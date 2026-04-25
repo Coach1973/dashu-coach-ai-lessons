@@ -1,7 +1,7 @@
 {
   "agent:kong:telegram:group:-1003877502911": {
     "sessionId": "7cdbf0a0-d635-41c8-a5e5-19b037c4331a",
-    "updatedAt": 1777145809670,
+    "updatedAt": 1777146911188,
     "systemSent": true,
     "abortedLastRun": false,
     "authProfileOverride": "minimax-portal:default",
@@ -415,13 +415,13 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777145796716,
+    "startedAt": 1777146897530,
     "modelProvider": "minimax-portal",
     "model": "MiniMax-M2.7",
     "contextTokens": 200000,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777145796703,
+      "generatedAt": 1777146897340,
       "sessionId": "7cdbf0a0-d635-41c8-a5e5-19b037c4331a",
       "sessionKey": "agent:kong:telegram:group:-1003877502911",
       "provider": "minimax-portal",
@@ -441,27 +441,11 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 38366,
-        "projectContextChars": 17417,
-        "nonProjectContextChars": 20949
+        "chars": 34352,
+        "projectContextChars": 13464,
+        "nonProjectContextChars": 20888
       },
       "injectedWorkspaceFiles": [
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
@@ -490,8 +474,8 @@
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 360,
-          "injectedChars": 360,
+          "rawChars": 546,
+          "injectedChars": 546,
           "truncated": false
         },
         {
@@ -506,16 +490,16 @@
           "name": "IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/IDENTITY.md",
           "missing": false,
-          "rawChars": 171,
-          "injectedChars": 171,
+          "rawChars": 318,
+          "injectedChars": 318,
           "truncated": false
         },
         {
           "name": "USER.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/USER.md",
           "missing": false,
-          "rawChars": 474,
-          "injectedChars": 474,
+          "rawChars": 494,
+          "injectedChars": 494,
           "truncated": false
         },
         {
@@ -529,21 +513,9 @@
         {
           "name": "BOOTSTRAP.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/BOOTSTRAP.md",
-          "missing": false,
-          "rawChars": 1450,
-          "injectedChars": 1450,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 72,
           "truncated": false
         },
         {
@@ -801,19 +773,19 @@
         ]
       }
     },
-    "inputTokens": 7635,
-    "outputTokens": 299,
-    "cacheRead": 19208,
-    "cacheWrite": 0,
-    "estimatedCostUsd": 0.039327075,
-    "totalTokens": 23045,
+    "inputTokens": 92,
+    "outputTokens": 558,
+    "cacheRead": 9011,
+    "cacheWrite": 13403,
+    "estimatedCostUsd": 0.05148822,
+    "totalTokens": 22506,
     "totalTokensFresh": true,
-    "endedAt": 1777145809586,
-    "runtimeMs": 12870
+    "endedAt": 1777146911104,
+    "runtimeMs": 13574
   },
   "agent:kong:telegram:group:-5083547625": {
     "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
-    "updatedAt": 1777146308996,
+    "updatedAt": 1777146582535,
     "systemSent": true,
     "abortedLastRun": false,
     "authProfileOverride": "minimax-portal:default",
@@ -1227,13 +1199,13 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777146306458,
+    "startedAt": 1777146578047,
     "modelProvider": "minimax-portal",
     "model": "MiniMax-M2.7",
     "contextTokens": 200000,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777146306454,
+      "generatedAt": 1777146578033,
       "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
       "sessionKey": "agent:kong:telegram:group:-5083547625",
       "provider": "minimax-portal",
@@ -1253,59 +1225,11 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 42757,
-        "projectContextChars": 21809,
-        "nonProjectContextChars": 20948
+        "chars": 32887,
+        "projectContextChars": 12000,
+        "nonProjectContextChars": 20887
       },
       "injectedWorkspaceFiles": [
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
-        {
-          "name": "GROUP_IDENTITY.md",
-          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
-          "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
-          "truncated": false
-        },
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
@@ -1326,8 +1250,8 @@
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 360,
-          "injectedChars": 360,
+          "rawChars": 546,
+          "injectedChars": 546,
           "truncated": false
         },
         {
@@ -1342,16 +1266,16 @@
           "name": "IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/IDENTITY.md",
           "missing": false,
-          "rawChars": 171,
-          "injectedChars": 171,
+          "rawChars": 318,
+          "injectedChars": 318,
           "truncated": false
         },
         {
           "name": "USER.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/USER.md",
           "missing": false,
-          "rawChars": 474,
-          "injectedChars": 474,
+          "rawChars": 494,
+          "injectedChars": 494,
           "truncated": false
         },
         {
@@ -1365,45 +1289,9 @@
         {
           "name": "BOOTSTRAP.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/BOOTSTRAP.md",
-          "missing": false,
-          "rawChars": 1450,
-          "injectedChars": 1450,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
-          "truncated": false
-        },
-        {
-          "path": "SELF_IMPROVEMENT_REMINDER.md",
-          "rawChars": 616,
-          "injectedChars": 616,
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 72,
           "truncated": false
         },
         {
@@ -1655,15 +1543,15 @@
         ]
       }
     },
-    "inputTokens": 22435,
-    "outputTokens": 113,
-    "cacheRead": 704,
+    "inputTokens": 19814,
+    "outputTokens": 251,
+    "cacheRead": 256,
     "cacheWrite": 0,
-    "estimatedCostUsd": 0.049722195,
-    "totalTokens": 23139,
+    "estimatedCostUsd": 0.055982954999999994,
+    "totalTokens": 20070,
     "totalTokensFresh": true,
-    "endedAt": 1777146308910,
-    "runtimeMs": 2452
+    "endedAt": 1777146582461,
+    "runtimeMs": 4414
   },
   "agent:kong:main": {
     "origin": {
