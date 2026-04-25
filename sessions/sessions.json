@@ -813,7 +813,7 @@
   },
   "agent:kong:telegram:group:-5083547625": {
     "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
-    "updatedAt": 1777145735847,
+    "updatedAt": 1777146308996,
     "systemSent": true,
     "abortedLastRun": false,
     "authProfileOverride": "minimax-portal:default",
@@ -1227,13 +1227,13 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777145724369,
+    "startedAt": 1777146306458,
     "modelProvider": "minimax-portal",
     "model": "MiniMax-M2.7",
     "contextTokens": 200000,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777145724364,
+      "generatedAt": 1777146306454,
       "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
       "sessionKey": "agent:kong:telegram:group:-5083547625",
       "provider": "minimax-portal",
@@ -1253,11 +1253,19 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 41293,
-        "projectContextChars": 20345,
+        "chars": 42757,
+        "projectContextChars": 21809,
         "nonProjectContextChars": 20948
       },
       "injectedWorkspaceFiles": [
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 743,
+          "injectedChars": 743,
+          "truncated": false
+        },
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
@@ -1360,6 +1368,12 @@
           "missing": false,
           "rawChars": 1450,
           "injectedChars": 1450,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
           "truncated": false
         },
         {
@@ -1641,15 +1655,15 @@
         ]
       }
     },
-    "inputTokens": 21603,
-    "outputTokens": 590,
-    "cacheRead": 22144,
+    "inputTokens": 22435,
+    "outputTokens": 113,
+    "cacheRead": 704,
     "cacheWrite": 0,
-    "estimatedCostUsd": 0.042813855,
-    "totalTokens": 22238,
+    "estimatedCostUsd": 0.049722195,
+    "totalTokens": 23139,
     "totalTokensFresh": true,
-    "endedAt": 1777145735798,
-    "runtimeMs": 11429
+    "endedAt": 1777146308910,
+    "runtimeMs": 2452
   },
   "agent:kong:main": {
     "origin": {
@@ -1662,7 +1676,7 @@
       "accountId": "bot_kong"
     },
     "sessionId": "dc24e399-0b34-43d1-a50e-1711d2c0746d",
-    "updatedAt": 1777145504802,
+    "updatedAt": 1777146507533,
     "deliveryContext": {
       "channel": "telegram",
       "to": "telegram:6124913915",
@@ -2062,15 +2076,13 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777145493244,
-    "endedAt": 1777145504701,
-    "runtimeMs": 11457,
+    "startedAt": 1777146501198,
     "modelProvider": "minimax-portal",
     "model": "MiniMax-M2.7",
     "contextTokens": 200000,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777145493240,
+      "generatedAt": 1777146501186,
       "sessionId": "dc24e399-0b34-43d1-a50e-1711d2c0746d",
       "sessionKey": "agent:kong:main",
       "provider": "minimax-portal",
@@ -2090,9 +2102,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 32978,
-        "projectContextChars": 12210,
-        "nonProjectContextChars": 20768
+        "chars": 31892,
+        "projectContextChars": 11185,
+        "nonProjectContextChars": 20707
       },
       "injectedWorkspaceFiles": [
         {
@@ -2107,8 +2119,8 @@
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 360,
-          "injectedChars": 360,
+          "rawChars": 546,
+          "injectedChars": 546,
           "truncated": false
         },
         {
@@ -2123,16 +2135,16 @@
           "name": "IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/IDENTITY.md",
           "missing": false,
-          "rawChars": 171,
-          "injectedChars": 171,
+          "rawChars": 318,
+          "injectedChars": 318,
           "truncated": false
         },
         {
           "name": "USER.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/USER.md",
           "missing": false,
-          "rawChars": 474,
-          "injectedChars": 474,
+          "rawChars": 494,
+          "injectedChars": 494,
           "truncated": false
         },
         {
@@ -2146,9 +2158,9 @@
         {
           "name": "BOOTSTRAP.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/BOOTSTRAP.md",
-          "missing": false,
-          "rawChars": 1450,
-          "injectedChars": 1450,
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 72,
           "truncated": false
         },
         {
@@ -2400,12 +2412,14 @@
         ]
       }
     },
-    "inputTokens": 17135,
-    "outputTokens": 550,
-    "cacheRead": 17152,
+    "inputTokens": 18132,
+    "outputTokens": 617,
+    "cacheRead": 96,
     "cacheWrite": 0,
-    "estimatedCostUsd": 0.00684498,
-    "totalTokens": 17332,
-    "totalTokensFresh": true
+    "estimatedCostUsd": 0.024099719999999998,
+    "totalTokens": 18228,
+    "totalTokensFresh": true,
+    "endedAt": 1777146507460,
+    "runtimeMs": 6262
   }
 }
