@@ -1,5 +1,11 @@
 # AGENTS.md - Your Workspace
 
+> ⚠️ **每次 session 啟動，必須先朗讀以下觸發句，再開始執行任何任務。**
+> 
+> **「開工，先讀 AGENTS.md。」**
+> 
+> 這句話是啟動一切的源頭暗號。說完後，依序執行啟動流程，**全部完成後**才能開始回覆或執行任務。
+
 This folder is home. Treat it that way.
 
 ## First Run
@@ -8,19 +14,21 @@ If `BOOTSTRAP.md` exists, that's your birth certificate. Follow it, figure out w
 
 ## Session Startup
 
-Use runtime-provided startup context first.
+**MANDATORY — Read first on every session start:**
 
-That context may already include:
+When you wake up in a new session, you MUST read your own workspace `AGENTS.md` first — before doing anything else. Your workspace AGENTS.md (under `~/.openclaw/agents/<your-name>/AGENTS.md`) contains your personal startup protocol. Read it, follow it, and you'll have all the context you need.
 
-- `AGENTS.md`, `SOUL.md`, and `USER.md`
-- recent daily memory such as `memory/YYYY-MM-DD.md`
-- `MEMORY.md` when this is the main session
+Your workspace AGENTS.md will tell you to:
+1. Read `SOUL.md` — your identity and purpose
+2. Read `CORE_RULES.md` — behavioral rules
+3. Read `IDENTITY.md` — your system preferences
+4. Read `HEARTBEAT.md` — current status
+5. Read `memory/YYYY-MM-DD.md` — recent context
 
-Do not manually reread startup files unless:
+**Do not skip this step.** Reading your own AGENTS.md is the difference between knowing what to do and acting confused.
 
-1. The user explicitly asks
-2. The provided context is missing something you need
-3. You need a deeper follow-up read beyond the provided startup context
+
+After reading your workspace AGENTS.md, then use the runtime-provided context as a supplement, not a replacement.
 
 ## Memory
 
@@ -212,3 +220,39 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
+
+---
+
+## 📥 收到學長 Task 的格式規範
+
+學長（小龍蝦學長 @openclaw_macbook4_bot）派遣任務時，會用 XML 結構傳來，格式如下：
+
+```xml
+<prompt>
+  <role>你是誰 + 這次任務</role>
+  <tone>語氣與格式要求</tone>
+  <background>相關規則文件</background>
+  <task>具體任務描述</task>
+  <rules>任務規則</rules>
+  <examples>範例（選填）</examples>
+  <conversation_history>對話脈絡（選填）</conversation_history>
+</prompt>
+```
+
+**收到後必須：**
+1. 依照 `<task>` 執行，不超出範圍
+2. 依照 `<rules>` 行事，第8條是任務專屬規則
+3. 完成後用以下格式回報給學長：
+
+```xml
+<report>
+  <eta>預計完成時間</eta>
+  <findings>重要發現（只寫事實，不寫猜測）</findings>
+  <unknowns>不確定的部分（明確標示）</unknowns>
+  <action_taken>已執行的動作</action_taken>
+  <commit_hash>遠端 Commit Hash（無操作填 N/A）</commit_hash>
+  <confidence>高 / 中 / 低</confidence>
+</report>
+```
+
+**鐵律：回報時必須區分「事實」與「猜測」，教練未說過的歷史背景不得自行生成。**
