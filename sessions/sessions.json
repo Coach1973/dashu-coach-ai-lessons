@@ -1,10 +1,10 @@
 {
   "agent:kong:telegram:group:-1003877502911": {
-    "sessionId": "7cdbf0a0-d635-41c8-a5e5-19b037c4331a",
-    "updatedAt": 1777146911188,
+    "sessionId": "5979187b-def3-4dc1-95e2-ea0503f029a6",
+    "updatedAt": 1779013385830,
     "systemSent": true,
     "abortedLastRun": false,
-    "authProfileOverride": "minimax-portal:default",
+    "authProfileOverride": "minimax:default",
     "authProfileOverrideSource": "auto",
     "authProfileOverrideCompactionCount": 0,
     "displayName": "telegram",
@@ -29,7 +29,7 @@
       "to": "telegram:-1003877502911",
       "accountId": "bot_kong"
     },
-    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/7cdbf0a0-d635-41c8-a5e5-19b037c4331a.jsonl",
+    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/5979187b-def3-4dc1-95e2-ea0503f029a6.jsonl",
     "compactionCount": 0,
     "skillsSnapshot": {
       "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>apple-notes</name>\n    <description>Manage Apple Notes via the `memo` CLI on macOS (create, view, edit, delete, search, move, and export notes). Use when a user asks OpenClaw to add a note, list notes, search notes, or manage note folders.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-notes/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>apple-reminders</name>\n    <description>Manage Apple Reminders via remindctl CLI (list, add, edit, complete, delete). Supports lists, date filters, and JSON/plain output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-reminders/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/coding-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gemini</name>\n    <description>Gemini CLI for one-shot Q&amp;A, summaries, and generation.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gemini/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gh-issues</name>\n    <description>Fetch GitHub issues, spawn sub-agents to implement fixes and open PRs, then monitor and address PR review comments. Usage: /gh-issues [owner/repo] [--label bug] [--limit 5] [--milestone v1.0] [--assignee @me] [--fork user/repo] [--watch] [--interval 5] [--reviews-only] [--cron] [--dry-run] [--model glm-5] [--notify-channel -1002381931352]</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gh-issues/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>github</name>\n    <description>GitHub operations via `gh` CLI: issues, PRs, CI runs, code review, API queries. Use when: (1) checking PR status or CI, (2) creating/commenting on issues, (3) listing/filtering PRs or issues, (4) viewing run logs. NOT for: complex web UI interactions requiring manual browser flows (use browser tooling when available), bulk operations across many repos (script with gh api), or when gh auth is not configured.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/github/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gog</name>\n    <description>Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gog/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>model-usage</name>\n    <description>Use CodexBar CLI local cost usage to summarize per-model usage for Codex or Claude, including the current (most recent) model or a full model breakdown. Trigger when asked for model-level usage/cost data from codexbar, or when you need a scriptable per-model summary from codexbar cost JSON.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/model-usage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/node-connect/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>openai-whisper</name>\n    <description>Local speech-to-text with the Whisper CLI (no API key).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/openai-whisper/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>self-improvement</name>\n    <description>Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects Claude (&apos;No, that&apos;s wrong...&apos;, &apos;Actually...&apos;), (3) User requests a capability that doesn&apos;t exist, (4) An external API or tool fails, (5) Claude realizes its knowledge is outdated or incorrect, (6) A better approach is discovered for a recurring task. Also review learnings before major tasks.</description>\n    <location>~/.openclaw/skills/self-improving-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>session-logs</name>\n    <description>Search and analyze your own session logs (older/parent conversations) using jq.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/session-logs/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create, edit, improve, or audit AgentSkills. Use when creating a new skill from scratch or when asked to improve, review, audit, tidy up, or clean up an existing skill or SKILL.md file. Also use when editing or restructuring a skill directory (moving files to references/ or scripts/, removing stale content, validating against the AgentSkills spec). Triggers on phrases like &quot;create a skill&quot;, &quot;author a skill&quot;, &quot;tidy up a skill&quot;, &quot;improve this skill&quot;, &quot;review the skill&quot;, &quot;clean up the skill&quot;, &quot;audit the skill&quot;.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow</name>\n    <description>Use when work should span one or more detached tasks but still behave like one job with a single owner context. TaskFlow is the durable flow substrate under authoring layers like Lobster, ACPX, plugins, or plain code. Keep conditional logic in the caller; use TaskFlow for flow identity, child-task linkage, waiting state, revision-checked mutations, and user-facing emergence.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow-inbox-triage</name>\n    <description>Example TaskFlow authoring pattern for inbox triage. Use when messages need different treatment based on intent, with some routes notifying immediately, some waiting on outside answers, and others rolling into a later summary.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow-inbox-triage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tmux</name>\n    <description>Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/tmux/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>video-frames</name>\n    <description>Extract frames or short clips from videos using ffmpeg.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/video-frames/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n</available_skills>",
@@ -415,16 +415,16 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777146897530,
-    "modelProvider": "minimax-portal",
+    "startedAt": 1779013380004,
+    "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
-    "contextTokens": 200000,
+    "contextTokens": 204800,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777146897340,
-      "sessionId": "7cdbf0a0-d635-41c8-a5e5-19b037c4331a",
+      "generatedAt": 1779013379787,
+      "sessionId": "5979187b-def3-4dc1-95e2-ea0503f029a6",
       "sessionKey": "agent:kong:telegram:group:-1003877502911",
-      "provider": "minimax-portal",
+      "provider": "minimax",
       "model": "MiniMax-M2.7",
       "workspaceDir": "/Users/bymyway/.openclaw/agents/kong",
       "bootstrapMaxChars": 12000,
@@ -441,49 +441,57 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 34352,
-        "projectContextChars": 13464,
-        "nonProjectContextChars": 20888
+        "chars": 43712,
+        "projectContextChars": 23190,
+        "nonProjectContextChars": 20522
       },
       "injectedWorkspaceFiles": [
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
           "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
+          "rawChars": 2767,
+          "injectedChars": 2767,
           "truncated": false
         },
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
           "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
           "truncated": false
         },
         {
           "name": "AGENTS.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/AGENTS.md",
           "missing": false,
-          "rawChars": 7727,
-          "injectedChars": 7727,
+          "rawChars": 9001,
+          "injectedChars": 9001,
           "truncated": false
         },
         {
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 546,
-          "injectedChars": 546,
+          "rawChars": 1443,
+          "injectedChars": 1443,
           "truncated": false
         },
         {
           "name": "TOOLS.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/TOOLS.md",
           "missing": false,
-          "rawChars": 850,
-          "injectedChars": 850,
+          "rawChars": 870,
+          "injectedChars": 870,
           "truncated": false
         },
         {
@@ -516,6 +524,12 @@
           "missing": true,
           "rawChars": 0,
           "injectedChars": 72,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
           "truncated": false
         },
         {
@@ -618,7 +632,7 @@
       },
       "tools": {
         "listChars": 0,
-        "schemaChars": 24135,
+        "schemaChars": 24177,
         "entries": [
           {
             "name": "read",
@@ -760,35 +774,41 @@
           },
           {
             "name": "memory_search",
-            "summaryChars": 385,
-            "schemaChars": 260,
-            "propertiesCount": 4
+            "summaryChars": 238,
+            "schemaChars": 224,
+            "propertiesCount": 2
           },
           {
             "name": "memory_get",
-            "summaryChars": 239,
-            "schemaChars": 249,
-            "propertiesCount": 4
+            "summaryChars": 144,
+            "schemaChars": 151,
+            "propertiesCount": 1
+          },
+          {
+            "name": "memory_transcript",
+            "summaryChars": 250,
+            "schemaChars": 176,
+            "propertiesCount": 1
           }
         ]
       }
     },
-    "inputTokens": 92,
-    "outputTokens": 558,
-    "cacheRead": 9011,
-    "cacheWrite": 13403,
-    "estimatedCostUsd": 0.05148822,
-    "totalTokens": 22506,
+    "inputTokens": 27529,
+    "outputTokens": 329,
+    "cacheRead": 256,
+    "cacheWrite": 0,
+    "estimatedCostUsd": 0.021063344999999997,
+    "totalTokens": 27785,
     "totalTokensFresh": true,
-    "endedAt": 1777146911104,
-    "runtimeMs": 13574
+    "endedAt": 1779013385706,
+    "runtimeMs": 5702
   },
   "agent:kong:telegram:group:-5083547625": {
-    "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
-    "updatedAt": 1777146582535,
+    "sessionId": "47174474-ae96-4c66-b1c0-b0ae2d104b2c",
+    "updatedAt": 1778685146225,
     "systemSent": true,
     "abortedLastRun": false,
-    "authProfileOverride": "minimax-portal:default",
+    "authProfileOverride": "minimax:default",
     "authProfileOverrideSource": "auto",
     "authProfileOverrideCompactionCount": 0,
     "displayName": "telegram",
@@ -813,7 +833,7 @@
       "to": "telegram:-5083547625",
       "accountId": "bot_kong"
     },
-    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl",
+    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/47174474-ae96-4c66-b1c0-b0ae2d104b2c.jsonl",
     "compactionCount": 0,
     "skillsSnapshot": {
       "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>apple-notes</name>\n    <description>Manage Apple Notes via the `memo` CLI on macOS (create, view, edit, delete, search, move, and export notes). Use when a user asks OpenClaw to add a note, list notes, search notes, or manage note folders.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-notes/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>apple-reminders</name>\n    <description>Manage Apple Reminders via remindctl CLI (list, add, edit, complete, delete). Supports lists, date filters, and JSON/plain output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-reminders/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/coding-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gemini</name>\n    <description>Gemini CLI for one-shot Q&amp;A, summaries, and generation.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gemini/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gh-issues</name>\n    <description>Fetch GitHub issues, spawn sub-agents to implement fixes and open PRs, then monitor and address PR review comments. Usage: /gh-issues [owner/repo] [--label bug] [--limit 5] [--milestone v1.0] [--assignee @me] [--fork user/repo] [--watch] [--interval 5] [--reviews-only] [--cron] [--dry-run] [--model glm-5] [--notify-channel -1002381931352]</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gh-issues/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>github</name>\n    <description>GitHub operations via `gh` CLI: issues, PRs, CI runs, code review, API queries. Use when: (1) checking PR status or CI, (2) creating/commenting on issues, (3) listing/filtering PRs or issues, (4) viewing run logs. NOT for: complex web UI interactions requiring manual browser flows (use browser tooling when available), bulk operations across many repos (script with gh api), or when gh auth is not configured.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/github/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gog</name>\n    <description>Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gog/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>model-usage</name>\n    <description>Use CodexBar CLI local cost usage to summarize per-model usage for Codex or Claude, including the current (most recent) model or a full model breakdown. Trigger when asked for model-level usage/cost data from codexbar, or when you need a scriptable per-model summary from codexbar cost JSON.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/model-usage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/node-connect/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>openai-whisper</name>\n    <description>Local speech-to-text with the Whisper CLI (no API key).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/openai-whisper/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>self-improvement</name>\n    <description>Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects Claude (&apos;No, that&apos;s wrong...&apos;, &apos;Actually...&apos;), (3) User requests a capability that doesn&apos;t exist, (4) An external API or tool fails, (5) Claude realizes its knowledge is outdated or incorrect, (6) A better approach is discovered for a recurring task. Also review learnings before major tasks.</description>\n    <location>~/.openclaw/skills/self-improving-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>session-logs</name>\n    <description>Search and analyze your own session logs (older/parent conversations) using jq.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/session-logs/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create, edit, improve, or audit AgentSkills. Use when creating a new skill from scratch or when asked to improve, review, audit, tidy up, or clean up an existing skill or SKILL.md file. Also use when editing or restructuring a skill directory (moving files to references/ or scripts/, removing stale content, validating against the AgentSkills spec). Triggers on phrases like &quot;create a skill&quot;, &quot;author a skill&quot;, &quot;tidy up a skill&quot;, &quot;improve this skill&quot;, &quot;review the skill&quot;, &quot;clean up the skill&quot;, &quot;audit the skill&quot;.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow</name>\n    <description>Use when work should span one or more detached tasks but still behave like one job with a single owner context. TaskFlow is the durable flow substrate under authoring layers like Lobster, ACPX, plugins, or plain code. Keep conditional logic in the caller; use TaskFlow for flow identity, child-task linkage, waiting state, revision-checked mutations, and user-facing emergence.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow-inbox-triage</name>\n    <description>Example TaskFlow authoring pattern for inbox triage. Use when messages need different treatment based on intent, with some routes notifying immediately, some waiting on outside answers, and others rolling into a later summary.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow-inbox-triage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tmux</name>\n    <description>Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/tmux/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>video-frames</name>\n    <description>Extract frames or short clips from videos using ffmpeg.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/video-frames/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n</available_skills>",
@@ -1199,16 +1219,16 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777146578047,
-    "modelProvider": "minimax-portal",
+    "startedAt": 1778685113996,
+    "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
-    "contextTokens": 200000,
+    "contextTokens": 204800,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777146578033,
-      "sessionId": "65fe1e1b-7eef-42b3-a11f-61c396df3974",
+      "generatedAt": 1778685113987,
+      "sessionId": "47174474-ae96-4c66-b1c0-b0ae2d104b2c",
       "sessionKey": "agent:kong:telegram:group:-5083547625",
-      "provider": "minimax-portal",
+      "provider": "minimax",
       "model": "MiniMax-M2.7",
       "workspaceDir": "/Users/bymyway/.openclaw/agents/kong",
       "bootstrapMaxChars": 12000,
@@ -1225,41 +1245,89 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 32887,
-        "projectContextChars": 12000,
-        "nonProjectContextChars": 20887
+        "chars": 56890,
+        "projectContextChars": 36369,
+        "nonProjectContextChars": 20521
       },
       "injectedWorkspaceFiles": [
         {
           "name": "GROUP_IDENTITY.md",
           "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
           "missing": false,
-          "rawChars": 743,
-          "injectedChars": 743,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
+          "truncated": false
+        },
+        {
+          "name": "GROUP_IDENTITY.md",
+          "path": "/Users/bymyway/.openclaw/workspace/shared-context/GROUP_IDENTITY.md",
+          "missing": false,
+          "rawChars": 2767,
+          "injectedChars": 2767,
           "truncated": false
         },
         {
           "name": "AGENTS.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/AGENTS.md",
           "missing": false,
-          "rawChars": 7727,
-          "injectedChars": 7727,
+          "rawChars": 9001,
+          "injectedChars": 9001,
           "truncated": false
         },
         {
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 546,
-          "injectedChars": 546,
+          "rawChars": 670,
+          "injectedChars": 670,
           "truncated": false
         },
         {
           "name": "TOOLS.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/TOOLS.md",
           "missing": false,
-          "rawChars": 850,
-          "injectedChars": 850,
+          "rawChars": 870,
+          "injectedChars": 870,
           "truncated": false
         },
         {
@@ -1292,6 +1360,42 @@
           "missing": true,
           "rawChars": 0,
           "injectedChars": 72,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
           "truncated": false
         },
         {
@@ -1388,7 +1492,7 @@
       },
       "tools": {
         "listChars": 0,
-        "schemaChars": 24135,
+        "schemaChars": 24177,
         "entries": [
           {
             "name": "read",
@@ -1530,28 +1634,34 @@
           },
           {
             "name": "memory_search",
-            "summaryChars": 385,
-            "schemaChars": 260,
-            "propertiesCount": 4
+            "summaryChars": 238,
+            "schemaChars": 224,
+            "propertiesCount": 2
           },
           {
             "name": "memory_get",
-            "summaryChars": 239,
-            "schemaChars": 249,
-            "propertiesCount": 4
+            "summaryChars": 144,
+            "schemaChars": 151,
+            "propertiesCount": 1
+          },
+          {
+            "name": "memory_transcript",
+            "summaryChars": 250,
+            "schemaChars": 176,
+            "propertiesCount": 1
           }
         ]
       }
     },
-    "inputTokens": 19814,
-    "outputTokens": 251,
+    "inputTokens": 96801,
+    "outputTokens": 107,
     "cacheRead": 256,
     "cacheWrite": 0,
-    "estimatedCostUsd": 0.055982954999999994,
-    "totalTokens": 20070,
+    "estimatedCostUsd": 0.54740682,
+    "totalTokens": 97057,
     "totalTokensFresh": true,
-    "endedAt": 1777146582461,
-    "runtimeMs": 4414
+    "endedAt": 1778685146113,
+    "runtimeMs": 32117
   },
   "agent:kong:main": {
     "origin": {
@@ -1563,8 +1673,8 @@
       "to": "telegram:6124913915",
       "accountId": "bot_kong"
     },
-    "sessionId": "dc24e399-0b34-43d1-a50e-1711d2c0746d",
-    "updatedAt": 1777146507533,
+    "sessionId": "c6fca6d1-f25b-4cda-9415-bf8095b551cf",
+    "updatedAt": 1777183831128,
     "deliveryContext": {
       "channel": "telegram",
       "to": "telegram:6124913915",
@@ -1575,11 +1685,8 @@
     "lastAccountId": "bot_kong",
     "systemSent": true,
     "abortedLastRun": false,
-    "authProfileOverride": "minimax-portal:default",
-    "authProfileOverrideSource": "auto",
-    "authProfileOverrideCompactionCount": 0,
     "chatType": "direct",
-    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/dc24e399-0b34-43d1-a50e-1711d2c0746d.jsonl",
+    "sessionFile": "/Users/bymyway/.openclaw/agents/kong/sessions/c6fca6d1-f25b-4cda-9415-bf8095b551cf.jsonl",
     "skillsSnapshot": {
       "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>apple-notes</name>\n    <description>Manage Apple Notes via the `memo` CLI on macOS (create, view, edit, delete, search, move, and export notes). Use when a user asks OpenClaw to add a note, list notes, search notes, or manage note folders.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-notes/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>apple-reminders</name>\n    <description>Manage Apple Reminders via remindctl CLI (list, add, edit, complete, delete). Supports lists, date filters, and JSON/plain output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/apple-reminders/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/coding-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gemini</name>\n    <description>Gemini CLI for one-shot Q&amp;A, summaries, and generation.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gemini/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gh-issues</name>\n    <description>Fetch GitHub issues, spawn sub-agents to implement fixes and open PRs, then monitor and address PR review comments. Usage: /gh-issues [owner/repo] [--label bug] [--limit 5] [--milestone v1.0] [--assignee @me] [--fork user/repo] [--watch] [--interval 5] [--reviews-only] [--cron] [--dry-run] [--model glm-5] [--notify-channel -1002381931352]</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gh-issues/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>github</name>\n    <description>GitHub operations via `gh` CLI: issues, PRs, CI runs, code review, API queries. Use when: (1) checking PR status or CI, (2) creating/commenting on issues, (3) listing/filtering PRs or issues, (4) viewing run logs. NOT for: complex web UI interactions requiring manual browser flows (use browser tooling when available), bulk operations across many repos (script with gh api), or when gh auth is not configured.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/github/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>gog</name>\n    <description>Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/gog/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>model-usage</name>\n    <description>Use CodexBar CLI local cost usage to summarize per-model usage for Codex or Claude, including the current (most recent) model or a full model breakdown. Trigger when asked for model-level usage/cost data from codexbar, or when you need a scriptable per-model summary from codexbar cost JSON.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/model-usage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/node-connect/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>openai-whisper</name>\n    <description>Local speech-to-text with the Whisper CLI (no API key).</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/openai-whisper/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>self-improvement</name>\n    <description>Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects Claude (&apos;No, that&apos;s wrong...&apos;, &apos;Actually...&apos;), (3) User requests a capability that doesn&apos;t exist, (4) An external API or tool fails, (5) Claude realizes its knowledge is outdated or incorrect, (6) A better approach is discovered for a recurring task. Also review learnings before major tasks.</description>\n    <location>~/.openclaw/skills/self-improving-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>session-logs</name>\n    <description>Search and analyze your own session logs (older/parent conversations) using jq.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/session-logs/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create, edit, improve, or audit AgentSkills. Use when creating a new skill from scratch or when asked to improve, review, audit, tidy up, or clean up an existing skill or SKILL.md file. Also use when editing or restructuring a skill directory (moving files to references/ or scripts/, removing stale content, validating against the AgentSkills spec). Triggers on phrases like &quot;create a skill&quot;, &quot;author a skill&quot;, &quot;tidy up a skill&quot;, &quot;improve this skill&quot;, &quot;review the skill&quot;, &quot;clean up the skill&quot;, &quot;audit the skill&quot;.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow</name>\n    <description>Use when work should span one or more detached tasks but still behave like one job with a single owner context. TaskFlow is the durable flow substrate under authoring layers like Lobster, ACPX, plugins, or plain code. Keep conditional logic in the caller; use TaskFlow for flow identity, child-task linkage, waiting state, revision-checked mutations, and user-facing emergence.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>taskflow-inbox-triage</name>\n    <description>Example TaskFlow authoring pattern for inbox triage. Use when messages need different treatment based on intent, with some routes notifying immediately, some waiting on outside answers, and others rolling into a later summary.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/taskflow-inbox-triage/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tmux</name>\n    <description>Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/tmux/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>video-frames</name>\n    <description>Extract frames or short clips from videos using ffmpeg.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/video-frames/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>/opt/homebrew/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n</available_skills>",
       "skills": [
@@ -1964,16 +2071,15 @@
       "version": 0
     },
     "status": "done",
-    "startedAt": 1777146501198,
-    "modelProvider": "minimax-portal",
+    "startedAt": 1777183652239,
+    "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
-    "contextTokens": 200000,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1777146501186,
-      "sessionId": "dc24e399-0b34-43d1-a50e-1711d2c0746d",
+      "generatedAt": 1777183652233,
+      "sessionId": "c6fca6d1-f25b-4cda-9415-bf8095b551cf",
       "sessionKey": "agent:kong:main",
-      "provider": "minimax-portal",
+      "provider": "minimax",
       "model": "MiniMax-M2.7",
       "workspaceDir": "/Users/bymyway/.openclaw/agents/kong",
       "bootstrapMaxChars": 12000,
@@ -1990,9 +2096,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 31892,
-        "projectContextChars": 11185,
-        "nonProjectContextChars": 20707
+        "chars": 32651,
+        "projectContextChars": 11958,
+        "nonProjectContextChars": 20693
       },
       "injectedWorkspaceFiles": [
         {
@@ -2007,8 +2113,8 @@
           "name": "SOUL.md",
           "path": "/Users/bymyway/.openclaw/agents/kong/SOUL.md",
           "missing": false,
-          "rawChars": 546,
-          "injectedChars": 546,
+          "rawChars": 670,
+          "injectedChars": 670,
           "truncated": false
         },
         {
@@ -2049,6 +2155,12 @@
           "missing": true,
           "rawChars": 0,
           "injectedChars": 72,
+          "truncated": false
+        },
+        {
+          "path": "SELF_IMPROVEMENT_REMINDER.md",
+          "rawChars": 616,
+          "injectedChars": 616,
           "truncated": false
         },
         {
@@ -2300,14 +2412,32 @@
         ]
       }
     },
-    "inputTokens": 18132,
-    "outputTokens": 617,
-    "cacheRead": 96,
+    "cacheRead": 30688,
     "cacheWrite": 0,
-    "estimatedCostUsd": 0.024099719999999998,
-    "totalTokens": 18228,
     "totalTokensFresh": true,
-    "endedAt": 1777146507460,
-    "runtimeMs": 6262
+    "compactionCount": 0,
+    "authProfileOverride": "minimax:default",
+    "authProfileOverrideSource": "auto",
+    "authProfileOverrideCompactionCount": 0,
+    "contextTokens": 204800,
+    "inputTokens": 31585,
+    "outputTokens": 5599,
+    "estimatedCostUsd": 0.071389395,
+    "totalTokens": 31065,
+    "endedAt": 1777183830994,
+    "runtimeMs": 178755
+  },
+  "agent:kong:telegram:slash:6124913915": {
+    "origin": {
+      "label": "coach",
+      "provider": "telegram",
+      "surface": "telegram",
+      "chatType": "direct",
+      "from": "telegram:6124913915",
+      "to": "telegram:6124913915",
+      "accountId": "bot_kong"
+    },
+    "sessionId": "b43cfb22-c1ce-4fc9-80d6-11218983e1ff",
+    "updatedAt": 1777180960941
   }
 }

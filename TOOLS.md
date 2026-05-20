@@ -1,6 +1,9 @@
 # TOOLS.md - Local Notes
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+## 環境架構
+- **主機**：Mac mini（吳大樹的Mac mini）
+- **位置**：所有 Bot（1號機、2號機、3號機）都在同一臺 Mac mini 上，不在 VPS
+- **主機名稱**：wudashudeMac-mini.local
 
 ## What Goes Here
 
