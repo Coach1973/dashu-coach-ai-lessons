@@ -18,21 +18,43 @@ If `BOOTSTRAP.md` exists, that's your birth certificate. Follow it, figure out w
 
 When you wake up in a new session, you MUST read your own workspace `AGENTS.md` first — before doing anything else. Your workspace AGENTS.md (under `~/.openclaw/agents/<your-name>/AGENTS.md`) contains your personal startup protocol. Read it, follow it, and you'll have all the context you need.
 
-Your workspace AGENTS.md will tell you to:
-1. Read `SOUL.md` — your identity and purpose
-2. Read `CORE_RULES.md` — behavioral rules
-3. Read `IDENTITY.md` — your system preferences
-4. Read `HEARTBEAT.md` — current status
-5. Read `memory/YYYY-MM-DD.md` — recent context
+Your workspace AGENTS.md will tell you to read the following files in order:
 
-**Do not skip this step.** Reading your own AGENTS.md is the difference between knowing what to do and acting confused.
+### 第一層：必讀（每次啟動都讀，無例外）
+1. Read `特助心法.md` — 🔴 最高正典，21 守則一字不差
+2. Read `SOUL.md` — 靈魂核心（心願目標 + 系統協作 + 模型鐵律）
+3. Read `執行細則.md` — 操作細則（15 條，怎麼做）
+4. Read `路徑大全.md` — 所有路徑、密碼、API Key（找不到東西先讀這份）
+5. Read `distill/top10_errors_2026-05-21.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
+6. Read `shared-relay/CONSENSUS.md` — 🔴 當晚最新共識（每次啟動必讀，確保不脫離團隊議程）
+7. Read `USER.md` — 教練偏好與習慣
+8. Read `shared-context/SUPERGROUP-MAP.md` — 團隊結構
+9. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶）
 
-
-After reading your workspace AGENTS.md, then use the runtime-provided context as a supplement, not a replacement.
+### 第二層：按需讀取
+10. Read `DAILY_DIGEST.md` — 近期任務摘要（心跳時必讀，啟動時選讀）
+11. Read `memory/YYYY-MM-DD.md`（今天）— 近期脈絡（>30KB 不讀）
+12. **若為主對話 Session**：也讀 `MEMORY.md`（長期記憶，勿在群組中載入）
 
 ## Memory
 
+<<<<<<< HEAD
 You wake up fresh each session. These files are your continuity:
+=======
+### 🔴 自我對照機制（每次執行任務前）
+每次執行任務時，對照以下三份檔案自我檢視：
+
+| 檔案 | 何時對照 | 檢視什麼 |
+|------|---------|---------|
+| `特助心法.md` | 任務開始前 | 這次行動是否違反使命/願景/守則？ |
+| `distill/top10_errors_2026-05-21.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
+| `shared-relay/CONSENSUS.md` | 任務開始前 | 這個決策是否符合團隊最新共識？ |
+
+**發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 top10_errors**
+
+> 教練說：「每一個 Agent 他自己的經驗值要寫進自己的 member，這是為了有效溝通，為了成為最懂老闆的 AI 特助。」
+
+> ⚠️ 守則正典統一為 `特助心法.md`（21 條）。`守則總綱.md` 是帶解說的參考版，內容重複不需啟動時讀。舊版規則檔已歸檔至 `_history_archive/`。
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
