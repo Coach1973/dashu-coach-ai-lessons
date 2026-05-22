@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴 幫電腦小白找檔案/授權設定，一定先全自動再給一個動作](feedback_do_everything_for_user_fileoperation.md) — 先 open -R 選好檔案 + 開設定頁，告訴教練「拖過去」，不給多步驟技術指令；違反即讓教練當搬運工
+
 - [對照守則由上往下——先回到三大信念/使命/理念](feedback_reason_from_beliefs_not_just_rules.md) — 守則是枝葉，根是三大信念+使命+理念；判斷先回到根，一個對的行為是上層信念+多條守則的綜合，別只停在單一編號
 
 - [測試的釣餌不可順手修](feedback_dont_fix_test_bait.md) — 教練設查核測試時，凍結被測的落差/錯誤，只報告不修復，先問「這是要我修還是要 bot 自己查的考題」
