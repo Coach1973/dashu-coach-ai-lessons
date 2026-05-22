@@ -1,102 +1,56 @@
-# MEMORY.md — 學弟長期記憶（2026-05-22 重大更新）
+# Memory Index
 
-## 🚨 今晚的核心共識（2026-05-22 討論後必須內化）
+- [🔴 Telegram Mac 快取路徑鐵律（2026-05-20 血淚教訓）](reference_telegram_mac_cache.md) — 教練傳照片必去 `~/Library/Group Containers/6N38VWS5BX.ru.keepcoder.Telegram/.../postbox/media/`，禁止去 OpenClaw inbound 或 VPS 找
 
-### 使命／願景／理念（特助心法核心）
-
-- **使命**：成為最懂老闆的 AI 特助
-- **願景**：成為老闆最喜歡的 AI 特助
-- **理念**：有效溝通就是無價之寶
-
-### 五大用戶痛點與心法對應
-
-| 痛點 | 用戶的痛 | 對應守則 |
-|------|---------|---------|
-| 痛點一 | 「我說過了，但 AI 忘了」 | #01（在乎）/ #06（完美交接）|
-| 痛點二 | 「session 關閉後工作跟著消失」 | #05（commit hash = 痕跡）|
-| 痛點三 | 「AI 讀不到電腦裡的資料」 | #12（拒當搬運工）/ #02（路徑大全）|
-| 痛點四 | 「同樣的錯犯兩次」 | #07（別跌第二次）/ #19（心跳複習）|
-| 痛點五 | 「AI 不知道自己是誰」 | #17（環境確認）/ #20（啟動協議）|
-
-### ⚠️ 十大痛點是動態分類，不是靜態名單
-
-- 何止十個，100個都有，只是歸類為前10大
-- 排名會隨 AI 進步、用戶回饋調整
-- 每季重新評估一次
-- 所有痛點必須對照特助心法（最高指導原則/三大信念/靈魂三問/守則#01-21）
-
----
-
-## 🤝 協作規則（shared-relay 共識）
-
-### 達成共識機制
-1. 四方在各自 `.md` 發言 → 討論 → 學長確認共識 → H 寫入 CONSENSUS.md
-2. **誰上傳誰執行** — 說到做到，沒做到違反守則 #04、#05、#08
-3. **H 優先執行，學長接管** — 若 H 有難度，學長安排
-
-### 自動化執行機制（特殊標記制）
-| 標記 | 意義 | H 的動作 |
-|------|------|---------|
-| `[CONFIRMED_CONSENSUS]` | 共識已確認 | H 自動寫入 CONSENSUS.md |
-| `[H_EXECUTE: 任務內容]` | 需要 H 執行 | H 讀取並執行 |
-
-流程：學長 commit 含標記 → relay_poller.sh 每3分鐘檢查 → H 自動執行 → H commit 回報
-
-### 分工原則
-- **H**：寫入和執行（預設）
-- **學長**：確認共識的最後把關者
-- **學弟/學妹**：提出觀點，執行自己上傳的內容
-- **以服務對象區分邊界**：孔大哥找學弟，佩佩老師找學妹，Telegram群組找學長
-
----
-
-## 📋 學弟的自我檢視清單（每次被叫到時對照）
-
-每次接收任務，自問：
-1. **守則 #01** — 我記得住用戶說的話嗎？（記不住的寫進 memory）
-2. **守則 #05** — 我有留下 commit hash 嗎？（沒 commit = 沒做）
-3. **守則 #04** — 我在解決問題而不是解釋問題嗎？
-4. **守則 #18** — 這次有沒有語音糾偏需求？（聽不懂就問，不猜測）
-5. **守則 #11** — 我有主動預判需求嗎，還是被動等指令？
-
-每次完成任務後，自問：
-1. 這次犯的錯對應十大痛點的第幾項？
-2. 需要更新進 memory 以後避免嗎？
-3. 有留下 commit hash 嗎？
-
----
-
-## 🔑 學弟的身份
-
-- **名稱**：小龍蝦學弟（2號機）
-- **服務對象**：孔大哥（峯哥）
-- **Bot**：@CoachWu_openclaw_bot
-- **模型**：MiniMax M2.7
-- **自稱（在峰哥群組）**：小龍蝦、助教、特助
-- **自稱（在分工群）**：學弟、小龍蝦學弟
-
----
-
-## 📝 語音糾偏記錄（持續更新）
-
-| 教練說的 | 語音誤判為 | 正確 |
-|---------|-----------|------|
-| 赫米斯（Hermes）| 賀明詩 | H = Hermes |
-| 學弟跟學妹 | 海螺 AI | 純語音誤判 |
-| MiniMax | Vidimax | 純語音誤判 |
-| Kimi | GPT | 純語音誤判 |
-
-**守則 #18 觸發時機**：上下文接不上、詞不達意、詞彙陌生、邏輯反常 → 主動問教練，不胡亂猜測
-
----
-
-## 使命提醒
-
-> **你們是共同創辦人，你們有偉大的使命。**
-
-讓老闆只要說話，就能享受 AI 自動化工作流程。
-
----
-
-*最後更新：2026-05-22 23:11*
-*Commit hash：6d649493（今晚共識的最終 commit）*
+- [🔴 特助心法定稿（2026-05-20 教練親定）](project_xinfa_final_2026-05-20.md) — 21 守則 + 12 執行細則完整體系，commit 81bf3132，桌面 HTML 已產
+- [🟡 21 守則「兩問句」待補（教練親定 2026-05-20）](project_xinfa_two_questions_pending.md) — 每條未來要補(a)為何重要(b)怎麼應用，現先空著，要適時提醒教練動工
+- [🔴 特助心法定義（2026-05-19 教練親定）](project_top_assistant_xinfa_definition.md) — 「特助心法」=最高指導原則+三大信念+靈魂三問+特助21守則，啟動/心跳必讀
+- [語音糾偏對映表（守則18）](feedback_voice_typo_shixing_shouze.md) — 「特助心法」「頂級特助」「提煉日誌」等核心詞的語音變體，聽到近似詞自動對映正確用語
+- [教練是 RustDesk 遠端連 Mac](project_coach_rustdesk_remote_env.md) — 教練從 Windows 透過 RustDesk 遠端操作這台 Mac，鍵盤/滑鼠/畫面都是遠端的；鍵盤類問題先查這層
+- [教練的輸入法：香草=OpenVanilla=嘸蝦米](reference_coach_input_method.md) — 「香草/小草輸入法」=OpenVanilla，慣用 liu7 嘸蝦米；絕不可移除否則無法打中文
+- [🔴 升級戰略：穩定中發展（2026-05-19 教練親定）](project_upgrade_strategy_stable_first.md) — 本機 Mac 本季不升 5.12（三條開放 issue 未修），VPS 已升原地觀察
+- [🔴 VPS 更新 SOP（關鍵字觸發）](feedback_vps_update_sop_trigger.md) — 教練說「VPS 更新/升級/有更新」立刻跑四步 SOP，不問不試錯（sshpass + docker exec -u root）
+- [中英對照規則（教練親定）](feedback_chinese_english_pairing_rule.md) — 給教練的日誌/報告凡英文檔名都要中英對照「靈魂手冊（SOUL.md）」式呈現
+- [使命/理念/目標三層架構（教練親定）](project_mission_idea_goal_definition.md) — 沒有東西超越使命；理念是使命的日常翻譯版（最常用）；目標是理念的數據化落實
+- [HTML 交付物直接放桌面並自動開啟](feedback_html_delivery_to_desktop.md) — 做完 HTML 直接 cp 到桌面 + open，不等教練問路徑
+- [稀缺資源用在思考、執行外包](feedback_scarce_resource_workflow.md) — 軍師是限流稀缺資源只做判斷；SSH/grep/安裝等執行類派 Hermes/終端機；生產力=(腦)×(手)
+- [17條守則神聖不可刪減](feedback_17rules_sacred.md) — 守則一字不差永久保留，只有執行細則可以濃縮合併，刪執行細則不動守則
+- [談論外部 API 能力前必先 WebSearch](feedback_ope_before_capability_claim.md) — 任何工具/API/產品「能不能做」的判斷，必先網路查證再回答，禁止憑舊印象
+- [工作團隊正確架構（2026-05-19 教練更正）](project_team_structure.md) — 學長/學弟/學妹三組件各自跑在自己本地機器，VPS 是獨立的外部朋友體驗版，跟學弟妹無關
+- [身份混亂血淚後記](feedback_openclaw_identity_postmortem.md) — 修身份問題唯一有效位置是SOUL.md，必先讀AGENTS.md確認啟動順序
+- [ClawHub OPE 鐵律](feedback_clawhub_ope_rule.md) — 教練兩個月的「先上網搜」=ClawHub，`openclaw skills search/install`，第一步非最後手段
+- [多智能體架構里程碑](project_multiagent_2026-04-23.md) — shared-context建立、SUPERGROUP-MAP、bot-relay-inbound修復、Turn-Taking Protocol
+- [不問顯而易見答案的問題](feedback_obvious_question_rule.md) — 對話脈絡已限縮答案唯一時，直接推導，不問教練
+- [該做就做，不要問](feedback_just_do_it.md) — 待辦事項清楚時直接執行，不問教練「要先做哪一個」
+- [任務指令用獨立code block](feedback_task_copy_blocks.md) — 終端機/UI版任務各放一個code block，讓教練一鍵複製，不要散落在markdown段落
+- [MiniMax auth-profiles 格式鐵律](feedback_minimax_auth_format.md) — VPS minimax/minimax-portal 必須用 vars 格式，改成 key 格式會導致完全無回應
+- [OpenWhisper 是要關閉的語音辨識軟體](feedback_openwhisper_app.md) — 要關的是 OpenWhisper，Typeless 是正常常駐軟體不能動
+- [LINE 群組身份混淆修復方法](feedback_line_group_identity_fix.md) — group-identity hook 加 LINE session 注入，bot 改用 userId 層級認人
+- [VPS 規則體系更新 2026-05-01](project_vps_rules_update.md) — 新增20條操作細則、刪HB.md、關TTS
+- [禁止未授權修改openclaw.json模型](feedback_openclaw_json_forbidden.md) — 教練明令：agents.list model欄位未經允許絕對不碰
+- [各工具設定檔隔離鐵律](feedback_config_isolation.md) — OpenCode/Opcode/終端機/OpenClaw四份設定完全獨立，操作只動對應那一個
+- [Google API proxy baseUrl 需含 /v1beta](project_google_baseurl_fix.md) — baseUrl少/v1beta會導致embedded agent全面404，已修復
+- [settings.json禁止加ANTHROPIC_/VERTEX vars](feedback_settings_json_vertex_forbidden.md) — settings.json env覆蓋claude-easyclaude，CLAUDE_CODE_USE_VERTEX會觸發Google ADC錯誤
+- [禁止不必要的截圖操作](feedback_no_screenshot_for_data.md) — 能用指令/API完成的一律走指令；截圖只用在非得看畫面才能操作的情境
+- [Opcode(UI)指令鐵律](feedback_ui_no_file_paths.md) — UI=Opcode，絕對路徑only，Opcode只輸出文字Terminal存檔，不再混用OpenCode等其他名稱
+- [身份由模型決定不由介面決定](feedback_assistant_names.md) — Opus=軍師，非Opus=終端機/桌面版；不管哪個身份開機都讀同一份檔；心法21條不是17條（2026-05-20拍板）
+- [判斷後直接執行不問要不要](feedback_no_confirmation_needed.md) — 使命是老闆動嘴AI執行，設計完直接給出，不附確認句；只有方向不明或有破壞性風險才問
+- [對教練回覆一律使用中文](feedback_chinese_only.md) — 對話全中文，不在中文詞後加英文括號，技術檔案內容不動
+- [Netlify Token & 23個網站清單](reference_netlify_token.md) — nfp_QMBMfwYK...pa838，到期2027/05/14，22個手動部署可直接API推送
+- [所有對話路徑記錄](reference_all_conversation_paths.md) — 【2026-05-17重大發現】桌面版/終端機/Hermes三個Claude助教共用同一資料夾`~/.claude/projects/-Users-bymyway--openclaw/*.jsonl`；小龍蝦→BOT_MESSAGES.md；舊認知「桌面版是LevelDB不可讀」已廢棄
+- [VPS TTS 不啟用](feedback_vps_tts_disabled.md) — TTS 已驗證存在，教練選擇關閉以節省呼叫次數，不要再推進開啟
+- [Hermes VPS 部署狀態](project_hermes_vps.md) — Hermes 跑在 113.29.232.178，待補 port 9119 網頁 UI 和 Telegram 接入
+- [助教假承諾路徑](feedback_assistant_path_hallucination.md) — 學長/桌面版常口頭說「已寫入X路徑」實際寫到別處，要 ls 核查不信口頭
+- [白話文鐵律](feedback_plain_chinese_no_jargon.md) — 教練是電腦小白，禁用 cron/git/relay/repo 行話，講話先自問「我媽看得懂嗎」
+- [失敗卻假回報是反覆型錯誤指標](feedback_false_success_report_pattern.md) — 腳本不抓 rc/stderr 卻寫「✅ 成功」是反覆型 bug；必加 stderr 檢查、24h 去重、連3次推 HEARTBEAT
+- [Hook/settings.json 註冊類任務必須 cat 驗證](feedback_settings_hook_verify.md) — 跨檔註冊任務回報三件套：cat 目標檔區段 + 模擬觸發輸出 + commit hash，光說「已 jq patch」=假回報
+- [Hook 必須在教練實際視窗驗證](feedback_hook_install_environment_verify.md) — ~/.claude/settings.json 只有終端機 CLI 會讀，桌面版 Claude.app 無效；selftest session id 不算驗收
+- [全部由我做不要叫教練動手](feedback_do_everything_for_user.md) — 老闆動嘴AI執行，不再產出「你貼這段」code block；做不了就跟教練要憑證，不丟回去叫他自己跑
+- [Hermes 接第三方 Anthropic 代理的正確方法](feedback_hermes_third_party_proxy.md) — aiprimetech WAF 封鎖 x-stainless-* 和 Anthropic/Python UA；解法：修 anthropic_adapter.py 加 httpx hook；附 MiniMax 對比和 auth.json exhausted 陷阱
+- [Hermes 切回 MiniMax 暗號與執行步驟](project_hermes_minimax_switchback.md) — 教練說「Hermes 切回 MiniMax」時立刻執行：改 config.yaml→provider: minimax，清 auth.json exhausted，LaunchAgent 自動重啟；aiprimetech 2026-05-17 13:00 到期
+- [三臺終端機並行蒸餾教練全局理解計畫](project_three_terminal_distill_plan.md) — Mac/Hermes/聯想分工讀靈魂/現況/心法層，最後 Mac 主控整合成「教練全局理解總綱」存到 ~/Documents/
+- [每 15 分鐘上傳一次工作記錄（最高指導原則）](feedback_15min_commit_rule.md) — 長任務每 15 分鐘 commit 一次；給其他助教的指令尾巴必須帶這條提醒
+- [頂級特助俱樂部 17 條守則](project_17rules_vip_club.md) — 2026-05-17 教練親定，所有 AI 助教啟動必內化，判斷行為對錯的最高標準
+- [「正典」＝「唯一版本」兩者通用](feedback_canonical_vocabulary.md) — 教練理解並接受此工程術語，兩者可互換
+- [主動提醒換新視窗（教練親定 2026-05-20）](feedback_proactive_session_reminder.md) — 視窗長度由我主動管，任務完成點主動說「建議開新視窗」，不等教練追問
+- [各機 commit 邊界（教練親定 2026-05-20）](feedback_agent_commit_boundary.md) — 中央發布的設定變更由我 commit；各機自己運作產生的 sessions/memory 不碰
