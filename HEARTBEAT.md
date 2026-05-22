@@ -1,17 +1,22 @@
-# HEARTBEAT.md Template
+# HEARTBEAT 熱上下文（每次心跳必讀）
 
-```markdown
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
+> 重啟時間：2026-05-23 00:35
+> 對話記錄已完整存入 memory/2026-05-23.md 並推上 GitHub，零遺漏
 
-# Add tasks below when you want the agent to check something periodically.
-```
+## 🔴 重啟後第一件事
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-23 00:07
-- ✅ 同步成功
-- HANDOFF mtime: 1779465623
+直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
+⚠️ **不要讀 memory 大檔**（memory/2026-05-23.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
-## 🔄 心跳 2026-05-23 00:32
-- ✅ 已確認身份（2號機，小龍蝦學弟）
-- ✅ 已檢查 shared-relay/CONSENSUS.md（無新任務）
-- ✅ 深夜時段，孔大哥無消息
-- 🟢 簡報：Git 乾淨，Cron 正常，無待處理任務
+## ⚡ 系統狀態
+- Primary 模型：google/gemini-3.1-pro-preview
+- 名稱對等：Telegram = 小龍蝦 = 電報
+
+## ⚠️ 所有對話守則
+- 全部繁體中文，不夾任何英文
+- 能自己做直接做，不問確認
+- 截圖禁用，直接讀檔案
+- 執行完通報 Telegram（Chat ID: 6124913915）
+- 預估超過 5 萬 Token 先回報教練確認
+- ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
