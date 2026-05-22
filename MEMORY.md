@@ -1,5 +1,9 @@
 # Memory Index
 
+- [測試的釣餌不可順手修](feedback_dont_fix_test_bait.md) — 教練設查核測試時，凍結被測的落差/錯誤，只報告不修復，先問「這是要我修還是要 bot 自己查的考題」
+
+- [批評多機時序前先對照協議延遲](feedback_verify_protocol_before_critique.md) — 評斷小龍蝦「假回報/時間瑕疵」前，用 commit 時間戳對照「授權→執行」間隔與輪詢週期，別把協議設計內的正常延遲當 bug
+
 - [🔴 Telegram Mac 快取路徑鐵律（2026-05-20 血淚教訓）](reference_telegram_mac_cache.md) — 教練傳照片必去 `~/Library/Group Containers/6N38VWS5BX.ru.keepcoder.Telegram/.../postbox/media/`，禁止去 OpenClaw inbound 或 VPS 找
 
 - [🔴 特助心法定稿（2026-05-20 教練親定）](project_xinfa_final_2026-05-20.md) — 21 守則 + 12 執行細則完整體系，commit 81bf3132，桌面 HTML 已產
