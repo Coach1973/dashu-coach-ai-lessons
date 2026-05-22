@@ -38,9 +38,6 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 
 ## Memory
 
-<<<<<<< HEAD
-You wake up fresh each session. These files are your continuity:
-=======
 ### 🔴 自我對照機制（每次執行任務前）
 每次執行任務時，對照以下三份檔案自我檢視：
 
