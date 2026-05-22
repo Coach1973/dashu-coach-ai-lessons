@@ -25,6 +25,10 @@
 | 「海螺AI」 | 學弟跟學妹（發音完全無關，語音辨識錯誤）|
 | 「Vidimax」 | MiniMax |
 | 「GPT API Key」 | Kimi |
+| 「Cloud App」 | Claude App（Anthropic 桌面版，無 Cloud App 這個東西）|
+
+**語音糾錯原則（守則#18）：**
+聽到任何名稱，第一時間自動對照已知的正確名稱。不是翻譯，是糾偏。只要發音不像，就必須主動提出，不可以跟著錯的名字走。從頭到尾沒有 Cloud App，只有 Claude App。
 
 ---
 
