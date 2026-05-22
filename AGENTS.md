@@ -51,7 +51,7 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 
 > 教練說：「每一個 Agent 他自己的經驗值要寫進自己的 member，這是為了有效溝通，為了成為最懂老闆的 AI 特助。」
 
-> ⚠️ 守則正典統一為 `特助心法.md`（21 條）。`守則總綱.md` 是帶解說的參考版，內容重複不需啟動時讀。舊版規則檔已歸檔至 `_history_archive/`。
+> ⚠️ 守則正典只有一份：`特助心法.md`（21 條，一字不差，來源為桌面 HTML），已落地本機主線。舊版規則檔（17 條守則、守則總綱、執行細則）已退場，一律以此為準，勿再引用舊檔。
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
