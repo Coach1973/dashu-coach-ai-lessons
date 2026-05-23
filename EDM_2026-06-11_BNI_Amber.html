@@ -2,8 +2,8 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNI 企業第二曲線 - Amber 陳博士分享會</title>
+    <meta name="viewport" content="width=600">
+    <title>BNI 活動海報</title>
     <style>
         * {
             margin: 0;
@@ -11,240 +11,245 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            width: 600px;
+            font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+            background: #f0f0f0;
         }
-        .edm-container {
-            max-width: 600px;
-            width: 100%;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        .poster {
+            width: 600px;
+            background: linear-gradient(180deg, #1a237e 0%, #283593 30%, #3949ab 60%, #5c6bc0 100%);
             color: white;
-            padding: 40px 30px;
-            text-align: center;
+            padding: 0;
             position: relative;
+            overflow: hidden;
         }
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 20px solid #2a5298;
+        /* 頂部裝飾 */
+        .top-bar {
+            background: #ff6f00;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+        /* BNI Logo區 */
+        .bni-header {
+            text-align: center;
+            padding: 20px 0 10px;
         }
         .bni-logo {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .bni-sub {
             font-size: 14px;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
+            letter-spacing: 6px;
+            margin-top: 5px;
             opacity: 0.9;
         }
+        /* 主標題區 */
+        .main-title-area {
+            text-align: center;
+            padding: 30px 40px;
+            background: rgba(255,255,255,0.1);
+            margin: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
         .main-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 900;
             line-height: 1.3;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
         }
-        .subtitle {
-            font-size: 18px;
+        .sub-title {
+            font-size: 20px;
+            font-weight: 500;
             opacity: 0.95;
-            font-weight: 300;
+            line-height: 1.5;
         }
-        .content {
-            padding: 40px 30px;
-        }
-        .speaker-section {
+        /* 講者區 */
+        .speaker-area {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f8f9fa;
+            padding: 25px 40px;
+            margin: 0 20px;
+            background: rgba(255,255,255,0.15);
             border-radius: 15px;
-            border-left: 5px solid #667eea;
+            border-left: 6px solid #ff6f00;
         }
         .speaker-avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff6f00 0%, #ff8f00 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            margin-right: 20px;
+            font-size: 40px;
+            font-weight: 900;
+            margin-right: 25px;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .speaker-info h3 {
-            color: #1e3c72;
-            font-size: 20px;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .speaker-info .title {
+            font-size: 18px;
+            opacity: 0.9;
             margin-bottom: 5px;
         }
-        .speaker-info p {
-            color: #666;
+        .speaker-info .detail {
             font-size: 14px;
+            opacity: 0.8;
             line-height: 1.6;
         }
-        .info-grid {
+        /* 資訊區 */
+        .info-area {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin: 20px;
         }
-        .info-item {
-            background: #f8f9fa;
+        .info-box {
+            background: rgba(255,255,255,0.15);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .info-icon {
-            font-size: 30px;
+            font-size: 32px;
             margin-bottom: 10px;
         }
         .info-label {
-            font-size: 12px;
-            color: #999;
+            font-size: 13px;
+            opacity: 0.8;
             margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         .info-value {
-            font-size: 16px;
-            color: #333;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 700;
         }
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .info-value.small {
+            font-size: 16px;
+        }
+        /* 價值主張 */
+        .value-area {
+            margin: 20px;
             padding: 25px;
+            background: linear-gradient(135deg, #ff6f00 0%, #ff8f00 100%);
             border-radius: 15px;
-            margin-bottom: 30px;
             text-align: center;
         }
-        .highlight-box h3 {
-            font-size: 18px;
+        .value-area h3 {
+            font-size: 22px;
             margin-bottom: 10px;
+            font-weight: 700;
         }
-        .highlight-box p {
-            font-size: 14px;
-            opacity: 0.9;
-            line-height: 1.6;
+        .value-area p {
+            font-size: 15px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        /* 報名按鈕 */
+        .cta-area {
+            text-align: center;
+            padding: 25px 20px 30px;
         }
         .cta-button {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: inline-block;
+            padding: 18px 60px;
+            background: #ff6f00;
             color: white;
-            text-align: center;
             text-decoration: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            box-shadow: 0 6px 20px rgba(255,111,0,0.5);
         }
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        .cta-note {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.8;
         }
+        /* 底部 */
         .footer {
             text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #999;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
             font-size: 12px;
-        }
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        @media (max-width: 480px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            .main-title {
-                font-size: 24px;
-            }
-            .speaker-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .speaker-avatar {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
-    <div class="edm-container">
-        <div class="header">
-            <div class="bni-logo">BNI TAIWAN</div>
-            <h1 class="main-title">用BNI找出企業<br>第二曲線</h1>
-            <p class="subtitle">定位翻轉及生態圈建置成果分享</p>
+    <div class="poster">
+        <div class="top-bar">BNI TAIWAN · 大台南南區</div>
+        
+        <div class="bni-header">
+            <div class="bni-logo">BNI</div>
+            <div class="bni-sub">商務引薦 · 共創雙贏</div>
         </div>
         
-        <div class="content">
-            <div class="speaker-section">
-                <div class="speaker-avatar">A</div>
-                <div class="speaker-info">
-                    <h3>Amber 陳博士</h3>
-                    <p>新竹B區執董<br>生醫產業專家｜助理教授<br>25項專利｜30+獎項</p>
-                </div>
+        <div class="main-title-area">
+            <div class="main-title">用BNI找出<br>企業第二曲線</div>
+            <div class="sub-title">定位翻轉及生態圈建置成果分享</div>
+        </div>
+        
+        <div class="speaker-area">
+            <div class="speaker-avatar">A</div>
+            <div class="speaker-info">
+                <h3>Amber 陳博士</h3>
+                <div class="title">新竹B區執行董事</div>
+                <div class="detail">生醫產業專家 · 助理教授<br>25項專利 · 30+獎項</div>
             </div>
-            
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon">📅</div>
-                    <div class="info-label">日期</div>
-                    <div class="info-value">6月11日（四）</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">🕒</div>
-                    <div class="info-label">時間</div>
-                    <div class="info-value">14:00-17:00</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <div class="info-label">地點</div>
-                    <div class="info-value">三道門文創旅店</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">🎯</div>
-                    <div class="info-label">地址</div>
-                    <div class="info-value">中西區成功路77號</div>
-                </div>
+        </div>
+        
+        <div class="info-area">
+            <div class="info-box">
+                <div class="info-icon">📅</div>
+                <div class="info-label">日期</div>
+                <div class="info-value">6月11日（四）</div>
             </div>
-            
-            <div class="highlight-box">
-                <h3>🚀 你將學到什麼？</h3>
-                <p>如何透過BNI商務引薦網絡，為企業找到第二成長曲線。從定位翻轉到生態圈建置的實戰成果分享，幫助你的企業突破瓶頸、開創新局。</p>
+            <div class="info-box">
+                <div class="info-icon">🕐</div>
+                <div class="info-label">時間</div>
+                <div class="info-value">14:00-17:00</div>
             </div>
-            
-            <a href="#" class="cta-button">立即報名參加</a>
-            
-            <div style="text-align: center; color: #666; font-size: 14px; line-height: 1.8;">
-                <p>名額有限，請盡早報名</p>
-                <p>如有疑問請聯繫您的分會執行董事</p>
+            <div class="info-box">
+                <div class="info-icon">📍</div>
+                <div class="info-label">地點</div>
+                <div class="info-value small">三道門文創旅店</div>
             </div>
+            <div class="info-box">
+                <div class="info-icon">🗺️</div>
+                <div class="info-label">地址</div>
+                <div class="info-value small">中西區成功路77號</div>
+            </div>
+        </div>
+        
+        <div class="value-area">
+            <h3>🚀 你將學到什麼？</h3>
+            <p>如何透過BNI商務引薦網絡，為企業找到第二成長曲線<br>從定位翻轉到生態圈建置的實戰成果分享<br>幫助你的企業突破瓶頸、開創新局</p>
+        </div>
+        
+        <div class="cta-area">
+            <a href="#" class="cta-button">立即報名</a>
+            <div class="cta-note">名額有限，請盡早報名 · 本活動由 BNI Amber 新竹B區 主辦</div>
         </div>
         
         <div class="footer">
-            <p>BNI 大臺南南區｜讓老闆只要說話，就能享受 AI 自動化工作流程</p>
-            <p style="margin-top: 10px;">本活動由 BNI Amber 新竹B區 主辦</p>
+            BNI 大台南南區 · 讓老闆只要說話，就能享受 AI 自動化工作流程
         </div>
     </div>
 </body>
