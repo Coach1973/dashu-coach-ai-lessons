@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('/Users/bymyway/.openclaw/node_modules/puppeteer');
 
 (async () => {
   const browser = await puppeteer.launch({
