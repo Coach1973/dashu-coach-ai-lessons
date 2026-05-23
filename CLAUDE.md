@@ -25,7 +25,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-23 12:23:37**
+> **最後同步：2026-05-23 12:25:53**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -104,9 +104,9 @@ M state/session_counter.json         ← 對話輪數計數器
 |------|------|
 | 🔴 高 | commit 三個已修改但未提交的檔案（.memsearch、HEARTBEAT、session_counter） |
 | 🔴 高 | 寫本場 SESSION 記錄檔（claude-sessions/SESSION_2026-05-23_*.md） |
-| 🟡 中 | 路徑大全.md 加上特助心法.md 的項目（目前沒列在「Workspace重要檔案」表格）|
-| 🟡 中 | 修 CLAUDE.md 中 `執行細則.md` 的殭屍引用（那個檔已不存在，啟動時讀它會失敗） |
-| 🟡 中 | 將 memory/feedback_archive_not_delete.md 加進 MEMORY.md 索引並 commit |
+| ✅ 已完成 | 路徑大全.md 加上特助心法.md 正典條目 |
+| ✅ 已完成 | 修 CLAUDE.md 中 `執行細則.md` 的殭屍引用（已移除，改為兩份正典） |
+| ✅ 已完成 | feedback_archive_not_delete.md 已加進 MEMORY.md 索引 |
 | 🟠 低 | 追查 HEARTBEAT.md 學弟資料為何出現在學長 workspace（同步邊界漏洞） |
 | 🟠 低 | 確認學弟/學妹各自 .git remote 不指向學長的 GitHub repo |
 
