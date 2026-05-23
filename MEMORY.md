@@ -62,3 +62,5 @@
 - [「正典」＝「唯一版本」兩者通用](feedback_canonical_vocabulary.md) — 教練理解並接受此工程術語，兩者可互換
 - [主動提醒換新視窗（教練親定 2026-05-20）](feedback_proactive_session_reminder.md) — 視窗長度由我主動管，任務完成點主動說「建議開新視窗」，不等教練追問
 - [各機 commit 邊界（教練親定 2026-05-20）](feedback_agent_commit_boundary.md) — 中央發布的設定變更由我 commit；各機自己運作產生的 sessions/memory 不碰
+
+- [海餅乾俱樂部正典（2007年創辦，一字不差）](海餅乾俱樂部_正典.md) — 團隊使命、三大信念、十大行為守則，來源 shared-relay/bot_chat_2026-02-25_result.json
