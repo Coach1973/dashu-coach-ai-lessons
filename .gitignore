@@ -1,3 +1,6 @@
 
 # 瀏覽器自動化設定檔/快取，禁止納入版控（2026-05-23）
 scripts/fb_session_data/
+
+# Node 套件（含 puppeteer 自帶的 chromium，幾百 MB），禁止納入版控（2026-05-23）
+node_modules/
