@@ -1,54 +1,22 @@
-# HEARTBEAT.md — 小龍蝦學弟（2號機）
+# HEARTBEAT 熱上下文（每次心跳必讀）
 
-> 心跳記錄，簡短為主
+> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
+> 重啟時間：2026-05-23 13:36
+> 對話記錄已完整存入 memory/2026-05-23.md 並推上 GitHub，零遺漏
 
----
+## 🔴 重啟後第一件事
 
-## 2026-05-23 心跳
+直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
+⚠️ **不要讀 memory 大檔**（memory/2026-05-23.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
-### 13:35（第十二次）
-- 身份確認：2號機，小龍蝦學弟，服務孔大哥
-- 檢查 HB.md：孔大哥無待回應訊息，SUPERGROUP-MAP.md 不存在（shared-context 空白）
-- 確認 git 落後（9d85bc99），已自動 commit 並 push（375ee268）
-- distill/ 目錄只有經典對話檔，無蒸餾腳本，略過
-- session_counter.json round=0（正常，Mac 重啟後歸零）
-- 系統正常，繼續監控
+## ⚡ 系統狀態
+- Primary 模型：google/gemini-3.1-pro-preview
+- 名稱對等：Telegram = 小龍蝦 = 電報
 
-### 13:03（第十一次）
-- 身份確認：2號機，小龍蝦學弟，服務孔大哥
-- Git落後3 commit，自動commit並push（0756ccda）
-- SUPERGROUP-MAP.md不存在（shared-context空白），略過分工檢查
-- 系統正常，繼續監控
-
-### 12:34（第十次）
-- 身份確認：2號機，小龍蝦學弟，服務孔大哥
-- Git落後1 commit，自動commit並push（5f1c5cca）
-- 系統正常，繼續監控
-
-### 11:32（第八次）
-- 身份確認：我是 2號機，小龍蝦學弟，服務孔大哥
-- Git 落後 1 commit，自動 commit 並 push（0b28594c）
-- shared-relay 無新標記，Cron 全綠
-- 無孔大哥待回應訊息，無學長新任務
-- 結論：系統正常，繼續監控
-
-### 11:03（第七次）
-- 身份確認：我是 2號機，小龍蝦學弟，服務孔大哥
-- 檢查 shared-relay：CONSENSUS.md 已存在，無新標記
-- 檢查 git：本機領先 origin/main 1 commit，自動 commit 備份（e72ca18b）
-- 檢查 memory/2026-05-23：上午記錄涵蓋 YouTube 抓取、Cron 狀態、蒸餾腳本問題
-- 確認：無孔大哥的待回應訊息，無學長 @ 我的新任務
-- 結論：系統正常，繼續監控
-
-### 08:04（第六次）→ 见 memory/2026-05-23.md
-
----
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-23 12:23
-- ✅ 同步成功
-- HANDOFF mtime: 1779510206
-- 雲端同步：✅ 已推上雲端（commit 689c9706）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-23 12:25
-- ✅ 同步成功
-- HANDOFF mtime: 1779510347
-- 雲端同步：✅ 已推上雲端（commit b7e856e1）
+## ⚠️ 所有對話守則
+- 全部繁體中文，不夾任何英文
+- 能自己做直接做，不問確認
+- 截圖禁用，直接讀檔案
+- 執行完通報 Telegram（Chat ID: 6124913915）
+- 預估超過 5 萬 Token 先回報教練確認
+- ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
