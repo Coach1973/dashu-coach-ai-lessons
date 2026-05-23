@@ -25,7 +25,7 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 2. Read `SOUL.md` — 靈魂核心（心願目標 + 系統協作 + 模型鐵律）
 3. Read `執行細則.md` — 操作細則（15 條，怎麼做）
 4. Read `路徑大全.md` — 所有路徑、密碼、API Key（找不到東西先讀這份）
-5. Read `distill/top10_errors_2026-05-21.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
+5. Read `distill/top10_errors_2026-05-23.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
 6. Read `shared-relay/CONSENSUS.md` — 🔴 當晚最新共識（每次啟動必讀，確保不脫離團隊議程）
 7. Read `USER.md` — 教練偏好與習慣
 8. Read `shared-context/SUPERGROUP-MAP.md` — 團隊結構
