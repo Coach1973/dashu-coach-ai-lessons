@@ -21,25 +21,9 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
-## 學長心跳 — 2026-05-25 03:32
+## 學長心跳 — 2026-05-25 05:03
 - Cron：14項全部正常 ✅
-- Git：auto-backup OK（025828b1）
-- Relay：03:33 relay poll OK
-- shared-relay/：CONSENSUS.md 已讀，無新任務
-- shared-context/：無 SUPERGROUP-MAP.md（僅有 commit_notify.log）
-- ✅ cron:768246fb 已修復（03:39）
-  - 問題：consecutiveErrors=2，狀態 error
-  - 原因：編輯 HEARTBEAT.md 時文字不匹配
-  - 修復：手動重置 jobs.json 狀態欄位
-  - 結果：狀態恢復為 ok
-- 系統健康，無需緊急介入
-
-## 學長 relay poll
-### 2026-05-25 05:03 - relay poll OK
-
-## 健康檢查 — 2026-05-25 05:00
-- Cron：14項全部正常 ✅
-- Git：auto-backup + push OK（799d7bd4）
-- 背景工作：無待推進項目
-- ✅ 無異常，靜默處理
-
+- Git：auto-backup OK（a36fc361）
+- shared-relay/：無新任務
+- shared-context/：commit_notify.log 已讀（最新 a36fc361）
+- ✅ 系統健康，無需緊急介入
