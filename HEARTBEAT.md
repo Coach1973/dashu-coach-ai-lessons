@@ -237,8 +237,16 @@
 - Git：已自動 commit+push（4個檔案）commit:1f0499ae
 - 備註：系統正常，無緊急事項
 
+### 2026-05-25 01:32
+- 身份：學長（1號機），服務大樹教練
+- HB任務：目標心跳驅動（cron:768246fb），系統例行檢查
+- Cron：14項全部正常
+- Git：已自動 commit+push（4個檔案）commit:19b8f227
+- 異常：relay_poll.py 腳本不存在（持續錯誤），sync_handoff.sh 正常
+- 備註：系統正常，relay_poll.py 缺失已知問題，記錄待處理
+
 ### 19:33
 
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 01:33 - relay poll OK
+### 2026-05-25 2026-05-25 02:04 - relay poll OK
 
