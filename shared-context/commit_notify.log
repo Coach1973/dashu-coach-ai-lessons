@@ -58,3 +58,7 @@
 [2026-05-25 02:38] [CoachWU] 53eaea73: [auto] 02:38 對話記錄更新（6 條）
 [2026-05-25 02:52] [CoachWU] 2bfb21bd: feat: Top10→Top20錯誤場景重構（2026-05-25）
 [2026-05-25 02:58] [CoachWU] c3fa8b2b: feat: 新增教官對話掃描腳本（scan_coach_history.js）      + Top20錯誤場景重構完成
+[2026-05-25 03:03] [CoachWU] 92813179: auto-backup 2026-05-25 03:00
+[2026-05-25 03:20] [CoachWU] f27b5b8d: feat: distill增量蒸餾cron上線 + relay_poll wrapper修補路徑
+[2026-05-25 03:24] [CoachWU] 74a78981: update: 接力棒標記完成事項（distill cron已上線、學弟妹已通知、top10_errors無簡體）
+[2026-05-25 03:25] [CoachWU] 0f9d715d: auto: 接力棒鏡像同步 2026-05-25 03:25
