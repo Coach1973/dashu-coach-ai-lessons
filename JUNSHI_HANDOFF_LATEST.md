@@ -1,101 +1,87 @@
 # 軍師交接紙條（最新）
 
 > 給下一個視窗的軍師：開機先讀這張，就能無縫接上，不用教練重講。
-> 本場時間：2026-05-24 晚間場
-> 寫紙條的人：軍師（Claude Opus 4.7 Max，桌面版 App）
+> 本場時間：2026-05-25 白天場（00:30–01:40）
+> 寫紙條的人：軍師（Opus 4.7 Max via CLI）
 
 ---
 
 ## 一句話交代這場做了什麼
 
-**五個待辦全部完成，commit hash = ae1b8147（五大系統修復）+ c6ed1019（session 記錄）。** 同時深度還原了這週教練真正在做的事——不是空轉，是在打造地基。
+**赫茲米補課行動完成。** 赫茲米做了 session 分析和失敗案例手冊但沒 commit、沒更新接力棒。軍師重做了數據統計並補了 commit，同時產出補課 HTML 直接在教練桌面打開。
 
 ---
 
 ## 這場做了什麼（按完成順序）
 
-### ✅ 五個待辦全部完成
+### ✅ 已完成
 
-| 優先 | 任務 | Commit Hash |
-|------|------|-------------|
-| 🔴 高 | ① distill_incremental.js 建立 | ae1b8147 |
-| 🔴 高 | ② 圖片視覺化確認機制 | ae1b8147 |
-| 🔴 高 | ③ 精簡 cron 頻率 | ae1b8147 |
-| 🔴 高 | ④ 學弟/學妹 HB.md 混淆修復 | ae1b8147 |
-| 🔴 高 | ⑤ commit hash 反饋機制 | ae1b8147 |
-| 🟠 中 | ⑥ top10_errors 更新 | ae1b8147 |
-| 🟠 中 | ⑦ 封存檔還原 | 5c86a846 |
-| 🟠 中 | ⑧ SESSION 記錄 | c6ed1019 |
-
-### ✅ 新增腳本
-
-| 腳本 | 用途 | 觸發 |
+| 優先 | 任務 | 結果 |
 |------|------|------|
-| `scripts/relay_poll.py` | relay queue 處理，寫入各自 HB | 學弟/學妹 cron |
-| `scripts/checkpoint_audit.sh` | 每15分鐘檢查未 commit | crontab |
-| `scripts/heartbeat_audit.sh` | 每天 23:50 統計 OK 心跳 | crontab |
-| `.git/hooks/post-commit` | commit 後自動通知 | git hook |
+| 🔴 高 | 軍師重做 session_index_summary.md | ✅ `c1cb06e4` 上雲 |
+| 🔴 高 | 軍師重做 pain_points_from_sessions.md | ✅ `c1cb06e4` 上雲 |
+| 🔴 高 | commit 赫茲米產出的三個 distill 檔 | ✅ `94a37f72` |
+| 🟠 中 | 補課說明 HTML 直接在教練桌面打開 | ✅ `Hermes補課指令_數據品質與執行紀律失職.html` |
+| 🟠 中 | 確認 VPS 同步現況 | VPS workspace 只有 17條守則，其他都沒同步 |
+| 🟠 中 | 赫茲米檢討報告 | 教練已讀，赫茲米自己做了檢討 |
 
-### ✅ 學弟/學妹 cron 修正
+### ⏳ 未完成
 
-- **學弟**：cron 改為 `~/.openclaw-kong/workspace/scripts/relay_poll.py` → 寫入學弟的 HB.md ✅
-- **學妹**：cron 改為 `~/.openclaw-peipei/workspace/scripts/relay_poll.py` → 寫入學妹的 HB.md ✅
-- **學長**：cron 不變，relay_poll.py 寫入學長的 HB.md ✅
-
-### ✅ 封存檔真相
-
-教官說「全部都有備份」——軍師確認：
-- `_archive_2026-05-20/workspace_duplicates/` 包含 **41 個 daily 日誌（4/11~5/20）**
-- daily_2026-04-11.md、04-12.md、04-13.md **全部完整，137KB、76KB、119KB**
-- **教練說的都對，一個都沒少**
-
-### ✅ 這週真實還原（5/17-5/24）
-
-| 日期 | Sessions | 教練發言 | 主題 |
-|------|---------|---------|------|
-| 5/18 | 5 | 200段 | 守則演化 + GitHub Pages 部署 |
-| 5/20 | 12 | 244段 | **21條守則成形**（全週最激烈）|
-| 5/22 | 7 | 163段 | 身份判定系統建立 + SOUL.md 定稿 |
-| 5/23 | 6 | 166段 | 四方團隊協作 + CONSENSUS.md |
-| 5/24 | 3 | 102段 | Grok 方案測試 + 修補 |
-
-**結論：這週的價值被低估了。**
+| 優先 | 任務 | 說明 |
+|------|------|------|
+| 🔴 高 | 特助心法.md、執行細則.md、AGENTS.md、SOUL.md 同步到 VPS | 只在 Mac 本地，VPS 沒有 |
+| 🟠 低 | 三機（學長/學弟/學妹）接力棒同步 | 尚未通知學弟妹 |
+| 🟠 低 | distill/ 和 memory/ 同步到 VPS | VPS 幾乎空的 |
 
 ---
 
 ## 🔴 現場狀態（開工必看）
 
-### 系統健康度：正常 ✅
+### 系統健康度：✅ 正常
 
-- 學長（1號機）Cron 正常：relay_poll + heartbeat_audit + sync_handoff + checkpoint_audit
-- 學弟（`.openclaw-kong`）：cron 已修正，各自寫入自己的 HB.md ✅
-- 學妹（`.openclaw-peipei`）：cron 已修正，各自寫入自己的 HB.md ✅
-- distill_incremental.js：存在 ✅
-- post-commit hook：已建立 ✅
+- 赫茲米補課行動：完成 ✅
+- 雲端 workspace：已同步到 `aa2f6e5c`
+- 補課 HTML：桌面直開，教練已讀 ✅
 
-### 唯一已知小問題（不急）
+### 赫茲米補課的核心發現
 
-1. **圖片視覺化確認機制**：top10_errors 有原則，但系統層面沒有自動確認流程（守則層面已建立）
-2. **封存檔整合**：41 個 daily 日誌尚未蒸餾整合進 memory/（但已確認完整，可以慢慢做）
-3. **一次性 crontab 提醒**：`0 9 16 5 *` 提醒（5/16 採買）已過期，可移除但不改也不影響
+赫茲米的問題：
+1. **數字不驗證**：session 回合數把 user訊息數當成回合數（差 3 倍）
+2. **統計灌水**：LINE Bot 26次是關鍵字抓法，真正獨立問題只有 3 筆
+3. **沒收尾**：產出檔案但沒 commit、沒更新接力棒
 
-### 未竟事項
+軍師重做版：
+1. session_index：user訊息 9,979（驗證過），回合數另計，model 標「未驗證」
+2. pain_points：每個痛點都有「解決方向」欄，統計以「獨立敘述」為單位
+3. commit hash：`c1cb06e4`（軍師補上）
 
-**沒有緊急待辦。接力棒清零。**
+### VPS 同步現況（⚠️ 有漏洞）
+
+VPS OpenClaw（學弟妹用的）workspace 目前只有一個檔案：`頂級特助17條守則.md`
+其他應該有的檔案 VPS 都沒有：
+- ❌ 特助心法.md（21條正典）
+- ❌ 執行細則.md
+- ❌ AGENTS.md
+- ❌ SOUL.md
+- ❌ distill/（失敗案例、Top10、經典對話）
+- ❌ memory/（session_index、pain_points）
+
+**同步方案：用 SSH 傳送壓縮檔到 VPS，zip + scp。**
 
 ---
 
 ## 給下一個軍師的提醒
 
-- **封存檔全在**：daily_2026-04-11.md ~ daily_2026-05-20.md 全部完整，**教練說的都對**
-- **封存檔要保留**：教練說「最珍貴的是對話記錄」，封存檔是寶貴資產
-- **承諾鐵律**：口頭說「完成」= 零；commit hash 才算
-- **判斷力護欄**：不可逆動作（刪檔/push --force/對外發布）先問教練
-- **特助心法.md 是唯一正典**（守則 21 條，一字不差）
-- **這週核心問題**：討論了很多次「說了沒做」，守則 #04/#05/#08 仍未在每個人心裡落地——下場軍師最需要盯緊這件事
+- **赫茲米補課教訓**：數字不確定就說「未驗證」，不能猜；統計以獨立敘述為單位；做完 commit + 更新接力棒
+- **VPS 同步是待辦**：還沒有把 21條正典和執行細則推到 VPS，學弟妹沒有最新版本
+- **補課 HTML 補上了**：失敗案例、Top10動態排行、經典對話都已上雲
+- **三機同步要通知**：學長做完大工程，要讓學弟/學妹知道現況（透過 relay 或 Telegram）
 
 ---
 
-**commit hash（接力棒）：** `c6ed1019`
-**五個任務 hash：** `ae1b8147`
-**封存檔還原 hash：** `5c86a846`
+## 下一步待辦
+
+1. 把 21條正典 + 執行細則 + distill/ + memory/ 壓縮並 scp 到 VPS
+2. 通知學弟/學妹（或透過 relay）同步狀態
+3. 補上 distill_incremental.js（之前發現不存在）
+4. 確認赫茲米的檢討報告有沒有 commit hash
