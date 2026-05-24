@@ -54,3 +54,7 @@
 [2026-05-25 02:30] [CoachWU] fadc20fa: auto: 接力棒鏡像同步 2026-05-25 02:30
 [2026-05-25 02:34] [CoachWU] 408cf420: auto-backup 2026-05-25 02:30
 [2026-05-25 02:35] [CoachWU] 2a7b98cc: auto: 接力棒鏡像同步 2026-05-25 02:35
+[2026-05-25 02:36] [CoachWU] 9f44f7b6: auto-backup 2026-05-25 02:36
+[2026-05-25 02:38] [CoachWU] 53eaea73: [auto] 02:38 對話記錄更新（6 條）
+[2026-05-25 02:52] [CoachWU] 2bfb21bd: feat: Top10→Top20錯誤場景重構（2026-05-25）
+[2026-05-25 02:58] [CoachWU] c3fa8b2b: feat: 新增教官對話掃描腳本（scan_coach_history.js）      + Top20錯誤場景重構完成
