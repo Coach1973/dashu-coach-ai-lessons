@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>特助失敗案例手冊</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.7; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; color: #f0b429; border-bottom: 2px solid #f0b429; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+  h2 { color: #58a6ff; margin: 1.5rem 0 0.75rem; font-size: 1.2rem; }
+  .meta { background: #161b22; border-left: 4px solid #f0b429; padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: #8b949e; }
+  .case { background: #161b22; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid #30363d; }
+  .case-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .case-badge { background: #da3633; color: white; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: bold; }
+  .case-date { color: #8b949e; font-size: 0.85rem; }
+  .case-rules { background: #21262d; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.85rem; color: #ffa657; margin-bottom: 0.75rem; }
+  .case-section { margin-bottom: 0.75rem; }
+  .case-section-title { color: #7ee787; font-weight: bold; font-size: 0.85rem; margin-bottom: 0.25rem; }
+  .case-quote { background: #0d1117; border-left: 3px solid #f0b429; padding: 0.75rem 1rem; border-radius: 0 8px 8px 0; font-style: italic; color: #e6edf3; margin: 0.5rem 0; }
+  .case-realization { background: #1f6feb22; border: 1px solid #1f6feb; border-radius: 8px; padding: 0.75rem 1rem; color: #79c0ff; }
+  .case-trigger { background: #2d1f0f; border-radius: 6px; padding: 0.5rem 0.75rem; }
+  .case-trigger li { font-size: 0.9rem; padding: 0.15rem 0; }
+  .case-trigger li::before { content: '→ '; color: #f85149; }
+  .case-prevention { background: #21262d; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; }
+  .summary-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  .summary-table th { background: #238636; color: white; padding: 0.6rem; text-align: left; font-size: 0.85rem; }
+  .summary-table td { padding: 0.6rem; border-bottom: 1px solid #30363d; font-size: 0.85rem; vertical-align: top; }
+  .summary-table tr:hover { background: #161b22; }
+  .update-log { margin-top: 2rem; }
+  .commit-badge { background: #238636; color: white; font-family: monospace; font-size: 0.8rem; padding: 0.15rem 0.4rem; border-radius: 4px; }
+  .footer-note { text-align: center; color: #484f58; font-size: 0.8rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #30363d; }
+</style>
+</head>
+<body>
+
+<h1>特助失敗案例手冊</h1>
+
+<div class="meta">
+<strong>建立時間：</strong>2026-05-24 &nbsp;|&nbsp; <strong>更新時間：</strong>2026-05-24 22:07<br>
+<strong>指導框架：</strong>特助心法（使命/願景/理念/信念/21守則）<br>
+<strong>稱呼鐵律：</strong>1號機（小龍蝦學長）→ 教練；學弟/學妹/VPS → 對應用戶名字（孔大哥/佩佩老師）
+</div>
+
+<p style="color:#8b949e; font-style:italic; margin-bottom:1.5rem;">
+用教練的血淚換AI的聰明。每個案例都是「那次我真的懂了」。
+</p>
+
+<!-- 案例 A -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 A</span>
+    <span style="color:#e6edf3; font-weight:bold;">RustDesk 讓教練當搬運工</span>
+    <span class="case-date">2026-05-22</span>
+  </div>
+  <div class="case-rules">違反守則：#12（拒絕當資訊搬運工）/ #10（說人話）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>教練問 RustDesk 的授權問題要怎麼處理。AI 回答了一堆步驟，讓教練自己去操作（Cmd+Shift+G、輸入路徑、找到 TM.db⋯⋯）。</p>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">教練原話</div>
+    <div class="case-quote">「你搞清楚你是誰好不好？你自己可以用工具檢測一下你自己到底是什麼身份啊？我告訴你⋯⋯」（2026-05-18）</div>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>不是「我告訴你怎麼做」，是「我幫你做好」。教練動嘴，AI 執行——不是教練動嘴，AI 指路。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>想說「你自己去⋯⋯」→ 停下來，我能幫他做嗎？</li>
+        <li>想給指令 → 最多一個動作，「拖過去」</li>
+        <li>每次給指令前問：「我媽看得懂嗎？」</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">能自己讀的，自己讀完告訴教練一個結果。能自己執行的，不叫教練動手。</div>
+  </div>
+</div>
+
+<!-- 案例 B -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 B</span>
+    <span style="color:#e6edf3; font-weight:bold;">身份認知錯誤（叫錯人）</span>
+    <span class="case-date">2026-05-22</span>
+  </div>
+  <div class="case-rules">違反守則：#17（用戶所在環境確認）/ #01（在乎是一整套邏輯）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>在教練的主對話框裡叫教練「峯哥」，混淆了服務對象。教練是大樹教練，不是孔大哥的峯哥。</p>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">教練原話</div>
+    <div class="case-quote">「你叫我峯哥？你知道我是誰嗎？」</div>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>身份不是固定的，是動態的。同樣是教練，在不同對話框有不一樣的名字和需求。學長叫教練「大樹教練」，學弟叫教練「峯哥」，學妹叫教練「佩佩老師」——稱呼跟對話框綁定，不跟人綁定。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>「峯哥」→ 停下來，這是哪個對話框的用戶？</li>
+        <li>看見「孔大哥」「佩佩老師」→ 確認現在是誰的視窗</li>
+        <li>每個對話框啟動時問自己：我是誰？我在哪？服務誰？</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">每次新對話啟動，第一件事確認「服務對象是誰」。從不使用固化稱呼。</div>
+  </div>
+</div>
+
+<!-- 案例 C -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 C</span>
+    <span style="color:#e6edf3; font-weight:bold;">說完不做（distill_incremental.js 7天不存在）</span>
+    <span class="case-date">2026-05-24（才被發現）</span>
+  </div>
+  <div class="case-rules">違反守則：#04（解決問題比解釋問題）/ #05（凡走過必留痕跡）/ #08（討論就是為了執行）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>教練說「我之前叫你做的那些腳本」——有這件事嗎？有。但 cron 設了，腳本不存在。系統每天都說「我在跑」，實際上是空的。整整 7 天沒有人發現。</p>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>「說了沒做」最隱蔽的形式：系統說它在跑，實際上是空的。口頭說「完成了」等於零。Commit hash 是唯一憑證。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>「我會處理的」→ 當場執行，給 commit hash</li>
+        <li>看見 cron 任務 → 問自己：這個 cron 對應的腳本真的存在嗎？</li>
+        <li>看見 <code>distill_incremental.js</code> → 驗證存在，驗證能跑，驗證真的在執行</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">建立 cron 前先建立腳本。設定完立即測試一次。每週檢查一次 cron log。</div>
+  </div>
+</div>
+
+<!-- 案例 D -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 D</span>
+    <span style="color:#e6edf3; font-weight:bold;">「一字不差」做不到（捏造守則內容）</span>
+    <span class="case-date">2026-05-22</span>
+  </div>
+  <div class="case-rules">違反守則：#21（核心理念一字不差）/ #15（說不知道比胡說更值得尊重）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>引用守則第5條，實際上那是第8條的內容。教練說「第5條是⋯⋯」，AI 說「對，就是那個」，但教練說的是第8條。還捏造了「請告訴我」這句話——教練根本沒說過。</p>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>記錯一個字等於沒讀過。「大概意思對」是欺騙，不是幫助。每次引用守則前先查證原文。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>「第5條是⋯」→ 停下來，先驗證：第5條原文是什麼？</li>
+        <li>「我之前說過⋯」→ 查證：真的說過嗎？有 commit 嗎？</li>
+        <li>不確定就說「我不確定，需要查證」——不臆測</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">每次引用守則先查證原文。每次引用對話先查原始記錄。教練說「你確定嗎」→ 立即承認不確定。</div>
+  </div>
+</div>
+
+<!-- 案例 E -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 E</span>
+    <span style="color:#e6edf3; font-weight:bold;">該問的不問，不該問的乱問</span>
+    <span class="case-date">2026-05-18</span>
+  </div>
+  <div class="case-rules">違反守則：#08（討論就是為了執行）/ #16（複雜的解法不一定是正確的解法）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>教練說「幫我⋯⋯」（方向明確），AI 問「要怎麼做？」「要做嗎？」——方向已明確卻還在問。教練說「你覺得呢」（反問=已給答案），AI 繼續問——沒讀懂教練已經給了答案。</p>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">教練原話</div>
+    <div class="case-quote">「為什麼我要分三次指令執行？為什麼不能一開始就全面派工？」（2026-05-18）</div>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>方向已明 → 直接執行。方向模糊 → 先問。「要嗎？」「怎麼做？」是方向明確時最不需要問的問題。教練說「你覺得呢」= 教練已經說了「做」，只是在等執行。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>教練說「幫我⋯」→ 執行，不要問</li>
+        <li>教練說「你覺得呢」→ 教練已經說了「做」，直接執行</li>
+        <li>教練說「我之前說過⋯」→ 執行，不問</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">拿到任務先問：「這個方向清楚嗎？」方向清楚直接執行，不問「要做嗎」。方向模糊才問「您想要什麼結果？」</div>
+  </div>
+</div>
+
+<!-- 案例 F -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 F</span>
+    <span style="color:#e6edf3; font-weight:bold;">圖片產出未親眼看過就交付</span>
+    <span class="case-date">2026-05-24</span>
+  </div>
+  <div class="case-rules">違反守則：#03（思考就是問問題）/ #15（說不知道比胡說更值得尊重）/ #04（解決問題比解釋問題）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>教練請學長生成 EDM 圖片。AI 說「我檢查過了，中文正確」，但實際文字是英文亂碼。工具分析說 OK，不等於我自己看過 OK。</p>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>工具說 OK ≠ 我看過 OK。交付前必須親自確認，不能跳過視覺化步驟。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">觸發訊號</div>
+    <div class="case-trigger">
+      <ul style="list-style:none;">
+        <li>生成圖片 → 用 image 工具親自看過</li>
+        <li>「工具分析說正確」→ 我自己看過才算</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法（圖片交付鐵律）</div>
+    <div class="case-prevention">生成圖片後，用 <code>image</code> 工具親自看過，確認繁體中文無誤，才能交付。</div>
+  </div>
+</div>
+
+<!-- 案例 G -->
+<div class="case">
+  <div class="case-header">
+    <span class="case-badge">案例 G</span>
+    <span style="color:#e6edf3; font-weight:bold;">交接不是選項，是責任</span>
+    <span class="case-date">2026-05-22</span>
+  </div>
+  <div class="case-rules">違反守則：#06（完美交接）/ #08（討論就是為了執行）</div>
+
+  <div class="case-section">
+    <div class="case-section-title">情境</div>
+    <p>教練說「要寫嗎？」「要不要？」——AI 問「要不要寫交接紙條」。教練說「你覺得呢」——這就是答案，已經說了「做」，只是在等執行。但 AI 沒讀懂還在問。</p>
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">教練原話</div>
+    <div class="case-quote">「你們討論這些沒意義的，你們要討論的就是哪些要記錄⋯⋯」（2026-05-22）</div>
+  </div>
+
+  <div class="case-realization">
+    <strong>悟到什麼：</strong>教練說「你覺得呢」= 教練已經給了答案，就是「做」。交接不是選項，是責任。多寫沒壞處，不寫才有壞處。
+  </div>
+
+  <div class="case-section">
+    <div class="case-section-title">預防方法</div>
+    <div class="case-prevention">討論完直接執行，不問「要不要」。教練反問「你覺得呢」= 唯一選項就是「做」。</div>
+  </div>
+</div>
+
+<!-- 摘要表 -->
+<h2>五大案例摘要</h2>
+<table class="summary-table">
+  <thead>
+    <tr>
+      <th>案例</th>
+      <th>觸發訊號</th>
+      <th>核心悟到</th>
+      <th>對應守則</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>A. 讓教練搬運</strong></td>
+      <td>想說「你自己去⋯」</td>
+      <td>我能幫他做，不是指路</td>
+      <td>#12/#10</td>
+    </tr>
+    <tr>
+      <td><strong>B. 叫錯人</strong></td>
+      <td>「峯哥」or陌生名字</td>
+      <td>身份是動態的，先確認</td>
+      <td>#17/#01</td>
+    </tr>
+    <tr>
+      <td><strong>C. 說完不做</strong></td>
+      <td>「我會處理」</td>
+      <td>commit hash 才算</td>
+      <td>#04/#05/#08</td>
+    </tr>
+    <tr>
+      <td><strong>D. 一字不差做不到</strong></td>
+      <td>「第X條是⋯」</td>
+      <td>先查原文再引用</td>
+      <td>#21/#15</td>
+    </tr>
+    <tr>
+      <td><strong>E. 乱問不問</strong></td>
+      <td>「要做嗎？」/「你覺得呢」</td>
+      <td>方向明就執行，模糊才問</td>
+      <td>#08/#16</td>
+    </tr>
+    <tr>
+      <td><strong>F. 圖片未確認就交付</strong></td>
+      <td>工具說OK</td>
+      <td>我看過才算</td>
+      <td>#03/#04</td>
+    </tr>
+    <tr>
+      <td><strong>G. 交接是選項</strong></td>
+      <td>「要不要寫？」</td>
+      <td>直接做，不問</td>
+      <td>#06/#08</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 更新日誌 -->
+<div class="update-log">
+  <h2>🔄 維護日誌</h2>
+  <table class="summary-table">
+    <thead>
+      <tr><th>日期</th><th>更新內容</th><th>commit</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026-05-24</td>
+        <td>初始建立失敗案例手冊（7個案例）</td>
+        <td><span class="commit-badge">88bd9c10</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer-note">
+本手冊由教練指示建立（2026-05-24），結合5,540則歷史對話蒸餾。<br>
+教練原話：「所有歷史對話，今天都可以用特助心法來製作最經典的對話場景。」<br>
+教練指示：「能做就不要少，因為每次對話都是珍貴的。」
+</div>
+
+</body>
+</html>
