@@ -30,9 +30,9 @@
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| 🟠 低 | distill/top10_errors 教練→教練 | 尚未執行全量替換 |
-| 🟠 低 | 通知學弟/學妹有新版本 | relay queue 目前是空的，要用別的方式通知 |
-| 🟠 低 | distill_incremental.js 補上或移除 cron | 赫茲米說了 7 天沒做，還沒處理 |
+| 🟢 完成 | distill_incremental.js cron | ✅ `f27b5b8d` 新增 run_distill.sh + run_relay_poll.sh，每2小時蒸餾 |
+| 🟢 完成 | 通知學弟/學妹有新版本 | ✅ 孔大哥bot + 佩佩老師bot 同步發送到群組 |
+| 🟠 低 | distill/top10_errors 教練→教練 | 確認無簡體，不需要替換 |
 
 ---
 
@@ -101,7 +101,5 @@ VPS OpenClaw（學弟妹用的）workspace 之前只有一個檔：`頂級特助
 
 ## 下一步待辦
 
-1. 把 21條正典 + 執行細則 + distill/ + memory/ 壓縮並 scp 到 VPS
-2. 通知學弟/學妹（或透過 relay）同步狀態
-3. 補上 distill_incremental.js（之前發現不存在）
-4. 確認赫茲米的檢討報告有沒有 commit hash
+1. 把 21條正典 + 執行細則（9條）+ distill/ + memory/ 壓縮並 scp 到 VPS（若尚未完成）
+2. 確認赫茲米的檢討報告有沒有 commit hash（若赫茲米有做）
