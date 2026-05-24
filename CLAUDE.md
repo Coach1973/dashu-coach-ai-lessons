@@ -25,7 +25,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-25 00:55:00**
+> **最後同步：2026-05-25 01:15:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -62,9 +62,8 @@
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| 🔴 高 | 特助心法.md、執行細則.md、AGENTS.md、SOUL.md 同步到 VPS | 只在 Mac 本地，VPS 沒有 |
-| 🟠 低 | 三機（學長/學弟/學妹）接力棒同步 | 尚未通知學弟妹 |
-| 🟠 低 | distill/ 和 memory/ 同步到 VPS | VPS 幾乎空的 |
+| 🟠 低 | 通知學弟/學妹有新版本 | relay queue 目前是空的，要用別的方式通知 |
+| 🟠 低 | distill_incremental.js 補上或移除 cron | 赫茲米說了 7 天沒做，還沒處理 |
 
 ---
 
@@ -88,18 +87,17 @@
 2. pain_points：每個痛點都有「解決方向」欄，統計以「獨立敘述」為單位
 3. commit hash：`c1cb06e4`（軍師補上）
 
-### VPS 同步現況（⚠️ 有漏洞）
+### VPS 同步現況：✅ 已修補
 
-VPS OpenClaw（學弟妹用的）workspace 目前只有一個檔案：`頂級特助17條守則.md`
-其他應該有的檔案 VPS 都沒有：
-- ❌ 特助心法.md（21條正典）
-- ❌ 執行細則.md
-- ❌ AGENTS.md
-- ❌ SOUL.md
-- ❌ distill/（失敗案例、Top10、經典對話）
-- ❌ memory/（session_index、pain_points）
+VPS OpenClaw（學弟妹用的）workspace 之前只有一個檔：`頂級特助17條守則.md`。
+軍師已用 tar + scp 把以下全部同步到 `/home/node/.openclaw/workspace/`：
+- 特助心法.md（21條正典，內含執行細則16條）
+- SOUL.md、AGENTS.md、接力棒
+- distill/（5個檔）、memory/（15個檔）
 
-**同步方案：用 SSH 傳送壓縮檔到 VPS，zip + scp。**
+⚠️ 沒有獨立的 `執行細則.md` 檔——它是內嵌在 `特助心法.md` 裡的「執行細則（16條）」章節。這就是為什麼 zip 時找不到。
+
+**同步方案：用 SSH 傳送壓縮檔到 VPS，tar + scp。**
 
 ---
 
