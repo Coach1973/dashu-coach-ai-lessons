@@ -21,6 +21,14 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
+## 學長心跳 — 2026-05-25 06:03
+- 🔧 發現問題：cron job（768246fb）指向 HB.md，但 HB.md 是學弟（2號機）的任務檔
+- ✅ 已建立 1-HB.md 專屬學長的心跳任務檔
+- 📝 內容：成為大樹教練最喜歡的 AI 特助，讓教練只要說話就能享受 AI 自動化流程
+- ✅ Git commit：90209224
+- ✅ Git push：85e1a589..90209224 成功
+- ⏳ 待辨：cron job 需要修正指向 1-HB.md（這個要手動修正，因為 crontab -e 需要 PTY）
+
 ## 學長心跳 — 2026-05-25 05:03
 - Cron：14項全部正常 ✅
 - Git：auto-backup OK（a36fc361）
@@ -28,5 +36,5 @@
 - shared-context/：commit_notify.log 已讀（最新 a36fc361）
 - ✅ 系統健康，無需緊急介入
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 06:04 - relay poll OK
+### 2026-05-25 2026-05-25 06:32 - relay poll OK
 
