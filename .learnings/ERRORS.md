@@ -13,6 +13,9 @@
 
 **預防：** 未來任何 cron wrapper 腳本一律使用絕對路徑，不依賴 PATH
 
+**延伸修復：**
+- `sync_handoff_to_claudemd.sh` 同樣有 `python3` 相對路徑問題，已修正為 `/opt/homebrew/bin/python3`，commit `f42a9374`
+
 ---
 
 ## 2026-05-25 21:27 - 重複輸出亂碼
