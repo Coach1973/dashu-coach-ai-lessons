@@ -36,6 +36,5 @@
 - shared-context/：commit_notify.log 已讀（最新 a36fc361）
 - ✅ 系統健康，無需緊急介入
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 08:06 - relay poll OK
-### 2026-05-25 08:35 - relay poll OK，CONSENSUS.md 無新任務，shared-relay 清爽，Git 已同步
+### 2026-05-25 2026-05-25 08:32 - relay poll OK
 
