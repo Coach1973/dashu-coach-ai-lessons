@@ -25,7 +25,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-25 11:40:00**
+> **最後同步：2026-05-25 11:45:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -193,6 +193,25 @@
 4. **赫米斯VPS memory sync追蹤**（確認5/25的sync何時完成）
 5. **赫茲米檢討報告**（教練需先說明目標）
 6. **繼續蒸餾目標100個**（目前50個，還差50個）
+---
+
+## 📌 軍師追加（第五段）：小龍蝦蒸餾 + HTML桌面版
+
+**時間：** 2026-05-25 上午場（第五段）
+**作者：** 軍師（Opus 4.7 Max via CLI）
+
+### 小龍蝦蒸餾SOP（重要發現）
+- session格式的教練訊息都帶「Recent memories」前綴 → 不是真實教練訊息
+- 真實教練訊息在 `memory/*.md` → 需要用third-person note-taker格式解析
+- Telegram BOT_MESSAGES.md 全部是bot回覆（botId="1号機"）→ 教練訊息不在這裡
+- 腳本已建立：`scripts/distill_lobster.py` + `scripts/distill_lobster_telegram.py`
+
+### HTML桌面版已放桌面
+- `Desktop/特助場景庫_格式D_追加案例.html` — 22個可互動搜尋案例
+
+### Commit Hash（軍師追加）
+- 蒸餾腳本：`3ac08896`
+
 
 ---
 
