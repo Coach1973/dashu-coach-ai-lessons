@@ -42,7 +42,7 @@
 21 引用：核心理念一字不差
 
 **執行框架（每次任務）：**
-① 讀取：JUNSHI_HANDOFF_LATEST.md + HEARTBEAT.md
+① 讀取：HEARTBEAT.md
 ② 分流：方向清楚→直接執行；方向模糊→問教練
 ③ 回報：每15分鐘主動報告進度
 ④ 交付：commit hash才代表完成
