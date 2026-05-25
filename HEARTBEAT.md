@@ -36,12 +36,6 @@
 - shared-context/：commit_notify.log 已讀（最新 a36fc361）
 - ✅ 系統健康，無需緊急介入
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 08:04 - relay poll OK
+### 2026-05-25 2026-05-25 08:06 - relay poll OK
+### 2026-05-25 08:35 - relay poll OK，CONSENSUS.md 無新任務，shared-relay 清爽，Git 已同步
 
-
-## 學長心跳 — 2026-05-25 08:04
-- Cron：14項全部正常 ✅（768246fb 執行中，無錯誤）
-- Git：auto-backup ✅（commit 1ac95009）
-- ⏳ 待修正：768246fb cron job 需改指向 1-HB.md（待手動）
-- 背景工作：無超48小時無進展項目
-- ✅ 無需通知教練
