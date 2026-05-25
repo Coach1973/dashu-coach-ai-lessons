@@ -260,3 +260,6 @@
 [2026-05-26 03:07] [CoachWU] 79cff2f6: auto-backup 2026-05-26 03:05
 [2026-05-26 03:08] [CoachWU] f7bb4d74: heartbeat 2026-05-26 03:07: cron 768246fb OK
 [2026-05-26 03:24] [CoachWU] bb794804: [auto] 03:24 對話記錄更新（6 條）
+[2026-05-26 03:34] [CoachWU] 2ecef02c: auto-backup 2026-05-25 19:30
+[2026-05-26 03:35] [CoachWU] a5045dea: fix: 修正 relay_poll wrapper 的 python3 路徑（/usr/bin/python3 → /opt/homebrew/bin/python3）
+[2026-05-26 03:54] [CoachWU] 2f17ca66: [auto] 03:54 對話記錄更新（4 條）
