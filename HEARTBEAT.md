@@ -83,6 +83,13 @@
 - ✅ shared-relay：無新任務（無 RELAY_QUEUE 掛鉤）
 - ✅ 系統健康，無緊急介入需求
 
+## 學長心跳 — 2026-05-25 14:34
+- ✅ HB.md 確認：學長是 1號機，服務大樹教練
+- ✅ shared-relay：無新任務（無 RELAY_QUEUE 掛鉤）
+- ✅ git pull：已是最新
+- ✅ Git：auto-backup（58c95e29）
+- ✅ 系統健康，無緊急介入需求
+
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 14:34 - relay poll OK
+### 2026-05-25 2026-05-25 15:02 - relay poll OK
 

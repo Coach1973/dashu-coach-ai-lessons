@@ -104,16 +104,20 @@ def check_all_fields(text: str) -> dict:
 
 def check_insight(text: str) -> dict:
     """檢查🌱是否提煉核心而非症狀"""
-    # 找🌱區塊
+    # 找🌱區塊（支援兩種格式：> 引用格式 或 普通文字格式）
     match = re.search(r'###\s+🌱\s+悟到什麼.*?\n(>.*?\n)?(.*?)(?=###|\Z)', text, re.DOTALL)
     if not match:
         return {'ok': False, 'reason': '找不到🌱區塊', 'level': '❌'}
 
-    insight_text = match.group(2) if match.group(2) else ''
-    insight_text = re.sub(r'[#*>`|\-]', '', insight_text).strip()
+    # 嘗試從 blockquote 提取
+    bq_match = re.search(r'###\s+🌱\s+悟到什麼.*?\n(>.*?\n)(.*?)(?=###|\Z)', text, re.DOTALL)
+    if bq_match:
+        insight_text = re.sub(r'[#*>`|\-]', '', bq_match.group(1)).strip()
+    else:
+        insight_text = re.sub(r'[#*>`|\-]', '', match.group(2) if match.group(2) else '').strip()
 
     if not insight_text:
-        return {'ok': False, 'reason': '🌱內容為空', 'level': '❌'}
+        return {'ok': False, 'reason': '🌱內容為空（待填寫狀態）', 'level': '❌', 'text': insight_text[:100]}
 
     has_symptom = any(kw in insight_text for kw in INSIGHT_SYMPTOM_KEYWORDS)
     has_core = any(kw in insight_text for kw in INSIGHT_CORE_KEYWORDS)
