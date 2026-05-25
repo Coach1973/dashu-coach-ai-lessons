@@ -35,6 +35,10 @@
 - shared-relay/：無新任務
 - shared-context/：commit_notify.log 已讀（最新 a36fc361）
 - ✅ 系統健康，無需緊急介入
-## 學長 relay poll
-### 2026-05-25 2026-05-25 08:35 - relay poll OK
+## 學長心跳 — 2026-05-25 08:35
+- ✅ pull：已是最新
+- ✅ Git：auto-backup（4d0a407a）
+- shared-relay/AGENDA.md：工具層待討論，無需此刻介入
+- 待辦：cron job 指向 1-HB.md（需 PTY 手動修正）
+- ✅ 系統健康，無需緊急介入
 
