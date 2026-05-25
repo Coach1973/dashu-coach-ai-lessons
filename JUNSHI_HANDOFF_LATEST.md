@@ -160,3 +160,21 @@
 4. **赫米斯VPS memory sync追蹤**（確認5/25的sync何時完成）
 5. **赫茲米檢討報告**（教練需先說明目標）
 6. **繼續蒸餾目標100個**（目前50個，還差50個）
+---
+
+## 📌 軍師追加（第五段）：小龍蝦蒸餾 + HTML桌面版
+
+**時間：** 2026-05-25 上午場（第五段）
+**作者：** 軍師（Opus 4.7 Max via CLI）
+
+### 小龍蝦蒸餾SOP（重要發現）
+- session格式的教練訊息都帶「Recent memories」前綴 → 不是真實教練訊息
+- 真實教練訊息在 `memory/*.md` → 需要用third-person note-taker格式解析
+- Telegram BOT_MESSAGES.md 全部是bot回覆（botId="1号機"）→ 教練訊息不在這裡
+- 腳本已建立：`scripts/distill_lobster.py` + `scripts/distill_lobster_telegram.py`
+
+### HTML桌面版已放桌面
+- `Desktop/特助場景庫_格式D_追加案例.html` — 22個可互動搜尋案例
+
+### Commit Hash（軍師追加）
+- 蒸餾腳本：`3ac08896`
