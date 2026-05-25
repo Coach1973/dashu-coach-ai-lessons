@@ -20,16 +20,16 @@ from pathlib import Path
 # ====== SOP 標準常數 ======
 
 REQUIRED_FIELDS = {
-    'title':     (r'##\s+案例\s+\w+\d+[：:].+',         '案例標題（## 案例 XXX）'),
-    'date':      (r'\*\*日期[：:]\*\*',                    '日期（**日期：YYYY-MM-DD**）'),
+    'title':     (r'##\s+.*案例\s+\[?[A-Z0-9]+\]?[:：]',  '案例標題（## 案例 XXX）'),
+    'date':      (r'\*\*犯錯日期[：:]\*\*|\*\*日期[：:]\*\*',  '日期（**犯錯日期：** 或 **日期：**）'),
     'type':      (r'\*\*類型[：:]\*\*',                    '類型（**類型：** ❌失敗 / ✅成功）'),
-    'rule':      (r'\*\*([違反|對應])守則[：:]\*\*',      '守則標註（**違反守則：** 或 **對應守則：**）'),
+    'rule':      (r'\*\*([違反|對應])[守則：:]\*\*',       '守則標註（**違反守則：** 或 **對應守則：**）'),
     'quote':     (r'###\s+📣\s+教練原話',                  '📣教練原話'),
     'insight':   (r'###\s+🌱\s+悟到什麼',                  '🌱悟到什麼'),
     'dna':       (r'###\s+🧬\s+DNA',                      '🧬DNA層次對應'),
-    'trigger':   (r'###\s+⚡\s+觸發訊號',                  '⚡觸發訊號'),
+    'trigger':   (r'###\s+⚡\s+觸發訊號',                  '⚡觸�發訊號'),
     'action':    (r'###\s+✅\s+行動指引',                  '✅行動指引'),
-    'table':     (r'###\s+📊\s+[守則對照表|對應守則表]',  '📊守則對照表'),
+    'table':     (r'###\s+📊\s+守則對照表',               '📊守則對照表'),
 }
 
 # 格式D成功案例用「對應守則」，失敗案例用「違反守則」
@@ -68,14 +68,14 @@ TABLE_PATTERN = re.compile(
 def extract_cases(text: str):
     """從Markdown文字中拆出所有案例"""
     # 以 ## 案例 作為分割點
-    parts = re.split(r'(?=##\s+案例\s+)', text)
+    parts = re.split(r'(?=##\s+[^#\n]+案例\s+)', text)
     cases = []
     for part in parts:
         part = part.strip()
         if not part:
             continue
-        # 找標題
-        title_match = re.search(r'##\s+案例\s+(\w+\d+)：(.*)', part)
+        # 找標題（支援 [03001] 或 案例 03001 或 案例 034 等各種格式）
+        title_match = re.search(r'##\s+[^#\n]+案例\s+(\[?\w+\d+\]?)[:：]\s*(.*)', part)
         if not title_match:
             continue
         case_id = title_match.group(1)
