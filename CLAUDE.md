@@ -168,7 +168,7 @@ cd ~/.openclaw/workspace && git fetch --all && (git stash push -m "auto-stash" |
 
 **動作 2（第 2-10 秒）：讀以下三份（教練 2026-05-20 拍板：開工讀這三份）**
 1. **`特助心法.md`**（21 條正典，最高衡量依據）
-2. **`執行細則.md`**（操作細則，部分修整中）
+2. **`執行細則.md`**（操作細則，9條正典）
 3. **🔴 `JUNSHI_HANDOFF_LATEST.md`**（前一場接力棒，讀完 < 1 分鐘無縫接續）
 
 > 守則總綱 ＝ 特助心法 ＋ 執行細則 的合訂本，故不另列。`SOUL.md` / `claude-sessions/SESSION_*.md` 需要時調閱。
@@ -330,7 +330,7 @@ git push origin main
 > ⚠️ 這是「小龍蝦」（OpenClaw Telegram bot）的啟動流程，不是軍師／終端機／桌面版的開工協議。軍師類開工只讀 2 份（`特助心法.md` + 接力棒），見上方「軍師接位提示」。
 
 1. `git pull origin main`（在工作區根目錄）
-2. 讀正典 `特助心法.md`（21 條）；`SOUL.md` / `守則總綱.md` / `DAILY_DIGEST.md` / `HEARTBEAT.md` / `SUPERGROUP-MAP.md` / `USER.md` 視需要調閱
+2. 讀正典 `特助心法.md`（21 條）；`SOUL.md` / `執行細則.md` / `DAILY_DIGEST.md` / `HEARTBEAT.md` / `USER.md` 視需要調閱
 3. 檢查 Gateway：`curl -s --connect-timeout 3 localhost:18789`
 4. 若有 `restart_pending: true` 在 HEARTBEAT.md，先發 Telegram 回報再清除
 
