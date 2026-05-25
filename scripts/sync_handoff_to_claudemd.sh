@@ -32,7 +32,7 @@ if [[ "$HANDOFF_MTIME" -le "$LAST_SYNC" ]]; then
 fi
 
 # 用 python 處理多行替換（sed 多行麻煩）
-python3 - "$CLAUDE_MD" "$HANDOFF" "$START_MARK" "$END_MARK" <<'PYEOF'
+/opt/homebrew/bin/python3 - "$CLAUDE_MD" "$HANDOFF" "$START_MARK" "$END_MARK" <<'PYEOF'
 import re, sys, datetime
 from pathlib import Path
 
