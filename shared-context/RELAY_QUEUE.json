@@ -1,0 +1,16 @@
+{
+  "created_by": "軍師（Opus 4.7 Max via CLI）",
+  "created_at": "2026-05-25T18:05:00",
+  "tasks": [
+    {
+      "id": "task_041_scenes",
+      "title": "填寫4月場景庫🌱欄位（格式D）",
+      "description": "讀 distill/4月場景庫_格式D.md，15個案例，每個填寫 ### 🌱 悟到什麼（格式D格式，一句話核心），output回原檔，commit hash回報",
+      "source_file": "distill/4月場景庫_格式D.md",
+      "output_file": "distill/4月場景庫_格式D.md",
+      "instruction": "格式D的🌱欄位格式：\n### 🌱 悟到什麼（一句話核心）\n> **一句話（不超過30字）** — 50字以內的具體教訓。\n\n每個案例都已有 ## 📖 案例 和 ### 📣 教練原話，你需要做的是：\n1. 讀取 distill/4月場景庫_格式D.md\n2. 找出所有 ### 🌱 待分析 的案例\n3. 根據教練原話和案例情境，填寫一句話核心悟到什麼\n4. 寫入原檔（原地replace）\n5. git add + commit + push\n6. 回報 commit hash（格式：✅ 4月場景庫🌱填寫完成：XXXXXXXX）",
+      "success_criteria": "所有15個案例都有完整的 ### 🌱 悟到什麼（格式D格式），commit hash回報",
+      "deadline": "2026-05-25T20:00:00"
+    }
+  ]
+}
