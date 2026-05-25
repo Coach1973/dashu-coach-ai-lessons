@@ -321,7 +321,7 @@
 
 **動作 1（第一秒做）：拉雲端最新版**
 ```bash
-cd ~/.openclaw/workspace && git fetch --all && git pull --rebase
+cd ~/.openclaw/workspace && git fetch --all && git stash && git pull --rebase && git stash pop
 ```
 
 **動作 2（第 2-10 秒）：讀以下三份（教練 2026-05-20 拍板：開工讀這三份）**
@@ -375,7 +375,7 @@ cd ~/.openclaw/workspace && git fetch --all && git pull --rebase
 ### 軍師動作前一律先做
 
 ```bash
-cd ~/.openclaw/workspace && git fetch --all && git pull --rebase
+cd ~/.openclaw/workspace && git fetch --all && git stash && git pull --rebase && git stash pop
 ```
 
 **上雲前先讀雲、記錄上雲凌駕一切。** 這兩條沒有例外。
