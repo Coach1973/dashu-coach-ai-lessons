@@ -22,5 +22,12 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 20:05 - relay poll OK
+### 2026-05-25 20:08 - 小龍蝦讀取邏輯定案
+
+開機必讀（4份）：CLAUDE.md / 特助心法.md / USER.md / HEARTBEAT.md
+按需讀取：SOUL.md / 路徑大全.md / DAILY_DIGEST.md / CONSENSUS.md / 對話分工表.md / people.md
+蒸餾資產：特助場景庫_格式D_100合併版.md / top10_dynamic.md
+赫米斯：小龍蝦不主動讀
+
+### 2026-05-25 20:05 - relay poll OK
 
