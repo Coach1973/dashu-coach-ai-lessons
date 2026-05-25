@@ -160,10 +160,11 @@ SKIP_PATTERNS = [
 
 教練只說「開工了」這三個字（或「軍師，開工了」），**不要客套、不要問細節、立即執行**：
 
-**動作 1（第一秒做）：拉雲端最新版**
+**動作 1（第一秒做）：拉雲端最新版（無錯誤訊息版）**
 ```bash
-cd ~/.openclaw/workspace && git fetch --all && git stash && git pull --rebase && git stash pop
+cd ~/.openclaw/workspace && git fetch --all && (git stash push -m "auto-stash" || true) && git pull --rebase && (git stash pop || true)
 ```
+> `|| true` 確保 stash 無內容時不顯示錯誤；`stash push -m` 用新版語法並加上訊息。
 
 **動作 2（第 2-10 秒）：讀以下三份（教練 2026-05-20 拍板：開工讀這三份）**
 1. **`特助心法.md`**（21 條正典，最高衡量依據）
@@ -216,7 +217,7 @@ cd ~/.openclaw/workspace && git fetch --all && git stash && git pull --rebase &&
 ### 軍師動作前一律先做
 
 ```bash
-cd ~/.openclaw/workspace && git fetch --all && git stash && git pull --rebase && git stash pop
+cd ~/.openclaw/workspace && git fetch --all && (git stash push -m "auto-stash" || true) && git pull --rebase && (git stash pop || true)
 ```
 
 **上雲前先讀雲、記錄上雲凌駕一切。** 這兩條沒有例外。
