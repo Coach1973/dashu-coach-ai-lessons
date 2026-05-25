@@ -23,5 +23,17 @@
 - ⚠️ 不要讀大型 memory 檔（任何模型讀取超大上下文都會品質下降，>30KB 一律不主動讀）
 
 ## 學長 relay poll
-### 2026-05-26 2026-05-26 05:31 - relay poll OK
+### 2026-05-26 2026-05-26 05:36 - relay poll OK
 
+=== 心跳執行記錄 ===
+時間：2026-05-26 05:36
+身份：學長（1號機），服務大樹教練
+動作：系統抽檢
+---
+✅ distill_incremental.js 存在且正常（今日已蒸餾）
+⚠️ distill_incremental.log 有 node not found 錯誤（已修復但殘留舊log）
+⚠️ distill_cron.log 空白（正常，今日還沒到第二個整點）
+✅ shared-relay 無新任務
+✅ SUPERGROUP-MAP.md 不存在（無多人分工需求）
+📝 下次心跳注意：檢查學弟 relay poll 有無新內容
+---
