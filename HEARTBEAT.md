@@ -91,5 +91,13 @@
 - ✅ 系統健康，無緊急介入需求
 
 ## 學長 relay poll
-### 2026-05-25 2026-05-25 15:33 - relay poll OK
+### 2026-05-25 2026-05-25 15:34 - relay poll OK
+
+## 學長心跳 — 2026-05-25 15:33
+- ✅ HB.md 確認：學長是 1號機，服務大樹教練
+- ✅ shared-relay/CONSENSUS.md 已讀（心法層四方簽署完成）
+- ✅ git pull：已是最新
+- ✅ Git：auto-backup（b6f0f1c2）
+- ✅ shared-relay：無新任務
+- ✅ 系統健康，無緊急介入需求
 
