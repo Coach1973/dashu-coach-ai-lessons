@@ -61,21 +61,24 @@ RECORD_CRITERIA = [
 # 守則對照表格式
 TABLE_PATTERN = re.compile(
     r'\|\s*守則\s*\|[^|]*\|[^|]*\|\s*\n'
-    r'\|\s*[-| ]+\s*\|[-| ]+\s*\|[-| ]+\s*\|'
+    r'\|[-| ]+\|[-| ]+\|[-| ]+\|'
 )
 
 
 def extract_cases(text: str):
-    """從Markdown文字中拆出所有案例"""
-    # 以 ## 案例 作為分割點
-    parts = re.split(r'(?=##\s+[^#\n]+案例\s+)', text)
+    """從Markdown文字中拆出所有案例
+    分割點：每個 ## 開頭的行（第二層標題），但排除 ## #（嵌套標題）
+    """
+    # 先以 ## 作為分割點（排除嵌套 ###）
+    parts = re.split(r'\n(?=## [^#])', text)
     cases = []
     for part in parts:
         part = part.strip()
         if not part:
             continue
         # 找標題（支援 [03001] 或 案例 03001 或 案例 034 等各種格式）
-        title_match = re.search(r'##\s+[^#\n]+案例\s+(\[?\w+\d+\]?)[:：]\s*(.*)', part)
+        # 格式：## [📖] 案例 ID：標題
+        title_match = re.search(r'##\s*📖?\s*案例\s+(\[?\w+\d+\]?)[:：]\s*(.*)', part)
         if not title_match:
             continue
         case_id = title_match.group(1)
@@ -162,18 +165,17 @@ def check_rule_header(text: str) -> dict:
     case_type = type_match.group(1)
 
     # 找守則標題
-    rule_match = re.search(r'\*\*([違反|對應])守則[：:]\*\*', text)
+    rule_match = re.search(r'\*\*(違反|對應)(守則[：:])', text)
     if not rule_match:
         return {'ok': False, 'reason': '找不到守則標題'}
 
     rule_header = rule_match.group(1)
 
     if '失敗' in case_type or '❌' in case_type:
-        expected = '違反守則'
-        actual = rule_header
+        expected = '違反'
     else:  # 成功
-        expected = '對應守則'
-        actual = rule_header
+        expected = '對應'
+    actual = rule_header
 
     if expected == actual:
         return {'ok': True, 'reason': f'✅ 標題正確（{actual}）', 'level': '🟢'}
@@ -188,13 +190,22 @@ def check_rule_header(text: str) -> dict:
 
 
 def check_table_format(text: str) -> dict:
-    """檢查守則對照表格式"""
-    # 找表格
-    table_match = re.search(r'(###\s+📊\s+[守則對照表|對應守則表].*?\n\n\|.*)', text, re.DOTALL)
+    """檢查守則對照表格式
+    找表格：支援有多種標題格式（### 📊 守則對照表 / ### 守則對照表 / ### 對應守則表）
+    也支援無標題的表格（直接以 | 開頭）
+    """
+    # 找表格（多種模式）：有標題的 or 無標題但有表格結構
+    table_match = re.search(
+        r'(?:###\s+📊\s*[守則對照表|對應守則表|守則表].*?\n\n|(?<=\n))\n?\|.*?(?=###|\Z)',
+        text,
+        re.DOTALL
+    )
     if not table_match:
         return {'ok': False, 'reason': '找不到守則對照表', 'level': '❌'}
 
-    table_text = table_match.group(1)
+    table_text = table_match.group(0)
+    # 去掉開頭可能的換行
+    table_text = table_text.strip()
 
     # 檢查三列格式
     lines = [l for l in table_text.split('\n') if l.strip().startswith('|')]
