@@ -62,7 +62,7 @@
 2. 不能當場做的 → 寫入 HEARTBEAT.md 的待辦，設定 deadline
 3. 做完就 commit，不等「累積多一點」
 
-**最後犯錯：** 2026-05-24（distill_incremental.js 7天不存在）
+**最後犯錯：** 2026-05-24（distill_incremental.js 7天不存在，2026-05-26修復根本原因：cron PATH 缺少 /opt/homebrew/bin，已修正 run_distill.sh 為絕對路徑，commit `5fc3f80d`）
 
 ---
 
@@ -230,7 +230,7 @@
 2. 設定 cron 後 → **立即測試一次，確認真的在跑**
 3. 每週檢查一次 cron log → **確認沒有 fail 的任務**
 
-**最後犯錯：** 2026-05-24（distill_incremental.js 7天不存在）
+**最後犯錯：** 2026-05-24（distill_incremental.js 7天不存在，2026-05-26修復根本原因：cron PATH 缺少 /opt/homebrew/bin，已修正 run_distill.sh 為絕對路徑，commit `5fc3f80d`）
 
 ---
 
