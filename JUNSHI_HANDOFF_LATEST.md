@@ -1,14 +1,14 @@
 # 軍師交接紙條（最新）
 
 > 給下一個軍師：開工先讀這張，就能無縫接上，不用教練重講。
-> 本場時間：2026-05-26 晚間場
-> 寫紙條的人：軍師（Claude Opus 4.7）
+> 本場時間：2026-05-26 深夜場
+> 寫紙條的人：軍師（Claude Sonnet 4.6 桌面版）
 
 ---
 
 ## 一句話交代這場做了什麼
 
-**🔥 燒錄系統全部上線：特助心法 + 執行細則 + 開工宣言 + 背景對照機制，全部燒進系統。**
+**🔥 SOUL.md 正確燒錄完成：特助心法 21 守則完整正典已嵌入 bootstrap 機制，每次 session 自動注入。**
 
 ---
 
@@ -16,20 +16,28 @@
 
 | 優先 | 任務 | 結果 |
 |------|------|------|
-| 🔴 高 | **燒錄系統上線** | ✅ 全部完成 |
-| 🔴 高 | A 方案整頓 | ✅ 完成（檔案清理、引用修正） |
+| 🔴 高 | **SOUL.md 正確燒錄**（bootstrap 正解） | ✅ commit faf1c6d7 |
+| 🔴 高 | 研究 openclaw.json 正確做法 | ✅ 找到：SOUL.md 才是正解 |
 | 🟡 中 | 觀察下一次心跳結果 | 尚未確認 |
 
 ---
 
 ## 🔥 燒錄系統詳細說明
 
-### 三個介面全部燒錄
+### 正確做法（本場確認）
 
-| 介面 | 檔案 | 內容 |
-|------|------|------|
-| 小龍蝦（Telegram/OpenClaw）| `~/.openclaw/openclaw.json` | systemPrompt 完整燒錄 |
-| 終端機 + 桌面版 | `~/.claude/CLAUDE.md` | 燒錄版完整內容 |
+| 介面 | 檔案 | 方法 | 原因 |
+|------|------|------|------|
+| 小龍蝦（Telegram/OpenClaw）| `~/.openclaw/workspace/SOUL.md` | 完整 21 守則直接嵌入 | SOUL.md 是 bootstrap 檔案，每次 session 自動注入 system prompt |
+| 終端機 + 桌面版 | `~/.claude/CLAUDE.md` | 燒錄版完整內容 | CLAUDE.md 是 Claude CLI 的全域指示 |
+
+### ⚠️ 錯誤做法（已修正，勿重蹈）
+
+| 錯誤做法 | 後果 | 修正 |
+|----------|------|------|
+| `agents.list[0].systemPrompt` 在 openclaw.json | Gateway crash loop（該欄位不存在） | 已 revert |
+| `agents.list[0].systemPromptOverride` | 整個替換 system prompt（危險） | 勿用 |
+| openclaw.json 只有引用（不嵌內容） | 依賴模型主動讀檔，不可靠 | 用 SOUL.md 燒錄 |
 
 ### 燒錄內容
 
@@ -81,7 +89,8 @@
 
 | 描述 | Commit |
 |------|--------|
-| 燒錄系統上線 | `e5ad2435` |
+| **SOUL.md 正確燒錄（本場）** | `faf1c6d7` |
+| 前場燒錄系統（openclaw.json 方式，已知錯誤，CLAUDE.md 部分有效） | `e5ad2435` |
 | A 方案整頓主體 | `4bca338e` |
 | HEARTBEAT.md 更新 | `7039445b` |
 | Push 到遠端 | ✅ 已推送 |

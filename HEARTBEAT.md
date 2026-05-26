@@ -1,25 +1,17 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-05-25 16:41
-> 對話記錄已完整存入 memory/2026-05-25.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-05-26 18:25
+> 對話記錄已完整存入 memory/2026-05-26.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-05-25.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-05-26.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
-- Primary 模型：minimax/MiniMax-M2.7（已驗證，2026-05-25 切換）
-- 備用模型：google/gemini-3.1-pro-preview
+- Primary 模型：google/gemini-3.1-pro-preview
 - 名稱對等：Telegram = 小龍蝦 = 電報
-+ VPS 掛載 OpenClaw 系統 = 小龍蝦
-+ 終端機 / 桌面版 Claude = 不是小龍蝦
-
-## 🔴 身份判定鐵律
-- Telegram 端執行 → 小龍蝦
-- VPS（43.245.60.200）掛載 OpenClaw → 小龍蝦
-- 終端機 / 桌面版 Claude → 不是小龍蝦（軍師）
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -27,8 +19,8 @@
 - 截圖禁用，直接讀檔案
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
-- ⚠️ 不要讀大型 memory 檔（任何模型讀取超大上下文都會品質下降，>30KB 一律不主動讀）
+- ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-05-26 2026-05-26 18:23 - relay poll OK
+### 2026-05-26 2026-05-26 18:32 - relay poll OK
 
