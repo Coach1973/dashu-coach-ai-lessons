@@ -60,6 +60,12 @@ const SKIP_PATTERNS = [
   /async exec.*completed/i,
   /heartbeat poll/i,
   /processed the completion result internally/i,
+  /^系統回報.*行事曆每週同步 cron/i,
+  /^用戶觸發定時心跳任務.*1-HB\.md/i,
+  /^OpenClaw 執行心跳檢查，回報結果：cron 正常/i,
+  /^OpenClaw 分析.*並識別.*已處理/i,
+  /context overflow/i,
+  /session restart/i,
 ];
 
 const entries = [];
