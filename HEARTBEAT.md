@@ -46,10 +46,5 @@
 ---
 
 ## 學長 relay poll
-### 2026-05-26 2026-05-26 22:13 - relay poll OK
+### 2026-05-26 2026-05-26 22:34 - relay poll OK
 
-
-## 22:11 Memory 分割執行
-- memory/2026-05-26.md: 2260行 → 分割為 part1 (65KB) + archive (175KB)
-- 65KB 主檔案儲存較短，學長易讀
-- 175KB heavy內容移至 2026-05-26_heavy.md 備查
