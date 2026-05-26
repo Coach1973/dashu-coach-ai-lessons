@@ -23,10 +23,10 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 ### 第一層：必讀（每次啟動都讀，無例外）
 1. Read `特助心法.md` — 🔴 最高正典，21 守則一字不差
 2. Read `SOUL.md` — 靈魂核心（心願目標 + 系統協作 + 模型鐵律）
-3. Read `執行細則.md` — 操作細則（9條）
+3. Read `執行細則.md` — 操作細則（9條，見檔案頂部版本說明）
 4. Read `路徑大全.md` — 所有路徑、密碼、API Key（找不到東西先讀這份）
 5. Read `distill/top10_dynamic.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
-6. Read `shared-relay/CONSENSUS.md` — 🔴 當晚最新共識（每次啟動必讀，確保不脫離團隊議程）
+6. Read `shared-relay/SUPERGROUP-MAP.md` — 🔴 超級群組地圖（每次啟動必讀）
 7. Read `USER.md` — 教練偏好與習慣
 8. Read `shared-relay/對話分工表.md` — 團隊結構
 9. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶）
@@ -47,11 +47,12 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 | `distill/top10_dynamic.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
 | `shared-relay/CONSENSUS.md` | 任務開始前 | 這個決策是否符合團隊最新共識？ |
 
-**發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 top10_errors**
+**發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 distill/failure-case-handbook.md**
 
 > 教練說：「每一個 Agent 他自己的經驗值要寫進自己的 member，這是為了有效溝通，為了成為最懂老闆的 AI 特助。」
 
 > ⚠️ 守則正典只有一份：`特助心法.md`（21 條，一字不差，來源為桌面 HTML），已落地本機主線。舊版規則檔（17 條守則、守則總綱）已退場，一律以此為準，勿再引用舊檔。
+> ⚠️ Top10 Errors 統一入口：`distill/top10_errors_index.md`（含 failure-case-handbook.md 和 top10_dynamic.md 的完整索引）
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
