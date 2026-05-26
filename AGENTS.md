@@ -44,7 +44,7 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 | 檔案 | 何時對照 | 檢視什麼 |
 |------|---------|---------|
 | `特助心法.md` | 任務開始前 | 這次行動是否違反使命/願景/守則？ |
-| `distill/top10_errors_2026-05-23.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
+| `distill/top10_dynamic.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
 | `shared-relay/CONSENSUS.md` | 任務開始前 | 這個決策是否符合團隊最新共識？ |
 
 **發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 top10_errors**
