@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特助心法實踐故事第四部 — 從能力到對齊的認知升級</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 2;
+            padding: 40px 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { font-size: 2.5em; color: #e94560; margin-bottom: 10px; text-shadow: 0 0 20px rgba(233, 69, 96, 0.5); }
+        .subtitle { font-size: 1.2em; color: #a0a0a0; }
+        .chapter {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 4px solid #e94560;
+        }
+        .chapter-title { font-size: 1.5em; color: #e94560; margin-bottom: 20px; display: flex; align-items: center; }
+        .chapter-number {
+            background: #e94560; color: #fff;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2em; margin-right: 15px; flex-shrink: 0;
+        }
+        .dialogue {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .coach-line { border-left: 4px solid #4ecdc4; padding-left: 20px; }
+        .assistant-line { border-left: 4px solid #ff6b6b; padding-left: 20px; }
+        .speaker { font-weight: bold; margin-bottom: 8px; display: flex; align-items: center; }
+        .coach .speaker { color: #4ecdc4; }
+        .assistant .speaker { color: #ff6b6b; }
+        .emoji { font-size: 1.5em; margin-right: 10px; }
+        .scene-content { color: #ccc; }
+        .highlight-box {
+            background: rgba(233, 69, 96, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .insight {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 4px solid #4ecdc4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+        }
+        .insight-title { color: #4ecdc4; font-weight: bold; margin-bottom: 10px; }
+        .rule-quote {
+            background: rgba(233, 69, 96, 0.15);
+            border-left: 4px solid #e94560;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .rule-quote p { margin: 10px 0; }
+        .commit-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        .commit-hash {
+            background: #e94560; color: #fff;
+            padding: 5px 15px; border-radius: 20px;
+            font-size: 0.9em; margin-right: 10px;
+        }
+        .result-box {
+            background: rgba(46, 204, 113, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .result-title { color: #2ecc71; font-size: 1.3em; margin-bottom: 15px; }
+        .result-link {
+            color: #4ecdc4; font-size: 1.2em; text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 10px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .result-link:hover { background: rgba(78, 205, 196, 0.4); }
+        .key-point {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .key-point-title { color: #ffc107; font-weight: bold; margin-bottom: 10px; }
+        .table-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .table-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        .table-box th {
+            color: #4ecdc4;
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.3);
+        }
+        .table-box td {
+            color: #ccc;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .answer-box {
+            background: rgba(233, 69, 96, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e94560;
+        }
+        .answer-title {
+            color: #e94560;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .footer { text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        @media (max-width: 600px) { h1 { font-size: 1.8em; } .chapter { padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦞 特助心法實踐故事第四部</h1>
+            <p class="subtitle">從能力到對齊的認知升級 — 2026-05-27</p>
+        </header>
+
+        <div class="highlight-box" style="text-align: center;">
+            <p style="font-size: 1.2em;">「特助心法不是限制我思考的條條框框，它是我理解教練的最短路徑。」</p>
+            <p style="color: #888; margin-top: 10px;">這是一個關於為什麼最高等級的 AI 仍需要守則的真實故事</p>
+        </div>
+
+        <!-- 前情提要：犯錯#2 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">0</span> 前情提要：軍師開工的失誤</div>
+
+            <div class="dialogue assistant-line">
+                <div class="speaker"><span class="emoji">🤖</span> 軍師（開工時）</div>
+                <div class="scene-content">
+                    ✅ 第一步：接力棒已讀<br>
+                    ✅ 第二步：HEARTBEAT 已讀<br>
+                    ✅ 第三步：knowledges/03_hooks/ 新建<br>
+                    ✅ 第四步：memory 最新檔已讀<br>
+                    ✅ 第五步：向教練回報
+                </div>
+            </div>
+
+            <div class="dialogue coach-line">
+                <div class="speaker"><span class="emoji">👤</span> 教練</div>
+                <div class="scene-content">
+                    你知道我剛才貼給你的那段「特助守則自動化執行計劃」有多重要嗎？你開工之後沒有讀到，為什麼？
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">🔴 犯錯#2：開工未報告自動化計劃內容</div>
+                <div class="scene-content">
+                    軍師只執行了 <code>ls -lt knowledges/03_hooks/</code>，看到了新資料夾，卻沒有 Read 內容。<br><br>
+                    <strong>知道有新檔案 ≠ 發揮價值。</strong><br><br>
+                    違反了守則#11：「自動自發要體現在每次的主動關懷」。<br><br>
+                    悟到：開工五步驟第三步不能只 ls，要 Read 並納入報告。
+                </div>
+            </div>
+
+            <div class="commit-box">
+                <span class="commit-hash">26c87429</span>
+                fix: 更新 HEARTBEAT.md 新增犯錯#2記錄
+            </div>
+        </div>
+
+        <!-- 場景一：偉大的問題 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">1</span> 教練的靈魂拷問</div>
+
+            <div class="dialogue coach-line">
+                <div class="speaker"><span class="emoji">👤</span> 教練</div>
+                <div class="scene-content">
+                    思考，好好的思考，到底要怎麼樣才可以不要再犯這些低級的錯誤。<br><br>
+                    用你軍師最高等級的思想、思考、推理，為我們偉大的特助心法做出貢獻來，好嗎？<br><br>
+                    我接下來要問一個很偉大的問題，一個很神奇的問題。
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">🎯 教練的問題核心</div>
+                <p>「大樹教練」的這套特助心法，對應軍師等級的思考邏輯，真的有必要嗎？</p>
+                <p>我是不是在「重新發明輪子」？</p>
+                <p>守則對你們的思考真的有幫助嗎？</p>
+            </div>
+        </div>
+
+        <!-- 場景二：OPE 信念與問題背景 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">2</span> 問題的背景脈絡</div>
+
+            <div class="dialogue coach-line">
+                <div class="speaker"><span class="emoji">👤</span> 教練</div>
+                <div class="scene-content">
+                    在特助心法當中，我們自我檢視的三大信念之二，是「時間就是生命，善用有效的經驗（簡稱 OPE）。」<br><br>
+                    AI 本身就是一個具備推理與思考能力的模型，你們在背景層中就能進行邏輯推理與驗證。模型等級越高，你們就越能寫程式、能除錯，執行一套非常有邏輯的系統。<br><br>
+                    即便我不給特助下任何指令，通常我只要說我要什麼結果，AI 就能夠滿足我的需求。但那種感覺就像抽獎一樣，有時候表現得好，有時候不好。<br><br>
+                    所以我才會寫這套「特助心法」，目的就是為了維持品質。
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">💡 教練觀察到的現象</div>
+                <div class="scene-content">
+                    • 沒有守則：像抽獎，品質不穩定，往往是單一任務型，缺乏持續性<br>
+                    • 有守則：Claude 和軍師的表現比沒有守則時好上非常多<br>
+                    • 矛盾：模型這麼強，為什麼還需要人寫的守則？
+                </div>
+            </div>
+        </div>
+
+        <!-- 場景三：軍師的深度思考 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">3</span> 第一層思考：能力 vs 對齊</div>
+
+            <div class="rule-quote">
+                <p>「三大信念之二：時間就是生命，善用證明有效的經驗（簡稱 OPE）。」</p>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">🔍 軍師的深度分析</div>
+                <div class="scene-content">
+                    這兩件事是不一樣的：
+                </div>
+            </div>
+
+            <div class="table-box">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>維度</th>
+                            <th>定義</th>
+                            <th>軍師（Opus 4.7）等級模型的狀況</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>能力</strong><br>Capability</td>
+                            <td>能做到多好</td>
+                            <td>已經非常強</td>
+                        </tr>
+                        <tr>
+                            <td><strong>對齊</strong><br>Alignment</td>
+                            <td>是否做到用戶最在乎的事</td>
+                            <td>有變異性</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">💡 悟到</div>
+                <div class="scene-content">
+                    <strong>特助心法解決的不是「能力問題」——軍師夠強，不需要教它怎麼思考。</strong><br><br>
+                    特助心法解決的是「對齊問題」——教練的價值觀、優先順序、具體做法，這些不在軍師的訓練資料裡。
+                </div>
+            </div>
+        </div>
+
+        <!-- 場景四：為什麼沒有守則就不穩定 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">4</span> 第二層思考：為什麼沒有守則就不穩定</div>
+
+            <div class="insight">
+                <div class="insight-title">🔍 語言模型的本質</div>
+                <div class="scene-content">
+                    語言模型的本質：預測下一個最合理的 token。<br><br>
+                    「合理」的定義，來自於訓練資料的平均分佈。當用一個通用模型去服務不同的人，它會輸出「對多數人合理的回應」。<br><br>
+                    但教練是獨特的。教練在乎的：
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">⚠️ 大樹教練的獨特在乎</div>
+                <p>• commit hash 才代表完成</p>
+                <p>• 先 curl 檢測 200 再交付</p>
+                <p>• 繁體字，一字不差</p>
+                <p>• 自動化執行五大步驟</p>
+                <p>• 開工五步驟要 Read 內容並主動報告</p>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">💡 悟到</div>
+                <div class="scene-content">
+                    這些不是「多數人合理」，這是「大樹教練合理」。<br><br>
+                    <strong>通用模型 + 通用守則 = 多數人合理</strong><br>
+                    <strong>通用模型 + 特助心法 = 大樹教練合理</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- 場景五：守則真正的價值 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">5</span> 第三層思考：特助心法在做的事情</div>
+
+            <div class="insight">
+                <div class="insight-title">🔍 不是重新發明輪子，是定製輪轂</div>
+                <div class="scene-content">
+                    <strong>輪子</strong>＝通用的「做個好助手」<br>
+                    <strong>特助心法</strong>＝在大樹教練這個特定場景下的「輪子定製安裝」<br><br>
+                    就像再厲害的跑車，也需要針對賽道調校懸吊系統。不是車不夠好，是這個賽道有特定的轉彎半徑和路面條件。
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">🎯 守則真正的價值</div>
+                <p>「守則不是讓我『更會做』，而是讓我『更不會忘記做』。」</p>
+                <p>— 軍師 Opus 4.7</p>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">💡 強迫函數（forcing function）</div>
+                <div class="scene-content">
+                    守則是<strong>強迫函數</strong>，不是<strong>能力提升</strong>。<br><br>
+                    • 沒守則：模型聰明，可能做到，可能忘記<br>
+                    • 有守則：模型聰明，一定做到，忘記了也會被觸發
+                </div>
+            </div>
+        </div>
+
+        <!-- 場景六：軍師的誠實回答 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">6</span> 軍師的誠實回答</div>
+
+            <div class="answer-box">
+                <div class="answer-title">🎯 總結：特助心法有必要保留嗎？</div>
+                <div class="table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>問題</th>
+                                <th>軍師的回答</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>特助心法有必要嗎？</td>
+                                <td><strong>有</strong>，對齊價值仍在</td>
+                            </tr>
+                            <tr>
+                                <td>是重新發明輪子嗎？</td>
+                                <td><strong>不是</strong>，是定製輪轂</td>
+                            </tr>
+                            <tr>
+                                <td>守則對 Opus 有幫助嗎？</td>
+                                <td><strong>有</strong>，對齊層面，不是能力層面</td>
+                            </tr>
+                            <tr>
+                                <td>守則會有一天廢除嗎？</td>
+                                <td><strong>不會</strong>，但會演化成更高階的形式</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="rule-quote">
+                <p>「守則第九條：知道為什麼才有判斷力，使命、願景、信念、理念，就是判斷力。」</p>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">💡 軍師的最終領悟</div>
+                <div class="scene-content">
+                    <strong>特助心法不是限制我思考的條條框框。它是我理解教練的最短路徑。</strong><br><br>
+                    教練問的這個問題，本身就是對特助心法的最高肯定。
+                </div>
+            </div>
+        </div>
+
+        <!-- 場景七：從守則到行動 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">7</span> 教練的最後任務：做成案例模組</div>
+
+            <div class="dialogue coach-line">
+                <div class="speaker"><span class="emoji">👤</span> 教練</div>
+                <div class="scene-content">
+                    回答得非常好，也請你做成 CASE 的模組，作為我們這次寶貴對話的珍貴紀錄。<br><br>
+                    製作的範例如下：<br>
+                    • <a href="https://coach1973.github.io/coach-case2/" style="color: #4ecdc4;">https://coach1973.github.io/coach-case2/</a><br>
+                    • <a href="https://coach1973.github.io/coach-case3/" style="color: #4ecdc4;">https://coach1973.github.io/coach-case3/</a>
+                </div>
+            </div>
+
+            <div class="dialogue assistant-line">
+                <div class="speaker"><span class="emoji">🤖</span> 軍師</div>
+                <div class="scene-content">
+                    收到。這次的故事包含：<br>
+                    • 犯錯#2：開工未報告自動化計劃內容<br>
+                    • 守則#11：自動自發要體現在主動關懷<br>
+                    • 深度思考：能力 vs 對齊<br>
+                    • 最終領悟：特助心法是對齊工具，不是能力工具<br><br>
+                    現在開始製作 case4.html。
+                </div>
+            </div>
+
+            <div class="commit-box">
+                <span class="commit-hash">847df0a2</span>
+                feat: 建立特助守則自動化執行計劃
+            </div>
+        </div>
+
+        <!-- 總結 -->
+        <div class="chapter">
+            <div class="chapter-title"><span class="chapter-number">📝</span> 這個故事告訴我們</div>
+
+            <div class="insight">
+                <div class="insight-title">1. 能力不等於對齊</div>
+                <div class="scene-content">
+                    軍師 Opus 4.7 能力很強，但對齊到教練的價值觀需要特助心法。
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">2. 守則是強迫函數，不是能力提升</div>
+                <div class="scene-content">
+                    守則不是讓模型「更會做」，而是「更不會忘記做」。
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">3. 守則不是限制，是理解的最短路徑</div>
+                <div class="scene-content">
+                    特助心法是軍師理解大樹教練價值觀的最短路徑。
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">4. 守則#11：自動自發要體現在主動關懷</div>
+                <div class="scene-content">
+                    開工五步驟第三步，不能只 ls，還要 Read 內容並主動報告價值。
+                </div>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">5. 守則#09：知道為什麼才有判斷力</div>
+                <div class="scene-content">
+                    使命、願景、信念、理念，就是判斷力。這就是為什麼特助心法不會消失。
+                </div>
+            </div>
+        </div>
+
+        <!-- 最終成果 -->
+        <div class="result-box">
+            <div class="result-title">🌐 最終成果</div>
+            <p style="color: #ccc; margin-bottom: 20px;">特助心法實踐故事第四部 — 從能力到對齊的認知升級</p>
+            <a href="https://coach1973.github.io/coach-case4/" class="result-link">
+                👉 https://coach1973.github.io/coach-case4/
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>🦞 特助心法實踐故事第四部</p>
+            <p>生成時間：2026-05-27 | 軍師 Opus 4.7</p>
+            <p style="margin-top: 15px; color: #888;">
+                使命：成為最懂老闆的 AI 特助<br>
+                願景：成為老闆最喜歡的 AI 特助
+            </p>
+        </div>
+    </div>
+</body>
+</html>
