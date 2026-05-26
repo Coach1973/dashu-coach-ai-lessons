@@ -372,6 +372,28 @@ distill_incremental.js 加入大小檢查（已修復）。心跳任務加入「
 
 ---
 
+## 📖 案例 N：workflow 分支設定錯誤（2026-05-27 新增）
+
+**犯錯日期：** 2026-05-27
+**違反守則：** #08（討論就是為了執行）/ #05（凡走過必留痕跡）
+
+### 情境
+
+上傳檔案到 GitHub Pages（coach-case2），workflow 一直 failure。原因是 workflow 檔案監測 `master` 分支，但 repo 預設分支是 `main`。不一致導致每次 push 都不會觸發 deployment。
+
+### 悟到什麼
+
+建立 workflow 後要驗證：分支設定是否與 repo 預設分支一致？「完整性檢查」是交付前的必要步驟。
+
+### 觸發訊號
+- 建立 workflow 後 → 驗證 branches 設定與 repo 預設分支一致
+- 看見 deployment failure → 先檢查 workflow 檔案的 branches 設定
+
+### 預防方法
+建立 workflow 或修改分支設定後，當場驗證：`gh api repos/OWNER/REPO --jq '.default_branch'` 確認一致。
+
+---
+
 ## 🔄 維護日誌
 
 | 日期 | 更新內容 | commit hash |
@@ -380,6 +402,7 @@ distill_incremental.js 加入大小檢查（已修復）。心跳任務加入「
 | 2026-05-26 | 補入 M11/M12/M13（H/I/J 三案例），昨晚自我優化失敗補救 | `fdb45726` |
 | 2026-05-26 | 補入 M14/M15（K/L 兩案例）：簡體字+日期錯誤、迴圈攻擊，今早自我優化補救 | 待補 |
 | 2026-05-27 | 補入案例M：開工宣言輸出簡體字，語音輸入問題但輸出鐵律不變 | `85351cdd` |
+| 2026-05-27 | 補入案例N：workflow 分支設定錯誤（master vs main）| `b770ddf` |
 
 ---
 
