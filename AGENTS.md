@@ -27,14 +27,15 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 4. Read `路徑大全.md` — 所有路徑、密碼、API Key（找不到東西先讀這份）
 5. Read `distill/top10_dynamic.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
 6. Read `shared-relay/SUPERGROUP-MAP.md` — 🔴 超級群組地圖（每次啟動必讀）
-7. Read `USER.md` — 教練偏好與習慣
-8. Read `shared-relay/對話分工表.md` — 團隊結構
-9. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶）
+7. Read `shared-relay/CONSENSUS.md` — 🔴 當晚最新共識（確保不脫離團隊議程）
+8. Read `USER.md` — 教練偏好與習慣
+9. Read `shared-relay/對話分工表.md` — 團隊結構
+10. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶）
 
 ### 第二層：按需讀取
-10. Read `DAILY_DIGEST.md` — 近期任務摘要（心跳時必讀，啟動時選讀）
-11. Read `memory/YYYY-MM-DD.md`（今天）— 近期脈絡（>30KB 不讀）
-12. **若為主對話 Session**：也讀 `MEMORY.md`（長期記憶，勿在群組中載入）
+11. Read `DAILY_DIGEST.md` — 近期任務摘要（心跳時必讀，啟動時選讀）
+12. Read `memory/YYYY-MM-DD.md`（今天）— 近期脈絡（>30KB 不讀）
+13. **若為主對話 Session**：也讀 `MEMORY.md`（長期記憶，勿在群組中載入）
 
 ## Memory
 
@@ -45,7 +46,7 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 |------|---------|---------|
 | `特助心法.md` | 任務開始前 | 這次行動是否違反使命/願景/守則？ |
 | `distill/top10_dynamic.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
-| `shared-relay/CONSENSUS.md` | 任務開始前 | 這個決策是否符合團隊最新共識？ |
+| `shared-relay/SUPERGROUP-MAP.md` | 任務開始前 | 這個決策是否符合團隊最新架構？ |
 
 **發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 distill/failure-case-handbook.md**
 
