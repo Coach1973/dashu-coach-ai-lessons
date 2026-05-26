@@ -101,8 +101,8 @@
 
 | # | 優先 | 任務 | 說明 |
 |---|------|------|------|
-| 1 | 🟡 中 | 觀察下一次心跳結果 | 14:00 台灣時間確認心跳是否用繁體、日期是否正確 |
-| 2 | 🟡 中 | 燒錄系統驗證 | 教練即將關閉視窗測試，確認新 session 是否帶燒錄內容 |
+| 1 | 🟡 中 | 觀察下一次心跳結果 | 確認心跳是否用繁體、日期是否正確、是否引用到 21 守則 |
+| 2 | 🟡 中 | SOUL.md 燒錄驗證 | 下一個 session 確認小龍蝦 context 中確實有 21 守則內容 |
 | 3 | 🟡 中 | `session-memory/handler.js` 時區修正追蹤 | OpenClaw 升級後會被覆寫，需要在升級後重新補修 |
 | 4 | 🟢 低 | 赫米斯檢討報告 | 教練尚未說明目標 |
 
@@ -110,9 +110,10 @@
 
 ## ⚠️ 特別提醒
 
-- **燒錄系統需要新 session 才生效** — 教練要關閉視窗重新開，測試開工宣言是否正常
-- **openclaw.json 不在 git 管理** — 更新直接生效，無需 commit
-- **~/.claude/CLAUDE.md 不在 git 管理** — 更新直接生效，無需 commit
+- **SOUL.md 在 git 管理，已 commit + push（faf1c6d7）** — 下次 session 自動生效，無需額外操作
+- **bootstrap 注入機制**：SOUL.md 由 OpenClaw `loadWorkspaceBootstrapFiles()` 自動讀取，每次 session 都注入 system prompt
+- **所有 cron 孤立 session（isolated）也生效** — 只要 `lightContext` 不是 `true`，都會包含 SOUL.md
+- **openclaw.json 不在 git 管理** — 確認目前版本無 systemPromptOverride 欄位（已 revert 正確）
 
 ---
 
@@ -120,14 +121,14 @@
 
 下次開工時，確認：
 
-- [ ] 開工宣言是否自動朗讀？（小龍蝦對教練）
-- [ ] 特助心法 21 守則是否在 context 裡？
-- [ ] 執行細則 9 條是否在 context 裡？
-- [ ] 背景對照機制是否設定？（對外部用戶）
+- [ ] 小龍蝦回應時是否有引用/遵循 21 守則的行為？
+- [ ] 特助心法 21 守則是否在 system prompt 裡（SOUL.md 有效）？
+- [ ] 心跳 cron 是否正確執行（繁體中文、不亂造數據）？
+- [ ] `1-HB.md` 第零步是否被遵守（強制讀特助心法）？
 
 ---
 
-*軍師交接紙條完成 | 2026-05-26 晚間場 | 軍師 Claude Opus 4.7*
+*軍師交接紙條完成 | 2026-05-26 深夜場 | 軍師 Claude Sonnet 4.6 桌面版*
 
 ---
 
