@@ -1,23 +1,6 @@
-# 教練對話蒸餾（2026-05-25）
-共 20 則
+# 教練對話蒸餾（2026-05-26）
+共 3 則
 
-1. User sent an image of Amber Chen's BNI profile card and provided event details for June 11th: "用BNI找出企業第二曲線- 定位翻轉及生態圈建置成果分享-Amber新竹B區執董", 14:00-17:00 at 三道門文創旅店-中西區成功路77號, with a "我要報名" (I want to register) button.
-2. User received a scheduled heartbeat cron job (768246fb-0b1a-409a-985c-f7419954c29c) instructing the assistant to read HB.md, execute one small task, and write progress to HEARTBEAT.md.
-3. User sent a system heartbeat instruction to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks from prior chats.
-4. User received a scheduled heartbeat cron job (768246fb-0b1a-409a-985c-f7419954c29c) instructing the assistant to read HB.md, execute one small task, and write progress to HEARTBEAT.md.
-5. User sent a system heartbeat instruction to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks from prior chats.
-6. User sent a heartbeat poll message instructing OpenClaw to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks.
-7. User sent a heartbeat poll message instructing OpenClaw to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks.
-8. User sent a heartbeat poll message instructing OpenClaw to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks.
-9. User sent a cron-triggered heartbeat task instructing OpenClaw (as "小龍蝦特助") to read `~/.openclaw/workspace/HB.md`, select one small task from it, execute it, and briefly write the execution status to `HEARTBEAT.md`, with principles of doing only one small step per heartbeat and not notifying the coa
-10. User sent a cron-triggered task for "YouTube新聞每日自動抓取" (YouTube news daily automatic fetch) instructing OpenClaw to execute `~/openclaw_scripts/youtube_monitor.sh` and output results to `~/Desktop/youtube_news.json`.
-11. User sent a cron-triggered heartbeat task instructing OpenClaw (as "小龍蝦特助") to read `~/.openclaw/workspace/HB.md`, select one small task from it, execute it, and briefly write the execution status to `HEARTBEAT.md`, with principles of doing only one small step per heartbeat and not notifying the coa
-12. User sent a heartbeat poll message instructing OpenClaw to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks.
-13. User sent a heartbeat poll message instructing OpenClaw to read HEARTBEAT.md from the workspace if it exists and follow it strictly, without inferring or repeating old tasks.
-14. User received a system message showing a proactive care message sent at 10:04 from "小龍蝦" to "教練" reporting morning routine checks complete (14 cron items normal, Git backed up, no pending background tasks), YouTube news fetch completed, and asking if there was anything to discuss or handle, followed
-15. User sent a cron-triggered task for "YouTube 頻道掃描與評估" (YouTube channel scan and evaluation) instructing OpenClaw to execute `python3 /Users/bymyway/.openclaw/workspace/skills/youtube-monitor/fetch-youtube-rss.py` to get the latest video list from 31 channels in the past 48 hours, rate videos by titl
-16. User sent a cron-triggered heartbeat task instructing OpenClaw (as "小龍蝦特助") to read `~/.openclaw/workspace/HB.md`, select one small task from it, execute it, and briefly write the execution status to `HEARTBEAT.md`, with principles of doing only one small step per heartbeat and not notifying the coa
-17. User sent a cron-triggered "每4小時主動關懷" (every 4 hours proactive care) message from "小龍蝦" to "大樹教練", asking how the day was going and if there was anything to discuss or help needed, with a note that it was a routine greeting and would not proactively list to-do items unless the coach asked.
-18. User sent a cron-triggered "每4小時主動關懷" (every 4 hours proactive care) message from "小龍蝦" to "大樹教練", asking how the day was going and if there was anything to discuss or help needed, with a note that it was a routine greeting and would not proactively list to-do items unless the coach asked.
-19. User received a system notification about a failed async exec command with signal SIGTERM, showing full cron job status output for 14 jobs, with instructions to handle the result internally and not relay it unless explicitly requested.
-20. User received a system message showing a proactive care message sent at 14:02 from "小龍蝦" to "教練" greeting on Sunday afternoon and offering to chat or help, followed by a heartbeat poll instructing OpenClaw to read HEARTBEAT.md if it exists and follow it strictly.
+1. User received a system notification about the Self Improvement Agent's completion report (distill incremental failure fixed, HEARTBEAT.md model info corrected, memory limit warning updated, top10_dynamic.md distilled, new error record added), but did not explicitly request any action.
+2. User received a system notification about the 6:03 AM proactive check-in message that was sent to 大樹教練, but did not explicitly request any action.
+3. User received system notifications about failed async cron jobs (SIGTERM signals for calendar weekly sync and Self Improvement Agent), but did not explicitly request any action.
