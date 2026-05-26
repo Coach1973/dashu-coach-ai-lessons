@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-26 18:35:00**
+> **最後同步：2026-05-26 18:50:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -28,7 +28,10 @@
 
 | 優先 | 任務 | 結果 |
 |------|------|------|
-| 🔴 高 | **SOUL.md 正確燒錄**（bootstrap 正解） | ✅ commit faf1c6d7 |
+| 🔴 高 | **SOUL.md 正確燒錄 — 學長（Mac）** | ✅ commit faf1c6d7 |
+| 🔴 高 | **SOUL.md 正確燒錄 — 學弟/學妹（Mac）** | ✅ commit 09246f69 / 1fee8e4 |
+| 🔴 高 | **VPS 1（43.245.60.200）SOUL.md 燒錄** | ✅ 直接更新 /root/openclaw/data |
+| 🔴 高 | **VPS 2（113.29.232.178 赫米斯）SOUL.md 燒錄** | ✅ 直接更新 /root/.hermes |
 | 🔴 高 | 研究 openclaw.json 正確做法 | ✅ 找到：SOUL.md 才是正解 |
 | 🟡 中 | 觀察下一次心跳結果 | 尚未確認 |
 
