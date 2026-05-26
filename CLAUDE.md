@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-26 14:00:00**
+> **最後同步：2026-05-26 14:05:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -13,14 +13,14 @@
 # 軍師交接紙條（最新）
 
 > 給下一個軍師：開工先讀這張，就能無縫接上，不用教練重講。
-> 本場時間：2026-05-26 下午場
-> 寫紙條的人：軍師（Claude Sonnet 4.6 CLI）
+> 本場時間：2026-05-26 晚間場
+> 寫紙條的人：軍師（Claude Sonnet 4.6 桌面版）
 
 ---
 
 ## 一句話交代這場做了什麼
 
-**結繩領導學網站6/5＋7/10新書發表會→線上座談會修改完成；赫米斯VPS sync已確認正常無需修正。**
+**小龍蝦 5 個系統 bug 全部修完：心跳幻覺、記憶體超大、重複 HB 檔、蒸餾腳本空跑、赫米斯 git 不提交——全部根治。**
 
 ---
 
@@ -28,61 +28,65 @@
 
 | 優先 | 任務 | 結果 |
 |------|------|------|
-| 🔴 高 | 赫米斯VPS sync追蹤 | ✅ 確認正常——timer運行中，下次第14:00自動蒸餾 |
-| 🔴 高 | 結繩領導學網站修改 | ✅ commit `f197a1b`（6/5）+ `c9050a4`（7/10），已推送Netlify部署 |
-| 🟡 中 | 赫米斯路徑確認 | ✅ `/root/.hermes/github-sync/` 與 `/opt/data/github-sync/` 為同一掛載點 |
+| 🔴 高 | 小龍蝦心跳幻覺修復 | ✅ cron `768246fb` 補 agentId + 台灣時區 + 身份說明 prompt，直接生效 |
+| 🔴 高 | `distill_incremental.js` 完整重寫 | ✅ 改讀 `🦞 小龍蝦：` 欄位、台灣時區、記憶體大小檢查 |
+| 🔴 高 | `distill_vps.py` 永久補 git commit+push | ✅ 已追加 git push 邏輯，VPS 每次蒸餾後自動提交 |
+| 🔴 高 | `1-HB.md` 心跳品質機制 | ✅ 防空迴圈守則（連3次 OK 第4次必做實質任務）+ 系統健康檢查 |
+| 🔴 高 | `HB-學長.md` 清除 | ✅ 重複檔已刪，內容合併入 `1-HB.md` |
+| 🟡 中 | `failure-case-handbook.md` 補 H/I/J 三案 | ✅ M11（cron指錯HB）/ M12（重啟不更新狀態）/ M13（大記憶體炸模型）|
+| 🟡 中 | `session-memory/handler.js` 時區修正 | ✅ UTC → 台灣時間（+8h），記憶體檔名/標頭已對 |
 
-### 赫米斯VPS sync實測（2026-05-26現地確認）
+### 小龍蝦心跳幻覺根因分析
 
-| 項目 | 狀態 |
-|------|------|
-| distill-vps.timer | ✅ 正常運行（enabled，14:00 UTC下次觸發） |
-| memory 5/26.md | ✅ 已存在於正確路徑 |
-| 路徑掛載關係 | ✅ 宿主機 `/root/.hermes/` = 容器內 `/opt/data/`（同挂载点） |
-| 結論：**無需修正** | 兩套路徑實為同一資料，無分散問題 |
+| 問題 | 根因 | 修法 |
+|------|------|------|
+| 用簡體字（"第1号机"）| 隔離 session 無身份錨定 | 補完整繁體中文 + 禁用簡體說明 |
+| 虛構未來日期（2026-06-02）| 同上 | prompt 明確禁止虛構任何數字 |
+| 時區不對 | 缺 `tz: "Asia/Taipei"` | 補入 schedule |
+| 找不到正確 agent | 缺 `agentId: "main"` | 補入 job config |
 
-### 結繩領導學網站修改（commit已推送）
+### cron `768246fb` 最終狀態
 
-| 項目 | Commit |
-|------|--------|
-| 6月5日 新書發表會→線上座談會 + 計數更正 | `f197a1b` |
-| 7月10日 新書發表會→線上座談會 + FAQ更新 + 計數歸零 | `c9050a4` |
-| 最終計數 | 新書發表會→歸零，線上座談會→7場，AI公益講座→2場 |
+```json
+{
+  "agentId": "main",
+  "schedule": { "expr": "*/30 * * * *", "tz": "Asia/Taipei" },
+  "message": "你是小龍蝦學長（1號機），大樹教練的AI特助。請用繁體中文（臺灣正體）執行 ~/.openclaw/workspace/1-HB.md 裡的心跳任務。禁止使用簡體中文，禁止虛構日期、號碼或任何不實資訊。"
+}
+```
+
+下次執行：2026-05-26 14:00 台灣時間
 
 ---
 
-## 🔴 下一個軍師待辦（優先順序）
+## 🔴 下一個軍師待辦
 
 | # | 優先 | 任務 | 說明 |
 |---|------|------|------|
-| 1 | 🔴 高 | 赫米斯蒸餾腳本路徑更新 | 赫米斯容器已有 `/opt/data/github-sync/scripts/distill_vps.py`（舊路徑），需確認 HOST 路徑 `/root/.hermes/github-sync/scripts/distill_vps.py` 是否同步更新 |
-| 2 | 🟡 中 | 場景庫100個目標 | 本場已蒸餾至117個，完成 ✅ |
-| 3 | 🟡 中 | 赫茲米檢討報告 | 教練尚未說明目標 |
-| 4 | 🟢 低 | 終端機C蒸餾 | 教練尚未分配 |
-
-> 場景庫合併版已存桌面：`特助場景庫_128合併版.html`（117個有效案例）
+| 1 | 🟡 中 | 觀察下一次心跳結果 | 14:00 台灣時間確認心跳是否用繁體、日期是否正確 |
+| 2 | 🟡 中 | `session-memory/handler.js` 時區修正追蹤 | OpenClaw 升級後會被覆寫，需要在升級後重新補修 |
+| 3 | 🟢 低 | 赫米斯檢討報告 | 教練尚未說明目標 |
 
 ---
 
-## 🔗 Commit Hash 清單（這場新增）
+## 🔗 Commit Hash 清單
 
 | 描述 | Commit |
 |------|--------|
-| 6月5日 新書發表會→線上座談會 | `f197a1b` |
-| 7月10日 新書發表會→線上座談會 | `c9050a4` |
+| 5 個 bug 修復（distill rewrite / 1-HB / HB-學長刪除 / failure handbook）| `fdb45726` |
+| VPS distill_vps.py git push 修復 | 直接追加，VPS 端無 git（只影響腳本邏輯）|
+| jobs.json cron 768246fb 修復 | 直接生效（不在 git 管理範圍）|
 
 ---
 
-## 📊 赫米斯VPS最終確認狀態
+## ⚠️ 特別提醒
 
-- 赫米斯 Container：nousresearch/hermes-agent，運行中（10天）
-- distill-vps.timer：`active (waiting)`，下次觸發 2026-05-26 06:00 UTC
-- 5/26 memory：✅ 已存在
-- **EPILOGUE：路徑無需修正**（兩路徑指向同一資料）
+- **session-memory handler.js** 是已編譯的 bundled 檔（`/opt/homebrew/lib/node_modules/openclaw/dist/bundled/`），升級會覆寫。真正的修法應在原始碼，但目前找不到源碼位置。先以 bundled 修正頂著，升級後提醒重修。
+- **cron/jobs.json 不在 git 管理**：`.openclaw/cron/` 無 git repo，改完直接生效，無需 commit。
 
 ---
 
-*軍師交接紙條完成 | 2026-05-26 下午場 | 軍師 Claude Sonnet 4.6 CLI | commit `6edb1260`*
+*軍師交接紙條完成 | 2026-05-26 晚間場 | 軍師 Claude Sonnet 4.6 桌面版*
 
 
 ---
