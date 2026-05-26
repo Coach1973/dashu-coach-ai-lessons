@@ -325,3 +325,4 @@
 [2026-05-26 14:19] [CoachWU] 855d942c: fix: 雙重保障——1-HB.md 強制第零步讀特助心法 + openclaw.json systemPrompt 注入21守則
 [2026-05-26 14:22] [CoachWU] e36e5463: fix: 1-HB.md 禁止事項更新——Gemini過時資訊移除，主動讀大檔改為按需讀取
 [2026-05-26 14:25] [CoachWU] 5b2cfbc4: [auto] 14:25 對話記錄更新（6 條）
+[2026-05-26 14:32] [CoachWU] 91acbce1: auto-backup 2026-05-26 14:32
