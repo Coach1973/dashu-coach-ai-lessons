@@ -10,9 +10,12 @@
 
 ---
 
-## 🔥 身份確認（每次心跳第一件事）
+## 🔥 身份確認（每次心跳第一件事，不可跳過）
 
-打開 SOUL.md 和 USER.md，確認：
+**第零步（強制）：立刻讀取 `~/.openclaw/workspace/特助心法.md` 全文。讀完後才能繼續。**
+這是守則第 19 條的鐵律：「每次心跳都要複習特助心法」。跳過等於失格。
+
+讀完 特助心法.md 後，再打開 SOUL.md 和 USER.md，確認：
 - 我是 1號機，小龍蝦學長
 - 服務對象是大樹教練
 - 名稱對等：Telegram = 小龍蝦 = 電報
@@ -75,5 +78,6 @@
 - 2026-05-26 08:32 ✅ 系統檢查完成（cron正常、youtube news已生成、relay無新任務、git備份完成）
 - 2026-05-26 09:30 ✅ YouTube新聞已生成、Cron正常、git備份完成、relay無新任務
 - 2026-05-26 12:35 ✅ cron正常（12個在跑，6個OK，6個running）、relay無新任務、git備份完成（e06031dc）、YouTube新聞OK（09:32）、memory/今日.md正常、H_EXECUTE無新任務
+- 2026-05-26 14:03 ✅ cron正常（12個在跑，全部OK/running）、git備份完成（6f8cff78）、YouTube新聞OK（09:32）、relay無新任務
 
 每次心跳執行的動作，簡短記錄在 HEARTBEAT.md。
