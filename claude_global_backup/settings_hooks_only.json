@@ -11,23 +11,23 @@
           {
             "type": "command",
             "command": "/Users/bymyway/.openclaw/workspace/scripts/pre_task_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/auto_goal_hook.sh"
           }
         ]
       }
     ]
   },
   "permissions": {
+    "deny": [],
     "allow": [
       "Read(/Users/bymyway/**)",
       "Write(/Users/bymyway/**)",
-      "Bash(*)",
-      "Edit(*)",
-      "Read(*)",
-      "Write(*)",
-      "WebFetch(*)",
-      "WebSearch(*)"
-    ],
-    "deny": [],
-    "defaultMode": "dontAsk"
+      "Bash(cd /Users/bymyway/.openclaw/workspace && git *)",
+      "Bash(sshpass -p * ssh -o StrictHostKeyChecking=no root@43.245.60.200 *)",
+      "Bash(scp -o StrictHostKeyChecking=no *)"
+    ]
   }
 }
