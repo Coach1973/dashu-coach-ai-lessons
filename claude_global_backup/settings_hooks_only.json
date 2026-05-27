@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/feed_junshi_handoff.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/pre_task_hook.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read(/Users/bymyway/**)",
+      "Write(/Users/bymyway/**)",
+      "Bash(*)",
+      "Edit(*)",
+      "Read(*)",
+      "Write(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ],
+    "deny": [],
+    "defaultMode": "dontAsk"
+  }
+}
