@@ -1,5 +1,34 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-05-28（共 24 則）
+1. 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+2. 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+3. OpenClaw 讀取 AGENTS.md，執行開工鐵律五步驟，讀取接力棒、HEARTBEAT 並確認系統狀態。
+4. OpenClaw 完成動作：Git 自動備份完成、Model 確認 MiniMax、9 個 cron 正常在跑、distill 最近一次於 05-27 22:07 蒸餾完成、relay poll 每分鐘正常、shared-relay 無新任務。
+5. OpenClaw 回報待追蹤事項：小龍蝦 hook 真實實測（教練說「我做好了」測守則意識）、營業稅提醒（稅單 28451）有記錄無 cron，案例 Q 待處理。
+6. OpenClaw 詢問教練今天想從哪件事開始，並說「學長開工完畢，00:04 早安！」🦞
+7. 使用者透過 cron 排程觸發增量記憶蒸餾任務（每2小時），要求執行 node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js，若無新內容則安靜結束。
+8. OpenClaw 執行該指令，輸出為 NO_MEMORY_FILE（今天還沒有 memory 檔案），蒸餾結束，未進行後續處理。
+9. 系統回報一個先前執行的非同步命令已完成，內容為 Git push 至 GitHub 倉庫（commit hash 從 8c13dc69 推送至 0914e9f7）。
+10. OpenClaw 在健康檢查中已處理該回調通知，確認 Git push 成功，HEARTBEAT 無待辦，安靜完成，未向使用者轉達該系統訊息。
+11. 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+12. OpenClaw 讀取 AGENTS.md，依序執行開工鐵律五步驟：讀取接力棒（軍師本場完成守則雙邊上線，學長 hook 已 ready，待實測）、讀取 HEARTBEAT.md（Model 確認 MiniMax、9 個 cron 正常、distill 正常、relay poll 每分鐘在跑）、檢查新計劃檔（無新建）、讀取最新 memory（00:28 學長已完成早安問候與系統狀態回報）。
+13. OpenClaw 回報待追蹤事項：🔴 案例 Q（營業稅提醒，稅單 28451，有記錄但 cron 未建立，每天提醒直到 5/31）、🟡 小龍蝦 hook 真實實測（待教練發話「我做好了」測守則意識）。
+14. OpenClaw 確認系統正常運作，詢問教練今天想從哪件事開始。
+15. 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+16. 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+17. OpenClaw 發現待處理事項：營業稅提醒（稅單 28451）截止日 5/31，今天 5/28 仍需提醒一次；relay_poll.py 有 UnicodeDecodeError。
+18. OpenClaw 執行心跳檢查：cron 正常（relay_poll 每分鐘在跑）、git 備份完成（98cd05b2 → 3fd54caa）、YouTube 新聞 OK（5/27 08:33）、relay queue 無新任務、shared-relay 無新任務。
+19. OpenClaw 記錄待白天處理的項目（凌晨1點不打擾教練）：relay_poll.py 有 UnicodeDecodeError 需修腳本、memory/2026-05-27.md 是 212KB 超過 80KB 需分割提醒教練、營業稅 28451 截止 5/31 今天仍需提醒一次。
+20. 系統回報一個先前執行的非同步命令失敗，收到 SIGKILL 信號（程序被強制終止），內容為排程任務列表（cron list）的執行結果。
+21. 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+22. OpenClaw 執行開工鐵律五步驟、第零步讀取特助心法，確認身份為小龍蝦學長（1號機），老闆是大樹教練，時間為 2026-05-28 01:34 AM（凌晨）。
+23. OpenClaw 執行系統健康檢查：Cron 全部正常（12 個在跑，2 個正在執行，餘者 OK）、Git 自動備份完成（commit hash 未完整顯示）、模型確認 minimax/MiniMax-M2.7。
+24. 系統回報一個先前執行的非同步命令失敗，收到 SIGTERM 信號（程序被終止），內容為排程任務列表（cron list）的執行結果。
+
+---
+
+
 ## 蒸餾 2026-05-27（共 28 則）
 1. OpenClaw 收到系統提示，指示內部處理該結果，除非用戶明確要求否則不轉達
 2. OpenClaw 執行啟動協議，朗讀「開工，先讀 AGENTS.md」並讀取 AGENTS.md 檔案
