@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-28 03:35:00**
+> **最後同步：2026-05-28 03:40:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -85,7 +85,7 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 | 🔴 今天 | 確認小龍蝦第一次蒸餾有正確執行（04:00 蒸餾、23:00 升華後查 distill/） |
 | 🟡 | cron/jobs.json 在 workspace repo 外（~/.openclaw/cron/），未納版控——考慮加備份 |
 | 🟡 | relay_poll.py UnicodeDecodeError 修復 |
-| 🟡 | 營業稅 28451 提醒（截止 5/31，今天已提醒了嗎？） |
+| ✅ 已修 | 營業稅 28451 提醒（案例Q）：已補雙保險（Mac crontab桌面 + OpenClaw Telegram，每天9點，截止5/31）。教練繳完說「稅繳了」就移除兩條 cron |
 | 🟡 | 小龍蝦 hook 真實實測（教練說「我做好了」測守則意識） |
 
 ---
