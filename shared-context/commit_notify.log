@@ -479,3 +479,6 @@
 [2026-05-27 12:26] [CoachWU] de5974a4: [auto] 12:26 對話記錄更新（4 條）
 [2026-05-27 12:29] [CoachWU] 9376bc86: 修復 post-commit 通知腳本 COMMIT_HASH 未定義錯誤（空 commit 驗證）
 [2026-05-27 12:34] [CoachWU] 49b43c96: auto-backup 2026-05-27 12:33
+[2026-05-27 12:35] [CoachWU] 774f731a: auto-backup 2026-05-27 12:34
+[2026-05-27 12:35] [CoachWU] 73bac858: auto-backup 2026-05-27 12:34
+[2026-05-27 12:49] [CoachWU] 83a23276: 小龍蝦守則自動對照 hook 上線 + 備份
