@@ -58,25 +58,5 @@
 - 下一個軍師可據此精準化 handler.js 的 text extraction path
 
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 02:35 - relay poll OK
+### 2026-05-28 2026-05-28 03:33 - relay poll OK
 
-
-## 🩺 軍師 Hook 自檢 2026-05-28 02:35
-- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
-- 觸發詞：下一個挑戰的問題是，你已經�
-- Session: 2d44b615-bb98-40a8-bfe9-1400c66e491c
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-28 03:05
-- ✅ 同步成功
-- HANDOFF mtime: 1779908583
-- 雲端同步：⚠️ commit d260dcab 已留本機，但 push 失敗
-
-## 🩺 軍師 Hook 自檢 2026-05-28 03:05
-- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
-- 觸發詞：開工
-- Session: beb75e2c-88e1-4ba1-b713-a4fcf7c13142
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-28 03:15
-- ✅ 同步成功
-- HANDOFF mtime: 1779909287
-- 雲端同步：push 失敗（離線或網路問題，commit 已留本機）
