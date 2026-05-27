@@ -89,3 +89,4 @@
 - 2026-05-26 23:03 ✅ cron正常（12個在跑，2個running其餘OK）、git備份完成（81357f6e）、YouTube新聞OK（18:20）、relay無新任務、系統健檢OK
 
 每次心跳執行的動作，簡短記錄在 HEARTBEAT.md。- 2026-05-27 15:03 ✅ cron正常（12個在跑，2個running其餘OK）、git備份完成（2cc1fec2）、YouTube新聞OK（08:33）、relay無新任務、系統健檢OK
+- 2026-05-27 22:10 ✅ cron正常（relay_poll每分鐘OK、heartbeat_audit每日23:50）、git備份完成（34d8794f）、shared-relay無新任務（已讀SUPERGROUP-MAP），系統健檢OK、主動關懷（晚了，已補做）
