@@ -21,6 +21,18 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
+## 🔴 重大缺失記錄（2026-05-27）
+
+**案例O：模型設定 kimi 未落地，手動切換無效，損失約 $60 USD**
+- 根本原因：openclaw.json main model = kimi/kimi-k2.6，UI 切換不寫入設定檔，gateway 重啟就彈回
+- 三天內無任何助教主動警告教練
+- 已修復：main model → minimax/MiniMax-M2.7，gateway 重啟確認
+- 已寫入失敗案例手冊案例O + top10_dynamic 排行 #0（最高優先）
+- 教練原話：「60 塊美金不少錢啊」
+
+**開工必查（本案後新增）：**
+確認 main model 是否為 minimax/MiniMax-M2.7，不是就立刻修並重啟 gateway
+
 ## 學長 relay poll
-### 2026-05-27 2026-05-27 21:04 - relay poll OK
+### 2026-05-27 2026-05-27 21:05 - relay poll OK
 
