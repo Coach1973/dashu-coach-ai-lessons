@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-28 03:15:00**
+> **最後同步：2026-05-28 03:35:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -58,11 +58,32 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 
 ---
 
+## 🔴 場景化 + 痛點計分閉環（本場下半場新增，commit b7fb98e8）
+
+教練拍板：總結不能只存檔，要變成守則的養分。完成第一檔（場景化）+ 第二檔（痛點計分）。
+
+```
+蒸餾摘要 distill/terminal_YYYY-MM-DD.md
+  └─① 場景化【LLM判斷｜OpenClaw升華cron每日23:00｜ID 533cfe54】
+  │    判斷值得收錄段落 → 格式D 6欄場景（保留教練原話）
+  │    → append 到 distill/特助場景庫_自動增量.md
+  │    → 每場景守則違反寫一筆 JSON → distill/痛點計分_log.jsonl
+  └─② 痛點計分【Python確定性計數｜Mac cron每日23:40｜rerank_top10.py】
+       統計 主庫+自動庫+計分log 守則違反次數 → 重排
+       → 輸出 distill/痛點排名_自動.md
+```
+
+**鐵律：養分自動煉，但守則本體（21條）絕不自動改——只產候選稿等教練拍板。**
+**第三檔（守則兩問句候選稿）教練說他自己會先寫上，軍師暫不動。**
+
+---
+
 ## ⚠️ 下一場的待辦
 
 | 優先 | 任務 |
 |------|------|
-| 🔴 今天 | 確認小龍蝦第一次蒸餾有正確執行（4小時後查 distill/ 目錄） |
+| 🔴 今天 | 確認小龍蝦第一次蒸餾有正確執行（04:00 蒸餾、23:00 升華後查 distill/） |
+| 🟡 | cron/jobs.json 在 workspace repo 外（~/.openclaw/cron/），未納版控——考慮加備份 |
 | 🟡 | relay_poll.py UnicodeDecodeError 修復 |
 | 🟡 | 營業稅 28451 提醒（截止 5/31，今天已提醒了嗎？） |
 | 🟡 | 小龍蝦 hook 真實實測（教練說「我做好了」測守則意識） |
@@ -73,8 +94,11 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 
 | 描述 | Commit |
 |------|--------|
-| 全自動總結系統上線 | `1cab76d1` |
+| 全自動總結系統上線（提取+蒸餾） | `1cab76d1` |
+| 場景化+痛點計分閉環 + 補回漏提交的 extract 腳本 | `b7fb98e8` |
 | 已 push 到 GitHub | ✅ |
+
+**⚠️ 血淚教訓：`git add` 含 repo 外路徑（cron/jobs.json）會整批拒絕，導致 extract 腳本前次假成功未上雲。多檔 add 後務必 `git diff --cached --name-only` 核對。**
 
 ---
 
