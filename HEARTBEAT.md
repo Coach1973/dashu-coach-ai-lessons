@@ -108,14 +108,5 @@
 ---
 
 ## 學長 relay poll
-### 2026-05-27 2026-05-27 09:33 - relay poll OK
+### 2026-05-27 2026-05-27 10:03 - relay poll OK
 
-
-### 2026-05-27 09:32 ✅
-- cron正常（13個在跑，2個running其餘OK）
-- git備份完成（e3745070）
-- YouTube新聞OK（5/26 18:20，1218行/33KB）
-- relay無新任務
-- memory/2026-05-27.md（69KB/695行）正常
-- shared-relay讀取完畢（SUPERGROUP-MAP.md確認分工）
-- 系統健檢OK
