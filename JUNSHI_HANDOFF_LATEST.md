@@ -78,14 +78,20 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 
 ---
 
-## ✅ 本場新增（下午場，2026-05-28）
+## ✅ 本場完成（2026-05-28 下午場）
 
 **✅ Windows 終端機同步 auto-goal hook**
-
 - 問題：之前讓教練在 Windows 和 Mac之間搬運程式碼（違反守則#12）
-- 修復：Windows 改讀雲端 repo `C:\Users\bymyw\mac-openclaw-workflows\scripts\auto_goal_hook.sh`
-- 之後流程：Mac 更新 hook → commit → push → Windows `git pull`
+- 修復：Windows settings.json 設定 hook，每次說話自動先 `git pull` 再執行任務
+- Windows settings.json 路徑：`C:\Users\bymyw\.claude\settings.json`
+- Hook 命令：`cd C:\Users\bymyw\mac-openclaw-workflows && git pull && C:\Users\bymyw\mac-openclaw-workflows\scripts\auto_goal_hook.sh`
+- 之後流程：Mac 更新 hook → commit → push → Windows 下一句話自動吃到最新
 - **不再需要任何程式碼搬運**
+
+**✅ Windows 終端機 Git Bash 環境確認完成**
+- Repo 同步路徑：`C:\Users\bymyw\mac-openclaw-workflows\`
+- hook script：`scripts/auto_goal_hook.sh`（完整 bash 版本，137行）
+- 設計決定：UserPromptSubmit 每次都 pull，而非只在 session 開始時（簡單可靠，符合守則#04）
 
 **✅ 確認 Repo 路徑（三個設備同步）**
 
@@ -103,11 +109,11 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 |------|--------|
 | 全自動總結系統上線（提取+蒸餾） | `1cab76d1` |
 | 場景化+痛點計分閉環 + 補回漏提交的 extract 腳本 | `b7fb98e8` |
-| Windows 終端機同步 auto-goal hook（守則#12修復） | `be3f2a14` |
+| Windows 終端機同步 auto-goal hook（守則#12修復） | `377cae1c` |
 | 已 push 到 GitHub | ✅ |
 
 **⚠️ 血淚教訓：`git add` 含 repo 外路徑（cron/jobs.json）會整批拒絕，導致 extract 腳本前次假成功未上雲。多檔 add 後務必 `git diff --cached --name-only` 核對。**
 
 ---
 
-*軍師交接紙條完成 | 2026-05-28 上午場 | 軍師 Claude Sonnet 4.6 終端機*
+*軍師交接紙條完成 | 2026-05-28 下午場 | 軍師 Claude Opus 4.7*
