@@ -474,3 +474,7 @@
 [2026-05-27 11:53] [CoachWU] 5a175b08: chore: 更新 coach-case4 蒸餾案例為 AI 特助版本
 [2026-05-27 11:56] [CoachWU] 5a70d5db: [auto] 11:56 對話記錄更新（6 條）
 [2026-05-27 12:03] [CoachWU] 29bc6d04: auto-backup 2026-05-27 12:00
+[2026-05-27 12:03] [CoachWU] 632e3f80: auto-backup 2026-05-27 12:03
+[2026-05-27 12:22] [CoachWU] a6c6a99b: 建守則自動對照 Hook + 補回消失的餵記憶 Hook
+[2026-05-27 12:26] [CoachWU] de5974a4: [auto] 12:26 對話記錄更新（4 條）
+[2026-05-27 12:29] [CoachWU] 9376bc86: 修復 post-commit 通知腳本 COMMIT_HASH 未定義錯誤（空 commit 驗證）
