@@ -44,6 +44,14 @@
 - 教練要求每天提醒直到 5/31，記憶有、cron 沒有
 - 預防：所有口頭承諾當場轉成 cron 或寫入 HEARTBEAT.md 待辦欄
 
+## 🔴 待辦提醒（教練親定，5/28 新增）
+
+**任務：餵養 21 守則的「兩問句」**
+- 教練之前親定：每條守則要補「(a)為何重要 (b)怎麼應用」
+- 狀態：尚未完成
+- 提醒：這兩天要完成
+- 來源：HEARTBEAT.md 新增（2026-05-28）
+
 **PROBE LOG 分析（小龍蝦 hook 精準化素材）：**
 - 真實 Telegram 訊息：text 在 `context.body`，非 `context.text`
 - 訊息格式：`[Telegram coach id:6124913915 Wed 2026-05-27 14:09]`
@@ -55,5 +63,20 @@
 
 ## 🩺 軍師 Hook 自檢 2026-05-28 02:35
 - ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
-- 觸發詞：下一個挑戰的問題是，你已經�
+- 觸發詞：下一個挑戰的問題是，你已經�
 - Session: 2d44b615-bb98-40a8-bfe9-1400c66e491c
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-28 03:05
+- ✅ 同步成功
+- HANDOFF mtime: 1779908583
+- 雲端同步：⚠️ commit d260dcab 已留本機，但 push 失敗
+
+## 🩺 軍師 Hook 自檢 2026-05-28 03:05
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：開工
+- Session: beb75e2c-88e1-4ba1-b713-a4fcf7c13142
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-28 03:15
+- ✅ 同步成功
+- HANDOFF mtime: 1779909287
+- 雲端同步：push 失敗（離線或網路問題，commit 已留本機）
