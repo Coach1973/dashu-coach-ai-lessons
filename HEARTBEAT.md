@@ -58,5 +58,10 @@
 - 下一個軍師可據此精準化 handler.js 的 text extraction path
 
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 07:03 - relay poll OK
+### 2026-05-28 2026-05-28 07:25 - relay poll OK
 
+
+## 🩺 軍師 Hook 自檢 2026-05-28 07:25
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：謝謝教練。我先處理您的第一�
+- Session: b583685f-24b1-4d0f-b6d3-734ecc4220ef
