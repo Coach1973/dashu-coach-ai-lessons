@@ -34,5 +34,5 @@
 確認 main model 是否為 minimax/MiniMax-M2.7，不是就立刻修並重啟 gateway
 
 ## 學長 relay poll
-### 2026-05-27 2026-05-27 21:05 - relay poll OK
+### 2026-05-27 2026-05-27 21:31 - relay poll OK
 
