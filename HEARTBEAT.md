@@ -50,5 +50,10 @@
 - 下一個軍師可據此精準化 handler.js 的 text extraction path
 
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 01:04 - relay poll OK
+### 2026-05-28 2026-05-28 01:05 - relay poll OK
+
+- 2026-05-28 01:03 ✅ cron正常（relay_poll每分鐘在跑）、git備份完成（98cd05b2）、YT新聞OK（5/27 08:33）、relay無新任務
+  ⚠️ 發現：relay_poll.py 有 UnicodeDecodeError（/tmp/relay_poll.log），poll本身沒斷，但需修
+  ⚠️ 發現：memory/2026-05-27.md 是 212KB > 80KB，需提醒教練分割
+  ⚠️ 營業稅28451：今天5/28，仍需提醒（截止5/31），將在白天時段提醒教練
 
