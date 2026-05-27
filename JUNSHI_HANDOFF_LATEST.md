@@ -78,12 +78,32 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 
 ---
 
-## 🔗 本場 Commit Hash
+## ✅ 本場新增（下午場，2026-05-28）
+
+**✅ Windows 終端機同步 auto-goal hook**
+
+- 問題：之前讓教練在 Windows 和 Mac之間搬運程式碼（違反守則#12）
+- 修復：Windows 改讀雲端 repo `C:\Users\bymyw\mac-openclaw-workflows\scripts\auto_goal_hook.sh`
+- 之後流程：Mac 更新 hook → commit → push → Windows `git pull`
+- **不再需要任何程式碼搬運**
+
+**✅ 確認 Repo 路徑（三個設備同步）**
+
+| 設備 | Repo 位置 |
+|------|---------|
+| Mac | `~/.openclaw/workspace/`（GitHub clone）|
+| Windows（Lenovo）| 桌面版：`C:\Users\bymyw\.claude\projects\` |
+| Windows（Lenovo） | 終端機：`C:\Users\bymyw\mac-openclaw-workflows\`（repo）|
+
+---
+
+## 🔗 Commit Hash
 
 | 描述 | Commit |
 |------|--------|
 | 全自動總結系統上線（提取+蒸餾） | `1cab76d1` |
 | 場景化+痛點計分閉環 + 補回漏提交的 extract 腳本 | `b7fb98e8` |
+| Windows 終端機同步 auto-goal hook（守則#12修復） | `be3f2a14` |
 | 已 push 到 GitHub | ✅ |
 
 **⚠️ 血淚教訓：`git add` 含 repo 外路徑（cron/jobs.json）會整批拒絕，導致 extract 腳本前次假成功未上雲。多檔 add 後務必 `git diff --cached --name-only` 核對。**
