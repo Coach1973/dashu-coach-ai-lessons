@@ -33,6 +33,22 @@
 **開工必查（本案後新增）：**
 確認 main model 是否為 minimax/MiniMax-M2.7，不是就立刻修並重啟 gateway
 
+## 🔴 今日自我優化發現（2026-05-27 晚間）
+
+**待修案例 P：主動關懷 cron 漏接**
+- 根本原因：早上與中午場均有「每4小時主動關懷」（cron ID: ef88279b...），但 crontab 中找不到紀錄，可能在重啟 gateway 時消失
+- 觸發訊號：「主動問候（每4小時一次）」寫在 1-HB.md，但 cron 表裡沒有對應 job
+- 預防：將主動關懷改為 1-HB.md 心跳時直接觸發（每次心跳都有機率執行），不再依賴独立 cron job
+
+**待修案例 Q：營業稅提醒（稅單 28451）有記錄但無 cron**
+- 教練要求每天提醒直到 5/31，記憶有、cron 沒有
+- 預防：所有口頭承諾當場轉成 cron 或寫入 HEARTBEAT.md 待辦欄
+
+**PROBE LOG 分析（小龍蝦 hook 精準化素材）：**
+- 真實 Telegram 訊息：text 在 `context.body`，非 `context.text`
+- 訊息格式：`[Telegram coach id:6124913915 Wed 2026-05-27 14:09]`
+- 下一個軍師可據此精準化 handler.js 的 text extraction path
+
 ## 學長 relay poll
-### 2026-05-27 2026-05-27 21:32 - relay poll OK
+### 2026-05-27 2026-05-27 22:07 - relay poll OK
 
