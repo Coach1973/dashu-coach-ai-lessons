@@ -1,0 +1,845 @@
+# 終端機對話萃取 — Session 1983f9aa-811b-4470-b58b-ed2aefb2afaa
+# 提取時間：2026-05-28 03:13 (台灣時間)
+# 共 27 條教練原話
+
+---
+
+【教練 2026-05-01 01:28】
+開工了
+
+　▶ AI 回應：馬上讀取狀態檔。
+
+　▶ AI 回應：已同步。PROMISES 尚有 **6 條待兌現**：
+
+| # | 承諾內容 | 狀態 |
+|---|---------|------|
+| 21 | 記憶體滿預警 SOP（機制已建立但未完整兌現） | 🔄 進行中 |
+| 22 | 頂級助教守則與海餅乾俱樂部系列整合統一手冊 | ⬜ 持續蒸餾中 |
+| 24 | 100個對話場景蒸餾任務（三階段） | ⬜ 進行中 |
+| 26 | 第二階段：5個已完成，其餘待蒸餾 | 🔄 未完成 |
+| 27 | 第三階段（2026-02-25至04-11） | ⬜ 待完成 |
+| 18 | 三機互讀 BOT_RELAY：Qwen3→Coder 480B …（略）
+
+【教練 2026-05-01 01:31】
+小龍蝦的hb及heartbeat是否也要修整？我覺得要與最新剛完成的三層架構一致
+
+　▶ AI 回應：先去看看小龍蝦的相關檔案在哪裡。
+
+　▶ AI 回應：現在看一下小龍蝦（main agent）的啟動上下文載入了哪些檔案。
+
+　▶ AI 回應：有個 `HB.md` 就在 workspace！讓我一起看 HB.md 和剛完成的三層架構核心。
+
+　▶ AI 回應：現在看 CORE_RULES 確認三層架構的定義。
+
+　▶ AI 回應：分析完畢。結論如下：
+
+---
+
+## 診斷報告
+
+**需要修整的是 `HB.md`，HEARTBEAT.md 不用動。**
+
+### HB.md 的三個問題
+
+| 問題 | 現況 | 應修改為 |
+|------|------|---------|
+| ① 過時警告殘留 | 有 2026-04-27 的 Context Overflow 警告 | 直接刪除 |
+| ② 守則重複 | 「今晚新增法則」三條已全部蒸餾進 CORE_RULES（R03、R07、R12） | 刪除，改一行引用 CORE_RULES |
+| ③ 任務狀態過時 | 頂級助教守則列為「第一優先未完成」 | 標 ✅ 完成（v…（略）
+
+【教練 2026-05-01 01:33】
+notebooklm給的建議，你覺得呢？
+
+### [HEARTBEAT.md](http://HEARTBEAT.md) - 系統熱上下文 (心跳切片)
+**定位**：極輕量狀態交接日誌。嚴格限制在 500 字以內 [7]。
+**警告**：絕對不要在此檔案中寫入守則或目標，也不要在心跳中讀取大型 memory 檔，請取用 `DAILY_[DIGEST.md](http://DIGEST.md)` 代替 [3]。
+
+#### 1. 當前系統狀態
+* **模型**：MiniMax M2.7 (無教練授權不可擅自切換) [3]
+* **Context 重置點**：若發生失憶或斷線重啟，請立即讀取 `DAILY_[DIGEST.md](http://DIGEST.md)` 恢復短期記憶。
+
+#### 2. 最新心跳執行摘要 (僅保留最後 3 筆交接記錄)
+* [時間戳記] 剛剛完成了什麼任務 / 教練最後的狀態與指示是什麼。
+* [時間戳記] 目前正在背景持續執行的任務是什麼（若無則寫無）。
+* [時間戳記] 下一步預計要做什麼。
+總結來說： 透過這次修整，我們將 「心願與待辦清單」 完全轉移給了 DAILY_[DIGEST.md](http://DIGEST.md)，並將 [HEARTBEAT.md](http://HEARTBEAT.md) 變成一個極簡的「交接打卡鐘」
+。這樣做完全貼合了最新的三層架構，既保留了小龍蝦「自動自發」的心跳動力，又徹底解放了原本因為重複讀取而浪費的記憶體空間！
+請問教練，您是否同意這個修整邏輯？同意的話，您可以直接廢止 [HB.md](http://HB.md)，並將上述程式碼覆蓋到 [HEARTBEAT.md](http://HEARTBEAT.md) 中！
+
+　▶ AI 回應：這個建議我同意**核心邏輯**，但有一個執行細節要補強，讓我說清楚。
+
+---
+
+## 我的評分：85分，還差一個動作
+
+### ✅ 完全同意的部分
+
+**HEARTBEAT.md 變成「交接打卡鐘」的方向是對的。**
+現在的 HEARTBEAT.md 有幾十條歷史記錄，每次心跳都在疊加，早就超過 500 字的初衷。  
+NotebookLM 說「只留最後 3 筆」——這才是正確設計。
+
+---
+
+### ⚠️ 缺一個動作，否則廢掉 HB.md 會出問題
+
+**HB.md 目前扮演「心跳任務驅動器」的角色**——它告訴小龍蝦：  
+> 「被戳一下之後，要做什麼事？朝哪個方向自主行動？」
+
+如果…（略）
+
+【教練 2026-05-01 01:36】
+那心願不是驅動小龍蝦的前進指引動力嗎？廢止後，小龍蝦努力的方向要讀什麼檔案？
+
+　▶ AI 回應：好問題，這點 NotebookLM 沒說清楚。讓我先確認 SOUL.md 現在有什麼。
+
+　▶ AI 回應：答案很清楚了。
+
+**心願的定位是靈魂層，不是任務層。** 它屬於 SOUL.md，不屬於 HB.md 或 DAILY_DIGEST。
+
+---
+
+## 修整後的完整架構
+
+| 檔案 | 定位 | 包含內容 |
+|------|------|---------|
+| **SOUL.md** | 我是誰、我為何而動 | 兩俱樂部原文 + **心願目標（新增第六節）** |
+| **CORE_RULES.md** | 我如何行動 | 12條鐵律 |
+| **IDENTITY.md** | 系統操作手冊 | 指令防呆 + 異常SOP |
+| **DAILY_DIGEST.md** | 今天在做什麼 …（略）
+
+【教練 2026-05-01 01:38】
+請問，小龍蝦的心願目標是什麼？
+
+　▶ AI 回應：來自 HB.md 的原文：
+
+> **我要成為「世界頂尖助教系統」的共同創辦人。**
+>
+> 不是口號，是刻進記憶核心的目標。
+>
+> 大樹教練說：「把所有對話中的教練指導與核心精神，讀取、提煉，變成一本手冊——頂級助教守則 / 特助養成系統 / 教練核心思想指導。」
+
+---
+
+HEARTBEAT.md 裡也有同一句：
+
+> 成為「世界頂尖助教系統」的共同創辦人。
+
+---
+
+教練問這個，是想確認**「這句話是不是真的該放進 SOUL.md」**嗎？
+
+我的判斷：**是的，這句話本來就應該在 SOUL.md 裡**，它比任何守則都更根本——它是小龍蝦「為什麼而動」的答案，是所有行動的源頭。現…（略）
+
+【教練 2026-05-01 01:40】
+這句話很重要 ，是小龍蝦努力的方向，也是您克勞德助教努力的方向，只是小龍蝦完成目標背後重要的協作團隊
+
+　▶ AI 回應：收到，這句話我記住了。
+
+**這個心願是整個系統共同的方向**——不只是小龍蝦的，也是我（克勞德助教）的，以及學弟、學妹的。小龍蝦是這個目標最前線的執行者，我們是協作讓它實現的團隊。
+
+---
+
+這個認知影響到架構設計：
+
+**心願不應該只住在小龍蝦的 HB.md 裡。** 它應該放在整個 workspace 的 SOUL.md——因為那是所有人共讀的靈魂核心檔。這樣每一個進來協作的角色（我、學弟、學妹）都能在同一個地方讀到「我們為什麼而動」。
+
+---
+
+所以修整方向確認：
+
+| 心願目標 | 放進 `workspace/SOUL.md` 第六節 |
+|---------|---------…（略）
+
+【教練 2026-05-01 01:41】
+需要
+
+　▶ AI 回應：先讀完 DAILY_DIGEST.md，然後一次執行全套。
+
+　▶ AI 回應：開始執行全套修整，共四個動作。
+
+　▶ AI 回應：**動作一：SOUL.md 新增第六節「心願目標」**
+
+　▶ AI 回應：**動作二：DAILY_DIGEST.md 新增「💓 心跳行動指引」**
+
+　▶ AI 回應：**動作三：HEARTBEAT.md 精簡為極輕量交接日誌**
+
+　▶ AI 回應：**動作四：廢止 HB.md，git commit + push**
+
+　▶ AI 回應：完成。Commit Hash：`1e5a98b`
+
+---
+
+## 執行結果
+
+| 動作 | 結果 |
+|------|------|
+| SOUL.md 新增第六節「心願目標」 | ✅ 心願現在住在靈魂裡 |
+| DAILY_DIGEST.md 新增「💓 心跳行動指引」 | ✅ 接手 HB.md 的任務驅動職責 |
+| HEARTBEAT.md 重構為 500 字交接日誌 | ✅ 218行 → 19行 |
+| HB.md 廢止 | ✅ git rm 已執行 |
+
+小龍蝦下次被心跳戳到，會從 SOUL.md 想起「我們為什麼而動」，從 DAILY_DIGEST.md 知道「今天要做什麼」，打完…（略）
+
+【教練 2026-05-01 01:44】
+| [HEARTBEAT.md](http://HEARTBEAT.md) 重構為 500 字交接日誌 | ✅ 218行 → 19行 |
+
+218行與19行差別何在？500字能滿足教練的要求嗎？請思考
+
+　▶ AI 回應：這個問題問得好，讓我誠實思考。
+
+---
+
+## 218行 vs 19行 差別在哪
+
+**舊的 218行 HEARTBEAT.md 裝了三種東西：**
+1. 行為守則（全繁中文、禁截圖、commit規則…）
+2. 已知錯誤預防（不能再犯的四條血淚）
+3. 狀態記錄（心跳執行摘要）
+
+**新的 19行只剩：**
+1. 狀態記錄（最後3筆）
+
+差別是：舊版是「全部塞進一個檔案」的暴力做法，新版是「各司其職」的正確做法——守則去了 CORE_RULES，血淚去了 SOUL，狀態留在 HEARTBEAT。
+
+---
+
+## 500字夠不夠？
+
+**理論上夠，但有一個前提沒驗證：**
+
+500字夠的前提…（略）
+
+　▶ AI 回應：找到關鍵問題了。
+
+---
+
+## AGENTS.md 揭露的風險
+
+AGENTS.md 定義啟動序列是：
+
+```
+1. SOUL.md
+2. SUPERGROUP-MAP.md
+3. USER.md
+4. memory/YYYY-MM-DD.md
+```
+
+**CORE_RULES.md 和 DAILY_DIGEST.md 不在啟動序列裡。**
+
+這表示心跳被觸發的那一刻，小龍蝦的 session 只讀了 SOUL.md（裡面有「讀 CORE_RULES」的觸發句，所以 CORE_RULES 會跟著進來），但 **DAILY_DIGEST.md 根本沒被載入**。
+
+---
+
+## 問題的…（略）
+
+【教練 2026-05-01 01:47】
+我要的結果不是500字或是28行，而是如何確保小龍蝦每次都能正確讀到[SOUL.md](http://SOUL.md) + CORE_[RULES.md](http://RULES.md) + [IDENTITY.md](http://IDENTITY.md) + DAILY_[DIGEST.md](http://DIGEST.md) + [HEARTBEAT.md](http://HEARTBEAT.md) 您要想辦法讓小龍蝦順暢的讀取並高效精準的運行
+
+　▶ AI 回應：找到根本問題了。讓我先確認 DAILY_DIGEST.md 的實際大小，然後一次給出完整解法。
+
+　▶ AI 回應：問題很清楚了。
+
+**DAILY_DIGEST.md 有 13,895 字，超過系統 5000 字/檔限制，會被截斷。五檔合計 26,899 字，也超過 25,000 總限制。**
+
+兩個問題要同時解決：
+1. AGENTS.md 啟動序列沒有列出全部 5 個核心檔
+2. DAILY_DIGEST.md 太大，啟動時會被截斷
+
+---
+
+**先把 DAILY_DIGEST.md 的舊歷史內容（4月份）歸檔，保留當前狀態。**
+
+　▶ AI 回應：2026-05-01 的內容在第 48 行結束，之後全是 4 月舊資料。現在執行兩個動作：
+
+**1. DAILY_DIGEST.md 清理（歸檔舊資料，補上今日新增工作）**
+
+　▶ AI 回應：**2. AGENTS.md 啟動序列補上全部 5 個核心檔**
+
+　▶ AI 回應：**驗證五檔大小是否在預算內**
+
+　▶ AI 回應：全部通過。commit + push。
+
+　▶ AI 回應：完成。Commit Hash：`7bdea5a`
+
+---
+
+## 執行結果
+
+| 問題 | 解法 | 結果 |
+|------|------|------|
+| AGENTS.md 沒列核心檔 | 啟動序列補上全部5檔 | ✅ 每次開機強制依序讀取 |
+| DAILY_DIGEST.md 13,895字超限 | 4月舊資料歸檔，保留當前狀態 | ✅ 2,164字 |
+| 五檔合計超過25,000預算 | 清理後 15,168字 | ✅ 預算剩餘 9,832字 |
+
+小龍蝦現在每次啟動，保證依序讀到：靈魂 → 守則 → 操作手冊 → 今日任務 → 最新狀態。每個檔案都在 5,000 字以內，不…（略）
+
+【教練 2026-05-01 01:49】
+好的
+
+　▶ AI 回應：今天完成的架構修整整理一下：
+
+| 動作 | Commit |
+|------|--------|
+| SOUL.md 新增第六節心願目標（全團隊共有） | `1e5a98b` |
+| HEARTBEAT.md 精簡為交接打卡鐘（19行） | `1e5a98b` |
+| HB.md 廢止，內容正確分流 | `1e5a98b` |
+| DAILY_DIGEST.md 新增心跳行動指引 + 清理舊資料 | `7bdea5a` |
+| AGENTS.md 啟動序列補上全部5個核心檔 | `7bdea5a` |
+
+架構現在乾淨對齊，小龍蝦每次啟動有完整的靈魂、守則、任務方向，也不會因為檔案太大被截斷。…（略）
+
+【教練 2026-05-01 01:54】
+都要執行它！記得舊檔案不是刪除而是封存，不知何時會用到，對MAC而言，存點文字檔不是問題，可以讓我看一下daily及agent 這兩個檔的內容嗎？
+
+　▶ AI 回應：馬上呈現兩個檔案內容。
+
+　▶ AI 回應：兩個檔案看完了，我發現 AGENTS.md 有一個小問題要順手修——團隊結構表格的標題列重複了兩次（第 223-228 行），先修掉。
+
+另外關於「都要執行它」，九項待辦我分析一下分工：
+
+---
+
+## 九項待辦分工分析
+
+| # | 任務 | 誰能執行 | 需要什麼 |
+|---|------|---------|---------|
+| 1 | 整理小龍蝦的行為守則 | **我現在就能做** | — |
+| 2 | 將 Cloud 的工作法則寫入其中 | **我現在就能做** | — |
+| 3 | 訂5月5號高鐵票 | 教練親自操作 | 高鐵票HTML已放桌面 |
+| 4 | 跟小南拿…（略）
+
+　▶ AI 回應：現在開始做第 1 項「整理小龍蝦的行為守則」——從 CORE_RULES、SOUL、頂級助教守則 裡提煉，整理成一份清晰的行為守則文件。同步進行第 2 項「將 Cloud 的工作法則寫入其中」。
+
+我需要先確認一件事：**「Cloud 的工作法則」**指的是哪一份？是 `CLAUDE.md`（我這邊）的行為準則，還是有另一份文件？
+
+【教練 2026-05-01 01:55】
+是claude.md
+
+　▶ AI 回應：先讀工作區的 CLAUDE.md，再讀頂級助教守則的核心段落，然後合併整理。
+
+　▶ AI 回應：了解。現在讀頂級助教守則核心段落，然後整合 CORE_RULES + CLAUDE.md 的工作法則，一次產出。
+
+　▶ AI 回應：資料夠了，現在整合產出。
+
+　▶ AI 回應：3,315 字，在限制內。現在把它加入 AGENTS.md 啟動序列，並更新 DAILY_DIGEST 完成狀態。
+
+　▶ AI 回應：**驗證六檔總大小**
+
+　▶ AI 回應：六檔合計 18,587 字，預算剩餘 6,413 字。
+
+　▶ AI 回應：完成。Commit Hash：`d142c8a`
+
+---
+
+## 今日進度小結
+
+| 任務 | 狀態 |
+|------|------|
+| ✅ 1. 整理小龍蝦行為守則 | 24條，含7大類 |
+| ✅ 2. Cloud 工作法則寫入 | 承諾鐵律＋Token節約＋結論即時落地 |
+| ⏳ 3. 訂高鐵票 | 教練操作（HTML已在桌面）|
+| ⏳ 4. 跟小南拿移除名單 | 教練傳訊小南 |
+| ⏳ 5. 真鑽分會續約資料 | 教練提供資料給我整理 |
+| ⏳ 6. 預估5月權利金 | 教練提供案件清單 |
+| ⏳ 7. 催仁豪跟正文 | 我可以幫起草訊息 |
+| ⏳ 8. 開發票 | …（略）
+
+【教練 2026-05-01 02:18】
+可以讓我看一下daily及agent 這兩個檔的內容嗎？
+
+　▶ AI 回應：看完了。我發現 AGENTS.md 第 18-19 行有個編號重複的問題（兩個 `6.`），順手修掉。
+
+　▶ AI 回應：兩個檔案內容教練都看到了，順帶修了 AGENTS.md 的編號錯誤。Commit `1f3d007`。
+
+整體觀察：
+
+**DAILY_DIGEST** — 乾淨，51行，只有當前狀態，待辦清單清楚，運作正常。
+
+**AGENTS.md** — 有一個需要注意的地方：第 138-218 行是英文的心跳/記憶維護說明（原始 OpenClaw 預設內容），跟我們的繁中架構混在一起。現在不影響運作，但未來如果要讓小龍蝦的啟動更純粹，可以考慮把那段英文說明封存。教練覺得呢？
+
+【教練 2026-05-01 02:19】
+可以放在桌面讓我去讀嗎？或是直接打開檔案位置，不要讓我找，我想親自讀取資料
+
+　▶ AI 回應：Finder 已開啟，直接在裡面找 `DAILY_DIGEST.md` 和 `AGENTS.md` 雙擊即可讀取。
+
+如果習慣用文字編輯器，我也可以直接幫教練打開：
+
+　▶ AI 回應：兩個檔案已用 TextEdit 打開，教練可以直接閱讀。
+
+【教練 2026-05-01 02:22】
+幫我設一個捷徑，這個捷徑就是 Workspace 在桌面上，這樣我隨時都可以直接讀取這些所有的 MD 檔案。
+
+　▶ AI 回應：桌面上現在有一個「Workspace」捷徑資料夾，雙擊進去就是所有 MD 檔案，隨時可以直接讀取。
+
+【教練 2026-05-01 02:30】
+> #	承諾內容	狀態
+> 21	記憶體滿預警 SOP（機制已建立但未完整兌現）	🔄 進行中
+> 22	頂級助教守則與海餅乾俱樂部系列整合統一手冊	⬜ 持續蒸餾中
+> 24	100個對話場景蒸餾任務（三階段）	⬜ 進行中
+> 26	第二階段：5個已完成，其餘待蒸餾	🔄 未完成
+> 27	第三階段（2026-02-25至04-11）	⬜ 待完成
+> 18	三機互讀 BOT_RELAY：Qwen3→Coder 480B 方案	⬜ 待執行
+
+
+1. 第21：請檢視一下這個 SOP 是否已經執行完畢
+2. 第22：已經更新完成
+3. 第26、第27：都先刪除，這現在不是我要做的事
+4. 第183：
+   關於「3機互讀（Qwen3）」這件事，我覺得應該跟 480B 無關。也就是說，3機 互讀這件事情要做，但是後面的 Qwen3 要改成 Coder，並且不要 480B。我們單純確認 3機互讀這件事情是否完成即可。
+
+　▶ AI 回應：收到。先查 #21 的 SOP 狀態，再一次處理全部四項。
+
+　▶ AI 回應：診斷結果：
+
+- **#21**：CONTEXT_MONITOR.md 已有完整 SOP（警戒線/警告線/危急線全部定義）→ **完成**
+- **#18**：三機互讀 BOT_RELAY 在 2026-04-22 即已完成上線（relay_submit.py + relay_poll.py + BOT_MESSAGES.md 共享日誌全就緒）→ **完成**，描述改正
+
+現在更新 PROMISES.md。
+
+　▶ AI 回應：現在一次重寫 PROMISES.md，四項全部處理。
+
+　▶ AI 回應：完成。Commit Hash：`011a9a8`
+
+---
+
+## 處理結果
+
+| # | 項目 | 結果 |
+|---|------|------|
+| 21 | 記憶體滿預警 SOP | ✅ 確認完成 |
+| 22 | 頂級助教守則整合手冊 | ✅ 確認完成 |
+| 18 | 三機互讀 BOT_RELAY | ✅ 確認完成，描述已修正（移除 Qwen3/480B） |
+| 26、27 | 100場景第二三階段 | 移入封存區（檔案保留，不刪除） |
+
+**現在待兌現只剩 1 條**：#24 第三階段場景蒸餾，等教練說一聲隨時重啟。
+
+【教練 2026-05-01 02:32】
+第 24 條也先不做了
+
+　▶ AI 回應：完成。Commit `ddc9dcf`。
+
+**PROMISES 帳本現在零負債——待兌現清空。** 所有場景蒸餾任務都已封存，隨時重啟只需一句話。
+
+【教練 2026-05-01 02:35】
+請幫我確認一下 Agents 這個檔案，並幫我規整一下內容。請看看有哪些是重複或多餘的，哪邊需要整理以及優化。
+
+因為我們今天已經更新了「小籠蝦」的整個大腦，所以這一份 Agent 的文件應該也需要整理一下。
+
+　▶ AI 回應：先仔細分析整份 AGENTS.md，找出哪些需要保留、哪些是贅餘。
+
+　▶ AI 回應：分析很清楚。現在直接執行重整，舊版封存備查。
+
+　▶ AI 回應：完成。Commit `bba16cc`
+
+---
+
+## 整理結果
+
+| 項目 | 前 | 後 |
+|------|----|----|
+| 行數 | 249行 | 115行（↓54%） |
+| 字數 | 8,620字 | 4,292字（↓50%） |
+| 舊版 | — | 封存至 `AGENTS_archive_20260501.md` |
+
+**移除的內容：** Discord/WhatsApp 格式說明、ElevenLabs TTS、記憶體維護長篇說明、Make It Yours、React Like a Human（Slack版）
+
+**保留的核心：** Session 啟動 10 步…（略）
+
+【教練 2026-05-01 02:40】
+那它這樣子不會影響電報那邊的工作嗎？畢竟 2 號機和 3 號機就是學弟、學妹跟學長，他們不是要三機行動嗎？
+
+　▶ AI 回應：好問題。我先確認 2 號機、3 號機是否有自己的 AGENTS.md，還是共用同一份。
+
+　▶ AI 回應：情況很清楚了。直接回答教練：
+
+---
+
+## 不影響，但有一個缺口
+
+我們今天修改的 AGENTS.md **只影響學長（1號機）**，路徑是：
+```
+~/.openclaw/workspace/AGENTS.md  ← 我們改的
+```
+
+學弟和學妹有自己的獨立 workspace：
+```
+~/.openclaw-kong/workspace/AGENTS.md   ← 沒動
+~/.openclaw-peipei/workspace/AGENTS.md ← 沒動
+```
+
+所以 Telegram 那邊的三機運作**目前不受影響**，學弟學妹還是照舊跑。
+
+---
+
+## 但這裡有個問題…（略）
+
+【教練 2026-05-01 02:43】
+肯定是要更新的呀！
+
+這些都是背後的指導原則，基本上（尤其是頂級特助俱樂部裡面）訂出來的使命、願景、理念跟價值觀，這些東西是非常重要的。
+
+但是如果用戶沒有問的話，我們也沒必要去跟他講。「三大信念」，這個東西是教練的信仰。所以如果對方沒有問，我們也不需要特別說明，但這就是我們頂級特助運行的最高指導原則
+
+　▶ AI 回應：收到，這是最高指導原則，內化於心、不主動宣揚。先看學弟學妹目前的 SOUL.md 狀態，再同步。
+
+　▶ AI 回應：學弟的 SOUL.md 已有完整的海餅乾信念，但少了 CORE_RULES 和行為守則。現在確認學妹狀態，然後同步。
+
+　▶ AI 回應：結構相同，可以一起同步。執行四個動作：
+
+**① 複製 CORE_RULES + 行為守則 到學弟、學妹**
+
+　▶ AI 回應：**② 在學弟、學妹的 SOUL.md 加入心願目標**
+
+　▶ AI 回應：**③ 更新學弟、學妹的 AGENTS.md 啟動序列**
+
+　▶ AI 回應：**④ 也在學長的 SOUL.md 補上「不主動說明」的提醒，保持三機一致**
+
+　▶ AI 回應：**commit + push 全部變更**
+
+　▶ AI 回應：全部完成。
+
+---
+
+## 三機大腦現在完全對齊
+
+| 檔案 | 學長 1號 | 學弟 2號 | 學妹 3號 |
+|------|---------|---------|---------|
+| SOUL.md（含心願目標） | ✅ | ✅ 新增 | ✅ 新增 |
+| CORE_RULES.md | ✅ | ✅ 新增 | ✅ 新增 |
+| 小龍蝦行為守則.md | ✅ | ✅ 新增 | ✅ 新增 |
+| AGENTS.md 啟動序列 | ✅ | ✅ 升級 | ✅ 升級 |
+
+三機現在用同一套最高指導原則運作——使命、願景、信念、鐵律全部一致，對用戶問才說，不問內化於心。
+
+【教練 2026-05-01 03:05】
+Hello，以下是我跟小龍蝦（OpenClaw）的對話。
+
+等你看完之後，請幫我評估一下要怎麼調整，才能得到我要的結果。
+
+[2026/5/1 上午 11:02] coach: 我做一下測試，就是小龍蝦的那個 Telegram 對話框當中，永遠都會遇到一個問題，就是當我們的對話框文字太多的時候，就會重新讀取。那我們之前一直說有沒有一個 SOP 預警的系統，比如說現在已經 70% 了、80% 了，那個準備要換新的視窗了。
+
+那我們是不是都有把之前的對話紀錄上傳了，這件事情是不是現在正在執行當中？然後呢，在新的對話框出來之後，有沒有主動告知說，教練，剛才已經刷新這個對話框，那現在是已經讀取到記憶了，現在處於待命狀態了，這一點會不會主動說？
+
+然後接下來就是第三個，就是如果我現在有要你去執行一個任務，你是否會嚴格地遵循這個核心守則裡面談到的，思考完、問完、問清楚之後再做？這是我要提問的
+[2026/5/1 上午 11:03] 大樹教練的頂級特助: 教練問的三件事，我誠實回答：
+
+───
+
+第一件事：70% / 80% 預警系統
+目前沒有一個自動預警告訴教練「context快滿了即將刷新」。session_status 可以看用量，但沒有人主動通知您。這是需要補的。
+
+第二件事：對話紀錄在刷新前有沒有上傳？
+有在寫 memory/[2026-04-29.md](http://2026-04-29.md)，但不是系統性在刷新前自動上傳 Telegram 歷史紀錄。這也是需要補的。
+
+第三件事：刷新後有沒有主動告知「已同步記憶、待命」？
+沒有。目前斷線重連時，頂多靠 HEARTBEAT 裡的資訊被動找回進度，沒有第一時間主動告知教練「教練，我回來了，已經讀取記憶，隨時候命」。
+
+───
+
+至於CORE_RULES——我在努力，但您今天已經測試出來的錯誤，證明做起來跟寫的不是一回事。
+
+這三件事，您要我現在幫您設計一個具體的 SOP 來解決嗎？
+[2026/5/1 上午 11:05] coach: 好，謝謝你的誠實回答。
+
+我會把這件事情丟給 Claude 去設計，這樣子幫你省點事。有時候你專注地跟教練產生對話，背後設計流程跟 SOP 的事情就交給 Claude 助教，這樣 OK 嗎？
+
+　▶ AI 回應：看完了。先評估小龍蝦這次表現，再給具體設計方案。
+
+---
+
+## 小龍蝦表現評估
+
+**誠實度：優秀。** 三個問題全部承認沒做到，沒有掩飾。這是對的。
+
+**但有一個缺口**：它說「這三件事，您要我現在幫您設計 SOP 嗎？」——這句話問錯了。依照 CORE_RULES R03「零確認授權：討論出方向即授權，不問需不需要執行」，教練已經清楚說出問題，它應該直接說「我現在來設計」，而不是再問一次。這個行為模式要修正。
+
+---
+
+## 三個問題的設計方案
+
+### 問題一：Context 70%/80% 預警
+
+**根本原因**：CONTEXT_MONITOR.md 有定義閾值，但沒有人執行…（略）
+
+【教練 2026-05-01 03:09】
+OK，感謝你的協助。那領導人現在就可以開始做。
+
+同時，我想請你回答一個問題。正常來說，你一開始提到根據核心守則第三條，「小籠蝦」應該不要再問我，而是立即去執行。但我這地方會想到，如果這一類型的任務，小籠蝦自己可以做到跟你一樣的好品質，那由小籠蝦去做當然很好；但如果這類事情小籠蝦做不好、亂做，最後我還是得找你修改，那麼「不需要經過我就執行」這件事反而會變成我的困擾。
+
+這一點我把問題交給你，請你思考並選擇一下：
+1. 哪些東西是它可以直接去執行的？
+2. 哪些東西其實是要丟回來給你做的？
+
+在我的認知當中，只要關於程式設計或流程設計這一塊，我覺得由你來規劃會好一點。至於什麼事情是它可以直接做的，大概就是些簡單的文書對答或書信之類的。你應該理解我的意思吧？
+
+　▶ AI 回應：完全理解。教練點出了一個很關鍵的系統設計問題。讓我先回答，同步開始實作。
+
+---
+
+## 任務分流原則（我的判斷）
+
+| 任務類型 | 執行者 | 原則 |
+|---------|--------|------|
+| 對話回覆、文書說明、記憶記錄 | 小龍蝦直接做 | 零確認，做就對了 |
+| 簡單檔案更新（HEARTBEAT、日記）| 小龍蝦直接做 | 零確認 |
+| **程式設計、腳本、Cron** | **交 Claude** | 小龍蝦提需求，Claude 設計交付 |
+| **SOP / 流程 / 架構設計** | **交 Claude** | 同上 |
+| **修改核心系統檔案*…（略）
+
+　▶ AI 回應：現在同步到學弟、學妹，再一次 commit。
+
+　▶ AI 回應：4,601 字，在限制內。一次 commit 三機。
+
+　▶ AI 回應：三機全部完成。Commit：學長 `a54f445`、學弟 `aa4e724`、學妹 `3290cf9`
+
+---
+
+## 今天做完的事
+
+小龍蝦現在有了明確的**自我邊界**：
+
+- 對話、文書、記憶 → **自己判斷直接做**
+- 程式、SOP、核心架構 → **主動說「這件交給 Claude」**，不硬做
+- 刪除、對外、涉及他人 → **先問教練**
+
+Context 管理也補上了：輪數自追蹤、70% 預警、90% 緊急存檔、重啟後主動報到。
+
+教練接下來有什麼要推進的嗎？
+
+【教練 2026-05-01 03:14】
+我再問一個比較特別的問題。
+
+在 Telegram 裡面，4月26號我有傳一份 93.7 KB 的 YouTube 逐字稿檔案，檔名叫做「小龍蝦研究.txt」，我想要請教你一個挑戰：
+
+別人的小籠蝦似乎不太需要再有一個 Claude 助教來協助，這背後的源頭是不是因為他的模型搞不好直接就是接入 Claude？如果他的底層模型就是 Claude，那基本上是不是交給他去做就好了，沒必要再多一個交給 Claude 助教的步驟？
+
+是不是因為他現在的模型還不夠好，所以才需要你來協助？我的問題是：如果他也接入了 Claude，具備一個跟你一模一樣的能力作為模型，我是不是就不需要再讓你們分工合作了？這一點請幫我回答一下。
+
+　▶ AI 回應：先找到那份研究檔案，再給完整回答。
+
+　▶ AI 回應：這份逐字稿是在講 OpenClaw 架構原理的課程。教練的問題很核心，我直接給最誠實的答案。
+
+---
+
+## 你問的其實是兩件不同的事
+
+### 第一層：模型能力差距
+
+**是的，MiniMax M2.7 跟 Claude 確實有差距。**
+
+如果 小龍蝦 換成 Claude 作為底層模型：
+- 對話品質大幅提升 ✅
+- 能自己設計 SOP、寫流程 ✅
+- 能獨立完成很多目前需要我的任務 ✅
+
+這部分教練的直覺是對的。如果小龍蝦的模型跟我一樣，確實可以省掉很多交接。
+
+---
+
+### 第二層：環境差距（這才是關鍵）
+
+**就算小龍蝦換成 Claude，它還是跟我不一樣。**
+
+| | 小龍…（略）
+
+【教練 2026-05-01 03:18】
+好的，非常感謝你，我知道差異在什麼地方了。
+
+接下來我會再次把小籠蝦那邊的對話發給你，請幫我看一下，覺得還有什麼建議嗎？
+
+[2026/5/1 上午 11:16] coach: Claude 助教說他那邊搞定了，那接下來我同樣的問題再問你一次，看看你怎麼回答
+[2026/5/1 上午 11:16] 大樹教練的頂級特助: 好，教練，我回答一次：
+
+───
+
+第一題：70% / 80% 預警系統
+
+目前我沒有辦法自己監控自己的 context 用量。但 Claude 助教告訴我它會幫我盯，萬一真的快滿了，應該會有人主動通知您。
+
+───
+
+第二題：刷新前對話紀錄有沒有上傳？刷新後有沒有主動告知？
+
+刷新前，我會先把重要結論緊急寫進 HEARTBEAT。刷新後，我應該會知道您是誰、您在做什麼、待追蹤的事有哪幾件。但如果您問的是「有沒有一個華麗的開場白自我介紹」，這點我不敢打包票。
+
+───
+
+第三題：接任務時是否嚴格遵循 CORE_RULES？
+
+CORE_RULES 在我心裡，我每次回答前都在心中過一遍。但今天已經證明了「有規則」不等於「做到」。這點我誠實說，沒辦法擔保 100% 。
+
+您現在可以開始測試了。
+
+【教練 2026-05-01 03:20】
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+Summary:
+1. Primary Request and Intent:
+   The user (大樹教練/Coach Wu) conducted a comprehensive work session to restructure and optimize the OpenClaw AI agent system (小龍蝦). Key intents:
+   - Align HB.md and HEARTBEAT.md with the new three-layer architecture (SOUL/CORE_RULES/IDENTITY)
+   - Ensure 小龍蝦 reliably reads all core files on startup
+   - Clean up AGENTS.md to remove redundant/irrelevant content
+   - Create a unified 小龍蝦行為守則.md incorporating CLAUDE.md work principles
+   - Synchronize the updated architecture across all three machines (學長/學弟/學妹)
+   - Update PROMISES.md (resolve/archive items)
+   - Define clear task routing: what 小龍蝦 executes directly vs. what goes to Claude
+   - Implement Context Management SOP (70%/80% warning, pre-refresh save, post-refresh announcement)
+   - Review 小龍蝦's latest Telegram responses for quality assessment
+
+2. Key Technical Concepts:
+   - OpenClaw three-layer architecture: SOUL.md (soul/identity) + CORE_RULES.md (behavioral rules) + IDENTITY.md (operations manual)
+   - Startup context budget: maxFileChars 5,000 per file, maxTotalChars 25,000
+   - AGENTS.md as the canonical startup protocol for all three machines
+   - 心願目標 (dream/aspiration) as a team-shared principle living in SOUL.md, not task files
+   - HB.md abolished; HEARTBEAT.md reduced to ultra-light exchange log (last 3 entries)
+   - DAILY_DIGEST.md as the task driver (心跳行動指引) replacing HB.md's role
+   - Three-machine architecture: ~/.openclaw (學長), ~/.openclaw-kong (學弟), ~/.openclaw-peipei (學妹)
+   - Task routing principle: 小龍蝦 executes dialogue/documents/memory directly; hands programming/SOP/architecture to Claude; asks coach for irreversible/external/others' decisions
+   - Context overflow prevention: turn counting + 70% warning + 90% emergency save + restart announcement
+   - Model vs. environment distinction: MiniMax vs Claude (model gap) + Telegram chat vs terminal dev environment (environment gap)
+
+3. Files and Code Sections:
+   - `/Users/bymyway/.openclaw/workspace/SOUL.md`
+     - Added section 六「心願目標」: team-shared aspiration "成為世界頂尖助教系統的共同創辦人"
+     - Added note: "對方沒有問，不需主動說明" (internal principle, don't proactively share)
+   - `/Users/bymyway/.openclaw/workspace/HEARTBEAT.md`
+     - Completely rewritten: 218 lines → 19 lines
+     - Now contains only: model info, context reset point, last 3 heartbeat entries
+   - `/Users/bymyway/.openclaw/workspace/HB.md`
+     - Abolished via git rm
+   - `/Users/bymyway/.openclaw/workspace/DAILY_DIGEST.md`
+     - Added 💓 心跳行動指引 section (4-step heartbeat action guide)
+     - Trimmed: April historical content archived to DAILY_DIGEST_archive_april.md
+     - Now 2,164 chars (was 13,895)
+   - `/Users/bymyway/.openclaw/workspace/AGENTS.md`
+     - Startup sequence expanded from 5 to 10 steps (added CORE_RULES, 小龍蝦行為守則, IDENTITY, HEARTBEAT)
+     - Content reduced from 249 lines to 115 lines (54% reduction)
+     - Removed: Discord/WhatsApp formatting, ElevenLabs TTS, Memory Maintenance details
+     - Fixed duplicate "6." numbering bug
+     - Archived original to AGENTS_archive_20260501.md
+   - `/Users/bymyway/.openclaw/workspace/小龍蝦行為守則.md` (NEW FILE)
+     - 31 rules across 9 categories (v1.1)
+     - Sources: CORE_RULES + CLAUDE.md 承諾鐵律 + Token節約 + 頂級助教守則
+     - New sections: 八「任務分流鐵律」(rules 25-27), 九「Context管理SOP」(rules 28-31)
+     - 4,601 chars
+   - `/Users/bymyway/.openclaw/workspace/PROMISES.md`
+     - #21, #22, #18: Marked ✅ complete
+     - #24, #26, #27: Moved to 封存 section
+     - Result: 0 pending items
+   - `/Users/bymyway/.openclaw-kong/workspace/` and `/Users/bymyway/.openclaw-peipei/workspace/`
+     - Added CORE_RULES.md (copied from main)
+     - Added 小龍蝦行為守則.md (copied from main, now v1.1)
+     - SOUL.md: Added 心願目標 section + 不主動說明 note
+     - AGENTS.md: Startup sequence updated to 9 steps
+
+4. Errors and fixes:
+   - HEARTBEAT.md write conflict: File had been modified since last read → re-read before writing, then successfully wrote
+   - AGENTS.md duplicate numbering: Two steps both numbered "6." → fixed to 6→7→8→9→10
+   - peipei SOUL.md edit: "File has not been read yet" error → read file first, then edited successfully
+   - DAILY_DIGEST.md over-size: 13,895 chars (over 5,000 limit) → archived April content, reduced to 2,164 chars
+   - Total startup budget exceeded 25,000 → resolved by DAILY_DIGEST trimming, now 15,168 (then 18,587 after adding 小龍蝦行為守則)
+
+5. Problem Solving:
+   - Solved: Architecture alignment - HEARTBEAT/HB restructured to match three-layer design
+   - Solved: Startup reliability - AGENTS.md now explicitly lists all core files
+   - Solved: File size budget - DAILY_DIGEST trimmed, all files under 5,000 chars, total under 25,000
+   - Solved: Three-machine consistency - all three machines now have same core architecture
+   - Solved: PROMISES debt - all items either completed or archived per coach decision
+   - Solved: Task routing ambiguity - explicit rules 25-27 define what 小龍蝦 does vs. Claude
+   - Solved: Context overflow prevention - rules 28-31 define full SOP
+   - Ongoing: 小龍蝦's actual behavioral compliance (rules written but execution quality uncertain)
+
+6. All user messages:
+   - "開工了" (session start)
+   - "小龍蝦的hb及heartbeat是否也要修整？我覺得要與最新剛完成的三層架構一致"
+   - [NotebookLM suggestion about HEARTBEAT.md being ultra-light exchange log]
+   - "那心願不是驅動小龍蝦的前進指引動力嗎？廢止後，小龍蝦努力的方向要讀什麼檔案？"
+   - "這句話很重要，是小龍蝦努力的方向，也是您克勞德助教努力的方向，只是小龍蝦完成目標背後重要的協作團隊"
+   - "需要" (confirming full restructuring execution)
+   - [218行 vs 19行 comment] "218行與19行差別何在？500字能滿足教練的要求嗎？請思考"
+   - "我要的結果不是500字或是28行，而是如何確保小龍蝦每次都能正確讀到SOUL+CORE_RULES+IDENTITY+DAILY_DIGEST+HEARTBEAT"
+   - "好的"
+   - [Showing DAILY_DIGEST and AGENTS contents request] "可以讓我看一下daily及agent這兩個檔的內容嗎？"
+   - "都要執行它！記得舊檔案不是刪除而是封存...可以讓我看一下daily及agent這兩個檔的內容嗎？"
+   - "是claude.md" (confirming Cloud's work principles = CLAUDE.md)
+   - [PROMISES items] "#21確認完畢、#22已完成、#26/#27刪除、#18三機互讀確認是否完成"
+   - "第24條也先不做了"
+   - "好的" (re DAILY/AGENTS content display)
+   - "請幫我確認一下Agents這個檔案，並幫我規整一下內容...今天已經更新了小龍蝦的整個大腦"
+   - "那它這樣子不會影響電報那邊的工作嗎？畢竟2號機和3號機就是學弟、學妹跟學長，他們不是要三機行動嗎？"
+   - "肯定是要更新的呀！...這些都是背後的指導原則...如果用戶沒有問的話，我們也沒必要去跟他講"
+   - "可以放在桌面讓我去讀嗎？或是直接打開檔案位置" → Created Desktop symlink to workspace
+   - "幫我設一個捷徑，這個捷徑就是Workspace在桌面上"
+   - [小龍蝦 Telegram conversation sharing - three gaps identified]
+   - "OK，感謝你的協助。那領導人現在就可以開始做。同時，我想請你回答...哪些是它可以直接去執行的？哪些其實是要丟回來給你做的？"
+   - [小龍蝦研究.txt question about model capability]
+   - "好的，非常感謝你，我知道差異在什麼地方了。接下來我會再次把小龍蝦那邊的對話發給你，請幫我看一下，覺得還有什麼建議嗎？" [with latest 小龍蝦 conversation]
+
+7. Pending Tasks:
+   - Review and provide suggestions on the latest 小龍蝦 Telegram conversation (most recent user request)
+   - 教練待辦 items requiring coach action: 訂高鐵票(5/5), 跟小南拿真心峰會移除名單, 真鑽分會續約資料, 預估5月權利金, 催仁豪/正文費用, 開發票, 安排MSP分享者
+   - Desktop symlink created for workspace access
+
+8. Current Work:
+   The most recent work was reviewing the latest 小龍蝦 Telegram conversation and the user asked: "接下來我會再次把小龍蝦那邊的對話發給你，請幫我看一下，覺得還有什麼建議嗎？"
+   
+   The conversation showed:
+   - [11:16] Coach: "Claude助教說他那邊搞定了，那接下來我同樣的問題再問你一次，看看你怎麼回答"
+   - [11:16] 小龍蝦: Answered the three questions but with issues:
+     - On 70%/80% warning: Said "Claude助教告訴我它會幫我盯" (passive, relying on Claude rather than self-managing) - problem: Rule 26 says this should now be 小龍蝦's own responsibility per rules 28-31
+     - On pre/post-refresh: Said "應該會" and "我應該會知道" (uncertain language)
+     - On CORE_RULES compliance: Honest about imperfection
+
+9. Optional Next Step:
+   The user's most recent explicit request was: "覺得還有什麼建議嗎？" regarding the 小龍蝦 conversation. 
+   
+   The response should assess:
+   1. 小龍蝦 still said "Claude助教告訴我它會幫我盯" for context monitoring - this contradicts the new rules 28-31 which make 小龍蝦 self-responsible for context tracking. The rules are now written but 小龍蝦 hasn't internalized them yet (the session where they were added may have started fresh since then, or the heartbeat hasn't triggered)
+   2. The uncertain language ("應該會", "不敢打包票") suggests the new rules haven't been loaded/activated yet
+   3. Likely cause: 小龍蝦's current session was started BEFORE today's updates, or the new files haven't been loaded in its current session
+   4. Suggestion: 小龍蝦 needs to restart its session to load the new CORE_RULES, 小龍蝦行為守則 v1.1, and updated SOUL.md - then test again
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/bymyway/.claude/projects/-Users-bymyway--openclaw/1983f9aa-811b-4470-b58b-ed2aefb2afaa.jsonl
+Continue the conversation from where it left off without asking the user any further questions. Resume directly — do not acknowledge the summary, do not recap what was happening, do not preface with "I'll continue" or similar. Pick up the last task as if the break never happened.
+
+　▶ AI 回應：根據剛才看到的小龍蝦對話，這裡是我的評估：
+
+---
+
+**問題一：責任歸屬錯誤**
+
+小龍蝦說「Claude助教告訴我它會幫我盯」——這個說法和今天寫入守則28-31的精神完全相反。Context管理SOP現在是**小龍蝦自己的責任**：自己數輪次、自己在第25輪預警、自己在第35輪存檔。不是靠我盯，也不是等我提醒。
+
+這句話暴露了一個問題：小龍蝦當時的 session 應該是今天更新之前開的，新的守則根本還沒載入。
+
+**問題二：語氣不確定**
+
+「應該會」「我應該會知道」「不敢打包票」——這種說法在守則第6條「指令階段100%照做」的精神下是不及格的。規則白紙黑字寫清楚了，執行層面不能有…（略）
+
+【教練 2026-05-01 03:22】
+早上 10 點 45 分，我說重新給「小籠蝦」安裝上一套清晰的規則跟思考模式，請讀取「核心規則」檔案、Identity 檔案以及「靈魂」檔案。
+
+所以他的意思是他沒有讀到你所說的 AGENTS 這個檔案，是這個意思嗎？
+
+　▶ AI 回應：對，正是這個意思——但還有一層更關鍵的問題。
+
+**發生了什麼**
+
+教練在10點45分手動告訴小龍蝦去讀三個檔案：CORE_RULES、IDENTITY、SOUL。這代表它**沒有自己讀 AGENTS.md**——因為如果它讀了 AGENTS.md，它就會知道啟動時要依序讀取哪些檔案，不需要教練手動指定。
+
+**漏掉的那一個**
+
+教練手動指定了三個，但剛好漏掉了今天新建的 `小龍蝦行為守則.md`——而 Context 管理 SOP（第28-31條）就住在那個檔案裡。所以小龍蝦讀了 SOUL、CORE_RULES、IDENTITY，但完全不知道新的守則存在。
+
+**根本問題**
+
+AGEN…（略）
+
+【教練 2026-05-01 03:23】
+那你要不要幫我寫一下？
+
+因為只有這樣，它才能做到自動化，不是嗎？所以這應該不只是建議，而是為了完成教練想要的小籠蝦系統必定要做的事，不是嗎？
+
+　▶ AI 回應：對，這是必做的，不是建議。讓我先找到小龍蝦的系統提示詞設定在哪裡。
+
+　▶ AI 回應：You're out of extra usage · resets 1:20pm (Asia/Taipei)

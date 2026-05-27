@@ -1,0 +1,32 @@
+# 終端機對話萃取 — Session c3edeea0-a01e-4324-bd53-f95fbf5feefb
+# 提取時間：2026-05-28 03:13 (台灣時間)
+# 共 1 條教練原話
+
+---
+
+【教練 2026-05-06 09:01】
+請在 Mac 的檔案系統上找出 Cowork / Claude 對話記錄存放的路徑。
+
+請執行以下步驟：
+1. 先列出 ~/Library/Application Support/Claude/ 這個資料夾的內容
+2. 如果存在 local-agent-mode-sessions 或類似資料夾，列出其內容（只列兩層即可）
+3. 也檢查 ~/.openclaw/ 裡有沒有對話記錄相關的資料夾
+4. 把找到的路徑整理成清單回報，讓使用者知道對話記錄存在哪裡
+
+　▶ AI 回應：我來檢查這幾個路徑。
+
+　▶ AI 回應：找到關鍵資料夾，繼續展開兩個最相關的路徑。
+
+　▶ AI 回應：已找到所有路徑，整理如下：
+
+---
+
+## Cowork / Claude 對話記錄存放位置
+
+### 1. Cowork 本地 Session（最主要）
+
+```
+~/Library/Application Support/Claude/local-agent-mode-sessions/
+  └── 86538e48-a15b-4f1f-b8e1-283b4cfc6f08/   ← 你的帳號 UUID
+       └── 86c0afaf-41f9-4160-a47d-87d58c9ba8ee/ ← Cowork 工作區 UUID
+            ├── local_3058a…（略）

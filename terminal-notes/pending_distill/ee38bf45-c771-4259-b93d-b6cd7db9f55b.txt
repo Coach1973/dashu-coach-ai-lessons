@@ -1,0 +1,29 @@
+# 終端機對話萃取 — Session ee38bf45-c771-4259-b93d-b6cd7db9f55b
+# 提取時間：2026-05-28 03:13 (台灣時間)
+# 共 1 條教練原話
+
+---
+
+【教練 2026-05-16 03:38】
+修 `/Users/bymyway/.openclaw/scripts/terminal-watchdog.sh` 的假回報 bug。
+
+問題：log `/tmp/terminal-watchdog.log` 顯示 osascript 因為 macOS 權限被拒（「System Events發生錯誤：不允許「osascript」傳送按鍵。(1002)」），但腳本仍然寫「✅ 已送出繼續指令」這種成功訊息。從 2026-05-16 08:31 到 10:32 至少 5 次連續失敗都沒被偵測到。
+
+請修：
+1. 抓 osascript 的 exit code 或 stderr，若失敗就在 log 寫「❌ osascript 權限被拒，請去『系統設定 → 隱私權與安全性 → 輔助使用』把 Terminal 加入」，**不能再寫「已送出繼續指令」**
+2. 加去重：同樣的失敗訊息 24 小時內只寫一次，避免 log 灌爆
+3. 連續失敗 3 次以上 → 也寫進 workspace/HEARTBEAT.md，讓學長下次心跳會主動推播給教練處理
+
+這違反 CORE_RULES R07（防幻覺、不可捏造）和 R13（交付前自測），是反例典型。
+
+修完 commit + push，更新 CLAUDE 助教自己的記憶 `feedback_*.md`（這類「失敗卻假回報」是反覆型錯誤的指標，值得立 memory）。
+
+　▶ AI 回應：修完並推上雲。
+
+**修復摘要**
+
+| 項目 | 結果 |
+|------|------|
+| 實際腳本（cron 執行的）| [scripts/terminal-watchdog.sh](/Users/bymyway/.openclaw/scripts/terminal-watchdog.sh) — 已就地改寫 |
+| Git 版本鏡像 | [workspace/scripts/terminal-watchdog.sh](/Users/bymyway/.openclaw/workspace/scripts/terminal-watchdog.sh) |
+| Commit | `c5b085…（略）
