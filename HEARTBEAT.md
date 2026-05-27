@@ -37,10 +37,21 @@
 |------|------|------|
 | 2026-05-26 19:19 | 建立知識庫系統 | ✅ commit c0b651f9 |
 | 2026-05-27 上午 | 特助心法實踐故事第四部 | ✅ commit dd3c699/bf41c0a，🌐 上線 |
+| 2026-05-27 中午 | 守則自動對照 hook（軍師版 pre_task）| ✅ commit a6c6a99b，已實證觸發 |
+| 2026-05-27 中午 | 守則自動對照 hook（小龍蝦版 rule-reminder）| ✅ commit 83a23276，hooks ✓ ready |
 
 ## 📝 心跳記錄
 
 ## 心跳記錄
+
+### 2026-05-27 中午（軍師 Opus 場）✅
+- 守則自動對照系統「雙邊上線」：軍師（Claude Code）+ 小龍蝦（OpenClaw）
+- 軍師版 pre_task_hook.sh **已實證觸發**（教練說「上傳」→ 自動注入 #04）
+- 恢復消失的 feed_junshi_handoff.sh（餵記憶 hook）
+- 小龍蝦 rule-reminder hook：openclaw hooks list ✓ ready（熱載入無中斷）
+- 關鍵教訓：OpenClaw managed hook 必須有 HOOK.md manifest 才被認
+- commit a6c6a99b + 83a23276，已 push
+- 待辦：小龍蝦 hook 真實 Telegram 實測 + probe log 精準化訊息欄位
 
 ### 2026-05-27 上午（軍師開工）
 
@@ -108,5 +119,5 @@
 ---
 
 ## 學長 relay poll
-### 2026-05-27 2026-05-27 12:56 - relay poll OK
+### 2026-05-27 2026-05-27 13:00 - relay poll OK
 
