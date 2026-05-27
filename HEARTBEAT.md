@@ -50,5 +50,5 @@
 - 下一個軍師可據此精準化 handler.js 的 text extraction path
 
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 00:30 - relay poll OK
+### 2026-05-28 2026-05-28 01:03 - relay poll OK
 
