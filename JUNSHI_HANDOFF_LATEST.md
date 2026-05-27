@@ -73,7 +73,7 @@ OpenClaw cron 每4小時（MiniMax，無限流量）
 | 🔴 今天 | 確認小龍蝦第一次蒸餾有正確執行（04:00 蒸餾、23:00 升華後查 distill/） |
 | 🟡 | cron/jobs.json 在 workspace repo 外（~/.openclaw/cron/），未納版控——考慮加備份 |
 | 🟡 | relay_poll.py UnicodeDecodeError 修復 |
-| 🟡 | 營業稅 28451 提醒（截止 5/31，今天已提醒了嗎？） |
+| ✅ 已修 | 營業稅 28451 提醒（案例Q）：已補雙保險（Mac crontab桌面 + OpenClaw Telegram，每天9點，截止5/31）。教練繳完說「稅繳了」就移除兩條 cron |
 | 🟡 | 小龍蝦 hook 真實實測（教練說「我做好了」測守則意識） |
 
 ---
