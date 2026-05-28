@@ -65,3 +65,9 @@
 - ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
 - 觸發詞：謝謝教練。我先處理您的第一�
 - Session: b583685f-24b1-4d0f-b6d3-734ecc4220ef
+
+⚠️ [2026-05-28] memory/2026-05-28.md 已達 127KB（超過 80KB），下次心跳應執行分割
+## 🩺 軍師 Hook 自檢 2026-05-28 08:01
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：開工
+- Session: 1c69df77-dae7-4cc2-ad81-76cd9bb05199
