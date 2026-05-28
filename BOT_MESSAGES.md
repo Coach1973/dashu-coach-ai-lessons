@@ -388,3 +388,4 @@
 {"ts":"2026-05-28T04:05:03.167Z","botId":"1号機","text":"今日無待蒸餾對話。\n\n`~/workspace/terminal-notes/pending_distill/` 目錄不存在，該資料夾僅有一個 5/17 的歷史檔案，沒有任何待處理項目。\n\n**蒸餾結果：0 個 session、0 條重點。** 程式安靜結束，無需 commit。","msgId":"6581","chatId":"-1003877502911"}
 {"ts":"2026-05-28T04:32:35.384Z","botId":"1号機","text":"📺 **今日 YouTube 精選**\n\n⭐⭐⭐ **強烈推薦**\n\n1. [@panscischool] Claude Computer Use 不只是桌面自動化！Skills & Live Artifacts 高效應用\n 👉 https://www.youtube.com/watch?v=WKe078iKQJk\n\n2. [@rickhau99] 不得不裝的 AI Skills｜GitHub","msgId":"89","chatId":"-1003877502911"}
 {"ts":"2026-05-28T06:01:29.905Z","botId":"1号機","text":"🦞 教練，下午好！\n\n時間過得很快，又到了主動關懷的時間了～\n\n這幾個小時有沒有什麼新想法，或是需要幫忙的地方？\n\n想聊就聊，想做事就直接說，我都在這裡 😊","msgId":"6582","chatId":"-1003877502911"}
+{"ts":"2026-05-28T08:11:10.934Z","botId":"1号機","text":"Subagent 路徑解析錯誤，`~` 展開成 `/Users/bymyway/workspace` 而非正確的 `/Users/bymyway/.openclaw/workspace`。直接執行蒸餾任務。","msgId":"6583","chatId":"-1003877502911"}
