@@ -19,10 +19,9 @@
 
 ## 🟡 待追蹤事項（白天處理）
 - ✅ 營業稅 28451 截止 5/31（18:02 已發提醒 Telegram）
-- 🟡 relay_poll.py UnicodeDecodeError 待修
+- ✅ relay_poll.py UnicodeDecodeError（2026-05-28 22:10 已修復，commit `631e2587`）
 - 🟡 小龍蝦 hook 真實實測（待教練發話「我做好了」測守則意識）
-- 🟡 relay_poll.py UnicodeDecodeError 待修
-- 🟡 小龍蝦 hook 真實實測（待教練發話「我做好了」測守則意識）
+- 🟡 brisk-va cron 重複回調（待查明來源，目前每30分鐘約2次回調）
 
 ## ✅ 今日已完成
 - YouTube 新聞：08:02 完成（22 頻道、152 影片）
@@ -36,5 +35,5 @@
 | 對話記錄更新 17:29 | `c3e2b9cf` |
 | handoff 深夜場 | `b3160092` |
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 21:34 - relay poll OK
+### 2026-05-28 2026-05-28 22:11 - relay poll OK
 
