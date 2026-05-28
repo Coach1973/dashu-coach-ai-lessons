@@ -26,7 +26,7 @@ def record_heartbeat(workspace_name):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
     marker = f"## {workspace_name} relay poll"
     try:
-        with open(HEARTBEAT, "r") as f:
+        with open(HEARTBEAT, "r", encoding="utf-8") as f:
             content = f.read()
     except FileNotFoundError:
         content = f"# {workspace_name} HEARTBEAT\n"
@@ -50,7 +50,7 @@ def record_heartbeat(workspace_name):
         content = '\n'.join(out) + '\n'
     
     try:
-        with open(HEARTBEAT, "w") as f:
+        with open(HEARTBEAT, "w", encoding="utf-8") as f:
             f.write(content)
     except Exception as e:
         log(f"HB 寫入失敗: {e}")
