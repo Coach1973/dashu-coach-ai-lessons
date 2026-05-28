@@ -1,5 +1,32 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-05-29（共 22 則）
+1. 使用者收到系統通知，告知兩筆 async cron 任務已完成：brisk-va session（code 0，成功，isolated 模式）和 ca52416d session（main 模式）。
+2. 此為第十八筆相同 cron 任務執行結果通知（00:03 May 29）。
+3. 觸發事件：cron job（Session ID: 768246fb-0b1a-409a-985c-f7419954c29c）向小龍蝦學長下達心跳任務，時間 00:03（5/29凌晨）。
+4. OpenClaw 執行心跳報告（2026-05-29 00:03），系統健康：Cron 15項全部在跑、Primary Model MiniMax M2.7、接力棒深夜場已完成號外修復。
+5. 今日已完成：YouTube 新聞 08:02 完成（22頻道152影片）、蒸餾系統 16:17 完成（76 sessions），23:00 升華5個場景（commit 46fac156）、號外修復已上線、營業稅提醒已發（截止 5/31）、relay_poll UnicodeDecodeError 已修復、Git 備份 00:00 完成。
+6. 待追蹤事項：小龍蝦 hook 真實實測（等教練說「我做好了」）、brisk-va cron 重複回調（持續觀察中）。
+7. 明日提醒：營業稅 28451 截止 5/31（還有2天），教練記得繳完告知可移除 cron。
+8. 使用者收到系統通知，告知兩筆 async cron 任務已完成：brisk-va session（code 0，成功，isolated 模式）和 ca52416d session（main 模式）。
+9. 此為第十九筆相同 cron 任務執行結果通知（00:04 May 29）。
+10. 觸發事件：每2小時增量記憶蒸餾 cron job（Session ID: 9c3fc55d-d0f4-462f-9eeb-631a3599a710）向小龍蝦學長下達任務，時間 00:04（5/29凌晨）。
+11. OpenClaw 執行 node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js。
+12. 輸出結果為 NO_NEW_ENTRIES，任務結束，未更新 CLIENT_PROFILE.md，未通知教練。
+13. 觸發事件：每4小時全自動終端機對話蒸餾 cron job（Session ID: d99eec28-57f7-49fc-94e9-1953a9ddd1ba）向小龍蝦學長下達蒸餾任務。
+14. OpenClaw 列出 ~/workspace/terminal-notes/pending_distill/ 目錄，確認目錄為空，無待蒸餾檔案。
+15. 任務結束，回報「今日無待蒸餾對話 ✅」，未執行後續步驟（蒸餾、写檔、搬移檔案、commit）。
+16. 使用者收到系統通知，告知兩筆 async cron 任務已完成：brisk-va session（code 0，成功，isolated 模式）和 ca52416d session（main 模式）。
+17. 此為第二十筆相同 cron 任務執行結果通知（00:30 May 29）。
+18. 觸發事件：cron job（Session ID: 768246fb-0b1a-409a-985c-f7419954c29c）向小龍蝦學長下達心跳任務，時間 00:33（5/29凌晨）。
+19. OpenClaw 執行開工鐵律五步驟，系統健康檢查完畢，回報狀態：Cron 15項全部在跑、Primary Model MiniMax M2.7、接力棒深夜場號外修復完成。
+20. 今日已完成：YouTube 新聞 08:02（22頻道152影片）、蒸餾系統 00:04 完成（pending_distill 空無待蒸餾）、場景化升華 23:00 完成（5個場景，commit 46fac156）、Git 備份 00:00 完成、relay_poll 00:33 OK。
+21. 待追蹤事項：營業稅 28451 截止 5/31（還有2天）、brisk-va cron 重複回調（持續觀察中）、小龍蝦 hook 真實實測（等教練說「我做好了」）。
+22. **「為什麼這條守則很重要」** + **「怎麼應用才更落地」**
+
+---
+
+
 ## 蒸餾 2026-05-28（共 24 則）
 1. 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
 2. 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
