@@ -22,5 +22,10 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 12:34 - relay poll OK
+### 2026-05-28 2026-05-28 12:35 - relay poll OK
 
+
+## 🩺 軍師 Hook 自檢 2026-05-28 12:35
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：我受不了了，叫終端機改個東�
+- Session: 8ff74147-bea3-491f-a550-6b306badefa4
