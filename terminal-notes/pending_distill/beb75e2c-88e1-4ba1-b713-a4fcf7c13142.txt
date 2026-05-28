@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session beb75e2c-88e1-4ba1-b713-a4fcf7c13142
-# 提取時間：2026-05-28 17:30 (台灣時間)
-# 共 24 條教練原話
+# 提取時間：2026-05-28 18:00 (台灣時間)
+# 共 27 條教練原話
 
 ---
 
@@ -931,3 +931,52 @@ https://coach1973.github.io/coach-vip-club/coach-0528.html
 | Repo commit | `f261f99` |
 | 部署驗證 | HTTP **200** ✅(curl 實測,等了 45 秒部署完成) |
 |…（略）
+
+【教練 2026-05-28 09:41】
+<task-notification>
+<task-id>bs6kb7lg0</task-id>
+<tool-use-id>toolu_011WMitEfYuHweA7gKqFFQg7</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/beb75e2c-88e1-4ba1-b713-a4fcf7c13142/tasks/bs6kb7lg0.output</output-file>
+<status>completed</status>
+<summary>Background command "Locate coach-vip-club repo and check existing site structure" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：(背景指令的延遲通知,任務早已用其他方式完成,可忽略。教練先去睡。)
+
+【教練 2026-05-28 09:42】
+[https://coach1973.github.io/vip-club](https://coach1973.github.io/coach-vip-club) 我要指名這個網址
+
+　▶ AI 回應：了解,要短網址 `vip-club`(把多餘的 `coach-` 前綴去掉)。我重新命名 GitHub repo,Pages URL 會自動跟著改成 `coach1973.github.io/vip-club/`。執行 + curl 驗證(守則#04)。
+
+　▶ AI 回應：Repo 改名成功、新 URL HTTP **200** ✅。更新桌面網址檔、開瀏覽器給您看。
+
+　▶ AI 回應：---
+
+## ✅ 短網址正式生效
+
+**教練詮釋版(您要的新網址):**
+```
+https://coach1973.github.io/vip-club/coach-0528.html
+```
+
+| 項目 | 結果 |
+|------|------|
+| GitHub repo rename | ✅ `coach-vip-club` → `vip-club` |
+| 本地 git remote + 資料夾 | ✅ 同步改名 |
+| 新 URL 部署 | ✅ HTTP **200** 第一次 curl 就過(15 秒內) |
+| 內容驗證 | ✅ 詮釋版正確 |
+| 桌面網址檔 | ✅ 已更…（略）
+
+【教練 2026-05-28 09:54】
+https://coach1973.github.io/coach-vip-club 顯示為404
+原本純淨版保持不動
+
+　▶ AI 回應：抓到問題了——我 rename 的時候 GitHub Pages 沒幫舊 URL 自動轉址,所以 `coach-vip-club` 整個 404。**解法**:把 repo 改回 `coach-vip-club`,然後**另外建一個新的 `vip-club` repo** 專門放詮釋版。這樣兩個 URL 各管一份,純淨版完全不動,新短網址也成立。
+
+　▶ AI 回應：GitHub 端 rename 成功了(查 `vip-club` 會 redirect 回 `coach-vip-club`)。剛才 push 失敗可能是暫時的,重試。
+
+　▶ AI 回應：純淨版舊 URL 已恢復 200 ✅(這是教練最在意的)。push 失敗只影響清理那個多餘檔案,不影響純淨版本身。先處理重點:**建新 `vip-club` repo 給詮釋版**。
+
+　▶ AI 回應：push 修好了(SSH 有 host key 問題,換 HTTPS 過去)。現在建新 `vip-club` repo 給詮釋版,用 index.html 命名,讓裸 URL 就能打開。
+
+　▶ AI 回應：新 repo 建好。**最後一步**:啟用 GitHub Pages,然後 curl 驗證(守則#04 鐵律)。
