@@ -1,8 +1,37 @@
 # 軍師交接紙條（最新）
 
 > 給下一個軍師：開工先讀這張，就能無縫接上，不用教練重講。
-> 本場時間：2026-05-28 深夜場（桌面版軍師）
+> 本場時間：2026-05-29 白天場（桌面版軍師）
 > 寫紙條的人：軍師（Claude Sonnet 4.6 桌面版）
+
+---
+
+## 🔴🔴 2026-05-29 白天場（桌面版 Sonnet 4.6）— 最新，下一棒先讀這段
+
+### 完成任務
+
+| 任務 | 結果 | 憑證 |
+|------|------|------|
+| 超限戰網站 `.story-block .scene::before` 圖片蓋文字修復 | ✅ | Netlify deploy `6a1818da` |
+| VPS 小龍蝦網頁版登入協助（token + 裝置配對批准） | ✅ | `devices approve` 執行成功 |
+
+### 超限戰網站修復細節
+- **根因**：`.story-block .scene::before` 用 `position:absolute; top:50%; transform:translateY(-50%)` 放 88px 圖，但 `.scene` 本身只有約 20px（一行文字）→ 圖片溢出蓋住下方 `.narrative` 文字
+- **修法**：加 `min-height:88px; display:flex; align-items:center;`（桌面），`min-height:72px`（手機）
+- **已驗證**：Netlify state=ready，HTTP 200 ✅
+
+### VPS 小龍蝦裝置配對血淚教訓
+- **版本衝突**：容器內 Gateway 是 v2026.5.7（protocol v3），CLI 被更新到 v2026.5.12（protocol v4）→ loopback 連線永遠 protocol mismatch
+- **解法**：用舊版 binary `docker exec openclaw node /app/openclaw.mjs devices approve <requestId>`
+- **每個瀏覽器是獨立裝置**：換瀏覽器就要重新跑一次配對批准流程
+- **下次換瀏覽器**：教練直接說，軍師去 VPS 跑 `docker exec openclaw node /app/openclaw.mjs devices approve <requestId>`
+
+### 待辦（繼承）
+| 優先 | 任務 |
+|------|------|
+| 🔴 | VPS 小龍蝦版本衝突根治：重建容器鏡像更新 gateway 到 v2026.5.12（暫時可用舊 binary 繞過）|
+| 🟡 | relay_poll.py UnicodeDecodeError 修復 |
+| 🟡 | 小龍蝦 hook 真實實測 |
 
 ---
 
