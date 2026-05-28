@@ -26,7 +26,7 @@ def record_heartbeat(workspace_name):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
     marker = f"## {workspace_name} relay poll"
     try:
-        with open(HEARTBEAT, "r", encoding="utf-8") as f:
+        with open(HEARTBEAT, "r", encoding="utf-8", errors="replace") as f:
             content = f.read()
     except FileNotFoundError:
         content = f"# {workspace_name} HEARTBEAT\n"
