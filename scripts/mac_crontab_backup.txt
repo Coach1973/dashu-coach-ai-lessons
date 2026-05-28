@@ -1,0 +1,26 @@
+*/15 * * * * bash /Users/bymyway/.openclaw/workspace/scripts/backup_terminal_sessions.sh >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace add terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace commit -m "auto: 終端機對話備份 $(date +\%H:\%M)" >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace push origin main >> /tmp/backup_terminal.log 2>&1
+0 17 * * * echo '⚠️ 提醒：今天是勞保最後繳費日，請去便利商店（7-11/全家/萊爾富）繳費' >> /Users/bymyway/Desktop/reminder.txt
+0 15 * * * echo '🦞 教練，今天記得清點庫存（領導手冊庫存），結果告訴小龍蝦紀錄' >> /Users/bymyway/Desktop/reminder.txt
+0 9 16 5 * echo '🦞 教練，今天是5/16採買日：會員成功專案手冊20本、申請書1、獎狀1、會議護照5本' >> /Users/bymyway/Desktop/reminder.txt
+
+# R18 鐵律：每 15 分鐘檢查 workspace uncommitted 是否超過 60 分（軍師 2026-05-16 立法）
+*/15 * * * * /Users/bymyway/.openclaw/workspace/scripts/checkpoint_audit.sh >> /tmp/checkpoint_audit.log 2>&1
+
+# R19 鐵律：每天 23:50 掃當天 HEARTBEAT.md 純 OK 心跳數（軍師 2026-05-16 立法）
+50 23 * * * /Users/bymyway/.openclaw/workspace/scripts/heartbeat_audit.sh >> /tmp/heartbeat_audit.log 2>&1
+
+# 接力棒→CLAUDE.md 自動鏡像（軍師 2026-05-16 12:26 立法，桌面版能讀到最新接力棒）
+*/5 * * * * /Users/bymyway/.openclaw/workspace/scripts/sync_handoff_to_claudemd.sh >> /tmp/sync_handoff.log 2>&1
+
+# 🔴 distill增量蒸餾：每2小時蒸餾今日對話精華（軍師2026-05-25新增）
+0 */2 * * * /Users/bymyway/.openclaw/workspace/scripts/run_distill.sh >> /tmp/distill_cron.log 2>&1
+
+# 🔴 relay_poll：學弟妹讀取學長的RELAY_QUEUE（改用wrapper修補路徑）
+* * * * * /Users/bymyway/.openclaw/workspace/scripts/run_relay_poll.sh >> /tmp/relay_poll.log 2>&1
+# 🔴 終端機對話提取：每30分鐘提取教練原話到 pending_distill/（軍師2026-05-28新增）
+*/30 * * * * /usr/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/extract_terminal_sessions.py >> /tmp/extract_terminal.log 2>&1
+# 🔴 痛點計數重排：每日23:40（升華後）統計守則違反次數，重算痛點排名（軍師2026-05-28新增）
+40 23 * * * /usr/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/rerank_top10.py >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace add distill/痛點排名_自動.md >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace commit -m "auto: 痛點排名重算 $(date +\%Y-\%m-\%d)" >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace push origin main >> /tmp/rerank_top10.log 2>&1
+# 🔴 營業稅28451繳費提醒備援（每天9點，截止5/31，繳完請移除此行）軍師2026-05-28
+0 9 * * * echo "🦞 $(date '+\%m/\%d') 提醒：營業稅（稅單28451）截止 5/31，記得繳費！繳完跟小龍蝦說一聲。" >> /Users/bymyway/Desktop/reminder.txt
+10,40 * * * * /Users/bymyway/.openclaw/workspace/scripts/split_memory.sh >> /tmp/split_memory_cron.log 2>&1

@@ -25,18 +25,20 @@ if (!fs.existsSync(memoryPath)) {
   process.exit(0);
 }
 
-// ⚠️ Memory 大小警示（超 80KB 寫入 HEARTBEAT.md，提醒心跳去分割）
+// ℹ️ Memory 大小提早通知（超 130KB 寫入 HEARTBEAT.md，純資訊）
+// 注意：真正的分割已由 scripts/split_memory.sh 自動處理（門檻 150KB，Mac cron 每30分鐘）。
+//       這裡只是提早讓教練知道「快滿了」，無需任何人手動分割。
 const fileSizeKB = Math.round(fs.statSync(memoryPath).size / 1024);
-if (fileSizeKB > 80) {
+if (fileSizeKB > 130) {
   try {
     const hb = fs.existsSync(HEARTBEAT) ? fs.readFileSync(HEARTBEAT, 'utf8') : '';
     const warningKey = `memory/${dateStr}.md 已達`;
     if (!hb.includes(warningKey)) {
-      fs.appendFileSync(HEARTBEAT, `\n⚠️ [${dateStr}] ${warningKey} ${fileSizeKB}KB（超過 80KB），下次心跳應執行分割`);
-      console.log(`⚠️ memory 大小警示已寫入 HEARTBEAT.md（${fileSizeKB}KB）`);
+      fs.appendFileSync(HEARTBEAT, `\nℹ️ [${dateStr}] ${warningKey} ${fileSizeKB}KB（接近門檻），split_memory.sh 會在 150KB 自動分割，無需手動`);
+      console.log(`ℹ️ memory 大小提早通知已寫入 HEARTBEAT.md（${fileSizeKB}KB）`);
     }
   } catch (e) {
-    console.log(`警示寫入失敗: ${e.message}`);
+    console.log(`通知寫入失敗: ${e.message}`);
   }
 }
 
