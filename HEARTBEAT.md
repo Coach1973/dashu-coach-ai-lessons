@@ -36,13 +36,5 @@
 | 對話記錄更新 17:29 | `c3e2b9cf` |
 | handoff 深夜場 | `b3160092` |
 ## 學長 relay poll
-### 2026-05-28 2026-05-28 20:35 - relay poll OK
+### 2026-05-28 2026-05-28 21:03 - relay poll OK
 
-
-### 2026-05-28 20:34 ✅
-- cron 正常（relay_poll 每分鐘、heartbeat_audit 每日 23:50、distill 每 2h 等）
-- Git 備份完成（commit `791f7e20`）
-- YouTube 新聞 OK（08:02，22 頻道、152 影片）
-- relay_poll.py UnicodeDecodeError 仍存在（待修，已在追蹤清單）
-- shared-relay 無新任務
-- 系統健檢 OK

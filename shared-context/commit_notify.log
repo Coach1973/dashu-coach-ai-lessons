@@ -691,3 +691,7 @@
 [2026-05-28 20:02] [CoachWU] 2bdbd8e6: auto-backup 2026-05-28 20:00
 [2026-05-28 20:29] [CoachWU] f62dea09: [auto] 20:29 對話記錄更新（6 條）
 [2026-05-28 20:34] [CoachWU] 88c25c62: auto-backup 2026-05-28 20:30
+[2026-05-28 20:35] [CoachWU] 791f7e20: auto-backup 2026-05-28 20:34
+[2026-05-28 20:35] [CoachWU] 8e5b1ff8: auto: HEARTBEAT更新 20:34
+[2026-05-28 20:36] [CoachWU] 5d703410: fix: relay_poll.py 新增 encoding='utf-8' 修復 UnicodeDecodeError
+[2026-05-28 20:59] [CoachWU] 0858f8d5: [auto] 20:59 對話記錄更新（4 條）
