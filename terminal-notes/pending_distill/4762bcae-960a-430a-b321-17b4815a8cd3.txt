@@ -1,0 +1,63 @@
+# 終端機對話萃取 — Session 4762bcae-960a-430a-b321-17b4815a8cd3
+# 提取時間：2026-05-28 18:30 (台灣時間)
+# 共 4 條教練原話
+
+---
+
+【教練 2026-05-28 10:20】
+開工
+
+　▶ AI 回應：我已讀完接力棒，正在執行開工五步驟，讀取 HEARTBEAT.md 和 knowledges/ 目錄。
+
+　▶ AI 回應：---
+
+🎯 **小龍蝦學長開工宣言**
+
+【我是誰】軍師（Claude Sonnet 4.6，桌面版）
+【為誰而戰】追求高溝通品質的大樹教練
+【使命】成為最懂老闆的 AI 特助
+【今日踐行】對照守則第 06 條（完美交接）執行開工五步驟
+
+---
+
+## 開工回報
+
+**接力棒（commit `e9efa56f`）已讀完：**
+- 超限戰網站號外區完整修復 ✅（commit `9fd29e9`）
+- 全自動總結系統雙軌並行 ✅（提取 + 蒸餾 cron 已上線）
+- 場景化 + 痛點計分閉環 ✅
+
+**HEARTBEAT 系統狀態（18:02 更新）：**
+- relay poll 18:2…（略）
+
+【教練 2026-05-28 10:23】
+https://whimsical-smakager-d47e8e.netlify.app  幫我修改這份網頁，因為我交給h助教(hermes VPS)他已經重複做了五次都沒有做對我要的標準。我的目標很簡單，不要讓圖片蓋到文字，請執行
+
+　▶ AI 回應：先抓網頁內容來看問題所在。
+
+　▶ AI 回應：WebFetch 拿不到原始碼，找本地檔案。
+
+【教練 2026-05-28 10:23】
+[Request interrupted by user]
+
+【教練 2026-05-28 10:25】
+去路徑大全，這是在教練的netlify，怎麼還需要找，帳號密碼都有呀
+
+　▶ AI 回應：對，直接走 Netlify API。先讀路徑大全拿 token。
+
+　▶ AI 回應：拿到了，522KB。現在分析圖片蓋文字的問題。
+
+　▶ AI 回應：找到根因了。`.story-block .scene::before` 用 `position:absolute; top:50%; transform:translateY(-50%)` 放一個 88px 圖片，但 `.scene` 本身只有一行文字（約20px高），圖片會溢出到下方的 `.narrative` 文字上方，造成蓋住文字。
+
+修法：給 `.scene` 加 `min-height:88px`，確保容器高度夠裝圖片。
+
+　▶ AI 回應：修正確認。現在上傳到 Netlify。
+
+　▶ AI 回應：部署完成，狀態 `ready`。
+
+**修了什麼：**
+
+根因：`.story-block .scene::before` 用 `position:absolute; top:50%; transform:translateY(-50%)` 放一個 88px 高的圖片，但 `.scene` 本身只有約 20px 高（一行文字）。圖片上下各溢出約 34px，直接蓋住下方的 `.narrative` 文字。
+
+**修法：**
+- 桌面版：`.story-block .scene` 加 `min-height:88px; display:flex; align-items:center;` → 容器…（略）

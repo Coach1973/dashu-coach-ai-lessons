@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session beb75e2c-88e1-4ba1-b713-a4fcf7c13142
-# 提取時間：2026-05-28 18:00 (台灣時間)
+# 提取時間：2026-05-28 18:30 (台灣時間)
 # 共 27 條教練原話
 
 ---
@@ -980,3 +980,19 @@ https://coach1973.github.io/coach-vip-club 顯示為404
 　▶ AI 回應：push 修好了(SSH 有 host key 問題,換 HTTPS 過去)。現在建新 `vip-club` repo 給詮釋版,用 index.html 命名,讓裸 URL 就能打開。
 
 　▶ AI 回應：新 repo 建好。**最後一步**:啟用 GitHub Pages,然後 curl 驗證(守則#04 鐵律)。
+
+　▶ AI 回應：啟用 Pages 的 API 呼叫格式錯了(嵌套參數要 JSON),重試用正確格式。
+
+　▶ AI 回應：Pages 已啟用,grep 成功抓到「好問句工具箱/教練詮釋版」字眼——代表 Pages 在 90 秒後已部署。再確認一次最終 HTTP 200。
+
+　▶ AI 回應：---
+
+## ✅ 雙網址各管一份,都驗證 HTTP 200
+
+| 版本 | 網址 | 狀態 |
+|------|------|------|
+| **教練詮釋版**(新) | https://coach1973.github.io/vip-club/ | ✅ HTTP 200 |
+| **純淨版**(原本不動) | https://coach1973.github.io/coach-vip-club/ | ✅ HTTP 200 |
+
+**做了什麼:**
+1. 把上次 rename 的 `vip-club` 還原回 `coach-vip-club` → 純淨版舊 URL 恢復(commit `…（略）
