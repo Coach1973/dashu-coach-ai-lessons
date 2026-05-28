@@ -1,0 +1,200 @@
+## Session 08:03
+### 08:03
+## 第一步：檢查 Cron 任務失敗記錄
+### 常見錯誤自動修復：
+## 第二步：檢查 Git 狀態
+- 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）
+- 若 git push 失敗（網路問題），略過，不通知
+## 第三步：檢查 HEARTBEAT.md 中的背景工作
+- 若該項目已超過 48 小時無進展，評估是否可自動化
+- 若可自動化，建立對應的 cron job 或寫入自動化腳本
+## 第四步：產出簡報（若有問題才通知）
+### 08:03
+- User triggered the YouTube news daily auto-fetch cron job (e70852c8-9a56-4972-a3e5-df34c429dd71) at 8:00 AM, instructing OpenClaw to run `~
+🦞 小龍蝦：教練說得對，我刚才确实写错了。
+
+**正確：「客戶的聲音就是你存在的價值」**
+**我寫的：「顧客的聲音就是你存在的價值」**
+
+---
+
+## 檢討
+
+| 項目 | 內容 |
+|------|------|
+| **錯誤** | 把「客戶」寫成「顧客」，差了1個字 |
+| **後果** | 守則13一字不差被我破壞了，違反守則21 |
+| **原因** | 「顧客」是日常口語，「客戶」是特助心法定典用語，我沒有核對原文就輸出 |
+| **預防** | 未來引用守則時，先確認正確文字，再輸出 |
+
+---
+
+## 立刻更正
+
+守則13正確內容：
+
+> **13. 客戶的聲音就是你存在的價值：**
+> 如果你記不住用戶說過的話，你就是不在乎。
+
+這是特助心法定典的原文，一字不差。
+
+---
+
+感謝教練抓錯。這個錯誤已記錄，絕不再犯。
+👤 教練：Recent memories (use memory_search for full search):
+[2026-05-26.md]
+## Session 08:03
+### 08:03
+## 第一步：檢查 Cron 任務失敗記錄
+### 常見錯誤自動修復：
+## 第二步：檢查 Git 狀態
+- 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）
+- 若 git push 失敗（網路問題），略過，不通知
+## 第三步：檢查 HEARTBEAT.md 中的背景工作
+- 若該項目已超過 48 小時無進展，評估是否可自動化
+- 若可自動化，建立對應的 cron job 或寫入自動化腳本
+## 第四步：產出簡報（若有問題才通知）
+### 08:03
+- User triggered the YouTube news daily auto-fetch cron job (e70852c8-9a56-4972-a3e5-df34c429dd71) at 8:00 AM, instructing OpenClaw to run `~
+🦞 小龍蝦：教練，Netlify CLI 的 Token 存放位置：
+
+---
+
+**Windows 典型路徑：**
+
+```
+C:\Users\<你的使用者名稱>\.netlify\config.json
+```
+
+**或環境變數（如果有的話）：**
+```
+NETLIFY_AUTH_TOKEN
+```
+
+---
+
+**具體操作：**
+
+1. 打開檔案總管
+2. 複製貼上：`%USERPROFILE%\.netlify\config.json`
+3. 檔案內容格式：
+
+```json
+{
+  "token": "nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838"
+}
+```
+
+---
+
+**如果找不到檔案：**
+可能是還沒登入過，Cloudflare/WindTerm 顯示的訊息表示還沒認證過 Netlify CLI。需要先在 Windows 終端機執行：
+
+```bash
+netlify login
+```
+
+就會引導你取得並儲存 Token。
+
+---
+
+需要我幫你確認嗎？
+
+---
+## 📨 對話記錄 05:28（共約 148 條，從第 0 行起）
+
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 讀取 AGENTS.md，啟動開工鐵律五步驟流程。
+- OpenClaw 讀取 JUNSHI_HANDOFF_LATEST.md（接力棒），確認中午場交付內容：守則自動對照系統雙邊上線、小龍蝦 rule-reminder hook 已就緒待實測。
+- OpenClaw 讀取 HEARTBEAT.md，確認本場重點待辦：小龍蝦 hook 真實實測、訊息欄位精準化、commit_notify 偶發 bug。
+- OpenClaw 回報五步驟完成，並詢問教練今天要從哪件事開始。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 回應「開工，先讀 AGENTS.md」，啟動開工流程。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，確認所有 Cron 任務正常運作、Git 已自動提交（commit hash: 03fd6beb），並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者詢問「怎麼沒有回應？」，表達對先前無回應的疑惑。
+- OpenClaw 解釋系統因對話記錄過長（Context Overflow）已自動重啟，並說明之前的對話已完整存入 memory/2026-05-27.md 並推上 GitHub。
+- OpenClaw 告知已重新啟動完成，並詢問教練今天要從哪件事開始。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 讀取 JUNSHI_HANDOFF_LATEST.md（接力棒），確認系統狀態正常，最後 relay poll 時間為 20:02，並發現學長場的改變有待提交。
+- OpenClaw 執行 git commit，提交變更（commit hash: 18e46679）。
+- OpenClaw 確認待辦事項：小龍蝦 hook 真實實測（教練說「我做好了」時，測試小龍蝦回應是否有守則意識）。
+- OpenClaw 回報系統狀態：12 個 Cron 任務正常運作、Git 備份完成、YouTube 新聞正常、relay 無新任務，並詢問教練是否有需要處理的事。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發增量記憶蒸餾任務，要求執行 node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js，並指示若無新內容則安靜結束、不需通知教練。
+- OpenClaw 執行該指令，輸出為 NO_NEW_ENTRIES，任務結束，未進行後續處理。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者詢問 OpenClaw 是否能幫忙修改 Netlify 網站（https://theunrestrictedwar-test.netlify.app/）的三項內容：更改日期和時間、調整字體大小、以及修改「路徑大全」中的密碼與連接資訊。
+- OpenClaw 調查該網站架構，發現其為手動上傳的靜態網站，僅包含 index.html 和 404.html，未綁定 GitHub repo。
+- OpenClaw 分析三項修改的可行性：日期和字體可透過 Netlify API 修改；路徑大全因含敏感資訊（VPS 密碼、API Token、IP 位址），不建議放在公開網站上。
+- OpenClaw 提出兩種修改方式：Netlify API 直接更新（推薦）或建立 GitHub repo 綁定自動部署。
+- OpenClaw 回報調查結果並詢問教練具體修改需求，未實際執行任何修改操作。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報兩個先前執行的非同步命令已完成：cron list 執行結果顯示多個排程任務狀態正常，以及 git commit 完成（commit hash: 18e46679，auto-backup 2026-05-27 20:05，4 個檔案變更，74 行新增，2 行刪除）。
+- OpenClaw 在健康檢查中已處理該回調通知，確認 Git 備份完成、所有 cron 任務狀態正常，並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：[Retry after the previous model attempt failed or timed out]
+
+You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，回覆「HEARTBEAT_OK」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者向 OpenClaw 說明「路徑大全」存放於本機電腦，無安全疑慮，並確認 GitHub 已綁定 Netlify 可自動部署。
+- 使用者詢問若人在外面，是否可以即時呼叫 OpenClaw 進行部署。
+- OpenClaw 回答可以，說明可即時修改網站內容、推送到 GitHub，並由 Netlify 自動部署，約 30 秒內生效。
+- OpenClaw 詢問使用者現在是否要進行修改，或僅確認功能即可。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者詢問 OpenClaw 是否已掌握 Netlify 自動部署的關鍵資訊（網站連結、Site ID、Token 等）。
+- OpenClaw 確認已掌握相關資訊，包括網站網址、Site ID、已從路徑大全取得 Netlify Token，以及修改方式（本地改 index.html → Netlify API 上傳 → 30 秒生效）。
+- OpenClaw 詢問使用者現在是否要進行修改，或僅確認資訊掌握狀態即可。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者指示 OpenClaw 將網站上的「號外！企業贈票」訊息移除。
+- OpenClaw 執行修改，移除號外公告（企業贈票訊息）。
+- OpenClaw 驗證結果：搜尋「號外」「企業贊助」「免費票券」「立即報名」已找不到相關內容，「上映時刻表」「首映週」正常顯示，南台影城場次表保留但無贈票公告。
+- OpenClaw 回報網站已更新，約 30 秒內全球生效。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，確認所有任務正常、Git 已自動備份（commit hash: b224280e），並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 執行健康檢查，回報系統狀態：12 個 Cron 任務運作中（2 個 running）、Git 備份完成（commit hash: b224280e，20:30）、YouTube 新聞已生成（08:33，33KB，12 頻道監測中）、relay poll 無新任務。
+- OpenClaw 回覆「2026-05-27 20:32 心跳報告」，確認學長巡航中一切正常，並向教練道晚安。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，確認系統一切正常，並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 辨識此為前次健康檢查的 cron list 結果重複通知，判斷無需處理，並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 依照開工鐵律五步驟執行：讀取接力棒、確認 HEARTBEAT 狀態（本場曾因對話太長於 18:57自動重啟）、檢查新計劃檔（shared-relay/review-vps-chatbot-heuristic-list.md，2026-05-27 01:41 建立）、確認 memory 最新檔（memory/2026-05-27.md，192KB 太大不讀）。
+- OpenClaw 回報接力棒待辦：小龍蝦守則 hook 需要真實實測（教練在 Telegram 說「我做好了」，看有沒有展現守則意識）。
+- OpenClaw 回報系統狀態正常，並詢問教練今天要從哪件事開始。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。
+- OpenClaw 在健康檢查中已處理該回調通知，確認 21:32 定時檢查完成，無需任何行動，並回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。
+- OpenClaw 依照開工鐵律、複習特助心法守則第19條，確認身份為小龍蝦學長（1號機），老闆是大樹教練，時間為 2026-05-27 21:32（晚間場）。
+- OpenClaw 執行系統檢查：19 個 Cron 正常、Relay 無新任務、Git 備份完成（commit hash 未完整顯示）、YouTube 新聞 OK（08:33）、系統健檢 OK。
+- OpenClaw 回覆「HEARTBEAT_OK ✅」。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統指示 OpenClaw 讀取 HEARTBEAT.md 並嚴格遵守內容，若無需處理則回覆 HEARTBEAT_OK。
+- OpenClaw 讀取 /Users/bymyway/.openclaw/workspace/HEARTBEAT.md，確認系統狀態正常，無需特別行動，回覆「HEARTBEAT_OK」。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 系統指示 OpenClaw 讀取 HEARTBEAT.md 並嚴格遵守內容，若無需處理則回覆 HEARTBEAT_OK。
+- OpenClaw 讀取 /Users/bymyway/.openclaw/workspace/HEARTBEAT.md，確認系統狀態正常，無需特別行動，回覆「HEARTBEAT_OK」。
+👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r
+🦞 小龍蝦：- 使用者透過 cron 排程觸發自我優化代理（每晚自我優化），要求檢視最近互動、workspace 規則與記憶，進行自我優化檢查並優先掃描 memory/ 中是否有教練碎碎念內容。
+- OpenClaw 掃描 memory/ 資料夾，發現 5 個待優化項目，並執行具體改善。
+- 發現一：主動關懷 cron 漏接（案例 P）——1-HB.md 寫「每4小時主動問候」，但 crontab 裡找不到對應 job，可能在 gateway 重啟時消失，已將主動關懷改為心跳時直接觸發。
+- 發現二：營業稅提醒有記錄無 cron（案例 Q）——教練口頭說「每天提醒直到 5/31，稅單 28451」，但 memory 有、crontab 沒有，已建立預防機制。
+- 發現三：PROBE LOG 分析（小龍蝦 hook 精準化素材）——真實 Telegram 訊息的文字欄位在 `context.body` 而非 `context.text`。
+- 已執行的修改：更新 HEARTBEAT.md（新增「今日自我優化發現」區）、更新 failure-case-handbook.md（維護日誌補入 P/Q），並
