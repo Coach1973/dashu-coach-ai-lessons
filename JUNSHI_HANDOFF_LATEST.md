@@ -6,11 +6,35 @@
 
 ---
 
-## 🔴🔴 2026-05-29 深夜（軍師找到真正根因）— 最重要的一次
+## 🔴🔴🔴 2026-05-29 深夜（軍師第二次找根因，這次才是真的）— **最最重要**
+
+### 一句話交代（推翻上一次的判斷）
+
+**第 4 次終端機 Opus 失敗後 grep 環境變數，找到真正根因：是 aiprimetech 第三方代理（unlimited.aiprimetech.io）對「.openclaw」字串有 bug。軍師走 Anthropic 官方端點完全正常，教練終端機走 aiprimetech 一律污染。模型沒問題、文件沒問題，代理才是兇手。**
+
+### 確診證據（軍師親自驗證 env）
+
+| 環境 | API 端點 | 路徑解析 |
+|------|---------|---------|
+| 軍師（Claude Desktop App）| api.anthropic.com（官方直連）| ✅ `.openclaw` 正確 |
+| 教練 Mac 終端機 Opus | unlimited.aiprimetech.io（第三方）| ❌ 全部把「.openclaw」看成別的 |
+| 多個新 session 測試 | 同上 | 全部相同症狀 → 跟 session 無關 |
+
+### 教練的對策（拍板）
+
+- **選 A**：改 settings.json BASE_URL 回 Anthropic 官方（修好但失去 aiprimetech 無限流量）
+- **選 B（軍師推薦）**：接受 Mac 終端機 Opus 不可用，任務軍師親手或派 MiniMax
+- **選 C**：聯絡 aiprimetech 客服回報 bug
+
+memory：`feedback_aiprimetech_proxy_string_bug.md` 已寫死
+
+---
+
+## 🔴 2026-05-29 深夜（軍師第一次找根因，被推翻）
 
 ### 一句話交代
 
-**今晚 3 次 Opus 任務失敗的「認知污染」真正根因——軍師自己寫的「禁止假設清單」是反向錨點污染源。LLM 看「禁止 X」反而把 X 烙印更深（粉紅色大象效應）。鐵律已立、路徑大全已清、memory 已寫。**
+**今晚 3 次 Opus 任務失敗，軍師起初判斷「反向錨點污染源在路徑大全」並已清理。但第 4 次失敗證明清理後新 Opus 還是壞 → 根因不在文件，在代理（見上方紅色段）。本段保留作為歷史參考。**
 
 ### 完成任務（深夜場）
 
