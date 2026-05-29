@@ -20,6 +20,9 @@
 | 雙標分流鐵律寫進 memory | ✅ | memory `feedback_subagent_instruction_no_questions.md` + MEMORY.md 索引 |
 | 派 MiniMax 改造 pre_task_hook.sh + 故事檔注入（Phase 3） | ✅ | workspace `97949784`（hook）+ `cc963f88`（接力棒）|
 | 軍師現場活證據驗收 hook 階段 3 | ✅ 通過 | 本場 session「凡走過必留痕跡」六字觸發 #05 注入，內容跟 056b2011 一致 |
+| **後段**：守則 21 條總覽 HTML 上桌面 + 教練視覺驗收第二輪 | ✅ 教練給 90 分 | `~/Desktop/守則故事案例庫_21條總覽.html`，30KB，金色/深藍頂級特助俱樂部風 |
+| **後段**：9 條去重複/升 A（教練視覺驗收反饋） | A21/B0/C0 全升 A | `821dff3d`，#02/#08/#10/#12/#14/#16/#17/#20 重撈獨立教練原話，#01 悟到照教練親寫改 |
+| **後段**：鎖死「Opus 軍師省 token 鐵律」 | ✅ | memory `feedback_opus_token_economy.md`，五層技巧清單+紅線+本場實戰範本 |
 
 ### 🔴 三件大事細節
 
@@ -53,7 +56,13 @@
 
 ### 🔴 教練本場親定鐵律（下一棒必讀）
 
-**派外包指令的「最高鐵律」標準格式**（已寫進 `feedback_subagent_instruction_no_questions.md`）：
+**B. Opus 軍師省 token 鐵律**（已寫進 `feedback_opus_token_economy.md`）：
+
+> 在 Opus 模式下，兼顧品質的前提下，軍師永遠要考慮怎麼節省 token 來完成任務。
+
+順序：① 品質達標（不能降）② 省 token（永遠想） ③ 速度快（順便）。Opus 走教練的 Claude 額度，揮霍 = 燒教練生命。具體五層技巧：分工、讀檔、驗收、互動、回報，加紅線（守則#21/#15/#03/#06 + 教練的話神聖不可省）。
+
+**A. 派外包指令的「最高鐵律」標準格式**（已寫進 `feedback_subagent_instruction_no_questions.md`）：
 
 ```
 🔴 最高鐵律（先讀）：
@@ -82,7 +91,9 @@
 | 守則 C 類 5 條補完 + 品管報告升級（A19/B2/C0） | `056b2011` |
 | MiniMax：pre_task_hook.sh 注入故事檔（Phase 3） | `97949784` |
 | MiniMax：接力棒更新 | `cc963f88` |
-| 本場接力棒更新（下午場記錄） | （此 commit）|
+| 本場接力棒更新（下午場記錄） | `ad4f38c9` |
+| **後段**：9 條去重複升 A（A21/B0/C0） | `821dff3d` |
+| **後段**：接力棒補增（含本行 + 省 token 鐵律） | （此 commit）|
 
 ### 對話狀態
 
