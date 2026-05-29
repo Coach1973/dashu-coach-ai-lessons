@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-28 03:40:00**
+> **最後同步：2026-05-30 01:25:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -13,96 +13,77 @@
 # 軍師交接紙條（最新）
 
 > 給下一個軍師：開工先讀這張，就能無縫接上，不用教練重講。
-> 本場時間：2026-05-28 上午場
-> 寫紙條的人：軍師（Claude Sonnet 4.6 終端機）
+> 本場時間：2026-05-30 凌晨（Haiku 終端機特助完成）
+> 寫紙條的人：終端機特助（Claude Haiku 4.5）
 
 ---
 
-## 一句話交代這場做了什麼
+## ✅ 本場完成任務：northern-tw.netlify.app 論壇網站大改版
 
-**「全自動總結」系統正式上線：提取腳本（Mac cron）+ OpenClaw 蒸餾 cron（MiniMax）雙軌並行，74 個歷史 session 已提取完畢，等待小龍蝦蒸餾。commit hash = `1cab76d1`**
-
----
-
-## ✅ 這場完成的事
-
-| 優先 | 任務 | 結果 |
-|------|------|------|
-| 🔴 最高 | `extract_terminal_sessions.py`（提取腳本）建立 + 測試 | ✅ 74 個 session 全部提取到 `pending_distill/` |
-| 🔴 最高 | Mac crontab 新增：每 30 分鐘自動提取 | ✅ 已驗證 |
-| 🔴 最高 | OpenClaw cron job（每4小時，MiniMax 蒸餾）新增 | ✅ ID: d99eec28 |
-| 🟡 | push 失敗修復（凌晨場殘留的 d260dcab） | ✅ 已推上去 |
-
----
-
-## 🔴 系統架構（下一場軍師必懂）
-
-```
-Mac crontab 每30分鐘
-  └── extract_terminal_sessions.py
-       └── 讀 ~/.claude/projects/.../*.jsonl
-       └── 提取教練原話（跳過 hook 注入、tool_result）
-       └── 寫入 terminal-notes/pending_distill/SESSIONID.txt
-
-OpenClaw cron 每4小時（MiniMax，無限流量）
-  └── 讀取 pending_distill/ 的 .txt 檔
-  └── LLM 蒸餾（保留教練原話）
-  └── 寫入 distill/terminal_YYYY-MM-DD.md
-  └── 移動已處理到 done_distill/
-  └── git commit + push
-```
-
-**分工原則（教練親定）：**
-- 這裡（Claude Code）= 寫腳本
-- 終端機（OpenClaw/MiniMax）= 實際執行蒸餾
-
----
-
-## 🔴 場景化 + 痛點計分閉環（本場下半場新增，commit b7fb98e8）
-
-教練拍板：總結不能只存檔，要變成守則的養分。完成第一檔（場景化）+ 第二檔（痛點計分）。
-
-```
-蒸餾摘要 distill/terminal_YYYY-MM-DD.md
-  └─① 場景化【LLM判斷｜OpenClaw升華cron每日23:00｜ID 533cfe54】
-  │    判斷值得收錄段落 → 格式D 6欄場景（保留教練原話）
-  │    → append 到 distill/特助場景庫_自動增量.md
-  │    → 每場景守則違反寫一筆 JSON → distill/痛點計分_log.jsonl
-  └─② 痛點計分【Python確定性計數｜Mac cron每日23:40｜rerank_top10.py】
-       統計 主庫+自動庫+計分log 守則違反次數 → 重排
-       → 輸出 distill/痛點排名_自動.md
-```
-
-**鐵律：養分自動煉，但守則本體（21條）絕不自動改——只產候選稿等教練拍板。**
-**第三檔（守則兩問句候選稿）教練說他自己會先寫上，軍師暫不動。**
-
----
-
-## ⚠️ 下一場的待辦
-
-| 優先 | 任務 |
+| 任務 | 結果 |
 |------|------|
-| 🔴 今天 | 確認小龍蝦第一次蒸餾有正確執行（04:00 蒸餾、23:00 升華後查 distill/） |
-| 🟡 | cron/jobs.json 在 workspace repo 外（~/.openclaw/cron/），未納版控——考慮加備份 |
-| 🟡 | relay_poll.py UnicodeDecodeError 修復 |
-| ✅ 已修 | 營業稅 28451 提醒（案例Q）：已補雙保險（Mac crontab桌面 + OpenClaw Telegram，每天9點，截止5/31）。教練繳完說「稅繳了」就移除兩條 cron |
-| 🟡 | 小龍蝦 hook 真實實測（教練說「我做好了」測守則意識） |
+| 圖片遺失修復（11 張從舊 deploy 救回） | ✅ |
+| 場次切換列（4/11 + 6/26） | ✅ |
+| 6/26 完整場次建置（7 位講師、議程、報名、贊助） | ✅ |
+| 626 設為首頁，411 移至成長足跡 | ✅ |
+| 成長足跡加入 1206 桃園場 + 411 高雄場兩筆記錄 | ✅ |
+| 場次切換列移至頁面最底部 | ✅ |
+| 回到頂部浮動按鈕（右下角 ▲） | ✅ |
+| 快速跳轉列（報名/論壇主題/演講者/議程/相關單位/廠商贊助） | ✅ |
+| 中正大學 Logo 上傳並套用 | ✅ |
+| 正式版推送完成 | ✅ |
 
 ---
 
-## 🔗 本場 Commit Hash
+## 🌐 網站資訊
 
-| 描述 | Commit |
-|------|--------|
-| 全自動總結系統上線（提取+蒸餾） | `1cab76d1` |
-| 場景化+痛點計分閉環 + 補回漏提交的 extract 腳本 | `b7fb98e8` |
-| 已 push 到 GitHub | ✅ |
+| 站台 | URL | Netlify Site ID |
+|------|-----|----------------|
+| 正式版 | https://northern-tw.netlify.app/ | f1f3ed15-79b6-4bed-b4d1-0199a185a181 |
+| 測試版 | https://northern-tw-test.netlify.app/ | 56d3fa7e-41bd-40d9-8000-2e9b779b0461 |
 
-**⚠️ 血淚教訓：`git add` 含 repo 外路徑（cron/jobs.json）會整批拒絕，導致 extract 腳本前次假成功未上雲。多檔 add 後務必 `git diff --cached --name-only` 核對。**
+Netlify Token：nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838（到期 2027/05/14）
 
 ---
 
-*軍師交接紙條完成 | 2026-05-28 上午場 | 軍師 Claude Sonnet 4.6 終端機*
+## ⚠️ 本地工作目錄（重開機會消失！）
+
+最新版所有檔案在：/tmp/northern_images/
+下次開工若 /tmp/northern_images 不存在，需從 Netlify 舊 deploy 重新拉檔案。
+拉法：用 API 找最新 deploy ID，再下載每個檔案。
+
+---
+
+## 🗓 6/26 場次關鍵資訊
+
+- 時間：2026 年 6 月 26 日（五）09:30–17:00
+- 地點：國立中正大學創新大樓（嘉義縣民雄鄉大學路一段168號）
+- 指導：嘉義縣衛生局
+- 主辦：國立中正大學中小企業育成中心、全球健康發展協會、紐約北方醫學中心
+- 報名費：免費，席次 200 位
+- 實體報名：https://forms.gle/Htk4YENdd5m9rmmG8
+- 線上報名：https://forms.gle/PHQjjADVXTyVbXGc7
+- 贊助廠商：NT$30,000
+- 入會表單：https://forms.gle/NjhHmEwxCUrw8FBW8
+
+講師：宋昇峯、林明傑、吳啟裕、張克咸、楊尚儒、陳佩君、藍士哲
+
+---
+
+## 📌 待辦（下一棒）
+
+- 1206 桃園場補完善（教練會提供報導花絮，不急）
+- 626 報名表連結確認（Google Forms 是否正確）
+- 626 議程如有更新再調整
+
+---
+
+## 🔴 部署鐵律
+
+Netlify 是手動上傳型，每次更新：
+1. 修改 /tmp/northern_images/index.html
+2. zip -r deploy.zip .
+3. curl API 推送（絕對不用 git push）
 
 
 ---
