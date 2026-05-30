@@ -14,8 +14,8 @@
 | extract_terminal_sessions.py cron 設定 | ✅ 每 30 分鐘 |
 | distill_terminal_llm.py 建立 | ✅ MiniMax 蒸餾腳本 |
 | run_distill_terminal.sh 建立 | ✅ cron wrapper |
-| 87 個 session 全部提取到 done_distill/ | ✅ |
-| 蒸餾 S1-S42（42 個 session） | ✅ |
+| 88 個 session 全部提取到 done_distill/ | ✅ |
+| 蒸餾 S1-S82（82 個 session） | ✅ |
 
 ### 案例分析網頁
 | 任務 | 結果 |
@@ -57,15 +57,15 @@ Netlify Token：nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838（到期 2027/05/14）
 | 蒸餾 | `scripts/distill_terminal_llm.py` | MiniMax LLM 蒸餾 |
 | 排程 | `scripts/run_distill_terminal.sh` | cron wrapper：提取→蒸餾→commit push |
 | 原始存檔 | `terminal-notes/done_distill/` | 88 個 raw text |
-| 蒸餾輸出 | `distill/terminal_2026-05-30.md` | 81 個 session |
+| 蒸餾輸出 | `distill/terminal_2026-05-30.md` | 82 個 session（S1-S82） |
 
 ### 現況
 | 指標 | 數量 |
 |------|------|
 | 總 session 數 | 88 個 |
-| 已蒸餾 | 81 個（S1-S81） |
-| 例行開工跳過 | 7 個（S71-S75 等） |
-| **未蒸餾** | **0 個（全部完成）** |
+| 已蒸餾 | 82 個（S1-S82） |
+| 例行開工跳過 | 6 個（S71-S75 + 1個 ping） |
+| 狀態追蹤 | `terminal-notes/.distill_complete_state.json` 全部 88 個 UUID 已標記完成 |
 
 ### 蒸餾 commit hash 記錄
 | 批次 | Sessions | commit hash |
@@ -75,6 +75,7 @@ Netlify Token：nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838（到期 2027/05/14）
 | 第三批 | S43-S60 | `0ae424ca` |
 | 第四批 | S61-S70 | `a20aa33d` |
 | 第五批 | S71-S81 | `d8f10aae` |
+| S82 | S82 | `ad432e6b` |
 
 ### 重要路徑
 - 所有蒸餾工具在 `/Users/bymyway/.openclaw/workspace/scripts/`
@@ -85,9 +86,6 @@ Netlify Token：nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838（到期 2027/05/14）
 ---
 
 ## 📌 下一棒待辦
-
-### ✅ 蒸餾系統已完成（88個session全部完成）
-無需繼續蒸餾。
 
 ### 🟡 次優先：案例分析網頁補圖
 
@@ -116,6 +114,6 @@ Netlify 手動上傳型（22 個站台），每次更新：
 
 ---
 
-**commit hash：** `d8f10aae`
+**commit hash：** `ad432e6b`
 **時間：** 2026-05-30 晚間（台灣時間）
 **軍師：** Claude Sonnet 4.6（桌面版）
