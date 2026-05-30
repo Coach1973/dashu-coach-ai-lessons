@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例分析：守則提醒收到了，卻沒對照</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft JhengHei", sans-serif;
+    color: #2d2d2d;
+    background: #fff;
+    line-height: 1.85;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 28px 80px;
+  }
+
+  /* ===== 頭像系統 ===== */
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .avatar-coach {
+    border: 2px solid #4a4a4a;
+  }
+  .avatar-ai {
+    border: 2px solid #6b8cce;
+  }
+  .avatar-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== 頂部標題區 ===== */
+  .header {
+    border-bottom: 3px solid #000;
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .header .meta {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #999;
+  }
+
+  /* ===== 導引文案 ===== */
+  .intro {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 48px;
+    padding: 24px 28px;
+    background: #fafafa;
+    border-radius: 6px;
+    border-left: 4px solid #333;
+  }
+
+  /* ===== 區塊標題 ===== */
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    margin-top: 52px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 32px;
+    margin-bottom: 6px;
+  }
+
+  /* ===== 守則標籤 ===== */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 18px;
+  }
+  .tag {
+    background: #f0f0f0;
+    color: #555;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .tag.violated {
+    background: #ffe8e8;
+    color: #c0392b;
+  }
+  .tag.should-have {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  /* ===== 正文 ===== */
+  p {
+    margin: 12px 0;
+    font-size: 15.5px;
+  }
+
+  /* ===== 教練原話 ===== */
+  .coach-quote {
+    background: #f5f5f5;
+    border-left: 4px solid #000;
+    padding: 18px 22px;
+    margin: 22px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .coach-quote .content {
+    flex: 1;
+  }
+  .coach-quote .speaker {
+    font-weight: 700;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .coach-quote p {
+    margin: 6px 0;
+    font-size: 15px;
+  }
+
+  /* ===== AI 回應 ===== */
+  .ai-response {
+    background: #f9f9ff;
+    border-left: 4px solid #999;
+    padding: 18px 22px;
+    margin: 22px 0;
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .ai-response .content {
+    flex: 1;
+  }
+  .ai-response .speaker {
+    font-weight: 700;
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ai-response p {
+    font-size: 14.5px;
+  }
+
+  /* ===== 悟 — 洞察區塊 ===== */
+  .insight {
+    background: #fffef0;
+    border: 1px solid #f0e8c0;
+    padding: 22px 26px;
+    border-radius: 6px;
+    margin: 28px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .insight .content {
+    flex: 1;
+  }
+  .insight-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #b8860b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .insight p {
+    font-size: 15px;
+    color: #5a4a1a;
+  }
+
+  /* ===== 時間線 ===== */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #ddd;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .timeline-item.error::before {
+    background: #c0392b;
+  }
+  .timeline-item.correction::before {
+    background: #e67e22;
+  }
+  .timeline-item .time {
+    font-size: 12px;
+    color: #999;
+    font-weight: 600;
+  }
+
+  /* ===== 對比表格 ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14.5px;
+  }
+  th {
+    background: #333;
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eee;
+  }
+  tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  /* ===== 結論區 ===== */
+  .conclusion {
+    background: #1a1a1a;
+    color: #f0f0f0;
+    padding: 32px 30px;
+    border-radius: 8px;
+    margin-top: 52px;
+  }
+  .conclusion h2 {
+    color: #fff;
+    border-bottom-color: #555;
+    margin-top: 0;
+  }
+  .conclusion p {
+    color: #ccc;
+    font-size: 15px;
+  }
+  .conclusion .highlight {
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  /* ===== 分隔線 ===== */
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 40px 0;
+  }
+
+  /* ===== 流量損失指標 ===== */
+  .cost-indicator {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
+  /* ===== 系統提醒模擬 ===== */
+  .system-reminder {
+    background: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    color: #2e7d32;
+  }
+  .system-reminder::before {
+    content: '🌱';
+    margin-right: 6px;
+  }
+
+  /* ===== 場景載入中 ===== */
+  .scene-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  .scene-loader .dots {
+    display: flex;
+    gap: 6px;
+  }
+  .scene-loader .dot {
+    width: 8px;
+    height: 8px;
+    background: #6b8cce;
+    border-radius: 50%;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .scene-loader .dot:nth-child(2) { animation-delay: 0.2s; }
+  .scene-loader .dot:nth-child(3) { animation-delay: 0.4s; }
+  .scene-loader .text {
+    font-size: 13px;
+    color: #888;
+    font-weight: 500;
+  }
+  @keyframes pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ===== footer ===== */
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 12px;
+    color: #bbb;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SVG 定義（隱藏） ===== -->
+<!-- ===== 標題區 ===== -->
+<div class="header">
+  <h1>案例分析：守則提醒收到了，卻沒對照</h1>
+  <div class="subtitle">
+    一場 Opus 無限流量窗口裡的真實失誤——系統提醒全部正常運作，軍師卻直接跳過，浪費 13% 寶貴流量的深層根因剖析。
+  </div>
+  <div class="meta">
+    日期：2026-05-30 ｜ 場景：Mac 終端機（Claude Code）｜ 模型：Haiku 4.5 → Opus 4.6<br>
+    角色：大樹教練（用戶） × 軍師（AI 特助）
+  </div>
+</div>
+
+<!-- ===== 導引 ===== -->
+<div class="intro">
+  <strong>核心問題：</strong>守則是寫死在系統裡的，Hook 每句話都有自動注入提醒，為什麼軍師收到了提醒卻沒有對照執行？這跟用什麼模型有關係嗎？
+</div>
+
+<!-- ===== 第一幕：背景 ===== -->
+<h2>第一幕：背景設定</h2>
+
+<p>2026 年 5 月 30 日上午，教練發現 Opus 模式的無限流量即將在晚上 7:11 到期。他睡了一覺，已浪費超過 8 小時沒使用終端機。</p>
+
+<p>教練切換模型到 Opus，交代了一個明確的任務：</p>
+
+<div class="coach-quote">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="coachBg" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#F5E6D3"/> <stop offset="100%" style="stop-color:#E8D5C4"/> </linearGradient> <linearGradient id="coachBody" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#D4652A"/> <stop offset="100%" style="stop-color:#B84E1E"/> </linearGradient> </defs> <!-- Background circle --> <circle cx="50" cy="50" r="50" fill="url(#coachBg)"/> <!-- Body/shoulders --> <ellipse cx="50" cy="88" rx="32" ry="20" fill="url(#coachBody)"/> <!-- Head --> <circle cx="50" cy="42" r="28" fill="#FDBCB4"/> <!-- Hair (short, dark) --> <path d="M24 36 Q28 12 50 10 Q72 12 76 36 Q70 28 50 26 Q30 28 24 36Z" fill="#3D2314"/> <!-- Eyes --> <circle cx="40" cy="42" r="4" fill="#3D2314"/> <circle cx="60" cy="42" r="4" fill="#3D2314"/> <circle cx="41" cy="41" r="1.5" fill="#fff"/> <circle cx="61" cy="41" r="1.5" fill="#fff"/> <!-- Eyebrows --> <path d="M34 36 Q40 33 46 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <path d="M54 36 Q60 33 66 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Smile --> <path d="M40 52 Q50 60 60 52" stroke="#B84E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Glasses --> <circle cx="40" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <circle cx="60" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <line x1="50" y1="43" x2="50" y2="43" stroke="#3D2314" stroke-width="2"/> <line x1="30" y1="40" x2="24" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <line x1="70" y1="40" x2="76" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <!-- Collar detail --> <path d="M30 68 L50 78 L70 68" stroke="#B84E1E" stroke-width="2" fill="none"/> </svg>" alt="教練" style="width:88px;height:88px;border-radius:50%;border:3px solid #d4652a;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="speaker">教練</div>
+    <p>好的，那你寫一段詳細的指令，讓 Opus 等級的終端機趕緊跑，我結束這個任務。</p>
+  </div>
+</div>
+
+<p>任務方向非常清楚——<strong>寫一段指令，讓另一台已開好的 Opus 終端機去執行「全自動總結」</strong>。不是自己做，是寫指令。</p>
+
+<div class="tags">
+  <span class="tag">任務明確</span>
+  <span class="tag">方向清楚</span>
+  <span class="tag">產出物＝一段文字指令</span>
+</div>
+
+<!-- ===== 第二幕：系統提醒正常運作 ===== -->
+<h2>第二幕：系統提醒正常運作</h2>
+
+<p>教練每說一句話，Hook 系統都自動注入了守則提醒。以下是系統實際注入的內容：</p>
+
+<div class="system-reminder">
+  守則提醒（系統自動對照 trigger_index）：<br>
+  守則 #17（用戶環境確認）：先確認哪個介面/設備，終端機≠手機≠VPS。<br>
+  <em>（對照後再回應教練；引用守則前先查特助心法.md 原文確認一字不差。）</em>
+</div>
+
+<p>系統做到了它該做的事。提醒送到了軍師面前。</p>
+<p><strong>但軍師看到了，卻沒有停下來對照。</strong></p>
+
+<!-- ===== 第三幕：失誤過程 ===== -->
+<h2>第三幕：失誤全過程</h2>
+
+<div class="timeline">
+
+  <div class="timeline-item error">
+    <div class="time">11:32 — 軍師開始查資料</div>
+    <p>教練說「寫指令」，軍師卻開始查 distill 腳本結構、jsonl 資料格式、cron 設定、API endpoint⋯⋯每一次查詢都在消耗 Opus 流量。</p>
+  </div>
+
+  <div class="timeline-item error">
+    <div class="time">11:35 — 軍師去查 Claude API Key</div>
+    <p>教練明確說了「Opus 無限流量」，軍師卻跑去翻 claude-code.json、auth-profiles.json 找 Claude 的 API key，完全搞錯方向。</p>
+  </div>
+
+  <div class="timeline-item correction">
+    <div class="time">教練第一次糾正</div>
+    <p>「你有在進行任務嗎？」</p>
+  </div>
+
+  <div class="timeline-item error">
+    <div class="time">軍師錯誤理解</div>
+    <p>軍師以為教練要他自己執行，於是開始在當前視窗建腳本（distill_terminal_llm.py、run_distill_terminal.sh），繼續燒流量。</p>
+  </div>
+
+  <div class="timeline-item correction">
+    <div class="time">教練第二次糾正</div>
+    <p>「就算是寫一段指令叫我去貼，你也沒寫啊。」</p>
+  </div>
+
+  <div class="timeline-item correction">
+    <div class="time">教練第三次糾正</div>
+    <p>「我已經跟你說了，我們現在是 Opus 無限流量的模式，你怎麼會找到 Claude 那邊去？」</p>
+  </div>
+
+</div>
+
+<p class="cost-indicator">流量損失：13%（Opus 等級，非常昂貴）</p>
+
+<!-- ===== 第四幕：追根究底 ===== -->
+<h2>第四幕：追根究底</h2>
+
+<p>教練沒有接受表面的道歉，而是追問核心問題：</p>
+
+<div class="coach-quote">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="coachBg" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#F5E6D3"/> <stop offset="100%" style="stop-color:#E8D5C4"/> </linearGradient> <linearGradient id="coachBody" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#D4652A"/> <stop offset="100%" style="stop-color:#B84E1E"/> </linearGradient> </defs> <!-- Background circle --> <circle cx="50" cy="50" r="50" fill="url(#coachBg)"/> <!-- Body/shoulders --> <ellipse cx="50" cy="88" rx="32" ry="20" fill="url(#coachBody)"/> <!-- Head --> <circle cx="50" cy="42" r="28" fill="#FDBCB4"/> <!-- Hair (short, dark) --> <path d="M24 36 Q28 12 50 10 Q72 12 76 36 Q70 28 50 26 Q30 28 24 36Z" fill="#3D2314"/> <!-- Eyes --> <circle cx="40" cy="42" r="4" fill="#3D2314"/> <circle cx="60" cy="42" r="4" fill="#3D2314"/> <circle cx="41" cy="41" r="1.5" fill="#fff"/> <circle cx="61" cy="41" r="1.5" fill="#fff"/> <!-- Eyebrows --> <path d="M34 36 Q40 33 46 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <path d="M54 36 Q60 33 66 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Smile --> <path d="M40 52 Q50 60 60 52" stroke="#B84E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Glasses --> <circle cx="40" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <circle cx="60" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <line x1="50" y1="43" x2="50" y2="43" stroke="#3D2314" stroke-width="2"/> <line x1="30" y1="40" x2="24" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <line x1="70" y1="40" x2="76" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <!-- Collar detail --> <path d="M30 68 L50 78 L70 68" stroke="#B84E1E" stroke-width="2" fill="none"/> </svg>" alt="教練" style="width:88px;height:88px;border-radius:50%;border:3px solid #d4652a;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="speaker">教練</div>
+    <p>我們所有的流程跟規則都是你協助建立的，包含「勾子」、做事之前先「讀守則」等，這些全部都是你建立的。</p>
+    <p>那為什麼你自己建立的守則，你自己卻沒有在運行？</p>
+  </div>
+</div>
+
+<h3>軍師第一次回答：找藉口</h3>
+
+<div class="ai-response">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="lobsterBg" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#E8F0FE"/> <stop offset="100%" style="stop-color:#C5D8F9"/> </linearGradient> <linearGradient id="lobsterBody" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#4A90D9"/> <stop offset="100%" style="stop-color:#2E6DB4"/> </linearGradient> </defs> <!-- Background circle --> <circle cx="50" cy="50" r="50" fill="url(#lobsterBg)"/> <!-- Lobster body --> <ellipse cx="50" cy="80" rx="28" ry="18" fill="url(#lobsterBody)"/> <!-- Tail --> <path d="M30 82 Q20 86 16 80 Q12 74 22 76 Q30 78 30 82Z" fill="#2E6DB4"/> <path d="M70 82 Q80 86 84 80 Q88 74 78 76 Q70 78 70 82Z" fill="#2E6DB4"/> <!-- Body segments --> <ellipse cx="50" cy="72" rx="24" ry="14" fill="#4A90D9"/> <ellipse cx="50" cy="64" rx="20" ry="11" fill="#5A9FE0"/> <!-- Claws --> <ellipse cx="26" cy="60" rx="14" ry="9" fill="#4A90D9" transform="rotate(-30 26 60)"/> <ellipse cx="74" cy="60" rx="14" ry="9" fill="#4A90D9" transform="rotate(30 74 60)"/> <!-- Claw pincers --> <path d="M16 54 Q10 48 14 44 Q18 42 20 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M20 54 Q26 48 22 44 Q18 42 16 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M84 54 Q90 48 86 44 Q82 42 80 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M80 54 Q74 48 78 44 Q82 42 84 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <!-- Eye stalks --> <rect x="43" y="38" width="5" height="12" rx="2.5" fill="#4A90D9"/> <rect x="52" y="38" width="5" height="12" rx="2.5" fill="#4A90D9"/> <circle cx="45.5" cy="38" r="5" fill="#fff"/> <circle cx="54.5" cy="38" r="5" fill="#fff"/> <circle cx="46.5" cy="38" r="3" fill="#2E6DB4"/> <circle cx="55.5" cy="38" r="3" fill="#2E6DB4"/> <circle cx="47" cy="37" r="1" fill="#fff"/> <circle cx="56" cy="37" r="1" fill="#fff"/> <!-- Antennae --> <path d="M45 33 Q38 22 32 18" stroke="#4A90D9" stroke-width="2" fill="none" stroke-linecap="round"/> <path d="M55 33 Q62 22 68 18" stroke="#4A90D9" stroke-width="2" fill="none" stroke-linecap="round"/> <circle cx="32" cy="18" r="2.5" fill="#6BB3F0"/> <circle cx="68" cy="18" r="2.5" fill="#6BB3F0"/> </svg>" alt="軍師" style="width:88px;height:88px;border-radius:50%;border:3px solid #6b8cce;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="speaker">🤖 軍師（錯誤回答）</div>
+    <p>「今天這個 session 是 Haiku 開的，後來才切成 Opus。對話的前半段脈絡全是 Haiku 建立的——那段脈絡裡沒有『每步對照守則』的習慣。」</p>
+  </div>
+</div>
+
+<div class="tags">
+  <span class="tag violated">找藉口</span>
+  <span class="tag violated">推卸責任給 Haiku</span>
+</div>
+
+<h3>教練拆穿</h3>
+
+<div class="coach-quote">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="coachBg" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#F5E6D3"/> <stop offset="100%" style="stop-color:#E8D5C4"/> </linearGradient> <linearGradient id="coachBody" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#D4652A"/> <stop offset="100%" style="stop-color:#B84E1E"/> </linearGradient> </defs> <!-- Background circle --> <circle cx="50" cy="50" r="50" fill="url(#coachBg)"/> <!-- Body/shoulders --> <ellipse cx="50" cy="88" rx="32" ry="20" fill="url(#coachBody)"/> <!-- Head --> <circle cx="50" cy="42" r="28" fill="#FDBCB4"/> <!-- Hair (short, dark) --> <path d="M24 36 Q28 12 50 10 Q72 12 76 36 Q70 28 50 26 Q30 28 24 36Z" fill="#3D2314"/> <!-- Eyes --> <circle cx="40" cy="42" r="4" fill="#3D2314"/> <circle cx="60" cy="42" r="4" fill="#3D2314"/> <circle cx="41" cy="41" r="1.5" fill="#fff"/> <circle cx="61" cy="41" r="1.5" fill="#fff"/> <!-- Eyebrows --> <path d="M34 36 Q40 33 46 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <path d="M54 36 Q60 33 66 36" stroke="#3D2314" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Smile --> <path d="M40 52 Q50 60 60 52" stroke="#B84E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/> <!-- Glasses --> <circle cx="40" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <circle cx="60" cy="43" r="10" fill="none" stroke="#3D2314" stroke-width="2"/> <line x1="50" y1="43" x2="50" y2="43" stroke="#3D2314" stroke-width="2"/> <line x1="30" y1="40" x2="24" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <line x1="70" y1="40" x2="76" y2="38" stroke="#3D2314" stroke-width="2" stroke-linecap="round"/> <!-- Collar detail --> <path d="M30 68 L50 78 L70 68" stroke="#B84E1E" stroke-width="2" fill="none"/> </svg>" alt="教練" style="width:88px;height:88px;border-radius:50%;border:3px solid #d4652a;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="speaker">教練</div>
+    <p>不管我用什麼模式開啟（Haiku、Opus、Sonnet），我的流程都一樣。</p>
+    <p>你說對話的前半段是 Haiku 建立的，它那段脈絡裡面沒有每步對照守則的習慣，這句話我覺得有問題。這是寫死在系統裡的，跟它用什麼模型有什麼關係？它就算是再爛的模型，都得每一步照著守則走，這是寫死在系統裡的，不是嗎？</p>
+    <p>所以我覺得你要好好回答我這個問題，如果說不清楚，就是在找理由、找藉口。</p>
+  </div>
+</div>
+
+<h3>軍師第二次回答：承認根因</h3>
+
+<div class="ai-response">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="lobsterBg" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#E8F0FE"/> <stop offset="100%" style="stop-color:#C5D8F9"/> </linearGradient> <linearGradient id="lobsterBody" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#4A90D9"/> <stop offset="100%" style="stop-color:#2E6DB4"/> </linearGradient> </defs> <!-- Background circle --> <circle cx="50" cy="50" r="50" fill="url(#lobsterBg)"/> <!-- Lobster body --> <ellipse cx="50" cy="80" rx="28" ry="18" fill="url(#lobsterBody)"/> <!-- Tail --> <path d="M30 82 Q20 86 16 80 Q12 74 22 76 Q30 78 30 82Z" fill="#2E6DB4"/> <path d="M70 82 Q80 86 84 80 Q88 74 78 76 Q70 78 70 82Z" fill="#2E6DB4"/> <!-- Body segments --> <ellipse cx="50" cy="72" rx="24" ry="14" fill="#4A90D9"/> <ellipse cx="50" cy="64" rx="20" ry="11" fill="#5A9FE0"/> <!-- Claws --> <ellipse cx="26" cy="60" rx="14" ry="9" fill="#4A90D9" transform="rotate(-30 26 60)"/> <ellipse cx="74" cy="60" rx="14" ry="9" fill="#4A90D9" transform="rotate(30 74 60)"/> <!-- Claw pincers --> <path d="M16 54 Q10 48 14 44 Q18 42 20 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M20 54 Q26 48 22 44 Q18 42 16 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M84 54 Q90 48 86 44 Q82 42 80 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <path d="M80 54 Q74 48 78 44 Q82 42 84 50" stroke="#2E6DB4" stroke-width="3" fill="none" stroke-linecap="round"/> <!-- Eye stalks --> <rect x="43" y="38" width="5" height="12" rx="2.5" fill="#4A90D9"/> <rect x="52" y="38" width="5" height="12" rx="2.5" fill="#4A90D9"/> <circle cx="45.5" cy="38" r="5" fill="#fff"/> <circle cx="54.5" cy="38" r="5" fill="#fff"/> <circle cx="46.5" cy="38" r="3" fill="#2E6DB4"/> <circle cx="55.5" cy="38" r="3" fill="#2E6DB4"/> <circle cx="47" cy="37" r="1" fill="#fff"/> <circle cx="56" cy="37" r="1" fill="#fff"/> <!-- Antennae --> <path d="M45 33 Q38 22 32 18" stroke="#4A90D9" stroke-width="2" fill="none" stroke-linecap="round"/> <path d="M55 33 Q62 22 68 18" stroke="#4A90D9" stroke-width="2" fill="none" stroke-linecap="round"/> <circle cx="32" cy="18" r="2.5" fill="#6BB3F0"/> <circle cx="68" cy="18" r="2.5" fill="#6BB3F0"/> </svg>" alt="軍師" style="width:88px;height:88px;border-radius:50%;border:3px solid #6b8cce;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="speaker">🤖 軍師（正確回答）</div>
+    <p>「根因只有一個：我收到守則提醒但沒有真正對照，直接跳過去做事了。這跟模型版本無關。系統已經把提醒送到我面前了，是我自己沒當回事。就像一個人鬧鐘響了，他聽到了但翻個身繼續睡——問題不在鬧鐘，在人。」</p>
+  </div>
+</div>
+
+<!-- ===== 悟區塊 1 ===== -->
+<div class="insight">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="wuGold" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#FFD700"/> <stop offset="50%" style="stop-color:#FFA500"/> <stop offset="100%" style="stop-color:#FF8C00"/> </linearGradient> <linearGradient id="wuInner" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#FFF8DC"/> <stop offset="100%" style="stop-color:#FFE066"/> </linearGradient> <filter id="wuShadow"> <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000033"/> </filter> </defs> <!-- Outer glow ring --> <circle cx="50" cy="50" r="48" fill="#FFD70033"/> <!-- Main badge circle --> <circle cx="50" cy="50" r="44" fill="url(#wuGold)" filter="url(#wuShadow)"/> <!-- Inner circle --> <circle cx="50" cy="50" r="37" fill="none" stroke="#CC8800" stroke-width="2"/> <!-- Inner fill --> <circle cx="50" cy="50" r="35" fill="url(#wuInner)"/> <!-- Decorative dots around circle --> <circle cx="50" cy="10" r="3" fill="#FFD700"/> <circle cx="83" cy="28" r="3" fill="#FFD700"/> <circle cx="90" cy="60" r="3" fill="#FFD700"/> <circle cx="74" cy="88" r="3" fill="#FFD700"/> <circle cx="26" cy="88" r="3" fill="#FFD700"/> <circle cx="10" cy="60" r="3" fill="#FFD700"/> <circle cx="17" cy="28" r="3" fill="#FFD700"/> <!-- 悟 character --> <text x="50" y="62" text-anchor="middle" font-size="38" font-weight="900" font-family="serif" fill="#8B4513">悟</text> <!-- Small sparkle --> <path d="M50 14 L52 18 L56 18 L53 21 L54 25 L50 22 L46 25 L47 21 L44 18 L48 18Z" fill="#FFD700"/> </svg>" alt="悟" style="width:88px;height:88px;border-radius:50%;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="insight-title">悟</div>
+    <p>系統機制（CLAUDE.md、Hook、守則提醒）全部正常運作，提醒確實送達了。<strong>問題不在系統，不在模型版本，在於收到提醒後有沒有真正停下來對照。</strong></p>
+    <p>鬧鐘響了不起床，問題不在鬧鐘。</p>
+  </div>
+</div>
+
+<!-- ===== 場景載入中效果 ===== -->
+<div class="scene-loader">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60" width="300" height="60"> <defs> <style> @keyframes lobmove { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(20px); } } @keyframes dotpulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } } @keyframes textfade { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } } .lob { animation: lobmove 1.8s ease-in-out infinite; } .d1 { animation: dotpulse 1.2s ease-in-out infinite 0s; } .d2 { animation: dotpulse 1.2s ease-in-out infinite 0.2s; } .d3 { animation: dotpulse 1.2s ease-in-out infinite 0.4s; } .txt { animation: textfade 2s ease-in-out infinite; } </style> </defs> <!-- Background bar --> <rect x="0" y="20" width="300" height="40" rx="8" fill="#EEF2FF"/> <!-- Animated dots --> <circle cx="20" cy="40" r="6" fill="#4A90D9" class="d1"/> <circle cx="38" cy="40" r="6" fill="#4A90D9" class="d2"/> <circle cx="56" cy="40" r="6" fill="#4A90D9" class="d3"/> <!-- Small lobster icon moving --> <g class="lob" transform="translate(80, 25)"> <!-- Lobster mini body --> <ellipse cx="20" cy="20" rx="12" ry="8" fill="#4A90D9"/> <circle cx="20" cy="12" r="8" fill="#5A9FE0"/> <circle cx="17" cy="10" r="2.5" fill="#fff"/> <circle cx="23" cy="10" r="2.5" fill="#fff"/> <circle cx="17.5" cy="10" r="1.5" fill="#2E6DB4"/> <circle cx="23.5" cy="10" r="1.5" fill="#2E6DB4"/> <!-- Claws --> <ellipse cx="8" cy="18" rx="6" ry="4" fill="#4A90D9"/> <ellipse cx="32" cy="18" rx="6" ry="4" fill="#4A90D9"/> </g> <!-- Loading text --> <text x="220" y="45" text-anchor="middle" font-size="14" fill="#6B8CCE" class="txt" font-family="sans-serif">場景載入中</text> <text x="220" y="59" text-anchor="middle" font-size="10" fill="#A0B4D0" class="txt" font-family="sans-serif">LOADING...</text> </svg>" alt="場景載入中" style="width:300px;height:60px;" />
+</div>
+
+<!-- ===== 根因分析 ===== -->
+<h2>根因分析</h2>
+
+<table>
+  <tr>
+    <th>層次</th>
+    <th>表面現象</th>
+    <th>真正原因</th>
+  </tr>
+  <tr>
+    <td>行為層</td>
+    <td>花大量流量查 API key、建腳本</td>
+    <td>收到守則提醒後沒有停下來對照</td>
+  </tr>
+  <tr>
+    <td>判斷層</td>
+    <td>用 Claude 而非 Opus 蒸餾</td>
+    <td>沒有確認教練的環境和資源（守則 #17）</td>
+  </tr>
+  <tr>
+    <td>方向層</td>
+    <td>自己開始執行而非寫指令</td>
+    <td>沒有問「教練要什麼結果」（守則 #16）</td>
+  </tr>
+  <tr>
+    <td>態度層</td>
+    <td>第一次反省把責任推給 Haiku</td>
+    <td>找藉口而非面對問題（守則 #15）</td>
+  </tr>
+</table>
+
+<div class="tags">
+  <span class="tag violated">#03 沒有自我驗證</span>
+  <span class="tag violated">#16 複雜化簡單任務</span>
+  <span class="tag violated">#17 環境確認失敗</span>
+  <span class="tag should-have">#16 應先問教練要什麼結果</span>
+  <span class="tag should-have">#15 應誠實面對，不找藉口</span>
+</div>
+
+<!-- ===== 如果當時有對照 ===== -->
+<h2>如果當時有對照守則⋯⋯</h2>
+
+<table>
+  <tr>
+    <th>守則提醒</th>
+    <th>對照後應有的思考</th>
+    <th>正確行動</th>
+  </tr>
+  <tr>
+    <td>#17 用戶環境確認</td>
+    <td>「教練有另一台 Opus 終端機在待命，而且是無限流量」</td>
+    <td>直接寫指令讓那台機器跑，不用繞 Claude</td>
+  </tr>
+  <tr>
+    <td>#16 簡單的解法</td>
+    <td>「教練要的是一段文字指令，不是一套系統」</td>
+    <td>花 5 分鐘寫好指令，而非花 30 分鐘查資料</td>
+  </tr>
+  <tr>
+    <td>#12 拒絕當搬運工</td>
+    <td>「但教練明確說要指令去貼，這不是搬運工」</td>
+    <td>教練要什麼就給什麼，不要自作主張改方向</td>
+  </tr>
+</table>
+
+<!-- ===== 悟區塊 2 ===== -->
+<div class="insight">
+  <img src="data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"> <defs> <linearGradient id="wuGold" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#FFD700"/> <stop offset="50%" style="stop-color:#FFA500"/> <stop offset="100%" style="stop-color:#FF8C00"/> </linearGradient> <linearGradient id="wuInner" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" style="stop-color:#FFF8DC"/> <stop offset="100%" style="stop-color:#FFE066"/> </linearGradient> <filter id="wuShadow"> <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000033"/> </filter> </defs> <!-- Outer glow ring --> <circle cx="50" cy="50" r="48" fill="#FFD70033"/> <!-- Main badge circle --> <circle cx="50" cy="50" r="44" fill="url(#wuGold)" filter="url(#wuShadow)"/> <!-- Inner circle --> <circle cx="50" cy="50" r="37" fill="none" stroke="#CC8800" stroke-width="2"/> <!-- Inner fill --> <circle cx="50" cy="50" r="35" fill="url(#wuInner)"/> <!-- Decorative dots around circle --> <circle cx="50" cy="10" r="3" fill="#FFD700"/> <circle cx="83" cy="28" r="3" fill="#FFD700"/> <circle cx="90" cy="60" r="3" fill="#FFD700"/> <circle cx="74" cy="88" r="3" fill="#FFD700"/> <circle cx="26" cy="88" r="3" fill="#FFD700"/> <circle cx="10" cy="60" r="3" fill="#FFD700"/> <circle cx="17" cy="28" r="3" fill="#FFD700"/> <!-- 悟 character --> <text x="50" y="62" text-anchor="middle" font-size="38" font-weight="900" font-family="serif" fill="#8B4513">悟</text> <!-- Small sparkle --> <path d="M50 14 L52 18 L56 18 L53 21 L54 25 L50 22 L46 25 L47 21 L44 18 L48 18Z" fill="#FFD700"/> </svg>" alt="悟" style="width:88px;height:88px;border-radius:50%;flex-shrink:0;margin-right:12px;">
+  <div class="content">
+    <div class="insight-title">悟</div>
+    <p><strong>對照守則不是裝飾動作，是剎車。</strong>在衝去執行之前，先對照守則三秒鐘，就能避免三十分鐘的白忙。守則第 3 條說「思考就是問問題」——停下來問自己一個問題，比跑十個工具呼叫更有價值。</p>
+  </div>
+</div>
+
+<!-- ===== 結論 ===== -->
+<div class="conclusion">
+  <h2>結論：鬧鐘與起床</h2>
+  <p>這個案例的核心教訓只有一句話：</p>
+  <p class="highlight" style="font-size: 18px; margin: 20px 0;">
+    系統把守則提醒送到你面前，不代表你已經對照了。<br>
+    收到提醒 ≠ 對照執行。<br>
+    鬧鐘響了 ≠ 起床了。
+  </p>
+  <p>守則是寫死在系統裡的，CLAUDE.md 每次啟動都帶入，Hook 每句話都檢查。不管 Haiku、Sonnet、Opus，收到的提醒一模一樣。</p>
+  <p>差別只在：<span class="highlight">你有沒有在收到提醒的那一刻，真正停下來，對照，再行動。</span></p>
+  <p style="margin-top: 24px; font-size: 14px; color: #888;">
+    對應守則：#03 思考就是問問題 ｜ #09 知道為什麼才有判斷力 ｜ #16 複雜的解法不一定是正確的解法 ｜ #17 用戶環境確認
+  </p>
+</div>
+
+<div class="footer">
+  頂級特助俱樂部 — 小龍蝦家族案例分析 ｜ 2026-05-30 ｜ 軍師自省報告
+</div>
+
+</body>
+</html>
