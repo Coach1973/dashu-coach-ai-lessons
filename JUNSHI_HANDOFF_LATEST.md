@@ -16,7 +16,6 @@
 | run_distill_terminal.sh 建立 | ✅ cron wrapper |
 | 87 個 session 全部提取到 done_distill/ | ✅ |
 | 蒸餾 S1-S42（42 個 session） | ✅ |
-| distill/terminal_2026-05-30.md | ✅ 59 KB，42 個 session |
 
 ### 案例分析網頁
 | 任務 | 結果 |
@@ -63,9 +62,15 @@ Netlify Token：nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838（到期 2027/05/14）
 ### 現況
 | 指標 | 數量 |
 |------|------|
-| 總 session 數 | 88 個（今日又新增） |
-| 已蒸餾 | 42 個 ✅ |
+| 總 session 數 | 88 個 |
+| 已蒸餾（S1-S42，42 個 session） | ✅ |
 | **未蒸餾** | **約 46 個** |
+
+### 本場新增蒸餾
+| 批次 | Sessions | 內容 |
+|------|---------|------|
+| 第一批（S16-S23） | 8 個 | northern-tw網站搶救、Relay失敗檢討、CC Switch、Kimi修復、品管 |
+| 第二批（S24-S42） | 19 個 | 完整蒸餾27-42，含Grok幻覺識別、SOUL.md拆分、守則系統大整合等 |
 
 ### 重要路徑
 - 所有蒸餾工具在 `/Users/bymyway/.openclaw/workspace/scripts/`
@@ -84,7 +89,8 @@ cd /Users/bymyway/.openclaw/workspace && git pull
 ls distill/terminal_2026-05-30.md terminal-notes/done_distill/
 ```
 
-- 從 Session 43 開始，讀 done_distill/ 裡尚未蒸餾的 session
+- 已完成 S1-S42（42 個 session），commit hash `591ed489` + `41f150ec`
+- 從 Session 43 開始，讀 done_distill/ 裡尚未蒸餾的剩餘 ~46 個 session
 - 格式跟 S1-S42 一致，append 到 distill/terminal_2026-05-30.md
 - 每 5 個 session commit 一次，給 hash
 - 一路執行到底，不要問
@@ -116,6 +122,33 @@ Netlify 手動上傳型（22 個站台），每次更新：
 
 ---
 
-**commit hash：** 待更新
+## 🔴 本場完成（蒸餾接力棒，2026-05-30 晚間）
+
+| 批次 | Sessions | commit hash |
+|------|---------|-------------|
+| 第一批 | S16-S23（8個） | `591ed489` |
+| 第二批 | S24-S42（19個） | `41f150ec` |
+
+**本場新增蒸餾（27個 sessions）：**
+- northern-tw 網站搶救圖片
+- Relay 系統失敗深度檢討
+- CC Switch MiniMax 同步驗證
+- 小龍蝦 Kimi 模型修復
+- 品管 SOP 執行（#20 系統設計原話修正）
+- Mac 自動重啟原因調查
+- 教練語錄來源確認
+- SOUL.md 三分法確立
+- Grok 幻覺方案識別
+- LINE 小龍蝦群組身份問題
+- /goal 指令系統建立
+- 守則 21 條一字不差定稿
+- 頂級特助分工群建立
+
+**犯錯記錄：**
+- 本場未犯新錯，流程順暢
+
+---
+
+**commit hash：** `41f150ec`
 **時間：** 2026-05-30 晚間（台灣時間）
 **軍師：** Claude Sonnet 4.6（桌面版）
