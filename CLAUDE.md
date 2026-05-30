@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-31 00:35:00**
+> **最後同步：2026-05-31 00:45:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -74,7 +74,8 @@
 |------|------|
 | 樣板案例範本 | cool-case 案例 #01「誰允許它切回去的？」 |
 | 原料堆（195 段） | `distill/_RAW_MATERIALS_FOR_JUNSHI.md` |
-| Top 20 候選（待生成） | `distill/_TOP20_CANDIDATES.md` |
+| ⚠️ Top 20 候選（**已知重複，勿用**） | `distill/_TOP20_CANDIDATES.md` |
+| ✅ Top 30 去重版（明天用這個） | `distill/_TOP30_DEDUPED.md`（今晚終端機產出） |
 | 終端機報告 | `distill/_TERMINAL_REPORT_LATEST.md` |
 | 本機 HTML | `/tmp/cool-case/index.html`（重開機消失，需重拉） |
 | 正式網址 | https://cool-case.netlify.app |
@@ -114,7 +115,7 @@
 
 1. 讀本檔案
 2. 讀案例 #01「誰允許它切回去的？」（已上線，去 https://cool-case.netlify.app/#case1 看）
-3. 確認終端機已完成 Top 20 排序（檔案：`distill/_TOP20_CANDIDATES.md`）
+3. 確認終端機已完成 Top 30 去重排序（檔案：`distill/_TOP30_DEDUPED.md`）。**注意**：Top 20 那份有滑動窗口重複問題（送出按鈕事件佔了 11 段），不要用，改用 Top 30 去重版
 4. 跟教練對齊：「今天從哪一組開始？A 升級、B 重做、還是 C 新案例？」
 5. 開幹
 
