@@ -53,10 +53,5 @@
 ⚠️ 待修：relay_poll.py UnicodeDecodeError（line 30）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 19:35 - relay poll OK
+### 2026-05-30 2026-05-30 19:36 - relay poll OK
 
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-05-30 19:35
-- ✅ 同步成功
-- HANDOFF mtime: 1780140878
-- 雲端同步：⚠️ commit cfec0468 已留本機，但 push 失敗
