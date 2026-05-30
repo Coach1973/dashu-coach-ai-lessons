@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結繩領導學｜線上座談會</title>
+<style>
+:root {
+  --blue: #123a63;
+  --blue-deep: #0b2742;
+  --blue-mid: #174873;
+  --orange: #f28c28;
+  --orange-soft: #ffb25b;
+  --bg: #f4f7fb;
+  --text: #1d2a35;
+  --muted: #5f6b76;
+  --white: #ffffff;
+  --radius: 18px;
+  --radius-lg: 26px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Noto Sans TC","Microsoft JhengHei",sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+img { max-width: 100%; display: block; }
+.container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+section { padding: 64px 0; }
+.section-title { font-size: 30px; font-weight: 900; color: var(--blue-deep); margin-bottom: 12px; line-height: 1.3; }
+.section-desc { color: var(--muted); font-size: 16px; max-width: 720px; margin-bottom: 28px; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  color: #fff;
+  padding: 72px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:""; position:absolute; width:360px; height:360px; right:-80px; top:-80px;
+  border-radius:50%; background:rgba(242,140,40,.14); filter:blur(12px); pointer-events:none;
+}
+.hero::after {
+  content:""; position:absolute; width:200px; height:200px; left:-60px; bottom:-60px;
+  border-radius:50%; background:rgba(255,255,255,.05); filter:blur(8px); pointer-events:none;
+}
+.hero-grid { display:grid; grid-template-columns:1.15fr 0.85fr; gap:44px; align-items:center; }
+.eyebrow {
+  display:inline-block; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.95); padding:8px 14px; border-radius:999px; font-size:13px; margin-bottom:16px;
+}
+h1 { font-size:48px; line-height:1.13; font-weight:900; margin-bottom:16px; }
+.hero-sub { font-size:18px; color:rgba(255,255,255,.88); margin-bottom:28px; max-width:560px; }
+.btn {
+  display:inline-flex; align-items:center; padding:14px 24px; border-radius:999px;
+  text-decoration:none; font-weight:900; font-size:15px; transition:.25s ease; border:none; cursor:pointer;
+}
+.btn-primary { background:linear-gradient(135deg,var(--orange),#ff9e3d); color:#fff; box-shadow:0 12px 28px rgba(242,140,40,.35); }
+.btn-danger { background:linear-gradient(135deg,#d33b3b,#b91c1c); color:#fff; box-shadow:0 12px 28px rgba(185,28,28,.28); }
+.btn-danger:hover { transform:translateY(-2px); }
+.member-note { display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:800; color:#b91c1c; background:rgba(185,28,28,.08); border:1px solid rgba(185,28,28,.16); }
+.modal-overlay { position:fixed; inset:0; background:rgba(11,39,66,.62); display:none; align-items:center; justify-content:center; padding:20px; z-index:9999; }
+.modal-overlay.active { display:flex; }
+.modal-box { width:min(460px, 100%); background:#fff; border-radius:22px; padding:28px 24px; box-shadow:0 24px 60px rgba(0,0,0,.22); text-align:center; }
+.modal-box h3 { color:var(--blue-deep); font-size:24px; font-weight:900; margin-bottom:10px; }
+.modal-box p { color:var(--muted); font-size:15px; line-height:1.8; margin-bottom:18px; }
+.modal-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.modal-actions .btn { min-width:140px; }
+body.modal-open { overflow:hidden; }
+@media(max-width:768px){ .modal-actions .btn { width:100%; } }
+.btn-secondary { color:#fff; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.07); }
+.btn:hover { transform:translateY(-2px); }
+.btn-secondary:hover { background:linear-gradient(135deg,var(--orange),#ff9e3d); border-color:transparent; color:#fff; box-shadow:0 12px 28px rgba(242,140,40,.35); }
+.btn-primary:hover { background:linear-gradient(135deg,#ff9e3d,var(--orange)); box-shadow:0 16px 32px rgba(242,140,40,.45); }
+.cta-row { display:flex; flex-wrap:wrap; gap:12px; }
+.hero-note { margin-top:12px; font-size:13px; color:rgba(255,255,255,.7); }
+
+/* Book card */
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-18px); }
+}
+.book-card {
+  background:transparent; border:none; padding:0;
+  position:relative; overflow:visible;
+}
+.book-img-wrap {
+  display:flex; justify-content:center; align-items:center;
+}
+.book-img {
+  width:100%; max-width:100%; border-radius:0;
+  filter: drop-shadow(0 40px 60px rgba(0,0,0,.6)) drop-shadow(0 8px 24px rgba(242,140,40,.22));
+  animation: float 4s ease-in-out infinite;
+  transition: filter .35s ease, transform .35s ease;
+  cursor: pointer;
+}
+.book-img:hover {
+  animation-play-state: paused;
+  transform: scale(1.04) translateY(-8px);
+  filter: drop-shadow(0 55px 80px rgba(0,0,0,.7)) drop-shadow(0 12px 32px rgba(242,140,40,.35));
+}
+
+/* Cards */
+.cards3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.card {
+  background:linear-gradient(160deg,var(--blue-deep),var(--blue-mid)); border-radius:var(--radius);
+  padding:26px; color:#fff; position:relative; overflow:hidden;
+}
+.card::before {
+  content:""; position:absolute; width:120px; height:120px; right:-40px; top:-40px;
+  border-radius:50%; background:rgba(242,140,40,.15); pointer-events:none;
+}
+.card h3 { color:var(--orange-soft); font-size:20px; font-weight:900; margin-bottom:10px; line-height:1.35; }
+.card p { color:rgba(255,255,255,.9); font-size:14px; }
+
+/* Highlight box */
+.highlight {
+  background:linear-gradient(180deg,#fff,#fff8f0); border:1px solid rgba(242,140,40,.2);
+  border-radius:var(--radius); padding:28px; font-size:16px; line-height:1.85;
+}
+
+/* Pain section */
+.white-bg { background:#fff; }
+
+/* Chapter cards */
+.cards4 { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.chapter-card {
+  background:#fff; border:1px solid rgba(18,58,99,.1); border-radius:var(--radius);
+  padding:24px; display:flex; gap:16px; align-items:flex-start;
+}
+.chapter-num {
+  flex-shrink:0; width:42px; height:42px; border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),#ff9e3d);
+  color:#fff; font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center;
+}
+.chapter-card h3 { font-size:17px; font-weight:900; color:var(--blue-deep); margin-bottom:6px; }
+.chapter-card p { font-size:14px; color:var(--muted); }
+
+/* Split */
+.split2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+
+/* Quote */
+.quote {
+  border-left:4px solid var(--orange); padding:22px 26px;
+  background:#fff; border-radius:0 var(--radius) var(--radius) 0;
+  font-size:16px; font-style:italic; color:var(--text); line-height:1.85;
+}
+
+/* Teacher */
+.teacher-wrap { position:relative; }
+.teacher-img-card {
+  border-radius:var(--radius-lg); overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.22); position:relative;
+}
+.teacher-img-card img {
+  width:100%; display:block; border-radius:var(--radius-lg);
+}
+.teacher-badge {
+  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+  background:rgba(11,39,66,.85); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.15); border-radius:12px;
+  padding:14px 22px; color:#fff; text-align:center; white-space:nowrap;
+}
+.teacher-badge strong { display:block; font-size:17px; font-weight:900; }
+.teacher-badge span { font-size:12px; color:rgba(255,255,255,.7); }
+.tag {
+  display:inline-block; background:rgba(242,140,40,.12); border:1px solid rgba(242,140,40,.28);
+  color:#c06010; border-radius:999px; padding:5px 12px; font-size:13px; margin:4px 4px 0 0;
+}
+
+/* Events */
+.events-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.event-card {
+  background:#fff; border:1px solid rgba(18,58,99,.1); border-radius:var(--radius);
+  padding:22px; text-align:center; transition:.2s;
+}
+.event-card:hover { box-shadow:0 8px 24px rgba(18,58,99,.1); transform:translateY(-2px); }
+.event-card h3 { font-size:17px; font-weight:900; color:var(--blue-deep); margin-bottom:6px; }
+.event-time { color:var(--muted); font-size:14px; margin-bottom:6px; }
+.event-count { font-size:13px; color:var(--orange); font-weight:700; margin-bottom:14px; min-height:20px; }
+.event-limit { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.notice-bar {
+  background:rgba(242,140,40,.1); border:1px solid rgba(242,140,40,.28);
+  border-radius:12px; padding:14px 18px; font-size:14px; margin-bottom:24px; color:var(--text);
+}
+
+/* Form */
+.form-card { background:#fff; border-radius:var(--radius-lg); padding:32px; border:1px solid rgba(18,58,99,.1); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-grid input, .form-grid select, .form-grid textarea {
+  padding:12px 16px; border:1.5px solid #dce4ed; border-radius:10px;
+  font-size:15px; font-family:inherit; color:var(--text); background:#f9fbfd; transition:.2s;
+  width:100%;
+}
+.form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
+  outline:none; border-color:var(--orange);
+}
+.form-grid .full { grid-column:1/-1; }
+.form-note { font-size:13px; color:var(--muted); margin-top:12px; }
+
+/* FAQ */
+.faq details { border-bottom:1px solid rgba(18,58,99,.1); padding:16px 0; }
+.faq summary {
+  font-weight:700; cursor:pointer; font-size:16px; color:var(--blue-deep);
+  list-style:none; display:flex; align-items:center; gap:10px;
+}
+.faq summary::-webkit-details-marker { display:none; }
+.faq summary::before { content:"▶"; font-size:11px; color:var(--orange); transition:.2s; flex-shrink:0; }
+.faq details[open] summary::before { transform:rotate(90deg); }
+.faq details p { padding:10px 0 2px 22px; color:var(--muted); font-size:15px; }
+
+/* Footer */
+footer { background:var(--blue-deep); color:rgba(255,255,255,.7); text-align:center; padding:28px 16px; font-size:14px; }
+
+/* ── Floating Nav ── */
+.float-nav {
+  position:fixed; right:18px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:10px; z-index:9000;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.float-nav.visible { opacity:1; pointer-events:auto; }
+.float-nav a {
+  display:flex; align-items:center; justify-content:center;
+  width:48px; height:48px; border-radius:50%;
+  background:rgba(11,39,66,.88); backdrop-filter:blur(8px);
+  color:#fff; text-decoration:none; font-size:13px; font-weight:900;
+  box-shadow:0 4px 16px rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.12);
+  transition:.25s ease; position:relative;
+}
+.float-nav a:hover { background:var(--orange); transform:scale(1.1); }
+.float-nav a .nav-tooltip {
+  position:absolute; right:58px; white-space:nowrap;
+  background:rgba(11,39,66,.92); color:#fff; padding:6px 12px;
+  border-radius:8px; font-size:12px; font-weight:700;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.float-nav a:hover .nav-tooltip { opacity:1; }
+
+@media(max-width:768px){
+  .hero-grid,.cards3,.cards4,.split2,.events-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+  h1 { font-size:34px; }
+  .section-title { font-size:24px; }
+  .hero { padding:52px 0 44px; }
+  .float-nav { right:12px; }
+  .float-nav a { width:42px; height:42px; font-size:12px; }
+  .float-nav a .nav-tooltip { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ★ HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">📖 2026 年度重磅新書</span>
+        <h1>結繩領導學<br>線上座談會</h1>
+        <p class="hero-sub">
+          你不是不努力，你是少了一套結構。<br>
+          一位總工程師教你用理工思維，打造不倒的事業大樓。
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#events">立即報名活動</a>
+          <a class="btn btn-secondary" href="#book-intro">瞭解這本書</a>
+          <a class="btn btn-secondary" href="#workshop">瞭解工作坊</a>
+        </div>
+        <p class="hero-note">📍 AI 公益講座 2場 + 線上座談會 10場 ‧ 晚上不同時段 ‧ 免費線上報名</p>
+      </div>
+      <div>
+        <div class="book-card">
+          <div class="book-img-wrap">
+            <img src="book.png" alt="結繩領導學封面" class="book-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ 這本書是寫給誰 -->
+<section id="who" class="white-bg">
+  <div class="container">
+    <h2 class="section-title">這本書是寫給你的，如果你……</h2>
+    <p class="section-desc">看起來很忙、很努力，但問題從來不在努力，而在結構設計。</p>
+    <div class="cards3">
+      <div class="card">
+        <h3>業務與公關型老闆</h3>
+        <p>奔波各種商務活動、交換很多名片，卻始終沒有形成穩定合作網絡。看似熱絡，其實鬆散；看似有資源，其實沒有真正的結構支撐。</p>
+      </div>
+      <div class="card">
+        <h3>擴張期企業主</h3>
+        <p>你在衝業績、衝規模、衝人數，但地基沒有同步補強。很多企業不是敗給市場，而是敗給內部承載不了成長的重量。</p>
+      </div>
+      <div class="card">
+        <h3>帶人帶到心累的主管</h3>
+        <p>你把責任扛在肩上，用力盯數字、盯進度、盯規矩，換來的卻是夥伴表面配合、私下敷衍。你像一根單樁，越撐越累。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ 書在解決什麼 -->
+<section id="book-intro">
+  <div class="container">
+    <h2 class="section-title">這不是心靈雞湯，而是一份企業家的結構安全計算書</h2>
+    <p class="section-desc">領導不是玄學，而是力學。不是靠天分，也不是只靠情緒，而是一套可理解、可拆解、可驗證、可落地的系統設計。</p>
+    <div class="highlight">
+      在你下一次擴張、招募、再加蓋事業版圖之前，先停下來做一次結構健檢。<br><br>
+      看懂團隊的<strong>承載力、連結密度與情緒阻尼器</strong>，才能讓成長不只是撐住，而是真正長久地撐得住。
+    </div>
+  </div>
+</section>
+
+<!-- ★ 書的四大核心 -->
+<section class="white-bg">
+  <div class="container">
+    <h2 class="section-title">書中的四大工具搶先看</h2>
+    <p class="section-desc">不是讀完覺得有道理，而是看完就能開始重新設計你的團隊結構。</p>
+    <div class="cards4">
+      <div class="chapter-card">
+        <div class="chapter-num">1</div>
+        <div>
+          <h3>靜力學｜信任與價值的地基</h3>
+          <p>建立團隊真正可依賴的底層價值，重新理解規範與自由的平衡，讓組織不再靠情緒運作，而是靠信任承載。</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-num">2</div>
+        <div>
+          <h3>材料力學｜極限環境下的識人術</h3>
+          <p>常溫常壓下看不出材質，一到壓力情境才見真章。學會辨識可塑之才、適配之才，將對的人放在對的位置。</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-num">3</div>
+        <div>
+          <h3>結構與抗壓｜危機中的情緒阻尼器</h3>
+          <p>市場有風雨，團隊更需要能吸收衝擊的系統。避免把外部壓力變成內部傷害，讓危機變成升級動能。</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <div class="chapter-num">4</div>
+        <div>
+          <h3>美學與色彩｜編織溫暖的人脈網</h3>
+          <p>放下冷硬磚塊式管理，用傘繩思維打造緊而不死、鬆而不散的關係，把差異編成圖騰，把連結變成力量。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ 作者介紹 -->
+<section>
+  <div class="container">
+    <div class="split2" style="align-items:center;">
+      <div>
+        <h2 class="section-title">你的總工程師與結繩引路人</h2>
+        <p style="font-size:20px; font-weight:900; color:var(--blue-deep); margin-bottom:6px;">蔡曜隆 Richard Tsai（曜董）</p>
+        <p class="section-desc">40年工程經驗+50年結繩智慧+10年國家級商務整合。走過理性與感性的兩端，也走過結構與人性的交界。</p>
+        <div style="margin-bottom:18px;">
+          <span class="tag">理智腦</span>
+          <span class="tag">藝術心</span>
+          <span class="tag">剛柔並濟</span>
+        </div>
+        <div class="highlight">
+          他帶領你重新理解：真正成熟的領導，不只是會管理，而是能同時做到——<br><br>
+          <strong>心中有尺</strong>（價值觀）<br>
+          <strong>手中有線</strong>（人脈鏈結）<br>
+          <strong>眼裡有光</strong>（愛與關懷）
+        </div>
+      </div>
+      <div class="teacher-wrap">
+        <div class="teacher-img-card">
+          <img src="teacher.jpg" alt="蔡曜隆 Richard Tsai">
+          <div class="teacher-badge">
+            <strong>蔡曜隆 Richard Tsai</strong>
+            <span>《結繩領導學》作者</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ Before / After -->
+<section class="white-bg">
+  <div class="container">
+    <h2 class="section-title">讀這本書之前 vs. 之後</h2>
+    <p class="section-desc">這不只是案例，而是很多經營者正在經歷、卻說不出口的現實。</p>
+    <div class="split2">
+      <div class="card">
+        <h3>Before｜你可能正在這裡</h3>
+        <p>團隊內耗、夥伴表面配合、業績停滯甚至下滑。你越努力，組織越沒有生命力；你越想穩住，底下的人越像在演戲。</p>
+      </div>
+      <div class="card">
+        <h3>After｜你可以到這裡</h3>
+        <p>夥伴從敷衍變成認同文化，團隊開始自發運作，SOP 重新設計，系統開始吸收壓力，不再只是你一個人硬撐。</p>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:24px;">
+      以前的我，一直以為只要更努力，就能把團隊帶起來。<br>
+      後來我才明白，問題根本不在努力，而在結構。<br>
+      當我開始用這套系統重新設計團隊，夥伴才真正從表面配合，走向文化認同；從負增長，走向穩定且可預測的倍放成長。
+    </div>
+    <div style="margin-top:10px; color:var(--muted); font-weight:800;">—— 吳大樹</div>
+    <div style="text-align:center; margin-top:28px;">
+      <a class="btn btn-primary" href="#events">前往活動，親自感受這套系統</a>
+    </div>
+  </div>
+</section>
+
+<!-- ★ 活動場次 -->
+<section id="events">
+  <div class="container">
+    <h2 class="section-title">線上座談會場次</h2>
+    <div class="notice-bar">
+      <strong>⚠️ 全部免費 ‧ 線上報名 ‧ 限額 100 人，額滿即截止。</strong><br>
+      點擊下方「免費報名」按鈕 → 加入「結繩領導學」LINE 官方帳號即可完成登記（活動前會發入場連結）
+    </div>
+    <div class="events-grid">
+      <!-- 6月5日｜線上座談會 -->
+      <div class="event-card">
+        <h3>6月5日（五）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-06-05T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 6月7日｜AI 公益講座(1) -->
+      <div class="event-card">
+        <h3>6月7日（日）｜AI 公益講座 (1)</h3>
+        <div class="event-time">21:30 – 22:30　主持人/尚政老師</div>
+        <div class="event-count" data-date="2026-06-07T21:30:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 6月14日｜線上座談會 -->
+      <div class="event-card">
+        <h3>6月14日（日）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-06-14T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 6月21日｜線上座談會 -->
+      <div class="event-card">
+        <h3>6月21日（日）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-06-21T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月1日｜線上座談會 -->
+      <div class="event-card">
+        <h3>7月1日（三）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/娃娃姐</div>
+        <div class="event-count" data-date="2026-07-01T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月4日｜線上座談會 -->
+      <div class="event-card">
+        <h3>7月4日（六）｜線上座談會</h3>
+        <div class="event-time">10:00 – 11:50　主持人/Peter Chen</div>
+        <div class="event-count" data-date="2026-07-04T10:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月5日｜AI 公益講座(2) -->
+      <div class="event-card">
+        <h3>7月5日（日）｜AI 公益講座 (2)</h3>
+        <div class="event-time">21:30 – 22:30　主持人/尚政老師</div>
+        <div class="event-count" data-date="2026-07-05T21:30:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月10日｜線上座談會 -->
+      <div class="event-card">
+        <h3>7月10日（五）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-07-10T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月12日｜線上座談會 -->
+      <div class="event-card">
+        <h3>7月12日（日）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-07-12T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+      <!-- 7月19日｜線上座談會 -->
+      <div class="event-card">
+        <h3>7月19日（日）｜線上座談會</h3>
+        <div class="event-time">20:00 – 21:30　主持人/大樹教練</div>
+        <div class="event-count" data-date="2026-07-19T20:00:00">倒數載入中…</div>
+        <div class="event-limit">限額 100 人</div>
+        <a class="btn btn-primary" href="https://line.me/R/ti/p/@pbz5529q" target="_blank" rel="noopener noreferrer" style="font-size:13px;padding:10px 18px;">免費報名</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ 兩天工作坊 -->
+<section id="workshop">
+  <div class="container">
+    <h2 class="section-title">結繩領導學｜兩天工作坊</h2>
+    <p class="section-desc">線上座談會讓你「看懂」這套系統，工作坊讓你「帶回去用」。兩天密集實作，直接拆解你的團隊結構，現場重新設計。</p>
+    <div class="split2">
+      <div class="highlight">
+        <strong style="font-size:18px; color:var(--blue-deep);">工作坊你會帶走什麼？</strong><br><br>
+        ✅ 一份屬於你企業的「結構健檢報告」<br>
+        ✅ 四大工具的實戰操作經驗<br>
+        ✅ 與曜董面對面的深度對話機會<br>
+        ✅ 同頻企業主的高品質人脈連結
+      </div>
+      <div class="highlight">
+        <strong style="font-size:18px; color:var(--blue-deep);">適合誰參加？</strong><br><br>
+        🎯 讀完書想落地的企業主<br>
+        🎯 帶團隊超過 3 年的中高階主管<br>
+        🎯 正在組織轉型或擴張期的經營者<br>
+        🎯 想從「個人硬撐」轉型為「系統承載」的領導者
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-secondary" href="#events" style="color:var(--blue-deep); border-color:var(--blue-deep);">報名線上座談會</a>
+        <a class="btn btn-primary" href="javascript:void(0)" id="workshopRegBtn" onclick="document.getElementById('workshopCities').style.display=document.getElementById('workshopCities').style.display==='none'?'block':'none'">立即報名工作坊</a>
+      </div>
+      <div id="workshopCities" style="display:none; margin-top:22px; text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
+        <div style="background:#fff; border:1px solid rgba(18,58,99,.1); border-radius:var(--radius); padding:22px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="color:var(--blue-deep); font-size:16px;">🔸 台南場</strong><br>
+            <span style="color:var(--muted); font-size:14px;">8/19、20（三、四）｜台南維悅酒店</span>
+          </div>
+          <a class="btn btn-primary" href="https://forms.gle/uLacoA3UqGVg8G4s9" target="_blank" rel="noopener noreferrer" style="font-size:13px; padding:10px 18px;">立即報名</a>
+        </div>
+        <div style="background:#fff; border:1px solid rgba(18,58,99,.1); border-radius:var(--radius); padding:22px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="color:var(--blue-deep); font-size:16px;">🔸 台中場</strong><br>
+            <span style="color:var(--muted); font-size:14px;">9/23、24（三、四）｜台中市區</span>
+          </div>
+          <a class="btn btn-primary" href="https://forms.gle/FFrUM9wAdWSHtUaC8" target="_blank" rel="noopener noreferrer" style="font-size:13px; padding:10px 18px;">立即報名</a>
+        </div>
+        <div style="background:#fff; border:1px solid rgba(18,58,99,.1); border-radius:var(--radius); padding:22px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="color:var(--blue-deep); font-size:16px;">🔸 台北場</strong><br>
+            <span style="color:var(--muted); font-size:14px;">11/25、26（三、四）｜劍潭青年活動中心</span>
+          </div>
+          <a class="btn btn-primary" href="https://forms.gle/2gAqndb6cYASAu2XA" target="_blank" rel="noopener noreferrer" style="font-size:13px; padding:10px 18px;">立即報名</a>
+        </div>
+        <p style="text-align:center; color:var(--muted); font-size:13px; margin-top:8px;">📍 詳細地址將視人數定案後，以 Email 通知</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ FAQ -->
+<section class="white-bg">
+  <div class="container">
+    <h2 class="section-title">常見問題</h2>
+    <div class="faq">
+      <details open>
+        <summary>這場活動是介紹新書，不是工作坊嗎？</summary>
+        <p>對，這次是線上座談會，重點是好好介紹《結繩領導學》這本書的內容與核心思想。輕鬆的分享形式，適合所有人參加。</p>
+      </details>
+      <details>
+        <summary>這本書適合什麼樣的人閱讀？</summary>
+        <p>適合企業主、高階主管、帶團隊的主管，以及想突破組織瓶頸的核心幹部。</p>
+      </details>
+      <details>
+        <summary>我不是工程背景，也能理解書中的比喻嗎？</summary>
+        <p>可以。工程比喻是為了讓你更容易理解領導、組織與連結的本質，不需要工程專業也能完整吸收。</p>
+      </details>
+      <details>
+        <summary>活動是線上進行嗎？</summary>
+        <p>是的，所有場次皆為線上活動，報名後會收到入場連結，方便您在家參與。</p>
+      </details>
+      <details>
+        <summary>可以選擇適合自己的場次嗎？</summary>
+        <p>可以，請於報名時選擇你想參加的日期，各場次獨立報名。</p>
+      </details>
+      <details>
+        <summary>參加活動需要付費嗎？</summary>
+        <p>全部場次完全免費，只需透過 LINE 官方帳號完成報名即可。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ★ Floating Nav -->
+<nav class="float-nav" id="floatNav">
+  <a href="#">
+    <span class="nav-tooltip">回到頂部</span>
+    ▲
+  </a>
+  <a href="#book-intro">
+    <span class="nav-tooltip">瞭解這本書</span>
+    📖
+  </a>
+  <a href="#events">
+    <span class="nav-tooltip">報名活動</span>
+    🎟
+  </a>
+  <a href="#workshop">
+    <span class="nav-tooltip">瞭解工作坊</span>
+    ❤️
+  </a>
+</nav>
+
+<footer>
+  <div class="container">《結繩領導學》線上座談會｜光線尺顧問 × RPL團隊 × 精心策劃｜2026｜免費報名</div>
+</footer>
+
+<script>
+// Float nav visibility
+(function(){
+  const nav = document.getElementById('floatNav');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 400) nav.classList.add('visible');
+    else nav.classList.remove('visible');
+  });
+})();
+
+function updateCountdowns(){
+  const now = new Date().getTime();
+  document.querySelectorAll('.event-count').forEach(el=>{
+    const target = new Date(el.dataset.date).getTime();
+    const diff = target - now;
+    if(diff<=0){ el.textContent='活動已開始'; return; }
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff/(1000*60*60))%24);
+    const m=Math.floor((diff/(1000*60))%60);
+    el.textContent='⏳ 還有 '+d+' 天 '+h+' 小時 '+m+' 分';
+  });
+}
+updateCountdowns();
+setInterval(updateCountdowns, 60000);
+</script>
+</body>
+</html>
