@@ -10,7 +10,7 @@
 ⚠️ **不要讀 memory 大檔**（memory/2026-05-30.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
-- Primary 模型：google/gemini-3.1-pro-preview
+- Primary 模型：minimax/MiniMax-M2.7（已驗證 2026-05-30）
 - 名稱對等：Telegram = 小龍蝦 = 電報
 
 ## ⚠️ 所有對話守則
@@ -22,5 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 10:05 - relay poll OK
+### 2026-05-30 2026-05-30 10:33 - relay poll OK
 
