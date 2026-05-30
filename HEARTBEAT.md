@@ -60,21 +60,5 @@
 ⚠️ 待修：relay_poll.py UnicodeDecodeError（line 30）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 22:06 - relay poll OK
-
----
-
-🦞 健康檢查報告（22:06）
-
-✅ Git 自動備份：67860f15
-✅ Cron 15 項全綠燈，無錯誤（46e67e2e running 正常）
-✅ Model：MiniMax M2.7
-✅ pending_distill 有 3 個檔案待蒸餾（~74KB）
-✅ 守則故事庫：20 個檔案已完成
-✅ relay poll OK
-
-📌 待追蹤：Top 20 → cool-case 案例 HTML（接力棒最高優先）
-📌 待追蹤：pending_distill 3 個檔案（~74KB）
-
-2026-05-30 22:06 ✅ 心跳正常，Git 67860f15，Cron 15/15 全綠燈
+### 2026-05-30 2026-05-30 22:33 - relay poll OK
 
