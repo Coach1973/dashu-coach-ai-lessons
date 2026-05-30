@@ -22,7 +22,20 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 📌 心跳狀態（每次寫入，降低 token burn）
-2026-05-30 16:00 ✅ 心跳正常，Git 2cf65d31，Cron 14/14 全綠燈
+🦞 健康檢查報告（17:03）
+
+✅ Git 自動備份：db29d4b8
+✅ Cron 12 項全綠燈，無錯誤
+✅ Model：MiniMax M2.7
+✅ 蒸餾腳本：2026-05-30 已蒸餾，結束
+✅ relay poll OK（無新任務）
+✅ shared-relay 已讀取（AGENDA、CUNSENSUS、SUPERGROUP-MAP 確認）
+✅ HEARTBEAT_OK 心跳品質：符合標準（檢查完所有系統組件）
+
+📌 待追蹤：守則故事庫（24個檔，蒸餾系統67個未完成）
+📌 待追蹤：relay_poll.py UnicodeDecodeError（HEARTBEAT已記錄）
+
+2026-05-30 17:03 ✅ 心跳正常，Git db29d4b8，Cron 12/12 全綠燈
 
 ---
 
@@ -40,5 +53,5 @@
 ⚠️ 待修：relay_poll.py UnicodeDecodeError（line 30）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 17:04 - relay poll OK
+### 2026-05-30 2026-05-30 18:30 - relay poll OK
 
