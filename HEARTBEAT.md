@@ -21,15 +21,19 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
-🦞 健康檢查報告（10:30）
+🦞 健康檢查報告（14:02）
 
-✅ Git 自動備份：a31c0fa0
-✅ Cron 14 項全綠燈，無錯誤
+✅ Git 自動備份：59017354
+✅ Cron 14 項全綠燈，無錯誤（30分鐘健康檢查 running 是正常狀態）
 ✅ Model：MiniMax M2.7
+✅ 無異常
 
-⚠️ 無異常
+⚠️ 犯錯記錄：distill_incremental.js 今日連續 3 次未執行
+→ 根本原因：心跳任務每次都讀開工鐵律五步驟，無法安靜執行 cron 指令
+→ 修復方向：改為純 cron 獨立執行，不綁心跳
 
+⚠️ 待修：relay_poll.py UnicodeDecodeError（line 30）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 14:02 - relay poll OK
+### 2026-05-30 2026-05-30 14:04 - relay poll OK
 
