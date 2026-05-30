@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-05-31 00:45:00**
+> **最後同步：2026-05-31 02:20:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -63,8 +63,11 @@
 - [ ] **B 組（案例重做）**：案例 #09、#10 整篇重做
   - 新 #09 五萬字守則，七成沒被讀到
   - 新 #10 修了文字，沒修 Hook
-- [ ] **C 組（新案例）**：從 Top 20 候選挑 5-10 個全新故事
-  - 來源：`distill/_TOP20_CANDIDATES.md`（今晚終端機準備）
+- [x] **C 組（新案例）**：從 Top 30 去重版挑 5-10 個全新故事
+  - ✅ **C-01 #11「海餅乾知識庫，還在桌面上」** — 三層通過（事件+反轉+真誠原則）
+    - commit `ae9fc347` | Deploy ID `6a1b2a2d49268e8ab9b79e44`
+    - Netlify 驗證：https://cool-case.netlify.app/#case11
+  - [ ] C-02 ~ C-05（待選 Top 30 中次優 4 個）
 
 ---
 
