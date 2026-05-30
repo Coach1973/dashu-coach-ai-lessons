@@ -21,6 +21,11 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
+## 📌 心跳狀態（每次寫入，降低 token burn）
+2026-05-30 16:00 ✅ 心跳正常，Git 2cf65d31，Cron 14/14 全綠燈
+
+---
+
 🦞 健康檢查報告（14:02）
 
 ✅ Git 自動備份：59017354
@@ -35,5 +40,5 @@
 ⚠️ 待修：relay_poll.py UnicodeDecodeError（line 30）
 
 ## 學長 relay poll
-### 2026-05-30 2026-05-30 16:02 - relay poll OK
+### 2026-05-30 2026-05-30 16:33 - relay poll OK
 
