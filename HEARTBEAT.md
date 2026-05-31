@@ -22,7 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-05-31 2026-05-31 23:06 - relay poll OK
+### 2026-06-01 2026-06-01 00:05 - relay poll OK
 
-
-- 2026-05-31 23:04 ✅ cron全部OK/running（15項）、git備份（3139200a 23:04）、relay無新任務、model MiniMax-M2.7 ✅、YT新聞OK（08:00 22頻道152部）
