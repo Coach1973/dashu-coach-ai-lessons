@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 4fc91aea-4bac-4b6d-a75f-799b21425b4e
-# 提取時間：2026-05-28 03:13 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-05-31 19:30 (台灣時間)
+# 共 5 條教練原話
 
 ---
 
@@ -107,3 +107,16 @@ UI 手動切換模型是「執行期臨時狀態」，不會寫入 `openclaw.jso
 <command-name>/goal</command-name>
             <command-message>goal</command-message>
             <command-args></command-args>
+
+　▶ AI 回應：No response requested.
+
+【教練 2026-05-31 11:23】
+brew install --cask opencode-desktop
+macOS (Apple Silicon)
+下載
+macOS (Intel)
+下載請問一下，我們這台電腦要選哪一個呢？
+
+　▶ AI 回應：這台是 **Apple M4**，屬於 Apple Silicon 晶片。
+
+選 **macOS (Apple Silicon)** 下載。

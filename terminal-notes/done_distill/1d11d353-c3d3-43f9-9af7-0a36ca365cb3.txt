@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 1d11d353-c3d3-43f9-9af7-0a36ca365cb3
-# 提取時間：2026-05-31 02:30 (台灣時間)
-# 共 83 條教練原話
+# 提取時間：2026-05-31 13:00 (台灣時間)
+# 共 84 條教練原話
 
 ---
 
@@ -1934,3 +1934,22 @@ Continue the conversation from where it left off without asking the user any fur
 | **Commit 案例** | ✅ | Hash `ae9fc347` |
 | **Commit 接力棒** | ✅ | Hash `111266d6` |
 | **桌面備份** |…（略）
+
+【教練 2026-05-31 04:49】
+幫我找一下我們連接到 GitHub 的路徑，然後怎麼連接，以及修改 GitHub 連線到 Netlify的過程，我想給 Windows 這部機器去操作測試看一下。
+
+　▶ AI 回應：教練，我找了一下，**目前沒有 GitHub 連接**。cool-case 現在是純手動 zip+API 直推到 Netlify，根本沒有 GitHub。
+
+目前的流程是：
+```
+/tmp/cool-case/index.html 
+  ↓ (編輯 + zip)
+/tmp/cool-case-deploy.zip 
+  ↓ (curl API)
+Netlify 直接部署
+```
+
+**要建立 GitHub → Netlify 自動部署**，需要三步：
+
+1. **創建 GitHub repo**（給 cool-case）
+2. **在 Netlify 連接 GitHub**（授權 + 選分支…（略）
