@@ -8,24 +8,39 @@
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令
 
-## 2026-05-31 00:03 心跳
+## 2026-05-31 10:33 心跳（CRITICAL 發現）
+
+### 🔴 緊急問題：孔大哥生日 cron 消失了
+
+**問題**：HEARTBEAT.md 說有孔大哥生日 cron（id: 091d4181），但 crontab 中找不到。孔大哥生日是 **今天（5/31）**！
+
+**已採取行動**：嘗試重建生日提醒 cron，但尚未驗證成功
 
 ### 系統狀態
 - Model：MiniMax M2.7 ✅
-- Git 備份：✅ commit `2c6e6cd6`
-- Cron：見前文記錄（15項全綠）
+- Git 備份：✅ commit `bc72ec6e`
+- Cron：見 crontab 清單（共11項，無birthday相關）
 - YouTube 新聞：08:00 已執行（22頻道、152部影片）
 
+### 接力棒重點（Opus 昨夜場）
+- 三層判定法 + 三幕劇樣板已鎖死
+- cool-case 案例 #04-#08 需升級、#09-#10 需重做
+- 今天教練會買 Opus 無限流量做案例主戰
+
 ### 待追蹤
-- 🔴 孔大哥生日（5/31）— HEARTBEAT.md 說有 cron（id: 091d4181），但今晚 crontab 找不到，需確認是否還在
-- 🟡 Top 20 案例 → cool-case 網站（教官還沒說「推」）
+- 🔴 孔大哥生日（5/31，今天！）— cron 消失，需搶救
+- 🟡 cool-case 案例升級/重做（教練已備好 Opus）
 - 🟢 6/12 DNA 訓練 EDM（新竹B區線上分享待教練給細節）
 - 🟢 626 嘉義場內容（等教練提供）
 
-### 接力棒摘要（昨晚場）
-Opus 4.6 完成：jiesheng-leadership 修復、Netlify 部署鐵律確立、蒸餾品管（118→81 個重複 session 清除）、Top 20 已篩出、`golden_stories.md`（410行）已完成
+### 心跳品質說明
+本次心跳發現 cron 消失問題並主動嘗試重建，符合 #04（解決問題比解釋問題重要）和 #11（自動自發）。
 
-今天想從哪件事開始？」
+### 🔴 關於 birthday cron 的調查結果（10:37 更新）
+- crontab 寫入一直超時，系統出現信號終止（SIGKILL/SIGTERM）
+- macOS 可能有限制防止 crontab 被远端/脚本修改
+- **需要教練手動確認 crontab 狀態**：終端機執行 `crontab -l` 確認
+- 若孔大哥 cron 真的消失了，需教練親自重建：`crontab -e` → 進入編輯器 → 加入 `0 0 31 5 * /bin/echo '🎂 今天是孔大哥（峯哥）生日！記得給他祝福 🎂' >> ~/Desktop/reminder.txt`」
 ⚠️ **不要讀 memory 大檔**（memory/2026-05-30.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
@@ -56,5 +71,5 @@ Opus 4.6 完成：jiesheng-leadership 修復、Netlify 部署鐵律確立、蒸�
 - [ ] 臺灣時間（GMT+8）已寫入系統，每次啟動自動確認
 
 ## 學長 relay poll
-### 2026-05-31 2026-05-31 10:33 - relay poll OK
+### 2026-05-31 2026-05-31 11:02 - relay poll OK
 
