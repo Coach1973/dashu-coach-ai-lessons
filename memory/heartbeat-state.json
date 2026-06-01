@@ -2,7 +2,8 @@
   "lastChecks": {
     "distill": 1748344800,
     "youtube_monitor": 1748344800,
-    "cron_health": 1748345700
+    "cron_health": 1748345700,
+    "system_check": 1751490900
   },
-  "lastHeartbeat": "2026-06-01T18:00:00+08:00"
+  "lastHeartbeat": "2026-06-01T23:35:00+08:00"
 }
