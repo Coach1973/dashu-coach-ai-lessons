@@ -1217,3 +1217,6 @@
 [2026-06-01 17:37] [CoachWU] 1033da86: HB: heartbeat-state update 2026-06-01 17:36
 [2026-06-01 18:04] [CoachWU] e66034cd: auto-backup 2026-06-01 18:04
 [2026-06-01 18:06] [CoachWU] 1ef35097: [auto] 18:06 對話記錄更新（3 條）
+[2026-06-01 18:31] [CoachWU] 3d139c97: auto-backup 2026-06-01 18:30
+[2026-06-01 18:36] [CoachWU] 4b27e056: [auto] 18:36 對話記錄更新（54 條）
+[2026-06-01 19:00] [CoachWU] 1f62dafe: Add Deepseek startup rules: ask path first, read rules, self-verify before showing coach (rules #02 #03 #09 #16)
