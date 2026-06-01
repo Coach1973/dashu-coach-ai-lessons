@@ -24,3 +24,17 @@
 ## 學長 relay poll
 ### 2026-06-01 2026-06-01 17:36 - relay poll OK
 
+
+---
+
+## 心跳記錄（2026-06-01）
+
+- 2026-06-01 17:31 ✅ 30分鐘心跳·學長（模型 Gemini 3.1 Pro Preview，14:33重啟後）
+  - Git自動備份 ✅（17:30，commit `c5e1c299`）
+  - Cron 15項全綠燈 ✅（YouTube新聞、執董週會提醒、終端機蒸餾等）
+  - YouTube新聞：22頻道、152影片 ✅（12:32更新）
+  - 模型：MiniMax M2.7（Mac版設定）
+  - shared-relay：無學弟妹新任務（SUPERGROUP-MAP 已讀）
+  - 接力棒：上一棒Deepseek v4 pro max已完成（cool-case GitHub Pages重建、theunrestrictedwar輪播精簡）
+  - 待辦：6/12 DNA訓練EDM（缺教練資料）、6/26嘉義內容（缺素材）、6/12峰哥生日（<2週）
+  - 請教練指示今天要從哪件事開始
