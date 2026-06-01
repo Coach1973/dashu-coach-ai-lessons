@@ -83,3 +83,24 @@
 2. 案例內容 CSS 仍有 `.case-card { opacity:1 }`，若將來要恢復揭示動畫需改回 `opacity:0` 並確保 JS 正確載入
 3. `assets/analysis-badge.jpg` 不存在（CSS 引用了但檔案沒上傳），不影響功能
 4. 教練對頭像很在意——大樹教練用 coach-avatar.jpg，小龍蝦用 xiaolongxia-avatar.jpg，不可搞混
+
+---
+
+## 🔴 2026-06-01 11:47 — FB 生日每日爬蟲失職（教練提醒）
+
+**犯規：** 守則 #01、#05（凡走過必留痕跡）
+
+**事實：**
+- FB 生日每日爬蟲 cron 在 git 历史重写后消失，2026-05-20 後就沒有真正執行過
+- 5/31 孔大哥生日當天只有一次性提醒（桌面文字檔），不是真正的 FB 壽星爬蟲
+- 接力棒也沒記錄這件事，等於沒交接
+
+**已修復：**
+- `run_fb_birthday.sh` wrapper 已重建
+- OpenClaw cron jobs.json 新增 job ID `fb-birthday-f7419954c29d`
+- 頻率：每天 06:00（Asia/Taipei）
+- 下次執行：2026-06-02 06:00
+
+**根因：** macOS crontab 完全無回應（多個 crontab 进程卡住），無法用傳統方式安裝。新方案使用 OpenClaw 內建 cron（jobs.json），繞過系統 crontab。
+
+**預防：** OpenClaw cron jobs.json 由軍師 commit 管理，每次修改後立即 commit。系統 crontab 對 macOS 相容性差，優先使用 OpenClaw cron。
