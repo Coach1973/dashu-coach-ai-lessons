@@ -26,10 +26,5 @@
 - ⚠️ 不要讀大型 memory 檔
 
 ## 學長 relay poll
-### 2026-06-01 2026-06-01 13:05 - relay poll OK
+### 2026-06-01 2026-06-01 13:33 - relay poll OK
 
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-06-01 13:05
-- ✅ 同步成功
-- HANDOFF mtime: 1780290285
-- 雲端同步：⚠️ commit ae19271a 已留本機，但 push 失敗
