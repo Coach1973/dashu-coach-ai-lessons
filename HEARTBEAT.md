@@ -35,14 +35,5 @@
 
 
 ## 學長 relay poll
-### 2026-06-02 2026-06-02 03:05 - relay poll OK
-
-## 🦞 心跳 2026-06-02 03:03 ✅
-- 模型：MiniMax M2.7 ✅
-- Git備份：`1785dbe9` ✅（4檔案變更）
-- Cron：15項（Self Improvement Agent 1 錯誤，需追蹤）✅
-- YouTube 新聞：Desktop 上找不到（08:00 執行可能有問題）→ 待確認
-- relay：無新任務 ✅
-- 備註：Self Improvement Agent 錯誤可能是因為它編輯 learning 檔失敗，不是 timeout
-- 備註：YouTube 新聞找不到，需確認 cron 是否真的生成了檔案
+### 2026-06-02 2026-06-02 03:06 - relay poll OK
 
