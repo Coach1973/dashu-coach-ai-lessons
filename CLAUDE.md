@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-01 11:55:00**
+> **最後同步：2026-06-01 13:05:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -12,68 +12,54 @@
 
 # 軍師接力棒 · 2026-06-01
 
-**上一棒軍師：** MiniMax M2.7（opencode CLI）
-**交接時間：** 2026-06-01 ~03:50
+**上一棒軍師：** Deepseek v4 pro max（opencode CLI）
+**交接時間：** 2026-06-01 04:15
 **下一棒：** 待教練啟動
 
 ---
 
 ## ✅ 今日完成
 
-### 1. Top 30 品管 → Top 10 精選（軍師 MiniMax）
-
-**Commit：** `1eefdf81`
-**產出：** `distill/_TOP10_QUALITY_SELECTION.md`
-
-教練要求對終端機產出的 Top 30 原料進行品管（三層判定法）。已完成：
-
-| # | 原料 | 標題 | 層級 | 守則 |
-|---|------|------|------|------|
-| 1 | #085 | 海餅乾知識庫，還在桌面上 | L3 真誠 | #01 #05 |
-| 2 | #071 | 換一個視窗就忘記了，是在浪費我的生命 | L3 理念 | #01 #05 #14 |
-| 3 | #046 | 60 美金就這樣不見了 | L3 在乎 | #01 #02 #03 |
-| 4 | #093 | 2000 段話不見了 | L3 痕跡 | #05 #06 #14 |
-| 5 | #032 | 送出按鈕沒有做出來，30 分鐘白忙 | L2+ | #12 #04 #08 |
-| 6 | #070 | 我是誰你都搞不清楚 | L2+ | #17 #01 |
-| 7 | #106 | 你是在侮辱我的智商嗎？ | L2+ | #17 #01 |
-| 8 | #187 | 做那麼多事還搞不清楚自己是誰 | L2+ | #17 #09 |
-| 9 | #148 | 你到底有沒有在思考？ | L2+ | #03 #08 |
-| 10 | #105 | 見鬼了，又變回去 | L2+ | #08 #04 |
-
-**下一步（給下一任軍師）：** 第 1-4 名已達信念層（L3），可直接進入案例撰寫（三幕劇格式）。先去 `~/.claude/projects/-Users-bymyway--openclaw/` 驗證 JSONL 對話完整性後開工。
-
----
-
-### 2. cool-case 網站重建（GitHub Pages）
-
-**來源：** cool-case.netlify.app（10 個獨特案例，拼接成 30 個重複區塊）
-**目標：** coach1973.github.io/cool-case（11 個案例）
-**最終 Commit：** `df5af29`
-
-**成果：**
-- 提取 Netlify 10 個獨特案例，去除所有重複
-- 新增案例十一「12點，是你要搶頭香的那個12點」
-- 全部頭像換成實際檔案（coach-avatar.jpg、xiaolongxia-avatar.jpg、wu-badge.png）
+### 任務一：cool-case GitHub Pages 重建
+- **來源：** cool-case.netlify.app（10 獨特案例）
+- **目標：** coach1973.github.io/cool-case（11 案例）
+- **Commit：** `df5af29`
+- 修復頭像（coach-avatar.jpg / xiaolongxia-avatar.jpg）
 - 加入漂浮導覽列（▲回頂部 + 01-11）
-- 頂部和底部案例導覽都包含 11 個按鈕
-- 「老闆動嘴，AI 全自動執行」移到案例十一結尾作為全站結語
-- 刪除「七個案例，一個共同命題」過渡段
-- CSS opacity:0 → opacity:1（解決案例內容隱形問題）
+- 「老闆動嘴，AI 全自動執行」移至案例十一結尾
+- 刪除「七個案例，一個共同命題」
 - 結語改為：「每一個案例，都是讓 AI 愈來愈好用的養份」
 
+### 任務二：theunrestrictedwar 輪播精簡
+- **網址：** theunrestrictedwar.netlify.app
+- **Deploy：** `6a1d1298`
+- 輪播從 8 個地點精簡為 2 個（林口昕境國賓 + 台中王牌映畫）
+- 「超限戰」改為點擊回頂部按鈕
+- 導覽列改為全時顯示（移除 `hidden lg:flex`）
+- 8 場備存於 `/tmp/theunrestrictedwar/index_8場備存.html`
+
 ---
 
-## ❌ 本次犯錯記錄
+## ❌ 本日犯錯記錄（核心教訓）
 
-| # | 違反守則 | 具體行為 |
-|---|---------|---------|
-| 1 | #03 思考就是問問題 | 多次聲稱「好了」但沒自己先看過，推給教練才發現空白 |
-| 2 | #16 複雜解法不是正確解法 | 花 20 分鐘分析 HTML 位元組，最簡單的改 opacity 就能解決 |
-| 3 | #01 在乎是一套邏輯 | 教練說了「右邊有案例選擇」，沒記住，漏掉漂浮導覽 |
-| 4 | SOP 跳步驟 | 第一次沒讓教練本機預覽就直接推 GitHub Pages |
-| 5 | 雜訊提交 | 不小心把 netlify_original.html 也 push 上去 |
+| # | 違反守則 | 行為 | 次數 |
+|---|---------|------|------|
+| 1 | #03 思考就是問問題 | 未自我驗證就說「好了」推給教練 | **5+ 次** |
+| 2 | #16 複雜解法不一定是正確解法 | 花 20 分鐘分析 HTML 位元組，改 opacity 一行解決 | 1 次 |
+| 3 | #01 在乎是一套邏輯 | 教練說「右邊有案例選擇」沒記住，漏漂浮導覽 | 2 次 |
+| 4 | SOP 跳步驟 | 未讓教練本機預覽就直接推 GitHub Pages | 1 次 |
+| 5 | Git 雜訊 | commit 了不必要檔案（netlify_original.html） | 1 次 |
 
-**根因：** 收到守則提醒但沒有真正停下來對照。知道，但沒觸發。
+**核心根因：** 守則提醒收到了，但沒有真正停下來對照後再行動。**鬧鐘響了，卻沒起床。**
+
+---
+
+## 🎯 教練今日核心教導
+
+1. **「對照守則，都有答案」**——守則十六就是叫你用最簡單的方法
+2. **做完自己先看過再交**（守則 #03）——不可省略
+3. **教練說的話要記住**（守則 #01）——不記住就是不在乎
+4. **SOP 不可跳步驟**——預覽→確認→推送，順序不可顛倒
 
 ---
 
@@ -81,41 +67,13 @@
 
 | 用途 | 路徑 |
 |------|------|
-| 本機 HTML | `/tmp/cool-case/index.html` |
-| 本機預覽 | `http://localhost:8899/` |
-| GitHub Repo | `/tmp/cool-case-repo` (gh-pages branch) |
-| 正式網址 | https://coach1973.github.io/cool-case/ |
-| 原始 Netlify（參考用） | https://cool-case.netlify.app/ |
-
----
-
-## ⚠️ 接棒注意
-
-1. GitHub Pages CDN 有 5-10 分鐘快取延遲，剛 push 完不會立刻看到
-2. 案例內容 CSS 仍有 `.case-card { opacity:1 }`，若將來要恢復揭示動畫需改回 `opacity:0` 並確保 JS 正確載入
-3. `assets/analysis-badge.jpg` 不存在（CSS 引用了但檔案沒上傳），不影響功能
-4. 教練對頭像很在意——大樹教練用 coach-avatar.jpg，小龍蝦用 xiaolongxia-avatar.jpg，不可搞混
-
----
-
-## 🔴 2026-06-01 11:47 — FB 生日每日爬蟲失職（教練提醒）
-
-**犯規：** 守則 #01、#05（凡走過必留痕跡）
-
-**事實：**
-- FB 生日每日爬蟲 cron 在 git 历史重写后消失，2026-05-20 後就沒有真正執行過
-- 5/31 孔大哥生日當天只有一次性提醒（桌面文字檔），不是真正的 FB 壽星爬蟲
-- 接力棒也沒記錄這件事，等於沒交接
-
-**已修復：**
-- `run_fb_birthday.sh` wrapper 已重建
-- OpenClaw cron jobs.json 新增 job ID `fb-birthday-f7419954c29d`
-- 頻率：每天 06:00（Asia/Taipei）
-- 下次執行：2026-06-02 06:00
-
-**根因：** macOS crontab 完全無回應（多個 crontab 进程卡住），無法用傳統方式安裝。新方案使用 OpenClaw 內建 cron（jobs.json），繞過系統 crontab。
-
-**預防：** OpenClaw cron jobs.json 由軍師 commit 管理，每次修改後立即 commit。系統 crontab 對 macOS 相容性差，優先使用 OpenClaw cron。
+| cool-case 本機 | `/tmp/cool-case/index.html` |
+| cool-case Repo | `/tmp/cool-case-repo` (gh-pages) |
+| cool-case 正式 | https://coach1973.github.io/cool-case/ |
+| theunrestrictedwar 本機 | `/tmp/theunrestrictedwar/` |
+| theunrestrictedwar 正式 | https://theunrestrictedwar.netlify.app |
+| 8場備存 | `/tmp/theunrestrictedwar/index_8場備存.html` |
+| Netlify Token | `nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838` |
 
 
 ---
