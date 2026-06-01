@@ -268,3 +268,11 @@ fatal: could not read Username for 'https://github.com': Device not configured
 [2026-06-01 09:10:00] 2026-06-01 1KB 未達門檻 150KB，不分割
 [2026-06-01 09:40:00] 2026-06-01 85KB 未達門檻 150KB，不分割
 [2026-06-01 10:10:01] 2026-06-01 86KB 未達門檻 150KB，不分割
+[2026-06-01 10:40:00] 分割 2026-06-01：177KB → 歸檔 2026-06-01_p2.md，新開活躍檔
+commit_notify logged: f59d8559
+✅ Commit notify: f59d8559 - auto: 今日記憶檔自動分割 2026-06-01（177KB→_p2，內容全保留）
+[main f59d8559] auto: 今日記憶檔自動分割 2026-06-01（177KB→_p2，內容全保留）
+ 2 files changed, 955 insertions(+), 949 deletions(-)
+ create mode 100644 memory/2026-06-01_p2.md
+fatal: could not read Username for 'https://github.com': Device not configured
+[2026-06-01 10:40:00] push 失敗，留待下次（commit 已在本地）
