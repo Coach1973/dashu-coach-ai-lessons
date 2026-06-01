@@ -1,9 +1,9 @@
 {
   "lastChecks": {
-    "distill": null,
-    "youtube_monitor": null,
-    "cron_health": null
+    "distill": "2026-06-01T17:31:00+08:00",
+    "youtube_monitor": "2026-06-01T12:32:00+08:00",
+    "cron_health": "2026-06-01T17:31:00+08:00"
   },
-  "lastHeartbeat": "2026-05-31T22:00:00+08:00",
-  "note": "heartbeat-state.json recreated 2026-05-31 自我優化檢查"
+  "lastHeartbeat": "2026-06-01T17:36:00+08:00",
+  "note": "17:36 heartbeat completed, model MiniMax M2.7, 15 cron green, no pending tasks"
 }
