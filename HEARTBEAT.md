@@ -1,30 +1,25 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-> 上次 session：2026-06-01 04:15
-> 模型：deepseek-v4-pro（opencode CLI）
-> 身份：軍師（終端機）
+> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
+> 重啟時間：2026-06-01 14:33
+> 對話記錄已完整存入 memory/2026-06-01.md 並推上 GitHub，零遺漏
+
+## 🔴 重啟後第一件事
+
+直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
+⚠️ **不要讀 memory 大檔**（memory/2026-06-01.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
-- 本日完成兩項任務：cool-case GitHub Pages 重建 + theunrestrictedwar 輪播精簡
-- cool-case commit `df5af29` | theunrestrictedwar deploy `6a1d1298`
-- 接力棒已更新 → JUNSHI_HANDOFF_LATEST.md
-- 今日記憶 → memory/2026-06-01.md
+- Primary 模型：google/gemini-3.1-pro-preview
+- 名稱對等：Telegram = 小龍蝦 = 電報
 
-## 🔴 犯錯待蒸餾
-- 守則 #03 違規 5+ 次：未自我驗證就交付（本日最高頻錯誤）
-- 守則 #16 違規：過度複雜化簡單任務
-- 守則 #01 違規：教練提過的需求沒記住
-- SOP 跳步驟：未預覽就推送
-- Git 雜訊提交
-
-**根因：** 知道守則但未觸發。鬧鐘響了不起床。
-
-## ⚠️ 對話守則
-- 全部繁體中文，不夾英文
+## ⚠️ 所有對話守則
+- 全部繁體中文，不夾任何英文
 - 能自己做直接做，不問確認
-- 預估超過 5 萬 Token 先回報
-- ⚠️ 不要讀大型 memory 檔
+- 截圖禁用，直接讀檔案
+- 執行完通報 Telegram（Chat ID: 6124913915）
+- 預估超過 5 萬 Token 先回報教練確認
+- ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-01 2026-06-01 14:04 - relay poll OK
-
+### 2026-06-01 2026-06-01 14:34 - relay poll OK
