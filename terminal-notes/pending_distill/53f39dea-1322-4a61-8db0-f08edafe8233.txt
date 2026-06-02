@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 53f39dea-1322-4a61-8db0-f08edafe8233
-# 提取時間：2026-06-03 01:00 (台灣時間)
-# 共 16 條教練原話
+# 提取時間：2026-06-03 01:30 (台灣時間)
+# 共 21 條教練原話
 
 ---
 
@@ -428,3 +428,69 @@ https://unlimited.aiprimetech.io
 　▶ AI 回應：小龍蝦恢復了。Gateway 2026.5.28 運行中，PID 28168。
 
 教練試一下 Telegram 發個訊息看小龍蝦有沒有回應，然後再看 `/model` → `anthropic` 有沒有 Opus 4.8。
+
+【教練 2026-06-02 17:03】
+好啦，說個好消息，那些雜七雜八的模型都不見了，只剩兩個我很喜歡的模型。但是呢，點進去之後只有兩個可以選，而且沒有4.8的選項，這樣子比較可惜啦。Claude Opus 4.8 的發佈時間是：
+2026 年 5 月 28 日
+詳細資訊：
+
+官方發佈日期：2026 年 5 月 28 日（星期四）
+這是 Anthropic 在 Opus 4.7（4 月 16 日發佈）之後推出的升級版本。
+發佈時同步上線在：
+claude.ai
+Claude API（模型 ID：claude-opus-4-8）
+Amazon Bedrock、Google Cloud Vertex AI 等平台
+
+一般來說，你這份更新到5月28的表，應該是4.8發布的同一天，所以它裡面的內容一定可以選到4.8的。你可以再仔細看看。
+
+　▶ AI 回應：讓我仔細查 2026.5.28 版內建的模型清單。
+
+　▶ AI 回應：Opus 4.8 確實在 2026.5.28 裡面！是 anthropic 插件的一部分。讓我查為什麼沒有顯示。
+
+　▶ AI 回應：找到了！問題是我之前手動加的 `anthropic` 進 models.json，只放了 2 個模型，把內建的 22 個（含 Opus 4.8）蓋掉了。移除我加的，讓內建的出來。
+
+　▶ AI 回應：同時在 openclaw.json 加上 anthropic provider 設定，讓它走 aiprimetech 的 API key：
+
+　▶ AI 回應：重啟完成。教練再試 `/model` → `anthropic`，這次應該能看到 Opus 4.8 了。
+
+【教練 2026-06-02 17:05】
+太棒了！成功了
+
+　▶ AI 回應：太好了！Opus 4.8 出現了。
+
+教練要我現在更新接力棒 + commit 收工嗎？還是繼續做場景任務？
+
+【教練 2026-06-02 17:07】
+這裡面有一個 airpimetech(2) 這是什麼？
+
+　▶ AI 回應：那是我之前多加的，跟 anthropic 重複了。刪掉。
+
+　▶ AI 回應：刪掉了，重啟完畢。現在 `/model` 應該只剩 **minimax** 和 **anthropic** 兩家，乾乾淨淨。
+
+【教練 2026-06-02 17:08】
+那裡面你都設定好我之前給你的那組 api key 了嗎？ 他是 Unlimited 這第三方提供的
+
+　▶ AI 回應：讓我確認一下。
+
+　▶ AI 回應：設好了：
+
+- **baseUrl**：`https://unlimited.aiprimetech.io`（走 Unlimited 第三方代理）
+- **apiKey**：`sk-214c4a...`（教練給的那組）
+- **api**：`anthropic-messages`
+
+等教練開通流量，選 `anthropic/claude-opus-4-8` 就能直接跑。
+
+【教練 2026-06-02 17:09】
+接力棒 收工
+
+　▶ AI 回應：收工。commit `b8826c81`，已推到 GitHub。
+
+**本場做了：**
+- M3 全面同步（4 台）
+- 品管評審報告（4 套成品，38 案）
+- Mac 三工具架構寫入記憶
+- OpenClaw 升級 2026.5.28 + Opus 4.8 上架
+- 升級當機修復（3 個 legacy key）
+- `/model` 精簡到 minimax + anthropic 兩家
+
+教練可以開新視窗了。

@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-03 00:25:00**
+> **最後同步：2026-06-03 01:15:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -154,24 +154,36 @@
 
 ---
 
+## ✅ OpenClaw 升級 + Anthropic Opus 4.8 上架（本場後半）
+
+- OpenClaw 版本：`2026.4.15` → `2026.5.28`（含 Opus 4.8 內建目錄）
+- 升級後 config 格式不相容導致當機 → 修了三個 legacy key（agents.defaults.llm / messages.tts.enabled / plugins.slots.memsearch）
+- `/model` 選單最終精簡為 **minimax + anthropic** 兩家
+- anthropic provider 已設定 aiprimetech 第三方代理（baseUrl + apiKey），教練開通流量後選 `anthropic/claude-opus-4-8` 即可跑 Opus
+- ⚠️ aiprimetech 有已知 `.openclaw` 字串 bug（記憶 `feedback_aiprimetech_proxy_string_bug`）
+
 ## 📊 本場軍師 commit 清單
 
 | Commit | 內容 |
 |--------|------|
-| `1df3b9c` | Mac 小龍蝦 M2.7 → M3（含 /model 補入 M3）（上一棒） |
-| `fd8a078` | /model 選單精簡，留 5 家 provider（上一棒） |
+| `1df3b9c` | Mac 小龍蝦 M2.7 → M3（上一棒） |
+| `fd8a078` | /model 選單精簡（上一棒） |
 | `8d9c0dfe` | 鼠鬚管+無蝦米完整安裝（上一棒） |
 | `3e3c21eb` | Boshiamy 卸載完成（上一棒） |
-| （本場）| M3 全面同步 + 品管評審 + 記憶更新 + 接力棒更新 |
+| `030d91a6` | M3 全面同步 + 品管評審 + 記憶更新 |
+| （本場後半）| OpenClaw 升級 2026.5.28 + Opus 4.8 上架 + config 修復 |
 
 ---
 
 ## 🎯 給下一棒軍師的提醒
 
 1. **品管重判報告已交**：教練還沒拍板要先做短期整理還是直接寫三幕劇，下一場開工先問
-2. **四台全 M3**：不要再動模型設定
-3. **Mac 三工具架構**：hermes/opencode/claude 是三個獨立 CLI，各自 API key 各自設定檔，記憶檔 `feedback_config_isolation.md` 已完整記錄
-4. **封存檔整合**仍待辦：`_archive_2026-05-20/workspace_duplicates/` 41 個檔案待整合進 memory/
+2. **四台全 M3**：不要再動 MiniMax 模型設定
+3. **Mac 三工具架構**：hermes/opencode/claude 三個獨立 CLI，記憶檔 `feedback_config_isolation.md` 已完整記錄
+4. **anthropic/aiprimetech 設定已就緒**：教練開通流量後可跑 Opus 4.8，不用再改設定
+5. **OpenClaw 剛升級到 2026.5.28**：memsearch 插件被移除（新版不相容），memory-lancedb 和 amazon-bedrock 顯示未安裝（不影響運作）
+6. **封存檔整合**仍待辦：`_archive_2026-05-20/workspace_duplicates/` 41 個檔案待整合進 memory/
+7. **`/model` 選單無法精簡**：內建目錄改不了，但現在只剩 minimax + anthropic 兩家已經夠乾淨
 
 
 
