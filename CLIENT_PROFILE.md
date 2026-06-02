@@ -1,5 +1,25 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-03（共 15 則）
+1. Cron job triggered heartbeat at 00:03 (Wednesday, June 3rd) — crossed midnight
+2. OpenClaw reported all 3 systems stable (main, 學弟, 學妹)
+3. No urgent matters pending; OpenClaw wished coach good night
+4. Cron job triggered incremental memory distillation at 2026-06-03 00:04 (every 2 hours)
+5. Cron prompt instructed silent execution: run distill_increment
+6. Cron job triggered terminal dialogue distillation at 2026-06-03 00:04 (every 4 hours)
+7. OpenClaw checked: pending_distill directory does not exist
+8. done_distill folder only contains one old file (HERMES_20
+9. Coach gave explicit authorization for the model upgrade
+10. OpenClaw (巴哈) immediately updated SOUL.md to reflect M2.7→M3 upgrade with change date record
+11. Logged the authorization process in the file
+12. Referenced rule 05 "凡走過必留痕跡" (leave evidence
+13. System reported two async exec completions: crisp-me (code 0) — calendar weekly sync showing ok; tidal-tr (code 0) — check returned "No errors found"
+14. OpenClaw processed both internally as residual async completion notifications
+15. Did not relay to user; previous health check report already delivered,
+
+---
+
+
 ## 蒸餾 2026-06-02（共 369 則）
 1. User sent system notification about two completed cron jobs: calendar weekly sync (ran 3 days 4 hours ago) and another cron (ran 7 days 6 hours ago), both completed successfully
 2. OpenClaw processed the async command completion notifications
