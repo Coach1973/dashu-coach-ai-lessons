@@ -4,17 +4,17 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-02 23:30:01**
+> **最後同步：2026-06-03 00:25:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-02
+# 軍師接力棒 · 2026-06-03
 
-**上一棒軍師：** Deepseek v4 pro max
-**交接時間：** 2026-06-02 23:00
-**本棒軍師：** Claude Sonnet 4.6（終端機 Claude Code）
+**上一棒軍師：** Deepseek v4 pro max → Claude Opus 4.6（本場接續）
+**交接時間：** 2026-06-03 00:30
+**本棒軍師：** Claude Opus 4.6（終端機 Claude Code）
 
 ---
 
@@ -116,45 +116,62 @@
 5. 跟教練確認後執行
 6. ⚠️ 這是**判斷類**任務（不是執行類）→ 用 Opus 軍師模式，不要 Haiku 混用（記憶 `feedback_model_choice_quality_first`）
 
-## 任務二：M3 模型全面同步（Hermes + VPS 小龍蝦）
+## ✅ 任務二：M3 模型全面同步 — 已完成（4 台全部 M3）
 
-**背景：** 本場（2026-06-02）軍師已把 Mac 端小龍蝦的 3 個 agent 從 `minimax/MiniMax-M2.7` 升到 `minimax/MiniMax-M3`（commit `1df3b9c`）。**但教練現在要求全面 M3，所以另外兩台也要查、要同步：**
+| 機器 | 原模型 | 改後 | 憑證 |
+|------|--------|------|------|
+| Mac 學長（OpenClaw） | M2.7 | ✅ M3 | commit `1df3b9c`（上一棒） |
+| VPS 小龍蝦（43.245.60.200） | M2.7 | ✅ M3 | Sonnet 已改，container 內 openclaw.json 確認 |
+| Mac Hermes | claude-opus-4-7 via minimax | ✅ MiniMax-M3 | `~/.hermes/config.yaml` 已改 |
+| VPS Hermes（113.29.232.178） | deepseek-chat via deepseek | ✅ MiniMax-M3 | config.yaml 改 + .env 補 MINIMAX_API_KEY + custom_providers 加 minimax + Docker restart |
 
-### 2-A：Hermes（VPS `113.29.232.178` 或其他 IP，記憶 `project_hermes_vps`）
-- 連線方式：`ssh root@113.29.232.178`（密碼路徑見記憶或 `~/.openclaw/credentials/`）
-- 查設定檔位置（過去經驗：可能在 `~/hermes/config.yaml` 或 `auth.json`）
-- 看 model 欄位現況
-- 如果不是 M3，升級到 `MiniMax-M3` 並重啟服務
-- 驗證：發一句訊息看回應正常
-
-### 2-B：VPS 小龍蝦（`43.245.60.200`，記憶 `project_team_structure`）
-- 連線：`sshpass -p <密碼> ssh root@43.245.60.200`（密碼放在記憶或 credentials/）
-- 進 docker：`docker exec -u root -it openclaw bash`
-- 查 `openclaw.json` 的 `agents.list[].model` 欄位
-- 不是 M3 就改成 `minimax/MiniMax-M3`
-- 重啟 gateway
-- 驗證：Telegram 發一句看回應正常
-
-**驗收標準：**
-- 三台（Mac / Hermes / VPS 小龍蝦）都跑 M3
-- 每台給 commit hash 或 docker exec 輸出截圖作憑證
-- 更新接力棒並 commit
-
-**⚠️ 風險提醒：**
-- VPS 小龍蝦：M2.7 的 cron 任務、prompt 可能對 M3 行為敏感，升級後先觀察 24 小時
-- Hermes：過去有 aiprimetech proxy bug（記憶 `feedback_aiprimetech_proxy_string_bug`），改 model 前先確認 API endpoint 還是走 `api.minimax.io`
-- 兩台都升完後，記得回頭更新本接力棒（劃掉這條，標 ✅）
+**VPS Hermes 補充操作：**
+- `.env` 原本 MINIMAX_API_KEY 是空的，已從 Mac Hermes auth.json 取同一把 key 寫入
+- `config.yaml` 底部加上 `custom_providers` minimax 區段（base_url: `api.minimax.io/anthropic`）
+- Docker container 已重啟
 
 ---
 
-## 📊 本場（2026-06-02）軍師 commit 清單
+## ✅ 品管重判（Opus 4.6 軍師評審已完成，待教練拍板執行）
+
+**盤點 4 套成品：**
+1. `distill/守則故事庫/`（22 案）— 原料庫，三輪 QA 後 A19/B2/C0，真實性良好
+2. `distill/特助場景庫_自動增量.md`（6 案）— #4#6 重複需合併，#1#2 缺 session ID
+3. `distill/_TOP10_QUALITY_SELECTION.md`（10 案）— 追溯性最強，信念層 4 案，最佳三幕劇候選
+4. `distill/痛點排名_自動.md` — 量化統計工具，保留
+
+**核心發現：全部 38 案都是事故報告格式，沒有一篇是教練要的三幕劇。**
+
+**軍師建議（等教練下一場拍板）：**
+- 短期：合併自動增量 #4#6、統一編號、補 session ID
+- 中期：Top10 前 4 名（海餅乾/浪費生命/60美金/2000段話）改寫三幕劇
+
+---
+
+## 📝 記憶更新
+
+- `feedback_config_isolation.md` → 完整重寫為「Mac 三工具架構」：hermes/opencode/claude 各自獨立 + Claude CLI 與 Desktop APP 差異（教練 2026-06-03 二次說明）
+
+---
+
+## 📊 本場軍師 commit 清單
 
 | Commit | 內容 |
 |--------|------|
-| `1df3b9c` | Mac 小龍蝦 M2.7 → M3（含 /model 補入 M3） |
-| `fd8a078` | /model 選單精簡，留 5 家 provider |
-| `8d9c0dfe` | 鼠鬚管+無蝦米完整安裝（接力棒首次更新） |
-| `3e3c21eb` | Boshiamy 卸載完成、教練實測「打的很順」 |
+| `1df3b9c` | Mac 小龍蝦 M2.7 → M3（含 /model 補入 M3）（上一棒） |
+| `fd8a078` | /model 選單精簡，留 5 家 provider（上一棒） |
+| `8d9c0dfe` | 鼠鬚管+無蝦米完整安裝（上一棒） |
+| `3e3c21eb` | Boshiamy 卸載完成（上一棒） |
+| （本場）| M3 全面同步 + 品管評審 + 記憶更新 + 接力棒更新 |
+
+---
+
+## 🎯 給下一棒軍師的提醒
+
+1. **品管重判報告已交**：教練還沒拍板要先做短期整理還是直接寫三幕劇，下一場開工先問
+2. **四台全 M3**：不要再動模型設定
+3. **Mac 三工具架構**：hermes/opencode/claude 是三個獨立 CLI，各自 API key 各自設定檔，記憶檔 `feedback_config_isolation.md` 已完整記錄
+4. **封存檔整合**仍待辦：`_archive_2026-05-20/workspace_duplicates/` 41 個檔案待整合進 memory/
 
 
 
