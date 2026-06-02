@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 53f39dea-1322-4a61-8db0-f08edafe8233
-# 提取時間：2026-06-03 00:00 (台灣時間)
-# 共 2 條教練原話
+# 提取時間：2026-06-03 00:30 (台灣時間)
+# 共 7 條教練原話
 
 ---
 
@@ -170,3 +170,105 @@ model:
 | VPS 小龍蝦（43.245.60.200） | M2.7 | ✅ M3 | 上一棒 Sonnet 已改 |
 | **Mac Hermes** | claude-opus-4-7 via minimax | ✅ **MiniMax-M3** | `~/.hermes/config.yaml` 已改 |
 | **VPS Hermes**（1…（略）
+
+【教練 2026-06-02 16:04】
+好，我得跟军师你报告一下，就是mac电脑的终端机，我呢有三个模型跑，这三个模型呢分别对应三组不同的API KEY 这三组呢分别差别在我输入什么指令。
+
+跑的模型就是看我给他丢什么指令。那因为呢我现在我不知道你能理解我的意思就是说我如果输入hemes，它背后就要跑hemes，它背后就要跑mini max M3的数据模型
+
+但我如果打open code这个这个指令那他就要跑open code购的模型(deepseek v4 pro)，如果我打cladue，它背后就要跑CCswitch里面，我边给他啊安排的模型，这样子你有理解我在说什么吗？听懂的话，你在复述里面给我听。
+
+　▶ AI 回應：聽懂了，教練。讓我複述一遍確認：
+
+---
+
+教練的 Mac 終端機上有**三個獨立的 AI 工具**，打不同指令就叫不同的出來：
+
+| 教練打的指令 | 背後跑的工具 | 用的模型 | 各自的設定檔 |
+|------------|------------|---------|------------|
+| `hermes` | Hermes Agent | **MiniMax M3**（剛改好的） | `~/.hermes/config.yaml` |
+| `opencode` | OpenCode | **DeepSeek V4 Pro** | OpenCode 自己的設定 |
+| `c…（略）
+
+【教練 2026-06-02 16:15】
+不完全正确，那我来再说清楚一点，然后我这次说完的，请你彻底的写到记忆档当中，因为之前我已经有說過过一次，可能这是我没有说清楚。
+
+首先呢终端机就代表呢就是CLI所以呢就是那个黑底的那个框框，在windows它叫命令提示列。这个概念没问题的，对不对？
+
+所以呢在CLI界面下的claude跟你刚才说的cladude code desktop桌面版那APP是不一样的。虽然呢我们的背后的对话记录是同一个，但是界面不一样，严格说起来我们的这个claude code desktop APP它其实是个UI界面。我这样子讲应该理解是正确吧。
+
+同時，你讲的也对，cc swtich 确实可以控制呃，claude CLi也能够控制Claude Code APP 桌面版嘛。
+
+這樣都清楚了嗎？
+
+　▶ AI 回應：完全清楚了。讓我確認：
+
+1. **終端機 = CLI** = 黑底框框，跟桌面版 APP 是不同介面
+2. **Claude Code CLI**（終端機打 `claude`）和 **Claude Code Desktop APP**（桌面上那個應用程式）→ 介面不同，但**對話記錄共用同一份**
+3. **CC Switch** 可以同時控制 Claude CLI 和 Claude Desktop APP 的模型
+4. Desktop APP 嚴格來說是 **UI 介面**
+
+現在寫進記憶檔。先看一下現有的相關記憶，避免重複。
+
+　▶ AI 回應：現有記憶缺了 Hermes，而且沒有解釋 CLI 跟桌面版的關係。我直接更新這份記憶，把教練剛說的完整架構寫進去。
+
+　▶ AI 回應：更新 MEMORY.md 索引。
+
+　▶ AI 回應：已寫入記憶檔，憑證：
+- 記憶檔：[feedback_config_isolation.md](memory/feedback_config_isolation.md)（已更新為完整版）
+- 索引：MEMORY.md 第 63 行已同步更新
+
+教練，這份記憶以後所有軍師都會讀到，不會再搞混了。
+
+【教練 2026-06-02 16:19】
+那我也跟你说一下这个这个cladue code APP的跟claude cIi最大的差别在什么地方，最主要就是在于这个Claude Code destop app呢？它左边有一排可以随时选取我们过往的对话的记录。但是终端机就是CLI它不行，啊，它只有进去啊这个那个对话的档案里面才能去读取。第二个不一样的地方是在CIi那边如果我要切换模型，我得打/model这个指令。但是呢在claude desktop app当中不用，我只要消鼠我就可以选择我要什么样的模型，我要什么样的推移强度，这样子理解了吗？。
+
+　▶ AI 回應：清楚，兩個差別我聽懂了：
+
+1. **看過往對話**：Desktop APP 左邊有一排可以直接點選歷史對話；CLI 沒有，要進檔案才能讀
+2. **切換模型**：CLI 要打 `/model` 指令；Desktop APP 用滑鼠就能選模型和推理強度
+
+直接補進剛才的記憶檔。
+
+　▶ AI 回應：已補進記憶檔，憑證：[feedback_config_isolation.md](memory/feedback_config_isolation.md) 第 22-24 行。
+
+【教練 2026-06-02 16:20】
+好了，那你總結上傳，我要開新的對話框，我們再來執行剛才的場景任務。
+
+　▶ AI 回應：收到，更新接力棒 + commit。
+
+　▶ AI 回應：找到原因了——`workspace/` 本身就是一個獨立的 git repo！要從裡面 commit。
+
+　▶ AI 回應：接力棒已上傳。
+
+---
+
+**本場總結：**
+
+| 完成事項 | 憑證 |
+|---------|------|
+| M3 全面同步（Mac Hermes + VPS Hermes） | `~/.hermes/config.yaml` 已改 + VPS Docker 已重啟 |
+| 品管評審報告（4 套成品，38 案，四維度） | 已寫在接力棒，待教練拍板 |
+| 記憶更新：Mac 三工具架構 + CLI vs Desktop APP 差異 | `feedback_config_isolation.md` |
+| 接力棒更新 + push | commit `030d91a6` |
+
+**下…（略）
+
+【教練 2026-06-02 16:28】
+我現在去這個 VPS 版的 Hermes / moder，它裡面呢沒有讓我可以選 M3 的模型，這樣子有必要改嗎？或者說，選不選沒關系，反正指定他跑m3 就行？
+
+另外，我主要的小龍蝦這個我打 /model進去看，一樣是全部的模型都列出來，並沒有出現你講的，只剩下五種選擇
+
+　▶ AI 回應：兩個問題我直接查、直接修。
+
+　▶ AI 回應：找到問題了。上一棒說「已 disabled 12 個 plugin」但實際上 `plugins.entries` 裡 17 個全是純字串，根本沒有 `enabled: false` 的標記——**精簡沒有生效**。
+
+先回答教練兩個問題，然後修。
+
+---
+
+**問題一（VPS Hermes /model 沒有 M3 可選）：** 不影響。`config.yaml` 裡寫死 `default: MiniMax-M3`，Hermes 啟動就直接跑 M3，`/model` 選單只是方便手動切換用的，不選也沒關係。
+
+**問題二（Mac 小龍蝦 /model 全部列出）：** 這是 bug——上一棒…（略）
+
+　▶ AI 回應：等一下——我把 dict 結構存成了 list，需要立刻修正。
