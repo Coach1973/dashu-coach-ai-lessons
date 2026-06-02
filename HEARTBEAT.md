@@ -22,4 +22,26 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-03 2026-06-03 01:30 - relay poll OK
+### 2026-06-03 2026-06-03 01:32 - relay poll OK
+
+---
+
+- 2026-06-03 01:31 ✅ 心跳正常（本場第一筆）
+  - cron 正常（心跳 30min job 在跑，lastRunStatus: error→已重試）
+  - git 備份完成（630a06d2）
+  - relay 無新任務
+  - 已讀接力棒（00:30 版）：鼠鬚管✅、M3升級✅、品管報告✅、OpenClaw升級✅
+  - 系統健檢 OK
+  - 深夜主動關懷（01:31 已發 Telegram，失敗（無 token），改為 local 記錄）
+  - ⚠️ Telegram bot token 未設定，heartbeat 無法推送，需手動補發
+
+
+## 🩺 軍師 Hook 自檢 2026-06-03 01:32
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：開工
+- Session: 53f39dea-1322-4a61-8db0-f08edafe8233
+
+## 🩺 軍師 Hook 自檢 2026-06-03 01:32
+- ✅ Hook 自檢通過（settings.json 含 hooks.UserPromptSubmit、本腳本被觸發）
+- 觸發詞：開工
+- Session: 5b9a049b-1ec0-4090-b7b2-0d1268177b1e
