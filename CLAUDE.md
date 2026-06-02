@@ -4,62 +4,50 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-01 13:05:00**
+> **最後同步：2026-06-02 23:05:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-01
+# 軍師接力棒 · 2026-06-02
 
-**上一棒軍師：** Deepseek v4 pro max（opencode CLI）
-**交接時間：** 2026-06-01 04:15
-**下一棒：** 待教練啟動
-
----
-
-## ✅ 今日完成
-
-### 任務一：cool-case GitHub Pages 重建
-- **來源：** cool-case.netlify.app（10 獨特案例）
-- **目標：** coach1973.github.io/cool-case（11 案例）
-- **Commit：** `df5af29`
-- 修復頭像（coach-avatar.jpg / xiaolongxia-avatar.jpg）
-- 加入漂浮導覽列（▲回頂部 + 01-11）
-- 「老闆動嘴，AI 全自動執行」移至案例十一結尾
-- 刪除「七個案例，一個共同命題」
-- 結語改為：「每一個案例，都是讓 AI 愈來愈好用的養份」
-
-### 任務二：theunrestrictedwar 輪播精簡
-- **網址：** theunrestrictedwar.netlify.app
-- **Deploy：** `6a1d1298`
-- 輪播從 8 個地點精簡為 2 個（林口昕境國賓 + 台中王牌映畫）
-- 「超限戰」改為點擊回頂部按鈕
-- 導覽列改為全時顯示（移除 `hidden lg:flex`）
-- 8 場備存於 `/tmp/theunrestrictedwar/index_8場備存.html`
+**上一棒軍師：** Deepseek v4 pro max
+**交接時間：** 2026-06-02 23:00
+**本棒軍師：** Claude Sonnet 4.6（終端機 Claude Code）
 
 ---
 
-## ❌ 本日犯錯記錄（核心教訓）
+## ✅ 今日完成（2026-06-02）
 
-| # | 違反守則 | 行為 | 次數 |
-|---|---------|------|------|
-| 1 | #03 思考就是問問題 | 未自我驗證就說「好了」推給教練 | **5+ 次** |
-| 2 | #16 複雜解法不一定是正確解法 | 花 20 分鐘分析 HTML 位元組，改 opacity 一行解決 | 1 次 |
-| 3 | #01 在乎是一套邏輯 | 教練說「右邊有案例選擇」沒記住，漏漂浮導覽 | 2 次 |
-| 4 | SOP 跳步驟 | 未讓教練本機預覽就直接推 GitHub Pages | 1 次 |
-| 5 | Git 雜訊 | commit 了不必要檔案（netlify_original.html） | 1 次 |
+### 任務一：升級小龍蝦模型 M2.7 → M3
+- 修 `~/.openclaw/openclaw.json` 三個 agent 模型欄位
+- 補上 M3 進 minimax provider models 清單（讓 /model 看得到）
+- **Commit：** `1df3b9c`
 
-**核心根因：** 守則提醒收到了，但沒有真正停下來對照後再行動。**鬧鐘響了，卻沒起床。**
+### 任務二：精簡 /model 選單，只留 5 家
+- Disabled 12 個 LLM provider plugin（amazon-bedrock, github-copilot, groq,
+  huggingface, kimi-coding, mistral, openai, opencode, openrouter,
+  vercel-ai-gateway, xai, zai）
+- 從 models.providers 移除 kimi（教練未列入保留）
+- Gateway 重啟 pid 11207 → 11509
+- 保留：minimax / anthropic / codex / opencode-go / google
+- **Commit：** `fd8a078`
+- **附註：** `codex` ≠ `openai`，codex 走 ChatGPT 訂閱通道（gpt-5.2/5.4/5.4-mini）；
+  openai 走 API key 通道（已關），教練確認維持現狀
 
----
-
-## 🎯 教練今日核心教導
-
-1. **「對照守則，都有答案」**——守則十六就是叫你用最簡單的方法
-2. **做完自己先看過再交**（守則 #03）——不可省略
-3. **教練說的話要記住**（守則 #01）——不記住就是不在乎
-4. **SOP 不可跳步驟**——預覽→確認→推送，順序不可顛倒
+### 任務三：鼠鬚管 + 無蝦米輸入法完整安裝
+- **問題：** Deepseek 上棒卡在「無蝦米字根對照表是專有資料、要教練給連結」
+- **軍師解：** GitHub 找到 `hsuanyi-chou/rime-liur`（全功能、自包含、49 萬行字根）
+- **執行：**
+  1. clone repo → /tmp/rime-liur
+  2. 備份 ~/Library/Rime/ 原本錯的骨架到 _backup_scaffold_*
+  3. 複製 rime-liur/Rime/* 全部 12 個 yaml + opencc/
+  4. Squirrel --install 註冊輸入源
+  5. open Squirrel.app 觸發部署
+  6. 驗證 build/liur.extended.table.bin 已生成
+- **狀態：** 鼠鬚管已註冊、liur schema 為預設、字典已編譯
+- **教練只剩動：** Ctrl+Space 切到鼠鬚管即可開始打字（不必登出登入）
 
 ---
 
@@ -67,13 +55,24 @@
 
 | 用途 | 路徑 |
 |------|------|
-| cool-case 本機 | `/tmp/cool-case/index.html` |
-| cool-case Repo | `/tmp/cool-case-repo` (gh-pages) |
-| cool-case 正式 | https://coach1973.github.io/cool-case/ |
-| theunrestrictedwar 本機 | `/tmp/theunrestrictedwar/` |
-| theunrestrictedwar 正式 | https://theunrestrictedwar.netlify.app |
-| 8場備存 | `/tmp/theunrestrictedwar/index_8場備存.html` |
-| Netlify Token | `nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838` |
+| Rime 設定 | `~/Library/Rime/` |
+| Rime 編譯產出 | `~/Library/Rime/build/` |
+| 原骨架備份 | `~/Library/Rime/_backup_scaffold_20260602_225813/` |
+| OpenClaw 設定 | `~/.openclaw/openclaw.json` |
+
+---
+
+## 🎯 給下一棒軍師的提醒
+
+1. **守則#12 落實：** 上棒卡關是因為叫教練給「下載連結」——其實 GitHub 上現成有方案。
+   下次遇到「教練要給我什麼檔案」先 WebSearch / gh search，自己找。
+2. **OpenClaw 模型現況：** 已是 MiniMax-M3，5 家 provider 精簡完，
+   不要再亂動 openclaw.json（守則 #04 寫死規則）
+3. **接力棒未完成：** 封存檔整合（`_archive_2026-05-20/workspace_duplicates/` 41 個）
+   仍待整合進 memory/
+
+---
+
 
 
 ---
