@@ -22,9 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-03 03:03 ✅ 心跳完成（cron模型過載，已記錄）
-- 發現：cron job接連2次error（MiniMax供應商cooldown）
-- git備份正常（2ffb6eea）
-- shared-relay無新任務
-- memory/2026-06-03.md正常（8KB）
+### 2026-06-03 2026-06-03 03:07 - relay poll OK
 
