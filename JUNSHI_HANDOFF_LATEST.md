@@ -82,3 +82,65 @@
 - 預防：寫進 `reference_coach_input_method.md` 的「危險操作」段落，下次同類操作必先 `cp` 備份
 
 ---
+
+---
+
+# 🔴 下一場軍師待辦（教練 2026-06-02 23:25 親交）
+
+## 任務一：守則故事庫品管重判
+
+**背景：** 過去兩三天（2026-05-29 ~ 2026-06-02）跑出來的「特助 21 守則」場景／故事庫，**有一些不錯的進度**，但教練希望**軍師再做一次品管重判**。
+
+**已知路徑（軍師前棒給 MiniMax 的任務檔，可作起點）：**
+- `~/.openclaw/workspace/knowledges/TASK_守則故事庫_品管重判_給MiniMax.md`（2026-05-29 10:08）
+- `~/.openclaw/workspace/knowledges/TASK_故事庫_真實性與重複度檢查_給MiniMax.md`（2026-05-29 04:26）
+- `~/.openclaw/workspace/knowledges/TASK_守則故事庫_給MiniMax終端機.md`（2026-05-29 04:21）
+
+**新軍師要做：**
+1. 先讀上述三份 TASK 檔，理解前一波品管的標準
+2. 找到 MiniMax 跑出來的「最新一版」故事庫成品（可能在 `memory/`、`knowledges/`、`distill/` 某處——要 grep + ls -lt 鎖定）
+3. 用「真實性 / 重複度 / 守則對映準確度」三維度評審
+4. 產出評審報告（哪些通過、哪些要重做、哪些要刪）
+5. 跟教練確認後執行
+6. ⚠️ 這是**判斷類**任務（不是執行類）→ 用 Opus 軍師模式，不要 Haiku 混用（記憶 `feedback_model_choice_quality_first`）
+
+## 任務二：M3 模型全面同步（Hermes + VPS 小龍蝦）
+
+**背景：** 本場（2026-06-02）軍師已把 Mac 端小龍蝦的 3 個 agent 從 `minimax/MiniMax-M2.7` 升到 `minimax/MiniMax-M3`（commit `1df3b9c`）。**但教練現在要求全面 M3，所以另外兩台也要查、要同步：**
+
+### 2-A：Hermes（VPS `113.29.232.178` 或其他 IP，記憶 `project_hermes_vps`）
+- 連線方式：`ssh root@113.29.232.178`（密碼路徑見記憶或 `~/.openclaw/credentials/`）
+- 查設定檔位置（過去經驗：可能在 `~/hermes/config.yaml` 或 `auth.json`）
+- 看 model 欄位現況
+- 如果不是 M3，升級到 `MiniMax-M3` 並重啟服務
+- 驗證：發一句訊息看回應正常
+
+### 2-B：VPS 小龍蝦（`43.245.60.200`，記憶 `project_team_structure`）
+- 連線：`sshpass -p <密碼> ssh root@43.245.60.200`（密碼放在記憶或 credentials/）
+- 進 docker：`docker exec -u root -it openclaw bash`
+- 查 `openclaw.json` 的 `agents.list[].model` 欄位
+- 不是 M3 就改成 `minimax/MiniMax-M3`
+- 重啟 gateway
+- 驗證：Telegram 發一句看回應正常
+
+**驗收標準：**
+- 三台（Mac / Hermes / VPS 小龍蝦）都跑 M3
+- 每台給 commit hash 或 docker exec 輸出截圖作憑證
+- 更新接力棒並 commit
+
+**⚠️ 風險提醒：**
+- VPS 小龍蝦：M2.7 的 cron 任務、prompt 可能對 M3 行為敏感，升級後先觀察 24 小時
+- Hermes：過去有 aiprimetech proxy bug（記憶 `feedback_aiprimetech_proxy_string_bug`），改 model 前先確認 API endpoint 還是走 `api.minimax.io`
+- 兩台都升完後，記得回頭更新本接力棒（劃掉這條，標 ✅）
+
+---
+
+## 📊 本場（2026-06-02）軍師 commit 清單
+
+| Commit | 內容 |
+|--------|------|
+| `1df3b9c` | Mac 小龍蝦 M2.7 → M3（含 /model 補入 M3） |
+| `fd8a078` | /model 選單精簡，留 5 家 provider |
+| `8d9c0dfe` | 鼠鬚管+無蝦米完整安裝（接力棒首次更新） |
+| `3e3c21eb` | Boshiamy 卸載完成、教練實測「打的很順」 |
+
