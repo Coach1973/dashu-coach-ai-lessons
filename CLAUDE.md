@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-02 23:05:01**
+> **最後同步：2026-06-02 23:20:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -73,6 +73,27 @@
 
 ---
 
+
+---
+
+## ✅ 任務三補完（2026-06-02 23:17）
+
+教練實測：「**打的很順，一切正常**」
+
+**已完成：**
+- 鼠鬚管 + 無蝦米全套部署 ✅
+- 註冊到 macOS AppleEnabledInputSources ✅
+- Boshiamy 試用版完整卸載（.app + plist + Application Support）✅
+- 備份：`~/Library/Rime/_backup_boshiamy_uninstall_20260602_231649/`
+- 記憶紅線更新：`reference_coach_input_method.md`
+
+**過程中的失誤 + 復原（守則 #07）：**
+- 失誤：Python `plistlib.dump` 簽名搞反 → `com.apple.HIToolbox.plist` 變 0 byte
+- 偵測：寫完立刻 `defaults read` 驗證，發現「does not exist」
+- 修復：4 秒內重建 plist（含教練原本 8 個輸入源）
+- 預防：寫進 `reference_coach_input_method.md` 的「危險操作」段落，下次同類操作必先 `cp` 備份
+
+---
 
 
 ---
