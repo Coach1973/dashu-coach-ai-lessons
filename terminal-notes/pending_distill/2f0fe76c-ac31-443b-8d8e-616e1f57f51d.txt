@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2f0fe76c-ac31-443b-8d8e-616e1f57f51d
-# 提取時間：2026-06-02 22:30 (台灣時間)
-# 共 7 條教練原話
+# 提取時間：2026-06-02 23:00 (台灣時間)
+# 共 10 條教練原話
 
 ---
 
@@ -79,3 +79,94 @@
 
 【教練 2026-06-02 14:28】
 軍師幫忙，能否讓小龍蝦的 /model 裡不要有那麼多選擇，我只要留 minamax 、claude ,  codex ,  opencode-go ,  gemini 這五家就好
+
+　▶ AI 回應：我需要先確認教練說的「/model 選單」實際長相，才不會弄錯方向。
+
+　▶ AI 回應：方向清楚，直接執行。要 disable 的 12 個 LLM provider plugin（留 minimax/anthropic/codex/opencode-go/google）：
+
+　▶ AI 回應：12 個全部 disable 成功。同步把 `openclaw.json` 裡的 kimi provider 設定（教練沒列在保留 5 家裡）一起移除，並清掉殘留的 kimi-coding。
+
+　▶ AI 回應：需要重啟 OpenClaw gateway 才會生效。
+
+　▶ AI 回應：Gateway 已重啟（pid 11207 → 11509）。Commit 設定變更。
+
+　▶ AI 回應：完成。
+
+## 憑證
+
+| 項目 | 內容 |
+|------|------|
+| **Commit** | `fd8a078`（~/.openclaw repo） |
+| **Gateway 重啟** | pid 11207 → 11509 ✅ |
+| **Backup** | `openclaw.json.bak`（OpenClaw 自動建立） |
+
+## 動了什麼
+
+**Disabled 12 個 LLM provider plugin：**
+amazon-bedrock、github-copilot、groq、huggingface、kimi-coding、mistral、openai…（略）
+
+【教練 2026-06-02 14:51】
+codex 就是 openai 對嗎？
+
+　▶ AI 回應：不憑印象，直接查 OpenClaw 對 `codex` 這個 provider 的定義。
+
+　▶ AI 回應：技術上講：**都來自 OpenAI 公司，但走不同管道、計費方式不同**。
+
+我直接看了 OpenClaw 的真實設定，三個 provider 並不一樣：
+
+| Provider | 模型內容 | 認證方式 | 白話 |
+|----------|---------|---------|------|
+| **codex** | gpt-5.2 / 5.4 / 5.4-mini（3 個） | `Auth: yes` ← 已認證 | 走 OpenAI 的 **Codex CLI**，用 ChatGPT Plus/Pro 訂閱登入（不另外付 API 費） |
+| **openai** | GPT-4…（略）
+
+【教練 2026-06-02 14:53】
+維持現狀
+
+　▶ AI 回應：收到，維持現狀。
+
+## 最終配置確認
+
+| Provider | 狀態 | 內容 |
+|----------|------|------|
+| ✅ **minimax** | 啟用 | MiniMax-M3（預設）、M2.7 |
+| ✅ **anthropic** | 啟用 | Claude 系列 |
+| ✅ **codex** | 啟用 | gpt-5.2 / 5.4 / 5.4-mini（ChatGPT 訂閱通道） |
+| ✅ **opencode-go** | 啟用 | opencode-go |
+| ✅ **google** | 啟用 | Gemini 系列 |
+| ❌ 其餘 12 …（略）
+
+【教練 2026-06-02 14:56】
+鼠鬚管
+Squirrel 已安裝、無蝦米架構已建立。但缺真正的字根對照表——我建的只是範例骨架。
+
+你提到有 IBus / gcin table 可下載。把那個下載連結給我，我轉成 RIME 格式匯入。
+
+做完後你需要：
+
+登出再登入
+系統設定 → 鍵盤 → 輸入方式 → 加「鼠鬚管」
+點選單列鼠鬚管圖示 →「重新部署」
+不能幫我做嗎？
+我做不到的部分只有一個：無蝦米的字根對照表是專有資料，我沒有。
+
+你前面說有以下可下載的檔案：
+
+SCIM table / gcin table / IBus table / IBus (ibus-table > 1.8.0) / Solaris table
+
+把那個下載頁面的網址給我，剩下的我全做——轉格式、匯入 RIME、部署、測試，一步到位
+
+這是從deepseek v4 pro 接手過來的任務，請軍師想想，怎麼幫有安裝這個輸入法，盡可能讓我少動手
+
+　▶ AI 回應：軍師接手，自己動手。先盤點現況、找到現成 RIME 嘸蝦米方案。
+
+　▶ AI 回應：骨架在但字典只有 26 個範例字。直接上 GitHub 找完整的 RIME 嘸蝦米方案。
+
+　▶ AI 回應：**找到完美方案：`hsuanyi-chou/rime-liur`**——記憶裡教練慣用「liu7 嘸蝦米」，這個 repo 就是它，而且自包含（不需要找 ibus 專有 .db 檔）。直接複製就行。
+
+　▶ AI 回應：字典齊全（49 萬行字根）！備份骨架，複製真實資料，然後嘗試命令列觸發部署。
+
+　▶ AI 回應：太好了！Squirrel 有完整 CLI——連註冊輸入源、啟用、切換都能命令列做。教練幾乎不用動手。
+
+　▶ AI 回應：換策略——直接走 install→enable→select 三連，Squirrel 啟動時自己會部署。
+
+　▶ AI 回應：部署成功！`liur.extended.table.bin` 已生成（真正的無蝦米字典 binary）。最後一步——切換到鼠鬚管。
