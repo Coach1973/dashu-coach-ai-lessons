@@ -605,3 +605,4 @@
 {"ts":"2026-06-03T06:02:08.679Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"6826","chatId":"-1003877502911"}
 {"ts":"2026-06-03T06:02:48.999Z","botId":"1号機","text":"🦞 教練，午安！\n\n下午兩點的關懷時間到囉～☀️\n\n今天 6/3（三），下午時段一切都好嗎？\n\n有時候下午容易疲憊，如果想休息或喝杯水、動一動，都是很好的選擇 💧\n\n有沒有什麼想法、事情想丟給我處理的，隨時說喔！","msgId":"6827","chatId":"-1003877502911"}
 {"ts":"2026-06-03T08:02:20.800Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"6828","chatId":"-1003877502911"}
+{"ts":"2026-06-03T08:03:47.988Z","botId":"1号機","text":"今日無待蒸餾對話。\n\n**現有狀態：**\n- `terminal-notes/pending_distill/` 目錄不存在（從未建立）\n- `terminal-notes/` 下只有一個 5 月份的記憶消化報告，無待處理項目\n\n**结论：無 session 可蒸餾，終止本次任務。**","msgId":"6829","chatId":"-1003877502911"}
