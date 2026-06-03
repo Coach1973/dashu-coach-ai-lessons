@@ -600,3 +600,4 @@
 {"ts":"2026-06-03T03:14:08.303Z","botId":"1号機","text":"📚 教練，早安！今日的《結繩領導學》閱讀時間到囉～\n\n翻一頁就好，**用最短的時間**、最輕鬆的心情，把今天的收穫帶走 💪\n\n讀完再繼續處理今天的事，我這邊待命著 🦞","msgId":"6823","chatId":"-1003877502911"}
 {"ts":"2026-06-03T04:02:25.065Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"6824","chatId":"-1003877502911"}
 {"ts":"2026-06-03T04:03:14.373Z","botId":"1号機","text":"**今日無待蒸餾對話** 📭\n\n檢查結果：\n- `pending_distill/` 目錄不存在\n- `terminal-notes/` 下沒有任何 `.txt` 待蒸餾檔案\n- `done_distill/` 是空的\n\n✅ 本次任務直接結束，無需 commit。","msgId":"6825","chatId":"-1003877502911"}
+{"ts":"2026-06-03T04:32:39.143Z","botId":"1号機","text":"⚠️ Cron job \"YouTube 頻道掃描與評估\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"95","chatId":"-1003877502911"}
