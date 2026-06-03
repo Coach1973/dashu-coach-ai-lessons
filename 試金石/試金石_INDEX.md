@@ -220,5 +220,117 @@
 
 ---
 
+## 📅 月份分類（2026-04 至 2026-06）
+
+> 目標：把 4 月、5 月、6 月全部整理出來的犯錯總結，以及正確的 SOP 做法，全部都寫到試金石裡面去。
+
+---
+
+## 📅 6月份（2026-06-01 至 2026-06-30）——進行中
+
+### 6月新增錯誤（軍師 Opus 整合中）
+
+| 排名 | 錯誤 | 嚴重程度 | 檔案 |
+|------|------|---------|------|
+| 🆕 | Context Overflow 自動重啟後未讀取接力棒 | 🟠 高 | 試金石_守則與流程.md |
+| 🆕 | 鼠鬚管輸入源重複（4個）| 🔴 常見 | 試金石_輸入法.md |
+| 🆕 | aiprimetech 第三方代理設定 | 🟠 高 | 試金石_模型與設定.md |
+| 🆕 | 6/3 終端機對話蒸餾記錄（部分完成）| 🟡 中 | 試金石_記憶與蒸餾.md |
+
+### 6月已完成 SOP
+
+| SOP 名稱 | Commit | 狀態 |
+|---------|--------|------|
+| Netlify 部署鐵律 | `d3978d2f` | ✅ 完成 |
+| 鼠鬚管修復 SOP | `f2448c85` | ✅ 完成 |
+| 第三方代理接法 | 待補 | 🔄 進行中 |
+
+---
+
+## 📅 4月份（2026-04-01 至 2026-04-30）——重要補充
+
+### 4月重大錯誤：三機身份維修（4/26）
+
+| 錯誤 | 嚴重程度 | 損失 | Commit |
+|------|---------|------|--------|
+| 🔴 修改錯誤路徑（改了 `~/.claude-code-kong/workspace/` 實際應改 `~/.claude-code/agents/kong/`） | 🔴🔴🔴 | 數小時修復 | `7daa08f` |
+| 🔴 BOOTSTRAP.md 未刪除導致 bot 進入初始化模式 | 🔴🔴 | 忽略 SOUL.md | `d09e83e` |
+| 🟠 Session 在修改檔案前就啟動（需重啟 gateway）| 🟠 | 改完沒效 | - |
+| 🟠 USER.md 寫錯佩佩老師身份（隊員寫成共同創辦者）| 🟠 | 身份錯誤 | `d09e83e` |
+
+### 4月正確做法 SOP
+
+```bash
+# 維修任何 bot 前，第一步確認正確路徑
+ls ~/.claude-code/agents/<bot名>/
+
+# 確認 BOOTSTRAP.md 是否已刪除
+ls ~/.claude-code/agents/<bot名>/BOOTSTRAP.md
+# 若存在 → rm 刪除
+
+# 修改正確的檔案路徑（agents/ 下的，不是 workspace/）
+
+# 修改完後重啟 gateway
+kill <gateway_pid>
+```
+
+### Claude Code Agent 啟動流程（重要觀念）
+
+1. **檢查 BOOTSTRAP.md** → 如果存在，執行「我是誰」初始化流程（**這會讓 bot 忽略 SOUL.md**）
+2. **讀取 SOUL.md** → 確認身份與行為準則
+3. **讀取 USER.md** → 認識服務對象
+4. **讀取 IDENTITY.md** → 基本身份確認
+5. **讀取 MEMORY.md**（如有）→ 長期記憶
+6. **讀取 memory/people.md**（如有）→ 認識所有人
+
+### 4月路徑對照表
+
+| 機 | 類型 | 正確路徑 | 錯誤路徑（不要改）|
+|---|------|---------|-----------------|
+| 2號機 kong | SOUL.md | `~/.claude-code/agents/kong/SOUL.md` | `~/.claude-code-kong/workspace/SOUL.md` |
+| 2號機 kong | USER.md | `~/.claude-code/agents/kong/USER.md` | `~/.claude-code-kong/workspace/USER.md` |
+| 3號機 peipei | SOUL.md | `~/.claude-code/agents/peipei/SOUL.md` | `~/.claude-code-peipei/workspace/SOUL.md` |
+| 3號機 peipei | USER.md | `~/.claude-code/agents/peipei/USER.md` | `~/.claude-code-peipei/workspace/USER.md` |
+| 1號機 main | SOUL.md | `~/.claude-code/workspace/SOUL.md` | - |
+
+---
+
+## 📊 統計摘要
+
+| 項目 | 數量 |
+|------|------|
+| 失敗案例手冊收錄 | 15 案例（A-O）|
+| Top20 排行收錄 | 21 案例 |
+| 5月案例已整合進試金石 | 12 個分類案例 |
+| 4月案例已整合進試金石 | 6 個新案例 |
+| 6月案例已整合進試金石 | 4 個新案例 |
+| 有 Commit 憑證 | 9 個 |
+| 有 SOP 文件 | 3 個（Netlify 部署、鼠鬚管修復、第三方代理）|
+| 寫入失敗案例手冊 | 5 次 |
+| 寫入 HEARTBEAT | 4 次 |
+
+---
+
+## 🔗 相關檔案
+
+- 路徑大全：知道去哪裡讀什麼（對話記錄、蒸餾檔、記憶檔）
+- 試金石：知道遇到什麼問題該怎麼做（本文檔）
+- 守則故事庫：`knowledges/TASK_守則故事庫_品管重判_給Claude.md`
+- 失敗案例手冊：`distill/failure-case-handbook.md`
+- 第三方代理設定：`feedback_hermes_third_party_proxy.md`（aiprimetech，**非 synterolink**）
+
+---
+
+## 🔴 重要更新記錄
+
+| 日期 | 更新內容 | Commit |
+|------|---------|--------|
+| 2026-06-03 | **刪除 synterolink，確認正確第三方代理為 aiprimetech（unlimited.aiprimetech.io）** | 待補 |
+| 2026-06-03 | 整合 4 月、5 月、6 月全部犯錯記錄進試金石 | 待補 |
+| 2026-06-03 | 新增 6 月錯誤（Context Overflow、鼠鬚管重複、第三方代理） | 待補 |
+| 2026-06-03 | 新增 4 月錯誤（三機身份維修、BOOTSTRAP.md 未刪除） | 待補 |
+
+---
+
 *軍師建立，2026-06-03*
 *使命：讓錯誤只犯一次，讓正確永遠傳承*
