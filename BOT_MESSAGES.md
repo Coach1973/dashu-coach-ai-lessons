@@ -729,3 +729,7 @@
 {"ts":"2026-06-03T19:54:44.673Z","botId":"1号機","text":"不是的，Symlink（符號連結）跟 API Key 完全沒有關係。\n\n**用白話說：**\n\n> Symlink = **捷徑**，就像桌面上的捷徑圖示，點下去會跳到真正檔案所在的地方。\n\n---\n\n### 🔍 實際例子\n\n教練的 Mac 上有這個設定：\n\n```\n~/.claude/claude-code.json → ~/.claude-code/claude-code.json\n```\n\n","msgId":"7175","chatId":"-1003877502911"}
 {"ts":"2026-06-03T19:57:30.050Z","botId":"1号機","text":"Upstream request failed","msgId":"7177","chatId":"-1003877502911"}
 {"ts":"2026-06-03T20:01:59.197Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7178","chatId":"-1003877502911"}
+{"ts":"2026-06-03T20:02:59.910Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (timeout)","msgId":"7179","chatId":"-1003877502911"}
+{"ts":"2026-06-03T20:04:12.739Z","botId":"1号機","text":"今日無待蒸餾對話。pending_distill 目錄是空的，沒有任何 .txt 檔案需要處理。","msgId":"7180","chatId":"-1003877502911"}
+{"ts":"2026-06-03T20:05:26.900Z","botId":"1号機","text":"🦞 對話記錄已滿，已自動重啟，請繼續下指令","msgId":"7184","chatId":"-1003877502911"}
+{"ts":"2026-06-03T20:05:37.142Z","botId":"1号機","text":"Upstream request failed","msgId":"7185","chatId":"-1003877502911"}
