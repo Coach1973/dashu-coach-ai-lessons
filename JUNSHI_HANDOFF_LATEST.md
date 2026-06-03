@@ -259,7 +259,7 @@ JSONL → extract_terminal_sessions.py → pending_distill
 
 ---
 
-## ✅ 品管重判（Opus 4.6 軍師評審已完成，待教練拍板執行）
+## ✅ 品管重判（Opus 4.6 軍師評審已完成，教練已拍板，執行完成）
 
 **盤點 4 套成品：**
 1. `distill/守則故事庫/`（22 案）— 原料庫，三輪 QA 後 A19/B2/C0，真實性良好
