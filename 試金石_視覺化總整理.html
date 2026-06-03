@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>試金石 · 視覺化總整理（4/5/6月）</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+    margin: 0;
+    padding: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.header h1 {
+    font-size: 48px;
+    color: white;
+    margin: 0 0 16px 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.header p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+}
+.stats {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+.stat-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 16px;
+    padding: 20px 32px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1c1c1e;
+}
+.stat-label {
+    font-size: 14px;
+    color: #636366;
+    margin-top: 4px;
+}
+.section {
+    margin-bottom: 40px;
+}
+.section-title {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+}
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-2px);
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.tag-red {
+    background: #ff3b30;
+    color: white;
+}
+.tag-orange {
+    background: #ff9500;
+    color: white;
+}
+.tag-green {
+    background: #34c759;
+    color: white;
+}
+.tag-blue {
+    background: #007aff;
+    color: white;
+}
+.case-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1e;
+}
+.loss {
+    background: #fff;
+    border: 2px solid #ff3b30;
+    color: #ff3b30;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.case-desc {
+    color: #636366;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+.nec {
+    background: #f5f5f7;
+    border-left: 4px solid #007aff;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+}
+.nec-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #007aff;
+    margin-bottom: 6px;
+}
+.nec-text {
+    font-size: 14px;
+    color: #3c3c43;
+}
+.commit-hash {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 13px;
+    color: #8e8e93;
+    background: #f5f5f7;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-top: 12px;
+    display: inline-block;
+}
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 24px;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+.month-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 8px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+<h1>🪨 試金石</h1>
+<p>讓錯誤只犯一次，讓正確永遠傳承</p>
+<p>4月 + 5月 + 6月 = 32+ 個錯誤案例</p>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+<div class="stat-card">
+<div class="stat-number">32+</div>
+<div class="stat-label">錯誤案例</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">10</div>
+<div class="stat-label">🔴 高優先</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">14</div>
+<div class="stat-label">🟠 中優先</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">6</div>
+<div class="stat-label">🟡 低優先</div>
+</div>
+</div>
+
+<!-- 🔴 High Priority Section -->
+<div class="section">
+<h2 class="section-title">🔴 第一優先（高）</h2>
+
+<!-- Case O: $60 loss -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">最高優先</span>
+<span class="loss">💸 損失 $60</span>
+</div>
+<div class="case-title">模型切換失效（UI ≠ 實際設定）</div>
+<div class="case-desc">
+教練在 UI 切換到 Claude，看起來成功了。但 <code>claude-code.json</code> 的 model 欄位從未改過。Gateway 重啟後回到舊設定，跑 3 天 Kimi 被扣 $60。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC 下次遇到怎麼做</div>
+<div class="nec-text">
+1. 教練說「切換模型」→ 立刻 <code>grep model claude-code.json</code> 確認寫入<br>
+2. 不相信 UI 顯示，要看設定檔<br>
+3. 改完重啟 gateway，驗證 pid 是否換了
+</div>
+</div>
+<span class="commit-hash">Commit: f7298df3, 8e482ff</span>
+</div>
+
+<!-- Case 013: Wrong path -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">🔴🔴🔴</span>
+</div>
+<div class="case-title">三機身份維修——改錯路徑</div>
+<div class="case-desc">
+一直改 <code>~/.claude-code-kong/workspace/SOUL.md</code>，但 bot 實際讀取的是 <code>~/.claude-code/agents/kong/SOUL.md</code>。數小時修復時間白白浪費。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC 下次遇到怎麼做</div>
+<div class="nec-text">
+1. 維修任何 bot → 第一件事 <code>ls ~/.claude-code/agents/&lt;bot名&gt;/</code><br>
+2. 確認 BOOTSTRAP.md 存在就刪除<br>
+3. 修改正確路徑（agents/ 下，不是 workspace/）<br>
+4. 修改完 → 重啟 gateway
+</div>
+</div>
+<span class="commit-hash">Commit: 7daa08f, d09e83e</span>
+</div>
+
+<!-- Case 014: Bootstrap -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">高</span>
+</div>
+<div class="case-title">BOOTSTRAP.md 未刪除</div>
+<div class="case-desc">
+<code>BOOTSTRAP.md</code> 存在，bot 每次啟動執行「我是誰」初始化流程，忽略 SOUL.md。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC</div>
+<div class="nec-text">發現任何 bot 設定沒生效 → 先檢查 BOOTSTRAP.md 是否存在，若存在就刪除 + 重啟 gateway</div>
+</div>
+</div>
+
+<!-- Case 005: Distill script missing -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">高</span>
+</div>
+<div class="case-title">Distill 腳本不存在但 cron 在跑</div>
+<div class="case-desc">
+cron 設了，腳本不存在。系統每天都說「我在跑」，實際上是空的。整整 7 天沒有人發現。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC</div>
+<div class="nec-text">
+1. 建立 cron 前先建立腳本<br>
+2. 設定完立即測試一次<br>
+3. 每週檢查 cron log
+</div>
+</div>
+<span class="commit-hash">Commit: 5fc3f80d</span>
+</div>
+
+<!-- Case 016: 30-minute report -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">高</span>
+</div>
+<div class="case-title">30分鐘回報��度失敗</div>
+<div class="case-desc">
+小龍蝦多次沒遵守「每30分鐘主動回報進度」的制度，教練多次提醒都不改。遲到只會道歉，不會修機制。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC</div>
+<div class="nec-text">
+收到「每30分鐘回報」→ 立即設定計時器<br>
+遲到 → 立即修機制，不是繼續道歉
+</div>
+</div>
+</div>
+
+<!-- Case 020: Identity confusion -->
+<div class="card">
+<div class="card-header">
+<span class="tag tag-red">高</span>
+</div>
+<div class="case-title">身份搞混（教練問「你是誰」）</div>
+<div class="case-desc">
+教練問「你是誰？」小龍蝦回答的內容與實際身份不符，同一個問題回答了3次都不一樣。
+</div>
+<div class="nec">
+<div class="nec-title">✅ NEC 身份判定鐵律</div>
+<div class="nec-text">
+• Telegram 端執行 = 小龍蝦<br>
+• VPS 掛 Claude Code = 小龍蝦<br>
+• 終端機 / 桌面版 = 軍師
+</div>
+</div>
+<span class="commit-hash">Commit: b26f4abe</span>
+</div>
+
+</div>
+
+<!-- 🟠 Medium Priority -->
+<div class="section">
+<h2 class="section-title">🟠 中高優先</h2>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">4月</span>
+</div>
+<div class="case-title">重複報告同樣內容</div>
+<div class="case-desc">對同一個 memory 檔蒸餾結果報告了4次，完全沒追蹤自己已經報告過什麼。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">4月</span>
+</div>
+<div class="case-title">誤解教練指示</div>
+<div class="case-desc">教練說「主動回報」，小龍蝦一直問教練「什麼意思」，而不直接執行。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">4月</span>
+</div>
+<div class="case-title">點名學弟妹失敗</div>
+<div class="case-desc">小龍蝦多次嘗試呼叫學弟妹都失敗，最後教練親自下指令。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">Hook 安裝但 settings.json 未寫入</div>
+<div class="case-desc">腳本檔案存在，但 <code>settings.json</code> 的 hooks 區段是空的 <code>{}</code>，Hook 完全沒生效。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">新視窗失憶（接力棒沒更新）</div>
+<div class="case-desc">上一場助教沒有在結束前覆寫接力棒，新視窗讀到舊狀態，教練要重講所有事情。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">FORK 自動搶跑</div>
+<div class="case-desc">看到接力棒就自動執行任務，未等教練確認就衝出去。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-orange">高</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">「一字不差」做不到</div>
+<div class="case-desc">引用守則第5條，實際上是第8條的內容。還捏造了教練沒說過的話。</div>
+</div>
+
+</div>
+
+<!-- 🟡 Low Priority -->
+<div class="section">
+<h2 class="section-title">🟡 中低優先</h2>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-green">低</span>
+<span class="month-badge">4月</span>
+</div>
+<div class="case-title">HEARTBEAT_OK 淹沒對話</div>
+<div class="case-desc">30分鐘一次的心跳，導致對話記錄充滿「HEARTBEAT_OK」的來回。建立熄燈時段制度（23:00-08:00）。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-green">低</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">大型 memory 檔造成空白回應</div>
+<div class="case-desc">memory/2026-06-03.md 超過 50KB，Gemini 收到後空白回應。⚠️ 不要讀大型 memory 檔。</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<span class="tag tag-green">低</span>
+<span class="month-badge">5月</span>
+</div>
+<div class="case-title">鼠鬚管輸入源重複（4個）</div>
+<div class="case-desc">每次打開 Squirrel.app 都會重複註冊輸入源，導致 ABC 出現 4 個鼠鬚管。</div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+<p>軍師建立 • 2026-06-03</p>
+<p>所有錯誤案例都有 commit hash 憑證</p>
+</div>
+
+</div>
+</body>
+</html>
