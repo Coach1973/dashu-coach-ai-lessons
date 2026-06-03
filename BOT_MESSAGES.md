@@ -733,3 +733,6 @@
 {"ts":"2026-06-03T20:04:12.739Z","botId":"1号機","text":"今日無待蒸餾對話。pending_distill 目錄是空的，沒有任何 .txt 檔案需要處理。","msgId":"7180","chatId":"-1003877502911"}
 {"ts":"2026-06-03T20:05:26.900Z","botId":"1号機","text":"🦞 對話記錄已滿，已自動重啟，請繼續下指令","msgId":"7184","chatId":"-1003877502911"}
 {"ts":"2026-06-03T20:05:37.142Z","botId":"1号機","text":"Upstream request failed","msgId":"7185","chatId":"-1003877502911"}
+{"ts":"2026-06-03T22:02:46.062Z","botId":"1号機","text":"⚠️ Cron job \"FB 生日每日爬蟲（06:00）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7186","chatId":"-1003877502911"}
+{"ts":"2026-06-03T22:02:46.637Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7187","chatId":"-1003877502911"}
+{"ts":"2026-06-03T22:03:36.171Z","botId":"1号機","text":"🦞 特助報告，教練早安！\n\n**FB 生日祝福檢查結果（2026/06/04）**\n\n今天沒有 FB 壽星需要祝福，祝福團隊可以休息一天囉～ ☀️","msgId":"7188","chatId":"-1003877502911"}
