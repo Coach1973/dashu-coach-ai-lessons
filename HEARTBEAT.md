@@ -22,3 +22,6 @@ Session 路徑：`/Users/bymyway/.claude/projects/-Users-bymyway--claude-code/`�
 | `d3978d2f` | 路徑大全：API Key 路由觸發規則（port 15721） |
 | `72cd1429` | reference：鼠鬚管安裝經驗 |
 | `b9d32958` | 接力棒更新（鼠鬚管 + 緊急待辦） |
+## 學長 relay poll
+### 2026-06-03 2026-06-03 20:03 - relay poll OK
+

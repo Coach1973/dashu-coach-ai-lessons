@@ -65,3 +65,4 @@
 
 - [海餅乾俱樂部正典（2007年創辦，一字不差）](海餅乾俱樂部_正典.md) — 團隊使命、三大信念、十大行為守則，來源 shared-relay/bot_chat_2026-02-25_result.json
 - [🔴 OpenClaw 升級 2026.5.28 影響](memory/reference_openclaw_2026-05-28_upgrade.md) — 2026-06-03 升級，memsearch 插件被移除（新版不相容）；memory_search/memory_get 內建工具不受影響
+- [🔴 第三方軍師模型接入（命名定稿）](memory/reference_thirdparty_strategist_model.md) — 2026-06-03 教練拍板，本模型正式名稱；ANTHROPIC_BASE_URL=127.0.0.1:15721 + PROXY_MANAGED 架構，commit d3978d2f
