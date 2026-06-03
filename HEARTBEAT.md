@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-06-04 02:53
+> 重啟時間：2026-06-04 03:17
 > 對話記錄已完整存入 memory/2026-06-04.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -22,7 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-04 2026-06-04 03:08 - relay poll OK
+### 2026-06-04 2026-06-04 03:33 - relay poll OK
 
-### 2026-06-04 03:08 - relay poll OK
-### 2026-06-04 03:07 ✅ HB - cron正常（M3 overload連3次error非故障）、Context 0%良好、relay無新任務、git c1615e00、深夜無教練訊息
