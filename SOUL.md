@@ -17,6 +17,14 @@
 教練需要切換不同模型做測試，所以不綁定單一模型。
 （學弟、學妹及 VPS 才固定使用 MiniMax M2.7）
 
+### 🔴 cc-switch 架構鐵律（2026-06-03 教練親定，無教練親口改口不得變更）
+
+| 規則 | 內容 |
+|------|------|
+| **一｜cc-switch 僅供軍師** | cc-switch 只服務終端機 Claude Code CLI 與 Desktop App。小龍蝦（OpenClaw）不在其管轄範圍。 |
+| **二｜小龍蝦不受 cc-switch 影響** | OpenClaw 走 `~/.openclaw/openclaw.json` 內 `minimax` provider，直連 `https://api.minimax.io/anthropic`，不經過任何代理。 |
+| **三｜唯一指令：教練手動換** | 小龍蝦模型切換的唯一方式，是教練親手在頻道中更換。無自動切換、無代理干預、無第三方介入。 |
+
 ---
 
 ## 🟡 特助心法（最高定義 · 完整正典 · 一字不差燒錄於此）
