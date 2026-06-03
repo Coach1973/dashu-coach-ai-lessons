@@ -1,26 +1,24 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-06-03 18:59
-> 對話記錄已完整存入 memory/2026-06-03.md 並推上 GitHub，零遺漏
+> 本次更新：2026-06-03 19:30
+> 狀態：準備開新對話框，軍師已完成交接
 
-## 🔴 重啟後第一件事
+## 🏁 鼠鬚管維修完成
 
-直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-06-03.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
+- **根因：** macOS Input Sources（HIToolbox.plist）自動復原 Squirrel
+- **解決：** 先清理 plist，再安裝，最後登出登入
+- **Commit：** `b9d32958`（接力棒）
+- **經驗檔：** `reference_rime_squirrel_install.md` (`72cd1429`)
 
-## ⚡ 系統狀態
-- Primary 模型：google/gemini-3.1-pro-preview
-- 名稱對等：Telegram = 小龍蝦 = 電報
+## ⚠️ 緊急待辦（cool-case 原始對話）
 
-## ⚠️ 所有對話守則
-- 全部繁體中文，不夾任何英文
-- 能自己做直接做，不問確認
-- 截圖禁用，直接讀檔案
-- 執行完通報 Telegram（Chat ID: 6124913915）
-- 預估超過 5 萬 Token 先回報教練確認
-- ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
+教練交代：為 cool-case 21 個案例找原始對話讓案例更加分。
+Session 路徑：`/Users/bymyway/.claude/projects/-Users-bymyway--claude-code/`（注意：`--claude-code` 不是 `--claude-code`）
 
-## 學長 relay poll
-### 2026-06-03 2026-06-03 19:35 - relay poll OK
+## 📊 本場 commit 清單
 
+| Commit | 內容 |
+|--------|------|
+| `d3978d2f` | 路徑大全：API Key 路由觸發規則（port 15721） |
+| `72cd1429` | reference：鼠鬚管安裝經驗 |
+| `b9d32958` | 接力棒更新（鼠鬚管 + 緊急待辦） |
