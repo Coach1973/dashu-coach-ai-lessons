@@ -78,8 +78,10 @@ def call_llm(content):
             return None
         data = resp.json()
         result = data.get("content", [])
-        if isinstance(result, list) and len(result) > 0:
-            return result[0].get("text", "")
+        if isinstance(result, list):
+            for block in result:
+                if block.get("type") == "text" and block.get("text"):
+                    return block["text"]
         return None
     except Exception as e:
         print(f"  ❌ LLM 呼叫失敗: {e}")
