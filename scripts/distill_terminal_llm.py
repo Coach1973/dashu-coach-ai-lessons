@@ -20,7 +20,7 @@ STATE_FILE = os.path.join(WORKSPACE, "terminal-notes/.distill_llm_state.json")
 
 MINIMAX_BASE_URL = "https://api.minimax.io/anthropic/v1/messages"
 MINIMAX_API_KEY = "sk-cp-0_iW72rvuoBmDucQXmRaSAUmcrjXTzZCpIxQt7xgKX_ImdeMkhGmgEV9QBzMNwH87jP-VLIXDNC8VqdgJmntnj5M9gJfTJFiveu9fWuXyQHnW9Z8EQnvlC8"
-MODEL = "MiniMax-M2.7"
+MODEL = "MiniMax-M3"
 
 TWN = timezone(timedelta(hours=8))
 
