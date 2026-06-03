@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session b701cc5f-5498-4a6e-b723-0cd90da952c9
-# 提取時間：2026-06-03 12:30 (台灣時間)
+# 提取時間：2026-06-03 13:00 (台灣時間)
 # 共 15 條教練原話
 
 ---
@@ -362,3 +362,22 @@ C
 　▶ AI 回應：`/usr/bin/python3` 沒裝 requests。看正確的 python 路徑。
 
 　▶ AI 回應：重跑 wrapper 驗證。
+
+　▶ AI 回應：完整鏈跑通！剩下的 2 個 session 也補蒸餾成功。提交所有改動。
+
+　▶ AI 回應：更新接力棒+記憶。
+
+　▶ AI 回應：---
+
+## 🎉 教練最高優先任務「全自動總結」打通了
+
+**從 90% → 100% 自動運轉**
+
+| 環節 | 狀態 |
+|------|------|
+| JSONL → 教練原話提取 | ✅ `extract_terminal_sessions.py` |
+| 教練原話 → MiniMax-M3 蒸餾 | ✅ `distill_terminal_llm.py`（修 parser bug） |
+| 蒸餾產出 → commit + push | ✅ `run_terminal_distill.sh` |
+| 自動排程 | ✅ crontab 每 30 分鐘 |
+
+**修的 bug：**…（略）
