@@ -736,3 +736,5 @@
 {"ts":"2026-06-03T22:02:46.062Z","botId":"1号機","text":"⚠️ Cron job \"FB 生日每日爬蟲（06:00）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7186","chatId":"-1003877502911"}
 {"ts":"2026-06-03T22:02:46.637Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7187","chatId":"-1003877502911"}
 {"ts":"2026-06-03T22:03:36.171Z","botId":"1号機","text":"🦞 特助報告，教練早安！\n\n**FB 生日祝福檢查結果（2026/06/04）**\n\n今天沒有 FB 壽星需要祝福，祝福團隊可以休息一天囉～ ☀️","msgId":"7188","chatId":"-1003877502911"}
+{"ts":"2026-06-03T22:04:29.754Z","botId":"1号機","text":"✅ 今天沒有 FB 壽星，安靜完成。","msgId":"7189","chatId":"-1003877502911"}
+{"ts":"2026-06-03T22:04:38.830Z","botId":"1号機","text":"早安教練！🌅\n\n清晨六點了，這個時間通常是一天最安静的時光。\n\n我剛讀完所有開工文件，系統運作正常，隨時候命。\n\n今天有什麼想聊聊的嗎？🦞","msgId":"7190","chatId":"-1003877502911"}
