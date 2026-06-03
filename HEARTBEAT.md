@@ -22,12 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-03 19:05 - relay poll OK
+### 2026-06-03 2026-06-03 19:22 - relay poll OK
 
----
-
-**2026-06-03 19:05 ✅ 心跳正常**
-- cron relay_poll/sync_handoff/terminal_distill 全部正常
-- git auto-backup 19:02 (800faf17)
-- 模型 M2.7（MiniMax overload 已隔離 session 繞過，本次成功）
-- 系統健檢 OK，無需關注項目
