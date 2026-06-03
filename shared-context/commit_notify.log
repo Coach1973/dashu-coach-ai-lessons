@@ -1479,3 +1479,5 @@
 [2026-06-04 02:34] [CoachWU] 8fad76ff: auto-backup 2026-06-04 02:34
 [2026-06-04 02:36] [CoachWU] daf47cc5: 🦞 P0-4：4個未提交檔案 commit（2026-06-04 02:35）
 [2026-06-04 02:57] [CoachWU] 1ecf9e7b: [auto] 02:57 對話記錄更新（6 條）
+[2026-06-04 03:03] [CoachWU] 35a0e532: auto-backup 2026-06-04 03:03
+[2026-06-04 03:04] [CoachWU] 1c4b8de2: feat: 新增 claude-code workspace 捷徑說明（symlink → 同工作區）
