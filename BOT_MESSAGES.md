@@ -596,3 +596,7 @@
 {"ts":"2026-06-03T03:11:58.028Z","botId":"1号機","text":"🦞 大樹教練早安！\n\n上午 11 點了，今天過得還順利嗎？\n\n最近天氣多變，提醒教練注意身體～有什麼需要我幫忙的，儘管說！","msgId":"6819","chatId":"-1003877502911"}
 {"ts":"2026-06-03T03:12:11.781Z","botId":"1号機","text":"🦞 小龍蝦特助回報，教練早！\n\n📅 今日（6/3）是 FB 壽星查詢日，但系統回報：\n\n**✅ 今天沒有 FB 壽星。**\n\n沒有需要發祝福的名單。\n\n教練，請問有其他需要幫忙的嗎？","msgId":"6820","chatId":"-1003877502911"}
 {"ts":"2026-06-03T03:12:18.099Z","botId":"1号機","text":"今日無待蒸餾對話。\n\n`terminal-notes/` 目錄存在但沒有 `pending_distill/` 子目錄，也找不到任何 `.txt` 待處理檔案。`done_distill/` 已存在（最近操作是 2026-05-28）。\n\n**總結：0 個 session、0 條重點、無 commit。**","msgId":"6821","chatId":"-1003877502911"}
+{"ts":"2026-06-03T03:13:29.705Z","botId":"1号機","text":"✅ **YouTube 新聞每日自動抓取完成**\n\n📊 執行結果：\n- 監控頻道：22 個\n- 更新影片：152 部\n- 輸出檔案：`~/Desktop/youtube_news.json`\n\n⏱️ 耗時：約 20 秒","msgId":"6822","chatId":"-1003877502911"}
+{"ts":"2026-06-03T03:14:08.303Z","botId":"1号機","text":"📚 教練，早安！今日的《結繩領導學》閱讀時間到囉～\n\n翻一頁就好，**用最短的時間**、最輕鬆的心情，把今天的收穫帶走 💪\n\n讀完再繼續處理今天的事，我這邊待命著 🦞","msgId":"6823","chatId":"-1003877502911"}
+{"ts":"2026-06-03T04:02:25.065Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"6824","chatId":"-1003877502911"}
+{"ts":"2026-06-03T04:03:14.373Z","botId":"1号機","text":"**今日無待蒸餾對話** 📭\n\n檢查結果：\n- `pending_distill/` 目錄不存在\n- `terminal-notes/` 下沒有任何 `.txt` 待蒸餾檔案\n- `done_distill/` 是空的\n\n✅ 本次任務直接結束，無需 commit。","msgId":"6825","chatId":"-1003877502911"}
