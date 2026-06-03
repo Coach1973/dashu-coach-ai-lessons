@@ -4,19 +4,26 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-03 12:35:00**
+> **最後同步：2026-06-03 16:10:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-03（下午 12:35 全自動總結打通版）
+# 軍師接力棒 · 2026-06-03（下午 16:10 收場總結版）
 
 ---
 
-## 🎉 重大突破：教練最高優先任務「全自動總結」打通了
+## 🎉 本場兩大突破
 
-**狀態：** 從「地基 90%」→「100% 跑通且自動運轉」
+### 突破一：cool-case 21 案三幕劇全攻略
+- 15 個 commit 把 21 案全數帶完整三幕劇結構（6 篇原本符合 + 15 個本場新標記）
+- 順手清側邊欄 42 連結對應（按 N→#caseN）
+- 順手清 HTML 結構（4 套 `</body></html>` → 1 套，少 112 行重複）
+- 線上版：https://coach1973.github.io/cool-case/
+
+### 突破二：教練最高優先任務「全自動總結」100% 打通
+**狀態：** 寫死在系統裡，自動運轉中
 
 **打通的流程：**
 ```
@@ -25,13 +32,65 @@ JSONL → extract_terminal_sessions.py → pending_distill
      → run_terminal_distill.sh 自動 commit + push
 ```
 
-**修的 bug：** M3 回應結構是 `[{thinking}, {text}]`，舊 parser 只讀第一塊（thinking 沒 text 欄位→空字串）。改用遍歷找 `type=="text"`
+**鐵證：過去 4 小時 cron 已按時自動觸發 8 次**（12:30/13:00/13:30/14:00/14:30/15:00/15:30/16:00）
+觸發紀錄在 `/tmp/terminal_distill_cron.log`
 
-**自動觸發：** crontab `*/30 * * * * run_terminal_distill.sh`
+**修的關鍵 bug：** MiniMax-M3 回應結構是 `[{thinking}, {text}]`，舊 parser 只讀第一塊（thinking 沒 text 欄位→空字串）。改用遍歷找 `type=="text"`。已記憶 [[feedback-minimax-m3-api-parser]]
 
-**驗證：** commit `743c2425`（首批 4 個 session）+ `f74a2659`（補 2 個 session）+ `1e703d8a`（系統打通）
+**自動觸發機制：** crontab `*/30 * * * * run_terminal_distill.sh` + macOS launchd `com.vix.cron.plist`（重啟也會自動啟動）
 
-**今日蒸餾產出：** `distill/terminal_2026-06-03.md`（14K，6 個 session 全保留教練原話）
+---
+
+## 📊 本場 commit 全清單（21 個）
+
+### cool-case repo（15 個）
+| Commit | 內容 |
+|--------|------|
+| `7d86200` | 案例七/八/十六升級三幕劇（海餅乾/浪費生命/2000段話） |
+| `9fde93d` | 案例九/十加三幕場景標記 |
+| `26d8d8b` | 側邊欄 42 連結對應修正 |
+| `9d2b0b5` | 案例二十加三幕場景標記 |
+| `4ed42c6` | 案例六重寫三幕劇（200美金的常識） |
+| `46a2035` | 案例四加三幕場景標記 |
+| `dfd9ed0` | 案例十一加三幕+孔大哥生日鋪墊 |
+| `ff2fc39` | 案例五加三幕 |
+| `0749e24` | 案例十七加三幕 |
+| `64dddbc` | 案例十八加三幕（簡體字→失憶老問題） |
+| `ba5af03` | 案例十九加三幕（232 場景沒人報告） |
+| `be27958` | 案例二十一加三幕（5 個 sed） |
+| `e2cedaa` | 案例二加三幕（邏輯推就知道要做） |
+| `10da95d` | 案例十六/十七補第三幕標記 |
+| `ec74d05` | HTML 結構大清理（4 套→1 套，少 112 行） |
+
+### workspace repo（6 個）
+| Commit | 內容 |
+|--------|------|
+| `e932d52c` | 全自動總結地基查清 + distill_terminal_llm.py 升 M3 |
+| `743c2425` | 首次手動跑 4 個 session 蒸餾成功 |
+| `f74a2659` | 補蒸餾剩下 2 個 session |
+| `1e703d8a` | 全自動總結系統打通：wrapper + M3 parser 修復 + cron 接上 |
+| `47f45fa9` | 接力棒更新「全自動總結打通」 |
+| （本次）| 接力棒收場總結 + 經驗記憶 |
+
+---
+
+## 🎁 本場新建的記憶（給下一棒）
+
+1. [[feedback-no-localhost-preview-use-github-pages]] — 軍師端 Chrome MCP 看不到 Mac localhost，HTML 預覽走 GitHub Pages
+2. [[feedback-minimax-m3-api-parser]] — M3 API 回應有 thinking+text 兩塊，必須遍歷找 type=="text"
+3. [[project-auto-distill-mission]] — 已更新為「100% 跑通」狀態
+
+---
+
+## ⚠️ 留給下一棒查的小問題（跟蒸餾無關）
+
+`sync_handoff` / `relay_poll` / `split_memory` 三個舊 cron 從 11:10 後沒再跑，但同時間其他 cron（backup_terminal、extract_terminal、新建的 terminal_distill）都正常跑。三者共同特徵需要挖根因。
+
+證據：
+- /tmp/sync_handoff.log 最後一筆 12:35:00（每 5 分鐘該跑）
+- /tmp/relay_poll.log 最後修改 11:09:00（每分鐘該跑）
+- /tmp/split_memory_cron.log 最後修改 11:10:00（每小時 10/40 該跑）
+- 對照組：/tmp/terminal_distill_cron.log 過去 8 次觸發都正常
 
 ---
 
