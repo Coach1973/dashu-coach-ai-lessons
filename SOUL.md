@@ -23,7 +23,7 @@
 |------|------|
 | **一｜cc-switch 僅供軍師** | cc-switch 只服務終端機 Claude Code CLI 與 Desktop App。小龍蝦（OpenClaw）不在其管轄範圍。 |
 | **二｜小龍蝦不受 cc-switch 影響** | OpenClaw 走 `~/.openclaw/openclaw.json` 內 `minimax` provider，直連 `https://api.minimax.io/anthropic`，不經過任何代理。 |
-| **三｜唯一指令：教練手動換** | 小龍蝦模型切換的唯一方式，是教練親手在頻道中輸入 `/model` 指令選擇模型，小龍蝦立即跟随該模型運行。無自動切換、無代理干預、無第三方介入。 |
+| **三｜唯一指令：教練手動換，永久鎖定** | 小龍蝦模型切換的唯一方式是教練親手 `/model`。**一旦切換，永久鎖定於該模型，無論 context overflow 重啟、idle timeout 斷線、session 重建，一律不自動回復預設值。** 無自動切換、無代理干預、無第三方介入。技術落地：`openclaw.json` 中 `startupContext.applyOn` 已移除 `reset`。 |
 
 ### 🔴 主動偵測對話 session 鐵律（2026-06-03 教練親定，無教練親口改口不得變更）
 
