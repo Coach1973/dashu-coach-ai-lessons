@@ -1,4 +1,27 @@
-# 軍師接力棒 · 2026-06-03（下午 12:50 更新）
+# 軍師接力棒 · 2026-06-03（下午 12:35 全自動總結打通版）
+
+---
+
+## 🎉 重大突破：教練最高優先任務「全自動總結」打通了
+
+**狀態：** 從「地基 90%」→「100% 跑通且自動運轉」
+
+**打通的流程：**
+```
+JSONL → extract_terminal_sessions.py → pending_distill
+     → distill_terminal_llm.py（MiniMax-M3）→ distill/terminal_YYYY-MM-DD.md
+     → run_terminal_distill.sh 自動 commit + push
+```
+
+**修的 bug：** M3 回應結構是 `[{thinking}, {text}]`，舊 parser 只讀第一塊（thinking 沒 text 欄位→空字串）。改用遍歷找 `type=="text"`
+
+**自動觸發：** crontab `*/30 * * * * run_terminal_distill.sh`
+
+**驗證：** commit `743c2425`（首批 4 個 session）+ `f74a2659`（補 2 個 session）+ `1e703d8a`（系統打通）
+
+**今日蒸餾產出：** `distill/terminal_2026-06-03.md`（14K，6 個 session 全保留教練原話）
+
+---
 
 **上一棒軍師：** Deepseek v4 pro max → Claude Opus 4.6（早晨接續）→ Claude Opus 4.6（中午 cool-case 三幕劇全攻略）
 **交接時間：** 2026-06-03 12:50
