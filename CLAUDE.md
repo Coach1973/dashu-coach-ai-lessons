@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-03 17:05:00**
+> **最後同步：2026-06-03 18:35:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -271,7 +271,7 @@ JSONL → extract_terminal_sessions.py → pending_distill
 
 ---
 
-## ✅ 品管重判（Opus 4.6 軍師評審已完成，待教練拍板執行）
+## ✅ 品管重判（Opus 4.6 軍師評審已完成，教練已拍板，執行完成）
 
 **盤點 4 套成品：**
 1. `distill/守則故事庫/`（22 案）— 原料庫，三輪 QA 後 A19/B2/C0，真實性良好
