@@ -64,3 +64,4 @@
 - [各機 commit 邊界（教練親定 2026-05-20）](feedback_agent_commit_boundary.md) — 中央發布的設定變更由我 commit；各機自己運作產生的 sessions/memory 不碰
 
 - [海餅乾俱樂部正典（2007年創辦，一字不差）](海餅乾俱樂部_正典.md) — 團隊使命、三大信念、十大行為守則，來源 shared-relay/bot_chat_2026-02-25_result.json
+- [🔴 OpenClaw 升級 2026.5.28 影響](memory/reference_openclaw_2026-05-28_upgrade.md) — 2026-06-03 升級，memsearch 插件被移除（新版不相容）；memory_search/memory_get 內建工具不受影響
