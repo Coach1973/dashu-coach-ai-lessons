@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-06-04 00:51
+> 重啟時間：2026-06-04 01:31
 > 對話記錄已完整存入 memory/2026-06-04.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -21,30 +21,9 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
----
-
-## 軍師交接（2026-06-03 晚場，軍師第四棒）
-
-> 軍師 session 在 `/Users/bymyway/.claude/projects/-Users-bymyway--claude-code/`
-> workspace 在 `/Users/bymyway/.claude-code/workspace/`
-> ⚠️ 兩者皆與 Telegram 共用同一份 workspace
-
-### 🏁 cool-case 寶藏挖掘完成
-| 案例 | 檔案 | Commit |
-|------|------|--------|
-| 案例11 12點搶頭香 | cool_case_11_12點搶頭香.md | d1e78d07 |
-| 案例17 認真讀訊息 | cool_case_17_認真讀訊息.md | d1e78d07 |
-| 案例18 繁體簡體 | cool_case_18_繁體簡體.md | d1e78d07 |
-| 案例19 全部忘記 | cool_case_19_全部忘記.md | d1e78d07 |
-
-**master_index：6→10個完整原話，🔶待查找：7個**
-
-### ⚠️ 待查找（7個）
-案例1/2/3/4/5/13/14/15 → 守則故事庫方向
-
-### 待辦（來自接力棒）
-- 品管重判拍板（軍師已審完，等教練確認方向）
-
 ## 學長 relay poll
-### 2026-06-04 2026-06-04 01:27 - relay poll OK
-
+### 2026-06-04 01:38 - relay poll OK ✅
+### Cron 異常（2026-06-04 01:38）
+- `每30分鐘任務健康檢查`（46e67e2e）→ error ⚠️
+- `每4小時主動關懷`（ef88279b）→ error ⚠️
+（其餘13個cron正常，Git備份OK）
