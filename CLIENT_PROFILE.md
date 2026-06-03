@@ -1,5 +1,12 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-04（共 2 則）
+1. 這就是 Top10 #1「說完不做」和 #6「無中生有」的組合犯錯
+2. 這就是 Top10 #1「說完不做」和 #6「無中生有」的組合犯錯
+
+---
+
+
 ## 蒸餾 2026-06-03（共 15 則）
 1. Cron job triggered heartbeat at 00:03 (Wednesday, June 3rd) — crossed midnight
 2. OpenClaw reported all 3 systems stable (main, 學弟, 學妹)
