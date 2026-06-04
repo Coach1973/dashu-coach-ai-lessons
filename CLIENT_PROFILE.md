@@ -1,5 +1,13 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-05（共 3 則）
+1. `.learnings/` 資料夾在 `/Users/bymyway/.openclaw/workspace/.learnings/`
+2. 已有 LEARNINGS.md（昨天 6/4 23:51 剛更新）與 ERRORS.md
+3. **缺 FEATURE_REQUESTS.md**（要新建）
+
+---
+
+
 ## 蒸餾 2026-06-04（共 2 則）
 1. 這就是 Top10 #1「說完不做」和 #6「無中生有」的組合犯錯
 2. 這就是 Top10 #1「說完不做」和 #6「無中生有」的組合犯錯
