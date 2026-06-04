@@ -738,3 +738,6 @@
 {"ts":"2026-06-03T22:03:36.171Z","botId":"1号機","text":"🦞 特助報告，教練早安！\n\n**FB 生日祝福檢查結果（2026/06/04）**\n\n今天沒有 FB 壽星需要祝福，祝福團隊可以休息一天囉～ ☀️","msgId":"7188","chatId":"-1003877502911"}
 {"ts":"2026-06-03T22:04:29.754Z","botId":"1号機","text":"✅ 今天沒有 FB 壽星，安靜完成。","msgId":"7189","chatId":"-1003877502911"}
 {"ts":"2026-06-03T22:04:38.830Z","botId":"1号機","text":"早安教練！🌅\n\n清晨六點了，這個時間通常是一天最安静的時光。\n\n我剛讀完所有開工文件，系統運作正常，隨時候命。\n\n今天有什麼想聊聊的嗎？🦞","msgId":"7190","chatId":"-1003877502911"}
+{"ts":"2026-06-04T00:02:16.286Z","botId":"1号機","text":"⚠️ Cron job \"YouTube新聞每日自動抓取\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7191","chatId":"-1003877502911"}
+{"ts":"2026-06-04T00:02:17.955Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7192","chatId":"-1003877502911"}
+{"ts":"2026-06-04T00:03:36.886Z","botId":"1号機","text":"✅ YouTube 每日監控執行完畢\n\n- **監控頻道**：22 個\n- **更新影片**：152 部\n- **輸出檔案**：`~/Desktop/youtube_news.json`\n\n如需查看資料內容，可直接開啟桌面上的 `youtube_news.json` 檔案。","msgId":"7193","chatId":"-1003877502911"}
