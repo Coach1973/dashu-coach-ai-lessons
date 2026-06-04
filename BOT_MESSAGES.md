@@ -906,3 +906,5 @@
 {"ts":"2026-06-04T22:03:02.662Z","botId":"1号機","text":"⚠️ Cron job \"FB 生日每日爬蟲（06:00）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7545","chatId":"-1003877502911"}
 {"ts":"2026-06-04T22:03:03.842Z","botId":"1号機","text":"⚠️ Cron job \"FB 生日每日爬蟲（06:00）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7546","chatId":"-1003877502911"}
 {"ts":"2026-06-04T22:03:45.282Z","botId":"1号機","text":"🦞 大樹教練，早安！\n\n清晨 6 點了，現在應該還在休息吧～\n\n如果還沒起床，這條訊息就先留著，起床再看就好 ☀️\n\n有任何需要的時候再叫我，我都在 😊","msgId":"7547","chatId":"-1003877502911"}
+{"ts":"2026-06-04T22:04:39.002Z","botId":"1号機","text":"🦞 **小龍蝦早安報告**\n\nFB 生日祝福任務執行完畢，今日（6/5）沒有 FB 壽星需要祝福。\n\n🗓️ 最近也沒有任何待關心的朋友，系統確認無需發送祝賀。\n\n教練早安！今天要從哪件事開始？🌳","msgId":"7548","chatId":"-1003877502911"}
+{"ts":"2026-06-04T22:05:02.035Z","botId":"1号機","text":"✅ 今天沒有 FB 壽星，已安靜記錄。","msgId":"7549","chatId":"-1003877502911"}
