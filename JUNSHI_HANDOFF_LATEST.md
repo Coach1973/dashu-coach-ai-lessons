@@ -94,7 +94,7 @@
 1. **試用 Hermes 桌面版 App**（教練已轉移過去使用）——驗證功能
 2. **守則 17「身份 ≠ 模型」全機規則同步** —— 三個 repo 都應該反映
 3. **守則故事庫 GitHub Pages 一對一映射** —— 確保 cool-case 21 個案例都對應守則
-4. **三個舊 cron 異常**（sync_handoff/relay_poll/split_memory 11:10 後停止）
+4. ~~**三個舊 cron 異常**（sync_handoff/relay_poll/split_memory 11:10 後停止）~~ — ✅ **已驗證全部健康**（commit `eff1539b`，6/5 04:32 軍師實測：log 持續運作、HEARTBEAT 持續 OK）
 5. **MEMORY 是否已自動反映新的 liur=蝦米 認知**（下次開機驗證）
 6. **OpenVanilla 已刪除但 workspace MEMORY.md 還寫著**（教練尚未處理，不在這次範圍）
 
