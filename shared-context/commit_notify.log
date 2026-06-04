@@ -1554,3 +1554,9 @@
 [2026-06-04 22:04] [CoachWU] 78441e2c: auto-backup 2026-06-04 22:03
 [2026-06-04 22:33] [CoachWU] 657935ce: auto-backup 2026-06-04 22:33
 [2026-06-04 23:04] [CoachWU] dcedbaa4: auto-backup 2026-06-04 23:03
+[2026-06-04 23:32] [CoachWU] 8041a195: auto-backup 2026-06-04 23:31
+[2026-06-04 23:40] [CoachWU] a7ecefcc: auto: 痛點排名重算 2026-06-04
+[2026-06-04 23:50] [CoachWU] 9964ee1a: fix(distill): 修卡住檔案 + 加 watchdog 自動入庫（C 選三件齊）
+[2026-06-04 23:51] [CoachWU] 65e054cb: docs(learnings): 記錄蒸餾卡住靜默跳過 Bug 修復教訓
+[2026-06-04 23:57] [CoachWU] 6248e3f7: [auto] 23:57 對話記錄更新（12 條）
+[2026-06-05 00:00] [CoachWU] 8f63e835: auto: 終端機對話蒸餾 2026-06-05
