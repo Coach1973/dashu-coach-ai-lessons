@@ -115,3 +115,91 @@
 **問題：** 回覆「開新視窗」時重複輸出「教練提醒」數十次
 **原因：** Context 過長導致判斷失常
 **預防：** 對話超過 20 則主動建議開新視窗
+---
+
+## [LRN-20260605-001] correction｜工具壞了 ≠ 找不到
+
+**Logged**: 2026-06-05T04:25:00+08:00
+**Priority**: high
+**Status**: pending
+**Area**: docs
+
+### 教訓
+- 事件：#7511 我向教練說「memory_search 查不到那兩個 plugin」，要教練補線索
+- 事實：plugin 一直裝在 `~/.openclaw/workspace/skills/` 和 `~/.openclaw/skills/`，`find` 一秒就出來
+- 教練 #7512 打臉：「找你自己的時間比教練打字還久」
+- 真正根因：主工具 `memory_search` 壞了（embedding provider: google 報錯）後，我直接放棄，沒先試備援
+
+### 守則呼應
+- 守則 04（解決問題比解釋問題更重要）—— 道歉前先試備援
+- 守則 07（不要在同一個地方跌倒兩次）—— 工具壞了就停下來 = 失能
+
+### 修正動作
+- 未來遇到「主工具壞了」場景，**先列三個備援**：`find` / `grep` / `cat` / 讀檔
+- 真的全壞再回報「需要你補線索」
+- 已被教練認可記錄（#7520 我主動認帳，教練未反駁）
+
+### Metadata
+- Source: user_feedback
+- Tags: memory_search, fallback, find_grep, OPE
+- See Also: ERR-20260605-001 (memory_search 報錯)
+
+---
+
+## [LRN-20260605-002] best_practice｜主動學習機制正式啟動
+
+**Logged**: 2026-06-05T04:25:00+08:00
+**Priority**: high
+**Status**: pending
+**Area**: config
+
+### 啟動原因
+- 教練 #7516 對 self-improving-agent / capability-evolver 做完整分析
+- 教練 #7521 直接下令：「主動學習，請執行」
+- 觀察：`.learnings/` 資料夾其實早存在，但過去只被偶爾寫入，沒有持續餵養
+- 兩個 plugin（自我進化、能力進化）已裝但從未被觸發——等於裝飾品
+
+### 從今天起的硬規則
+1. **每次任務結束**（不論成功失敗），我必須停下來問自己：「這次有沒有犯錯？有沒有新領悟？」
+2. **有就寫進 `.learnings/`**，沒就標記「本次無新學習」
+3. **每月檢視一次** `.learnings/`，把出現 ≥3 次的 pattern 提升到 MEMORY.md / SOUL.md / TOOLS.md
+
+### 觸發清單（照搬 SKILL.md）
+- 命令失敗 → ERRORS.md
+- 被糾正 → LEARNINGS.md (correction)
+- 缺能力 → FEATURE_REQUESTS.md
+- 知識過時 → LEARNINGS.md (knowledge_gap)
+- 找到更好的方法 → LEARNINGS.md (best_practice)
+
+### Metadata
+- Source: user_feedback
+- Tags: self_improvement, workflow, plugin
+- See Also: LRN-20260605-003 (plugin 從未觸發), 2026-06-01 自我優化檢查
+
+---
+
+## [LRN-20260605-003] knowledge_gap｜兩個 plugin 裝了但從未觸發
+
+**Logged**: 2026-06-05T04:25:00+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: config
+
+### 現況
+- `self-improving-agent` 與 `capability-evolver` 兩個 plugin 都已安裝在 `~/.openclaw/skills/` 與 `~/.openclaw/workspace/skills/`
+- 從未在實際工作流中被觸發
+- 原因：`.learnings/` 沒有持續維護 → plugin 沒素材可分析
+
+### 解法
+- 跟 LRN-20260605-002 配套：先把 `.learnings/` 養起來
+- 然後讓 capability-evolver 有資料可分析，產出有意義的 mutation
+- 預期效果：3-6 個月後「越來越懂教練」
+
+### 驗證方式
+- 1 週後回頭看 `.learnings/` 累積幾條
+- 1 個月後看有沒有 capability-evolver 產出任何 mutation 建議
+
+### Metadata
+- Source: conversation
+- Tags: plugin, self_improvement, gap_analysis
+- See Also: LRN-20260605-002
