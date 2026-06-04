@@ -1,0 +1,20 @@
+=== 教練原創核心 9 件 — SHA256 hash 清單（2026-06-04 蓋戳）===
+生成時間：2026-06-04 19:08 GMT+8
+工具：OpenTimestamps + Bitcoin blockchain
+
+# 格式：<SHA256>  <檔案路徑>
+
+=== mac repo 核心正典 3 件 ===
+6c00c5422d025878311e9f14d36f14283f1f391fe5c6a4febc84287564886bcd  特助心法.md
+70e7295e868ebacf41fe2e108b1ad0cb36b58aa937443b652f887cc1fab27867  海餅乾俱樂部_正典.md
+5a30e57c53627c8345c8afcae7c6533943f49eb6ebd242406b14447382ffd1fe  教練高頻語錄_SOP.md
+
+=== lessons_upload 核心 5 件 ===
+6229b847ab03529491fccc768379644e78193ecb6a0921e3f9dee94d40e40d33  .lessons_upload/SEABISCUIT_TEN_COMMANDMENTS.md
+56f71bed4a8fb742ca0e7717666d477c830fc42bc0752848f64576c819878620  .lessons_upload/SEABISCUIT_KNOWLEDGE_BASE.md
+c401f6b1e93f4346186fc5e236d721cdb1eeafdf5c36d2d9a85432a348a19363  .lessons_upload/COACH_WISDOM_DISTILLED.md
+33f1052abca8d20260620987dae6b5dba21ed1de2d3b2ef9ed3bdf0cd8f2a66f  .lessons_upload/handbook/頂級特助商業化營運手冊.md
+8ee5536eb98dedabff5025a518fc0337772faedf269936fab1f848b7ae5cbd1f  .lessons_upload/cases/個案研究.md
+
+=== 原始逐字稿 1 件（2/25 對話鐵證）===
+755334227590a305c2b7f908a65ffb5dd9f965f43d1826409313466c7fb23a6b  shared-relay/bot_chat_2026-02-25_result.json
