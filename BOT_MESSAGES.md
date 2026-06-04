@@ -741,3 +741,4 @@
 {"ts":"2026-06-04T00:02:16.286Z","botId":"1号機","text":"⚠️ Cron job \"YouTube新聞每日自動抓取\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7191","chatId":"-1003877502911"}
 {"ts":"2026-06-04T00:02:17.955Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M2.7: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7192","chatId":"-1003877502911"}
 {"ts":"2026-06-04T00:03:36.886Z","botId":"1号機","text":"✅ YouTube 每日監控執行完畢\n\n- **監控頻道**：22 個\n- **更新影片**：152 部\n- **輸出檔案**：`~/Desktop/youtube_news.json`\n\n如需查看資料內容，可直接開啟桌面上的 `youtube_news.json` 檔案。","msgId":"7193","chatId":"-1003877502911"}
+{"ts":"2026-06-04T00:04:46.349Z","botId":"1号機","text":"今日無待蒸餾對話。\n\n目錄 `~/workspace/terminal-notes/pending_distill/` 不存在，沒有任何待蒸餾的檔案。✅","msgId":"7194","chatId":"-1003877502911"}

@@ -20,22 +20,28 @@ When you wake up in a new session, you MUST read your own workspace `AGENTS.md` 
 
 Your workspace AGENTS.md will tell you to read the following files in order:
 
-### 第一層：必讀（每次啟動都讀，無例外）
-1. Read `特助心法.md` — 🔴 最高正典，21 守則一字不差
-2. Read `SOUL.md` — 靈魂核心（心願目標 + 系統協作 + 模型鐵律）
-3. Read `執行細則.md` — 操作細則（9條，見檔案頂部版本說明）
-4. Read `路徑大全.md` — 所有路徑、密碼、API Key（找不到東西先讀這份）
-5. Read `distill/top10_dynamic.md` — 🔴 Top 10 最常犯錯場景（每次執行任務前自檢）
-6. Read `shared-relay/SUPERGROUP-MAP.md` — 🔴 超級群組地圖（每次啟動必讀）
-7. Read `shared-relay/CONSENSUS.md` — 🔴 當晚最新共識（確保不脫離團隊議程）
-8. Read `USER.md` — 教練偏好與習慣
-9. Read `shared-relay/對話分工表.md` — 團隊結構
-10. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶）
+### 🔥 第一層：熱啟動（每次啟動，無例外，只有這 3 個）
 
-### 第二層：按需讀取
-11. Read `DAILY_DIGEST.md` — 近期任務摘要（心跳時必讀，啟動時選讀）
-12. Read `memory/YYYY-MM-DD.md`（今天）— 近期脈絡（>30KB 不讀）
-13. **若為主對話 Session**：也讀 `MEMORY.md`（長期記憶，勿在群組中載入）
+1. Read `特助心法.md` — 🔴 最高正典，21 守則一字不差（約 11.9KB）
+2. Read `SOUL.md` — 靈魂核心（心願目標 + 系統協作 + 模型鐵律，約 15KB）
+3. Read `JUNSHI_HANDOFF_LATEST.md` — 🔴 接力棒（上一場完成了什麼、待辦、教訓，不讀 = 失憶，約 10KB）
+
+> ⚠️ **熱啟動只有這 3 個**，不要自己擴充。多了 Context 會爆。
+
+### 📖 第二層：按需讀取（任務需要才讀，不要在啟動時一口氣讀完）
+
+| 何時讀 | 讀什麼 |
+|--------|--------|
+| 任務開始前 | `distill/top10_dynamic.md`（Top 10 最常犯錯場景）|
+| 需要知道教練偏好 | `USER.md`（教練偏好與習慣）|
+| 需要找路徑/密碼 | `路徑大全.md`（所有路徑、密碼、API Key）|
+| 需要知道團隊結構 | `shared-relay/對話分工表.md` |
+| 需要知道超級群組 | `shared-relay/SUPERGROUP-MAP.md` |
+| 需要知道最新共識 | `shared-relay/CONSENSUS.md` |
+| 需要知道執行細則 | `執行細則.md`（9條）|
+| 需要長期脈絡 | `memory/YYYY-MM-DD.md`（今天，>30KB 不讀）|
+| 需要完整記憶（主 session 限定）| `MEMORY.md`（長期記憶，勿在群組中載入）|
+| 需要近期摘要 | `DAILY_DIGEST.md`（近期任務摘要）|
 
 ## Memory
 
