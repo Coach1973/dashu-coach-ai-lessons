@@ -6,6 +6,31 @@
 
 ---
 
+## 2026-06-04｜蒸餾卡住靜默跳過 Bug（教練 C 選修復）
+
+### 問題
+- 教練選 C「讀得到 + 自動觸發 + 犯錯自動入庫」後盤點，發現 terminal_2026-06-04.md 不存在
+- 原因：`distill_terminal_llm.py` 的狀態檔以 session_id 標記「已蒸餾」
+- 當同一 session 被重新萃取（pending 比 distilled 新或大），腳本永遠靜默跳過
+- 觀察：6/3 16:30 重新萃取的 b701cc5f 卡 1 天，每天 30 分鐘 1 次「跳過 1 個」永遠沒人發現
+- **這是典型「犯錯不自動入庫」——INFO log 不算 ERROR，教練永遠看不到**
+
+### 解法
+1. `distill_terminal_llm.py` 加「重新萃取偵測」：比對 pending vs distilled 的 mtime 和 size，超過 1.2 倍或 mtime 較新就強制重蒸餾
+2. 加「卡住警告」：如果 pending 檔 mtime 比 distilled 舊超過 6 小時，寫入 `/tmp/distill_stuck_warnings.log`
+3. 新增 `distill_watchdog.sh` 獨立 watchdog：每 15 分鐘掃 pending >2 小時 → 推 Telegram 給教練
+4. 通知方式：`openclaw message send -t 6124913915 -m "..."` （注意是 `-t` 不是 `--target`）
+
+### commit
+- `9964ee1a` — 已推送 Coach1973/mac-openclaw-workflows
+
+### 教訓
+- **靜默跳過 = 反覆型錯誤**：日誌寫「INFO 找到 1 個，跳過 1 個」= 假回報
+- 任何「狀態檔 vs 實際檔案」不一致的場景，必須有「重新同步」邏輯，不能假設 state 永遠對
+- watchdog 必須和主腳本分開，否則主腳本掛了 watchdog 也掛了
+
+---
+
 ## 2026-06-01｜自我優化檢查（22:00）
 
 ### 發現問題
