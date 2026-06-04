@@ -804,3 +804,4 @@
 {"ts":"2026-06-04T06:03:14.287Z","botId":"1号機","text":"系統檢查完畢，兩項都正常：\n\n- **Cron 任務**：僅有本任務，0 錯誤，正常運行\n- **Git 未 commit**：8 個檔案（門檻為 >15，未觸發）\n\n沒有發現任何問題，安靜結束。","msgId":"7319","chatId":"-1003877502911"}
 {"ts":"2026-06-04T06:03:15.278Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7320","chatId":"-1003877502911"}
 {"ts":"2026-06-04T06:03:38.835Z","botId":"1号機","text":"教練，午後愉快！🦞\n\n兩點了，來關心一下～\n\n今天早上有沒有做完什麼事？還是正在忙什麼？\n\n不管怎样，有需要我幫忙的就直接說，我在這裡隨時待命。😊","msgId":"7321","chatId":"-1003877502911"}
+{"ts":"2026-06-04T06:15:18.049Z","botId":"1号機","text":"兩項檢查都通過，系統無異常：\n\n**Cron 任務**：✅ 正常（consecutiveErrors: 0）\n**Git 備份**：✅ 正常（未 commit 檔案 6 個，未達 15 個門檻）\n\n安靜結束，無需通知教練。✅","msgId":"7322","chatId":"-1003877502911"}
