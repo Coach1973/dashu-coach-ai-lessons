@@ -29,6 +29,5 @@
 3. 心跳淪為形式，沒有真正關懷
 
 ## 學長 relay poll
-### 2026-06-04 17:17 - relay poll OK
-### 2026-06-04 17:20 - relay poll OK
-### 2026-06-04 17:18 - Telegram 通道已恢復（前三則 SUBSCRIPTION_NOT_FOUND 已解）
+### 2026-06-04 2026-06-04 17:32 - relay poll OK
+
