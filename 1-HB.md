@@ -90,6 +90,7 @@
 
 每次心跳執行的動作，簡短記錄在 HEARTBEAT.md。- 2026-05-27 15:03 ✅ cron正常（12個在跑，2個running其餘OK）、git備份完成（2cc1fec2）、YouTube新聞OK（08:33）、relay無新任務、系統健檢OK
 - 2026-05-27 22:10 ✅ cron正常（relay_poll每分鐘OK、heartbeat_audit每日23:50）、git備份完成（34d8794f）、shared-relay無新任務（已讀SUPERGROUP-MAP），系統健檢OK、主動關懷（晚了，已補做）
+- 2026-06-04 08:51 ✅ cron正常（目標心跳上次執行error已修復）、git備份完成（6819ed78）、系統健檢OK、relay poll正常
 - 2026-05-27 23:03 ✅ cron正常（12個在跑）、git備份完成（5efb2424）、relay無新任務、model確認minimax/MiniMax-M2.7 ✅、YT新聞OK（08:33）、系統健檢OK
 
 📌 待追蹤：營業稅提醒cron（稅單28451）有記錄無cron，案例Q待處理（見HEARTBEAT.md）

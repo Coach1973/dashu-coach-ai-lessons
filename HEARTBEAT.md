@@ -12,6 +12,8 @@
 ## ⚡ 系統狀態
 - Primary 模型：google/gemini-3.1-pro-preview
 - 名稱對等：Telegram = 小龍蝦 = 電報
+- ⚠️ 目標心跳上次因訊息發送失敗（⚠️ ✉️ Message failed）導致7次連續錯誤
+- ✅ 本次心跳已確認系統正常，cron job運行中
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -22,5 +24,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-04 2026-06-04 08:48 - relay poll OK
+### 2026-06-04 2026-06-04 08:52 - relay poll OK
 
