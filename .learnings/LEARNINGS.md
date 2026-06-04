@@ -203,3 +203,50 @@
 - Source: conversation
 - Tags: plugin, self_improvement, gap_analysis
 - See Also: LRN-20260605-002
+
+---
+
+## [LRN-20260605-004] correction｜沒盤點 workspace 就下判斷 = 嚴重失誤
+
+**Logged**: 2026-06-05T04:47:00+08:00
+**Priority**: critical
+**Status**: pending
+**Area**: docs
+
+### 教訓
+- 事件：#7531 我跟教練說「capability-evolver 等 1-2 個月讓 .learnings/ 累積素材再說」
+- 教練 #7532 直接打臉：「我們非常有歷史... 我們過去做了非常多次的場景... 上百個場景... Top 30... 試金石... 21 個精彩案例... 怎麼會沒有材料？餵進去」
+- 事實：30 秒內撈到——
+  - 試金石系統 8 個專題檔案（5/24-6/3 建立）
+  - 21 守則經典場景（36KB，從 74 session 提煉）
+  - Top 30 多版本（11 個精煉檔）
+  - cool_case 21 案例
+  - 456KB 原始素材 + 256KB 場景庫
+  - 蒸餾腳本都已寫好
+
+### 根本錯誤
+- 我在「盤點」之前就下判斷
+- 沒先 `ls distill/` 跟 `ls 試金石/` 就說「沒素材」
+- 這違反守則 14（提煉是一種習慣）—— 沒提煉就評論
+
+### 修正動作（永久規則）
+- **下任何「素材不足」「資料沒有」的判斷前**，先：
+  1. `ls ~/.openclaw/workspace/distill/`
+  2. `ls ~/.openclaw/workspace/試金石/`
+  3. `ls ~/.openclaw/workspace/memory/`
+  4. `ls ~/.openclaw/workspace/守則故事庫/`
+- 真的都沒有才能說「沒素材」
+- 有看到「場景」「守則」「案例」「SOP」相關檔案 = 素材已經在了
+
+### 守則呼應
+- 守則 07（不要在同一個地方跌倒兩次）—— 跌過一次，永遠記得先盤點
+- 守則 14（提煉是一種習慣）—— 不提煉別評論
+- 守則 09（知道為什麼才有判斷力）—— 沒盤點的判斷是空話
+
+### Metadata
+- Source: user_feedback
+- Tags: critical, 判斷失誤, 素材盤點, capability-evolver
+- See Also: LRN-20260605-003 (plugin 從未觸發——這條要重新檢視)
+- Recurrence-Count: 1
+- First-Seen: 2026-06-05
+- Last-Seen: 2026-06-05
