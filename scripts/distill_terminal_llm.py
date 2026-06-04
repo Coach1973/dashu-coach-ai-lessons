@@ -117,19 +117,38 @@ def main():
     success_count = 0
     skip_count = 0
 
+    stale_warnings = []  # 收集卡住的檔案（pending 比 distilled 新但 state 說已蒸餾）
+
     for fname in pending_files:
         session_id = fname[:-4]
-
-        if session_id in distilled_set:
-            skip_count += 1
-            continue
-
         fpath = os.path.join(PENDING_DIR, fname)
+
+        # 🔴 修復：檢查是否被重新萃取（pending 比 distilled 新）
+        distilled_path = os.path.join(DISTILLED_DIR, fname)
+        re_extracted = False
+        if session_id in distilled_set:
+            if os.path.exists(distilled_path):
+                pending_mtime = os.path.getmtime(fpath)
+                distilled_mtime = os.path.getmtime(distilled_path)
+                pending_size = os.path.getsize(fpath)
+                distilled_size = os.path.getsize(distilled_path)
+                if pending_mtime > distilled_mtime or pending_size > distilled_size * 1.2:
+                    re_extracted = True
+                    print(f"  ♻️  {session_id[:8]} 偵測到重新萃取（pending {pending_size}B > distilled {distilled_size}B 或 mtime 新），強制重蒸餾")
+            if not re_extracted:
+                skip_count += 1
+                # 檢查是否卡太久（>6 小時）— 可能是 state 與檔案不同步
+                age_hours = (os.path.getmtime(fpath) - os.path.getmtime(distilled_path)) / 3600 if os.path.exists(distilled_path) else 999
+                if age_hours > 6:
+                    stale_warnings.append(f"{session_id[:8]} 卡在 pending {age_hours:.1f} 小時（distilled 已存在但內容可能更舊）")
+                continue
+
         try:
             with open(fpath, encoding="utf-8") as f:
                 content = f.read()
         except Exception as e:
             print(f"  ⚠️ 讀取失敗 {fname}: {e}")
+            stale_warnings.append(f"{session_id[:8]} 讀取失敗: {e}")
             continue
 
         if len(content.strip()) < 50:
@@ -161,9 +180,29 @@ def main():
 
     state["distilled_sessions"] = list(distilled_set)
     state["last_run"] = now_str
+    state["stale_warnings"] = stale_warnings
     save_state(state)
 
-    print(f"[完成] 蒸餾 {success_count} 個，跳過 {skip_count} 個")
+    # 🔴 犯錯自動入庫：把卡住警告寫到專用 log，教練下次啟動會看到
+    if stale_warnings:
+        warn_log = "/tmp/distill_stuck_warnings.log"
+        with open(warn_log, "a", encoding="utf-8") as f:
+            f.write(f"\n=== {now_str} ===\n")
+            for w in stale_warnings:
+                f.write(f"  ⚠️  {w}\n")
+        print(f"[ERROR] 發現 {len(stale_warnings)} 個卡住檔案，已寫入 {warn_log}")
+        # 嘗試推 Telegram 通知（如果 openclaw CLI 可用）
+        try:
+            import subprocess
+            msg = f"🦞 蒸餾卡住警報\n\n{now_str}\n" + "\n".join(f"• {w}" for w in stale_warnings)
+            subprocess.run(
+                ["openclaw", "message", "send", "-t", "6124913915", "-m", msg],
+                capture_output=True, timeout=10
+            )
+        except Exception:
+            pass  # 推失敗不影響主流程，下次心跳會被發現
+
+    print(f"[完成] 蒸餾 {success_count} 個，跳過 {skip_count} 個{'，警告 ' + str(len(stale_warnings)) + ' 個' if stale_warnings else ''}")
 
 
 if __name__ == "__main__":
