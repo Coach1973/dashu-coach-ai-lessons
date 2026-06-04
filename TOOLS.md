@@ -11,24 +11,26 @@
 |------|---------|
 | node | `/opt/homebrew/bin/node` |
 | python3 | `/opt/homebrew/bin/python3` |
-| openclaw CLI | `/opt/homebrew/bin/openclaw` |
+| claude-code CLI | `/opt/homebrew/bin/claude-code` |
 
 **原則**：任何 cron wrapper 腳本一律使用絕對路徑，不依賴 PATH。
 
 ## 模型驗證
 
-- **驗證腳本**：`~/.openclaw/scripts/validate-models.sh`
-- **當前 Primary**：`minimax/MiniMax-M2.7`（教練已切換，2026-05-25）
+- **驗證腳本**：`~/.claude-code/workspace/scripts/validate-models.sh`（舊路徑 `~/.claude-code/scripts/` 已停用，2026-06-04 更新）
+- **當前 Primary**：`claude/Claude Sonnet`
 - **備用**：`google/gemini-3.1-pro-preview`
 
-## 常用腳本
+## 常用腳本（小龍蝦專用）
 
 | 腳本 | 用途 | cron 頻率 |
 |------|------|----------|
-| `scripts/run_distill.sh` | 增量蒸餾今日對話 | 每 2 小時 |
-| `scripts/run_relay_poll.sh` | 學弟妹讀取學長 RELAY_QUEUE | 每分鐘 |
-| `scripts/sync_handoff_to_claudemd.sh` | 接力棒鏡像到 CLAUDE.md | 每 5 分鐘 |
-| `scripts/heartbeat_audit.sh` | 心跳品質審查 | 每天 23:50 |
+| `~/.claude-code/workspace/scripts/run_distill.sh` | 增量蒸餾今日對話 | 每 2 小時 |
+| `~/.claude-code/workspace/scripts/run_relay_poll.sh` | 學弟妹讀取學長 RELAY_QUEUE | 每分鐘 |
+| `~/.claude-code/workspace/scripts/sync_handoff_to_claudemd.sh` | 接力棒鏡像到 CLAUDE.md | 每 5 分鐘 |
+| `~/.claude-code/workspace/scripts/heartbeat_audit.sh` | 心跳品質審查 | 每天 23:50 |
+
+> ⚠️ 所有腳本路徑已統一移至 `~/.claude-code/workspace/scripts/`（2026-06-04 更新）
 
 ## What Goes Here
 
