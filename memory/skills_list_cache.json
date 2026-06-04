@@ -1,0 +1,3 @@
+{
+  "list": "- **agent-group**: No description\n- **capability-evolver**: A GEP-powered self-evolution engine for AI agents. Features automated log analysis and Genome Evolut...\n- **evolver**: A GEP-powered self-evolution engine for AI agents. Features automated log analysis and Genome Evolut...\n- **feishu-evolver-wrapper**: Feishu-specific wrapper for capability-evolver\n- **macos-calendar**: No description\n- **memory-lancedb-pro**: No description\n- **openclaw-model-switch-2**: No description\n- **personal-assistant**: No description\n- **relay-to-agent**: No description\n- **self-improving-agent**: \"Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A comma...\n- **tg-groupchat-setup**: No description"
+}

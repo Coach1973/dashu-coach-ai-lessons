@@ -8,6 +8,14 @@
     "capability-evolver": {
       "version": "1.53.2",
       "installedAt": 1780563412446
+    },
+    "evolver": {
+      "version": "1.53.2",
+      "installedAt": 1780606362671
+    },
+    "feishu-evolver-wrapper": {
+      "version": "1.8.0",
+      "installedAt": 1780606373555
     }
   }
 }

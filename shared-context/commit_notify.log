@@ -1586,3 +1586,11 @@
 [2026-06-05 04:28] [CoachWU] 074f5a6d: [auto] 04:28 對話記錄更新（3 條）
 [2026-06-05 04:30] [CoachWU] 6923ef7e: auto: 終端機對話蒸餾 2026-06-05
 [2026-06-05 04:31] [CoachWU] eff1539b: memory: cron 三異常排查 — 全部健康運作，接力棒誤報
+[2026-06-05 04:32] [CoachWU] 1660af2b: auto-backup 2026-06-05 04:32
+[2026-06-05 04:34] [CoachWU] 3d75299b: docs(learnings): 啟動主動學習機制 — 補上三條教訓（工具壞了≠找不到、主動學習啟動、plugin 從未觸發）
+[2026-06-05 04:38] [CoachWU] 3487517f: handoff: 標記 cron 三異常已完成驗證（eff1539b 全部健康）
+[2026-06-05 04:39] [CoachWU] 2922eb86: memory: 更新待辦清單 + 開工教訓（讀接力棒要先驗證版本）
+[2026-06-05 04:40] [CoachWU] 03fb15d8: auto: 接力棒鏡像同步 2026-06-05 04:40
+[2026-06-05 04:48] [CoachWU] a455c0e5: docs(learnings): 補上 LRN-20260605-004 — 沒盤點 workspace 就下判斷的嚴重失誤
+[2026-06-05 04:58] [CoachWU] c0f6f3ae: [auto] 04:58 對話記錄更新（24 條）
+[2026-06-05 05:03] [CoachWU] 01ca8def: distill: capability-evolver 首次完整跑結果摘要（6 信號+3 Gene+警告）
