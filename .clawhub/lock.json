@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "self-improving-agent": {
+      "version": "3.0.21",
+      "installedAt": 1780563397851
+    },
+    "capability-evolver": {
+      "version": "1.53.2",
+      "installedAt": 1780563412446
+    }
+  }
+}
