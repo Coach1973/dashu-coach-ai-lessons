@@ -1,7 +1,42 @@
-# Netlify 網站修改 SOP（標準作業程序）
+# 網站修改 SOP（標準作業程序）
 
-> 教練親定 2026-05-30，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
-> 本 SOP 源自 jiesheng-leadership.netlify.app 的成功流程，一次就做對。
+> 教練親定 2026-05-30，更新 2026-06-06，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
+
+---
+
+## 🔴 站台分流鐵律（教練 2026-06-06 親定）
+
+| 站台 | 平台 | 費用 | 使用時機 |
+|------|------|------|---------|
+| coach1973 GitHub Pages | GitHub | **免費** | 開發、測試、日常更新 |
+| Netlify（超限戰等公開站） | Netlify | **扣點** | 確認完善後才同步 |
+
+**規則：**
+- coach1973.github.io 底下的站（如 cool-case）→ **直接 git push 到 gh-pages 分支**，不走 Netlify
+- Netlify 站（theunrestrictedwar、jiesheng-leadership 等）→ 走下方七步驟
+- **嚴禁未確認就推 Netlify**，扣點不可逆
+
+### coach1973 GitHub 站台修改流程
+
+```bash
+# 本機 clone 路徑
+cd /Users/bymyway/github_repos/cool-case   # cool-case 範例
+
+# 1. 先 pull 確保最新
+git pull
+
+# 2. 修改 index.html（在 /tmp/ 編輯後複製過來，或直接編輯）
+cp /tmp/cool-case/index.html .
+
+# 3. commit + push
+git add index.html
+git commit -m "說明修改內容"
+git push origin gh-pages
+```
+
+確認上線：`https://coach1973.github.io/cool-case/`
+
+---
 
 ---
 
