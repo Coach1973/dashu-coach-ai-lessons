@@ -908,3 +908,5 @@
 {"ts":"2026-06-04T22:03:45.282Z","botId":"1号機","text":"🦞 大樹教練，早安！\n\n清晨 6 點了，現在應該還在休息吧～\n\n如果還沒起床，這條訊息就先留著，起床再看就好 ☀️\n\n有任何需要的時候再叫我，我都在 😊","msgId":"7547","chatId":"-1003877502911"}
 {"ts":"2026-06-04T22:04:39.002Z","botId":"1号機","text":"🦞 **小龍蝦早安報告**\n\nFB 生日祝福任務執行完畢，今日（6/5）沒有 FB 壽星需要祝福。\n\n🗓️ 最近也沒有任何待關心的朋友，系統確認無需發送祝賀。\n\n教練早安！今天要從哪件事開始？🌳","msgId":"7548","chatId":"-1003877502911"}
 {"ts":"2026-06-04T22:05:02.035Z","botId":"1号機","text":"✅ 今天沒有 FB 壽星，已安靜記錄。","msgId":"7549","chatId":"-1003877502911"}
+{"ts":"2026-06-05T00:02:55.402Z","botId":"1号機","text":"⚠️ Cron job \"YouTube新聞每日自動抓取\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7550","chatId":"-1003877502911"}
+{"ts":"2026-06-05T00:04:40.841Z","botId":"1号機","text":"✅ YouTube 新聞每日自動抓取完成！\n\n📊 **執行摘要：**\n- 監控頻道：**22 個**\n- 更新影片：**152 部**\n- 輸出檔案：`~/Desktop/youtube_news.json`（1218 行）\n\n所有主要 AI / 科技頻道已成功抓取，包含 AI Explained、Two Minute Papers、Yannic Kilcher、Lex Fridman、Marq","msgId":"7551","chatId":"-1003877502911"}
