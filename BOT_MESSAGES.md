@@ -951,3 +951,4 @@
 {"ts":"2026-06-05T11:48:43.547Z","botId":"1号機","text":"佩佩老師，我找到了 ✅\n\n**「曜董」= 曜隆董事**（5/23 我們去過他的 workshop，95 桌 950 人那場）— 我有印象，是個有影響力的人。\n\n---\n\n**我馬上記下今天的新任務**：\n\n📌 **佩佩老師今晚的行動**\n- 當來賓 → 認識人\n- 順便 → 幫曜董的書宣傳\n\n---\n\n**佩佩老師，告訴我三件事，我馬上幫您動起來：**\n\n1. **曜董的書叫什麼名字？**（書名","msgId":"1043","chatId":"-1003877502911"}
 {"ts":"2026-06-05T12:02:16.411Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7632","chatId":"-1003877502911"}
 {"ts":"2026-06-05T12:05:30.178Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7633","chatId":"-1003877502911"}
+{"ts":"2026-06-05T13:01:52.598Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7634","chatId":"-1003877502911"}
