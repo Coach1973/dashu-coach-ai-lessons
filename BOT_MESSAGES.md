@@ -945,3 +945,4 @@
 {"ts":"2026-06-05T10:28:21.806Z","botId":"1号機","text":"⚠️ ⏰ Cron failed","msgId":"7619","chatId":"-1003877502911"}
 {"ts":"2026-06-05T10:36:59.512Z","botId":"1号機","text":"✅ 全部修完了！驗證確認：\n\n| 任務 | 設定 | 說明 |\n|------|------|------|\n| 🦞 每30分鐘任務健康檢查 | `failureAlert: false` | 它自己邏輯就有「≥3 次才通知」，OpenClaw 內建太敏感 |\n| 🦞 每4小時主動關懷 | `failureAlert: false` | 之前已修 |\n| 🔄 cron 模型自動同步 | `f","msgId":"7629","chatId":"-1003877502911"}
 {"ts":"2026-06-05T11:02:44.734Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7630","chatId":"-1003877502911"}
+{"ts":"2026-06-05T11:04:47.388Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7631","chatId":"-1003877502911"}
