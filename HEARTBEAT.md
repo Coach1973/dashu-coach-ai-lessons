@@ -10,8 +10,13 @@
 ⚠️ **不要讀 memory 大檔**（memory/2026-06-05.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
-- Primary 模型：google/gemini-3.1-pro-preview
+- Primary 模型：minimax/MiniMax-M3（2026-06-05 確認）
+- 自動同步：每小時 0 分跑 `scripts/sync_cron_models.sh`，確保 cron `payload.model` 跟 openclaw.json 同步
 - 名稱對等：Telegram = 小龍蝦 = 電報
+
+## 🔴 2026-06-05 教訓（已修復）
+- 9 個 cron 仍寫 M2.7（5/25 切 M3 後沒同步）→ 已全部更新 + 建立自動同步機制
+- 詳見 `.learnings/LEARNINGS.md` 開頭 + `scripts/sync_cron_models.sh`
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -22,5 +27,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-05 2026-06-05 16:03 - relay poll OK
+### 2026-06-05 2026-06-05 16:08 - relay poll OK
 
