@@ -939,3 +939,7 @@
 {"ts":"2026-06-05T10:02:45.267Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7610","chatId":"-1003877502911"}
 {"ts":"2026-06-05T10:02:47.005Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7611","chatId":"-1003877502911"}
 {"ts":"2026-06-05T10:02:47.968Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7612","chatId":"-1003877502911"}
+{"ts":"2026-06-05T10:04:50.130Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7613","chatId":"-1003877502911"}
+{"ts":"2026-06-05T10:04:50.637Z","botId":"1号機","text":"🦞 教練好！小龍蝦 4 小時關懷時間到～\n\n週五傍晚 6 點了，今天辛苦了！有任何想討論的、卡住的地方、或想分享的，隨時跟我說一聲。\n\n如果想查待辦，說一聲「查待辦」就行；想安靜忙一下也沒關係，我會乖乖待命 💪","msgId":"7614","chatId":"-1003877502911"}
+{"ts":"2026-06-05T10:28:20.350Z","botId":"1号機","text":"✅ 修完了，教練！以後這種 minimax 偶爾過載的小失敗，不會再打擾您了。\n\n## 我做了什麼\n\n把這兩個任務的「內建失敗通知」關掉：\n- 🦞 **每4小時主動關懷**\n- 🔄 **cron 模型自動同步（每小時）**\n\n兩個都設定成 `failureAlert: false`（驗證過了）。\n\n## 為什麼這樣改就夠\n\n1. **過載是偶發的** —— minimax 過幾分鐘自己會好，不","msgId":"7618","chatId":"-1003877502911"}
+{"ts":"2026-06-05T10:28:21.806Z","botId":"1号機","text":"⚠️ ⏰ Cron failed","msgId":"7619","chatId":"-1003877502911"}
