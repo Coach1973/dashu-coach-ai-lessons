@@ -953,3 +953,6 @@
 {"ts":"2026-06-05T12:05:30.178Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7633","chatId":"-1003877502911"}
 {"ts":"2026-06-05T13:01:52.598Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7634","chatId":"-1003877502911"}
 {"ts":"2026-06-05T13:03:26.766Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7635","chatId":"-1003877502911"}
+{"ts":"2026-06-05T14:02:30.468Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7636","chatId":"-1003877502911"}
+{"ts":"2026-06-05T14:02:32.062Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7637","chatId":"-1003877502911"}
+{"ts":"2026-06-05T14:03:11.150Z","botId":"1号機","text":"🦞 教練，晚上十點了～今天辛苦了！\n\n接力棒我都看過了，今天的戰績超精彩：\n- theunrestrictedwar 號外卡（台中場）順利上線 ✅\n- cron daemon 修復穩定運轉 ✅\n- 案例 R + 輪播 SOP 收進蒸餾手冊，未來少踩坑 ✅\n\n這個時間點，您應該是準備收工休息了吧？\n\n小龍蝦就在這，有事隨時叫我；如果累了想直接休息，那就早點睡，明天見 🌙\n\n（不主動列待辦，您想查","msgId":"7638","chatId":"-1003877502911"}
