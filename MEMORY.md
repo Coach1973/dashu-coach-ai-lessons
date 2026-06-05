@@ -15,7 +15,7 @@
 - [🔴 特助心法定義（2026-05-19 教練親定）](project_top_assistant_xinfa_definition.md) — 「特助心法」=最高指導原則+三大信念+靈魂三問+特助21守則，啟動/心跳必讀
 - [語音糾偏對映表（守則18）](feedback_voice_typo_shixing_shouze.md) — 「特助心法」「頂級特助」「提煉日誌」等核心詞的語音變體，聽到近似詞自動對映正確用語
 - [教練是 RustDesk 遠端連 Mac](project_coach_rustdesk_remote_env.md) — 教練從 Windows 透過 RustDesk 遠端操作這台 Mac，鍵盤/滑鼠/畫面都是遠端的；鍵盤類問題先查這層
-- [教練的輸入法：香草=OpenVanilla=嘸蝦米](reference_coach_input_method.md) — 「香草/小草輸入法」=OpenVanilla，慣用 liu7 嘸蝦米；絕不可移除否則無法打中文
+- [教練的輸入法：鼠鬚管 Squirrel + RIME liur 嘸蝦米](reference_coach_input_method.md) — 2026-06-02 升級自 OpenVanilla；Boshiamy + OpenVanilla 已完全卸載，紅線改為「至少保留一個能打中文的輸入法」；「liur」「liu7」「嘸蝦米」是同一個東西的不同寫法
 - [🔴 升級戰略：穩定中發展（2026-05-19 教練親定）](project_upgrade_strategy_stable_first.md) — 本機 Mac 本季不升 5.12（三條開放 issue 未修），VPS 已升原地觀察
 - [🔴 VPS 更新 SOP（關鍵字觸發）](feedback_vps_update_sop_trigger.md) — 教練說「VPS 更新/升級/有更新」立刻跑四步 SOP，不問不試錯（sshpass + docker exec -u root）
 - [中英對照規則（教練親定）](feedback_chinese_english_pairing_rule.md) — 給教練的日誌/報告凡英文檔名都要中英對照「靈魂手冊（SOUL.md）」式呈現
