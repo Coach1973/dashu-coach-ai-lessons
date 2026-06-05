@@ -6,6 +6,53 @@
 
 ---
 
+## 2026-06-05｜cron 模型不同步：session 跑 M3，cron 還在 M2.7（教練拍桌教訓）
+
+### 問題
+- 2026-06-05 早上 06:03 三個 cron（每4小時主動關懷、FB 生日爬蟲、結繩閱讀提醒）連續失敗
+- 根因追查：9 個啟用中的 cron **全部硬寫 `payload.model: "minimax/MiniMax-M2.7"`**
+- 但 1號機 session 早就改用 `minimax/MiniMax-M3`（約 2026-05-25 切換）
+- 結果：cron 用過期的 M2.7 → M2.7 cooldown（過載暫停）→ 任務失敗
+- 教練原話：**「明明我的模型都選 M3 怎麼指令還在跑 2.7，明顯就是沒有做資訊同步更新，下次可能還有升級例如 M3.5 到時記得一定要同步更新，記取教訓」**
+
+### 教練為什麼不滿
+- 教練以為「在 OpenClaw 改模型 = 全部任務都跟著換」，但 cron 的 `payload.model` 是**建立時燒死的字串**
+- AI 沒有主動偵測「session 模型 vs cron 模型」不一致
+- 教練 5/25 切到 M3，**到 6/5 才被發現**，中間 10 天空窗期每天 06:03 都在爆炸
+
+### 解法（已完成）
+1. ✅ 9 個啟用 + 3 個停用的 cron 全部從 M2.7 → M3
+2. ✅ 寫 `scripts/sync_cron_models.sh`：
+   - 讀 `~/.openclaw/openclaw.json` 的 main agent 模型
+   - 列出所有啟用的 agentTurn cron
+   - 逐一比對 `payload.model`，不一致就 `openclaw cron edit --model` 改掉
+   - 結果寫到 `state/sync_cron_models.log`
+3. ✅ 新增 cron「🔄 cron 模型自動同步（每小時）」：每小時 0 分跑同步腳本，有變動才通知教練
+4. ⚠️ cron 同步本身用 M3（避免 model 欄位空著的遞迴問題），下次 1號機換 M4 時這個 sync cron 會更新其他 9 個，自己則維持 M3（直到手動改為止，這是設計 trade-off）
+
+### 教訓（最高優先）
+- **「設定改了 ≠ 全部生效」**：OpenClaw 有多個地方會硬寫模型（openclaw.json agents.list、cron payload.model、session override），三者要分別更新
+- **「資訊同步」不是口號**：每次主模型升級（M2.7→M3→M3.5→M4），必須主動跑一次全系統掃描，確認 cron / session / agents 全部一致
+- **「使用者改了設定沒看到效果」= 反覆型錯誤**：教練被動知道問題 = AI 失職，應該有 watchdog 自動偵測
+- **「payload.model 欄位不能清空」**：cron API 對 `null` 會轉成字串「null」壞掉，只能用「明寫模型」或「依賴主 session default」
+- **「明寫模型 = 易腐敗」**：寫死模型欄位 = 升級時漏改的根源，未來考慮改用「相對參照」（例如「跟 main agent 一樣」）但目前 API 不支援
+
+### 守則對應
+- 🔴 守則 #07 失敗為成功之母：不要在同一個地方跌倒兩次 → 必須有自動偵測機制
+- 🟠 守則 #11 自動自發要體現在每次的主動關懷：模型升級要主動提醒同步
+- 🟠 守則 #05 凡走過必留痕跡：commit 進 LEARNINGS.md 並推送 GitHub
+
+### 預防措施
+- ✅ `sync_cron_models.sh` + 每小時 sync cron
+- 🔲 未來如果支援「相對模型參照」，把所有 cron 改用「跟 main 一樣」語法
+- 🔲 蒸餾系統也應該把這個案例納入 `distill/特助場景庫_自動增量.md`
+
+### commit
+- 提交時訊息：`lesson: cron 模型不同步 → 自動同步機制`
+- 路徑：`.learnings/LEARNINGS.md` + `scripts/sync_cron_models.sh`
+
+---
+
 ## 2026-06-04｜蒸餾卡住靜默跳過 Bug（教練 C 選修復）
 
 ### 問題
