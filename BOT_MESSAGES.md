@@ -911,3 +911,4 @@
 {"ts":"2026-06-05T00:02:55.402Z","botId":"1号機","text":"⚠️ Cron job \"YouTube新聞每日自動抓取\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7550","chatId":"-1003877502911"}
 {"ts":"2026-06-05T00:04:40.841Z","botId":"1号機","text":"✅ YouTube 新聞每日自動抓取完成！\n\n📊 **執行摘要：**\n- 監控頻道：**22 個**\n- 更新影片：**152 部**\n- 輸出檔案：`~/Desktop/youtube_news.json`（1218 行）\n\n所有主要 AI / 科技頻道已成功抓取，包含 AI Explained、Two Minute Papers、Yannic Kilcher、Lex Fridman、Marq","msgId":"7551","chatId":"-1003877502911"}
 {"ts":"2026-06-05T01:01:37.786Z","botId":"1号機","text":"⚠️ Cron job \"📚 每日結繩領導學閱讀提醒\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7552","chatId":"-1003877502911"}
+{"ts":"2026-06-05T01:03:03.795Z","botId":"1号機","text":"教練早安 ☀️ 9:02 了，《結繩領導學》閱讀時間到～\n\n今天用最短的時間，吸最濃的智慧 💪\n讀到哪一段有感觸，直接語音丟給我，我幫你整理成筆記 🦞","msgId":"7553","chatId":"-1003877502911"}
