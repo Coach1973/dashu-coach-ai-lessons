@@ -1,6 +1,7 @@
-# 軍師接力棒 · 2026-06-05（Opus 4.8 終端機 session 持續中）
+# 軍師接力棒 · 2026-06-05（Opus 4.8 終端機 session 結案）
 
-> 建立時間：2026-06-05 18:25
+> 建立時間：2026-06-05 19:00
+> **結案時間：2026-06-05 19:00（推 theunrestrictedwar 成功）**
 > 上一棒：軍師接力棒 2026-06-05 17:30（minimax-m3 終端機 session 完）
 > 本棒執行者：Opus 4.8 軍師（Claude Code CLI 終端機）
 > 接班建議：本次重點已完成（教訓蒸餾 + 站台改好），待教練確認推 theunrestrictedwar
@@ -24,14 +25,18 @@
 
 ## ✅ 本場完成（Opus 4.8 軍師）
 
-### 任務一：theunrestrictedwar 號外卡（台中 6/5-6/9）✅
+### 任務一：theunrestrictedwar 號外卡（台中 6/5-6/9）✅ 已推上線
 
-**狀態**：本機 `/tmp/theunrestrictedwar/` 已改好
+**狀態**：已推上線並驗證完成
 - 新增號外第 2 張卡：台中清水時代影城 ＆ 王牌映畫 6/5-6/9（共 135 張）
 - 報名表單：`https://forms.gle/JBXvvXkP4cvNNyzx5`（教練提供）
 - 修復輪播空白 bug（用原生水平滾動取代 transform）
 
-**🔴 待教練說「推」才推**（SOP 鐵律）
+**部署憑證**：
+- Deploy ID：`6a22ac29c409762de6d8978b`
+- State：ready ✅
+- 線上 URL：https://theunrestrictedwar.netlify.app
+- 線上驗證：grep「台中清水時代」「135 張」「6/05」全部命中 ✅
 
 ### 任務二：教訓蒸餾（案例 R + 輪播 SOP）✅
 
@@ -71,21 +76,20 @@
 
 ## 📝 給下一棒
 
-### 待辦
-- [ ] 🔴 **推 theunrestrictedwar 站台** — 等教練說「推」才推
-  - Site ID: `86406013-6cdf-4bec-90e3-cdc9655bf124`
-  - 最新 deploy: `6a228d8a824c18c401c53721` (2026-06-05 08:49)
-  - 本機改好的檔案：`/tmp/theunrestrictedwar/index.html` + `_headers` + `1779859916089.jpg`
-  - 預覽伺服器：`http://localhost:8899/`（跑中）
+### 待辦（已全清）✅
+- ✅ theunrestrictedwar 號外卡（台中 6/5-6/9）已推上線
+- ✅ 教訓蒸餾（案例 R + 輪播 SOP + 路徑大全）已 commit + push
+- ✅ 接力棒已更新
 
 ### 環境狀態
 - 終端機軌道：Claude Code CLI Opus 4.8（本棒）
-- 工作區 git：最新 commit `2474e694`（待 push）
-- 預覽伺服器：port 8899 跑中
+- 工作區 git：最新 commit `2705c50b`（已 push）
+- 預覽伺服器：port 8899（可關）
 
 ### 提醒
-- ✅ 教練已確認輪播 bug 修好（教練原話：「太棒了，終於解決了！」）
-- 🔴 還沒推站台，因為 SOP 鐵律是教練沒說推之前不推
+- ✅ 教練確認輪播 bug 修好
+- ✅ 教練說「推」後已推上線
+- ✅ 線上驗證 grep 命中關鍵字
 - 📝 案例 R + 輪播 SOP 已寫入，未來所有輪播元件一律用此模式
 
 ---
@@ -95,6 +99,8 @@
 | Commit | 內容 |
 |--------|------|
 | `2474e694` | 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP |
+| `2705c50b` | 接力棒更新：案例 R + 輪播 SOP + 等教練推 theunrestrictedwar |
+| `（待）` | 接力棒結案：推上線成功 + Deploy ID 記錄 |
 
 ---
 
