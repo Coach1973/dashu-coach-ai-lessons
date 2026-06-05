@@ -1,13 +1,13 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-06-05 23:29
-> 對話記錄已完整存入 memory/2026-06-05.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-06-06 01:59
+> 對話記錄已完整存入 memory/2026-06-06.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-06-05.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-06-06.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：google/gemini-3.1-pro-preview
@@ -22,5 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-06 2026-06-06 01:32 - relay poll OK
+### 2026-06-06 2026-06-06 02:02 - relay poll OK
 
