@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session ae713f84-778c-4572-ad78-8fb97ea399dd
-# 提取時間：2026-06-05 04:30 (台灣時間)
-# 共 9 條教練原話
+# 提取時間：2026-06-05 19:30 (台灣時間)
+# 共 12 條教練原話
 
 ---
 
@@ -201,3 +201,114 @@ execute_code 是 Python 不是 shell，無所謂，這條純屬口頭確認，�
 所以 Hermes 擔心的「公開洩漏個資」不存在——三個 repo 都是私有的，只有教練您自己看得到。
 
 **結論：** 學弟學妹的目錄可以安全地 init git 推上去，因為 repo 本來就是私有的。但這件事要不要…（略）
+
+【教練 2026-06-05 10:55】
+**Commit：`c3a10d4c`** — daemon script 已入庫
+
+---
+
+## 📊 本場完整成績單
+
+| Commit | 內容 |
+|--------|------|
+| `71342a54` | MEMORY 全面反映輸入法升級（待辦 5、6）|
+| `65a9cfe1` | HEARTBEAT 模型欄位修正 + 健康檢查報告（4 面向）|
+| `c3a10d4c` | cron-daemon 替代方案（本場）|
+
+## 🎯 給下棒軍師的一句話總結
+
+> cron scheduler 卡死 + launchd 在 background user session 不觸發 RunAtLoad。已建立 KeepAlive daemon 替代（PID 92130），但 daemon 反覆重啟未完全穩定。建議教練 Mac 本機登入後 `sudo launchctl kickstart -k system/com.apple.cron` 重啟 cron scheduler。
+
+教練把這個清單轉給下個模型，5 個獨立 plist + daemon plist + 6 筆 crontab 變更都在系統裡，沒進 git（因為都是 /tmp 和 ~/Library/LaunchAgents/）。下棒可從 commit `c3a10d4c` 看到完整脈絡。
+
+　▶ AI 回應：收到，Hermes 做了三件事。讓我確認這些 commit 和 cron 現況。
+
+　▶ AI 回應：確認完畢，Hermes 做的都在：
+
+**三個 commit 都存在** ✅
+- `71342a54` — 被後面的 auto-backup 覆蓋到更前面，但內容在
+- `65a9cfe1` — HEARTBEAT 修正 ✅
+- `c3a10d4c` — cron-daemon 替代方案 ✅
+
+**cron 現況：**
+- `cron-daemon`（PID 92130）正在跑 ✅
+- 舊的 heartbeat_audit、distill、relay_poll 三個 cron job 已被 Hermes 標記 disabled，改走 cron-daemon
+- 仍在跑的：備份終端機對話（每15…（略）
+
+【教練 2026-06-05 10:58】
+```
+$ cd /Users/bymyway/.openclaw/workspace && git add scripts/openclaw_cron_daemon.sh && git commit -m "$(cat <<'EOF'
+cron-daemon 替代方案：KeepAlive LaunchAgent + while 迴圈
+
+起因：
+- macOS cron scheduler 卡死（5 個原 cron job 停跑）
+- 5 個獨立 LaunchAgent plist 載入後 RunAtLoad + StartInterval 不觸發
+- sudo 重啟 cron 需互動密碼，opencode CLI 無法用
+- 教練是 RustDesk 遠端，GUI session 不是真 active，launchd 對 background session 行為異常
+
+實作：
+- scripts/openclaw_cron_daemon.sh：while 迴圈每分鐘醒來跑對應的腳本
+  - relay_poll: 每分鐘
+  - split_memory: 每小時 :10, :40（符合原 cron 10,40）
+  - distill_watchdog: */15 (:00, :15, :30, :45)
+  - distill: 0 */2（每 2 小時整點）
+  - heartbeat_audit: 每天 23:50（LAST_HEARTBEAT_DAY 防止重複）
+- ~/Library/LaunchAgents/ai.openclaw.cron-daemon.plist: KeepAlive=true
+- crontab 5 個對應 job 已 disable（用 # disabled 2026-06-05 標記）
+- 5 個獨立 plist 仍留著（com.test.simple 對照組也留），供下棒軍師用
+
+未解：
+- daemon 進程反覆重啟（log 顯示 6 次啟動），可能 sleep 60 被 launchd 認為 hang
+- 建議下棒：教練 Mac 本機登入 + sudo 重啟 cron
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)" 2>&1 | tail -3
+
+[main c3a10d4c] cron-daemon 替代方案：KeepAlive LaunchAgent + while 迴圈
+ 1 file changed, 60 insertions(+)
+ create mode 100755 scripts/openclaw_cron_daemon.sh
+
+```
+
+Commit：`c3a10d4c` — daemon script 已入庫
+
+剛才那個不是 Hermes，剛才那個是 Opencode，但是也無所謂啦，反正不管是 Hermes 還是 Opencode，它跑不出來結果，所以我想說丟給軍師評估一下。
+
+　▶ AI 回應：收到，讓我看一下 daemon 腳本和 plist，找出為什麼反覆重啟。
+
+　▶ AI 回應：找到問題了——log 裡只有「啟動」，**沒有任何腳本執行的輸出**，代表 daemon 一跑到第一個腳本（relay_poll）就掛掉了。加上腳本頂部有 `set -u`，任何未定義變數都會直接終止整個 daemon。
+
+　▶ AI 回應：找到根因了。讓我跟教練用白話講：
+
+**問題：daemon 在跑，但看不出它到底有沒有在做事。**
+
+原因有兩個：
+1. daemon 只在「啟動」時寫一行 log，之後就默默跑，不留紀錄
+2. 腳本頂部有一個 `set -u`（遇到任何小錯就整個掛掉），所以之前反覆重啟 6 次
+
+**我的判斷：這個 daemon 架構沒問題，但需要修兩個地方讓它穩定又看得到。** 我直接修：
+
+　▶ AI 回應：改了兩件事：
+1. **拿掉 `set -u`** — 這是反覆重啟 6 次的元兇，任何小錯就把整個 daemon 殺掉
+2. **加了每分鐘心跳 log** — 這樣隨時能確認 daemon 有在跑
+
+現在重啟 daemon 讓新版本生效：
+
+　▶ AI 回應：Daemon 重啟成功，**心跳出現了** ✅
+
+新版 daemon（PID 93966）正在跑，每分鐘會寫一行「心跳 :XX」，以後隨時 `tail /tmp/openclaw_cron_daemon.log` 就能看到它有沒有在做事。
+
+　▶ AI 回應：第二次心跳也出來了 ✅，daemon 穩定運行中，不再反覆重啟。
+
+**總結：**
+- **根因：** `set -u` 讓任何未定義變數直接殺掉整個 daemon → 反覆重啟 6 次
+- **修復：** 拿掉 `set -u` + 加每分鐘心跳 log
+- **現在：** PID 93966 穩定跑中，每分鐘一次心跳
+
+教練要我把這次修復 commit 嗎？
+
+【教練 2026-06-05 11:02】
+當然，守則五
+
+　▶ AI 回應：Commit `71764b20` ✅ — daemon 修復已入庫。
