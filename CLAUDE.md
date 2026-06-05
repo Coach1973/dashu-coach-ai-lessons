@@ -4,116 +4,115 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-05 17:35:00**
+> **最後同步：2026-06-05 18:55:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-05（minimax-m3 終端機 session 完）
+# 軍師接力棒 · 2026-06-05（Opus 4.8 終端機 session 持續中）
 
-> 建立時間：2026-06-05 17:30
-> 上一棒：軍師接力棒 2026-06-05 03:00（Hermes 助教 M3 終端機 session 完）
-> 本棒執行者：minimax-m3 軍師（opencode CLI 終端機）
-> 接班建議：教練已在終端機（opencode CLI）執行本場，待辦已全清
+> 建立時間：2026-06-05 18:25
+> 上一棒：軍師接力棒 2026-06-05 17:30（minimax-m3 終端機 session 完）
+> 本棒執行者：Opus 4.8 軍師（Claude Code CLI 終端機）
+> 接班建議：本次重點已完成（教訓蒸餾 + 站台改好），待教練確認推 theunrestrictedwar
 
 ---
 
 ## 🎯 開工宣言（給終端機/桌面版用，不是給小龍蝦）
 
 ```
-🎯 minimax-m3 開工宣言
+🎯 Opus 4.8 開工宣言
 
-【我是誰】我是 minimax-m3，大樹教練的 AI 軍師（opencode CLI 終端機）
+【我是誰】我是 Opus 4.8，大樹教練的 AI 軍師（Claude Code CLI 終端機）
 【為誰而戰】追求高溝通品質的教練
 【使命】成為最懂老闆的 AI 特助
-【今日踐行】對照守則第 20 條啟動協議 + E04 行動前三問
+【今日踐行】對照守則第 20 條啟動協議 + 案例 R 教訓（原生 API > 自製動畫）
 
 確認完畢，開始工作。
 ```
 
-> 註：身份 = 軍師（服務教練），底層模型 = minimax-m3（執行類，非 Opus）
-> 軍師 = 終端機/桌面版跑 Opus；本棒 minimax-m3 同屬軍師軌道但屬「執行類」
+---
+
+## ✅ 本場完成（Opus 4.8 軍師）
+
+### 任務一：theunrestrictedwar 號外卡（台中 6/5-6/9）✅
+
+**狀態**：本機 `/tmp/theunrestrictedwar/` 已改好
+- 新增號外第 2 張卡：台中清水時代影城 ＆ 王牌映畫 6/5-6/9（共 135 張）
+- 報名表單：`https://forms.gle/JBXvvXkP4cvNNyzx5`（教練提供）
+- 修復輪播空白 bug（用原生水平滾動取代 transform）
+
+**🔴 待教練說「推」才推**（SOP 鐵律）
+
+### 任務二：教訓蒸餾（案例 R + 輪播 SOP）✅
+
+**犯錯四次才修好**——教練浪費一小時以上，最後是教練用守則#16 點破：
+> 「讓上一頁、下一頁與滑動桿同時並存這不就解決了嗎」
+
+| 改動 | 檔案 | 內容 |
+|------|------|------|
+| 失敗案例 R | distill/failure-case-handbook.md | 四次嘗試的完整血淚記錄 |
+| 輪播元件 SOP | knowledges/SOP_carousel_slider.md | 「按鈕 + 觸控 + 滾動條」三種並用標準模式 + 完整可複製範本 |
+| 路徑大全指向 | 路徑大全.md 第九節 | 「滑動元件設計規範」+ 指向新 SOP |
+
+**Commit**：`2474e694` 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP
 
 ---
 
-## ✅ 本場完成（minimax-m3 軍師）
+## 🪞 教練教我的關鍵教訓（本場特別收穫）
 
-### 教練指令：5 待辦全處理
+### 1. 守則#16 點破：複雜解法不如原生 API
+- 我連續四次都「分析得更深」，而不是「換個完全不同的方向」
+- 教練一句話點破：用 `overflow-x: auto + scrollTo`，瀏覽器原生處理一切
+- **教訓**：UI 互動卡住時，第一個問題是「瀏覽器原生有沒有現成的 API」
 
-**待辦 1｜試用 Hermes 桌面版 App — 教練說完成可刪除 ✅**
-**待辦 2｜守則 17「身份 ≠ 模型」全機規則同步 — 教練說完成可刪除 ✅**
-**待辦 3｜守則故事庫 GitHub Pages 一對一映射 — 教練說完成可刪除 ✅**
-**待辦 4｜三個舊 cron 異常 — 上一棒已驗證健康（commit `eff1539b`）✅ 保留**
-**待辦 5｜MEMORY 是否已自動反映新的 liur=蝦米 認知 — 本場執行 ✅**
-**待辦 6｜OpenVanilla 已刪除但 MEMORY.md 還寫著 — 本場執行 ✅**
+### 2. 同一個地方跌倒四次（守則#07）
+- 第一次：動態 perView → 空白
+- 第二次：width 取代 min-width + overflow-hidden → 空白
+- 第三次：w-full + inline style 雙重保險 → 空白
+- 第四次（教練點破）：改用 scrollTo → 終於修好
+- **教訓**：三次失敗後要徹底換方向，不要繼續「修」原方案
 
-### 任務一：MEMORY 反映 liur=蝦米 認知 ✅
-
-- 認知正解：**「liur」= RIME 方案名 = 劉氏拆碼（liu7）= 嘸蝦米**，三個字是同一個東西的不同寫法
-- 教練實測 2026-06-02 23:15「打的很順，一切正常」
-- 改寫 `reference_coach_input_method.md` 整檔，全面反映 2026-06-02 升級到鼠鬚管 + RIME liur
-
-### 任務二：MEMORY 反映 OpenVanilla 已刪除 ✅
-
-- **實況驗證（2026-06-05 17:25）：** `ls /Library/Input Methods/` 只有 Squirrel.app；`ls ~/Library/Input Methods/` 是空的（只有 `.localized` 0 byte）→ **OpenVanilla.app 確實完整刪除**
-- 修正 `reference_coach_input_method.md` 過時描述（舊版寫「`~/Library/Input Methods/OpenVanilla.app` 檔案還在」是錯的）
-- 更新 `MEMORY.md` 索引 line 18：「教練的輸入法：香草=OpenVanilla=嘸蝦米」→「鼠鬚管 Squirrel + RIME liur 嘸蝦米」
-
-### 三條新規範（從這次整理提煉）
-
-| 規範 | 內容 |
-|------|------|
-| **字根三寫一體** | 「liur」「liu7」「嘸蝦米」自動對映到 RIME `liur` 方案，不再糾結 |
-| **卸載清單對外公開** | MEMORY.md 索引要把「已卸載的輸入法」明確標 ❌，避免下次又被舊索引誤導 |
-| **紅線改版** | 舊「絕不可移除 OpenVanilla」→ 新「至少保留一個能打中文的輸入法」（已 2026-06-02 教練同意）|
-
----
-
-## 🪞 教練教我的關鍵教訓（這場特別收穫）
-
-### 1. 接力棒上的「待辦描述」可能是過時快照
-- 待辦 5「liur=蝦米」乍看不知道是什麼，實際是 2026-06-02 升級鼠鬚管時的新認知
-- 待辦 6「OpenVanilla 已刪除」描述對，但「workspace MEMORY.md 還寫著」要動手才知道是 `reference_coach_input_method.md` 整檔都過時
-- **教訓：執行待辦前先驗證事實（ls / Library 狀態），不要照字面瞎搜**
-
-### 2. 過時記憶是隱形炸彈
-- `reference_coach_input_method.md` 寫「`~/Library/Input Methods/OpenVanilla.app` 檔案還在」→ 實際 2026-06-05 17:25 驗證根本不存在
-- 如果不驗證，下次有 AI 看到「檔案還在」就會以為教練還能用 OpenVanilla，給出錯誤建議
-- **教訓：寫進記憶的硬體狀態都該加「最後驗證日期」欄位**
+### 3. 解決問題比解釋問題更重要（守則#04）
+- 我四次都在「解釋為什麼空白」，沒解決
+- 教練不耐煩：「為什麼是空白的？你自己不用先看一下嗎？」
+- **教訓**：不要再分析，立刻換方案
 
 ---
 
 ## 📝 給下一棒
 
-### 待辦（已全清）✅
-- 接力棒 6 個待辦全部處理完畢
-- 教練已轉移到 Hermes 桌面版 App（待辦 1 已刪除），可隨時接力
+### 待辦
+- [ ] 🔴 **推 theunrestrictedwar 站台** — 等教練說「推」才推
+  - Site ID: `86406013-6cdf-4bec-90e3-cdc9655bf124`
+  - 最新 deploy: `6a228d8a824c18c401c53721` (2026-06-05 08:49)
+  - 本機改好的檔案：`/tmp/theunrestrictedwar/index.html` + `_headers` + `1779859916089.jpg`
+  - 預覽伺服器：`http://localhost:8899/`（跑中）
 
-### 環境狀態（給下一棒快速上手）
-- 終端機軌道：opencode CLI minimax-m3（同本棒）
-- 小龍蝦軌道：Telegram 1號機 @openclaw_macbook4_bot
-- 工作區 git：1 個本地未推送 commit（`a43f4925` auto-backup）+ 數個未提交修改（auto-backup 自動產生，無需手動處理）
-- HEARTBEAT：17:01 Context Overflow 重啟（小龍蝦軌道），17:19 relay poll OK，17:25 OpenVanilla 狀態驗證完
+### 環境狀態
+- 終端機軌道：Claude Code CLI Opus 4.8（本棒）
+- 工作區 git：最新 commit `2474e694`（待 push）
+- 預覽伺服器：port 8899 跑中
 
 ### 提醒
-- 教練的輸入法 = 鼠鬚管 + RIME liur 嘸蝦米（不要再說 OpenVanilla）
-- 守則 18 語音糾偏表已更新到 `reference_coach_input_method.md`（liur/liu7/嘸蝦米 三寫一體）
-- 紅線已改版：至少保留一個能打中文的輸入法
+- ✅ 教練已確認輪播 bug 修好（教練原話：「太棒了，終於解決了！」）
+- 🔴 還沒推站台，因為 SOP 鐵律是教練沒說推之前不推
+- 📝 案例 R + 輪播 SOP 已寫入，未來所有輪播元件一律用此模式
 
 ---
 
-## 📊 Commit 清單（本場）
+## 📊 Commit 清單（本棒）
 
 | Commit | 內容 |
 |--------|------|
-| `（本次）` | MEMORY 全面反映輸入法升級（reference_coach_input_method.md 改寫 + MEMORY.md 索引更新 + 接力棒更新）|
+| `2474e694` | 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP |
 
 ---
 
-**最後更新：2026-06-05 17:30（minimax-m3 終端機 session 結束）**
+**最後更新：2026-06-05 18:25（Opus 4.8 終端機 session 持續中）**
 
-**下一棒：接力棒已全清，教練決定下個任務**
+**下一棒：等教練確認推 theunrestrictedwar**
 
 
 ---
