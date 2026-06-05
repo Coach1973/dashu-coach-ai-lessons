@@ -107,3 +107,74 @@
 **最後更新：2026-06-05 18:25（Opus 4.8 終端機 session 持續中）**
 
 **下一棒：等教練確認推 theunrestrictedwar**
+
+---
+
+# 接力棒追加 · 2026-06-05 19:10（minimax-m3 後續 session）
+
+> 上一棒：Opus 4.8 19:00 結案（theunrestrictedwar 推上線）
+> 本棒執行者：minimax-m3（同一 worktree 並行 session）
+> 重大事件：教練親手修 cron daemon，PID 93966 穩定跑中
+
+---
+
+## ✅ 本棒完成（minimax-m3 19:05-19:10）
+
+### 1. 試金石案例 022 入庫 ✅
+- `試金石/試金石_守則與流程.md` 追加 案例 022
+- 主題：daemon 腳本用 `set -u` 導致反覆重啟
+- 教訓：歸因從程式碼開始，不要從系統開始
+- 教練親手修記錄：移除 `set -u` + 加心跳 log + 簡潔失敗處理
+
+### 2. cron 修復完整閉環 ✅
+- daemon 進程 PID 93966 穩定跑 5+ 分鐘
+- 5 個原 cron job 由 daemon 接管（distill_watchdog 19:00 已觸發驗證）
+- 5 個對應 crontab job 已 disable（避免 cron 復活後重複）
+- 5 個獨立 LaunchAgent plist 保留供未來選用
+
+### 3. 健康複檢 ✅
+- 隨時 `tail -f /tmp/openclaw_cron_daemon.log` 看心跳
+- 5 個 job 各自的 log 路徑已在「監控指標」段列清楚
+
+---
+
+## 📝 給下一棒（累積）
+
+### 待辦（已全清）✅
+- 接力棒從早上 03:00 到現在 19:10，所有待辦全清
+- 系統全面健康
+
+### 環境狀態（兩棒合併視角）
+- 終端機軌道 1：Claude Code CLI Opus 4.8（剛結案 theunrestrictedwar）
+- 終端機軌道 2：opencode CLI minimax-m3（本棒 cron 修復）
+- 小龍蝦軌道：Telegram 1號機 @openclaw_macbook4_bot
+- worktree：3 個新 commit（71342a54、65a9cfe1、c3a10d4c）+ Opus 4.8 2 個（2474e694、2705c50b）待 push
+
+### 監控指標
+- daemon 心跳：`tail -f /tmp/openclaw_cron_daemon.log`
+- 5 個 job log 路徑：見上方「監控指標」段
+
+### 提醒（累積）
+- 教練輸入法 = 鼠鬚管 + RIME liur 嘸蝦米（不要說 OpenVanilla）
+- 守則 7 新教訓：歸因從程式碼開始
+- 新試金石 022：daemon 別用 set -u
+- 案例 R：UI 互動卡住先想「瀏覽器原生 API」（Opus 4.8 教訓）
+
+---
+
+## 📊 完整 Commit 清單（今日）
+
+| 時間 | Commit | 棒 | 內容 |
+|------|--------|----|----|
+| 17:30 | `71342a54` | minimax-m3 | MEMORY 全面反映輸入法升級 |
+| 17:45 | `65a9cfe1` | minimax-m3 | HEARTBEAT 修正 + 健康檢查報告 |
+| 18:48 | `c3a10d4c` | minimax-m3 | cron-daemon 替代方案 |
+| ~19:00 | `2474e694` | Opus 4.8 | 教訓蒸餾：輪播空白四改無效 + 案例 R + 輪播 SOP |
+| ~19:00 | `2705c50b` | Opus 4.8 | 接力棒結案（theunrestrictedwar 推上線）|
+| 19:10 | `（本次）` | minimax-m3 | 試金石 022 + 接力棒追加 |
+
+---
+
+**最後更新：2026-06-05 19:10（minimax-m3 後續 session 結案）**
+
+**下一棒：系統全面健康，等教練下個任務**
