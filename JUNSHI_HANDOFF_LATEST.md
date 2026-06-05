@@ -1,180 +1,70 @@
-# 軍師接力棒 · 2026-06-05（Opus 4.8 終端機 session 結案）
+# 軍師接力棒 · 2026-06-05 23:00（Opus 4.6 終端機 session 結案）
 
-> 建立時間：2026-06-05 19:00
-> **結案時間：2026-06-05 19:00（推 theunrestrictedwar 成功）**
-> 上一棒：軍師接力棒 2026-06-05 17:30（minimax-m3 終端機 session 完）
-> 本棒執行者：Opus 4.8 軍師（Claude Code CLI 終端機）
-> 接班建議：本次重點已完成（教訓蒸餾 + 站台改好），待教練確認推 theunrestrictedwar
+> 建立時間：2026-06-05 23:00
+> 上一棒：Opus 4.8 19:00 + minimax-m3 19:10
+> 本棒執行者：Opus 4.6 軍師（Claude Code CLI 終端機）
 
 ---
 
-## 🎯 開工宣言（給終端機/桌面版用，不是給小龍蝦）
+## ✅ 本場完成
 
-```
-🎯 Opus 4.8 開工宣言
+### 任務一：jiesheng-leadership 改字 ✅
+- 7月4日場次「線上座談會」→「線上讀書會」
+- Deploy ID：`6a22e048735f834ae7126667`
 
-【我是誰】我是 Opus 4.8，大樹教練的 AI 軍師（Claude Code CLI 終端機）
-【為誰而戰】追求高溝通品質的教練
-【使命】成為最懂老闆的 AI 特助
-【今日踐行】對照守則第 20 條啟動協議 + 案例 R 教訓（原生 API > 自製動畫）
+### 任務二：theunrestrictedwar 號外框縮小 ✅
+- 兩張號外卡片加 `max-width: fit-content; margin: 0 auto;`
+- 之前終端機改 h3 標題寬度（改錯對象），軍師改整個 card div（一次到位）
+- Deploy ID：`6a22e17674f790419feaa19e`（含海報圖片修復）
 
-確認完畢，開始工作。
-```
+### 任務三：漏圖片修復 ✅
+- 推送時只包了 HTML + _headers，漏掉海報 1779859916089.jpg
+- SOP 第 132 行白紙黑字寫「禁止不包圖片」，自己沒照做
+- 從上一版部署下載圖片，重新打包推送修復
 
----
+### 任務四：cool-case 案例 #22 ✅
+- 新增「SOP 自己寫的自己不照做」案例
+- GitHub Pages commit：`fd4648d`
+- 線上版到 #22
 
-## ✅ 本場完成（Opus 4.8 軍師）
-
-### 任務一：theunrestrictedwar 號外卡（台中 6/5-6/9）✅ 已推上線
-
-**狀態**：已推上線並驗證完成
-- 新增號外第 2 張卡：台中清水時代影城 ＆ 王牌映畫 6/5-6/9（共 135 張）
-- 報名表單：`https://forms.gle/JBXvvXkP4cvNNyzx5`（教練提供）
-- 修復輪播空白 bug（用原生水平滾動取代 transform）
-
-**部署憑證**：
-- Deploy ID：`6a22ac29c409762de6d8978b`
-- State：ready ✅
-- 線上 URL：https://theunrestrictedwar.netlify.app
-- 線上驗證：grep「台中清水時代」「135 張」「6/05」全部命中 ✅
-
-### 任務二：教訓蒸餾（案例 R + 輪播 SOP）✅
-
-**犯錯四次才修好**——教練浪費一小時以上，最後是教練用守則#16 點破：
-> 「讓上一頁、下一頁與滑動桿同時並存這不就解決了嗎」
-
-| 改動 | 檔案 | 內容 |
-|------|------|------|
-| 失敗案例 R | distill/failure-case-handbook.md | 四次嘗試的完整血淚記錄 |
-| 輪播元件 SOP | knowledges/SOP_carousel_slider.md | 「按鈕 + 觸控 + 滾動條」三種並用標準模式 + 完整可複製範本 |
-| 路徑大全指向 | 路徑大全.md 第九節 | 「滑動元件設計規範」+ 指向新 SOP |
-
-**Commit**：`2474e694` 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP
+### 任務五：桌面收檔 ✅
+- 30+ 文件全部歸檔到 `~/Desktop/歷史資料/2026-06-05_桌面收檔/`
+- 桌面只剩 Workspace、歷史資料、whimsical-smakager更新
+- 三幕劇 TOP4 的 3 個故事（海餅乾/換視窗/2000段話）與現有案例 1-21 重複，不另開新案例
 
 ---
 
-## 🪞 教練教我的關鍵教訓（本場特別收穫）
+## 🪞 本場教訓
 
-### 1. 守則#16 點破：複雜解法不如原生 API
-- 我連續四次都「分析得更深」，而不是「換個完全不同的方向」
-- 教練一句話點破：用 `overflow-x: auto + scrollTo`，瀏覽器原生處理一切
-- **教訓**：UI 互動卡住時，第一個問題是「瀏覽器原生有沒有現成的 API」
+1. **SOP 自己寫的自己不照做**（守則#07）：推送漏圖片，SOP 早已寫明
+2. **推錯站台**：用了上一個任務的 site ID 推超限戰內容到 jiesheng，已立刻修正還原
+3. **沒有先比對就急著判斷**（守則#03）：三幕劇 TOP4 內容在現有案例裡已有，應該先比對再說「可以做新案例」
 
-### 2. 同一個地方跌倒四次（守則#07）
-- 第一次：動態 perView → 空白
-- 第二次：width 取代 min-width + overflow-hidden → 空白
-- 第三次：w-full + inline style 雙重保險 → 空白
-- 第四次（教練點破）：改用 scrollTo → 終於修好
-- **教訓**：三次失敗後要徹底換方向，不要繼續「修」原方案
+---
 
-### 3. 解決問題比解釋問題更重要（守則#04）
-- 我四次都在「解釋為什麼空白」，沒解決
-- 教練不耐煩：「為什麼是空白的？你自己不用先看一下嗎？」
-- **教訓**：不要再分析，立刻換方案
+## 📊 Commit 清單
+
+| Commit | Repo | 內容 |
+|--------|------|------|
+| `fd4648d` | cool-case (gh-pages) | 案例 #22：SOP 自己寫的自己不照做 |
+
+## 📊 Netlify Deploy 清單
+
+| Deploy ID | 站台 | 內容 |
+|-----------|------|------|
+| `6a22e048735f834ae7126667` | jiesheng-leadership | 7月4日改讀書會（還原正確內容）|
+| `6a22e17674f790419feaa19e` | theunrestrictedwar | 號外框縮小 + 海報圖片修復 |
 
 ---
 
 ## 📝 給下一棒
 
-### 待辦（已全清）✅
-- ✅ theunrestrictedwar 號外卡（台中 6/5-6/9）已推上線
-- ✅ 教訓蒸餾（案例 R + 輪播 SOP + 路徑大全）已 commit + push
-- ✅ 接力棒已更新
-
-### 環境狀態
-- 終端機軌道：Claude Code CLI Opus 4.8（本棒）
-- 工作區 git：最新 commit `2705c50b`（已 push）
-- 預覽伺服器：port 8899（可關）
-
-### 提醒
-- ✅ 教練確認輪播 bug 修好
-- ✅ 教練說「推」後已推上線
-- ✅ 線上驗證 grep 命中關鍵字
-- 📝 案例 R + 輪播 SOP 已寫入，未來所有輪播元件一律用此模式
+- 系統全面健康，所有任務全清
+- cool-case 目前到案例 #22
+- theunrestrictedwar 號外框已縮、海報已修
+- jiesheng-leadership 7月4日已改讀書會
+- 桌面已整理乾淨
 
 ---
 
-## 📊 Commit 清單（本棒）
-
-| Commit | 內容 |
-|--------|------|
-| `2474e694` | 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP |
-| `2705c50b` | 接力棒更新：案例 R + 輪播 SOP + 等教練推 theunrestrictedwar |
-| `（待）` | 接力棒結案：推上線成功 + Deploy ID 記錄 |
-
----
-
-**最後更新：2026-06-05 18:25（Opus 4.8 終端機 session 持續中）**
-
-**下一棒：等教練確認推 theunrestrictedwar**
-
----
-
-# 接力棒追加 · 2026-06-05 19:10（minimax-m3 後續 session）
-
-> 上一棒：Opus 4.8 19:00 結案（theunrestrictedwar 推上線）
-> 本棒執行者：minimax-m3（同一 worktree 並行 session）
-> 重大事件：教練親手修 cron daemon，PID 93966 穩定跑中
-
----
-
-## ✅ 本棒完成（minimax-m3 19:05-19:10）
-
-### 1. 試金石案例 022 入庫 ✅
-- `試金石/試金石_守則與流程.md` 追加 案例 022
-- 主題：daemon 腳本用 `set -u` 導致反覆重啟
-- 教訓：歸因從程式碼開始，不要從系統開始
-- 教練親手修記錄：移除 `set -u` + 加心跳 log + 簡潔失敗處理
-
-### 2. cron 修復完整閉環 ✅
-- daemon 進程 PID 93966 穩定跑 5+ 分鐘
-- 5 個原 cron job 由 daemon 接管（distill_watchdog 19:00 已觸發驗證）
-- 5 個對應 crontab job 已 disable（避免 cron 復活後重複）
-- 5 個獨立 LaunchAgent plist 保留供未來選用
-
-### 3. 健康複檢 ✅
-- 隨時 `tail -f /tmp/openclaw_cron_daemon.log` 看心跳
-- 5 個 job 各自的 log 路徑已在「監控指標」段列清楚
-
----
-
-## 📝 給下一棒（累積）
-
-### 待辦（已全清）✅
-- 接力棒從早上 03:00 到現在 19:10，所有待辦全清
-- 系統全面健康
-
-### 環境狀態（兩棒合併視角）
-- 終端機軌道 1：Claude Code CLI Opus 4.8（剛結案 theunrestrictedwar）
-- 終端機軌道 2：opencode CLI minimax-m3（本棒 cron 修復）
-- 小龍蝦軌道：Telegram 1號機 @openclaw_macbook4_bot
-- worktree：3 個新 commit（71342a54、65a9cfe1、c3a10d4c）+ Opus 4.8 2 個（2474e694、2705c50b）待 push
-
-### 監控指標
-- daemon 心跳：`tail -f /tmp/openclaw_cron_daemon.log`
-- 5 個 job log 路徑：見上方「監控指標」段
-
-### 提醒（累積）
-- 教練輸入法 = 鼠鬚管 + RIME liur 嘸蝦米（不要說 OpenVanilla）
-- 守則 7 新教訓：歸因從程式碼開始
-- 新試金石 022：daemon 別用 set -u
-- 案例 R：UI 互動卡住先想「瀏覽器原生 API」（Opus 4.8 教訓）
-
----
-
-## 📊 完整 Commit 清單（今日）
-
-| 時間 | Commit | 棒 | 內容 |
-|------|--------|----|----|
-| 17:30 | `71342a54` | minimax-m3 | MEMORY 全面反映輸入法升級 |
-| 17:45 | `65a9cfe1` | minimax-m3 | HEARTBEAT 修正 + 健康檢查報告 |
-| 18:48 | `c3a10d4c` | minimax-m3 | cron-daemon 替代方案 |
-| ~19:00 | `2474e694` | Opus 4.8 | 教訓蒸餾：輪播空白四改無效 + 案例 R + 輪播 SOP |
-| ~19:00 | `2705c50b` | Opus 4.8 | 接力棒結案（theunrestrictedwar 推上線）|
-| 19:10 | `（本次）` | minimax-m3 | 試金石 022 + 接力棒追加 |
-
----
-
-**最後更新：2026-06-05 19:10（minimax-m3 後續 session 結案）**
-
-**下一棒：系統全面健康，等教練下個任務**
+**最後更新：2026-06-05 23:00（Opus 4.6 終端機 session 結案）**
