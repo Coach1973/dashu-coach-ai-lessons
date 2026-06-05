@@ -952,3 +952,4 @@
 {"ts":"2026-06-05T12:02:16.411Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7632","chatId":"-1003877502911"}
 {"ts":"2026-06-05T12:05:30.178Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7633","chatId":"-1003877502911"}
 {"ts":"2026-06-05T13:01:52.598Z","botId":"1号機","text":"⚠️ Cron job \"🔄 cron 模型自動同步（每小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7634","chatId":"-1003877502911"}
+{"ts":"2026-06-05T13:03:26.766Z","botId":"1号機","text":"✅ cron 模型同步：無需變更","msgId":"7635","chatId":"-1003877502911"}
