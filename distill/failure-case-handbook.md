@@ -342,6 +342,7 @@ distill_incremental.js 加入大小檢查（已修復）。心跳任務加入「
 | K. 主動關懷混簡體/日期錯誤 | 生成日期/中文訊息 | 事實字段需驗證 | #03/#15 |
 | L. 15:25 迴圈攻擊 | 系統噪音重複超過3次 | 增量蒸餾要過濾實質行為 | #05/#19 |
 | M. 開工宣言輸出簡體字 | 看見簡體字 | 輸出必須是繁體，輸入無關 | #03/#19/#21 |
+| R. 輪播空白四改無效 | flex + transform 計算 | 用瀏覽器原生水平滾動 | #16/#07/#04 |
 
 ---
 
@@ -454,9 +455,87 @@ distill_incremental.js 加入大小檢查（已修復）。心跳任務加入「
 | 2026-05-27 | 補入案例N：workflow 分支設定錯誤（master vs main）| `b770ddf` |
 | 2026-05-27 | 補入案例O：模型設定 kimi 未落地，手動切換無效，損失 60 美金 | `???` |
 | 2026-05-27 | 補入案例P/Q：主動關懷 cron 漏接 / 營業稅提醒有記錄無 cron（晚間自優） | 待補 |
+| 2026-06-05 | 補入案例R：輪播空白四改無效，浪費教練一小時（守則#16反思） | `本次` |
 
 ---
 
 > 📝 本手冊由教練指示建立（2026-05-24），結合5,540則歷史對話蒸餾。
 > 教練原話：「所有歷史對話，今天都可以用特助心法來製作最經典的對話場景。」
 > 教練指示：「能做就不要少，因為每次對話都是珍貴的。」
+---
+
+## 📖 案例 R：輪播第二頁空白，四次改版都沒修好，浪費教練一小時（2026-06-05 新增）
+
+**犯錯日期：** 2026-06-05
+**嚴重等級：** 🟠 高（時間浪費 + 教練反覆測試，信任損耗）
+**違反守則：** #16（複雜的解法不一定是正確的解法）/ #07（同一個地方跌倒）/ #04（解決問題比解釋問題更重要）
+
+### 情境
+
+教練要在超限戰網站（theunrestrictedwar.netlify.app）新增「台中清水時代影城 ＆ 台中王牌映畫 6/5-6/9 加開免費觀影場次」卡片。我用原本的號外輪播元件加卡片，但**第二張卡顯示空白**。
+
+教練原文：
+> 「你說它看起來好像沒有動，但從網頁視覺上看，第二頁就是被切掉了...你看第一頁寫得很完整，但第二頁就切到『目前企業持續』就斷掉沒了。為什麼？因為它沒辦法按下一頁，就卡在那裡。雖然是個小細節，但我們還是要注重細節，對吧？」
+
+### 悟到什麼
+
+**最痛的一課**——我連續改了四次都沒修好：
+
+| 嘗試 | 改動 | 結果 |
+|------|------|------|
+| ① 動態 perView 邏輯 | `getHaowaiPerView` 改為 ≤2 張時永遠 1 張 | ❌ 按鈕能切但空白 |
+| ② 強制寬度 + track overflow-hidden | `width` 取代 `min-width`、track 加 overflow-hidden | ❌ 仍然空白 |
+| ③ track 加 w-full + inline style | Tailwind class + inline style 雙重保險 | ❌ 仍然空白 |
+| ④ **改用 scrollTo（原生水平滾動）** | `overflow-x-auto` + `scrollTo` 取代 transform | ✅ 終於修好 |
+
+**根因**：用 `transform: translateX(-100%)` 切換頁面時，flex 容器的寬度計算有太多變數（flex-shrink、min-width、transform 百分比基準、overflow 行為...）。我每一次「分析」都對，但實際渲染結果就是空白，因為 flex + transform 的組合太脆弱。
+
+**最終正解**：放棄 transform 動畫，改用**瀏覽器原生水平滾動**。`overflow-x: auto` 自動處理「按鈕 + 觸控 + 滾動條」三種互動，零計算誤差。
+
+### 教練第 4 次提醒才讓我開竅
+
+> 「**要提醒你守則16 讓上一頁，下一下 與底上有一個滑動桿同時並存這不就解決了嗎**」
+
+教練一句話點破：我應該用**原生滾動條 + 滑動桿**，而不是寫自己的 transform 動畫。**簡單的解法才是對的**。
+
+### 觸發訊號
+
+- 設計任何**輪播 / 滑動切換元件** → 第一時間想 `overflow-x: auto`，不是 `transform: translateX`
+- 卡在 flex + transform 計算上 → 立即換成原生滾動
+- 按鈕 + 觸控 + 滾動條需要並存 → 必用原生水平滾動
+
+### 預防方法
+
+**完整 SOP 已寫到 `knowledges/SOP_carousel_slider.md`**，未來所有輪播元件一律用以下標準模式：
+
+```html
+<div id="track" class="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory" 
+     style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+    <div class="item flex-shrink-0 snap-start" style="width: 100%; min-width: 100%;">卡 1</div>
+    <div class="item flex-shrink-0 snap-start" style="width: 100%; min-width: 100%;">卡 2</div>
+</div>
+```
+
+```javascript
+// 按鈕：scrollTo 控制
+track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
+
+// 監聽 scroll 事件同步頁數計數
+track.addEventListener('scroll', () => {
+    const newIndex = Math.round(track.scrollLeft / track.clientWidth);
+    // 更新計數和按鈕狀態
+});
+```
+
+**三種方式並存**：
+1. 按鈕（scrollTo）
+2. 觸控滑動（瀏覽器原生）
+3. 滾動條拖動（瀏覽器原生顯示）
+
+### 永久教訓
+
+> 守則 #16「複雜的解法不一定是正確的解法」——遇到 UI 互動問題，**第一個問題是「瀏覽器原生有沒有現成的 API」**。原生 API 經過全世界開發者驗證，比自己寫的 transform 動畫可靠 100 倍。
+
+> 守則 #07「不要在同一個地方跌倒兩次」——四次都沒修好，是因為我每次都「分析得更深」，而不是「換個完全不同的方向」。
+
+> 守則 #04「解決問題比解釋問題更重要」——我解釋了四次「為什麼空白」，但沒解決。最後是教練點破，才用最簡單的方法解決。
