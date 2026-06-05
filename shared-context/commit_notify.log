@@ -1630,3 +1630,10 @@
 [2026-06-05 17:35] [CoachWU] 8d3c99fd: auto: 接力棒鏡像同步 2026-06-05 17:35
 [2026-06-05 17:49] [CoachWU] 65a9cfe1: 健康檢查：HEARTBEAT 模型欄位修正 + 4 面向報告
 [2026-06-05 18:03] [CoachWU] 139144e5: auto-backup 2026-06-05 18:03
+[2026-06-05 18:36] [CoachWU] ea68e4a9: auto-backup 2026-06-05 18:35
+[2026-06-05 18:52] [CoachWU] c3a10d4c: cron-daemon 替代方案：KeepAlive LaunchAgent + while 迴圈
+[2026-06-05 18:53] [軍師] 2474e694: 教訓蒸餾：輪播空白四改無效，新增案例 R + 輪播元件 SOP
+[2026-06-05 18:54] [軍師] 2705c50b: 接力棒更新：案例 R + 輪播 SOP + 等教練推 theunrestrictedwar
+[2026-06-05 18:55] [CoachWU] 8adb9b47: auto: 接力棒鏡像同步 2026-06-05 18:55
+[2026-06-05 19:02] [CoachWU] 71764b20: 修復 cron-daemon 反覆重啟：拿掉 set -u + 加每分鐘心跳 log
+[2026-06-05 19:03] [軍師] 0c49fa9b: 接力棒結案：推 theunrestrictedwar 成功
