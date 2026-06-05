@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-06-05 17:01
+> 重啟時間：2026-06-05 17:48
 > 對話記錄已完整存入 memory/2026-06-05.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -10,9 +10,8 @@
 ⚠️ **不要讀 memory 大檔**（memory/2026-06-05.md 可能超過 50KB，讀了會造成 Gemini 空白回應）
 
 ## ⚡ 系統狀態
-- Primary 模型：minimax/MiniMax-M3（2026-06-05 17:20 全面健康檢查已確認）
+- Primary 模型：google/gemini-3.1-pro-preview
 - 名稱對等：Telegram = 小龍蝦 = 電報
-- 安全警告: 5 critical + 5 warn（groupPolicy="open" 風險，已記錄待教練裁決）
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -23,11 +22,4 @@
 - ⚠️ 不要讀大型 memory 檔（會造成 Gemini 空白回應）
 
 ## 學長 relay poll
-### 2026-06-05 2026-06-05 17:33 - relay poll OK
-
-
-### 2026-06-05 17:32 - 健康檢查
-- Cron: 唯一任務（自我健康檢查）consecutiveErrors=2, lastErrorReason=overloaded（AI 服務過載，非腳本問題），< 3 不通知
-- Git: 5 files committed (92804dc0) + pushed OK
-- HEARTBEAT: 無 ⬜ 待辦
-- 結論: 安靜處理，無需通知教練
+### 2026-06-05 2026-06-05 17:49 - relay poll OK
