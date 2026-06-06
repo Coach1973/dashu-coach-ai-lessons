@@ -1,5 +1,26 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-06（共 16 則）
+1. 這是 **YouTube 新聞的專屬群組**（不是頂級特助分工群）
+2. 原本是 @CoachWuYouTubeDailyBot 每日推送 YouTube 新聞的「家」
+3. 6/2 該 bot 停更後，這個 cron 雖然還在每天 08:00 跑（lastRunStatus=ok），但因為 bot 已下線，推到群組的內容形同空投
+4. 跟您看到的「YouTube 精選跑錯群組」是兩件不同的事 — 精選是「YouTube 頻道掃描與評估」(8d7c282a) 那一支，已在 #7678 修好
+5. 🔴 cron「YouTube新聞每日自動抓取」(e70852c8) → **disabled**，明天 08:00 就不會再空跑了
+6. ✅ cron「每4小時主動關懷」(ef88279b) → 改成 systemEvent（早上那次還在進行中）
+7. 🔴 cron「YouTube新聞每日自動抓取」(e70852c8) → **disabled**，明天 08:00 就不會再空跑了
+8. ✅ cron「每4小時主動關懷」(ef88279b) → 改成 systemEvent（早上那次還在進行中）
+9. 這是 **YouTube 新聞的專屬群組**（不是頂級特助分工群）
+10. 原本是 @CoachWuYouTubeDailyBot 每日推送 YouTube 新聞的「家」
+11. 6/2 該 bot 停更後，這個 cron 雖然還在每天 08:00 跑（lastRunStatus=ok），但因為 bot 已下線，推到群組的內容形同空投
+12. 跟您看到的「YouTube 精選跑錯群組」是兩件不同的事 — 精選是「YouTube 頻道掃描與評估」(8d7c282a) 那一支，已在 #7678 修好
+13. 🔴 cron「YouTube新聞每日自動抓取」(e70852c8) → **disabled**，明天 08:00 就不會再空跑了
+14. ✅ cron「每4小時主動關懷」(ef88279b) → 改成 systemEvent（早上那次還在進行中）
+15. 🔴 cron「YouTube新聞每日自動抓取」(e70852c8) → **disabled**，明天 08:00 就不會再空跑了
+16. ✅ cron「每4小時主動關懷」(ef88279b) → 改成 systemEvent（早上那次還在進行中）
+
+---
+
+
 ## 蒸餾 2026-06-05（共 3 則）
 1. `.learnings/` 資料夾在 `/Users/bymyway/.openclaw/workspace/.learnings/`
 2. 已有 LEARNINGS.md（昨天 6/4 23:51 剛更新）與 ERRORS.md
