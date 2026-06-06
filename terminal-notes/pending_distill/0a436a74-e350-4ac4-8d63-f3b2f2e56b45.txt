@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 0a436a74-e350-4ac4-8d63-f3b2f2e56b45
-# 提取時間：2026-06-06 16:00 (台灣時間)
-# 共 18 條教練原話
+# 提取時間：2026-06-06 16:30 (台灣時間)
+# 共 19 條教練原話
 
 ---
 
@@ -600,3 +600,48 @@ Continue the conversation from where it left off without asking the user any fur
 　▶ AI 回應：注入確認成功了！但小龍蝦仍然沒反應。問題不在 hook——**注入確實發生了**，但 MiniMax M3 模型沒有使用注入的數據。
 
 讓我看看 gateway 怎麼消費 `inject` 陣列。
+
+　▶ AI 回應：找到根因了。`message:preprocessed` 內部 hook 是 **fire-and-forget**（發完不等回），gateway 不會等 hook 完成就繼續建構 prompt 送給模型。所以 `event.context.inject` 裡面推了什麼，模型永遠看不到。
+
+**這是 OpenClaw 的設計限制，不是我們程式碼的 bug。**
+
+換一條路——直接在小龍蝦的系統指令裡加「看到流量就讀快取檔」的說明。
+
+　▶ AI 回應：小龍蝦確實能讀檔案（從 BOT_MESSAGES 可以看到它讀 HEARTBEAT、WISDOM_CORES 等）。最可靠的做法：**直接在 SOUL.md 加「流量指令」說明，讓小龍蝦看到「流量」時去讀快取檔案。**
+
+　▶ AI 回應：在鐵律三條之後、模型設定之前加入「流量」指令。
+
+　▶ AI 回應：workspace 有自己的 `.git`！它是一個獨立的 git repo。所以我應該在 workspace 裡 commit。
+
+　▶ AI 回應：SOUL.md 已經被 `auto-backup` 在 16:04 自動 commit 了（`fa1f1f02`）。
+
+　▶ AI 回應：SOUL.md 的修改已經被 auto-backup 收錄，commit `fa1f1f02`。
+
+但有個問題：**小龍蝦需要開新 session 才會重新讀取 SOUL.md**（startupContext 只在 `new` 時觸發）。目前的 session 裡小龍蝦不會看到新的鐵律四。
+
+　▶ AI 回應：教練，SOUL.md 已經加上「流量」指令了（commit `fa1f1f02`）。但小龍蝦**需要開新 session 才會讀到新的 SOUL.md**。
+
+請在 Telegram 對小龍蝦發送 `/new`，然後再試「流量」。
+
+**整理一下做了什麼：**
+
+1. **查出 hook 注入失效的根因**：OpenClaw 的 `message:preprocessed` 是 fire-and-forget，hook 推進 `event.context.inject` 的數據不會被消費——這是架構設計，不是 bug
+2. **改用 SOUL.md 指令方式**：在 SOUL.md 加上「鐵律…（略）
+
+【教練 2026-06-06 08:12】
+好的，流量的功能已經正常。
+
+請你總結經驗並上傳，我要開啟新的對話框跟你討論下一個任務。
+
+　▶ AI 回應：全部完成。接力棒 commit `5a8be4ec`。
+
+**本場總結：**
+
+| 任務 | 結果 | 憑證 |
+|------|------|------|
+| Karpathy 技能評估 | E10-E12 加入 CLAUDE.md | `204888bf` |
+| jiesheng 書封修復 | 根因＝手動推送漏圖片，git push 修復 | `6d3faa2` |
+| 流量指令 | SOUL.md 鐵律四 + usage_cache.json | `fa1f1f02` |
+| 接力棒 | 已更新 | `5a8be4ec` |
+
+**最重要的經驗教訓：** OpenClaw 的 `me…（略）

@@ -1,10 +1,10 @@
 {
-  "updated": "2026-06-06T15:30:00+08:00",
+  "updated": "2026-06-06T16:10:00+08:00",
   "claude": {
     "plan": "Pro",
-    "session_used": "25%",
-    "session_reset": "4 小時 20 分鐘",
-    "weekly_used": "18%",
+    "session_used": "72%",
+    "session_reset": "3 小時 10 分鐘",
+    "weekly_used": "26%",
     "weekly_reset": "週三下午 1:00",
     "credits_spent": "$0.00",
     "credits_reset": "7 月 1 日",
