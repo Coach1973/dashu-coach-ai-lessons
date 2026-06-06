@@ -1749,3 +1749,10 @@
 [2026-06-06 23:55] [CoachWU] da356f30: 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12）
 [2026-06-06 23:57] [CoachWU] b5037206: 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查
 [2026-06-07 00:00] [CoachWU] b69d5b53: auto: 終端機對話蒸餾 2026-06-07
+[2026-06-07 00:02] [CoachWU] d0611fdd: auto-backup 2026-06-07 00:02
+[2026-06-07 00:36] [CoachWU] dd19f966: 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測
+[2026-06-07 00:43] [CoachWU] 2f36dc5c: 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息
+[2026-06-07 00:45] [CoachWU] e1b48949: 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地）
+[2026-06-07 00:48] [CoachWU] 91ec79ab: 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07）
+[2026-06-07 00:54] [CoachWU] e99bdae8: 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復
+[2026-06-07 00:55] [CoachWU] 6670f558: auto: 接力棒鏡像同步 2026-06-07 00:55
