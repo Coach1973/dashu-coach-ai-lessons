@@ -29,7 +29,7 @@ echo "✅ 知識庫蒸餾完成" >> "$LOG_FILE"
 
 # TODO: 未來可以加入更複雜的邏輯
 # 例如：分析 HEARTBEAT.md，找出新增的失敗案例
-# 然後自動更新 failure-case-handbook.md
+# 然後自動更新 試金石/試金石_案例庫.md
 
 echo "時間：$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG_FILE"
 echo "" >> "$LOG_FILE"

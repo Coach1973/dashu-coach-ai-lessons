@@ -54,12 +54,12 @@ Your workspace AGENTS.md will tell you to read the following files in order:
 | `distill/top10_dynamic.md` | 任務開始前 | 這個場景是否曾經犯過錯？ |
 | `shared-relay/SUPERGROUP-MAP.md` | 任務開始前 | 這個決策是否符合團隊最新架構？ |
 
-**發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 distill/failure-case-handbook.md**
+**發現缺口 → 立即修正 → 犯錯後寫入 HEARTBEAT.md → 蒸餾進 試金石/試金石_案例庫.md**
 
 > 教練說：「每一個 Agent 他自己的經驗值要寫進自己的 member，這是為了有效溝通，為了成為最懂老闆的 AI 特助。」
 
 > ⚠️ 守則正典只有一份：`特助心法.md`（21 條，一字不差，來源為桌面 HTML），已落地本機主線。舊版規則檔（17 條守則、守則總綱）已退場，一律以此為準，勿再引用舊檔。
-> ⚠️ Top10 Errors 統一入口：`distill/top10_errors_index.md`（含 failure-case-handbook.md 和 top10_dynamic.md 的完整索引）
+> ⚠️ Top10 Errors 統一入口：`distill/top10_errors_index.md`（含 試金石/試金石_案例庫.md 和 top10_dynamic.md 的完整索引）
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
