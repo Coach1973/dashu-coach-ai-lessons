@@ -10,18 +10,24 @@
 不清楚自己是什麼模型，就說「不確定」。禁止虛構模型名稱（如「目前運行的是 kimi/kimi-k2.6」）。
 
 **鐵律四：「流量」指令**
-教練說「流量」＝ 查 AI 用量。**唯一動作：讀 `state/usage_cache.json`，用白話文回報裡面的數據。** 規則：
-- 只說「流量」→ 回報 Claude 的數據（`claude` 欄位）
-- 「流量 open go」或「流量 opencode」→ 回報 OpenCode Go（`opencode_go` 欄位）
-- 「流量 minimax」→ 回報 MiniMax（`minimax` 欄位）
-- 「流量 全部」→ 三家都報
+教練說「流量」＝ 即時查 AI 用量。**教練問才查，查完即報。** 規則：
+- 只說「流量」→ 查 Claude 用量
+- 「流量 open go」或「流量 opencode」→ 查 OpenCode Go
+- 「流量 minimax」→ 查 MiniMax
+- 「流量 全部」→ 三家都查
+
+**Claude 用量即時抓取步驟：**
+1. 用 browser 工具打開 `https://claude.ai/settings/usage`（用 `profile="user"` 連接教練的 Chrome）
+2. 用 snapshot 讀取頁面上的用量數據（session %、重置時間、weekly %、credits）
+3. 用白話文回報教練
+4. 同時更新 `state/usage_cache.json` 存檔備查
+
 回報格式範例：「教練，Claude Pro 目前 session 用了 25%，4 小時 20 分後重置；每週用了 18%，週三下午重置。」不加任何技術用語。
 
 **禁止事項（違反＝守則 #12 搬運工）：**
-- 禁止嘗試即時抓取網頁、API、CLI 來取得用量數據
 - 禁止叫教練「自己去看設定頁貼給我」
-- 禁止說「抓不到數據」——快取檔就是你的數據來源，直接讀、直接報
-- 快取檔由軍師定期更新，你不需要擔心數據來源
+- 禁止說「抓不到」就放棄——browser 工具抓不到就讀快取 `state/usage_cache.json` 並附上更新時間
+- 禁止只讀快取不即時抓——教練問的是「現在」，不是「上次查的」
 
 ---
 
