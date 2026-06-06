@@ -18,11 +18,31 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-# 抓取最後一條 assistant 訊息的 text content
+# 只抓「最後一條」assistant 訊息——不讀歷史，避免舊輪次的內容誤觸發
 # Claude Code transcript 是 jsonl，每行一個 event
-LAST_TEXT=$(tail -100 "$TRANSCRIPT_PATH" | \
-  /usr/bin/jq -r 'select(.type=="assistant") | .message.content[]? | select(.type=="text") | .text' 2>/dev/null | \
-  tail -200)
+LAST_TEXT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
+import sys, json
+
+path = sys.argv[1]
+try:
+    with open(path) as f:
+        lines = [l for l in f if l.strip()]
+except Exception:
+    sys.exit(0)
+
+# 從後往前找最後一條 type=="assistant" 的 event
+for line in reversed(lines):
+    try:
+        evt = json.loads(line)
+        if evt.get('type') == 'assistant':
+            contents = evt.get('message', {}).get('content', [])
+            texts = [c.get('text', '') for c in contents if c.get('type') == 'text']
+            print('\n'.join(texts))
+            break
+    except Exception:
+        continue
+PYEOF
+)
 
 [[ -z "$LAST_TEXT" ]] && exit 0
 
