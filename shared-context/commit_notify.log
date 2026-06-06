@@ -1743,3 +1743,9 @@
 [2026-06-06 22:37] [CoachWU] 8eadab80: auto-backup 2026-06-06 22:36
 [2026-06-06 23:03] [CoachWU] edd52b3c: auto-backup 2026-06-06 23:03
 [2026-06-06 23:30] [CoachWU] f45b1ffa: auto: 終端機對話備份 23:30
+[2026-06-06 23:32] [CoachWU] 958452fc: auto-backup 2026-06-06 23:32
+[2026-06-06 23:40] [CoachWU] c3d11650: auto: 痛點排名重算 2026-06-06
+[2026-06-06 23:50] [CoachWU] d17473bd: 新增 quote_xinfa_hook：守則編號自動 grep 原文注入
+[2026-06-06 23:55] [CoachWU] da356f30: 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12）
+[2026-06-06 23:57] [CoachWU] b5037206: 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查
+[2026-06-07 00:00] [CoachWU] b69d5b53: auto: 終端機對話蒸餾 2026-06-07
