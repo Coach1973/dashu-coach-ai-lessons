@@ -1,9 +1,9 @@
 {
-  "updated": "2026-06-06T19:30:55+08:00",
+  "updated": "2026-06-06T19:40:30+08:00",
   "claude": {
     "plan": "Pro",
-    "session_used": "11%",
-    "session_reset": "4 小時 48 分鐘",
+    "session_used": "12%",
+    "session_reset": "4 小時 39 分鐘",
     "weekly_used": "32%",
     "weekly_reset": "週三下午 1:00",
     "credits_spent": "$0.00",
@@ -12,12 +12,12 @@
     "balance": "$0.01"
   },
   "opencode_go": {
-    "rolling_used": "3%",
-    "rolling_reset": "3 小時 40 分鐘",
+    "rolling_used": "0%",
+    "rolling_reset": "5 小時 0 分鐘",
     "weekly_used": "44%",
-    "weekly_reset": "1 天 17 小時",
+    "weekly_reset": "1 天 12 小時",
     "monthly_used": "26%",
-    "monthly_reset": "24 天 4 小時"
+    "monthly_reset": "23 天 23 小時"
   },
   "minimax": {
     "yesterday_tokens": "53.73M",
