@@ -61,7 +61,7 @@
 ## 📝 給下一棒
 
 - **流量指令已升級**：教練說「流量」→ 小龍蝦用 browser 工具即時抓 claude.ai/settings/usage，不再靠快取。教練實測通過。
-- **Context Overflow 交接機制已建立**：小龍蝦 context 到 🟠/🔴 時會寫 `session_handoff.md`，新 session 自動載入。尚未經歷真實 overflow 驗證。
+- **Context Overflow 交接機制已建立並驗證通過**：小龍蝦 context 到 🟠/🔴 時會寫 `session_handoff.md`，新 session 自動載入。教練用 `/new` 開新 session 實測，小龍蝦能答出「剛才聊了什麼」✅
 - **Cron 現況**：12 個全部 🟢，送達設定全修好。教練特別在意提醒類有沒有真的送到 Telegram。
 - **YouTube 頻道重新利用**：教練有 bot token（@CoachWuYouTubeDailyBot），待規劃用途。
 - **OpenCode Go / MiniMax 的流量查詢**：鐵律四已寫好分流規則，但 browser 即時抓取的步驟目前只寫了 Claude，其他兩家的即時抓取待補。
