@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session 0a436a74-e350-4ac4-8d63-f3b2f2e56b45
-# 提取時間：2026-06-06 15:00 (台灣時間)
+# 提取時間：2026-06-06 15:30 (台灣時間)
 # 共 11 條教練原話
 
 ---
@@ -262,3 +262,49 @@ https://claude.ai/settings/usage
 　▶ AI 回應：我先查 Claude usage 頁面背後用了什麼 API，如果能直接用 curl 抓就最簡單。
 
 　▶ AI 回應：Claude 的 usage 數據剛才 read_page 已經讀到了（dialog 裡面）。讓我用 JS 直接從 DOM 抓出來，同時找 API 端點。
+
+　▶ AI 回應：完美，數據全部抓到了。現在點 Refresh 按鈕看能不能抓到 API 端點，同時去讀 OpenCode 的 API。
+
+　▶ AI 回應：找到 API 端點了。現在確認 OpenClaw 的 browser tool 能不能用。
+
+　▶ AI 回應：OpenClaw 有完整的 browser tool。讓我測試整條鏈路：啟動 → 導航 → 讀取。
+
+　▶ AI 回應：OpenClaw browser 開的是自己的 Chromium，沒有教練的登入狀態。換個策略——用快取檔案方案：
+
+1. 寫一個 hook 偵測「流量」→ 讀快取檔案 → 注入數據
+2. 快取檔案由腳本定期更新（或軍師手動觸發）
+
+先關掉 OpenClaw browser，然後開始建造。
+
+　▶ AI 回應：好，現在建造完整方案。
+
+　▶ AI 回應：先建快取檔案（用剛才讀到的真實數據），再建 hook。
+
+　▶ AI 回應：現在建 hook：
+
+　▶ AI 回應：現在把 hook 註冊到 openclaw.json：
+
+　▶ AI 回應：現在寫一個更新快取的腳本，讓軍師或 cron 可以跑：
+
+　▶ AI 回應：驗證 hook 語法正確，模擬觸發測試：
+
+　▶ AI 回應：四個測試全部通過！Commit：
+
+　▶ AI 回應：Commit `3cb5197c`。Hook 和腳本在 `.openclaw/` 非 workspace git 追蹤範圍，但已實際寫入。驗證一下都在：
+
+　▶ AI 回應：---
+
+## ✅ 完成報告
+
+### 已建造：AI 流量查詢系統
+
+教練在 Telegram 對小龍蝦說的話 → 回報內容：
+
+| 教練說 | 小龍蝦回報 |
+|---|---|
+| **「流量」** | Claude 的 session 用量、每週用量、額度餘額 |
+| **「流量 open go」** | OpenCode Go 的滾動/每週/每月用量 |
+| **「流量 全部」** | Claude + OpenCode Go + MiniMax 三家 |
+
+### 運作方式
+1. **Hook**（`usage-query/handler.js`）偵測「流量」關鍵字，讀取快取檔案，自…（略）
