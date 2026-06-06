@@ -52,12 +52,28 @@ PATTERNS=(
   "請把這段複製"
 )
 
+# 白名單關鍵字：含這些字代表該行是在「討論/列舉/解釋」守則，不是真的叫教練搬運
+# 例如：「禁止句型清單包含『請你貼』」應該跳過
+WHITELIST_PATTERN='禁止|不要|不應|不准|不會|不可|違反|列舉|引用|以下|清單|句型|守則|原文|案例|範例|示例|例如|諸如|偵測到|命中|示範|black\?list|black list|偵測|抓到|grep|hook|測試'
+
 HITS=""
-for PATTERN in "${PATTERNS[@]}"; do
-  if printf '%s' "$LAST_TEXT" | grep -qF "$PATTERN"; then
-    HITS+="  • 偵測到「${PATTERN}」"$'\n'
+# 逐行檢查（按換行符拆分）
+while IFS= read -r LINE; do
+  # 該行含白名單關鍵字 → 跳過（是討論/列舉，不是真叫搬運）
+  if printf '%s' "$LINE" | grep -qE "$WHITELIST_PATTERN"; then
+    continue
   fi
-done
+  # 檢查該行有無禁止句型
+  for PATTERN in "${PATTERNS[@]}"; do
+    if printf '%s' "$LINE" | grep -qF "$PATTERN"; then
+      HITS+="  • 偵測到「${PATTERN}」"$'\n'
+    fi
+  done
+done <<< "$LAST_TEXT"
+
+# 去重
+HITS=$(printf '%s' "$HITS" | sort -u)
+[[ -n "$HITS" ]] && HITS+=$'\n'
 
 # 沒命中 → 放行
 [[ -z "$HITS" ]] && exit 0
