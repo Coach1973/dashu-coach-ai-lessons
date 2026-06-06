@@ -63,9 +63,11 @@ while IFS= read -r LINE; do
   if printf '%s' "$LINE" | grep -qE "$WHITELIST_PATTERN"; then
     continue
   fi
-  # 檢查該行有無禁止句型
+  # 去掉中文引號「...」內的內容（引號內是舉例/引用，不是真的叫搬運）
+  CLEAN_LINE=$(printf '%s' "$LINE" | sed 's/「[^」]*」//g')
+  # 檢查清理後的行有無禁止句型
   for PATTERN in "${PATTERNS[@]}"; do
-    if printf '%s' "$LINE" | grep -qF "$PATTERN"; then
+    if printf '%s' "$CLEAN_LINE" | grep -qF "$PATTERN"; then
       HITS+="  • 偵測到「${PATTERN}」"$'\n'
     fi
   done
