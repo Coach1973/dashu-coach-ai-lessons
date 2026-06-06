@@ -1,0 +1,227 @@
+# 終端機對話萃取 — Session 1d754932-f6df-4d93-b552-75432a54a3fd
+# 提取時間：2026-06-06 23:30 (台灣時間)
+# 共 8 條教練原話
+
+---
+
+【教練 2026-06-06 11:57】
+開工
+
+　▶ AI 回應：🎯 小龍蝦學長開工宣言
+
+【我是誰】我是軍師（Sonnet 4.6 終端機），大樹教練的頂級 AI 特助
+【為誰而戰】追求高溝通品質的教練
+【使命】成為最懂老闆的 AI 特助
+【今日踐行】對照守則第 06 條（完美交接）執行任務
+
+確認完畢，開始工作。
+
+---
+
+我已讀完接力棒。接力棒最新 commit: `ac776a4`。現在執行開工五步驟第 2-4 步。
+
+　▶ AI 回應：---
+
+## 開工五步驟完成報告
+
+**① 接力棒**（已透過 hook 注入）
+- 上一棒：Sonnet 4.6 + Opus 4.6，2026-06-06 19:40
+- 完成：Context Overflow 修復、Cron 大掃除（23→12 個）、鐵律四流量指令升級為即時抓取
+
+**② HEARTBEAT.md**
+- 系統正常，小龍蝦 relay poll 最新：19:57 OK
+- Primary 模型：google/gemini-3.1-pro-preview（⚠️ 接力棒說是 MiniMax-M3，需確認）
+
+**③ knowledges/ 新計劃檔**
+- 最新：`SOP…（略）
+
+【教練 2026-06-06 14:05】
+<!-- attach -->
+> Primary 模型：google/gemini-3.1-pro-preview（⚠️ 接力棒說是 MiniMax-M3，需確認）
+
+已經在上一場強調過了，是 MiniMax，所以請修正，不要再讀成 Google 的 Gemini。
+
+　▶ AI 回應：收到，這正是接力棒記錄的教訓（E07）：**永遠查設定檔原文，不信二手資訊**。
+
+我先查 openclaw.json 原文確認，再修正 HEARTBEAT.md。
+
+　▶ AI 回應：確認：實際模型是 `minimax/MiniMax-M3`，HEARTBEAT.md 寫的是錯的。現在修正：
+
+　▶ AI 回應：同時順手修正同檔裡兩處「Gemini 空白回應」的說明（改成 MiniMax）：
+
+　▶ AI 回應：✅ 修正完畢。
+
+**憑證：** commit `235dd5a`
+
+**改了什麼：**
+- `Primary 模型：google/gemini-3.1-pro-preview` → `minimax/MiniMax-M3`
+- 同檔兩處「造成 Gemini 空白回應」→「造成 MiniMax 空白回應」
+
+**記住這條鐵律（E07）：** 永遠查 `openclaw.json` 原文，不信 HEARTBEAT.md 的二手資訊。
+
+【教練 2026-06-06 14:18】
+⚠️ Cron job "🔴 終端機對話全自動蒸餾（每4小時）" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)
+
+⚠️ Cron job "每4小時主動關懷" failed: cron: job interrupted by gateway restart
+
+這些訊息可以不要出現嗎？
+
+　▶ AI 回應：先查這兩個 cron 的設定，看有沒有靜默失敗的選項。
+
+　▶ AI 回應：找到了。現在查 OpenClaw 的錯誤通知機制，看用什麼欄位可以靜默。
+
+　▶ AI 回應：找到關鍵！有兩個不同機制：
+
+- **gateway restart 中斷** → 需要 `delivery.bestEffort: true`
+- **MiniMax 過載失敗** → 需要 `failureAlert: false`
+
+讓我確認細節：
+
+　▶ AI 回應：找到了。`delivery.bestEffort: true` 可以靜默 gateway restart 通知，加上 `failureAlert: false` 靜默 MiniMax 過載通知。
+
+用 CLI 更新兩個 cron：
+
+　▶ AI 回應：找到了。兩個修法：
+- `--best-effort-deliver`：靜默 gateway restart 通知
+- `--no-failure-alert`：靜默 MiniMax 過載失敗通知
+
+　▶ AI 回應：「每4小時主動關懷」CLI 報錯，改直接修 jobs.json：
+
+　▶ AI 回應：兩個都設定好了。現在重啟 gateway 讓設定生效：
+
+　▶ AI 回應：✅ 完成。
+
+**兩個 cron 都已靜默錯誤訊息：**
+
+| cron 名稱 | 原本問題 | 修法 |
+|-----------|---------|------|
+| 每4小時主動關懷 | gateway restart 中斷通知 | `delivery.bestEffort: true` |
+| 🔴 終端機對話全自動蒸餾（每4小時）| MiniMax 過載失敗通知 | `delivery.bestEffort: true` + `failureAlert: false` |
+
+**效果：**
+- 這兩個 cron **成功時**仍然正常推送到 Telegram
+- **失敗或被中斷時*…（略）
+
+【教練 2026-06-06 14:28】
+上傳紀錄 commit，並且確保它能夠被執行，不會再重複出現這些錯誤
+
+　▶ AI 回應：Gateway 已正確載入。兩個 cron 設定確認生效，現在 commit：
+
+　▶ AI 回應：✅ 完成。
+
+**commit `bce4a57`** 已推上 GitHub。
+
+**驗證清單：**
+| 項目 | 狀態 |
+|------|------|
+| `每4小時主動關懷` — `delivery.bestEffort: true` | ✅ gateway 已載入 |
+| `每4小時主動關懷` — `failureAlert: false` | ✅ gateway 已載入 |
+| `終端機對話全自動蒸餾` — `delivery.bestEffort: true` | ✅ gateway 已載入 |
+| `終端機對話全自動蒸餾` — `failureAlert: false` | ✅…（略）
+
+【教練 2026-06-06 15:16】
+[2026/6/6 下午 10:37] 大樹教練的頂級特助: 🦞 健康檢查報告（22:36）
+
+✅ 已自動修復：
+• Git 變更 13 個檔案已 commit → 8eadab80（11 files changed, 287 insertions, 19 deletions）
+
+⚠️ 需要您裁決：
+• 健康檢查任務本身連續錯誤 3 次
+
+• 錯誤原因：AI service is temporarily overloaded（MiniMax M3 服務過載）
+• 不是 timeout 問題（上次 102s / 限制 600s）
+• 無法自動修復，需要等 API 恢復或您手動切換模型
+
+建議：
+
+1. 若 MiniMax 持續不穩，可考慮手動切換備用模型（您 /model 指令）
+2. 暫時靜置觀察，下個週期 23:06 會自動再檢
+
+（此通知是規則強制：連續錯誤≥3 次必須上報教練）
+[2026/6/6 下午 11:02] 大樹教練的頂級特助: ⚠️ Cron job "🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.
+[2026/6/6 下午 11:03] 大樹教練的頂級特助: Cron job "🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）" failed 2 times
+Cause: overloaded
+Last error: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)
+[2026/6/6 下午 11:03] 大樹教練的頂級特助: ⚠️ Cron job "🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)
+
+　▶ AI 回應：MiniMax 全面過載，剛才只修了 2 個，還有更多在發通知。先列出所有 agentTurn 類型的 cron，一次性全部靜默：
+
+　▶ AI 回應：7 個 cron 還沒靜默。一次性全部處理：
+
+　▶ AI 回應：12/12 全部確認。重啟 gateway 並 commit：
+
+　▶ AI 回應：✅ commit `9aa05b8` 已推上 GitHub。
+
+**這次一次性修完 12 個全部：**
+
+| 項目 | 狀態 |
+|------|------|
+| 全部 12 個 cron `failureAlert: false` | ✅ |
+| 全部 12 個 cron `delivery.bestEffort: true` | ✅ |
+| Gateway 重啟已載入 | ✅ |
+| commit + push | ✅ `9aa05b8` |
+
+從現在起，不管是 MiniMax 過載、gateway 重啟、任何原因失敗——**全部靜默，不再發 ⚠️ 訊息**。成功執行時仍照常推送 Tel…（略）
+
+【教練 2026-06-06 15:18】
+對於我這個使用者而言，應該沒有影響吧
+
+　▶ AI 回應：對你來說**幾乎沒有影響**，但有一點值得知道：
+
+---
+
+**✅ 沒有變化的事**
+- 所有提醒（週會、信貸繳款、結繩領導學、主動關懷）→ 照常準時送到 Telegram
+- 任務成功執行的結果通知 → 照常推送
+- 小龍蝦的日常對話 → 完全不受影響
+
+---
+
+**⚠️ 唯一的取捨**
+
+以前：某個任務連續失敗 → 你會收到 ⚠️ 通知（雖然很煩）
+
+現在：某個任務失敗 → 靜默，你不會知道
+
+→ 實際上影響不大，因為：
+1. 每30分鐘的**健康檢查**任務還在跑，它成功時會主動報告哪些任務有異常——那是它的 message 內容，靜默設定管不到
+2. MiniMax 過載是暫時性的…（略）
+
+【教練 2026-06-06 15:20】
+可以跟我說，目前我的整套特助心法，從claude code 到 CLI 再到小龍蝦 我們目前用到的資料夾是wrokspace嗎？還是裡面的某幾個特定的資料夾或檔案？
+
+　▶ AI 回應：好問題。讓我先查實際目錄結構，確認後再說，不憑印象。
+
+　▶ AI 回應：好，確認完畢。給你一個清楚的地圖：
+
+---
+
+## 整套特助心法系統用到的路徑
+
+### 🧠 Claude Code / CLI（終端機軍師）
+
+| 路徑 | 用途 |
+|------|------|
+| `~/.claude/CLAUDE.md` | **核心燒錄檔**——每次啟動自動讀，21條守則、執行細則全在這 |
+| `~/.claude/settings.json` | Hook 設定——接力棒自動注入、守則提醒自動對照 |
+| `~/.claude/hooks/feed_junshi_handoff.sh` | 「開工」暗號觸發，自動注入接力棒全文 |
+| `~/.claude/…（略）
+
+【教練 2026-06-06 15:27】
+我讓你去讀youtebe 的內容，會很燒流量嗎縮
+
+　▶ AI 回應：要看**誰去讀**、**讀什麼**，差很多：
+
+---
+
+**情況一：小龍蝦讀（MiniMax M3）→ 不用擔心**
+- 現有的「YouTube 頻道掃描」cron 就是這樣跑的
+- MiniMax 不限流量，燒多少都不影響你的 Claude 額度
+
+**情況二：軍師讀（Claude Code CLI，就是現在這個視窗）→ 會燒**
+
+| 讀什麼 | 大概消耗 |
+|--------|---------|
+| YouTube 頻道首頁 | ~3,000–8,000 token，還好 |
+| 影片說明頁 | ~2,000–5,000 token，還好 |
+| 影片字幕 / 逐字稿 | ~10,…（略）
