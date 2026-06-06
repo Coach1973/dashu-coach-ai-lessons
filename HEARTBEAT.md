@@ -20,3 +20,7 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成 MiniMax 空白回應）
+
+## 學長 relay poll
+### 2026-06-06 2026-06-06 22:37 - relay poll OK
+

@@ -1028,3 +1028,4 @@
 {"ts":"2026-06-06T11:47:58.637Z","botId":"1号機","text":"教練，剛才（12:58 ~ 16:28）我們聊了 4 件大事，因為對話太長 context 滿了自動重啟，**完整對話已存到 `memory/2026-06-06.md` 並推到 GitHub**，零遺漏。\n\n🦞 **剛才聊了這些：**\n\n**1. cron 失敗排查（12:58 起）**\n- 「結繩領導學閱讀提醒」連兩次因 minimax overload 失敗\n- YouTube 精選推播到","msgId":"7776","chatId":"-1003877502911"}
 {"ts":"2026-06-06T12:02:09.411Z","botId":"1号機","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7777","chatId":"-1003877502911"}
 {"ts":"2026-06-06T12:05:00.118Z","botId":"1号機","text":"今日無待蒸餾對話（pending_distill/ 目錄為空）。","msgId":"7778","chatId":"-1003877502911"}
+{"ts":"2026-06-06T14:01:30.524Z","botId":"1号機","text":"⚠️ Cron job \"每4小時主動關懷\" failed: cron: job interrupted by gateway restart","msgId":"7779","chatId":"-1003877502911"}

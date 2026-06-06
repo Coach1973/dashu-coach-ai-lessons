@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 1d754932-f6df-4d93-b552-75432a54a3fd
-# 提取時間：2026-06-06 20:30 (台灣時間)
-# 共 1 條教練原話
+# 提取時間：2026-06-06 22:30 (台灣時間)
+# 共 4 條教練原話
 
 ---
 
@@ -34,3 +34,87 @@
 
 **③ knowledges/ 新計劃檔**
 - 最新：`SOP…（略）
+
+【教練 2026-06-06 14:05】
+<!-- attach -->
+> Primary 模型：google/gemini-3.1-pro-preview（⚠️ 接力棒說是 MiniMax-M3，需確認）
+
+已經在上一場強調過了，是 MiniMax，所以請修正，不要再讀成 Google 的 Gemini。
+
+　▶ AI 回應：收到，這正是接力棒記錄的教訓（E07）：**永遠查設定檔原文，不信二手資訊**。
+
+我先查 openclaw.json 原文確認，再修正 HEARTBEAT.md。
+
+　▶ AI 回應：確認：實際模型是 `minimax/MiniMax-M3`，HEARTBEAT.md 寫的是錯的。現在修正：
+
+　▶ AI 回應：同時順手修正同檔裡兩處「Gemini 空白回應」的說明（改成 MiniMax）：
+
+　▶ AI 回應：✅ 修正完畢。
+
+**憑證：** commit `235dd5a`
+
+**改了什麼：**
+- `Primary 模型：google/gemini-3.1-pro-preview` → `minimax/MiniMax-M3`
+- 同檔兩處「造成 Gemini 空白回應」→「造成 MiniMax 空白回應」
+
+**記住這條鐵律（E07）：** 永遠查 `openclaw.json` 原文，不信 HEARTBEAT.md 的二手資訊。
+
+【教練 2026-06-06 14:18】
+⚠️ Cron job "🔴 終端機對話全自動蒸餾（每4小時）" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)
+
+⚠️ Cron job "每4小時主動關懷" failed: cron: job interrupted by gateway restart
+
+這些訊息可以不要出現嗎？
+
+　▶ AI 回應：先查這兩個 cron 的設定，看有沒有靜默失敗的選項。
+
+　▶ AI 回應：找到了。現在查 OpenClaw 的錯誤通知機制，看用什麼欄位可以靜默。
+
+　▶ AI 回應：找到關鍵！有兩個不同機制：
+
+- **gateway restart 中斷** → 需要 `delivery.bestEffort: true`
+- **MiniMax 過載失敗** → 需要 `failureAlert: false`
+
+讓我確認細節：
+
+　▶ AI 回應：找到了。`delivery.bestEffort: true` 可以靜默 gateway restart 通知，加上 `failureAlert: false` 靜默 MiniMax 過載通知。
+
+用 CLI 更新兩個 cron：
+
+　▶ AI 回應：找到了。兩個修法：
+- `--best-effort-deliver`：靜默 gateway restart 通知
+- `--no-failure-alert`：靜默 MiniMax 過載失敗通知
+
+　▶ AI 回應：「每4小時主動關懷」CLI 報錯，改直接修 jobs.json：
+
+　▶ AI 回應：兩個都設定好了。現在重啟 gateway 讓設定生效：
+
+　▶ AI 回應：✅ 完成。
+
+**兩個 cron 都已靜默錯誤訊息：**
+
+| cron 名稱 | 原本問題 | 修法 |
+|-----------|---------|------|
+| 每4小時主動關懷 | gateway restart 中斷通知 | `delivery.bestEffort: true` |
+| 🔴 終端機對話全自動蒸餾（每4小時）| MiniMax 過載失敗通知 | `delivery.bestEffort: true` + `failureAlert: false` |
+
+**效果：**
+- 這兩個 cron **成功時**仍然正常推送到 Telegram
+- **失敗或被中斷時*…（略）
+
+【教練 2026-06-06 14:28】
+上傳紀錄 commit，並且確保它能夠被執行，不會再重複出現這些錯誤
+
+　▶ AI 回應：Gateway 已正確載入。兩個 cron 設定確認生效，現在 commit：
+
+　▶ AI 回應：✅ 完成。
+
+**commit `bce4a57`** 已推上 GitHub。
+
+**驗證清單：**
+| 項目 | 狀態 |
+|------|------|
+| `每4小時主動關懷` — `delivery.bestEffort: true` | ✅ gateway 已載入 |
+| `每4小時主動關懷` — `failureAlert: false` | ✅ gateway 已載入 |
+| `終端機對話全自動蒸餾` — `delivery.bestEffort: true` | ✅ gateway 已載入 |
+| `終端機對話全自動蒸餾` — `failureAlert: false` | ✅…（略）
