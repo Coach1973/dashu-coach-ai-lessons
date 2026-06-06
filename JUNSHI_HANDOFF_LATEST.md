@@ -1,44 +1,41 @@
-# 軍師接力棒 · 2026-06-05 23:00（Opus 4.6 終端機 session 結案）
+# 軍師接力棒 · 2026-06-06 16:20（Opus 4.6 終端機 session 結案）
 
-> 建立時間：2026-06-05 23:00
-> 上一棒：Opus 4.8 19:00 + minimax-m3 19:10
+> 建立時間：2026-06-06 16:20
+> 上一棒：Opus 4.6 2026-06-05 23:00
 > 本棒執行者：Opus 4.6 軍師（Claude Code CLI 終端機）
 
 ---
 
 ## ✅ 本場完成
 
-### 任務一：jiesheng-leadership 改字 ✅
-- 7月4日場次「線上座談會」→「線上讀書會」
-- Deploy ID：`6a22e048735f834ae7126667`
+### 任務一：Karpathy 技能評估與整合 ✅
+- 比較 `multica-ai/andrej-karpathy-skills` 與特助心法
+- 新增 E10~E12 三條執行細則到 `~/.claude/CLAUDE.md`
+- E10：編碼前說出假設（Karpathy 原則一）
+- E11：只碰必要的，只清自己的亂（原則二+三）
+- E12：把任務轉成可驗證目標（原則四）
+- 結論：不適合寫到小龍蝦系統（僅適用於寫程式的 AI）
 
-### 任務二：theunrestrictedwar 號外框縮小 ✅
-- 兩張號外卡片加 `max-width: fit-content; margin: 0 auto;`
-- 之前終端機改 h3 標題寬度（改錯對象），軍師改整個 card div（一次到位）
-- Deploy ID：`6a22e17674f790419feaa19e`（含海報圖片修復）
+### 任務二：jiesheng-leadership 書封修復 ✅
+- 書封 book.png 和 teacher.jpg 404
+- 根因：上一棒軍師 6/5 22:42 用手動 API 推送改字，zip 漏帶圖片
+- 修復：空 commit `6d3faa2` → git push 觸發 GitHub 自動部署
+- Netlify deploy ID：`6a23ce25ec2d`
 
-### 任務三：漏圖片修復 ✅
-- 推送時只包了 HTML + _headers，漏掉海報 1779859916089.jpg
-- SOP 第 132 行白紙黑字寫「禁止不包圖片」，自己沒照做
-- 從上一版部署下載圖片，重新打包推送修復
-
-### 任務四：cool-case 案例 #22 ✅
-- 新增「SOP 自己寫的自己不照做」案例
-- GitHub Pages commit：`fd4648d`
-- 線上版到 #22
-
-### 任務五：桌面收檔 ✅
-- 30+ 文件全部歸檔到 `~/Desktop/歷史資料/2026-06-05_桌面收檔/`
-- 桌面只剩 Workspace、歷史資料、whimsical-smakager更新
-- 三幕劇 TOP4 的 3 個故事（海餅乾/換視窗/2000段話）與現有案例 1-21 重複，不另開新案例
+### 任務三：「流量」指令——Telegram 查 AI 用量 ✅
+- 教練在 Telegram 說「流量」→ 小龍蝦回報 Claude/OpenCode Go/MiniMax 用量
+- **方案一（hook inject）失敗**：OpenClaw `message:preprocessed` 是 fire-and-forget，inject 不被消費
+- **方案二（SOUL.md 指令）成功**：在 SOUL.md 加鐵律四，小龍蝦讀 `state/usage_cache.json` 回報
+- 教練實測確認功能正常
+- 快取數據來源：軍師用 Chrome MCP 讀取三家平台頁面後寫入
 
 ---
 
 ## 🪞 本場教訓
 
-1. **SOP 自己寫的自己不照做**（守則#07）：推送漏圖片，SOP 早已寫明
-2. **推錯站台**：用了上一個任務的 site ID 推超限戰內容到 jiesheng，已立刻修正還原
-3. **沒有先比對就急著判斷**（守則#03）：三幕劇 TOP4 內容在現有案例裡已有，應該先比對再說「可以做新案例」
+1. **OpenClaw 內部 hook 的 `message:preprocessed` 是 fire-and-forget**——不能用來注入 prompt 內容。花了大量時間 debug 才找到這個架構限制。下次遇到 hook 無效，先確認事件類型是否被 await。
+2. **重複回答浪費流量**——教練已回答過的問題，不要因為 context 壓縮後重複輸出。
+3. **手動 API 推送漏圖片是反覆型錯誤**——jiesheng-leadership 和 theunrestrictedwar 連續兩次同樣問題。有 GitHub 連結的站一律用 git push。
 
 ---
 
@@ -46,25 +43,21 @@
 
 | Commit | Repo | 內容 |
 |--------|------|------|
-| `fd4648d` | cool-case (gh-pages) | 案例 #22：SOP 自己寫的自己不照做 |
-
-## 📊 Netlify Deploy 清單
-
-| Deploy ID | 站台 | 內容 |
-|-----------|------|------|
-| `6a22e048735f834ae7126667` | jiesheng-leadership | 7月4日改讀書會（還原正確內容）|
-| `6a22e17674f790419feaa19e` | theunrestrictedwar | 號外框縮小 + 海報圖片修復 |
+| `204888bf` | openclaw | CLAUDE.md 變更記錄（E10-E12） |
+| `6d3faa2` | jiesheng-leadership | 空 commit 觸發自動部署修復圖片 |
+| `7c2c2ae` | openclaw | hooks/usage-query 程式碼 |
+| `fa1f1f02` | workspace | SOUL.md 鐵律四 + usage_cache.json |
 
 ---
 
 ## 📝 給下一棒
 
-- 系統全面健康，所有任務全清
-- cool-case 目前到案例 #22
-- theunrestrictedwar 號外框已縮、海報已修
-- jiesheng-leadership 7月4日已改讀書會
-- 桌面已整理乾淨
+- **流量指令已上線**：教練說「流量」小龍蝦會回報。快取在 `workspace/state/usage_cache.json`，需要軍師定期用 Chrome MCP 更新
+- **快取更新方式**：用 Chrome MCP 讀 claude.ai/settings/usage、opencode.ai、platform.minimax.io 三個頁面，把數據寫入 usage_cache.json
+- **hook 程式碼保留**：`~/.openclaw/hooks/usage-query/` 完整可用，等 OpenClaw 未來支援 awaited hook 事件後可啟用
+- **YouTube 頻道重新利用**：教練有 bot token `8570992742:AAGR_swFNzjopUuaAkWYZa-h8U9oHn5jlZk`（@CoachWuYouTubeDailyBot），待規劃用途
+- CLAUDE.md 已新增 E10-E12（Karpathy 工程執行紀律）
 
 ---
 
-**最後更新：2026-06-05 23:00（Opus 4.6 終端機 session 結案）**
+**最後更新：2026-06-06 16:20（Opus 4.6 終端機 session 結案）**
