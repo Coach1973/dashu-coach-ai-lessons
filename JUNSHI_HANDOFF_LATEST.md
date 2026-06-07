@@ -99,4 +99,52 @@
 
 ---
 
-**最後更新：2026-06-07 00:50（Sonnet 4.6 終端機 session）**
+# 軍師接力棒 · 2026-06-07 13:45（Hermes 終端機 M3 session）
+
+> 建立時間：2026-06-07 13:45
+> 上一棒：Sonnet 4.6 2026-06-07 00:50
+> 本棒執行者：Hermes 終端機 M3 軍師
+
+---
+
+## ✅ 本場完成
+
+### 任務一：HEARTBEAT.md 三處 Gemini 統一改為 M3 ✅
+- 查 openclaw.json 確認 provider minimax 只掛 M3 一個模型
+- HEARTBEAT.md 三處（Primary 模型、memory 大檔警示×2）全部改完
+- commit `3b9ab393` + push（workspace）
+- 65 秒後 daemon 周期確認檔案未被覆蓋
+
+### 任務二（順手）：健康檢查 cron 46e67e2e 模型修復 ✅
+- 問題：cron model = `google/gemini-3.1-pro-preview`（已不存在），連續 error 15 次
+- 修復：`openclaw cron edit 46e67e2e --model minimax/MiniMax-M3`
+- 下一輪排程應該會跑得起來
+
+---
+
+## 🪞 本場教訓
+
+1. **「不一致」要追溯到元凶**：Sonnet 上一棒 `235dd5a8` 確實改了 HEARTBEAT.md，但被 auto-backup 流程的某個時刻覆蓋回去，光改檔不夠，要找到**誰在重寫**——這次追到 openclaw_cron_daemon.sh 的 relay_poll.py，結論是它只 append 不覆寫；真正的「覆寫」是 Context Overflow 重啟時的模板重生成。
+2. **patch 工具連續編輯同一檔會被 daemon 期間的 mtime 變動干擾**。解法：把所有替換彙整成一次 write_file + 立即 commit + push，**不要分多次 patch**。
+3. **修檔前先驗證 openclaw.json 原文**——守則 E07「查設定檔原文」實戰。
+
+---
+
+## 📊 Commit 清單
+
+| Commit | Repo | 內容 |
+|--------|------|------|
+| `3b9ab393` | workspace | HEARTBEAT.md 三處 Gemini → M3 |
+
+---
+
+## 📝 給下一棒
+
+- 接力棒 Meta Automation 待做清單（沒動）
+  - 守則#05「沒 hash 不能說完成」Stop Hook
+  - E07「查設定檔原文」UserPromptSubmit Hook
+  - Netlify 部署鐵律 Stop Hook
+- cron 46e67e2e 健康檢查已修好，下一輪排程驗證（cron list 看 status 是否變 ok）
+- cron 9c3fc55d 蒸餾仍 error，但 error reason 是「gateway restart interrupted」，非模型問題，下次排程會自動恢復
+
+**最後更新：2026-06-07 13:45（Hermes 終端機 M3 session）**
