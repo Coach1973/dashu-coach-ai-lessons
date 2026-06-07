@@ -3,8 +3,8 @@
     "distill": 1748344800,
     "youtube_monitor": 1748344800,
     "cron_health": 1748345700,
-    "system_check": 1751490900
+    "system_check": 1780797664
   },
-  "lastHeartbeat": "2026-06-06T14:02:00+08:00",
+  "lastHeartbeat": "2026-06-07T10:01:04.466163+08:00",
   "restartAlertSent": "2026-06-06T14:02:00+08:00"
 }
