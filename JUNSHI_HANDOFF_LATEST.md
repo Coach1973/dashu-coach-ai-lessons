@@ -99,9 +99,9 @@
 
 ---
 
-# 軍師接力棒 · 2026-06-07 13:45（Hermes 終端機 M3 session）
+# 軍師接力棒 · 2026-06-07 13:50（Hermes 終端機 M3 session）
 
-> 建立時間：2026-06-07 13:45
+> 建立時間：2026-06-07 13:50
 > 上一棒：Sonnet 4.6 2026-06-07 00:50
 > 本棒執行者：Hermes 終端機 M3 軍師
 
@@ -118,15 +118,26 @@
 ### 任務二（順手）：健康檢查 cron 46e67e2e 模型修復 ✅
 - 問題：cron model = `google/gemini-3.1-pro-preview`（已不存在），連續 error 15 次
 - 修復：`openclaw cron edit 46e67e2e --model minimax/MiniMax-M3`
-- 下一輪排程應該會跑得起來
+
+### 任務三：守則#05 hash Hook（Meta Automation）✅
+- 守則#05「凡走過必留痕跡」機械化：完成詞 + 無 hash → exit 2 強制重做
+- 測試先行（沿用 #12 紀律）：16 個案例，**一次全 PASS**
+- 真實整合測試：模擬違規 transcript → exit 2 + 修正指引 ✅
+- 註冊到 `~/.claude/settings.json` Stop hook（跟 #12 並列）
+- 完成詞清單 30+ 個：修好/已推送/已部署/搞定/任務完成...
+- 白名單涵蓋：守則/不要/不應/抱歉/無法/失敗/先不要/如果 等討論/否定語境
+- commits:
+  - `d9106dce` test: 測試套件先行
+  - `ff259403` feat: hook 實作 + 整合
 
 ---
 
 ## 🪞 本場教訓
 
-1. **「不一致」要追溯到元凶**：Sonnet 上一棒 `235dd5a8` 確實改了 HEARTBEAT.md，但被 auto-backup 流程的某個時刻覆蓋回去，光改檔不夠，要找到**誰在重寫**——這次追到 openclaw_cron_daemon.sh 的 relay_poll.py，結論是它只 append 不覆寫；真正的「覆寫」是 Context Overflow 重啟時的模板重生成。
-2. **patch 工具連續編輯同一檔會被 daemon 期間的 mtime 變動干擾**。解法：把所有替換彙整成一次 write_file + 立即 commit + push，**不要分多次 patch**。
+1. **「不一致」要追溯到元凶**：Sonnet 上一棒 `235dd5a8` 確實改了 HEARTBEAT.md，但被某個流程覆蓋回去，光改檔不夠，要找到**誰在重寫**——這次追到 openclaw_cron_daemon.sh 的 relay_poll.py，結論是它只 append 不覆寫；真正的「覆寫」是 Context Overflow 重啟時的模板重生成。
+2. **patch 工具連續編輯同一檔會被 daemon 期間的 mtime 變動干擾**。解法：把所有替換彙整成一次 write_file + 立即 commit + push。
 3. **修檔前先驗證 openclaw.json 原文**——守則 E07「查設定檔原文」實戰。
+4. **「#05 hash 鉤子」16 個測試一次全通過**——代表 TDD + 沿用 #12 範本讓風險降到最低。
 
 ---
 
@@ -135,16 +146,30 @@
 | Commit | Repo | 內容 |
 |--------|------|------|
 | `3b9ab393` | workspace | HEARTBEAT.md 三處 Gemini → M3 |
+| `80fdd30b` | workspace | 接力棒更新 |
+| `d9106dce` | workspace | test: rule05_hash 測試套件 |
+| `ff259403` | workspace | feat: rule05_hash hook 實作 + 整合 |
 
 ---
 
 ## 📝 給下一棒
 
-- 接力棒 Meta Automation 待做清單（沒動）
-  - 守則#05「沒 hash 不能說完成」Stop Hook
-  - E07「查設定檔原文」UserPromptSubmit Hook
-  - Netlify 部署鐵律 Stop Hook
-- cron 46e67e2e 健康檢查已修好，下一輪排程驗證（cron list 看 status 是否變 ok）
-- cron 9c3fc55d 蒸餾仍 error，但 error reason 是「gateway restart interrupted」，非模型問題，下次排程會自動恢復
+### Meta Automation 待做清單（剩 2 個）
+- 🔴 **E07「查設定檔原文」UserPromptSubmit Hook**——模型相關問題自動注入 openclaw.json 摘要
+  - 觸發訊號：「模型」「provider」「現在用什麼」
+  - 預期：自動把 minimax provider 設定注入 context，不用模型憑記憶答
+- 🔴 **Netlify 部署鐵律 Stop Hook**——偵測 git push + netlify 組合 → 攔截
+  - 風險：80 次不成熟部署已燒 1200 點
+  - 挑戰：「已 push 還能攔截嗎」技術問題需先驗證
 
-**最後更新：2026-06-07 13:45（Hermes 終端機 M3 session）**
+### cron 狀態
+- `46e67e2e` 健康檢查已修，下一輪排程驗證
+- `9c3fc55d` 蒸餾仍 error（gateway restart interrupted），下次排程會自動恢復
+
+### 已完成的鉤子（給下一棒直接參考結構）
+- `scripts/rule12_porter_check.sh` + `test_rule12_hook.sh`（搬運工句型）
+- `scripts/rule05_hash_check.sh` + `test_rule05_hash.sh`（完成詞缺 hash）← 本場新增
+- 註冊位置：`~/.claude/settings.json` → `hooks.Stop[]`
+- 共同紀律：先測試後實作、只讀最後一條、stop_hook_active 防迴圈、違規寫 log
+
+**最後更新：2026-06-07 13:50（Hermes 終端機 M3 session）**
