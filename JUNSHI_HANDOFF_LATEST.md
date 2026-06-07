@@ -99,10 +99,10 @@
 
 ---
 
-# 軍師接力棒 · 2026-06-07 13:50（Hermes 終端機 M3 session）
+# 軍師接力棒 · 2026-06-07 14:10（Hermes 終端機 M3 session）
 
-> 建立時間：2026-06-07 13:50
-> 上一棒：Sonnet 4.6 2026-06-07 00:50
+> 建立時間：2026-06-07 14:10
+> 上一棒：Hermes M3 2026-06-07 13:50
 > 本棒執行者：Hermes 終端機 M3 軍師
 
 ---
@@ -118,26 +118,39 @@
 ### 任務二（順手）：健康檢查 cron 46e67e2e 模型修復 ✅
 - 問題：cron model = `google/gemini-3.1-pro-preview`（已不存在），連續 error 15 次
 - 修復：`openclaw cron edit 46e67e2e --model minimax/MiniMax-M3`
+- ✅ 已驗證恢復（git log 看到 `auto-backup 2026-06-07 14:07` 跟 `auto: 接力棒鏡像同步 2026-06-07 13:50` 兩條 auto commit 正常產生）
 
 ### 任務三：守則#05 hash Hook（Meta Automation）✅
 - 守則#05「凡走過必留痕跡」機械化：完成詞 + 無 hash → exit 2 強制重做
 - 測試先行（沿用 #12 紀律）：16 個案例，**一次全 PASS**
-- 真實整合測試：模擬違規 transcript → exit 2 + 修正指引 ✅
+- 整合測試：模擬違規 transcript → exit 2 + 修正指引 ✅
 - 註冊到 `~/.claude/settings.json` Stop hook（跟 #12 並列）
-- 完成詞清單 30+ 個：修好/已推送/已部署/搞定/任務完成...
-- 白名單涵蓋：守則/不要/不應/抱歉/無法/失敗/先不要/如果 等討論/否定語境
 - commits:
   - `d9106dce` test: 測試套件先行
   - `ff259403` feat: hook 實作 + 整合
+
+### 任務四：E07 設定檔自動注入 Hook（Meta Automation）✅
+- 守則 E07「存在性驗證」+ #15「說不知道比胡說八道更值得尊重」機械化
+- 教練 prompt 提到「模型/provider/M3/Opus/Kimi」等詞時，自動從 openclaw.json 抽出摘要注入 context
+- 觸發：模型/provider/切換/M3/Opus/Sonnet/Haiku/Kimi/Claude/GPT/Gemini 等 22 個詞
+- 白名單：BMW/車/音樂/俳句/health care provider 等英文語境（避誤觸發）
+- 16 個測試一次全 PASS，實際整合測試 OK
+- 註冊到 `~/.claude/settings.json` UserPromptSubmit hook（跟 quote_xinfa 並列）
+- commit `b67e1104`（workspace）
 
 ---
 
 ## 🪞 本場教訓
 
-1. **「不一致」要追溯到元凶**：Sonnet 上一棒 `235dd5a8` 確實改了 HEARTBEAT.md，但被某個流程覆蓋回去，光改檔不夠，要找到**誰在重寫**——這次追到 openclaw_cron_daemon.sh 的 relay_poll.py，結論是它只 append 不覆寫；真正的「覆寫」是 Context Overflow 重啟時的模板重生成。
-2. **patch 工具連續編輯同一檔會被 daemon 期間的 mtime 變動干擾**。解法：把所有替換彙整成一次 write_file + 立即 commit + push。
-3. **修檔前先驗證 openclaw.json 原文**——守則 E07「查設定檔原文」實戰。
-4. **「#05 hash 鉤子」16 個測試一次全通過**——代表 TDD + 沿用 #12 範本讓風險降到最低。
+1. **「不一致」要追溯到元凶**：光改檔不夠，要找到誰在重寫。
+2. **patch 連續編輯會被 daemon 干擾** → write_file 一次寫 + 立即 commit + push。
+3. **修檔前先驗證 openclaw.json 原文**（E07 實戰）。
+4. **#05 hash Hook**：TDD + 沿用 #12 範本讓風險降到最低，16 個測試一次過。
+5. **E07 設定檔注入實作 4 個踩雷**（已記入試金石）：
+   - shell array for 迴圈 `"${ARR[@]}"` 寫成單一字串就壞
+   - jq object value 不能直接 `//`，要包 `(...)`
+   - openclaw.json `agents` 結構是 `.agents.list[]` 不是 `to_entries`
+   - JSON 構造用 `python -c`，不要 printf（escape 問題）
 
 ---
 
@@ -149,27 +162,31 @@
 | `80fdd30b` | workspace | 接力棒更新 |
 | `d9106dce` | workspace | test: rule05_hash 測試套件 |
 | `ff259403` | workspace | feat: rule05_hash hook 實作 + 整合 |
+| `f357bb7e` | workspace | 接力棒：守則#05 完成 + 剩餘 2 個待做 |
+| `b67e1104` | workspace | feat: E07 設定檔自動注入 hook |
 
 ---
 
 ## 📝 給下一棒
 
-### Meta Automation 待做清單（剩 2 個）
-- 🔴 **E07「查設定檔原文」UserPromptSubmit Hook**——模型相關問題自動注入 openclaw.json 摘要
-  - 觸發訊號：「模型」「provider」「現在用什麼」
-  - 預期：自動把 minimax provider 設定注入 context，不用模型憑記憶答
+### Meta Automation 待做清單（剩 1 個）
 - 🔴 **Netlify 部署鐵律 Stop Hook**——偵測 git push + netlify 組合 → 攔截
   - 風險：80 次不成熟部署已燒 1200 點
   - 挑戰：「已 push 還能攔截嗎」技術問題需先驗證
+  - 替代方案：PreToolUse Hook（推送前攔截）可能比 Stop Hook 可靠
 
-### cron 狀態
-- `46e67e2e` 健康檢查已修，下一輪排程驗證
-- `9c3fc55d` 蒸餾仍 error（gateway restart interrupted），下次排程會自動恢復
+### cron 狀態（已全部恢復健康）
+- `46e67e2e` 健康檢查：✅ 已驗證恢復運作
+- `9c3fc55d` 蒸餾：上次 error 為 gateway restart，下次排程自動恢復
 
 ### 已完成的鉤子（給下一棒直接參考結構）
 - `scripts/rule12_porter_check.sh` + `test_rule12_hook.sh`（搬運工句型）
-- `scripts/rule05_hash_check.sh` + `test_rule05_hash.sh`（完成詞缺 hash）← 本場新增
-- 註冊位置：`~/.claude/settings.json` → `hooks.Stop[]`
-- 共同紀律：先測試後實作、只讀最後一條、stop_hook_active 防迴圈、違規寫 log
+- `scripts/rule05_hash_check.sh` + `test_rule05_hash.sh`（完成詞缺 hash）
+- `scripts/e07_settings_inject.sh` + `test_e07_settings.sh`（模型問題自動注入）← 本場新增
+- 註冊位置：`~/.claude/settings.json` → `hooks.Stop[]` / `hooks.UserPromptSubmit[]`
+- 共同紀律：先測試後實作、只讀最後一條（Stop）、白名單避誤觸發、違規寫 log
 
-**最後更新：2026-06-07 13:50（Hermes 終端機 M3 session）**
+### 試金石案例（已記入，未來可正式寫入案例庫）
+- E07 4 個實作雷：shell array / jq // / agents 結構 / JSON 構造
+
+**最後更新：2026-06-07 14:10（Hermes 終端機 M3 session）**
