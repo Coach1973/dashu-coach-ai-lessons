@@ -1,15 +1,19 @@
 {
-  "updated": "2026-06-06T19:40:30+08:00",
+  "updated": "2026-06-08T18:18:00+08:00",
+  "source": "browser openclaw managed profile (claude.ai/settings/usage 抓取)",
   "claude": {
     "plan": "Pro",
-    "session_used": "12%",
-    "session_reset": "4 小時 39 分鐘",
-    "weekly_used": "32%",
+    "session_used": "18%",
+    "session_reset": "3 小時 11 分鐘",
+    "weekly_used": "45%",
     "weekly_reset": "週三下午 1:00",
+    "routine_runs": "0 / 5（今日）",
     "credits_spent": "$0.00",
     "credits_reset": "7 月 1 日",
     "credits_limit": "$20",
-    "balance": "$0.01"
+    "balance": "$0.01",
+    "auto_reload": "關閉",
+    "last_updated_page": "1 分鐘前"
   },
   "opencode_go": {
     "rolling_used": "0%",
