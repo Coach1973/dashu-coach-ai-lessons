@@ -75,3 +75,41 @@ RTO 攔截（學長收到的 preprocessed 事件）
 # 已加進 openclaw.json hooks.internal.entries
 # gateway 熱重載自動生效
 ```
+
+---
+
+## 八、Changelog
+
+### v0.2（2026-06-09 上午，OPE 後改造）
+
+**動機**：教練親口「全新、清晰且明白的架構，用簡單容易的做法」+ OPE 網搜（AutoGen GroupChat + Council Mode）。
+
+**改動三件**：
+
+1. **prompt 升級**：generateAgenda() prompt 加入異構化角色
+   - 🦞 學長 = 哲學家視角（先問本質、揭示假設、整合收尾）
+   - 🦐 學弟 = 偵探視角（挖證據、找事實、給數據）
+   - 🐰 學妹 = 辯論者視角（挑戰假設、提反方角度、整合矛盾）
+
+2. **議程格式強制 Council Mode 三段收尾**：
+   - ✅ 三方共識
+   - ⚠️ 主要分歧
+   - 💡 獨特發現
+   - 禁止只給結論——教練要看推理過程，破純多數決不穩
+
+3. **注入內容升級**：加「群組公開發言」鐵律
+   - 學弟學妹在分工群直接公開發言，不再 sessions_send 私訊學長
+   - 配套：學長 SOUL.md（commit 66fe13ce）、學弟 SOUL.md（commit e802c1d4）、學妹 SOUL.md（commit f5e8b40）同步升級
+
+**OPE 依據**：
+- [AutoGen GroupChat dynamic group chat](https://microsoft.github.io/autogen/0.2/docs/tutorial/conversation-patterns/)
+- [AutoGen Selector Group Chat（新 API）](https://microsoft.github.io/autogen/dev//user-guide/agentchat-user-guide/selector-group-chat.html)
+- [Council Mode: Multi-Agent Consensus（arxiv 2604.02923）](https://arxiv.org/pdf/2604.02923)
+
+**驗證方式**：教練在分工群（chatId -1003877502911）丟一個需要討論的題目，觀察：
+- 學長收到 RTO 注入的圓桌議程
+- 學長照議程在群裡 @ 學弟（@CoachWu_openclaw_bot）/學妹（@coachwu_lenovo_bot）
+- 學弟學妹在群裡**公開發言**（不是私訊學長）
+- 學長最後以 Council Mode 三段呈報教練
+
+**Gateway restart**：2026-06-09 上午（PID 25170 → 38464）載入 v0.2。
