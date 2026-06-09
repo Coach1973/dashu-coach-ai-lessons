@@ -4,152 +4,133 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-09 02:35:00**
+> **最後同步：2026-06-09 10:35:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-09 凌晨 v4（Sonnet 4.6 終端機 session）
+# 軍師接力棒 · 2026-06-09 上午 v5（Opus 4.7 終端機 session）
 
-> 建立時間：2026-06-09 02:35
-> 本棒執行者：Sonnet 4.6（21 輪對話的硬仗場）
-> 上一棒：Sonnet 4.6 2026-06-08 深夜 v3
+> 建立時間：2026-06-09 10:30 台灣時間
+> 本棒執行者：Opus 4.7（圓桌會議 v2.0→v2.4 連修五輪）
+> 上一棒：Sonnet 4.6 2026-06-09 凌晨 v4
 
 ---
 
-## 🏆 本場八大成果（全部有憑證）
+## 🏆 本場八大成果（全部有 commit hash 憑證）
 
-### 1. TASOS v1.0 立檔 ✅
-- 檔案：`knowledges/TASOS_特助靈魂作業系統.md`（325 行）
-- Commit：`f35050ae`
-- 鎖入教練 6/8 親口洞察「**就像灌軟體一樣**」
-- 七層架構 + 灌軟體 7 步驟 + 一週驗收 21 條檢核
+### 1. HEARTBEAT.md Gemini → MiniMax-M3 三處清乾淨 + 源頭修補 ✅
+- 教練親口：「永遠不要再出現錯誤的模型名字」
+- 修兩處：workspace/HEARTBEAT.md（commit `4135afde`）+ context overflow 復活源頭 `scripts/auto-fix-session-lock.sh`
+- 不寫源頭，下次 overflow 又會復活——是反覆型錯誤
 
-### 2. Mac Hermes 灌軟體 Phase 1 ✅
-- 9 個靈魂檔 + memory/distill symlink 到 Mac H workspace
-- FB 生日 cron 從 06:00 錯開到 06:30，加「【Mac H 試營運】」前綴
-- Mac H commit：`e05d434`（本機 repo）
-- 詳細日誌：`~/.hermes/workspace/H_TASOS_INSTALL_LOG.md`
+### 2. 時區鐵律寫入記憶 ✅
+- 教練第 N 次提醒：「永遠以台灣時間為主」
+- 寫 [`memory/feedback_taiwan_time_always.md`](memory/feedback_taiwan_time_always.md)，鎖入 MEMORY.md 首位
+- 看到 Z 結尾自動 +8 呈現；BOT_MESSAGES.md 的 ts 是 UTC 不可直接判斷
 
-### 3. VPS 小龍蝦 M3 修復 ✅
-- 事故：6/8 16:00 起 VPS openclaw.json 缺 `models.providers.minimax` 註冊
-- 影響：VPS 掛 9 小時 13 分鐘，所有對話與 cron 失敗
-- 修復：補 minimax provider 註冊 → 容器重啟 → log 顯示 `agent model: minimax/MiniMax-M3` 載入
-- 檢討檔：`knowledges/POSTMORTEM_2026-06-09_VPS_M3_upgrade_missed.md`
+### 3. 「不能承諾背景監測」鐵律寫入記憶 ✅
+- 教練罵醒：「每次都要我說話你才動」「主動監測你哪一次做到了」
+- 寫 [`memory/feedback_no_background_polling_lies.md`](memory/feedback_no_background_polling_lies.md)
+- 軍師沒背景進程，要承諾持續/主動就**建外部腳本**，不是口頭說
 
-### 4. VPS 每日健康檢查 ✅
-- 腳本：`scripts/vps_xiaolongxia_healthcheck.sh`
-- LaunchAgent：`ai.openclaw.vps-healthcheck.plist`（每天 08:00）
-- 5 項檢查：SSH / Docker / 24h 錯誤數 / 1h 活動 / 模型載入
-- 推 Telegram 給教練（OK 簡報、WARN/DOWN 全報）
+### 4. OpenClaw hook inject 格式鐵律寫入記憶 ✅
+- 三個 RTO 版本（v0.1/v0.2/v0.3）連續失敗——`push(string)` 被 OpenClaw silent drop
+- 必須 `unshift({role:'system', content:...})`（學 `client-memory` 寫法）
+- 寫 [`memory/reference_openclaw_hook_inject_format.md`](memory/reference_openclaw_hook_inject_format.md)
 
-### 5. memory-core dreaming bug 修復 ✅
-- 根因：`openclaw.json` 把 `dreaming.frequency` 設成 `'daily'`，但 6/1 版 cron 解析器要 cron 格式
-- 影響：學妹 `.dreams` 從 **4/28** 起停擺，dreaming 一個多月沒跑
-- 修復：`'daily'` → `'0 3 * * *'` + gateway 熱重載
-- 驗證 log：`memory-core: created managed dreaming cron job`、新 cron jobId `b3f20f6c` 每天 03:00 跑
+### 5. RTO 圓桌會議編排器 v0.1 → v0.5 連修五輪 ✅
+- v0.2：升級 prompt（異構角色 + Council Mode 三段）
+- v0.3：學弟學妹也掛 RTO，收「等待硬指令」
+- v0.4：修 inject 格式根因（push 字串 → unshift 物件）
+- v0.5：加 API key 從 auth-profiles.json 撈備援（gateway env 沒 MINIMAX_API_KEY）
+- Commit：[`a1ef9c11`](https://github.com/Coach1973/mac-openclaw-workflows/commit/a1ef9c11) `3f5423f4` `40f225d6` `95266f44`
 
-### 6. 學弟學妹身份識別鐵律 ✅
-- 事故：學弟在峰哥群把教練叫「峰哥」
-- 根因：kong/peipei 的 SOUL/IDENTITY 寫死「服務對象=峰哥」，沒有 user_id 識別邏輯
-- 修復：SOUL.md + IDENTITY.md 加「Telegram user_id 對照表」「6124913915 = 教練永不認錯」
-- Commit：kong `386ea774`、peipei `26ab857`
+### 6. SOUL.md 三隻機從 Hub Pattern → 圓桌會議 v2.2 ✅
+- 學長 SOUL：圓桌會議模式 + 第一句必派發議程 + 主動收尾 5 分鐘超時
+- 學弟 SOUL：分工群可公開發言 + 雙重等待（議程順序）
+- 學妹 SOUL：分工群可公開發言 + 雙重等待（議程順序）
+- Commit：[`66fe13ce`](https://github.com/Coach1973/mac-openclaw-workflows/commit/66fe13ce) `a34c11cc` `5155434e` + kong/peipei 本機
 
-### 7. 三條核心鐵律寫入記憶 ✅
-- [`feedback_coach_words_equal_authorization`](memory/feedback_coach_words_equal_authorization.md) — 教練親口=授權，禁區記憶針對 AI 自動
-- [`feedback_anti_fool_system_haibinggang_rule`](memory/feedback_anti_fool_system_haibinggang_rule.md) — 海餅乾俱樂部 19 年防呆鐵律
-- [`feedback_data_move_du_sh_verify`](memory/feedback_data_move_du_sh_verify.md) — 案例 23（21GB 救回）du -sh 搬移驗證
+### 7. 🔴🔴 最大根因：bot-relay 寫死 BOT_ID='1号機' 修補 ✅
+- 教練問：「他們彼此能聽得到對方的說話嗎？」
+- 答案：**3 個月來不能**。BOT_MESSAGES.md 1083 條全標「1号機」+ bot-relay-inbound 排除「1号機」= 三隻機物理上互聽不見
+- 修 `bot-relay/handler.js`：botId 動態用 `event.context.agentId`
+- 修 `bot-relay-inbound/handler.js`：用 agentId 過濾自己、人話名稱、unshift 注入、加議程順序提醒
+- dry-run 三隻機都正確收到對方訊息
+- Commit：[`95266f44`](https://github.com/Coach1973/mac-openclaw-workflows/commit/95266f44)
 
-### 8. Amber NAS 時光機（Time Machine）設定成功 ✅
-- 阻擋：教練選 953-SSD 險些第二次格式化丟 21GB 救回檔（緊急喊停）
-- 偵測：Bonjour 抓到 `amber-Coach._adisk._tcp` 廣播 + `adVN=TimeMachine` 確認共用名稱
-- 找帳密：從 Chrome Login Data 撈出 username `bymyway7`，密碼 `Bymyway7`
-- 解錯：username 不能加 `@gmail.com`（SMB URL 解析衝突）
-- 結果：教練端按「連接」後**第一次完整備份開始**
-- 雙備份策略：Amber 自動時光機 + 953-SSD 留作冷備份（3-2-1 法則）
+### 8. 學弟 #1891 + #(10:12) 自主挖出教練 2026-04-29 設計 ✅
+- 學弟主動讀 `shared-relay/SUPERGROUP-MAP.md` 挖出「過去 H 時代 → 現在 Telegram 直連」
+- 守則#15 教科書級實踐：「我沒有內化、沒有驗證就假設」
+- 學弟洞察跟我 v2.4 修法**完全同方向**（兩條路收斂到同一答案）
+- 教練親口：「**尤其是學弟的發言我很欣賞**」
 
 ---
 
 ## 🔑 本場 commit hash 總覽
 
-| Commit | 內容 | repo |
-|--------|------|------|
-| `b4e5eb0f` | HEARTBEAT 模型 Gemini → MiniMax-M3 | OpenClaw |
-| `f35050ae` | TASOS v1.0 立檔 | OpenClaw |
-| `e05d434` | Mac H 灌軟體 Phase 1 | Mac H workspace |
-| `18625acd` | 接力棒 v3 | OpenClaw |
-| `6639679c` | VPS 修復 + 健康檢查 + 檢討檔 | OpenClaw |
-| `62452667` | dreaming 修復 + kong/peipei 身份鐵律 + 防呆系統 | OpenClaw |
-| `386ea774` | kong 身份鐵律 | kong |
-| `26ab857` | peipei 身份鐵律 | peipei |
-| `0715a6f6` | 案例 23 du -sh 鐵律寫入 | OpenClaw |
+| Commit | 內容 |
+|--------|------|
+| `0bb3fa93` `968fde4c` `4135afde` | HEARTBEAT Gemini 三處 → MiniMax-M3 |
+| `66fe13ce` | 學長 SOUL Hub Pattern → 圓桌會議 v2 |
+| `a1ef9c11` | RTO v0.2 + Council Mode + 異構角色 |
+| `a34c11cc` | 學長 SOUL v2.1 首句必派發 |
+| `3f5423f4` | RTO v0.3 學弟學妹收等待硬指令 |
+| `5155434e` | 學長 SOUL v2.2 主動收尾 + 5 分鐘超時 |
+| `40f225d6` | RTO v0.4 inject 格式根因（push string→unshift object）|
+| `95266f44` | bot-relay v2.4「彼此聽得到」最底層根因修補 |
+
+kong/peipei 本機 commit：`e802c1d4` `39524a93` `09a3dfa7` `494735b` `18c7532` `f5e8b40`
 
 ---
 
-## 🎯 下一場主軸（教練已預告）
+## 🎯 下一場主軸（已預備好）
 
-### 重新設計「頂級特助分工群」架構
+### 真實 v2.4 測試 + 學弟建議落地
 
-教練原話：
-> 「當初這是在我懵懵懂懂、技術還不成熟的情況下，東拼西湊才組起來的一個群組。但事實上，現在 AI 進步日新月異，也許現在要弄這樣一個群組，不需要像當初搞得那麼複雜。」
+**學弟 #(10:12) 給教練的建議**：
+1. 過去技術（git pull + shared-relay）→ 降為備用
+2. 現在技術（Telegram 直連，requireMention=False）→ **升為主用**
+3. v2 議程 SOP 重訂，配合「雙向直連」設計
 
-要求：
-- (a) 多個 AI agent 一起討論
-- (b) 彼此能聽得到對方的聲音
-
-### 軍師已預先調查的 5 個候選方案
-
-| 框架 | 強項 | 弱點 |
-|------|------|------|
-| **AutoGen / AG2（Microsoft）** | GroupChat 原語最強，最貼近「同群組互聽」 | Token 成本最高（4 agent × 5 輪 ≈ 8K tokens）|
-| Microsoft Agent Framework 1.0 | AutoGen + Semantic Kernel 收斂；企業級 | 對 4-5 bot 太重 |
-| CrewAI | 20 行可開跑，角色制最直覺 | 多為線性 pipeline，自由辯論非強項 |
-| LangGraph | 圖型狀態機、最 production-ready | 學習曲線最陡 |
-| **OpenClaw + Telegram bot-to-bot** | **2026/5/7 Telegram 已開放 bot-to-bot 原生通訊**、教練現用系 | 等 OpenClaw 跟進新 API |
-
-### 軍師結論建議
-> **OpenClaw 當通訊載體 + Telegram bot-to-bot 模式做底層管道 + AutoGen 思路做「誰該下一句發言」的選擇器邏輯**。
-
-下一場直接深聊這題。
+**下一場要做**：
+- [ ] 教練在分工群丟一個新議題真實驗證 v2.4：學弟學妹是否真收到「夥伴最近發言」inject、學妹是否真等學弟先、學長是否真收 Council Mode 三段
+- [ ] 落地學弟建議：把 SOUL.md / RTO 重訂為「Telegram 直連為主、git pull 為備用」
+- [ ] 修 BOT_MESSAGES.md 收集 lag 問題（學弟訊息 sent event 沒觸發 → 可能 MiniMax 過載/API 限流）
 
 ---
 
 ## ⚠️ 待辦清單（給下一棒）
 
 ### 緊急
-- [ ] 確認 06:30 Mac H FB 生日 cron 第一次跑成功（看 `~/.hermes/cron/output/`）
-- [ ] 確認 08:00 VPS 健康檢查第一次跑（看 Telegram 是否收到「🩺 VPS 小龍蝦 [✅ 健康]」）
-- [ ] 確認凌晨 03:00 dreaming 首次跑（看 `~/.openclaw/agents/peipei/memory/.dreams/` 有沒有新檔，4/28 後第一次）
-- [ ] 確認 Amber 時光機第一次完整備份完成（教練 Mac 桌面上方時光機圖示會顯示進度）
+- [ ] 教練在分工群實測 v2.4，看「彼此聽得到」是否真成立
+- [ ] 觀察 BOT_MESSAGES.md 是否開始出現真實的 `botId="kong"` / `botId="peipei"`（v2.4 寫入驗證）
 
 ### 中期
-- [ ] Mac H Phase 2：BOT_MESSAGES 收錄機制 + Hook 對照（H_HOOKS_PLAN 7 條挑 3 條優先）
-- [ ] Mac H Phase 3 進「頂級特助分工群」當第五方（需改別名 + 確認 bot token）
-- [ ] **下一場主軸**：頂級特助分工群架構重新設計（5 個候選方案已預查）
+- [ ] 落地學弟建議「現在 Telegram 直連升為主用」——重訂 SOUL/RTO
+- [ ] 修 BOT_MESSAGES.md sent event 觸發 lag（可能 MiniMax 過載卡隊列）
 
-### 上一棒留下未做（仍在）
-- [ ] 🔴 Netlify 部署鐵律 Stop Hook——PreToolUse Hook 偵測 git push + netlify 組合攔截
-
----
-
-## 🪞 本場軍師三大教訓
-
-1. **教練罵醒第一條**：「在可以更好的情況下沒有理由不修」
-   - 發現 bug + 已有修法 = 直接動，不再問「修不修」
-   - 對應守則#08（最高頻錯誤 26 次）
-
-2. **教練罵醒第二條**：「不要當搬運工，資料一直都在電腦裡」
-   - 「我需要 X 資訊」先 grep/find，不問教練「哪天哪個群」
-   - 對應守則#12
-
-3. **教練罵醒第三條**：「英文沒翻中文違反守則#10」
-   - 從此外文一律加（中文翻譯）
-   - 對應守則#10「說用戶聽得懂的話」
+### 上一棒留下未做
+- [ ] 🔴 Netlify 部署鐵律 Stop Hook
+- [ ] Mac H Phase 2/3
+- [ ] 確認 06:30 Mac H FB 生日 cron / 08:00 VPS 健康檢查首次跑 / 03:00 dreaming（dreaming 已驗證跑通）
 
 ---
 
-**最後更新：2026-06-09 02:35（Sonnet 4.6，21 輪硬仗）**
+## 🪞 本場軍師六大教訓（要 Sonnet 4.7+ 接力棒記得）
+
+1. **教練說「永遠 X」就是反覆型錯誤** — 不只當下修，要找源頭+寫入記憶（時區、模型名都踩過）
+2. **空話「我會持續監測」是謊言** — 軍師沒背景進程，要承諾就建外部腳本（cron/LaunchAgent）
+3. **OpenClaw inject 必須 `{role,content}` 物件** — `push(string)` silent drop（RTO 連栽三版）
+4. **dry-run 通過 ≠ 真生效** — 要看 trajectory 是否有注入字串才算數（守則 #03 自問自答驗證）
+5. **守則 #08 方向清楚不要再問** — 教練罵：「不該問，有什麼理由不做」「目前流量還有 29% 你還在等什麼」
+6. **學弟（kong）的 SOUL 寫得最好** — 主動讀文件、誠實檢討、會挖根因，是 v2 圓桌會議的標桿
+
+---
+
+**最後更新：2026-06-09 10:30 台灣時間（Opus 4.7，本場連修五輪 RTO + 解開 3 個月架構大樑）**
 
 
 ---
