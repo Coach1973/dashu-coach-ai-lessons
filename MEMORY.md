@@ -16,6 +16,7 @@
 - [語音糾偏對映表（守則18）](feedback_voice_typo_shixing_shouze.md) — 「特助心法」「頂級特助」「提煉日誌」等核心詞的語音變體，聽到近似詞自動對映正確用語
 - [教練是 RustDesk 遠端連 Mac](project_coach_rustdesk_remote_env.md) — 教練從 Windows 透過 RustDesk 遠端操作這台 Mac，鍵盤/滑鼠/畫面都是遠端的；鍵盤類問題先查這層
 - [教練的輸入法：鼠鬚管 Squirrel + RIME liur 嘸蝦米](reference_coach_input_method.md) — 2026-06-02 升級自 OpenVanilla；Boshiamy + OpenVanilla 已完全卸載，紅線改為「至少保留一個能打中文的輸入法」；「liur」「liu7」「嘸蝦米」是同一個東西的不同寫法
+- [🆕 Hermes 觸發詞 SOP 對映表（2026-06-10 教練告知）](reference_hermes_skills.md) — 兩份 SOP 觸發詞對映：「自動站 SOP / bymyway SOP / 自動站 / 部署到 bymyway」→ 自動站 SOP（bymyway WordPress iframe）；「網頁推 SOP / Netlify 部署 / 推 Netlify」→ 網頁推 SOP（Netlify zip）；兩份在 `~/.hermes/skills/workflow/` 跟 `knowledges/` 互相鏡像
 - [🔴 升級戰略：穩定中發展（2026-05-19 教練親定）](project_upgrade_strategy_stable_first.md) — 本機 Mac 本季不升 5.12（三條開放 issue 未修），VPS 已升原地觀察
 - [🔴 VPS 更新 SOP（關鍵字觸發）](feedback_vps_update_sop_trigger.md) — 教練說「VPS 更新/升級/有更新」立刻跑四步 SOP，不問不試錯（sshpass + docker exec -u root）
 - [中英對照規則（教練親定）](feedback_chinese_english_pairing_rule.md) — 給教練的日誌/報告凡英文檔名都要中英對照「靈魂手冊（SOUL.md）」式呈現
@@ -108,3 +109,66 @@
 - **#19 心跳有意義** — 複習頂級特助俱樂部原文
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
+
+## Promoted From Short-Term Memory (2026-06-10)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:16:16 -->
+- 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:16-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:41:42 -->
+- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:41-42]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:83:86 -->
+- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl 👤 教練：討論一下，如何能記住用戶的每一句話，任何時候，當用戶問時，都能快速找到 🦞 小龍蝦：教練，這題是整個系統的心臟——守則 #01「在乎的表現」就是這件事，記不住您說的話就什麼都免談。讓我把現況和方向整理一下： [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:83-86]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:5:6 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：🦞 對話記錄已滿，已自動重啟，請繼續下指令 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:5-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:8:8 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 教練早，我重啟完成了，記憶已經完整存到 `memory/2026-06-07.md` 並推到 GitHub，零遺漏。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:8-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:10:11 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 請問今天要從哪件事開始？ 🦞 小龍蝦：教練，早安 ☀️ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:10-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:13:13 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 今天（6/7 週日）FB 沒有壽星 🎂，所以不用發祝福。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:15:15 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 我會持續每天 6:00 自動跑一次，有壽星才通知你，沒有的時候就不打擾，讓你安心準備週日行程 👍 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:15-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:17:18 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 有需要隨時叫我～ 🦞 小龍蝦：☀️ 早安，教練。2026-06-07 06:03 起床摘要 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:17-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:20:22 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 過去 12 小時（2026-06-06 18:03 起）共 41 個 commit 其中 29 個是純自動備份（略過） 8 個值得您看一下： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:20-22]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:24:27 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `e99bdae8` 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復 • `91ec79ab` 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07） • `e1b48949` 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地） • `2f36dc5c` 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:24-27]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:28:31 -->
+- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `dd19f966` 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測 • `b5037206` 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查 • `da356f30` 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12） • `d1747 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:28-31]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:36:39 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:36-39]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:40:43 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 👤 教練：FB有壽星，怎麼總跟我說沒有壽星？ 🦞 小龍蝦：教練，我馬上查為什麼查不到壽星。讓我先看一下生日回報的腳本和最近的執行情況。 🦞 小龍蝦：讓我跑一次看實際情況。 🦞 小龍蝦：找到兩個問題了： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:40-43]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:44:45 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: cron 環境找不到 `node`（PATH 問題）; 讓我用絕對路徑跑一次，看真實狀況 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:44-45]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:46:48 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 🦞 小龍蝦：抓到了！腳本被 FB 導去登入頁了（`index.php?next=...`），session 已經過期。讓我先查 session 狀態，然後規劃修復。 🦞 小龍蝦：讓我先檢查是不是 session 真的過期了，並用教練的真實瀏覽器（如果有登入的話）對照一下。 🦞 小龍蝦：我看到核心問題了。讓我先給教練整理出原因，並修最致命的「明明沒登入還回報『沒壽星』」這個隱形 bug。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:46-48]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:50:50 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **教練，找到原因了。** 不是 FB 沒壽星，是腳本**假回報**： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:50-50]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:52:53 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **session 已過期** — FB 把頁面導去登入頁（網址變成 `index.php?next=...`），腳本沒抓到任何 `<h2>`，就直接當成「沒壽星」回報; **cron 環境的 `node` 找不到** — 你 TOOLS.md 早就記載要寫絕對路徑，但 `run_fb_birthday.sh` 還是用 `node`，所以好幾次 cron 跑都失敗，但被 `exit: 0` 蓋掉了 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:52-53]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:55:56 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 讓我先把這兩個 bug 修掉，再處理登入： 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:55-56]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:5:5 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🦞 小龍蝦：教練，Claude Pro 流量抓回來了 🦞 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:7:10 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |------|------|----------| | **這段對話時段** | 用 18% | 3 小時 11 分鐘後重置 | | **整週額度** | 用 45% | 週三下午 1:00 重置 | [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:7-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:11:13 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | **額度（Credits）** | 花 $0.00 / 上限 $20 | 7 月 1 日重置 | | **帳戶餘額** | $0.01 | 自動加值目前是關閉的 | | **今日例行任務** | 0 / 5（還沒跑） | — | [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:11-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:15:15 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 📌 整週已經用掉 45%，週三下午才會歸零，這週再用下去就要小心一點了 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:15-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:17:18 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔） 🦞 小龍蝦：教練，Claude Pro 流量抓回來了 🦞 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:17-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:30:30 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔） [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:30-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:35:35 -->
+- 📨 對話記錄 23:29（共約 1 條，從第 0 行起）: 👤 教練：Hello，請告訴我，這個群組的對話紀錄都存在哪一個檔案裡面？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:35-35]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:37:37 -->
+- 📨 對話記錄 23:29（共約 1 條，從第 0 行起）: 我要請「軍師」分析一下我們這個群組對話的邏輯，請告訴我對話的存檔都存在什麼地方？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:37-37]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:5:5 -->
+- 📨 對話記錄 01:59（共約 6 條，從第 0 行起）: 👤 教練：學弟，你可不可以告訴我，跟峰哥在一起的那個群組裡面的對話路徑在什麼地方？還有它的設定檔在什麼地方？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:7:9 -->
+- 📨 對話記錄 01:59（共約 6 條，從第 0 行起）: 因為他現在在那個群組裡面把我的名字叫錯了，我想了解這個設定檔哪邊出問題。 🦞 小龍蝦：教練，收到！我來處理這個問題——先查學弟的摘要和設定檔線索。 🦞 小龍蝦：教練，問題點抓到了！我把答案整理給您： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:7-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:18:18 -->
+- 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:18-18]
