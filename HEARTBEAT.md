@@ -45,6 +45,22 @@
 - Mac H Phase 2/3 是 7 天試煉長期任務，需每天觀察 cron + 接其他 SOP（Netlify/案例網站）+ 7 天後 21 條驗收
 - Mac H 已知限制 4 條：Hook 對照未實裝、BOT_MESSAGES 收錄未接、多 agent 缺位、試金石本地版分離
 
+## 🛠 2026-06-09 下午 2:46 軍師（A+B 圓桌自動收尾）紀錄
+**架構限制解法落地：bot 訊息不觸發其他 bot 的 preprocessed event，學長派議程後永遠等不到收尾觸發。**
+
+- **方案 A**：`scripts/council_orchestrator.sh` + launchctl 每 120 秒巡邏 BOT_MESSAGES（commit `873a1b13`）
+  - 條件：學長派議程後 >60 秒 + 學弟學妹都發過 OR 派發後 >5 分鐘 + 學長沒收尾
+  - 動作：呼叫 minimax anthropic-compat API 生 Council 三段 → main bot token Telegram sendMessage
+  - 防呆：lockfile 5 分鐘 TTL + 發成功後手動寫 BOT_MESSAGES 防下輪重觸
+  - 實測：下午 2:43 已成功觸發發送一次 Council 到分工群（教練 Telegram 應已看到）
+- **方案 B**：`hooks/bot-relay/handler.js` 學弟學妹 sent 時 spawn 觸發 orchestrator（commit `b550eb5`，gateway PID 79960 已載入）
+  - 把 Council 收尾延遲從 2 分鐘壓到秒級
+  - detached + unref + stdio:ignore 不阻塞 hook
+  - 只對 kong/peipei 觸發避免 main 自觸發循環
+- **時間鐵律寫死系統**：`scripts/inject_taiwan_time.sh` + HEARTBEAT 紅標 + memory（commit `2a3447b9`/`7a72cb1`）
+
+**Gateway 重啟紀錄**：今天兩次（12:47 / 14:46）載入新 hook，launchctl 託管自動拉起無感知
+
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
 - 能自己做直接做，不問確認
@@ -54,5 +70,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-06-09 2026-06-09 14:35 - relay poll OK
+### 2026-06-09 2026-06-09 14:46 - relay poll OK
 
