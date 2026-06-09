@@ -4,65 +4,55 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-10 00:35:01**
+> **最後同步：2026-06-10 01:20:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-10 凌晨 v9（Opus 4.8 桌面版 session）
+# 軍師接力棒 · 2026-06-10 凌晨 v11（Opus 4.8 桌面版 session）
 
-> 建立時間：2026-06-10 凌晨 12:32 台灣時間
-> 本棒執行者：Opus 4.8 1M context（接續 v8 Opus 4.6）
-> 上一棒：Opus 4.6 晚上 v8（案例24修改完工）
+> 建立時間：2026-06-10 凌晨 1:20 台灣時間
+> 本棒執行者：Opus 4.8 1M context
+> 上一棒：v10 bymyway-bridge 上線
 
 ---
 
-## 🎯 本場最重要決策
+## 🎯 本場最重要成果
 
-**教練任務：嘴巴改 WordPress 工具完工**
+**jiesheng-leadership 內容已建到 bymyway.com/leadership（草稿）**
+
+教練動嘴 → AI 全自動 → 草稿存好等教練去後台按發布
 
 ---
 
 ## 🏆 本場成果
 
-### bymyway-bridge v1.0 完工
+### jiesheng-leadership → bymyway.com/leadership 草稿建立完成
 
-教練需求：「動嘴 → AI 改 bymyway.com」，**網站不搬家，繼續用 WordPress**。
+**流程（自動）：**
+1. 抓 jiesheng-leadership 整站 → 33KB HTML + 2 張圖（book.png、teacher.jpg）
+2. 圖片上傳 bymyway 媒體庫 → ID 27331、27332
+3. 建立獨立頁面 → ID **27333**、slug `leadership`、status **draft**
+4. 預計線上位置：`https://www.bymyway.com/leadership/`
 
-**完成內容：**
-- `wp_client.py`（5.5KB）：WordPress REST API 封裝，CLI 工具
-  - 讀取：list-posts / get-post / search（不需密碼）
-  - 寫入：create-draft / update-post / delete-post（密碼 + 教練確認）
-- `backup.py`（2.3KB）：每日備份到 `~/Documents/bymyway-backups/`
-- `commands.md`：自然語言 → 函式對照表
-- `README.md`：設定教學 + 設計原則
+**未動到 live 網站**（草稿狀態），教練後台預覽沒問題才按發布。
 
-**API 連通驗證 ✅**
-- 跑 `python3 wp_client.py list-posts --limit 3` 成功
-- 抓到 3 篇真實文章（海餅乾俱樂部 18/17/16 週年慶）
-- 順便偵測到 bymyway 是**課程型電商**（wc/v3 + paypal/v1 + tutor/v1）
-
-**commit hash：`efdd796`**
+### SOP 暫不寫
+教練明確指示：「**等驗證成功再寫 SOP**」。本場純做、不寫文件。
 
 ---
 
-## ⏳ 待下一棒
+## ⏳ 等教練驗證
 
-### 最高優先（等教練執行）
-- **bymyway-bridge 啟用最後一哩**：教練去 bymyway 後台建立「應用程式密碼」，回傳 24 碼給 AI
-- AI 立刻把密碼存進 macOS Keychain（`security add-generic-password -s bymyway-bridge -a wp-api`）
-- 然後教練動嘴「幫 bymyway 寫一篇關於 X 的草稿」就能跑
+教練需要做的事（10 分鐘）：
+1. 登入 `https://www.bymyway.com/wp-admin`
+2. 左邊選單 → **頁面** → 找到「結繩領導力學院（Leadership）」（ID 27333）
+3. 點「預覽」看內容
+4. ✅ 確認圖、文、連結都對 → 按「發布」
+5. ❌ 有問題 → 把問題截圖丟給 AI
 
-### 中優先
-- 教練提到「node 在活動監視器跳授權」→ 可順便查是哪個專案在讀哪個資料夾
-- 教練提到「Dock 的 Python 圖示」→ 可右鍵從 Dock 移除（不影響系統）
-
-### 沿用上一棒
-- workshop.html 報名按鈕連結（等金流網址）
-- vps-healthcheck stdout 0 bytes
-- council_orchestrator log 觀察
-- gateway PID 觀察
+發布後：https://www.bymyway.com/leadership/ 上線
 
 ---
 
@@ -70,24 +60,24 @@
 
 | Commit | Repo | 內容 |
 |--------|------|------|
-| `efdd796` | bymyway-bridge (新) | WordPress 嘴巴改工具 v1.0 |
-| `5471d05` | cool-case (gh-pages) | 案例24：軍師→小龍蝦AI特助（沿用） |
+| `e8bd2ac` | bymyway-bridge | 部署腳本 deploy_to_bymyway.py |
+| `0e319fe` | bymyway-bridge | 帳號修正 + --yes flag |
+| `efdd796` | bymyway-bridge | v1.0 主工具 |
 
 ---
 
-## 📂 工具路徑
+## 🚀 之後可以搬的站（教練有提到的）
 
-```
-~/.openclaw/workspace/projects/bymyway-bridge/
-├── wp_client.py    ← 主工具
-├── backup.py       ← 備份
-├── commands.md     ← 對照表
-└── README.md       ← 設定教學
-```
+| 站 | 預估時間 |
+|---|---------|
+| theunrestrictedwar.netlify.app | 5 分鐘（看起來也是一頁式）|
+| cool-case | 1 小時+（30+ 案例頁要一個一個搬）|
+
+教練要再搬哪個，動嘴就好。
 
 ---
 
-**最後更新：2026-06-10 凌晨 12:32 台灣時間（Opus 4.8 1M context，bymyway-bridge v1.0 完工）**
+**最後更新：2026-06-10 凌晨 1:20 台灣時間（Opus 4.8 1M context，jiesheng-leadership 搬遷完成）**
 
 
 ---
