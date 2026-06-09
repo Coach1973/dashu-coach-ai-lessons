@@ -7,3 +7,6 @@ node_modules/
 
 # 教訓上傳暫存區，有自己的獨立 git repo，不由學長 workspace 管理（2026-05-23）
 .lessons_upload/
+
+# 機密憑證（WordPress 應用程式密碼等），禁止納入版控（2026-06-10）
+reference_wordpress_bymyway.md
