@@ -80,6 +80,23 @@ RTO 攔截（學長收到的 preprocessed 事件）
 
 ## 八、Changelog
 
+### v0.4（2026-06-09 上午 09:05，inject 格式根因修補）
+
+**重大根因**：v0.1~v0.3 連續三版**RTO 注入從未生效**。
+證據：所有 main/peipei/kong 的 trajectory 都沒有「圓桌會議編排」或「RTO」字串。
+
+**根因**：OpenClaw 期望 `event.context.inject` 元素是 `{ role, content }` 物件，
+RTO 一直用 `push(stringValue)` 推字串 → OpenClaw **靜默忽略**（沒錯誤、沒 log）。
+
+學長派發議程之所以能跑（v2.2/v2.3 兩次測試），是因為**學長 SOUL.md 寫了「第一句必派發」**，
+學長照 SOUL 自覺執行，**不是 RTO 注入的議程**。
+學妹搶順序就是因為 SOUL 規則被 system prompt 淹沒，且 RTO 沒成功補注「等待硬指令」。
+
+**修法**：
+- `event.context.inject.push(injection)` → `event.context.inject.unshift({ role: 'system', content: injection })`
+- 學 client-memory handler 的做法
+- 寫入記憶 [reference_openclaw_hook_inject_format](memory/reference_openclaw_hook_inject_format.md)
+
 ### v0.3（2026-06-09 上午 08:55，學妹搶順序後補強）
 
 **動機**：v2.2 上線後測試（08:51 教練第二次測題），學妹仍搶在學弟前面發言。
