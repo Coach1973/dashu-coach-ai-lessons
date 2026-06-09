@@ -19,7 +19,20 @@
   - `do_clear_sessions` 加 `glob *.trajectory.jsonl`（之前只刪 sessions.json 的 sessionFile 小檔，大檔沒清 → 死循環）
 - RustDesk 門檻 600MB → 1024MB（commit `cebb72a`）
 - v2.4 圓桌會議實測通過：三隻機都回應、議程順序生效（學長→學妹→學弟）、互相聽得到（學弟引用 H 過往答案）
-- 下一場待修：bot-relay handler.js `botId` 還標 unknown（agentId 取錯欄位），看內容能辨識三隻機但 BOT_MESSAGES.md 統計失準
+
+## 🛠 2026-06-09 12:55 軍師（Opus 4.7 v2.5+守護）紀錄
+**六項待辦全做完，2 commits：**
+- **#1 bot-relay v2.5**：補三層 fallback（event.agentId → ctx.agentId → sessionKey 解析）解 v2.4 殘 bug「unknown」（commit `63a6017`，dry-run 四案全綠）
+- **#2 sent event lag**：根因 = botId=unknown，v2.5 已解；gateway 重啟後 BOT_MESSAGES 應寫真實 main/kong/peipei
+- **#3 SOUL/RTO 直連為主**：實質落地——三隻 SOUL 純直連、shared-relay 自 05-26 起無新檔、cron 無 git pull
+- **#4 Netlify 部署守護**：scripts/netlify_deploy_guard.sh + settings.json PreToolUse hook（commit `0321abef`，攔 curl deploys / netlify deploy / nfp_xxx；教練親口「推」加 NETLIFY_DEPLOY_CONFIRMED=1 前綴重試放行）
+- **#5 Mac H Phase 1 驗收 4/4 全綠**：FB cron 06-09 06:33 準時跑、status=ok、含「【Mac H 試營運】」前綴。Phase 2/3 = 7 天試煉 + 接其他 SOP（長期任務待持續）
+- **#6 cron 首跑驗證**：fb-birthday 06-07/06-08 各跑 1 次找到壽星、vps-healthcheck 06-09 08:00 觸發（log 0 bytes 待查）、dreaming deep/rem/light 三層 06-09 03:00 跑通
+
+**⏳ 待下一棒**：
+- vps-healthcheck stdout 0 bytes 要查（cron 觸發了但無輸出）
+- Mac H Phase 2/3 是 7 天試煉長期任務，需每天觀察 cron + 接其他 SOP（Netlify/案例網站）+ 7 天後 21 條驗收
+- Mac H 已知限制 4 條：Hook 對照未實裝、BOT_MESSAGES 收錄未接、多 agent 缺位、試金石本地版分離
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -30,5 +43,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-06-09 2026-06-09 12:14 - relay poll OK
+### 2026-06-09 2026-06-09 12:46 - relay poll OK
 
