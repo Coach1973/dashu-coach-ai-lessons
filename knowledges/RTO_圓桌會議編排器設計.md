@@ -80,6 +80,32 @@ RTO 攔截（學長收到的 preprocessed 事件）
 
 ## 八、Changelog
 
+### v0.5 / bot-relay 同步修補（2026-06-09 上午 09:12，「彼此聽得到」根因）
+
+**最底層根因**：3 個月來分工群三隻機**物理上互相聽不到**對方說話。
+
+**證據**：
+- `bot-relay/handler.js` 第 8 行 `const BOT_ID = '1号機';` 寫死
+- 三隻機共用同一 handler.js，**所有訊息都標 botId="1号機"**（BOT_MESSAGES.md 1083 條，100% 是「1号機」）
+- `bot-relay-inbound/handler.js` 過濾 `entry.botId !== '1号機'` → 三隻機都把所有訊息排除掉 → others=[] → 不注入
+
+**結果**：學弟學妹從來沒看到對方/學長說了什麼。所謂「分工群討論」是 3 個獨立 bot 各回各的，**沒有真實討論**。
+
+**修法（兩個 hook 同步改）**：
+1. `bot-relay/handler.js`：
+   - botId 改用 `event.context.agentId`（main / kong / peipei）
+   - 加 botName 欄位寫人話名稱
+2. `bot-relay-inbound/handler.js`：
+   - 排除自己用 `entry.botId !== event.context.agentId`
+   - MAX_LINES 20 → 30（更多群組脈絡）
+   - 顯示用人話名稱（🦞學長/🦐學弟/🐰學妹）
+   - 加提醒「議程說先學弟但沒看到學弟發言就再等」
+   - inject 用 `unshift({role:'system',content})` 確保優先讀到
+
+**dry-run 通過**：三隻機都正確收到對方訊息 inject。
+
+---
+
 ### v0.4（2026-06-09 上午 09:05，inject 格式根因修補）
 
 **重大根因**：v0.1~v0.3 連續三版**RTO 注入從未生效**。
