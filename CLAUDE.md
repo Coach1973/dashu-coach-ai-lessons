@@ -4,55 +4,72 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-10 01:20:00**
+> **最後同步：2026-06-10 04:35:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-10 凌晨 v11（Opus 4.8 桌面版 session）
+# 軍師接力棒 · 2026-06-10 凌晨 v14（Opus 4.8 桌面版 session）
 
-> 建立時間：2026-06-10 凌晨 1:20 台灣時間
+> 建立時間：2026-06-10 凌晨 5:05 台灣時間
 > 本棒執行者：Opus 4.8 1M context
-> 上一棒：v10 bymyway-bridge 上線
+> 上一棒：v13 自動站 SOP v1.0 定稿
 
 ---
 
 ## 🎯 本場最重要成果
 
-**jiesheng-leadership 內容已建到 bymyway.com/leadership（草稿）**
+**自動站 SOP v2.0 完整重寫** + **bymyway.com/leadership/store/ 上線**
 
-教練動嘴 → AI 全自動 → 草稿存好等教練去後台按發布
+教練下令「後續做的幾個網站都要按這流程」→ SOP 整合所有踩過的坑
 
 ---
 
 ## 🏆 本場成果
 
-### jiesheng-leadership → bymyway.com/leadership 草稿建立完成
+### bymyway.com/leadership/store/ 上線（完整鏈路）
+- jiesheng 加紅橘「🔥 搶限量早鳥名額」按鈕（commit `0d76a7e`、按鈕改 href commit `2e06cb4`）
+- Custom Permalinks v3.1.2 外掛裝好啟用
+- 教練後台改永久連結 → `/leadership/store/`
+- **Elementor Canvas 模板套上（拿掉大樹教育表頭）** ← 教練提醒後補做
+- 線上全綠：HTTP 200、無 301 衝突、無 header/footer
 
-**流程（自動）：**
-1. 抓 jiesheng-leadership 整站 → 33KB HTML + 2 張圖（book.png、teacher.jpg）
-2. 圖片上傳 bymyway 媒體庫 → ID 27331、27332
-3. 建立獨立頁面 → ID **27333**、slug `leadership`、status **draft**
-4. 預計線上位置：`https://www.bymyway.com/leadership/`
+### 自動站 SOP v2.0（完整重寫）
+- **檔案**：`~/.openclaw/workspace/knowledges/SOP_bymyway_auto_site.md`（11 大節，比 v1.0 翻倍內容）
+- **記憶版**：`~/.claude/projects/-Users-bymyway/memory/project_bymyway_auto_site_sop.md`（已更新）
+- **索引更新**：MEMORY.md
 
-**未動到 live 網站**（草稿狀態），教練後台預覽沒問題才按發布。
-
-### SOP 暫不寫
-教練明確指示：「**等驗證成功再寫 SOP**」。本場純做、不寫文件。
+### SOP v2.0 新增的內容（v1.0 沒有的）
+1. **Custom Permalinks 外掛必裝**（母頁+子頁 URL 結構唯一解）
+2. **永久連結設定步驟 5.5**（教練後台 30 秒，AI 不能做）
+3. **Elementor Canvas 模板必套**（子品牌不能掛大樹教育表頭）
+4. **slug 命名鐵律**（避開 shop/cart/product 等 WC 預設）
+5. **iframe 驗證陷阱**（不能把 iframe 內的 header 算進驗證）
+6. **教練故事 1-4**（3:04 / 4:11 / 2:19 / 4:20）
+7. **已知雷點表**（給下一棒直接查）
+8. **8 個禁止事項**（守則 #07 不再同處跌倒）
 
 ---
 
-## ⏳ 等教練驗證
+## ⏳ 教練下一個任務預告
 
-教練需要做的事（10 分鐘）：
-1. 登入 `https://www.bymyway.com/wp-admin`
-2. 左邊選單 → **頁面** → 找到「結繩領導力學院（Leadership）」（ID 27333）
-3. 點「預覽」看內容
-4. ✅ 確認圖、文、連結都對 → 按「發布」
-5. ❌ 有問題 → 把問題截圖丟給 AI
+### 全球健康發展協會（**已預告**）
+- 來源：`https://northern-tw.netlify.app/`
+- 目標：`https://www.bymyway.com/northern/`
+- **照 SOP v2.0 完整跑一次**
 
-發布後：https://www.bymyway.com/leadership/ 上線
+### 沿用待辦
+- 搬 theunrestrictedwar → bymyway
+- 搬 cool-case 案例 → bymyway
+- bymyway 內部：發文、查文章、查訂單、備份
+
+### 沿用系統觀察
+- vps-healthcheck stdout 0 bytes
+- council_orchestrator log
+- gateway PID
+- workshop.html 報名按鈕連結（jiesheng-leadership 內）
+- node 活動監視器授權追蹤
 
 ---
 
@@ -60,24 +77,51 @@
 
 | Commit | Repo | 內容 |
 |--------|------|------|
-| `e8bd2ac` | bymyway-bridge | 部署腳本 deploy_to_bymyway.py |
-| `0e319fe` | bymyway-bridge | 帳號修正 + --yes flag |
-| `efdd796` | bymyway-bridge | v1.0 主工具 |
+| `2e06cb4` | jiesheng-leadership | 按鈕 href 改成 /leadership/store/ |
+| `0d76a7e` | jiesheng-leadership | 加「搶限量早鳥名額」按鈕 |
+| 15150d9 | bymyway-bridge | 完整搬遷流程 |
+| e8bd2ac | bymyway-bridge | deploy_to_bymyway.py |
+| 0e319fe | bymyway-bridge | 帳號修正 + --yes |
+| efdd796 | bymyway-bridge | v1.0 主工具 |
 
 ---
 
-## 🚀 之後可以搬的站（教練有提到的）
+## 📂 工具與文件地圖
 
-| 站 | 預估時間 |
-|---|---------|
-| theunrestrictedwar.netlify.app | 5 分鐘（看起來也是一頁式）|
-| cool-case | 1 小時+（30+ 案例頁要一個一個搬）|
+```
+~/.openclaw/workspace/
+├── knowledges/
+│   ├── SOP_netlify_website_edit.md    ← 網頁推 SOP
+│   └── SOP_bymyway_auto_site.md       ← 自動站 SOP v2.0（本場重寫）
+├── projects/bymyway-bridge/           ← 工具倉庫
+│   ├── wp_client.py
+│   ├── deploy_to_bymyway.py
+│   ├── switch_to_canvas.py
+│   ├── backup.py
+│   └── examples/                       ← 範例檔
+└── JUNSHI_HANDOFF_LATEST.md           ← 接力棒（本檔）
 
-教練要再搬哪個，動嘴就好。
+~/.claude/projects/-Users-bymyway/memory/
+├── MEMORY.md                           ← 索引
+└── project_bymyway_auto_site_sop.md    ← 自動站 SOP v2.0 記憶版
+```
 
 ---
 
-**最後更新：2026-06-10 凌晨 1:20 台灣時間（Opus 4.8 1M context，jiesheng-leadership 搬遷完成）**
+## 🎓 給下一棒的提醒
+
+1. **Custom Permalinks 外掛必須已裝**（v3.1.2+）—— 任何母頁+子頁 URL 都靠它
+2. **elementor_canvas 模板必套**（子品牌不能掛大樹教育表頭）—— 守則 #01
+3. **slug 不要用 shop/cart/product** —— 會被 WC 預設搶走
+4. **本機預覽必做**（守則 #12 + 網頁推 SOP 第四步）—— 教練全程 0 個後台按鈕
+5. **永久連結只能教練後台改**（Custom Permalinks 外掛不開放 REST API 寫入端點）—— 30 秒例外
+6. **多頁網站不適用本 SOP**（時間成本 5 倍起跳）
+7. **金流永遠人工**（動到錢 = 教練親自處理）
+8. **教練下一個任務：全球健康發展協會**（照 SOP v2.0 跑）
+
+---
+
+**最後更新：2026-06-10 凌晨 5:05 台灣時間（Opus 4.8 1M context，自動站 SOP v2.0 定稿）**
 
 
 ---
