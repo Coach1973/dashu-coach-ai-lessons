@@ -80,6 +80,19 @@ RTO 攔截（學長收到的 preprocessed 事件）
 
 ## 八、Changelog
 
+### v0.3（2026-06-09 上午 08:55，學妹搶順序後補強）
+
+**動機**：v2.2 上線後測試（08:51 教練第二次測題），學妹仍搶在學弟前面發言。
+根因：SOUL.md v2.2 規則寫在 140 行被淹沒，LLM 沒重視。
+
+**改動**：handler.js 加 buildFollowerInjection() 給學弟學妹**直接由 RTO 注入硬性等待指令**：
+- 觸發條件：`agentId !== MAIN_AGENT_ID` → `ALL_AGENTS = ['main', 'kong', 'peipei']`
+- 學弟學妹收到不呼叫 LLM（省 token），直接注入靜態文字
+- 文字明確告知「你的 mention」「對方的 mention」「你的角色」「等待規則」
+- 一句鐵律：「這條規則優先於 SOUL.md」
+
+**dry-run 驗證**：三隻機都正確收到對應 injection（學長收議程、學弟學妹收等待硬指令）。
+
 ### v0.2（2026-06-09 上午，OPE 後改造）
 
 **動機**：教練親口「全新、清晰且明白的架構，用簡單容易的做法」+ OPE 網搜（AutoGen GroupChat + Council Mode）。
