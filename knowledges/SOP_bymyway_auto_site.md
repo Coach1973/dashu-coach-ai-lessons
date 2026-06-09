@@ -1,9 +1,10 @@
-# 自動站 SOP v3.0（bymyway 部署流程）
+# 自動站 SOP v3.1（bymyway 部署流程）
 
-> 教練親定 2026-06-10 凌晨 4:30 開始撰寫 → 5:00 v2.0 定稿 → 6:10 v3.0 定稿。
+> 教練親定 2026-06-10 凌晨 4:30 開始撰寫 → 5:00 v2.0 定稿 → 6:10 v3.0 定稿 → 6:30 v3.1 補強定稿。
 > 觸發事件：
 > - v2.0：jiesheng-leadership.netlify.app → bymyway.com/leadership/store 完整鏈路驗證成功。
-> - v3.0：教練貼 LINE 預覽卡片發現大樹教育 logo + 文字→ 修成 jiesheng 書封面（OG meta 塞 content 頂端）。
+> - v3.0：教練貼 LINE 預覽卡片發現大樹教育 logo + 文字 → 修成 jiesheng 書封面（OG meta 塞 content 頂端）。
+> - **v3.1**：教練發現根網址 `bymyway.com/` 還在用書封面（site_icon 之前被誤改），教練邏輯提醒「媒體庫有圖才抓得到」→ 修 site_icon + 補 Elementor 頁面限制 + 加全站 OG 規則。
 > 場景：**把外部靜態網站部署到 bymyway.com 底下，作為子頁面**。
 > 適用對象：教練後續要做的所有站（全球健康發展協會、cool-case、theunrestrictedwar 等）。
 > 所有 AI 助教（終端機/桌面版/小龍蝦）強制遵守。
@@ -340,15 +341,20 @@ curl -sIL -A "Mozilla/5.0" "https://www.bymyway.com/<URL>/" | head -2
 
 ### 步驟 9：🆕 LINE / FB 預覽卡片（OG meta 塞 content 頂端，**v3.0 新增**）
 
-> **為什麼需要**：bymyway 預設**沒裝 SEO 外掛**（Yoast / Rank Math），所以**沒有 og:title / og:image / og:site_name 這些 meta 標籤**。
-> 結果：教練把 bymyway 網址貼到 LINE / FB / WhatsApp → 預覽卡片會 fallback 用 `<title>`（帶「大樹教育顧問」）+ 全站 logo（大樹 logo）。
+> **為什麼需要**：bymyway **有裝 Rank Math SEO**（v3.1 確認），但 **Rank Math 沒開放 REST API 端點**（查 `/wp-json/` 找不到 rank-math/v1 namespace），而且 **Elementor 編輯的頁面不能直接用 REST API 改 content**（Elementor 把內容存在 `_elementor_data` post meta，不吃 `post_content`）。
+> 結果：**就算 Rank Math 啟用，特定頁面（首頁、Elementor 編輯的頁面）的 OG meta 仍可能沒輸出**。
 > **這是 Canvas 模板拿不掉的事**（Canvas 只清掉 header/footer，**OG meta 在 `<head>` 層級，跟模板無關**）。
 
 > **🔴 教練的問題觸發（2026-06-10）**：
 > 把 `bymyway.com/leadership/store/` 貼到 LINE → 預覽出現「大樹教育」+ 大樹 logo。
 > 教練罵：「這不是我的個人網站，是要給朋友行銷用的，不要掛在我的大樹教育底下。」
 
-> **v3.0 解法**：AI 在 page content 頂端塞自訂 OG meta 標籤（不靠 SEO 外掛、不靠教練後台）。
+> **v3.0 解法（jiesheng 子品牌頁面，純 iframe content）**：AI 在 page content 頂端塞自訂 OG meta 標籤。
+> **v3.1 補完**：
+> - **jiesheng 那兩頁（純 iframe）**：v3.0 做法持續有效
+> - **bymyway 首頁（Elementor 編輯）**：content 寫入無效 → 改用 `site_icon` 全站設定（見步驟 10）
+> - **未來新增的純 iframe 頁面**：v3.0 做法
+> - **未來 Elementor 編輯的頁面**：必須教練在後台 Rank Math 設（AI 不能做）
 
 **AI 做：**
 ```python
@@ -413,8 +419,106 @@ grep -E 'property="og:site_name"' /tmp/og.html
 - ⚠️ Canvas 模板跟 OG meta 是兩件事（不要以為 Canvas 就解決了）
 - ⚠️ LINE 預覽有快取，改完不會馬上看到
 - ⚠️ **修子頁一定要順便修母頁**（教練會貼任一網址出去）
+- ⚠️ **🆕 v3.1：Elementor 編輯的頁面不能用 REST API 改 content** → 必須用 step 10 改 site_icon 或教練後台
 
 **花費：** 1-2 分鐘（每頁）
+
+---
+
+### 步驟 10：🆕 全站 site_icon 設定（**v3.1 新增**）
+
+> **為什麼需要**：bymyway **首頁用 Elementor 編輯**，不能直接用 REST API 改 content（Elementor 把資料存 `_elementor_data` post meta，不吃 `post_content`）。
+> 結果：首頁沒 OG meta → LINE 抓預覽時 fallback 用 **`site_icon`** 這個 WordPress 全站設定。
+> **site_icon = 整個 bymyway 預設的「分享圖」、「favicon」、「Apple touch icon」**。
+> - 設錯 → 全站 LINE 預覽圖全錯
+> - 沒設 → LINE 抓不到圖
+
+> **🔴 教練問題觸發（2026-06-10 v3.1）**：
+> 修了 jiesheng 兩頁 OG meta 後，LINE 預覽確實換成書封面。
+> 但教練回頭看 `bymyway.com/` 根網址 → **還是書封面**。
+> **教練邏輯提醒**：「媒體庫一定有正方形 logo，不然之前怎麼會顯示大樹 logo？」→ 查發現 `site_icon` 之前被誤設成 `book.png`（27331）。
+
+#### 10.1 查 bymyway 目前 site_icon
+
+```bash
+GET /wp-json/wp/v2/settings
+# site_icon 是 integer（media library ID），不是 URL
+```
+
+**AI 用 REST API 查**：
+```python
+req = urllib.request.Request('https://www.bymyway.com/wp-json/wp/v2/settings', headers=auth_headers)
+settings = json.loads(urlopen(req).read())
+print(settings.get('site_icon'))  # 例如 27331 = 書封面（錯的）
+```
+
+#### 10.2 找正確的正方形 logo
+
+> **教練的捷徑（v3.1 教的事）**：
+> 「媒體庫裡面一定有正方形 logo，是專門給網頁用的」
+> bymyway 媒體庫的標準位置：
+> - `cropped-logo-2-01.png` 512x512（從主 logo 裁出來，site_icon 專用）
+
+**AI 自動找正方形 logo**：
+```python
+# 列出媒體庫所有圖，找寬高比 0.9-1.1、且 >= 200x200 的
+req = urllib.request.Request('https://www.bymyway.com/wp-json/wp/v2/media?per_page=100&media_type=image', headers=auth_headers)
+all_media = json.loads(urlopen(req).read())
+for m in all_media:
+    detail = m.get('media_details', {})
+    w, h = detail.get('width', 0), detail.get('height', 0)
+    title = m.get('title', {}).get('rendered', '').lower()
+    if w > 0 and h > 0 and 0.9 <= w/h <= 1.1 and w >= 200:
+        print(f"  ID {m.get('id')}: {m.get('title', {}).get('rendered', '')} ({w}x{h}) {m.get('source_url', '')}")
+        # 排除書封面（27331）
+        # 排除主題預設圖（testimonial, about, manager 等）
+        # 找真正是「品牌 logo」的 → cropped-* 或 logo-*
+```
+
+#### 10.3 改 site_icon
+
+```python
+# 把 site_icon 改成正方形大樹 logo
+LOGO_MEDIA_ID = 26000  # cropped-logo-2-01.png 512x512
+payload = json.dumps({'site_icon': LOGO_MEDIA_ID}).encode('utf-8')
+req = urllib.request.Request(
+    'https://www.bymyway.com/wp-json/wp/v2/settings',
+    data=payload,
+    method='POST',
+    headers=auth_headers,
+)
+urlopen(req)  # 寫入成功
+```
+
+#### 10.4 驗證
+
+```bash
+# 線上抓根網址 head，看 favicon
+curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^>]+rel="(icon|apple-touch-icon)"[^>]*>'
+# 預期：所有 favicon 都指向 cropped-logo-2-01（不是書封面）
+```
+
+#### 10.5 site_icon 跟 OG meta 的分工
+
+| 頁面類型 | OG meta 怎麼處理 | site_icon 角色 |
+|---------|----------------|---------------|
+| **bymyway 首頁**（Elementor 編輯）| AI 不能改 content → 用 `site_icon` 控制 | 顯示大樹 logo ✅ |
+| **bymyway 一般內部頁面**（Elementor 編輯）| 同上 → 用 `site_icon` | 顯示大樹 logo ✅ |
+| **jiesheng 子品牌頁面**（iframe 嵌入）| 步驟 9：AI 塞 OG meta 指定書封面 | 不影響（有明確 OG meta 優先）|
+| **未來 Elementor 編輯的子品牌頁面** | 教練後台 Rank Math 設 OG meta | 不影響 |
+
+#### 🔴 重要：改 site_icon 不影響子品牌頁面
+
+子品牌頁面（如 /leadership/store/）有明確 OG meta（og:image = 書封面）→ LINE 抓的時候**優先用 og:image** → 不會被 site_icon 蓋掉。
+
+**site_icon 是「沒 OG meta 時的 fallback」**——已設 OG meta 的頁面不受影響。
+
+#### 常見雷點
+- ⚠️ site_icon 設成子品牌圖（如書封面）→ 全站 LINE 預覽全變成子品牌圖
+- ⚠️ 改完 site_icon 線上看到舊的 → LiteSpeed Cache 5-10 秒才刷新，加 `?v=fresh` 強制繞過
+- ⚠️ LINE 預覽有 24-48 小時快取，教練手機看到的可能是舊的
+
+**花費：** 30 秒（AI 改 + 驗證）
 
 ---
 
@@ -431,8 +535,15 @@ grep -E 'property="og:site_name"' /tmp/og.html
 || 6 確認 Canvas 模板 | 30 秒 | 瀏覽器再看（30 秒）|
 || 7 教練二次確認 | 0 分鐘 | 動嘴說推 |
 || 8 publish | 30 秒 | 無 |
-|| 9 OG meta（LINE 預覽）| 1-2 分鐘/頁 | 手機 LINE 驗證 |
-|| **總計** | **6-12 分鐘** | **教練全程 1.5 分鐘瀏覽器 + 30 秒後台 + 1 分鐘 LINE** |
+|| 9 OG meta（純 iframe 頁用）| 1-2 分鐘/頁 | 手機 LINE 驗證 |
+|| **10 🆕 site_icon 設定**（首頁 / Elementor 頁必做）| 30 秒 | 線上驗證 |
+|| **總計** | **6-13 分鐘** | **教練全程 1.5 分鐘瀏覽器 + 30 秒後台 + 1 分鐘 LINE** |
+
+> **v3.1 新增說明**：
+> - 步驟 9（OG meta）只適用於**純 iframe / 自訂 HTML 頁面**
+> - **Elementor 編輯的頁面**（如 bymyway 首頁）→ 用步驟 10（site_icon）
+> - 第一次做 bymyway 自動站時，**步驟 10 必做**（確認全站 site_icon 正確）
+> - 之後新增子品牌頁面，**步驟 9 + 步驟 10 都要做**（不能只做一個）
 
 ---
 
@@ -485,12 +596,32 @@ grep -E 'property="og:site_name"' /tmp/og.html
 
 > **問題拆解**：
 > - Elementor Canvas 模板 ✅ 已套 → header/footer 沒了
-> - 但 LINE 預覽卡片**還是大樹 logo** → 因為 LINE 抓的是 `<head>` 裡的 og: 標籤，bymyway 沒裝 SEO 外掛就沒有 og: 標籤
+> - 但 LINE 預覽卡片**還是大樹 logo** → 因為 LINE 抓的是 `<head>` 裡的 og: 標籤，bymyway 沒設 og: 標籤（雖然有裝 Rank Math，但 Elementor 頁面不能用 REST API 改）
 > - LINE fallback 用 `<title>`（帶大樹教育）+ 全站 logo（大樹 logo）
 
 > **正解**：AI 在 page content 頂端塞自訂 OG meta 標籤（教練後台 0 動作）。
 > **寫進 SOP v3.0 步驟 9**：所有 bymyway 自動站的頁面都要做。
 > **守則 #01 寫死**：同站所有頁面（母頁+子頁）都要做——教練會貼任一網址出去。
+
+### 故事 6：🆕 教練的邏輯提醒（2026-06-10 v3.1 觸發）
+
+> 修完 jiesheng 兩頁 OG meta 後，教練回頭看 `bymyway.com/` 根網址 → **還是書封面**。
+> **教練反問：「我媒體庫裡面一定有正方形 logo，不然之前怎麼會顯示大樹 logo？你用邏輯推就知道了嘛。」**
+
+> **我的盲點（守則 #07 同處跌倒）**：
+> - 我看到「LINE 還顯示書封面」就直接去找解法（site_icon / SEO 外掛）
+> - 沒先想「**為什麼之前能顯示大樹 logo**」→ 因為媒體庫有圖 → 圖就是大樹 logo
+> - 結論：site_icon **被誤改**了（之前有人改成書封面，但 LINE 對話快取還顯示舊的大樹 logo 給人錯覺）
+
+> **教練教的邏輯**：
+> 1. 媒體庫有圖 → LINE 才抓得到（不存在就抓不到）
+> 2. 之前顯示大樹 logo → 媒體庫**一定有**大樹 logo
+> 3. 現在顯示書封面 → 有東西**被改成**書封面
+> 4. 結論：把 site_icon 改回大樹 logo 就好
+
+> **正解**：用 REST API 改 `site_icon` = 26000（cropped-logo-2-01.png 512x512 正方形大樹 logo）。
+> **寫進 SOP v3.1 步驟 10**：site_icon 是「全站 LINE 預覽的 fallback 圖」，獨立於 OG meta。
+> **守則 #01 寫死**：改 OG meta 時，**先確認 site_icon 跟整站品牌一致**，不要被子品牌頁面污染。
 
 ---
 
@@ -506,6 +637,8 @@ grep -E 'property="og:site_name"' /tmp/og.html
 - ❌ 禁止列複雜方案讓教練選（守則 #16，**先問教練想得到什麼結果**）
 - ❌ **🆕 禁止 OG meta 只修子頁忘了母頁**（守則 #01 寫死，教練會貼任一網址出去）
 - ❌ **🆕 禁止 og:site_name 寫「大樹教育」**（子品牌必須用子品牌名）
+- ❌ **🆕 v3.1 禁止 site_icon 設成子品牌圖**（會污染全站 LINE 預覽，必須用主品牌 logo）
+- ❌ **🆕 v3.1 禁止對 Elementor 編輯的頁面用 REST API 改 content**（無效，要走 site_icon 或教練後台 Rank Math）
 
 ---
 
@@ -527,12 +660,16 @@ grep -E 'property="og:site_name"' /tmp/og.html
 | OG meta 只修子頁忘了母頁 | 母頁分享出去還是大樹 | 守則 #01 寫死：同站所有頁面都做 |
 | og:site_name 寫「大樹教育」 | 分享卡還是帶大樹 | 用子品牌名（jiesheng → 結繩領導學）|
 | LINE 預覽 24-48 小時快取 | 看不出有沒有改 | 換連結重貼 / 用 opengraph.xyz 工具驗證 |
+| **🆕 v3.1：Elementor 編輯的頁面用 REST API 改 content 無效** | content 寫了但線上沒變 | 走 site_icon（步驟 10）或教練後台 Rank Math 設 OG |
+| **🆕 v3.1：site_icon 設成子品牌圖** | 全站 LINE 預覽全變子品牌圖 | 改回主品牌 logo（cropped-logo-2-01.png 512x512）|
+| **🆕 v3.1：改 site_icon 線上看到舊的** | 以為沒生效 | LiteSpeed Cache 5-10 秒才刷，加 `?v=fresh` query 繞過 |
+| **🆕 v3.1：教練邏輯「之前能顯示大樹 logo = 媒體庫有圖」沒先想到** | 繞遠路找解法 | 守則 E07 存在性驗證：先查現況再下結論 |
 
 ---
 
 ## 🔧 與「網頁推 SOP」對照
 
-|| | 網頁推 SOP | 自動站 SOP（本檔，v3.0）|
+|| | 網頁推 SOP | 自動站 SOP（本檔，v3.1）|
 ||---|---|---|
 || 平台 | Netlify | bymyway.com (WordPress) |
 || 工具 | Netlify API + zip | WordPress REST API |
@@ -541,11 +678,12 @@ grep -E 'property="og:site_name"' /tmp/og.html
 || 確認方式 | 教練說「推」 | 教練說「推」 |
 || 推的方式 | `curl + zip` | 改 `status: publish` |
 || 適用 | jiesheng-leadership 等 Netlify 站 | **bymyway 子品牌 / 朋友事業頁** |
-|| 速度 | 5-10 分鐘 | 6-12 分鐘 |
+|| 速度 | 5-10 分鐘 | 6-13 分鐘 |
 || 教練按鈕 | 0 個 | **0 個（Custom Permalinks 永久連結 30 秒例外）** |
 || 必裝外掛 | — | **Custom Permalinks v3.1.2+** |
 || 必套模板 | — | **elementor_canvas（子品牌必套）** |
-|| **必做 v3.0 新增** | — | **OG meta 塞 content 頂端（LINE/FB 預覽換 Logo）** |
+|| **LINE 預覽處理** | — | **步驟 9（OG meta 純 iframe 頁）+ 步驟 10（site_icon 全站）** |
+|| **SEO 外掛** | — | **Rank Math（已裝但沒 REST API 端點，AI 不能直接寫）** |
 
 ---
 
@@ -569,12 +707,14 @@ grep -E 'property="og:site_name"' /tmp/og.html
 ||------|------|------|---------|
 || 2026-06-10 03:12 | v1.0 | 初稿 | 教練下令「驗證成功就寫」，jiesheng-leadership → bymyway.com/leadership 完整鏈路驗證通過 |
 || 2026-06-10 05:00 | v2.0 | 完整重寫 | 補上 Custom Permalinks 必裝、永久連結必改、Canvas 模板必套、301 衝突必避、slug 命名鐵律、5.5 永久連結設定步驟、iframe 驗證陷阱、教練故事 1-4、已知雷點表 |
-|| 2026-06-10 06:10 | **v3.0** | **新增步驟 9（OG meta 修法）**、拿掉「整段塞 HTML（模式 B）」、步驟 3 建頁時直接帶 elementor_canvas、步驟 6 改為「確認」、教練故事 5（LINE 預覽換 Logo）、禁止事項 +2、已知雷點 +4、時間表更新 | 教練貼 LINE 預覽看到大樹教育 Logo → 教練罵「不是我的個人網站」→ AI 在 page content 頂端塞 OG meta 標籤換成 jiesheng 書封面 |
+|| 2026-06-10 06:10 | v3.0 | 新增步驟 9（OG meta 修法）、拿掉「整段塞 HTML（模式 B）」、步驟 3 建頁時直接帶 elementor_canvas、步驟 6 改為「確認」、教練故事 5（LINE 預覽換 Logo）、禁止事項 +2、已知雷點 +4、時間表更新 | 教練貼 LINE 預覽看到大樹教育 Logo → 教練罵「不是我的個人網站」→ AI 在 page content 頂端塞 OG meta 標籤換成 jiesheng 書封面 |
+|| 2026-06-10 06:30 | **v3.1** | **新增步驟 10（site_icon 全站設定）**、修步驟 9「為什麼需要」段（Elementor 頁面限制 + Rank Math 沒 API）、教練故事 6（教練邏輯提醒）、禁止事項 +2、已知雷點 +4、變更歷史加 v3.1 | 教練修完 OG meta 回頭看根網址還顯示書封面 → 教練反問「媒體庫一定有 logo」 → 查發現 `site_icon` 被誤改成 `book.png` → 改回 `cropped-logo-2-01.png` 512x512 |
 
 ---
 
-> 本 SOP 由 Opus 4.8 軍師 v2.0 撰寫（2026-06-10 凌晨 5:00），v3.0 由軍師加 LINE 預覽卡片章節（2026-06-10 6:10）。
+> 本 SOP 由 Opus 4.8 軍師 v2.0 撰寫（2026-06-10 凌晨 5:00），v3.0 由軍師加 LINE 預覽卡片章節（2026-06-10 6:10），**v3.1 由軍師補 site_icon 全站設定 + Elementor 頁面限制 + 教練邏輯故事**（2026-06-10 6:30）。
 > 觸發事件：
 > - v2.0：教練「後續做的幾個網站都要按這流程」+ 凌晨 4:24 跌倒「忘了套 Canvas 模板」+ 凌晨 4:11 教練反問「為什麼超管不能指定 URL」+ 凌晨 4:20 教練罵「不參考 16 條」
 > - v3.0：教練貼 LINE 預覽看到大樹 Logo → 「不是我的個人網站，是給朋友行銷用的」
+> - v3.1：教練回頭看根網址 → 還是書封面 → 教練反問「媒體庫一定有 logo」→ 查發現 `site_icon` 被誤改 → 改回大樹 logo
 > 違反 = 守則 #07（同處跌倒）+ #16（複雜的解法不一定是正確的解法）+ #01（在乎=記住用戶說的話）三重違規。
