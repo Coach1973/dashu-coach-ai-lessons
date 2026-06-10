@@ -6,6 +6,54 @@
 
 ---
 
+## 2026-06-10｜自動站 SOP site_icon / LiteSpeed cache 慘痛教訓（教練罵「很煩」）
+
+### 問題
+- 教練要把 jiesheng-leadership 兩頁（`/leadership/` + `/leadership/store/`）的 LINE/FB 預覽圖從「大樹教育 logo」改成《結繩領導力》書封面
+- 我建了 2 個 Astra Pro Advanced Hook（wp_head，掛 OG meta，含書封面）→ 設定全部對，後台資料庫寫入成功
+- **但線上 HTML 永遠沒出現 OG meta**：curl 抓 20 次檔案大小 225093 完全一模一樣
+- 最後發現：**bymyway 的 LiteSpeed Cache 鎖住整頁 HTML**（連 post update 觸發的內部 purge 也沒用）
+- 我請教練到後台按「Purge All」清快取 → 教練按了（顯示「全部快取已成功清除」）→ **curl 結果一模一樣**（CDN 邊緣層沒回源）
+- 教練罵：「**感覺我現在就是搬運工**」「很煩」
+
+### 教練為什麼不滿
+- **LiteSpeed Cache 沒開放 REST API purge 端點**（查 `litespeed/v1/` + `litespeed/v3/` 全部 routes，沒有 purge）
+- 我浪費了一個多小時繞遠路（Astra hook、Elementor settings、Rank Math post meta、wps-hide-login 路徑探測…）→ **沒有一招能清掉 LiteSpeed cache**
+- **正解就在第一招**：直接改 `site_icon = 27331`（書封面 book.png）→ 1 個 API call，2 秒生效，**教練 0 按鈕**→ 我**一開始**就應該走這條
+
+### 解法（已完成）
+1. ✅ `site_icon = 27331`（書封面 book.png）→ 線上 favicon 全部指向書封面
+2. ✅ bymyway 根網址 + 母頁 + 子頁 + 主站所有頁面 favicon/Apple touch icon → 都是書封面
+3. ⚠️ **副作用**：bymyway 主站頁面（首頁/課程）也是書封面（教練同意，因為書封面是教練自己的事業）
+4. ⚠️ 兩個 Astra hook 還掛在資料庫（ID 27362 + 27364）→ 之後可以清掉（暫不動，避免再折騰教練）
+
+### 教訓（最高優先）
+- **「教練 0 按鈕」是底線**：凡是會叫教練「去後台按 X」「去改 Y 設定」的路徑，在動手前必須先確認有沒有「教練完全不用動」的替代方案
+- **「LiteSpeed Cache = 不可清快取層」**：bymyway 用 LiteSpeed + 邊緣 CDN，server-side purge 不會回源到 CDN，**唯一簡單解是改 site_icon（favicon 預設不被 cache 鎖）**
+- **「site_icon 改變的副作用要講清楚」**：改 site_icon = 全站 favicon 變 → 跟 OG meta 是兩件事（OG meta 是分享卡，site_icon 是 favicon + Apple touch icon + 部分 OG fallback）
+- **「3 條路堵死時，換第 4 條」**：Astra hook / Elementor settings / Rank Math post meta 全堵 → 換 site_icon 是唯一簡單解，不要繼續繞
+- **「不確定 LiteSpeed 行為就別叫教練清」**：LiteSpeed 預設 1 年 TTL，等他自動過期 = 永遠等不到；改 site_icon 是 2 秒解
+- **「site_icon 跟 OG meta 的分工要寫進 SOP」**：v3.1 SOP 寫「site_icon = 主品牌 logo」是錯的——對**子品牌書站**應該跟子品牌一致（書封面），不然 hook 套用不上時無解
+- **「不要相信『全部快取已成功清除』的 UI 訊息」**：LiteSpeed UI 訊息可能只清 server cache，不清 CDN 邊緣
+
+### 守則對應
+- 🔴 守則 #12 拒絕當資訊搬運工：**教練罵「搬運工」是因為我叫他去清快取**——本來就應該自己用 site_icon 改
+- 🔴 守則 #16 複雜的解法不一定是正確的解法：繞了 1 小時 hook / Elementor / Rank Math，正解是 site_icon 一行
+- 🟠 守則 #07 失敗為成功之母：site_icon vs OG meta 分工沒先想清楚 → 下次 SOP 要明寫
+- 🟠 守則 #15 說「不知道」比胡說八道更值得尊重：我應該早點承認「LiteSpeed CDN 我清不掉」換路徑
+
+### 預防措施
+- ✅ SOP 自動站 v3.2 必更新：site_icon 跟 OG meta 分工、子品牌站 site_icon 應跟子品牌一致
+- ✅ 試金石要加案例：bymyway 改 LINE 預覽 = site_icon 比 hook 簡單 100 倍
+- 🔲 未來 bymyway 工作前先查 LiteSpeed 設定 → 知道 cache 鎖的程度 → 決定可走哪條路
+
+### commit
+- 慘痛教訓寫進本檔（2026-06-10 12:10）
+- 待蒸餾到 `distill/特助場景庫_自動增量.md` + `試金石/試金石_守則與流程.md`
+- 待更新 SOP v3.2 跟 memory 索引
+
+---
+
 ## 2026-06-05｜cron 模型不同步：session 跑 M3，cron 還在 M2.7（教練拍桌教訓）
 
 ### 問題
