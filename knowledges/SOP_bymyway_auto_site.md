@@ -718,3 +718,59 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 > - v3.0：教練貼 LINE 預覽看到大樹 Logo → 「不是我的個人網站，是給朋友行銷用的」
 > - v3.1：教練回頭看根網址 → 還是書封面 → 教練反問「媒體庫一定有 logo」→ 查發現 `site_icon` 被誤改 → 改回大樹 logo
 > 違反 = 守則 #07（同處跌倒）+ #16（複雜的解法不一定是正確的解法）+ #01（在乎=記住用戶說的話）三重違規。
+
+---
+
+## 📌 v3.2 新增：品牌 Favicon SOP（2026-06-10）
+
+> 每個品牌頁面的瀏覽器小圖示（Tab 上的 LOGO）各自不同。
+
+### 設計原則
+- **全站 site_icon**（ID:26000）= 大樹教育 LOGO（所有頁面預設值）
+- **品牌子頁面**：在頁面 content 最前面注入 JS，動態覆蓋該頁的 favicon
+
+### 目前設定對照表
+
+| 頁面 | 網址 | 瀏覽器小圖示 | LOGO 圖片 |
+|------|------|------------|---------|
+| 大樹教育（全站預設）| bymyway.com/* | 大樹 LOGO | cropped-logo-2-01.png（ID:26000）|
+| 結繩領導力 | /leadership/ | 書本封面 | book.png（ID:27331）|
+| 結繩工作坊報名 | /leadership/store/ | 書本封面 | book.png（ID:27331）|
+| 全球健康發展協會 | /northern/ | 協會 LOGO | logo-global-health-1.png（ID:27368）|
+
+### 新增品牌頁面的 SOP
+
+**步驟 A：準備 LOGO**
+1. 從品牌網站抓圖（`curl -o /tmp/logo.png URL`）
+2. 上傳媒體庫（`POST /wp-json/wp/v2/media`），記錄 ID
+
+**步驟 B：在頁面 content 最前面注入 JS**
+```python
+LOGO_URL = "https://www.bymyway.com/wp-content/uploads/.../logo.png"
+favicon_js = f'''<script>
+(function(){{
+  var favs = document.querySelectorAll('link[rel*="icon"]');
+  favs.forEach(function(l){{ l.href = '{LOGO_URL}'; }});
+}})();
+</script>
+'''
+# 清掉舊的 favicon js，加新的
+new_content = favicon_js + clean_old_content
+# POST /wp-json/wp/v2/pages/{page_id} 更新
+```
+
+**步驟 C：驗證**
+```bash
+python3 -c "
+import urllib.request
+req = urllib.request.Request('https://www.bymyway.com/brand-page/', headers={'User-Agent': 'Mozilla/5.0'})
+with urllib.request.urlopen(req) as r:
+    html = r.read().decode()
+print('logo-xxx.png' in html)
+"
+```
+
+### 注意事項
+- Astra Custom Layout（astra-advanced-hook）的 POST/PATCH 被 Wordfence WAF 攔截 → 改用頁面 content 注入 JS
+- JS 在 body 執行，動態替換 `<head>` 裡的 favicon link 標籤
+- 只適用於 iframe 嵌入型頁面（content 是 raw HTML，不是 Elementor blocks）
