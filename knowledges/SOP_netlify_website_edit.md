@@ -103,9 +103,12 @@ EOF
 # 啟動本機伺服器
 python3 -m http.server 8899 --directory /tmp/站台名稱 &
 
-# 開瀏覽器讓教練查看
-open http://localhost:8899/
+# 開瀏覽器讓教練查看（🔴 不用 open，Chrome 可能沒在跑）
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window http://localhost:8899/
 ```
+
+> ⚠️ 教練透過 RustDesk 遠端看 Mac，localhost 是可以看到的。
+> ⚠️ 禁止用 Claude Code 的 Write 工具把預覽 HTML 寫到 /tmp/，那只會觸發右側 Launch 面板，教練透過 RustDesk 看不到。必須開 Mac 桌面瀏覽器。
 
 ---
 

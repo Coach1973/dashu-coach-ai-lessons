@@ -205,12 +205,16 @@ EOF
 # 啟動 server
 lsof -ti :<port> | xargs kill -9 2>/dev/null
 nohup python3 -m http.server <port> --directory /tmp/preview-<站名> > /tmp/preview-<站名>.log 2>&1 &
-open "http://localhost:<port>/"
+
+# 🔴 開瀏覽器（不用 open，Chrome 可能沒在跑）
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window http://localhost:<port>/
 ```
 
 **驗證：**
 - 教練在瀏覽器看到 iframe 載入的內容
 - port 不跟舊 server 衝突
+
+> ⚠️ **陷阱（2026-06-10 踩雷）**：用 Claude Code Write 工具把 HTML 寫到 /tmp/ → 只會觸發 Claude App 右側 Launch 預覽，教練透過 RustDesk **看不到**。必須開 Mac 桌面瀏覽器。
 
 **花費：** 1 分鐘
 
