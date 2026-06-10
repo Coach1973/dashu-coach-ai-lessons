@@ -18,6 +18,10 @@
 
 ### coach1973 GitHub 站台修改流程
 
+> 🔴 **GitHub 自動部署站也要等教練確認才 push（2026-06-11 血淚）**
+> jiesheng-leadership 就是 GitHub 自動部署站，push 等於部署，每次都扣點。
+> **所有修改全部做完 → 讓教練確認 → 才 push 一次**，不要分批 push。
+
 ```bash
 # 本機 clone 路徑
 cd /Users/bymyway/github_repos/cool-case   # cool-case 範例
@@ -25,11 +29,14 @@ cd /Users/bymyway/github_repos/cool-case   # cool-case 範例
 # 1. 先 pull 確保最新
 git pull
 
-# 2. 修改 index.html（在 /tmp/ 編輯後複製過來，或直接編輯）
-cp /tmp/cool-case/index.html .
+# 2. 做完所有修改（先別 push）
+# 用 Edit / sed 工具修改，所有改動都做完
 
-# 3. commit + push
-git add index.html
+# 3. 本機預覽讓教練確認
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window http://localhost:8899/
+
+# 4. 教練說「推」才 commit + push（只推一次）
+git add .
 git commit -m "說明修改內容"
 git push origin gh-pages
 ```
