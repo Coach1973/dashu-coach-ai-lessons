@@ -62,3 +62,20 @@
 - 試金石：`~/.openclaw/workspace/試金石/試金石_案例庫.md`
 - 網頁推 SOP：`~/.openclaw/workspace/knowledges/SOP_netlify_website_edit.md`
 
+
+---
+
+## 🔒 v17.1 增補（2026-06-11 凌晨 4:15，Fable 5 軍師）
+
+### 教練拍板的新方向：「規則太多、機關太少」→ 重複犯錯改用物理鎖
+1. **推送鎖（pre-push）已裝**：jiesheng-leadership / cool-case / theunrestrictedwar 三個資料夾。
+   - 沒有通行證 `.git/PUSH_APPROVED` → git push 直接被擋（案例 G+H 永久止血）
+   - 教練說「推」→ `touch .git/PUSH_APPROVED && git push`，單次有效、30 分鐘過期
+   - 安裝器：`scripts/install-push-lock.sh`
+   - 教練補充：只有 Netlify（jiesheng-leadership）扣點，另外兩個不扣
+2. **截圖鎖（PreToolUse hook）已裝**：`scripts/screenshot_lock.sh`，掛在 `~/.claude/settings.json`
+   - 沒有通行證 `state/SCREENSHOT_APPROVED` → 所有截圖/zoom 工具（含批次夾帶）直接被擋
+   - 教練同意 → `touch ~/.openclaw/workspace/state/SCREENSHOT_APPROVED`，10 分鐘有效
+   - 永久測試套件：`scripts/test_screenshot_lock.sh`（11 項全過才能改 hook，案例 F 教訓）
+   - ⚠️ 限制：只管終端機 CLI；桌面版 Claude.app 是否吃這個 hook 未驗證；小龍蝦（OpenClaw）另一套系統不在範圍
+3. **教練待決事項**：另外三個建議（就地放規則紙條 / 查話工具 / 基礎建設封頂）尚未拍板
