@@ -79,3 +79,21 @@
    - 永久測試套件：`scripts/test_screenshot_lock.sh`（11 項全過才能改 hook，案例 F 教訓）
    - ⚠️ 限制：只管終端機 CLI；桌面版 Claude.app 是否吃這個 hook 未驗證；小龍蝦（OpenClaw）另一套系統不在範圍
 3. **教練待決事項**：另外三個建議（就地放規則紙條 / 查話工具 / 基礎建設封頂）尚未拍板
+
+---
+
+## 🔎 v17.2 增補（2026-06-11 凌晨 4:50，Fable 5 軍師）：查話系統上線
+
+### 教練最重視的「記憶力」問題，三層解法已全部落地
+1. **逐字保險箱**：`memory/verbatim/YYYY-MM.jsonl`（只加不刪）
+   - 🔴 重大發現：OpenClaw sessions 在 Context Overflow 重啟會被清掉，「原文100%都在」對小龍蝦不成立！
+   - 每 30 分鐘 crontab 自動收割（小龍蝦三群 + 終端機備份），從此原文永不蒸發
+2. **自動索引**：`state/recall_index.jsonl`，885 句真人的話，0.7 秒重建，過濾 cron/心跳/作夢噪音
+3. **查話入口**：`scripts/recall.py 關鍵詞` → 台灣時間+出處+原句，只回前10筆（省 Context）
+   - 同義詞自動展開：`state/recall_synonyms.json`（語音糾偏對映表的落地）
+   - 小龍蝦接線：TOOLS.md 已加「教練問舊話→跑 recall」段落
+   - crontab 已註冊並當場驗證（E09）：`*/30 * * * * recall.py --harvest --build`
+
+### 下一棒注意
+- 同義詞表發現新諧音就補
+- verbatim/ 會隨 workspace 的 git 自動備份上雲

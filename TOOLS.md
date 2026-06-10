@@ -68,3 +68,19 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+---
+
+## 🔎 查話工具（recall）——記住教練每一句話的入口（2026-06-11 軍師建立，教練拍板）
+
+**觸發時機**：教練問「我之前說過X嗎」「我什麼時候講過X」「幫我查X那件事」「我們之前討論過的X」——任何要找舊話的時候，**不要靠記憶猜，直接查**：
+
+```bash
+python3 ~/.openclaw/workspace/scripts/recall.py 關鍵詞
+```
+
+- 結果自帶台灣時間＋出處（小龍蝦群/峰哥群/佩佩群/終端機/每日摘要）
+- 多關鍵詞 = 任一命中：`recall.py 早鳥 金流`
+- 要更多筆：`recall.py --limit 20 關鍵詞`
+- 同義詞自動展開（查「傘繩」自動連「散繩/閃神」一起查），同義詞表：`state/recall_synonyms.json`，發現新的語音諧音就補進去
+- **Context 紀律**：只把搜尋結果（幾百字）帶進對話，禁止為了找話去讀大型 memory 檔
