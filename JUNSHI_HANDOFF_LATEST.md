@@ -97,3 +97,20 @@
 ### 下一棒注意
 - 同義詞表發現新諧音就補
 - verbatim/ 會隨 workspace 的 git 自動備份上雲
+
+---
+
+## 🔧 v17.3 增補（2026-06-11 凌晨 4:55，Fable 5 軍師）：機關化工程
+
+教練拍板指令原文：「每條『會痛的規則』逐一變成機關，請務必執行。」
+
+1. **刪檔鎖**：`scripts/delete_guard.sh`（PreToolUse Bash）——危險刪除指令沒通行證直接擋；/tmp、node_modules、引號與 heredoc 字面內容不誤殺。測試 `test_delete_guard.sh` 12 項全過。⭐ 上線 3 分鐘就當場攔到軍師自己一次（heredoc 誤殺），照案例 F 流程補測試再修，活證據
+2. **交付自檢門**：`scripts/delivery_check.sh`（Stop）——宣稱完工卻零憑證 → 擋下要求補驗證。測試 `test_delivery_check.sh` 10 項全過
+3. **試金石模板**：案例庫頂部新增模板，「🔧 對應機關」成必填欄——沒有機關的案例＝教練白疼一次
+4. **機關註冊表**：`機關註冊表.md`——16 個已上線機關列冊＋待建上限 5 條，新案例必同步登記
+5. settings.json 已掛 delete_guard（Bash matcher）＋ delivery_check（Stop）
+
+### 下一棒待辦（更新）
+- 🔴 小龍蝦端三鎖移植（見機關註冊表待建欄）
+- 🟡 簡體字偵測 Stop hook
+- 🟡 教練開桌面版時驗證 hook 是否生效
