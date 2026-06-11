@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-11 12:10:00**
+> **最後同步：2026-06-11 12:30:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -153,6 +153,29 @@
 | 教練親定縮寫 CC = CC Switch | ef035d9a |
 
 下一棒最優先：①小龍蝦端鎖修復（機關註冊表待建欄第一條）②全自動蒸餾系統 ③教練開桌面版時驗證 hook
+
+---
+
+## ✅ v18 增補（2026-06-11 中午 12:30，Fable 5 軍師）：小龍蝦端三鎖修復完成
+
+### 根因（推翻 v17.4 的「上游 bug」猜測）
+- 不是 openclaw#5943/#5513 上游問題。真相：OpenClaw 真正跑指令的是 agent runtime，它只載入「啟動名單」上的外掛
+- hook 型外掛要進啟動名單，manifest（openclaw.plugin.json）必須宣告 `"activation": {"onStartup": true, "onCapabilities": ["hook"]}`
+- 之前 gateway 主進程有載到（所以 register log 看得到），但 agent runtime 沒載 → before_tool_call 永遠不觸發
+
+### 修了什麼
+1. `plugin-dev/safety-locks/openclaw.plugin.json` 補 activation 宣告（v1.1.0）＋移除偵察碼
+2. `openclaw plugins install --force` 重裝 → gateway 重啟 → 啟動清單 10 → 11 個（safety-locks 進場）
+3. gateway LaunchAgent stderr：/dev/null → `~/Library/Logs/openclaw/gateway.err.log`（以後外掛載入錯誤看得到）
+
+### 實彈驗證（三發全中，2026-06-11 中午）
+| 測試 | 結果 |
+|------|------|
+| 無通行證 rm -rf 測試目錄 | ✅ 被擋，目錄存活，小龍蝦回報「刪檔鎖攔下」 |
+| touch DELETE_APPROVED 後重試 | ✅ 放行，目錄刪除（通行證已清理） |
+| screencapture 截圖 | ✅ 被擋，無檔案產生 |
+
+### 機關註冊表已同步：小龍蝦端鎖移到「已上線」，待建欄剩 3 條
 
 
 ---
