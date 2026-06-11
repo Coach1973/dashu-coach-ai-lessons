@@ -56,16 +56,6 @@ export default {
   name: "Safety Locks",
   register(api) {
     console.log("[safety-locks] 外掛已註冊 before_tool_call 攔截");
-    // 暫時偵察：確認哪些事件有真的流進外掛（驗證完即移除）
-    for (const ev of ["message_received", "after_tool_call", "before_prompt_build", "agent_end"]) {
-      try {
-        api.on(ev, (e) => {
-          console.log(`[safety-locks] 偵察事件: ${ev}`, e?.toolName ?? "");
-        });
-      } catch (err) {
-        console.log(`[safety-locks] 註冊 ${ev} 失敗:`, String(err));
-      }
-    }
     api.on(
       "before_tool_call",
       (event) => {

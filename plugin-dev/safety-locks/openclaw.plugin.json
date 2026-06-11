@@ -2,7 +2,11 @@
   "id": "safety-locks",
   "name": "Safety Locks",
   "description": "小龍蝦端安全鎖：危險刪除與截圖指令未經教練同意直接擋下（機關註冊表 2026-06-11）",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "activation": {
+    "onStartup": true,
+    "onCapabilities": ["hook"]
+  },
   "configSchema": {
     "type": "object",
     "additionalProperties": false,
