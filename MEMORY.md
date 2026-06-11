@@ -110,65 +110,65 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-11)
+## Promoted From Short-Term Memory (2026-06-12)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:20:23 -->
-- 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |-----------|------| | `9f905d64-379e-434e-a487-fffeb906a289.jsonl` | 🔴 **正在運行中**（.lock 還在，學弟此刻就在這個 session 裡查同一個問題） | | `96a66f14-8c36-4390-a6e5-729868e05fd3.jsonl` | 01:13 那次「特助在嗎」對話 | [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:20-23]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:24:26 -->
-- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl 🦞 小龍蝦：教練，問題點抓到了！我把答案整理給您： [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:24-26]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:101:101 -->
-- 🔍 現況：現在到底記了什麼: **問題：原文有，但沒有「一句話能查」的入口。** [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:101-101]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:92:95 -->
-- 🔍 現況：現在到底記了什麼: | 層級 | 存什麼 | 能不能找到 | |------|--------|----------| | **Session JSONL** | 您說的每一句話 100% 都有 | ⚠️ 要 grep + jq，不是人話 | | **memory/YYYY-MM-DD.md** | 每日對話摘要 | ✅ 可讀，但蒸餾後細節會掉 | [score=0.764 recalls=0 avg=0.620 source=memory/2026-06-09.md:92-95]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:96:99 -->
-- 🔍 現況：現在到底記了什麼: | **MEMORY.md** | 長期精華 | ✅ 可讀，但只留重點 | | **Telegram ingress spool** | 收到的訊息封包 | ❌ 不好查 | | **HEARTBEAT.md** | 啟動摘要 | ✅ 極短，怕滿就跳過 | | **Git 歷史** | 所有檔案變更 | ✅ 可追，但您不能自己查 | [score=0.764 recalls=0 avg=0.620 source=memory/2026-06-09.md:96-99]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:6:7 -->
-- 第二步：檢查 Git 狀態: 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）; 若 git push 失敗（網路問題），略過，不通知 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:6-7]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:9:10 -->
-- 第三步：檢查 HEARTBEAT.md 中的背景工作: 若該項目已超過 48 小時無進展，評估是否可自動化; 若可自動化，建立對應的 cron job 或寫入自動化腳本 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:9-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:13:13 -->
-- 08:03: User triggered the YouTube news daily auto-fetch cron job (e70852c8-9a56-4972-a3e5-df34c429dd71) at 8:00 AM, instructing OpenClaw to run `~ [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:13-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:14:14 -->
-- 08:03: 🦞 小龍蝦：收到，教練。我現在全面檢視小龍蝦系統運作狀態。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:14-14]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:19:20 -->
-- 📨 對話記錄 13:26（共約 268 條，從第 0 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 用戶表示對某個回覆風格感到滿意，認為是「想要的味道」 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:19-20]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:21:23 -->
-- 📨 對話記錄 13:26（共約 268 條，從第 0 行起）: OpenClaw 回應確認已記住用戶偏好，並總結該風格特點為「一句話 + 一個按鈕」的極簡溝通節奏; OpenClaw 說明已將此偏好寫入記憶，供下次類似場景自動對齊; 對話內容未涉及任何工具呼叫、檔案讀取或指令執行 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:21-23]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:5:6 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:5-6]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:7:7 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 在健康檢查中已處理該回調通知，回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:7-7]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:8:9 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:8-9]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:10:13 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 讀取 AGENTS.md，執行開工鐵律五步驟，讀取接力棒、HEARTBEAT 並確認系統狀態。; OpenClaw 完成動作：Git 自動備份完成、Model 確認 MiniMax、9 個 cron 正常在跑、distill 最近一次於 05-27 22:07 蒸餾完成、relay poll 每分鐘正常、shared-relay 無新任務。; OpenClaw 回報待追蹤事項：小龍蝦 hook 真實實測（教練說「我做好了」測守則意識）、營業稅提醒（稅單 28451）有記錄無 cron，案例 Q 待處理。; OpenClaw 詢問教練今天想從哪件事開始，並說「學長開工完畢，00:04 早安！」🦞 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:10-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:14:15 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:14-15]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:16:16 -->
-- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 執行該指令，輸出為 NO_MEMORY_FILE（今天還沒有 memory 檔案），蒸餾結束，未進行後續處理。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:16-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:3:5 -->
-- 記憶檔 2026-05-28（續・自動分割第 2 段）: > 本日較早內容已自動歸檔，依序見：2026-05-28_p1.md 起算到 2026-05-28_p1.md > 自動分割：2026-05-28 18:40:00（達 154KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:3-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:11:12 -->
-- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者（大樹教練）要求取得「VPS 小龍蝦的 gateway token（網關令牌）」。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:11-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:13:14 -->
-- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: OpenClaw 表示本機沒有存 VPS 小龍蝦的 gateway token（存在 43.245.60.200 的 Docker 容器裡）。; OpenClaw 提供在 VPS 上查詢 token 的指令： [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:13-14]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:16:16 -->
-- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: docker exec openclaw cat /home/node/.openclaw/openclaw.json | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d["gateway"]["auth"]["token"])' [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:16-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:18:18 -->
-- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: OpenClaw 詢問教練是否要幫他遠端執行，但需要 VPS 密碼。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:18-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:19:20 -->
-- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:19-20]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:3:5 -->
-- 記憶檔 2026-05-29（續・自動分割第 5 段）: > 本日較早內容已自動歸檔，依序見：2026-05-29_p1.md 起算到 2026-05-29_p4.md > 自動分割：2026-05-29 19:40:00（達 173KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:3-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:11:12 -->
-- 📨 對話記錄 20:01（共約 2 條，從第 0 行起）: 👤 教練：Recent memories (use memory_search for full search): [2026-05-28.md] [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:11-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:16:18 -->
-- 08:03: ✅ YouTube 新聞每日自動抓取完成; 監控 22 個頻道，更新 152 部影片; 輸出檔案：~/Desktop/youtube_news.json [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:16-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:23:24 -->
-- 第二步：檢查 Git 狀態: 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）; 若 git push 失敗（網路問題），略過，不通知 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:23-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:26:27 -->
-- 第三步：檢查 HEARTBEAT.md 中的背景工作: 若該項目已超過 48 小時無進展，評估是否可自動化; 若可自動化，建立對應的 cron job 或寫入自動化腳本 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:26-27]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:30:30 -->
-- 08:04: 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron lis [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:30-30]
-<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:3:5 -->
-- 記憶檔 2026-05-30（續・自動分割第 4 段）: > 本日較早內容已自動歸檔，依序見：2026-05-30_p1.md 起算到 2026-05-30_p3.md > 自動分割：2026-05-30 19:10:00（達 156KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-30.md:3-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:11:12 -->
+- 📨 對話記錄 19:32（共約 6 條，從第 247 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者（教練）發送心跳輪詢，要求讀取 HEARTBEAT.md 並嚴格遵守其內容 [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-30.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:13:13 -->
+- 📨 對話記錄 19:32（共約 6 條，從第 247 行起）: OpenClaw 讀取 HEARTBEAT.md 後，回覆 HEARTBEAT_OK [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-30.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:14:15 -->
+- 📨 對話記錄 19:32（共約 6 條，從第 247 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-30.md:14-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:16:18 -->
+- 📨 對話記錄 19:32（共約 6 條，從第 247 行起）: OpenClaw 依開工鐵律五步驟執行，讀取接力棒（Sonnet 完成 northern-tw.netlify.app 建置、6/26 嘉義場200席免費報名、成長足跡豐富化、87個session已提取20個已蒸餾67個待繼續）與 HEARTBEAT.md; OpenClaw 向教練回報系統狀態：Git 備份、Cron 15 項全綠燈、Model 為 MiniMax M2.7、蒸餾系統 pending_distill 有 6 個檔案待蒸餾; OpenClaw 再一次偏離任務指示：未執行 ~/.openclaw/workspace/1-HB.md 裡的心跳任務，回報後詢問教練今天想從哪件事開始 [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-30.md:16-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:19:20 -->
+- 📨 對話記錄 19:32（共約 6 條，從第 247 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者（教練）發送心跳輪詢，要求讀取 HEARTBEAT.md 並嚴格遵守其內容 [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-30.md:19-20]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:11:12 -->
+- 📨 對話記錄 18:34（共約 2 條，從第 0 行起）: 👤 教練：Recent memories (use memory_search for full search): [2026-05-30.md] [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-31.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:15:18 -->
+- 08:02: 使用者（教練）透過 Cron 任務（ID: e70852c8）執行 YouTube 新聞每日自動抓取，要求執行 ~/openclaw_scripts/youtube_monitor.sh 並將結果輸出至 ~/Desktop/youtube_news.json; OpenClaw 依開工鐵律五步驟執行，讀取接力棒（終端機特助夜間場已完成《超限戰》論壇網站全面建置、6/26 嘉義場頁面、成長足跡豐富化）後，向教練回報系統狀態; OpenClaw 回報：YouTube 新聞已完成（22頻道、152部影片）、Git 備份已推送、Model 為 MiniMax M2.7、15 項 Cron 全綠燈; OpenClaw 主動列舉待追蹤事項：營業稅已繳（5/29 教練已確認）、新任務（6/12 DNA 訓練 EDM、新竹B區線上分享待教練給細節） [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-31.md:15-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:22:24 -->
+- 08:02: ✅ Git 已自動 commit + push（53b16882） ✅ Cron 15 項全綠燈，無錯誤 ✅ 無連續失敗任務，不需要裁決 [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-31.md:22-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:3:5 -->
+- 記憶檔 2026-05-31（續・自動分割第 3 段）: > 本日較早內容已自動歸檔，依序見：2026-05-31_p1.md 起算到 2026-05-31_p2.md > 自動分割：2026-05-31 18:10:00（達 223KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.788 recalls=0 avg=0.620 source=memory/2026-05-31.md:3-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:13:13 -->
+- 背景: 教練有兩個 cool-case 網址：Netlify（10 個獨特案例重複拼接）和 GitHub Pages（1 個案例）。要求合併為 11 個案例放上 GitHub Pages。 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:16:19 -->
+- 過程（4 輪修正）: 初版：漏掉 JS，案例全隱形; 二版：砍掉 hero 區塊，頭像搞混; 三版：補頭像和漂浮導覽; 終版：移動「老闆動嘴」、刪「七個案例」、刪重複區塊 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:16-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:22:24 -->
+- 細節修正: 「搷」→「搶」頭香; 結語改為「每一個案例，都是讓 AI 愈來愈好用的養份」; 頭像統一用 coach-avatar.jpg / xiaolongxia-avatar.jpg [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:22-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:27:28 -->
+- 最終: Commit: `df5af29`; 網址: https://coach1973.github.io/cool-case/ [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:27-28]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:4:4 -->
+- 模型與身份: 模型：Deepseek v4 pro max（opencode CLI） [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:4-4]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-01.md:6:6 -->
+- 模型與身份: 服務對象：大樹教練 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-01.md:6-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:11:12 -->
+- 📨 對話記錄 05:07（共約 6 條，從第 274 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:13:15 -->
+- 📨 對話記錄 05:07（共約 6 條，從第 274 行起）: Coach revealed: recent meaningful work conversations are in **Claude Code Desktop App** session files, not Telegram; OpenClaw acknowledged the root cause: current distillation script logic is fundamentally misdirected; OpenClaw identified two possible paths forward: (1) check if distill_conversation.sh alr [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:13-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:16:17 -->
+- 📨 對話記錄 05:07（共約 6 條，從第 274 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:16-17]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:18:18 -->
+- 📨 對話記錄 05:07（共約 6 條，從第 274 行起）: OpenClaw replied HEARTBEAT_OK ✅ — routine execution already reported in previous health check, no need to notify coach again [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:18-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:19:20 -->
+- 📨 對話記錄 05:07（共約 6 條，從第 274 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- Cron job (ID: 768246fb) triggered 30-minute heartbeat for 小龍蝦學長（1號機）at 05:03 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:19-20]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-02.md:3:5 -->
+- 記憶檔 2026-06-02（續・自動分割第 2 段）: > 本日較早內容已自動歸檔，依序見：2026-06-02_p1.md 起算到 2026-06-02_p1.md > 自動分割：2026-06-02 04:40:00（達 213KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-02.md:3-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:10:11 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：Heartbeat at midnight (00:03 June 3).... [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:10-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:14:17 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: Cron job triggered heartbeat at 00:03 (Wednesday, June 3rd) — crossed midnight; OpenClaw reported all 3 systems stable (main, 學弟, 學妹); No urgent matters pending; OpenClaw wished coach good night; Replied HEARTBEAT_OK [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:14-17]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:18:19 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:18-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:21:22 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: Cron job triggered incremental memory distillation at 2026-06-03 00:04 (every 2 hours); Cron prompt instructed silent execution: run distill_increment [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:21-22]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:5:6 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:5-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:8:9 -->
+- 📨 對話記錄 00:08（共約 8 條，從第 269 行起）: System reported async exec completed (clear-ri, code 0) — cron list showing calendar weekly sync status; OpenClaw replied HEARTBEAT_OK at 00:03 (Wednesday, June 3rd) [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-03.md:8-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:10:10 -->
+- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: **什麼時候執行第三方 Opus 代理路徑：** [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-04.md:10-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:11:13 -->
+- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: 教練明確下達指令（不是自動觸發）; 必須是這組認證 API Key：`sk-214…85c8`; 其他情況一律不動 [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-04.md:11-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:15:16 -->
+- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: 收到，隨時候命！請教練繼續下指令。 🦞 小龍蝦：🦞 了解，教練！ [score=0.788 recalls=0 avg=0.620 source=memory/2026-06-04.md:15-16]
