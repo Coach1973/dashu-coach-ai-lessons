@@ -22,24 +22,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-06-10 2026-06-10 12:10 - relay poll OK
-
----
-
-## 🆕 給軍師：本棒慘痛教訓（教練說「一會丟給軍師處理」）
-
-**見 `.learnings/LEARNINGS.md` 開頭新章節（2026-06-10）**
-
-### 重點一句話
-教練罵「感覺我現在就是搬運工」「很煩」——因為我繞了 1 小時清 LiteSpeed Cache（教練去後台按按鈕也清不掉），正解其實是改 `site_icon = 書封面 book.png`，1 個 API call、2 秒生效、教練 0 按鈕。
-
-### 軍師要做的事
-1. **更新 SOP 自動站 v3.2**：site_icon 跟 OG meta 分工、子品牌站 site_icon 應跟子品牌一致
-2. **更新 memory/索引**：把 v3.1 描述改成 v3.2
-3. **蒸餾到試金石**：這案例的關鍵 = 「教練 0 按鈕」原則 + 「LiteSpeed 不可清快取」環境限制
-4. **更新 auto-site-sop-bymyway skill**：跟 SOP v3.2 同步
-5. **2 個 Astra hook（ID 27362 + 27364）**：決定留或刪（site_icon 解法生效後這 2 個 hook 其實多餘了，但清掉要進資料庫，問教練）
-
-### 完整教訓見 `.learnings/LEARNINGS.md` 2026-06-10 章節
-
+### 2026-06-11 2026-06-11 13:02 - relay poll OK
 

@@ -1,5 +1,191 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-11（共 57 則）
+1. evidence: memory/2026-06-09.md:7-9
+2. Candidate: 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/`
+3. evidence: memory/2026-06-09.md:16-16
+4. Candidate: 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔：
+5. evidence: memory/2026-06-09.md:18-18
+6. Candidate: 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
+7. evidence: memory/2026-06-09.md:24-26
+8. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+9. evidence: memory/2026-06-09.md:41-42
+10. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+11. evidence: memory/2026-06-09.md:83-86
+12. Candidate: 🔍 現況：現在到底記了什麼: | 層級 | 存什麼 | 能不能找到 | |
+13. evidence: memory/2026-06-08.md:5-5
+14. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |
+15. evidence: memory/2026-06-08.md:17-18
+16. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔）
+17. evidence: memory/2026-06-08.md:30-30
+18. Candidate: 📨 對話記錄 23:29（共約 1 條，從第 0 行起）:
+19. evidence: memory/2026-06-07.md:5-6
+20. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 教練早，我重啟完成了，記憶已經完整存到 `memory/2026-06-07.md` 並推到 GitHub，零遺漏。
+21. evidence: memory/2026-06-07.md:8-8
+22. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 請問今天要從哪件事開始？ 🦞 小龍蝦：教練，早安 ☀️
+23. evidence: memory/2026-06-07.md:10-11
+24. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 今天（6/7 週日）FB 沒有壽星 🎂，所以不用發祝福。
+25. evidence: memory/2026-06-07.md:13-13
+26. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 我會持續每天 6:00 自動跑一次，有壽星才通知你，沒有的時候就不打擾，讓你安心準備週日行程 👍
+27. evidence: memory/2026-06-07.md:15-15
+28. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 有需要隨時叫我～ 🦞 小龍蝦：☀️ 早安，教練。2026-06-07 06:03 起床摘要
+29. evidence: memory/2026-06-07.md:17-18
+30. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 過去 12 小時（2026-06-06 18:03 起）共 41 個 commit 其中 29 個是純自動備份（略過） 8 個值得您看一下：
+31. evidence: memory/2026-06-07.md:20-22
+32. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `e99bdae8` 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復 • `91ec79ab` 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07） • `e1b48949` 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地） • `2f36dc5c` 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息
+33. evidence: memory/2026-06-07.md:24-27
+34. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `dd19f966` 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測 • `b5037206` 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查 • `da356f30` 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12） • `d1747
+35. evidence: memory/2026-06-07.md:28-31
+36. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+37. evidence: memory/2026-06-07.md:36-39
+38. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+39. evidence: memory/2026-06-07.md:40-43
+40. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: cron 環境找不到 `node`（PATH 問題）; 讓我用絕對路徑跑一次，看真實狀況
+41. evidence: memory/2026-06-07.md:44-45
+42. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 🦞 小龍蝦：抓到了！腳本被 FB 導去登入頁了（`index.php?next=...`），session 已經過期。讓我先查 session 狀態，然後規劃修復。 🦞 小龍蝦：讓我先檢查是不是 session 真的過期了，並用教練的真實瀏覽器（如果有登入的話）對照一下。 🦞 小龍蝦：我看到核心問題了。讓我先給教練整理出原因，並修最致命的「明明沒登入還回報『沒壽星』」這個隱形 bug。
+43. evidence: memory/2026-06-07.md:46-48
+44. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **教練，找到原因了。** 不是 FB 沒壽星，是腳本**假回報**：
+45. evidence: memory/2026-06-07.md:50-50
+46. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **session 已過期** — FB 把頁面導去登入頁（網址變成 `index.php?next=...`），腳本沒抓到任何 `<h2>`，就直接當成「沒壽星」回報; **cron 環境的 `node` 找不到** — 你 TOOLS.md 早就記載要寫絕對路徑，但 `run_fb_birthday.sh` 還是用 `node`，所以好幾次 cron 跑都失敗，但被 `exit: 0` 蓋掉了
+47. evidence: memory/2026-06-07.md:52-53
+48. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 讓我先把這兩個 bug 修掉，再處理登入： 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。
+49. evidence: memory/2026-06-07.md:55-56
+50. Theme: `對話` kept surfacing across 32 memories.
+51. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-09.md:16-16
+52. Theme: `記錄` kept surfacing across 26 memories.
+53. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-08.md:5-5
+54. Theme: `教練` kept surfacing across 10 memories.
+55. evidence: memory/2026-06-09.md:5-5, memory/2026-06-08.md:5-5, memory/2026-06-08.md:35-35
+56. 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl 🦞 小龍蝦：教練，問題點抓到了！我把答案整理給您： [confidence=0.58 evidence=memory/2026-06-09.md:24-26]
+57. 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
+
+---
+
+
+## 蒸餾 2026-06-10（共 58 則）
+1. evidence: memory/2026-06-09.md:7-9
+2. Candidate: 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/`
+3. evidence: memory/2026-06-09.md:16-16
+4. Candidate: 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔：
+5. evidence: memory/2026-06-09.md:18-18
+6. Candidate: 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
+7. evidence: memory/2026-06-09.md:24-26
+8. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+9. evidence: memory/2026-06-09.md:41-42
+10. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+11. evidence: memory/2026-06-09.md:83-86
+12. Candidate: 🔍 現況：現在到底記了什麼: | 層級 | 存什麼 | 能不能找到 | |
+13. evidence: memory/2026-06-08.md:5-5
+14. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |
+15. evidence: memory/2026-06-08.md:17-18
+16. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔）
+17. evidence: memory/2026-06-08.md:30-30
+18. Candidate: 📨 對話記錄 23:29（共約 1 條，從第 0 行起）:
+19. evidence: memory/2026-06-07.md:5-6
+20. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 教練早，我重啟完成了，記憶已經完整存到 `memory/2026-06-07.md` 並推到 GitHub，零遺漏。
+21. evidence: memory/2026-06-07.md:8-8
+22. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 請問今天要從哪件事開始？ 🦞 小龍蝦：教練，早安 ☀️
+23. evidence: memory/2026-06-07.md:10-11
+24. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 今天（6/7 週日）FB 沒有壽星 🎂，所以不用發祝福。
+25. evidence: memory/2026-06-07.md:13-13
+26. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 我會持續每天 6:00 自動跑一次，有壽星才通知你，沒有的時候就不打擾，讓你安心準備週日行程 👍
+27. evidence: memory/2026-06-07.md:15-15
+28. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 有需要隨時叫我～ 🦞 小龍蝦：☀️ 早安，教練。2026-06-07 06:03 起床摘要
+29. evidence: memory/2026-06-07.md:17-18
+30. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 過去 12 小時（2026-06-06 18:03 起）共 41 個 commit 其中 29 個是純自動備份（略過） 8 個值得您看一下：
+31. evidence: memory/2026-06-07.md:20-22
+32. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `e99bdae8` 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復 • `91ec79ab` 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07） • `e1b48949` 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地） • `2f36dc5c` 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息
+33. evidence: memory/2026-06-07.md:24-27
+34. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `dd19f966` 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測 • `b5037206` 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查 • `da356f30` 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12） • `d1747
+35. evidence: memory/2026-06-07.md:28-31
+36. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+37. evidence: memory/2026-06-07.md:36-39
+38. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+39. evidence: memory/2026-06-07.md:40-43
+40. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: cron 環境找不到 `node`（PATH 問題）; 讓我用絕對路徑跑一次，看真實狀況
+41. evidence: memory/2026-06-07.md:44-45
+42. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 🦞 小龍蝦：抓到了！腳本被 FB 導去登入頁了（`index.php?next=...`），session 已經過期。讓我先查 session 狀態，然後規劃修復。 🦞 小龍蝦：讓我先檢查是不是 session 真的過期了，並用教練的真實瀏覽器（如果有登入的話）對照一下。 🦞 小龍蝦：我看到核心問題了。讓我先給教練整理出原因，並修最致命的「明明沒登入還回報『沒壽星』」這個隱形 bug。
+43. evidence: memory/2026-06-07.md:46-48
+44. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **教練，找到原因了。** 不是 FB 沒壽星，是腳本**假回報**：
+45. evidence: memory/2026-06-07.md:50-50
+46. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **session 已過期** — FB 把頁面導去登入頁（網址變成 `index.php?next=...`），腳本沒抓到任何 `<h2>`，就直接當成「沒壽星」回報; **cron 環境的 `node` 找不到** — 你 TOOLS.md 早就記載要寫絕對路徑，但 `run_fb_birthday.sh` 還是用 `node`，所以好幾次 cron 跑都失敗，但被 `exit: 0` 蓋掉了
+47. evidence: memory/2026-06-07.md:52-53
+48. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 讓我先把這兩個 bug 修掉，再處理登入： 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。
+49. evidence: memory/2026-06-07.md:55-56
+50. Theme: `對話` kept surfacing across 32 memories.
+51. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-09.md:16-16
+52. Theme: `記錄` kept surfacing across 26 memories.
+53. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-08.md:5-5
+54. Theme: `教練` kept surfacing across 10 memories.
+55. evidence: memory/2026-06-09.md:5-5, memory/2026-06-08.md:5-5, memory/2026-06-08.md:35-35
+56. 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` [confidence=0.58 evidence=memory/2026-06-09.md:16-16]
+57. 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl [confidence=0.58 evidence=memory/2026-06-09.md:41-42]
+58. 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+
+---
+
+
+## 蒸餾 2026-06-09（共 56 則）
+1. evidence: memory/2026-06-09.md:7-9
+2. Candidate: 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/`
+3. evidence: memory/2026-06-09.md:16-16
+4. Candidate: 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔：
+5. evidence: memory/2026-06-09.md:18-18
+6. Candidate: 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
+7. evidence: memory/2026-06-09.md:24-26
+8. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+9. evidence: memory/2026-06-09.md:41-42
+10. Candidate: 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl
+11. evidence: memory/2026-06-09.md:83-86
+12. Candidate: 🔍 現況：現在到底記了什麼: | 層級 | 存什麼 | 能不能找到 | |
+13. evidence: memory/2026-06-08.md:5-5
+14. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |
+15. evidence: memory/2026-06-08.md:17-18
+16. Candidate: 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔）
+17. evidence: memory/2026-06-08.md:30-30
+18. Candidate: 📨 對話記錄 23:29（共約 1 條，從第 0 行起）:
+19. evidence: memory/2026-06-07.md:5-6
+20. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 教練早，我重啟完成了，記憶已經完整存到 `memory/2026-06-07.md` 並推到 GitHub，零遺漏。
+21. evidence: memory/2026-06-07.md:8-8
+22. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 請問今天要從哪件事開始？ 🦞 小龍蝦：教練，早安 ☀️
+23. evidence: memory/2026-06-07.md:10-11
+24. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 今天（6/7 週日）FB 沒有壽星 🎂，所以不用發祝福。
+25. evidence: memory/2026-06-07.md:13-13
+26. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 我會持續每天 6:00 自動跑一次，有壽星才通知你，沒有的時候就不打擾，讓你安心準備週日行程 👍
+27. evidence: memory/2026-06-07.md:15-15
+28. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 有需要隨時叫我～ 🦞 小龍蝦：☀️ 早安，教練。2026-06-07 06:03 起床摘要
+29. evidence: memory/2026-06-07.md:17-18
+30. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 過去 12 小時（2026-06-06 18:03 起）共 41 個 commit 其中 29 個是純自動備份（略過） 8 個值得您看一下：
+31. evidence: memory/2026-06-07.md:20-22
+32. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `e99bdae8` 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復 • `91ec79ab` 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07） • `e1b48949` 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地） • `2f36dc5c` 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息
+33. evidence: memory/2026-06-07.md:24-27
+34. Candidate: 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `dd19f966` 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測 • `b5037206` 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查 • `da356f30` 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12） • `d1747
+35. evidence: memory/2026-06-07.md:28-31
+36. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+37. evidence: memory/2026-06-07.md:36-39
+38. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）:
+39. evidence: memory/2026-06-07.md:40-43
+40. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: cron 環境找不到 `node`（PATH 問題）; 讓我用絕對路徑跑一次，看真實狀況
+41. evidence: memory/2026-06-07.md:44-45
+42. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 🦞 小龍蝦：抓到了！腳本被 FB 導去登入頁了（`index.php?next=...`），session 已經過期。讓我先查 session 狀態，然後規劃修復。 🦞 小龍蝦：讓我先檢查是不是 session 真的過期了，並用教練的真實瀏覽器（如果有登入的話）對照一下。 🦞 小龍蝦：我看到核心問題了。讓我先給教練整理出原因，並修最致命的「明明沒登入還回報『沒壽星』」這個隱形 bug。
+43. evidence: memory/2026-06-07.md:46-48
+44. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **教練，找到原因了。** 不是 FB 沒壽星，是腳本**假回報**：
+45. evidence: memory/2026-06-07.md:50-50
+46. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **session 已過期** — FB 把頁面導去登入頁（網址變成 `index.php?next=...`），腳本沒抓到任何 `<h2>`，就直接當成「沒壽星」回報; **cron 環境的 `node` 找不到** — 你 TOOLS.md 早就記載要寫絕對路徑，但 `run_fb_birthday.sh` 還是用 `node`，所以好幾次 cron 跑都失敗，但被 `exit: 0` 蓋掉了
+47. evidence: memory/2026-06-07.md:52-53
+48. Candidate: 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 讓我先把這兩個 bug 修掉，再處理登入： 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。
+49. evidence: memory/2026-06-07.md:55-56
+50. Theme: `對話` kept surfacing across 32 memories.
+51. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-09.md:16-16
+52. Theme: `記錄` kept surfacing across 26 memories.
+53. evidence: memory/2026-06-09.md:5-5, memory/2026-06-09.md:7-9, memory/2026-06-08.md:5-5
+54. Theme: `教練` kept surfacing across 10 memories.
+55. evidence: memory/2026-06-09.md:5-5, memory/2026-06-08.md:5-5, memory/2026-06-08.md:35-35
+56. No strong candidate truths surfaced.
+
+---
+
+
 ## 蒸餾 2026-06-06（共 16 則）
 1. 這是 **YouTube 新聞的專屬群組**（不是頂級特助分工群）
 2. 原本是 @CoachWuYouTubeDailyBot 每日推送 YouTube 新聞的「家」

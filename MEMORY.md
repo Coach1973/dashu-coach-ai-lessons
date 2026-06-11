@@ -110,65 +110,65 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-10)
+## Promoted From Short-Term Memory (2026-06-11)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:16:16 -->
-- 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:16-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:41:42 -->
-- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:41-42]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:83:86 -->
-- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl 👤 教練：討論一下，如何能記住用戶的每一句話，任何時候，當用戶問時，都能快速找到 🦞 小龍蝦：教練，這題是整個系統的心臟——守則 #01「在乎的表現」就是這件事，記不住您說的話就什麼都免談。讓我把現況和方向整理一下： [score=0.712 recalls=0 avg=0.620 source=memory/2026-06-09.md:83-86]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:5:6 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：🦞 對話記錄已滿，已自動重啟，請繼續下指令 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:5-6]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:8:8 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 教練早，我重啟完成了，記憶已經完整存到 `memory/2026-06-07.md` 並推到 GitHub，零遺漏。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:8-8]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:10:11 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 請問今天要從哪件事開始？ 🦞 小龍蝦：教練，早安 ☀️ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:10-11]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:13:13 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 今天（6/7 週日）FB 沒有壽星 🎂，所以不用發祝福。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:13-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:15:15 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 我會持續每天 6:00 自動跑一次，有壽星才通知你，沒有的時候就不打擾，讓你安心準備週日行程 👍 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:15-15]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:17:18 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 有需要隨時叫我～ 🦞 小龍蝦：☀️ 早安，教練。2026-06-07 06:03 起床摘要 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:17-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:20:22 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: 過去 12 小時（2026-06-06 18:03 起）共 41 個 commit 其中 29 個是純自動備份（略過） 8 個值得您看一下： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:20-22]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:24:27 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `e99bdae8` 軍師接力棒 2026-06-07：Meta Automation + 試金石改名 + cron 修復 • `91ec79ab` 「失敗案例手冊」正式改名為「試金石」（教練親定 2026-06-07） • `e1b48949` 新增 rule12 回歸測試套件 + 失敗案例手冊（守則#07 落地） • `2f36dc5c` 修 rule12_porter_check 第四次誤觸發：只讀最後一輪 assistant 訊息 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:24-27]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:28:31 -->
-- 📨 對話記錄 06:28（共約 4 條，從第 0 行起）: • `dd19f966` 修 rule12_porter_check 第三次誤觸發：去掉引號內容再偵測 • `b5037206` 修 rule12_porter_check 誤觸發：白名單關鍵字 + 逐行檢查 • `da356f30` 新增 rule12_porter_check：搬運工句型 Stop hook（守則#12） • `d1747 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:28-31]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:36:39 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:36-39]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:40:43 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 👤 教練：FB有壽星，怎麼總跟我說沒有壽星？ 🦞 小龍蝦：教練，我馬上查為什麼查不到壽星。讓我先看一下生日回報的腳本和最近的執行情況。 🦞 小龍蝦：讓我跑一次看實際情況。 🦞 小龍蝦：找到兩個問題了： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:40-43]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:44:45 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: cron 環境找不到 `node`（PATH 問題）; 讓我用絕對路徑跑一次，看真實狀況 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:44-45]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:46:48 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 🦞 小龍蝦：抓到了！腳本被 FB 導去登入頁了（`index.php?next=...`），session 已經過期。讓我先查 session 狀態，然後規劃修復。 🦞 小龍蝦：讓我先檢查是不是 session 真的過期了，並用教練的真實瀏覽器（如果有登入的話）對照一下。 🦞 小龍蝦：我看到核心問題了。讓我先給教練整理出原因，並修最致命的「明明沒登入還回報『沒壽星』」這個隱形 bug。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:46-48]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:50:50 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **教練，找到原因了。** 不是 FB 沒壽星，是腳本**假回報**： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:50-50]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:52:53 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **session 已過期** — FB 把頁面導去登入頁（網址變成 `index.php?next=...`），腳本沒抓到任何 `<h2>`，就直接當成「沒壽星」回報; **cron 環境的 `node` 找不到** — 你 TOOLS.md 早就記載要寫絕對路徑，但 `run_fb_birthday.sh` 還是用 `node`，所以好幾次 cron 跑都失敗，但被 `exit: 0` 蓋掉了 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:52-53]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:55:56 -->
-- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: 讓我先把這兩個 bug 修掉，再處理登入： 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-07.md:55-56]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:5:5 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🦞 小龍蝦：教練，Claude Pro 流量抓回來了 🦞 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:7:10 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |------|------|----------| | **這段對話時段** | 用 18% | 3 小時 11 分鐘後重置 | | **整週額度** | 用 45% | 週三下午 1:00 重置 | [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:7-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:11:13 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | **額度（Credits）** | 花 $0.00 / 上限 $20 | 7 月 1 日重置 | | **帳戶餘額** | $0.01 | 自動加值目前是關閉的 | | **今日例行任務** | 0 / 5（還沒跑） | — | [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:11-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:15:15 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 📌 整週已經用掉 45%，週三下午才會歸零，這週再用下去就要小心一點了 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:15-15]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:17:18 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔） 🦞 小龍蝦：教練，Claude Pro 流量抓回來了 🦞 [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:17-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:30:30 -->
-- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 🗂️ 快取已存到 `state/usage_cache.json`（這次是即時抓的，不是讀舊檔） [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:30-30]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:35:35 -->
-- 📨 對話記錄 23:29（共約 1 條，從第 0 行起）: 👤 教練：Hello，請告訴我，這個群組的對話紀錄都存在哪一個檔案裡面？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:35-35]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:37:37 -->
-- 📨 對話記錄 23:29（共約 1 條，從第 0 行起）: 我要請「軍師」分析一下我們這個群組對話的邏輯，請告訴我對話的存檔都存在什麼地方？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-08.md:37-37]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:5:5 -->
-- 📨 對話記錄 01:59（共約 6 條，從第 0 行起）: 👤 教練：學弟，你可不可以告訴我，跟峰哥在一起的那個群組裡面的對話路徑在什麼地方？還有它的設定檔在什麼地方？ [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:7:9 -->
-- 📨 對話記錄 01:59（共約 6 條，從第 0 行起）: 因為他現在在那個群組裡面把我的名字叫錯了，我想了解這個設定檔哪邊出問題。 🦞 小龍蝦：教練，收到！我來處理這個問題——先查學弟的摘要和設定檔線索。 🦞 小龍蝦：教練，問題點抓到了！我把答案整理給您： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:7-9]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:18:18 -->
-- 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔： [score=0.680 recalls=0 avg=0.620 source=memory/2026-06-09.md:18-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:20:23 -->
+- 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |-----------|------| | `9f905d64-379e-434e-a487-fffeb906a289.jsonl` | 🔴 **正在運行中**（.lock 還在，學弟此刻就在這個 session 裡查同一個問題） | | `96a66f14-8c36-4390-a6e5-729868e05fd3.jsonl` | 01:13 那次「特助在嗎」對話 | [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:20-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:24:26 -->
+- 📁 對話紀錄（JSONL 格式）: | `5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl` | 較早的 session | | `65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl 🦞 小龍蝦：教練，問題點抓到了！我把答案整理給您： [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:24-26]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:101:101 -->
+- 🔍 現況：現在到底記了什麼: **問題：原文有，但沒有「一句話能查」的入口。** [score=0.796 recalls=0 avg=0.620 source=memory/2026-06-09.md:101-101]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:92:95 -->
+- 🔍 現況：現在到底記了什麼: | 層級 | 存什麼 | 能不能找到 | |------|--------|----------| | **Session JSONL** | 您說的每一句話 100% 都有 | ⚠️ 要 grep + jq，不是人話 | | **memory/YYYY-MM-DD.md** | 每日對話摘要 | ✅ 可讀，但蒸餾後細節會掉 | [score=0.764 recalls=0 avg=0.620 source=memory/2026-06-09.md:92-95]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:96:99 -->
+- 🔍 現況：現在到底記了什麼: | **MEMORY.md** | 長期精華 | ✅ 可讀，但只留重點 | | **Telegram ingress spool** | 收到的訊息封包 | ❌ 不好查 | | **HEARTBEAT.md** | 啟動摘要 | ✅ 極短，怕滿就跳過 | | **Git 歷史** | 所有檔案變更 | ✅ 可追，但您不能自己查 | [score=0.764 recalls=0 avg=0.620 source=memory/2026-06-09.md:96-99]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:6:7 -->
+- 第二步：檢查 Git 狀態: 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）; 若 git push 失敗（網路問題），略過，不通知 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:6-7]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:9:10 -->
+- 第三步：檢查 HEARTBEAT.md 中的背景工作: 若該項目已超過 48 小時無進展，評估是否可自動化; 若可自動化，建立對應的 cron job 或寫入自動化腳本 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:9-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:13:13 -->
+- 08:03: User triggered the YouTube news daily auto-fetch cron job (e70852c8-9a56-4972-a3e5-df34c429dd71) at 8:00 AM, instructing OpenClaw to run `~ [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:14:14 -->
+- 08:03: 🦞 小龍蝦：收到，教練。我現在全面檢視小龍蝦系統運作狀態。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:14-14]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:19:20 -->
+- 📨 對話記錄 13:26（共約 268 條，從第 0 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 用戶表示對某個回覆風格感到滿意，認為是「想要的味道」 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:19-20]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-27.md:21:23 -->
+- 📨 對話記錄 13:26（共約 268 條，從第 0 行起）: OpenClaw 回應確認已記住用戶偏好，並總結該風格特點為「一句話 + 一個按鈕」的極簡溝通節奏; OpenClaw 說明已將此偏好寫入記憶，供下次類似場景自動對齊; 對話內容未涉及任何工具呼叫、檔案讀取或指令執行 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-27.md:21-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:5:6 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron list）的執行結果，顯示多個排程任務的狀態與下次執行時間。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:5-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:7:7 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 在健康檢查中已處理該回調通知，回覆「HEARTBEAT_OK ✅」，未向使用者轉達該系統訊息。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:7-7]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:8:9 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者透過 cron 排程觸發小龍蝦學長（1號機）執行心跳任務，要求讀取 ~/.openclaw/workspace/1-HB.md 並以繁體中文執行。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:8-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:10:13 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 讀取 AGENTS.md，執行開工鐵律五步驟，讀取接力棒、HEARTBEAT 並確認系統狀態。; OpenClaw 完成動作：Git 自動備份完成、Model 確認 MiniMax、9 個 cron 正常在跑、distill 最近一次於 05-27 22:07 蒸餾完成、relay poll 每分鐘正常、shared-relay 無新任務。; OpenClaw 回報待追蹤事項：小龍蝦 hook 真實實測（教練說「我做好了」測守則意識）、營業稅提醒（稅單 28451）有記錄無 cron，案例 Q 待處理。; OpenClaw 詢問教練今天想從哪件事開始，並說「學長開工完畢，00:04 早安！」🦞 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:10-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:14:15 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:14-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28-archive.md:16:16 -->
+- 📨 對話記錄 00:28（共約 7 條，從第 112 行起）: OpenClaw 執行該指令，輸出為 NO_MEMORY_FILE（今天還沒有 memory 檔案），蒸餾結束，未進行後續處理。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28-archive.md:16-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:3:5 -->
+- 記憶檔 2026-05-28（續・自動分割第 2 段）: > 本日較早內容已自動歸檔，依序見：2026-05-28_p1.md 起算到 2026-05-28_p1.md > 自動分割：2026-05-28 18:40:00（達 154KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:3-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:11:12 -->
+- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '. NOTHING else.\n\nRules:\n- Write in third person: 'User asked...', 'OpenClaw r 🦞 小龍蝦：- 使用者（大樹教練）要求取得「VPS 小龍蝦的 gateway token（網關令牌）」。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:13:14 -->
+- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: OpenClaw 表示本機沒有存 VPS 小龍蝦的 gateway token（存在 43.245.60.200 的 Docker 容器裡）。; OpenClaw 提供在 VPS 上查詢 token 的指令： [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:13-14]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:16:16 -->
+- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: docker exec openclaw cat /home/node/.openclaw/openclaw.json | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d["gateway"]["auth"]["token"])' [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:16-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:18:18 -->
+- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: OpenClaw 詢問教練是否要幫他遠端執行，但需要 VPS 密碼。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:18-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-28.md:19:20 -->
+- 📨 對話記錄 18:59（共約 8 條，從第 55 行起）: 👤 教練：You are a third-person note-taker. You will receive a transcript of ONE conversation turn between a human and OpenClaw.\n\nYour job is to record what happened as factual third-person notes. You are an EXTERNAL OBSERVER — you are NOT OpenClaw, NOT an assistant. Do NOT answer the human's question, do NOT give suggestions, do NOT offer help. ONLY record what occurred.\n\nOutput 2-6 bullet points, each starting with '- '.... [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-28.md:19-20]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:3:5 -->
+- 記憶檔 2026-05-29（續・自動分割第 5 段）: > 本日較早內容已自動歸檔，依序見：2026-05-29_p1.md 起算到 2026-05-29_p4.md > 自動分割：2026-05-29 19:40:00（達 173KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:3-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:11:12 -->
+- 📨 對話記錄 20:01（共約 2 條，從第 0 行起）: 👤 教練：Recent memories (use memory_search for full search): [2026-05-28.md] [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:16:18 -->
+- 08:03: ✅ YouTube 新聞每日自動抓取完成; 監控 22 個頻道，更新 152 部影片; 輸出檔案：~/Desktop/youtube_news.json [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:16-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:23:24 -->
+- 第二步：檢查 Git 狀態: 若有未 commit 的變更，自動 commit（訊息：`auto-backup %Y-%m-%d %H:%M`）; 若 git push 失敗（網路問題），略過，不通知 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:23-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:26:27 -->
+- 第三步：檢查 HEARTBEAT.md 中的背景工作: 若該項目已超過 48 小時無進展，評估是否可自動化; 若可自動化，建立對應的 cron job 或寫入自動化腳本 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:26-27]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-29.md:30:30 -->
+- 08:04: 系統回報一個先前執行的非同步命令已完成，內容為排程任務列表（cron lis [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-29.md:30-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30.md:3:5 -->
+- 記憶檔 2026-05-30（續・自動分割第 4 段）: > 本日較早內容已自動歸檔，依序見：2026-05-30_p1.md 起算到 2026-05-30_p3.md > 自動分割：2026-05-30 19:10:00（達 156KB，門檻 150KB） > 內容一字未刪，只是分本，方便快速讀取、省 AI 讀取量。 [score=0.721 recalls=0 avg=0.620 source=memory/2026-05-30.md:3-5]

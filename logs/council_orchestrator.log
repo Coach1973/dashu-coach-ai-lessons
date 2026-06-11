@@ -1,0 +1,8 @@
+2026-06-09 14:43:25 triggered: agenda=2026-06-09T06:24:34.752Z elapsed=1131s kong=1 peipei=1
+2026-06-09 14:43:25 ✅ council sent successfully
+2026-06-09 14:45:17 triggered: agenda=2026-06-09T06:24:34.752Z elapsed=1243s kong=2 peipei=1
+2026-06-09 14:45:17 ✅ council sent successfully (msgId=1918)
+2026-06-09 21:18:56 triggered: agenda=2026-06-09T13:13:18.057Z elapsed=338s kong=1 peipei=0
+2026-06-09 21:18:56 ✅ council sent successfully (msgId=1926)
+2026-06-10 01:07:06 triggered: agenda=2026-06-09T17:01:48.342Z elapsed=318s kong=0 peipei=0
+2026-06-10 01:07:06 ✅ council sent successfully (msgId=1927)
