@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session d8d63574-d739-44d0-aa73-a56445780c29
-# 提取時間：2026-06-13 00:30 (台灣時間)
-# 共 11 條教練原話
+# 提取時間：2026-06-13 01:00 (台灣時間)
+# 共 14 條教練原話
 
 ---
 
@@ -212,3 +212,61 @@ H 是  MAC 版的 只要我沒有加 VPS 就代表這是住在 mac 本機的
 　▶ AI 回應：讓我直接測試確認，不只說「應該可以了」：
 
 　▶ AI 回應：解決了。git 認證正常，H 以後推任何 GitHub repo 都不會再卡 token 問題。
+
+【教練 2026-06-12 16:45】
+Commit 成功（`8cd878f`），但 sandbox 的 git 沒有 GitHub 認證，push 被擋。查一下 Mac 本機有沒有存好憑證（credentials）：Commit 已完成（`8cd878f`），但 Cowork 的沙盒沒有 GitHub 帳密，無法 push。Mac 本機的 `gh` CLI 有認證，需要教練幫我跑一個指令。
+請教練開終端機（Terminal），貼上這行，按 Enter：
+
+```
+cd ~/github_repos/jiesheng-leadership && touch .git/PUSH_APPROVED && git push origin main
+
+```
+
+這是目前唯一需要教練動手的步驟。推完 Netlify 會自動部署，約 1 分鐘上線。
+
+這是cowork 回我的，怎麼解決
+
+　▶ AI 回應：收到，Cowork 有 commit 但推不出去。我來直接推，不需要教練動手。
+
+　▶ AI 回應：commit `8cd878f` 已在本機，我來推：
+
+　▶ AI 回應：推出去了。commit `8cd878f` 已上 GitHub，Netlify 約 1 分鐘自動部署上線。
+
+---
+
+**根本問題說明**：Cowork 的沙盒每次都是乾淨環境，沒有 Mac 鑰匙圈的 GitHub 認證，所以永遠推不出去。
+
+**長期解法**：Cowork 做完 commit → 教練叫我（軍師終端機）「推」→ 我來推。這樣教練不需要自己動手，也不違反守則 #12。
+
+【教練 2026-06-12 16:57】
+日稍早，Anthropic 宣布旗下桌面端 AI 代理工具 Claude Cowork 的五小時滾動配額視窗（每五個小時允許你用多少次的上限）即日起翻倍，持續到 7 月 5 日，全面開放給 Pro、Team、Enterprise 訂閱者。由於 Claude Cowork 沒有 Claude Code 的「每週上限」，五小時配額翻倍等於可以實踐更多任務。
+
+所以，我讓任務在 cowrok 跑，最後一個動作，再讓 code 來執行
+
+　▶ AI 回應：完全理解，這個分工很聰明：
+
+**工作流程確認：**
+
+| 角色 | 做什麼 | 優勢 |
+|------|--------|------|
+| **Cowork** | 研究、修改、commit | 配額翻倍、無週限、跑大任務 |
+| **軍師（Claude Code）** | 最後一步 `git push` | 有 Mac 鑰匙圈認證，直接推 |
+
+**操作暗號：**
+教練對我說「**推**」→ 我查最新 commit → `touch .git/PUSH_APPROVED && git push`，30 秒搞定。
+
+Cowork 做完交給我推，這樣既省了教練的 Code 配額，又不需要教…（略）
+
+【教練 2026-06-12 16:58】
+可以，列入特別優惠流量時的SOP，如果 cowrok 沒有優惠了，我們就回來原本的作法
+
+　▶ AI 回應：直接寫進去，有效期到 7/5。
+
+　▶ AI 回應：寫好了，commit `25d84ae9`。
+
+SOP 路徑：[SOP_cowork_plus_code_workflow.md](workspace/knowledges/SOP_cowork_plus_code_workflow.md)
+
+重點：
+- **Cowork 跑任務 → 說「推」→ 軍師 30 秒推出去**
+- 有效到 **7/5**，過期自動回原本作法
+- 下一棒讀到這份 SOP，不需要重新想分工邏輯
