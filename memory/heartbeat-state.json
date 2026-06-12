@@ -5,6 +5,7 @@
     "cron_health": 1748345700,
     "system_check": 1780797664
   },
-  "lastHeartbeat": "2026-06-07T10:01:04.466163+08:00",
+  "lastHeartbeat": "2026-06-13T06:03:30+08:00",
+  "lastHeartbeatNote": "relay poll - 凌晨靜默時段，Context 重啟後第 3 小時，無需擾動教練",
   "restartAlertSent": "2026-06-06T14:02:00+08:00"
 }
