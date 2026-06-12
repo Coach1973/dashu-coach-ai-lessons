@@ -5,6 +5,10 @@
 
 set -euo pipefail
 
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export PYTHONIOENCODING=utf-8
+
 QUEUE="/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE"
 RESULT="/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_RESULT"
 LOCKFILE="/tmp/junshi_task_worker.lock"
@@ -55,9 +59,10 @@ TASK_ID=$(/opt/homebrew/bin/python3 -c "import json,sys; print(json.loads(sys.ar
 
 write_result() {
   local status="$1" message="$2"
-  /opt/homebrew/bin/python3 -c "
-import json, datetime
-r = {'id': '$TASK_ID', 'status': '$status', 'message': '''$message''', 'ts': datetime.datetime.now().astimezone().isoformat()}
+  printf '%s\n%s\n%s' "$TASK_ID" "$status" "$message" | /opt/homebrew/bin/python3 -c "
+import json, datetime, sys
+lines = sys.stdin.read().split('\n', 2)
+r = {'id': lines[0], 'status': lines[1], 'message': lines[2] if len(lines)>2 else '', 'ts': datetime.datetime.now().astimezone().isoformat()}
 with open('$RESULT', 'w') as f:
     json.dump(r, f, ensure_ascii=False, indent=2)
 "
@@ -117,10 +122,14 @@ case "$TASK_TYPE" in
     log "Running claude -p: ${PROMPT:0:100}..."
     notify_telegram "⏳ *軍師開始執行任務*\n📋 ${PROMPT:0:100}..."
 
-    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" --output-format text 2>&1 | tail -c 3000) || true
+    TASK_STDERR=$(mktemp)
+    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" --output-format text 2>"$TASK_STDERR" | tail -c 3000) || true
+    if [ -s "$TASK_STDERR" ]; then
+      log "claude stderr: $(head -c 500 "$TASK_STDERR")"
+    fi
+    rm -f "$TASK_STDERR"
 
-    MSG="✅ 任務完成\n結果摘要：${TASK_OUTPUT:0:500}"
-    log "$MSG"
+    log "Task output (first 500): ${TASK_OUTPUT:0:500}"
     write_result "ok" "$TASK_OUTPUT"
     notify_telegram "🟢 *軍師任務完成*\n📋 ${PROMPT:0:80}...\n📝 ${TASK_OUTPUT:0:300}"
     ;;
