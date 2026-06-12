@@ -71,6 +71,61 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ---
 
+## 🚀 軍師任務橋——讓小龍蝦呼叫軍師執行任務（2026-06-13 教練親定）
+
+**觸發時機**：教練要推 git、或要軍師執行複雜任務時
+
+### 推 git（教練說「推 XX」）
+
+```bash
+python3 -c "
+import json, datetime
+task = {
+    'id': datetime.datetime.now().strftime('%Y%m%d-%H%M%S'),
+    'type': 'push',
+    'repo': 'REPO名稱',   # jiesheng-leadership / cool-case / theunrestrictedwar
+    'branch': 'main',      # cool-case 要改成 gh-pages
+    'requestedBy': '小龍蝦',
+    'ts': datetime.datetime.now().astimezone().isoformat()
+}
+with open('/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE', 'w') as f:
+    f.write(json.dumps(task, ensure_ascii=False) + '\n')
+print('✅ 已派任務給軍師')
+"
+```
+
+### 叫軍師跑複雜任務（教練說「叫軍師做 XX」）
+
+```bash
+python3 -c "
+import json, datetime
+task = {
+    'id': datetime.datetime.now().strftime('%Y%m%d-%H%M%S'),
+    'type': 'task',
+    'prompt': '教練要做的事情描述',
+    'requestedBy': '小龍蝦',
+    'ts': datetime.datetime.now().astimezone().isoformat()
+}
+with open('/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE', 'w') as f:
+    f.write(json.dumps(task, ensure_ascii=False) + '\n')
+print('✅ 已派任務給軍師')
+"
+```
+
+### 讀取軍師回報結果
+
+```bash
+cat /Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_RESULT 2>/dev/null
+```
+
+**注意**：
+- 軍師會自動 Telegram 通知教練結果，小龍蝦也可以主動讀結果
+- push 類型：軍師自動建通行證（PUSH_APPROVED）→ 推送 → 通知
+- task 類型：軍師用 `claude -p` 執行 → 結果回寫 → 通知
+- Repo 路徑一律在 `/Users/bymyway/github_repos/`
+
+---
+
 ## 🔎 查話工具（recall）——記住教練每一句話的入口（2026-06-11 軍師建立，教練拍板）
 
 **觸發時機**：教練問「我之前說過X嗎」「我什麼時候講過X」「幫我查X那件事」「我們之前討論過的X」——任何要找舊話的時候，**不要靠記憶猜，直接查**：
