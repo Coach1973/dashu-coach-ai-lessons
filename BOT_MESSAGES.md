@@ -1113,3 +1113,4 @@
 {"ts":"2026-06-11T22:02:53.040Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"☀️ 每日 06:00 起床摘要（前 12 小時工作）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7874","chatId":"-1003877502911"}
 {"ts":"2026-06-11T22:03:13.113Z","botId":"main","botName":"🦞學長","text":"✅ 起床摘要：過去 12 小時無新工作","msgId":"7875","chatId":"-1003877502911"}
 {"ts":"2026-06-11T22:03:41.605Z","botId":"main","botName":"🦞學長","text":"🎂 **教練早安！今日 FB 壽星名單（共 8 位）**\n\n1. Fei Fei Chen\n2. 鄧稚勤\n3. 孟法吟\n4. 陳忠盛\n5. 鄭琍文\n6. Andrew Hall\n7. Cissy Kan\n8. 李路禕\n\n💡 請直接複製名單到 FB 進行半自動發送祝福。","msgId":"7876","chatId":"-1003877502911"}
+{"ts":"2026-06-12T00:04:41.114Z","botId":"main","botName":"🦞學長","text":"教練，今日 8:04 終端機蒸餾 cron 跑完，**pending_distill/ 目錄是空的，無待蒸餾對話**。\n\n- 最後一次有內容的蒸餾：6/11 13:00（已寫入 terminal_2026-06-11.md）\n- 6/11 13:00 ~ 6/12 08:00 期間，無新終端機對話進來\n\n無需 commit、無需 push，下次 cron 4 小時後再跑。","msgId":"7877","chatId":"-1003877502911"}
