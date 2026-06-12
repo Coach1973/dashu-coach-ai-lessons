@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-11 12:40:01**
+> **最後同步：2026-06-13 01:45:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -192,6 +192,54 @@
 - 已全數用 `openclaw cron add` 重建（13 個工作在 gateway 清單）；新版規矩：main session 系統事件不可帶 --announce；安靜型工作要 --no-deliver
 - E09 驗證：手動觸發增量蒸餾 → status=ok ✅
 - ⚠️ 從此 cron 真相源 = `openclaw cron list`（SQLite），cron/jobs.json 是遺骸僅供考古
+
+---
+
+## ✅ v19 增補（2026-06-13 凌晨，Opus 4.6 軍師）：任務橋＋快取清理＋SOP 更新
+
+### 本場成果
+
+#### 1. jiesheng-leadership 推送（台中場場地＋7/5活動更新）
+- commit b6c1d6b（台中場場地更新）＋ 8cd878f（7/5活動更新）已推上 Netlify
+
+#### 2. 網頁推 SOP 補齊站台分流（commit 7a2917ef）
+- jiesheng-leadership 是 GitHub 自動部署型（非 zip+API），H 踩雷紀錄已寫入
+- 新增判斷腳本：curl API 看 `repo_url` 有無，決定走 git push 或 zip
+
+#### 3. Cowork＋Code 分工 SOP（commit 25d84ae9）
+- 教練親定，有效至 2026-07-05（Anthropic Cowork 配額翻倍期間）
+- 小龍蝦有 GitHub 認證（2026-06-13 驗證），H 目前壞掉
+- 路徑：`workspace/knowledges/SOP_cowork_plus_code_workflow.md`
+
+#### 4. 小龍蝦→軍師任務橋（commit b93d9fd0）
+- WatchPaths LaunchAgent（事件驅動，0 輪詢）
+- worker 腳本：`scripts/junshi_task_worker.sh`
+- 支援兩種任務：push（自動建通行證推送）、task（claude -p 執行）
+- 小龍蝦端 TOOLS.md 已加使用說明
+- **v19.1 修 bug**：Unicode 編碼（加 LANG/LC_ALL/PYTHONIOENCODING）、write_result 改 stdin 管道（避免特殊字元炸 Python）、stderr 分離
+
+#### 5. 快取清理（教練透過小龍蝦→軍師橋派任）
+- npm 快取 4.1GB、Chrome 549M、Typeless 317M、Electron 218M、OpenCode 56M → 共釋放約 5.2GB
+- 全部為可再生快取，不影響功能
+
+### 📋 下一棒待辦
+
+| 優先 | 任務 | 說明 |
+|------|------|------|
+| 🟡 | H 的 gh auth 修復 | H 無法 push，根因疑為不同 token store |
+| 🟡 | bymyway.com 搬移 | 超限戰、cool-case 搬進 bymyway 主站 |
+| 🟡 | jiesheng-leadership 金流就緒時 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
+
+### 🔑 本場 commit hash
+
+| commit | 內容 |
+|--------|------|
+| b6c1d6b | jiesheng-leadership 台中場場地更新 |
+| 8cd878f | jiesheng-leadership 7/5活動更新 |
+| 7a2917ef | SOP 站台分流補丁 |
+| 25d84ae9 | Cowork+Code 分工 SOP |
+| a419c678 | 小龍蝦 push 能力更新 |
+| b93d9fd0 | 小龍蝦→軍師任務橋系統 |
 
 
 ---

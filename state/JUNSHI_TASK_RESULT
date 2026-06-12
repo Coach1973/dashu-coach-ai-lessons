@@ -1,6 +1,6 @@
 {
-  "id": "test-012334",
+  "id": "selftest-014443",
   "status": "ok",
-  "message": "✅ 推送成功\nRepo: jiesheng-leadership\nBranch: main\nCommit: 8cd878f 7月5日活動改為線上座談會（20:00-21:30/大樹教練），移除 hero note 中 AI 公益講座場數",
-  "ts": "2026-06-13T01:23:35.596752+08:00"
+  "message": "🟢 **junshi task bridge selftest 通過**\n\n- `echo` 輸出：`hello from junshi task bridge selftest`\n- 系統時間：**2026-06-13 Saturday 01:44:54 CST（台灣時間）**\n\nhook 顯示 01:44:45 → 終端機 01:44:54，差距 9 秒在合理範圍，任務橋接運作正常。隨時可以開工，教練。",
+  "ts": "2026-06-13T01:44:59.941881+08:00"
 }

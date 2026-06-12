@@ -1,5 +1,12 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-13（共 2 則）
+1. 權限範圍：gist、read:org、repo、workflow
+2. 權限範圍：gist、read:org、repo、workflow
+
+---
+
+
 ## 蒸餾 2026-06-11（共 57 則）
 1. evidence: memory/2026-06-09.md:7-9
 2. Candidate: 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/`
