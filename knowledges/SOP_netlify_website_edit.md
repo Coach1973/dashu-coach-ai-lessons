@@ -4,17 +4,36 @@
 
 ---
 
-## 🔴 站台分流鐵律（教練 2026-06-06 親定）
+## 🔴 站台分流鐵律（教練 2026-06-06 親定，2026-06-13 H 血淚增補）
 
-| 站台 | 平台 | 費用 | 使用時機 |
-|------|------|------|---------|
-| coach1973 GitHub Pages | GitHub | **免費** | 開發、測試、日常更新 |
-| Netlify（超限戰等公開站） | Netlify | **扣點** | 確認完善後才同步 |
+| 類型 | 站台 | 更新路徑 | 費用 |
+|------|------|---------|------|
+| GitHub Pages | cool-case, teamwork/rpl | git push gh-pages → 自動 | 免費 |
+| Netlify（GitHub 自動部署型）| **jiesheng-leadership** | git push main → Netlify 自動 hook | **扣點** |
+| Netlify（手動上傳型）| theunrestrictedwar 等 22 站 | zip + Netlify API 推送 | **扣點** |
+
+**⚠️ 2026-06-13 H 踩雷紀錄（必讀）：**
+- jiesheng-leadership 的 Netlify 站台設定 `repo_url: github.com/Coach1973/jiesheng-leadership` → 它走的是 GitHub 自動部署，不是手動 zip 上傳
+- H 的 Netlify token 可 GET 但 POST deploys 被拒（Access Denied）——因為這個站根本不走 API 推
+- **jiesheng-leadership 唯一更新路徑：git push main → Netlify 自動部署**
+- H 沒有 GitHub token → 改由軍師（Mac 終端機，gh CLI 有效）來 push
 
 **規則：**
-- coach1973.github.io 底下的站（如 cool-case）→ **直接 git push 到 gh-pages 分支**，不走 Netlify
-- Netlify 站（theunrestrictedwar、jiesheng-leadership 等）→ 走下方七步驟
-- **嚴禁未確認就推 Netlify**，扣點不可逆
+- coach1973.github.io 底下的站（cool-case, teamwork 等）→ **git push gh-pages 分支**
+- jiesheng-leadership → **git push main**（GitHub 自動觸發 Netlify 部署）
+- theunrestrictedwar 等其他 Netlify 站 → **走下方七步驟（zip + API）**
+- **全部站台：推之前等教練確認，教練說「推」才動**
+- **嚴禁未確認就推，扣點不可逆**
+
+**如何判斷一個 Netlify 站是哪種類型：**
+```bash
+curl -s -H "Authorization: Bearer nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838" \
+  "https://api.netlify.com/api/v1/sites/{site_id}" | python3 -c "
+import json, sys; d = json.load(sys.stdin)
+print('repo_url:', d.get('build_settings', {}).get('repo_url', '無 → 手動上傳型'))"
+# 有 repo_url → GitHub 自動部署型（走 git push）
+# 無 repo_url → 手動上傳型（走 zip + API）
+```
 
 ### coach1973 GitHub 站台修改流程
 
