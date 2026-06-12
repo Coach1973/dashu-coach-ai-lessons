@@ -3,7 +3,7 @@
 # WatchPaths 觸發：state/JUNSHI_TASK_QUEUE 一寫入就執行
 # 2026-06-13 軍師建立（教練親定）
 
-set -euo pipefail
+set -uo pipefail
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -41,7 +41,16 @@ if [ -f "$LOCKFILE" ]; then
   rm -f "$LOCKFILE"
 fi
 
-trap 'rm -f "$LOCKFILE"' EXIT
+cleanup() {
+  rm -f "$LOCKFILE"
+  # 不管成功失敗都清 QUEUE，避免卡住重複觸發
+  if [ -f "$QUEUE" ]; then
+    tail -n +2 "$QUEUE" > "${QUEUE}.tmp" 2>/dev/null || true
+    mv "${QUEUE}.tmp" "$QUEUE" 2>/dev/null || true
+    [ -s "$QUEUE" ] || rm -f "$QUEUE"
+  fi
+}
+trap cleanup EXIT
 touch "$LOCKFILE"
 
 # 沒有任務就退出
@@ -84,9 +93,8 @@ case "$TASK_TYPE" in
     if [ ! -d "$REPO_PATH/.git" ]; then
       MSG="❌ 推送失敗：找不到 repo ${REPO}（路徑 ${REPO_PATH}）"
       log "$MSG"
-      write_result "error" "$MSG"
-      notify_telegram "🔴 軍師任務失敗\n${MSG}"
-      remove_first_line
+      write_result "error" "$MSG" || log "WARN: write_result failed"
+      notify_telegram "🔴 軍師任務失敗\n${MSG}" || true
       exit 1
     fi
 
@@ -97,13 +105,13 @@ case "$TASK_TYPE" in
     if PUSH_OUTPUT=$(git push origin "$BRANCH" 2>&1); then
       MSG="✅ 推送成功\nRepo: ${REPO}\nBranch: ${BRANCH}\nCommit: ${LATEST_COMMIT}"
       log "$MSG"
-      write_result "ok" "$MSG"
-      notify_telegram "🟢 *軍師推送完成*\n📦 ${REPO} → ${BRANCH}\n📝 ${LATEST_COMMIT}"
+      write_result "ok" "$MSG" || log "WARN: write_result failed"
+      notify_telegram "🟢 *軍師推送完成*\n📦 ${REPO} → ${BRANCH}\n📝 ${LATEST_COMMIT}" || true
     else
       MSG="❌ 推送失敗\nRepo: ${REPO}\n錯誤: ${PUSH_OUTPUT}"
       log "$MSG"
-      write_result "error" "$MSG"
-      notify_telegram "🔴 *軍師推送失敗*\n📦 ${REPO}\n${PUSH_OUTPUT}"
+      write_result "error" "$MSG" || log "WARN: write_result failed"
+      notify_telegram "🔴 *軍師推送失敗*\n📦 ${REPO}\n${PUSH_OUTPUT}" || true
     fi
     ;;
 
@@ -113,9 +121,8 @@ case "$TASK_TYPE" in
     if [ -z "$PROMPT" ]; then
       MSG="❌ 任務失敗：prompt 為空"
       log "$MSG"
-      write_result "error" "$MSG"
-      notify_telegram "🔴 軍師任務失敗：沒有 prompt"
-      remove_first_line
+      write_result "error" "$MSG" || log "WARN: write_result failed"
+      notify_telegram "🔴 軍師任務失敗：沒有 prompt" || true
       exit 1
     fi
 
@@ -130,15 +137,15 @@ case "$TASK_TYPE" in
     rm -f "$TASK_STDERR"
 
     log "Task output (first 500): ${TASK_OUTPUT:0:500}"
-    write_result "ok" "$TASK_OUTPUT"
-    notify_telegram "🟢 *軍師任務完成*\n📋 ${PROMPT:0:80}...\n📝 ${TASK_OUTPUT:0:300}"
+    write_result "ok" "$TASK_OUTPUT" || log "WARN: write_result failed"
+    notify_telegram "🟢 *軍師任務完成*\n📋 ${PROMPT:0:80}...\n📝 ${TASK_OUTPUT:0:300}" || true
     ;;
 
   *)
     MSG="❌ 未知任務類型: ${TASK_TYPE}"
     log "$MSG"
-    write_result "error" "$MSG"
-    notify_telegram "🔴 軍師：未知任務類型 ${TASK_TYPE}"
+    write_result "error" "$MSG" || log "WARN: write_result failed"
+    notify_telegram "🔴 軍師：未知任務類型 ${TASK_TYPE}" || true
     ;;
 esac
 
