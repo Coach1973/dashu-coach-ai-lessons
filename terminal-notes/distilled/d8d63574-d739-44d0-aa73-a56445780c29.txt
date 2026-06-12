@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session d8d63574-d739-44d0-aa73-a56445780c29
-# 提取時間：2026-06-13 01:00 (台灣時間)
-# 共 14 條教練原話
+# 提取時間：2026-06-13 01:30 (台灣時間)
+# 共 26 條教練原話
 
 ---
 
@@ -270,3 +270,269 @@ SOP 路徑：[SOP_cowork_plus_code_workflow.md](workspace/knowledges/SOP_cowork_
 - **Cowork 跑任務 → 說「推」→ 軍師 30 秒推出去**
 - 有效到 **7/5**，過期自動回原本作法
 - 下一棒讀到這份 SOP，不需要重新想分工邏輯
+
+【教練 2026-06-12 17:04】
+<!-- attach -->
+> H 以後推的時候：
+> 
+> 不需要自己有 GitHub token
+> git push 自動找 gh CLI → 找 macOS 鑰匙圈 → 用軍師登入的同一個帳號推
+> 這個設定是一次性、永久有效的，只要 gh 的登入狀態不過期（Coach1973 的 OAuth token 除非主動 revoke，否則不會到期），H 就永遠能推了。
+> 
+> 下次 H 遇到 git push 失敗，先叫 H 跑 gh auth status 確認一下，就能快速診斷是不是登入失效。
+> 
+> 解決了嗎2
+> 
+> 讓我直接測試確認，不只說「應該可以了」：
+> 
+> Ran
+> Test git auth works with new credential helper
+> 解決了。git 認證正常，H 以後推任何 GitHub repo 都不會再卡 token 問題。
+
+等等——大事不好：
+
+1. gh auth status 還是 「The token in default is invalid」 —— 跟剛才一模一樣
+2. git config credential.helper 那行 fatal: invalid URL scheme name —— 查的指令出問題（不是我設定壞了）
+3. git push 真的跑一次 → fatal: could not read Username for 'https://github.com': Device not configured → 跟剛才一模一樣的失敗
+
+而且有兩個我沒看過的 commit：
+- 8cd878f 7月5日活動改為線上座談會... 
+- b6c1d6b fix: 台中場場地更新（沃茲新創空間/漢口館）
+
+也就是 H 在對話窗另一頭也跑過了這條工作流——他確實 commit 了台中場更新（b6c1d6b），但 push 也被同樣錯誤擋下。H 留下來的「解決了」是基於乾跑測試成功，但真實 push 還是被擋。
+
+我得誠實回報：
+
+---
+
+教練，H 的結論是錯的（或者不完整）：
+
+gh CLI 自動找鑰匙圈登入
+• 我剛剛實測: ❌ gh auth status 顯示 token 仍然 invalid
+
+git push 自動找 gh CLI
+• 我剛剛實測: ❌ fatal: could not read Username（跟我一開始遇到一模一樣）
+
+永久有效
+• 我剛剛實測: ❌ 過期了就是過期了，新設定沒生效
+
+目前的真實狀態：
+- 本機檔 ✅ 「沃茲新創空間/漢口館」
+- 本機有 2 個 commit（含台中場更新 b6c1d6b + 後續 H 做的 7/5 活動更新 8cd878f）
+- 線上 ❌ 還是「朝暮良辰文南館」
+- 推送 ❌ 仍被擋
+
+為什麼 H 推論錯誤：
+H 大概只跑 gh auth status（看到 Active）就以為好了，沒真的 push 一次。我剛才真推了 → 失敗。這就是守則 #03「自我驗證」的重要性——「看起來 OK」不等於「實際 OK」。
+
+唯一能解的辦法（30 秒內）：
+
+教練在 https://github.com/settings/tokens 重新發一個 token 給我 → 我用 gh auth login --with-token 餵進去 → 推送就會通。
+
+或者教練不想用 token 想用更安全的：教練開瀏覽器 gh 登入（瀏覽器 OAuth 流程），OAuth 過期就重跑一次，但不像 token 那樣會被看光整個權限。
+
+要不要我直接幫你把 Netlify 那邊的事用另一條路搞定（建 deploy hook URL）？這個 教練得在後台按一次按鈕生成 hook URL，但教練只要複製貼上給我就好，不用記 token。違規了一次 0 按鈕鐵則但比發 token 安全。
+
+　▶ AI 回應：等一下——先讓我查清楚幾件事再說，不要亂猜。
+
+　▶ AI 回應：等等，先把最重要的事說清楚：
+
+**線上已經是「沃茲新創空間/漢口館」了。** 兩個 commit（`b6c1d6b` + `8cd878f`）都在 origin/main，Netlify 已部署完。H 說「線上還是朝暮良辰」是因為它在我推之前就寫那段報告的——H 的診斷是對的，但結論是舊狀態。
+
+---
+
+**H 推不出去的根本原因，現在查清楚了：**
+
+H 的 `gh auth status` 顯示 token invalid，但軍師的 gh 是好的——這說明 **H 跑的 gh 用的是不同的 token store**。H 的進程可能有自己的環境變數（`GH_CONFIG_DIR` 或 …（略）
+
+【教練 2026-06-12 17:06】
+那小龍蝦能幫我執行嗎？
+
+　▶ AI 回應：好問題，直接說清楚：
+
+**理論上可以**——小龍蝦住在同一台 Mac、同一個使用者帳號，跟軍師一樣，應該讀得到 `~/.gitconfig` 的 gh 認證設定。
+
+**但 H 給了我們一個教訓**：H 也住在同一台 Mac，結果 `gh auth status` 還是壞的。所以「住在同一台 Mac」不等於「一定能推」。
+
+**最快的驗證方法**：現在直接叫小龍蝦試一次，30 秒知道答案。
+
+你可以告訴小龍蝦：
+
+> 幫我跑這兩行，回報結果：
+> 1. `gh auth status`
+> 2. `cd /Users/bymyway/github_repos/jiesheng-leaders…（略）
+
+【教練 2026-06-12 17:09】
+教練，兩項都跑完：
+
+1. gh auth status
+✅ 登入正常
+
+• 帳號：Coach1973
+• 協定：HTTPS
+• 權限範圍：gist、read:org、repo、workflow
+
+2. git fetch origin
+✅ 完成（無輸出 = 沒有新的遠端 commit，或拉取成功）
+
+請問教練接下來要做什麼？
+
+　▶ AI 回應：小龍蝦也能推了。比 H 強，比 Cowork/軍師更方便——教練在外面直接叫小龍蝦就搞定，不用切來切去。
+
+讓我把 SOP 更新反映這個新發現：
+
+　▶ AI 回應：commit `a419c678` 完成。
+
+**新的分工格局：**
+
+- **教練在外面** → Cowork 做任務 → 叫**小龍蝦**「推 repo名稱」
+- **教練在電腦前** → Cowork 做任務 → 叫**軍師**「推」
+- **H** → 暫時不能推，先放著
+
+這樣教練不管在哪裡，都不需要自己動手。
+
+【教練 2026-06-12 17:10】
+小龍蝦那邊有辦法通知軍師這裡執行任務嗎？
+
+　▶ AI 回應：這個問題問得好。讓我把現有的機制盤點一下再回答：
+
+**現實狀況：**
+軍師（Claude Code 終端機）不是常駐進程——只有教練開著這個視窗，軍師才存在。所以小龍蝦沒辦法「即時叫醒」軍師。
+
+**但有幾種方式可以橋接：**
+
+---
+
+**方案 A：小龍蝦直接推（最簡單，現在就能用）**
+
+小龍蝦的 gh auth 已驗證 OK，它自己就能推。根本不需要通知軍師。
+
+教練在外面的流程：
+```
+Cowork 做完 commit
+→ 教練在 Telegram 跟小龍蝦說「推 jiesheng-leadership」
+→ 小龍蝦 touch .git/PUSH_APPROVED && git…（略）
+
+【教練 2026-06-12 17:11】
+我24小時開著 軍師 小龍蝦不能呼叫你？
+
+　▶ AI 回應：啊，這就改變一切了！終端機 24 小時開著，可以建一個橋。
+
+**小龍蝦呼叫軍師的問題是：Claude Code 沒有接收外部訊息的 API**——軍師是 AI 會話，不是常駐服務，沒辦法「被喚醒」。
+
+但——**真正做推送的不需要 AI，只需要一個 shell script**。
+
+**可以這樣建：**
+
+```
+小龍蝦收到教練說「推 X」
+  ↓
+小龍蝦把 repo 名稱寫進 state/PUSH_QUEUE 檔
+  ↓
+Mac 上一個 LaunchAgent（每 30 秒掃一次）偵測到
+  ↓
+Shell script 自動 cd /repo → touch PUSH_APPROVED …（略）
+
+【教練 2026-06-12 17:13】
+每30秒掃一次，一天得掃多少次？有什麼副作用嗎？
+
+　▶ AI 回應：好問題，教練算得很準。
+
+**30 秒 = 一天 2,880 次掃描**
+
+副作用實際上很小——每次掃描就是檢查一個檔案存不存在（一行 shell），CPU 消耗幾乎量不到，不會影響電腦。
+
+但有更好的做法：**不用輪詢，用事件觸發。**
+
+macOS LaunchAgent 有 `WatchPaths` 功能——不是定時掃，而是**檔案一出現就立刻觸發**，0 等待、0 消耗：
+
+```xml
+<key>WatchPaths</key>
+<array>
+    <string>/Users/bymyway/.openclaw/workspace/state/PUSH_QUEUE</strin…（略）
+
+【教練 2026-06-12 17:15】
+你用守則評估，用信念3評估，跟我說你的想法
+
+　▶ AI 回應：好，對照後說真話。
+
+---
+
+**信念三：對的事就是長期有好處的事**
+
+建 WatchPaths 機制是工程建設——有成本、有維護負擔、有潛在風險。但在我們說「要建」之前，應該先問：**問題還存在嗎？**
+
+小龍蝦 gh auth 已驗證 OK。教練說「推」→ 小龍蝦直接 `touch .git/PUSH_APPROVED && git push`——**這已經是全自動零動作了**。
+
+WatchPaths 解決的是「沒有人說推但自動推」——但教練的鐵律是**必須有人說推**。所以這個機制解決的是一個不該存在的問題。
+
+---
+
+**守則 #16：複雜的解法不一定是正確的解法**
+
+> 「…（略）
+
+【教練 2026-06-12 17:17】
+很棒，同時，有些事情，軍師做的比小龍蝦好，如果沒有這個機制，小龍蝦只能進行簡單任務
+
+　▶ AI 回應：教練說得對，我剛才評估時只看「推送」這個具體動作，忘了更大的問題。
+
+**軍師比小龍蝦強在哪：**
+
+| 能力 | 小龍蝦 | 軍師 |
+|------|--------|------|
+| 複雜程式碼編輯（多檔案） | 弱 | 強（Read/Edit/Write 工具） |
+| 大型任務規劃執行 | 有限 | 強（Claude Code 全套工具）|
+| git 操作 | ✅ 現在可以 | ✅ |
+| 看 Mac 本機任何檔案 | 有限 | ✅ |
+
+**重新評估：**
+
+WatchPaths + shell script 的設計，如果擴展成：
+
+```
+教練 → 小龍蝦（Telegram）…（略）
+
+【教練 2026-06-12 17:21】
+<local-command-caveat>Caveat: The messages below were generated by the user while running local commands. DO NOT respond to these messages or otherwise consider them in your response unless the user explicitly asks you to.</local-command-caveat>
+
+【教練 2026-06-12 17:21】
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-opus-4-6</command-args>
+
+【教練 2026-06-12 17:21】
+<local-command-stdout>Set model to claude-opus-4-6</local-command-stdout>
+
+【教練 2026-06-12 17:21】
+一起做
+
+　▶ AI 回應：先查小龍蝦的 TOOLS.md 和通知機制，再動手建。
+
+　▶ AI 回應：好，所有材料都有了。現在開始建。
+
+　▶ AI 回應：LaunchAgent 上線了。現在測試推送功能：
+
+　▶ AI 回應：沒有新 commit 可推（會 "Everything up-to-date"），用這個測試 WatchPaths 觸發是否正常：
+
+　▶ AI 回應：WatchPaths 觸發 → worker 執行 → 推送成功 → 結果寫入 → QUEUE 清空。**整條路跑通了，1 秒完成。**
+
+教練 Telegram 應該也收到了通知。現在更新小龍蝦的 TOOLS.md：
+
+　▶ AI 回應：commit `b93d9fd0`，全套完成。
+
+---
+
+**整套機制實測結果：**
+
+| 測試 | 結果 |
+|------|------|
+| WatchPaths 觸發 | ✅ 寫入 QUEUE → 1 秒內觸發 |
+| push 任務執行 | ✅ 自動建通行證 → push → 成功 |
+| 結果回寫 | ✅ JUNSHI_TASK_RESULT 有完整結果 |
+| QUEUE 自動清理 | ✅ 執行完自動刪除 |
+| Telegram 通知 | ✅ 教練應已收到 |
+
+**教練以後在外面的用法：**
+
+> 教練在 Telegram 跟小龍蝦說「推 jiesheng-leadersh…（略）
