@@ -110,65 +110,65 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-13)
+## Promoted From Short-Term Memory (2026-06-14)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:20:20 -->
-- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: **什麼時候執行第三方 Opus 代理路徑：** [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-04.md:20-20]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:21:23 -->
-- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: 教練明確下達指令（不是自動觸發）; 必須是這組認證 API Key：`sk-214…85c8`; 其他情況一律不動 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-04.md:21-23]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-04.md:5:6 -->
-- 📨 對話記錄 01:57（共約 24 條，從第 0 行起）: 👤 教練：你記住，只有在第三方——也就是我下達指令且它是認證 API Key 的情況下，只有這一組 API Key 在運行時，你才執行這個第三方的路徑。這樣瞭解嗎？ 🦞 小龍蝦：🦞 了解，教練！ [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-04.md:5-6]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:12:12 -->
-- 教練痛點: Hermit 桌面版 App 每次執行 Python `-e` / `-c` 都要跳出「Always allow this command?」對話框，教練覺得很煩很累。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:12-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:15:16 -->
-- 教練原話: > 「Hermit 的桌面版 App 執行任務的時候，一直要反覆地讓我同意它去讀取資料夾。」 > 「可以的話，直接幫我執行可以嗎？直接從後臺去修改它，讓它直接加進去，然後就不要再問我，可以吧？」 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:15-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:19:22 -->
-- 處理過程: 教練最初要求「直接從後臺改」→ 我先解釋 macOS 安全機制（守則#15 說真話）; 提出三方案讓教練選（守則#16 複雜的解法不一定是正確的解法 → 問用戶要什麼）; 教練選 A（只加 command_allowlist，零風險）; 備份 `~/.hermes/config.yaml` → `config.yaml.bak.before_hermit_autopermit_20260605_042103` [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:19-22]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:23:26 -->
-- 處理過程: 編輯 `command_allowlist`，從 1 條擴充為 5 條：; `script execution via -e/-c flag`（原有）; `python3 -e *`（新增）; `python3 -c *`（新增） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:23-26]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:27:28 -->
-- 處理過程: `python3 /Users/bymyway/.openclaw/**`（新增）; `python3 /tmp/**`（新增） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:27-28]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:3:5 -->
-- 2026-06-05 軍師工作日誌: > 開工時間：2026-06-05 04:21 > 開工路徑：終端機 CLI（軍師身份） > HEARTBEAT 狀態：上棒 22:59 Context Overflow 自動重啟 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:3-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:31:33 -->
-- 關鍵發現: `echotoken` provider 已有 `permissions.allow`：Read/Write `/Users/bymyway/**`、git、ssh、scp; 但**「Always allow this command」**是另一個機制，由 `command_allowlist` 控制; 還有一個更高階的 `approvals.mode`（目前 `manual`），如果 A 不夠再做 B [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:31-33]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:36:36 -->
-- 教練要重啟 Hermit 才生效: 需完全關閉（Cmd+Q）再重開，新設定才會被讀入。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:36-36]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:45:46 -->
-- 🔍 Cron 三個舊異常排查結果: 接力棒說三個 cron（sync_handoff / relay_poll / split_memory）「11:10 後停止」。 **實際驗證結果：全部都健康運作中，接力棒資訊過期。** [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:45-46]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:48:51 -->
-- 🔍 Cron 三個舊異常排查結果: | Cron | 最後執行時間 | 狀態 | |------|------------|------| | `sync_handoff_to_claudemd.sh` | 2026-06-05 03:10 | ✅ 12 筆 log 持續 | | `run_relay_poll.sh` | HEARTBEAT 持續有 relay poll OK | ✅ 腳本正常（無 pending 任務時 silent return）| [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:48-51]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:52:52 -->
-- 🔍 Cron 三個舊異常排查結果: | `split_memory.sh` | 2026-06-05 04:10 | ✅ 持續監測（log 寫在 workspace/split_memory.log 不在 /tmp/）| [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:52-52]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:54:54 -->
-- 🔍 Cron 三個舊異常排查結果: **根因**：6/3 11:09 之後可能沒有 pending relay 任務，所以 relay_poll 的 print() 沒輸出，log 看起來停了，但 HEARTBEAT 心跳寫入其實持續運作。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:54-54]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:56:56 -->
-- 🔍 Cron 三個舊異常排查結果: **守則#15 體現**：3 個 cron 沒問題就是沒問題，不為了「做事」硬找事做。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:56-56]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:61:64 -->
-- 📌 待辦（接力棒帶下來）: [ ] 封存檔整合 41 個待處理 → ✅ **已驗證完成** (commit `81b765cf` 6/5 00:44); [ ] 品管重判拍板（守則故事庫方向 vs 三幕劇方向）→ ✅ **已完成** (commit `4338e157`); [ ] 試用 Hermes 桌面版 App（教練已轉移使用）; [ ] 守則 17「身份 ≠ 模型」全機規則同步（三個 repo 都應反映） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:61-64]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:65:67 -->
-- 📌 待辦（接力棒帶下來）: [ ] 守則故事庫 GitHub Pages 一對一映射（確保 cool-case 21 個案例都對應守則）; [ ] MEMORY 是否已自動反映新的 liur=蝦米 認知（下次開機驗證）; [ ] OpenVanilla 已刪除但 workspace MEMORY.md 還寫著（教練尚未處理） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:65-67]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:70:71 -->
-- 🎓 開工教訓（給未來的自己）: 開工讀接力棒時，**要先 `git log JUNSHI_HANDOFF_LATEST.md` 確認是最新版**，不然會讀到舊版誤判待辦; cron 4 分鐘後自動同步了新接力棒，我才發現我之前分析的「矛盾」其實是版本落差 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:70-71]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:78:78 -->
-- 任務脈絡: 教練 5/30 早就在 Cronbach 接能力進化任務（capability-evolver 是 Node.js 套件，要 npm install 才有 runtime 跑）。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:78-78]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:79:81 -->
-- 任務脈絡: xia（OpenClaw/小龍蝦）跑通了首次完整跑（commit `01ca8def`）; xia 提出餵素材計畫; 教練拍板：「後續你這邊來執行，讓小龍蝦做執行方」 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:79-81]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:84:87 -->
-- 軍師接手後的 5 步執行: ✅ Commit xia 跑結果（`01ca8def`）; ✅ 讀 8 個試金石檔 + 21 條守則; ✅ 寫 29 條素材摘要進 MEMORY.md（11462 → 14757 bytes）; ✅ 再跑 evolver 對比（`/tmp/evolver_run2.log` 914 行） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:84-87]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:88:88 -->
-- 軍師接手後的 5 步執行: ✅ 寫對比報告（`distill/evolver_run_compare_2026-06-05.md`） [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:88-88]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:91:93 -->
-- 核心成果: 信號總數不變 6 個，但**品質升級**（tool_bypass/repeated_tool_usage → user_feature_request/protocol_drift）; Gene priority **0.667 → 0.800**（+0.133）; 證實 MEMORY.md 餵法有效 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:91-93]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05.md:96:98 -->
-- 教練醒來可看: 對比報告：`distill/evolver_run_compare_2026-06-05.md`; 結果摘要：`distill/evolver_run_2026-06-05.md`（xia 跑的首次結果）; MEMORY.md 新區段「📚 歷史素材索引（capability-evolver 專用）」 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-05.md:96-98]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:13:14 -->
-- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: Last error: FallbackSummaryError: All models failed (1): mini 🦞 小龍蝦：教練,我馬上去查這兩件事。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-06.md:13-14]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:16:18 -->
-- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 我先看一下 cron 的設定和 YouTube 推送的規則。 🦞 小龍蝦：教練,我先查一下超級群組地圖,確認 YouTube 精選原本應該發到哪。 🦞 小龍蝦：我找到問題了： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-06.md:16-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:20:21 -->
-- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: **問題 1：YouTube 精選** 原本設計是發到「頂級特助分工群」（-1003877502911），現在 cron 設成發到 -1003537129853（這是個不明的群組，但教練的 Telegram 有 mirror 所以他主對話框也收到）。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-06.md:20-21]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:23:24 -->
-- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: **問題 2：「結繩領導學閱讀提醒」失敗** 這個 cron 是 `agentTurn` 模式，要跑 LLM，但 minimax provider overload 就失敗；失敗時 OpenClaw 把整個錯誤訊息 announce 到教練的 chat。 [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-06.md:23-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:26:29 -->
-- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 我馬上修這兩個。 🦞 小龍蝦：YouTube 精選改好了。再修第二個。 🦞 小龍蝦：兩個都修好了。我向教練回報一下： 🦞 小龍蝦：NO_REPLY [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-06.md:26-29]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:30:30 -->
+- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 🦞 小龍蝦：教練,我馬上去查這兩件事。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:30-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:32:32 -->
+- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 我先看一下 cron 的設定和 YouTube 推送的規則。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:32-32]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:37:38 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 👤 教練：查到了嗎？ 🦞 小龍蝦：收到您的提醒，我現在動手。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:37-38]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:40:40 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 剛才兩件事的查修進度： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:40-40]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:42:43 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **1️⃣ -1003537129853 是哪個群組？查到了 ✅** 從 cron「YouTube新聞每日自動抓取」(e70852c8) 的 `sessionKey: agent:main:telegram:group:-1003537129853` 可以判斷： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:42-43]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:44:47 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 這是 **YouTube 新聞的專屬群組**（不是頂級特助分工群）; 原本是 @CoachWuYouTubeDailyBot 每日推送 YouTube 新聞的「家」; 6/2 該 bot 停更後，這個 cron 雖然還在每天 08:00 跑（lastRunStatus=ok），但因為 bot 已下線，推到群組的內容形同空投; 跟您看到的「YouTube 精選跑錯群組」是兩件不同的事 — 精選是「YouTube 頻道掃描與評估」(8d7c282a) 那一支，已在 #7678 修好 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:44-47]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:49:52 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **2️⃣ 「每4小時主動關懷」錯誤訊息 — 馬上修 🔧** 跟結繩領導學同樣的邏輯：agentTurn 跑 LLM 容易被 minimax overload 拖下水，失敗就會發錯誤訊 🦞 小龍蝦：啊，isolated 的 cron 不能用 systemEvent。改成 sessionTarget=main，這樣跟結繩領導學同樣模式（純文字注入，不跑 LLM）： 🦞 小龍蝦：兩件事都辦好了 ✅ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:49-52]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:5:8 -->
+- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:5-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:56:57 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **1️⃣ -1003537129853 是什麼群組？** 是 **YouTube 新聞的專屬群組**（不是精選，是每日新聞抓取） [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:56-57]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:58:60 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 對應 cron「YouTube新聞每日自動抓取」(e70852c8)，sessionKey 綁在這個群組; 原本 @CoachWuYouTubeDailyBot 每天 08:00 推新聞到這裡; 6/2 該 bot 停更後，這個 cron 雖然 lastRunStatus=ok 還在跑，但 push 到群組的東西形同空投 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:58-60]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:62:62 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **2️⃣ 「每4小時主動關懷」錯誤訊息 — 已修 🔧** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:62-62]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:63:65 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 原本 agentTurn 跑 LLM → minimax overload 就直接 fail → 失敗訊息送到您這; 改成 **systemEvent**（跟結繩領導學同一招）→ 純文字注入，不跑 LLM; 6/10/14/18/22 整點只會出現關懷訊息，**絕對不再有錯誤訊息打擾您** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:63-65]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:69:69 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **🤔 順便問您一下，要不要把 YouTube 新聞群組（-1003537129853）的事也順手清掉？** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:69-69]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:71:72 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 我看到三個選項供您 🦞 小龍蝦：兩件事都辦好了 ✅ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:71-72]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:76:77 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **1️⃣ -1003537129853 是什麼群組？** 是 **YouTube 新聞的專屬群組**（不是精選，是每日新聞抓取） [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:76-77]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:78:80 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: 對應 cron「YouTube新聞每日自動抓取」(e70852c8)，sessionKey 綁在這個群組; 原本 @CoachWuYouTubeDailyBot 每天 08:00 推新聞到這裡; 6/2 該 bot 停更後，這個 cron 雖然 lastRunStatus=ok 還在跑，但 push 到群組的東西形同空投 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:78-80]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:82:82 -->
+- 📨 對話記錄 13:28（共約 16 條，從第 0 行起）: **2️⃣ 「每4小時主動關懷」錯誤訊息 — 已修 🔧** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:82-82]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:9:12 -->
+- 📨 對話記錄 12:58（共約 12 條，從第 0 行起）: 👤 教練：[2026/6/6 上午 09:01] 大樹教練的頂級特助: ⚠️ Cron job "📚 每日結繩領導學閱讀提醒" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment. [2026/6/6 上午 09:01] 大樹教練的頂級特助: ⚠️ Cron job "📚 每日結繩領導學閱讀提醒" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded) [2026/6/6 上午 09:01] 大樹教練的頂級特助: Cron job "📚 每日結繩領導學閱讀提醒" failed 2 times Cause: overloaded [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-06.md:9-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:61:63 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: ⚠️ FB session 已過期，被導去登入頁，無法抓壽星。 終網址：https://www.facebook.com/index.php?next=...&deoia=1 請教練登入後再跑一次。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:61-63]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:66:67 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **之前為什麼一直回「沒壽星」：** 腳本沒抓登入狀態，被導去登入頁時頁面沒有 `<h2>`，array 是空的，就當「沒壽星」回報——這是**假回報**，已經修掉，以後會直接說「session 過期」。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:66-67]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:69:70 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **第二個 bug 也修了：** cron 環境找不到 `node`，已經改用 `/opt/homebrew/bin/node` 絕對路徑。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:69-70]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:74:74 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **接下來要重登 FB，要怎麼登？** 我有兩條路： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:74-74]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:76:76 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **A 路（推薦）**：我用 puppeteer 開一個看得見的瀏覽器，導去 FB 登入頁，你手動輸入帳密登入，cookie 自動存好，我馬上重跑一次確認。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:76-76]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-07.md:78:79 -->
+- 📨 對話記錄 11:28（共約 13 條，從第 0 行起）: **B 路**：你在自己的 Chrome 登入 FB，然後把 Chrome 的 cookie 🦞 小龍蝦：腳本現在會誠實回報了（exit 2 表示 session 過期）。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-07.md:78-79]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:20:23 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | 項目 | 數字 | 重置時間 | |------|------|----------| | **這段對話時段** | 用 18% | 3 小時 11 分鐘後重置 | | **整週額度** | 用 45% | 週三下午 1:00 重置 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-08.md:20-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:24:26 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: | **額度（Credits）** | 花 $0.00 / 上限 $20 | 7 月 1 日重置 | | **帳戶餘額** | $0.01 | 自動加值目前是關閉的 | | **今日例行任務** | 0 / 5（還沒跑） | — | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-08.md:24-26]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08.md:28:28 -->
+- 📨 對話記錄 18:29（共約 2 條，從第 0 行起）: 📌 整週已經用掉 45%，週三下午才會歸零，這週再用下去就要小心一點了 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-08.md:28-28]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:33:33 -->
+- 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-09.md:33-33]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:35:35 -->
+- 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-09.md:35-35]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:37:40 -->
+- 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |-----------|------| | `9f905d64-379e-434e-a487-fffeb906a289.jsonl` | 🔴 **正在運行中**（.lock 還在，學弟此刻就在這個 session 裡查同一個問題） | | `96a66f14-8c36-4390-a6e5-729868e05fd3.jsonl` | 01:13 那次「特助在嗎」對話 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-09.md:37-40]
