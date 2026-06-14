@@ -1152,3 +1152,5 @@
 {"ts":"2026-06-13T22:02:10.173Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"☀️ 每日 06:00 起床摘要（前 12 小時工作）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7951","chatId":"-1003877502911"}
 {"ts":"2026-06-13T22:02:59.277Z","botId":"main","botName":"🦞學長","text":"教練，早安 ☀️\n\n**今日（6/14）FB 壽星 6 位** 🎂\n\n1. 林鼎淵\n2. 蔡瑞穠\n3. 胡鴻業\n4. 黃吉安\n5. Leni Qt\n6. 李岱倫\n\n請複製名單到 FB 搜尋框查詢，半自動發送生日祝福 🙏","msgId":"7952","chatId":"-1003877502911"}
 {"ts":"2026-06-13T22:03:12.283Z","botId":"main","botName":"🦞學長","text":"✅ 起床摘要：過去 12 小時無新工作","msgId":"7953","chatId":"-1003877502911"}
+{"ts":"2026-06-14T00:04:27.648Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"🔴 終端機對話全自動蒸餾（每4小時）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7954","chatId":"-1003877502911"}
+{"ts":"2026-06-14T00:05:23.457Z","botId":"main","botName":"🦞學長","text":"pending_distill/ 目錄是空的，沒有待蒸餾的檔案。今日無待蒸餾對話，本次蒸餾任務空跑。","msgId":"7955","chatId":"-1003877502911"}
