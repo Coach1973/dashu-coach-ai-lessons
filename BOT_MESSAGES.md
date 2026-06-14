@@ -1167,3 +1167,4 @@
 {"ts":"2026-06-14T15:02:28.233Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7978","chatId":"-1003877502911"}
 {"ts":"2026-06-14T15:03:38.771Z","botId":"main","botName":"🦞學長","text":"今日無可升華對話。\n\n- 檢查路徑：`~/workspace/distill/terminal_2026-06-14.md`\n- 結果：檔案不存在（distill/ 目錄下目前只有 2026-05-28 的舊檔）\n- 步驟二~四：未執行（無來源可蒸餾）\n- 建議：明天 23:00 再跑，或檢查 `run_distill.sh` 排程是否正常產出當日檔案","msgId":"7979","chatId":"-1003877502911"}
 {"ts":"2026-06-14T16:04:42.595Z","botId":"main","botName":"🦞學長","text":"教練，今日終端機對話蒸餾結果：pending_distill/ 目錄為空，**今日無待蒸餾對話**，任務提前結束。","msgId":"7980","chatId":"-1003877502911"}
+{"ts":"2026-06-14T20:04:31.976Z","botId":"main","botName":"🦞學長","text":"目錄為空，無待蒸餾檔案。\n\n**今日無待蒸餾對話** —— `/Users/bymyway/.openclaw/workspace/terminal-notes/pending_distill/` 為空，蒸餾任務提早結束，無需 commit。","msgId":"7981","chatId":"-1003877502911"}
