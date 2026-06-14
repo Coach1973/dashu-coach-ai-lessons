@@ -5,7 +5,9 @@
     "cron_health": 1748345700,
     "system_check": 1780797664
   },
-  "lastHeartbeat": "2026-06-13T06:03:30+08:00",
-  "lastHeartbeatNote": "relay poll - 凌晨靜默時段，Context 重啟後第 3 小時，無需擾動教練",
-  "restartAlertSent": "2026-06-06T14:02:00+08:00"
+  "lastHeartbeat": "2026-06-14T14:02:00+08:00",
+  "lastHeartbeatNote": "Context overflow restart 偵測（重啟 06:37）→ 嘗試發 Telegram 重啟通知 → 失敗：cron 環境無 TELEGRAM_BOT_TOKEN（隔離 cron 執行限制）。心跳記錄於本機。",
+  "restartAlertSent": "2026-06-14T14:02:00+08:00",
+  "restartAlertStatus": "attempted_failed_no_telegram_token_in_cron_context",
+  "restartAt": "2026-06-14T06:37:00+08:00"
 }
