@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session e6b7e307-9066-4c35-a6a7-c4be4327d874
-# 提取時間：2026-06-14 17:00 (台灣時間)
-# 共 18 條教練原話
+# 提取時間：2026-06-14 17:30 (台灣時間)
+# 共 19 條教練原話
 
 ---
 
@@ -459,3 +459,8 @@ Continue the conversation from where it left off without asking the user any fur
 - 清除已無用的 handleSubscribe 函數
 
 教練等 GitHub Pages 更新後，重新整理 bymyway.com/coach 就能看到新的效果，順便也看看 LINE 浮動按鈕…（略）
+
+【教練 2026-06-14 09:14】
+https://www.ganjingworld.com/@bymyway?tab=videos&subtabshowing=latest&q=應該要連到一個觀看大樹教練影片的連結，讓使用者點擊後直接跳轉到影片頁面。不然的話，直接連到我的首頁也可以。[https://www.ganjingworld.com/@bymyway](https://www.ganjingworld.com/@bymyway?tab=videos&subtabshowing=latest&q=)
+
+　▶ AI 回應：You've hit your session limit · resets 6:30pm (Asia/Taipei)
