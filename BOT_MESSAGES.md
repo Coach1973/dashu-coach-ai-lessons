@@ -1164,3 +1164,4 @@
 {"ts":"2026-06-14T07:59:57.804Z","botId":"main","botName":"🦞學長","text":"✅ **殘留設定清乾淨了**\n\n📋 **結果對比：**\n\n| 警告 | 清理前 | 清理後 |\n|------|--------|--------|\n| `plugins.entries.memsearch: plugin not found (stale config entry)` | ⚠️ 有 | ✅ 消失 |\n| `plugins.entries.minimax-portal: plug","msgId":"7975","chatId":"-1003877502911"}
 {"ts":"2026-06-14T08:04:30.499Z","botId":"main","botName":"🦞學長","text":"教練，剛跑了終端機對話蒸餾任務，`pending_distill/` 目錄是空的，沒有待蒸餾的對話。✅","msgId":"7976","chatId":"-1003877502911"}
 {"ts":"2026-06-14T12:04:32.295Z","botId":"main","botName":"🦞學長","text":"「今日無待蒸餾對話」\n\n`terminal-notes/pending_distill/` 目錄是空的，沒有待處理的終端機對話檔案，蒸餾流程結束。","msgId":"7977","chatId":"-1003877502911"}
+{"ts":"2026-06-14T15:02:28.233Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"7978","chatId":"-1003877502911"}
