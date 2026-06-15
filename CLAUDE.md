@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-15 18:50:00**
+> **最後同步：2026-06-15 19:05:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -56,6 +56,7 @@
 | commit | 內容 | repo |
 |--------|------|------|
 | （本次） | AI 導入教練品牌故事初稿 + 接力棒 v23 | .openclaw |
+| `03bd2c1` | 修正 07/20 初階MSP 地址：安路路176號 → 安平路176號 | tainan-calender（M3 Hermes 助教補登，非軍師本場） |
 
 ---
 
