@@ -1175,3 +1175,5 @@
 {"ts":"2026-06-14T22:04:52.266Z","botId":"main","botName":"🦞學長","text":"✅ 起床摘要：過去 12 小時無新工作","msgId":"7986","chatId":"-1003877502911"}
 {"ts":"2026-06-15T00:04:36.734Z","botId":"main","botName":"🦞學長","text":"今日無待蒸餾對話。\n\n`pending_distill/` 目錄為空（最後修改時間 6/15 02:30），沒有待處理的終端機對話檔案，本次蒸餾任務略過。\n\n教練若要我手動從記憶體抓資料補蒸餾，請說一聲。","msgId":"7987","chatId":"-1003877502911"}
 {"ts":"2026-06-15T00:05:12.870Z","botId":"main","botName":"🦞學長","text":"教練，行事曆每週同步已完成（2026-06-15 08:05），本週無新增更新。","msgId":"7988","chatId":"-1003877502911"}
+{"ts":"2026-06-15T04:04:42.906Z","botId":"main","botName":"🦞學長","text":"# 終端機對話蒸餾報告\n\n**今日無待蒸餾對話。**\n\n檢查結果：\n- `pending_distill/` 目錄為空（最後更新 06/15 08:30）\n- 今日 `terminal_2026-06-15.md` 蒸餾檔案已存在（早場 08:30 已完成）\n- 上次狀態檔 `.distill_complete_state.json` 已記錄已處理 session\n\n系統狀態正常，等待新 sess","msgId":"7989","chatId":"-1003877502911"}
+{"ts":"2026-06-15T04:32:22.106Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"YouTube 頻道掃描與評估\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"1933","chatId":"-1003877502911"}
