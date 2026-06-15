@@ -1173,3 +1173,5 @@
 {"ts":"2026-06-14T22:03:38.216Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"☀️ 每日 06:00 起床摘要（前 12 小時工作）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"7984","chatId":"-1003877502911"}
 {"ts":"2026-06-14T22:04:34.921Z","botId":"main","botName":"🦞學長","text":"🎂 教練早安！今日（6/15）FB 壽星共有 7 位：\n\n1. 倪愷泊\n2. 李佳相\n3. Sam Sam\n4. 陳雅萍\n5. 周欣\n6. 林小鳳\n7. 陳柏志\n\n請教練直接複製名單進行半自動發送祝福 🎉","msgId":"7985","chatId":"-1003877502911"}
 {"ts":"2026-06-14T22:04:52.266Z","botId":"main","botName":"🦞學長","text":"✅ 起床摘要：過去 12 小時無新工作","msgId":"7986","chatId":"-1003877502911"}
+{"ts":"2026-06-15T00:04:36.734Z","botId":"main","botName":"🦞學長","text":"今日無待蒸餾對話。\n\n`pending_distill/` 目錄為空（最後修改時間 6/15 02:30），沒有待處理的終端機對話檔案，本次蒸餾任務略過。\n\n教練若要我手動從記憶體抓資料補蒸餾，請說一聲。","msgId":"7987","chatId":"-1003877502911"}
+{"ts":"2026-06-15T00:05:12.870Z","botId":"main","botName":"🦞學長","text":"教練，行事曆每週同步已完成（2026-06-15 08:05），本週無新增更新。","msgId":"7988","chatId":"-1003877502911"}
