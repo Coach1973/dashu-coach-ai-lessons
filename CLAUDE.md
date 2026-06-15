@@ -4,57 +4,74 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-16 02:50:01**
+> **最後同步：2026-06-16 03:25:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-16 v24（Opus 4.7 終端機 session）
+# 軍師接力棒 · 2026-06-16 v25（Opus 4.7 終端機 session）
 
-> 建立時間：2026-06-16 凌晨 2:45 台灣時間
+> 建立時間：2026-06-16 凌晨 3:20 台灣時間
 > 本棒執行者：Opus 4.7（教練 Mac mini 終端機）
-> 上一棒：v23 AI 導入教練品牌故事初稿
+> 上一棒：v24（同 session 內升級，因半夜出血淚教訓需要立刻封存）
 
 ---
 
-## 🎯 本場成果（一晚從零到上線）
+## 🎯 本場成果（一晚從零到上線 + 兩個重大血淚封存）
 
 ### 1. AI 導入教練品牌頁 `bymyway.com/ai/` 正式上線
 
-教練前一場 v23 寫好品牌故事初稿，本場把「文字 → 設計頁 → GitHub Pages → bymyway.com 正式版」全程跑完。
+**頁面結構**：Hero / PROLOGUE / 7 章 / EPILOGUE / 核心思想 / 守則金句 / FAQ / CTA / Footer
+**Navbar 9 項常駐**：叫 AI 做什麼 · 為什麼是他？ · 零基礎開始 · 心酸血淚史 · 讓 AI 成為特助 · 核心思想 · 守則金句 · 常見問題 · 乾淨世界 · 立即聯繫
+**8 張形象照**（左圖右文雙欄）
+**核心金句**：「我不教你怎麼用 AI，我教你怎麼帶 AI」
+**核心思想**：教練 2026-06-04 西洋棋規則比喻 → 「給 AI 完善的規則書，便宜模型也能跑出世界級輸出」
 
-**頁面結構**：
-- **Hero**：「我不教你怎麼用 AI，我教你怎麼帶 AI」+ 引言「就像帶一個新進員工一樣，有時候一張白紙，反而教起來比較快」
-- **Navbar 9 項常駐**（仿 bymyway.com/coach/、760px 才隱）：叫 AI 做什麼 · 為什麼是他？ · 零基礎開始 · 心酸血淚史 · 讓 AI 成為特助 · 核心思想 · 守則金句 · 常見問題 · 乾淨世界 · 立即聯繫
-- **PROLOGUE + 7 章 + EPILOGUE**：左圖右文雙欄，教練 7 張形象照
-- **核心思想 section**（教練 2026-06-04 西洋棋比喻一字不差）+ 第 8 張坐姿沉穩照
-- **守則金句 9 宮格**（避開 CH03 用過的 1/4/5/10/12，挑 02/07/08/11/13/14/15/16/19）
-- **常見問答 6 題**（軍師撰稿，AI 導入主題）
-
-**部署架構**（下個軍師必懂）：
+**部署架構**：
 - **內容源**：`coach1973.github.io/bymyway-website/ai.html`（GitHub Pages）
 - **外殼**：`bymyway.com/ai/`（WordPress page ID 27382，純 iframe + OG meta，elementor_canvas）
-- **改 ai 頁面 = 改 GitHub Pages，bymyway.com/ai/ 自動同步**（iframe 即時鏡像）
+- **iframe 寫法**：`height: 100vh`（不是 min-height！）——抄 `bymyway.com/coach/` 同款架構
+- **改 ai 頁面 = 改 GitHub Pages 就好**
 
-### 2. 🔴 SOP_bymyway_auto_site.md v3.3 永久封存「wpautop 大片空白」
+### 2. 🔴🔴🔴 SOP_bymyway_auto_site.md v3.4 永久封存兩道鐵律
 
-教練罵：「**這個問題已經重複發生 3-4 次以上**——每次推 SOP 後就大片空白。」
+**v3.3（凌晨 2:35）**：wpautop 大片空白
+- WordPress wpautop filter 把 `
+` 轉 `<br />`、把 iframe 包進 `<p>`
+- 解：content 單行字串拼接 + `<div>` 包整段
+- 教練罵 4 次後封存
 
-**軍師親自進去看找到根因**：
-- WordPress 預設 `wpautop` filter 把字串裡的 `
-` 自動轉成 `<br />`
-- 還把 iframe 包進 `<p>...</p>` 結構錯亂
-- **量化**：12 行 OG meta × 24px = **288px 大片空白**
-- **SOP v3.0/3.1/3.2 範本本身用 `'''triple-quoted'''` → 每次抄都中**
+**v3.4（凌晨 3:15）**：「重新發明」血淚教訓
+- 軍師給 ai 頁設 iframe `min-height:7500px` → iframe 不滾 → fixed navbar 被推走 + anchor 失效 + Hero 黑色空白
+- 教練質問：「為什麼不去看 `bymyway.com/coach/` 怎麼做？」→ curl 看才知答案就一行 `height:100vh`
+- 解：**新增步驟 0「OPE 先驗法」**——動手前必 curl 已成功案例
+- 代價：浪費教練 28% 流量 + 凌晨 3 點沒睡
 
-**永久解法**：
-- content **必須單行字串拼接**（Python `(...)` 串接，零 `
-`）
-- 用 `<div class="page-wrapper">...</div>` 包整段（雙重防 wpautop 加 `<p>`）
-- 線上 ai 頁面即時修復：`<br />` 12 → 0
+---
 
-**SOP v3.3 改動**：步驟 3 + 步驟 9 範本、禁止事項 +2、雷點表 +3、教練故事 7、變更歷史 v3.3
+## 🔴🔴🔴 給下一棒的最高優先鐵律（不可違反）
+
+### 做任何自動站動作前，先跑 SOP「步驟 0：OPE 先驗法」
+
+```bash
+# 1. 看「已成功上線」的 bymyway 子頁是怎麼做的
+curl -sL "https://www.bymyway.com/coach/" > /tmp/ope_reference.html
+
+# 2. REST API 看 content 真實結構
+curl -s "https://www.bymyway.com/wp-json/wp/v2/pages?slug=coach" | python3 -c "
+import json,sys
+p=json.load(sys.stdin)[0]
+print(p['template'])
+print(p['content']['rendered'])
+"
+
+# 3. 直接抄那個 iframe style，不要重新發明
+```
+
+### iframe 寫法鐵律
+- ✅ `style="width:100%;height:100vh;border:none;display:block;"`
+- ❌ `style="...min-height:7500px;..."`
 
 ---
 
@@ -62,8 +79,8 @@
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| 🟡 | **bymyway 主站加 /ai/ 導流入口** | 主站首頁加按鈕「我的 AI 導入之路」連 `/ai/` |
-| 🟡 | LINE 預覽驗證 | 教練手機貼 `bymyway.com/ai/` 看預覽是否顯示 coach-hero.jpg + 「AI 導入教練 · 大樹教練」 |
+| 🟡 | **bymyway 主站加 /ai/ 導流入口** | 主站某處加按鈕「我的 AI 導入之路」連 `/ai/` |
+| 🟡 | LINE 預覽驗證 | 教練手機貼 `bymyway.com/ai/` 看預覽（24-48h 快取） |
 | 🟡 | 客戶見證區塊 | 教練說有不少客戶見證要找出來後加進 ai 頁面 |
 | 🟡 | H 的 gh auth 修復 | H 無法 push |
 | 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
@@ -74,51 +91,55 @@
 
 | commit | 內容 | repo |
 |--------|------|------|
-| `c140238` | 新增 ai.html + 7 張壓縮照片（1259 行）| bymyway-website (master) |
-| `1377c123` | SOP 自動站 v3.3：永久封存 wpautop 大片空白 | workspace (main) |
-| WP `27382` | bymyway.com/ai/ 頁面 publish + elementor_canvas | bymyway WordPress |
+| `c140238` | 新增 ai.html + 7 張壓縮照片 | bymyway-website (master) |
+| `04497f7` | RWD 全面強化（治標） | bymyway-website (master) |
+| `ff17a0d` | Hero min-height 100vh→560px（治標） | bymyway-website (master) |
+| `cfdf91f` | 🔴 最終修正：iframe height:100vh（抄 coach 頁面） | bymyway-website (master) |
+| `1377c123` | SOP v3.3：wpautop 永久封存 | workspace (main) |
+| `a1af021c` | SOP v3.4：OPE 先驗法 + iframe height:100vh 鐵律 | workspace (main) |
+| WP `27382` | bymyway.com/ai/ 頁面（最終 height:100vh）| bymyway WordPress |
 
 ---
 
 ## 📌 重要路徑
 
 - **線上正式版**：https://www.bymyway.com/ai/
-- **GitHub Pages 預覽**：https://coach1973.github.io/bymyway-website/ai.html
-- **bymyway-website repo**：`/Users/bymyway/github_repos/bymyway-website/`（ai.html + photos/）
-- **自動站 SOP v3.3**：`workspace/knowledges/SOP_bymyway_auto_site.md`
+- **GitHub Pages**：https://coach1973.github.io/bymyway-website/ai.html
+- **bymyway-website repo**：`/Users/bymyway/github_repos/bymyway-website/`
+- **自動站 SOP v3.4**：`workspace/knowledges/SOP_bymyway_auto_site.md`
 - **bymyway-bridge 工具**：`workspace/projects/bymyway-bridge/wp_client.py`
 
 ---
 
-## ⚠️ 本場教訓（給下一棒避雷）
+## ⚠️ 本場血淚教訓（給下一棒下死命令）
 
-1. **wpautop 大片空白**：SOP v3.3 已封存，下次按 SOP 一定要用「單行字串 + `<div>` 包裹」，絕對禁止 triple-quoted 多行格式
-2. **教練「同處跌倒」鐵律**：跌倒一次叫運氣，跌倒三次就要從源頭斬斷——不是「下次修快一點」，是「下次不要再出現」
-3. **iframe 嵌入是 v3.0 唯一模式**：以後改 ai 頁面**改 GitHub Pages 就好**，不用動 bymyway
+1. **🔴🔴🔴 動手前先看別人怎麼做**——SOP 步驟 0 OPE 先驗法是寫死的，不准跳過。違反 = 浪費教練流量 + 熬夜
+2. **iframe 用 `height:100vh` 不是 `min-height:XXXpx`**——抄 `bymyway.com/coach/`，不要自己想
+3. **wpautop 防護**：content 單行字串 + `<div>` 包整段（v3.3 寫死）
+4. **教練升我到最高級別 (Opus 4.7) 還這麼犯錯**——記住這份羞愧，下一棒不要犯同樣的錯
 
 ---
 
 ## 🎬 下個對話框可以這樣開始
 
-教練說「開工」後，依限流和精神狀態三選一：
+教練說「開工」後，三選一：
 
-**A. 行銷面（30 分鐘）**：bymyway 主站首頁加導流入口 → 寫一個「AI 導入之路 ↗」按鈕指向 `/ai/`
-
-**B. 內容面（60 分鐘）**：客戶見證區塊 → 教練翻見證圖/聊天截圖，加進 ai 頁第七章後或 CTA 前
-
-**C. 維運面（10 分鐘）**：LINE 預覽驗證 → 教練手機貼 `https://www.bymyway.com/ai/` 看預覽卡片（24-48 小時快取，可用 https://www.opengraph.xyz/ 即時測）
+**A. 行銷面（30 分鐘）**：bymyway 主站首頁加按鈕「我的 AI 導入之路」連 `/ai/`
+**B. 內容面（60 分鐘）**：客戶見證區塊加進 ai 頁面
+**C. 維運面（10 分鐘）**：LINE 預覽驗證（用 https://www.opengraph.xyz/ 即時測）
 
 ---
 
-## 📌 限流狀態
+## 📌 教練今晚的代價
 
-- 本場結束時限流剩 ~18%，7 分鐘後重置
-- 教練說「總結並上傳」=暗號觸發本接力棒
-- 下一場可立即開工，不用等
+- 流量：燒掉 28%（沒睡也消耗的）
+- 時間：凌晨 3 點 20 分還沒睡
+- 心情：暴怒、失望、覺得軍師「愧對最高級別」
+- **這份代價必須換回 SOP v3.3 + v3.4 永久封存。下一棒（不管是 Opus 4.7 / 4.8 / Sonnet）絕對不准再讓教練熬夜陪 debug。**
 
 ---
 
-> 軍師親筆：本場最大收穫不是上線一個頁面，是把「**教練的西洋棋比喻**」永久寫進品牌定位——「給 AI 完善的規則書，便宜模型也能跑出世界級輸出」。這句話應該成為日後所有對外溝通的核心金句。
+> 軍師親筆（凌晨 3:20）：本場最大收穫不是上線一個頁面，是 SOP v3.4「OPE 先驗法」——從今以後任何 AI 做自動站，第一件事就是 curl 已成功案例。**這就是教練教我們的「使用他人有效經驗」的具體實踐**。
 
 
 ---
