@@ -66,9 +66,9 @@ print(p['content']['rendered'])
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| 🟡 | **bymyway 主站加 /ai/ 導流入口** | 主站某處加按鈕「我的 AI 導入之路」連 `/ai/` |
-| 🟡 | LINE 預覽驗證 | 教練手機貼 `bymyway.com/ai/` 看預覽（24-48h 快取） |
-| 🟡 | 客戶見證區塊 | 教練說有不少客戶見證要找出來後加進 ai 頁面 |
+| ✅ | ~~bymyway 主站加 /ai/ 導流入口~~ | 2026-06-16 03:35 完成——主選單加「教練創業之路」「AI 導入教練」兩項（v25 補完成） |
+| ✅ | ~~LINE 預覽驗證~~ | 教練已確認沒問題（v25 補） |
+| ⏸ | 客戶見證區塊 | 教練 06-16 說「AI 那邊不需要顧客見證，還沒有」——暫緩 |
 | 🟡 | H 的 gh auth 修復 | H 無法 push |
 | 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
 
@@ -85,6 +85,9 @@ print(p['content']['rendered'])
 | `1377c123` | SOP v3.3：wpautop 永久封存 | workspace (main) |
 | `a1af021c` | SOP v3.4：OPE 先驗法 + iframe height:100vh 鐵律 | workspace (main) |
 | WP `27382` | bymyway.com/ai/ 頁面（最終 height:100vh）| bymyway WordPress |
+| WP menu `27388` | 主選單新增「教練創業之路」→ /coach/ | bymyway WordPress |
+| WP menu `27389` | 主選單新增「AI 導入教練」→ /ai/ | bymyway WordPress |
+| WP menu `25168` | 「登入課程」order 5→10（擠到最後）| bymyway WordPress |
 
 ---
 
