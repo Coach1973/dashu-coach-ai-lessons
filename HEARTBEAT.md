@@ -22,3 +22,10 @@
 ## 學長 relay poll
 ### 2026-06-15 2026-06-15 14:33 - relay poll OK
 
+## 健康檢查
+### 2026-06-15 14:32 - healthcheck OK
+- Cron: 1/1 (健康檢查本身上次 1 次連續 error - AI overload，未達 3 次門檻)
+- Git: commit d9e827ce + push OK (4 files, +7/-8)
+- 待辦: 無 ⬜ 項目超 48h
+- .lessons_upload: git 子模組狀態異常（untracked 顯示），332MB，.gitignore 規則未生效（既有現象，非新問題）
+
