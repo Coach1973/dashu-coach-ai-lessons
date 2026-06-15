@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 3ed9ca7a-1feb-455b-a473-560c67592fb5
-# 提取時間：2026-06-15 22:00 (台灣時間)
-# 共 1 條教練原話
+# 提取時間：2026-06-15 22:30 (台灣時間)
+# 共 3 條教練原話
 
 ---
 
@@ -23,3 +23,44 @@
 
 🔴 **下一棒首要任務（接力棒明確指定）**
 **品牌故事定稿 → 網站落地**——初…（略）
+
+【教練 2026-06-15 14:06】
+<!-- attach -->
+> 開獨立子網站
+
+我想要的獨立頁 [https://www.bymyway.com/](https://www.bymyway.com/ai.html)coach.ai. 您覺得如何？
+
+　▶ AI 回應：教練，方向我贊成——獨立頁比塞進現有頁面好，故事完整、好分享、好追蹤效果。
+
+**先請教練確認三件事，再動手不浪費：**
+
+1️⃣ **路徑名稱**（您訊息有兩種寫法，我猜不出哪個）
+- A：`https://www.bymyway.com/ai.html`（單一 HTML 檔，簡單直接）
+- B：`https://www.bymyway.com/coach-ai/`（目錄式，未來可擴充子頁）
+- C：`https://www.bymyway.com/coach.ai`（這個寫法 Netlify 會當副檔名 `.ai`，要特別處理）
+
+→ **我建議 B**（目錄式），未來客戶見證、案例集都能…（略）
+
+【教練 2026-06-15 14:13】
+<!-- attach -->
+> https://www.bymyway.com/ai.html
+
+先這個，之後需要可以用超連結互串，您做出個樣子來讓我看一下，最後才修一些細節，最後再推到bymyway.com 目前先放在github 上
+
+　▶ AI 回應：收到，路徑定 `/ai.html`，先做樣子放 GitHub 給您看，不上 www.bymyway.com。
+
+開工，先做三件事：
+1. 讀品牌故事初稿
+2. 看 bymyway-website 現有風格（顏色、字體、版型）
+3. 確認 Netlify 是不是自動部署（避免 push 就上線）
+
+　▶ AI 回應：教練，**樣子做出來了，現在已經在您瀏覽器打開**（也在 Launch preview panel）。
+
+📄 **檔案位置**：`/tmp/ai-preview/ai.html`
+
+🎨 **設計重點**（沿用 bymyway.com 同款金黑風格）
+- 主色：#c8a96e 金 + #0c0c0c 深黑（跟主站一致）
+- 字體：Noto Serif TC 標題 + Noto Sans TC 內文
+- 結構：Navbar（左側「大樹教練 AI 導入教練」+ 右上「← 回主站」）→ Hero 大標 →  PROLOGUE + 七章 + EPILOGUE → CTA → Footer
+
+✨ **特色…（略）
