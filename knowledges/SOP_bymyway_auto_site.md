@@ -136,10 +136,21 @@ curl -sL "https://某站.netlify.app/圖片.png" -o 圖片.png
 
 **v3.0 唯一採用模式：iframe 嵌入**
 
+> 🔴 **v3.3 鐵律（2026-06-16 教練罵第 4+ 次後永久封存）**：
+> WordPress 的 **`wpautop` filter** 會把 content 字串裡的：
+> 1. 每個 `\n` 自動轉成 `<br />` → 多行字串 = 一堆空白
+> 2. 整段內容包進 `<p>...</p>` → iframe 變 `</iframe></p>` 結構錯亂
+>
+> **結果：iframe 上方出現「大片空白」**（每行 24px，12 行 OG meta = 288px 空白）
+>
+> **解法：content 必須單行字串 + `<div>` 包裹**（雙重防 wpautop）
+> ❌ 禁止用 `'''triple-quoted multi-line'''`
+> ❌ 禁止用 `f"""..."""` 帶換行
+
 ```python
-content = '''<iframe src="https://某站.netlify.app/" 
-  style="width:100%;min-height:1800px;border:none;display:block;" 
-  title="頁面標題"></iframe>'''
+# ✅ 正確：單行字串拼接（沒有任何 \n）+ <div> 包裹
+iframe_html = '<iframe src="https://某站.netlify.app/" style="width:100%;min-height:1800px;border:none;display:block;" title="頁面標題"></iframe>'
+content = f'<div class="iframe-wrapper" style="margin:0;padding:0;">{iframe_html}</div>'
 
 payload = {
     "title": "頁面標題",
@@ -149,6 +160,14 @@ payload = {
     "template": "elementor_canvas",   # 🔴 必套（拿掉 bymyway 表頭/footer）
     "excerpt": "一句話描述",
 }
+```
+
+```python
+# ❌ 錯誤示範（教練踩過 4 次的坑）
+content = '''<iframe src="..."
+  style="..."
+  title="..."></iframe>'''
+# 這個 \n 會被 wpautop 加 <br /> → 大片空白
 ```
 
 > ⚠️ **v3.0 起，建立頁面時直接帶 `template: elementor_canvas`**，省下後續步驟 6 還要再改一次。
@@ -361,25 +380,50 @@ curl -sIL -A "Mozilla/5.0" "https://www.bymyway.com/<URL>/" | head -2
 > - **未來 Elementor 編輯的頁面**：必須教練在後台 Rank Math 設（AI 不能做）
 
 **AI 做：**
-```python
-og_meta = '''<!-- OG Meta for LINE/FB Preview -->
-<meta property="og:title" content="<頁面標題> - <子品牌名>" />
-<meta property="og:description" content="<一句話描述>" />
-<meta property="og:image" content="<bymyway 媒體庫 URL 或 來源站封面圖 URL>" />
-<meta property="og:url" content="<bymyway 完整 URL>" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="<子品牌名，不要寫大樹教育>" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="<頁面標題>" />
-<meta name="twitter:description" content="<一句話描述>" />
-<meta name="twitter:image" content="<圖 URL>" />
-<!-- END OG Meta -->
-'''
 
-# 把 OG meta 串到現有 content 頂端
-new_content = og_meta + '\n' + current_content  # current_content = iframe 字串
+> 🔴 **v3.3 鐵律（2026-06-16 教練第 4+ 次罵後永久封存）**：
+> OG meta **必須單行字串拼接**，不能用 `'''triple-quoted'''` 多行格式。
+> **原因**：wpautop filter 把每行 `\n` 轉成 `<br />`，12 行 OG meta = 12 個 `<br />` = 288px 大片空白堆在 iframe 上方。
+> **教練症狀**：「網頁有一大片空白」，每次推完 SOP 都中。
+
+```python
+# ✅ 正確：單行字串拼接（零 \n）+ <div> 包整段
+og_meta = (
+    '<meta property="og:title" content="<頁面標題> - <子品牌名>" />'
+    '<meta property="og:description" content="<一句話描述>" />'
+    '<meta property="og:image" content="<圖 URL>" />'
+    '<meta property="og:url" content="<bymyway 完整 URL>" />'
+    '<meta property="og:type" content="website" />'
+    '<meta property="og:site_name" content="<子品牌名，不要寫大樹教育>" />'
+    '<meta name="twitter:card" content="summary_large_image" />'
+    '<meta name="twitter:title" content="<頁面標題>" />'
+    '<meta name="twitter:description" content="<一句話描述>" />'
+    '<meta name="twitter:image" content="<圖 URL>" />'
+)
+iframe_html = '<iframe src="..." style="..." title="..."></iframe>'
+
+# ✅ <div> 包整段（雙重防 wpautop 加 <p> 和 <br />）
+new_content = f'<div class="page-wrapper" style="margin:0;padding:0;">{og_meta}{iframe_html}</div>'
+
 payload = {"content": new_content}
 POST /wp-json/wp/v2/pages/<page_id>
+```
+
+```python
+# ❌ 錯誤示範（每次都中招的寫法）
+og_meta = '''<!-- OG Meta -->
+<meta property="og:title" content="..." />
+<meta property="og:description" content="..." />
+...
+'''
+# 每行 \n 都被 wpautop 轉成 <br /> → iframe 上面 288px 空白
+```
+
+**🔴 修復現有受害頁面的指令**（自動找出所有有空白的舊頁）：
+```python
+# 抓某頁 content 看有沒有 \n（有 = 已被 wpautop 害過）
+GET /wp-json/wp/v2/pages/<id>?context=edit
+# raw content 裡若看到 <br /> 多次出現 → 用上面的單行格式重塞 content
 ```
 
 **真實範例（jiesheng-leadership 子頁，2026-06-10 修好）：**
@@ -607,6 +651,33 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 > **寫進 SOP v3.0 步驟 9**：所有 bymyway 自動站的頁面都要做。
 > **守則 #01 寫死**：同站所有頁面（母頁+子頁）都要做——教練會貼任一網址出去。
 
+### 故事 7：🔴 wpautop 大片空白事件——同處跌倒 4 次後永久封存（2026-06-16 v3.3 觸發）
+
+> 教練 2026-06-16 凌晨 02:30 罵：
+> 「每一次我只要執行自動站的 SOP，掛到 bymyway.com 這個網址時，都會出現千篇一律的問題：網頁會有一大片空白。
+> 雖然講完之後 AI 立刻去查驗，就會發現是什麼地方做錯並完成導正，每次都很快就修好了，**但重點是這樣的事情至少重複發生過三到四次以上**。
+> 所以我在想，能不能一次性解決這個問題？也就是當我們自動站推上去之後，就不要再出現同樣的錯誤了。」
+
+> **根因（軍師親自進去看找到的）**：
+> 1. WordPress 預設啟用 **`wpautop` filter**——專門處理「人寫的文章」自動加段落格式
+> 2. `wpautop` 把 content 字串裡的每個 `\n` 轉成 `<br />`
+> 3. `wpautop` 把整段內容包進 `<p>...</p>`——但 iframe 是 block 元素不該在 `<p>` 內，HTML 結構錯亂
+> 4. **SOP v3.0 / v3.1 / v3.2 範本本身就用 `'''triple-quoted'''` 多行字串** → 每次抄都中招
+> 5. 12 行 OG meta = 12 個 `<br />` = **288px 大片空白**（每個 br 約 24px）
+
+> **永久解法**（v3.3 寫死，所有未來頁面遵守）：
+> - **content 必須單行字串拼接**（用 Python 字串相加，不用換行）
+> - **內容用 `<div class="page-wrapper" style="margin:0;padding:0;">...</div>` 包整段**（雙重防 wpautop 加 `<p>`）
+
+> **修復現有受害頁面**：
+> 2026-06-16 修 bymyway.com/ai/，`<br />` 從 12 → 0、iframe 不再被 `<p>` 包。
+> 建議查 jiesheng/store/leadership/northern 是否也有殘留空白問題（grep `<br` 數量）。
+
+> **教練的洞察（守則 #07 同處跌倒）**：
+> 「不是叫你下次修快一點，是叫你『**下次不要再出現**』。」
+> → 改 SOP 範本 = 從源頭斬斷
+> → 加入禁止事項 + 雷點表 + 教練故事 = 三道防線
+
 ### 故事 6：🆕 教練的邏輯提醒（2026-06-10 v3.1 觸發）
 
 > 修完 jiesheng 兩頁 OG meta 後，教練回頭看 `bymyway.com/` 根網址 → **還是書封面**。
@@ -643,6 +714,8 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 - ❌ **🆕 禁止 og:site_name 寫「大樹教育」**（子品牌必須用子品牌名）
 - ❌ **🆕 v3.1 禁止 site_icon 設成子品牌圖**（會污染全站 LINE 預覽，必須用主品牌 logo）
 - ❌ **🆕 v3.1 禁止對 Elementor 編輯的頁面用 REST API 改 content**（無效，要走 site_icon 或教練後台 Rank Math）
+- ❌ **🔴 v3.3 禁止 content 用 triple-quoted multi-line 字串**（wpautop 把 `\n` 轉 `<br />`，iframe 上方出現大片空白；教練罵了 4+ 次）
+- ❌ **🔴 v3.3 禁止 iframe 不包 `<div>` 直接送 content**（wpautop 會包 `<p>`→`</iframe></p>` 結構錯亂）
 
 ---
 
@@ -668,6 +741,9 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 | **🆕 v3.1：site_icon 設成子品牌圖** | 全站 LINE 預覽全變子品牌圖 | 改回主品牌 logo（cropped-logo-2-01.png 512x512）|
 | **🆕 v3.1：改 site_icon 線上看到舊的** | 以為沒生效 | LiteSpeed Cache 5-10 秒才刷，加 `?v=fresh` query 繞過 |
 | **🆕 v3.1：教練邏輯「之前能顯示大樹 logo = 媒體庫有圖」沒先想到** | 繞遠路找解法 | 守則 E07 存在性驗證：先查現況再下結論 |
+| **🔴 v3.3：content 多行字串被 wpautop 加 `<br />`** | iframe 上方 288px 大片空白（每行 24px × 12 行 OG meta）| **content 必須單行 + `<div>` 包裹**（步驟 3、步驟 9 範本已改）|
+| **🔴 v3.3：iframe 被 `<p>` 包住** | `</iframe></p>` HTML 結構錯亂 | 同上：`<div>` 外層阻止 wpautop 加 `<p>` |
+| **🔴 v3.3：教練每次都罵「網頁有一大片空白」** | 跌倒 4+ 次同處（嚴重違反守則 #07）| **根因永久封存於步驟 3 + 步驟 9 + 教練故事 7** |
 
 ---
 
@@ -713,6 +789,7 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 || 2026-06-10 05:00 | v2.0 | 完整重寫 | 補上 Custom Permalinks 必裝、永久連結必改、Canvas 模板必套、301 衝突必避、slug 命名鐵律、5.5 永久連結設定步驟、iframe 驗證陷阱、教練故事 1-4、已知雷點表 |
 || 2026-06-10 06:10 | v3.0 | 新增步驟 9（OG meta 修法）、拿掉「整段塞 HTML（模式 B）」、步驟 3 建頁時直接帶 elementor_canvas、步驟 6 改為「確認」、教練故事 5（LINE 預覽換 Logo）、禁止事項 +2、已知雷點 +4、時間表更新 | 教練貼 LINE 預覽看到大樹教育 Logo → 教練罵「不是我的個人網站」→ AI 在 page content 頂端塞 OG meta 標籤換成 jiesheng 書封面 |
 || 2026-06-10 06:30 | **v3.1** | **新增步驟 10（site_icon 全站設定）**、修步驟 9「為什麼需要」段（Elementor 頁面限制 + Rank Math 沒 API）、教練故事 6（教練邏輯提醒）、禁止事項 +2、已知雷點 +4、變更歷史加 v3.1 | 教練修完 OG meta 回頭看根網址還顯示書封面 → 教練反問「媒體庫一定有 logo」 → 查發現 `site_icon` 被誤改成 `book.png` → 改回 `cropped-logo-2-01.png` 512x512 |
+|| 2026-06-16 02:35 | **🔴 v3.3** | **永久封存 wpautop 大片空白根因**：步驟 3 範本改成「單行字串 + `<div>` 包裹」、步驟 9 OG meta 範本改成「Python 字串拼接單行」、禁止事項 +2、已知雷點 +3、教練故事 7、ai 頁線上即時修復（`<br />` 12→0）| 推 bymyway.com/ai/ 後教練罵「同樣的問題重複發生 3-4 次以上」→ 軍師親自進去看根因是 WordPress wpautop filter 把 `\n` 轉 `<br />` + 把 iframe 包進 `<p>` → 改範本從源頭斬斷 |
 
 ---
 
