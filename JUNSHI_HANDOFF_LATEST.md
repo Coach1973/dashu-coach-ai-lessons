@@ -1,37 +1,38 @@
-# 軍師接力棒 · 2026-06-14 v20（Opus 4.6 終端機 session）
+# 軍師接力棒 · 2026-06-15 v21（Opus 4.6 終端機 session）
 
-> 建立時間：2026-06-14 下午 2:36 台灣時間
+> 建立時間：2026-06-15 上午 8:06 台灣時間
 > 本棒執行者：Opus 4.6
-> 上一棒：v19 任務橋＋快取清理＋SOP 更新
+> 上一棒：v20 超限戰復原＋個人品牌網站改版
 
 ---
 
 ## 🎯 本場成果
 
-### 1. 超限戰網頁完整復原＋部署（commit 9669ecd）
-- theunrestrictedwar.netlify.app 從精簡版復原為歷史典藏版
-- 內容：首映週（5/22-5/28）＋ 續映週（5/29-6/04）＋ 9 張企業贊助號外全部找回
-- 部署方式：zip + Netlify API（手動上傳型）
-- Netlify token 記憶檔已更正
+### bymyway.com/coach/ 個人品牌網站 iframe 嵌入修復
 
-### 2. 個人品牌網站改版（commit 9830c42，已推 GitHub Pages）
-- Repo：`/Users/bymyway/github_repos/bymyway-website/`
-- 線上版：https://coach1973.github.io/bymyway-website/
-- 教練方向：**專注個人品牌，拿掉 AI 相關內容**
-- 已完成：
-  1. 品牌金句：AI 語錄 → 海餅乾語錄「你是誰，決定了別人怎麼看你」
-  2. 身份標籤：「頂級特助系統創建者」→「人才培育系統創辦人」
-  3. 企業演講：「AI 落地與自動化」→「品德教育與傳統文化」
-  4. **新增「創業歷程」時間軸**（1997～2024，14 筆教練完整簡歷）
-  5. **新增「智慧語錄」輪播**（19 句金句，來源：`~/Downloads/海餅乾語錄.docx`）
-     - 左右箭頭＋底部翻頁＋圓點導航
-     - 電腦 3 張、平板 2 張、手機 1 張
-  6. 導覽列加了「創業歷程」連結
-- HTML 預覽已在桌面：`~/Desktop/bymyway-preview.html`
+教練反映三大問題，全部修復完成：
 
-### 3. Windows 桌面版 Claude 讀取 GitHub 設定
-- 提供 MCP GitHub Server 設定格式
-- 用 `gh auth token` 取得現有 token
+1. **Hero 區塊大片空白**（commit fa0e86c）
+   - 原因：`min-height: 100vh` 在 iframe 裡撐到 4500px
+   - 修法：改成 `min(100vh, 800px)`
+
+2. **學員見證排版跑掉**（commit fa0e86c）
+   - 原因：`IntersectionObserver` fade 動畫在 iframe 不觸發，卡片全部 opacity:0
+   - 修法：偵測 iframe 環境直接顯示，跳過 fade 動畫
+
+3. **LINE 按鈕不出現 + anchor 連結失效**（commit fa0e86c → 863e620）
+   - 原因：`position: fixed` 在大型 iframe 裡固定在 iframe 頂部而非螢幕
+   - 修法：改 iframe 為 `height:100vh`（自帶滾動），fixed 定位正確運作
+
+4. **導覽列不固定**（commit 863e620 + WordPress API 更新）
+   - 原因：iframe min-height:4500px 時 fixed navbar 跟著 iframe 頂部跑
+   - 修法：iframe 改 `height:100vh`，navbar fixed 正確固定在可見區域頂部
+   - 教練確認：所有導覽項目點擊後表頭都固定不動 ✅
+
+### WordPress 頁面更新
+- 頁面 ID：27374（slug: coach）
+- iframe style：`width:100%;height:100vh;border:none;display:block;`
+- 快取破除：`?v=20260615c`
 
 ---
 
@@ -39,7 +40,7 @@
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| 🔴 | bymyway 網站繼續改版 | 教練看完後根據回饋調整；可能加更多語錄、加客戶見證（教練說會提供） |
+| 🔴 | bymyway 網站繼續改版 | 教練看完後根據回饋調整 |
 | 🟡 | 客戶見證區塊 | 教練說他有不少客戶見證，要找出來後再做 |
 | 🟡 | H 的 gh auth 修復 | H 無法 push |
 | 🟡 | jiesheng-leadership 金流就緒時 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
@@ -50,24 +51,24 @@
 
 | commit | 內容 | repo |
 |--------|------|------|
-| 9669ecd | 超限戰網頁完整復原 | theunrestrictedwar |
-| 9830c42 | 個人品牌網站改版（去AI＋時間軸＋語錄輪播） | bymyway-website |
-| 8831ed36 | 接力棒 v20 首版 | mac-openclaw-workflows |
+| fa0e86c | iframe 嵌入三大修復（hero/fade/anchor） | bymyway-website |
+| 863e620 | LINE 浮動按鈕改回 fixed（配合 100vh iframe） | bymyway-website |
 
 ---
 
 ## 📌 重要路徑
 
 - bymyway 網站 repo：`/Users/bymyway/github_repos/bymyway-website/`
-- 海餅乾語錄：`~/Downloads/海餅乾語錄.docx`（金句素材，19 句已用，可能還有更多）
-- 官方網站：www.bymyway.com（七大公開課程、服務單位等參考）
-- 超限戰 repo：`/Users/bymyway/github_repos/theunrestrictedwar/`
+- 線上版：https://coach1973.github.io/bymyway-website/
+- bymyway.com 嵌入頁：https://www.bymyway.com/coach/（WordPress 頁面 ID 27374）
+- 自動站 SOP：`~/.openclaw/workspace/knowledges/SOP_bymyway_auto_site.md`
 - 網頁推 SOP：`~/.openclaw/workspace/knowledges/SOP_netlify_website_edit.md`
 
 ---
 
 ## ⚠️ 本場教訓
 
-1. theunrestrictedwar 是手動上傳型——SOP 寫死禁止 git push 部署
-2. Netlify token 查路徑大全，不信記憶檔舊版
-3. HTML 預覽放桌面是 SOP——App 裡的預覽看不清楚
+1. **iframe 內 `100vh` 會撐滿整個 iframe 高度**——用 `min(100vh, 800px)` 封頂
+2. **iframe 內 `IntersectionObserver` 不可靠**——偵測 iframe 環境跳過 fade 動畫
+3. **iframe 內 `position: fixed` 要搭配 `height:100vh` iframe 才正確**——大型 iframe（4500px）的 fixed 等於 absolute
+4. **改 iframe style 要同步更新 WordPress 頁面**——用 bymyway-bridge wp_client.py REST API
