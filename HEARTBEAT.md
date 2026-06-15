@@ -20,11 +20,5 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-06-15 2026-06-15 14:03 - relay poll OK
-
-## 健康檢查
-### 2026-06-15 14:02 - healthcheck OK
-- Cron: 1/1 (健康檢查本身 1 次連續 error - AI overload，未達 3 次門檻)
-- Git: commit 337e34cf + push OK (4 files, +7/-2)
-- 待辦: 無 ⬜ 項目超 48h
+### 2026-06-15 2026-06-15 14:33 - relay poll OK
 
