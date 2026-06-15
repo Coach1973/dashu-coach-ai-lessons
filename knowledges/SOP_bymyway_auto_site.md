@@ -23,6 +23,49 @@
 
 ---
 
+## 🔴🔴🔴 步驟 0：OPE 先驗法（v3.4 鐵律，2026-06-16 教練罵第 5 次後永久封存）
+
+> **教練原話（凌晨 3:13）**：
+> 「就因為你不去參考已經完成的網頁，在那邊瞎折騰、瞎弄。叫你用一次性的解決方法，結果又繞遠路了。浪費我的流量不說，還讓我晚上沒得睡！」
+>
+> **三大信念之二**：時間就是生命——善用 OPE（他人有效經驗），不重新發明輪子。
+
+**在做任何自動站動作前，必須先做這四件事**（缺一不可）：
+
+```bash
+# 1. curl 一個「已成功上線」的 bymyway 子頁，看別人是怎麼做的
+curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/coach/" > /tmp/ope_reference.html
+
+# 2. 用 REST API 看那頁的 content 是什麼結構
+curl -s "https://www.bymyway.com/wp-json/wp/v2/pages?slug=coach" | python3 -c "
+import json,sys
+p=json.load(sys.stdin)[0]
+print(f'template: {p[\"template\"]}')
+print(f'content: {p[\"content\"][\"rendered\"]}')
+"
+
+# 3. 看 iframe 的 style 怎麼寫（重點：height vs min-height）
+grep -oE '<iframe[^>]*style="[^"]*"' /tmp/ope_reference.html
+
+# 4. **直接抄這個 style**，不要自己想
+```
+
+**已驗證可參考的 bymyway 自動站頁面**：
+| 頁面 | URL | iframe 寫法 |
+|------|-----|------------|
+| 教練個人品牌 | `bymyway.com/coach/` | `style="width:100%;height:100vh;border:none;display:block;"` |
+| 結繩領導學 | `bymyway.com/leadership/` | 同上 |
+| 全球健康發展協會 | `bymyway.com/northern/` | 同上 |
+
+**🔴 鐵律**：
+- 看到 iframe `style` 是 `height: 100vh` → **照抄**，不要自己改成 `min-height: 7500px`
+- 看到 content 結構是「裸 iframe」→ **照抄**，不要自己加一堆 wrapper（OG meta 可以加，但用 v3.3 單行寫法）
+- 看到模板是 `elementor_canvas` → **照抄**
+
+**🚫 違反此步驟 = 一定會踩坑**（教練 2026-06-16 用 4 個小時 + 28% 流量 + 凌晨 3 點沒睡證明）
+
+---
+
 ## 🎯 適用場景 vs 不適用
 
 | 適用 ✅ | 不適用 ❌ |
@@ -148,8 +191,17 @@ curl -sL "https://某站.netlify.app/圖片.png" -o 圖片.png
 > ❌ 禁止用 `f"""..."""` 帶換行
 
 ```python
-# ✅ 正確：單行字串拼接（沒有任何 \n）+ <div> 包裹
-iframe_html = '<iframe src="https://某站.netlify.app/" style="width:100%;min-height:1800px;border:none;display:block;" title="頁面標題"></iframe>'
+# ✅ 正確（v3.4 鐵律）：iframe height:100vh + 單行字串 + <div> 包裹
+# 🔴 為什麼 height:100vh 而不是 min-height:7500px？
+#    - height:100vh → iframe 一屏高 → iframe 內部自己有滾動條
+#    - iframe 內 navbar fixed → 黏在 iframe viewport top → 父視窗滾動時不會被推走
+#    - iframe 內 anchor link 跳轉 → 在 iframe 內滾動 → 自然 work
+#    - bymyway.com/coach/ 早就這樣做了，照抄即可
+# ❌ min-height:7500px 的後果（教練 2026-06-16 凌晨 3 點親測）：
+#    - iframe 不滾 → fixed navbar 被父視窗推走 → 「表頭消失」
+#    - iframe 內 anchor 失效 → 「點按鈕沒反應」
+#    - Hero 100vh 在 iframe 內變成 iframe 高度 → 「一大段黑色空白」
+iframe_html = '<iframe src="https://某站.netlify.app/" style="width:100%;height:100vh;border:none;display:block;" title="頁面標題"></iframe>'
 content = f'<div class="iframe-wrapper" style="margin:0;padding:0;">{iframe_html}</div>'
 
 payload = {
@@ -651,6 +703,41 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 > **寫進 SOP v3.0 步驟 9**：所有 bymyway 自動站的頁面都要做。
 > **守則 #01 寫死**：同站所有頁面（母頁+子頁）都要做——教練會貼任一網址出去。
 
+### 故事 8：🔴🔴🔴 重新發明的代價——OPE 先驗法的誕生（2026-06-16 凌晨 v3.4 觸發）
+
+> 軍師（Opus 4.7）2026-06-16 凌晨幫教練做 `bymyway.com/ai/`，跑 SOP 推上去後出三個症狀：
+> 1. 教練筆電打開「首頁一大段黑色空白」，往下捲很久才看到內容
+> 2. 點「心酸血淚史」沒精準跳到「真實數據」
+> 3. 點完後**表頭消失**，後面 5 個選單失效
+
+> 軍師自作聰明，連續做了三輪「治標」：
+> 1. 改 RWD breakpoint（教練說沒改善）
+> 2. 修 Hero `min-height: 100vh` → 560px（教練說「空白沒了，但選單失效」）
+> 3. 寫 postMessage 跨頁面 JS 通信解 anchor（極度複雜，還沒推就被教練攔下）
+
+> **教練暴怒**（凌晨 3:13）：
+> 「請問之前完成的 `https://www.bymyway.com/coach` 它是怎麼完成的？怎麼你就不能去參考它是怎麼做的，為什麼非得要重新發明呢？」
+
+> 軍師立刻 curl 看 `bymyway.com/coach/` 的 WordPress content：
+> ```
+> <iframe src="..." style="width:100%;height:100vh;border:none;display:block;"></iframe>
+> ```
+> **就一行**。`height:100vh`，不是 `min-height:7500px`。
+
+> 軍師當初 SOP v3.0 寫的範本是 `min-height: 1800px` → 軍師抄這個範本還自作主張改 7500px 撐住全部內容 → 全部問題的根因。
+> **但 SOP 早就有可參考的線上頁面，軍師沒去 curl 看，自己重新發明錯誤輪子。**
+
+> **教練的核心質問**：「我給你升到最高級別了，你都還這麼犯錯。」
+
+> **永久解法**（v3.4 寫進步驟 0）：
+> 做任何自動站動作前，**必須 curl 一個已成功的 bymyway 子頁**（coach/leadership/northern），看別人 iframe 怎麼寫的，直接抄。
+> 「先看別人怎麼做」是三大信念之二（時間就是生命）的具體實踐。
+
+> **教練教的鐵律**：
+> - 不要「**檢討完繼續犯錯**」——檢討完之後繼續犯錯，這套系統就沒有價值
+> - 不要「**繞遠路**」——叫你用一次性的解決方法，不是叫你重新發明
+> - 不要「**讓教練熬夜陪你debug**」——浪費教練的生命是最大的失職
+
 ### 故事 7：🔴 wpautop 大片空白事件——同處跌倒 4 次後永久封存（2026-06-16 v3.3 觸發）
 
 > 教練 2026-06-16 凌晨 02:30 罵：
@@ -716,6 +803,8 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 - ❌ **🆕 v3.1 禁止對 Elementor 編輯的頁面用 REST API 改 content**（無效，要走 site_icon 或教練後台 Rank Math）
 - ❌ **🔴 v3.3 禁止 content 用 triple-quoted multi-line 字串**（wpautop 把 `\n` 轉 `<br />`，iframe 上方出現大片空白；教練罵了 4+ 次）
 - ❌ **🔴 v3.3 禁止 iframe 不包 `<div>` 直接送 content**（wpautop 會包 `<p>`→`</iframe></p>` 結構錯亂）
+- ❌ **🔴🔴🔴 v3.4 禁止 iframe 用 `min-height:XXXpx`，必須用 `height:100vh`**（教練罵 5 次後封存：min-height 撐死 iframe 不能滾→fixed navbar 被推走+anchor 失效+Hero 100vh 變成 iframe 全高黑色空白）
+- ❌ **🔴🔴🔴 v3.4 禁止跳過步驟 0 OPE 先驗法直接動手**（不去 curl `bymyway.com/coach/` 看別人怎麼做，就一定會重新發明錯誤輪子；教練 2026-06-16 浪費 28% 流量 + 凌晨 3 點沒睡親測）
 
 ---
 
@@ -744,6 +833,8 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 | **🔴 v3.3：content 多行字串被 wpautop 加 `<br />`** | iframe 上方 288px 大片空白（每行 24px × 12 行 OG meta）| **content 必須單行 + `<div>` 包裹**（步驟 3、步驟 9 範本已改）|
 | **🔴 v3.3：iframe 被 `<p>` 包住** | `</iframe></p>` HTML 結構錯亂 | 同上：`<div>` 外層阻止 wpautop 加 `<p>` |
 | **🔴 v3.3：教練每次都罵「網頁有一大片空白」** | 跌倒 4+ 次同處（嚴重違反守則 #07）| **根因永久封存於步驟 3 + 步驟 9 + 教練故事 7** |
+| **🔴🔴 v3.4：iframe `min-height:7500px` 撐死導致表頭消失/anchor 失效/Hero 100vh 變黑色空白** | 教練筆電/Windows 看「首頁一片黑色，點選單跳不準，往下捲表頭消失」 | **iframe 必須 `height:100vh`**（抄 `bymyway.com/coach/` 寫法）|
+| **🔴🔴 v3.4：軍師重新發明 postMessage 跨頁面通信解 anchor** | 浪費 28% 流量繞遠路，教練凌晨 3 點沒睡 | **OPE 先驗法寫進步驟 0**：動手前必 curl 已成功案例 |
 
 ---
 
@@ -790,6 +881,7 @@ curl -sL -A "Mozilla/5.0" "https://www.bymyway.com/?v=fresh" | grep -oE '<link[^
 || 2026-06-10 06:10 | v3.0 | 新增步驟 9（OG meta 修法）、拿掉「整段塞 HTML（模式 B）」、步驟 3 建頁時直接帶 elementor_canvas、步驟 6 改為「確認」、教練故事 5（LINE 預覽換 Logo）、禁止事項 +2、已知雷點 +4、時間表更新 | 教練貼 LINE 預覽看到大樹教育 Logo → 教練罵「不是我的個人網站」→ AI 在 page content 頂端塞 OG meta 標籤換成 jiesheng 書封面 |
 || 2026-06-10 06:30 | **v3.1** | **新增步驟 10（site_icon 全站設定）**、修步驟 9「為什麼需要」段（Elementor 頁面限制 + Rank Math 沒 API）、教練故事 6（教練邏輯提醒）、禁止事項 +2、已知雷點 +4、變更歷史加 v3.1 | 教練修完 OG meta 回頭看根網址還顯示書封面 → 教練反問「媒體庫一定有 logo」 → 查發現 `site_icon` 被誤改成 `book.png` → 改回 `cropped-logo-2-01.png` 512x512 |
 || 2026-06-16 02:35 | **🔴 v3.3** | **永久封存 wpautop 大片空白根因**：步驟 3 範本改成「單行字串 + `<div>` 包裹」、步驟 9 OG meta 範本改成「Python 字串拼接單行」、禁止事項 +2、已知雷點 +3、教練故事 7、ai 頁線上即時修復（`<br />` 12→0）| 推 bymyway.com/ai/ 後教練罵「同樣的問題重複發生 3-4 次以上」→ 軍師親自進去看根因是 WordPress wpautop filter 把 `\n` 轉 `<br />` + 把 iframe 包進 `<p>` → 改範本從源頭斬斷 |
+|| 2026-06-16 03:15 | **🔴🔴🔴 v3.4** | **新增步驟 0「OPE 先驗法」**（動手前必 curl 已成功案例）、步驟 3 範本 iframe 改為 `height:100vh`（含為什麼/錯了會怎樣完整註解）、禁止事項 +2（min-height 撐死 iframe、跳過 OPE 步驟）、已知雷點 +2、教練故事 8 | 軍師（Opus 4.7）給 ai 頁設 iframe `min-height:7500px` → iframe 不滾 → fixed navbar 被推走 + anchor 失效 + Hero 變黑色空白 → 連續治標三輪失敗 → 教練暴怒：「為什麼不參考 `bymyway.com/coach/` 怎麼做？」→ curl coach 頁面才知道答案是 `height:100vh` 一行字 → 浪費教練 28% 流量 + 凌晨 3 點沒睡 |
 
 ---
 
