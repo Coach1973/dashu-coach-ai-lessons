@@ -1,5 +1,12 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-17（共 2 則）
+1. evidence: memory/.dreams/session-corpus/2026-06-15.txt:161-161
+2. Candidate: User: 小龍蝦：教練，問題點抓到了！我把答案整理給您： - 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` - 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔： - 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
+
+---
+
+
 ## 蒸餾 2026-06-13（共 2 則）
 1. 權限範圍：gist、read:org、repo、workflow
 2. 權限範圍：gist、read:org、repo、workflow
