@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-16 03:35:00**
+> **最後同步：2026-06-16 10:35:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -81,9 +81,17 @@ print(p['content']['rendered'])
 |------|------|------|
 | ✅ | ~~bymyway 主站加 /ai/ 導流入口~~ | 2026-06-16 03:35 完成——主選單加「教練創業之路」「AI 導入教練」兩項（v25 補完成） |
 | ✅ | ~~LINE 預覽驗證~~ | 教練已確認沒問題（v25 補） |
+| ✅ | ~~ai.html 手機版補三條橫線選單~~ | 2026-06-16 03:55 完成（commit e483d90） |
+| ✅ | ~~刪 FB 每日生日祝福 cron~~ | 2026-06-16 10:00 完成（已轉交 Mac 版 H 特助） |
+| ✅ | ~~11 個 cron 加 failureAlert:false~~ | 2026-06-16 10:00 完成——再也不會收 cron fail 通知 |
+| ✅ | ~~新增「🦞 小龍蝦對話蒸餾（每4小時）」cron~~ | 2026-06-16 10:20 完成（每天 0:30/4:30/8:30/12:30/16:30/20:30，commit c4719f4） |
+| ✅ | ~~桌面整理 + 43GB 釋放~~ | 2026-06-16 10:30 完成——本機可用 68→111 GB |
 | ⏸ | 客戶見證區塊 | 教練 06-16 說「AI 那邊不需要顧客見證，還沒有」——暫緩 |
 | 🟡 | H 的 gh auth 修復 | H 無法 push |
 | 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
+| 🟡 | **openclaw.json 髒改動未 commit** | 之前其他軍師改的（memorySearch:false + 新增 usage-query/round-table-orchestrator hook），等教練確認原因再 commit |
+| 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 教練本人已踩過 6.1 坑，沒急迫性；下次主動找時間 |
+| 🔴 | **VPS 線上小龍蝦保持 2026.5.27 不升級** | 教練「比較少用」，5.27 已穩定跑 7 天 healthy；升 6.x 必踩教練親身踩過的 2026.6.1 兩道坑（外掛 activation + cron 孤兒，斷頭 4 天血淚） |
 
 ---
 
@@ -101,6 +109,10 @@ print(p['content']['rendered'])
 | WP menu `27388` | 主選單新增「教練創業之路」→ /coach/ | bymyway WordPress |
 | WP menu `27389` | 主選單新增「AI 導入教練」→ /ai/ | bymyway WordPress |
 | WP menu `25168` | 「登入課程」order 5→10（擠到最後）| bymyway WordPress |
+| `e483d90` | ai.html 手機版補上三條橫線選單 | bymyway-website (master) |
+| `7c76f74` | cron 刪 FB 祝福 + 全 cron failureAlert:false 永久靜默 | workspace (main) |
+| `c4719f4` | 新增「🦞 小龍蝦對話蒸餾（每4小時）」cron（下次 12:30）| workspace (main) |
+| 43 GB | 本機釋放：垃圾桶+Caches 1.2G + 23GB recup 搬 953-SSD + 24 張 TM 快照瘦身 | macOS（68→111 GB 可用）|
 
 ---
 
