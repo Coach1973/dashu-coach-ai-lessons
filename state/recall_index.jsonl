@@ -1079,3 +1079,4 @@
 {"t": "2026-06-16 22:48", "src": "終端機", "who": "教練", "text": "若寫指令，丟給終端機去執行呢？或是寫給小龍蝦，讓他自己修復也行", "ref": "/Users/bymyway/.openclaw/workspace/memory/verbatim/2026-06.jsonl"}
 {"t": "2026-06-16 22:53", "src": "終端機", "who": "教練", "text": "我的chrome會當掉然後重開，要檢查一下是什麼問題嗎？", "ref": "/Users/bymyway/.openclaw/workspace/memory/verbatim/2026-06.jsonl"}
 {"t": "2026-06-16 22:54", "src": "小龍蝦群", "who": "真人訊息", "text": "小龍蝦，去讀 ~/.openclaw/workspace/knowledges/TASK_蒸餾系統三軌打架修復_2026-06-16.md， 按步驟修復後回報。重點：A 系統不要動、修 C cron 改去看 distilled、移除 B launchd。", "ref": "/Users/bymyway/.openclaw/workspace/memory/verbatim/2026-06.jsonl"}
+{"t": "2026-06-17", "src": "每日摘要", "who": "教練", "text": "學弟，你可不可以告訴我，跟峰哥在一起的那個群組裡面的對話路徑在什麼地方？還有它的設定檔在什麼地方？ - 📨 對話記錄 02:59（共約 14 條，從第 0 行起）: 因為他現在在那個群組裡面把我的名字叫錯了，我想了解這個設定檔哪邊出問題。 🦞 小龍蝦：教練，收到！我來處理這個問題——先查學弟的摘要和設定檔線索。 🦞 小龍蝦：教練，問題點抓到了！我把答", "ref": "/Users/bymyway/.openclaw/workspace/memory/2026-06-17.md:3"}
