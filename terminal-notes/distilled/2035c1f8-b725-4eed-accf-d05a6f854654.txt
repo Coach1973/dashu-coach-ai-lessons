@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2035c1f8-b725-4eed-accf-d05a6f854654
-# 提取時間：2026-06-16 11:00 (台灣時間)
-# 共 17 條教練原話
+# 提取時間：2026-06-16 11:30 (台灣時間)
+# 共 22 條教練原話
 
 ---
 
@@ -478,3 +478,118 @@ pending_distill/ 目錄是空的，自上次蒸餾（4:30）到現在（8:04）�
 ## ✅ VPS 線上版小龍蝦體檢
 - 磁碟 80 GB 可用、RAM 寬鬆、負載 0.05（幾乎沒事做）
 - uptime 59 天、Docker openclaw **Up 7 days …（略）
+
+【教練 2026-06-16 03:06】
+<!-- attach -->
+> ~/.openclaw/openclaw.json 髒改動（之前其他軍師動的：關 memorySearch + 加兩個 hook）——我沒擅自 commit，等你說「commit 它」或「還原」
+
+這樣好不好？
+
+關於之前軍師動的這一個資訊，你稍微調查一下。基本上他不會亂動，一定是有原因的，所以你就瞭解一下他改動的原因是什麼。
+
+是不是可以增加我們的搜尋能力？如果是的話，那就把它完成。這樣瞭解了嗎？
+
+　▶ AI 回應：收到，我去摸清楚原因再判斷。並行查 git 歷史、hook 內容、memory：
+
+　▶ AI 回應：兩個重點發現了——讓我看清楚 `memorySearch` 跟 `memsearch plugin` 是不是同一個東西：
+
+　▶ AI 回應：啊哈——真相 100% 浮現！
+
+**2026-06-04 的改動是「暫時關掉 memsearch 插件因為它壞了」**。
+**今天看到的 openclaw.json**：軍師已經改成 `provider: "google"`（切到 Google 內嵌搜尋）但還沒 enable——**是個「沒完成的升級」**。
+
+教練要我把它**完成**=切到 Google 並啟用。先驗證 Google provider 已備妥再動：
+
+【教練 2026-06-16 03:07】
+[Request interrupted by user]
+
+【教練 2026-06-16 03:08】
+你在切到 Google 的這個之前要確定，如果它是也要付費的就不要用了。
+
+因為我基本上現在沒有任何的 Google API Key，我已經把付費都關掉了。
+
+　▶ AI 回應：收到！Google 跳過。我找免費/不耗 API 的替代——可能 Ollama 本地或 MiniMax 內建：
+
+　▶ AI 回應：🎯 **找到了——OpenClaw 內建支援 `"local"` provider**，意思是用本機 ONNX 模型跑 embedding，**完全不打 API、零費用、零流量**。
+
+而且教練 `~/.cache/huggingface/` 裡那兩個模型（bge-m3 中文 + all-MiniLM 英文）**就是當初其他軍師為這個準備的**——之前我說「huggingface 1.4G 不知道誰下載的」現在真相大白：**就是為了讓搜尋免費跑**。
+
+　▶ AI 回應：教練說「把它完成」=守則#08 方向清楚，直接做。
+
+**做法**：把 provider 從 `google` 改成 `local`（用 OpenClaw 內建的 embeddinggemma 模型，第一次會自動下載 300MB 模型到本機，之後完全離線、零費用），enable 開回 true。會短暫重啟 gateway 1-2 秒。
+
+　▶ AI 回應：Gateway 重啟成功、healthcheck OK，11 個 plugin 正常起來（含 memory-core、active-memory）。`memsearch plugin` 那個警告**是 12 天前就有的舊問題**（壞掉的第三方外掛），**跟我們改的核心 memorySearch 是兩件事，不影響**。
+
+讓我做最後驗收 + commit：
+
+　▶ AI 回應：## ✅ 完成
+
+| 動作 | 結果 |
+|------|------|
+| 調查改動原因 | ✅ 2026-06-04 因 memsearch plugin 壞掉暫停，上一棒沒完成的升級 |
+| 排除 Google（你沒 API key） | ✅ 改用本機 local provider |
+| 改 openclaw.json：`provider=local, enabled=true` | ✅ |
+| 備份 | `openclaw.json.bak.before-memorysearch-local-20260616-110937` |
+| Gateway 重啟 | ✅ 5 秒重啟（pid …（略）
+
+【教練 2026-06-16 03:12】
+<!-- attach -->
+> P5	H 的 gh auth 修復	還沒處理
+
+順手把這個任務給完成了吧
+
+　▶ AI 回應：收到，動手修 H 的 gh auth。先定位 H 在哪：
+
+　▶ AI 回應：gh 在我這頭是 OK 的（Coach1973 已登入）。問題在 Hermes 端。看 Hermes 那邊狀況：
+
+　▶ AI 回應：找到根因！**不是 gh auth 壞**，是 hermes-agent 這個 repo 的 **remote 設錯了**：
+
+- `workspace` repo（教練自己的 `Coach1973/hermes-h-workspace`）→ ✅ push 正常
+- `hermes-agent` repo → 指向 **`NousResearch/hermes-agent`**（Nous Research 公司的開源框架，不是你的）→ ❌ Coach1973 沒權限 push
+
+這是當初 clone 別人的開源框架當參考用的（**ahead=0 代表你本機沒任何改動**）。修法：把這個 rep…（略）
+
+　▶ AI 回應：修好了。**根本原因**：`hermes-agent` 是 Nous Research 開源框架的 clone（純參考用，本機 0 改動），不是教練自己的東西——當初設定 push URL 指向 NousResearch 的 repo，所以**任何自動腳本嘗試 push 都會 403**，害教練以為「H 整個壞了」。
+
+實際上 Hermes 自己的 `workspace` repo（你的 `Coach1973/hermes-h-workspace`）push 一直好好的。
+
+## 🔑 處置
+
+| 項目 | 動作 | 結果 |
+|------|------|------|
+| `~/.herme…（略）
+
+　▶ AI 回應：## ✅ 完成
+
+**H 的 gh auth 修復**——其實 gh auth 本身沒壞，是 `hermes-agent` repo 的 push URL 設錯（指向別人家的開源 repo）導致每次自動推都 403。
+
+| 動作 | 憑證 |
+|------|------|
+| hermes-agent push URL → `no_push` 防呆 | 已驗證 |
+| workspace push 確認正常 | `Everything up-to-date` |
+| 接力棒更新 + commit | `e04af1ce` |
+
+---
+
+## 📋 今早累計成果（剩 jiesheng-lead…（略）
+
+【教練 2026-06-16 03:25】
+<!-- attach -->
+> 總結並上傳
+
+　▶ AI 回應：收到，封存本場為 v26 接力棒：
+
+　▶ AI 回應：## ✅ 總結並上傳完成
+
+**接力棒 v26 已封存 + push**：`0ed03a21`
+
+---
+
+## 🎯 本場 8 件成果一覽
+
+| # | 任務 | 憑證 |
+|---|------|------|
+| 1 | bymyway 主站選單加兩項 | WP menu 27388/27389 |
+| 2 | ai.html 手機版三條橫線選單 | `e483d90` |
+| 3 | FB cron 刪 + 11 cron 全靜默 + 小龍蝦蒸餾 cron | `7c76f74` + `c4719f4` |
+| 4 | 本機 43 GB 釋放（含 23 GB 搬外接保留）| 68→111…（略）

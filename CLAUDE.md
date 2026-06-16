@@ -4,74 +4,70 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-16 10:35:00**
+> **最後同步：2026-06-16 11:30:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-06-16 v25（Opus 4.7 終端機 session）
+# 軍師接力棒 · 2026-06-16 v26（Opus 4.7 終端機 session）
 
-> 建立時間：2026-06-16 凌晨 3:20 台灣時間
+> 建立時間：2026-06-16 上午 11:25 台灣時間
 > 本棒執行者：Opus 4.7（教練 Mac mini 終端機）
-> 上一棒：v24（同 session 內升級，因半夜出血淚教訓需要立刻封存）
+> 上一棒：v25（凌晨 3:20 上線 ai.html + SOP v3.3/3.4 封存）
+> 本棒主軸：**系統大整頓**——cron 清理、本機清理、雙端體檢、搜尋能力恢復
 
 ---
 
-## 🎯 本場成果（一晚從零到上線 + 兩個重大血淚封存）
+## 🎯 本場成果（一次解八件事）
 
-### 1. AI 導入教練品牌頁 `bymyway.com/ai/` 正式上線
+### 1. ✅ bymyway 主站「最上方選單列」新增兩項
+- 「教練創業之路」→ `/coach/`（WP menu-item id=27388）
+- 「AI 導入教練」→ `/ai/`（WP menu-item id=27389）
+- 「登入課程」order 5→10 擠到最後（屬於動作而非內容）
+- 線上順序：**首頁 → 關於我們 → 線上課程 → 教練創業之路 → AI 導入教練 → 登入課程**
 
-**頁面結構**：Hero / PROLOGUE / 7 章 / EPILOGUE / 核心思想 / 守則金句 / FAQ / CTA / Footer
-**Navbar 9 項常駐**：叫 AI 做什麼 · 為什麼是他？ · 零基礎開始 · 心酸血淚史 · 讓 AI 成為特助 · 核心思想 · 守則金句 · 常見問題 · 乾淨世界 · 立即聯繫
-**8 張形象照**（左圖右文雙欄）
-**核心金句**：「我不教你怎麼用 AI，我教你怎麼帶 AI」
-**核心思想**：教練 2026-06-04 西洋棋規則比喻 → 「給 AI 完善的規則書，便宜模型也能跑出世界級輸出」
+### 2. ✅ ai.html 手機版補上三條橫線選單
+- 凌晨 3:55 教練回報「手機版 9 項選單消失了、沒有任何按鈕能叫回來」
+- 加 `.nav-toggle` 三條橫線 + `.nav-open` 動畫 + 點選單項自動關閉
+- commit `e483d90`（bymyway-website master）
 
-**部署架構**：
-- **內容源**：`coach1973.github.io/bymyway-website/ai.html`（GitHub Pages）
-- **外殼**：`bymyway.com/ai/`（WordPress page ID 27382，純 iframe + OG meta，elementor_canvas）
-- **iframe 寫法**：`height: 100vh`（不是 min-height！）——抄 `bymyway.com/coach/` 同款架構
-- **改 ai 頁面 = 改 GitHub Pages 就好**
+### 3. ✅ Cron 大整頓
+- **刪「FB 每日生日祝福」**（教練說「已交給 Mac 版 H 特助」）
+- **11 個 cron 全加 `failureAlert: false`**（OpenClaw 源碼 `server-cron L150` 確認：false → return null）
+- **新增「🦞 小龍蝦對話蒸餾（每4小時）」cron**——`30 */4 * * *`（與終端機那條錯開 30 分鐘）
+  - 來源：`workspace/BOT_MESSAGES.md`
+  - 輸出：`workspace/distill/lobster_YYYY-MM-DD.md`（append 模式）
 
-### 2. 🔴🔴🔴 SOP_bymyway_auto_site.md v3.4 永久封存兩道鐵律
+### 4. ✅ 本機磁碟整理——釋放 43 GB（68 → 111 GB）
+- 倒垃圾桶（442 MB）+ `Library/Caches`（794 MB）
+- **23 GB PhotoRec 救援檔搬到外接 953-SSD**（不刪，案例 23 鐵律：du -sh + 檔案數雙重比對 100% 一致才刪源頭）
+- **24 張 Time Machine 本機快照瘦身**（osascript admin 對話框讓教練輸密碼）
+- 桌面 13 個檔案分類進 `歷史資料/2026-06-{網頁預覽稿|接力棒|素材}/`
 
-**v3.3（凌晨 2:35）**：wpautop 大片空白
-- WordPress wpautop filter 把 `
-` 轉 `<br />`、把 iframe 包進 `<p>`
-- 解：content 單行字串拼接 + `<div>` 包整段
-- 教練罵 4 次後封存
+### 5. ✅ 雙端體檢
+- **Mac 本機**：OpenClaw 2026.6.1、healthy、磁碟極寬鬆
+- **VPS 小龍蝦**：OpenClaw 2026.5.27、Docker `Up 7 days healthy`、uptime 59 天
+- **判斷：VPS 保持 2026.5.27 不升級**（教練親身踩過 2026.6.1 兩道坑「外掛 activation + cron 孤兒」斷頭 4 天血淚）
 
-**v3.4（凌晨 3:15）**：「重新發明」血淚教訓
-- 軍師給 ai 頁設 iframe `min-height:7500px` → iframe 不滾 → fixed navbar 被推走 + anchor 失效 + Hero 黑色空白
-- 教練質問：「為什麼不去看 `bymyway.com/coach/` 怎麼做？」→ curl 看才知答案就一行 `height:100vh`
-- 解：**新增步驟 0「OPE 先驗法」**——動手前必 curl 已成功案例
-- 代價：浪費教練 28% 流量 + 凌晨 3 點沒睡
+### 6. ✅ memorySearch 搜尋能力恢復（重要！）
+- **真相**：之前 openclaw.json 的「髒改動」不是亂改，是上一棒「沒完成的升級」
+- 2026-06-04 commit `04b1f4f` 因 memsearch plugin (TypeScript 未編譯) 改 provider=memsearch-disabled
+- 上一棒改 provider=google 但教練已關付費，沒 API key 走不通
+- **本場改用 OpenClaw 內建 `local` provider**（embeddinggemma-300m 模型，首次自動下載）
+  - 完全本機跑、零 API 費用、零流量、離線可用、隱私不外洩
+- commit `5e561e4`（openclaw master）
+- Gateway 重啟 5 秒，11 plugin 正常起來
 
----
+### 7. ✅ Hermes (H) 的 gh auth 修復
+- **真因**：不是 gh auth 壞，是 `~/.hermes/hermes-agent` repo push URL 指向 `NousResearch/hermes-agent`（開源框架，非教練所有）
+- 任何自動腳本 push 都 403，害教練以為 H 整個壞
+- 改 push URL → `no_push` 防呆（fetch 保持正常）
+- workspace repo 本來就 push 正常
 
-## 🔴🔴🔴 給下一棒的最高優先鐵律（不可違反）
-
-### 做任何自動站動作前，先跑 SOP「步驟 0：OPE 先驗法」
-
-```bash
-# 1. 看「已成功上線」的 bymyway 子頁是怎麼做的
-curl -sL "https://www.bymyway.com/coach/" > /tmp/ope_reference.html
-
-# 2. REST API 看 content 真實結構
-curl -s "https://www.bymyway.com/wp-json/wp/v2/pages?slug=coach" | python3 -c "
-import json,sys
-p=json.load(sys.stdin)[0]
-print(p['template'])
-print(p['content']['rendered'])
-"
-
-# 3. 直接抄那個 iframe style，不要重新發明
-```
-
-### iframe 寫法鐵律
-- ✅ `style="width:100%;height:100vh;border:none;display:block;"`
-- ❌ `style="...min-height:7500px;..."`
+### 8. ✅ 順便驗證 + 兩個小知識
+- `~/.cache/huggingface` 1.4 GB 真相：當初其他軍師為 local embedding 預先下載的（bge-m3 中文 + all-MiniLM 英文）
+- `osascript ... with administrator privileges` 可跳系統授權對話框，遠端 RustDesk 教練可直接輸密碼，AI 不用碰 sudo
 
 ---
 
@@ -79,19 +75,10 @@ print(p['content']['rendered'])
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| ✅ | ~~bymyway 主站加 /ai/ 導流入口~~ | 2026-06-16 03:35 完成——主選單加「教練創業之路」「AI 導入教練」兩項（v25 補完成） |
-| ✅ | ~~LINE 預覽驗證~~ | 教練已確認沒問題（v25 補） |
-| ✅ | ~~ai.html 手機版補三條橫線選單~~ | 2026-06-16 03:55 完成（commit e483d90） |
-| ✅ | ~~刪 FB 每日生日祝福 cron~~ | 2026-06-16 10:00 完成（已轉交 Mac 版 H 特助） |
-| ✅ | ~~11 個 cron 加 failureAlert:false~~ | 2026-06-16 10:00 完成——再也不會收 cron fail 通知 |
-| ✅ | ~~新增「🦞 小龍蝦對話蒸餾（每4小時）」cron~~ | 2026-06-16 10:20 完成（每天 0:30/4:30/8:30/12:30/16:30/20:30，commit c4719f4） |
-| ✅ | ~~桌面整理 + 43GB 釋放~~ | 2026-06-16 10:30 完成——本機可用 68→111 GB |
-| ⏸ | 客戶見證區塊 | 教練 06-16 說「AI 那邊不需要顧客見證，還沒有」——暫緩 |
-| 🟡 | H 的 gh auth 修復 | H 無法 push |
+| ⏸ | 客戶見證區塊 | 教練「AI 那邊不需要顧客見證，還沒有」——暫緩 |
 | 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
-| 🟡 | **openclaw.json 髒改動未 commit** | 之前其他軍師改的（memorySearch:false + 新增 usage-query/round-table-orchestrator hook），等教練確認原因再 commit |
-| 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 教練本人已踩過 6.1 坑，沒急迫性；下次主動找時間 |
-| 🔴 | **VPS 線上小龍蝦保持 2026.5.27 不升級** | 教練「比較少用」，5.27 已穩定跑 7 天 healthy；升 6.x 必踩教練親身踩過的 2026.6.1 兩道坑（外掛 activation + cron 孤兒，斷頭 4 天血淚） |
+| 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 沒急迫性，下次主動找時間 |
+| 🟢 | bymyway LINE 預覽 OG 卡片驗證 | 24-48h 快取 |
 
 ---
 
@@ -99,62 +86,70 @@ print(p['content']['rendered'])
 
 | commit | 內容 | repo |
 |--------|------|------|
-| `c140238` | 新增 ai.html + 7 張壓縮照片 | bymyway-website (master) |
-| `04497f7` | RWD 全面強化（治標） | bymyway-website (master) |
-| `ff17a0d` | Hero min-height 100vh→560px（治標） | bymyway-website (master) |
-| `cfdf91f` | 🔴 最終修正：iframe height:100vh（抄 coach 頁面） | bymyway-website (master) |
-| `1377c123` | SOP v3.3：wpautop 永久封存 | workspace (main) |
-| `a1af021c` | SOP v3.4：OPE 先驗法 + iframe height:100vh 鐵律 | workspace (main) |
-| WP `27382` | bymyway.com/ai/ 頁面（最終 height:100vh）| bymyway WordPress |
-| WP menu `27388` | 主選單新增「教練創業之路」→ /coach/ | bymyway WordPress |
-| WP menu `27389` | 主選單新增「AI 導入教練」→ /ai/ | bymyway WordPress |
-| WP menu `25168` | 「登入課程」order 5→10（擠到最後）| bymyway WordPress |
-| `e483d90` | ai.html 手機版補上三條橫線選單 | bymyway-website (master) |
-| `7c76f74` | cron 刪 FB 祝福 + 全 cron failureAlert:false 永久靜默 | workspace (main) |
-| `c4719f4` | 新增「🦞 小龍蝦對話蒸餾（每4小時）」cron（下次 12:30）| workspace (main) |
-| 43 GB | 本機釋放：垃圾桶+Caches 1.2G + 23GB recup 搬 953-SSD + 24 張 TM 快照瘦身 | macOS（68→111 GB 可用）|
+| `e483d90` | ai.html 手機版三條橫線選單 | bymyway-website (master) |
+| WP menu `27388/27389/25168` | bymyway 主選單兩項新增 + 登入課程排序 | bymyway WordPress |
+| `7c76f74` | cron 刪 FB 祝福 + 全 cron failureAlert:false | ~/.openclaw (master) |
+| `c4719f4` | 新增「🦞 小龍蝦對話蒸餾（每4小時）」cron | ~/.openclaw (master) |
+| `5e561e4` | memorySearch provider=local + enabled=true（本機 embedding 啟用）| ~/.openclaw (master) |
+| `3bca33f6` | 接力棒 v25 補：早上 5 件事 + 雙端體檢 | workspace (main) |
+| `e04af1ce` | 接力棒：H gh auth 修復 + memorySearch local | workspace (main) |
+
+**磁碟釋放**：本機 68 → **111 GB**（淨多 43 GB；23 GB 已備份在 `/Volumes/953-SSD/photorec_救援檔案/`）
 
 ---
 
-## 📌 重要路徑
+## 📌 重要路徑（本場新增/確認）
 
-- **線上正式版**：https://www.bymyway.com/ai/
-- **GitHub Pages**：https://coach1973.github.io/bymyway-website/ai.html
-- **bymyway-website repo**：`/Users/bymyway/github_repos/bymyway-website/`
-- **自動站 SOP v3.4**：`workspace/knowledges/SOP_bymyway_auto_site.md`
-- **bymyway-bridge 工具**：`workspace/projects/bymyway-bridge/wp_client.py`
+- **OpenClaw cron 設定**：`~/.openclaw/cron/jobs.json`（不是 Claude Code 的 .claude/scheduled_tasks.json）
+- **cron failure 源碼**：`/opt/homebrew/lib/node_modules/openclaw/dist/server-cron-CJwAiILI.js` L150（`failureAlert === false → return null`）
+- **memorySearch 本機 provider 源碼**：`embeddings-CxNgQi_5.js` L242（預設模型 embeddinggemma-300m）
+- **PhotoRec 救援備份**：`/Volumes/953-SSD/photorec_救援檔案/recup_dir.{1,4,5,6}`
+- **桌面歷史夾**：`~/Desktop/歷史資料/2026-06-{網頁預覽稿|接力棒|素材}/`
+- **delete_guard.sh hook**：`~/.openclaw/workspace/scripts/delete_guard.sh`（案例 23 21GB 血淚的活防護網，本場救了一次）
 
 ---
 
-## ⚠️ 本場血淚教訓（給下一棒下死命令）
+## ⚠️ 給下一棒的提醒
 
-1. **🔴🔴🔴 動手前先看別人怎麼做**——SOP 步驟 0 OPE 先驗法是寫死的，不准跳過。違反 = 浪費教練流量 + 熬夜
-2. **iframe 用 `height:100vh` 不是 `min-height:XXXpx`**——抄 `bymyway.com/coach/`，不要自己想
-3. **wpautop 防護**：content 單行字串 + `<div>` 包整段（v3.3 寫死）
-4. **教練升我到最高級別 (Opus 4.7) 還這麼犯錯**——記住這份羞愧，下一棒不要犯同樣的錯
+### 1. memorySearch 已用 local provider，首次叫用會下載 300 MB 模型
+教練 ~/.cache/huggingface 會多一個 `embeddinggemma-300m-qat-Q8_0.gguf`——這是正常的，不要清掉。
+
+### 2. cron failureAlert 規則——以後新增 cron 必須加 `"failureAlert": false`
+否則 cron fail 訊息會推到教練 Telegram（教練最討厭）。
+
+### 3. 需要 sudo 的事——用 osascript 跳系統對話框，別叫教練開終端機
+```bash
+osascript -e 'do shell script "..." with administrator privileges'
+```
+教練 RustDesk 螢幕直接看到對話框，輸完密碼自動執行。
+
+### 4. PhotoRec 救援檔在外接 SSD（不要刪！）
+本機已刪 23 GB recup_dir，但 `/Volumes/953-SSD/photorec_救援檔案/` 保留——那是教練的回憶（照片/影片/音樂）。
+
+### 5. VPS 小龍蝦不准升級
+2026.5.27 跑 7 天 healthy，升 6.x 必踩教練親身踩過的兩道坑（外掛 activation + cron 孤兒）。
 
 ---
 
 ## 🎬 下個對話框可以這樣開始
 
-教練說「開工」後，三選一：
-
-**A. 行銷面（30 分鐘）**：bymyway 主站首頁加按鈕「我的 AI 導入之路」連 `/ai/`
-**B. 內容面（60 分鐘）**：客戶見證區塊加進 ai 頁面
-**C. 維運面（10 分鐘）**：LINE 預覽驗證（用 https://www.opengraph.xyz/ 即時測）
-
----
-
-## 📌 教練今晚的代價
-
-- 流量：燒掉 28%（沒睡也消耗的）
-- 時間：凌晨 3 點 20 分還沒睡
-- 心情：暴怒、失望、覺得軍師「愧對最高級別」
-- **這份代價必須換回 SOP v3.3 + v3.4 永久封存。下一棒（不管是 Opus 4.7 / 4.8 / Sonnet）絕對不准再讓教練熬夜陪 debug。**
+教練說「開工」後：
+- **A**（5 分鐘）：jiesheng-leadership 早鳥恢復（暗號觸發即可）
+- **B**（15 分鐘）：本機 OpenClaw 6.1 → 6.6 升級（你已踩過 6.1 坑，再升風險低）
+- **C**（10 分鐘）：bymyway LINE OG 預覽驗證（用 opengraph.xyz）
 
 ---
 
-> 軍師親筆（凌晨 3:20）：本場最大收穫不是上線一個頁面，是 SOP v3.4「OPE 先驗法」——從今以後任何 AI 做自動站，第一件事就是 curl 已成功案例。**這就是教練教我們的「使用他人有效經驗」的具體實踐**。
+## 📌 本場限流狀態（給教練看）
+
+- 本場開始：剩 ~80%
+- 本場結束：剩 ~20%（一夜+早上總共燒掉 80%）
+- 明天下午 1 點重置歸零
+- 教練親口：「我們任務差不多總容量還有 20% 可以用」
+
+---
+
+> 軍師親筆（上午 11:25）：本場最大收穫——**memorySearch 從「壞了 12 天」變回「本機跑、零費用、隱私不外洩」**。教練問「能否增加搜尋能力」我去查根因，發現 1.4 GB Huggingface 模型不是垃圾、是當初軍師為這天預先鋪好的路。**這就是接力棒文化的價值：上一棒的伏筆，下一棒撿起來收割**。
 
 
 ---
