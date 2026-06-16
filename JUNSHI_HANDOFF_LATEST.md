@@ -74,9 +74,9 @@ print(p['content']['rendered'])
 | ✅ | ~~新增「🦞 小龍蝦對話蒸餾（每4小時）」cron~~ | 2026-06-16 10:20 完成（每天 0:30/4:30/8:30/12:30/16:30/20:30，commit c4719f4） |
 | ✅ | ~~桌面整理 + 43GB 釋放~~ | 2026-06-16 10:30 完成——本機可用 68→111 GB |
 | ⏸ | 客戶見證區塊 | 教練 06-16 說「AI 那邊不需要顧客見證，還沒有」——暫緩 |
-| 🟡 | H 的 gh auth 修復 | H 無法 push |
+| ✅ | ~~H 的 gh auth 修復~~ | 2026-06-16 11:13 完成——真因是 hermes-agent 指向 NousResearch 開源 repo（非教練所有），push URL 改 no_push 防呆；workspace 本來就正常 |
+| ✅ | ~~openclaw.json 髒改動處理~~ | 2026-06-16 11:11 完成——memorySearch provider=local + enabled=true（本機 embeddinggemma 模型，零 API 費用），commit 5e561e4 |
 | 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
-| 🟡 | **openclaw.json 髒改動未 commit** | 之前其他軍師改的（memorySearch:false + 新增 usage-query/round-table-orchestrator hook），等教練確認原因再 commit |
 | 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 教練本人已踩過 6.1 坑，沒急迫性；下次主動找時間 |
 | 🔴 | **VPS 線上小龍蝦保持 2026.5.27 不升級** | 教練「比較少用」，5.27 已穩定跑 7 天 healthy；升 6.x 必踩教練親身踩過的 2026.6.1 兩道坑（外掛 activation + cron 孤兒，斷頭 4 天血淚） |
 
