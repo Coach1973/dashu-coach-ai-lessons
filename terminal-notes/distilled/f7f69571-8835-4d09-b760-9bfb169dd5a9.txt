@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session f7f69571-8835-4d09-b760-9bfb169dd5a9
-# 提取時間：2026-06-16 12:30 (台灣時間)
-# 共 3 條教練原話
+# 提取時間：2026-06-16 18:30 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -79,3 +79,63 @@ pending_distill/ 目錄是空的，自上次蒸餾（4:30）到現在（8:04）�
 | **橋接腳本** | `scripts/sync_jsonl_to_pending_distill.py`（168 行 Python）|
 | **macOS 排程** | `~/Library/LaunchAgents/com.bymyway.sync-jsonl-distill.plist`（launchctl list 確認載入）|
 | **立刻試跑** | 投遞 **2 個 session、248 段對話** 到 `terminal-note…（略）
+
+【教練 2026-06-16 07:04】
+在頂級特助分工群裡面，這個學長的身份好像經常錯亂。我明明沒有安排他去執行 YouTube 的任務，結果他在裡面卻回報了。
+
+你可不可以看一下他那邊的情況？https://t.me/+TRV5MwIqwIZlYzY1
+[2026/6/16 下午 12:32] 大樹教練的頂級特助: ⚠️ Cron job "YouTube 頻道掃描與評估" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.
+[2026/6/16 下午 12:32] 大樹教練的頂級特助: ⚠️ Cron job "YouTube 頻道掃描與評估" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)
+
+　▶ AI 回應：我去查學長那邊跑了什麼。
+
+　▶ AI 回應：抓到關鍵了。讓我把這條 cron 完整 dump 出來。
+
+　▶ AI 回應：抓到真相了，分兩層：
+
+## 🔍 一、為什麼學長會跑 YouTube 任務
+
+```json
+"name": "YouTube 頻道掃描與評估"
+"agentId": "main"          ← 學長
+"enabled": false           ← 明明是停用狀態
+"schedule": "30 12 * * *"  ← 每天中午 12:30
+"delivery.to": "-1003877502911"  ← 頂級特助分工群組
+```
+
+**這條 cron 是別場 session 建的「每天中午 12:30 抓 YouTube 新片」任務**，後來被某個人停用（enable…（略）
+
+【教練 2026-06-16 07:09】
+刪
+
+　▶ AI 回應：⚠️ **重大發現**——`jobs.json` **不是 OpenClaw cron 的真實來源**！
+
+`openclaw cron list` 顯示 YouTube cron 還在跑（ID `4de83cf2...`），跟我剛從 jobs.json 刪的（ID `8d7c282a...`）**根本是不同條**。jobs.json 只是舊版設定殘留——真正在跑的另有儲存。我得用 OpenClaw CLI 才能真刪。
+
+　▶ AI 回應：YouTube cron 真的刪除了 ✅。順手把今天的 jobs.json 改動也 commit 留痕。
+
+　▶ AI 回應：刪除成功 ✅ commit `5920e51` 已上雲端。
+
+## 🎯 處置結果
+
+| 項目 | 憑證 |
+|------|------|
+| **YouTube cron 真刪** | `openclaw cron rm 4de83cf2...` → `{ok:true, removed:true}` |
+| **cron list 驗證** | 已無任何 YouTube 條目 |
+| **jobs.json 同步** | 12 → 11 條（一致性整理）|
+| **備份** | `cron/jobs.json.bak.before-youtube-delete-20260616-15100…（略）
+
+【教練 2026-06-16 07:12】
+FB我交給H 小龍蝦那邊可以刪
+
+　▶ AI 回應：FB 生日祝福真刪了 ✅
+
+| 項目 | 憑證 |
+|------|------|
+| **cron rm** | `openclaw cron rm 1232e58a...` → `{ok:true, removed:true}` |
+| **list 驗證** | `cron list \| grep -iE "FB\|生日"` 0 筆 |
+| **cron 總數** | 14 → **12 條**（這場一口氣刪 YouTube + FB）|
+
+小龍蝦這邊乾淨了，FB 生日祝福從現在開始**只在 H 那邊跑**，不會雙開。
+
+下次早上 6 點再有訊息推進來，就代表 H 接好了；如果一片靜，…（略）
