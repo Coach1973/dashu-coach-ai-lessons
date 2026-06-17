@@ -12,7 +12,7 @@
 #   情境 B：一鍵還原後 → workspace 還在 E 槽，重寫 settings.json
 
 param(
-    [string]$Root = "E:\junshi-hook"
+    [string]$Root = "E:\Claude-Data"
 )
 
 $ErrorActionPreference = 'Stop'
@@ -76,11 +76,50 @@ Write-Host "`n[3/6] 永久設 JUNSHI_HOOK_ROOT 環境變數..." -ForegroundColor
 $env:JUNSHI_HOOK_ROOT = $Root
 Write-Host "  ✅ 已設 JUNSHI_HOOK_ROOT = $Root（永久，登入時自動載入）" -ForegroundColor Green
 
-# ───────── 4. 處理 C 槽 settings.json（清殭屍 + 寫新註冊）─────────
-Write-Host "`n[4/6] 重建 C 槽 settings.json hook 註冊..." -ForegroundColor Yellow
-$settingsFile = Join-Path $env:USERPROFILE ".claude\settings.json"
-$settingsDir  = Split-Path $settingsFile -Parent
+# ───────── 4. 自動偵測 settings.json 位置（教練若把 .claude 搬到 E 槽就用 E 槽，不再被一鍵還原威脅）─────────
+Write-Host "`n[4/6] 偵測 settings.json 位置..." -ForegroundColor Yellow
+
+# 優先序：
+#   1. $env:CLAUDE_CONFIG_DIR（Claude Code 官方自訂變數）
+#   2. E:\Claude-Data\.claude（教練既有目錄，若存在則代表已搬到 E 槽）
+#   3. %USERPROFILE%\.claude（Claude Code 預設，C 槽，會被一鍵還原洗掉）
+$settingsLocations = @()
+if ($env:CLAUDE_CONFIG_DIR) {
+    $settingsLocations += [PSCustomObject]@{ Path = (Join-Path $env:CLAUDE_CONFIG_DIR "settings.json"); Source = "CLAUDE_CONFIG_DIR 環境變數" }
+}
+if (Test-Path "E:\Claude-Data\.claude") {
+    $settingsLocations += [PSCustomObject]@{ Path = "E:\Claude-Data\.claude\settings.json"; Source = "E:\Claude-Data\.claude 既有目錄（教練既有）" }
+}
+$settingsLocations += [PSCustomObject]@{ Path = (Join-Path $env:USERPROFILE ".claude\settings.json"); Source = "%USERPROFILE%\.claude（C 槽預設，會被一鍵還原）" }
+
+# 列所有候選給 Windows 軍師看（透明）
+Write-Host "  偵測到的候選位置：" -ForegroundColor Cyan
+foreach ($loc in $settingsLocations) {
+    $exists = if (Test-Path $loc.Path) { "✅存在" } else { "—" }
+    Write-Host "    [$exists] $($loc.Path)" -ForegroundColor DarkGray
+    Write-Host "          來源：$($loc.Source)" -ForegroundColor DarkGray
+}
+
+# 優先用第一個存在的 .claude 目錄；都不存在就用最後一個（C 槽）建新
+$settingsFile = $settingsLocations[0].Path
+foreach ($loc in $settingsLocations) {
+    $dir = Split-Path $loc.Path -Parent
+    if (Test-Path $dir) {
+        $settingsFile = $loc.Path
+        Write-Host "  ✅ 選用: $settingsFile" -ForegroundColor Green
+        if ($settingsFile -like "E:\*") {
+            Write-Host "  🎉 settings.json 在 E 槽，連接線也免疫一鍵還原！" -ForegroundColor Green
+        } else {
+            Write-Host "  ⚠️  settings.json 仍在 C 槽，一鍵還原後需重跑本腳本" -ForegroundColor Yellow
+        }
+        break
+    }
+}
+
+$settingsDir = Split-Path $settingsFile -Parent
 if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null }
+Write-Host "" -ForegroundColor DarkGray
+Write-Host "  重建 hook 註冊..." -ForegroundColor Yellow
 
 if (Test-Path $settingsFile) {
     $backup = "$settingsFile.bak.v3.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
@@ -175,7 +214,8 @@ Write-Host "━━━━━━━━━━━━━━━━━━━━━━�
 Write-Host "✅ 安裝/還原完成（v3 E 槽工具箱設計）" -ForegroundColor Green
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
 Write-Host "📁 工具箱（E 槽，不被一鍵還原）: $workspace"
-Write-Host "🔗 連接線（C 槽 settings.json）: $settingsFile"
+$connLocation = if ($settingsFile -like "E:\*") { "🎉 連接線（E 槽，也免疫一鍵還原）" } else { "🔗 連接線（C 槽，一鍵還原會洗掉，需重跑本腳本）" }
+Write-Host "${connLocation}: $settingsFile"
 Write-Host "☁️  真相源（雲端）: $REPO_URL"
 Write-Host "🌐 環境變數: JUNSHI_HOOK_ROOT = $Root"
 Write-Host "🧹 清掉殭屍註冊: $brokenCount 個"

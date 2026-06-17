@@ -16,13 +16,16 @@ $ErrorActionPreference = 'Continue'
 # ───────── 雲端真相源（固定，不需動）─────────
 $REPO_URL  = "https://github.com/Coach1973/mac-openclaw-workflows.git"
 
-# ───────── workspace 位置（v3 教練親定：E 槽不被一鍵還原洗掉）─────────
+# ───────── workspace 位置（v3.1 教練親定：對齊既有 E:\Claude-Data）─────────
 # 優先序：
 #   1. $env:JUNSHI_HOOK_ROOT 環境變數（由 install 腳本永久設定）
-#   2. E:\junshi-hook\workspace（E 槽可寫時的預設）
-#   3. C 槽 fallback（最後手段，C 槽會被一鍵還原洗掉，僅應急）
+#   2. E:\Claude-Data\workspace（教練既有 Claude-Data 目錄結構）
+#   3. E:\junshi-hook\workspace（fallback 若 Claude-Data 不存在）
+#   4. C 槽（最後手段，會被一鍵還原洗掉）
 if ($env:JUNSHI_HOOK_ROOT) {
     $workspace = Join-Path $env:JUNSHI_HOOK_ROOT "workspace"
+} elseif (Test-Path "E:\Claude-Data") {
+    $workspace = "E:\Claude-Data\workspace"
 } elseif (Test-Path "E:\") {
     $workspace = "E:\junshi-hook\workspace"
 } else {
