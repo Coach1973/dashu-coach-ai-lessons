@@ -2,6 +2,8 @@
 
 > 教練親定 2026-05-30，更新 2026-06-06，2026-06-13 增補 Cowork 分工，2026-06-17 補上「Chrome 唯一預覽鐵律」放最頂，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
 
+> 🪟 **Windows 桌面版軍師請改讀**：[`knowledges/IDENTITY_windows_desktop.md`](IDENTITY_windows_desktop.md) ——同樣七步，但所有指令是 PowerShell 對應版（`$env:TEMP` 取代 `/tmp`、`Start-Process chrome.exe` 取代 `open -a "Google Chrome"`、`Compress-Archive` 取代 `zip` 等）。本檔以 Mac/Linux bash 為主。
+
 ---
 
 ## 🔴🔴🔴 預覽鐵律（2026-06-17 教練第二次親口提醒後寫死，違反 = 守則 #07 同處跌倒）
