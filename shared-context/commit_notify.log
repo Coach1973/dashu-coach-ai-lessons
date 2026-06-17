@@ -2443,3 +2443,6 @@
 [2026-06-18 04:53] [CoachWU] e09de656: [Mac] 案例 25 + handoff v27.2 收尾：BOM 真根因揭曉，E15 規約立檔，Sonnet 4.6 致敬
 [2026-06-18 04:58] [CoachWU] 283a9b06: [Mac] 案例 25 補真機關：pre-commit hook 強制 .ps1 BOM，承認 E13/E14 是廢紙
 [2026-06-18 05:00] [CoachWU] 4728c833: auto: 終端機對話蒸餾 2026-06-18
+[2026-06-18 05:18] [CoachWU] b404b65f: auto-backup 2026-06-18 05:02
+[2026-06-18 05:18] [CoachWU] 56c20ed1: [Mac] SOP: LINE Windows 桌面版對話搬到 E 槽（三階段強制隔離設計）
+[2026-06-18 05:30] [CoachWU] 29f5bda1: auto: 終端機對話蒸餾 2026-06-18
