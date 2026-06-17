@@ -18,8 +18,31 @@
 
 - ❌ `open <path>` 不指定 -a（會走系統預設，可能跳 Safari）
 - ❌ `open -a Safari ...`（教練不用 Safari）
-- ❌ 只依賴 Claude Code 預覽面板（教練透過 RustDesk 看不到、且渲染跟真實瀏覽器有差）
+- ❌ **觸發 Claude Code 內建 Launch preview panel（教練 2026-06-17 三度強調）**——這個面板展不開、看不到整體，教練每次都要手動關閉造成困擾，AI 每次開啟也浪費資源
 - ❌ 用 Write 工具寫到 /tmp/ 期待 Launch 面板顯示
+
+### 🔴 AI 端怎麼避免觸發 Launch 預覽面板
+
+Claude Code 的 `Edit` / `Write` 工具動 HTML 檔會**自動**觸發 PostToolUse hook 把檔案推進 Launch 預覽面板（無 settings.json 開關可關）。所以 AI 端要主動避開：
+
+| 改 HTML 的方式 | 會觸發 Launch 預覽？ |
+|---------------|------------------|
+| `Edit` 工具 | ✅ 會觸發（教練不要） |
+| `Write` 工具 | ✅ 會觸發（教練不要） |
+| `Bash` + `python3` / `sed` / `awk` 改檔 | ❌ 不會觸發 ✅ 採用 |
+
+**標準作法**：HTML 改動寫成 Python 腳本透過 Bash 跑（精準替換 + 不觸發預覽）：
+
+```bash
+python3 << 'PY'
+import re
+with open("index.html","r",encoding="utf-8") as f: s = f.read()
+s = s.replace("舊字串", "新字串")
+with open("index.html","w",encoding="utf-8") as f: f.write(s)
+PY
+```
+
+改完直接 `open -a "Google Chrome"`，省去教練關預覽面板的麻煩。
 
 ### Why
 教練 2026-06-17 第二次親口提醒：「之前打開都是用 chrome 為何這次是使用 safari？唯一指定開啟的 html 就是 chrome」。
