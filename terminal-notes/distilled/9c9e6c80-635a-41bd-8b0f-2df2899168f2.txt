@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9c9e6c80-635a-41bd-8b0f-2df2899168f2
-# 提取時間：2026-06-17 18:30 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-06-17 19:00 (台灣時間)
+# 共 5 條教練原話
 
 ---
 
@@ -100,3 +100,46 @@ Claude 並不瞭解它是桌面版的 GUI 程式，他還以為是終端機 CLI�
 | 🟢 本機 OpenClaw 2026.6.1 → 6.6 升級評估 | 待教練拍板 |
 
 或者教練…（略）
+
+【教練 2026-06-17 10:31】
+---這裡是 Windows 桌面版傳來的，代表它目前的能力讀取正常。
+
+接下來請你：
+1. 接著做「軍師」對齊驗證
+2. B 任務我已經在做了，可以直接刪掉
+3. C 任務早點恢復這件事情，在 7 月之前應該都還用不到，可以到時候再提醒
+
+## 🦞 我讀完了（Windows 軍師・2026-06-17 開工報告）
+
+**六步驟完成確認：**
+1. ✅ 接力棒 v27 讀完（本棒：Opus 4.7 Mac CLI，下午 5:45）
+2. ✅ HEARTBEAT 讀完（2026-06-17 18:03 relay poll OK，無 ⬜ 待辦）
+3. ✅ 血淚試金石讀完 — 案例 24 牢記：636 GB E 槽蒸發起因是 Bash 呼叫 PowerShell 時 `$temp` 跳脫空字串，`Remove-Item -Recurse -Force` 從 `E:\` 整槽刪除。**今場絕不碰任何遞迴刪除指令**。
+4. ✅ knowledges/ 最新計劃 — SOP v1.1 已在本次 git pull 中到位（`fb357e5b`）
+5. ✅ memory 讀完 — 2026-06-17 補記完整，Windows 軍師 13:45 簽署對齊紀錄在案
+6. ✅ git pull 完成，workspace 現在對齊 Mac 最新 commit `fb357e5b`
+
+---
+
+**今場三個待辦選項（接棒 v27 指定）：**
+
+| 代號 | 任務 | 時間 |
+|------|------|------|
+| **A** | Windows 軍師對齊驗證（確認 SOP v1.1 + E11 + delete_guard.ps1 簽署） | 10 分鐘 |
+| **B** | E 槽 636 GB 救援評估（Recuva/EaseUS 方案） | 30 分鐘 |
+| **C** | jiesheng 早鳥恢復（暗號觸發） | 5 分鐘 |
+
+**今天從哪件事開始？**
+
+　▶ AI 回應：Windows 軍師線上了，認知到位（讀完接力棒、案例 24 記住、git pull 對齊到 `fb357e5b`）。我這邊（Mac 軍師）負責**寫對齊驗證 checklist 給 Windows 軍師執行 + 收他的 ack commit**。先看 SOP v1.1 簽署規約怎麼定的。
+
+　▶ AI 回應：SOP v1.1 簽署規約我看清楚了。寫一份「Windows 軍師對齊驗證 checklist」給教練貼過去——Windows 軍師執行完會直接 commit + push，我這邊看到 ack commit 就算完成。
+
+## 📋 教練貼這段給 Windows 桌面版（一次到位）
+
+```
+請執行 Windows 軍師對齊驗證 SOP v1.1，照下列順序執行並全程用 [Win] 前綴 commit：
+
+【步驟 1】裝開工 hook（之後每場「開」「開工」自動觸發）
+cd $env:USERPROFILE\.openclaw\workspace
+powershell -ExecutionPol…（略）
