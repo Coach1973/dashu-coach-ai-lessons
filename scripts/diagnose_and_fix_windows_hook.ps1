@@ -1,44 +1,53 @@
-# 全自動診斷 + 徹底修復 Windows 桌面版 Claude Code 開工 hook
-# 適用情境：跑了 install_windows_hook.ps1 顯示「已註冊跳過」，但實際打「開工」毫無反應
-# 根因：E 槽 636 GB 蒸發災難後，舊 hook 路徑指向已不存在的腳本，silent fail
-# 教練暗號：「徹底修 Windows hook」
+# 全自動診斷 + 徹底修復 Windows 桌面版 Claude Code 開工 hook (v2)
+#
+# v2 設計核心（教練 2026-06-18 親定）：
+#   - 完全不掃 E 槽（教練 E 槽在修復）
+#   - 固定走 %USERPROFILE%\.openclaw\workspace（C 槽）
+#   - workspace 不存在 → 自動 git clone（一次性）
+#   - 用新版 feed_junshi_handoff.ps1（自帶每次 git pull）
+#
+# 教練暗號：「徹底修 hook」
 
 $ErrorActionPreference = 'Stop'
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
-Write-Host "🔍 Windows 軍師 hook 診斷 + 徹底修復" -ForegroundColor Cyan
+Write-Host "🔍 Windows 軍師 hook 診斷 + 徹底修復 v2" -ForegroundColor Cyan
+Write-Host "  （不碰 E 槽，固定 C 槽，hook 自帶雲端同步）" -ForegroundColor DarkGray
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
 
-# ───────── 1. 找 workspace 真實位置 ─────────
-Write-Host "`n[1/7] 找 workspace 真實位置..." -ForegroundColor Yellow
-$candidates = @(
-    $env:OPENCLAW_WORKSPACE,
-    (Join-Path $env:USERPROFILE ".openclaw\workspace"),
-    "C:\Users\$env:USERNAME\.openclaw\workspace",
-    "E:\Claude-Data\.openclaw\workspace",
-    "E:\.openclaw\workspace",
-    "D:\.openclaw\workspace"
-) | Where-Object { $_ -and (Test-Path (Join-Path $_ "JUNSHI_HANDOFF_LATEST.md")) }
-
-if (-not $candidates) {
-    Write-Host "  ❌ 找不到任何含 JUNSHI_HANDOFF_LATEST.md 的 workspace" -ForegroundColor Red
-    Write-Host "  請先 git clone 到 `$env:USERPROFILE\.openclaw\workspace" -ForegroundColor Yellow
-    exit 1
-}
-$workspace = $candidates[0]
+$REPO_URL  = "https://github.com/Coach1973/mac-openclaw-workflows.git"
+$workspace = Join-Path $env:USERPROFILE ".openclaw\workspace"
 $hookScript = Join-Path $workspace "scripts\feed_junshi_handoff.ps1"
-Write-Host "  ✅ Workspace: $workspace" -ForegroundColor Green
-Write-Host "  ✅ Hook 腳本: $hookScript" -ForegroundColor Green
+
+# ───────── 1. 確保 C 槽 workspace 存在（不存在就 clone）─────────
+Write-Host "`n[1/6] 確認 workspace（固定 C 槽位置：$workspace）..." -ForegroundColor Yellow
+if (-not (Test-Path $workspace)) {
+    Write-Host "  📥 不存在 → 從雲端 clone..." -ForegroundColor Cyan
+    $parentDir = Split-Path $workspace -Parent
+    if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
+    & git clone --quiet $REPO_URL $workspace
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  ❌ Clone 失敗——請檢查 GitHub credential（試 ``gh auth status``）" -ForegroundColor Red
+        exit 1
+    }
+    Write-Host "  ✅ Clone 完成" -ForegroundColor Green
+} else {
+    Write-Host "  ✅ 已存在 → git pull 取最新..." -ForegroundColor Green
+    & git -C $workspace pull --quiet
+    $headHash = (& git -C $workspace rev-parse --short HEAD).Trim()
+    Write-Host "  ✅ 已拉到 HEAD: $headHash" -ForegroundColor Green
+}
 
 if (-not (Test-Path $hookScript)) {
-    Write-Host "  ❌ feed_junshi_handoff.ps1 不存在！請 git pull" -ForegroundColor Red
+    Write-Host "  ❌ scripts\feed_junshi_handoff.ps1 不存在——repo 結構異常" -ForegroundColor Red
     exit 1
 }
+Write-Host "  ✅ Hook 腳本: $hookScript" -ForegroundColor Green
 
-# ───────── 2. 列出現有 settings.json 內容 ─────────
-Write-Host "`n[2/7] 檢查現有 settings.json..." -ForegroundColor Yellow
+# ───────── 2. 讀現有 settings.json ─────────
+Write-Host "`n[2/6] 檢查現有 settings.json..." -ForegroundColor Yellow
 $settingsFile = Join-Path $env:USERPROFILE ".claude\settings.json"
 if (-not (Test-Path $settingsFile)) {
-    Write-Host "  📝 settings.json 不存在，建新檔" -ForegroundColor Cyan
+    Write-Host "  📝 不存在，建新檔" -ForegroundColor Cyan
     $settings = [PSCustomObject]@{}
 } else {
     $backup = "$settingsFile.bak.diagfix.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
@@ -47,51 +56,38 @@ if (-not (Test-Path $settingsFile)) {
     $settings = Get-Content $settingsFile -Raw -Encoding UTF8 | ConvertFrom-Json
 }
 
-# ───────── 3. 掃描所有 hook 註冊，找出壞掉的舊註冊 ─────────
-Write-Host "`n[3/7] 掃描舊 hook 註冊..." -ForegroundColor Yellow
+# ───────── 3. 掃描舊 hook 註冊（包括指向已不存在路徑的殭屍註冊）─────────
+Write-Host "`n[3/6] 掃描舊 hook 註冊..." -ForegroundColor Yellow
 $brokenHooks = @()
 $validHooks  = @()
-
 if ($settings.PSObject.Properties['hooks'] -and $settings.hooks.PSObject.Properties['UserPromptSubmit']) {
     foreach ($entry in $settings.hooks.UserPromptSubmit) {
         foreach ($h in $entry.hooks) {
             if ($h.command -match "feed_junshi_handoff\.ps1") {
-                # 取出 -File 後的路徑
-                if ($h.command -match '-File\s+"([^"]+)"') {
-                    $registeredPath = $matches[1]
-                } elseif ($h.command -match '-File\s+(\S+)') {
-                    $registeredPath = $matches[1]
-                } else {
-                    $registeredPath = "(無法解析)"
-                }
+                if ($h.command -match '-File\s+"([^"]+)"') { $registeredPath = $matches[1] }
+                elseif ($h.command -match '-File\s+(\S+)') { $registeredPath = $matches[1] }
+                else { $registeredPath = "(無法解析)" }
 
                 if (Test-Path $registeredPath) {
                     $validHooks += $registeredPath
                     Write-Host "  ✅ 有效: $registeredPath" -ForegroundColor Green
                 } else {
                     $brokenHooks += $registeredPath
-                    Write-Host "  ❌ 壞掉（檔案不存在）: $registeredPath" -ForegroundColor Red
+                    Write-Host "  ❌ 殭屍（檔案不存在）: $registeredPath" -ForegroundColor Red
                 }
             }
         }
     }
 }
 
-if ($brokenHooks.Count -eq 0 -and $validHooks.Count -eq 0) {
-    Write-Host "  ℹ️  沒有任何 feed_junshi_handoff.ps1 註冊（全新安裝）" -ForegroundColor Cyan
-}
-
-# ───────── 4. 重建 hooks.UserPromptSubmit：清掉所有 feed_junshi_handoff 註冊，重新寫一份 ─────────
-Write-Host "`n[4/7] 清除壞掉/舊註冊，重建 hook..." -ForegroundColor Yellow
-
+# ───────── 4. 清掉所有 feed_junshi_handoff 註冊，重寫一份指向正確路徑 ─────────
+Write-Host "`n[4/6] 重建 hook（清舊註冊 + 寫新指向）..." -ForegroundColor Yellow
 if (-not $settings.PSObject.Properties['hooks']) {
     $settings | Add-Member -NotePropertyName hooks -NotePropertyValue ([PSCustomObject]@{}) -Force
 }
 if (-not $settings.hooks.PSObject.Properties['UserPromptSubmit']) {
     $settings.hooks | Add-Member -NotePropertyName UserPromptSubmit -NotePropertyValue @() -Force
 }
-
-# 過濾掉所有 feed_junshi_handoff 相關 entry（會用乾淨新版重新加）
 $cleanedEntries = @()
 foreach ($entry in $settings.hooks.UserPromptSubmit) {
     $remainingHooks = @($entry.hooks | Where-Object { $_.command -notmatch "feed_junshi_handoff\.ps1" })
@@ -100,63 +96,53 @@ foreach ($entry in $settings.hooks.UserPromptSubmit) {
         $cleanedEntries += $entry
     }
 }
-
-# 加入乾淨的新 entry
 $hookCmd = "powershell.exe -ExecutionPolicy Bypass -File `"$hookScript`""
-$newEntry = [PSCustomObject]@{
+$cleanedEntries += [PSCustomObject]@{
     matcher = ""
-    hooks   = @([PSCustomObject]@{
-        type    = "command"
-        command = $hookCmd
-    })
+    hooks   = @([PSCustomObject]@{ type = "command"; command = $hookCmd })
 }
-$cleanedEntries += $newEntry
 $settings.hooks.UserPromptSubmit = $cleanedEntries
+Write-Host "  ✅ 清除殭屍註冊 $($brokenHooks.Count) 個" -ForegroundColor Green
+Write-Host "  ✅ 重新註冊 1 個 → $hookScript" -ForegroundColor Green
 
-Write-Host "  ✅ 已清除 $($brokenHooks.Count) 個壞掉註冊" -ForegroundColor Green
-Write-Host "  ✅ 已重新註冊指向: $hookScript" -ForegroundColor Green
-
-# ───────── 5. 寫回 settings.json ─────────
-Write-Host "`n[5/7] 寫回 settings.json..." -ForegroundColor Yellow
+# ───────── 5. 寫回 settings.json（UTF-8 with BOM 避免 PS 5.1 emoji 亂碼）─────────
+Write-Host "`n[5/6] 寫回 settings.json..." -ForegroundColor Yellow
 $settingsDir = Split-Path $settingsFile -Parent
 if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null }
 $json = $settings | ConvertTo-Json -Depth 10
-# 寫成 UTF-8 with BOM（避免 PowerShell 5.1 讀取 emoji 崩潰）
 $utf8Bom = New-Object System.Text.UTF8Encoding $true
 [System.IO.File]::WriteAllText($settingsFile, $json, $utf8Bom)
-Write-Host "  ✅ 已寫入 $settingsFile（UTF-8 with BOM）" -ForegroundColor Green
+Write-Host "  ✅ 已寫入 $settingsFile" -ForegroundColor Green
 
-# ───────── 6. Self-test（真的跑一次 hook 看注入內容）─────────
-Write-Host "`n[6/7] Self-test（模擬教練說「開工」）..." -ForegroundColor Yellow
+# ───────── 6. Self-test（真的跑一次 hook + 驗證雲端 git pull 通了）─────────
+Write-Host "`n[6/6] Self-test（模擬「開工」+ 驗證雲端 git pull）..." -ForegroundColor Yellow
 $testPayload = @{ session_id = "diagfix-$(Get-Date -Format 'HHmmss')"; prompt = "開工" } | ConvertTo-Json -Compress
 $testOutput  = $testPayload | & powershell.exe -ExecutionPolicy Bypass -File $hookScript 2>&1
-$firstLines  = ($testOutput -split "`n" | Select-Object -First 5) -join "`n"
+$cloudLine   = ($testOutput | Select-String "已拉雲端最新|首次 clone").Line | Select-Object -First 1
+$handoffOK   = ($testOutput -match "軍師接力棒")
 
-if ($testOutput -match "軍師接力棒") {
-    Write-Host "  ✅ Self-test 通過——hook 收到「開工」會注入接力棒" -ForegroundColor Green
-    Write-Host "  注入第一行: $($testOutput -split "`n" | Select-Object -First 1)" -ForegroundColor DarkGray
+if ($handoffOK) {
+    Write-Host "  ✅ Self-test 通過——hook 收到「開工」會自動 git pull + 注入接力棒" -ForegroundColor Green
+    if ($cloudLine) { Write-Host "  ☁️  $($cloudLine.Trim())" -ForegroundColor Cyan }
 } else {
     Write-Host "  ⚠️  Self-test 異常，輸出前 5 行：" -ForegroundColor Yellow
-    Write-Host $firstLines -ForegroundColor DarkGray
+    ($testOutput -split "`n" | Select-Object -First 5) | ForEach-Object { Write-Host "     $_" -ForegroundColor DarkGray }
 }
 
-# ───────── 7. 最終診斷報告 ─────────
-Write-Host "`n[7/7] 最終診斷報告" -ForegroundColor Yellow
+# ───────── 最終報告 ─────────
+Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
-Write-Host "✅ workspace 真實位置: $workspace" -ForegroundColor Green
-Write-Host "✅ hook 腳本: $hookScript ($(if(Test-Path $hookScript){'存在'}else{'❌不存在'}))" -ForegroundColor Green
-Write-Host "✅ settings.json: $settingsFile" -ForegroundColor Green
-Write-Host "✅ 清除壞掉舊註冊: $($brokenHooks.Count) 個" -ForegroundColor Green
-Write-Host "✅ 重新註冊: 1 個（指向上述存在的腳本）" -ForegroundColor Green
+Write-Host "✅ 修復完成（v2 雲端優先設計）" -ForegroundColor Green
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
+Write-Host "📁 Workspace: $workspace（**不依賴 E 槽**）"
+Write-Host "🪝 Hook 註冊: $hookScript"
+Write-Host "☁️  雲端同步: 每次「開工」自動 git pull"
+Write-Host "🧹 清除殭屍註冊: $($brokenHooks.Count) 個"
 Write-Host ""
-Write-Host "🔴 關鍵下一步：" -ForegroundColor Red
-Write-Host "  Claude Code 啟動時讀 settings.json，所以必須【完全關閉重開】才會載入新的 hook 路徑。" -ForegroundColor Yellow
-Write-Host "  在當前 session 打「開工」不會有反應，這正常——hook 是啟動時 register 的。" -ForegroundColor Yellow
+Write-Host "🔴 下一步：" -ForegroundColor Red
+Write-Host "  1. 完全關閉 Claude Code 桌面版（不是隱藏視窗 — 是退出進程）" -ForegroundColor White
+Write-Host "  2. 重新開啟" -ForegroundColor White
+Write-Host "  3. 開新對話打「開」或「開工」" -ForegroundColor White
+Write-Host "     應該會看到「軍師接力棒（系統自動注入）」+ 雲端 HEAD hash" -ForegroundColor White
 Write-Host ""
-Write-Host "  1. 完全關閉 Claude Code（不是隱藏視窗——是退出進程）" -ForegroundColor White
-Write-Host "  2. 確認 cwd：開啟時切到 workspace 目錄，不要從 E:\ 開（E 槽被清光，沒 CLAUDE.md）" -ForegroundColor White
-Write-Host "     建議：cd $workspace ; 然後啟動 Claude Code" -ForegroundColor White
-Write-Host "  3. 開新對話打「開工」——應該會看到接力棒自動注入" -ForegroundColor White
-Write-Host ""
-Write-Host "回報 Mac 軍師：把上面整段【最終診斷報告】貼過去就完成驗證" -ForegroundColor Cyan
+Write-Host "回報 Mac 軍師：把上面五行報告貼過去就完成驗證" -ForegroundColor Cyan
