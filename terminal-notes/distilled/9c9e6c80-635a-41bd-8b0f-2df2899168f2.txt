@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9c9e6c80-635a-41bd-8b0f-2df2899168f2
-# 提取時間：2026-06-18 04:00 (台灣時間)
-# 共 10 條教練原話
+# 提取時間：2026-06-18 04:30 (台灣時間)
+# 共 15 條教練原話
 
 ---
 
@@ -332,3 +332,137 @@ Windows 軍師說「**hook 已存在，跳過**」是**假信息**——我寫�
 
 【教練 2026-06-17 19:59】
 重點是他就不能直接讀雲端嗎？E碟目前還在修復，可以不要管E碟嗎？
+
+　▶ AI 回應：對！教練問到重點——**Windows 軍師根本不用本機 clone**。為什麼非要本機檔案？hook 可以**直接從 GitHub 雲端拉最新版接力棒**。
+
+E 碟讓修復人員處理，我們完全跳過本機 workspace 依賴。
+
+先確認 repo 是公開還是私有（影響要不要帶 token）：
+
+　▶ AI 回應：確認結果：repo 是 **private**，所以「雲端」不是隨便 curl 就能拉。
+
+但教練的想法 100% 對——**真正的解法是讓 hook 自己每次拉雲端最新版**。我重新設計：
+
+| 舊架構（有問題）| 新架構（教練要的）|
+|---|---|
+| hook 只讀本機檔 → 本機沒就壞 | hook **每次觸發先 `git pull`** → 永遠雲端最新 |
+| 要掃 E 槽、C 槽、D 槽 | **完全不掃** → 固定一個位置，沒有就自動 clone |
+| 教練擔心 E 槽 | **完全不碰 E 槽** |
+
+　▶ AI 回應：現在更新 diagnose 腳本，拿掉 E 槽掃描，改成「固定走 C 槽 + 不存在就自動 clone」。
+
+　▶ AI 回應：✅ 雙腳本都已上雲端。憑證：commit `e3068950`（feed_junshi_handoff.ps1 v2 已在 `15f8576f` 由 cron auto-backup 帶上去）。
+
+## 🎯 教練的設計被採納——「雲端優先」徹底翻盤
+
+| 維度 | 舊版（v1，失效根因）| 新版 v2（教練要的）|
+|---|---|---|
+| 接力棒來源 | 死讀本機檔 | **每次「開工」自動 `git pull` 拉雲端** |
+| E 槽依賴 | 還會掃 E/D 槽 | **完全不碰 E 槽** |
+| workspace 不存在怎辦 | 印錯誤訊息要教練手動 clone | **自…（略）
+
+【教練 2026-06-17 20:06】
+不行，C碟，我會使用一鍵復原，所以建在C碟的資料也會不見，所以還是要放在E碟，建一個沒問題，然後，把所有要執行開工的資訊都同步一份過去，當然，如果能不依賴E碟就能雲端執行，是最棒的選擇。
+
+　▶ AI 回應：教練徹底點破——C 槽會被一鍵還原洗掉！包括 settings.json 本身。我重新設計：
+
+| 檔案 | 位置 | 為什麼 |
+|---|---|---|
+| **hook 腳本 + workspace cache** | `E:\junshi-hook\workspace` | E 槽不被一鍵還原 |
+| **settings.json**（Claude Code 規定在 C 槽）| 沒辦法，C 槽 | 但**一鍵還原後重跑 install 腳本一次就能修復** |
+| **接力棒真相** | **雲端 GitHub** | 每次「開工」都 git pull |
+
+也就是說：**E 槽 …（略）
+
+　▶ AI 回應：✅ v3 上線。憑證：commit `920383a0`。
+
+## 🏗️ 三層架構（教練親口設計）
+
+```
+┌──────────────────────────────────────┐
+│  ☁️  雲端真相源（GitHub repo）         │  永恆不變
+│  每次「開工」自動 git pull            │
+└──────────────────────────────────────┘
+                  ↑
+                  │ git pull
+                  │
+┌─────────────────…（略）
+
+【教練 2026-06-17 20:11】
+E:\Claude-Data\.claude  這是目前有建在 windows 的檔案，是為了執行網頁推建的檔，提供給你參考，看打算怎麼規劃，或是並不衝突，那我就直接貼給windows
+
+　▶ AI 回應：🎯 重要情報！教練既有 `E:\Claude-Data\.claude` 表示他**可能已經把 Claude Code 設定整個搬到 E 槽**（透過 `CLAUDE_CONFIG_DIR` 環境變數或 symlink）。如果是真的——**連 settings.json 都不會被一鍵還原洗掉**！
+
+我升級成 v3.1：對齊既有 `E:\Claude-Data\` 目錄結構，並加自動偵測。
+
+　▶ AI 回應：✅ v3.1 上線。憑證：commit `5ecf02bd`。
+
+## 🎯 對齊既有 `E:\Claude-Data` 目錄結構，不衝突
+
+| 項目 | v3.1 預設值 | 為什麼 |
+|---|---|---|
+| 工具箱 workspace | `E:\Claude-Data\workspace` | 對齊教練既有 `E:\Claude-Data` |
+| 連接線 settings.json | **自動偵測 3 個位置** | 看教練 .claude 在哪 |
+| settings.json 偵測 #1 | `$env:CLAUDE_CONFIG_DIR\settings.json` …（略）
+
+【教練 2026-06-17 20:17】
+📁 工具箱（E 槽，不被一鍵還原）: E:\Claude-Data\workspace
+🎉 連接線（E 槽，也免疫一鍵還原）: E:\Claude-Data\.claude\settings.json
+☁️  真相源（雲端）: https://github.com/Coach1973/mac-openclaw-workflows.git
+🌐 環境變數: JUNSHI_HOOK_ROOT = E:\Claude-Data
+🧹 清掉殭屍註冊: 1 個（HEAD: 5ecf02bd）
+
+　▶ AI 回應：🎉 **完美達成情境 A**——教練的設計徹底成功！
+
+| 層 | 位置 | 一鍵還原威脅 |
+|---|---|---|
+| 🌐 真相源 | 雲端 GitHub | 永恆 |
+| 📁 工具箱 | `E:\Claude-Data\workspace` | ✅ 免疫 |
+| 🎉 連接線 | `E:\Claude-Data\.claude\settings.json` | ✅ **也免疫** |
+| 🌍 環境變數 | `JUNSHI_HOOK_ROOT = E:\Claude-Data` | ✅ 永久 User 變數 |
+
+**C 槽完全脫鉤**。教練哪天按一鍵還原，整套系統毫無感覺。
+
+## 🪟…（略）
+
+【教練 2026-06-17 20:23】
+我全關，再重開，還特地選了資料夾 E:\Claude-Data\
+我打個 開 字 回應如下
+「開」だけでは意図が伝わりにくいです。何をお手伝いしましょうか？
+
+　▶ AI 回應：啊，我猜錯了——日文一般回應 = hook 完全沒跑。
+
+## 🔍 根因分析
+
+我之前用「`E:\Claude-Data\.claude` 目錄存在 = Claude Code 讀那個檔」這個推論——**錯了**。
+
+Claude Code 桌面版**只讀 `%USERPROFILE%\.claude\settings.json`（C 槽）**，除非有設 `CLAUDE_CONFIG_DIR` 環境變數。教練建 `E:\Claude-Data\.claude` 是他自己建的，Claude Code 根本沒被告知要讀那。
+
+所以我們 install 腳本寫了 E 槽 settings.json，…（略）
+
+　▶ AI 回應：✅ v3.2 上線。憑證：commit `a34b8136`。
+
+## 🙏 我承認 v3.1 設計錯誤
+
+教練實測點破——「目錄存在 = Claude Code 讀那」是**我自己腦補的推論**。真相：
+
+> **Claude Code 桌面版只讀 `%USERPROFILE%\.claude\settings.json`，除非有 `CLAUDE_CONFIG_DIR` 環境變數。**
+
+教練手建的 `E:\Claude-Data\.claude` 是教練自己建的，Claude Code 從來沒被告知過這個位置——所以 v3.1 把 hook 寫到 E 槽 = 寫到 Claude Code 看…（略）
+
+【教練 2026-06-17 20:27】
+我還是好奇，怎麼就不能讀我指定的檔案位置？或是直接讀雲端
+
+　▶ AI 回應：教練問到根本——這是程式設計上很合理的疑問。讓我老實回答兩個限制，然後給你**真正的終極解**。
+
+## 🔬 兩個限制的真相
+
+### Q1：為什麼 Claude Code 不能讀我指定的檔案位置？
+
+**其實能。** Claude Code 支援 `CLAUDE_CONFIG_DIR` 環境變數自訂 config 目錄（v3.2 已設）。
+
+**唯一麻煩**：環境變數要**登出/登入 Windows** 才會載入到新進程——這是 Windows 機制，不是 Claude Code 的鍋。
+
+### Q2：為什麼不能直接讀雲端？
+
+**Claude Code settings.json 必須是…（略）

@@ -2428,3 +2428,9 @@
 [2026-06-18 03:33] [CoachWU] a1febc89: auto-backup 2026-06-18 03:32 health check
 [2026-06-18 03:58] [CoachWU] 11cb6d89: [Mac] 全自動診斷+修復 Windows hook（解 install 腳本 false-positive 漏洞）
 [2026-06-18 04:00] [CoachWU] 92273499: auto: 終端機對話蒸餾 2026-06-18
+[2026-06-18 04:02] [CoachWU] 15f8576f: auto-backup 2026-06-18 04:02
+[2026-06-18 04:03] [CoachWU] e3068950: [Mac] Windows hook v2：雲端優先，每次開工自動 git pull，徹底不碰 E 槽
+[2026-06-18 04:09] [CoachWU] 920383a0: [Mac] Windows hook v3：E 槽工具箱 + C 槽連接線 + 雲端真相（一鍵還原免疫）
+[2026-06-18 04:12] [CoachWU] 5ecf02bd: [Mac] Windows hook v3.1：對齊既有 E:\Claude-Data 目錄 + settings.json 自動偵測
+[2026-06-18 04:26] [CoachWU] a34b8136: [Mac] Windows hook v3.2：雙寫 C+E settings.json，修正 Claude Code 只讀 C 槽的真相
+[2026-06-18 04:30] [CoachWU] 023f5d82: auto: 終端機對話蒸餾 2026-06-18
