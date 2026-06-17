@@ -118,8 +118,16 @@ gh repo create Coach1973/repo名稱 --public --source=. --remote=origin --push
 gh api repos/Coach1973/repo名稱/pages --method POST -f "source[branch]=master" -f "source[path]=/"
 `
 
-**驗證**：Pages 啟用後等 1-2 分鐘，確認 https://coach1973.github.io/repo名稱/ 有回應。
+**驗證**：Pages 啟用後，用 PowerShell curl 確認，不能靠瀏覽器（瀏覽器會快取舊 404）：
+
+```powershell
+(Invoke-WebRequest -Uri "https://coach1973.github.io/repo名稱/" -UseBasicParsing).StatusCode
+# 200 = 真的上線 → 告知教練按 Ctrl+Shift+R 強制清快取
+# 404 = 真的沒上 → 查 gh api repos/Coach1973/repo名稱/pages/builds
+```
+
 **禁止**：先 push 再補 .nojekyll——每次補救都要多等一次 build，教練等兩次 404。
+**禁止**：只看瀏覽器畫面就說「還是 404」——先 curl 再說（2026-06-18 學費）。
 ### coach1973 GitHub 站台修改流程
 
 > 🔴 **GitHub 自動部署站也要等教練確認才 push（2026-06-11 血淚）**
