@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9c9e6c80-635a-41bd-8b0f-2df2899168f2
-# 提取時間：2026-06-18 05:30 (台灣時間)
-# 共 29 條教練原話
+# 提取時間：2026-06-18 06:00 (台灣時間)
+# 共 32 條教練原話
 
 ---
 
@@ -802,3 +802,37 @@ Windows 軍師會 git pull → 讀 `knowledges/SOP_line_migrate_to_e_drive.md` �
 | 1 | 只「看」LINE 在哪、多大 | 零 |
 | 2 | robocopy 複製到 E 槽（**不刪原檔**）| 零（複製不動原檔）|
 | 3 | rename 原檔為 `.…（略）
+
+【教練 2026-06-17 21:52】
+有兩件事情：
+
+1. Windows 桌面版（也就是 PowerShell 終端機）在執行 Claude CLI 程式之後，原本的設定資訊都跑掉了。請比照我們這邊的設定，因為那邊的 Claude CLI 是接 MiniMax 的 API Key。請給我一段指令，讓我在 Windows 桌面版寫入設定，這樣之後打開 CLI 的時候，就可以自動執行 MiniMax 的 API Key。
+
+2. 請協助尋找一下這個資訊。去讀 ~/.openclaw/openclaw.json，找出 LINE channel 的完整 channelAccessToken 和 channelSecret，直接印出來給我看。
+
+　▶ AI 回應：教練回來了，兩件事我並行處理。
+
+　▶ AI 回應：LINE 兩個值找到了。MiniMax API key 不在 openclaw.json，要找 auth-profiles。
+
+【教練 2026-06-17 21:54】
+[Request interrupted by user]
+
+【教練 2026-06-17 21:55】
+不要浪費時間在這邊瞎找，API Key 一直都是在「路徑大全」裡面。
+
+路徑大全裡面有所有的 API Key，所以你怎麼會找不到呢？
+
+　▶ AI 回應：對，我浪費時間瞎找。直接讀路徑大全。
+
+　▶ AI 回應：收到，我有問題：路徑大全寫「見 openclaw.json」我就該直接拿，前面繞太遠了。直接給結果。
+
+---
+
+## 1️⃣ MiniMax API Key（給 Windows Claude CLI 用）
+
+```
+API Key  : sk-cp-0_iW72rvuoBmDucQXmRaSAUmcrjXTzZCpIxQt7xgKX_ImdeMkhGmgEV9QBzMNwH87jP-VLIXDNC8VqdgJmntnj5M9gJfTJFiveu9fWuXyQHnW9Z8EQnvlC8
+Base URL : https://api.minimax.io/anthropic
+```
+
+### W…（略）
