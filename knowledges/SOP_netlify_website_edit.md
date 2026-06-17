@@ -1,4 +1,4 @@
-# 網站修改 SOP（標準作業程序）
+﻿# 網站修改 SOP（標準作業程序）
 
 > 教練親定 2026-05-30，更新 2026-06-06，2026-06-13 增補 Cowork 分工，2026-06-17 補上「Chrome 唯一預覽鐵律」放最頂，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
 
@@ -92,6 +92,34 @@ print('repo_url:', d.get('build_settings', {}).get('repo_url', '無 → 手動�
 # 無 repo_url → 手動上傳型（走 zip + API）
 ```
 
+
+### 🔴 新建 GitHub Pages repo 必加 .nojekyll（2026-06-18 學費）
+
+**症狀**：新建 repo 啟用 Pages 後，網址一直 404。
+**根因**：GitHub Pages 預設跑 Jekyll 處理器；靜態 HTML 沒有 Jekyll 設定 → build 失敗 → 404。
+**解法**：**第一次 commit 時就加 .nojekyll**，讓 Pages 直接服務靜態檔案。
+
+`powershell
+# Windows — 新建 GitHub Pages repo 標準流程
+$repoDir = "D:\路徑\repo名稱"
+New-Item -ItemType Directory -Path $repoDir -Force | Out-Null
+Copy-Item "source.html" "$repoDir\index.html"
+
+# ★ 必加：.nojekyll（空檔案）
+[System.IO.File]::WriteAllText("$repoDir\.nojekyll", "")
+
+cd $repoDir
+git init
+git add index.html .nojekyll        # ← 兩個一起 commit
+git commit -m "init: landing page + .nojekyll"
+gh repo create Coach1973/repo名稱 --public --source=. --remote=origin --push
+
+# 啟用 Pages（master 分支）
+gh api repos/Coach1973/repo名稱/pages --method POST -f "source[branch]=master" -f "source[path]=/"
+`
+
+**驗證**：Pages 啟用後等 1-2 分鐘，確認 https://coach1973.github.io/repo名稱/ 有回應。
+**禁止**：先 push 再補 .nojekyll——每次補救都要多等一次 build，教練等兩次 404。
 ### coach1973 GitHub 站台修改流程
 
 > 🔴 **GitHub 自動部署站也要等教練確認才 push（2026-06-11 血淚）**
