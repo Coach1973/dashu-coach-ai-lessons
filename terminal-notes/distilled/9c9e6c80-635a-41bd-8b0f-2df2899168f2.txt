@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9c9e6c80-635a-41bd-8b0f-2df2899168f2
-# 提取時間：2026-06-17 19:00 (台灣時間)
-# 共 5 條教練原話
+# 提取時間：2026-06-17 19:30 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -143,3 +143,26 @@ Claude 並不瞭解它是桌面版的 GUI 程式，他還以為是終端機 CLI�
 【步驟 1】裝開工 hook（之後每場「開」「開工」自動觸發）
 cd $env:USERPROFILE\.openclaw\workspace
 powershell -ExecutionPol…（略）
+
+【教練 2026-06-17 11:12】
+那我還需要把這一份資料丟給他看嗎？
+
+還是我應該給他什麼樣的提示或暗示，好讓他能夠理解這一份對齊的內容？
+
+　▶ AI 回應：教練問到關鍵——其實**不該貼整份 checklist 給他**，那違反「動嘴就好」。正確做法是：
+
+**把 checklist 寫成 workspace 裡的一份檔，教練只要丟一個暗號**，Windows 軍師自己去 git pull + 讀 + 照做。
+
+我來寫這份檔。
+
+　▶ AI 回應：✅ 寫好了。憑證：commit `67f7d1fa`，已 push。
+
+## 🎯 教練只要動嘴一句話（兩個選一）
+
+### 暗號 A（最短，七字）
+> **「請執行對齊驗證」**
+
+### 暗號 B（明確指名）
+> **「請執行 CHECKLIST_windows_align_v1.1.md」**
+
+Windows 軍師收到任一句 → 自己 `git pull` 拿到新檔 → 讀 [knowledges/CHECKLIST_windows_align_v1.1.md](knowledges/CHECKLIST_windows_align_v1.1.md) → 七步驟一氣呵成 → 推一個 `[W…（略）

@@ -12,6 +12,11 @@ Netlify Personal Access Token（Coach1973 帳號）：
 
 到期日：2027/05/14
 
+**🔴 每月積分週期：每月 25 日重置 1000 積分（教練 2026-06-18 親口告知）**
+- 6/25 04:00 PT = 6/25 20:00 GMT+8 重置
+- 下次重置：2026-06-25
+- 提醒設定：每月 24 日早上主動提醒教練「明天 Netlify 積分重置，可重啟大量部署」
+
 用法：
 ```
 curl -H "Authorization: Bearer nfp_QMBMfwYKEGqxokQ2WU9CERSRwLp4yVapa838" https://api.netlify.com/api/v1/sites
