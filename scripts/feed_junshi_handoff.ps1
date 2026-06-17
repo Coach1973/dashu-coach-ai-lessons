@@ -1,4 +1,4 @@
-# Hook: UserPromptSubmit (Windows PowerShell 版 · v2 雲端優先)
+﻿# Hook: UserPromptSubmit (Windows PowerShell 版 · v2 雲端優先)
 # 用途: 教練在 Windows 桌面版 Claude Code 喊「開」「開工」等暗號時，
 #       自動 git pull 拉雲端最新接力棒 → 注入 context。
 #
