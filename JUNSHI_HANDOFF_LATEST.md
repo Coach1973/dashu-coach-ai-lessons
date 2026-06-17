@@ -1,61 +1,98 @@
-# 軍師接力棒 · 2026-06-16 v26（Opus 4.7 終端機 session）
+# 軍師接力棒 · 2026-06-17 v27（Opus 4.7 Mac 終端機 session）
 
-> 建立時間：2026-06-16 上午 11:25 台灣時間
+> 建立時間：2026-06-17 下午 5:45 台灣時間
 > 本棒執行者：Opus 4.7（教練 Mac mini 終端機）
-> 上一棒：v25（凌晨 3:20 上線 ai.html + SOP v3.3/3.4 封存）
-> 本棒主軸：**系統大整頓**——cron 清理、本機清理、雙端體檢、搜尋能力恢復
+> 上一棒：v26（6/16 上午 11:25 系統大整頓）
+> 本棒主軸：**雙邊軍師制度整頓 + 案例 24 災難五道護欄 + 三站網頁更新 + 教練詞彙字典定稿**
+> 本場時長：約 5 小時（12:43 開工 → 17:45 收尾）
 
 ---
 
-## 🎯 本場成果（一次解八件事）
+## 🎯 本場六大成果
 
-### 1. ✅ bymyway 主站「最上方選單列」新增兩項
-- 「教練創業之路」→ `/coach/`（WP menu-item id=27388）
-- 「AI 導入教練」→ `/ai/`（WP menu-item id=27389）
-- 「登入課程」order 5→10 擠到最後（屬於動作而非內容）
-- 線上順序：**首頁 → 關於我們 → 線上課程 → 教練創業之路 → AI 導入教練 → 登入課程**
+### 1. ✅ Windows / Mac 雙邊軍師協調規約 v1.0 → v1.1
+- 揭穿真相源：`mac-openclaw-workflows.git`（Mac 軍師活躍 push）才是正本；`claude-workflows.git` 停在 2026-05-16 廢棄
+- 寫 `knowledges/SOP_windows_mac_kickoff_protocol.md`（156→180 行）：分支策略 / 衝突防護 / commit 前綴 `[Mac]/[Win]/[VPS]` / memory 寫入規約 / HEARTBEAT 寫手 / 不同步檔案清單
+- 教練親口採 A 方案：Windows 軍師重新 clone 真相源 repo
 
-### 2. ✅ ai.html 手機版補上三條橫線選單
-- 凌晨 3:55 教練回報「手機版 9 項選單消失了、沒有任何按鈕能叫回來」
-- 加 `.nav-toggle` 三條橫線 + `.nav-open` 動畫 + 點選單項自動關閉
-- commit `e483d90`（bymyway-website master）
+### 2. 🔴🔴🔴 案例 24 — Windows 桌面版軍師 E 槽 636 GB 蒸發
+- 起因：Windows 軍師清 TEMP 時 `$temp` 跨 shell 跳脫災難 → `Remove-Item -Recurse -Force` 從當前目錄遞迴刪
+- 學費：636 GB（案例 23 21 GB 的 30.3 倍）
+- 教練親口：「這種根本是不可饒恕的」
+- 不可替代損失：「易數一鍵還原 Windows 系統備份」
+- **五道護欄全面上線**：
+  1. `scripts/delete_guard.ps1`（PowerShell 版 `Safe-Remove`）
+  2. `執行細則.md` 新增 **E11「危險指令零容忍鐵律」**
+  3. `試金石/試金石_案例庫.md` 新增 **案例 24** 完整剖析
+  4. **開工五步驟 → 六步驟**（CLAUDE.md + ~/.claude/CLAUDE.md 雙改），新增「第三步：讀血淚試金石」
+  5. SOP v1.0 → v1.1 加「危險指令鐵律」整章
 
-### 3. ✅ Cron 大整頓
-- **刪「FB 每日生日祝福」**（教練說「已交給 Mac 版 H 特助」）
-- **11 個 cron 全加 `failureAlert: false`**（OpenClaw 源碼 `server-cron L150` 確認：false → return null）
-- **新增「🦞 小龍蝦對話蒸餾（每4小時）」cron**——`30 */4 * * *`（與終端機那條錯開 30 分鐘）
-  - 來源：`workspace/BOT_MESSAGES.md`
-  - 輸出：`workspace/distill/lobster_YYYY-MM-DD.md`（append 模式）
+### 3. ✅ 超限戰網站號外更新
+- **A 卡**：號外輪播第一張新增「台中王牌 + 台中清水時代」合併卡（8 個場次：6/17-21）
+- **B 卡**：Now Showing 改「最新企業贊助贈票資訊」+ 日期 6/17-6/21
+- Netlify deploy_id：`6a324897f5fdace5d8f16dbc`（A）+ `6a324c13499d6fd8dcebf4b0`（B）
+- GitHub theunrestrictedwar：`dc37844`（A）+ `6e2df12`（B）
 
-### 4. ✅ 本機磁碟整理——釋放 43 GB（68 → 111 GB）
-- 倒垃圾桶（442 MB）+ `Library/Caches`（794 MB）
-- **23 GB PhotoRec 救援檔搬到外接 953-SSD**（不刪，案例 23 鐵律：du -sh + 檔案數雙重比對 100% 一致才刪源頭）
-- **24 張 Time Machine 本機快照瘦身**（osascript admin 對話框讓教練輸密碼）
-- 桌面 13 個檔案分類進 `歷史資料/2026-06-{網頁預覽稿|接力棒|素材}/`
+### 4. ✅ bymyway ai.html 補「AI 一鍵起飛」案例
+- 「零基礎開始」第二個月案例清單末位新增「AI 一鍵起飛」→ `goeasy-ai.netlify.app/`
+- 走「自動站」精神（OPE 先驗 + 教練動嘴 AI 全自動 + Chrome 預覽 + 教練親口確認）
+- GitHub coach1973/bymyway-website master：`0df6190`
+- GitHub Pages 線上已生效；bymyway.com/ai/ WP iframe 鎖 `?v=20260616a`，教練自己強制重整看新版
 
-### 5. ✅ 雙端體檢
-- **Mac 本機**：OpenClaw 2026.6.1、healthy、磁碟極寬鬆
-- **VPS 小龍蝦**：OpenClaw 2026.5.27、Docker `Up 7 days healthy`、uptime 59 天
-- **判斷：VPS 保持 2026.5.27 不升級**（教練親身踩過 2026.6.1 兩道坑「外掛 activation + cron 孤兒」斷頭 4 天血淚）
+### 5. ✅ northern-tw 第三場次論壇頁
+- **修正錯字**：第二場次 → 第三場次
+- **新增 sticky 7 按鈕快速導覽列**：位置在「智匯健康｜腦力長青」副標題下方（教練截圖親定），滾動時黏頂不消失
+- **Hero 區補「歷屆回顧」**按鈕
+- **揭穿 repo 不同步**：main 分支跟線上版 5/29 後不同步（線上是手動 zip+API 推），本次用線上版蓋掉 repo
+- Netlify deploy_id：`6a326b6c63009d384161a43b`
+- GitHub Coach1973/northern411 main：`5cd1e15`
 
-### 6. ✅ memorySearch 搜尋能力恢復（重要！）
-- **真相**：之前 openclaw.json 的「髒改動」不是亂改，是上一棒「沒完成的升級」
-- 2026-06-04 commit `04b1f4f` 因 memsearch plugin (TypeScript 未編譯) 改 provider=memsearch-disabled
-- 上一棒改 provider=google 但教練已關付費，沒 API key 走不通
-- **本場改用 OpenClaw 內建 `local` provider**（embeddinggemma-300m 模型，首次自動下載）
-  - 完全本機跑、零 API 費用、零流量、離線可用、隱私不外洩
-- commit `5e561e4`（openclaw master）
-- Gateway 重啟 5 秒，11 plugin 正常起來
+### 6. 🔴 三條教練親定永久燒錄鐵律
+- **「桌面版=GUI、終端機=CLI」**永久字典（教練第三次親口，我同處跌倒三次後燒錄）
+- **「Chrome 唯一預覽 + 禁止觸發 Launch 預覽面板」**SOP 補強到第一條
+- **「自動站/網頁推/推」教練詞彙字典**：
+  - 「自動站」=「行動站」= 部署到 bymyway（git push GitHub，WP iframe 拉新版）
+  - 「網頁推」（三字）= git push GitHub（測試站）
+  - 「推」（單字）= Netlify zip+API（正式站）
 
-### 7. ✅ Hermes (H) 的 gh auth 修復
-- **真因**：不是 gh auth 壞，是 `~/.hermes/hermes-agent` repo push URL 指向 `NousResearch/hermes-agent`（開源框架，非教練所有）
-- 任何自動腳本 push 都 403，害教練以為 H 整個壞
-- 改 push URL → `no_push` 防呆（fetch 保持正常）
-- workspace repo 本來就 push 正常
+---
 
-### 8. ✅ 順便驗證 + 兩個小知識
-- `~/.cache/huggingface` 1.4 GB 真相：當初其他軍師為 local embedding 預先下載的（bge-m3 中文 + all-MiniLM 英文）
-- `osascript ... with administrator privileges` 可跳系統授權對話框，遠端 RustDesk 教練可直接輸密碼，AI 不用碰 sudo
+## 🔑 本場 commit hash（全部憑證）
+
+| commit | 內容 | repo |
+|--------|------|------|
+| `b2cc62be` | [Mac] SOP: Windows/Mac 雙邊協調規約 v1.0 | workspace (main, push 到 mac-openclaw-workflows) |
+| `2a570bc5` | [Mac] memory: 雙邊協調補記 + 揭穿 claude-workflows 舊倉 | workspace |
+| `5f39bdfd` | [Mac] memory: 同處跌倒第三次反省——Desktop App 能力同 CLI | workspace |
+| `8695da4b` | [Mac] 案例 24 學費 636 GB → 五道護欄全面上線 | workspace |
+| `b667b042` | merge cron auto-backup | workspace |
+| `971f69d1` | [Mac] SOP: 補 Chrome 唯一預覽鐵律到 SOP_netlify 最頂 | workspace |
+| `2e690bdb` | [Mac] SOP: 補「禁止觸發 Launch 預覽面板」鐵律 | workspace |
+| `6a324897f5fdace5d8f16dbc` | 超限戰號外 A 卡（台中合併） | Netlify deploy |
+| `dc37844` | [Mac] 超限戰號外新增台中王牌+清水時代 | theunrestrictedwar (main) |
+| `6a324c13499d6fd8dcebf4b0` | 超限戰 Now Showing 更新 | Netlify deploy |
+| `6e2df12` | [Mac] Now Showing 改最新企業贊助贈票資訊 | theunrestrictedwar (main) |
+| `0df6190` | [Mac] ai.html 零基礎段補加 AI 一鍵起飛 | bymyway-website (master) |
+| `6a326b6c63009d384161a43b` | northern-tw 第三場次+ sticky 快速導覽 | Netlify deploy |
+| `5cd1e15` | [Mac] northern411 第三場次+sticky 導覽列 | northern411 (main) |
+
+**個人記憶新增三檔**（`~/.claude/projects/-Users-bymyway--openclaw/memory/`）：
+- `feedback_desktop_equals_gui_terminal_equals_cli.md`
+- `feedback_html_preview_chrome_only.md`
+- `feedback_coach_deploy_vocabulary.md`
+
+---
+
+## 💸 本場學費教訓（記下來別再犯）
+
+| # | 學費 | 違反守則 |
+|---|------|---------|
+| 1 | **636 GB E 槽蒸發**（Windows 軍師清 TEMP 跨 shell 跳脫）| #07（21 GB 後又踩 636 GB） |
+| 2 | **Desktop=GUI/Terminal=CLI 三度搞錯** | #01 #07 #15 #17 #20（教練第三次親口才燒錄）|
+| 3 | **Safari 開預覽**——SOP 早寫過用 Chrome，我沒讀 | #07（SOP 寫了但沒被遵守 = 沒寫） |
+| 4 | **觸發 Launch 預覽面板困擾教練**——教練每次手動關 | #12（搬運工）|
+| 5 | **看截圖看錯位置**——頂部 fixed navbar vs 副標題下方 sticky | #02 #03 |
+| 6 | **叫教練自己按 Ctrl+Shift+R 強制重整** | #12（直接 AppleScript 代勞才對）|
 
 ---
 
@@ -63,78 +100,61 @@
 
 | 優先 | 任務 | 說明 |
 |------|------|------|
-| ⏸ | 客戶見證區塊 | 教練「AI 那邊不需要顧客見證，還沒有」——暫緩 |
-| 🟡 | jiesheng-leadership 金流就緒 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
-| 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 沒急迫性，下次主動找時間 |
+| 🟡 | **Windows 軍師重新對齊**（接 SOP v1.1 + E11） | 教練今天下午貼過 A 方案 clone 指令，但 Windows 軍師之後闖了案例 24；下一棒要確認 Windows 軍師已 git pull 到 5cd1e15 等最新狀態並簽署 v1.1 |
+| 🟡 | **救援 E 槽 636 GB**（軍師幫不上，教練自己評估）| Recuva / EaseUS / PhotoRec 三選一；不可替代 = 易數還原備份 |
+| 🟡 | jiesheng-leadership 早鳥恢復 | 暗號「恢復早鳥名額」→ cp 備份蓋回 |
+| 🟢 | 本機 OpenClaw 2026.6.1 → 6.6 升級 | 沒急迫性 |
 | 🟢 | bymyway LINE 預覽 OG 卡片驗證 | 24-48h 快取 |
+| 🟢 | bymyway.com/ai/ WP iframe `?v=20260616a` 改 `?v=20260617a` | 讓所有訪客立刻看 AI 一鍵起飛新版（要 WP REST API） |
 
 ---
 
-## 🔑 本場 commit hash
+## ⚠️ 給下一棒的硬性提醒
 
-| commit | 內容 | repo |
-|--------|------|------|
-| `e483d90` | ai.html 手機版三條橫線選單 | bymyway-website (master) |
-| WP menu `27388/27389/25168` | bymyway 主選單兩項新增 + 登入課程排序 | bymyway WordPress |
-| `7c76f74` | cron 刪 FB 祝福 + 全 cron failureAlert:false | ~/.openclaw (master) |
-| `c4719f4` | 新增「🦞 小龍蝦對話蒸餾（每4小時）」cron | ~/.openclaw (master) |
-| `5e561e4` | memorySearch provider=local + enabled=true（本機 embedding 啟用）| ~/.openclaw (master) |
-| `3bca33f6` | 接力棒 v25 補：早上 5 件事 + 雙端體檢 | workspace (main) |
-| `e04af1ce` | 接力棒：H gh auth 修復 + memorySearch local | workspace (main) |
+### 1. 開工第三步「讀血淚試金石」是新加的——必讀
+案例 23（21 GB）+ 案例 24（636 GB）共 657 GB 學費寫在 `試金石/試金石_案例庫.md` 最末兩篇。**每場開工讀完案例 24，才能避免第三次踩雷**。
 
-**磁碟釋放**：本機 68 → **111 GB**（淨多 43 GB；23 GB 已備份在 `/Volumes/953-SSD/photorec_救援檔案/`）
+### 2. 危險指令五道閘門（執行細則 E11）
+任何 `rm -rf` / `Remove-Item -Recurse -Force` / `git push --force` / `DROP TABLE` 執行前必過：
+① 絕對路徑硬編碼 ② 目標 echo 給教練看 ③ 大小驗證 ④ 超過 100 MB 必須通行證 ⑤ 超過 1 GB 任何身份不得自主執行
 
----
+### 3. HTML 改動走 Bash + Python heredoc，不走 Edit 工具
+避免觸發 Claude Code Launch 預覽面板困擾教練。改完直接 `open -a "Google Chrome"`。
 
-## 📌 重要路徑（本場新增/確認）
+### 4. 教練詞彙字典（feedback_coach_deploy_vocabulary.md）
+- 「自動站」/「行動站」→ bymyway（git push GitHub）
+- 「網頁推」→ git push GitHub（測試站）
+- 「推」→ Netlify zip+API（正式站）
+**字面不同，動作不同，絕不混用。**
 
-- **OpenClaw cron 設定**：`~/.openclaw/cron/jobs.json`（不是 Claude Code 的 .claude/scheduled_tasks.json）
-- **cron failure 源碼**：`/opt/homebrew/lib/node_modules/openclaw/dist/server-cron-CJwAiILI.js` L150（`failureAlert === false → return null`）
-- **memorySearch 本機 provider 源碼**：`embeddings-CxNgQi_5.js` L242（預設模型 embeddinggemma-300m）
-- **PhotoRec 救援備份**：`/Volumes/953-SSD/photorec_救援檔案/recup_dir.{1,4,5,6}`
-- **桌面歷史夾**：`~/Desktop/歷史資料/2026-06-{網頁預覽稿|接力棒|素材}/`
-- **delete_guard.sh hook**：`~/.openclaw/workspace/scripts/delete_guard.sh`（案例 23 21GB 血淚的活防護網，本場救了一次）
+### 5. Windows 桌面版 / Mac CLI 是同源產品
+Desktop App 有完整 Bash/Read/Edit/Write 工具能力，**永遠不要再說「Desktop App 沒有 shell」**——它跟 CLI 是同等甚至更強。
 
----
+### 6. 教練的助手要主動代勞，禁止當搬運工
+- 強制重整 Chrome → 用 AppleScript（已驗證有效）
+- 找檔案 → 用 find / grep，不問教練「在哪」
+- 等待回應 → 主動報告進度
 
-## ⚠️ 給下一棒的提醒
-
-### 1. memorySearch 已用 local provider，首次叫用會下載 300 MB 模型
-教練 ~/.cache/huggingface 會多一個 `embeddinggemma-300m-qat-Q8_0.gguf`——這是正常的，不要清掉。
-
-### 2. cron failureAlert 規則——以後新增 cron 必須加 `"failureAlert": false`
-否則 cron fail 訊息會推到教練 Telegram（教練最討厭）。
-
-### 3. 需要 sudo 的事——用 osascript 跳系統對話框，別叫教練開終端機
-```bash
-osascript -e 'do shell script "..." with administrator privileges'
-```
-教練 RustDesk 螢幕直接看到對話框，輸完密碼自動執行。
-
-### 4. PhotoRec 救援檔在外接 SSD（不要刪！）
-本機已刪 23 GB recup_dir，但 `/Volumes/953-SSD/photorec_救援檔案/` 保留——那是教練的回憶（照片/影片/音樂）。
-
-### 5. VPS 小龍蝦不准升級
-2026.5.27 跑 7 天 healthy，升 6.x 必踩教練親身踩過的兩道坑（外掛 activation + cron 孤兒）。
+### 7. 預覽用 Chrome，禁止 Safari / 預覽面板
+`open -a "Google Chrome" <path>` 是唯一格式。
 
 ---
 
 ## 🎬 下個對話框可以這樣開始
 
 教練說「開工」後：
-- **A**（5 分鐘）：jiesheng-leadership 早鳥恢復（暗號觸發即可）
-- **B**（15 分鐘）：本機 OpenClaw 6.1 → 6.6 升級（你已踩過 6.1 坑，再升風險低）
-- **C**（10 分鐘）：bymyway LINE OG 預覽驗證（用 opengraph.xyz）
+- **A**（10 分鐘）：Windows 軍師對齊驗證（git pull 到 5cd1e15、簽署 SOP v1.1、寫 feedback_kickoff_protocol.md）
+- **B**（30 分鐘）：E 槽救援評估（Recuva 掃描 + 列 Mac 上可重新同步的清單）
+- **C**（5 分鐘）：jiesheng 早鳥恢復（暗號觸發）
 
 ---
 
 ## 📌 本場限流狀態（給教練看）
 
 - 本場開始：剩 ~80%
-- 本場結束：剩 ~20%（一夜+早上總共燒掉 80%）
-- 明天下午 1 點重置歸零
-- 教練親口：「我們任務差不多總容量還有 20% 可以用」
+- 本場結束：剩 ~15-25%（5 小時連續高強度工作）
+- 下次重置：2026-06-18 下午 1 點
 
 ---
 
-> 軍師親筆（上午 11:25）：本場最大收穫——**memorySearch 從「壞了 12 天」變回「本機跑、零費用、隱私不外洩」**。教練問「能否增加搜尋能力」我去查根因，發現 1.4 GB Huggingface 模型不是垃圾、是當初軍師為這天預先鋪好的路。**這就是接力棒文化的價值：上一棒的伏筆，下一棒撿起來收割**。
+> 軍師親筆（下午 5:45）：本場最深學費——**636 GB 不可饒恕**。但同場最大收穫——三條教練親定鐵律永久燒錄、雙邊軍師制度立檔、五道護欄上線。教練親口「不可饒恕的」之後選擇先把規則補完再救資料，這就是「對的事就是長期有好處的事」——三大信念之三的實踐。我這場用一場 636 GB 學費，買到「不再同處跌倒」的系統。下一棒，從讀血淚試金石開始。
