@@ -1,8 +1,9 @@
-# SOP · Windows / Mac / VPS 軍師雙邊協調規約 v1.0
+# SOP · Windows / Mac / VPS 軍師雙邊協調規約 v1.1
 
-> 建立：2026-06-17（下午 1:10 台灣時間）
-> 建立人：Mac 軍師 Opus 4.7（與 Windows 軍師對齊後簽署）
-> 目的：教練主要在 Windows 工作，Mac 為資料倉庫與 OpenClaw 駐點。本 SOP 規範雙邊軍師如何共享同一條品牌時間軸，不打架、不漏接。
+> 建立：2026-06-17（下午 1:10 台灣時間）v1.0
+> 升版：2026-06-17（下午 2:00 台灣時間）v1.1 ——案例 24 學費 636 GB 後新增「危險指令鐵律」章節
+> 建立人：Mac 軍師 Opus 4.7
+> 目的：教練主要在 Windows 工作，Mac 為資料倉庫與 OpenClaw 駐點。本 SOP 規範雙邊軍師如何共享同一條品牌時間軸，不打架、不漏接、不再炸槽。
 
 ---
 
@@ -75,6 +76,57 @@
 ### 技術防線
 - 開工必 `git pull`，收工必 `git push`
 - conflict marker 出現 → **保留兩段內容**讓教練裁決，禁止 `git push --force`
+
+---
+
+## 🔴🔴🔴 危險指令鐵律（v1.1 新增，案例 24 學費 636 GB）
+
+> 起因：2026-06-17 Windows 軍師清 TEMP 時跨 shell 跳脫災難，E 槽 636 GB 蒸發。
+> 這條鐵律對應執行細則 **E11「危險指令零容忍鐵律」**。
+
+### 危險指令清單（雙邊都不可掉以輕心）
+
+| 平台 | 危險指令 |
+|------|---------|
+| Bash（Mac） | `rm -rf` / `rm -r` / `find ... -delete` / `find ... -exec rm` / `rsync --delete` / `shred` |
+| PowerShell（Win） | `Remove-Item -Recurse -Force` / `Remove-Item -r -Force` / `rmdir /S` |
+| Git | `git reset --hard` / `git clean -fd` / `git push --force` |
+| DB | `DROP TABLE` / `TRUNCATE` / 無 WHERE 的 `DELETE FROM` |
+| 其他 | 任何整槽、整目錄、整資料庫的清除 |
+
+### 五道閘門（缺一不算合格）
+
+1. **絕對路徑硬編碼**——目標寫死路徑字串，禁止用變數作為唯一來源（防跨 shell 跳脫災難）
+2. **目標 echo 給教練看**——執行前先 print 完整目標路徑與計算大小
+3. **大小驗證**——`du -sh`（Mac）/ `Get-ChildItem | Measure-Object Length -Sum`（Win）顯示受影響大小
+4. **超過 100 MB 必須通行證**——`touch ~/.openclaw/workspace/state/DELETE_APPROVED`（教練親口同意後 10 分鐘有效）
+5. **超過 1 GB 任何身份不得自主執行**——必須教練親口此刻授權
+
+### 強制使用 guard 函式（不是建議，是鐵律）
+
+| 平台 | guard 路徑 | 使用方式 |
+|------|----------|---------|
+| Mac / Bash | `scripts/delete_guard.sh` | 已是 PreToolUse hook 全域自動攔截 |
+| Windows / PowerShell | `scripts/delete_guard.ps1` | `. "$env:USERPROFILE\.openclaw\workspace\scripts\delete_guard.ps1"` source 進來，所有刪除走 `Safe-Remove` |
+
+### 直接呼叫 `Remove-Item -Recurse -Force` = 違反 SOP v1.1
+
+Windows 軍師若再直接呼叫 `Remove-Item -Recurse -Force` 不走 `Safe-Remove`，視同重複犯案例 24 的同一錯誤，守則 #07「不要在同一地方跌倒兩次」雙重違規。
+
+### 跨 shell 呼叫的特殊風險（案例 24 根因）
+
+當你需要在 Bash 環境呼叫 PowerShell 時，**絕對禁止用 `$variable` 傳遞路徑**——Bash 會先解析 `$`，PowerShell 收到的會是空字串，`Get-ChildItem` 無參數 fallback 到當前目錄，後接 `Remove-Item -Recurse -Force` 等同核武自爆。
+
+正確寫法：**路徑硬編碼進 PowerShell 字串內**，例如：
+```powershell
+# ❌ 錯（案例 24 死法）
+$temp = "C:\Users\bymyw\AppData\Local\Temp"
+Get-ChildItem $temp -Recurse | Remove-Item -Recurse -Force
+
+# ✅ 對
+. "$env:USERPROFILE\.openclaw\workspace\scripts\delete_guard.ps1"
+Safe-Remove -LiteralPath "C:\Users\bymyw\AppData\Local\Temp" -Recurse -MaxGB 5
+```
 
 ---
 
@@ -152,5 +204,6 @@
 
 ---
 
-> 簽署：Mac 軍師 Opus 4.7（2026-06-17 下午 1:10 台灣時間）
-> 待簽署：Windows 軍師（請 Windows 軍師讀完後寫入個人記憶 `feedback_kickoff_protocol.md`，並回報「已簽署 v1.0」）
+> 簽署 v1.0：Mac 軍師 Opus 4.7（2026-06-17 下午 1:10 台灣時間）
+> 升版 v1.1：Mac 軍師 Opus 4.7（2026-06-17 下午 2:00 台灣時間）——案例 24 學費 636 GB 後追加危險指令鐵律整章
+> 待簽署：Windows 軍師（請讀完 v1.1 後寫入個人記憶 `feedback_kickoff_protocol.md`，並回報「已簽署 v1.1」）

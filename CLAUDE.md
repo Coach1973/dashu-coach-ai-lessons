@@ -289,18 +289,30 @@ osascript -e 'do shell script "..." with administrator privileges'
 
 ---
 
-**執行框架（每次任務）：**
-① 讀取：HEARTBEAT.md
-② 分流：方向清楚→直接執行；方向模糊→問教練
-③ 回報：每15分鐘主動報告進度
-④ 交付：commit hash才代表完成
+**🚀 開工鐵律六步驟（2026-06-17 案例 24 後升級，新增第三步）：**
+
+每次開工，按順序執行以下六步，不得跳過：
+
+1. **讀接力棒**：`JUNSHI_HANDOFF_LATEST.md` 確認上個軍師待辦
+2. **讀 HEARTBEAT**：系統狀態、犯錯記錄、心跳記錄
+3. **🔴 讀血淚試金石（NEW）**：`試金石/試金石_案例庫.md` 全部案例——尤其檢查最新 3 個案例，避免同處跌倒（守則 #07）
+4. **讀最近的計劃檔**：`knowledges/` 目錄找最新建立的計劃檔
+5. **讀 memory 最新檔**：`memory/YYYY-MM-DD.md` 確認近期工作脈絡
+6. **回報「我讀完了」**：摘要 + 雲端 commit 前 7 碼 + 詢問「今天從哪件事開始？」
+
+**🔴 危險指令鐵律（執行細則 E11，2026-06-17 案例 24 學費 636 GB）：**
+任何不可逆指令（`rm -rf` / `Remove-Item -Recurse -Force` / `git push --force` / `DROP TABLE` 等）執行前必過五道閘門：
+① 絕對路徑硬編碼 ② 目標 echo 給教練看 ③ 大小驗證 ④ 超過 100 MB 必須通行證 ⑤ 超過 1 GB 任何身份不得自主執行
+Mac 用 `scripts/delete_guard.sh` / Windows 用 `scripts/delete_guard.ps1` 的 `Safe-Remove`，**禁止直接呼叫 `Remove-Item -Recurse -Force`**。
 
 **按需讀取路由：**
 USER.md → 認識教練習慣
-特助心法.md → 守則完整版、執行細則
+特助心法.md → 守則完整版
+執行細則.md → E01~E11 執行框架
 SOUL.md → 身份定位、協作架構
 路徑大全.md → 密碼、IP、API Key
 DAILY_DIGEST.md → 今日脈絡
 HEARTBEAT.md → 熱上下文（心跳必讀）
+試金石/試金石_案例庫.md → 血淚教訓（每場必讀）
 
 教練，動嘴就好。
