@@ -76,49 +76,38 @@ Write-Host "`n[3/6] 永久設 JUNSHI_HOOK_ROOT 環境變數..." -ForegroundColor
 $env:JUNSHI_HOOK_ROOT = $Root
 Write-Host "  ✅ 已設 JUNSHI_HOOK_ROOT = $Root（永久，登入時自動載入）" -ForegroundColor Green
 
-# ───────── 4. 自動偵測 settings.json 位置（教練若把 .claude 搬到 E 槽就用 E 槽，不再被一鍵還原威脅）─────────
-Write-Host "`n[4/6] 偵測 settings.json 位置..." -ForegroundColor Yellow
+# ───────── 4. 雙寫 settings.json（教訓：上一版誤判 Claude Code 會讀 E 槽）─────────
+Write-Host "`n[4/6] 雙寫 settings.json（C 槽 + E 槽備存）..." -ForegroundColor Yellow
 
-# 優先序：
-#   1. $env:CLAUDE_CONFIG_DIR（Claude Code 官方自訂變數）
-#   2. E:\Claude-Data\.claude（教練既有目錄，若存在則代表已搬到 E 槽）
-#   3. %USERPROFILE%\.claude（Claude Code 預設，C 槽，會被一鍵還原洗掉）
-$settingsLocations = @()
-if ($env:CLAUDE_CONFIG_DIR) {
-    $settingsLocations += [PSCustomObject]@{ Path = (Join-Path $env:CLAUDE_CONFIG_DIR "settings.json"); Source = "CLAUDE_CONFIG_DIR 環境變數" }
-}
-if (Test-Path "E:\Claude-Data\.claude") {
-    $settingsLocations += [PSCustomObject]@{ Path = "E:\Claude-Data\.claude\settings.json"; Source = "E:\Claude-Data\.claude 既有目錄（教練既有）" }
-}
-$settingsLocations += [PSCustomObject]@{ Path = (Join-Path $env:USERPROFILE ".claude\settings.json"); Source = "%USERPROFILE%\.claude（C 槽預設，會被一鍵還原）" }
+# 真相：Claude Code 桌面版預設只讀 %USERPROFILE%\.claude\settings.json（C 槽），
+# 除非有設 $env:CLAUDE_CONFIG_DIR 環境變數指到別處。
+# 所以策略改成：
+#   1. C 槽必寫（Claude Code 一定讀得到，立刻生效）
+#   2. E 槽備寫一份（將來 CLAUDE_CONFIG_DIR 生效後可切過去，免疫一鍵還原）
+#   3. 永久設 CLAUDE_CONFIG_DIR = E:\Claude-Data\.claude
+#      → 第一次重啟 Claude Code：仍讀 C 槽（環境變數還沒被新進程載入）
+#      → 第二次重啟之後：讀 E 槽（環境變數生效，免疫一鍵還原）
 
-# 列所有候選給 Windows 軍師看（透明）
-Write-Host "  偵測到的候選位置：" -ForegroundColor Cyan
-foreach ($loc in $settingsLocations) {
-    $exists = if (Test-Path $loc.Path) { "✅存在" } else { "—" }
-    Write-Host "    [$exists] $($loc.Path)" -ForegroundColor DarkGray
-    Write-Host "          來源：$($loc.Source)" -ForegroundColor DarkGray
-}
+$primarySettings = Join-Path $env:USERPROFILE ".claude\settings.json"  # C 槽，立刻生效
+$mirrorSettings  = "E:\Claude-Data\.claude\settings.json"               # E 槽，第二次重啟後生效
 
-# 優先用第一個存在的 .claude 目錄；都不存在就用最後一個（C 槽）建新
-$settingsFile = $settingsLocations[0].Path
-foreach ($loc in $settingsLocations) {
-    $dir = Split-Path $loc.Path -Parent
-    if (Test-Path $dir) {
-        $settingsFile = $loc.Path
-        Write-Host "  ✅ 選用: $settingsFile" -ForegroundColor Green
-        if ($settingsFile -like "E:\*") {
-            Write-Host "  🎉 settings.json 在 E 槽，連接線也免疫一鍵還原！" -ForegroundColor Green
-        } else {
-            Write-Host "  ⚠️  settings.json 仍在 C 槽，一鍵還原後需重跑本腳本" -ForegroundColor Yellow
-        }
-        break
-    }
+Write-Host "  📍 寫入位置：" -ForegroundColor Cyan
+Write-Host "    [必寫] $primarySettings  ← Claude Code 預設讀這（立刻生效）" -ForegroundColor White
+Write-Host "    [備寫] $mirrorSettings  ← CLAUDE_CONFIG_DIR 生效後切過來" -ForegroundColor White
+
+# 永久設 CLAUDE_CONFIG_DIR（讓 Claude Code 未來重啟後切到 E 槽）
+$existingConfigDir = [Environment]::GetEnvironmentVariable("CLAUDE_CONFIG_DIR", "User")
+if ($existingConfigDir -ne "E:\Claude-Data\.claude") {
+    [Environment]::SetEnvironmentVariable("CLAUDE_CONFIG_DIR", "E:\Claude-Data\.claude", "User")
+    Write-Host "  ✅ 已設 CLAUDE_CONFIG_DIR = E:\Claude-Data\.claude（永久）" -ForegroundColor Green
+    Write-Host "     ⚠️  要重啟 Claude Code 才會生效（第一次重啟仍讀 C 槽，第二次起讀 E 槽）" -ForegroundColor Yellow
+} else {
+    Write-Host "  ✅ CLAUDE_CONFIG_DIR 已正確設定" -ForegroundColor Green
 }
 
+$settingsFile = $primarySettings  # 後續邏輯處理 C 槽，最後再 mirror 到 E 槽
 $settingsDir = Split-Path $settingsFile -Parent
 if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null }
-Write-Host "" -ForegroundColor DarkGray
 Write-Host "  重建 hook 註冊..." -ForegroundColor Yellow
 
 if (Test-Path $settingsFile) {
@@ -164,7 +153,14 @@ $settings.hooks.UserPromptSubmit = $cleanedEntries
 $json = $settings | ConvertTo-Json -Depth 10
 $utf8Bom = New-Object System.Text.UTF8Encoding $true
 [System.IO.File]::WriteAllText($settingsFile, $json, $utf8Bom)
-Write-Host "  ✅ 清掉舊註冊 $brokenCount 個，重新註冊 1 個 → E 槽" -ForegroundColor Green
+Write-Host "  ✅ C 槽 settings.json 已寫入（Claude Code 立刻讀到）" -ForegroundColor Green
+
+# Mirror 同樣內容到 E 槽
+$mirrorDir = Split-Path $mirrorSettings -Parent
+if (-not (Test-Path $mirrorDir)) { New-Item -ItemType Directory -Path $mirrorDir -Force | Out-Null }
+[System.IO.File]::WriteAllText($mirrorSettings, $json, $utf8Bom)
+Write-Host "  ✅ E 槽 settings.json mirror 完成（CLAUDE_CONFIG_DIR 生效後讀這）" -ForegroundColor Green
+Write-Host "  ✅ 清掉殭屍註冊 $brokenCount 個，重新註冊 1 個（指向 E 槽 hook 腳本）" -ForegroundColor Green
 
 # ───────── 5. Self-test ─────────
 Write-Host "`n[5/6] Self-test（模擬「開工」+ 驗證雲端 pull）..." -ForegroundColor Yellow
@@ -214,16 +210,22 @@ Write-Host "━━━━━━━━━━━━━━━━━━━━━━�
 Write-Host "✅ 安裝/還原完成（v3 E 槽工具箱設計）" -ForegroundColor Green
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
 Write-Host "📁 工具箱（E 槽，不被一鍵還原）: $workspace"
-$connLocation = if ($settingsFile -like "E:\*") { "🎉 連接線（E 槽，也免疫一鍵還原）" } else { "🔗 連接線（C 槽，一鍵還原會洗掉，需重跑本腳本）" }
-Write-Host "${connLocation}: $settingsFile"
+Write-Host "🔗 主連接線（C 槽，立刻生效）: $primarySettings"
+Write-Host "🪞 鏡像連接線（E 槽備存）: $mirrorSettings"
+Write-Host "🌐 CLAUDE_CONFIG_DIR: E:\Claude-Data\.claude（第二次重啟後生效，免疫一鍵還原）"
 Write-Host "☁️  真相源（雲端）: $REPO_URL"
 Write-Host "🌐 環境變數: JUNSHI_HOOK_ROOT = $Root"
 Write-Host "🧹 清掉殭屍註冊: $brokenCount 個"
 Write-Host "📝 還原便條: $notePath"
 Write-Host ""
-Write-Host "🔴 下一步：" -ForegroundColor Red
-Write-Host "  1. 完全關閉 Claude Code 桌面版（退出進程）" -ForegroundColor White
-Write-Host "  2. 重新開啟" -ForegroundColor White
-Write-Host "  3. 開新對話打「開」或「開工」→ 看到雲端 HEAD hash + 接力棒" -ForegroundColor White
+Write-Host "🔴 下一步（兩階段）：" -ForegroundColor Red
+Write-Host "  【階段 1：立刻能用，hook 走 C 槽 settings.json】" -ForegroundColor Yellow
+Write-Host "    1. 完全關閉 Claude Code 桌面版（退出進程）" -ForegroundColor White
+Write-Host "    2. 重新開啟" -ForegroundColor White
+Write-Host "    3. 開新對話打「開」→ 應該看到雲端 HEAD + 接力棒" -ForegroundColor White
+Write-Host ""
+Write-Host "  【階段 2：升級到 100% E 槽（免疫一鍵還原）】" -ForegroundColor Yellow
+Write-Host "    完全登出 Windows 帳號 → 重新登入（讓 CLAUDE_CONFIG_DIR 環境變數載入）" -ForegroundColor White
+Write-Host "    之後 Claude Code 會自動讀 E 槽 settings.json，C 槽完全脫鉤" -ForegroundColor White
 Write-Host ""
 Write-Host "回報 Mac 軍師：把上面五行報告貼過去就完成驗證" -ForegroundColor Cyan
