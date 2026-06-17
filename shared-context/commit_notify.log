@@ -2434,3 +2434,12 @@
 [2026-06-18 04:12] [CoachWU] 5ecf02bd: [Mac] Windows hook v3.1：對齊既有 E:\Claude-Data 目錄 + settings.json 自動偵測
 [2026-06-18 04:26] [CoachWU] a34b8136: [Mac] Windows hook v3.2：雙寫 C+E settings.json，修正 Claude Code 只讀 C 槽的真相
 [2026-06-18 04:30] [CoachWU] 023f5d82: auto: 終端機對話蒸餾 2026-06-18
+[2026-06-18 04:33] [CoachWU] 3938d7e2: auto-backup 2026-06-18 04:32
+[2026-06-18 04:33] [CoachWU] 5f9df4ca: [Mac] Junction 升級腳本：Windows .claude 整個目錄 C 槽路徑指向 E 槽真檔（回原本架構）
+[2026-06-18 04:38] [CoachWU] c69efe30: [Mac] 極簡診斷腳本：junction 升級後仍無接力棒時定位根因
+[2026-06-18 04:42] [CoachWU] 39b78bde: [Mac] 試金石案例 25：Opus 連環瞎猜讓教練凌晨 4 點當搬運工——E13/E14 兩條新鐵律對應
+[2026-06-18 04:43] [CoachWU] 19f05705: [Mac] 案例 25 補記：本場 Opus 流量損失 25% 週量——零產出，全燒在瞎猜
+[2026-06-18 04:46] [CoachWU] 83f261c6: [Mac] 接力棒 v27.1 補記：Windows hook 戰役現狀 + 兩條路線交接給下一棒
+[2026-06-18 04:53] [CoachWU] e09de656: [Mac] 案例 25 + handoff v27.2 收尾：BOM 真根因揭曉，E15 規約立檔，Sonnet 4.6 致敬
+[2026-06-18 04:58] [CoachWU] 283a9b06: [Mac] 案例 25 補真機關：pre-commit hook 強制 .ps1 BOM，承認 E13/E14 是廢紙
+[2026-06-18 05:00] [CoachWU] 4728c833: auto: 終端機對話蒸餾 2026-06-18
