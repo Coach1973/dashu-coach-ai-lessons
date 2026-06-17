@@ -2,7 +2,7 @@
 # Hook：UserPromptSubmit
 # 用途：教練在新 session 喊「開工」/「軍師」等暗號時，自動把 JUNSHI_HANDOFF_LATEST.md 餵進 context。
 # 設計：每個 session 只餵一次（marker 檔防重複），避免每輪 prompt 都炸 token。
-# 觸發詞：開工 / 軍師 / 接續指揮所考古 / Claude 軍師
+# 觸發詞：開 / 開工 / 工作 / 幹活 / 軍師 / 接續指揮所考古 / Claude 軍師
 set -uo pipefail
 
 HANDOFF="/Users/bymyway/.openclaw/workspace/JUNSHI_HANDOFF_LATEST.md"
@@ -17,7 +17,7 @@ MARKER="/tmp/junshi_fed_${SESSION_ID}"
 # 「開工」=強制重餵口令（即使 marker 存在也餵）—— 教練在同視窗 /clear 後仍可重新觸發
 # 其他軍師字眼 = 看 marker，同 session 只餵一次（避免隨口提到也炸 token）
 FORCE_REFEED=0
-if printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*開工[[:space:]]*$|開工了|開工。|開工！"; then
+if printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*開工[[:space:]]*$|開工了|開工。|開工！|開工幹活"; then
   FORCE_REFEED=1
 fi
 
@@ -27,7 +27,9 @@ if [[ "$FORCE_REFEED" -eq 0 && -n "$SESSION_ID" && -f "$MARKER" ]]; then
 fi
 
 # 判斷是否為軍師接位暗號（中英都接）
-if printf '%s' "$PROMPT" | grep -qE "開工|軍師|接續指揮所考古|Claude 軍師|JunShi|junshi"; then
+# 整句僅「開」「開工」「工作」「幹活」單一動詞 → 觸發；含「軍師」字眼也觸發
+# 注意：「開」單字太易誤觸發（打開瀏覽器…），所以僅整句=「開」才接
+if printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*(開|開工|工作|幹活|開始工作)[[:space:]。！!]*$|軍師|接續指揮所|JunShi|junshi"; then
   if [[ -f "$HANDOFF" ]]; then
     # 抓最新 SESSION 總結檔（依檔名排序取最後一個）
     LATEST_SESSION=$(ls -1 "$SESSION_DUMP"/SESSION_*.md 2>/dev/null | sort | tail -1)
