@@ -15,7 +15,19 @@ $ErrorActionPreference = 'Continue'
 
 # ───────── 雲端真相源（固定，不需動）─────────
 $REPO_URL  = "https://github.com/Coach1973/mac-openclaw-workflows.git"
-$workspace = Join-Path $env:USERPROFILE ".openclaw\workspace"
+
+# ───────── workspace 位置（v3 教練親定：E 槽不被一鍵還原洗掉）─────────
+# 優先序：
+#   1. $env:JUNSHI_HOOK_ROOT 環境變數（由 install 腳本永久設定）
+#   2. E:\junshi-hook\workspace（E 槽可寫時的預設）
+#   3. C 槽 fallback（最後手段，C 槽會被一鍵還原洗掉，僅應急）
+if ($env:JUNSHI_HOOK_ROOT) {
+    $workspace = Join-Path $env:JUNSHI_HOOK_ROOT "workspace"
+} elseif (Test-Path "E:\") {
+    $workspace = "E:\junshi-hook\workspace"
+} else {
+    $workspace = Join-Path $env:USERPROFILE ".openclaw\workspace"
+}
 
 $handoff       = Join-Path $workspace "JUNSHI_HANDOFF_LATEST.md"
 $identityCard  = Join-Path $workspace "knowledges\IDENTITY_windows_desktop.md"
@@ -102,7 +114,7 @@ Write-Output "## 🌐 雲端同步狀態（v2 設計：每次「開工」自動 
 Write-Output ""
 Write-Output "- $pullStatus"
 Write-Output "- 來源：$REPO_URL"
-Write-Output "- 本機 cache：$workspace（**不依賴 E 槽**，E 槽在修復中）"
+Write-Output "- 本機 cache：$workspace（**E 槽不被一鍵還原洗掉**，C 槽 settings.json 失效後可一鍵重建）"
 Write-Output ""
 Write-Output "## 🪪 身份硬性告知（教練 2026-06-17 親口定稿）"
 Write-Output ""
