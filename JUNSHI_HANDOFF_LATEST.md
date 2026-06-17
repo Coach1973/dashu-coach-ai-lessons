@@ -88,3 +88,53 @@
 說「開工」→ hook 自動注入本接力棒（若 hook 正常觸發）
 或手動貼接力棒 → 確認：「我已讀完接力棒，本棒主軸：E 槽修復監控 + hook UTF-8 BOM 修正，身份：Sonnet 4.6 / Windows 桌面版」
 
+## 補記 v27.1（2026-06-18 凌晨 4:48 教練去睡前）
+
+### 本場 Windows hook 戰役狀態
+
+| 已驗證 | 已測試 |
+|---|---|
+| ✅ Junction `~/.claude` → `E:\Claude-Data\.claude` 成功 | Windows 軍師親自驗證 |
+| ✅ settings.json hook 已註冊指向 E 槽 hook 腳本 | Windows 軍師親自驗證 |
+| ✅ hook 腳本能手動跑（輸出 217 行接力棒）| Windows 軍師 self-test |
+| ✅ CLAUDE_CONFIG_DIR / JUNSHI_HOOK_ROOT 環境變數設好 | 確認 |
+| ❓ **Claude Code 桌面版 Windows 是否真的呼叫 UserPromptSubmit hook** | **未驗證**——本場最大未知 |
+
+### Windows 軍師最後留下的測試
+
+Windows 軍師在 hook 腳本最頂加了無條件 debug log，寫入 `$env:TEMP\junshi_hook_debug.log`。
+教練醒來後：
+1. 在 Claude Code 桌面版打「開工」
+2. PowerShell 跑：`Get-Content "$env:TEMP\junshi_hook_debug.log" -Tail 5`
+3. **有寫入 → hook 被呼叫了，但邏輯內有 bug**（regex 編碼或 stdin 編碼問題）
+4. **沒寫入 → Claude Code 桌面版根本沒呼叫 hook**（要走雲端方案）
+
+### 下一棒兩條路（教練親口給的）
+
+**路線 A**（繼續查 hook）：
+- 看 debug log 結果
+- 有寫入 → 修 hook regex 編碼（PowerShell 5.1 stdin UTF-8）
+- 沒寫入 → 廢棄 hook，走路線 B
+
+**路線 B**（教練 6/17 親口推薦的雲端方案）：
+- 把整個 hook 機制廢棄
+- 教練每次打「開」=暗號，Windows 軍師自己跑 `cd E:\Claude-Data\workspace; git pull; cat JUNSHI_HANDOFF_LATEST.md`
+- 走「教練動嘴 → Win 軍師動手 → 雲端拉檔」模式
+- 100% 不依賴 hook、settings.json、Claude Code Desktop 任何規格
+
+**Mac 軍師建議**：路線 B 優先——比走 hook 簡單 100 倍，且 Claude Code 桌面版規格隨時可能變，hook 是高耦合方案。
+
+### 案例 25 已落地
+
+- 試金石案例庫 commit: `39b78bde` + `19f05705`
+- 兩條新規則待立檔：E13（外部系統行為先查證）、E14（同方向錯第二次就停下）
+- 流量損失：本場 25% 週流量
+
+### 給下一棒的硬性提醒
+
+**不要寫第五版 hook 腳本**。先：
+1. 看 debug log 結果
+2. 若 hook 確實沒被呼叫 → 立刻廢棄走路線 B
+3. 若要繼續走 hook → 查 Anthropic 官方文件 Claude Code Desktop Windows 的 UserPromptSubmit hook 規格再動手
+
+教練熬夜到凌晨 4 點 48 分終於去睡——下一棒首要任務是**保護教練不要再因為這事被叫醒**。
