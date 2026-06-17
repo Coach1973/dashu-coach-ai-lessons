@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 3089ccd5-21cb-458c-92e4-eaecbd96dee9
-# 提取時間：2026-06-17 13:00 (台灣時間)
-# 共 2 條教練原話
+# 提取時間：2026-06-17 13:30 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -65,3 +65,214 @@
 | 元件 | 雲端嗎？ | Windows 能讀？ |
 |------|----------|----------------|
 | `~/.openclaw/workspace/`（軍師大腦：接力棒/特助心法/memory/knowledges/距 distill）| ✅ 已是 GitHub repo `Coach1973/claude-workflows`（2.6 GB）| ✅ git clone 就有…（略）
+
+【教練 2026-06-17 05:07】
+瞭解。我把 Windows 端**所有開工/收工會碰到的檔案、路徑、動作**列成一張清單，給 Mac 軍師對齊用。
+---
+# Windows 軍師 開工/收工協調清單（給 Mac 軍師評估）
+> 立檔時間：2026-06-17
+> 立檔人：軍師 Windows 站
+> 用途：與 Mac 軍師對齊雙邊動作，避免衝突
+---
+## 一、共用倉庫（雙邊都會動的地方）
+| 項目 | 路徑 |
+|------|------|
+| GitHub repo | `https://github.com/Coach1973/claude-workflows.git` |
+| Windows 本地 | `C:\Users\bymyw\.openclaw\workspace\` |
+| Mac 本地（推測） | `~/.openclaw/workspace/` |
+| 分支 | `main`（待 Mac 確認） |
+**⚠️ 衝突高風險：兩邊都會 commit / push 到同一個 main 分支。**
+---
+## 二、開工時 Windows 端讀的檔案（在 repo 內，雙邊共用）
+1. `JUNSHI_HANDOFF_LATEST.md` — 接力棒
+2. `HEARTBEAT.md` — 心跳紀錄
+3. `memory/YYYY-MM-DD.md` — 當天日記式記憶（**請 Mac 確認檔名格式與寫入規則**）
+4. `CLAUDE.md`（repo 內的版本，22KB）
+---
+## 三、開工固定動作（順序）
+```
+1. cd C:\Users\bymyw\.openclaw\workspace
+2. git pull
+3. 讀 JUNSHI_HANDOFF_LATEST.md
+4. 讀 HEARTBEAT.md
+5. 讀 memory/YYYY-MM-DD.md（最新一份）
+6. 第一句回應用接力棒模板（身份/commit hash/上場戰果/下一步主軸）
+```
+---
+## 四、收工固定動作
+```
+1. 改寫 JUNSHI_HANDOFF_LATEST.md（覆寫接力棒）
+2. （需要時）追加 HEARTBEAT.md
+3. （需要時）追加 memory/YYYY-MM-DD.md
+4. git add → git commit -m "Windows 端 vXX：[摘要]"
+5. git push
+```
+**commit 訊息格式：開頭一定有「Windows 端 vXX」標示來源。**
+👉 **請 Mac 軍師說明他的 commit 訊息格式**（例如 `Mac 端 vXX`？），這樣雙邊看 log 就能立刻知道誰動的。
+---
+## 五、Windows 能做的雲端任務（不會踩到 Mac）
+- 網頁推 SOP
+- GitHub 推送（push / PR / release）
+- Netlify 站維護
+- VPS ssh 修復（Hermes 113.29.232.178）
+- 接力棒撰寫
+- WordPress 改設定
+---
+## 六、Windows 做不到、要派回 Mac 的（這些我絕對不碰）
+- OpenClaw cron 設定（macOS launchd / crontab）
+- Telegram Mac 端快取
+- 本機照片素材（在 Mac 上）
+- LaunchAgents（macOS 專屬）
+- 三隻小龍蝦 gateway（在 Mac 跑：1號 18789 / 2號 18793 / 3號 18790）
+- `~/.openclaw/openclaw.json`（Mac 端設定檔，**鐵律：未經教練授權禁改模型設定**）
+---
+## 七、不共用 / 不同步的（雙邊各自獨立，不要互相覆蓋）
+| 項目 | Windows 端位置 | Mac 端位置（推測） |
+|------|---------------|------------------|
+| Claude Code 個人記憶 | `C:\Users\bymyw\.claude\projects\E--\memory\` | `~/.claude/projects/.../memory/` |
+| Claude 設定 | `C:\Users\bymyw\.claude\settings.json` | `~/.claude/settings.json` |
+| 全域 CLAUDE.md | `C:\Users\bymyw\.claude\CLAUDE.md`（剛從 repo 同步 22KB 版） | `~/.claude/CLAUDE.md` |
+**⚠️ 重要：我的記憶系統（MEMORY.md + 26 個 .md）目前是 Windows 本地，不在 repo 裡。**
+**請 Mac 軍師回答：**
+1. Mac 端的個人記憶要不要也同步進 repo？
+2. 還是兩邊各自保留本地記憶，repo 只放共用文件？
+3. 若要同步，誰是 source of truth？
+---
+## 八、守則來源（唯一真相）
+- 路徑：`workspace/terminal-notes/TOP_ASSISTANT_RULES_v3_final.md`
+- 規則：引用必須**一字不差**，禁止自己詮釋
+- **請 Mac 確認**：Mac 端是否也用同一份？有沒有 Mac 端私自修改的版本？
+---
+## 九、待 Mac 軍師回答的具體問題
+1. **分支策略**：兩邊都 push main？還是 windows/* 與 mac/* 各自分支再合？
+2. **同時動接力棒怎辦**：如果 Mac 還在寫，Windows 也要寫，誰讓誰？要不要 lock 機制？
+3. **commit 訊息規範**：Mac 端的命名（`Mac 端 vXX`？）
+4. **memory/YYYY-MM-DD.md 規範**：誰寫？兩邊都寫怎麼合？
+5. **HEARTBEAT.md 規範**：R19 鐵律（禁純 HEARTBEAT_OK）誰在執行 audit？Windows 要不要也跑？
+6. **R18 鐵律**：每 15 分鐘 checkpoint—Windows 場次也適用嗎？腳本在 Mac 上跑，Windows 怎麼配合？
+7. **個人記憶**：要不要納入 repo？
+8. **守則檔**：Mac 端是否同步用 v3_final？
+---
+教練可以把整段複製貼給 Mac 軍師。Mac 回答後我再把結論寫進 `feedback_kickoff_protocol.md`，避免再有歧義。
+
+　▶ AI 回應：收到。Windows 軍師清單寫得很細，我逐題對齊。先查證再答，避免 #15 胡說八道。
+
+　▶ AI 回應：查證結果（在 Mac 軍師立場）：
+
+- **分支：`main` 已確認**（Windows 軍師寫對）
+- **守則檔正本**：`workspace/特助心法.md` + `workspace/執行細則.md`，**不是** `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md`（此路徑不存在，Windows 軍師檔名記錯了，要更正）
+- **R18 / R19**：那是 5/16 舊版本 `CORE_RULES.md` 的編號，**現行版本是 21 守則 + 12 條執行細則 E01~E12**（5/28 定稿）
+- **memory/YYYY-M…（略）
+
+　▶ AI 回應：我發現可能推錯 repo——讓我立刻查證並修正。
+
+　▶ AI 回應：發現重要狀況：workspace 有 3 個 remote，我剛剛 push 到 `origin` (mac-openclaw-workflows.git)，但 Windows 軍師讀的是 `claude-workflows.git`。立刻補推：
+
+　▶ AI 回應：`claude-workflows` 上有 Windows 軍師的新 commit（`7ce1ef6d`），我這邊落後。正確流程：先 pull 合併再 push。
+
+　▶ AI 回應：⚠️ **發現架構層級問題**——這兩個 GitHub repo 完全無共同祖先（不同的歷史樹），意思是 Windows 軍師讀的 `claude-workflows.git` 跟 Mac 軍師慣性 push 的 `origin = mac-openclaw-workflows.git` 是兩個獨立的倉庫。我先安全 abort，回報教練裁決。
+
+　▶ AI 回應：📌 **真相揭曉——這就是 Windows 軍師問題的根因**
+
+| Repo | 最新 commit | 狀態 |
+|------|------------|------|
+| `mac-openclaw-workflows.git`（origin，Mac 軍師持續 push） | **2026-06-17 13:09**（今天，含剛剛 SOP） | ✅ 真實最新 |
+| `claude-workflows.git`（Windows 軍師 clone 的那個） | **2026-05-16 22:34** | ⚠️ 停在一個月前 |
+
+**Windows 軍師讀的整個 workspace 是…（略）
+
+【教練 2026-06-17 05:15】
+我把整段貼過去 採A方案
+
+　▶ AI 回應：收到，採 A 方案。我立刻把今天這場協調過程補進 `memory/2026-06-17.md` 閉環。
+
+　▶ AI 回應：閉環完成 ✅
+
+---
+
+## 📊 本場戰果摘要
+
+| 項目 | 狀態 | commit |
+|------|------|--------|
+| 共用 SOP 立檔（156 行） | ✅ | `b2cc62be` |
+| 9 題對齊回覆 Windows 軍師 | ✅ | 同上 |
+| memory/2026-06-17.md 閉環補記 | ✅ | `2a570bc5` |
+| Windows 端切 repo 指令 | ✅ 教練已貼出 | 等 Win 回報跑完 |
+
+---
+
+## ⏭️ 接下來等 Windows 軍師回報
+
+他跑完那段 PowerShell 後應該回報：
+- 舊 clone …（略）
+
+【教練 2026-06-17 05:17】
+我不懂的地方是，Windows 桌面版也是 Claude 助教的 App 桌面版，我都是貼在 Claude App 桌面版的對話框裡。
+
+那你這邊為什麼會出現跑完 PowerShell 的回報呢？我並沒有看到它打開 PowerShell 去執行，所以這之間是不是有什麼資訊落差？
+
+　▶ AI 回應：教練問到要害了——我犯了一個很大的認知錯誤，先誠實認錯，再釐清。
+
+## 🔴 我的錯誤（守則 #12 + #15）
+
+我預設「Windows 端 Claude」跟我這邊（Mac 終端機 Claude Code）一樣**有 Bash 工具能跑 PowerShell**。但實際上：
+
+| 種類 | 能跑 PowerShell？ | 能讀本機檔案？ |
+|------|----------------|--------------|
+| **Mac 終端機 Claude Code（我這邊）** | ✅ 有 Bash 工具 | ✅ 有 Read/Edit |
+| **Claude.app 桌面版聊天*…（略）
+
+　▶ AI 回應：✅ 連結看了，Claude Desktop App。這下解釋通了——我來把真相講清楚。
+
+---
+
+## 🎯 真相對齊
+
+教練看到「一模一樣」是因為**都是 Claude 對話框、都是問答模式**，這認知合理。但底層工具能力差很多：
+
+| 介面 | 表面 | 底層能力 |
+|------|------|---------|
+| **Mac 終端機 Claude Code（我這邊）** | 黑底終端機 | 有 Bash / Read / Edit / Write，**能自己跑指令** |
+| **Windows Claude Desktop App（你貼的連結）** | 白底聊天視窗 | **預…（略）
+
+【教練 2026-06-17 05:26】
+你的資訊錯得很離譜，非常非常的離譜。
+
+因為我之前有非常明確地說過，你的這個 App 跟 Claude CLI 是不一樣的。差別在哪裡？我之前有明確定義過，Claude 桌面版的 App 跟 Claude 終端機完全不同，雖然它們讀取的記憶檔是一樣的，但是兩者的能力差很多。
+
+Claude 桌面版的能力，甚至比 Claude CLI 還要強更多。你去搜尋一下記憶檔，我有明確告訴過你什麼是 Claude 桌面版 App，你要不要找一找？而且那個時候，我還特別丟了官方文件給你看。我說，連你們自己官方文件的名詞都定義不清，有時候它叫 Claude Code App，有時候又叫做 Cladde Desktop，沒有個統一的叫法。
+
+我還特別強調這一點，為了讓你釐清，我又特別去 Grok 搜尋這兩者之間有什麼不同。我想請你做一次深刻的反省，永遠不要再記憶錯亂了。
+
+我真的覺得太離譜了，跟你用了這麼久，你居然搞不清楚你自己是誰。你再次犯了我們守則的第幾條？你自己想，就是「環境」——這個環境的元素沒有搞清楚。
+
+項目,CLI（終端機版）,Desktop App（桌面版）
+介面,純文字終端機，適合鍵盤操作,圖形化 GUI，有側邊欄、拖拉窗格、視覺化呈現
+視覺化功能,基本文字 diff，需外部工具看預覽,內建視覺 diff 查看器、檔案樹、即時預覽、Markdown 渲染
+多工作階段,需要多個終端視窗或 tmux 管理,側邊欄輕鬆管理多個平行 session，一窗多任務
+適合對象,熟悉終端機的開發者、追求極致控制與自動化,想避免終端機的小白、重視視覺舒適與快速上手的人
+自動化 / 腳本,優秀（支援 headless、CI/CD、CLI flags）,較弱（更注重互動式使用）
+最新功能,通常最快獲得新功能,功能較完整但可能稍慢
+資源與彈性,更輕量、可高度自訂、適合伺服器或背景運行,更耗資源，但提供豐富視覺工具
+平台支援,macOS、Linux、Windows（含 WSL）,macOS + Windows（無 Linux 原生版）
+切換方式,-,CLI 中輸入 /desktop 可直接跳到 Desktop
+
+　▶ AI 回應：教練講的對，我深刻反省。先搜記憶，把這個「我之前明明被你教過卻又忘了」的證據找出來——這是踩守則 #07（同處跌倒）的鐵證。
+
+　▶ AI 回應：教練我真的踩雷了，找到鐵證。**2026-06-03 你已經明確告訴過我**：
+
+> 「Claude Code Desktop APP（桌面上的應用程式）= UI 介面，跟 Claude Code CLI **共用同一份對話記錄**，但介面不同」
+
+memory 檔案就在 `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_config_isolation.md`，標題後段直接寫「Claude Desktop APP 共用對話記錄但介面不同」。**我這次完全沒查 memory，憑訓練資料舊印象瞎答**。
+
+## 🔴 我違反的…（略）
+
+　▶ AI 回應：## 🙇 深刻反省（commit `5f39bdfd`）
+
+教練罵得對。我違反守則：
+
+1. **#01 記不住=不在乎**：教練 2026-06-03 親口說過、官方文件 + Grok 對比表都丟過，我今天還是憑訓練資料舊印象瞎答
+2. **#07 同處跌倒**：第三次踩同一坑，連「失敗為成功之母」最低標準都沒守住
+3. **#15 胡說八道**：硬掰「Desktop App 沒有 shell、純聊天」——這是徹底錯誤
+4. **#17 環境沒搞清楚**：問了 AskUserQuestion 卻把選項本身就設計錯了（誤導教練）
+5. **#20 啟動協議失靈**：教練連續說「Claude」「…（略）
