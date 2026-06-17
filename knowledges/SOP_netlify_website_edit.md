@@ -1,6 +1,29 @@
 # 網站修改 SOP（標準作業程序）
 
-> 教練親定 2026-05-30，更新 2026-06-06，2026-06-13 增補 Cowork 分工，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
+> 教練親定 2026-05-30，更新 2026-06-06，2026-06-13 增補 Cowork 分工，2026-06-17 補上「Chrome 唯一預覽鐵律」放最頂，所有 AI 助教（終端機/桌面版/小龍蝦/Hermes）強制遵守。
+
+---
+
+## 🔴🔴🔴 預覽鐵律（2026-06-17 教練第二次親口提醒後寫死，違反 = 守則 #07 同處跌倒）
+
+**本機 HTML 預覽唯一指定瀏覽器 = Google Chrome。**
+
+| 場景 | 唯一正確指令 |
+|------|------------|
+| 開本機 file:// | `open -a "Google Chrome" /absolute/path/to/index.html` |
+| 開本機 server | `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window http://localhost:8899/` |
+| 開線上 URL 給教練看 | `open -a "Google Chrome" "https://theunrestrictedwar.netlify.app/"` |
+
+### 禁止做的事
+
+- ❌ `open <path>` 不指定 -a（會走系統預設，可能跳 Safari）
+- ❌ `open -a Safari ...`（教練不用 Safari）
+- ❌ 只依賴 Claude Code 預覽面板（教練透過 RustDesk 看不到、且渲染跟真實瀏覽器有差）
+- ❌ 用 Write 工具寫到 /tmp/ 期待 Launch 面板顯示
+
+### Why
+教練 2026-06-17 第二次親口提醒：「之前打開都是用 chrome 為何這次是使用 safari？唯一指定開啟的 html 就是 chrome」。
+這條 SOP 本來在 L141 就寫過，但軍師沒落實——這次升為**全 SOP 第一條**，每場讀 SOP 第一眼就看到。
 
 ---
 
