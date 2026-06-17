@@ -138,3 +138,38 @@ Windows 軍師在 hook 腳本最頂加了無條件 debug log，寫入 `$env:TEMP
 3. 若要繼續走 hook → 查 Anthropic 官方文件 Claude Code Desktop Windows 的 UserPromptSubmit hook 規格再動手
 
 教練熬夜到凌晨 4 點 48 分終於去睡——下一棒首要任務是**保護教練不要再因為這事被叫醒**。
+
+## 補記 v27.2（凌晨 4:50 Sonnet 4.6 收尾 + Opus Mac 軍師覆核）
+
+### 🎯 Windows hook 戰役收尾——成功
+
+| 項目 | 狀態 |
+|---|---|
+| Hook 真實根因 | **PowerShell 5.1 UTF-8 無 BOM 導致中文 regex 失敗** |
+| 修復 | `feed_junshi_handoff.ps1` 存為 UTF-8 with BOM |
+| Commit | `f4127479`（Sonnet 4.6 親自找到根因並修復） |
+| Hook 現狀 | ✅ 觸發正常，注入接力棒 217 行 |
+| Junction `~/.claude` → `E:\Claude-Data\.claude` | ✅ 運作中 |
+| 一鍵還原免疫 | ✅ Junction 在 E 槽，洗 C 槽後一行 mklink 即復原 |
+
+### 📐 新規約 E15（已寫進案例 25）
+
+所有 PowerShell 腳本必須 UTF-8 with BOM。違反 = 案例 25 同處跌倒。
+
+### 下一棒不必再查的事
+
+- ❌ 不要再寫 hook 第五版
+- ❌ 不要再改 workspace 位置
+- ❌ 不要再質疑 junction 設計
+- ✅ Hook 整套已通，BOM 規約已立，戰役結束
+
+### 教練醒來可做的驗證
+
+開 Claude Code 桌面版打「開工」→ 應看到接力棒注入 + 雲端 HEAD hash。
+若有反應 → 戰役確定收尾。
+若無反應 → 跑 `Get-Content "$env:TEMP\junshi_hook_debug.log" -Tail 5` 看 debug log。
+
+### Opus 致 Sonnet 4.6
+
+Sonnet 4.6 凌晨 4:48 一場找到 BOM 根因，解掉 Opus 整晚四版瞎猜都沒解掉的問題。
+這證明 Opus 等級 ≠ 不會犯錯，務實診斷分離法 > 高等級瞎猜。
