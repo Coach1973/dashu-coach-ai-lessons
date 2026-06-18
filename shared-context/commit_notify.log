@@ -2468,3 +2468,4 @@
 [2026-06-18 13:02] [CoachWU] 7c6db4e0: auto-backup 2026-06-18 13:02 (notify v2)
 [2026-06-18 13:32] [CoachWU] c78f6af4: auto-backup 2026-06-18 13:32
 [2026-06-18 14:05] [CoachWU] 67fed83b: auto: 接力棒鏡像同步 2026-06-18 14:05
+[2026-06-18 14:05] [CoachWU] f5137887: auto-backup 2026-06-18 14:05 健康檢查自動提交（修復 sync_handoff Python 3.12 re.escape 問題）
