@@ -85,3 +85,22 @@
 
 🎯 結論：無需通知教練，安靜結束。
 =====================================
+
+[2026-06-18 23:37:00] 健康檢查 #N（23:37）
+=====================================
+📋 Cron 任務：
+   - 健康檢查本身 CE=3（lastErrorReason=overloaded）
+   - ⚠️ 已達 3 次門檻 → 已 announce Telegram 通知教練（messageId 8065）
+   - 本次成功執行後會自動歸零
+   - 屬於上游 MiniMax API 過載抖動，無法在本層修復
+
+📦 Git 狀態：
+   - 6 個檔案變更 → ✅ 已自動 commit（826591ab）+ push 成功
+   - BOT_MESSAGES.md / HEARTBEAT.md / shared-context/commit_notify.log / split_memory.log / state/health_check.log / state/session_counter.json
+
+📝 HEARTBEAT.md：
+   - 僅 23:37 relay poll OK 紀錄
+   - 無 ⬜ 停滯項目
+
+🎯 結論：已通知教練裁決（CE=3），Git 已自動修復。
+=====================================
