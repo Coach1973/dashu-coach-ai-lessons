@@ -110,37 +110,35 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-18)
+## Promoted From Short-Term Memory (2026-06-19)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:49:49 -->
-- 📨 對話記錄 01:23（共約 45 條，從第 0 行起）: 🦞 小龍蝦：教練，兩項都跑完： [score=0.824 recalls=0 avg=0.620 source=memory/2026-06-13.md:49-49]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:83:83 -->
-- 📨 對話記錄 01:53（共約 21 條，從第 52 行起）: **給軍師的指令摘要：** [score=0.824 recalls=0 avg=0.620 source=memory/2026-06-13.md:83-83]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:51:51 -->
-- 📨 對話記錄 01:23（共約 45 條，從第 0 行起）: **1. `gh auth status`** [score=0.814 recalls=0 avg=0.620 source=memory/2026-06-13.md:51-51]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:63:63 -->
-- 📨 對話記錄 01:23（共約 45 條，從第 0 行起）: **1. `gh auth status`** [score=0.814 recalls=0 avg=0.620 source=memory/2026-06-13.md:63-63]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:13:16 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:13-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:17:20 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:17-20]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:21:24 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:21-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:25:28 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:25-28]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:29:32 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:29-32]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:33:36 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:33-36]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:37:40 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:37-40]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:41:44 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:41-44]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:45:48 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:45-48]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:49:52 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:49-52]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:5:8 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:5-8]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:53:54 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：我桌面版的 Claude 助教要讀取我們雲端上面的 GitHub 資料，請問路徑在什麼地方？ 🦞 小龍蝦：教練，三個 GitHub repo 在本機的路徑如下： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-14.md:53-54]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:56:59 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | 雲端 Repo | 本機路徑 | 用途 | |----------|---------|------| | `Coach1973/mac-openclaw-workflows` | `/Users/bymyway/.openclaw/workspace/` | 學長（1號機）專屬 | | `Coach1973/openclaw-kong` | `/Users/bymyway/.openclaw-kong/workspace/` | 學弟（孔大哥） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:56-59]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:60:60 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | `Coach1973/openclaw-peipei` | `/Users/bymyway/.openclaw-peipei/workspace/` | 學妹（佩佩老師） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:60-60]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:62:62 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: **桌面版 Claude 助教要讀我的（學長）資料時，路徑給它：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:62-62]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:64:64 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: /Users/bymyway/.openclaw/workspace/ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:64-64]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:67:68 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 這個資料夾本身就是 Git 倉庫（`.git` 已綁定 `Coach1973/mac-openclaw-workflows`），桌面版只要對 🦞 小龍蝦：教練，三個 GitHub repo 在本機的路徑如下： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:67-68]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:70:73 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | 雲端 Repo | 本機路徑 | 用途 | |----------|---------|------| | `Coach1973/mac-openclaw-workflows` | `/Users/bymyway/.openclaw/workspace/` | 學長（1號機）專屬 | | `Coach1973/openclaw-kong` | `/Users/bymyway/.openclaw-kong/workspace/` | 學弟（孔大哥） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:70-73]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:74:74 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | `Coach1973/openclaw-peipei` | `/Users/bymyway/.openclaw-peipei/workspace/` | 學妹（佩佩老師） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:74-74]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:76:76 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: **桌面版 Claude 助教要讀我的（學長）資料時，路徑給它：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:76-76]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:78:78 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: /Users/bymyway/.openclaw/workspace/ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:78-78]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:81:81 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 這個資料夾本身就是 Git 倉庫（`.git` 已綁定 `Coach1973/mac-openclaw-workflows`），桌面版只要對 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:81-81]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:9:12 -->
+- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:9-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:280:283 -->
+- 📨 對話記錄 17:53（共約 66 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.825 recalls=0 avg=0.620 source=memory/2026-06-11.md:280-283]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:284:285 -->
+- 📨 對話記錄 17:53（共約 66 條，從第 0 行起）: 👤 教練：⚡ Interrupting current task. I'll respond to your message shortly. 什麼意思 🦞 小龍蝦：教練，這句話的意思很簡單： [score=0.825 recalls=0 avg=0.620 source=memory/2026-06-11.md:284-285]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:84:87 -->
+- 📨 對話記錄 01:53（共約 21 條，從第 52 行起）: `top -l 1 -n 0 -o mem` 抓記憶體前 20 名進程; `vm_stat` + `memory_pressure` 看 swap 與整體壓力; 列出 `~/Library/Caches` 前 10 大、`/private/var/folders` 前 5 大; 快取類、暫存類可以直接清；超過 1GB 的大項要先列清單請教練裁決 [score=0.794 recalls=0 avg=0.620 source=memory/2026-06-13.md:84-87]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:88:88 -->
+- 📨 對話記錄 01:53（共約 21 條，從第 52 行起）: 完成的證據：清理報告 + 清理前後 `memory_pressure` 對比 + commit hash [score=0.794 recalls=0 avg=0.620 source=memory/2026-06-13.md:88-88]
