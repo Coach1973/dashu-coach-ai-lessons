@@ -64,7 +64,8 @@ new_section = f"""{start_mark}
 if start_mark in claude_content and end_mark in claude_content:
     # 已有標記區段：替換內容
     pattern = re.compile(re.escape(start_mark) + r".*?" + re.escape(end_mark), re.DOTALL)
-    new_content = pattern.sub(new_section, claude_content)
+    # 用 lambda 傳入替換字串，避免 Python 3.12+ re.sub 把 handoff 內的 \C、\U 等當作 backref escape
+    new_content = pattern.sub(lambda m: new_section, claude_content)
 else:
     # 首次安裝：在第一個「## 🎖️ Claude 軍師接位提示」之前插入
     anchor = "## 🎖️ Claude 軍師接位提示"
