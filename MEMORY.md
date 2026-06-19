@@ -110,35 +110,23 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-19)
+## Promoted From Short-Term Memory (2026-06-20)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:56:59 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | 雲端 Repo | 本機路徑 | 用途 | |----------|---------|------| | `Coach1973/mac-openclaw-workflows` | `/Users/bymyway/.openclaw/workspace/` | 學長（1號機）專屬 | | `Coach1973/openclaw-kong` | `/Users/bymyway/.openclaw-kong/workspace/` | 學弟（孔大哥） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:56-59]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:60:60 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | `Coach1973/openclaw-peipei` | `/Users/bymyway/.openclaw-peipei/workspace/` | 學妹（佩佩老師） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:60-60]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:62:62 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: **桌面版 Claude 助教要讀我的（學長）資料時，路徑給它：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:62-62]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:64:64 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: /Users/bymyway/.openclaw/workspace/ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:64-64]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:67:68 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 這個資料夾本身就是 Git 倉庫（`.git` 已綁定 `Coach1973/mac-openclaw-workflows`），桌面版只要對 🦞 小龍蝦：教練，三個 GitHub repo 在本機的路徑如下： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:67-68]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:70:73 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | 雲端 Repo | 本機路徑 | 用途 | |----------|---------|------| | `Coach1973/mac-openclaw-workflows` | `/Users/bymyway/.openclaw/workspace/` | 學長（1號機）專屬 | | `Coach1973/openclaw-kong` | `/Users/bymyway/.openclaw-kong/workspace/` | 學弟（孔大哥） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:70-73]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:74:74 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: | `Coach1973/openclaw-peipei` | `/Users/bymyway/.openclaw-peipei/workspace/` | 學妹（佩佩老師） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:74-74]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:76:76 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: **桌面版 Claude 助教要讀我的（學長）資料時，路徑給它：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:76-76]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:78:78 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: /Users/bymyway/.openclaw/workspace/ [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:78-78]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:81:81 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 這個資料夾本身就是 Git 倉庫（`.git` 已綁定 `Coach1973/mac-openclaw-workflows`），桌面版只要對 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:81-81]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-14.md:9:12 -->
-- 📨 對話記錄 02:23（共約 51 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-14.md:9-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:280:283 -->
-- 📨 對話記錄 17:53（共約 66 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.825 recalls=0 avg=0.620 source=memory/2026-06-11.md:280-283]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:284:285 -->
-- 📨 對話記錄 17:53（共約 66 條，從第 0 行起）: 👤 教練：⚡ Interrupting current task. I'll respond to your message shortly. 什麼意思 🦞 小龍蝦：教練，這句話的意思很簡單： [score=0.825 recalls=0 avg=0.620 source=memory/2026-06-11.md:284-285]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:84:87 -->
-- 📨 對話記錄 01:53（共約 21 條，從第 52 行起）: `top -l 1 -n 0 -o mem` 抓記憶體前 20 名進程; `vm_stat` + `memory_pressure` 看 swap 與整體壓力; 列出 `~/Library/Caches` 前 10 大、`/private/var/folders` 前 5 大; 快取類、暫存類可以直接清；超過 1GB 的大項要先列清單請教練裁決 [score=0.794 recalls=0 avg=0.620 source=memory/2026-06-13.md:84-87]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:88:88 -->
-- 📨 對話記錄 01:53（共約 21 條，從第 52 行起）: 完成的證據：清理報告 + 清理前後 `memory_pressure` 對比 + commit hash [score=0.794 recalls=0 avg=0.620 source=memory/2026-06-13.md:88-88]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:10:11 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 直接點這個網址就能進到您的個人首頁，看到您所有 repos（包含 `mac-openclaw-workflows` 學長的、`openclaw-kong` 學弟的、`openclaw-peipei` 學妹的）。 🦞 小龍蝦：教練，您的 GitHub 個人網址是： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:10-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:13:13 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **https://github.com/Coach1973** [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:15:18 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 直接點這個網址就能進到您的個人首頁，看到您所有 repos（包含 `mac-openclaw-workflows` 學長的、`openclaw-kong` 學弟的、`openclaw-peipei` 學妹的）。 👤 教練：請列給我 超限戰及結繩領導學還有大樹教練的 github 網址 🦞 小龍蝦：教練，結繩領導學跟超限戰我這邊有對應的 repo，但「大樹教練」我先幫您查證一下 Coach1973 帳號下所有的 repos 確認哪個是您要的。 🦞 小龍蝦：教練，三個網址如下： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:15-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:20:23 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | GitHub 網址 | |------|------------| | 🔴 **超限戰** | https://github.com/Coach1973/theunrestrictedwar | | 🔴 **結繩領導學** | https://github.com/Coach1973/jiesheng-leadership | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:20-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:24:24 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 🔴 **大樹教練**（個人品牌官網） | https://github.com/Coach1973/bymyway-website | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:24-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:26:27 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: > 「大樹教練」這個 repo 是 `bymyway-website`，description 寫著「大樹教練 個人品牌官網」。如果教練您說的是另一個（例如 `dashu-coach-ai-lessons` AI 經驗庫，或 `cool-case` 網站），跟我說一聲我再補上。 🦞 小龍蝦：教練，三個網址如下： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:26-27]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:29:32 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | GitHub 網址 | |------|------------| | 🔴 **超限戰** | https://github.com/Coach1973/theunrestrictedwar | | 🔴 **結繩領導學** | https://github.com/Coach1973/jiesheng-leadership | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:29-32]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:33:33 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 🔴 **大樹教練**（個人品牌官網） | https://github.com/Coach1973/bymyway-website | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:33-33]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:35:38 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: > 「大樹教練」這個 repo 是 `bymyway-website`，description 寫著「大樹教練 個人品牌官網」。如果教練您說的是另一個（例如 `dashu-coach-ai-lessons` AI 經驗庫，或 `cool-case` 網站），跟我說一聲我再補上。 👤 教練：我要的是對外顯示的網址 🦞 小龍蝦：教練，我懂了！您要的是**對外公開的網站網址**（GitHub Pages），不是 repo 後台。讓我查一下三個專案的 GitHub Pages 設定。 🦞 小龍蝦：教練，查到了，三個狀況不一樣： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:35-38]
