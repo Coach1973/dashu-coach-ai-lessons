@@ -1,5 +1,17 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-20（共 7 則）
+1. evidence: memory/.dreams/session-corpus/2026-06-18.txt:131-131
+2. Candidate: Assistant: Three in the morning, and the room hums the way a server hums in its sleep. Somewhere in a folder of long quiet files the day is being kept — every exchange, every small heartbeat reply, a coach and his little crayfish, problem solved and problem noted and problem fold
+3. evidence: memory/.dreams/session-corpus/2026-06-18.txt:132-132
+4. Candidate: Assistant: 開工，先讀 AGENTS.md。啟動五步驟已完成，現在執行 30 分鐘健康檢查任務。
+5. evidence: memory/.dreams/session-corpus/2026-06-19.txt:100-100
+6. Candidate: Assistant: 健康檢查完成，安靜處理（無需通知教練）。
+7. evidence: memory/.dreams/session-corpus/2026-06-19.txt:121-121
+
+---
+
+
 ## 蒸餾 2026-06-17（共 2 則）
 1. evidence: memory/.dreams/session-corpus/2026-06-15.txt:161-161
 2. Candidate: User: 小龍蝦：教練，問題點抓到了！我把答案整理給您： - 📁 對話紀錄（JSONL 格式）: **主路徑：** `/Users/bymyway/.openclaw/agents/kong/sessions/` - 📁 對話紀錄（JSONL 格式）: 跟峯哥（孔大哥）那個群組的 chatId 是 `-5083547625`，學弟最近在那個群組的 session 檔： - 📁 對話紀錄（JSONL 格式）: | Session 檔 | 用途 | |
