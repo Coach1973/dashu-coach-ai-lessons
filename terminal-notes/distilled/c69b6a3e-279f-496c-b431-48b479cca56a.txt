@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session c69b6a3e-279f-496c-b431-48b479cca56a
-# 提取時間：2026-06-21 06:00 (台灣時間)
-# 共 26 條教練原話
+# 提取時間：2026-06-21 06:30 (台灣時間)
+# 共 28 條教練原話
 
 ---
 
@@ -488,3 +488,52 @@ OK 推
 | push | `450ee51..4022a56 main -> main` ✅ |
 | 做法 | **從 government-subsidies 整份 cp 為基底**（確保 modal+script 100% 一致、已驗證會動）|
 | 套上 sed/Edit 改動 | 14 處（標題、台南場、免費、承辦、議程清理、stat 2 欄、banner、logo …（略）
+
+【教練 2026-06-20 22:19】
+<!-- attach -->
+> (要再按F5才有反應)
+
+不好意思，我還是要F5重新整理，才會出現報名，請查修，只要按一次F5，場次資訊那幾場就可以出現報名，再回到top  再選 場次資訊，就無動作，還要再按一下F5 才有反應
+
+　▶ AI 回應：立刻用 Chrome MCP 真實開頁面點，看 console error 和 DOM 狀態。
+
+　▶ AI 回應：Chrome MCP 沒連，改用本機 preview 真實點。先看 modal hide 邏輯有沒有踩雷。
+
+　▶ AI 回應：Snapshot 沒看到 modal 出現，確認 bug 重現。看 modal 元素的狀態。
+
+　▶ AI 回應：**preview 上 modal 確實能開（display: flex）**。問題很可能在 GitHub Pages CDN cache，本機沒 cache 所以正常。模擬完整流程確認。
+
+　▶ AI 回應：**找到根因！** `#registerModal` 在 DOM 中**不存在**（count: 0），但函式存在。表示 HTML 結構錯，browser 解析時丟掉了 modal 元素。
+
+　▶ AI 回應：找到嫌疑：line 808 有 `showRegisterModal(); ... .remove();` 把 modal **整個移除**。但這是 mobile menu 內按鈕，我沒點到它。再 trace 一次看流程。
+
+　▶ AI 回應：重新 reload 乾淨測一次。
+
+　▶ AI 回應：本機 reload 後第一次 click 就成功——**本機沒問題**。教練的問題 99% 是 **GitHub Pages CDN cache** 給舊版 HTML，F5 才拉新版。
+
+加 cache-buster meta + 強制 no-cache，這次推完教練 **Ctrl+F5 一次**之後永遠不會再卡。
+
+　▶ AI 回應：驗證 ✅ 全部通過。Push。
+
+　▶ AI 回應：推完並驗證 ✅
+
+## 完成憑證
+
+| 項目 | 結果 |
+|------|------|
+| commit hash | **`ff3e6df`** |
+| push | `4022a56..ff3e6df main -> main` ✅ |
+| 本機 preview 真實點測 | nav 報名按鈕 → modal **第一次點就 display: flex** ✅ |
+| 線上 cache-buster meta | 3 個全在 ✅ |
+| 線上關鍵字命中 | 21 處 ✅ |
+
+## 根因 + 修法
+
+**根因**：本機 preview 第一次 click 就能彈 modal、JS 沒 …（略）
+
+【教練 2026-06-20 22:27】
+不行，你自己試一次，先按選擇場次報右，最右邊那個，會跳到 立即選擇場次報名，你按一下試試沒有反應，就是要按F5之後才有反應，再點，場次資訊，一樣，四場都沒有反應，要按F5 才有反應
+
+　▶ AI 回應：我親自再用 preview 真實 click 一次完整 trace。
+
+　▶ AI 回應：**bug 復現了！** 真實 click 後 modal 立刻被 hide 回去。一定有 document-level click handler 干擾。
