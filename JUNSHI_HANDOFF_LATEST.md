@@ -46,7 +46,7 @@
 
 ---
 
-## 🔴🔴 本場血淚案例（案例 25，已寫入試金石）
+## 🔴🔴 本場血淚案例（案例 26，已寫入試金石）
 
 **government-grow 報名按鈕反覆 4 次推送沒抓到真根因 → 教練無眠 1.5 小時**
 
@@ -122,7 +122,7 @@ modal class 也含 `fixed inset-0 bg-black/60`，**點任何 menu link 都會把
 
 ## ⚠️ 給下一棒的提醒（請務必讀完才動工）
 
-1. **本場血淚案例 25 已寫入試金石**——下次修「按鈕沒反應 + F5 才有反應」類 bug，第一動 grep `document.querySelectorAll('.fixed.inset-0.bg-black')`，不要繞 cache/listener。
+1. **本場血淚案例 26 已寫入試金石**——下次修「按鈕沒反應 + F5 才有反應」類 bug，第一動 grep `document.querySelectorAll('.fixed.inset-0.bg-black')`，不要繞 cache/listener。
 
 2. **本場兩個新記憶必讀**：
    - `feedback_modal_selector_remove_pitfall.md`（modal selector 撞名）
@@ -134,4 +134,4 @@ modal class 也含 `fixed inset-0 bg-black/60`，**點任何 menu link 都會把
 
 ---
 
-> 軍師親筆：本場做了 3 件事但教練付 1.5 小時無眠當測試員，是我這個 Opus 軍師不及格的紀錄。血淚案例 25 已落實到試金石，下一棒請以此為戒——**修按鈕/modal/重要互動 bug，push 前必本機真實點過，不是 grep 計數**。
+> 軍師親筆：本場做了 3 件事但教練付 1.5 小時無眠當測試員，是我這個 Opus 軍師不及格的紀錄。血淚案例 26 已落實到試金石，下一棒請以此為戒——**修按鈕/modal/重要互動 bug，push 前必本機真實點過，不是 grep 計數**。
