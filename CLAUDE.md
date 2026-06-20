@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-21 06:45:00**
+> **最後同步：2026-06-21 07:55:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -116,6 +116,9 @@ modal class 也含 `fixed inset-0 bg-black/60`，**點任何 menu link 都會把
 | `ff3e6df` | cache-buster meta | 已被覆蓋 |
 | `9b986dc` | inline onclick → addEventListener | 已被覆蓋 |
 | **`6dea838`** | **真根因修復：selector 排除 modal** | **government-grow (main) 最終版** |
+| `26d7721e` | 接力棒 v30 + 試金石案例 25（撞號版）| mac-openclaw-workflows |
+| `3fc660f4` | 編號修正：撞號改為案例 26 + 補案例 25 短條目 | mac-openclaw-workflows |
+| `34f822e` | cool-case 新增案例二十六「報名按鈕修四次都沒修對」| cool-case (gh-pages) |
 
 ---
 
@@ -129,6 +132,7 @@ modal class 也含 `fixed inset-0 bg-black/60`，**點任何 menu link 都會把
 | Netlify function | https://sme-register-fn.netlify.app/.netlify/functions/register |
 | LINE bot | `@268dptjc`（小龍蝦 OpenClaw bot） |
 | 經濟部 banner 來源 | https://0800280280.sme.gov.tw/0800/plus_ai/images/banner2024.jpg |
+| **cool-case 案例 26 上線** | **https://coach1973.github.io/cool-case/#case26** |
 
 ---
 
