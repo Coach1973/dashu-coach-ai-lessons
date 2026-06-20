@@ -110,23 +110,23 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-20)
+## Promoted From Short-Term Memory (2026-06-21)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:10:11 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 直接點這個網址就能進到您的個人首頁，看到您所有 repos（包含 `mac-openclaw-workflows` 學長的、`openclaw-kong` 學弟的、`openclaw-peipei` 學妹的）。 🦞 小龍蝦：教練，您的 GitHub 個人網址是： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:10-11]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:13:13 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **https://github.com/Coach1973** [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:13-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:15:18 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 直接點這個網址就能進到您的個人首頁，看到您所有 repos（包含 `mac-openclaw-workflows` 學長的、`openclaw-kong` 學弟的、`openclaw-peipei` 學妹的）。 👤 教練：請列給我 超限戰及結繩領導學還有大樹教練的 github 網址 🦞 小龍蝦：教練，結繩領導學跟超限戰我這邊有對應的 repo，但「大樹教練」我先幫您查證一下 Coach1973 帳號下所有的 repos 確認哪個是您要的。 🦞 小龍蝦：教練，三個網址如下： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:15-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:20:23 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | GitHub 網址 | |------|------------| | 🔴 **超限戰** | https://github.com/Coach1973/theunrestrictedwar | | 🔴 **結繩領導學** | https://github.com/Coach1973/jiesheng-leadership | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:20-23]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:24:24 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 🔴 **大樹教練**（個人品牌官網） | https://github.com/Coach1973/bymyway-website | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:24-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:26:27 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: > 「大樹教練」這個 repo 是 `bymyway-website`，description 寫著「大樹教練 個人品牌官網」。如果教練您說的是另一個（例如 `dashu-coach-ai-lessons` AI 經驗庫，或 `cool-case` 網站），跟我說一聲我再補上。 🦞 小龍蝦：教練，三個網址如下： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:26-27]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:29:32 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | GitHub 網址 | |------|------------| | 🔴 **超限戰** | https://github.com/Coach1973/theunrestrictedwar | | 🔴 **結繩領導學** | https://github.com/Coach1973/jiesheng-leadership | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:29-32]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:33:33 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 🔴 **大樹教練**（個人品牌官網） | https://github.com/Coach1973/bymyway-website | [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:33-33]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:35:38 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: > 「大樹教練」這個 repo 是 `bymyway-website`，description 寫著「大樹教練 個人品牌官網」。如果教練您說的是另一個（例如 `dashu-coach-ai-lessons` AI 經驗庫，或 `cool-case` 網站），跟我說一聲我再補上。 👤 教練：我要的是對外顯示的網址 🦞 小龍蝦：教練，我懂了！您要的是**對外公開的網站網址**（GitHub Pages），不是 repo 後台。讓我查一下三個專案的 GitHub Pages 設定。 🦞 小龍蝦：教練，查到了，三個狀況不一樣： [score=0.812 recalls=0 avg=0.620 source=memory/2026-06-16.md:35-38]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:40:43 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | 對外公開網址 | 狀態 | |------|------------|------| | 🔴 **超限戰** | ⚠️ **沒設 GitHub Pages** | repo 存在但沒有對外網頁 | | ✅ **結繩領導學** | **https://coach1973.github.io/jiesheng-leadership/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:40-43]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:44:44 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | ✅ **大樹教練**（個人品牌官網）| **https://coach1973.github.io/bymyway-website/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:44-44]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:46:46 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **超限戰** 的 repo 雖然有，但 GitHub Pages 沒開過（API 回 404）。有兩個可能： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:46-46]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:47:48 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 還沒部署到 GitHub Pages（停在程式碼階段）; 部署在別的地方（例如 Netlify 之類的） [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:47-48]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:5:6 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 👤 教練：請問我的github 網址在哪裡 🦞 小龍蝦：教練，您的 GitHub 個人網址是： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:5-6]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:50:51 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 教練您印象中超限戰是放在哪裡？或是還沒對外公開？我可以幫您查 Netlify 那邊有沒有這個專案。 🦞 小龍蝦：教練，查到了，三個狀況不一樣： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:50-51]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:53:56 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | 對外公開網址 | 狀態 | |------|------------|------| | 🔴 **超限戰** | ⚠️ **沒設 GitHub Pages** | repo 存在但沒有對外網頁 | | ✅ **結繩領導學** | **https://coach1973.github.io/jiesheng-leadership/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:53-56]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:57:57 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | ✅ **大樹教練**（個人品牌官網）| **https://coach1973.github.io/bymyway-website/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:57-57]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:59:59 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **超限戰** 的 repo 雖然有，但 GitHub Pages 沒開過（API 回 404）。有兩個可能： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:59-59]
