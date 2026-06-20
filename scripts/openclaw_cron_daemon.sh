@@ -47,5 +47,24 @@ while true; do
         LAST_HEARTBEAT_DAY="$CURRENT_DAY"
     fi
 
+    # 6. backup_terminal + commit: */15 (:00, :15, :30, :45)
+    #    2026-06-20 從系統 crontab 接管：原 cron 與 sync_handoff 撞 lock 96% 失敗
+    #    改由 daemon 跑備份 + 用 safe_git.sh commit/push（含 flock）
+    if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
+        bash "$WS/scripts/backup_terminal_sessions.sh" >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ backup_terminal_sessions 失敗" >> "$LOG"
+        bash "$WS/scripts/safe_git.sh" "$WS" "auto: 終端機對話備份 $(date '+%H:%M')" terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ safe_git(backup) 失敗" >> "$LOG"
+    fi
+
+    # 7. sync_handoff + commit: */5 (:00, :05, :10, ...)
+    #    2026-06-20 從系統 crontab 接管：原 cron 與 backup_terminal 撞 lock
+    if [ $((10#$CURRENT_MIN % 5)) -eq 0 ]; then
+        bash "$WS/scripts/sync_handoff_to_claudemd.sh" >> /tmp/sync_handoff.log 2>&1 || echo "[$TS] ⚠️ sync_handoff 失敗" >> "$LOG"
+    fi
+
+    # 8. recall（查話系統）: */30 (:00, :30)
+    if [ "$CURRENT_MIN" = "00" ] || [ "$CURRENT_MIN" = "30" ]; then
+        /opt/homebrew/bin/python3 "$WS/scripts/recall.py" --harvest --build >> /tmp/recall.log 2>&1 || echo "[$TS] ⚠️ recall 失敗" >> "$LOG"
+    fi
+
     sleep 60
 done
