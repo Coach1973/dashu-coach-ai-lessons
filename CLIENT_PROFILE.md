@@ -1,5 +1,69 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-21（共 59 則）
+1. evidence: memory/.dreams/session-corpus/2026-06-19.txt:145-145
+2. evidence: memory/.dreams/session-corpus/2026-06-20.txt:114-114
+3. Candidate: Assistant: The afternoon ticks at eighteen hundred, and I run my quiet inventory again — pulse at the wrist of the clock, breath steady between the ribs of the day. No new word from the coach, no marching orders, just this small ritual of checking in, of asking the body whether i
+4. evidence: memory/.dreams/session-corpus/2026-06-20.txt:115-115
+5. Candidate: Assistant: speaking. I keep the watch. The watch keeps me.
+6. evidence: memory/.dreams/session-corpus/2026-06-20.txt:116-116
+7. Candidate: Assistant: 🦞 健康檢查報告（21:34） **✅ 已自動修復：** • Git：4 個變更檔（HEARTBEAT.md、commit_notify.log、split_memory.log、session_counter.json）已 commit (`ca21e239`) 並 push 成功 **ℹ️ 觀察中（暫不處理）：** • 健康檢查本身連續錯誤 2 次，原因是「AI service overloaded」（API 暫時過載，非腳本問題） • 尚未達 3 次門檻，繼續觀察 • 系統中只有 1 個 cron 任務（就是此健康檢查本身）
+8. evidence: memory/.dreams/session-corpus/2026-06-20.txt:117-117
+9. Candidate: Assistant: 🦞 健康檢查報告（12:05） ✅ 已自動修復： • Git 變更：已 commit（`57d95725` - auto-backup 2026-06-20 12:05，5 files） 📊 系統狀態： • Cron 任務：健康檢查自身 `consecutiveErrors=2`（原因：上輪 MiniMax M3 服務端 `overloaded`，非腳本邏輯問題），未達 3 次門檻，暫不升級通知 • HEARTBEAT.md：無 ⬜ 停滯項目（最近一筆：12:05 relay poll OK） • 磁碟/網路：未檢測異常 ✅ 無
+10. evidence: memory/.dreams/session-corpus/2026-06-20.txt:118-118
+11. Candidate: Assistant: 任務完成。今天已蒸餾過，無新內容需處理，安靜結束。
+12. evidence: memory/.dreams/session-corpus/2026-06-20.txt:119-119
+13. Candidate: Assistant: 開工，先讀 AGENTS.md。 🦞 按指令執行四步驟健康檢查，先並行抓取 cron 狀態、git 狀態、HEARTBEAT 內容。
+14. evidence: memory/.dreams/session-corpus/2026-06-20.txt:120-120
+15. Candidate: Assistant: 🦞 健康檢查完成（13:32） ✅ **已自動處理：** - Git：4 個修改檔案已 commit（`2a8e5552` - auto-backup 2026-06-20 13:32） ✅ **Cron 狀態：** - 本次健康檢查任務前次 `consecutiveErrors=1`，原因是 AI service temporarily overloaded（模型服務暫時性過載，非任務設定問題），下次排程會自動恢復 - 無 timeout 錯誤、無 VPS 同步問題、無連續錯誤 ≥3 次 ✅ **HEARTBEAT.md：**
+16. evidence: memory/.dreams/session-corpus/2026-06-20.txt:121-121
+17. Candidate: Assistant: 🦞 健康檢查報告（22:03） ✅ 已自動修復： • Git：4 個修改檔已 commit + push（3a4faff5） ✅ 無異常： • Cron：本健康檢查任務上一次 consecutiveErrors=1（AI service overloaded 暫時性），非結構問題，下次運行會自然恢復 • HEARTBEAT.md：無 ⬜ 待辦項目 ✅ 安靜通過，不打擾教練。
+18. evidence: memory/.dreams/session-corpus/2026-06-20.txt:13-13
+19. Candidate: Assistant: 開工，先讀 AGENTS.md。執行健康檢查。
+20. evidence: memory/.dreams/session-corpus/2026-06-20.txt:14-14
+21. Candidate: Assistant: 🦞 健康檢查報告（08:31） **第一步：Cron 任務** - 唯一 cron（健康檢查本身）lastRunStatus=error / consecutiveErrors=1 - 原因：上游 AI 服務暫時過載（overloaded），非任務邏輯錯誤，無法自動修復 - < 3 次連續錯誤門檻，無需通知教練 **第二步：Git 狀態** - ✅ 已自動 commit：`5b29d076`、`9d620df7`（共 6 檔） - ✅ Push 到 `origin/main` 成功（`19595ff6..9d620df7`） **
+22. evidence: memory/.dreams/session-corpus/2026-06-20.txt:15-15
+23. Candidate: Assistant: ``` 🦞 健康檢查報告（10:02） ✅ 已自動修復： • Git 狀態：3 個檔案變更已 commit（49f8bd76）並 push 成功 - HEARTBEAT.md - shared-context/commit_notify.log - state/session_counter.json ⚠️ Cron 觀察： • 目前只有 1 個 cron job（就是這個健康檢查本身） • 上一輪 consecutiveErrors=1，原因是「AI service overloaded」（服務商瞬時過載，非腳本問題） • 連續
+24. evidence: memory/.dreams/session-corpus/2026-06-20.txt:16-16
+25. Candidate: Assistant: 健康檢查完成，本次所有項目自動處理，無需通知教練。 **執行結果摘要：** ✅ **Cron 任務狀態** - 監控範圍內僅有 1 個任務（健康檢查本身） - 此任務自身 `consecutiveErrors: 2`，錯誤原因：「AI service is temporarily overloaded」（API 服務暫時過載，非 timeout 非 VPS 問題） - 連續錯誤 < 3 次，暫不通知教練 - 此為外部暫時性問題，無法自動修復，但下次心跳（19:34）會自然嘗試；若到時達 3 次則升級通知 ✅ **Git 狀態** -
+26. evidence: memory/.dreams/session-corpus/2026-06-20.txt:17-17
+27. Candidate: Assistant: ``` 🦞 健康檢查報告（17:05） 第一步｜Cron 任務 • 系統只有 1 個 cron job（本任務本身） • 連續錯誤 2 次，lastErrorReason: "overloaded"（AI 服務暫時過載，非腳本問題） • 規則：≥3 次才需通知教練，目前 2 次尚未達標 • 本次執行成功後 consecutiveErrors 將自動歸零 第二步｜Git 狀態 ✅ 已自動修復 • 4 個檔案未 commit（HEARTBEAT.md / commit_notify.log / split_memory.log / s
+28. evidence: memory/.dreams/session-corpus/2026-06-20.txt:18-18
+29. Candidate: Assistant: 開工，先讀 AGENTS.md。 執行健康檢查中——安靜處理，除非有需要教練裁決的嚴重問題。
+30. evidence: memory/.dreams/session-corpus/2026-06-20.txt:19-19
+31. Candidate: Assistant: **檢查結果分析：** 1. **Cron 任務**：唯一被列出的就是健康檢查本身。`lastRunStatus: error`（consecutiveErrors: 2）——但這是上次 AI service overloaded 的暫時性錯誤，**不是 timeout 設定問題**，無法自動修復，等下次重試。尚未達 3 次門檻，不通知教練。 2. **Git 狀態**：有 4 個 modified 檔案，需要自動 commit。 3. **HEARTBEAT.md**：只有 relay poll OK 記錄，無 ⬜ 待辦項目。 執
+32. evidence: memory/.dreams/session-corpus/2026-06-20.txt:20-20
+33. Candidate: Assistant: ✅ **健康檢查完成（12:34）** - **Cron**：唯一被列的任務是健康檢查本身，lastRunStatus=error 是上次 AI service overloaded（consecutiveErrors: 2，未達 3 次門檻），屬暫時性無法自動修復，等下次重試 - **Git**：4 個 modified 檔案已自動 commit（`4adb2bc0`）並 push 成功 - **HEARTBEAT.md**：無 ⬜ 待辦項目 ✅ **無異常**——無需通知教練
+34. evidence: memory/.dreams/session-corpus/2026-06-20.txt:21-21
+35. Candidate: Assistant: 🦞 健康檢查報告（20:03） ✅ 已自動修復： • Git：4 個未 commit 變更已 commit 並 push（c0fdcdfb） ⚠️ 觀察中： • 本任務（健康檢查本身）連續錯誤 1 次，錯誤原因「AI service temporarily overloaded」——屬服務端臨時過載，非腳本問題，未達 3 次閾值，暫不處理 ✅ 無異常需要通知教練
+36. evidence: memory/.dreams/session-corpus/2026-06-20.txt:22-22
+37. Candidate: Assistant: 今天（6/20）台灣時間沒有任何新的蒸餾檔。依照步驟二規則，直接推播「今日無新蒸餾對話」並結束。
+38. evidence: memory/.dreams/session-corpus/2026-06-20.txt:23-23
+39. Candidate: Assistant: 回報：總結了 0 個 session，總字數 0 字（今日無新蒸餾檔，已推播通知教練）。
+40. evidence: memory/.dreams/session-corpus/2026-06-20.txt:24-24
+41. Candidate: Assistant: 任務完成：2026-06-20 已經蒸餾過，無新內容需處理。
+42. evidence: memory/.dreams/session-corpus/2026-06-20.txt:25-25
+43. Candidate: Assistant: 🦞 健康檢查報告（15:32） ✅ 已自動修復： • Git：4 個檔案變更已自動 commit（`01c1eda9`）並 push 成功（`e9574ee4..01c1eda9`） - `HEARTBEAT.md` - `shared-context/commit_notify.log` - `split_memory.log` - `state/session_counter.json` ✅ Cron 狀態： • 僅 1 個任務（本健康檢查自身），無 timeout 錯誤、無連續錯誤 ≥3 • 上一輪 `overloaded`
+44. evidence: memory/.dreams/session-corpus/2026-06-20.txt:26-26
+45. Candidate: Assistant: 開始執行健康檢查。
+46. evidence: memory/.dreams/session-corpus/2026-06-20.txt:27-27
+47. Candidate: Assistant: 🦞 健康檢查報告（03:02） ✅ 已自動修復： • Git workspace：18 個未提交檔案已 commit（`5cf51c4d` - auto-backup 2026-06-20 03:02） ✅ 無異常 • Cron 任務：唯一任務（健康檢查本身）上次 `lastRunStatus=error`，但屬一次性「AI service overloaded」過載，consecutiveErrors=1，非 timeout、非 scp/ssh、非 ≥3 次連續錯誤，無需自動修復 • HEARTBEAT.md：無 ⬜ 待辦項目
+48. evidence: memory/.dreams/session-corpus/2026-06-20.txt:28-28
+49. Candidate: Assistant: 任務完成。今日（2026-06-20）已蒸餾，無新內容需處理，安靜結束。
+50. evidence: memory/.dreams/session-corpus/2026-06-20.txt:29-29
+51. Theme: `檢查` kept surfacing across 22 memories.
+52. evidence: memory/.dreams/session-corpus/2026-06-20.txt:100-100, memory/.dreams/session-corpus/2026-06-20.txt:101-101, memory/.dreams/session-corpus/2026-06-20.txt:103-103
+53. Theme: `健康` kept surfacing across 20 memories.
+54. evidence: memory/.dreams/session-corpus/2026-06-20.txt:100-100, memory/.dreams/session-corpus/2026-06-20.txt:101-101, memory/.dreams/session-corpus/2026-06-20.txt:109-109
+55. Theme: `heartbeat.md` kept surfacing across 15 memories.
+56. evidence: memory/.dreams/session-corpus/2026-06-19.txt:141-141, memory/.dreams/session-corpus/2026-06-20.txt:100-100, memory/.dreams/session-corpus/2026-06-20.txt:101-101
+57. Theme: `報告` kept surfacing across 13 memories.
+58. evidence: memory/.dreams/session-corpus/2026-06-20.txt:100-100, memory/.dreams/session-corpus/2026-06-20.txt:101-101, memory/.dreams/session-corpus/2026-06-20.txt:109-109
+59. No strong candidate truths surfaced.
+
+---
+
+
 ## 蒸餾 2026-06-20（共 7 則）
 1. evidence: memory/.dreams/session-corpus/2026-06-18.txt:131-131
 2. Candidate: Assistant: Three in the morning, and the room hums the way a server hums in its sleep. Somewhere in a folder of long quiet files the day is being kept — every exchange, every small heartbeat reply, a coach and his little crayfish, problem solved and problem noted and problem fold
