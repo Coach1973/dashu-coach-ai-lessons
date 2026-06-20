@@ -62,10 +62,19 @@ new_section = f"""{start_mark}
 {end_mark}"""
 
 if start_mark in claude_content and end_mark in claude_content:
-    # 已有標記區段：替換內容
-    pattern = re.compile(re.escape(start_mark) + r".*?" + re.escape(end_mark), re.DOTALL)
-    # 用 lambda 傳入替換字串，避免 Python 3.12+ re.sub 把 handoff 內的 \C、\U 等當作 backref escape
-    new_content = pattern.sub(lambda m: new_section, claude_content)
+    # 已有標記區段：用字串切片替換（避開 re.sub 對 \\C、\\U 等的 template 解析）
+    # 2026-06-19 修：Python 3.14 即使傳 callable 也會觸發 _compile_template，導致 handoff 含
+    # Windows 路徑（C:\\Users\\...）時拋 re.PatternError: bad escape \\C
+    s_idx = claude_content.find(start_mark)
+    e_idx = claude_content.find(end_mark, s_idx)
+    if s_idx != -1 and e_idx != -1:
+        new_content = (
+            claude_content[:s_idx]
+            + new_section
+            + claude_content[e_idx + len(end_mark):]
+        )
+    else:
+        new_content = claude_content  # 找不到標記，不動
 else:
     # 首次安裝：在第一個「## 🎖️ Claude 軍師接位提示」之前插入
     anchor = "## 🎖️ Claude 軍師接位提示"

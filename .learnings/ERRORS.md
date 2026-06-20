@@ -34,3 +34,34 @@
 🚫 「要更即時，建議您去設定頁貼我」這類話術 = 違規，零容忍
 🚫 任何流量指令的延伸建議 = 違規
 ✅ 流量指令 = 讀快取 + 照報 + 結束
+
+## 2026-06-20 09:04 | sync_handoff_to_claudemd.sh 隱藏 regex bug 已修
+
+**場景**：
+每 30 分鐘健康檢查發現 `sync_handoff.sh` 自 2026-06-17 17:50 起連續 27 小時拋 `re.PatternError: bad escape \C at position 733`。
+最後一次成功同步：2026-06-18 21:05，之後 handoff 沒再被改、cron 因 mtime 短路退出 → 沒有新錯誤 log，但**bug 仍在腳本裡**，等下次 Windows session 寫入含 `C:\Users\...` 路徑的 handoff 就會再次爆炸。
+
+**根因**：
+腳本用 `re.compile(...).sub(lambda m: new_section, content)` 想避開 Python 3.12+ 對 `re.sub` 字串版做 template escape parsing 的問題。
+但 Python 3.14 連 callable 版也觸發 `_compile_template`，只要 new_section 內含 `\C`、`\U`、`\d1` 等反斜線序列就壞。
+
+**修復**：
+把 `pattern.sub(...)` 換成純字串切片：
+```python
+s_idx = claude_content.find(start_mark)
+e_idx = claude_content.find(end_mark, s_idx)
+new_content = claude_content[:s_idx] + new_section + claude_content[e_idx + len(end_mark):]
+```
+完全繞過 regex 引擎，handoff 內容含任何反斜線都不影響。
+
+**驗證**：
+模擬 Windows 風格 handoff（`C:\Users\coach\Desktop\file.txt` + `\U` + `\d1`）→ 跑腳本 → 同步成功，無錯誤。
+
+**預防**：
+1. 任何處理「外部內容塞進 regex replacement」的腳本，優先用字串 find/slice，不要僥倖 callable 版
+2. cron 腳本每週應有 sanity check：log 末段不能停在「連續 traceback」
+3. 健康檢查要看 cron log 的「最後一次成功時間」，光看 mtime 短路會讓隱藏 bug 藏很久
+
+**NEC（不可再犯）**：
+🚫 對 handoff / memory / 任何外部 Markdown 內容用 `re.sub` 處理 → 改字串切片
+🚫 cron 腳本靠 mtime 短路來「避免錯誤 log 噪音」掩蓋潛在 bug → 應加每週主動驗證
