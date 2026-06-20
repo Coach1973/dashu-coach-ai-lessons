@@ -65,3 +65,41 @@ new_content = claude_content[:s_idx] + new_section + claude_content[e_idx + len(
 **NEC（不可再犯）**：
 🚫 對 handoff / memory / 任何外部 Markdown 內容用 `re.sub` 處理 → 改字串切片
 🚫 cron 腳本靠 mtime 短路來「避免錯誤 log 噪音」掩蓋潛在 bug → 應加每週主動驗證
+
+## 2026-06-20 09:15 | backup_terminal + sync_handoff lock 衝突（96% 失敗率）已修
+
+**場景**：
+health check 發現 `/tmp/backup_terminal.log` 有 306 個 `fatal: Unable to create '.git/index.lock'` 錯誤，
+統計過去 316 次嘗試中 306 次失敗（96.8% 失敗率），從約 06:15 起每 15 分鐘失敗一次。
+根因：system crontab 同時跑 `backup_terminal_sessions.sh`（每 15 分，:00/:15/:30/:45）和
+`sync_handoff_to_claudemd.sh`（每 5 分鐘），每 15 分鐘就撞 index.lock。
+
+**根因**：
+1. 多個 cron job 同時跑 git add/commit，搶同一個 index.lock
+2. macOS 沒有 `flock`（cron chain 沒做 lock）
+
+**修復**（2026-06-20 09:20 完成）：
+1. **新增 `scripts/safe_git.py`**：用 Python `fcntl.flock` 實作阻塞式檔案鎖（30 秒 timeout）
+   - 拿不到鎖就跳過本輪（讓下一輪接手）
+   - 拿到鎖才做 `git add → 檢查 staged → commit → push`
+   - push 失敗不影響 commit（本機留 commit，下次再推）
+2. **新增 `scripts/safe_git.sh`**：safe_git.py 的 thin wrapper，給 cron 較友善的介面
+3. **修改 `scripts/openclaw_cron_daemon.sh`**：把 backup_terminal、sync_handoff、recall 從系統 crontab 接管過來
+   - macOS cron scheduler 本身就卡（這是為什麼 openclaw_cron_daemon 2026-06-05 才建）
+   - 一不做二不休，全部搬到 daemon 管，跑在 Lock 保護下
+4. **`backup_terminal_sessions.sh`**：保持純備份（不碰 git），git ops 交給 safe_git.sh
+
+**驗證**：
+- 並行測試：A、B 兩個 safe_git 同時跑 → A 拿到鎖 commit 成功、B 等到 A 釋放後發現無變化跳過 ✅
+- daemon 重啟後 09:21:03 開始跑新邏輯 ✅
+
+**預防**：
+1. 任何會 git commit 的 cron 都應該走 safe_git.sh，不要直接在 crontab 串 `git add && git commit && git push`
+2. macOS 環境不能用 flock（指令不存在），要用 fcntl（Python）實作
+3. cron 鎖 timeout 不應太長（30 秒夠了，超過表示有問題）
+
+**NEC（不可再犯）**：
+🚫 macOS cron chain 直接串 git 操作不加 lock → 必撞 lock
+🚫 在 macOS 假設 `flock` 存在 → 不存在，要用 fcntl
+🚫 修復 bug 後只 commit 不 push → 必 push，remote 是 source of truth
+🚫 `git reset --hard` 不先確認 untracked 檔案 → 會把新檔案刪光（我這次就遇到一次，要 reflog 救回）
