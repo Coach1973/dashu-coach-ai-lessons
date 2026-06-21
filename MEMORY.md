@@ -110,23 +110,19 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-21)
+## Promoted From Short-Term Memory (2026-06-22)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:40:43 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | 對外公開網址 | 狀態 | |------|------------|------| | 🔴 **超限戰** | ⚠️ **沒設 GitHub Pages** | repo 存在但沒有對外網頁 | | ✅ **結繩領導學** | **https://coach1973.github.io/jiesheng-leadership/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:40-43]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:44:44 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | ✅ **大樹教練**（個人品牌官網）| **https://coach1973.github.io/bymyway-website/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:44-44]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:46:46 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **超限戰** 的 repo 雖然有，但 GitHub Pages 沒開過（API 回 404）。有兩個可能： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:46-46]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:47:48 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 還沒部署到 GitHub Pages（停在程式碼階段）; 部署在別的地方（例如 Netlify 之類的） [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:47-48]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:5:6 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 👤 教練：請問我的github 網址在哪裡 🦞 小龍蝦：教練，您的 GitHub 個人網址是： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:5-6]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:50:51 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 教練您印象中超限戰是放在哪裡？或是還沒對外公開？我可以幫您查 Netlify 那邊有沒有這個專案。 🦞 小龍蝦：教練，查到了，三個狀況不一樣： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:50-51]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:53:56 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | 專案 | 對外公開網址 | 狀態 | |------|------------|------| | 🔴 **超限戰** | ⚠️ **沒設 GitHub Pages** | repo 存在但沒有對外網頁 | | ✅ **結繩領導學** | **https://coach1973.github.io/jiesheng-leadership/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:53-56]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:57:57 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: | ✅ **大樹教練**（個人品牌官網）| **https://coach1973.github.io/bymyway-website/** | GitHub Pages 正常運作 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:57-57]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:59:59 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **超限戰** 的 repo 雖然有，但 GitHub Pages 沒開過（API 回 404）。有兩個可能： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:59-59]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:60:61 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 還沒部署到 GitHub Pages（停在程式碼階段）; 部署在別的地方（例如 Netlify 之類的） [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:60-61]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:63:66 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 教練您印象中超限戰是放在哪裡？或是還沒對外公開？我可以幫您查 Netlify 那邊有沒有這個專案。 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:63-66]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:67:70 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:67-70]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:71:74 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:71-74]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:8:8 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **https://github.com/Coach1973** [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:8-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:75:78 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:75-78]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:79:82 -->
+- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:79-82]
