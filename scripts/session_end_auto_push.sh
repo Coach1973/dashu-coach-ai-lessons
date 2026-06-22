@@ -30,6 +30,7 @@ SYNC_PATHS=(
   "memory/"
   "knowledges/"
   "試金石/"
+  "scripts/"
 )
 
 # 過濾出真的有變動的路徑

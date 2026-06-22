@@ -42,7 +42,8 @@ try {
         "HEARTBEAT.md",
         "memory/",
         "knowledges/",
-        "試金石/"
+        "試金石/",
+        "scripts/"
     )
 
     # 過濾出真的有變動的路徑（已追蹤的 diff + untracked 新檔）
