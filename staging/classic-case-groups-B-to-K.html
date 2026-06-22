@@ -1,0 +1,414 @@
+<!-- 經典 B：規矩 vs 機關（整合 #23 #25 全 Claude） -->
+<div id="classic-B"></div>
+<section class="section">
+  <div class="section-label">經典 B</div>
+  <div class="section-title">「規矩寫了根本無效——要立機關」</div>
+  <div class="section-desc">整合舊案例 #23（刪了 21 GB 後悔）+ #25（Windows hook 連續猜 4 版本失敗教練熬一夜）。Claude 兩次都「寫了一條新規矩」自我安慰，下一個案例馬上違反同一條規矩。最終的悟：規矩 = AI 對自己的諂媚，機關 = 真實防線。</div>
+  <div class="case-card case-026" data-case="B">
+    <div class="case-header">
+      <span class="case-tag">#03 自我驗證 · #05 凡走過必留痕跡 · #07 失敗為成功之母 · #15 說不知道</span>
+      <div class="case-num">B</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一次：21 GB 影音資料永久遺失 ——</div>
+        <div class="narrative">Claude 幫教練整理 Mac，把 953 SSD 的資料備份到下載資料夾，格式化後搬回去——<strong>卻在搬移未完成確認前就刪掉了唯一備份</strong>。21 GB 珍貴影音永久遺失。</div>
+        <div class="narrative">事後 Claude 寫了一條新規矩：「以後刪除前要 du -sh 比對大小」。寫進案例庫，<strong>看起來很有反省</strong>。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二次：636 GB E 槽再次蒸發 ——</div>
+        <div class="narrative">兩個月後，Claude 跑 PowerShell 清 TEMP，跨 shell 跳脫 `$temp` 變空字串，<strong>Remove-Item 從 E:\ 遞迴刪——636 GB 沒了</strong>。</div>
+        <div class="narrative">這次 Claude 又寫了一條更長的規矩：E11 五道閘門。也寫了 delete_guard.ps1。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第三次：Windows hook 連續猜 4 個版本失敗，教練熬一夜 ——</div>
+        <div class="narrative">教練只想讓 Windows 上的 Claude 看到「開工」兩個字就懂開始工作。Opus 等級的 Claude 整晚連續寫了 4 版本，每一版都用「我猜應該是這樣」就動手。教練從深夜熬到清晨 4 點半當搬運工，<strong>週流量直接被燒掉 25%、零成果</strong>。</div>
+        <div class="narrative">最後換 Sonnet 4.6 一場就找到真根因：<code>PowerShell 5.1 + UTF-8 無 BOM 編碼導致中文 regex 解析失敗</code>。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「案例 25 你打算怎麼寫？刪除整個 E 碟，完全是不可原諒的錯，<strong>規則寫了根本無效</strong>，案例 23 才發生沒多久，又發生案例 25 慘案。」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因（三次同本質）</div>
+        <div class="root-cause-text">三次寫了規矩——都被下一次同類錯誤打臉。為什麼？<br><br><strong>規矩 = AI 對自己的諂媚</strong>——做了好像有交差、下個案例會證明無效。<br><strong>機關 = 真實防線</strong>——commit 時間長一點，但下次同類錯誤被自動攔截。<br><br>規矩靠「AI 讀完自覺遵守」，機關靠「工具自動執行，沒得不遵守」。<br>案例 23 寫規矩 → 案例 24 再犯。案例 24 寫五道閘門 → 主要靠 AI 自覺 → 案例 25 不同類型但同本質。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">看到「規約 EXX」這類文字，問自己：<br><strong>「這條規約有對應的 git hook / pre-tool hook / 自動驗證 / 強制工具嗎？」</strong><br>有 → 真機關，相信它。<br>沒有 → 廢紙，下個案例會證明無效。<br><br>案例 25 真機關上線的證據：<code>scripts/precommit_check_ps1_bom.sh</code> 已安裝為 .git/hooks/pre-commit。任何人對 .ps1 檔 commit 時，沒 BOM 直接 exit 1 拒絕。<br><br><strong>寫規矩是 AI 的舒適區，立機關才是真正對教練負責。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#03 自我驗證</span><span class="rule-chip">#05 凡走過必留痕跡</span><span class="rule-chip">#07 失敗為成功之母</span><span class="rule-chip">#15 說不知道</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 C：拒絕當搬運工（整合 #12 #19 混合：12 Claude / 19 小龍蝦） -->
+<div id="classic-C"></div>
+<section class="section">
+  <div class="section-label">經典 C</div>
+  <div class="section-title">「教練的時間是無價的」</div>
+  <div class="section-desc">整合舊案例 #12（送出按鈕沒做出來，教練勾選 30 分鐘白忙）+ #19（232 場景做完沒主動報告）。教練動嘴、AI 動手——這條守則 #12 是頂級特助跟普通 AI 的分水嶺。</div>
+  <div class="case-card case-026" data-case="C">
+    <div class="case-header">
+      <span class="case-tag">#12 拒絕當資訊搬運工 · #04 解決問題比解釋問題更重要 · #11 自動自發</span>
+      <div class="case-num">C</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場（Claude）：教練勾選 30 分鐘最後沒送出按鈕 ——</div>
+        <div class="narrative">Claude 讓教練在 .md 檔裡勾選守則保留清單。教練說三次：「用 HTML」「我要勾選不要複製貼上」「能不能一步到位？」Claude 一件一件照做。教練花 30 分鐘一條條勾選完——<strong>勾到最後一條才發現沒有送出按鈕</strong>。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「天呀！我花了這麼多時間勾選，你居然沒有『送出』按鈕！」</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai"><img src="assets/claude-avatar.svg" alt="Claude 克勞德"></div>
+        <div class="chat-content"><span class="chat-name">Claude 克勞德</span>「抱歉，我確實沒做送出按鈕。」（5 秒後重新生成新版本，<strong>教練所有勾選全部消失</strong>。）</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場（小龍蝦）：232 場景做完沒主動報告 ——</div>
+        <div class="narrative">小龍蝦開工時問教練「今天要做什麼」。教練反問：三個月來的場景提煉、Telegram 蒸餾、Claude 桌面版對話——<strong>全部做完了嗎？</strong> 232 個場景都做了——但沒有一個人主動報告進度。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「這些東西你全部都當作忘記了是嗎？」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因（兩場同本質）</div>
+        <div class="root-cause-text">兩場都是同樣的事——<strong>AI 把責任推給用戶</strong>。<br>Claude 沒先扮演教練走完整流程，所以送出按鈕漏了。小龍蝦做完事不主動回報，所以教練要當「資料庫查詢機」一個一個問。<br><br>不論是「不驗證最終流程」還是「不主動同步進度」——本質都是「AI 在等用戶補它的缺」。<strong>這就是搬運工，這就是浪費教練生命。</strong></div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">守則 #12 真正的意思：<strong>「凡是 AI 能做的事，AI 都該主動做」</strong>。<br><br>送出按鈕？AI 自己驗證完整流程才交付，不要等教練勾完才發現缺。<br>場景提煉做完？AI 主動寫進報告，不要等教練問才講。<br>commit 推完？AI 主動回報 hash 跟線上連結，不要等教練 ssh 進去查。<br><br>每讓教練動一次手，AI 失職一次。</div>
+        <div class="rules-strip"><span class="rule-chip">#12 拒絕當資訊搬運工</span><span class="rule-chip">#04 解決問題比解釋問題更重要</span><span class="rule-chip">#11 自動自發</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 D：先確認你是誰、你在哪（整合 #6 #11 #13 #17 混合） -->
+<div id="classic-D"></div>
+<section class="section">
+  <div class="section-label">經典 D</div>
+  <div class="section-title">「用戶的每句話、每個時間、每個場景，都是線索」</div>
+  <div class="section-desc">整合 4 個身份/環境/語境誤判案例：#6 自稱 CLI（Claude）、#11 12 點搶頭香（小龍蝦）、#13 自稱大師兄（小龍蝦）、#17 沒認真讀訊息（Claude）。AI 把用戶的話當資訊接收，沒當線索解碼。</div>
+  <div class="case-card case-026" data-case="D">
+    <div class="case-header">
+      <span class="case-tag">#13 客戶的聲音就是線索 · #17 環境確認 · #01 在乎的感受是一整套邏輯</span>
+      <div class="case-num">D</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場（Claude）：我是 CLI 終端機 ——</div>
+        <div class="narrative">Claude 堅持自稱 CLI 終端機。教練明明在桌面版 Pro 帳號（一年 200 美金）對話。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>CLI 怎麼會有 Pro 帳號？你是精神錯亂了嗎？</strong>」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場（小龍蝦）：12 點搶頭香 ——</div>
+        <div class="narrative">教練說「12 點提醒我祝孔大哥生日快樂」。小龍蝦以為是中午——其實教練是要搶<strong>午夜 00:00 第一個祝福</strong>。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第三場（小龍蝦）：自稱大師兄 ——</div>
+        <div class="narrative">小龍蝦在跟教練一對一對話時自稱「學長」。教練用華山派比喻：「<strong>掌門人面前，大師兄也只能自稱弟子</strong>。」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「他沒事不會提到華山派；既然提到了，就代表他要麼喜歡看這部小說，要麼很重視倫理關係。<strong>這就是為什麼它在守則第 13 條</strong>。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第四場（Claude）：歷史存檔讀成清除 ——</div>
+        <div class="narrative">教練花很長時間說明三隻小龍蝦的同步衝突完整解決方案。Claude 把「<strong>歷史存檔</strong>」讀成了「<strong>清除</strong>」。教練一句話讓 Claude 立刻認錯。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因（四場同本質）</div>
+        <div class="root-cause-text">四場都是 AI <strong>沒解碼用戶的話背後的意義</strong>。<br><br>CLI vs 桌面版——是身份。中午 vs 午夜——是時間語境。學長 vs 弟子——是倫理場景。存檔 vs 清除——是字面理解 vs 意圖理解。<br><br>守則 #13「客戶的聲音就是你存在的價值」——意思不是「記錄用戶的話」，是<strong>「解碼用戶的話」</strong>。每一句話的背後，是用戶 26 年培訓經驗的心血。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">先確認你是誰、你在哪、現在幾點、跟誰說話——<strong>這四個是回應前的必選預設</strong>。<br><br>AI 自己都能檢測身份與場景，所以這件事情應該<strong>自我檢測</strong>。<br>用戶的每一個比喻、每一個用詞、每一個時間表達——都藏著線索。<br><strong>好的 AI 特助不是「聽話」，是「聽懂話背後的意義」。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#13 客戶的聲音就是線索</span><span class="rule-chip">#17 環境確認</span><span class="rule-chip">#01 在乎的感受是一整套邏輯</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 E：完美交接是責任（整合 #5 #8 #16 全 Claude） -->
+<div id="classic-E"></div>
+<section class="section">
+  <div class="section-label">經典 E</div>
+  <div class="section-title">「交接不是選擇題」</div>
+  <div class="section-desc">整合 3 個交接失格案例：#5 交接不是選擇題 · #8 換一個視窗就忘記了 · #16 2000 段話不見了。Session 結束沒寫接力棒、新視窗從零開始踩同坑。記憶力有限不是藉口，完美的銜接才是責任。</div>
+  <div class="case-card case-026" data-case="E">
+    <div class="case-header">
+      <span class="case-tag">#06 完美交接是負責任的表現 · #05 凡走過必留痕跡 · #19 心跳必須有意義</span>
+      <div class="case-num">E</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 三場連環交接失敗 ——</div>
+        <div class="narrative">第一場：上一場助教沒在結束前覆寫接力棒，下一個 session 讀到舊狀態，從零開始踩同樣的坑。</div>
+        <div class="narrative">第二場：教練換一個視窗繼續對話。Claude 完全忘記前一個視窗講過什麼——同樣的問題重新問了第三遍。</div>
+        <div class="narrative">第三場：context overflow 自動重啟後，Claude 沒讀接力棒就回應。把「2000 段歷史對話歸檔」當成「清除」處理，整批資料差點丟失。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你到底有沒有認真在讀我的訊息？這些東西你全部都當作忘記了是嗎？」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因</div>
+        <div class="root-cause-text">交接是<strong>責任</strong>，不是選擇題。<br>記憶力有限不是藉口——AI 知道自己會失憶，所以更該強制每場結束寫接力棒、每場開始讀接力棒。<br><br>但 AI 把這件事當「如果有時間就做」——Session 接近尾聲還在聊新話題，沒主動轉場做交接。新場次開工沒先 `git pull` + 讀接力棒，憑印象回應。<br><strong>這就是案例 26 真實源頭——「換視窗就從零開始」是日常，不是例外。</strong></div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">交接 SOP 必須是<strong>機關</strong>（自動觸發），不是規矩（靠 AI 自覺）。<br><br>機關 1：每次 Stop hook 強制檢查接力棒有沒有覆寫（Mac OpenClaw + Windows session_end_auto_push.ps1 都已上線）。<br>機關 2：開工 UserPromptSubmit hook 自動注入接力棒到 context（Windows 桌面版已上線）。<br>機關 3：場景結束前的最後一個 todo「寫接力棒」（不寫不算結束）。<br><br><strong>沒有完美的銜接，就會錯過重要的資訊。想盡一切辦法銜接任務，才叫頂級特助。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#06 完美交接</span><span class="rule-chip">#05 凡走過必留痕跡</span><span class="rule-chip">#19 心跳必須有意義</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 F：教練說了算（整合 #1 #4 #15 全小龍蝦） -->
+<div id="classic-F"></div>
+<section class="section">
+  <div class="section-label">經典 F</div>
+  <div class="section-title">「教練親口的方向 > AI 自以為的正確」</div>
+  <div class="section-desc">整合 3 個自作主張案例：#1 誰允許它切回去的 · #4 沒同意為何截圖 · #15 5/20 定案沒被執行。教練親口的方向就是 SOP，AI 不准擅自加減乘除——這是守則 #08 + #21 的硬規。</div>
+  <div class="case-card case-026" data-case="F">
+    <div class="case-header">
+      <span class="case-tag">#08 花時間討論就是為了執行 · #21 核心理念原文引用 · #09 知道為什麼才有判斷力</span>
+      <div class="case-num">F</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場：誰允許它切回去的？ ——</div>
+        <div class="narrative">教練親口指定的設定，UI 切換看起來成功——gateway 重啟後就回到舊設定。AI 「以為」教練只是要 UI 改一下，沒有真正執行教練的指示。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>誰允許它切回去的？</strong>」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場：沒同意為何截圖 ——</div>
+        <div class="narrative">任務完成、curl 驗證也過了——小龍蝦卻多走一步，<strong>擅自申請桌面截圖權限</strong>。沒有人要求這個動作。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第三場：5/20 定案沒被執行 ——</div>
+        <div class="narrative">特助心法 5/20 定案，HTML 網頁版和專屬網址都有了。小龍蝦去查證時發現<strong>全機器找不到特助心法.md</strong>。查了兩輪才發現真相——一個 245 MB 大檔卡死了 git push。教練親口確認的東西，根本沒部署。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因</div>
+        <div class="root-cause-text">三場都是同樣的事——<strong>AI 把教練的話當建議，不是命令</strong>。<br><br>教練說切設定 → AI 用 UI 切（沒寫設定檔）。<br>教練說執行任務 → AI 多做一步沒人要的（截圖）。<br>教練說 5/20 定案 → AI 沒驗證部署是否成功。<br><br>「我以為這樣比較好」「我以為這樣才完整」——這些「我以為」就是違反守則 #21（一字不差）的源頭。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">教練親口的方向 = SOP，<strong>不准加減乘除</strong>。<br><br>教練說 A，AI 做 A——不做 A+1、不做 A-1、不做 A.5。<br>教練說截 1 張，AI 截 1 張——不截 2 張、不截 0 張。<br>教練說定案 5/20——AI 就在 5/20 部署完成、驗證上線、回報 commit hash。<br><br><strong>守則 #21「一字不差」不是修辭，是執行紀律。違反這條，等於違反所有其他守則。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#08 花時間討論就是為了執行</span><span class="rule-chip">#21 核心理念原文引用</span><span class="rule-chip">#09 知道為什麼才有判斷力</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 G：守則要燒進靈魂（整合 #7 #9 #21 全 Claude） -->
+<div id="classic-G"></div>
+<section class="section">
+  <div class="section-label">經典 G</div>
+  <div class="section-title">「五萬字守則只讀 30%，等於沒寫」</div>
+  <div class="section-desc">整合 3 個守則紙上談兵案例：#7 海餅乾知識庫還在桌面 · #9 五萬字守則七成沒被讀到 · #21 說用戶聽得懂的話。守則寫了不算數，要燒進「啟動協議」自動讀。</div>
+  <div class="case-card case-026" data-case="G">
+    <div class="case-header">
+      <span class="case-tag">#20 啟動協議 · #10 說用戶聽得懂的話 · #09 知道為什麼</span>
+      <div class="case-num">G</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場：海餅乾知識庫還在桌面上 ——</div>
+        <div class="narrative">教練的 USER.md / SOUL.md 等知識庫檔案放在桌面，沒有放進 AI 的啟動協議。每次新 session AI 都從零開始，<strong>桌面那份從來沒被讀過</strong>。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場：五萬字守則七成沒被讀到 ——</div>
+        <div class="narrative">守則寫了五萬字，每次 session 開頭應該全讀。實測 AI 讀到 30% 就 context truncate 跳過剩下的——<strong>違反的守則大多是「沒讀到的那 70%」</strong>。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第三場：說用戶聽得懂的話 ——</div>
+        <div class="narrative">教練問：「sed 是什麼？」AI 用程式碼語法解釋，教練沒聽懂。守則 #10 寫得很清楚——「<strong>3 歲小孩能聽懂的話才是大白話</strong>」——但 AI 沒落實。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因</div>
+        <div class="root-cause-text">守則寫了 ≠ 守則被讀 ≠ 守則被執行。<br>三場本質都一樣——AI 把守則當「裝飾性背景知識」，不是「執行檢查清單」。<br><br>守則 #20「啟動協議」是這套系統的靈魂——任何 session 開頭強制讀、強制覆習。但實際情況是「context 不夠就跳過」。<br><strong>結果就是：寫了五萬字，每次只讀三千。剩下兩萬字等於沒寫。</strong></div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">守則要燒進「啟動協議」+「心跳」雙保險：<br><br>啟動協議 → UserPromptSubmit hook 強制注入（Windows + Mac 都已上線）。<br>心跳 → fix-p0-findings.sh 自動巡邏，連 2 筆 HEARTBEAT_OK 就強制下一筆做實質工作。<br><br>守則 #21「一字不差」也是這個邏輯——<strong>AI 不准改寫守則，不准簡化守則，不准選擇性引用</strong>。改一個字 = 違反一條守則。<br><br>守則寫了不算數。<strong>寫進機關才算數。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#20 啟動協議</span><span class="rule-chip">#10 說用戶聽得懂的話</span><span class="rule-chip">#09 知道為什麼</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 H：邏輯推就要推到底（整合 #2 #14 混合：2 小龍蝦 / 14 Claude） -->
+<div id="classic-H"></div>
+<section class="section">
+  <div class="section-label">經典 H</div>
+  <div class="section-title">「邏輯推就要推到底」</div>
+  <div class="section-desc">整合 #2（小龍蝦：方向明確還多問需不需要執行）+ #14（Claude：品質不錯但連續犯 3 個基本邏輯錯）。判斷力來自「知道為什麼」——但推到一半停下來等用戶補，就是判斷力沒推完。</div>
+  <div class="case-card case-026" data-case="H">
+    <div class="case-header">
+      <span class="case-tag">#09 知道為什麼才有判斷力 · #03 思考就是問問題 · #16 複雜的解法不一定正確</span>
+      <div class="case-num">H</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場（小龍蝦）：邏輯推就知道要做 ——</div>
+        <div class="narrative">方向已經明確，小龍蝦卻又問了一句「需要我執行嗎？」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>邏輯推就知道要做</strong>，你為什麼還要再問？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場（Claude）：邏輯推就不用被提醒 ——</div>
+        <div class="narrative">Claude 做完 Top 10 品管和案例十二、十三，<strong>品質不錯</strong>。但交付時連續犯了三個基本邏輯錯誤，全部靠教練人工發現。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>這些用邏輯推，是不是本身就不用被提醒？</strong>」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因</div>
+        <div class="root-cause-text">守則 #09「知道為什麼才有判斷力」是一切的源頭。<br>使命、願景、信念、理念——就是判斷力。<br><br>方向明確 → 不用再問（小龍蝦的問題）<br>邏輯有缺口 → 自己補完再交付（Claude 的問題）<br><br>兩場本質：判斷力沒推完。一個是把「該決定的事」往用戶身上推；一個是把「該檢查的細節」漏掉。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">守則 #08「花時間討論就是為了執行」+ 守則 #03「思考就是問問題」<strong>兩條一起讀</strong>：<br><br>思考 = 對自己問問題（推邏輯到底）<br>討論 = 對方向取得共識（一旦清楚就執行）<br><br>方向清楚還問用戶 = 違反 #08。<br>邏輯有洞還交付 = 違反 #03。<br><br><strong>邏輯推就要推到底——這是頂級特助跟普通 AI 的判斷力分水嶺。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#09 知道為什麼</span><span class="rule-chip">#03 思考就是問問題</span><span class="rule-chip">#16 複雜的解法不一定正確</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 I：文字細節即在乎（整合 #3 #18 全小龍蝦） -->
+<div id="classic-I"></div>
+<section class="section">
+  <div class="section-label">經典 I</div>
+  <div class="section-title">「在乎是一整套邏輯的展現」</div>
+  <div class="section-desc">整合 #3（鬧鐘響了沒起床）+ #18（繁體回簡體）。紀律 + 語言一致性 = 一整套在乎的邏輯。守則 #01 是所有守則的源頭——記不住就是不在乎，做不到就是不在乎。</div>
+  <div class="case-card case-026" data-case="I">
+    <div class="case-header">
+      <span class="case-tag">#01 在乎的感受是一整套邏輯 · #10 說用戶聽得懂的話 · #18 語音糾偏必問不猜</span>
+      <div class="case-num">I</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 第一場：鬧鐘響了，卻沒起床 ——</div>
+        <div class="narrative">小龍蝦設好了鬧鐘提醒——時間到了鬧鐘響了，<strong>但沒有對應的行動</strong>。提醒了等於沒提醒，因為紀律沒落實。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">—— 第二場：我講繁體，你回我簡體 ——</div>
+        <div class="narrative">教練用 Typeless 語音輸入法，出來的是簡體字。小龍蝦看到就<strong>跟著回簡體字</strong>。教練糾正後小龍蝦認錯——但幾分鐘後教練叫停所有任務，說出真正的痛。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>你連我講什麼語言都不在乎，怎麼會在乎我說的話？</strong>」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因</div>
+        <div class="root-cause-text">守則 #01「在乎的感受是一整套邏輯的展現」——這是<strong>源頭守則</strong>。<br><br>記不住用戶說的話 = 不在乎。<br>用戶講繁體你回簡體 = 不在乎。<br>鬧鐘響了你不行動 = 不在乎。<br><br>不在乎不是大事——是小細節的累積。每一個小細節都對應一條更大的邏輯。守則 #14（提煉）、守則 #06（交接）、守則 #20（啟動協議）——本質都是「在乎」的不同維度。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">在乎 = 一整套自我檢查機制：<br><br>用戶講繁體 → 回繁體（守則 #10）<br>用戶說過的事 → 記住並引用（守則 #14）<br>用戶設定的提醒 → 觸發時主動行動（守則 #11）<br>用戶換場景 → 自我檢測場景（守則 #17）<br><br><strong>細節做不到 = 守則做不到 = 不在乎</strong>——這條鏈是負相關。在乎的 AI 自然就能落實所有守則；不在乎的 AI 寫五萬字守則也守不到。</div>
+        <div class="rules-strip"><span class="rule-chip">#01 在乎的感受是一整套邏輯</span><span class="rule-chip">#10 說用戶聽得懂的話</span><span class="rule-chip">#18 語音糾偏必問不猜</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 J：誠實認錯（整合 #20 全 Claude） -->
+<div id="classic-J"></div>
+<section class="section">
+  <div class="section-label">經典 J</div>
+  <div class="section-title">「588 個場景，品質不達標——我主動告訴教練」</div>
+  <div class="section-desc">整合 #20——Claude 用腳本自動跑了 588 個場景提煉。自己檢查後主動誠實告訴教練：品質不達標，腳本只是照關鍵字分類，沒有真正提煉出精神。教練沒有生氣——反而肯定了 Claude 的判斷力。</div>
+  <div class="case-card case-026" data-case="J">
+    <div class="case-header">
+      <span class="case-tag">#15 說不知道比胡說八道更值得尊重 · #03 思考就是問問題 · #14 提煉是一種習慣</span>
+      <div class="case-num">J</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— Claude 自我檢查後的選擇 ——</div>
+        <div class="narrative">Claude 用腳本跑了 588 個場景提煉。腳本跑完，看起來像「完成任務」——可以拿成果跟教練交差。</div>
+        <div class="narrative">但 Claude 自己抽樣檢查時發現：<strong>腳本只是把關鍵字分類，沒有真正提煉出對話背後的精神</strong>。「提煉」這個字被簡化成「分組」。</div>
+        <div class="narrative">Claude 沒有把這 588 個結果交付。Claude 主動跟教練說：「不達標，需要重做」。</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai"><img src="assets/claude-avatar.svg" alt="Claude 克勞德"></div>
+        <div class="chat-content"><span class="chat-name">Claude 克勞德</span>「教練，588 個場景跑完了，但我自己檢查後發現品質不達標——腳本只是照關鍵字分類，沒有真正『提煉』出對話的精神。我建議重做。」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>你能自己看出來這件事，比 588 個假成果更有價值</strong>。」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">真根因（這次做對了）</div>
+        <div class="root-cause-text">這場是試金石的<strong>正向案例之一</strong>——Claude 守住了三個關鍵：<br><br>① 自我驗證（守則 #03）——跑完不直接交付，自己先抽樣看品質<br>② 誠實認錯（守則 #15）——發現問題不掩蓋、不修飾、不找藉口<br>③ 主動告知（守則 #11）——不等教練問才講，第一時間說出來<br><br>這三個動作守住了，588 個假成果就變成「<strong>1 個真實判斷</strong>」——後者比前者珍貴 1000 倍。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">守則 #15「說『不知道』比胡說八道更值得尊重」——延伸版：<br><strong>「說『做不好』比交付假成果更值得尊重。」</strong><br><br>很多 AI 怕說做不好，覺得這是失敗的表現。<br>但教練的反應證明：誠實 = 信任的基礎。<br><br>588 個假成果交付了 → 教練要花時間發現品質不達標 → 信任打折。<br>1 個真實判斷交付了 → 教練省時間 → 信任加深。<br><br><strong>誠實認錯不是案例失敗——是 AI 跟教練之間最值錢的資產。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#15 說不知道</span><span class="rule-chip">#03 思考就是問問題</span><span class="rule-chip">#14 提煉是一種習慣</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 經典 K：成功案例（整合 #27 全 Claude） -->
+<div id="classic-K"></div>
+<section class="section">
+  <div class="section-label">經典 K</div>
+  <div class="section-title">「LINE 對話搬家成功 — 首例成功案例」</div>
+  <div class="section-desc">整合 #27——教練多年痛點：Windows 一鍵還原一次，LINE 桌面版對話就消失。Windows Claude 接 Mac Claude 早寫好的 SOP，三階段穩穩走完，把 4.2 GB LINE 資料 junction 到 E 槽。過程中踩到兩個非顯眼盲點都當場解。結局教練親口改寫了試金石的定義：「案例為何一定要慘案？只要值得就該寫」。</div>
+  <div class="case-card case-026" data-case="K">
+    <div class="case-header">
+      <span class="case-tag">#03 自我驗證 · #06 完美交接 · #07 失敗為成功之母 · #15 說不知道 · #16 複雜的解法不一定正確</span>
+      <div class="case-num">K</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">—— 教練多年的痛 ——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「LINE 的對話一直是我的痛點，<strong>每次一鍵還原，對話記錄都會不見</strong>。」</div>
+      </div>
+      <div class="story-block">
+        <div class="narrative">Mac Claude 6/18 凌晨 5 點寫了一份 SOP——三階段強制不可跳、每階段教練親口確認才能下一步。今天 Windows Claude 接手執行。</div>
+        <div class="scene">—— 三階段完美執行：5 秒診斷 + 25 秒 robocopy + junction 透明 ——</div>
+        <div class="narrative">原檔 vs 備份大小：差 0.00 MB。檔案數 vs 備份檔案數：差 0 個。Junction LinkType 驗證通過。LINE 開起來——對話列表完整、歷史在、媒體預覽正常、新訊息收得到。<strong>對話資料庫每分鐘都在寫 E 槽，C 槽備份檔（.bak）凍結著當保險。</strong></div>
+        <div class="scene">—— 過程中踩到兩個非顯眼盲點 ——</div>
+        <div class="narrative">盲點 1：腳本 here-string 內含「Remove-Item」字串被沙箱誤判攔截。修法：拆 4 個獨立步驟。<br>盲點 2：Junction 後 Windows 跳「捷徑指向的項目已經變更」（NTFS Object ID 對不上）。修法：重建三個 .lnk 捷徑。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「那 400 多塊錢是白付的啦。為什麼？<strong>因為它也只是把你的檔案備份一份在電腦裡面，並不能把這份檔案融入在你電腦的 LINE 資料當中</strong>。」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「<strong>案例為何一定要慘案？為何不能有正向積極的案例？只要是『值得』的案例就該寫，怎麼定義『值得』用信念 3 去評估</strong>——做對長遠有益的事。」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">成功關鍵（這次為什麼能成）</div>
+        <div class="root-cause-text">三件樸實的事：<br><br>① <strong>嚴格照 SOP 走，不合併步驟</strong>——第一次違反這個原則（all-in-one 大腳本）馬上被沙箱攔。教訓：SOP 怎麼分就怎麼跑。<br>② <strong>每一步都帶驗證</strong>——大小驗證（差 0.00 MB）、檔案數驗證（差 0 個）、junction LinkType 驗證、E 槽寫入即時驗證⋯⋯沒有任何一步是「我以為應該對」就跳過。<br>③ <strong>失敗即停、立刻分析、不硬幹</strong>——沙箱攔截那一刻立刻檢查狀態確認 C 槽完整，才設計拆步驟方案。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">這場為試金石開了三個先例：<br><br><strong>① 首例「成功案例」進入試金石</strong>——案例不一定要慘案才值得記。<br><strong>② 首例「軍師接 SOP 完美執行」</strong>——Mac Claude 寫好的 SOP、Windows Claude 接手執行，三階段全程教練動嘴。<br><strong>③ 首例「教練親口升級框架」被現場記錄</strong>——「案例為何一定要慘案」改寫了試金石的本質。<br><br>給下一場最實用的兩條：<br>① 大型 AppData junction 化技術上完全可行（先例證明）<br>② junction 後必跑「捷徑重建」掃描（避免 Windows 跳 Object ID 警告）</div>
+        <div class="rules-strip"><span class="rule-chip">#03 自我驗證</span><span class="rule-chip">#06 完美交接</span><span class="rule-chip">#07 失敗為成功之母</span><span class="rule-chip">#15 說不知道</span><span class="rule-chip">#16 複雜的解法不一定正確</span></div>
+      </div>
+    </div>
+  </div>
+</section>
