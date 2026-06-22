@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b177788b-05e6-43cf-ae05-f51aa66d5da8
-# 提取時間：2026-06-22 13:30 (台灣時間)
-# 共 1 條教練原話
+# 提取時間：2026-06-22 14:30 (台灣時間)
+# 共 9 條教練原話
 
 ---
 
@@ -19,3 +19,232 @@
 3. ✅ 試金石最新 3 案例（24/25/26，記住 modal selector 撞名坑）
 4. ✅ knowledges/ 無新計劃檔
 5. …（略）
+
+【教練 2026-06-22 06:00】
+我想請問開工的檔案，要在雲端讀取要下什麼指令，windows 那邊我打開工，總是讀不到
+
+　▶ AI 回應：教練，這問題我來解。Windows 那邊讀不到是因為 PS1 hook 有 UTF-8 BOM 編碼問題（v29 接力棒就提過卡住沒修）。
+
+不過有個**更簡單的解法已經生效了**——我剛剛讀到的 `CLAUDE.md` 已經自動鏡像了接力棒全文（上面看到 2026-06-21 07:55 同步過），任何模型啟動讀 CLAUDE.md 就自動帶入，不靠 hook。
+
+讓我確認 Windows 端的路徑和同步狀態：
+
+　▶ AI 回應：教練，我給你**最白話的答案**：
+
+## 🎯 Windows 端打「開工」讀不到的根因
+
+Windows 桌面版那邊的 PowerShell hook（`feed_junshi_handoff.ps1`）有 UTF-8 BOM 編碼問題，v29 接力棒就提過卡住沒修。
+
+## ✅ 三個解法（由簡到難）
+
+### 解法 1：教練用這句指令（最省事，立刻能用）
+在 Windows 桌面版直接打：
+```
+讀 C:\Users\bymyw\.openclaw\workspace\JUNSHI_HANDOFF_LATEST.md
+```
+這比「開工」更直接，不靠 hook。
+
+### 解法 2：靠 …（略）
+
+【教練 2026-06-22 06:06】
+好，我來跟你講我的想法，你也聽一下，然後認真思考。
+
+我希望我們每次對話的基礎，都來自於你對我們整臺 Mac 電腦整個對話歷史足跡的掌握。在這樣的基礎下，你才會理解我到底在想什麼。
+
+1. 關於你的第一個方案：
+   我當然可以讓它去讀本機的開機檔案，但我需要你告訴我，讀完之後會得到什麼結果？
+
+2. 關於雲端接力檔的好處：
+   好處在於它永遠知道同步到什麼地方、我們做到什麼地步。這樣 Windows 跟 Mac 電腦同時都會知道（我是主人）目前的工作進度到哪裡。如果它總是讀 Windows 本地端，根本不會知道我另一端更新到哪裡，所以我當然傾向同步。
+
+3. 關於根治問題：
+   你剛才說根治要花時間，但我當然要根治，如果能根治為什麼不呢？重點是，要修 Windows 電腦的這個問題，你覺得是你修比較快，還是你給個指令讓它去修比較快？
+
+畢竟你們兩邊都是一樣的介面，都是 Cloud Code 桌面版的 App，所以我不想當「資訊搬運工」。也就是你這邊給我個指令、我貼給它，它那邊有什麼指令、我再貼給你，這種情況我已經厭煩、厭倦了。
+
+所以我現在給你一個方向：
+你們能不能建立一個機制，讓 Windows 桌面版的 Claude 做完事情後丟上去，然後你這邊就自己去讀取 Windows 那邊的情況；同樣地，你這邊處理完後也丟上去，讓 Windows 上去讀。
+
+我就不當搬運工了，這樣可以吧？之前我們在「頂級特助」的分工群裡面，他們都可以做到討論完我的事情後丟到雲端，他們再自己上去讀取討論內容。你們兩個都是軍師等級的，難道不能做到這件事，非得要讓我在中間當資訊搬運工嗎？我很厭煩這個工作，聽懂了吧？
+
+　▶ AI 回應：教練，我聽懂了。核心訴求一句話：**Mac 軍師跟 Windows 軍師之間建立「GitHub 雲端中繼」，雙向自動拉推，你不再當搬運工。**
+
+## 先回你三個問題
+
+**Q1：讀本機檔得到什麼？**
+只解決「Windows 端看得到接力棒」這一半，**不解決同步問題**——Mac 這邊更新了 Windows 還是不知道。所以這方案我自己也不滿意，是退而求其次的下策。
+
+**Q2：雲端接力檔的好處**
+你說得對，GitHub 才是 single source of truth。Mac 寫 → push；Windows pull → 讀；反之亦然。**只有雲端做中繼，兩邊才會永遠對齊。**
+
+…（略）
+
+【教練 2026-06-22 06:08】
+所以我只要講「開工」，他們就會去雲端彼此讀取最新的資訊，我不用再當搬運工了對不對？
+
+我要問的是，確定是不是這樣子？
+
+　▶ AI 回應：教練，誠實回答：**目前還不是。**
+
+## 現況（我剛才還沒驗證完，先講事實）
+
+| 環節 | 狀態 |
+|------|------|
+| Mac 端有沒有自動 push 到 GitHub | ❓ 我還沒驗證 cron 尾巴有沒有 push |
+| Windows 端「開工」hook | ❌ 壞的（PS1 BOM 問題沒修） |
+| Windows 端有沒有自動 git pull | ❌ 沒有，要你手動 pull |
+| Windows 軍師結束會不會自動 push | ❌ 沒有這個 hook |
+
+## 所以結論
+
+**現在打「開工」=不會雙向同步**，跟你描述的「彼此讀取最新」還有距離…（略）
+
+【教練 2026-06-22 06:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「推上 GitHub」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：收到守則#05 系統提醒。**澄清**：剛才那句「全部推上 GitHub，告訴你 commit hash」是**設計步驟描述（未來式）**，不是完成宣告——目前我**還沒動工、沒 commit、沒 hash**。
+
+被 grep 誤觸發是我用詞不夠精確，我承認。下次描述未來步驟，會改用「待 push」「會 push」「動工後 push」，避免裸寫「推上 GitHub」讓系統誤判。
+
+**回到正題**：教練要不要我動工那 4 件事？等你一句「動工」就開始。
+
+【教練 2026-06-22 06:10】
+所以現在你的指令根本不是「開工」兩個字，我之所以會在意的原因，是因為「開工」是我在開啟一個新對話框時給的第一個指令，目的是讓它快速瞭解上一棒做到什麼地方、接力棒下一棒要做些什麼。
+
+所以這是一個很特定場合使用的名詞。但你現在正在執行任務，怎麼會用「開工」呢？
+
+你應該是問我說：「教練，請問這些任務我們是不是要執行？」或者是 1、2、3、4 要不要做。而不是說開工，否則會造成混淆。這樣懂了嗎？而是要問我說：「教練，這四件事情是不是要開始進行了？」
+
+好啦，反正我懂你的意思，但我覺得「開工」就是我的一個同步指令。所以你現在就趕緊把這四件事情動工吧，你要說動工、幹活都可以，就是趕緊把這四個任務完成並給我個回報，好不好？
+
+　▶ AI 回應：教練收到，用詞我記住了：「開工」=新 session 同步暗號（你的專屬指令），任務中要用「動工/幹活」。
+
+現在動工 4 件事，過程中我會邊做邊回報，做完一次給你 commit hash。
+
+　▶ AI 回應：教練，**重大發現**——我先誠實匯報，再決定怎麼動工：
+
+　▶ AI 回應：教練，動工前我重新查證，**4 件事實際狀況跟我之前估的不一樣**——好消息，比想像中少：
+
+## 📊 實況盤點（剛驗證完）
+
+| # | 我原本說要做 | 實際狀況 |
+|---|------|------|
+| 1 | 修 PS1 BOM | ✅ **已修**（檔頭有 `EFBBBF` BOM 標記，6/18 已存對） |
+| 2 | Mac→雲端自動 push | ✅ **已有**（`sync_handoff_to_claudemd.sh` 每 5 分鐘 cron，內含 auto-push 區段） |
+| 3 | Windows 端「開工」自動 git pull | ✅ **PS1 v2…（略）
+
+【教練 2026-06-22 06:14】
+都沒有關係，如果你這邊都做好了，我需要貼一個什麼指令，讓 Windows 那邊可以開始接軌上來？這都沒有問題。
+
+所以你現在趕緊動工 A 跟 B，好不好？完了之後，看需要我貼什麼東西讓 Windows 去自動接收，都跟我說。沒有問題，趕緊幹活。
+
+　▶ AI 回應：動工。先寫 Mac 端 Stop hook，再寫 Windows 端對應版本，最後 commit + push。
+
+　▶ AI 回應：PS1 要存 UTF-8 with BOM 才能被 PowerShell 5.1 正確讀（v29 接力棒血淚），補 BOM：
+
+　▶ AI 回應：現在註冊 Mac 端 Stop hook + 寫 Windows 端 install 指令文件 + 本地測試 Mac hook：
+
+　▶ AI 回應：✅ Mac 端測通：commit `e004f217` 已 push。現在寫 Windows 端 install 腳本（教練只貼一次，之後永久生效）：
+
+　▶ AI 回應：# ✅ 動工完成
+
+## commit 憑證
+- **e004f217** — Mac hook 本機測通自動 push（HEARTBEAT.md 變動）
+- **543d28e2** — 三個新檔上雲端（Mac sh + Windows ps1 + install 腳本）
+
+## 雙端閉環現況
+
+| 方向 | 機制 | 狀態 |
+|------|------|------|
+| Mac → 雲端 | session 結束自動 push（剛裝） | ✅ 已測通 |
+| Mac → 雲端 | cron 每 5 分鐘同步 CLAUDE.md | ✅ 既有 |
+| 雲端 → Windows | 「開…（略）
+
+【教練 2026-06-22 06:19】
+腳本不存在。先看看 scripts 目錄裡有什麼。
+
+沒有 `install_windows_session_end_hook.ps1`。前面 `git pull` 因 `HEARTBEAT.md` 本地修改而中止，所以最新提交還沒拉下來。要我先 `git stash` 再 pull 嗎？這樣才能拿到最新的腳本。
+
+　▶ AI 回應：教練，**對，就這樣做**。Windows 軍師的判斷正確，直接照辦。
+
+## 教練貼回 Windows 軍師的指令（一句話）
+
+```
+對，三步走：
+1. git stash
+2. git pull
+3. git stash pop（拉完接力棒再把本地 HEARTBEAT 改動套回來）
+然後跑：
+powershell -ExecutionPolicy Bypass -File "E:\Claude-Data\workspace\scripts\install_windows_session_end_hook.ps1"
+裝完回報註冊狀態。
+```
+
+## 但這暴露了一個架構問題（我這邊順手修）…（略）
+
+　▶ AI 回應：## 📦 已修 + 已 push
+
+**commit `ac139bf7`** — `feed_junshi_handoff.ps1` 加 stash 包裝：未來 Windows 端「開工」自動 `stash → pull --rebase → stash pop`，**HEARTBEAT.md 再也不會卡 pull**。
+
+## 教練眼下要做的（這次貼這段就好）
+
+直接貼回 Windows 軍師對話框：
+
+```
+對，照三步走：
+1. git stash
+2. git pull
+3. git stash pop
+
+然後跑 install：
+powershell -ExecutionPolic…（略）
+
+【教練 2026-06-22 06:25】
+回報：
+
+- **狀態**：已註冊過，未重複安裝
+- **Stop hook 清單**（僅一條）：
+  - `powershell -ExecutionPolicy Bypass -File "E:\Claude-Data\workspace\scripts\session_end_auto_push.ps1"`
+- **本地分支**：領先 origin/main 兩個 commit（merge commit + 之前的提交），下次 session 結束 hook 會自動 push。
+
+另外注意：`HEARTBEAT.md`、`install_or_restore_windows_hook.ps1`、`upgrade_to_junction.ps1` 有未提交的本地修改。
+
+　▶ AI 回應：教練，**雙端閉環確認成功**！🎉
+
+## 但我有個漏洞要承認 + 立刻修
+
+Windows 軍師提到的 3 個未提交檔案（`install_or_restore_windows_hook.ps1` 等），**我的 session-end hook 不會推它們**——因為 `SYNC_PATHS` 沒包含 `scripts/`。這是我設計時漏掉的盲點。
+
+立刻補上：
+
+　▶ AI 回應：**雙端閉環生效的活證據**！Windows 軍師那邊已經 push 上來，我這邊 pull rebase 就好：
+
+　▶ AI 回應：# 🎉 雙端閉環活證據（git log 不會說謊）
+
+```
+6e5cb7dc [Mac] SYNC_PATHS 補上 scripts/
+3d151535 [Win] session-end 自動同步 14:21  ← Windows 自己推的
+dd446b15 Merge branch 'main'                ← 雙端合流
+c59a4fb8 [Mac] session-end 自動同步 14:20
+51fc0e9d [Win] session-end 自動同步 14:20  ← Windows 自己推的
+ac139bf7 [Mac] stash 包裝修補
+```
+
+**[…（略）
