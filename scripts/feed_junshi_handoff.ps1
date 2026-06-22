@@ -76,10 +76,21 @@ try {
         }
     } else {
         # 已存在：git pull 拉雲端最新（每次「開工」都拉，保證永遠不過期）
-        $pullResult = & git -C $workspace pull --quiet 2>&1
-        if ($LASTEXITCODE -eq 0) {
+        # 2026-06-22 修：HEARTBEAT.md/log 類經常被 hook 寫入會卡 pull，先 stash 包裝再 pop
+        $dirty = & git -C $workspace status --porcelain 2>$null
+        $stashed = $false
+        if ($dirty) {
+            & git -C $workspace stash push -u -m "auto-pull-stash-$(Get-Date -Format yyyyMMddHHmmss)" --quiet 2>$null | Out-Null
+            if ($LASTEXITCODE -eq 0) { $stashed = $true }
+        }
+        $pullResult = & git -C $workspace pull --quiet --rebase 2>&1
+        $pullOk = ($LASTEXITCODE -eq 0)
+        if ($stashed) {
+            & git -C $workspace stash pop --quiet 2>$null | Out-Null
+        }
+        if ($pullOk) {
             $headHash = (& git -C $workspace rev-parse --short HEAD 2>&1).Trim()
-            $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash）"
+            $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash$(if($stashed){'，本地改動已 stash/pop'}else{''})）"
         } else {
             $pullStatus = "⚠️ Pull 警告: $pullResult"
         }
