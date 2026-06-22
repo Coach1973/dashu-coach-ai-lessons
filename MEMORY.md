@@ -110,19 +110,13 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-22)
+## Promoted From Short-Term Memory (2026-06-23)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:60:61 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 還沒部署到 GitHub Pages（停在程式碼階段）; 部署在別的地方（例如 Netlify 之類的） [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:60-61]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:63:66 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 教練您印象中超限戰是放在哪裡？或是還沒對外公開？我可以幫您查 Netlify 那邊有沒有這個專案。 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:63-66]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:67:70 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:67-70]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:71:74 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:71-74]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:8:8 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: **https://github.com/Coach1973** [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-16.md:8-8]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:75:78 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:75-78]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:79:82 -->
-- 📨 對話記錄 01:54（共約 58 條，從第 0 行起）: 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-16.md:79-82]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:271:271 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 教練今天下午問「怎麼讓 Windows 桌面版 Claude 助教讀到雲端工作真相、達到軍師級表現」。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:271-271]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:273:273 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **全程驗證後的發現**： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:273-273]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:275:277 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: workspace 有 3 個 GitHub remote：`origin = mac-openclaw-workflows.git`（Mac 軍師持續 push，今天 b2cc62be 是最新）、`claude-workflows.git`（停在 2026-05-16 22:34，一個月沒動）、`lessons`（教練課程倉）; **Windows 軍師之前 clone 的是停在 5/16 的 `claude-workflows.git`**——這就是為什麼他用 R18/R19 舊命名、引用 `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md` 不存在路徑; 真相源 = `mac-openclaw-workflows.git` [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:275-277]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:279:279 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **本場交付**： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:279-279]
