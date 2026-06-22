@@ -13,3 +13,7 @@
 - 觸發詞：cd E:\Claude-Data\workspace; git pull; c
 - 雲端狀態：✅ 已拉雲端最新（HEAD: 19f05705）
 - Session: d9f193e5-6234-4166-8e56-a513852d3dcd
+
+## 🚀 Session-End 雲端同步 2026-06-22 14:20（Windows）
+- ⚠️ commit 51fc0e9d 本機留底，push 失敗（離線/credential）
+- 同步路徑：HEARTBEAT.md
