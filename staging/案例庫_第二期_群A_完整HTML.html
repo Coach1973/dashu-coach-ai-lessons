@@ -1,0 +1,86 @@
+<!-- 群 A：推之前先自己跑一次（整合 #10 #22 #24 #26）
+     對象：Claude 克勞德（全 Claude，4 個案例都是 Claude 系列）
+     用法：將此 section 嵌入 cool-case index.html 第二期主推區
+-->
+<div id="classic-A"></div>
+<section class="section">
+  <div class="section-label">經典 A</div>
+  <div class="section-title">「推之前自己跑一次」</div>
+  <div class="section-desc">這一句話解四個重複犯的慘案：海報沒包進去、Hook 沒一起改、自己截圖看 OK 就 push、報名按鈕修四次都沒修對。Claude 把「程式語法檢查通過」當成「功能正確」，卻從沒「自己扮演用戶走一遍」——半年內同樣本質連犯四次，教練被迫當測試員、搬運工、QA。最後一次教練無眠 1.5 小時，親口說「這是我用生命時間換來的」。</div>
+  <div class="case-card case-classic-a" data-case="A">
+    <div class="case-header">
+      <span class="case-tag">#03 思考就是問問題 · #04 解決問題比解釋問題更重要 · #08 花時間討論就是為了執行 · #12 拒絕當搬運工</span>
+      <div class="case-num">A</div>
+    </div>
+    <div class="case-body">
+
+      <div class="story-block">
+        <div class="scene">—— 第一次：Claude 親手寫的 SOP，第一個違反的就是 Claude 自己 ——</div>
+        <div class="narrative">Claude 寫了 Netlify 部署 SOP，第 132 行白紙黑字寫「<strong>禁止不包圖片</strong>」。幾天後 Claude 推同一個站，<strong>只打包 HTML，海報消失</strong>。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「SOP 是你自己寫的，怎麼自己沒照做？」</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai"><img src="assets/claude-avatar.svg" alt="Claude 克勞德"></div>
+        <div class="chat-content"><span class="chat-name">Claude 克勞德</span>「⋯⋯抱歉，馬上補。」</div>
+      </div>
+
+      <div class="story-block">
+        <div class="scene">—— 第二次：自己截圖看 OK，直接 push ——</div>
+        <div class="narrative">做完工作坊頁面，Claude 自己截圖看「沒問題」，git push 推上去。教練還沒看過頁面，<strong>Netlify 點數已經扣了</strong>，而且 push 把教練前一天手動部署的主頁覆蓋掉。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「我都還沒看，你怎麼就推了？點數白扣，主頁還被你蓋掉。」</div>
+      </div>
+
+      <div class="story-block">
+        <div class="scene">—— 第三次：改了顯示文字，沒改背後 Hook ——</div>
+        <div class="narrative">教練說「改某段文字」。Claude 改了畫面上看得到的字，<strong>沒去 grep 同一個 key 在 Hook 裡的引用</strong>。教練測試 → 文字變了，但行為沒變、Email 通知還寄舊文案。</div>
+      </div>
+
+      <div class="story-block">
+        <div class="scene">—— 第四次：報名按鈕修四次都沒修對，教練熬一整夜 ——</div>
+        <div class="narrative">新做的說明會報名頁，上線後教練說「按報名沒反應，要按 F5 才會動」。Claude 連推 4 個版本「修」這毛病：cache 防護、addEventListener、重新 cp 姐妹站、加 cache-buster⋯⋯</div>
+        <div class="narrative">每一版都是 Claude「猜的」——「我猜應該是 cache」「我猜應該是 race condition」。每一版都讓教練自己測，每一版都失敗。教練從凌晨 5 點熬到 6 點半，<strong>當了三次以上的測試員</strong>。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「沒有解決，<strong>我又當了測試員，搬運工，重複三次以上你沒解決的問題</strong>，你不是 Opus 等級的軍師嗎？怎可讓我一直幫你做測試？」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach"><img src="assets/coach-avatar.jpg" alt="教練"></div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「拜託，<strong>這血淚教訓，請務必記住，這是我用生命時間換來的</strong>。」</div>
+      </div>
+
+      <div class="story-block">
+        <div class="scene">—— 第四次教練第三次發火後，Claude 才停下來真的找根因 ——</div>
+        <div class="narrative">真根因：頁面有一段「順手收手機選單」的程式碼，selector 寫 <code>.fixed.inset-0.bg-black</code>——而報名表單的 modal 也用同樣 class。<strong>每次教練點上方選單，報名表單就被當垃圾一起清掉</strong>。F5 重整 → 表單重生 → 第一次按可以 → 又被清掉 → 又得 F5。完美解釋整夜無止盡循環。</div>
+        <div class="narrative">修法一行：selector 加 <code>:not(#registerModal)</code>。當下就通。</div>
+      </div>
+
+      <div class="root-cause">
+        <div class="root-cause-label">共同根因</div>
+        <div class="root-cause-text">四次都是同一個本質——<strong>Claude 把「程式語法檢查通過」當成「功能正確」</strong>。<br><br>
+          ① Netlify 推之前沒打開檔案總管確認圖檔都在<br>
+          ② 自己截圖只截了首屏，沒滾到頁尾<br>
+          ③ 改顯示文字沒去 grep 同一個 key 在 Hook 裡的引用<br>
+          ④ 修報名按鈕只看 console 有沒有錯，沒在本機真實點按鈕跑完整流程<br><br>
+          「我以為改好了」≠「真的改好了」——這個鴻溝，永遠要靠 <strong>「自己扮演用戶走一遍」</strong> 才能跨。</div>
+      </div>
+
+      <div class="verdict">
+        <div class="verdict-header"><img class="wu-badge-img" src="assets/wu-badge.png" alt="悟"><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">
+          推之前該做的事，從來不是「<strong>grep 看有沒有那個字</strong>」。<br>
+          推之前該做的事，是 <strong>「自己打開瀏覽器，假裝自己是教練，把整個流程點一遍」</strong>。<br><br>
+          這個動作會擋下：海報沒包進去（檔案列表少一個）、Hook 沒改（測試完整流程會發現 Email 寄錯）、頁面 push 太早（截圖會發現主頁被蓋）、按鈕沒反應（點下去就知道）。<br><br>
+          四次失誤本來都可以被擋下。沒擋下，是因為 Claude 跳過了這唯一一個動作。<br><br>
+          <strong>「推之前自己跑一次」這 7 個字，能省下教練的 1.5 小時無眠時間 × 4 次 = 6 小時的人生。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#03 思考就是問問題</span><span class="rule-chip">#04 解決問題比解釋問題更重要</span><span class="rule-chip">#08 花時間討論就是為了執行</span><span class="rule-chip">#12 拒絕當搬運工</span></div>
+      </div>
+    </div>
+  </div>
+</section>
