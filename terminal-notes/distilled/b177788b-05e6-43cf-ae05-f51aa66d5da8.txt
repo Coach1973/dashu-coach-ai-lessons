@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b177788b-05e6-43cf-ae05-f51aa66d5da8
-# 提取時間：2026-06-22 15:00 (台灣時間)
-# 共 10 條教練原話
+# 提取時間：2026-06-22 21:30 (台灣時間)
+# 共 12 條教練原話
 
 ---
 
@@ -261,3 +261,25 @@ ac139bf7 [Mac] stash 包裝修補
 - 下場「開工」→ hook 自動 git pull 拉對端最新進度
 
 **這場任務收工，commit `6e5cb7dc` 是最後一筆。教練請放心開新工作。** 🦞
+
+【教練 2026-06-22 13:07】
+Continue from where you left off.
+
+　▶ AI 回應：No response requested.
+
+【教練 2026-06-22 13:18】
+可否找一下，我明確的分工規劃？ 像是 OPUS 軍師 claude 桌面版 與 claude CLI 與 終端機(Hermes) 終端機(minimax) 找找，我記得有非常明確分工說明
+
+　▶ AI 回應：教練，我先讀記憶檔最相關幾條 + 搜 workspace 找完整分工檔。
+
+　▶ AI 回應：找到一個關鍵檔 `CLI_DIVISION.md`——這應該就是教練要找的：
+
+　▶ AI 回應：教練，找齊了。**最明確的分工檔是 `CLI_DIVISION.md`**（2026-04-24 建立），但有些已被後續更新覆蓋——我幫你整合成最新版：
+
+## 📂 分工資料的 4 個源頭
+
+| 檔案 | 位置 | 內容重點 |
+|------|------|---------|
+| **CLI_DIVISION.md** | `~/.openclaw/workspace/CLI_DIVISION.md` | 三助教分工地圖原版（2026-04-24）|
+| **feedback_config_isolation.md** | memory/ | Mac 三 CLI 工具設定隔離鐵律 |
+| …（略）
