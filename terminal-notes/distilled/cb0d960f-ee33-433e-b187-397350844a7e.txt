@@ -1,0 +1,183 @@
+# 終端機對話萃取 — Session cb0d960f-ee33-433e-b187-397350844a7e
+# 提取時間：2026-06-23 17:30 (台灣時間)
+# 共 8 條教練原話
+
+---
+
+【教練 2026-06-23 07:49】
+開工
+
+　▶ AI 回應：讀完了。報告：
+
+## 📋 開工六步驟讀檔回報（Mac 終端機軍師 Opus 4.7）
+
+**🌐 當下：2026-06-23（二）下午 3:49 · session 已開 6.4 小時 · 教練 9 分鐘前親口「開新對話，我有偉大任務要給你做」**
+
+### 1. 接力棒 v32（hook 已自動注入）
+- 上一棒：本人本場上午 09:23~15:40，已收尾蒸餾上傳 [`2a527e41`](.) 等系列
+- 戰果：hook v2/v3 升六步驟、助理筆電 LINE D 槽 SOP、機制體檢、session_time_context.sh、SOP 路由 v1.1、bootstrap_acer…（略）
+
+【教練 2026-06-23 07:56】
+我要你做一支可以隨身帶的一鍵安裝的特助系統，這樣，任何時候，任何的AI，只要讀取這份系統資料，就能立即進入特助的狀態，我最理想是寫成網頁，我只要貼這個網頁給AI，他讀完，立即就能開始最高標準的動作。我開到ulrta等級的軍師，請您好好思想，找到最優方案，再來跟我提案，一勞永逸的解決角色及使用特助心法來做為規則行事，跨電腦跨系統，只要一講開工，都能進入最裡狀態，偉大的任務，交給你了
+
+　▶ AI 回應：收到偉大任務。先思考——這不是「做網頁」，是**「跨 AI 一鍵特助化」**。網頁只是載體。讓我把 Ultra 思考過的提案攤出來。
+
+---
+
+# 🎯 軍師 Ultra 提案：**小龍蝦特助系統 · 一鍵注入版**
+
+## 一、教練真正要的（重新框定問題）
+
+不是「網頁」——是 **「任何 AI × 任何裝置 × 貼一個 URL × 30 秒進入頂級特助狀態」**。
+網頁是手段；目標是 **跨平台一致性 + 零摩擦帶走 + 教練零搬運**。
+
+## 二、最優方案：雙端發布（Secret Gist 主，GitHub Pages 副）
+
+| 角色 | 載體 | URL 風格 | 給誰用 |
+|-…（略）
+
+　▶ AI 回應：教練拍板，動工。**完全公開＝這變成品牌作品**，呼應 [project_ai_coach_brand_story](memory/project_ai_coach_brand_story.md)，把「大樹教練心法」變成方法論代名詞（像彼得・杜拉克管理學）。
+
+讓我先盤環境再動工。
+
+　▶ AI 回應：HTML 寫完了。接下來補 README + LICENSE，然後用 Chrome 給教練親眼驗收（記憶：[feedback_html_preview_chrome_only](memory/feedback_html_preview_chrome_only.md)）。
+
+　▶ AI 回應：Preview 自驗證全過：fetch 正常、21 守則完整、跨平台 8 個、無 console error、responsive 都對。現在開 Chrome 給教練親眼看。
+
+　▶ AI 回應：---
+
+## 🦞 教練，本機預覽出來了，請親眼看一下
+
+**Chrome 已自動開啟**：`http://localhost:8765/`
+
+### 您會看到的關鍵元素
+
+1. **Hero 區**：「讓任何 AI 30 秒變成頂級特助」+ 使命/願景/理念三張卡
+2. **核心按鈕**：橘色大按鈕「📋 一鍵複製注入提示詞」← 您可以點點看
+3. **三步驟說明**：複製 → 貼上 → 動嘴
+4. **8 個 AI 平台支援**：Claude / ChatGPT / Gemini / Grok / MiniMax / DeepSeek / Llama / 離線 AI
+5. **三大信念**：…（略）
+
+【教練 2026-06-23 08:29】
+做的不錯，我丟網址給AI讀有異曲同工之妙嗎？
+
+　▶ AI 回應：教練問的是核心要害。誠實答：**異曲同工 70%，差 30%**——關鍵在「AI 會不會主動 fetch URL」。
+
+## 對照表（守則 #15 誠實版）
+
+| 方式 | 哪些 AI 等同 | 哪些 AI 失效 |
+|------|------------|-------------|
+| 貼網址（讓 AI 自己讀）| Claude（Code / Web / 桌面）✅<br>ChatGPT GPT-4o（含 browse）✅<br>Gemini Pro（grounding）✅ | 不會聯網的 AI（部分 GPT-3.5 / 離線版）❌<br>有些 Claude 預設不主動 fetch，要明示…（略）
+
+【教練 2026-06-23 08:30】
+[Request interrupted by user for tool use]
+
+【教練 2026-06-23 08:31】
+我想取名 [https://coach1973.github.io/ai-](https://coach1973.github.io/ai-assistant/)go
+
+　▶ AI 回應：收到，`ai-go` 更妙——「AI 開工 / AI 走起」雙關，比 ai-assistant 短一半。立刻改名：
+
+　▶ AI 回應：全乾淨。重新 commit + push：
+
+　▶ AI 回應：Pages 已 live。**`https://coach1973.github.io/ai-go/` 上線了**！立刻實測「貼網址給 AI」效果——
+
+　▶ AI 回應：curl 結果暴露：GitHub Pages 還在 serve 舊版（cache 尚未刷新到 84241d4）。等 build：
+
+　▶ AI 回應：把 Pages CDN 輪詢丟背景跑。先給教練回報：
+
+---
+
+## 🌐 上線報告 · 改名 ai-go 已 push
+
+| 項目 | 狀態 |
+|------|------|
+| GitHub repo `Coach1973/ai-go` | ✅ 已建 + push（最新 commit `84241d4`）|
+| GitHub Pages | ✅ 已 build，URL `https://coach1973.github.io/ai-go/` |
+| `raw.githubusercontent.com` 版本 | ✅ 已是最新（diff 跟本機 0 差異）|
+| Pages CDN 同步…（略）
+
+【教練 2026-06-23 08:39】
+<task-notification>
+<task-id>b1vutw21y</task-id>
+<tool-use-id>toolu_01ToncNQyHpmuDkzBn9FSzVr</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/4e51c46d-66d2-4a7f-aef6-2ae5c071e132/tasks/b1vutw21y.output</output-file>
+<status>completed</status>
+<summary>Background command "Poll Pages CDN sync after rebuild" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：CDN 同步完成！`https://coach1973.github.io/ai-go/` 全站已是最新 `ai-go` 版。
+
+　▶ AI 回應：URL 全部驗證通過。寫進記憶，給教練做最終交付。
+
+　▶ AI 回應：---
+
+# 🎯 偉大任務 · 交付完成
+
+## 🌐 永久 URL
+
+**主網址**：https://coach1973.github.io/ai-go/
+**Repo**：https://github.com/Coach1973/ai-go
+**授權**：CC BY-ND 4.0（完全公開分享，禁止改作）
+
+## ✅ 全部驗收通過
+
+| 檢查項 | 結果 |
+|--------|------|
+| 主 URL HTTP 200 + text/html | ✅ |
+| `system-prompt.md` HTTP 200 + text/markdown | ✅ |
+| 內容大小 16K by…（略）
+
+【教練 2026-06-23 09:13】
+太棒了，是否同步到 bymyway.com /ai-go 請參照 行動站SOP
+
+　▶ AI 回應：收到。先確認「行動站 SOP」是不是「自動站 SOP」的語音糾偏（守則 #18）——
+
+　▶ AI 回應：確認 → 「行動站」= 語音糾偏「**自動站**」（守則 #18）。SOP 找到了：
+
+　▶ AI 回應：SOP 讀完，立刻照辦——先 OPE 先驗法（步驟 0）：
+
+　▶ AI 回應：OPE 完成：照抄 coach 模板（`height:100vh`，`elementor_canvas`），slug `ai-go` 可用。看 deploy 工具用法：
+
+　▶ AI 回應：寫部署腳本（套 SOP v3.4 範本，單行 + height:100vh + Canvas）：
+
+　▶ AI 回應：Draft 建立成功 page ID `27390`。建本機預覽 wrapper（步驟 4）：
+
+　▶ AI 回應：---
+
+# 🦞 教練，bymyway/ai-go 草稿建好了，請過目
+
+## ✅ 已完成（步驟 0~4，SOP v3.4 全程合規）
+
+| 項目 | 狀態 |
+|------|------|
+| 步驟 0 OPE 先驗法（curl `coach/` 看現成寫法）| ✅ 照抄 `height:100vh` |
+| 步驟 3 建 draft 頁面 | ✅ `page ID = 27390` |
+| Elementor Canvas 模板 | ✅（拿掉 bymyway 表頭/footer）|
+| iframe height:100vh（v3.4 鐵律）| ✅ |
+| 單行字串 content（v3…（略）
+
+【教練 2026-06-23 09:19】
+推
+
+　▶ AI 回應：收到推令，立刻 publish + 驗證：
+
+　▶ AI 回應：`bymyway.com/ai-go/` 已上線回 200！（單層 slug 不需 Custom Permalinks）。線上品質驗證：
+
+　▶ AI 回應：全部五星滿分！立刻歸檔留痕跡（守則 #05）：
+
+　▶ AI 回應：---
+
+# 🎯 自動站完成 · bymyway.com/ai-go/ 上線
+
+## 🌐 雙入口正式齊備
+
+| URL | 用途 | 狀態 |
+|-----|------|------|
+| https://coach1973.github.io/ai-go/ | 開發者 / AI 直接 fetch | ✅ HTTP 200 |
+| **https://www.bymyway.com/ai-go/** | 教練個人品牌、社群分享、LINE 預覽 | ✅ **HTTP 200** |
+
+## ✅ SOP v3.4 五星滿分驗證
+
+| 檢查項 | 結果 |
+|--------|------|
+| …（略）

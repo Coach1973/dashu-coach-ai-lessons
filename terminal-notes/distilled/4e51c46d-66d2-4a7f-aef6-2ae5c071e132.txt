@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 4e51c46d-66d2-4a7f-aef6-2ae5c071e132
-# 提取時間：2026-06-23 17:00 (台灣時間)
-# 共 6 條教練原話
+# 提取時間：2026-06-23 17:30 (台灣時間)
+# 共 7 條教練原話
 
 ---
 
@@ -126,3 +126,18 @@
 | 主 URL HTTP 200 + text/html | ✅ |
 | `system-prompt.md` HTTP 200 + text/markdown | ✅ |
 | 內容大小 16K by…（略）
+
+【教練 2026-06-23 09:13】
+太棒了，是否同步到 bymyway.con /ai-go
+
+　▶ AI 回應：可以，而且方法很乾淨。先盤 bymyway 部署方式：
+
+　▶ AI 回應：教練先別動工，盤完才知道——**bymyway.com 是 WordPress 站（LiteSpeed + Cloudflare）**，不是 git push 就能改的靜態站。所以 ai-go 沒辦法直接「複製進去」。
+
+但「同步」可以做到，有三條路：
+
+## 三個可行方案
+
+| 方案 | URL 長相 | 教練要做什麼 | 推薦度 |
+|------|---------|------------|--------|
+| **A. 子網域 CNAME** | `ai-go.bymyway.com` | 在 DNS 加一條 CNAME → `coach1973.github.io`（5 分鐘）|…（略）
