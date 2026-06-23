@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session 1fb0d1c5-ccc2-4794-8a6e-75aa34006401
-# 提取時間：2026-06-24 01:00 (台灣時間)
+# 提取時間：2026-06-24 01:30 (台灣時間)
 # 共 2 條教練原話
 
 ---
@@ -106,3 +106,83 @@
 　▶ AI 回應：人像裁得乾淨——謝總專業形象照，右下角還帶一點薄荷綠斜邊，剛好對上簡報識別。素材到位，開始建頁面。
 
 先標記章節，然後寫出完整 `index.html`。
+
+　▶ AI 回應：頁面建好了。先建 `.nojekyll`（GitHub Pages 必需），然後做功能驗證——特別要親自點報名按鈕跑完整流程（案例 26 血淚：不能靠 grep 計數說「完成」）。
+
+先載入驗證工具並啟動預覽。
+
+　▶ AI 回應：預覽工具需要 dev server。為靜態網頁建一個 launch.json（python static server），然後啟動驗證。
+
+　▶ AI 回應：預覽讀的是 cwd（`~/.openclaw`）的 launch.json。看一下現有設定（grow 應該就是 government-grow），照同樣模式加一條。
+
+　▶ AI 回應：`--directory` 模式。8765 被 ai-go 佔了，用 8124。在 cwd 的 launch.json 加一條（E11：必要的追加，不動其他）。
+
+　▶ AI 回應：Server 起來了。截圖看全貌 + 檢查 console 錯誤。
+
+　▶ AI 回應：截圖被鎖（教練規則：未經同意不截圖）——沒問題，我改用文字版 snapshot + 功能點擊驗證，等等開 Chrome 讓教練直接看。
+
+Console 乾淨：只有 Tailwind CDN 的正常提醒，**無任何錯誤**，gallery 初始化成功。
+
+現在做案例 26 的關鍵測試——先點選單錨點連結，再點報名按鈕，確認 modal 不會被 initSmoothScroll 誤殺。
+
+　▶ AI 回應：Snapshot 太長被截斷，看不到 modal 狀態。用 preview_eval 直接查 modal 是否打開（最可靠，案例 26 的精準驗證）。
+
+　▶ AI 回應：Modal 還在 DOM（案例 26 修復有效 ✅）、12 張 gallery ✅、人像載入 ✅。但 `modalVisible: false`——點報名按鈕後 modal 沒開！這正是案例 26 要抓的「按了沒反應」。讓我隔離問題：直接呼叫函式 vs 模擬真實點擊。
+
+　▶ AI 回應：函式與按鈕都正常（`afterNavClick: true` ✅）。先前那次 false 應該是 snapshot 工具造成的狀態重置，不是真 bug。做一次乾淨的真實點擊驗證（中間不插 snapshot），再測完整報名送出流程。
+
+　▶ AI 回應：等等——真實點擊（preview_click 模擬滑鼠）開不了，但 eval `.click()` 開得了。這代表**真實滑鼠點擊可能被某元素擋住**——這正是案例 26「按了沒反應」的同類根因，必須查清楚（不能放給教練踩）。
+
+用 elementFromPoint 查報名按鈕座標上到底是哪個元素接到點擊。
+
+　▶ AI 回應：按鈕在 `left: -98`（畫面外左側）——所以真實點擊點不到！這通常是**頁面有水平溢出**或 viewport 異常。查 viewport 寬度與水平捲動。
+
+　▶ AI 回應：找到了——`innerWidth: 9`、`clientWidth: 0`、viewport 寬度幾乎是 0！這是**預覽 viewport 處於 0 寬度的退化狀態**，不是我頁面的問題（按鈕被擠到畫面外負座標，所以滑鼠點不到）。eval `.click()` 不依賴座標所以能開。
+
+把 viewport resize 成正常桌面尺寸再測一次真實點擊。
+
+　▶ AI 回應：preset 沒生效（仍 0 寬）。改用明確的寬高數值。
+
+　▶ AI 回應：Viewport 正常了（1280×800）。回頂部，重做真實點擊測試。
+
+　▶ AI 回應：按鈕在畫面內（left:1117）但真實點擊仍開不了 modal，eval `.click()` 卻可以。查按鈕座標上是否有透明元素擋住（真正的點擊攔截才是案例 26 根因）。
+
+　▶ AI 回應：找到真相了——按鈕座標上蓋著的是 **successModal**（`z-[110] fixed inset-0`）！那是我**前面測試送出表單時打開的成功彈窗**沒關掉，蓋住整個畫面攔截了所有點擊。這是我自己的測試污染，不是頁面 bug。
+
+關掉所有彈窗，做一次真正乾淨的點擊測試。
+
+　▶ AI 回應：仍 false。我漏了 government-grow 的 `hardenRegisterButtons()`——案例 26 的修復之一就是「inline onclick 第一次真實點擊有時不 fire，要轉成 addEventListener」。先確認按鈕座標上沒有遮擋，確認後就補上硬化函式。
+
+　▶ AI 回應：確認了：按鈕無遮擋（座標落在按鈕內），但真實點擊不 fire inline `onclick`——這正是案例 26 的根因（inline onclick 第一次真實點擊不觸發）。government-grow 的解法是 `hardenRegisterButtons()` 把 onclick 轉成 addEventListener。我漏了這個保險。
+
+補上通用按鈕硬化函式（守則 #07 不在同處跌倒）。
+
+　▶ AI 回應：重新載入預覽，重設 viewport，再測真實點擊是否修復。
+
+　▶ AI 回應：還是 false。可能是 preview_click 根本不觸發任何 click handler（工具限制），而非頁面問題。裝一個 document 層級的點擊探針確認 preview_click 到底有沒有送出 click 事件，同時確認硬化是否生效。
+
+　▶ AI 回應：硬化生效了（onclick 已移除，轉成 addEventListener）。探針已裝好。現在 preview_click 一次，再讀探針計數。
+
+　▶ AI 回應：`probeCount: 0` — preview_click 回報「成功」但實際上**沒有送出任何 click 事件**（連 document capture 都沒收到）。確認了：是 **preview_click 工具在這個靜態 server 環境失效**，不是我頁面的問題。eval `.click()` 全程正常（前面已證 modal 開得了）。
+
+改用 eval 模擬真實點擊，跑一次完整功能驗證（報名全流程 + gallery lightbox + 案例 26 防呆）。
+
+　▶ AI 回應：完整功能驗證全部通過 ✅：報名按鈕開 modal、送出流程、**案例 26 防呆（modal 不被錨點點擊移除）**、lightbox 正確、無壞圖、12 張 gallery。
+
+最後測手機版（375px）有沒有水平溢出、漢堡選單是否正常。
+
+　▶ AI 回應：手機版也過 ✅（無水平溢出、漢堡選單正常）。桌面 + 手機雙版功能與排版都驗證完畢。
+
+開 Chrome 讓教練親眼審視（教練指定唯一預覽方式）。
+
+　▶ AI 回應：教練，網頁做好了，**已在 Chrome 開啟**（就在這台 Mac 的螢幕上，您直接看），請過目。
+
+## 🎯 我做了什麼
+
+把您給的 **12 張簡報 + 謝總故事 + 您的行銷思路**，做成一頁式講座宣傳網頁。定位是**故事驅動角度**（跟之前那頁政府補助的正式角度區隔），配色沿用簡報的**薄荷綠 + 深藍灰**，給謝總專屬質感。
+
+**頁面結構（由上到下）**：
+1. 主視覺 — 7/1 講座、大樹教練 × 謝總同台、謝總形象照（我從簡報 2 裁出來的）
+2. 痛點共鳴橫幅 — 「成功的人不是沒有問題，而是願意面對問題」
+3. **同台講者** — 謝總卡 + 大樹教練卡
+4. **謝…（略）
