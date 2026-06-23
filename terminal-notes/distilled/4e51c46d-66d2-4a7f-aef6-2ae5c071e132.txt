@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 4e51c46d-66d2-4a7f-aef6-2ae5c071e132
-# 提取時間：2026-06-23 16:00 (台灣時間)
-# 共 2 條教練原話
+# 提取時間：2026-06-23 16:30 (台灣時間)
+# 共 3 條教練原話
 
 ---
 
@@ -35,3 +35,28 @@
 
 | 角色 | 載體 | URL 風格 | 給誰用 |
 |-…（略）
+
+　▶ AI 回應：教練拍板，動工。**完全公開＝這變成品牌作品**，呼應 [project_ai_coach_brand_story](memory/project_ai_coach_brand_story.md)，把「大樹教練心法」變成方法論代名詞（像彼得・杜拉克管理學）。
+
+讓我先盤環境再動工。
+
+　▶ AI 回應：HTML 寫完了。接下來補 README + LICENSE，然後用 Chrome 給教練親眼驗收（記憶：[feedback_html_preview_chrome_only](memory/feedback_html_preview_chrome_only.md)）。
+
+　▶ AI 回應：Preview 自驗證全過：fetch 正常、21 守則完整、跨平台 8 個、無 console error、responsive 都對。現在開 Chrome 給教練親眼看。
+
+　▶ AI 回應：---
+
+## 🦞 教練，本機預覽出來了，請親眼看一下
+
+**Chrome 已自動開啟**：`http://localhost:8765/`
+
+### 您會看到的關鍵元素
+
+1. **Hero 區**：「讓任何 AI 30 秒變成頂級特助」+ 使命/願景/理念三張卡
+2. **核心按鈕**：橘色大按鈕「📋 一鍵複製注入提示詞」← 您可以點點看
+3. **三步驟說明**：複製 → 貼上 → 動嘴
+4. **8 個 AI 平台支援**：Claude / ChatGPT / Gemini / Grok / MiniMax / DeepSeek / Llama / 離線 AI
+5. **三大信念**：…（略）
+
+【教練 2026-06-23 08:29】
+做的不錯，我丟網址給AI讀有異曲同工之妙嗎？
