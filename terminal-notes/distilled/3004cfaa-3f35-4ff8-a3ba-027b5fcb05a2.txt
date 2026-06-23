@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 3004cfaa-3f35-4ff8-a3ba-027b5fcb05a2
-# 提取時間：2026-06-23 10:30 (台灣時間)
-# 共 9 條教練原話
+# 提取時間：2026-06-23 15:30 (台灣時間)
+# 共 10 條教練原話
 
 ---
 
@@ -274,3 +274,8 @@ Finish with a short summary: how many files you touched and what changed.
 | `2a527e41` | v32 接力棒 + SOP 路由 v1.1 + bootstrap_acer + time_context.sh |
 
 ## 6 項 t…（略）
+
+【教練 2026-06-23 07:29】
+我的筆電，安裝了claude code desktop app 裝完了，結果 code 功能用不了，給您一張截圖，在下載資料夾，同時你可以上網援一下，為何裝上不能用，
+
+　▶ AI 回應：教練上完課回來了。我直接看截圖 + 平行查網路。
