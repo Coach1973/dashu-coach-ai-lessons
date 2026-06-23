@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 4e51c46d-66d2-4a7f-aef6-2ae5c071e132
-# 提取時間：2026-06-23 16:30 (台灣時間)
-# 共 3 條教練原話
+# 提取時間：2026-06-23 17:00 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -60,3 +60,69 @@
 
 【教練 2026-06-23 08:29】
 做的不錯，我丟網址給AI讀有異曲同工之妙嗎？
+
+　▶ AI 回應：教練問的是核心要害。誠實答：**異曲同工 70%，差 30%**——關鍵在「AI 會不會主動 fetch URL」。
+
+## 對照表（守則 #15 誠實版）
+
+| 方式 | 哪些 AI 等同 | 哪些 AI 失效 |
+|------|------------|-------------|
+| 貼網址（讓 AI 自己讀）| Claude（Code / Web / 桌面）✅<br>ChatGPT GPT-4o（含 browse）✅<br>Gemini Pro（grounding）✅ | 不會聯網的 AI（部分 GPT-3.5 / 離線版）❌<br>有些 Claude 預設不主動 fetch，要明示…（略）
+
+【教練 2026-06-23 08:30】
+[Request interrupted by user for tool use]
+
+【教練 2026-06-23 08:31】
+我想取名 [https://coach1973.github.io/ai-](https://coach1973.github.io/ai-assistant/)go
+
+　▶ AI 回應：收到，`ai-go` 更妙——「AI 開工 / AI 走起」雙關，比 ai-assistant 短一半。立刻改名：
+
+　▶ AI 回應：全乾淨。重新 commit + push：
+
+　▶ AI 回應：Pages 已 live。**`https://coach1973.github.io/ai-go/` 上線了**！立刻實測「貼網址給 AI」效果——
+
+　▶ AI 回應：curl 結果暴露：GitHub Pages 還在 serve 舊版（cache 尚未刷新到 84241d4）。等 build：
+
+　▶ AI 回應：把 Pages CDN 輪詢丟背景跑。先給教練回報：
+
+---
+
+## 🌐 上線報告 · 改名 ai-go 已 push
+
+| 項目 | 狀態 |
+|------|------|
+| GitHub repo `Coach1973/ai-go` | ✅ 已建 + push（最新 commit `84241d4`）|
+| GitHub Pages | ✅ 已 build，URL `https://coach1973.github.io/ai-go/` |
+| `raw.githubusercontent.com` 版本 | ✅ 已是最新（diff 跟本機 0 差異）|
+| Pages CDN 同步…（略）
+
+【教練 2026-06-23 08:39】
+<task-notification>
+<task-id>b1vutw21y</task-id>
+<tool-use-id>toolu_01ToncNQyHpmuDkzBn9FSzVr</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/4e51c46d-66d2-4a7f-aef6-2ae5c071e132/tasks/b1vutw21y.output</output-file>
+<status>completed</status>
+<summary>Background command "Poll Pages CDN sync after rebuild" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：CDN 同步完成！`https://coach1973.github.io/ai-go/` 全站已是最新 `ai-go` 版。
+
+　▶ AI 回應：URL 全部驗證通過。寫進記憶，給教練做最終交付。
+
+　▶ AI 回應：---
+
+# 🎯 偉大任務 · 交付完成
+
+## 🌐 永久 URL
+
+**主網址**：https://coach1973.github.io/ai-go/
+**Repo**：https://github.com/Coach1973/ai-go
+**授權**：CC BY-ND 4.0（完全公開分享，禁止改作）
+
+## ✅ 全部驗收通過
+
+| 檢查項 | 結果 |
+|--------|------|
+| 主 URL HTTP 200 + text/html | ✅ |
+| `system-prompt.md` HTTP 200 + text/markdown | ✅ |
+| 內容大小 16K by…（略）
