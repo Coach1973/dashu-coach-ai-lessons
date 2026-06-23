@@ -110,13 +110,17 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-23)
+## Promoted From Short-Term Memory (2026-06-24)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:271:271 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 教練今天下午問「怎麼讓 Windows 桌面版 Claude 助教讀到雲端工作真相、達到軍師級表現」。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:271-271]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:273:273 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **全程驗證後的發現**： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:273-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:275:277 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: workspace 有 3 個 GitHub remote：`origin = mac-openclaw-workflows.git`（Mac 軍師持續 push，今天 b2cc62be 是最新）、`claude-workflows.git`（停在 2026-05-16 22:34，一個月沒動）、`lessons`（教練課程倉）; **Windows 軍師之前 clone 的是停在 5/16 的 `claude-workflows.git`**——這就是為什麼他用 R18/R19 舊命名、引用 `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md` 不存在路徑; 真相源 = `mac-openclaw-workflows.git` [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:275-277]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:279:279 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **本場交付**： [score=0.834 recalls=0 avg=0.620 source=memory/2026-06-17.md:279-279]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:281:284 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 寫了 `knowledges/SOP_windows_mac_kickoff_protocol.md` v1.0（156 行），共用 SOP 包含分支策略 / 衝突防護 / commit 訊息前綴（[Mac]/[Win]/[VPS]）/ memory 寫入規約 / HEARTBEAT 寫手獨家 / 守則正本位置 / 兩邊各做什麼 / 不同步檔案清單 / 限流回報文化; 回覆了 Windows 軍師 9 題對齊清單; 揭穿並更正 R18/R19 是 5/16 廢版命名（現行 21 守則 + E01~E12）; 揭穿 `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md` 不存在（正本是 `workspace/特助心法.md` + `workspace/執行細則.md`） [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:281-284]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:285:286 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 給教練「Windows 端切換 repo」一鍵指令（備份舊 clone → clone 正確 repo → 覆寫 CLAUDE.md → 驗證）; 教練親口選 A 方案，已把整段貼給 Windows 軍師執行 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:285-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:288:288 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **commit hash**：`b2cc62be` ([Mac] SOP v1.0) [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:288-288]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:290:290 -->
+- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **意義**：以後不論 Mac、Windows、VPS 哪一邊軍師開工，都讀同一份 SOP、對齊同一條品牌時間軸，不再分叉。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:290-290]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:294:294 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: 教練今天下午問「Windows 桌面版 Claude 怎麼跟你銜接」，我憑訓練資料舊印象瞎答「Desktop App 是純聊天視窗、沒有 Bash 工具、不能跑 PowerShell」。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:294-294]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:296:296 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **教練嚴厲糾正**——這是 2026-05 + 2026-06-03 兩次親述過的事，今天我再錯第三次： [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:296-296]
