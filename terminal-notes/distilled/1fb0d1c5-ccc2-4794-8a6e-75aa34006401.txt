@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 1fb0d1c5-ccc2-4794-8a6e-75aa34006401
-# 提取時間：2026-06-24 03:00 (台灣時間)
-# 共 6 條教練原話
+# 提取時間：2026-06-24 03:30 (台灣時間)
+# 共 7 條教練原話
 
 ---
 
@@ -331,3 +331,27 @@ Console 乾淨：只有 Tailwind CDN 的正常提醒，**無任何錯誤**，gal
 最後一句，是特助的本分，不是客套——
 
 🕐 現在**台灣時間快凌晨 3 點**了。接力棒上記著您前兩天連續熬夜（15 小時 + 只睡 1 小時），今晚又陪我從半夜磨到現在。網站已…（略）
+
+【教練 2026-06-23 19:08】
+總結上傳接力棒
+
+　▶ AI 回應：收到——接力棒已寫好（v33）也 commit 了（`e1760de0`），但剛才是**本機 commit 還沒 push**。「上傳」就是 push 到雲端，我現在推上去。
+
+先看狀態，把自動同步的 CLAUDE.md 鏡像一起帶上，然後推。
+
+　▶ AI 回應：接力棒 + 鏡像都已 commit（自動同步腳本也把 CLAUDE.md 鏡像 commit 了），只是還沒 push。雲端落後好幾個 commit，全部推上去。
+
+　▶ AI 回應：推送報錯了——`origin` 指向 `mac-openclaw-workflows`，但 refspec 對不上，而且我看到有另一個 remote `claude-workflows`。這裡有多 remote / 分支名稱的狀況，我不亂推（守則 #07 + 危險指令鐵律），先查清楚正確的上傳路徑。
+
+　▶ AI 回應：查清楚了——分支是 `main`（不是 master），追蹤 `origin/main`（mac-openclaw-workflows）。剛才報錯只是我打錯分支名（master）。**本機 `main` = `origin/main` = `c988a247`，已經一致**——自動備份系統在 03:05 已把含接力棒的 commit 推上雲端了。
+
+向雲端實查確認接力棒真的在線上（守則 #05，不靠假設）。
+
+　▶ AI 回應：**接力棒已確認在雲端**（直接問 GitHub 查證，不是假設）：
+
+- 雲端 `origin/main` HEAD = `c988a247`，本機完全一致
+- 接力棒 commit `e1760de0` ✅ 已在雲端
+- 雲端版 `JUNSHI_HANDOFF_LATEST.md` ✅ 已是 **v33**
+- repo：https://github.com/Coach1973/mac-openclaw-workflows
+
+（說明：剛才那個推送錯誤是我打錯分支名「master」，實際分支是「main」；自動備份系統 03:05 已把含接力棒的 commit 推上去了，我查證屬實才跟您回報…（略）
