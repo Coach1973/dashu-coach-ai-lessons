@@ -1,27 +1,20 @@
-﻿# Hook: UserPromptSubmit (Windows PowerShell 版 · v2 雲端優先)
+﻿# Hook: UserPromptSubmit (Windows PowerShell 版 · v3 六步驟全注入)
 # 用途: 教練在 Windows 桌面版 Claude Code 喊「開」「開工」等暗號時，
-#       自動 git pull 拉雲端最新接力棒 → 注入 context。
+#       自動 git pull 拉雲端最新接力棒 → 注入六步驟全部內容到 context。
 #
-# 設計核心（v2 教練 2026-06-18 親定）：
-#   - 完全不依賴本機 workspace 預先存在
-#   - 完全不碰 E 槽（教練 E 槽在修復）
-#   - 固定用 %USERPROFILE%\.openclaw\workspace 當 cache
-#   - workspace 不存在 → 自動 git clone（一次性）
-#   - workspace 存在 → git pull --quiet 永遠拉雲端最新（不會過期）
+# v3 改動 (2026-06-23 教練親口「對長期有好處的事不問直接做」):
+#   - 不只注入接力棒，連同 HEARTBEAT / 試金石最新 3 案 / memory 最新日 / knowledges 近 7 天清單全部一次注入
+#   - 對應 Mac feed_junshi_handoff.sh，雙邊邏輯對等
+#   - 保留 v2 雲端優先設計（git pull 永遠拉最新）
 #
 # 對應 Mac 版: feed_junshi_handoff.sh
 
 $ErrorActionPreference = 'Continue'
 
 # ───────── 雲端真相源（固定，不需動）─────────
-$REPO_URL  = "https://github.com/Coach1973/mac-openclaw-workflows.git"
+$REPO_URL = "https://github.com/Coach1973/mac-openclaw-workflows.git"
 
 # ───────── workspace 位置（v3.1 教練親定：對齊既有 E:\Claude-Data）─────────
-# 優先序：
-#   1. $env:JUNSHI_HOOK_ROOT 環境變數（由 install 腳本永久設定）
-#   2. E:\Claude-Data\workspace（教練既有 Claude-Data 目錄結構）
-#   3. E:\junshi-hook\workspace（fallback 若 Claude-Data 不存在）
-#   4. C 槽（最後手段，會被一鍵還原洗掉）
 if ($env:JUNSHI_HOOK_ROOT) {
     $workspace = Join-Path $env:JUNSHI_HOOK_ROOT "workspace"
 } elseif (Test-Path "E:\Claude-Data") {
@@ -36,6 +29,9 @@ $handoff       = Join-Path $workspace "JUNSHI_HANDOFF_LATEST.md"
 $identityCard  = Join-Path $workspace "knowledges\IDENTITY_windows_desktop.md"
 $sessionDump   = Join-Path $workspace "claude-sessions"
 $heartbeatPath = Join-Path $workspace "HEARTBEAT.md"
+$stonePath     = Join-Path $workspace "試金石\試金石_案例庫.md"
+$memoryDir     = Join-Path $workspace "memory"
+$knowledgesDir = Join-Path $workspace "knowledges"
 
 # ───────── 讀 stdin JSON ─────────
 $raw = [Console]::In.ReadToEnd()
@@ -65,7 +61,6 @@ if ((-not $forceRefeed) -and $sessionId -and (Test-Path $marker)) { exit 0 }
 $pullStatus = ""
 try {
     if (-not (Test-Path $workspace)) {
-        # 首次：自動 clone 雲端 repo 到固定位置（用 git credential，不問 token）
         $parentDir = Split-Path $workspace -Parent
         if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
         $cloneResult = & git clone --quiet $REPO_URL $workspace 2>&1
@@ -75,8 +70,6 @@ try {
             $pullStatus = "❌ Clone 失敗: $cloneResult"
         }
     } else {
-        # 已存在：git pull 拉雲端最新（每次「開工」都拉，保證永遠不過期）
-        # 2026-06-22 修：HEARTBEAT.md/log 類經常被 hook 寫入會卡 pull，先 stash 包裝再 pop
         $dirty = & git -C $workspace status --porcelain 2>$null
         $stashed = $false
         if ($dirty) {
@@ -122,13 +115,13 @@ if (Test-Path $sessionDump) {
 }
 
 # ───────── 輸出注入內容 ─────────
-Write-Output "# 🔴 軍師接力棒（系統自動注入，本場 session 僅注入一次）"
+Write-Output "# 🔴 軍師接力棒 v3（六步驟全注入，本場 session 僅一次）"
 Write-Output ""
-Write-Output "## 🌐 雲端同步狀態（v2 設計：每次「開工」自動 git pull）"
+Write-Output "## 🌐 雲端同步狀態（v3 設計：每次「開工」自動 git pull）"
 Write-Output ""
 Write-Output "- $pullStatus"
 Write-Output "- 來源：$REPO_URL"
-Write-Output "- 本機 cache：$workspace（**E 槽不被一鍵還原洗掉**，C 槽 settings.json 失效後可一鍵重建）"
+Write-Output "- 本機 cache：$workspace"
 Write-Output ""
 Write-Output "## 🪪 身份硬性告知（教練 2026-06-17 親口定稿）"
 Write-Output ""
@@ -136,7 +129,7 @@ Write-Output "- **平台**：Windows 桌面版（GUI App，非終端機 CLI）"
 Write-Output "- **軟體**：Claude Code Desktop App for Windows"
 Write-Output "- **工具能力**：✅ 跟 Mac CLI / 終端機 **完全同等**——Bash、Read、Edit、Write、TaskCreate、Agent、Skill 全部都有"
 Write-Output "- **底層 shell**：Bash 工具在 Windows 跑 PowerShell（不是 macOS bash），語法要對應"
-Write-Output "- **工作目錄**：``\`$env:USERPROFILE\.openclaw\workspace``（**不是 E 槽**）"
+Write-Output "- **工作目錄**：``$workspace`` (**不是 C 槽 .openclaw**)"
 Write-Output "- **身份等級**：軍師（Opus），跟 Mac 軍師同等發言權"
 Write-Output "- **稱呼教練**：**大樹教練**"
 Write-Output "- **commit 前綴**：``[Win]``（區分 Mac 軍師的 ``[Mac]``）"
@@ -151,11 +144,86 @@ Write-Output ""
 Write-Output "---"
 Write-Output ""
 Write-Output "教練說「開工/開/工作/幹活」=暗號觸發。讀完本段即可無縫接續。"
+
+# ───────── 第 1 步：接力棒 ─────────
 Write-Output ""
-Write-Output "## 📜 JUNSHI_HANDOFF_LATEST.md 完整內容（剛從雲端拉的）"
+Write-Output "## 📜 第 1 步：接力棒（JUNSHI_HANDOFF_LATEST.md 全文 · 剛從雲端拉的）"
 Write-Output ""
 Get-Content -Path $handoff -Encoding UTF8 | ForEach-Object { Write-Output $_ }
 
+# ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
+if (Test-Path $heartbeatPath) {
+    Write-Output ""
+    Write-Output "---"
+    Write-Output ""
+    Write-Output "## 🩺 第 2 步：HEARTBEAT.md（最近 50 行熱上下文）"
+    Write-Output ""
+    Get-Content -Path $heartbeatPath -Encoding UTF8 -Tail 50 | ForEach-Object { Write-Output $_ }
+}
+
+# ───────── 第 3 步：血淚試金石最新 3 案例 ─────────
+if (Test-Path $stonePath) {
+    Write-Output ""
+    Write-Output "---"
+    Write-Output ""
+    Write-Output "## 🔴 第 3 步：血淚試金石最新 3 案例（守則 #07 同處跌倒鐵律）"
+    Write-Output ""
+    $stoneLines = Get-Content -Path $stonePath -Encoding UTF8
+    $caseIdx = @()
+    for ($i = 0; $i -lt $stoneLines.Count; $i++) {
+        if ($stoneLines[$i] -match '^## 案例') { $caseIdx += $i }
+    }
+    if ($caseIdx.Count -ge 3) {
+        $startLine = $caseIdx[$caseIdx.Count - 3]
+        $stoneLines[$startLine..($stoneLines.Count - 1)] | ForEach-Object { Write-Output $_ }
+    } elseif ($caseIdx.Count -gt 0) {
+        $startLine = $caseIdx[0]
+        $stoneLines[$startLine..($stoneLines.Count - 1)] | ForEach-Object { Write-Output $_ }
+    } else {
+        Write-Output "（無法定位案例段落，請手動查閱 試金石\試金石_案例庫.md）"
+    }
+}
+
+# ───────── 第 4 步：knowledges 近 7 天新檔清單 ─────────
+if (Test-Path $knowledgesDir) {
+    Write-Output ""
+    Write-Output "---"
+    Write-Output ""
+    Write-Output "## 📚 第 4 步：knowledges/ 最近 7 天新建/修改檔案清單"
+    Write-Output ""
+    $weekAgo = (Get-Date).AddDays(-7)
+    $recentFiles = Get-ChildItem -Path $knowledgesDir -Filter "*.md" -File -ErrorAction SilentlyContinue |
+                   Where-Object { $_.LastWriteTime -gt $weekAgo } |
+                   Sort-Object Name
+    if ($recentFiles.Count -gt 0) {
+        foreach ($f in $recentFiles) {
+            $firstLine = ""
+            try {
+                $firstLine = (Get-Content -Path $f.FullName -Encoding UTF8 -TotalCount 1) -replace '^# ', ''
+            } catch {}
+            Write-Output "- ``$($f.Name)``：$firstLine"
+        }
+    } else {
+        Write-Output "（過去 7 天無新檔）"
+    }
+}
+
+# ───────── 第 5 步：memory 最新日 ─────────
+if (Test-Path $memoryDir) {
+    $latestMemory = Get-ChildItem -Path $memoryDir -Filter "20*.md" -File -ErrorAction SilentlyContinue |
+                    Where-Object { $_.Name -match '^\d{4}-\d{2}-\d{2}\.md$' } |
+                    Sort-Object Name | Select-Object -Last 1
+    if ($latestMemory) {
+        Write-Output ""
+        Write-Output "---"
+        Write-Output ""
+        Write-Output "## 🧠 第 5 步：memory 最新日（$($latestMemory.Name)）"
+        Write-Output ""
+        Get-Content -Path $latestMemory.FullName -Encoding UTF8 | ForEach-Object { Write-Output $_ }
+    }
+}
+
+# ───────── 最新一場 SESSION 總結（保留原行為）─────────
 if ($latestSession) {
     Write-Output ""
     Write-Output "---"
@@ -165,15 +233,17 @@ if ($latestSession) {
     Get-Content -Path $latestSession.FullName -Encoding UTF8 | ForEach-Object { Write-Output $_ }
 }
 
+# ───────── 第 6 步：上線回應要求 ─────────
 Write-Output ""
 Write-Output "---"
 Write-Output ""
-Write-Output "## ✅ 上線回應要求"
+Write-Output "## ✅ 第 6 步：上線回應要求"
 Write-Output "讀完本段後，第一句回應**必須**包含："
 Write-Output "- 「我已讀完接力棒」字樣"
 Write-Output "- 雲端同步 HEAD hash 前 7 碼"
 Write-Output "- 當下主軸名稱（從 JUNSHI_HANDOFF_LATEST.md「本棒主軸」段挑最優先一條）"
 Write-Output "- 身份核對（模型版本 + 平台：Windows 桌面版 GUI）"
+Write-Output "- 詢問教練「今天從哪件事開始？」"
 Write-Output ""
 
 # 寫 self-test 到 HEARTBEAT（如果存在）
@@ -182,8 +252,8 @@ if (Test-Path $heartbeatPath) {
     $triggerPreview = if ($prompt.Length -gt 40) { $prompt.Substring(0, 40) } else { $prompt }
     $selfTest = @"
 
-## 🩺 軍師 Hook 自檢 $ts（Windows v2 雲端優先）
-- ✅ Hook 觸發 + git pull 完成
+## 🩺 軍師 Hook 自檢 $ts（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
 - 觸發詞：$triggerPreview
 - 雲端狀態：$pullStatus
 - Session: $sessionId
