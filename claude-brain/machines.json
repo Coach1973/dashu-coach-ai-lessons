@@ -30,9 +30,9 @@
       "workdir": "E:\\Claude-Data",
       "encoded_path": "E--Claude-Data",
       "claude_memory_link": "%USERPROFILE%\\.claude\\projects\\E--Claude-Data\\memory",
-      "brain_repo_root": "E:\\Claude-Data\\workspace",
+      "brain_repo_root": "E:\\Claude-Data\\mac-openclaw-workflows",
       "link_type": "junction",
-      "status": "⏳ 待 Windows 軍師對接（跑 setup_claude_brain.ps1，確認 brain_repo_root 實際 clone 位置）"
+      "status": "✅ 已橋接（2026-06-25 02:10）"
     },
     "acer-laptop": {
       "os": "windows",
