@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-23T19:00:00.334Z",
+  "updatedAt": "2026-06-24T19:00:00.264Z",
   "entries": {
     "memory:memory/2026-06-09.md:5:5": {
       "key": "memory:memory/2026-06-09.md:5:5",
@@ -82,251 +82,6 @@
       "lastLightAt": "2026-06-10T19:00:01.404Z",
       "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
     },
-    "memory:memory/2026-06-07.md:5:6": {
-      "key": "memory:memory/2026-06-07.md:5:6",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/2026-06-07.md:8:8": {
-      "key": "memory:memory/2026-06-07.md:8:8",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/2026-06-07.md:10:11": {
-      "key": "memory:memory/2026-06-07.md:10:11",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/2026-06-07.md:13:13": {
-      "key": "memory:memory/2026-06-07.md:13:13",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/2026-06-07.md:15:15": {
-      "key": "memory:memory/2026-06-07.md:15:15",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/2026-06-07.md:17:18": {
-      "key": "memory:memory/2026-06-07.md:17:18",
-      "lightHits": 3,
-      "remHits": 0,
-      "lastLightAt": "2026-06-10T19:00:01.404Z",
-      "lastRemConsideredAt": "2026-06-10T19:00:01.404Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:128:128": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:128:128",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:129:129": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:129:129",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:130:130": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:130:130",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:131:131": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:131:131",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:132:132": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:132:132",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:133:133": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:133:133",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:134:134": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:134:134",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:135:135": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:135:135",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-20.txt:136:136": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-20.txt:136:136",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:100:100": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:100:100",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:101:101": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:101:101",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:102:102": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:102:102",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:103:103": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:103:103",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:104:104": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:104:104",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:105:105": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:105:105",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:106:106": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:106:106",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:107:107": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:107:107",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:108:108": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:108:108",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:109:109": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:109:109",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:110:110": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:110:110",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:111:111": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:111:111",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:112:112": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:112:112",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:113:113": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:113:113",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:114:114": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:114:114",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:115:115": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:115:115",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:116:116": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:116:116",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:117:117": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:117:117",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:118:118": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:118:118",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:12:12": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:12:12",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-21T19:00:00.209Z",
-      "lastRemConsideredAt": "2026-06-21T19:00:00.209Z"
-    },
     "memory:memory/.dreams/session-corpus/2026-06-21.txt:120:120": {
       "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:120:120",
       "lightHits": 1,
@@ -357,314 +112,6 @@
     },
     "memory:memory/.dreams/session-corpus/2026-06-21.txt:124:124": {
       "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:124:124",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:125:125": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:125:125",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:126:126": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:126:126",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:127:127": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:127:127",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:128:128": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:128:128",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:129:129": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:129:129",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-21.txt:130:130": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-21.txt:130:130",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:100:100": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:100:100",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:101:101": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:101:101",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:102:102": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:102:102",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:103:103": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:103:103",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:104:104": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:104:104",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:105:105": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:105:105",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:106:106": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:106:106",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:108:108": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:108:108",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:109:109": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:109:109",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:110:110": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:110:110",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:111:111": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:111:111",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:112:112": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:112:112",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:13:13": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:13:13",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:14:14": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:14:14",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:15:15": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:15:15",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:16:16": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:16:16",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:17:17": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:17:17",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:18:18": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:18:18",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:19:19": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:19:19",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:20:20": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:20:20",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:21:21": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:21:21",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:22:22": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:22:22",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:23:23": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:23:23",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:24:24": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:24:24",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:25:25": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:25:25",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:26:26": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:26:26",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:27:27": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:27:27",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:28:28": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:28:28",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:29:29": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:29:29",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:30:30": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:30:30",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:31:31": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:31:31",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:32:32": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:32:32",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:33:33": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:33:33",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:34:34": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:34:34",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:35:35": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:35:35",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:36:36": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:36:36",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:37:37": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:37:37",
-      "lightHits": 1,
-      "remHits": 0,
-      "lastLightAt": "2026-06-22T19:00:00.217Z",
-      "lastRemConsideredAt": "2026-06-22T19:00:00.217Z"
-    },
-    "memory:memory/.dreams/session-corpus/2026-06-22.txt:38:38": {
-      "key": "memory:memory/.dreams/session-corpus/2026-06-22.txt:38:38",
       "lightHits": 1,
       "remHits": 0,
       "lastLightAt": "2026-06-22T19:00:00.217Z",
@@ -1019,6 +466,342 @@
       "remHits": 0,
       "lastLightAt": "2026-06-23T19:00:00.334Z",
       "lastRemConsideredAt": "2026-06-23T19:00:00.334Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:161:161": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:161:161",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:162:162": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:162:162",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:164:164": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:164:164",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:165:165": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:165:165",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:166:166": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:166:166",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:167:167": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:167:167",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:168:168": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:168:168",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:169:169": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:169:169",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:170:170": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:170:170",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:171:171": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:171:171",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-23.txt:172:172": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-23.txt:172:172",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:100:100": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:100:100",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:101:101": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:101:101",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:102:102": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:102:102",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:103:103": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:103:103",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:104:104": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:104:104",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:105:105": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:105:105",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:106:106": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:106:106",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:107:107": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:107:107",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:108:108": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:108:108",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:109:109": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:109:109",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:110:110": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:110:110",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:111:111": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:111:111",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:112:112": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:112:112",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:113:113": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:113:113",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:114:114": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:114:114",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:115:115": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:115:115",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:116:116": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:116:116",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:117:117": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:117:117",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:118:118": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:118:118",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:119:119": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:119:119",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:120:120": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:120:120",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:121:121": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:121:121",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:122:122": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:122:122",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:123:123": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:123:123",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:124:124": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:124:124",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:125:125": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:125:125",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:126:126": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:126:126",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:127:127": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:127:127",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:128:128": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:128:128",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:129:129": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:129:129",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:130:130": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:130:130",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:14:14": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:14:14",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:15:15": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:15:15",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:16:16": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:16:16",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:17:17": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:17:17",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:18:18": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:18:18",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
+    },
+    "memory:memory/.dreams/session-corpus/2026-06-24.txt:19:19": {
+      "key": "memory:memory/.dreams/session-corpus/2026-06-24.txt:19:19",
+      "lightHits": 1,
+      "remHits": 0,
+      "lastLightAt": "2026-06-24T19:00:00.264Z",
+      "lastRemConsideredAt": "2026-06-24T19:00:00.264Z"
     }
   }
 }

@@ -110,17 +110,17 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-24)
+## Promoted From Short-Term Memory (2026-06-25)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:281:284 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 寫了 `knowledges/SOP_windows_mac_kickoff_protocol.md` v1.0（156 行），共用 SOP 包含分支策略 / 衝突防護 / commit 訊息前綴（[Mac]/[Win]/[VPS]）/ memory 寫入規約 / HEARTBEAT 寫手獨家 / 守則正本位置 / 兩邊各做什麼 / 不同步檔案清單 / 限流回報文化; 回覆了 Windows 軍師 9 題對齊清單; 揭穿並更正 R18/R19 是 5/16 廢版命名（現行 21 守則 + E01~E12）; 揭穿 `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md` 不存在（正本是 `workspace/特助心法.md` + `workspace/執行細則.md`） [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:281-284]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:285:286 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: 給教練「Windows 端切換 repo」一鍵指令（備份舊 clone → clone 正確 repo → 覆寫 CLAUDE.md → 驗證）; 教練親口選 A 方案，已把整段貼給 Windows 軍師執行 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:285-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:288:288 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **commit hash**：`b2cc62be` ([Mac] SOP v1.0) [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:288-288]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:290:290 -->
-- 13:15 Mac 軍師補記：Windows / Mac 雙邊軍師協調規約立檔: **意義**：以後不論 Mac、Windows、VPS 哪一邊軍師開工，都讀同一份 SOP、對齊同一條品牌時間軸，不再分叉。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:290-290]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:294:294 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: 教練今天下午問「Windows 桌面版 Claude 怎麼跟你銜接」，我憑訓練資料舊印象瞎答「Desktop App 是純聊天視窗、沒有 Bash 工具、不能跑 PowerShell」。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:294-294]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:296:296 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **教練嚴厲糾正**——這是 2026-05 + 2026-06-03 兩次親述過的事，今天我再錯第三次： [score=0.854 recalls=0 avg=0.620 source=memory/2026-06-17.md:296-296]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:298:298 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **真相**（教練親口 + 官方文件 + Grok 對比表）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:298-298]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:299:302 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: Claude Code Desktop App = GUI 版 Claude Code，底層工具能力與 CLI **完全相同**; 兩者共用對話記錄（同台機器同份 jsonl）; Desktop App 甚至比 CLI 有更強的視覺化功能（檔案樹、即時預覽、視覺 diff、多 session 側邊欄）; CLI 打 `/desktop` 可直接切過去 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:299-302]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:303:303 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: CC Switch 同步控制兩者模型 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:303-303]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:305:305 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **踩到的守則**：#01（記不住=不在乎）#03（沒自我驗證就答）#07（同處跌倒）#15（胡說八道）#17（環境沒搞清楚）#20（沒啟動 memory 撈相關） [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:305-305]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:307:307 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **已修補**： [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:307-307]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:308:309 -->
+- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: 更新 `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_config_isolation.md`，加上完整能力對比表 + 鐵律「永遠不要再以為 Desktop App 沒有 shell」; 對外部 Windows 軍師發送的 SOP `b2cc62be` 內容主體（共用倉庫、commit 前綴、衝突防護）依然正確，**但「Windows 端是純聊天 vs Code CLI」的能力描述是錯的**——Windows 端 Desktop App 跟 Mac CLI 是同源產品，工具能力相同 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:308-309]
