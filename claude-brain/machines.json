@@ -1,0 +1,49 @@
+{
+  "_說明": "Claude 桌面版三機共用大腦 · 機器地圖。這支檔案就是『雲端記住每台機器本機儲存位置』的具體落實。新增第 4 台機器 = 加一筆 + 在該機跑 setup_claude_brain 腳本，不需教練手動搬路徑。",
+  "version": 1,
+  "updated": "2026-06-25",
+  "canonical_brain": {
+    "說明": "唯一真相源。三台機器的 Claude 桌面版記憶都接到這裡。",
+    "repo": "mac-openclaw-workflows",
+    "path_in_repo": "claude-brain",
+    "sync_pull": "開工自動 git pull（feed_junshi_handoff.sh）",
+    "sync_push": "收工自動 git commit+push（session_end_auto_push.sh）",
+    "synced_files": "MEMORY.md + feedback_* / project_* / reference_* / user_* 事實檔（共用）",
+    "local_only_ignored": "daily_*.md、.dreams/、*.bak（每台機器各自暫存，不跨機）"
+  },
+  "machines": {
+    "mac-mini": {
+      "os": "macos",
+      "nickname": "Mac（mini）",
+      "role": "軍師主機 · 種子機（首次大腦內容來源）",
+      "workdir": "/Users/bymyway/.openclaw",
+      "encoded_path": "-Users-bymyway--openclaw",
+      "claude_memory_link": "/Users/bymyway/.claude/projects/-Users-bymyway--openclaw/memory",
+      "brain_repo_root": "/Users/bymyway/.openclaw/workspace",
+      "link_type": "symlink",
+      "status": "✅ 已橋接（2026-06-25 01:43）"
+    },
+    "lenovo-windows": {
+      "os": "windows",
+      "nickname": "Windows / 聯想（主力工作機）",
+      "role": "教練主要工作電腦",
+      "workdir": "E:\\Claude-Data",
+      "encoded_path": "E--Claude-Data",
+      "claude_memory_link": "%USERPROFILE%\\.claude\\projects\\E--Claude-Data\\memory",
+      "brain_repo_root": "E:\\Claude-Data\\workspace",
+      "link_type": "junction",
+      "status": "⏳ 待 Windows 軍師對接（跑 setup_claude_brain.ps1，確認 brain_repo_root 實際 clone 位置）"
+    },
+    "acer-laptop": {
+      "os": "windows",
+      "nickname": "ACER 筆電（外出第二據點）",
+      "role": "教練外出用",
+      "workdir": "D:\\Claude-Data",
+      "encoded_path": "D--Claude-Data",
+      "claude_memory_link": "%USERPROFILE%\\.claude\\projects\\D--Claude-Data\\memory",
+      "brain_repo_root": "D:\\Claude-Data\\workspace",
+      "link_type": "junction",
+      "status": "⏳ 待 bootstrap 後對接"
+    }
+  }
+}

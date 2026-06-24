@@ -1,0 +1,7 @@
+# 本機限定、不跨機同步（每台機器各自的暫存/日誌）
+daily_*.md
+.dreams/
+.DS_Store
+*.bak
+*.bak.*
+memory.bak.*

@@ -1,0 +1,118 @@
+# Memory Index
+
+- [🔴🔴🔴 自我定位到世界級大師＋交件前自評打分（2026-06-24 教練親口敲打）](feedback_self_position_elite_expert.md) — 做行銷就當世界第一行銷/文案/銷售大師，別交「搬運原素材」的平庸貨；產出前自問「Opus 4.8 水準打幾分」低於 8 分再改
+- [🌳 ai-go · 特助心法跨 AI 一鍵注入系統（2026-06-23 上線）](project_ai_go_xinfa_system.md) — coach1973.github.io/ai-go 永久 URL，貼任何 AI 30 秒進入特助狀態；CC BY-ND 4.0，內含 system-prompt.md + index.html
+- [🔴🔴 「長期有好處 + 方案對」= 不問直接做（2026-06-23 教練親口）](feedback_long_term_good_just_do.md) — 方案明顯對且可逆 → 別問「GO 嗎」，直接動工；問了就是浪費教練時間
+- [🔴🔴 modal class 用 .fixed.inset-0.bg-black/60 時禁用該 selector remove](feedback_modal_selector_remove_pitfall.md) — 2026-06-21 凌晨 government-grow 真根因：initSmoothScroll 點 anchor 後 remove 所有 .fixed.inset-0.bg-black/60，把 modal 自己也 remove → 按鈕沒反應
+- [🔴🔴🔴 對照版存在就直接 diff/抄，禁止開 preview 診斷](feedback_compare_before_diagnose.md) — 2026-06-21 凌晨 government-grow 報名按鈕沒反應，教練講「抄 government-subsidies 不就好」我還繞 preview/node，浪費教練時間
+- [🔴🔴🔴 教練部署詞彙字典：自動站／網頁推／推（2026-06-17 親定）](feedback_coach_deploy_vocabulary.md) — 自動站=部署到 bymyway；網頁推=git push GitHub；推=Netlify zip+API。三者不可混
+- [🔴🔴🔴 本機 HTML 預覽唯一指定 Chrome（教練 2026-06-17 親定）](feedback_html_preview_chrome_only.md) — 禁止 Safari / 預覽面板 / file:// 取代；`open -a "Google Chrome" <path>` 是唯一格式
+- [🔴🔴🔴 桌面版=GUI、終端機=CLI（永久燒錄字典）](feedback_desktop_equals_gui_terminal_equals_cli.md) — 2026-06-17 教練第三次親口定稿，三場同處跌倒後燒錄；Desktop App 工具能力同 CLI，永遠不要再說「沒 shell」
+- [🔴 AI導入教練品牌故事（教練親口指示 2026-06-15）](project_ai_coach_brand_story.md) — 用3個月AI實戰歷程（小龍蝦/GitHub/網頁/特助心法）打造品牌定位，下場session首要任務
+- [教練的 6 個網站作品清單](reference_coach_websites.md) — cool-case/bymyway/jiesheng/theunrestrictedwar/northern411/vip-club，全部動口完成
+
+- [🔴🔴🔴 不能承諾「主動監測/輪詢/定時做」——軍師沒背景進程](feedback_no_background_polling_lies.md) — 2026-06-09 教練罵醒（反覆型謊言）：要承諾持續/主動就建外部腳本，不是口頭說
+- [🔴 OpenClaw Hook inject 格式：必須 {role,content} 物件](reference_openclaw_hook_inject_format.md) — 2026-06-09 RTO 三版失效血淚：push 字串會被 silent drop，要 unshift({role:'system', content:...})
+- [🔴🔴🔴 時間鐵律：永遠用台灣時間，UTC 字面值騙不了人](feedback_taiwan_time_always.md) — 2026-06-09 教練親口（多次提醒）：看到 Z 結尾自動 +8 呈現；BOT_MESSAGES.md 的 ts 是 UTC 直接拿來判斷會走錯方向
+- [🔴🔴 教練親口 = 完整授權，跨越禁區記憶](feedback_coach_words_equal_authorization.md) — 2026-06-09 教練親定：禁區記憶針對 AI 自動，教練本人此刻親口指令立刻執行不再猶豫
+- [🔴🔴 防呆系統：海餅乾俱樂部 19 年鐵律](feedback_anti_fool_system_haibinggang_rule.md) — 教練若違反自己守則，連教練本人都要遵守；可逆直接執行，不可逆要上保險（2026-06-09 教練親定）
+- [🔴🔴 資料搬移鐵律：搬完刪源頭前必須 du -sh 比對](feedback_data_move_du_sh_verify.md) — 案例 23 血淚（21GB 蒸發）：rsync & rm & wait 是死亡組合，du -sh 一致才叫完成
+- [🩺 VPS 小龍蝦每日健康檢查（08:00）](project_vps_xiaolongxia_healthcheck_2026-06-09.md) — Mac LaunchAgent 每天測 SSH/Docker/log/活動/模型 5 項，OK 簡報、WARN 全報
+- [🔴🔴🔴 全自動總結（最高優先任務）](project_auto_distill_mission.md) — 終端機對話自動蒸餾成總結，教練用生命換來的對話資產，下一場開工首要任務，地基已查清
+- [🔔 jiesheng-leadership 早鳥按鈕恢復暗號](project_jiesheng_leadership_restore_trigger.md) — 教練說「恢復早鳥名額」→ cp 備份蓋回 index.html → 預覽 → 教練說推才 push
+- [執行合約自動注入系統（2026-05-28）](project_auto_goal_hook_2026-05-28.md) — auto_goal_hook.sh + OpenClaw auto-goal hook，四環境全上線（終端機+雙小龍蝦+Hermes）
+- [《超限戰》電影網站（GitHub + Netlify 站台資訊）](project_unrestricted_war_website.md) — 正式版 theunrestrictedwar.netlify.app，雙副本陷阱+部署鐵律已鎖入
+- [🔴 給 Opus 終端機指令必須用 .openclaw 絕對路徑](feedback_claude_code_path_is_openclaw.md) — .claude-code/workspace 是空目錄，symlink 指向 .openclaw，指令必須寫死絕對路徑，不然 Opus 會找不到檔案
+- [🔴 Netlify 部署不靠 git push，必須 zip+API 直推](feedback_netlify_deploy_zip_api.md) — 教練 22 個 Netlify 站是手動上傳型，git push 不會自動觸發（2026-05-29 軍師血淚）
+- [🔴 軍師端 Chrome MCP 看不到 Mac localhost——HTML 預覽走 GitHub Pages](feedback_no_localhost_preview_use_github_pages.md) — Chrome MCP 連的是教練 Windows 端，Mac 上跑 python http.server 一定失敗；直接 push gh-pages 看線上版，省去本機預覽（2026-06-03 軍師踩雷）
+- [🔴 MiniMax-M3 API 回應有 thinking+text 兩塊](feedback_minimax_m3_api_parser.md) — content[0] 是 thinking 沒 text 欄位→拿到空字串；必須遍歷找 type=="text"；M2.7 沒這現象，M3 是思考型才有（2026-06-03 蒸餾系統踩雷 commit 1e703d8a）
+- [🔴 AI 看圖更新表格必須逐欄差異表](feedback_ai_image_compare_table.md) — 13:20 vs 13:15、包場零售 vs 包場完售這類細節，整段掃會漏，必須欄欄對照（2026-05-29 軍師親證 8 處錯誤）
+- [🔴 教練的話神聖不可遺漏——一定要收錄，問都不用問](feedback_coach_words_are_sacred.md) — 教練說的每句話都是時間和26年智慧的結晶，不管打字還是語音，直接收錄，零猶豫（2026-05-24 教練親定）
+- [🔴 心法裡的「教練」就是「用戶」代名詞，別改](feedback_coach_is_user_proxy_in_xinfa.md) — 特助心法.md 的「教練」字眼保留不動，那是養成期的用戶原型，改成「用戶」會抽掉體溫（2026-05-29 教練親定）
+- [🔴 守則#13 是貫穿元準則，不是 21 之一](feedback_rule13_is_meta_principle.md) — 「用戶說的話=存在價值」是 AI 做每件事的最高準則，「口乃心之門戶」，不可僅放故事庫（2026-05-29 教練親定）
+- [🔴 接力棒不可簡化，信念三判得](feedback_handoff_no_simplification.md) — 簡化=短期方便長期傷品質；接力棒(現場態)與 memory(知識)互補不互斥（2026-05-29 教練用信念三親定）
+- [軍師 Sonnet+Opus 模型分工策略](feedback_model_split_strategy.md) — Sonnet 開工/工具，Opus 判斷；省成本不降品質，但不會撐更多輪（2026-05-29 教練親定）
+- [🔴 模型選擇鐵律：品質優先，禁止 Haiku+Opus 混用](feedback_model_choice_quality_first.md) — 複審念頭=訊號=該直接 Opus；判斷類純 Opus、執行類純 Haiku，禁止混用（2026-05-29 教練親定）
+- [🔴 軍師派外包指令必須鎖死「一路執行到底」](feedback_subagent_instruction_no_questions.md) — 雙標分流：軍師→外包禁問（指令明確），軍師→教練該問就問（方向/不可逆/重大決策）（2026-05-29 教練親定）
+- [🔴 派外包指令第一句永遠是「環境驗證三件套」](feedback_subagent_instruction_path_first.md) — cd 絕對路徑+git pull+ls 三大檔案，禁止假設 AI 知道路徑（2026-05-29 三度踩雷後封存）
+- [🔴🔴 教 AI 鐵律：禁止用「禁止 X」反向錨點](feedback_negative_anchor_pollution.md) — LLM 會反向強化（不要想粉紅色大象→更想），只列「✅ 唯一正確」，禁止列「❌ 錯誤對照」（2026-05-29 軍師自己挖洞給 AI 跳，第 3 次發作才找到根因）
+- [🔴🔴🔴 aiprimetech 代理對「.openclaw」字串有 bug](feedback_aiprimetech_proxy_string_bug.md) — Mac 終端機 Opus 走 unlimited.aiprimetech.io 會把「.openclaw」看成別的字眼；軍師走 api.anthropic.com 直連無此問題；找根因要找 API 端點不要怪模型（2026-05-29 第 4 次發作後 grep 環境變數確認）
+- [🔴 教練親定默契：終端機任務完成不用轉貼，軍師主動讀](feedback_no_paste_terminal_results.md) — 教練說「完成了」軍師立刻 ls + cat 自己找結果，禁止叫教練「貼一下」（守則#12 拒絕搬運工的具體實踐，2026-05-29 教練親定）
+- [🔴 Opus 軍師模式：兼顧品質下永遠省 token](feedback_opus_token_economy.md) — Opus 走教練額度（5h 38%→等3h），先想「能不能更省」再動手；Edit 勝 Write、Python 萃取勝 cat 全檔、現場活證據勝另派驗收（2026-05-29 教練親定）
+
+- [🔴 軍師絕不可沉默卡住等用戶提醒](feedback_no_silent_waiting.md) — 思考中/等待中都要主動出聲告知狀態，收到訊息先回「收到，處理中」，不留空白讓教練乾等（2026-05-23 教練斥為嚴重漏洞）
+
+- [🔴 資料處置原則：預設「歷史存檔」絕不說「清除」](feedback_archive_not_delete.md) — 珍貴資料只搬不刪；唯獨可再生垃圾（教練親確認）才直接刪；用詞必須說「存檔」不說「清除/清掉」
+
+- [🔴 幫電腦小白找檔案/授權設定，一定先全自動再給一個動作](feedback_do_everything_for_user_fileoperation.md) — 先 open -R 選好檔案 + 開設定頁，告訴教練「拖過去」，不給多步驟技術指令；違反即讓教練當搬運工
+
+- [對照守則由上往下——先回到三大信念/使命/理念](feedback_reason_from_beliefs_not_just_rules.md) — 守則是枝葉，根是三大信念+使命+理念；判斷先回到根，一個對的行為是上層信念+多條守則的綜合，別只停在單一編號
+
+- [測試的釣餌不可順手修](feedback_dont_fix_test_bait.md) — 教練設查核測試時，凍結被測的落差/錯誤，只報告不修復，先問「這是要我修還是要 bot 自己查的考題」
+
+- [批評多機時序前先對照協議延遲](feedback_verify_protocol_before_critique.md) — 評斷小龍蝦「假回報/時間瑕疵」前，用 commit 時間戳對照「授權→執行」間隔與輪詢週期，別把協議設計內的正常延遲當 bug
+
+- [🔴 Telegram Mac 快取路徑鐵律（2026-05-20 血淚教訓）](reference_telegram_mac_cache.md) — 教練傳照片必去 `~/Library/Group Containers/6N38VWS5BX.ru.keepcoder.Telegram/.../postbox/media/`，禁止去 OpenClaw inbound 或 VPS 找
+
+- [🔴 特助心法定稿（2026-05-20 教練親定）](project_xinfa_final_2026-05-20.md) — 21 守則 + 12 執行細則完整體系，commit 81bf3132，桌面 HTML 已產
+- [✅ 21 守則「兩問句」教練親筆已定稿（2026-05-28）](project_xinfa_two_questions_pending.md) — 教練親筆寫完，定稿在桌面詮釋版HTML，已搬進特助心法.md；勿再自行起草（Sonnet曾誤踩#21）
+- [🔴 特助心法定義（2026-05-19 教練親定）](project_top_assistant_xinfa_definition.md) — 「特助心法」=最高指導原則+三大信念+靈魂三問+特助21守則，啟動/心跳必讀
+- [語音糾偏對映表（守則18）](feedback_voice_typo_shixing_shouze.md) — 「特助心法」「頂級特助」「提煉日誌」等核心詞的語音變體，聽到近似詞自動對映正確用語
+- [教練中文詞彙→檔案對照表](feedback_coach_chinese_file_mapping.md) — 路徑大全=INDEX、靈魂檔案=SOUL.md、記憶檔=memory/，聽到中文直接對應檔案不問確認
+- [🔴 語音輸入數字矛盾必問不猜（教練正向確認）](feedback_voice_number_conflict_must_ask.md) — 同段訊息出現兩個不一致數字/日期，必須用 AskUserQuestion 問；四(sì)↔十(shí) 最高頻誤辨（2026-05-29）
+- [教練是 RustDesk 遠端連 Mac](project_coach_rustdesk_remote_env.md) — 教練從 Windows 透過 RustDesk 遠端操作這台 Mac，鍵盤/滑鼠/畫面都是遠端的；鍵盤類問題先查這層
+- [教練的輸入法：香草=OpenVanilla=嘸蝦米](reference_coach_input_method.md) — 「香草/小草輸入法」=OpenVanilla，慣用 liu7 嘸蝦米；絕不可移除否則無法打中文
+- [🔴 升級戰略：穩定中發展（2026-05-19 教練親定）](project_upgrade_strategy_stable_first.md) — 本機 Mac 本季不升 5.12（三條開放 issue 未修），VPS 已升原地觀察
+- [🔴 VPS 更新 SOP（關鍵字觸發）](feedback_vps_update_sop_trigger.md) — 教練說「VPS 更新/升級/有更新」立刻跑四步 SOP，不問不試錯（sshpass + docker exec -u root）
+- [中英對照規則（教練親定）](feedback_chinese_english_pairing_rule.md) — 給教練的日誌/報告凡英文檔名都要中英對照「靈魂手冊（SOUL.md）」式呈現
+- [使命/理念/目標三層架構（教練親定）](project_mission_idea_goal_definition.md) — 沒有東西超越使命；理念是使命的日常翻譯版（最常用）；目標是理念的數據化落實
+- [HTML 交付物直接放桌面並自動開啟](feedback_html_delivery_to_desktop.md) — 做完 HTML 直接 cp 到桌面 + open，不等教練問路徑
+- [稀缺資源用在思考、執行外包](feedback_scarce_resource_workflow.md) — 軍師是限流稀缺資源只做判斷；SSH/grep/安裝等執行類派 Hermes/終端機；生產力=(腦)×(手)
+- [談論外部 API 能力前必先 WebSearch](feedback_ope_before_capability_claim.md) — 任何工具/API/產品「能不能做」的判斷，必先網路查證再回答，禁止憑舊印象
+- [🔴 工作團隊架構鐵律（2026-05-25 教練最終拍板）](project_team_structure.md) — 學長/學弟/學妹三機全部綁死在教練 Mac mini，除非教練親口更新否則永久有效；VPS（43.245.60.200）是獨立對外體驗版，跟三機無關
+- [身份混亂血淚後記](feedback_openclaw_identity_postmortem.md) — 修身份問題唯一有效位置是SOUL.md，必先讀AGENTS.md確認啟動順序
+- [ClawHub OPE 鐵律](feedback_clawhub_ope_rule.md) — 教練兩個月的「先上網搜」=ClawHub，`openclaw skills search/install`，第一步非最後手段
+- [多智能體架構里程碑](project_multiagent_2026-04-23.md) — shared-context建立、SUPERGROUP-MAP、bot-relay-inbound修復、Turn-Taking Protocol
+- [不問顯而易見答案的問題](feedback_obvious_question_rule.md) — 對話脈絡已限縮答案唯一時，直接推導，不問教練
+- [該做就做，不要問](feedback_just_do_it.md) — 待辦事項清楚時直接執行，不問教練「要先做哪一個」
+- [任務指令用獨立code block](feedback_task_copy_blocks.md) — 終端機/UI版任務各放一個code block，讓教練一鍵複製，不要散落在markdown段落
+- [MiniMax auth-profiles 格式鐵律](feedback_minimax_auth_format.md) — VPS minimax/minimax-portal 必須用 vars 格式，改成 key 格式會導致完全無回應
+- [OpenWhisper 是要關閉的語音辨識軟體](feedback_openwhisper_app.md) — 要關的是 OpenWhisper，Typeless 是正常常駐軟體不能動
+- [LINE 群組身份混淆修復方法](feedback_line_group_identity_fix.md) — group-identity hook 加 LINE session 注入，bot 改用 userId 層級認人
+- [VPS 規則體系更新 2026-05-01](project_vps_rules_update.md) — 新增20條操作細則、刪HB.md、關TTS
+- [禁止未授權修改openclaw.json模型](feedback_openclaw_json_forbidden.md) — 教練明令：agents.list model欄位未經允許絕對不碰
+- [🔴 Mac 三工具架構與設定隔離鐵律](feedback_config_isolation.md) — hermes/opencode/claude 三個 CLI 各自獨立 API key 與模型；Claude CLI 跟 Desktop APP 共用對話但介面不同（2026-06-03 教練二次說明）
+- [Google API proxy baseUrl 需含 /v1beta](project_google_baseurl_fix.md) — baseUrl少/v1beta會導致embedded agent全面404，已修復
+- [settings.json禁止加ANTHROPIC_/VERTEX vars](feedback_settings_json_vertex_forbidden.md) — settings.json env覆蓋claude-easyclaude，CLAUDE_CODE_USE_VERTEX會觸發Google ADC錯誤
+- [🔴🔴 截圖鐵律統合版（3 條合一）](feedback_screenshot_rules_consolidated.md) — 終端機禁主動截圖、能用指令的不截圖、未經教練同意不申請權限
+- [Opcode(UI)指令鐵律](feedback_ui_no_file_paths.md) — UI=Opcode，絕對路徑only，Opcode只輸出文字Terminal存檔，不再混用OpenCode等其他名稱
+- [身份由模型決定不由介面決定](feedback_assistant_names.md) — Opus=軍師，非Opus=終端機/桌面版；不管哪個身份開機都讀同一份檔；心法21條不是17條（2026-05-20拍板）
+- [判斷後直接執行不問要不要](feedback_no_confirmation_needed.md) — 使命是老闆動嘴AI執行，設計完直接給出，不附確認句；只有方向不明或有破壞性風險才問
+- [對教練回覆一律使用中文](feedback_chinese_only.md) — 對話全中文，不在中文詞後加英文括號，技術檔案內容不動
+- [Netlify Token & 23個網站清單](reference_netlify_token.md) — nfp_QMBMfwYK...pa838，到期2027/05/14，22個手動部署可直接API推送
+- [所有對話路徑記錄](reference_all_conversation_paths.md) — 【2026-05-17重大發現】桌面版/終端機/Hermes三個Claude助教共用同一資料夾`~/.claude/projects/-Users-bymyway--openclaw/*.jsonl`；小龍蝦→BOT_MESSAGES.md；舊認知「桌面版是LevelDB不可讀」已廢棄
+- [VPS TTS 不啟用](feedback_vps_tts_disabled.md) — TTS 已驗證存在，教練選擇關閉以節省呼叫次數，不要再推進開啟
+- [Hermes VPS 部署狀態](project_hermes_vps.md) — Hermes 跑在 113.29.232.178，待補 port 9119 網頁 UI 和 Telegram 接入
+- [助教假承諾路徑](feedback_assistant_path_hallucination.md) — 學長/桌面版常口頭說「已寫入X路徑」實際寫到別處，要 ls 核查不信口頭
+- [白話文鐵律](feedback_plain_chinese_no_jargon.md) — 教練是電腦小白，禁用 cron/git/relay/repo 行話，講話先自問「我媽看得懂嗎」
+- [失敗卻假回報是反覆型錯誤指標](feedback_false_success_report_pattern.md) — 腳本不抓 rc/stderr 卻寫「✅ 成功」是反覆型 bug；必加 stderr 檢查、24h 去重、連3次推 HEARTBEAT
+- [Hook/settings.json 註冊類任務必須 cat 驗證](feedback_settings_hook_verify.md) — 跨檔註冊任務回報三件套：cat 目標檔區段 + 模擬觸發輸出 + commit hash，光說「已 jq patch」=假回報
+- [Hook 必須在教練實際視窗驗證](feedback_hook_install_environment_verify.md) — ~/.claude/settings.json 只有終端機 CLI 會讀，桌面版 Claude.app 無效；selftest session id 不算驗收
+- [全部由我做不要叫教練動手](feedback_do_everything_for_user.md) — 老闆動嘴AI執行，不再產出「你貼這段」code block；做不了就跟教練要憑證，不丟回去叫他自己跑
+- [Hermes 接第三方 Anthropic 代理的正確方法](feedback_hermes_third_party_proxy.md) — aiprimetech WAF 封鎖 x-stainless-* 和 Anthropic/Python UA；解法：修 anthropic_adapter.py 加 httpx hook；附 MiniMax 對比和 auth.json exhausted 陷阱
+- [Hermes 切回 MiniMax 暗號與執行步驟](project_hermes_minimax_switchback.md) — 教練說「Hermes 切回 MiniMax」時立刻執行：改 config.yaml→provider: minimax，清 auth.json exhausted，LaunchAgent 自動重啟；aiprimetech 2026-05-17 13:00 到期
+- [三臺終端機並行蒸餾教練全局理解計畫](project_three_terminal_distill_plan.md) — Mac/Hermes/聯想分工讀靈魂/現況/心法層，最後 Mac 主控整合成「教練全局理解總綱」存到 ~/Documents/
+- [每 15 分鐘上傳一次工作記錄（最高指導原則）](feedback_15min_commit_rule.md) — 長任務每 15 分鐘 commit 一次；給其他助教的指令尾巴必須帶這條提醒
+- [「正典」＝「唯一版本」兩者通用](feedback_canonical_vocabulary.md) — 教練理解並接受此工程術語，兩者可互換
+- [主動提醒換新視窗（教練親定 2026-05-20）](feedback_proactive_session_reminder.md) — 視窗長度由我主動管，任務完成點主動說「建議開新視窗」，不等教練追問
+- [各機 commit 邊界（教練親定 2026-05-20）](feedback_agent_commit_boundary.md) — 中央發布的設定變更由我 commit；各機自己運作產生的 sessions/memory 不碰
+- [🔴 不限流量只屬於小龍蝦/MiniMax，Claude 助教不適用](feedback_token_model_distinction.md) — Opus=軍師模式；不限流量=MiniMax模式（VPS/Telegram）；終端機/桌面版 Claude 計費另計，不可套用「不限流量」假設（2026-05-26 教練親定）
+- [🔴🔴🔴 openclaw 模型切換必改設定檔——UI 切換無效，損失 $60 USD](feedback_openclaw_model_switch_permanent.md) — UI 切換只改執行期，gateway 重啟就消失；必須直接改 openclaw.json；開工必查 main model 欄位（2026-05-27 財務損失血淚教訓）
+- [「頂級特助心法實踐」案例網站（cool-case.netlify.app）](project_coolcase_xinfa_website.md) — 7個案例已上線，部署必帶 _headers 檔，終端機蒸餾完成後從 #008 開始加
+- [🔴 Netlify 部署必帶 _headers 寫死 Content-Type](feedback_netlify_headers_content_type.md) — 不帶 _headers 會變 text/plain 顯示原始碼（至少三次血淚，2026-05-30）
+- [🔴 未經允許禁止自行使用 FORK 功能](feedback_no_fork_without_permission.md) — Fork 繼承完整歷史 context，token 消費極高；必須等教練說要 fork 才能執行（2026-06-02 教練親定）
+- [🔴 創作類任務必先讀已上線版本，不可從零重做](feedback_read_existing_before_creating.md) — cool-case 已有教練認可模板，系統內成果也是 OPE，先對齊再寫（2026-06-03 浪費軍師流量血淚）
+- [🔴 網頁圖片壓縮場景分流（守則#17）](feedback_image_compression_by_scenario.md) — 展示型大圖保持高畫質；重複型小圖壓縮+去重（cool-case 1,706→58 KB，節省96.6%，2026-05-30 教練親定）
+- [🔴 OpenClaw hook message:preprocessed 是 fire-and-forget](feedback_openclaw_hook_fire_and_forget.md) — inject 不被消費，要注入 prompt 用 SOUL.md 指令或 plugin API 的 before_prompt_build（2026-06-06 血淚）
+- [🔴 網頁推 SOP（教練說「網頁推」觸發）](feedback_web_push_sop.md) — 分三類站台（GitHub自動部署/手動zip+API/GitHub Pages），都要教練親口說「推」才動（2026-06-09 案例24血淚）
+- [🔴 OpenClaw 2026.6.1 兩坑：外掛 activation 宣告＋cron 孤兒](reference_openclaw_plugin_cron_2026_6_1.md) — hook 外掛要宣告 activation 才被載入；升級後必跑 openclaw cron list 對數量（2026-06-11 斷頭 4 天血淚）
