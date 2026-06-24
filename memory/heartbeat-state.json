@@ -1,13 +1,15 @@
 {
   "lastChecks": {
-    "distill": 1748344800,
-    "youtube_monitor": 1748344800,
-    "cron_health": 1748345700,
-    "system_check": 1780797664
+    "distill": 1782280800,
+    "youtube_monitor": 1782280800,
+    "cron_health": 1782280800,
+    "system_check": 1782280852
   },
-  "lastHeartbeat": "2026-06-14T14:02:00+08:00",
-  "lastHeartbeatNote": "Context overflow restart 偵測（重啟 06:37）→ 嘗試發 Telegram 重啟通知 → 失敗：cron 環境無 TELEGRAM_BOT_TOKEN（隔離 cron 執行限制）。心跳記錄於本機。",
-  "restartAlertSent": "2026-06-14T14:02:00+08:00",
-  "restartAlertStatus": "attempted_failed_no_telegram_token_in_cron_context",
-  "restartAt": "2026-06-14T06:37:00+08:00"
+  "lastHeartbeat": "2026-06-24T14:00:00+08:00",
+  "lastHeartbeatNote": "週二下午例行心跳。所有 12 個 cron 任務健康（consecutiveErrors=0），最近 1 小時 教練無新指令（13:02 完成 consultant 換照並推 git commit 397f144）。下一個主動接觸點：14:00 每4小時關懷（即將自動觸發）、明日 06/25 09:00 Netlify 積分重置提醒 + 10:00 每月信貸繳款提醒。",
+  "systemSnapshot": {
+    "allCronsHealthy": true,
+    "recentCoachActivity": "2026-06-24 13:02 完成 consultant 換照推 git",
+    "nextProactiveEvent": "2026-06-25 09:00 Netlify 重置提醒"
+  }
 }
