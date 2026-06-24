@@ -37,7 +37,7 @@ if (-not (Test-Path $Projects)) {
 $localDirs = Get-ChildItem $Projects -Directory | Select-Object -ExpandProperty Name
 $encoded = $null
 if (Test-Path $Registry) {
-    $reg = Get-Content $Registry -Raw | ConvertFrom-Json
+    $reg = [System.IO.File]::ReadAllText($Registry, [System.Text.Encoding]::UTF8) | ConvertFrom-Json
     foreach ($p in $reg.machines.PSObject.Properties) {
         $cfg = $p.Value
         if ($cfg.os -eq "windows" -and ($localDirs -contains $cfg.encoded_path)) {
