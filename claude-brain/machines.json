@@ -44,6 +44,18 @@
       "brain_repo_root": "D:\\Claude-Data\\workspace",
       "link_type": "junction",
       "status": "⏳ 待 bootstrap 後對接"
+    },
+    "pc5c925ed70e46": {
+      "os": "windows",
+      "nickname": "Windows 工作站（一鍵還原機）",
+      "role": "教練主要工作電腦（C 槽有一鍵還原，資料存 D 槽）",
+      "hostname": "PC5C925ED70E46",
+      "workdir": "C:\\Users\\Administrator\\.claude",
+      "encoded_path": "C--Users-Administrator--claude",
+      "claude_memory_link": "%USERPROFILE%\\.claude\\projects\\C--Users-Administrator--claude\\memory",
+      "brain_repo_root": "D:\\Claude-Data\\mac-openclaw-workflows",
+      "link_type": "junction",
+      "status": "✅ 已橋接（2026-06-25），記憶體指向 D 槽"
     }
   }
 }
