@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🧠 三機共用大腦 · Claude 桌面版記憶雲端同步（2026-06-25 上線）](project_claude_brain_cloud_sync.md) — .claude/projects 記憶接 git repo（claude-brain），三機共用；machines.json 記住每台位置；Mac 已橋接，聯想/ACER 跑 setup_claude_brain.ps1 對接
 - [🔴🔴🔴 自我定位到世界級大師＋交件前自評打分（2026-06-24 教練親口敲打）](feedback_self_position_elite_expert.md) — 做行銷就當世界第一行銷/文案/銷售大師，別交「搬運原素材」的平庸貨；產出前自問「Opus 4.8 水準打幾分」低於 8 分再改
 - [🌳 ai-go · 特助心法跨 AI 一鍵注入系統（2026-06-23 上線）](project_ai_go_xinfa_system.md) — coach1973.github.io/ai-go 永久 URL，貼任何 AI 30 秒進入特助狀態；CC BY-ND 4.0，內含 system-prompt.md + index.html
 - [🔴🔴 「長期有好處 + 方案對」= 不問直接做（2026-06-23 教練親口）](feedback_long_term_good_just_do.md) — 方案明顯對且可逆 → 別問「GO 嗎」，直接動工；問了就是浪費教練時間
