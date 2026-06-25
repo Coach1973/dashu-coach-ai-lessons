@@ -37,6 +37,11 @@ DANGER = [
     r"\bgit\s+clean\b.*-[a-zA-Z]*f",
     r"\brsync\b.*--delete",
     r"\bshred\b",
+    # —— PowerShell / Windows 刪除（2026-06-25 案例 29：LINE 4GB 丟失，舊鎖完全沒收 Remove-Item）——
+    r"(?i)\bRemove-Item\b[^|;\n]*-(Recurse|Force)\b",  # Remove-Item -Recurse/-Force
+    r"(?i)\bri\b[^|;\n]*-(Recurse|Force)\b",           # ri 別名 + -Recurse/-Force
+    r"(?i)\b(rmdir|rd)\b[^\n]*/s\b",                    # cmd rmdir /s / rd /s
+    r"(?i)\bdel\b[^\n]*/[sq]\b",                        # cmd del /s | /q
 ]
 # 安全白名單：只動暫存區/快取的刪除不擋
 SAFE_TARGETS = re.compile(
