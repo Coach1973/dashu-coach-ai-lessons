@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎤 大樹教練 2026 講座系列一頁式行銷頁（交接 Acer 2026-06-26 凌晨）](project_coach_speakers_2026_landing.md) — v2 已套教練 GitHub coach1973 設計正典，等講座資料填空＋部署；桌面有交接棒 markdown
 - [🔴🔴🔴 禁止 Stop-Process -Force 關瀏覽器（案例30：Zoom 連結失效差點赴不了約）](feedback_force_kill_browser_data_loss.md) — 強制殺瀏覽器=協定權限消失；搬家前請教練手動關、搬後測完整流程不只測能啟動
 - [🔴 App 搬外接碟後偵測失效→直接官網重裝，AI 跑安裝指令=假回報](feedback_zoom_junction_reinstall.md) — 診斷 registry/protocol/port 全沒用；教練自己官網重裝一次搞定（2026-06-25 血淚）
 - [🧠 三機共用大腦 · Claude 桌面版記憶雲端同步（2026-06-25 上線）](project_claude_brain_cloud_sync.md) — .claude/projects 記憶接 git repo（claude-brain），三機共用；machines.json 記住每台位置；Mac 已橋接，聯想/ACER 跑 setup_claude_brain.ps1 對接
