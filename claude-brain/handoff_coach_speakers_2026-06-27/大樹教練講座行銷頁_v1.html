@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大樹教練 2026 講座系列｜26 年實戰 × AI 特助心法</title>
+<meta name="description" content="海餅乾俱樂部創辦人 大樹教練，26 年培訓、5,000+ 場演講、輔導逾 1.5 萬位老闆。2026 講座系列線上＋實體同步開講。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c2a28;
+  --ink-soft:#3d4d4a;
+  --paper:#faf6ee;
+  --paper-2:#f1e9d8;
+  --deep:#163b35;
+  --deep-2:#0f2a26;
+  --accent:#e07a3c;
+  --accent-2:#c25e22;
+  --gold:#b58a4f;
+  --line:rgba(28,42,40,.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:"Noto Serif TC","Noto Sans TC",serif;line-height:1.3;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ====== NAV ====== */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,246,238,.92);
+  backdrop-filter:saturate(1.1) blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-family:"Noto Serif TC",serif;font-size:18px}
+.brand-dot{width:30px;height:30px;border-radius:50%;background:var(--deep);display:grid;place-items:center;color:var(--paper);font-weight:900;font-size:14px}
+.nav-links{display:flex;gap:22px;font-size:14px;color:var(--ink-soft)}
+.nav-links a:hover{color:var(--accent-2)}
+.nav-cta{background:var(--accent);color:#fff;padding:9px 18px;border-radius:999px;font-size:14px;font-weight:700;transition:.2s}
+.nav-cta:hover{background:var(--accent-2)}
+@media (max-width:780px){.nav-links{display:none}}
+
+/* ====== HERO ====== */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(224,122,60,.16), transparent 60%),
+    radial-gradient(700px 400px at -10% 110%, rgba(22,59,53,.18), transparent 60%),
+    var(--paper);
+  padding:80px 0 60px;
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:32px}}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--line);
+  padding:6px 14px;border-radius:999px;
+  font-size:13px;color:var(--deep);font-weight:700;letter-spacing:.04em;
+}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.h1{
+  font-size:clamp(34px,4.6vw,58px);
+  font-weight:900;letter-spacing:-.01em;
+  margin:20px 0 18px;
+  color:var(--deep-2);
+}
+.h1 em{font-style:normal;color:var(--accent-2);background:linear-gradient(transparent 62%,rgba(224,122,60,.25) 62%)}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--ink-soft);max-width:560px}
+.cta-row{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:15px 28px;border-radius:999px;font-weight:800;font-size:16px;
+  transition:.2s;cursor:pointer;border:0;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-2);transform:translateY(-1px)}
+.btn-ghost{background:#fff;color:var(--deep);border:1.5px solid var(--deep)}
+.btn-ghost:hover{background:var(--deep);color:#fff}
+.btn .arrow{transition:transform .2s}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* hero portrait card */
+.portrait-card{
+  position:relative;
+  background:#fff;border-radius:24px;
+  padding:28px;
+  box-shadow:0 20px 50px -20px rgba(22,59,53,.28);
+  border:1px solid var(--line);
+}
+.portrait-frame{
+  aspect-ratio:4/5;border-radius:16px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,.6), transparent 55%),
+    linear-gradient(160deg,#1f4a43 0%, #0f2a26 100%);
+  display:grid;place-items:center;color:#fff;
+  position:relative;overflow:hidden;
+}
+.portrait-frame svg{width:62%;opacity:.9}
+.portrait-tag{
+  position:absolute;left:-12px;top:24px;
+  background:var(--accent);color:#fff;
+  padding:8px 16px;border-radius:8px;
+  font-size:13px;font-weight:800;letter-spacing:.05em;
+  box-shadow:0 8px 18px -6px rgba(224,122,60,.5);
+}
+.portrait-name{margin-top:18px;text-align:center}
+.portrait-name .n{font-family:"Noto Serif TC",serif;font-size:22px;font-weight:900;color:var(--deep-2)}
+.portrait-name .t{font-size:13px;color:var(--ink-soft);margin-top:4px}
+
+/* stats strip */
+.stats{
+  margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  background:var(--deep);border-radius:18px;overflow:hidden;
+}
+@media (max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:26px 20px;color:var(--paper);text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+.stat:last-child{border-right:0}
+@media (max-width:780px){.stat:nth-child(2){border-right:0}.stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid rgba(255,255,255,.08)}}
+.stat .num{font-family:"Noto Serif TC",serif;font-size:36px;font-weight:900;color:#fff}
+.stat .num span{color:var(--accent);font-size:.6em;vertical-align:super;margin-left:2px}
+.stat .lbl{font-size:13px;color:rgba(250,246,238,.75);margin-top:4px;letter-spacing:.05em}
+
+/* ====== SECTION COMMON ====== */
+section{padding:96px 0}
+.sec-eyebrow{
+  font-size:13px;color:var(--accent-2);letter-spacing:.18em;
+  font-weight:800;text-transform:uppercase;margin-bottom:14px;
+}
+.sec-title{font-size:clamp(28px,3.2vw,42px);font-weight:900;color:var(--deep-2);margin-bottom:18px}
+.sec-lead{font-size:17px;color:var(--ink-soft);max-width:680px;margin-bottom:48px}
+
+/* ====== PAIN POINTS ====== */
+.pain{background:var(--paper-2)}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.pain-grid{grid-template-columns:1fr}}
+.pain-card{
+  background:#fff;border-radius:18px;padding:32px 28px;
+  border:1px solid var(--line);
+  transition:.25s;
+}
+.pain-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -20px rgba(22,59,53,.25)}
+.pain-card .ico{
+  width:54px;height:54px;border-radius:14px;
+  background:linear-gradient(135deg,#fcd2b5,#f7a070);
+  display:grid;place-items:center;color:#fff;font-size:24px;margin-bottom:18px;
+}
+.pain-card h3{font-size:20px;color:var(--deep-2);margin-bottom:10px}
+.pain-card p{margin:0;color:var(--ink-soft);font-size:15px}
+
+/* ====== WHY COACH ====== */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media (max-width:900px){.why-grid{grid-template-columns:1fr}}
+.why-list{display:grid;gap:24px}
+.why-item{display:flex;gap:18px;align-items:flex-start}
+.why-num{
+  flex-shrink:0;width:46px;height:46px;border-radius:50%;
+  background:var(--deep);color:var(--paper);
+  display:grid;place-items:center;font-weight:900;font-family:"Noto Serif TC",serif;font-size:18px;
+}
+.why-item h4{font-size:19px;color:var(--deep-2);margin-bottom:6px}
+.why-item p{margin:0;color:var(--ink-soft);font-size:15px}
+.why-art{
+  background:#fff;border:1px solid var(--line);border-radius:24px;
+  padding:36px;text-align:center;
+}
+.why-art-quote{
+  font-family:"Noto Serif TC",serif;font-size:22px;font-weight:700;
+  color:var(--deep-2);line-height:1.65;
+}
+.why-art-quote::before,.why-art-quote::after{color:var(--accent);font-size:28px;vertical-align:middle}
+.why-art-quote::before{content:"「";margin-right:4px}
+.why-art-quote::after{content:"」";margin-left:4px}
+.why-art-by{margin-top:20px;font-size:13px;color:var(--ink-soft);letter-spacing:.1em}
+
+/* ====== EVENTS ====== */
+.events{
+  background:
+    linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 100%);
+  color:var(--paper);
+}
+.events .sec-eyebrow{color:#f7a070}
+.events .sec-title{color:#fff}
+.events .sec-lead{color:rgba(250,246,238,.78)}
+
+.event-tabs{display:flex;gap:12px;margin-bottom:36px;flex-wrap:wrap}
+.event-tab{
+  padding:10px 22px;border-radius:999px;
+  background:rgba(255,255,255,.08);color:var(--paper);
+  border:1px solid rgba(255,255,255,.15);cursor:pointer;
+  font-weight:700;font-size:14px;transition:.2s;
+}
+.event-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.event-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+@media (max-width:780px){.event-grid{grid-template-columns:1fr}}
+.event-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:32px 28px;
+  transition:.25s;
+  position:relative;overflow:hidden;
+}
+.event-card:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.event-type{
+  display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;
+  padding:5px 12px;border-radius:6px;margin-bottom:18px;
+}
+.event-type.online{background:rgba(115,200,180,.18);color:#92e6cf}
+.event-type.live{background:rgba(247,160,112,.2);color:#fcc59c}
+.event-card h3{font-size:24px;color:#fff;margin-bottom:14px;line-height:1.4}
+.event-meta{display:grid;gap:8px;font-size:14px;color:rgba(250,246,238,.78);margin-bottom:22px}
+.event-meta .row{display:flex;gap:10px;align-items:center}
+.event-meta .icon{width:18px;text-align:center;color:var(--accent);font-style:normal}
+.event-desc{font-size:14.5px;color:rgba(250,246,238,.72);margin-bottom:22px;line-height:1.7}
+.event-price{display:flex;align-items:baseline;gap:8px;margin-bottom:22px}
+.event-price .now{font-family:"Noto Serif TC",serif;font-size:30px;font-weight:900;color:#fff}
+.event-price .unit{color:rgba(250,246,238,.6);font-size:13px}
+.event-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:#fff;
+  padding:12px 24px;border-radius:999px;font-weight:800;font-size:14.5px;
+  transition:.2s;
+}
+.event-cta:hover{background:var(--accent-2)}
+
+.event-placeholder{
+  border-style:dashed;background:transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;min-height:300px;
+  color:rgba(250,246,238,.55);
+}
+.event-placeholder .plus{font-size:42px;font-weight:300;margin-bottom:10px;color:rgba(250,246,238,.4)}
+
+/* ====== STORY ====== */
+.story{background:var(--paper)}
+.story-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center}
+@media (max-width:900px){.story-grid{grid-template-columns:1fr}}
+.story-art{
+  background:linear-gradient(160deg,var(--paper-2),#fff);
+  border-radius:24px;padding:36px;border:1px solid var(--line);
+}
+.story-timeline{display:grid;gap:22px}
+.story-step{display:flex;gap:16px;align-items:flex-start;padding-bottom:22px;border-bottom:1px dashed var(--line)}
+.story-step:last-child{border-bottom:0;padding-bottom:0}
+.story-year{
+  flex-shrink:0;font-family:"Noto Serif TC",serif;font-weight:900;
+  color:var(--accent-2);font-size:18px;min-width:64px;
+}
+.story-step h4{font-size:17px;color:var(--deep-2);margin-bottom:4px}
+.story-step p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+.story-body p{font-size:16px;color:var(--ink-soft);margin:0 0 18px}
+.story-body p:first-child{font-size:18px;color:var(--ink);font-weight:500}
+
+/* ====== MEDIA BADGES ====== */
+.media{background:var(--paper-2);padding:60px 0}
+.media-title{text-align:center;font-size:13px;letter-spacing:.18em;color:var(--ink-soft);font-weight:700;margin-bottom:28px}
+.media-row{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap}
+.media-item{
+  font-family:"Noto Serif TC",serif;font-weight:900;font-size:18px;
+  color:var(--deep-2);opacity:.7;
+  padding:8px 18px;border-left:3px solid var(--accent);
+}
+
+/* ====== TESTIMONIALS ====== */
+.tm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media (max-width:900px){.tm-grid{grid-template-columns:1fr}}
+.tm-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:30px 26px;
+}
+.tm-quote{font-size:15.5px;color:var(--ink);line-height:1.85;margin-bottom:22px}
+.tm-author{display:flex;align-items:center;gap:12px}
+.tm-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--accent));
+  display:grid;place-items:center;color:#fff;font-weight:900;font-family:"Noto Serif TC",serif;
+}
+.tm-name{font-weight:700;color:var(--deep-2);font-size:15px}
+.tm-title{font-size:13px;color:var(--ink-soft)}
+
+/* ====== FAQ ====== */
+.faq{background:var(--paper-2)}
+.faq-list{display:grid;gap:14px;max-width:840px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:700;color:var(--deep-2);font-size:16px}
+.faq-q .mark{color:var(--accent);font-size:22px;font-weight:300;transition:.2s}
+.faq-item.open .faq-q .mark{transform:rotate(45deg)}
+.faq-a{font-size:15px;color:var(--ink-soft);margin-top:0;max-height:0;overflow:hidden;transition:.3s}
+.faq-item.open .faq-a{max-height:260px;margin-top:14px}
+
+/* ====== FINAL CTA ====== */
+.final{
+  background:
+    radial-gradient(600px 300px at 80% 20%, rgba(224,122,60,.25), transparent 60%),
+    linear-gradient(160deg,var(--deep-2),var(--deep));
+  color:var(--paper);text-align:center;
+}
+.final h2{font-size:clamp(30px,3.5vw,46px);color:#fff;margin-bottom:18px}
+.final p{font-size:18px;color:rgba(250,246,238,.78);max-width:620px;margin:0 auto 36px}
+
+/* ====== FOOTER ====== */
+footer{background:#0a1f1c;color:rgba(250,246,238,.65);padding:40px 0;font-size:14px}
+.foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.foot-grid a{color:rgba(250,246,238,.85);margin-left:18px}
+.foot-grid a:hover{color:var(--accent)}
+
+/* placeholder hint banner */
+.draft-banner{
+  position:fixed;bottom:18px;right:18px;z-index:80;
+  background:#fff;border:2px dashed var(--accent);
+  padding:10px 16px;border-radius:12px;font-size:13px;
+  color:var(--deep-2);max-width:280px;line-height:1.5;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.2);
+}
+.draft-banner b{color:var(--accent-2)}
+.draft-banner .x{
+  position:absolute;top:6px;right:8px;cursor:pointer;
+  font-size:14px;color:var(--ink-soft);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <div class="brand-dot">樹</div>
+      <span>大樹教練</span>
+    </div>
+    <div class="nav-links">
+      <a href="#why">為什麼選大樹教練</a>
+      <a href="#events">講座場次</a>
+      <a href="#story">教練故事</a>
+      <a href="#faq">常見問題</a>
+    </div>
+    <a class="nav-cta" href="#events">立即報名 →</a>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">2026 講座系列 · 線上 ＋ 實體同步開講</span>
+        <h1 class="h1">老闆動嘴，<em>AI 就能執行</em><br>26 年實戰，<em>陪你少走十年彎路</em></h1>
+        <p class="lead">
+          海餅乾俱樂部創辦人 大樹教練，把企業培訓 26 年的核心心法，
+          與這兩年親自實戰的 <b>AI 特助心法</b>，
+          濃縮成一系列你能直接拿回公司、明天就能用的講座。
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#events">看完整講座場次 <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#story">先認識大樹教練</a>
+        </div>
+      </div>
+      <div class="portrait-card">
+        <div class="portrait-frame">
+          <span class="portrait-tag">2026 巡迴開講</span>
+          <!-- 大樹意象 SVG -->
+          <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="tg" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="#f7a070" stop-opacity=".85"/>
+                <stop offset="100%" stop-color="#163b35" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="100" cy="100" r="78" fill="url(#tg)"/>
+            <!-- 樹冠 -->
+            <path d="M100 30 C60 50 50 90 70 110 C40 110 35 145 70 155 L130 155 C165 145 160 110 130 110 C150 90 140 50 100 30 Z"
+                  fill="#faf6ee" opacity=".95"/>
+            <!-- 樹幹 -->
+            <rect x="92" y="150" width="16" height="55" fill="#faf6ee" opacity=".95"/>
+            <!-- 海浪 -->
+            <path d="M0 215 Q50 200 100 215 T200 215 V240 H0 Z" fill="#e07a3c" opacity=".55"/>
+            <path d="M0 225 Q50 215 100 225 T200 225 V240 H0 Z" fill="#e07a3c" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="portrait-name">
+          <div class="n">吳大樹｜大樹教練</div>
+          <div class="t">海餅乾俱樂部創辦人 · 大樹教育顧問</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- stats -->
+    <div class="stats">
+      <div class="stat"><div class="num">26<span>年</span></div><div class="lbl">企業培訓資歷</div></div>
+      <div class="stat"><div class="num">5,000<span>+</span></div><div class="lbl">場演講足跡</div></div>
+      <div class="stat"><div class="num">15,000<span>+</span></div><div class="lbl">位老闆親自教練</div></div>
+      <div class="stat"><div class="num">4<span>國</span></div><div class="lbl">台 · 星 · 馬 · 中</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ====== 痛點 ====== -->
+<section class="pain">
+  <div class="wrap">
+    <div class="sec-eyebrow">為什麼要來</div>
+    <h2 class="sec-title">這些坑，老闆都想自己跳過，<br>但你不必再用三年換答案</h2>
+    <p class="sec-lead">大樹教練 26 年看過上萬位老闆遇到的同一張地圖。一場講座，就把他們流過的眼淚替你標好標記。</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="ico">①</div>
+        <h3>AI 工具買了一堆，用不出生意</h3>
+        <p>訂閱費繳了、課程看了，AI 還是停在「玩具」階段。問題不在工具，在心法。</p>
+      </div>
+      <div class="pain-card">
+        <div class="ico">②</div>
+        <h3>團隊跟不上，事情都壓在老闆身上</h3>
+        <p>會議開不完、決策做不完。需要的不是更多人手，是把對的事交給對的人（含 AI）。</p>
+      </div>
+      <div class="pain-card">
+        <div class="ico">③</div>
+        <h3>講師很多，但能落地的少</h3>
+        <p>聽完很激動、回去用不出來。大樹教練的講座只講「明天就能做的一件事」。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHY COACH ====== -->
+<section id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div>
+        <div class="sec-eyebrow">為什麼選大樹教練</div>
+        <h2 class="sec-title">不是講師中的講師，<br>是老闆背後那位「肯講真話的軍師」</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-num">1</div>
+            <div>
+              <h4>26 年只做一件事：把「知道」變成「做到」</h4>
+              <p>從個人成長到團隊建立、從 BNI 大台南執行董事到海餅乾俱樂部創辦人，教練的工作從沒換過——讓對的方法被真正用出來。</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">2</div>
+            <div>
+              <h4>自創「AI 特助心法」，21 條守則親手實戰</h4>
+              <p>這不是 AI 課程，是教練本人天天用、寫過六個網站、做過數百小時對話蒸餾後寫下的心法。台灣少數真把 AI 變成第二個自己的企業教練。</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">3</div>
+            <div>
+              <h4>真誠善良不藏私 · 培訓界清流</h4>
+              <p>《看雜誌》《聯合新聞網》《大紀元》都報導過教練的價值宣言：把最好的留給學員，不藏不掖。一場講座，當天就把家底掏給你。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-art">
+        <p class="why-art-quote">培育人才，創造奇蹟，做對社會有貢獻的事。</p>
+        <div class="why-art-by">— 海餅乾俱樂部使命，2007 年至今</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== EVENTS ====== -->
+<section class="events" id="events">
+  <div class="wrap">
+    <div class="sec-eyebrow">2026 講座系列</div>
+    <h2 class="sec-title">線上 + 實體，挑一場最適合你的</h2>
+    <p class="sec-lead">每月固定開講，主題涵蓋 AI 落地、團隊心法、老闆心理學。線上場可回看，實體場限額互動。</p>
+
+    <div class="event-tabs">
+      <div class="event-tab active">全部場次</div>
+      <div class="event-tab">線上講座</div>
+      <div class="event-tab">實體講座</div>
+    </div>
+
+    <div class="event-grid">
+
+      <div class="event-card">
+        <span class="event-type online">線上 ONLINE</span>
+        <h3>【講座一·待補主題】<br><span style="font-size:16px;font-weight:400;color:rgba(250,246,238,.6)">例：AI 特助心法 30 分鐘上手</span></h3>
+        <div class="event-meta">
+          <div class="row"><i class="icon">📅</i><span>待補日期 · 待補時段</span></div>
+          <div class="row"><i class="icon">💻</i><span>Zoom 線上直播（可回看 7 天）</span></div>
+          <div class="row"><i class="icon">👥</i><span>限額 100 人 · 含 Q&amp;A</span></div>
+        </div>
+        <p class="event-desc">一句話告訴學員：來這場你會帶走什麼。建議寫 2–3 行，講重點不講課綱。</p>
+        <div class="event-price"><span class="now">$ 待補</span><span class="unit">/ 人</span></div>
+        <a class="event-cta" href="#">立即報名 →</a>
+      </div>
+
+      <div class="event-card">
+        <span class="event-type live">實體 LIVE</span>
+        <h3>【講座二·待補主題】<br><span style="font-size:16px;font-weight:400;color:rgba(250,246,238,.6)">例：老闆動嘴，AI 執行（台南場）</span></h3>
+        <div class="event-meta">
+          <div class="row"><i class="icon">📅</i><span>待補日期 · 下午場</span></div>
+          <div class="row"><i class="icon">📍</i><span>待補地點（台南）</span></div>
+          <div class="row"><i class="icon">👥</i><span>限額 40 人 · 含茶點</span></div>
+        </div>
+        <p class="event-desc">一句話告訴學員：來這場你會帶走什麼。建議寫 2–3 行，講重點不講課綱。</p>
+        <div class="event-price"><span class="now">$ 待補</span><span class="unit">/ 人</span></div>
+        <a class="event-cta" href="#">立即報名 →</a>
+      </div>
+
+      <div class="event-card">
+        <span class="event-type online">線上 ONLINE</span>
+        <h3>【講座三·待補主題】<br><span style="font-size:16px;font-weight:400;color:rgba(250,246,238,.6)">例：團隊不靠喊話，靠系統</span></h3>
+        <div class="event-meta">
+          <div class="row"><i class="icon">📅</i><span>待補日期 · 晚上場</span></div>
+          <div class="row"><i class="icon">💻</i><span>Zoom 線上直播</span></div>
+          <div class="row"><i class="icon">👥</i><span>限額 200 人</span></div>
+        </div>
+        <p class="event-desc">一句話告訴學員：來這場你會帶走什麼。建議寫 2–3 行，講重點不講課綱。</p>
+        <div class="event-price"><span class="now">$ 待補</span><span class="unit">/ 人</span></div>
+        <a class="event-cta" href="#">立即報名 →</a>
+      </div>
+
+      <div class="event-card">
+        <span class="event-type live">實體 LIVE</span>
+        <h3>【講座四·待補主題】<br><span style="font-size:16px;font-weight:400;color:rgba(250,246,238,.6)">例：老闆的情緒管理（台北場）</span></h3>
+        <div class="event-meta">
+          <div class="row"><i class="icon">📅</i><span>待補日期 · 全天工作坊</span></div>
+          <div class="row"><i class="icon">📍</i><span>待補地點（台北）</span></div>
+          <div class="row"><i class="icon">👥</i><span>限額 30 人 · 含午餐</span></div>
+        </div>
+        <p class="event-desc">一句話告訴學員：來這場你會帶走什麼。建議寫 2–3 行，講重點不講課綱。</p>
+        <div class="event-price"><span class="now">$ 待補</span><span class="unit">/ 人</span></div>
+        <a class="event-cta" href="#">立即報名 →</a>
+      </div>
+
+      <div class="event-card event-placeholder">
+        <div class="plus">+</div>
+        <div>更多場次<br>陸續公布</div>
+      </div>
+
+      <div class="event-card event-placeholder">
+        <div class="plus">+</div>
+        <div>企業包班<br>歡迎私訊洽談</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== STORY ====== -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-art">
+        <div class="story-timeline">
+          <div class="story-step">
+            <div class="story-year">中興大學</div>
+            <div>
+              <h4>從留級生到傑出校友</h4>
+              <p>那段被退學門檻逼到牆角的歲月，後來成為教練面對老闆時最大的同理底氣。</p>
+            </div>
+          </div>
+          <div class="story-step">
+            <div class="story-year">2000</div>
+            <div>
+              <h4>踏入企業培訓界</h4>
+              <p>從第一場 8 人小場開始，走到後來新加坡、馬來西亞、中國大陸滿場演講。</p>
+            </div>
+          </div>
+          <div class="story-step">
+            <div class="story-year">2007</div>
+            <div>
+              <h4>創辦海餅乾俱樂部</h4>
+              <p>「海餅乾與團隊創造奇蹟」是教練看待組織的核心隱喻——讓平凡人組起來不平凡。</p>
+            </div>
+          </div>
+          <div class="story-step">
+            <div class="story-year">至今</div>
+            <div>
+              <h4>BNI 大台南執行董事</h4>
+              <p>BNI 大台南市區執行董事，把人際與商業引薦帶進千家中小企業。</p>
+            </div>
+          </div>
+          <div class="story-step">
+            <div class="story-year">2026</div>
+            <div>
+              <h4>自創「AI 特助心法」21 守則</h4>
+              <p>親手寫 6 個網站、做數百小時對話蒸餾，把 AI 變成第二個自己——這套心法即將首次完整公開。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="sec-eyebrow">教練是誰</div>
+        <h2 class="sec-title">26 年走來，我只想<br>讓更多老闆少走我走過的彎路。</h2>
+        <p>從中興大學的留級生，到站上五千場演講舞台；從一個人摸索，到創辦海餅乾俱樂部、輔導超過 15,000 位老闆。這條路上踩過的坑，每一個都讓我更想把答案說清楚、講白話。</p>
+        <p>這兩年，我親手把 AI 變成我的第二個自己。我寫了六個網站，全部是動嘴完成；我寫下 21 條「AI 特助心法」，每天都在用。我不是來教你用工具，我是來告訴你——一個 50 歲的老闆，怎麼讓 AI 真的替你做事。</p>
+        <p>2026，我把這些濃縮成一系列你能直接帶回公司的講座。歡迎你來，我們現場見。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MEDIA ====== -->
+<div class="media">
+  <div class="wrap">
+    <div class="media-title">媒 體 報 導 · 過 往 平 台</div>
+    <div class="media-row">
+      <div class="media-item">看雜誌</div>
+      <div class="media-item">聯合新聞網</div>
+      <div class="media-item">台灣大紀元</div>
+      <div class="media-item">BNI 大台南</div>
+      <div class="media-item">中興大學傑出校友</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TESTIMONIALS ====== -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">學員回饋</div>
+    <h2 class="sec-title">上過教練的課，<br>老闆們最常講的一句話</h2>
+    <p class="sec-lead">（以下三段為樣板，可換成教練真實學員回饋。）</p>
+    <div class="tm-grid">
+      <div class="tm-card">
+        <p class="tm-quote">「26 年功力一場講座給你看，回去當天就把流程改了，這在別的課堂上從來沒發生過。」</p>
+        <div class="tm-author"><div class="tm-avatar">陳</div><div><div class="tm-name">陳董｜餐飲業</div><div class="tm-title">海餅乾俱樂部成員</div></div></div>
+      </div>
+      <div class="tm-card">
+        <p class="tm-quote">「我聽過十幾場 AI 課，這是唯一一場讓我老婆隔天說『欸你怎麼變了』的。」</p>
+        <div class="tm-author"><div class="tm-avatar">林</div><div><div class="tm-name">林總｜製造業</div><div class="tm-title">第二代接班</div></div></div>
+      </div>
+      <div class="tm-card">
+        <p class="tm-quote">「教練講話直白、不藏私，三小時帶走三年經驗。值。」</p>
+        <div class="tm-author"><div class="tm-avatar">王</div><div><div class="tm-name">王經理｜美業</div><div class="tm-title">創業第 4 年</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-eyebrow">常見問題</div>
+    <h2 class="sec-title">報名前，先看這幾題</h2>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q">線上講座可以回看嗎？<span class="mark">+</span></div>
+        <div class="faq-a">可以。報名後 7 天內無限次回看，給工作忙錯過直播的老闆。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">實體講座有提供發票嗎？<span class="mark">+</span></div>
+        <div class="faq-a">有。報名表單可填統編，現場領發票或選擇電子發票寄送。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">不是企業老闆可以參加嗎？<span class="mark">+</span></div>
+        <div class="faq-a">當然可以。教練的學員從上市櫃董座到剛創業的個人接案者都有，課程的「心法」可大可小。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">想包班給公司同仁聽，怎麼談？<span class="mark">+</span></div>
+        <div class="faq-a">直接 LINE 或 Email 教練助理，10 人以上即可客製化主題與時段。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">可以單買講義或錄影檔嗎？<span class="mark">+</span></div>
+        <div class="faq-a">目前不單售。講義與影片只提供給該場次的報名學員。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL CTA ====== -->
+<section class="final">
+  <div class="wrap">
+    <h2>26 年的彎路，<br>一個下午走完。</h2>
+    <p>名額有限。下一場最快就在本月——選一場最適合你的，我們現場見。</p>
+    <a class="btn btn-primary" href="#events" style="font-size:17px;padding:17px 36px">看 2026 全部講座場次 →</a>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>© 2026 大樹教育顧問 · 海餅乾俱樂部</div>
+    <div>
+      <a href="https://www.bymyway.com/" target="_blank">官方網站</a>
+      <a href="https://www.facebook.com/bymyway/" target="_blank">Facebook</a>
+      <a href="https://www.youtube.com/channel/UC3WwtORvtc2O6hoFgOQld4A" target="_blank">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<!-- 草稿提示，正式上線前刪掉 -->
+<div class="draft-banner" id="draftBanner">
+  <span class="x" onclick="document.getElementById('draftBanner').remove()">✕</span>
+  <b>📝 v1 草稿</b><br>
+  講座區塊已預留 4 張卡片＋2 個 placeholder。<br>
+  請告訴我每場講座的：<br>
+  ① 主題標題　② 日期時間　③ 線上/實體＋地點　④ 價格　⑤ 報名連結
+</div>
+
+<script>
+// FAQ 折疊
+document.querySelectorAll('.faq-item').forEach(it=>{
+  it.addEventListener('click',()=>it.classList.toggle('open'));
+});
+// 講座 tab（純視覺切換，目前還沒有資料源就先切 active 樣式）
+document.querySelectorAll('.event-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.event-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
