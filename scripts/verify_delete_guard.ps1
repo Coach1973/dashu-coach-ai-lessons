@@ -12,9 +12,19 @@ if (-not (Test-Path $hook)) { Write-Host "找不到 $hook" -ForegroundColor Red;
 
 $script:pass = 0; $script:fail = 0
 function Check([string]$desc, [string]$command, [int]$expect) {
-    $json = @{ tool_name = "Bash"; tool_input = @{ command = $command } } | ConvertTo-Json -Compress
-    $json | & powershell -NoProfile -ExecutionPolicy Bypass -File $hook 2>$null | Out-Null
-    $rc = $LASTEXITCODE
+    $json   = @{ tool_name = "Bash"; tool_input = @{ command = $command } } | ConvertTo-Json -Compress
+    $tmpIn  = [System.IO.Path]::GetTempFileName()
+    $tmpErr = [System.IO.Path]::GetTempFileName()
+    # PS5.1 pipeline + stderr 會導致 NativeCommandError 使 $LASTEXITCODE 不可靠。
+    # 改用 Start-Process：stdin 走 tmpIn、stderr 走 tmpErr（不流回父進程），
+    # exit code 由 $proc.ExitCode 直接取，避開 PS5.1 的 stderr 陷阱。
+    [System.IO.File]::WriteAllText($tmpIn, $json, [System.Text.Encoding]::UTF8)
+    $proc = Start-Process powershell `
+        -ArgumentList "-NoProfile","-ExecutionPolicy","Bypass","-File",$hook `
+        -RedirectStandardInput $tmpIn -RedirectStandardError $tmpErr `
+        -Wait -PassThru -NoNewWindow
+    $rc = $proc.ExitCode
+    Remove-Item $tmpIn,$tmpErr -Force -ErrorAction SilentlyContinue
     if ($rc -eq $expect) { Write-Host "  OK  $desc (rc=$rc)" -ForegroundColor Green; $script:pass++ }
     else { Write-Host "  XX  $desc 期望 rc=$expect 實得 rc=$rc" -ForegroundColor Red; $script:fail++ }
 }
