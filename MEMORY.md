@@ -110,17 +110,7 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-25)
+## Promoted From Short-Term Memory (2026-06-26)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:298:298 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **真相**（教練親口 + 官方文件 + Grok 對比表）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:298-298]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:299:302 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: Claude Code Desktop App = GUI 版 Claude Code，底層工具能力與 CLI **完全相同**; 兩者共用對話記錄（同台機器同份 jsonl）; Desktop App 甚至比 CLI 有更強的視覺化功能（檔案樹、即時預覽、視覺 diff、多 session 側邊欄）; CLI 打 `/desktop` 可直接切過去 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:299-302]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:303:303 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: CC Switch 同步控制兩者模型 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:303-303]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:305:305 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **踩到的守則**：#01（記不住=不在乎）#03（沒自我驗證就答）#07（同處跌倒）#15（胡說八道）#17（環境沒搞清楚）#20（沒啟動 memory 撈相關） [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:305-305]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:307:307 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: **已修補**： [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:307-307]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17.md:308:309 -->
-- 13:26 ⚠️ Mac 軍師同處跌倒第三次：誤判 Desktop App 沒有 shell: 更新 `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_config_isolation.md`，加上完整能力對比表 + 鐵律「永遠不要再以為 Desktop App 沒有 shell」; 對外部 Windows 軍師發送的 SOP `b2cc62be` 內容主體（共用倉庫、commit 前綴、衝突防護）依然正確，**但「Windows 端是純聊天 vs Code CLI」的能力描述是錯的**——Windows 端 Desktop App 跟 Mac CLI 是同源產品，工具能力相同 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-17.md:308-309]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-18.md:2:5 -->
+- 2026-06-18 補記（Windows 軍師）: **Netlify 積分重置**：2026-06-24（週二）恢復 1000 積分；每月 25 日為固定週期重算日; **BNI DnA 儀表板**：新建 `coach1973/bni-dna`，上線 `https://coach1973.github.io/bni-dna/`，大台南南區 DnA 團隊出缺席儀表板; **Hook 安裝**：settings.json 寫入完成，self-test UTF-8 BOM 問題待解; **E 槽修復中**：DiskGenius 修復進行中，Junction 問題（.claude）修復後有望自動恢復 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-18.md:2-5]
