@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 49e7bd0b-eb8c-484c-bb28-d72355b93229
-# 提取時間：2026-06-25 20:30 (台灣時間)
-# 共 3 條教練原話
+# 提取時間：2026-06-25 21:30 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -55,3 +55,43 @@ https://coach1973.github.io/consultant/  這個網頁上面的「免費參加」
 　▶ AI 回應：推上去了。commit `588be59`，9 個地方全數更新。
 
 網頁過幾分鐘後生效：[coach1973.github.io/consultant](https://coach1973.github.io/consultant/)
+
+【教練 2026-06-25 13:16】
+有個任務，我ACER那邊出問題，我現在要請您寫一段指令給我，讓我貼到powershell 裡面，他就能自動抓到 minimax API KEY 因為我ARCR電腦，連claude cli 的程式都執行不了，沒有api key 你懂我的意思嗎？
+
+　▶ AI 回應：懂了。讓我先確認兩件事，才能寫出正確的指令：
+
+　▶ AI 回應：找到金鑰了。請問一下，ACER 上面要跑的是哪個工具？
+
+- **Hermes**（OpenClaw 那套）
+- **Claude CLI**（`claude` 指令）用 MiniMax 當 proxy
+- 其他
+
+【教練 2026-06-25 13:17】
+claude cli (類似終端機，但是透過powershell)
+
+　▶ AI 回應：了解，Claude CLI 在 Windows PowerShell 跑。讓我先查你 Mac 這邊 Claude CLI 用的是哪個 API key / proxy。
+
+　▶ AI 回應：看清楚了。Mac 這邊是用 MiniMax 當 Claude CLI 的後端，ACER 只要把一樣的設定貼進去就能跑。
+
+以下這段**完整複製貼到 ACER 的 PowerShell**，一鍵設定完畢：
+
+```powershell
+# === Claude CLI × MiniMax 環境設定（貼到 PowerShell 執行一次即永久生效）===
+
+$env_vars = @{
+    "ANTHROPIC_API_KEY"                  = "sk-cp-0_iW72rvuoBmDucQXmRaSAUmcrjXTzZCpIxQt7xgKX_ImdeMkhGmgEV9Q…（略）
+
+【教練 2026-06-25 13:19】
+然後，我希望他不要老問我 YES NO 該怎麼做，不要老問我，一律執行
+
+　▶ AI 回應：兩個地方要設：一個是 Claude CLI 的 `settings.json`，一個是 PowerShell 快捷方式。
+
+```powershell
+# === Claude CLI 免問 YES/NO 設定 ===
+
+# 1. 建立 ~/.claude/settings.json，讓 claude 預設允許所有操作
+$claudeDir = "$env:USERPROFILE\.claude"
+if (!(Test-Path $claudeDir)) { New-Item -ItemType Directory -Path $claudeDir | Out-Null }
+
+$setting…（略）
