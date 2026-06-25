@@ -59,17 +59,25 @@ metadata:
 
 LINE 26.x 的 LineLauncher.exe 會用 `GetModuleFileName()` 取得自己的實際路徑，跟 Registry 中的 `LauncherPath` 比對。透過 junction 啟動時，Windows 解析成 E 碟真實路徑，跟 Registry 的 C 碟路徑不匹配，就報錯。LINE 9.x 沒有這個驗證，所以 ACER 不受影響。
 
-### 最終可行方案（2026-06-25 驗證通過）
+### 最終可行方案（2026-06-25 二次驗證通過，含 4GB 聊天記錄）
 
 **bin 留 C 碟，Data + Cache 用 junction 搬到 E 碟：**
 
-1. 關閉 LINE
-2. robocopy Data 和 Cache 到 E 碟，驗證檔案數一致
-3. rename 原始 Data、Cache 為 .bak（**保留 7 天不刪**）
-4. mklink /J 建 junction（Data → E 碟、Cache → E 碟）
-5. 啟動 LINE 驗證
+1. 關閉 LINE（`Stop-Process -Name LINE,LineLauncher -Force`）
+2. `robocopy` Data 和 Cache 到 E 碟（`/E /COPY:DAT /R:1 /W:1`，**禁用 /COPYALL** 否則報權限錯誤）
+3. 用 `/MIR` 再跑一次確保 E 槽無多餘殘留
+4. 比對來源和 E 槽檔案數 + 大小，**差異必須為 0 才能繼續**
+5. Rename 原始 Data、Cache 為 `.bak.YYYYMMDD-HHmmss`（**🔴 保留 7 天不刪，到期：2026-07-02**）
+6. `mklink /J` 建 junction（Data → E 碟、Cache → E 碟）
+7. 啟動 LINE，確認聊天記錄都在
 
 這樣 LineLauncher 從 C 碟的 bin 啟動，不觸發路徑驗證。Data 和 Cache 佔 95% 以上空間，搬到 E 碟達到省空間目的。
+
+**第二次實際數據（2026-06-25）：**
+- Data：1,663.5 MB（20,713 個項目）→ E 槽
+- Cache：2,030.3 MB（111,395 個項目）→ E 槽
+- bin：377 MB → 留 C 槽
+- 省下 C 槽：3.6 GB
 
 ---
 
