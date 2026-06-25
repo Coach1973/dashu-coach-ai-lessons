@@ -237,6 +237,7 @@
 | 🆕 | aiprimetech 第三方代理設定 | 🟠 高 | 試金石_模型與設定.md |
 | 🆕 | 6/3 終端機對話蒸餾記錄（部分完成）| 🟡 中 | 試金石_記憶與蒸餾.md |
 | 🆕 | CRON isolated session 模型名稱格式錯誤（6次連續失敗）| 🟠 高 | 試金石_模型與設定.md |
+| 🆕 **6/25** | **C→D 搬移大災難：Junction ≠ 完整遷移，Claude Desktop + Comet 全損（-4小時）** | 🔴🔴🔴 極高 | 試金石_案例庫.md（案例 I）+ 試金石_專案與代碼.md（SOP W01）|
 
 ### 6月已完成 SOP
 
@@ -247,6 +248,7 @@
 | 第三方代理接法（aiprimetech）| 待補 | 🔄 進行中 |
 | 礦山路徑（JSONL）vs 二手石頭（distill/）| `be138c89` | ✅ 完成 |
 | Proxy 檢查 SOP | `be138c89` | ✅ 完成 |
+| **Windows AppData 搬移七步驟 SOP（血淚版）** | `7ed5b9ce` | ✅ 完成 |
 
 ---
 
