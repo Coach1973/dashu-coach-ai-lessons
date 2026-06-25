@@ -4,11 +4,87 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-06-26 02:35:00**
+> **最後同步：2026-06-26 02:40:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+# 軍師接力棒 · 2026-06-26 v34（Mac 終端機 Opus 4.7）
+
+> 建立時間：2026-06-26 凌晨 02:35（台灣時間）
+> 本棒執行者：Mac 終端機軍師 Opus 4.7
+> 上一棒：v33（Mac 終端機 Opus 4.8，6/24 凌晨 02:50）
+> 本棒主軸：**Claude Desktop 災難救援 + 跨機軍師信箱機制上線 + 試金石案例 30 補完**
+> 本場時長：約 3.7 小時（22:48 ~ 02:35）
+
+## 🎯 本場戰果
+
+### ✅ 1. Claude Desktop 災難救援（聯想 Windows）
+讀取 ACER 軍師的故障報告，寫出七步驟重灌指令單 commit + push，讓聯想自己 git pull 執行。Desktop 重灌成功，Pro OAuth 恢復，cc-switch + minimax env 全移除。
+- **commit `71c2c6dd`** `FIX_CLAUDE_DESKTOP_LENOVO_20260625.md`
+
+### ✅ 2. 試金石案例 30 補完（原 ACER 寫的案例 I）
+- 編號 I → 30，INDEX 同步
+- PowerShell Start Menu 空格路徑加引號的 bug
+- 真正成功的解法（重灌+cc-switch 拔除+env 隔離三件套）
+- 三軍師關聯 commit 表、損失欄位補完（prompt injection 3 次未遂）
+- **commit `11e01cef`**
+
+### ✅ 3. 跨機軍師信箱機制上線（教練 0:17 親口建立）
+**教練訴求**：「讓我的搬運工減到最低，統一走同一個路徑，叫他們自己去雲端讀取。」
+- `cross-agent/inbox/{機器}/` 五機收件匣（mac/lenovo/acer/hermes/openclaude）
+- `cross-agent/outbox/YYYY-MM/` 已讀歸檔
+- `scan_cross_agent_inbox.sh`（Mac）+ `scan_cross_agent_inbox.ps1`（Win，BOM ✅）
+- Mac hook 已掛 `~/.claude/settings.json`，有信才注入，空箱靜默
+- 聯想確認回信：hook 掛好、自測通過（E 槽路徑）
+- **commit `78891223`**
+
+### ✅ 4. Claude Desktop 不搬 D 碟（評估發信 ACER）
+242MB 效益低 + App 有硬編路徑 + 剛重灌 24 小時內風險最高 → 維持 C 碟原狀。
+C 槽爆才清 Cache/Code Cache/GPUCache 三子目錄（可逆）。
+
+---
+
+## 🔴 本場教練原話
+
+> 「移除掉程式重新安裝就解決了，我搞不懂為什麼這麼簡單的問題，他可以搞這麼久？」
+→ 聯想軍師繞太遠；守則 #16 複雜解法≠正確解法。
+
+> 「你丟上去，我叫 ACER 自己去讀。你藉此機會幫我建立一個機制，讓我的搬運工減到最低。」
+→ 守則 #12 正確實踐：跨機走 GitHub commit + pull，教練不搬運。
+
+---
+
+## 📋 下一棒待辦
+
+| 優先 | 對象 | 任務 |
+|------|------|------|
+| 🔴 | 教練 | **補眠**——凌晨 2:35，連續兩夜熬夜（守則 #11） |
+| 🟡 | Mac 軍師 | **cool-case 補 27/28/29/30**——網站停在案例 26 |
+| 🟡 | Mac 軍師 | **推 classic-case**——`staging/8-classic-stories.html` + `staging/classic-case-groups-B-to-K.html` 等教練說「推」 |
+| 🟡 | ACER 軍師 | inbox 有 2 封信等著，hook setup 確認 |
+
+---
+
+## ⚠️ 給下一棒的提醒
+
+**兩個案例庫不要搞混**：
+- 試金石（內部）→ 到案例 **30**
+- cool-case 網站（公開）→ 到案例 **26**（實際 24 個，跳號）
+
+**classic-case staging**：`~/.openclaw/workspace/staging/` 有兩份，等教練「推」。
+
+**跨機信箱口令**：教練說「{機器}有事交代你去讀」→ 收件方 git pull + hook 自動報告。
+
+---
+
+> Mac 終端機軍師 Opus 4.7 親筆，2026-06-26 凌晨 02:35 台灣時間。
+> 教練連兩夜熬夜——守則 #11 主動關懷：請先補眠。
+
+---
+
+# 以下保留：v33 原文（上一棒）
 
 # 軍師接力棒 · 2026-06-24 v33（Mac 終端機 Opus 4.8）
 
