@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 禁止 Stop-Process -Force 關瀏覽器（案例30：Zoom 連結失效差點赴不了約）](feedback_force_kill_browser_data_loss.md) — 強制殺瀏覽器=協定權限消失；搬家前請教練手動關、搬後測完整流程不只測能啟動
+- [🔴 App 搬外接碟後偵測失效→直接官網重裝，AI 跑安裝指令=假回報](feedback_zoom_junction_reinstall.md) — 診斷 registry/protocol/port 全沒用；教練自己官網重裝一次搞定（2026-06-25 血淚）
 - [🧠 三機共用大腦 · Claude 桌面版記憶雲端同步（2026-06-25 上線）](project_claude_brain_cloud_sync.md) — .claude/projects 記憶接 git repo（claude-brain），三機共用；machines.json 記住每台位置；Mac 已橋接，聯想/ACER 跑 setup_claude_brain.ps1 對接
 - [📐 共用大腦命名公約（2026-06-25 教練信念三拍板）](reference_brain_naming_convention.md) — 三機寫記憶一律 type_snake_case.md（描述用底線不用連字號），機關 scripts/lint_brain_naming.sh 自動檢查
 - [🧭 新對話開工脈絡（原 touchstone.md 改名）](reference_new_session_context.md) — 教練是誰+心法核心+三機環境表，新 session 讀此檔快速進入狀態
