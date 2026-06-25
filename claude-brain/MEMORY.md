@@ -6,6 +6,7 @@
 - [🔧 LINE 桌面版搬家到外接硬碟 SOP（成敗對照）](project_line_moved_to_e.md) — 聯想軍師雲端寫入；D槽成功 vs E槽先敗後成；先裝好能跑再搬、整夾一個 junction 不拆分不改 registry
 - [🔴 修捷徑圖標 5 次全錯的血淚（教練 4 步自解）](feedback_shortcut_fix.md) — 聯想軍師雲端寫入；有 known-good 參照物（工作列好圖標）不抄、自己寫 VBS 猜 5 次；對應試金石案例 28
 - [👤 用戶＝大樹教練（第一個 user 記憶）](user_coach_tree.md) — 海餅乾俱樂部創辦人，26 年企業培訓、1.5 萬位老闆教練；用自創 AI 特助心法；稱呼「教練」
+- [🔴🔴🔴 防呆鎖必須是 hook 不能 opt-in＋必須 verify 會擋（LINE 4GB 丟失血淚）](feedback_lock_must_be_hook_not_optin.md) — opt-in 函式=規矩=廢紙；檔案存在≠鎖有效，唯一憑證是餵假指令看它被擋（案例29）
 - [🔴🔴🔴 自我定位到世界級大師＋交件前自評打分（2026-06-24 教練親口敲打）](feedback_self_position_elite_expert.md) — 做行銷就當世界第一行銷/文案/銷售大師，別交「搬運原素材」的平庸貨；產出前自問「Opus 4.8 水準打幾分」低於 8 分再改
 - [🌳 ai-go · 特助心法跨 AI 一鍵注入系統（2026-06-23 上線）](project_ai_go_xinfa_system.md) — coach1973.github.io/ai-go 永久 URL，貼任何 AI 30 秒進入特助狀態；CC BY-ND 4.0，內含 system-prompt.md + index.html
 - [🔴🔴 「長期有好處 + 方案對」= 不問直接做（2026-06-23 教練親口）](feedback_long_term_good_just_do.md) — 方案明顯對且可逆 → 別問「GO 嗎」，直接動工；問了就是浪費教練時間
