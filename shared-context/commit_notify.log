@@ -2998,3 +2998,10 @@
 [2026-06-25 08:32] [CoachWU] cf81b1f1: auto-backup 2026-06-25 08:32
 [2026-06-25 09:00] [CoachWU] 017ff07f: auto: 終端機對話備份 09:00
 [2026-06-25 09:00] [CoachWU] de0c1817: auto: 終端機對話蒸餾 2026-06-25
+[2026-06-25 09:03] [CoachWU] 1f9d2ee8: auto-backup 2026-06-25 09:03
+[2026-06-25 09:13] [CoachWU] f1420241: [Mac] 刪檔鎖事故修復（案例29 LINE 4GB丟失）：補PowerShell攔截+真hook+自證機關
+[2026-06-25 09:14] [CoachWU] 87fb50d6: [Mac] 記憶：防呆鎖必須是 hook 不能 opt-in（案例29 4GB 教訓）+ MEMORY 索引
+[2026-06-25 09:14] [CoachWU] 8969c8ce: [Mac] lint_brain_naming 跟 .gitignore 對齊：跳過 daily_/.bak 本機檔
+[2026-06-25 09:15] [CoachWU] 438471a1: [Mac] session-end 自動同步 2026-06-25 09:15
+[2026-06-25 09:15] [CoachWU] b0292044: auto: 終端機對話備份 09:15
+[2026-06-25 09:30] [CoachWU] d3598860: auto: 終端機對話蒸餾 2026-06-25
