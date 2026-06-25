@@ -18,6 +18,8 @@ bad=0
 while IFS= read -r f; do
   base="$(basename "$f")"
   [ "$base" = "MEMORY.md" ] && continue
+  # 與 .gitignore 對齊：本機限定、不上雲的檔不檢查（daily 日誌 / 備份）
+  case "$base" in daily_*.md|*.bak|*.bak.*) continue ;; esac
   if ! echo "$base" | grep -qE "$OK_RE"; then
     echo "❌ 不合規：$base"
     bad=$((bad+1))
