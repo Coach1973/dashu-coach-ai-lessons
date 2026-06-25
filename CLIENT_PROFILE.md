@@ -1,5 +1,51 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-06-26（共 41 則）
+1. evidence: memory/.dreams/session-corpus/2026-06-24.txt:145-145
+2. evidence: memory/.dreams/session-corpus/2026-06-25.txt:103-103
+3. Candidate: User: 的是停在 5/16 的 `claude-workflows.git`**——這就是為什麼他用 R18/R19 舊命名、引用 `terminal-notes/TOP_ASSISTANT_RULES_v3_final.md` 不存在路徑; 真相源 = `mac-openclaw-workflows.git` - 13:15 Mac 軍師補記：Windows / - Assistant: The river has two banks tonight, and on each a strategist keeps ledgers. The one
+4. evidence: memory/.dreams/session-corpus/2026-06-25.txt:104-104
+5. Candidate: User: Write a dream diary entry from these memory fragments: - Reflections: Theme: `教練` kept surfacing across 16 memories.; confidence: 0.82; evidence: memory/2026-06-09.md:107-110, memory/2026-06-10.md:193-196, memory/.dreams/session-corpus/2026-06-09.txt:55-55; note: reflection
+6. evidence: memory/.dreams/session-corpus/2026-06-25.txt:105-105
+7. Candidate: User: Truths: Possible Lasting Truths: Assistant: 我看到很多相關檔案了，再快速確認幾個關鍵的： [confidence=0.49 evidence=memory/.dreams/session-corpus/2026-06-08.txt:3-3]; Assistant: 收到教練 — 1號機那個 `mac-openclaw-workflows` 的命名我轉給學長改 ✋ 我（2號機 `Coach1973/openclaw-kong`）沒問題 ✓ [confidence=0.49 evi - Reflecti
+8. evidence: memory/.dreams/session-corpus/2026-06-25.txt:106-106
+9. Candidate: User: evidence=memory/.dreams/session-corpus/2026-06-08.txt:3-3]; Assistant: 收到教練 — 1號機那個 `mac-openclaw-workflows` 的命名我轉給學長改 ✋ 我（2號機 `Coach1973/openclaw-kong`）沒問題 ✓ [confidence=0.49 evi - Reflections: Theme: `reflections` kept surfacing across 13 memories.; confidence: 0.81; evid
+10. evidence: memory/.dreams/session-corpus/2026-06-25.txt:107-107
+11. Candidate: User: reflection - Reflections: Theme: `教練` kept surfacing across 11 memories.; confidence: 0.69; evidence: memory/2026-06-09.md:107-110, memory/2026-06-10.md:193-196, memory/2026-06-11.md:183-186; note: reflection - Reflections: Theme: `107-110` kept surfacing across 10 memories
+12. evidence: memory/.dreams/session-corpus/2026-06-25.txt:108-108
+13. Candidate: Assistant: 🦞 健康檢查報告（15:04） ✅ 已自動修復： • Git：4 個變更已 commit（6a83519b） ⚠️ 觀察中： • 健康檢查本身：consecutiveErrors=2（前次因 AI overloaded 失敗），本次執行成功 → 將自動歸零 ✅ 無異常 安靜處理，無需通知教練。
+14. evidence: memory/.dreams/session-corpus/2026-06-25.txt:109-109
+15. Candidate: Assistant: NO_NEW_ENTRIES — 任務結束。
+16. evidence: memory/.dreams/session-corpus/2026-06-25.txt:110-110
+17. Candidate: Assistant: 🦞 健康檢查報告（06:33） ✅ 已自動處理： • **Git auto-backup**：5 個檔案已 commit - commit 1：`162853c7`（HEARTBEAT.md / commit_notify.log / split_memory.log / session_counter.json） - commit 2：`5d41398b`（HEARTBEAT.md / commit_notify.log——commit_notify 副作用再 commit 一次） - push 略過（remote 有新提交需
+18. evidence: memory/.dreams/session-corpus/2026-06-25.txt:111-111
+19. Candidate: Assistant: 開工，先讀 AGENTS.md。✅ 已讀。 執行健康檢查：
+20. evidence: memory/.dreams/session-corpus/2026-06-25.txt:113-113
+21. Candidate: Assistant: ``` 🦞 健康檢查報告（05:32） ✅ 已自動修復： • Git：25 檔案未 commit 變更，已自動 commit（e4a68578），push 因遠端有更新略過（按規則不通知） ✅ Cron 任務： • 唯一任務（健康檢查本身）consecutiveErrors=5，但原因為「AI service temporarily overloaded」（模型供應商過載），非 timeout 非 VPS 同步問題 • 本次執行成功 → 計數將自動重置，無需手動介入 ✅ HEARTBEAT：無 ⬜ 滯留項目 ✅ 無異常，安靜結束
+22. evidence: memory/.dreams/session-corpus/2026-06-25.txt:114-114
+23. Candidate: Assistant: 🦞 健康檢查報告（08:13） **✅ 已自動修復：** - 自動 commit 6 個修改檔（`auto-backup 2026-06-25 08:02`）+ 4 個補 commit（08:10、08:11、08:12、08:13） - 接力棒已成功鏡像 → CLAUDE.md（`eb3ea05b`、`96678997`） **✅ 系統 cron / openclaw_cron_daemon 全部健康：** - backup_terminal：偶發 `.git/index.lock` 競爭 → safe_git 已恢復，正常運作
+24. evidence: memory/.dreams/session-corpus/2026-06-25.txt:115-115
+25. Candidate: Assistant: 1 個任務（就是本健康檢查本身） - 上次 `overloaded` 錯誤（consecutiveErrors=1）→ 不到 3 次，不算嚴重 **HEARTBEAT.md：** 沒有待自動化的 ⬜ 背景工作項目 ✅ 無異常需要教練裁決。安靜結束本輪檢查。
+26. evidence: memory/.dreams/session-corpus/2026-06-25.txt:116-116
+27. Candidate: Assistant: 🦞 健康檢查報告（12:04） ✅ **已自動修復：** - Git：5 個檔案已自動 commit（`62f7c342`）並 push 成功 📊 **當前狀態：** - Cron 任務：1 個（本健康檢查任務本身） - consecutiveErrors: 2（< 3 次門檻，不需通知） - lastErrorReason: `overloaded`（API 暫時過載，非腳本問題，下次心跳會自動恢復） - HEARTBEAT.md：無 ⬜ 待辦項目 ✅ **無異常，無需教練裁決**（本次安靜處理，不通知）
+28. evidence: memory/.dreams/session-corpus/2026-06-25.txt:118-118
+29. Candidate: User: Write a dream diary entry from these memory fragments: - Possible Lasting Truths: No strong candidate truths surfaced. - Possible Lasting Truths: Assistant: 我看到很多相關檔案了，再快速確認幾個關鍵的： [confidence=0.49 evidence=memory/.dreams/session-corpus/2026-06-08.txt:3-3]; Assistant: 收到教練 —
+30. evidence: memory/.dreams/session-corpus/2026-06-25.txt:119-119
+31. Candidate: User: kept surfacing across 5 memories.; confidence: 0.53; evidence: memory/.dreams/session-corpus/2026-06-05.txt:5-5, memory/.dreams/session-corpus/2026-06-05.txt:8-8, memory/.dreams/session-corpus/2026-06-08.txt:2-2; note: reflection - Reflections: Theme: `教練` kept surfacing ac
+32. evidence: memory/.dreams/session-corpus/2026-06-25.txt:122-122
+33. Candidate: Assistant: 開工，先讀 AGENTS.md。 我已根據啟動流程完成熱啟動（SOUL.md、JUNSHI_HANDOFF_LATEST.md、AGENTS.md 皆已載入），現在開始執行健康檢查。
+34. evidence: memory/.dreams/session-corpus/2026-06-25.txt:123-123
+35. Candidate: Assistant: 🦞 健康檢查報告（18:32） **Cron 狀態**：健康檢查任務本身 `consecutiveErrors: 1`，原因為「AI 服務暫時過載」（overloaded）——暫時性錯誤，未達 3 次門檻，無需介入。 **Git 狀態**： - 已自動 commit：`23c3b49a`（HEARTBEAT.md / split_memory.log / state/session_counter.json） - 已 push 成功 **HEARTBEAT.md**：無 ⬜ 滯留項目，僅有 relay poll 成功紀錄。 ✅ 無
+36. evidence: memory/.dreams/session-corpus/2026-06-25.txt:14-14
+37. Candidate: User: 三機大腦的指令怎麼下，能讓我其他筆電也能讀取試金石檔案？
+38. evidence: memory/.dreams/session-corpus/2026-06-25.txt:15-15
+39. Candidate: Assistant: 教練，我去找出具體指令給您看。
+40. evidence: memory/.dreams/session-corpus/2026-06-25.txt:16-16
+41. Candidate: Assistant: 教練，這份指令端到您面前，**直接在 ACER 筆電上跑**（聯想那台已經接好了，ACER 還沒接）：
+
+---
+
+
 ## 蒸餾 2026-06-21（共 59 則）
 1. evidence: memory/.dreams/session-corpus/2026-06-19.txt:145-145
 2. evidence: memory/.dreams/session-corpus/2026-06-20.txt:114-114
