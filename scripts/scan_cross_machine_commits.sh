@@ -31,7 +31,7 @@ MY_PREFIX="[Mac]"
 COMMITS=$(git log --all --oneline --since="24 hours ago" --format="%h|%ai|%s" 2>/dev/null \
     | grep -v "auto-backup" \
     | grep -v "auto:" \
-    | grep -v "$MY_PREFIX" \
+    | grep -vF "$MY_PREFIX" \
     | grep -v "Merge branch" \
     | grep -iv "Co-Authored-By" \
     | head -15)
