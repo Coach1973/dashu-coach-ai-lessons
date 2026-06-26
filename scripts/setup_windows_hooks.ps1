@@ -123,7 +123,8 @@ $userPromptHooks = @(
     @{ command = "$pwshPrefix `"$ScriptDir\inject_taiwan_time.ps1`""; type = "command" },
     @{ command = "$pwshPrefix `"$ScriptDir\session_time_context.ps1`""; type = "command" },
     @{ command = "$pwshPrefix `"$ScriptDir\feed_junshi_handoff.ps1`""; type = "command" },
-    @{ command = "$pwshPrefix `"$ScriptDir\scan_cross_agent_inbox.ps1`""; type = "command" }
+    @{ command = "$pwshPrefix `"$ScriptDir\scan_cross_agent_inbox.ps1`""; type = "command" },
+    @{ command = "$pwshPrefix `"$ScriptDir\scan_cross_machine_commits.ps1`""; type = "command" }
 )
 
 $preToolUseHooks = @(
@@ -181,10 +182,11 @@ Write-Host "    1. inject_taiwan_time.ps1    台灣時間鐵律" -ForegroundColo
 Write-Host "    2. session_time_context.ps1  Session 時間覺察" -ForegroundColor Gray
 Write-Host "    3. feed_junshi_handoff.ps1   開工六步驟全注入（接力棒）" -ForegroundColor Gray
 Write-Host "    4. scan_cross_agent_inbox.ps1 跨機信箱掃描" -ForegroundColor Gray
+Write-Host "    5. scan_cross_machine_commits.ps1 跨機 commit 掃描" -ForegroundColor Gray
 Write-Host "  ── PreToolUse（執行指令前攔截）──" -ForegroundColor White
-Write-Host "    5. delete_guard_hook.ps1     刪除防護鎖" -ForegroundColor Gray
+Write-Host "    6. delete_guard_hook.ps1     刪除防護鎖" -ForegroundColor Gray
 Write-Host "  ── Stop（Session 結束時）──" -ForegroundColor White
-Write-Host "    6. session_end_auto_push.ps1 自動 git push 同步" -ForegroundColor Gray
+Write-Host "    7. session_end_auto_push.ps1 自動 git push 同步" -ForegroundColor Gray
 Write-Host ""
 
 # ───────── 4. 自測 ─────────
@@ -199,6 +201,7 @@ $scripts = @(
     "session_time_context.ps1",
     "feed_junshi_handoff.ps1",
     "scan_cross_agent_inbox.ps1",
+    "scan_cross_machine_commits.ps1",
     "delete_guard_hook.ps1",
     "session_end_auto_push.ps1"
 )
