@@ -8,6 +8,18 @@ set -uo pipefail
 WORKSPACE="/Users/bymyway/.openclaw/workspace"
 INBOX="$WORKSPACE/cross-agent/inbox/mac"
 
+# 先 git pull 確保本地最新（節流：5 分鐘內不重複 pull）
+PULL_LOCK="${TMPDIR:-/tmp}/inbox_git_pull.lock"
+NEED_PULL=true
+if [[ -f "$PULL_LOCK" ]]; then
+    LOCK_AGE=$(( $(date +%s) - $(stat -f %m "$PULL_LOCK" 2>/dev/null || echo 0) ))
+    [[ $LOCK_AGE -lt 300 ]] && NEED_PULL=false
+fi
+if $NEED_PULL && [[ -d "$WORKSPACE/.git" ]]; then
+    git -C "$WORKSPACE" pull --quiet 2>/dev/null || true
+    touch "$PULL_LOCK"
+fi
+
 [[ ! -d "$INBOX" ]] && exit 0
 
 # 只列 .md 檔，按時間倒序

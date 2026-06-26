@@ -17,6 +17,20 @@ $ErrorActionPreference = "SilentlyContinue"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Workspace = Split-Path -Parent $ScriptDir
 
+# 先 git pull 確保本地最新（節流：5 分鐘內不重複 pull）
+$pullLock = Join-Path $env:TEMP "inbox_git_pull.lock"
+$needPull = $true
+if (Test-Path $pullLock) {
+    $lockAge = (Get-Date) - (Get-Item $pullLock).LastWriteTime
+    if ($lockAge.TotalSeconds -lt 300) { $needPull = $false }
+}
+if ($needPull -and (Test-Path (Join-Path $Workspace ".git"))) {
+    Push-Location $Workspace
+    & git pull --quiet 2>$null
+    Pop-Location
+    New-Item -Path $pullLock -ItemType File -Force | Out-Null
+}
+
 # 機器名（必須設環境變數）
 $AgentName = $env:AGENT_INBOX_NAME
 if (-not $AgentName) { exit 0 }   # 沒設就靜默

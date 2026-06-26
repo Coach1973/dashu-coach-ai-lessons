@@ -29,6 +29,18 @@ if (-not (Test-Path (Join-Path $Workspace ".git"))) {
 
 Push-Location $Workspace
 
+# 先 git pull 確保看到其他機器的最新 commit（節流：5 分鐘內不重複）
+$pullLock = Join-Path $env:TEMP "cross_commit_git_pull.lock"
+$needPull = $true
+if (Test-Path $pullLock) {
+    $lockAge = (Get-Date) - (Get-Item $pullLock).LastWriteTime
+    if ($lockAge.TotalSeconds -lt 300) { $needPull = $false }
+}
+if ($needPull) {
+    & git pull --quiet 2>$null
+    New-Item -Path $pullLock -ItemType File -Force | Out-Null
+}
+
 # 判斷自己是哪台（排除自己的 commit）
 $machineName = $env:AGENT_INBOX_NAME
 if (-not $machineName) { $machineName = "windows" }

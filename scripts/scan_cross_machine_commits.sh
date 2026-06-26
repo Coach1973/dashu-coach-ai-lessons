@@ -24,6 +24,18 @@ WORKSPACE="$HOME/.openclaw/workspace"
 
 cd "$WORKSPACE" || exit 0
 
+# 先 git pull 確保看到其他機器的最新 commit（節流：5 分鐘內不重複）
+PULL_LOCK="${TMPDIR:-/tmp}/cross_commit_git_pull.lock"
+NEED_PULL=true
+if [ -f "$PULL_LOCK" ]; then
+    LOCK_AGE=$(( $(date +%s) - $(stat -f %m "$PULL_LOCK" 2>/dev/null || echo 0) ))
+    [ "$LOCK_AGE" -lt 300 ] && NEED_PULL=false
+fi
+if $NEED_PULL; then
+    git pull --quiet 2>/dev/null || true
+    touch "$PULL_LOCK"
+fi
+
 # 判斷自己是誰（Mac）
 MY_PREFIX="[Mac]"
 
