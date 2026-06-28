@@ -110,12 +110,14 @@
 - **#20 啟動協議** — 用戶說話自動讀特助心法
 - **#21 原文引用** — 使命/願景/信念/守則一字不差禁止詮釋
 
-## Promoted From Short-Term Memory (2026-06-26)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-18.md:2:5 -->
-- 2026-06-18 補記（Windows 軍師）: **Netlify 積分重置**：2026-06-24（週二）恢復 1000 積分；每月 25 日為固定週期重算日; **BNI DnA 儀表板**：新建 `coach1973/bni-dna`，上線 `https://coach1973.github.io/bni-dna/`，大台南南區 DnA 團隊出缺席儀表板; **Hook 安裝**：settings.json 寫入完成，self-test UTF-8 BOM 問題待解; **E 槽修復中**：DiskGenius 修復進行中，Junction 問題（.claude）修復後有望自動恢復 [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-18.md:2-5]
-
 ## Promoted From Short-Term Memory (2026-06-28)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-06-18.md:6:6 -->
 - 2026-06-18 補記（Windows 軍師）: **SOP v1.1 對齊**：Windows 軍師完成簽署，對齊驗證通過，commit 8a6ce72 [score=0.876 recalls=0 avg=0.620 source=memory/2026-06-18.md:6-6]
+
+## Promoted From Short-Term Memory (2026-06-29)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-20.md:272:272 -->
+- 📨 對話記錄 09:11（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-06-20.md:272-272]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-20.md:276:276 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.847 recalls=0 avg=0.620 source=memory/2026-06-20.md:276-276]
