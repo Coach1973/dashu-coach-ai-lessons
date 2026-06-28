@@ -1388,3 +1388,4 @@
 {"ts":"2026-06-27T22:02:56.676Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"☀️ 每日 06:00 起床摘要（前 12 小時工作）\" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.","msgId":"8227","chatId":"-1003877502911"}
 {"ts":"2026-06-27T22:02:58.399Z","botId":"unknown","botName":"unknown","text":"⚠️ Cron job \"☀️ 每日 06:00 起床摘要（前 12 小時工作）\" failed: FallbackSummaryError: All models failed (1): minimax/MiniMax-M3: Provider minimax is in cooldown (suspending lanes) (overloaded)","msgId":"8228","chatId":"-1003877502911"}
 {"ts":"2026-06-27T22:04:07.871Z","botId":"main","botName":"🦞學長","text":"✅ 起床摘要：過去 12 小時無新工作","msgId":"8229","chatId":"-1003877502911"}
+{"ts":"2026-06-28T00:05:26.282Z","botId":"main","botName":"🦞學長","text":"📊 *過去 4 小時對話蒸餾*\n\n教練早安 ☀️\n\n今日無新蒸餾對話。\n\n（最近一份終端機蒸餾停在 6/26 14:30，距今已 41 小時無新內容；過去 4 小時亦無新對話產生，無需摘要。）","msgId":"8230","chatId":"-1003877502911"}
