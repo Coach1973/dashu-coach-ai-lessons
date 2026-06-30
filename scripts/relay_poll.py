@@ -32,22 +32,47 @@ def record_heartbeat(workspace_name):
         content = f"# {workspace_name} HEARTBEAT\n"
     
     # 追加 relay poll 心跳（每天一個區段）
-    date_marker = f"### {datetime.now().strftime('%Y-%m-%d')}"
-    new_entry = f"{date_marker} {ts} - relay poll OK\n"
-    
+    # 2026-06-30 修：原本 marker 找到就 break+覆蓋，會把 marker 之後的教練待辦砍光。
+    # 改：找到 marker 後不 break；若今天那行 (### YYYY-MM-DD) 已存在就替換、不存在就 append。
+    # 學長體檢 P0-1 找出此 bug（症狀：09:17、09:20、18:29 三次教練待辦被吃掉）
+    date_prefix = f"### {datetime.now().strftime('%Y-%m-%d')}"
+    new_entry = f"{date_prefix} {ts} - relay poll OK"
+
     if marker not in content:
-        content += f"\n{marker}\n{new_entry}"
+        content = content.rstrip('\n') + f"\n\n{marker}\n{new_entry}\n"
     else:
         lines = content.split('\n')
         out = []
         in_block = False
+        today_replaced = False
         for line in lines:
-            out.append(line)
             if marker in line:
                 in_block = True
-                out.append(new_entry)
-                break
-        content = '\n'.join(out) + '\n'
+                out.append(line)
+                continue
+            if in_block:
+                # 區塊結束條件：遇到下一個 ## heading
+                if line.startswith('## ') and marker not in line:
+                    if not today_replaced:
+                        out.append(new_entry)
+                        today_replaced = True
+                    in_block = False
+                    out.append(line)
+                    continue
+                # 區塊內找今天那行，存在則替換成當下時間
+                if line.startswith(date_prefix):
+                    if not today_replaced:
+                        out.append(new_entry)
+                        today_replaced = True
+                    # 重複的今天行（保險）直接 skip
+                    continue
+            out.append(line)
+        # 檔尾仍在 marker 區塊（沒下一個 ## heading）
+        if in_block and not today_replaced:
+            out.append(new_entry)
+        content = '\n'.join(out)
+        if not content.endswith('\n'):
+            content += '\n'
     
     try:
         with open(HEARTBEAT, "w", encoding="utf-8") as f:
