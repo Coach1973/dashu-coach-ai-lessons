@@ -1,12 +1,22 @@
 #!/bin/bash
-# Hook：UserPromptSubmit（Mac 終端機版）
+# Hook：UserPromptSubmit（Mac 終端機版）v2 — 2026-06-30 升級
 # 用途：每次教練講話時掃 cross-agent/inbox/mac/，有新信主動報告
+# v2 新增：偵測「讀信/開工/讀取信件/{機器}有事」等暗號 → 自動 cat 全文進對話
 # 設計：有信才注入，沒信靜默退出（不干擾正常對話）
-# 對應：教練 2026-06-26 0:17 親口「以後跨機統一路徑，叫他們自己去讀」
+# 對應：教練 2026-06-26 0:17「跨機統一路徑」+ 2026-06-30 12:04「一句口令自動讀內文」
 set -uo pipefail
 
 WORKSPACE="/Users/bymyway/.openclaw/workspace"
 INBOX="$WORKSPACE/cross-agent/inbox/mac"
+
+# 讀 stdin JSON 拿 prompt（hook 機制）— 用來偵測暗號
+INPUT=$(cat 2>/dev/null || echo '{}')
+PROMPT=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.prompt // ""' 2>/dev/null || echo "")
+# 暗號偵測：任一命中 → 自動 cat 信件全文
+TRIGGER_FULL=false
+if printf '%s' "$PROMPT" | grep -qE "讀信|讀取信件|跨機有信|有事交代|有事要|去讀|開工|信箱|inbox"; then
+    TRIGGER_FULL=true
+fi
 
 # 先 git pull 確保本地最新（節流：5 分鐘內不重複 pull）
 PULL_LOCK="${TMPDIR:-/tmp}/inbox_git_pull.lock"
@@ -37,11 +47,29 @@ cat <<EOF
 $(printf '%s\n' "$NEW_LETTERS" | while read -r f; do printf '  📨 %s\n' "$(basename "$f")"; done)
 
 🎯 教練口令字典：
-  • 「讀信」「跨機有信」「{機器}有事交代」 → Mac 軍師自動讀取最新封並執行/回報
-  • 處理完務必 mv 到 cross-agent/outbox/$(date +%Y-%m)/ 歸檔，不留在 inbox
+  • 「讀信」「讀取信件」「跨機有信」「{機器}有事交代」「開工」 → 自動 cat 全文進對話
+  • 處理完務必 mv 到 cross-agent/outbox/$(date +%Y-%m)/ 歸檔
 
 📁 完整路徑：$INBOX
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+
+# v2 暗號觸發 → 自動 cat 所有未讀全文
+if $TRIGGER_FULL; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "📖 暗號偵測 → 自動展開全部信件內文"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    printf '%s\n' "$NEW_LETTERS" | while read -r f; do
+        echo ""
+        echo "════════════════════════════════════════"
+        echo "📨 $(basename "$f")"
+        echo "════════════════════════════════════════"
+        cat "$f"
+        echo ""
+    done
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "✅ 讀完後請：(1) 執行任務 (2) 回信對方 inbox (3) mv 到 outbox/$(date +%Y-%m)/"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+fi
 
 exit 0
