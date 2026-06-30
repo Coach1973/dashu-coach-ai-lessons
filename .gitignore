@@ -10,3 +10,6 @@ node_modules/
 
 # 機密憑證（WordPress 應用程式密碼等），禁止納入版控（2026-06-10）
 reference_wordpress_bymyway.md
+shared-context/commit_notify.log
+split_memory.log
+*.log

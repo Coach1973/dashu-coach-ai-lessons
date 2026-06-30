@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 軍師=Opus 最高決策層，不請示教練小決策（2026-06-30 親口）](feedback_junshi_role_decide_not_ask.md) — 學長等 MiniMax M3 是回報者，軍師用更高智慧想根源解法直接做；可逆方向對就動工，不丟 A/B/C 給教練
 - [🎤 大樹教練 2026 講座系列一頁式行銷頁（交接 Acer 2026-06-26 凌晨）](project_coach_speakers_2026_landing.md) — v2 已套教練 GitHub coach1973 設計正典，等講座資料填空＋部署；桌面有交接棒 markdown
 - [🔴🔴🔴 禁止 Stop-Process -Force 關瀏覽器（案例30：Zoom 連結失效差點赴不了約）](feedback_force_kill_browser_data_loss.md) — 強制殺瀏覽器=協定權限消失；搬家前請教練手動關、搬後測完整流程不只測能啟動
 - [🔴 App 搬外接碟後偵測失效→直接官網重裝，AI 跑安裝指令=假回報](feedback_zoom_junction_reinstall.md) — 診斷 registry/protocol/port 全沒用；教練自己官網重裝一次搞定（2026-06-25 血淚）

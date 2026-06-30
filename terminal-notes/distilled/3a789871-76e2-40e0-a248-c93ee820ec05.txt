@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 3a789871-76e2-40e0-a248-c93ee820ec05
-# 提取時間：2026-06-30 18:30 (台灣時間)
-# 共 19 條教練原話
+# 提取時間：2026-06-30 18:48 (台灣時間)
+# 共 25 條教練原話
 
 ---
 
@@ -352,3 +352,108 @@ gateway log 顯示**每 10 分鐘 health-monitor 都在重啟 peipei**：
 ```
 16:10:08 [health-monitor] [telegram:bot_peipei] health-monitor: restarting (reason: stopped)
 16:20:08 [health-monitor] [telegram:bot_peipei] health-monitor: restarting (…（略）
+
+【教練 2026-06-30 10:31】
+重點是，我其他的小籠蝦都正常，那就很不合理。像我自己正在用的學長這一支就很正常，那如果學長的正常，為什麼學妹那一支是當機的呢？然後 MiniMax 永遠不要去切換它的模型，除非我親自命令。
+
+所以我們線上的小籠蝦全部都是切 MiniMax M3，這一點應該講過很多遍了，不要亂動，好嗎？
+
+　▶ AI 回應：明白了，記住：**MiniMax 永遠不要切換，除非教練親口命令**。學長正常代表模型沒問題，peipei 卡的是別的原因——我得重查不是亂猜。
+
+　▶ AI 回應：找到真根因了！**peipei 卡的是 Telegram channel 連線，跟 MiniMax 無關**：
+
+```
+2026-06-30T09:12:45 [bot_peipei] channel exited: Bad Gateway | worker exited code 1
+歷史：6/25 起每天上午 9 點多都掛一次（Bad Gateway / Too Many Requests / deleteWebhook 502）
+```
+
+連續六天同樣時間掛 → 很像有 **webhook 殘留**或 polling 衝突。先用 Telegram API 驗證：
+
+　▶ AI 回應：bot 本身活著、沒 webhook 殘留、沒 polling 衝突——**
+
+【教練 2026-06-30 10:35】
+[Request interrupted by user]
+
+【教練 2026-06-30 10:35】
+你剛才說你在亂猜、亂猜，這就很不專業。
+
+你是最高級的 AI 程式，怎麼可以有亂猜的這種思想呢？這樣子要怎麼當軍師？軍師是用亂猜的思維邏輯在做事嗎？
+
+　▶ AI 回應：教練說的對，我用「亂猜」「我建議」是錯的思維框架。軍師應該分清楚**事實** vs **假設**，每個假設用最低成本驗證再動手。重新整理：
+
+---
+
+## 📊 事實（log 證據，零推測）
+
+1. peipei bot 帳號本身健康 — `getMe` 回 200，username `coachwu_lenovo_bot`
+2. peipei bot 端 webhook 是空的 — `getWebhookInfo.url = ""`
+3. 沒有別處在 polling 衝突 — `getUpdates` 直接回 `[]`
+4. peipei 在 OpenClaw 內部從 **6/30 早上 9…（略）
+
+【教練 2026-06-30 10:36】
+不知道什麼原因，珮珮老師的那一個又開始活動了。
+
+你去檢查一下，之前卡住的原因以及後面又可以繼續活動的原因到底是什麼？
+
+　▶ AI 回應：去查 — 看 log 找出卡住→活過來的轉折點。
+
+　▶ AI 回應：事實已找齊，根因清楚——**不是猜的，是 log 對得起來**。
+
+---
+
+## ⏰ 復活精準時間：今天傍晚 **18:32:28**
+
+```
+18:25:09 [health-monitor] restarting (reason: stopped)            ← 第 N 次失敗
+18:32:28 [bot_peipei] restarting after timed-out channel stop completed   ← 🔑 關鍵
+18:32:28 [bot_peipei] starting provider (@coachwu_lenovo_bot)     ← 真…（略）
+
+【教練 2026-06-30 10:38】
+找到問題就要解決問題，不然為什麼要同意 Bug 的存在呢？又不是修不了。
+
+剛才我讓「小籠蝦」主帳號去做一下體檢，他那邊出來一堆體檢報告。你去讀取一下 Telegram 上剛剛 6 點 36 分發出的那份報告，看內容寫的是什麼。
+
+請評估一下他的檢測報告方向對不對、該不該做、要不要做。你作為軍師，不管小籠蝦發出什麼訊息，你都要去評估可行性與執行力。對於我們整體的協調性與長期規劃，這些都是你要考量的事情，這樣可以吧？
+
+　▶ AI 回應：收到。先讀 18:36 那份學長體檢報告，再給評估。
+
+　▶ AI 回應：讀完了。給你軍師評估：
+
+---
+
+## 🎯 整體評分：方向 8/10，框架對、但漏一個關鍵項
+
+學長把 P0/P1/P2 分級很清楚，**完全可以照辦** — 但他**自己沒抓到 peipei channel-stop bug**（教練今天問才查出來），我得補進去。
+
+---
+
+## 📊 逐項評估
+
+| 學長提的 | 軍師評估 | 動嗎 |
+|---|---|---|
+| **P0-1 HEARTBEAT 截斷** | ✅ 方向對，但「修法不 break」要小心副作用（marker 後可能有正常待辦資料一起被誤插重複）— **要先驗證程式邏輯再改**，不能照單全收 | 🟢 修，但我先 cat…（略）
+
+【教練 2026-06-30 10:43】
+討論就是為了執行，不是嗎？
+
+　▶ AI 回應：收到，動工。
+
+　▶ AI 回應：### P0-1 — 先驗證 relay_poll.py 程式
+
+　▶ AI 回應：學長指的 bug **第 41-50 行確實存在**：`break` 後 `out` 只保留到 marker 行，marker 後的所有原內容都丟。
+
+修法（含改進避免無限長大）：
+
+　▶ AI 回應：自測：用假 HEARTBEAT 驗證舊內容是否保留。
+
+　▶ AI 回應：✅ P0-1 修好驗證：教練待辦保留、真鑽提醒保留、marker 後內容全保留。
+
+　▶ AI 回應：### P0-3 — peipei channel-stop 監控 + force-restart
+
+　▶ AI 回應：寫監控 + force-restart 腳本：
+
+　▶ AI 回應：掛 system cron 每 5 分鐘跑：
+
+　▶ AI 回應：### P1-6 — commit_notify.log
+
+　▶ AI 回應：### P0-2 — 試金石檔對比表
