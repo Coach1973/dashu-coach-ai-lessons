@@ -151,6 +151,21 @@ Write-Output "## 📜 第 1 步：接力棒（JUNSHI_HANDOFF_LATEST.md 全文 ·
 Write-Output ""
 Get-Content -Path $handoff -Encoding UTF8 | ForEach-Object { Write-Output $_ }
 
+# ───────── 注入 JUNSHI_RULES.md（三機共讀軍師鐵律正典）─────────
+$junshiRules = if ($env:JUNSHI_HOOK_ROOT) {
+    Join-Path $env:JUNSHI_HOOK_ROOT "mac-openclaw-workflows\JUNSHI_RULES.md"
+} else {
+    Join-Path (Split-Path $workspace -Parent) "mac-openclaw-workflows\JUNSHI_RULES.md"
+}
+if (Test-Path $junshiRules) {
+    Write-Output ""
+    Write-Output "---"
+    Write-Output ""
+    Write-Output "## 🔴 軍師鐵律正典（雲端三機共讀，本場開工注入）"
+    Write-Output ""
+    Get-Content $junshiRules -Raw -Encoding UTF8
+}
+
 # ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
 if (Test-Path $heartbeatPath) {
     Write-Output ""
