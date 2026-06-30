@@ -11,6 +11,8 @@
 #      { "command": "powershell -ExecutionPolicy Bypass -File D:\\Claude-Data\\mac-openclaw-workflows\\scripts\\scan_cross_agent_inbox.ps1", "type": "command" }
 #      （路徑依實際 repo 位置調整）
 
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 $ErrorActionPreference = "SilentlyContinue"
 
 # 找 workspace 根（以本檔案位置往上一層）
@@ -24,11 +26,50 @@ if (Test-Path $pullLock) {
     $lockAge = (Get-Date) - (Get-Item $pullLock).LastWriteTime
     if ($lockAge.TotalSeconds -lt 300) { $needPull = $false }
 }
+$pulledNewContent = $false
+$newMemoryLines = @()
+$newRootHandoffs = @()
 if ($needPull -and (Test-Path (Join-Path $Workspace ".git"))) {
     Push-Location $Workspace
+    # 記錄 pull 前的 HEAD
+    $beforeHash = & git rev-parse HEAD 2>$null
     & git pull --quiet 2>$null
+    $afterHash = & git rev-parse HEAD 2>$null
     Pop-Location
     New-Item -Path $pullLock -ItemType File -Force | Out-Null
+
+    if ($beforeHash -ne $afterHash) {
+        $pulledNewContent = $true
+        # 偵測 MEMORY.md 新增行（+ 開頭，排除 +++ 檔頭）
+        $memDiff = & git -C $Workspace diff "$beforeHash" "$afterHash" -- "memory/MEMORY.md" 2>$null
+        if ($memDiff) {
+            $newMemoryLines = $memDiff | Where-Object { $_ -match "^\+[^+]" } | ForEach-Object { $_ -replace "^\+", "" }
+        }
+        # 偵測根目錄新增的 *lenovo* 或 *handoff* .md 檔
+        $newFiles = & git -C $Workspace diff --name-only --diff-filter=A "$beforeHash" "$afterHash" 2>$null
+        $newRootHandoffs = $newFiles | Where-Object { $_ -match "^[^/]+\.(md)$" -and ($_ -match "lenovo" -or $_ -match "handoff") }
+    }
+}
+
+# ── 注入 git pull 新增內容 ──────────────────────────────────
+if ($pulledNewContent) {
+    if ($newMemoryLines.Count -gt 0) {
+        Write-Output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        Write-Output "🔄 雲端同步：MEMORY.md 有新增條目（git pull 更新）"
+        Write-Output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        $newMemoryLines | ForEach-Object { Write-Output $_ }
+        Write-Output ""
+    }
+    foreach ($f in $newRootHandoffs) {
+        $fullPath = Join-Path $Workspace $f
+        if (Test-Path $fullPath) {
+            Write-Output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            Write-Output "📋 雲端同步：新交接棒 [$f]"
+            Write-Output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            Get-Content $fullPath -Encoding UTF8 | Write-Output
+            Write-Output ""
+        }
+    }
 }
 
 # 機器名（必須設環境變數）
