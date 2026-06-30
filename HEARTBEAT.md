@@ -1,5 +1,5 @@
 ## 學長 relay poll
-### 2026-06-30 2026-06-30 19:08 - relay poll OK
+### 2026-06-30 2026-06-30 19:17 - relay poll OK
 
 
 ## 🚀 Session-End 雲端同步 2026-06-30 18:48（Mac）
@@ -27,3 +27,13 @@
 ## 🚀 Session-End 雲端同步 2026-06-30 19:05（Mac）
 - ✅ pushed 7ff40e8e
 - 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-06-30 19:08（Mac）
+- ✅ pushed fcd13aa6
+- 同步路徑：HEARTBEAT.md
+
+## 🩺 軍師 Hook 自檢 2026-06-30 19:17（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: e800e341-3d04-4ed4-bf2a-f43e799bb9e4
