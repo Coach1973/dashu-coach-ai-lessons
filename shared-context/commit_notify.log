@@ -3370,3 +3370,12 @@
 [2026-06-30 12:04] [CoachWU] dd314914: [Mac] session-end 自動同步 2026-06-30 12:04
 [2026-06-30 12:06] [CoachWU] 09dcfc1e: [Mac] scan_cross_agent_inbox v2：偵測『讀信/開工』暗號自動 cat 全文
 [2026-06-30 12:07] [CoachWU] 5446ecae: [Mac] session-end 自動同步 2026-06-30 12:07
+[2026-06-30 12:08] [CoachWU] 65edbf32: auto-backup 2026-06-30 12:07
+[2026-06-30 12:15] [CoachWU] c3fd9580: auto: 終端機對話備份 12:15
+[2026-06-30 12:18] [CoachWU] 32b29ef1: [Mac] 蒸餾推送新規則對齊（session 結束觸發）+ 信箱歸檔
+[2026-06-30 12:18] [CoachWU] d86cbfa8: [Mac] session-end 自動同步 2026-06-30 12:18
+[2026-06-30 12:19] [CoachWU] d6dd5246: auto: 終端機對話蒸餾 2026-06-30
+[2026-06-30 12:30] [CoachWU] c26284a3: auto: 終端機對話備份 12:30
+[2026-06-30 12:30] [CoachWU] 57bf96fa: auto: 終端機對話蒸餾 2026-06-30
+[2026-06-30 12:31] [CoachWU] 159c8973: [Mac] session-end 自動同步 2026-06-30 12:31
+[2026-06-30 12:31] [CoachWU] 873897af: auto: 終端機對話蒸餾 2026-06-30
