@@ -51,7 +51,22 @@ if (fs.existsSync(PROFILE)) {
   }
 }
 
-const content = fs.readFileSync(memoryPath, 'utf8');
+// 主源：Mac 本機 memory（加 [Mac] 標籤）
+let content = '[__SOURCE__:Mac]\n' + fs.readFileSync(memoryPath, 'utf8');
+
+// 跨機 verbatim 來源（v3 2026-06-30 新增，對應 knowledges/2026-06-30_跨機verbatim蒸餾備忘.md）
+// 從 memory/verbatim/{lenovo,acer}/YYYY-MM-DD.md 補上跨機紀錄
+const CROSS_SOURCES = [
+  { tag: 'lenovo', label: '聯想' },
+  { tag: 'acer',   label: 'ACER' },
+];
+for (const src of CROSS_SOURCES) {
+  const p = path.join(MEMORY_DIR, 'verbatim', src.tag, `${dateStr}.md`);
+  if (fs.existsSync(p)) {
+    content += `\n\n[__SOURCE__:${src.label}]\n` + fs.readFileSync(p, 'utf8');
+    console.log(`✅ 讀取跨機 verbatim：${src.label}（${p}）`);
+  }
+}
 
 // 提取 🦞小龍蝦 的 bullet points（第三人稱摘要，才是真實蒸餾資料）
 // 跳過純系統通知，保留有意義的行為描述
@@ -71,18 +86,45 @@ const SKIP_PATTERNS = [
 ];
 
 const entries = [];
-const lobsterPat = /🦞 小龍蝦：([\s\S]*?)(?=👤 教練：|---|$)/g;
-let m;
-while ((m = lobsterPat.exec(content)) !== null) {
-  const section = m[1];
-  for (const line of section.split('\n')) {
-    if (!line.trimStart().startsWith('- ')) continue;
-    const text = line.replace(/^\s*- /, '').trim();
-    if (text.length < 30) continue;
-    if (SKIP_PATTERNS.some(p => p.test(text))) continue;
-    entries.push(text.slice(0, 300));
+const touchstoneCandidates = [];  // 🪨 試金石候選收集
+// 依 [__SOURCE__:XXX] 分段，預設 Mac
+const sections = content.split(/\[__SOURCE__:([^\]]+)\]\n/);
+// sections = ['', 'Mac', '<body>', '聯想', '<body>', 'ACER', '<body>']
+for (let i = 1; i < sections.length; i += 2) {
+  const source = sections[i];
+  const body = sections[i + 1] || '';
+  const prefix = source === 'Mac' ? '' : `[${source}] `;
+  const lobsterPat = /🦞 小龍蝦：([\s\S]*?)(?=👤 教練：|---|$)/g;
+  let m;
+  while ((m = lobsterPat.exec(body)) !== null) {
+    for (const line of m[1].split('\n')) {
+      if (!line.trimStart().startsWith('- ')) continue;
+      const text = line.replace(/^\s*- /, '').trim();
+      if (text.length < 30) continue;
+      if (SKIP_PATTERNS.some(p => p.test(text))) continue;
+      const tagged = (prefix + text).slice(0, 300 + prefix.length);
+      entries.push(tagged);
+      if (/🪨\s*試金石候選[:：]/.test(text)) touchstoneCandidates.push(tagged);
+    }
+  }
+  // 跨機 verbatim 檔（body 直接是 `- [tag] xxx` 形式，非 🦞/👤 對話格式）也收
+  if (source !== 'Mac') {
+    for (const line of body.split('\n')) {
+      if (!line.trimStart().startsWith('- ')) continue;
+      const text = line.replace(/^\s*- /, '').trim();
+      if (text.length < 30) continue;
+      if (SKIP_PATTERNS.some(p => p.test(text))) continue;
+      const sliced = text.slice(0, 300);
+      // 跨機檔本身已內含 [聯想]/[ACER] tag，無需重貼
+      entries.push(sliced);
+      if (/🪨\s*試金石候選[:：]/.test(text)) touchstoneCandidates.push(sliced);
+    }
   }
 }
+// 去重（跨機 verbatim 區段可能跟主源段重疊）
+const seen = new Set();
+const uniqEntries = entries.filter(e => { if (seen.has(e)) return false; seen.add(e); return true; });
+entries.length = 0; entries.push(...uniqEntries);
 
 console.log(`提取到 ${entries.length} 個有效紀錄`);
 
@@ -106,3 +148,17 @@ const newProfile = profile.slice(0, firstNewline) + '\n' + todaySection + '\n---
 fs.writeFileSync(PROFILE, newProfile);
 
 console.log(`✅ 蒸餾完成：${entries.length} 則有效紀錄 → CLIENT_PROFILE.md`);
+
+// 🪨 試金石候選彙整（交付物 D）
+if (touchstoneCandidates.length > 0) {
+  const TOUCHSTONE = path.join(BASE, 'distill', '試金石_候選區.md');
+  const stamp = `## ${dateStr}（${touchstoneCandidates.length} 則跨機候選）\n`;
+  const block = stamp + touchstoneCandidates.map(t => `- ${t}`).join('\n') + '\n\n---\n\n';
+  let prev = fs.existsSync(TOUCHSTONE) ? fs.readFileSync(TOUCHSTONE, 'utf8')
+    : '# 🪨 試金石候選區（自動收集，教練決定收不收）\n\n> 來源：跨機 verbatim 蒸餾標記。對應 `knowledges/2026-06-30_跨機verbatim蒸餾備忘.md` 交付物 D。\n\n';
+  if (!prev.includes(stamp)) {
+    const head = prev.indexOf('\n\n') + 2;
+    fs.writeFileSync(TOUCHSTONE, prev.slice(0, head) + block + prev.slice(head));
+    console.log(`🪨 寫入試金石候選 ${touchstoneCandidates.length} 則 → ${TOUCHSTONE}`);
+  }
+}
