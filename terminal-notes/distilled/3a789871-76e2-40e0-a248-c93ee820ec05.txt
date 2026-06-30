@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 3a789871-76e2-40e0-a248-c93ee820ec05
-# 提取時間：2026-06-30 13:00 (台灣時間)
-# 共 18 條教練原話
+# 提取時間：2026-06-30 18:30 (台灣時間)
+# 共 19 條教練原話
 
 ---
 
@@ -328,3 +328,27 @@
 | **時間** | 2026-06-16 下午 3:11 |
 | **原任務** | `8d7c282a YouTube 頻道掃描與評估` 每天中午 12:30 跑 |
 | **刪除理由** | 教練 6/16 中午 12:32 在分工群看到學長一直推失敗訊息（FailoverError + FallbackS…（略）
+
+【教練 2026-06-30 10:28】
+想辦法解決就好了，好不好？就是怎麼搞丟的，就怎麼找回來。
+
+我的這個任務是派給 Mac 版的 Hermes 去執行，你看看怎麼做。另外，你現在立刻去查一下，小籠蝦現在沒有動作是看什麼原因。
+
+我是指 Mac 版的小籠蝦，我現在在佩佩老師的那邊看，裡面是沒有記錄的，也沒有回應，說話都沒有回應。
+
+　▶ AI 回應：兩件事並行查。
+
+　▶ AI 回應：找到關鍵線索：`ai.hermes.gateway` PID 33924 — **Mac 版 Hermes 真的有**！而且學妹 peipei 從 6/29 早上 8:17 後沒動。深入查 peipei 狀態：
+
+　▶ AI 回應：兩個問題挖到根因了。
+
+---
+
+## 🔴 小龍蝦現況診斷（守則 #15 老實講）
+
+### 問題 1：學妹 peipei bot 一直被踢掉
+gateway log 顯示**每 10 分鐘 health-monitor 都在重啟 peipei**：
+
+```
+16:10:08 [health-monitor] [telegram:bot_peipei] health-monitor: restarting (reason: stopped)
+16:20:08 [health-monitor] [telegram:bot_peipei] health-monitor: restarting (…（略）
