@@ -1,0 +1,37 @@
+# 終端機對話萃取 — Session e800e341-3d04-4ed4-bf2a-f43e799bb9e4
+# 提取時間：2026-06-30 19:30 (台灣時間)
+# 共 2 條教練原話
+
+---
+
+【教練 2026-06-30 11:17】
+開
+
+　▶ AI 回應：教練好，我讀完了。
+
+## 📖 開工六步驟完成
+
+**接力棒 v35（Sonnet 4.6 傍晚 6:55 交班）** — 本場戰果 7 件：跨機 verbatim 蒸餾、scan v2、兩種任務規則、小龍蝦 23:05 三機總結、YouTube 真相、peipei 9 小時根因、學長體檢 9 條全處理。
+
+**HEARTBEAT** — 系統綠燈，relay poll 19:17 OK，最新 commit `31d9f477`（接力棒同步 CLAUDE.md）。試金石策展提醒已亮（top10_dynamic 30 天沒動 + 候選池累積 10 個）。
+
+**試金石案例庫**最新案例（6/25…（略）
+
+【教練 2026-06-30 11:28】
+<!-- attach -->
+> YouTube 救回路線：派給 Mac 版 Hermes 跑 fetch-youtube-rss.py + 建 cron 失敗靜默
+
+寫指令讓終端機跑，或是讓小龍蝦自己修
+
+　▶ AI 回應：教練，我直接動手——查清楚了，腳本路徑、Hermes cron 格式都驗證了。
+
+**現況確認：**
+- 腳本：`/Users/bymyway/Documents/mac-openclaw-workflows/skills/youtube-monitor/fetch-youtube-rss.py`（純 urllib，零 token）
+- Hermes cron：`~/.hermes/cron/jobs.json`（gateway PID 33924 在跑）
+- 31 個 YouTube 頻道，預設抓 2 天內新片
+
+軍師動腦寫 cron 條目，跑腳本+寫 jobs.json+restart 這…（略）
+
+　▶ AI 回應：腳本完美跑通——抓到 17 部新片，只 1 個頻道 ID 失效（AI-Short-Taipei 404，下次處理）。
+
+現在建 Hermes cron job：
