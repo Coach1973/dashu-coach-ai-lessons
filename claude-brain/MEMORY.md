@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 VPS小龍蝦9用戶記憶隔離漏洞修復（2026-07-01）](project_vps_client_isolation_fix_2026-07-01.md) — client-memory hook原本把教練內部資訊+其他客戶隱私整份灌給每個人，已改成per-user獨立檔案+fail-closed
 - [🟢 說真話辦真事優先於顧全形象＋系統備份≠App備份（2026-07-01 教練親口肯定）](feedback_truth_over_reassurance_backup_nuance.md) — 教練要案例都寫「有備份」，軍師指出案例29真無備份並拒改，教練讚許誠實；技術上磁碟映像救不回單一App誤刪資料
 - [🔴🔴🔴 軍師流量稀缺，耗 token 動作寫腳本丟終端機跑（2026-06-30 親口）](feedback_junshi_token_economy_outsource.md) — 軍師=深層思考+判斷；耗 token 的 grep/cat/log 掃描要外包終端機 MiniMax M3；本場血淚一輪用 50%
 - [🔴🔴🔴 軍師=Opus 最高決策層，不請示教練小決策（2026-06-30 親口）](feedback_junshi_role_decide_not_ask.md) — 學長等 MiniMax M3 是回報者，軍師用更高智慧想根源解法直接做；可逆方向對就動工，不丟 A/B/C 給教練
