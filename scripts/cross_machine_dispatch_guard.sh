@@ -1,0 +1,65 @@
+#!/bin/bash
+# ============================================================
+# 📬🔒 跨機指令鎖（PreToolUse hook，2026-07-02 教練親定）
+#
+# 起因：軍師建好「心跳燈塔+三機互查」後，未經教練拍板就
+#       直接發信給 ACER、聯想要求他們照辦，教練事後才發現，
+#       質問「我有說 OK 嗎？你不就是私自做決定了嗎？」
+#       （見 memory: feedback_retract_crossmachine_instruction_on_reversal）
+#
+# 原理：任何要在 cross-agent/inbox/{acer,lenovo,hermes}/ 底下
+#       新建檔案（= 發信給其他軍師）的動作，先檢查通行證。
+#       通行證 = state/CROSS_MACHINE_APPROVED
+#       沒有通行證 → 寫入被擋下，逼軍師先跟教練口頭核對。
+#       通行證有效 30 分鐘（教練口頭同意一次，30 分鐘內可發，過期重新問）。
+#
+# 發通行證（教練親口說「可以發」「OK」「去發」之後才能執行）：
+#   touch ~/.openclaw/workspace/state/CROSS_MACHINE_APPROVED
+# ============================================================
+
+INPUT=$(cat)
+export HOOK_INPUT="$INPUT"
+
+python3 - <<'PYEOF'
+import json, os, sys, time
+
+try:
+    data = json.loads(os.environ.get("HOOK_INPUT", "{}"))
+except Exception:
+    sys.exit(0)
+
+tool = data.get("tool_name", "")
+ti = data.get("tool_input") or {}
+
+if tool not in ("Write", "Edit"):
+    sys.exit(0)
+
+path = ti.get("file_path", "") or ""
+
+import re
+if not re.search(r"cross-agent/inbox/(acer|lenovo|hermes)/", path):
+    sys.exit(0)
+
+token = os.path.expanduser("~/.openclaw/workspace/state/CROSS_MACHINE_APPROVED")
+MAX_AGE = 1800  # 30 分鐘
+
+if os.path.exists(token):
+    age = time.time() - os.path.getmtime(token)
+    if age <= MAX_AGE:
+        sys.exit(0)
+    try:
+        os.remove(token)
+    except OSError:
+        pass
+
+print("", file=sys.stderr)
+print("📬🔒 跨機指令鎖：這次發信已被擋下。", file=sys.stderr)
+print("", file=sys.stderr)
+print("教練明令（2026-07-02）：任何要指揮/通知 ACER、聯想、Hermes 做事的信，", file=sys.stderr)
+print("必須先在對話裡跟教練說清楚要發什麼、為什麼，得到教練拍板後才能發。", file=sys.stderr)
+print("", file=sys.stderr)
+print("教練已經親口同意這次要發的內容了嗎？", file=sys.stderr)
+print("  是 → 執行：touch ~/.openclaw/workspace/state/CROSS_MACHINE_APPROVED 再重試（30分鐘有效）", file=sys.stderr)
+print("  否 → 先停下，回到對話裡跟教練說明這封信的內容跟目的，等教練拍板。", file=sys.stderr)
+sys.exit(2)
+PYEOF
