@@ -24,7 +24,7 @@
 ## 學長 relay poll
 ### 2026-06-30 2026-06-30 23:59 - relay poll OK
 
-### 2026-07-01 2026-07-01 20:50 - relay poll OK
+### 2026-07-01 2026-07-01 20:59 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-01 20:08（Mac）
 - ✅ pushed d19c62e2
@@ -49,3 +49,13 @@
 ## 🚀 Session-End 雲端同步 2026-07-01 20:46（Mac）
 - ✅ pushed 8a1a933c
 - 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-07-01 20:51（Mac）
+- ✅ pushed 19ed2970
+- 同步路徑：HEARTBEAT.md
+
+## 🩺 軍師 Hook 自檢 2026-07-01 20:55（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：我的SOP呢？網頁推？[https://coac
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: e800e341-3d04-4ed4-bf2a-f43e799bb9e4
