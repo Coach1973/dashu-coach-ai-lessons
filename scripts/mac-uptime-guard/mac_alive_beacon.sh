@@ -1,7 +1,7 @@
 #!/bin/bash
-# Mac 存活心跳燈塔
-# 每 5 分鐘寫時間戳進 monitoring/mac_alive.txt 並推 GitHub
-# 其他機器（ACER/聯想/VPS）看到超過 15 分鐘沒更新就知道 Mac 掛了
+# Mac 存活心跳燈塔（v2：只寫本地檔，不推 GitHub）
+# 每 30 分鐘寫時間戳進 monitoring/mac_alive.txt
+# ACER/聯想 用 SSH 讀這個檔案即可判斷 Mac 是否活著
 
 WORKSPACE=/Users/bymyway/.openclaw/workspace
 mkdir -p "$WORKSPACE/monitoring"
@@ -17,8 +17,3 @@ FILE="$WORKSPACE/monitoring/mac_alive.txt"
   echo "cron_daemon_pid: $(pgrep -f 'openclaw_cron_daemon.sh' | head -1)"
   echo "epoch: $(date +%s)"
 } > "$FILE"
-
-cd "$WORKSPACE"
-git add monitoring/mac_alive.txt >/dev/null 2>&1
-git commit -m "beacon: Mac alive $(date +%H:%M)" --no-verify >/dev/null 2>&1 && \
-  git push origin main >/dev/null 2>&1

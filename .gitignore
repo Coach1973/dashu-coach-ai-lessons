@@ -13,3 +13,4 @@ reference_wordpress_bymyway.md
 shared-context/commit_notify.log
 split_memory.log
 *.log
+monitoring/
