@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session e800e341-3d04-4ed4-bf2a-f43e799bb9e4
-# 提取時間：2026-07-02 04:30 (台灣時間)
-# 共 50 條教練原話
+# 提取時間：2026-07-02 04:53 (台灣時間)
+# 共 51 條教練原話
 
 ---
 
@@ -1252,3 +1252,40 @@ VPS 小龍蝦現在有了自己的 GitHub 憑證,今晚的隱私隔離修復也�
 
 **我沒有繼續無限期空等**,現在做法:
 -…（略）
+
+【教練 2026-07-01 20:49】
+<task-notification>
+<task-id>bzfs8hwta</task-id>
+<tool-use-id>toolu_01G8jEaeR18RUMZax5hHLdzk</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/e800e341-3d04-4ed4-bf2a-f43e799bb9e4/tasks/bzfs8hwta.output</output-file>
+<status>completed</status>
+<summary>Background command "Force reindex memory for main agent using local embedding provider" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：第一次那個索引指令的背景通知顯示完成了(exit code 0)!查看完整輸出內容,搞清楚實際狀況。
+
+　▶ AI 回應：明白了,原來是 SSH 連線本身斷過(「Connection reset by peer」),不是程式卡住——我殺掉的第一次其實是誤殺,程式那時候還在真的工作,只是連線斷了讓我看不到輸出。這是我的判斷失誤,晚點會誠實記錄。
+
+好消息是第二次(用 `nohup` 背景執行)不受連線影響,現在直接查它的真實狀態。
+
+　▶ AI 回應：**索引跑完了!** log 最後一行顯示「Memory index updated (main).」,進程也結束了。馬上做真正的驗證測試。
+
+　▶ AI 回應：太好了,搜尋真的找到相關的 4 月內容了!(結果裡看到「Email 自動分類與回覆草稿」「LINE 訊息自動存入 Google Sheets」這些正是 n8n 課程規劃的內容)。看完整輸出,確認最高分的那一筆。
+
+　▶ AI 回應：**驗證成功了!最高分那一筆(0.714,遠高於其他約 0.37 的雜訊分數)精準命中 `memory/2026-04-20-n8n-course-outline.md`**——正是 4 月 20 日那次討論 n8n 課程的原始內容,兩個半月前的具體對話,搜尋引擎現在真的能撈回來了。這證實記憶修復成功。
+
+存記憶、更新接力棒,把這場的完整過程誠實記下來。
+
+　▶ AI 回應：存進試金石(案例 35),記錄這次修復的完整過程,包含誠實承認誤殺進程的教訓。
+
+　▶ AI 回應：現在更新接力棒,反映這場真正的完整戰果。
+
+　▶ AI 回應：## 完成報告(教練醒來看這段)
+
+**VPS 長期記憶修復:驗證成功。**
+
+真實測試不是理論——搜尋「n8n 課程 工作流程自動化」,最高分 **0.714**(次高分只有 ~0.37)精準命中 `memory/2026-04-20-n8n-course-outline.md`,就是 4 月 20 日那次討論的原始內容。兩個半月前的事,現在真的能撈得回來。
+
+**過程誠實交代**:
+- 根因是容器裡的 `OPENAI_API_KEY` 被接到您申請的 NVIDIA 萬用金鑰,但金鑰跟 OpenClaw 要呼叫的路徑不相容,一直默默壞著。
+- 照您的判斷框架:local 模式優先(VPS 跟…（略）
