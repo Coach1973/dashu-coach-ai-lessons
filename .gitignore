@@ -10,6 +10,9 @@ node_modules/
 
 # 機密憑證（WordPress 應用程式密碼等），禁止納入版控（2026-06-10）
 reference_wordpress_bymyway.md
+
+# VPS GitHub 憑證設定說明（雖無實際 token，但描述路徑與設定細節），禁止納入版控（2026-07-02）
+reference_vps_github_credentials.md
 shared-context/commit_notify.log
 split_memory.log
 *.log
