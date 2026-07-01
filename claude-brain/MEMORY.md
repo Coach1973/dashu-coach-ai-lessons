@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🟢 VPS一鍵開通新用戶腳本(2026-07-02)](reference_vps_provision_script.md) — /root/provision_new_vps_user.sh，假ID測試通過；100GB磁碟只用34GB，100帳號不是問題但無法預先佔位
+- [🔴🔴🔴 VPS版本更新至6.11+每人獨立agent架構完成(2026-07-02凌晨)](project_vps_multiagent_rollout_2026-07-02.md) — 8位外部用戶各自獨立workspace/session，4位活躍用戶對話完整搬遷驗證；抓到「新agent自動變預設」及「session key格式」兩個關鍵坑並修正
 - [🟢 VPS小龍蝦已配GitHub憑證能自主備份(2026-07-02)](reference_vps_github_credentials.md) — 教練用信念三拍板，commit 4de29b9c已驗證推送成功；VPS用master分支、Mac用main分支，同repo不同分支
 - [🔴🔴🔴 VPS完整體檢：共用agent架構限制+dreaming今晚風險+版本評估](project_vps_health_check_2026-07-01.md) — 所有VPS用戶共用一個agentId，MEMORY.md/dreaming會跨用戶混；v2026.6.11修復今天的spool卡住bug無breaking change建議升級
 - [🔴🔴🔴 VPS小龍蝦9用戶記憶隔離漏洞修復（2026-07-01）](project_vps_client_isolation_fix_2026-07-01.md) — client-memory hook原本把教練內部資訊+其他客戶隱私整份灌給每個人，已改成per-user獨立檔案+fail-closed
