@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 跨機指令被推翻必須主動撤回，不能只清本機(2026-07-02凌晨)](feedback_retract_crossmachine_instruction_on_reversal.md) — 三機互查方案被教練打槍後只拆Mac端，忘記通知ACER/聯想撤回，造成聯想凌晨還在問要不要處理已死指令
+- [🟢 Mac三機協作退役土法煉鋼relay改用官方sessions_send(2026-07-02)](project_mac_bot_relay_retired_2026-07-02.md) — 發現agentToAgent其實早就啟用只是沒人講，關閉bot-relay/bot-relay-inbound兩hook簡化架構
 - [🟢 VPS一鍵開通新用戶腳本(2026-07-02)](reference_vps_provision_script.md) — /root/provision_new_vps_user.sh，假ID測試通過；100GB磁碟只用34GB，100帳號不是問題但無法預先佔位
 - [🔴🔴🔴 VPS版本更新至6.11+每人獨立agent架構完成(2026-07-02凌晨)](project_vps_multiagent_rollout_2026-07-02.md) — 8位外部用戶各自獨立workspace/session，4位活躍用戶對話完整搬遷驗證；抓到「新agent自動變預設」及「session key格式」兩個關鍵坑並修正
 - [🟢 VPS小龍蝦已配GitHub憑證能自主備份(2026-07-02)](reference_vps_github_credentials.md) — 教練用信念三拍板，commit 4de29b9c已驗證推送成功；VPS用master分支、Mac用main分支，同repo不同分支
