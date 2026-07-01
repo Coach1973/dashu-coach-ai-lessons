@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 VPS完整體檢：共用agent架構限制+dreaming今晚風險+版本評估](project_vps_health_check_2026-07-01.md) — 所有VPS用戶共用一個agentId，MEMORY.md/dreaming會跨用戶混；v2026.6.11修復今天的spool卡住bug無breaking change建議升級
 - [🔴🔴🔴 VPS小龍蝦9用戶記憶隔離漏洞修復（2026-07-01）](project_vps_client_isolation_fix_2026-07-01.md) — client-memory hook原本把教練內部資訊+其他客戶隱私整份灌給每個人，已改成per-user獨立檔案+fail-closed
 - [🟢 說真話辦真事優先於顧全形象＋系統備份≠App備份（2026-07-01 教練親口肯定）](feedback_truth_over_reassurance_backup_nuance.md) — 教練要案例都寫「有備份」，軍師指出案例29真無備份並拒改，教練讚許誠實；技術上磁碟映像救不回單一App誤刪資料
 - [🔴🔴🔴 軍師流量稀缺，耗 token 動作寫腳本丟終端機跑（2026-06-30 親口）](feedback_junshi_token_economy_outsource.md) — 軍師=深層思考+判斷；耗 token 的 grep/cat/log 掃描要外包終端機 MiniMax M3；本場血淚一輪用 50%
