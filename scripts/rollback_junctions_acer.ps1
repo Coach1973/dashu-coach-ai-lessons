@@ -41,21 +41,21 @@ $rollbacks = @(
     @{
         Name = "Chrome"
         Links = @(
-            @{ Link = "C:\Users\Administrator\AppData\Local\Google"; Bak = "C:\Users\Administrator\AppData\Local\Google.bak.20260701" }
+            @{ Link = "C:\Users\Administrator\AppData\Local\Google\Chrome\User Data"; Bak = "" }
         )
         Kill = @("chrome")
     },
     @{
         Name = "GanJing"
         Links = @(
-            @{ Link = "C:\Users\Administrator\AppData\Local\GanJing"; Bak = "C:\Users\Administrator\AppData\Local\GanJing.bak.20260701" }
+            @{ Link = "C:\Users\Administrator\AppData\Local\GanJing\User Data"; Bak = "" }
         )
         Kill = @("Gan Jing Browser")
     },
     @{
         Name = "Perplexity"
         Links = @(
-            @{ Link = "C:\Users\Administrator\AppData\Local\Perplexity"; Bak = "C:\Users\Administrator\AppData\Local\Perplexity.bak.20260701" }
+            @{ Link = "C:\Users\Administrator\AppData\Local\Perplexity\Comet\User Data"; Bak = "" }
         )
         Kill = @("Perplexity")
     }
