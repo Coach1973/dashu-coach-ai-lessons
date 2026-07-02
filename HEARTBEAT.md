@@ -26,7 +26,7 @@
 
 ### 2026-07-01 2026-07-01 23:59 - relay poll OK
 
-### 2026-07-02 2026-07-02 09:06 - relay poll OK
+### 2026-07-02 2026-07-02 09:07 - relay poll OK
 ## 🚀 Session-End 雲端同步 2026-07-01 20:08（Mac）
 - ✅ pushed d19c62e2
 - 同步路徑：HEARTBEAT.md
@@ -288,3 +288,13 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1782954098
 - 雲端同步：✅ 已推上雲端（commit c1ed7074）
+
+## 🚀 Session-End 雲端同步 2026-07-02 09:06（Mac）
+- ✅ pushed ecae0e9f
+- 同步路徑：HEARTBEAT.md
+
+## 🩺 軍師 Hook 自檢 2026-07-02 09:07（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 12114e5f）
+- Session: 74f6529a-a3a6-4f25-80a7-c3811088f625
