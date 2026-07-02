@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-02 2026-07-02 17:35 - relay poll OK
+### 2026-07-02 2026-07-02 17:48 - relay poll OK
 
 
 
@@ -40,3 +40,16 @@
 
 
 
+
+## 🚀 Session-End 雲端同步 2026-07-02 17:36（Mac）
+- ✅ pushed fc65ee75
+- 同步路徑：HEARTBEAT.md
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-02 17:40
+- ✅ 同步成功
+- HANDOFF mtime: 1782984986
+- 雲端同步：✅ 已推上雲端（commit 14f337d1）
+
+## ⚠️ peipei 自動 force-restart 2026-07-02 17:45:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
