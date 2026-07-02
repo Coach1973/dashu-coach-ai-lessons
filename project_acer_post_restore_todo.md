@@ -36,7 +36,7 @@ metadata:
    ```
    還原後需要**重啟 Claude Code** 才會生效。
 4. **Zoom 重新安裝**：從 zoom.us 下載安裝，裝完直接跑步驟 1 的腳本，`data/logs/reports` 會自動 junction 回 D 碟舊資料（2026-07-02 起改法：bin/程式本體留在 C 碟不搬，只 junction 增量資料，不用像以前整包搬）
-5. **瀏覽器/通訊軟體**：Chrome、GanJing、LINE、Telegram 現在都已改成「只 junction User Data/Data/Cache/tdata，程式本體留 C 碟」，跑完步驟 1 的腳本應該會自動接回 D 碟資料。若程式本體本身也在還原時被清空（不在還原點快照裡），才需要重新安裝，裝完再跑一次步驟 1 的腳本即可，不用整包重搬
+5. **瀏覽器/通訊軟體**：Chrome、GanJing、LINE、Telegram、Perplexity(Comet) 現在都已改成「只 junction User Data/Data/Cache/tdata，程式本體留 C 碟」，跑完步驟 1 的腳本應該會自動接回 D 碟資料。若程式本體本身也在還原時被清空（不在還原點快照裡），才需要重新安裝，裝完再跑一次步驟 1 的腳本即可，不用整包重搬
 6. **拉取最新記憶**：
    ```
    cd ~/Documents/mac-openclaw-workflows && git pull origin main
@@ -44,7 +44,7 @@ metadata:
 
 ### 注意事項
 - 瀏覽器/通訊軟體（Chrome、GanJing、Perplexity、LINE、Telegram）**絕對不能整包 AppData 做 junction**，只能 junction User Data/Data/Cache/tdata 這類 profile 子資料夾，程式本體資料夾永遠留 C 碟，見 [[browser-no-full-junction]]
-- Perplexity（Comet\User Data）截至 2026-07-02 尚未實際搬移，D 碟來源不存在會自動 SKIP，之後要搬比照 GanJing 做法
+- Perplexity（Comet\User Data）2026-07-03 已搬移完成。特殊狀況：發現它的程式本體（Comet\Application、CometUpdater、Update）之前被舊版整包搬移邏輯放到 D 碟去了（桌面/工作列/開始功能表捷徑全部指向 D 碟），已全部搬回 C 碟並修正 4 個捷徑指向。以後每個軟體搬移前都要先查捷徑實際指向哪裡，不要假設程式本體一定在 C 碟
 - 完成後清理 C 碟 7 天前的 .bak 資料夾
 - 每次搬移前先確認清楚該軟體「程式本體」跟「使用者資料」實際分別放在哪個資料夾（別用猜的），只 junction 使用者資料那層
 

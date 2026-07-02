@@ -54,7 +54,7 @@ $junctions = @(
     @{
         Link   = "C:\Users\Administrator\AppData\Local\Perplexity\Comet\User Data"
         Target = "D:\Claude-Data\Perplexity-UserData"
-        Note   = "Perplexity Comet 瀏覽器（尚未實際搬移，D 碟來源不存在會自動 SKIP，之後要搬比照 GanJing 做法）"
+        Note   = "Perplexity Comet 瀏覽器（2026-07-03 完成：只 junction User Data，程式本體 Comet\Application/CometUpdater/Update 已從舊版整包搬移的 D 碟移回 C 碟，桌面/工作列/開始功能表捷徑同步改指向 C 碟）"
     }
 )
 

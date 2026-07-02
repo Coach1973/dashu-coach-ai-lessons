@@ -57,7 +57,7 @@ $rollbacks = @(
         Links = @(
             @{ Link = "C:\Users\Administrator\AppData\Local\Perplexity\Comet\User Data"; Bak = "" }
         )
-        Kill = @("Perplexity")
+        Kill = @("comet")
     }
 )
 
