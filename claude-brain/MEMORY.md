@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md) — 別台AI寫的記憶檔案不算數，要自己SSH/git log/讀原始log驗證，「轉述」跟「親眼看到」是兩回事
+- [🔴🔴 軍師不當兩AI系統間的傳話筒(2026-07-02)](feedback_dont_relay_between_ai_systems.md) — 教練點破「叫我傳一句話給Hermes」也算資訊搬運工，軍師有SSH就該自己動手裝技能，不設計需要教練轉話的流程
+- [🟢 Hermes VPS更新+核准流程澄清+vps-onboard-approve技能直裝(2026-07-02)](project_hermes_vps_multitool_session_2026-07-02.md) — v0.13→v0.17、dashboard登入bug修復、pairing核准非全自動的澄清、技能檔案直接SSH寫入VPS並用hermes skills list驗證enabled
 - [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02上午)](feedback_verify_via_real_transcript_not_case_count.md) — 教練連續兩次抓到軍師用案例庫筆數估算偷懶；#03/#08真實頻率6次、「沒查證就回」真實8次，軍師第一次答的「2次」本身又是沒查證的產物
 - [🟢🟢🟢 一場75輪內建4個新機關+cool-case案例33-37上線(2026-07-02上午)](project_2026-07-02_guardrail_expansion.md) — HTML預覽查證鎖/#03擴充/#08/主動提醒開新視窗；過程中抓到2個真bug當場修復
 - [🔴🔴🔴 事件驅動優於輪詢——教練第三次糾正同一原則(2026-07-02)](feedback_event_driven_not_polling_pattern.md) — 心跳/蒸餾/自動開通三度犯同錯；改用Docker unless-stopped restart policy讓hook直接process.exit觸發重啟，零輪詢

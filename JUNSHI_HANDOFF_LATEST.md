@@ -1,51 +1,43 @@
-# 軍師接力棒 · 2026-07-02 v39（Mac 終端機 Opus）
+# 軍師接力棒 · 2026-07-02 v40（聯想 Sonnet 5）
 
-> 建立時間：2026-07-02 上午 9:00（台灣時間）
-> 本棒執行者：Mac 終端機軍師 Opus
-> 上一棒：v38（Mac 終端機 Opus，凌晨 04:55，VPS長期記憶+跨機指令鎖）
-> 本棒主軸：**機關SOP系統化 + cool-case案例33-37上線 + 4個新機關（含連續2次自我糾錯）**
-> 本場時長：約75輪、跨37.7小時（教練 6/30 晚上7:17開始 ~ 7/2 上午9:00收尾）
+> 建立時間：2026-07-02（台灣時間，教練說「總結上傳開新對話框」觸發）
+> 本棒執行者：聯想軍師 Sonnet 5
+> 上一棒：v39（Mac 終端機 Opus，上午 9:00，機關SOP系統化+cool-case案例33-37）
+> 本棒主軸：**Hermes VPS 全面處理——版本更新、登入bug修復、核准機制澄清、技能直裝驗證**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. ✅ cool-case網站補上案例33-37，5個新案例全部上線驗證
-教練早上重申鐵律：「沒有上傳到cool-case網站之前的，就不要跟我說是已經定案的案例」。本場把試金石案例庫累積的案例33-37（VPS體檢/先斬後奏鎖兩難/VPS長期記憶修復/輪詢第三次糾正/HTML預覽查證鎖）全部轉成HTML、本機Chrome預覽驗證內容正確、教練確認後推上GitHub Pages。
+### 1. ✅ Hermes VPS（113.29.232.178）更新 v0.13.0 → v0.17.0
+先備份839M資料（`/root/.hermes.bak.20260702-update`，保留至7/9），舊容器改名保留（`hermes-old-v0.13.0`）可隨時回滾。新版容器穩定運行、進程健康。
 
-### 2. ✅ 建立「機關生命週期SOP」+ 分析腳本，回應教練「不能每次都我提醒你建機關」
-新增 `機關SOP.md`——機關分三級（Block/Warn/Allow）、什麼時候建（違反2次以上或教練生氣過）、每3個月定期審計「這個鎖還有意義嗎」。配套 `scripts/guardrail_gap_audit.sh`，掃描試金石案例庫比對現有機關，列出缺口。
+### 2. ✅ 更新後 Dashboard 登入 500 錯誤，查出官方bug並修復
+正確網址是 `/login`，不是系統自動導向的 `/auth/login?provider=basic`（後者是OAuth專用路徑，Basic Auth走這條會報 NotImplementedError）。已設帳密 `coach` / `Hermes2026Coach!`，實測登入成功（HTTP 200 + `{"ok":true}`）。
 
-### 3. 🔴 重大教訓：教練連續兩次抓到軍師「用案例庫筆數估算頻率」是不精準的方法
-軍師一開始判斷 #03/#04/#08 這幾條「難機關化」時，是用「案例庫裡出現幾次」估算（結果很低估）。教練點破：「每個能寫到案例的都不是只犯1次或2次……你只查案例是不精準的，而是要查過去的對話紀錄」。改用查真實32天對話紀錄的方法重查：
-- #03「思考就是問問題」：真實6次（跟HTML案例37同頻率）
-- #08「花時間討論就是為了執行」：真實6次
-- 最後追問「沒經查證就回」這個更廣的類別：**真實8次**（軍師第一次給的「2次」答案本身又是沒徹底查證就送出的——當場被抓到二度示範同樣的病）
+### 3. ✅ OpenClaw vs Hermes 架構比較 + Mac本地/VPS雲端 Hermes 差異查證
+上網OPE查證後給教練分工建議：小龍蝦=廣度協調中樞、Hermes=深度技能學習體。Mac軍師實際查證本機Hermes（v0.16.0，落後官方3302 commits，workspace跟OpenClaw共用symlink），跟VPS Hermes（v0.17.0，Docker獨立）列表對照。
 
-### 4. ✅ 新建4個機關（Block 1 + Warn 3），全部當場測試通過才commit
-| 機關 | 等級 | 抓什麼 |
-|------|------|--------|
-| `web_preview_verify_guard.sh` | Block | git push網站前查transcript有無真的開過Chrome的證據，不採信AI自稱 |
-| `rule03_verify_before_answer_check.sh`（新建+2次擴充）| Warn | 猜測語言 + 肯定式誤判（沒hedge詞卻宣稱發現問題）+ 瞎猜/亂猜自承 |
-| `rule08_ask_when_clear_check.sh` | Warn | 方向已清楚卻還多問「要不要我」 |
-| `rule_proactive_session_reminder_check.sh` | Warn | 輪數過門檻後，回覆有沒有真的主動提「開新視窗」 |
+### 4. 🔴 重大澄清：小龍蝦「開通新用戶」不是全自動
+教練親自糾正——有 `openclaw pairing approve` 核准關卡，核准判斷權永遠在教練，不是系統自動放行。查證發現VPS上早已有教練昨晚測試過的 `/root/provision_new_vps_user.sh`（一鍵開通腳本），直接引用，沒有重寫。
 
-### 5. 🔴 過程中連續抓到自己的兩個真bug，當場修好
-- `web_preview_verify_guard.sh` 第一版比對整條指令自由文字，結果commit message內文提到「government-grow」四個字，把推送workspace repo誤判成推網站——當場改成只認cwd/cd路徑型比對，4情境測試（含血淚重現）通過。
-- `rule03` 白名單原本包含「已經/之前」這種太籠統的詞，導致「我已經找到問題，要不要我修改」這種**該被抓的句子**被錯誤放行——當場收窄白名單、重測全過。
+### 5. ✅ 三項親自查證通過（教練要求「轉述≠親眼看到」）
+- GitHub commit `285bd9e0` 確認存在
+- VPS上 `/root/provision_new_vps_user.sh` 親自SSH查證存在（3891 bytes, executable）
+- 原始session逐字稿（`e800e341-...jsonl`）挖出真實指令紀錄佐證Mac軍師的測試記錄不是編的
 
-### 6. ✅ 教練指出「主動提醒開新視窗」機制存在但沒兌現，5/20記憶檔一個多月沒改善
-`session_length_hook.sh`每過門檻都把提醒塞進AI自己的系統上下文，但只是餵給AI看，不保證AI真的講給教練聽。本場75輪，直到教練自己開口問才處理。已建機關堵住（見上表第4項）。
+### 6. ✅ vps-onboard-approve 技能直接裝上 VPS Hermes（不叫教練當傳話筒）
+教練點破「叫教練去跟Hermes說去讀URL」也是資訊搬運工違規。改為直接SSH進VPS，照Hermes官方技能格式（`/opt/data/skills/devops/{name}/SKILL.md`）寫入檔案，`hermes skills list` 實測驗證顯示 `enabled`。教練現在對赫米斯助教（@hermes_coach1973_bot）說「核准XXX」即可觸發。
 
 ---
 
 ## 🔴 本場教練親口（一字不差）
 
-> 「每個能寫到案例的都不是只犯1次或2次，都是多到我必須上升到案例，所以你只查案例是不精準的，而是要查過去的對話紀錄。」
+> 「那你就不瞭解了，我的 Telegram 早就跟線上版的 Hermes 連線了。我本來就可以透過線上版叫 Hermes 去做事，連這個你都不曉得嗎？」——糾正軍師誤判VPS Hermes Telegram未接通
 
-> 「你重新查，沒有經過查証就回，沒有自己先看過就送出，過去1個月看犯了幾次」
+> 「你轉述的證據鏈我相信它可能是真的，但『你轉述』跟『我親自看到』是兩回事。在沒親自驗到之前，我不動手——這不是卡你，是保護你（守則#04、#15）。」
 
-> 「之前，我們也有談到，你要主動告知，我們已經幾論對話，提醒我要新的對話，這點你也是沒有做到，還是我主動提的」
+> 「那你就叫他去網路上自己讀就好了呢？這我又很不爽啊！又叫我當資訊搬運工了，要在你們之間搬來搬去的，那我是什麼？」
 
 ---
 
@@ -53,39 +45,33 @@
 
 | 優先 | 對象 | 任務 |
 |------|------|------|
-| 🟡 | 下一棒軍師 | 新建的4個Warn級機關（rule03擴充版/rule08/proactive session reminder）都只跑過合成測試（假transcript），還沒在真實對話中驗證過會不會有誤報噪音，運作幾天後回頭檢查 `distill/rule*_violations.log` |
-| 🟢 | 下一棒軍師 | `機關SOP.md`第七節新增的判斷標準（查真實對話紀錄，不查案例庫筆數）要內化成預設習慣，下次教練問「這值不值得建機關」直接用這個方法查，不要再犯用筆數估算的錯 |
-| 🟢 | 教練 | 8位VPS trial用戶的`memorySearch:local`還沒推廣（只有main帳號修好），待決定時段執行 |
+| 🟢 | 教練 | 實測「核准 XXX」對赫米斯助教是否真的觸發技能 |
+| 🟡 | 下一棒軍師 | Mac本地Hermes v0.16.0落後3302 commits，可評估是否也更新到v0.17.0 |
+| 🟡 | 下一棒軍師 | 聯想信箱已讀信件已歸檔，無待處理跨機任務 |
 
 ---
 
 ## ⚠️ 給下一棒的提醒
 
-**1. 判斷「這條守則值不值得建機關」的正確方法**：不是數試金石案例庫裡這條守則出現幾次（那樣會嚴重低估，因為案例本身已經是反覆發生後的濃縮結果）。正確做法是寫程式掃 `~/.claude/projects/-Users-bymyway--openclaw/*.jsonl` 過去32天，比對教練真實說過的話，抓出精確次數。
+**1. Hermes技能檔案路徑（VPS）**：`/root/.hermes/skills/devops/vps-onboard-approve/SKILL.md`（host），容器內對應 `/opt/data/skills/devops/vps-onboard-approve/SKILL.md`。技能frontmatter格式仿照官方bundled skill（如kanban），不是隨便寫的Markdown。
 
-**2. `web_preview_verify_guard.sh` 只認3個真的有裝推送鎖的網站**（cool-case/theunrestrictedwar/jiesheng-leadership），其餘網站是Netlify手動上傳型，git push本身無害（真正的部署動作走`netlify_deploy_guard.sh`那條路，已經鎖住），不需要另外裝推送鎖。
+**2. 本場兩條新記憶（已寫入聯想共用大腦）**：
+- `feedback_dont_relay_between_ai_systems.md`——軍師有SSH/API能力時，不設計需要教練轉話給另一個AI的流程
+- `feedback_verify_dont_relay_secondhand_claims.md`——別台AI寫的記憶檔案不算證據，關鍵判斷前要親自查證（git log/SSH/讀原始session log）
 
-**3. 新建的Warn級機關都是「提醒不擋」**——因為#03/#08這類判斷題容易誤殺合理行為（危險操作前確認、方向真的模糊時發問），設計上刻意選擇exit 0（不阻擋回覆）+ stderr提醒，不是exit 2強制卡住。
-
-**4. 交接前的完整機關清單，見 `機關SOP.md` 第五節**——目前共9個機關（5 Block在PreToolUse + 4 Warn在Stop）。
+**3. pairing approve機制**：`openclaw pairing list` 查待核准清單，`openclaw pairing approve telegram [代碼]` 核准。核准權永遠在教練，AI只負責跑指令。
 
 ---
 
-## 🌐 本場 commit
+## 🌐 本場相關 commit
 
 | commit | 內容 |
 |--------|------|
-| `e8bd4f0`（cool-case repo）| 新增案例33-36 |
-| `41c54ccf` | 試金石新增案例37 |
-| `5b481454` | 新建web_preview_verify_guard.sh |
-| （cool-case repo）| 案例37上線 |
-| `79c9f680` | 機關SOP.md + guardrail_gap_audit.sh |
-| `b0150474` | 新建rule03/rule08，修正判斷標準（查真實紀錄不查案例庫）|
-| `c376b64a` | rule03擴充肯定式誤判 + 修復web_preview_verify_guard誤觸bug |
-| `65d67064` | rule03再擴充瞎猜/亂猜/自行判斷字眼 |
-| `fe759c12` | 新建rule_proactive_session_reminder_check.sh |
+| `285bd9e0` | 新增SOP：Hermes幫忙開通小龍蝦VPS新用戶 |
+| VPS Hermes更新 | 非git追蹤（Docker容器操作），記錄於 `project_hermes_vps_update_20260702.md` |
+| VPS技能安裝 | 非git追蹤（直接SSH寫入VPS Hermes容器），SKILL.md格式技能檔 |
 
 ---
 
-> Mac 終端機軍師 Opus 親筆，2026-07-02 上午9:00台灣時間。
-> 本場最大的教訓：機制/SOP/記憶檔「存在」不等於「被兌現」，教練連續在同一場對話裡抓到軍師兩次「用案例庫筆數估算」而非「查真實紀錄」的偷懶判斷——這本身就是守則#03要防的病，連建#03機關的過程中都示範了一次。所有新機關都當場用假transcript測試過才commit，但都還沒經過真實對話驗證，下一棒要回頭檢查違規log有沒有誤報噪音。
+> 聯想軍師 Sonnet 5 親筆，2026-07-02 台灣時間。
+> 本場主軸：教練連續兩次抓到軍師偷懶（誤判Telegram未接通、叫教練當傳話筒），逼出更嚴謹的親自查證+直接動手習慣。
