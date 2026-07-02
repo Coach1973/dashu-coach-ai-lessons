@@ -36,14 +36,16 @@ metadata:
    ```
    還原後需要**重啟 Claude Code** 才會生效。
 4. **Zoom 重新安裝**：從 zoom.us 下載安裝，裝完直接跑步驟 1 的腳本，`data/logs/reports` 會自動 junction 回 D 碟舊資料（2026-07-02 起改法：bin/程式本體留在 C 碟不搬，只 junction 增量資料，不用像以前整包搬）
-5. **瀏覽器不用動** — 6月26日還原點本身就有完整帳密和書籤
+5. **瀏覽器/通訊軟體**：Chrome、GanJing、LINE、Telegram 現在都已改成「只 junction User Data/Data/Cache/tdata，程式本體留 C 碟」，跑完步驟 1 的腳本應該會自動接回 D 碟資料。若程式本體本身也在還原時被清空（不在還原點快照裡），才需要重新安裝，裝完再跑一次步驟 1 的腳本即可，不用整包重搬
 6. **拉取最新記憶**：
    ```
    cd ~/Documents/mac-openclaw-workflows && git pull origin main
    ```
 
 ### 注意事項
-- 瀏覽器（Chrome、GanJing、Perplexity）**絕對不做 junction**，見 [[browser-no-full-junction]]
+- 瀏覽器/通訊軟體（Chrome、GanJing、Perplexity、LINE、Telegram）**絕對不能整包 AppData 做 junction**，只能 junction User Data/Data/Cache/tdata 這類 profile 子資料夾，程式本體資料夾永遠留 C 碟，見 [[browser-no-full-junction]]
+- Perplexity（Comet\User Data）截至 2026-07-02 尚未實際搬移，D 碟來源不存在會自動 SKIP，之後要搬比照 GanJing 做法
 - 完成後清理 C 碟 7 天前的 .bak 資料夾
+- 每次搬移前先確認清楚該軟體「程式本體」跟「使用者資料」實際分別放在哪個資料夾（別用猜的），只 junction 使用者資料那層
 
 Related: [[browser-no-full-junction]], [[openclaw-spool-stuck-fix]]

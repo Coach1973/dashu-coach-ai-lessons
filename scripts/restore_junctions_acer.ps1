@@ -37,9 +37,9 @@ $junctions = @(
         Note   = "Zoom 報告"
     },
     @{
-        Link   = "C:\Users\Administrator\AppData\Roaming\Telegram Desktop"
+        Link   = "C:\Users\Administrator\AppData\Roaming\Telegram Desktop\tdata"
         Target = "D:\Claude-Data\Telegram-Desktop"
-        Note   = "Telegram 聊天記錄"
+        Note   = "Telegram 聊天記錄（2026-07-02 改法：只 junction tdata，Telegram.exe/Updater.exe/modules 程式本體留 C 碟）"
     },
     @{
         Link   = "C:\Users\Administrator\AppData\Local\Google\Chrome\User Data"

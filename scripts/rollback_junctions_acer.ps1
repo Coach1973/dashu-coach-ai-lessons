@@ -17,8 +17,8 @@ $rollbacks = @(
     @{
         Name = "LINE"
         Links = @(
-            @{ Link = "C:\Users\Administrator\AppData\Local\LINE\Data";  Bak = "C:\Users\Administrator\AppData\Local\LINE\Data.bak.20260701" },
-            @{ Link = "C:\Users\Administrator\AppData\Local\LINE\Cache"; Bak = "C:\Users\Administrator\AppData\Local\LINE\Cache.bak.20260701" }
+            @{ Link = "C:\Users\Administrator\AppData\Local\LINE\Data";  Bak = "" },
+            @{ Link = "C:\Users\Administrator\AppData\Local\LINE\Cache"; Bak = "" }
         )
         Kill = @("LINE","LineLauncher","LineCall","LineMediaPlayer")
     },
@@ -34,7 +34,7 @@ $rollbacks = @(
     @{
         Name = "Telegram"
         Links = @(
-            @{ Link = "C:\Users\Administrator\AppData\Roaming\Telegram Desktop"; Bak = "C:\Users\Administrator\AppData\Roaming\Telegram Desktop.bak.20260701" }
+            @{ Link = "C:\Users\Administrator\AppData\Roaming\Telegram Desktop\tdata"; Bak = "" }
         )
         Kill = @("Telegram")
     },
