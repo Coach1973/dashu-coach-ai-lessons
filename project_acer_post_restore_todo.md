@@ -30,6 +30,11 @@ metadata:
    ```
    cp "D:\Claude-Data\ssh-backup-acer\CLAUDE.md.bak" ~/.claude/CLAUDE.md
    ```
+3.5 **還原 settings.json**（關閉 Yes/No 確認彈窗，教練反覆抱怨這項每次還原就消失）：
+   ```
+   cp "D:\Claude-Data\ssh-backup-acer\settings.json.bak" ~/.claude/settings.json
+   ```
+   還原後需要**重啟 Claude Code** 才會生效。
 4. **Zoom 重新安裝**：從 zoom.us 下載安裝
 5. **瀏覽器不用動** — 6月26日還原點本身就有完整帳密和書籤
 6. **拉取最新記憶**：
