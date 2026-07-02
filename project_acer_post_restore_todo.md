@@ -1,6 +1,6 @@
 ---
 name: acer-post-restore-todo
-description: ACER 一鍵還原後（2026-07-01）開工時必須主動提醒執行的還原步驟
+description: ACER 一鍵還原後（任何還原點，含2026-07-01/2026-05測試）開工時必須主動提醒執行的還原步驟
 metadata: 
   node_type: memory
   type: project
@@ -16,6 +16,11 @@ metadata:
 **How to apply:** 教練說「開工」時，立即提醒並協助執行：
 
 ### 還原步驟（按順序）
+0. **修復 `~/Documents/mac-openclaw-workflows` 本機路徑**（2026-07-03 發現：這是 C 槽真實資料夾，不是 junction，還原後極可能消失或變成舊版本，開工自動 git pull 會失效）：
+   ```
+   powershell -Command "Test-Path $env:USERPROFILE\Documents\mac-openclaw-workflows"
+   ```
+   不存在就 `git clone https://github.com/Coach1973/mac-openclaw-workflows.git ~/Documents/mac-openclaw-workflows`，存在但太舊就直接 `git pull origin main`
 1. **重建 junction**：以系統管理員身分執行
    ```
    powershell -ExecutionPolicy Bypass -File "D:\Claude-Data\restore_junctions_acer.ps1"
