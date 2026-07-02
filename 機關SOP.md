@@ -81,6 +81,19 @@
 | `rule07_polling_check.sh` | Warn | #07 | Stop | 2026-07-02 | 案例36 三次輪詢 |
 | `rule12_porter_check.sh` | Warn | #12 | Stop | 2026-06 | 叫教練複製貼上 |
 | `delivery_check.sh` | Warn | 交付品質 | Stop | 2026-06 | 交付格式不合規 |
+| `web_preview_verify_guard.sh` | Block | HTML預覽 | PreToolUse:Bash | 2026-07-02 | 案例37 一個月6次沒給看HTML |
+| `rule03_verify_before_answer_check.sh` | Warn | #03 | Stop | 2026-07-02 | 過去32天真實查證6次違反，同案例37頻率 |
+| `rule08_ask_when_clear_check.sh` | Warn | #08 | Stop | 2026-07-02 | 過去32天真實查證6次違反，同案例37頻率 |
+
+---
+
+## 七、判斷標準修正（2026-07-02 教練親口糾正）
+
+> 「每個能寫到案例的都不是只犯1次或2次……你只查案例是不精準的，而是要查過去的對話紀錄。」
+
+**錯誤做法**（軍師曾經這樣做過一次，被教練當場糾正）：只數「試金石案例庫裡這條守則出現幾次」——這樣會嚴重低估，因為每個案例本身就是「已經反覆發生過才被寫成案例」的濃縮結果。
+
+**正確做法**：用第三步的分析方法（`web_preview_verify_guard.sh` 那次的做法）——直接寫程式掃過去 32 天的原始對話紀錄（`~/.claude/projects/-Users-bymyway--openclaw/*.jsonl`），比對教練真實說過的話，抓出精確次數。案例庫筆數只能當「這個問題存在」的提示，不能當「發生了幾次」的答案。
 
 ---
 
