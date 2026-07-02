@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-03 2026-07-03 07:35 - relay poll OK
+### 2026-07-03 2026-07-03 07:38 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-03 04:23（Mac）
 - ✅ pushed 77713686
@@ -113,3 +113,7 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1783035090
 - 雲端同步：✅ 已推上雲端（commit 08e021f7）
+
+## 🚀 Session-End 雲端同步 2026-07-03 07:35（Mac）
+- ✅ pushed 8cb4d820
+- 同步路徑：HEARTBEAT.md
