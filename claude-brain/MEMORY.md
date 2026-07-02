@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02上午)](feedback_verify_via_real_transcript_not_case_count.md) — 教練連續兩次抓到軍師用案例庫筆數估算偷懶；#03/#08真實頻率6次、「沒查證就回」真實8次，軍師第一次答的「2次」本身又是沒查證的產物
+- [🟢🟢🟢 一場75輪內建4個新機關+cool-case案例33-37上線(2026-07-02上午)](project_2026-07-02_guardrail_expansion.md) — HTML預覽查證鎖/#03擴充/#08/主動提醒開新視窗；過程中抓到2個真bug當場修復
 - [🔴🔴🔴 事件驅動優於輪詢——教練第三次糾正同一原則(2026-07-02)](feedback_event_driven_not_polling_pattern.md) — 心跳/蒸餾/自動開通三度犯同錯；改用Docker unless-stopped restart policy讓hook直接process.exit觸發重啟，零輪詢
 - [🟢🟢🟢 VPS長期記憶修復成功驗證(2026-07-02凌晨)](project_vps_local_embedding_fix_2026-07-02.md) — 根因是env var把OpenAI金鑰接到NVIDIA造成embeddings 401；改local模式後實測4/20 n8n內容以0.714最高分被正確撈回；含誤殺仍在跑的進程教訓
 - [🔴🔴 跨機指令被推翻必須主動撤回，不能只清本機(2026-07-02凌晨)](feedback_retract_crossmachine_instruction_on_reversal.md) — 三機互查方案被教練打槍後只拆Mac端，忘記通知ACER/聯想撤回，造成聯想凌晨還在問要不要處理已死指令
