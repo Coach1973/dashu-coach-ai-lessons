@@ -16,14 +16,18 @@ TRANSCRIPT_PATH=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.transcript_path // ""'
 # 只攔 git push
 echo "$CMD" | grep -qE '(^|&&|\||;)\s*git\s+push' || exit 0
 
-# 「push即上線」網站清單（GitHub Pages / GitHub 自動部署型）
-WEBSITE_REPOS='cool-case|theunrestrictedwar|jiesheng-leadership|bymyway-website|government-grow|ai-go|consultant|government-subsidies'
+# 「push即上線」網站清單（GitHub Pages / GitHub 自動部署型，只有真的有推送鎖的才算）
+WEBSITE_REPOS='cool-case|theunrestrictedwar|jiesheng-leadership'
 
-echo "$CMD" | grep -qE "$WEBSITE_REPOS" || {
-  # command 本身沒提到站名，改用目前工作目錄判斷
-  CWD=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.cwd // ""' 2>/dev/null)
-  echo "$CWD" | grep -qE "$WEBSITE_REPOS" || exit 0
-}
+# 只認「路徑型」出現（cd 到某資料夾 / cwd 本身在該資料夾），
+# 不比對整條指令的自由文字（避免 commit message 內文提到站名誤觸，2026-07-02 血淚教訓）
+CWD=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.cwd // ""' 2>/dev/null)
+CD_TARGET=$(printf '%s' "$CMD" | grep -oE 'cd\s+[^&|;]+' | head -1)
+
+MATCH=0
+echo "$CWD" | grep -qE "/($WEBSITE_REPOS)(/|$)" && MATCH=1
+echo "$CD_TARGET" | grep -qE "/($WEBSITE_REPOS)(/|$| )" && MATCH=1
+[[ "$MATCH" -eq 0 ]] && exit 0
 
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 

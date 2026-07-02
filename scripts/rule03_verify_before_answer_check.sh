@@ -55,22 +55,73 @@ GUESS_PATTERNS=(
   "可能是因為"
 )
 
+# 肯定式誤判語言（2026-07-02 教練親抓：沒有hedge詞，用肯定語氣宣稱「發現問題」，
+# 卻沒先查現有記憶檔/SOP——government-grow誤判「無鎖=漏洞」就是這種樣貌）
+CONFIDENT_CLAIM_PATTERNS=(
+  "之前沒發現的"
+  "發現.{0,4}漏洞"
+  "這是.{0,4}漏洞"
+  "完全沒有.{0,4}(攔截|防護|保護)"
+)
+
 # 白名單：誠實說不知道（守則#15正確行為）、討論過去案例、已明確查證過
 WHITELIST_PATTERN='不確定|需要查證|案例[0-9三十二四五六七八九十]|教訓|檢討|反省|已驗證|已確認|測試通過|查證後|實測|跑過.*確認|讀取.*確認'
 
-HITS=""
+GUESS_HITS=""
+CONFIDENT_HITS=""
 while IFS= read -r LINE; do
   if printf '%s' "$LINE" | grep -qE "$WHITELIST_PATTERN"; then
     continue
   fi
   for PATTERN in "${GUESS_PATTERNS[@]}"; do
     if printf '%s' "$LINE" | grep -qE "$PATTERN"; then
-      HITS+="  • 偵測到疑似未查證就交付：「$(printf '%s' "$LINE" | cut -c1-60)...」"$'\n'
+      GUESS_HITS+="  • 偵測到疑似未查證就交付：「$(printf '%s' "$LINE" | cut -c1-60)...」"$'\n'
+      break
+    fi
+  done
+  for PATTERN in "${CONFIDENT_CLAIM_PATTERNS[@]}"; do
+    if printf '%s' "$LINE" | grep -qE "$PATTERN"; then
+      CONFIDENT_HITS+="  • 偵測到疑似肯定式誤判（沒hedge詞卻宣稱發現問題）：「$(printf '%s' "$LINE" | cut -c1-60)...」"$'\n'
       break
     fi
   done
 done <<< "$LAST_TEXT"
 
+# 肯定式誤判額外檢查：這輪對話有沒有查過記憶檔/SOP的證據（Grep/Read命中memory或特助心法/SOP）
+if [[ -n "$CONFIDENT_HITS" && -n "$TRANSCRIPT_PATH" && -f "$TRANSCRIPT_PATH" ]]; then
+  HAS_MEMORY_CHECK=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
+import sys, json
+path = sys.argv[1]
+try:
+    with open(path, encoding='utf-8') as f:
+        lines = [l for l in f if l.strip()]
+except Exception:
+    print("unknown"); sys.exit(0)
+recent = lines[-40:]
+found = False
+for line in recent:
+    try:
+        evt = json.loads(line)
+    except Exception:
+        continue
+    if evt.get('type') != 'assistant':
+        continue
+    for c in evt.get('message', {}).get('content', []):
+        if not isinstance(c, dict) or c.get('type') != 'tool_use':
+            continue
+        name = c.get('name', '')
+        tin = c.get('input', {})
+        target = str(tin.get('file_path', '')) + str(tin.get('pattern', '')) + str(tin.get('path', ''))
+        if name in ('Grep', 'Read') and ('memory' in target or 'SOP' in target or '特助心法' in target or '試金石' in target):
+            found = True
+print("yes" if found else "no")
+PYEOF
+)
+  # 已經查過記憶檔 → 這則肯定式宣稱是有根據的，不算違規
+  [[ "$HAS_MEMORY_CHECK" == "yes" ]] && CONFIDENT_HITS=""
+fi
+
+HITS="${GUESS_HITS}${CONFIDENT_HITS}"
 [[ -z "$HITS" ]] && exit 0
 
 LOG="$HOME/.openclaw/workspace/distill/rule03_verify_violations.log"
