@@ -35,7 +35,7 @@ metadata:
    cp "D:\Claude-Data\ssh-backup-acer\settings.json.bak" ~/.claude/settings.json
    ```
    還原後需要**重啟 Claude Code** 才會生效。
-4. **Zoom 重新安裝**：從 zoom.us 下載安裝
+4. **Zoom 重新安裝**：從 zoom.us 下載安裝，裝完直接跑步驟 1 的腳本，`data/logs/reports` 會自動 junction 回 D 碟舊資料（2026-07-02 起改法：bin/程式本體留在 C 碟不搬，只 junction 增量資料，不用像以前整包搬）
 5. **瀏覽器不用動** — 6月26日還原點本身就有完整帳密和書籤
 6. **拉取最新記憶**：
    ```
