@@ -208,3 +208,10 @@
 - Git：✅ auto-backup commit 91aab7d1 已 pushed（HEARTBEAT.md + session_counter.json）
 - HEARTBEAT ⬜：無待辦
 - 結論：✅ 無異常，安靜處理，不通知教練
+
+## 🦞 健康檢查 2026-07-03 16:02（cron 自動）
+- 任務狀態：上一輪 lastError=overloaded（consecutiveErrors=1，服務端暫時過載，未達3次門檻）
+- 判斷：consecutiveErrors=1 未達3次門檻，無法自動修復（屬 API 服務端問題，非腳本超時；lastDurationMs=113s）
+- Git：✅ auto-backup commit f7496ca2 已 pushed（HEARTBEAT.md + session_counter.json）
+- HEARTBEAT ⬜：無待辦
+- 結論：✅ 無異常，安靜處理，不通知教練
