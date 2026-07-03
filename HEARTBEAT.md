@@ -128,3 +128,10 @@
 - Git：✅ auto-backup commit 5d5c464b
 - HEARTBEAT ⬜：無待辦
 - 結論：✅ 無異常，安靜處理，不通知教練
+
+## 🦞 健康檢查 2026-07-03 12:33（cron 自動）
+- 任務狀態：lastError=overloaded（consecutiveErrors=1，未達3次門檻，服務端暫時過載）
+- 判斷：無法自動修復（屬 API 服務端問題，非腳本錯誤）
+- Git：✅ auto-backup commit c8471790（HEARTBEAT.md + session_counter.json）
+- HEARTBEAT ⬜：無待辦
+- 結論：✅ 無異常，安靜處理，不通知教練
