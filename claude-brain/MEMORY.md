@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 視覺類任務唯一可信驗證是截圖，不是DOM數字(2026-07-03)](feedback_visual_change_screenshot_not_dom_numbers.md) — logo裁切debug血淚：preview_eval讀DOM數字可能因工具異常/快取失真但看似精確，教練罵醒後截圖一次就抓對問題
+- [🟢 2026講座系列行銷頁bigtree上線(2026-07-03)](project_speakers2026_bigtree_launch.md) — coach1973.github.io/bigtree/speakers-2026/ + bymyway.com/bigtree/ 自動站首次零空白上線，黑金風格整合完成
 - [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md) — 別台AI寫的記憶檔案不算數，要自己SSH/git log/讀原始log驗證，「轉述」跟「親眼看到」是兩回事
 - [🔴🔴 軍師不當兩AI系統間的傳話筒(2026-07-02)](feedback_dont_relay_between_ai_systems.md) — 教練點破「叫我傳一句話給Hermes」也算資訊搬運工，軍師有SSH就該自己動手裝技能，不設計需要教練轉話的流程
 - [🟢 Hermes VPS更新+核准流程澄清+vps-onboard-approve技能直裝(2026-07-02)](project_hermes_vps_multitool_session_2026-07-02.md) — v0.13→v0.17、dashboard登入bug修復、pairing核准非全自動的澄清、技能檔案直接SSH寫入VPS並用hermes skills list驗證enabled
