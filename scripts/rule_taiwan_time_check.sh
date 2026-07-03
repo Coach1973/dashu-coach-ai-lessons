@@ -54,7 +54,41 @@ if last_user_idx is None:
     last_user_idx = 0
 
 turn_lines = lines[last_user_idx:]
-turn_raw_text = '\n'.join(turn_lines)
+
+# 🔴 只抓「實際內容文字」（訊息文字、tool_result 文字），
+# 不可用整行 raw JSONL（每個事件本身的 "timestamp" 信封欄位一定含 UTC Z 格式，
+# 會讓 touched_utc 恆為 true，2026-07-03 案例38後首次真實對話就誤報過一次）
+def extract_texts(node):
+    texts = []
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k == 'timestamp':
+                continue  # 信封層的事件時間戳，不算「AI 處理過的內容」
+            if k == 'text' and isinstance(v, str):
+                texts.append(v)
+            elif k == 'content' and isinstance(v, str):
+                texts.append(v)
+            else:
+                texts.extend(extract_texts(v))
+    elif isinstance(node, list):
+        for item in node:
+            texts.extend(extract_texts(item))
+    return texts
+
+content_texts = []
+for line in turn_lines:
+    try:
+        evt = json.loads(line)
+    except Exception:
+        continue
+    # 🔴 排除 type=="attachment"：這是 UserPromptSubmit hook 每輪自動注入的
+    # 守則提醒文字（本身寫死含範例 "2026-06-09T06:25:36.752Z" 當教材），
+    # 不是 AI 真正讀取/處理的外部資料，會讓 touched_utc 恆為 true
+    # （2026-07-03 案例38後首次真實對話誤報，根因就是這段範例文字）
+    if evt.get('type') == 'attachment':
+        continue
+    content_texts.extend(extract_texts(evt.get('message', evt)))
+turn_raw_text = '\n'.join(content_texts)
 
 # 這一輪是否出現過原始 UTC ISO timestamp（T..:..:..Z 或 T..:..:...Z 帶毫秒）
 import re
