@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2989d377-322b-4a22-a511-60d11dcf12e3
-# 提取時間：2026-07-03 22:00 (台灣時間)
-# 共 19 條教練原話
+# 提取時間：2026-07-03 23:30 (台灣時間)
+# 共 23 條教練原話
 
 ---
 
@@ -347,3 +347,77 @@ https://jiesheng-leadership.netlify.app/#events
 **維持原樣(橘色按鈕，可正常報名)**：7/4、7/5、7/10、7/12、7/19、7/23 — 這6場都還沒到
 
 已經用 Chrome 開給您看,麻煩看一下顏色跟文字OK嗎,沒問題就跟我說「推」。
+
+【教練 2026-07-03 15:03】
+OK
+
+　▶ AI 回應：推送完成,commit `bca62f8`。Netlify 會自動部署,約1分鐘後 https://jiesheng-leadership.netlify.app/#events 就會看到過期的5場變灰色。
+
+【教練 2026-07-03 15:16】
+偉大的任務來了！我看完之後覺得，想要讓這一個最新做出來的頁面取代「bymyway」的首頁。
+
+你可以思考一下要如何取代，目前的構想如下：
+
+1. 頁面更換與命名
+   原本的首頁先更換成另外一個名稱，例如在「bymyway」後面加上/old，代表它是舊的頁面；接著就把我們最新做的 BigTree 頁面上線。
+
+2. 內容調整
+   (a) 右上角的「立即聯繫」部分：我們要把它改成「登入課程」，因為原本的首頁是有登入課程功能頁面的。
+   (b) YouTube 影片：我底下有一支 YouTube 影片做得非常的好，希望能保留在頁面最下方，讓大家可以觀看。
+
+除了以上這兩點，其他部分基本上都不用動。同時，我也希望你能提出看法跟想法，看看我們該如何用這個最新做的頁面來取代百百味的首頁。這件事我之前就提過，現在打算正式執行了，OK。
+
+　▶ AI 回應：Good, credentials and tooling exist. Let me check the current front page setting via REST API.
+
+　▶ AI 回應：Good, only the top-right nav button changed; all other contact/联系 buttons throughout the page are untouched. Now let me check whether the current live homepage has a YouTube video I should carry over, before asking the coach.
+
+　▶ AI 回應：Now the CSS:
+
+　▶ AI 回應：內容修改都做好了,並且用「查證不用猜」原則解決了 YouTube 影片的問題——我直接抓了現在 bymyway 首頁的原始碼,發現上面真的只有一支 YouTube 影片(《大樹教練短片2016》,位置在頁面下方 80% 處),應該就是您說的那支。已經放進新頁面最下方(footer 之前)。
+
+**已完成的內容修改**：
+1. 右上角「登入課程」按鈕：連到 `bymyway.com/dashboard`(我查了現在首頁的帳號圖示，這就是真正的課程登入/會員後台，桌面版+手機版選單都改了)
+2. 頁面最下方新增「精選影片」區塊，嵌入《大樹教練短片2016》
+
+已用 Chrome 開給您看,麻煩先確…（略）
+
+【教練 2026-07-03 15:22】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/delivery_check.sh]: 
+📦🔒 交付自檢門（守則 #03 + #05 自動對照）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才的回覆宣稱「完成了」，但整段找不到任何憑證。
+教練原話：「我真的不想當監工，都是很基本的問題，我卻要人工發現。」
+
+交付前先回答三問，並把證據放進回覆：
+  ① 我自己打開/跑過/看過成果了嗎？→ 附上輸出或測試結果
+  ② 數量、編號、規格跟教練要求的一致嗎？→ 數過再說
+  ③ 有 commit hash 或可驗證的痕跡嗎？→ 沒有 hash 不算完成（守則 #05）
+
+請先實際驗證，把憑證補進回覆再交付。
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補上憑證,回應剛才的自檢提醒:
+
+**① 我自己驗證過了嗎？**
+- `grep` 確認 `index.html` 第229行(桌面版)、第247行(手機版)的按鈕文字都已經是「登入課程」，連到 `bymyway.com/dashboard`
+- `grep` 確認第1468行新增了 `id="video"` 的精選影片區塊
+- 而且我用 Chrome 實際開過畫面(不是只讀 DOM 數字)
+
+**② 數量/規格跟教練要求一致嗎？**
+- 教練要求2項：① 登入課程按鈕 ② YouTube影片保留在最下方 → 兩項都做了且位置正確(影片在 footer 之前)
+
+**③ 有 commit ha…（略）
+
+【教練 2026-07-03 15:25】
+他不能直接打 bymyway.com 就直接出現我們製作好的這個 file:///Users/bymyway/github_repos/bigtree/speakers-2026/index.html，我們不能直接就出現首頁嗎？
+
+　▶ AI 回應：可以,而且這正是我剛才提的方案要做的事——打 `bymyway.com` 直接顯示我們做好的這個新頁面，不需要加 `/bigtree/`。
+
+技術上是這樣運作的：WordPress 有一個「首頁指向哪一頁」的設定，目前指向舊首頁；只要把這個設定改指向 BigTree 這一頁，`bymyway.com` 這個網址打開來就會直接是新頁面，跟 `bymyway.com/bigtree/` 現在看到的內容一模一樣。
+
+這一步我還沒做（正在等您確認影片、確認可以推），只要您說「推」，我馬上：
+1. push 內容到 GitHub
+2. 把「首頁指向」設定切換過去
+
+切換完，打 `bymyway.com`…（略）
