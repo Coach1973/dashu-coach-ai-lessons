@@ -1,0 +1,73 @@
+# 終端機對話萃取 — Session 1111f123-50de-417b-ab6c-b714e22c7809
+# 提取時間：2026-07-04 01:00 (台灣時間)
+# 共 6 條教練原話
+
+---
+
+【教練 2026-07-03 16:52】
+bymyway.com/ 最底下的那一行字，幫我多加一個名字
+Copyright © 1999 – 2026 大樹教育顧問｜海餅乾俱樂部 大樹教練  課程製作 呂明麗
+
+【教練 2026-07-03 16:52】
+[Request interrupted by user]
+
+【教練 2026-07-03 16:53】
+先讀開工檔案，再執行剛才上面的指令
+
+　▶ AI 回應：確認了,首頁的內容是從 `coach1973.github.io/bigtree/speakers-2026/` 這個網址嵌入的,對應本機檔案 `~/github_repos/bigtree/speakers-2026/index.html`。現在幫你修改版權那一行。
+
+　▶ AI 回應：本機檔案已改好,Chrome 已幫你開好本機預覽視窗(捲到最下面就能看到新的版權那行)。確認畫面上顯示的字沒問題後,跟我說一聲「推」,我就把這個改動同步上線到 bymyway.com。
+
+【教練 2026-07-03 16:54】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「已改好」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：本機檔案的修改**尚未 commit、也還沒推上線**——照「網頁推 SOP」規定,要等您看過預覽、說「推」之後,我才會 commit + push。
+
+目前狀態:
+- ✅ 已修改本機檔案 `bigtree/speakers-2026/index.html` 的版權那行,加上「課程製作 呂明麗」
+- ✅ 已用 Chrome 開本機預覽,您可以捲到最下面確認畫面
+- ⏳ 尚未 commit、尚未上線,等您說「推」
+
+您看過 Chrome 裡的畫面沒問題的話,跟我說「推」,我就會 commit(附 hash)+ push 讓 bymyway.com 更新。
+
+【教練 2026-07-03 16:54】
+推，推上去
+
+　▶ AI 回應：GitHub Pages 部署第一次失敗了(跟接力棒記載的已知偶發問題一樣),補一個空白 commit 觸發重新部署。
+
+　▶ AI 回應：第二次部署成功了。查證線上頁面的實際文字內容,確認 bymyway.com 首頁已經是新版。
+
+　▶ AI 回應：已推上線,查證通過。
+
+- commit `77b048d`(改內容)+ `71f9792`(補觸發部署,第一次部署照慣例失敗一次)
+- 線上實測 `coach1973.github.io/bigtree/speakers-2026/` 版權那行已顯示:「Copyright © 1999 – 2026 大樹教育顧問｜海餅乾俱樂部 大樹教練｜課程製作 呂明麗」
+- bymyway.com 首頁是 iframe 嵌入這個網址,所以已經同步生效
+
+【教練 2026-07-03 16:56】
+正確來說，它這個應該不是網頁推的 SOP，應該是行動站的 SOP
+
+　▶ AI 回應：教練說的對,查了 `feedback_coach_deploy_vocabulary.md` 確認:
+
+**「自動站」（跟「行動站」同義,您 2026-06-17 已親口承認過口誤）＝ 部署到 bymyway.com**——技術動作就是 git push 到 GitHub repo,讓 bymyway WP 的 iframe 抓新版。這次改的正是嵌在 bymyway.com 首頁的 `bigtree/speakers-2026` repo,完全符合這個定義。
+
+「網頁推」這個詞我用錯了——那是專指 Netlify 那條線下的教練測試站（jiesheng-leadership、theunrest…（略）
+
+　▶ AI 回應：已補記並上傳,commit `f5563708`。
