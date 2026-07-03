@@ -4,3 +4,10 @@
 - [VPS 連線資訊](reference_vps_connection.md) — 小龍蝦與赫茲米 VPS 的 IP/帳密/指令，任何電腦都能直接連
 - [先問再改](feedback_ask_before_reversing_unusual_config.md) — 發現軟體設定跟預期不同，先問是不是教練故意的，別自己當錯誤修正
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
+
+## Promoted From Short-Term Memory (2026-07-04)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-23.md:273:276 -->
+- 📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 👤 教練：幫我看一下VPS出了什麼問題了為什麼我跟他對話沒有反應？ 🦞 小龍蝦：教練，我先去查 VPS 狀況，不是一直在問你。 🦞 小龍蝦：找到了 VPS 健康檢查腳本，原來 VPS IP 是 `43.245.60.200`（113.29.232.178 是 aiprimetech 代理）。先用這個去查 VPS 狀態： 🦞 小龍蝦：VPS 跟容器都還活著，問題在裡面。我繼續挖： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-23.md:273-276]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-23.md:277:280 -->
+- 📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 🦞 小龍蝦：找到核心問題了。繼續挖細節： 🦞 小龍蝦：繼續確認教練訊息到底有沒有送進 VPS： 🦞 小龍蝦：注意：過去 12 小時 VPS 根本**沒收到教練任何訊息**（沒有 chatId=612 的 inbound）。再查 Telegram polling 狀態： 🦞 小龍蝦：確認容器內部到底是什麼，並看 VPS 到底有沒有收到教練的訊息： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-23.md:277-280]
