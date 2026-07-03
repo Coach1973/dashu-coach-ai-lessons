@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-03 2026-07-03 11:02 - relay poll OK
+### 2026-07-03 2026-07-03 11:32 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-03 04:23（Mac）
 - ✅ pushed 77713686
@@ -121,3 +121,10 @@
 ## 🚀 Session-End 雲端同步 2026-07-03 07:38（Mac）
 - ✅ pushed 1067ce05
 - 同步路徑：HEARTBEAT.md
+
+## 🦞 健康檢查 2026-07-03 11:01（cron 自動）
+- 任務狀態：lastError=overloaded（consecutiveErrors=1，未達3次門檻）
+- 判斷：服務端暫時過載，無法自動修復，等下次重試
+- Git：✅ auto-backup commit 5d5c464b
+- HEARTBEAT ⬜：無待辦
+- 結論：✅ 無異常，安靜處理，不通知教練
