@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2989d377-322b-4a22-a511-60d11dcf12e3
-# 提取時間：2026-07-04 00:00 (台灣時間)
-# 共 24 條教練原話
+# 提取時間：2026-07-04 00:30 (台灣時間)
+# 共 25 條教練原話
 
 ---
 
@@ -443,3 +443,21 @@ OK，看完了，可以執行
 - Push 內容到 GitHub：commit `bd1e3e7`
 - GitHub Pages 第一次自動部署**失敗**(`Deploy to GitHub Pages... 部署失敗，請稍後再試`，我有查 log 確認)——這是 GitHub 系統偶發問題，不是我們內容的錯，我補了一個空白 commit `f244937` 觸發重新部署，這次成功
 - WordPress 後台：舊首頁(ID 25066)網址代稱改成 `old`，標題改成「首頁（舊版）」；「首頁顯示」設定切換指向 BigTree 頁面(I…（略）
+
+【教練 2026-07-03 16:10】
+可以總結上傳，我們下一個任務就是執行這個企業健身房的案子
+
+　▶ AI 回應：Now let me write the memory files for this session's key events, then update the handoff.
+
+　▶ AI 回應：Now let's run the sync script and commit everything.
+
+　▶ AI 回應：Sync succeeded. Now let's commit and push everything from this session.
+
+　▶ AI 回應：總結上傳完成，commit `f0a53176` 已推上雲端。
+
+**這場總結了什麼**：
+- 🎯 最大戰果：bymyway.com 首頁正式換成 BigTree 講座頁，舊首頁保留在 `/old/`，30秒可復原
+- 🔴 時間鎖 hook 上線後第一次真實誤報，已找到根因並修復（8/8測試+真實案例重新驗證都過）
+- 其他：jiesheng-leadership 新增座談會場次、過期報名標示、bigtree 媒體報導區塊
+
+**下一棒接力棒已寫好指向企業健身房案子**：我在接力棒裡特別標記了 `20260630-handoff_biz-gym-to-lenovo.md` 這份 ACER 交給…（略）
