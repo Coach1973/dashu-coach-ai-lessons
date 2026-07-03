@@ -1,112 +1,29 @@
+# HEARTBEAT 熱上下文（每次心跳必讀）
 
+> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
+> 重啟時間：2026-07-04 01:07
+> 對話記錄已完整存入 memory/2026-07-04.md 並推上 GitHub，零遺漏
 
-## 學長 relay poll
-### 2026-07-03 2026-07-03 23:59 - relay poll OK
+## 🔴 重啟後第一件事
 
-### 2026-07-04 2026-07-04 01:07 - relay poll OK
-## ⚠️ peipei 自動 force-restart 2026-07-03 17:45:00
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
+⚠️ **不要讀 memory 大檔**（memory/2026-07-04.md 可能超過 50KB，讀了會造成模型空白回應）
 
-## 🚀 Session-End 雲端同步 2026-07-03 18:02（Mac）
-- ✅ pushed cfd05a57
-- 同步路徑：HEARTBEAT.md
+## ⚡ 系統狀態
+- Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
+- 名稱對等：Telegram = 小龍蝦 = 電報
 
-## 🚀 Session-End 雲端同步 2026-07-03 18:04（Mac）
-- ✅ pushed aef9113d
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 18:05（Mac）
-- ✅ pushed bfc378d3
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 18:30（Mac）
-- ✅ pushed d5ec428d
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 18:47（Mac）
-- ✅ pushed b8b4b04f
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 20:25（Mac）
-- ✅ pushed adc09130
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 20:27（Mac）
-- ✅ pushed 96dd076b
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 21:25（Mac）
-- ✅ pushed 4424b608
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 21:31（Mac）
-- ✅ pushed dc05f6a2
-- 同步路徑：HEARTBEAT.md memory/
-
-## 🚀 Session-End 雲端同步 2026-07-03 21:36（Mac）
-- ✅ pushed a6e08d36
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 21:43（Mac）
-- ✅ pushed 5d231f98
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 21:44（Mac）
-- ✅ pushed 80ca8a54
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 23:04（Mac）
-- ✅ pushed 03943bb8
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 23:22（Mac）
-- ✅ pushed 8a668aef
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 23:22（Mac）
-- ✅ pushed 42e05065
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 23:25（Mac）
-- ✅ pushed 2a3e31cb
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-03 23:53（Mac）
-- ✅ pushed 4842fcfe
-- 同步路徑：HEARTBEAT.md
-
-## 🦞 健康檢查 2026-07-04 00:33（每30分鐘）
-- ✅ git auto-backup commit e91a1c8b → push 成功
-- ⚠️ 上一次 cron 跑（overloaded）— 連續錯誤 1 次，非腳本問題，不需裁決
-- ✅ HEARTBEAT 無 ⬜ 待辦
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-04 00:12
-- ✅ 同步成功
-- HANDOFF mtime: 1783095175
-- 雲端同步：✅ 已推上雲端（commit 8d4266dc）
-
-## 🚀 Session-End 雲端同步 2026-07-04 00:54（Mac）
-- ✅ pushed 7c1de6de
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 00:54（Mac）
-- ✅ pushed 7ee662d0
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 00:56（Mac）
-- ✅ pushed 912efc0e
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 00:59（Mac）
-- ✅ pushed 01385430
-- 同步路徑：HEARTBEAT.md
-
-## 🦞 健康檢查 2026-07-04 01:02（每30分鐘）
-- ✅ git auto-backup commit 994677f1 → push 成功
-- ✅ Cron 狀態：唯一 cron（本任務）上次因 AI overloaded 連續錯誤 1 次（< 3，不需裁決）
-- ✅ HEARTBEAT 無 ⬜ 待辦，無需自動化
+## ⚠️ 所有對話守則
+- 全部繁體中文，不夾任何英文
+- 能自己做直接做，不問確認
+- 截圖禁用，直接讀檔案
+- 執行完通報 Telegram（Chat ID: 6124913915）
+- 預估超過 5 萬 Token 先回報教練確認
+- ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 🚀 Session-End 雲端同步 2026-07-04 01:07（Mac）
-- ✅ pushed 957b2010
+- ✅ pushed 015a2357
 - 同步路徑：HEARTBEAT.md
+
+## 學長 relay poll
+### 2026-07-04 2026-07-04 01:12 - relay poll OK
