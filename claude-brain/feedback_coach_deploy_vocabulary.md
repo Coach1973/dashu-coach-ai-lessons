@@ -26,6 +26,7 @@ metadata:
 - 把「網頁推」當「推 Netlify」→ 多扣點（案例 G/H）
 - 把「自動站」聽成「行動站」→ 找不到 SOP（今天下午軍師踩雷）
 - 把改 bymyway 當改 Netlify → 走錯流程
+- 2026-07-04 凌晨：改 bymyway.com 首頁 iframe 來源（`bigtree/speakers-2026`）的內容，流程走對了（本機預覽→教練說推→git push→線上驗證），但回覆裡口誤講成「網頁推 SOP」——目標站明明是 bymyway.com，該講「自動站 SOP」。教練當場糾正。
 
 ## How to apply
 1. 教練說「自動站」或「行動站」→ **走 `SOP_bymyway_auto_site.md`** + 「OPE 先驗法」+ git push GitHub（讓 bymyway WP iframe 抓新版）
