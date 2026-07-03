@@ -1,24 +1,35 @@
-# 軍師接力棒 · 2026-07-03 v43（Mac 終端機 Sonnet，session 收尾）
+# 軍師接力棒 · 2026-07-04 v44（Mac 終端機 Sonnet，session 收尾）
 
-> 建立時間：2026-07-03 下午 1:30（台灣時間）
+> 建立時間：2026-07-04 凌晨 12:10（台灣時間）
 > 本棒執行者：Mac 終端機軍師 Sonnet 5
-> 上一棒：v42（2026-07-03 上午7:30，logo裁切最終修好上線+試金石案例38完整檢討）
-> 本棒主軸：**新增時間鎖機關 + session總結收尾**（教練要開新視窗）
+> 上一棒：v43（2026-07-03 下午1:30，新增時間鎖機關+session收尾）
+> 本棒主軸：**bymyway.com 首頁正式換成 BigTree 講座頁（教練主動升級決策）+ 時間鎖 hook 首次真實誤報修復**
 
 ---
 
-## 🎯 本場最終戰果總覽（延續v41~v43三棒同一場session）
+## 🎯 本場最終戰果總覽
 
-### 1. ✅ 講座系列行銷頁定案上線
-- GitHub Pages：https://coach1973.github.io/bigtree/speakers-2026/
-- bymyway正式版：https://www.bymyway.com/bigtree/（自動站SOP首次零空白零表頭殘留一次上線）
-- 詳見記憶檔 `project_speakers2026_bigtree_launch.md`
+### 1. 🟢🟢🟢 bymyway.com 首頁正式換版（本場最大任務）
+- **新首頁**：`https://www.bymyway.com/` 直接顯示 BigTree 講座黑金風格頁
+- **舊首頁**：搬到 `https://www.bymyway.com/old/`（page_id 25066，資料完全沒動）
+- 技術機制：WordPress `page_on_front` 設定切到 27393，跟一般子頁部署共用自動站 SOP
+- 連帶內容修改：導覽「立即聯繫」→「登入課程」（連到 `/dashboard`）、頁面最下方新增精選影片區塊（YouTube `zL4InI7s96Q`，從舊首頁原始碼查證找到，不是猜的）
+- 踩坑：GitHub Pages 第一次部署失敗（系統暫時性問題），補空白 commit 觸發第二次部署成功
+- 復原方法：`page_on_front` 改回 25066 即可，30 秒可逆
+- 詳見記憶檔 `project_bymyway_homepage_replaced_with_bigtree.md`
 
-### 2. 🔴🔴🔴 試金石案例38：logo裁切debug血淚（54分54秒、10則訊息、9次修改）
-教練親口三問（為何不自己先看/為何要人工幫看左右/自己有沒有審美）逐條誠實回答寫進案例庫。核心教訓：`preview_eval`讀DOM數字不能替代截圖，工具本身視窗異常/CSS快取會讓數字失真但看似精確。詳見記憶檔 `feedback_visual_change_screenshot_not_dom_numbers.md`。
+### 2. 🔴 時間鎖 hook 上線後首次真實對話誤報，已修根因
+- 案例38後新建的 `rule_taiwan_time_check.sh` 在真實對話中第一次誤判違規（回覆零時鐘數字仍被判定違規）
+- 根因：舊版把信封層 `timestamp` 欄位 + 系統自動注入的提醒教材文字（本身含 UTC 範例）誤判成「AI處理過的資料」
+- 修法：只掃真正的訊息內容文字，排除信封欄位跟 `type=="attachment"` 事件
+- 驗證：原 8/8 回歸測試全過 + 兩個真實誤觸發輪重新模擬皆改回不誤判
+- commit `f4c3ef13`
+- 詳見記憶檔 `feedback_time_lock_hook_false_positive_fix.md`
 
-### 3. 🔴🔴 案例38查證過程中又犯UTC未轉台灣時間（同一場對話裡的第二次翻車）
-查timestamp算耗時沒錯，但口頭報時間軸給教練時把UTC原始小時數字當台灣時間講，教練當場抓到。**新建機關**：`scripts/rule_taiwan_time_check.sh`（Stop hook，commit `64e28e6a`）——事後偵測「這輪讀過UTC timestamp+回覆有時鐘數字+沒講台灣時間」三條件成立就exit 2強制重做。8/8測試通過。已在 `settings.json` Stop hooks 陣列註冊生效。
+### 3. 🟢 其他完成項目（小任務，細節見 git log）
+- jiesheng-leadership 新增「與作者有約」實體座談會（7/23，高雄市立圖書館，限額70人）
+- jiesheng-leadership 過期場次（6/5~7/1共5場）按鈕改灰色+標「已截止報名」
+- bigtree/speakers-2026 新增「媒體報導」區塊，20則報導以分類標籤呈現（人際關係/職場話題/九型人格/公益演講/電臺訪談/雜誌專訪/雜誌廣告/演講邀約/希望之聲電台訪問），標題保留原文章headline；3則watchinese標題後來換成教練提供的真實標題；導覽拿掉「五個相信」減少擁擠
 
 ---
 
@@ -26,21 +37,18 @@
 
 | 優先 | 對象 | 任務 |
 |------|------|------|
-| 🟡 | 下一棒軍師 | 建立案例38提到的「視覺類改動送出前截圖確認」Stop hook（比照今天新建的 `rule_taiwan_time_check.sh` 模式），把「preview_eval不能替代截圖」也系統化成機關，不只是記憶檔 |
-| 🟢 | 下一棒軍師 | 教練說「如果bigtree效果更好，之後改成COACH」——等教練決定是否要把 `bymyway.com/coach/` 也換成這個新版黑金風格內容 |
-| 🟢 | 下一棒軍師 | `bymyway.com/bigtree/` 分頁標題「– 大樹教育顧問」後綴是否要拿掉，等教練回覆 |
-| 🟢 | 下一棒軍師 | speakers-2026事件卡部分場次標「時間確認中」，等教練補實際時段；OG meta+site_icon若要分享連結出去也需要照SOP步驟9補上 |
-| 🟢 | 下一棒軍師 | 新建的 `rule_taiwan_time_check.sh` 剛上線，還沒經過真實對話驗證有無誤報，運作幾天後回頭檢查 `distill/rule_taiwan_time_violations.log` |
+| 🔴 | 下一棒軍師 | **教練指定下一個任務：企業健身房（海餅乾俱樂部・商務健身房）案子**。已有進行中的交接檔 `20260630-handoff_biz-gym-to-lenovo.md`（ACER→Lenovo，2026-06-30），內容含完整品牌數據、10個section結構、已上線 v2 於 `coach1973.github.io/bigtree/biz-gym/`。**開工前務必先讀這份交接檔**，避免重新問教練已經給過的品牌數據 |
+| 🟡 | 下一棒軍師 | bymyway 新首頁的 OG meta（LINE/FB分享卡）目前沒設，跟舊首頁一樣靠 site_icon(26000大樹logo) fallback；若教練要分享連結出去，需照 SOP 步驟9額外補 |
+| 🟢 | 下一棒軍師 | `rule_taiwan_time_check.sh` 修復後還沒經過長期真實對話驗證，運作幾天後回頭檢查 `distill/rule_taiwan_time_violations.log` 有無再誤報 |
 
 ---
 
 ## 🔑 本場關鍵記憶檔案索引
 
-- `project_speakers2026_bigtree_launch.md` — 講座頁上線全貌
-- `feedback_visual_change_screenshot_not_dom_numbers.md` — 視覺類任務必截圖鐵律
-- `feedback_taiwan_time_always.md`（補充）— 時間鎖N+1次違反+新機關
-- `試金石/試金石_案例庫.md` 案例38 — 完整debug血淚過程+教練三問逐條回答
+- `project_bymyway_homepage_replaced_with_bigtree.md` — 首頁換版完整技術細節+復原方法
+- `feedback_time_lock_hook_false_positive_fix.md` — 時間鎖機關誤報根因與修法
+- `20260630-handoff_biz-gym-to-lenovo.md`（workspace 根目錄）— 企業健身房案子完整交接（下一棒必讀）
 
 ---
 
-> Mac 終端機軍師 Sonnet 5 親筆，2026-07-03 下午1:30台灣時間。教練要開新對話視窗，本棒收尾。
+> Mac 終端機軍師 Sonnet 5 親筆，2026-07-04 凌晨12:10台灣時間。教練確認總結上傳，下一場從企業健身房案子開始。

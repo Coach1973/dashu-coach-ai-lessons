@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🟢🟢🟢 bymyway.com首頁正式換成BigTree講座頁(2026-07-03深夜)](project_bymyway_homepage_replaced_with_bigtree.md) — 教練主動決策升級首頁，舊首頁保留在/old/，30秒可復原；含GitHub Pages偶發部署失敗處理法
+- [🔴 時間鎖hook上線首次真實對話就誤報，已修根因(2026-07-03)](feedback_time_lock_hook_false_positive_fix.md) — 誤把信封timestamp欄位+系統自動注入提醒教材當成AI處理過的UTC資料，改成只掃真正內容文字
 - [🔴🔴 視覺類任務唯一可信驗證是截圖，不是DOM數字(2026-07-03)](feedback_visual_change_screenshot_not_dom_numbers.md) — logo裁切debug血淚：preview_eval讀DOM數字可能因工具異常/快取失真但看似精確，教練罵醒後截圖一次就抓對問題
 - [🟢 2026講座系列行銷頁bigtree上線(2026-07-03)](project_speakers2026_bigtree_launch.md) — coach1973.github.io/bigtree/speakers-2026/ + bymyway.com/bigtree/ 自動站首次零空白上線，黑金風格整合完成
 - [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md) — 別台AI寫的記憶檔案不算數，要自己SSH/git log/讀原始log驗證，「轉述」跟「親眼看到」是兩回事
