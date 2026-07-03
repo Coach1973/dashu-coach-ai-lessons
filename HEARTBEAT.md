@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-03 2026-07-03 13:33 - relay poll OK
+### 2026-07-03 2026-07-03 13:34 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-03 04:23（Mac）
 - ✅ pushed 77713686
@@ -149,3 +149,9 @@
 - Git：✅ auto-backup commit 76fa5929（HEARTBEAT.md + session_counter.json + terminal-notes/.extract_state.json + pending_distill/）
 - HEARTBEAT ⬜：無待辦
 - 結論：✅ 無異常，安靜處理，不通知教練
+
+## 🩺 軍師 Hook 自檢 2026-07-03 13:34（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: 0ecc306a-195a-4685-a62b-be81ff507f0c
