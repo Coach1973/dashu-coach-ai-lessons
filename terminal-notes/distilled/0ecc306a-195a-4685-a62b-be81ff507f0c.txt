@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session 0ecc306a-195a-4685-a62b-be81ff507f0c
-# 提取時間：2026-07-03 17:00 (台灣時間)
+# 提取時間：2026-07-03 17:30 (台灣時間)
 # 共 6 條教練原話
 
 ---
@@ -113,3 +113,5 @@ https://www.watchinese.com/article/2014/16312
 請發揮你的專業與智慧，想想看該如何安排、排版才會好看，並讓整體的呈現更友善且連結順暢。
 
 如果成果不錯的話，我們甚至可以用這個來取代 bymyway.com 的首頁，我覺得這樣也很棒。
+
+　▶ AI 回應：Let me view lines around the ARTICLES block end (line 653-678) to insert the new MEDIA CSS block right before NEWS CAROUSEL.
