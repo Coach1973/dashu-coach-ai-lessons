@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2989d377-322b-4a22-a511-60d11dcf12e3
-# 提取時間：2026-07-03 23:30 (台灣時間)
-# 共 23 條教練原話
+# 提取時間：2026-07-03 23:53 (台灣時間)
+# 共 24 條教練原話
 
 ---
 
@@ -421,3 +421,25 @@ Stop hook feedback:
 2. 把「首頁指向」設定切換過去
 
 切換完，打 `bymyway.com`…（略）
+
+【教練 2026-07-03 15:43】
+OK，看完了，可以執行
+
+　▶ AI 回應：Pushed. Now let's do the WordPress side: rename the old homepage's slug and flip the front-page setting.
+
+　▶ AI 回應：Now let's verify both URLs live.
+
+　▶ AI 回應：It's re-running (queued/in progress). Let's wait for it to complete.
+
+　▶ AI 回應：This new deployment completed successfully. Let's verify the live site now.
+
+　▶ AI 回應：GitHub Pages now confirmed serving the latest content. Now let's verify the bymyway.com homepage (through the iframe) reflects this too, once its CDN cache clears.
+
+　▶ AI 回應：Confirmed correct. Now let's open both live URLs in Chrome for the coach to see the final result.
+
+　▶ AI 回應：🎉 首頁換版完成了,全部驗證通過:
+
+**執行過程(含一個小插曲，誠實回報)**：
+- Push 內容到 GitHub：commit `bd1e3e7`
+- GitHub Pages 第一次自動部署**失敗**(`Deploy to GitHub Pages... 部署失敗，請稍後再試`，我有查 log 確認)——這是 GitHub 系統偶發問題，不是我們內容的錯，我補了一個空白 commit `f244937` 觸發重新部署，這次成功
+- WordPress 後台：舊首頁(ID 25066)網址代稱改成 `old`，標題改成「首頁（舊版）」；「首頁顯示」設定切換指向 BigTree 頁面(I…（略）
