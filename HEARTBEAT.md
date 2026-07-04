@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-07-04 01:07
+> 重啟時間：2026-07-04 21:07
 > 對話記錄已完整存入 memory/2026-07-04.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -21,37 +21,5 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## 🚀 Session-End 雲端同步 2026-07-04 01:07（Mac）
-- ✅ pushed 015a2357
-- 同步路徑：HEARTBEAT.md
-
 ## 學長 relay poll
-### 2026-07-04 2026-07-04 21:02 - relay poll OK
-
-## 🚀 Session-End 雲端同步 2026-07-04 01:12（Mac）
-- ✅ pushed 8749bf4b
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 01:19（Mac）
-- ✅ pushed 9871457c
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 01:27（Mac）
-- ✅ pushed 585fb8e4
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 01:41（Mac）
-- ✅ pushed ce6c3623
-- 同步路徑：HEARTBEAT.md
-
-## 🚀 Session-End 雲端同步 2026-07-04 01:57（Mac）
-- ✅ pushed 0f96e53b
-- 同步路徑：HEARTBEAT.md
-
-## ⚠️ peipei 自動 force-restart 2026-07-04 17:45:00
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
-
-## ⚠️ peipei 自動 force-restart 2026-07-04 18:45:01
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+### 2026-07-04 2026-07-04 21:29 - relay poll OK
