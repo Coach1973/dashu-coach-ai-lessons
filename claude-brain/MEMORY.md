@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴 下結論前先查歷史紀錄；查清楚後直接決定不要再問(2026-07-05)](feedback_query_before_conclude_and_act_on_facts.md) — 兩個相反方向的糾正合一：查證是為了讓判斷有根據，有根據就不該再猶豫
+- [🔧 OpenClaw兩個獨立git倉庫：外層master(cron設定)vs workspace/main(共用大腦)](reference_openclaw_nested_git_repos.md) — 別把兩者當同一repo分岔，查cron問題進外層、查記憶/試金石進workspace內層
+- [🎨 商務健身房(biz-gym)黑金改版進度(2026-07-04)](project_bizgym_blackgold_redesign_2026-07-04.md) — 統一Noto Sans TC粗黑體+黑金配色定案，10個section本機已套用，等教練說「推」才上線
 - [🟢🟢🟢 bymyway.com首頁正式換成BigTree講座頁(2026-07-03深夜)](project_bymyway_homepage_replaced_with_bigtree.md) — 教練主動決策升級首頁，舊首頁保留在/old/，30秒可復原；含GitHub Pages偶發部署失敗處理法
 - [🔴 時間鎖hook上線首次真實對話就誤報，已修根因(2026-07-03)](feedback_time_lock_hook_false_positive_fix.md) — 誤把信封timestamp欄位+系統自動注入提醒教材當成AI處理過的UTC資料，改成只掃真正內容文字
 - [🔴🔴 視覺類任務唯一可信驗證是截圖，不是DOM數字(2026-07-03)](feedback_visual_change_screenshot_not_dom_numbers.md) — logo裁切debug血淚：preview_eval讀DOM數字可能因工具異常/快取失真但看似精確，教練罵醒後截圖一次就抓對問題
