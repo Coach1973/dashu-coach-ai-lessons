@@ -26,7 +26,7 @@
 - 同步路徑：HEARTBEAT.md
 
 ## 學長 relay poll
-### 2026-07-04 2026-07-04 18:32 - relay poll OK
+### 2026-07-04 2026-07-04 19:03 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-04 01:12（Mac）
 - ✅ pushed 8749bf4b
@@ -49,5 +49,9 @@
 - 同步路徑：HEARTBEAT.md
 
 ## ⚠️ peipei 自動 force-restart 2026-07-04 17:45:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## ⚠️ peipei 自動 force-restart 2026-07-04 18:45:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
