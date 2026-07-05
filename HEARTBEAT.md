@@ -22,8 +22,13 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-05 2026-07-05 20:33 - relay poll OK
+### 2026-07-05 2026-07-05 21:02 - relay poll OK
 
 ## ⚠️ peipei 自動 force-restart 2026-07-05 17:55:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🪨 試金石策展提醒 2026-07-05 21:00
+- top10_dynamic.md 已 35 天未更新
+- 候選池：特助場景庫_自動增量.md 累積 34 個自動場景
+- 動作：教練動嘴「策展試金石」→ 軍師讀候選池挑出值得收錄的，升級成 top10_dynamic.md 條目
