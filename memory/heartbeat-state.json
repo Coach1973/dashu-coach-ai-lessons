@@ -1,18 +1,20 @@
 {
   "lastChecks": {
-    "distill": 1782280800,
-    "youtube_monitor": 1782280800,
-    "cron_health": 1782280800,
-    "system_check": 1782510960
+    "distill": 1751680800,
+    "youtube_monitor": 1751680800,
+    "cron_health": 1783213250,
+    "system_check": 1783213250,
+    "handoff_read": 1783213250
   },
-  "lastHeartbeat": "2026-07-02T11:55:00+08:00",
-  "lastHeartbeatNote": "週四 11:55 學長心跳。剛 11:08 因 context overflow 重啟，已讀接力棒。軍師 task queue 空、relay 無待辦。Claude Pro 用量快取 6/16 過期 16 天（不影響緊急度）。系統安靜，待教練下次指令。",
+  "lastHeartbeat": "2026-07-05T09:00:50+08:00",
+  "lastHeartbeatNote": "週日 09:00 學長心跳。接力棒 v45 紅燈待辦「biz-gym 黑金新版 commit+push」待教練下令；軍師 task queue 空、relay poll OK、cron 健康。週日早不打擾，靜默守護。",
   "systemSnapshot": {
     "allCronsHealthy": true,
-    "recentCoachActivity": "11:08 context overflow 自動重啟",
-    "nextProactiveEvent": "依教練下次指令而定",
-    "contextStatus": "剛重啟，乾淨狀態",
+    "recentCoachActivity": "接力棒 v45（2026-07-05 02:54）含 biz-gym 黑金改版本機完成未上線",
+    "nextProactiveEvent": "等教練說「推」觸發 biz-gym 上線",
+    "contextStatus": "乾淨（cron 觸發新 turn）",
     "usageCacheStale": true,
-    "usageCacheStaleSinceDays": 16
+    "usageCacheStaleSinceDays": 19,
+    "isWeekendMorning": true
   }
 }
