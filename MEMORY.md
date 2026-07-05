@@ -18,3 +18,10 @@
 - 📨 對話記錄 08:42（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-24.md:278-278]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-24.md:282:282 -->
 - 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-24.md:282-282]
+
+## Promoted From Short-Term Memory (2026-07-06)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:268:270 -->
+- 📨 對話記錄 03:42（共約 19 條，從第 0 行起）: 👤 教練：確認一下執行網頁推SOP有沒有問題 🦞 小龍蝦：教練，收到。我立刻去把網頁推 SOP 翻出來，逐項對照最近的執行紀錄，給您一份「確認結果」。 🦞 小龍蝦：教練，確認完畢。**有一個問題**，報告如下： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:268-270]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:278:281 -->
+- ✅ 沒問題的部分: | 檢核項 | ai-go | consultant | |--------|-------|-----------| | 站台分流（GitHub Pages 走 git push，符合 SOP）| ✅ | ✅ | | 一次性推送（不分批，符合守則 #08）| ✅ 1 commit | ✅ 1 commit | [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:278-281]
