@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-05 2026-07-05 22:50 - relay poll OK
+### 2026-07-05 2026-07-05 22:54 - relay poll OK
 
 ## ⚠️ peipei 自動 force-restart 2026-07-05 17:55:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
@@ -41,4 +41,8 @@
 
 ## 🚀 Session-End 雲端同步 2026-07-05 22:50（Mac）
 - ✅ pushed 5af1a6e1
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-07-05 22:50（Mac）
+- ✅ pushed c6aa1493
 - 同步路徑：HEARTBEAT.md
