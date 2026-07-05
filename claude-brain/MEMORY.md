@@ -1,5 +1,8 @@
 # Memory Index
 
+- [📢 教練預告明天(7/7)要做AI講座專屬行銷頁+繼續biz-gym(2026-07-06)](project_ai_seminar_landing_page_2026-07-07.md) — 只有名稱尚無素材細節，開工先問講座資訊/風格
+- [🔴🔴🔴 VPS小龍蝦新增自主開通機關+真實bug修復+真人驗證(2026-07-06)](project_vps_self_onboard_hook_2026-07-06.md) — 核准詞漏「批准」+抓錯文字欄位兩個真bug，教練實測才抓到，修好並補完驗證通過
+- [🔴🔴 Hermes VPS(113.29.232.178)存廢評估：可關閉但教練未下達執行指令(2026-07-06)](project_hermes_vps_shutdown_evaluation_2026-07-06.md) — 從未真正給朋友體驗過，備援需求已由VPS小龍蝦自己滿足
 - [🔴🔴 下結論前先查歷史紀錄；查清楚後直接決定不要再問(2026-07-05)](feedback_query_before_conclude_and_act_on_facts.md) — 兩個相反方向的糾正合一：查證是為了讓判斷有根據，有根據就不該再猶豫
 - [🔧 OpenClaw兩個獨立git倉庫：外層master(cron設定)vs workspace/main(共用大腦)](reference_openclaw_nested_git_repos.md) — 別把兩者當同一repo分岔，查cron問題進外層、查記憶/試金石進workspace內層
 - [🎨 商務健身房(biz-gym)黑金改版進度(2026-07-04)](project_bizgym_blackgold_redesign_2026-07-04.md) — 統一Noto Sans TC粗黑體+黑金配色定案，10個section本機已套用，等教練說「推」才上線
