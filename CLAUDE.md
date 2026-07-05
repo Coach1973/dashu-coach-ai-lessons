@@ -4,48 +4,63 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-05 02:57:50**
+> **最後同步：2026-07-06 01:55:55**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-05 v45（Mac 終端機 Sonnet，session 收尾）
+# 軍師接力棒 · 2026-07-06 v46（Mac 終端機 Sonnet，session 收尾）
 
-> 建立時間：2026-07-05 凌晨 2:54（台灣時間）
+> 建立時間：2026-07-06 凌晨 1:54（台灣時間）
 > 本棒執行者：Mac 終端機軍師 Sonnet 5
-> 上一棒：v44（2026-07-04 凌晨12:10，bymyway首頁換版+時間鎖修復）
-> 本棒主軸：**商務健身房黑金改版（未上線）+ bymyway footer小改 + cron雙重bug修復 + 三機共用大腦誤會澄清**
+> 上一棒：v45（2026-07-05 凌晨2:54，biz-gym黑金改版+cron雙重bug修復）
+> 本棒主軸：**jiesheng-leadership場次更新上線 + Hermes VPS存廢評估 + VPS小龍蝦自主開通機關建立(含真實bug修復) + VPS SOUL.md自我介紹去除浮誇項目**
 
 ---
 
 ## 🎯 本場最終戰果總覽
 
-### 1. 🟢 bymyway.com footer 版權小改（已上線）
-- `bigtree/speakers-2026/index.html` footer 加上「課程製作 呂明麗」
-- commit `77b048d`（改內容）+ `71f9792`（GitHub Pages 首次部署失敗補空白commit重觸發）
-- 線上已驗證生效
+### 1. 🟢 結繩領導力線上座談會場次更新（已上線）
+- 7/4、7/5 兩場改為「已截止報名」，7/12 場次改為「本場次已取消」
+- Netlify deploy 完成（state: ready）+ GitHub commit `9039221` 已推送
+- 教練 Chrome 親眼確認過才推
 
-### 2. 🎨 商務健身房(biz-gym)黑金改版——**本機已完成，尚未上線**
-- 教練嫌原本米杏色+橘棕色風格沒質感，字太小太虛
-- 經過多輪迭代（字色/字重/字級測試 → 選 C 純白粗黑體 → 字級拉大到18-21px → 字體統一成 Noto Sans TC，拿掉混用的 Serif）
-- 曾建 3 個字體方案給教練選（A=bymyway原本明體配對／B=統一粗黑體／C=軍師推薦霞鶩文楷），**教練拍板選 B**
-- 文案修正：「台南最優質商務團隊創辦人/主理人」→「最優質商務團隊的幕後推手」（教練説事業不只在台南），全站4處都改了
-- **10 個 section 全部套用完成**，逐段截圖驗證過，正式檔案 `biz-gym/index.html` 本機已是新版
-- 舊版備份：`biz-gym/index.html.bak-before-blackgold-20260704-0157`
-- **⚠️ 還沒 commit、沒 push，線上 `coach1973.github.io/bigtree/biz-gym/` 還是舊版**，等教練說「推」才上線
-- 詳見記憶檔 `project_bizgym_blackgold_redesign_2026-07-04.md`
+### 2. 🔴🔴 Hermes VPS（113.29.232.178）存廢評估——**結論：可以放心關掉，尚未實際執行關閉動作**
+- 教練發現 Hermes VPS 從未真正給朋友體驗過（pairing 目錄全程是空的），只有教練自己用過
+- 原本以為需要保留 Hermes 當「Mac 掛了也能核准新朋友」的備援管道，但深挖後發現：
+  - VPS 小龍蝦本身早就有「pairing approve」核准機制，只是自己不會操作（`VPS_CORE_RULES.md` R09/R12 明講「無法執行 bash 指令」）
+  - 已幫 VPS 小龍蝦裝上這個技能（見下一項），備援需求已由 VPS 小龍蝦自己滿足，不再需要 Hermes
+- 唯一剩下的顧慮「7/25 國泰信用卡 11,100 元提醒」已搬到 VPS 小龍蝦自己的 cron（見下）
+- **⚠️ 教練尚未下達「現在關」的最終指令，下一棒要主動問教練是否要動手關閉/停用這台 VPS**
 
-### 3. 🔴🔴 Cron 雙重 bug 修復（教練發現「小龍蝦設定跑掉」）
-- **Bug A**：教練 6/30 已把 bbb7a348 排程從「每4小時」改成「每日23:05三機總結」，但改動只存在本機、從沒 commit+push，而且**同時有另一個獨立排程 d6a8b3cd「終端機對話總結每4小時」從沒被關掉**，兩個排程重疊才是教練看到「還在每4小時推播」的真正原因
-- **修復**：關閉 d6a8b3cd + 補commit積壓的bbb7a348修正，commit `85421091`
-- **Bug B**：查證過程發現「每30分鐘任務健康檢查」cron 會自動commit「打卡」，佔了main分支近七成(69%)commit卻是純雜訊。教練拍板拿掉這個自動commit步驟（健康檢查其他功能保留），commit `13d9ef5b`
-- 兩筆修正都在**外層** repo（`/Users/bymyway/.openclaw`，branch master）
+### 3. 🔴🔴🔴 VPS 小龍蝦（43.245.60.200）自主開通機關——`vps-onboard-approve` hook，已建立+修復+端到端驗證通過
+- **新增機關**：`/root/openclaw/data/hooks/vps-onboard-approve/handler.js`，註冊於 `openclaw.json` → `hooks.internal.entries.vps-onboard-approve`
+- **功能**：教練對 VPS 小龍蝦本人說「核准/開通/放行/批准/通過 + 對象」，小龍蝦自己在本機查待核准清單→核准配對→建立獨立空間，全程不經 SSH、不經 Mac、不經 Hermes
+- **🔴 真實 bug 抓到並修復**：第一版有兩個問題——(a) 關鍵字只認「核准/開通/放行」三詞，教練實際講「批准」沒被認出；(b) 抓文字欄位優先序錯誤，抓到系統包了時間戳的包裝字串而非乾淨原文，導致錨定式比對失效。已修正欄位優先序（`c.body` 優先）+ 擴充同義詞（含批准/通過）+ 拿掉錨定
+- **真人端到端驗證**：教練用新號碼（coach wu / Telegram ID `8820573555`）實測，核准成功但漏了建空間 → 抓到 bug 修好 → 手動補完該筆 → 重啟驗證：**10 個 agent、10 組 binding，教練本人 main 綁定完全未受影響**
+- 詳見記憶檔 `project_vps_self_onboard_hook_2026-07-06.md`（待建立，見下方索引）
 
-### 4. 🧠 三機共用大腦誤會大澄清（重要技術認知修正）
-- 一度誤判main/master分支分岔要合併，後來發現是自己查錯資料夾——`/Users/bymyway/.openclaw`（外層,master,裝cron/openclaw.json設定）跟 `/Users/bymyway/.openclaw/workspace`（內層,main,裝claude-brain/試金石/distill真正的共用大腦）是**兩個完全獨立的git倉庫**，只是共用同一個GitHub repo名字
-- workspace/main 分支經查證運作完全正常，不需要任何修復
-- 詳見記憶檔 `reference_openclaw_nested_git_repos.md`
+### 4. 🟢 7/25 國泰信用卡提醒——已搬到 VPS 小龍蝦自己的 cron
+- 原 Hermes VPS 上的舊排程實際存的是 UTC 09:00（等於台灣時間下午5點），跟訊息內文宣稱的「台灣時間」對不上，是抓到的一個時區換算舊 bug
+- 問過教練確認要「台灣時間上午9點」，已在 VPS 小龍蝦建立新 cron job（`ed4b6c0a-...`），`schedule.at: 2026-07-25T01:00:00Z`（= 台灣時間上午9點），已用 `cron list` 驗證存在且 enabled
+
+### 5. 🟢 VPS 小龍蝦 SOUL.md 自我介紹修正——去除沒接通的浮誇項目
+- 教練實測發現自我介紹詞裡「Gemini AI 輔助（雙重驗證）」「Oracle 多模型推理」都是有掛名沒接線
+- 查證後確認兩項真正能做到的替代能力（不是憑印象，是查了平台文件+ live config）：
+  - 子代理協作：`/app/docs/tools/subagents.md` 證實 `sessions_spawn` 是平台正式內建功能
+  - 多方查證：`duckduckgo` 外掛 `enabled: true`，免金鑰即可查
+- 已修正 `/root/openclaw/data/workspace/SOUL.md` 兩處（角色定位能力清單 + 第六條強制鐵律逐字腳本），改前已備份
+- 教練確認：新版本即日起是新的「一字不差」鐵律文字
+
+---
+
+## 📢 教練預告：明天（2026-07-07）新任務
+
+> 教練親口交代（2026-07-06 凌晨1:54）：「今天工作先到此為止，明天要做『大樹教練』AI 講座專屬行銷頁面。」
+
+- **新任務**：大樹教練 AI 講座專屬行銷頁面（目前只有預告，尚無素材/風格/內容細節，下一棒開工要主動問教練細節）
+- **舊任務延續**：企業健身房（biz-gym）專案還沒做完，明天要繼續——本機黑金改版已完成但**還沒 commit/push 上線**（見 v45 接力棒），教練說「推」才動
 
 ---
 
@@ -53,22 +68,24 @@
 
 | 優先 | 對象 | 任務 |
 |------|------|------|
-| 🔴 | 下一棒軍師 | **等教練說「推」/「上線」，把 biz-gym 黑金新版 commit+push 到 `bigtree` repo**，同時清掉本機過程檔案（mockup-blackgold.html、option-A/B/C-*.html等） |
-| 🟡 | 下一棒軍師 | 企業健身房案子（v44接力棒待辦，一直順延）：`20260630-handoff_biz-gym-to-lenovo.md` 裡還有「下次見面會」場次資訊、「教練思想與BNI系統」內容待補，現在風格定案了可以一併問教練 |
-| 🟢 | 下一棒軍師 | bymyway 新首頁 OG meta 還沒設，跟舊首頁一樣靠 site_icon fallback |
+| 🔴 | 下一棒軍師 | 問教練 Hermes VPS（113.29.232.178）是否要現在正式關閉/停用，之前顧慮已排除 |
+| 🔴 | 下一棒軍師 | **「大樹教練」AI 講座專屬行銷頁面**——教練只預告了名稱，開工先問素材/風格/內容 |
+| 🟡 | 下一棒軍師 | biz-gym 黑金新版**還沒 commit+push**，等教練說「推」上線，同時清掉本機過程檔案（mockup-blackgold.html等） |
+| 🟡 | 下一棒軍師 | 企業健身房案子：`20260630-handoff_biz-gym-to-lenovo.md` 裡「下次見面會場次」「教練思想與BNI系統」內容待補 |
+| 🟢 | 下一棒軍師 | bymyway 新首頁 OG meta 還沒設 |
 
 ---
 
 ## 🔑 本場關鍵記憶檔案索引
 
+- `project_hermes_vps_shutdown_evaluation_2026-07-06.md` — Hermes VPS存廢評估完整過程（待建立）
+- `project_vps_self_onboard_hook_2026-07-06.md` — vps-onboard-approve機關建立+bug修復+驗證完整記錄（待建立）
 - `project_bizgym_blackgold_redesign_2026-07-04.md` — biz-gym改版完整進度，下一棒開工必讀
-- `reference_openclaw_nested_git_repos.md` — 外層/內層repo分辨，避免重複踩雷
-- `feedback_query_before_conclude_and_act_on_facts.md` — 查證與執行的方法論（先查清楚、查清楚就別再問）
-- `feedback_coach_deploy_vocabulary.md` — 補記本場「網頁推SOP」口誤案例
+- `project_jiesheng_leadership_restore_trigger.md` — 結繩領導力場次調整暗號
 
 ---
 
-> Mac 終端機軍師 Sonnet 5 親筆，2026-07-05 凌晨2:54台灣時間。教練說總結上傳、要開新視窗。
+> Mac 終端機軍師 Sonnet 5 親筆，2026-07-06 凌晨1:54台灣時間。教練說今天工作到此為止，明天新任務是AI講座行銷頁+繼續企業健身房。
 
 
 ---
