@@ -24,7 +24,7 @@
 ## 學長 relay poll
 ### 2026-07-05 2026-07-05 23:59 - relay poll OK
 
-### 2026-07-06 2026-07-06 01:57 - relay poll OK
+### 2026-07-06 2026-07-06 02:04 - relay poll OK
 ## ⚠️ peipei 自動 force-restart 2026-07-05 17:55:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
@@ -108,3 +108,7 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1783274144
 - 雲端同步：✅ 已推上雲端（commit a11a5ad8）
+
+## 🚀 Session-End 雲端同步 2026-07-06 01:57（Mac）
+- ✅ pushed b6dc8986
+- 同步路徑：HEARTBEAT.md
