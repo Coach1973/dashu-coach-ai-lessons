@@ -17,7 +17,9 @@ TRANSCRIPT_PATH=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.transcript_path // ""'
 echo "$CMD" | grep -qE '(^|&&|\||;)\s*git\s+push' || exit 0
 
 # 「push即上線」網站清單（GitHub Pages / GitHub 自動部署型，只有真的有推送鎖的才算）
-WEBSITE_REPOS='cool-case|theunrestrictedwar|jiesheng-leadership'
+# 2026-07-07 教練發現清單過期漏了 bigtree（案例37同一個坑再犯一次）：
+# 依 ~/github_repos/ 實際 clone 的站台資料夾全部補齊，之後新增站台記得同步這裡
+WEBSITE_REPOS='cool-case|theunrestrictedwar|jiesheng-leadership|bigtree|bymyway-website|government-grow|government-subsidies|ai-go|consultant|northern411|tainan-calender|vip-club|coach-vip-club'
 
 # 只認「路徑型」出現（cd 到某資料夾 / cwd 本身在該資料夾），
 # 不比對整條指令的自由文字（避免 commit message 內文提到站名誤觸，2026-07-02 血淚教訓）
