@@ -19,4 +19,15 @@ metadata:
 ## 教訓
 `~/.openclaw/cron/jobs.json` 這份檔案曾被視為「改了=生效」，實際上是脫節的靜態快照，導致至少兩次假修復（見 [[reference_openclaw_cron_json_stale_snapshot]]）。以後任何cron變更一律用 `openclaw cron` CLI 操作+驗證，不再手動編輯這份JSON。
 
+## 🔴 2026-07-07 更新：「已修好」其實只修了一半，真正的鎖是 delivery.bestEffort 不是 failureAlert
+
+教練 23:00 那天晚上還是收到「Cron job ... failed: FailoverError: The AI service is temporarily overloaded」的錯誤推播，證明前一天「統一關閉failureAlert」的修復不完整。查 openclaw CLI 原始碼（`~/.hermes/node/lib/node_modules/openclaw/dist/server-cron-CJwAiILI.js`）才發現：
+
+- `job.failureAlert` 只控制「連續失敗N次」的門檻型警報（`emitFailureAlert`），這條路徑昨天確實關對了。
+- 但還有第二條完全獨立的路徑 `dispatchCronFailureDestinationNotifications`——**只要單次執行status="error"，且`job.delivery.bestEffort !== true`，不論failureAlert設什麼都會照樣發送**「⚠️ Cron job X failed: ...」到Telegram。這條路徑昨天完全沒處理到。
+- 真正能同時擋住兩條路徑的欄位是 `delivery.bestEffort`（CLI參數 `--best-effort-deliver`）。已對4個真的會announce到Telegram的任務（06:00起床摘要 a8450f2c、23:00場景化升華 dc9bdf5c、行事曆每週同步 89b8648d、7/24繳費提醒peipei的de70413e）加上此參數；另外7個delivery本來就是「not requested」的任務不受影響，不用改。
+- 驗證方式：讀原始碼確認`mergeCronPayload`是merge不是覆蓋（不會清空message欄位），逐一`cron get`確認`delivery.bestEffort:true`且message欄位完整保留。因為這4個任務會對外送真實訊息（含教練Telegram、佩佩老師群組車貸提醒），沒有用`cron run`實際觸發測試，避免誤發訊息。
+
+**教訓：`--no-failure-alert` 跟「這個任務不會再打擾我」不是同一件事**，openclaw的cron通知系統有兩條互相獨立的程式碼路徑，只改一個參數＝只堵住一半的水管。以後遇到「說關了還是有收到」，第一步是去讀CLI原始碼確認欄位真的對應哪段邏輯，不能只看CLI `--help`的中文說明就假設懂了。
+
 關聯：[[feedback_junshi_role_decide_not_ask]]、[[reference_openclaw_cron_json_stale_snapshot]]、[[feedback_false_success_report_pattern]]
