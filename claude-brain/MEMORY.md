@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 Cron大體檢：假關閉的4hr報告+無授權的30分鐘健檢+全靜音(2026-07-06)](project_cron_cleanup_2026-07-06.md) — 3問題一次修好，發現jobs.json是脫節快照的關鍵bug
+- [🔴🔴 openclaw cron/jobs.json是脫節靜態快照，改cron只能用CLI(2026-07-06)](reference_openclaw_cron_json_stale_snapshot.md) — 改檔案不會生效，兩次假修復實證；查改一律用openclaw cron CLI
 - [📢 教練預告明天(7/7)要做AI講座專屬行銷頁+繼續biz-gym(2026-07-06)](project_ai_seminar_landing_page_2026-07-07.md) — 只有名稱尚無素材細節，開工先問講座資訊/風格
 - [🔴🔴🔴 VPS小龍蝦新增自主開通機關+真實bug修復+真人驗證(2026-07-06)](project_vps_self_onboard_hook_2026-07-06.md) — 核准詞漏「批准」+抓錯文字欄位兩個真bug，教練實測才抓到，修好並補完驗證通過
 - [🔴🔴 Hermes VPS(113.29.232.178)存廢評估：可關閉但教練未下達執行指令(2026-07-06)](project_hermes_vps_shutdown_evaluation_2026-07-06.md) — 從未真正給朋友體驗過，備援需求已由VPS小龍蝦自己滿足
@@ -26,7 +28,7 @@
 - [🔴🔴🔴 VPS小龍蝦9用戶記憶隔離漏洞修復（2026-07-01）](project_vps_client_isolation_fix_2026-07-01.md) — client-memory hook原本把教練內部資訊+其他客戶隱私整份灌給每個人，已改成per-user獨立檔案+fail-closed
 - [🟢 說真話辦真事優先於顧全形象＋系統備份≠App備份（2026-07-01 教練親口肯定）](feedback_truth_over_reassurance_backup_nuance.md) — 教練要案例都寫「有備份」，軍師指出案例29真無備份並拒改，教練讚許誠實；技術上磁碟映像救不回單一App誤刪資料
 - [🔴🔴🔴 軍師流量稀缺，耗 token 動作寫腳本丟終端機跑（2026-06-30 親口）](feedback_junshi_token_economy_outsource.md) — 軍師=深層思考+判斷；耗 token 的 grep/cat/log 掃描要外包終端機 MiniMax M3；本場血淚一輪用 50%
-- [🔴🔴🔴 軍師=Opus 最高決策層，不請示教練小決策（2026-06-30 親口）](feedback_junshi_role_decide_not_ask.md) — 學長等 MiniMax M3 是回報者，軍師用更高智慧想根源解法直接做；可逆方向對就動工，不丟 A/B/C 給教練
+- [🔴🔴🔴 軍師=Opus 最高決策層，不請示教練小決策（2026-06-30起二次發作）](feedback_junshi_role_decide_not_ask.md) — 學長等MiniMax M3是回報者；可逆方向對就動工，不丟A/B/C或AskUserQuestion給教練，7/6用cron停用案二度重犯
 - [🎤 大樹教練 2026 講座系列一頁式行銷頁（交接 Acer 2026-06-26 凌晨）](project_coach_speakers_2026_landing.md) — v2 已套教練 GitHub coach1973 設計正典，等講座資料填空＋部署；桌面有交接棒 markdown
 - [🔴🔴🔴 禁止 Stop-Process -Force 關瀏覽器（案例30：Zoom 連結失效差點赴不了約）](feedback_force_kill_browser_data_loss.md) — 強制殺瀏覽器=協定權限消失；搬家前請教練手動關、搬後測完整流程不只測能啟動
 - [🔴 App 搬外接碟後偵測失效→直接官網重裝，AI 跑安裝指令=假回報](feedback_zoom_junction_reinstall.md) — 診斷 registry/protocol/port 全沒用；教練自己官網重裝一次搞定（2026-06-25 血淚）
