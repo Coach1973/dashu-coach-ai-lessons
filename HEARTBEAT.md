@@ -22,7 +22,7 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 學長 relay poll
-### 2026-07-06 2026-07-06 17:45 - relay poll OK
+### 2026-07-06 2026-07-06 17:59 - relay poll OK
 
 ## 🚀 Session-End 雲端同步 2026-07-06 13:37（Mac）
 - ✅ pushed 6c3482239
@@ -67,3 +67,11 @@
 ## 🚀 Session-End 雲端同步 2026-07-06 17:44（Mac）
 - ✅ pushed 88f4c3878
 - 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-07-06 17:46（Mac）
+- ✅ pushed 880589a36
+- 同步路徑：HEARTBEAT.md
+
+## ⚠️ peipei 自動 force-restart 2026-07-06 17:55:01
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
