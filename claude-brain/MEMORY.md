@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🟢🟢🟢 聯想機C槽大體檢+瘦身完成，釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — LINE/GanJing/Perplexity過期備份+opcode舊碼+NotebookLM快取+Windows.old全清；Chrome發現早已細粒度Junction搬家不需動作
+- [🔴🔴🔴 禁止問教練記不記得，AI要自己查——查證方向七層系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md) — 教練親口糾正：凡走過必留痕跡，git log/試金石/memory/HEARTBEAT/distill/原始對話紀錄/即時系統現況七層查證順序，永遠不問教練回想細節
 - [📮 「小龍蝦的專線」=cloudflared=LINE命脈，絕對不能關(2026-07-08)](reference_xiaolongxia_line_tunnel_cloudflared.md) — LINE官方→Cloudflare→Mac小龍蝦的訊息通道；詳細在路徑大全第十三節；差點被誤關的血淚見試金石案例40
 - [🔴🔴🔴 Fable5系統全盤稽核+修復完成：3紅全修/11殭屍排程清理(2026-07-08)](project_fable5_system_audit_2026-07-08.md) — session-end自我餵養/蒸餾三引擎/relay四頭殭屍全斬，土炮排程器vs crontab雙跑一併拆；cloudflared=LINE通道勿動
 - [🟢🟢🟢 宏碁機分割區調整後D槽清理11.25GB+建立W03完整SOP(2026-07-08)](project_acer_c_d_cleanup_20260708.md) — 🔴待辦：觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（`_20260703_before_resize`，36.3GB）
