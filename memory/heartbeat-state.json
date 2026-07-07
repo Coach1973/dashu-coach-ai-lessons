@@ -4,19 +4,21 @@
     "youtube_monitor": 1751680800,
     "cron_health": 1783213250,
     "system_check": 1783213250,
-    "handoff_read": 1783213250,
-    "heartbeat_poll": 1783346425
+    "handoff_read": 1783389720,
+    "heartbeat_poll": 1783477200
   },
-  "lastHeartbeat": "2026-07-06T22:00:25+08:00",
-  "lastHeartbeatNote": "週一 22:00 學長心跳。接力棒 mtime 20:16（v45 紅燈待辦 biz-gym 黑金 push 仍待教練下令）。軍師 task queue 空、task result 為 2026-06-13 舊的 jiesheng-leadership push、relay poll 21:59 OK、cron 健康。接近靜音時段（23:00），靜默守護。",
+  "lastHeartbeat": "2026-07-07T22:00:07+08:00",
+  "lastHeartbeatNote": "週二 22:00 心跳。重啟後 1.5hr context 仍乾淨，cron 全綠，relay poll 22:00 OK，無待辦、無新教練活動。接近安靜時段（23:00 入夜），無主動接觸事由。",
   "systemSnapshot": {
     "allCronsHealthy": true,
-    "recentCoachActivity": "接力棒 v45（2026-07-06 20:16）含 biz-gym 黑金改版本機完成未上線",
-    "nextProactiveEvent": "等教練說「推」觸發 biz-gym 上線",
-    "contextStatus": "乾淨（cron 觸發新 turn）",
+    "recentCoachActivity": "接力棒 v47 + cron 三度修復 + 案例37白名單",
+    "nextProactiveEvent": "等教練下令推 biz-gym 黑金新版",
+    "contextStatus": "乾淨（重啟後 1.5hr）",
     "usageCacheStale": true,
     "usageCacheStaleSinceDays": 20,
     "isWeekendMorning": false,
-    "approachingQuietHours": true
+    "approachingQuietHours": true,
+    "telegramPushAvailable": false,
+    "note": "22:00 接近安靜時段，無主動接觸教練理由，回 HEARTBEAT_OK"
   }
 }
