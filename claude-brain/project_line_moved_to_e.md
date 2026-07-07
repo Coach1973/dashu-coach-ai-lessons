@@ -94,6 +94,12 @@ LINE 26.x 的 LineLauncher.exe 會用 `GetModuleFileName()` 取得自己的實�
 | 7 | **有成功案例先讀那份 SOP** | 不要自己瞎猜 |
 | 8 | **不改 Registry** | junction 自動接管 |
 
+## 五、聯想機（TREE）過期備份清理完成（2026-07-08）
+
+聯想筆電（主機名 TREE，E:\Claude-Data）上，LINE 之外還有 GanJing（乾淨世界）、Perplexity（Comet）、Claude 桌面版沙盒（vm_bundles）也用同一套「junction 搬到 E 槽＋原地留 .bak」模式。查證五組 .bak（LINE Data+Cache、GanJing User Data、Perplexity Comet、Claude vm_bundles）都已超過 7 天保留期，E 槽現役資料都驗證有當天寫入紀錄，教練自己另做了一鍵備份當保險後，確認清除，共釋放 C 槽約 13.8GB。事後教練逐一重開 LINE、乾淨世界、Perplexity、Google（Chrome）、Claude 桌面版，全部正常。
+
+**教訓**：這台機器搬家搬的不只 LINE，凡是曾經 junction 到 E 槽的 App，搬家當天的 .bak 都要記得追蹤 7 天到期，不會自動提醒，要主動查。
+
 ## 四、驗證題（AI 自證已讀）
 
 1. LINE 電腦版有雲端備份嗎？ → **沒有**，唯一備份方式是手動複製資料夾
