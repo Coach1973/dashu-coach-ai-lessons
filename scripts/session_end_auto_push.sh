@@ -10,7 +10,11 @@
 set -uo pipefail
 
 WS="/Users/bymyway/.openclaw/workspace"
-LOG="$WS/HEARTBEAT.md"
+# 2026-07-08 Fable5 稽核修復：推送紀錄改寫 /tmp，不寫 HEARTBEAT.md。
+# 原因：HEARTBEAT.md 在同步清單裡，寫進去會讓它永遠是髒的 → 每次 Stop 都
+# 觸發一次只推「上次推送紀錄」的空轉 commit（自我餵養循環）。
+# 推送憑證改由 commit 本身留痕（git log 可查），不需要重複記帳。
+LOG="/tmp/session_end_push.log"
 LOCK="/tmp/session_end_push.lock"
 
 # 10 秒內重複觸發直接退出（Stop hook 可能連續觸發）
@@ -45,12 +49,14 @@ for p in "${SYNC_PATHS[@]}"; do
   fi
 done
 
-# 去重
-DIRTY=($(printf '%s\n' "${DIRTY[@]}" | sort -u))
-
+# 空清單先擋（bash 3.2 在 set -u 下展開空陣列會報 unbound variable，
+# 舊版因 HEARTBEAT 永遠髒、此路徑從未走到；2026-07-08 斷循環後現形，一併修正）
 if [[ ${#DIRTY[@]} -eq 0 ]]; then
   exit 0
 fi
+
+# 去重
+DIRTY=($(printf '%s\n' "${DIRTY[@]}" | sort -u))
 
 # 加入 stage
 git add "${DIRTY[@]}" 2>/dev/null

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.openclaw.split-memory</string>
+    <key>Comment</key>
+    <string>Split memory: 今日記憶檔達 150KB 自動滾動（從 cron 遷移 2026-06-05）</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/bymyway/.openclaw/workspace/scripts/split_memory.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>900</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/split_memory_cron.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/split_memory_cron.error.log</string>
+</dict>
+</plist>
