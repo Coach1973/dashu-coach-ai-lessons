@@ -4,18 +4,18 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-08 03:55:52**
+> **最後同步：2026-07-08 04:54:38**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-08 v49（Mac 終端機 Fable 5，系統全盤稽核+修復完成）
+# 軍師接力棒 · 2026-07-08 v49（Mac 終端機 Fable 5，系統全盤稽核+修復完成，教練指示「總結上傳」收尾）
 
-> 建立時間：2026-07-08 凌晨 03:55（台灣時間）
+> 建立時間：2026-07-08 凌晨 03:55（台灣時間）／收尾更新：04:53
 > 本棒執行者：Mac 終端機軍師 **Fable 5**（教練親口指定的最高等級）
 > 上一棒：v48（2026-07-08 凌晨 02:20，Sonnet 交辦 Fable 5 稽核任務）
-> 本棒主軸：**系統全盤稽核（3紅6黃7綠）+ 教練核准後全部紅色問題修復完成 + 清 11 個殭屍/重複排程 + 閃電說刪除 + cloudflared 驗明正身**
+> 本棒主軸：**系統全盤稽核（3紅6黃7綠）+ 教練核准後全部紅色問題修復完成 + 清 11 個殭屍/重複排程 + 閃電說刪除 + cloudflared 驗明正身 + 三處永久封存（路徑大全/試金石/共用大腦）**
 
 ---
 
@@ -38,7 +38,14 @@
 - 用 `sfltool dumpbtm` 逐筆驗證：那些 bash/sh/python/node 全是小龍蝦自家 LaunchAgent，**不是病毒，不要關**
 - RustDesk（教練遠端命脈）/ GoogleUpdater / Mounty+Benjamin Fleischer 都正常
 - **閃電說（Tanwei Wuhan）**：教練核准刪除，App 114MB + 壞掉的自啟動 plist 已刪除驗證 ✅（走 delete_guard 通行證流程，鎖有真的攔我一次=機關有效）
-- **cloudflared**：查 zsh_history 破案——3/15 裝的，是 **LINE 頻道的訊息通道**（LINE 官方伺服器 → Cloudflare → 這台 Mac 的小龍蝦 port 18789/line/webhook）。openclaw.json 的 LINE 頻道 enabled:true。**保留不動**，已問教練 LINE 還用不用，若不用可連 LINE 頻道一起退役
+- **cloudflared**：查 zsh_history 破案——3/15 裝的，是 **LINE 頻道的訊息通道**（LINE 官方伺服器 → Cloudflare → 這台 Mac 的小龍蝦 port 18789/line/webhook）。教練確認：**LINE 用得很頻繁，絕對不能斷**，保留不動
+
+### 5. cloudflared 三處永久封存（教練親令：記錄下來下次不用再查）
+教練原話：「還好你有做求證……請你把它記錄到我們的檔案當中……只要一提到這個關鍵字，例如說『小龍蝦的專線』或『小龍蝦 LINE 專用的頻道』，立刻就能知道講的是什麼。」並要求把這次的經驗值寫進試金石，肯定軍師「實事求是、認真努力、非常深度的思考」。
+- `路徑大全.md` 第十三節：關鍵字對映 + 技術明細 + 健康檢查指令 + 鐵律「任何清理不得停用」
+- 試金石案例 40：完整記下「查無紀錄≠來路不明，證據才決定該不該刪」的查證鏈
+- 共用大腦新增 `reference_xiaolongxia_line_tunnel_cloudflared.md` + MEMORY.md 索引，三機同步可查
+- commit：`adf486baf`
 
 ---
 
@@ -46,7 +53,6 @@
 
 | 優先 | 任務 |
 |------|------|
-| 🔴 | 教練若回覆「LINE 不用了」→ cloudflared + openclaw LINE 頻道一起退役（要先確認沒有別的東西走這條通道） |
 | 🟡 | 稽核報告 6 個🟡逐項處理：兩個掃描 hook 合併省 2.3 秒/句、WEBSITE_REPOS 改動態掃描、E09 補「announce cron 必加 --best-effort-deliver」、試金石編號統一（案例25重複、字母/數字/W三套並行）、council-orchestrator 去留（教練說之後再討論） |
 | 🟡 | biz-gym 黑金新版等教練說「推」（已延續五棒） |
 | 🟢 | 聯想/ACER 兩機的同款稽核（發跨機指令需教練拍板） |
@@ -59,7 +65,7 @@
 - `_archive/launchagents_retired_20260708/README.md` — 11 個退役零件的復原方法
 - 記憶檔 `project_fable5_system_audit_2026-07-08.md`（共用大腦）— 稽核+修復完整紀錄
 
-> Fable 5 親筆，2026-07-08 凌晨 03:55。本場一小時：稽核+修復+清殭屍+答疑，全部有 commit hash 佐證。
+> Fable 5 親筆，2026-07-08 凌晨 03:55，教練指示「總結上傳」04:53 收尾。本場約 2 小時：稽核+修復+清殭屍+答疑+永久封存，全部有 commit hash 佐證。教練當面肯定：「還好你有做求證」「實事求是、認真努力、非常深度的思考」。下一棒建議開新視窗接續，先讀試金石案例 40。
 
 
 ---
