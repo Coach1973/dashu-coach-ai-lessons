@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 Fable5系統全盤稽核完成：3紅6黃7綠(2026-07-08)](project_fable5_system_audit_2026-07-08.md) — session-end自我餵養循環/蒸餾雙引擎/relay殭屍輪詢三大真問題，修復待教練說「修」；cron失敗通知確認只有兩條路
 - [🟢🟢🟢 大樹小講．無話不談行銷頁上線(2026-07-06)](project_dashuxiaojiang_landing_page_2026-07-06.md) — coach1973.github.io/bigtree/ 正式取代舊版，舊版存/old/；色系/場次/11場EDM歷史紀錄完整記錄
 - [🔴🔴 公開活動真實性看有人參加，不看有沒有做網頁(2026-07-06)](feedback_public_event_reality_not_webpage_existence.md) — 教練親口說過的場次直接當事實記錄，別用「查無網頁」暗示存疑
 - [🔴🔴🔴 Cron大體檢：假關閉的4hr報告+無授權的30分鐘健檢+全靜音(2026-07-06)](project_cron_cleanup_2026-07-06.md) — 3問題一次修好，發現jobs.json是脫節快照的關鍵bug
