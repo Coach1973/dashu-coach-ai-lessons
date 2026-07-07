@@ -1,0 +1,39 @@
+*/15 * * * * bash /Users/bymyway/.openclaw/workspace/scripts/backup_terminal_sessions.sh >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace add terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace commit -m "auto: 終端機對話備份 $(date +\%H:\%M)" >> /tmp/backup_terminal.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace push origin main >> /tmp/backup_terminal.log 2>&1
+0 17 * * * echo '⚠️ 提醒：今天是勞保最後繳費日，請去便利商店（7-11/全家/萊爾富）繳費' >> /Users/bymyway/Desktop/reminder.txt
+0 15 * * * echo '🦞 教練，今天記得清點庫存（領導手冊庫存），結果告訴小龍蝦紀錄' >> /Users/bymyway/Desktop/reminder.txt
+0 9 16 5 * echo '🦞 教練，今天是5/16採買日：會員成功專案手冊20本、申請書1、獎狀1、會議護照5本' >> /Users/bymyway/Desktop/reminder.txt
+
+# R18 鐵律：每 15 分鐘檢查 workspace uncommitted 是否超過 60 分（軍師 2026-05-16 立法）
+*/15 * * * * /Users/bymyway/.openclaw/workspace/scripts/checkpoint_audit.sh >> /tmp/checkpoint_audit.log 2>&1
+
+# R19 鐵律：每天 23:50 掃當天 HEARTBEAT.md 純 OK 心跳數（軍師 2026-05-16 立法）
+# disabled 2026-06-05 by 軍師（cron 改用 ai.openclaw.cron-daemon）: 50 23 * * * /Users/bymyway/.openclaw/workspace/scripts/heartbeat_audit.sh >> /tmp/heartbeat_audit.log 2>&1
+
+# 接力棒→CLAUDE.md 自動鏡像（軍師 2026-05-16 12:26 立法，桌面版能讀到最新接力棒）
+*/5 * * * * /Users/bymyway/.openclaw/workspace/scripts/sync_handoff_to_claudemd.sh >> /tmp/sync_handoff.log 2>&1
+
+# 🔴 distill增量蒸餾：每2小時蒸餾今日對話精華（軍師2026-05-25新增）
+# disabled 2026-06-05 by 軍師（cron 改用 ai.openclaw.cron-daemon）: 0 */2 * * * /Users/bymyway/.openclaw/workspace/scripts/run_distill.sh >> /tmp/distill_cron.log 2>&1
+
+# 🔴 relay_poll：學弟妹讀取學長的RELAY_QUEUE（改用wrapper修補路徑）
+# disabled 2026-06-05 by 軍師（cron 改用 ai.openclaw.cron-daemon）: * * * * * /Users/bymyway/.openclaw/workspace/scripts/run_relay_poll.sh >> /tmp/relay_poll.log 2>&1
+# [DEPRECATED 2026-06-03 by 軍師] 已被 run_terminal_distill.sh 取代
+# 🔴 痛點計數重排：每日23:40（升華後）統計守則違反次數，重算痛點排名（軍師2026-05-28新增）
+40 23 * * * /usr/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/rerank_top10.py >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace add distill/痛點排名_自動.md >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace commit -m "auto: 痛點排名重算 $(date +\%Y-\%m-\%d)" >> /tmp/rerank_top10.log 2>&1 && git -C /Users/bymyway/.openclaw/workspace push origin main >> /tmp/rerank_top10.log 2>&1
+# disabled 2026-06-05 by 軍師（cron 改用 ai.openclaw.cron-daemon）: 10,40 * * * * /Users/bymyway/.openclaw/workspace/scripts/split_memory.sh >> /tmp/split_memory_cron.log 2>&1
+0 0 31 5 * echo '🎂 今天是孔大哥（峯哥）生日！記得給他祝福 🎂' >> /Users/bymyway/Desktop/reminder.txt
+
+# 🔴 終端機對話全自動蒸餾：每30分鐘 extract+distill+push（軍師2026-06-03新增）
+*/30 * * * * /Users/bymyway/.openclaw/workspace/scripts/run_terminal_distill.sh >> /tmp/terminal_distill_cron.log 2>&1
+
+
+# 🔴 蒸餾 watchdog：每 15 分鐘檢查 pending 卡住 >2 小時（軍師 2026-06-04 教練 C 選：犯錯自動入庫）
+# disabled 2026-06-05 by 軍師（cron 改用 ai.openclaw.cron-daemon）: */15 * * * * /Users/bymyway/.openclaw/workspace/scripts/distill_watchdog.sh >> /tmp/distill_watchdog_cron.log 2>&1
+
+# 查話系統：每30分鐘收割真人對話進逐字保險箱+重建索引（軍師 2026-06-11 立，教練拍板）
+*/30 * * * * /opt/homebrew/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/recall.py --harvest --build >> /tmp/recall.log 2>&1
+# peipei channel-stop bug 自動偵測+force-restart（軍師 2026-06-30 18:45）
+*/5 * * * * /Users/bymyway/.openclaw/workspace/scripts/peipei_stuck_force_restart.sh
+
+# 試金石策展提醒（每週日 21:00，軍師方案 2026-06-30）
+0 21 * * 0 /Users/bymyway/.openclaw/workspace/scripts/weekly_touchstone_curation_reminder.sh

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.openclaw.distill-watchdog</string>
+    <key>Comment</key>
+    <string>Distill watchdog: 每 15 分鐘檢查 pending_distill/ 卡住 >2 小時（從 cron 遷移 2026-06-05）</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/bymyway/.openclaw/workspace/scripts/distill_watchdog.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>900</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/distill_watchdog_cron.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/distill_watchdog_cron.error.log</string>
+</dict>
+</plist>
