@@ -49,12 +49,14 @@ for p in "${SYNC_PATHS[@]}"; do
   fi
 done
 
-# 去重
-DIRTY=($(printf '%s\n' "${DIRTY[@]}" | sort -u))
-
+# 空清單先擋（bash 3.2 在 set -u 下展開空陣列會報 unbound variable，
+# 舊版因 HEARTBEAT 永遠髒、此路徑從未走到；2026-07-08 斷循環後現形，一併修正）
 if [[ ${#DIRTY[@]} -eq 0 ]]; then
   exit 0
 fi
+
+# 去重
+DIRTY=($(printf '%s\n' "${DIRTY[@]}" | sort -u))
 
 # 加入 stage
 git add "${DIRTY[@]}" 2>/dev/null
