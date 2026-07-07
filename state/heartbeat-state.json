@@ -1,0 +1,7 @@
+{
+  "lastChecks": {
+    "heartbeat": 1751820016,
+    "restart_notified": 1751820016
+  },
+  "notes": "2026-07-06 18:00 - 首次心跳補送重啟通知給教練（原重啟 12:08 未立即送出）。系統健康，所有 session-end sync 已推上 GitHub。"
+}

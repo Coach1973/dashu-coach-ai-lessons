@@ -190,3 +190,35 @@
   ✅ Gateway 活躍（過去 1 小時有事件）
   ✅ 模型已載入: minimax/MiniMax-M3
 
+===== [2026-07-03 08:00:03] VPS 小龍蝦健康檢查 =====
+整體狀態: OK
+  ✅ SSH 連通
+  ✅ Docker 容器: Up 24 hours (healthy)
+  ✅ Gateway 24h 錯誤數: 36（< 50 容忍值）
+  ✅ Gateway 活躍（過去 1 小時有事件）
+  ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）
+
+===== [2026-07-04 08:00:00] VPS 小龍蝦健康檢查 =====
+整體狀態: OK
+  ✅ SSH 連通
+  ✅ Docker 容器: Up 2 days (healthy)
+  ✅ Gateway 24h 錯誤數: 16（< 50 容忍值）
+  ✅ Gateway 活躍（過去 1 小時有事件）
+  ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）
+
+===== [2026-07-05 08:00:00] VPS 小龍蝦健康檢查 =====
+整體狀態: WARN
+  ✅ SSH 連通
+  ✅ Docker 容器: Up 3 days (healthy)
+  ⚠️ Gateway 24h 錯誤數: 206（超過容忍值）
+  ⚠️ Gateway 過去 1 小時無活動跡象
+  ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）
+
+===== [2026-07-06 08:00:00] VPS 小龍蝦健康檢查 =====
+整體狀態: WARN
+  ✅ SSH 連通
+  ✅ Docker 容器: Up 6 hours (healthy)
+  ✅ Gateway 24h 錯誤數: 19（< 50 容忍值）
+  ⚠️ Gateway 過去 1 小時無活動跡象
+  ✅ 模型已載入: minimax/MiniMax-M3
+
