@@ -1,5 +1,20 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-07-08（共 10 則）
+1. evidence: memory/2026-06-30.md:84-85
+2. Candidate: 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **1. 小龍蝦個人介紹頁** → 等您說「做介紹頁」時，會主動補上媒體報導區塊（我會用您校正過的品牌資料，不上網亂抄）。
+3. evidence: memory/2026-06-30.md:87-87
+4. Theme: `教練` kept surfacing across 16 memories.
+5. evidence: memory/.dreams/session-corpus/2026-07-08.txt:2-2, memory/.dreams/session-corpus/2026-07-08.txt:3-3, memory/2026-06-30.md:13-15
+6. Theme: `蒸餾` kept surfacing across 12 memories.
+7. evidence: memory/.dreams/session-corpus/2026-07-07.txt:14-14, memory/.dreams/session-corpus/2026-07-07.txt:15-15, memory/.dreams/session-corpus/2026-07-07.txt:16-16
+8. ⚠️ 教訓記錄（給未來的我）: **過度依賴 USER.md 對照表**：看到「真鑽」就聯想到「真鑫」是 BNI 語音誤判，沒先求證。; **教練沒否認 ≠ 默認**：「提醒就好」只是要我不煩他，不是對「真鑫/真鑽」的答覆。我以為「未否認就是默認」是過度解讀。; **正確做法**：遇到 USER.md 沒列的陌生詞，**就算對方不回應，也要標註「未確認」而不是預設成某個值**。本次教訓要寫進 .learnings/。; **守則 #18「語音糾偏必問不猜」**：我問了，但問完又自己猜了，這還是猜。 [confidence=0.58 evidence=memory/2026-06-30.md:3
+9. 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **1. 小龍蝦個人介紹頁** → 等您說「做介紹頁」時，會主動補上媒體報導區塊（我會用您校正過的品牌資料，不上網亂抄）。 [confidence=0.58 evidence=memory/2026-06-30.md:87-87]
+10. 📨 對話記錄 09:15（共約 13 條，從第 0 行起）:
+
+---
+
+
 ## 蒸餾 2026-07-07（共 91 則）
 1. Candidate: Assistant: 蒸餾結果：NO_NEW_ENTRIES，今日尚無新增對話紀錄需要處理。任務結束。
 2. evidence: memory/.dreams/session-corpus/2026-07-06.txt:16-16
