@@ -10,7 +10,8 @@ metadata:
 `/Users/bymyway/.openclaw`（外層）和 `/Users/bymyway/.openclaw/workspace`（內層）是**兩個完全獨立、各自 `git init` 的倉庫**，只是剛好都設定了同一個 GitHub remote 名字 `mac-openclaw-workflows`，歷史完全不相干（git 回報「拒絕合併無關的歷史」）。
 
 - **外層**（repo root = `/Users/bymyway/.openclaw`）：分支 `master`，裝 `cron/jobs.json`、`openclaw.json` 等 OpenClaw 系統設定，只跟這台 Mac 自己的排程/設定有關，不是三機共用內容。
-- **內層 `workspace/`**：分支 `main`（4500+ commit，remote 還多掛了 `claude-workflows` / `lessons` 兩個備援），這才是真正的「三機共用大腦」，`claude-brain/`（149行 MEMORY.md 索引 + 158 個記憶檔）、`試金石/`、`distill/`、`knowledges/` 全部在這裡，`feed_junshi_handoff.sh`（開工pull）跟 `session_end_auto_push.sh`（收工push）都是對這個內層 repo 操作。
+- **內層 `workspace/`**：分支 `main`（4500+ commit，remote 掛 `lessons` 備援），這才是真正的「三機共用大腦」，`claude-brain/`（149行 MEMORY.md 索引 + 158 個記憶檔）、`試金石/`、`distill/`、`knowledges/` 全部在這裡，`feed_junshi_handoff.sh`（開工pull）跟 `session_end_auto_push.sh`（收工push）都是對這個內層 repo 操作。`~/.claude/projects/-Users-bymyway--openclaw/memory` 其實是這個 repo 的 symlink 路徑（`git rev-parse --show-toplevel` 會指回 `~/.openclaw/workspace`），兩個路徑改的是同一份東西。
+  - **🔴 2026-07-08 更新**：原本還多掛了一個過期的 `claude-workflows` remote（5月的舊倉庫HEAD，跟現在內容早就對不上），Windows機（聯想）那邊有人推送時繞去這個舊remote才發現問題、改推`origin`才成功。Mac這邊已用 `git remote remove claude-workflows` 清掉，只剩 `origin`(`mac-openclaw-workflows`) + `lessons`。**其他機器（Windows/ACER）若也還掛著這個舊remote，要各自在自己那台跑同樣的移除指令**，軍師沒有遠端權限直接幫其他機器改。
 
 ## Why
 2026-07-05 查「小龍蝦設定跑掉」時，在外層資料夾跑 `git log`/`git push origin main` 一直失敗，一度誤判三機共用大腦壞了、main跟master分岔要合併——後來才發現是查錯資料夾，內層 workspace 的 main 分支其實運作正常（6分鐘前才剛同步過）。白忙一場的根因就是沒意識到這是兩個repo。
