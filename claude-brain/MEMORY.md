@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🧰 教練常用工具箱——反覆需求集中索引(2026-07-08)](reference_coach_common_toolbox.md) — yes/no免問指令+部署詞彙+HTML預覽鐵律+危險指令五道閘門+查證七層系統+App搬家正確做法，一次查全
 - [🟢🟢🟢 聯想機C槽大體檢+瘦身完成，釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — LINE/GanJing/Perplexity過期備份+opcode舊碼+NotebookLM快取+Windows.old全清；Chrome發現早已細粒度Junction搬家不需動作
 - [🔴🔴🔴 禁止問教練記不記得，AI要自己查——查證方向七層系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md) — 教練親口糾正：凡走過必留痕跡，git log/試金石/memory/HEARTBEAT/distill/原始對話紀錄/即時系統現況七層查證順序，永遠不問教練回想細節
 - [📮 「小龍蝦的專線」=cloudflared=LINE命脈，絕對不能關(2026-07-08)](reference_xiaolongxia_line_tunnel_cloudflared.md) — LINE官方→Cloudflare→Mac小龍蝦的訊息通道；詳細在路徑大全第十三節；差點被誤關的血淚見試金石案例40
