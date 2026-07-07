@@ -1,4 +1,5 @@
 - [Browser no full junction](feedback_browser_no_full_junction.md) — 瀏覽器絕不整個 junction，只搬書籤等增量檔案
+- [跨機備份 SOP 提醒](feedback_cross_machine_backup_reminder.md) — 教練新電腦要做增量備份（junction 搬家）時主動提醒，引用試金石案例 39 七步驟
 - [OpenClaw spool stuck fix](project_openclaw_spool_stuck_fix.md) — VPS 小龍蝦訊息卡住：檢查 .processing 檔案並清除即可修復
 - [ACER post-restore TODO](project_acer_post_restore_todo.md) — 一鍵還原後開工時必須主動提醒執行還原步驟
 - [VPS 連線資訊](reference_vps_connection.md) — 小龍蝦與赫茲米 VPS 的 IP/帳密/指令，任何電腦都能直接連

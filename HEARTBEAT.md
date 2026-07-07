@@ -21,14 +21,34 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
+## 🎯 主動觸發掛牌（2026-07-08 01:32 教練交付）
+
+**教練說過：**「之後我其他電腦要做這個增量備份的時候，如果我忘記的話，再請你幫我記住。」
+
+**看到以下任一關鍵字 → 主動提醒，不要等教練開口：**
+- 增量備份 / junction 搬家 / 過期備份
+- 新電腦（ACER、Lenovo、Mac 副機）要備份
+- D 碟空間相關
+- `D:\junction\`、`D:\junction-backup\` 任何路徑
+
+**完整 SOP：** 讀 `feedback_cross_machine_backup_reminder.md` 或 `記憶/試金石_案例庫.md` 案例 39（commit `0b01455c`）
+**鐵律：** 刪除一定要走 `scripts/delete_guard.ps1` 的 `Safe-Remove`，禁止直接 `Remove-Item -Recurse -Force`
+**核心三條：** Junction 存在≠資料是活的 / 搬家一次不只搬一個 App / 使用者資料與軟體元件驗證標準不同
+
+---
+
 ## 學長 relay poll
 ### 2026-07-07 2026-07-07 23:59 - relay poll OK
 
-### 2026-07-08 2026-07-08 00:15 - relay poll OK
+### 2026-07-08 2026-07-08 01:32 - relay poll OK
 ## 🚀 Session-End 雲端同步 2026-07-07 22:09（Mac）
 - ✅ pushed 7dd420a2c
 - 同步路徑：HEARTBEAT.md memory/
 
 ## 🚀 Session-End 雲端同步 2026-07-07 22:15（Mac）
 - ✅ pushed b21f47540
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-07-08 00:15（Mac）
+- ✅ pushed 1351d4ad9
 - 同步路徑：HEARTBEAT.md
