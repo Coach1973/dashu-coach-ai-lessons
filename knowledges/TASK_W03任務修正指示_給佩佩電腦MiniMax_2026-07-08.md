@@ -20,8 +20,21 @@
 
 ---
 
-## 📂 第一步：確認 repo 位置，pull 最新版
+## 📂 第一步：確認環境，pull 最新版
 
+**這個 repo 是私有的（private），不掛認證會 clone 失敗，這是這台機器第一次接這套系統，請照下面順序做：**
+
+### 1a. 先確認 Git 有沒有裝
+```powershell
+git --version
+```
+如果報錯「找不到命令」，先裝：
+```powershell
+winget install --id Git.Git -e --source winget
+```
+裝完**重開一個新的 PowerShell 視窗**再繼續（PATH 才會生效）。
+
+### 1b. 確認這台機器有沒有 clone 過
 ```powershell
 Test-Path "$env:USERPROFILE\Documents\mac-openclaw-workflows"
 ```
@@ -32,11 +45,21 @@ cd "$env:USERPROFILE\Documents\mac-openclaw-workflows"
 git pull origin main --quiet
 ```
 
-**如果回傳 False（這台機器第一次接這個 repo）：**
+**如果回傳 False（第一次接這個 repo，需要一次性認證）：**
+教練會親口告訴你一組一次性授權碼（GitHub token），**只需要輸入這一次**，之後 git 會自動記住不用再問：
 ```powershell
 cd "$env:USERPROFILE\Documents"
 git clone https://github.com/Coach1973/mac-openclaw-workflows.git
+```
+執行後如果跳出 Username/Password 提示：
+- Username 填：`Coach1973`
+- Password 填：**教練現在告訴你的那組授權碼**（不是 GitHub 登入密碼，是一組 `gho_` 開頭的字串）
+
+clone 成功後設定記住認證，之後永遠不用再輸入：
+```powershell
 cd mac-openclaw-workflows
+git config credential.helper store
+git pull origin main --quiet
 ```
 
 pull/clone 完成後，**這封信本身**就在剛拉下來的 repo 裡：
