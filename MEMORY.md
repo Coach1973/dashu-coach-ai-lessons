@@ -25,3 +25,8 @@
 - 📨 對話記錄 03:42（共約 19 條，從第 0 行起）: 👤 教練：確認一下執行網頁推SOP有沒有問題 🦞 小龍蝦：教練，收到。我立刻去把網頁推 SOP 翻出來，逐項對照最近的執行紀錄，給您一份「確認結果」。 🦞 小龍蝦：教練，確認完畢。**有一個問題**，報告如下： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:268-270]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:278:281 -->
 - ✅ 沒問題的部分: | 檢核項 | ai-go | consultant | |--------|-------|-----------| | 站台分流（GitHub Pages 走 git push，符合 SOP）| ✅ | ✅ | | 一次性推送（不分批，符合守則 #08）| ✅ 1 commit | ✅ 1 commit | [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:278-281]
+
+## Promoted From Short-Term Memory (2026-07-07)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-28.md:273:274 -->
+- 📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 👤 教練：這裡並沒有蒸餾的任務，如果要執行，應該是請學弟及學妹回報服務的情況，學長這裡每天也都有蒸餾報告，只是沒有同步到這裡來 🦞 小龍蝦：收到教練 👌 [score=0.876 recalls=0 avg=0.620 source=memory/2026-06-28.md:273-274]

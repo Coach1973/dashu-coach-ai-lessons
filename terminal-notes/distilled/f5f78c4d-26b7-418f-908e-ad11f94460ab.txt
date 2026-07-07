@@ -1,0 +1,95 @@
+# 終端機對話萃取 — Session f5f78c4d-26b7-418f-908e-ad11f94460ab
+# 提取時間：2026-07-07 22:15 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-07-06 16:08】
+開
+
+　▶ AI 回應：✅ 六步驟已讀完，向教練回報：
+
+**第1步 接力棒（v47，7/6 晚上8:16）**
+- 🟢🟢🟢 「大樹小講．無話不談」行銷頁正式上線取代舊版（[coach1973.github.io/bigtree](https://coach1973.github.io/bigtree/)），舊版存 `/old/`，教練說**還在持續微調中**
+- 🔴🔴🔴 Cron 大體檢：抓到 7/5 一次「假關閉」的舊修復（改 jobs.json 檔案根本不生效，得用 `openclaw cron` CLI 才是真的）；現已真的關掉4hr總結報告、30分鐘健檢併入每日23:00任務、12個cron全部靜音失敗警報…（略）
+
+【教練 2026-07-06 16:09】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：檢查後確認：剛才提到的「00:08」本身就已經是**台灣時間**（來自 hook 內建的台灣時間自檢時間戳，非 UTC 原始值），只是我回覆時沒有明講「台灣時間」四個字，觸發了這個關鍵字比對型的鎖。
+
+補充澄清：
+- 「00:08」= 台灣時間 2026-07-07 00:08（凌晨）
+- 「7/6 晚上8:16」= 台灣時間，已標註無誤
+
+這次是格式上沒標字樣、不是真的算錯時區，之後我會確保每次提到時間都明確帶「台灣時間」字樣，避免鎖誤判也讓教練一眼確認。
+
+【教練 2026-07-06 16:12】
+目前的情況我看了看，需要處理的是 案例37。
+
+我覺得在上一輪對話當中，它還是會出現沒有給我 HTML 預覽的情況，都要等我講完才有，所以這件事情要重複查驗到底是不是真的有鎖上。
+
+另外有幾件事：
+
+1. Hermes VPS 我已經關閉了，所以你不用再下線去關它，我已經從系統根源都關上了。
+2. 大樹小獎還可能會調整，沒錯，還可能會調整，所以就隨時待命。
+3. 體檢的部分，我之前明確說過錯誤訊息就不要再發給我了，經過處理就好。但我剛才 11 點鐘還是有收到，所以我貼給你看，你順便處理一下。
+
+就這樣。
+
+⚠️ Cron job "🔴 場景化升華+系統健檢（每日23:00）" failed: FailoverError: The AI service is temporarily overloaded. Please try again in a moment.
+
+　▶ AI 回應：Diff confirmed clean. Now committing both fixes (guard script + cron best-effort) and updating memory.
+
+　▶ AI 回應：Now committing the memory + handoff updates.
+
+　▶ AI 回應：全部處理完畢，逐項回報：
+
+**1. 案例37重複查驗——找到真正的病根，已修好**
+機關邏輯本身沒壞（三情境測試都對），但白名單 `WEBSITE_REPOS` 從7/2建立後就沒更新，只列了3個站台（cool-case/theunrestrictedwar/jiesheng-leadership）。您上一輪做的「大樹小講」用的是新站台 `bigtree`，根本不在名單裡——**鎖對它完全不會觸發，等於沒鎖，而且不會有任何警示**，這就是為什麼您感覺鎖形同虛設。已補齊 `~/github_repos/` 下全部站台，針對 bigtree 專門測過一次（無證據擋下✓），commit `1eb4…（略）
+
+【教練 2026-07-06 16:44】
+<task-notification>
+<task-id>b23mb56tn</task-id>
+<tool-use-id>toolu_01RZcVLDU2N8WJWH39YFJH6w</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/f5f78c4d-26b7-418f-908e-ad11f94460ab/tasks/b23mb56tn.output</output-file>
+<status>completed</status>
+<summary>Background command "在openclaw workspace中搜尋失敗訊息模板字串來源" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：那個背景搜尋指令的結果已經沒有必要看了——同一個問題我後來用直接 grep 原始碼的方式已經找到根因並修好（見上一則回覆）。這個背景任務可以忽略。
+
+【教練 2026-07-07 14:08】
+https://coach1973.github.io/bigtree/  有7月10日的EDM，請協助放到歷史紀錄 圖片在下載資料夾
+
+【教練 2026-07-07 14:08】
+[Image: original 1152x2048, displayed at 1125x2000. Multiply coordinates by 1.02 to map to original image.]
+
+　▶ AI 回應：按照鐵律，先本機開 Chrome 讓您親眼確認再推。
+
+　▶ AI 回應：已經在 Chrome 打開了「過往講座歷史紀錄」頁面，新增的第12場「7月10日（五）線上座談會：告訴我什麼叫尊重？」已加在7/5那場後面，EDM圖片也貼上去了。
+
+請您看一下 Chrome 視窗確認沒問題，沒問題的話跟我說「推」，我就把這個更新推上線（`coach1973.github.io/bigtree/archive/`）。
+
+【教練 2026-07-07 14:13】
+OK
+
+　▶ AI 回應：已推上線並驗證：`coach1973.github.io/bigtree/archive/` 的歷史講座紀錄頁已經看得到7/10「告訴我什麼叫尊重？」線上座談會，EDM圖片也正常顯示（線上curl測試200 OK）。commit `d860692`。
