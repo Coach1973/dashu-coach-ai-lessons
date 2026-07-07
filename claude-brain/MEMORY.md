@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🟢🟢🟢 宏碁機分割區調整後D槽清理11.25GB+建立W03完整SOP(2026-07-08)](project_acer_c_d_cleanup_20260708.md) — 🔴待辦：觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（`_20260703_before_resize`，36.3GB）
 - [🟢🟢🟢 大樹小講．無話不談行銷頁上線(2026-07-06)](project_dashuxiaojiang_landing_page_2026-07-06.md) — coach1973.github.io/bigtree/ 正式取代舊版，舊版存/old/；色系/場次/11場EDM歷史紀錄完整記錄
 - [🔴🔴 公開活動真實性看有人參加，不看有沒有做網頁(2026-07-06)](feedback_public_event_reality_not_webpage_existence.md) — 教練親口說過的場次直接當事實記錄，別用「查無網頁」暗示存疑
 - [🔴🔴🔴 Cron大體檢：假關閉的4hr報告+無授權的30分鐘健檢+全靜音(2026-07-06)](project_cron_cleanup_2026-07-06.md) — 3問題一次修好，發現jobs.json是脫節快照的關鍵bug
