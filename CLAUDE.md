@@ -4,53 +4,41 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-08 02:20:00**
+> **最後同步：2026-07-08 03:55:52**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-08 v48（Mac 終端機 Sonnet，教練指示「總結上傳」收尾）
+# 軍師接力棒 · 2026-07-08 v49（Mac 終端機 Fable 5，系統全盤稽核+修復完成）
 
-> 建立時間：2026-07-08 凌晨 02:20（台灣時間）
-> 本棒執行者：Mac 終端機軍師 Sonnet 5
-> 上一棒：v47（2026-07-06 晚上8:16，大樹小講上線+cron大體檢）
-> 本棒主軸：**bigtree 場次維護 + 案例37二度驗證(白名單bug) + cron通知二度修復(bestEffort) + git remote過期清理 + 下一棒最高優先任務：Fable 5 系統全盤稽核**
-
----
-
-## 🔴🔴🔴 下一棒最優先任務（教練親口指定，用 Fable 5 執行）
-
-教練指示下一輪要請**最高等級 Fable 5** 對整套小龍蝦系統做全盤健診——檢查所有設定的邏輯正確性、優化空間，讓問題越來越少、效率越來越高。
-
-**完整任務簡報已寫好，請下一棒開工時第一件事就讀：**
-👉 `knowledges/BRIEF_fable5_system_audit_2026-07-08.md`
-
-簡報內容摘要：Sonnet 判斷這個稽核**值得做**（不是走過場），並列出6大稽核範圍（hook健康度/cron通知路徑/白名單類機關/三機一致性/蒸餾系統重複勞動/試金石案例庫健康度），附上本場4個具體案例當證據。
+> 建立時間：2026-07-08 凌晨 03:55（台灣時間）
+> 本棒執行者：Mac 終端機軍師 **Fable 5**（教練親口指定的最高等級）
+> 上一棒：v48（2026-07-08 凌晨 02:20，Sonnet 交辦 Fable 5 稽核任務）
+> 本棒主軸：**系統全盤稽核（3紅6黃7綠）+ 教練核准後全部紅色問題修復完成 + 清 11 個殭屍/重複排程 + 閃電說刪除 + cloudflared 驗明正身**
 
 ---
 
-## 🎯 本場戰果總覽（v47 之後新增）
+## 🎯 本場戰果
 
-### 1. 🔴🔴🔴 案例37二度驗證：白名單過期漏 bigtree，已修好
-教練回報「上一輪還是沒給HTML預覽」，查證發現 `web_preview_verify_guard.sh` 的 `WEBSITE_REPOS` 白名單自7/2建立後沒更新，新站台bigtree完全沒被鎖到（等於沒鎖，且無警示）。已補齊`~/github_repos/`全部站台，三情境測試全過。commit `1eb4a8d2b`。詳見試金石案例37追蹤驗證段落。
+### 1. 全盤稽核報告（教練指定任務）
+`knowledges/AUDIT_fable5_系統全盤稽核報告_2026-07-08.md`（commit `1ff4434d3`）
+3 個🔴真問題 / 6 個🟡優化空間 / 7 個🟢查證過很好。每條附可重跑的查證方法。
 
-### 2. 🔴🔴🔴 cron失敗通知二度修復：真正閘門是delivery.bestEffort
-7/6關的`failureAlert`只擋門檻型警報，教練23:00還是收到單次失敗推播。讀openclaw CLI原始碼確認還有第二條獨立路徑`dispatchCronFailureDestinationNotifications`，只看`delivery.bestEffort`不看`failureAlert`。已對4個會announce的任務加上`--best-effort-deliver`。詳見`project_cron_cleanup_2026-07-06.md`的「2026-07-07更新」段落。
+### 2. 三個🔴全修完（教練親口核准「當然是要修嘍」）
+- **紅1 自我餵養循環**：`session_end_auto_push.sh` 推送紀錄改寫 /tmp（`95fae5d2b`），順修空陣列舊 bug（`f197c7917`）。實測連跑兩次 HEARTBEAT 保持乾淨
+- **紅2 蒸餾三引擎**（比報告寫的雙引擎還多一個）：LaunchAgent 卸載存檔 + 土炮排程器 `openclaw_cron_daemon.sh` 內建那份移除（`5d23cedc2`），只留 openclaw cron 單引擎
+- **紅3 relay 殭屍四顆頭全斬**：LaunchAgent relay-poll（卸載）+ 土炮排程器每分鐘輪詢（移除）+ kong/peipei 休眠分身 jobs.json 各一（enabled:false，有 .bak）。實測 relay 心跳停在 03:13 不再前進
 
-### 3. 🟢 bigtree 網站兩次場次更新
-- 歷史紀錄新增第12場「7/10線上座談會：告訴我什麼叫尊重？」，commit `d860692`
-- 近期場次新增7/29(三)午場「零基礎學AI起步比較快」，commit `9f2208b`，EDM圖片教練後續補上
-- 兩次都先Chrome預覽、教練確認才推，線上已curl驗證
+### 3. 雙跑線路第二批拆除（教練核准「邏輯一樣當然要修」）
+土炮排程器 6/20「接管」了 crontab 的備份/鏡像/查話但舊線沒拆 → 已註解 crontab 三條 + 卸載三個重複 LaunchAgent（split-memory / distill-watchdog / heartbeat-audit）。commit `8332f5ab5`。
+**全部存檔可復原**：`_archive/launchagents_retired_20260708/`（含 README 復原方法）+ `_archive/crontab_backup_20260708_before_dedup.txt`
 
-### 4. 🟢 git remote 過期清理
-教練轉述小龍蝦回報：Mac端共用大腦倉庫多掛一個5月舊remote`claude-workflows`，已查證屬實並移除，只剩正確`origin`(`mac-openclaw-workflows`)。同時SSH查證VPS端本來就乾淨。**沒有讓教練當兩個AI之間的傳話筒**，全程自己查證處理。詳見`reference_openclaw_nested_git_repos.md`(2026-07-08更新)。
-
-### 5. 🟢 三機/VPS記憶隔離架構澄清
-教練問「小龍蝦讀得到軍師的信嗎」，SSH實測確認VPS的`master`分支跟三機共用的`main`分支**沒有共同祖先**，是刻意設計的防火牆（避免客戶隱私跟教練內部資訊混在一起），非漏洞。
-
-### 6. 🟢 場景化升華手動執行（教練說「總結上傳」觸發）
-新增2個案例到`distill/特助場景庫_自動增量.md`（AUTO-20260707-3 git remote查證、AUTO-20260708-1 三機架構釐清），commit `dca18fc95`。健檢：11個cron任務全部`ok`，無consecutiveErrors≥3異常。
+### 4. 教練截圖問題：登入項目一堆「未辨識開發者」
+- 用 `sfltool dumpbtm` 逐筆驗證：那些 bash/sh/python/node 全是小龍蝦自家 LaunchAgent，**不是病毒，不要關**
+- RustDesk（教練遠端命脈）/ GoogleUpdater / Mounty+Benjamin Fleischer 都正常
+- **閃電說（Tanwei Wuhan）**：教練核准刪除，App 114MB + 壞掉的自啟動 plist 已刪除驗證 ✅（走 delete_guard 通行證流程，鎖有真的攔我一次=機關有效）
+- **cloudflared**：查 zsh_history 破案——3/15 裝的，是 **LINE 頻道的訊息通道**（LINE 官方伺服器 → Cloudflare → 這台 Mac 的小龍蝦 port 18789/line/webhook）。openclaw.json 的 LINE 頻道 enabled:true。**保留不動**，已問教練 LINE 還用不用，若不用可連 LINE 頻道一起退役
 
 ---
 
@@ -58,25 +46,20 @@
 
 | 優先 | 任務 |
 |------|------|
-| 🔴🔴🔴 | **讀`knowledges/BRIEF_fable5_system_audit_2026-07-08.md`，用Fable 5執行系統全盤稽核** |
-| 🔴 | bigtree頁面教練可能還會繼續微調，開工先確認線上最新狀態；7/29場次EDM圖片教練做好後要補上 |
-| 🟡 | biz-gym 黑金新版還沒 commit+push，等教練說「推」上線(已延續四棒未處理) |
-| 🟢 | 企業健身房案子：`20260630-handoff_biz-gym-to-lenovo.md`裡「下次見面會場次」「教練思想與BNI系統」內容待補 |
+| 🔴 | 教練若回覆「LINE 不用了」→ cloudflared + openclaw LINE 頻道一起退役（要先確認沒有別的東西走這條通道） |
+| 🟡 | 稽核報告 6 個🟡逐項處理：兩個掃描 hook 合併省 2.3 秒/句、WEBSITE_REPOS 改動態掃描、E09 補「announce cron 必加 --best-effort-deliver」、試金石編號統一（案例25重複、字母/數字/W三套並行）、council-orchestrator 去留（教練說之後再討論） |
+| 🟡 | biz-gym 黑金新版等教練說「推」（已延續五棒） |
+| 🟢 | 聯想/ACER 兩機的同款稽核（發跨機指令需教練拍板） |
+| 🟢 | bigtree 7/29 場次 EDM 圖片教練做好後補上 |
 
 ---
 
-## 🔑 本場關鍵記憶檔案索引
+## 🔑 關鍵檔案索引
+- `knowledges/AUDIT_fable5_系統全盤稽核報告_2026-07-08.md` — 稽核全文
+- `_archive/launchagents_retired_20260708/README.md` — 11 個退役零件的復原方法
+- 記憶檔 `project_fable5_system_audit_2026-07-08.md`（共用大腦）— 稽核+修復完整紀錄
 
-- `knowledges/BRIEF_fable5_system_audit_2026-07-08.md` — **下一棒必讀，Fable5稽核任務完整簡報**
-- `project_cron_cleanup_2026-07-06.md` — cron雙路徑通知問題完整記錄（含7/7更新）
-- `reference_openclaw_nested_git_repos.md` — git remote過期+VPS分支隔離完整記錄（2026-07-08更新）
-- 試金石案例37追蹤驗證段落 — 白名單類機關要主動維護
-- 試金石案例39 — 聯想機LINE/GanJing/Perplexity搬家SOP，教練已驗證LINE轉移成功
-- `distill/特助場景庫_自動增量.md` AUTO-20260707-3/AUTO-20260708-1 — 本場新增案例
-
----
-
-> Mac 終端機軍師 Sonnet 5 親筆，2026-07-08 凌晨02:20台灣時間。教練說「總結上傳」，本棒到此收尾，下一棒重點任務是Fable 5系統稽核。
+> Fable 5 親筆，2026-07-08 凌晨 03:55。本場一小時：稽核+修復+清殭屍+答疑，全部有 commit hash 佐證。
 
 
 ---
