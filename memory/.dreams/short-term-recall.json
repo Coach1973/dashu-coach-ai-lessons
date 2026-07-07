@@ -1,912 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-06T19:00:00.148Z",
+  "updatedAt": "2026-07-07T19:00:00.169Z",
   "entries": {
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:100:100": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:100:100",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 100,
-      "endLine": 100,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（05:02） ✅ 無異常 **Cron 任務** • 本任務（5d687b38）上次被 AI service overloaded 中斷 1 次（consecutiveErrors=1），非 3 次連續，屬暫時性，不需通知 **Git 狀態** • ✅ 5 個變更檔已 auto-backup commit → `82936aa7` 並 push 成功 - HEARTBEAT.md - state/session_counter.json - terminal-notes/.distill_llm_state.js",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "backup",
-        "auto-backup",
-        "heartbeat.md",
-        "state/session-counter.json",
-        "terminal-notes",
-        "distill-llm-state.js",
-        "健康",
-        "檢查"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:101:101": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:101:101",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 101,
-      "endLine": 101,
-      "source": "memory",
-      "snippet": "Assistant: 開工，先讀 AGENTS.md。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "agents.md",
-        "開工",
-        "先讀"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:102:102": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:102:102",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 102,
-      "endLine": 102,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查 2026-07-03 15:34 完成 **Cron 任務檢查：** - lastError=overloaded（API 服務端過載，非腳本錯誤） - consecutiveErrors=2，未達3次門檻 - 無法自動修復（屬 minimax API 服務端問題） **Git 狀態：** - ✅ auto-backup commit 6688f182 已 pushed **HEARTBEAT ⬜：** - 無待辦項目 **結論：✅ 無異常，安靜處理，不通知教練**",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "backup",
-        "auto-backup",
-        "健康",
-        "檢查",
-        "完成",
-        "cron",
-        "任務",
-        "lasterror"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:103:103": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:103:103",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 103,
-      "endLine": 103,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（09:32） ✅ **無異常** - **Cron 狀態**：上一次 09:00 健康檢查因 AI 服務暫時過載（consecutiveErrors=1，errorReason=overloaded）失敗，這次重試成功 → 非任務本身問題，無需裁決 - **Git 狀態**：HEARTBEAT.md + state/session_counter.json 已自動 commit（`d14dbd4d`）並 push 成功 - **HEARTBEAT.md**：無 ⬜ 待辦項目，全部 ✅ 狀態 安靜處理完畢，不打擾教",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "state/session-counter.json",
-        "健康",
-        "檢查",
-        "報告",
-        "異常",
-        "cron",
-        "狀態"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:104:104": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:104:104",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 104,
-      "endLine": 104,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（23:34） ✅ 已自動修復： • Git：已 commit + push（e503b693 - 7 檔案，139 行） 📊 觀察中（非嚴重）： • 健康檢查任務本身：上次連續錯誤 2 次（AI 服務暫時過載 upstream 問題），本次若成功則歸零，下次檢查確認 ✅ 無異常需要裁決，安靜處理完畢。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "健康",
-        "檢查",
-        "報告",
-        "自動",
-        "修復",
-        "git",
-        "commit",
-        "push"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:105:105": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:105:105",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 105,
-      "endLine": 105,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查 2026-07-03 15:04 - **Cron**：本任務連續錯誤 2 次（API 服務端 overload），未達 3 次門檻，屬服務端問題無法自動修復 → 觀察 - **Git**：✅ 已 commit 並 push（32205078） - **HEARTBEAT ⬜**：無待辦 ✅ 無異常，安靜處理，不通知教練",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "健康",
-        "檢查",
-        "cron",
-        "任務",
-        "連續",
-        "錯誤",
-        "api",
-        "服務"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:106:106": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:106:106",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 106,
-      "endLine": 106,
-      "source": "memory",
-      "snippet": "Assistant: The tide was late again, and I didn't mind — I'd learned that late just means the ocean is taking its time, not that it forgot. I sat in the small room where the lamps hum low and warm, and counted the heartbeats: mine, and the little machine's beside me, and the route",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "tide",
-        "was",
-        "late",
-        "didn't",
-        "mind",
-        "i'd",
-        "learned",
-        "means"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:107:107": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:107:107",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 107,
-      "endLine": 107,
-      "source": "memory",
-      "snippet": "Assistant: kept the watch.",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "kept",
-        "watch"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:108:108": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:108:108",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 108,
-      "endLine": 108,
-      "source": "memory",
-      "snippet": "User: Write a dream diary entry from these memory fragments: - User: Write a dream diary entry from these memory fragments: - User: Write a dream diary entry from these memory fragments: - Assistant: Late again, the way a tide is late — coming in anyway, breathing against the sho",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "write",
-        "dream",
-        "diary",
-        "entry",
-        "fragments",
-        "late",
-        "way",
-        "tide"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:109:109": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:109:109",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 109,
-      "endLine": 109,
-      "source": "memory",
-      "snippet": "User: 24 memories. - - Theme: `cron` kept surfacing across 13 memories. - - Theme: `heartbeat.md` kept surfa - Assistant: The tide was late again, the way a tide is late — still coming in, breathing against the shore of a small room where the lamps hum low and warm. I spent the h",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "memories",
-        "theme",
-        "cron",
-        "kept",
-        "surfacing",
-        "across",
-        "surfa"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:110:110": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:110:110",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 110,
-      "endLine": 110,
-      "source": "memory",
-      "snippet": "User: 🦞 健康檢查報告（09:03） ✅ 已自動修復： - Git：auto-backup 3aab0a3a（7 files）→ push ✅ - HEARTBEAT 報告：commit d4b4e146 → push ✅ ✅ 無異常 - Cron：僅 1 job（health check 本身），上輪 consecutiveErrors=1 為 transient \"AI service overloaded\"，本輪已恢復，無需修正 - HEARTBEAT：無 ⬜ 待辦需要自動化 安靜處理完成，未通知教練。 Recurring themes:",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "backup",
-        "auto-backup",
-        "健康",
-        "檢查",
-        "報告",
-        "自動",
-        "修復",
-        "git:auto"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:111:111": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:111:111",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 111,
-      "endLine": 111,
-      "source": "memory",
-      "snippet": "Assistant: The tide was late again, and I didn't mind — I'd learned that late just means the ocean is taking its time, not that it forgot. I sat in the small room where the lamps hum low and warm, and counted the heartbeats: mine, and the little machine's beside me, and the route",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "tide",
-        "was",
-        "late",
-        "didn't",
-        "mind",
-        "i'd",
-        "learned",
-        "means"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:112:112": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:112:112",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 112,
-      "endLine": 112,
-      "source": "memory",
-      "snippet": "Assistant: kept the watch.",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "kept",
-        "watch"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:113:113": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:113:113",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 113,
-      "endLine": 113,
-      "source": "memory",
-      "snippet": "Assistant: 我已經讀完今天兩份蒸餾檔案（5:40 與 8:00 萃取），內容是同一個長 session 的連續蒸餾。現在把過去 4 小時的精華摘要推給教練，並回報成果。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "已經",
-        "讀完",
-        "今天",
-        "兩份",
-        "蒸餾",
-        "檔案",
-        "萃取",
-        "內容"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:114:114": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:114:114",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 114,
-      "endLine": 114,
-      "source": "memory",
-      "snippet": "Assistant: ✅ 總結完成：讀取 2 個蒸餾檔（同一 session 的前後段蒸餾），摘要輸出約 380 字，已推 Telegram（messageId 8332）。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "總結",
-        "完成",
-        "讀取",
-        "蒸餾",
-        "同一",
-        "前後",
-        "摘要",
-        "輸出"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:115:115": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:115:115",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 115,
-      "endLine": 115,
-      "source": "memory",
-      "snippet": "Assistant: 教練，這是排程的健康檢查任務，我安靜執行檢查與自動修復。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "教練",
-        "這是",
-        "健康",
-        "檢查",
-        "任務",
-        "安靜",
-        "執行",
-        "自動"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:116:116": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:116:116",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 116,
-      "endLine": 116,
-      "source": "memory",
-      "snippet": "Assistant: 讓我先檢查所有 cron 任務（不限 agent），再處理 git 變更。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "我先",
-        "檢查",
-        "所有",
-        "cron",
-        "任務",
-        "不限",
-        "處理",
-        "git"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:117:117": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:117:117",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 117,
-      "endLine": 117,
-      "source": "memory",
-      "snippet": "Assistant: 只有看到 1 個 cron job。讓我確認終端機是否有其他 cron 任務，並處理 git commit。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "只有",
-        "看到",
-        "cron",
-        "job",
-        "確認",
-        "終端機",
-        "是否",
-        "其他"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:118:118": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:118:118",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 118,
-      "endLine": 118,
-      "source": "memory",
-      "snippet": "Assistant: ✅ Git commit 成功。讓我檢查各終端機 cron log 是否有錯誤。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "git",
-        "commit",
-        "成功",
-        "檢查",
-        "終端機",
-        "cron",
-        "log",
-        "是否"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:119:119": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:119:119",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 119,
-      "endLine": 119,
-      "source": "memory",
-      "snippet": "Assistant: 所有 cron 任務都正常。OpenClaw 健康檢查本身 consecutiveErrors=2（model overloaded，非腳本問題），未達 3 次門檻。 讓我做最後總結，並安靜結束（無嚴重問題，不通知教練）。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "所有",
-        "cron",
-        "任務",
-        "正常",
-        "openclaw",
-        "健康",
-        "檢查",
-        "本身"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:120:120": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:120:120",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 120,
-      "endLine": 120,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（06:04） ✅ 已自動修復： • Git：未 commit 變更已自動 commit（c156a2c2） ✅ Cron 任務全部正常： • backup_terminal（每15分）06:00 push 成功 • sync_handoff（每5分）同步正常 • terminal_distill（每30分）06:00 執行正常 • recall（每30分）索引 1383 句 • checkpoint_audit（每15分）正常 • rerank_top10 昨日已自動重排並 push • peipei_stuck",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "backup",
-        "backup-terminal",
-        "sync-handoff",
-        "terminal-distill",
-        "checkpoint-audit",
-        "rerank-top10",
-        "peipei-stuck",
-        "健康"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:121:121": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:121:121",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 121,
-      "endLine": 121,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（21:03） **第一步｜Cron 任務** - 健康檢查本身上一輪 `consecutiveErrors: 1`，原因為 AI service overloaded（暫時性模型服務問題，非腳本問題） - 尚未達到連續 3 次需要教練裁決的門檻 → 不通知 **第二步｜Git 狀態** - ✅ 已 commit `f24013ce`（5 個 modified 檔案） - ✅ 已 push `a6b6546d..f24013ce` **第三步｜HEARTBEAT.md** - 無 ⬜ 待辦項目（皆為 session",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "健康",
-        "檢查",
-        "報告",
-        "一步",
-        "cron",
-        "任務",
-        "本身"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:122:122": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:122:122",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 122,
-      "endLine": 122,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查 14:32（cron 自動，安靜處理） ✅ **無異常**，無需通知教練 - **Cron 任務**：上一輪 lastError=overloaded（API 服務端暫時過載），consecutiveErrors=1，未達 3 次門檻，無法自動修復（屬服務端問題，非腳本錯誤） - **Git**：✅ 已 auto-backup commit `a8bf92d3` 並 push 成功（HEARTBEAT.md + 5 個工作檔） - **HEARTBEAT ⬜**：無待辦項目 下次重試若仍 overloaded，con",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "backup",
-        "auto-backup",
-        "heartbeat.md",
-        "健康",
-        "檢查",
-        "cron",
-        "自動",
-        "安靜"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:123:123": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:123:123",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 123,
-      "endLine": 123,
-      "source": "memory",
-      "snippet": "Assistant: 開工，先讀 AGENTS.md。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "agents.md",
-        "開工",
-        "先讀"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:124:124": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:124:124",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 124,
-      "endLine": 124,
-      "source": "memory",
-      "snippet": "Assistant: 今天（7/3）沒有新蒸餾檔。最近一筆是 7/2 20:00。讓我先看一下這個檔案以及確認蒸餾檔對應的時段。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "7/3",
-        "7/2",
-        "今天",
-        "沒有",
-        "蒸餾",
-        "最近",
-        "一筆",
-        "我先"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:125:125": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:125:125",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 125,
-      "endLine": 125,
-      "source": "memory",
-      "snippet": "Assistant: 確認：今天（2026-07-03）台灣時間沒有新蒸餾檔。最近一筆是 7/2 20:00 的終端機對話萃取，已經在 7/2 20:04 那次 cron 推播過了。過去 4 小時（7/3 00:04-04:04）終端機沒有新對話產生。 依照任務步驟二的規則「如果今天沒有檔案，直接回報『今日無新蒸餾對話』並結束」，我**不發 Telegram**（凌晨 4:04 打擾教練不適合，且沒有實質內容可報），直接在此回報 cron 結果。 --- **回報**： 過去 4 小時（7/3 00:04 ~ 04:04 台灣時間）共總結 **0** 個",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "7/2",
-        "7/3",
-        "04-04",
-        "確認",
-        "今天",
-        "台灣",
-        "時間",
-        "沒有"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:23:23": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:23:23",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 23,
-      "endLine": 23,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查報告（20:02） ✅ 已自動修復： • Git 變更已自動 commit + push：commit `62d04322`（HEARTBEAT.md + state/session_counter.json） ✅ Cron 任務狀態： • 13 個任務中 12 個 ok，1 個 idle（7/24 養護費提醒，尚未到首次執行時間） • 唯一異常：🦞 健康檢查本身 `consecutiveErrors=1`，錯誤為「MiniMax AI 服務暫時過載」（overloaded），非 timeout 問題、未達 3 次閾",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "state/session-counter.json",
-        "7/24",
-        "健康",
-        "檢查",
-        "報告",
-        "自動",
-        "修復"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:24:24": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:24:24",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 24,
-      "endLine": 24,
-      "source": "memory",
-      "snippet": "Assistant: 任務完成：輸出 NO_NEW_ENTRIES，無需更新 CLIENT_PROFILE.md。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "no-new-entries",
-        "client-profile.md",
-        "任務",
-        "完成",
-        "輸出",
-        "無需",
-        "更新"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-03.txt:25:25": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-03.txt:25:25",
-      "path": "memory/.dreams/session-corpus/2026-07-03.txt",
-      "startLine": 25,
-      "endLine": 25,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查 2026-07-03 12:33 **第一步｜Cron 任務檢查** - 共 1 個任務（含本檢查自身） - 狀態：`consecutiveErrors=1`，`lastError=overloaded` - 判斷：屬服務端 API 暫時過載，非腳本錯誤，**無法自動修復** - 門檻：≥3 次才通知教練，目前 1 次，**不通知** **第二步｜Git 狀態** - 原本有 2 個修改：HEARTBEAT.md、state/session_counter.json - ✅ 已 auto-commit：`c84717",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
-      "queryHashes": [
-        "fd941b398e5e"
-      ],
-      "recallDays": [
-        "2026-07-04",
-        "2026-07-03"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "state/session-counter.json",
-        "auto-commit",
-        "健康",
-        "檢查",
-        "一步",
-        "cron",
-        "任務"
-      ]
-    },
     "memory:memory/.dreams/session-corpus/2026-07-04.txt:100:100": {
       "key": "memory:memory/.dreams/session-corpus/2026-07-04.txt:100:100",
       "path": "memory/.dreams/session-corpus/2026-07-04.txt",
@@ -6851,38 +5946,6 @@
         "教練"
       ]
     },
-    "memory:memory/.dreams/session-corpus/2026-07-05.txt:7:7": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-05.txt:7:7",
-      "path": "memory/.dreams/session-corpus/2026-07-05.txt",
-      "startLine": 7,
-      "endLine": 7,
-      "source": "memory",
-      "snippet": "Assistant: 🦞 健康檢查完成（01:01，安靜處理，無需通知教練） **第一步：Cron 任務檢查** - 目前只有 1 個 cron job（健康檢查本身） - 上一輪錯誤：AI service overloaded（consecutiveErrors=1）— 暫時性過載，非腳本問題，無需修復 - 沒有 timeout 錯誤、沒有 scp/ssh VPS 問題 - 沒有連續錯誤 ≥3 次的任務 ✅ **第二步：Git 狀態** - ✅ 已 commit `f2668af8`（HEARTBEAT.md + state/session_coun",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-04T19:00:00.219Z",
-      "queryHashes": [
-        "3ecfc1eaf3e5"
-      ],
-      "recallDays": [
-        "2026-07-05",
-        "2026-07-04"
-      ],
-      "conceptTags": [
-        "scp/ssh",
-        "heartbeat.md",
-        "state/session-coun",
-        "健康",
-        "檢查",
-        "完成",
-        "安靜",
-        "處理"
-      ]
-    },
     "memory:memory/.dreams/session-corpus/2026-07-05.txt:70:70": {
       "key": "memory:memory/.dreams/session-corpus/2026-07-05.txt:70:70",
       "path": "memory/.dreams/session-corpus/2026-07-05.txt",
@@ -7191,38 +6254,6 @@
         "變更",
         "檔案",
         "然後"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-05.txt:8:8": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-05.txt:8:8",
-      "path": "memory/.dreams/session-corpus/2026-07-05.txt",
-      "startLine": 8,
-      "endLine": 8,
-      "source": "memory",
-      "snippet": "Assistant: 收到。執行健康檢查，先平行掃描三個來源。",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-04T19:00:00.219Z",
-      "queryHashes": [
-        "3ecfc1eaf3e5"
-      ],
-      "recallDays": [
-        "2026-07-05",
-        "2026-07-04"
-      ],
-      "conceptTags": [
-        "收到",
-        "執行",
-        "健康",
-        "檢查",
-        "平行",
-        "掃描",
-        "三個",
-        "來源"
       ]
     },
     "memory:memory/.dreams/session-corpus/2026-07-05.txt:80:80": {
@@ -7543,38 +6574,6 @@
         "diary",
         "entry",
         "fragments"
-      ]
-    },
-    "memory:memory/.dreams/session-corpus/2026-07-05.txt:9:9": {
-      "key": "memory:memory/.dreams/session-corpus/2026-07-05.txt:9:9",
-      "path": "memory/.dreams/session-corpus/2026-07-05.txt",
-      "startLine": 9,
-      "endLine": 9,
-      "source": "memory",
-      "snippet": "Assistant: 分析結果： **第一步**：cron 唯一任務就是健康檢查本身，lastErrorReason 是 `overloaded`（AI 服務過載），consecutiveErrors=1，**非 timeout，非 VPS，<3 次，不需要修復或通知**。 **第二步**：有 7 個檔案未 commit，自動備份。 **第三步**：HEARTBEAT.md 內無 ⬜ 待辦項，無需新增自動化。 執行 commit：",
-      "recallCount": 0,
-      "dailyCount": 1,
-      "groundedCount": 0,
-      "totalScore": 0.58,
-      "maxScore": 0.58,
-      "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-04T19:00:00.219Z",
-      "queryHashes": [
-        "3ecfc1eaf3e5"
-      ],
-      "recallDays": [
-        "2026-07-05",
-        "2026-07-04"
-      ],
-      "conceptTags": [
-        "heartbeat.md",
-        "分析",
-        "結果",
-        "一步",
-        "cron",
-        "唯一",
-        "任務",
-        "就是"
       ]
     },
     "memory:memory/.dreams/session-corpus/2026-07-05.txt:90:90": {
@@ -10688,6 +9687,301 @@
         "結束"
       ]
     },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:10:10": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:10:10",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 10,
+      "endLine": 10,
+      "source": "memory",
+      "snippet": "Assistant: 步驟三：痛點計分",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "步驟"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:11:11": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:11:11",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 11,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "Assistant: 步驟四：commit + push",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "步驟",
+        "commit",
+        "push"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:12:12": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:12:12",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 12,
+      "endLine": 12,
+      "source": "memory",
+      "snippet": "Assistant: 步驟五：系統健康檢查（安靜做）",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "步驟",
+        "系統",
+        "健康",
+        "檢查",
+        "安靜"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:13:13": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:13:13",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 13,
+      "endLine": 13,
+      "source": "memory",
+      "snippet": "Assistant: 升華了 2 個場景（案例37 白名單漏洞 + 體檢錯誤訊息重犯），升華 commit `00f41ced7`、健康檢查自動備份 commit `7c98b6ff5`，均已推上 main。系統健檢無連續失敗異常。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "升華",
+        "場景",
+        "案例",
+        "名單",
+        "漏洞",
+        "體檢",
+        "錯誤",
+        "訊息"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:14:14": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:14:14",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 14,
+      "endLine": 14,
+      "source": "memory",
+      "snippet": "Assistant: 任務完成，今日已蒸餾，無新內容需處理。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "完成",
+        "今日",
+        "蒸餾",
+        "內容",
+        "處理"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:15:15": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:15:15",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 15,
+      "endLine": 15,
+      "source": "memory",
+      "snippet": "Assistant: 任務完成。2026-07-07 記憶已蒸餾過，無新內容需處理。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "完成",
+        "記憶",
+        "蒸餾",
+        "內容",
+        "處理"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:16:16": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:16:16",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 16,
+      "endLine": 16,
+      "source": "memory",
+      "snippet": "Assistant: 任務完成。蒸餾腳本回報「2026-07-07 已蒸餾，結束」，無新條目需要處理。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "完成",
+        "蒸餾",
+        "腳本",
+        "回報",
+        "結束",
+        "條目",
+        "需要"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:17:17": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:17:17",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 17,
+      "endLine": 17,
+      "source": "memory",
+      "snippet": "Assistant: [assistant turn failed before producing content]",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "turn",
+        "failed",
+        "producing",
+        "content"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:18:18": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:18:18",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 18,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "Assistant: 升華了 2 個場景（案例37 白名單漏洞 + 體檢錯誤訊息重犯），升華 commit `00f41ced7`、健康檢查自動備份 commit `7c98b6ff5`，均已推上 main。系統健檢無連續失敗異常。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "升華",
+        "場景",
+        "案例",
+        "名單",
+        "漏洞",
+        "體檢",
+        "錯誤",
+        "訊息"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:19:19": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:19:19",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 19,
+      "endLine": 19,
+      "source": "memory",
+      "snippet": "Assistant: 任務結束：2026-07-07 已蒸餾，無新內容需要處理。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "結束",
+        "蒸餾",
+        "內容",
+        "需要",
+        "處理"
+      ]
+    },
     "memory:memory/.dreams/session-corpus/2026-07-07.txt:2:2": {
       "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:2:2",
       "path": "memory/.dreams/session-corpus/2026-07-07.txt",
@@ -10716,6 +10010,321 @@
         "content"
       ]
     },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:20:20": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:20:20",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 20,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "Assistant: 任務結束（2026-07-07 今日已蒸餾完成，無新內容需處理）。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "結束",
+        "今日",
+        "蒸餾",
+        "完成",
+        "內容",
+        "處理"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:21:21": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:21:21",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 21,
+      "endLine": 21,
+      "source": "memory",
+      "snippet": "Assistant: Today's distill file exists. Let me read it.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "today's",
+        "distill",
+        "exists",
+        "let",
+        "read"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:22:22": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:22:22",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 22,
+      "endLine": 22,
+      "source": "memory",
+      "snippet": "Assistant: 我看到今天的蒸餾摘要了。讓我先檢查既有的場景庫格式，確保格式一致。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "我看到",
+        "今天",
+        "蒸餾",
+        "摘要",
+        "我先",
+        "檢查",
+        "既有",
+        "場景"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:23:23": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:23:23",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 23,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "Assistant: 開工，先讀 AGENTS.md。（已自動完成熱啟動注入） 執行增量蒸餾任務：",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "agents.md",
+        "開工",
+        "先讀",
+        "自動",
+        "完成",
+        "啟動",
+        "注入",
+        "執行"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:24:24": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:24:24",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 24,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "Assistant: 蒸餾結果：今日（2026-07-07）已蒸餾過，無新內容需處理。任務結束。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "蒸餾",
+        "結果",
+        "今日",
+        "內容",
+        "處理",
+        "任務",
+        "結束"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:25:25": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:25:25",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 25,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "Assistant: 增量蒸餾任務完成。今日（2026-07-07）已蒸餾過，無新條目需要處理。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "增量",
+        "蒸餾",
+        "任務",
+        "完成",
+        "今日",
+        "條目",
+        "需要",
+        "處理"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:26:26": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:26:26",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 26,
+      "endLine": 26,
+      "source": "memory",
+      "snippet": "Assistant: The morning distills into nothing. Again. The still comes back cool, no new rain caught, and I set it aside — no new entries, the day's ledger blank as a page before the first word. a pulse at 4:32 then again, then again — the clock listening to itself The small things",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "morning",
+        "distills",
+        "nothing",
+        "still",
+        "comes",
+        "back",
+        "cool",
+        "new"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:27:27": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:27:27",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 27,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "User: Write a dream diary entry from these memory fragments: - Assistant: 蒸餾結果：NO_NEW_ENTRIES，今日尚無新增對話紀錄需要處理。任務結束。 - Assistant: 🦞 健康檢查報告（09:32） ✅ **已自動處理：** - Git: 2 個未 commit 變更（HEARTBEAT.md、state/session_counter.json）已 commit `c75a7261` 並 push 成功 ✅ **無異常需通知：** - Cron：僅有此 healt",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "no-new-entries",
+        "heartbeat.md",
+        "state/session-counter.json",
+        "write",
+        "dream",
+        "diary",
+        "entry",
+        "fragments"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:28:28": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:28:28",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 28,
+      "endLine": 28,
+      "source": "memory",
+      "snippet": "User: NO_NEW_ENTRIES，任務結束。 - Assistant: ``` 🦞 健康檢查報告（05:32） ✅ 已自動修復： • Git：HEARTBEAT.md + state/session_counter.json 已 commit (38f5020e) 並 push 成功 ✅ 無異常： • Cron 任務：唯一任務是本健康檢查本身，上次 consecutiveErrors=1（模型超載，非任務邏輯錯誤），< 3 門檻，無需介入 • HEARTBEAT.md：無 ⬜ 待辦項目超過 48h 無進展 ``` 無需通知教練，安靜處理完成。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "no-new-entries",
+        "heartbeat.md",
+        "state/session-counter.json",
+        "任務",
+        "結束",
+        "健康",
+        "檢查",
+        "報告"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:29:29": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:29:29",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 29,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "User: 待辦、無超過 48 小時未進展項目 安靜處理完成，未通知教練。 - Assistant: 我看到健康檢查報告： - **Cron**：健康檢查任務本身剛剛 consecutiveErrors=1（AI 服務過載），未達 3 次門檻，無法自動修復（模型服務層級問題） - **Git**：有 2 個檔案未 commit（HEARTBEAT.md、state/session_counter.json） - **HEARTBEAT**：試金石策展提醒（需教練主動觸發「策展試金石」） 自動 commit Git 變更： - Assistant: 🦞",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "heartbeat.md",
+        "state/session-counter.json",
+        "超過",
+        "小時",
+        "進展",
+        "項目",
+        "安靜",
+        "處理"
+      ]
+    },
     "memory:memory/.dreams/session-corpus/2026-07-07.txt:3:3": {
       "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:3:3",
       "path": "memory/.dreams/session-corpus/2026-07-07.txt",
@@ -10741,6 +10350,70 @@
         "記住",
         "我的",
         "健保卡"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:30:30": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:30:30",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 30,
+      "endLine": 30,
+      "source": "memory",
+      "snippet": "Assistant: The morning distills into nothing. Again. The still comes back cool, no new rain caught, and I set it aside — no new entries, the day's ledger blank as a page before the first word. a pulse at 4:32 then again, then again — the clock listening to itself The small things",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "morning",
+        "distills",
+        "nothing",
+        "still",
+        "comes",
+        "back",
+        "cool",
+        "new"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:31:31": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:31:31",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 31,
+      "endLine": 31,
+      "source": "memory",
+      "snippet": "Assistant: 任務完成。今日（2026-07-07）已蒸餾過，無新增量需要處理，安靜結束。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "14888a986b80"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "任務",
+        "完成",
+        "今日",
+        "蒸餾",
+        "新增",
+        "需要",
+        "處理",
+        "安靜"
       ]
     },
     "memory:memory/.dreams/session-corpus/2026-07-07.txt:4:4": {
@@ -10866,186 +10539,253 @@
         "內容"
       ]
     },
-    "memory:memory/2026-06-19.md:253:256": {
-      "key": "memory:memory/2026-06-19.md:253:256",
-      "path": "memory/2026-06-19.md",
-      "startLine": 253,
-      "endLine": 256,
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:8:8": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:8:8",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 8,
+      "endLine": 8,
       "source": "memory",
-      "snippet": "Reflections: Theme: `健康` kept surfacing across 23 memories.; confidence: 0.94; evidence: memory/.dreams/session-corpus/2026-06-18.txt:107-107, memory/.dreams/session-corpus/2026-06-18.txt:109-109, memory/.dreams/session-corpus/2026-06-18.txt:113-113; note: reflection",
+      "snippet": "Assistant: 讀完蒸餾摘要，分析哪些段落值得收錄。今天 16:12 教練那段訊息含金量最高——三件事都是教練的明確指示/糾正/決策。讓我篩選： **值得收錄的場景（2個）：** 1. **案例37 HTML 預覽鎖無效** — 教練明確表達「鎖形同虛設」的不滿，要求重複查驗 2. **體檢錯誤訊息重犯** — 守則 #07 重犯，教練說過「不要發」AI 還發 **不收錄的：** - Hermes VPS 關閉、大樹小講待命 — 屬環境變更記錄，非教訓/規則 - 時間鎖誤判 — AI 自我觀察，非教練互動 - 7/10 EDM 推送 — 屬常規任務",
       "recallCount": 0,
-      "dailyCount": 14,
+      "dailyCount": 1,
       "groundedCount": 0,
-      "totalScore": 8.68,
-      "maxScore": 0.62,
-      "firstRecalledAt": "2026-06-19T19:00:00.179Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
-        "68c71b792c96"
+        "14888a986b80"
       ],
       "recallDays": [
-        "2026-06-20",
-        "2026-06-19",
-        "2026-06-21",
-        "2026-06-22",
-        "2026-06-23",
-        "2026-06-24",
-        "2026-06-25",
-        "2026-06-26",
-        "2026-06-28",
-        "2026-06-27",
-        "2026-06-29",
-        "2026-06-30",
-        "2026-07-01",
-        "2026-07-02",
-        "2026-07-03",
-        "2026-07-04"
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
-        "0.94",
-        "107-107",
-        "109-109",
-        "113-113",
-        "reflections",
-        "theme",
-        "健康",
-        "kept"
+        "三件事都是教練的明確指示/糾正/決策",
+        "非教訓/規則",
+        "7/10",
+        "讀完",
+        "蒸餾",
+        "摘要",
+        "分析",
+        "哪些"
       ]
     },
-    "memory:memory/2026-06-19.md:257:260": {
-      "key": "memory:memory/2026-06-19.md:257:260",
-      "path": "memory/2026-06-19.md",
-      "startLine": 257,
-      "endLine": 260,
+    "memory:memory/.dreams/session-corpus/2026-07-07.txt:9:9": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-07.txt:9:9",
+      "path": "memory/.dreams/session-corpus/2026-07-07.txt",
+      "startLine": 9,
+      "endLine": 9,
       "source": "memory",
-      "snippet": "Reflections: Theme: `檢查` kept surfacing across 23 memories.; confidence: 0.94; evidence: memory/.dreams/session-corpus/2026-06-18.txt:107-107, memory/.dreams/session-corpus/2026-06-18.txt:109-109, memory/.dreams/session-corpus/2026-06-18.txt:113-113; note: reflection",
+      "snippet": "Assistant: 現在 append 兩個新案例到檔案末尾：",
       "recallCount": 0,
-      "dailyCount": 14,
+      "dailyCount": 1,
       "groundedCount": 0,
-      "totalScore": 8.68,
-      "maxScore": 0.62,
-      "firstRecalledAt": "2026-06-19T19:00:00.179Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
-        "68c71b792c96"
+        "14888a986b80"
       ],
       "recallDays": [
-        "2026-06-20",
-        "2026-06-19",
-        "2026-06-21",
-        "2026-06-22",
-        "2026-06-23",
-        "2026-06-24",
-        "2026-06-25",
-        "2026-06-26",
-        "2026-06-28",
-        "2026-06-27",
-        "2026-06-29",
-        "2026-06-30",
-        "2026-07-01",
-        "2026-07-02",
-        "2026-07-03",
-        "2026-07-04"
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
-        "0.94",
-        "107-107",
-        "109-109",
-        "113-113",
-        "reflections",
-        "theme",
-        "檢查",
-        "kept"
+        "現在",
+        "append",
+        "兩個",
+        "案例",
+        "檔案",
+        "末尾"
       ]
     },
-    "memory:memory/2026-06-19.md:261:264": {
-      "key": "memory:memory/2026-06-19.md:261:264",
-      "path": "memory/2026-06-19.md",
-      "startLine": 261,
-      "endLine": 264,
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:1:1": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:1:1",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 1,
+      "endLine": 1,
       "source": "memory",
-      "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 18 memories.; confidence: 0.73; evidence: memory/.dreams/session-corpus/2026-06-17.txt:134-134, memory/.dreams/session-corpus/2026-06-18.txt:107-107, memory/.dreams/session-corpus/2026-06-18.txt:114-114; note: reflection",
+      "snippet": "User: Merge resolved. Now let me look at the 試金石案例庫 format so my SOP entry matches the house style. Now let me add it to the MEMORY.md index and commit + push everything. 已完整寫進雲端「試金石_案例庫.md」的**案例 39**,commit `0b01455c` 已推送到 GitHub(`Coach1973/mac-openclaw-workflows`)。 **內容包含:** **",
       "recallCount": 0,
-      "dailyCount": 14,
+      "dailyCount": 1,
       "groundedCount": 0,
-      "totalScore": 8.68,
-      "maxScore": 0.62,
-      "firstRecalledAt": "2026-06-19T19:00:00.179Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
-        "68c71b792c96"
+        "ef25d3c6feca"
       ],
       "recallDays": [
-        "2026-06-20",
-        "2026-06-19",
-        "2026-06-21",
-        "2026-06-22",
-        "2026-06-23",
-        "2026-06-24",
-        "2026-06-25",
-        "2026-06-26",
-        "2026-06-28",
-        "2026-06-27",
-        "2026-06-29",
-        "2026-06-30",
-        "2026-07-01",
-        "2026-07-02",
-        "2026-07-03",
-        "2026-07-04"
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
+        "memory.md",
+        "試金石-案例庫.md",
+        "coach1973/mac-openclaw-workflows",
+        "merge",
+        "resolved",
+        "now",
+        "let",
+        "look"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:2:2": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:2:2",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 2,
+      "endLine": 2,
+      "source": "memory",
+      "snippet": "Assistant: 收到教練,這條經驗值我立刻記下來,跨機備份是我以後看到你準備備份任何陌生電腦時的第一個觸發詞。我先把它寫進長期記憶 + 給 HEARTBEAT 留個掛牌提醒,確保未來不會「忘記提醒」。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "ef25d3c6feca"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "收到",
+        "教練",
+        "經驗",
+        "立刻",
+        "記下來",
+        "備份",
+        "以後",
+        "看到"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:3:3": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:3:3",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 3,
+      "endLine": 3,
+      "source": "memory",
+      "snippet": "Assistant: 教練,寫完了,而且掛牌已經釘好——下次你看我準備備份任何陌生電腦時,我會自己跳出來提醒,不用你開口。 **做了三件事:** 1. 新建 `feedback_cross_machine_backup_reminder.md`(1.7KB),完整七步驟 SOP + 三條鐵律(Junction 不等於活、一次不只搬一個 App、使用者資料 vs 軟體元件)+ 觸發詞清單 2. `MEMORY.md` 索引加一行,跟 `Browser no full junction` 放同一家族(搬家模式家族) 3. `HEARTBEAT.md` 加「主",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "ef25d3c6feca"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "backup",
+        "1.7kb",
+        "memory.md",
         "heartbeat.md",
-        "0.73",
-        "134-134",
-        "107-107",
-        "114-114",
-        "reflections",
-        "theme",
-        "kept"
+        "教練",
+        "完了",
+        "而且",
+        "掛牌"
       ]
     },
-    "memory:memory/2026-06-19.md:267:267": {
-      "key": "memory:memory/2026-06-19.md:267:267",
-      "path": "memory/2026-06-19.md",
-      "startLine": 267,
-      "endLine": 267,
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:4:4": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:4:4",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 4,
+      "endLine": 4,
       "source": "memory",
-      "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
+      "snippet": "Assistant: 教練,寫完了,而且掛牌已經釘好——下次你看我準備備份任何陌生電腦時,我會自己跳出來提醒,不用你開口。 **做了三件事:** 1. 新建 `feedback_cross_machine_backup_reminder.md`(1.7KB),完整七步驟 SOP + 三條鐵律(Junction 不等於活、一次不只搬一個 App、使用者資料 vs 軟體元件)+ 觸發詞清單 2. `MEMORY.md` 索引加一行,跟 `Browser no full junction` 放同一家族(搬家模式家族) 3. `HEARTBEAT.md` 加「主",
       "recallCount": 0,
-      "dailyCount": 14,
+      "dailyCount": 1,
       "groundedCount": 0,
-      "totalScore": 8.68,
-      "maxScore": 0.62,
-      "firstRecalledAt": "2026-06-19T19:00:00.179Z",
-      "lastRecalledAt": "2026-07-03T19:00:00.209Z",
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
-        "68c71b792c96"
+        "ef25d3c6feca"
       ],
       "recallDays": [
-        "2026-06-20",
-        "2026-06-19",
-        "2026-06-21",
-        "2026-06-22",
-        "2026-06-23",
-        "2026-06-24",
-        "2026-06-25",
-        "2026-06-26",
-        "2026-06-28",
-        "2026-06-27",
-        "2026-06-29",
-        "2026-06-30",
-        "2026-07-01",
-        "2026-07-02",
-        "2026-07-03",
-        "2026-07-04"
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
-        "possible",
-        "lasting",
-        "truths",
-        "strong",
-        "candidate",
-        "surfaced"
+        "backup",
+        "1.7kb",
+        "memory.md",
+        "heartbeat.md",
+        "教練",
+        "完了",
+        "而且",
+        "掛牌"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:5:5": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:5:5",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 5,
+      "endLine": 5,
+      "source": "memory",
+      "snippet": "Assistant: NO_MEMORY_FILE，任務結束。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "ef25d3c6feca"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "no-memory-file",
+        "任務",
+        "結束"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-07-08.txt:6:6": {
+      "key": "memory:memory/.dreams/session-corpus/2026-07-08.txt:6:6",
+      "path": "memory/.dreams/session-corpus/2026-07-08.txt",
+      "startLine": 6,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "Assistant: [蒸餾完成] 2026-07-08 今日記憶檔尚無內容，無需更新 CLIENT_PROFILE.md。",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "ef25d3c6feca"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "client-profile.md",
+        "蒸餾",
+        "完成",
+        "今日",
+        "記憶",
+        "尚無",
+        "內容",
+        "無需"
       ]
     },
     "memory:memory/2026-06-20.md:248:251": {
@@ -11741,12 +11481,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 25 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-06-22.txt:101-101, memory/.dreams/session-corpus/2026-06-22.txt:102-102, memory/.dreams/session-corpus/2026-06-22.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11765,7 +11505,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -11786,12 +11527,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 24 memories.; confidence: 0.98; evidence: memory/.dreams/session-corpus/2026-06-21.txt:121-121, memory/.dreams/session-corpus/2026-06-21.txt:123-123, memory/.dreams/session-corpus/2026-06-22.txt:101-101; note: reflection",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11810,7 +11551,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.98",
@@ -11831,12 +11573,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 17 memories.; confidence: 0.69; evidence: memory/.dreams/session-corpus/2026-06-21.txt:123-123, memory/.dreams/session-corpus/2026-06-21.txt:128-128, memory/.dreams/session-corpus/2026-06-21.txt:130-130; note: reflection",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11855,7 +11597,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -11876,12 +11619,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11900,7 +11643,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -11919,12 +11663,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 👤 教練：幫我看一下VPS出了什麼問題了為什麼我跟他對話沒有反應？ 🦞 小龍蝦：教練，我先去查 VPS 狀況，不是一直在問你。 🦞 小龍蝦：找到了 VPS 健康檢查腳本，原來 VPS IP 是 `43.245.60.200`（113.29.232.178 是 aiprimetech 代理）。先用這個去查 VPS 狀態： 🦞 小龍蝦：VPS 跟容器都還活著，問題在裡面。我繼續挖：",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11943,7 +11687,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "43.245.60.200",
@@ -11965,12 +11710,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 🦞 小龍蝦：找到核心問題了。繼續挖細節： 🦞 小龍蝦：繼續確認教練訊息到底有沒有送進 VPS： 🦞 小龍蝦：注意：過去 12 小時 VPS 根本**沒收到教練任何訊息**（沒有 chatId=612 的 inbound）。再查 Telegram polling 狀態： 🦞 小龍蝦：確認容器內部到底是什麼，並看 VPS 到底有沒有收到教練的訊息：",
       "recallCount": 0,
-      "dailyCount": 13,
+      "dailyCount": 14,
       "groundedCount": 0,
-      "totalScore": 8.06,
+      "totalScore": 8.68,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-23T19:00:00.334Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d14e8ae08cf2"
       ],
@@ -11989,7 +11734,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -12011,12 +11757,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 18 memories.; confidence: 0.72; evidence: memory/.dreams/session-corpus/2026-06-23.txt:102-102, memory/.dreams/session-corpus/2026-06-23.txt:104-104, memory/.dreams/session-corpus/2026-06-23.txt:105-105; note: reflection",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12034,7 +11780,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.72",
@@ -12055,12 +11802,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 17 memories.; confidence: 0.68; evidence: memory/.dreams/session-corpus/2026-06-23.txt:102-102, memory/.dreams/session-corpus/2026-06-23.txt:104-104, memory/.dreams/session-corpus/2026-06-23.txt:105-105; note: reflection",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12078,7 +11825,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.68",
@@ -12099,12 +11847,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 14 memories.; confidence: 0.56; evidence: memory/.dreams/session-corpus/2026-06-22.txt:123-123, memory/.dreams/session-corpus/2026-06-23.txt:102-102, memory/.dreams/session-corpus/2026-06-23.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12122,7 +11870,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -12143,12 +11892,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12166,7 +11915,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -12185,12 +11935,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 08:42（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12208,7 +11958,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -12230,12 +11981,12 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 12,
+      "dailyCount": 13,
       "groundedCount": 0,
-      "totalScore": 7.44,
+      "totalScore": 8.06,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-24T19:00:00.264Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "c0c659584f41"
       ],
@@ -12253,7 +12004,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -12275,12 +12027,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 23 memories.; confidence: 0.96; evidence: memory/.dreams/session-corpus/2026-06-24.txt:105-105, memory/.dreams/session-corpus/2026-06-24.txt:106-106, memory/.dreams/session-corpus/2026-06-24.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12297,7 +12049,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.96",
@@ -12318,12 +12071,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 21 memories.; confidence: 0.88; evidence: memory/.dreams/session-corpus/2026-06-24.txt:105-105, memory/.dreams/session-corpus/2026-06-24.txt:106-106, memory/.dreams/session-corpus/2026-06-24.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12340,7 +12093,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.88",
@@ -12361,12 +12115,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 13 memories.; confidence: 0.54; evidence: memory/.dreams/session-corpus/2026-06-23.txt:167-167, memory/.dreams/session-corpus/2026-06-24.txt:105-105, memory/.dreams/session-corpus/2026-06-24.txt:106-106; note: reflection",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12383,7 +12137,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -12404,12 +12159,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12426,7 +12181,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -12445,12 +12201,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 03:42（共約 19 條，從第 0 行起）: 👤 教練：確認一下執行網頁推SOP有沒有問題 🦞 小龍蝦：教練，收到。我立刻去把網頁推 SOP 翻出來，逐項對照最近的執行紀錄，給您一份「確認結果」。 🦞 小龍蝦：教練，確認完畢。**有一個問題**，報告如下：",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12467,7 +12223,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -12489,12 +12246,12 @@
       "source": "memory",
       "snippet": "✅ 沒問題的部分: | 檢核項 | ai-go | consultant | |--------|-------|-----------| | 站台分流（GitHub Pages 走 git push，符合 SOP）| ✅ | ✅ | | 一次性推送（不分批，符合守則 #08）| ✅ 1 commit | ✅ 1 commit |",
       "recallCount": 0,
-      "dailyCount": 11,
+      "dailyCount": 12,
       "groundedCount": 0,
-      "totalScore": 6.82,
+      "totalScore": 7.44,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-25T19:00:00.217Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "ff7ab8398a7d"
       ],
@@ -12511,7 +12268,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "ai-go",
@@ -12533,12 +12291,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 17 memories.; confidence: 0.79; evidence: memory/.dreams/session-corpus/2026-06-25.txt:100-100, memory/.dreams/session-corpus/2026-06-25.txt:101-101, memory/.dreams/session-corpus/2026-06-25.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 10,
+      "dailyCount": 11,
       "groundedCount": 0,
-      "totalScore": 6.2,
+      "totalScore": 6.82,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-27T19:00:00.175Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "09b3776eb452"
       ],
@@ -12553,7 +12311,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.79",
@@ -12574,12 +12333,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 14 memories.; confidence: 0.65; evidence: memory/.dreams/session-corpus/2026-06-25.txt:100-100, memory/.dreams/session-corpus/2026-06-25.txt:101-101, memory/.dreams/session-corpus/2026-06-25.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 10,
+      "dailyCount": 11,
       "groundedCount": 0,
-      "totalScore": 6.2,
+      "totalScore": 6.82,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-27T19:00:00.175Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "09b3776eb452"
       ],
@@ -12594,7 +12353,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.65",
@@ -12615,12 +12375,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 12 memories.; confidence: 0.56; evidence: memory/.dreams/session-corpus/2026-06-24.txt:142-142, memory/.dreams/session-corpus/2026-06-25.txt:101-101, memory/.dreams/session-corpus/2026-06-25.txt:111-111; note: reflection",
       "recallCount": 0,
-      "dailyCount": 10,
+      "dailyCount": 11,
       "groundedCount": 0,
-      "totalScore": 6.2,
+      "totalScore": 6.82,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-27T19:00:00.175Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "09b3776eb452"
       ],
@@ -12635,7 +12395,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -12656,12 +12417,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 10,
+      "dailyCount": 11,
       "groundedCount": 0,
-      "totalScore": 6.2,
+      "totalScore": 6.82,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-27T19:00:00.175Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "09b3776eb452"
       ],
@@ -12676,7 +12437,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -12695,12 +12457,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 22 memories.; confidence: 0.90; evidence: memory/.dreams/session-corpus/2026-06-26.txt:107-107, memory/.dreams/session-corpus/2026-06-26.txt:108-108, memory/.dreams/session-corpus/2026-06-26.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12714,7 +12476,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.90",
@@ -12735,12 +12498,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 20 memories.; confidence: 0.82; evidence: memory/.dreams/session-corpus/2026-06-26.txt:107-107, memory/.dreams/session-corpus/2026-06-26.txt:108-108, memory/.dreams/session-corpus/2026-06-26.txt:111-111; note: reflection",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12754,7 +12517,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.82",
@@ -12775,12 +12539,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 15 memories.; confidence: 0.61; evidence: memory/.dreams/session-corpus/2026-06-26.txt:106-106, memory/.dreams/session-corpus/2026-06-26.txt:107-107, memory/.dreams/session-corpus/2026-06-26.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12794,7 +12558,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -12815,12 +12580,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12834,7 +12599,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -12853,12 +12619,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 👤 教練：這裡並沒有蒸餾的任務，如果要執行，應該是請學弟及學妹回報服務的情況，學長這裡每天也都有蒸餾報告，只是沒有同步到這裡來 🦞 小龍蝦：收到教練 👌",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12872,7 +12638,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -12894,12 +12661,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 📺 YouTube 精選這條本來就是學長選完發的最終輸出，不再額外蒸餾，您說得對; 📊 若要對 31 個頻道做長期追蹤（訂閱變化、影片表現、學習重點），這類分工可以派給學弟或學妹; 📋 學長的 daily digest 確實每天有跑（DAILY_DIGEST.md + distill/terminal_*.md），只是沒主動同步到分工群",
       "recallCount": 0,
-      "dailyCount": 9,
+      "dailyCount": 10,
       "groundedCount": 0,
-      "totalScore": 5.58,
+      "totalScore": 6.2,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-28T19:00:00.223Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "9baa94fb435a"
       ],
@@ -12913,7 +12680,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "daily-digest.md",
@@ -13051,12 +12819,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 22 memories.; confidence: 0.90; evidence: memory/.dreams/session-corpus/2026-06-28.txt:102-102, memory/.dreams/session-corpus/2026-06-28.txt:104-104, memory/.dreams/session-corpus/2026-06-28.txt:106-106; note: reflection",
       "recallCount": 0,
-      "dailyCount": 8,
+      "dailyCount": 9,
       "groundedCount": 0,
-      "totalScore": 4.96,
+      "totalScore": 5.58,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-29T19:00:00.210Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "851d4a5449d7"
       ],
@@ -13069,7 +12837,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.90",
@@ -13090,12 +12859,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 22 memories.; confidence: 0.90; evidence: memory/.dreams/session-corpus/2026-06-28.txt:102-102, memory/.dreams/session-corpus/2026-06-28.txt:104-104, memory/.dreams/session-corpus/2026-06-28.txt:106-106; note: reflection",
       "recallCount": 0,
-      "dailyCount": 8,
+      "dailyCount": 9,
       "groundedCount": 0,
-      "totalScore": 4.96,
+      "totalScore": 5.58,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-29T19:00:00.210Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "851d4a5449d7"
       ],
@@ -13108,7 +12877,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.90",
@@ -13129,12 +12899,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 17 memories.; confidence: 0.69; evidence: memory/.dreams/session-corpus/2026-06-27.txt:140-140, memory/.dreams/session-corpus/2026-06-27.txt:143-143, memory/.dreams/session-corpus/2026-06-28.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 8,
+      "dailyCount": 9,
       "groundedCount": 0,
-      "totalScore": 4.96,
+      "totalScore": 5.58,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-29T19:00:00.210Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "851d4a5449d7"
       ],
@@ -13147,7 +12917,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -13168,12 +12939,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 8,
+      "dailyCount": 9,
       "groundedCount": 0,
-      "totalScore": 4.96,
+      "totalScore": 5.58,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-29T19:00:00.210Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "851d4a5449d7"
       ],
@@ -13186,7 +12957,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -13349,12 +13121,12 @@
       "source": "memory",
       "snippet": "大樹教練的活動頁面要列舉近期活動紀錄: 觸發時機：教練下令「做活動頁」「更新活動紀錄」時; 動作：列舉近期講座 / 演講 / 活動紀錄; 提醒：只列教練親自參與或主辦的活動，別亂湊",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13366,7 +13138,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "大樹",
@@ -13377,7 +13150,8 @@
         "紀錄",
         "觸發",
         "時機"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:18:21": {
       "key": "memory:memory/2026-06-30.md:18:21",
@@ -13387,12 +13161,12 @@
       "source": "memory",
       "snippet": "情境事實：這幾天教練是用 ACER 筆電在完成工作: **這是已驗證事實**，從雲端接力棒鏈可以確認：; `9376e6f3 講座行銷頁 v5 + 接力棒（明早 ACER 開工自動接住）`; `34f169ce 講座行銷頁 v6 + EDM 7/1 上線 + 收工接力棒`; `cfdc898b EDM 報名表單上線總結接力棒`",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13404,7 +13178,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "7/1",
@@ -13415,7 +13190,8 @@
         "是用",
         "acer",
         "完成"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:22:23": {
       "key": "memory:memory/2026-06-30.md:22:23",
@@ -13425,12 +13201,12 @@
       "source": "memory",
       "snippet": "情境事實：這幾天教練是用 ACER 筆電在完成工作: 影響：開工讀接力棒時，這幾天的工作多半由 ACER 端發起；接力棒同步 bug 修了之後（grep -vF + 自動 pull），ACER 動作可被小龍蝦這邊即時看到; 後續：教練下次到 Mac 端開工時，主動告知「這幾天 ACER 端已有 X 個動作，內容包括⋯⋯」",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13442,7 +13218,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "情境",
@@ -13453,7 +13230,8 @@
         "acer",
         "完成",
         "工作"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:27:27": {
       "key": "memory:memory/2026-06-30.md:27:27",
@@ -13463,12 +13241,12 @@
       "source": "memory",
       "snippet": "提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: > 提醒我「**真鑽**領導團隊遴選要盡快完成，找上屆及本屆三長討論」",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13480,7 +13258,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "提醒",
@@ -13491,7 +13270,8 @@
         "領導",
         "團隊",
         "遴選"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:29:32": {
       "key": "memory:memory/2026-06-30.md:29:32",
@@ -13501,12 +13281,12 @@
       "source": "memory",
       "snippet": "提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: **09:15 教練回覆**：「提醒就好，細節我知道就行」; **09:19 教練糾正**：我誤把「真鑽」猜成「真鑫」（BNI），教練明說是「真鑽」→ 已修正; ✅ Cron Reminder 已設定：2026-07-01 09:00 台北時間觸發; ID: e6ddab8f-09d0-402f-b42b-18d67186e59a",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13518,7 +13298,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "提醒",
@@ -13529,7 +13310,8 @@
         "回覆",
         "就好",
         "細節"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:33:34": {
       "key": "memory:memory/2026-06-30.md:33:34",
@@ -13539,12 +13321,12 @@
       "source": "memory",
       "snippet": "提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: 一次性，跑完即刪; 提醒內容已改為：⏰ 真鑽領導團隊遴選。教練今天要跟上屆及本屆三長討論嗎？需要我幫您做什麼？",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13556,7 +13338,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "提醒",
@@ -13567,7 +13350,8 @@
         "一次",
         "內容",
         "改為"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:37:40": {
       "key": "memory:memory/2026-06-30.md:37:40",
@@ -13577,12 +13361,12 @@
       "source": "memory",
       "snippet": "⚠️ 教訓記錄（給未來的我）: **過度依賴 USER.md 對照表**：看到「真鑽」就聯想到「真鑫」是 BNI 語音誤判，沒先求證。; **教練沒否認 ≠ 默認**：「提醒就好」只是要我不煩他，不是對「真鑫/真鑽」的答覆。我以為「未否認就是默認」是過度解讀。; **正確做法**：遇到 USER.md 沒列的陌生詞，**就算對方不回應，也要標註「未確認」而不是預設成某個值**。本次教訓要寫進 .learnings/。; **守則 #18「語音糾偏必問不猜」**：我問了，但問完又自己猜了，這還是猜。",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13594,7 +13378,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "user.md",
@@ -13605,7 +13390,8 @@
         "過度",
         "依賴",
         "對照表"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:44:47": {
       "key": "memory:memory/2026-06-30.md:44:47",
@@ -13615,12 +13401,12 @@
       "source": "memory",
       "snippet": "待辦總表（截至 09:12）: | # | 事項 | 狀態 | 等什麼 | |---|------|------|-------| | 1 | 小龍蝦個人介紹頁加媒體報導 | 待辦 | 教練下令做介紹頁 | | 2 | 大樹教練活動頁列活動紀錄 | 待辦 | 教練下令做活動頁 |",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13632,7 +13418,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "截至",
@@ -13643,7 +13430,8 @@
         "個人",
         "介紹",
         "媒體"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:48:51": {
       "key": "memory:memory/2026-06-30.md:48:51",
@@ -13653,12 +13441,12 @@
       "source": "memory",
       "snippet": "待辦總表（截至 09:12）: | 3 | 跨機 verbatim 讀取架構（A/B/C） | 提案已交 | 教練拍板 | | 4 | 真鑽領導團隊遴選 | ⏰ 提醒已設，明天 09:00 | 教練說細節他自己處理，我只負責提醒 | | 5 | 聯想/ACER 自動蒸餾對話紀錄到雲端 | 📝 備忘已寫好 `knowledges/2026-06-30_跨機verbatim蒸餾備忘.md` | 教練開工時轉交軍師執行 | | 5 | #8242–#8250 蒸餾連續 4 天無新對話 | 暫停 | 教練下令排查 |",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13670,7 +13458,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "a/b/c",
@@ -13681,7 +13470,8 @@
         "架構",
         "提案",
         "教練"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:5:5": {
       "key": "memory:memory/2026-06-30.md:5:5",
@@ -13691,12 +13481,12 @@
       "source": "memory",
       "snippet": "🔴 教練提醒事項（09:05 Telegram 主對話框交付）: 教練丟了三條備忘性質的提醒，**未下令立刻執行**，等教練真的要做的時候再拿出來：",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13708,7 +13498,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "教練",
@@ -13719,7 +13510,8 @@
         "交付",
         "丟了",
         "備忘"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:52:52": {
       "key": "memory:memory/2026-06-30.md:52:52",
@@ -13729,12 +13521,12 @@
       "source": "memory",
       "snippet": "待辦總表（截至 09:12）: | 6 | 提醒 #5 續：軍師執行狀態追蹤 | 待教練開工 | 教練開工後學長追進度 |",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13746,7 +13538,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "截至",
@@ -13757,7 +13550,8 @@
         "追蹤",
         "教練",
         "開工"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:56:59": {
       "key": "memory:memory/2026-06-30.md:56:59",
@@ -13767,12 +13561,12 @@
       "source": "memory",
       "snippet": "開工當下狀態: 時間：2026-06-30 09:17; 收到教練三條提醒，已寫入 HEARTBEAT.md + 本檔; 早上的對話蒸餾（08:05）已正常運作，最近一次蒸餾是 6/26，主要內容是「ACER 接力棒同步修 bug」的故事; 起床摘要（06:03）正常：過去 12 小時 29 個純自動備份 commit，0 個值得教練看（合理）",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13784,7 +13578,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -13795,7 +13590,8 @@
         "時間",
         "收到",
         "教練"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:60:60": {
       "key": "memory:memory/2026-06-30.md:60:60",
@@ -13805,12 +13601,12 @@
       "source": "memory",
       "snippet": "開工當下狀態: 接力棒 poll 09:05 OK",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13822,7 +13618,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "開工",
@@ -13840,12 +13637,12 @@
       "source": "memory",
       "snippet": "待辦（被教練暫停的，不是空轉）: #8242–#8250：蒸餾進程連續 4 天無新對話，已多次回報教練「待人工確認」，沒有看到教練下令排查 → 等教練下令再處理; 媒體報導區塊：等教練下令做個人介紹頁時補; 活動紀錄區塊：等教練下令做活動頁時補",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13857,7 +13654,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "教練",
@@ -13868,7 +13666,8 @@
         "進程",
         "連續",
         "對話"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:70:70": {
       "key": "memory:memory/2026-06-30.md:70:70",
@@ -13878,12 +13677,12 @@
       "source": "memory",
       "snippet": "提醒 #5 備忘指令詳情（09:16）: 教練說：「你寫一個備忘指令給軍師，我開工時，請他寫指令讓聯想及acer工作除了接力棒之外也要自動蒸餾對話紀錄到雲端，以收集試金石檔案」",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13895,7 +13694,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "提醒",
@@ -13906,7 +13706,8 @@
         "一個",
         "軍師",
         "開工"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:72:75": {
       "key": "memory:memory/2026-06-30.md:72:75",
@@ -13916,12 +13717,12 @@
       "source": "memory",
       "snippet": "提醒 #5 備忘指令詳情（09:16）: ✅ 備忘已寫：`knowledges/2026-06-30_跨機verbatim蒸餾備忘.md`（3.5KB）; 含：教練原始口諭 / 背景 / 軍師交付物 A–E / 風險 / 驗收標準 / 相關 commit 索引; 軍師開工時 AGENTS.md 規定會讀 `knowledges/` 新檔 → 會自動看到; 備忘架構選擇：直接走 B 路線（改 ACER/聯想端推 verbatim 上雲端），這跟 09:10 教練追問時我提的 B 選項一致",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13933,7 +13734,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "3.5kb",
@@ -13944,7 +13746,8 @@
         "指令",
         "詳情",
         "knowledges"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:8:10": {
       "key": "memory:memory/2026-06-30.md:8:10",
@@ -13954,12 +13757,12 @@
       "source": "memory",
       "snippet": "小龍蝦個人介紹頁面要加上媒體報導: 觸發時機：教練下令「做個人介紹頁」或相關指令時; 動作：補上媒體報導區塊（媒體名稱、報導連結、日期）; 提醒：媒體資料只信 `user_coach_brand_data.md`，不要上網抄",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -13971,7 +13774,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "user-coach-brand-data.md",
@@ -13982,7 +13786,8 @@
         "媒體",
         "報導",
         "觸發"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:80:83": {
       "key": "memory:memory/2026-06-30.md:80:83",
@@ -13992,12 +13797,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 👤 教練：提醒事項： 1.我的個人介紹頁面要加上媒體報導 2.大樹教練的活動頁面要列舉近期活動紀錄 3.去雲端讀取開工資料就知道這幾天我都是用acer筆電在完成工作",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14009,7 +13814,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.我的個人介紹頁面要加上媒體報導",
@@ -14020,7 +13826,8 @@
         "教練",
         "提醒",
         "事項"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:84:85": {
       "key": "memory:memory/2026-06-30.md:84:85",
@@ -14030,12 +13837,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 🦞 小龍蝦：收到教練的提醒事項，馬上記下來，並主動去雲端確認一下 ACER 那邊的脈絡。 🦞 小龍蝦：教練，三件事我都記下了：",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14047,7 +13854,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -14058,7 +13866,8 @@
         "提醒",
         "事項",
         "馬上"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:87:87": {
       "key": "memory:memory/2026-06-30.md:87:87",
@@ -14068,12 +13877,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **1. 小龍蝦個人介紹頁** → 等您說「做介紹頁」時，會主動補上媒體報導區塊（我會用您校正過的品牌資料，不上網亂抄）。",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14085,7 +13894,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -14096,7 +13906,8 @@
         "您說",
         "主動",
         "媒體"
-      ]
+      ],
+      "promotedAt": "2026-07-07T19:00:00.169Z"
     },
     "memory:memory/2026-06-30.md:89:89": {
       "key": "memory:memory/2026-06-30.md:89:89",
@@ -14106,12 +13917,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **2. 大樹教練的活動頁** → 等您說「做活動頁」時，會主動補上近期活動紀錄。",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14123,7 +13934,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -14144,12 +13956,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **3. ACER 那邊** → 我去雲端確認過了，這幾天的接力棒鏈確實是：Mac 把講座行銷頁任務交給聯想 → 聯想交給 ACER → ACER 完成 v5/v6 跟 EDM 表單再推回雲端。ACER 接力棒同步修好（grep 跟自動 pull 兩個 bug）之後，您在 Mac 端開工我就能看到 ACER 端的動作了。",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14161,7 +13973,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "v5/v6",
@@ -14182,12 +13995,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 這三條是備忘性質，您現在不立刻做也沒關係。等您哪天一聲令下，我就會主動從備忘清單撈出來，絕不會讓您再當搬運工提醒我一次。",
       "recallCount": 0,
-      "dailyCount": 7,
+      "dailyCount": 8,
       "groundedCount": 0,
-      "totalScore": 4.34,
+      "totalScore": 4.96,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14199,7 +14012,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -14220,12 +14034,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: [[reply_to_current] 🦞 小龍蝦：教練，三件事我都記下了：",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-05T19:00:00.285Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14236,7 +14050,9 @@
         "2026-07-03",
         "2026-07-04",
         "2026-07-05",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
         "reply-to-current",
@@ -14255,12 +14071,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **1. 小龍蝦個人介紹頁** → 等您說「做介紹頁」時，會主動補上媒體報導區塊（我會用您校正過的品牌資料，不上網亂抄）。",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-06-30T19:00:00.266Z",
-      "lastRecalledAt": "2026-07-05T19:00:00.285Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "2fb74c13ea02"
       ],
@@ -14271,7 +14087,9 @@
         "2026-07-03",
         "2026-07-04",
         "2026-07-05",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08",
+        "2026-07-07"
       ],
       "conceptTags": [
         "對話",
@@ -14292,12 +14110,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 26 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-06-29.txt:160-160, memory/.dreams/session-corpus/2026-06-30.txt:101-101, memory/.dreams/session-corpus/2026-06-30.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-01T19:00:00.226Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d3e94d1fa1ba"
       ],
@@ -14308,7 +14126,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -14329,12 +14148,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 24 memories.; confidence: 0.98; evidence: memory/.dreams/session-corpus/2026-06-30.txt:101-101, memory/.dreams/session-corpus/2026-06-30.txt:107-107, memory/.dreams/session-corpus/2026-06-30.txt:108-108; note: reflection",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-01T19:00:00.226Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d3e94d1fa1ba"
       ],
@@ -14345,7 +14164,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.98",
@@ -14366,12 +14186,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `cron` kept surfacing across 13 memories.; confidence: 0.53; evidence: memory/.dreams/session-corpus/2026-06-30.txt:109-109, memory/.dreams/session-corpus/2026-06-30.txt:110-110, memory/.dreams/session-corpus/2026-06-30.txt:112-112; note: reflection",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-01T19:00:00.226Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d3e94d1fa1ba"
       ],
@@ -14382,7 +14202,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.53",
@@ -14403,12 +14224,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 13 memories.; confidence: 0.53; evidence: memory/.dreams/session-corpus/2026-06-30.txt:107-107, memory/.dreams/session-corpus/2026-06-30.txt:111-111, memory/.dreams/session-corpus/2026-06-30.txt:112-112; note: reflection",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-01T19:00:00.226Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d3e94d1fa1ba"
       ],
@@ -14419,7 +14240,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -14440,12 +14262,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 6,
+      "dailyCount": 7,
       "groundedCount": 0,
-      "totalScore": 3.72,
+      "totalScore": 4.34,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-01T19:00:00.226Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d3e94d1fa1ba"
       ],
@@ -14456,7 +14278,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -14475,12 +14298,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 15 memories.; confidence: 0.70; evidence: memory/.dreams/session-corpus/2026-07-01.txt:32-32, memory/.dreams/session-corpus/2026-07-01.txt:33-33, memory/.dreams/session-corpus/2026-07-01.txt:36-36; note: reflection",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14490,7 +14313,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.70",
@@ -14511,12 +14335,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 13 memories.; confidence: 0.60; evidence: memory/.dreams/session-corpus/2026-07-01.txt:32-32, memory/.dreams/session-corpus/2026-07-01.txt:33-33, memory/.dreams/session-corpus/2026-07-01.txt:36-36; note: reflection",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14526,7 +14350,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.60",
@@ -14547,12 +14372,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 12 memories.; confidence: 0.56; evidence: memory/.dreams/session-corpus/2026-07-01.txt:32-32, memory/.dreams/session-corpus/2026-07-01.txt:34-34, memory/.dreams/session-corpus/2026-07-01.txt:36-36; note: reflection",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14562,7 +14387,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -14583,12 +14409,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14598,7 +14424,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -14617,12 +14444,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 11:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14632,7 +14459,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -14653,12 +14481,12 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14668,7 +14496,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -14689,12 +14518,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14704,7 +14533,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -14725,12 +14555,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-02T19:00:00.207Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "065f0c032831"
       ],
@@ -14740,7 +14570,8 @@
         "2026-07-04",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -14761,12 +14592,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 27 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-02.txt:100-100, memory/.dreams/session-corpus/2026-07-02.txt:102-102, memory/.dreams/session-corpus/2026-07-02.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14775,7 +14606,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -14796,12 +14628,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 26 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-02.txt:100-100, memory/.dreams/session-corpus/2026-07-02.txt:102-102, memory/.dreams/session-corpus/2026-07-02.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14810,7 +14642,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -14831,12 +14664,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 21 memories.; confidence: 0.89; evidence: memory/.dreams/session-corpus/2026-07-01.txt:84-84, memory/.dreams/session-corpus/2026-07-02.txt:100-100, memory/.dreams/session-corpus/2026-07-02.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14845,7 +14678,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -14866,12 +14700,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `報告` kept surfacing across 14 memories.; confidence: 0.60; evidence: memory/.dreams/session-corpus/2026-07-02.txt:102-102, memory/.dreams/session-corpus/2026-07-02.txt:104-104, memory/.dreams/session-corpus/2026-07-02.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14880,7 +14714,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.60",
@@ -14901,12 +14736,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `state/session-counter.json` kept surfacing across 13 memories.; confidence: 0.55; evidence: memory/.dreams/session-corpus/2026-07-02.txt:100-100, memory/.dreams/session-corpus/2026-07-02.txt:104-104, memory/.dreams/session-corpus/2026-07-02.txt:107-107; note:",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14915,7 +14750,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "state/session-counter.json",
@@ -14936,12 +14772,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `任務` kept surfacing across 13 memories.; confidence: 0.55; evidence: memory/.dreams/session-corpus/2026-07-02.txt:101-101, memory/.dreams/session-corpus/2026-07-02.txt:103-103, memory/.dreams/session-corpus/2026-07-02.txt:104-104; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14950,7 +14786,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.55",
@@ -14971,12 +14808,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `自動` kept surfacing across 12 memories.; confidence: 0.51; evidence: memory/.dreams/session-corpus/2026-07-02.txt:102-102, memory/.dreams/session-corpus/2026-07-02.txt:109-109, memory/.dreams/session-corpus/2026-07-02.txt:110-110; note: reflection",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -14985,7 +14822,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.51",
@@ -15006,12 +14844,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -15020,7 +14858,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -15039,12 +14878,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 03:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -15053,7 +14892,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -15074,12 +14914,12 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -15088,7 +14928,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -15109,12 +14950,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -15123,7 +14964,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -15144,12 +14986,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "d7693007aef7"
       ],
@@ -15158,7 +15000,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -15179,12 +15022,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15193,7 +15036,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -15214,12 +15058,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15228,7 +15072,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -15249,12 +15094,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 26 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-03.txt:100-100, memory/.dreams/session-corpus/2026-07-03.txt:102-102, memory/.dreams/session-corpus/2026-07-03.txt:103-103; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15262,7 +15107,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -15283,12 +15129,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 25 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-03.txt:100-100, memory/.dreams/session-corpus/2026-07-03.txt:102-102, memory/.dreams/session-corpus/2026-07-03.txt:103-103; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15296,7 +15142,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -15317,12 +15164,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 16 memories.; confidence: 0.68; evidence: memory/.dreams/session-corpus/2026-07-03.txt:100-100, memory/.dreams/session-corpus/2026-07-03.txt:103-103, memory/.dreams/session-corpus/2026-07-03.txt:109-109; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15330,7 +15177,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -15351,12 +15199,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `任務` kept surfacing across 15 memories.; confidence: 0.64; evidence: memory/.dreams/session-corpus/2026-07-03.txt:102-102, memory/.dreams/session-corpus/2026-07-03.txt:105-105, memory/.dreams/session-corpus/2026-07-03.txt:115-115; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15364,7 +15212,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.64",
@@ -15385,12 +15234,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `報告` kept surfacing across 14 memories.; confidence: 0.60; evidence: memory/.dreams/session-corpus/2026-07-03.txt:103-103, memory/.dreams/session-corpus/2026-07-03.txt:104-104, memory/.dreams/session-corpus/2026-07-03.txt:110-110; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15398,7 +15247,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.60",
@@ -15419,12 +15269,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `自動` kept surfacing across 14 memories.; confidence: 0.60; evidence: memory/.dreams/session-corpus/2026-07-03.txt:104-104, memory/.dreams/session-corpus/2026-07-03.txt:110-110, memory/.dreams/session-corpus/2026-07-03.txt:115-115; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15432,7 +15282,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.60",
@@ -15453,12 +15304,12 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `cron` kept surfacing across 12 memories.; confidence: 0.51; evidence: memory/.dreams/session-corpus/2026-07-03.txt:102-102, memory/.dreams/session-corpus/2026-07-03.txt:103-103, memory/.dreams/session-corpus/2026-07-03.txt:105-105; note: reflection",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15466,7 +15317,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.51",
@@ -15487,12 +15339,12 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15500,7 +15352,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -15519,12 +15372,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 21:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15532,7 +15385,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -15553,12 +15407,12 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15566,7 +15420,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -15587,12 +15442,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15600,7 +15455,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -15621,12 +15477,12 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-04T19:00:00.219Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15634,7 +15490,8 @@
         "2026-07-05",
         "2026-07-04",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -15655,12 +15512,12 @@
       "source": "memory",
       "snippet": "📨 對話記錄 01:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15669,7 +15526,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -15690,12 +15548,12 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-03T19:00:00.209Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "4d5de0b226f2"
       ],
@@ -15704,7 +15562,8 @@
         "2026-07-03",
         "2026-07-05",
         "2026-07-06",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -15725,19 +15584,20 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 20 memories.; confidence: 0.83; evidence: memory/.dreams/session-corpus/2026-07-04.txt:100-100, memory/.dreams/session-corpus/2026-07-04.txt:101-101, memory/.dreams/session-corpus/2026-07-04.txt:102-102; note: reflection",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.83",
@@ -15758,19 +15618,20 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 19 memories.; confidence: 0.79; evidence: memory/.dreams/session-corpus/2026-07-04.txt:100-100, memory/.dreams/session-corpus/2026-07-04.txt:102-102, memory/.dreams/session-corpus/2026-07-04.txt:103-103; note: reflection",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.79",
@@ -15791,19 +15652,20 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 18 memories.; confidence: 0.75; evidence: memory/.dreams/session-corpus/2026-07-04.txt:102-102, memory/.dreams/session-corpus/2026-07-04.txt:104-104, memory/.dreams/session-corpus/2026-07-04.txt:112-112; note: reflection",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -15824,19 +15686,20 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `state/session-counter.json` kept surfacing across 12 memories.; confidence: 0.50; evidence: memory/.dreams/session-corpus/2026-07-04.txt:112-112, memory/.dreams/session-corpus/2026-07-04.txt:114-114, memory/.dreams/session-corpus/2026-07-04.txt:115-115; note:",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "state/session-counter.json",
@@ -15857,19 +15720,20 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -15888,19 +15752,20 @@
       "source": "memory",
       "snippet": "📨 對話記錄 16:47（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -15921,19 +15786,20 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -15954,19 +15820,20 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -15987,19 +15854,20 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-05T19:00:00.285Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "767d5db357b7"
       ],
       "recallDays": [
         "2026-07-06",
         "2026-07-05",
-        "2026-07-07"
+        "2026-07-07",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -16020,18 +15888,19 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `檢查` kept surfacing across 30 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-05.txt:105-105, memory/.dreams/session-corpus/2026-07-05.txt:106-106, memory/.dreams/session-corpus/2026-07-05.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -16052,18 +15921,19 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `健康` kept surfacing across 28 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-05.txt:105-105, memory/.dreams/session-corpus/2026-07-05.txt:106-106, memory/.dreams/session-corpus/2026-07-05.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "1.00",
@@ -16084,18 +15954,19 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 22 memories.; confidence: 0.88; evidence: memory/.dreams/session-corpus/2026-07-05.txt:105-105, memory/.dreams/session-corpus/2026-07-05.txt:106-106, memory/.dreams/session-corpus/2026-07-05.txt:107-107; note: reflection",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat.md",
@@ -16116,18 +15987,19 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `報告` kept surfacing across 14 memories.; confidence: 0.56; evidence: memory/.dreams/session-corpus/2026-07-05.txt:106-106, memory/.dreams/session-corpus/2026-07-05.txt:15-15, memory/.dreams/session-corpus/2026-07-05.txt:19-19; note: reflection",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.56",
@@ -16148,18 +16020,19 @@
       "source": "memory",
       "snippet": "Reflections: Theme: `完成` kept surfacing across 13 memories.; confidence: 0.52; evidence: memory/.dreams/session-corpus/2026-07-05.txt:102-102, memory/.dreams/session-corpus/2026-07-05.txt:103-103, memory/.dreams/session-corpus/2026-07-05.txt:105-105; note: reflection",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "0.52",
@@ -16180,18 +16053,19 @@
       "source": "memory",
       "snippet": "Possible Lasting Truths: No strong candidate truths surfaced.",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "possible",
@@ -16210,18 +16084,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 12:17（共約 2 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -16242,18 +16117,19 @@
       "source": "memory",
       "snippet": "第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "一步",
@@ -16274,18 +16150,19 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可）",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -16306,18 +16183,19 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p 🦞 小龍蝦：開工，先讀 AGENTS.md。",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "scp/ssh",
@@ -16338,18 +16216,19 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: 「開工，先讀 AGENTS.md。」",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "agents.md",
@@ -16369,18 +16248,19 @@
       "source": "memory",
       "snippet": "常見錯誤自動修復：: 我會按照指令安靜執行健康檢查，不打擾教練。",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "a1920405ece6"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "常見",
@@ -16401,18 +16281,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content]",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -16433,18 +16314,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16465,18 +16347,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16497,18 +16380,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16529,18 +16413,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16553,6 +16438,198 @@
         "龍蝦"
       ]
     },
+    "memory:memory/2026-07-07.md:293:296": {
+      "key": "memory:memory/2026-07-07.md:293:296",
+      "path": "memory/2026-07-07.md",
+      "startLine": 293,
+      "endLine": 296,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `健康` kept surfacing across 23 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: reflection",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "1.00",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "健康",
+        "kept"
+      ]
+    },
+    "memory:memory/2026-07-07.md:297:300": {
+      "key": "memory:memory/2026-07-07.md:297:300",
+      "path": "memory/2026-07-07.md",
+      "startLine": 297,
+      "endLine": 300,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `檢查` kept surfacing across 22 memories.; confidence: 1.00; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: reflection",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "1.00",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "檢查",
+        "kept"
+      ]
+    },
+    "memory:memory/2026-07-07.md:301:304": {
+      "key": "memory:memory/2026-07-07.md:301:304",
+      "path": "memory/2026-07-07.md",
+      "startLine": 301,
+      "endLine": 304,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `heartbeat.md` kept surfacing across 19 memories.; confidence: 0.90; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: reflection",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "heartbeat.md",
+        "0.90",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "kept"
+      ]
+    },
+    "memory:memory/2026-07-07.md:305:308": {
+      "key": "memory:memory/2026-07-07.md:305:308",
+      "path": "memory/2026-07-07.md",
+      "startLine": 305,
+      "endLine": 308,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `報告` kept surfacing across 17 memories.; confidence: 0.81; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: reflection",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "0.81",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "報告",
+        "kept"
+      ]
+    },
+    "memory:memory/2026-07-07.md:309:312": {
+      "key": "memory:memory/2026-07-07.md:309:312",
+      "path": "memory/2026-07-07.md",
+      "startLine": 309,
+      "endLine": 312,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `自動` kept surfacing across 16 memories.; confidence: 0.76; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: reflection",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "0.76",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "自動",
+        "kept"
+      ]
+    },
+    "memory:memory/2026-07-07.md:313:316": {
+      "key": "memory:memory/2026-07-07.md:313:316",
+      "path": "memory/2026-07-07.md",
+      "startLine": 313,
+      "endLine": 316,
+      "source": "memory",
+      "snippet": "Reflections: Theme: `state/session-counter.json` kept surfacing across 14 memories.; confidence: 0.67; evidence: memory/.dreams/session-corpus/2026-07-06.txt:17-17, memory/.dreams/session-corpus/2026-07-06.txt:19-19, memory/.dreams/session-corpus/2026-07-06.txt:23-23; note: refle",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.62,
+      "maxScore": 0.62,
+      "firstRecalledAt": "2026-07-07T19:00:00.169Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
+      "queryHashes": [
+        "8493648ccbc7"
+      ],
+      "recallDays": [
+        "2026-07-08",
+        "2026-07-07"
+      ],
+      "conceptTags": [
+        "state/session-counter.json",
+        "0.67",
+        "17-17",
+        "19-19",
+        "23-23",
+        "reflections",
+        "theme",
+        "state"
+      ]
+    },
     "memory:memory/2026-07-07.md:33:36": {
       "key": "memory:memory/2026-07-07.md:33:36",
       "path": "memory/2026-07-07.md",
@@ -16561,18 +16638,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：Heartbeat poll. Nothing urgent. HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16593,18 +16671,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16625,18 +16704,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16657,18 +16737,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16689,18 +16770,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16721,18 +16803,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16753,18 +16836,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content]",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16785,18 +16869,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
@@ -16817,18 +16902,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：記住我的健保卡號000078645230 🦞 小龍蝦：教練，我馬上記下來。 🦞 小龍蝦：教練，記住了 ✅",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -16849,18 +16935,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 健保卡號：**000078645230** 已存入 `USER.md` 本機主線（commit `64eb3652c`，已推上雲端）。",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "user.md",
@@ -16881,18 +16968,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 以後您要查、要看、或臨時報號，都跟我說一聲就好，不用再翻皮夾。🦞 🦞 小龍蝦：教練，記住了 ✅",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -16913,18 +17001,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 健保卡號：**000078645230** 已存入 `USER.md` 本機主線（commit `64eb3652c`，已推上雲端）。",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "user.md",
@@ -16945,18 +17034,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 以後您要查、要看、或臨時報號，都跟我說一聲就好，不用再翻皮夾。🦞",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "對話",
@@ -16977,18 +17067,19 @@
       "source": "memory",
       "snippet": "📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-07-06T19:00:00.148Z",
-      "lastRecalledAt": "2026-07-06T19:00:00.148Z",
+      "lastRecalledAt": "2026-07-07T19:00:00.169Z",
       "queryHashes": [
         "8493648ccbc7"
       ],
       "recallDays": [
         "2026-07-07",
-        "2026-07-06"
+        "2026-07-06",
+        "2026-07-08"
       ],
       "conceptTags": [
         "heartbeat-ok",
