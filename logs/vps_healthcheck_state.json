@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-07-02 08:00:04",
-  "status": "WARN",
-  "results": ["✅ SSH 連通","✅ Docker 容器: Up 15 minutes (healthy)","⚠️ Gateway 24h 錯誤數: 299（超過容忍值）","✅ Gateway 活躍（過去 1 小時有事件）","✅ 模型已載入: minimax/MiniMax-M3"]
+  "lastCheckAt": "2026-07-07 08:00:00",
+  "status": "OK",
+  "results": ["✅ SSH 連通","✅ Docker 容器: Up 30 hours (healthy)","✅ Gateway 24h 錯誤數: 41（< 50 容忍值）","✅ Gateway 活躍（過去 1 小時有事件）","ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）"]
 }

@@ -52,3 +52,11 @@ metadata:
 這跟 [[feedback_no_background_polling_lies]] 同理：行為要寫成程式碼，不是寫成文字。
 
 關聯：[[feedback_no_silent_waiting]]、[[feedback_no_background_polling_lies]]、守則#04（修好不要只解釋）、守則#07（不要同一地方跌倒兩次）
+
+## 2026-07-03 早上再犯一次（案例38）→ 新增 Stop hook 事後偵測
+
+即使有 `inject_taiwan_time.sh`（UserPromptSubmit，回合開頭注入提醒），軍師還是在查 session log 抓 UTC timestamp 算「訊息間隔」時，把 `22:36`、`23:08` 這類原始 UTC 小時數字直接口頭報給教練當作台灣時間，完全沒 +8。教練當場：「你的時間也不對，你到底是用哪一個國家的時間？」
+
+**新增第二道防線**：`scripts/rule_taiwan_time_check.sh`（Stop hook，commit `64e28e6a`）——事後偵測「這一輪有沒有讀過原始 UTC timestamp（`T..:..:..Z` 格式）」+「回覆裡有沒有時鐘數字」+「有沒有講『台灣時間』/『+8』字樣」，三者同時成立但缺最後一項 → exit 2 強制重做。8/8 測試通過，含本次真實違規重現測試。
+
+**教訓**：`inject_taiwan_time.sh` 是「回合開頭提醒」，防不了「回合中途查證數據時忘記換算」這種情境——兩種 hook 要分工，一個管開頭意識，一個管結尾把關，缺一不可。詳見試金石案例38。

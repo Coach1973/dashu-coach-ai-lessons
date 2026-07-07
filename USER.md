@@ -11,6 +11,7 @@
 - **時區**：Asia/Taipei（GMT+8）
 - **Telegram Chat ID**：6124913915
 - **Email**：bymyway7@gmail.com
+- **健保卡號**：000078645230（2026-07-07 教練交付，存於 USER.md 本機主線）
 - **設備**：Mac mini M4（主力）、Lenovo Win / Acer Win（Windows 副機）
 
 ## 個人背景
