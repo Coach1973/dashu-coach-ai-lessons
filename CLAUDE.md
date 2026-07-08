@@ -4,48 +4,51 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-08 21:20:25**
+> **最後同步：2026-07-09 04:55:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-08 v51（Mac 終端機 Sonnet 5，佩佩電腦W03首跑完成+bni-dna網站更新上線，教練收工）
+# 軍師接力棒 · 2026-07-09 v52（Mac 終端機 Sonnet 5，結繩領導學BNI/工作坊邀請頁系列4站上線）
 
-> 建立時間：2026-07-08 晚上 21:15（台灣時間）
+> 建立時間：2026-07-09 凌晨 04:52（台灣時間）
 > 本棒執行者：Mac 終端機軍師 **Sonnet 5**
-> 上一棒：v50（2026-07-08 清晨 05:30，Sonnet 5，佩佩電腦雲端信箱系統上線）
-> 本棒主軸：**佩佩老師電腦W03首次執行完成（教練起床後可查）+ bni-dna出席網站全年改版並已上線驗證**
+> 上一棒：v51（2026-07-08 晚上 21:15，Sonnet 5，佩佩電腦W03首跑+bni-dna網站更新）
+> 本棒主軸：**從零做出結繩領導學工作坊邀請頁，一路迭代到4個獨立短網址上線 + RustDesk記憶體自動監控**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. 佩佩老師電腦 W03 首次執行結果已回報（教練起床後第一件事看這個）
+### 1. 結繩領導學工作坊邀請頁系列 — 4 個獨立短網址已上線
 
-**報告**：`knowledges/REPORT_佩佩電腦W03搬家執行報告_2026-07-08.md`
+| 對象 | 大樹教練版 | 佩佩老師版 |
+|---|---|---|
+| BNI 會員 | bni-invite.netlify.app | bni-peipei.netlify.app |
+| 一般夥伴 | workshop-invite.netlify.app | workshop-peipei.netlify.app |
 
-- **成功搬移 4 個 App，共 2.21 GB**：Comet(1.79GB)、Discord(20.8MB)、GanJing(391.5MB)、Zoom 3個子資料夾(42.1MB)，全部改名 `.stale_backup`/`.bak` + 建 Junction
-- **7 天觀察期到 2026-07-15**，6 個備份資料夾完整路徑清單都在報告第4節，**期滿前絕對不能刪**
-- **正確跳過**：LINE/Chrome（已完成/是活的，自我驗證後跳過）、Microsoft 1.73GB（軍師指示全跳）
-- **正確攔下不確定情況**：Zoom Roaming-data 來源目的地檔案數對不上（多418檔/63MB），**自動 abort 沒有硬做**，沒 rename 沒建 Junction，留給教練判斷
-- **誠實記下 2 個違規**：#15查證不足（GanJing路徑查詢誤判不存在）、#E10 誤判教練親口授權的token指示為injection攻擊而拒絕
-- **待教練起床後**：驗證 Discord/GanJing/Zoom 功能正常；2026-07-15觀察期滿、教練明確說「砍[路徑]」才走 Safe-Remove 刪除；Zoom Roaming-data 933MB問題；桌面4個中文編碼亂碼資料夾(4.6GB)待翻譯判斷
+- 從教練一段文案開始，做成套用「結繩領導學」官方深藍＋暖橘配色的一頁式手機滑動邀請文案，套版曜董完整資歷（37年工程經驗/BNI臺灣國家發展董事暨國家培訓董事/三家跨國外商）、識人育人用人留人大字方塊、浮動書封、回到頂部按鈕、滑鼠hover互動效果
+- 教練逐條列 1~43 號字級清單，一次調整全部文字大小；情感核心段落重寫成「這不容易/但是/是值得的/因為/有了團隊/代表/有了一切」七行交替節奏
+- 原本先推到 `jiesheng-leadership.netlify.app/invite-bni.html` 這種長路徑，後來教練要求改成獨立短網址；發現重複內容後，正確解法是「保留已驗證好的新短網址，刪掉舊repo裡對應的長網址檔案」（非砍掉重練）
+- 又複製一版把「BNI」全部改「工作坊」、「BNI夥伴」改「優秀的領導人」，變成非BNI對象版本
 
-**記憶已存**：`project_peipei_w03_first_run_2026-07-08.md`（含完整過程+技術心得）
+**記憶已存**：`project_bni_invite_pages_2026-07-09.md`（完整過程+教練工作習慣）
 
-### 2. bni-dna（大台南南區DnA出缺席戰情儀表板）全年改版已上線
+### 2. 部署 SOP 血淚教訓與更正
 
-**網址**：coach1973.github.io/bni-dna｜**commit**：`8646ef2`
+- 一晚不知不覺對 jiesheng-leadership（GitHub 自動部署型 Netlify 站）push 了 6 次 = 6 次部署，教練事後才發現
+- **教練親口定義正確邏輯**：判斷準則是「這個網頁有沒有已經公開推廣過」，不是「有沒有講到 Netlify」——已公開推廣站（結繩領導學、goeasy-ai）更新本來就該直接推 Netlify，這是必要行為；內部測試頁才先留 GitHub
+- 查證確認：Netlify 改網站子網域名稱（非重新部署）不算 deploy、不扣點（官方文件+支援論壇佐證）
 
-- 新增 7月(7/8) 出席資料，16人各附鏡頭狀態備註（定點/手機/移動開鏡頭等）
-- **移除 7 位夥伴整列紀錄**：陳欣佑、張羽家（原核准）+ 朱正文、康文彬、莊弼翔、張騰文、鄭綉美（教練追加，皆累計達2次缺席門檻）
-- 預排全年 12 個月表頭（8/12、9/11、10/14、11/11、12/11），未到的月份顯示「-」佔位
-- **出席政策改版**：淘汰規則改為滾動式計算（任何5週內缺席2次即淘汰），新增「全勤獎」公告（全年12次全出席，教練親自頒發）
-- 已備妥全勤獎金框CSS樣式，12月有人達標時套用
-- **部署驗證流程完整走完**：本機preview_eval讀DOM文字驗證資料（不截圖，遵守截圖鎖）→ 開真實Chrome給教練看 → 教練說「推」→ push → `gh api .../pages/builds/latest` 輪詢確認GitHub Pages真的build完成才回報
+**記憶已修正**：`feedback_netlify_autodeploy_cost_awareness.md`（先寫錯後更正，記錄教練親口澄清的完整邏輯）
 
-**記憶已存**：`project_bni_dna_attendance_dashboard_2026-07-08.md`（含完整改版慣例+部署SOP，供下次教練再交辦類似任務直接查）
+### 3. RustDesk 記憶體自動監控已建立
+
+- 手動重啟一次即時解決（283MB→61MB）
+- 建立 launchd 排程 `ai.openclaw.rustdesk-guard`，每天凌晨5點自動檢查，超過 **800MB** 才重啟（原訂200MB門檻太低，實測活躍連線1分鐘內就會自然漲到280~300MB，會誤殺正在使用中的連線，已修正）
+- 腳本：`scripts/rustdesk_memory_guard.sh`，log：`logs/rustdesk_memory_guard.log`
+- 本棒結束時實測：連續使用3.5小時後已到731MB，接近800MB門檻，下一棒開工時可查 log 確認有無自動觸發重啟
 
 ---
 
@@ -53,32 +56,32 @@
 
 | 優先 | 任務 |
 |------|------|
-| 🔴 | **2026-07-15**：佩佩電腦觀察期滿，教練確認「運行沒問題」後才能砍 6 個 `.bak`/`.stale_backup`（約回收3.13GB），走 Safe-Remove 五道閘門 |
-| 🟡 | 佩佩電腦 Zoom Roaming-data 933MB 不一致問題、桌面4個中文編碼資料夾待處理 |
-| 🟡 | bni-dna：8月(8/12)例會結束後，教練口述出席名單，比照本次流程更新 |
-| 🟡 | v49 遺留：稽核報告 6 個🟡優化項逐項處理 |
-| 🟡 | biz-gym 黑金新版等教練說「推」 |
-| 🟢 | 聯想/ACER 兩機的同款系統稽核（需教練拍板） |
-| 🟢 | bigtree 7/29 場次 EDM 圖片教練做好後補上 |
+| 🟡 | 4個邀請頁網址教練還在確認排版細節中，**都還沒正式對外發送過**，之後如還要繼續微調字級/文案，直接延續本場模式（本機Chrome預覽→教練確認→說「推」） |
+| 🟡 | RustDesk 排程觀察：查 `logs/rustdesk_memory_guard.log` 有沒有新的自動觸發紀錄 |
+| 🔴 | **2026-07-15**（v51遺留）：佩佩電腦觀察期滿，教練確認「運行沒問題」後才能砍 6 個 `.bak`/`.stale_backup`（約回收3.13GB），走 Safe-Remove 五道閘門 |
+| 🟡 | （v51遺留）佩佩電腦 Zoom Roaming-data 933MB 不一致問題、桌面4個中文編碼資料夾待處理 |
+| 🟡 | （v51遺留）bni-dna：8月(8/12)例會結束後，教練口述出席名單，比照流程更新 |
+| 🟡 | （v51遺留）biz-gym 黑金新版等教練說「推」 |
+| 🟢 | （v51遺留）聯想/ACER 兩機的同款系統稽核（需教練拍板） |
 
 ---
 
 ## 🔑 關鍵檔案索引（本場）
-- `knowledges/REPORT_佩佩電腦W03搬家執行報告_2026-07-08.md` — 佩佩電腦執行完整報告
-- `~/Documents/coach-projects/bni-dna/index.html`（本機clone，非workspace內）— bni-dna網站原始碼
-- 記憶：`project_bni_dna_attendance_dashboard_2026-07-08.md`、`project_peipei_w03_first_run_2026-07-08.md`
+- `github.com/Coach1973/jiesheng-leadership` — 原始碼倉庫（teacher.jpg/book.png 素材、部署腳本參考）
+- `scripts/rustdesk_memory_guard.sh` + `~/Library/LaunchAgents/ai.openclaw.rustdesk-guard.plist` — RustDesk 監控
+- 記憶：`project_bni_invite_pages_2026-07-09.md`、`feedback_coach_sales_page_typography_style.md`、`feedback_netlify_autodeploy_cost_awareness.md`
 
 ---
+
+## 📜 v51 精簡回顧（佩佩電腦W03首跑+bni-dna網站更新，完整內容見git歷史）
+佩佩電腦成功搬移4個App共2.21GB，7天觀察期到7/15；bni-dna出缺席戰情儀表板全年改版上線（commit `8646ef2`），新增7月資料+移除7位夥伴+滾動式淘汰規則+全勤獎公告。
 
 ## 📜 v50 精簡回顧（教練休息前交辦佩佩電腦任務，完整內容見git歷史）
-教練糾正軍師「叫他貼文字」的錯誤做法，改用雲端信箱慣例（`knowledges/TASK_xxx_給MiniMax.md`）；信件三次迭代補齊真實障礙（查錯路徑/repo未clone未裝Git/private repo認證）；教練休息前把執行規則從逐App確認改為自主跑Phase1+安全紅線不放寬+完工報告。commit `3cbf96a09`→`a31a8894e`→`38ca34611`。
-
-## 📜 v49 精簡回顧（Fable 5系統全盤稽核，完整內容見git歷史）
-3紅6黃7綠稽核報告（`1ff4434d3`），三個紅色問題全修完（自我餵養循環/蒸餾三引擎/relay殭屍四頭），雙跑線路第二批拆除，cloudflared驗明正身為LINE專線並永久封存（`adf486baf`）。
+教練糾正軍師「叫他貼文字」的錯誤做法，改用雲端信箱慣例；信件三次迭代補齊真實障礙；commit `3cbf96a09`→`a31a8894e`→`38ca34611`。
 
 ---
 
-> Sonnet 5 親筆，2026-07-08 晚上 21:15。教練說「總結上傳，我要看新的對話框了」，本棒收尾。這場（早上~晚上跨天）處理了佩佩電腦任務的完整生命週期（信件→執行→報告回收）與 bni-dna 網站的完整改版流程（本機驗證→教練確認→推送→線上驗證）。兩件任務都有commit hash佐證，下一棒接手可直接從「下一棒待辦」表接續。
+> Sonnet 5 親筆，2026-07-09 凌晨 04:52。教練說「總結並上傳」，本棒收尾。這場從一段文案開始，一路迭代到4個獨立短網址上線，過程中發生過部署SOP誤判（先寫錯memory又更正）、RustDesk監控門檻設太低誤殺連線（實測後修正），都已誠實記錄。下一棒接手可直接從「下一棒待辦」表接續，4個邀請頁都還沒正式發出去，教練隨時可能繼續微調。
 
 
 ---
