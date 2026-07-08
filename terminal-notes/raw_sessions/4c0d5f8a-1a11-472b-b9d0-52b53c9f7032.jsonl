@@ -184,3 +184,4 @@
 {"type":"last-prompt","lastPrompt":"OK","leafUuid":"46272404-b7d7-4d92-858c-be10795ed369","sessionId":"4c0d5f8a-1a11-472b-b9d0-52b53c9f7032"}
 {"type":"mode","mode":"normal","sessionId":"4c0d5f8a-1a11-472b-b9d0-52b53c9f7032"}
 {"parentUuid":"46272404-b7d7-4d92-858c-be10795ed369","isSidechain":false,"promptId":"bae9342b-99f3-4391-bc6f-bf22b8bd8595","type":"user","message":{"role":"user","content":[{"type":"text","text":"[Request interrupted by user]"}]},"uuid":"e6b571b0-98cd-46a2-b981-bc3c11fbb2ee","timestamp":"2026-07-08T23:28:46.946Z","userType":"external","entrypoint":"claude-desktop","cwd":"/Users/bymyway/.openclaw","sessionId":"4c0d5f8a-1a11-472b-b9d0-52b53c9f7032","version":"2.1.197","gitBranch":"master"}
+{"type":"last-prompt","lastPrompt":"OK","leafUuid":"e6b571b0-98cd-46a2-b981-bc3c11fbb2ee","sessionId":"4c0d5f8a-1a11-472b-b9d0-52b53c9f7032"}
