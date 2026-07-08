@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯 DnA出席戰情儀表板(bni-dna)網站維運(2026-07-08)](project_bni_dna_attendance_dashboard_2026-07-08.md) — coach1973.github.io/bni-dna，全年12個月預排+滾動式5週2次缺席淘汰+全勤獎，commit 8646ef2
+- [🌙 佩佩老師電腦首次接大腦+W03首跑結果(2026-07-08)](project_peipei_w03_first_run_2026-07-08.md) — 雲端信箱系統上線過程+自主完成4個App搬移2.21GB+7天觀察期到7/15+2個違規誠實記錄
 - [🧰 教練常用工具箱——反覆需求集中索引(2026-07-08)](reference_coach_common_toolbox.md) — yes/no免問指令+部署詞彙+HTML預覽鐵律+危險指令五道閘門+查證七層系統+App搬家正確做法，一次查全
 - [🟢🟢🟢 聯想機C槽大體檢+瘦身完成，釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — LINE/GanJing/Perplexity過期備份+opcode舊碼+NotebookLM快取+Windows.old全清；Chrome發現早已細粒度Junction搬家不需動作
 - [🔴🔴🔴 禁止問教練記不記得，AI要自己查——查證方向七層系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md) — 教練親口糾正：凡走過必留痕跡，git log/試金石/memory/HEARTBEAT/distill/原始對話紀錄/即時系統現況七層查證順序，永遠不問教練回想細節
