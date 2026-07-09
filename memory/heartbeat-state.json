@@ -2,23 +2,23 @@
   "lastChecks": {
     "distill": 1751680800,
     "youtube_monitor": 1751680800,
-    "cron_health": 1783213250,
-    "system_check": 1783213250,
-    "handoff_read": 1783389720,
-    "heartbeat_poll": 1783477200
+    "cron_health": 1783591281,
+    "system_check": 1783591281,
+    "handoff_read": 1783591281,
+    "heartbeat_poll": 1783605638
   },
-  "lastHeartbeat": "2026-07-07T22:00:07+08:00",
-  "lastHeartbeatNote": "週二 22:00 心跳。重啟後 1.5hr context 仍乾淨，cron 全綠，relay poll 22:00 OK，無待辦、無新教練活動。接近安靜時段（23:00 入夜），無主動接觸事由。",
+  "lastHeartbeat": "2026-07-09T22:00:38.693257+08:00",
+  "lastHeartbeatNote": "週四 22:00 心跳。距上次 4hr，接近安靜時段（23:00-08:00）。無新教練訊息、無新待辦、cron 全綠、handoff v52 早上已接。context 重啟至今 7hr+ 仍乾淨。usage_cache 雖過期 21 天但教練未問，不主動查。回 HEARTBEAT_OK。",
   "systemSnapshot": {
     "allCronsHealthy": true,
-    "recentCoachActivity": "接力棒 v47 + cron 三度修復 + 案例37白名單",
-    "nextProactiveEvent": "等教練下令推 biz-gym 黑金新版",
-    "contextStatus": "乾淨（重啟後 1.5hr）",
+    "recentCoachActivity": "今早 28 封信標已讀（無重要信件）",
+    "nextProactiveEvent": "等教練下令推 biz-gym 黑金新版 或 確認 4 個邀請頁排版",
+    "contextStatus": "乾淨（重啟後 7hr+）",
     "usageCacheStale": true,
-    "usageCacheStaleSinceDays": 20,
+    "usageCacheStaleSinceDays": 21,
     "isWeekendMorning": false,
     "approachingQuietHours": true,
     "telegramPushAvailable": false,
-    "note": "22:00 接近安靜時段，無主動接觸教練理由，回 HEARTBEAT_OK"
+    "note": "週四 22:00 接近安靜時段，無新待辦，回 HEARTBEAT_OK"
   }
 }

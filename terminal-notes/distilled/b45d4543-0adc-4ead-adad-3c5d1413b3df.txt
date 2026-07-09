@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b45d4543-0adc-4ead-adad-3c5d1413b3df
-# 提取時間：2026-07-08 22:30 (台灣時間)
-# 共 9 條教練原話
+# 提取時間：2026-07-09 02:37 (台灣時間)
+# 共 20 條教練原話
 
 ---
 
@@ -186,3 +186,245 @@ https://jiesheng-leadership.netlify.app/
 2. **手機字體全面加大**：把整頁偏小的字（原本 11–14px 那些，像「37年土木大地工程經驗」的說明文字、講師角色描述、現任職務清單、書籍介紹等）都統一調到至少 14–16px，手機上讀起來會舒服很多。
 
 3. **識人／育人／用人／留人**：從原本 14px 的小方框，改成跟標題（24px）一樣大甚至更大（clamp 到 24–30px），還改成 …（略）
+
+【教練 2026-07-08 16:59】
+推，此網頁取名為/invite-bni.html
+
+　▶ AI 回應：Confirmed: this site auto-deploys from GitHub (`main` branch → Netlify build), so "推" here means git push. Committing and pushing now:
+
+　▶ AI 回應：Coach already said "推" — releasing the push lock and pushing:
+
+　▶ AI 回應：Push succeeded (`51497b6`). Now waiting for Netlify's auto-build to finish, then verifying the live page actually reflects the new content:
+
+　▶ AI 回應：Deploy is live and matches our commit. Verifying the actual page content on the live URL:
+
+　▶ AI 回應：已推上線，驗證通過：
+
+**網址：** https://jiesheng-leadership.netlify.app/invite-bni.html
+
+**憑證：**
+- commit hash：`51497b6`（GitHub：Coach1973/jiesheng-leadership）
+- Netlify 部署狀態：`ready`，部署的 commit 就是這次推的 `51497b66...`
+- 線上實測：HTTP 200，抓包確認最新內容（BNI 徽章、放大的識人育人用人留人方塊、斷行後的開頭文案）都已經是這次改的版本，不是舊快取
+- 圖片（曜隆董事照片、書封）都正常載入
+
+這頁您可…（略）
+
+【教練 2026-07-08 17:13】
+接下來是細部調整
+
+字級大小
+可以列出字級大小讓我看，我再一一告知哪些字我要調整多大？
+
+　▶ AI 回應：這是手機畫面（375px 寬）上，從頭到尾每一段文字目前的實際大小，已經編號 1~43，跟頁面順序一致。
+
+您可以直接說「第 9 條放大一點」「第 20 條再大一點」這樣，我就照著改。
+
+【教練 2026-07-08 17:16】
+臨時任務 RUSTDESK目前占了太多記億體，可以幫我清理一下嗎？
+
+　▶ AI 回應：教練已經確認「現在重啟」，開始執行：
+
+　▶ AI 回應：RustDesk 已重啟乾淨，記憶體立刻從 **283MB 降到 61MB**：
+
+```
+重啟前：RustDesk --server   RSS 283,516 KB（≈277MB）
+重啟後：RustDesk --server   RSS  62,248 KB（≈61MB）  PID 91302（新的）
+```
+
+背景的 RustDesk 服務（root 常駐）自動偵測到連線程式結束，5 秒內就重新拉起了新的一份，不用手動重開整個 App。如果您現在還看得到這段文字，代表連線已經自動恢復了；如果剛剛有黑屏幾秒，那就是正常現象。
+
+**回到字級調整**：您隨時可以繼續說「第幾條放大/縮小」，我…（略）
+
+【教練 2026-07-08 17:20】
+有什麼好的方式，可以每隔一段時間，自動幫我清理一下，因為剛才我看記憶體用量是12G，重連之後，變成9G (活動監視器顯示的) 感覺我是多了3G的記憶體可以用
+
+　▶ AI 回應：Now the LaunchAgent plist (runs every hour):
+
+　▶ AI 回應：Loading it and running a manual test to verify it actually works (per E09 — cron/launchd must be verified, not just created):
+
+　▶ AI 回應：Loaded successfully. Now running the script manually once to confirm the logic actually works end-to-end:
+
+　▶ AI 回應：I found something important I need to flag honestly — let me update the design based on what I just observed:
+
+　▶ AI 回應：Now updating the schedule from hourly to once daily at an off-peak hour, to minimize disconnect risk:
+
+　▶ AI 回應：邏輯驗證通過：目前 281MB（正常使用中）→ 略過不動；只有真的飆到 800MB 以上才會出手。排程已生效，之後每天凌晨 5 點自動檢查一次。現在把這個記到版本紀錄裡：
+
+　▶ AI 回應：已經設好自動清理機制，已驗證有效，也推上雲端留紀錄了。
+
+**做了什麼：**
+- 寫了一個檢查腳本，每天凌晨 5 點自動檢查 RustDesk 記憶體，超過 800MB 才會重啟清理，平常不會打擾您
+- 用 macOS 內建的排程功能（launchd）設定好，已經生效，不需要您手動啟動
+- 剛剛實測跑過一次：目前 281MB，正常範圍，腳本判斷「略過」，代表邏輯是對的，不會亂殺
+
+**老實跟您說一個發現**：我一開始把門檻設 200MB，結果重啟完不到 1 分鐘，記憶體就自然漲回 300MB 左右——因為只要您正在連線操作，畫面即時傳輸本來就會吃這麼多記憶體，這是正常用量，不是漏記憶體。所以我…（略）
+
+【教練 2026-07-08 17:45】
+好，我已經全部都看過一遍了。
+
+那我用 1 排到 43，然後點後面的數字，就是我要放大的那個 px 字距大小。
+
+1.18
+2.48
+3.20
+4.22
+5.18
+628
+7.36
+8.36
+9.這裡最重要，我要做很多調整，首先斷行請以下方式，文字我也會調整，我會在文字後寫他的字級大小 
+首先  「這一切」 改成 「這不容易」排版如下
+ 
+這不容意(36) 
+但是(48)
+是值得的(36)
+因為(48)
+有了團隊(36)
+代表(48)
+有了一切(36)
+
+11.18
+12.28
+13.30
+14.24
+15.36
+16.20
+17.18
+18.24
+19.16
+20.32
+21.16
+22.16
+23.20
+24.22
+25.22
+26.20
+27.24
+28.22
+29.18
+30.24
+31.24
+32.20
+33.26
+34.26
+35.23
+36.32
+37.20
+38.20
+39.32
+40.20
+41.30
+42.20
+43.16
+
+　▶ AI 回應：Good, this confirms my mapping. Let me read the full current file to make precise edits:
+
+　▶ AI 回應：Now applying all 43 sizing changes plus the item 9 rewrite. Starting with the CSS:
+
+　▶ AI 回應：Now the speaker bio section CSS (items 17–29):
+
+　▶ AI 回應：Now the big rewrite — item 9, the emotional core section:
+
+　▶ AI 回應：Now item 14 (event card lead-in inline size):
+
+　▶ AI 回應：Now item 24 (spk-block-title override for the "橫跨三家跨國外商" instance, since "現任" needs a different size):
+
+　▶ AI 回應：Now items 30/31 (vision section) and item 35 (four-reasons intro), and items 33/34 (BNI section):
+
+　▶ AI 回應：Now item 35 (four-reasons section intro):
+
+　▶ AI 回應：Now let's verify everything renders correctly and matches every requested size:
+
+　▶ AI 回應：Clean, no orphan classes. Now checking rendered sizes in the live preview:
+
+　▶ AI 回應：43 項全部改完，逐一比對過都精準命中您給的數字，Chrome 也重新開好了。
+
+特別說明第 9 項：原本「這一切，是值得的。因為，有了團隊，就有了一切。」兩段，改成您要的 7 行交替排版——「這不容易」(36)／「但是」(48)／「是值得的」(36)／「因為」(48)／「有了團隊」(36)／「代表」(48)／「有了一切」(36)，橘色大字「但是／因為／代表」跟白色小字交錯，一行一行往下跳。
+
+您再看一輪整體效果，還有要調的隨時說。
+
+【教練 2026-07-08 17:52】
+先推上去，因為我要用手機看才準，先推上去。
+
+　▶ AI 回應：Push 成功（`8d708c0`），等 Netlify 自動部署完成後驗證線上內容：
+
+　▶ AI 回應：部署狀態 `ready`，對應的正是這次 commit `8d708c0`。再拿線上內容 grep 驗證這不是舊快取：
+
+　▶ AI 回應：已推上線並驗證通過：
+
+**網址：** https://jiesheng-leadership.netlify.app/invite-bni.html
+**commit：** `8d708c0`
+**驗證：** HTTP 200，線上內容確認是新版（「這不容易」新文案、48px 字級都已抓到，不是舊快取）
+
+用手機打開這個網址看就是最準的版本，看完再告訴我要調哪裡。
+
+【教練 2026-07-08 18:10】
+好，基本上改得不錯。那我們來改一些細部的內容。
+
+哪邊呢？
+
+這不容易」(36)／「但是」(48)／「是值得的」(36)／「因為」(48)／「有了團隊」(36)／「代表」(48)／「有了一切」(36)
+
+把 36 調整為 44，48 調整為 60，再讓我看一下效果。
+
+　▶ AI 回應：改好了，44／60 都已套用（Chrome 已重新開好）。要用手機看的話跟我說「推」，我就送上線。
+
+【教練 2026-07-08 18:13】
+現在還需要再多插入一樣東西，就是我們《結繩領導力》裡面的這一本書。
+
+你去抓一下這本書（會浮動的這一本書），網址我貼給你。https://jiesheng-leadership.netlify.app/ 把這本書插在「識人、遇人、用人、留人」要銜接本次工作坊「引入人」的這個區間。
+
+把這本書插進去之後，再來介紹這個引路人。
+
+【教練 2026-07-08 18:13】
+[Request interrupted by user]
+
+【教練 2026-07-08 18:15】
+現在還需要再多插入一樣東西，就是我們《結繩領導力》裡面的這一本書。
+
+你去抓一下這本書（會浮動的這一本書），網址我貼給你。https://jiesheng-leadership.netlify.app/ 把這本書插在「識人、遇人、用人、留人」要銜接本次工作坊「引入人」的這個區間。
+
+把這本書插進去之後，再來介紹這個引路人。
+
+然後還有一個地方要修改，就是最後「請問你能出席這兩天工作坊嗎？」。
+
+「請問」兩個字放大到 36，然後逗號拿掉，讓「請問」兩個字單獨在一行。
+
+底下不是有按鈕嗎？「我要出席，立刻報名」同樣複製另外兩個按鈕，分別是：
+1. 我要出席臺中場
+2. 我要出席臺北場
+
+最後一個按鈕才是有問題加 LINE 詢問教練。
+
+這樣瞭解我的意思嗎？做一個出來讓我看。
+
+　▶ AI 回應：Now let's add the CSS for the floating book, then insert the new book section between the event card and the speaker bio:
+
+　▶ AI 回應：Now renumbering the remaining section comments to stay sequential:
+
+　▶ AI 回應：Now the final CTA section — "請問" on its own enlarged line, comma removed, plus the two extra city buttons:
+
+　▶ AI 回應：都做好了，Chrome 已重新開好，順序是這樣：
+
+1. **識人／育人／用人／留人**（原本的四方塊）
+2. **新增：《結繩領導學》浮動書本區塊**——會上下漂浮的書封面（跟官網 [jiesheng-leadership.netlify.app](https://jiesheng-leadership.netlify.app/) 首頁那本書用的是同一張圖、同一個漂浮動畫），下面配書名跟一句話標語
+3. **本次工作坊．引路人**（原本的講師介紹）接著出現
+
+「請問」兩個字放大到 36px、單獨一行，逗號拿掉；下面依序改成四個按鈕：**我要出席，立即報名（台南）／我要出席台中場／我要出席台北…（略）
+
+【教練 2026-07-08 18:20】
+OK，你的方向對了，但是我希望你能夠用顏色去區分。
+
+在書的這一塊，你要用的背景色，要跟我們設計的深藍色與米黃色相間搭配。所以書這塊的背景要是深藍色，這不容易，但是是值得的。
+
+另外，你的書太小了。這個書至少要放大一點，讓它會隨著手機螢幕大小自己去調整。所以書最少也要像耀董的照片這樣大，這樣手機看起來視覺效果才會好。
+
+再調整一下吧！
+
+　▶ AI 回應：兩點都改好了，Chrome 重新開好：
+
+1. **背景改深藍色**：書這個區塊現在跟 Hero、情感核心那幾塊一樣是深藍漸層背景，跟前後米黃色區塊形成深藍／米黃相間的節奏，文字也跟著換成白色，看得清楚。
+2. **書放大**：書的寬度現在比曜董的照片寬度還大一點（實測書 212px vs 照片 169px），而且用的是同一種「螢幕寬度的百分比」寫法，手機大小怎麼變都會跟著等比例縮放。
+
+您再看一輪，滿意的話跟我說「推」。

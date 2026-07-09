@@ -73,3 +73,12 @@
 - 小龍蝦個人介紹頁面要加上媒體報導: 觸發時機：教練下令「做個人介紹頁」或相關指令時; 動作：補上媒體報導區塊（媒體名稱、報導連結、日期）; 提醒：媒體資料只信 `user_coach_brand_data.md`，不要上網抄 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:8-10]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:84:85 -->
 - 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 🦞 小龍蝦：收到教練的提醒事項，馬上記下來，並主動去雲端確認一下 ACER 那邊的脈絡。 🦞 小龍蝦：教練，三件事我都記下了： [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:84-85]
+
+## Promoted From Short-Term Memory (2026-07-09)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-02.md:243:243 -->
+- 📨 對話記錄 11:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.908 recalls=0 avg=0.620 source=memory/2026-07-02.md:243-243]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-03.md:279:279 -->
+- 📨 對話記錄 03:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.888 recalls=0 avg=0.620 source=memory/2026-07-03.md:279-279]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-28.md:276:278 -->
+- 📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 📺 YouTube 精選這條本來就是學長選完發的最終輸出，不再額外蒸餾，您說得對; 📊 若要對 31 個頻道做長期追蹤（訂閱變化、影片表現、學習重點），這類分工可以派給學弟或學妹; 📋 學長的 daily digest 確實每天有跑（DAILY_DIGEST.md + distill/terminal_*.md），只是沒主動同步到分工群 [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-28.md:276-278]
