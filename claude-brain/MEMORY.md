@@ -4,7 +4,7 @@
 - [🎯 媒體資源中心構想評估與規劃(2026-07-09)](project_media_resource_center_2026-07-09.md) — 用Amber私有雲整合散落素材，SMB已實測可用免WebDAV，教練說不急先建地圖
 - [🎯 陸海空矩陣行銷提案，長期方向已定案不急執行(2026-07-09)](project_matrix_marketing_plan_2026-07-09.md) — 大樹小講中央廚房同步FB/IG/LINE/Threads/乾淨世界/Podcast，LINE最快、FB個人頁做不到
 - [🔧 Amber私有雲主機(192.168.0.35)，SMB實測可用非WebDAV(2026-07-09)](reference_amber_nas.md) — \\amber-Coach\home已掛通，教練家用私有雲500GB可擴充
-- [教練41個GitHub作品完整清單(2026-07-09 API實測)](reference_coach_websites.md) — 取代舊6個過期清單，含bigtree/結繩領導學/BNI系列/特助心法系列
+- [教練41個GitHub作品清單，19個已封存(2026-07-09)](reference_coach_websites.md) — 教練親自盤點閒置站，19個無心插柳的測試站已用gh repo archive封存
 - [🎯 結繩領導學BNI/工作坊邀請頁系列4站上線(2026-07-09)](project_bni_invite_pages_2026-07-09.md) — bni-invite/bni-peipei/workshop-invite/workshop-peipei；教練逐條編號改字級習慣
 - [🔴🔴🔴 部署SOP準則：「有沒有公開推廣」非「有沒有講Netlify」(2026-07-09教練親定)](feedback_netlify_autodeploy_cost_awareness.md) — 已公開推廣站更新必推Netlify；內部測試頁先留GitHub；新網址別掛長路徑
 - [🎨 教練銷售頁排版視覺喜好(2026-07-09)](feedback_coach_sales_page_typography_style.md) — 短句硬斷行/字級大反差/精確px不用clamp/深藍米黃交替/按鈕都要hover
