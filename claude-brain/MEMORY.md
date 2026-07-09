@@ -1,5 +1,6 @@
 # Memory Index
 
+- [📋 2026-07-08整場session總結：LINE驗證→C槽體檢→查證系統→佩佩電腦跨機協作(2026-07-08)](project_2026-07-08_full_session_summary.md) — 一件事牽出一件事的完整脈絡，含跨機雲端信箱協作模式（沒讓教練當搬運工）
 - [🧰 教練常用工具箱——反覆需求集中索引(2026-07-08)](reference_coach_common_toolbox.md) — yes/no免問指令+部署詞彙+HTML預覽鐵律+危險指令五道閘門+查證七層系統+App搬家正確做法，一次查全
 - [🟢🟢🟢 聯想機C槽大體檢+瘦身完成，釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — LINE/GanJing/Perplexity過期備份+opcode舊碼+NotebookLM快取+Windows.old全清；Chrome發現早已細粒度Junction搬家不需動作
 - [🔴🔴🔴 禁止問教練記不記得，AI要自己查——查證方向七層系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md) — 教練親口糾正：凡走過必留痕跡，git log/試金石/memory/HEARTBEAT/distill/原始對話紀錄/即時系統現況七層查證順序，永遠不問教練回想細節
