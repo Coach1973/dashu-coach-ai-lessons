@@ -1,5 +1,10 @@
 # Memory Index
 
+- [🎯 結繩領導學BNI/工作坊邀請頁系列，4個獨立短網址完成(2026-07-09)](project_bni_invite_pages_2026-07-09.md) — bni-invite/bni-peipei/workshop-invite/workshop-peipei四站上線；教練逐條編號改字級+一次要多版本的工作習慣
+- [🔴🔴🔴 網頁部署SOP：判斷準則是「有沒有公開推廣」不是「有沒有講Netlify」(2026-07-09教練親定)](feedback_netlify_autodeploy_cost_awareness.md) — 已公開推廣站(結繩領導學/goeasy-ai)更新必推Netlify是正確行為；內部測試頁先留GitHub；新建要推廣的頁面網址別掛長路徑
+- [🎨 教練銷售頁排版視覺喜好——短句硬斷行/逗號改換行/字級大反差(2026-07-09)](feedback_coach_sales_page_typography_style.md) — 長句拆短句每句一行、精確px不用clamp、內容詞小連接詞大交替節奏、圖片放大+可點連結、深藍米黃交替、所有標籤按鈕都要hover
+- [🎯 DnA出席戰情儀表板(bni-dna)網站維運(2026-07-08)](project_bni_dna_attendance_dashboard_2026-07-08.md) — coach1973.github.io/bni-dna，全年12個月預排+滾動式5週2次缺席淘汰+全勤獎，commit 8646ef2
+- [🌙 佩佩老師電腦首次接大腦+W03首跑結果(2026-07-08)](project_peipei_w03_first_run_2026-07-08.md) — 雲端信箱系統上線過程+自主完成4個App搬移2.21GB+7天觀察期到7/15+2個違規誠實記錄
 - [📋 2026-07-08整場session總結：LINE驗證→C槽體檢→查證系統→佩佩電腦跨機協作(2026-07-08)](project_2026-07-08_full_session_summary.md) — 一件事牽出一件事的完整脈絡，含跨機雲端信箱協作模式（沒讓教練當搬運工）
 - [🧰 教練常用工具箱——反覆需求集中索引(2026-07-08)](reference_coach_common_toolbox.md) — yes/no免問指令+部署詞彙+HTML預覽鐵律+危險指令五道閘門+查證七層系統+App搬家正確做法，一次查全
 - [🟢🟢🟢 聯想機C槽大體檢+瘦身完成，釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — LINE/GanJing/Perplexity過期備份+opcode舊碼+NotebookLM快取+Windows.old全清；Chrome發現早已細粒度Junction搬家不需動作

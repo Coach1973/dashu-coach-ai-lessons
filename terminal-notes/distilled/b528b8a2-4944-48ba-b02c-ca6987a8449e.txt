@@ -1,0 +1,175 @@
+# 終端機對話萃取 — Session b528b8a2-4944-48ba-b02c-ca6987a8449e
+# 提取時間：2026-07-08 21:33 (台灣時間)
+# 共 3 條教練原話
+
+---
+
+【教練 2026-07-07 20:56】
+开工
+
+　▶ AI 回應：开工六步驟啟動，先讀接力棒、HEARTBEAT、試金石案例庫、knowledges新計劃檔、memory最新檔。
+
+　▶ AI 回應：🎯 開工六步驟已讀完，回報教練：
+
+**接力棒（v49，Fable 5 剛收尾）**
+上一場（凌晨03:55~04:53）做了系統全盤稽核：3紅6黃7綠，三個紅色問題（自我餵養循環、蒸餾三引擎重複、relay殭屍四頭）全部修復完成，並清掉11個殭屍/重複排程。另外救回一個差點被誤關的「cloudflared」——查證後確認是小龍蝦LINE專線命脈，已永久記錄避免下次重查。
+
+**HEARTBEAT**：系統心跳正常，最新同步 04:54 已推上雲端，剛才 workspace 只有一個同步標記檔小差異，非衝突，不用處理。
+
+**試金石最新3案例**：
+- 案例40：查證救了LINE專線（clou…（略）
+
+【教練 2026-07-07 21:11】
+現在是這樣子的，我在聯想（Lenovo）跟宏碁（Acer）電腦做了同樣的 C 槽增量資料遷移之後，現在要幫佩佩老師的電腦也做同樣的事情。
+
+所以呢，他們寫了一個 commit 上去了，叫做 W03，而且寫了 SOP。結果我在佩佩老師的終端機執行的時候，它居然不認。
+
+好，我把它的話貼過來，然後你讀完之後，你再看著怎麼回信給它，叫它去雲端讀取、在什麼地方讀取，寫信叫它照著 SOP 辦事，不要那麼笨，這樣可以嗎？
+
+當然啦，它不是 Claude 助教，它是 MiniMax 系統跑出來的。雖然它的 AI 等級不夠，但是我們的指令就是它的智慧，這樣瞭解嗎？
+
+　▶ AI 回應：佩佩老師電腦的 MiniMax 回話還沒貼過來——請把它的原話貼給我，我讀完就能寫回信指令，告訴它去哪個雲端路徑讀 W03 的 commit 和 SOP。
+
+【教練 2026-07-07 21:11】
+你這樣很不專業，因為這件事情跟 Mac 電腦一點關係都沒有。
+
+這是聯想電腦跟宏碁電腦，它們都是跑 Windows 系統的，這一套是由 Windows 系統的工程師寫出來的，所以跟 Mac 沒有關係。
+
+
+我會把你的話貼過去，然後請他在雲端上給你寫信，你自己去讀取，該怎麼做就怎麼做。> 掛牌升級四件事:
+
+  1. 雙 SOP 入口——新機器用 W03(完整生命週期),純清理用案例 39(已跑過一輪才用)
+  2. 佩佩老師電腦觸發詞——「佩佩」+備份/搬家/增量任一組合 → 主動提醒。我不替佩佩那邊的 CLI
+  下指令,只提醒你派工作給她電腦上的 CLI(那不是我的管轄範圍,我是你的學長,不是佩佩的助手)
+  3. 孤兒資料夾判準——不是看名字有沒有 .stale_backup,是看「現役 App 的 C 槽資料夾有沒有任何 Junction
+  指向它」,沒指向才是孤兒(這次 Google-Chrome-Local 就是沒日期後綴的孤兒)
+  4. BOM 陷阱 + 語音陷阱——都收進掛牌,不再踩
+
+  Commit 紀錄: 87127f2c7,已推上 Coach1973/mac-openclaw-workflows main。
+
+  佩佩老師那台建議動線(我不會搶佩佩 CLI 的事):
+
+  1. 你到佩佩那邊開工前,叫她電腦上的 CLI 先 git pull origin main(拿最新的 W03)
+  2. 照 W03 的「讀取指引」依序讀 W03 + 案例 30 + project_line_moved_to_e.md + 案例 39
+  3. Phase 1 跑完一個 App 立刻給你看,你確認資料活得對再進下一個
+  4. 7 天觀察期內絕對不能刪 .stale_backup(這條 W03 寫得很硬,我也會幫你盯)
+
+  ⎿  UserPromptSubmit hook error                              ⎿  Failed with non-blocking status code: bash: cd: No such
+                                                                 file or directory
+
+  Thought for 6s (ctrl+o to expand)
+
+● 收到教練！四件掛牌 + Commit 87127f2c7 我先建任務追蹤，再查現有掛牌位置跟內容。
+
+  Listed 1 directory (ctrl+o to expand)
+
+● 本地 memory-source\ 沒有「掛牌」檔，也沒有 W03 / 案例 30 / 案例 39。先看 handoffs / cases / plans 跟 git repo 結構。
+
+  Listed 1 directory (ctrl+o to expand)
+
+● Bash(cd "D:/Claude-Data" && git log --oneline -20 2>&1 | head -30)
+  ⎿  fatal: not a git repository (or any of the parent directories): .git
+
+● Bash(cd "D:/Claude-Data" && git remote -v 2>&1 && echo "---" && git status 2>&1 | head -20)
+  ⎿  Error: Exit code 128
+     fatal: not a git repository (or any of the parent directories): .git
+
+● 重要發現： D:\Claude-Data 不是 git repo（沒有 .git）。commit 87127f2c7 在 Mac 軍師那邊的
+  repo（Coach1973/mac-openclaw-workflows），我這邊的 memory-source 是鏡像——靠 sync-memory.ps1 從 Mac repo pull 過來。
+
+  也就是說：
+
+  - 真相源頭 = Mac repo（教練剛 push 的 87127f2c7）
+  - 本地鏡像 = D:\Claude-Data\memory-source\ ← sync-memory.ps1 會拉
+  - 不能在這邊 git commit / push（沒 remote）
+
+  讓我先確認 sync 機制跟目前本地版本。
+
+  Read 1 file, listed 1 directory (ctrl+o to expand)
+
+● 完全確認 sync 機制：
+
+  - sync-memory.ps1 只做單向同步：memory-source\*.md → C:\Users\...projects\<各專案>\memory\
+  - 不是 git pull / push，純檔案 copy
+  - 真源頭在 Mac repo；本地 memory-source 是「Mac 拉下來的鏡像」
+
+  教練的 commit 87127f2c7 不會自動到這邊。 我必須先去 Mac repo 抓新版（教練應該會提供檔案、或教練幫忙跑
+  sync），或者教練把 Mac 那邊的檔案直接貼過來。
+
+  在這之前我先問清楚，避免我猜方向搞錯。
+
+● 教練，等一下，先跟您校準 3 件事，避免我搞錯方向：
+
+  ---
+  🟡 發現 1：本地 D:\Claude-Data 不是 git repo
+
+  - git log / git remote 都失敗
+  - 真相源頭 = Mac repo Coach1973/mac-openclaw-workflows
+  - 本地 memory-source\ 是鏡像，sync-memory.ps1 只做單向 copy（source → 各專案根目錄的 memory\）
+  - 所以 commit 87127f2c7 不會自動 sync 到 D:\Claude-Data\memory-source\
+
+  🟡 發現 2：本地 memory-source\ 還沒有「掛牌」檔
+
+  現有 5 個 .md：
+  - MEMORY.md（索引）
+  - chrome-move-sop.md
+  - coach-machine-state.md
+  - edge-removal-handoff.md
+  - handoff-2026-06-23-cleanup.md
+  - line-sop-failure-lessons.md
+
+  沒有 SOP/掛牌.md / rules.md / W03 / 案例 39 / 案例 30 —— 這些應該都在 Mac repo 裡。
+
+  🟡 發現 3：您說的 4 條掛牌我還沒看到實際內容
+
+  想升級到「掛牌檔」，我得先看現有掛牌長什麼樣、W03 跟 案例 39 的結構、案例 30
+  的內容——才不會覆蓋掉原版格式或漏接既有的佩佩觸發詞。
+
+  ---
+  我需要的 3 個動作（您選一個）
+
+  (A) 您幫我跑 Mac 那邊的 pull，把新版 memory-source\ 整包複製/同步到 D:\Claude-Data\memory-source\
+  → 我接著讀 W03 / 案例 30 / 案例 39 / 掛牌檔，把 4 條升級整併進既有掛牌（不另開新檔）
+
+  (B) 您把 Mac repo 的以下檔案直接貼過來（內容貼到對話框或寫到 D:\Claude-Data\memory-source\）：
+  - SOP/掛牌.md（或同性質檔）
+  - SOP/W03-*.md
+  - cases/案例 39
+  - cases/案例 30（佩佩那邊的「讀取指引」應該會引用）
+
+  → 我讀完照既有格式做 in-place 升級
+
+  (C) 我先建一個新檔 D:\Claude-Data\memory-source\掛牌-upgrade-20260708.md 當草稿，等 Mac
+  那邊檔案到了再合併進真正的掛牌檔
+  → 最保守但會多一步合併
+
+  ---
+  佩佩動線我已經記住了（4 條會寫進今天的回報 + 掛牌升級）：
+  1. 開工前先叫她 CLI git pull origin main
+  2. 依序讀 W03 → 案例 30 → project_line_moved_to_e.md → 案例 39
+  3. Phase 1 一個 App 跑完立刻給教練看
+  4. 7 天觀察期內絕對不刪 .stale_backup
+
+  學長邊界我記住了：教練是佩佩的學長、不是佩佩助手；我不替佩佩 CLI 下指令，只在教練提到「佩佩」+ 搬家/備份/增量
+  時提醒「要不要先叫佩佩那邊 CLI pull」。
+
+  您選 A / B / C？
+
+✻ Cogitated for 34s
+
+  4 tasks (1 done, 3 open)
+  √ 查 D:\Claude-Data\memory-source\ 與 git repo 現況
+  □ 把四件掛牌升級寫進本地 memory-source 掛牌檔
+  □ 同步到 git repo Coach1973/mac-openclaw-workflows
+  □ 更新 MEMORY.md 索引 + 回報教練
+
+　▶ AI 回應：收到,我看懂佩佩老師電腦上 MiniMax 卡住的原因了——它自己都排查對了(本地不是 git repo,只是鏡像),只是不知道去哪個雲端路徑抓正確檔案。我現在去查真正的檔案位置,才能寫出精確指令,不能空講「去讀 W03」這種抽象話讓它繼續瞎猜。
+
+　▶ AI 回應：✅ 查清楚了,佩佩老師電腦上那個 MiniMax 診斷得沒錯——`D:\Claude-Data\memory-source` 確實只是鏡像,不是真正的 SOP 源頭。真正的雲端倉庫在 GitHub `Coach1973/mac-openclaw-workflows`,W03、案例30、案例39 都已經在裡面,只是它從沒 clone 過這個 repo。以下是可以直接貼給它的完整指令,把「去哪裡讀」講死,不留猜測空間。
+
+---
+
+**請把以下整段貼給佩佩老師電腦上的 MiniMax CLI：**
+
+```
+你剛才的排查方向是對的——D:\Claude-Data\memory-source 確實只…（略）

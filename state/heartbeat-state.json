@@ -1,7 +1,24 @@
 {
   "lastChecks": {
-    "heartbeat": 1751820016,
-    "restart_notified": 1751820016
+    "distill": 1751680800,
+    "youtube_monitor": 1751680800,
+    "cron_health": 1783504845,
+    "system_check": 1783477215,
+    "handoff_read": 1783504845,
+    "heartbeat_poll": 1783504845
   },
-  "notes": "2026-07-06 18:00 - 首次心跳補送重啟通知給教練（原重啟 12:08 未立即送出）。系統健康，所有 session-end sync 已推上 GitHub。"
+  "lastHeartbeat": "2026-07-08T22:00:19.881988+08:00",
+  "lastHeartbeatNote": "週三 22:00 心跳。所有 cron 健康、無 JUNSHI 待辦、軍師無回報（最後一筆 6/13）。佩佩電腦 W03 任務尚在進行、教練已休息。接近安靜時段（23:00），無主動接觸事由，回 HEARTBEAT_OK。",
+  "systemSnapshot": {
+    "allCronsHealthy": true,
+    "recentCoachActivity": "handoff v50（佩佩電腦接雲端大腦系統）",
+    "nextProactiveEvent": "等佩佩電腦回報 W03 執行報告 + 等教練下令",
+    "contextStatus": "乾淨",
+    "usageCacheStale": true,
+    "usageCacheStaleSinceDays": 20,
+    "isWeekendMorning": false,
+    "approachingQuietHours": false,
+    "telegramPushAvailable": false,
+    "note": "週三 22:00 深夜心跳，無新指令、教練休息中"
+  }
 }
