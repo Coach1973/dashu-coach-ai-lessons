@@ -256,11 +256,12 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 
 | 系統 | 模型 | Context | 開工設定 |
 |------|------|---------|---------|
-| **小龍蝦**（Telegram/Claude Code） | Opus 4.8 | 200K | 🔥 **熱啟動 3 核心**，其餘按需讀取 |
+| **小龍蝦**（Telegram/Claude Code） | minimax/MiniMax-M3（2026-06-09 起，取代舊表格寫的 Opus 4.8） | 最高約 1,048,576 tokens（≈1M，2026-07-10 WebSearch 官方規格驗證，保底 512K） | 🔥 **熱啟動 3 核心**，其餘按需讀取 |
 | **軍師**（桌面版 Claude Code） | Opus 4.8[1M] | 1M | 讀所有必讀檔案，照舊 |
 
-> 原因：小龍蝦 Context 只有 200K，一次讀 10 個大檔案會爆 → 無限重啟循環。
-> 軍師 Context 有 1M，讀所有檔案不會爆，維持現狀。
+> 🔴 2026-07-10 更正：這張表原寫小龍蝦「Opus 4.8／200K」是 2026-06-04 的舊資料，2026-06-09 教練已改用 MiniMax-M3，模型原生 context 其實跟軍師差不多大（近 1M），不是 200K。
+> 真正會讓小龍蝦重啟的瓶頸不是模型原生 context 上限，而是 `openclaw.json` 裡 `startupContext.maxTotalChars: 25000` 這個框架自己設的自動注入上限，跟長 session 累積的對話量觸發 `compaction.memoryFlush`（見 `路徑大全.md` 或直接查 openclaw.json）。
+> 「熱啟動只讀 3 核心」這個做法仍然值得維持——不是因為模型裝不下，是因為讀太多雜訊會拖慢速度、稀釋重點，維持現狀。
 
 ---
 
