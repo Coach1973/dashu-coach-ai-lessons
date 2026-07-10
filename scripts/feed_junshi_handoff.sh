@@ -80,7 +80,11 @@ if [[ -f "$HEARTBEAT" ]]; then
 fi
 
 # ───────── 注入內容開始 ─────────
-{
+# 2026-07-10 軍師加：字數上限防呆（比照 OpenClaw 原生 startupContext.maxTotalChars 精神）。
+# 起因：本 Hook 原本無任何上限，實測某次注入 43.4KB，是文章〈OpenClaw Token 粉碎機〉點名的
+# 「工具輸出無上限」問題在我們自己客製 Hook 上重演，且繞過了原生防呆值。
+MAX_INJECT_CHARS=60000
+INJECT_CONTENT=$(
   echo "# 🔴 軍師接力棒 v2（六步驟全注入，本場 session 僅一次）"
   echo ""
   echo "## 🌐 雲端同步狀態"
@@ -153,16 +157,20 @@ fi
     fi
   fi
 
-  # ───────── 第 5 步：memory 最新日 ─────────
+  # ───────── 第 5 步：memory 最新日（已濾除 Dreaming 雜訊區塊，2026-07-10 軍師查證後修）─────────
+  # 原因：memory/*.md 裡的 openclaw:dreaming:light/rem 區塊是系統自動生成的低信度「反思的反思」，
+  # 非教練真實對話，過去整段 cat 進來會佔掉大半篇幅（實測 2026-07-10.md 17KB 裡八成是這塊雜訊）。
   if [[ -d "$MEMORY_DIR" ]]; then
     LATEST_MEMORY=$(ls -1 "$MEMORY_DIR"/20[2-9][0-9]-[0-9][0-9]-[0-9][0-9].md 2>/dev/null | sort | tail -1)
     if [[ -n "$LATEST_MEMORY" && -f "$LATEST_MEMORY" ]]; then
       echo ""
       echo "---"
       echo ""
-      echo "## 🧠 第 5 步：memory 最新日（$(basename "$LATEST_MEMORY")）"
+      echo "## 🧠 第 5 步：memory 最新日（$(basename "$LATEST_MEMORY")，已濾除 Dreaming 雜訊區塊）"
       echo ""
-      cat "$LATEST_MEMORY"
+      sed -e '/<!-- openclaw:dreaming:light:start -->/,/<!-- openclaw:dreaming:light:end -->/d' \
+          -e '/<!-- openclaw:dreaming:rem:start -->/,/<!-- openclaw:dreaming:rem:end -->/d' \
+          "$LATEST_MEMORY"
     fi
   fi
 
@@ -187,7 +195,17 @@ fi
   echo "- 身份核對（模型版本 + 平台：Mac 終端機/桌面版）"
   echo "- 雲端同步狀態（${PULL_STATUS}）"
   echo "- 詢問教練「今天從哪件事開始？」"
-}
+)
+
+CONTENT_LEN=${#INJECT_CONTENT}
+if [[ $CONTENT_LEN -gt $MAX_INJECT_CHARS ]]; then
+  printf '%s' "${INJECT_CONTENT:0:$MAX_INJECT_CHARS}"
+  echo ""
+  echo ""
+  echo "⚠️ **內容過長已截斷**（原始 ${CONTENT_LEN} 字元，上限 ${MAX_INJECT_CHARS}，2026-07-10 軍師加的防呆值）。完整內容仍完整存在對應檔案中，需要哪一段可直接讀取原檔。"
+else
+  printf '%s\n' "$INJECT_CONTENT"
+fi
 
 # 設 marker，本 session 不再注入
 if [[ -n "$SESSION_ID" ]]; then
