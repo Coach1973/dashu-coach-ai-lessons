@@ -7,20 +7,6 @@
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
 - [ACER 分割區調整後D槽清理待辦](claude-brain/project_acer_c_d_cleanup_20260708.md) — 觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（36.3GB）
 
-## Promoted From Short-Term Memory (2026-07-04)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-23.md:273:276 -->
-- 📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 👤 教練：幫我看一下VPS出了什麼問題了為什麼我跟他對話沒有反應？ 🦞 小龍蝦：教練，我先去查 VPS 狀況，不是一直在問你。 🦞 小龍蝦：找到了 VPS 健康檢查腳本，原來 VPS IP 是 `43.245.60.200`（113.29.232.178 是 aiprimetech 代理）。先用這個去查 VPS 狀態： 🦞 小龍蝦：VPS 跟容器都還活著，問題在裡面。我繼續挖： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-23.md:273-276]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-23.md:277:280 -->
-- 📨 對話記錄 12:41（共約 14 條，從第 0 行起）: 🦞 小龍蝦：找到核心問題了。繼續挖細節： 🦞 小龍蝦：繼續確認教練訊息到底有沒有送進 VPS： 🦞 小龍蝦：注意：過去 12 小時 VPS 根本**沒收到教練任何訊息**（沒有 chatId=612 的 inbound）。再查 Telegram polling 狀態： 🦞 小龍蝦：確認容器內部到底是什麼，並看 VPS 到底有沒有收到教練的訊息： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-23.md:277-280]
-
-## Promoted From Short-Term Memory (2026-07-05)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-24.md:278:278 -->
-- 📨 對話記錄 08:42（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-24.md:278-278]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-24.md:282:282 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-24.md:282-282]
-
 ## Promoted From Short-Term Memory (2026-07-06)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:268:270 -->
@@ -76,9 +62,13 @@
 
 ## Promoted From Short-Term Memory (2026-07-09)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-07-02.md:243:243 -->
-- 📨 對話記錄 11:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.908 recalls=0 avg=0.620 source=memory/2026-07-02.md:243-243]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-03.md:279:279 -->
-- 📨 對話記錄 03:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.888 recalls=0 avg=0.620 source=memory/2026-07-03.md:279-279]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-28.md:276:278 -->
 - 📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 📺 YouTube 精選這條本來就是學長選完發的最終輸出，不再額外蒸餾，您說得對; 📊 若要對 31 個頻道做長期追蹤（訂閱變化、影片表現、學習重點），這類分工可以派給學弟或學妹; 📋 學長的 daily digest 確實每天有跑（DAILY_DIGEST.md + distill/terminal_*.md），只是沒主動同步到分工群 [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-28.md:276-278]
+
+## 每30分鐘健康檢查 cron 常見錯誤自動修復 SOP（2026-07-10 整併，原本被自動晉升機制重複收錄4次)
+
+> 這條內容是「每30分鐘健康檢查」cron 的固定操作手冊，不是單次對話的教訓，之前被自動晉升系統誤判成新知識、從07-02跟07-03的每日記憶檔各重複收錄一次。整併成一份，密碼也改指到憑證層。
+
+1. **檢查 Cron 任務失敗記錄**：`openclaw cron list` 檢查所有任務的 consecutiveErrors 與 lastStatus
+2. **timeout 錯誤**（lastDurationMs ≈ timeoutSeconds）：腳本正常，只是逾時設太短 → `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 改 300 秒（⚠️ 06:00 海餅乾精神背誦維持60秒不要改）
+3. **scp/ssh 同步到 VPS 逾時**：改用 `rsync -e 'sshpass -p <密碼，見路徑大全_憑證層.md> ssh' ...`（原密碼明文已移除）
