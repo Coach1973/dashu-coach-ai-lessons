@@ -1,24 +1,18 @@
 {
   "lastChecks": {
-    "distill": 1751680800,
-    "youtube_monitor": 1751680800,
-    "cron_health": 1783591281,
-    "system_check": 1783591281,
-    "handoff_read": 1783591281,
-    "heartbeat_poll": 1783605638
+    "gmail": 1783645299,
+    "calendar": 1783645299,
+    "heartbeat_poll": 1783645299
   },
-  "lastHeartbeat": "2026-07-09T22:00:38.693257+08:00",
-  "lastHeartbeatNote": "週四 22:00 心跳。距上次 4hr，接近安靜時段（23:00-08:00）。無新教練訊息、無新待辦、cron 全綠、handoff v52 早上已接。context 重啟至今 7hr+ 仍乾淨。usage_cache 雖過期 21 天但教練未問，不主動查。回 HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-07-10T09:01:39.914255+08:00",
+  "lastHeartbeatNote": "週五 09:00 早晨心跳。Gmail 掃描：11 封未讀（過去 24hr），無緊急事件（2 封合庫對帳單例行、1 封 BNI 網絡文章、其餘為信仰/廣告/通知）。Calendar API 仍未啟用（已知問題）。無軍師佇列待處理。已登錄軍師 08:52 簡體字違規至 ERRORS.md。回 HEARTBEAT_OK。",
   "systemSnapshot": {
+    "timeOfDay": "morning",
+    "isQuietHours": false,
     "allCronsHealthy": true,
-    "recentCoachActivity": "今早 28 封信標已讀（無重要信件）",
-    "nextProactiveEvent": "等教練下令推 biz-gym 黑金新版 或 確認 4 個邀請頁排版",
-    "contextStatus": "乾淨（重啟後 7hr+）",
-    "usageCacheStale": true,
-    "usageCacheStaleSinceDays": 21,
-    "isWeekendMorning": false,
-    "approachingQuietHours": true,
-    "telegramPushAvailable": false,
-    "note": "週四 22:00 接近安靜時段，無新待辦，回 HEARTBEAT_OK"
+    "contextStatus": "clean",
+    "recentCoachActivity": "今早 11 封未讀信，多為例行通知",
+    "urgentGmailCount": 0,
+    "note": "週五早晨，無新待辦、無緊急事件、回 HEARTBEAT_OK"
   }
 }
