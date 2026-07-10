@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 教練糾正時先查證再回應，不要用舊印象頂撞(2026-07-10)](feedback_verify_before_correcting_coach.md) — 手機版Code功能認知過時+終端機環境誤判雙重案例，查證後教練都是對的
+- [🎯 手機版Claude同步Mac：放棄Remote Control改用GitHub repo+開工.md(2026-07-10)](project_mobile_claude_sync_2026-07-10.md) — 教練「手機=第四台電腦」思路勝出，順手抓到Mac本機漏網30分鐘蒸餾cron
 - [🔴🔴🔴 有能力自己驗證時絕不叫用戶當試錯手腳——Amber WebDAV血淚(2026-07-09)](feedback_self_verify_before_directing_user.md) — 連續兩次猜錯選單叫教練點，教練點破「你該自我驗證」，30秒net use就測出真相
 - [🎯 媒體資源中心構想評估與規劃(2026-07-09)](project_media_resource_center_2026-07-09.md) — 用Amber私有雲整合散落素材，SMB已實測可用免WebDAV，教練說不急先建地圖
 - [🎯 陸海空矩陣行銷提案，長期方向已定案不急執行(2026-07-09)](project_matrix_marketing_plan_2026-07-09.md) — 大樹小講中央廚房同步FB/IG/LINE/Threads/乾淨世界/Podcast，LINE最快、FB個人頁做不到

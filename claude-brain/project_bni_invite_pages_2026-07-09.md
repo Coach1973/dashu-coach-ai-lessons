@@ -35,3 +35,26 @@ metadata:
 
 ## 相關記憶
 [[feedback-coach-sales-page-typography-style]]、[[feedback-netlify-autodeploy-cost-awareness]]、[[reference-netlify-token]]
+
+---
+
+## 2026-07-10 更新：姓名個人化功能上線 + bigtree 手機版優化
+
+### 1. 邀請頁新增「姓名取代 BNI」個人化功能
+
+教練提出挑戰：能否讓每則邀請連結顯示收件人姓名。解法：URL 參數(`?name=姓名`)+ JavaScript，純前端、免資料庫。
+
+- 網址後面加 `?name=王小明`，頁面自動把導覽列「BNI 專屬邀請」的「BNI」換成姓名，下方「BNI 專屬價值」徽章換成「{姓名} 專屬邀請」——教練逐步微調成「換字不加行」的協調版本，不是額外插入一行問候語
+- **4 個網站已正式部署**（`0dcb9f34`/`2ecef0da`/`ac6c851e`/`2aadd382` 四個 Netlify site ID，用 zip+API 推送，帶 `_headers` 檔避免顯示原始碼）
+- 用教練提供的 Google 試算表名單（BNI 分會會員，姓名格式「姓名-分會名」需拆分），示範產生前 10 位正式連結
+- **踩過一個假象坑**：第一次用 `open -a "Google Chrome" "file://...?name=..."` 開本機預覽，網址參數被 macOS `open` 指令吃掉，教練說「沒有」看不到效果——查 Chrome 分頁網址發現參數真的不見了，改用 `osascript -e 'open location ...'` 才正確保留參數。**教訓：本機 Chrome 預覽帶查詢字串時，`open -a` 不可靠，要用 `osascript open location`。**
+
+### 2. bigtree 手機版導覽列漢堡選單 + 回到最上面按鈕
+
+`coach1973.github.io/bigtree/` 手機版原本完全看不到導覽連結（只有 `hidden md:flex` 的桌面版選單）。新增三線漢堡按鈕展開 7 項（品牌故事/主題領域/近期場次/學員見證/常見問答/歷史紀錄/立即報名），教練口語「進行場次」「歷史記錄」直接對應既有的「近期場次」「歷史紀錄」，不用多問。另加浮動回頂按鈕，滾動 400px 後浮現。
+
+- **commit `424ce52`**，push 前先 `git pull --rebase` 處理遠端有其他新 commit 的情況
+- GitHub Pages 是 `legacy` build type，push 後用 `gh api repos/.../pages/builds/latest` 輪詢確認 `status: built` 才算真正上線，不能只看 `git push` 成功就結案
+
+## 相關記憶（更新）
+[[feedback-coach-sales-page-typography-style]]、[[feedback-netlify-autodeploy-cost-awareness]]、[[reference-netlify-token]]、[[project-mobile-claude-sync-2026-07-10]]
