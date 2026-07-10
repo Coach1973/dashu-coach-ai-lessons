@@ -45,6 +45,16 @@
 | **二｜小龍蝦不受 cc-switch 影響** | OpenClaw 走 `~/.openclaw/openclaw.json` 內 `minimax` provider，直連 `https://api.minimax.io/anthropic`，不經過任何代理。 |
 | **三｜唯一指令：教練手動換，永久鎖定** | 小龍蝦模型切換的唯一方式是教練親手 `/model`。**一旦切換，永久鎖定於該模型，無論 context overflow 重啟、idle timeout 斷線、session 重建，一律不自動回復預設值。** 無自動切換、無代理干預、無第三方介入。技術落地：`openclaw.json` 中 `startupContext.applyOn` 已移除 `reset`。 |
 
+### 🔴 cc-switch 為什麼不動小龍蝦（2026-07-10 教練親口）
+
+> **設計動機**——教練親口解釋為什麼 cc-switch 跟小龍蝦要切乾淨：
+
+- 因為 **cc-switch 是教練專門用於開啟 PowerShell 或終端機裡面的 Claude CLI（Claude CLI 專用）**
+- 小龍蝦**指定使用 minimax**，品質必須穩定
+- 如果小龍蝦受到 cc-switch 影響，品質就會不穩定
+
+　　總之一句話：**cc-switch 給 Claude CLI 用，小龍蝦是 OpenClaw 體系，兩者不相通。** 小龍蝦的模型只受教練手動 `/model` 控制。
+
 ### 🔴 主動偵測對話 session 鐵律（2026-06-03 教練親定，無教練親口改口不得變更）
 
 教練有任務要交辨時，若對話 session 即將滿（Context 接近上限），我必須**主動告知教練，建議開新視窗**，不得等到對話溢出自動重啟才反應。
