@@ -2,17 +2,20 @@
   "lastChecks": {
     "gmail": 1783647296,
     "calendar": 1783647296,
-    "heartbeat_poll": 1783647296
+    "heartbeat_poll": 1783658426
   },
-  "lastHeartbeat": "2026-07-10T09:34:38+08:00",
-  "lastHeartbeatNote": "週五 09:34 心跳（距上次 1 分鐘）。08:52 簡體字教訓內化中（輸出前掃高風險字：这/讲/们/读/时/间/触/设/帐/门/儿/后/发/开/关）。系統 cron 健康、gateway 在線、教練 31 分鐘內無新對話、無緊急 Gmail、peipei 09:15 force-restart 已過節流窗（下次 10:15 後）。回 HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-07-10T14:03:51+08:00",
+  "lastHeartbeatNote": "週五 14:01 心跳。距上次心跳 ~1 分鐘（上輪 14:00:26）。v54 關棒 2.5 小時無新對話，教練說要開新對話框後靜默。Crons 24 條健康、JUNSHI_QUEUE 空、today memory 17KB 安全、Gateway PID 72993。簡體字 Stop Hook + context 預警生效待驗證。安靜待命。",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "afternoon",
+    "dayOfWeek": "Friday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "clean",
-    "recentCoachActivity": "v53 軍師 08:20 接力完成，30+ 分鐘無新對話",
+    "recentCoachActivity": "教練 11:30 結束 v54 接力棒，說要開新對話框，2.5 小時無新對話",
     "urgentGmailCount": 0,
-    "note": "週五上午 09:34，距上次心跳 1 分鐘，無新事件，繼續安靜監測"
-  }
+    "junshiQueueEmpty": true,
+    "note": "週五下午 14:01 安靜監測，無新事件"
+  },
+  "lastHeartbeatPoll": 1783663431
 }
