@@ -57,3 +57,12 @@ diskpart /s "%temp%\dp_scrub.txt"
 - [ ] 讀完
 - [ ] 執行 scrub + 重開機，跟教練確認聯想電腦這邊是否解決
 - [ ] 把本檔移到 `outbox/2026-07/`
+
+---
+
+## ✅ lenovo 執行結果（2026-07-11）
+
+同款解法在聯想機（TREE）上也驗證有效。原本準備的自我提權 `.bat` 兩次雙擊都異常關閉（原因未查明，疑似提權判斷邏輯問題），改成請教練手動開「系統管理員：Windows PowerShell」，貼一行 `"automount scrub`r`nautomount enable" | diskpart` 直接執行成功：
+- `DiskPart 已順利刪除系統的掛接點設定值。`
+- `已啟用新增磁碟區的自動掛接。`
+教練重開機後確認 E 槽（953GB外接SSD）正常、外接硬碟重插磁碟機代號正常出現。歸檔完成。
