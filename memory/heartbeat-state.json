@@ -1,18 +1,18 @@
 {
   "lastChecks": {
-    "gmail": 1783645299,
-    "calendar": 1783645299,
-    "heartbeat_poll": 1783645299
+    "gmail": 1783647296,
+    "calendar": 1783647296,
+    "heartbeat_poll": 1783647296
   },
-  "lastHeartbeat": "2026-07-10T09:01:39.914255+08:00",
-  "lastHeartbeatNote": "週五 09:00 早晨心跳。Gmail 掃描：11 封未讀（過去 24hr），無緊急事件（2 封合庫對帳單例行、1 封 BNI 網絡文章、其餘為信仰/廣告/通知）。Calendar API 仍未啟用（已知問題）。無軍師佇列待處理。已登錄軍師 08:52 簡體字違規至 ERRORS.md。回 HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-07-10T09:34:38+08:00",
+  "lastHeartbeatNote": "週五 09:34 心跳（距上次 1 分鐘）。08:52 簡體字教訓內化中（輸出前掃高風險字：这/讲/们/读/时/间/触/设/帐/门/儿/后/发/开/关）。系統 cron 健康、gateway 在線、教練 31 分鐘內無新對話、無緊急 Gmail、peipei 09:15 force-restart 已過節流窗（下次 10:15 後）。回 HEARTBEAT_OK。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "clean",
-    "recentCoachActivity": "今早 11 封未讀信，多為例行通知",
+    "recentCoachActivity": "v53 軍師 08:20 接力完成，30+ 分鐘無新對話",
     "urgentGmailCount": 0,
-    "note": "週五早晨，無新待辦、無緊急事件、回 HEARTBEAT_OK"
+    "note": "週五上午 09:34，距上次心跳 1 分鐘，無新事件，繼續安靜監測"
   }
 }
