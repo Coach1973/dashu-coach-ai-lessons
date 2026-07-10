@@ -4,46 +4,58 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-10 08:22:39**
+> **最後同步：2026-07-10 11:31:14**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-10 v53（Mac 桌面版 Sonnet 5，手機同步打通+邀請頁個人化上線+bigtree手機優化+漏網cron清理）
+# 軍師接力棒 · 2026-07-10 v54（Mac 桌面版 Sonnet 5，第二意見查核+密碼分層+版本升級+MEMORY瘦身+兩個機關上鎖）
 
-> 建立時間：2026-07-10 早上 08:20（台灣時間）
+> 建立時間：2026-07-10 上午 11:30（台灣時間）
 > 本棒執行者：Mac 桌面版 App Sonnet 5
-> 上一棒：v52（2026-07-09 凌晨 04:52，Sonnet 5，結繩領導學BNI/工作坊邀請頁系列4站上線）
-> 本棒主軸：**打通教練手機版 Claude 同步 Mac 的方案 + 邀請頁個人化功能上線 + bigtree 手機版優化 + 抓到漏網的本機 crontab**
+> 上一棒：v53（2026-07-10 早上 08:20，手機同步打通+邀請頁個人化+bigtree優化+漏網cron清理）
+> 本棒主軸：**幫小龍蝦(MiniMax)的文章分析做第二意見查核，抓到3個誤判 + 密碼分層(無感)+ OpenClaw升級6.11 + MEMORY.md去重複去洩漏 + 修好兩個「有規則沒執行」的真bug（簡體字Stop Hook、context預警直發Telegram）**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. 手機版 Claude 同步 Mac——最終方案：GitHub repo + 開工.md 入口檔
+### 1. 文章第二意見查核：抓到小龍蝦(MiniMax-M3)3個沒查證的誤判
 
-教練親自想出的思路：手機當「第四台電腦」，跟聯想機/宏碁機一樣讀雲端最新狀態即可，不用複雜的 Remote Control。
+教練懷疑 MiniMax 深度分析能力，要求軍師重新分析同一篇 OpenClaw 架構文章、對照小龍蝦初版。親自抓原文+查openclaw.json+實測檔案大小，抓到：
+- ①memorySearch 向量搜尋其實已在跑，小龍蝦判斷「我們不用RAG」是錯的
+- ②熱啟動小龍蝦說「比文章聰明」但沒實測，軍師實測反而超過文章講的上限（≈1.83萬tokens）
+- ③完全沒發現自製 `feed_junshi_handoff.sh` Hook 無字數上限，把 memory 裡的 Dreaming 雜訊整包灌進對話（43KB）
 
-- 建立入口檔 `開工.md`（commit `7722e701f`），教練手機 Code 分頁加入 `Coach1973/mac-openclaw-workflows` 這個 private repo 後，打字「讀開工」就會自動依序讀完 CLAUDE.md、JUNSHI_HANDOFF_LATEST.md、試金石案例庫——**已實測教練手機讀到的內容跟 Mac 這邊完全一致**
-- 教練確認理解：要改哪個網站，就要把那個網站的 repo 也加進手機 Code 分頁,已選了 jiesheng-leadership、bigtree、tainan-calender
-- 過程中犯過兩次環境誤判被教練當場糾正，完整教訓見 `feedback_verify_before_correcting_coach.md`——**核心教訓：判斷「我現在是誰」不能用 Bash 另開一個獨立 CLI 查，要用 `ps aux` 查真正驅動當前對話的進程**
-- 完整過程與能力邊界表見 `project_mobile_claude_sync_2026-07-10.md`
+執行修復：Hook 濾除 Dreaming 雜訊 + 加 6 萬字元防呆上限（實測 43.4KB→28.4KB）；USER.md 健保卡號搬出熱讀路徑；AGENTS.md 修正小龍蝦 Context 舊資料（200K→實測近1M）。
+完整報告：`knowledges/2026-07-10_文章剖析_軍師版_對照小龍蝦初版.md`
 
-### 2. 邀請頁「姓名取代 BNI」個人化功能 + 4 站正式上線
+### 2. 密碼分層——教練明令「不要讓我難做事」，已做到無感
 
-- URL 參數(`?name=姓名`)+ JS,純前端無資料庫,網址加姓名會自動把「BNI 專屬邀請」「BNI 專屬價值」換成教練指定的姓名版本
-- **4 個網站已正式部署**(zip+API 推送,帶 `_headers`)：bni-invite / bni-peipei / workshop-invite / workshop-peipei
-- 教練 Google 試算表前 10 位名單已示範產生正式連結
-- 記憶已補：`project_bni_invite_pages_2026-07-09.md`(2026-07-10 更新段落)
+真正的密碼/API金鑰/序號全部從 `路徑大全.md` 拆到新檔 `路徑大全_憑證層.md`，兩檔都鎖權限 600。任何 AI 找路徑、讀檔案的方式完全沒變，教練端零操作變化。commit `78768019d`。
 
-### 3. bigtree 手機版導覽優化
+### 3. OpenClaw 升級 2026.6.1 → 2026.6.11（已驗證運作正常）
 
-`coach1973.github.io/bigtree/` 新增三線漢堡選單(7項連結)+ 浮動回頂按鈕，**commit `424ce52`**，已用 `gh api .../pages/builds/latest` 驗證 GitHub Pages 真正 build 完成上線。
+教練同意升級（原因：以為有 context 用量表）。已用 `openclaw update --dry-run` 預覽、正式升級、驗證版本+閘道服務健康。**誠實澄清**：用量表其實是官方測試版 2026.7.1-beta 的功能，6.11 穩定版目前沒有，教練決定不追測試版。
 
-### 4. 發現並停用 Mac 本機漏網的 30 分鐘自動蒸餾 crontab
+### 4. 自我改進機制比較（試金石 vs 業界方案）
 
-教練質疑「每 30 分鐘自動蒸餾」是否還必要——查證後發現 7/6 那次 cron 大體檢只清了「小龍蝦(openclaw cron)系統」，**這台 Mac 本機自己的 crontab**(`run_terminal_distill.sh`)是獨立系統，完全沒被那次體檢碰過，一直跑到今天。已用註解方式停用(commit `8e265574a`)，未整行刪除方便追溯。
+查證教練記得的「揭露技能資料公開」提醒——查 git log/已裝plugin/hooks info 均無吻合紀錄，如實回報不臆測。仍完成比較：業界方案的「明確觸發清單」「內建敏感資料防護」值得吸收；我們的敘事深度+守則綁定+跨機共用範圍更完整，應保持。`knowledges/2026-07-10_自我改進機制對照_試金石vs社群方案.md`
+
+### 5. MEMORY.md 瘦身，抓到真正根因
+
+不是「好內容太多」，是自動「做夢/晉升」機制把每 30 分鐘健康檢查 cron 的固定操作文字，誤判成新知識，從兩天的記憶檔各重複收錄一次，**其中一份還意外夾帶明文 VPS 密碼**。已整併去重複、密碼移除改指憑證層，14.8KB→12.7KB。commit `7b5d94e7f`。
+
+### 6. 🔴 簡體字二犯——建立 Stop Hook 自動攔截（試金石案例44更新）
+
+案例44 記錄完、承諾自我掃描後，下一則回覆立刻又犯，證明認知層面修法無效。比照既有 `rule_taiwan_time_check.sh` 架構，新建 `scripts/rule_traditional_chinese_check.sh` 註冊進 `~/.claude/settings.json` Stop hooks：偵測簡體字專用字元（约60字），命中即 exit 2 強制重寫。已測試驗證會攔截、不誤判正常繁體。commit `cee620d69`。
+
+### 7. 🔴🔴🔴 context 80%預警規則形同虛設——找到根因並上鎖（試金石案例45，本場最大技術發現）
+
+教練問「context用量表意義」延伸出的查核：SOUL.md 有教練親定的「80%必須主動提醒」鐵律，但今早 context overflow 是直接自動重啟、沒有事先警告。查證發現現成機關 `context-overflow-guard` 狀態顯示「已啟用」，但**綁定的 `message:preprocessed` 事件是已知的 fire-and-forget bug（見既有記憶 `feedback_openclaw_hook_fire_and_forget.md`）**，注入的警告文字從來沒有真正被模型看到過。狀態燈正常≠真的有作用。
+
+**已修復**：改成跨過 30/38 輪門檻時，直接呼叫 Telegram Bot API 發訊息給教練（chat_id 6124913915），不依賴模型有沒有看到注入內容，每門檻只發一次不洗版。**已實測**：`node -e` 直接觸發，HTTP 200、`ok:true`，教練 Telegram 確實收到測試訊息。修復位置：`~/.openclaw`（外層 master 分支）commit `11220712`。
 
 ---
 
@@ -51,33 +63,35 @@
 
 | 優先 | 任務 |
 |------|------|
-| 🟡 | 手機版同步已打通，觀察教練實際用起來有沒有問題(讀取延遲、repo 選擇卡住等) |
-| 🟡 | 4個邀請頁個人化功能上線,教練如需完整名單(不只前10位)可直接產生批次連結 |
-| 🔴 | **2026-07-15**(v51遺留)：佩佩電腦觀察期滿，教練確認「運行沒問題」後才能砍 6 個 `.bak`/`.stale_backup`(約回收3.13GB)，走 Safe-Remove 五道閘門 |
-| 🟡 | (v51遺留)佩佩電腦 Zoom Roaming-data 933MB 不一致問題、桌面4個中文編碼資料夾待處理 |
-| 🟡 | (v51遺留)bni-dna：8月(8/12)例會結束後，教練口述出席名單，比照流程更新 |
-| 🟡 | (v51遺留)biz-gym 黑金新版等教練說「推」 |
-| 🟢 | (v51遺留)聯想/ACER 兩機的同款系統稽核(需教練拍板) |
+| 🟡 | 觀察 context-overflow-guard 直發 Telegram 機制在真實長對話中是否確實在 30/38 輪準時觸發 |
+| 🟡 | 自我改進機制比較報告裡的 2 個吸收建議（明確觸發清單、寫入前敏感資料檢查）找時間補進 `執行細則.md` |
+| 🟡 | `路徑大全.md` 裡還有 3 處 Netlify 部署 SOP 範本刻意保留明文 token（copy-paste 效率考量），教練若想進一步收緊可再議 |
+| 🟢 | MEMORY.md 07-06/07-07/07-08 段落還有更多可整併的重複片段，這次只清了 07-09/07-10 段落，非急件 |
+| 🟢 | 是否要測試 OpenClaw 2026.7.1-beta 拿到真正的 context 用量表，教練說不急先不動 |
+| 🔴 | (v53遺留)2026-07-15：佩佩電腦觀察期滿，教練確認「運行沒問題」後才能砍 6 個 `.bak`/`.stale_backup`(約回收3.13GB) |
+| 🟡 | (v53遺留)bni-dna：8月(8/12)例會結束後，教練口述出席名單更新 |
+| 🟡 | (v53遺留)biz-gym 黑金新版等教練說「推」 |
 
 ---
 
 ## 🔑 關鍵檔案索引(本場)
-- `開工.md`(workspace 根目錄) — 手機版專用入口檔
-- 記憶：`project_mobile_claude_sync_2026-07-10.md`、`feedback_verify_before_correcting_coach.md`、`project_bni_invite_pages_2026-07-09.md`(更新)
-- `github.com/Coach1973/mac-openclaw-workflows` — workspace 本體，手機同步的核心 repo(private)
-- `github.com/Coach1973/bigtree` — 大樹小講官網(public)
+
+- `knowledges/2026-07-10_文章剖析_軍師版_對照小龍蝦初版.md` — 第二意見查核完整報告
+- `knowledges/2026-07-10_OpenClaw最新趨勢調研_記憶力效能技能.md` — 版本/記憶/技能/成本調研
+- `knowledges/2026-07-10_自我改進機制對照_試金石vs社群方案.md` — 業界方案比較
+- `路徑大全_憑證層.md`（新檔）— 真實密碼/API金鑰集中處，權限600
+- `scripts/rule_traditional_chinese_check.sh` — 繁體字 Stop Hook
+- `~/.openclaw/hooks/context-overflow-guard/handler.js` — 已改直發Telegram（注意：這個檔案在外層 `~/.openclaw` repo，不在 workspace repo）
+- 試金石案例44（更新）、案例45（新增）
 
 ---
 
-## 📜 v52 精簡回顧(結繩領導學邀請頁系列4站上線+RustDesk監控，完整內容見git歷史)
-從一段文案開始，做出結繩領導學工作坊邀請頁，一路迭代到4個獨立短網址上線；RustDesk記憶體自動監控排程建立(每天凌晨5點檢查，超過800MB才重啟)。
-
-## 📜 v51 精簡回顧(佩佩電腦W03首跑+bni-dna網站更新，完整內容見git歷史)
-佩佩電腦成功搬移4個App共2.21GB，7天觀察期到7/15；bni-dna出缺席戰情儀表板全年改版上線(commit `8646ef2`)。
+## 📜 v53 精簡回顧(手機同步打通+邀請頁個人化+bigtree優化+漏網cron清理，完整內容見git歷史)
+教練親自想出手機當「第四台電腦」思路，建 `開工.md` 入口檔打通手機版同步；4個邀請頁個人化功能正式上線；bigtree手機導覽優化；抓到漏網一個月的本機30分鐘蒸餾crontab。
 
 ---
 
-> Sonnet 5 親筆，2026-07-10 早上 08:20。教練說「總結並上傳」，本棒收尾。這場對話最大的價值是打通了手機版同步這條路——過程繞了一大圈(先鑽研 Remote Control 又被教練喊停)，最後靠教練自己的簡單思路解決，也順手抓到一個漏網一個月的本機 cron。下一棒接手直接觀察手機版同步實際使用狀況即可，沒有阻塞性待辦。
+> Sonnet 5 親筆，2026-07-10 上午 11:30。教練說「總結上傳，我要開新對話框」，本棒收尾。這場對話最大的價值是連續抓到兩個「規則寫著但沒真的執行」的系統性 bug（簡體字靠自覺不可靠、context預警底層事件機制根本沒送達），兩個都已經改成不依賴 AI 自覺的「鎖」，並且都有實測憑證（Hook 攔截測試、Telegram HTTP 200）。下一棒接手可以直接觀察這兩個鎖在真實使用中的表現，沒有阻塞性待辦。
 
 
 ---
