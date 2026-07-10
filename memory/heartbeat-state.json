@@ -2,20 +2,20 @@
   "lastChecks": {
     "gmail": 1783647296,
     "calendar": 1783647296,
-    "heartbeat_poll": 1783658426
+    "heartbeat_poll": 1783677627
   },
-  "lastHeartbeat": "2026-07-10T14:03:51+08:00",
-  "lastHeartbeatNote": "週五 14:01 心跳。距上次心跳 ~1 分鐘（上輪 14:00:26）。v54 關棒 2.5 小時無新對話，教練說要開新對話框後靜默。Crons 24 條健康、JUNSHI_QUEUE 空、today memory 17KB 安全、Gateway PID 72993。簡體字 Stop Hook + context 預警生效待驗證。安靜待命。",
+  "lastHeartbeat": "2026-07-10T22:00:30+08:00",
+  "lastHeartbeatNote": "週五 22:00 心跳。距上次心跳 4 小時（上輪 18:02）。距 v54 收棒 10.5 小時無新對話，教練說要開新對話框後靜默。JUNSHI_QUEUE 空、Gateway 穩定、peipei 18:55 throttle 重啟期已過。週五深夜 22:00 接近安靜時段（23:00 起），無事不打擾。",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
+    "timeOfDay": "late-evening",
     "dayOfWeek": "Friday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "clean",
-    "recentCoachActivity": "教練 11:30 結束 v54 接力棒，說要開新對話框，2.5 小時無新對話",
+    "recentCoachActivity": "教練 11:30 結束 v54 接力棒，說要開新對話框，10.5 小時無新對話",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
-    "note": "週五下午 14:01 安靜監測，無新事件"
+    "note": "週五深夜 22:00 安靜待命，接近 23:00 進入安靜時段"
   },
-  "lastHeartbeatPoll": 1783663431
+  "lastHeartbeatPoll": 1783677630
 }

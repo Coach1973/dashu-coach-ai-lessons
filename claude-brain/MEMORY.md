@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴 軍師長篇技術回覆整段滑成簡體字，二度犯(2026-07-10)](feedback_chinese_only.md) — 唯一指定繁體字，長篇/高思考負荷回覆送出前必掃簡體字，試金石案例44
+- [👤 教練隱私立場：公眾人物零隱瞞，優先便利性甚於資料極小化(2026-07-10)](user_privacy_risk_posture.md) — 健保卡未使用、帳密交給系統記住是刻意選擇，勿誇大風險急迫性
+- [🎯 軍師重跑文章分析當第二意見，抓到MiniMax 3個誤判(2026-07-10)](project_wisely_article_second_opinion_2026-07-10.md) — memorySearch判斷錯+熱啟動未實測+沒發現自製Hook無上限Dreaming黑洞
 - [🔴🔴🔴 教練糾正時先查證再回應，不要用舊印象頂撞(2026-07-10)](feedback_verify_before_correcting_coach.md) — 手機版Code功能認知過時+終端機環境誤判雙重案例，查證後教練都是對的
 - [🎯 手機版Claude同步Mac：放棄Remote Control改用GitHub repo+開工.md(2026-07-10)](project_mobile_claude_sync_2026-07-10.md) — 教練「手機=第四台電腦」思路勝出，順手抓到Mac本機漏網30分鐘蒸餾cron
 - [📋 2026-07-09整場session總結](project_2026-07-09_full_session_summary.md) — bigtree場次更新→矩陣行銷評估→媒體資源中心→GitHub封存→結繩領導學6站文案同步
@@ -126,7 +129,6 @@
 - [🔴🔴 截圖鐵律統合版(3條合一)](feedback_screenshot_rules_consolidated.md) — 終端機禁主動截圖、能用指令不截圖、未經同意不申請權限
 - [Opcode(UI)指令鐵律](feedback_ui_no_file_paths.md) — UI=Opcode，絕對路徑only，只輸出文字Terminal存檔
 - [身份由模型決定不由介面決定](feedback_assistant_names.md) — Opus=軍師，非Opus=終端機/桌面版；心法21條不是17條
-- [對教練回覆一律使用中文](feedback_chinese_only.md) — 對話全中文，不在中文詞後加英文括號
 - [Netlify Token & 23個網站清單](reference_netlify_token.md) — nfp_QMBMfwYK...pa838，到期2027/05/14，22個手動部署可直接API推送
 - [所有對話路徑記錄](reference_all_conversation_paths.md) — 桌面版/終端機/Hermes三助教共用同資料夾；小龍蝦→BOT_MESSAGES.md
 - [白話文鐵律](feedback_plain_chinese_no_jargon.md) — 教練是電腦小白，禁用cron/git/relay/repo行話，講話先自問「我媽看得懂嗎」
