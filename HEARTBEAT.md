@@ -41,3 +41,8 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-10 09:15:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-10 11:31
+- ✅ 同步成功
+- HANDOFF mtime: 1783654267
+- 雲端同步：✅ 已推上雲端（commit ccae6d209）
