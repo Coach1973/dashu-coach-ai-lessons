@@ -6,6 +6,7 @@ import base64
 import io
 import json
 import os
+import re
 
 import anthropic
 
@@ -37,6 +38,12 @@ SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一張名�
 - 如果同一張名片有多組電話，mobile 放手機、landline 放市話，兩者都有就都填
 - 完全看不出來的欄位一律填 null，不要瞎猜
 """
+
+
+def _repair_stray_backslashes(text: str) -> str:
+    """名片標語常出現業主手寫的反斜線（如「農舍\\鐵皮屋」），不是合法JSON跳脫字元，
+    會讓json.loads()直接炸掉。把非法的反斜線（後面不是合法跳脫字元）都跳脫成 \\\\。"""
+    return re.sub(r'\\(?!["\\/bfnrtu])', r"\\\\", text)
 
 
 def _load_image_bytes(image_path: str) -> tuple[bytes, str]:
@@ -97,14 +104,19 @@ def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = No
         block.text for block in message.content if getattr(block, "type", None) == "text"
     )
 
-    try:
-        return json.loads(raw_text)
-    except json.JSONDecodeError:
-        start = raw_text.find("{")
-        end = raw_text.rfind("}")
-        if start != -1 and end != -1:
-            try:
-                return json.loads(raw_text[start : end + 1])
-            except json.JSONDecodeError:
-                pass
-        return {"_error": "JSON解析失敗", "_raw": raw_text}
+    candidates = [raw_text]
+    start = raw_text.find("{")
+    end = raw_text.rfind("}")
+    if start != -1 and end != -1:
+        candidates.append(raw_text[start : end + 1])
+
+    for candidate in list(candidates):
+        candidates.append(_repair_stray_backslashes(candidate))
+
+    for candidate in candidates:
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+
+    return {"_error": "JSON解析失敗", "_raw": raw_text}
