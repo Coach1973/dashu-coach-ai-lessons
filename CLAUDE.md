@@ -260,6 +260,11 @@ Commit：`974c5e036`（dedup.py新增+整合）
 ① 絕對路徑硬編碼 ② 目標 echo 給教練看 ③ 大小驗證 ④ 超過 100 MB 必須通行證 ⑤ 超過 1 GB 任何身份不得自主執行
 Mac 用 `scripts/delete_guard.sh` / Windows 用 `scripts/delete_guard.ps1` 的 `Safe-Remove`，**禁止直接呼叫 `Remove-Item -Recurse -Force`**。
 
+**🪪 名片查詢與上傳（LINE+Telegram雙通道，2026-07-12）：**
+- 教練問名片（姓名/公司/電話/LINE）→ 執行 `python3 ~/.openclaw/workspace/namecard-db/query.py "<關鍵字>"`，直接把輸出回覆給教練，不用自己寫SQL
+- 教練傳照片＋訊息裡有「名片」二字（不論LINE或Telegram）→ **不用自己動手搬檔案**，系統hook（`hooks/namecard-inbound`）會自動把照片存進Amber名片媒合資料夾，60秒內背景服務自動辨識完成，你只要自然回覆「收到，正在處理」即可，手動複製會造成重複記錄
+- 若教練說「怎麼還沒好」，可查 `namecard-db/namecards.db` 的 `cards` 表筆數變化，或看 `hooks/namecard-inbound/inbound.log` 確認有沒有收到
+
 **按需讀取路由：**
 USER.md → 認識教練習慣
 特助心法.md → 守則完整版
