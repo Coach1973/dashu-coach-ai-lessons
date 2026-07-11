@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>名片資料庫搜尋</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 720px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  h1 { font-size: 20px; margin-bottom: 12px; }
+  form { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  input[type=text] { flex: 1; min-width: 160px; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+  select { padding: 10px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; }
+  button { padding: 10px 16px; font-size: 16px; border: none; border-radius: 8px; background: #1f3a5f; color: white; }
+  .card { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card .name { font-size: 17px; font-weight: 700; }
+  .card .company { color: #444; margin-bottom: 6px; }
+  .card .tagline { color: #777; font-size: 13px; margin: 4px 0; }
+  .card .row { font-size: 14px; margin: 2px 0; }
+  .card a { color: #1f3a5f; text-decoration: none; }
+  .tag { display: inline-block; background: #eef1f6; color: #1f3a5f; font-size: 12px; padding: 2px 8px; border-radius: 12px; margin: 2px 4px 0 0; }
+  .review { color: #b45309; font-size: 12px; }
+  .empty { color: #888; text-align: center; padding: 40px 0; }
+  .count { color: #666; font-size: 13px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<h1>📇 名片資料庫搜尋</h1>
+<form method="get">
+  <input type="text" name="q" placeholder="搜姓名／公司／地區／產品服務關鍵字" value="{{ query }}">
+  <select name="category">
+    <option value="">全部類別</option>
+    {% for c in categories %}
+    <option value="{{ c }}" {% if c == selected_category %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">搜尋</button>
+</form>
+<div class="count">共 {{ cards|length }} 筆</div>
+
+{% if not cards %}
+<div class="empty">沒有符合的名片</div>
+{% endif %}
+
+{% for c in cards %}
+<div class="card">
+  <div class="name">{{ c.name or "（未辨識姓名）" }} {% if c.title %}<span style="font-weight:400;color:#666;">・{{ c.title }}</span>{% endif %}</div>
+  <div class="company">{{ c.company or "" }}</div>
+  {% if c.tagline %}<div class="tagline">{{ c.tagline }}</div>{% endif %}
+  {% if c.mobile %}<div class="row">📱 <a href="tel:{{ c.mobile }}">{{ c.mobile }}</a></div>{% endif %}
+  {% if c.landline %}<div class="row">☎️ {{ c.landline }}</div>{% endif %}
+  {% if c.email %}<div class="row">✉️ <a href="mailto:{{ c.email }}">{{ c.email }}</a></div>{% endif %}
+  {% if c.line_id %}<div class="row">💬 LINE：{{ c.line_id }}</div>{% endif %}
+  {% if c.address %}<div class="row">📍 {{ c.address }}</div>{% endif %}
+  <div>
+    {% if c.category %}<span class="tag">{{ c.category }}</span>{% endif %}
+    {% for k in c.keywords %}<span class="tag">{{ k }}</span>{% endfor %}
+  </div>
+  {% if c.status == 'needs_review' %}<div class="review">⚠️ AI辨識沒把握，建議人工核對：{{ c.confidence_notes }}</div>{% endif %}
+</div>
+{% endfor %}
+
+<p style="text-align:center;"><a href="/matches">查看產業鏈媒合建議 →</a></p>
+</body>
+</html>
