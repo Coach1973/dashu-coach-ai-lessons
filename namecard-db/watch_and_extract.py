@@ -13,6 +13,7 @@ import time
 import anthropic
 
 import db
+from dedup import run_dedup
 from extract import extract_card_fields
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
@@ -44,6 +45,11 @@ def scan_once(folder: str, client: anthropic.Anthropic) -> None:
             print(f"  ✅ {fields.get('name')} / {fields.get('company')}")
     conn.close()
     print(f"本次掃描完成，新處理 {new_count} 張，資料夾內共 {len(filenames)} 張。")
+
+    if new_count > 0:
+        merged = run_dedup(client)
+        if merged:
+            print(f"  🔗 自動合併 {merged} 組正反面名片")
 
 
 def main() -> None:

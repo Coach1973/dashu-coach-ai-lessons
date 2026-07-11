@@ -16,6 +16,9 @@ def init_db() -> None:
     conn = get_conn()
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         conn.executescript(f.read())
+    existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(cards)")}
+    if "extra_images" not in existing_cols:
+        conn.execute("ALTER TABLE cards ADD COLUMN extra_images TEXT")
     conn.commit()
     conn.close()
 

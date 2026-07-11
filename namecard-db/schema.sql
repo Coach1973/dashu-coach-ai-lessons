@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS cards (
     confidence_notes TEXT,
     raw_response TEXT,          -- AI原始回應，除錯用
     status TEXT DEFAULT 'ok',   -- ok / needs_review / failed
+    extra_images TEXT,          -- 同一張名片的其他照片(如背面)，逗號分隔檔名
     created_at TEXT DEFAULT (datetime('now'))
 );
 
