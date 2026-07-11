@@ -1,6 +1,6 @@
 # Memory Index
 
-- [🔴🔴🔴 markdown連結顯示文字與href不一致必須主動確認(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 教練反問句是糾錯窗口非走過場；核心是浪費教練犧牲睡眠換來的時間，試金石案例47
+- [🔴🔴🔴 追問標準＝邏輯鏈有沒有斷掉，不是我有沒有把握(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 有斷才問(案例47)沒斷別問(案例48)；兩邊都浪費教練犧牲睡眠換來的時間
 - [🔴🔴 系統性操作前先查兩台機器雲端歷史經驗(2026-07-11)](feedback_check_crossmachine_history_before_system_ops.md) — 舊版restore_junctions.ps1路徑寫死D槽，查了ACER已驗證版本才發現，教練喊停避免用錯版本
 - [🔴🔴🔴 HTML驗證沒跳Chrome給教練看，第四次犯(2026-07-10)](feedback_html_preview_chrome_only.md) — 用無頭瀏覽器MCP自己截圖確認≠教練親眼看過，回報完成前必開Chrome，試金石案例46
 - [🔴🔴🔴 軍師長篇技術回覆整段滑成簡體字，二度犯(2026-07-10)](feedback_chinese_only.md) — 唯一指定繁體字，長篇/高思考負荷回覆送出前必掃簡體字，試金石案例44
