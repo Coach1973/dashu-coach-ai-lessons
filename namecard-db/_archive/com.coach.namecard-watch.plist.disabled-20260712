@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.coach.namecard-watch</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/bymyway/.openclaw/workspace/namecard-db/venv/bin/python3</string>
+        <string>/Users/bymyway/.openclaw/workspace/namecard-db/watch_and_extract.py</string>
+        <string>--watch</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ANTHROPIC_API_KEY</key>
+        <string>sk-cp-0_iW72rvuoBmDucQXmRaSAUmcrjXTzZCpIxQt7xgKX_ImdeMkhGmgEV9QBzMNwH87jP-VLIXDNC8VqdgJmntnj5M9gJfTJFiveu9fWuXyQHnW9Z8EQnvlC8</string>
+        <key>ANTHROPIC_BASE_URL</key>
+        <string>https://api.minimax.io/anthropic</string>
+        <key>NAMECARD_MODEL</key>
+        <string>MiniMax-M3</string>
+        <key>NAMECARD_FOLDER</key>
+        <string>/Volumes/home/名片媒合中心</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/watch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/watch.error.log</string>
+</dict>
+</plist>

@@ -3,12 +3,17 @@
 
 用法：
     python watch_and_extract.py --once          掃一次就結束
-    python watch_and_extract.py --watch          每 INTERVAL_SECONDS 掃一次，一直跑
     python watch_and_extract.py --folder /path   指定資料夾（預設讀環境變數 NAMECARD_FOLDER）
+
+2026-07-12 教練糾正（同一個「輪詢 vs 事件觸發」的坑第4次踩，見試金石案例49）：
+拿掉了原本每N秒重複掃的--watch常駐模式，不再有任何背景排程。改成純事件觸發：
+- Telegram/LINE傳名片 → hooks/namecard-inbound複製完檔案後直接spawn這支程式跑--once
+- Amber App/電腦直接丟進資料夾（沒有事件通知機制可用）→ 教練/孔大哥/佩佩老師上傳完
+  跟小龍蝦/學弟/學妹說「整理名片」，由對話觸發跑--once
+沒事件發生，這支程式就完全不會被呼叫，沒有任何進程常駐、沒有任何定時任務。
 """
 import argparse
 import os
-import time
 
 import anthropic
 
@@ -17,7 +22,6 @@ from dedup import run_dedup
 from extract import extract_card_fields
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
-INTERVAL_SECONDS = 60
 
 
 def scan_once(folder: str, client: anthropic.Anthropic) -> None:
@@ -55,7 +59,6 @@ def scan_once(folder: str, client: anthropic.Anthropic) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--once", action="store_true")
-    parser.add_argument("--watch", action="store_true")
     parser.add_argument("--folder", default=os.environ.get("NAMECARD_FOLDER"))
     args = parser.parse_args()
 
@@ -66,14 +69,7 @@ def main() -> None:
 
     db.init_db()
     client = anthropic.Anthropic()
-
-    if args.watch:
-        print(f"開始監控資料夾：{args.folder}（每 {INTERVAL_SECONDS} 秒掃一次，Ctrl+C 停止）")
-        while True:
-            scan_once(args.folder, client)
-            time.sleep(INTERVAL_SECONDS)
-    else:
-        scan_once(args.folder, client)
+    scan_once(args.folder, client)
 
 
 if __name__ == "__main__":
