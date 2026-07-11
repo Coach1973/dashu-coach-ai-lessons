@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  用途：讓Mac mini開機/登入後自動跑名片監控，教練丟名片進「名片媒合中心」資料夾，
+  不用開終端機、不用手動執行任何指令，系統會每60秒自動掃一次新名片。
+
+  這是「樣板」，套用前要把下面三個 __PLACEHOLDER__ 換成 Mac mini 上的實際值：
+  1. __PYTHON_PATH__      → 執行 `which python3` 查到的絕對路徑
+  2. __NAMECARD_DB_PATH__ → namecard-db 資料夾的絕對路徑（例如 /Users/xxx/mac-openclaw-workflows/namecard-db）
+  3. __NAMECARD_FOLDER__  → Amber私有雲名片資料夾的Mac掛載路徑（例如 /Volumes/home/名片媒合中心）
+  4. ANTHROPIC_API_KEY 那行的 __API_KEY__ → 教練的API金鑰（從 workspace/路徑大全_憑證層.md 讀）
+
+  安裝方式：
+    cp com.coach.namecard-watch.plist.template ~/Library/LaunchAgents/com.coach.namecard-watch.plist
+    （改好上面幾個值之後）
+    launchctl load ~/Library/LaunchAgents/com.coach.namecard-watch.plist
+
+  移除方式：
+    launchctl unload ~/Library/LaunchAgents/com.coach.namecard-watch.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.coach.namecard-watch</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PYTHON_PATH__</string>
+        <string>__NAMECARD_DB_PATH__/watch_and_extract.py</string>
+        <string>--watch</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__NAMECARD_DB_PATH__</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ANTHROPIC_API_KEY</key>
+        <string>__API_KEY__</string>
+        <key>NAMECARD_FOLDER</key>
+        <string>__NAMECARD_FOLDER__</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>__NAMECARD_DB_PATH__/watch.log</string>
+    <key>StandardErrorPath</key>
+    <string>__NAMECARD_DB_PATH__/watch.error.log</string>
+</dict>
+</plist>

@@ -16,7 +16,7 @@ import db
 from extract import extract_card_fields
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
-INTERVAL_SECONDS = 300
+INTERVAL_SECONDS = 60
 
 
 def scan_once(folder: str, client: anthropic.Anthropic) -> None:
