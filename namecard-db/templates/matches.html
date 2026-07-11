@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>產業鏈媒合建議</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 720px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  h1 { font-size: 20px; }
+  .pair { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .names { font-weight: 700; }
+  .reason { color: #444; font-size: 14px; margin-top: 6px; }
+  .empty { color: #888; text-align: center; padding: 40px 0; }
+  a.back { display:block; text-align:center; margin-top:16px; color:#1f3a5f; }
+</style>
+</head>
+<body>
+<h1>🔗 產業鏈媒合建議</h1>
+{% if not pairs %}
+<div class="empty">還沒有媒合結果，先執行 match.py 產生候選配對</div>
+{% endif %}
+{% for p in pairs %}
+<div class="pair">
+  <div class="names">{{ p.name_a }}（{{ p.company_a }}） ⇄ {{ p.name_b }}（{{ p.company_b }}）</div>
+  <div class="reason">{{ p.relation_reason }}</div>
+</div>
+{% endfor %}
+<a class="back" href="/">← 回搜尋頁</a>
+</body>
+</html>

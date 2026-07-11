@@ -118,7 +118,7 @@
 | 機器 | 載入方式 | 狀態 |
 |---|---|---|
 | **Mac** | `~/.claude/hooks/feed_junshi_handoff.sh` 開工自動 cat 本檔 | ✅ 本場改 |
-| **聯想** | `feed_junshi_handoff.ps1` 開工自動 cat 本檔 | ⏳ 等聯想軍師改（inbox 通知中）|
+| **聯想** | `feed_junshi_handoff.ps1` 開工自動 cat 本檔 | ✅ 2026-07-12 聯想軍師確認：hook 早已內建讀取本檔路徑的邏輯（`scripts\feed_junshi_handoff.ps1` 第154~167行），本檔一出現就自動生效，不需額外修改 |
 | **ACER** | 同上 | ⏳ 等 ACER 軍師改（inbox 通知中）|
 
 ---
