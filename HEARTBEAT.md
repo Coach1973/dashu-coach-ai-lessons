@@ -35,3 +35,7 @@
 - 觸發詞：開工
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - Session: c156ef40-674b-4c1f-90aa-35d188bf7b4b
+
+## ⚠️ peipei 自動 force-restart 2026-07-11 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
