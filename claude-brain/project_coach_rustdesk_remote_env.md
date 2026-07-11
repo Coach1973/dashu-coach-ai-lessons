@@ -17,3 +17,5 @@ metadata:
 - **RustDesk 鍵盤模式（教練 2026-05-22 親測）：要用「1:1 傳輸模式」(Map mode)，嘸蝦米才正常可用；「傳統模式」(Legacy) 會讓嘸蝦米輸入法消失/不能用。翻譯模式(Translate) 尚未測。→ 教練電腦預設請固定用 1:1 傳輸模式。**
 - 截圖成本考量：畫面是遠端的，截圖更貴更慢，能用指令查就別截圖（呼應截圖鐵律）。
 - 相關：[[feedback_voice_typo_shixing_shouze]]（香草/小草輸入法的語音對映）。
+
+**🔴 快捷鍵指引鐵律（2026-07-12 教練親口要求記住）**：教練實體鍵盤是 **Windows 鍵盤**，任何時候要教他按快捷鍵，一律換算成 Windows 鍵盤術語，不可直接講 Mac 快捷鍵術語。RustDesk 對映規則：Windows 鍵（⊞）＝ Mac 的 Cmd 鍵，Alt＝Option，Ctrl＝Ctrl。例：Mac「Cmd+K」要說成「Windows 鍵＋K」。

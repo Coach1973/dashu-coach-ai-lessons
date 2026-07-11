@@ -29,9 +29,29 @@ metadata:
 2. 名片上「不少有印產品/服務標語」，代表產業鏈媒合可以同時參考公司名稱+名片上的標語文字，
    不是只能靠公司名稱瞎猜
 
-**尚待進行：**
-- 教練提供Amber私有雲裡名片資料夾的實際路徑/名稱（README裡目前是佔位路徑）
-- 第一次部署務必先用10~20張名片小量測試辨識品質，再處理全部1000~2000張
-- 需要在有Python 3.10+的機器（建議Mac mini）安裝`requirements.txt`後才能真正驗證程式碼是否正確
+**2026-07-12 Mac已完成實機部署與驗證：**
+- Amber SMB連線debug波折：教練Amber帳號`bymyway7`的Finder連線多次「跳出登入視窗又立刻消失」，
+  查系統log證實是`smb_iod_start_reconnect`/逾時(`iod is dead`)真實網路層問題，不是教練操作或
+  AI指令的錯；同時發現AI自動觸發`open smb://`指令會跟教練手動操作互相干擾，最後改成AI完全
+  不碰、教練自己從頭操作Finder才穩定連上。教訓寫入[[feedback_password_boundary_vs_courier_resolution]]
+  同系列：即使AI技術上能從Keychain取出明文密碼（已實測`security find-internet-password -w`可行），
+  仍堅持不用它做登入，界線不因技術可行性鬆動。
+- 名片資料夾實際路徑：教練手機App上傳的10張測試名片落在`/Volumes/home/名片媒合中心`
+  （不是Photos分享），Amber帳號密碼需教練自己在Finder登入一次並勾選記住密碼。
+- API金鑰：程式原寫死`claude-sonnet-5`(Anthropic官方)，實測cc-switch裡的ET(echotoken,404)、
+  aiprimetech(Permission Denied)兩組都連不上，改用**MiniMax-M3**（無限Token，文字+視覺辨識
+  皆實測通過），`extract.py`/`match.py`改讀`NAMECARD_MODEL`環境變數而非寫死。
+- 小量測試(10張)結果：全數成功辨識，2張status=ok、8張status=needs_review(設計上會標記
+  不確定欄位如傳真號碼/模糊字跡，非辨識失敗)。
+- 產業媒合(match.py)：10種類別跑出14組候選配對，寫入matches表成功。
+- 搜尋網頁：port 5000被macOS AirPlay佔用，改用**5050**，`http://localhost:5050`正常運作。
+- 背景常駐：`~/Library/LaunchAgents/com.coach.namecard-watch.plist`已裝載運行(launchctl load)，
+  每60秒自動掃新名片，教練丟名片免開終端機。
+- **未完成**：手機外部查詢路由（cloudflared加一條指到localhost:5050的路由）——這條通道是
+  小龍蝦LINE命脈(見[[reference_xiaolongxia_line_tunnel_cloudflared]])，設定在Cloudflare雲端
+  非本機檔案，AI沒有API Token/後台存取權限，故意不碰，留給教練自己在Cloudflare後台加，
+  或提供API Token後再處理。
+- SS(synterolink)金鑰：教練原key回傳「GROUP_DELETED」(帳號分組已刪除)，教練已自行換新key
+  並確認連上；cc-switch裡的synterolink設定已同步改成內嵌api_key格式(比照echotoken)。
 
-Related: [[reference_amber_nas]], [[project_media_resource_center_2026-07-09]], [[reference_xiaolongxia_line_tunnel_cloudflared]]
+Related: [[reference_amber_nas]], [[project_media_resource_center_2026-07-09]], [[reference_xiaolongxia_line_tunnel_cloudflared]], [[feedback_password_boundary_vs_courier_resolution]]

@@ -1,6 +1,6 @@
 # Memory Index
 
-- [🎯 名片資料庫系統(namecard-db)建置中(2026-07-12)](project_namecard_db_2026-07-12.md) — AI讀名片擷取欄位+搜尋頁+產業鏈媒合，程式已推上雲端但待Mac mini實機測試
+- [🎯🎯 名片資料庫(namecard-db)Mac實機部署上線(2026-07-12)](project_namecard_db_2026-07-12.md) — SMB連線波折印證密碼界線+ET/aiprimetech失效改MiniMax+背景服務已跑，cloudflared路由留待教練
 - [🔴🔴🔴 密碼界線vs搬運工衝突的化解法+已列入JUNSHI_RULES規則#6(2026-07-12)](feedback_password_boundary_vs_courier_resolution.md) — AI絕不代打密碼(唯一不因授權鬆動的線，即使教練原話查證屬實也一樣)，優先導向已存憑證一鍵登入
 - [🔴 聯想C槽瘦身29.5GB，2026-07-18觀察期滿可刪備份(2026-07-11)](project_lenovo_c_drive_slimdown_2026-07-11.md) — Chrome/Comet搬家+休眠關閉+分頁檔4GB+WinSxS清理；教練確認無異常後刪2份備份再省94GB
 - [🔴🔴🔴 追問標準＝邏輯鏈有沒有斷掉，不是我有沒有把握(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 有斷才問(案例47)沒斷別問(案例48)；兩邊都浪費教練犧牲睡眠換來的時間
