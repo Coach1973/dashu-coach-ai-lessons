@@ -47,6 +47,11 @@ $junctions = @(
         Note   = "Claude 桌面版沙盒環境資料"
     },
     @{
+        Link   = "C:\Users\bymyw\AppData\Local\Perplexity\Comet\User Data"
+        Target = "E:\Claude-Data\AppData\Comet-User-Data"
+        Note   = "Comet瀏覽器（2026-07-11修復：原本整包junction含Application程式本體誤搬到E槽，已改正為只junction User Data，Application/CometUpdater/Update程式本體留C槽——注意還原後Comet\Application資料夾必須是真實資料夾存在，不能是junction，若程式本體遺失需重新安裝Comet再跑本腳本）"
+    },
+    @{
         Link   = "C:\Users\bymyw\.claude\projects\E--Claude-Data\memory"
         Target = "E:\Claude-Data\mac-openclaw-workflows\claude-brain"
         Note   = "三機共用大腦記憶（最優先，其他步驟失敗也要確保這條先接回）"
@@ -98,6 +103,6 @@ Write-Host "=== 完成：$ok 成功 / $fail 失敗 ===" -ForegroundColor $(if ($
 Write-Host ""
 Write-Host "提醒：" -ForegroundColor Cyan
 Write-Host "  - Zoom 目前是整包 junction，還原後若會議連結偵測不到已安裝，去 zoom.us 重裝一次即可，不用花時間診斷"
-Write-Host "  - Comet（Perplexity）瀏覽器目前尚未啟用 junction，還原後是全新資料，不受影響（E 碟上的舊備份是測試期殘留，非現役資料）"
+Write-Host "  - Comet（Perplexity）瀏覽器：Application 程式本體必須留在C槽是真實資料夾，只有 User Data 是junction，還原後若Application資料夾不存在，先去官網重裝Comet，裝完再跑本腳本接回User Data"
 Write-Host "  - Chrome/GanJing：絕對不要整包 junction AppData\Local\<瀏覽器>，只能 junction User Data 子資料夾，教訓見 acer-post-restore-todo.md 的慘痛經驗（整包搬移遺失過帳號設定）"
 Write-Host "  - 還原後務必請教練親自打開每套軟體，肉眼確認資料還在，不是只看程式能不能開"
