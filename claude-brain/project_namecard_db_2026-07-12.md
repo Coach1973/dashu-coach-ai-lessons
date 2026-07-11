@@ -54,4 +54,30 @@ metadata:
 - SS(synterolink)金鑰：教練原key回傳「GROUP_DELETED」(帳號分組已刪除)，教練已自行換新key
   並確認連上；cc-switch裡的synterolink設定已同步改成內嵌api_key格式(比照echotoken)。
 
+**2026-07-12 追加：正反面名片自動合併(dedup.py)**
+教練發現「鄭勝光/TFS」兩張照片是同一張名片的正反面，卻被拆成兩筆獨立紀錄。新增
+`dedup.py`：用公司名稱關鍵字重疊比對抓正反面配對（先排除「有限公司」「股份」等
+通用字），自動合併進同一筆、背面照片記進新增的`extra_images`欄位。已整合進
+`watch_and_extract.py`每次掃描後自動執行，非一次性手動修正。**技術教訓**：原本
+照教練指示用AI(MiniMax-M3)做yes/no合理性判斷，實測同一組資料重複問三次答案
+不一致(2否1是)，不夠可靠，改用純關鍵字重疊的確定性判斷。commit `974c5e036`。
+
+**2026-07-12 待辦（教練指定下一場新對話框執行，今晚太累不做）：**
+教練要「雙通道」——LINE跟Telegram(小龍蝦)都要能傳名片/查詢名片，不是只做Telegram
+單邊。技術背景：
+- 查詢名片：簡單，小龍蝦本來就能讀這台Mac的檔案，直接查`namecards.db`即可，
+  Telegram/LINE兩邊都適用同一套邏輯（因為都是同一個OpenClaw agent在回應）
+- 上傳照片變名片：教練傳照片到小龍蝦（不論LINE或Telegram）會先落地
+  `~/.openclaw/media/inbound/`，這裡是所有訊息類型混放的共用資料夾，需要寫一段
+  串接邏輯：偵測到教練傳照片+觸發詞（例如「上傳名片」）→ 把該照片複製到Amber
+  SMB掛載的`/Volumes/home/名片媒合中心`資料夾 → 現有背景服務會在60秒內自動接手
+  處理，不需要額外碰AI辨識這塊
+- 這件事完全不需要cloudflared/LINE tunnel路由，是完全不同的技術路徑（直接用
+  OpenClaw既有的訊息接收機制），比原本規劃的「開網頁對外路由」更簡單、風險更低
+
+**釐清：LINE tunnel(cloudflared)跟名片系統本來就沒有任何關聯**——上一輪對話教練
+一度誤會兩者有關，已澄清：cloudflared只在「想用手機瀏覽器連進localhost:5050搜尋頁」
+這個附加功能才用得到，教練決定改用小龍蝦雙通道後，這條路線已經不需要了，
+cloudflared/LINE tunnel維持原樣不用動（它的既定用途是LINE官方帳號訊息進小龍蝦）。
+
 Related: [[reference_amber_nas]], [[project_media_resource_center_2026-07-09]], [[reference_xiaolongxia_line_tunnel_cloudflared]], [[feedback_password_boundary_vs_courier_resolution]]
