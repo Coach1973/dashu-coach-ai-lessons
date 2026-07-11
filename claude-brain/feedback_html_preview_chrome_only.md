@@ -28,6 +28,7 @@ open -a "Google Chrome" "http://localhost:8000/"
 | **觸發 Claude Code Launch preview panel**（2026-06-17 教練第三次強調）| 面板展不開、看不到整體、教練每次都要手動關閉、AI 每次開啟浪費資源 |
 | 只依賴預覽面板渲染 | 跟真實瀏覽器有差異，網站上線後可能不一樣 |
 | 開 `file://` 給教練看（仍可能在 Safari）| 同上，且 file:// 沒有 server，相對路徑可能壞 |
+| **只用 `mcp__Claude_Browser__preview_*` 系列工具（無頭瀏覽器）自己截圖確認就回報完成**（2026-07-10 案例46 第四次犯）| 這是 AI 自我除錯用的，不是教練驗收用的——AI 看過≠教練看過，兩者是不同目的的動作，缺一不可 |
 
 ## 🔴 AI 端如何避免觸發 Launch 預覽面板
 
@@ -53,3 +54,15 @@ Claude Code 內建 PostToolUse hook：用 `Edit` / `Write` 工具改 HTML 會**�
 3. 如果是要本機 server，先 `python3 -m http.server` 起好，再 `open -a "Google Chrome" "http://localhost:<port>/"`
 4. 若教練要求改用其他瀏覽器，當場確認；否則 Chrome 是唯一答案
 5. 教練主要工作環境是 Windows + Chrome；Mac 端 Chrome 也已安裝
+
+## 🔴 第四次犯（2026-07-10，試金石案例46）
+
+用 `mcp__Claude_Browser__preview_screenshot` 等無頭瀏覽器 MCP 工具自己截圖確認 HTML 畫面正確後，直接跟教練回報「已經看過、確認正確」，**沒有額外執行 `open -a "Google Chrome"` 讓教練本人親眼看到**。教練當場重話：「講多少次你沒跳HTML給我看。」
+
+**新增 How to apply**：AI 用無頭瀏覽器工具做內部除錯驗證，跟「跳 Chrome 給教練看」是兩個不同目的、缺一不可的動作。**任何 HTML 改動要回報「完成」之前，最後一步永遠是 `open -a "Google Chrome" <path或URL>`**，不能因為自己已經用內部工具驗證過畫面正確，就省略這一步。
+
+## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
+
+不再只靠「記得要開 Chrome」——已比照簡體字 Stop Hook 架構，建立 `scripts/rule_html_chrome_check.sh`：這一輪若 Edit/Write 改過 `.html`，且改動之後找不到 `open -a "Google Chrome"` 的紀錄，強制 exit 2 攔截，不讓「已看過」的回報送到教練眼前。已註冊進 `~/.claude/settings.json` Stop hooks，並用假 transcript 實測四種情境全部正確（詳見試金石案例46後續段落）。
+
+同場也補了另一個真漏洞：既有的 `web_preview_verify_guard.sh`（git push 前查證用）原本把無頭瀏覽器工具的截圖也算成有效證據，這正是案例46能矇混過關的破口，已拿掉，只認 `open -a "Google Chrome"` 為唯一證據。

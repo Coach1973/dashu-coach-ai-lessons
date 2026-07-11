@@ -64,10 +64,9 @@ for line in recent:
             command = str(tin.get('command', ''))
             if 'open -a' in command and ('Chrome' in command or 'chrome' in command):
                 evidence = True
-            if 'http.server' in command or 'preview' in command.lower():
-                evidence = True
-        if name.startswith('mcp__Claude_Preview__preview_') or 'preview_screenshot' in name or 'preview_snapshot' in name:
-            evidence = True
+        # 案例46教訓：無頭瀏覽器工具（preview_screenshot/preview_snapshot等）
+        # 是 AI 自我除錯用，不是教練親眼看過的替代品，不算有效證據——
+        # 唯一認可的證據是明確執行過 open -a "Google Chrome"
 
 print("yes" if evidence else "no")
 PYEOF
