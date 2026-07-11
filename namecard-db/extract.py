@@ -9,7 +9,7 @@ import os
 
 import anthropic
 
-MODEL = "claude-sonnet-5"
+MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 
 SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一張名片照片，請仔細讀出上面所有文字，
 並整理成結構化資料。名片可能是繁體中文、簡體中文、英文，或中英夾雜。

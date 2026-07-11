@@ -10,12 +10,13 @@
 """
 import itertools
 import json
+import os
 
 import anthropic
 
 import db
 
-MODEL = "claude-sonnet-5"
+MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 
 MATCH_PROMPT = """以下是一份商務名片資料庫裡出現過的產業類別清單（每行一個）：
 

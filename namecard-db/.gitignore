@@ -4,3 +4,5 @@ __pycache__/
 watch.log
 watch.error.log
 com.coach.namecard-watch.plist
+.env
+venv/
