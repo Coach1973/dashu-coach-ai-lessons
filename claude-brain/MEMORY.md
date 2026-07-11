@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 密碼界線vs搬運工衝突的化解法(2026-07-12)](feedback_password_boundary_vs_courier_resolution.md) — AI絕不代打密碼(唯一不因授權鬆動的線)，但要優先導向教練已存的瀏覽器/系統憑證一鍵登入，不是叫教練重打
 - [🔴 聯想C槽瘦身29.5GB，2026-07-18觀察期滿可刪備份(2026-07-11)](project_lenovo_c_drive_slimdown_2026-07-11.md) — Chrome/Comet搬家+休眠關閉+分頁檔4GB+WinSxS清理；教練確認無異常後刪2份備份再省94GB
 - [🔴🔴🔴 追問標準＝邏輯鏈有沒有斷掉，不是我有沒有把握(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 有斷才問(案例47)沒斷別問(案例48)；兩邊都浪費教練犧牲睡眠換來的時間
 - [🔴🔴 系統性操作前先查兩台機器雲端歷史經驗(2026-07-11)](feedback_check_crossmachine_history_before_system_ops.md) — 舊版restore_junctions.ps1路徑寫死D槽，查了ACER已驗證版本才發現，教練喊停避免用錯版本
