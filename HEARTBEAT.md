@@ -25,3 +25,7 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1783836048
 - 雲端同步：✅ 已推上雲端（commit 42024391f）
+
+## ⚠️ peipei 自動 force-restart 2026-07-12 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
