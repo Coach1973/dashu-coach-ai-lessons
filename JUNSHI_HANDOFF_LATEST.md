@@ -97,7 +97,7 @@ hook**，每次開新session自動掃描比對，兩邊對不上就跳警告。�
 | ✅ | **名片系統自動化已修復到位（2026-07-13）**：①`paddle_extract.py`+`paddleocr_venv`兩個核心檔案曾經無聲消失（前者從未進git、後者只剩外殼），已重建並**這次真的commit了**（commit `6ad2fbf08`）②Amber資料夾直接上傳（非LINE/Telegram）**改成真正事件觸發**：新建`com.coach.namecard-amber-watch.plist`用launchd WatchPaths監控SMB網路資料夾，實測macOS對Amber掛載資料夾的變更通知真的有效（不是輪詢），教練不用再說「整理名片」。CLAUDE.md已同步更新（commit `a14917235`） |
 | 🟡 | **佩佩老師的名片照片讀取問題（2026-07-13發現，待下次處理）**：佩佩手機是Amber私人雲的另一個帳號(johnpeggy0706@gmail.com)，她上傳的照片在她自己的私人家目錄，教練這邊讀不到、Amber也沒有「跨帳號共用資料夾」機制（右鍵選單只有複製/移動，沒有分享/建立捷徑）。**已定案方向**：改用Google硬碟——佩佩手機開「相機自動上傳」到Google硬碟資料夾，分享給教練的Google帳號，我方申請Google Drive API做即時監控（比Amber更正規，官方支援webhook）。**這是全新工程**，量級跟今天接LINE Channel Token相當，教練說「先記進待辦，下次再做」，下次開工要主動提起 |
 | ✅ | **cool-case網站已同步到最新（2026-07-13）**：GitHub gh-pages分支比Netlify新（案例1~32 vs 舊版案例1~24），已zip+API推送同步，Netlify deploy_id `6a53db9538c928158473f3eb`，逐位元組驗證跟GitHub Pages完全一致 |
-| 🔴 | **cool-case案例33~40草稿已寫完，等教練審稿（2026-07-13）**：試金石_案例庫.md真實案例33~49（17篇）整理合併成8個經典案例草稿，完整三幕劇/對話泡泡格式，永久存在`~/.openclaw/workspace/drafts/cool-case_33-40_draft.html`。教練說「用心寫，先給我看過」，還沒得到教練確認，**不能自己動手上架**，下次開工先開Chrome給教練看這個檔案 |
+| ✅ | **cool-case案例33~40已正式上架，17篇原始案例全部處理完畢（2026-07-13）**：試金石_案例庫.md原案例33~49（17篇）已全數整理——15篇合併成8個網站經典案例，另外2篇（原33/35，VPS架構深度debug，技術含量高但敘事價值對外部讀者較低）教練認可「不選入」留在試金石庫內部參考。教練審過草稿後說「先上傳吧」。已推送兩邊：GitHub Pages commit `d4dcee0`、Netlify deploy_id `6a53f6b318f63574bb009623`，DOM層級驗證8案例文字/圖片/結構全部正確。網站現在共40個案例，跟試金石庫的進度差距已補齊 |
 | 🔴 | **大樹AI作品一覽表兩個頁面（教練2026-07-12構想，個人頁已完成待教練驗收）**：①個人專用總覽頁**已完成**：`~/.openclaw/workspace/portfolio-private.html`，37個項目全編號分四類（公開11/保留1/私藏23/待啟用1），Chrome已開給教練看過，教練還沒回覆是否OK②**對外公開頁尚未做**：只放11個公開項目，走正式Netlify/GitHub部署，等教練確認個人頁排版後才做③教練確認goeasy-ai不該被封存（已解封並修正記憶檔） |
 
 ---
