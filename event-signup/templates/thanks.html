@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>報到完成｜{{ event.name }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff;
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+  }
+  .card {
+    width:100%; max-width:440px; background:var(--dark2); text-align:center;
+    border:1px solid var(--line); border-radius:16px; padding:44px 28px;
+  }
+  .check {
+    width:74px; height:74px; margin:0 auto 22px; border-radius:50%;
+    background:var(--gold); display:flex; align-items:center; justify-content:center;
+  }
+  .check svg { width:38px; height:38px; }
+  h1 { font-size:27px; font-weight:900; margin-bottom:12px; }
+  .sub { font-size:19px; color:rgba(255,255,255,.85); line-height:1.8; margin-bottom:32px; }
+  .line-cta {
+    display:block; text-decoration:none; padding:17px; font-size:21px; font-weight:900;
+    color:#fff; background:#06C755; border-radius:10px; letter-spacing:2px; transition:.25s;
+  }
+  .line-cta:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .line-note { font-size:16px; color:var(--gold); font-weight:700; margin-top:14px; line-height:1.7; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="check">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6.5" stroke="#0a0a0a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    {% if repeat %}
+    <h1>您已完成報到</h1>
+    <p class="sub">這場活動先前已留過資料<br>不必重複填寫，直接入座</p>
+    {% else %}
+    <h1>報到完成</h1>
+    <p class="sub">感謝蒞臨「{{ event.name }}」<br>祝您收穫滿滿</p>
+    {% endif %}
+    <a class="line-cta" href="{{ line_url }}">➕ 加 LINE 好友</a>
+    <p class="line-note">加入後，下次活動第一時間通知您</p>
+  </div>
+</body>
+</html>

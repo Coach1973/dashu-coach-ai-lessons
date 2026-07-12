@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>來賓名單｜大樹教練活動系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:28px 16px 60px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  h1 { font-size:26px; font-weight:900; margin-bottom:4px; }
+  h1 span { color:var(--gold); }
+  .total { font-size:18px; color:rgba(255,255,255,.75); margin-bottom:24px; }
+  .events { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+  .chip {
+    text-decoration:none; padding:10px 18px; border-radius:999px; font-size:17px; font-weight:700;
+    color:#fff; background:#1c1c1c; border:1px solid var(--line);
+  }
+  .chip.active, .chip:hover { background:var(--gold); color:var(--dark); }
+  .chip .n { opacity:.75; font-weight:900; }
+  .export {
+    display:inline-block; text-decoration:none; margin-bottom:22px; padding:11px 20px;
+    font-size:17px; font-weight:900; color:var(--dark); background:var(--gold); border-radius:8px;
+  }
+  .tbl { width:100%; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:17px; }
+  th { text-align:left; color:var(--gold); font-size:16px; font-weight:700; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  td { padding:12px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:top; }
+  td.name { font-weight:900; font-size:18px; white-space:nowrap; }
+  td.phone { font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .badge { display:inline-block; background:#1c1c1c; border:1px solid var(--line); color:var(--gold);
+           border-radius:6px; padding:2px 8px; font-size:14px; font-weight:700; }
+  .empty { padding:40px 0; text-align:center; color:rgba(255,255,255,.5); font-size:18px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>來賓名單<span>｜大樹教練活動系統</span></h1>
+    <p class="total">目前累計 <strong style="color:var(--gold)">{{ attendees|length }}</strong> 位來賓{% if selected %}（已篩選）{% endif %}</p>
+
+    <div class="events">
+      <a class="chip {{ '' if selected else 'active' }}" href="?key={{ admin_key }}">全部來賓</a>
+      {% for e in events %}
+      <a class="chip {{ 'active' if selected == e.slug else '' }}" href="?key={{ admin_key }}&event={{ e.slug }}">
+        {{ e.name }} <span class="n">{{ e.signup_count }}人</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <a class="export" href="/admin/export.csv?key={{ admin_key }}">⬇ 下載名單（Excel 可開）</a>
+
+    <div class="tbl">
+      <table>
+        <tr><th>姓名</th><th>手機</th><th>公司／職稱</th><th>參加過的活動</th><th>首次留資料</th></tr>
+        {% for a in attendees %}
+        <tr>
+          <td class="name">{{ a.name }}</td>
+          <td class="phone">{{ a.phone }}</td>
+          <td>{{ a.company_title or '—' }}</td>
+          <td><span class="badge">{{ a.event_count }} 場</span> {{ a.attended_events }}</td>
+          <td>{{ a.created_at }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% if not attendees %}<div class="empty">目前還沒有來賓資料</div>{% endif %}
+    </div>
+  </div>
+</body>
+</html>
