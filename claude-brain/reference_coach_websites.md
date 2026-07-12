@@ -1,6 +1,6 @@
 ---
 name: reference-coach-websites
-description: 教練所有GitHub作品清單（41個repo，2026-07-09教練親自盤點分類後，19個已封存，22個維持活躍）
+description: 教練所有GitHub作品清單（41個repo，2026-07-09教練親自盤點分類，18個已封存，23個活躍；含2026-07-12大樹AI作品一覽表挑選來源）
 metadata: 
   node_type: memory
   type: reference
@@ -20,13 +20,14 @@ metadata:
 8. government-grow / government-subsidies（中小微企業多元發展說明會，台南場）
 9. gold-excellence（金卓獎聚會）
 10. bymyway-website（個人品牌官網，曾是bymyway.com首頁，2026-07-03後被bigtree取代）
+11. goeasy-ai（AI一鍵起飛3小時實戰講座活動頁，coach1973.github.io/ai/品牌故事頁親自連結對外使用中，2026-07-12教練發現誤封存，已`gh repo unarchive`解封並驗證archived:false——這是「93天未更新=閒置」判斷法則的一次誤判，判斷閒置不能只看更新日期，要交叉比對是否被其他活躍頁面連結）
 
 **待教練確認用途是否算「公開活躍」**：vip-club、coach-vip-club（兩者內容相近，哪個是正式版？）、coach-case / coach-case2 / coach-case3 / coach-case4（獨立公開站還是cool-case草稿？）、teamwork（結繩領導學的獨立網站還是資源包？）、northern411、tainan-calender（說明留空，用途待補）
 
 **純技術用途，本來就不是要公開的網站（has_pages=false，不算閒置）**：
 dashu-coach-ai-lessons（AI經驗庫踩坑記錄）、claude-workflows（Claude AI自動化工作流腳本備份）
 
-**已封存（2026-07-09，共19個，2026-04-06同一天建立、93天未更新，教練確認是早期Netlify測試整批誤同步）**：
-tubular-centaur-a769c4、comforting-salmiakki-356efb、deluxe-hamster-6a3525、lucky-fox-ce325e、courageous-scanstart、tourmaline-panda-82be5e（6個自動命名草稿站）、bniheroway、bni-traffic、bni-99999、bni-88888、bni-happy、bni-top10、worklucky-2026、everyday7、goeasy-ai、goeasy-ai88、peipeievent-411（11個BNI系列早期練習）、tree-coach-book、claude-test
+**已封存（2026-07-09，原19個，2026-04-06同一天建立、93天未更新，教練確認是早期Netlify測試整批誤同步；2026-07-12 goeasy-ai已解封移出，現存18個）**：
+tubular-centaur-a769c4、comforting-salmiakki-356efb、deluxe-hamster-6a3525、lucky-fox-ce325e、courageous-scanstart、tourmaline-panda-82be5e（6個自動命名草稿站）、bniheroway、bni-traffic、bni-99999、bni-88888、bni-happy、bni-top10、worklucky-2026、everyday7、goeasy-ai88、peipeievent-411（10個BNI系列早期練習）、tree-coach-book、claude-test
 
 **How to apply**：這份清單是[[project_media_resource_center_2026-07-09]]媒體資源中心的核心素材來源之一。之後若要重新盤點，直接用 `curl https://api.github.com/users/Coach1973/repos?per_page=100` 拉最新清單，用`gh api repos/Coach1973/<repo> --jq '.archived'`查封存狀態，不要只憑記憶。「待教練確認」那7個問清楚後要更新分類。這台聯想機的`gh`已用Coach1973帳號登入且有`repo`權限，之後封存/解封操作可直接用`gh repo archive`/`gh repo unarchive`。
