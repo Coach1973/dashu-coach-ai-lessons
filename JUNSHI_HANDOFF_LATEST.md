@@ -99,6 +99,7 @@ hook**，每次開新session自動掃描比對，兩邊對不上就跳警告。�
 | ✅ | **cool-case網站已同步到最新（2026-07-13）**：GitHub gh-pages分支比Netlify新（案例1~32 vs 舊版案例1~24），已zip+API推送同步，Netlify deploy_id `6a53db9538c928158473f3eb`，逐位元組驗證跟GitHub Pages完全一致 |
 | ✅ | **cool-case案例33~40已正式上架，17篇原始案例全部處理完畢（2026-07-13）**：試金石_案例庫.md原案例33~49（17篇）已全數整理——15篇合併成8個網站經典案例，另外2篇（原33/35，VPS架構深度debug，技術含量高但敘事價值對外部讀者較低）教練認可「不選入」留在試金石庫內部參考。教練審過草稿後說「先上傳吧」。已推送兩邊：GitHub Pages commit `d4dcee0`、Netlify deploy_id `6a53f6b318f63574bb009623`，DOM層級驗證8案例文字/圖片/結構全部正確。網站現在共40個案例，跟試金石庫的進度差距已補齊 |
 | 🔴 | **大樹AI作品一覽表兩個頁面（教練2026-07-12構想，個人頁已完成待教練驗收）**：①個人專用總覽頁**已完成**：`~/.openclaw/workspace/portfolio-private.html`，37個項目全編號分四類（公開11/保留1/私藏23/待啟用1），Chrome已開給教練看過，教練還沒回覆是否OK②**對外公開頁尚未做**：只放11個公開項目，走正式Netlify/GitHub部署，等教練確認個人頁排版後才做③教練確認goeasy-ai不該被封存（已解封並修正記憶檔） |
+| 🟡 | **教練在找一個「CLAUDE」圓形頭像圖案（2026-07-13，下次教練會主動告知資料位置）**：教練記得之前對話裡設計過一個AI專用、裡面寫著CLAUDE字樣的圓形頭像，現在對話中只看到自己的頭像、AI的不見了。**已查證cool-case repo（main+gh-pages兩分支全部歷史）完全沒有這個檔案存在過**——從頭到尾圖片資產只有`coach-avatar.jpg`/`xiaolongxia-avatar.jpg`/`wu-badge.png`/`analysis-badge.jpg`，逐字搜尋所有commit內容"claude"字樣也只出現在案例故事內文提到Claude Desktop工具名稱、或git的Co-Authored-By紀錄，兩者都跟頭像設計無關。教練說下一輪會主動告訴軍師資料實際在哪裡，下次開工要接著查，不要重新從cool-case找（已查過沒有） |
 
 ---
 
