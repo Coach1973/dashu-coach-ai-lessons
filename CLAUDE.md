@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-12 21:10:27**
+> **最後同步：2026-07-12 22:35:09**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -102,7 +102,7 @@ hook**，每次開新session自動掃描比對，兩邊對不上就跳警告。�
 | 優先 | 任務 |
 |------|------|
 | 🔴🔴 | **企業健身房（biz-gym）黑金改版——教練 2026-07-12 親口指示「必須持續提醒」，每一棒都要寫進接力棒，不准再漏**。現況：黑金版成品在 `~/github_repos/bigtree/biz-gym/index-new-blackgold.html`（7/4 完成、教練逐段看過），但 7/6 下午4:37 正式檔 `index.html` 被還原回米杏色舊版（與舊版備份逐字節相同，還原原因待查），目前本機+線上都是舊版。下一步：帶教練用 Chrome 預覽黑金版 → 教練親口說「推」→ 才恢復正式檔+上線 |
-| 🟡 | **QR code 活動報名系統（教練 2026-07-12 構想，已上線可用）**：`event.bymyway.com`，架構同名片系統（Mac資料庫+獨立Cloudflare Tunnel）。報名→感謝頁「STEP1加LINE好友／STEP2一鍵傳問候」→系統用LINE Webhook接收比對身分，端到端已實測通過（commit `fa2e35542`）。**LINE帳號架構重要澄清**：對外活動一律用「大叔教練」品牌帳號`@qaw8118h`（不是小龍蝦`@268dptjc`，小龍蝦是教練私人助理頻道，dmPolicy=pairing，不對外開放）。原本`@qaw8118h`接的第三方聊天機器人Chatisfy（1,041好友，只做關鍵字自動回覆）教練已確認不用，Webhook已換成`event.bymyway.com/line/webhook`。**還缺最後一塊**：Channel access token（教練要去LINE後台「發行」，目前只給了Channel Secret）——沒有它系統收得到來賓身分但還不能「主動群發」，等教練拿到token後才能做「精準分眾只通知曾參加某活動的人」。7/29 AI微型論壇已建好活動(slug: ai-talk-0729)可直接用 |
+| ✅ | **QR code 活動報名系統（教練 2026-07-12 構想，已完整驗收上線）**：`event.bymyway.com`，架構同名片系統（Mac資料庫+獨立Cloudflare Tunnel）。完整流程：掃QR→填表→感謝頁「STEP1加LINE好友／STEP2一鍵傳問候」→系統比對身分→後台「發送通知」精準推播給參加過該活動的人。**全程真人真訊息端到端驗收成功**（教練親自掃碼、加好友、傳問候、收到測試通知，commit `1cbe530f5`）。LINE帳號用「大叔教練」`@qaw8118h`（不是小龍蝦`@268dptjc`，小龍蝦是私人助理頻道dmPolicy=pairing不對外）。原本接的Chatisfy已確認不用並拔線。**🔴🔴 重要踩坑記錄**：Webhook網址設對了、Channel Secret/Token都對，訊息還是收不到——真正原因是LINE Official Account Manager「設定→回應設定」頁面有一個獨立的「Webhook」開關，預設關閉，網址設定跟這個開關是兩件事，都要開才會真的送資料過來。3把鑰匙+這條踩坑記錄都存進`路徑大全.md`/`路徑大全_憑證層.md`（commit `e3bdadaaf`）。7/29 AI微型論壇活動已建好(slug: ai-talk-0729)，教練隨時可用 |
 | 🟡 | 名片系統：目前16~18筆測試資料，教練說之後會上傳完整1000~2000張，屆時背景處理靠事件觸發，記得提醒教練上傳完要說「整理名片」 |
 | 🟡 | 名片「needs_review」狀態那幾筆（AI信心較低）建議教練找時間人工抽查 |
 | 🟡 | 陳德凡（教練提過的人名）目前17張測試照片裡沒有這張名片，不是辨識問題，是還沒上傳到系統 |
