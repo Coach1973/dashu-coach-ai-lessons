@@ -20,10 +20,11 @@
   }
   .chip.active, .chip:hover { background:var(--gold); color:var(--dark); }
   .chip .n { opacity:.75; font-weight:900; }
-  .export {
+  .export, .notify-btn {
     display:inline-block; text-decoration:none; margin-bottom:22px; padding:11px 20px;
     font-size:17px; font-weight:900; color:var(--dark); background:var(--gold); border-radius:8px;
   }
+  .notify-btn { background:#06C755; color:#fff; margin-left:10px; }
   .tbl { width:100%; overflow-x:auto; }
   table { width:100%; border-collapse:collapse; font-size:17px; }
   th { text-align:left; color:var(--gold); font-size:16px; font-weight:700; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }
@@ -52,6 +53,7 @@
     </div>
 
     <a class="export" href="/admin/export.csv?key={{ admin_key }}">⬇ 下載名單（Excel 可開）</a>
+    <a class="notify-btn" href="/admin/notify?key={{ admin_key }}">💬 發送通知</a>
 
     <div class="tbl">
       <table>

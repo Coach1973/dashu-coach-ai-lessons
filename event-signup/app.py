@@ -10,6 +10,8 @@ import io
 import json
 import os
 import re
+import urllib.error
+import urllib.request
 from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, url_for
@@ -20,6 +22,7 @@ app = Flask(__name__)
 ADMIN_KEY = os.environ.get("EVENT_ADMIN_KEY", "")
 LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
 LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
+LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", "")
 
 GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 
@@ -130,6 +133,77 @@ def line_webhook():
 def _require_key():
     if not ADMIN_KEY or request.args.get("key") != ADMIN_KEY:
         abort(403)
+
+
+def _line_push(line_user_id: str, text: str) -> bool:
+    body = json.dumps({"to": line_user_id, "messages": [{"type": "text", "text": text}]}).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.line.me/v2/bot/message/push", data=body, method="POST",
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {LINE_CHANNEL_ACCESS_TOKEN}",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status == 200
+    except urllib.error.HTTPError:
+        return False
+
+
+@app.route("/admin/notify", methods=["GET"])
+def notify_form():
+    _require_key()
+    conn = db.get_conn()
+    events = conn.execute(
+        """SELECT e.*, COUNT(s.id) AS signup_count,
+                  SUM(CASE WHEN a.line_user_id IS NOT NULL THEN 1 ELSE 0 END) AS line_bound_count
+           FROM events e
+           LEFT JOIN signups s ON s.event_id = e.id
+           LEFT JOIN attendees a ON a.id = s.attendee_id
+           GROUP BY e.id ORDER BY e.event_date DESC"""
+    ).fetchall()
+    conn.close()
+    return render_template("notify.html", events=events, admin_key=ADMIN_KEY, result=None)
+
+
+@app.route("/admin/notify", methods=["POST"])
+def notify_send():
+    _require_key()
+    if not LINE_CHANNEL_ACCESS_TOKEN:
+        abort(500)
+
+    slug = (request.form.get("event") or "").strip()
+    message = (request.form.get("message") or "").strip()
+
+    conn = db.get_conn()
+    events = conn.execute(
+        """SELECT e.*, COUNT(s.id) AS signup_count,
+                  SUM(CASE WHEN a.line_user_id IS NOT NULL THEN 1 ELSE 0 END) AS line_bound_count
+           FROM events e
+           LEFT JOIN signups s ON s.event_id = e.id
+           LEFT JOIN attendees a ON a.id = s.attendee_id
+           GROUP BY e.id ORDER BY e.event_date DESC"""
+    ).fetchall()
+
+    result = None
+    if slug and message:
+        recipients = conn.execute(
+            """SELECT a.line_user_id FROM attendees a
+               JOIN signups s ON s.attendee_id = a.id
+               JOIN events e ON e.id = s.event_id
+               WHERE e.slug = ? AND a.line_user_id IS NOT NULL""",
+            (slug,),
+        ).fetchall()
+        sent, failed = 0, 0
+        for r in recipients:
+            if _line_push(r["line_user_id"], message):
+                sent += 1
+            else:
+                failed += 1
+        result = {"sent": sent, "failed": failed, "total": len(recipients)}
+    conn.close()
+    return render_template("notify.html", events=events, admin_key=ADMIN_KEY, result=result)
 
 
 @app.route("/admin")
