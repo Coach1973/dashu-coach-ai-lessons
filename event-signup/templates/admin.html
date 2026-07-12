@@ -32,6 +32,8 @@
   td.phone { font-variant-numeric:tabular-nums; white-space:nowrap; }
   .badge { display:inline-block; background:#1c1c1c; border:1px solid var(--line); color:var(--gold);
            border-radius:6px; padding:2px 8px; font-size:14px; font-weight:700; }
+  .line-yes { color:#06C755; font-weight:900; }
+  .line-no { color:rgba(255,255,255,.35); }
   .empty { padding:40px 0; text-align:center; color:rgba(255,255,255,.5); font-size:18px; }
 </style>
 </head>
@@ -53,7 +55,7 @@
 
     <div class="tbl">
       <table>
-        <tr><th>姓名</th><th>手機</th><th>公司／職稱</th><th>參加過的活動</th><th>首次留資料</th></tr>
+        <tr><th>姓名</th><th>手機</th><th>公司／職稱</th><th>參加過的活動</th><th>首次留資料</th><th>LINE可通知</th></tr>
         {% for a in attendees %}
         <tr>
           <td class="name">{{ a.name }}</td>
@@ -61,6 +63,7 @@
           <td>{{ a.company_title or '—' }}</td>
           <td><span class="badge">{{ a.event_count }} 場</span> {{ a.attended_events }}</td>
           <td>{{ a.created_at }}</td>
+          <td>{% if a.line_bound %}<span class="line-yes">✓ 已綁定</span>{% else %}<span class="line-no">未綁定</span>{% endif %}</td>
         </tr>
         {% endfor %}
       </table>

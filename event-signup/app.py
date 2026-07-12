@@ -2,9 +2,14 @@
 活動報名網頁。跑法：python app.py（預設 port 5060，比照名片系統用獨立Cloudflare通道對外開）
 來賓掃QR → /e/<slug> 填表 → 感謝頁（加LINE好友）；教練看名單 → /admin?key=<ADMIN_KEY>
 """
+import base64
 import csv
+import hashlib
+import hmac
 import io
+import json
 import os
+import re
 from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, url_for
@@ -14,6 +19,9 @@ import db
 app = Flask(__name__)
 ADMIN_KEY = os.environ.get("EVENT_ADMIN_KEY", "")
 LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
+LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
+
+GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 
 
 @app.route("/")
@@ -84,6 +92,41 @@ def thanks(slug):
     )
 
 
+def _verify_line_signature(body: bytes, signature: str) -> bool:
+    if not LINE_CHANNEL_SECRET or not signature:
+        return False
+    expected = base64.b64encode(
+        hmac.new(LINE_CHANNEL_SECRET.encode("utf-8"), body, hashlib.sha256).digest()
+    ).decode("utf-8")
+    return hmac.compare_digest(expected, signature)
+
+
+@app.route("/line/webhook", methods=["POST"])
+def line_webhook():
+    body = request.get_data()
+    signature = request.headers.get("X-Line-Signature", "")
+    if not _verify_line_signature(body, signature):
+        abort(403)
+
+    payload = json.loads(body)
+    conn = db.get_conn()
+    for event in payload.get("events", []):
+        if event.get("type") != "message":
+            continue
+        message = event.get("message", {})
+        if message.get("type") != "text":
+            continue
+        text = (message.get("text") or "").strip()
+        line_user_id = event.get("source", {}).get("userId")
+        if not line_user_id:
+            continue
+        m = GREET_PATTERN.match(text)
+        if m:
+            db.match_line_identity(conn, m.group(1).strip(), line_user_id)
+    conn.close()
+    return "", 200
+
+
 def _require_key():
     if not ADMIN_KEY or request.args.get("key") != ADMIN_KEY:
         abort(403)
@@ -101,6 +144,7 @@ def admin():
 
     selected = request.args.get("event", "").strip()
     sql = """SELECT a.name, a.phone, a.company_title, a.created_at,
+                    a.line_user_id IS NOT NULL AS line_bound,
                     GROUP_CONCAT(e.name, '、') AS attended_events,
                     COUNT(DISTINCT s.event_id) AS event_count
              FROM attendees a
@@ -125,7 +169,7 @@ def export_csv():
     _require_key()
     conn = db.get_conn()
     rows = conn.execute(
-        """SELECT a.name, a.phone, a.company_title,
+        """SELECT a.name, a.phone, a.company_title, a.line_user_id IS NOT NULL AS line_bound,
                   GROUP_CONCAT(e.name, '、') AS attended_events, a.created_at
            FROM attendees a
            JOIN signups s ON s.attendee_id = a.id
@@ -135,9 +179,10 @@ def export_csv():
     conn.close()
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(["姓名", "手機", "公司／職稱", "參加過的活動", "首次留資料時間"])
+    writer.writerow(["姓名", "手機", "公司／職稱", "參加過的活動", "首次留資料時間", "LINE可通知"])
     for r in rows:
-        writer.writerow([r["name"], r["phone"], r["company_title"] or "", r["attended_events"], r["created_at"]])
+        writer.writerow([r["name"], r["phone"], r["company_title"] or "", r["attended_events"], r["created_at"],
+                         "是" if r["line_bound"] else "否"])
     out = "﻿" + buf.getvalue()  # BOM讓Excel直接開不亂碼
     return Response(out, mimetype="text/csv",
                     headers={"Content-Disposition": "attachment; filename=attendees.csv"})

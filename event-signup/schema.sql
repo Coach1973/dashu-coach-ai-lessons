@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS attendees (
     name TEXT NOT NULL,
     phone TEXT NOT NULL UNIQUE,         -- 正規化後的手機號（只留數字），同一人的身分證
     company_title TEXT,                 -- 公司／職稱（選填）
+    line_user_id TEXT,                  -- 來賓在LINE傳問候訊息後比對到的身分，用來之後精準群發
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );

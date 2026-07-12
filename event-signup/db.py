@@ -17,8 +17,29 @@ def init_db() -> None:
     conn = get_conn()
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         conn.executescript(f.read())
+    existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(attendees)")}
+    if "line_user_id" not in existing_cols:
+        conn.execute("ALTER TABLE attendees ADD COLUMN line_user_id TEXT")
     conn.commit()
     conn.close()
+
+
+def match_line_identity(conn: sqlite3.Connection, name: str, line_user_id: str) -> bool:
+    """來賓在LINE傳「我是OOO，剛報名了XXX」時呼叫。用姓名比對最近一筆未綁定的報名記錄。
+    回傳 True 表示比對成功並已存入 line_user_id。"""
+    row = conn.execute(
+        """SELECT id FROM attendees WHERE name = ? AND line_user_id IS NULL
+           ORDER BY updated_at DESC LIMIT 1""",
+        (name,),
+    ).fetchone()
+    if not row:
+        return False
+    conn.execute(
+        "UPDATE attendees SET line_user_id = ?, updated_at = datetime('now', 'localtime') WHERE id = ?",
+        (line_user_id, row["id"]),
+    )
+    conn.commit()
+    return True
 
 
 def normalize_phone(raw: str) -> str:
