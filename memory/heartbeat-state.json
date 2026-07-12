@@ -2,21 +2,21 @@
   "lastChecks": {
     "gmail": 1783647296,
     "calendar": 1783647296,
-    "heartbeat_poll": 1783771417
+    "heartbeat_poll": 1783833620
   },
-  "lastHeartbeat": "2026-07-11T18:03:37+08:00",
-  "lastHeartbeatNote": "週六 18:03 下午心跳。距上次心跳 8 小時 3 分鐘。教練已靜默逾 30 小時（週五 11:30 收棒後未回），週末休息中不主動打擾。系統全綠：launchctl 11 個 openclaw 服務皆健康（含 Gateway 6052），cron daemon 運作中，context 乾淨。軍師 hook 17:13 雲端 Pull 警告（不影響教練週末），peipei 17:55 自動 force-restart（節流 1 小時內不重啟）。usage_cache.json 仍為舊資料（教練未問流量不主動抓）。",
+  "lastHeartbeat": "2026-07-12T10:00:00+08:00",
+  "lastHeartbeatNote": "週日 10:00 跟進心跳。系統全綠：10 個 openclaw 服務運行中、Gateway 200 OK、junshi queue 空、台北🌦️+27°C。教練週末靜默逾 47 小時，09:00 早安已推，不再二次打擾，靜靜守候。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Saturday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Sunday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "clean",
-    "recentCoachActivity": "教練週五 11:30 v54 收棒後靜默，已逾 30 小時無新對話，週末休息中",
+    "recentCoachActivity": "教練週五 11:30 v54 收棒後靜默，已逾 45 小時無新對話，週末休息中",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
-    "gatewayPid": 6052,
-    "note": "週六 18:03 週末傍晚心跳，教練週末休息不主動打擾，HEARTBEAT_OK"
+    "gatewayPid": 24685,
+    "note": "週日 09:00 重啟後首次心跳，推 Telegram 簡短早安通知教練（HEARTBEAT.md 明確指令）"
   },
-  "lastHeartbeatPoll": 1783771417
+  "lastHeartbeatPoll": 1783833660
 }
