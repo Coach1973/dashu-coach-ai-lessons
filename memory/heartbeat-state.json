@@ -2,12 +2,13 @@
   "lastChecks": {
     "gmail": 1783850418,
     "calendar": 1783850418,
-    "heartbeat_poll": 1783850574
+    "heartbeat_poll": 1783864825,
+    "system_health": 1783864825
   },
-  "lastHeartbeat": "2026-07-12T18:02:00+08:00",
-  "lastHeartbeatNote": "週日 18:02 兩分鐘內第二次心跳，無新狀況，沿用 18:00 結論不打擾教練",
+  "lastHeartbeat": "2026-07-12T22:02:47.778668+08:00",
+  "lastHeartbeatNote": "週日 22:02 心跳，距上次僅 2 分鐘，教練週末靜默中，一切系統平靜，維持安靜不擾",
   "systemSnapshot": {
-    "timeOfDay": "evening",
+    "timeOfDay": "late-evening",
     "dayOfWeek": "Sunday",
     "isQuietHours": false,
     "allCronsHealthy": true,
@@ -16,7 +17,8 @@
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayPid": 24685,
-    "note": "週日傍晚心跳，系統平靜，不打擾教練休息；下週一開工待命"
+    "note": "週日夜間心跳，系統平靜，教練休息中；不主動推訊息，HEARTBEAT_OK 收尾",
+    "gatewayRunning": true
   },
-  "lastHeartbeatPoll": 1783850574
+  "lastHeartbeatPoll": 1783864967
 }
