@@ -1,6 +1,6 @@
 ---
 name: event-driven-not-polling-pattern
-description: 這是教練第三次糾正軍師用「定時輪詢」取代「事件觸發」——應該內化成預設直覺，不用每次被提醒
+description: 教練第4次糾正軍師用「定時輪詢」取代「事件觸發」；根因查到：對應的Stop hook(rule07_polling_check.sh)寫好後從未接進~/.claude/settings.json，2026-07-12已補上並實測exit 2生效
 metadata: 
   node_type: memory
   type: feedback
@@ -24,5 +24,24 @@ metadata:
 **教練事後追問（更深一層）**：「commit有效就不會重複犯錯，但commit就像悔過書鎖進保險箱，執行時不會主動打開看，這樣有意義嗎？」——這句話點破了本篇記憶本身的侷限：純文字記錄是被動的，只有session開頭讀一次，session中途做新決定時不會自動回頭查。
 
 **真正的解法（已落地，不只是記憶）**：仿照守則#05的`rule05_hash_check.sh`模式，新增Stop hook `scripts/rule07_polling_check.sh`——偵測AI自己輸出裡的「每X分鐘檢查/定時輪詢」語言，命中且無正當理由就exit 2強制重新思考，不靠AI自己記得回頭翻案例庫。三種情境（提議輪詢/討論案例/有正當理由）用假transcript測試過，行為正確。commit `b7550283`。**這篇記憶檔本身的教訓：光寫記憶不夠，要轉成能攔截AI自己輸出的機關，才是對「不在同一地方跌倒兩次」的真正落實。**
+
+## 2026-07-12 第4次發作：名片系統Amber資料夾監看
+
+建namecard-db的Amber資料夾自動辨識時，第一版是`--watch`常駐每60秒輪詢，教練問「耗資源嗎」，
+軍師的第一次「修正」只是把間隔拉長到30分鐘——**這不是改成事件觸發，是同一個錯誤的折衷版**，
+教練立刻點破：「你知道每30分鐘查一次，一天24小時要查幾次嗎？」「這種事情你已經不是第一次了。」
+
+**關鍵根因（這次才真正查到）**：本篇記憶檔寫的「真正的解法」提到已經做了Stop hook
+`~/.openclaw/workspace/scripts/rule07_polling_check.sh`，會偵測AI輸出裡的輪詢語言強制
+exit 2。但去查`~/.claude/settings.json`才發現**這支hook從來沒有被註冊進去**——檔案裡完全
+沒有`hooks`這個key，只有`env`區塊。也就是說這支軍師（Claude Code桌面版/終端機）用的
+環境，這個機關從建立以來從未真正生效過，等於白做——這正好解釋了為什麼「已經寫成防呆機關」
+還是攔不住第4次發作。已於2026-07-12補上註冊（`~/.claude/settings.json`加`hooks.Stop`），
+用假transcript實測「命中輪詢語言exit 2」「正常回覆exit 0」兩種情況都正確。
+
+**這次教訓比前3次更進一步**：光說「已經做了機關」不夠，機關要真的接上才算數——以後任何
+「已經有防呆腳本/hook」的說法，都要實際去查對應的settings.json/hooks註冊表確認真的載入，
+不能只憑腳本檔案存在就假設它在保護自己。這篇記憶檔本身之前就犯過這個毛病：寫了「真正的
+解法（已落地）」卻沒有驗證它真的接進這個環境。
 
 Related: [[project_vps_multiagent_rollout_2026-07-02]]

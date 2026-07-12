@@ -50,7 +50,7 @@
 - [🟢 Hermes VPS更新+核准流程澄清(2026-07-02)](project_hermes_vps_multitool_session_2026-07-02.md) — v0.13→v0.17、dashboard登入修復、pairing非全自動、技能SSH直裝驗證
 - [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02)](feedback_verify_via_real_transcript_not_case_count.md) — 教練連兩次抓到用案例庫筆數偷懶估算，真實頻率需查transcript
 - [🟢🟢🟢 一場75輪內建4新機關+cool-case案例33-37(2026-07-02)](project_2026-07-02_guardrail_expansion.md) — HTML預覽查證鎖/#03擴充/#08/主動提醒開新視窗；抓到2真bug
-- [🔴🔴🔴 事件驅動優於輪詢——教練第三次糾正(2026-07-02)](feedback_event_driven_not_polling_pattern.md) — 心跳/蒸餾/自動開通三度犯錯；改Docker unless-stopped讓hook觸發重啟
+- [🔴🔴🔴 事件驅動優於輪詢——教練第4次糾正，防呆hook從未真正接上(2026-07-12)](feedback_event_driven_not_polling_pattern.md) — 名片系統又犯；查到rule07_polling_check.sh從未註冊進~/.claude/settings.json，已補上實測
 - [🟢🟢🟢 VPS長期記憶修復成功驗證(2026-07-02)](project_vps_local_embedding_fix_2026-07-02.md) — env var把OpenAI金鑰接NVIDIA致401；改local模式後0.714最高分驗證成功
 - [🔴🔴 跨機指令被推翻必須主動撤回，不能只清本機(2026-07-02)](feedback_retract_crossmachine_instruction_on_reversal.md) — 三機互查方案被打槍後只拆Mac端，忘通知ACER/聯想撤回
 - [🟢 Mac三機協作relay改用官方sessions_send(2026-07-02)](project_mac_bot_relay_retired_2026-07-02.md) — agentToAgent早已啟用只是沒人講，關閉bot-relay兩hook簡化架構

@@ -1,19 +1,29 @@
 """
 名片欄位擷取：讀一張名片照片，回傳結構化欄位(dict)。
-用 Claude 的視覺理解直接讀卡片內容，不走傳統 OCR 軟體。
+
+2026-07-12 改成兩階段管線（教練實測抓到MiniMax-M3直接看圖辨識準確率太差，
+「黃薇雅」讀成「黃鈺翔」、「洪美香」讀成「洪美智」等真人名確認過的錯誤）：
+    第一階段：PaddleOCR 本機辨識出照片上的文字（免費、不經過任何外部API）
+    第二階段：把辨識出的文字（不是圖片）交給MiniMax整理成結構化欄位
+PaddleOCR需要Python 3.11環境（PaddlePaddle不支援主環境的3.14），跑在
+獨立的 paddleocr_venv，用subprocess呼叫 paddle_extract.py。
 """
-import base64
-import io
 import json
 import os
 import re
+import subprocess
 
 import anthropic
 
 MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 
-SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一張名片照片，請仔細讀出上面所有文字，
-並整理成結構化資料。名片可能是繁體中文、簡體中文、英文，或中英夾雜。
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+_PADDLE_PYTHON = os.path.join(_THIS_DIR, "paddleocr_venv", "bin", "python3")
+_PADDLE_SCRIPT = os.path.join(_THIS_DIR, "paddle_extract.py")
+
+SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一段用OCR從名片照片辨識出來的文字，
+這段文字是逐行的偵測結果，順序可能跟名片上的排版不完全一致，也可能有少數辨識雜訊。
+請根據這些文字整理成結構化資料。名片可能是繁體中文、簡體中文、英文，或中英夾雜。
 
 只輸出一個 JSON 物件，不要有任何其他文字、不要用 markdown code block 包起來。欄位如下：
 
@@ -37,6 +47,11 @@ SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一張名�
 - 電話號碼統一整理成台灣常見格式（例如 0912-345-678 或 02-1234-5678），但不要臆測缺漏的數字
 - 如果同一張名片有多組電話，mobile 放手機、landline 放市話，兩者都有就都填
 - 完全看不出來的欄位一律填 null，不要瞎猜
+- 這是OCR文字不是圖片，逐行文字本身就是最準確的依據，不要自己腦補修改文字內容
+- 名片常有裝飾圖案、浮水印、印章、標語（如「深耕台灣 走向世界」）等非聯絡資訊文字，
+  OCR可能把這類裝飾文字的殘影字元跟姓名/職稱等欄位排在相鄰行，不要把不相關的零星字元
+  拼進姓名欄位——姓名通常是2到4個連續、語意通順的中文字，不要把明顯不相關或語意不通的
+  字元硬湊進去
 """
 
 
@@ -46,34 +61,49 @@ def _repair_stray_backslashes(text: str) -> str:
     return re.sub(r'\\(?!["\\/bfnrtu])', r"\\\\", text)
 
 
-def _load_image_bytes(image_path: str) -> tuple[bytes, str]:
+def _ensure_paddle_readable_path(image_path: str) -> str:
+    """PaddleOCR不吃HEIC，先轉成暫存JPEG給它讀；其他格式直接用原檔路徑。"""
     ext = os.path.splitext(image_path)[1].lower()
-    if ext in (".heic", ".heif"):
-        import pillow_heif
-        from PIL import Image
+    if ext not in (".heic", ".heif"):
+        return image_path
 
-        pillow_heif.register_heif_opener()
-        img = Image.open(image_path).convert("RGB")
-        buf = io.BytesIO()
-        img.save(buf, format="JPEG", quality=90)
-        return buf.getvalue(), "image/jpeg"
+    import pillow_heif
+    from PIL import Image
 
-    media_type = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".webp": "image/webp",
-        ".gif": "image/gif",
-    }.get(ext, "image/jpeg")
-    with open(image_path, "rb") as f:
-        return f.read(), media_type
+    pillow_heif.register_heif_opener()
+    img = Image.open(image_path).convert("RGB")
+    tmp_path = image_path + ".paddletmp.jpg"
+    img.save(tmp_path, format="JPEG", quality=90)
+    return tmp_path
+
+
+def _run_paddleocr(image_path: str) -> list[str]:
+    """呼叫獨立的Python 3.11環境跑PaddleOCR，回傳偵測到的文字行列表。"""
+    readable_path = _ensure_paddle_readable_path(image_path)
+    try:
+        result = subprocess.run(
+            [_PADDLE_PYTHON, _PADDLE_SCRIPT, readable_path],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(f"paddleocr子行程失敗: {result.stderr[-500:]}")
+        lines = [l for l in result.stdout.splitlines() if l.strip()]
+        return lines
+    finally:
+        if readable_path != image_path and os.path.exists(readable_path):
+            os.remove(readable_path)
 
 
 def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = None) -> dict:
     """回傳擷取結果 dict。失敗時回傳 {"_error": "...", "_raw": "..."}"""
     client = client or anthropic.Anthropic()
-    image_bytes, media_type = _load_image_bytes(image_path)
-    b64 = base64.standard_b64encode(image_bytes).decode("utf-8")
+
+    ocr_lines = _run_paddleocr(image_path)
+    if not ocr_lines:
+        return {"_error": "PaddleOCR沒有讀到任何文字", "_raw": ""}
+    ocr_text = "\n".join(ocr_lines)
 
     message = client.messages.create(
         model=MODEL,
@@ -84,16 +114,8 @@ def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = No
                 "role": "user",
                 "content": [
                     {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": b64,
-                        },
-                    },
-                    {
                         "type": "text",
-                        "text": "請讀取這張名片照片，輸出 JSON。",
+                        "text": f"以下是OCR辨識出的名片文字，請整理成JSON：\n\n{ocr_text}",
                     },
                 ],
             }
