@@ -28,7 +28,10 @@
     color:#fff; background:#06C755; border-radius:10px; letter-spacing:2px; transition:.25s;
   }
   .line-cta:hover { filter:brightness(1.1); transform:translateY(-1px); }
-  .line-note { font-size:16px; color:var(--gold); font-weight:700; margin-top:14px; line-height:1.7; }
+  .line-cta.step2 { background:var(--gold); color:var(--dark); margin-top:12px; }
+  .step-label { font-size:15px; color:rgba(255,255,255,.5); font-weight:700; text-align:left; margin:18px 0 6px 4px; }
+  .step-label:first-of-type { margin-top:32px; }
+  .line-note { font-size:16px; color:var(--gold); font-weight:700; margin-top:16px; line-height:1.7; }
 </style>
 </head>
 <body>
@@ -43,7 +46,13 @@
     <h1>報到完成</h1>
     <p class="sub">感謝蒞臨「{{ event.name }}」<br>祝您收穫滿滿</p>
     {% endif %}
-    <a class="line-cta" href="{{ line_url }}">➕ 加 LINE 好友</a>
+
+    <p class="step-label">STEP 1</p>
+    <a class="line-cta" href="{{ add_friend_url }}">➕ 加 LINE 好友</a>
+
+    <p class="step-label">STEP 2（加完好友後再點這個）</p>
+    <a class="line-cta step2" href="{{ greet_url }}">💬 一鍵傳送問候</a>
+
     <p class="line-note">加入後，下次活動第一時間通知您</p>
   </div>
 </body>

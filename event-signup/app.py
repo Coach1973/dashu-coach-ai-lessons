@@ -5,6 +5,7 @@
 import csv
 import io
 import os
+from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, url_for
 
@@ -12,7 +13,7 @@ import db
 
 app = Flask(__name__)
 ADMIN_KEY = os.environ.get("EVENT_ADMIN_KEY", "")
-LINE_URL = os.environ.get("EVENT_LINE_URL", "https://line.me/R/ti/p/@qaw8118h")
+LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
 
 
 @app.route("/")
@@ -58,7 +59,7 @@ def signup_submit(slug):
 
     status = db.upsert_signup(conn, event["id"], name, phone, company_title)
     conn.close()
-    return redirect(url_for("thanks", slug=slug, s=status))
+    return redirect(url_for("thanks", slug=slug, s=status, n=name))
 
 
 @app.route("/e/<slug>/thanks")
@@ -69,7 +70,18 @@ def thanks(slug):
     if not event:
         abort(404)
     repeat = request.args.get("s") == "repeat"
-    return render_template("thanks.html", event=event, repeat=repeat, line_url=LINE_URL)
+    name = (request.args.get("n") or "").strip()
+
+    add_friend_url = f"https://line.me/R/ti/p/{LINE_OA_ID}"
+    greet_url = add_friend_url
+    if name:
+        greet_text = f"我是{name}，剛報名了{event['name']}"
+        greet_url = f"https://line.me/R/oaMessage/{LINE_OA_ID}/?{quote(greet_text)}"
+
+    return render_template(
+        "thanks.html", event=event, repeat=repeat,
+        add_friend_url=add_friend_url, greet_url=greet_url,
+    )
 
 
 def _require_key():
