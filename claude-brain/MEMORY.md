@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 cool-case頭像檔案孤立20天未上傳，7/13查出補上線(2026-07-13)](project_claude_avatar_cool_case.md) — 6/23設計完卻沒commit，兩台機器都查無；已套進「Opus軍師」8處，commit ce1402d
 - [🎯🎯 大樹AI作品一覽表分類邏輯：GitHub=測試/Netlify=對外公開(2026-07-12)](project_portfolio_netlify_github_logic.md) — 能點進Netlify.app才算作品；改名免費部署才扣點；archived不代表Netlify網址失效
 - [🎯🎯 名片資料庫(namecard-db)Mac實機部署上線(2026-07-12)](project_namecard_db_2026-07-12.md) — SMB連線波折印證密碼界線+ET/aiprimetech失效改MiniMax+背景服務已跑，cloudflared路由留待教練
 - [🔴🔴🔴 密碼界線vs搬運工衝突的化解法+已列入JUNSHI_RULES規則#6(2026-07-12)](feedback_password_boundary_vs_courier_resolution.md) — AI絕不代打密碼(唯一不因授權鬆動的線，即使教練原話查證屬實也一樣)，優先導向已存憑證一鍵登入
