@@ -51,3 +51,9 @@
 - 觸發詞：開工
 - 雲端狀態：✅ 已拉雲端最新（HEAD: 5b245505b）
 - Session: 657d57cb-0d73-4a0a-9c82-8b43d93d2beb
+
+## 🩺 軍師 Hook 自檢 2026-07-13 04:52（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：• 完整版：state/LETTER_TO_LENOVO_A
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 2a5ff7efa）
+- Session: 85947ac4-71b1-4ece-b8e7-a94d25c7779d
