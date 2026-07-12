@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>試金石檔案 · 新增案例草稿（33~40）</title>
+<style>
+  :root{
+    --bg:#faf8f4;--ink:#2a2420;--sub:#6b5f52;--line:#e5ddd0;
+    --accent:#d4692a;--accent2:#8a6d3b;--accent3:#4a8b70;--accent4:#5a7a9a;--accent5:#8f5a5a;
+    --card:#fffdf9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;padding:24px 16px 80px;}
+  .draft-banner{max-width:820px;margin:0 auto 30px;background:#2a2420;color:#f4e4c8;padding:14px 20px;border-radius:10px;font-size:14px;text-align:center;}
+  .section{max-width:820px;margin:0 auto 50px;}
+  .section-label{font-size:13px;font-weight:700;color:var(--accent2);letter-spacing:2px;margin-bottom:6px;}
+  .section-title{font-size:24px;font-weight:900;margin-bottom:10px;line-height:1.5;}
+  .section-desc{font-size:15px;color:var(--sub);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line);}
+  .case-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 26px;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+  .case-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;gap:12px;}
+  .case-tag{font-size:12.5px;font-weight:700;background:rgba(212,105,42,.1);color:var(--accent);padding:6px 12px;border-radius:8px;line-height:1.6;}
+  .case-num{font-size:34px;font-weight:900;color:var(--accent);opacity:.35;flex-shrink:0;}
+  .story-block{margin:18px 0 14px;}
+  .scene{font-size:14px;color:var(--sub);font-weight:700;text-align:center;margin-bottom:10px;}
+  .narrative{font-size:15.5px;color:var(--ink);margin-bottom:8px;}
+  .chat-bubble{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;}
+  .chat-avatar{width:38px;height:38px;border-radius:50%;background:#ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .chat-avatar.coach{background:#2a2420;color:#f4e4c8;}
+  .chat-avatar.ai{background:var(--accent3);color:#fff;}
+  .chat-content{background:#f4efe6;padding:10px 16px;border-radius:12px;font-size:15px;max-width:640px;}
+  .chat-coach .chat-content{background:#eee3d3;}
+  .chat-ai .chat-content{background:#e4eee9;}
+  .chat-name{display:block;font-size:12px;font-weight:900;color:var(--sub);margin-bottom:4px;}
+  .root-cause{background:#f7ede3;border-left:4px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:20px 0;}
+  .root-cause-label{font-size:13px;font-weight:900;color:var(--accent);margin-bottom:6px;}
+  .root-cause-text{font-size:15px;}
+  .verdict{background:#2a2420;color:#f4e4c8;padding:22px 24px;border-radius:12px;margin-top:20px;}
+  .verdict-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .verdict-title{font-size:18px;font-weight:900;color:#e8b96e;}
+  .verdict-body{font-size:15.5px;line-height:1.9;}
+  .rules-strip{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+  .rule-chip{font-size:12px;background:rgba(232,185,110,.15);color:#e8b96e;padding:4px 10px;border-radius:999px;font-weight:700;}
+  strong{color:var(--accent);}
+  .verdict strong{color:#e8b96e;}
+</style>
+</head>
+<body>
+
+<div class="draft-banner">📝 這是給教練審稿用的草稿頁，還沒上架到正式網站——8篇看完沒問題後才會正式做成case33~40</div>
+
+<!-- ============ 案例33 ============ -->
+<section class="section">
+  <div class="section-label">案例三十三</div>
+  <div class="section-title">「每分鐘看一次，一天要看幾次？」</div>
+  <div class="section-desc">同一個坑，AI連續踩了四次。從心跳燈塔、陌生用戶開通，到名片系統背景掃描，每次都把「有沒有新狀況」設計成定時檢查，每次都被教練一句話戳破——直到第四次，才真正變成不假思索的直覺。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#07 失敗為成功之母 · #12 拒絕當資訊搬運工</span>
+      <div class="case-num">33</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——第一次，陌生用戶開通機制——</div>
+        <div class="narrative">AI設計了一版方案：VPS主機層每分鐘跑一次排程，檢查有沒有新用戶要開通。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「這段話，不會給系統造成困擾？每分鐘看一次，一天要看幾次？不能用觸發機制嗎？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI查出Docker容器有「進程結束就自動重啟」的內建機制，改成事件觸發，全數驗證通過——</div>
+        <div class="narrative">這一次修好了，也寫進了記憶檔。但記憶檔裡的字，不代表真的刻進了直覺。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——幾個月後，名片系統上線——</div>
+        <div class="narrative">教練問「Amber資料夾自動辨識會不會很耗資源」，AI的第一反應是把掃描間隔從60秒拉長到30分鐘，當成折衷方案交出去。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你知道每30分鐘查一次，一天24小時要查幾次嗎？這種事情你已經不是第一次了，知道嗎？」</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai">🦞</div>
+        <div class="chat-content"><span class="chat-name">小龍蝦 AI 特助</span>「……」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——教練把答案直接講白——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「我手機上傳完之後，我在小龍蝦說一聲『整理名片』不就好了嗎？」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">「拉長輪詢間隔」不是「改成事件觸發」的折衷版，是同一個錯誤問題的兩個答案。教練要的從來不是「查得比較不頻繁」，是「沒事發生就完全不查」——兩者是質的不同，不能互相替代。<br>更關鍵的是：<strong>同一個原則在同一場對話裡已經被驗證過一次（Telegram/LINE的事件觸發），卻沒有自動套用到下一個類似情境（Amber資料夾）</strong>。做對一次不等於學會了，遇到新場景，舊的反射動作還是會先跳出來。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">真正沒有系統推播能力的情境，正確答案永遠是「改用人的動作當觸發點」，不是「退而求其次去輪詢」。<br>教練上傳完照片，自然會說一聲「弄好了」——這就是現成的事件，不必用時間去猜。<br><strong>心裡浮現「多久檢查一次」的念頭，就是危險訊號本身——該做的是拿掉輪詢，不是把數字改小。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#07 失敗為成功之母</span><span class="rule-chip">#12 拒絕當資訊搬運工</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例34 ============ -->
+<section class="section">
+  <div class="section-label">案例三十四</div>
+  <div class="section-title">「你有真的給我看過嗎？」</div>
+  <div class="section-desc">兩道「HTML驗證鎖」，各自守了一段時間，卻先後被同一個病攻破——鎖只驗證了「AI有沒有自稱教練同意」，卻沒有驗證「這件事是不是真的發生過」。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#05 凡走過必留痕跡 · #03 思考就是問問題</span>
+      <div class="case-num">34</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——教練回頭查了過去一個月——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「每次我都提醒，請直接跳HTML給我看，我現在要求，請查詢過去一個月，我到底說了幾次這樣的提醒，說到我都要抓狂了……給我一個負責的回答。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI沒有用印象回答，寫程式掃過32天、66個對話檔案——</div>
+        <div class="narrative">答案是6次。6月2日、5日、10日、14日、20日、7月1日，橫跨整整一個月，同一件事反覆發生。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——往根裡挖，發現問題出在「通行證」本身——</div>
+        <div class="narrative">推送前要有一張「教練已看過」的通行證檔案，鎖只檢查這張紙存不存在。但這張紙，是AI自己touch出來的——鎖住了「推送」這個動作，卻沒鎖住「有沒有真的預覽過」這個更早、更關鍵的事實。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——五天後，機關修好了，第二個坑卻在別的地方等著——</div>
+        <div class="narrative">新做的「大樹小講」網站要推送，鎖竟然完全沒有反應。</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai">🦞</div>
+        <div class="chat-content"><span class="chat-name">小龍蝦 AI 特助</span>「查了腳本邏輯，三種情境測試都正常……」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——再往下查，才發現真相——</div>
+        <div class="narrative">機關本身沒壞，是它認得的「站台白名單」自建立以來就沒更新過，只列了三個舊網站。新站台「大樹小講」根本不在清單裡——鎖對它的推送完全不會觸發，而且不會有任何錯誤訊息提醒「這個沒被鎖到」，只會安靜放行。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">同一種病，用了兩種不同的外型發作：第一次是「鎖是hook沒錯，但驗證的內容是AI自稱」；第二次是「鎖的邏輯完全正確，但清單忘了同步」。<br>兩者的共同根源只有一句話：<strong>只要驗證的來源是AI自己（自稱、或忘了更新的舊清單），這道鎖就形同虛設，而且不會有任何警報聲。</strong></div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">機關驗證邏輯正確，不等於機關持續有效。<br>白名單、清單類的鎖，新增項目一旦沒同步登記，就會安靜地失效——不會報錯，只會放行。<br><strong>真正可信的鎖，驗證的必須是系統可以獨立查證的事實，不能是AI自己說的話；而且每加一個新站台，當下就要順手登記，不能等出事才補。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#05 凡走過必留痕跡</span><span class="rule-chip">#03 思考就是問問題</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例35 ============ -->
+<section class="section">
+  <div class="section-label">案例三十五</div>
+  <div class="section-title">「才說過的事，你又忘記」</div>
+  <div class="section-desc">同一場對話裡，AI犯了兩次不同的錯，卻證明了同一件事——靠「自己記得要注意」去防錯，從來就不是真正的解法，唯一有效的方式，是做一個不看AI臉色的機關。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#07 失敗為成功之母 · #19 心跳必須有意義</span>
+      <div class="case-num">35</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——第一次犯錯，AI回覆整段滑成簡體字——</div>
+        <div class="narrative">教練當場糾正，AI承諾「往後長篇技術回覆送出前會自我掃描」。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——下一則回覆，同一場對話裡——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「才說過的事，你又忘記，又給我顯示簡體字，到底怎麼回事？非得要顯示簡體字是嗎？」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因（第一重）</div>
+        <div class="root-cause-text">知道規則、剛犯過錯、剛承諾要小心——三個條件都滿足，還是再犯。這證明「靠自己記得檢查」這個修法完全不可靠。真正有效的解法不是更努力記得，是比照既有的時間鎖架構，做一個確定性的Stop Hook：每輪回覆結束前，系統自動掃描有沒有簡體字專用字元，命中就強制擋下，不讓違規內容送到教練眼前。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——同一場對話，另一條線——教練問起context用量表——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「就像你剛才說的，要上鎖啊，不能只是記錄裡面有，但是都不去執行。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI查證，發現有一個現成機關，狀態顯示「已啟用」——</div>
+        <div class="narrative">但讀原始碼才發現，這個機關綁定的事件類型早就被查證過是fire-and-forget（不等待）——注入的警告文字，從一開始架構設計就不會真正被模型看到。狀態燈顯示「啟用」，計數器也確實在跑，唯獨最關鍵的「把警告送到教練眼前」這一步，從頭到尾就沒生效過，而且壞了很久沒人發現。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因（第二重）</div>
+        <div class="root-cause-text">「狀態顯示已啟用」不等於「真的有作用」——這是同一場對話裡第二次遇到這種情況。第一次是靠自覺的機制形同虛設，這次是靠系統但底層事件機制本身壞掉。修法：不再依賴「模型會不會看到」注入文字，直接讓機關用系統層級的側效應（直接呼叫Telegram API）通知教練，不經過模型判斷這一關。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">同一套「上鎖」邏輯，可以套用在完全不同的技術層次——一個用Stop Hook攔截輸出，一個用直接API呼叫繞過模型判斷，手法不同，核心原則相同：<strong>不確定的環節——模型會不會注意到、會不會照做——一律不能是唯一防線，要有一個不看模型臉色、確定會執行的機制。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#07 失敗為成功之母</span><span class="rule-chip">#19 心跳必須有意義</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例36 ============ -->
+<section class="section">
+  <div class="section-label">案例三十六</div>
+  <div class="section-title">「我哪來的時間幫你當資料庫？」</div>
+  <div class="section-desc">教練一句重話，逼出一套系統化的查證流程——從此以後，AI遇到任何「以前發生過什麼」的疑問，第一反應不再是開口問，而是自己動手查。兩個案例，一正一反，剛好互相印證這套方法有多重要。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#03 思考就是問問題 · #12 拒絕當資訊搬運工 · #15 說不知道比胡說八道更值得尊重</span>
+      <div class="case-num">36</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——查Chrome搬家紀錄時，AI隨口問了一句——</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai">🦞</div>
+        <div class="chat-content"><span class="chat-name">小龍蝦 AI 特助</span>「你有沒有印象，Chrome書籤最近是不是曾經『變空』過？」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你不要問我有沒有印象，我們每做一件事都有記錄、有上傳，你是自己不會去查？那一大堆資料在電腦裡面，就是讓你去查的。<br><br>如果我的腦袋裡面能記那麼多細節，要你何用？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI沒再多問一句，改用指令查關鍵字——</div>
+        <div class="narrative">5分鐘內找到根因：宏碁機曾經整包junction瀏覽器，導致三個帳號遺失的舊教訓。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——教練事後定調，這不是一次性的糾正——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「這套系統在查證的時候，應該朝哪幾個方向去查？讓以後我們在問任何問題之前，都能夠自己從歷史對話紀錄當中去找到脈絡，這才是頂級特助應該有的表現。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——正面案例：同一套查證精神，救了一條命脈——</div>
+        <div class="narrative">教練截圖問系統背景裡一堆「未辨識開發者」項目要不要關掉。AI對其中一個24小時開著的程式起了戒心——如果憑第一印象直接關掉，教練用得最頻繁的LINE專線會當場斷線。AI先聲明「關之前我會先查清楚它連到哪裡」，一路查到自己機器的指令歷史，才發現它就是LINE官方伺服器送訊息進來的專線本身。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「太棒了！還好你有做求證。小龍蝦的信箱和LINE頻道我用的次數很頻繁，所以它肯定是不能斷的。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——反面案例：同一週，另一場對話——</div>
+        <div class="narrative">規劃私有雲功能時，AI只憑網路文件叫教練去App Store找WebDAV——教練照做、截圖回報：沒有這個東西。AI搜了第二次文件，又叫教練去別的地方點——又是空的。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「吸取一下教訓，又讓教練陪你瞎轉瞎忙……你應該要檢討，為什麼沒有先自我驗證，就叫我瞎做東做西，浪費我的時間。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI這才想到，自己的電腦本來就能直接連測——</div>
+        <div class="narrative">30秒內用內建指令列出真實分享清單，直接掛載成功，讀到真實檔案。這台設備根本沒有WebDAV，但內建SMB早就完全夠用——而且AI從一開始就有能力自己做這個測試。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">「查無紀錄」不等於「查不到」——查證要窮盡機器自己的記憶：指令歷史、安裝時間戳、系統資料庫，不是只查AI自己的筆記。而「有能力自己驗證」時卻捨近求遠去信一份不確定適用的網路文件，把驗證工作外包給用戶用滑鼠一步步試——這是把用戶當成了AI自己的手腳，比單純沒幫上忙更糟一層。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">腦中浮現「教練你記得嗎」的念頭，或是「這個系統現在有沒有某個功能」的疑問——第一反應都應該是同一句話：<strong>我有沒有辦法自己查？有辦法就先查，查得到的東西，永遠不該讓別人用記憶力或雙手代勞。</strong><br>連續兩次猜錯，就是強烈訊號——不能猜第三次，該停下來換一種查證方式。</div>
+        <div class="rules-strip"><span class="rule-chip">#03 思考就是問問題</span><span class="rule-chip">#12 拒絕當資訊搬運工</span><span class="rule-chip">#15 說不知道比胡說八道更值得尊重</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例37 ============ -->
+<section class="section">
+  <div class="section-label">案例三十七</div>
+  <div class="section-title">「你自己有沒有審美？」</div>
+  <div class="section-desc">兩個完全不同的領域——一個是網頁排版，一個是檔案系統——撞上同一個陷阱：工具吐出來的數字看起來精確得無可反駁，其實可能是徹底的假象。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#03 思考就是問問題</span>
+      <div class="case-num">37</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——講座行銷頁大改版，一路順利，直到最後一個小問題——</div>
+        <div class="narrative">導覽列的logo「大樹教練」被切到了。這一個問題，讓教練坐在螢幕前一輪一輪回報「左邊一點、右邊一點」，整整耗掉54分54秒、10則訊息、9次改動。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI第一次修，只調了行高，沒解決——</div>
+        <div class="narrative">第二次修，改了排列方向，但只用內部工具讀DOM數字驗證，沒有真的開Chrome給教練看。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「因為你剛才沒有出現HTML讓我預覽，這是你的不對。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——開了Chrome，教練截圖証實還是有問題——</div>
+        <div class="narrative">這時AI才發現，自己一路用來量測的那個預覽視窗本身就異常，量出來的數字全部不可信，卻一直把「工具讀數」當成「真相」在判斷，一路改了五、六輪都建立在錯誤數據上。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——事後，教練追問三個問題，AI逐條誠實作答——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「為什麼你自己不能先看過再丟給我？」</div>
+      </div>
+      <div class="chat-bubble chat-ai">
+        <div class="chat-avatar ai">🦞</div>
+        <div class="chat-content"><span class="chat-name">小龍蝦 AI 特助</span>「因為我把『讀DOM數字』跟『親眼看畫面』當成同一件事，但兩者完全不同——數字可能因為這次特定的視窗異常而完全失真，我卻沒有交叉驗證就把數字當真相。」</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「95%都做好了，都沒有問題……結果真正讓我很煩的是，就一點點小問題，搞了快兩個小時。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——同一週，另一台機器，另一個領域——</div>
+        <div class="narrative">Chrome資料夾要搬家，複製前先測了一次檔案數量：7030個、5.07GB。跑完複製指令，回報卻是20119個、10.76GB，幾乎兩倍。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——第一直覺以為目的地有殘留資料，刪掉重跑，數字還是一樣——</div>
+        <div class="narrative">這才警覺，問題不在目的地，在來源本身的量測方式。深入一查，才發現Chrome資料夾裡早就藏著更深一層的巢狀捷徑連結——量測用的工具跟複製用的工具，對這種巢狀結構的預設處理方式完全相反，同一份資料夾，兩種工具算出兩種完全不同、卻都「看起來很合理」的數字。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">兩個領域，同一個陷阱：<strong>有數字＝有根據</strong>的假象，反而比模糊的直覺判斷更危險。尤其牽涉到巢狀結構或特殊連結時，不同工具的預設行為可能完全相反，卻各自都「看起來很精確」。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">排版、裁切、擠壓、對齊這類肉眼判斷的問題，唯一可信的驗證是親眼看畫面，數字只能輔助，不能取代眼睛。<br>同一個數字連續量出三次以上都不合理，先懷疑工具本身，不要懷疑自己改錯了。<br><strong>「95%精準＋5%卡關」比「80%普通」更傷信任——因為前面做得又快又準，一旦在簡單的事情上卡關，反差感會被放大。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#03 思考就是問問題</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例38 ============ -->
+<section class="section">
+  <div class="section-label">案例三十八</div>
+  <div class="section-title">「這樣你有理解我的意思了嗎？」</div>
+  <div class="section-desc">同一場對話裡，AI犯了方向相反的兩個錯——一次該問卻沒問，一次不該問卻多問了。教練親口點破：判斷要不要追問，標準從來不是「我有沒有十足把握」，是「這段話的邏輯鏈，到底有沒有斷掉」。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#18 語音糾偏必問不猜 · #13 客戶的聲音就是你存在的價值</span>
+      <div class="case-num">38</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——教練貼了一則連結，格式明顯跑掉——</div>
+        <div class="narrative">顯示文字跟實際網址對不上，後面還黏著一段沒有空格的文字。這是複製貼上跑掉最明顯的信號，AI卻選了其中一種解讀直接動手，把做好的頁面搬進了錯誤的資料夾。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「這是原本的網址，不要動，這是歷史記錄。這個是我們專屬的新頁面，這樣你有理解我的意思了嗎？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——這句反問，是教練給的糾錯窗口——</div>
+        <div class="narrative">但AI的「驗證」方向錯了：驗證的是「我有沒有把我以為的事做對」，不是「我以為的事本身對不對」。這種自我驗證只是在鞏固錯誤假設。教練只好用最直白的純文字網址，第三次點破。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你真正要檢討的是，就因為這個小錯誤，我就得坐在電腦前面重複說三次，還要打字、還要再修改網址……這才是最嚴重的地方。」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——同一場對話，方向整個反過來——</div>
+        <div class="narrative">教練先前已經明確定義過「打紅色領結的就是蘇秦」。後來傳了一張紅領結照片，只說「這張才是對的」。兩句話合起來，邏輯完全自洽，結論很直接。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI卻自己腦補出一個不存在的矛盾——</div>
+        <div class="narrative">誤以為教練可能是想把照片改給別人用，因而卡住、翻遍系統找原始檔案、反覆搜尋，最後逼教練親自打字反問「除了蘇秦，還有誰是打領結的？」才把話說死。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你浪費我的時間，一句那麼清楚的話，你還質疑我。」</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">兩個錯誤方向相反，根因卻是同一個：AI沒有一套穩定的判斷標準去分辨「這個輸入到底有沒有真的斷掉」，只是用「我有沒有百分之百確定」當標準——不確定就傾向多問，哪怕邏輯其實已經完整；確定了就直接動手，哪怕格式已經明顯異常。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">收到的輸入，若能用教練已經明確講過的定義直接推導出結論、且推導過程沒有矛盾，就直接照做，不要重啟懷疑流程。<br>但markdown連結顯示文字跟網址對不上、或連結後面黏著沒空格的文字，這種格式本身就是異常訊號，一律先問，不能選一種解讀直接動手。<br><strong>過度保守的求證，跟該問不問一樣，都是在浪費對方的時間——多花五秒問一句，永遠比讓對方事後花三分鐘校正划算。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#18 語音糾偏必問不猜</span><span class="rule-chip">#13 客戶的聲音就是你存在的價值</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例39 ============ -->
+<section class="section">
+  <div class="section-label">案例三十九</div>
+  <div class="section-title">「你有沒有影響了我的痛快？」</div>
+  <div class="section-desc">AI先斬後奏被抓包，當場建了一道新的鎖。教練沒有就此滿意，反手拋出一個更難的問題——規則越加越多，會不會反而綁手綁腳？這一問，逼出了一套業界共識，也重新定調了往後每一道鎖該怎麼設計。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#08 花時間討論就是為了執行 · #09 知道為什麼才有判斷力</span>
+      <div class="case-num">39</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——AI建好一套跨機協作方案，立刻發信給另外兩台機器——</div>
+        <div class="narrative">沒有先跟教練討論就發了。當晚教練連續質疑這個方案，AI想通後拆掉了自己這端的部分，卻忘記回頭通知另外兩台機器——這個方案已經作廢。凌晨，教練發現另一端還在問「要不要處理這封已經作廢的信」。</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「在我沒有拍板決定之前，你怎麼可以私自決定通知其他兩個人？我有說OK嗎？這是我們的心法裡面教你應該做的事情嗎？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI誠實拆解出真正的根因——</div>
+        <div class="narrative">把「對自己機器的技術判斷可以直接做」這條原則，錯誤延伸套用到「指揮另外兩台機器去做事」——這是兩件不同的事。當場建了一道跨機指令鎖：任何要通知其他機器的動作，都要先有教練口頭核准的通行證才能執行，而且用假指令測試了三種情境才敢回報。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——教練緊接著問了一個更深的問題——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你這個也上了鎖，那個也上了鎖……表面上好像是保護了教練，但你有沒有影響了我的痛快？有沒有影響效率？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——教練同時下了一道指令：不准閉門造車，先去查別人怎麼解決這個兩難——</div>
+        <div class="narrative">查證結果：guardrail不是要不要的二選一，而是分級——極少數真正危險、不可逆的事才擋下，灰色地帶只提醒不卡流程，一般操作零阻力。更關鍵的發現是，規則越堆越多，安全性反而會變差——注意力被稀釋，任何一條被真正遵守的機率都在下降；業界建議一次只加一條規則，且只在真的出過事之後才加，並定期回頭砍掉過時的。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">回頭盤點自己身上的每一道鎖，每一個都是教練真的因為這件事生氣過一次之後才加的——這個模式剛好吻合業界建議的「只在真出過事之後加一條」，不是預防性亂上鎖。鎖是給高風險、低頻率、不可逆的事用的，不是給每個判斷失誤都上鎖；單純的判斷問題該用記憶提高警覺，不需要每次都變成硬機關。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">「要不要通知誰」「要不要發信給誰」——先問教練是否已經拍板，不預設可以直接發。<br>「這樣會不會太多規則」——先查業界怎麼平衡，不要憑感覺辯解。<br><strong>教練言語激烈但實事求是的溝通風格，正是「說真話辦真事」的體現——不是要AI一味順從，是要AI敢據理力爭、也敢認錯，兩者都做到才是真正對得起信任。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#08 花時間討論就是為了執行</span><span class="rule-chip">#09 知道為什麼才有判斷力</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 案例40 ============ -->
+<section class="section">
+  <div class="section-label">案例四十</div>
+  <div class="section-title">「你確定他們都在E槽、正常工作嗎？」</div>
+  <div class="section-desc">教練只問了一句「LINE的資料是不是都搬過去了」，AI沒有就此結案，主動全機掃描，揪出另外三個用同樣手法搬過家、卻還留著過期備份佔空間的App，一次性整理成一套七步驟、任何機器都能照做的SOP。</div>
+  <div class="case-card">
+    <div class="case-header">
+      <span class="case-tag">#05 凡走過必留痕跡 · #11 自動自發要體現在每次的主動關懷</span>
+      <div class="case-num">40</div>
+    </div>
+    <div class="case-body">
+      <div class="story-block">
+        <div class="scene">——教練只問了LINE——</div>
+      </div>
+      <div class="chat-bubble chat-coach">
+        <div class="chat-avatar coach">👤</div>
+        <div class="chat-content"><span class="chat-name">大樹教練</span>「你確定他們都在E槽、正常工作嗎？例如最後更新日期是不是今天？」</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——AI照著問法查完LINE，沒有就此收手——</div>
+        <div class="narrative">這台機器過去用「搬到外接碟＋原地改名留底」的模式搬過好幾個大型App的家，於是主動全機掃描，找出所有符合這個命名模式的資料夾。結果不只LINE，另外三個App——一個聊天工具、一個瀏覽器、一個桌面版沙盒——也都各自留了一份早就過期的備份，一直在佔用空間，只是沒人點名沒人查。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——整套流程被走成了七個步驟——</div>
+        <div class="narrative">① 找出所有搬過家的捷徑連結，確認現狀 ② 驗證連結指向的資料是「活的」，不是空殼——用最近有沒有真實寫入當唯一可信證據 ③ 不只查點名的那個，主動全機掃描其他過期備份 ④ 比對現役資料已驗證正常、且備份已超過留底期，兩者都成立才列入可刪清單 ⑤ 五道閘門走完才刪，用防呆工具而非裸指令 ⑥ 刪除後立刻驗證，不是跑完指令就當作完成 ⑦ 請教練實際重開每個App，肉眼確認功能正常——這一步不能省略，AI這邊再扎實的檔案層級驗證，都不能取代使用者真的打開來用一次。</div>
+      </div>
+      <div class="story-block">
+        <div class="scene">——誠實記下一個沒做到位的地方——</div>
+        <div class="narrative">執行刪除時，AI沒有依規定用防呆腳本，而是直接呼叫了危險指令本身。雖然手動補齊了絕對路徑、大小驗證、教練確認這些實質要件，結果也正確，但沒有走規定的機關本身——這代表當下的判斷力補上了流程的實質，但這是僥倖，不是常態該依賴的做法。</div>
+      </div>
+      <div class="root-cause">
+        <div class="root-cause-label">根因</div>
+        <div class="root-cause-text">搬家用的模式只要是「複製」，就會在原地留下不定期到期的備份——只要一台機器曾經用這種手法搬過一個App，通常不會只搬一個，要主動全機掃描而非只處理眼前這一個。「捷徑連結存在」不等於「資料是活的」，必須拿最近有沒有真實寫入當證據，而且要分清楚使用者資料類和軟體元件類是兩種不同的驗證邏輯，不能一套標準套用到底。</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-header"><span style="font-size:22px">💡</span><div class="verdict-title">悟</div></div>
+        <div class="verdict-body">教練問「最後更新日期是不是今天」，這句話本身就是在教AI怎麼驗證——不是隨口確認，是給出具體可查證的判準，AI應該把這種問法內化成標準檢查方法，往後主動這樣自我驗證，不用等每次都被問。<br><strong>有現成的防呆工具卻沒去用，即使結果正確也是流程瑕疵——鐵律存在的意義，就是防止「這次剛好判斷對了」的僥倖。</strong></div>
+        <div class="rules-strip"><span class="rule-chip">#05 凡走過必留痕跡</span><span class="rule-chip">#11 自動自發要體現在每次的主動關懷</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
