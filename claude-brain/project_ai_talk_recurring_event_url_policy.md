@@ -26,16 +26,29 @@ metadata:
    對外公開）——這個專案是同一套邏輯的具體實例，只是換成「同一網址反覆覆蓋」
    而非「多個獨立作品各自一個網址」
 
-## 已有先例驗證（教練 2026-07-13 親口補充）
+## 已有先例驗證（教練 2026-07-13 親口補充，7/13查證修正）
 
-「全球健康發展協會」（repo/站台代號 `goeasy-ai`）已經照這套模式辦過**3場**——GitHub
-後端跟著每場活動內容改了3次，但對外公開的固定網址從頭到尾都是同一個，群眾點的
-連結不變、只有內容跟著換。AI微型論壇是複製這套已經驗證跑通的模式，不是新發明。
+「全國健康發展協會」（正確網址 `https://northern-tw.netlify.app/`，網站標題「智匯
+健康｜腦力長青｜2026失智防治與逆齡醫學跨界論壇」，repo為 `Coach1973/northern411`）
+已經照這套模式辦過**3場**——GitHub後端跟著每場活動內容改了3次，但對外公開的固定
+網址從頭到尾都是同一個，群眾點的連結不變、只有內容跟著換。AI微型論壇是複製這套
+已經驗證跑通的模式，不是新發明。
+
+⚠️ **這裡曾經錯誤引用過「全球健康發展協會」（goeasy-ai）當案例，教練指出「這個才
+是」點名northern-tw後才發現搞混——兩個名稱一字之差（全國 vs 全球）、但是完全不同
+的兩個專案，日後聽到類似機構名稱要留意逐字核對，不能靠印象快速匹配。**
+
+🔴 **順帶查證發現一個修正舊記憶的重點**：`northern-tw` 是**GitHub自動部署型**
+（Netlify後台直接接 `Coach1973/northern411` main分支，git push就會自動觸發部署），
+不是手動zip上傳型。這代表 [[feedback_netlify_deploy_zip_api]] 裡「23個站只有1個
+是GitHub自動部署（health-news-tw）」這筆舊記憶已經過時/不完整，至少還有northern-tw
+這個第二個自動部署站，該記憶檔已同步修正。
 
 ## 相關
 
 - Netlify site：`ai-talk-tw`，site_id `633b4b00-dae8-476c-a21b-9d0548bf1e66`
 - GitHub repo：`Coach1973/ai-talk`（main分支，GitHub Pages來源）
 - 部署方式見 [[feedback_netlify_deploy_zip_api]]（手動zip+API型，git push不會自動同步Netlify）
-- 已驗證同模式先例：`goeasy-ai`（全球健康發展協會，已辦3場）、`jiesheng-leadership`
-  （結繩領導學）——見 [[feedback_netlify_autodeploy_cost_awareness]]
+- 已驗證同模式先例：`northern-tw`/`northern411`（全國健康發展協會，已辦3場，
+  GitHub自動部署型）、`jiesheng-leadership`（結繩領導學）——見
+  [[feedback_netlify_autodeploy_cost_awareness]]

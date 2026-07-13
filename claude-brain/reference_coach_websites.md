@@ -21,8 +21,9 @@ metadata:
 9. gold-excellence（金卓獎聚會）
 10. bymyway-website（個人品牌官網，曾是bymyway.com首頁，2026-07-03後被bigtree取代）
 11. goeasy-ai（AI一鍵起飛3小時實戰講座活動頁，coach1973.github.io/ai/品牌故事頁親自連結對外使用中，2026-07-12教練發現誤封存，已`gh repo unarchive`解封並驗證archived:false——這是「93天未更新=閒置」判斷法則的一次誤判，判斷閒置不能只看更新日期，要交叉比對是否被其他活躍頁面連結）
+12. northern411（2026-07-13確認：對外網址`northern-tw.netlify.app`，「全國健康發展協會」智匯健康｜腦力長青｜2026失智防治與逆齡醫學跨界論壇，已辦3場，**GitHub自動部署型**——push main分支就會自動觸發Netlify部署，跟ai-talk等手動zip型不同，詳見[[project_ai_talk_recurring_event_url_policy]]）
 
-**待教練確認用途是否算「公開活躍」**：vip-club、coach-vip-club（兩者內容相近，哪個是正式版？）、coach-case / coach-case2 / coach-case3 / coach-case4（獨立公開站還是cool-case草稿？）、teamwork（結繩領導學的獨立網站還是資源包？）、northern411、tainan-calender（說明留空，用途待補）
+**待教練確認用途是否算「公開活躍」**：vip-club、coach-vip-club（兩者內容相近，哪個是正式版？）、coach-case / coach-case2 / coach-case3 / coach-case4（獨立公開站還是cool-case草稿？）、teamwork（結繩領導學的獨立網站還是資源包？）、tainan-calender（說明留空，用途待補）
 
 **純技術用途，本來就不是要公開的網站（has_pages=false，不算閒置）**：
 dashu-coach-ai-lessons（AI經驗庫踩坑記錄）、claude-workflows（Claude AI自動化工作流腳本備份）

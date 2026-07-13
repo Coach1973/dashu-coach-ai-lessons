@@ -7,7 +7,11 @@ metadata:
   originSessionId: 74751326-4082-44ca-8fa5-4a18e20c30a3
 ---
 
-教練 23 個 Netlify 站中，**22 個是手動上傳型**，只有 1 個（health-news-tw）連 GitHub 自動部署。
+教練 23 個 Netlify 站中，多數是**手動上傳型**，已知至少 2 個連 GitHub 自動部署：
+health-news-tw、northern-tw（northern411 repo，2026-07-13查證確認，詳見
+[[project_ai_talk_recurring_event_url_policy]]）。⚠️ 「只有1個」是舊記憶（18天前）
+留下的過時數字，動手改任何站之前務必用下方方法1實測查證當下的部署類型，不要沿用
+這個數字。
 
 **Why:** 2026-05-29 軍師逆向診斷 theunrestrictedwar「永遠改不上線」的死循環，發現小龍蝦/MiniMax 反覆走錯部署管道——以為 git push 就會自動部署 Netlify，實際完全沒觸發。教練看到網站不更新就再叫人改，但他們又只 push 沒推 zip，連續折騰多次。
 
