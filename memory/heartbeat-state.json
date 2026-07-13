@@ -2,23 +2,27 @@
   "lastChecks": {
     "gmail": 1783850418,
     "calendar": 1783850418,
-    "heartbeat_poll": 1783864825,
-    "system_health": 1783864825
+    "heartbeat_poll": 1783908203215,
+    "system_health": 1783908203215
   },
-  "lastHeartbeat": "2026-07-12T22:02:47.778668+08:00",
-  "lastHeartbeatNote": "週日 22:02 心跳，距上次僅 2 分鐘，教練週末靜默中，一切系統平靜，維持安靜不擾",
+  "lastHeartbeat": "2026-07-13T10:03:23+08:00",
+  "lastHeartbeatNote": "週一早上 10:03 心跳（距上次 2 分鐘）：無新事件、教練仍在靜默（已 5h+）、9:01 早安未回、Context 16% 穩定、Gateway/cron 全綠、junshi 佇列空；無需打擾，待命中",
   "systemSnapshot": {
-    "timeOfDay": "late-evening",
-    "dayOfWeek": "Sunday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Monday",
     "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "clean",
-    "recentCoachActivity": "教練週五 11:30 v54 收棒後靜默，已逾 54 小時無新對話，週末休息中",
+    "contextStatus": "stable",
+    "contextPercent": 16,
+    "recentCoachActivity": "教練 04:46 後連續靜默，9:01 早安尚未回；在終端機與軍師對話處理頭像任務",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
+    "junshiResultMtime": "2026-07-08T01:33",
     "gatewayPid": 24685,
-    "note": "週日夜間心跳，系統平靜，教練休息中；不主動推訊息，HEARTBEAT_OK 收尾",
-    "gatewayRunning": true
+    "note": "10:00 心跳，待命中，不打擾教練",
+    "gatewayRunning": true,
+    "openTask": "頭像任務：聯想軍師已做 8 處，全部套用待辦",
+    "coachSilentSince": "04:46"
   },
-  "lastHeartbeatPoll": 1783864967
+  "lastHeartbeatPoll": 1783908073304
 }

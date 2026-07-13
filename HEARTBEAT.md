@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-07-13 01:07
+> 重啟時間：2026-07-13 05:37
 > 對話記錄已完整存入 memory/2026-07-13.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -21,50 +21,6 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 02:25
-- ✅ 同步成功
-- HANDOFF mtime: 1783880650
-- 雲端同步：✅ 已推上雲端（commit 89daaa266）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 04:05
-- ✅ 同步成功
-- HANDOFF mtime: 1783886699
-- 雲端同步：✅ 已推上雲端（commit 2ae1864d3）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 04:20
-- ✅ 同步成功
-- HANDOFF mtime: 1783887597
-- 雲端同步：✅ 已推上雲端（commit 4f4850886）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 04:30
-- ✅ 同步成功
-- HANDOFF mtime: 1783888061
-- 雲端同步：✅ 已推上雲端（commit 90c45f5fd）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 04:40
-- ✅ 同步成功
-- HANDOFF mtime: 1783888757
-- 雲端同步：✅ 已推上雲端（commit f3fafdc48）
-
-## 🩺 軍師 Hook 自檢 2026-07-13 04:49（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：✅ 已拉雲端最新（HEAD: 5b245505b）
-- Session: 657d57cb-0d73-4a0a-9c82-8b43d93d2beb
-
-## 🩺 軍師 Hook 自檢 2026-07-13 04:52（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：• 完整版：state/LETTER_TO_LENOVO_A
-- 雲端狀態：✅ 已拉雲端最新（HEAD: 2a5ff7efa）
-- Session: 85947ac4-71b1-4ece-b8e7-a94d25c7779d
-
-## 🩺 聯想軍師收工自檢 2026-07-13
-- 本場：名片系統初版建置+交接Mac、密碼界線規則#6確認、CC Switch/MiniMax問題診斷(未解決待追蹤)、bni-dna Netlify同步、CLAUDE頭像查詢(查無，同Mac結果)
-- 接力棒已更新為 v61
-
-## 🩺 軍師 Hook 自檢 2026-07-13 05:17（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：聯想回報－
-**頭像已上線**：`c
-- 雲端狀態：✅ 已拉雲端最新（HEAD: 94da61fe5）
-- Session: 5256ce8b-86ce-4315-a694-dc9185d44b92
+## ⚠️ peipei 自動 force-restart 2026-07-13 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
