@@ -20,8 +20,26 @@ def init_db() -> None:
     existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(attendees)")}
     if "line_user_id" not in existing_cols:
         conn.execute("ALTER TABLE attendees ADD COLUMN line_user_id TEXT")
+    event_cols = {row["name"] for row in conn.execute("PRAGMA table_info(events)")}
+    if "is_current" not in event_cols:
+        conn.execute("ALTER TABLE events ADD COLUMN is_current INTEGER NOT NULL DEFAULT 0")
     conn.commit()
     conn.close()
+
+
+def get_current_event(conn: sqlite3.Connection):
+    return conn.execute("SELECT * FROM events WHERE is_current = 1 LIMIT 1").fetchone()
+
+
+def set_current_event(conn: sqlite3.Connection, slug: str) -> bool:
+    """把固定QR立牌(/checkin)導向的活動切換成slug這場。回傳False表示找不到這個活動。"""
+    row = conn.execute("SELECT id FROM events WHERE slug = ?", (slug,)).fetchone()
+    if not row:
+        return False
+    conn.execute("UPDATE events SET is_current = 0")
+    conn.execute("UPDATE events SET is_current = 1 WHERE id = ?", (row["id"],))
+    conn.commit()
+    return True
 
 
 def match_line_identity(conn: sqlite3.Connection, name: str, line_user_id: str) -> bool:

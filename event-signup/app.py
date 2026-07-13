@@ -14,7 +14,7 @@ import urllib.error
 import urllib.request
 from urllib.parse import quote
 
-from flask import Flask, Response, abort, redirect, render_template, request, url_for
+from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, url_for
 
 import db
 
@@ -30,6 +30,26 @@ GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 @app.route("/")
 def root():
     return redirect("https://coach1973.github.io/ai-talk/")
+
+
+QR_DIR = os.path.join(os.path.dirname(__file__), "qr")
+
+
+@app.route("/qr/<path:filename>")
+def qr_file(filename):
+    return send_from_directory(QR_DIR, filename)
+
+
+@app.route("/checkin")
+def checkin():
+    """固定不變的報到入口，QR立牌永久印這個網址。後台切哪場是「目前活動」，
+    這裡就自動導去那場的報名頁，不用重印立牌。"""
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    conn.close()
+    if not event:
+        return "目前沒有進行中的活動，請稍後再試", 404
+    return redirect(url_for("signup_form", slug=event["slug"]))
 
 
 @app.route("/e/<slug>", methods=["GET"])
@@ -206,6 +226,16 @@ def notify_send():
     return render_template("notify.html", events=events, admin_key=ADMIN_KEY, result=result)
 
 
+@app.route("/admin/set-current", methods=["POST"])
+def set_current():
+    _require_key()
+    slug = (request.form.get("event") or "").strip()
+    conn = db.get_conn()
+    db.set_current_event(conn, slug)
+    conn.close()
+    return redirect(url_for("admin", key=ADMIN_KEY))
+
+
 @app.route("/admin")
 def admin():
     _require_key()
@@ -231,10 +261,11 @@ def admin():
         params.append(selected)
     sql += " GROUP BY a.id ORDER BY a.created_at DESC"
     attendees = conn.execute(sql, params).fetchall()
+    current_event = db.get_current_event(conn)
     conn.close()
     return render_template(
         "admin.html", events=events, attendees=attendees,
-        selected=selected, admin_key=ADMIN_KEY,
+        selected=selected, admin_key=ADMIN_KEY, current_event=current_event,
     )
 
 

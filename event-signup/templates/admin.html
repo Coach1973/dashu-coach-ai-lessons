@@ -25,6 +25,16 @@
     font-size:17px; font-weight:900; color:var(--dark); background:var(--gold); border-radius:8px;
   }
   .notify-btn { background:#06C755; color:#fff; margin-left:10px; }
+  .current-box {
+    background:#1c1c1c; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:22px;
+  }
+  .current-box .label { font-size:15px; color:rgba(255,255,255,.6); font-weight:700; margin-bottom:8px; }
+  .current-box .now { font-size:19px; font-weight:900; color:var(--gold); margin-bottom:12px; }
+  .current-box form { display:flex; gap:10px; flex-wrap:wrap; }
+  .current-box select { flex:1; min-width:200px; padding:10px 12px; font-size:16px; border-radius:8px;
+    border:1px solid var(--line); background:#0a0a0a; color:#fff; }
+  .current-box button { padding:10px 20px; font-size:16px; font-weight:900; border-radius:8px; border:none;
+    background:var(--gold); color:var(--dark); cursor:pointer; }
   .tbl { width:100%; overflow-x:auto; }
   table { width:100%; border-collapse:collapse; font-size:17px; }
   th { text-align:left; color:var(--gold); font-size:16px; font-weight:700; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }
@@ -42,6 +52,19 @@
   <div class="wrap">
     <h1>來賓名單<span>｜大樹教練活動系統</span></h1>
     <p class="total">目前累計 <strong style="color:var(--gold)">{{ attendees|length }}</strong> 位來賓{% if selected %}（已篩選）{% endif %}</p>
+
+    <div class="current-box">
+      <div class="label">📌 固定 QR 立牌（/checkin）目前導向</div>
+      <div class="now">{{ current_event.name if current_event else '尚未設定——QR掃了會顯示「目前沒有進行中的活動」' }}</div>
+      <form method="POST" action="/admin/set-current?key={{ admin_key }}">
+        <select name="event">
+          {% for e in events %}
+          <option value="{{ e.slug }}" {{ 'selected' if current_event and current_event.slug == e.slug else '' }}>{{ e.name }}{% if e.event_date %}（{{ e.event_date }}）{% endif %}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">切換為目前活動</button>
+      </form>
+    </div>
 
     <div class="events">
       <a class="chip {{ '' if selected else 'active' }}" href="?key={{ admin_key }}">全部來賓</a>

@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS events (
     slug TEXT NOT NULL UNIQUE,          -- 網址用的短名，例如 ai-talk-0729
     name TEXT NOT NULL,                 -- 活動名稱
     event_date TEXT,                    -- 活動日期 YYYY-MM-DD
+    is_current INTEGER NOT NULL DEFAULT 0,  -- 1=固定QR立牌(/checkin)目前導向這場，同時只能有一筆是1
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
