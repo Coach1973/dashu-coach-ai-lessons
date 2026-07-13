@@ -35,3 +35,7 @@
 1. Netlify 50% 用量 — 建議登入查看
 2. 光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳
 3. Telegram channel 異常（bot token 失效）— 需處理
+
+## ⚠️ peipei 自動 force-restart 2026-07-13 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
