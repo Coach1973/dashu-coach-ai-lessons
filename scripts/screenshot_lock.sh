@@ -40,6 +40,10 @@ def wants_screenshot():
     # Chrome 的 computer 工具：只有 action 是截圖/放大才算
     if tool == "mcp__Claude_in_Chrome__computer":
         return ti.get("action") in SHOT_ACTIONS
+    # Browser pane 的 computer 工具：同樣只有 action 是截圖/放大才算
+    # 2026-07-13 教練抓到：這支工具當時完全沒被鎖檢查到，重複截圖沒被擋
+    if tool == "mcp__Claude_Browser__computer":
+        return ti.get("action") in SHOT_ACTIONS
     # 批次工具：掃裡面有沒有夾帶截圖動作
     if tool in ("mcp__computer-use__computer_batch",
                 "mcp__computer-use__teach_step",
