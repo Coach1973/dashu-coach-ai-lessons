@@ -1,6 +1,6 @@
 """
 活動報名網頁。跑法：python app.py（預設 port 5060，比照名片系統用獨立Cloudflare通道對外開）
-來賓掃QR → /e/<slug> 填表 → 感謝頁（加LINE好友）；教練看名單 → /admin?key=<ADMIN_KEY>
+來賓掃QR → /e/<slug> 填表 → 感謝頁（加LINE好友）；教練看名單 → /admin（帳密登入，見/admin/login）
 """
 import base64
 import csv
@@ -14,12 +14,15 @@ import urllib.error
 import urllib.request
 from urllib.parse import quote
 
-from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, url_for
+from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
+from werkzeug.security import check_password_hash
 
 import db
 
 app = Flask(__name__)
-ADMIN_KEY = os.environ.get("EVENT_ADMIN_KEY", "")
+app.secret_key = os.environ.get("EVENT_SECRET_KEY", "")
+ADMIN_USER = os.environ.get("EVENT_ADMIN_USER", "")
+ADMIN_PASSWORD_HASH = os.environ.get("EVENT_ADMIN_PASSWORD_HASH", "")
 LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
 LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", "")
@@ -150,9 +153,32 @@ def line_webhook():
     return "", 200
 
 
-def _require_key():
-    if not ADMIN_KEY or request.args.get("key") != ADMIN_KEY:
-        abort(403)
+def _logged_in() -> bool:
+    return bool(session.get("logged_in"))
+
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "GET":
+        return render_template("login.html", error=None)
+
+    username = (request.form.get("username") or "").strip()
+    password = request.form.get("password") or ""
+    if (
+        ADMIN_USER and ADMIN_PASSWORD_HASH
+        and username == ADMIN_USER
+        and check_password_hash(ADMIN_PASSWORD_HASH, password)
+    ):
+        session["logged_in"] = True
+        session.permanent = True
+        return redirect(request.args.get("next") or url_for("admin"))
+    return render_template("login.html", error="帳號或密碼不對，請再試一次"), 401
+
+
+@app.route("/admin/logout")
+def admin_logout():
+    session.clear()
+    return redirect(url_for("admin_login"))
 
 
 def _line_push(line_user_id: str, text: str) -> bool:
@@ -173,7 +199,8 @@ def _line_push(line_user_id: str, text: str) -> bool:
 
 @app.route("/admin/notify", methods=["GET"])
 def notify_form():
-    _require_key()
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
     conn = db.get_conn()
     events = conn.execute(
         """SELECT e.*, COUNT(s.id) AS signup_count,
@@ -184,12 +211,13 @@ def notify_form():
            GROUP BY e.id ORDER BY e.event_date DESC"""
     ).fetchall()
     conn.close()
-    return render_template("notify.html", events=events, admin_key=ADMIN_KEY, result=None)
+    return render_template("notify.html", events=events, result=None)
 
 
 @app.route("/admin/notify", methods=["POST"])
 def notify_send():
-    _require_key()
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
     if not LINE_CHANNEL_ACCESS_TOKEN:
         abort(500)
 
@@ -223,22 +251,24 @@ def notify_send():
                 failed += 1
         result = {"sent": sent, "failed": failed, "total": len(recipients)}
     conn.close()
-    return render_template("notify.html", events=events, admin_key=ADMIN_KEY, result=result)
+    return render_template("notify.html", events=events, result=result)
 
 
 @app.route("/admin/set-current", methods=["POST"])
 def set_current():
-    _require_key()
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
     slug = (request.form.get("event") or "").strip()
     conn = db.get_conn()
     db.set_current_event(conn, slug)
     conn.close()
-    return redirect(url_for("admin", key=ADMIN_KEY))
+    return redirect(url_for("admin"))
 
 
 @app.route("/admin")
 def admin():
-    _require_key()
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
     conn = db.get_conn()
     events = conn.execute(
         """SELECT e.*, COUNT(s.id) AS signup_count
@@ -265,13 +295,14 @@ def admin():
     conn.close()
     return render_template(
         "admin.html", events=events, attendees=attendees,
-        selected=selected, admin_key=ADMIN_KEY, current_event=current_event,
+        selected=selected, current_event=current_event,
     )
 
 
 @app.route("/admin/export.csv")
 def export_csv():
-    _require_key()
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
     conn = db.get_conn()
     rows = conn.execute(
         """SELECT a.name, a.phone, a.company_title, a.line_user_id IS NOT NULL AS line_bound,
