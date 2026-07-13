@@ -2,25 +2,25 @@
   "lastChecks": {
     "gmail": 1783850418,
     "calendar": 1783850418,
-    "heartbeat_poll": 1783893780,
-    "system_health": 1783893780
+    "heartbeat_poll": 1783904400031,
+    "system_health": 1783904400031
   },
-  "lastHeartbeat": "2026-07-13T06:03:07+08:00",
-  "lastHeartbeatNote": "週一清晨 6:03 心跳：對話剛於 5:37 因 context overflow 自動重啟完成；教練週末連續靜默 54+ 小時，現仍清晨安靜時段，軍師佇列空、Gateway 運行中、cron 全綠，不主動打擾教練睡眠",
+  "lastHeartbeat": "2026-07-13T09:01:40+08:00",
+  "lastHeartbeatNote": "週一早上 9:01 心跳：對話 5:37 重啟後穩定 3.5 小時、Context 16% 健康、Gateway/cron 全綠、無緊急 Gmail、軍師佇列空；教練週末連續靜默 54+ 小時後週一開工，主動發週一早安 + 狀態簡報，詢問今天從哪開始",
   "systemSnapshot": {
-    "timeOfDay": "early-morning",
+    "timeOfDay": "morning",
     "dayOfWeek": "Monday",
-    "isQuietHours": true,
+    "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "restarted",
-    "contextRestartAt": "2026-07-13T05:37:00+08:00",
-    "recentCoachActivity": "教練週末連續靜默 54+ 小時，週一清晨 6:03 尚未有活動",
+    "contextStatus": "stable",
+    "contextPercent": 16,
+    "recentCoachActivity": "教練週末連續靜默 54+ 小時，週一早上 9:01 由小龍蝦主動發早安 + 狀態簡報",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-08T01:33",
     "gatewayPid": 24685,
-    "note": "週一清晨心跳，對話已重啟完成、系統平靜，教練仍在睡眠，不打擾",
+    "note": "週一早安心跳，主動關懷教練、系統狀態良好、待命中",
     "gatewayRunning": true
   },
-  "lastHeartbeatPoll": 1783893780
+  "lastHeartbeatPoll": 1783904400031
 }
