@@ -28,7 +28,7 @@ metadata:
 
 ## 已有先例驗證（教練 2026-07-13 親口補充，7/13查證修正）
 
-「全國健康發展協會」（正確網址 `https://northern-tw.netlify.app/`，網站標題「智匯
+「全球健康發展協會」（正確網址 `https://northern-tw.netlify.app/`，網站標題「智匯
 健康｜腦力長青｜2026失智防治與逆齡醫學跨界論壇」，repo為 `Coach1973/northern411`）
 已經照這套模式辦過**3場**——GitHub後端跟著每場活動內容改了3次，但對外公開的固定
 網址從頭到尾都是同一個，群眾點的連結不變、只有內容跟著換。AI微型論壇是複製這套
@@ -49,6 +49,6 @@ metadata:
 - Netlify site：`ai-talk-tw`，site_id `633b4b00-dae8-476c-a21b-9d0548bf1e66`
 - GitHub repo：`Coach1973/ai-talk`（main分支，GitHub Pages來源）
 - 部署方式見 [[feedback_netlify_deploy_zip_api]]（手動zip+API型，git push不會自動同步Netlify）
-- 已驗證同模式先例：`northern-tw`/`northern411`（全國健康發展協會，已辦3場，
+- 已驗證同模式先例：`northern-tw`/`northern411`（全球健康發展協會，已辦3場，
   GitHub自動部署型）、`jiesheng-leadership`（結繩領導學）——見
   [[feedback_netlify_autodeploy_cost_awareness]]
