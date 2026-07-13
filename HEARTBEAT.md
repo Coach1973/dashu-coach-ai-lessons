@@ -25,6 +25,7 @@
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
 
+<<<<<<< HEAD
 ## ⚠️ Telegram channel 異常 2026-07-13 14:02
 - 現象：message 工具回報「Telegram bot token missing」
 - 檢查：env 無 TELEGRAM_BOT_TOKEN、openclaw.json telegram 區段 enabled=true 但無 token
@@ -39,3 +40,21 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-13 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+=======
+## 🩺 聯想軍師收工自檢 2026-07-13 12:21
+- 本場：cool-case頭像事件通報Mac/ACER善後、ai-talk王彤講師簡介更新（GitHub+Netlify雙推）、AI微型論壇固定網址政策記憶建立
+- 🔴 本場2次守則違規自首：①改完ai-talk沒跳真實Chrome給教練看（試金石案例46第5次發作，已補Windows版`start chrome`解法）②引用「全球健康發展協會」案例時先錯成goeasy-ai、又把全球打成全國，連錯兩次才被教練逐字糾正
+- 接力棒已更新為 v63
+
+## 🩺 聯想軍師收工自檢 2026-07-13 17:20
+- 本場：coach888分類重排、jiesheng-leadership三場報名連結更新、bigtree新增7/22地址，三個網站都已GitHub+Netlify雙推驗證上線
+- 🟢 意外挖到真問題並根治：聯想電腦記憶體監視器93%異常，追查到`Pool Nonpaged Bytes`核心記憶體池洩漏26GB，鎖定IObit Advanced SystemCare過濾驅動為兇手，解除安裝+重開機驗證後恢復正常（93%→34%，26GB→0.82GB）
+- 🟢 聯想這台HTML驗證瀏覽器由Chrome改Comet（教練回報Chrome跳出空白，Comet正常）
+- 🟢 教練質疑「開工(fork)」重複出現，已查證本機無自動化腳本觸發，誠實告知無法完全確認App層觸發點
+- 接力棒已更新為 v64
+>>>>>>> 1dcde649ee9fb8f2d8b86ab06fa61aa992246d6b
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-13 18:35
+- ✅ 同步成功
+- HANDOFF mtime: 1783938805
+- 雲端同步：push 失敗（離線或網路問題，commit 已留本機）

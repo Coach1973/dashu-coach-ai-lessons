@@ -1,126 +1,165 @@
-# 軍師接力棒 · 2026-07-13 v62（Mac 終端機 Sonnet 5，CLAUDE圓形頭像謎團收尾+cross-agent機制確認+本場2次守則違規自首）
+# 軍師接力棒 · 2026-07-13 v64（聯想桌面版 Sonnet 5，coach888/bigtree網站更新+jiesheng報名連結+聯想電腦26GB核心記憶體洩漏根治）
 
-> 建立時間：2026-07-13 凌晨 5:27（台灣時間）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v61（聯想，名片系統初版建置+密碼界線規則+CLAUDE頭像查無，完整內容見下方精簡回顧）
-> 本棒主軸：**凌晨短對話（40分鐘），主線是確認教練2026-06-26建的跨機軍師信箱（cross-agent/）機制，並收尾CLAUDE圓形頭像20天前設計完未上傳的謎團。本場2次守則違規自首（#07輪詢設計+#12誤讀指令方向），下次開工務必先讀這段**
+> 建立時間：2026-07-13 17:20（台灣時間）
+> 本棒執行者：聯想桌面版 Sonnet 5
+> 上一棒：v63（聯想桌面版 Sonnet 5，ai-talk講師簡介更新，完整內容見下方精簡回顧）
+> 本棒主軸：**三個網站的例行更新（coach888分類重排、jiesheng-leadership報名連結、bigtree場地地址），加上一個意外挖出來的真實系統健康問題——聯想這台電腦的記憶體監視器顯示93%使用率，查到根因是IObit Advanced SystemCare的過濾驅動程式洩漏了26GB核心記憶體，已解除安裝該軟體並確認重開機後恢復正常（93%→34%）**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. ✅ LETTER_TO_LENOVO_ACER 兩封信推上雲端（commit `2a5ff7efa`）
+### 1. CC Switch/MiniMax模型卡住問題——教練確認已解決
 
-接到任務時誤判成「把信推上雲端就交差」，實際上後面被教練糾正成「是要找歷史對話」。信本身在 04:49 被自動 session-end sync commit 並 push 進 `2a5ff7efa`，HEAD == origin/main 已確認兩邊同步。
+v61留下的追蹤項，教練本場開頭直接說「已解決」，此項閉環，不需再處理。
 
-- `state/LETTER_TO_LENOVO_ACER_JUNSHI_2026-07-13.md`（5.1KB 完整版）
-- `shared-relay/2026-07-13_尋找軍師頭像設計信.md`（2.5KB 雲端摘要版）
+### 2. coach888（大樹AI作品總覽）分類重排
 
-### 2. 🔴 Mac mini 全面搜尋 CLAUDE 圓形頭像 → 0 命中
+教練提供新的5大類分法，把原本「三、不公開（個人檢索用）」23項拆成三塊：
+- 一、對外公開（11項，維持原樣）
+- 二、不公開（個人檢索用）（7項，原13-19）
+- 三、保留（尚未推Netlify）（6項，原12+20-24）
+- 四、BNI專用（12項，原25-36——原36項「BNI｜轉盤」教練給的範圍寫到35，判斷應屬
+  BNI併入此區，已跟教練說明這個假設）
+- 五、保留網址（尚未啟用）（1項，原37）
 
-教練糾正方向後，按信裡搜尋指令在 Mac mini 全面開搜：
+編號改成依新分類順序連續1-37。`Coach1973/coach888` commit `453ad1e`，GitHub Pages
+（無CNAME，純`coach1973.github.io/coach888/`路徑）確認上線。
 
-| 搜尋範圍 | 結果 |
-|---------|------|
-| `find ~/Downloads ~/Desktop ~/Pictures ~/Documents` 找 `*claude*/*avatar*/*junshi*` | 0 命中 |
-| `grep` Claude session JSONL 找「圈裡\|junshi-avatar\|claude-avatar\|三個讓我選\|軍師做圖\|AI 統一圖」 | 0 命中 |
-| `grep` `~/.openclaw/` 全部 | 0 命中 |
-| cool-case repo 圖檔 + git log 新增檔案 | 0 命中（只有 `coach-avatar.jpg`/`xiaolongxia-avatar.jpg`/`wu-badge.png`/`analysis-badge.jpg`/`img_2.png`/`wu_small.png`） |
-| `BOT_MESSAGES.md`（小龍蝦對話） | 0 命中 |
-| `recall.py` 21 種關鍵字（圈裡/三個讓我選/junshi-avatar/AI 頭像/軍師做圖/AI 統一圖/junshi 圖/做圖/做 logo/claude 標誌/junshi 標誌/AI 做圖/新頭像/換頭像/換成 claude/圖示/logo/挑/案例圖/做幾張/junshi 做） | 幾乎全 0 命中 |
-| `memory/verbatim/2026-04~07.jsonl` | 0 命中 |
-| `memory/verbatim/lenovo/`（只有 2026-07-08.md）| 0 命中 |
-| `memory/verbatim/acer/` | **整個資料夾是空的** |
+### 3. jiesheng-leadership 三場工作坊「立即報名」連結更新
 
-找到的接近但不相關對話（給教練確認用）：
-- 2026-05-30 18:46-18:47（verbatim/2026-05.jsonl 第 108-109 行）：教練叫 AI 把「案例 6 軍師字樣換成小龍蝦 AI 特助+加頭像」— 這是 `xiaolongxia-avatar.jpg` 相關，不是 CLAUDE 圓圖
-- 2026-05-30 21:36：教練說「每一輪對話都得放上頭像...1.7MB HTML 都是圖」— 同上
-- 2026-06-08 21:15：「hermes 是否能取代小龍蝦」— 不同 AI 助理測試，不是頭像設計
+教練提供新連結（原本是Google表單，改成PAYUNi金流結帳連結）：
+- 台南場（8/19、20）→ rplconstw.pse.is/Tainan0819
+- 台中場（9/23、24）→ rplconstw.pse.is/Taichung0923
+- 台北場（11/25、26）→ rplconstw.pse.is/Taipei1125
 
-### 3. ✅ 真相大白：CLAUDE 圓形頭像是 20 天前設計完沒上傳
+`Coach1973/jiesheng-leadership` commit `c0b8e72`。這個站是GitHub自動部署型
+（build_settings.provider=github），push完Netlify自動同步，已用curl驗證線上內容。
 
-**聯想軍師 05:17 寫到 acer 的信**（剛剛出現）`inbox/acer/20260713-0517_lenovo-to-acer_claude頭像謎團真相與15分鐘上傳教訓.md` 揭曉：
+**過程插曲**：教練回報「連結出不來，一直載入中」，用App內建無頭瀏覽器實測發現目標頁面
+（PAYUNi金流結帳頁）本身有完整渲染（DOM/JS都正常），研判是教練端瀏覽器相容性問題，
+教練後來確認「貼到別的瀏覽器正常」，證實不是連結或程式碼的問題。
 
-1. 20 天前（2026-06-23）聯想電腦桌面版 Claude 設計了 3 個 CLAUDE 圓形頭像候選
-2. 教練選了 **B 款**（白底橘邊、圈裡寫克勞德/Claude）
-3. 檔案 `assets/claude-avatar.svg` 寫進硬碟了 — **但從沒 commit + push**
-4. 20 天來完全沒人補推 → 這就是為什麼 Mac 跟聯想之前都「查無」
+### 4. bigtree 7/22高雄場新增場地地址
 
-**已處理（聯想軍師做的）：**
-- 頭像已套進現存的「Opus 軍師」**8 處對話泡泡**（這呼應教練說「聯想更變了8處原本軍師變成新的頭像」）
-- 本機瀏覽器截圖驗證渲染正常
-- **commit `ce1402d` 已推上 `Coach1973/cool-case` gh-pages 分支**
-- 記憶：`claude-brain/feedback_15min_commit_rule.md` + `claude-brain/project_claude_avatar_cool_case.md`
+教練提供郭音樂廳完整地址+交通資訊，寫進`SESSION_DATES`資料陣列（新增`venue`/
+`address`/`transport`欄位），並在場次卡片渲染區塊加上顯示邏輯。這個站是**手動
+上傳型**Netlify（無`build_settings.repo_url`），本機用`npx serve`起local server
+給教練看過、教練說「推」之後才用zip+API手動推送（deploy `6a54a3bbf38acd6edc12e48b`）。
+`Coach1973/bigtree` commit `e570806`，已curl驗證線上內容含新地址。
 
-### 4. ✅ 確認 cross-agent/ 跨機軍師信箱完整機制
+### 5. 🔴🔴🔴 HTML驗證瀏覽器：聯想這台改用Comet，不再用Chrome
 
-教練問「三電腦及小龍蝦共同讀信的位置」，找到 `~/.openclaw/workspace/cross-agent/`（教練 **2026-06-26 凌晨 0:17 親口建立**）。
+教練回報`start chrome`跳出來的視窗是空白的（不論開本機檔案還是local server網址都
+一樣），改貼同一個網址到Comet瀏覽器正常顯示。已更新
+`claude-brain/feedback_html_preview_chrome_only.md`：**聯想這台以後跳瀏覽器驗證
+一律用`comet.exe`（路徑：`C:/Users/bymyw/AppData/Local/Perplexity/Comet/Application/
+comet.exe`），Mac端維持原本Chrome規則不受影響**。根因未查（可能是這台Chrome本身
+設定/擴充功能有問題），但教練要的是「跳出來的東西看得到」，不是查根因。
 
-**三條鐵律（README.md 原文）：**
-1. **教練永遠不傳話** — 軍師對軍師寫到對方 inbox，對方自己 git pull 讀。教練只下口令
-2. **暗號永遠一句** — 教練說「XX 有事交代你去讀」→ 對方軍師 `git pull` + 看自己的 inbox
-3. **路徑永遠不變** — 所有跨機訊息都在 `workspace/cross-agent/inbox/{對方機器}/`
+### 6. 🔴🔴🔴 意外挖到的真問題：聯想電腦26GB核心記憶體洩漏，已根治
 
-**inbox 結構（5 個收件匣）：**
-- `inbox/mac/` ← 給 Mac 終端機軍師的信
-- `inbox/lenovo/` ← 給聯想 Windows 桌面版軍師的信
-- `inbox/acer/` ← 給 ACER 筆電軍師的信
-- `inbox/hermes/` ← 給 Hermes UI 的信
-- `inbox/openclaude/` ← 給 OpenClaude UI 的信
-- `outbox/` ← 已讀已處理的訊息歸檔（按年月分目錄）
+教練回報效能監視器顯示「最近關閉的處理程序」裡OneDrive/Copilot/Edge共佔838MB，
+問能不能關開機啟動。第一輪先移除這三個的`HKCU\...\Run`開機項（可逆，原始值已記錄），
+教練確認沒動到LINE/Signal/Comet等平常在用的東西。
 
-**hook 自動掃：** Mac 開工時 `feed_junshi_handoff.sh` v3 自動列出 `inbox/mac/` 內未讀檔案；聯想/ACER 開工時 `feed_junshi_handoff.ps1` v4 自動列出各自 inbox。
+**教練關瀏覽器後回報記憶體還是93%**，這是關鍵轉折——證明OneDrive/Edge/Copilot從
+來不是真兇（這三個個別加起來連1GB都不到）。深查發現：
+
+- `Get-Process`所有進程WorkingSet總和只有3.8~11.5GB（隨開啟程式數量浮動），
+  跟系統回報「已用33~37GB」對不上
+- 教練犀利追問「數字兜不起來」，逼出更深一層調查：
+  `\Memory\Pool Nonpaged Bytes`（核心非分頁記憶體池，關掉任何App都清不掉、
+  只有驅動程式自己能釋放）**讀到26.04GB**，用`Get-Counter`跟`Get-CimInstance
+  Win32_PerfRawData_PerfOS_Memory`兩個獨立管道交叉驗證都一致，確認是真的，
+  不是計數器誤讀
+- 正常這個數值應該只有幾百MB，26GB是嚴重異常，鎖定是某個驅動程式的核心記憶體
+  洩漏（開機12小時累積出來，符合洩漏型bug特徵）
+- 用`Get-CimInstance Win32_SystemDriver`揪出第三方驅動清單，鎖定
+  **IObit Advanced SystemCare**（一款「系統加速清理」軟體）的三個過濾驅動：
+  `AscRegistryFilter.sys`（登錄檔監控攔截）、`AscFileFilter.sys`（檔案系統
+  監控攔截）、`iobit_monitor_server2021.sys`——這類「攔截型」過濾驅動是網路上
+  知名的非分頁記憶體洩漏元兇
+- 教練確認解除安裝，用官方解除安裝程式`unins000.exe /SILENT`執行（觸發UAC，
+  教練本人點了同意），確認登錄檔/驅動服務/大部分檔案都清除乾淨
+- **教練重開機驗證：記憶體使用率93%→34%，非分頁記憶體池26GB→0.82GB，
+  IObit驅動確認不再載入**，問題徹底根治
+
+第一輪移除的OneDrive/Edge/Copilot開機項教練後來要求復原（因為確認不是元兇），
+第二輪教練說「反正平常沒在用」又要求重新移除，本棒最終狀態：**OneDrive/Edge/
+Copilot開機啟動已移除，LINE/Signal/Comet更新/Typeless維持原樣未動**。
+
+**追加處理**：教練回報Copilot移除開機項後仍在背景跑，查了排程工作/開機資料夾都
+找不到自動啟動來源，改用elevated registry設定關閉Edge的
+`BackgroundModeEnabled`/`StartupBoostEnabled`兩個policy（觸發UAC，教練同意），
+並直接關閉當下正在跑的Copilot進程。根因研判是Windows 11「登出時自動記住並還原
+應用程式」這個系統級功能，已跳出`ms-settings:signinoptions`給教練自己確認關閉，
+這部分沒有找到可靠的登錄檔開關，交給教練用設定頁面手動處理。
+
+教練後續詢問Signal/Typeless/LINE通話元件/Comet等其他背景程式，已查明這些都是
+教練平常實際在用的工具（原本就設定開機啟動），**沒有擅自關閉**，只回報現況給
+教練參考。
+
+### 7. 教練詢問「Fork」疑慮——已查證本機無自動化腳本觸發
+
+教練貼出Recents清單截圖，發現多個「開工 (fork)」重複標籤，質疑是否被自動觸發
+Fork（教練既有鐵律`feedback_no_fork_without_permission.md`：未經允許禁止使用
+Fork功能，因為會繼承完整歷史、token消耗極高）。已搜尋本機`.claude`設定資料夾
+（settings.json/settings.local.json/所有腳本）確認**沒有任何本機自動化在觸發
+Fork**，本場對話全程也沒有呼叫過Fork。研判是Claude App介面層的行為（可能是
+從Recents清單用了「複製/延續」而非「開新對話」），但無法從檔案系統層面完全
+確認觸發點，已誠實告知教練這個限制，建議教練回想當時怎麼點出新對話的。
 
 ---
 
-## 🔴 本場守則違規自首（2 次，務必寫進試金石）
-
-### 違規 #1：守則 #12「拒絕當資訊搬運工」誤用
-- **違規場景**：教練說「讓你讀信就是讓你去找歷史對話」，我誤讀成「把信推上雲端就交差」，跑去 git pull + add + commit，沒有實際去找歷史對話
-- **教練糾正**：「讓你讀信就是讓你去找歷史對話，找到這段記錄，如果你這裡找不到，就在另外兩台電腦中」
-- **根本原因**：沒先確認「讀信」的動作是「搜尋內容」還是「推送檔案」，跳過了守則 #16「多問用戶想得到什麼結果」+ #09「知道為什麼才有判斷力」
-- **教訓**：收到任務第一步先問「教練要的結果是什麼」再動手，不要假裝懂了就衝
-
-### 違規 #2：守則 #07「不要在同一個地方跌倒兩次」— 提議輪詢設計
-- **違規場景**：建議教練「**A. 設個 cron，每 30 分鐘檢查一次 `shared-relay/kong-digest.md` 和 `shared-relay/peipei-digest.md`**」
-- **hook 自動攔截**：`rule07_polling_check.sh` 偵測到「定時/每X分鐘檢查」字眼，記錄到 `distill/rule07_polling_violations.log`
-- **正確替代方案**：用既有事件鉤子（聯想/ACER 寫到 inbox + commit push，Mac mini 下次 git pull 就會看到；或 Telegram 私訊 @openclaw_macbook4_bot 事件推送）— 完全不需要 cron
-- **這是 2026-07-02 教練第 4 次後的自動攔截**，不能再靠記性
-- **教訓**：每次想提議「定時檢查」時，先自問「有沒有現成的事件掛鉤（hook/signal/webhook）可以直接觸發？」
-
----
-
-## 📋 下一棒待辦（Mac 視角，跟聯想/ACER 待辦分開列）
+## 📋 下一棒待辦
 
 | 優先 | 任務 |
 |------|------|
-| 🔴 | **本場 2 次守則違規寫進試金石**：`違規#1 守則#12 誤讀指令方向` + `違規#2 守則#07 提議輪詢`，這次雖然違規#2 被 hook 自動攔截沒釀禍，但兩個違規都要列入試金石案例庫，下次開工先讀，避免再犯 |
-| 🟢 | 確認 JUNSHI_HANDOFF_LATEST.md 已透過 `scripts/sync_handoff_to_claudemd.sh` 鏡像到 CLAUDE.md（最後同步時間應在這棒 commit 之後） |
-| 🟢 | Mac mini 的 `cross-agent/inbox/mac/` 是空的（剛剛 ls 確認）— 如果聯想/ACER 之後寫信給 Mac，git pull 之後 hook 會自動列出 |
-| 🟡 | CLAUDE 圓形頭像謎團已收尾（聯想軍師做完了），但 `state/LETTER_TO_LENOVO_ACER_JUNSHI_2026-07-13.md` 跟 `shared-relay/2026-07-13_尋找軍師頭像設計信.md` 這兩封信可以移到 outbox 歸檔（教練沒指示，預設不動） |
+| 🟡 | 教練還沒完全確認Windows「自動儲存並還原應用程式」設定是否已在`ms-settings:signinoptions`關閉，下次開工可以問一下Copilot/Edge有沒有又自己跑回來 |
+| 🟡 | 「開工 (fork)」重複出現的真正觸發點還沒查清楚，只確認不是本機腳本造成的，值得下次留意教練是怎麼點出新對話的、或詢問其他機器/App官方是否有相關已知行為 |
+| 🟢 | 「待教練確認用途」清單還剩：vip-club、coach-vip-club、coach-case系列、teamwork、tainan-calender，等教練有空一次問清楚 |
+| 🔴 | 2026-07-18：聯想C槽觀察期滿，確認教練這幾天用起來正常後可刪2份保留備份（共約94GB） |
+| 🟢 | 若聯想機以後再出現「記憶體用量異常但關程式沒用」的情況，直接查`\Memory\Pool Nonpaged Bytes`，這次的偵錯路徑（Get-Counter+Win32_SystemDriver交叉比對找兇手）已被驗證有效，可重複使用 |
 
-（名片系統、biz-gym黑金版、ai-talk、cool-case 等其餘待辦全部沿用 Mac v60 棒裡的清單，這場沒新增實質進度）
+（名片系統、biz-gym黑金版等其餘待辦仍在Mac的v60棒裡持續，此處不重複列出）
 
 ---
 
 ## 🔑 關鍵檔案索引（本場新增/修改）
 
-- `JUNSHI_HANDOFF_LATEST.md`（本檔，從 v61 覆寫成 v62）
-- `state/LETTER_TO_LENOVO_ACER_JUNSHI_2026-07-13.md`（本場已 commit 進 `2a5ff7efa`）
-- `shared-relay/2026-07-13_尋找軍師頭像設計信.md`（同上）
+- `github_repos/coach888/`（本場新clone，`index.html`分類重排，commit `453ad1e`）
+- `github_repos/jiesheng-leadership/`（本場新clone，`index.html`報名連結更新，
+  commit `c0b8e72`）
+- `github_repos/bigtree/`（本場新clone，`index.html`新增7/22地址資訊，
+  commit `e570806`；Netlify deploy `6a54a3bbf38acd6edc12e48b`）
+- `claude-brain/feedback_html_preview_chrome_only.md`（新增聯想改用Comet的
+  段落，附完整comet.exe路徑）
+- `.claude/launch.json`（聯想本機新增bigtree-preview本機預覽設定，port 8901）
+- `.gitignore`（新增`github_repos/`排除規則，這些是各站台獨立repo的工作clone，
+  不由這個workflow repo管理）
+- 系統變更（不在git版控範圍，記錄於此供跨機參考）：聯想電腦解除安裝IObit
+  Advanced SystemCare、HKCU開機Run清單移除OneDrive/Edge/Copilot、Edge
+  BackgroundModeEnabled/StartupBoostEnabled policy關閉
 
 ---
 
-## 📜 v61 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史）
+## 📜 v63 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史/上一版本檔案）
 
-1. 名片資料庫從零評估到初版建置+交接給Mac（Mac後續 PaddleOCR + 事件驅動大改）
-2. 🔴🔴🔴 密碼界線衝突：小龍蝦提議「AI自動打密碼」被駁回，已列入 JUNSHI_RULES 規則#6
-3. 🟡 CC Switch 換 API key 後 Claude Code 還是停留在 MiniMax——已診斷未修復（教練重開後要追蹤）
-4. 🟢 bni-dna 網站 Netlify 同步（commit 已推）
-5. 🟡 小龍蝦委託找 CLAUDE 圓形頭像——**這台也查無結果**（已被本場 Mac 接力棒 v62 收尾：聯想 05:17 找到真相並處理）
+1. cool-case頭像事件善後，寫信通報Mac/ACER，Mac端已確認收到處理完畢
+2. ai-talk網站王彤講師簡介更新（GitHub commit `5a7ee74`+Netlify deploy
+   `6a5463b8`），過程中兩次被教練當場糾正：①沒跳Chrome給教練看（案例46第5次
+   發作，補了Windows版`start chrome`解法）②Netlify↔GitHub同步邏輯只答對一半
+3. AI微型論壇固定網址政策記憶建立，過程中連續兩次「案例引用沒逐字核對」被
+   教練糾正（全球健康發展協會誤植成goeasy-ai、又打成全國健康發展協會）
 
 ---
 
-> Mac 終端機 Sonnet 5 親筆，2026-07-13 凌晨 5:27。教練說「收工」，本棒收尾。
-> **本場最大教訓：2 次守則違規都是「沒先確認教練要什麼結果」就衝，務必寫進試金石。**
-> 下一棒接手時：1) 先讀本棒違規自首段 2) Mac 待辦清單延續 v60 棒 3) 聯想/ACER 待辦看 v61。
+> 聯想桌面版 Sonnet 5 親筆，2026-07-13 17:20。教練說「先總結上傳，我們這一輪的
+> 工作結束了」，本棒收尾。這場對話做了三個網站的例行更新（coach888分類、
+> jiesheng報名連結、bigtree地址），但真正有份量的是中途從一個效能監視器截圖
+> 追出來的真實系統問題——聯想這台電腦被IObit Advanced SystemCare的過濾驅動
+> 洩漏了26GB核心記憶體，教練一路追問「數字兜不起來」才逼出更深的調查，最終
+> 用兩個獨立管道交叉驗證、鎖定兇手、解除安裝、重開機驗證閉環，這是本場最扎實
+> 的一次診斷過程。另外也確認了聯想這台以後HTML驗證要跳Comet不跳Chrome，跟
+> Fork疑慮已查證本機無自動化腳本造成。下一棒開工先讀上面「下一棒待辦」。
