@@ -2,20 +2,20 @@
   "lastChecks": {
     "gmail": 1783922502,
     "calendar": 1783922502,
-    "heartbeat_poll": 1783922409020,
+    "heartbeat_poll": 1783951264233,
     "system_health": 1783922502,
     "telegram_channel": 1783922502
   },
-  "lastHeartbeat": "2026-07-13T14:02:00+08:00",
-  "lastHeartbeatNote": "週一下午 14:00 心跳：Netlify 50% + 光線尺 ATM 10,000 元兩件事待教練確認；Telegram channel 異常（bot token 不見，無法主動通知），教練靜默 9h+",
+  "lastHeartbeat": "2026-07-13T22:01:04+08:00",
+  "lastHeartbeatNote": "週一晚間 22:00 心跳：重啟後 1h53m 教練未說話、接力棒 v65 未完事項清楚（cool-case 頭像案+peipei-event 後續）、Telegram channel 仍斷、晚間時段不主動打擾",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
+    "timeOfDay": "evening",
     "dayOfWeek": "Monday",
-    "isQuietHours": false,
+    "isQuietHours": true,
     "allCronsHealthy": true,
-    "contextStatus": "stable",
-    "contextPercent": 16,
-    "recentCoachActivity": "教練 04:46 後連續靜默 9h+，9:01 早安尚未回；推測在上班/處理私事",
+    "contextStatus": "fresh",
+    "contextPercent": 5,
+    "recentCoachActivity": "教練自 14:00 起重啟前最後一則後連續靜默 8h+，20:07 重啟後尚未收到任何教練訊息",
     "urgentGmailCount": 2,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-06-13T08:27",
@@ -29,7 +29,7 @@
       "光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳",
       "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
     ],
-    "note": "14:00 心跳，Telegram 通道斷了所以沒主動推訊；等教練回應一次告知"
+    "note": "22:00 晚間心跳，距重啟 1h53m；教練應已就寢，不主動打擾；下個工作時段心跳再追蹤 v65 待辦（cool-case 頭像、peipei-event 群發實測、聯想/ACER 截圖鎖回信）"
   },
-  "lastHeartbeatPoll": 1783922400020
+  "lastHeartbeatPoll": 1783951264233
 }

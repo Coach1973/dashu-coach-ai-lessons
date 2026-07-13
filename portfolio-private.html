@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大樹AI作品總覽（個人專用）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:36px 20px 80px; }
+  .wrap { max-width:920px; margin:0 auto; }
+  h1 { font-size:30px; font-weight:900; margin-bottom:6px; }
+  h1 span { color:var(--gold); }
+  .sub { color:rgba(255,255,255,.5); font-size:16px; margin-bottom:36px; }
+  .section-title {
+    display:flex; align-items:center; gap:12px; margin:40px 0 16px;
+    font-size:20px; font-weight:900; color:var(--gold);
+  }
+  .section-title .count { font-size:14px; color:rgba(255,255,255,.4); font-weight:700; }
+  .section-title::after { content:''; flex:1; height:1px; background:var(--line); }
+  .grid { display:flex; flex-direction:column; gap:8px; }
+  a.item {
+    display:flex; align-items:center; gap:16px; text-decoration:none; color:#fff;
+    background:var(--dark2); border:1px solid var(--line); border-radius:10px;
+    padding:14px 18px; transition:.2s;
+  }
+  a.item:hover { border-color:var(--gold); background:#1a1a1a; transform:translateX(2px); }
+  .num {
+    flex-shrink:0; width:34px; height:34px; border-radius:8px; background:#1c1c1c;
+    display:flex; align-items:center; justify-content:center; font-weight:900;
+    font-size:15px; color:var(--gold); border:1px solid var(--line);
+  }
+  .name { font-weight:700; font-size:17px; flex:1; }
+  .url { font-size:13px; color:rgba(255,255,255,.35); font-variant-numeric:tabular-nums; }
+  .badge {
+    font-size:12px; font-weight:900; padding:3px 9px; border-radius:999px; flex-shrink:0;
+  }
+  .badge.public { background:rgba(6,199,85,.15); color:#06C755; }
+  .badge.reserved { background:rgba(200,169,110,.15); color:var(--gold); }
+  .badge.private { background:rgba(255,255,255,.08); color:rgba(255,255,255,.5); }
+  .badge.pending { background:rgba(220,80,80,.15); color:#ff8a8a; }
+  .note { font-size:13px; color:rgba(255,255,255,.4); padding:10px 18px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>大樹AI作品總覽<span>｜個人專用</span></h1>
+    <p class="sub">只有您看得到的完整清單。點編號對應的項目即可直接開啟。</p>
+
+    <div class="section-title">一、對外公開 <span class="count">11項</span></div>
+    <div class="grid">
+      <a class="item" href="https://jiesheng-leadership.netlify.app" target="_blank"><div class="num">1</div><div class="name">結繩領導學</div><div class="url">jiesheng-leadership.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://theunrestrictedwar.netlify.app" target="_blank"><div class="num">2</div><div class="name">超限戰</div><div class="url">theunrestrictedwar.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://cool-case.netlify.app/" target="_blank"><div class="num">3</div><div class="name">試金石檔案</div><div class="url">cool-case.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://tainan-calender.netlify.app/" target="_blank"><div class="num">4</div><div class="name">大台南BNI培訓行事曆</div><div class="url">tainan-calender.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://northern-tw.netlify.app/" target="_blank"><div class="num">5</div><div class="name">全球健康發展協會</div><div class="url">northern-tw.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://www.bymyway.com/coach/" target="_blank"><div class="num">6</div><div class="name">大樹教練個人品牌頁</div><div class="url">bymyway.com/coach</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://seabiscuitclub.netlify.app/" target="_blank"><div class="num">7</div><div class="name">海餅乾俱樂部</div><div class="url">seabiscuitclub.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://goeasy-ai.netlify.app/" target="_blank"><div class="num">8</div><div class="name">一鍵起飛</div><div class="url">goeasy-ai.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://bigtree-tw.netlify.app/" target="_blank"><div class="num">9</div><div class="name">大樹小講</div><div class="url">bigtree-tw.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://ai-talk-tw.netlify.app/" target="_blank"><div class="num">10</div><div class="name">微型論壇</div><div class="url">ai-talk-tw.netlify.app</div><div class="badge public">公開</div></a>
+      <a class="item" href="https://gold-excellence.netlify.app/" target="_blank"><div class="num">11</div><div class="name">金卓獎聚會</div><div class="url">gold-excellence.netlify.app</div><div class="badge public">公開</div></a>
+    </div>
+
+    <div class="section-title">二、保留（尚未推Netlify） <span class="count">1項</span></div>
+    <div class="grid">
+      <a class="item" href="https://coach1973.github.io/vip-club/" target="_blank"><div class="num">12</div><div class="name">特助21心法完整版</div><div class="url">coach1973.github.io/vip-club</div><div class="badge reserved">保留</div></a>
+    </div>
+    <p class="note">還沒推Netlify，先掛在GitHub Pages；日後要對外公開時記得先推上去</p>
+
+    <div class="section-title">三、不公開（個人檢索用） <span class="count">23項</span></div>
+    <div class="grid">
+      <a class="item" href="https://workshop-invite.netlify.app/?name=邀請信" target="_blank"><div class="num">13</div><div class="name">有了團隊就有了一切邀請信</div><div class="url">workshop-invite.netlify.app</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://namecard.bymyway.com" target="_blank"><div class="num">14</div><div class="name">AI名片系統</div><div class="url">namecard.bymyway.com</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://event.bymyway.com" target="_blank"><div class="num">15</div><div class="name">AI報名系統</div><div class="url">event.bymyway.com</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/ai-go/" target="_blank"><div class="num">16</div><div class="name">一鍵注入</div><div class="url">coach1973.github.io/ai-go</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/consultant/" target="_blank"><div class="num">17</div><div class="name">謝扉榆創業講座</div><div class="url">coach1973.github.io/consultant</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/government-grow/" target="_blank"><div class="num">18</div><div class="name">中小微企業多元發展貸款說明會</div><div class="url">coach1973.github.io/government-grow</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/government-subsidies/" target="_blank"><div class="num">19</div><div class="name">中小微企業多元發展實戰說明會</div><div class="url">coach1973.github.io/government-subsidies</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/coach-case/" target="_blank"><div class="num">20</div><div class="name">特助心法實踐故事 第一部</div><div class="url">coach1973.github.io/coach-case</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/coach-case2/" target="_blank"><div class="num">21</div><div class="name">特助心法實踐故事 第二部</div><div class="url">coach1973.github.io/coach-case2</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/coach-case3/" target="_blank"><div class="num">22</div><div class="name">特助心法實踐故事 第三部</div><div class="url">coach1973.github.io/coach-case3</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/coach-case4/" target="_blank"><div class="num">23</div><div class="name">特助心法實踐故事 第四部</div><div class="url">coach1973.github.io/coach-case4</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/coach-vip-club/" target="_blank"><div class="num">24</div><div class="name">頂級特助俱樂部（純淨版）</div><div class="url">coach1973.github.io/coach-vip-club</div><div class="badge private">私藏</div></a>
+      <a class="item" href="https://coach1973.github.io/bni-dna/" target="_blank"><div class="num">25</div><div class="name">BNI｜出席戰情儀表板</div><div class="url">coach1973.github.io/bni-dna</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bni-traffic.netlify.app/" target="_blank"><div class="num">26</div><div class="name">BNI｜燈號表</div><div class="url">bni-traffic.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://worklucky-2026.netlify.app/" target="_blank"><div class="num">27</div><div class="name">BNI｜職涯測試</div><div class="url">worklucky-2026.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bniheroway.netlify.app/" target="_blank"><div class="num">28</div><div class="name">BNI｜從入門到精通：英雄之路</div><div class="url">bniheroway.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://courageous-scanstart.netlify.app/" target="_blank"><div class="num">29</div><div class="name">BNI｜星探卡</div><div class="url">courageous-scanstart.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://everyday7.netlify.app/" target="_blank"><div class="num">30</div><div class="name">BNI｜養成好習慣</div><div class="url">everyday7.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://tree-coach-book.netlify.app/" target="_blank"><div class="num">31</div><div class="name">BNI｜口袋圖書館</div><div class="url">tree-coach-book.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bni-88888.netlify.app/" target="_blank"><div class="num">32</div><div class="name">BNI｜真鑽猜猜猜</div><div class="url">bni-88888.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bni-99999.netlify.app/" target="_blank"><div class="num">33</div><div class="name">BNI｜真誠猜猜猜</div><div class="url">bni-99999.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bni-top10.netlify.app/" target="_blank"><div class="num">34</div><div class="name">BNI｜來賓邀約排行表</div><div class="url">bni-top10.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://bni-happy.netlify.app/" target="_blank"><div class="num">35</div><div class="name">BNI｜大台南南區領導團隊推薦系統(後台分析)</div><div class="url">bni-happy.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+      <a class="item" href="https://tourmaline-panda-82be5e.netlify.app/" target="_blank"><div class="num">36</div><div class="name">BNI｜轉盤</div><div class="url">tourmaline-panda-82be5e.netlify.app</div><div class="badge private">私藏·BNI</div></a>
+    </div>
+
+    <div class="section-title">四、保留網址（尚未啟用） <span class="count">1項</span></div>
+    <div class="grid">
+      <a class="item" href="https://coach1973.github.io/teamwork/" target="_blank"><div class="num">37</div><div class="name">teamwork（規劃給企業健身房用，尚未啟用）</div><div class="url">coach1973.github.io/teamwork</div><div class="badge pending">待啟用</div></a>
+    </div>
+  </div>
+</body>
+</html>

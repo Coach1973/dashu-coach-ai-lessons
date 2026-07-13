@@ -1,5 +1,11 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-07-13（共 1 則）
+1. **GitHub Pages**（coach1973.github.io/cool-case）：用 `xiaolongxia-avatar.jpg`（小龍蝦的圖）
+
+---
+
+
 ## 蒸餾 2026-07-12（共 7 則）
 1. 摘要文字 [source=memory/YYYY-MM-DD.md:行號-行號]
 2. `2026-06-04.md` — 已被部分蒸餾（只在 MEMORY.md 提到 1 次），但 97KB 還沒被縮減。需要進一步蒸餾

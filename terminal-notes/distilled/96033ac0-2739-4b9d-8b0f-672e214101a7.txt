@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 96033ac0-2739-4b9d-8b0f-672e214101a7
-# 提取時間：2026-07-12 23:03 (台灣時間)
-# 共 33 條教練原話
+# 提取時間：2026-07-13 00:07 (台灣時間)
+# 共 34 條教練原話
 
 ---
 
@@ -485,3 +485,47 @@ workshop-invite.netlify.app/?name= 邀請信
 | 全球健康發展協會活動資訊平台 | https://northern-tw.netlify.app/ |
 | 海餅乾俱樂部27年管理哲學 | https://seabiscuitclub.netlify.app/ |
 | AI一鍵起飛3小時實戰講座 | https://goeasy-ai.netlify.…（略）
+
+【教練 2026-07-12 15:47】
+先講邏輯
+一般來說，構思階段，測試階段，都會是使用 [https://coach1973.github.io/](https://coach1973.github.io/cool-case/) 
+
+成熟的作品，可以大量對外公開，就會佈署到 netlify.app 
+
+所以往往能夠公開到 netlify 的都會有對應的 github 
+
+以下是我提供的列入作品集及補充說明
+以下每一個都有對應的github 因為他們都是從 github 測試成功後，再推到netlify的。
+
+https://bigtree-tw.netlify.app/  大樹小講 
+https://coach1973.github.io/cool-case/ 大台南BNI培訓行事曆
+https://gold-excellence.netlify.app/ 金卓獎聚會
+https://cool-case.netlify.app/ 特助案例 (試金石檔案)
+https://ai-talk-tw.netlify.app/ AI微型論壇
+https://bigtree-tw.netlify.app/ 大樹小講
+
+
+以下是先完成之後網頁後(當時還不會用使github所以每次測試都會扣點數)，才又多複製一份到github 這就是那封存19份的由來
+
+https://bni-traffic.netlify.app/
+https://worklucky-2026.netlify.app/ 職涯測試
+
+https://bniheroway.netlify.app/  從入門到精通-英雄之路
+
+https://courageous-scanstart.netlify.app/ 星探卡
+
+　▶ AI 回應：邏輯清楚了：GitHub Pages＝構思測試，成熟到能大量對外推廣才上Netlify，所以有Netlify版的通常背後都有GitHub那份底稿。
+
+先幫您快速驗證這幾個網址真的都活著：
+
+　▶ AI 回應：全部都活著（200）。但發現一個矛盾要跟您確認——`coach1973.github.io/cool-case/` 和 `cool-case.netlify.app/` 是**同一個GitHub repo**部署出來的兩個網址，照理內容應該一樣，但您分別標成「大台南BNI培訓行事曆」跟「特助案例(試金石檔案)」，兩個名字完全不同。我直接抓頁面標題看實際內容：
+
+　▶ AI 回應：兩個網址標題都是「試金石案例集」相關，跟「大台南BNI培訓行事曆」對不上——**這邊看起來打錯或貼錯網址了**。我猜您要的可能是這個（repo名字直接寫著台南行事曆）：
+
+　▶ AI 回應：**`https://coach1973.github.io/tainan-calender/`，標題「2026 全年度行事曆」** —— 這個才像是「大台南BNI培訓行事曆」，之前候選清單裡「用途待您說明」那個 tainan-calender，答案應該就是它。
+
+您說的 `cool-case` 那個網址，麻煩您確認一下是不是貼錯了，還是「大台南BNI培訓行事曆」另外有別的網址？
+
+---
+
+另外想跟您確認一件事：後面這4個（bni-traffic、worklucky-2026、bniheroway、courageous-scanstart）目前在GitHub上是「已封存」狀態，但您說的邏輯是…（略）

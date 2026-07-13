@@ -20,3 +20,9 @@ monitoring/
 
 # 各站台本機工作clone，各自有獨立GitHub repo，不由這裡的workflow repo管理（2026-07-13）
 github_repos/
+
+# Python 虛擬環境是可重建依賴，體積近 1GB，不納入版控（2026-07-13）
+namecard-db/paddleocr_venv/
+
+# 跨機操作通行證只限本機單次授權，禁止同步到其他機器（2026-07-13）
+state/CROSS_MACHINE_APPROVED

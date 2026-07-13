@@ -1,30 +1,38 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-12T14:00:24+08:00",
-    "handoff_read": "2026-07-12T14:00:24+08:00",
-    "git_recent_commits": [
-      "19c6e7c3b",
-      "4a891845c",
-      "c409f5fdc",
-      "17b9891d6",
-      "89191746a"
-    ],
-    "memory_today_exists": true,
-    "junshi_pending_tasks": 0,
-    "junshi_active_session": true,
-    "junshi_current_task_observed": "軍師處理中(不歸小龍蝦)",
-    "peipei_force_restart_needed": false,
-    "openclaw_gateway_health": "未驗證",
-    "action_taken": "sunday_afternoon_checkin",
-    "next_observation": "週日14:00下午,距上次心跳10:03已4hr,12:08剛重啟過,系統健康,無主動通知必要"
+    "heartbeat_received": "2026-07-13T18:00:00+08:00",
+    "gmail": "2026-07-13T18:00:30+08:00",
+    "calendar": "API 未啟用 (403)",
+    "system_health": "2026-07-13T18:00:30+08:00",
+    "telegram_channel": "仍異常 (無 bot token)"
   },
-  "notes": [
-    "週日14:00下午心跳,距上次10:03已4hr,節奏正常",
-    "12:08剛因Context Overflow自動重啟(對話滿),重啟後已運作近2hr",
-    "HEARTBEAT.md無待辦項目,系統健康",
-    "junshi TASK_QUEUE空,軍師無新任務",
-    "JUNSHI_TASK_RESULT最新是2026-06-13歷史紀錄,無新結果",
-    "週日下午安靜時段,不主動通知教練",
-    "不讀memory大檔(避免空白回應)"
-  ]
+  "lastHeartbeat": "2026-07-13T18:00:00+08:00",
+  "lastHeartbeatNote": "週一傍晚 18:00 心跳：Gmail 新增 1 封 IMPORTANT（嘖嘖募資 14:01），其餘為促銷；待辦不變（Netlify 50% + 光線尺 ATM 10,000 + Telegram 異常）",
+  "systemSnapshot": {
+    "timeOfDay": "evening",
+    "dayOfWeek": "Monday",
+    "isQuietHours": false,
+    "allCronsHealthy": true,
+    "contextStatus": "stable",
+    "contextPercent": 16,
+    "gatewayPid": 71310,
+    "gatewayRunning": true,
+    "telegramChannelOk": false,
+    "junshiQueueEmpty": true,
+    "junshiResultMtime": "2026-06-13T08:27",
+    "coachSilentSince": "04:46",
+    "coachSilentHours": 13.2,
+    "unreadGmailCount": 11,
+    "unreadImportantCount": 3,
+    "newImportantSinceLastCheck": [
+      "嘖嘖 zeczec 14:01 群眾集資（足球、平安符、蠟燭狗）— 與教練業務無關，UNKNOWN 重要度"
+    ],
+    "pendingCoachItems": [
+      "Netlify 50% 用量（13:36 來信）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳",
+      "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
+    ],
+    "weatherRelevance": "傍晚 18:00，週一工作日結束，教練若外出回家路需注意",
+    "note": "Telegram 通道仍斷，無法主動推訊；18:00 屬傍晚主動關懷時段，給有意義回報"
+  }
 }
