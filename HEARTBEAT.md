@@ -24,3 +24,8 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-13 09:15:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 聯想軍師收工自檢 2026-07-13 12:21
+- 本場：cool-case頭像事件通報Mac/ACER善後、ai-talk王彤講師簡介更新（GitHub+Netlify雙推）、AI微型論壇固定網址政策記憶建立
+- 🔴 本場2次守則違規自首：①改完ai-talk沒跳真實Chrome給教練看（試金石案例46第5次發作，已補Windows版`start chrome`解法）②引用「全球健康發展協會」案例時先錯成goeasy-ai、又把全球打成全國，連錯兩次才被教練逐字糾正
+- 接力棒已更新為 v63

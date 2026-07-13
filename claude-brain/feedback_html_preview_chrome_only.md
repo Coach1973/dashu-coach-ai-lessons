@@ -61,6 +61,29 @@ Claude Code 內建 PostToolUse hook：用 `Edit` / `Write` 工具改 HTML 會**�
 
 **新增 How to apply**：AI 用無頭瀏覽器工具做內部除錯驗證，跟「跳 Chrome 給教練看」是兩個不同目的、缺一不可的動作。**任何 HTML 改動要回報「完成」之前，最後一步永遠是 `open -a "Google Chrome" <path或URL>`**，不能因為自己已經用內部工具驗證過畫面正確，就省略這一步。
 
+## 🔴 第五次犯＋Windows端解法（2026-07-13，聯想桌面版）
+
+改完 ai-talk 講師簡介後，先試 `mcp__claude-in-chrome__*`（Claude in Chrome 擴充功能）
+想跳出教練本人的真實 Chrome，但擴充功能沒連上（"Claude in Chrome is not connected"），
+retry 兩次都失敗。**這時候退回去只用 `mcp__Claude_Browser__*`（App內建無頭瀏覽器）自己
+截圖驗證，就跟教練回報完成**——又是同一個坑，教練當場點破：「你這邊沒有執行跳 HTML
+出來給我看。」
+
+**真正解法**：這台是教練本人的實體 Windows 電腦（不是遠端連線），不需要靠 MCP 瀏覽器
+自動化工具才能碰到教練的螢幕——**直接用 Bash 工具跑 Windows 原生指令 `start chrome
+"<url>"`**（或 `start "" "<url>"`），就會在教練自己的螢幕上真的彈出 Chrome 視窗。
+這一試就成功，比檢查 Claude in Chrome 擴充功能連線狀態更直接。
+
+**Windows 版 How to apply（跟 Mac 版 `open -a "Google Chrome"` 對應）**：
+```bash
+start chrome "http://localhost:<port>/"
+# 或推上線後
+start chrome "https://xxx.netlify.app/"
+```
+Claude in Chrome MCP 擴充功能不是這台機器的必要依賴——它沒連上時不代表沒辦法跳出瀏覽器
+給教練看，`start chrome` 永遠是本機最後保底手段，優先層級應該跟 Mac 的 `open -a` 同等，
+不是等 MCP 失敗才想到的備案。
+
 ## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
 
 不再只靠「記得要開 Chrome」——已比照簡體字 Stop Hook 架構，建立 `scripts/rule_html_chrome_check.sh`：這一輪若 Edit/Write 改過 `.html`，且改動之後找不到 `open -a "Google Chrome"` 的紀錄，強制 exit 2 攔截，不讓「已看過」的回報送到教練眼前。已註冊進 `~/.claude/settings.json` Stop hooks，並用假 transcript 實測四種情境全部正確（詳見試金石案例46後續段落）。
