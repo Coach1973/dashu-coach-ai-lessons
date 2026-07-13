@@ -26,8 +26,16 @@ metadata:
    對外公開）——這個專案是同一套邏輯的具體實例，只是換成「同一網址反覆覆蓋」
    而非「多個獨立作品各自一個網址」
 
+## 已有先例驗證（教練 2026-07-13 親口補充）
+
+「全球健康發展協會」（repo/站台代號 `goeasy-ai`）已經照這套模式辦過**3場**——GitHub
+後端跟著每場活動內容改了3次，但對外公開的固定網址從頭到尾都是同一個，群眾點的
+連結不變、只有內容跟著換。AI微型論壇是複製這套已經驗證跑通的模式，不是新發明。
+
 ## 相關
 
 - Netlify site：`ai-talk-tw`，site_id `633b4b00-dae8-476c-a21b-9d0548bf1e66`
 - GitHub repo：`Coach1973/ai-talk`（main分支，GitHub Pages來源）
 - 部署方式見 [[feedback_netlify_deploy_zip_api]]（手動zip+API型，git push不會自動同步Netlify）
+- 已驗證同模式先例：`goeasy-ai`（全球健康發展協會，已辦3場）、`jiesheng-leadership`
+  （結繩領導學）——見 [[feedback_netlify_autodeploy_cost_awareness]]
