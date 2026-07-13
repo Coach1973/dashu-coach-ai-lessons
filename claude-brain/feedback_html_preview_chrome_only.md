@@ -1,11 +1,37 @@
 ---
 name: html-preview-chrome-only
-description: 本機 HTML 預覽唯一指定瀏覽器 = Chrome；禁止 Safari / 預覽面板 / file:// 取代
+description: 本機 HTML 預覽指定瀏覽器——Mac=Chrome；聯想(Windows)2026-07-13起改用Comet，因為聯想這台Chrome跳出來會空白、Comet正常
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 3089ccd5-21cb-458c-92e4-eaecbd96dee9
 ---
+
+# 🔴🔴🔴 2026-07-13更新：聯想（Windows）改用 Comet，不再用 Chrome
+
+教練當場指示：「你下次跳出來的時候，不要跳 Chrome，因為它那邊感覺有問題，網頁出不來。
+可是我把同樣的網址貼到 Comet，它就正常可以出來。所以你這邊可以預設跳出來的是 Comet
+的瀏覽器嗎？然後記住設定，不要跳空白頁出來給我看，跳出來必須是要有東西。」
+
+**Why:** 聯想這台機器用 `start chrome "<url>"` 跳出來的視窗教練看到的是空白頁（不論是
+`file://` 本機路徑，還是 `http://localhost:8901/` 本機 server，都空白），改貼同一個
+網址到 Comet 瀏覽器（`comet.exe`）畫面正常。根因未查（可能是這台 Chrome 本身設定/擴充
+功能有問題），但教練要的不是查根因，是「跳出來的東西教練看得到」，Comet 目前驗證過
+可以正常顯示。
+
+**How to apply（僅限聯想/Windows這台機器，Mac 端仍維持 Chrome，見下方原始鐵律）：**
+```bash
+"C:/Users/bymyw/AppData/Local/Perplexity/Comet/Application/comet.exe" "http://localhost:<port>/"
+# 或推上線後
+"C:/Users/bymyw/AppData/Local/Perplexity/Comet/Application/comet.exe" "https://xxx.netlify.app/"
+```
+- 聯想這台以後任何 HTML 驗證要跳瀏覽器給教練看，**第一動作改成上面這行，不要再用
+  `start chrome`**
+- 若之後教練回報 Comet 也空白，代表要進一步查根因（可能是本機server起太慢、Comet
+  也需要等一下再截圖），不能直接又退回 Chrome
+- 2026-07-13 本次教練親眼在 Comet 看過 bigtree 7/22 高雄場地址資訊、確認畫面正常，
+  才說「可以往上推了」——這次沒有再重演案例46（有真的跳出瀏覽器給教練看，且教練
+  確認過才推 Netlify）
 
 # 🔴 本機 HTML 預覽鐵律（教練 2026-06-17 下午 3:09 親口定稿）
 

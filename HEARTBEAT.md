@@ -29,3 +29,10 @@
 - 本場：cool-case頭像事件通報Mac/ACER善後、ai-talk王彤講師簡介更新（GitHub+Netlify雙推）、AI微型論壇固定網址政策記憶建立
 - 🔴 本場2次守則違規自首：①改完ai-talk沒跳真實Chrome給教練看（試金石案例46第5次發作，已補Windows版`start chrome`解法）②引用「全球健康發展協會」案例時先錯成goeasy-ai、又把全球打成全國，連錯兩次才被教練逐字糾正
 - 接力棒已更新為 v63
+
+## 🩺 聯想軍師收工自檢 2026-07-13 17:20
+- 本場：coach888分類重排、jiesheng-leadership三場報名連結更新、bigtree新增7/22地址，三個網站都已GitHub+Netlify雙推驗證上線
+- 🟢 意外挖到真問題並根治：聯想電腦記憶體監視器93%異常，追查到`Pool Nonpaged Bytes`核心記憶體池洩漏26GB，鎖定IObit Advanced SystemCare過濾驅動為兇手，解除安裝+重開機驗證後恢復正常（93%→34%，26GB→0.82GB）
+- 🟢 聯想這台HTML驗證瀏覽器由Chrome改Comet（教練回報Chrome跳出空白，Comet正常）
+- 🟢 教練質疑「開工(fork)」重複出現，已查證本機無自動化腳本觸發，誠實告知無法完全確認App層觸發點
+- 接力棒已更新為 v64

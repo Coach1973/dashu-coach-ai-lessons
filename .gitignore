@@ -17,3 +17,6 @@ shared-context/commit_notify.log
 split_memory.log
 *.log
 monitoring/
+
+# 各站台本機工作clone，各自有獨立GitHub repo，不由這裡的workflow repo管理（2026-07-13）
+github_repos/
