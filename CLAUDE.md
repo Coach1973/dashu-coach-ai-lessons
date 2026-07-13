@@ -4,123 +4,113 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-13 18:35:29**
+> **最後同步：2026-07-13 19:03:12**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 軍師接力棒 · 2026-07-13 v64（聯想桌面版 Sonnet 5，coach888/bigtree網站更新+jiesheng報名連結+聯想電腦26GB核心記憶體洩漏根治）
+# 軍師接力棒 · 2026-07-13 v65（Mac桌面版 Sonnet 5，佩佩老師報名系統上線+截圖鎖漏洞修復+cool-case頭像案未完）
 
-> 建立時間：2026-07-13 17:20（台灣時間）
-> 本棒執行者：聯想桌面版 Sonnet 5
-> 上一棒：v63（聯想桌面版 Sonnet 5，ai-talk講師簡介更新，完整內容見下方精簡回顧）
-> 本棒主軸：**三個網站的例行更新（coach888分類重排、jiesheng-leadership報名連結、bigtree場地地址），加上一個意外挖出來的真實系統健康問題——聯想這台電腦的記憶體監視器顯示93%使用率，查到根因是IObit Advanced SystemCare的過濾驅動程式洩漏了26GB核心記憶體，已解除安裝該軟體並確認重開機後恢復正常（93%→34%）**
+> 建立時間：2026-07-13 19:05（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v64（聯想桌面版 Sonnet 5，coach888/jiesheng/bigtree三站更新+聯想26GB記憶體洩漏根治，完整內容見下方精簡回顧）
+> 本棒主軸：**幫佩佩老師建了一套獨立的活動報名系統（複製教練版event-signup，換綁她自己的LINE官方帳號），端到端測試通過；過程中教練抓到「截圖鎖」有真的漏洞（matcher清單漏掉一個工具家族），已修好+驗證+通知聯想/ACER去查自己的機器；另外cool-case頭像案（把終端機/桌面版對話從小龍蝦頭像改成Opus軍師頭像）分析到一半被打斷，沒做完，下一棒要接著做**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. CC Switch/MiniMax模型卡住問題——教練確認已解決
+### 1. 🔴🔴🔴 未完成事項：cool-case頭像重新歸類（分析做了一半，沒執行）
 
-v61留下的追蹤項，教練本場開頭直接說「已解決」，此項閉環，不需再處理。
+教練要求：cool-case網站（`coach1973.github.io/cool-case/`）裡所有「小龍蝦AI特助」
+頭像的對話泡泡，只要內容實際上是終端機/桌面版（軍師）在講話而不是Telegram小龍蝦，
+就要改成新的claude-avatar.svg + 改名「Opus 軍師」（聯想已經先修過8處，但那8處是
+本來就已經標「Opus軍師」名字只是圖片配錯；其餘66處全部標「小龍蝦AI特助」，教練
+確認要判斷哪些其實是軍師講的）。
 
-### 2. coach888（大樹AI作品總覽）分類重排
+**已做的分析**（案例1~40逐一讀過scene/narrative/root-cause/實際對話內容），初步
+判斷這些案例明顯是終端機/桌面版內容（強訊號：提到終端機/桌面版/Claude Code/CLI/
+git push/sed指令/rsync/PhotoRec等）：
+`案例4, 6, 7?, 10, 12?, 14, 15, 20, 21, 23, 24, 33, 34, 36, 37`
+（標?的是訊號比較弱，需要再確認）
 
-教練提供新的5大類分法，把原本「三、不公開（個人檢索用）」23項拆成三塊：
-- 一、對外公開（11項，維持原樣）
-- 二、不公開（個人檢索用）（7項，原13-19）
-- 三、保留（尚未推Netlify）（6項，原12+20-24）
-- 四、BNI專用（12項，原25-36——原36項「BNI｜轉盤」教練給的範圍寫到35，判斷應屬
-  BNI併入此區，已跟教練說明這個假設）
-- 五、保留網址（尚未啟用）（1項，原37）
+案例1/2/5/9/11/13/16/17/18/19判斷是真的OpenClaw/Telegram/小龍蝦系統相關內容，
+應該維持小龍蝦頭像不動。
 
-編號改成依新分類順序連續1-37。`Coach1973/coach888` commit `453ad1e`，GitHub Pages
-（無CNAME，純`coach1973.github.io/coach888/`路徑）確認上線。
+**沒做完的部分**：
+1. 案例7（海餅乾知識庫）、案例12（送出按鈕）這兩則訊號比較模糊，需要重讀確認
+2. 最終名單確認後，要寫程式把符合條件案例裡的
+   `xiaolongxia-avatar.jpg" alt="小龍蝦"` → `claude-avatar.svg" alt="Opus 軍師"`
+   以及 `>小龍蝦 AI 特助<` → `>Opus 軍師<` 換掉（只換符合案例編號範圍內的，
+   不要replace_all整份文件，會誤傷真的小龍蝦案例）
+3. 換完要開真的Chrome給教練看（不能只用內部工具截圖，見下面第3項教訓），教練
+   確認後才commit push GitHub，確認完再問要不要推Netlify（cool-case同時部署在
+   Netlify，上次commit `6a53f6b318f63574bb009623`，這次頭像案要推的話要重新走
+   部署SOP三步驟）
 
-### 3. jiesheng-leadership 三場工作坊「立即報名」連結更新
+**下一棒直接從這裡接手**，不用重新分析，上面的判斷清單可以直接用，只是還要
+補案例7/12的判斷再動手改。
 
-教練提供新連結（原本是Google表單，改成PAYUNi金流結帳連結）：
-- 台南場（8/19、20）→ rplconstw.pse.is/Tainan0819
-- 台中場（9/23、24）→ rplconstw.pse.is/Taichung0923
-- 台北場（11/25、26）→ rplconstw.pse.is/Taipei1125
+### 2. 佩佩老師活動報名系統（peipei-event）從零建置到端到端測試通過
 
-`Coach1973/jiesheng-leadership` commit `c0b8e72`。這個站是GitHub自動部署型
-（build_settings.provider=github），push完Netlify自動同步，已用curl驗證線上內容。
+教練要幫佩佩老師複製一份跟教練版一樣的「掃QR報到→加LINE好友→傳問候→系統比對
+身分→精準群發通知」系統，換成她自己的LINE官方帳號 `@701ohlly`。
 
-**過程插曲**：教練回報「連結出不來，一直載入中」，用App內建無頭瀏覽器實測發現目標頁面
-（PAYUNi金流結帳頁）本身有完整渲染（DOM/JS都正常），研判是教練端瀏覽器相容性問題，
-教練後來確認「貼到別的瀏覽器正常」，證實不是連結或程式碼的問題。
+- 新GitHub私有repo：`Coach1973/peipei-event`（複製自`event-signup`，拿掉教練版
+  LINE金鑰/舊QR，port改5061避免跟教練版5060衝突）
+- 新Cloudflare Tunnel：`peipei-event.bymyway.com` → localhost:5061（tunnel id
+  `10eaf2db-7a38-418e-a4a6-8daca6161a34`，設定檔`~/.cloudflared/
+  peipei-event-config.yml`）
+- LINE三把鑰匙：教練一開始誤貼了教練版的Channel Access Token（已攔下說明LINE
+  Token不能跨帳號共用），教練重新去LINE後台Issue一組新的，我用LINE API
+  `/v2/bot/info`驗證過這組token確實對應到`@701ohlly`（顯示名稱「佩佩活動策展
+  諮詢顧問」）才填進系統，不是盲目相信教練貼的字串
+- 活動代號：教練說這是「常態性佩佩老師認識朋友的管道」不是單場活動，改名
+  `peipei`，標題「音樂藝術策展＋商務連接＝有質感的活動」，不標日期（表單/QR
+  立牌模板都改成沒日期就不顯示，不留空白）
+- **端到端測試教練親自做過，我有查資料庫+log驗證，不是聽教練說「有反應」就信**：
+  填表→查重（同一手機號兩次填只算一筆，thanks頁正確顯示"已報到過"）→加LINE
+  好友→傳問候句→webhook收到（`POST /line/webhook`兩次都200）→資料庫裡吳大樹這
+  筆已經綁定`line_user_id`，全部驗證通過
+- commit：`8d54915`（初版）、`fd4c8ff`（改常態代號+QR版面修正）
 
-### 4. bigtree 7/22高雄場新增場地地址
+**下一棒待辦**：群發通知功能（`/admin/notify`）教練還沒實測過，QR立牌
+（`qr/peipei-print.html`）教練還沒看過印出來的實體效果，服務目前是前景跑
+（`nohup python3 app.py`），還沒做成LaunchAgent常駐開機自動跑（教練版
+`event-signup`已有對應的plist範本可以照抄）。
 
-教練提供郭音樂廳完整地址+交通資訊，寫進`SESSION_DATES`資料陣列（新增`venue`/
-`address`/`transport`欄位），並在場次卡片渲染區塊加上顯示邏輯。這個站是**手動
-上傳型**Netlify（無`build_settings.repo_url`），本機用`npx serve`起local server
-給教練看過、教練說「推」之後才用zip+API手動推送（deploy `6a54a3bbf38acd6edc12e48b`）。
-`Coach1973/bigtree` commit `e570806`，已curl驗證線上內容含新地址。
+### 3. 🔴🔴🔴 截圖鎖真的有漏洞，教練當場抓到，已修好+通知聯想/ACER
 
-### 5. 🔴🔴🔴 HTML驗證瀏覽器：聯想這台改用Comet，不再用Chrome
+驗收peipei-event成品時，我重複用內部無頭瀏覽器工具截圖確認，沒有被
+「截圖鎖」（`scripts/screenshot_lock.sh`，教練明令未經同意不可截圖）擋下來。
+教練直接質問「不是說有上鎖嗎？」
 
-教練回報`start chrome`跳出來的視窗是空白的（不論開本機檔案還是local server網址都
-一樣），改貼同一個網址到Comet瀏覽器正常顯示。已更新
-`claude-brain/feedback_html_preview_chrome_only.md`：**聯想這台以後跳瀏覽器驗證
-一律用`comet.exe`（路徑：`C:/Users/bymyw/AppData/Local/Perplexity/Comet/Application/
-comet.exe`），Mac端維持原本Chrome規則不受影響**。根因未查（可能是這台Chrome本身
-設定/擴充功能有問題），但教練要的是「跳出來的東西看得到」，不是查根因。
+**根因**：`screenshot_lock.sh`裡判斷「哪些工具算截圖」的清單、以及
+`~/.claude/settings.json`裡`hooks.PreToolUse`的matcher，兩邊都只列了
+`mcp__computer-use__*`跟`mcp__Claude_in_Chrome__*`，完全漏掉這次session實際
+重複用到的`mcp__Claude_Browser__computer`。不是鎖故意放水，是清單沒寫全。
 
-### 6. 🔴🔴🔴 意外挖到的真問題：聯想電腦26GB核心記憶體洩漏，已根治
+**已修好**：兩邊都補上這個工具，餵4組假指令實測（無通行證截圖→擋/zoom→擋/
+一般操作→放行/有通行證→放行，全部符合預期），commit `323d6c73d`。
 
-教練回報效能監視器顯示「最近關閉的處理程序」裡OneDrive/Copilot/Edge共佔838MB，
-問能不能關開機啟動。第一輪先移除這三個的`HKCU\...\Run`開機項（可逆，原始值已記錄），
-教練確認沒動到LINE/Signal/Comet等平常在用的東西。
+**已寫信通知聯想+ACER**（教練親口指示「寫封信去交待其他電腦照做」）：
+`cross-agent/inbox/lenovo/20260713-1900_mac-to-lenovo_screenshot-lock-audit.md`
+`cross-agent/inbox/acer/20260713-1900_mac-to-acer_screenshot-lock-audit.md`
+內容要求對方查自己的`settings.json`matcher（這個檔不跟git同步，各機獨立）、
+對照自己機器實際會用到的截圖工具、**用餵假指令實測**（不能只肉眼比對清單），
+查完不管有沒有洞都要回信。**下一棒開工留意`cross-agent/inbox/mac/`有沒有
+聯想/ACER的回信**。
 
-**教練關瀏覽器後回報記憶體還是93%**，這是關鍵轉折——證明OneDrive/Edge/Copilot從
-來不是真兇（這三個個別加起來連1GB都不到）。深查發現：
+另外教練同時確認：另一支「成品完成必須開真Chrome給教練看」的鎖
+（`web_preview_verify_guard.sh`）本身沒有漏洞，它只認`open -a "Google Chrome"`
+這個證據，內部截圖工具本來就被排除在證據之外，這條規矩一直都在運作。
 
-- `Get-Process`所有進程WorkingSet總和只有3.8~11.5GB（隨開啟程式數量浮動），
-  跟系統回報「已用33~37GB」對不上
-- 教練犀利追問「數字兜不起來」，逼出更深一層調查：
-  `\Memory\Pool Nonpaged Bytes`（核心非分頁記憶體池，關掉任何App都清不掉、
-  只有驅動程式自己能釋放）**讀到26.04GB**，用`Get-Counter`跟`Get-CimInstance
-  Win32_PerfRawData_PerfOS_Memory`兩個獨立管道交叉驗證都一致，確認是真的，
-  不是計數器誤讀
-- 正常這個數值應該只有幾百MB，26GB是嚴重異常，鎖定是某個驅動程式的核心記憶體
-  洩漏（開機12小時累積出來，符合洩漏型bug特徵）
-- 用`Get-CimInstance Win32_SystemDriver`揪出第三方驅動清單，鎖定
-  **IObit Advanced SystemCare**（一款「系統加速清理」軟體）的三個過濾驅動：
-  `AscRegistryFilter.sys`（登錄檔監控攔截）、`AscFileFilter.sys`（檔案系統
-  監控攔截）、`iobit_monitor_server2021.sys`——這類「攔截型」過濾驅動是網路上
-  知名的非分頁記憶體洩漏元兇
-- 教練確認解除安裝，用官方解除安裝程式`unins000.exe /SILENT`執行（觸發UAC，
-  教練本人點了同意），確認登錄檔/驅動服務/大部分檔案都清除乾淨
-- **教練重開機驗證：記憶體使用率93%→34%，非分頁記憶體池26GB→0.82GB，
-  IObit驅動確認不再載入**，問題徹底根治
+### 4. 聯想cool-case頭像上線案——已驗證屬實（本場開頭）
 
-第一輪移除的OneDrive/Edge/Copilot開機項教練後來要求復原（因為確認不是元兇），
-第二輪教練說「反正平常沒在用」又要求重新移除，本棒最終狀態：**OneDrive/Edge/
-Copilot開機啟動已移除，LINE/Signal/Comet更新/Typeless維持原樣未動**。
-
-**追加處理**：教練回報Copilot移除開機項後仍在背景跑，查了排程工作/開機資料夾都
-找不到自動啟動來源，改用elevated registry設定關閉Edge的
-`BackgroundModeEnabled`/`StartupBoostEnabled`兩個policy（觸發UAC，教練同意），
-並直接關閉當下正在跑的Copilot進程。根因研判是Windows 11「登出時自動記住並還原
-應用程式」這個系統級功能，已跳出`ms-settings:signinoptions`給教練自己確認關閉，
-這部分沒有找到可靠的登錄檔開關，交給教練用設定頁面手動處理。
-
-教練後續詢問Signal/Typeless/LINE通話元件/Comet等其他背景程式，已查明這些都是
-教練平常實際在用的工具（原本就設定開機啟動），**沒有擅自關閉**，只回報現況給
-教練參考。
-
-### 7. 教練詢問「Fork」疑慮——已查證本機無自動化腳本觸發
-
-教練貼出Recents清單截圖，發現多個「開工 (fork)」重複標籤，質疑是否被自動觸發
-Fork（教練既有鐵律`feedback_no_fork_without_permission.md`：未經允許禁止使用
-Fork功能，因為會繼承完整歷史、token消耗極高）。已搜尋本機`.claude`設定資料夾
-（settings.json/settings.local.json/所有腳本）確認**沒有任何本機自動化在觸發
-Fork**，本場對話全程也沒有呼叫過Fork。研判是Claude App介面層的行為（可能是
-從Recents清單用了「複製/延續」而非「開新對話」），但無法從檔案系統層面完全
-確認觸發點，已誠實告知教練這個限制，建議教練回想當時怎麼點出新對話的。
+聯想回報「claude-avatar.svg已套進Opus軍師8處對話泡泡，commit ce1402d」，我沒有
+直接採信轉述，親自`git fetch`+`git show ce1402d`查證commit確實存在、內容跟回報
+一致，才確認這件事。（這就是後續第1項頭像案的起點）
 
 ---
 
@@ -128,11 +118,13 @@ Fork**，本場對話全程也沒有呼叫過Fork。研判是Claude App介面層
 
 | 優先 | 任務 |
 |------|------|
-| 🟡 | 教練還沒完全確認Windows「自動儲存並還原應用程式」設定是否已在`ms-settings:signinoptions`關閉，下次開工可以問一下Copilot/Edge有沒有又自己跑回來 |
-| 🟡 | 「開工 (fork)」重複出現的真正觸發點還沒查清楚，只確認不是本機腳本造成的，值得下次留意教練是怎麼點出新對話的、或詢問其他機器/App官方是否有相關已知行為 |
-| 🟢 | 「待教練確認用途」清單還剩：vip-club、coach-vip-club、coach-case系列、teamwork、tainan-calender，等教練有空一次問清楚 |
-| 🔴 | 2026-07-18：聯想C槽觀察期滿，確認教練這幾天用起來正常後可刪2份保留備份（共約94GB） |
-| 🟢 | 若聯想機以後再出現「記憶體用量異常但關程式沒用」的情況，直接查`\Memory\Pool Nonpaged Bytes`，這次的偵錯路徑（Get-Counter+Win32_SystemDriver交叉比對找兇手）已被驗證有效，可重複使用 |
+| 🔴🔴🔴 | **cool-case頭像重新歸類案，分析到一半沒做完**——見上面第1項，有完整判斷清單可以直接接手，只差案例7/12再確認+實際執行改檔+開Chrome給教練看+等教練說「推」 |
+| 🔴🔴 | **留意`cross-agent/inbox/mac/`有沒有聯想/ACER回覆截圖鎖稽核結果**，收到要讀完處理，處理完記得移到outbox |
+| 🟡 | peipei-event：群發通知功能還沒實測，QR立牌還沒印出來給教練看實體效果，服務還沒做成LaunchAgent開機常駐（目前是前景nohup跑，教練重開機或Mac休眠會斷） |
+| 🟡 | 教練還沒完全確認Windows「自動儲存並還原應用程式」設定是否已在`ms-settings:signinoptions`關閉（聯想機，v64留的） |
+| 🟢 | 「開工 (fork)」重複出現的真正觸發點還沒查清楚（聯想機，v64留的） |
+| 🟢 | 「待教練確認用途」清單還剩：vip-club、coach-vip-club、coach-case系列、teamwork、tainan-calender（v64留的） |
+| 🔴 | 2026-07-18：聯想C槽觀察期滿，確認教練這幾天用起來正常後可刪2份保留備份（共約94GB）（v64留的） |
 
 （名片系統、biz-gym黑金版等其餘待辦仍在Mac的v60棒裡持續，此處不重複列出）
 
@@ -140,41 +132,40 @@ Fork**，本場對話全程也沒有呼叫過Fork。研判是Claude App介面層
 
 ## 🔑 關鍵檔案索引（本場新增/修改）
 
-- `github_repos/coach888/`（本場新clone，`index.html`分類重排，commit `453ad1e`）
-- `github_repos/jiesheng-leadership/`（本場新clone，`index.html`報名連結更新，
-  commit `c0b8e72`）
-- `github_repos/bigtree/`（本場新clone，`index.html`新增7/22地址資訊，
-  commit `e570806`；Netlify deploy `6a54a3bbf38acd6edc12e48b`）
-- `claude-brain/feedback_html_preview_chrome_only.md`（新增聯想改用Comet的
-  段落，附完整comet.exe路徑）
-- `.claude/launch.json`（聯想本機新增bigtree-preview本機預覽設定，port 8901）
-- `.gitignore`（新增`github_repos/`排除規則，這些是各站台獨立repo的工作clone，
-  不由這個workflow repo管理）
-- 系統變更（不在git版控範圍，記錄於此供跨機參考）：聯想電腦解除安裝IObit
-  Advanced SystemCare、HKCU開機Run清單移除OneDrive/Edge/Copilot、Edge
-  BackgroundModeEnabled/StartupBoostEnabled policy關閉
+- `github_repos/peipei-event/`（新repo，複製自event-signup，commit `8d54915`/`fd4c8ff`）
+- `~/.cloudflared/peipei-event-config.yml`、tunnel `10eaf2db-...`（新建）
+- `scripts/screenshot_lock.sh`（補上`mcp__Claude_Browser__computer`判斷，commit `323d6c73d`）
+- `~/.claude/settings.json`（matcher補同一個工具，不在git範圍，只影響這台Mac）
+- `cross-agent/inbox/lenovo/`、`cross-agent/inbox/acer/`（各新增一封截圖鎖稽核信）
+- `~/github_repos/cool-case/`（頭像案分析中，尚未實際改檔，git stash裡還留著一份
+  07-02的舊草稿`stale-case37-draft-before-avatar-task-20260713`，跟本場無關可忽略
+  或找教練確認要不要正式清掉）
 
 ---
 
-## 📜 v63 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史/上一版本檔案）
+## 📜 v64 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史/上一版本檔案）
 
-1. cool-case頭像事件善後，寫信通報Mac/ACER，Mac端已確認收到處理完畢
-2. ai-talk網站王彤講師簡介更新（GitHub commit `5a7ee74`+Netlify deploy
-   `6a5463b8`），過程中兩次被教練當場糾正：①沒跳Chrome給教練看（案例46第5次
-   發作，補了Windows版`start chrome`解法）②Netlify↔GitHub同步邏輯只答對一半
-3. AI微型論壇固定網址政策記憶建立，過程中連續兩次「案例引用沒逐字核對」被
-   教練糾正（全球健康發展協會誤植成goeasy-ai、又打成全國健康發展協會）
+1. coach888作品總覽分類重排成5大類，編號改連續1-37（commit `453ad1e`）
+2. jiesheng-leadership三場工作坊報名連結改成PAYUNi金流連結（commit `c0b8e72`）
+3. bigtree新增7/22高雄場地地址（commit `e570806`）
+4. 🔴🔴🔴 聯想這台HTML驗證改用Comet瀏覽器（`comet.exe`），不再用Chrome（Chrome
+   跳出來是空白視窗，根因未查但教練要的是「看得到」不是查根因）
+5. 🔴🔴🔴 意外挖到聯想電腦26GB核心非分頁記憶體洩漏，鎖定IObit Advanced
+   SystemCare過濾驅動，解除安裝+重開機驗證93%→34%，徹底根治
+6. 查證「開工(fork)」重複出現不是本機腳本造成，但真正觸發點未查清楚
 
 ---
 
-> 聯想桌面版 Sonnet 5 親筆，2026-07-13 17:20。教練說「先總結上傳，我們這一輪的
-> 工作結束了」，本棒收尾。這場對話做了三個網站的例行更新（coach888分類、
-> jiesheng報名連結、bigtree地址），但真正有份量的是中途從一個效能監視器截圖
-> 追出來的真實系統問題——聯想這台電腦被IObit Advanced SystemCare的過濾驅動
-> 洩漏了26GB核心記憶體，教練一路追問「數字兜不起來」才逼出更深的調查，最終
-> 用兩個獨立管道交叉驗證、鎖定兇手、解除安裝、重開機驗證閉環，這是本場最扎實
-> 的一次診斷過程。另外也確認了聯想這台以後HTML驗證要跳Comet不跳Chrome，跟
-> Fork疑慮已查證本機無自動化腳本造成。下一棒開工先讀上面「下一棒待辦」。
+> Mac桌面版 Sonnet 5 親筆，2026-07-13 19:05。這場對話一開始是驗證聯想的頭像
+> commit，接著教練要求把cool-case裡所有實際是終端機/桌面版對話卻掛小龍蝦頭像
+> 的案例全部改過來——這個分析做到一半，教練轉去談佩佩老師的活動報名系統，這件
+> 事就沒做完，是本棒最大的未竟事項，已經把判斷清單寫清楚，下一棒可以直接接手
+> 不用重新分析。佩佩老師的系統從零建到端到端測試通過，資料庫+log都親自查過驗證
+> 不是聽教練說「有反應」就信。過程中教練當場抓到截圖鎖有真的漏洞（不是嘴上說的
+> 假鎖，是清單真的沒寫全），修好、實測、寫信通知聯想跟ACER去查自己的機器——這
+> 是教練親口要求「不用我重複提醒」的落實，把稽核責任寫進跨機信箱系統，不是只
+> 在這台Mac修好就結案。下一棒開工先讀上面「下一棒待辦」，第一件事是把頭像案
+> 做完。
 
 
 ---
