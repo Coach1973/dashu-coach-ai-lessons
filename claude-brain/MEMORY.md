@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯 佩佩老師個人品牌頁改版進行中(2026-07-14)](project_peipei_art_redesign_2026-07-14.md) — 測試站https://coach1973.github.io/peipei-art/已上線，版面骨架完成等教練補文字照片，之後推正式peipei-event.netlify.app
 - [🎯 AI微型論壇是持續系列活動，Netlify固定網址不隨場次變(2026-07-13)](project_ai_talk_recurring_event_url_policy.md) — GitHub是每場改稿工作稿，ai-talk-tw.netlify.app才是永久對外網址，換場次不換站
 - [🔴🔴🔴 cool-case頭像檔案孤立20天未上傳，7/13查出補上線(2026-07-13)](project_claude_avatar_cool_case.md) — 6/23設計完卻沒commit，兩台機器都查無；已套進「Opus軍師」8處，commit ce1402d
 - [🎯🎯 大樹AI作品一覽表分類邏輯：GitHub=測試/Netlify=對外公開(2026-07-12)](project_portfolio_netlify_github_logic.md) — 能點進Netlify.app才算作品；改名免費部署才扣點；archived不代表Netlify網址失效
