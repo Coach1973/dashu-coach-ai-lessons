@@ -2,35 +2,35 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1783990853155,
-    "system_health": 1784008903,
+    "heartbeat_poll": 1784023459,
+    "system_health": 1784023459,
     "telegram_channel": 1783951264,
-    "junshi_queue": 1784008903
+    "junshi_queue": 1784023459
   },
-  "lastHeartbeat": "2026-07-14T14:01:43.562318+08:00",
-  "lastHeartbeatNote": "週二下午 14:00 心跳：context 5% 健康；TG channel 仍斷、cron 46e67e2e 健康檢查仍壞、教練最後活動 06:41 終端機（迄今 7h 無新動作）；無新 junshi 任務；軍師任務結果停在 06-13；安靜結束",
+  "lastHeartbeat": "2026-07-14T18:04:19+08:00",
+  "lastHeartbeatNote": "週二傍晚 18:04 心跳：context 5% 健康；gateway PID 91448 健康（5:55PM 啟動，port 18789）；junshi queue 空、結果仍停 06-13；TG channel 未修；cron 46e67e2e 已壞 114+ 次；教練最後活動 06:41 終端機（迄今 11.3h 無新動作），18:04 仍在 BNI/外出可能性高，安靜待命",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
+    "timeOfDay": "evening",
     "dayOfWeek": "Tuesday",
     "isQuietHours": false,
     "allCronsHealthy": false,
     "contextStatus": "fresh",
     "contextPercent": 5,
-    "recentCoachActivity": "教練 06:41 終端機 stop hook（守則#07 polling check 觸發）後迄今 7h 無新動作",
+    "recentCoachActivity": "教練 06:41 終端機後迄今 11.3h 無新動作（18:04 仍在 BNI 例會/外出可能性高）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-06-13",
-    "gatewayPid": 10208,
+    "gatewayPid": 91448,
     "gatewayRunning": true,
     "telegramChannelOk": false,
-    "openTask": "cron 46e67e2e 健康檢查 114+ 次錯誤需裁決 / Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖",
+    "openTask": "cron 46e67e2e 健康檢查 114+ 次錯誤 / Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖",
     "coachSilentSince": "06:41",
     "pendingCoachItems": [
       "Netlify 50% 用量（07-13 13:36 來信）— 建議登入查看",
       "光線尺顧問 ATM NT$10,000 入金（07-13 13:25）— 請對帳",
       "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
     ],
-    "note": "下午心跳，無新任務，安靜待命；待教練上線再處理 TG channel 與 cron 健康",
+    "note": "傍晚心跳，距上次 14:01 約 4h，無新任務；gateway 與 cron daemon 健康；教練 11h 無動作但仍在合理範圍（BNI 例會週二常見時段），安靜待命",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
@@ -52,5 +52,5 @@
       }
     ]
   },
-  "lastHeartbeatPoll": 1784008903562
+  "lastHeartbeatPoll": 1784023459
 }
