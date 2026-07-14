@@ -55,6 +55,18 @@ Store空殼跑不動，`.sh`版鎖完全失效**。聯想已重寫純PowerShell�
 跟v65狀態相同，沒有進度。判斷清單、待辦細節見下方「下一棒待辦」第一項，直接沿用
 v65寫好的內容，不重複貼一次。
 
+### 5. VPS 小龍蝦 polling 健康檢查機關補完 + 試金石案例 50
+
+教練在 17:43 指示：「第一個通知小龍蝦恢復，我已經做完了。第二、第三要做」——也就是把 polling 卡住事故寫入試金石，並建立 alert。前一輪小龍蝦只做到半成品：`scripts/vps_polling_healthcheck.sh` 有檔案，但實測會因 shell/Python 字串插值炸掉，且沒有看到排程落地憑證。
+
+本輪已補完：
+- 重寫 `scripts/vps_polling_healthcheck.sh`，改成穩定抓 VPS spool、最後 inbound、最後 health-monitor restart，避免 log 內容含引號/換行導致 JSON/Python 炸掉
+- 拿掉 `StrictHostKeyChecking=no`，避免 SSH host key 檢查被關掉
+- 異常時直接用本地 Telegram bot token 推送教練（Chat ID `6124913915`），並保留 60 分鐘冷卻
+- 把 `scripts/openclaw_cron_daemon.sh` 的 15 分鐘區段接上 `vps_polling_healthcheck.sh`，現有 daemon 進程仍在跑（PID 72993）
+- 寫入 `試金石/試金石_案例庫.md` 案例 50
+- 實測：`bash -n scripts/vps_polling_healthcheck.sh` 通過；直接執行退出碼 0；`state/vps_polling_healthcheck.state.json` 產出有效 JSON，18:23 台灣時間狀態為 `ok`、`spool_count=0`、`spool_processing=0`、最後 inbound 約 12 分鐘前、最後 restart 約 63 分鐘前
+
 ---
 
 ## 📋 下一棒待辦（新的優先順序）
@@ -85,6 +97,9 @@ v65寫好的內容，不重複貼一次。
   `templates/login.html`：登入後台（commit `4a635db`）
 - `peipei-event/.env`：同上結構，帳號`peipei`
 - `cross-agent/outbox/2026-07/`：聯想回信已歸檔，Mac→聯想/ACER原信也已歸檔
+- `scripts/vps_polling_healthcheck.sh` + `scripts/openclaw_cron_daemon.sh`：VPS 小龍蝦 polling 健康檢查，每 15 分鐘檢查 spool/inbound/restart，異常推 Telegram 給教練（案例 50）
+- `state/vps_polling_healthcheck.state.json` / `.log` / `.last_alert`：polling 健康檢查最新狀態、執行紀錄與 60 分鐘告警冷卻
+- `試金石/試金石_案例庫.md`：新增案例 50（VPS 小龍蝦 polling stale state 卡住 8 小時）
 
 ---
 

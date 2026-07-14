@@ -32,9 +32,10 @@ while true; do
         bash "$WS/scripts/split_memory.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ split_memory 失敗" >> "$LOG"
     fi
 
-    # 3. distill_watchdog: */15 (:00, :15, :30, :45)
+    # 3. distill_watchdog + VPS polling healthcheck: */15 (:00, :15, :30, :45)
     if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
         bash "$WS/scripts/distill_watchdog.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ distill_watchdog 失敗" >> "$LOG"
+        bash "$WS/scripts/vps_polling_healthcheck.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ vps_polling_healthcheck 失敗" >> "$LOG"
     fi
 
     # 4. distill: 已移交 openclaw cron「每2小時增量記憶蒸餾」單引擎（2026-07-08 Fable5 稽核，教練核准）
