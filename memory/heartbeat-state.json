@@ -1,35 +1,56 @@
 {
   "lastChecks": {
-    "gmail": 1783922502,
-    "calendar": 1783922502,
-    "heartbeat_poll": 1783951264233,
-    "system_health": 1783922502,
-    "telegram_channel": 1783922502
+    "gmail": 1783951264,
+    "calendar": 1783951264,
+    "heartbeat_poll": 1783990853155,
+    "system_health": 1784008903,
+    "telegram_channel": 1783951264,
+    "junshi_queue": 1784008903
   },
-  "lastHeartbeat": "2026-07-13T22:01:04+08:00",
-  "lastHeartbeatNote": "週一晚間 22:00 心跳：重啟後 1h53m 教練未說話、接力棒 v65 未完事項清楚（cool-case 頭像案+peipei-event 後續）、Telegram channel 仍斷、晚間時段不主動打擾",
+  "lastHeartbeat": "2026-07-14T14:01:43.562318+08:00",
+  "lastHeartbeatNote": "週二下午 14:00 心跳：context 5% 健康；TG channel 仍斷、cron 46e67e2e 健康檢查仍壞、教練最後活動 06:41 終端機（迄今 7h 無新動作）；無新 junshi 任務；軍師任務結果停在 06-13；安靜結束",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Monday",
-    "isQuietHours": true,
-    "allCronsHealthy": true,
+    "timeOfDay": "afternoon",
+    "dayOfWeek": "Tuesday",
+    "isQuietHours": false,
+    "allCronsHealthy": false,
     "contextStatus": "fresh",
     "contextPercent": 5,
-    "recentCoachActivity": "教練自 14:00 起重啟前最後一則後連續靜默 8h+，20:07 重啟後尚未收到任何教練訊息",
-    "urgentGmailCount": 2,
+    "recentCoachActivity": "教練 06:41 終端機 stop hook（守則#07 polling check 觸發）後迄今 7h 無新動作",
+    "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
-    "junshiResultMtime": "2026-06-13T08:27",
+    "junshiResultMtime": "2026-06-13",
     "gatewayPid": 10208,
     "gatewayRunning": true,
     "telegramChannelOk": false,
-    "openTask": "頭像任務：聯想軍師已做 8 處，全部套用待辦",
-    "coachSilentSince": "04:46",
+    "openTask": "cron 46e67e2e 健康檢查 114+ 次錯誤需裁決 / Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖",
+    "coachSilentSince": "06:41",
     "pendingCoachItems": [
-      "Netlify 50% 用量（13:36 來信）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳",
+      "Netlify 50% 用量（07-13 13:36 來信）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25）— 請對帳",
       "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
     ],
-    "note": "22:00 晚間心跳，距重啟 1h53m；教練應已就寢，不主動打擾；下個工作時段心跳再追蹤 v65 待辦（cool-case 頭像、peipei-event 群發實測、聯想/ACER 截圖鎖回信）"
+    "note": "下午心跳，無新任務，安靜待命；待教練上線再處理 TG channel 與 cron 健康",
+    "cronErrors": [
+      {
+        "jobId": "46e67e2e",
+        "name": "🦞 每30分鐘任務健康檢查",
+        "consecutiveErrors": 114,
+        "rootCause": "LLM request failed（claude-opus-4-8 在 isolated cron 環境 100% timeout）"
+      },
+      {
+        "jobId": "961021a7",
+        "name": "每2小時增量記憶蒸餾",
+        "consecutiveErrors": 1,
+        "rootCause": "Update Goal complete failed"
+      },
+      {
+        "jobId": "28cd69d9",
+        "name": "📦 每週記憶檔自動蒸餾",
+        "consecutiveErrors": 4,
+        "rootCause": "timeoutSeconds 300 不夠，下週日跑前應手動調 900"
+      }
+    ]
   },
-  "lastHeartbeatPoll": 1783951264233
+  "lastHeartbeatPoll": 1784008903562
 }
