@@ -35,3 +35,8 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1784024769
 - 雲端同步：✅ 已推上雲端（commit 5fbca0ccc）
+
+## 🩺 聯想軍師收工自檢 2026-07-14
+- 本場：修復HEARTBEAT合併衝突標記、回應Mac截圖鎖稽核信（聯想這台matcher從未接上+python3是Store空殼，兩層問題，已寫screenshot_lock.ps1修復）、coach888/bigtree/jiesheng-leadership三站維運（新增場次、關閉過期場次、修正連結）、意外抓到自己上一棒Netlify部署的PowerShell反斜線路徑bug並修好、教練電腦睡眠問題全程用事件記錄查證診斷（滑鼠喚醒+AC永不休眠設定）、新開佩佩老師個人品牌頁改版專案(peipei-art)
+- 接力棒已更新為 v67，CLAUDE.md已手動同步（Mac版sync腳本路徑寫死無法在Windows執行，下次如需自動化建議補一支.ps1版本）
+- 🟡 自首：`make_zip.js`這支修bug用的工具還躺在session暫存區沒正式進repo，PowerShell Compress-Archive反斜線bug也還沒寫進試金石，都留給下一棒或自己下次記得補
