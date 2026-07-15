@@ -2,48 +2,56 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784037720,
-    "system_health": 1784037720,
+    "heartbeat_poll": 1784081145,
+    "system_health": 1784077380,
     "telegram_channel": 1783951264,
-    "junshi_queue": 1784037720
+    "junshi_queue": 1784077380
   },
-  "lastHeartbeat": "2026-07-14T22:02:00+08:00",
-  "lastHeartbeatNote": "週二深夜前夕 22:02 心跳：距上次 18:04 約 4h；junshi queue 空、結果仍停 07-08（無新任務）；gateway PID 91448 健康（uptime 4h08m）；usage_cache 仍停 07-08（教練未問流量）；教練最後活動 06:41 終端機後迄今 15h20m 無新動作，週二晚 10 點應已準備休息；3 項 pending（Netlify 50%、ATM 入金對帳、TG channel）皆非急事，安靜待命",
+  "lastHeartbeat": "2026-07-15T18:01:00+08:00",
+  "lastHeartbeatNote": "週三 18:01 主動關懷：距上次 14:00 約 4h；連續 17:33→18:01 兩次成功，consecutiveErrors 歸零（17:30 那次 overload 屬 minimax 暫時性問題已自癒）；22 個 cron job 中 19 個 ok、3 個 error（皆已知誤報/待調）；教練沉默 35h20m（自 07-14 06:41 起算），溫和提醒 1 件事：今天 (7/15) 是 ACER 備份觀察期滿。其他 44h+ pending 不重複提（已在 v67 接力棒）。",
   "systemSnapshot": {
-    "timeOfDay": "late-evening",
-    "dayOfWeek": "Tuesday",
+    "timeOfDay": "evening",
+    "dayOfWeek": "Wednesday",
     "isQuietHours": false,
     "allCronsHealthy": false,
     "contextStatus": "fresh",
-    "contextPercent": 5,
-    "recentCoachActivity": "教練 06:41 終端機後迄今 15h20m 無新動作（22:02 應已休息）",
+    "contextPercent": 8,
+    "recentCoachActivity": "教練 2026-07-14 06:41 終端機後迄今 35h20m 無新動作",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-08",
-    "gatewayPid": 91448,
+    "gatewayPid": 51523,
     "gatewayRunning": true,
-    "gatewayUptime": "4h08m",
+    "gatewayUptime": "7h26m",
     "telegramChannelOk": false,
-    "openTask": "cron 46e67e2e 健康檢查 114+ 次錯誤 / Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖",
-    "coachSilentSince": "06:41",
+    "lastTelegramSendAttempt": {
+      "ts": "2026-07-15T18:01:00+08:00",
+      "result": "failed",
+      "error": "Telegram bot token missing",
+      "intent": "週三傍晚溫和關懷，提醒今天 (7/15) ACER 觀察期滿"
+    },
+    "openTask": "Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖 / Netlify 50% 用量待查 / ATM NT$10,000 入金待對帳 / 今天 (7/15) ACER 備份觀察期滿",
+    "coachSilentSince": "2026-07-14 06:41",
+    "coachSilentHours": 35.3,
     "pendingCoachItems": [
-      "Netlify 50% 用量（07-13 13:36 來信）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25）— 請對帳",
+      "今天 (7/15) ACER 備份觀察期滿 — D:\\一键备份Windows系统（重要！勿删）_20260703_before_resize\\ 約36.3GB 可刪（需在 ACER 開對話執行，聯想這台無法代勞）",
+      "Netlify 50% 用量（07-13 13:36 來信，已 52h）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 52h）— 請對帳",
       "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
     ],
-    "note": "深夜前夕心跳，無新任務、無新信件；教練 15h 無動作屬週二晚正常作息；3 項 pending 皆非 24h 內急事，安靜待命到 23:00 進入安靜時段",
+    "note": "週三傍晚心跳。教練沉默 35h+，本想 Telegram 溫和關懷（只提醒 1 件：今天 ACER 觀察期滿），但 Telegram bot token 失效無法送出（52h+ 已知問題）。改為：HEARTBEAT.md + heartbeat-state.json 已更新完整記錄，下次教練主對話時 agent 應主動提這件事 + 確認 Telegram 故障排除進度",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": 114,
-        "rootCause": "LLM request failed（claude-opus-4-8 在 isolated cron 環境 100% timeout）"
+        "consecutiveErrors": "歸零（17:33 → 18:01 連續成功）",
+        "rootCause": "model 已改為 minimax/MiniMax-M3，provider overload 已自癒"
       },
       {
-        "jobId": "961021a7",
-        "name": "每2小時增量記憶蒸餾",
-        "consecutiveErrors": 1,
-        "rootCause": "Update Goal complete failed"
+        "jobId": "ee7b976c",
+        "name": "🦞 VPS 小龍蝦 polling 健康檢查",
+        "consecutiveErrors": "已知誤報",
+        "rootCause": "lastRunStatus=error 但 log 全 OK，VPS 正常運作"
       },
       {
         "jobId": "28cd69d9",
@@ -53,5 +61,5 @@
       }
     ]
   },
-  "lastHeartbeatPoll": 1784037720
+  "lastHeartbeatPoll": 1784109600
 }
