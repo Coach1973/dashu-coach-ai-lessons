@@ -11,6 +11,12 @@
 # (no-BOM) source files under the system codepage, which previously broke
 # string literals containing Chinese characters.
 #
+# 2026-07-15: added a Bash-command content check. A screenshot taken through
+# generic script execution (e.g. PowerShell CopyFromScreen via the Bash tool)
+# used to bypass this lock entirely because it never calls a named
+# "screenshot" tool. settings.json's matcher must include "Bash" for this to
+# fire; see Wants-Screenshot's Bash branch below.
+#
 # Token gate: pass = ~/.openclaw/workspace/state/SCREENSHOT_APPROVED
 #             no pass -> screenshot-class tool calls are blocked (exit 2)
 #             pass is valid for 10 minutes.
@@ -59,6 +65,29 @@ function Wants-Screenshot {
     if ($tool -eq "mcp__claude-in-chrome__browser_batch") {
         foreach ($a in $ti.actions) {
             if ($a.input.action -in $shotActions) { return $true }
+        }
+        return $false
+    }
+    if ($tool -eq "Bash") {
+        # Gap found 2026-07-15: a screenshot taken via generic script execution
+        # (e.g. PowerShell CopyFromScreen, or any CLI screencap utility) bypassed
+        # every matcher above because it never calls a named "screenshot" tool.
+        $cmd = $ti.command
+        if ($cmd) {
+            # Deliberately narrow, case-sensitive signatures of actual capture
+            # API calls / CLI invocations -- NOT the bare word "screenshot",
+            # which self-triggers on any command that merely mentions this
+            # lock script's own name or the SCREENSHOT_APPROVED token path
+            # (found and fixed same day: 2026-07-15, first version locked out
+            # all Bash including the grant command itself).
+            $screenshotSignatures = @(
+                "CopyFromScreen\(", "PrintWindow\(", "BitBlt\(",
+                "screencapture ", "gnome-screenshot", "^scrot\b",
+                "import -window", "nircmd.*savescreenshot"
+            )
+            foreach ($sig in $screenshotSignatures) {
+                if ($cmd -cmatch $sig) { return $true }
+            }
         }
         return $false
     }
