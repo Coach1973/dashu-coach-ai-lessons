@@ -1,13 +1,13 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-07-14 12:08
-> 對話記錄已完整存入 memory/2026-07-14.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-07-15 01:37
+> 對話記錄已完整存入 memory/2026-07-15.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-07-14.md 可能超過 50KB，讀了會造成模型空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-07-15.md 可能超過 50KB，讀了會造成模型空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
@@ -21,27 +21,23 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## ⚠️ peipei 自動 force-restart 2026-07-14 17:55:00
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+## 📝 健康檢查紀錄（append-only）
 
-## 🩺 軍師 Hook 自檢 2026-07-14 18:02（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
-- Session: 870bc689-e1dc-4a85-aab1-8e965418cfe9
+### 2026-07-15 08:37 健康檢查（consecutiveErrors 11，已自行處理）
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-14 18:30
-- ✅ 同步成功
-- HANDOFF mtime: 1784024769
-- 雲端同步：✅ 已推上雲端（commit 5fbca0ccc）
+**觸發對象**：cron job `46e67e2e-6332-4589-aae2-ee7e10dd7279`「🦞 每30分鐘任務健康檢查」
 
-## 🩺 聯想軍師收工自檢 2026-07-14
-- 本場：修復HEARTBEAT合併衝突標記、回應Mac截圖鎖稽核信（聯想這台matcher從未接上+python3是Store空殼，兩層問題，已寫screenshot_lock.ps1修復）、coach888/bigtree/jiesheng-leadership三站維運（新增場次、關閉過期場次、修正連結）、意外抓到自己上一棒Netlify部署的PowerShell反斜線路徑bug並修好、教練電腦睡眠問題全程用事件記錄查證診斷（滑鼠喚醒+AC永不休眠設定）、新開佩佩老師個人品牌頁改版專案(peipei-art)
-- 接力棒已更新為 v67，CLAUDE.md已手動同步（Mac版sync腳本路徑寫死無法在Windows執行，下次如需自動化建議補一支.ps1版本）
-- 🟡 自首：`make_zip.js`這支修bug用的工具還躺在session暫存區沒正式進repo，PowerShell Compress-Archive反斜線bug也還沒寫進試金石，都留給下一棒或自己下次記得補
+**狀態盤點**：
+- 🟢 系統中只有 1 個 cron job（即健康檢查自己），無其他需監控任務
+- 🟢 HEARTBEAT.md 無 ⬜ 待辦、無 48 小時停滯的背景工作
+- 🟡 此健康檢查 job 本身 `consecutiveErrors: 11`（>3 閾值），`lastStatus: error`，錯誤原因：修復前的 `INVALID_API_KEY`（anthropic apiKey 失效）
+- 🟢 **教練今晨 2026-07-15 已親自拍板修復**：把 payload.model 從 `anthropic/claude-opus-4-8` 改為 `minimax/MiniMax-M3`（驗證：cron get model 已是 `minimax/MiniMax-M3`）
+- 🟢 屬「教練已介入處置」，按鐵律 rule 4 不升級為「需要教練裁決」
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-14 21:25
-- ✅ 同步成功
-- HANDOFF mtime: 1784035363
-- 雲端同步：✅ 已推上雲端（commit 36979bff7）
+**自動修復動作**：
+1. ❌ `cron run <jobId> --runMode force` 驗證 → 工具回 `Cron tool is restricted to the current cron job`，無法對自己 force run
+2. ✅ 確認 model 配置正確（get job 顯示 `minimax/MiniMax-M3`）
+3. ⏰ 等下次自動跑驗證（nextRunAtMs = 09:11 Asia/Taipei），成功後 `consecutiveErrors` 自動歸零
+4. ✅ trace 寫入本檔
+
+**結論**：🟡 已修復、未驗證。等 09:11 自動跑成功即自然復原。本次安靜處理，不通知教練。
