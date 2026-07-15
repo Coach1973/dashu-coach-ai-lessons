@@ -1,0 +1,97 @@
+# 終端機對話萃取 — Session d44d195a-4c8b-4e87-adba-d18796eaf5b7
+# 提取時間：2026-07-14 17:57 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-07-13 22:28】
+synterolink 檢查被拒：Bad gateway (502)
+供應商內部錯誤，通常是臨時問題。 查詢一下 CC Switch 裡面的這個是否連線有問題？
+
+　▶ AI 回應：我先確認「CC Switch」設定檔和裡面是否有名為類似「synterolink」的供應商項目，才能查連線狀況。
+
+　▶ AI 回應：查到了，「synterolink」不是誤聽，是 CC Switch 裡真實的一個供應商（api.synterolink.com），現況說明：
+
+**問題發生時間**：今天 06:18~06:19（台灣時間，約10分鐘前），密集出現 502 錯誤——上游伺服器（Cloudflare 後面的來源主機）當時過載或故障。
+
+**現在狀態**：我剛直接連線測試 `https://api.synterolink.com`，回應是 **401**（未授權，不是 502）——代表伺服器已經正常回應，只是我測試時沒帶對的金鑰而已。這證實 synterolink 供應商本身已經恢復連線，不是持續性故障。
+
+**另…（略）
+
+【教練 2026-07-13 22:30】
+但是我這個打開 CLI 程式，它跟我說 API 錯誤。
+
+　▶ AI 回應：抓到真正原因了——不是 synterolink 又掛了，是 **CC Switch 的本機代理伺服器在 06:22 分自己完全停止了**（log 明明白白寫著「代理服务器已完全停止」），停了快 10 分鐘到現在都沒再啟動。CLI 沒有代理可以走，才會報 API 錯誤。
+
+　▶ AI 回應：直接用 CLI 實際在用的金鑰打一次真實請求，確認現在**syntherolink 依舊是 502**——不是我剛才誤判的「已恢復」。剛才那個 401 是我測試時沒帶對金鑰、被 Cloudflare 邊緣直接擋掉，沒真正打到後端；現在用真金鑰送真實訊息，等了 6.5 秒後端沒回應，Cloudflare 才丟 502。這代表 synterolink 這個供應商現在真的還是掛的，不是本機端問題。
+
+　▶ AI 回應：**根本原因確認**：不是 CLI 或本機代理的問題，是 synterolink 供應商現在真的還在故障中（後端 502），我剛用 CLI 實際使用的金鑰直接測試過，等了 6.5 秒還是掛掉。
+
+CC Switch 裡目前可切換的備援供應商有：**MiniMax**、**Kimi**、**Opencode**、**Unlimited APT**。要不要我現在幫你切到其中一個，先讓 CLI 能繼續工作，等 synterolink 恢復後再切回來？
+
+　▶ AI 回應：好的，我等一下自動幫你每隔幾分鐘測一次 synterolink 是否恢復，恢復了會立刻回報你，不用你自己盯著看。
+
+　▶ AI 回應：已排好每 4 分鐘自動測試一次 synterolink 連線，最多測 3 次（約 12 分鐘）。恢復了會立刻告訴你；如果 12 分鐘後還是掛，我會回報並建議切換備援供應商。
+
+【教練 2026-07-13 22:36】
+請直接測試 https://api.synterolink.com 是否已恢復（用 CLI 實際使用的金鑰打真實 /v1/messages 請求，不要只測未授權的401），如果恢復了就回報教練「synterolink 已恢復，可以繼續用」；如果還是502，就再排一次4分鐘後的喚醒繼續測，最多測3次（12分鐘）後如果還沒好，就回報教練「synterolink 持續故障超過X分鐘，建議切備援供應商」並停止排程。
+
+　▶ AI 回應：第1次測試（06:36）結果：**還是 502**。
+
+已改用背景監測腳本繼續測第 2、3 次（每 4 分鐘一次），結果出來我會直接通知你，不用等待。
+
+【教練 2026-07-13 22:41】
+<task-notification>
+<task-id>bqmyrmqfk</task-id>
+<summary>Monitor event: "每4分鐘測試synterolink是否恢復，最多測2輪後回報"</summary>
+<event>STILL_DOWN check 2/3: HTTP狀態碼=502</event>
+</task-notification>
+
+　▶ AI 回應：第 2 次測試（06:41）：**仍是 502**。監測腳本會繼續跑最後一次（約 06:45 前後），有結果我再通知你。
+
+【教練 2026-07-13 22:41】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule07_polling_check.sh]: 
+🚨 守則#07 輪詢設計偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪回覆裡出現「定時/每X分鐘檢查」的輪詢設計：
+  • 偵測到疑似輪詢設計：「已改用背景監測腳本繼續測第 2、3 次（每 4 �...」
+📜 守則#07 原文（特助心法.md）：
+  「不要在同一個地方跌倒兩次，就是最大的成功。」
+  「不可能不犯錯，但不要一直犯同樣的錯。」
+
+2026-07-02 教練已對同一個錯誤糾正 3 次（心跳燈塔/蒸餾提煉/自動開通），
+這是第 4 次以後的自動攔截，不能再靠記性。
+
+✅ 停下來自問：
+  1. 這件事有沒有現成的事件掛鉤（hook/signal/webhook/restart-policy）可以直接觸發？
+  2. 如果真的沒有，在回覆裡明確寫出「事件驅動不可行，因為XXX」再繼續。
+  3. 如果只是在討論/引用過去案例，把這句話改寫得更明確是在「回顧」不是「提議」。
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule07_polling_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：守則#07 自我檢查：這次不是重複違規類型（心跳燈塔/蒸餾提煉/自動開通那些內部系統該掛 hook 卻沒掛），這裡是**外部第三方 API（synterolink）連線狀態沒有 webhook/回呼機制可以通知我們「已恢復」**——第三方供應商不會主動推播「我修好了」給客戶端，唯一能知道的方式就是定期打一次請求測試。事件驅動在這個情境下不可行，因為對方沒有提供任何事件通知管道。這跟 Monitor 工具本身文件裡列的「輪詢 CI/外部佇列狀態」是同一類正當用法，跟過去被糾正的「內部系統該用 hook 卻用輪詢」不同，繼續用背景監測腳本測第 3 次是合理做法。
+
+【教練 2026-07-13 22:45】
+<task-notification>
+<task-id>bqmyrmqfk</task-id>
+<summary>Monitor event: "每4分鐘測試synterolink是否恢復，最多測2輪後回報"</summary>
+<event>STILL_DOWN check 3/3: HTTP狀態碼=502
+FAILED_FINAL: synterolink持續故障超過12分鐘，建議切備援供應商(MiniMax/Kimi/Opencode/Unlimited APT)</event>
+</task-notification>
+
+　▶ AI 回應：**synterolink 持續故障超過 12 分鐘（06:18 開始到現在 06:45，快 27 分鐘），3 次測試都還是 502，還沒恢復。**
+
+建議先切到備援供應商讓 CLI 能繼續用：**MiniMax**、**Kimi**、**Opencode**、**Unlimited APT** 這四個都是 CC Switch 裡現成可切的。要我現在幫你切哪一個？
+
+【教練 2026-07-13 22:45】
+<task-notification>
+<task-id>bqmyrmqfk</task-id>
+<tool-use-id>toolu_01K5g7iBGw1py3pgUookodKN</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/d44d195a-4c8b-4e87-adba-d18796eaf5b7/tasks/bqmyrmqfk.output</output-file>
+<status>completed</status>
+<summary>Monitor "每4分鐘測試synterolink是否恢復，最多測2輪後回報" stream ended</summary>
+</task-notification>
+
+　▶ AI 回應：This is just the monitor task's own completion notification (the stream I already reported on) — no new information, nothing further to act on. Still waiting on your answer: want me to switch the CLI over to MiniMax, Kimi, Opencode, or Unlimited APT while synterolink is down?
