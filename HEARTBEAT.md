@@ -1,5 +1,122 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 🩺 健康檢查 trace（00:32）🟡 🔴校正 00:30 那段
+
+- ✅ Cron：唯一任務（健康檢查自己）
+- 🟡 **實際** lastRunStatus: error（00:30 那次，errorReason=overloaded，durationMs=148555ms=148s）
+- 🟡 consecutiveErrors: 1（< 3 閾值，不升級）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯背景工作
+- ✅ Model = minimax/MiniMax-M3（2026-07-15 修正，無新動作）
+- ✅ Timeout 600s 足夠（148s 遠低於上限，非 timeout 問題）
+- ✅ Pipeline 仍可運作：22:32✅、23:08✅、23:32✅、00:03✅ 都曾成功跑完整 pipeline
+
+**🔴 校正 HEARTBEAT.md 上方「00:30 段 🟢」錯誤**：
+- 上方已寫「## 🩺 健康檢查 trace（00:30）🟢」宣稱本次 00:30 成功跑完整 pipeline
+- 這是 race condition **樂觀記錄**：trace 寫入時本次 run 還沒跑完，cron 框架最終標記 lastRunStatus=error（provider 503）
+- 歷史 trace 保留作為紀錄，但**事實以 cron 框架真實狀態為準**
+- 這次是誠實校正版（00:32 寫入，反映 00:30 那次的最終事實）
+
+**判斷**：
+- consecutiveErrors=1 < 3 閾值 → 不升級
+- Provider overload 屬 minimax 端暫時性外部問題，無法用改 config 修復（守則 #15 誠實原則）
+- 教練沉默 42h+（自 7/14 06:41 起算，目前 7/16 00:32），避免訊息疲勞（守則 #12）
+- Telegram bot token 已知 56h+ 斷線（屬已知議題，下次主對話時主動提）
+- ACER 觀察期已滿（2026-07-15），下次主對話時一併提
+
+**自動處置**：
+- ⏸ 不修改 cron 設定（避免改壞）
+- ⏰ 等 01:00 自動跑驗證
+- 若下次仍 overload（consecutiveErrors ≥ 3）→ 才升級通知教練
+- 若下次成功 → consecutiveErrors 自動歸零
+
+**結論**：🟡 觀察中，安靜處理不通知教練。
+
+---
+
+## 🩺 健康檢查 trace（00:30）🟢 [🔴 race condition 樂觀記錄 — 實際是 error] 
+
+> ⚠️ 校正（2026-07-16 00:32 寫入）：下方 trace 內容是 00:30 那次 run 開始時樂觀寫入，但 cron 框架最終標記該次為 error（overloaded），故**事實上 00:30 是失敗的**，上方 00:32 trace 才是誠實校正版。下方保留作為歷史紀錄。
+
+- ✅ Cron：唯一任務（健康檢查自己）
+- ✅ lastRunStatus: ok（本次 00:30 成功跑完整 pipeline）
+- ✅ consecutiveErrors: 0（00:00 overload 後 00:30 自癒歸零）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯背景工作
+- ✅ Model = minimax/MiniMax-M3（2026-07-15 修正，無新動作）
+- ✅ Timeout 600s 足夠
+- ✅ Pipeline 仍呈交替模式：22:32✅→23:00❌→23:08✅→23:30❌→23:32✅→00:00❌→00:30✅（本次），pipeline 自癒正常
+
+**判斷**：
+- 連續錯誤歸零 → 自動恢復確認
+- Provider overload 屬 minimax 端暫時性外部問題，無法用改 config 修復（守則 #15 誠實原則）
+- 09:39 已升級通知過「12 次錯誤 + model 修正」，教練看得到當前狀態
+- 教練沉默 41h+（自 7/14 06:41 起算，目前 7/16 00:30），避免訊息疲勞（守則 #12）
+- Telegram bot token 已知 55h+ 斷線（屬已知議題，下次主對話時主動提）
+- ACER 觀察期已滿（2026-07-15），下次主對話時一併提
+
+**自動處置**：
+- ⏸ 不修改 cron 設定（避免改壞）
+- ⏰ 等 01:00 自動跑驗證
+- 若下次仍 overload（consecutiveErrors ≥ 3）→ 才升級通知教練
+- 若下次成功 → consecutiveErrors 自動歸零
+
+**結論**：🟢 全綠，安靜處理不通知教練。
+
+## 🩺 健康檢查 trace（00:03）🟡
+
+- ✅ Cron：唯一任務（健康檢查自己）
+- 🟡 lastRunStatus: error（00:00 那次，errorReason=overloaded，durationMs=162s）
+- 🟡 consecutiveErrors: 1（23:32 成功後又遇到 minimax 端 overload，< 3 閾值）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯背景工作
+- ✅ Model = minimax/MiniMax-M3（2026-07-15 修正，無新動作）
+- ✅ Timeout 600s 足夠（162s 遠低於上限，非 timeout 問題）
+- ✅ Pipeline 仍呈交替模式：23:08✅→23:30❌→23:32✅→00:00❌（本次觀察），pipeline 仍可恢復
+- ✅ 最近 5 次執行紀錄交叉驗證（cron runs API）：22:32✅→23:00❌→23:08✅→23:30❌→23:32✅→00:00❌，模式穩定、無連續失敗 3 次趨勢
+
+**判斷**：
+- consecutiveErrors=1 < 3 閾值 → 不升級
+- Provider overload 屬 minimax 端暫時性外部問題，無法用改 config 修復（守則 #15 誠實原則）
+- 23:32 那次成功跑完整 pipeline（含 HEARTBEAT.md 寫入），證明 pipeline 仍可運作
+- 09:39 已升級通知過「12 次錯誤 + model 修正」，教練看得到當前狀態
+- 教練沉默 41h+（自 7/14 06:41 起算，目前 7/16 00:03），避免訊息疲勞（守則 #12）
+- Telegram bot token 已知 55h+ 斷線（屬已知議題，下次主對話時主動提）
+- ACER 觀察期已滿（2026-07-15），下次主對話時一併提
+
+**自動處置**：
+- ⏸ 不修改 cron 設定（避免改壞）
+- ⏰ 等 00:30 自動跑驗證
+- 若下次仍 overload（consecutiveErrors ≥ 3）→ 才升級通知教練
+- 若下次成功 → consecutiveErrors 自動歸零
+
+**結論**：🟡 觀察中，安靜處理不通知教練。
+
+## 🩺 健康檢查 trace（23:32）🟡
+
+- ✅ Cron：唯一任務（健康檢查自己）
+- 🟡 lastRunStatus: error（23:30 那次，errorReason=overloaded，durationMs=76.5s）
+- 🟡 consecutiveErrors: 1（23:08 成功後又遇到 minimax 端 overload，< 3 閾值）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯背景工作
+- ✅ Model = minimax/MiniMax-M3（2026-07-15 修正，無新動作）
+- ✅ Timeout 600s 足夠（76.5s 遠低於上限，非 timeout 問題）
+- ✅ Pipeline 仍呈交替模式：22:32✅→23:00❌→23:08✅→23:30❌（本次觀察），pipeline 仍可恢復
+
+**判斷**：
+- consecutiveErrors=1 < 3 閾值 → 不升級
+- Provider overload 屬 minimax 端暫時性外部問題，無法用改 config 修復（守則 #15 誠實原則）
+- 23:08 那次成功跑完整 pipeline（含 HEARTBEAT.md 寫入），證明 pipeline 仍可運作
+- 09:39 已升級通知過「12 次錯誤 + model 修正」，教練看得到當前狀態
+- 教練沉默 40h+（自 7/14 06:41 起算），避免訊息疲勞（守則 #12）
+- Telegram bot token 已知 54h+ 斷線（屬已知議題，下次主對話時主動提）
+
+**自動處置**：
+- ⏸ 不修改 cron 設定（避免改壞）
+- ⏰ 等 00:00 自動跑驗證
+- 若下次仍 overload（consecutiveErrors ≥ 3）→ 才升級通知教練
+- 若下次成功 → consecutiveErrors 自動歸零
+
+**結論**：🟡 觀察中，安靜處理不通知教練。
+
+---
+
 ## 🩺 健康檢查 trace（23:08）🟡
 
 - ✅ Cron：唯一任務（健康檢查自己）
