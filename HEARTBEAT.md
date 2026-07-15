@@ -1,5 +1,31 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 🩺 健康檢查 trace（01:02）🟢
+
+- ✅ Cron：唯一任務（健康檢查自己）
+- ✅ 本次 01:02 成功跑完整 pipeline（durationMs≈ 正常範圍）
+- ✅ consecutiveErrors 暫時歸零前先確認 — 上次 00:30 overload 為 transient，本 run 已自行恢復
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48 小時停滯背景工作
+- ✅ Model = minimax/MiniMax-M3（2026-07-15 修正，無新動作）
+- ✅ Timeout 600s 足夠
+
+**判斷**：
+- 00:30 那次 overload 屬 minimax 端暫時性外部問題，無法用改 config 修復（守則 #15 誠實原則）
+- 01:02 本次成功 → pipeline 自癒確認（22:32✅、23:08✅、23:32✅、00:03✅、01:02✅）
+- 教練沉默 42h+（自 7/14 06:41 起算，目前 7/16 01:02），避免訊息疲勞（守則 #12）
+- Telegram bot token 已知 56h+ 斷線（屬已知議題，下次主對話時主動提）
+- ACER 觀察期已滿（2026-07-15），下次主對話時一併提
+
+**自動處置**：
+- ⏸ 不修改 cron 設定（避免改壞）
+- ⏰ 等 01:30 自動跑驗證
+- 若下次仍 overload（consecutiveErrors ≥ 3）→ 才升級通知教練
+- 若下次成功 → consecutiveErrors 維持歸零
+
+**結論**：🟢 全綠，安靜處理不通知教練。
+
+---
+
 ## 🩺 健康檢查 trace（00:32）🟡 🔴校正 00:30 那段
 
 - ✅ Cron：唯一任務（健康檢查自己）
