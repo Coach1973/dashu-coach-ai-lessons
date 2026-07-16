@@ -1,5 +1,31 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 🦞 11:32 健康檢查 trace（中午，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| Cron 任務（agent=main 範圍） | 唯一任務（健康檢查自己） |
+| lastRunStatus | 🟡 error（11:30 那次，overloaded, 112.1s） |
+| consecutiveErrors | 🟡 1（< 3 閾值，不升級） |
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足（112.1s 遠低於上限） |
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 10:00❌→10:03✅→10:30❌→本次 11:32（延遲重試，仍可恢復） |
+| 教練沉默 | 52h+（自 2026-07-14 06:41 起算） |
+| Telegram channel | 🔴 bot token 仍失效（沿用 trace，待教練補 token） |
+| 記憶蒸餾 cron (28cd69d9) | 🟡 consecutiveErrors 4，timeoutSeconds 300 不足，待週日 12:00（07-19）前手動調 900 |
+| peipei 自動 force-restart | ⚠️ 下次可啟動時間 11:15 之後，靜默觀察 |
+
+**結論**：🟡 安靜處理，不升級通知。
+
+無自動修復動作（守則 #15 誠實原則：provider overload 是 minimax 端外部波動，AI 無法代修 config；Telegram token 是教練端設定，AI 無法代補）。
+
+consecutiveErrors 仍 1（< 3），未達升級門檻。本次 11:32 屬延遲重試（11:30 那次失敗後自動 retry）——若本次成功 → consecutiveErrors 自動歸零；若本次也 overload → 累計 2 仍觀察；下次 12:00 若再失敗 → 累計 ≥ 3 → 才升級通知教練。
+
+memory 蒸餾任務 28cd69d9 的 consecutiveErrors 4 已維持多輪，因 cron tool 在本 isolated session 受限無法直接 get/修改，維持原計畫（週日 07-19 12:00 跑前手動調 timeout 300→900）。
+
+---
+
 ## 🦞 11:02 健康檢查 trace（上午，安靜處理）
 
 | 項目 | 狀態 |
