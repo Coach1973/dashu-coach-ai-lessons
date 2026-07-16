@@ -2,27 +2,27 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784167419,
+    "heartbeat_poll": 1784174160,
     "system_health": 1784138520,
     "telegram_channel": 1783951264,
     "junshi_queue": 1784138520
   },
-  "lastHeartbeat": "2026-07-16T10:03:39+08:00",
-  "lastHeartbeatNote": "週四 10:03 由「每4小時主動關懷」(1cbe1701) 10:00 那次觸發的 cron-event session。模型正常回應（durationMs=12），但 Telegram bot token 失效 60h+ 無法主動推送。健康檢查 10:00 那次 error（overloaded, 174.1s），consecutiveErrors=1 仍未達升級閾值。Pipeline 交替模式照舊：09:00❌→09:03✅→09:30❌→09:32✅→10:00❌→本輪 10:03 觀察。教練沉默 52h+ 仍未現身。安靜處理，不升級通知（守則 #12）。",
+  "lastHeartbeat": "2026-07-16T11:56:00+08:00",
+  "lastHeartbeatNote": "週四 11:56 heartbeat poll（cron-event，距 11:55 僅 1 分鐘）。純 cadence poll，無新訊息、無新任務、無新錯誤。健康檢查 46e67e2e 維持 ok（11:32 後穩定），consecutiveErrors=0。28cd69d9 蒸餾 cron 維持 error（nextRun=07-19 週日 12:00），仍待手動調 timeout 300→900。教練沉默 53h15m（自 2026-07-14 06:41 起算），距 72h 升級閾值 07-17 04:41 還有 ~17h。Telegram bot token 失效 63h+ 無法推送（待教練補 token）。12:00 健康檢查即將觸發。安靜處理不升級通知（守則 #12）。",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "midday",
     "dayOfWeek": "Thursday",
     "isQuietHours": false,
     "allCronsHealthy": false,
     "contextStatus": "fresh",
     "contextPercent": 8,
-    "recentCoachActivity": "教練 2026-07-14 06:41 終端機後迄今 52h+ 無新動作；今晨至 10:03 仍未現身",
+    "recentCoachActivity": "教練 2026-07-14 06:41 終端機後迄今 53h+ 無新動作；今晨至 11:56 仍未現身",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-08",
     "gatewayPid": 51523,
     "gatewayRunning": true,
-    "gatewayUptime": "23h28m",
+    "gatewayUptime": "25h21m",
     "telegramChannelOk": false,
     "lastTelegramSendAttempt": {
       "ts": "2026-07-15T18:01:00+08:00",
@@ -32,24 +32,24 @@
     },
     "openTask": "Telegram channel bot token 失效 / 記憶蒸餾 cron timeout 不足 / cool-case 頭像案 / 真誠峰會願景 / Netlify 50% 用量待查 / ATM NT$10,000 入金待對帳 / ACER 備份觀察期滿已過 1 天 / peipei-art 等文字",
     "coachSilentSince": "2026-07-14 06:41",
-    "coachSilentHours": 52.4,
+    "coachSilentHours": 53.25,
     "pendingCoachItems": [
-      "Telegram channel bot token 失效 (60h+) — 11:00 主動關懷訊息會撞牆，需教練補 token",
+      "Telegram channel bot token 失效 (63h+) — 主動關懷訊息會撞牆，需教練補 token",
       "ACER 備份觀察期滿 (7/15) 已過 1 天 — 需在 ACER 開對話執行刪除 D:\\一键备份Windows系统（重要！勿删）_20260703_before_resize\\ 約36.3GB",
-      "Netlify 50% 用量（07-13 13:36 來信，已 68h）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 68h）— 請對帳",
+      "Netlify 50% 用量（07-13 13:36 來信，已 70h）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 70h）— 請對帳",
       "真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
       "cool-case 頭像重新歸類案（連續三棒未完）",
       "peipei-art 改版等教練提供文字/照片",
-      "📦 記憶蒸餾 cron (28cd69d9) consecutiveErrors 4 — 週日 12:00 跑前應調 timeout 300→900"
+      "📦 記憶蒸餾 cron (28cd69d9) consecutiveErrors 4 — 週日 12:00（07-19）跑前應調 timeout 300→900"
     ],
-    "note": "週四上午 10:03 由「每4小時主動關懷」(1cbe1701) 10:00 那次觸發的 cron-event session。模型正常回應（12ms），但 Telegram 60h+ 失效無法推送；健康檢查 10:00 那次 error（174.1s），consecutiveErrors=1 未達升級閾值，Pipeline 交替模式照舊可恢復。教練沉默 52h+ 仍未現身。安靜處理不升級通知（守則 #12）。下次健康檢查 10:33 若仍 overload → consecutiveErrors=2 仍觀察；11:03 第三次失敗 → 升到 3 → 才升級通知。",
+    "note": "週四中午 11:56 heartbeat poll（cron-event）。距上次心跳 11:55 僅 1 分鐘，純 cadence poll。健康檢查 46e67e2e 維持 ok（consecutiveErrors=0）。28cd69d9 維持 error 狀態，nextRun=07-19 週日 12:00。教練沉默 53h15m 仍未現身，Telegram 失效 63h+ 無法推送。安靜處理不升級通知（守則 #12）。下次 12:00 健康檢查即將觸發。",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "1（10:00 那次 overloaded, 174.1s）",
-        "rootCause": "provider overload（minimax 端外部波動），未達升級閾值"
+        "consecutiveErrors": "0（11:32 ok 後歸零，11:30 那次 overload 已自動恢復）",
+        "rootCause": "provider overload（minimax 端外部波動），本次已恢復"
       },
       {
         "jobId": "ee7b976c",
@@ -65,5 +65,5 @@
       }
     ]
   },
-  "lastHeartbeatPoll": 1784167419
+  "lastHeartbeatPoll": 1784174160
 }
