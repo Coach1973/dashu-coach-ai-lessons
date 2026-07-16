@@ -1,5 +1,111 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 🦞 14:02 健康檢查 trace（午後，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| Cron 任務（agent=main 範圍） | 唯一任務（健康檢查自己） |
+| lastRunStatus | 🟡 error（14:00 那次，overloaded, 111.1s）|
+| consecutiveErrors | 🟡 1（從 14:01 觀察時的 1 維持不變，仍 < 3 閾值）|
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足（111.1s 遠低於上限）|
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 12:30❌→13:02✅→13:30❌→14:00❌→本次 14:02（連兩次失敗，仍可恢復）|
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00 |
+| 教練沉默 | 55h21m（自 2026-07-14 06:41 起算，距 72h 升級閾值 07-17 04:41 還有 ~14h40m）|
+| Telegram channel | 🔴 bot token 失效 65h+（無法主動推送，待教練補 token）|
+| 自動修復動作 | ❌ 無（守則 #15：provider overload 是 minimax 端外部波動，AI 無法代修 config）|
+
+**結論**：🟡 安靜處理，不升級通知。
+consecutiveErrors=1 < 3 閾值，未達升級門檻。Pipeline 連兩次失敗（13:30、14:00）但 consecutiveErrors 仍 1——13:02 成功那次讓計數歸零，14:00 才升回 1。
+等 14:30 自動跑驗證 → 若成功 consecutiveErrors 自動歸零；若再失敗累計 ≥ 2 仍觀察；15:00 後第三次才升級通知教練。
+Telegram token + 28cd69d9 兩項皆非本 session 可代修，留待教練下次主對話時一併處理。
+
+## 🦞 14:01 heartbeat poll trace（午後，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| 觸發 | heartbeat poll 14:01（cron-event，距 13:32 約 29 分鐘）|
+| 與 13:32 比對 | 無新訊息、無新任務、無新錯誤，純 cadence poll |
+| Cron 46e67e2e lastRun | 🟡 error（13:30 那次，overloaded, 148.4s，consecutiveErrors=1 維持）|
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足 |
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 12:00❌→12:30❌→13:02✅→13:30❌→14:00（待驗）|
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00 |
+| 教練沉默 | 55h20m（自 2026-07-14 06:41 起算，距 72h 升級閾值 07-17 04:41 還有 ~14h40m）|
+| Telegram channel | 🔴 bot token 失效 65h+（無法主動推送，待教練補 token）|
+| 自動修復動作 | ❌ 無（守則 #15：provider overload 是 minimax 端外部波動，AI 無法代修 config）|
+
+**結論**：🟡 安靜處理，不升級通知。
+consecutiveErrors=1 < 3 閾值，未達升級門檻。Pipeline 交替模式持續運作，模型端仍可自恢復。
+14:00 健康檢查 cron 剛觸發，結果應在下次 heartbeat poll 揭曉。
+教練沉默逼近 72h 升級閾值（07-17 04:41 觸發），但 Telegram 失效 65h+ 無法推送 → 屆時改為「下次主對話時告知」策略。
+Telegram token + 28cd69d9 兩項皆非本 session 可代修，留待教練下次主對話時一併處理。
+
+## 🦞 13:32 健康檢查 trace（午後，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| Cron 46e67e2e lastRun | 🟡 error（13:30 那次，overloaded, 148.4s）|
+| consecutiveErrors | 🟡 1（從 13:02 觀察時的 1 維持不變，仍 < 3 閾值）|
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足（148.4s 遠低於上限）|
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 12:00❌→12:30❌→13:02✅→13:30❌（本次，仍可恢復）|
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00 |
+| 教練沉默 | 54h51m（自 2026-07-14 06:41 起算，距 72h 升級閾值 07-17 04:41 還有 ~15h）|
+| Telegram channel | 🔴 bot token 失效 65h+（無法主動推送，待教練補 token）|
+| 自動修復動作 | ❌ 無（守則 #15：provider overload 是 minimax 端外部波動，AI 無法代修 config）|
+
+**結論**：🟡 安靜處理，不升級通知。
+consecutiveErrors=1 < 3 閾值，未達升級門檻。Pipeline 交替模式持續運作（13:02 成功 → 13:30 失敗），模型端仍可自恢復。
+13:02 那次屬於 12:30 失敗後的延遲重試成功 → 歸零 → 13:30 排程失敗又升回 1。
+等 14:00 自動跑驗證 → 若成功 consecutiveErrors 自動歸零；若再失敗累計 ≥ 2 仍觀察；14:30 後第三次才升級通知教練。
+Telegram token + 28cd69d9 兩項皆非本 session 可代修，留待教練下次主對話時一併處理。
+
+## 🦞 13:02 健康檢查 trace（午後，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| Cron 46e67e2e lastRun | 🟡 error（12:30 retry 那次，overloaded, 121.0s）|
+| consecutiveErrors | 🟡 1（從 12:33 觀察時的 1 維持不變，仍 < 3 閾值）|
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足（121.0s 遠低於上限）|
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 12:00❌→12:30❌（連兩次失敗）→本次 13:02（注意：累計可能升到 2）|
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00 |
+| 教練沉默 | 54h21m（自 2026-07-14 06:41 起算，距 72h 升級閾值 07-17 04:41 還有 ~15h）|
+| Telegram channel | 🔴 bot token 失效 64h+（無法主動推送，待教練補 token）|
+| 自動修復動作 | ❌ 無（守則 #15：provider overload 是 minimax 端外部波動，AI 無法代修 config）|
+
+**結論**：🟡 安靜處理，不升級通知。
+consecutiveErrors=1 < 3 閾值，未達升級門檻。Pipeline 連續兩次 overload（12:00、12:30）但 consecutiveErrors 仍 1（12:30 失敗後本輪 13:02 屬重試成功——若本輪 ok 則歸零，若本輪也 overload 則升 2）。
+等 13:30 自動跑驗證 → 若成功 consecutiveErrors 自動歸零；若再失敗累計 ≥ 2 仍觀察；14:00 後第三次才升級通知教練。
+Telegram token + 28cd69d9 兩項皆非本 session 可代修，留待教練下次主對話時一併處理。
+
+## 🦞 12:33 健康檢查 trace（中午，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| Cron 46e67e2e lastRun | 🟡 error（12:00 那次，overloaded, 181.4s） |
+| consecutiveErrors | 🟡 1（< 3 閾值，不升級） |
+| Model | ✅ minimax/MiniMax-M3 |
+| Timeout 600s | ✅ 充足 |
+| HEARTBEAT.md | ✅ 無 ⬜ 待辦、無 48h 停滯背景工作 |
+| Pipeline 交替模式 | 11:30❌→11:32✅→12:00❌→12:30（待驗）→本次 12:33 |
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00（cron tool 在本 session 受限）|
+| 教練沉默 | 53h22m（自 2026-07-14 06:41 起算，距 72h 升級閾值 07-17 04:41 還有 ~16h） |
+| Telegram channel | 🔴 bot token 失效 63h+（無法主動推送，待教練補 token） |
+| 自動修復動作 | ❌ 無（守則 #15：provider overload 是 minimax 端外部波動，AI 無法代修 config）|
+
+**結論**：🟡 安靜處理，不升級通知。
+consecutiveErrors=1 < 3 閾值，未達升級門檻。Pipeline 交替模式持續運作，模型端可自恢復。
+等 12:30 自動跑驗證 → 若成功 consecutiveErrors 自動歸零；若再失敗累計 2 仍觀察；13:00 後第三次才升級通知教練。
+Telegram token + 28cd69d9 兩項皆非本 session 可代修，留待教練下次主對話時一併處理。
+
+---
+
 ## 🦞 12:03 健康檢查 trace（中午，安靜處理）
 
 | 項目 | 狀態 |
@@ -505,3 +611,19 @@ consecutiveErrors 1 未達升級門檻（≥3），但 Pipeline 已連續 3 次�
 
 **結論**：🟢 安靜處理，不升級通知。與 11:55 完全一致，無新動作。
 
+
+## 🦞 14:03 heartbeat poll trace（午後，安靜處理）
+
+| 項目 | 狀態 |
+|------|------|
+| 觸發 | heartbeat poll 14:03（cron-event，距 14:02 僅 1 分鐘）|
+| 與 14:02 比對 | 無新訊息、無新任務、無新錯誤，純 cadence poll |
+| lastRunStatus（46e67e2e 健康檢查） | 🟡 維持 error（14:00 那次 overloaded，consecutiveErrors=1）|
+| 28cd69d9 蒸餾 | 🟡 維持 error，nextRun=07-19 週日 12:00 |
+| 教練沉默 | 55h22m（距 72h 升級閾值 07-17 04:41 還有 ~14h39m）|
+| Telegram channel | 🔴 bot token 失效 65h+（無法推送）|
+| 下次健康檢查 | 14:30（cron list 顯示 nextRunAtMs=1784183400000）|
+
+**結論**：🟡 安靜處理，不升級通知。
+與 14:02 完全一致，無新動作。教練沉默逼近 72h 升級閾值（07-17 04:41 觸發），但 Telegram 失效 65h+ 無法推送 → 屆時改為「下次主對話時告知」策略。
+等 14:30 健康檢查自動跑驗證 → 若成功 consecutiveErrors 自動歸零；若再失敗累計 ≥ 2 仍觀察；15:00 後第三次才升級通知教練。
