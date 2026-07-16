@@ -2,27 +2,27 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784081145,
-    "system_health": 1784077380,
+    "heartbeat_poll": 1784167419,
+    "system_health": 1784138520,
     "telegram_channel": 1783951264,
-    "junshi_queue": 1784077380
+    "junshi_queue": 1784138520
   },
-  "lastHeartbeat": "2026-07-15T18:01:00+08:00",
-  "lastHeartbeatNote": "週三 18:01 主動關懷：距上次 14:00 約 4h；連續 17:33→18:01 兩次成功，consecutiveErrors 歸零（17:30 那次 overload 屬 minimax 暫時性問題已自癒）；22 個 cron job 中 19 個 ok、3 個 error（皆已知誤報/待調）；教練沉默 35h20m（自 07-14 06:41 起算），溫和提醒 1 件事：今天 (7/15) 是 ACER 備份觀察期滿。其他 44h+ pending 不重複提（已在 v67 接力棒）。",
+  "lastHeartbeat": "2026-07-16T10:03:39+08:00",
+  "lastHeartbeatNote": "週四 10:03 由「每4小時主動關懷」(1cbe1701) 10:00 那次觸發的 cron-event session。模型正常回應（durationMs=12），但 Telegram bot token 失效 60h+ 無法主動推送。健康檢查 10:00 那次 error（overloaded, 174.1s），consecutiveErrors=1 仍未達升級閾值。Pipeline 交替模式照舊：09:00❌→09:03✅→09:30❌→09:32✅→10:00❌→本輪 10:03 觀察。教練沉默 52h+ 仍未現身。安靜處理，不升級通知（守則 #12）。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Wednesday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Thursday",
     "isQuietHours": false,
     "allCronsHealthy": false,
     "contextStatus": "fresh",
     "contextPercent": 8,
-    "recentCoachActivity": "教練 2026-07-14 06:41 終端機後迄今 35h20m 無新動作",
+    "recentCoachActivity": "教練 2026-07-14 06:41 終端機後迄今 52h+ 無新動作；今晨至 10:03 仍未現身",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-08",
     "gatewayPid": 51523,
     "gatewayRunning": true,
-    "gatewayUptime": "7h26m",
+    "gatewayUptime": "23h28m",
     "telegramChannelOk": false,
     "lastTelegramSendAttempt": {
       "ts": "2026-07-15T18:01:00+08:00",
@@ -30,22 +30,26 @@
       "error": "Telegram bot token missing",
       "intent": "週三傍晚溫和關懷，提醒今天 (7/15) ACER 觀察期滿"
     },
-    "openTask": "Telegram channel bot token 失效 / cool-case 頭像案 / 真誠峰會願景圖 / Netlify 50% 用量待查 / ATM NT$10,000 入金待對帳 / 今天 (7/15) ACER 備份觀察期滿",
+    "openTask": "Telegram channel bot token 失效 / 記憶蒸餾 cron timeout 不足 / cool-case 頭像案 / 真誠峰會願景 / Netlify 50% 用量待查 / ATM NT$10,000 入金待對帳 / ACER 備份觀察期滿已過 1 天 / peipei-art 等文字",
     "coachSilentSince": "2026-07-14 06:41",
-    "coachSilentHours": 35.3,
+    "coachSilentHours": 52.4,
     "pendingCoachItems": [
-      "今天 (7/15) ACER 備份觀察期滿 — D:\\一键备份Windows系统（重要！勿删）_20260703_before_resize\\ 約36.3GB 可刪（需在 ACER 開對話執行，聯想這台無法代勞）",
-      "Netlify 50% 用量（07-13 13:36 來信，已 52h）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 52h）— 請對帳",
-      "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
+      "Telegram channel bot token 失效 (60h+) — 11:00 主動關懷訊息會撞牆，需教練補 token",
+      "ACER 備份觀察期滿 (7/15) 已過 1 天 — 需在 ACER 開對話執行刪除 D:\\一键备份Windows系统（重要！勿删）_20260703_before_resize\\ 約36.3GB",
+      "Netlify 50% 用量（07-13 13:36 來信，已 68h）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 68h）— 請對帳",
+      "真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
+      "cool-case 頭像重新歸類案（連續三棒未完）",
+      "peipei-art 改版等教練提供文字/照片",
+      "📦 記憶蒸餾 cron (28cd69d9) consecutiveErrors 4 — 週日 12:00 跑前應調 timeout 300→900"
     ],
-    "note": "週三傍晚心跳。教練沉默 35h+，本想 Telegram 溫和關懷（只提醒 1 件：今天 ACER 觀察期滿），但 Telegram bot token 失效無法送出（52h+ 已知問題）。改為：HEARTBEAT.md + heartbeat-state.json 已更新完整記錄，下次教練主對話時 agent 應主動提這件事 + 確認 Telegram 故障排除進度",
+    "note": "週四上午 10:03 由「每4小時主動關懷」(1cbe1701) 10:00 那次觸發的 cron-event session。模型正常回應（12ms），但 Telegram 60h+ 失效無法推送；健康檢查 10:00 那次 error（174.1s），consecutiveErrors=1 未達升級閾值，Pipeline 交替模式照舊可恢復。教練沉默 52h+ 仍未現身。安靜處理不升級通知（守則 #12）。下次健康檢查 10:33 若仍 overload → consecutiveErrors=2 仍觀察；11:03 第三次失敗 → 升到 3 → 才升級通知。",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "歸零（17:33 → 18:01 連續成功）",
-        "rootCause": "model 已改為 minimax/MiniMax-M3，provider overload 已自癒"
+        "consecutiveErrors": "1（10:00 那次 overloaded, 174.1s）",
+        "rootCause": "provider overload（minimax 端外部波動），未達升級閾值"
       },
       {
         "jobId": "ee7b976c",
@@ -57,9 +61,9 @@
         "jobId": "28cd69d9",
         "name": "📦 每週記憶檔自動蒸餾",
         "consecutiveErrors": 4,
-        "rootCause": "timeoutSeconds 300 不夠，下週日跑前應手動調 900"
+        "rootCause": "timeoutSeconds 300 不夠，週日 12:00（07-19）跑前應手動調 900"
       }
     ]
   },
-  "lastHeartbeatPoll": 1784109600
+  "lastHeartbeatPoll": 1784167419
 }
