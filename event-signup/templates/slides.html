@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>領取今日簡報｜大樹教練</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff;
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+  }
+  .card {
+    width:100%; max-width:440px; background:var(--dark2); text-align:center;
+    border:1px solid var(--line); border-radius:16px; padding:44px 28px;
+  }
+  h1 { font-size:26px; font-weight:900; margin-bottom:12px; }
+  .sub { font-size:17px; color:rgba(255,255,255,.8); line-height:1.8; margin-bottom:32px; }
+  .cta {
+    display:block; text-decoration:none; padding:17px; font-size:20px; font-weight:900;
+    color:#fff; border-radius:10px; letter-spacing:1px; transition:.25s;
+  }
+  .cta:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .cta.line { background:#06C755; }
+  .cta.slide { background:var(--gold); color:var(--dark); margin-top:14px; }
+  .cta.disabled { background:#333; color:rgba(255,255,255,.4); pointer-events:none; margin-top:14px; }
+  .step-label { font-size:14px; color:rgba(255,255,255,.5); font-weight:700; text-align:left; margin:22px 0 6px 4px; }
+  .step-label:first-of-type { margin-top:0; }
+  .note { font-size:14px; color:rgba(255,255,255,.4); margin-top:24px; line-height:1.7; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>感謝聆聽 🙌</h1>
+    <p class="sub">加入大樹教練 LINE 好友<br>並下載今天的簡報檔</p>
+
+    <p class="step-label">STEP 1</p>
+    <a class="cta line" href="{{ add_friend_url }}">➕ 加 LINE 好友</a>
+
+    <p class="step-label">STEP 2</p>
+    {% if has_slide %}
+    <a class="cta slide" href="{{ download_url }}">📄 下載今日簡報</a>
+    {% else %}
+    <span class="cta disabled">今天還沒有設定簡報檔</span>
+    {% endif %}
+
+    <p class="note">加入好友後，未來活動也會第一時間通知您</p>
+  </div>
+</body>
+</html>

@@ -87,6 +87,47 @@
       {% endif %}
     </div>
 
+    <div class="current-box" style="margin-top:16px">
+      <div class="label">🎤 簡報QR（/slides）目前提供的檔案
+        {% if slides_mode == 'auto' %}
+        <span style="font-weight:900;color:#7ee787">● 自動抓今天日期</span>
+        {% else %}
+        <span style="font-weight:900;color:var(--gold)">● 手動指定中</span>
+        {% endif %}
+      </div>
+      <div class="now">{{ current_slide if current_slide else '尚未設定——掃碼會顯示「今天還沒有設定簡報檔」' }}</div>
+      <p style="font-size:13px;opacity:.7;margin:6px 0 14px">
+        {% if slides_mode == 'auto' %}
+        自動模式：上傳簡報檔時，檔名開頭寫今天日期（例如 2026-07-16-AI微型論壇.pdf），系統會自動比對今天日期給出正確檔案。
+        {% else %}
+        手動模式：固定給下面指定的這一份，不看日期。
+        {% endif %}
+      </p>
+
+      <form method="POST" action="/admin/slides-upload" enctype="multipart/form-data" style="display:block;margin-bottom:10px">
+        <input type="file" name="slide_file" required>
+        <button type="submit">上傳簡報檔</button>
+      </form>
+
+      {% if slide_files %}
+      <form method="POST" action="/admin/slides-set-mode" style="display:inline">
+        <input type="hidden" name="mode" value="manual">
+        <select name="manual_file">
+          {% for f in slide_files %}
+          <option value="{{ f }}" {{ 'selected' if manual_slide == f else '' }}>{{ f }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">手動指定為這一份</button>
+      </form>
+      {% endif %}
+      {% if slides_mode == 'manual' %}
+      <form method="POST" action="/admin/slides-set-mode" style="display:inline;margin-left:8px">
+        <input type="hidden" name="mode" value="auto">
+        <button type="submit">恢復自動抓日期</button>
+      </form>
+      {% endif %}
+    </div>
+
     <div class="events">
       <a class="chip {{ '' if selected else 'active' }}" href="/admin">全部來賓</a>
       {% for e in events %}

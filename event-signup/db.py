@@ -61,6 +61,34 @@ def get_current_event(conn: sqlite3.Connection):
     ).fetchone()
 
 
+def get_slides_mode(conn: sqlite3.Connection) -> str:
+    row = conn.execute("SELECT value FROM app_settings WHERE key = 'slides_mode'").fetchone()
+    return row["value"] if row else "auto"
+
+
+def set_slides_mode(conn: sqlite3.Connection, mode: str) -> None:
+    conn.execute(
+        "INSERT INTO app_settings (key, value) VALUES ('slides_mode', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (mode,),
+    )
+    conn.commit()
+
+
+def get_manual_slide_file(conn: sqlite3.Connection) -> str | None:
+    row = conn.execute("SELECT value FROM app_settings WHERE key = 'slides_manual_file'").fetchone()
+    return row["value"] if row else None
+
+
+def set_manual_slide_file(conn: sqlite3.Connection, filename: str) -> None:
+    conn.execute(
+        "INSERT INTO app_settings (key, value) VALUES ('slides_manual_file', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (filename,),
+    )
+    conn.commit()
+
+
 def set_current_event(conn: sqlite3.Connection, slug: str) -> bool:
     """手動把固定QR立牌(/checkin)導向的活動切換成slug這場，並切成manual模式
     （手動選一次之後就不會被自動切換蓋掉，除非之後又按「恢復自動切換」）。
