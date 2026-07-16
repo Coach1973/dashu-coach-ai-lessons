@@ -265,6 +265,17 @@ def set_current():
     return redirect(url_for("admin"))
 
 
+@app.route("/admin/set-auto", methods=["POST"])
+def set_auto():
+    """恢復自動切換：/checkin 改回自動抓日期最接近的那場，不用每次手動點。"""
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    conn = db.get_conn()
+    db.set_routing_mode(conn, "auto")
+    conn.close()
+    return redirect(url_for("admin"))
+
+
 @app.route("/admin")
 def admin():
     if not _logged_in():
@@ -292,10 +303,11 @@ def admin():
     sql += " GROUP BY a.id ORDER BY a.created_at DESC"
     attendees = conn.execute(sql, params).fetchall()
     current_event = db.get_current_event(conn)
+    routing_mode = db.get_routing_mode(conn)
     conn.close()
     return render_template(
         "admin.html", events=events, attendees=attendees,
-        selected=selected, current_event=current_event,
+        selected=selected, current_event=current_event, routing_mode=routing_mode,
     )
 
 

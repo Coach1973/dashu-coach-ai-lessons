@@ -27,17 +27,50 @@ def init_db() -> None:
     conn.close()
 
 
+def get_routing_mode(conn: sqlite3.Connection) -> str:
+    """回傳 'auto' 或 'manual'。預設 auto（沒設定過就是自動）。"""
+    row = conn.execute("SELECT value FROM app_settings WHERE key = 'routing_mode'").fetchone()
+    return row["value"] if row else "auto"
+
+
+def set_routing_mode(conn: sqlite3.Connection, mode: str) -> None:
+    conn.execute(
+        "INSERT INTO app_settings (key, value) VALUES ('routing_mode', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (mode,),
+    )
+    conn.commit()
+
+
 def get_current_event(conn: sqlite3.Connection):
-    return conn.execute("SELECT * FROM events WHERE is_current = 1 LIMIT 1").fetchone()
+    """/checkin 實際導去哪一場，依 routing_mode 決定：
+    auto   → 自動抓「日期最接近、還沒過期」的那場；全部過期則退回最近一場已過期的活動。
+    manual → 照後台手動指定的 is_current 那筆（跟原本行為一樣）。"""
+    if get_routing_mode(conn) == "manual":
+        return conn.execute("SELECT * FROM events WHERE is_current = 1 LIMIT 1").fetchone()
+
+    upcoming = conn.execute(
+        "SELECT * FROM events WHERE event_date >= date('now', 'localtime') "
+        "ORDER BY event_date ASC LIMIT 1"
+    ).fetchone()
+    if upcoming:
+        return upcoming
+    return conn.execute(
+        "SELECT * FROM events WHERE event_date < date('now', 'localtime') "
+        "ORDER BY event_date DESC LIMIT 1"
+    ).fetchone()
 
 
 def set_current_event(conn: sqlite3.Connection, slug: str) -> bool:
-    """把固定QR立牌(/checkin)導向的活動切換成slug這場。回傳False表示找不到這個活動。"""
+    """手動把固定QR立牌(/checkin)導向的活動切換成slug這場，並切成manual模式
+    （手動選一次之後就不會被自動切換蓋掉，除非之後又按「恢復自動切換」）。
+    回傳False表示找不到這個活動。"""
     row = conn.execute("SELECT id FROM events WHERE slug = ?", (slug,)).fetchone()
     if not row:
         return False
     conn.execute("UPDATE events SET is_current = 0")
     conn.execute("UPDATE events SET is_current = 1 WHERE id = ?", (row["id"],))
+    set_routing_mode(conn, "manual")
     conn.commit()
     return True
 

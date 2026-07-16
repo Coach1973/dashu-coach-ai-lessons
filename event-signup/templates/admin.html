@@ -57,16 +57,34 @@
     <p class="total">目前累計 <strong style="color:var(--gold)">{{ attendees|length }}</strong> 位來賓{% if selected %}（已篩選）{% endif %}</p>
 
     <div class="current-box">
-      <div class="label">📌 固定 QR 立牌（/checkin）目前導向</div>
-      <div class="now">{{ current_event.name if current_event else '尚未設定——QR掃了會顯示「目前沒有進行中的活動」' }}</div>
-      <form method="POST" action="/admin/set-current">
+      <div class="label">📌 固定 QR 立牌（/checkin）目前導向
+        {% if routing_mode == 'auto' %}
+        <span style="font-weight:900;color:#7ee787">● 自動切換中</span>
+        {% else %}
+        <span style="font-weight:900;color:var(--gold)">● 手動指定中</span>
+        {% endif %}
+      </div>
+      <div class="now">{{ current_event.name if current_event else '尚未設定——QR掃了會顯示「目前沒有進行中的活動」' }}{% if current_event and current_event.event_date %}（{{ current_event.event_date }}）{% endif %}</div>
+      <p style="font-size:13px;opacity:.7;margin:6px 0 14px">
+        {% if routing_mode == 'auto' %}
+        自動模式：每次掃碼都會即時抓「日期最接近、還沒過期」的那場，過完一場自動接下一場，不用手動切換。
+        {% else %}
+        手動模式：固定導去下面指定的這一場，就算日期過了也不會自動跳下一場，要自己切換。
+        {% endif %}
+      </p>
+      <form method="POST" action="/admin/set-current" style="display:inline">
         <select name="event">
           {% for e in events %}
           <option value="{{ e.slug }}" {{ 'selected' if current_event and current_event.slug == e.slug else '' }}>{{ e.name }}{% if e.event_date %}（{{ e.event_date }}）{% endif %}</option>
           {% endfor %}
         </select>
-        <button type="submit">切換為目前活動</button>
+        <button type="submit">手動切換為這一場</button>
       </form>
+      {% if routing_mode == 'manual' %}
+      <form method="POST" action="/admin/set-auto" style="display:inline;margin-left:8px">
+        <button type="submit">恢復自動切換</button>
+      </form>
+      {% endif %}
     </div>
 
     <div class="events">
