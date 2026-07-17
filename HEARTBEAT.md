@@ -119,3 +119,7 @@
 - HEARTBEAT.md：無 ⬜ 待辦、無 48h 停滯背景工作
 - 回應模式：輕量寒暄 + 1 個明日到期提醒（聯想 C 槽 7/18 觀察期屆滿）
 - 升級通知：❌ 安靜處理（無 system-down、無連續錯誤、無 72h 沉默）
+
+## ⚠️ peipei 自動 force-restart 2026-07-17 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
