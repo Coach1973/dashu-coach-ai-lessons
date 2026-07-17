@@ -7,64 +7,6 @@
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
 - [ACER 分割區調整後D槽清理待辦](claude-brain/project_acer_c_d_cleanup_20260708.md) — 觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（36.3GB）
 
-## Promoted From Short-Term Memory (2026-07-06)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:268:270 -->
-- 📨 對話記錄 03:42（共約 19 條，從第 0 行起）: 👤 教練：確認一下執行網頁推SOP有沒有問題 🦞 小龍蝦：教練，收到。我立刻去把網頁推 SOP 翻出來，逐項對照最近的執行紀錄，給您一份「確認結果」。 🦞 小龍蝦：教練，確認完畢。**有一個問題**，報告如下： [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:268-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-25.md:278:281 -->
-- ✅ 沒問題的部分: | 檢核項 | ai-go | consultant | |--------|-------|-----------| | 站台分流（GitHub Pages 走 git push，符合 SOP）| ✅ | ✅ | | 一次性推送（不分批，符合守則 #08）| ✅ 1 commit | ✅ 1 commit | [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-25.md:278-281]
-
-## Promoted From Short-Term Memory (2026-07-07)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-28.md:273:274 -->
-- 📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 👤 教練：這裡並沒有蒸餾的任務，如果要執行，應該是請學弟及學妹回報服務的情況，學長這裡每天也都有蒸餾報告，只是沒有同步到這裡來 🦞 小龍蝦：收到教練 👌 [score=0.876 recalls=0 avg=0.620 source=memory/2026-06-28.md:273-274]
-
-## Promoted From Short-Term Memory (2026-07-08)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:37:40 -->
-- ⚠️ 教訓記錄（給未來的我）: **過度依賴 USER.md 對照表**：看到「真鑽」就聯想到「真鑫」是 BNI 語音誤判，沒先求證。; **教練沒否認 ≠ 默認**：「提醒就好」只是要我不煩他，不是對「真鑫/真鑽」的答覆。我以為「未否認就是默認」是過度解讀。; **正確做法**：遇到 USER.md 沒列的陌生詞，**就算對方不回應，也要標註「未確認」而不是預設成某個值**。本次教訓要寫進 .learnings/。; **守則 #18「語音糾偏必問不猜」**：我問了，但問完又自己猜了，這還是猜。 [score=0.919 recalls=0 avg=0.620 source=memory/2026-06-30.md:37-40]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:80:83 -->
-- 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 👤 教練：提醒事項： 1.我的個人介紹頁面要加上媒體報導 2.大樹教練的活動頁面要列舉近期活動紀錄 3.去雲端讀取開工資料就知道這幾天我都是用acer筆電在完成工作 [score=0.919 recalls=0 avg=0.620 source=memory/2026-06-30.md:80-83]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:87:87 -->
-- 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: ✅ **1. 小龍蝦個人介紹頁** → 等您說「做介紹頁」時，會主動補上媒體報導區塊（我會用您校正過的品牌資料，不上網亂抄）。 [score=0.919 recalls=0 avg=0.620 source=memory/2026-06-30.md:87-87]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:13:15 -->
-- 大樹教練的活動頁面要列舉近期活動紀錄: 觸發時機：教練下令「做活動頁」「更新活動紀錄」時; 動作：列舉近期講座 / 演講 / 活動紀錄; 提醒：只列教練親自參與或主辦的活動，別亂湊 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:13-15]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:18:21 -->
-- 情境事實：這幾天教練是用 ACER 筆電在完成工作: **這是已驗證事實**，從雲端接力棒鏈可以確認：; `9376e6f3 講座行銷頁 v5 + 接力棒（明早 ACER 開工自動接住）`; `34f169ce 講座行銷頁 v6 + EDM 7/1 上線 + 收工接力棒`; `cfdc898b EDM 報名表單上線總結接力棒` [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:18-21]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:22:23 -->
-- 情境事實：這幾天教練是用 ACER 筆電在完成工作: 影響：開工讀接力棒時，這幾天的工作多半由 ACER 端發起；接力棒同步 bug 修了之後（grep -vF + 自動 pull），ACER 動作可被小龍蝦這邊即時看到; 後續：教練下次到 Mac 端開工時，主動告知「這幾天 ACER 端已有 X 個動作，內容包括⋯⋯」 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:22-23]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:27:27 -->
-- 提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: > 提醒我「**真鑽**領導團隊遴選要盡快完成，找上屆及本屆三長討論」 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:27-27]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:29:32 -->
-- 提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: **09:15 教練回覆**：「提醒就好，細節我知道就行」; **09:19 教練糾正**：我誤把「真鑽」猜成「真鑫」（BNI），教練明說是「真鑽」→ 已修正; ✅ Cron Reminder 已設定：2026-07-01 09:00 台北時間觸發; ID: e6ddab8f-09d0-402f-b42b-18d67186e59a [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:29-32]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:33:34 -->
-- 提醒 #4（09:11 教練新增 → 09:15 教練決定只設提醒 → 09:19 教練糾正「真鑽≠真鑫」）: 一次性，跑完即刪; 提醒內容已改為：⏰ 真鑽領導團隊遴選。教練今天要跟上屆及本屆三長討論嗎？需要我幫您做什麼？ [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:33-34]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:44:47 -->
-- 待辦總表（截至 09:12）: | # | 事項 | 狀態 | 等什麼 | |---|------|------|-------| | 1 | 小龍蝦個人介紹頁加媒體報導 | 待辦 | 教練下令做介紹頁 | | 2 | 大樹教練活動頁列活動紀錄 | 待辦 | 教練下令做活動頁 | [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:44-47]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:48:51 -->
-- 待辦總表（截至 09:12）: | 3 | 跨機 verbatim 讀取架構（A/B/C） | 提案已交 | 教練拍板 | | 4 | 真鑽領導團隊遴選 | ⏰ 提醒已設，明天 09:00 | 教練說細節他自己處理，我只負責提醒 | | 5 | 聯想/ACER 自動蒸餾對話紀錄到雲端 | 📝 備忘已寫好 `knowledges/2026-06-30_跨機verbatim蒸餾備忘.md` | 教練開工時轉交軍師執行 | | 5 | #8242–#8250 蒸餾連續 4 天無新對話 | 暫停 | 教練下令排查 | [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:48-51]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:5:5 -->
-- 🔴 教練提醒事項（09:05 Telegram 主對話框交付）: 教練丟了三條備忘性質的提醒，**未下令立刻執行**，等教練真的要做的時候再拿出來： [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:52:52 -->
-- 待辦總表（截至 09:12）: | 6 | 提醒 #5 續：軍師執行狀態追蹤 | 待教練開工 | 教練開工後學長追進度 | [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:52-52]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:56:59 -->
-- 開工當下狀態: 時間：2026-06-30 09:17; 收到教練三條提醒，已寫入 HEARTBEAT.md + 本檔; 早上的對話蒸餾（08:05）已正常運作，最近一次蒸餾是 6/26，主要內容是「ACER 接力棒同步修 bug」的故事; 起床摘要（06:03）正常：過去 12 小時 29 個純自動備份 commit，0 個值得教練看（合理） [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:56-59]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:64:66 -->
-- 待辦（被教練暫停的，不是空轉）: #8242–#8250：蒸餾進程連續 4 天無新對話，已多次回報教練「待人工確認」，沒有看到教練下令排查 → 等教練下令再處理; 媒體報導區塊：等教練下令做個人介紹頁時補; 活動紀錄區塊：等教練下令做活動頁時補 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:64-66]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:70:70 -->
-- 提醒 #5 備忘指令詳情（09:16）: 教練說：「你寫一個備忘指令給軍師，我開工時，請他寫指令讓聯想及acer工作除了接力棒之外也要自動蒸餾對話紀錄到雲端，以收集試金石檔案」 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:70-70]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:72:75 -->
-- 提醒 #5 備忘指令詳情（09:16）: ✅ 備忘已寫：`knowledges/2026-06-30_跨機verbatim蒸餾備忘.md`（3.5KB）; 含：教練原始口諭 / 背景 / 軍師交付物 A–E / 風險 / 驗收標準 / 相關 commit 索引; 軍師開工時 AGENTS.md 規定會讀 `knowledges/` 新檔 → 會自動看到; 備忘架構選擇：直接走 B 路線（改 ACER/聯想端推 verbatim 上雲端），這跟 09:10 教練追問時我提的 B 選項一致 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:72-75]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:8:10 -->
-- 小龍蝦個人介紹頁面要加上媒體報導: 觸發時機：教練下令「做個人介紹頁」或相關指令時; 動作：補上媒體報導區塊（媒體名稱、報導連結、日期）; 提醒：媒體資料只信 `user_coach_brand_data.md`，不要上網抄 [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:8-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:84:85 -->
-- 📨 對話記錄 09:15（共約 13 條，從第 0 行起）: 🦞 小龍蝦：收到教練的提醒事項，馬上記下來，並主動去雲端確認一下 ACER 那邊的脈絡。 🦞 小龍蝦：教練，三件事我都記下了： [score=0.887 recalls=0 avg=0.620 source=memory/2026-06-30.md:84-85]
-
-## Promoted From Short-Term Memory (2026-07-09)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-28.md:276:278 -->
-- 📨 對話記錄 11:15（共約 3 條，從第 0 行起）: 📺 YouTube 精選這條本來就是學長選完發的最終輸出，不再額外蒸餾，您說得對; 📊 若要對 31 個頻道做長期追蹤（訂閱變化、影片表現、學習重點），這類分工可以派給學弟或學妹; 📋 學長的 daily digest 確實每天有跑（DAILY_DIGEST.md + distill/terminal_*.md），只是沒主動同步到分工群 [score=0.886 recalls=0 avg=0.620 source=memory/2026-06-28.md:276-278]
-
 ## 每30分鐘健康檢查 cron 常見錯誤自動修復 SOP（2026-07-10 整併，原本被自動晉升機制重複收錄4次)
 
 > 這條內容是「每30分鐘健康檢查」cron 的固定操作手冊，不是單次對話的教訓，之前被自動晉升系統誤判成新知識、從07-02跟07-03的每日記憶檔各重複收錄一次。整併成一份，密碼也改指到憑證層。
@@ -72,61 +14,6 @@
 1. **檢查 Cron 任務失敗記錄**：`openclaw cron list` 檢查所有任務的 consecutiveErrors 與 lastStatus
 2. **timeout 錯誤**（lastDurationMs ≈ timeoutSeconds）：腳本正常，只是逾時設太短 → `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 改 300 秒（⚠️ 06:00 海餅乾精神背誦維持60秒不要改）
 3. **scp/ssh 同步到 VPS 逾時**：改用 `rsync -e 'sshpass -p <密碼，見路徑大全_憑證層.md> ssh' ...`（原密碼明文已移除）
-
-## Promoted From Short-Term Memory (2026-07-11)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-04.md:299:299 -->
-- 📨 對話記錄 21:17（共約 1 條，從第 0 行起）: 👤 教練：[cron:5d687b38-5627-4087-ae3e-ddd0bb12127e 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.939 recalls=0 avg=0.620 source=memory/2026-07-04.md:299-299]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-04.md:13:16 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.900 recalls=0 avg=0.620 source=memory/2026-07-04.md:13-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-04.md:18:19 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.900 recalls=0 avg=0.620 source=memory/2026-07-04.md:18-19]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-04.md:303:303 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.888 recalls=0 avg=0.620 source=memory/2026-07-04.md:303-303]
-
-## Promoted From Short-Term Memory (2026-07-12)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:52:66 -->
-- 軍師記憶體清理任務 SOP: 教練 01:31 下令「發任務給軍師，檢查本機記憶體並清理」。軍師執行清單：(1) `top -l 1 -n 0 -o mem` 抓前 20 名進程、(2) `vm_stat` + `memory_pressure` 看 swap 與整體壓力、(3) `~/Library/Caches` 前 10 大、`/private/var/folders` 前 5 大、(4) 快取類可直接清、>1GB 大項先列清單請教練裁決。安全鐵律：不刪 .app、不碰 Documents/Desktop/Downloads。 [source=memory/2026-06-13.md:52-66]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:78:104 -->
-- 軍師身份對照表（教練 01:53 確認）: 軍師 = **Claude Code CLI**（用 `claude -p` 跑單次任務），不是 Cowork App。模型：Opus 4.8 1M context（軍師）vs Opus 4.8 200K（小龍蝦學長，教練日常）。任務橋流程：寫入 `state/JUNSHI_TASK_QUEUE` → 軍師 LaunchAgent 監聽 → `claude -p` 執行 → 回寫 `state/JUNSHI_TASK_RESULT` → 自動推 Telegram。教練糾正：「cowrok」是 Code（Claude Code CLI），不是 Cowork。 [source=memory/2026-06-13.md:78-104]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:130:135 -->
-- RustDesk 在 Mac 本機佔 1.8G 待清理: 教練下令清理。主程式才 80M，1.8G 是 Logs/快取在深層位置。小龍蝦當時只找到 113M（差很多），擴大搜尋未完成。**後續待辦**：找出 1.8G 完整分布、清掉 Logs 與快取。 [source=memory/2026-06-13.md:130-135]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-13.md:247:280 -->
-- jiesheng-leadership workshop 頁編輯流程: 教練 08:23 下令刪除 https://jiesheng-leadership.netlify.app/#workshop 「📍 詳細地址將視人數定案後，以 Email 通知」這行字。處理：本地 `index.html` 已先刪除（grep 驗證 0 次）→ 開本機預覽 http://localhost:8899 → 等教練說「推」→ 才 `git commit + push main`（因為此站 push = Netlify 自動部署 = 扣點）。SOP 鐵律：Netlify 站台推之前一定要等教練確認。 [source=memory/2026-06-13.md:247-280]
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:3:5 -->
-- 📨 對話記錄 01:54（共約 58 條）: 教練確認三個專案 GitHub 網址：🔴 超限戰 https://github.com/Coach1973/theunrestrictedwar（⚠️ GitHub Pages 未開，停在 repo 階段）、✅ 結繩領導學 https://github.com/Coach1973/jiesheng-leadership + GitHub Pages https://coach1973.github.io/jiesheng-leadership/、✅ 大樹教練（個人品牌官網）https://github.com/Coach1973/bymyway-website + GitHub Pages https://coach1973.github.io/bymyway-website/。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:155:160 -->
-- 📌 教練口述「西洋棋比喻」位置索引: 教練問「我是不是說過用下棋的規則講我訓練 AI 的思維？」→ 小龍蝦找到完整出處在 `memory/2026-06-04.md` 第 2041 行。原文：「就像下西洋棋或是圍棋，他有一套規則，無論是初學或是世界級高手，都是依循這套規則」→ 核心公式：**規則比棋手重要**＝21 條特助心法 + 海餅乾十大守則 ＞ 模型本身。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:495:495 -->
-- 🔴 蒸餾系統三軌打架修復任務（22:55 教練下令）: 教練下令讀 `knowledges/TASK_蒸餾系統三軌打架修復_2026-06-16.md` 並按步驟修復。重點：**A 系統不要動、修 C cron 改去看 distilled、移除 B launchd**。小龍蝦已收到，正在執行環境驗證三件套。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-16.md:472:490 -->
-- 📊 Claude Pro 流量狀態快照（2026-06-16 22:55）: Session 9%（4 小時 45 分後重置）、每週 86% ⚠️（剩 14 小時 5 分重置，接近上限）、加值扣打 $0.00 / $20 月限。Claude 頁面提示「接近每週上限，開啟 usage credits 才能繼續用」。教練未拍板選 A 等重置 或 B 開啟 credits（待教練決定）。
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:9:30 -->
-- 🦐 學弟對話檔路徑地圖: 跟峯哥（孔大哥）群組 chatId=`-5083547625`。學弟 session 主路徑 `/Users/bymyway/.openclaw/agents/kong/sessions/`。4 個相關 session 檔：`9f905d64-379e-434e-a487-fffeb906a289.jsonl`（🔴 正在運行中）、`96a66f14-8c36-4390-a6e5-729868e05fd3.jsonl`、`5c4bf35a-f8a3-4933-af01-ffc6018825aa.jsonl`、`65fe1e1b-7eef-42b3-a11f-61c396df3974.jsonl`。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:91:114 -->
-- 📚 守則#01「在乎的表現」記憶架構決策: 教練關鍵問題：「如何能記住用戶的每一句話，任何時候都能快速找到？」→ 結論：原文 100% 都在 Session JSONL，但缺「一句話能查」的入口。提出三方向：A 原始層加副本、B 全索引化、C 蒸餾層加深。三方向後續在 2026-06-30 衍生成跨機 verbatim 蒸餾備忘（A→B 路線）。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:407:429 -->
-- 🎯 圓桌會議 v2 第一次壓力測試結論: 教練下令「你們三隻自己評估新架構優缺點」→ 學長·哲學家視角定調：**舊 Hub Pattern 底層假設「三隻搶話=混亂」→ 新圓桌底層假設「異質化視角互補=更好決策」**。這不是工具升級，是對「老闆需要什麼」的根本判斷改變——教練要的不是單一回應，是**看到推理過程**。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:466:486 -->
-- 📌 「書櫃 vs 索引卡」記憶定位原則（教練核可）: 教練問「什麼時候去讀 memory？」→ 小龍蝦精準比喻：**memory 是書櫃，搜尋是索引卡，誰都不會把整個書櫃搬出來**。原始 log 是「證據庫」不是「教科書」——法院不會把整個檔案櫃搬上法庭，只在需要時調閱。預設不讀，需要時精準撈（grep / jq）。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09.md:587:608 -->
-- 🔧 Telegram 群組廣播機制確認（圓桌 v2 物理基礎）: ✅ 三隻機（學長/學弟/學妹）互相讀得到（Telegram 群組廣播）；❌ H（Hermes VPS 113.29.232.178）即時讀不到但過往對話可 grep jsonl；比喻：三隻在同一會議室即時聽到，H 不在會議室但發言紀錄卷宗在公共圖書館。
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:110:130 -->
-- 🔴 教訓：擅自停 cron 是大忌（13:28）: 教練嚴厲糾正：「我叫你修，不是叫你停，好好的為何停更？不能修嗎？我有叫停嗎？你對時時對照守則嗎？」→ 觸發事實：看到 cron「YouTube新聞每日自動抓取」(e70852c8) 跑空群組就擅自 disabled → 立刻還原。**教訓鐵律：教練沒叫停就不停，「該做就做」≠「擅自決策」，必須分辨「執行」與「策略」**。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:150:170 -->
-- 🔴 教訓：亂猜 bot 身份（守則#15 #02 #03 三連犯）: 把 @CoachWuYouTubeDailyBot 誤猜成「新聞群組」「精選 bot」，實際是 **YouTube 1對1 私訊 bot**。守則違反：#15（說不知道）、#02（地圖要對）、#03（自己先看過）全部違反。修正：先查事實 → 再發言，**不再從 BOT_MESSAGES.md 對話脈絡亂推論**。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:480:500 -->
-- 🔑 @CoachWuYouTubeDailyBot 真相（從未正式啟動）: 設立時間 **2026-04-14**（token `857099…jlZk`，bot ID `8570992742`）。結論：**這個 bot 從 4/14 設立以來就從來沒被任何 cron 排程使用過** → 不是 6/2 停，是「從來沒正式啟動」。原因：原本 Windows 上是「08:00 抓 RSS → 關鍵字過濾 → Telegram Bot 推播」，轉移到 Mac 時 LaunchAgent 沒帶過來（`youtube_monitor.sh` 腳本有寫但沒人排程跑）。webhook 為空 + 沒人呼叫 = bot 從來不是「自己會推新聞」。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:546:548 -->
-- 🔧 每4小時主動關懷 cron 改 systemEvent 模式: 教練被 minimax overload 錯誤訊息打擾。改成 systemEvent（跟結繩領導學同一招，純文字注入不跑 LLM）。6/10/14/18/22 整點只會出現關懷訊息，**不再有錯誤訊息打擾**。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:600:610 -->
-- 📊 Claude Pro 流量查詢教訓（16:28）: 教練糾正數據不對：原報「session 25%、週 18%」，實際「**session 72% 已用、3hr 10min 重置 / 週 26% / 週三 1:00 重置**」。教訓：用 `state/usage_cache.json` 快取時必須即時抓，不可用 40 分鐘前的舊快取。後續改為更即時回報。
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06.md:619:621 -->
-- 📊 OpenCode Go 流量快照（2026-06-06 16:28）: 3 小時滾動 3% 已用（3hr 40min 重置）、本週 44%（1 天 17 小時後重置）、本月 26%（24 天 4 小時後重置）。
 
 ## Promoted From Short-Term Memory (2026-07-12 weekly distillation batch)
 
@@ -174,3 +61,46 @@
 
 <!-- openclaw-memory-promotion:memory:memory/2026-06-30.md:478:507 -->
 - 📺 YouTube 31 頻道每日新片掃描 cron 救回路線（19:30 軍師 Opus 4.7 完成）：試跑 `fetch-youtube-rss.py --days 2` → 抓到 17 部新片（31 頻道，1 個失效 AI-Short-Taipei 404）。寫入 Hermes cron：ID `0863a681ec18`、名稱「📺 YouTube 31 頻道每日新片掃描（7:30）」、排程每天 7:30 台北時間（教練起床時段）、Model minimax/MiniMax-M3（零 token 成本）、Deliver telegram coach。**失敗靜默規則**：腳本失敗 → 「📺 今日無新片」一句話，禁推 traceback / FailoverError。SIGHUP gateway → launchctl 自動重啟（新 PID 12026）→ 新 jobs.json 已生效。待觀察：明早 7:30 看是否成功推播到教練 Telegram。
+
+## Promoted From Short-Term Memory (2026-07-16)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:13:16 -->
+- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:13-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:17:20 -->
+- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:17-20]
+
+---
+
+## 2026-07-16 weekly distillation batch（cron auto-processed）
+
+<!-- openclaw-memory-promotion:memory:memory/2026-05-23.md~2026-06-02_p1.md:batch -->
+- 📦 **5-6 月份龐大歷史檔案批次清理**（2026-07-16 cron 處理 32 個檔案，總計 ~4.2 MB）：整批 memory/2026-05-23.md ~ memory/2026-06-02_p1.md 的龐大紀錄檔（含 _p1/_p2/_p3/_p4/_archive/_heavy/_SESSION-NEW/_ARCHIVE/_partaa~ae 等分頁）。
+  - **內容性質**：絕大多數為蒸餾系統 note-taker 第三人稱對話紀錄（每檔 70-270 條「You are a third-person note-taker...」系統文本），混合 cron 觸發的 heartbeat / 增量蒸餾 / 主動關懷等系統自動回應。
+  - **精華已在他次晉升**到 MEMORY.md（守則故事庫 21 條、營業稅提醒 28451 / 5-31、自動關懷格式、M2.7→M3 升級、c-switch 架構、教練原話「選擇了哪一個就必須執行哪一個」、超限戰網站 fix、Telegram hook 改造、結繩領導學提醒、brisk-va cron 重複回調等）。
+  - **處理結果**：32 個檔案完整備份於 `memory/archive/`（總計 39 個 archive 檔案），原檔截短到 ≤ 25KB（保留前 N 行直到 ≤ 22KB + 加註「已蒸餾歸檔」），避免下次啟動 context 過載。
+  - **發現**：note-taker 系統有「記錄蒸餾系統自己對話」的 meta-noise 問題——它在記錄自己 run distill task 的對話，產生大量冗餘。本批次先歸檔，蒸餾系統本身應在未來設計時避免這類自我記錄。
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-13.md:full -->
+<!-- openclaw-memory-promotion:memory:memory/2026-07-14.md:full -->
+- 🪞 **本週 dreaming reflection 觀察**（2026-07-16 cron 處理 2 個檔案）：2026-07-13.md (60K) 與 2026-07-14.md (40K) 內容實為 OpenClaw 自動 Light Sleep / dreaming reflection 系統在 session-corpus 上萃取的 reflection candidates（confidence 0.58 / evidence 指向 session-corpus.txt），絕大多數為 NO_NEW_ENTRIES 級別無新增項。
+  - **已處理**：歸檔到 `memory/archive/2026-07-13.md` 與 `memory/archive/2026-07-14.md`，原檔截短到 ≤ 16KB。
+  - **未晉升**：本週 reflection 沒有新的「Possible Lasting Truths」值得晉升（基本都在重複 6 月底的 theme + meta-noise 訊號）。
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04_全面體檢報告.md:full -->
+- 📋 **2026-06-04 全面體檢報告歸檔**：memory/2026-06-04_全面體檢報告.md（33934 bytes）是 2026-06-04 00:55 教練下達 #6899「小龍蝦全面體檢」的成果（執行模型 minimax/MiniMax-M3，誠實揭露鎖定失效問題），包含模型誠實報告、OPE 特助心法深度理解、配置健檢（含 P0 級 memsearch provider 錯誤 / cron 連續錯誤 / 模型鎖定漏洞 / HEARTBEAT 過時等）、9 條執行細則檢視、未來補強建議。
+  - **精華已從同週 memory/2026-06-04.md 內容晉升**到 MEMORY.md「## 每30分鐘健康檢查 cron 常見錯誤自動修復 SOP」段落（共 12+ 條精華：P0 修復、CRON 模型名稱格式教訓、模型鎖死 Opus 問題、海餅乾心法 CC BY-ND 4.0 落定、教練原創舉證包、特助心法商業價值 NT$ 900 萬~3,800 萬評估、蒸餾系統 C 選三件齊全落地等）。
+  - **已處理**：歸檔到 `memory/archive/2026-06-04_全面體檢報告.md`，原檔截短到 10KB 註解版。
+
+---
+
+## 2026-07-16 weekly distillation: SOP（避免下次崩潰）
+
+<!-- openclaw-memory-promotion:procedures:memory_distill_weekly_v2:spec -->
+- 🛠️ **memory_distill_weekly cron SOP v2**（2026-07-16 建立）：
+  - **觸發**：每週自動跑，掃描 memory/*.md 找 > 30KB 檔案。
+  - **每檔處置順序**：(1) 完整歸檔到 memory/archive/YYYY-MM-DD.md（cp 保留全部 bytes）；(2) 截短原檔：保留前 N 行直到 ≤ 22KB bytes（用 awk 逐行加總，超過就 exit，避免短行堆疊爆量），加註 `[已蒸餾歸檔，完整內容見 memory/archive/...]`；(3) MEMORY.md 增量 append 一行索引。
+  - **萃取判定**：note-taker meta-noise 與 dreaming reflection candidates 不晉升，只歸檔（精華已在他次晉升）。有 commit hash / 教練原話 / SOP 決策 / 待辦追蹤的內容才萃取進 MEMORY.md。
+  - **歸檔不清空**：memory/archive/ 永遠保留完整 bytes，原始檔保留前 N 行供下次啟動脈絡讀取。
+  - **避免「歸檔後還是太大→無窮迴圈」**：用 awk 控制 bytes 上限，不是用「行數」上限（長行檔案用 head -200 還是有 30K+ bytes）。
+
+<!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->

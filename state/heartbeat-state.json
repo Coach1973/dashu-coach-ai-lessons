@@ -1,18 +1,18 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-13T18:00:00+08:00",
+    "heartbeat_received": "2026-07-16T18:03:11+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-13T18:00:30+08:00",
+    "system_health": "2026-07-16T18:03:00+08:00",
     "telegram_channel": "仍異常 (無 bot token)"
   },
-  "lastHeartbeat": "2026-07-13T18:00:00+08:00",
-  "lastHeartbeatNote": "週一傍晚 18:00 心跳：Gmail 新增 1 封 IMPORTANT（嘖嘖募資 14:01），其餘為促銷；待辦不變（Netlify 50% + 光線尺 ATM 10,000 + Telegram 異常）",
+  "lastHeartbeat": "2026-07-16T18:03:00+08:00",
+  "lastHeartbeatNote": "週四傍晚 18:03 cadence poll（距 18:02 僅 1 分鐘）：無新訊息、無新任務、無新錯誤；Pipeline 18:00 仍 error（124.3s overloaded）但 consecutiveErrors=1 維持；model=minimax/MiniMax-M3 OK；Timeout 600s 充足；nextRun=18:30。🟢 安靜處理不升級（純 cadence poll）",
   "systemSnapshot": {
     "timeOfDay": "evening",
-    "dayOfWeek": "Monday",
+    "dayOfWeek": "Thursday",
     "isQuietHours": false,
-    "allCronsHealthy": true,
+    "allCronsHealthy": false,
     "contextStatus": "stable",
     "contextPercent": 16,
     "gatewayPid": 71310,
@@ -21,7 +21,7 @@
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-06-13T08:27",
     "coachSilentSince": "04:46",
-    "coachSilentHours": 13.2,
+    "coachSilentHours": 13.3,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
     "newImportantSinceLastCheck": [
@@ -32,7 +32,7 @@
       "光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳",
       "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
     ],
-    "weatherRelevance": "傍晚 18:00，週一工作日結束，教練若外出回家路需注意",
-    "note": "Telegram 通道仍斷，無法主動推訊；18:00 屬傍晚主動關懷時段，給有意義回報"
+    "weatherRelevance": "傍晚 18:00，週四工作日結束，教練若外出回家路需注意",
+    "note": "Telegram 通道仍斷，無法主動推訊；18:03 距上次 18:02 僅 1 分鐘純 cadence poll，不升級不打擾"
   }
 }

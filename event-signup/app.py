@@ -12,12 +12,22 @@ import os
 import re
 import urllib.error
 import urllib.request
+from datetime import datetime
 from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
 from werkzeug.security import check_password_hash
 
 import db
+
+
+def _sanitize_filename(raw: str) -> str:
+    """保留中文檔名（簡報標題常是中文），只擋掉路徑穿越與危險字元。
+    不能直接用werkzeug的secure_filename——它會把中文整段砍掉，
+    「2026-07-16-AI微型論壇.pdf」會變成「2026-07-16-AI.pdf」，日期後的說明文字全部消失。"""
+    name = os.path.basename(raw).replace("\x00", "")
+    name = re.sub(r'[/\\:*?"<>|]', "", name)
+    return name.strip() or "file"
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("EVENT_SECRET_KEY", "")
@@ -28,6 +38,26 @@ LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", "")
 
 GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
+
+SLIDES_DIR = os.path.join(os.path.dirname(__file__), "slides")
+OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
+TELEGRAM_NOTIFY_CHAT_ID = "6124913915"  # 教練跟小龍蝦的對話，路徑大全.md已記錄
+
+
+def _notify_xiaolongxia(text: str) -> None:
+    """發Telegram訊息給小龍蝦（教練本人的對話），失敗不影響網頁本身回應。"""
+    try:
+        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
+            config = json.load(f)
+        bot_token = config["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
+        body = json.dumps({"chat_id": TELEGRAM_NOTIFY_CHAT_ID, "text": text}).encode("utf-8")
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{bot_token}/sendMessage",
+            data=body, method="POST", headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=10)
+    except Exception:
+        pass  # 通知失敗不該擋住聽眾拿到簡報
 
 
 @app.route("/")
@@ -53,6 +83,81 @@ def checkin():
     if not event:
         return "目前沒有進行中的活動，請稍後再試", 404
     return redirect(url_for("signup_form", slug=event["slug"]))
+
+
+def _resolve_current_slide(conn) -> str | None:
+    """回傳目前應該給出的簡報檔名（slides/資料夾裡的檔名），找不到回傳None。
+    auto模式：抓檔名開頭是今天日期(YYYY-MM-DD)的檔案；manual模式：後台指定的那個檔案。"""
+    mode = db.get_slides_mode(conn)
+    if mode == "manual":
+        fname = db.get_manual_slide_file(conn)
+        if fname and os.path.exists(os.path.join(SLIDES_DIR, fname)):
+            return fname
+        return None
+    today = datetime.now().strftime("%Y-%m-%d")
+    if os.path.isdir(SLIDES_DIR):
+        for fname in sorted(os.listdir(SLIDES_DIR)):
+            if fname.startswith(today):
+                return fname
+    return None
+
+
+@app.route("/slides")
+def slides_landing():
+    """簡報最後QR掃碼進來的頁面：加LINE好友 + 下載今天的簡報，同時通知小龍蝦。
+    固定網址，不用因為每次簡報不同而重印QR——後台換今天的檔案就好。"""
+    conn = db.get_conn()
+    fname = _resolve_current_slide(conn)
+    conn.close()
+
+    _notify_xiaolongxia(
+        f"📊 有人掃了簡報QR碼\n檔案：{fname or '（尚未設定今日簡報）'}\n時間：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    )
+
+    add_friend_url = f"https://line.me/R/ti/p/{LINE_OA_ID}"
+    return render_template(
+        "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname),
+        download_url=url_for("slides_download") if fname else None,
+    )
+
+
+@app.route("/slides/download")
+def slides_download():
+    conn = db.get_conn()
+    fname = _resolve_current_slide(conn)
+    conn.close()
+    if not fname:
+        return "今天還沒有設定簡報檔，請洽大樹教練", 404
+    return send_from_directory(SLIDES_DIR, fname, as_attachment=True)
+
+
+@app.route("/admin/slides-upload", methods=["POST"])
+def slides_upload():
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    file = request.files.get("slide_file")
+    if file and file.filename:
+        os.makedirs(SLIDES_DIR, exist_ok=True)
+        safe_name = _sanitize_filename(file.filename)
+        file.save(os.path.join(SLIDES_DIR, safe_name))
+    return redirect(url_for("admin"))
+
+
+@app.route("/admin/slides-set-mode", methods=["POST"])
+def slides_set_mode():
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    mode = (request.form.get("mode") or "auto").strip()
+    conn = db.get_conn()
+    if mode == "manual":
+        fname = (request.form.get("manual_file") or "").strip()
+        if fname:
+            db.set_manual_slide_file(conn, fname)
+        db.set_slides_mode(conn, "manual")
+    else:
+        db.set_slides_mode(conn, "auto")
+    conn.close()
+    return redirect(url_for("admin"))
 
 
 @app.route("/e/<slug>", methods=["GET"])
@@ -265,6 +370,17 @@ def set_current():
     return redirect(url_for("admin"))
 
 
+@app.route("/admin/set-auto", methods=["POST"])
+def set_auto():
+    """恢復自動切換：/checkin 改回自動抓日期最接近的那場，不用每次手動點。"""
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    conn = db.get_conn()
+    db.set_routing_mode(conn, "auto")
+    conn.close()
+    return redirect(url_for("admin"))
+
+
 @app.route("/admin")
 def admin():
     if not _logged_in():
@@ -292,10 +408,17 @@ def admin():
     sql += " GROUP BY a.id ORDER BY a.created_at DESC"
     attendees = conn.execute(sql, params).fetchall()
     current_event = db.get_current_event(conn)
+    routing_mode = db.get_routing_mode(conn)
+    slides_mode = db.get_slides_mode(conn)
+    current_slide = _resolve_current_slide(conn)
+    manual_slide = db.get_manual_slide_file(conn)
     conn.close()
+    slide_files = sorted(os.listdir(SLIDES_DIR)) if os.path.isdir(SLIDES_DIR) else []
     return render_template(
         "admin.html", events=events, attendees=attendees,
-        selected=selected, current_event=current_event,
+        selected=selected, current_event=current_event, routing_mode=routing_mode,
+        slides_mode=slides_mode, current_slide=current_slide,
+        manual_slide=manual_slide, slide_files=slide_files,
     )
 
 

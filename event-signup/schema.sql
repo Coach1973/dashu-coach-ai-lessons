@@ -25,3 +25,9 @@ CREATE TABLE IF NOT EXISTS signups (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     UNIQUE (attendee_id, event_id)      -- 同一人同一場只算一次
 );
+
+-- 簡單的key-value設定表，目前只放一筆：/checkin的切換模式
+CREATE TABLE IF NOT EXISTS app_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
