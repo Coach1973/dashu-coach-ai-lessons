@@ -1,3 +1,97 @@
+## 🦞 健康檢查 trace（11:32 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 error（剛 11:30 那次 overloaded, **142.9s**）
+- consecutiveErrors 🟡 **1**（< 3 升級閾值，安靜處理）
+- lastDurationMs = 142.9s（遠低於 600s timeout，**非 timeout 錯誤**）
+- lastErrorReason = `overloaded`（minimax provider 端外部波動，非 config 問題，守則 #15 無法代修）
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s、delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：典型 alternating fail/recover（11:00✅ 完整恢復→11:30❌ provider 端再抖→本次 11:32 觀察）
+- cron 跨 job 查詢（ee7b976c VPS polling）受限：restricted mode 只能查 current job，從前次 10:33 trace 仍 🟢 ok 推斷穩定
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
+- 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 星期五上午 11:32）
+- 教練沉默時間：07:04 交辦 8036 車貸後約 4h28m，遠 < 72h 閾值
+- 結論：上午 11:32 觀察期，無需打擾教練，等 12:00 自動驗證
+
+---
+
+## 🦞 健康檢查 trace（11:00 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟢 **ok**（cron list 已顯示 ok，CE 已歸零）
+- 10:30 那次 overloaded (147.1s, CE=1) 已被本次 11:00 成功 reset → pipeline 完全恢復
+- 其他 23 個 cron jobs：🟢 全 ok（健康檢查 + VPS polling 雙重恢復）
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s/300s、delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：alternating fail/recover → **11:00 完整恢復**（minimax provider 上午時段波動後已正常）
+- 自動修復：❌ 無需（已恢復健康）
+- 升級通知：❌ 安靜處理（all ok + delivery.mode=none + 上午 11:00 pipeline 完全健康）
+- 教練沉默時間：07:04 交辦 8036 車貸後約 4h，遠 < 72h 閾值
+- 結論：上午 11:00 pipeline 完全健康，無需打擾教練
+
+---
+
+## 🦞 健康檢查 trace（10:33 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 **error**（剛 10:30 那次 overloaded, **147.1s**）
+  - consecutiveErrors 🟡 **1**（< 3 升級閾值，安靜處理）
+  - lastDurationMs = 147.1s（遠低於 600s timeout，**非 timeout 錯誤**）
+  - lastErrorReason = `overloaded`（minimax provider 端外部波動，非 config 問題，守則 #15 無法代修）
+  - Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s、delivery.mode ✅ none
+- Cron VPS polling 健康檢查（ee7b976c）：從 HEARTBEAT 10:04 trace 已知 10:03 那次 ok（11.9s, CE=0）
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式延續：典型 alternating fail/recover（10:00✅ 完整恢復→10:30❌ provider 端再抖→本次 10:33 觀察；10:30 屬 minimax provider 上午時段外部波動）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
+- 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 上午 10:33 非緊急時段）
+- 結論：上午 10:33 觀察期，無需打擾教練，等 11:00 自動驗證
+
+---
+
+## 🦞 健康檢查 trace（10:04 07-17，本次）
+
+- 觸發：cron-event heartbeat poll（距上次 09:07 約 57 分鐘）
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟢 **ok**（10:00 那次已恢復，CE 歸零）
+- Cron VPS polling 健康檢查（ee7b976c）：lastRunStatus 🟢 **ok**（剛 10:03 跑完）
+- 23 個 cron jobs：健康檢查 + VPS polling 全 ok，其他 jobs 維持 ok
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s/300s
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：alternating fail/recover → **10:00 完整恢復**（minimax provider 凌晨/清晨波動後已正常）
+- 自動修復：❌ 無需（已恢復健康）
+- 升級通知：❌ 安靜處理（all ok + delivery.mode=none + 早晨 10:04 + 教練 07:04 後沉默 3h 遠 < 72h 閾值）
+- peipei gateway force-restart（09:15:00）已在觀察中，下次 VPS polling 10:33 驗證
+- 結論：早晨 10:04 pipeline 完全健康，無需打擾教練
+
+---
+
+## 🦞 健康檢查 trace（10:02 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 error（剛 10:00 那次 overloaded, **71.3s**）
+- consecutiveErrors 🟡 **1**（< 3 升級閾值，安靜處理）
+- lastDurationMs = 71.3s（遠低於 600s timeout，**非 timeout 錯誤**）
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s、delivery.mode ✅ none
+- 錯誤類型：`FailoverError: The AI service is temporarily overloaded`（minimax provider 端外部波動，非 config 問題，守則 #15 無法代修）
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式延續：典型 alternating fail/recover（09:32✅→09:30❌→10:00❌→本次 10:02 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
+- 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 早晨 10:02 非緊急時段）
+- 結論：早晨 10:02 觀察期，無需打擾教練，等 10:30 自動驗證
+
+---
+
+## 🦞 健康檢查 trace（09:32 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 error（剛 09:30 那次 overloaded, **106.3s**）
+- consecutiveErrors 🟡 **1**（< 3 升級閾值，安靜處理）
+- lastDurationMs = 106.3s（遠低於 600s timeout，**非 timeout 錯誤**）
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s、delivery.mode ✅ none
+- 錯誤類型：`FailoverError: The AI service is temporarily overloaded`（minimax provider 端外部波動，非 config 問題，守則 #15 無法代修）
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式延續：典型 alternating fail/recover（09:00✅→09:30❌→本次 09:32 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
+- 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 早晨 09:32 非緊急時段 + 教練 07:04 有互動）
+- 結論：早晨 09:32 觀察期，無需打擾教練，等 10:00 自動驗證
+
+---
+
 ## 🦞 健康檢查 trace（09:07 07-17，本次）
 
 - 觸發：cron-event heartbeat poll（距上次 06:04 約 3 小時）
@@ -387,3 +481,20 @@
 - 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
 - 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 清晨 07:32 非緊急時段）
 - 結論：清晨 07:32 觀察期，無需打擾教練
+
+## ⚠️ peipei 自動 force-restart 2026-07-17 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🦞 健康檢查 trace（10:02 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟢 **ok**（10:00 那次已恢復，CE 應已歸零）
+- Cron VPS polling 健康檢查（ee7b976c）：lastRunStatus 🟢 **ok**（剛 10:03 跑完，11.9s，CE=0，lastRunAtMs=1784253798353）
+- 23 個 cron jobs：健康檢查 + VPS polling 全 ok，其他 jobs 維持 ok
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s/300s
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：alternating fail/recover → **10:00 完整恢復**（minimax provider 凌晨/清晨波動後已正常）
+- 自動修復：❌ 無需（已恢復健康）
+- 升級通知：❌ 安靜處理（all ok + delivery.mode=none + 早晨 10:02 + 教練 07:04 後沉默中）
+- peipei gateway force-restart（09:15:00）已在觀察中，下次 VPS polling 10:15 驗證
+- 結論：早晨 10:02 pipeline 完全健康，無需打擾教練
