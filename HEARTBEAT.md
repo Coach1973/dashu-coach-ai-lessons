@@ -1,4 +1,15 @@
 ---
+📌 **2026-07-17 18:02 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 18:00 那次 overloaded, 110.0s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（110.0s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：延續 alternating fail/recover（17:03✅→17:31✅→18:00❌→本次 18:02 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + 星期五傍晚 18:02 非緊急時段）
+- 下次觀察：18:30 cron fire，預期會自動驗證恢復
+
+---
 📌 **2026-07-17 17:31 健康檢查 trace**（安靜結束）
 - Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 17:00 那次 overloaded, 67.5s, minimax 端外部波動）
 - consecutiveErrors：🟡 **1**（< 3 升級閾值）
@@ -123,3 +134,16 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-17 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+---
+📌 **2026-07-17 18:01 主動關懷 trace（每4小時，cron 心跳）**（安靜結束）
+- 觸發：cron 「每4小時主動關懷」18:00 fire（上次 14:04，間隔 4h）
+- 教練沉默：🟡 07:04 起算已 11h（**已超過 8h 升級閾值**，但週末前夕傍晚非緊急）
+- Telegram channel：🔴 仍壞（自 7/15 18:01 起 86h+，bot token 缺）
+- Pipeline：46e67e2e 持續 alternating fail/recover（CE=1，minimax 端外部波動）
+- HEARTBEAT.md：無 ⬜ 待辦、無 48h 停滯背景工作
+- Gateway：🟢 正常（pid 7209，uptime 16h29m+）
+- peipei：17:55 自動 force-restart 過，已恢復正常
+- 回應模式：輕量週末問候 + 1 個明日到期提醒（聯想 C 槽 7/18 觀察期屆滿，刪兩份保留備份約 94GB）
+- 升級通知：❌ 安靜處理（無 system-down、教練 11h 沉默雖過閾值但週五傍晚屬於合理休息時段）
+- 下次觀察：22:00 cron fire，預期夜間時段安靜結束
