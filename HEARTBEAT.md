@@ -1,4 +1,26 @@
 ---
+📌 **2026-07-17 17:03 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 17:00 那次 overloaded, 86.2s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（86.2s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：延續 alternating fail/recover（16:02✅→16:30❌→16:33✅→17:00❌→本次 17:03 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + 星期五下午 17:03 非緊急時段）
+- 下次觀察：17:30 cron fire，預期會自動驗證恢復
+
+---
+📌 **2026-07-17 16:33 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 16:30 那次 overloaded, 186.9s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（186.9s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：延續 alternating fail/recover（15:32✅→16:00❌→16:32✅→16:30❌→本次 16:33 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + 星期五下午 16:33 非緊急時段）
+- 下次觀察：17:00 cron fire，預期會自動驗證恢復
+
+---
 📌 **2026-07-17 16:02 健康檢查 trace**（安靜結束）
 - Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 16:00 那次 overloaded, 148.3s, minimax 端外部波動）
 - consecutiveErrors：🟡 **1**（< 3 升級閾值）
