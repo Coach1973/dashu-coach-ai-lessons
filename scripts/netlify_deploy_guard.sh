@@ -23,6 +23,29 @@ fi
 if echo "$CMD" | grep -qE "api\.netlify\.com/api/v1/sites/[^/]+/deploys|netlify deploy|nfp_[A-Za-z0-9]{30,}"; then
   # 已過二次確認的指令放行（教練親口「推」後，Claude 重發指令加前綴）
   if echo "$CMD" | grep -q "^NETLIFY_DEPLOY_CONFIRMED=1 "; then
+    # 🔴 2026-07-17 教練交辦：7/25前只剩16次部署額度，每次真的POST新部署要計數提醒
+    # 只認「真的建立新部署」的POST（.../deploys 結尾，且有 -X POST），
+    # 查狀態的GET（.../deploys/<id>）或列site清單不算，不會誤扣
+    QUOTA_FILE="/Users/bymyway/.openclaw/workspace/state/netlify_deploy_quota.json"
+    if echo "$CMD" | grep -qE -- "-X *POST" && echo "$CMD" | grep -qE "/deploys[\"' ]*$"; then
+      if [ -f "$QUOTA_FILE" ]; then
+        REMAINING=$(/usr/bin/python3 -c "
+import json
+with open('$QUOTA_FILE') as f:
+    d = json.load(f)
+d['quota_remaining'] -= 1
+with open('$QUOTA_FILE', 'w') as f:
+    json.dump(d, f, ensure_ascii=False, indent=2)
+print(d['quota_remaining'])
+" 2>/dev/null)
+        if [ -n "$REMAINING" ]; then
+          echo "📊 Netlify 部署額度：本次用掉1次，還剩 ${REMAINING} 次（7/25前）" >&2
+          if [ "$REMAINING" -le 3 ]; then
+            echo "⚠️⚠️⚠️ 額度只剩 ${REMAINING} 次了，記得回報教練提醒注意！" >&2
+          fi
+        fi
+      fi
+    fi
     exit 0
   fi
 
