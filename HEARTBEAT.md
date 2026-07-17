@@ -1,4 +1,27 @@
 ---
+📌 **2026-07-17 19:00 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟢 lastRunStatus=ok（本次 19:00 完美執行，21645ms / 21.6s）
+- consecutiveErrors：🟢 **0**（19:00 已自動從 CE=1 恢復）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（21.6s ≪ 600s）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：典型 alternating fail/recover，但本次 🟢 恢復（18:02✅→18:30❌→18:32✅→19:00✅本次）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修；本次成功無需修）
+- 升級通知：❌ 安靜處理（CE=0 + delivery.mode=none + 星期五傍晚 19:00 非緊急時段）
+- 下次觀察：19:30 cron fire，預期監控延續
+
+---
+📌 **2026-07-17 18:32 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 18:00 那次 overloaded, 112.5s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（112.5s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- 額外觀察：15:25 run id 65f9c990 出現 `minimax can't find the model` 瞬斷（100ms）後自動恢復，不影響整體 pipeline
+- Pipeline 模式：延續 alternating fail/recover（17:31✅→18:00❌→本次 18:32 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + 星期五傍晚 18:32 非緊急時段）
+- 下次觀察：19:00 cron fire，預期會自動驗證恢復
+
+---
 📌 **2026-07-17 18:02 健康檢查 trace**（安靜結束）
 - Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 18:00 那次 overloaded, 110.0s, minimax 端外部波動）
 - consecutiveErrors：🟡 **1**（< 3 升級閾值）
