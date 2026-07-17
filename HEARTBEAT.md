@@ -1,3 +1,19 @@
+## 🦞 健康檢查 trace（12:02 07-17，本次）
+
+- Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 error（剛 12:00 那次 overloaded, **99.6s**）
+- consecutiveErrors 🟡 **1**（< 3 升級閾值，安靜處理）
+- lastDurationMs = 99.6s（遠低於 600s timeout，**非 timeout 錯誤**）
+- lastErrorReason = `overloaded`（minimax provider 端外部波動，非 config 問題，守則 #15 無法代修）
+- Model ✅ `minimax/MiniMax-M3`、Timeout ✅ 600s、delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：典型 alternating fail/recover（11:32✅→11:30 那次因 provider 抖→12:00❌→本次 12:02 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，無 config 層可修）
+- 升級通知：❌ 安靜處理（CE=1 < 3 + delivery.mode=none + 星期五中午 12:02 觀察期）
+- 教練沉默時間：07:04 交辦 8036 車貸後約 4h58m，遠 < 72h 閾值
+- 結論：中午 12:02 觀察期，無需打擾教練，等 12:30 自動驗證即可
+
+---
+
 ## 🦞 健康檢查 trace（11:32 07-17，本次）
 
 - Cron 健康檢查本身（46e67e2e）：lastRunStatus 🟡 error（剛 11:30 那次 overloaded, **142.9s**）
