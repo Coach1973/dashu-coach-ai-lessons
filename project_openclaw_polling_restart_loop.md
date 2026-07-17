@@ -71,7 +71,21 @@ Mac mini 上的 `launchctl kickstart -k ai.openclaw.gateway` 是 macOS LaunchAge
 
 ---
 
-### How to apply（推薦修法）
+### 🔴 2026-07-17 已自動化：不用再手動判斷+手動修
+
+教練要求「自動偵測、自動修復，不要再讓我操心」。`scripts/vps_polling_healthcheck.sh`
+已經內建這份 SOP 的判斷邏輯（訊號1+訊號2成立才觸發）+ 自動執行下面的修法 +
+自動重新驗證，修好才輕量通報（不是求救），修不好才發原本的警報。
+
+**觸發機制改成純 bash launchd（`ai.openclaw.vps-polling-healthcheck.plist`，每15分鐘），
+不再經過 openclaw agent cron（LLM 層）**——這樣即使 minimax provider 過載/model_not_found，
+健康檢查本身也不會被打斷（2026-07-17 15:15 那次監控空窗就是舊機制的問題，原本的
+`ee7b976c` LLM cron 已停用，避免同一套邏輯重複跑兩次）。
+
+有效期限：只對「restart loop」這個模式自動修，spool堆積類問題（見上表）不會被誤觸發，
+會维持發警報等人工判斷。自動修復本身有2小時冷卻，避免對修不好的問題無限重試洗版。
+
+### How to apply（人工介入時參考，自動化沒修好才需要看這段）
 
 **✅ 推薦：直接重啟整個 Docker container（2026-07-17 驗證有效，2026-06-23 同款）**
 

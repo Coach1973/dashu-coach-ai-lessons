@@ -1,12 +1,20 @@
 #!/bin/bash
 # vps_polling_healthcheck.sh — VPS 小龍蝦（43.245.60.200）polling 健康檢查
 #
-# 觸發：openclaw_cron_daemon.sh 每 15 分鐘執行
+# 觸發：ai.openclaw.vps-healthcheck.plist（launchd，純 bash，不經過LLM/agent層，
+#       所以不會像openclaw agent cron那樣被model_not_found/provider過載打斷）每 15 分鐘執行
 # 用途：早於朋友發現 VPS polling 卡住（案例 50，2026-07-14）
 # 設計：小龍蝦學長（1號機）
 #
 # 原理：抓容器內 spool 狀態 + polling log，最後判斷是否卡住，寫結果到
-#       state/vps_polling_healthcheck.state.json。異常時直接推 Telegram 給教練。
+#       state/vps_polling_healthcheck.state.json。
+#
+# 🔴 2026-07-17 教練要求「自動偵測+自動修復，不要再讓我操心」新增：
+#       偵測到「health-monitor restart loop」這個已知模式（見
+#       project_openclaw_polling_restart_loop.md 4訊號判斷）時，
+#       腳本自己執行docker restart openclaw修復，重新驗證，
+#       修好才通知教練（輕量通報，不是求救）；修不好才發原本的求救警報。
+#       自動修復有2小時冷卻，避免無限重試同一個修不好的問題洗版。
 #
 # 憑證：見 ~/.openclaw/workspace/路徑大全_憑證層.md（不硬編碼，從檔案抓）
 
@@ -17,6 +25,7 @@ STATE_DIR="$WS/state"
 LOG="$STATE_DIR/vps_polling_healthcheck.log"
 STATE_FILE="$STATE_DIR/vps_polling_healthcheck.state.json"
 LAST_ALERT_FILE="$STATE_DIR/vps_polling_healthcheck.last_alert"
+LAST_AUTOFIX_FILE="$STATE_DIR/vps_polling_healthcheck.last_autofix"
 
 mkdir -p "$STATE_DIR"
 
@@ -162,9 +171,54 @@ if [ "$LAST_INBOUND_AGE" -gt 3600 ] && [ "$SPOOL_COUNT" -gt 0 ]; then
     ALERT_REASON="${ALERT_REASON:+$ALERT_REASON；}${REASON_C}"
 fi
 
+# 🔴 自動修復判斷：只有「health-monitor restart loop」這個已知模式才自動修，
+# 符合 project_openclaw_polling_restart_loop.md 的適用條件（訊號1+訊號2）：
+# restart loop 訊號成立 且 spool 沒有堆積（spool堆積是另一種問題，要走.processing SOP，不能亂docker restart）
+AUTOFIX_ELIGIBLE=false
+if [ "$LAST_RESTART_AGE" -lt 1800 ] && [ "$SPOOL_COUNT" -le 5 ]; then
+    AUTOFIX_ELIGIBLE=true
+fi
+
+AUTOFIX_COOLDOWN_SECS=7200
+AUTOFIX_ATTEMPTED=false
+AUTOFIX_SUCCESS=false
+if [ "$ALERT" = "true" ] && [ "$AUTOFIX_ELIGIBLE" = "true" ]; then
+    AUTOFIX_OK_TO_TRY=true
+    if [ -f "$LAST_AUTOFIX_FILE" ]; then
+        LAST_AUTOFIX_TS=$(safe_int "$(cat "$LAST_AUTOFIX_FILE" 2>/dev/null || echo 0)")
+        LAST_AUTOFIX_TS=${LAST_AUTOFIX_TS:-0}
+        if [ $((NOW - LAST_AUTOFIX_TS)) -lt $AUTOFIX_COOLDOWN_SECS ]; then
+            AUTOFIX_OK_TO_TRY=false
+        fi
+    fi
+
+    if [ "$AUTOFIX_OK_TO_TRY" = "true" ]; then
+        AUTOFIX_ATTEMPTED=true
+        echo "$NOW" > "$LAST_AUTOFIX_FILE"
+        log "🔧 偵測到 restart loop 模式（訊號1+2符合），嘗試自動修復：docker restart openclaw"
+        vps_ssh "docker restart openclaw" >/dev/null 2>&1 || true
+        sleep 20
+
+        POST_LOG=$(vps_ssh "docker logs --tail 60 openclaw 2>&1" || true)
+        POST_HEALTHY=$(vps_ssh "docker inspect openclaw --format='{{.State.Health.Status}}' 2>/dev/null" | tail -1 || true)
+
+        if echo "$POST_LOG" | grep -q "isolated polling ingress started" && [ "$POST_HEALTHY" = "healthy" ]; then
+            AUTOFIX_SUCCESS=true
+            log "✅ 自動修復成功：容器healthy，polling ingress已重新啟動"
+        else
+            log "❌ 自動修復嘗試後仍未恢復（healthy=$POST_HEALTHY），需要人工介入"
+        fi
+    else
+        log "⏸ 自動修復冷卻中（2小時內已嘗試過，避免對修不好的問題無限重試）"
+    fi
+fi
+
 COOLDOWN_SECS=3600
 SHOULD_ALERT="$ALERT"
-if [ "$ALERT" = "true" ] && [ -f "$LAST_ALERT_FILE" ]; then
+if [ "$AUTOFIX_SUCCESS" = "true" ]; then
+    SHOULD_ALERT="false"
+fi
+if [ "$ALERT" = "true" ] && [ "$AUTOFIX_SUCCESS" != "true" ] && [ -f "$LAST_ALERT_FILE" ]; then
     LAST_TS=$(safe_int "$(cat "$LAST_ALERT_FILE" 2>/dev/null || echo 0)")
     LAST_TS=${LAST_TS:-0}
     if [ $((NOW - LAST_TS)) -lt $COOLDOWN_SECS ]; then
@@ -175,15 +229,44 @@ fi
 STATUS="ok"
 if [ "$SHOULD_ALERT" = "true" ]; then
     STATUS="alert"
+elif [ "$AUTOFIX_SUCCESS" = "true" ]; then
+    STATUS="auto_fixed"
 fi
 write_state "$STATUS" "$SHOULD_ALERT" "$ALERT_REASON" "$SPOOL_COUNT" "$PROCESSING_COUNT" "$LAST_INBOUND" "$((LAST_INBOUND_AGE/60))" "$((LAST_RESTART_AGE/60))" "$CONTAINER_UPTIME"
+
+LOCAL_BOT_TOKEN=$(grep -oE '"botToken"[[:space:]]*:[[:space:]]*"[^"]*"' "$HOME/.openclaw/openclaw.json" | head -1 | sed -E 's/.*"([^"]*)"/\1/' || true)
+COACH_CHAT_ID="6124913915"
+
+if [ "$AUTOFIX_SUCCESS" = "true" ]; then
+    log "📨 發送輕量通報（已自動修復，非求救）"
+    FIXED_MSG="🔧 VPS 小龍蝦剛才 polling 卡住，已自動修復
+
+原因：${ALERT_REASON}
+處置：自動執行 docker restart openclaw，已確認 polling 恢復正常，不需要您動手
+
+時間：$(date '+%Y-%m-%d %H:%M:%S')"
+    if [ -n "$LOCAL_BOT_TOKEN" ]; then
+        curl -sS -X POST "https://api.telegram.org/bot${LOCAL_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${COACH_CHAT_ID}" \
+            -d "text=${FIXED_MSG}" \
+            --max-time 10 > /dev/null 2>&1 && \
+            log "✅ Telegram 通報成功" || \
+            log "⚠️ Telegram 通報失敗"
+    fi
+fi
 
 if [ "$SHOULD_ALERT" = "true" ]; then
     log "🚨 ALERT: $ALERT_REASON (spool=$SPOOL_COUNT processing=$PROCESSING_COUNT)"
     echo "$NOW" > "$LAST_ALERT_FILE"
 
-    LOCAL_BOT_TOKEN=$(grep -oE '"botToken"[[:space:]]*:[[:space:]]*"[^"]*"' "$HOME/.openclaw/openclaw.json" | head -1 | sed -E 's/.*"([^"]*)"/\1/' || true)
-    COACH_CHAT_ID="6124913915"
+    if [ "$AUTOFIX_ATTEMPTED" = "true" ]; then
+        AUTOFIX_NOTE="⚠️ 已嘗試自動修復（docker restart openclaw）但沒有恢復，需要您協助查看。"
+    elif [ "$AUTOFIX_ELIGIBLE" = "true" ]; then
+        AUTOFIX_NOTE="（自動修復冷卻中，2小時內已試過一次未成功）"
+    else
+        AUTOFIX_NOTE="這個症狀不符合已知的自動修復條件（可能是 spool 堆積類問題，需要不同的排查方式）。"
+    fi
+
     ALERT_MSG="🚨 VPS 小龍蝦（對外體驗版）polling 異常！
 
 原因：${ALERT_REASON}
@@ -192,8 +275,10 @@ if [ "$SHOULD_ALERT" = "true" ]; then
 • Spool 待處理：${SPOOL_COUNT} 條（${PROCESSING_COUNT} 個 processing）
 • 容器啟動時間：$(echo "$CONTAINER_UPTIME" | head -c 19)
 
+${AUTOFIX_NOTE}
+
 建議處置：
-openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+sshpass -p '<路徑大全_憑證層.md查密碼>' ssh root@43.245.60.200 'docker restart openclaw'（詳見 project_openclaw_polling_restart_loop.md，不要用 openclaw gateway restart，容器內沒 systemd 會踩坑）
 
 警報時間：$(date '+%Y-%m-%d %H:%M:%S')"
 
