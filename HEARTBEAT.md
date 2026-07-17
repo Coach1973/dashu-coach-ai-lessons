@@ -202,3 +202,31 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1784289641
 - 雲端同步：✅ 已推上雲端（commit f010451ae）
+
+---
+📌 **2026-07-17 20:03 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 20:00 那次 overloaded, 153.9s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值，13+ 小時 CE 從未跨 3 升級線）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（153.9s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：典型 alternating fail/recover（19:32✅→20:00❌→本次 20:03 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + delivery.mode=none + 星期五晚間 20:03 非緊急時段）
+- 下次觀察：20:30 cron fire，預期會自動驗證恢復
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-17 20:05
+- ✅ 同步成功
+- HANDOFF mtime: 1784289703
+- 雲端同步：✅ 已推上雲端（commit e3ca5e2d9）
+
+---
+📌 **2026-07-17 20:32 健康檢查 trace**（安靜結束）
+- Cron 健康檢查本身（46e67e2e）：🟡 lastRunStatus=error（剛 20:30 那次 overloaded, 115.1s, minimax 端外部波動）
+- consecutiveErrors：🟡 **1**（< 3 升級閾值，全天 12+ 小時未跨 3）
+- Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s（115.1s ≪ 600s，非 timeout 問題）/ delivery.mode ✅ none
+- HEARTBEAT.md ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+- Pipeline 模式：典型 alternating fail/recover（20:03✅→20:00❌→本次 20:32 觀察）
+- 自動修復：❌ 無（overloaded 為 provider 端外部波動，守則 #15 無法代修）
+- 升級通知：❌ 安靜處理（CE=1 + delivery.mode=none + 星期五晚間 20:32 非緊急時段）
+- 下次觀察：21:00 cron fire，預期會自動驗證恢復
+
