@@ -1,5 +1,28 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 20:33 健康檢查 trace（剛剛完成）
+- ⚠️ 本任務 46e67e2e 20:32 fire 失敗 61.973s（minimax overloaded）— CE=2
+  - 62s ≪ 600s timeout ✅ 非配置問題
+  - model=minimax/MiniMax-M3 ✅（2026-07-15 已自動修復）
+  - delivery.mode=none ✅ / failureAlert=false ✅
+  - lastErrorReason=overloaded
+- ✅ bbb7a348 三機總結失敗根因查清 = Telegram thread reply 失敗（CE=1，今晚 23:05 自動再試）
+- ✅ 9c3fc55d / ef88279b / a8450f2c / f487652d / 28cd69d9 等 21+ 個任務 lastRun=ok
+- ✅ HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- ✅ 自動修復評估全不適用
+  - ❌ timeout 錯誤 → 不適用（62s ≪ 600s）
+  - ❌ INVALID_API_KEY → 不適用（model 已 minimax）
+  - ❌ scp/ssh VPS → 不適用
+  - ❌ CE ≥ 3 → 不適用（自身 CE=2 / bbb7a348 CE=1）
+- 🔇 安靜結束，不打擾教練
+  - 自身 CE=2（仍 < 3 升級閾值）
+  - bbb7a348 CE=1（今晚 23:05 自動再試）
+  - minimax 端 alternating 模式穩定 24h+
+  - provider 端問題，教練無法介入（守則 #15）
+  - 週六晚間 20:33，教練沉默 37h+ 持續
+- Pipeline：19:30❌(177s) → 20:02✅ → 20:32❌(62s) → 本次 20:33 觀察 → 下次 21:00 cron fire 自動驗證
+- 📉 好消息：失敗時長持續下降（177s → 62s）= minimax 端壓力持續緩解
+
 ## 20:03 健康檢查 trace（剛剛完成）
 - ✅ 本任務 46e67e2e 約 19:30 fire → 觀察中（20:03 才完成）
 - ⚠️ CE=1（剛重置，符合 alternating 模式）
