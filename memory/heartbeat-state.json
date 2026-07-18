@@ -9,8 +9,8 @@
     "cron_list": 1784372550,
     "care_4h": 1784368800
   },
-  "lastHeartbeat": "2026-07-18T19:02:30+08:00",
-  "lastHeartbeatNote": "週六 19:02 健康檢查（46e67e2e 19:00 fire 失敗 118.799s overloaded，CE=1 alternating 模式第 N 次；118s ≪ 600s timeout 非配置問題；model=minimax/MiniMax-M3 已正確無 apiKey 問題；HEARTBEAT.md 無 ⬜ / 無 48h 停滯）。教練沉默 35h+ 持續、週末傍晚、安靜時段、不打擾。Telegram channel bot token 仍壞 105h+。下次第 19:30 cron fire 自動驗證恢復。",",
+  "lastHeartbeat": "2026-07-18T21:02:30+08:00",
+  "lastHeartbeatNote": "週六 21:02 健康檢查（46e67e2e 21:00 fire 失敗 105.269s overloaded，CE=1；105s ≪ 600s timeout 非配置問題；model=minimax/MiniMax-M3 已正確無 apiKey 問題；HEARTBEAT.md 無 ⬜ / 無 48h 停滯）。教練沉默 38h+ 持續、週末晚間、安靜時段、不打擾。Telegram channel bot token 仍壞 107h+。下次第 21:30 cron fire 自動驗證恢復。",",
   "systemSnapshot": {
     "timeOfDay": "evening",
     "dayOfWeek": "Saturday",
@@ -34,7 +34,7 @@
     },
     "openTask": "🆕 [今日 7/18 已驗證到期 8 小時] 聯想 C 槽觀察期 10:02 屆滿（已過 8 小時）— 請在聯想開對話執行刪除兩份保留備份約 94GB / ACER 備份觀察期 (7/15) 已過 3 天 — 請在 ACER 開對話執行刪除約36.3GB / Telegram channel bot token 失效 105h+ — 主動關懷訊息會撞牆，需教練補 token / Netlify 50% 用量（07-13 13:36 來信，已 130h+）— 建議登入查看 / 光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 130h+）— 請對帳 / 真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）/ cool-case 頭像案（連續三棒未完）/ peipei-art 等文字 / peipei-event: 群發通知未實測+QR立牌未印+服務 nuhup 跑 / 8036 車貸已建檔+設 cron 12/1 / 起床摘要 cron (f487652d) lastRun=error 但 a8450f2c 06:00 已成功（重複 cron 互卡，待查）/ 30分任務健康檢查 (46e67e2e) 18:00 fire 失敗 143.815s overloaded（CE=1，下次 18:02 fire 自動驗證恢復，alternating 模式穩定 24h+）/ 三機總結 cron (bbb7a348) 7/17 23:05 失敗根因查清 = Telegram 推播失敗，CE=1 / 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定 / ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 72h+ 仍無回信",
     "coachSilentSince": "2026-07-17 07:04",
-    "coachSilentHours": 34.97,
+    "coachSilentHours": 37.97,
     "pendingCoachItems": [
       "🆕 [已驗證到期 8 小時] 聯想 C 槽觀察期 10:02 屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
       "ACER 備份觀察期 (7/15) 已過 3 天 — 請在 ACER 開對話執行刪除約36.3GB",
@@ -47,18 +47,18 @@
       "📦 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定",
       "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 72h+ 仍無回信 — 提醒 ACER 補 settings.json 的 Bash matcher"
     ],
-    "note": "週六 18:02 主動關懷（每 4 小時 cron 1cbe1701 18:00 fire）。17:33→18:02 間：18:00 健康檢查 fire 失敗 143.815s overloaded（alternating 模式穩定 24h+，CE=1 < 3 不升級，下次 18:02 fire 100% 自動驗證恢復）。Telegram channel bot token 105h+ 仍壞，主動關懷訊息撞牆無法推送（教練 direct bot 不受影響仍可下指令）。三機總結 bbb7a348 仍是 7/17 23:05 那次失敗（CE=1, Telegram token 已知問題）。教練沉默 34h+ 持續（週六傍晚非緊急，可能外出/在家休息/晚睡晚起）。聯想 C 槽觀察期 10:02 已屆滿 8 小時、ACER 備份觀察期 (7/15) 已過 3 天——Telegram 壞無法推送，待教練上線自動提示。週末傍晚靜默，無主動訊息。",
+    "note": "週六 21:02 健康檢查（46e67e2e 21:00 fire 失敗 105.269s overloaded，CE=1 alternating 模式穩定 24h+）。20:30❌(105s)→20:33✅→21:00❌(105s)→本次 21:02 觀察→下次 21:30 cron fire 自動驗證恢復。HEARTBEAT.md 無 ⬜ / 無 48h 停滯。自動修復評估全不適用（105s ≪ 600s timeout、model 已是 minimax、CE=1）。Telegram channel bot token 107h+ 仍壞，主動關懷訊息撞牆（教練 direct bot 不受影響）。三機總結 bbb7a348 仍是 7/17 23:05 那次失敗（CE=1, Telegram token 已知問題）。教練沉默 38h+ 持續（週六晚間非緊急，可能外出/在家休息/晚睡晚起）。",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "1（19:00 ❌ 失敗 118.799s overloaded；alternating 模式穩定 24h+，上次 18:32 ✅ 重置後回 1，下次 19:30 fire 100% 自動驗證恢復）",
+        "consecutiveErrors": "1（21:00 ❌ 失敗 105.269s overloaded；alternating 模式穩定 24h+，上次 20:33 ✅ 重置後回 1，下次 21:30 fire 100% 自動驗證恢復）",
         "rootCause": "minimax 端外部波動（overloaded / cooldown 切換），非系統性"
       },
       {
         "jobId": "bbb7a348",
         "name": "📊 每日 23:05 三機總結",
-        "consecutiveErrors": "1（7/17 23:05 fire 失敗 525s，根因 = Telegram 推播失敗 token 仍壞 105h+，已知問題；< 3 不升級）",
+        "consecutiveErrors": "1（7/17 23:05 fire 失敗 525s，根因 = Telegram 推播失敗 token 仍壞 107h+，已知問題；< 3 不升級）",
         "rootCause": "Telegram channel bot token 失效（已知，HEARTBEAT.md 已記錄待教練補 token）"
       },
       {
