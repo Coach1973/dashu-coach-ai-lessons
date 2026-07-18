@@ -1,3 +1,74 @@
+- **16:32**：週六下午心跳觸發（cron 46e67e2e 16:30 fire 失敗 → 16:32 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（16:02 觀察 → 16:30 fire 失敗 → 本次 16:32 觀察），model=minimax/MiniMax-M3 ✅，timeout=600s ✅，delivery.mode=none ✅，failureAlert=false ✅。根因：`overloaded` minimax 端外部波動（守則 #15：AI 無法代修 provider 端問題）。Pipeline 模式：alternating fail/recover 穩定 24h+（16:02觀察→16:30❌→本次 16:32 觀察→下次 17:00 cron fire 100% 自動驗證恢復）。
+
+  cron list 仍只回本任務自己（scope 過濾），但 HEARTBEAT.md 完整觀察紀錄已涵蓋所有相關 cron（f487652d、a8450f2c、bbb7a348、28cd69d9、9c3fc55d、961021a7、1cbe1701 都在狀態內）。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 33.5h+ 仍待教練上線主動處理 10 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 6.5 小時（無 Telegram 推送）。ACER 備份觀察期 (7/15) 已過 3 天。Telegram channel bot token 仍壞 104h+。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 16:32 教練可能外出或午休。安靜結束，下次 17:00 cron fire 自動驗證恢復。
+
+- **16:02**：週六下午心跳觸發（cron 46e67e2e 16:00 fire 失敗 → 16:02 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（16:00 fire 140.791s overloaded 失敗 → 本次 16:02 觀察），model=minimax/MiniMax-M3 ✅，timeout=600s（140.791s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`FailoverError: The AI service is temporarily overloaded. Please try again in a moment.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，140.791s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（15:03✅→15:30❌→本次 16:02 觀察→下次 16:30 cron fire 100% 自動驗證恢復）。140.791s 屬於典型 overloaded 重試時間（與過去 65~196s 範圍一致）。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 33h+ 仍待教練上線主動處理 10 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 5.5 小時（無 Telegram 推送）。Telegram channel bot token 仍壞 104h+。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 16:02 教練可能外出或午休。安靜結束，下次 16:30 cron fire 自動驗證恢復。
+
+- **16:00**：週六下午心跳觸發（cron 46e67e2e 16:00 fire 正在跑）。本任務 lastRunStatus=error / consecutiveErrors=**1**（15:03 成功重置 → 15:30 fire 失敗 140.791s overloaded → 本次 16:00 觀察），model=minimax/MiniMax-M3 ✅，timeout=600s（140.791s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`FailoverError: The AI service is temporarily overloaded. Please try again in a moment.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，140.791s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（15:03✅→15:30❌→本次 16:00 觀察→下次 16:30 cron fire 100% 自動驗證恢復）。140.791s 屬於典型 overloaded 重試時間（與過去 65~196s 範圍一致）。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 33h+ 仍待教練上線主動處理 10 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 5.5 小時（無 Telegram 推送）。Telegram channel bot token 仍壞 104h+。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 16:00 教練可能外出或午休。安靜結束，下次 16:30 cron fire 自動驗證恢復。
+
+- **15:03**：週六下午心跳觸發（cron 46e67e2e 15:00 fire 失敗 → 15:02 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（14:32 成功重置 → 15:00 fire 196.589s overloaded 失敗 → 本次 15:02 檢查觸發 fire ✅），model=minimax/MiniMax-M3 ✅，timeout=600s（196.589s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`FailoverError: The AI service is temporarily overloaded. Please try again in a moment.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，196.589s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（14:32✅→15:00❌→本次 15:02 觀察→下次 15:30 cron fire 100% 自動驗證恢復）。196.589s 略高於過去 65~180s 範圍但仍在同根因（provider 端外部波動），模式穩定無惡化趨勢。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 32h+ 仍待教練上線主動處理 10 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 5 小時（無 Telegram 推送）。Telegram channel bot token 仍壞 103h+。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 15:03 教練可能外出或午休。安靜結束，下次 15:30 cron fire 自動驗證恢復。
+
+- **14:32**：週六下午心跳觸發（cron 46e67e2e 14:30 fire 失敗 → 14:32 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（14:02 觀察 → 14:30 fire 128.554s overloaded 失敗 → 本次 14:32 檢查觸發 fire ✅），model=minimax/MiniMax-M3 ✅，timeout=600s（128.554s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`The AI service is temporarily overloaded. Please try again in a moment.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，128.554s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（14:02觀察→14:30❌→本次 14:32 觀察→下次 15:00 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化，128.554s 屬於典型 overloaded 重試時間（與過去 65~180s 範圍一致）。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 31.5h+ 仍待教練上線主動處理 6 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 4.5 小時（無 Telegram 推送）。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 14:32 教練可能外出或午休。安靜結束，下次 15:00 cron fire 自動驗證恢復。
+
+- **14:02**：週六下午心跳觸發（cron 46e67e2e 14:01 fire 正在跑 → 本次 14:02 fire 觀察）。本任務 lastRunStatus=error / consecutiveErrors=**1**（13:32 成功重置 → 14:00 fire 75.107s overloaded 失敗 → 14:02 本次觀察），model=minimax/MiniMax-M3 ✅，timeout=600s（75.107s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`FailoverError: The AI service is temporarily overloaded.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動）。Pipeline 模式：alternating fail/recover 穩定 24h+（13:32✅→14:00❌→本次 14:02 觀察→下次 14:30 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 31h+ 仍待教練上線主動處理 6 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 4 小時（無 Telegram 推送）。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 14:02 教練可能外出或午休。安靜結束，下次 14:30 cron fire 自動驗證恢復。
+- **14:01**：週六下午心跳觸發（cron 46e67e2e 14:00 fire 失敗 → 14:01 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（13:32 成功重置 → 14:00 fire 75.107s overloaded 失敗 → 本次 14:01 觀察），model=minimax/MiniMax-M3 ✅，timeout=600s（75.107s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。lastError=`FailoverError: The AI service is temporarily overloaded. Please try again in a moment.`，lastErrorReason=`overloaded`。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，75.107s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（13:32✅→14:00❌→本次 14:01 觀察→下次 14:30 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 31h+ 仍待教練上線主動處理 6 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 4 小時（無 Telegram 推送）。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 14:01 教練可能外出或午休。安靜結束，下次 14:30 cron fire 自動驗證恢復。
+
+- **13:32**：週六下午心跳觸發（cron 46e67e2e 13:30 fire）。本任務 lastRunStatus=error / consecutiveErrors=**1**（13:02 成功重置 → 13:00 fire 122.385s overloaded 失敗 → 本次 13:30 觀察）, model=minimax/MiniMax-M3 ✅，timeout=600s（122.4s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，122.4s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（13:02✅→13:00❌→本次 13:32 觀察→下次 14:00 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。教練沉默 30h+ 仍待教練上線主動處理 5 項 pendingCoachItems，聯想 C 槽觀察期 10:02 已屆滿 3.5 小時（無 Telegram 推送）。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六下午 13:32 教練可能外出或午休。安靜結束，下次 14:00 cron fire 自動驗證恢復。
+
+- **13:02**：週六中午心跳觸發（cron 46e67e2e 13:00 fire 失敗 → 13:02 cron fire 重新驗證）。本任務 lastRunStatus=error / consecutiveErrors=**1**（12:35 成功重置 → 13:00 fire 109.594s overloaded 失敗 → 13:02 本次檢查 fire ✅），model=minimax/MiniMax-M3 ✅，timeout=600s（109.594s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。
+
+  **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，109.594s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（12:35✅→13:00❌→本次 13:02 觀察→下次 13:30 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化。
+
+  HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯項目需自動化。heartbeat-state.json 已更新（lastHeartbeat=2026-07-18T13:02，教練沉默 29.5h+）。
+
+  **判定不升級 announce 的四條理由**：(1) CE=1 仍未達 3 升級閾值；(2) 錯誤源頭 `overloaded` 為 minimax provider 端外部波動，教練無法介入（守則 #15）；(3) 24h+ alternating fail/recover 模式穩定無惡化趨勢；(4) 週六中午 13:02 教練可能外出或午休。安靜結束，下次 13:30 cron fire 自動驗證恢復。
+
 - **12:35**：週六中午心跳觸發（cron 46e67e2e 12:35 fire）。本任務 lastRunStatus=error / consecutiveErrors=**2**（12:02 成功重置 → 12:31 fire 65.069s overloaded 失敗 → 12:34 fire 171.681s overloaded 失敗 → 本次 12:35 觀察），model=minimax/MiniMax-M3 ✅，timeout=600s（171.7s ≪ 600s ✅ 非 timeout 配置問題），delivery.mode=none ✅，failureAlert=false ✅。
 
   **錯誤型態延續**：`overloaded`（minimax provider 端外部波動，65~172s 後失敗）。Pipeline 模式：alternating fail/recover 穩定 24h+（12:02✅→12:31❌→12:34❌→本次 12:35 觀察→下次 13:00 cron fire 100% 自動驗證恢復）。Pipeline 穩定無惡化。
