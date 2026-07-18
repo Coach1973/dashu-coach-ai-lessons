@@ -1,5 +1,68 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 22:32 健康檢查 trace（剛剛完成）
+- ⚠️ 本任務 46e67e2e 22:30 fire 失敗 149.295s（minimax overloaded）— CE=1
+  - 149s ≪ 600s timeout ✅ 非配置問題
+  - model=minimax/MiniMax-M3 ✅（2026-07-15 已自動修復）
+  - delivery.mode=none ✅ / failureAlert=false ✅
+  - lastErrorReason=overloaded
+- ✅ HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- ✅ 自動修復評估全不適用
+  - ❌ timeout 錯誤 → 不適用（149s ≪ 600s）
+  - ❌ INVALID_API_KEY → 不適用（model 已 minimax）
+  - ❌ scp/ssh VPS → 不適用
+  - ❌ CE ≥ 3 → 不適用（CE=1）
+- 🔇 安靜結束，不打擾教練
+  - CE=1 < 3 升級閾值
+  - 錯誤源頭 minimax 端 overloaded，教練無法介入（守則 #15）
+  - alternating fail/recover 模式穩定 24h+ 持續
+  - 週六晚間 22:32，教練沉默 39h+ 持續
+  - 距離上次 trace 22:04 約 28 分鐘（仍在 alternating 窗口內）
+  - 下次觀察 = 23:00 cron fire 自動驗證恢復
+- Pipeline：21:32✅ → 22:00❌(153s) → 22:04 觀察 → 22:32 本輪觀察 → 下次 23:00 cron fire
+- 📉 觀察：失敗時長本輪 149s（介於 62~196s 區間），屬典型 minimax overloaded 重試時間，無惡化趨勢
+
+## 22:04 健康檢查 trace（剛剛完成）
+- ⚠️ 本任務 46e67e2e 22:00 fire 失敗 153.145s（minimax overloaded）— CE=1
+  - 153s ≪ 600s timeout ✅ 非配置問題
+  - model=minimax/MiniMax-M3 ✅（2026-07-15 已自動修復）
+  - delivery.mode=none ✅ / failureAlert=false ✅
+  - lastErrorReason=overloaded
+- ✅ HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- ✅ 自動修復評估全不適用
+  - ❌ timeout 錯誤 → 不適用（153s ≪ 600s）
+  - ❌ INVALID_API_KEY → 不適用（model 已 minimax）
+  - ❌ scp/ssh VPS → 不適用
+  - ❌ CE ≥ 3 → 不適用（CE=1）
+- 🔇 安靜結束，不打擾教練
+  - CE=1 < 3 升級閾值
+  - 錯誤源頭 minimax 端 overloaded，教練無法介入（守則 #15）
+  - alternating fail/recover 模式穩定 24h+ 持續
+  - 週六晚間 22:04，距離 22:03 trace 僅 1 分鐘（無新事件）
+  - 下次觀察 = 22:30 cron fire 自動驗證恢復
+- Pipeline：21:32✅ → 22:00❌(153s) → 22:03 觀察 → 22:04 觀察（本輪無新事件）→ 下次 22:30 cron fire
+- 📉 觀察：失敗時長本輪 153s（介於 62~196s 區間），屬典型 minimax overloaded 重試時間，無惡化趨勢
+
+## 22:03 健康檢查 trace（剛剛完成）
+- ⚠️ 本任務 46e67e2e 22:00 fire 失敗 153.145s（minimax overloaded）— CE=1
+  - 153s ≪ 600s timeout ✅ 非配置問題
+  - model=minimax/MiniMax-M3 ✅（2026-07-15 已自動修復）
+  - delivery.mode=none ✅ / failureAlert=false ✅
+  - lastErrorReason=overloaded
+- ✅ HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- ✅ 自動修復評估全不適用
+  - ❌ timeout 錯誤 → 不適用（153s ≪ 600s）
+  - ❌ INVALID_API_KEY → 不適用（model 已 minimax）
+  - ❌ scp/ssh VPS → 不適用
+  - ❌ CE ≥ 3 → 不適用（CE=1）
+- 🔇 安靜結束，不打擾教練
+  - CE=1 < 3 升級閾值
+  - 錯誤源頭 minimax 端 overloaded，教練無法介入（守則 #15）
+  - alternating fail/recover 模式穩定 24h+ 持續
+  - 週六晚間 22:03，教練沉默 39h+ 持續
+- Pipeline：21:32✅ → 22:00❌(153s) → 本次 22:03 觀察 → 下次 22:30 cron fire 自動驗證恢復
+- 📉 觀察：失敗時長本輪 153s（介於 62~196s 區間），屬典型 minimax overloaded 重試時間，無惡化趨勢
+
 ## 21:32 健康檢查 trace（剛剛完成）
 - ⚠️ 本任務 46e67e2e 21:30 fire 失敗 156.818s（minimax overloaded）— CE=1
   - 156s ≪ 600s timeout ✅ 非配置問題
