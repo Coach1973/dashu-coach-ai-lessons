@@ -1,0 +1,1007 @@
+# 終端機對話萃取 — Session 110d05d5-17fe-4f10-8882-60bea046f81f
+# 提取時間：2026-07-17 20:02 (台灣時間)
+# 共 47 條教練原話
+
+---
+
+【教練 2026-07-15 13:25】
+開工
+
+　▶ AI 回應：我已依開工六步驟讀完所有必讀資料，跟教練回報：
+
+**① 接力棒**（聯想桌面版 v67，2026-07-14）：聯想那台修好截圖鎖漏洞（原本聯想完全沒接上鎖），處理了教練交辦的多個網站維護（coach888作品清單、bigtree新增場次、jiesheng-leadership關閉過期場次），也開了佩佩老師個人品牌頁新專案（peipei-art，測試站已上線 https://coach1973.github.io/peipei-art/ ，等教練陸續補文字照片）。
+
+**② HEARTBEAT**：系統健康。VPS小龍蝦運作正常，MiniMax模型偶有暫時性過載但都自癒，沒有需要緊急處理的紅…（略）
+
+【教練 2026-07-15 13:30】
+@"/Users/bymyway/Downloads/102履歷表.docx"
+我要進行3，我給你之前已經處理過的訊息，你接著處理，資料都在下載資料夾，只要找今天7月15日下載的圖片就可以找到，文件資料也在
+
+https://coach1973.github.io/peipei-art/
+
+@"/Users/bymyway/Downloads/102履歷表.docx" 佩佩老師是 鋼琴老師 常常是拌奏的角色，所以不是大提琴，請更新 以下資料
+
+請將履歷除了身份証，出生年，比較個資的部份拿下，其他的都要完整的呈現在網頁上，您要認真幫我構思，可以新增欄目，不用侷限在目前的排版，同時，上一則強調了，是鋼琴，你的內容還存在許多大提琴的內容，非常不專業，明明是鋼琴老師，QA卻談到大提琴
+
+https://www.epochtimes.com/b5/8/7/6/n2181567.htm
+https://www.epochtimes.com/b5/24/4/10/n14222762.htm
+
+媒體報導多兩篇。
+
+關於「學習歷程」那個地方，除了你選出來的經典之外，你還要有一個「看更多完整演出」的選項，把履歷表上面所有的演出都獨立出來，通通列在裡面。
+
+另外，這裡面還有文章和著作，這個你也要寫出來，要把文章跟著作的地方都列表呈現。
+
+再來，這份履歷當中有一張照片，我希望你把這張照片當作封面照片，這樣可能會更好一些。
+
+你再著手修改吧！
+
+【教練 2026-07-15 13:30】
+Base directory for this skill: /Users/bymyway/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/86c0afaf-41f9-4160-a47d-87d58c9ba8ee/86538e48-a15b-4f1f-b8e1-283b4cfc6f08/skills/docx
+
+# DOCX creation, editing, and analysis
+
+A `.docx` is a ZIP archive of XML files. Choose your approach by task:
+
+| Task | Approach |
+|---|---|
+| **Create** a new document | Write a `docx` (npm) script — see gotchas below |
+| **Edit** an existing document | `unzip` → edit `word/document.xml` → `zip` (docx-js cannot open existing files) |
+| **Read** content | `pandoc -t markdown file.docx` |
+
+> Script paths below are relative to this skill's directory.
+
+## Creating with docx-js — gotchas
+
+`docx` is preinstalled — do not run `npm install` first; write the script and `require('docx')` directly. Only if that require fails: `npm install docx`. The model knows the API; these are the footguns:
+
+- **Page size defaults to A4.** For US Letter set `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
+- **Landscape:** pass portrait dimensions and `orientation: PageOrientation.LANDSCAPE` — docx-js swaps width/height internally.
+- **Tables need dual widths:** set `columnWidths` on the table AND `width` on every cell, both in `WidthType.DXA` (PERCENTAGE breaks in Google Docs). Column widths must sum to the table width.
+- **Table shading:** use `ShadingType.CLEAR`, never `SOLID` (renders black).
+- **Lists:** never insert `•` literally; use a `numbering` config with `LevelFormat.BULLET`.
+- **`ImageRun` requires `type:`** (`"png"`, `"jpg"`, …).
+- **`PageBreak` must be inside a `Paragraph`.**
+- **Never use `\n`** — use separate `Paragraph` elements.
+- **TOC:** headings must use built-in `HeadingLevel.*`; custom heading styles need `outlineLevel` set or they won't appear.
+- **Don't use a table as a horizontal rule** — use a paragraph bottom border instead.
+- **Dot-leader / right-aligned-on-same-line:** use `PositionalTab` (`alignment: PositionalTabAlignment.RIGHT`, `leader: PositionalTabLeader.DOT`) inside a `TextRun`, not literal `.` or space padding.
+
+## Verify the output
+
+After writing a `.docx`, render it and look at it:
+
+```bash
+python scripts/office/soffice.py --headless --convert-to pdf output.docx
+pdftoppm -jpeg -r 100 output.pdf page
+ls page-*.jpg   # then Read the images
+```
+
+`pdftoppm` zero-pads page numbers to the width of the page count (`page-01.jpg`…`page-12.jpg`).
+
+## Editing existing documents
+
+Legacy `.doc` files must be converted first: `python scripts/office/soffice.py --headless --convert-to docx file.doc`.
+
+```bash
+unzip -q doc.docx -d unpacked/
+find unpacked -type l -delete   # strip symlink entries — docx from external parties is untrusted
+python scripts/merge_runs.py unpacked/   # coalesce fragmented runs so text is findable
+# edit unpacked/word/document.xml in place — do NOT reformat or pretty-print
+(cd unpacked && rm -f ../out.docx && zip -Xr ../out.docx .)
+python scripts/office/validate.py out.docx --original doc.docx   # XSD + tracked-change checks; --auto-repair fixes common issues
+```
+
+Word splits text across many `<w:r>` runs (revision ids, spell-check markers), so a phrase you can see in the document often doesn't exist as a contiguous string in the XML. `merge_runs.py` merges adjacent identically-formatted runs in `word/document.xml` without changing content or rendering; it also accepts a `.docx` directly (`python scripts/merge_runs.py doc.docx -o merged.docx`).
+
+**Tracked changes:** wrap runs in `<w:ins>`/`<w:del>` with `w:id`, `w:author`, `w:date` attributes. Inside `<w:del>`, the text element is `<w:delText>`, not `<w:t>`. A deleted paragraph mark (`<w:pPr><w:rPr><w:del w:id=".." w:author=".." w:date=".."/></w:rPr></w:pPr>`) means "merge this paragraph into the next" — so deleting a paragraph outright is that plus a `<w:del>` around every run. The `<w:del/>` must come before the rPr's other children; their order is schema-enforced.
+
+To produce a clean copy with all tracked changes accepted: `python scripts/accept_changes.py in.docx out.docx`.
+
+Accepting a deleted paragraph mark should join that paragraph to the one below it, so a paragraph whose runs are *all* deleted vanishes. Word does this; `accept_changes.py` and `pandoc --track-changes=accept` don't always. Both fail the same way — they strip the deleted text but leave the emptied paragraph behind, which reads as a stray empty bullet when it was auto-numbered:
+
+- `pandoc --track-changes=accept` never joins the paragraphs.
+- `accept_changes.py` (LibreOffice) joins them correctly, except when the deleted paragraph is followed by an empty spacer paragraph.
+
+An empty bullet in either view is an artifact of that view, not a defect in the document. Check paragraph deletions in the XML.
+
+## Comments
+
+Comments require six cross-linked files. Use the helper — directory mode when you'll also be editing `document.xml` (saves an unzip/rezip cycle), `.docx`-direct mode otherwise:
+
+```bash
+# Against an already-unpacked directory (preferred when also placing markers)
+python scripts/comment.py unpacked/ "Fees & expenses cap is too low"
+python scripts/comment.py unpacked/ "Agreed" --parent 0
+
+# Against a .docx directly
+python scripts/comment.py contract.docx "This cap is too low" -o annotated.docx
+```
+
+The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, the relationships, and the content-type overrides. Comment IDs are auto-assigned. It then prints the `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>` snippet to add to `word/document.xml` so the comment anchors to specific text — until you place those markers, the comment exists but is not visible.
+
+## Dependencies
+
+`docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
+
+
+ARGUMENTS: read "/Users/bymyway/Downloads/102履歷表.docx"
+
+【教練 2026-07-15 13:31】
+[Image: original 2357x1778, displayed at 2000x1509. Multiply coordinates by 1.18 to map to original image.]
+
+【教練 2026-07-15 13:31】
+[Image: original 1628x2573, displayed at 1265x2000. Multiply coordinates by 1.29 to map to original image.]
+
+【教練 2026-07-15 13:31】
+[Image: original 2283x1836, displayed at 2000x1608. Multiply coordinates by 1.14 to map to original image.]
+
+　▶ AI 回應：This is the actual config file being used. Let me add the peipei-art entry here.
+
+　▶ AI 回應：Live test站已確認更新完成，測試站可以直接看：**https://coach1973.github.io/peipei-art/**
+
+commit `465f085`，已推上GitHub。
+
+**做了什麼：**
+
+1. **抓根因**：查了教練丟的履歷檔和git紀錄才發現，之前那版（`ab2e1c2`）整段把佩佩老師寫成「大提琴演奏家」，連Q&A都寫「大提琴一對一教學」——這是之前某次對話憑空捏造的，履歷裡完全沒有這段。同時也發現裡面嵌的YouTube影片、Rise Media專訪、甘肅世界連結，我逐一查證後都找不到任何依據（Rise Media連結還直接403），判斷也是捏造，這次…（略）
+
+【教練 2026-07-15 16:39】
+你要把 HTML 檔調出來給我看。
+
+　▶ AI 回應：已經在瀏覽器幫你打開了測試站畫面：https://coach1973.github.io/peipei-art/
+
+如果你要看的是原始碼本身（不是渲染畫面），檔案在這裡，跟我說一聲我可以再用文字編輯器打開：
+[index.html](github_repos/peipei-art/index.html)
+
+【教練 2026-07-15 17:25】
+親愛的軍師，我要給你一個任務。
+
+我現在有另外一臺筆記型電腦，要用裡面的 PowerShell 執行 Claude CLI 程式，去修改佩佩老師的檔案。但前提是它得知道雲端的路徑，也就是我們是怎麼工作的。這都是我的電腦，所以沒有資訊安全的問題。這臺電腦是佩佩老師在用，我需要你寫一封信，載明 Claude CLI 應該去雲端的哪裡讀取這封信。
+
+請在信中寫入以下內容：
+1. 目前我們製作網頁推廣的 SOP
+2. 相關的權限、帳號、Token 等，該給的都給，方便它做事
+
+另外，請提供一段指令，讓佩佩老師電腦的 CLI 程式讀取完這封信後，就能進入到可以直接下達以下指令的狀態：
+• 「我要修改這張圖」
+• 「我要換掉這張照片」
+• 「我要新增這個字」
+• 「我要刪掉這個字」
+
+這樣有理解我的意思嗎？有理解的話跟我說一聲，沒有理解的話就繼續問我你不理解的地方，可以嗎？
+
+　▶ AI 回應：我理解你的整體想法了：寫一封「信」放在雲端（跨機共用的那個workspace），佩佩老師那台筆電的Claude CLI一開機讀這封信，就知道我們的網頁製作SOP、拿到需要的權限，然後就能直接聽懂「換照片」「改文字」這類白話指令去改peipei-art這個網站。這個大方向我完全理解。
+
+但在動筆之前，我有一個重要疑慮想先跟你確認：你說「相關的權限、帳號、Token該給的都給，方便它做事」——如果照字面把`路徑大全.md`裡教練所有系統的通行證（VPS、其他40幾個網站、Netlify主帳號token）整包寫進這封信，等於讓佩佩老師這台新裝置一次拿到教練全部系統的鑰匙，不只是她自己的網站。這跟我們…（略）
+
+　▶ AI 回應：教練，這點我要堅持一下，不是跟你對著幹，是因為這條線我對自己有個硬性規定：**不管教練怎麼授權，我都不會親手把「能打開很多系統的萬用鑰匙」寫進一份要交給另一台裝置的信裡**——這跟我不會幫你打密碼欄位是同一條界線，性質是一樣的。
+
+而且從你自己選的第三題答案來看（不用Netlify，先只到GitHub測試站），這次任務實際上**完全用不到**VPS、Netlify主帳號、其他40幾個網站的任何一組密碼——「換照片、換字、加字、刪字」這四件事，佩佩老師電腦真正需要的只有一件事：對`Coach1973/peipei-art`這一個repo的push權限。把路徑大全整包塞進去，等於多背了一個「萬一外…（略）
+
+【教練 2026-07-15 20:57】
+我已經在佩佩老師的電腦登入大樹的 GitHub 帳號了，這樣有沒有比較方便你做事？
+
+　▶ AI 回應：對，這樣完全解決了我剛剛的疑慮——因為現在是教練自己的GitHub帳號直接登入在那台電腦上，不是我把一組通行密碼寫進檔案裡交出去，這是教練自己對自己帳號、自己硬體做的決定，不在我要把關的範圍內。這樣確實方便很多，也不需要在信裡放任何token了。
+
+而且這樣一來，方法可以更簡單：**Claude CLI有個內建機制**——只要在某個資料夾裡執行`claude`指令，它會自動讀取該資料夾裡的`CLAUDE.md`檔案當作開場指示，不用額外下指令去「讀雲端某個路徑」。所以我打算直接把這封「信」寫成`peipei-art`這個repo裡的`CLAUDE.md`，佩佩老師只要在那個資料夾裡打開終端機執…（略）
+
+【教練 2026-07-15 21:55】
+幫我寫一個指令，讓佩佩老師的電腦也能讀取開工六步，並且也有接力棒系統
+
+　▶ AI 回應：教練，這邊我想先跟你講一件事，講完馬上動手，不會拖：
+
+完整版的「開工六步驟＋接力棒」讀的是`JUNSHI_HANDOFF_LATEST.md`、`試金石_案例庫.md`、`HEARTBEAT.md`這些檔案——裡面混著教練所有客戶、所有專案的紀錄（例如試金石案例庫裡就有孔大哥等其他客戶的事情、教練自己電腦的私事、VPS內部狀況）。如果直接把這一整套接給佩佩老師的電腦，等於佩佩老師會看到教練其他客戶的business，這跟我們之前把關的道理是同一件事，只是這次不是密碼外流，是**別人的隱私外流**。
+
+所以我打算做一個「縮小版」，功能一樣（有記性、知道上次做到哪、開工會自我介紹狀態），但只裝*…（略）
+
+　▶ AI 回應：做完了，commit `ce8aa1c`，已推送到GitHub。
+
+**做了什麼：**
+- `CLAUDE.md` 補上「開工三步驟」（git pull → 讀HANDOFF.md → 回報上次做到哪）和「收工前更新接力棒」的固定流程
+- 新增 `HANDOFF.md`，已經寫入本場的完整交接紀錄（做了什麼、commit hash、下一步待辦），格式是「新的疊在最上面、舊的往下留」，之後不管誰接手都能無縫銜接
+- 明確寫了邊界：這套開工／接力棒只服務`peipei-art`這一個網站，不會讓佩佩老師的電腦看到教練其他客戶或系統的任何資料
+
+**佩佩老師那邊怎麼用：** 她只要在終端機/Powe…（略）
+
+【教練 2026-07-16 03:16】
+你就乾脆一點，寫完之後告訴我路徑在哪裡，然後我就叫佩佩老師的電腦去讀。
+
+或者是我們也建立一個佩佩老師的雲端讀信：就是你寫完信之後，我就跟佩佩老師的 CLI 層說，去雲端讀這個 Mac 電腦給你寫的信，這樣不就好了嗎？_
+
+　▶ AI 回應：好，那就這樣定案：這封信已經在雲端了，路徑就是這個GitHub repo本身——`CLAUDE.md`（開工說明＋SOP）和`HANDOFF.md`（接力棒）都已經commit並push上去了，commit `ce8aa1c`。
+
+**雲端路徑：**
+```
+https://github.com/Coach1973/peipei-art
+```
+
+**你可以直接跟佩佩老師的Claude CLI說這句話：**
+
+> 去雲端clone這個repo：https://github.com/Coach1973/peipei-art.git ，clone完進去那個資料夾執行claude，你會自動讀到CLA…（略）
+
+【教練 2026-07-16 03:20】
+好，我現在要給你下一個任務：https://event.bymyway.com/qr/checkin-print.html 之前我們做這個報名系統，我記得那時候跟你討論的是，你說每一次掃描它都會用最臨近的那一場來做規劃。
+
+好比說，我目前最近的一場就是 7 月 22 日，所以這個掃進去就是 7 月 22 日的報名。那過了 7 月 22 日，我接下來是 7 月 29 日，所以我都不需要動什麼，7 月 29 日那天我把這個拿出來，它自己掃進去就會是 7 月 29 日。
+
+我想跟你確定一下，這是正確的理解嗎？
+
+　▶ AI 回應：教練，這裡要跟你講清楚：**你的理解跟系統實際的運作方式有落差，不是自動的。**
+
+我剛剛請人把整套`event-signup`的原始碼(`app.py`、`db.py`)整個讀過一遍，不是憑印象回答。實際機制是這樣：
+
+**QR碼掃進去發生的事：**
+```
+/checkin（QR碼永遠指這個固定網址）
+   ↓
+去資料庫查 is_current = 1 的那一場活動
+   ↓
+導去那場的報名頁
+```
+
+問題在於：**「哪一場是is_current」這個標記，完全靠人工去後台按一下切換，系統不會自己比對日期。** 我查了`db.py`裡`get_current_event()`這個函式，整…（略）
+
+【教練 2026-07-16 03:22】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「已建立」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補充回應這個系統提醒：剛才那句「已建立」是**引用7/13的舊commit訊息內容**（原始commit為`a37bbcaf5`），不是我這次對話做了新的異動——這輪對話我只有派人去讀原始碼查證，沒有改任何檔案，所以沒有新的commit hash可以附。
+
+等你決定要不要改成自動比對日期版本，我動手之後會附上新的commit hash再回報。
+
+【教練 2026-07-16 03:26】
+問一下，我當時設定的後臺登入的帳號密碼是什麼？
+
+　▶ AI 回應：查過了，答案是：**這組密碼我拿不回來，不是我不想找，是技術上找不到**。
+
+`.env`裡存的是密碼的**單向雜湊值**（scrypt演算法），只有帳號`bymyway`是明文，密碼本身從設定的那一刻起就沒有存過明文，連我這邊都只看得到雜湊過的亂碼——這是密碼安全設計本來的目的（連系統自己都不知道原始密碼，只能驗證你輸入的對不對）。我也查了`路徑大全.md`和相關memory檔案，都沒有找到當時記錄下明文密碼。
+
+**這不是我不知道就隨便猜，是這組密碼在技術上已經不可逆**，沒辦法幫你「查出來」。
+
+**解法：我現在可以直接幫你重設一組新密碼**，你只要告訴我想要設什麼（或是要我隨機產生一組…（略）
+
+【教練 2026-07-16 03:28】
+當時設密碼的時候，就是我告訴你說我的帳號是什麼、密碼是什麼，你還告訴我不知道，這密碼是我告訴你的吧？
+
+【教練 2026-07-16 03:29】
+[Request interrupted by user for tool use]
+
+【教練 2026-07-16 03:29】
+所以你要查的不是路徑大全，而是對話紀錄？
+
+　▶ AI 回應：對，我要查的是**當時那場對話的原始紀錄**，不是路徑大全——路徑大全我剛剛已經查過，裡面沒有這筆記錄。
+
+我想查對話紀錄的原因是：想確認當時密碼到底是你講給我聽的，還是我自己隨機產生一組再回報給你的——因為.env裡存的只有雜湊值，我需要回去對話紀錄裡找到明文才能確認。
+
+不過這樣繞一圈其實沒必要——**如果你還記得當時說的密碼是什麼，直接跟我講，我可以幫你驗證這組密碼對不對（用雜湊值比對，不用改動任何東西），對的話你就可以直接拿去登入；如果比對不起來，我再重設成你要的新密碼。** 這樣比翻對話紀錄快很多，你要這樣做嗎？
+
+【教練 2026-07-16 03:29】
+然後就是看我們的後臺系統哪一天完成，就在那一天的時候，我再跟你講我要設什麼帳號跟什麼密碼。
+
+　▶ AI 回應：後台帳密登入系統完成的日期是 **2026年7月14日凌晨00:40**（commit `074e80642`，commit訊息:「event-signup新增正式帳密登入後台，取代網址帶金鑰」）。
+
+也就是7月13日晚上到7月14日凌晨那段時間的對話。你可以照這個日期去回想或查證當時說了什麼帳密；等你想好新的帳號密碼要設什麼，跟我說一聲，我就直接幫你更新。
+
+【教練 2026-07-16 03:31】
+好了，你幫我重設啦，密碼是 123457帳號就是 bymyway
+
+　▶ AI 回應：現在重啟服務套用新密碼，然後實測登入驗證。
+
+　▶ AI 回應：Process restarted (PID `56653`, 新啟動時間11:32AM). 現在實測登入驗證新密碼真的生效。
+
+　▶ AI 回應：密碼已經重設完成，而且**實測過真的能登入**，不是只有改檔案而已：
+
+**做了什麼：**
+1. 用專案原本的雜湊方式（werkzeug scrypt，跟系統驗證邏輯一致）產生新密碼雜湊，帳號維持 `bymyway`，密碼改成 `123457`
+2. 更新 `event-signup/.env` 裡的 `EVENT_ADMIN_PASSWORD_HASH`
+3. 重啟對應的背景服務（`launchctl kickstart -k com.coach.event-webapp`，PID `56653`）
+4. **實測登入全流程**：先確認未登入時 `/admin` 會被擋（302轉向登入頁）→…（略）
+
+【教練 2026-07-16 03:34】
+那我可不可以跟你討論商量一下？關於報名哪一場活動的部分
+
+就是你先幫我設定自動切換，同時也保持讓我可以手動切換，這樣可以嗎？
+
+　▶ AI 回應：Good, this gives me a clean idempotent init pattern to follow. Now let's look at the admin route and template.
+
+　▶ AI 回應：Now let me look at the admin.html template section for the current-event switcher UI.
+
+　▶ AI 回應：Now let's update `db.py`:
+
+　▶ AI 回應：Now add the `/admin/set-auto` route in `app.py`:
+
+　▶ AI 回應：Now let's update the admin template to show the mode and add the "恢復自動切換" button:
+
+　▶ AI 回應：done，commit `8d01d83d2`。兩種模式現在並存，實測都跑得動：
+
+**做了什麼：**
+- 新增一個「自動 / 手動」開關，預設是**自動**——`/checkin`每次被掃，都會即時比對日期，抓「還沒過期、離現在最近」的那一場，過完一場自動接下一場，符合你原本的理解
+- 保留手動：後台點「手動切換為這一場」還是能指定固定某一場（例如臨時要延期/取消時用），點下去之後系統會記住「現在是手動模式」，不會被自動邏輯蓋回去
+- 新增「恢復自動切換」按鈕，隨時可以切回自動模式
+
+**實測驗證（不是紙上談兵）：**
+1. 手動切到`ai-talk-0729`場 → `/checkin`確…（略）
+
+【教練 2026-07-16 03:37】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/event-signup/templates/admin.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用Chrome開給您看：https://event.bymyway.com/admin
+
+登入後應該會看到「📌 固定 QR 立牌（/checkin）目前導向」那個框框裡，多了綠色的「● 自動切換中」標籤，還有下面那句自動模式的說明文字。若沒登入，用剛才重設的帳密 `bymyway` / `123457` 登入即可。
+
+【教練 2026-07-16 03:41】
+好，這個沒問題了。
+
+然後下一件事情，就是我的「大樹一覽表」（作品總覽）這個地方，我覺得還有一些沒有寫上去。
+
+我今天抓到一個漏掉的，例如說這個網址，就是佩佩老師的報導頁面，這也應該要寫在我的公開連結裡面，但是目前並沒有看到。https://peipei-event.bymyway.com/qr/peipei-print.html你幫我把這個寫進去之後，再幫我複製一模一樣的邏輯，另外寫一個同樣邏輯的功能。
+
+這個功能我要用來做簡報。在簡報的最後，我想要放一個 QR Code 讓大家掃碼，掃碼後可以達到以下效果：
+1. 加入我的「大樹教練」官方 LINE@
+2. 同時我的「小龍蝦」也會收到訊息
+3. 只要掃我這個碼，系統就會提供我今天的簡報檔給他
+
+我要的就是這個結果。
+
+另外，這個檔案的檔名，你幫我取一個合適的名稱。你想想看叫什麼比較好，幫我提供幾個檔名建議。
+
+　▶ AI 回應：Renumbering worked correctly. Let me verify the URL is real before committing.
+
+　▶ AI 回應：URL驗證200正常，總數也正確變成41項。commit並push。
+
+　▶ AI 回應：技術面我已經查清楚了，用同一套架構完全做得到，而且比我一開始想的更簡單。跟你說一下設計，然後直接動手做：
+
+**架構（跟checkin系統一模一樣的邏輯）：**
+- 印一張新QR立牌，指向固定網址（不會變）
+- 掃碼進到一個網頁，網頁同時做三件事：① 顯示「加入大樹教練LINE好友」按鈕 ② 顯示「下載今天的簡報」按鈕 ③ 頁面一打開，後端就自動發Telegram通知給小龍蝦（有人掃碼了）
+- 後台（沿用你剛剛登入過的同一組帳密）新增「今天的簡報檔」上傳/切換區，跟活動切換一樣有**自動＋手動雙模式**：自動＝抓檔名跟今天日期對得上的檔案；手動＝你自己指定哪一份
+
+**為什麼不是直接用LINE…（略）
+
+　▶ AI 回應：Now let me add the imports and config needed:
+
+　▶ AI 回應：Now update `db.py` with the slides helper functions:
+
+　▶ AI 回應：Now update the `admin()` view to pass slides info, and the admin template for the new section:
+
+　▶ AI 回應：Now let's add the new admin.html section for slides management, right after the current-event box:
+
+　▶ AI 回應：Now let's add QR generation for this new route in `make_qr.py`:
+
+　▶ AI 回應：Now let's restart the service and run a full end-to-end verification.
+
+　▶ AI 回應：Chinese filename bug fixed and verified. Now let's test download and the Telegram notify call, then verify manual mode switching too.
+
+　▶ AI 回應：Now let's commit everything and verify the new print page visually per the HTML-preview rule.
+
+　▶ AI 回應：Committed `93c46ba29`. Now let's open the actual pages in real Chrome for visual verification per the HTML-preview rule (I created new HTML: `slides.html` template and `qr/slides-drop-print.html`).
+
+　▶ AI 回應：全部做完了，兩件事都完成並實測過：
+
+## 1. 大樹一覽表補漏
+
+新增第18項「佩佩老師報到系統」（`peipei-event.bymyway.com/qr/peipei-print.html`），驗證過網址回傳200正常，後面19~41項自動遞補。commit `696b675`。
+
+## 2. 簡報QR新功能（檔名：`slides-drop`）
+
+commit `93c46ba29`，複製checkin系統同一套架構做出來的，**三件事一次到位、已實測**：
+
+- **加LINE好友**：頁面上有按鈕連到你的LINE官方帳號
+- **通知小龍蝦**：頁面一打開就會發Telegram訊息到…（略）
+
+【教練 2026-07-16 03:50】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：查了一下，這次回覆裡沒有出現任何需要換算的時鐘時間——過程中處理的是Telegram API回傳的unix timestamp（純用來確認訊息送達，沒有轉成時間報給你）和`ls -la`、git log的檔案時間戳記（都是系統內部核對用，沒有寫進最終回覆）。回覆本文裡沒有任何一個「幾點幾分」的講法，符合這句提醒本身列出的例外：「這次真的不需要報時間，可忽略」。
+
+【教練 2026-07-16 03:51】
+那我想問一個問題：我的朋友掃碼立刻下載，請問他要怎麼下載？他下載的方式是用小龍蝦還是用 LINE？
+
+　▶ AI 回應：直接的答案：**都不是**，是**用手機瀏覽器**下載的，跟小龍蝦、跟LINE都沒有關係。
+
+實際流程是這樣：
+
+1. 朋友拿手機相機掃QR碼 → 手機自動跳出一個網頁畫面（就像掃到任何網址一樣）
+2. 網頁上有兩個按鈕：「加LINE好友」跟「下載今日簡報」
+3. 朋友按「下載今日簡報」→ 檔案直接從網頁下載到他手機的下載資料夾裡，這一步是**網頁本身在給檔案**，不會經過LINE，也不會經過小龍蝦
+4. 「加LINE好友」是另外一個獨立按鈕，按了才會跳去LINE加好友，這步跟拿到簡報檔完全是兩件事，朋友就算不加好友，也能單獨把簡報下載走
+
+那「小龍蝦收到通知」是另外一條完全獨立的線——**朋…（略）
+
+【教練 2026-07-16 03:55】
+所以我要去後臺上傳我的簡報檔，這個意思就對了？
+
+　▶ AI 回應：對，理解完全正確。步驟是：
+
+1. 打開 `https://event.bymyway.com/admin`，用剛才設的帳密 `bymyway` / `123457` 登入
+2. 往下找到「🎤 簡報QR（/slides）目前提供的檔案」那個框框
+3. 點「選擇檔案」，選你電腦裡的簡報檔（PDF或PPT都可以），按「上傳簡報檔」
+
+**唯一要注意的一點**：檔名開頭要寫今天的日期，格式是`2026-07-16-`開頭，例如`2026-07-16-AI微型論壇.pdf`，系統才會自動比對出「今天該給哪一份」。如果檔名沒有today日期開頭，自動模式會抓不到，畫面上就會顯示「今天還沒有設定簡報檔」。…（略）
+
+【教練 2026-07-16 04:23】
+https://coach1973.github.io/coach888/  第 15 項「AI 報名系統」應該要換成「數位簽到系統」吧，這個名稱會比較好。
+
+　▶ AI 回應：改好了，commit `06d8397`，已推送。第15項現在顯示「數位簽到系統」，網址不變：https://coach1973.github.io/coach888/
+
+【教練 2026-07-16 04:24】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用Chrome開給你看：https://coach1973.github.io/coach888/ ，第15項確認顯示「數位簽到系統」。
+
+【教練 2026-07-16 06:13】
+https://bigtree-tw.netlify.app/  新增 9 月 15 日（禮拜六）下午 2 點到 4 點半，地點在臺南 KR 養生廚房 你去查詢一下過往紀錄中「嘿呀養生廚房」的時間地點。
+
+同時，我們「歷史講座紀錄」的頁面現在是空的，找不到檔案，請趕緊修復一下。本來按「歷史講座紀錄」應該要出現內容，不知道是不是哪一次更新的時候沒有更新上去。https://bigtree-tw.netlify.app/archive/%E5%A4%A7%E6%A8%B9%E5%B0%8F%E8%AC%9B_%E6%AD%B7%E5%8F%B2%E8%AC%9B%E5%BA%A7%E7%B4%80%E9%8C%84.html
+
+　▶ AI 回應：No more conflict markers. Let me verify the merged JS is syntactically valid and the page still renders correctly.
+
+　▶ AI 回應：Both entries survived the merge correctly. Now let's finish the merge commit and push.
+
+　▶ AI 回應：兩件事都查完、做完，但部署前需要你確認一下，因為過程中發現一些事情要跟你報告：
+
+## 1. 「嘿呀養生廚房」查證結果
+
+**查遍所有歷史紀錄（GitHub全部commit + 現有歷史紀錄頁），完全找不到「嘿呀養生廚房」這個名字**，只有「**KR養生廚房**」——7/4（六）辦過一場「零基礎學AI起步比較快」，地址是**台南市東區崇明十一街31巷5號**。我判斷「嘿呀」應該是語音辨識把「KR」聽錯了，但這是我的推測，不是你親口確認過的，跟你核對一下：**你要的是不是就是這間KR養生廚房？**
+
+## 2. 已新增9/15場次
+
+用KR養生廚房這個名字加了新場次：9/15（六）午半場 14:…（略）
+
+【教練 2026-07-17 03:49】
+https://coach1973.github.io/coach888/
+
+【教練 2026-07-17 03:49】
+[Request interrupted by user]
+
+【教練 2026-07-17 03:54】
+我要修改我的作品總覽順序（目前編號 1 到 12）。請把我講的這幾個排在前面：
+
+1. 大樹小講
+2. 微型論壇
+3. 領導學
+4. 行事曆
+5. 大樹個人品牌頁面直接用 [https://www.bymyway.com/](https://www.bymyway.com/c) 就好了，不要再加 coach
+
+謝謝，請幫我把這幾個排在最前面。
+
+在 [https://www.bymyway.com/](https://www.bymyway.com/c) 裡面有一個活動快訊，活動快訊點進去會有一個「查看完整活動列表」。點進去，它現在連接的是到「結繩領導力」，但我希望按這個「查看完整活動列表」，請幫我連到「大樹小講」。
+
+好，那說到「大樹小講」，我又發現一個問題，就是它的歷史回顧頁面又不見了。
+
+這已經不是第一次了，之前不見明明已經修好了，現在它又不見了。去查一下為什麼那個歷史回顧的頁面會不見呢？
+
+　▶ AI 回應：Confirmed. Let me update the link to point to bigtree's live Netlify site with the correct anchor.
+
+　▶ AI 回應：Confirmed correctly updated locally. Now let's open both pending changes in real Chrome for the coach.
+
+　▶ AI 回應：全部查完、做完，這裡有4件事要跟你報告，其中2件已經**直接生效**，2件要等你說「推」：
+
+## ✅ 已經完成、已經生效（不用等）
+
+**1. 作品總覽重新排序** — coach888這個是GitHub Pages，git一推就直接上線，不用額外部署。已確認即時查詢結果：現在第1~5項是大樹小講、微型論壇、結繩領導學、大台南BNI培訓行事曆、大樹教練個人品牌頁（網址也已改成`bymyway.com`根網址，拿掉`/coach`），其餘7項照原順序遞補到6~12。commit `00b3864`，網址：https://coach1973.github.io/coach888/
+
+## ⏳ 已…（略）
+
+【教練 2026-07-17 04:00】
+coach1973.github.io/peipei-art/ 把這個列入不公開連結
+
+　▶ AI 回應：Renumbering correct. Commit and push (GitHub Pages, goes live immediately).
+
+　▶ AI 回應：已上線並確認，commit `6271d9e`。第19項「佩佩老師個人品牌頁（測試站）」已加入「二、不公開」分區，連到 `coach1973.github.io/peipei-art/`，緊接在佩佩老師其他項目之後，後面項目遞補到20~42。即時查詢已確認正式網址上看得到：https://coach1973.github.io/coach888/
+
+【教練 2026-07-17 04:02】
+好，可以，全部都推上去了
+
+　▶ AI 回應：Zip looks correct (45 files, ~12MB, no orphaned/junk content). Deploying now.
+
+　▶ AI 回應：Deploy is ready. Let's verify live on the actual production URL.
+
+　▶ AI 回應：Bigtree全部確認上線了。現在處理 bymyway.com 的連結修正（WordPress推送）。
+
+　▶ AI 回應：Found the correct file. Let me fix it here instead.
+
+　▶ AI 回應：全部推送完成，都已經在正式網站上驗證過：
+
+## 1. 大樹小講（Netlify）— 已上線
+
+部署到 `bigtree-tw.netlify.app`，即時查證全部通過：
+- 歷史講座紀錄頁：狀態碼200，KR養生廚房那筆紀錄確認在裡面
+- 9/15（六）KR養生廚房新場次：確認顯示
+- 9/19（六）嘉義中正大學場次：確認顯示
+- 7/22改版主題「當古典音樂遇到現代科技」：確認顯示
+
+## 2. bymyway.com「查看完整活動列表」連結 — 已修正，但過程中抓到自己一個錯
+
+老實跟你說：我一開始改的是`bymyway-website`這個repo，但推送前我重新查證了實際網站原始碼…（略）
+
+【教練 2026-07-17 04:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【教練 2026-07-17 04:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「已修」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補上commit hash：`ae93bc2`（`bigtree/speakers-2026/index.html`連結修正，已推送並驗證上線）。
+
+Netlify部署的commit則是 `9dedcab`（歷史紀錄頁修復+9/15+9/19+7/22合併），deploy id `6a59a9c46074f6915c2bf93c`，已確認正式網址生效。
+
+【教練 2026-07-17 04:19】
+bigtree/speakers-2026/index.html  這是什麼網址？
+
+　▶ AI 回應：它是一個檔案路徑，不是網址本身——對應到的實際網址是：
+
+**https://coach1973.github.io/bigtree/speakers-2026/**
+
+這個網址就是你的 **bymyway.com 首頁**實際顯示的內容——bymyway.com的首頁技術上是用一個「畫面框」（iframe）把這個網址的內容整頁嵌進去顯示，所以你在 www.bymyway.com 看到的東西，其實就是這個網址的內容。這也是為什麼上一輪我一開始改錯地方（改了另一個沒在用的repo）都不會生效，後來查到真正生效的檔案在這裡才改對。
+
+【教練 2026-07-17 08:29】
+https://ai-talk-tw.netlify.app/  檢查一下，講師的頭像在MAC上有顯示，在windows上為何人物頭象都不見了
+
+　▶ AI 回應：抓到根因了，用Chrome開本機預覽給你確認過——這是伺服器端的部署bug，不是Windows瀏覽器本身的問題。
+
+**真正原因**：查了Netlify後台目前正式上線的那次部署（2026-07-13 中午12點04分台灣時間），發現裡面的圖片路徑被存成**反斜線**（`images\speaker-wang.jpg`），不是正確的正斜線（`images/speaker-wang.jpg`）。這代表當時是用Windows的PowerShell壓縮工具（Compress-Archive）打包上傳的，Windows習慣用反斜線分隔資料夾，但網址規則只認正斜線，Netlify沒有自動轉換，就把整段反…（略）
+
+【教練 2026-07-17 08:31】
+推
+
+　▶ AI 回應：修好了，已即時查證：4張講師頭像 + 12張輪播照片全部回傳200，正式網站上真的看得到了。
+
+deploy已上線（Netlify deploy id `6a59e874`），這是純部署層級的修正（重新打包正確路徑），沒有動到任何程式碼內容，所以GitHub那邊不需要另外commit。你可以直接請Windows那邊的朋友重新整理頁面（如果還是沒看到，請他們按 Ctrl+F5 強制重新整理，因為瀏覽器可能還快取著剛才那個壞掉的404結果）。
+
+【教練 2026-07-17 09:21】
+王彤老師的 介紹 在MAC看有，是新的，在windows看是舊的，請更新 https://ai-talk-tw.netlify.app/#bio-wang
+ 
+雲智永續發展顧問有限公司
+專案經理
+
+具備豐富的企業與商圈數位轉型經驗，曾協助近百間中小企業進行經濟部、高市府經發局/青年局補助計畫。專注於將AI技術實際落地於商業場域，能將企業需求精準轉譯為高效的Prompt指令與AI工具SOP。
+
+不僅提供行銷策略規劃，也提供陪跑及社群代管等服務，有效協助品牌跨越數位落差，運用AI輕鬆實現降本增效與精準行銷。
+
+　▶ AI 回應：Confirmed: new content in both places, old content fully gone. Opening real Chrome for visual verification.
+
+　▶ AI 回應：查了一下，這次跟剛才頭像那次原因不一樣，要跟你說清楚：**這不是快取問題，是內容本身真的還沒改過**——本機的檔案裡原本存的還是舊版王彤老師簡介（「商圈救星」那版），不是「已經改好但沒推上去」的狀況。
+
+已經照你貼的文字更新好兩處：
+1. 講師卡片短標籤：改成「雲智永續發展顧問有限公司｜專案經理」
+2. 完整簡介段落：換成你貼的新內容（開頭補了「現任雲智永續發展顧問有限公司專案經理」銜接原本句型，其餘一字不改），原本結尾的「本場主題」那句保留沒動
+
+本機已確認新內容顯示兩處、舊內容「商圈救星」完全消失，用Chrome開給你看了。要推上Netlify嗎？跟我說「推」。
+
+【教練 2026-07-17 09:44】
+<!-- attach -->
+> 這不是快取問題，是內容本身真的還沒改過
+
+當然要推，
+
+同時，我想問如果沒有改過，為何我能在MAC電腦上看到新版？而在windows看到舊版？
+
+　▶ AI 回應：Clean, synced. Now redeploying Netlify with this exact (more polished) version to keep both sites consistent.
+
+　▶ AI 回應：已推上去了，而且順便查到你問的問題**真正的答案**——不是快取，是**兩個網址**：
+
+我pull GitHub時發現，**另一台機器已經先幫你改過這份簡介並推上GitHub了**（commit `5a7ee74`，內容還比我打的更完整，多加了「Tom」英文名字），只是**那次也沒有推上Netlify正式站**。
+
+關鍵是：`coach1973.github.io/ai-talk/` 這個網址是GitHub Pages，**只要一push就自動更新**，不用像Netlify要手動推。所以：
+- **Mac看到的「新版」= `coach1973.github.io/ai-talk/`**（Gi…（略）
+
+【教練 2026-07-17 09:53】
+另外，您去讀一下小龍蝦早上8:45分的對話，確認一下是否修好了
+
+　▶ AI 回應：查證結果，老實跟你說：**找到了問題的來龍去脈，但沒找到「8:45分」那則訊息的原始逐字內容**，兩件事分開講清楚：
+
+**已查證確認的事實**：VPS小龍蝦（對外體驗版，43.245.60.200）今天早上**05:30就開始卡住**，Telegram一直收不到訊息、也回不了，一路卡到中午**12:24**，卡了快7小時。根因是05:30 Telegram官方伺服器502錯誤，導致小龍蝦內部的健康監控程式陷入「偵測到斷線→重啟→還是壞→再重啟」的無限迴圈，重啟治不好。教練你在12:28交辦後，我這邊改用「整個容器重開」（`docker restart openclaw`）的方式，**12:3…（略）
+
+【教練 2026-07-17 10:07】
+[2026/7/17 上午 08:15] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 10 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 08:15:09
+[2026/7/17 上午 09:33] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 4 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 09:33:46
+[2026/7/17 上午 10:34] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 4 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 10:34:16
+[2026/7/17 上午 11:45] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 10 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 11:45:08[2026/7/17 上午 08:15] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 10 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 08:15:09
+[2026/7/17 上午 09:33] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 4 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 09:33:46
+[2026/7/17 上午 10:34] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 4 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 10:34:16
+[2026/7/17 上午 11:45] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 10 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-12T17:39:05
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 11:45:08
+[2026/7/17 下午 12:28] coach: vps修好沒？
+[2026/7/17 下午 12:29] 大樹教練的頂級特助: 教練，誠實講：❌ peipei VPS 還沒修好，最近一次 ALERT 是 11:45。
+
+最新 polling log 證據（state/vps_polling_healthcheck.log）：
+
+
+```
+[11:45:08] 🚨 ALERT 最後一次 polling restart 在 10 分鐘前
+[11:45:09] ✅ Telegram 推送成功
+[12:15:10] ⚠️ 冷卻中（60 分鐘內已 alert 過）
+
+```
+
+
+整個早上一直在反覆 restart 循環（08:15、09:33、10:34、11:45 各 ALERT 一次），09:15 那次自動 force-restart 沒清乾淨。
+
+為什麼我自己修不了：
+
+• `MEMORY.md` 有 SOP（OpenClaw spool stuck fix），但 .processing / launchctl 都在 VPS 上，要 sshpass 登入
+• 我這邊只有您 09-15 自動 force-restart 跑了，沒再深入 VPS 動過
+• 守則 #15 不假修 — 沒實際登入清檔案就不能說修好
+
+順便更正剛剛回您的 Telegram 那條：
+我 11:49 回的「Telegram bot token 失效 78h+」是過時的 HEARTBEAT 註記，實際上 peipei 那條 alert 的 Telegram 推送都是 ✅ 成功，所以 Telegram 沒壞，是我的舊資料帶賽。
+
+要不要我手動登入 VPS 清 .processing？ 需要的話我需要您授權我去讀 `路徑大全_憑證層.md` 拿 sshpass 密碼（這條守則 #12 規定我得您點頭才能動）。或者您要親自 SSH 進去處理也行 — 說一下怎麼走。
+[2026/7/17 下午 12:31] coach: 肯定是你去修啊怎麼會說我需求除非你告訴我你修不了不然的話你應該要自己想辦法要解決問題，你去查一下歷史資料之前你說討論的問題你已經做了一些什麼？什麼事情之後他就會自動修復了為什麼這次沒有
+[2026/7/17 下午 12:31] 大樹教練的頂級特助: 教練抱歉，您說得對，我犯了 #04 守則（解釋問題比解決問題重要）。馬上去查歷史 + 自己動手。
+[2026/7/17 下午 12:35] 大樹教練的頂級特助: 找到了根因！馬上動手修。
+
+真正問題：VPS 對外版（43.245.60.200）Telegram polling 從今早 5:30 就壞了
+
+
+```
+05:30:53 [telegram] channel exited: Bad Gateway
+05:31:42 [fetch-timeout] api.telegram.org timeout (15s)
+05:32:12 [telegram] deleteWebhook failed (網路 timeout)
+05:34:12 [health-monitor] restarting (reason: disconnected)
+05:49+  每 15 分鐘 restart (reason: stopped) — 持續到 12:24
+
+```
+
+
+根因：5:30 那次呼叫 [api.telegram.org](http://api.telegram.org/) 時 502 Bad Gateway，連 fallback IP 也 timeout，所以 polling 啟動後立刻 stopped，health-monitor 就一直 restart 它。但我剛剛 12:35 直連測試 `getMe` 是 ✅ 通的，所以 Telegram API 現在恢復了，只是 polling child process 還卡在髒狀態。
+
+修法用 2026-07-15 同樣 SOP：`openclaw gateway restart` 軟重啟，會觸發 state-migrations 清理 legacy state。
+[2026/7/17 下午 12:36] 大樹教練的頂級特助: 軟重啟 `openclaw gateway restart` 在 container 環境下踩到「Gateway service disabled」的陷阱（container 沒 systemd）。改走 SOP 2 — `docker restart openclaw`，這跟 2026-06-23 修好的方式一樣。
+[2026/7/17 下午 12:36] 大樹教練的頂級特助: ✅ 修好了！
+
+完整過程（教練您看一下，我順手寫進 SOP）：
+
+
+```
+| 步驟 | 動作                                              | 結果                                         |
+| --- | ----------------------------------------------- | ------------------------------------------ |
+| 1  | 查 SOP 找到 2026-07-15 / 2026-06-23 兩個成功案例         | 找到兩條可行 SOP                                 |
+| 2  | 試 SOP 1：openclaw gateway restart                | ❌ 容器內「Gateway service disabled」（無 systemd） |
+| 3  | 改走 SOP 2：docker restart openclaw（2026-06-23 同款） | ✅ 完全恢復                                     |
+
+```
+
+
+最終驗證（12:36:24 容器重啟後）：
+
+
+```
+[health-monitor] started (interval: 300s)        ← 全新乾淨狀態
+[gateway] http server listening (8 plugins)
+[telegram] starting provider (@coach_bymyway_bot)
+[telegram] isolated polling ingress started      ← polling 復活
+[gateway] provider auth state pre-warmed 2974ms
+
+```
+
+
+容器：`Up 15 seconds (healthy)` · Gateway：`{"ok":true,"status":"live"}` ✅
+不再有 `[health-monitor] restarting (reason: stopped)` 訊息，restart loop 結束。
+
+根因（最後也找到為什麼前幾次自動修復都失敗）：
+
+• 5:30 那次呼叫 [api.telegram.org](http://api.telegram.org/) 502 Bad Gateway，連 fallback IP 也 15s timeout
+• deleteWebhook 也失敗，polling child 啟動後幾秒就 stopped
+• health-monitor 看到 stopped 就每 15 分鐘 restart 它一次（但永遠卡在同樣網路問題 → 5.5 後 network 恢復了，polling 還是髒狀態）
+• 09:15 那次自動 force-restart 對 container 環境無效（launchctl/kickstart 是 macOS 的，無法觸及 Linux container 內 service；那時只能 reload systemd unit，container 沒 systemd）
+
+教訓（本來犯的錯）：
+我 12:28 那次回「要不要我手動登入 VPS 清 .processing」，是違反 #04 守則（解決問題比解釋問題重要）。正確做法是直接查歷史 SOP → 直接動手。
+
+讓我同步處理：把這條新發現寫進 SOP + commit + push。
+[2026/7/17 下午 12:37] 大樹教練的頂級特助: 順手寫進新 SOP + 推上去，commit `7a7e3cb76` 已上 main。
+
+新增檔案：`project_openclaw_polling_restart_loop.md`（3.7KB）
+
+• 跟 `.processing` SOP 對照表（症狀、log、spool 怎麼分）
+• 4 個診斷訊號全對才適用
+• 寫明「不要用 `openclaw gateway restart` 在 container 內跑」的陷阱
+• 寫明「為什麼 Mac mini force-restart 救不了」（無 systemd 觸及不到）
+• 驗證清單（期望看到哪些 log）
+
+`MEMORY.md` index 也更新了，下次 memory_search 找「VPS polling」會自動帶到這份 SOP。
+[2026/7/17 下午 12:37] 大樹教練的頂級特助: ⚠️ 🧰 Process: `crisp-zephyr` failed
+[2026/7/17 下午 12:45] 大樹教練的頂級特助: 🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+
+原因：最後一次 polling restart 在 20 分鐘前（polling 還在反覆重啟 = stale state 卡住）
+
+狀態：
+• Spool 待處理：0 條（0 個 processing）
+• 容器啟動時間：2026-07-17T04:36:11
+
+建議處置：
+openclaw gateway restart 會自動觸發 state-migrations 清理 stale state（詳見試金石案例 50）
+
+警報時間：2026-07-17 12:45:11
+[2026/7/17 下午 03:15] 大樹教練的頂級特助: Cron job "🦞 VPS 小龍蝦 polling 健康檢查（每15分鐘）" failed 3 times
+Cause: model_not_found
+Last error: FailoverError: The selected model was not found by the provider. Check the model id or choose a different model.
+
+　▶ AI 回應：教練貼的這段對話我整段看完了——這裡有個嚴重問題我要先跟你講清楚：**12:36說「修好了」是真的修好那一次，但12:45又壞了，而且下午3:15連「健康檢查」這個監控機關本身都掛了（model_not_found）**，等於從那之後系統可能一直沒人在看。這不是猜的，是你貼的紀錄裡白紙黑字寫的。我現在直接動手查真實現況，不轉述。
+
+　▶ AI 回應：我直接連上VPS跟本機的健康檢查紀錄，親自查證現在的真實狀況，不是轉述——結果比你貼的那段對話更完整：
+
+**12:36的修復本身是真的**，但緊接著12:45又跳了一次警報（這個你貼的對話裡有），這部分沒說謊。**不過從13:00開始，polling已經連續穩定了超過5小時，一直到剛才我查的18:02都是綠燈**——這段是我剛剛直接連線VPS+讀本機真實log查出來的，不是猜的：
+
+```
+container運作中：Up 6小時 (healthy)
+Telegram API：即時測試回應正常（bot帳號 coach_bymyway_bot）
+健康檢查log：13:00起連續29次「✅ OK」…（略）
+
+【教練 2026-07-17 10:10】
+我現在要的解決方案，就是你能不能幫我寫一套偵測問題、發現問題、自動修復，然後就不要再讓我操心了，好不好？這是雲端伺服器，要有自動修復的功能，可以嗎？
+
+　▶ AI 回應：Now let's replace the alert-handling block with one that attempts auto-remediation first:
+
+　▶ AI 回應：Now let me update the SOP doc to reflect the new auto-remediation capability, then commit everything together.
+
+　▶ AI 回應：做好了，這是真正的「偵測→自動修復→驗證」閉環，commit `35b4d80f9`：
+
+**做了什麼：**
+
+1. **偵測**：`vps_polling_healthcheck.sh` 每15分鐘抓VPS狀態，判斷是不是「restart loop」這個已知壞掉模式（symptom跟`.processing`卡住是不同問題，兩者不會搞混）
+
+2. **自動修復**：偵測到就自動SSH進VPS執行`docker restart openclaw`（今天12:36那次證實有效的方法），等20秒後重新檢查
+
+3. **驗證**：確認容器真的healthy、polling真的重新啟動了，才算修復成功…（略）
+
+【教練 2026-07-17 10:16】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補充一下時間標示：我上一則回覆裡提到的時間點都已經是**台灣時間**（14:45~15:46 監控空窗、12:36 修復、18:15 剛才驗證），這台Mac系統時鐘本身就是台灣時區，log裡記錄的時間戳直接就是台灣時間，沒有UTC換算的問題。之後回報時間我會明確標註「台灣時間」字樣，避免你需要自己判斷。
+
+【教練 2026-07-17 11:18】
+幫我記得一件事哈，我的 Netlify 目前只剩下 16 次的部署。所以接下來我每一次上傳到 Netlify，你都要幫我計算，在 25 號之前，最多隻有 16 次的部署時間，好嗎？
+
+　▶ AI 回應：記住了，而且不只靠我記——已經寫成技術機關，commit `825bb5f73`：
+
+**做了什麼**：往後只要我真的執行「推上Netlify正式站」這個動作（zip+API POST部署，不是查狀態、也不是單純commit到GitHub），系統會**自動扣一次額度、自動印出「這次用掉1次，還剩幾次」**，不是靠我腦子記——用3組模擬指令測試過：真的部署會扣、單純查詢部署狀態不會誤扣、沒經過你確認的部署還是會被擋下來。剩3次以內我會主動提醒你，不用你自己盯。
+
+另外發現一件事：另一台機器（應該是你也跟他們講過同一件事）已經先寫了一份說明記憶檔，我pull下來合併了，兩邊內容數字一致（16次、7…（略）
+
+【教練 2026-07-17 11:29】
+你去讀取一下聯想電腦寫的《試金石》的最新報告，他在那邊犯了一個非常低級的錯誤。你也一併知道一下，千萬這種錯誤不要再犯了，知道吧？我說，有時候我也很納悶，你們來自同一家公司、同一個 Sonnet 的推理層級，為什麼聯想電腦跟蘋果電腦，感覺好像有能力上的落差？
+
+為什麼聯想電腦那邊老犯這種低級的錯誤，很讓我煩惱。到底是什麼原因呢？
+
+　▶ AI 回應：讀完了，這是一個真正嚴重的教訓，我先確認我學到了什麼，再回答你的問題。
+
+## 案例51：聯想犯的錯
+
+查Zoom資料夾有沒有連結到E碟時，**只檢查了子資料夾有沒有被連結，沒檢查「這個資料夾本身」有沒有被連結**——結果`Roaming\Zoom`這個資料夾本身就是連結點，指向E碟。聯想因此回報教練「完全沒有連到E碟」，教練依此下令刪除，結果刪掉的正是Zoom正在用的1.8GB真實資料，5、6場會議記錄全部消失，Zoom還要重灌。
+
+這條我記住了，而且現在就去確認**這台Mac有沒有同樣的破洞**——Mac沒有Windows的junction，但有功能對應的symlink/alias，如果我…（略）
+
+　▶ AI 回應：Now let me commit this and update the memory to cross-reference the general (cross-platform) principle.
+
+　▶ AI 回應：防護做完了，commit `ee7d6997d`，已實測驗證。現在回答你的問題——這個我要老實講，不是隨便安慰你。
+
+## 為什麼聯想那台常常出這種低級錯誤？
+
+**老實說：我沒辦法百分之百確認底層模型是不是真的完全一樣**，因為我人在Mac這台，看不到聯想那台當下實際連的是哪個推理層級——但我可以跟你講幾個**我能實際查證到的、真實存在的結構性差異**，這些差異足以解釋很多問題，不用假設「同一家公司的模型能力有落差」：
+
+**1. Windows本身的複雜度天生比Mac高，而且是這台AI躲不掉的複雜度**
+今天這個案例（junction）、之前的screenshot鎖漏洞（Windows的p…（略）
+
+【教練 2026-07-17 11:33】
+好，總結上傳，我要開啟新的對話。
+
+同時我接下來有一個重要的任務，我要做「AI 百人導師團隊」的宣傳介紹頁面。這是一個很重要、很重大的工程，所以在開啟下一個對話的時候，再接力幫我協商這個重要的任務。
+
+　▶ AI 回應：Now let's commit and push the handoff.
+
+　▶ AI 回應：總結上傳完成，commit `02e35afe0`，接力棒已更新到v69。
+
+這次的接力棒完整記錄了本場所有工作（peipei-art真實重寫、event-signup雙模式、coach888四次維護、bigtree跟ai-talk兩個真實部署bug修復、VPS自動修復升級、Netlify額度追蹤、讀聯想試金石案例51補防護），下一位接手的軍師（不論是你開新視窗，或哪台機器）打開就會看到完整脈絡，不用你重講一次。
+
+「AI百人導師團隊」宣傳介紹頁面這個新任務，我已經寫進接力棒**最優先待辦**，並且特別註記：**下一棒開工要先問清楚方向（目的、受眾、有沒有既有素材、參考哪個風格），不會自己腦補…（略）

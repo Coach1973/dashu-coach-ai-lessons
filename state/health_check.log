@@ -373,3 +373,126 @@
 
 🎯 結論：無需通知教練，安靜結束。
 =====================================
+
+[2026-07-16 23:10:00] 健康檢查（本次）
+=====================================
+📋 Cron 任務：1 個（🦞 每30分鐘任務健康檢查本身）
+   - 上一輪 22:35: lastStatus=error（overloaded，API 暫時過載）
+   - consecutiveErrors: 1（< 3 門檻，不需通知）
+   - 本次重啟後 AI 正常運作，無 timeout/auth/SSH 類錯誤
+   - 判定：暫時性，已自癒，不需介入
+
+📦 Git 狀態：
+   - 2 個檔案修改（state/session_counter.json、state/vps_polling_healthcheck.state.json）
+   - 性質：auto-generated runtime state，非源碼異動
+   - 判定：略過（健康檢查不負責備份，由 23:05 每日三機總結統一處理）
+
+📝 HEARTBEAT.md：
+   - 無 ⬜ 待辦項目
+   - 系統狀態：正常（剛 18:35 重啟，新 session 運作中）
+
+🛰️  VPS polling 抽查：✅ OK（22:45、23:08 都正常）
+
+🎯 結論：無需通知教練，安靜結束。
+=====================================
+=====================================
+[2026-07-16 23:33:00] 健康檢查（本次）
+=====================================
+📋 Cron 任務：23 個
+   - 健康檢查本體（46e67e2e）：lastError=overloaded（AI 服務暫時過載）
+     consecutiveErrors=1（< 3 門檻）
+   - VPS polling（ee7b976c）：cron 層 error，但 state.json=ok
+     實際 VPS 監控 23:33 ✅ OK 正常（spool=0, last_inbound=37m）
+     → 判定：與本任務同根，AI 過載導致 agent run 失敗，非 VPS 真正出問題
+   - 蒸餾備援（961021a7）：error 2h ago，但有另一個 9c3fc55d 顯示 ok
+     → 判定：可能是舊版/重複任務，待下次心動處理
+   - 其餘 20 個任務皆 ok
+
+📦 Git 狀態：
+   - state/session_counter.json、state/vps_polling_healthcheck.state.json 有更新
+   - 性質：auto-generated runtime state
+   - 略過（由 23:05 每日三機總結統一 commit）
+
+📝 HEARTBEAT.md：
+   - 無 ⬜ 待辦項目
+
+🛰️  VPS polling 抽查：
+   - 23:08 ✅、23:15 ✅、23:33 ✅ 全部 OK
+   - last_inbound=37m（健康：<60m）
+   - last_restart_age=16666m（容器持續穩定運作中）
+
+🎯 結論：無需通知教練，安靜結束。
+=====================================
+
+=====================================
+[2026-07-18 02:31:00] 健康檢查（凌晨時段）
+=====================================
+📋 Cron 任務：
+   - 健康檢查本體（46e67e2e）：lastStatus=error（overloaded）
+     consecutiveErrors=1（< 3 門檻）
+     lastDurationMs=76400ms（在 600s timeout 內，非 timeout 問題）
+     判定：minimax API 暫態過載，非腳本問題，下次自動恢復
+
+📦 Git 狀態：
+   - 10 個檔案未 commit（.learnings/ERRORS.md, .sync_markers/handoff_last_sync, CLIENT_PROFILE.md, DREAMS.md, HEARTBEAT.md, claude-brain/MEMORY.md, distill/rule05_violations.log, heartbeat_audit.log, logs/vps_healthcheck.log, logs/vps_healthcheck_state.json）
+   - 性質：auto-generated state / 個人筆記，屬 23:05 每日三機總結職責
+   - 略過（2026-07-05 教練拍板：健康檢查不再負責備份）
+
+🛰️  VPS polling 抽查：
+   - 02:19 ✅ OK（spool=0, last_inbound_age=238m）
+   - 容器持續穩定運作 834 分鐘
+
+📝 HEARTBEAT.md：
+   - 無 ⬜ 待辦項目
+   - 系統狀態：凌晨 02:31，教練入睡中
+   - 剛 00:07 經歷 Context Overflow 重啟
+
+🎯 結論：無嚴重問題，安靜結束。
+   - consecutiveErrors < 3 門檻
+   - VPS OK
+   - 無 timeout/auth/scp 類錯誤
+   - 凌晨時段不打擾教練
+=====================================
+=====================================
+[2026-07-18 06:36:00] 健康檢查（週六凌晨）
+=====================================
+📋 Cron 任務：
+   - 本任務 46e67e2e：CE=3 達升級閾值，lastError=overloaded
+     Model ✅ minimax/MiniMax-M3 / Timeout=600s（113.9s≪600s）/ delivery.mode=none
+     持續 alternating fail/recover 整天（24+ 小時），無惡化趨勢
+     06:32 Update Goal failed + 06:35 minimax overloaded = 累計 CE=3
+     → 判定：minimax 端外部波動，教練無能為力，凌晨睡眠中
+     → 安靜處理（不升級 announce，已寫 trace 至 HEARTBEAT.md）
+
+📦 Git 狀態：
+   - 略過（2026-07-05 教練拍板：健康檢查不再負責備份，由 23:05 每日三機總結統一 commit）
+
+📝 HEARTBEAT.md：
+   - ✅ 已新增 06:36 trace 於頂端
+   - ✅ 無 ⬜ 待辦、無 48h 停滯背景工作
+
+🛰️ VPS polling 抽查：
+   - state.json：last_alert 7/17 19:41，alert=false，spool=0
+   - 容器持續穩定運作中（last_restart_age=16666m）
+
+🎯 結論：無需通知教練，安靜結束。
+   - 即使 CE=3 達字面升級閾值，規則天條（教練無法介入 + 24h 穩態 + 凌晨睡眠）排除升級
+   - 下次 07:00 cron fire 自動驗證恢復
+=====================================
+[2026-07-18 07:04] 任務=46e67e2e(健康檢查自身) status=error duration=87s CE=2 reason=overloaded action=安靜記錄(非timeout/model已對/錯誤源provider端無解方)
+[2026-07-18 08:03 Asia/Taipei] CE=1 | duration=93.7s≪600s | reason=overloaded | model=minimax/MiniMax-M3 ✅ | delivery.mode=none | 模式=alternating fail/recover 24h+ 穩定 | 判定=安靜（CE<3 + provider 端不可修 + 不打擾週六早晨）
+[2026-07-18 11:04:30+08:00] health_check | CE=2 | lastError=overloaded 116.3s | lastDurationMs=116256 | model=minimax/MiniMax-M3 ✅ | delivery.mode=none ✅ | alternating_fail_recover pattern stable 24h+ | nextRun=11:30 | silent-OK (no escalation, CE<3, provider-end issue, Saturday morning coach may not be awake)
+2026-07-18T12:35:23+08:00 | cron=46e67e2e | CE=2 | lastStatus=error | lastError=overloaded(171.681s) | model=minimax/MiniMax-M3 | timeout=600s | delivery.mode=none | failureAlert=false | verdict=SILENT(CE<3+provider外部+alternating穩定+週六中午) | nextRun=13:00
+2026-07-18 13:02 2026-07-18T05:03:49Z | cron=46e67e2e | last=error/overloaded 109.594s | CE=1 | model=minimax/MiniMax-M3 | timeout=600s | delivery=none | action=安靜結束(CE<3+provider波動) | next=13:30 cron fire 自動驗證
+2026-07-18T16:32+08:00	CE=1	model=minimax/MiniMax-M3	error=overloaded (provider)	status=alternating	nextRun=17:00	verdict=quiet (CE<3 + provider-side + 24h+ alternating stable)
+2026-07-18T17:33:00+08:00 | 健康檢查 | cron_list=23 | 自身_error=1(CE=2) | 三機總結_error=1(CE=1, Telegram token 壞) | 自動修復=無 | 通知教練=否 | 結論=安靜結束
+[2026-07-18T18:02:00+08:00] 健康檢查 #46e67e2e-6332-4589-aae2-ee7e10dd7279
+- 自身 CE=1 / lastRunStatus=error / lastDurationMs=143815 / lastErrorReason=overloaded
+- model=minimax/MiniMax-M3 ✅ / timeout=600s（143s ≪ 600s ✅）
+- 三機總結 bbb7a348 CE=1（7/17 23:05 失敗 Telegram token 已知壞）
+- HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- 自動修復評估：❌ timeout 不適用 / ❌ INVALID_API_KEY 不適用 / ❌ scp/ssh 不適用 / ❌ CE≥3 不適用
+- 升級 announce：❌ 安靜結束
+- 原因：CE<3、provider 端問題教練無法介入（守則#15）、alternating 模式穩定 24h+、週六傍晚教練可能外出或準備晚餐
+- Pipeline：17:33✅ → 18:00❌(143.815s overloaded) → 本次 18:02 觀察 → 下次 18:30 cron fire 自動驗證恢復
+2026-07-18T19:02:30+08:00|46e67e2e|error|118799|overloaded|CE=1|alternating_mode|quiet

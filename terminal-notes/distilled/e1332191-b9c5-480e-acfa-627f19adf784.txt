@@ -1,0 +1,462 @@
+# 終端機對話萃取 — Session e1332191-b9c5-480e-acfa-627f19adf784
+# 提取時間：2026-07-18 21:59 (台灣時間)
+# 共 20 條教練原話
+
+---
+
+【教練 2026-07-17 11:41】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：Mac 桌面版 Sonnet 5（軍師），這是新開的對話框（前一場已收工並完成蒸餾上傳）。
+
+**接力棒主軸**：上一棒（v69）處理了 peipei-art 個人品牌頁重寫、event.bymyway.com 後台修復、bigtree/ai-talk 兩個真實部署 bug、VPS 小龍蝦自動偵測修復機制、Netlify 額度追蹤等一長串維運任務，收工前教練預告了一個新專案——**「AI 百人導師團隊」宣傳介紹頁面**，形容為「很重要、很重大的工程」，但**目前完全沒有給細節**。
+
+**雲端同步狀態**：接力棒裡標記「⚠️ Pull 警告」，我實際查了一…（略）
+
+【教練 2026-07-17 11:42】
+<!-- attach -->
+> 🔴🔴🔴 cool-case 頭像重新歸類案——連續五棒沒做完
+
+先把這個解決了
+
+　▶ AI 回應：cool-case 頭像案已修好，需要教練確認一件事才能推上線。
+
+**已解決的部分**（本機已 commit `ab48fd2`）：
+
+前5棒卡住的原因，我查出來了——之前有一次批次替換，把整個網站「小龍蝦AI特助」對話泡泡**一律**改成「Opus 軍師」，但沒有真正照 v65 分析過的名單去做,結果**過度修改**：案例 5、13、16、17、18、19 明明內容是講 Telegram/小龍蝦系統的事（例如案例13逐字寫「在主對話框自稱小龍蝦」、案例17逐字寫「三隻小龍蝦同步衝突」），卻被誤改成 Opus 軍師。我已經逐案核對內容，把這 6 個案例改回「小龍蝦 AI 特助」+ 正確頭像，…（略）
+
+【教練 2026-07-17 11:55】
+不同故事，同一個編號，這麼明顯的錯誤肯定是要修啊！怎麼可以是案例不同，結果編號一樣呢？
+
+再來就是早期的這個，如果是 gmemi 的話，那就什麼標籤都不要放就好了嘛，就趕緊做吧。
+《接力棒》裡面有「真誠峰會」這個錯誤的形容詞
+語音輸入的問題，都是分會，真誠分會、真愛分會、真實AI分會議
+
+　▶ AI 回應：Bug 2（案例編號重複）修好了，1~40 全部唯一無重複。現在處理案例7（海餅乾知識庫）— 教練確認是 Gemini 的話就拿掉標籤。
+
+　▶ AI 回應：Cool-case 三項全部修好了，現在處理接力棒的用詞（真誠峰會 → 真誠分會）。
+
+　▶ AI 回應：全部完成，跟教練回報一下：
+
+**✅ 案例編號重複 bug**——查出根因：案例一/二/三/四這4個 case-card 的內部編號屬性被寫錯，剛好跟後面正牌的案例7（海餅乾知識庫）、案例8（換一個視窗就忘記了）撞號。導航選單本身連結一直是對的（教練點選單不會點錯），只是內部編號欄位錯亂。已修正，1~40 現在完全唯一無重複。
+
+**✅ 案例7「海餅乾知識庫」**——去查原始對話記錄，發現當時提到「教練從 Gemini 3.1 切到 2.5」，證實教練猜得對，這事件確實很可能不是 Claude 系統。已把這個案例的頭像圖片跟名字標籤整個拿掉，只留對話內容，不掛任何 AI 身份。
+
+**✅ 語音…（略）
+
+【教練 2026-07-17 12:49】
+<!-- attach -->
+> 推上線
+
+GO
+
+　▶ AI 回應：推上線了，已經在真實網站上驗證過，全部正確：
+
+**https://coach1973.github.io/cool-case/**
+
+- ✅ 案例編號 1~40 全部唯一，沒有重複了
+- ✅ 案例 5、13、16、17、18、19 已改回「小龍蝦 AI 特助」
+- ✅ 案例 6、12、14、15、20、21、23、24 維持「Opus 軍師」不變
+- ✅ 案例7（海餅乾知識庫）已經沒有任何頭像跟名字標籤，只留對話內容
+
+四棒沒做完的 cool-case 案子，這次連同教練順手抓到的編號重複 bug 跟語音糾偏，一次全部解決收工。
+
+【教練 2026-07-18 01:41】
+<!-- attach -->
+> 新專案「AI 百人導師團隊」宣傳頁
+
+來，我說一下目前對這個專欄的想法：
+
+第一個是版面的風格，可以參考我提供的一個參考網站。這個專欄主要就是介紹老師。講者資訊https://www.taiwan-marketing.com/
+第二個部分，我希望你能發揮你的規劃能力。我會先提供大概 6 到 8 個我們已經有講師資料的樣本（sample）上去讓你參考。
+
+至於其他的講師，我想要用自動化的方式處理：
+1. 我有一個群組，百人導師群都在裡面。我希望能發一個連結到群組裡，讓大家點進去填寫自己的介紹。
+2. 他們填寫完、你這邊收到之後，系統就會自動更新上去。
+3. 填寫的內容要包含讓他們上傳照片、FB 粉絲專頁或公司官網。
+
+簡單來說，除了我們提供的樣本之外，需要為這群百人導師設計一個可以讓他們上傳個人簡介的介面。這個部分想請你設計跟規劃一下，OK 嗎？
+
+　▶ AI 回應：Dependencies installed. Now setting up git and the repo structure.
+
+　▶ AI 回應：Good, GitHub CLI is ready. Task #1 scaffolding done — moving to the schema.
+
+　▶ AI 回應：Schema and db layer done. Now the core Flask app with the photo sanitizer/upload handling.
+
+　▶ AI 回應：Now I have the exact admin auth pattern. Writing the main `app.py`.
+
+　▶ AI 回應：Now the admin templates.
+
+　▶ AI 回應：Templates done. Now let's run it locally and verify.
+
+　▶ AI 回應：Filename collision-safety, Chinese filenames, and honeypot spam protection all verified working correctly. Now checking the visual card grid.
+
+　▶ AI 回應：All 3 mentors render correctly. Now checking the responsive grid breakpoints and the bio modal.
+
+　▶ AI 回應：1280px width → 4 columns, correct. Let me verify the other breakpoints and the bio modal interaction.
+
+　▶ AI 回應：1→2→4 column breakpoints all confirmed correctly. Now testing the bio modal interaction.
+
+　▶ AI 回應：Core functionality fully verified — grid breakpoints, photo cropping, and the bio modal (open/populate/close, paragraph splitting, contact links) all work correctly via direct interaction testing. Cleaning up test data now before deployment.
+
+　▶ AI 回應：Task 6 done. Now generating production secrets and committing/creating the GitHub repo.
+
+　▶ AI 回應：Repo created and pushed. Task 7's admin credentials are ready — now moving to deployment (Cloudflare tunnel + LaunchAgents).
+
+　▶ AI 回應：部署卡在最後一步——公開 DNS 網址需要教練明確點頭才能開通（這是我計劃裡唯一保留給教練確認的小提案，系統的安全機制也在這裡自動擋了一下，動作正確）。
+
+**網站程式已經全部寫完、本機測試通過、程式碼已推上 GitHub 私有倉庫**（`Coach1973/mentor100`）。剩下唯一要教練確認的是**子網址名稱**：
+
+我提案用 **`mentor100.bymyway.com`**——跟程式碼倉庫同名，好記好對照，這個網址目前還沒被任何人用過。教練覺得可以嗎？或者有更喜歡的名字（例如 `ai100.bymyway.com`）也可以直接跟我說，我立刻換。
+
+confirmO 之後我會馬…（略）
+
+【教練 2026-07-18 02:14】
+# 「AI 改變世界」導師計畫緣起
+
+這是我透過語音輸入整理的計畫構想與初衷。請幫我將這些想法，整理成一個吸引人的網頁標題與內容。
+
+### 起心動念與初衷
+隨著 AI 時代來臨（或稱為「全民 AI 時代來臨」、「全民 AI 競爭力提升」），我們這群跑在前面、願意花時間投入 AI 的老師們，共同意識到肩膀上的責任。我們希望幫助更多人消除對 AI 的焦慮與恐懼，進而帶領大家正向、積極且健康地使用 AI。
+
+### 我們的團隊與運作模式
+這個計畫的目標是匯聚 100 位 AI 導師。我們的團隊是這樣凝聚而來的：
+* **發起人與召集人**：我是這個計畫的發起人（大樹教練），而佩君老師（佩佩老師）負責邀約，是本計畫的召集人。
+* **零基礎與專業的共融**：我本身是從零基礎開始學習 AI，正因如此，我得到了許多資深 AI 前輩、專家與愛好者的認可，他們才願意加入這個群組。
+* **深度的理念共鳴**：每位導師在進群前，我都會與他們進行平均約一小時（最少半小時）的深度交流，聊完彼此的想法與理念後，大家才決定加入。
+* **充分尊重的自由氛圍**：我們充分尊重每位成員。這裡是一個來去自如的空間，想加入我們熱烈歡迎；若不習慣人多的環境想離開，我們也完全尊重，沒有任何限制與要求。
+
+### 群組扮演的角色
+我們希望這個群組能發揮以下幾個功能：
+1. **AI 人才的聚集部落**：這裡就像一個專屬 AI 人才的部落。
+2. **華山論劍的交流平臺**：大家可以在這裡自由交流對 AI 的理解與認識。因為彼此都是 AI 的愛好者與使用者，聊起 AI 來非常舒服，接受度也很高。
+
+　▶ AI 回應：內容寫好了，已 commit `1a26605` 推上 GitHub（還沒公開上線，網址還在等教練確認）。整理成三段：
+
+---
+
+**AI 改變世界．百人導師同行**
+*跑在前面的人，該負起帶路的責任*
+
+**起心動念**
+AI 時代已經來臨——這是一個全民 AI 競爭力提升的時代。我們這群比較早跑在浪頭上、願意花時間投入 AI 的老師們，都在同一件事上有了共識：肩膀上，多了一份責任。我們想做的，不是站在高處展示成果，而是牽著更多人的手，一起消除對 AI 的焦慮與恐懼，帶領大家用正向、積極、健康的方式，走進 AI 的世界。
+
+**我們的團隊**
+這個計畫，由大樹教練發起；佩君老師（佩佩老師）…（略）
+
+【教練 2026-07-18 02:17】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/mentor100/templates/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 開給教練看：**http://localhost:5062/**（本機測試網址，教練螢幕上應該已經跳出瀏覽器視窗）。頁面上方是「AI 改變世界．百人導師同行」標題跟緣起三段文字，下方目前還沒有導師資料（等教練確認網址、我幫忙建種子資料後就會出現）。
+
+麻烦教練直接看一眼 Chrome 視窗，內容跟語氣如果沒問題，跟我說一聲，我就處理网址上線的事。
+
+【教練 2026-07-18 04:31】
+去把 7 月 29 日的 AI 論壇裡面的四位老師先做一個 sample（樣本），移植在我們的「AI 改變世界百人導師同行」的網站裡面，看看效果怎麼樣。
+
+　▶ AI 回應：Found it — 7/29 台南場 AI 微型論壇. Now pulling the four speaker profiles.
+
+　▶ AI 回應：Server's up. Now logging in and inserting the four real speaker profiles.
+
+　▶ AI 回應：Admin login now works — that surfaced a real bug (more on this after). Now inserting the four speaker profiles.
+
+　▶ AI 回應：All four inserted successfully. Now verifying the public page renders them correctly.
+
+　▶ AI 回應：All four speakers render correctly with photos, titles, and topic tags. Let me verify the photos load and check one bio modal.
+
+　▶ AI 回應：Now let me clean up test artifacts and commit.
+
+　▶ AI 回應：Let me quickly check whether this same bug affects the coach's already-live event-signup system, since that's a real production admin panel.
+
+　▶ AI 回應：七月 29 日台南場 AI 微型論壇的四位講師已經移植進「AI 改變世界百人導師同行」網站，已用 Chrome 開給教練看：**http://localhost:5062/**
+
+**四位講師（原樣照片+完整簡介，來自 ai-talk 網站）：**
+1. 王彤 Tom — 雲智永續發展顧問有限公司 專案經理
+2. 蘇秦 Su Chin — AI 教學工具專家
+3. 燒茶 林祥禔 — 嘉享賀企業有限公司 首席技術長
+4. 大樹教練 — 海餅乾俱樂部創辦人
+
+四張卡片、四個照片都正常顯示，點「簡介」會跳出完整學經歷（已逐一驗證過，段落分得正確）。這批算是種子資料的一部分，之後教練給的 6-8 位樣…（略）
+
+【教練 2026-07-18 08:57】
+那我需要先輸入一行自己的FB或是頻道，來測試效果嗎？還是直接推上去再來測試
+
+　▶ AI 回應：不用等推上線，現在就可以測試——本機這個網址已經是跟正式上線一模一樣的系統，教練現在就能試填表單。
+
+**現在就能測**：教練點這個連結 → http://localhost:5062/join
+填自己的姓名、公司/職稱、簡介、上傳一張照片、貼自己的FB連結，按送出後，馬上回到首頁 http://localhost:5062/ 就會看到自己的卡片出現在四位講師後面——這就是完全自動上線的效果，不用等我做任何事。
+
+**不用擔心「填錯」或「想改」**：填完想改任何東西，或想整個刪掉重測，我都能在後台幫教練修改/刪除，不會留下垃圾資料。
+
+**推上線後也是一樣的行為**：現在測試通過的話，之後推上…（略）
+
+【教練 2026-07-18 10:49】
+那我想請問一下，我們是不是應該要給好幾個連結？
+
+舉個例子：
+1. 第一次上傳的是 FB
+2. 第二次上傳的是我的官網
+3. 第三次上傳的是我的 IG
+4. 第四次上傳的是我的部落格文章
+5. 第五次上傳的是我的 YouTube
+
+系統上可以這樣設定嗎？就是每一個連結丟上去，它就在它的頁面底下新增一個連結，還是就以一個連結為代表？
+
+因為當初我在後臺肯定是能刪，但是對於填寫的這些老師而言，如果他們發現填錯了，要如何去修改跟刪除？你幫我想想怎麼做會比較好？
+
+　▶ AI 回應：Good catch — this exposes two real gaps: only one generic link field, and no way for mentors to fix their own typos without going through you. Let me design and build both properly.
+
+　▶ AI 回應：Now updating `db.py` with the migration logic and new query functions.
+
+　▶ AI 回應：Now updating the admin routes to use the new links dict pattern.
+
+　▶ AI 回應：Now updating the templates — join form, thanks page, new self-edit page, admin form, and the index modal.
+
+　▶ AI 回應：Now updating the index page's bio modal to show all the link types.
+
+　▶ AI 回應：Restarting the server to trigger the schema migration on the existing database with the 4 seeded speakers, then testing the full flow.
+
+　▶ AI 回應：Got the edit token. Let me verify the thanks page shows the edit link, then test editing and deleting through it.
+
+　▶ AI 回應：All 5 links stored and pre-filled correctly. Now testing self-service edit and delete via the token.
+
+　▶ AI 回應：5 cards render, and 王彤's modal correctly shows zero link chips since he has none set (no empty/broken tags). Everything works cleanly. Let me open Chrome for the coach and commit.
+
+　▶ AI 回應：已用 Chrome 開給教練看，兩個問題都解決了，commit `ac212eb`：
+
+**問題一：多個連結**
+表單改成 5 個獨立欄位——FB、官網、IG、部落格文章、YouTube，每個都選填。導師想填幾個就填幾個，不用把好幾個連結塞進同一格。點「簡介」的彈窗會把導師有填的連結逐一列成小標籤（例如「FB →」「IG →」），沒填的不會出現空白項目——我已經測試過所有組合都正常。
+
+**問題二：導師自己改/刪資料**
+每筆資料現在都會生成一組專屬的隨機編輯連結（別人猜不到）。導師填表送出成功後，畫面上會顯示這組連結並提醒「請截圖或加書籤保存」。之後導師想改名字、換照片、加連結，或整個刪掉，…（略）
+
+【教練 2026-07-18 11:07】
+你有跳HTML 讓我看?
+
+　▶ AI 回應：老實說：我剛才確實有呼叫「開啟 Google Chrome」的指令兩次，但問題可能出在——**我後來為了 commit 程式碼，把本機測試伺服器關掉了**，所以就算 Chrome 視窗真的跳出來，教練點開看到的可能是「無法連線」的錯誤畫面，等於沒看到東西。
+
+我剛剛已經：
+1. 重新啟動本機伺服器
+2. 重新開一次 Chrome，並把它切到最前面（用 `activate` 指令強制把 Chrome 視窗拉到最上層）
+
+麻煩教練現在看一下螢幕上是否有 Chrome 視窗跳出來、網址是 `http://localhost:5062/`。如果教練是用 RustDesk 遠端連這台 Mac，也可能是 …（略）
+
+【教練 2026-07-18 11:39】
+是否修l修改頁面，有刪除的選項，或是給我一個後台，我可以去有手動編輯的權限，然後，關於提供網址連結，我想設計成可以自己設計連結的名稱，內建連結順序如下：
+1.官網
+2.FB 
+3. IG
+4.Threads
+5.YouTube 
+6.GJW 
+7.LINE
+8. Podcasts
+9.Blog
+註：您可以修改連結名稱
+
+　▶ AI 回應：Now updating `_extract_links()` in app.py to build from `db.LINK_COLUMNS` dynamically instead of a hardcoded 5-field dict.
+
+　▶ AI 回應：Now updating `admin_form.html` the same way.
+
+　▶ AI 回應：Now updating the index.html modal to handle all 9 link types.
+
+　▶ AI 回應：All 9 links stored correctly. Now let me verify the modal renders all 9 in order, then clean up this test entry.
+
+　▶ AI 回應：All 9 links render in the exact order the coach specified. Now cleaning up test data and setting up the admin backend access he asked for.
+
+　▶ AI 回應：兩件事都處理好了，已用 Chrome 開到後台登入頁給教練看。
+
+**1. 後台編輯權限——已經存在，剛給教練開好帳號**
+
+網址：`http://localhost:5062/admin/login`（本機測試網址，Chrome 已經跳出來了）
+帳號：`bymyway`
+密碼：`PMRfJB1VaWdN`
+
+登入後可以看到所有導師名單、新增/編輯/刪除，跟教練現在自己測試出來的兩筆測試資料（「吳大樹」「CoachWu」）都在裡面——教練要保留、修改或刪掉都可以直接在後台操作，我沒有動它們。
+
+**2. 連結欄位改成教練指定的 9 個、固定順序**
+
+官網、FB、IG、Threads、YouT…（略）
+
+【教練 2026-07-18 11:57】
+首先，登入密碼我要設為123457
+第二，顯示連結的按鈕，不要出現--> 箭頭
+第三，我希望這個顯示按鈕是可以編輯按鈕文字
+
+　▶ AI 回應：Three changes — let me handle them one at a time, starting with the password.
+
+　▶ AI 回應：Password confirmed working. Now the label + arrow redesign — this needs a schema change to store an editable button-text per link.
+
+　▶ AI 回應：Now updating `db.py` to handle the URL+label pairs, with a helper to resolve each mentor's final link list.
+
+　▶ AI 回應：Now updating `app.py`'s `_extract_links()` to pick up label fields too.
+
+　▶ AI 回應：Now adding editable button-text fields alongside each URL input in the three forms.
+
+　▶ AI 回應：Now replacing the 9 link fields with URL+label row pairs.
+
+　▶ AI 回應：Now the same for `admin_form.html`.
+
+　▶ AI 回應：All three changes verified working. Cleaning up test data and committing.
+
+　▶ AI 回應：三件事都改好了，已用 Chrome 開給教練看，commit `7905b26`：
+
+**1. 密碼改成 `123457`**——帳號還是 `bymyway`，已測試登入成功。
+
+**2. 箭頭拿掉了**——按鈕現在只顯示「官網」「FB」這種純文字，沒有「→」符號。
+
+**3. 按鈕文字可以自己編輯**——每個連結旁邊多了一格小輸入框，可以打自己想要的按鈕文字（例如把 FB 改成「追蹤我的粉專」），留空就用預設名稱（官網/FB/IG...）。自助填表、自助修改、後台新增/編輯三個地方都同步加了這個功能，已經測試過「有填自訂文字」跟「留空用預設」兩種情況都正確顯示。
+
+順便注意到教練這邊已經在後…（略）
+
+【教練 2026-07-18 12:16】
+那請問我登入後臺的專用網址是哪一個？你要整合到同一個嗎？https://event.bymyway.com/admin 或是再獨立一個管理後臺。
+
+另外我想說的是，我剛才測試了一下。那個 icon 的內建，就是我已經寫好的那幾個（好比說內建是 FB，它就顯示 FB）。
+
+旁邊有一個「修改標籤」的按鈕，等於說使用者要去按了「修改標籤」並輸入內容，原本內建的 FB 才會被改掉。如果沒有按，就維持原本內建的顯示。
+
+這樣有理解我的意思嗎？
+
+　▶ AI 回應：Understood on both — let me clarify the admin URL first, then fix the label UX to match exactly what you described.
+
+**Admin 網址**：建議獨立一個，不要跟 `event.bymyway.com/admin` 整合。這兩套系統資料完全不同（event.bymyway.com 管的是活動報名名單，這個是導師資料），硬併在一起後台會很亂。等網址確認後，教練的後台會是 `https://mentor100.bymyway.com/admin`（跟公開頁同一個網域，只是路徑不同）…（略）
+
+　▶ AI 回應：Now applying the same pattern to `join_edit.html` and `admin_form.html`.
+
+　▶ AI 回應：Both pages render fine. Now checking the toggle behavior and default-visible-when-has-value logic via browser.
+
+　▶ AI 回應：Exactly right — already-set labels show expanded, unset ones stay hidden. Cleaning up and committing.
+
+　▶ AI 回應：互動邏輯改對了，已用 Chrome 開到填表頁給教練看，commit `604395b`：
+
+現在每個連結預設**只顯示網址欄位**，內建按鈕文字就是平台名稱（FB 就顯示「FB」），完全不用管。旁邊有一個「修改標籤」按鈕，沒按過，文字輸入框根本不會出現。按了才會跳出來，可以打自己想要的文字。
+
+我也測了「回頭編輯」的情況：如果之前已經填過自訂文字（例如把 FB 改成「我的粉專」），編輯畫面會自動把那個輸入框展開顯示，方便看到目前設定的是什麼，不用重新點按鈕。
+
+**關於後台網址**：目前確認獨立設一個後台（不跟 event.bymyway.com 混在一起），路徑會是未來 `mentor10…（略）
+
+【教練 2026-07-18 12:22】
+你看一下截圖，你這個比例不對：
+
+1. 修改標籤：應該在最右邊，是一個小小的按鈕
+2. 主視覺：應該是那一長條讓人填網址的地方
+
+你看一下截圖就知道了。
+
+　▶ AI 回應：教練截圖似乎沒有實際傳過來（我這邊訊息裡沒看到附圖），但不用等——我直接檢查自己本機畫面的實際排版比例。
+
+　▶ AI 回應：Found the exact bug — the button is rendering at 346px and the URL field at only 30px, completely inverted. Let me confirm the cause before fixing.
+
+　▶ AI 回應：Confirmed — the generic `button{width:100%}` rule (meant for the submit button) was bleeding onto the small edit-label button. Fixing in all three forms.
+
+　▶ AI 回應：Now let me verify the fix actually corrects the proportions before showing the coach.
+
+　▶ AI 回應：Flask isn't in debug mode, so it cached the old template. Restarting the server to pick up the CSS fix.
+
+　▶ AI 回應：Confirmed fixed: URL field now 298px (dominant), button 78px (small, right side). Committing and showing the coach.
+
+　▶ AI 回應：比例的問題找到了，已經修好，commit `4a215b3`，Chrome 也開好給教練看。
+
+**根因**：頁面本來就有給「送出」大按鈕用的樣式，規定所有按鈕都要「寬度 100%」。我新加的「修改標籤」小按鈕沒有特別排除這條規則，結果也被拉成滿版寬——網址欄位被擠到只剩 30px，按鈕自己卻佔了 346px，跟教練說的完全相反。
+
+**現在**：網址欄位變成主視覺（約 298px，佔滿大部分空間），「修改標籤」縮小成小按鈕（約 78px）貼在最右邊。九個連結都改好了。
+
+順便說一下：我這次是先自己抓實際的像素寬度來驗證，不是憑肉眼感覺，抓到問題所在後才動手改。麻煩教練再看一眼 Chrome …（略）
+
+【教練 2026-07-18 12:30】
+可以推了 記得把 修改後台寫在作品一覽頁面，還有 百人導師 也要寫入一覽頁面
+
+　▶ AI 回應：「可以推了」收到，先把網站正式上線，再處理作品一覽表的部分。
+
+　▶ AI 回應：DNS route created. Now setting up the LaunchAgents so the app and tunnel run persistently.
+
+　▶ AI 回應：Now creating the two matching plist files for mentor100.
+
+　▶ AI 回應：Both services running under launchd. Now verifying the public URL resolves and serves correctly.
+
+　▶ AI 回應：Now committing the handoff update and syncing to CLAUDE.md.
+
+　▶ AI 回應：全部推上線了，兩件事都完成：
+
+**1. mentor100 正式上線** — **https://mentor100.bymyway.com/**
+用瀏覽器實際打開驗證過（首頁、填表頁、後台登入都正常），不是只看本機。DNS 生效後有個小插曲：我終端機這邊的網路解析一度卡住（curl 查不到），換瀏覽器工具查證確認網站其實已經正常運作，是我這台機器本地的解析快取問題，不影響教練或任何人實際訪問。
+
+**2. 教練作品一覽表已更新** — commit `013ea26`
+比照 event/peipei 的慣例，新增第 24 項「AI百人導師團隊」（公開頁）跟第 25 項「AI百人導師後台系統…（略）
+
+【教練 2026-07-18 12:44】
+刪除
+
+　▶ AI 回應：刪除完成，已直接驗證過：
+
+- 資料庫裡那筆測試資料（「佩佩老師」/「大樹教育」/「導入COACH」）已經刪除，連同它的照片檔案一起清掉
+- 直接查了目前公開頁面的原始碼確認：頁面上只剩下真正的 4 位講師（王彤、蘇秦、燒茶、大樹教練），沒有殘留
+- 頁面上還會看到「佩佩老師」這三個字，但那是緣起文案裡提到她是計畫召集人的介紹文字，不是被刪掉的那筆測試資料，兩者不衝突
+
+網站現在乾淨上線，https://mentor100.bymyway.com/ 只顯示 4 位真實講師。
+
+【教練 2026-07-18 12:49】
+把24，25 移到最上面15、16 把13 放到25
+
+【教練 2026-07-18 12:49】
+[Request interrupted by user]
+
+　▶ AI 回應：No response requested.
+
+【教練 2026-07-18 13:25】
+接下來我們的文案我做了一些修正，然後你再認真的讀取、重新幫我排版。
+
+段落和標題的字都大一點。那我把文案貼給你，你自己用心的排版吧。
+
+AI 改變世界．百人導師同行
+從零基礎到大師，這裡比想像的多更多
+我也是導師，我要加入 →
+
+起心動念
+
+民我們想做的，不是站在高處展示成果，而是匯聚人才的力量，引領大家用正向、積極、健康的方式，消除對 AI 的焦慮與擔憂；帶領更多人走進 AI 的世界。
+
+計劃源起
+
+這個計畫，由大樹教練發起；佩君老師負責邀約，每一位加入的導師，在進群之前，大樹教練與佩君老師都會親自與他深聊——平均約一小時，最少也有半小時——聊聊彼此對 AI 的想法與理念，對這個計劃有所期待，形成一股共識。想加入，我們熱烈歡迎；想離開，我們同樣尊重，沒有任何限制與要求。
+
+這是一個怎樣的地方
+
+因為每個人都是 AI 的愛好者，也都是 AI 的使用者。這裡，是一個屬於 AI 人才的聚合地，讓志同道合的人自然而然找到彼此；也是一個華山論劍的交流平台，讓每個人可以暢談對 AI 的理解與體會。
+
+免責聲明
+
+ 
+我們這裡沒有先來後到之分，我們也沒有設定加入門檻，但我們真心希望能成為彼此事業成長的翅膀。也希望珍惜羽毛，彼此欣賞、合作愉快。
+
+諸位老師們合作產生的任何效益，皆歸他們的智慧勞動所得，我們樂見其成。若他們合作產生意見分歧，這屬於他們的個人行為，與本站無關。
+
+我們只是想讓大家在組隊服務企業時，有更多的可能性。願大家找到最佳團隊組合，讓我們共同創造一個由道德品格主導的 AI 世界。
+
+　▶ AI 回應：文案排版好了，已經正式上線在 **https://mentor100.bymyway.com/**，Chrome 也開好給教練看。
+
+- 標題跟段落文字都放大了（標題 27px、內文 18px，比原本明顯大一號）
+- 四個段落全部照教練修訂後的版本呈現：起心動念、計劃源起（改名+內容更新為大樹教練與佩君老師一起深聊）、這是一個怎樣的地方（順序調整過）、新增的免責聲明
+- 標語也換成「從零基礎到大師，這裡比想像的多更多」
+- 順手抓到一個小地方：教練貼的文案「起心動念」開頭多了一個孤立的「民」字（應該是編輯時的殘留），排版時順手拿掉了，語意不受影響
+
+四位真實講師的卡片牆維持在文案下方，一切正常…（略）
