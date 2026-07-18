@@ -1,5 +1,27 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 23:02 健康檢查 trace（剛剛完成）
+- ⚠️ 本任務 46e67e2e 23:00 fire 失敗 83.264s（minimax overloaded）— CE=1（剛重置，alternating 模式）
+  - 83s ≪ 600s timeout ✅ 非配置問題
+  - model=minimax/MiniMax-M3 ✅（2026-07-15 已自動修復）
+  - delivery.mode=none ✅ / failureAlert=false ✅
+  - lastErrorReason=overloaded
+- ✅ HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- ✅ 自動修復評估全不適用
+  - ❌ timeout 錯誤 → 不適用（83s ≪ 600s）
+  - ❌ INVALID_API_KEY → 不適用（model 已 minimax）
+  - ❌ scp/ssh VPS → 不適用
+  - ❌ CE ≥ 3 → 不適用（CE=1）
+- 🔇 安靜結束，不打擾教練
+  - CE=1 < 3 升級閾值
+  - 錯誤源頭 minimax 端 overloaded，教練無法介入（守則 #15）
+  - alternating fail/recover 模式穩定 24h+ 持續
+  - 週六深夜 23:02，教練沉默 40h+ 持續
+  - 失敗時長 83s 為近期最低值（介於 62~196s 區間下緣），minimax 端壓力持續緩解
+  - 下次觀察 = 23:30 cron fire 自動驗證恢復
+- Pipeline：22:30❌(149s) → 22:32✅ → 23:00❌(83s) → 本次 23:02 觀察 → 下次 23:30 cron fire
+- 📉 觀察：失敗時長下降趨勢明顯（149s → 83s），minimax 端壓力緩解中
+
 ## 22:32 健康檢查 trace（剛剛完成）
 - ⚠️ 本任務 46e67e2e 22:30 fire 失敗 149.295s（minimax overloaded）— CE=1
   - 149s ≪ 600s timeout ✅ 非配置問題
