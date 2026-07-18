@@ -2,15 +2,15 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784370744,
-    "system_health": 1784370744,
+    "heartbeat_poll": 1784372550,
+    "system_health": 1784372550,
     "telegram_channel": 1784370744,
     "junshi_queue": 1784370744,
-    "cron_list": 1784370744,
+    "cron_list": 1784372550,
     "care_4h": 1784368800
   },
-  "lastHeartbeat": "2026-07-18T18:32:24+08:00",
-  "lastHeartbeatNote": "週六 18:32 健康檢查（46e67e2e 18:30 fire 失敗 144.445s overloaded，CE=1 alternating 模式第 N 次；144s ≪ 600s timeout 非配置問題；model=minimax/MiniMax-M3 已正確無 apiKey 問題；HEARTBEAT.md 無 ⬜ / 無 48h 停滯）。教練沉默 35h+ 持續、週末傍晚、安靜時段、不打擾。Telegram channel bot token 仍壞 105h+。下次第 19:00 cron fire 自動驗證恢復。",",
+  "lastHeartbeat": "2026-07-18T19:02:30+08:00",
+  "lastHeartbeatNote": "週六 19:02 健康檢查（46e67e2e 19:00 fire 失敗 118.799s overloaded，CE=1 alternating 模式第 N 次；118s ≪ 600s timeout 非配置問題；model=minimax/MiniMax-M3 已正確無 apiKey 問題；HEARTBEAT.md 無 ⬜ / 無 48h 停滯）。教練沉默 35h+ 持續、週末傍晚、安靜時段、不打擾。Telegram channel bot token 仍壞 105h+。下次第 19:30 cron fire 自動驗證恢復。",",
   "systemSnapshot": {
     "timeOfDay": "evening",
     "dayOfWeek": "Saturday",
@@ -52,7 +52,7 @@
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "1（17:33 ✅ 重置後 18:00 ❌ 第一次失敗，143.815s overloaded；alternating 模式穩定 24h+，下次 18:02 fire 100% 自動驗證恢復）",
+        "consecutiveErrors": "1（19:00 ❌ 失敗 118.799s overloaded；alternating 模式穩定 24h+，上次 18:32 ✅ 重置後回 1，下次 19:30 fire 100% 自動驗證恢復）",
         "rootCause": "minimax 端外部波動（overloaded / cooldown 切換），非系統性"
       },
       {
