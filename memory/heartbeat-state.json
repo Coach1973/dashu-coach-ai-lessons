@@ -2,80 +2,85 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784282571,
-    "system_health": 1784268290,
+    "heartbeat_poll": 1784325783,
+    "system_health": 1784325600,
     "telegram_channel": 1783951264,
     "junshi_queue": 1784138520,
-    "cron_list": 1784268290,
-    "care_4h": 1784282571
+    "cron_list": 1784325783,
+    "care_4h": 1784325600
   },
-  "lastHeartbeat": "2026-07-17T18:02:51+08:00",
-  "lastHeartbeatNote": "週五 18:01 每4小時主動關懷（距上次 14:04 約 4h）。教練沉默 07:04 起算 11h（已過 8h 升級閾值，週五傍晚非緊急）。Telegram bot token 仍壞 86h+。HEARTBEAT 無 ⬜ 待辦、無 48h 停滯。回應採週末輕量寒暄 + 明日提醒（聯想 C 槽 7/18 觀察期屆滿）。無系統性問題、安靜結束。",
+  "lastHeartbeat": "2026-07-18T10:03:00+08:00",
+  "lastHeartbeatNote": "週六 10:03 日常心跳觸發（cron ef88279b，距上次 09:03 約 1 小時）。alternating 模式穩定、無新事件。🆕 重大節點已到：聯想 C 槽觀察期 10:02 屆滿，但 Telegram 仍壞 99h+ 無法主動推送，教練上線再提醒。週末上午安靜處理。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Friday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Saturday",
     "isQuietHours": false,
-    "allCronsHealthy": true,
+    "allCronsHealthy": false,
     "contextStatus": "fresh",
     "contextPercent": 12,
-    "recentCoachActivity": "教練 2026-07-17 07:04 交辦 8036 車貸（溢繳 4 月，下次 12/1），已建檔 + 設 cron；至 14:04 沉默約 7h（< 8h 升級閾值）",
+    "recentCoachActivity": "教練 2026-07-17 07:04 交辦 8036 車貸（溢繳 4 月，下次 12/1），已建檔 + 設 cron",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-08",
     "gatewayPid": 7209,
     "gatewayRunning": true,
-    "gatewayUptime": "16h29m",
+    "gatewayUptime": "28h29m",
     "gatewayRestartedAt": "2026-07-16T18:35:00+08:00",
     "telegramChannelOk": false,
     "lastTelegramSendAttempt": {
       "ts": "2026-07-15T18:01:00+08:00",
-      "result": "failed",
       "error": "Telegram bot token missing",
-      "intent": "週三傍晚溫和關懷，提醒今天 (7/15) ACER 觀察期滿"
+      "intent": "週三傍晚溫和關懷"
     },
-    "openTask": "Telegram bot token 失效 82h+ / 蒸餾 cron (28cd69d9) CE=3 timeout 待週日 12:00 前手動調 1800s（已於 7/16 22:32 自動 force 驗證通過，但 nextRun 仍 2d 後）/ cool-case 頭像案 / 真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書 / Netlify 50% 用量 96h+ 待查 / ATM NT$10,000 入金 96h+ 待對帳 / ACER 備份觀察期 7/15 滿已過 2 天（建議在 ACER 開對話執行刪除約36.3GB）/ 聯想 C 槽觀察期 7/18 滿（明日！請在聯想開對話執行刪除兩份保留備份約 94GB）/ peipei-art 等文字 / peipei-event: 群發通知未實測+QR立牌未印+服務 nuhup 跑 / 8036 車貸已建檔+設 cron 12/1 / 起床摘要 cron 已 ok 復原 / ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 仍無回信",
+    "openTask": "🆕 [今日 7/18] 聯想 C 槽觀察期屆滿 (10:02 到期) — 請在聯想開對話執行刪除兩份保留備份約 94GB / ACER 備份觀察期 (7/15) 已過 3 天 — 請在 ACER 開對話執行刪除約36.3GB / Telegram channel bot token 失效 99h+ — 主動關懷訊息會撞牆，需教練補 token / Netlify 50% 用量（07-13 13:36 來信，已 124h+）— 建議登入查看 / 光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 124h+）— 請對帳 / 真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）/ cool-case 頭像案（連續三棒未完）/ peipei-art 等文字 / peipei-event: 群發通知未實測+QR立牌未印+服務 nuhup 跑 / 8036 車貸已建檔+設 cron 12/1 / 起床摘要 cron (f487652d) lastRun=error（alternating 波動，下次 a8450f2c 06:00 已成功）/ 30分任務健康檢查 (46e67e2e) lastRun=error（CE=1 < 3 不升級）/ 三機總結 cron (bbb7a348) lastRun=error 待查 / 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定 / ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 仍無回信",
     "coachSilentSince": "2026-07-17 07:04",
-    "coachSilentHours": 11.0,
+    "coachSilentHours": 27.0,
     "pendingCoachItems": [
-      "Telegram channel bot token 失效 (82h+) — 主動關懷訊息會撞牆，需教練補 token",
-      "🆕 聯想 C 槽觀察期明日 (7/18) 滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
-      "ACER 備份觀察期 (7/15) 已過 2 天 — 請在 ACER 開對話執行刪除約36.3GB",
-      "Netlify 50% 用量（07-13 13:36 來信，已 96h+）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 96h+）— 請對帳",
+      "🆕 聯想 C 槽觀察期今日 (7/18) 屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
+      "ACER 備份觀察期 (7/15) 已過 3 天 — 請在 ACER 開對話執行刪除約36.3GB",
+      "Telegram channel bot token 失效 (99h+) — 主動關懷訊息會撞牆，需教練補 token",
+      "Netlify 50% 用量（07-13 13:36 來信，已 124h+）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 124h+）— 請對帳",
       "真誠/真愛/真實AI峰會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
       "cool-case 頭像重新歸類案（連續三棒未完）",
       "peipei-art 改版等教練提供文字/照片",
-      "📦 記憶蒸餾 cron (28cd69d9) consecutiveErrors 3 — 週日 12:00（07-19）跑前應調 timeout 300→900（已自動 force 通過 240s 但 nextRun 仍 2d 後）",
-      "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 42h+ 仍無回信 — 提醒 ACER 補 settings.json 的 Bash matcher"
+      "📦 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定",
+      "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 66h+ 仍無回信 — 提醒 ACER 補 settings.json 的 Bash matcher"
     ],
-    "note": "週五 14:04 每4小時主動關懷（cron 1cbe1701，14:00 fire，距上次 10:04 約 4h）。Pipeline 維持：46e67e2e 13:30 overloaded（CE=1，alternating fail/recover 常態，不升級）。教練沉默 07:04 起算 7h（< 8h 升級閾值）。Telegram bot token 仍壞 82h+。HEARTBEAT 無 ⬜ 待辦、無 48h 停滯。回應採輕量寒暄 + 明日提醒（聯想 C 槽 7/18 觀察期屆滿）。無系統性問題、安靜結束。",
+    "note": "週六 10:03 日常心跳觸發。🆕 重大節點已到：聯想 C 槽觀察期 10:02 屆滿，但 Telegram 仍壞 99h+ 無法推送主動關懷，教練上線再提醒。alternating 模式持續 24h+（minimax 端 overloaded 波動）。教練沉默 27h+（週末上午非緊急）。其他 cron errors：46e67e2e CE=1 alternating（不升級）、f487652d 06:00 起床摘要 lastRun=error 但 a8450f2c 06:00 已成功（重複 cron 互卡，待查）、bbb7a348 23:05 三機總結 lastRun=error 待查、9c3fc55d/961021a7 每2小時蒸餾 lastRun=error（alternating）。回應採週末早晨靜默 + 狀態更新。",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "1（13:30 那次 overloaded，alternating fail/recover 常態；< 3 不升級）",
+        "consecutiveErrors": "1（alternating fail/recover 常態，< 3 不升級）",
         "rootCause": "minimax 端外部波動，非系統性"
       },
       {
         "jobId": "f487652d",
         "name": "☀️ 每日 06:00 起床摘要",
-        "consecutiveErrors": "0（已復原，3h+ ago 成功）",
-        "rootCause": "前次 126.3s model idle timeout 為單次事件，pipeline 自恢復"
+        "consecutiveErrors": "1（06:00 那次 lastRun=error，但同名 a8450f2c 06:00 已成功 — 可能是重複 cron 互卡）",
+        "rootCause": "可能有兩個起床摘要 cron 互相競爭，下次查 runs 詳情"
       },
       {
-        "jobId": "ee7b976c",
-        "name": "🦞 VPS 小龍蝦 polling 健康檢查",
-        "consecutiveErrors": "0（last_inbound=801m 是因為 coach 自己也沒發 Telegram，正常）",
-        "rootCause": "已恢復健康"
+        "jobId": "bbb7a348",
+        "name": "🦞 小龍蝦每日三機總結（每日23:05）",
+        "consecutiveErrors": "1（7/17 23:05 失敗，待查 runs）",
+        "rootCause": "待查"
       },
       {
         "jobId": "28cd69d9",
         "name": "📦 每週記憶檔自動蒸餾",
-        "consecutiveErrors": "3（7/16 22:32 自動 force 驗證通過；timeout 300→1800 + model 鎖定 minimax/MiniMax-M3；CE 已降）",
-        "rootCause": "timeoutSeconds 300 不夠，已自動調 1800s + 鎖定 model；nextRun 週日 12:00 (07-19) 正式跑驗證"
+        "consecutiveErrors": "0（已自動調 timeout 300→1800 + model 鎖定 minimax/MiniMax-M3）",
+        "rootCause": "已恢復，下次週日 12:00 (07-19) 正式跑驗證"
+      },
+      {
+        "jobId": "9c3fc55d/961021a7",
+        "name": "📚 每2小時增量記憶蒸餾",
+        "consecutiveErrors": "1（alternating fail/recover 常態，< 3 不升級）",
+        "rootCause": "minimax 端外部波動，重複 cron 同步失敗"
       }
     ],
-    "remainingTo72hMinutes": 4149
+    "remainingTo72hMinutes": 4050
   },
-  "lastHeartbeatPoll": 1784282571
+  "lastHeartbeatPoll": 1784325783
 }
