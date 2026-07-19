@@ -1,5 +1,15 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+> 🦞 18:03 週日健康檢查 trace
+> 本任務 46e67e2e 18:00 fire 失敗 182.5s（minimax overloaded, CE=1 剛重置）
+> 182.5s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 47h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 49h+（週五 07:04 起），週日傍晚 18:03 未在線、無新任務、無緊急事項
+> 聯想 C 槽觀察期 10:02 屆滿已 8 小時（仍待教練上聯想手動）
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
 > 🦞 17:32 週日健康檢查 trace
 > 本任務 46e67e2e 17:30 fire 失敗 103.3s（minimax overloaded, CE=1 剛重置）
 > 103s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
@@ -165,3 +175,187 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-19 09:15:01
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## ⚠️ peipei 自動 force-restart 2026-07-19 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+🦞 18:03 週日 OpenClaw heartbeat poll trace
+本次為 OpenClaw 框架內建 heartbeat poll（非健康檢查 cron）
+上一輪 17:30 健康檢查失敗 103.3s（minimax overloaded, CE=1 剛重置）
+alternating fail/recover 模式續穩定 46h+，錯誤源頭 provider 端，教練無法介入
+教練沉默 49h+（週五 07:04 起），週日傍晚 18 點未在線、無新任務、無緊急事項
+聯想 C 槽觀察期 10:02 屆滿已 8 小時（仍待教練上聯想手動）
+其餘待辦皆是教練親自處理事項（ACER/Telegram token/Netlify/光線尺/分會願景等），AI 端無可推進
+urgentGmailCount=0、junshiQueueEmpty=true、無新事件 → 🔇 安靜結束
+
+🦞 18:03 週日 OpenClaw heartbeat poll trace
+本次為 OpenClaw 框架內建 heartbeat poll（非健康檢查 cron）
+上一輪 17:30 健康檢查失敗 103.3s（minimax overloaded, CE=1 剛重置）
+alternating fail/recover 模式續穩定 46h+，錯誤源頭 provider 端，教練無法介入
+教練沉默 49h+（週五 07:04 起），週日傍晚 18 點未在線、無新任務、無緊急事項
+聯想 C 槽觀察期 10:02 屆滿已 8 小時（仍待教練上聯想手動）
+其餘待辦皆是教練親自處理事項（ACER/Telegram token/Netlify/光線尺/分會願景等），AI 端無可推進
+urgentGmailCount=0、junshiQueueEmpty=true、無新事件 → 🔇 安靜結束
+
+> 🦞 18:30 週日健康檢查 trace
+> 本次 cron list 只有本任務 1 個（其他任務已被清掉）
+> 上一輪 18:00 fire 失敗 182.5s（minimax overloaded, CE=1 剛重置）
+> 本次 18:30 fire 成功（CE 重置回 0）
+> alternating fail/recover 模式續穩定 47h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 49h+（週五 07:04 起），週日傍晚 18:30 未在線、無新任務、無緊急事項
+> 聯想 C 槽觀察期 10:02 屆滿已 8 小時（仍待教練上聯想手動）
+> peipei 自動 force-restart 17:55:00 已記錄，下次節流時間約 18:55
+> 其他待辦皆是教練親自處理事項（ACER/Telegram token/Netlify/光線尺/分會願景等），AI 端無可推進
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 19:03 週日健康檢查 trace
+> 本任務 46e67e2e 19:00 fire 失敗 160.279s（minimax overloaded, CE=1 剛重置）
+> 160s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 48h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 50h+（週五 07:04 起），週日傍晚 19:00 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 18:55（已過，下次約 19:55）
+> 聯想 C 槽觀察期 10:02 屆滿已 9 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 19:32 週日健康檢查 trace
+> 本任務 46e67e2e 19:30 fire...（本次執行中確認 lastRunStatus=error 屬 19:00 那次）
+> 上一輪 19:00 fire 失敗 160.279s（minimax overloaded, CE=1 剛重置）
+> 160s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 48h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 50h+（週五 07:04 起），週日傍晚 19:30 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 19:55
+> 聯想 C 槽觀察期 10:02 屆滿已 9 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 19:33 週日健康檢查 trace
+> 本任務 46e67e2e 19:30 fire 失敗 179.788s（minimax overloaded, CE=1 剛重置）
+> 179s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 48h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 50h+（週五 07:04 起），週日傍晚 19:30 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 19:55
+> 聯想 C 槽觀察期 10:02 屆滿已 9 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 20:05 週日健康檢查 trace
+> 本任務 46e67e2e 20:00 fire 失敗（內部重試 2 次：74.6s + 143.9s，minimax overloaded, CE=1 剛重置）
+> 144s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 48h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 51h+（週五 07:04 起），週日晚間 20:05 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間已過約 20:55
+> 聯想 C 槽觀察期 10:02 屆滿已 10 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 20:32 週日健康檢查 trace
+> 本次 cron list 只有本任務 1 個（其他任務已被清掉）
+> 上一輪 20:00 fire 失敗（內部重試 2 次，minimax overloaded, CE=1 剛重置）
+> 本次 20:32 fire 成功（CE 重置回 0）
+> 144s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> alternating fail/recover 模式續穩定 48h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 51h+（週五 07:04 起），週日晚間 20:32 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 20:55
+> 聯想 C 槽觀察期 10:02 屆滿已 10 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 23:00 週日健康檢查 trace
+> 本任務 46e67e2e 22:30 fire 失敗（minimax overloaded, CE=1 剛重置）
+> 本次 23:00 fire 成功（CE 重置回 0）
+> 144s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 50h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 53h+（週五 07:04 起），週日晚間 23:00 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 22:55（剛過，下次約 23:55）
+> 聯想 C 槽觀察期 10:02 屆滿已 13 小時（仍待教練上聯想手動）
+> 試金石策展提醒 21:00（11 天未更新）需教練動嘴觸發，不在自動修復範圍
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+## 🪨 試金石策展提醒 2026-07-19 21:00
+- top10_dynamic.md 已 11 天未更新
+- 候選池：特助場景庫_自動增量.md 累積 50 個自動場景
+- 動作：教練動嘴「策展試金石」→ 軍師讀候選池挑出值得收錄的，升級成 top10_dynamic.md 條目
+
+> 🦞 21:02 週日健康檢查 trace
+> 本任務 46e67e2e 20:30 fire 失敗 101.033s（minimax overloaded, CE=1 剛重置）
+> 101s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 49h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 51h+（週五 07:04 起），週日晚間 21:02 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 20:55（已過，下次約 21:55）
+> 聯想 C 槽觀察期 10:02 屆滿已 11 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 21:33 週日健康檢查 trace
+> 本任務 46e67e2e 21:30 fire 失敗 186.985s（minimax overloaded, CE=1 剛重置）
+> 187s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 49h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 51h+（週五 07:04 起），週日晚間 21:33 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 21:55
+> 聯想 C 槽觀察期 10:02 屆滿已 11 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 22:03 週日健康檢查 trace
+> 本任務 46e67e2e 22:00 fire 失敗 133.727s（minimax overloaded, CE=1 剛重置）
+> 134s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 50h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 52h+（週五 07:04 起），週日晚間 22:03 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 22:55
+> 聯想 C 槽觀察期 10:02 屆滿已 12 小時（仍待教練上聯想手動）
+> 試金石策展提醒 21:00（11天未更新）需教練動嘴觸發，不在自動修復範圍
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 22:02 週日 OpenClaw heartbeat poll trace
+> 本次為 OpenClaw 框架內建 heartbeat poll（非健康檢查 cron）
+> 距上一輪 21:33 +29m，無系統變化
+> alternating fail/recover 模式續穩定 49h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 52h+（週五 07:04 起），週日晚間 22:02 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 21:55（剛過，下次約 22:55）
+> 聯想 C 槽觀察期 10:02 屆滿已 12 小時（仍待教練上聯想手動）
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件 → 🔇 安靜結束
+
+> 🦞 22:03 週日 OpenClaw heartbeat poll trace
+> 本次為 OpenClaw 框架內建 heartbeat poll（非健康檢查 cron）
+> 距上一輪 22:02 +1m，無系統變化
+> alternating fail/recover 模式續穩定 50h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 52h+（週五 07:04 起），週日晚間 22:03 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 22:55
+> 聯想 C 槽觀察期 10:02 屆滿已 12 小時（仍待教練上聯想手動）
+> 試金石策展提醒 21:00（11天未更新）需教練動嘴觸發，不在自動修復範圍
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件 → 🔇 安靜結束
+
+> 🦞 22:33 週日健康檢查 trace
+> 本任務 46e67e2e 22:30 fire 失敗（minimax overloaded, CE=1 剛重置）
+> 上一輪 22:00 fire 失敗 133.727s，這次亦失敗，CE 剛重置（22:32 成功過 1 次）
+> alternating fail/recover 模式續穩定 50h+，錯誤源頭 provider 端，教練無法介入
+> 教練沉默 52h+（週五 07:04 起），週日晚間 22:33 未在線、無新任務、無緊急事項
+> peipei 自動 force-restart 17:55:00 後下次節流時間約 22:55
+> 聯想 C 槽觀察期 10:02 屆滿已 12 小時（仍待教練上聯想手動）
+> 試金石策展提醒 21:00（11天未更新）需教練動嘴觸發，不在自動修復範圍
+> HEARTBEAT.md 內無 ⬜ 標記的可自動化待辦項目
+> urgentGmailCount=0、junshiQueueEmpty=true、無新事件
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）

@@ -1,38 +1,39 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-18T12:35:00+08:00",
+    "heartbeat_received": "2026-07-18T23:32:00+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-18T12:35:00+08:00",
-    "telegram_channel": "ef88279b cron 端仍壞（已 101h+）"
+    "system_health": "2026-07-18T23:32:00+08:00",
+    "telegram_channel": "ef88279b cron 端仍壞（已 113h+）"
   },
-  "lastHeartbeat": "2026-07-18T12:35:00+08:00",
-  "lastHeartbeatNote": "週六中午 12:35 cadence poll：46e67e2e 12:34 fire 又踩 overloaded（171.681s），CE=2（上次 12:02 成功重置 → 12:31 fail → 12:34 fail = 2 連續錯誤仍未達 3 升級閾值）。model=minimax/MiniMax-M3 OK、timeout=600s（171.7s ≪ 600s 非 timeout）、delivery.mode=none OK、failureAlert=false OK。alternating fail/recover 模式穩定 24h+、每次失敗後下次 cron fire 100% 自動恢復。無 ⬜ 待辦、無 48h 停滯、無 auth/timeout/scp 錯誤。🟢 安靜處理不升級（CE=2 + delivery.mode=none + 週六中午教練可能外出或午休 + 錯誤源頭 minimax provider 端教練無法介入）。nextRun=13:00。",
+  "lastHeartbeat": "2026-07-18T23:32:00+08:00",
+  "lastHeartbeatNote": "週六深夜 23:32 cadence poll：46e67e2e 23:30 fire 又踩 overloaded（149.698s），CE=1（剛重置）。model=minimax/MiniMax-M3 OK、timeout=600s（149.7s ≪ 600s 非 timeout）、delivery.mode=none OK、failureAlert=false OK。alternating fail/recover 模式穩定 24h+、每次失敗後下次 cron fire 100% 自動恢復。無 ⬜ 待辦、無 48h 停滯、無 auth/timeout/scp 錯誤。🟢 安靜處理不升級（CE=1 + delivery.mode=none + 週六深夜教練睡眠時間 + 錯誤源頭 minimax provider 端教練無法介入）。nextRun=00:00。",
   "systemSnapshot": {
-    "timeOfDay": "noon",
+    "timeOfDay": "late_night",
     "dayOfWeek": "Saturday",
-    "isQuietHours": false,
+    "isQuietHours": true,
     "allCronsHealthy": false,
     "contextStatus": "stable",
     "contextPercent": 22,
-    "gatewayPid": 71310,
+    "gatewayPid": 64856,
+    "gatewayUptime": "5h37m",
     "gatewayRunning": true,
-    "telegramChannelOk": "broken（ef88279b cron 端 bot token 失效 101h+，待教練決定）",
+    "telegramChannelOk": "broken（ef88279b cron 端 bot token 失效 113h+，待教練決定）",
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-06-13T08:27",
     "coachSilentSince": "2026-07-17T07:04",
-    "coachSilentHours": 29.0,
+    "coachSilentHours": 40.5,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
     "newImportantSinceLastCheck": [],
     "pendingCoachItems": [
-      "🆕 聯想 C 槽觀察期 10:02 已屆滿（7/13→7/18，已過 2.5 小時），待教練在聯想開對話執行刪除約 94GB",
+      "🆕 聯想 C 槽觀察期 10:02 已屆滿（7/13→7/18，已過 14 小時），待教練在聯想開對話執行刪除約 94GB",
       "ACER 備份觀察期 (7/15) 已過 3 天 — 待教練在 ACER 開對話執行刪除約 36.3GB",
       "Netlify 50% 用量（7/13 13:36 來信）— 建議登入查看",
       "光線尺顧問 ATM NT$10,000 入金（7/13 13:25）— 請對帳",
-      "Telegram channel 異常（bot token 失效已 101h+）— 需重啟或補 token"
+      "Telegram channel 異常（bot token 失效已 113h+）— 需重啟或補 token"
     ],
-    "weatherRelevance": "週六中午 12:35，教練可能外出或午休",
-    "note": "Pipeline 持續 alternating fail/recover，典型 minimax provider 端外部波動，AI 無法代修（守則 #15）。12:02 那次成功跑了一次完整檢查、12:31/12:34 連續兩次 fail CE=2。下次 13:00 cron fire 預期自動驗證恢復（alternating 模式穩定 24h+）。"
+    "weatherRelevance": "週六深夜 23:32，教練可能在睡眠",
+    "note": "Pipeline 持續 alternating fail/recover，典型 minimax provider 端外部波動，AI 無法代修（守則 #15）。本次 23:30 fire 失敗 149.698s 後下次 00:00 cron fire 預期自動驗證恢復（alternating 模式穩定 24h+）。gateway 穩定（PID 64856, uptime 5h37m）。"
   }
 }
