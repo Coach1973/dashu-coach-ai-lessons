@@ -1,47 +1,51 @@
-# 軍師接力棒 · 2026-07-20 v71（聯想桌面版 Sonnet 5，17天同步斷線修復+tainan-calender/bigtree兩站部署+分會願景案再確認）
+# 軍師接力棒 · 2026-07-20 v72（Mac桌面版 Sonnet 5，三機總結誤報真bug修復+「全世界最優秀的團隊計畫」黑金銷售頁從零上線+coach888拖拉排序系統）
 
-> 建立時間：2026-07-20（台灣時間，實際對話發生於7/19晚間~7/20凌晨）
-> 本棒執行者：聯想（Windows）桌面版 Sonnet 5
-> 上一棒：v70（Mac桌面版 Sonnet 5，cool-case頭像案收尾+mentor100全新專案上線，完整內容見下方精簡回顧）
-> 本棒主軸：**這是聯想這台機器睽違17天後第一次真正開工。一開場教練就問「為什麼接力棒沒讀到某項目」，查證發現這台機器的workspace/mac-openclaw-workflows兩份git本地clone都嚴重落後遠端（最長落後1711個commit/17天），當場拉齊修復。過程中釐清教練口述的「真誠峰會/真愛峰會/真實AI峰會」其實語音辨識該聽成「分會」（跟Mac那邊教練同一天糾正的內容一致，雙邊各自獨立記錄後互相印證）。接著處理教練連續交辦的兩個實際網站任務：tainan-calender.netlify.app改場次日期、bigtree-tw歷史紀錄頁新增4場活動+診斷修復圖片下載過慢問題+線上座談會系列補連結。過程中一度只用App內建無頭瀏覽器驗證HTML就想回報完成，被教練當場點破「沒有跳HTML出來給我看」，立刻改用Comet補做**
+> 建立時間：2026-07-20（台灣時間，實際對話發生於7/19深夜~7/20凌晨）
+> 本棒執行者：Mac 桌面版 Sonnet 5（後段一度切到 Fable 5）
+> 上一棒：v71（聯想桌面版 Sonnet 5，17天同步斷線修復+tainan-calender/bigtree兩站部署，完整內容見下方精簡回顧）
+> 本棒主軸：**這場對話橫跨多個獨立任務。開場先回答mentor100後台修改權限的疑問，接著查出並修好一個真bug——三機每日總結cron連續誤報「聯想連續11天沒有對話」，根因是判斷邏輯依賴一個從未真正運作的中繼蒸餾檔案，已改用git commit真相源查證（試金石案例52）。中段裝了Claude in Chrome擴充套件，讀取教練NotebookLM裡整理的商業比喻素材，從零打造「全世界最優秀的團隊計畫」黑金銷售頁，經教練多輪實質內容修訂後正式上線於教練保留網址`coach1973.github.io/teamwork`。後段圍繞教練的「AI作品總覽」(coach888)反覆調整分類與排序，最終做成一套教練可以自己拖拉排序的介面——中途一度因為用了錯誤的測試方法（自己呼叫函式而非真正模擬滑鼠操作）誤判功能正常，被教練實測抓包「都會被打回原位」，回頭查出根因是HTML5原生拖放API跟連結元素衝突，改用滑鼠事件手刻邏輯修復，這次真正用模擬滑鼠事件測試過三種情境才回報**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. 🔴🔴🔴 聯想機兩份git clone同時落後遠端17天，當場修復
+### 1. 🎯 mentor100後台修改權限疑問——4位原始導師其實早就有編輯代碼
 
-教練一開場問「為什麼接力棒沒讀到『真誠分會願景說明書』、『AI百人導師團隊宣傳頁』」，先查`workspace/`（原本以為是唯一clone）發現本地main分支落後origin **1711個commit、17天**（最後一次commit停在6/30），拉齊後才在v69接力棒看到教練預告的mentor100新專案。教練繼續追問後，才發現這台機器其實還有第二份獨立clone`mac-openclaw-workflows/`，第一次`git status`顯示「up to date」是**沒重新fetch的舊快取結果**，重新fetch後其實也落後8個commit（後來因為Mac同時在寫session，落後數字持續變動，最終也拉齊）。
+教練問最早4位種子導師（王彤/蘇秦/燒茶/大樹教練）沒有後台權限要怎麼改自己資料。查db.py發現schema升級時已自動幫舊資料補齊`edit_token`，這4人其實早就各自有專屬修改連結，只是沒人交給他們——直接把4條`mentor100.bymyway.com/join/edit/<token>`連結整理給教練。
 
-**教訓**：`git status`的「up to date with origin/main」只反映上次fetch時的認知，不代表當下真的最新——之後開工前一律先`git fetch`再看`git status`是否顯示behind，不能只看一次結果就下結論。已寫入`project_windows_workspace_git_sync_gap_2026-07-17.md`。
+### 2. 🔴🔴🔴 三機每日總結cron誤報「聯想連續11天無對話」——試金石案例52
 
-### 2. 🔴 語音糾偏再確認：「真誠分會、真愛分會、真實AI分會」
+教練當晚指出23:05自動推播的總結報告「聯想連續11天沒有對話」不合理，他明明一直在聯想用Claude助教。查證cron payload發現：判斷邏輯只憑`memory/verbatim/{acer,lenovo}/YYYY-MM-DD.md`這個中繼蒸餾檔案存不存在來下結論，但這個檔案要靠`distill_and_push_*.sh`在ACER/聯想端排程執行才會產生——查證發現ACER目錄從建立以來從未真正寫入過、聯想只成功寫過一次(7/8)之後11天沒有新檔案。同時查真實workspace git log，發現聯想軍師當天下午15:26才剛真實commit過一筆工作（`[Win]`前綴），直接推翻cron的誤判。
 
-教練一開始給的說法是「真誠峰會、真愛峰會、真實AI峰會」（跟Mac那邊蒸餾記錄的錯字一致），這裡先誤判成「峰會」搜尋落空；教練澄清「語音輸入的問題，都是分會」後才對上——跟Mac同一天（7/17）獨立記錄的`feedback_fenhui_not_fenghui_voice_correction.md`完全一致，雙邊各自查證互相印證，非單一來源。這個新專案本身（三分會的願景說明書+產業分佈圖網上說明書）**仍在等教練給細節**，本棒沒有動手設計，只把命名和狀態記清楚，寫入`project_bni_three_chapters_vision_pending.md`。
+**修復**：`openclaw cron edit bbb7a348-...`，把判斷邏輯改成「先查git log有沒有`[ACER]`/`[Win]`前綴或機器關鍵字的commit，有=今天有對話；沒有才退回去看verbatim中繼檔案」，「連續N天」的統計也改用git log逐日反推。試金石新增案例52，workspace commit `afc09589d`，記憶檔commit `2b4843891`。
 
-### 3. 🟢 tainan-calender.netlify.app：9/21場次改9/14
+### 3. 🟢 ai-talk-tw.netlify.app：已報名人數公式重新校準
 
-BNI「1對1+引薦工作坊」場次日期異動。找到線上實際HTML（本機備份檔是4月舊版、結構完全不同，沒有拿來改），改完直接用Netlify API zip部署，curl驗證線上09/21已消失、09/14已上線，其他時間/地點/報名連結不動。這是本棒Netlify部署quota第1次。
+教練發現「已報名87人」跟真實20多人報名數落差太大。查證發現這個數字是一個跟真實報名資料完全脫勾的假動態公式（起始18人、每3小時+1）。照教練提供的邏輯（現在約50、9天後約90）重新校準參數：起始50人、7/19起每6小時+1人。commit `f2cf45c`（ai-talk repo），已用瀏覽器實測畫面顯示52人，並推上Netlify驗證線上生效（本場Netlify部署quota第2次，剩14）。
 
-### 4. 🔴🔴🔴 bigtree-tw歷史紀錄頁：圖片下載過慢診斷+修復+新增4場活動+線上座談會系列補連結
+### 4. 🎯🎯🎯 裝Claude in Chrome擴充套件，讀取NotebookLM素材，從零打造「全世界最優秀的團隊計畫」黑金銷售頁
 
-教練回報「圖片下載非常慢，等快兩分鐘才完全出現」。查證發現：12張活動EDM圖全部是印刷等級原圖直接上網（最大2087×2943px），畫面顯示框只有278px寬；加上沒有lazy loading，開頁就一次抓12張，總重9.3MB。
+教練問能不能讀取他已登入的NotebookLM筆記本內容——確認一開始沒有連接，引導教練裝好「Claude in Chrome」擴充套件後成功連上，讀取「真實AI團隊計劃」筆記本裡三份AI整理的商業比喻精華素材（20個經典案例+隱藏版金句+團隊組建金句彙編）。
 
-**修復**：全部16張圖（12張既有+4張新增）壓縮到符合實際顯示需要的尺寸（600~900px寬，JPEG quality 82），總重量降到2MB內；所有`<img class="edm">`加上`loading="lazy"`。
+**首版**：融合教練口述的六大核心元素（BNI 41年76國全球系統、遊戲化組隊、體育競賽紀律、SOP執行、版權聲明），寫成`~/github_repos/true-ai-team/index.html`黑底金字銷售頁，commit `c1e7d54`。
 
-**新增4場活動**（教練提供EDM圖片，經比對下載資料夾檔名+像素尺寸+目視內容三重確認）：
-- 7/18（六）九型人際策略讀書會
-- 7/19（日）危機就是轉機
-- 7/22（三）當古典音樂遇到AI科技——連到`bigtree-tw.netlify.app/?session=2026-07-22#signup`
-- 7/29（三）AI微型論壇——連到`ai-talk-tw.netlify.app`（既有專屬頁）
+**教練多輪實質內容修訂**（不是排版微調，是重寫比喻本身）：
+1. AI比喻從「泥板與鍵盤」改成「智慧型手機浪潮」（躲不掉的現實不是選擇）；木工故事改「水電師傅修馬桶」；博士故事加「思想的轉換」；角色卡新增「補血輔助」；「頂級SEO」升級+VIP貴賓室80吋螢幕視覺化；「為夢想奮鬥」拉出來做成全站最大標題的獨立強調區塊——commit `04f56c4`
+2. 主標題整個改名「全世界最優秀的團隊計畫」（原叫真實AI團隊計畫）；副標題改「一個人可以走得快，但一群人可以走得遠」；SEO文案再統一用詞——commit `92afd79`
 
-**線上座談會系列補連結**（教練指示）：6/5、6/14、6/21、7/5、7/10、7/19共6場（皆為蔡曜隆先生與談的ZOOM系列）全部加「有網頁」標籤，連到`jiesheng-leadership.netlify.app`；7/18九型人際策略連到`bigtree-tw.netlify.app/?session=2026-07-18#signup`（比照7/22的深連結做法，直接對到報名卡片而非只連首頁）。
+**正式上線**：教練指示直接用之前保留給「企業健身房」的網址`coach1973.github.io/teamwork`（原本只有一份暫存報告，沒動到任何舊資料），clone該repo、複製首頁進去、commit `047e496`推上線，curl+Chrome雙重驗證。企業健身房另外要用的網址教練後來親貼確認是`coach1973.github.io/Business.gym`（尚未建站，先記錄）。
 
-**部署流程**：先推GitHub Pages（`coach1973.github.io/bigtree/`）供教練檢視，教練用Comet實機確認後才推Netlify正式站。改用`netlify-cli deploy --prod`而非手動zip（Windows的`Compress-Archive`與.NET`ZipFile.CreateFromDirectory`都會把巢狀路徑存成反斜線，實測證實過會導致線上404，這次直接繞開）。這是本棒Netlify部署quota第2次；推送當下Mac同時在推`ai-talk-tw`，兩邊quota計數在git merge時撞上，已手動合併修正，**實際剩13次（7/25前）**。
+### 5. 🔴🔴🔴 coach888「AI作品總覽」多輪重整，最終做成拖拉排序系統（含一次真bug修復）
 
-### 5. 🔴 HTML驗收流程一度漏做，教練當場糾正
+教練多輪要求調整coach888分類與排序，過程：
+1. 新增「大樹常用」分類置頂（12/24/25/46等指定項目）、保留網址+工具箱併入——commit `f3ce852`、`580a6aa`
+2. 「對外公開」1-5移入大樹常用，全站1~46重新連續編號——commit `d3de360`
+3. 新增「後臺系統」獨立分類，大樹常用內部重排——commit `79d432c`
+4. **教練提出一勞永逸方案**：做一個側欄讓他自己拖拉排序，不用每次口述。決定改成「每個大項各自獨立編號」（教練評估後拍板：這樣講「第幾大項第幾項」永遠不會因為別的分類增減而跳號）——commit `203b542`
 
-第一輪只用App內建無頭瀏覽器工具（`mcp__Claude_Browser__*`）自己驗證bigtree頁面畫面正確，就想跟教練回報「已驗證」——教練直接問「你有跳出HTML來給我看嗎？」，這是既有試金石案例46的同一個坑在聯想機重演。立刻改用`comet.exe`把畫面真的跳到教練螢幕上（聯想機指定瀏覽器，Chrome在這台會空白），之後每次要教練驗收都比照辦理，內部工具驗證跟跳瀏覽器給教練看是兩個目的不同、缺一不可的動作。
+**真bug修復（教練親自實測抓到）**：第一版拖拉功能用HTML5原生`draggable`API，教練實測「都會被打回原來的位置」。查根因：`.item`內部包了`<a href>`連結，瀏覽器對連結有自己的原生拖曳行為，跟外層draggable搶主導權，放開時被瀏覽器判定無效拖放而彈回。**我自己先前的測試方法有問題**——用`dispatchEvent(new Event(...))`直接觸發事件，繞過了瀏覽器真實拖放判定機制，導致誤判「已測試通過」。修復：整個拖拉邏輯改成手刻滑鼠事件（mousedown/mousemove/mouseup），完全不碰原生drag&drop API；並增加跨組拖拉支援（項目數與編號自動同步更新）+ 舊版localStorage排序資料相容遷移。commit `6bec1f2`（新增跨組功能）→ `a760fde`（真正修好bug）。這次用程式模擬真實的MouseEvent序列（mousedown→多段mousemove→mouseup，非直接呼叫自己的函式）測試過組內排序、跨組移動、重整後保留三種情境才回報。
+
+**教訓寫入待辦**：驗證拖拉/互動類功能不能只呼叫自己寫的事件處理函式，要模擬「使用者真實操作路徑」（滑鼠事件序列或至少帶DataTransfer的DragEvent），否則會像這次一樣自信回報「已測試」卻在教練手上失敗。
 
 ---
 
@@ -49,38 +53,38 @@ BNI「1對1+引薦工作坊」場次日期異動。找到線上實際HTML（本�
 
 | 優先 | 任務 |
 |------|------|
-| 🔴🔴🔴 | 教練預告的真誠分會、真愛分會、真實AI分會願景+產業分佈圖說明書——連續多棒未開始，教練還沒給細節，開工先問清楚身份/受眾/資料來源三件事 |
-| 🔴🔴🔴 | **Netlify部署額度：剩13次（7/25前）**——每次真的觸發新deploy前先查`state/netlify_deploy_quota.json`，deploy後即時更新，若多台機器同時推要留意git merge時history陣列可能衝突，需人工核對remaining_after正確遞減 |
-| 🟡 | mentor100首頁上教練自己測試留下的真實資料，v70結尾就提醒要確認保留或刪除，本棒沒碰到mentor100，順延 |
-| 🟡 | mentor100導師自助表單目前只有基本honeypot+IP限流防濫用，近百人實際開始填表後留意有沒有真的垃圾資料湧入 |
-| 🟡 | 兩個小工程教訓值得正式寫進試金石：①`.env`裡含`$`字元的值用bash source讀取要單引號包住，②Jinja模板`value="{{ x if y else '' }}"`要guard x可能是None（mentor100已修好，peipei-event等其他Flask小專案若有類似寫法值得抽空檢查） |
-| 🟡 | Windows端打包zip給Netlify部署，一律優先用`npx netlify-cli deploy --prod --dir=... --site=... --auth=...`，不要用`Compress-Archive`或.NET`ZipFile`手動壓——兩者在Windows上都會把巢狀路徑存成反斜線，導致線上404 |
+| 🔴🔴🔴 | 教練預告的真誠分會、真愛分會、真實AI分會願景+產業分佈圖說明書——連續多棒未開始，教練還沒給細節 |
+| 🔴🔴🔴 | **Netlify部署額度：剩13次（7/25前）**——teamwork/coach888走GitHub Pages不消耗額度；下次碰Netlify站台先查`state/netlify_deploy_quota.json` |
+| 🟡 | coach888拖拉排序功能請教練親自驗收——這次雖然用真實滑鼠事件模擬測試過，但終究不是教練本人的手感操作，開工第一件事應該先問「拖拉排序好用了嗎」 |
+| 🟡 | 「全世界最優秀的團隊計畫」頁面兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
+| 🟡 | 企業健身房正式建站（`coach1973.github.io/Business.gym`）教練還沒交辦，只是先記錄網址 |
+| 🟡 | mentor100首頁教練自己測試留下的真實資料，連續多棒提醒要確認保留或刪除，一直沒處理 |
+| 🟡 | 兩個小工程教訓待寫進試金石：①`.env`裡含`$`字元的值要單引號包住，②Jinja模板要guard None值（mentor100已修好，其他Flask小專案若有類似寫法值得抽空檢查） |
 | 🟢 | ACER備份刪除已逾期（原訂7/15），需在ACER那台開對話親自執行 |
 
 ---
 
 ## 🔑 關鍵檔案索引（本場新增/修改）
 
-- `E:\Claude-Data\github_repos\tainan-calender\`已不再使用（線上真實內容跟本機備份早已脫節，改直接對線上curl操作）
-- `E:\Claude-Data\github_repos\bigtree\archive\大樹小講_歷史講座紀錄.html`（新增4個item、6+1個連結、16張img全加lazy loading）
-- `E:\Claude-Data\github_repos\bigtree\archive\edm\`（12張既有圖片壓縮、新增4張：edm_0718_jiuxing.jpg / edm_0719_weiji.jpg / edm_0722_gudian.jpg / edm_0729_luntan.jpg）
-- `state/netlify_deploy_quota.json`（本棒新增2筆history，跟Mac的ai-talk-tw部署合併解衝突）
-- `claude-brain/project_bni_three_chapters_vision_pending.md`（新增）
-- `claude-brain/project_windows_workspace_git_sync_gap_2026-07-17.md`（新增）
-- `claude-brain/MEMORY.md`（索引補上以上兩則）
+- `~/github_repos/true-ai-team/index.html`（全新，全世界最優秀的團隊計畫黑金銷售頁）
+- `~/github_repos/teamwork/index.html`（正式上線頁面，教練保留網址挪用）
+- `~/github_repos/coach888/index.html`（多輪重整+拖拉排序系統，含滑鼠事件手刻邏輯）
+- `~/github_repos/ai-talk/index.html`（已報名人數公式重新校準）
+- `試金石/試金石_案例庫.md`（新增案例52：三機總結誤報bug）
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_verify_activity_via_git_log_not_relay_file.md`（新增）
+- `scripts/rule_html_chrome_check.sh`（強化偵測範圍，涵蓋cp/mv/git add等Bash部署動作，不只認Edit/Write）
+- openclaw cron `bbb7a348-59dc-41fd-879b-91b4d0522e18`（三機每日總結payload邏輯改用git log查證）
 
 ---
 
-## 📜 v70 精簡回顧（Mac桌面版 Sonnet 5，完整內容見git歷史）
+## 📜 v71 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史）
 
-1. cool-case頭像重新歸類案（連續五棒未解決）本棒徹底完成，順手修正案例7/8編號撞號bug，commit `ab48fd2`、`5d02831`
-2. 語音糾偏「峰會」→「分會」，新增`feedback_fenhui_not_fenghui_voice_correction.md`
-3. 全新專案「AI改變世界百人導師同行」（mentor100）從零規劃到正式上線`mentor100.bymyway.com`，Flask+SQLite+Cloudflare Tunnel，多輪根據教練即時回饋修正（9個具名連結+自助編輯+按鈕比例bug）
-4. coach888作品一覽表新增第24/25項（mentor100公開頁+後台）
-5. 新增通用工具「字級大小對照表」`coach888/font-scale.html`+coach888第45項「工具箱」分類
-6. mentor100文案+字級全面重新設計，教練指定明確px門檻逐項達標
-7. mentor100「None」字面文字污染bug：Jinja對None值沒guard，先修程式碼再清舊資料
+1. 聯想機兩份git clone同時落後遠端17天（最長1711個commit），當場修復
+2. 語音糾偏再確認「真誠分會、真愛分會、真實AI分會」
+3. tainan-calender.netlify.app：9/21場次改9/14
+4. bigtree-tw歷史紀錄頁：圖片下載過慢診斷修復+新增4場活動+線上座談會補連結
+5. HTML驗收流程一度漏做（試金石案例46再犯），教練當場糾正改用Comet
 
 ---
 
-> 聯想（Windows）桌面版 Sonnet 5 親筆，2026-07-20。這是聯想這台機器17天以來第一次真正開工，開場就撞上「查了半天查不到教練交辦的事」——後來發現不是教練沒講、也不是我沒查，是兩份本地git clone都嚴重落後遠端，資訊本來就傳不過來。這個教訓很直接：以後開工不能只憑「查不到」就下結論，要先確認自己手上的資料是不是新鮮的。後半場處理兩個實際網站任務時，一度犯了老毛病——只用內部除錯工具驗證畫面就想回報完成，被教練當場點破「沒跳HTML給我看」，這是試金石案例46的坑，證明「AI自己看過」跟「教練親眼看過」是兩件事，缺一不可，之後每次驗收都老實跳Comet。下一棒開工，Netlify額度只剩13次，7/25前要留意；真誠/真愛/真實AI三分會的願景說明書還在等教練給細節，不要自己腦補設計。
+> Mac桌面版 Sonnet 5 親筆，2026-07-20。這場對話有個值得記住的教訓：拖拉排序功能第一次交付時，我用「自己呼叫事件處理函式」的方式測試，邏輯上看起來沒問題就回報教練驗收，結果教練一用就失敗——這不是我沒測試，是我測試的方法本身沒有真正驗證到「使用者實際操作」這件事，跟守則#03「思考就是問問題」講的自我驗證是同一個層次的問題：驗證要驗證到真正會發生的路徑，不能驗證一個自己方便呼叫、但跟真實情境不同的簡化版本。修好之後改用模擬真實滑鼠事件序列測試，這才是對的做法，以後任何涉及使用者互動（拖拉、點擊、輸入）的功能，都要用這個標準去測試，不能只驗證「程式邏輯」，要驗證「操作路徑」。下一棒開工，先問教練拖拉排序這次是不是真的好用了。
