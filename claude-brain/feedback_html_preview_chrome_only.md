@@ -110,6 +110,16 @@ Claude in Chrome MCP 擴充功能不是這台機器的必要依賴——它沒�
 給教練看，`start chrome` 永遠是本機最後保底手段，優先層級應該跟 Mac 的 `open -a` 同等，
 不是等 MCP 失敗才想到的備案。
 
+## 🔴 第六次犯＋Hook漏洞補上（2026-07-20，Mac桌面版）
+
+把「全世界最優秀的團隊計畫」頁面上線到教練保留網址 teamwork 時，用 `cp` 把 `index.html` 複製到另一個 repo 再 `git commit && git push`——這個動作完全沒有用 Edit/Write 碰過 `.html`，只回報「上線了」文字給教練，沒有主動跳 Chrome。教練當場重話：「怎麼可以只說一句『上線了』？上線了你要跳出來給我啊，不然還要讓我自己去貼嗎？這都已經講了幾百遍了，每次都忘記。」
+
+**根因**：`scripts/rule_html_chrome_check.sh` 這個 Stop hook 原本只偵測 Edit/Write 工具改過 `.html`，完全沒有覆蓋「用 Bash 指令（cp/mv/rsync/git push）把 html 檔案部署到別的地方」這種路徑——這次的改動方式剛好繞過了防呆機制，導致沒被攔下就把「上線了」的文字回報送到教練眼前。
+
+**修復**：已補上偵測——Bash 指令字串同時含 `.html` 與 `cp|mv|rsync|git commit|git push|git add` 關鍵字時，一律視同「這輪動過 html」，跟 Edit/Write 一樣要求之後必須有 `open -a "Google Chrome"` 才放行。用模擬 transcript 測試兩種情境（沒補 Chrome=exit 2 攔截、補了 Chrome=exit 0 放行）都通過，commit `460f3dbc7`。
+
+**How to apply（更新版）**：不管是本機直接改 `.html`，還是把改好的 `.html` 用任何方式（cp/部署/推上線）送到教練能看到的地方，最後一步永遠是 `open -a "Google Chrome" <本機路徑或真實上線網址>`——「上線了」這句話本身不構成完成，跳出瀏覽器才是。
+
 ## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
 
 不再只靠「記得要開 Chrome」——已比照簡體字 Stop Hook 架構，建立 `scripts/rule_html_chrome_check.sh`：這一輪若 Edit/Write 改過 `.html`，且改動之後找不到 `open -a "Google Chrome"` 的紀錄，強制 exit 2 攔截，不讓「已看過」的回報送到教練眼前。已註冊進 `~/.claude/settings.json` Stop hooks，並用假 transcript 實測四種情境全部正確（詳見試金石案例46後續段落）。
