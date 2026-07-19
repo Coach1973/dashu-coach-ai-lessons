@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 真誠/真愛/真實AI分會願景說明書連續多棒未開始(2026-07-19)](project_bni_three_chapters_vision_pending.md) — 三個BNI分會的願景+產業分佈圖，卡在等教練給細節：身份/受眾/資料來源
+- [🔴🔴 這台Windows機器接力棒倉庫曾落後17天/1711commit，已修復(2026-07-17)](project_windows_workspace_git_sync_gap_2026-07-17.md) — 開工前先git fetch+status查behind，避免誤判「查無交辦」
 - [🔴 語音糾偏：真誠/真愛/真實AI「分會」不是「峰會」(2026-07-17)](feedback_fenhui_not_fenghui_voice_correction.md) — 已修正接力棒/CLAUDE.md用詞，歷史蒸餾逐字稿保留原樣不動
 - [🔴🔴🔴 Netlify部署額度只剩16次，7/25前每次推都要計數(2026-07-17)](project_netlify_deploy_quota_2026-07.md) — 教練親告，每次推Netlify前先報剩餘次數，低於3次要提醒
 - [🎯 佩佩老師個人品牌頁改版進行中(2026-07-14)](project_peipei_art_redesign_2026-07-14.md) — 測試站https://coach1973.github.io/peipei-art/已上線，版面骨架完成等教練補文字照片，之後推正式peipei-event.netlify.app
