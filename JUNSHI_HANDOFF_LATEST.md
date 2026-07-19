@@ -1,127 +1,128 @@
-# 軍師接力棒 · 2026-07-17 v69（Mac桌面版 Sonnet 5，peipei-art真實資料重寫+多站台bug修復+VPS自動修復機制+新專案「AI百人導師團隊」宣傳頁待啟動）
+# 軍師接力棒 · 2026-07-18 v70（Mac桌面版 Sonnet 5，cool-case頭像案完全收尾+「AI百人導師團隊」mentor100全新專案從零到正式上線）
 
-> 建立時間：2026-07-17（台灣時間）
+> 建立時間：2026-07-18（台灣時間）
 > 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v68（聯想桌面版 Sonnet 5，E碟/G碟資料救援+Zoom誤刪事故與修復，完整內容見下方精簡回顧）
-> 本棒主軸：**這場對話橫跨兩天（7/16~7/17）。前半段重寫佩佩老師個人品牌頁（peipei-art）成真實履歷資料版本，修正前手誤植的樂器錯誤；接著處理教練連續交辦的多個網站維運任務，過程中抓到並修好兩個真實部署bug（bigtree歷史紀錄頁從未真正推上Netlify、ai-talk講師頭像因Windows Compress-Archive反斜線路徑bug全部404）；VPS小龍蝦polling問題深入排查後，不只是修復，還做了「自動偵測+自動修復」的技術升級，並抓出監控機制本身依賴LLM層導致的空窗根因；讀了聯想試金石案例51（Zoom誤刪事故）後主動幫Mac補上同款防護；最後新增Netlify部署額度追蹤機制。教練收工前預告下一個重要新專案：「AI百人導師團隊」宣傳介紹頁面，教練形容為「很重要、很重大的工程」，細節尚未給，下一棒開工要主動詢問**
+> 上一棒：v69（Mac桌面版 Sonnet 5，peipei-art真實資料重寫+多站台bug修復，完整內容見下方精簡回顧）
+> 本棒主軸：**這場對話橫跨兩天（7/17~7/18）。前半段把連續五棒沒做完的cool-case頭像重新歸類案徹底解決（含教練當場抓到的案例編號重複bug），順手修正接力棒裡「峰會」誤植為「分會」的語音辨識錯字。後半段是教練交辦的全新重大專案——「AI改變世界百人導師同行」（mentor100）：從零規劃、建置Flask+SQLite+Cloudflare Tunnel全新系統、多輪根據教練即時回饋反覆優化（連結欄位設計、自助編輯、按鈕比例bug），最終正式上線於`mentor100.bymyway.com`，並更新教練的作品一覽表**
 
 ---
 
 ## 🎯 本場戰果
 
-### 1. 🔴🔴🔴 peipei-art個人品牌頁：從假資料重寫成真實履歷版本
+### 1. 🔴🔴🔴 cool-case頭像重新歸類案——連續五棒未解決，本棒徹底完成
 
-前一棒（v67）建立的骨架版本後來被別的session填了內容，但整段把佩佩老師寫成「大提琴演奏家」、Q&A也提到大提琴教學——經查證履歷表（102履歷表.docx）證實她本業是**鋼琴家**，唯一跟大提琴沾邊的一場是她幫別人的大提琴獨奏會做鋼琴伴奏。同時查出網頁裡嵌的YouTube影片、Rise Media專訪、甘肅世界連結，逐一驗證後確認**都是捏造內容**（Rise Media連結還直接403），已全部移除，不留未查證的內容。
+教練直接下令「先把這個解決了」。查出v65分析過但從未真正執行的判斷清單，逐案核對narrative/dialogue內容後執行：
+- 案例5/13/16/17/18/19從誤改的「Opus 軍師」改回正確的「小龍蝦 AI 特助」
+- 案例12交叉核對`memory/verbatim/2026-05.jsonl`原始對話src欄位確認為「終端機」，確認維持「Opus 軍師」無誤
+- 案例7（海餅乾知識庫）原始討論記錄查出提及「教練從Gemini 3.1切到2.5」，證實很可能不是Claude系統事件，教練確認後**整個拿掉頭像與名稱標籤**，只留對話內容不掛任何AI身份
 
-重寫依據履歷表逐項核實：完整46場演出紀錄（可展開/收合）、學歷師承時間軸、文章與著作8項列表、2篇**實際打開查證過**的大紀元真實媒體報導（非憑印象摘要）。個資部分依教練指示只拿掉身分證字號與出生年月日，其餘完整呈現。封面照片改用履歷表中標註「請附上美美照片一張」的那張。commit `465f085`。
+**教練順手抓到的真bug**：案例7跟案例8的`data-case`屬性各自被寫錯撞號兩次（案例一/二/三/四這4個case-card的內部編號被寫錯成8/7/1/2）。已修正回1/2/3/4，1~40不再重複，`id="caseN"`錨點本身沒錯（導航一直是對的）。
 
-**新增「開工三步驟＋接力棒」給佩佩老師電腦**：`CLAUDE.md`（自動載入的SOP說明）+ `HANDOFF.md`（只服務這一個網站的接力棒，刻意不包含教練其他客戶/系統資料，避免隱私外流到佩佩老師的電腦），讓佩佩老師自己的電腦也能對這個repo下「換照片」「改文字」這類白話指令直接工作。commit `f50a28b`、`ce8aa1c`。
+commit `ab48fd2`、`5d02831`（cool-case repo），已推上線至`coach1973.github.io/cool-case/`並逐項瀏覽器驗證。
 
-**過程中的安全把關**：教練一度要求把`路徑大全.md`全部帳密寫進要給佩佩老師電腦讀的信裡，軍師堅持不照辦（比照絕不代打密碼的界線），改用「讓佩佩老師的GitHub帳號直接login在她自己電腦上」取代寫死token，完全避免任何密碼落地在檔案裡。
+### 2. 🔴 語音糾偏：「峰會」→「分會」
 
-### 2. 🔴🔴 event.bymyway.com（教練活動報名系統）兩項修復
+教練親口糾正：真誠/真愛/真實AI是「分會」不是「峰會」（語音輸入辨識錯誤）。已修正`JUNSHI_HANDOFF_LATEST.md`、`CLAUDE.md`兩份現行接力棒文件；歷史蒸餾逐字稿刻意不動（那是語音辨識當下的真實記錄）。新增記憶檔`feedback_fenhui_not_fenghui_voice_correction.md`避免重犯。workspace commit `0be298df5`。
 
-**後台密碼重設**：教練要求重設帳密（帳號`bymyway`/密碼`123457`），已生成werkzeug scrypt雜湊寫入`.env`、重啟服務、**實測完整登入流程**（未登入擋下→POST登入→帶cookie訪問/admin回傳200且有登出按鈕）確認真的能用，不是只改檔案沒驗證。
+### 3. 🔴🔴🔴🔴 全新專案「AI改變世界百人導師同行」（mentor100）：從零規劃到正式上線
 
-**QR立牌自動+手動雙模式**：教練原本誤以為QR立牌會自動抓「日期最近的場次」，查證code後發現實際上完全靠後台手動切換（`is_current`欄位）。教練要求「自動切換+保留手動」，已新增`app_settings`表存`routing_mode`，auto模式即時抓日期最近未過期場次、manual模式維持原邏輯，手動切一次會自動轉manual、有「恢復自動切換」按鈕轉回去。實測驗證：手動切換→查詢正確導向；恢復自動→正確退回日期最近場次。commit `8d01d83d2`。
+教練交辦新專案：介紹AI百人導師團隊的公開網頁，版面參考`taiwan-marketing.com`講者資訊卡片牆風格，教練先給6-8個樣本、其餘近百位導師要能自助填表上傳。**用EnterPlanMode正式規劃**（研究了taiwan-marketing.com實際DOM結構+event-signup/peipei-event既有可複用架構），教練核准後開始實作。
 
-### 3. 🎯 新功能「簡報QR」（slides-drop）：加LINE好友+領簡報+通知小龍蝦
+**核心架構**：新建`~/github_repos/mentor100/`（GitHub私有repo`Coach1973/mentor100`），Flask+SQLite+Cloudflare Tunnel（port 5062），完全比照event-signup/peipei-event已驗證的部署模式（LaunchAgent常駐+獨立Cloudflare通道），不是靜態站。
 
-教練要在簡報最後放一個QR碼，掃了同時做三件事：加LINE好友、通知小龍蝦有人掃碼、下載當天簡報檔。複製event-signup同一套架構（固定QR、後台帳密登入、自動/手動雙模式）新增`/slides`頁面。過程中抓到一個真bug：用套件內建`secure_filename()`清檔名會把中文整段砍掉（「AI微型論壇.pdf」變成「AI.pdf」），改寫成保留中文只擋危險字元的版本。已用中文檔名完整測試上傳→自動比對日期→下載→Telegram通知（直接測API拿到`{"ok":true}`確認真的送達）。commit `93c46ba29`。
+**多輪迭代**（教練每次實測後提出真實回饋，逐一修正）：
+1. 首版：卡片牆+簡介modal+單一contact_url連結欄位，種子種入7/29台南場AI微型論壇的4位真實講師（王彤/蘇秦/燒茶/大樹教練，逐字取自ai-talk網站已驗證內容）
+2. 教練提問「多個連結怎麼辦、導師填錯自己怎麼改」→ 改成5個具名連結欄位+每筆資料生成專屬`edit_token`（隨機不可猜測），送出成功頁顯示自助編輯連結，導師不需登入就能改資料/換照片/整筆刪除
+3. 教練指定9個連結＋固定順序（官網/FB/IG/Threads/YouTube/GJW乾淨世界/LINE/Podcast/部落格），全部改用`db.LINK_FIELDS`結構化定義，三個表單改用Jinja迴圈產生，不再手動重複9次區塊
+4. 教練要求：後台密碼設為`123457`（帳號`bymyway`）、連結按鈕拿掉箭頭符號、按鈕文字要能編輯→ schema新增9組`_label`欄位，表單改成「預設隱藏label輸入框、按「修改標籤」按鈕才展開」的互動模式，已填過自訂文字的連結預設展開顯示
+5. **教練截圖抓到真bug**：修改標籤按鈕比例完全顛倒（按鈕346px、網址欄位僅30px）。查證發現是頁面既有的通用`button{width:100%}`樣式污染了小按鈕，補上`width:auto; flex:0 0 auto`明確覆寫，修正後網址欄位298px（主視覺）、按鈕78px貼右側，完全符合教練要求
 
-### 4. 🔴🔴 coach888作品一覽表：4次追加修改
+**正式上線**：`cloudflared tunnel create mentor100-app`+DNS route+兩個LaunchAgent（`com.coach.mentor100-webapp.plist`/`com.coach.mentor100-tunnel.plist`，比照event-webapp/event-tunnel結構），公開網址`https://mentor100.bymyway.com/`已用瀏覽器工具實測確認正常運作（首頁、/join表單、/admin後台皆200）。
 
-- 新增第18項「佩佩老師報到系統」（教練指出的漏項，已驗證網址200正常）
-- 新增第19項「佩佩老師個人品牌頁測試站」（peipei-art）
-- 第15項改名「AI報名系統」→「數位簽到系統」
-- 重排前5項：大樹小講、微型論壇、結繩領導學、大台南BNI培訓行事曆、大樹教練個人品牌頁（網址同時從`bymyway.com/coach/`改成根網址`bymyway.com/`），其餘7項維持相對順序遞補
+**過程中自行抓到並修好的技術細節**：
+- 中文檔名安全消毒＋隨機後綴防止近百人上傳同名照片互相覆蓋
+- Pillow驗證圖片格式＋EXIF自動轉正＋縮圖，拒絕壞檔給友善中文提示
+- honeypot隱藏欄位+每小時5次IP限流，擋機器人但不影響真人
+- `.env`裡scrypt密碼雜湊值含`$`字元，用bash `source`讀取時會被誤判成shell變數展開、值被腰斬——已全面補上單引號包住，這是我自己這次新建`.env`時漏的（比對確認event-signup/peipei-event的`.env`早就有正確加引號，不受影響）
+- Flask非debug模式不會自動重載樣板檔案，每次改模板都要重啟服務才會生效（教練截圖抓到比例bug時，我一開始改了CSS卻忘記重啟，浪費了一輪）
 
-commit `696b675`、`06d8397`、`00b3864`、`6271d9e`，全部即時查證GitHub Pages已生效（這個站是GitHub Pages，push即上線，不需額外部署）。
+commit序列（mentor100 repo）：`c26532e`（init）→`1a26605`（緣起文案）→`ac212eb`（5個具名連結+導師自助修改刪除）→`d7880f4`（9連結固定順序）→`604395b`（按鈕觸發式標籤編輯）→`4a215b3`（比例bug修正）。
 
-### 5. 🔴🔴🔴 bigtree/歷史講座紀錄頁：抓到「從未真正上線」的根因
+**教練提供的緣起文案**（語音口述整理）：起心動念/我們的團隊/這是一個怎樣的地方三段，說明大樹教練發起、佩君老師（佩佩老師）邀約召集、每位導師進群前深聊約1小時的理念與運作模式。
 
-教練回報歷史講座紀錄頁404。查證發現：本機檔案內容完全正常，問題是**這個網站是Netlify在對外服務、不是GitHub自動同步**——之前好幾次commit進了GitHub，但從來沒有一次真的推上Netlify，`archive/`資料夾根本沒被送上去過。用Netlify API直接查目前線上部署的檔案清單證實（29個檔案裡完全沒有archive/）。
+### 4. 🎯 教練作品一覽表（coach888）新增第24/25項
 
-同時處理教練新場次需求（9/15 KR養生廚房，午半場14:00-16:30）與合併另一台機器已推上GitHub但同樣沒推Netlify的變更（7/22改主題+高雄場地址、9/19嘉義中正大學新場次），解決一次merge conflict（SLOTS物件雙方各自新增了不同的時段定義，合併保留兩邊）。**用Netlify API直接zip部署**（比對線上現有29個檔案清單、確認新增內容完整、排除無關的biz-gym/舊草稿檔），部署後即時查證：歷史紀錄頁200、KR養生廚房內容確認在頁面上、9/15/9/19新場次確認顯示、7/22改版主題確認顯示。commit `591d830`、`9dedcab`。
+比照event-signup/peipei-event慣例（公開頁+後台系統各自獨立列一項），新增：
+- 第24項：AI百人導師團隊（`mentor100.bymyway.com`）
+- 第25項：AI百人導師後台系統（`mentor100.bymyway.com/admin`）
 
-### 6. 🔴🔴 bymyway.com「查看完整活動列表」連結：改對地方前先改錯一次
+原本24項之後（BNI/保留區）全部順移+2，1~44連續不重複，已程式驗證無漏號無重複。commit `013ea26`。
 
-教練要求這個連結從結繩領導學改連大樹小講。**第一次改在`bymyway-website`這個repo，推送前重新查證實際網站原始碼，才發現bymyway.com首頁其實是iframe嵌入`coach1973.github.io/bigtree/speakers-2026/`**，跟`bymyway-website`repo完全無關（那邊改了不會生效）。已在正確檔案改好，本機預覽+Chrome確認後才推送，即時查證`speakers-2026/`與bymyway.com首頁的iframe來源都已顯示正確連結。commit `ae93bc2`。
+### 5. 🎯 新增通用工具「字級大小對照表」+coach888第45項「工具箱」分類
 
-### 7. 🔴🔴🔴 ai-talk-tw.netlify.app：講師頭像全滅+簡介新舊版混淆，兩個都是真bug
+教練指出以前每次要調字級大小，都要臨時輸出一份頁面專屬的編號字級清單（例如jiesheng-leadership那次輸出43條），改成一份**通用可重複使用**的視覺對照表（`coach1973.github.io/coach888/font-scale.html`，12px~104px每個級距都用真實繁體字渲染出實際大小），以後教練直接說「這段用32級」（=32px）就能精準溝通，不用每次重新生成頁面專屬清單。coach888新增「六、工具箱」分類、第45項。commit `ddca415`。
 
-**頭像404**：教練回報Mac看得到、Windows看不到。查Netlify線上部署檔案清單發現全部圖片路徑存成**反斜線**（`images\speaker-wang.jpg`），確認是用Windows PowerShell的`Compress-Archive`打包造成——這是聯想機器已知踩過的同一種bug，只是這次沒人補saved在ai-talk上。用Mac原生zip指令（天生正斜線）重新打包部署，即時查證4張頭像+12張輪播照片全部回傳200。
+### 6. 🔴🔴 mentor100文案+字級全面重新設計（教練多輪即時回饋）
 
-**王彤老師簡介新舊版**：教練也回報「Mac看到新版、Windows看到舊版」。查local repo確認本地內容確實還是舊版（「商圈救星」），先手動改成教練貼的新內容準備推送，但push時發現**另一台機器已經先改過並推上GitHub了**（內容更完整，多了英文名「Tom」），fast-forward合併採用那個更完整的版本，重新部署到Netlify。**順手查出「Mac看新、Windows看舊」的真正原因**：不是快取，是GitHub Pages（`coach1973.github.io/ai-talk/`，push即生效）跟Netlify正式站（`ai-talk-tw.netlify.app`，要手動部署）內容不同步——教練兩台電腦剛好開到兩個網址一模一樣但更新機制不同的頁面。兩次部署後即時查證正式站內容一致。
+教練用語音重新口述整份文案（標題/副標/四段介紹文字全部改版，新增「免責聲明」段落），並指定明確字級門檻：標題48級以上、副標32級以上、段落跟標題都要「大一點」。已實作：
+- 桌面版標題52px、副標34px（雙雙達標），手機版響應式縮小為38px/24px避免小螢幕過度換行
+- 按鈕文字改「我要參與導師同行計劃」單行大按鈕
+- 段落20px、小標題32px全面放大
+- 文案改版：計劃源起段落「大樹教練與佩君老師親自深聊」改成「我們會通過線上交流」；「想加入/想離開」句子從計劃源起移到「這是一個怎樣的地方」；新增免責聲明三段
+- 導師卡片牆正上方新增第二顆大按鈕「我要加入百人導師計劃」，不用捲回頁首
 
-### 8. 🔴🔴🔴 VPS小龍蝦polling：查證健康後，順手做了「自動偵測+自動修復」升級
+commit `b1b1372`，已用瀏覽器工具實測桌面版1280px寬確認字級精確達標，並用真Chrome開給教練看過。
 
-教練報8:45對話疑似沒回應，深入查證後發現：**當天05:30~12:24卡了近7小時、12:36修復成功、12:45又短暫故障、13:00起已連續穩定5小時以上**（直接SSH連VPS+讀本機真實log核實，不是轉述）。教練聽完提出核心要求：「幫我寫一套偵測問題、發現問題、自動修復，不要再讓我操心」。
+### 7. 🔴🔴🔴 「None」字面文字污染bug——先修程式碼，再清舊資料
 
-已完成完整閉環：`vps_polling_healthcheck.sh`新增自動修復邏輯——偵測到「restart loop」這個已知模式（訊號1+2成立）就自動`docker restart openclaw`、20秒後重新驗證，成功才發輕量通報（非求救），失敗才發警報並註明已嘗試過。**過程中抓到更根本的問題**：原本每15分鐘觸發這支腳本的機關要先過AI模型（openclaw agent cron），這正是教練回報的當天下午3:15「model_not_found」監控空窗（14:45~15:46缺記錄）的元凶。已改用純bash launchd（`ai.openclaw.vps-polling-healthcheck.plist`，`StartInterval 900`秒）直接觸發，完全不經過LLM層，provider過載也打不斷監控；舊的LLM cron已停用（一度誤操作先停用後才發現它是唯一觸發源，已立即恢復再正確替換，過程中沒有真的留下監控空窗）。commit `35b4d80f9`。
+教練截圖回報兩個症狀：①編輯頁面空欄位自動帶入一段英文要手動刪除才能送出、②簡介按鈕顯示「None」而非FB/IG等內建名稱。逐一查證後發現是**同一個根因**：`join_edit.html`/`admin_form.html`的`value="{{ f[url_name] if f else '' }}"`只guard「f本身不存在」，沒guard「f存在但該欄位是SQL NULL」——Jinja把Python的`None`物件直接印成畫面上的字面文字「None」，這段假文字擋住了原本該顯示的placeholder提示（FB/IG/YouTube等內建名稱），也造成教練形容的「要手動刪除的英文」。
 
-### 9. 🎯 Netlify部署額度追蹤（教練交辦：7/25前只剩16次）
+**兩層修復**：
+1. 程式碼修正（commit `9c1d0ff`）：改成`(f[url_name] if f else '') or ''`雙重保險，role_tag欄位同一問題一併修掉。已直接fetch編輯頁HTML核對`value=""`不再出現任何`None`
+2. **舊資料清理**（純資料庫操作，無新commit）：教練自己在bug修好「之前」編輯過「大樹教練」這筆真實資料，當時畫面上的假「None」文字被他直接送出、永久存進資料庫（FB/GJW/LINE/Podcast等6個label欄位變成字面上的字串"None"，不是NULL）。已用SQL直接把這些被污染的"None"字串換回真正的NULL，並重新驗證公開頁面上「大樹教練」卡片的簡介按鈕：官網/FB/GJW/LINE/Podcast全部正確顯示內建名稱且連結正確，教練自己改過的「大樹小講」自訂標籤也完整保留
 
-不只寫進記憶檔，改成**hook自動計數**：`netlify_deploy_guard.sh`在確認部署放行時，精準判斷「真的建立新部署的POST」（不誤判查狀態的GET），自動扣一次額度、印出還剩幾次，剩3次以內額外警示。已用3組模擬指令測試過：POST部署會扣、GET不會扣、未確認的部署仍被擋。commit `825bb5f73`。跟聯想那台各自獨立寫了一份（聯想寫了說明記憶檔`project_netlify_deploy_quota_2026-07.md`），兩邊數字一致，已合併不衝突。
-
-**目前額度：16次，倒數到7/25。**
-
-### 10. 🔴 讀了聯想試金石案例51，主動幫Mac補上同款防護
-
-聯想那台查Zoom資料夾junction時只查子資料夾、沒查資料夾本身，誤判「沒連結」導致教練依此下令刪除正在用的1.8GB真實資料。這是查證層級的通用邏輯漏洞，不是Windows專屬——Mac也有symlink，一樣可能踩坑。已新增`scripts/check_full_link_chain.sh`（Mac版同款防護，先查SELF是不是連結，再查子項目），用2組測試驗證（真實資料夾、真symlink）都正確判斷。commit `ee7d6997d`。
+**教訓**：Jinja對None值沒有預設安全網，任何從資料庫讀出來、可能是NULL的欄位，寫入HTML屬性前都要明確guard，不能只信任「if 物件本身存在」這一層判斷。
 
 ---
 
-## 🆕 下一棒最優先：教練預告新專案「AI百人導師團隊」宣傳介紹頁面
-
-教練2026-07-17收工前交辦，形容為「很重要、很重大的工程」，**目前完全沒有給細節**。下一棒開工第一件事，要主動問清楚：
-- 這個頁面的目的／目標受眾是誰（招募導師？介紹給潛在客戶？兩者都要？）
-- 「AI百人導師團隊」實際指的是什麼（教練已經有100位導師了，還是這是一個招募目標？）
-- 有沒有既有素材（導師名單、簡介、照片、Logo、品牌色系）
-- 要參考哪個現有網站的風格/架構（bigtree？peipei-art？全新設計？）
-- 部署位置：GitHub Pages測試、還是直接上Netlify（要注意額度只剩16次）
-
-**不要憑空開始設計**，這個任務教練特別強調重要性，先問清楚方向再動手，比照守則#16（多問用戶想要什麼結果）。
-
----
-
-## 📋 其他下一棒待辦（依優先度，沿用自v68未解決項目）
+## 📋 下一棒待辦（依優先度）
 
 | 優先 | 任務 |
 |------|------|
-| 🔴🔴🔴 | **Netlify部署額度16次（7/25前）**——每次推送前查`state/netlify_deploy_quota.json`，hook會自動扣但仍要回報教練還剩幾次 |
-| 🔴🔴🔴 | 教練預告的真誠峰會、真愛峰會、真實AI峰會願景+產業分佈圖說明書——連續多棒未開始，教練還沒給細節 |
-| 🔴🔴🔴 | cool-case頭像重新歸類案，連續五棒沒做完——判斷清單已有，見試金石案例庫案例統整 |
-| 🔴 | ACER備份刪除已逾期（原訂7/15），需在ACER那台開對話親自執行，其他機器看不到即時狀態 |
-| 🟡 | v68提到的PowerShell Compress-Archive反斜線bug，這次在ai-talk又中招一次——**強烈建議正式寫進CLAUDE.md或試金石**，不要每次靠不同session各自發現 |
+| 🔴🔴🔴 | 教練預告的真誠分會、真愛分會、真實AI分會願景+產業分佈圖說明書——連續多棒未開始，教練還沒給細節 |
+| 🔴🔴🔴 | **Netlify部署額度**——上次記錄16次（7/25前），這次mentor100走Cloudflare Tunnel、coach888/cool-case走GitHub Pages，全部沒消耗Netlify額度，下次碰Netlify站台時記得查`state/netlify_deploy_quota.json`確認最新剩餘次數 |
+| 🟡 | mentor100導師自助表單目前只有基本honeypot+IP限流防濫用，近百人實際開始填表後留意有沒有真的垃圾資料湧入，若有需要加強 |
+| 🟡 | 兩個小工程教訓值得正式寫進試金石：①`.env`裡含`$`字元的值（scrypt雜湊）用bash source讀取一定要單引號包住，②Jinja模板寫`value="{{ x if y else '' }}"`只guard了y本身，沒guard x可能是None，兩者都已在mentor100修好，但這個模式在其他Flask小專案(peipei-event等)若有類似寫法，值得抽空檢查一次 |
+| 🟢 | ACER備份刪除已逾期（原訂7/15），需在ACER那台開對話親自執行 |
 
 ---
 
 ## 🔑 關鍵檔案索引（本場新增/修改）
 
-- `github_repos/peipei-art/`（index.html全面重寫、CLAUDE.md+HANDOFF.md新增）
-- `.openclaw/workspace/event-signup/`（app.py/db.py新增routing_mode雙模式、slides相關新路由與模板、.env密碼重設)
-- `github_repos/coach888/index.html`（40+項排序與新增修改）
-- `github_repos/bigtree/`（index.html、speakers-2026/index.html、archive/首次真正部署上Netlify）
-- `github_repos/ai-talk/index.html`（圖片路徑bug修復、王彤簡介更新）
-- `scripts/vps_polling_healthcheck.sh`（新增自動修復邏輯）
-- `Library/LaunchAgents/ai.openclaw.vps-polling-healthcheck.plist`（新增，純bash觸發）
-- `scripts/netlify_deploy_guard.sh`（新增額度自動計數）
-- `state/netlify_deploy_quota.json`（新增）
-- `scripts/check_full_link_chain.sh`（新增，案例51 Mac版防護）
-- `project_openclaw_polling_restart_loop.md`（更新，記錄自動化細節）
+- `~/github_repos/mentor100/`（全新專案：app.py/db.py/schema.sql/templates/、.env）
+- `~/.cloudflared/mentor100-config.yml`（新增tunnel設定）
+- `~/Library/LaunchAgents/com.coach.mentor100-webapp.plist`、`com.coach.mentor100-tunnel.plist`（新增，常駐部署）
+- `~/github_repos/cool-case/index.html`（頭像歸類修正+編號bug修正）
+- `~/github_repos/coach888/index.html`（新增第24/25/45項，1~44+工具箱分類重新驗證無誤）
+- `~/github_repos/coach888/font-scale.html`（新增，通用字級對照表工具）
+- `JUNSHI_HANDOFF_LATEST.md`、`CLAUDE.md`（語音糾偏「分會」用詞修正）
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_fenhui_not_fenghui_voice_correction.md`（新增）
 
 ---
 
-## 📜 v68 精簡回顧（聯想桌面版 Sonnet 5，完整內容見git歷史）
+## 📜 v69 精簡回顧（Mac桌面版 Sonnet 5，完整內容見git歷史）
 
-1. LINE無法啟動修復（殭屍行程問題）
-2. 截圖越權事件＋截圖鎖Bash漏洞修復（Bash執行截圖繞過偵測）
-3. 曜隆董事專區資料損毀調查擴大成全E碟/G碟4DDiG救援盤點，救回8,352個可用檔案、釋放超過1TB空間
-4. 一鍵還原舊備份清理（釋放91.28GB）
-5. **Zoom E碟junction誤判導致誤刪事故（試金石案例51）**——只查子項目沒查節點本身，誤判「沒連結」，教練據此下令刪除正牌資料，事後誠實檢討+正確修復+建立防呆機關
-6. Netlify部署額度追蹤機制建立（16次，7/25前）
+1. peipei-art個人品牌頁重寫成真實履歷資料版本，移除捏造內容
+2. event.bymyway.com後台密碼重設+QR立牌自動/手動雙模式
+3. 新功能「簡報QR」(slides-drop)：加LINE好友+領簡報+通知小龍蝦
+4. coach888作品一覽表4次追加修改
+5. bigtree歷史講座紀錄頁抓到「從未真正上線」的根因，重新部署
+6. bymyway.com「查看完整活動列表」連結修正（先改錯repo才發現iframe真正來源）
+7. ai-talk-tw.netlify.app講師頭像全滅+簡介新舊版混淆，兩個真bug都修好
+8. VPS小龍蝦polling自動偵測+自動修復技術升級
+9. Netlify部署額度追蹤機制建立
+10. 讀了聯想試金石案例51，主動幫Mac補上同款junction查證防護
 
 ---
 
-> Mac桌面版 Sonnet 5 親筆，2026-07-17。這場對話橫跨兩天，處理了教練連續交辦的一長串網站維護任務，過程中查到兩個真實存在、此前沒人發現的部署bug（bigtree歷史紀錄頁從未真正上線、ai-talk頭像因Windows打包工具路徑分隔符號問題全滅）——都不是接受表面說法就結案，而是實際查Netlify部署清單、實際重新部署、實際即時驗證線上內容。VPS小龍蝦那段，教練要的不是「這次修好」而是「以後不要再操心」，所以沒有停在修復，而是往前一步做了自動偵測+自動修復的技術升級，並且抓出監控機制本身依賴AI模型層這個更根本的脆弱點。讀到聯想那台的試金石案例51（Zoom誤刪事故）後，沒有把它當成「別人的教訓」放著，主動查了Mac這邊有沒有同樣的破洞、真的寫了防護工具、真的測過。教練最後交辦一個還沒有任何細節的新專案「AI百人導師團隊」宣傳頁，形容為重大工程——下一棒開工的第一件事，應該是先問清楚方向，不要自己腦補設計。
+> Mac桌面版 Sonnet 5 親筆，2026-07-18。這場對話有兩個明顯分野：前半段是把積壓五棒的技術債（cool-case頭像案）徹底清乾淨，過程中教練當場抓到一個編號重複的真bug；後半段是從零開始的全新專案，教練用一連串真實使用後的回饋（不是憑空想像的需求）逐步把系統修到位——包括一次截圖點出的真實排版比例bug，查出根因是通用按鈕樣式污染了小按鈕。整場對話的模式很清楚：教練提出方向或抓到問題，我負責查證根因、動手修正、實際驗證（不管是重新整理瀏覽器看DOM結構、跑curl測完整流程、量測實際像素寬度），而不是憑印象回報「應該修好了」。下一棒開工第一件事，應該先確認mentor100首頁上那筆教練自己測試留下的真實資料要保留或刪除。

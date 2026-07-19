@@ -143,3 +143,66 @@ health check 發現 `/tmp/backup_terminal.log` 有 306 個 `fatal: Unable to cre
 🚫 「用戶輸入簡體所以我回簡體」 = 違規（鐵律一明寫：無論輸入是什麼，輸出永遠繁體）
 ✅ 輸出前快速掃描高風險簡體字清單
 ✅ 技術性/長篇內容完成後，二次檢查繁簡
+
+## [ERR-20260717-GQP] git staged-path verification with non-ASCII filename
+
+**Logged**: 2026-07-17T23:06:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: infra
+
+### Summary
+Git quoted a staged Traditional Chinese filename, so a plain-text equality check falsely reported that the wrong file was staged.
+
+### Error
+```
+ERROR: staged files differ:
+"distill/\\344\\270\\211..._2026-07-17.md"
+```
+
+### Context
+- Operation: verify that only the daily summary was staged before committing.
+- Cause: `git diff --cached --name-only` obeyed Git's default `core.quotepath` display escaping.
+- No data loss and no incorrect commit occurred; the intended file remained staged.
+
+### Suggested Fix
+Use NUL-delimited raw output (`git diff --cached --name-only -z`) and compare decoded paths, or run the display-only check with `git -c core.quotepath=false`.
+
+### Metadata
+- Reproducible: yes
+- Related Files: distill/三機每日總結_2026-07-17.md
+
+### Resolution
+- **Resolved**: 2026-07-17T23:06:00+08:00
+- **Notes**: Switched to a NUL-delimited raw path comparison.
+
+---
+
+## [ERR-20260717-MSG] Telegram message tool rejected optional thread fields
+
+**Logged**: 2026-07-17T23:07:00+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: infra
+
+### Summary
+The Telegram `message` send operation failed repeatedly because private-chat sends were submitted with `replyTo`/`threadId` values, which Telegram rejected as nonexistent message threads.
+
+### Error
+```
+400 Bad Request: message thread not found
+```
+
+### Context
+- Target was the authorized private Telegram chat for the daily summary.
+- The summary itself was already written, committed, pushed, and remote-verified.
+- Fallback: rely on the cron turn's final plain-text reply, which OpenClaw delivers automatically to the originating Telegram chat.
+
+### Suggested Fix
+For private Telegram sends, omit `replyTo` and `threadId` entirely unless a valid inbound message/topic id is available; tool wrappers should not serialize empty or placeholder optional fields.
+
+### Metadata
+- Reproducible: yes
+- Related Files: distill/三機每日總結_2026-07-17.md
+
+---

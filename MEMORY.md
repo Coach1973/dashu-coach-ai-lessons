@@ -65,3 +65,10 @@
 - 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:21-24]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:25:28 -->
 - 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:25-28]
+
+## Promoted From Short-Term Memory (2026-07-18)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:5:8 -->
+- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:5-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:9:12 -->
+- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:9-12]

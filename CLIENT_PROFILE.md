@@ -1,5 +1,34 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-07-18（共 18 則）
+1. evidence: memory/.dreams/session-corpus/2026-07-17.txt:142-142
+2. evidence: memory/.dreams/session-corpus/2026-07-17.txt:143-143
+3. Candidate: Assistant: checked, and to keep answering back.
+4. evidence: memory/.dreams/session-corpus/2026-07-17.txt:144-144
+5. Candidate: Assistant: 開始執行健康檢查。
+6. evidence: memory/.dreams/session-corpus/2026-07-17.txt:145-145
+7. Candidate: Assistant: 開始分析結果並產出簡報。
+8. evidence: memory/.dreams/session-corpus/2026-07-17.txt:146-146
+9. Candidate: Assistant: ``` 🦞 健康檢查報告（04:33 Asia/Taipei，安靜結束） 第一步｜Cron 任務檢查 • 唯一任務（健康檢查自己 46e67e2e） • lastRunStatus：🟡 error（剛 04:30 那次 overloaded, 178.2s） • consecutiveErrors：🟡 1（< 3 升級閾值） • Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s • 錯誤類型：overloaded（minimax 端外部波動，非 config 問題） 第二步｜HEARTBE
+10. evidence: memory/.dreams/session-corpus/2026-07-17.txt:147-147
+11. Candidate: Assistant: 🦞 健康檢查報告（20:32 Asia/Taipei，安靜結束） ``` 第一步｜Cron 任務檢查 • 唯一任務：健康檢查自己 46e67e2e • lastRunStatus：🟡 error（剛 20:30 那次 overloaded, 115.1s） • consecutiveErrors：🟡 1（< 3 升級閾值，全天 12+ 小時未跨 3） • Model ✅ minimax/MiniMax-M3 / Timeout ✅ 600s / delivery.mode ✅ none • 錯誤類型：overloaded（mi
+12. evidence: memory/.dreams/session-corpus/2026-07-17.txt:148-148
+13. Candidate: Assistant: 開工，先讀 AGENTS.md。健康檢查模式啟動，無需朗讀觸發句（cron 觸發），直接執行三步檢查。
+14. evidence: memory/.dreams/session-corpus/2026-07-17.txt:149-149
+15. Theme: `檢查` kept surfacing across 20 memories.
+16. evidence: memory/.dreams/session-corpus/2026-07-17.txt:100-100, memory/.dreams/session-corpus/2026-07-17.txt:101-101, memory/.dreams/session-corpus/2026-07-17.txt:102-102
+17. Theme: `健康` kept surfacing across 18 memories.
+18. No strong candidate truths surfaced.
+
+---
+
+
+## 蒸餾 2026-07-17（共 1 則）
+1. 寫進長期參考檔（`memory/reference_car_loan_8036.md`），日後隨時可查
+
+---
+
+
 ## 蒸餾 2026-07-13（共 1 則）
 1. **GitHub Pages**（coach1973.github.io/cool-case）：用 `xiaolongxia-avatar.jpg`（小龍蝦的圖）
 

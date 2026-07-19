@@ -1,38 +1,38 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-16T18:03:11+08:00",
+    "heartbeat_received": "2026-07-18T12:35:00+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-16T18:03:00+08:00",
-    "telegram_channel": "仍異常 (無 bot token)"
+    "system_health": "2026-07-18T12:35:00+08:00",
+    "telegram_channel": "ef88279b cron 端仍壞（已 101h+）"
   },
-  "lastHeartbeat": "2026-07-16T18:03:00+08:00",
-  "lastHeartbeatNote": "週四傍晚 18:03 cadence poll（距 18:02 僅 1 分鐘）：無新訊息、無新任務、無新錯誤；Pipeline 18:00 仍 error（124.3s overloaded）但 consecutiveErrors=1 維持；model=minimax/MiniMax-M3 OK；Timeout 600s 充足；nextRun=18:30。🟢 安靜處理不升級（純 cadence poll）",
+  "lastHeartbeat": "2026-07-18T12:35:00+08:00",
+  "lastHeartbeatNote": "週六中午 12:35 cadence poll：46e67e2e 12:34 fire 又踩 overloaded（171.681s），CE=2（上次 12:02 成功重置 → 12:31 fail → 12:34 fail = 2 連續錯誤仍未達 3 升級閾值）。model=minimax/MiniMax-M3 OK、timeout=600s（171.7s ≪ 600s 非 timeout）、delivery.mode=none OK、failureAlert=false OK。alternating fail/recover 模式穩定 24h+、每次失敗後下次 cron fire 100% 自動恢復。無 ⬜ 待辦、無 48h 停滯、無 auth/timeout/scp 錯誤。🟢 安靜處理不升級（CE=2 + delivery.mode=none + 週六中午教練可能外出或午休 + 錯誤源頭 minimax provider 端教練無法介入）。nextRun=13:00。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Thursday",
+    "timeOfDay": "noon",
+    "dayOfWeek": "Saturday",
     "isQuietHours": false,
     "allCronsHealthy": false,
     "contextStatus": "stable",
-    "contextPercent": 16,
+    "contextPercent": 22,
     "gatewayPid": 71310,
     "gatewayRunning": true,
-    "telegramChannelOk": false,
+    "telegramChannelOk": "broken（ef88279b cron 端 bot token 失效 101h+，待教練決定）",
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-06-13T08:27",
-    "coachSilentSince": "04:46",
-    "coachSilentHours": 13.3,
+    "coachSilentSince": "2026-07-17T07:04",
+    "coachSilentHours": 29.0,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
-    "newImportantSinceLastCheck": [
-      "嘖嘖 zeczec 14:01 群眾集資（足球、平安符、蠟燭狗）— 與教練業務無關，UNKNOWN 重要度"
-    ],
+    "newImportantSinceLastCheck": [],
     "pendingCoachItems": [
-      "Netlify 50% 用量（13:36 來信）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（13:25）— 請對帳",
-      "Telegram channel 異常（bot token 失效）— 需重啟或補 token"
+      "🆕 聯想 C 槽觀察期 10:02 已屆滿（7/13→7/18，已過 2.5 小時），待教練在聯想開對話執行刪除約 94GB",
+      "ACER 備份觀察期 (7/15) 已過 3 天 — 待教練在 ACER 開對話執行刪除約 36.3GB",
+      "Netlify 50% 用量（7/13 13:36 來信）— 建議登入查看",
+      "光線尺顧問 ATM NT$10,000 入金（7/13 13:25）— 請對帳",
+      "Telegram channel 異常（bot token 失效已 101h+）— 需重啟或補 token"
     ],
-    "weatherRelevance": "傍晚 18:00，週四工作日結束，教練若外出回家路需注意",
-    "note": "Telegram 通道仍斷，無法主動推訊；18:03 距上次 18:02 僅 1 分鐘純 cadence poll，不升級不打擾"
+    "weatherRelevance": "週六中午 12:35，教練可能外出或午休",
+    "note": "Pipeline 持續 alternating fail/recover，典型 minimax provider 端外部波動，AI 無法代修（守則 #15）。12:02 那次成功跑了一次完整檢查、12:31/12:34 連續兩次 fail CE=2。下次 13:00 cron fire 預期自動驗證恢復（alternating 模式穩定 24h+）。"
   }
 }

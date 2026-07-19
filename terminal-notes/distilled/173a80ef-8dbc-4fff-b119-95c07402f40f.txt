@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 173a80ef-8dbc-4fff-b119-95c07402f40f
-# 提取時間：2026-07-16 14:19 (台灣時間)
-# 共 28 條教練原話
+# 提取時間：2026-07-17 16:31 (台灣時間)
+# 共 37 條教練原話
 
 ---
 
@@ -515,3 +515,130 @@ https://bigtree-tw.netlify.app/  新增 9 月 15 日（禮拜六）下午 2 點�
 ## 2. 已新增9/15場次
 
 用KR養生廚房這個名字加了新場次：9/15（六）午半場 14:…（略）
+
+【教練 2026-07-17 03:49】
+https://coach1973.github.io/coach888/
+
+【教練 2026-07-17 03:49】
+[Request interrupted by user]
+
+【教練 2026-07-17 03:54】
+我要修改我的作品總覽順序（目前編號 1 到 12）。請把我講的這幾個排在前面：
+
+1. 大樹小講
+2. 微型論壇
+3. 領導學
+4. 行事曆
+5. 大樹個人品牌頁面直接用 [https://www.bymyway.com/](https://www.bymyway.com/c) 就好了，不要再加 coach
+
+謝謝，請幫我把這幾個排在最前面。
+
+在 [https://www.bymyway.com/](https://www.bymyway.com/c) 裡面有一個活動快訊，活動快訊點進去會有一個「查看完整活動列表」。點進去，它現在連接的是到「結繩領導力」，但我希望按這個「查看完整活動列表」，請幫我連到「大樹小講」。
+
+好，那說到「大樹小講」，我又發現一個問題，就是它的歷史回顧頁面又不見了。
+
+這已經不是第一次了，之前不見明明已經修好了，現在它又不見了。去查一下為什麼那個歷史回顧的頁面會不見呢？
+
+　▶ AI 回應：Confirmed. Let me update the link to point to bigtree's live Netlify site with the correct anchor.
+
+　▶ AI 回應：Confirmed correctly updated locally. Now let's open both pending changes in real Chrome for the coach.
+
+　▶ AI 回應：全部查完、做完，這裡有4件事要跟你報告，其中2件已經**直接生效**，2件要等你說「推」：
+
+## ✅ 已經完成、已經生效（不用等）
+
+**1. 作品總覽重新排序** — coach888這個是GitHub Pages，git一推就直接上線，不用額外部署。已確認即時查詢結果：現在第1~5項是大樹小講、微型論壇、結繩領導學、大台南BNI培訓行事曆、大樹教練個人品牌頁（網址也已改成`bymyway.com`根網址，拿掉`/coach`），其餘7項照原順序遞補到6~12。commit `00b3864`，網址：https://coach1973.github.io/coach888/
+
+## ⏳ 已…（略）
+
+【教練 2026-07-17 04:00】
+coach1973.github.io/peipei-art/ 把這個列入不公開連結
+
+　▶ AI 回應：Renumbering correct. Commit and push (GitHub Pages, goes live immediately).
+
+　▶ AI 回應：已上線並確認，commit `6271d9e`。第19項「佩佩老師個人品牌頁（測試站）」已加入「二、不公開」分區，連到 `coach1973.github.io/peipei-art/`，緊接在佩佩老師其他項目之後，後面項目遞補到20~42。即時查詢已確認正式網址上看得到：https://coach1973.github.io/coach888/
+
+【教練 2026-07-17 04:02】
+好，可以，全部都推上去了
+
+　▶ AI 回應：Zip looks correct (45 files, ~12MB, no orphaned/junk content). Deploying now.
+
+　▶ AI 回應：Deploy is ready. Let's verify live on the actual production URL.
+
+　▶ AI 回應：Bigtree全部確認上線了。現在處理 bymyway.com 的連結修正（WordPress推送）。
+
+　▶ AI 回應：Found the correct file. Let me fix it here instead.
+
+　▶ AI 回應：全部推送完成，都已經在正式網站上驗證過：
+
+## 1. 大樹小講（Netlify）— 已上線
+
+部署到 `bigtree-tw.netlify.app`，即時查證全部通過：
+- 歷史講座紀錄頁：狀態碼200，KR養生廚房那筆紀錄確認在裡面
+- 9/15（六）KR養生廚房新場次：確認顯示
+- 9/19（六）嘉義中正大學場次：確認顯示
+- 7/22改版主題「當古典音樂遇到現代科技」：確認顯示
+
+## 2. bymyway.com「查看完整活動列表」連結 — 已修正，但過程中抓到自己一個錯
+
+老實跟你說：我一開始改的是`bymyway-website`這個repo，但推送前我重新查證了實際網站原始碼…（略）
+
+【教練 2026-07-17 04:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【教練 2026-07-17 04:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「已修」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補上commit hash：`ae93bc2`（`bigtree/speakers-2026/index.html`連結修正，已推送並驗證上線）。
+
+Netlify部署的commit則是 `9dedcab`（歷史紀錄頁修復+9/15+9/19+7/22合併），deploy id `6a59a9c46074f6915c2bf93c`，已確認正式網址生效。
+
+【教練 2026-07-17 04:19】
+bigtree/speakers-2026/index.html  這是什麼網址？
+
+　▶ AI 回應：它是一個檔案路徑，不是網址本身——對應到的實際網址是：
+
+**https://coach1973.github.io/bigtree/speakers-2026/**
+
+這個網址就是你的 **bymyway.com 首頁**實際顯示的內容——bymyway.com的首頁技術上是用一個「畫面框」（iframe）把這個網址的內容整頁嵌進去顯示，所以你在 www.bymyway.com 看到的東西，其實就是這個網址的內容。這也是為什麼上一輪我一開始改錯地方（改了另一個沒在用的repo）都不會生效，後來查到真正生效的檔案在這裡才改對。
+
+【教練 2026-07-17 08:26】
+https://ai-talk-tw.netlify.app/  檢查一下，為何人物頭象都不見了
+
+　▶ AI 回應：Failed to authenticate. API Error: 401 Invalid authentication credentials
