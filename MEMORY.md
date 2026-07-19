@@ -72,3 +72,8 @@
 - 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:5-8]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:9:12 -->
 - 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:9-12]
+
+## Promoted From Short-Term Memory (2026-07-19)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-09.md:284:287 -->
+- 📨 對話記錄 10:48（共約 11 條，從第 0 行起）: 👤 教練：可以去信箱幫我查看信件嗎？ 🦞 小龍蝦：教練，我去信箱看看。先查收件匣最近 7 天的信。 🦞 小龍蝦：教練，我整理一下信箱給您看。我先把幾封重要的打開看詳細內容（桂田酒店 15,000 付款、Apple 訂閱到期、BNI 真誠分會會議），其它的先列清單。 🦞 小龍蝦：教練，我看完信箱了。整理一份重要信件給您： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-09.md:284-287]

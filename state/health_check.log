@@ -496,3 +496,4 @@
 - 原因：CE<3、provider 端問題教練無法介入（守則#15）、alternating 模式穩定 24h+、週六傍晚教練可能外出或準備晚餐
 - Pipeline：17:33✅ → 18:00❌(143.815s overloaded) → 本次 18:02 觀察 → 下次 18:30 cron fire 自動驗證恢復
 2026-07-18T19:02:30+08:00|46e67e2e|error|118799|overloaded|CE=1|alternating_mode|quiet
+2026-07-18T23:32:00+08:00|46e67e2e|error|149698|overloaded|CE=1|alternating_mode|quiet|model=minimax/MiniMax-M3|timeout=600s|gateway=PID64856(5h37m)|coachSilent=40h+

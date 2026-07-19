@@ -206,3 +206,34 @@ For private Telegram sends, omit `replyTo` and `threadId` entirely unless a vali
 - Related Files: distill/三機每日總結_2026-07-17.md
 
 ---
+
+## [ERR-20260718-APPEND] 場景化追加腳本初版資料結構錯誤
+
+**Logged**: 2026-07-18T23:10:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: docs
+
+### Summary
+場景化追加腳本初版把觸發訊號當成二元組解包，實際資料是字串，因此腳本在寫入前失敗。
+
+### Error
+```
+ValueError: too many values to unpack (expected 2)
+```
+
+### Context
+- 操作：為每日蒸餾摘要組裝格式 D 案例與痛點計分 JSON。
+- 原因：觸發訊號資料結構使用「情境→反應」字串，但產生 Markdown 時誤用 `for a, b in triggers`。
+- 後續檢查確認本次目標文件已有先前成功執行的 2026-07-18 升華 commit，沒有重複追加或資料遺失。
+
+### Suggested Fix
+組裝表格前明確以第一次 `→` 分割觸發訊號字串，並在寫入前先檢查案例 ID 是否已存在。
+
+### Metadata
+- **Reproducible**: yes
+- **Related Files**: distill/特助場景庫_自動增量.md, distill/痛點計分_log.jsonl
+
+### Resolution
+- **Resolved**: 2026-07-18T23:10:00+08:00
+- **Notes**: 改用字串分割邏輯；同時採用既有案例 ID 檢查，避免重複寫入。
