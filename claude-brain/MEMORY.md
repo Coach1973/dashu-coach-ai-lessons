@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯 mentor100報名資料不用主動幫忙分辨測試資料(2026-07-20)](feedback_mentor100_test_data_self_managed.md) — 教練自己測試會自己刪，看到的新增條目都當真實資料，不列待辦
 - [🎯 「全世界最優秀的團隊計畫」正式上線於teamwork網址(2026-07-20)](project_true_ai_team_teamwork_launch.md) — NotebookLM三份精華素材+教練多輪修訂，coach888已補上第46項
 - [🔧 企業健身房預訂網址是Business.gym(2026-07-20)](project_business_gym_reserved_url_2026-07-20.md) — 教練親貼連結確認，取代原teamwork口頭說法，尚未建站
 - [🔴🔴🔴 判斷機器有沒有活動要查git log真相，不能信中繼蒸餾檔案(2026-07-19)](feedback_verify_activity_via_git_log_not_relay_file.md) — 三機總結cron誤報「聯想連續11天無對話」，實為ACER/Lenovo蒸餾排程從未真正運作，已改用git commit查證+修cron
