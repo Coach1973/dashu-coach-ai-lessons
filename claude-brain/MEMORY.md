@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 判斷機器有沒有活動要查git log真相，不能信中繼蒸餾檔案(2026-07-19)](feedback_verify_activity_via_git_log_not_relay_file.md) — 三機總結cron誤報「聯想連續11天無對話」，實為ACER/Lenovo蒸餾排程從未真正運作，已改用git commit查證+修cron
 - [🔴🔴🔴 真誠/真愛/真實AI分會願景說明書連續多棒未開始(2026-07-19)](project_bni_three_chapters_vision_pending.md) — 三個BNI分會的願景+產業分佈圖，卡在等教練給細節：身份/受眾/資料來源
 - [🔴🔴 這台Windows機器接力棒倉庫曾落後17天/1711commit，已修復(2026-07-17)](project_windows_workspace_git_sync_gap_2026-07-17.md) — 開工前先git fetch+status查behind，避免誤判「查無交辦」
 - [🔴 語音糾偏：真誠/真愛/真實AI「分會」不是「峰會」(2026-07-17)](feedback_fenhui_not_fenghui_voice_correction.md) — 已修正接力棒/CLAUDE.md用詞，歷史蒸餾逐字稿保留原樣不動
