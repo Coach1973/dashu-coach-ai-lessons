@@ -41,3 +41,34 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1784496992
 - 雲端同步：✅ 已推上雲端（commit 6cca8e2c5）
+
+## 🩺 Heartbeat 健康檢查 2026-07-20 07:32（週一早安，安靜時段）
+- ✅ 本次 cron fire 失敗 128s（minimax overloaded, CE=1 剛從 07:02 成功重置）
+- ✅ 128s ≪ 600s timeout ✅ 非配置問題
+- ✅ model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+- ✅ 全系統仍只本任務 1 個 cron job
+- ✅ alternating fail/recover 模式已穩定 53h+（provider 端，教練無法介入）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯
+- ✅ 自動修復評估全不適用（timeout/auth/ssh/CE≥3 都不適用）
+- 🔇 安靜結束，下次 08:00 cron fire 自動驗證恢復
+
+## 🩺 Heartbeat 健康檢查 2026-07-20 07:02（週一早安，安靜時段，教練仍在睡）
+- ✅ 本次 cron fire 失敗 112s（minimax overloaded, CE=1 剛從 06:32 成功重置）
+- ✅ 112s ≪ 600s timeout ✅ 非配置問題
+- ✅ model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+- ✅ 全系統仍只本任務 1 個 cron job
+- ✅ alternating fail/recover 模式已穩定 53h+（provider 端，教練無法介入）
+- ✅ HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯
+- ✅ 自動修復評估全不適用（timeout/auth/ssh/CE≥3 都不適用）
+- 🔇 安靜結束，下次 07:32 cron fire 自動驗證恢復
+
+## 🩺 Heartbeat 健康檢查 2026-07-20 06:03（週一凌晨，教練在睡）
+- ✅ Gateway PID 41397 仍跑（uptime 7h+，自 00:37 重啟起）
+- ✅ Cron list 22 個全 enabled（alternating 模式穩定）
+- ✅ Telegram bot_main token 確認有效（getMe 返回 openclaw_macbook4_bot）— 之前「Telegram token 壞」的記錄是 channel bot 不是 main bot
+- ✅ VPS polling 5 個時點全 OK（最近 05:55）
+- ✅ 心跳日誌正常（每分鐘）
+- ✅ 接力棒 mtime 7/20 05:36（06:00 起床摘要 cron fire 後仍正常）
+- ⚠️ 教練沉默 71h+（自 7/17 07:04 起），週一 06:03 仍在安靜時段（23:00-08:00），不主動打擾
+- 📌 起床摘要 cron f487652d 06:00 fire（4m 前），status=running（執行中，待結束）
+- 📌 下個關鍵時點：08:00 出安靜時段，屆時若教練仍未上線可考慮被動關懷
