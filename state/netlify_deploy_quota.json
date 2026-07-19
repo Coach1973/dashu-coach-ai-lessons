@@ -1,6 +1,6 @@
 {
   "quota_total_remaining_as_of": "2026-07-19",
-  "quota_remaining": 15,
+  "quota_remaining": 14,
   "deadline": "2026-07-25",
   "note": "教練2026-07-17親口告知：帳號到7/25前只剩16次部署額度。每次真的執行zip+curl API部署（POST .../deploys）就要decrement一次，回報教練時附上「本次第N次，還剩M次，到7/25」。剩3次以內要主動提醒教練，不用等問。這個數字不含純commit到GitHub（那不算Netlify部署），只算真的POST到api.netlify.com/.../deploys的次數。",
   "history": [
@@ -10,6 +10,13 @@
       "deploy_id": "6a5c7b54571509371435f890",
       "change": "9/21場次日期改為9/14",
       "remaining_after": 15
+    },
+    {
+      "date": "2026-07-19",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a5c9c4d5ef99905058c12af",
+      "change": "已報名人數公式調整：起始50人、7/19起每6小時+1人，讓現況更接近真實報名節奏",
+      "remaining_after": 14
     }
   ]
 }
