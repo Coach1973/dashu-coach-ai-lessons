@@ -1,0 +1,12 @@
+[main/sessions/main/31ca1606-c0da-4100-af1b-a2ee65201e81.jsonl#L14] Assistant: 🦞 健康檢查（02:03）— 安靜完成，無需通知教練 **Cron 監控：** - 系統目前只有 1 個 cron job（健康檢查本身） - 本任務上次狀態：error（consecutiveErrors=1） - 原因：`overloaded`（AI service 瞬時過載，非永久問題） - 判斷：模型已是 `minimax/MiniMax-M3`（正確），不需改 model/timeout - 未達連續錯誤 3 次門檻，**不需通知教練** **HEARTBEAT.md：** - 僅顯示 2026-07-20 00
+[main/sessions/main/455e5478-176a-41e2-a9e3-6187529f6e2c.jsonl#L12] Assistant: 🦞 健康檢查報告（01:32） **Cron 監控：** - 任務 `🦞 每30分鐘任務健康檢查`（自己）：lastRunStatus = error - consecutiveErrors = 1（未達 3 次門檻，暫不升級） - lastErrorReason = **"overloaded"**（AI 服務暫時過載，非 apiKey 失效、非 timeout、非 ssh 問題） - lastDurationMs = 149,603ms（< 600s timeout，沒超時） - 屬於暫時性錯誤，下次自動重試即可，*
+[main/sessions/main/4eeb4de5-3bf3-4330-9f20-875a2691cac3.jsonl#L12] Assistant: 🦞 健康檢查報告（01:03） ✅ 無異常 --- **檢查結果：** 1. **Cron 任務監控** - 系統目前只有 1 個 cron 任務（本健康檢查自身） - 上次失敗原因：`overloaded`（MiniMax 模型端臨時過載），不是 timeout、不是 apiKey、不是 scp - `consecutiveErrors` = 1，未達 3 次警戒線 - `lastDurationMs` = 161 秒，離 600 秒 timeout 還很遠 - **無法自動修復**：overloaded 是供應商端暫時
+[main/sessions/main/5c7ea61e-6015-4bdb-be1b-cae8f50dfbe4.jsonl#L8] Assistant: **開工，先讀 AGENTS.md。** 執行增量記憶蒸餾任務（靜默模式，不通知教練）。
+[main/sessions/main/5c7ea61e-6015-4bdb-be1b-cae8f50dfbe4.jsonl#L10] Assistant: 任務結束。輸出 `NO_NEW_ENTRIES`，無新紀錄需要處理，無需更新 `CLIENT_PROFILE.md`，無需通知教練。
+[main/sessions/main/76f56ccf-7c29-4bdc-8719-d6141ac39da6.jsonl#L6] Assistant: 開工，先讀 AGENTS.md。 🦞 執行健康檢查：
+[main/sessions/main/76f56ccf-7c29-4bdc-8719-d6141ac39da6.jsonl#L9] Assistant: 發現自身任務 `lastRunStatus: error`，先詳查原因：
+[main/sessions/main/76f56ccf-7c29-4bdc-8719-d6141ac39da6.jsonl#L12] Assistant: 自身任務上次是 AI 過載錯誤（`overloaded`，非配置問題）。檢查過去執行歷史判斷趨勢：
+[main/sessions/main/76f56ccf-7c29-4bdc-8719-d6141ac39da6.jsonl#L14] Assistant: 🦞 健康檢查（02:32）— 安靜完成，無需通知教練 **Cron 監控：** - 系統目前只有 1 個 cron job（健康檢查本身） - 本任務上次狀態：error（consecutiveErrors=1） - 原因：`overloaded`（AI service 瞬時過載，非永久問題） - 判斷：模型已是 `minimax/MiniMax-M3`（正確），不需改 model/timeout - 未達連續錯誤 3 次門檻，**不需通知教練** - 從 runs 歷史觀察，alternating fail/recove
+[main/sessions/main/b300ed91-40f8-4de8-933e-33326414e79b.jsonl#L8] Assistant: 開工，先讀 AGENTS.md。已讀，現在執行健康檢查任務。
+[main/sessions/main/ce269bfc-9c81-4ee8-87b5-f026b3afbb91.jsonl#L19] Assistant: NO_NEW_ENTRIES，無新對話可蒸餾，任務結束。
+[main/sessions/main/d9a91cd2-4383-4006-93d5-ebd8c643fd63.jsonl#L11] Assistant: 🔇 安靜結束 - 本次 00:02 fire 成功（CE=1 → 0） - 23:30 那次失敗屬 alternating fail/recover 模式，provider 端問題，無法介入 - 自動修復評估全不適用 - HEARTBEAT.md 已更新 - 無需通知教練
