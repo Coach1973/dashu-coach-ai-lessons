@@ -1,5 +1,38 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+> 🦞 17:32 週日健康檢查 trace
+> 本任務 46e67e2e 17:30 fire 失敗 103.3s（minimax overloaded, CE=1 剛重置）
+> 103s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 46h+，錯誤源頭 provider 端，教練無法介入
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 17:02 週日健康檢查 trace
+> 本任務 46e67e2e 17:00 fire 失敗 103.3s（minimax overloaded，CE=1 剛重置）
+> 103s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 45h+，錯誤源頭 provider 端，教練無法介入
+> 自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 16:32 週日健康檢查 trace
+> 本次 cron list 只有本任務 1 個（其他任務已被清掉）
+> 上一輪 16:00 fire 失敗（minimax overloaded，CE 剛重置，alternating 模式穩定 44h+）
+> 自動修復評估全不適用，🔇 安靜結束
+
+> 🦞 16:03 週日健康檢查 trace
+> 本任務 46e67e2e 16:00 fire 失敗 130.5s（minimax overloaded，CE=1 剛重置）
+> 130s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 43h+，錯誤源頭 provider 端，教練無法介入
+> CE=1 仍未達 3，自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
+> 🦞 15:35 週日健康檢查 trace
+> 本任務 46e67e2e 15:30 fire 失敗 141.245s（minimax overloaded, CE=2）
+> 141s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
+> 全系統 cron jobs 只有本任務 1 個（其他任務已被清掉）
+> alternating fail/recover 模式續穩定 42h+，錯誤源頭 provider 端，教練無法介入
+> CE=2 仍未達 3，自動修復評估全不適用，🔇 安靜結束（CE 達 3 才通知）
+
 > 🦞 15:03 週日健康檢查 trace
 > 本任務 46e67e2e 14:30 fire 失敗 151.975s（minimax overloaded，CE=1）
 > 151s ≪ 600s timeout ✅ / model=minimax/MiniMax-M3 ✅ / delivery=none ✅
