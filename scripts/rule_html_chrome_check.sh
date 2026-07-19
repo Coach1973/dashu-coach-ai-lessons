@@ -68,6 +68,18 @@ for i, line in enumerate(recent):
             if re.search(r"open\s+-a\s+\"?Google Chrome\"?", command, re.IGNORECASE):
                 chrome_evidence_idx = i
 
+            # 2026-07-20 案例52後補：Edit/Write 只抓得到「直接編輯 .html」，
+            # 但用 Bash 把 .html 複製/部署到別的 repo 再 push 上線（cp/mv/rsync/
+            # git commit/git push 動作 + 指令字串含 .html）完全繞過上面的偵測，
+            # 導致教練看到的是「已上線」文字回報而不是真的被跳 Chrome 出來驗證。
+            if re.search(r'\.html\b', command, re.IGNORECASE) and re.search(
+                r'\b(cp|mv|rsync|git\s+commit|git\s+push|git\s+add)\b', command, re.IGNORECASE
+            ):
+                html_edit_idx = i
+                m = re.search(r'([./\w~-]+\.html)', command)
+                if m and m.group(1) not in html_files:
+                    html_files.append(m.group(1))
+
 print(json.dumps({
     'html_edit_idx': html_edit_idx,
     'html_files': html_files,
