@@ -70,14 +70,22 @@ for i, line in enumerate(recent):
 
             # 2026-07-20 案例52後補：Edit/Write 只抓得到「直接編輯 .html」，
             # 但用 Bash 把 .html 複製/部署到別的 repo 再 push 上線（cp/mv/rsync/
-            # git commit/git push 動作 + 指令字串含 .html）完全繞過上面的偵測，
-            # 導致教練看到的是「已上線」文字回報而不是真的被跳 Chrome 出來驗證。
-            if re.search(r'\.html\b', command, re.IGNORECASE) and re.search(
-                r'\b(cp|mv|rsync|git\s+commit|git\s+push|git\s+add)\b', command, re.IGNORECASE
-            ):
+            # git add 動作）完全繞過上面的偵測，導致教練看到的是「已上線」文字
+            # 回報而不是真的被跳 Chrome 出來驗證。
+            # 2026-07-20 同日修正：原正則太寬——只要整段指令字串「同時含 .html
+            # 字樣」與「cp/mv/git 等關鍵字」就誤判，導致連 commit message 裡
+            # 用文字描述「用cp把index.html複製」這種純說明文字都被誤抓成真的
+            # 執行過複製。改成要求動詞後面緊接著一個真正的檔案路徑（前面必須
+            # 是空白或路徑符號，不能是中文字或其他字元直接黏著），只認得
+            # cp/mv/rsync/git add 這種「後面帶檔名參數」的指令，拿掉純字面
+            # 存在的 git commit / git push 關鍵字比對（這兩個動作本身不帶檔名）。
+            m = re.search(
+                r'\b(?:cp|mv|rsync|git\s+add)\s+(?:[\w.-]+\s+)*([~./][\w./~-]*\.html)\b',
+                command
+            )
+            if m:
                 html_edit_idx = i
-                m = re.search(r'([./\w~-]+\.html)', command)
-                if m and m.group(1) not in html_files:
+                if m.group(1) not in html_files:
                     html_files.append(m.group(1))
 
 print(json.dumps({
