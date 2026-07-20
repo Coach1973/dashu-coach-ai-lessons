@@ -2,65 +2,67 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784423028,
-    "system_health": 1784423028,
-    "telegram_channel": 1784370744,
+    "heartbeat_poll": 1784513040,
+    "system_health": 1784513040,
+    "telegram_channel": 1784513040,
     "junshi_queue": 1784370744,
-    "cron_list": 1784412240,
-    "care_4h": 1784368800
+    "cron_list": 1784513040,
+    "care_4h": 1784513040
   },
-  "lastHeartbeat": "2026-07-20T06:03:35+08:00",
-  "lastHeartbeatNote": "週一 06:03 健康檢查（cron list 22 個全 enabled ok、gateway 7h27m 仍跑、telegram bot_main 驗證有效、system uptime 18 天、無新事件）。alternating fail/recover 模式穩定 36h+（minimax 端 provider 問題）。教練沉默 71h+ 持續（自 7/17 07:04 起），週一凌晨 06:03 仍在安靜時段，不主動打擾。起床摘要 cron f487652d 已 06:00 fire (running)。memory_distill_weekly.log 7/19 08:03 已驗證完成（無檔案需蒸餾）。",
+  "lastHeartbeat": "2026-07-20T10:04:00+08:00",
+  "lastHeartbeatNote": "週一 10:04 健康檢查（cron 1cbe1701 每4小時主動關懷 fire 監控版，< 10s OK）。24 cron jobs 全 status=ok/running/idle/disabled，無 escalated CE≥3。Gateway PID 34819（peipei 09:15 auto-restart 起的，~50min uptime；原 PID 41397 已不在）。alternating fail/recover 模式 54h+ 仍由 minimax provider 端波動。bot_main token 仍有效（ef88279b 10:00 telegram send 已成功）。軍師正在處理 VPS 記憶搜尋修復任務（08:47 派出，claude -p 進程 8:47 起到現在還在跑）。Netlify 部署額度剩 13 次（07-25 前）。聯想 C 槽觀察期 10:02 剛屆滿（最 urgent 頭項），教練 75h+ 沉默仍未上線。本 turn 不發外部訊息（ef88279b 剛已送），安靜維護 HEARTBEAT.md + state json。",
   "systemSnapshot": {
-    "timeOfDay": "early_morning",
+    "timeOfDay": "morning",
     "dayOfWeek": "Monday",
-    "isQuietHours": true,
+    "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh",
-    "contextPercent": 8,
+    "contextPercent": 5,
     "recentCoachActivity": "教練 2026-07-17 07:04 交辦 8036 車貸（溢繳 4 月，下次 12/1），已建檔 + 設 cron",
     "urgentGmailCount": 0,
-    "junshiQueueEmpty": true,
+    "junshiQueueEmpty": false,
     "junshiResultMtime": "2026-07-08",
-    "gatewayPid": 41397,
+    "junshiQueueTask": "VPS 記憶搜尋功能修復請求（08:47 派出，軍師正在跑，預計 ~1h+）",
+    "gatewayPid": 34819,
     "gatewayRunning": true,
-    "gatewayUptime": "7h27m+",
-    "gatewayRestartedAt": "2026-07-20T00:37:00+08:00",
+    "gatewayUptime": "50min+",
+    "gatewayRestartedAt": "2026-07-20T09:15:00+08:00",
     "telegramChannelOk": true,
     "lastTelegramSendAttempt": {
-      "ts": "2026-07-20T06:00:00+08:00",
+      "ts": "2026-07-20T10:00:00+08:00",
       "error": null,
-      "intent": "週一 06:00 起床摘要 cron f487652d fire (running, status=ok)",
-      "note": "bot_main token 驗證有效（username: openclaw_macbook4_bot），之前 channel bot 損壞記錄已不適用 main bot"
+      "intent": "週一 10:00 每4小時主動關懷 cron ef88279b fire (success, 已 send telegram)",
+      "note": "bot_main token 仍有效；ef88279b 6m ago 已成功 send telegram (cron list status=ok)"
     },
-    "openTask": "🆕 [今日 7/19 已驗證到期] 聯想 C 槽觀察期 10:02 屆滿（已過 12 小時）— 請在聯想開對話執行刪除兩份保留備份約 94GB / ACER 備份觀察期 (7/15) 已過 4 天 — 請在 ACER 開對話執行刪除約36.3GB / Telegram channel bot token 失效 108h+ — 主動關懷訊息會撞牆，需教練補 token / Netlify 50% 用量（07-13 13:36 來信，已 134h+）— 建議登入查看 / 光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 134h+）— 請對帳 / 真誠/真愛/真實AI分會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）/ cool-case 頭像案（v70 已收尾完成）/ peipei-art 等文字 / peipei-event: 群發通知未實測+QR立牌未印+服務 nuhup 跑 / 8036 車貸已建檔+設 cron 12/1 / 起床摘要 cron (f487652d) lastRun=error 但 a8450f2c 06:00 已成功（重複 cron 互卡，待查）/ 30分任務健康檢查 (46e67e2e) 06:00 fire 失敗 126s overloaded（cron list 顯示 ok，alternating 模式穩定 31h+）/ 三機總結 cron (bbb7a348) 7/17 23:05 失敗根因查清 = Telegram 推播失敗，CE=1 / 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定 / ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 81h+ 仍無回信 / mentor100 教練自己測試留下的真實資料要保留或刪除（v70 接力棒結尾提醒）",
+    "openTask": "🆕 [剛剛到期 10:02] 聯想 C 槽觀察期屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB（教練仍未上線，待上線時第一提醒）/ ACER 備份觀察期 (7/15) 已過 4 天 — 請在 ACER 開對話執行刪除約36.3GB / Telegram channel bot token 失效 112h+ — 主動關懷訊息會撞牆，需教練補 token（但 bot_main token 仍有效）/ Netlify 剩 13 次（7/25 前，上次 07-19 bigtree-tw 從 14→13）— 剩 3 次以內主動提醒 / 光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 138h+）— 請對帳 / 真誠/真愛/真實AI分會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）/ peipei-art 等文字 / peipei-event: 群發通知未實測+QR立牌未印+服務 nuhup 跑 / 8036 車貸已建檔+設 cron 12/1 / 起床摘要 cron (f487652d) lastRun=error 但 a8450f2c 06:00 已成功（重複 cron 互卡，待查）/ 30分任務健康檢查 (46e67e2e) alternating 模式穩定 54h+ 持續 / 三機總結 cron (bbb7a348) 7/17 23:05 失敗根因查清 = Telegram 推播失敗，CE=1 / 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定 / ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 85h+ 仍無回信 / mentor100 教練自己測試留下的真實資料要保留或刪除（v70 接力棒結尾提醒）/ 軍師 08:47 派出 VPS 記憶搜尋功能修復任務進行中",
     "coachSilentSince": "2026-07-17 07:04",
-    "coachSilentHours": 71,
+    "coachSilentHours": 75,
     "pendingCoachItems": [
-      "🆕 [已驗證到期] 聯想 C 槽觀察期 10:02 屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
+      "🆕 [剛剛 10:02 到期] 聯想 C 槽觀察期屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
       "ACER 備份觀察期 (7/15) 已過 4 天 — 請在 ACER 開對話執行刪除約36.3GB",
-      "Telegram channel bot token 失效 (108h+) — 主動關懷訊息會撞牆，需教練補 token",
-      "Netlify 50% 用量（07-13 13:36 來信，已 134h+）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 134h+）— 請對帳",
+      "Telegram channel bot token 失效 (112h+) — 主動關懷訊息會撞牆，需教練補 token",
+      "Netlify 剩 13 次（7/25 前），剩 3 次以內主動提醒",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 138h+）— 請對帳",
       "真誠/真愛/真實AI分會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
       "peipei-art 改版等教練提供文字/照片",
-      "📦 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定",
-      "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 81h+ 仍無回信 — 提醒 ACER 補 settings.json 的 Bash matcher",
-      "🆕 mentor100 教練自己測試留下的真實資料要保留或刪除（v70 接力棒結尾提醒）"
+      "📦 記憶蒸餾 cron (28cd69d9) 週日 12:00 (07-19) 正式跑驗證 — 已自動調 timeout 300→1800 + model 鎖定 minimax/MiniMax-M3",
+      "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 85h+ 仍無回信 — 提醒 ACER 補 settings.json 的 Bash matcher",
+      "🆕 mentor100 教練自己測試留下的真實資料要保留或刪除（v70 接力棒結尾提醒）",
+      "🆕 軍師 08:47 派出 VPS 記憶搜尋功能修復任務進行中（claude -p 8:47 起算 ~1h+ 還在跑）"
     ],
-    "note": "週一 06:03 健康檢查（cron list 22 個全 enabled ok、gateway 7h27m 仍跑、telegram bot_main 驗證有效、system uptime 18 天、無新事件）。alternating fail/recover 模式穩定 36h+（minimax 端 provider 問題）。教練沉默 71h+ 持續（自 7/17 07:04 起），週一凌晨 06:03 仍在安靜時段，不主動打擾。起床摘要 cron f487652d 已 06:00 fire (running)。memory_distill_weekly.log 7/19 08:03 已驗證完成（無檔案需蒸餾）。",
-    "lastHeartbeatTimestamp": "2026-07-20T06:03:35+08:00",
+    "note": "週一 10:04 健康檢查（cron 1cbe1701 fire 監控版，< 10s OK）。24 cron jobs 全 ok/running/idle/disabled，無 escalated CE≥3。Gateway PID 34819 (peipei 09:15 auto-restart 起的，~50min uptime)。alternating 模式 54h+。bot_main token 有效（10:00 ef88279b telegram send 成功）。軍師正在處理 VPS 修復任務。聯想 C 槽 10:02 觀察期剛屆滿（最 urgent 頭項）。教練沉默 75h+ 持續。本 turn 不發外部訊息（ef88279b 剛已送），安靜維護。",
+    "lastHeartbeatTimestamp": "2026-07-20T10:04:00+08:00",
     "cronErrors": [
       {
         "jobId": "46e67e2e",
         "name": "🦞 每30分鐘任務健康檢查",
-        "consecutiveErrors": "0（cron list lastRunStatus=ok，06:00 fire HEARTBEAT 顯示 overloaded 126s 但 list 是 ok = alternating 模式中某次成功，alternating 模式穩定 31h+）",
+        "consecutiveErrors": "0（alternating 模式中 ok 與 overloaded 交替，< 600s timeout 都不算）",
         "rootCause": "minimax 端外部波動（overloaded / cooldown 切換），非系統性"
       },
       {
         "jobId": "bbb7a348",
         "name": "📊 每日 23:05 三機總結",
-        "consecutiveErrors": "1（7/17 23:05 fire 失敗 525s，根因 = Telegram 推播失敗 token 仍壞 108h+，已知問題；< 3 不升級）",
+        "consecutiveErrors": "1（7/17 23:05 fire 失敗 525s，根因 = Telegram 推播失敗 token 仍壞 112h+，已知問題；< 3 不升級）",
         "rootCause": "Telegram channel bot token 失效（已知，HEARTBEAT.md 已記錄待教練補 token）"
       },
       {
@@ -78,7 +80,7 @@
       {
         "jobId": "28cd69d9",
         "name": "📦 週日 12:00 記憶蒸餾正式驗證",
-        "consecutiveErrors": "N/A（待週日 07-19 12:00 fire，距今約 6 小時）",
+        "consecutiveErrors": "N/A（已成功 07-19 12:00 跑驗證）",
         "rootCause": "已自動調 timeout 300→1800 + model 鎖定 minimax/MiniMax-M3"
       }
     ]
