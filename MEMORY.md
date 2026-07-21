@@ -77,3 +77,20 @@
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-09.md:284:287 -->
 - 📨 對話記錄 10:48（共約 11 條，從第 0 行起）: 👤 教練：可以去信箱幫我查看信件嗎？ 🦞 小龍蝦：教練，我去信箱看看。先查收件匣最近 7 天的信。 🦞 小龍蝦：教練，我整理一下信箱給您看。我先把幾封重要的打開看詳細內容（桂田酒店 15,000 付款、Apple 訂閱到期、BNI 真誠分會會議），其它的先列清單。 🦞 小龍蝦：教練，我看完信箱了。整理一份重要信件給您： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-09.md:284-287]
+
+## Promoted From Short-Term Memory (2026-07-21)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-10.md:256:258 -->
+- 📨 對話記錄 08:18（共約 2 條，從第 0 行起）: 👤 教練：https://ai-coding.wiselychen.com/openclaw-architecture-deep-dive-context-memory-token-crusher/ 研究一下這篇文章，看看我們的系統有沒有需要完善的。也就是說，有沒有哪裡可以做得更好、哪些是可以少做一點的，或者是可以更加精簡、更加有智慧的？ 總之，請深度剖析一下那篇文章，然後看看我們還有什麼差異。 🦞 小龍蝦：開工。先抓文章 + 讀接力棒 + 看 knowledges 跟 memory 脈絡，並行跑。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-10.md:256-258]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-11.md:5:8 -->
+- 12:03 蒸餾檢查: 指令來源:cron 961021a7-6536-4075-ab2a-af4596b6e246(每2小時增量記憶蒸餾); 執行結果:NO_NEW_ENTRIES(0 個有效紀錄); 處理:本次無新對話紀錄需蒸餾,任務結束; CLIENT_PROFILE.md:未更新(無新內容) [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-11.md:5-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:11:12 -->
+- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: Current time: Sunday, July 12th, 2026 - 12:00 AM (Asia/Taipei) Reference UTC: 2026-07-11 16:00 UTC [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:5:5 -->
+- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:7:10 -->
+- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:7-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:280:280 -->
+- 📨 對話記錄 08:18（共約 18 條，從第 0 行起）: 👤 教練：[cron:28cd69d9-b911-4112-b4ca-5499cb7f5247 📦 每週記憶檔自動蒸餾（>30KB 直接處理）] 你是記憶檔自動蒸餾助理，**自己動手做完**，不要叫教練做事。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-12.md:280-280]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:283:285 -->
+- 📨 對話記錄 08:18（共約 18 條，從第 0 行起）: 執行 `ls -la ~/.openclaw/workspace/memory/*.md`，找出檔案大小超過 30720 bytes（30KB）的 memory 檔案; 若全部都 < 30KB，**靜默結束**（不通知教練）; 對每個過大的檔案，自動執行以下蒸餾流程： [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-12.md:283-285]

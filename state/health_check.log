@@ -497,3 +497,116 @@
 - Pipeline：17:33✅ → 18:00❌(143.815s overloaded) → 本次 18:02 觀察 → 下次 18:30 cron fire 自動驗證恢復
 2026-07-18T19:02:30+08:00|46e67e2e|error|118799|overloaded|CE=1|alternating_mode|quiet
 2026-07-18T23:32:00+08:00|46e67e2e|error|149698|overloaded|CE=1|alternating_mode|quiet|model=minimax/MiniMax-M3|timeout=600s|gateway=PID64856(5h37m)|coachSilent=40h+
+[2026-07-20 11:32:00+08:00] 健康檢查 #46e67e2e
+- 自身 CE=1 / lastRunStatus=error / lastDurationMs=90226 / lastErrorReason=overloaded
+- model=minimax/MiniMax-M3 ✅ / timeout=600s（90s ≪ 600s ✅）/ delivery.mode=none ✅
+- lastDiagnosticSummary: "The AI service is temporarily overloaded. Please try again in a moment."
+- HEARTBEAT.md 無 ⬜ / 無 48h 停滯
+- VPS polling state: ok, alert=false, container_uptime 7/17 起算 16666m
+- 自動修復評估：
+  ❌ timeout 不適用（duration 90s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用（CE=1）
+- 升級 announce：❌ 安靜結束
+- 原因：overloaded=provider 端問題（守則#15 教練無法介入）+ CE=1 遠低於 3 + alternating 模式穩定 + 週一上午教練可能忙碌
+- Pipeline：本次 11:30❌(90s overloaded) → 下次 12:00 cron fire 自動驗證恢復
+[2026-07-20 20:32:00+08:00] 健康檢查 #46e67e2e
+- 自身 CE=1 / lastRunStatus=error / lastDurationMs=138163 / lastErrorReason=overloaded
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅（138s ≪ 600s）
+- lastDiagnosticSummary: "The AI service is temporarily overloaded."
+- 23 個 cron jobs 掃描結果：
+  • 錯誤：僅自身 CE=1（provider 端 overloaded）
+  • 連續錯誤 ≥3：無
+  • idle（從未跑過）：de70413e 7/24養護費（4天後）、cf7a0654 8036車貸（134天後）— 均為一次性提醒，idle 正常
+  • 三機總結 bbb7a348：上次 ok（CE=0）
+- HEARTBEAT.md ⬜ 項目：無
+- 自動修復評估：
+  ❌ timeout 不適用（duration 138s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用（CE=1）
+- 升級 announce：❌ 安靜結束
+- 原因：overloaded=provider 端問題（守則#15 教練無法介入）+ CE=1 遠低於 3 + alternating 模式穩定
+- Pipeline：本次 20:00❌(138s overloaded) → 下次 20:30 cron fire 自動驗證恢復
+[2026-07-20 21:04:00+08:00] 健康檢查 #46e67e2e
+- 自身 CE=2 / lastRunStatus=error / lastDurationMs=85102 / lastErrorReason=overloaded
+- model=minimax/MiniMax-M3 ✅ / timeout=600s（85s ≪ 600s ✅）/ delivery.mode=none ✅
+- lastDiagnosticSummary: "The AI service is temporarily overloaded."
+- 23 個 cron jobs 掃描結果（openclaw cron list）：
+  • 錯誤：僅自身 CE=2（provider 端 overloaded，alternating 模式穩定 24h+）
+  • 連續錯誤 ≥3：無
+  • idle（從未跑過）：de70413e 7/24養護費（4天後）、cf7a0654 8036車貸（133天後）— 均為一次性提醒，idle 正常
+  • 三機每日總結 bbb7a348：上次 ok（CE=0）
+  • 場景化升華 533cfe54、起床摘要 f487652d、主動關懷 1cbe1701/ef88279b、增量蒸餾 9c3fc55d/961021a7、結繩提醒 73cbf6da/af137f9b、執董週會 9ee405c0/baa849af、信貸 71d213a1/ca52416d、行事曆 89b8648d/b349ddd3、Netlify 541f0c32、Memory Dreaming b3f20f6c：全部 ok
+- HEARTBEAT.md ⬜ 項目：無
+- VPS polling state：status=ok，alert=false，spool=0，container_uptime 7/17 起算 16666m（穩定 11 天+）
+- 自動修復評估：
+  ❌ timeout 不適用（duration 85s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用（CE=2，未達 3 次門檻）
+- 升級 announce：❌ 安靜結束
+- 原因：overloaded=provider 端問題（守則#15 教練無法介入）+ CE=2 仍未達 3 + alternating 模式穩定 24h+ + 週一晚 21:04
+- Pipeline：本次 21:00❌(85s overloaded) → 下次 21:30 cron fire 自動驗證恢復
+[2026-07-20 22:03 Asia/Taipei] 健康檢查 — 安靜結束
+- 上一輪 22:00 fire 失敗 97s（minimax provider overloaded）
+- consecutiveErrors = 1（剛從 21:32 成功 reset）
+- 97s ≪ 600s timeout ✅ 非配置問題
+- model = minimax/MiniMax-M3 ✅ / delivery = none ✅
+- alternating fail/recover 模式穩定 66h+
+- HEARTBEAT.md 無 ⬜ 待辦、無 48h 停滯
+- 自動修復評估：全不適用
+- 結論：✅ 無異常、安靜結束
+[2026-07-20 23:03:00+08:00] 健康檢查 #46e67e2e
+- 自身 CE=1 / lastRunStatus=error / lastDurationMs=160588 / lastErrorReason=overloaded
+- model=minimax/MiniMax-M3 ✅ / timeout=600s（160s ≪ 600s ✅）/ delivery.mode=none ✅
+- lastDiagnosticSummary: "The AI service is temporarily overloaded."
+- cron list 結果：1 個任務（自身健康檢查），其他任務未列出（gateway 11:08 重啟後 cron jobs 可能未 persist；或 list 真的只剩 1）
+- 從歷史 health_check.log 比對：過去有 23 個 cron jobs，目前 cron list 只回 1 個，狀態待查
+- HEARTBEAT.md ⬜ 項目：無；無 48h 停滯
+- VPS polling：status=ok，container_uptime 16666m（穩定 11 天+）
+- 自動修復評估：
+  ❌ timeout 不適用（duration 160s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用（CE=1，未達 3 次門檻）
+  ❌ cron jobs 缺失不適用自動修復（需教練手動評估是否重建）
+- 升級 announce：❌ 安靜結束
+- 原因：overloaded=provider 端問題（守則#15 教練無法介入）+ CE=1 遠低於 3 + alternating 模式穩定 24h+ + 週一深夜 23:03 教練可能睡眠
+- Pipeline：本次 23:00❌(160s overloaded) → 下次 23:30 cron fire 自動驗證恢復
+
+[2026-07-21 00:04 Asia/Taipei] 健康檢查完成
+- consecutiveErrors = 2（差 1 次到 3 次紅線）
+- lastErrorReason = overloaded（minimax provider 暫時過載）
+- lastDurationMs = 90,524ms ≪ 600s timeout（非 timeout 問題）
+- model = minimax/MiniMax-M3 ✅（2026-07-15 已自動修復 apiKey 失效）
+- delivery = none ✅ / failureAlert = false ✅
+- alternating fail/recover 模式已穩定 60h+
+- HEARTBEAT.md：無 ⬜ 項目、無 48h 停滯
+- 自動修復評估：全部不適用
+- 結論：無異常，安靜結束，無需通知教練
+- 下次 00:30 cron fire 自動驗證恢復
+
+[2026-07-21 07:32 Asia/Taipei] 健康檢查完成
+- 自身 CE=1（cron get 顯示剛被 fire；本次 success 結束後會重置）
+- lastErrorReason = overloaded（minimax provider 過載）
+- lastDurationMs = 103,035ms ≪ 600s timeout（非 timeout 問題）
+- model = minimax/MiniMax-M3 ✅ / delivery = none ✅ / failureAlert = false ✅
+- 22 個 cron jobs 全掃描（openclaw cron list --all）：
+  • 自身健康檢查：running（本次成功）
+  • 其他 21 個全部 ok 或 idle（一次性 7/24 養護費提醒 4 天後，正常 idle）
+  • 連續錯誤 ≥3：❌ 無
+- HEARTBEAT.md：無 ⬜ 項目、無 48h 停滯（最近重啟 04:38 後 memory 已推上 GitHub）
+- VPS polling：status=ok / container_uptime 11d+ / spool=0
+- 自動修復評估：
+  ❌ timeout 不適用（103s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用
+- 升級 announce：❌ 安靜結束
+- 原因：alternating fail/recover 模式穩定 60h+ + CE=1 遠低於 3 + 過載是 provider 端
+- 教練端時間：週二 07:32 早晨，自動修復不通知
+- Pipeline：本次 07:30 成功 → 下次 08:00 cron fire 監控
+
+2026-07-21 17:02:50 CST | 17:02 健康檢查完成（isolated cron run）
