@@ -1,9 +1,16 @@
 {
   "quota_total_remaining_as_of": "2026-07-22",
-  "quota_remaining": 12,
+  "quota_remaining": 11,
   "deadline": "2026-07-25",
   "note": "教練2026-07-17親口告知：帳號到7/25前只剩16次部署額度。每次真的執行部署（zip+API或netlify-cli deploy --prod）就要decrement一次，回報教練時附上「本次第N次，還剩M次，到7/25」。剩3次以內要主動提醒教練，不用等問。這個數字不含純commit到GitHub（那不算Netlify部署），只算真的觸發Netlify產生新deploy的次數。",
   "history": [
+    {
+      "date": "2026-07-22",
+      "site": "jiesheng-leadership",
+      "deploy_id": "643a557(git-auto-deploy)",
+      "change": "7/19改已截止報名+7/23加今晚00:00自動截止(瀏覽器端定時，非重新部署)",
+      "remaining_after": 11
+    },
     {
       "date": "2026-07-22",
       "site": "bigtree-tw",
