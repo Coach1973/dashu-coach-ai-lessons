@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 監控旗標說通道壞了先實測真相源再信，別被黏著假警報憋住關懷(2026-07-22)](feedback_verify_channel_health_not_stale_flag.md) — HEARTBEAT誤報Telegram失效133h憋住11項待辦5.5天，實測3token全活；盲信衍生旗標第三犯(案例53)
 - [🎯 mentor100報名資料不用主動幫忙分辨測試資料(2026-07-20)](feedback_mentor100_test_data_self_managed.md) — 教練自己測試會自己刪，看到的新增條目都當真實資料，不列待辦
 - [🎯 「全世界最優秀的團隊計畫」正式上線於teamwork網址(2026-07-20)](project_true_ai_team_teamwork_launch.md) — NotebookLM三份精華素材+教練多輪修訂，coach888已補上第46項
 - [🔧 企業健身房預訂網址是Business.gym(2026-07-20)](project_business_gym_reserved_url_2026-07-20.md) — 教練親貼連結確認，取代原teamwork口頭說法，尚未建站
