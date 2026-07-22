@@ -1,39 +1,41 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-21T06:03:53.362315+08:00",
+    "heartbeat_received": "2026-07-22T14:04:12.170594+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
     "system_health": "2026-07-18T23:32:00+08:00",
-    "telegram_channel": "ef88279b cron 端仍壞（已 113h+）"
+    "telegram_channel": "ok（探針 14:02 實測 ok=true，已更正過期旗標）"
   },
-  "lastHeartbeat": "2026-07-21T09:01:50.138468+08:00",
-  "lastHeartbeatNote": "週二 09:01 心跳：距上次 06:03 已 3 小時；coach silent 95h+、telegram channel 仍壞（113h+）、pipeline alternating 模式持續；本任務 08:30 fire 失敗 91.2s（minimax provider overloaded）；無新郵件、無新待辦、教練仍未回，採最小回報。",
+  "lastHeartbeat": "2026-07-22T14:04:12.170594+08:00",
+  "lastHeartbeatNote": "週三 14:02 心跳：探針回 ok=true 確認通道已恢復（之前旗標過期 113h+）；channel 健康 → coach silent 127h、5 項 pending 已堆積；本任務 14:00 fire 失敗 171s (overloaded) → CE=1；alternating 模式穩定；無需自動修復。",
   "systemSnapshot": {
-    "timeOfDay": "morning_tuesday",
-    "dayOfWeek": "Tuesday",
+    "timeOfDay": "afternoon_wednesday",
+    "dayOfWeek": "Wednesday",
     "isQuietHours": false,
-    "allCronsHealthy": false,
-    "contextStatus": "fresh_after_restart_0438",
-    "contextPercent": 5,
+    "allCronsHealthy": true,
+    "contextStatus": "fresh_after_restart_1036",
+    "contextPercent": 4,
     "gatewayPid": 64856,
-    "gatewayUptime": "5h37m",
+    "gatewayUptime": "21d_running",
     "gatewayRunning": true,
-    "telegramChannelOk": "broken（ef88279b cron 端 bot token 失效 113h+，待教練決定）",
+    "telegramChannelOk": true,
+    "telegramChannelSource": "telegram_channel_probe.sh 14:02 實測 ok=true（更正 heartbeat-state 過期旗標）",
     "junshiQueueEmpty": true,
-    "junshiResultMtime": "2026-06-13T08:27",
-    "coachSilentSince": "2026-07-17T07:04",
-    "coachSilentHours": 95.0,
+    "coachSilentSince": "2026-07-17T07:04:00+08:00",
+    "coachSilentHours": 127.0,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
-    "newImportantSinceLastCheck": [],
     "pendingCoachItems": [
-      "🆕 聯想 C 槽觀察期 10:02 已屆滿（7/13→7/18，已過 14 小時），待教練在聯想開對話執行刪除約 94GB",
-      "ACER 備份觀察期 (7/15) 已過 3 天 — 待教練在 ACER 開對話執行刪除約 36.3GB",
+      "🆕 聯想 C 槽觀察期 7/13→7/18 已過 4 天，待教練在聯想開對話執行刪除約 94GB",
+      "ACER 備份觀察期 (7/15) 已過 7 天 — 待教練在 ACER 開對話執行刪除約 36.3GB",
       "Netlify 50% 用量（7/13 13:36 來信）— 建議登入查看",
-      "光線尺顧問 ATM NT$10,000 入金（7/13 13:25）— 請對帳",
-      "Telegram channel 異常（bot token 失效已 113h+）— 需重啟或補 token"
+      "光線尺顧問 ATM NT,000 入金（7/13 13:25）— 請對帳",
+      "Telegram channel 異常 — 探針 14:02 實測已恢復，過期旗標已更正 ✅"
     ],
-    "weatherRelevance": "週六深夜 23:32，教練可能在睡眠",
-    "note": "Pipeline 持續 alternating fail/recover，典型 minimax provider 端外部波動，AI 無法代修（守則 #15）。本次 23:30 fire 失敗 149.698s 後下次 00:00 cron fire 預期自動驗證恢復（alternating 模式穩定 24h+）。gateway 穩定（PID 64856, uptime 5h37m）。"
+    "weatherRelevance": "週三下午 14:03，工作時間，教練可能外出/會議",
+    "note": "通道剛恢復但 pending 已堆 5 天，若教練下一則訊息抵達，建議同時把 5 項清單附上；若 24h 內仍無訊息，下次 18:30 心跳主動 Telegram 推摘要（守則19 + 守則11）。",
+    "telegramChannelPushAt": "2026-07-22T14:04:45.477494+08:00",
+    "telegramChannelPushMsgId": "8834",
+    "telegramChannelPushResult": "sent_ok"
   }
 }

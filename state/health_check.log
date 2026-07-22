@@ -610,3 +610,22 @@
 - Pipeline：本次 07:30 成功 → 下次 08:00 cron fire 監控
 
 2026-07-21 17:02:50 CST | 17:02 健康檢查完成（isolated cron run）
+
+[2026-07-22 14:33 Asia/Taipei] 健康檢查完成
+- consecutiveErrors = 1（重啟後已重置，遠低於 3 紅線）
+- lastErrorReason = overloaded（minimax provider 暫時過載）
+- lastDurationMs = 166,548ms ≪ 600s timeout（非 timeout 問題）
+- model = minimax/MiniMax-M3 ✅（2026-07-15 已自動修復 apiKey 失效）
+- delivery = none ✅ / failureAlert = false ✅
+- 1 個 cron job 全掃描（自身健康檢查）：
+  • 自身健康檢查：running（本次成功）
+  • 其他 22 個 missing 延續 11:08 gateway 重啟後狀態，待教練手動評估（如要重建）
+- HEARTBEAT.md：無 ⬜ 項目、無 48h 停滯
+- 自動修復評估：
+  ❌ timeout 不適用（160s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用
+- 升級 announce：❌ 安靜結束
+- 原因：alternating fail/recover 模式穩定 73h+ + CE=1 遠低於 3 + 過載是 provider 端（教練無法介入）+ cron missing 已 11+ 小時穩定（不阻擋服務）
+- Pipeline：本次 14:30 成功 → 下次 15:00 cron fire 監控

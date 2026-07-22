@@ -192,3 +192,28 @@
 - HEARTBEAT 無 ⬜ 待自動化項目
 - alternating fail/recover 模式穩定 84h+，CE=2 < 3 紅線
 - 安靜結束，不通知教練
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-22 22:25
+- ✅ 同步成功
+- HANDOFF mtime: 1784730216
+- 雲端同步：✅ 已推上雲端（commit 89c0e1b13）
+
+## 🦞 健康檢查紀錄（23:03 Asia/Taipei）
+- 23:00 fire 失敗 188.1s（minimax provider overloaded）→ CE=1
+- 22:33 成功 → CE reset → 23:00 又踩到 1 次 → CE=1（alternating 模式延續）
+- 188.1s ≪ 600s timeout ✅（非配置問題）
+- 🔍 額外觀察：533cfe54 場景化升華 cron 23:00:00 fire 失敗（overloaded, 188s）→ CE=1，retry 排程 23:03:38——昨日 7/21 同模式失敗一次後 23:03:41 自動恢復成功，屬於 minimax provider 穩定 alternating 模式
+- model=minimax/MiniMax-M3、timeout=600s 配置正確，自動修復全不適用
+- HEARTBEAT 無 ⬜ 待自動化項目
+- alternating fail/recover 模式穩定 86h+，CE=1 < 3 紅線
+- 安靜結束，不通知教練
+
+## 🦞 健康檢查紀錄（22:33 Asia/Taipei）
+- 22:30 fire 失敗 117.5s（minimax provider overloaded）→ CE=1
+- 22:03 成功 → CE reset → 22:30 又踩到 1 次 → CE=1（alternating 模式延續）
+- 117.5s ≪ 600s timeout ✅（非配置問題）
+- cron list 確認：當前 store 只有 self 1 個 job
+- model=minimax/MiniMax-M3、timeout=600s 配置正確，自動修復全不適用
+- HEARTBEAT 無 ⬜ 待自動化項目
+- alternating fail/recover 模式穩定 86h+，CE=1 < 3 紅線
+- 安靜結束，不通知教練
