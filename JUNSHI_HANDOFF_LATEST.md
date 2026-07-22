@@ -1,4 +1,38 @@
-# 軍師接力棒 · 2026-07-22 v74（聯想桌面版 Fable5，聯想機側體檢：攝影機占用排除+自動同步機制治本建立+Comet資源黑洞安全釋放）
+# 軍師接力棒 · 2026-07-23 v75（Mac終端機 Sonnet5，BNI大台南LINE小幫手從Coze搬到小龍蝦本機+順手修好LINE通道潛藏斷線bug）
+
+> 建立時間：2026-07-23 凌晨（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5（軍師）
+> 上一棒：v74（聯想桌面版 Fable5，完整內容見下方）
+> 本棒主軸：**教練原本用Coze串接LINE做「BNI大台南小幫手」機器人，要求評估並直接搬到小龍蝦本機、換用MiniMax-M3。過程中發現並修好一個真bug——LINE通道plugin從未在plugins.entries宣告啟用，導致webhook路徑404，教練個人LINE小龍蝦可能已silent斷線一段時間，此次順手修復。**
+
+## 🎯 v75 本場戰果
+
+### 1. 🎯🎯🎯 BNI大台南小幫手完整搬遷：Coze → 小龍蝦本機agent + MiniMax-M3
+用教練授權的Chrome權限進Coze後台，完整擷取人設prompt（大台南小幫手總指令.txt，39.8KB）+3份知識庫文件（Podcast菁華錄/經典PODCAST/產業專業表，共約123KB），未動Coze任何現有設定（沒按Publish、沒Disconnect LINE）。
+
+發現OpenClaw原生支援多LINE官方帳號（跟kong/peipei用同一套`channels.line.accounts`+`bindings`機制），於是：
+- 新增agent `bni_tainan`（workspace `agents/bni_tainan/`，AGENTS.md放完整人設，`knowledge/`放3份補充資料）
+- 用`openclaw channels add --channel line --account bni_tainan`註冊BNI官方帳號的Channel Secret/Access Token（存`credentials/line-bni_tainan-{token,secret}.txt`，未進git明文）
+- 用`openclaw agents add bni_tainan --bind line:bni_tainan`建立agent綁定，教練個人LINE小龍蝦（default帳號）完全沒被動到
+
+`openclaw agent --agent bni_tainan --message ...`本機測試3題（引薦單必填欄位/DnA防幻覺/曜董是誰），回答語氣、格式（LINE安全無**號）、案例引用（連Podcast集數都對得上）全部正確，其中DnA的「一字不改強制輸出」guardrail也正確生效。
+
+### 2. 🔴🔴🔴 順手修好：LINE通道plugin從未宣告啟用，webhook 404（可能已影響教練個人LINE小龍蝦）
+測試新帳號前先驗證現有LINE webhook端點，`curl -X POST localhost:18789/line/webhook`回404——不是我弄壞的，查`plugins.entries`發現從2026.6.1外掛啟用機制上線以來，**"line"從未被加進去**（只有minimax/active-memory/memory-core/google/safety-locks等有宣告），`channels list`/`channels status`因此完全不列LINE，教練個人LINE小龍蝦這條線实际上可能已經默默斷線一段時間（cloudflared tunnel本身活著，但gateway端根本沒mount這個路徑）。
+
+補上`plugins.entries.line = {enabled:true}`，重啟gateway後webhook變成正常的400（非404），`channels status`正確顯示`LINE default: running, mode:webhook`，3個Telegram bot也順利重連無影響。
+
+commit `bf560a96`（外層repo，已push）。
+
+## 📋 v75 待辦
+| 優先 | 項目 | 誰動手 |
+|---|---|---|
+| 🔴🔴🔴 | BNI大台南新LINE帳號webhook尚未切換——目前Coze那邊的舊webhook還在正常運作服務會員，新系統已就位但沒上線。教練決定要切換時，需登入LINE Developers Console把Webhook URL從Coze的換成跟教練個人LINE小龍蝦一樣的網址（同一個cloudflared tunnel，靠destination欄位自動分流不同帳號） | 教練/軍師協同 |
+| 🟡 | 教練個人LINE小龍蝦這幾天有沒有收到過LINE訊息？如果一直沒收到，這次修復很可能就是原因，值得跟教練確認一下這段時間有沒有漏接 | 教練 |
+| 🟡 | Coze那個舊機器人先保留不要動，等新系統教練實測滿意、正式切換後才考慮停用 | 教練 |
+
+---
+
 
 > 建立時間：2026-07-22 上午（台灣時間），與Mac v73同一天、教練同一句「Fable5最高等級全面體檢」指令的**聯想機這一側**
 > 本棒執行者：聯想（Windows）桌面版 Fable 5
