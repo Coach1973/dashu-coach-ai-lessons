@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-23 02:20:30**
+> **最後同步：2026-07-23 02:55:53**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -36,12 +36,24 @@
 
 commit `bf560a96`（外層repo，已push）。
 
+### 3. 🎯 webhook已切換上線（教練當場實測）
+教練說「現在就切換」，登入LINE Developers Console把「大台南南區AI小幫手」(Channel 2008741664)的Webhook URL從Coze換成`https://openclaw.bymyway.com/line/webhook`（跟教練個人LINE小龍蝦共用同一條cloudflared tunnel，LINE官方Verify測試回應Success）。教練實測第一句話卡在OpenClaw的陌生人配對關卡(dmPolicy=pairing)——這是設計給個人助理用的機制，BNI要服務全體會員不該有這關。教練原話：「肯定是要開放，不然要累死我嗎？」，已改`channels.line.accounts.bni_tainan.dmPolicy=open`+`allowFrom=["*"]`，跟教練個人LINE(default帳號)的pairing設定分開處理。commit `07ee6418`。
+
+### 4. 🎯🎯 追加三項強化：誠實鐵律、搜尋/製圖能力、行事曆真實資料
+教練評估了coach1973.github.io/ai-go(教練自己的特助心法跨AI注入系統)能不能整份加進BNI小幫手——判斷後**沒有照抄**，因為ai-go是設計給「服務教練本人」的AI用的身份框架，直接塞會跟BNI小幫手「服務全體會員」的身份打架，且格式(**號)會炸掉LINE輸出规则。改成用BNI小幫手自己的語氣，把精神抽出來寫成AGENTS.md新增1.5節「誠實鐵律與三大信念」：不知道就說不知道、絕不編造，三大信念（真誠善良忍讓/時間就是生命善用OPE/對的事是長期有好處的事）。
+
+同時實測確認agent本來就有網路搜尋(web_fetch，走DuckDuckGo)、圖片生成(image_generate，走MiniMax image-01)能力，不用額外申請key，AGENTS.md新增3.5節指引何時該用。
+
+**行事曆真實bug修復**：教練發現問「7月MSP幾號、9月M1幾號」小幫手答不出來/亂碼。查出根因：`tainan-calender.netlify.app`頁面內嵌一個巨大base64字型檔案在CSS裡，AI用網頁擷取工具讀整頁時常在讀到真正活動資料前就被截斷，誤判成「JS動態載入抓不到」（其實活動資料是寫死的靜態HTML）。治本：新建`agents/bni_tainan/scripts/sync_calendar.py`，直接解析該頁面HTML的event-item區塊，輸出乾淨的`knowledge/tainan_calendar.md`（按月份列日期/課程/時間/地點），openclaw cron每4小時自動重跑一次（job `99bdac4a`，已用「先刪檔案→手動觸發cron→確認重新產生」驗證過真的會跑，不是假成功）。重測「7月MSP哪天」「9月M1幾號」用全新session都答對(07/20初階MSP；09/14-15+09/19-20兩場M1)。
+
+過程中也把AGENTS.md的`bootstrapMaxChars`從預設20000調高到40000（`bootstrapTotalMaxChars`100000），避免內容持續增加時被系統靜默截斷。commit `5f00f921`。
+
 ## 📋 v75 待辦
 | 優先 | 項目 | 誰動手 |
 |---|---|---|
-| 🔴🔴🔴 | BNI大台南新LINE帳號webhook尚未切換——目前Coze那邊的舊webhook還在正常運作服務會員，新系統已就位但沒上線。教練決定要切換時，需登入LINE Developers Console把Webhook URL從Coze的換成跟教練個人LINE小龍蝦一樣的網址（同一個cloudflared tunnel，靠destination欄位自動分流不同帳號） | 教練/軍師協同 |
-| 🟡 | 教練個人LINE小龍蝦這幾天有沒有收到過LINE訊息？如果一直沒收到，這次修復很可能就是原因，值得跟教練確認一下這段時間有沒有漏接 | 教練 |
-| 🟡 | Coze那個舊機器人先保留不要動，等新系統教練實測滿意、正式切換後才考慮停用 | 教練 |
+| 🟡 | 教練親自在LINE多測幾種問法，確認BNI小幫手實戰體驗OK | 教練 |
+| 🟡 | Coze那個舊機器人先保留不要動，當備援，等教練確認新系統穩定一陣子後再考慮停用 | 教練 |
+| 🟢 | tainan_calendar.md目前是「教練改網站→最長4小時後同步」，若教練覺得太慢可以縮短cron間隔 | 教練提出需求再改 |
 
 ---
 
