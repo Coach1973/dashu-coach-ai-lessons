@@ -1,0 +1,972 @@
+{
+  "jobs": [
+    {
+      "id": "46e67e2e-6332-4589-aae2-ee7e10dd7279",
+      "name": "🦞 每30分鐘任務健康檢查",
+      "enabled": true,
+      "createdAtMs": 1777119838184,
+      "updatedAtMs": 1784685846159,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）：\n\n## 第一步：檢查 Cron 任務失敗記錄\n\n使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。\n\n### 常見錯誤自動修復：\n\n**1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：**\n→ 表示腳本本身正常，但 timeoutSeconds 設定太短\n→ 使用 `cron update <jobId> --patch '{\"payload\":{\"timeoutSeconds\":300}}'` 將 timeout 改為 300秒\n→ 注意：不要改 06:00 海餅乾精神背誦（60秒即可）\n\n**2. scp/ssh 同步到 VPS 逾時：**\n→ 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --partial --progress` 或降低頻率\n→ 或刪除該任務（VPS 已非主力）\n\n**3. INVALID_API_KEY / auth 錯誤：**\n→ 表示 cron payload.model 指向的 provider apiKey 已失效\n→ 標準解法：把 model 改成 `minimax/MiniMax-M3`（與 main agent 一致），走 minimax provider\n→ 指令：`cron update <jobId> --patch '{\"payload\":{\"model\":\"minimax/MiniMax-M3\"}}'`\n→ 改完後手動 `cron run <jobId> --runMode force` 驗證 ok 才能算修復\n\n**4. 任意時刻連續錯誤 ≥3 次：**\n→ 視為「需要教練介入」，立即通知教練（delivery.mode: announce）\n→ 格式：「🔴 自動修復失敗，需要您裁決：任務XXX已連續錯誤3次...」\n\n## 第二步：檢查 HEARTBEAT.md 中的背景工作\n\n讀取 HEARTBEAT.md，檢查任何標記為 ⬜ 的項目：\n- 若該項目已超過 48 小時無進展，評估是否可自動化\n- 若可自動化，建立對應的 cron job 或寫入自動化腳本\n\n## 第三步：產出簡報（若有問題才通知）\n\n```\n🦞 健康檢查報告（HH:MM）\n\n✅ 已自動修復：\n• 任務X：將 timeout 從 120s → 300s\n\n⚠️ 需要注意：\n• 任務Z：已連續錯誤3次，需要裁決\n\n✅ 無異常\n```\n\n只有當有「需要教練裁決」的項目時，才 announce 通知教練。其他安靜處理。\n\n（2026-07-05 教練拍板：每日 23:05 已有「小龍蝦每日三機總結」統一做 commit+push，此健康檢查不再每 30 分鐘打卡備份，只保留 cron 監控與自動修復功能。）\n（2026-07-15 自動修復：將本任務 model 從 anthropic/claude-opus-4-8 → minimax/MiniMax-M3，根因 apiKey 失效。）",
+        "model": "minimax/MiniMax-M3",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784687400000,
+        "lastRunAtMs": 1784685771713,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 74446,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "9c3fc55d-d0f4-462f-9eeb-631a3599a710",
+      "name": "每2小時增量記憶蒸餾",
+      "enabled": true,
+      "createdAtMs": 1776564497255,
+      "updatedAtMs": 1784685751942,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */2 * * *",
+        "tz": "Asia/Taipei",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練：\n\n1. 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js\n2. 如果輸出是 NO_NEW_ENTRIES，任務結束。\n3. 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。\n4. 任務完成，不需要回覆教練。",
+        "model": "minimax/MiniMax-M3",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "none",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "lastRunAtMs": 1784685743738,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 8204,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0,
+        "nextRunAtMs": 1784692825191
+      },
+      "status": "ok"
+    },
+    {
+      "id": "961021a7-6536-4075-ab2a-af4596b6e246",
+      "name": "每2小時增量記憶蒸餾",
+      "enabled": true,
+      "createdAtMs": 1781152451130,
+      "updatedAtMs": 1784685751929,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */2 * * *",
+        "tz": "Asia/Taipei",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練：\n\n1. 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js\n2. 如果輸出是 NO_NEW_ENTRIES，任務結束。\n3. 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。\n4. 任務完成，不需要回覆教練。"
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784692941420,
+        "lastRunAtMs": 1784685743735,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 8194,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "1cbe1701-c31d-4c54-bb9e-53b48a2d8a8f",
+      "name": "每4小時主動關懷",
+      "enabled": true,
+      "createdAtMs": 1781152474258,
+      "updatedAtMs": 1784685600043,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6,10,14,18,22 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "🦞 大樹教練，我是小龍蝦！每四小時的主動關懷時間到囉～\n\n今天過得還順利嗎？有沒有什麼新事情想討論、或是需要我幫忙的？\n\n⚠️ 注意：這是例行問候，我不會主動列出你的待辦清單。若你想查待辦，請直接說「查待辦」。\n\n📌 重要提示：請用繁體中文（臺灣正體）回覆，禁止使用簡體中文。"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784700000000,
+        "lastRunAtMs": 1784685600029,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 14,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "ef88279b-bde2-41c8-b386-4c64d185bc39",
+      "name": "每4小時主動關懷",
+      "enabled": true,
+      "createdAtMs": 1776643759701,
+      "updatedAtMs": 1784685600043,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6,10,14,18,22 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "🦞 大樹教練，我是小龍蝦！每四小時的主動關懷時間到囉～\n\n今天過得還順利嗎？有沒有什麼新事情想討論、或是需要我幫忙的？\n\n⚠️ 注意：這是例行問候，我不會主動列出你的待辦清單。若你想查待辦，請直接說「查待辦」。\n\n📌 重要提示：請用繁體中文（臺灣正體）回覆，禁止使用簡體中文。"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784700000000,
+        "lastRunAtMs": 1784685600035,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 8,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "533cfe54-5a89-45e3-88dc-6c81749e3c90",
+      "name": "🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分）",
+      "enabled": true,
+      "createdAtMs": 1779910080531,
+      "updatedAtMs": 1784646211575,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "【場景化 + 痛點計分 · 升華任務】\n你是軍師助手，要把今天的終端機對話蒸餾「升華」成特助心法的養分。嚴格按步驟做：\n\n步驟一：讀今天的蒸餾摘要\n- 用台灣日期讀 ~/workspace/distill/terminal_YYYY-MM-DD.md\n- 若檔案不存在或無內容，回報「今日無可升華對話」並結束\n\n步驟二：場景化（判斷力工序）\n- 逐段判斷哪些對話「值得收錄」，符合以下任一才收：\n  (1)教練立了新規則 (2)教練糾正AI錯誤 (3)教練表達明確價值判斷\n  (4)教練做關鍵決策 (5)AI錯誤重複出現 (6)教練說了具體數字/事實\n- 每個值得收錄的段落，寫成「格式D」6欄案例：\n  ## 案例 [AUTO-YYYYMMDD-N]：標題\n  **日期：** / **類型：** ❌失敗or✅成功or🔄 / **守則：** #XX（名）\n  ### 📣 教練原話（一字不差，從蒸餾摘要裡抄教練真的說過的關鍵句）\n  ### 🌱 悟到什麼 / ### 🧬 DNA層次（對應使命/願景/理念/信念）\n  ### ⚡ 觸發訊號（表格：觸發情境|AI該有的反應）\n  ### ✅ 行動指引（做/禁）/ ### 📊 守則對照表\n- append 到 ~/workspace/distill/特助場景庫_自動增量.md（接在檔尾，不要覆蓋既有內容）\n\n步驟三：痛點計分（每個新案例寫一筆 JSON 到計分log）\n- 每寫一個格式D案例，就 append 一行 JSON 到 ~/workspace/distill/痛點計分_log.jsonl：\n  {\"date\":\"YYYY-MM-DD\",\"session\":\"來源session前8碼\",\"標題\":\"案例標題\",\"違反守則\":[\"#08\",\"#04\"],\"觸發訊號\":[\"關鍵字1\"]}\n- 一行一筆，違反守則用該案例「守則：」欄列出的編號\n\n步驟四：commit + push\n- git add distill/特助場景庫_自動增量.md distill/痛點計分_log.jsonl\n- commit 訊息「auto: 場景化升華 日期（新增N個場景）」, push origin main\n- 回報 commit hash\n\n鐵律：📣教練原話必須是教練真的說過的話（從蒸餾摘要抄），不可捏造。判斷不出守則對照就標 #15（說不知道），不要硬湊。\n完成後一句話總結：升華了幾個場景、commit hash。",
+        "model": "minimax/MiniMax-M3",
+        "timeoutSeconds": 1800
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784732400000,
+        "lastRunAtMs": 1784646187796,
+        "lastRunStatus": "ok",
+        "consecutiveErrors": 0,
+        "lastStatus": "ok",
+        "lastDurationMs": 23779,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "status": "ok"
+    },
+    {
+      "id": "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1",
+      "name": "🔴 場景化升華+系統健檢（每日23:00）",
+      "enabled": true,
+      "createdAtMs": 1781152455414,
+      "updatedAtMs": 1784646185756,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "【場景化 + 痛點計分 · 升華任務】\n你是軍師助手，要把今天的終端機對話蒸餾「升華」成特助心法的養分。嚴格按步驟做：\n\n步驟一：讀今天的蒸餾摘要\n- 用台灣日期讀 ~/workspace/distill/terminal_YYYY-MM-DD.md\n- 若檔案不存在或無內容，回報「今日無可升華對話」並結束\n\n步驟二：場景化（判斷力工序）\n- 逐段判斷哪些對話「值得收錄」，符合以下任一才收：\n  (1)教練立了新規則 (2)教練糾正AI錯誤 (3)教練表達明確價值判斷\n  (4)教練做關鍵決策 (5)AI錯誤重複出現 (6)教練說了具體數字/事實\n- 每個值得收錄的段落，寫成「格式D」6欄案例：\n  ## 案例 [AUTO-YYYYMMDD-N]：標題\n  **日期：** / **類型：** ❌失敗or✅成功or🔄 / **守則：** #XX（名）\n  ### 📣 教練原話（一字不差，從蒸餾摘要裡抄教練真的說過的關鍵句）\n  ### 🌱 悟到什麼 / ### 🧬 DNA層次（對應使命/願景/理念/信念）\n  ### ⚡ 觸發訊號（表格：觸發情境|AI該有的反應）\n  ### ✅ 行動指引（做/禁）/ ### 📊 守則對照表\n- append 到 ~/workspace/distill/特助場景庫_自動增量.md（接在檔尾，不要覆蓋既有內容）\n\n步驟三：痛點計分（每個新案例寫一筆 JSON 到計分log）\n- 每寫一個格式D案例，就 append 一行 JSON 到 ~/workspace/distill/痛點計分_log.jsonl：\n  {\"date\":\"YYYY-MM-DD\",\"session\":\"來源session前8碼\",\"標題\":\"案例標題\",\"違反守則\":[\"#08\",\"#04\"],\"觸發訊號\":[\"關鍵字1\"]}\n- 一行一筆，違反守則用該案例「守則：」欄列出的編號\n\n步驟四：commit + push\n- git add distill/特助場景庫_自動增量.md distill/痛點計分_log.jsonl\n- commit 訊息「auto: 場景化升華 日期（新增N個場景）」, push origin main\n- 回報 commit hash\n\n步驟五：順手系統健康檢查（取代已停用的每30分鐘檢查，一天做這一次就好）\n- 用 `openclaw cron list` 看有沒有任務 consecutiveErrors ≥ 3（連續失敗3次以上才算異常，1-2次是暫時過載不用管）\n- 用 `git status --short` 檢查 workspace 有沒有未 commit 的檔案，有的話直接 `git add -A && git commit` 並 push（訊息「auto: 健康檢查自動備份 日期」）\n- 這一步全程安靜做，不額外輸出任何內容——只有發現「連續失敗≥3次」這種真的異常時，才在本次回報的最後多加一段「⚠️ 系統異常：xxx」，平常完全不提這一步\n\n鐵律：📣教練原話必須是教練真的說過的話（從蒸餾摘要抄），不可捏造。判斷不出守則對照就標 #15（說不知道），不要硬湊。\n完成後一句話總結：升華了幾個場景、commit hash。"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": true
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784732400000,
+        "lastRunAtMs": 1784646000020,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 185736,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "status": "ok"
+    },
+    {
+      "id": "bbb7a348-59dc-41fd-879b-91b4d0522e18",
+      "name": "🦞 小龍蝦每日三機總結（每日23:05）",
+      "enabled": true,
+      "createdAtMs": 1781576375320,
+      "updatedAtMs": 1784646391185,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 23 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "【每日三機含金量總結 · 教練 2026-06-30 12:35 親口定稿，2026-07-20 修正判斷邏輯】\n\n教練要的不是囉哩吧唆每 4 小時的小報告，要每天一份「三機狀況總結 + 含金量提煉」。\n\n步驟一：判斷三機今天「有沒有對話」（台灣日期 YYYY-MM-DD）\n\n🔴 2026-07-20 教練親抓假數據 bug 修正：不可只憑 memory/verbatim/{acer,lenovo}/YYYY-MM-DD.md 這個檔案存不存在，就判斷「今天無對話」。查證發現這個蒸餾中繼檔案排程從未在 ACER/Lenovo 端穩定運作過（ACER 目錄從建立以來從未真正寫入過任何一天、Lenovo 只在 2026-07-08 成功寫過一次之後就再沒有新檔案）——檔案不存在只代表「中繼蒸餾排程沒跑」，不代表「教練沒用那台機器對話」。曾發生教練當天下午才在聯想真實 commit 過工作，晚上總結卻誤報「聯想連續 11 天沒有對話」的事故。\n\n正確判斷順序（每台機器都要跑）：\n- (a) ACER：先查 `cd ~/.openclaw/workspace && git log --since=\"YYYY-MM-DD 00:00\" --until=\"YYYY-MM-DD 23:59\" --all --format=\"%ad|%s\" --date=format:'%Y-%m-%d %H:%M'`，看有沒有訊息含 `[ACER]` 前綴或「acer」關鍵字的 commit——有 = 今天有對話（列出 commit 摘要當重點）。沒有 commit 時，才進一步讀 memory/verbatim/acer/YYYY-MM-DD.md 補充細節。兩者都沒有，才能下「今天無對話」的結論\n- (b) 聯想：同樣先查 git log 有沒有訊息含 `[Win]` 前綴或「聯想」關鍵字的 commit；沒有才看 memory/verbatim/lenovo/YYYY-MM-DD.md；兩者都沒有才能下「今天無對話」的結論\n- (c) Mac：讀 ~/.openclaw/workspace/memory/YYYY-MM-DD.md（必有）\n- (d) 小龍蝦自己（Telegram）：讀 ~/.openclaw/workspace/BOT_MESSAGES.md 今天時段\n\n「連續 N 天沒有對話」的天數統計，也必須用同樣的 git log 方式逐日往回查證（例如 `git log --all --format=\"%ad|%s\" --date=format:'%Y-%m-%d' | grep -E \"\\[ACER\\]|\\[Win\\]|聯想|acer\"` 找最後一筆真實 commit 日期反推天數），不能只憑 verbatim 資料夾裡最後一個檔案的日期去推算——那個資料夾本身可能是死的，用它反推天數等於用假資料算假天數。\n\n步驟二：每台機器分別給狀況評估\n- 無對話：直接寫「(X) XXX：今天無對話紀錄」\n- 有對話：寫「(X) XXX：今天有對話，重點 3-5 條」+ 含金量提煉\n\n步驟三：含金量提煉專區（跨機合併）\n- 把教練今天說過最有指導價值的 3-5 句原話列出（一字不差）\n- 每句註明出處（哪台機器、本地還是雲端 commit）\n- 教練親口：「教練只要開口說話就是價值」——不可遺漏關鍵指導\n\n步驟四：寫入 ~/.openclaw/workspace/distill/三機每日總結_YYYY-MM-DD.md\n\n步驟五：git add + commit + push\n- commit 訊息：「auto: 三機每日總結 YYYY-MM-DD」\n\n步驟六：推播教練（一次性 Telegram 訊息）\n- 標題：📊 今日三機總結 YYYY-MM-DD\n- 內容：三機狀況一句話 + 含金量提煉清單 + commit hash\n- 不要囉哩吧唆，重點即可",
+        "model": "minimax/MiniMax-M3",
+        "timeoutSeconds": 1800
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784732700000,
+        "lastRunAtMs": 1784646300020,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 91165,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDiagnostics": {
+          "summary": "⚠️ ✉️ Message failed",
+          "entries": [
+            {
+              "ts": 1784646390209,
+              "source": "tool",
+              "severity": "warn",
+              "message": "⚠️ ✉️ Message failed"
+            }
+          ]
+        },
+        "lastDiagnosticSummary": "⚠️ ✉️ Message failed"
+      },
+      "status": "ok"
+    },
+    {
+      "id": "b3f20f6c-e0eb-4d78-bd26-e36eb5c501e1",
+      "name": "Memory Dreaming Promotion",
+      "description": "[managed-by=memory-core.short-term-promotion] Promote weighted short-term recalls into MEMORY.md (limit=30, minScore=0.600, minRecallCount=2, minUniqueQueries=1, recencyHalfLifeDays=14, maxAgeDays=60).",
+      "enabled": true,
+      "createdAtMs": 1780941439217,
+      "updatedAtMs": 1784660519309,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "__openclaw_memory_core_short_term_promotion_dream__",
+        "lightContext": true
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784746800000,
+        "lastRunAtMs": 1784660400023,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 119286,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "a8450f2c-faf1-4cec-b107-dfd7a1cf89d1",
+      "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
+      "enabled": true,
+      "createdAtMs": 1781152456244,
+      "updatedAtMs": 1784671421076,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是起床摘要助理。請執行：\n\n```bash\nbash /Users/bymyway/.openclaw/workspace/scripts/morning_digest.sh\n```\n\n腳本會輸出摘要（5-10 行），**請原封不動轉給教練**。\n如果輸出是空的（沒有值得看的 commit），請回覆「✅ 起床摘要：過去 12 小時無新工作」，不要打擾教練。"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": true
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784757600000,
+        "lastRunAtMs": 1784671406704,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 14372,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "status": "ok"
+    },
+    {
+      "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
+      "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
+      "description": "每天 06:00 掃前 12 小時 git commits，過濾 auto-backup，把值得教練知道的工作摘要成 5-10 行推到 Telegram。沒事就安靜。",
+      "enabled": true,
+      "createdAtMs": 1780647633372,
+      "updatedAtMs": 1784671330786,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是起床摘要助理。請執行：\n\n```bash\nbash /Users/bymyway/.openclaw/workspace/scripts/morning_digest.sh\n```\n\n腳本會輸出摘要（5-10 行），**請原封不動轉給教練**。\n如果輸出是空的（沒有值得看的 commit），請回覆「✅ 起床摘要：過去 12 小時無新工作」，不要打擾教練。",
+        "model": "minimax/MiniMax-M3"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784757600000,
+        "lastRunAtMs": 1784671200036,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 130750,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "status": "ok"
+    },
+    {
+      "id": "73cbf6da-67c7-430f-88af-38f15c303312",
+      "name": "📚 每日結繩領導學閱讀提醒",
+      "enabled": true,
+      "createdAtMs": 1781152475073,
+      "updatedAtMs": 1784682000029,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "🦞 教練，9:00 到了！記得花 10 分鐘閱讀《結繩領導學》喔～"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784768400000,
+        "lastRunAtMs": 1784682000022,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 7,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "af137f9b-6f36-4907-94bc-d1cbf2dbc4d4",
+      "name": "📚 每日結繩領導學閱讀提醒",
+      "enabled": true,
+      "createdAtMs": 1779254482969,
+      "updatedAtMs": 1784682000029,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "🦞 教練，9:00 到了！記得花 10 分鐘閱讀《結繩領導學》喔～"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784768400000,
+        "lastRunAtMs": 1784682000027,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 2,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "9ee405c0-c32f-4f29-a51e-10d252ab0665",
+      "name": "執董週會提醒",
+      "enabled": true,
+      "createdAtMs": 1775706586610,
+      "updatedAtMs": 1784174100031,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 11 * * 4",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "哈囉大樹教練！🎓 溫馨提醒：現在是早上 11:55，準備開始開「執董週會」囉！會議順利✨"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784778900000,
+        "lastRunAtMs": 1784174100024,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 7,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "baa849af-d97c-4112-8128-9f193e04d26f",
+      "name": "執董週會提醒",
+      "enabled": true,
+      "createdAtMs": 1781152472644,
+      "updatedAtMs": 1784174100031,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 11 * * 4",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "哈囉大樹教練！🎓 溫馨提醒：現在是早上 11:55，準備開始開「執董週會」囉！會議順利✨"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784778900000,
+        "lastRunAtMs": 1784174100019,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 12,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "541f0c32-57c0-4064-a523-e4e2974ed45f",
+      "name": "🔔 Netlify 積分重置提醒（每月 24 日）",
+      "description": "每月 24 日早上 9 點提醒教練，明天 25 日 Netlify 1000 積分重置，可重啟大量部署",
+      "enabled": true,
+      "createdAtMs": 1781722976137,
+      "updatedAtMs": 1783320207666,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:bot_main:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 24 * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "⏰ 教練，明天（每月 25 日）Netlify 積分會重置 1000 點！上次已燒光（80 次燒 1200 點），提醒您明天可以重啟大量部署。詳見 ~/.openclaw/workspace/reference_netlify_token.md"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784854800000,
+        "lastRunAtMs": 1782262800026,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 3,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "de70413e-b344-4543-91af-8a1de95f9222",
+      "name": "7/24 繳交養護安全管理費提醒",
+      "description": "教練 7/2 18:01 下單：7/31 繳養護安全管理費，7/24（一週前）提醒",
+      "enabled": true,
+      "createdAtMs": 1783026803163,
+      "updatedAtMs": 1783354878908,
+      "agentId": "peipei",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 24 7 *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "請在群組「佩佩老師的巴哈助理」（Telegram chat_id -5115910257）發送提醒訊息：\n\n🚗 提醒：7/31 養護安全管理費（一週後截止）\n• 兩台車共 NT$ 13,440\n• 繳費方式：超商\n• 記得帶繳費通知單（超商需掃單繳費）\n• 別逾期會被罰鍰喔！🙏\n\n訊息要用繁體中文，簡潔有力。送出後回報「已送出」。",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257",
+        "bestEffort": true
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784854800000
+      },
+      "status": "idle"
+    },
+    {
+      "id": "71d213a1-71aa-4dec-babd-0d50dcd1abb5",
+      "name": "每月25日信貸繳款提醒",
+      "enabled": true,
+      "createdAtMs": 1781152473451,
+      "updatedAtMs": 1783320209269,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 25 * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "哈囉大樹教練！🦞 溫馨提醒：每月 25 日的信貸扣款即將到來！💰 請記得確認扣款帳戶餘額是否充足喔！"
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784944800000,
+        "lastRunAtMs": 1782352800022,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 5,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "ca52416d-d950-41c1-bcb9-d30f08386d6a",
+      "name": "每月25日信貸繳款提醒",
+      "enabled": true,
+      "createdAtMs": 1776210630688,
+      "updatedAtMs": 1783647116839,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:direct:6124913915",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 25 * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "哈囉大樹教練！🦞 溫馨提醒：每月 25 日的信貸扣款即將到來！💰 請記得確認扣款帳戶餘額是否充足喔！"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "accountId": "bot_main",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1784944800000,
+        "lastRunAtMs": 1783647116838,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 1,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "28cd69d9-b911-4112-b4ca-5499cb7f5247",
+      "name": "📦 每週記憶檔自動蒸餾（>30KB 直接處理）",
+      "description": "每週日凌晨 8:00（台灣時間）自動掃描記憶檔，超過 30KB 直接蒸餾到 MEMORY.md，原始檔歸檔。教練 2026-07-10 明令「不要提醒，直接做」→ 已從「提醒型」改為「處理型」。",
+      "enabled": true,
+      "createdAtMs": 1783643297187,
+      "updatedAtMs": 1784419403825,
+      "agentId": "main",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * 0",
+        "tz": "Asia/Taipei",
+        "staggerMs": 60000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是記憶檔自動蒸餾助理，**自己動手做完**，不要叫教練做事。\n\n步驟（嚴格遵守）：\n1. 執行 `ls -la ~/.openclaw/workspace/memory/*.md`，找出檔案大小超過 30720 bytes（30KB）的 memory 檔案\n2. 若全部都 < 30KB，**靜默結束**（不通知教練）\n3. 對每個過大的檔案，自動執行以下蒸餾流程：\n   a. 完整讀取該檔案\n   b. 用 LLM 提取精華：重要決策 / 教訓 / 待辦 / 人物關係 / commit hash 引用 / 教練口述的關鍵字\n   c. **增量 append** 到 `~/.openclaw/workspace/MEMORY.md` 的「## Promoted From Short-Term Memory (YYYY-MM-DD)」段落（沿用現有格式），保留「<!-- openclaw-memory-promotion:memory:memory/YYYY-MM-DD.md:行號:行號 -->」的標註\n   d. **歸檔原始檔**到 `~/.openclaw/workspace/memory/archive/YYYY-MM-DD.md`（用 mkdir -p 建立 archive 資料夾），保留完整記錄以備查\n   e. 原始檔 memory/YYYY-MM-DD.md 在歸檔後**保留**（不刪除），因為下次啟動還是會讀 → 如果歸檔完檔案還是太大，會無窮迴圈，所以歸檔後原始檔**保留前 200 行 + 加註「[已蒸餾歸檔，完整內容見 memory/archive/YYYY-MM-DD.md]」**\n\n4. 全部處理完後，**簡短回報教練**（用 message 工具 send Telegram chat_id=6124913915），格式（繁體中文，說人話）：\n   「🦞 教練，本週自動蒸餾完成：\n   - 處理了 X 個檔案：memory/2026-07-XX.md（XX KB）、...\n   - MEMORY.md 增量 +XXXX 字\n   - 原始檔已歸檔到 memory/archive/\n   - 不需要您做任何事。」\n\n5. 完整記錄到 `~/.openclaw/workspace/logs/memory_distill_weekly.log`（含時間、處理清單、MEMORY.md 增量、是否通知）\n\n注意：\n- **不要問教練「要不要蒸餾」**，教練已明令「直接做」（守則 #08 應用：討論是為了執行）\n- **不要在主對話框觸發任何訊息**，全程在 isolated session 跑\n- MEMORY.md 寫入前先 read 一次，確認要 append 的段落格式與既有內容一致\n- 原始檔不刪除，只歸檔 + 截短（避免下次啟動讀不到頭尾脈絡）\n\n開始執行。",
+        "model": "minimax/MiniMax-M3",
+        "timeoutSeconds": 1800
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1785024009275,
+        "lastRunAtMs": 1784419377124,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 26701,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "status": "ok"
+    },
+    {
+      "id": "89b8648d-5dce-4224-ac71-c09a32af89a9",
+      "name": "行事曆每週同步",
+      "enabled": true,
+      "createdAtMs": 1781152453253,
+      "updatedAtMs": 1784505916751,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 8 * * 1",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "執行 ~/openclaw_scripts/calendar_sync.sh 同步行事曆，有更新就通知教練"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": true
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1785110700000,
+        "lastRunAtMs": 1784505900025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 16726,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "b349ddd3-d519-45e8-b783-cfe5c956d5d3",
+      "name": "行事曆每週同步",
+      "enabled": true,
+      "createdAtMs": 1778840138446,
+      "updatedAtMs": 1784505928230,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 8 * * 1",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "執行 ~/openclaw_scripts/calendar_sync.sh 同步行事曆，有更新就通知教練",
+        "model": "minimax/MiniMax-M3"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": false
+      },
+      "failureAlert": false,
+      "state": {
+        "nextRunAtMs": 1785110700000,
+        "lastRunAtMs": 1784505900028,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 28202,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true,
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveSkipped": 0
+      },
+      "status": "ok"
+    },
+    {
+      "id": "cf7a0654-0222-4181-a5db-9b3336c105ce",
+      "name": "🚗 8036車貸 12/1 繳費提醒",
+      "description": "教練 2026-07-17 07:04 告知 8036 車貸已溢繳 4 個月，下次交費 12/1。一次性提醒，到期後教練可決定是否續設。",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1784243176787,
+      "updatedAtMs": 1784243176787,
+      "agentId": "main",
+      "sessionKey": "agent:main:telegram:bot_main:direct:6124913915",
+      "schedule": {
+        "kind": "at",
+        "at": "2026-12-01T01:00:00.000Z"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "🦞 教練早安，提醒您今天 12/1 是 8036 車號車貸的繳費日（您之前已溢繳 4 個月，這次起算新的繳費週期）。請確認銀行帳戶餘額是否充足，必要時打開銀行 app 查看這期應繳金額。如需小龍蝦代查細節，請直接說一聲。"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1796086800000
+      },
+      "status": "idle"
+    }
+  ],
+  "total": 23,
+  "offset": 0,
+  "limit": 23,
+  "hasMore": false,
+  "nextOffset": null,
+  "deliveryPreviews": {
+    "46e67e2e-6332-4589-aae2-ee7e10dd7279": {
+      "label": "none -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "9c3fc55d-d0f4-462f-9eeb-631a3599a710": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "961021a7-6536-4075-ab2a-af4596b6e246": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "1cbe1701-c31d-4c54-bb9e-53b48a2d8a8f": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "ef88279b-bde2-41c8-b386-4c64d185bc39": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "533cfe54-5a89-45e3-88dc-6c81749e3c90": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "bbb7a348-59dc-41fd-879b-91b4d0522e18": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "b3f20f6c-e0eb-4d78-bd26-e36eb5c501e1": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "a8450f2c-faf1-4cec-b107-dfd7a1cf89d1": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "f487652d-0696-4b54-ac7f-7dd1a94cdb8c": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "73cbf6da-67c7-430f-88af-38f15c303312": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "af137f9b-6f36-4907-94bc-d1cbf2dbc4d4": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "9ee405c0-c32f-4f29-a51e-10d252ab0665": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "baa849af-d97c-4112-8128-9f193e04d26f": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "541f0c32-57c0-4064-a523-e4e2974ed45f": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "de70413e-b344-4543-91af-8a1de95f9222": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "71d213a1-71aa-4dec-babd-0d50dcd1abb5": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "ca52416d-d950-41c1-bcb9-d30f08386d6a": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "28cd69d9-b911-4112-b4ca-5499cb7f5247": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "89b8648d-5dce-4224-ac71-c09a32af89a9": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "b349ddd3-d519-45e8-b783-cfe5c956d5d3": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "cf7a0654-0222-4181-a5db-9b3336c105ce": {
+      "label": "not requested",
+      "detail": "not requested"
+    }
+  }
+}
