@@ -21,6 +21,9 @@ HEARTBEAT `telegramChannelOk=false` 誤報Telegram通道死了5.5天，害系統
 
 ### 完整體檢報告：`knowledges/2026-07-22_Fable5全面深度體檢報告.md`（commit `57e2a1b7a`）
 
+### 5. 🟢 大書小講兩場活動改名「當古典音樂遇到AI科技」（後段任務）
+教練要7/22+8/1兩場統一改名，牽動兩系統：①後台event-signup `event.db` events表id=2/3改名（Flask讀DB即時生效，實測`/checkin`→`/e/bigtree-0722`吐新名，備份`event.db.bak-before-rename-*`）；②bigtree公開站`index.html`兩場topic+`qr-0722.html`大標題（原7/22寫「現代科技」、8/1寫「零基礎學AI」），GitHub commit `a622bfd`，Netlify zip+API部署`bigtree-tw`(手動上傳型,site_id 40e580f0)deploy `6a602d3b`，線上實測兩場皆新名、舊名0殘留。**Netlify額度13→12(7/25前)** commit `4c5acf667`。checkin-print.html通用頁不寫死場次名不用動。
+
 ## 📋 v73 待辦（教練回神後）
 | 優先 | 項目 | 誰動手 |
 |---|---|---|
@@ -30,7 +33,7 @@ HEARTBEAT `telegramChannelOk=false` 誤報Telegram通道死了5.5天，害系統
 | 🟡 | 光線尺顧問ATM NT$10,000入金(07-13)待對帳 | 教練 |
 | 🟡 | 企業健身房4項文案修改(已記錄10c7b11cf) | 教練繼續交辦 |
 | 🔴🔴🔴 | 真誠/真愛/真實AI分會願景說明書 | 教練給細節 |
-| 🟢 | Netlify剩13次(7/25前) | 部署前查額度 |
+| 🟢 | Netlify剩12次(7/25前) | 部署前查額度 |
 
 ---
 
