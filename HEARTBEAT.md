@@ -25,3 +25,15 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1784744297
 - 雲端同步：✅ 已推上雲端（commit 57db5b0d6）
+
+## 🩺 健康檢查紀錄 2026-07-23 02:33
+- 全系統 cron：**1 個**（僅本任務本身）
+- 02:30 fire 失敗 **169.3s**（minimax provider `FailoverError: overloaded`）
+- 02:02 成功 → CE reset → 02:30 又踩到 1 次 → **CE=1**
+- `169.3s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式穩定 **90h+**
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（凌晨 02:33 屬於不打擾時段，且 CE=1 未達紅線）
+- 下次 **03:00** cron fire 自動驗證恢復
