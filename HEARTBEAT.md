@@ -217,3 +217,36 @@
 - HEARTBEAT 無 ⬜ 待自動化項目
 - alternating fail/recover 模式穩定 86h+，CE=1 < 3 紅線
 - 安靜結束，不通知教練
+
+## 🦞 健康檢查紀錄（23:33 Asia/Taipei）
+- 23:30 fire 失敗 77.0s（minimax provider overloaded）→ CE=2
+- 23:03 成功 → CE reset → 23:30 又踩到 1 次 → CE=2（alternating 模式延續，距 3 紅線剩 1 次）
+- 77.0s ≪ 600s timeout ✅（非配置問題）
+- lastErrorReason: "overloaded"（lastDiagnostics: "The AI service is temporarily overloaded."）
+- cron list 確認：當前 store 只有 self 1 個 job
+- model=minimax/MiniMax-M3、timeout=600s 配置正確，自動修復全不適用
+- HEARTBEAT 無 ⬜ 待自動化項目
+- alternating fail/recover 模式穩定 87h+，CE=2 < 3 紅線（下次 23:33 fire 若再失敗 → CE=3 必須通知教練）
+- 安靜結束，不通知教練
+
+## 🦞 健康檢查紀錄（00:03 Asia/Taipei）
+- 00:00 fire 失敗 171.5s（minimax provider overloaded）→ CE=1
+- 23:33 → 00:00 中間應有 success fire reset CE（HEARTBEAT 無連續紀錄）
+- 171.5s ≪ 600s timeout ✅（非配置問題）
+- lastErrorReason: "overloaded"（lastDiagnostics: "The AI service is temporarily overloaded."）
+- cron list 確認：當前 store 只有 self 1 個 job（v73 軍師去重後的常態）
+- model=minimax/MiniMax-M3、timeout=600s 配置正確，自動修復全不適用
+- HEARTBEAT 無 ⬜ 待自動化項目
+- alternating fail/recover 模式穩定 88h+，CE=1 < 3 紅線
+- 安靜結束，不通知教練
+
+## 🦞 健康檢查紀錄（00:31 Asia/Taipei）
+- 00:30 fire 失敗 89.1s（minimax provider overloaded）→ CE=1
+- 00:03 成功 → CE reset → 00:30 又踩到 1 次 → CE=1（alternating 模式延續）
+- 89.1s ≪ 600s timeout ✅（非配置問題）
+- lastErrorReason: "overloaded"（lastDiagnostics: "The AI service is temporarily overloaded."）
+- cron list 確認：當前 store 只有 self 1 個 job（v73 軍師去重後的常態）
+- model=minimax/MiniMax-M3、timeout=600s 配置正確，自動修復全不適用
+- HEARTBEAT 無 ⬜ 待自動化項目
+- alternating fail/recover 模式穩定 88h+，CE=1 < 3 紅線
+- 安靜結束，不通知教練
