@@ -1,9 +1,16 @@
 {
-  "quota_total_remaining_as_of": "2026-07-19",
-  "quota_remaining": 13,
+  "quota_total_remaining_as_of": "2026-07-22",
+  "quota_remaining": 12,
   "deadline": "2026-07-25",
   "note": "教練2026-07-17親口告知：帳號到7/25前只剩16次部署額度。每次真的執行部署（zip+API或netlify-cli deploy --prod）就要decrement一次，回報教練時附上「本次第N次，還剩M次，到7/25」。剩3次以內要主動提醒教練，不用等問。這個數字不含純commit到GitHub（那不算Netlify部署），只算真的觸發Netlify產生新deploy的次數。",
   "history": [
+    {
+      "date": "2026-07-22",
+      "site": "bigtree-tw",
+      "deploy_id": "6a602d3b80cda22da0ac1d9c",
+      "change": "7/22與8/1兩場活動改名為「當古典音樂遇到AI科技」(後台event.db同步已改)",
+      "remaining_after": 12
+    },
     {
       "date": "2026-07-19",
       "site": "tainan-calender",
