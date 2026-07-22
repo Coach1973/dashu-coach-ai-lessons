@@ -4,9 +4,38 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-22 10:55:19**
+> **最後同步：2026-07-22 22:25:33**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+# 軍師接力棒 · 2026-07-22 v74（聯想桌面版 Fable5，聯想機側體檢：攝影機占用排除+自動同步機制治本建立+Comet資源黑洞安全釋放）
+
+> 建立時間：2026-07-22 上午（台灣時間），與Mac v73同一天、教練同一句「Fable5最高等級全面體檢」指令的**聯想機這一側**
+> 本棒執行者：聯想（Windows）桌面版 Fable 5
+> 上一棒：v73（Mac桌面版 Fable5，Telegram假警報/cron去重/設定清理，完整見下方）
+> 本棒主軸：**這場對話從教練Google Meet「攝影機被占用」求助開始，一路延伸到全面電腦體檢。三個實際成果：①查出並排除攝影機占用（Comet殘留Meet分頁）；②體檢揪出結構性病灶——這台機器根本沒有在運作的自動同步（舊ClaudeMemorySync/Heartbeat排程6/14起就Disabled、指向4月老腳本），治本建了新的LenovoBrainSync自動拉取排程；③Comet資源黑洞（51行程/8GB）安全釋放約4.5GB，但因偵測到教練正在用的分頁而刻意點到為止不強關**
+
+## 🎯 v74 本場戰果（聯想機側）
+
+### 1. 🟢 攝影機占用排除
+教練用Google Meet說攝影機被占用。查Windows攝影機使用記錄（`ConsentStore\webcam`，LastStop=0=占用中），揪出是Comet殘留一個沒關的Google Meet分頁（PID標題「Meet - rgk-fjwt-nzx」）霸著鏡頭。單獨關分頁行程會被Comet復活，改整個關Comet才釋放。教練確認Meet鏡頭恢復正常。
+
+### 2. 🔴🔴🔴 治本：這台機器根本沒有自動同步（本週17天落後的真根源）
+體檢發現兩主倉庫昨晚同步後幾小時又落後遠端76 commit。查排程：本該自動同步的`ClaudeMemorySync`、`ClaudeHeartbeat`從**2026-06-14就是Disabled**（五週），且指向`E:\Claude-Data\scripts\`裡4月/6月的舊架構老腳本（現在倉庫早改用mac-openclaw-workflows）。這就是[[project_windows_workspace_git_sync_gap_2026-07-17]]落後17天/1711commit的**結構性根源，非偶發**。
+**治本已完成**：新建`E:\Claude-Data\scripts\auto_git_sync.ps1`（純英文避編碼陷阱，只`pull --ff-only`、工作區髒就跳過、絕不自動push）+ schtasks排程`LenovoBrainSync`（每2小時+StartWhenAvailable開機補跑；ONLOGON觸發要管理員權限失敗，改HOURLY/MO 2免權限成功）。已實測排程器能正確呼叫→拉取→寫log。詳見記憶`project_lenovo_auto_git_sync_2026-07-22.md`。以後這台最多落後2小時。
+
+### 3. 🟡 Comet資源黑洞安全釋放約4.5GB（點到為止，守不可逆線）
+Comet爆51行程/8GB。優雅關閉主視窗（CloseMainWindow，觸發session存檔）降到33行程/4.1GB後，偵測到**視窗復活且是教練正在用的分頁**（購買Mac mini頁、0729貸款說明會簽到表Google文件）——踩到「不可逆」線（強關可能弄丟簽到表編輯），依教練「只避開不可逆」指示**主動停手**，最終28行程/3.4GB，教練分頁全保留。血淚鐵律[[feedback_force_kill_browser_data_loss.md]]這次有守住。
+
+### 4. Zoom：教練說運作正常，不動（不冒重裝風險）。空junction是案例51刪除事故留下的殼，機械原因已對教練解釋清楚。
+
+## 📋 v74 待辦補充（併入v73待辦，不重複）
+| 優先 | 項目 | 誰動手 |
+|---|---|---|
+| 🟢 | 舊死排程ClaudeMemorySync/ClaudeHeartbeat可擇日刪除（已被LenovoBrainSync取代，留著無害） | 軍師 |
+| 🟡 | 聯想C槽94GB待刪（觀察期滿，跟v73同項） | 教練在聯想開對話 |
 
 ---
 
