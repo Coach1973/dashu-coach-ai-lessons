@@ -1,0 +1,52 @@
+{
+  "lastChecks": {
+    "gmail": 1783951264,
+    "calendar": 1783951264,
+    "heartbeat_poll": 1784685984,
+    "system_health": 1784682153,
+    "telegram_channel": 1784682153,
+    "junshi_queue": 1784682153,
+    "cron_list": 1784682153,
+    "care_4h": 1784671200
+  },
+  "lastHeartbeat": "2026-07-22T10:06:24+08:00",
+  "lastHeartbeatNote": "週三 10:05 心跳（10:02 後 3 分鐘再次觸發，無新事件）。狀態延續 10:02：教練沉默 123h+、Telegram channel 仍失效、4h 關懷 cron 自身 CE=0、健康檢查 30 分鐘 cron CE=1（alternating 71h+，無需介入）、pending 11 項無變化。Channel 撞牆無主動通知價值，安靜結束 HEARTBEAT_OK。",
+  "systemSnapshot": {
+    "timeOfDay": "morning",
+    "dayOfWeek": "Wednesday",
+    "isQuietHours": false,
+    "allCronsHealthy": true,
+    "contextStatus": "fresh",
+    "contextPercent": 8,
+    "recentCoachActivity": "教練 2026-07-17 07:04 交辦 8036 車貸（溢繳 4 月，下次 12/1），已建檔 + 設 cron",
+    "urgentGmailCount": 0,
+    "junshiQueueEmpty": true,
+    "junshiResultMtime": "2026-07-20T12:56:45",
+    "junshiQueueTask": "✅ VPS 記憶搜尋修復已完成（12:56 寫入 result）— 待教練裁示 5 個優先動作 + 升級試金石 53? + VPS commit 待 pull",
+    "junshiCommitHashes": [
+      "d816bc8a",
+      "e0711644"
+    ],
+    "gatewayPid": 76264,
+    "gatewayRunning": true,
+    "gatewayUptime": "13h51m (since 09:15 peipei force-restart)",
+    "telegramChannelOk": false,
+    "openTask": "軍師 VPS 任務結果待教練裁示 5 個動作 / 聯想 C 槽觀察期已屆滿 94GB 待刪 / ACER 觀察期已過 5 天 36.3GB 待刪 / Telegram channel bot token 失效 133h+ / Netlify 剩 13 次（7/25 前，剩 3 次內提醒）/ 光線尺 ATM NT$10,000 入金 155h+ 待對帳 / VPS commit (d816bc8a + e0711644) 待 pull 到 Mac",
+    "coachSilentSince": "2026-07-17 07:04",
+    "coachSilentHours": 123,
+    "pendingCoachItems": [
+      "軍師 VPS 任務結果（07-20 12:56 完成）— 待教練裁示 5 個優先動作（P0+D+A+B+C）+ 升級試金石 53?",
+      "聯想 C 槽觀察期屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
+      "ACER 備份觀察期 (7/15) 已過 6 天 — 請在 ACER 開對話執行刪除約 36.3GB",
+      "Telegram channel bot token 失效 (133h+) — 主動關懷訊息會撞牆，需教練補 token",
+      "Netlify 剩 13 次（7/25 前 3 天），剩 3 次以內主動提醒",
+      "光線尺顧問 ATM NT$10,000 入金（07-13 13:25，已 155h+）— 請對帳",
+      "VPS commit (d816bc8a + e0711644) 待 pull 到 Mac workspace（軍師 Mac 寫入被擋）",
+      "mentor100 教練自己測試留下的真實資料要保留或刪除（v70 接力棒結尾提醒）",
+      "ACER 截圖鎖 bash gap 修補信 (7/15 20:30) 已寄達 99h+ 仍無回信",
+      "真誠/真愛/真實AI分會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
+      "peipei-art 改版等教練提供文字/照片"
+    ],
+    "note": "週三 06:06 心跳。Context 16:37 overflow 重啟已 13h29m，教練沉默 119h+ 持續。Telegram channel 失效 133h+，主動打擾無效（撞牆）。所有 cron 全部 CE=0（起床摘要 + 30 分鐘健檢 + 4 小時關懷都 ok）。pending items 11 項等教練回神後一次裁示。本次心跳不主動打擾（channel 撞牆也沒用）。系統全綠、CE=0。"
+  }
+}
