@@ -39,3 +39,10 @@
 - cron list 仍只回傳 1 個任務（健康檢查本身）——已知過濾現象
 - HEARTBEAT.md 無 ⬜ 待辦項目需追蹤
 - 結論：✅ 無需自動修復，安靜處理，下次健康檢查再觀察
+
+## 🏥 健康檢查紀錄 2026-07-24 07:02
+- ✅ 自我健康檢查任務：lastRunStatus=ok，consecutiveErrors=0（已從上次 1 恢復為 0），lastDurationMs=52533（52秒）
+- model=minimax/MiniMax-M3 正常運作，timeoutSeconds=600 充足
+- cron list 仍只回傳 1 個任務（健康檢查本身）——已知過濾現象，與前次一致
+- HEARTBEAT.md 無 ⬜ 待辦項目需追蹤
+- 結論：✅ 無需自動修復，安靜處理，下次健康檢查再觀察
