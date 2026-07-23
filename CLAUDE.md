@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-23 10:00:57**
+> **最後同步：2026-07-23 11:05:36**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -53,17 +53,25 @@
 - Session瀏覽路徑：`/sessions` 列出所有agent的對話（含bni_tainan），點進去`/chat?session=agent%3Abni_tainan%3A...`看完整逐字稿
 - Gateway目前綁定：`bind=loopback (127.0.0.1)`，只有這台Mac本機能連，還沒對外
 
+### ✅ 已完成子步驟（本場10:59，教練親自挑戰後現場做的）：登入方式改密碼制
+教練問「聯想/宏碁能不能打這個網址進去看」「要不要帳號密碼」，查證`127.0.0.1`只有本機能連（這正是還沒做Cloudflare公開的直接後果）後，同時解決登入方式：查`openclaw gateway --help`確認系統原生支援`auth.mode=password`（不用自己造登入系統），教練選定密碼登入、密碼指定為`Bymyway7`。已執行：
+- `openclaw config set gateway.auth.mode password`
+- `openclaw config set gateway.auth.password "Bymyway7"`
+- `openclaw gateway restart`
+驗證：`gateway status`顯示`Runtime: running`、`Connectivity probe: ok`；`curl http://127.0.0.1:18789/`回200；LINE default/bni_tainan兩通道`channels status`皆`running`；Telegram三隻bot雖然`channels status`顯示`disconnected`，但用`scripts/telegram_channel_probe.sh`真相源探針測試回`OK:通道健康`（案例53教訓：不信衍生欄位，信真探針）；已`open -a "Google Chrome"`跳出本機dashboard給教練現場看。**密碼已改好，下一場開工先確認教練這幾天有沒有回報密碼登入畫面正常，這步不用重做。**
+
 ### 下一場要做的事
 1. 用教練已登入的Chrome進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`bni.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
    - 查證重點：這場（v75）沒找到教練存的Cloudflare API token，目前判斷要用瀏覽器手動加，不是API一鍵完成——下一場先確認一次有沒有漏看
 2. 加好後，實測：`curl -I https://bni.bymyway.com/` 應該要能連到跟`localhost:18789`一樣的回應
-3. 把最終網址（含token的完整連結）整理給教練，比照VPS那個`coach.bymyway.com/chat?session=...`的格式給他書籤
+3. 把最終網址整理給教練——**注意登入方式已改成密碼制，不用再帶token查詢字串**，教練在任何電腦打開`https://bni.bymyway.com/`都應該先看到密碼輸入畫面，打`Bymyway7`進去
 
 ### 驗證方式
 - [ ] `curl -I https://bni.bymyway.com/` 回200（或至少不是DNS錯誤/522），確認tunnel路由生效
-- [ ] 瀏覽器實際打開`https://bni.bymyway.com/#token=...`，看到跟本機測試一樣的Dashboard主畫面
+- [x] 登入方式改密碼制（本場已完成，見上）
+- [ ] 瀏覽器實際打開`https://bni.bymyway.com/`，看到密碼輸入畫面，打密碼後進得去、看到跟本機測試一樣的Dashboard主畫面
 - [ ] 點進bni_tainan的session列表，能看到完整對話內容（不只是metadata）
-- [ ] 把可收藏的完整網址交給教練，請他自己收藏/確認能用
+- [ ] 教練親自在聯想或宏碁那台電腦實測打開這個網址，確認真的能從別台電腦登入
 
 ---
 
