@@ -56,18 +56,23 @@
 
 **目前狀態**：這台Mac本機Chrome（Claude in Chrome操作的那個分頁）已經登入成功並保持登入，教練這台機器不會再卡到。密碼已改好，登入機制本身（伺服器端）驗證過是正常運作的，只是那顆按鈕本身有bug。
 
-### 下一場要做的事
-1. 用教練已登入的Chrome進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`bni.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
-   - 查證重點：這場（v75）沒找到教練存的Cloudflare API token，目前判斷要用瀏覽器手動加，不是API一鍵完成——下一場先確認一次有沒有漏看
-2. 加好後，實測：`curl -I https://bni.bymyway.com/` 應該要能連到跟`localhost:18789`一樣的回應
-3. 把最終網址整理給教練——**注意登入方式已改成密碼制，不用再帶token查詢字串**，教練在任何電腦打開`https://bni.bymyway.com/`都應該先看到密碼輸入畫面，打`Bymyway7`進去
+### ✅ Task 2 本場（07-24凌晨）已全部完成，用Claude in Chrome操作教練真實登入的Cloudflare帳號
+1. 進Cloudflare Zero Trust後台，找到現有tunnel `openclaw-macmini`（ID `e35d30ec-45cf-4854-8afc-1bf92b163231`），Routes分頁點「Add route」→「Published application」→ subdomain `bni`、domain `bymyway.com`、service `http://localhost:18789`，成功新增`bni.bymyway.com`路由（跟`openclaw.bymyway.com`/`media.bymyway.com`同一顆tunnel，dashboard上三條route都看得到）
+2. `dig bni.bymyway.com`回Cloudflare edge IP、`curl https://bni.bymyway.com/`回200 ✅
+3. **🔴 過程中揪出並修好一個真的會擋登入的bug**：第一次訪問`bni.bymyway.com`顯示「瀏覽器來源不允許／Gateway在接受Control UI連線前拒絕了此頁面來源」——查schema發現`gateway.controlUi.allowedOrigins`是非loopback部署的必填白名單（教練之前只在`127.0.0.1`本機測過，從沒真正拿新網址連過，所以這個問題v75/本場之前完全沒被踩到）。已執行`openclaw config set gateway.controlUi.allowedOrigins '["https://bni.bymyway.com"]' --strict-json` + `openclaw gateway restart`，修好後這條錯誤訊息消失。
+4. **🔴 又發現一層設計：裝置配對（device pairing）**——就算密碼對、來源也允許了，全新瀏覽器第一次連線還會卡在「需要裝置配對」，畫面上會顯示一組device ID，要在這台Mac執行`openclaw devices approve <該ID>`才能放行。這**不是bug，是刻意的安全機制**（`gateway.controlUi.dangerouslyDisableDeviceAuth`這個關掉它的選項本身就寫「dangerously」「只能短期debug用」，不建議關）。用全新分頁完整測過一輪：密碼登入→裝置配對卡住→`openclaw devices approve`→重新連線成功，看到跟本機一樣的完整session列表和對話記錄。
+5. **「連接」按鈕點擊沒反應——這個bug的真實性仍不確定**：本場多次嘗試用自動化工具（座標點擊、accessibility ref點擊）都無法讓按鈕正常提交，但仔細查證發現點擊座標本身完全正確（`elementFromPoint`驗證過沒有東西擋在按鈕上面），懷疑問題出在自動化工具本身送出的合成點擊事件跟真人滑鼠點擊在瀏覽器層級的處理方式不同（例如focus()的user-activation限制），**不能排除教練用真滑鼠正常點擊反而完全沒問題**。誠實結論：不確定，教練實測最準——正常點打密碼+按連接，能進去就是能進去；卡住再回報，屆時我用`app.connect()`這招或考慮升級新版(v2026.7.1-2)都能救。
+
+### 給教練的最終資訊（下一場開工先確認教練有沒有試過）
+- **網址**：`https://bni.bymyway.com/`
+- **密碼**：`Bymyway7`（不用帳號名稱）
+- **在聯想/宏碁第一次連線流程**：打開網址 → 打密碼按連接 → 如果卡在「需要裝置配對」，把畫面上顯示的device ID回報給軍師/小龍蝦 → 軍師在這台Mac跑`openclaw devices approve <ID>` → 教練那邊重新整理/再按一次連接 → 應該就能看到完整監控畫面。**這個裝置核准只需要對每一台新電腦/新瀏覽器做一次，之後同一台機器同一個瀏覽器不用再重複。**
 
 ### 驗證方式
-- [ ] `curl -I https://bni.bymyway.com/` 回200（或至少不是DNS錯誤/522），確認tunnel路由生效
-- [x] 登入方式改密碼制（本場已完成，見上）
-- [ ] 瀏覽器實際打開`https://bni.bymyway.com/`，看到密碼輸入畫面，打密碼後進得去、看到跟本機測試一樣的Dashboard主畫面
-- [ ] 點進bni_tainan的session列表，能看到完整對話內容（不只是metadata）
-- [ ] 教練親自在聯想或宏碁那台電腦實測打開這個網址，確認真的能從別台電腦登入
+- [x] `curl -I https://bni.bymyway.com/` 回200，確認tunnel路由生效
+- [x] 登入方式改密碼制
+- [x] 用全新瀏覽器分頁完整測過密碼+裝置配對整套流程成功，看到完整session列表和對話記錄
+- [ ] 教練親自在聯想或宏碁那台電腦實測——**這步還沒做，教練剛才只說「好了」（指Cloudflare登入完成），還沒真的去聯想電腦試**
 
 ---
 
