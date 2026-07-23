@@ -1,32 +1,40 @@
-# 軍師接力棒 · 2026-07-23 v76（Mac終端機 Sonnet5，下一場開工直接執行：BNI提醒功能+對外監看網址coach.bymyway.com）
+# 軍師接力棒 · 2026-07-23 v77（Mac終端機 Sonnet5，v76設計經教練挑戰後修正：提醒功能改事件驅動一次性排程/監看網址改bni.bymyway.com）
 
-> 教練原話（v75尾聲，2026-07-23上午）：「這部分你可以先寫在交接簿裡面，等都寫完之後，我會開新的對話框並打完開工指令，到時候直接在下一個新的對話框去執行我現在說的這幾件事情。」——**因為當時context已到73%，教練刻意要求「本場只寫計畫、下一場才動手」，所以以下兩項是v75這場沒做、下一場開工要直接做的任務，不是選項。**
+> 教練原話（v75尾聲，2026-07-23上午）：「這部分你可以先寫在交接簿裡面，等都寫完之後，我會開新的對話框並打完開工指令，到時候直接在下一個新的對話框去執行我現在說的這幾件事情。」——因為當時context已到73%，教練刻意要求「本場只寫計畫、下一場才動手」。
 
-## 🎯 任務一：BNI大台南小幫手「主動提醒」功能
+> **v76→v77修正記錄**：v76寫好的設計，教練開工後當場提兩點挑戰：①「每1分鐘掃一次」又是輪詢，這是同一個坑第5次犯（[[feedback_event_driven_not_polling_pattern.md]]）；②`coach.bymyway.com`教練貼出實際在用的VPS版連結，證明這個網址已經綁給VPS的Telegram版小龍蝦，Mac的LINE版不能再用同一個名字。以下是修正後的設計，**下一場直接照這個做，不要再用v76舊設計**。
 
-教練原話：「例如說，使用者如果說『提醒我明天下午三點倒垃圾』...它在下午三點之前——比如說我三點要倒垃圾，但你兩點半的時候提醒我——它在兩點半就會主動提示。」「這是一個很奇怪的要求嗎？或者這對小龍蝦來講，是一個很難做的事情？」
+## 🎯 任務一：BNI大台南小幫手「主動提醒」功能（v77修正：改事件驅動一次性排程，零輪詢）
 
-**我的結論（已想清楚，下一場直接照這個做）：不奇怪、不難，是標準功能，OpenClaw本來就有排程送訊息的能力，只是要避開跟主系統共用同一套cron（怕BNI開放帳號被亂用拖累教練自己的排程）。**
+教練原話：「例如說，使用者如果說『提醒我明天下午三點倒垃圾』...它在兩點半就會主動提示。」
 
-### 設計（獨立、輕量、每人各自累積，不動用主系統cron）
+**v77修正版設計（查證過`openclaw cron add --help`，`--at`本來就支援一次性未來時間點+`--delete-after-run`會在成功後自動刪除，完全不需要自己寫輪詢腳本）：**
 
-1. `agents/bni_tainan/scripts/add_reminder.py`：CLI工具，用法 `add_reminder.py --to <lineUserId> --at "2026-07-24T15:00:00+08:00" --message "..."`，把提醒寫進 `agents/bni_tainan/state/reminders.json`（陣列，每筆含 to/fireAt/message/fired三個欄位）
-2. `agents/bni_tainan/scripts/check_reminders.py`：掃 `reminders.json`，找 `fireAt <= 現在(台灣時間)` 且 `fired=false` 的項目，用LINE Messaging API的**push**端點（不是reply，因為要主動發，不是回覆）直接發訊息給該會員，發完標記 `fired=true`。LINE push API：`POST https://api.line.me/v2/bot/message/push`，headers帶 `Authorization: Bearer <token>`（token讀 `credentials/line-bni_tainan-token.txt`），body `{"to": "<lineUserId>", "messages":[{"type":"text","text":"..."}]}`
-3. **一個新的、獨立的cron**（跟教練自己的排程完全分開）：`openclaw cron add --name "BNI大台南提醒檢查" --every 1m --command "python3 /Users/bymyway/.openclaw/agents/bni_tainan/scripts/check_reminders.py"`，這支只做「掃檔案+送LINE push」，不碰main workspace任何東西，風險等級低（就算被大量觸發，最多是這支腳本跑久一點，不會拖累教練的主排程）
-4. AGENTS.md新增一節「提醒功能」：教練說「提醒我...」→ 小幫手自己算出絕對時間（用exec跑python算，不要自己心算日期），呼叫 `exec` 執行 `add_reminder.py --to <這位會員的LINE ID> --at <算出來的ISO時間> --message <內容>`，回覆會員「好的,我會在OO時OO分提醒您」
-5. **關鍵注意**：小幫手怎麼知道「這位會員的LINE ID」？從inbound訊息的 `origin.from`（`line:U開頭那串`）取得，不是自己編——這個agent的session route裡本來就有這個欄位（v75已驗證過，session.json的route.target.to就是這個格式）
+1. `agents/bni_tainan/scripts/send_line_push.py`：單一用途腳本，用法 `send_line_push.py --to <lineUserId> --message "..."`，只做一件事——呼叫LINE push API送一則訊息，**沒有狀態檔、沒有迴圈**。LINE push API：`POST https://api.line.me/v2/bot/message/push`，headers帶 `Authorization: Bearer <token>`（token讀 `credentials/line-bni_tainan-token.txt`），body `{"to": "<lineUserId>", "messages":[{"type":"text","text":"..."}]}`
+2. **不再有`add_reminder.py`/`reminders.json`/`check_reminders.py`/每1分鐘cron**，全部刪掉這個設計。改成：教練說「提醒我...」→ 小幫手用exec跑python算出絕對ISO時間（不自己心算），直接呼叫 `exec` 執行：
+   ```
+   openclaw cron add --at "<算出來的ISO時間>" --delete-after-run \
+     --name "BNI提醒-<lineUserId末4碼>-<時間>" \
+     --command-argv '["python3","/Users/bymyway/.openclaw/agents/bni_tainan/scripts/send_line_push.py","--to","<lineUserId>","--message","<提醒內容>"]'
+   ```
+   用`--command-argv`（JSON陣列）而非`--command`（shell字串），避免會員輸入的中文/特殊字元造成shell escaping問題。
+3. 每則提醒＝一個獨立的一次性cron job，時間到自動觸發、成功後`--delete-after-run`自動清掉，**cron list裡不會累積任何常駐項目**，跟教練自己的排程完全分開（用`BNI提醒-`前綴辨識）。
+4. AGENTS.md新增一節「提醒功能」，寫上面這個流程，回覆會員「好的,我會在OO時OO分提醒您」
+5. **關鍵注意**：會員LINE ID從inbound訊息的`origin.from`（`line:U開頭那串`）取得，不是自己編——v75已驗證session.json的route.target.to就是這個格式
 
 ### 驗證方式（照E12格式，下一場做完要能自己勾）
-- [ ] `add_reminder.py --to line:U895a0ad8e49d75f8303dc3d067282dc0 --at "<5分鐘後的時間>" --message "測試提醒"` 手動跑一次，確認寫進 `state/reminders.json`
-- [ ] 等5分鐘，確認 `check_reminders.py` 被cron觸發後，教練的LINE真的收到這則推播（教練親自確認收到，不是只看log）
-- [ ] 用全新session問小幫手「提醒我30分鐘後喝水」，確認它自己算對時間、呼叫exec寫入、回覆教練
-- [ ] 確認 `fired=true` 之後不會重複發送（跑第二次cron不該再發一次舊的）
+- [ ] 手動跑一次 `openclaw cron add --at "<5分鐘後的時間>" --delete-after-run --name "測試提醒" --command-argv '["python3",".../send_line_push.py","--to","line:U895a0ad8e49d75f8303dc3d067282dc0","--message","測試提醒"]'`，確認`openclaw cron list`看得到這個一次性job
+- [ ] 等5分鐘，確認教練的LINE真的收到這則推播（教練親自確認收到，不是只看log），且該job從`cron list`消失（`--delete-after-run`生效）
+- [ ] 用全新session問小幫手「提醒我30分鐘後喝水」，確認它自己算對時間、呼叫`cron add`、回覆教練
+- [ ] `openclaw cron list`確認全程沒有任何常駐/每分鐘輪詢的job出現
 
-## 🎯 任務二：對外監看網址 `coach.bymyway.com`
+## 🎯 任務二：對外監看網址（v77修正：改用 `bni.bymyway.com`，不用 `coach.bymyway.com`）
 
-教練原話：「後臺的監控介面確實需要單獨幫我做出來...對外的網址你就寫coach.bymyway.com這樣就好了。」
+教練原話：「後臺的監控介面確實需要單獨幫我做出來...」（v75原提議`coach.bymyway.com`，但教練開工後親自貼出`coach.bymyway.com/chat?session=agent%3Amain%3Adreaming...`證明這個名字**已經是VPS版Telegram小龍蝦在用**，兩者衝突，改教練親自提的`bni.bymyway.com`）
 
 **v75已確認好消息：這台Mac本來就有跟VPS版一模一樣的後臺（OpenClaw內建的Dashboard），本機已實測能完整看到bni_tainan每一段真實對話（問題+回答都在），不用重新開發，只差「對外開一個網址」這一步。**
+
+**v77已查證**：`dig bni.bymyway.com`查無任何DNS紀錄，確認這個名字目前完全沒被佔用，可以安全使用。
 
 ### 現況（v75已驗證，下一場直接沿用不用重查）
 - 本機網址：`http://127.0.0.1:18789/#token=fd9928d58f419937cf56ea1ab10c0830fbded6e64714a047`（gateway token，來自openclaw.json的`gateway.auth.token`）
@@ -34,14 +42,14 @@
 - Gateway目前綁定：`bind=loopback (127.0.0.1)`，只有這台Mac本機能連，還沒對外
 
 ### 下一場要做的事
-1. 用教練已登入的Chrome（跟這場改LINE webhook同一個手法）進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`coach.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
+1. 用教練已登入的Chrome進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`bni.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
    - 查證重點：這場（v75）沒找到教練存的Cloudflare API token，目前判斷要用瀏覽器手動加，不是API一鍵完成——下一場先確認一次有沒有漏看
-2. 加好後，實測：`curl -I https://coach.bymyway.com/` 應該要能連到跟`localhost:18789`一樣的回應（跟v75驗證`openclaw.bymyway.com/line/webhook`回應一致的手法相同）
+2. 加好後，實測：`curl -I https://bni.bymyway.com/` 應該要能連到跟`localhost:18789`一樣的回應
 3. 把最終網址（含token的完整連結）整理給教練，比照VPS那個`coach.bymyway.com/chat?session=...`的格式給他書籤
 
 ### 驗證方式
-- [ ] `curl -I https://coach.bymyway.com/` 回200（或至少不是DNS錯誤/522），確認tunnel路由生效
-- [ ] 瀏覽器實際打開`https://coach.bymyway.com/#token=...`，看到跟本機測試一樣的Dashboard主畫面
+- [ ] `curl -I https://bni.bymyway.com/` 回200（或至少不是DNS錯誤/522），確認tunnel路由生效
+- [ ] 瀏覽器實際打開`https://bni.bymyway.com/#token=...`，看到跟本機測試一樣的Dashboard主畫面
 - [ ] 點進bni_tainan的session列表，能看到完整對話內容（不只是metadata）
 - [ ] 把可收藏的完整網址交給教練，請他自己收藏/確認能用
 

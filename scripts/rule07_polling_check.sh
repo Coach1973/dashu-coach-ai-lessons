@@ -28,16 +28,36 @@ try:
 except Exception:
     sys.exit(0)
 
+# 案例：v76設計寫進Write工具的檔案內容，沒出現在最後一句assistant文字，
+# 舊版只看「最後一筆assistant事件的text區塊」完全漏抓——改成往回掃到
+# 上一個user事件為止（=這整個回合），同時抓text + Write/Edit/Bash的
+# 工具輸入內容，不然設計寫進檔案就繞過偵測。
+segments = []
 for line in reversed(lines):
     try:
         evt = json.loads(line)
-        if evt.get('type') == 'assistant':
-            contents = evt.get('message', {}).get('content', [])
-            texts = [c.get('text', '') for c in contents if c.get('type') == 'text']
-            print('\n'.join(texts))
-            break
     except Exception:
         continue
+    t = evt.get('type')
+    if t == 'user':
+        break
+    if t != 'assistant':
+        continue
+    contents = evt.get('message', {}).get('content', [])
+    for c in contents:
+        ctype = c.get('type')
+        if ctype == 'text':
+            segments.append(c.get('text', ''))
+        elif ctype == 'tool_use':
+            name = c.get('name', '')
+            inp = c.get('input', {}) or {}
+            if name in ('Write', 'Edit'):
+                segments.append(inp.get('content', ''))
+                segments.append(inp.get('new_string', ''))
+            elif name == 'Bash':
+                segments.append(inp.get('command', ''))
+
+print('\n'.join(reversed(segments)))
 PYEOF
 )
 
