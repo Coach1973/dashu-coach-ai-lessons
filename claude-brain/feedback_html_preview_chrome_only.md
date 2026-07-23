@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 3089ccd5-21cb-458c-92e4-eaecbd96dee9
+  modified: 2026-07-23T15:29:01.730Z
 ---
 
 # 🔴🔴🔴 2026-07-13更新：聯想（Windows）改用 Comet，不再用 Chrome
@@ -119,6 +120,14 @@ Claude in Chrome MCP 擴充功能不是這台機器的必要依賴——它沒�
 **修復**：已補上偵測——Bash 指令字串同時含 `.html` 與 `cp|mv|rsync|git commit|git push|git add` 關鍵字時，一律視同「這輪動過 html」，跟 Edit/Write 一樣要求之後必須有 `open -a "Google Chrome"` 才放行。用模擬 transcript 測試兩種情境（沒補 Chrome=exit 2 攔截、補了 Chrome=exit 0 放行）都通過，commit `460f3dbc7`。
 
 **How to apply（更新版）**：不管是本機直接改 `.html`，還是把改好的 `.html` 用任何方式（cp/部署/推上線）送到教練能看到的地方，最後一步永遠是 `open -a "Google Chrome" <本機路徑或真實上線網址>`——「上線了」這句話本身不構成完成，跳出瀏覽器才是。
+
+## 🔴 第七次犯＋這次不是沒跳Chrome，是跳了但沒真的看內容（2026-07-23，Mac終端機）
+
+用`open -a "Google Chrome" <帶token的dashboard網址>`跳出瀏覽器後，只憑「指令有跑、curl回200」就跟教練回報「已經跳出來給你看了」，**沒有實際去讀那個頁面裡到底顯示什麼內容**。教練回報：「沒有，沒有看到它顯示登入或連結。」
+
+**根因**：瀏覽器裡殘留舊token模式的裝置身份快取（`localStorage.openclaw-device-identity-v1`），跟剛切換的密碼模式衝突，頁面顯示的其實是一團技術性錯誤訊息（「驗證不相符/裝置權杖不符」），不是乾淨的登入畫面——`open -a Chrome`指令本身成功執行、HTTP狀態码200，但這兩個都只證明「瀏覽器開了、伺服器有回應」，完全不能證明「畫面內容是教練看得懂、能操作的東西」。
+
+**新增 How to apply**：`open -a Chrome`只是第一步，不是終點。跳出瀏覽器之後，**必須自己再用讀取工具（`mcp__Claude_Browser__get_page_text`/`read_page`或Claude in Chrome同款工具）去讀那個頁面實際渲染出的文字內容**，確認畫面上真的是預期的東西（例如登入表單、正確的資料），而不是一片空白、錯誤訊息，或跟預期不符的畫面，才能跟教練說「跳出來給你看了」。「瀏覽器開了」≠「教練看得到有意義的東西」。
 
 ## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
 
