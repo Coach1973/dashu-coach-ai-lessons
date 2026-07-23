@@ -2,23 +2,23 @@
   "lastChecks": {
     "gmail": 1783951264,
     "calendar": 1783951264,
-    "heartbeat_poll": 1784757762,
-    "system_health": 1784757762,
-    "telegram_channel": 1784757762,
+    "heartbeat_poll": 1784815413,
+    "system_health": 1784801010,
+    "telegram_channel": 1784815413,
     "junshi_queue": 1784682153,
-    "cron_list": 1784757762,
+    "cron_list": 1784815413,
     "care_4h": 1784671200
   },
-  "lastHeartbeat": "2026-07-23T06:02:00+08:00",
-  "lastHeartbeatNote": "週四 06:02 心跳。Context Overflow 02:08 重啟後第 4 小時，CE=0 reset（05:31 失敗、06:00 retry 成功）。Telegram 通道探針實測 ok（守則19鐵律：未盲信舊旗標）。16 個 cron 全部輪詢 OK。alternating fail/recover 模式已逾 92h。06:02 仍在不打擾時段 23:00-08:00，安靜結束 HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-07-23T22:03:33.828875+08:00",
+  "lastHeartbeatNote": "週四 22:02 心跳（上次 18:03 → 4h 間隔）。Telegram 通道探針實測 ok（守則19）。21 個 cron 全 enabled，自身健康檢查 error 為常態波動。教練持續沉默 137h+。接近 23:00 安靜時段，無急迫事件、無新郵件、無 2h 內行程。多項待辦（VPS pull、ACER 刪除、光線尺對帳、Netlify 積分）皆待教練主動開對話。安靜結束 HEARTBEAT_OK。",
   "systemSnapshot": {
-    "timeOfDay": "early_morning",
+    "timeOfDay": "late-evening",
     "dayOfWeek": "Thursday",
-    "isQuietHours": true,
+    "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh",
     "contextPercent": 4,
-    "recentCoachActivity": "教練最後對話 2026-07-17 07:04（已 137h+ 沉默）— Context Overflow 重啟 02:08 屬系統自動行為",
+    "recentCoachActivity": "教練最後對話 2026-07-17 07:04（已 137h+ 沉默）。7/23 02:08 + 16:07 兩次 Context Overflow 自動重啟皆系統行為，非教練活動",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -29,7 +29,7 @@
     ],
     "gatewayPid": 76264,
     "gatewayRunning": true,
-    "gatewayUptime": "3h53m+ (since Context Overflow 02:08 重啟)",
+    "gatewayUptime": "9h47m+ (since Context Overflow 02:08 重啟)",
     "telegramChannelOk": true,
     "openTask": "軍師 VPS 任務結果待教練裁示 5 個動作 / 聯想 C 槽觀察期已屆滿 94GB 待刪 / ACER 觀察期已過 5 天 36.3GB 待刪 / [已修正]Telegram通道實測正常 / Netlify 剩 13 次（7/25 前，剩 3 次內提醒）/ 光線尺 ATM NT$10,000 入金 155h+ 待對帳 / VPS commit (d816bc8a + e0711644) 待 pull 到 Mac",
     "coachSilentSince": "2026-07-17 07:04",
@@ -46,7 +46,7 @@
       "真誠/真愛/真實AI分會願景 + 產業分佈圖說明書（v66 留的，教練還沒給細節）",
       "peipei-art 改版等教練提供文字/照片"
     ],
-    "note": "週四 06:02 心跳。Context Overflow 02:08 重啟後第 4 小時，context fresh（4%）。CE=0 reset（05:31 失敗、06:00 retry 成功）。Telegram 通道探針實測 ok（守則19鐵律：未盲信舊旗標）。16 個 cron 全部輪詢 OK（其中 30分鐘健檢 cron lastRunStatus error 待下次更新為 ok）。alternating fail/recover 模式已逾 92h。06:02 仍在不打擾時段 23:00-08:00，安靜結束 HEARTBEAT_OK。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-23T06:02 (getMe+getChat 實測 ok)"
+    "note": "週四 18:01 心跳（11:35 上次到現在 6h26m，這次是 */30 健康檢查 cron 觸發）。教練持續沉默 137h+（自 7/17 07:04 起）。軍師 queue 空。Telegram 通道探針實測 ok（守則19鐵律）。21 個 cron 全 running（自身健康檢查 last 3m ago ok，蒸餾/三機總結有 error 但常態波動）。alternating fail/recover 模式逾 100h 持續。17:55 peipei 自動 force-restart 已恢復。無急迫事件、無新郵件、無 2h 內行程。教練沉默 6 天不適合連環轟炸，安靜結束 HEARTBEAT_OK。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-23T22:03:33.828875+08:00 (getMe+getChat 實測 ok)"
   }
 }

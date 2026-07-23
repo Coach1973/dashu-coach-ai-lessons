@@ -1,41 +1,46 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-22T14:04:12.170594+08:00",
+    "heartbeat_received": "2026-07-23T09:03:30+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-18T23:32:00+08:00",
-    "telegram_channel": "ok（探針 14:02 實測 ok=true，已更正過期旗標）"
+    "system_health": "2026-07-23T09:03:30+08:00",
+    "telegram_channel": "ok（探針 09:02 實測 ok=true，守則19 鐵律：當下實測為準）"
   },
-  "lastHeartbeat": "2026-07-22T14:04:12.170594+08:00",
-  "lastHeartbeatNote": "週三 14:02 心跳：探針回 ok=true 確認通道已恢復（之前旗標過期 113h+）；channel 健康 → coach silent 127h、5 項 pending 已堆積；本任務 14:00 fire 失敗 171s (overloaded) → CE=1；alternating 模式穩定；無需自動修復。",
+  "lastHeartbeat": "2026-07-23T09:03:30+08:00",
+  "lastHeartbeatNote": "週四 09:02 心跳：探針回 ok=true 通道健康（守則19 不沿用舊旗標）；06:32→08:30 一連串 alternating fail/recover 都靠 retry 把 CE 拉回 0/1，09:00 cron fire 失敗 → 09:02 retry（本則處理）→ CE 預期 reset 回 0，alternating 模式穩定逾 95h。接力棒 v75 重大完成：BNI 大台南小幫手 Coze→本機搬遷 + LINE 通道 plugin 4 月以來潛藏斷線真bug 修復（教練個人LINE小龍蝦可能曾 silent 斷線，現已修）。已主動 Telegram 推送有意義早晨關懷，建議教練親測 BNI 小幫手確認實戰體驗。",
   "systemSnapshot": {
-    "timeOfDay": "afternoon_wednesday",
-    "dayOfWeek": "Wednesday",
+    "timeOfDay": "morning_thursday",
+    "dayOfWeek": "Thursday",
     "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "fresh_after_restart_1036",
+    "contextStatus": "fresh_after_restart_2026-07-23_02:08",
     "contextPercent": 4,
     "gatewayPid": 64856,
     "gatewayUptime": "21d_running",
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh 14:02 實測 ok=true（更正 heartbeat-state 過期旗標）",
+    "telegramChannelSource": "telegram_channel_probe.sh 09:02 實測 ok=true（守則19 通道健康鐵律：當下 probe 為準，不沿用過期旗標）",
     "junshiQueueEmpty": true,
-    "coachSilentSince": "2026-07-17T07:04:00+08:00",
-    "coachSilentHours": 127.0,
+    "coachSilentSince": "2026-07-23T00:30:00+08:00",
+    "coachSilentHours": 8.6,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
     "pendingCoachItems": [
-      "🆕 聯想 C 槽觀察期 7/13→7/18 已過 4 天，待教練在聯想開對話執行刪除約 94GB",
-      "ACER 備份觀察期 (7/15) 已過 7 天 — 待教練在 ACER 開對話執行刪除約 36.3GB",
-      "Netlify 50% 用量（7/13 13:36 來信）— 建議登入查看",
-      "光線尺顧問 ATM NT,000 入金（7/13 13:25）— 請對帳",
-      "Telegram channel 異常 — 探針 14:02 實測已恢復，過期旗標已更正 ✅"
+      "🟡 v75：教練親自在 LINE 多測幾種問法，確認 BNI 小幫手實戰體驗 OK（webhook 已上線）",
+      "🟡 v75：Coze 舊機器人先保留當備援，等教練確認新系統穩定後再停用",
+      "🟢 v75：tainan_calendar.md 同步頻率目前每 4 小時，若覺得太慢可縮短 cron 間隔",
+      "🟡 v73/v74：聯想 C 槽 94GB 待刪（觀察期已滿，待教練在聯想開對話）",
+      "🟡 v73：ACER 36.3GB 待刪（觀察期已過，待教練在 ACER 開對話）",
+      "🟡 v72：Netlify 部署額度剩 12 次（7/25 前）",
+      "🟡 v73：光線尺顧問 ATM NT$10,000 入金(07-13)待對帳",
+      "🟡 v73：企業健身房 4 項文案修改（已記錄）",
+      "🔴🔴🔴 v72/v73：真誠/真愛/真實 AI 分會願景說明書——連續多棒未開始，教練尚未給細節",
+      "🟢 v73：「場景化升華」兩不同名排程都 23:00 推播，教練若嫌吵一句話停一個"
     ],
-    "weatherRelevance": "週三下午 14:03，工作時間，教練可能外出/會議",
-    "note": "通道剛恢復但 pending 已堆 5 天，若教練下一則訊息抵達，建議同時把 5 項清單附上；若 24h 內仍無訊息，下次 18:30 心跳主動 Telegram 推摘要（守則19 + 守則11）。",
-    "telegramChannelPushAt": "2026-07-22T14:04:45.477494+08:00",
-    "telegramChannelPushMsgId": "8834",
-    "telegramChannelPushResult": "sent_ok"
+    "weatherRelevance": "週四早上 09:03，工作時間，教練可能剛到公司",
+    "note": "v75 是大工程（BNI 系統搬遷 + LINE 真 bug 修復），主動關懷有意義。教練 silent 8.6h（昨晚深夜後），09:00 cron fire 失敗 → 09:02 retry（本次心跳）→ 預期 CE reset 為 0。若教練下一則訊息抵達，建議把 v75 待辦摘要順手補上。",
+    "telegramChannelPushAt": "2026-07-23T09:03:35+08:00",
+    "telegramChannelPushMsgId": "8841",
+    "telegramChannelPushResult": "sent_ok（curl 直發，因 message tool 找不到 channels.telegram.accounts.bot_main.botToken 巢狀路徑，已記待修）"
   }
 }

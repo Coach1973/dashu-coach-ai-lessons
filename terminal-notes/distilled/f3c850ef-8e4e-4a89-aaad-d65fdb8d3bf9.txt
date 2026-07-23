@@ -1,0 +1,81 @@
+# 終端機對話萃取 — Session f3c850ef-8e4e-4a89-aaad-d65fdb8d3bf9
+# 提取時間：2026-07-23 11:04 (台灣時間)
+# 共 5 條教練原話
+
+---
+
+【教練 2026-07-23 01:53】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**當下主軸**：v76交接指定「下一場開工直接執行」兩件事——① BNI大台南小幫手「主動提醒」功能（LINE push排程，獨立cron不動教練主系統）② 對外監看網址 `coach.bymyway.com`（把本機Dashboard透過現有cloudflared tunnel對外開一個Public Hostname）
+
+**身份核對**：Sonnet 5（軍師層級）／Mac 終端機
+
+**雲端同步狀態**：hook顯示「⚠️ Pull 警告」，但我實測 `git status` + `git fetch`，確認分支與 `origin/main` 完全一致、無衝突——這…（略）
+
+【教練 2026-07-23 01:57】
+* 用一支輕量的檢查程式每分鐘掃一次，時間到了就主動用LINE推播（不是被動回覆）
+
+兩個問題：
+
+1. 剛才我又再次聽到說，用一個輕量測試每分鐘檢查一次。那這個已經是討論過好幾次了，不應該總是用這種很耗費資源、很沒有生產力的方式。每分鐘掃描一次，一天得掃多少次？有沒有更好的方法？這是我第一個要提出挑戰的。
+
+2. 第二個就是原本的這個[   ](https://coach.bymyway.com/chat?session=agent%3Amain%3Adreaming-narrative-light-de2ce856d903)也就是我貼的這個網址。https://coach.bymyway.com/chat?session=agent%3Amain%3Adreaming-narrative-light-de2ce856d903
+
+這個網址是給 VPS 版的小龍蝦用的，它對應的通訊端點是電報。那我們現在的 Line 版也一樣要用這個網址嗎？還是要取另外一個名字？
+
+例如我想要取的是 bni.bymyway.com
+
+　▶ AI 回應：這兩個問題都問到重點，讓我查證後回答，不是憑印象猜。
+
+　▶ AI 回應：Test entry cleaned. Now let me commit these fixes.
+
+　▶ AI 回應：Pushed，commit `00821d280`。回答兩個問題：
+
+**問題1：每分鐘輪詢——已改成事件驅動，零輪詢**
+
+你講得對，這是同一個坑第5次踩（[[feedback_event_driven_not_polling_pattern.md]] 記憶檔裡記了前4次）。我查了 `openclaw cron add --help`，發現系統本來就有 `--at "<未來時間點>"` 一次性排程 + `--delete-after-run`（成功後自動刪除）——這正是為這種需求設計的，完全不用自己寫輪詢腳本。
+
+新設計：會員說「提醒我...」→ 小幫手算出絕對時間 → 直接呼叫 `open…（略）
+
+【教練 2026-07-23 02:49】
+事情做都做一半。
+
+那你好了，你不用展示給我看，也不用跳 HTML 出來給我看。我看看那個介面是什麼吧？就只是嘴巴說說而已。然後我 HTML 不知道講了 N 次，調 HTML 這件事情我已經交代了至少多少次，要搜尋一下，每次都要提醒，每次都要提醒。
+
+　▶ AI 回應：已經用 `open -a "Google Chrome"` 把監控介面在你螢幕上的 Chrome 開出來了，不是嘴巴說——你現在應該能直接在畫面上看到（本機 dashboard，含各 agent 的完整對話記錄）。
+
+你要我查的次數，查完了，不護短直接講：這是記憶檔 [feedback_html_preview_chrome_only.md](../../../.claude/projects/-Users-bymyway--openclaw/memory/feedback_html_preview_chrome_only.md) 裡記錄的**第 7 次**同一個問題——前 6 次分別是：
+1…（略）
+
+【教練 2026-07-23 02:51】
+那請問我不可以在聯想電腦上打這個網址進去看嗎？我不可以在宏碁電腦打這個網址進去看嗎？
+
+所以是不是要有一個後臺的登錄帳號密碼，然後我隨便在不同電腦都能登錄進去看，這樣可以嗎？
+
+　▶ AI 回應：先回答第一部分——你現在講的沒錯，**用 `127.0.0.1` 這個網址在聯想或宏碁打不開**，這是我還沒做完的 Task 2（Cloudflare 對外開放）造成的：`127.0.0.1` 意思是「只有這台 Mac 自己能連」，不管你在哪台電腦打這個網址，只要不是這台 Mac，一定連不上，不是帳密的問題，是「這台 Mac 根本還沒對外開門」。
+
+Task 2 做完（`bni.bymyway.com` 對外開通）之後，這個問題就解決一半——因為那時候網址不再是 `127.0.0.1`，而是真正的網際網路網址，任何電腦、手機都連得到。
+
+第二部分「要不要帳號密碼」，我查了系統本身的能力，有兩種…（略）
+
+　▶ AI 回應：好，密碼登入這個方向記下來了。實作前確認一件事：
+
+**密碼要用什麼？** 這是你以後在不同電腦上要手動打的字，我可以幫你生一組安全的，但你要在陌生電腦、可能用不熟悉的輸入法打字，所以想確認：你想自己指定一個好記的密碼，還是要我生一組（會給你看，不是我自己收著不給你）？
+
+順便說一下實作順序：我打算先在這台 Mac 本機把 `auth.mode` 從 token 改成 password（這一步不會動到對外，風險低，本機測過密碼真的能登入再繼續），接著才做 Cloudflare 對外開通（`bni.bymyway.com`）——這樣做的話，等對外一開通，你在聯想、宏碁打開 `bni.bymywa…（略）
+
+【教練 2026-07-23 02:59】
+Bymyway7
+
+　▶ AI 回應：Good, there's a proper `openclaw config set` command. Let me use it to set the password auth mode correctly.
+
+　▶ AI 回應：Good, private repo, and this matches the exact existing pattern (previous token was already committed the same way). Let me commit both repos' changes.
+
+　▶ AI 回應：密碼已經改好，兩個 repo 都 push 了（commit `56fe7c84` 系統設定、`42adf19a9` 交接棒記錄）。
+
+**現況**：登入方式從 token 網址改成密碼 `Bymyway7`，本機已重啟 gateway 驗證過（LINE 兩通道正常、Telegram 用真探針測過健康），Chrome 也已經跳出來給你看。
+
+**還沒解決的部分**：密碼只解決「怎麼登入」，還沒解決「聯想/宏碁打得到」——那台還是要等 Task 2（Cloudflare 把 `bni.bymyway.com` 對外開通）做完，才能從別的電腦真正連進來。這步還沒做，因為要進 Cloudflare …（略）

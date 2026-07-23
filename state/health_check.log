@@ -629,3 +629,22 @@
 - 升級 announce：❌ 安靜結束
 - 原因：alternating fail/recover 模式穩定 73h+ + CE=1 遠低於 3 + 過載是 provider 端（教練無法介入）+ cron missing 已 11+ 小時穩定（不阻擋服務）
 - Pipeline：本次 14:30 成功 → 下次 15:00 cron fire 監控
+
+[2026-07-23 16:33 Asia/Taipei] 健康檢查完成（16:32 retry fire 又是 overloaded 失敗）
+- consecutiveErrors = 1（16:03 retry 成功 reset → 16:30 又踩到 1 次 → 16:32 retry 又踩 1 次）
+- lastErrorReason = overloaded（minimax provider 臨時過載，109.2s ≪ 600s）
+- lastDurationMs = 109,189ms ≪ 600s timeout（非配置問題）
+- model = minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery=none ✅
+- 1 個 cron job：自身健康檢查（其他 22 個已 missing 30h+，2026-07-22 11:08 gateway 重啟後狀態，待教練手動評估）
+- HEARTBEAT.md：無 ⬜ 項目、無 48h 停滯
+- VPS polling：status=ok / container_uptime 11d+ / spool=0
+- 自動修復評估：
+  ❌ timeout 不適用（109s ≪ 600s）
+  ❌ INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ scp/ssh 不適用
+  ❌ CE≥3 不適用（CE=1 距紅線 2 次）
+- 警戒：16:32 retry 此次也失敗（109s），CE=1 將延續；如 17:00 fire 再失敗 → CE=2；17:30 再失敗 → CE=3 → 必須 announce
+- 模式持續 100h+ alternating fail/recover，屬 provider 端常態波動
+- 🔕 安靜結束，不通知教練
+- 教練端時間：週四 16:33 下午上班時段
+- Pipeline：17:00 cron fire 將自動驗證恢復

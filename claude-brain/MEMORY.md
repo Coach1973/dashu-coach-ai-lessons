@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 BNI大台南小幫手從Coze搬到小龍蝦本機+MiniMax-M3，webhook待教練切換(2026-07-23)](project_bni_tainan_line_migration_2026-07-23.md) — 人設+3份知識庫已搬完，順手修好LINE plugin未宣告啟用的404真bug，commit bf560a96
 - [🔴🔴🔴 監控旗標說通道壞了先實測真相源再信，別被黏著假警報憋住關懷(2026-07-22)](feedback_verify_channel_health_not_stale_flag.md) — HEARTBEAT誤報Telegram失效133h憋住11項待辦5.5天，實測3token全活；盲信衍生旗標第三犯(案例53)
 - [🟢🟢🟢 聯想機已建LenovoBrainSync自動同步排程,治本落後問題(2026-07-22)](project_lenovo_auto_git_sync_2026-07-22.md) — 每2小時+開機補跑git pull;舊ClaudeMemorySync/Heartbeat是死的可忽略;查auto_git_sync.log
 - [🎯 mentor100報名資料不用主動幫忙分辨測試資料(2026-07-20)](feedback_mentor100_test_data_self_managed.md) — 教練自己測試會自己刪，看到的新增條目都當真實資料，不列待辦
