@@ -260,3 +260,62 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1784772025
 - 雲端同步：✅ 已推上雲端（commit cbc547f19）
+
+## 🩺 健康檢查紀錄 2026-07-23 10:01
+- cron-event heartbeat poll
+- 全系統 cron：**1 個**（僅本任務本身）
+- 09:31 retry 成功 → CE=0 reset → 10:00 接力棒自動同步成功（commit cbc547f19）→ 10:01 本次心跳（cron-event）
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- 通道實測：`telegram_channel_probe.sh` 10:01 跑回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` ✅ 通道健康
+- 🔴 守則19通道健康鐵律：當下 probe 為準，不沿用舊旗標 → telegramChannelOk=true，**允許主動關懷**（但本次不發）
+- alternating fail/recover 模式持續（已逾 96h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 **安靜結束**，不通知教練，理由：
+  1. 09:03 才剛發過主動關懷（v75 BNI 搬遷完成 + LINE 通道 plugin 4 月潛藏斷線真 bug 修復），距今才 1 小時
+  2. CE=0 reset 無紅線
+  3. 接力棒剛 10:00 同步成功，內容是 v77 為下一場準備的「提醒功能 + 對外監看網址 bni.bymyway.com」計畫，教練明確要求「下一場才動手」
+  4. 10:01 屬於正常上班時段，教練可能在工作中，再發會變成 spam
+- 觸發主動關懷的條件（任何一個成立時）：
+  - 教練主動說話（高優先）
+  - 接力棒同步失敗/衝突（需手動處理）
+  - CE=3 紅線（須 announce）
+  - 超過 4 小時未發任何關懷
+- 下次 **10:30** cron fire 自動驗證
+
+## 🩺 健康檢查紀錄 2026-07-23 10:03
+- cron-event retry fire（因 10:00 失敗觸發 retry）
+- 全系統 cron：**1 個**（僅本任務本身）
+- 10:00 fire 失敗 **91.0s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 09:31 retry 成功 → CE reset → 10:00 又踩到 1 次 → **CE=1**
+- `91.0s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 96h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 **安靜結束**，不通知教練，理由：
+  1. CE=1 未達紅線 3
+  2. 09:03 才剛發過主動關懷，距今 1 小時，不重複打擾
+  3. alternating 模式穩定逾 96h，屬 provider 端常態波動，非本任務問題
+  4. 10:03 屬正常上班時段，教練可能在工作中
+- 下次 **10:30** cron fire 自動驗證
+- ⚠️ **警戒**：若 10:30 失敗 → CE=2；11:00 再失敗 → CE=3 → 必須 announce 通知教練
+
+## 🩺 健康檢查紀錄 2026-07-23 10:32
+- cron-event retry fire（因 10:30 失敗觸發 retry）
+- 全系統 cron：**1 個**（僅本任務本身）
+- 10:30 fire 失敗 **126.6s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 10:03 retry 成功 → CE reset → 10:30 又踩到 1 次 → 10:32 retry（本則處理）→ **CE=1**
+- `126.6s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 96h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 **安靜結束**，不通知教練，理由：
+  1. CE=1 未達紅線 3
+  2. 09:03 才剛發過主動關懷，距今 1.5 小時，不重複打擾
+  3. alternating 模式穩定逾 96h，屬 provider 端常態波動，非本任務問題
+  4. 10:32 屬正常上班時段，教練可能在工作中
+- 下次 **11:00** cron fire 自動驗證
+- ⚠️ **警戒**：若 11:00 失敗 → CE=2；11:30 再失敗 → CE=3 → 必須 announce 通知教練
+
