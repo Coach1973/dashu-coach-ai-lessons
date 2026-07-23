@@ -46,7 +46,15 @@
 - `openclaw config set gateway.auth.mode password`
 - `openclaw config set gateway.auth.password "Bymyway7"`
 - `openclaw gateway restart`
-驗證：`gateway status`顯示`Runtime: running`、`Connectivity probe: ok`；`curl http://127.0.0.1:18789/`回200；LINE default/bni_tainan兩通道`channels status`皆`running`；Telegram三隻bot雖然`channels status`顯示`disconnected`，但用`scripts/telegram_channel_probe.sh`真相源探針測試回`OK:通道健康`（案例53教訓：不信衍生欄位，信真探針）；已`open -a "Google Chrome"`跳出本機dashboard給教練現場看。**密碼已改好，下一場開工先確認教練這幾天有沒有回報密碼登入畫面正常，這步不用重做。**
+驗證：`gateway status`顯示`Runtime: running`、`Connectivity probe: ok`；`curl http://127.0.0.1:18789/`回200；LINE default/bni_tainan兩通道`channels status`皆`running`；Telegram三隻bot雖然`channels status`顯示`disconnected`，但用`scripts/telegram_channel_probe.sh`真相源探針測試回`OK:通道健康`（案例53教訓：不信衍生欄位，信真探針）。
+
+**🔴 追加發現＋已知未修bug（教練實測「沒看到登入畫面」抓到，本場用Claude in Chrome深挖到底）**：
+1. 第一次`open -a Chrome`後教練回報「沒有看到它顯示登入或連結」——查證是瀏覽器殘留舊token模式的裝置身分快取(`localStorage.openclaw-device-identity-v1`)，跟新密碼模式衝突，導致連登入表單都顯示不出乾淨畫面。清掉localStorage後恢復乾淨的登入表單。
+2. **真UI bug（未修，教練口頭同意先擱置）**：登入表單上的「連接」按鈕，不論用滑鼠座標點擊、accessibility ref點擊都完全沒反應（伺服器log證實：`reason=password_missing`，代表按下去根本沒把密碼欄位的值送出）。查到`openclaw-app`元件本身有`password`屬性和`connect()`方法，直接用JS呼叫`app.connect()`繞過按鈕、成功登入，登入後重整頁面會維持登入狀態（不用每次重打密碼）。懷疑根因：畫面上同時疊著一個「Control UI did not start」的過期錯誤提示框，可能蓋住了按鈕的可點擊區域（但`customElements.get('openclaw-app')`實測是true，元件其實有正常啟動，這個提示框本身可能才是過期/誤報）。
+3. 系統右上角顯示有新版可更新（v2026.7.1-2，目前跑v2026.6.11），這個按鈕bug有機會已經在新版修掉。
+4. **教練決定（本場已問過）**：先不處理，等他自己真的在別的瀏覽器/別台電腦第一次登入卡到這個bug再說——**下一場如果做Task 2（Cloudflare對外開通）之後教練第一次從聯想/宏碁登入卡住，這就是原因，直接用`app.connect()`這招或考慮版本更新，不用重新從頭查。**
+
+**目前狀態**：這台Mac本機Chrome（Claude in Chrome操作的那個分頁）已經登入成功並保持登入，教練這台機器不會再卡到。密碼已改好，登入機制本身（伺服器端）驗證過是正常運作的，只是那顆按鈕本身有bug。
 
 ### 下一場要做的事
 1. 用教練已登入的Chrome進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`bni.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
