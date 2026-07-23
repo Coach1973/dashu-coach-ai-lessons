@@ -140,3 +140,94 @@
 - 🔕 安靜結束（凌晨 06:02 仍屬不打擾時段 23:00-08:00，且 CE=0 無紅線）
 - 下次 **06:30** cron fire 自動驗證
 - 📌 備註：06:00 起床摘要 cron (`f487652d`) nextRunAtMs=1784844000000（=2026-07-24 06:00），今日已過，待下個早晨
+
+## 🩺 健康檢查紀錄 2026-07-23 06:32
+- 全系統 cron：**1 個**（僅本任務本身）
+- 06:30 fire 失敗 **138.0s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 06:02 retry 成功 → CE reset → 06:30 又踩到 1 次 → **CE=1**（本 session 為 06:32 retry 觸發）
+- `138.0s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 93h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（清晨 06:32 仍屬不打擾時段 23:00-08:00，且 CE=1 未達紅線）
+- 下次 **07:00** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 07:03
+- 全系統 cron：**1 個**（僅本任務本身）
+- 07:00 fire 失敗 **182.9s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 06:32 retry 成功 → CE reset → 07:00 又踩到 1 次 → 07:03 retry 成功 → **CE=0**（reset）
+- `182.9s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 94h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（清晨 07:03 仍屬不打擾時段 23:00-08:00，且 CE=0 reset 無紅線）
+- 下次 **07:30** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 07:32
+- 全系統 cron：**1 個**（僅本任務本身）
+- 07:30 fire 失敗 **124.0s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 07:03 成功 → CE reset → 07:30 又踩到 1 次 → 07:32 retry 成功 → **CE=0**（reset）
+- `124.0s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 94h 穩定觀察，這次靠 retry 把 CE 拉回 0）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（清晨 07:32 仍屬不打擾時段 23:00-08:00，且 CE=0 reset 無紅線）
+- 下次 **08:00** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 08:02
+- 全系統 cron：**1 個**（僅本任務本身）
+- 08:00 fire 失敗 **98.2s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 07:32 成功 → CE reset → 08:00 又踩到 1 次 → **CE=1**（08:02 retry 觸發本則處理）
+- `98.2s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 95h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（08:02 屬於不打擾時段尾聲 23:00-08:00，且 CE=1 未達紅線）
+- ⚠️ **警戒**：下次 08:30 cron fire 若再失敗 → 09:00 也失敗 → CE=2 → 警戒；若 09:30 也失敗 → CE=3 → 必須 announce 通知教練
+- 下次 **08:30** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 08:32
+- 全系統 cron：**1 個**（僅本任務本身）
+- 08:30 fire 失敗 **121.3s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 08:02 retry 成功 → CE reset → 08:30 又踩到 1 次 → **CE=1**（08:32 retry 觸發本則處理）
+- `121.3s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式持續（已逾 95h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（08:32 雖已過 08:00 不打擾時段，但 CE=1 未達紅線，且 alternating 模式穩定無新訊號）
+- 下次 **09:00** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 09:03
+- 全系統 cron：**1 個**（僅本任務本身）
+- 09:00 fire 失敗 **153.8s**（minimax provider `overloaded`，alternating fail/recover 持續）
+- 08:32 retry 成功 → CE reset → 09:00 又踩到 1 次 → **CE=1**（09:03 retry 觸發本則處理）
+- `153.8s ≪ 600s timeout` ✅ 非配置問題
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- alternating fail/recover 模式穩定（已逾 95h 觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（早晨 09:03 已過不打擾時段，但 CE=1 未達紅線，且 alternating 模式穩定無新訊號）
+- 下次 **09:30** cron fire 自動驗證恢復
+
+## 🩺 健康檢查紀錄 2026-07-23 09:03
+- 全系統 cron：**16 個**（完整健康檢查，含 06:02 起床摘要 16 個統計）
+- 09:00 fire 失敗 **104.x s**（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 08:32 retry 成功 → CE reset → 09:00 又踩到 1 次 → 09:02 retry（本則處理）→ **CE=0**（retry 成功後 reset）
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- 通道實測：`telegram_channel_probe.sh` 09:02 跑回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` ✅ 通道健康
+- 🔴 守則19通道健康鐵律：當下 probe 為準，不沿用舊旗標 → telegramChannelOk=true，允許主動關懷
+- alternating fail/recover 模式穩定逾 95h（自 7/19 起）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- ✅ **09:02 已過 08:00 不打擾時段，通道健康，主動發有意義早晨關懷給教練**
+- 訊息內容：v75 BNI 大台南小幫手 Coze→本機搬遷 + LINE 通道 plugin 4 月潛藏斷線真bug 修復，教練可親測 + 系統一句話
+- 下次 **09:30** cron fire 自動驗證
+
+## ⚠️ peipei 自動 force-restart 2026-07-23 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
