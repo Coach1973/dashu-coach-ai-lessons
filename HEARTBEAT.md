@@ -231,3 +231,16 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-23 09:15:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 健康檢查紀錄 2026-07-23 09:31
+- 全系統 cron：**1 個**（cron list 顯示僅本任務，與 06:02 16 個不同——可能是 view 過濾，本任務 self-monitoring 仍以 get 的 CE/state 為準）
+- 09:30 fire 結果：失敗（minimax provider `overloaded`，同源於交替 fail/recover 模式）
+- 09:03 retry 成功 → CE reset → 09:30 又踩到 1 次 → 09:31 retry（本則處理）→ **CE=0**（retry 成功後 reset）
+- `model = minimax/MiniMax-M3` ✅、`timeout = 600s` ✅
+- `lastDurationMs = 84890ms（≈85s）` ≪ `600s timeout` ✅ 非配置問題
+- `lastErrorReason = "overloaded"` — provider 端擁塞，非本任務程式問題
+- alternating fail/recover 模式持續（已逾 95h 穩定觀察）
+- HEARTBEAT ⬜ 待自動化項目：無
+- 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
+- 🔕 安靜結束，不通知教練（09:31 已過 08:00 不打擾時段，但 CE reset 為 0 無紅線，且 alternating 模式穩定無新訊號）
+- 下次 **10:00** cron fire 自動驗證恢復
