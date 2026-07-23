@@ -244,3 +244,9 @@
 - 自動修復評估全不適用（timeout / INVALID_API_KEY / VPS / CE≥3 全部不符合）
 - 🔕 安靜結束，不通知教練（09:31 已過 08:00 不打擾時段，但 CE reset 為 0 無紅線，且 alternating 模式穩定無新訊號）
 - 下次 **10:00** cron fire 自動驗證恢復
+
+## 🩺 軍師 Hook 自檢 2026-07-23 09:53（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: f3c850ef-8e4e-4a89-aaad-d65fdb8d3bf9
