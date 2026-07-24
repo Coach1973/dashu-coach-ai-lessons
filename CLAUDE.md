@@ -4,9 +4,59 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-23 11:05:36**
+> **最後同步：2026-07-24 08:40:54**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立）
+
+> 這張表**取代**逐棒散落的「vXX待辦」小表——舊表格散在v72/v73/v74/v75各自的段落裡，容易漏看、也看不出哪項是「卡住等教練」還是「該我自己動手」。**以後每一棒開工先看這裡，任務完成或狀態改變就更新這張表，不要再另開一張新的待辦表。**
+>
+> 狀態代碼：🔒卡住-等教練　⏳待軍師/小龍蝦動手　⚠️持續追蹤(非任務)　✅已完成待確認
+
+| 優先 | 任務 | 狀態 | 說明 |
+|---|---|---|---|
+| 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
+| 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
+| 🔴🔴🔴 | Netlify部署額度 | ⚠️持續追蹤 | 真相源`state/netlify_deploy_quota.json`：剩10次（2026-07-25前到期），不是任務本身，是每次碰Netlify站台前要先查的約束條件 |
+| 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
+| 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
+| 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
+| 🟡 | 企業健身房4項文案修改 | 🔒卡住-等教練 | 已記錄commit 10c7b11cf，等教練繼續交辦下一步 |
+| 🟡 | 兩個小工程教訓寫入試金石 | ⏳待軍師動手 | ①`.env`含`$`字元值要單引號包住 ②Jinja模板要guard None值（mentor100已修好，其他Flask小專案值得抽空檢查） |
+| 🟡 | BNI小幫手教練親測多種問法 | ⏳待教練體驗 | 確認BNI小幫手實戰體驗OK |
+| 🟡 | Coze舊機器人何時停用 | 🔒卡住-等教練 | 先保留當備援，等教練確認新系統穩定一陣子後裁示 |
+| 🟡 | ACER/聯想備份刪除（ACER備份+聯想C槽94GB+ACER 36.3GB，觀察期皆已過） | 🔒卡住-需教練在ACER/聯想機器親自開對話執行 | 這台Mac無法代為執行，是本機執行限制不是任務被遺忘 |
+| 🟡 | 光線尺顧問ATM NT$10,000入金(07-13)對帳 | 🔒卡住-等教練 | 待教練對帳 |
+| 🟢 | 「連接」按鈕自動化點擊無反應（真人操作無此問題） | ✅已排除疑慮 | 教練親自兩台電腦實測「連接」按鈕正常，先前疑慮的bug只影響自動化工具合成點擊事件，教練不會遇到，暫不需修 |
+| 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
+| 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
+| 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+## 🎯 2026-07-24 08:XX OpenClaw系統更新：6.11 → 6.33（extended-stable，非7.1-2最新版）
+
+教練問「有可用更新，差別在哪、有沒有風險、建議更新嗎」。查證後對照：`7.1-2`（npm latest）是3368個commit、300個檔案的大改版（Control UI整個重新設計+大量新功能）；`6.33`是官方另外維護的「延伸穩定版」頻道，只有169個PR，全部是安全性/穩定性修復，沒有介面大改，其中一項修復（Gateway origin白名單）剛好跟我們今天手動設的`allowedOrigins`直接相關。**建議更新到6.33、不要跳7.1-2**，教練確認「現在就做」。
+
+**執行過程（有踩坑，如實記錄）**：
+1. `openclaw update --tag extended-stable --yes` 官方指令本身回報`ERROR`（"expected installed version extended-stable, found 2026.6.33"）——這是**官方CLI自己的驗證邏輯bug**（拿dist-tag字串去跟實際版本號比對），但npm安裝本身其實有跑，只是裝到錯的地方。
+2. 查出這台Mac有兩套獨立node/npm環境：`/Users/bymyway/.hermes/node`（shell預設PATH第一個）跟`/opt/homebrew`（gateway服務實際在用的）。`openclaw update`用的是hermes那套npm，裝完後`openclaw`指令（連到`/opt/homebrew/bin/openclaw`）完全沒變。改用`/opt/homebrew/bin/npm install -g openclaw@2026.6.33`直接指定正確路徑，這次真的裝上了（`openclaw --version`確認`2026.6.33`）。
+3. `openclaw doctor --repair`揪出2個外掛版本沒跟上：`line`（教練個人LINE+BNI大台南LINE都靠這個外掛）、`llama-cpp`。用官方建議指令`openclaw plugins update @openclaw/line@2026.6.33`+`@openclaw/llama-cpp-provider@2026.6.33`個別更新。
+4. `openclaw gateway install --force`重裝LaunchAgent清掉版本殘留警告時，**又踩到同一個雙node環境的坑**——重裝時用了hermes的node路徑，跟gateway服務原本用的homebrew node不一致。改用`PATH="/opt/homebrew/opt/node/bin:...:$PATH" openclaw gateway install --force`強制指定正確node路徑重裝一次才修好。
+
+**驗證（全部真的測過，不是憑感覺回報）**：
+- `gateway status`：CLI/Gateway版本皆`2026.6.33`、`Runtime: running`、`Connectivity probe: ok`、node路徑正確指回`/opt/homebrew/opt/node`
+- `channels status`：LINE default/bni_tainan皆`running`
+- `scripts/telegram_channel_probe.sh`真探針：`OK:通道健康`（不信channels status顯示的disconnected欄位，案例53教訓）
+- `openclaw agent --agent bni_tainan --message "曜董是誰"`：**真的跑一次agent對話**，回答語氣/內容/emoji風格正常，確認line外掛更新後BNI小幫手沒壞
+- `curl https://bni.bymyway.com/`與`curl http://127.0.0.1:18789/`皆回200
+
+**新出現的非阻斷性警告**：`plugins.allow is empty`，代表7.x/6.33這條線新增了外掛白名單機制的提示（目前只是警告不是強制），已記入待辦表格，不急著處理。
+
+**🔴 記進試金石的教訓（這台Mac有雙node環境是系統性風險，下次任何要碰gateway服務層級安裝/更新的操作都要注意）**：以後任何`openclaw gateway install`、`openclaw update`、或任何會重新產生LaunchAgent/npm全域安裝的指令，執行前先確認`which node`/`which npm`是不是`/opt/homebrew`那套，不是的話要用`PATH=...`明確指定，不能相信shell預設的PATH順序。
 
 ---
 
@@ -58,20 +108,33 @@
 - `openclaw config set gateway.auth.mode password`
 - `openclaw config set gateway.auth.password "Bymyway7"`
 - `openclaw gateway restart`
-驗證：`gateway status`顯示`Runtime: running`、`Connectivity probe: ok`；`curl http://127.0.0.1:18789/`回200；LINE default/bni_tainan兩通道`channels status`皆`running`；Telegram三隻bot雖然`channels status`顯示`disconnected`，但用`scripts/telegram_channel_probe.sh`真相源探針測試回`OK:通道健康`（案例53教訓：不信衍生欄位，信真探針）；已`open -a "Google Chrome"`跳出本機dashboard給教練現場看。**密碼已改好，下一場開工先確認教練這幾天有沒有回報密碼登入畫面正常，這步不用重做。**
+驗證：`gateway status`顯示`Runtime: running`、`Connectivity probe: ok`；`curl http://127.0.0.1:18789/`回200；LINE default/bni_tainan兩通道`channels status`皆`running`；Telegram三隻bot雖然`channels status`顯示`disconnected`，但用`scripts/telegram_channel_probe.sh`真相源探針測試回`OK:通道健康`（案例53教訓：不信衍生欄位，信真探針）。
 
-### 下一場要做的事
-1. 用教練已登入的Chrome進 Cloudflare Zero Trust 後台，找到現有那個cloudflared tunnel（就是`openclaw.bymyway.com`用的那個，教練帳號下管理`bymyway.com`這個domain），**新增一條Public Hostname**：`bni.bymyway.com` → `http://localhost:18789`（跟`openclaw.bymyway.com`指去`/line/webhook`那條走同一顆tunnel，只是路徑/用途不同，用hostname分流，不用另外裝新tunnel）
-   - 查證重點：這場（v75）沒找到教練存的Cloudflare API token，目前判斷要用瀏覽器手動加，不是API一鍵完成——下一場先確認一次有沒有漏看
-2. 加好後，實測：`curl -I https://bni.bymyway.com/` 應該要能連到跟`localhost:18789`一樣的回應
-3. 把最終網址整理給教練——**注意登入方式已改成密碼制，不用再帶token查詢字串**，教練在任何電腦打開`https://bni.bymyway.com/`都應該先看到密碼輸入畫面，打`Bymyway7`進去
+**🔴 追加發現＋已知未修bug（教練實測「沒看到登入畫面」抓到，本場用Claude in Chrome深挖到底）**：
+1. 第一次`open -a Chrome`後教練回報「沒有看到它顯示登入或連結」——查證是瀏覽器殘留舊token模式的裝置身分快取(`localStorage.openclaw-device-identity-v1`)，跟新密碼模式衝突，導致連登入表單都顯示不出乾淨畫面。清掉localStorage後恢復乾淨的登入表單。
+2. **真UI bug（未修，教練口頭同意先擱置）**：登入表單上的「連接」按鈕，不論用滑鼠座標點擊、accessibility ref點擊都完全沒反應（伺服器log證實：`reason=password_missing`，代表按下去根本沒把密碼欄位的值送出）。查到`openclaw-app`元件本身有`password`屬性和`connect()`方法，直接用JS呼叫`app.connect()`繞過按鈕、成功登入，登入後重整頁面會維持登入狀態（不用每次重打密碼）。懷疑根因：畫面上同時疊著一個「Control UI did not start」的過期錯誤提示框，可能蓋住了按鈕的可點擊區域（但`customElements.get('openclaw-app')`實測是true，元件其實有正常啟動，這個提示框本身可能才是過期/誤報）。
+3. 系統右上角顯示有新版可更新（v2026.7.1-2，目前跑v2026.6.11），這個按鈕bug有機會已經在新版修掉。
+4. **教練決定（本場已問過）**：先不處理，等他自己真的在別的瀏覽器/別台電腦第一次登入卡到這個bug再說——**下一場如果做Task 2（Cloudflare對外開通）之後教練第一次從聯想/宏碁登入卡住，這就是原因，直接用`app.connect()`這招或考慮版本更新，不用重新從頭查。**
+
+**目前狀態**：這台Mac本機Chrome（Claude in Chrome操作的那個分頁）已經登入成功並保持登入，教練這台機器不會再卡到。密碼已改好，登入機制本身（伺服器端）驗證過是正常運作的，只是那顆按鈕本身有bug。
+
+### ✅ Task 2 本場（07-24凌晨）已全部完成，用Claude in Chrome操作教練真實登入的Cloudflare帳號
+1. 進Cloudflare Zero Trust後台，找到現有tunnel `openclaw-macmini`（ID `e35d30ec-45cf-4854-8afc-1bf92b163231`），Routes分頁點「Add route」→「Published application」→ subdomain `bni`、domain `bymyway.com`、service `http://localhost:18789`，成功新增`bni.bymyway.com`路由（跟`openclaw.bymyway.com`/`media.bymyway.com`同一顆tunnel，dashboard上三條route都看得到）
+2. `dig bni.bymyway.com`回Cloudflare edge IP、`curl https://bni.bymyway.com/`回200 ✅
+3. **🔴 過程中揪出並修好一個真的會擋登入的bug**：第一次訪問`bni.bymyway.com`顯示「瀏覽器來源不允許／Gateway在接受Control UI連線前拒絕了此頁面來源」——查schema發現`gateway.controlUi.allowedOrigins`是非loopback部署的必填白名單（教練之前只在`127.0.0.1`本機測過，從沒真正拿新網址連過，所以這個問題v75/本場之前完全沒被踩到）。已執行`openclaw config set gateway.controlUi.allowedOrigins '["https://bni.bymyway.com"]' --strict-json` + `openclaw gateway restart`，修好後這條錯誤訊息消失。
+4. **🔴 又發現一層設計：裝置配對（device pairing）**——就算密碼對、來源也允許了，全新瀏覽器第一次連線還會卡在「需要裝置配對」，畫面上會顯示一組device ID，要在這台Mac執行`openclaw devices approve <該ID>`才能放行。這**不是bug，是刻意的安全機制**（`gateway.controlUi.dangerouslyDisableDeviceAuth`這個關掉它的選項本身就寫「dangerously」「只能短期debug用」，不建議關）。用全新分頁完整測過一輪：密碼登入→裝置配對卡住→`openclaw devices approve`→重新連線成功，看到跟本機一樣的完整session列表和對話記錄。
+5. **「連接」按鈕點擊沒反應——教練實測結果：真人點擊沒有卡住**。教練在兩台電腦（其中一台Win32裝置確認、一台裝置標記MacIntel，可能是教練當下用RustDesk連的這台Mac、也可能是我先前測試分頁的殘留，未完全查清楚但不影響結果）都各自送出裝置配對請求（requestId `c54cfbf3-3373-4e54-bc01-a81b094d20fb`、`15655958-2d04-46aa-bd7b-bfeebc741a91`，皆已`openclaw devices approve`核准），代表**密碼+連接按鈕這一關教練真人操作完全正常**，我先前擔心的按鈕bug只是自動化工具合成點擊事件的問題，不是真的產品bug，教練這邊不會遇到。教練原話「總之，我現在兩台電腦都進去了」——**Task 2完全收尾，教練親口驗收通過。**
+
+### 給教練的最終資訊（下一場開工先確認教練有沒有試過）
+- **網址**：`https://bni.bymyway.com/`
+- **密碼**：`Bymyway7`（不用帳號名稱）
+- **在聯想/宏碁第一次連線流程**：打開網址 → 打密碼按連接 → 如果卡在「需要裝置配對」，把畫面上顯示的device ID回報給軍師/小龍蝦 → 軍師在這台Mac跑`openclaw devices approve <ID>` → 教練那邊重新整理/再按一次連接 → 應該就能看到完整監控畫面。**這個裝置核准只需要對每一台新電腦/新瀏覽器做一次，之後同一台機器同一個瀏覽器不用再重複。**
 
 ### 驗證方式
-- [ ] `curl -I https://bni.bymyway.com/` 回200（或至少不是DNS錯誤/522），確認tunnel路由生效
-- [x] 登入方式改密碼制（本場已完成，見上）
-- [ ] 瀏覽器實際打開`https://bni.bymyway.com/`，看到密碼輸入畫面，打密碼後進得去、看到跟本機測試一樣的Dashboard主畫面
-- [ ] 點進bni_tainan的session列表，能看到完整對話內容（不只是metadata）
-- [ ] 教練親自在聯想或宏碁那台電腦實測打開這個網址，確認真的能從別台電腦登入
+- [x] `curl -I https://bni.bymyway.com/` 回200，確認tunnel路由生效
+- [x] 登入方式改密碼制
+- [x] 用全新瀏覽器分頁完整測過密碼+裝置配對整套流程成功，看到完整session列表和對話記錄
+- [x] 教練親自在兩台電腦實測——教練原話「總之，我現在兩台電腦都進去了」，Task 2驗收通過
 
 ---
 

@@ -1,9 +1,16 @@
 {
-  "quota_total_remaining_as_of": "2026-07-22",
-  "quota_remaining": 11,
+  "quota_total_remaining_as_of": "2026-07-23",
+  "quota_remaining": 10,
   "deadline": "2026-07-25",
   "note": "教練2026-07-17親口告知：帳號到7/25前只剩16次部署額度。每次真的執行部署（zip+API或netlify-cli deploy --prod）就要decrement一次，回報教練時附上「本次第N次，還剩M次，到7/25」。剩3次以內要主動提醒教練，不用等問。這個數字不含純commit到GitHub（那不算Netlify部署），只算真的觸發Netlify產生新deploy的次數。",
   "history": [
+    {
+      "date": "2026-07-23",
+      "site": "tainan-calender",
+      "deploy_id": "6a616d726f8186474a9d4a72",
+      "change": "修復Content-Type text/plain導致網頁顯示成原始碼的bug，補上_headers強制text/html",
+      "remaining_after": 10
+    },
     {
       "date": "2026-07-22",
       "site": "jiesheng-leadership",
