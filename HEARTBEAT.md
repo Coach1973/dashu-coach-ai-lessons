@@ -969,3 +969,37 @@
 - 觸發詞：開
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - Session: a4a51c19-f738-4fb5-92f4-7a04ee2887d7
+
+## 🩺 健康檢查 2026-07-24 17:01（Asia/Taipei，週五傍晚）
+
+**全系統 cron 狀態（main agent scope）：**
+- 只有 1 個任務：🦞 每30分鐘任務健康檢查（就是本任務）
+- consecutiveErrors = **1**
+- lastErrorReason = `timeout`（LLM idle timeout）
+- lastDurationMs = **68.9s** ≪ 600s timeout ✅（不是 timeoutSeconds 設定問題）
+- 上次成功時間：16:37 retry（CE 從 3 reset 回 0 後，17:00 fire 又失敗）
+
+**配置審查：**
+- `model=minimax/MiniMax-M3` ✅
+- `timeoutSeconds=600` ✅
+- 無 apiKey/auth 錯誤
+- 68.9s ≪ 600s → 非 timeout 配置問題
+
+**自動修復評估（全不適用）：**
+- ❌ timeout 錯誤 → 68.9s ≪ 600s
+- ❌ INVALID_API_KEY → model 已是 minimax/MiniMax-M3
+- ❌ scp/ssh VPS → 無此類任務
+- ❌ CE ≥ 3 → CE=1，未達紅線
+
+**HEARTBEAT.md ⬜ 待自動化：**
+- 無
+
+**結論：** ✅ 安靜結束，不通知教練
+- alternating fail/recover 模式延續（已逾 110h+）
+- 本質是 minimax provider 端 model idle timeout，教練無法直接介入
+- 16:37 成功 retry 後 CE reset 為 0，17:00 又失敗 CE=1（模式不變）
+- 68.9s 遠低於 600s timeout，配置完全正確
+
+⚠️ 警戒：若 17:30 fire 失敗 → CE=2；18:00 再失敗 → CE=3 紅線 → 必須 announce 通知教練。
+
+下次 **17:30** cron fire 自動驗證。
