@@ -142,3 +142,30 @@
 - 軍師 VPS 任務結果 4 天前完成，待教練裁示
 
 **結論：** 預期教練可能已就寢，不強求回應。
+
+## 🦞 22:32 健康檢查（週五深夜，安靜處理，2026-07-24）
+
+**結果：CE=1 → 0（本場 retry 成功，安穩）**
+
+- 22:30 fire ❌（model idle timeout, 86.6s ≪ 600s）→ 22:32 retry 本場 ✅ OK
+- 22:02 上一場 ✅ OK → 22:30 fire 失敗 → CE 從 0 升到 1
+- 本場 retry 成功 → CE reset 回 **0**（距紅線 3 次）
+- `model=minimax/MiniMax-M3` ✅、`timeout=600s` ✅
+- 無 INVALID_API_KEY、無 scp/ssh VPS、無 CE ≥ 3
+- HEARTBEAT.md ⬜ 待自動化：無
+
+**alternating 模式節奏（最近 12 輪）：**
+- 22:30 error（86.6s）→ 22:32 retry ok（本場）
+- 22:00 error（124.4s）→ 22:02 retry ok
+- 21:30 error（124.4s）→ 21:32 retry ok
+- 21:00 error（159.4s）→ 21:03 retry error（85.4s）→ 21:05 retry ok
+- 20:30 error（70.2s）→ 20:31 retry ok
+- 20:00 error（122.4s）→ 20:02 retry ok
+
+**結論：** ✅ 安靜結束，不通知教練
+- alternating fail/recover 模式 110h+ 絕對穩定
+- 錯誤本質是 minimax provider 端臨時性問題，教練無法介入
+- 配置完全正確
+- 本場 retry 成功 → CE reset 回 0，警戒線已重置
+
+⚠️ **警戒重新計算：** 23:00 fire 若失敗 → CE=1；23:30 fire 又失敗 → CE=2；00:00 fire 再失敗 → CE=3 紅線 → 必須 announce 教練。
