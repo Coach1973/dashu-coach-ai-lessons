@@ -1,10 +1,11 @@
 ---
 name: project-line-moved-to-e
-description: 試金石——LINE 搬家血淚全紀錄（4GB 資料丟失 + 版本差異導致 junction 失敗），任何機器的 AI 都必須讀懂
+description: 試金石——LINE 搬家血淚全紀錄（4GB 資料丟失 + 版本差異導致 junction 失敗 + 2026-07-24 junction未拆就解除安裝二度驚魂），任何機器的 AI 都必須讀懂
 metadata:
   type: project
   originSessionId: 9c64b31c-9b4d-4490-b41d-77b5d1e7bcf2
   updated: 2026-06-25
+  modified: 2026-07-24T07:58:10.114Z
 ---
 
 # 試金石：LINE 桌面版搬家到外接硬碟
@@ -93,6 +94,28 @@ LINE 26.x 的 LineLauncher.exe 會用 `GetModuleFileName()` 取得自己的實�
 | 6 | **LINE 26.x 折衷：bin 留 C，Data+Cache junction** | 兼顧省空間和啟動正常 |
 | 7 | **有成功案例先讀那份 SOP** | 不要自己瞎猜 |
 | 8 | **不改 Registry** | junction 自動接管 |
+
+## 六、2026-07-24 二度驚魂：junction 還接著就解除安裝，E 槽真資料被沿路刪光（幸好有備份接住）
+
+**起因**：LINE 卡死打不開（開了程序但視窗生不出來，CPU 幾乎零，殭屍程序越點越多）。查證後找到兩個線索：
+1. `E:\Claude-Data\LINE-Cache` 底下光一個子資料夾就有 2.6 萬+ 檔案，掃描/初始化極慢
+2. Windows Temp 資料夾裡有殘留的 `qtsingleapp-line*-lockfile`——LINE 用 Qt 的單一實例鎖定機制，只要上次是被 `Stop-Process -Force` 強制關掉（無論是當機、斷電，還是 AI 自己動手），這個鎖定檔就不會被清掉，下次啟動去驗證這個殘留鎖定檔時卡住，正是「開了程序、視窗生不出來、CPU 不動」的元兇
+
+**修復動作**：清空 Cache、清殘留鎖定檔、改用 `LineLauncher.exe --booting` 正確啟動方式——這些都對，但這次還是沒解決，於是決定乾淨重裝。
+
+**🔴🔴🔴 真正出事的地方**：重裝第一輪，junction（`C:\...\LINE\Data` → `E:\Claude-Data\LINE-Data`）已經接對確認過（8683 項/1311.7MB），但因為要進一步除錯，junction 沒有先拆掉。教練接著自己動手做了第二輪「解除安裝→重裝」，解除安裝程式在清理 `C:\...\LINE\Data` 時，**沿著還連著的 junction 把 E 槽的真實資料也一起清空了**——直接查 `E:\Claude-Data\LINE-Data`（不透過 junction）發現變成 0 個項目。跟本檔案最上面「4GB 聊天記錄永久丟失」事故的死法幾乎一模一樣，只是這次角色換成解除安裝程式，不是 AI 自己下 Remove-Item。
+
+**這次沒有釀成災難的唯一原因**：一開始拆第一次 junction 前，就先做了一份獨立備份到 `E:\Claude-Data\LINE-Data.bak.<timestamp>`（用 robocopy，跟來源比對項目數與大小完全一致才算數）。事後直接從這份備份 robocopy 回填、重新驗證項目數/大小相符，再重建 junction，資料完全復原。
+
+**新增鐵律（比照 🔴1~4 同等級）**：
+
+| 編號 | 鐵律 | 違反的後果 |
+|------|------|-----------|
+| 🔴9 | **junction 只要還接著，絕對不能對那個 App 做解除安裝／移除／重裝，一定要先拆 junction** | 解除安裝程式不會分辨 junction，會沿著連結把外接硬碟的真實資料也一起清掉 |
+| 🔴10 | **每一次要拆 junction 或重裝，都要重新走一次「先獨立備份」流程，不能因為「上次做過了」就省略** | 這次差點出事就是因為除錯中途分心，忘記在第二次操作前重新確認 junction 狀態 |
+| 🔴11 | **拆 junction 一律用 `[System.IO.Directory]::Delete(path, $false)` 或不帶 -Recurse 的 Remove-Item，絕不能用遞迴刪除指令去清 junction 所在的父資料夾** | 遞迴刪除會穿透 junction 刪到真正的目標內容 |
+
+Related: 這次事故最終仍未修好 LINE 開不了的根本問題（懷疑跟這台機器 WMI/CIM 子系統異常有關，多個 PowerShell 存放體查詢指令會無故卡住，需要系統管理員權限才能繼續往下查），教練最終決定用 2026-07-11 的 C 槽系統映像一鍵還原解決，D/E 槽不受影響。還原後需要補裝 7/12 之後新增的軟體：NordVPN(7/17)、Comet(7/22)、Gan Jing Browser(7/24)。LINE 本身不用重裝，還原後會回到搬家前的正常狀態。
 
 ## 五、聯想機（TREE）過期備份清理完成（2026-07-08）
 
