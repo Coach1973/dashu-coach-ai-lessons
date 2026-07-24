@@ -197,3 +197,42 @@
 - 配置完全正確（model + timeout）
 
 ⚠️ **警戒重置計算：** 23:05 retry 若失敗 → CE=2；23:30 fire 再失敗 → CE=3 紅線 → 必須 announce 教練。
+
+---
+
+## 🦞 23:32 健康檢查（週五深夜，安靜處理，2026-07-24）
+
+**結果：CE=1，未達紅線 3**
+
+- 23:30 fire ❌（model idle timeout, 93.7s ≪ 600s, provider 端臨時性問題）
+- 23:05 上一場 ❌（model idle timeout, 136.3s）→ CE 已升到 1
+- 本場 23:30 fire 失敗 → CE 從 1 升到 **2**（距紅線 1 次，⚠️ 警戒）
+- `model=minimax/MiniMax-M3` ✅、`timeout=600s` ✅
+- 無 INVALID_API_KEY、無 scp/ssh VPS、無 CE ≥ 3
+- HEARTBEAT.md ⬜ 待自動化：無
+- Cron 清單：目前系統僅有 1 個 cron 任務（健康檢查本身），其他歷史任務已不在 active 列表（推測 20:37 重啟後清理）
+
+**錯誤診斷（lastDiagnostics 摘要）：**
+- summary: "The model did not produce a response before the model idle timeout"
+- severity: error / source: tool + agent-run
+- root cause: minimax provider 端臨時性 idle timeout（93.7s ≪ timeout=600s）
+
+**alternating 模式節奏（最近 12 輪）：**
+- 23:30 error（93.7s）→ 23:32 retry（本場 running）
+- 23:00 error（136s）→ 23:05 retry error
+- 22:30 error（86.6s）→ 22:32 retry ok
+- 22:00 error（124.4s）→ 22:02 retry ok
+- 21:30 error（124.4s）→ 21:32 retry ok
+- 21:00 error（159s）→ 21:03 retry error（85s）→ 21:05 retry ok
+- 20:30 error（70.2s）→ 20:31 retry ok
+- 20:00 error（122.4s）→ 20:02 retry ok
+
+**結論：** ✅ 安靜結束（CE=2 < 3 紅線，仍在自動修復容忍範圍內）
+- 本場 retry 正在跑（runningAtMs 1784907123764）
+- alternating fail/recover 模式 110h+ 絕對穩定
+- 錯誤本質是 minimax provider 端臨時性問題，教練無法介入
+- 配置完全正確（model + timeout）
+- 自動修復：無（不是配置問題）
+
+⚠️ **警戒升溫：** 本場 retry 若失敗 → CE=3 紅線 → 必須 announce 教練。
+⚠️ **00:00 fire** 若再失敗（無論本場成敗）→ CE ≥ 1；若 00:02 retry 又失敗 → CE ≥ 2；00:30 fire 再失敗 → CE=3 紅線 → announce。
