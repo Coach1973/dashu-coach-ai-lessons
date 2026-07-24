@@ -23,6 +23,29 @@
 
 ---
 
+## 🎯 2026-07-24 08:XX OpenClaw系統更新：6.11 → 6.33（extended-stable，非7.1-2最新版）
+
+教練問「有可用更新，差別在哪、有沒有風險、建議更新嗎」。查證後對照：`7.1-2`（npm latest）是3368個commit、300個檔案的大改版（Control UI整個重新設計+大量新功能）；`6.33`是官方另外維護的「延伸穩定版」頻道，只有169個PR，全部是安全性/穩定性修復，沒有介面大改，其中一項修復（Gateway origin白名單）剛好跟我們今天手動設的`allowedOrigins`直接相關。**建議更新到6.33、不要跳7.1-2**，教練確認「現在就做」。
+
+**執行過程（有踩坑，如實記錄）**：
+1. `openclaw update --tag extended-stable --yes` 官方指令本身回報`ERROR`（"expected installed version extended-stable, found 2026.6.33"）——這是**官方CLI自己的驗證邏輯bug**（拿dist-tag字串去跟實際版本號比對），但npm安裝本身其實有跑，只是裝到錯的地方。
+2. 查出這台Mac有兩套獨立node/npm環境：`/Users/bymyway/.hermes/node`（shell預設PATH第一個）跟`/opt/homebrew`（gateway服務實際在用的）。`openclaw update`用的是hermes那套npm，裝完後`openclaw`指令（連到`/opt/homebrew/bin/openclaw`）完全沒變。改用`/opt/homebrew/bin/npm install -g openclaw@2026.6.33`直接指定正確路徑，這次真的裝上了（`openclaw --version`確認`2026.6.33`）。
+3. `openclaw doctor --repair`揪出2個外掛版本沒跟上：`line`（教練個人LINE+BNI大台南LINE都靠這個外掛）、`llama-cpp`。用官方建議指令`openclaw plugins update @openclaw/line@2026.6.33`+`@openclaw/llama-cpp-provider@2026.6.33`個別更新。
+4. `openclaw gateway install --force`重裝LaunchAgent清掉版本殘留警告時，**又踩到同一個雙node環境的坑**——重裝時用了hermes的node路徑，跟gateway服務原本用的homebrew node不一致。改用`PATH="/opt/homebrew/opt/node/bin:...:$PATH" openclaw gateway install --force`強制指定正確node路徑重裝一次才修好。
+
+**驗證（全部真的測過，不是憑感覺回報）**：
+- `gateway status`：CLI/Gateway版本皆`2026.6.33`、`Runtime: running`、`Connectivity probe: ok`、node路徑正確指回`/opt/homebrew/opt/node`
+- `channels status`：LINE default/bni_tainan皆`running`
+- `scripts/telegram_channel_probe.sh`真探針：`OK:通道健康`（不信channels status顯示的disconnected欄位，案例53教訓）
+- `openclaw agent --agent bni_tainan --message "曜董是誰"`：**真的跑一次agent對話**，回答語氣/內容/emoji風格正常，確認line外掛更新後BNI小幫手沒壞
+- `curl https://bni.bymyway.com/`與`curl http://127.0.0.1:18789/`皆回200
+
+**新出現的非阻斷性警告**：`plugins.allow is empty`，代表7.x/6.33這條線新增了外掛白名單機制的提示（目前只是警告不是強制），已記入待辦表格，不急著處理。
+
+**🔴 記進試金石的教訓（這台Mac有雙node環境是系統性風險，下次任何要碰gateway服務層級安裝/更新的操作都要注意）**：以後任何`openclaw gateway install`、`openclaw update`、或任何會重新產生LaunchAgent/npm全域安裝的指令，執行前先確認`which node`/`which npm`是不是`/opt/homebrew`那套，不是的話要用`PATH=...`明確指定，不能相信shell預設的PATH順序。
+
+---
+
 # 軍師接力棒 · 2026-07-23 v77（Mac終端機 Sonnet5，v76設計經教練挑戰後修正：提醒功能改事件驅動一次性排程/監看網址改bni.bymyway.com）
 
 > 教練原話（v75尾聲，2026-07-23上午）：「這部分你可以先寫在交接簿裡面，等都寫完之後，我會開新的對話框並打完開工指令，到時候直接在下一個新的對話框去執行我現在說的這幾件事情。」——因為當時context已到73%，教練刻意要求「本場只寫計畫、下一場才動手」。
