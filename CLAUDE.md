@@ -4,9 +4,57 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-24 08:10:34**
+> **最後同步：2026-07-24 08:20:40**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立）
+
+> 這張表**取代**逐棒散落的「vXX待辦」小表——舊表格散在v72/v73/v74/v75各自的段落裡，容易漏看、也看不出哪項是「卡住等教練」還是「該我自己動手」。**以後每一棒開工先看這裡，任務完成或狀態改變就更新這張表，不要再另開一張新的待辦表。**
+>
+> 狀態代碼：🔒卡住-等教練　⏳待軍師/小龍蝦動手　⚠️持續追蹤(非任務)　✅已完成待確認
+
+| 優先 | 任務 | 狀態 | 說明 |
+|---|---|---|---|
+| 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
+| 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
+| 🔴🔴🔴 | Netlify部署額度 | ⚠️持續追蹤 | 真相源`state/netlify_deploy_quota.json`：剩10次（2026-07-25前到期），不是任務本身，是每次碰Netlify站台前要先查的約束條件 |
+| 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
+| 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
+| 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
+| 🟡 | 企業健身房4項文案修改 | 🔒卡住-等教練 | 已記錄commit 10c7b11cf，等教練繼續交辦下一步 |
+| 🟡 | 兩個小工程教訓寫入試金石 | ⏳待軍師動手 | ①`.env`含`$`字元值要單引號包住 ②Jinja模板要guard None值（mentor100已修好，其他Flask小專案值得抽空檢查） |
+| 🟡 | BNI小幫手教練親測多種問法 | ⏳待教練體驗 | 確認BNI小幫手實戰體驗OK |
+| 🟡 | Coze舊機器人何時停用 | 🔒卡住-等教練 | 先保留當備援，等教練確認新系統穩定一陣子後裁示 |
+| 🟡 | ACER/聯想備份刪除（ACER備份+聯想C槽94GB+ACER 36.3GB，觀察期皆已過） | 🔒卡住-需教練在ACER/聯想機器親自開對話執行 | 這台Mac無法代為執行，是本機執行限制不是任務被遺忘 |
+| 🟡 | 光線尺顧問ATM NT$10,000入金(07-13)對帳 | 🔒卡住-等教練 | 待教練對帳 |
+| 🟢 | 「連接」按鈕自動化點擊無反應（真人操作無此問題） | ✅已排除疑慮 | 教練親自兩台電腦實測「連接」按鈕正常，先前疑慮的bug只影響自動化工具合成點擊事件，教練不會遇到，暫不需修 |
+| 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
+
+---
+
+## 🎯 2026-07-24 08:XX OpenClaw系統更新：6.11 → 6.33（extended-stable，非7.1-2最新版）
+
+教練問「有可用更新，差別在哪、有沒有風險、建議更新嗎」。查證後對照：`7.1-2`（npm latest）是3368個commit、300個檔案的大改版（Control UI整個重新設計+大量新功能）；`6.33`是官方另外維護的「延伸穩定版」頻道，只有169個PR，全部是安全性/穩定性修復，沒有介面大改，其中一項修復（Gateway origin白名單）剛好跟我們今天手動設的`allowedOrigins`直接相關。**建議更新到6.33、不要跳7.1-2**，教練確認「現在就做」。
+
+**執行過程（有踩坑，如實記錄）**：
+1. `openclaw update --tag extended-stable --yes` 官方指令本身回報`ERROR`（"expected installed version extended-stable, found 2026.6.33"）——這是**官方CLI自己的驗證邏輯bug**（拿dist-tag字串去跟實際版本號比對），但npm安裝本身其實有跑，只是裝到錯的地方。
+2. 查出這台Mac有兩套獨立node/npm環境：`/Users/bymyway/.hermes/node`（shell預設PATH第一個）跟`/opt/homebrew`（gateway服務實際在用的）。`openclaw update`用的是hermes那套npm，裝完後`openclaw`指令（連到`/opt/homebrew/bin/openclaw`）完全沒變。改用`/opt/homebrew/bin/npm install -g openclaw@2026.6.33`直接指定正確路徑，這次真的裝上了（`openclaw --version`確認`2026.6.33`）。
+3. `openclaw doctor --repair`揪出2個外掛版本沒跟上：`line`（教練個人LINE+BNI大台南LINE都靠這個外掛）、`llama-cpp`。用官方建議指令`openclaw plugins update @openclaw/line@2026.6.33`+`@openclaw/llama-cpp-provider@2026.6.33`個別更新。
+4. `openclaw gateway install --force`重裝LaunchAgent清掉版本殘留警告時，**又踩到同一個雙node環境的坑**——重裝時用了hermes的node路徑，跟gateway服務原本用的homebrew node不一致。改用`PATH="/opt/homebrew/opt/node/bin:...:$PATH" openclaw gateway install --force`強制指定正確node路徑重裝一次才修好。
+
+**驗證（全部真的測過，不是憑感覺回報）**：
+- `gateway status`：CLI/Gateway版本皆`2026.6.33`、`Runtime: running`、`Connectivity probe: ok`、node路徑正確指回`/opt/homebrew/opt/node`
+- `channels status`：LINE default/bni_tainan皆`running`
+- `scripts/telegram_channel_probe.sh`真探針：`OK:通道健康`（不信channels status顯示的disconnected欄位，案例53教訓）
+- `openclaw agent --agent bni_tainan --message "曜董是誰"`：**真的跑一次agent對話**，回答語氣/內容/emoji風格正常，確認line外掛更新後BNI小幫手沒壞
+- `curl https://bni.bymyway.com/`與`curl http://127.0.0.1:18789/`皆回200
+
+**新出現的非阻斷性警告**：`plugins.allow is empty`，代表7.x/6.33這條線新增了外掛白名單機制的提示（目前只是警告不是強制），已記入待辦表格，不急著處理。
+
+**🔴 記進試金石的教訓（這台Mac有雙node環境是系統性風險，下次任何要碰gateway服務層級安裝/更新的操作都要注意）**：以後任何`openclaw gateway install`、`openclaw update`、或任何會重新產生LaunchAgent/npm全域安裝的指令，執行前先確認`which node`/`which npm`是不是`/opt/homebrew`那套，不是的話要用`PATH=...`明確指定，不能相信shell預設的PATH順序。
 
 ---
 
