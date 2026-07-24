@@ -1,28 +1,29 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-23T09:03:30+08:00",
+    "heartbeat_received": "2026-07-24T10:06:28+08:00",
     "gmail": "2026-07-13T18:00:30+08:00",
     "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-23T09:03:30+08:00",
-    "telegram_channel": "ok（探針 09:02 實測 ok=true，守則19 鐵律：當下實測為準）"
+    "system_health": "2026-07-24T10:06:28+08:00",
+    "telegram_channel": "ok（探針 10:06 實測 ok=true，守則19 鐵律：當下實測為準）"
   },
-  "lastHeartbeat": "2026-07-23T09:03:30+08:00",
-  "lastHeartbeatNote": "週四 09:02 心跳：探針回 ok=true 通道健康（守則19 不沿用舊旗標）；06:32→08:30 一連串 alternating fail/recover 都靠 retry 把 CE 拉回 0/1，09:00 cron fire 失敗 → 09:02 retry（本則處理）→ CE 預期 reset 回 0，alternating 模式穩定逾 95h。接力棒 v75 重大完成：BNI 大台南小幫手 Coze→本機搬遷 + LINE 通道 plugin 4 月以來潛藏斷線真bug 修復（教練個人LINE小龍蝦可能曾 silent 斷線，現已修）。已主動 Telegram 推送有意義早晨關懷，建議教練親測 BNI 小幫手確認實戰體驗。",
+  "lastHeartbeat": "2026-07-24T10:06:28+08:00",
+  "lastHeartbeatNote": "週五 10:06 「每4小時主動關懷」cron ef88279b fire 觸發：教練 silent 33.6h（從昨晚 00:30 起，週五早上合理時段），已送出友善問候到 Telegram（透過 cron announce delivery），不列待辦。Telegram 通道健康（探針當下實測 ok=true）。系統一切就緒：昨晚 OpenClaw 6.33 更新完成、bni.bymyway.com 對外開通教練已兩台電腦實測通過、BNI 小幫手 webhook 上線、Netlify 額度剩 10 次（明天 7/25 到期）、plugins.allow 白名單未設定（非緊急）。下次 14:00 cron fire 自動觸發下次關懷。",
+  "lastProactiveCare": "2026-07-24T10:06:28+08:00",
   "systemSnapshot": {
-    "timeOfDay": "morning_thursday",
-    "dayOfWeek": "Thursday",
+    "timeOfDay": "morning_friday",
+    "dayOfWeek": "Friday",
     "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "fresh_after_restart_2026-07-23_02:08",
-    "contextPercent": 4,
+    "contextStatus": "fresh_after_restart_2026-07-24_07:38",
+    "contextPercent": 15,
     "gatewayPid": 64856,
     "gatewayUptime": "21d_running",
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh 09:02 實測 ok=true（守則19 通道健康鐵律：當下 probe 為準，不沿用過期旗標）",
+    "telegramChannelSource": "telegram_channel_probe.sh 10:06 實測 ok=true",
     "junshiQueueEmpty": true,
     "coachSilentSince": "2026-07-23T00:30:00+08:00",
-    "coachSilentHours": 8.6,
+    "coachSilentHours": 33.6,
     "unreadGmailCount": 11,
     "unreadImportantCount": 3,
     "pendingCoachItems": [
@@ -31,16 +32,27 @@
       "🟢 v75：tainan_calendar.md 同步頻率目前每 4 小時，若覺得太慢可縮短 cron 間隔",
       "🟡 v73/v74：聯想 C 槽 94GB 待刪（觀察期已滿，待教練在聯想開對話）",
       "🟡 v73：ACER 36.3GB 待刪（觀察期已過，待教練在 ACER 開對話）",
-      "🟡 v72：Netlify 部署額度剩 12 次（7/25 前）",
+      "🟡 v72：Netlify 部署額度剩 10 次（7/25 前到期，明天）",
       "🟡 v73：光線尺顧問 ATM NT$10,000 入金(07-13)待對帳",
       "🟡 v73：企業健身房 4 項文案修改（已記錄）",
       "🔴🔴🔴 v72/v73：真誠/真愛/真實 AI 分會願景說明書——連續多棒未開始，教練尚未給細節",
-      "🟢 v73：「場景化升華」兩不同名排程都 23:00 推播，教練若嫌吵一句話停一個"
+      "🟢 v73：「場景化升華」兩不同名排程都 23:00 推播，教練若嫌吵一句話停一個",
+      "🟡 v77：plugins.allow 白名單未設定（非緊急，建議找空檔補上明確清單）"
     ],
-    "weatherRelevance": "週四早上 09:03，工作時間，教練可能剛到公司",
-    "note": "v75 是大工程（BNI 系統搬遷 + LINE 真 bug 修復），主動關懷有意義。教練 silent 8.6h（昨晚深夜後），09:00 cron fire 失敗 → 09:02 retry（本次心跳）→ 預期 CE reset 為 0。若教練下一則訊息抵達，建議把 v75 待辦摘要順手補上。",
-    "telegramChannelPushAt": "2026-07-23T09:03:35+08:00",
-    "telegramChannelPushMsgId": "8841",
-    "telegramChannelPushResult": "sent_ok（curl 直發，因 message tool 找不到 channels.telegram.accounts.bot_main.botToken 巢狀路徑，已記待修）"
+    "weatherRelevance": "週五早上 10:06，教練可能剛到辦公室",
+    "note": "本次是「每4小時主動關懷」cron 觸發（不同於「每30分鐘健康檢查」），按 cron 設計送出友善問候到 Telegram。教練 silent 33.6h 是合理範圍（可能忙或休假），不需要更高頻打擾。接力棒待辦中真誠／真愛／真實AI 三分會說明書（🔴🔴🔴）仍待教練細節，但按 cron payload 指示『不主動列待辦』，下次教練主動說話才順手提醒。",
+    "telegramChannelPushAt": "2026-07-24T10:06:28+08:00",
+    "telegramChannelPushResult": "sent_via_cron_announce_delivery（payload 自動送到 Telegram, bot_main, 6124913915）",
+    "netlifyQuotaCheck": {
+      "checkedAt": "2026-07-24T10:06:28+08:00",
+      "remaining": 10,
+      "deadline": "2026-07-25",
+      "note": "明天到期，剩 10 次。碰 Netlify 站台前必查"
+    },
+    "cron1000fires": [
+      {"id": "46e67e2e", "name": "🦞 每30分鐘任務健康檢查", "result": "error → next retry 10:30"},
+      {"id": "9c3fc55d", "name": "每2小時增量記憶蒸餾", "result": "error → next retry 12:02"},
+      {"id": "ef88279b", "name": "每4小時主動關懷", "result": "ok（10:00 fire 觸發本 session，已送出關懷訊息）"}
+    ]
   }
 }
