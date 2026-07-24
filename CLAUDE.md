@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-24 07:05:01**
+> **最後同步：2026-07-24 08:10:34**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -73,7 +73,7 @@
 2. `dig bni.bymyway.com`回Cloudflare edge IP、`curl https://bni.bymyway.com/`回200 ✅
 3. **🔴 過程中揪出並修好一個真的會擋登入的bug**：第一次訪問`bni.bymyway.com`顯示「瀏覽器來源不允許／Gateway在接受Control UI連線前拒絕了此頁面來源」——查schema發現`gateway.controlUi.allowedOrigins`是非loopback部署的必填白名單（教練之前只在`127.0.0.1`本機測過，從沒真正拿新網址連過，所以這個問題v75/本場之前完全沒被踩到）。已執行`openclaw config set gateway.controlUi.allowedOrigins '["https://bni.bymyway.com"]' --strict-json` + `openclaw gateway restart`，修好後這條錯誤訊息消失。
 4. **🔴 又發現一層設計：裝置配對（device pairing）**——就算密碼對、來源也允許了，全新瀏覽器第一次連線還會卡在「需要裝置配對」，畫面上會顯示一組device ID，要在這台Mac執行`openclaw devices approve <該ID>`才能放行。這**不是bug，是刻意的安全機制**（`gateway.controlUi.dangerouslyDisableDeviceAuth`這個關掉它的選項本身就寫「dangerously」「只能短期debug用」，不建議關）。用全新分頁完整測過一輪：密碼登入→裝置配對卡住→`openclaw devices approve`→重新連線成功，看到跟本機一樣的完整session列表和對話記錄。
-5. **「連接」按鈕點擊沒反應——這個bug的真實性仍不確定**：本場多次嘗試用自動化工具（座標點擊、accessibility ref點擊）都無法讓按鈕正常提交，但仔細查證發現點擊座標本身完全正確（`elementFromPoint`驗證過沒有東西擋在按鈕上面），懷疑問題出在自動化工具本身送出的合成點擊事件跟真人滑鼠點擊在瀏覽器層級的處理方式不同（例如focus()的user-activation限制），**不能排除教練用真滑鼠正常點擊反而完全沒問題**。誠實結論：不確定，教練實測最準——正常點打密碼+按連接，能進去就是能進去；卡住再回報，屆時我用`app.connect()`這招或考慮升級新版(v2026.7.1-2)都能救。
+5. **「連接」按鈕點擊沒反應——教練實測結果：真人點擊沒有卡住**。教練在兩台電腦（其中一台Win32裝置確認、一台裝置標記MacIntel，可能是教練當下用RustDesk連的這台Mac、也可能是我先前測試分頁的殘留，未完全查清楚但不影響結果）都各自送出裝置配對請求（requestId `c54cfbf3-3373-4e54-bc01-a81b094d20fb`、`15655958-2d04-46aa-bd7b-bfeebc741a91`，皆已`openclaw devices approve`核准），代表**密碼+連接按鈕這一關教練真人操作完全正常**，我先前擔心的按鈕bug只是自動化工具合成點擊事件的問題，不是真的產品bug，教練這邊不會遇到。教練原話「總之，我現在兩台電腦都進去了」——**Task 2完全收尾，教練親口驗收通過。**
 
 ### 給教練的最終資訊（下一場開工先確認教練有沒有試過）
 - **網址**：`https://bni.bymyway.com/`
@@ -84,7 +84,7 @@
 - [x] `curl -I https://bni.bymyway.com/` 回200，確認tunnel路由生效
 - [x] 登入方式改密碼制
 - [x] 用全新瀏覽器分頁完整測過密碼+裝置配對整套流程成功，看到完整session列表和對話記錄
-- [ ] 教練親自在聯想或宏碁那台電腦實測——**這步還沒做，教練剛才只說「好了」（指Cloudflare登入完成），還沒真的去聯想電腦試**
+- [x] 教練親自在兩台電腦實測——教練原話「總之，我現在兩台電腦都進去了」，Task 2驗收通過
 
 ---
 
