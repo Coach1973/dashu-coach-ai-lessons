@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🕐 終端機/桌面版每則回覆開頭要標台灣時間戳記(2026-07-24)](feedback_timestamp_every_reply.md) — 教練要求方便一眼判斷訊息幾點發的，範圍限這個介面，小龍蝦端另外評估
 - [🔧 Mac終端機有雙node環境，gateway層級指令要指定PATH(2026-07-24)](reference_mac_dual_node_environment.md) — .hermes/node排PATH第一但gateway實際用/opt/homebrew，update/install指令搞錯路徑會裝到假地方
 - [🎯🎯 BNI大台南小幫手從Coze搬到小龍蝦本機+MiniMax-M3，webhook待教練切換(2026-07-23)](project_bni_tainan_line_migration_2026-07-23.md) — 人設+3份知識庫已搬完，順手修好LINE plugin未宣告啟用的404真bug，commit bf560a96
 - [🔴🔴🔴 監控旗標說通道壞了先實測真相源再信，別被黏著假警報憋住關懷(2026-07-22)](feedback_verify_channel_health_not_stale_flag.md) — HEARTBEAT誤報Telegram失效133h憋住11項待辦5.5天，實測3token全活；盲信衍生旗標第三犯(案例53)

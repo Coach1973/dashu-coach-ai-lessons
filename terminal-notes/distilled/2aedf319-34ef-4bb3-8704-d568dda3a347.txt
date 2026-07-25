@@ -1,0 +1,114 @@
+# 終端機對話萃取 — Session 2aedf319-34ef-4bb3-8704-d568dda3a347
+# 提取時間：2026-07-24 17:15 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-07-23 23:02】
+https://github.com/mattpocock/skills  請幫我研究這一份非常被推薦的開源資料，同時檢查我的開工檔案。
+
+再幫我做一個全面的分析：我們目前所有的工作，是否可以透過你對這份文件的理解來做一些加強與優化，以便達到這份開源資料裡面提到的種種好處？
+
+　▶ AI 回應：## 開工檔案已讀（特助身份：Sonnet 5・終端機/桌面版，非小龍蝦）
+
+接力棒、HEARTBEAT、試金石最新3案例（案例51 Zoom誤刪、案例52三機誤報、案例53 HEARTBEAT假旗標）都讀完了。這三個案例有個共同根因，等下分析會用到。既有待辦（真誠/真愛/真實AI分會、Netlify剩13次、coach888拖拉驗收）維持原狀，教練今天要處理的是新任務，先聚焦這個。
+
+---
+
+## 一、mattpocock/skills 是什麼
+
+作者 Matt Pocock（TypeScript 界知名教育者，~6萬訂閱newsletter）把他自己每天真實在用的 Claude Code…（略）
+
+【教練 2026-07-24 00:06】
+我覺得你的四個建議都很好。我是非常信任你，所以你現在就好好的認真研究，把 1、2、3、4 全部都做了，好吧？
+
+　▶ AI 回應：Staged correctly — 11 skills, handoff table, and 執行細則.md, without touching the background-process files (HEARTBEAT.md, logs, state) that are being modified independently. Committing now.
+
+　▶ AI 回應：Committed: `8d90200f1`. Now pushing to origin, and separately committing mentor100's CONTEXT.md to its own repo.
+
+　▶ AI 回應：Push succeeded. Now committing CONTEXT.md in the mentor100 repo.
+
+　▶ AI 回應：兩個commit都推上雲端了：workspace倉庫 `8d90200f1`（技能+待辦總表+執行細則補充+namecard-db的CONTEXT.md），mentor100倉庫 `39ef9ad`（CONTEXT.md）。四項全部做完，逐項憑證如下：
+
+## 1️⃣ 事前驗證紀律 → `engineering-verification-discipline` 技能
+
+整合了執行細則E10~E12（Karpathy原則：先說假設、真驗證迴圈、只碰必要的）+ 案例51（Zoom junction誤刪）、案例52（三機誤報）、案例53（HEARTBEAT假旗標）、coach888拖拉bug——四個…（略）
+
+【教練 2026-07-24 00:24】
+OK，我想給你一個原則性的指導：當你發現任何可以優化的點，請結合我們三大信念中的第三條——「做長期有好處的事」。
+
+如果評估下來，這件事能讓系統負擔更輕、更精準、更正確，只要對工作有幫助，基本上這就是我們要走的方向。雖然你禮貌上都會問我，但通常這種能讓系統越來越好的事，我們都是要去執行的。
+
+關於你問那兩個檔案是不是要合併？那當然是要合併，因為這樣才簡單。
+
+另外，怎麼讓「小龍蝦」也能像這樣進行優化，這是你需要替我思考的。因為你比我更懂程式語言和底層邏輯，你問我，我是沒有概念的。作為一個用戶，我的想法很簡單：怎麼好用、怎麼簡單、怎麼聽話，能做出我要的結果，這對我來說最重要。至於後面的技術怎麼克服、怎麼協調，那是你這個軍師的任務。
+
+有了這個方向性的建議，你應該就知道該怎麼做了。請你好好寫一份計劃，看看怎麼把這份精神移植進去。小龍蝦要越來越好用，才能幫助我的工作越來越好。
+
+而且我們這份努力，是要提供給那些還不太會使用 Claude Code（也就是 Claude 的軍師系統）的人。很多人還是不會使用，他們最多就是用用小龍蝦；但如果小龍蝦背後有很好的指導邏輯，它也可以表現得非常良好。
+
+這就是我想讓你去思考、去努力的方向。
+
+　▶ AI 回應：Verified — full content (including the E11 danger-command five-gates and E12 memory-write rules) is now correctly mirrored, with E13-15 preserving the Karpathy content. Now registering the sync as a recurring cron job so it never drifts again.
+
+　▶ AI 回應：All four scenarios verified — new rules fire correctly, existing rules unaffected, clean messages produce no noise. Now committing and updating the trigger index doc for consistency.
+
+　▶ AI 回應：All healthy — gateway restarted clean, LINE/BNI channel running, Telegram verified via real probe (not the misleading derived field). New rules are now live in production.
+
+　▶ AI 回應：All done and pushed. Summary of this round:
+
+**兩份文件合併**（`0a4271d80`）：執行細則.md 保留為唯一權威版，Karpathy三原則改編號 E13~E15 追加，不覆蓋既有E11危險指令/E12記憶寫入這兩條血淚教訓。新增自動同步腳本 + 每30分鐘 cron（job `37593697`）鏡像進 `~/.claude/CLAUDE.md`，已手動跑過驗證成功——這不是修一次就好，是結構性根治，以後不會再分岔。
+
+**小龍蝦紀律移植計劃**（`352629834`）：查證後確認 `openclaw skills` 市集是工具/能力插…（略）
+
+【教練 2026-07-24 00:36】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：查了一下——這輪確實讀到不少工具輸出裡的UTC時間戳（cron job JSON、probe log等），但我的回覆本文裡沒有真的向你報任何時鐘時間（沒有「幾點幾分」這種表述，只有commit hash、cron job編號、"每30分鐘"這種間隔描述）。符合守則本身註明的例外情況（「如果這次真的不需要報時間，可忽略」），這次不需要更正——沒有漏算+8的時間數字要改。
+
+【教練 2026-07-24 00:41】
+如果可以的話，我是蠻希望我們的每一次對話都有一個時間戳記，因為這樣一看就知道這是幾點幾分發的訊息，你也好評估。
+
+　▶ AI 回應：🕐 2026-07-24（五）08:42 台灣時間
+
+好，從現在開始每則回覆都會加這個時間戳。
+
+已記錄成記憶：範圍是這個終端機/桌面版對話介面。小龍蝦（Telegram/LINE那邊）要不要也比照辦理，是不同系統、要另外想辦法做（例如在訊息送出前加時間字首），你之後如果也想要那邊加戳記，跟我說一聲，我再評估怎麼實作。
+
+【教練 2026-07-24 08:41】
+請問一下，我要進行一個新任務，與現在對話主題無關，就是去大樹小講更改活動行程，我是新對話，還是直接說，我想的是那一個比較省流量token
+
+　▶ AI 回應：🕐 2026-07-24（五）16:41 台灣時間
+
+開新對話比較省。
+
+這場對話從研究mattpocock/skills到現在已經累積非常多內容（11個技能+E規則合併+小龍蝦hook修改等），之後在這裡每問一句，系統都要把這整段歷史一起帶著算。開一個新對話是從乾淨狀態開始，只帶基本記憶系統，不會拖著這些跟活動行程改動完全無關的東西，處理起來更輕、更省。
+
+你可以直接開新對話說「大樹小講要改活動行程」，我會照六步驟開工流程接手（讀接力棒、讀最新狀態），不需要重複解釋這是新任務。
+
+【教練 2026-07-24 08:42】
+所以，你不用總結上傳，我再開新對話，我就直接去開對新對話，你這裡呢？
+
+　▶ AI 回應：🕐 2026-07-24（五）16:43 台灣時間
+
+這裡不用做什麼——今天的每個改動我都是隨手commit（不是留到最後才總結），接力棒待辦表也已經是最新的。剛才多刷了一個小遺漏（記憶偏好那個檔案先前忘了commit），已經補上推走了，commit `9c82a3306`。
+
+你可以直接開新對話，這邊放著就好，不用特別關閉或交代什麼。
