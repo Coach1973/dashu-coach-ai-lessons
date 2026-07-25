@@ -2,14 +2,42 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-07-25",
-  "quota_remaining": 71,
-  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期，目前剩999.5點→約66次部署額度；②另一組500點credits，2026-05-30核發、無到期日，目前剩70.1點→約4次部署額度。credit依到期日先扣（soonest first，會先扣8/25到期那組），合計約71次部署可用。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。之後真的部署後要比對前後credit差異，確認15點/次這個換算率是否仍準確。",
+  "quota_remaining": 66,
+  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
-    {"name": "Personal plan credits", "remaining": 999.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 66},
+    {"name": "Personal plan credits", "remaining": 924.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 61},
     {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
   ],
-  "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次，之後改用新起始值繼續遞減",
+  "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a648ce438fa3d0772a2965d",
+      "change": "贊助人名單改版：11位補上贈品項目，婕尼雅改確認資訊(廖珮汝/婕妮雅髮膚保養)，新增馬儷文(享嘉品牌創辦人)+蔡佩茹(慈安山生前契約)。教練刻意批次收集2天GitHub-only修改後一次性推Netlify，一次部署成功",
+      "remaining_after": 66
+    },
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a64777088a6e566789cbc3b",
+      "change": "現場設攤新增第7-9家：吳婉蓉(蛋白優格燕麥杯)+EVERYDAY CAFE+煦多午茶(贊助商同時也是現場設攤)，部署前已用.NET ZipArchive+curl -sI雙重驗證文字與圖片Content-Type，一次成功",
+      "remaining_after": 67
+    },
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a646d61f78654b788d59cee",
+      "change": "🔴補救部署：修正_headers的/*規則強制Content-Type:text/html蓋過圖片正確MIME類型，導致圖片下載成功但瀏覽器不顯示。同時修正PowerShell Compress-Archive產生反斜線路徑(images\\xxx.jpg)而非正斜線(images/xxx.jpg)，Netlify無法辨識資料夾結構的問題。改用.NET ZipArchive手動控制路徑分隔符。這是本場第2、3次部署，因第1次部署有上述兩個bug，圖片完全無法顯示，教練實測發現後補救",
+      "remaining_after": 68
+    },
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a646c0213e4778b1f227e4e",
+      "change": "新增現場設攤6家廠商卡片、贊助好禮(EVERYDAY CAFE+煦多午茶)、贊助人名單9位、入門禮加註手搖飲甜點限量60份先到先得（⚠️此次部署圖片實際未顯示，見下一筆補救記錄）",
+      "remaining_after": 70
+    },
     {
       "date": "2026-07-24",
       "site": "ai-talk-tw",
