@@ -2,14 +2,21 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-07-25",
-  "quota_remaining": 68,
+  "quota_remaining": 67,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
-    {"name": "Personal plan credits", "remaining": 954.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 63},
+    {"name": "Personal plan credits", "remaining": 939.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 62},
     {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a64777088a6e566789cbc3b",
+      "change": "現場設攤新增第7-9家：吳婉蓉(蛋白優格燕麥杯)+EVERYDAY CAFE+煦多午茶(贊助商同時也是現場設攤)，部署前已用.NET ZipArchive+curl -sI雙重驗證文字與圖片Content-Type，一次成功",
+      "remaining_after": 67
+    },
     {
       "date": "2026-07-25",
       "site": "ai-talk-tw",
