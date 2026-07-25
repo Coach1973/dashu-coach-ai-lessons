@@ -21,16 +21,20 @@
 
 1. `git pull` 拿到 `jiesheng-report/` 資料夾
 2. 建 venv 裝 `requirements.txt`（Flask/Werkzeug）
-3. 用 `generate_password_hash` 產生教練指定的工作人員密碼雜湊，設定環境變數（`JIESHENG_SECRET_KEY`／`JIESHENG_ADMIN_USER`／`JIESHENG_ADMIN_PASSWORD_HASH`／`JIESHENG_PORT`，預設5061）
-4. **建議**：沿用既有 tunnel `openclaw-macmini` 加一條新 Route（比照 `bni.bymyway.com` 做法，比另開新tunnel省事）——subdomain建議 `jiesheng-report`，service指向 `http://localhost:5061`
+3. 設定環境變數，**教練已定案，密碼雜湊值直接複製用，不用重新產生**：
+   - `JIESHENG_SECRET_KEY`：隨機字串（自己產生，例如 `openssl rand -hex 32`）
+   - `JIESHENG_ADMIN_USER`：`staff`
+   - `JIESHENG_ADMIN_PASSWORD_HASH`：`scrypt:32768:8:1$uxXZ8x5sRmBQ97XV$3a8e071bf28e76526543e1599977f67f1d04351243f9d42497ab74948c5c4f0aba33a2342f0091f1b825b4e6a6cce7035d5f92f07a650e6350bee5856ec10022`（明文是教練公司統編，教練自己知道，只存雜湊值不進任何檔案）
+   - `JIESHENG_PORT`：預設5061
+4. 沿用既有 tunnel `openclaw-macmini` 加一條新 Route（比照 `bni.bymyway.com` 做法）——subdomain **`rpl-workshop`**（教練已定案），domain `bymyway.com`，service指向 `http://localhost:5061`
 5. LaunchAgent 常駐（比照 `com.coach.event-webapp.plist`）
-6. 上線後拿正式網址跑一次 `smoke_test.py`（設 `JIESHENG_TEST_BASE=https://jiesheng-report.bymyway.com`）確認沒壞
+6. 上線後拿正式網址跑一次 `smoke_test.py`（設 `JIESHENG_TEST_BASE=https://rpl-workshop.bymyway.com`）確認沒壞
 
 ## 為什麼沒有直接在Windows部署完
 
 查證確認這台聯想電腦沒有裝 cloudflared、也沒有任何 `bymyway.com` 子網域的能力——`~/.cloudflared/` 設定只存在Mac，所有 `xxx.bymyway.com` 網域都是Mac那顆 `openclaw-macmini` tunnel在管。所以只能做到「程式碼完整寫好＋本機測試證明邏輯正確」，最後一步的對外開通需要Mac這邊接手，跟 event-signup／mentor100／bni.bymyway.com 都是同樣的分工模式。
 
-## 教練還沒決定的事（部署時可以順便問一下，或先用建議值）
+## 網域+密碼教練已定案（2026-07-26，README.md已同步更新）
 
-- 工作人員登入密碼：目前只是本機測試用的假密碼，正式上線要教練指定一組
-- 網址子網域名稱：建議 `jiesheng-report.bymyway.com`，教練可能有更喜歡的名字
+- 網址：`https://rpl-workshop.bymyway.com`
+- 工作人員密碼：公司統編（教練口頭指定，雜湊值見上方，明文不進任何檔案）

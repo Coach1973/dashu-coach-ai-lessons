@@ -19,20 +19,17 @@
    python3 -m venv venv
    ./venv/bin/pip install -r requirements.txt
    ```
-3. 設定帳密（環境變數，不進版本庫）。用下面指令產生密碼雜湊：
-   ```bash
-   ./venv/bin/python3 -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('教練指定的密碼'))"
-   ```
-   然後在啟動 LaunchAgent 的 plist 裡設定：
+3. 設定帳密（環境變數，不進版本庫）。**教練已指定密碼（公司統編），雜湊值已產生好，直接用即可，不用重新產生：**
    - `JIESHENG_SECRET_KEY`：隨機字串（例如 `openssl rand -hex 32`）
-   - `JIESHENG_ADMIN_USER`：工作人員共用帳號，例如 `staff`
-   - `JIESHENG_ADMIN_PASSWORD_HASH`：上面指令印出的雜湊值
+   - `JIESHENG_ADMIN_USER`：`staff`
+   - `JIESHENG_ADMIN_PASSWORD_HASH`：`scrypt:32768:8:1$uxXZ8x5sRmBQ97XV$3a8e071bf28e76526543e1599977f67f1d04351243f9d42497ab74948c5c4f0aba33a2342f0091f1b825b4e6a6cce7035d5f92f07a650e6350bee5856ec10022`
    - `JIESHENG_PORT`：預設 5061（跟 event-signup 的 5060 錯開，跟其他既有服務對照 `~/.cloudflared/` 底下各 config 確認沒撞）
+   - 明文密碼本身沒有寫進任何檔案（一律只存雜湊值），教練本人知道是公司統編，需要時教練自己告訴工作人員
 4. **兩種部署方式擇一，建議選①（更省事，比照 `bni.bymyway.com` 的做法）：**
 
    **① 沿用既有 tunnel `openclaw-macmini` 加一條新 Route（推薦）**
    - Cloudflare Zero Trust 後台 → Tunnels → `openclaw-macmini` → Routes → Add route
-   - Published application：subdomain 建議 `jiesheng-report`（或教練指定其他名字）、domain `bymyway.com`、service `http://localhost:5061`
+   - Published application：subdomain `rpl-workshop`（教練已定案）、domain `bymyway.com`、service `http://localhost:5061`
    - 不用另外裝 LaunchAgent 跑 cloudflared，只要保證 Flask app 常駐執行即可（見下方 LaunchAgent）
 
    **② 另開一顆專屬 tunnel（比照 event-signup 原本的做法，較費工，非必要不建議）**
@@ -54,11 +51,11 @@
    </dict>
    <key>KeepAlive</key><true/>
    ```
-6. 驗證：`curl https://jiesheng-report.bymyway.com/admin/login` 回 200，帳密登入後看得到三場戰報頁面
+6. 驗證：`curl https://rpl-workshop.bymyway.com/admin/login` 回 200，帳密登入後看得到三場戰報頁面
 
 ## 網址（部署後才會生效）
 
-- 後台：`https://jiesheng-report.bymyway.com/admin`（教練可改名，記得同步更新這份文件跟接力棒）
+- 後台：`https://rpl-workshop.bymyway.com/admin`（教練可改名，記得同步更新這份文件跟接力棒）
 
 ## 資料表
 
