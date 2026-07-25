@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-25 20:55:42**
+> **最後同步：2026-07-25 21:00:47**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,10 +18,12 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴🔴🔴 | **新任務預告：「教練都在想什麼」LINE帳號搬遷到Mac+MiniMax-M3** | ⏳下一場直接開工 | 教練2026-07-25晚間親口預告：BNI大台南小幫手搬遷效果好，要比照同一套模式（Coze→小龍蝦本機agent+MiniMax-M3，參考v75/v76做法）把「教練都在想什麼」這個LINE官方帳號也搬過去，並且要**提供更多資料庫讓AI做更大的品牌宣傳**。LINE OA後台網址：`https://manager.line.biz/account/@fun3297t`，教練已登入。**教練明確指示「請在新任務時，直接進行這個新任務」——下一場開工不用再問方向，直接照bni_tainan的搬遷SOP走：先查Coze現有人設/知識庫內容(若有)、註冊LINE channel、建agent、測試、確認plugins.entries.line已宣告啟用（v75曾踩過這個坑）、webhook上線。** |
 | 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
+| 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅本場已完成 | 詳見下方v80完整戰果，三個hook都已重啟驗證+commit |
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
 | 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
-| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | 一直是credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。2026-07-25核發新credit後餘額回升到約71次，本場ai-talk-tw圖片bug補救共部署3次，目前剩約68次。每次部署前後仍要查`state/netlify_deploy_quota.json`更新餘額 |
+| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | 一直是credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。目前`state/netlify_deploy_quota.json`最新記錄剩66次(2026-07-25，聯想機序列)——Mac這棒也部署過2次(bigtree-tw/ai-talk-tw)，但發生在教練貼credit截圖查明真制度**之前**，71這個基準值本身已經是教練當下實測的真實餘額(已經反映過Mac那2次的扣減)，聯想後續3次部署往下扣到66，兩邊沒有重複計算，66可信。但這只是本地推算，下次部署前仍建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
@@ -36,6 +38,43 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-24~25 v80（Mac終端機 Sonnet 5，BNI小幫手三道防呆hook+大樹小講/ai-talk內容更新+四分會通訊錄擴建，教練預告下一場「教練都在想什麼」帳號搬遷）
+
+> 建立時間：2026-07-25 晚間（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v77（Mac終端機Sonnet5，BNI小幫手提醒功能設計+bni.bymyway.com對外開通）——中間v78/v79是聯想機同步進行的另一條工作線，內容不重疊，見上方
+> 本棒主軸：**這場對話橫跨多個獨立任務。開場先處理大樹小講(bigtree-tw)活動行程整理跟ai-talk-tw報名人數校準兩個部署任務。接著教練回報「LINE沒收到小幫手回覆但後台看得到」，查證是LINE reply token在AI處理較久時過期導致訊息默默消失，動手做了三個事件驅動的防呆hook（送達備援、網址手滑自動校正、user ID自動對照真實姓名）。後段教練陸續提供四個分會（真鑫/真鑽鈦金/真誠/真富/真愛/真貴籌備會）的會員通訊錄文字/PDF資料，整理進知識庫並更新AGENTS.md回答邏輯。尾聲教練預告下一個新任務——把「教練都在想什麼」LINE帳號也比照搬到Mac+MiniMax-M3，並提供更多資料庫做品牌宣傳。**
+
+## 🎯 本場戰果
+
+### 1. 🟢 大樹小講(bigtree-tw)活動行程整理，GitHub+Netlify雙推
+教練口述整批調整：7/18+7/22兩場按鈕改「已截止報名」；刪除8/1、9/16、10/4、10/21、11/18、12/16共6場重複/取消場次；9/15日期寫錯（實際是星期二不是星期六）修正為9/5；10/31+12/7原本排早午晚三時段各刪2個只留1個，後來教練澄清改成不寫具體時段、顯示「時間確認後公告」；8/26主題改「當古典音樂遇到AI科技」。刪除的場次連報名下拉選單都同步消失（跟主列表同一段程式生成，不用另外處理）。commit `b9655fb`+`33ac6ac`（bigtree repo），Netlify部署`bigtree-tw`（deploy `6a632cc6`），用Chrome實測畫面正確。
+
+### 2. 🟢 ai-talk-tw.netlify.app 報名人數重新校準
+教練回報數字跳太快，改成從對話當下（17:15）重新起算62人，維持原本每6小時+1人節奏不變。commit `8f8c477`（ai-talk repo），Netlify部署`ai-talk-tw`（deploy `6a636462`），實測線上顯示62人正確。
+
+### 3. 🔴🔴🔴 LINE「後台看得到回覆、LINE收不到」真bug查證+三道防呆修復
+教練回報會員問培訓問題，網路後台看得到小幫手已回覆，但LINE完全沒收到。查`openclaw logs`原始紀錄，抓到真相：教練追問「人呢？」那次，小幫手內部處理卡住超過6分鐘（`stuck session recovery`事件，同一種MiniMax provider端idle timeout，跟HEARTBEAT持續110+小時的問題同源），系統自動abort重跑。`channels status`的`out`時間戳反覆查證都沒更新，確認訊息真的沒送達——**根因是LINE的reply token只有約1分鐘有效期，AI想太久，等真的要送出時票已經過期，LINE直接拒收，訊息默默消失，AI自己不知道沒送到**。教練點破關鍵：「電報版反應很好」——因為Telegram沒有這種短效token限制，同樣的AI偶爾變慢，Telegram不會弄丟訊息，LINE會，這是架構落差不是純provider問題。
+
+三個新hook（都是`~/.openclaw/hooks/`下的OpenClaw原生hook，已重啟gateway驗證`✓ ready`，不影響現有通道）：
+- **`line-delivery-fallback`**（`message:sent`事件）：偵測bni_tainan送出失敗，自動改用新建的`agents/bni_tainan/scripts/send_line_push.py`（LINE Push API，無時效限制）補送一次。commit `e07efa61`。
+- **`line-url-typo-guard`**（`message:sending`事件，送出前可改寫內容）：起因是同一次對話裡小幫手把`tainan-calender.netlify.app`手滑打成漏連字號的`tainancalender.netlify.app`，會員點到404。查證AGENTS.md/knowledge/sync_calendar.py原始網址全部正確，是AI生成當下隨機打字失誤。教練原話：「不能因為你們自己手滑多一個字，我就要多註冊一個網址…如果重複發生超過三次，你就要真的徹底解決」——改成送出前用regex自動校正回正確網址，會員永遠看不到壞掉的連結；同時累計次數寫進`state/line_url_typo_guard.json`，每滿3的倍數自動用Telegram通知教練需要根因分析。commit `7535d190`。
+- **`bni-member-directory-map`**（`message:received`事件）：教練問「後台只看到user ID能不能對應人名」，查證LINE Profile API可查`displayName`，教練確認「非常需要」做成永久機制。新user ID第一次互動時自動查暱稱，並比對`member_directory.md`猜測真實姓名（三層信心：完整姓名/去姓氏名字/專業關鍵字命中），寫進`state/bni_tainan_line_id_map.json`。已用真實user ID驗證，正確猜出柯朝陽（和牛貿易商）、黃智宏（信用卡商戶服務）。commit `29c589ad`+workspace commit `1532a9aff`。
+
+### 4. 🎯🎯 BNI大台南六個分會/籌備會通訊錄建置（`knowledge/member_directory.md`）
+教練陸續提供PDF+文字兩種格式的會員名冊，整理進知識庫並更新AGENTS.md資料檢索協定：
+- **真鑫分會**（23人，PDF含電話）、**真鑽鈦金分會**（48人，PDF含電話）——教練確認查到會員可直接告知電話，符合BNI引薦精神，commit `761c51ae`
+- **真誠分會**（17人，文字版無電話，事後教練更正1位姓名+補1位漏列成員）、**真富分會**（2人，部分名單）、**真愛分會**（2人，部分名單）、**真貴籌備會**（籌備中未正式成立，3人+籌備大使楊仁豪）——沒有電話的分會，AGENTS.md明確規定查到人只回報姓名+專業，電話誠實說沒記錄，不編造，commit `68a69166`+`780300b0`
+- 全程用CLI實測驗證回答正確（問木工裝潢代表、精油/手工皂代表、真誠分會網站代表、真貴籌備會運作狀況，皆答對且格式/語氣正確）
+
+### 5. 🟢 Mac mini螢幕解析度查證（教練RustDesk遠端連線畫面變小）
+教練懷疑RustDesk切到較小螢幕。三種方式交叉查證（`system_profiler`文字/JSON、`NSScreen`即時API）確認macOS當下只認得1個螢幕（1280x720，Main Display），沒有第二螢幕可切。教練確認後面接的是「真螢幕」非假訊號頭，這個解析度數字偏低值得留意，但教練後來回報「已經正常了」，查證後系統層級數字沒變，判斷是RustDesk viewer端顯示/縮放問題，不是Mac端螢幕輸出改變。
+
+## 📢 教練預告的下一場新任務（已寫入最上方狀態總表🔴🔴🔴🔴，此處補充脈絡）
+教練原話：「大台南小幫手成功移到MAC電腦並接入minimax 3效果很好，所以我也要把『教練都在想什麼』這個帳號也都移植過去，並且我想提供更多的資料庫，讓這個AI能夠幫我做更大的品牌宣傳。https://manager.line.biz/account/@fun3297t 我已經登錄，請在新任務時，直接進行這個新任務」——**下一場開工直接照bni_tainan搬遷SOP動手，不用再問方向**：先查LINE OA後台現況（有沒有既有Coze串接、既有素材）、查有沒有既有Coze人設可擷取（比照v75做法）、註冊`channels add --channel line`新帳號、建agent、**務必記得`plugins.entries.line`要宣告啟用**（v75曾踩過webhook 404的坑）、測試、webhook上線。教練會另外提供更多資料庫供品牌宣傳用途，細節等下一場教練說明。
 
 ---
 
