@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-25 21:00:47**
+> **最後同步：2026-07-26 03:00:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,9 +18,11 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴🔴🔴 | **新任務預告：「教練都在想什麼」LINE帳號搬遷到Mac+MiniMax-M3** | ⏳下一場直接開工 | 教練2026-07-25晚間親口預告：BNI大台南小幫手搬遷效果好，要比照同一套模式（Coze→小龍蝦本機agent+MiniMax-M3，參考v75/v76做法）把「教練都在想什麼」這個LINE官方帳號也搬過去，並且要**提供更多資料庫讓AI做更大的品牌宣傳**。LINE OA後台網址：`https://manager.line.biz/account/@fun3297t`，教練已登入。**教練明確指示「請在新任務時，直接進行這個新任務」——下一場開工不用再問方向，直接照bni_tainan的搬遷SOP走：先查Coze現有人設/知識庫內容(若有)、註冊LINE channel、建agent、測試、確認plugins.entries.line已宣告啟用（v75曾踩過這個坑）、webhook上線。** |
+| 🟢 | 「教練都在想什麼」LINE帳號完整搬遷到Mac+MiniMax-M3 | ✅本場已完成 | 詳見下方v81完整戰果。人設逐字搬遷+46萬字知識庫+FTS5全文檢索+webhook正式上線服務121位好友+dmPolicy修復+seabiscuit.bymyway.com監控後台+User ID對照hook泛化。教練待自行測試seabiscuit.bymyway.com登入(密碼Bymyway7，第一次會卡裝置配對，把畫面ID給軍師) |
+| 🟡 | 「教練都在想什麼」案例庫深度待擴充 | ⏳待教練提供更多素材 | 目前只有教練提供的4份文件(大樹使命之旅/禮物諮詢法/海餅乾文化核心逐字稿/海餅乾語錄，共46萬字)，教練原話「提供更多資料庫讓AI做更大的品牌宣傳」——若教練還有其他素材(更多逐字稿/文章/Podcast)，補進`agents/jiaolian_thoughts/knowledge/`後跑一次`python3 scripts/build_search_index.py`重建索引即可 |
+| 🟡 | 教練其他類似LINE帳號待比照搬遷 | ⏳待教練指定下一個帳號 | 教練原話「我還有其他類似的帳號也要這麼做」，已產出完整SOP：`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，下次教練指定帳號直接照SOP 12步驟走，不用重新摸索 |
 | 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
-| 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅本場已完成 | 詳見下方v80完整戰果，三個hook都已重啟驗證+commit |
+| 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅已完成 | 詳見v80完整戰果，三個hook都已重啟驗證+commit。會員ID對照hook本場(v81)已泛化為全LINE帳號通用，不影響原有功能 |
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
 | 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
 | ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | 一直是credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。目前`state/netlify_deploy_quota.json`最新記錄剩66次(2026-07-25，聯想機序列)——Mac這棒也部署過2次(bigtree-tw/ai-talk-tw)，但發生在教練貼credit截圖查明真制度**之前**，71這個基準值本身已經是教練當下實測的真實餘額(已經反映過Mac那2次的扣減)，聯想後續3次部署往下扣到66，兩邊沒有重複計算，66可信。但這只是本地推算，下次部署前仍建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
@@ -38,6 +40,60 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-26 v81（Mac終端機 Sonnet 5，「教練都在想什麼」LINE帳號完整搬遷上線+SOP產出）
+
+> 建立時間：2026-07-26 凌晨（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v80（Mac終端機Sonnet5，BNI小幫手三道防呆hook+四分會通訊錄擴建，預告本場任務）
+> 本棒主軸：**教練開工後直接照v80預告，把「教練都在想什麼」LINE帳號完整搬遷到小龍蝦本機。過程比BNI小幫手複雜得多：manager.line.biz顯示webhook是空的，但LINE Developers Console(真相源)查出其實一直有Coze串接，順藤摸瓜找到對應bot、逐字擷取三層人設(禮物諮詢法+TREE-6模型+海餅乾三大信念十大守則)，卻發現Coze原本掛的6個知識庫全部「系統內部異常」從未真正處理成功。教練提供4份原始資料(46萬字)後，先做完agent建置+webhook正式切換上線(服務121位好友)，切換後教練親測踩到跟BNI一樣的陌生人配對關卡(第二次犯同一個坑)，當場修復。教練接著指示解決大知識庫拖慢回覆速度的問題，改用SQLite FTS5全文檢索取代整包塞進提示詞。最後教練要求建監控後台(seabiscuit.bymyway.com)，Cloudflare網頁後台卡在要求輸入帳單資訊，改用CLI+臨時範圍限縮API Token繞過完成。教練點出User ID對照hook沒有自動套用到新帳號，當場把該hook泛化為全帳號通用。尾聲教練要求把整套流程寫成SOP供其他類似帳號複用。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 真相源查證：manager.line.biz顯示空白，Developers Console揭穿其實一直有Coze串接
+教練確認「教練都在想什麼」帳號要搬遷後，先查`manager.line.biz`後台，Webhook網址欄位顯示空白，一度誤判「這個帳號完全沒有既有機器人」並回報教練。教練糾正查證不完整、指出Coze裡確實有明確寫好的persona，要求重新查。改查`developers.line.biz/console`（真相源）才發現Webhook其實一直指向`https://api.coze.com/adapter/line/webhook/7587779377988894725`且「Use webhook」是開啟中——manager.line.biz的顯示是介面不同步的假象。用這組bot ID在Coze後台（`大樹教練@COACH_WU`空間）比對出正確的bot，同空間裡還有BNI小幫手、AI實驗小學、大法經書等其他不相關bot，確認只處理對應這個LINE帳號的那一個。
+
+### 2. 🎯🎯 逐字擷取Coze三層人設（禮物諮詢法 + TREE-6模型 + 海餅乾核心教條）
+Coze的Persona編輯框是虛擬化渲染，一次讀不全，逐段捲動+逐段用accessibility tree讀取拼接。人設本身是教練多次疊代寫成，同一份prompt裡有三層疊加的「Role」區塊（核心定位/核心技術/TREE-6模型 → 核心宇宙觀/絕對限制/Tone & Speaking Style → Profile/Core Doctrine(團隊使命+三大信念+十大行為守則，標註「絕對不可修改」)/人物隱喻/推薦連結庫），全部逐字搬進`agents/jiaolian_thoughts/AGENTS.md`，未刪減未意譯。教練事後親自把人設裡的案例姓名改成匿名化（陳小姐/李先生），並加註「個案匿名化」規則（組織公開代表人物峯哥/明麗/佩君/紅霞不在此限）。
+
+### 3. 🔴🔴🔴 Coze知識庫全部損壞（0 segments），教練提供46萬字原始資料補齊
+Coze bot掛的6個知識庫（大樹使命/海餅乾文化/禮物諮詢原則/禮物諮詢法1-4/禮物諮詢法5-9/禮物諮詢最新案例）逐一點開檢查，全部顯示「系統內部異常」、0 segments——Coze版機器人實際上檢索不到任何案例，人設裡提到的真實案例（手汗、上台恐懼等）內容讀不出來。教練確認電腦裡有原始.docx，隨後提供4份檔案：《大樹使命之旅》《禮物諮詢法》（Downloads資料夾）+《海餅乾文化_核心逐字稿》（桌面「歷史資料/海餅乾知識庫」）+《海餅乾語錄》（桌面），共約46萬字，皆已擷取純文字存進`knowledge/*.md`，含真實案例逐字稿（佩軍老師手汗案例等，人設裡已改匿名）。
+
+### 4. 🔴🔴🔴 效能優化：46萬字改用SQLite FTS5全文檢索，不整包塞進提示詞
+教練指示「這麼龐大的資料庫要怎麼確保反應速度不要太慢」，並提示參考信念二(OPE)去查現成解法，舉例「一整本聖經放進去要怎麼快速搜尋」。查證ClawHub有現成RAG外掛(gbrain/activewiki)但需要額外裝Postgres等重型基礎設施，改用Python內建零依賴的SQLite FTS5：`scripts/build_search_index.py`把`knowledge/*.md`（docx擷取常常沒有段落換行，需額外用中文句尾標點二次切分）切成767個語意段落建索引；`scripts/search_knowledge.py`做關鍵字全文查詢。`AGENTS.md`新增指引要求agent用exec呼叫搜尋腳本取代整份讀取。實測驗證：問「上台恐懼」「偏頭痛」等問題，agent真的呼叫了`search_knowledge.py`（trajectory log可查證），答案正確不編造。
+
+### 5. 🎯🎯 Agent建置+LINE通道註冊+webhook正式切換上線
+新建`agents/jiaolian_thoughts/`，`openclaw channels add --channel line --account jiaolian_thoughts`註冊Channel ID 2008779326，`openclaw agents add jiaolian_thoughts --bind line:jiaolian_thoughts --model minimax/MiniMax-M3`建立綁定。本機測試（三大信念逐字引用、手汗案例正確應用禮物諮詢法）皆正確、LINE格式規則（禁**號/用【】/留空行）皆遵守。教練確認「現在就切，正式上線」後，在`developers.line.biz`把Webhook URL改成`https://openclaw.bymyway.com/line/webhook`，Verify回Success（`statusCode: 200`實測確認），`channels status`顯示running，正式服務121位好友，Coze版本停止回應。
+
+### 6. 🔴🔴🔴 陌生人配對關卡+獨立對話記錄——同一個坑第二次犯，當場修復
+webhook切換後真人朋友（`U895a0ad8e49d75f8303dc3d067282dc0`）傳訊息卡在OpenClaw陌生人配對關卡（跟bni_tainan v75同一個坑，建置時漏設定）。教練原話「這種問題不應該重複發生啊！我們不是都有試金石檔案嗎？」——修復：`channels.line.accounts.jiaolian_thoughts`加`dmPolicy: open`+`allowFrom: ["*"]`+`groupAllowFrom: ["*"]`；對應route加`session.dmScope: per-channel-peer`確保每位好友獨立對話記錄不混在一起。`gateway restart`後確認三個LINE帳號（default/bni_tainan/jiaolian_thoughts）皆running。commit `8b73bbea`。
+
+### 7. 🎯🎯 seabiscuit.bymyway.com監控後台上線（Cloudflare付費牆繞過）
+教練要求仿照`bni.bymyway.com`模式建立獨立監控後台，取名`seabiscuit.bymyway.com`。Cloudflare Zero Trust網頁後台這次卡在要求先輸入帳單/付款資訊才能進入（未替教練輸入任何付款資料，直接退出）。改用`cloudflared tunnel route dns openclaw-macmini seabiscuit.bymyway.com`（CLI走本機cert.pem認證，不受網頁付費牆限制）建立DNS，再建立一個範圍限縮為「Cloudflare Tunnel:Edit」、7天效期的臨時API Token，透過官方API（`PUT /accounts/{account}/cfd_tunnel/{tunnel}/configurations`）把新hostname加進tunnel `openclaw-macmini`的ingress規則（version 11→12），指向`http://localhost:18789`。完成後立即刪除該臨時Token（Cloudflare後台+本機皆清除）。`curl https://seabiscuit.bymyway.com/`回200，登入頁面正常顯示，密碼沿用既有`Bymyway7`。過程中教練實測真人連線一度卡在「gateway password missing」（重新整理後應可解決，屬已知UI小毛病）+ 裝置配對，皆已即時排除/核准（`openclaw devices approve 8704af4e-...`）。workspace commit `5a34e8ccf`記錄此不在git範圍的基礎設施變更。
+
+### 8. 🔴🔴🔴 User ID→真實姓名對照hook泛化為全LINE帳號通用（教練二次提醒同一坑）
+教練提醒：「別忘了之前的設定，每一個用戶你都要去找他的ID...不要一個一個都要讓我再重複講一次」——原本`bni-member-directory-map`這支hook寫死只認`bni_tainan`帳號，建立jiaolian_thoughts時沒自動套用。改寫成從sessionKey（`agent:<accountId>:line:direct:<userId>`）動態解析帳號，token/通訊錄路徑改用accountId動態組成；沒有`member_directory.md`的agent（如jiaolian_thoughts）優雅降級為`confidence: no_directory`，只記displayName不硬猜姓名，不報錯。實測驗證：jiaolian_thoughts真實inbound成功查到`U895a0a...`的displayName是「吳大樹」，正確寫入`state/jiaolian_thoughts_line_id_map.json`。gateway重啟後`hooks list`顯示✓ready。commit `9c95e096`。**以後新增任何LINE帳號都自動套用，不用再重複交代。**
+
+### 9. 🎯 SOP產出：Coze LINE帳號搬遷小龍蝦本機標準作業程序
+教練原話：「請嚴謹地把這個流程寫出一個SOP，因為我還有其他類似的帳號也要這麼做。」完整記錄本場12個步驟：查證真相源技巧/Coze人設虛擬化擷取方法/知識庫健康度查證/本機agent建置指令/46萬字以上效能處理/dmPolicy+dmScope必做三件套/webhook切換流程/User ID對照hook(已泛化免設定)/監控後台建置(CLI繞過Cloudflare付費牆)，結尾附完整檢查清單。`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，commit `2cee17f6b`。
+
+## 📋 v81 待辦（已併入最上方狀態總表，此處補充細節）
+| 優先 | 項目 | 說明 |
+|---|---|---|
+| 🟡 | 教練親自測試seabiscuit.bymyway.com登入 | 已核准教練這台裝置的pairing，理論上重新按連接即可進入，需教練確認實際體驗OK |
+| 🟡 | 「教練都在想什麼」知識庫深度擴充 | 目前只有教練提供的4份文件，教練若有更多素材可隨時補進`knowledge/`+重建索引 |
+| 🟡 | 其他類似LINE帳號待教練指定 | SOP已就緒，下次教練說「搬XX帳號」直接照SOP走 |
+
+## 🔑 本場關鍵檔案索引
+- `agents/jiaolian_thoughts/AGENTS.md`（完整人設，三層疊加逐字搬遷+匿名化規則）
+- `agents/jiaolian_thoughts/knowledge/*.md`（4份原始資料，46萬字）
+- `agents/jiaolian_thoughts/scripts/{build_search_index,search_knowledge}.py`（FTS5全文檢索）
+- `hooks/bni-member-directory-map/handler.js`（已泛化為全帳號通用）
+- `knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`（新SOP文件）
+- `claude-brain/project_seabiscuit_dashboard_2026-07-26.md`（Cloudflare tunnel設定變更記錄）
+- commit序列：`0e7fb756`(agent+人設+知識庫) → `ba5cd0c9`(FTS5效能優化) → `8b73bbea`(dmPolicy修復) → `9c95e096`(hook泛化) → `2cee17f6b`(SOP，workspace repo) → `5a34e8ccf`(dashboard記錄，workspace repo)
 
 ---
 
