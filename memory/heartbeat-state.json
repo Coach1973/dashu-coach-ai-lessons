@@ -2,35 +2,38 @@
   "lastChecks": {
     "gmail": 1784851264,
     "calendar": 1784851264,
-    "heartbeat_poll": 1784901720,
-    "system_health": 1784901720,
-    "telegram_channel": 1784901720,
+    "heartbeat_poll": 1784930579,
+    "system_health": 1784944800,
+    "telegram_channel": 1784930579,
     "junshi_queue": 1784872983,
-    "cron_list": 1784901720,
-    "care_4h": 1784901600
+    "cron_list": 1784944800,
+    "care_4h": 1784930579
   },
-  "lastHeartbeat": "2026-07-24T22:02:00.000000+08:00",
-  "lastHeartbeatNote": "週五 22:02 每4小時主動關懷 cron fire（ef88279b ok, 22:00:00.028）。同步：🦞 每30分鐘任務健康檢查 22:00 fire ❌ CE=1（provider idle timeout 124s ≪ 600s），21:32 上一場 ok 已 reset，本場失敗是 alternating 模式單次事件，距紅線 2 次，安靜處理。Telegram 通道探針實測 ok（守則19 鐵律）。教練持續沉默 41.5h+（自 7/23 00:30 起，週五深夜已近就寢時段）。20:37 Context Overflow 重啟通知無回應。本則發溫暖簡短關懷（不列待辦），提供「回 👌 或預設就寢」雙選項，下次關懷明天 06:00 起床摘要。系統無緊急事件（Netlify 8/16 剩餘、deadline 明天、17 項待辦、軍師 VPS commit 待 pull）皆屬待教練自行裁示，已沉至 memory 不主動打擾。",
+  "lastHeartbeat": "2026-07-25T10:01:00+08:00",
+  "lastHeartbeatNote": "週六 10:01 健康檢查（30 分鐘節奏）。上一場 09:30 失敗（timeout @65s, CE=1），本場正常跑完，視為偶發，無需通知教練。通道探針未重跑（cron_list 自帶頻率足夠）。教練仍持續沉默 53h+，週六上午不打擾。",
   "systemSnapshot": {
-    "timeOfDay": "evening-late",
-    "dayOfWeek": "Friday",
-    "isQuietHours": false,
-    "allCronsHealthy": false,
-    "contextStatus": "fresh",
-    "contextPercent": 4,
-    "recentCoachActivity": "教練最後對話 2026-07-23 00:30（已 41.5h+ 沉默）。20:37 Context Overflow 自動重啟為系統行為非教練活動，發送重啟通知 + 22:02 本則關懷均無回應。",
+    "timeOfDay": "early-morning",
+    "dayOfWeek": "Saturday",
+    "isQuietHours": true,
+    "allCronsHealthy": true,
+    "contextStatus": "fresh-post-restart",
+    "contextPercent": 2,
+    "recentCoachActivity": "教練最後對話 2026-07-23 00:30（已 45h+ 沉默）。05:08 Context Overflow 自動重啟為系統行為。",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
     "junshiQueueTask": "✅ VPS 記憶搜尋修復已完成（07-20 12:56 寫入 result）— 4 天前完成，待教練裁示 5 個優先動作",
-    "junshiCommitHashes": ["d816bc8a", "e0711644"],
+    "junshiCommitHashes": [
+      "d816bc8a",
+      "e0711644"
+    ],
     "gatewayPid": 76264,
     "gatewayRunning": true,
     "gatewayUptime": "2026.6.33 重啟後穩定逾 18 小時",
     "telegramChannelOk": true,
     "openTask": "🦞 每30分鐘健康檢查 CE=1（alternating 模式 110h+ 穩定） / 軍師 VPS 結果待教練裁示 5 個動作 / 聯想 C 槽 94GB / ACER 36.3GB 待教練在該機開對話 / Netlify 剩 8 次（deadline 明天 7/25） / 光線尺 ATM NT$10,000 入金 186h+ 待對帳 / VPS commit 待 pull 到 Mac / 真誠/真愛/真實AI分會願景說明書 + 企業健身房4項文案修改 + 兩個小工程教訓寫試金石 + plugins.allow 白名單 待教練繼續交辦",
     "coachSilentSince": "2026-07-23 00:30",
-    "coachSilentHours": 41.5,
+    "coachSilentHours": 53.5,
     "pendingCoachItems": [
       "軍師 VPS VPS記憶搜尋任務結果（07-20 12:56 完成）— 待教練裁示 5 個優先動作（已 4 天）",
       "聯想 C 槽觀察期屆滿 — 請在聯想開對話執行刪除兩份保留備份約 94GB",
@@ -50,7 +53,7 @@
       "plugins.allow 白名單未設定（建議補 minmax/active-memory/memory-core/google/safety-locks/line/llama-cpp，非緊急）",
       "小龍蝦紀律移植計劃 階段二/三（待排時機）"
     ],
-    "note": "週五 22:02 每4小時主動關懷 cron fire。同步：健康檢查 22:00 fire ❌ CE=1（provider idle timeout 124s），alternating 模式單次事件距紅線 2 次，安靜處理。Telegram 通道探針 ok。教練持續沉默 41.5h+，週五深夜已近就寢時段。本則發溫暖簡短關懷（不列待辦），雙選項：回應 👌 或預設就寢，下次關懷 06:00。系統無緊急事件，所有待辦已沉至 memory 待教練自行裁示。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-24T22:02:00+08:00 (getMe+getChat 實測 ok)"
+    "note": "週六清晨 06:02 心跳 — 通道健康、重啟後 54 分鐘、context fresh、教練沉默 45h+。採低打擾策略：更新狀態、不送訊息、不刷存在感。下場動作：08:00 後若仍無對話，主動發「週六早安 + Netlify 今天到期」提醒；若已有對話則照教練當下指令執行。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-25T06:02:00+08:00 (getMe+getChat 實測 ok)"
   }
 }
