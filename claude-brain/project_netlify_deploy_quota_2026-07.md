@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 54392333-a164-49b3-b17d-eae26af22220
-  modified: 2026-07-25T06:20:24.028Z
+  modified: 2026-07-25T07:56:38.477Z
 ---
 
 # Netlify部署額度追蹤（2026-07月）
@@ -39,5 +39,6 @@ metadata:
 | 2026-07-17 | 教練告知起始額度 | 16 |
 | 2026-07-19~07-24 | 陸續多次部署（tainan-calender/bigtree-tw/ai-talk-tw/jiesheng-leadership等） | 見`state/netlify_deploy_quota.json`history區塊 |
 | 2026-07-25 | 教練貼帳單截圖，新credit核發，餘額換算回升 | 約71 |
+| 2026-07-25 | ai-talk-tw部署：現場設攤6家廠商+贊助好禮+贊助人名單+入門禮補充(deploy 6a646c0213e4778b1f227e4e) | 70 |
 
 Related: [[reference_netlify_token]], [[feedback_netlify_autodeploy_cost_awareness]]

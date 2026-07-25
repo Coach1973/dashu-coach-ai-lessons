@@ -2,14 +2,21 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-07-25",
-  "quota_remaining": 71,
-  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期，目前剩999.5點→約66次部署額度；②另一組500點credits，2026-05-30核發、無到期日，目前剩70.1點→約4次部署額度。credit依到期日先扣（soonest first，會先扣8/25到期那組），合計約71次部署可用。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。之後真的部署後要比對前後credit差異，確認15點/次這個換算率是否仍準確。",
+  "quota_remaining": 70,
+  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
-    {"name": "Personal plan credits", "remaining": 999.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 66},
+    {"name": "Personal plan credits", "remaining": 984.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 65},
     {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
   ],
-  "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次，之後改用新起始值繼續遞減",
+  "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a646c0213e4778b1f227e4e",
+      "change": "新增現場設攤6家廠商卡片、贊助好禮(EVERYDAY CAFE+煦多午茶)、贊助人名單9位、入門禮加註手搖飲甜點限量60份先到先得",
+      "remaining_after": 70
+    },
     {
       "date": "2026-07-24",
       "site": "ai-talk-tw",
