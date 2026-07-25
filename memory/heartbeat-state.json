@@ -2,15 +2,15 @@
   "lastChecks": {
     "gmail": 1784851264,
     "calendar": 1784851264,
-    "heartbeat_poll": 1784930579,
+    "heartbeat_poll": 1784959398,
     "system_health": 1784944800,
-    "telegram_channel": 1784930579,
+    "telegram_channel": 1784959398,
     "junshi_queue": 1784872983,
     "cron_list": 1784944800,
     "care_4h": 1784930579
   },
-  "lastHeartbeat": "2026-07-25T10:01:00+08:00",
-  "lastHeartbeatNote": "週六 10:01 健康檢查（30 分鐘節奏）。上一場 09:30 失敗（timeout @65s, CE=1），本場正常跑完，視為偶發，無需通知教練。通道探針未重跑（cron_list 自帶頻率足夠）。教練仍持續沉默 53h+，週六上午不打擾。",
+  "lastHeartbeat": "2026-07-25T14:01:00+08:00",
+  "lastHeartbeatNote": "週六 14:01 心跳（30 分鐘節奏）。通道探針實測 ok、HEARTBEAT.md 13:00 失敗 CE=2、13:30+ log 缺（待下場健康檢查補完）。教練沉默 53.5h+（自 2026-07-23 00:30），但有 🔴 緊急事項：Netlify 剩 8 次今天（7/25）到期，主動發 Telegram 簡訊關懷（message_id 8865，OK 送出）。守則 19 鐵律：通道死活以當下實測為準；本次 ok:true 確認後才發。",
   "systemSnapshot": {
     "timeOfDay": "early-morning",
     "dayOfWeek": "Saturday",
@@ -54,6 +54,6 @@
       "小龍蝦紀律移植計劃 階段二/三（待排時機）"
     ],
     "note": "週六清晨 06:02 心跳 — 通道健康、重啟後 54 分鐘、context fresh、教練沉默 45h+。採低打擾策略：更新狀態、不送訊息、不刷存在感。下場動作：08:00 後若仍無對話，主動發「週六早安 + Netlify 今天到期」提醒；若已有對話則照教練當下指令執行。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-25T06:02:00+08:00 (getMe+getChat 實測 ok)"
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-25T14:01:00+08:00 (getMe+getChat 實測 ok) + sendMessage 實測送出（message_id 8865）"
   }
 }
