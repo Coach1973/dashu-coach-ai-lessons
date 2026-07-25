@@ -2,10 +2,10 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-07-25",
-  "quota_remaining": 70,
+  "quota_remaining": 68,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
-    {"name": "Personal plan credits", "remaining": 984.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 65},
+    {"name": "Personal plan credits", "remaining": 954.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 63},
     {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
@@ -13,8 +13,15 @@
     {
       "date": "2026-07-25",
       "site": "ai-talk-tw",
+      "deploy_id": "6a646d61f78654b788d59cee",
+      "change": "🔴補救部署：修正_headers的/*規則強制Content-Type:text/html蓋過圖片正確MIME類型，導致圖片下載成功但瀏覽器不顯示。同時修正PowerShell Compress-Archive產生反斜線路徑(images\\xxx.jpg)而非正斜線(images/xxx.jpg)，Netlify無法辨識資料夾結構的問題。改用.NET ZipArchive手動控制路徑分隔符。這是本場第2、3次部署，因第1次部署有上述兩個bug，圖片完全無法顯示，教練實測發現後補救",
+      "remaining_after": 68
+    },
+    {
+      "date": "2026-07-25",
+      "site": "ai-talk-tw",
       "deploy_id": "6a646c0213e4778b1f227e4e",
-      "change": "新增現場設攤6家廠商卡片、贊助好禮(EVERYDAY CAFE+煦多午茶)、贊助人名單9位、入門禮加註手搖飲甜點限量60份先到先得",
+      "change": "新增現場設攤6家廠商卡片、贊助好禮(EVERYDAY CAFE+煦多午茶)、贊助人名單9位、入門禮加註手搖飲甜點限量60份先到先得（⚠️此次部署圖片實際未顯示，見下一筆補救記錄）",
       "remaining_after": 70
     },
     {
