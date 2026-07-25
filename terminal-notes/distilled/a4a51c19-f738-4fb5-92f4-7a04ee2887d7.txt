@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session a4a51c19-f738-4fb5-92f4-7a04ee2887d7
-# 提取時間：2026-07-24 23:08 (台灣時間)
-# 共 13 條教練原話
+# 提取時間：2026-07-24 23:37 (台灣時間)
+# 共 16 條教練原話
 
 ---
 
@@ -166,3 +166,48 @@ Deploy `6a632cc690a1d91a5fab53df`，狀態 ready，線上已確認顯示新的11
 
 **查到的真正原因：**
 教練問「人呢？」那一次，AI 內部處理卡住超過6分鐘（22:50~22:57），系統自動偵測到卡住並強制中止重來——這跟這幾天系統一直在發…（略）
+
+【教練 2026-07-24 15:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補充說明一下：剛才回覆裡提到的所有時間點（22:44、22:46、22:50~22:57、晚上10點21分左右）都**已經是換算後的台灣時間**（原始 log 記錄是 UTC，我有先加8小時换算，例如系統記的「14:56:53Z」換算後就是台灣時間 22:56:53），不是直接照抄 UTC 數字，教練可以放心對照。
+
+回到剛才的問題：要不要我現在就動手，幫大台南小幫手加一道「LINE回覆送不出去就改用push硬送」的備援機制？
+
+【教練 2026-07-24 15:10】
+為何網頁版能看到，LINE卻看不到縮
+
+　▶ AI 回應：簡單講就是:網頁後台看到的,是「AI大腦裡想的答案」;LINE看到的,是「答案有沒有真的寄出去」——這是兩件不同的事。
+
+大台南小幫手這次因為卡住想了超過6分鐘才想完(這幾天系統整體都不穩,不是這個小幫手專屬問題),等它想完要送出去給LINE的時候,LINE那邊的「回覆門票」已經過期了(LINE規定要在很短時間內回覆,通常一分鐘內),所以送不出去,直接被LINE退回。但AI自己不知道被退回,後台紀錄還是顯示「我已經回覆了」,才會出現教練這邊「網頁看得到、LINE看不到」的落差。
+
+【教練 2026-07-24 15:11】
+<task-notification>
+<task-id>bqi9zt9bm</task-id>
+<tool-use-id>toolu_013fDgAXc3Vj5VFa2oqUXkLk</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/a4a51c19-f738-4fb5-92f4-7a04ee2887d7/tasks/bqi9zt9bm.output</output-file>
+<status>completed</status>
+<summary>Background command "find / -path "*/node_modules/@openclaw/line*" -maxdepth 8 2&gt;/dev/null | grep -v Permission | head -5
+echo "---"
+find / -iname "*line*.js" -path "*openclaw*" 2&gt;/dev/null | grep -v Permission | grep -v node_modules/@openclaw/line | head -5" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：（背景排查完成，非教練發言）剛好把 LINE 外掛程式的位置查到了：`~/.openclaw/node_modules/@openclaw/line`，等教練確認要不要加「回覆失敗改用push硬送」這個備援機制時，我這邊已經準備好可以直接動手。

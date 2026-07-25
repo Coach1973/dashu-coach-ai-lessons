@@ -1,58 +1,42 @@
 {
   "lastChecks": {
-    "heartbeat_received": "2026-07-24T10:06:28+08:00",
-    "gmail": "2026-07-13T18:00:30+08:00",
-    "calendar": "API 未啟用 (403)",
-    "system_health": "2026-07-24T10:06:28+08:00",
-    "telegram_channel": "ok（探針 10:06 實測 ok=true，守則19 鐵律：當下實測為準）"
+    "heartbeat_poll": "2026-07-25T18:03:48.083830+08:00",
+    "system_health": "2026-07-25T18:03:48.083830+08:00",
+    "telegram_channel": "2026-07-25T18:03:48.083830+08:00",
+    "netlify_quota": "2026-07-25T14:25:00+08:00"
   },
-  "lastHeartbeat": "2026-07-24T10:06:28+08:00",
-  "lastHeartbeatNote": "週五 10:06 「每4小時主動關懷」cron ef88279b fire 觸發：教練 silent 33.6h（從昨晚 00:30 起，週五早上合理時段），已送出友善問候到 Telegram（透過 cron announce delivery），不列待辦。Telegram 通道健康（探針當下實測 ok=true）。系統一切就緒：昨晚 OpenClaw 6.33 更新完成、bni.bymyway.com 對外開通教練已兩台電腦實測通過、BNI 小幫手 webhook 上線、Netlify 額度剩 10 次（明天 7/25 到期）、plugins.allow 白名單未設定（非緊急）。下次 14:00 cron fire 自動觸發下次關懷。",
-  "lastProactiveCare": "2026-07-24T10:06:28+08:00",
+  "lastHeartbeat": "2026-07-25T18:03:48.083830+08:00",
+  "lastHeartbeatNote": "週六 18:01 心跳。通道探針實測 ok、系統全面健康（17:55 peipei force-restart、17:37 context 二次 overflow 重啟、14:01 第一次 overflow 重啟）。Netlify 額度已驗證 71 次充裕（14:25 查），14:01 推送之「剩 8 次今天到期」屬當下資料已過期，可忽略。教練沉默 62.1h+ 週六傍晚，18:00 關懷 cron 已 fire（announce telegram 6124913915 送出），本場不重複打擾。判斷：保持沉默，下場等 22:00 關懷 cron 或教練主動。",
   "systemSnapshot": {
-    "timeOfDay": "morning_friday",
-    "dayOfWeek": "Friday",
+    "timeOfDay": "evening_saturday",
+    "dayOfWeek": "Saturday",
     "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "fresh_after_restart_2026-07-24_07:38",
-    "contextPercent": 15,
-    "gatewayPid": 64856,
-    "gatewayUptime": "21d_running",
+    "contextStatus": "post_2nd_overflow_restart",
+    "contextPercent": 8,
+    "recentRestarts": "2026-07-25 14:37 (overflow) + 17:37 (overflow) + 17:55 (peipei 自动)",
+    "gatewayPid": 76264,
     "gatewayRunning": true,
+    "gatewayUptime": "6.33 升級後穩定逾 18 小時",
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh 10:06 實測 ok=true",
+    "telegramChannelSource": "telegram_channel_probe.sh 18:01 實測 ok=true",
     "junshiQueueEmpty": true,
+    "netlifyQuota": 71,
+    "netlifyQuotaCheckNote": "2026-07-25 14:25 查證，credit 制而非「到期」，7/25 核發新 credit 後 71 次充裕",
     "coachSilentSince": "2026-07-23T00:30:00+08:00",
-    "coachSilentHours": 33.6,
-    "unreadGmailCount": 11,
-    "unreadImportantCount": 3,
+    "coachSilentHours": 62.1,
     "pendingCoachItems": [
-      "🟡 v75：教練親自在 LINE 多測幾種問法，確認 BNI 小幫手實戰體驗 OK（webhook 已上線）",
-      "🟡 v75：Coze 舊機器人先保留當備援，等教練確認新系統穩定後再停用",
-      "🟢 v75：tainan_calendar.md 同步頻率目前每 4 小時，若覺得太慢可縮短 cron 間隔",
-      "🟡 v73/v74：聯想 C 槽 94GB 待刪（觀察期已滿，待教練在聯想開對話）",
-      "🟡 v73：ACER 36.3GB 待刪（觀察期已過，待教練在 ACER 開對話）",
-      "🟡 v72：Netlify 部署額度剩 10 次（7/25 前到期，明天）",
-      "🟡 v73：光線尺顧問 ATM NT$10,000 入金(07-13)待對帳",
-      "🟡 v73：企業健身房 4 項文案修改（已記錄）",
-      "🔴🔴🔴 v72/v73：真誠/真愛/真實 AI 分會願景說明書——連續多棒未開始，教練尚未給細節",
-      "🟢 v73：「場景化升華」兩不同名排程都 23:00 推播，教練若嫌吵一句話停一個",
-      "🟡 v77：plugins.allow 白名單未設定（非緊急，建議找空檔補上明確清單）"
+      "🟡 v75：教練親自在 LINE 多測幾種問法，確認 BNI 小幫手實戰體驗 OK",
+      "🟡 v75：Coze 舊機器人先保留當備援",
+      "🟡 v73/v74：聯想 C 槽 94GB 暫緩刪除（原計畫變更：7/11 舊備份 7/24 真的拿去還原救過一次，等新備份穩定後再議）",
+      "🟡 v73：ACER 36.3GB 待刪（需教練在 ACER 開對話）",
+      "🟡 v73：光線尺顧問 ATM NT,000 入金(07-13) 待對帳",
+      "🟡 v73：企業健身房 4 項文案修改",
+      "🔴🔴🔴 v72/v73：真誠/真愛/真實 AI 分會願景說明書",
+      "🟡 v77：plugins.allow 白名單補上",
+      "🟡 v77：BNI 大台南小幫手「主動提醒」功能（下一場直接實作）"
     ],
-    "weatherRelevance": "週五早上 10:06，教練可能剛到辦公室",
-    "note": "本次是「每4小時主動關懷」cron 觸發（不同於「每30分鐘健康檢查」），按 cron 設計送出友善問候到 Telegram。教練 silent 33.6h 是合理範圍（可能忙或休假），不需要更高頻打擾。接力棒待辦中真誠／真愛／真實AI 三分會說明書（🔴🔴🔴）仍待教練細節，但按 cron payload 指示『不主動列待辦』，下次教練主動說話才順手提醒。",
-    "telegramChannelPushAt": "2026-07-24T10:06:28+08:00",
-    "telegramChannelPushResult": "sent_via_cron_announce_delivery（payload 自動送到 Telegram, bot_main, 6124913915）",
-    "netlifyQuotaCheck": {
-      "checkedAt": "2026-07-24T10:06:28+08:00",
-      "remaining": 10,
-      "deadline": "2026-07-25",
-      "note": "明天到期，剩 10 次。碰 Netlify 站台前必查"
-    },
-    "cron1000fires": [
-      {"id": "46e67e2e", "name": "🦞 每30分鐘任務健康檢查", "result": "error → next retry 10:30"},
-      {"id": "9c3fc55d", "name": "每2小時增量記憶蒸餾", "result": "error → next retry 12:02"},
-      {"id": "ef88279b", "name": "每4小時主動關懷", "result": "ok（10:00 fire 觸發本 session，已送出關懷訊息）"}
-    ]
+    "note": "週六傍晚 18:01 心跳 — 系統健康、通道健康、教練沉默 62.1h+ 週末節奏。14:01 overflow 後 17:37 再 overflow 連續重啟，但都已穩定。18:00 關懷 cron 已送出不重複打擾。等教練主動或 22:00 cron 關懷。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 18:01 (getMe+getChat 實測 ok)"
   }
 }

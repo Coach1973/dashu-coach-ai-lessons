@@ -2,20 +2,20 @@
   "lastChecks": {
     "gmail": 1784851264,
     "calendar": 1784851264,
-    "heartbeat_poll": 1784959398,
+    "heartbeat_poll": 1784988182,
     "system_health": 1784944800,
-    "telegram_channel": 1784959398,
+    "telegram_channel": 1784988182,
     "junshi_queue": 1784872983,
     "cron_list": 1784944800,
     "care_4h": 1784930579
   },
-  "lastHeartbeat": "2026-07-25T14:01:00+08:00",
-  "lastHeartbeatNote": "週六 14:01 心跳（30 分鐘節奏）。通道探針實測 ok、HEARTBEAT.md 13:00 失敗 CE=2、13:30+ log 缺（待下場健康檢查補完）。教練沉默 53.5h+（自 2026-07-23 00:30），但有 🔴 緊急事項：Netlify 剩 8 次今天（7/25）到期，主動發 Telegram 簡訊關懷（message_id 8865，OK 送出）。守則 19 鐵律：通道死活以當下實測為準；本次 ok:true 確認後才發。",
+  "lastHeartbeat": "2026-07-25T22:03:02.700774+08:00",
+  "lastHeartbeatNote": "週六 22:02 心跳（30 分鐘節奏）。通道探針實測 ok:true。兩項單次偶發錯誤（30-min 健康檢查 model idle timeout / 場景化升華 session 競態），連錯 ≤1 未達紅線，無需通知教練。Coach 今天 v80 給了大量交辦（BNI三道防呆+四分會通訊錄），下一場明示任務「教練都在想什麼」LINE帳號搬遷待命。本場 22:02 接近靜音時段（23:00 開始），不主動打擾，等教練新訊息。",
   "systemSnapshot": {
-    "timeOfDay": "early-morning",
+    "timeOfDay": "late-night",
     "dayOfWeek": "Saturday",
     "isQuietHours": true,
-    "allCronsHealthy": true,
+    "allCronsHealthy": false,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 2,
     "recentCoachActivity": "教練最後對話 2026-07-23 00:30（已 45h+ 沉默）。05:08 Context Overflow 自動重啟為系統行為。",
@@ -31,7 +31,7 @@
     "gatewayRunning": true,
     "gatewayUptime": "2026.6.33 重啟後穩定逾 18 小時",
     "telegramChannelOk": true,
-    "openTask": "🦞 每30分鐘健康檢查 CE=1（alternating 模式 110h+ 穩定） / 軍師 VPS 結果待教練裁示 5 個動作 / 聯想 C 槽 94GB / ACER 36.3GB 待教練在該機開對話 / Netlify 剩 8 次（deadline 明天 7/25） / 光線尺 ATM NT$10,000 入金 186h+ 待對帳 / VPS commit 待 pull 到 Mac / 真誠/真愛/真實AI分會願景說明書 + 企業健身房4項文案修改 + 兩個小工程教訓寫試金石 + plugins.allow 白名單 待教練繼續交辦",
+    "openTask": "🦞 「教練都在想什麼」LINE帳號搬遷到Mac+MiniMax-M3（教練2026-07-25明示下一場直接動手） / BNI大台南小幫手「主動提醒」功能（v77設計已備） / 30-min 健康檢查 + 23:00 場景化升華 各1次連錯待觀察 / 多項卡住-等教練",
     "coachSilentSince": "2026-07-23 00:30",
     "coachSilentHours": 53.5,
     "pendingCoachItems": [
@@ -54,6 +54,6 @@
       "小龍蝦紀律移植計劃 階段二/三（待排時機）"
     ],
     "note": "週六清晨 06:02 心跳 — 通道健康、重啟後 54 分鐘、context fresh、教練沉默 45h+。採低打擾策略：更新狀態、不送訊息、不刷存在感。下場動作：08:00 後若仍無對話，主動發「週六早安 + Netlify 今天到期」提醒；若已有對話則照教練當下指令執行。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-25T14:01:00+08:00 (getMe+getChat 實測 ok) + sendMessage 實測送出（message_id 8865）"
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-25T22:03:02.700774+08:00 (getMe+getChat 實測 ok)"
   }
 }
