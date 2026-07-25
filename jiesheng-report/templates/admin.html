@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>戰報｜結繩領導學工作坊</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); --green:#7ee787; --red:#ff9b9b; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:28px 16px 60px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:26px; font-weight:900; margin-bottom:4px; }
+  h1 span { color:var(--gold); }
+  .logout { display:inline-block; text-decoration:none; float:right; padding:10px 18px;
+    font-size:15px; font-weight:700; color:rgba(255,255,255,.6); background:#1c1c1c; border:1px solid var(--line); border-radius:8px; }
+
+  .stat-row { display:flex; gap:12px; margin:22px 0 28px; flex-wrap:wrap; }
+  .stat-card { flex:1; min-width:220px; text-decoration:none; color:#fff; background:#1c1c1c;
+    border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .stat-card.active { border-color:var(--gold); background:#20190f; }
+  .stat-card .city { font-size:19px; font-weight:900; margin-bottom:2px; }
+  .stat-card .city span.date { font-size:13px; font-weight:500; color:rgba(255,255,255,.5); margin-left:6px; }
+  .stat-card .nums { display:flex; gap:14px; margin-top:10px; font-size:14px; }
+  .stat-card .nums b { display:block; font-size:20px; }
+  .stat-card .total b { color:#fff; }
+  .stat-card .paid b { color:var(--green); }
+  .stat-card .unpaid b { color:var(--red); }
+
+  .box { background:#1c1c1c; border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:24px; }
+  .box h2 { font-size:18px; font-weight:900; color:var(--gold); margin-bottom:14px; }
+  .add-form { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  .add-form .field { display:flex; flex-direction:column; gap:4px; }
+  .add-form label { font-size:13px; color:rgba(255,255,255,.6); font-weight:700; }
+  .add-form input { padding:10px 12px; font-size:16px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:inherit; }
+  .add-form input[name="name"] { width:140px; }
+  .add-form input[name="phone"] { width:130px; }
+  .add-form input[name="register_date"] { width:150px; }
+  .add-form input[name="note"] { width:180px; }
+  .add-form button { padding:11px 22px; font-size:16px; font-weight:900; border:none; border-radius:8px;
+    background:var(--gold); color:var(--dark); cursor:pointer; height:41px; }
+
+  .tbl { width:100%; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:16px; }
+  th { text-align:left; color:var(--gold); font-size:14px; font-weight:700; padding:8px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  td { padding:10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:middle; }
+  td.name { font-weight:900; white-space:nowrap; }
+  tr.paid-row td { background:rgba(126,231,135,.06); }
+  input[type="checkbox"] { width:20px; height:20px; cursor:pointer; }
+  select, td input[type="text"], td input[type="number"], td input[type="date"] {
+    padding:7px 8px; font-size:15px; border-radius:6px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:inherit; width:100%; min-width:80px;
+  }
+  td.amount input { width:80px; }
+  td.note input { width:140px; }
+  .row-actions { display:flex; gap:6px; }
+  .row-actions button { padding:7px 12px; font-size:14px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
+  .btn-save { background:var(--gold); color:var(--dark); }
+  .btn-del { background:#3a1c1c; color:var(--red); border:1px solid rgba(220,80,80,.4) !important; }
+  .empty { padding:36px 0; text-align:center; color:rgba(255,255,255,.5); font-size:17px; }
+  .paid-label { font-size:13px; font-weight:700; }
+  .paid-label.yes { color:var(--green); }
+  .paid-label.no { color:rgba(255,255,255,.4); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="logout" href="/admin/logout">登出</a>
+    <h1>結繩領導學工作坊<span>｜即時戰報</span></h1>
+
+    <div class="stat-row">
+      {% for w in workshops %}
+      <a class="stat-card {{ 'active' if w == selected else '' }}" href="/admin?workshop={{ w }}">
+        <div class="city">{{ w }}<span class="date">{{ workshop_dates[w] }}</span></div>
+        <div class="nums">
+          <div class="total">報名<b>{{ stats[w].total }}</b></div>
+          <div class="paid">已繳<b>{{ stats[w].paid }}</b></div>
+          <div class="unpaid">未繳<b>{{ stats[w].unpaid }}</b></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="box">
+      <h2>新增報名者｜{{ selected }}場</h2>
+      <form class="add-form" method="POST" action="/admin/add">
+        <input type="hidden" name="workshop" value="{{ selected }}">
+        <div class="field"><label>姓名 *</label><input type="text" name="name" required></div>
+        <div class="field"><label>電話</label><input type="text" name="phone"></div>
+        <div class="field"><label>報名日期</label><input type="date" name="register_date" value="{{ today }}"></div>
+        <div class="field"><label>備註</label><input type="text" name="note" placeholder="選填"></div>
+        <button type="submit">＋ 新增</button>
+      </form>
+    </div>
+
+    <div class="box">
+      <h2>{{ selected }}場名單（共 {{ registrants|length }} 人）</h2>
+      <div class="tbl">
+        {# form 元素不能直接包住 tr/td（表格內容模型不允許，瀏覽器會把它搬走導致送出失敗），
+           改用 HTML5 form="id" 屬性，讓每個欄位各自指回外面獨立的 form 標籤 #}
+        {% for r in registrants %}
+        <form id="save-{{ r.id }}" method="POST" action="/admin/update/{{ r.id }}" style="display:none"></form>
+        <form id="del-{{ r.id }}" method="POST" action="/admin/delete/{{ r.id }}"
+              onsubmit="return confirm('確定刪除 {{ r.name }} 這筆資料？');" style="display:none"></form>
+        {% endfor %}
+        <table>
+          <tr>
+            <th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
+            <th>繳費方式</th><th>金額</th><th>備註</th><th>操作</th>
+          </tr>
+          {% for r in registrants %}
+          <tr class="{{ 'paid-row' if r.paid else '' }}">
+            <td class="name">
+              {{ r.name }}
+              <input type="hidden" name="name" value="{{ r.name }}" form="save-{{ r.id }}">
+            </td>
+            <td><input type="text" name="phone" value="{{ r.phone or '' }}" form="save-{{ r.id }}"></td>
+            <td><input type="date" name="register_date" value="{{ r.register_date }}" form="save-{{ r.id }}"></td>
+            <td>
+              <input type="checkbox" name="paid" {{ 'checked' if r.paid else '' }} form="save-{{ r.id }}">
+              <span class="paid-label {{ 'yes' if r.paid else 'no' }}">{{ '已繳費' if r.paid else '未繳費' }}</span>
+            </td>
+            <td>
+              <select name="paid_method" form="save-{{ r.id }}">
+                <option value="">—</option>
+                {% for m in paid_methods %}
+                <option value="{{ m }}" {{ 'selected' if r.paid_method == m else '' }}>{{ m }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="amount"><input type="number" name="amount" value="{{ r.amount or '' }}" form="save-{{ r.id }}"></td>
+            <td class="note"><input type="text" name="note" value="{{ r.note or '' }}" form="save-{{ r.id }}"></td>
+            <td class="row-actions">
+              <button type="submit" form="save-{{ r.id }}" class="btn-save">儲存</button>
+              <button type="submit" form="del-{{ r.id }}" class="btn-del">刪除</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% if not registrants %}<div class="empty">{{ selected }}場目前還沒有報名者，用上面表單新增第一筆</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
