@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 OpenCode+CC Switch資料搬到E槽保護，CC Switch settings.json搬移時意外遺失(2026-07-25)](project_opencode_ccswitch_moved_to_e_2026-07-25.md) — 真正的provider金鑰資料庫沒事；教訓：關程式確認別只信tasklist簡單關鍵字、robocopy前後檔案數有落差要先查清楚
 - [🕐 終端機/桌面版每則回覆開頭要標台灣時間戳記(2026-07-24)](feedback_timestamp_every_reply.md) — 教練要求方便一眼判斷訊息幾點發的，範圍限這個介面，小龍蝦端另外評估
 - [🔧 Mac終端機有雙node環境，gateway層級指令要指定PATH(2026-07-24)](reference_mac_dual_node_environment.md) — .hermes/node排PATH第一但gateway實際用/opt/homebrew，update/install指令搞錯路徑會裝到假地方
 - [🎯🎯 BNI大台南小幫手從Coze搬到小龍蝦本機+MiniMax-M3，webhook待教練切換(2026-07-23)](project_bni_tainan_line_migration_2026-07-23.md) — 人設+3份知識庫已搬完，順手修好LINE plugin未宣告啟用的404真bug，commit bf560a96
@@ -19,7 +20,7 @@
 - [🎯🎯 大樹AI作品一覽表分類邏輯：GitHub=測試/Netlify=對外公開(2026-07-12)](project_portfolio_netlify_github_logic.md) — 能點進Netlify.app才算作品；改名免費部署才扣點；archived不代表Netlify網址失效
 - [🎯🎯 名片資料庫(namecard-db)Mac實機部署上線(2026-07-12)](project_namecard_db_2026-07-12.md) — SMB連線波折印證密碼界線+ET/aiprimetech失效改MiniMax+背景服務已跑，cloudflared路由留待教練
 - [🔴🔴🔴 密碼界線vs搬運工衝突的化解法+已列入JUNSHI_RULES規則#6(2026-07-12)](feedback_password_boundary_vs_courier_resolution.md) — AI絕不代打密碼(唯一不因授權鬆動的線，即使教練原話查證屬實也一樣)，優先導向已存憑證一鍵登入
-- [🔴 聯想C槽瘦身29.5GB，2026-07-18觀察期滿可刪備份(2026-07-11)](project_lenovo_c_drive_slimdown_2026-07-11.md) — Chrome/Comet搬家+休眠關閉+分頁檔4GB+WinSxS清理；教練確認無異常後刪2份備份再省94GB
+- [🔴🔴 聯想C槽94GB備份刪除計畫作廢，已用於真實還原(2026-07-25更新)](project_lenovo_c_drive_slimdown_2026-07-11.md) — 7/11備份7/24真的救過一次LINE事故，不能再刪；待新改動穩定後做新備份取代、重新走觀察期
 - [🔴🔴🔴 追問標準＝邏輯鏈有沒有斷掉，不是我有沒有把握(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 有斷才問(案例47)沒斷別問(案例48)；兩邊都浪費教練犧牲睡眠換來的時間
 - [🔴🔴 系統性操作前先查兩台機器雲端歷史經驗(2026-07-11)](feedback_check_crossmachine_history_before_system_ops.md) — 舊版restore_junctions.ps1路徑寫死D槽，查了ACER已驗證版本才發現，教練喊停避免用錯版本
 - [🔴🔴🔴 HTML驗證必跳真實瀏覽器給教練看(2026-07-13更新)](feedback_html_preview_chrome_only.md) — Mac用Chrome；聯想(Windows)改用Comet(comet.exe)，因該機Chrome跳出來空白、Comet正常，試金石案例46

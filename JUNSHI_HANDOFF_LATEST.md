@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
 | 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
-| 🔴🔴🔴 | Netlify部署額度 | ⚠️持續追蹤 | 真相源`state/netlify_deploy_quota.json`：剩10次（2026-07-25前到期），不是任務本身，是每次碰Netlify站台前要先查的約束條件 |
+| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | 一直是credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。2026-07-25核發新credit後餘額回升：1000點(8/25到期)剩999.5+500點(無到期日)剩70.1，換算約剩71次。每次部署前後仍要查`state/netlify_deploy_quota.json`更新餘額 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
@@ -16,12 +16,52 @@
 | 🟡 | 兩個小工程教訓寫入試金石 | ⏳待軍師動手 | ①`.env`含`$`字元值要單引號包住 ②Jinja模板要guard None值（mentor100已修好，其他Flask小專案值得抽空檢查） |
 | 🟡 | BNI小幫手教練親測多種問法 | ⏳待教練體驗 | 確認BNI小幫手實戰體驗OK |
 | 🟡 | Coze舊機器人何時停用 | 🔒卡住-等教練 | 先保留當備援，等教練確認新系統穩定一陣子後裁示 |
-| 🟡 | ACER/聯想備份刪除（ACER備份+聯想C槽94GB+ACER 36.3GB，觀察期皆已過） | 🔒卡住-需教練在ACER/聯想機器親自開對話執行 | 這台Mac無法代為執行，是本機執行限制不是任務被遺忘 |
+| 🟡 | ACER 36.3GB備份待刪（觀察期已過） | 🔒卡住-需教練在ACER機器親自開對話執行 | 這台Mac無法代為執行 |
+| 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
 | 🟡 | 光線尺顧問ATM NT$10,000入金(07-13)對帳 | 🔒卡住-等教練 | 待教練對帳 |
 | 🟢 | 「連接」按鈕自動化點擊無反應（真人操作無此問題） | ✅已排除疑慮 | 教練親自兩台電腦實測「連接」按鈕正常，先前疑慮的bug只影響自動化工具合成點擊事件，教練不會遇到，暫不需修 |
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-25 v78（聯想Windows Claude Code Sonnet5，LINE事故善後+OpenCode/CC Switch搬家保護+繁體字Hook補漏跨平台）
+
+> 建立時間：2026-07-25（台灣時間）
+> 本棒執行者：聯想（Windows）Claude Code Sonnet 5
+> 上一棒：v77（Mac終端機Sonnet5，BNI小幫手提醒功能設計+bni.bymyway.com對外開通，完整見下方）
+> 本棒主軸：**開工後先做完六步驟，接著圍繞7/24 LINE junction事故（見[[project_line_moved_to_e]]鐵律9-11）的善後工作展開——確認事故期間備份救援有沒有留下缺口、順手修好教練新裝OpenCode桌面版連不上TokenTable的真bug、把OpenCode與CC Switch兩套App的使用者資料搬去E槽避免下次還原又消失、移除被7/11舊備份帶回來的Advanced SystemCare、完整盤點7/11~7/25所有C槽異動確認無遺漏。尾聲教練抓到軍師本場第4次把回覆滑成簡體字，這次原因是Mac那邊已有的防呆Hook沒有覆蓋到這台Windows的Claude Code，當場補建對應Hook並在對話中真實觸發驗證有效。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 LINE資料完整性驗證：7/11還原不影響E槽真實資料
+教練擔心C槽還原到7/11後，7/11~7/24這段期間LINE的聊天資料會不會被連帶洗掉。查證：LINE聊天資料庫實際存在E槽（`C:\Users\bymyw\AppData\Local\LINE\Data`是指向`E:\Claude-Data\LINE-Data`的junction），系統還原只動C槽、不動E槽；又比對事故當天(7/24)junction拆除前做的備份`LINE-Data.bak.20260724-1440`與目前即時資料，檔案數不減反增(5553→5663)、主要資料庫檔案大小一致且持續有新寫入紀錄，確認資料完整無缺、沒有回退到7/11。
+
+### 2. 🎯🎯 修好OpenCode桌面版連不上TokenTable的真bug
+教練照著TokenTable官方教學設定好OpenCode桌面版的自訂Provider，送出訊息完全沒反應。查`~/.local/share/opencode/log/opencode.log`抓到明確錯誤：`TypeError: Headers.append: "tokentable auto" is an invalid header name`——設定檔`opencode.jsonc`裡多了一段不該有的`headers: {"TokenTable Auto": "TokenTable Auto"}`，HTTP標頭名稱不能含空格，每次送出請求都在連線前就當場報錯。移除該欄位後教練實測「有了」，問題解決。
+
+### 3. 🔴🔴 OpenCode + CC Switch使用者資料搬去E槽（junction保護，比照LINE/Chrome/Comet既有SOP）
+教練主動問「這些設定會不會也被下次還原洗掉」，比照既有SOP搬家：
+- OpenCode三個資料夾（`.config/opencode`設定3KB、`.local/share/opencode`對話資料庫4.7MB、`AppData/Roaming/ai.opencode.desktop`視窗狀態13MB）→ 全數robocopy到`E:\Claude-Data\AppData\OpenCode-{Config,LocalShare,Roaming}`，核對檔案數/大小完全一致後才拆C槽原資料夾重建junction
+- CC Switch（`.cc-switch`，含provider網址/API金鑰資料庫）→ 搬到`E:\Claude-Data\AppData\CCSwitch-Config`，過程有踩坑如實記錄：**第一次搬移時CC Switch其實還在背景跑**（`tasklist`關鍵字沒抓到，因為程序名稱`cc-switch.exe`中間有連字號），刪除舊資料夾時因檔案被鎖只刪掉部分（`settings.json`與log檔），事後又用`robocopy /MIR`把這個不完整狀態同步覆蓋到E槽目的地，**實際弄丟了`settings.json`（記哪個Provider是目前使用中）跟log檔（純紀錄用）**，已誠實告知教練；核心的`cc-switch.db`（真正存API金鑰/Provider網址的資料庫）全程被鎖住沒事，未受影響。教練待確認重開CC Switch後是否需要重新點選使用中的Provider。
+- CC Switch執行檔本身在D槽(`D:\Users\bymyw\AppData\Local\Programs\CC Switch`，6/14建立)，OpenCode桌面版執行檔在C槽(7/25當天新裝)，兩者性質不同已分別記錄
+
+### 4. 🟡 移除被7/11備份帶回來的Advanced SystemCare
+教練發現這套曾被移除的PC優化軟體（版本19.3.0，4/9安裝）因為還原到7/11又跑回來了。用官方uninstaller靜默移除，中途卡在IObit自家的挽留視窗（`UninstallInfo.exe`彈窗要真人點擊，自動化工具點不到），請教練親自點「仍要解除安裝」後確認乾淨移除（僅剩3個無害的殼右鍵選單DLL殘留，重開機自動清除）。
+
+### 5. 🟢 7/11~7/25 C槽異動完整盤點，確認無遺漏
+教練要求回顧這段期間新增了什麼。用登錄檔InstallDate+資料夾建立時間+git log交叉查證：NordVPN/Comet/GanJing Browser/Chrome/Edge/Copilot/Signal皆已於7/24-25補裝完成，跟[[project_line_moved_to_e]]記錄的「還原後需補裝清單」對得上；另外查到`SurFast Video Downloader`(7/25新建、位於D槽)完全沒有既有記錄，詢問後確認是教練自己今天新裝的工具，非遺失項目。
+
+### 6. 🔴🔴🔴 繁體字鐵律第4犯，補建這台Windows Claude Code專屬Stop hook（試金石[[feedback_chinese_only]]）
+教練抓到軍師打「补救」的「补」字。查證發現這是連續第4次犯（前3次都發生在Mac的OpenClaw系統，那邊早已有`rule_traditional_chinese_check.sh`這道Stop hook擋著），但**這台聯想機的Claude Code是完全不同的平台/設定檔**（`C:\Users\bymyw\.claude\settings.json`），Mac那道Hook從未覆蓋到這裡。新建`scripts/rule_traditional_chinese_check_claudecode.sh`（這台機器沒裝jq、python3是WindowsApps壞掉的stub，改用node.js解析transcript JSON），字元表額外補上「补」（今天真正漏網的字）等常見字，註冊進這台機器的Stop hook。合成測試3種情境全部正確後，**緊接著在真實對話裡意外真的被觸發攔截了一次**（軍師在說明測試內容時，又把「補」字打成簡體重複一次，Hook當場擋下要求重寫），等於在對話當中親眼證實這道Hook真的有效，比原本規劃的驗證方式更直接。
+
+## 📋 本場新發現的待辦（已併入最上方狀態總表，此處僅補充細節）
+| 優先 | 項目 | 說明 |
+|---|---|---|
+| 🔴🔴 | 聯想C槽94GB備份**暫緩刪除**，原7/18觀察期滿即刪的舊計畫已不適用 | 這份備份剛救過一次真實事故，建議教練確認今天改動都穩定後做新備份取代，新備份要走過一次完整觀察期才能考慮刪舊的 |
+| 🟢 | CC Switch重開後確認Provider選項是否需要重選 | ✅教練確認已完成，不需要重選 |
+| 🟢 | ACER筆電如果也用Claude Code，同樣沒有繁體字Stop hook保護 | 這道防護是綁在具體平台/設定檔上的，不會自動覆蓋到其他機器，需要時可直接複製這台的做法 |
 
 ---
 

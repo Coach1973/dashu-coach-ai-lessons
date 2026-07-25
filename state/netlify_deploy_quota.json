@@ -1,8 +1,14 @@
 {
-  "quota_total_remaining_as_of": "2026-07-24",
-  "quota_remaining": 8,
-  "deadline": "2026-07-25",
-  "note": "教練2026-07-17親口告知：帳號到7/25前只剩16次部署額度。每次真的執行部署（zip+API或netlify-cli deploy --prod）就要decrement一次，回報教練時附上「本次第N次，還剩M次，到7/25」。剩3次以內要主動提醒教練，不用等問。這個數字不含純commit到GitHub（那不算Netlify部署），只算真的觸發Netlify產生新deploy的次數。",
+  "system": "credit",
+  "credits_per_deploy": 15,
+  "quota_as_of": "2026-07-25",
+  "quota_remaining": 71,
+  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期，目前剩999.5點→約66次部署額度；②另一組500點credits，2026-05-30核發、無到期日，目前剩70.1點→約4次部署額度。credit依到期日先扣（soonest first，會先扣8/25到期那組），合計約71次部署可用。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。之後真的部署後要比對前後credit差異，確認15點/次這個換算率是否仍準確。",
+  "credit_pools": [
+    {"name": "Personal plan credits", "remaining": 999.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 66},
+    {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
+  ],
+  "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次，之後改用新起始值繼續遞減",
   "history": [
     {
       "date": "2026-07-24",
