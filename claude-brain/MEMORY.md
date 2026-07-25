@@ -13,7 +13,7 @@
 - [🔴🔴🔴 真誠/真愛/真實AI分會願景說明書連續多棒未開始(2026-07-19)](project_bni_three_chapters_vision_pending.md) — 三個BNI分會的願景+產業分佈圖，卡在等教練給細節：身份/受眾/資料來源
 - [🔴🔴 這台Windows機器接力棒倉庫曾落後17天/1711commit，已修復(2026-07-17)](project_windows_workspace_git_sync_gap_2026-07-17.md) — 開工前先git fetch+status查behind，避免誤判「查無交辦」
 - [🔴 語音糾偏：真誠/真愛/真實AI「分會」不是「峰會」(2026-07-17)](feedback_fenhui_not_fenghui_voice_correction.md) — 已修正接力棒/CLAUDE.md用詞，歷史蒸餾逐字稿保留原樣不動
-- [🔴🔴🔴 Netlify部署額度只剩16次，7/25前每次推都要計數(2026-07-17)](project_netlify_deploy_quota_2026-07.md) — 教練親告，每次推Netlify前先報剩餘次數，低於3次要提醒
+- [🔴🔴🔴 Netlify帳號是credit制，「剩幾次」＝credit餘額÷15換算(2026-07-25更正)](project_netlify_deploy_quota_2026-07.md) — 非「改制」，2026-07-25核發新credit後約剩68次，部署前後查state/netlify_deploy_quota.json
 - [🎯 佩佩老師個人品牌頁改版進行中(2026-07-14)](project_peipei_art_redesign_2026-07-14.md) — 測試站https://coach1973.github.io/peipei-art/已上線，版面骨架完成等教練補文字照片，之後推正式peipei-event.netlify.app
 - [🎯 AI微型論壇是持續系列活動，Netlify固定網址不隨場次變(2026-07-13)](project_ai_talk_recurring_event_url_policy.md) — GitHub是每場改稿工作稿，ai-talk-tw.netlify.app才是永久對外網址，換場次不換站
 - [🔴🔴🔴 cool-case頭像檔案孤立20天未上傳，7/13查出補上線(2026-07-13)](project_claude_avatar_cool_case.md) — 6/23設計完卻沒commit，兩台機器都查無；已套進「Opus軍師」8處，commit ce1402d
@@ -146,7 +146,7 @@
 - [各機commit邊界](feedback_agent_commit_boundary.md) — 中央發布設定變更由我commit；各機自己sessions/memory不碰
 - [🔴 不限流量只屬於小龍蝦/MiniMax，Claude助教不適用](feedback_token_model_distinction.md) — 終端機/桌面版Claude計費另計，不可套用「不限流量」假設
 - [🔴🔴🔴 openclaw模型切換必改設定檔——UI切換無效](feedback_openclaw_model_switch_permanent.md) — 損失$60USD教訓；必須直接改openclaw.json，開工必查main model
-- [🔴 Netlify部署必帶_headers寫死Content-Type](feedback_netlify_headers_content_type.md) — 不帶會變text/plain顯示原始碼(至少三次血淚)
+- [🔴🔴🔴 Netlify的_headers規則不能用/*萬用，會蓋過圖片Content-Type(2026-07-25第4次血淚)](feedback_netlify_headers_content_type.md) — 明明有SOP卻只驗證文字沒驗證圖片，3次部署才修好；教練要求全機通報，見試金石案例54
 - [🔴 未經允許禁止自行使用FORK功能](feedback_no_fork_without_permission.md) — Fork繼承完整歷史context token消費極高，須等教練說要fork
 - [🔴 創作類任務必先讀已上線版本，不可從零重做](feedback_read_existing_before_creating.md) — 已有教練認可模板，系統內成果也是OPE，先對齊再寫
 - [🔴 網頁圖片壓縮場景分流(守則#17)](feedback_image_compression_by_scenario.md) — 展示型大圖保持高畫質；重複型小圖壓縮去重(節省96.6%)
