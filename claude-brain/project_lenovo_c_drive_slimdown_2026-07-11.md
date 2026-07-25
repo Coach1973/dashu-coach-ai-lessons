@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 1770c262-04fd-4812-9b49-c06f84deed0b
+  modified: 2026-07-25T06:05:05.774Z
 ---
 
 # 2026-07-11 聯想C槽瘦身總結
@@ -40,5 +41,13 @@ metadata:
 ## 相關檔案
 - 聯想還原腳本：`mac-openclaw-workflows/scripts/restore_junctions_lenovo.ps1`（已包含Chrome/Comet正確架構記錄）
 - 教練最終備份：`E:\易数一键还原Windows系统备份（不要删除）\SystemImage.pmf`（81.05GB，2026-07-11 23:01）
+
+## 🔴🔴 2026-07-25更新：這份備份的刪除計畫作廢——它已經被拿去做過一次真實還原
+
+原訂「觀察期滿(7/18)後刪除」的計畫**不再適用**。2026-07-24發生LINE junction事故（見[[project_line_moved_to_e]]鐵律9-11），教練最終用這份`E:\易数一键还原Windows系统备份（不要删除）`（SystemImage.pmf，87GB，2026-07-11 23:01建立）做了一次真正的系統還原，成功救回機器。2026-07-25查證這份備份檔案本身仍完整存在（未被任何後續操作動過）。
+
+**Why：** 這份備份已證明有實際救援價值，不是理論上的保險——不能再照舊計畫刪除。且7/24~25期間又對這台機器做了不少改動（OpenCode/CC Switch資料搬E槽、Advanced SystemCare移除等），這份7/11的舊備份完全不知道這些新狀態，若又拿它還原會把這些新改動全部清空。
+
+**How to apply：** 之後開工若教練問起這份備份，不要再引用「7/18觀察期滿可刪」這個舊結論。應建議：確認2026-07-24~25這波改動穩定後，做一次新的一鍵備份取代這份，新備份要重新走一輪至少7天觀察期，才能考慮刪除這份7/11舊的。
 
 Related: [[project-line-moved-to-e]], [[feedback-check-crossmachine-history-before-system-ops]]
