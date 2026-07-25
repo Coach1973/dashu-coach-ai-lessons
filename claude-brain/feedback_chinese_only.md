@@ -3,6 +3,7 @@ name: 對教練的回覆一律使用中文
 description: 與教練的對話全程繁體中文，不跟簡體、不在中文詞彙後加英文括號，技術檔案內容不動
 type: feedback
 originSessionId: a5e0d933-c5e0-4d50-b3a0-fd4b4d5e521c
+modified: 2026-07-25T05:57:05.460Z
 ---
 教練用中文溝通，回覆就用中文。「終端機」不加（Terminal），「提交」不說 commit，「分支」不說 branch。
 
@@ -38,3 +39,11 @@ originSessionId: a5e0d933-c5e0-4d50-b3a0-fd4b4d5e521c
 **Why（關鍵教訓）：** 靠「認知層面」的修法（提醒自己、承諾以後注意）對這類問題**證明無效**——知道規則、剛犯過、剛承諾小心，三個條件都滿足還是再犯。這跟守則 #19 同一條根：靠自覺不如靠系統。
 
 **How to apply（最終解法）：** 已比照既有的 `scripts/rule_taiwan_time_check.sh`（時間鎖）架構，新建 `scripts/rule_traditional_chinese_check.sh` 註冊進 Stop hook——每輪回覆結束前系統自動 grep 掃描簡體字專用字元，命中就 exit 2 強制擋下重寫，不讓違規內容送到教練眼前。**未來遇到任何「知道規則但反覆再犯」的情況，優先考慮做這種確定性 Hook，不要再用「下次會注意」當答案。**
+
+## 🔴🔴🔴 第四次犯——換了平台（聯想Windows的Claude Code）沒有Mac那套Hook保護，「补救」一詞漏網（2026-07-25）
+
+前3次都發生在Mac的OpenClaw系統，Stop hook `rule_traditional_chinese_check.sh` 已經在那邊守住。但**這次在聯想筆電的Claude Code（不是OpenClaw）打「补救」給教練**，因為這是完全不同的平台、不同的settings.json（`C:\Users\bymyw\.claude\settings.json`），Mac那個Hook從來沒有覆蓋到這裡——證明「靠自覺」連換一個平台都撐不住，而且「已經修過」的錯覺（以為 Hook 已經解決這個問題）本身就是盲點：修好的是Mac那一台，不是「這個問題」。
+
+**Why（新增）：** 同一個人（軍師）在不同機器/不同框架下運作時，行為修正（Hook）是綁在具體的執行環境上的，不會自動跟著「軍師」這個身份走到別的平台。每次確認「這個坑已經用Hook解決了」時，要同時確認「是哪個平台的Hook」，不能假設全部環境都覆蓋到了。
+
+**How to apply（新增）：** 已比照Mac版邏輯，在聯想機新建 `mac-openclaw-workflows/scripts/rule_traditional_chinese_check_claudecode.sh`（因為這台機器沒裝jq、python3是WindowsApps壞掉的stub會exit 49，改用node.js做JSON解析），字元表額外補上「补」（這次真正漏網的字）、龍/阳/阴/币/达/与/灵/码/钱/银/销等常見字，註冊進 `C:\Users\bymyw\.claude\settings.json` 的Stop hook。**以後任何機器/平台如果還沒配這道Hook（例如ACER筆電的Claude Code），視同尚未真正解決，不能因為Mac那邊修過就假設這裡也安全。**

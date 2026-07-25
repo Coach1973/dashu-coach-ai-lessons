@@ -22,7 +22,7 @@
 - [🔴🔴🔴 追問標準＝邏輯鏈有沒有斷掉，不是我有沒有把握(2026-07-11)](feedback_markdown_link_mismatch_verify.md) — 有斷才問(案例47)沒斷別問(案例48)；兩邊都浪費教練犧牲睡眠換來的時間
 - [🔴🔴 系統性操作前先查兩台機器雲端歷史經驗(2026-07-11)](feedback_check_crossmachine_history_before_system_ops.md) — 舊版restore_junctions.ps1路徑寫死D槽，查了ACER已驗證版本才發現，教練喊停避免用錯版本
 - [🔴🔴🔴 HTML驗證必跳真實瀏覽器給教練看(2026-07-13更新)](feedback_html_preview_chrome_only.md) — Mac用Chrome；聯想(Windows)改用Comet(comet.exe)，因該機Chrome跳出來空白、Comet正常，試金石案例46
-- [🔴🔴🔴 軍師長篇技術回覆整段滑成簡體字，二度犯(2026-07-10)](feedback_chinese_only.md) — 唯一指定繁體字，長篇/高思考負荷回覆送出前必掃簡體字，試金石案例44
+- [🔴🔴🔴 軍師回覆滑成簡體字，第4犯(2026-07-25聯想Claude Code補Hook)](feedback_chinese_only.md) — 唯一指定繁體字；前3犯在Mac OpenClaw已有Hook擋，這次換平台漏網，已補rule_traditional_chinese_check_claudecode.sh
 - [👤 教練隱私立場：公眾人物零隱瞞，優先便利性甚於資料極小化(2026-07-10)](user_privacy_risk_posture.md) — 健保卡未使用、帳密交給系統記住是刻意選擇，勿誇大風險急迫性
 - [🎯 軍師重跑文章分析當第二意見，抓到MiniMax 3個誤判(2026-07-10)](project_wisely_article_second_opinion_2026-07-10.md) — memorySearch判斷錯+熱啟動未實測+沒發現自製Hook無上限Dreaming黑洞
 - [🔴🔴🔴 教練糾正時先查證再回應，不要用舊印象頂撞(2026-07-10)](feedback_verify_before_correcting_coach.md) — 手機版Code功能認知過時+終端機環境誤判雙重案例，查證後教練都是對的
