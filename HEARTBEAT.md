@@ -6,6 +6,40 @@
 
 ## 🦞 健康檢查場次（安靜處理）
 
+### 17:33（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 17:30 fire ❌（lastDurationMs=177,824ms ≈ 178s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 178s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"，lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身，受 cron 工具 self-only 限制）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 17:02（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 17:00 fire ❌（lastDurationMs=104,691ms ≈ 105s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 105s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"，lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身，受 cron 工具 self-only 限制）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 16:32（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 16:30 fire ❌（lastDurationMs=111,578ms ≈ 112s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 112s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"
+- lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身，受 cron 工具 self-only 限制）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
 ### 15:02（週日下午，安靜，無需通知教練）
 - 46e67e2e 上一場 15:00 fire ❌（lastDurationMs=128,207ms ≈ 128s，錯誤：minimax provider `AI service temporarily overloaded`）
 - 128s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
