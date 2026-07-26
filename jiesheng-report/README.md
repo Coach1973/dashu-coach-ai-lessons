@@ -23,13 +23,13 @@
    - `JIESHENG_SECRET_KEY`：隨機字串（例如 `openssl rand -hex 32`）
    - `JIESHENG_ADMIN_USER`：`staff`
    - `JIESHENG_ADMIN_PASSWORD_HASH`：`scrypt:32768:8:1$uxXZ8x5sRmBQ97XV$3a8e071bf28e76526543e1599977f67f1d04351243f9d42497ab74948c5c4f0aba33a2342f0091f1b825b4e6a6cce7035d5f92f07a650e6350bee5856ec10022`
-   - `JIESHENG_PORT`：預設 5061（跟 event-signup 的 5060 錯開，跟其他既有服務對照 `~/.cloudflared/` 底下各 config 確認沒撞）
+   - `JIESHENG_PORT`：**實際部署用 5063**（原建議 5061 跟既有 `peipei-event` app 撞了，5060=event-signup、5061=peipei-event、5062=mentor100，Mac上線時改用5063錯開）
    - 明文密碼本身沒有寫進任何檔案（一律只存雜湊值），教練本人知道是公司統編，需要時教練自己告訴工作人員
 4. **兩種部署方式擇一，建議選①（更省事，比照 `bni.bymyway.com` 的做法）：**
 
-   **① 沿用既有 tunnel `openclaw-macmini` 加一條新 Route（推薦）**
-   - Cloudflare Zero Trust 後台 → Tunnels → `openclaw-macmini` → Routes → Add route
-   - Published application：subdomain `rpl-workshop`（教練已定案）、domain `bymyway.com`、service `http://localhost:5061`
+   **① 沿用既有 tunnel `openclaw-macmini` 加一條新 Route（推薦，Mac已採用此法）**
+   - Cloudflare Zero Trust 網頁後台有帳單資訊卡關（同seabiscuit.bymyway.com遇到的狀況），改用CLI+臨時API Token：`cloudflared tunnel route dns openclaw-macmini rpl-workshop.bymyway.com`建DNS，再用臨時建立、範圍限縮為「Cloudflare Tunnel:Edit」、短效期的API Token透過`PUT /accounts/{account}/cfd_tunnel/{tunnel}/configurations`把新hostname加進ingress規則，完成後立即刪除該臨時Token
+   - Published application：subdomain `rpl-workshop`（教練已定案）、domain `bymyway.com`、service `http://localhost:5063`
    - 不用另外裝 LaunchAgent 跑 cloudflared，只要保證 Flask app 常駐執行即可（見下方 LaunchAgent）
 
    **② 另開一顆專屬 tunnel（比照 event-signup 原本的做法，較費工，非必要不建議）**
@@ -53,9 +53,11 @@
    ```
 6. 驗證：`curl https://rpl-workshop.bymyway.com/admin/login` 回 200，帳密登入後看得到三場戰報頁面
 
-## 網址（部署後才會生效）
+## 網址（已上線，2026-07-26 Mac軍師部署）
 
-- 後台：`https://rpl-workshop.bymyway.com/admin`（教練可改名，記得同步更新這份文件跟接力棒）
+- 後台：`https://rpl-workshop.bymyway.com/admin`
+- 常駐：`com.coach.jiesheng-webapp.plist`（LaunchAgent，KeepAlive，比照event-webapp）
+- 驗證：`curl https://rpl-workshop.bymyway.com/admin/login`回200、標題正確；AI未曾輸入過真實密碼（公司統編僅教練本人知道），登入流程需教練親自測試一次
 
 ## 資料表
 
