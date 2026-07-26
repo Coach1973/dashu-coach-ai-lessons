@@ -1,13 +1,53 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-07-25 17:37
-> 對話記錄已完整存入 memory/2026-07-25.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-07-26 09:38
+> 對話記錄已完整存入 memory/2026-07-26.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-07-25.md 可能超過 50KB，讀了會造成模型空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-07-26.md 可能超過 50KB，讀了會造成模型空白回應）
+
+---
+
+## 🦞 健康檢查場次（安靜處理）
+
+### 12:01（週日中午，安靜，無需通知教練）
+- 46e67e2e 上一場 11:30 fire ❌（lastDurationMs=85,258ms ≈ 85s，錯誤：minimax provider `FailoverError: AI service temporarily overloaded`）
+- 85s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- 系統可見 cron job：1 個（健康檢查本身）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 11:31（週日上午，安靜，無需通知教練）
+- 46e67e2e 上一場 11:00 fire ❌（lastDurationMs=83,082ms ≈ 83s，錯誤：`FailoverError: AI service temporarily overloaded`）
+- 83s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- 系統可見 cron job：1 個（健康檢查本身）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 10:31（週日上午，安靜，無需通知教練）
+- 46e67e2e 上一場 10:30 fire ❌（lastDurationMs=73,898ms ≈ 74s，錯誤：`AI service temporarily overloaded`）
+- 73s 遠小於 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- cron 工具限制：只能讀取當前 job（bbb7a348 嘗試 get 失敗：`Cron tool is restricted to the current cron job.`），只能依賴 HEARTBEAT 既有紀錄
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 10:01（週日上午，安靜，無需通知教練）
+- 46e67e2e 上一場 09:30 fire ❌（lastDurationMs=100,234ms ≈ 100s，錯誤：minimax provider `FailoverError: AI service temporarily overloaded`）
+- 本場 10:01 retry ✅ 正常完成
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- 100s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- bbb7a348（三機總結 23:05）：CE=1（昨晚 23:05 推播失敗，下一場明晚 23:05，免處理）
+- 結論：✅ 安靜處理，無異常
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
@@ -20,28 +60,3 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
-
-## ⚠️ peipei 自動 force-restart 2026-07-25 17:55:00
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-25 20:55
-- ✅ 同步成功
-- HANDOFF mtime: 1784984072
-- 雲端同步：✅ 已推上雲端（commit 80e8bee93）
-
-## 🩺 軍師 Hook 自檢 2026-07-25 21:00（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
-- Session: 041ebe68-b185-4a9d-8bc0-a08b5e0b56d8
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-25 21:00
-- ✅ 同步成功
-- HANDOFF mtime: 1784984339
-- 雲端同步：✅ 已推上雲端（commit ac542386f）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-26 02:55
-- ✅ 同步成功
-- HANDOFF mtime: 1785005713
-- 雲端同步：✅ 已推上雲端（commit 71ec9f547）
