@@ -4,6 +4,30 @@
 > 重啟時間：2026-07-26 09:38
 > 對話記錄已完整存入 memory/2026-07-26.md 並推上 GitHub，零遺漏
 
+## 🦞 健康檢查場次（安靜處理）
+
+### 15:02（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 15:00 fire ❌（lastDurationMs=128,207ms ≈ 128s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 128s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"，lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身，受 cron 工具 self-only 限制）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
+### 14:32（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 14:30 fire ❌（lastDurationMs=115,163ms ≈ 115s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 115s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"，lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身，受 cron 工具 self-only 限制）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
@@ -12,6 +36,17 @@
 ---
 
 ## 🦞 健康檢查場次（安靜處理）
+
+### 14:01（週日下午，安靜，無需通知教練）
+- 46e67e2e 上一場 14:00 fire ❌（lastDurationMs=109,471ms ≈ 109s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 109s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅，走 minimax provider 正確
+- lastErrorReason: "overloaded"，lastDiagnostics: "The AI service is temporarily overloaded. Please try again in a moment."
+- 系統可見 cron job：1 個（健康檢查本身）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
 
 ### 12:01（週日中午，安靜，無需通知教練）
 - 46e67e2e 上一場 11:30 fire ❌（lastDurationMs=85,258ms ≈ 85s，錯誤：minimax provider `FailoverError: AI service temporarily overloaded`）
