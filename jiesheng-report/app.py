@@ -114,32 +114,35 @@ def add():
     return redirect(url_for("admin", workshop=workshop))
 
 
-@app.route("/admin/update/<int:reg_id>", methods=["POST"])
-def update(reg_id):
+@app.route("/admin/save_all", methods=["POST"])
+def save_all():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
+    workshop = request.form.get("workshop", db.WORKSHOPS[0])
+    if workshop not in db.WORKSHOPS:
+        workshop = db.WORKSHOPS[0]
+
     conn = db.get_conn()
-    reg = db.get_registrant(conn, reg_id)
-    if reg is None:
-        conn.close()
-        return redirect(url_for("admin"))
+    for reg_id in request.form.getlist("ids"):
+        reg = db.get_registrant(conn, reg_id)
+        if reg is None:
+            continue
+        name = (request.form.get(f"name_{reg_id}") or reg["name"]).strip()
+        phone = (request.form.get(f"phone_{reg_id}") or "").strip()
+        register_date = (request.form.get(f"register_date_{reg_id}") or reg["register_date"]).strip()
+        note = (request.form.get(f"note_{reg_id}") or "").strip()
+        paid_method = (request.form.get(f"paid_method_{reg_id}") or "").strip()
+        amount_raw = (request.form.get(f"amount_{reg_id}") or "").strip()
+        amount = int(amount_raw) if amount_raw.isdigit() else None
+        paid = request.form.get(f"paid_{reg_id}") == "on"
+        referrer = (request.form.get(f"referrer_{reg_id}") or "").strip()
+        if referrer not in db.REFERRERS:
+            referrer = ""
 
-    name = (request.form.get("name") or reg["name"]).strip()
-    phone = (request.form.get("phone") or "").strip()
-    register_date = (request.form.get("register_date") or reg["register_date"]).strip()
-    note = (request.form.get("note") or "").strip()
-    paid_method = (request.form.get("paid_method") or "").strip()
-    amount_raw = (request.form.get("amount") or "").strip()
-    amount = int(amount_raw) if amount_raw.isdigit() else None
-    paid = request.form.get("paid") == "on"
-    referrer = (request.form.get("referrer") or "").strip()
-    if referrer not in db.REFERRERS:
-        referrer = ""
-
-    db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, referrer)
-    db.set_paid(conn, reg_id, paid, paid_method, amount)
+        db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, referrer)
+        db.set_paid(conn, reg_id, paid, paid_method, amount)
     conn.close()
-    return redirect(url_for("admin", workshop=reg["workshop"]))
+    return redirect(url_for("admin", workshop=workshop))
 
 
 @app.route("/admin/delete/<int:reg_id>", methods=["POST"])

@@ -51,6 +51,7 @@
   th { text-align:left; color:var(--gold); font-size:14px; font-weight:700; padding:8px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
   td { padding:10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:middle; }
   td.name { font-weight:900; white-space:nowrap; }
+  td.seq { color:var(--gold); font-weight:700; text-align:center; width:32px; }
   tr.paid-row td { background:rgba(126,231,135,.06); }
   input[type="checkbox"] { width:20px; height:20px; cursor:pointer; }
   select, td input[type="text"], td input[type="number"], td input[type="date"] {
@@ -61,9 +62,11 @@
   td.note input { width:140px; }
   .row-actions { display:flex; gap:6px; }
   .row-actions button { padding:7px 12px; font-size:14px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
-  .btn-save { background:var(--gold); color:var(--dark); }
   .btn-del { background:#3a1c1c; color:var(--red); border:1px solid rgba(220,80,80,.4) !important; }
   .empty { padding:36px 0; text-align:center; color:rgba(255,255,255,.5); font-size:17px; }
+  .save-all-row { display:flex; justify-content:flex-end; margin-top:16px; }
+  .btn-save-all { padding:13px 28px; font-size:16px; font-weight:900; border:none; border-radius:8px;
+    background:var(--gold); color:var(--dark); cursor:pointer; }
   .paid-label { font-size:13px; font-weight:700; }
   .paid-label.yes { color:var(--green); }
   .paid-label.no { color:rgba(255,255,255,.4); }
@@ -115,42 +118,44 @@
     <div class="box">
       <h2>{{ selected }}場名單（共 {{ registrants|length }} 人）</h2>
       <div class="tbl">
-        {# form 元素不能直接包住 tr/td（表格內容模型不允許，瀏覽器會把它搬走導致送出失敗），
-           改用 HTML5 form="id" 屬性，讓每個欄位各自指回外面獨立的 form 標籤 #}
+        {# 刪除是立即動作、獨立按鈕，各自一個小 form（form 不能巢狀，所以宣告在外層 save-all 表單之前）#}
         {% for r in registrants %}
-        <form id="save-{{ r.id }}" method="POST" action="/admin/update/{{ r.id }}" style="display:none"></form>
         <form id="del-{{ r.id }}" method="POST" action="/admin/delete/{{ r.id }}"
               onsubmit="return confirm('確定刪除 {{ r.name }} 這筆資料？');" style="display:none"></form>
         {% endfor %}
+        <form method="POST" action="/admin/save_all">
+        <input type="hidden" name="workshop" value="{{ selected }}">
         <table>
           <tr>
-            <th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
+            <th>#</th><th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
             <th>繳費方式</th><th>金額</th><th>備註</th><th>邀請人</th><th>操作</th>
           </tr>
           {% for r in registrants %}
           <tr class="{{ 'paid-row' if r.paid else '' }}">
+            <td class="seq">{{ loop.index }}</td>
             <td class="name">
               {{ r.name }}
-              <input type="hidden" name="name" value="{{ r.name }}" form="save-{{ r.id }}">
+              <input type="hidden" name="ids" value="{{ r.id }}">
+              <input type="hidden" name="name_{{ r.id }}" value="{{ r.name }}">
             </td>
-            <td><input type="text" name="phone" value="{{ r.phone or '' }}" form="save-{{ r.id }}"></td>
-            <td><input type="date" name="register_date" value="{{ r.register_date }}" form="save-{{ r.id }}"></td>
+            <td><input type="text" name="phone_{{ r.id }}" value="{{ r.phone or '' }}"></td>
+            <td><input type="date" name="register_date_{{ r.id }}" value="{{ r.register_date }}"></td>
             <td>
-              <input type="checkbox" name="paid" {{ 'checked' if r.paid else '' }} form="save-{{ r.id }}">
+              <input type="checkbox" name="paid_{{ r.id }}" {{ 'checked' if r.paid else '' }}>
               <span class="paid-label {{ 'yes' if r.paid else 'no' }}">{{ '已繳費' if r.paid else '未繳費' }}</span>
             </td>
             <td>
-              <select name="paid_method" form="save-{{ r.id }}">
+              <select name="paid_method_{{ r.id }}">
                 <option value="">—</option>
                 {% for m in paid_methods %}
                 <option value="{{ m }}" {{ 'selected' if r.paid_method == m else '' }}>{{ m }}</option>
                 {% endfor %}
               </select>
             </td>
-            <td class="amount"><input type="number" name="amount" value="{{ r.amount or '' }}" form="save-{{ r.id }}"></td>
-            <td class="note"><input type="text" name="note" value="{{ r.note or '' }}" form="save-{{ r.id }}"></td>
+            <td class="amount"><input type="number" name="amount_{{ r.id }}" value="{{ r.amount or '' }}"></td>
+            <td class="note"><input type="text" name="note_{{ r.id }}" value="{{ r.note or '' }}"></td>
             <td>
-              <select name="referrer" form="save-{{ r.id }}">
+              <select name="referrer_{{ r.id }}">
                 <option value="">—</option>
                 {% for r2 in referrers %}
                 <option value="{{ r2 }}" {{ 'selected' if r.referrer == r2 else '' }}>{{ r2 }}</option>
@@ -158,12 +163,15 @@
               </select>
             </td>
             <td class="row-actions">
-              <button type="submit" form="save-{{ r.id }}" class="btn-save">儲存</button>
               <button type="submit" form="del-{{ r.id }}" class="btn-del">刪除</button>
             </td>
           </tr>
           {% endfor %}
         </table>
+        {% if registrants %}
+        <div class="save-all-row"><button type="submit" class="btn-save-all">💾 全部儲存</button></div>
+        {% endif %}
+        </form>
         {% if not registrants %}<div class="empty">{{ selected }}場目前還沒有報名者，用上面表單新增第一筆</div>{% endif %}
       </div>
     </div>
