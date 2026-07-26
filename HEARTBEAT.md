@@ -13,6 +13,15 @@
 
 ## 🦞 健康檢查場次（安靜處理）
 
+### 11:31（週日上午，安靜，無需通知教練）
+- 46e67e2e 上一場 11:00 fire ❌（lastDurationMs=83,082ms ≈ 83s，錯誤：`FailoverError: AI service temporarily overloaded`）
+- 83s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
+- 錯誤類型：overloaded（非 INVALID_API_KEY、非 scp/ssh）→ 不適用規則 #3、不適用規則 #2
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- 系統可見 cron job：1 個（健康檢查本身）
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 結論：✅ 安靜處理，無異常
+
 ### 10:31（週日上午，安靜，無需通知教練）
 - 46e67e2e 上一場 10:30 fire ❌（lastDurationMs=73,898ms ≈ 74s，錯誤：`AI service temporarily overloaded`）
 - 73s 遠小於 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
