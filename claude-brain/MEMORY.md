@@ -1,12 +1,13 @@
 # Memory Index
 
+- [🎯🎯 結繩領導學工作坊戰報系統(jiesheng-report)上線rpl-workshop.bymyway.com(2026-07-26)](project_jiesheng_report_launch_2026-07-26.md) — 帳號RPL(大寫)+全部儲存一次搞定+邀請人/資料提交人四選一；.env含$符號要單引號否則密碼被bash吃掉
+- [🔧 名片辨識系統(namecard-db)的PaddleOCR+MiniMax兩階段管線可複用於任何讀圖辨識場景(2026-07-26)](reference_namecard_ocr_pipeline_reusable.md) — 已驗證比AI直接看圖準確、零Token成本，下次「讀截圖建檔」任務優先用這套不要自己瞇眼看
 - [🔧 聯想Bash執行環境跟真實桌面網路隔離，本機dev server驗證要用靜態快照+桌面開檔(2026-07-26)](reference_windows_bash_network_sandbox_isolation.md) — curl/瀏覽器工具都連不到Bash啟動的127.0.0.1伺服器，連教練真實Comet也連不到；改用HTML快照存檔+comet.exe開file路徑
 - [🎯🎯 OpenCode+CC Switch資料搬到E槽保護，CC Switch settings.json搬移時意外遺失(2026-07-25)](project_opencode_ccswitch_moved_to_e_2026-07-25.md) — 真正的provider金鑰資料庫沒事；教訓：關程式確認別只信tasklist簡單關鍵字、robocopy前後檔案數有落差要先查清楚
 - [🕐 終端機/桌面版每則回覆開頭要標台灣時間戳記(2026-07-24)](feedback_timestamp_every_reply.md) — 教練要求方便一眼判斷訊息幾點發的，範圍限這個介面，小龍蝦端另外評估
 - [🔧 Mac終端機有雙node環境，gateway層級指令要指定PATH(2026-07-24)](reference_mac_dual_node_environment.md) — .hermes/node排PATH第一但gateway實際用/opt/homebrew，update/install指令搞錯路徑會裝到假地方
 - [🎯🎯 BNI大台南小幫手從Coze搬到小龍蝦本機+MiniMax-M3，webhook待教練切換(2026-07-23)](project_bni_tainan_line_migration_2026-07-23.md) — 人設+3份知識庫已搬完，順手修好LINE plugin未宣告啟用的404真bug，commit bf560a96
 - [🔴🔴🔴 監控旗標說通道壞了先實測真相源再信，別被黏著假警報憋住關懷(2026-07-22)](feedback_verify_channel_health_not_stale_flag.md) — HEARTBEAT誤報Telegram失效133h憋住11項待辦5.5天，實測3token全活；盲信衍生旗標第三犯(案例53)
-- [🟢 聯想機LenovoBrainSync排程已於07-23停用(2026-07-22建/07-23關)](project_lenovo_auto_git_sync_2026-07-22.md) — 教練說開工自然會同步不需輪詢;腳本還在僅Disable;同步回歸開工六步驟手動git pull
 - [🎯 mentor100報名資料不用主動幫忙分辨測試資料(2026-07-20)](feedback_mentor100_test_data_self_managed.md) — 教練自己測試會自己刪，看到的新增條目都當真實資料，不列待辦
 - [🎯 「全世界最優秀的團隊計畫」正式上線於teamwork網址(2026-07-20)](project_true_ai_team_teamwork_launch.md) — NotebookLM三份精華素材+教練多輪修訂，coach888已補上第46項
 - [🔧 企業健身房預訂網址是Business.gym(2026-07-20)](project_business_gym_reserved_url_2026-07-20.md) — 教練親貼連結確認，取代原teamwork口頭說法，尚未建站
@@ -40,14 +41,11 @@
 - [🔴🔴🔴 部署SOP準則：「有沒有公開推廣」非「有沒有講Netlify」(2026-07-09教練親定)](feedback_netlify_autodeploy_cost_awareness.md) — 已公開推廣站更新必推Netlify；內部測試頁先留GitHub；新網址別掛長路徑
 - [🎨 教練銷售頁排版視覺喜好(2026-07-09)](feedback_coach_sales_page_typography_style.md) — 短句硬斷行/字級大反差/精確px不用clamp/深藍米黃交替/按鈕都要hover
 - [🎯 DnA出席戰情儀表板(bni-dna)網站維運(2026-07-08)](project_bni_dna_attendance_dashboard_2026-07-08.md) — 全年12月預排+滾動式5週2缺淘汰+全勤獎，commit 8646ef2
-- [🌙 佩佩老師電腦首次接大腦+W03首跑(2026-07-08)](project_peipei_w03_first_run_2026-07-08.md) — 雲端信箱系統上線+4個App搬移2.21GB+觀察期到7/15
 - [🧰 教練常用工具箱索引(2026-07-08)](reference_coach_common_toolbox.md) — yes/no指令+部署詞彙+HTML預覽鐵律+危險指令五道閘門+查證七層+App搬家做法
-- [🟢🟢🟢 聯想機C槽體檢+瘦身釋放約34GB(2026-07-08)](project_lenovo_c_drive_checkup_2026-07-08.md) — 過期備份/舊碼/快取/Windows.old全清；Chrome早已Junction搬家不需動作
 - [🔴🔴🔴 禁止問教練記不記得，AI自己查——七層查證系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md) — git log/試金石/memory/HEARTBEAT/distill/原始對話/即時現況，永不問教練回想
 - [📮 「小龍蝦專線」=cloudflared=LINE命脈，絕對不能關(2026-07-08)](reference_xiaolongxia_line_tunnel_cloudflared.md) — LINE官方→Cloudflare→Mac小龍蝦通道；詳見路徑大全第13節；試金石案例40
 - [🔴🔴🔴 Fable5系統稽核修復：3紅全修/11殭屍排程清理(2026-07-08)](project_fable5_system_audit_2026-07-08.md) — session-end自我餵養/蒸餾三引擎/relay四頭殭屍全斬；cloudflared勿動
 - [🟢🟢🟢 宏碁D槽清理11.25GB+建W03 SOP(2026-07-08)](project_acer_c_d_cleanup_20260708.md) — 待辦：觀察期至7/11~15，教練確認無異常才能刪Eassos舊備份(36.3GB)
-- [🟢🟢🟢 大樹小講．無話不談行銷頁上線(2026-07-06)](project_dashuxiaojiang_landing_page_2026-07-06.md) — coach1973.github.io/bigtree/ 取代舊版(存/old/)；色系/場次/11場EDM記錄完整
 - [🔴🔴 公開活動真實性看有人參加，不看有沒有做網頁(2026-07-06)](feedback_public_event_reality_not_webpage_existence.md) — 教練親口說過的場次直接當事實，別用「查無網頁」暗示存疑
 - [🔴🔴🔴 Cron大體檢：假關閉4hr報告+無授權健檢+全靜音(2026-07-06)](project_cron_cleanup_2026-07-06.md) — 3問題一次修好，發現jobs.json是脫節快照bug
 - [🔴🔴 openclaw cron/jobs.json是脫節靜態快照(2026-07-06)](reference_openclaw_cron_json_stale_snapshot.md) — 改檔案不生效，兩次假修復實證；查改一律用openclaw cron CLI
@@ -56,10 +54,8 @@
 - [🔴🔴 下結論前先查歷史；查清楚後直接決定不要再問(2026-07-05)](feedback_query_before_conclude_and_act_on_facts.md) — 查證是為了讓判斷有根據，有根據就不該猶豫
 - [🔧 OpenClaw兩獨立git倉庫：外層master(cron)vs workspace/main(大腦)](reference_openclaw_nested_git_repos.md) — 別當同一repo分岔，查cron進外層、查記憶/試金石進內層
 - [🎨 商務健身房(biz-gym)黑金改版進度(2026-07-04)](project_bizgym_blackgold_redesign_2026-07-04.md) — Noto Sans TC粗黑體+黑金配色，10個section本機已套，等教練說「推」
-- [🟢🟢🟢 bymyway.com首頁換成BigTree講座頁(2026-07-03深夜)](project_bymyway_homepage_replaced_with_bigtree.md) — 教練主動升級首頁，舊首頁存/old/30秒可復原；含GitHub Pages部署失敗處理法
 - [🔴 時間鎖hook首次真實對話就誤報，已修根因(2026-07-03)](feedback_time_lock_hook_false_positive_fix.md) — 誤把timestamp欄位當AI處理過的UTC資料，改成只掃內容文字
 - [🔴🔴 視覺類任務唯一可信驗證是截圖，不是DOM數字(2026-07-03)](feedback_visual_change_screenshot_not_dom_numbers.md) — logo裁切debug血淚：preview_eval讀DOM可能失真，截圖一次就抓對
-- [🟢 2026講座系列行銷頁bigtree上線(2026-07-03)](project_speakers2026_bigtree_launch.md) — coach1973.github.io/bigtree/speakers-2026/ + bymyway.com/bigtree/ 零空白上線
 - [🟢 Windows證明檔案存在用檔案總管非瀏覽器(2026-07-02)](feedback_windows_file_proof_use_explorer_not_browser.md) — explorer.exe /select 反白圖示；瀏覽器開HTML會被誤認網頁
 - [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md) — 別台AI寫的記憶不算數，要自己SSH/git log驗證，轉述≠親眼看到
 - [🔴🔴 軍師不當兩AI系統間的傳話筒(2026-07-02)](feedback_dont_relay_between_ai_systems.md) — 「傳話給Hermes」也算資訊搬運工，有SSH就自己動手裝技能
@@ -118,7 +114,6 @@
 - [🔴 資料處置原則：預設「歷史存檔」絕不說「清除」](feedback_archive_not_delete.md) — 珍貴資料只搬不刪；唯獨可再生垃圾(教練親確認)才直接刪
 - [🔴 幫電腦小白找檔案/授權設定，一定先全自動再給一個動作](feedback_do_everything_for_user_fileoperation.md) — 先open -R選好檔案+開設定頁，告訴教練「拖過去」，不給技術指令
 - [🔴 Telegram Mac快取路徑鐵律](reference_telegram_mac_cache.md) — 教練傳照片必去Group Containers/.../postbox/media/，禁去OpenClaw inbound
-- [✅ 特助心法建置定稿(2026-05-19~05-28三階段完成)](project_xinfa_two_questions_pending.md) — 21守則+12執行細則+兩問句教練親筆版，最終定稿已搬進特助心法.md
 - [語音糾偏對映表(守則18)](feedback_voice_typo_shixing_shouze.md) — 「特助心法」「頂級特助」等核心詞語音變體，聽到近似詞自動對映
 - [教練中文詞彙→檔案對照表](feedback_coach_chinese_file_mapping.md) — 路徑大全=INDEX、靈魂檔案=SOUL.md、記憶檔=memory/，聽到中文直接對應
 - [🔴 語音輸入數字矛盾必問不猜](feedback_voice_number_conflict_must_ask.md) — 同段訊息兩不一致數字/日期必須AskUserQuestion；四↔十最高頻誤辨
