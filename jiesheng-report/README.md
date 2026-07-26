@@ -69,3 +69,20 @@
 - `app.py` 網頁主程式｜`db.py` 資料庫｜`schema.sql` 表結構
 - `templates/login.html`、`templates/admin.html`——黑金風格，Noto Sans TC，沿用教練其他系統視覺
 - `jiesheng_report.db` 資料庫檔（不進版本庫，Mac 上線後才會產生）
+
+## 🔴 2026-07-26 真bug記錄：.env裡的$符號被bash source吃掉，導致密碼永遠登不進去
+
+**根因**：LaunchAgent啟動時用`bash -c "set -a; source .env; ..."`載入環境變數，`.env`裡`JIESHENG_ADMIN_PASSWORD_HASH`的值含有scrypt格式特有的`$`分隔符（例如`1$uxXZ8x5sRmBQ97XV$3a8e...`），沒加引號時bash的`source`會把`$uxXZ8x5sRmBQ97XV`、`$3`當成變數展開（皆為未定義，展開成空字串），導致實際載入到Flask程式裡的雜湊值被吃掉一截，跟教練的真實密碼永遠對不上——即使密碼打得完全正確也無法登入。
+
+**修復**：`.env`裡任何含`$`字元的值都要用單引號包住，例如：
+```
+JIESHENG_ADMIN_PASSWORD_HASH='scrypt:32768:8:1$uxXZ8x5sRmBQ97XV$3a8e...'
+```
+
+**驗證方式（不經過網頁登入表單，純本機雜湊比對）**：
+```bash
+bash -c 'set -a; source .env; set +a; echo "$JIESHENG_ADMIN_PASSWORD_HASH"'
+```
+比對輸出是否跟原始雜湊值逐字一致；再用Python `werkzeug.security.check_password_hash(hash, 真實密碼)`確認回傳True。
+
+**教訓**：這條規則跟既有試金石教訓「`.env`含`$`字元的值要單引號包住」（見待辦列表兩個小工程教訓之一）完全相同，這次是真的踩到了才發現先前只是記錄提醒、沒有在這個新專案套用到。以後任何`.env`檔案，只要值裡有`$`、反引號、空白等shell特殊字元，一律加單引號，不要假設「反正只是資料，不會被當成程式碼」。
