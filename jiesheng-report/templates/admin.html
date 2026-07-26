@@ -102,12 +102,30 @@
         <div class="field"><label>姓名 *</label><input type="text" name="name" required></div>
         <div class="field"><label>電話</label><input type="text" name="phone"></div>
         <div class="field"><label>報名日期</label><input type="date" name="register_date" value="{{ today }}"></div>
+        <div class="field"><label>已繳費</label><input type="checkbox" name="paid" style="align-self:center; height:41px;"></div>
+        <div class="field"><label>繳費方式</label>
+          <select name="paid_method">
+            <option value="">—</option>
+            {% for m in paid_methods %}
+            <option value="{{ m }}">{{ m }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field"><label>金額</label><input type="number" name="amount" value="10000" style="width:100px;"></div>
         <div class="field"><label>備註</label><input type="text" name="note" placeholder="選填"></div>
         <div class="field"><label>邀請人</label>
           <select name="referrer">
             <option value="">—</option>
             {% for r in referrers %}
             <option value="{{ r }}">{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field"><label>資料提交人</label>
+          <select name="submitter">
+            <option value="">—</option>
+            {% for s in submitters %}
+            <option value="{{ s }}">{{ s }}</option>
             {% endfor %}
           </select>
         </div>
@@ -128,7 +146,7 @@
         <table>
           <tr>
             <th>#</th><th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
-            <th>繳費方式</th><th>金額</th><th>備註</th><th>邀請人</th><th>操作</th>
+            <th>繳費方式</th><th>金額</th><th>備註</th><th>邀請人</th><th>資料提交人</th><th>操作</th>
           </tr>
           {% for r in registrants %}
           <tr class="{{ 'paid-row' if r.paid else '' }}">
@@ -158,6 +176,14 @@
                 <option value="">—</option>
                 {% for r2 in referrers %}
                 <option value="{{ r2 }}" {{ 'selected' if r.referrer == r2 else '' }}>{{ r2 }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <select name="submitter_{{ r.id }}">
+                <option value="">—</option>
+                {% for s in submitters %}
+                <option value="{{ s }}" {{ 'selected' if r.submitter == s else '' }}>{{ s }}</option>
                 {% endfor %}
               </select>
             </td>

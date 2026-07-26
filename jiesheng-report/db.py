@@ -1,5 +1,6 @@
 import os
 import sqlite3
+from datetime import date
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "jiesheng_report.db")
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "schema.sql")
@@ -22,6 +23,8 @@ def init_db() -> None:
     existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(registrants)")}
     if "referrer" not in existing_cols:
         conn.execute("ALTER TABLE registrants ADD COLUMN referrer TEXT")
+    if "submitter" not in existing_cols:
+        conn.execute("ALTER TABLE registrants ADD COLUMN submitter TEXT")
     conn.commit()
     conn.close()
 
@@ -48,11 +51,17 @@ def get_stats(conn: sqlite3.Connection) -> dict:
 
 
 def add_registrant(conn: sqlite3.Connection, workshop: str, name: str, phone: str,
-                    register_date: str, note: str, referrer: str = None) -> int:
+                    register_date: str, note: str, referrer: str = None,
+                    paid: bool = False, paid_method: str = None, amount=None,
+                    submitter: str = None) -> int:
+    paid_date = date.today().isoformat() if paid else None
     cur = conn.execute(
-        """INSERT INTO registrants (workshop, name, phone, register_date, note, referrer)
-           VALUES (?, ?, ?, ?, ?, ?)""",
-        (workshop, name, phone or None, register_date, note or None, referrer or None),
+        """INSERT INTO registrants
+           (workshop, name, phone, register_date, note, referrer,
+            paid, paid_method, paid_date, amount, submitter)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (workshop, name, phone or None, register_date, note or None, referrer or None,
+         1 if paid else 0, paid_method if paid else None, paid_date, amount, submitter or None),
     )
     conn.commit()
     return cur.lastrowid
@@ -60,13 +69,14 @@ def add_registrant(conn: sqlite3.Connection, workshop: str, name: str, phone: st
 
 def update_registrant(conn: sqlite3.Connection, reg_id: int, name: str, phone: str,
                        register_date: str, note: str, paid_method: str, amount,
-                       referrer: str = None) -> None:
+                       referrer: str = None, submitter: str = None) -> None:
     conn.execute(
         """UPDATE registrants SET name = ?, phone = ?, register_date = ?, note = ?,
-           paid_method = ?, amount = ?, referrer = ?, updated_at = datetime('now', 'localtime')
+           paid_method = ?, amount = ?, referrer = ?, submitter = ?,
+           updated_at = datetime('now', 'localtime')
            WHERE id = ?""",
         (name, phone or None, register_date, note or None, paid_method or None, amount,
-         referrer or None, reg_id),
+         referrer or None, submitter or None, reg_id),
     )
     conn.commit()
 

@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS registrants (
     paid_date TEXT,                     -- YYYY-MM-DD
     amount INTEGER,
     note TEXT,
-    referrer TEXT,                       -- 邀請人：自由輸入（實際邀請人不限於固定名單）
+    referrer TEXT,                       -- 邀請人：曜董 | 大樹 | 佩君 | Lavi
+    submitter TEXT,                      -- 資料提交人：曜董 | 大樹 | 佩君 | Lavi（同帳號共用，用這欄記錄實際操作人）
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );

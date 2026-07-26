@@ -85,6 +85,7 @@ def admin():
         percent=percent,
         paid_methods=db.PAID_METHODS,
         referrers=db.REFERRERS,
+        submitters=db.REFERRERS,
         selected=workshop,
         registrants=registrants,
         stats=stats,
@@ -106,10 +107,18 @@ def add():
     referrer = (request.form.get("referrer") or "").strip()
     if referrer not in db.REFERRERS:
         referrer = ""
+    submitter = (request.form.get("submitter") or "").strip()
+    if submitter not in db.REFERRERS:
+        submitter = ""
+    paid_method = (request.form.get("paid_method") or "").strip()
+    amount_raw = (request.form.get("amount") or "").strip()
+    amount = int(amount_raw) if amount_raw.isdigit() else None
+    paid = request.form.get("paid") == "on"
 
     if name:
         conn = db.get_conn()
-        db.add_registrant(conn, workshop, name, phone, register_date, note, referrer)
+        db.add_registrant(conn, workshop, name, phone, register_date, note, referrer,
+                           paid, paid_method, amount, submitter)
         conn.close()
     return redirect(url_for("admin", workshop=workshop))
 
@@ -138,8 +147,12 @@ def save_all():
         referrer = (request.form.get(f"referrer_{reg_id}") or "").strip()
         if referrer not in db.REFERRERS:
             referrer = ""
+        submitter = (request.form.get(f"submitter_{reg_id}") or "").strip()
+        if submitter not in db.REFERRERS:
+            submitter = ""
 
-        db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, referrer)
+        db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount,
+                              referrer, submitter)
         db.set_paid(conn, reg_id, paid, paid_method, amount)
     conn.close()
     return redirect(url_for("admin", workshop=workshop))
