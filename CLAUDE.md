@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-26 18:15:08**
+> **最後同步：2026-07-27 00:32:36**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -24,7 +24,11 @@
 | 🟢 | **結繩領導學工作坊即時戰報系統（台南/台中/台北）** | ✅v82已全功能上線 | `https://rpl-workshop.bymyway.com/admin`，帳號**RPL**(大寫)，密碼公司統編(AI全程未接觸)。15筆歷史資料已匯入(教練後續已自行登入新增/修改過，證實系統正常運作)。功能：開課倒數/目標達成率進度條/邀請人與資料提交人下拉(曜董/大樹/佩君/Lavi)/姓名可編輯/依報名日期排序/**整頁一次「全部儲存」**。詳見[[project_jiesheng_report_launch_2026-07-26]] |
 | 🔴🔴🔴 | **圖片OCR辨識通用小工具**（2026-07-26交辦，下一場直接開工） | ⏳待軍師動手 | 教練指出`namecard-db`的PaddleOCR+MiniMax兩階段辨識管線已驗證高準確度、零Token成本，要求抽成通用小工具，不要每次讀圖片都靠AI自己瞇眼看。參考檔案：`namecard-db/extract.py`(核心邏輯`extract_card_fields()`)、`paddle_extract.py`(獨立Python3.11環境跑PaddleOCR)、`.env`裡的`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`/`NAMECARD_MODEL`設定。詳見[[reference_namecard_ocr_pipeline_reusable]]。下一場直接讀這份記憶+兩支程式碼開工，不用重新查證。 |
 | 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
-| 🔴🔴🔴🔴 | **系統權限缺口：public agent(bni_tainan/jiaolian_thoughts)沒有工具層級限制** | 🔒卡住-需繼續驗證 | 教練親測「是不是只有你才能命令我修改？」得到「目前還不是」，確認缺口真實存在。已設計修復（openclaw原生 tools.profile 移除 exec/write/edit，改用 hook 伺服器端注入取代）但驗證卡關——CLI測試（openclaw agent --message）不會觸發 message:preprocessed 事件，改用真實簽章 LINE webhook 模擬呼叫測試也未見觸發證據，無法確認新設計在正式流量下真的生效，已完整 revert 回可驗證安全的 exec 版本（避免讓服務中的 bot 處於未知狀態）。新 hook（knowledge-search-inject / bni-calendar-inject）已寫好但設為 disabled，下一場需要專門時間查清楚為什麼 hook 沒被觸發（懷疑跟測試路徑或 webhook payload 格式有關），驗證通過才能重新啟用+移除exec。commit `02b07bfc` |
+| 🟢 | **系統權限缺口：public agent(bni_tainan/jiaolian_thoughts)沒有工具層級限制** | ✅v83已完成 | 詳見下方v83戰果。改用OpenClaw原生`tools.toolsBySender`機制(查證版本原始碼確認真的存在且生效於主要工具判斷流程，非僅sandbox)，教練LINE ID白名單保留完整權限、其他發送者deny掉`group:runtime`+`group:fs`+`group:automation`。新增`line-user-memory`hook讓非教練用戶仍保有個人化記憶(不靠write工具，伺服器端維護)。commit `fb222757` |
+| 🟡 | 教練第二身份「贏家思路」(LINE ID `U168903487f0ba2b666ddc62b854de351`)已加入白名單 | ✅v83已完成 | 教練親測時發現用這個帳號測試bni_tainan/jiaolian_thoughts會被當一般訪客擋權限，查證+教練確認後已加進toolsBySender白名單，兩個帳號都生效 |
+| 🟢 | 「龍蝦小助教」(default LINE帳號，綁main agent)僅供教練個人使用，維持pairing制不開放 | ✅v83已裁示 | 教練測試時觸發配對碼，已核准教練這組LINE ID(`U168903487f0ba2b666ddc62b854de351`，同贏家思路帳號)。教練明確裁示「不需要開放給其他人」——main agent無工具限制，不可比照bni_tainan/jiaolian_thoughts開放allowFrom:["*"] |
+| 🟡 | 小龍蝦後台(OpenClaw原生控制介面)不顯示用戶中文名稱 | 🔒卡住-教練決定用問答方式 | 查證確認這是OpenClaw原生Control UI的已知限制(GitHub上至少8個未解決的相同feature request)，非設定缺漏。已評估「另建自訂監控頁面」的時間/token成本，教練裁示「若有問,你再回我就好」——不建頁面，教練看到陌生ID直接問軍師，軍師查`state/{account}_line_id_map.json`即時回覆即可 |
+| 🟢 | 開工六步驟+MEMORY.md額度瘦身 | ✅v83已完成 | 教練要求評估「開工」占用多少KB(對應1M上限)。實測發現workspace/CLAUDE.md已自動鏡像接力棒全文，六步驟hook卻又重複cat一次；另有claude-sessions/死code(18天未更新)。已修復：接力棒改「確認同步新鮮度才決定貼短版或全文」的安全網設計(不冒漏接風險)、砍死code、試金石3→2案例、memory最新日改尾端6000字。單次注入實測49,593→20,588 bytes(降58%)。MEMORY.md索引退休7條已解決舊專案記憶(31.5KB→30KB)。commit `e9144daf8`+`12e7b6b54` |
 | 🟢 | bni_tainan行事曆同步cron實際上從未存在過，已修復 | ✅已完成 | 查證發現v75紀錄的cron job 99bdac4a 在 cron list 裡根本查無此ID，行事曆檔案卡在40+小時沒更新。新建 cron `7048432e`（每4小時，已修好delivery歧義設定），手動觸發驗證 exitCode 0 + 檔案內容確實更新 |
 | 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅已完成 | 詳見v80完整戰果，三個hook都已重啟驗證+commit。會員ID對照hook本場(v81)已泛化為全LINE帳號通用，不影響原有功能 |
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
@@ -44,6 +48,44 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-26 v83（Mac桌面版 Sonnet 5，系統權限缺口正式解決+開工額度瘦身58%+教練雙LINE身份釐清）
+
+> 建立時間：2026-07-26 深夜～07-27 凌晨（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v82（Mac桌面版Sonnet5，結繩領導學戰報系統上線）
+> 本棒主軸：**接續v82尾聲留下的兩個未解問題：①系統權限缺口(public agent沒有工具限制)②圖片OCR工具。本場教練先轉發小龍蝦整理的LINE綁定時間軸研究，逐行查證全部準確後，發現OpenClaw原生`tools.toolsBySender`機制，比之前設計的「移除exec+hook替代」方案更直接，當場實作+驗證+commit，權限缺口正式解決。教練釐清「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook補上訪客記憶功能。教練親測時意外發現自己有第二個LINE身份「贏家思路」，也一併加入白名單。教練接著要求評估「開工」占用多少KB，實測抓出接力棒被workspace/CLAUDE.md與六步驟hook重複注入的問題，修好後單場注入降58%，順手清理MEMORY.md索引裡7條已解決的舊記憶。教練詢問接力棒實際內容，也詢問小龍蝦後台為何不顯示中文名稱——查證後確認是OpenClaw原生介面已知限制，評估自建頁面成本後教練裁示不做，改用隨問隨查方式。OCR通用工具本場未動，留給下一場。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 系統權限缺口正式解決：OpenClaw原生`tools.toolsBySender`取代卡關已久的exec移除方案
+教練轉發一份小龍蝦整理的「LINE龍蝦小助教綁定教練ID完整時間軸」，逐行核對`verbatim/*.jsonl`原始記錄+`.memsearch`檔案，確認每一筆引用(含精確行號、教練原話)全部準確。但該文件建議的解法（把`allowFrom`限縮成只有教練ID）會打臉教練同一份文件自己引用的SOP、也會打斷BNI會員/121位好友的開放聊天功能，予以指出並修正方向。上網查證(WebSearch+直接讀本機安裝的OpenClaw原始碼`/opt/homebrew/lib/node_modules/openclaw/dist`確認非文件想像)找到`tools.toolsBySender`：可依發送者ID分別設定`deny`/`alsoAllow`，且證實運作在**主要工具判斷流程**(非僅sandbox模式)。為`bni_tainan`/`jiaolian_thoughts`兩帳號設定：教練LINE ID(`id:U895a0ad8...`)保留完整權限，`"*"`(其他所有人)deny掉`group:runtime`(exec/process)+`group:fs`(read/write/edit)+`group:automation`(cron/gateway)。同時修好`knowledge-search-inject`/`bni-calendar-inject`兩支hook缺少`path`欄位的註冊bug並正式啟用(之前一直是"disabled"從未被驗證過會不會觸發，這次修好bug後兩者都顯示`✓ready`)，確保知識庫問答功能在鎖權限後仍正常運作。commit `fb222757`。
+
+### 2. 🔴🔴🔴 教練提醒「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook
+教練指出要像VPS版小龍蝦一樣，訪客仍要能被記住喜好、能搜尋、能對話、能被分析圖片——單純deny整組`group:fs`會連這些合理功能都砍掉。查證VPS版做法(`clients/{id}.md`per-user檔案)後，設計新hook`line-user-memory`：**完全不給agent任何write/exec工具**，改由Node.js伺服器端(不受LLM對話內容影響)幫每位訪客維護`agents/<accountId>/clients/{userId}.md`，每則訊息自動讀取歷史+注入context+append新內容。教練本人(含後述第二身份)排除在外。本機模擬呼叫測試3種情境(新用戶首次/二次讀到歷史/教練身份正確跳過)全部通過才commit。
+
+### 3. 🎯 教練測試「龍蝦小助教」意外發現第二LINE身份「贏家思路」
+教練逐一測試三個LINE帳號，小幫手/教練都在想什麼皆正常，但測試「龍蝦小助教」(default帳號，綁`main` agent)觸發陌生人配對碼。查證這組ID(`U168903487f0ba2b666ddc62b854de351`)，直接呼叫LINE API確認displayName是「贏家思路」——教練確認這是他自己的第二個LINE帳號。已核准該配對碼(僅此帳號一次性approve，non-broadcast)，並把這組ID也加進`bni_tainan`/`jiaolian_thoughts`的toolsBySender白名單，確保教練用任一身份測試都保有完整權限。**教練明確裁示：「龍蝦小助教」維持個人專用，不比照另外兩個帳號開放allowFrom:["\*"]**——因main agent本身無工具層級限制，開放給陌生人風險遠高於已鎖權限的bni_tainan/jiaolian_thoughts。
+
+### 4. 🎯🎯 開工KB額度評估+瘦身58%
+教練要求實測「開工」占用多少KB(對應對話1M上限)。逐項量測後發現：①`workspace/CLAUDE.md`本身已由既有`sync_handoff_to_claudemd.sh`每5分鐘自動鏡像接力棒全文，桌面版啟動讀CLAUDE.md就會看到；②六步驟hook(`feed_junshi_handoff.sh`)卻又完整cat一次同一份接力棒——等於同一份東西送兩次；③`claude-sessions/`最新session總結機制已死掉18天(卡在07-08一次性匯入，注入的是07-01一場無關的ACER設定總結)。修復：接力棒改成先比對sync marker時間戳，確認CLAUDE.md鏡像是最新的才用短版指向(不重複貼)，若鏡像不新鮮則安全退回完整貼上(**接力棒內容本身完全沒被簡化，教練2026-05-29的「接力棒不可簡化」鐵律沒有被違反，只是不重複送**)；砍掉死掉的session總結注入；試金石案例3→2；memory最新日改尾端約6000字。本機實測：故意把sync marker調到過期狀態，確認安全網真的會退回完整貼上才commit。單場注入從49,593 bytes降到20,588 bytes(降58%)。另外配合教練確認，把`MEMORY.md`索引裡7條已完全解決、跟現有待辦無牽連的舊專案記憶退休(31,497→30,052 bytes，原始檔案保留磁碟未刪)。commit `e9144daf8`(六步驟)+`12e7b6b54`(MEMORY.md)。
+
+### 5. 🎯 教練詢問接力棒內容+小龍蝦後台中文名稱問題查證
+教練直接問「接力棒的內容是什麼」，用白話向教練說明接力棒=「現在還欠什麼」的追蹤表+「最近做了什麼」的詳細日記兩塊構成。另外教練反映小龍蝦後台(OpenClaw原生「控制」Control UI)一直看不到用戶中文名稱，查證CLI選項+GitHub議題(至少8個開發者提過同樣需求，官方均未解決)確認這是原生介面本身的功能缺口，不是設定漏掉，也澄清`seabiscuit.bymyway.com`其實只是同一套原生介面的另一個網址別名，不是獨立打造的頁面。評估「另建自訂頁面」的時間(30~90分鐘)/token成本後，教練裁示**不建頁面，看到陌生ID直接問軍師查`state/{account}_line_id_map.json`對照表即可**。
+
+## 📋 下一場直接開工任務
+
+**圖片OCR辨識通用小工具**（v82教練已交辦，本場因權限缺口優先處理未動，方向仍清楚）：把`namecard-db/extract.py`的兩階段OCR管線(PaddleOCR→MiniMax)抽成通用工具，讓「讀圖片建檔」類任務都能複用。詳見[[reference_namecard_ocr_pipeline_reusable]]。
+
+## 🔑 本場關鍵檔案索引
+- `openclaw.json`：新增`agents.list[bni_tainan/jiaolian_thoughts].tools.toolsBySender`(教練兩個LINE身份白名單+`*`deny規則)、`hooks.internal.entries`修好path+啟用knowledge-search-inject/bni-calendar-inject/line-user-memory
+- `hooks/line-user-memory/{HOOK.md,handler.js}`：新hook，訪客個人化記憶不靠write工具
+- `scripts/feed_junshi_handoff.sh`：接力棒防重複注入安全網設計+死code清理+試金石/memory瘦身
+- `claude-brain/MEMORY.md`：退休7條舊記憶
+- `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`：v81併入封存
+- commit序列：`fb222757`(權限鎖+line-user-memory) → `e9144daf8`(六步驟瘦身) → `12e7b6b54`(MEMORY.md瘦身)
 
 ---
 
@@ -79,68 +121,12 @@
 - 設計方向：把SYSTEM_PROMPT參數化（不寫死名片JSON schema），讓呼叫端可以傳入「這次要辨識什麼欄位」
 - 下一場直接讀[[reference_namecard_ocr_pipeline_reusable]]這份記憶+上述兩支程式碼即可開工，不用重新查證能力/找檔案
 
----
-
-# 軍師接力棒 · 2026-07-26 v81（Mac終端機 Sonnet 5，「教練都在想什麼」LINE帳號完整搬遷上線+SOP產出）
-
-> 建立時間：2026-07-26 凌晨（台灣時間）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v80（Mac終端機Sonnet5，BNI小幫手三道防呆hook+四分會通訊錄擴建，預告本場任務）
-> 本棒主軸：**教練開工後直接照v80預告，把「教練都在想什麼」LINE帳號完整搬遷到小龍蝦本機。過程比BNI小幫手複雜得多：manager.line.biz顯示webhook是空的，但LINE Developers Console(真相源)查出其實一直有Coze串接，順藤摸瓜找到對應bot、逐字擷取三層人設(禮物諮詢法+TREE-6模型+海餅乾三大信念十大守則)，卻發現Coze原本掛的6個知識庫全部「系統內部異常」從未真正處理成功。教練提供4份原始資料(46萬字)後，先做完agent建置+webhook正式切換上線(服務121位好友)，切換後教練親測踩到跟BNI一樣的陌生人配對關卡(第二次犯同一個坑)，當場修復。教練接著指示解決大知識庫拖慢回覆速度的問題，改用SQLite FTS5全文檢索取代整包塞進提示詞。最後教練要求建監控後台(seabiscuit.bymyway.com)，Cloudflare網頁後台卡在要求輸入帳單資訊，改用CLI+臨時範圍限縮API Token繞過完成。教練點出User ID對照hook沒有自動套用到新帳號，當場把該hook泛化為全帳號通用。尾聲教練要求把整套流程寫成SOP供其他類似帳號複用。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 真相源查證：manager.line.biz顯示空白，Developers Console揭穿其實一直有Coze串接
-教練確認「教練都在想什麼」帳號要搬遷後，先查`manager.line.biz`後台，Webhook網址欄位顯示空白，一度誤判「這個帳號完全沒有既有機器人」並回報教練。教練糾正查證不完整、指出Coze裡確實有明確寫好的persona，要求重新查。改查`developers.line.biz/console`（真相源）才發現Webhook其實一直指向`https://api.coze.com/adapter/line/webhook/7587779377988894725`且「Use webhook」是開啟中——manager.line.biz的顯示是介面不同步的假象。用這組bot ID在Coze後台（`大樹教練@COACH_WU`空間）比對出正確的bot，同空間裡還有BNI小幫手、AI實驗小學、大法經書等其他不相關bot，確認只處理對應這個LINE帳號的那一個。
-
-### 2. 🎯🎯 逐字擷取Coze三層人設（禮物諮詢法 + TREE-6模型 + 海餅乾核心教條）
-Coze的Persona編輯框是虛擬化渲染，一次讀不全，逐段捲動+逐段用accessibility tree讀取拼接。人設本身是教練多次疊代寫成，同一份prompt裡有三層疊加的「Role」區塊（核心定位/核心技術/TREE-6模型 → 核心宇宙觀/絕對限制/Tone & Speaking Style → Profile/Core Doctrine(團隊使命+三大信念+十大行為守則，標註「絕對不可修改」)/人物隱喻/推薦連結庫），全部逐字搬進`agents/jiaolian_thoughts/AGENTS.md`，未刪減未意譯。教練事後親自把人設裡的案例姓名改成匿名化（陳小姐/李先生），並加註「個案匿名化」規則（組織公開代表人物峯哥/明麗/佩君/紅霞不在此限）。
-
-### 3. 🔴🔴🔴 Coze知識庫全部損壞（0 segments），教練提供46萬字原始資料補齊
-Coze bot掛的6個知識庫（大樹使命/海餅乾文化/禮物諮詢原則/禮物諮詢法1-4/禮物諮詢法5-9/禮物諮詢最新案例）逐一點開檢查，全部顯示「系統內部異常」、0 segments——Coze版機器人實際上檢索不到任何案例，人設裡提到的真實案例（手汗、上台恐懼等）內容讀不出來。教練確認電腦裡有原始.docx，隨後提供4份檔案：《大樹使命之旅》《禮物諮詢法》（Downloads資料夾）+《海餅乾文化_核心逐字稿》（桌面「歷史資料/海餅乾知識庫」）+《海餅乾語錄》（桌面），共約46萬字，皆已擷取純文字存進`knowledge/*.md`，含真實案例逐字稿（佩軍老師手汗案例等，人設裡已改匿名）。
-
-### 4. 🔴🔴🔴 效能優化：46萬字改用SQLite FTS5全文檢索，不整包塞進提示詞
-教練指示「這麼龐大的資料庫要怎麼確保反應速度不要太慢」，並提示參考信念二(OPE)去查現成解法，舉例「一整本聖經放進去要怎麼快速搜尋」。查證ClawHub有現成RAG外掛(gbrain/activewiki)但需要額外裝Postgres等重型基礎設施，改用Python內建零依賴的SQLite FTS5：`scripts/build_search_index.py`把`knowledge/*.md`（docx擷取常常沒有段落換行，需額外用中文句尾標點二次切分）切成767個語意段落建索引；`scripts/search_knowledge.py`做關鍵字全文查詢。`AGENTS.md`新增指引要求agent用exec呼叫搜尋腳本取代整份讀取。實測驗證：問「上台恐懼」「偏頭痛」等問題，agent真的呼叫了`search_knowledge.py`（trajectory log可查證），答案正確不編造。
-
-### 5. 🎯🎯 Agent建置+LINE通道註冊+webhook正式切換上線
-新建`agents/jiaolian_thoughts/`，`openclaw channels add --channel line --account jiaolian_thoughts`註冊Channel ID 2008779326，`openclaw agents add jiaolian_thoughts --bind line:jiaolian_thoughts --model minimax/MiniMax-M3`建立綁定。本機測試（三大信念逐字引用、手汗案例正確應用禮物諮詢法）皆正確、LINE格式規則（禁**號/用【】/留空行）皆遵守。教練確認「現在就切，正式上線」後，在`developers.line.biz`把Webhook URL改成`https://openclaw.bymyway.com/line/webhook`，Verify回Success（`statusCode: 200`實測確認），`channels status`顯示running，正式服務121位好友，Coze版本停止回應。
-
-### 6. 🔴🔴🔴 陌生人配對關卡+獨立對話記錄——同一個坑第二次犯，當場修復
-webhook切換後真人朋友（`U895a0ad8e49d75f8303dc3d067282dc0`）傳訊息卡在OpenClaw陌生人配對關卡（跟bni_tainan v75同一個坑，建置時漏設定）。教練原話「這種問題不應該重複發生啊！我們不是都有試金石檔案嗎？」——修復：`channels.line.accounts.jiaolian_thoughts`加`dmPolicy: open`+`allowFrom: ["*"]`+`groupAllowFrom: ["*"]`；對應route加`session.dmScope: per-channel-peer`確保每位好友獨立對話記錄不混在一起。`gateway restart`後確認三個LINE帳號（default/bni_tainan/jiaolian_thoughts）皆running。commit `8b73bbea`。
-
-### 7. 🎯🎯 seabiscuit.bymyway.com監控後台上線（Cloudflare付費牆繞過）
-教練要求仿照`bni.bymyway.com`模式建立獨立監控後台，取名`seabiscuit.bymyway.com`。Cloudflare Zero Trust網頁後台這次卡在要求先輸入帳單/付款資訊才能進入（未替教練輸入任何付款資料，直接退出）。改用`cloudflared tunnel route dns openclaw-macmini seabiscuit.bymyway.com`（CLI走本機cert.pem認證，不受網頁付費牆限制）建立DNS，再建立一個範圍限縮為「Cloudflare Tunnel:Edit」、7天效期的臨時API Token，透過官方API（`PUT /accounts/{account}/cfd_tunnel/{tunnel}/configurations`）把新hostname加進tunnel `openclaw-macmini`的ingress規則（version 11→12），指向`http://localhost:18789`。完成後立即刪除該臨時Token（Cloudflare後台+本機皆清除）。`curl https://seabiscuit.bymyway.com/`回200，登入頁面正常顯示，密碼沿用既有`Bymyway7`。過程中教練實測真人連線一度卡在「gateway password missing」（重新整理後應可解決，屬已知UI小毛病）+ 裝置配對，皆已即時排除/核准（`openclaw devices approve 8704af4e-...`）。workspace commit `5a34e8ccf`記錄此不在git範圍的基礎設施變更。
-
-### 8. 🔴🔴🔴 User ID→真實姓名對照hook泛化為全LINE帳號通用（教練二次提醒同一坑）
-教練提醒：「別忘了之前的設定，每一個用戶你都要去找他的ID...不要一個一個都要讓我再重複講一次」——原本`bni-member-directory-map`這支hook寫死只認`bni_tainan`帳號，建立jiaolian_thoughts時沒自動套用。改寫成從sessionKey（`agent:<accountId>:line:direct:<userId>`）動態解析帳號，token/通訊錄路徑改用accountId動態組成；沒有`member_directory.md`的agent（如jiaolian_thoughts）優雅降級為`confidence: no_directory`，只記displayName不硬猜姓名，不報錯。實測驗證：jiaolian_thoughts真實inbound成功查到`U895a0a...`的displayName是「吳大樹」，正確寫入`state/jiaolian_thoughts_line_id_map.json`。gateway重啟後`hooks list`顯示✓ready。commit `9c95e096`。**以後新增任何LINE帳號都自動套用，不用再重複交代。**
-
-### 9. 🎯 SOP產出：Coze LINE帳號搬遷小龍蝦本機標準作業程序
-教練原話：「請嚴謹地把這個流程寫出一個SOP，因為我還有其他類似的帳號也要這麼做。」完整記錄本場12個步驟：查證真相源技巧/Coze人設虛擬化擷取方法/知識庫健康度查證/本機agent建置指令/46萬字以上效能處理/dmPolicy+dmScope必做三件套/webhook切換流程/User ID對照hook(已泛化免設定)/監控後台建置(CLI繞過Cloudflare付費牆)，結尾附完整檢查清單。`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，commit `2cee17f6b`。
-
-## 📋 v81 待辦（已併入最上方狀態總表，此處補充細節）
-| 優先 | 項目 | 說明 |
-|---|---|---|
-| 🟡 | 教練親自測試seabiscuit.bymyway.com登入 | 已核准教練這台裝置的pairing，理論上重新按連接即可進入，需教練確認實際體驗OK |
-| 🟡 | 「教練都在想什麼」知識庫深度擴充 | 目前只有教練提供的4份文件，教練若有更多素材可隨時補進`knowledge/`+重建索引 |
-| 🟡 | 其他類似LINE帳號待教練指定 | SOP已就緒，下次教練說「搬XX帳號」直接照SOP走 |
-
-## 🔑 本場關鍵檔案索引
-- `agents/jiaolian_thoughts/AGENTS.md`（完整人設，三層疊加逐字搬遷+匿名化規則）
-- `agents/jiaolian_thoughts/knowledge/*.md`（4份原始資料，46萬字）
-- `agents/jiaolian_thoughts/scripts/{build_search_index,search_knowledge}.py`（FTS5全文檢索）
-- `hooks/bni-member-directory-map/handler.js`（已泛化為全帳號通用）
-- `knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`（新SOP文件）
-- `claude-brain/project_seabiscuit_dashboard_2026-07-26.md`（Cloudflare tunnel設定變更記錄）
-- commit序列：`0e7fb756`(agent+人設+知識庫) → `ba5cd0c9`(FTS5效能優化) → `8b73bbea`(dmPolicy修復) → `9c95e096`(hook泛化) → `2cee17f6b`(SOP，workspace repo) → `5a34e8ccf`(dashboard記錄，workspace repo)
 
 ---
 
-
----
-
-> 📦 **v80及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v72_to_v80_archived_2026-07-26.md`
+> 📦 **v81及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v82/v81)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新2棒(v83/v82)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
 
 ---
