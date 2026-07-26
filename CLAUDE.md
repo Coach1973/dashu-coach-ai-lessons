@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-26 18:10:49**
+> **最後同步：2026-07-26 18:15:08**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -47,10 +47,10 @@
 
 ---
 
-# 軍師接力棒 · 2026-07-26 v82（Mac終端機 Sonnet 5，結繩領導學戰報系統全功能上線+Cloudflare Token安全清理+下一場OCR工具交辦）
+# 軍師接力棒 · 2026-07-26 v82（Mac桌面版 Sonnet 5，結繩領導學戰報系統全功能上線+Cloudflare Token安全清理+下一場OCR工具交辦）
 
 > 建立時間：2026-07-26 傍晚（台灣時間）
-> 本棒執行者：Mac 終端機 Sonnet 5
+> 本棒執行者：Mac 桌面版 Sonnet 5
 > 上一棒：v81（Mac終端機Sonnet5，「教練都在想什麼」LINE帳號完整搬遷上線）
 > 本棒主軸：**接手聯想機寫好的jiesheng-report程式碼，完成Mac端部署上線，過程中修好一個真bug（.env密碼雜湊被bash source吃掉導致密碼永遠登不進去），並依教練多輪追加需求把系統做完整（一次全部儲存/序號/姓名可編輯/排序/邀請人與資料提交人）。中途發現並清理2個先前seabiscuit任務遺留的Cloudflare臨時Token（安全debt清償）。尾聲教練提出Token成本疑慮，查證確認screenshot截圖真的貴，教練也回憶起namecard-db已有驗證過的PaddleOCR+MiniMax辨識管線可複用，本場對話長度已高（10+小時/30+輪）教練主動要求總結收尾，開新對話繼續做OCR通用工具。**
 
