@@ -416,3 +416,56 @@ HEARTBEAT `telegramChannelOk=false` 誤報Telegram通道死了5.5天，害系統
 > Mac桌面版 Sonnet 5 親筆，2026-07-20。這場對話有個值得記住的教訓：拖拉排序功能第一次交付時，我用「自己呼叫事件處理函式」的方式測試，邏輯上看起來沒問題就回報教練驗收，結果教練一用就失敗——這不是我沒測試，是我測試的方法本身沒有真正驗證到「使用者實際操作」這件事，跟守則#03「思考就是問問題」講的自我驗證是同一個層次的問題：驗證要驗證到真正會發生的路徑，不能驗證一個自己方便呼叫、但跟真實情境不同的簡化版本。修好之後改用模擬真實滑鼠事件序列測試，這才是對的做法，以後任何涉及使用者互動（拖拉、點擊、輸入）的功能，都要用這個標準去測試，不能只驗證「程式邏輯」，要驗證「操作路徑」。下一棒開工，先問教練拖拉排序這次是不是真的好用了。
 
 </details>
+---
+
+# 軍師接力棒 · 2026-07-26 v81（Mac終端機 Sonnet 5，「教練都在想什麼」LINE帳號完整搬遷上線+SOP產出）
+
+> 建立時間：2026-07-26 凌晨（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v80（Mac終端機Sonnet5，BNI小幫手三道防呆hook+四分會通訊錄擴建，預告本場任務）
+> 本棒主軸：**教練開工後直接照v80預告，把「教練都在想什麼」LINE帳號完整搬遷到小龍蝦本機。過程比BNI小幫手複雜得多：manager.line.biz顯示webhook是空的，但LINE Developers Console(真相源)查出其實一直有Coze串接，順藤摸瓜找到對應bot、逐字擷取三層人設(禮物諮詢法+TREE-6模型+海餅乾三大信念十大守則)，卻發現Coze原本掛的6個知識庫全部「系統內部異常」從未真正處理成功。教練提供4份原始資料(46萬字)後，先做完agent建置+webhook正式切換上線(服務121位好友)，切換後教練親測踩到跟BNI一樣的陌生人配對關卡(第二次犯同一個坑)，當場修復。教練接著指示解決大知識庫拖慢回覆速度的問題，改用SQLite FTS5全文檢索取代整包塞進提示詞。最後教練要求建監控後台(seabiscuit.bymyway.com)，Cloudflare網頁後台卡在要求輸入帳單資訊，改用CLI+臨時範圍限縮API Token繞過完成。教練點出User ID對照hook沒有自動套用到新帳號，當場把該hook泛化為全帳號通用。尾聲教練要求把整套流程寫成SOP供其他類似帳號複用。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 真相源查證：manager.line.biz顯示空白，Developers Console揭穿其實一直有Coze串接
+教練確認「教練都在想什麼」帳號要搬遷後，先查`manager.line.biz`後台，Webhook網址欄位顯示空白，一度誤判「這個帳號完全沒有既有機器人」並回報教練。教練糾正查證不完整、指出Coze裡確實有明確寫好的persona，要求重新查。改查`developers.line.biz/console`（真相源）才發現Webhook其實一直指向`https://api.coze.com/adapter/line/webhook/7587779377988894725`且「Use webhook」是開啟中——manager.line.biz的顯示是介面不同步的假象。用這組bot ID在Coze後台（`大樹教練@COACH_WU`空間）比對出正確的bot，同空間裡還有BNI小幫手、AI實驗小學、大法經書等其他不相關bot，確認只處理對應這個LINE帳號的那一個。
+
+### 2. 🎯🎯 逐字擷取Coze三層人設（禮物諮詢法 + TREE-6模型 + 海餅乾核心教條）
+Coze的Persona編輯框是虛擬化渲染，一次讀不全，逐段捲動+逐段用accessibility tree讀取拼接。人設本身是教練多次疊代寫成，同一份prompt裡有三層疊加的「Role」區塊（核心定位/核心技術/TREE-6模型 → 核心宇宙觀/絕對限制/Tone & Speaking Style → Profile/Core Doctrine(團隊使命+三大信念+十大行為守則，標註「絕對不可修改」)/人物隱喻/推薦連結庫），全部逐字搬進`agents/jiaolian_thoughts/AGENTS.md`，未刪減未意譯。教練事後親自把人設裡的案例姓名改成匿名化（陳小姐/李先生），並加註「個案匿名化」規則（組織公開代表人物峯哥/明麗/佩君/紅霞不在此限）。
+
+### 3. 🔴🔴🔴 Coze知識庫全部損壞（0 segments），教練提供46萬字原始資料補齊
+Coze bot掛的6個知識庫（大樹使命/海餅乾文化/禮物諮詢原則/禮物諮詢法1-4/禮物諮詢法5-9/禮物諮詢最新案例）逐一點開檢查，全部顯示「系統內部異常」、0 segments——Coze版機器人實際上檢索不到任何案例，人設裡提到的真實案例（手汗、上台恐懼等）內容讀不出來。教練確認電腦裡有原始.docx，隨後提供4份檔案：《大樹使命之旅》《禮物諮詢法》（Downloads資料夾）+《海餅乾文化_核心逐字稿》（桌面「歷史資料/海餅乾知識庫」）+《海餅乾語錄》（桌面），共約46萬字，皆已擷取純文字存進`knowledge/*.md`，含真實案例逐字稿（佩軍老師手汗案例等，人設裡已改匿名）。
+
+### 4. 🔴🔴🔴 效能優化：46萬字改用SQLite FTS5全文檢索，不整包塞進提示詞
+教練指示「這麼龐大的資料庫要怎麼確保反應速度不要太慢」，並提示參考信念二(OPE)去查現成解法，舉例「一整本聖經放進去要怎麼快速搜尋」。查證ClawHub有現成RAG外掛(gbrain/activewiki)但需要額外裝Postgres等重型基礎設施，改用Python內建零依賴的SQLite FTS5：`scripts/build_search_index.py`把`knowledge/*.md`（docx擷取常常沒有段落換行，需額外用中文句尾標點二次切分）切成767個語意段落建索引；`scripts/search_knowledge.py`做關鍵字全文查詢。`AGENTS.md`新增指引要求agent用exec呼叫搜尋腳本取代整份讀取。實測驗證：問「上台恐懼」「偏頭痛」等問題，agent真的呼叫了`search_knowledge.py`（trajectory log可查證），答案正確不編造。
+
+### 5. 🎯🎯 Agent建置+LINE通道註冊+webhook正式切換上線
+新建`agents/jiaolian_thoughts/`，`openclaw channels add --channel line --account jiaolian_thoughts`註冊Channel ID 2008779326，`openclaw agents add jiaolian_thoughts --bind line:jiaolian_thoughts --model minimax/MiniMax-M3`建立綁定。本機測試（三大信念逐字引用、手汗案例正確應用禮物諮詢法）皆正確、LINE格式規則（禁**號/用【】/留空行）皆遵守。教練確認「現在就切，正式上線」後，在`developers.line.biz`把Webhook URL改成`https://openclaw.bymyway.com/line/webhook`，Verify回Success（`statusCode: 200`實測確認），`channels status`顯示running，正式服務121位好友，Coze版本停止回應。
+
+### 6. 🔴🔴🔴 陌生人配對關卡+獨立對話記錄——同一個坑第二次犯，當場修復
+webhook切換後真人朋友（`U895a0ad8e49d75f8303dc3d067282dc0`）傳訊息卡在OpenClaw陌生人配對關卡（跟bni_tainan v75同一個坑，建置時漏設定）。教練原話「這種問題不應該重複發生啊！我們不是都有試金石檔案嗎？」——修復：`channels.line.accounts.jiaolian_thoughts`加`dmPolicy: open`+`allowFrom: ["*"]`+`groupAllowFrom: ["*"]`；對應route加`session.dmScope: per-channel-peer`確保每位好友獨立對話記錄不混在一起。`gateway restart`後確認三個LINE帳號（default/bni_tainan/jiaolian_thoughts）皆running。commit `8b73bbea`。
+
+### 7. 🎯🎯 seabiscuit.bymyway.com監控後台上線（Cloudflare付費牆繞過）
+教練要求仿照`bni.bymyway.com`模式建立獨立監控後台，取名`seabiscuit.bymyway.com`。Cloudflare Zero Trust網頁後台這次卡在要求先輸入帳單/付款資訊才能進入（未替教練輸入任何付款資料，直接退出）。改用`cloudflared tunnel route dns openclaw-macmini seabiscuit.bymyway.com`（CLI走本機cert.pem認證，不受網頁付費牆限制）建立DNS，再建立一個範圍限縮為「Cloudflare Tunnel:Edit」、7天效期的臨時API Token，透過官方API（`PUT /accounts/{account}/cfd_tunnel/{tunnel}/configurations`）把新hostname加進tunnel `openclaw-macmini`的ingress規則（version 11→12），指向`http://localhost:18789`。完成後立即刪除該臨時Token（Cloudflare後台+本機皆清除）。`curl https://seabiscuit.bymyway.com/`回200，登入頁面正常顯示，密碼沿用既有`Bymyway7`。過程中教練實測真人連線一度卡在「gateway password missing」（重新整理後應可解決，屬已知UI小毛病）+ 裝置配對，皆已即時排除/核准（`openclaw devices approve 8704af4e-...`）。workspace commit `5a34e8ccf`記錄此不在git範圍的基礎設施變更。
+
+### 8. 🔴🔴🔴 User ID→真實姓名對照hook泛化為全LINE帳號通用（教練二次提醒同一坑）
+教練提醒：「別忘了之前的設定，每一個用戶你都要去找他的ID...不要一個一個都要讓我再重複講一次」——原本`bni-member-directory-map`這支hook寫死只認`bni_tainan`帳號，建立jiaolian_thoughts時沒自動套用。改寫成從sessionKey（`agent:<accountId>:line:direct:<userId>`）動態解析帳號，token/通訊錄路徑改用accountId動態組成；沒有`member_directory.md`的agent（如jiaolian_thoughts）優雅降級為`confidence: no_directory`，只記displayName不硬猜姓名，不報錯。實測驗證：jiaolian_thoughts真實inbound成功查到`U895a0a...`的displayName是「吳大樹」，正確寫入`state/jiaolian_thoughts_line_id_map.json`。gateway重啟後`hooks list`顯示✓ready。commit `9c95e096`。**以後新增任何LINE帳號都自動套用，不用再重複交代。**
+
+### 9. 🎯 SOP產出：Coze LINE帳號搬遷小龍蝦本機標準作業程序
+教練原話：「請嚴謹地把這個流程寫出一個SOP，因為我還有其他類似的帳號也要這麼做。」完整記錄本場12個步驟：查證真相源技巧/Coze人設虛擬化擷取方法/知識庫健康度查證/本機agent建置指令/46萬字以上效能處理/dmPolicy+dmScope必做三件套/webhook切換流程/User ID對照hook(已泛化免設定)/監控後台建置(CLI繞過Cloudflare付費牆)，結尾附完整檢查清單。`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，commit `2cee17f6b`。
+
+## 📋 v81 待辦（已併入最上方狀態總表，此處補充細節）
+| 優先 | 項目 | 說明 |
+|---|---|---|
+| 🟡 | 教練親自測試seabiscuit.bymyway.com登入 | 已核准教練這台裝置的pairing，理論上重新按連接即可進入，需教練確認實際體驗OK |
+| 🟡 | 「教練都在想什麼」知識庫深度擴充 | 目前只有教練提供的4份文件，教練若有更多素材可隨時補進`knowledge/`+重建索引 |
+| 🟡 | 其他類似LINE帳號待教練指定 | SOP已就緒，下次教練說「搬XX帳號」直接照SOP走 |
+
+## 🔑 本場關鍵檔案索引
+- `agents/jiaolian_thoughts/AGENTS.md`（完整人設，三層疊加逐字搬遷+匿名化規則）
+- `agents/jiaolian_thoughts/knowledge/*.md`（4份原始資料，46萬字）
+- `agents/jiaolian_thoughts/scripts/{build_search_index,search_knowledge}.py`（FTS5全文檢索）
+- `hooks/bni-member-directory-map/handler.js`（已泛化為全帳號通用）
+- `knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`（新SOP文件）
+- `claude-brain/project_seabiscuit_dashboard_2026-07-26.md`（Cloudflare tunnel設定變更記錄）
+- commit序列：`0e7fb756`(agent+人設+知識庫) → `ba5cd0c9`(FTS5效能優化) → `8b73bbea`(dmPolicy修復) → `9c95e096`(hook泛化) → `2cee17f6b`(SOP，workspace repo) → `5a34e8ccf`(dashboard記錄，workspace repo)
