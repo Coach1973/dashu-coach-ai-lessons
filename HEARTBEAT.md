@@ -31,3 +31,15 @@
 - 觸發詞：開工
 - 雲端狀態：✅ 已拉雲端最新（HEAD: 0ea6ce8ab）
 - Session: test-kaigong-measure-999
+
+## 🩺 軍師 Hook 自檢 2026-07-26 22:58（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 1332b2ca6）
+- Session: test-optimize-verify-001
+
+## 🩺 軍師 Hook 自檢 2026-07-26 22:58（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 1332b2ca6）
+- Session: test-optimize-verify-002
