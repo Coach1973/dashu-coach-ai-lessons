@@ -10,7 +10,6 @@ set -uo pipefail
 
 WORKSPACE="/Users/bymyway/.openclaw/workspace"
 HANDOFF="$WORKSPACE/JUNSHI_HANDOFF_LATEST.md"
-SESSION_DUMP="$WORKSPACE/claude-sessions"
 HEARTBEAT="$WORKSPACE/HEARTBEAT.md"
 STONE="$WORKSPACE/試金石/試金石_案例庫.md"
 MEMORY_DIR="$WORKSPACE/memory"
@@ -64,9 +63,6 @@ if [[ -d "$WORKSPACE/.git" ]]; then
   fi
 fi
 
-# 抓最新 SESSION 總結
-LATEST_SESSION=$(ls -1 "$SESSION_DUMP"/SESSION_*.md 2>/dev/null | sort | tail -1)
-
 # Self-test 寫入 HEARTBEAT（防假回報）
 if [[ -f "$HEARTBEAT" ]]; then
   {
@@ -107,10 +103,24 @@ INJECT_CONTENT=$(
   echo "教練說「開工/開/工作/幹活」=暗號觸發。讀完本段即可無縫接續。"
 
   # ───────── 第 1 步：接力棒 ─────────
+  # 2026-07-26 軍師加：workspace/CLAUDE.md 本身已由 scripts/sync_handoff_to_claudemd.sh
+  # 每 5 分鐘自動鏡像接力棒全文（桌面版讀 CLAUDE.md 時就會看到）。若該鏡像確認是最新的
+  # （sync marker 時間 >= HANDOFF mtime），這裡就不重複貼整份接力棒，只給一句指向，
+  # 省下~25KB重複內容；若鏡像不是最新（sync 掛掉/沒跑過），照舊完整貼上，安全優先。
   echo ""
-  echo "## 📜 第 1 步：接力棒（JUNSHI_HANDOFF_LATEST.md 全文）"
+  echo "## 📜 第 1 步：接力棒"
   echo ""
-  cat "$HANDOFF"
+  HANDOFF_MTIME=$(stat -f %m "$HANDOFF" 2>/dev/null || echo 0)
+  SYNC_MARKER="$WORKSPACE/.sync_markers/handoff_last_sync"
+  LAST_SYNC=0
+  [[ -f "$SYNC_MARKER" ]] && LAST_SYNC=$(cat "$SYNC_MARKER" 2>/dev/null || echo 0)
+  if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" ]]; then
+    echo "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 \`JUNSHI_HANDOFF_LATEST.md\` 原檔。）"
+  else
+    echo "⚠️（CLAUDE.md 鏡像非最新，改為完整貼上，確保接力棒不漏接）"
+    echo ""
+    cat "$HANDOFF"
+  fi
 
   # ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
   if [[ -f "$HEARTBEAT" ]]; then
@@ -127,9 +137,9 @@ INJECT_CONTENT=$(
     echo ""
     echo "---"
     echo ""
-    echo "## 🔴 第 3 步：血淚試金石最新 3 案例（守則 #07 同處跌倒鐵律）"
+    echo "## 🔴 第 3 步：血淚試金石最新 2 案例（守則 #07 同處跌倒鐵律）"
     echo ""
-    LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -3 | head -1 | cut -d: -f1)
+    LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -2 | head -1 | cut -d: -f1)
     if [[ -n "$LAST_3_START" ]]; then
       tail -n +"$LAST_3_START" "$STONE"
     else
@@ -166,22 +176,22 @@ INJECT_CONTENT=$(
       echo ""
       echo "---"
       echo ""
-      echo "## 🧠 第 5 步：memory 最新日（$(basename "$LATEST_MEMORY")，已濾除 Dreaming 雜訊區塊）"
+      echo "## 🧠 第 5 步：memory 最新日（$(basename "$LATEST_MEMORY")，已濾除 Dreaming 雜訊區塊，僅取最近段落）"
       echo ""
-      sed -e '/<!-- openclaw:dreaming:light:start -->/,/<!-- openclaw:dreaming:light:end -->/d' \
+      # 2026-07-26 軍師加：改取尾端約6000字（今天最近做的事），不整天全文貼上；
+      # 更早的今日記錄仍完整存在原檔，需要時直接讀 memory/YYYY-MM-DD.md
+      FILTERED_MEMORY=$(sed -e '/<!-- openclaw:dreaming:light:start -->/,/<!-- openclaw:dreaming:light:end -->/d' \
           -e '/<!-- openclaw:dreaming:rem:start -->/,/<!-- openclaw:dreaming:rem:end -->/d' \
-          "$LATEST_MEMORY"
+          "$LATEST_MEMORY")
+      FM_LEN=${#FILTERED_MEMORY}
+      if [[ $FM_LEN -gt 6000 ]]; then
+        echo "（僅顯示今日最近約6000字，完整內容見 \`memory/$(basename "$LATEST_MEMORY")\`）"
+        echo ""
+        printf '%s' "${FILTERED_MEMORY: -6000}"
+      else
+        printf '%s' "$FILTERED_MEMORY"
+      fi
     fi
-  fi
-
-  # ───────── 最新一場 SESSION 總結（保留 v1 行為）─────────
-  if [[ -n "$LATEST_SESSION" && -f "$LATEST_SESSION" ]]; then
-    echo ""
-    echo "---"
-    echo ""
-    echo "## 📂 最新一場 session 總結（$(basename "$LATEST_SESSION")）"
-    echo ""
-    cat "$LATEST_SESSION"
   fi
 
   # ───────── 第 6 步：上線回應要求 ─────────
