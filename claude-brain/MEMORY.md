@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 聯想Bash執行環境跟真實桌面網路隔離，本機dev server驗證要用靜態快照+桌面開檔(2026-07-26)](reference_windows_bash_network_sandbox_isolation.md) — curl/瀏覽器工具都連不到Bash啟動的127.0.0.1伺服器，連教練真實Comet也連不到；改用HTML快照存檔+comet.exe開file路徑
 - [🎯🎯 OpenCode+CC Switch資料搬到E槽保護，CC Switch settings.json搬移時意外遺失(2026-07-25)](project_opencode_ccswitch_moved_to_e_2026-07-25.md) — 真正的provider金鑰資料庫沒事；教訓：關程式確認別只信tasklist簡單關鍵字、robocopy前後檔案數有落差要先查清楚
 - [🕐 終端機/桌面版每則回覆開頭要標台灣時間戳記(2026-07-24)](feedback_timestamp_every_reply.md) — 教練要求方便一眼判斷訊息幾點發的，範圍限這個介面，小龍蝦端另外評估
 - [🔧 Mac終端機有雙node環境，gateway層級指令要指定PATH(2026-07-24)](reference_mac_dual_node_environment.md) — .hermes/node排PATH第一但gateway實際用/opt/homebrew，update/install指令搞錯路徑會裝到假地方
