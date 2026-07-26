@@ -21,7 +21,7 @@
    ```
 3. 設定帳密（環境變數，不進版本庫）。**教練已指定密碼（公司統編），雜湊值已產生好，直接用即可，不用重新產生：**
    - `JIESHENG_SECRET_KEY`：隨機字串（例如 `openssl rand -hex 32`）
-   - `JIESHENG_ADMIN_USER`：`staff`
+   - `JIESHENG_ADMIN_USER`：`rpl`（2026-07-26教練指示由預設`staff`改為`rpl`小寫）
    - `JIESHENG_ADMIN_PASSWORD_HASH`：`scrypt:32768:8:1$uxXZ8x5sRmBQ97XV$3a8e071bf28e76526543e1599977f67f1d04351243f9d42497ab74948c5c4f0aba33a2342f0091f1b825b4e6a6cce7035d5f92f07a650e6350bee5856ec10022`
    - `JIESHENG_PORT`：**實際部署用 5063**（原建議 5061 跟既有 `peipei-event` app 撞了，5060=event-signup、5061=peipei-event、5062=mentor100，Mac上線時改用5063錯開）
    - 明文密碼本身沒有寫進任何檔案（一律只存雜湊值），教練本人知道是公司統編，需要時教練自己告訴工作人員
@@ -46,7 +46,7 @@
    <key>EnvironmentVariables</key>
    <dict>
      <key>JIESHENG_SECRET_KEY</key><string>（隨機字串）</string>
-     <key>JIESHENG_ADMIN_USER</key><string>staff</string>
+     <key>JIESHENG_ADMIN_USER</key><string>rpl</string>
      <key>JIESHENG_ADMIN_PASSWORD_HASH</key><string>（雜湊值）</string>
    </dict>
    <key>KeepAlive</key><true/>
