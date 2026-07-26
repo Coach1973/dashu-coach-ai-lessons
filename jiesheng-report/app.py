@@ -3,7 +3,7 @@
 純工作人員內部工具，不對外公開報名——資料全靠工作人員手動輸入，帳密登入才看得到。
 """
 import os
-from datetime import date
+from datetime import date, datetime
 
 from flask import Flask, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
@@ -16,6 +16,12 @@ ADMIN_USER = os.environ.get("JIESHENG_ADMIN_USER", "")
 ADMIN_PASSWORD_HASH = os.environ.get("JIESHENG_ADMIN_PASSWORD_HASH", "")
 
 WORKSHOP_DATES = {"台南": "2026-08-19", "台中": "2026-09-23", "台北": "2026-11-25"}
+WORKSHOP_TARGETS = {"台南": 25, "台中": 20, "台北": 50}
+
+
+def _countdown_days(date_str: str) -> int:
+    target = datetime.strptime(date_str, "%Y-%m-%d").date()
+    return (target - date.today()).days
 
 
 def _logged_in() -> bool:
@@ -64,11 +70,21 @@ def admin():
     stats = db.get_stats(conn)
     conn.close()
 
+    countdown_days = {w: _countdown_days(WORKSHOP_DATES[w]) for w in db.WORKSHOPS}
+    percent = {
+        w: round(stats[w]["total"] / WORKSHOP_TARGETS[w] * 100) if WORKSHOP_TARGETS[w] else 0
+        for w in db.WORKSHOPS
+    }
+
     return render_template(
         "admin.html",
         workshops=db.WORKSHOPS,
         workshop_dates=WORKSHOP_DATES,
+        workshop_targets=WORKSHOP_TARGETS,
+        countdown_days=countdown_days,
+        percent=percent,
         paid_methods=db.PAID_METHODS,
+        closers=db.CLOSERS,
         selected=workshop,
         registrants=registrants,
         stats=stats,
@@ -87,10 +103,13 @@ def add():
     phone = (request.form.get("phone") or "").strip()
     register_date = (request.form.get("register_date") or date.today().isoformat()).strip()
     note = (request.form.get("note") or "").strip()
+    closer = (request.form.get("closer") or "").strip()
+    if closer not in db.CLOSERS:
+        closer = ""
 
     if name:
         conn = db.get_conn()
-        db.add_registrant(conn, workshop, name, phone, register_date, note)
+        db.add_registrant(conn, workshop, name, phone, register_date, note, closer)
         conn.close()
     return redirect(url_for("admin", workshop=workshop))
 
@@ -113,8 +132,11 @@ def update(reg_id):
     amount_raw = (request.form.get("amount") or "").strip()
     amount = int(amount_raw) if amount_raw.isdigit() else None
     paid = request.form.get("paid") == "on"
+    closer = (request.form.get("closer") or "").strip()
+    if closer not in db.CLOSERS:
+        closer = ""
 
-    db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount)
+    db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, closer)
     db.set_paid(conn, reg_id, paid, paid_method, amount)
     conn.close()
     return redirect(url_for("admin", workshop=reg["workshop"]))

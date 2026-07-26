@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS registrants (
     paid_date TEXT,                     -- YYYY-MM-DD
     amount INTEGER,
     note TEXT,
+    closer TEXT,                        -- 成交人員：曜董 | 大樹 | 佩君 | Lavi
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );

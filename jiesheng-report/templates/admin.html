@@ -26,6 +26,11 @@
   .stat-card .total b { color:#fff; }
   .stat-card .paid b { color:var(--green); }
   .stat-card .unpaid b { color:var(--red); }
+  .stat-card .sub-row { display:flex; gap:14px; margin-top:10px; padding-top:10px; border-top:1px solid var(--line); font-size:13px; color:rgba(255,255,255,.6); }
+  .stat-card .countdown b { display:block; font-size:18px; color:var(--gold); }
+  .stat-card .percent b { display:block; font-size:18px; }
+  .progress-bar { margin-top:8px; height:6px; border-radius:3px; background:#0a0a0a; overflow:hidden; }
+  .progress-bar .fill { height:100%; background:var(--gold); }
 
   .box { background:#1c1c1c; border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:24px; }
   .box h2 { font-size:18px; font-weight:900; color:var(--gold); margin-bottom:14px; }
@@ -72,12 +77,17 @@
     <div class="stat-row">
       {% for w in workshops %}
       <a class="stat-card {{ 'active' if w == selected else '' }}" href="/admin?workshop={{ w }}">
-        <div class="city">{{ w }}<span class="date">{{ workshop_dates[w] }}</span></div>
+        <div class="city">{{ w }}<span class="date">{{ workshop_dates[w] }}開課</span></div>
         <div class="nums">
           <div class="total">報名<b>{{ stats[w].total }}</b></div>
           <div class="paid">已繳<b>{{ stats[w].paid }}</b></div>
           <div class="unpaid">未繳<b>{{ stats[w].unpaid }}</b></div>
         </div>
+        <div class="sub-row">
+          <div class="countdown">倒數<b>{{ countdown_days[w] }}天</b></div>
+          <div class="percent">目標{{ workshop_targets[w] }}人<b>{{ percent[w] }}%</b></div>
+        </div>
+        <div class="progress-bar"><div class="fill" style="width:{{ [percent[w], 100] | min }}%"></div></div>
       </a>
       {% endfor %}
     </div>
@@ -90,6 +100,14 @@
         <div class="field"><label>電話</label><input type="text" name="phone"></div>
         <div class="field"><label>報名日期</label><input type="date" name="register_date" value="{{ today }}"></div>
         <div class="field"><label>備註</label><input type="text" name="note" placeholder="選填"></div>
+        <div class="field"><label>成交人員</label>
+          <select name="closer">
+            <option value="">—</option>
+            {% for c in closers %}
+            <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
         <button type="submit">＋ 新增</button>
       </form>
     </div>
@@ -107,7 +125,7 @@
         <table>
           <tr>
             <th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
-            <th>繳費方式</th><th>金額</th><th>備註</th><th>操作</th>
+            <th>繳費方式</th><th>金額</th><th>備註</th><th>成交人員</th><th>操作</th>
           </tr>
           {% for r in registrants %}
           <tr class="{{ 'paid-row' if r.paid else '' }}">
@@ -131,6 +149,14 @@
             </td>
             <td class="amount"><input type="number" name="amount" value="{{ r.amount or '' }}" form="save-{{ r.id }}"></td>
             <td class="note"><input type="text" name="note" value="{{ r.note or '' }}" form="save-{{ r.id }}"></td>
+            <td>
+              <select name="closer" form="save-{{ r.id }}">
+                <option value="">—</option>
+                {% for c in closers %}
+                <option value="{{ c }}" {{ 'selected' if r.closer == c else '' }}>{{ c }}</option>
+                {% endfor %}
+              </select>
+            </td>
             <td class="row-actions">
               <button type="submit" form="save-{{ r.id }}" class="btn-save">儲存</button>
               <button type="submit" form="del-{{ r.id }}" class="btn-del">刪除</button>

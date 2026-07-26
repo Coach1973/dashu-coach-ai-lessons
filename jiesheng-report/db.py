@@ -6,6 +6,7 @@ SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "schema.sql")
 
 WORKSHOPS = ["台南", "台中", "台北"]
 PAID_METHODS = ["ATM", "PAYUNi", "其他"]
+CLOSERS = ["曜董", "大樹", "佩君", "Lavi"]
 
 
 def get_conn() -> sqlite3.Connection:
@@ -18,6 +19,9 @@ def init_db() -> None:
     conn = get_conn()
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         conn.executescript(f.read())
+    existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(registrants)")}
+    if "closer" not in existing_cols:
+        conn.execute("ALTER TABLE registrants ADD COLUMN closer TEXT")
     conn.commit()
     conn.close()
 
@@ -44,23 +48,25 @@ def get_stats(conn: sqlite3.Connection) -> dict:
 
 
 def add_registrant(conn: sqlite3.Connection, workshop: str, name: str, phone: str,
-                    register_date: str, note: str) -> int:
+                    register_date: str, note: str, closer: str = None) -> int:
     cur = conn.execute(
-        """INSERT INTO registrants (workshop, name, phone, register_date, note)
-           VALUES (?, ?, ?, ?, ?)""",
-        (workshop, name, phone or None, register_date, note or None),
+        """INSERT INTO registrants (workshop, name, phone, register_date, note, closer)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (workshop, name, phone or None, register_date, note or None, closer or None),
     )
     conn.commit()
     return cur.lastrowid
 
 
 def update_registrant(conn: sqlite3.Connection, reg_id: int, name: str, phone: str,
-                       register_date: str, note: str, paid_method: str, amount) -> None:
+                       register_date: str, note: str, paid_method: str, amount,
+                       closer: str = None) -> None:
     conn.execute(
         """UPDATE registrants SET name = ?, phone = ?, register_date = ?, note = ?,
-           paid_method = ?, amount = ?, updated_at = datetime('now', 'localtime')
+           paid_method = ?, amount = ?, closer = ?, updated_at = datetime('now', 'localtime')
            WHERE id = ?""",
-        (name, phone or None, register_date, note or None, paid_method or None, amount, reg_id),
+        (name, phone or None, register_date, note or None, paid_method or None, amount,
+         closer or None, reg_id),
     )
     conn.commit()
 
