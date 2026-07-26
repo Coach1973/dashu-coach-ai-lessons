@@ -84,7 +84,7 @@ def admin():
         countdown_days=countdown_days,
         percent=percent,
         paid_methods=db.PAID_METHODS,
-        closers=db.CLOSERS,
+        referrers=db.REFERRERS,
         selected=workshop,
         registrants=registrants,
         stats=stats,
@@ -103,13 +103,13 @@ def add():
     phone = (request.form.get("phone") or "").strip()
     register_date = (request.form.get("register_date") or date.today().isoformat()).strip()
     note = (request.form.get("note") or "").strip()
-    closer = (request.form.get("closer") or "").strip()
-    if closer not in db.CLOSERS:
-        closer = ""
+    referrer = (request.form.get("referrer") or "").strip()
+    if referrer not in db.REFERRERS:
+        referrer = ""
 
     if name:
         conn = db.get_conn()
-        db.add_registrant(conn, workshop, name, phone, register_date, note, closer)
+        db.add_registrant(conn, workshop, name, phone, register_date, note, referrer)
         conn.close()
     return redirect(url_for("admin", workshop=workshop))
 
@@ -132,11 +132,11 @@ def update(reg_id):
     amount_raw = (request.form.get("amount") or "").strip()
     amount = int(amount_raw) if amount_raw.isdigit() else None
     paid = request.form.get("paid") == "on"
-    closer = (request.form.get("closer") or "").strip()
-    if closer not in db.CLOSERS:
-        closer = ""
+    referrer = (request.form.get("referrer") or "").strip()
+    if referrer not in db.REFERRERS:
+        referrer = ""
 
-    db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, closer)
+    db.update_registrant(conn, reg_id, name, phone, register_date, note, paid_method, amount, referrer)
     db.set_paid(conn, reg_id, paid, paid_method, amount)
     conn.close()
     return redirect(url_for("admin", workshop=reg["workshop"]))

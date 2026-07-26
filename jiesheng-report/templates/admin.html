@@ -100,11 +100,11 @@
         <div class="field"><label>電話</label><input type="text" name="phone"></div>
         <div class="field"><label>報名日期</label><input type="date" name="register_date" value="{{ today }}"></div>
         <div class="field"><label>備註</label><input type="text" name="note" placeholder="選填"></div>
-        <div class="field"><label>成交人員</label>
-          <select name="closer">
+        <div class="field"><label>邀請人</label>
+          <select name="referrer">
             <option value="">—</option>
-            {% for c in closers %}
-            <option value="{{ c }}">{{ c }}</option>
+            {% for r in referrers %}
+            <option value="{{ r }}">{{ r }}</option>
             {% endfor %}
           </select>
         </div>
@@ -125,7 +125,7 @@
         <table>
           <tr>
             <th>姓名</th><th>電話</th><th>報名日期</th><th>已繳費</th>
-            <th>繳費方式</th><th>金額</th><th>備註</th><th>成交人員</th><th>操作</th>
+            <th>繳費方式</th><th>金額</th><th>備註</th><th>邀請人</th><th>操作</th>
           </tr>
           {% for r in registrants %}
           <tr class="{{ 'paid-row' if r.paid else '' }}">
@@ -150,10 +150,10 @@
             <td class="amount"><input type="number" name="amount" value="{{ r.amount or '' }}" form="save-{{ r.id }}"></td>
             <td class="note"><input type="text" name="note" value="{{ r.note or '' }}" form="save-{{ r.id }}"></td>
             <td>
-              <select name="closer" form="save-{{ r.id }}">
+              <select name="referrer" form="save-{{ r.id }}">
                 <option value="">—</option>
-                {% for c in closers %}
-                <option value="{{ c }}" {{ 'selected' if r.closer == c else '' }}>{{ c }}</option>
+                {% for r2 in referrers %}
+                <option value="{{ r2 }}" {{ 'selected' if r.referrer == r2 else '' }}>{{ r2 }}</option>
                 {% endfor %}
               </select>
             </td>
