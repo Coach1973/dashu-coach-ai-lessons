@@ -9,7 +9,8 @@
 | 🟢 | 「教練都在想什麼」LINE帳號完整搬遷到Mac+MiniMax-M3 | ✅本場已完成 | 詳見下方v81完整戰果。人設逐字搬遷+46萬字知識庫+FTS5全文檢索+webhook正式上線服務121位好友+dmPolicy修復+seabiscuit.bymyway.com監控後台+User ID對照hook泛化。教練待自行測試seabiscuit.bymyway.com登入(密碼Bymyway7，第一次會卡裝置配對，把畫面ID給軍師) |
 | 🟡 | 「教練都在想什麼」案例庫深度待擴充 | ⏳待教練提供更多素材 | 目前只有教練提供的4份文件(大樹使命之旅/禮物諮詢法/海餅乾文化核心逐字稿/海餅乾語錄，共46萬字)，教練原話「提供更多資料庫讓AI做更大的品牌宣傳」——若教練還有其他素材(更多逐字稿/文章/Podcast)，補進`agents/jiaolian_thoughts/knowledge/`後跑一次`python3 scripts/build_search_index.py`重建索引即可 |
 | 🟡 | 教練其他類似LINE帳號待比照搬遷 | ⏳待教練指定下一個帳號 | 教練原話「我還有其他類似的帳號也要這麼做」，已產出完整SOP：`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，下次教練指定帳號直接照SOP 12步驟走，不用重新摸索 |
-| 🟢 | **結繩領導學工作坊即時戰報系統（台南/台中/台北）** | ✅本場已上線待教練驗收 | Mac已完成部署：venv+LaunchAgent(`com.coach.jiesheng-webapp.plist`)常駐+Cloudflare Route(CLI+臨時API Token比照seabiscuit做法，用完即刪)。**port改用5063**(原建議5061跟既有peipei-event撞了)。`https://rpl-workshop.bymyway.com/admin/login`curl驗證200、標題正確。順手清掉2個先前seabiscuit任務遺留、忘記刪除的Cloudflare臨時API Token(安全debt清償)。追加功能：邀請人下拉(曜董/大樹/佩君/Lavi)/開課倒數/目標達成率進度條；歷史資料匯入5筆(台南4+台中1)，**台北10筆卡住**缺報名日期待教練補充。**AI全程未接觸過真實密碼**(公司統編)，需教練親自測試登入一次確認。附註：聯想機本場過程中發現這台Bash執行環境跟教練真實桌面(Comet)網路隔離，本機dev server驗證要改用「HTML快照存桌面+comet.exe開file路徑」，技術細節見[[reference_windows_bash_network_sandbox_isolation]] |
+| 🟢 | **結繩領導學工作坊即時戰報系統（台南/台中/台北）** | ✅v82已全功能上線 | `https://rpl-workshop.bymyway.com/admin`，帳號**RPL**(大寫)，密碼公司統編(AI全程未接觸)。15筆歷史資料已匯入(教練後續已自行登入新增/修改過，證實系統正常運作)。功能：開課倒數/目標達成率進度條/邀請人與資料提交人下拉(曜董/大樹/佩君/Lavi)/姓名可編輯/依報名日期排序/**整頁一次「全部儲存」**。詳見[[project_jiesheng_report_launch_2026-07-26]] |
+| 🔴🔴🔴 | **圖片OCR辨識通用小工具**（2026-07-26交辦，下一場直接開工） | ⏳待軍師動手 | 教練指出`namecard-db`的PaddleOCR+MiniMax兩階段辨識管線已驗證高準確度、零Token成本，要求抽成通用小工具，不要每次讀圖片都靠AI自己瞇眼看。參考檔案：`namecard-db/extract.py`(核心邏輯`extract_card_fields()`)、`paddle_extract.py`(獨立Python3.11環境跑PaddleOCR)、`.env`裡的`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`/`NAMECARD_MODEL`設定。詳見[[reference_namecard_ocr_pipeline_reusable]]。下一場直接讀這份記憶+兩支程式碼開工，不用重新查證。 |
 | 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
 | 🔴🔴🔴🔴 | **系統權限缺口：public agent(bni_tainan/jiaolian_thoughts)沒有工具層級限制** | 🔒卡住-需繼續驗證 | 教練親測「是不是只有你才能命令我修改？」得到「目前還不是」，確認缺口真實存在。已設計修復（openclaw原生 tools.profile 移除 exec/write/edit，改用 hook 伺服器端注入取代）但驗證卡關——CLI測試（openclaw agent --message）不會觸發 message:preprocessed 事件，改用真實簽章 LINE webhook 模擬呼叫測試也未見觸發證據，無法確認新設計在正式流量下真的生效，已完整 revert 回可驗證安全的 exec 版本（避免讓服務中的 bot 處於未知狀態）。新 hook（knowledge-search-inject / bni-calendar-inject）已寫好但設為 disabled，下一場需要專門時間查清楚為什麼 hook 沒被觸發（懷疑跟測試路徑或 webhook payload 格式有關），驗證通過才能重新啟用+移除exec。commit `02b07bfc` |
 | 🟢 | bni_tainan行事曆同步cron實際上從未存在過，已修復 | ✅已完成 | 查證發現v75紀錄的cron job 99bdac4a 在 cron list 裡根本查無此ID，行事曆檔案卡在40+小時沒更新。新建 cron `7048432e`（每4小時，已修好delivery歧義設定），手動觸發驗證 exitCode 0 + 檔案內容確實更新 |
@@ -21,7 +22,7 @@
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
 | 🟡 | 企業健身房4項文案修改 | 🔒卡住-等教練 | 已記錄commit 10c7b11cf，等教練繼續交辦下一步 |
-| 🟡 | 兩個小工程教訓寫入試金石 | ⏳待軍師動手 | ①`.env`含`$`字元值要單引號包住 ②Jinja模板要guard None值（mentor100已修好，其他Flask小專案值得抽空檢查） |
+| 🟢 | `.env`含`$`字元值要單引號包住 | ✅本場真實踩到並修好 | jiesheng-report密碼雜湊值含`$`被bash source吃掉，已修復+寫入記憶[[project_jiesheng_report_launch_2026-07-26]]。Jinja模板guard None值這條仍待抽空檢查其他Flask小專案 |
 | 🟡 | BNI小幫手教練親測多種問法 | ⏳待教練體驗 | 確認BNI小幫手實戰體驗OK |
 | 🟡 | Coze舊機器人何時停用 | 🔒卡住-等教練 | 先保留當備援，等教練確認新系統穩定一陣子後裁示 |
 | 🟡 | ACER 36.3GB備份待刪（觀察期已過） | 🔒卡住-需教練在ACER機器親自開對話執行 | 這台Mac無法代為執行 |
@@ -31,6 +32,40 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-26 v82（Mac終端機 Sonnet 5，結繩領導學戰報系統全功能上線+Cloudflare Token安全清理+下一場OCR工具交辦）
+
+> 建立時間：2026-07-26 傍晚（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v81（Mac終端機Sonnet5，「教練都在想什麼」LINE帳號完整搬遷上線）
+> 本棒主軸：**接手聯想機寫好的jiesheng-report程式碼，完成Mac端部署上線，過程中修好一個真bug（.env密碼雜湊被bash source吃掉導致密碼永遠登不進去），並依教練多輪追加需求把系統做完整（一次全部儲存/序號/姓名可編輯/排序/邀請人與資料提交人）。中途發現並清理2個先前seabiscuit任務遺留的Cloudflare臨時Token（安全debt清償）。尾聲教練提出Token成本疑慮，查證確認screenshot截圖真的貴，教練也回憶起namecard-db已有驗證過的PaddleOCR+MiniMax辨識管線可複用，本場對話長度已高（10+小時/30+輪）教練主動要求總結收尾，開新對話繼續做OCR通用工具。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯🎯 結繩領導學工作坊戰報系統(jiesheng-report)完整部署上線
+接手聯想機已寫好的Flask+SQLite程式碼，建venv+LaunchAgent(`com.coach.jiesheng-webapp.plist`)常駐port 5063(原建議5061跟既有peipei-event撞了)，Cloudflare Route(CLI+臨時API Token比照seabiscuit做法，用完即刪)接上`rpl-workshop.bymyway.com`。過程順手清掉2個seabiscuit任務遺留、忘記刪除的Cloudflare臨時API Token(安全debt清償)。
+
+### 2. 🔴🔴🔴 真bug：.env密碼雜湊被bash source吃掉，密碼永遠登不進去
+教練實測登入失敗、給出真實密碼(42710762)要我確認，本機雜湊比對(不經過網頁登入表單)發現密碼雜湊值裡的`$`符號被LaunchAgent的`bash -c "source .env"`當成shell變數展開吃掉一截。修復：`.env`裡含`$`的值一律加單引號。這條試金石早有記錄（[[feedback_settings_hook_verify]]附近文件曾提過.env含$要加引號）但這次是真的踩到才發現新專案沒套用到，教訓已寫進[[project_jiesheng_report_launch_2026-07-26]]。
+
+### 3. 🎯🎯 歷史資料匯入15筆(台南4/台中1/台北10)
+教練提供4張報名截圖(3張分場+1張金流總表)，交叉比對姓名+日期，台北10筆裡8筆有精確付款日期(比對金流總表)、2筆無金流紀錄的(含教練指定的「沒有金流的都標6/29」規則)。教練事後親自登入系統新增1筆(邱于騰)+修改1筆(林俊瑋改已繳費)，證實系統正常運作。
+
+### 4. 🎯🎯🎯 教練多輪追加需求，系統做到「一次全部儲存」
+教練反映「改一個欄位就要按一次儲存」太繁瑣，整個table改成單一表單設計，底部一個「💾全部儲存」按鈕一次送出所有列的變動；刪除維持各自獨立按鈕(不受影響)。另加序號欄#、姓名改可編輯(教練舉例「李俊國」打錯成「林俊偉」的情境)、排序改依報名日期(舊到新，最新報名排最下面)、新增「資料提交人」欄位(同帳號共用登入，用這欄記錄誰實際操作，四選一曜董/大樹/佩君/Lavi)、新增表單直接支援金流欄位(已繳費/繳費方式/金額，一次到位不用事後補)。標題「後台」字樣依教練指示全數移除，只留「即時戰報」。全部功能均用真實瀏覽器互動測試(非DOM操作)驗證通過。
+
+### 5. 🎯 Token成本意識+找到更好的圖片辨識方案
+教練發現本場截圖近40張，質疑Token消耗，查證後誠實回報「無法給精確Token數字」（沒有即時計數器）。教練指示「智慧地截圖」——同批功能改完再截一次，不要每改一處截一次，已寫入[[feedback_screenshot_rules_consolidated]]。教練接著提出用Hermes/MiniMax做圖片辨識省Token的構想，查證MiniMax-M3確實支援原生視覺輸入，但更進一步教練想起`namecard-db`已有驗證過、比直接視覺辨識更準的**PaddleOCR+MiniMax兩階段管線**(本機OCR免費+MiniMax不限流量整理成JSON，零Token成本)，已寫入[[reference_namecard_ocr_pipeline_reusable]]。
+
+## 📋 下一場直接開工任務（教練已交辦，方向清楚不用再問）
+
+**把`namecard-db/extract.py`的兩階段OCR管線抽成通用小工具**，不綁死名片欄位，讓「讀圖片建檔」這類任務都能複用（不用AI自己盯圖片瞇眼看，且免費/不耗Token）。
+- 核心參考：`namecard-db/extract.py`的`extract_card_fields()`函式（PaddleOCR→MiniMax兩階段）、`paddle_extract.py`（獨立Python3.11環境跑PaddleOCR的子行程）
+- `.env`裡已有`ANTHROPIC_API_KEY`/`ANTHROPIC_BASE_URL`(指向MiniMax端點)/`NAMECARD_MODEL`設定可直接沿用
+- 設計方向：把SYSTEM_PROMPT參數化（不寫死名片JSON schema），讓呼叫端可以傳入「這次要辨識什麼欄位」
+- 下一場直接讀[[reference_namecard_ocr_pipeline_reusable]]這份記憶+上述兩支程式碼即可開工，不用重新查證能力/找檔案
 
 ---
 
