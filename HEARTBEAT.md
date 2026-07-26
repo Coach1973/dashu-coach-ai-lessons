@@ -6,6 +6,30 @@
 
 ## 🦞 健康檢查場次（安靜處理）
 
+### 18:33（週日傍晚，安靜，無需通知教練）
+- 通道探針：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則19鐵律執行）
+- 46e67e2e 上一場 18:03 fire ❌（lastDurationMs=181,851ms ≈ 182s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 182s ≪ 600s timeoutSeconds → 非 timeout 錯誤
+- 錯誤類型：overloaded → 不適用自動修復規則 #1/#2/#3
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 時間判斷：週日 18:33 屬於傍晚家庭時段，無緊急關懷事由
+- 結論：✅ 安靜處理，無異常
+
+### 18:03（週日傍晚，安靜，無需通知教練）
+- 通道探針：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則19鐵律執行，跑真相源探針非沿用舊旗標）
+- 46e67e2e 上一場 17:30 fire ❌（lastDurationMs=177,824ms ≈ 178s，錯誤：minimax provider `AI service temporarily overloaded`）
+- 178s ≪ 600s timeoutSeconds → 非 timeout 錯誤
+- 錯誤類型：overloaded → 不適用自動修復規則
+- consecutiveErrors: 1（< 3，未達升級閾值）
+- model 已為 minimax/MiniMax-M3 ✅
+- JUNSHI_HANDOFF_LATEST.md 掃描：v81完整戰果已收尾，關鍵待辦皆為「等教練」（測試seabiscuit/提供更多素材/指定下一個LINE帳號），非小龍蝦主動動手項目
+- HEARTBEAT.md 無 ⬜ 標記項目 → 第二步無工作
+- 時間判斷：週日 18:03 屬於傍晚家庭時段（教練可能在休息/陪伴家人），無緊急關懷事由
+- peipei 17:55 自動 force-restart 屬正常節流運作，無需通知教練
+- 結論：✅ 安靜處理，無異常
+
 ### 17:33（週日下午，安靜，無需通知教練）
 - 46e67e2e 上一場 17:30 fire ❌（lastDurationMs=177,824ms ≈ 178s，錯誤：minimax provider `AI service temporarily overloaded`）
 - 178s ≪ 600s timeoutSeconds → 非 timeout 錯誤，不適用自動修復規則 #1
