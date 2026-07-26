@@ -134,9 +134,8 @@
           <tr class="{{ 'paid-row' if r.paid else '' }}">
             <td class="seq">{{ loop.index }}</td>
             <td class="name">
-              {{ r.name }}
               <input type="hidden" name="ids" value="{{ r.id }}">
-              <input type="hidden" name="name_{{ r.id }}" value="{{ r.name }}">
+              <input type="text" name="name_{{ r.id }}" value="{{ r.name }}">
             </td>
             <td><input type="text" name="phone_{{ r.id }}" value="{{ r.phone or '' }}"></td>
             <td><input type="date" name="register_date_{{ r.id }}" value="{{ r.register_date }}"></td>
