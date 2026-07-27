@@ -88,14 +88,17 @@ def _write(
     print(f"立牌頁: {html_path}")
 
 
-def make_checkin() -> None:
+def make_checkin(event_label: str = "") -> None:
     """固定簽到QR：印一次永久用。2026-07-28教練指出來賓報名網站時已留過姓名/電話/email，
     現場再掃這組QR進/checkin重填一次是多此一舉，改成跟/slides一樣導向「加LINE好友+下載今日簡報」，
     不再要求重複填寫資料。網址改指向SLIDES_URL（原本CHECKIN_URL/checkin route維持不變，
-    保留給未來沒有事先線上報名的活動使用）。"""
+    保留給未來沒有事先線上報名的活動使用）。
+    event_label：選填，這次現場活動的名稱（例如「AI微型論壇」），印在「歡迎蒞臨」標題正下方、
+    醒目金色大字，讓來賓一眼看出這是哪一場，不用每次重新設計版型。"""
     name_html = "大樹小講系列講座<br>數位簽到系統"
+    label_html = f'<div class="date">{event_label}</div>' if event_label else ""
     _write(
-        "checkin", SLIDES_URL, "大樹小講系列講座 數位簽到系統", name_html, "",
+        "checkin", SLIDES_URL, "大樹小講系列講座 數位簽到系統", name_html, label_html,
         cta_html='手機掃描 <span>加好友領簡報</span>',
         sub_text="您已完成線上報名，掃碼加好友並領取今日簡報即可",
     )
