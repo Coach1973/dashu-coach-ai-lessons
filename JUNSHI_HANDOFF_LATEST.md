@@ -44,7 +44,7 @@
 > 建立時間：2026-07-26 深夜～07-27 凌晨（台灣時間）
 > 本棒執行者：Mac 桌面版 Sonnet 5
 > 上一棒：v82（Mac桌面版Sonnet5，結繩領導學戰報系統上線）
-> 本棒主軸：**接續v82尾聲留下的兩個未解問題：①系統權限缺口(public agent沒有工具限制)②圖片OCR工具。本場教練先轉發小龍蝦整理的LINE綁定時間軸研究，逐行查證全部準確後，發現OpenClaw原生`tools.toolsBySender`機制，比之前設計的「移除exec+hook替代」方案更直接，當場實作+驗證+commit，權限缺口正式解決。教練釐清「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook補上訪客記憶功能。教練親測時意外發現自己有第二個LINE身份「贏家思路」，也一併加入白名單。教練接著要求評估「開工」占用多少KB，實測抓出接力棒被workspace/CLAUDE.md與六步驟hook重複注入的問題，修好後單場注入降58%，順手清理MEMORY.md索引裡7條已解決的舊記憶。教練詢問接力棒實際內容，也詢問小龍蝦後台為何不顯示中文名稱——查證後確認是OpenClaw原生介面已知限制，評估自建頁面成本後教練裁示不做，改用隨問隨查方式。OCR通用工具本場未動，留給下一場。**
+> 本棒主軸：**接續v82尾聲留下的兩個未解問題：①系統權限缺口(public agent沒有工具限制)②圖片OCR工具。本場教練先轉發小龍蝦整理的LINE綁定時間軸研究，逐行查證全部準確後，發現OpenClaw原生`tools.toolsBySender`機制，比之前設計的「移除exec+hook替代」方案更直接，當場實作+驗證+commit，權限缺口正式解決。教練釐清「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook補上訪客記憶功能。教練親測時意外發現自己有第二個LINE身份「贏家思路」，也一併加入白名單。教練接著要求評估「開工」占用多少KB，實測抓出接力棒被workspace/CLAUDE.md與六步驟hook重複注入的問題，修好後單場注入降58%，順手清理MEMORY.md索引裡7條已解決的舊記憶。教練詢問接力棒實際內容，也詢問小龍蝦後台為何不顯示中文名稱——查證後確認是OpenClaw原生介面已知限制，評估自建頁面成本後教練裁示不做，改用隨問隨查方式。OCR工具本場雖未動，但交接棒走出v83後終端機那邊07:01已抽出通用工具完成（commit `1488b6c68`），13:36 教練親自驗收，標記為「已完成」。**
 
 ## 🎯 本場戰果
 
@@ -65,7 +65,7 @@
 
 ## 📋 下一場直接開工任務
 
-**圖片OCR辨識通用小工具**（v82教練已交辦，本場因權限缺口優先處理未動，方向仍清楚）：把`namecard-db/extract.py`的兩階段OCR管線(PaddleOCR→MiniMax)抽成通用工具，讓「讀圖片建檔」類任務都能複用。詳見[[reference_namecard_ocr_pipeline_reusable]]。
+**🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（工作總表最熱項目，v77 已設計好整套事件驅動流程 cron `--at --delete-after-run` 架構，方向清楚動手即可，不再傾向空泛討論）：教練提出「BNI 會員加入/業績達標/特定節日/會議前 1 小時」等情境要主動打給對方。詳見v77設計文件。註：v83 接力棒本來寫「OCR 通用工具」但實際上 07:01 終端機那邊已抽出 `tools/ocr-extract/ocr_extract.py` 完成（commit `1488b6c68`），且 13:34 教練已親自在終端機跟軍師確認「未來會用 OCR 取代燒 Token 視覺看圖方式」，本場順手換成下一個真正待辦。
 
 ## 🔑 本場關鍵檔案索引
 - `openclaw.json`：新增`agents.list[bni_tainan/jiaolian_thoughts].tools.toolsBySender`(教練兩個LINE身份白名單+`*`deny規則)、`hooks.internal.entries`修好path+啟用knowledge-search-inject/bni-calendar-inject/line-user-memory
