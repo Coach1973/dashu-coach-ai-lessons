@@ -26,3 +26,12 @@
 - ✅ 同步成功（本場小龍蝦 commit `7a49347f8` 接力棒換下一場任務）
 - HANDOFF mtime: 1785132435
 - 雲端同步：✅ 已推上雲端
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-27 14:10
+- ✅ 同步成功
+- HANDOFF mtime: 1785132414
+- 雲端同步：✅ 已推上雲端（commit d05ba6fc2）
+
+## ⚠️ peipei 自動 force-restart 2026-07-27 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
