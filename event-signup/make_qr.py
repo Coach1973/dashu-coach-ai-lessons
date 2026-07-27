@@ -89,12 +89,16 @@ def _write(
 
 
 def make_checkin() -> None:
-    """固定簽到QR：標題永遠寫死，網址永遠是/checkin，印一次永久用，
-    後台/admin切換「目前活動」即可換到不同場次，不用重印。
-    教練指定三行依序顯示（標題兩行+集點文案一行），QR圖在後面。"""
+    """固定簽到QR：印一次永久用。2026-07-28教練指出來賓報名網站時已留過姓名/電話/email，
+    現場再掃這組QR進/checkin重填一次是多此一舉，改成跟/slides一樣導向「加LINE好友+下載今日簡報」，
+    不再要求重複填寫資料。網址改指向SLIDES_URL（原本CHECKIN_URL/checkin route維持不變，
+    保留給未來沒有事先線上報名的活動使用）。"""
     name_html = "大樹小講系列講座<br>數位簽到系統"
-    gift_html = f'<div class="gift">{CHECKIN_GIFT_NOTE}</div>'
-    _write("checkin", CHECKIN_URL, CHECKIN_TITLE, name_html, "", gift_html)
+    _write(
+        "checkin", SLIDES_URL, "大樹小講系列講座 數位簽到系統", name_html, "",
+        cta_html='手機掃描 <span>加好友領簡報</span>',
+        sub_text="您已完成線上報名，掃碼加好友並領取今日簡報即可",
+    )
 
 
 def make_slides() -> None:
