@@ -73,16 +73,49 @@ def qr_file(filename):
     return send_from_directory(QR_DIR, filename)
 
 
-@app.route("/checkin")
+@app.route("/checkin", methods=["GET"])
 def checkin():
     """固定不變的報到入口，QR立牌永久印這個網址。後台切哪場是「目前活動」，
-    這裡就自動導去那場的報名頁，不用重印立牌。"""
+    這裡就自動導去那場的簽到頁，不用重印立牌。
+    2026-07-28教練指出來賓線上報名時已留過姓名/電話，現場只需要再輸入手機號碼比對身份即可，
+    不用整份表單重填一次——比對成功才算「簽到」，一樣會記進signups表供集點使用。"""
     conn = db.get_conn()
     event = db.get_current_event(conn)
     conn.close()
     if not event:
         return "目前沒有進行中的活動，請稍後再試", 404
-    return redirect(url_for("signup_form", slug=event["slug"]))
+    return render_template("checkin.html", event=event, error=None, phone="")
+
+
+@app.route("/checkin", methods=["POST"])
+def checkin_submit():
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    if not event:
+        conn.close()
+        return "目前沒有進行中的活動，請稍後再試", 404
+
+    phone_raw = (request.form.get("phone") or "").strip()
+    phone = db.normalize_phone(phone_raw)
+
+    if not (phone.startswith("09") and len(phone) == 10):
+        conn.close()
+        return render_template(
+            "checkin.html", event=event, phone=phone_raw,
+            error="手機號碼格式不對，請確認是 09 開頭的 10 碼",
+        ), 400
+
+    row = conn.execute(
+        "SELECT id, name, company_title FROM attendees WHERE phone = ?", (phone,)
+    ).fetchone()
+    if not row:
+        conn.close()
+        # 查無報名資料（現場臨時來、沒事先線上報名的人）：導去完整報名表單，手機號碼先幫他帶進去
+        return redirect(url_for("signup_form", slug=event["slug"], phone=phone))
+
+    db.upsert_signup(conn, event["id"], row["name"], phone, row["company_title"] or "")
+    conn.close()
+    return redirect(url_for("slides_landing", name=row["name"]))
 
 
 def _resolve_current_slide(conn) -> str | None:
@@ -105,18 +138,24 @@ def _resolve_current_slide(conn) -> str | None:
 @app.route("/slides")
 def slides_landing():
     """簡報最後QR掃碼進來的頁面：加LINE好友 + 下載今天的簡報，同時通知小龍蝦。
-    固定網址，不用因為每次簡報不同而重印QR——後台換今天的檔案就好。"""
+    固定網址，不用因為每次簡報不同而重印QR——後台換今天的檔案就好。
+    name（選填）：從/checkin手機比對成功導過來時會帶上，顯示個人化歡迎文字；
+    直接掃簡報QR進來（原本流程）不會帶這個參數，維持原本「感謝聆聽」文字。"""
     conn = db.get_conn()
     fname = _resolve_current_slide(conn)
     conn.close()
 
+    name = (request.args.get("name") or "").strip()
+
     _notify_xiaolongxia(
-        f"📊 有人掃了簡報QR碼\n檔案：{fname or '（尚未設定今日簡報）'}\n時間：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        f"📊 有人{'簽到' if name else '掃了簡報QR碼'}\n"
+        f"{f'姓名：{name}' + chr(10) if name else ''}"
+        f"檔案：{fname or '（尚未設定今日簡報）'}\n時間：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
     )
 
     add_friend_url = f"https://line.me/R/ti/p/{LINE_OA_ID}"
     return render_template(
-        "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname),
+        "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname), name=name,
         download_url=url_for("slides_download") if fname else None,
     )
 
@@ -167,7 +206,10 @@ def signup_form(slug):
     conn.close()
     if not event:
         abort(404)
-    return render_template("form.html", event=event, error=None, form={})
+    # phone（選填）：從/checkin查無資料時會帶上，先幫現場臨時報名的人把手機號碼帶進表單，
+    # 不用手機、姓名兩個都重打一次
+    prefill_phone = (request.args.get("phone") or "").strip()
+    return render_template("form.html", event=event, error=None, form={"phone": prefill_phone})
 
 
 @app.route("/e/<slug>", methods=["POST"])

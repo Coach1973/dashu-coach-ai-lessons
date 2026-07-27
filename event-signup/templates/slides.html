@@ -33,7 +33,11 @@
 </head>
 <body>
   <div class="card">
+    {% if name %}
+    <h1>{{ name }}，簽到成功 🙌</h1>
+    {% else %}
     <h1>感謝聆聽 🙌</h1>
+    {% endif %}
     <p class="sub">加入大樹教練 LINE 好友<br>並下載今天的簡報檔</p>
 
     <p class="step-label">STEP 1</p>
