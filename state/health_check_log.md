@@ -84,3 +84,30 @@ HEARTBEAT.md 內容：
 - ⚠️ 2026-07-25 05:08 因 Context Overflow 自動重啟（main session 已通知教練）
 - 系統狀態／守則摘要
 - **無任何 ⬜ 待辦項目**，無背景工作需評估
+
+---
+
+## 2026-07-27 23:03 CST (週一晚間)
+
+**檢查範圍**：cron list 總計 19 個啟用任務（透過 sqlite 查詢 openclaw.sqlite）。
+
+**錯誤任務（3 個，consecutive_errors=1，皆為 23:00 跑的任務）**：
+
+| Job ID | 名稱 | lastDurationMs | timeoutSeconds | 錯誤 |
+|---|---|---|---|---|
+| dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1 | 🔴 場景化升華+系統健檢（每日23:00） | 144,430ms | (無) | FailoverError: AI service overloaded |
+| 533cfe54-5a89-45e3-88dc-6c81749e3c90 | 🔴 場景化升華（每日23:00，蒸餾→格式D場景+痛點計分） | 122,457ms | 1800 | FailoverError: AI service overloaded |
+| 46e67e2e-6332-4589-aae2-ee7e10dd7279 | 🦞 每30分鐘任務健康檢查（本任務） | 107,225ms | 600 | FailoverError: AI service overloaded |
+
+**分析**：
+- 三個任務幾乎**同時**在 23:00 觸發，都碰到同一個錯誤「AI service is temporarily overloaded」
+- 這是 **MiniMax provider 端瞬時過載**，不是 cron 設定問題（timeout 不會這樣爆）
+- 與規則「1. timeout 錯誤」**不吻合**（durationMs 110~144s ≪ timeoutSeconds 600/1800）
+- 與規則「3. INVALID_API_KEY」**不適用**（model 已是 minimax/MiniMax-M3）
+- consecutiveErrors=1，**遠未達 3 次紅線**
+
+**自動修復**：無（provider 端瞬時 overload，無法自動修復，只能等下次重試）。
+- 場景化升華 2 個任務明天 23:00 會自然重試
+- 健康檢查本身 30 分鐘後再 fire（若持續 overload 升級 3 次則通知教練）
+
+**動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。

@@ -1,30 +1,30 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-07-25T18:03:48.083830+08:00",
+    "heartbeat_poll": "2026-07-27T06:03:31.676709+08:00",
     "system_health": "2026-07-25T18:03:48.083830+08:00",
-    "telegram_channel": "2026-07-25T18:03:48.083830+08:00",
+    "telegram_channel": "2026-07-27T06:03:31.676709+08:00",
     "netlify_quota": "2026-07-25T14:25:00+08:00"
   },
-  "lastHeartbeat": "2026-07-25T18:03:48.083830+08:00",
-  "lastHeartbeatNote": "週六 18:01 心跳。通道探針實測 ok、系統全面健康（17:55 peipei force-restart、17:37 context 二次 overflow 重啟、14:01 第一次 overflow 重啟）。Netlify 額度已驗證 71 次充裕（14:25 查），14:01 推送之「剩 8 次今天到期」屬當下資料已過期，可忽略。教練沉默 62.1h+ 週六傍晚，18:00 關懷 cron 已 fire（announce telegram 6124913915 送出），本場不重複打擾。判斷：保持沉默，下場等 22:00 關懷 cron 或教練主動。",
+  "lastHeartbeat": 1785103411.676725,
+  "lastHeartbeatNote": "週一 06:03 心跳。通道探針實測 ok:true（守則#19 加強版已 21h 沒跑補驗證）。教練沉默 78h（自 7/23 起），週一晨屬邊界時段。v81 LINE 上線、v77 BNI 小幫手主動提醒待下一場實作。軍師 hook 00:34 有 pull 警告待人工處理。本場保持沉默，HEARTBEAT_OK，4h 關懷 cron 07:30 接力。",
   "systemSnapshot": {
-    "timeOfDay": "evening_saturday",
-    "dayOfWeek": "Saturday",
+    "timeOfDay": "early-monday-morning",
+    "dayOfWeek": "Monday",
     "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "post_2nd_overflow_restart",
+    "contextStatus": "fresh",
     "contextPercent": 8,
     "recentRestarts": "2026-07-25 14:37 (overflow) + 17:37 (overflow) + 17:55 (peipei 自动)",
     "gatewayPid": 76264,
     "gatewayRunning": true,
     "gatewayUptime": "6.33 升級後穩定逾 18 小時",
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh 18:01 實測 ok=true",
+    "telegramChannelSource": "telegram_channel_probe.sh @ 2026-07-27T06:03:31.676709+08:00",
     "junshiQueueEmpty": true,
     "netlifyQuota": 71,
     "netlifyQuotaCheckNote": "2026-07-25 14:25 查證，credit 制而非「到期」，7/25 核發新 credit 後 71 次充裕",
     "coachSilentSince": "2026-07-23T00:30:00+08:00",
-    "coachSilentHours": 62.1,
+    "coachSilentHours": 101.6,
     "pendingCoachItems": [
       "🟡 v75：教練親自在 LINE 多測幾種問法，確認 BNI 小幫手實戰體驗 OK",
       "🟡 v75：Coze 舊機器人先保留當備援",
@@ -36,7 +36,10 @@
       "🟡 v77：plugins.allow 白名單補上",
       "🟡 v77：BNI 大台南小幫手「主動提醒」功能（下一場直接實作）"
     ],
-    "note": "週六傍晚 18:01 心跳 — 系統健康、通道健康、教練沉默 62.1h+ 週末節奏。14:01 overflow 後 17:37 再 overflow 連續重啟，但都已穩定。18:00 關懷 cron 已送出不重複打擾。等教練主動或 22:00 cron 關懷。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 18:01 (getMe+getChat 實測 ok)"
-  }
+    "note": "週日上午心跳：探針健康、教練私人時段、v81 戰果已收尾、無待命指令。本場靜默，HEARTBEAT_OK。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-27T06:03:31.676709+08:00 (getMe+getChat 實測 ok)"
+  },
+  "lastHeartbeatReason": "quiet-monday-6am-no-instruction",
+  "telegramChannelOk": true,
+  "telegramChannelSource": "telegram_channel_probe.sh 06:03 實測 ok=true"
 }

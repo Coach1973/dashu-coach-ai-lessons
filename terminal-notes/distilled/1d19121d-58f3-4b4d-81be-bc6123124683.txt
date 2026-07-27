@@ -1,0 +1,164 @@
+# 終端機對話萃取 — Session 1d19121d-58f3-4b4d-81be-bc6123124683
+# 提取時間：2026-07-27 20:02 (台灣時間)
+# 共 11 條教練原話
+
+---
+
+【教練 2026-07-26 16:34】
+開工
+
+　▶ AI 回應：我已讀完接力棒。目前狀態：
+
+**身份核對**：Mac 終端機 / 桌面版 Sonnet 5（軍師層級），workspace 在 `/Users/bymyway/.openclaw/workspace`
+
+**雲端同步狀態**：Hook 顯示的「⚠️ Pull 警告」已查證是暫時性狀況——外層倉庫與 `workspace/` 內層倉庫我剛都重新 `git fetch` 確認過，兩邊都跟 origin 一致，沒有真正衝突（可能是 00:32~00:34 多個 session 同時觸發自動同步造成的短暫卡頓，已自行復原）。
+
+**本棒主軸（v83，剛結束）**：系統權限缺口用 OpenClaw 原…（略）
+
+【教練 2026-07-26 16:41】
+先優先調整 https://www.bymyway.com/ai/  這裡面的案例，我想新增大樹小講、同時，把AI特助案例及特助心法專屬頁面這兩個拿掉。然後再來處理OCR通用工具
+
+　▶ AI 回應：Confirmed live. Now let me check the second occurrence area (line ~1320-1355) before editing.
+
+　▶ AI 回應：Edit confirmed — both removed items are gone, 大樹小講 is in. Let me view it in the browser to visually confirm before pushing.
+
+　▶ AI 回應：Good, that worked. Let me verify the content and take a screenshot.
+
+　▶ AI 回應：本機驗證已完成：`大樹小講．無話不談`（連到 [coach1973.github.io/bigtree](https://coach1973.github.io/bigtree)，剛 curl 確認 200 存活）已加入案例清單，`AI 特助案例集`跟`特助心法專屬頁面`兩項已移除，diff 乾淨無其他改動。
+
+這個檔案是 GitHub Pages（`coach1973.github.io/bymyway-website/ai.html`），`bymyway.com/ai/` 是用 iframe 嵌這個網址進去——照教練的用詞，這屬於「網頁推」（git push GitHub），推上去 Git…（略）
+
+【教練 2026-07-26 16:45】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/bymyway-website/ai.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 開啟修改後的 `ai.html` 給您看（第二個月建設清單那段）。確認畫面沒問題的話，跟我說「推」，我就推上 GitHub。
+
+【教練 2026-07-26 17:06】
+https://coach1973.github.io/coach-case4/ 再往下有一個「想看大樹教練怎麼帶 AI」，然後有一個「真實案例公開上線」就好了（原本的「24 個真實案例」先不寫，我覺得想想有點複雜，所以直接寫「真實案例公開上線」就好）。
+
+然後「看 AI 實戰案例」的連結，就是我給你的這一個，因為這個連結裡麵包含 Case 2 和 Case 3，所以他要看的話，自己可以點進去看。
+
+OK，這個再幫我改一下。
+
+　▶ AI 回應：Confirmed live. Now updating the CTA section in `ai.html`.
+
+　▶ AI 回應：Diff is clean and matches exactly what you asked. Now opening in Chrome per the verification lock.
+
+　▶ AI 回應：已改好，已用 Chrome 開給您看。這次改動：
+
+- CTA 區塊文字改成「真實案例公開上線。」
+- 按鈕改成「看 AI 實戰案例」，連到您給的 `coach1973.github.io/coach-case4/`（已 curl 確認 200 存活）
+
+確認沒問題的話，跟我說「推」就一次推上去（案例清單那項跟這次 CTA 改動一起推）。
+
+【教練 2026-07-26 17:10】
+再多增加一個按鈕，在「認識大樹教練」的旁邊再多一個「近期活動」，然後「近期活動」幫我連到「大樹小講」
+
+　▶ AI 回應：Adding a third button "近期活動" linking to 大樹小講 (`coach1973.github.io/bigtree`).
+
+　▶ AI 回應：已加好第三顆按鈕「近期活動」，連到大樹小講（`coach1973.github.io/bigtree`），已用 Chrome 開給您看。
+
+三顆按鈕現在是：看 AI 實戰案例 → 認識大樹教練 → 近期活動。確認沒問題的話，跟我說「推」，我就把這三次改動一次推上去。
+
+【教練 2026-07-26 17:11】
+<!-- attach -->
+> 「推」
+
+　▶ AI 回應：GitHub Pages 已更新，線上已看得到三項改動。
+
+**已推送**：commit `f8a7a89`（`bymyway-website` repo, master 分支）
+**線上驗證**：`coach1973.github.io/bymyway-website/ai.html` 已 curl 確認含「大樹小講」「近期活動」「coach-case4」，`bymyway.com/ai/` 是 iframe 嵌這個網址，同步生效。
+
+接下來處理 OCR 通用工具。
+
+【教練 2026-07-27 05:18】
+OCR處理得怎麼樣？
+
+　▶ AI 回應：老實跟您報告：**還沒開始動手**。剛才推完 bymyway.com/ai/ 的三次改動後，您接著問「近期活動」按鈕、我做完、您說「推」我推送完，那時候已經是凌晨1點11分——中間到現在13點18分這12小時沒有新的對話，OCR工具我還沒有實際著手，剛剛查了 git log 也確認這段期間沒有相關 commit，不是我忘記講、是真的還沒做。
+
+現在立刻開工，讀 `namecard-db` 的既有管線把它抽成通用工具。
+
+　▶ AI 回應：Now creating the `.env` (credentials, git-ignored) and `.gitignore`:
+
+　▶ AI 回應：Now let's add `venv/` to `.gitignore` and test the tool end-to-end with a real image using a custom (non-namecard) schema to prove genericity.
+
+　▶ AI 回應：Both tests pass with completely different field schemas — confirms the parameterization works. Cleaning up test files and writing docs.
+
+　▶ AI 回應：.env and venv/ correctly excluded. Committing now.
+
+　▶ AI 回應：Now updating the handoff todo table to mark this task complete.
+
+　▶ AI 回應：**OCR 通用工具已經做完了。**
+
+- 位置：`tools/ocr-extract/ocr_extract.py`，抽出 `namecard-db` 的 PaddleOCR（本機免費）→ MiniMax（欄位整理）兩階段管線，欄位跟情境說明改成參數，不再綁死名片格式。
+- **實測抓到一個真 bug**：一開始測試直接打到 `api.anthropic.com` 回傳 401 認證錯誤，查出是終端機本身已有的 `ANTHROPIC_API_KEY`/`ANTHROPIC_BASE_URL` 蓋過了工具自己 `.env` 裡的 MiniMax 設定，改成強制覆蓋後修好、重測通過。
+- **驗…（略）
+
+【教練 2026-07-27 05:33】
+當初說要建 OCR 是為了什麼，你.還記得嗎？.
+
+　▶ AI 回應：記得，起因是 7 月 26 日晚上做結繩領導學戰報系統（v82）那場——您提供 4 張報名截圖給我核對資料，我當時用 PIL 裁切放大自己盯著看，**真的看錯一個名字**（陳慧雯讀成陳薏雯）。
+
+同一時間您也在意那場對話截圖將近 40 張的 Token 消耗問題，於是您想起 `namecard-db` 早就有一套驗證過的機制——PaddleOCR 本機辨識（免費、零 Token）加上 MiniMax 整理成 JSON（不限流量），準確度比我自己瞇眼看圖高很多（namecard-db 那邊也真的抓到過「黃薇雅讀成黃鈺翔」這類我看不出來的錯誤）。
+
+所以建 OCR 通用工具的目的是兩個：**準確度…（略）
+
+【教練 2026-07-27 05:34】
+所以之後你會從那個下載資料夾去辨識裡面的圖片文字的時候，就不會再用你原本這個燒 Token 的方式，就是會用這個 OCR 的機制去辨識，對吧？
+
+　▶ AI 回應：對，之後只要是「從一批圖片裡辨識出文字、整理成結構化資料」這類任務——比如下載資料夾裡一堆報名表截圖、收據、名片，我要把裡面的姓名、金額、日期等欄位抓出來——我會直接呼叫 `tools/ocr-extract` 這套機制，不會再用自己瞇眼看圖片這種燒 Token 又容易看錯字的方式。
+
+但有一個界線要跟您說清楚：**這個工具是用在「把圖片裡的文字讀出來、整理成欄位」這種任務**。如果是另一種情境——比如您要我看一張截圖判斷「這個網頁排版對不對」「這個設計好不好看」「這張照片的構圖」，那種需要我真的用「看」去判斷視覺效果，而不是抓文字欄位的，還是得靠我自己看，OCR 工具幫不上忙。
+
+簡單說：*…（略）
+
+【教練 2026-07-27 05:36】
+好，知道了，謝謝你
+
+　▶ AI 回應：不客氣。今天的進度都推上雲端了（`bymyway.com/ai/` 三次改動 + OCR 通用工具），有其他事再叫我。
+
+【教練 2026-07-27 11:58】
+https://event.bymyway.com/admin  更新一下這裡面手動切換的場次。
+
+下一場不是 8 月 1 號，我們已經有做一些變動，所以 8 月 1 號目前是沒有活動的。
+
+目前更新後的場次為：
+• 8 月 26 號
+• 9 月 5 號
+• 9 月 19 號
+
+更新的場次細節，你可以看我後面貼的這個。https://bigtree-tw.netlify.app/另外後臺的部分，我想請教一下：
+
+「綁定」是不是代表說，他有發一個表情符號，就代表綁定？
+而「未綁定」就是說，他只有掃碼關注，但他沒有發任何表情符號，所以沒有綁定。
+
+是這個意思吧？
+
+　▶ AI 回應：Now let's verify this shows correctly on the live admin page.
+
+　▶ AI 回應：兩件事都處理完了。
+
+**場次已更新**（`event.bymyway.com/admin`）：
+- 8/1 場次（`bigtree-0801`）已確認 0 人報名、安全移除
+- 新增 3 場，資料照您給的 bigtree-tw.netlify.app 內容抓的：
+  - **8/26（三）**　當古典音樂遇到AI科技　14:00–17:00
+  - **9/5（六）**　零基礎學AI起步比較快　14:00–16:30，地點 KR養生廚房
+  - **9/19（六）**　領導力培訓（中正大學社團幹部專場，約50人）　10:00–12:00，嘉義場・國立中正大學
+
+改之前先備份了資料庫，改完直接…（略）
