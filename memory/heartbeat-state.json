@@ -2,23 +2,23 @@
   "lastChecks": {
     "gmail": 1784851264,
     "calendar": 1784851264,
-    "heartbeat_poll": 1785160800,
-    "system_health": 1785160800,
-    "telegram_channel": 1785160800,
-    "junshi_queue": 1785160800,
-    "cron_list": 1785160800,
-    "care_4h": 1785160800
+    "heartbeat_poll": 1785189600,
+    "system_health": 1785189600,
+    "telegram_channel": 1785189600,
+    "junshi_queue": 1785189600,
+    "cron_list": 1785189600,
+    "care_4h": 1785189600
   },
-  "lastHeartbeat": "2026-07-27T22:03:54+08:00",
-  "lastHeartbeatNote": "週一 22:03 晚間關懷（4h 節奏，8h 距上次，因為 14:07 後跑到現在 22:03 期間沒有啟動新對話）。Telegram 通道探針實測 ok:true（getMe+getChat）。28 cron 全綠 all lastRunStatus:ok。接力棒下一場任務 🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 已設計）。教練 19:51 後未對話，但仍在活躍工作（14h+ 沒跟小龍蝦 Telegram 對話，終端機 13:36 剛驗收 OCR 工具）。22:00 接近深夜但不超過 23:00 靜默邊界，發一則簡短關懷確認狀態。",
+  "lastHeartbeat": "2026-07-28T06:03:30+08:00",
+  "lastHeartbeatNote": "週二 06:03 清晨心跳（重啟後第一次）。03:38 context overflow 自動重啟已穩定 2.5h。Telegram 通道探針實測 ok:true。16 cron 全綠（除昨晚 bbb7a348 三機總結 error 已記錄）。接力棒下一場任務 🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（軍師）。教練已 34h+ 未對話（自 7/26 19:51 起）。06:00 起床摘要 cron 4m 前已跑過但內容不含 context 重啟告知 → 本次補發重啟通知（disable_notification:true 避免打擾，message_id 8913）。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Monday",
-    "isQuietHours": false,
+    "timeOfDay": "early_morning",
+    "dayOfWeek": "Tuesday",
+    "isQuietHours": true,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 4,
-    "recentCoachActivity": "教練 14h+ 沒跟小龍蝦對話，終端機 13:36 剛驗收 OCR 工具，目前 22:03 仍在線可能性高（週一晚間）",
+    "recentCoachActivity": "教練 34h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）。終端機 13:36 驗收 OCR 工具後未再出現。本場心跳前無新對話訊息。",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -33,7 +33,7 @@
     "telegramChannelOk": true,
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26 19:51",
-    "coachSilentHours": 26.2,
+    "coachSilentHours": 34.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -45,7 +45,10 @@
       "plugins.allow 白名單設定（非緊急）",
       "小龍蝦紀律移植計劃 階段二/三"
     ],
-    "note": "週一 22:03 晚間關懷 — 接力棒下一場任務明確、cron 全綠、通道健康。已發一則簡短關懷訊息確認教練狀態。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-27T22:03:54+08:00 (getMe+getChat 實測 ok)"
+    "restartMessageSent": true,
+    "restartMessageId": 8913,
+    "restartMessageQuiet": true,
+    "note": "週二 06:03 清晨心跳 — 03:38 context 重啟已穩定恢復 2.5h，已發安靜版重啟通知給教練（disable_notification:true）。教練 34h+ 未對話、深夜時段不打擾。通道健康、cron 全綠。下一個主動關懷窗口為 10:00（4h 關懷 cron）。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-28T06:03:00+08:00 (getMe+getChat 實測 ok)"
   }
 }
