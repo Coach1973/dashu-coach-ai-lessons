@@ -1,11 +1,11 @@
 ---
 name: html-preview-chrome-only
-description: 本機 HTML 預覽指定瀏覽器——Mac=Chrome；聯想(Windows)2026-07-13起改用Comet，因為聯想這台Chrome跳出來會空白、Comet正常
+description: 本機 HTML 預覽指定瀏覽器——Mac=Chrome；聯想(Windows)2026-07-13起改用Comet；2026-07-28第8次發作後新增PreToolUse hook攔截瀏覽器不安全埠(ERR_UNSAFE_PORT)，不只是記憶
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 3089ccd5-21cb-458c-92e4-eaecbd96dee9
-  modified: 2026-07-23T15:29:01.730Z
+  modified: 2026-07-28T11:12:05.928Z
 ---
 
 # 🔴🔴🔴 2026-07-13更新：聯想（Windows）改用 Comet，不再用 Chrome
@@ -128,6 +128,17 @@ Claude in Chrome MCP 擴充功能不是這台機器的必要依賴——它沒�
 **根因**：瀏覽器裡殘留舊token模式的裝置身份快取（`localStorage.openclaw-device-identity-v1`），跟剛切換的密碼模式衝突，頁面顯示的其實是一團技術性錯誤訊息（「驗證不相符/裝置權杖不符」），不是乾淨的登入畫面——`open -a Chrome`指令本身成功執行、HTTP狀態码200，但這兩個都只證明「瀏覽器開了、伺服器有回應」，完全不能證明「畫面內容是教練看得懂、能操作的東西」。
 
 **新增 How to apply**：`open -a Chrome`只是第一步，不是終點。跳出瀏覽器之後，**必須自己再用讀取工具（`mcp__Claude_Browser__get_page_text`/`read_page`或Claude in Chrome同款工具）去讀那個頁面實際渲染出的文字內容**，確認畫面上真的是預期的東西（例如登入表單、正確的資料），而不是一片空白、錯誤訊息，或跟預期不符的畫面，才能跟教練說「跳出來給你看了」。「瀏覽器開了」≠「教練看得到有意義的東西」。
+
+## 🔴 第八次犯（2026-07-28）：跳了Chrome，但埠號本身被瀏覽器黑名單擋掉
+
+event-signup抽獎轉盤功能開發時，教練連`http://127.0.0.1:5060/wheel`出現「無法連上這個
+網站…ERR_UNSAFE_PORT」。這次不是沒跳Chrome（前7次的坑），而是**跳了Chrome、指令也沒錯，
+但5060這個埠本身就在瀏覽器內建安全黑名單裡**，跟服務正不正常無關，瀏覽器一律拒絕連線。
+教練要求「不要每次都要我說『記得跳HTML』然後結果是無法顯示網頁，把它寫進SOP」。
+
+**解法（已落地，不只是這篇記憶）**：新增PreToolUse hook `scripts/unsafe_port_check.sh`，
+偵測`open -a "Google Chrome"`/`start chrome`指向本機黑名單埠時直接攔截，提醒改用對外
+網址或換安全埠，不用等教練回報「打不開」才發現。詳見`reference_browser_unsafe_port_5060`。
 
 ## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
 

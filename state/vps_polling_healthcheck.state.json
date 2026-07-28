@@ -1,12 +1,12 @@
 {
-  "ts": "2026-07-27T14:54:18Z",
+  "ts": "2026-07-28T15:02:22Z",
   "status": "ok",
   "alert": false,
   "reason": "",
   "spool_count": 0,
   "spool_processing": 0,
-  "last_inbound": "{\"0\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"1\":\"Inbound message telegram:8364394153 -> @coach_bymyway_bot (direct, 15 chars)\",\"_meta\":{\"runtime\":\"node\",\"runtimeVersion\":\"24.14.0\",\"hostname\":\"72cd9942693c\",\"name\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"parentNames\":",
-  "last_inbound_age_minutes": 312,
+  "last_inbound": "{\"0\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"1\":\"Inbound message telegram:8364394153 -> @coach_bymyway_bot (direct, 10 chars)\",\"_meta\":{\"runtime\":\"node\",\"runtimeVersion\":\"24.14.0\",\"hostname\":\"72cd9942693c\",\"name\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"parentNames\":",
+  "last_inbound_age_minutes": 486,
   "last_restart_age_minutes": 16666,
   "container_uptime": "2026-07-20T15:18:36.747172234Z"
 }

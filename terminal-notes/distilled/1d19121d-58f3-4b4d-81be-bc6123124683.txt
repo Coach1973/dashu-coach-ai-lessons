@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 1d19121d-58f3-4b4d-81be-bc6123124683
-# 提取時間：2026-07-27 20:02 (台灣時間)
-# 共 11 條教練原話
+# 提取時間：2026-07-28 10:56 (台灣時間)
+# 共 24 條教練原話
 
 ---
 
@@ -162,3 +162,185 @@ https://event.bymyway.com/admin  更新一下這裡面手動切換的場次。
   - **9/19（六）**　領導力培訓（中正大學社團幹部專場，約50人）　10:00–12:00，嘉義場・國立中正大學
 
 改之前先備份了資料庫，改完直接…（略）
+
+【教練 2026-07-27 15:57】
+https://ai-talk-tw.netlify.app/#sponsor 原本上面是寫說甜點下午茶的 60 份，請幫我改成 50 份
+
+　▶ AI 回應：Now local repo is synced. Let's find both "60 份" occurrences precisely and update them.
+
+　▶ AI 回應：Both refer to the same real quantity of sponsored desserts. Updating both.
+
+　▶ AI 回應：Clean diff, both instances updated. Opening in Chrome for visual confirmation per the preview lock rule before deploying.
+
+　▶ AI 回應：已改好、已用 Chrome 開給您看，兩處「甜點下午茶 60 份」都改成 50 份了（入門禮那段 + 煦多午茶設攤卡片那段）。
+
+順便跟您回報一件事：本機這份 GitHub 工作稿原本是舊的（落後聯想機 4 個 commit，缺了 7 家現場設攤廠商卡片跟贊助人名單），我剛剛先 `git pull` 同步到最新才動手改，改的是最新版本，沒有蓋掉聯想機之前的成果。
+
+確認畫面沒問題的話，跟我說「推」，我就把這次改動用 Netlify 部署上線（會照 SOP 用 curl 分別驗證文字跟圖片的 Content-Type）。
+
+【教練 2026-07-27 18:45】
+推
+
+　▶ AI 回應：All paths use forward slashes correctly. Now deploying.
+
+　▶ AI 回應：Now updating the deploy quota tracking file.
+
+　▶ AI 回應：**已推上線，驗證都過關。**
+
+- 兩處「甜點下午茶」都已改成 50 份，線上 curl 確認文字已更新
+- 圖片 Content-Type 也一併確認正常（image/jpeg，沒有重踩案例 54 的坑）
+- 部署 ID `6a67a7974cf315a6254c2d70`，狀態 ready
+- GitHub 工作稿 commit `52ff47a`，額度紀錄 commit `4e47a2278`，剩 65 次部署額度
+
+【教練 2026-07-27 18:49】
+https://event.bymyway.com/qr/checkin-print.html 這個是本來的簽到系統，然後我發現到一個 bug：原本的「大樹小講」頁面或者是「AI 論壇」的頁面，使用者在按報名的時候，已經提供過姓名、電話跟 email 了，結果掃這個圖片進去，還要再輸入一次姓名、電話、email，我覺得是多此一舉。
+
+所以我要你把這個頁面改掉，變成另外一組，直接按「加好友」跟「下載簡報」就可以了。我把網址發給你。https://event.bymyway.com/slides 也就是說，29 號當天我會用我後面給你的這個 QR code，讓他們掃完加好友跟索取簡報就可以了。
+
+　▶ AI 回應：Now editing `make_checkin()` to point at `/slides` instead of `/checkin`, with copy matching the new action:
+
+　▶ AI 回應：Now regenerating the QR files:
+
+　▶ AI 回應：Live server confirmed updated. Now opening it in Chrome for visual confirmation.
+
+　▶ AI 回應：One more thing needs attention for this to actually work on 7/29 — checking today's slide file setup.
+
+　▶ AI 回應：Now let's commit the code change (event-signup source is under git).
+
+　▶ AI 回應：**改好了，已推上雲端（commit `fd480212a`）、線上已生效，剛用 Chrome 開給您看那張立牌實際畫面。**
+
+**做了什麼**：`event.bymyway.com/qr/checkin-print.html`（原本印出來要貼在現場的簽到立牌）的 QR 改成直接連到 `/slides`，掃碼後就是「➕ 加 LINE 好友」+「📄 下載今日簡報」兩顆按鈕，不會再跳出姓名/電話/email 的表單。這是活的伺服器直接改，改完立刻生效，不用等部署。
+
+**有一件事要跟您確認**：原本這組簽到 QR 背後其實還兼著「集滿 5 次活動場次送神秘禮物」的集點記錄功能——因為它會把每次掃…（略）
+
+【教練 2026-07-27 18:58】
+因為我記得我在後臺有設定手動指定檔案，當然你改成 7/29 沒有問題。
+
+我現在想要的是：依然保留「集滿五場送禮物」的功能，但不強制重填資料。
+
+所以我想分兩步走：
+
+第一步：先給我一個簡單一點的版本。就是你剛才做出來的這個「大促小講系列講座數位簽到系統」，請再幫我多加一個標題，在「歡迎蒞臨」這個地方寫「AI 微型論壇」，這樣大家一看就知道是這一場活動。這個要先出來，我要列印成 A4 的立牌來掃碼。
+
+第二步：你再繼續花時間去設計「不重複資料又可以集點」的邏輯。
+
+這樣瞭解了嗎？
+
+　▶ AI 回應：Reverted template ordering back to safe default (affects other event QR signs too). Now regenerating with the label positioned right below the title, in prominent gold text.
+
+　▶ AI 回應：Let's verify live and open in Chrome for visual confirmation before the coach prints it.
+
+　▶ AI 回應：**了解，兩步走沒問題。第一步已經做完**：`event.bymyway.com/qr/checkin-print.html` 現在標題下方多了金色大字「AI微型論壇」，一眼就知道是這場活動，已用 Chrome 開給您看實際畫面，可以直接列印 A4 立牌。commit `022051eba`。
+
+7/29 簡報檔也確認沒問題——您說後台有手動指定，我改的檔名不影響（改名只是為了保險，若後台是手動模式就不受檔名影響）。
+
+**第二步（集點但不重填資料的邏輯）我接著設計**，會回來跟您討論方案，不會現在動手改動線上系統。
+
+【教練 2026-07-27 19:02】
+設計了嗎
+
+　▶ AI 回應：設計好了。給您看方案：
+
+**新流程：`/checkin` 只問「手機號碼」一欄，不是三欄**
+
+1. 來賓掃立牌 QR → 進 `/checkin`，畫面只有一個欄位：手機號碼 + 一顆「完成報到」按鈕（不再問姓名、公司）
+2. 系統拿手機號碼去比對資料庫：
+   - **有找到**（代表這人已經在網站上報名過）→ 直接用資料庫裡已經留的姓名，把這場「簽到記錄」寫進去（這就是集點用的紀錄），接著顯示「加LINE好友」＋「下載今日簡報」兩顆按鈕
+   - **沒找到**（現場臨時來、沒事先報名的人）→ 導去原本的完整報名表單，但手機號碼幫他先帶進去，只需要再補填姓名
+
+**這樣可以做到**：
+…（略）
+
+【教練 2026-07-27 23:27】
+https://event.bymyway.com/slides原本的是掃描就可以給官方LINE傳訊息，但沒有積點，現在的是需要對方輸一組手機號再加好友，是這個意思嗎？如果我有辦法讓報到的來賓都加好友，這樣還有必要輸手機嗎？
+
+【教練 2026-07-27 23:27】
+[Request interrupted by user]
+
+【教練 2026-07-27 23:28】
+因為我製作的簽到表都有他們的手機號
+
+　▶ AI 回應：先跟您核對一個誤解：`/slides` 目前只有兩步——「加LINE好友」+「下載簡報」，**沒有傳訊息給官方LINE這個動作**。會自動幫忙帶入「我是OOO，剛報名了」這句問候訊息、讓對方按傳送的功能，是在原本完整報名表單填完後的感謝頁才有，`/slides` 本身沒有這段。
+
+回答您的問題：**如果您本來就會準備紙本簽到表、上面已經有手機號碼，那確實不需要再叫來賓在網頁上多打一次手機號碼**——直接用最初那個 `/slides` 連結（掃了就是「加好友」+「下載簡報」，零輸入）就夠了，我現在做出來給您的立牌就是這一版，不用再改。
+
+但有一點要提醒您：這樣一來，「集滿5次送禮物」的計數就完全…（略）
+
+【教練 2026-07-27 23:42】
+那你先做一版輸入手機當簽到的版本，我看看效果怎麼樣
+
+　▶ AI 回應：Now let's implement. First, the new checkin template:
+
+　▶ AI 回應：Now editing the `/checkin` route to split GET/POST and add the phone-lookup logic:
+
+　▶ AI 回應：Now updating `signup_form` to accept a phone prefill query param, and `slides_landing` to accept a personalized name:
+
+　▶ AI 回應：Now the `signup_form` phone-prefill for the fallback path:
+
+　▶ AI 回應：Now updating `slides.html` to show the personalized greeting when `name` is present:
+
+　▶ AI 回應：Now updating `make_qr.py` so the checkin QR points back to `/checkin` (which now does the lightweight phone flow) instead of `/slides`:
+
+　▶ AI 回應：Now restarting the Flask app to pick up the new routes.
+
+　▶ AI 回應：Live GET page works. Now testing the POST flow with a real vs. unknown phone number.
+
+　▶ AI 回應：All three paths verified end-to-end. Let me open it in Chrome for a visual check before reporting back.
+
+　▶ AI 回應：Now committing the code changes.
+
+　▶ AI 回應：**手機號碼簽到版已經上線，可以實測了。**commit `0ef5ee98a`。
+
+**現場流程**：`event.bymyway.com/checkin`（跟原本立牌同一組 QR）→ 只有一個手機號碼欄位 → 按「完成簽到」
+
+- **號碼比對成功**（已線上報名過）→ 直接記進集點紀錄，跳到「OOO，簽到成功」+「加好友」+「下載簡報」畫面，不用再打姓名
+- **號碼查無資料**（現場臨時來的人）→ 導去原本完整報名表單，但手機號碼已經先幫他填好，只需要再補姓名
+
+已經用真實資料測過三種情況（已知號碼／查無此號碼／格式打錯），也剛用 Chrome 開 `/checkin` 給您看實際畫面…（略）
+
+【教練 2026-07-28 00:25】
+試過了，很好，我們就用這個版本，昨天我印出的也都可以用，不用重印
+
+　▶ AI 回應：太好了，收到。接力棒待辦表已更新標記完成，commit `917085e38`。
+
+今天處理完的：bymyway.com/ai/ 案例改版、大樹小講場次更新、ai-talk 甜點份數修正、event-signup 簽到系統改成手機比對版——全部都推上雲端了。
+
+對話已經進行一段時間，如果您要收工，可以說「總結並上傳」，我會把今天的紀錄蒸餾好再 commit；沒事的話也可以繼續往下一項（BNI 大台南小幫手主動提醒功能）走。
+
+【教練 2026-07-28 00:54】
+https://ai-talk-tw.netlify.app/  好消息，報名人數超過88位了，請幫忙更新，每3小時增加2位，今晚12點就能到96位了
+
+　▶ AI 回應：Clean diff. Let me open it in Chrome to visually confirm the live count now displays correctly.
+
+　▶ AI 回應：本機驗證：照您說的「每3小時+2位」設定，現在（08:55）會顯示 88，往下算到**今晚 00:00 會顯示 98**，不是 96——因為 2 位/3 小時這個速率，15 小時左右會累加 10 位（88+10=98）。如果您比較在意「剛好 96」這個數字，我可以改速率或改基準時間去對齊；如果只是大概抓一下、不用剛好卡 96，那現在這版直接用沒問題。
+
+已用 Chrome 開本機檔案給您看。這是否要照現在這版推上線，還是要我調整成剛好落在 96？
+
+【教練 2026-07-28 00:56】
+98沒問題，應該會超過
+
+　▶ AI 回應：**已推上線，驗證過關。** 現在起顯示 88，往後每 3 小時 +2 人，今晚會超過 96（算下來約 98）。
+
+- 部署 ID `6a67fe51830fffe6b97beaaf`，狀態 ready，線上 curl 確認公式已生效
+- GitHub commit `16d72b4`，額度紀錄 commit `ad97e625d`，剩 64 次部署額度
+
+【教練 2026-07-28 02:44】
+總結，我要開新的對話框，有新的那個 Netlify 的更新要做。
+
+　▶ AI 回應：Now inserting the new v84 section and archiving v82:
+
+　▶ AI 回應：Now let's remove the v82 body from the main file and replace with an archive pointer, keeping only v84+v83 per the E16 slimming rule.
+
+　▶ AI 回應：Now removing v82's body and updating the archive footer note:
+
+　▶ AI 回應：Structure is clean — v84 + v83 only. Committing now.
+
+　▶ AI 回應：**總結完成，可以安心開新視窗了。**commit `797a55222`。
+
+這場（v84）做了 6 件事，全部推上雲端：
+
+1. **event-signup 簽到系統重構**——手機號碼比對簽到，免重填資料又保留集點，您已實測確認採用
+2. **bymyway.com/ai/ 品牌頁**三輪改版（案例清單、CTA、近期活動按鈕）
+3. **event.bymyway.com 場次校正**——8/1 改成 8/26、9/5、9/19
+4. **ai-talk-tw 兩次數據更新**——甜點份數 60→50、報名人數 62→88（速率改每3小時+2）
+5. **OCR 通用工具**教練驗收確…（略）

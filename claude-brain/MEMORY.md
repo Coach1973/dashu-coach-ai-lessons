@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔒 瀏覽器不安全埠(如5060)已升級成PreToolUse Hook攔截，非僅記憶(2026-07-28)](reference_browser_unsafe_port_5060.md) — open Chrome前先擋黑名單埠，教練要求別再靠提醒；同場見[[feedback_html_preview_chrome_only]]第8次犯
 - [🎯🎯 結繩領導學工作坊戰報系統(jiesheng-report)上線rpl-workshop.bymyway.com(2026-07-26)](project_jiesheng_report_launch_2026-07-26.md) — 帳號RPL(大寫)+全部儲存一次搞定+邀請人/資料提交人四選一；.env含$符號要單引號否則密碼被bash吃掉
 - [🔧 名片辨識系統(namecard-db)的PaddleOCR+MiniMax兩階段管線可複用於任何讀圖辨識場景(2026-07-26)](reference_namecard_ocr_pipeline_reusable.md) — 已驗證比AI直接看圖準確、零Token成本，下次「讀截圖建檔」任務優先用這套不要自己瞇眼看
 - [🔧 聯想Bash執行環境跟真實桌面網路隔離，本機dev server驗證要用靜態快照+桌面開檔(2026-07-26)](reference_windows_bash_network_sandbox_isolation.md) — curl/瀏覽器工具都連不到Bash啟動的127.0.0.1伺服器，連教練真實Comet也連不到；改用HTML快照存檔+comet.exe開file路徑
@@ -60,7 +61,7 @@
 - [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md) — 別台AI寫的記憶不算數，要自己SSH/git log驗證，轉述≠親眼看到
 - [🔴🔴 軍師不當兩AI系統間的傳話筒(2026-07-02)](feedback_dont_relay_between_ai_systems.md) — 「傳話給Hermes」也算資訊搬運工，有SSH就自己動手裝技能
 - [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02)](feedback_verify_via_real_transcript_not_case_count.md) — 教練連兩次抓到用案例庫筆數偷懶估算，真實頻率需查transcript
-- [🔴🔴🔴 事件驅動優於輪詢——教練第4次糾正，防呆hook從未真正接上(2026-07-12)](feedback_event_driven_not_polling_pattern.md) — 名片系統又犯；查到rule07_polling_check.sh從未註冊進~/.claude/settings.json，已補上實測
+- [🔴🔴🔴🔴🔴 事件驅動優於輪詢——教練第5次糾正，這次是前端UI輪詢(2026-07-28)](feedback_event_driven_not_polling_pattern.md) — 抽獎轉盤setInterval又犯，改成按鈕動作觸發時才查詢；前4次是後端輪詢，證實前端定時刷新也算同一個坑
 - [🔴🔴 跨機指令被推翻必須主動撤回，不能只清本機(2026-07-02)](feedback_retract_crossmachine_instruction_on_reversal.md) — 三機互查方案被打槍後只拆Mac端，忘通知ACER/聯想撤回
 - [🟢 Mac三機協作relay改用官方sessions_send(2026-07-02)](project_mac_bot_relay_retired_2026-07-02.md) — agentToAgent早已啟用只是沒人講，關閉bot-relay兩hook簡化架構
 - [🟢 VPS一鍵開通新用戶腳本(2026-07-02)](reference_vps_provision_script.md) — /root/provision_new_vps_user.sh測試通過；100GB僅用34GB
