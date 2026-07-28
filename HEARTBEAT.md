@@ -3,6 +3,9 @@
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
 > 重啟時間：2026-07-28 03:38
 > 對話記錄已完整存入 memory/2026-07-28.md 並推上 GitHub，零遺漏
+> 09:03 cron heartbeat 醒來（已過 5hr25m，message 工具 cron-event session 無 Telegram bot token，無法主動推送，待教練下次主動聯繫時口頭報告重啟）
+> 10:01 cron heartbeat 醒來：再次驗證 message 工具（Error: Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.）→ 確認 cron-event session 無法推 Telegram，通道探針 ok 但 bot token 缺失是另一回事。
+> 待教練下次主動聯繫時口頭報告重啟：🦞 對話記錄已滿，已自動重啟（03:38），對話已完整存檔（commit 48b78e46a），零遺漏，請繼續下指令。
 
 ## 🔴 重啟後第一件事
 
@@ -25,3 +28,7 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1785198360
 - 雲端同步：✅ 已推上雲端（commit 48b78e46a）
+
+## ⚠️ peipei 自動 force-restart 2026-07-28 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
