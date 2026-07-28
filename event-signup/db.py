@@ -133,6 +133,48 @@ def get_event(conn: sqlite3.Connection, slug: str):
     return conn.execute("SELECT * FROM events WHERE slug = ?", (slug,)).fetchone()
 
 
+def get_wheel_roster(conn: sqlite3.Connection, event_id: int):
+    """轉盤名單：這場已簽到、且還沒中獎過的人（依簽到時間排序）。"""
+    return conn.execute(
+        """SELECT a.id, a.name FROM attendees a
+           JOIN signups s ON s.attendee_id = a.id
+           WHERE s.event_id = ?
+             AND a.id NOT IN (SELECT attendee_id FROM wheel_winners WHERE event_id = ?)
+           ORDER BY s.created_at""",
+        (event_id, event_id),
+    ).fetchall()
+
+
+def get_wheel_winners(conn: sqlite3.Connection, event_id: int):
+    return conn.execute(
+        """SELECT w.id, a.name, w.prize, w.created_at FROM wheel_winners w
+           JOIN attendees a ON a.id = w.attendee_id
+           WHERE w.event_id = ? ORDER BY w.created_at""",
+        (event_id,),
+    ).fetchall()
+
+
+def add_wheel_winner(conn: sqlite3.Connection, event_id: int, attendee_id: int, prize: str) -> bool:
+    """回傳False表示這個人在這場已經中過獎了（不重複記錄）。"""
+    dup = conn.execute(
+        "SELECT 1 FROM wheel_winners WHERE event_id = ? AND attendee_id = ?",
+        (event_id, attendee_id),
+    ).fetchone()
+    if dup:
+        return False
+    conn.execute(
+        "INSERT INTO wheel_winners (event_id, attendee_id, prize) VALUES (?, ?, ?)",
+        (event_id, attendee_id, prize or None),
+    )
+    conn.commit()
+    return True
+
+
+def clear_wheel_winners(conn: sqlite3.Connection, event_id: int) -> None:
+    conn.execute("DELETE FROM wheel_winners WHERE event_id = ?", (event_id,))
+    conn.commit()
+
+
 def upsert_signup(conn: sqlite3.Connection, event_id: int, name: str, phone: str, company_title: str) -> str:
     """回傳 'new'（首次報名）或 'repeat'（這場已報過）"""
     row = conn.execute("SELECT id FROM attendees WHERE phone = ?", (phone,)).fetchone()

@@ -31,3 +31,13 @@ CREATE TABLE IF NOT EXISTS app_settings (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
 );
+
+-- 抽獎轉盤：中獎名單直接查signups當名單來源，這裡只記「誰在這場抽中過」避免重複抽中
+CREATE TABLE IF NOT EXISTS wheel_winners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id INTEGER NOT NULL REFERENCES events(id),
+    attendee_id INTEGER NOT NULL REFERENCES attendees(id),
+    prize TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    UNIQUE (event_id, attendee_id)
+);

@@ -423,6 +423,72 @@ def set_auto():
     return redirect(url_for("admin"))
 
 
+@app.route("/wheel")
+def wheel():
+    """抽獎轉盤：教練上台操作用，名單直接來自「目前活動」已簽到的人，不用手動輸入。
+    跟/admin共用同一組登入session，登入過/admin這裡就不用再登一次。"""
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    conn.close()
+    if not event:
+        return "目前沒有進行中的活動，請先到 /admin 設定", 404
+    return render_template("wheel.html", event=event)
+
+
+@app.route("/wheel/data")
+def wheel_data():
+    if not _logged_in():
+        abort(401)
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    if not event:
+        conn.close()
+        return {"error": "目前沒有進行中的活動"}, 404
+    roster = db.get_wheel_roster(conn, event["id"])
+    winners = db.get_wheel_winners(conn, event["id"])
+    conn.close()
+    return {
+        "event_name": event["name"],
+        "roster": [{"id": r["id"], "name": r["name"]} for r in roster],
+        "winners": [{"name": w["name"], "prize": w["prize"] or ""} for w in winners],
+    }
+
+
+@app.route("/wheel/winner", methods=["POST"])
+def wheel_winner():
+    if not _logged_in():
+        abort(401)
+    data = request.get_json(silent=True) or {}
+    attendee_id = data.get("attendee_id")
+    prize = (data.get("prize") or "").strip()
+    if not attendee_id:
+        return {"ok": False, "error": "缺少attendee_id"}, 400
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    if not event:
+        conn.close()
+        return {"ok": False, "error": "目前沒有進行中的活動"}, 404
+    ok = db.add_wheel_winner(conn, event["id"], attendee_id, prize)
+    conn.close()
+    return {"ok": ok}
+
+
+@app.route("/wheel/reset", methods=["POST"])
+def wheel_reset():
+    if not _logged_in():
+        abort(401)
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    if not event:
+        conn.close()
+        return {"ok": False, "error": "目前沒有進行中的活動"}, 404
+    db.clear_wheel_winners(conn, event["id"])
+    conn.close()
+    return {"ok": True}
+
+
 @app.route("/admin")
 def admin():
     if not _logged_in():

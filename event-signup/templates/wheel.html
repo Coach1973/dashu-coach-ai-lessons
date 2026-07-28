@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽獎轉盤｜{{ event["name"] }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:24px 16px 60px; }
+  .wrap { max-width:1100px; margin:0 auto; }
+  .top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+  h1 { font-size:24px; font-weight:900; }
+  h1 span { color:var(--gold); }
+  .back { text-decoration:none; padding:10px 18px; font-size:15px; font-weight:700; color:rgba(255,255,255,.6);
+    background:#1c1c1c; border:1px solid var(--line); border-radius:8px; }
+  .layout { display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start; }
+  .panel { background:#1c1c1c; border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .side { flex:1; min-width:260px; }
+  .side h2 { font-size:17px; color:var(--gold); margin-bottom:10px; }
+  .roster-count { font-size:15px; color:rgba(255,255,255,.7); margin-bottom:16px; }
+  .prize-input { width:100%; padding:10px 12px; font-size:16px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; margin-bottom:12px; }
+  .winners { list-style:none; max-height:340px; overflow-y:auto; }
+  .winners li { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; display:flex; justify-content:space-between; }
+  .winners li .n { font-weight:900; }
+  .winners li .p { color:var(--gold); font-size:13px; }
+  .empty-note { color:rgba(255,255,255,.4); font-size:14px; padding:10px 0; }
+  .reset-btn { margin-top:16px; width:100%; padding:10px; font-size:14px; font-weight:700; color:rgba(255,255,255,.6);
+    background:#1c1c1c; border:1px solid var(--line); border-radius:8px; cursor:pointer; }
+  .reset-btn:hover { color:#ff6b6b; border-color:#ff6b6b; }
+
+  .wheel-area { flex:2; min-width:320px; display:flex; flex-direction:column; align-items:center; }
+  .pointer-wrap { position:relative; }
+  .pointer { position:absolute; top:-6px; left:50%; transform:translateX(-50%); z-index:10;
+    width:0; height:0; border-left:20px solid transparent; border-right:20px solid transparent;
+    border-top:40px solid #ff6b6b; filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
+  canvas { max-width:100%; height:auto; border-radius:50%; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+  .center-dot { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:28px; height:28px; background:#fff; border-radius:50%; border:4px solid #1c1c1c; }
+  .spin-btn { margin-top:28px; background:linear-gradient(135deg,#ff6b6b,#c8a96e); color:#fff; font-size:20px;
+    font-weight:900; padding:16px 48px; border:none; border-radius:999px; cursor:pointer;
+    box-shadow:0 6px 20px rgba(200,169,110,.4); transition:transform .15s; }
+  .spin-btn:hover { transform:scale(1.05); }
+  .spin-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+  .done-note { margin-top:24px; text-align:center; color:rgba(255,255,255,.5); font-size:16px; }
+
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:50; }
+  .modal.show { display:flex; }
+  .modal-box { background:#1c1c1c; border:1px solid var(--gold); border-radius:20px; padding:40px; text-align:center;
+    max-width:360px; width:90%; }
+  .modal-box h2 { font-size:22px; margin-bottom:16px; }
+  .modal-box .winner-name { font-size:36px; font-weight:900; color:var(--gold); margin:16px 0 28px; }
+  .modal-box button { background:var(--gold); color:var(--dark); font-weight:900; font-size:16px;
+    padding:12px 32px; border:none; border-radius:999px; cursor:pointer; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h1>🎯 抽獎轉盤<span>｜{{ event["name"] }}</span></h1>
+      <a class="back" href="/admin">← 回名單</a>
+    </div>
+
+    <div class="layout">
+      <div class="panel side">
+        <h2>本輪獎項（選填）</h2>
+        <input type="text" id="prizeInput" class="prize-input" placeholder="例如：酸痛貼布30組">
+
+        <h2>已中獎名單</h2>
+        <div class="roster-count" id="rosterCount">載入中…</div>
+        <ul class="winners" id="winnersList"></ul>
+
+        <button class="reset-btn" onclick="resetWheel()">🔄 重置本場中獎名單</button>
+      </div>
+
+      <div class="panel wheel-area">
+        <div class="pointer-wrap">
+          <div class="pointer"></div>
+          <canvas id="wheelCanvas" width="480" height="480"></canvas>
+          <div class="center-dot"></div>
+        </div>
+        <button id="spinBtn" class="spin-btn" onclick="spin()">開始旋轉！</button>
+        <div class="done-note" id="doneNote" style="display:none">🎉 所有已簽到的人都抽過了，可以重置後再抽</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal">
+    <div class="modal-box">
+      <h2 id="resultMessage">🎉 恭喜中獎！</h2>
+      <div class="winner-name" id="winnerName">－</div>
+      <button onclick="closeModal()">確定</button>
+    </div>
+  </div>
+
+<script>
+const canvas = document.getElementById('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
+const colors = ['#FF6B6B','#4ECDC4','#45B7D1','#FFA07A','#98D8C8','#F7DC6F','#BB8FCE','#F1948A','#82E0AA','#85C1E9','#F0B27A','#D7BDE2'];
+const funMessages = ["不用懷疑，就是你！👉","躲得過初一，躲不過十五...👻","恭喜發財！幸運得主是...🎉","眾望所歸！大家掌聲鼓勵...👏👏","命運女神對你微笑了！✨"];
+
+let roster = [];   // [{id, name}]
+let winners = [];  // [{name, prize}]
+let startAngle = 0;
+let arc = Math.PI * 2 / 12;
+let spinAngleStart = 10, spinTime = 0, spinTimeTotal = 0, isSpinning = false;
+
+async function loadData() {
+  const res = await fetch('/wheel/data');
+  if (!res.ok) { alert('讀取名單失敗，請重新整理'); return; }
+  const data = await res.json();
+  roster = data.roster;
+  winners = data.winners;
+  renderWinners();
+  drawWheel();
+  updateSpinAvailability();
+}
+
+function renderWinners() {
+  document.getElementById('rosterCount').innerText = `目前可抽 ${roster.length} 位，已抽 ${winners.length} 位`;
+  const ul = document.getElementById('winnersList');
+  if (winners.length === 0) {
+    ul.innerHTML = '<div class="empty-note">還沒有人中獎</div>';
+    return;
+  }
+  ul.innerHTML = winners.map(w =>
+    `<li><span class="n">${escapeHtml(w.name)}</span><span class="p">${escapeHtml(w.prize || '')}</span></li>`
+  ).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function updateSpinAvailability() {
+  const canSpin = roster.length > 0 && !isSpinning;
+  spinBtn.disabled = !canSpin;
+  document.getElementById('doneNote').style.display = roster.length === 0 ? 'block' : 'none';
+}
+
+function drawWheel() {
+  ctx.clearRect(0, 0, 480, 480);
+  if (roster.length === 0) return;
+  arc = Math.PI * 2 / roster.length;
+  const outsideRadius = 230, textRadius = 165, insideRadius = 48;
+  ctx.font = 'bold 16px "Noto Sans TC", sans-serif';
+  for (let i = 0; i < roster.length; i++) {
+    const angle = startAngle + i * arc;
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.beginPath();
+    ctx.arc(240, 240, outsideRadius, angle, angle + arc, false);
+    ctx.arc(240, 240, insideRadius, angle + arc, angle, true);
+    ctx.fill();
+    ctx.save();
+    ctx.fillStyle = "white";
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 4;
+    ctx.translate(240 + Math.cos(angle + arc / 2) * textRadius, 240 + Math.sin(angle + arc / 2) * textRadius);
+    ctx.rotate(angle + arc / 2 + Math.PI / 2);
+    const text = roster[i].name;
+    ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+    ctx.restore();
+  }
+}
+
+function spin() {
+  if (isSpinning || roster.length === 0) return;
+  isSpinning = true;
+  updateSpinAvailability();
+  spinAngleStart = Math.random() * 10 + 10;
+  spinTime = 0;
+  spinTimeTotal = Math.random() * 3000 + 4000;
+  rotateWheel();
+}
+
+function rotateWheel() {
+  spinTime += 30;
+  if (spinTime >= spinTimeTotal) { stopRotateWheel(); return; }
+  const spinAngle = spinAngleStart - (spinAngleStart * (spinTime / spinTimeTotal));
+  startAngle += (spinAngle * Math.PI / 180);
+  drawWheel();
+  requestAnimationFrame(rotateWheel);
+}
+
+async function stopRotateWheel() {
+  isSpinning = false;
+  const degrees = startAngle * 180 / Math.PI + 90;
+  const arcd = 360 / roster.length;
+  const index = Math.floor((360 - degrees % 360) / arcd) % roster.length;
+  const winner = roster[index];
+
+  const prize = document.getElementById('prizeInput').value.trim();
+  const res = await fetch('/wheel/winner', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({attendee_id: winner.id, prize}),
+  });
+  const data = await res.json();
+  if (!data.ok) {
+    alert('記錄中獎失敗，請重新整理頁面再試一次');
+    updateSpinAvailability();
+    return;
+  }
+  showResult(winner.name, prize);
+  await loadData();
+}
+
+function showResult(name, prize) {
+  const randomMsg = funMessages[Math.floor(Math.random() * funMessages.length)];
+  document.getElementById('resultMessage').innerText = randomMsg;
+  document.getElementById('winnerName').innerText = name + (prize ? `　（${prize}）` : '');
+  document.getElementById('resultModal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('resultModal').classList.remove('show');
+  document.getElementById('prizeInput').value = '';
+}
+
+async function resetWheel() {
+  if (!confirm('確定要清空本場所有中獎紀錄嗎？清空後所有已簽到的人都可以重新被抽中。')) return;
+  const res = await fetch('/wheel/reset', {method: 'POST'});
+  const data = await res.json();
+  if (!data.ok) { alert('重置失敗：' + (data.error || '未知錯誤')); return; }
+  await loadData();
+}
+
+loadData();
+</script>
+</body>
+</html>
