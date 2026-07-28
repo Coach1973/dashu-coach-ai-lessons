@@ -62,3 +62,7 @@ https:/
 - ✅ Cron 監控：僅健康檢查本身 1 個任務，上一輪（16:30）error 同樣為「AI service overloaded」暫時性問題（93 秒內被上游拒絕），consecutiveErrors=1 未達 3 次門檻
 - ✅ HEARTBEAT.md：無超 48 小時未動 ⬜ 項目，無新待辦
 - ✅ 無需教練裁決，安靜處理
+
+## ⚠️ peipei 自動 force-restart 2026-07-28 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
