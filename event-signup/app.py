@@ -448,11 +448,16 @@ def wheel_data():
         return {"error": "目前沒有進行中的活動"}, 404
     roster = db.get_wheel_roster(conn, event["id"])
     winners = db.get_wheel_winners(conn, event["id"])
+    prizes = db.get_wheel_prizes(conn, event["id"])
     conn.close()
     return {
         "event_name": event["name"],
         "roster": [{"id": r["id"], "name": r["name"]} for r in roster],
         "winners": [{"name": w["name"], "prize": w["prize"] or ""} for w in winners],
+        "prizes": [
+            {"id": p["id"], "name": p["name"], "remaining": p["remaining_qty"], "total": p["total_qty"]}
+            for p in prizes
+        ],
     }
 
 
@@ -462,7 +467,8 @@ def wheel_winner():
         abort(401)
     data = request.get_json(silent=True) or {}
     attendee_id = data.get("attendee_id")
-    prize = (data.get("prize") or "").strip()
+    prize_id = data.get("prize_id")
+    prize_text = (data.get("prize") or "").strip()
     if not attendee_id:
         return {"ok": False, "error": "缺少attendee_id"}, 400
     conn = db.get_conn()
@@ -470,9 +476,45 @@ def wheel_winner():
     if not event:
         conn.close()
         return {"ok": False, "error": "目前沒有進行中的活動"}, 404
-    ok = db.add_wheel_winner(conn, event["id"], attendee_id, prize)
+
+    prize_name = prize_text
+    if prize_id:
+        prize_name = db.decrement_wheel_prize(conn, prize_id)
+        if prize_name is None:
+            conn.close()
+            return {"ok": False, "error": "這個獎項已經發完了，請重新整理頁面選別的獎項"}, 409
+
+    ok = db.add_wheel_winner(conn, event["id"], attendee_id, prize_name)
     conn.close()
     return {"ok": ok}
+
+
+@app.route("/wheel/prizes/set", methods=["POST"])
+def wheel_prizes_set():
+    """整批設定目前活動的獎品清單，格式：每行「獎品名稱 數量」，例如「雲朵包 1」。"""
+    if not _logged_in():
+        abort(401)
+    conn = db.get_conn()
+    event = db.get_current_event(conn)
+    if not event:
+        conn.close()
+        return {"ok": False, "error": "目前沒有進行中的活動"}, 404
+
+    raw = (request.get_json(silent=True) or {}).get("text", "")
+    prizes = []
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.rsplit(" ", 1)
+        if len(parts) == 2 and parts[1].isdigit():
+            prizes.append((parts[0].strip(), int(parts[1])))
+        else:
+            prizes.append((line, 1))
+
+    db.set_wheel_prizes(conn, event["id"], prizes)
+    conn.close()
+    return {"ok": True, "count": len(prizes)}
 
 
 @app.route("/wheel/reset", methods=["POST"])

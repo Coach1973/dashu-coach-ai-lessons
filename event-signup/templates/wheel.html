@@ -65,8 +65,16 @@
 
     <div class="layout">
       <div class="panel side">
-        <h2>本輪獎項（選填）</h2>
-        <input type="text" id="prizeInput" class="prize-input" placeholder="例如：酸痛貼布30組">
+        <h2>本輪獎項</h2>
+        <select id="prizeSelect" class="prize-input"></select>
+        <input type="text" id="prizeInput" class="prize-input" placeholder="例如：酸痛貼布30組" style="display:none">
+        <div id="noPrizeNote" class="empty-note" style="display:none">還沒有設定獎品清單，抽到的人不會記獎項名稱</div>
+        <button class="reset-btn" onclick="togglePrizeEditor()" style="margin-bottom:16px">✏️ 設定獎品清單</button>
+        <div id="prizeEditor" style="display:none; margin-bottom:16px">
+          <textarea id="prizeEditorText" rows="6" class="prize-input" style="resize:vertical"
+            placeholder="一行一種獎品，格式：名稱 數量&#10;例如：&#10;雲朵包 1&#10;下午茶組 3"></textarea>
+          <button class="reset-btn" onclick="savePrizes()" style="color:var(--gold); border-color:var(--gold)">儲存獎品清單</button>
+        </div>
 
         <h2>已中獎名單</h2>
         <div class="roster-count" id="rosterCount">載入中…</div>
@@ -104,6 +112,7 @@ const funMessages = ["不用懷疑，就是你！👉","躲得過初一，躲不
 
 let roster = [];   // [{id, name}]
 let winners = [];  // [{name, prize}]
+let prizes = [];   // [{id, name, remaining, total}]
 let startAngle = 0;
 let arc = Math.PI * 2 / 12;
 let spinAngleStart = 10, spinTime = 0, spinTimeTotal = 0, isSpinning = false;
@@ -114,9 +123,59 @@ async function loadData() {
   const data = await res.json();
   roster = data.roster;
   winners = data.winners;
+  prizes = data.prizes;
   renderWinners();
+  renderPrizeSelect();
   drawWheel();
   updateSpinAvailability();
+}
+
+function renderPrizeSelect() {
+  const select = document.getElementById('prizeSelect');
+  const textInput = document.getElementById('prizeInput');
+  const noPrizeNote = document.getElementById('noPrizeNote');
+
+  if (prizes.length === 0) {
+    select.style.display = 'none';
+    noPrizeNote.style.display = 'block';
+    textInput.style.display = 'block';
+    return;
+  }
+  noPrizeNote.style.display = 'none';
+  select.style.display = 'block';
+  textInput.style.display = 'none';
+
+  const available = prizes.filter(p => p.remaining > 0);
+  if (available.length === 0) {
+    select.innerHTML = '<option value="">獎品都發完了</option>';
+    return;
+  }
+  select.innerHTML = available.map(p =>
+    `<option value="${p.id}">${escapeHtml(p.name)}（剩 ${p.remaining}）</option>`
+  ).join('');
+}
+
+function togglePrizeEditor() {
+  const editor = document.getElementById('prizeEditor');
+  const isShowing = editor.style.display !== 'none';
+  if (!isShowing) {
+    document.getElementById('prizeEditorText').value =
+      prizes.map(p => `${p.name} ${p.total}`).join('\n');
+  }
+  editor.style.display = isShowing ? 'none' : 'block';
+}
+
+async function savePrizes() {
+  const text = document.getElementById('prizeEditorText').value;
+  const res = await fetch('/wheel/prizes/set', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text}),
+  });
+  const data = await res.json();
+  if (!data.ok) { alert('儲存失敗：' + (data.error || '未知錯誤')); return; }
+  document.getElementById('prizeEditor').style.display = 'none';
+  await loadData();
 }
 
 function renderWinners() {
@@ -168,6 +227,10 @@ function drawWheel() {
 
 function spin() {
   if (isSpinning || roster.length === 0) return;
+  if (prizes.length > 0 && !document.getElementById('prizeSelect').value) {
+    alert('獎品都發完了，請重置或設定新的獎品清單');
+    return;
+  }
   isSpinning = true;
   updateSpinAvailability();
   spinAngleStart = Math.random() * 10 + 10;
@@ -192,19 +255,28 @@ async function stopRotateWheel() {
   const index = Math.floor((360 - degrees % 360) / arcd) % roster.length;
   const winner = roster[index];
 
-  const prize = document.getElementById('prizeInput').value.trim();
+  let payload = {attendee_id: winner.id};
+  if (prizes.length > 0) {
+    payload.prize_id = document.getElementById('prizeSelect').value;
+  } else {
+    payload.prize = document.getElementById('prizeInput').value.trim();
+  }
   const res = await fetch('/wheel/winner', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({attendee_id: winner.id, prize}),
+    body: JSON.stringify(payload),
   });
   const data = await res.json();
   if (!data.ok) {
-    alert('記錄中獎失敗，請重新整理頁面再試一次');
-    updateSpinAvailability();
+    alert(data.error || '記錄中獎失敗，請重新整理頁面再試一次');
+    isSpinning = false;
+    await loadData();
     return;
   }
-  showResult(winner.name, prize);
+  const wonPrizeName = prizes.length > 0
+    ? (prizes.find(p => String(p.id) === String(payload.prize_id))?.name || '')
+    : payload.prize;
+  showResult(winner.name, wonPrizeName);
   await loadData();
 }
 
@@ -229,6 +301,10 @@ async function resetWheel() {
 }
 
 loadData();
+
+// 有人現場簽到會即時寫進資料庫，這裡每15秒偷看一次有沒有新人，
+// 只在沒有轉動時才更新（避免正在轉的動畫被打斷、或轉到一半名單被抽換）
+setInterval(() => { if (!isSpinning) loadData(); }, 15000);
 </script>
 </body>
 </html>

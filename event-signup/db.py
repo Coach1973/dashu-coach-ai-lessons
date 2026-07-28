@@ -171,8 +171,42 @@ def add_wheel_winner(conn: sqlite3.Connection, event_id: int, attendee_id: int, 
 
 
 def clear_wheel_winners(conn: sqlite3.Connection, event_id: int) -> None:
+    """清空中獎名單，同時把獎品庫存全部復原(重置=這場重新抽，庫存也該回到滿的)。"""
     conn.execute("DELETE FROM wheel_winners WHERE event_id = ?", (event_id,))
+    conn.execute(
+        "UPDATE wheel_prizes SET remaining_qty = total_qty WHERE event_id = ?",
+        (event_id,),
+    )
     conn.commit()
+
+
+def get_wheel_prizes(conn: sqlite3.Connection, event_id: int):
+    """回傳這場活動的獎品清單，依sort_order排序。"""
+    return conn.execute(
+        "SELECT * FROM wheel_prizes WHERE event_id = ? ORDER BY sort_order, id",
+        (event_id,),
+    ).fetchall()
+
+
+def set_wheel_prizes(conn: sqlite3.Connection, event_id: int, prizes: list[tuple[str, int]]) -> None:
+    """整批設定這場活動的獎品清單(先清空舊的再寫入新的)。prizes是[(name, qty), ...]。"""
+    conn.execute("DELETE FROM wheel_prizes WHERE event_id = ?", (event_id,))
+    for i, (name, qty) in enumerate(prizes):
+        conn.execute(
+            "INSERT INTO wheel_prizes (event_id, name, total_qty, remaining_qty, sort_order) VALUES (?, ?, ?, ?, ?)",
+            (event_id, name, qty, qty, i),
+        )
+    conn.commit()
+
+
+def decrement_wheel_prize(conn: sqlite3.Connection, prize_id: int) -> str | None:
+    """扣一個庫存，回傳獎品名稱；庫存已經是0時回傳None（不能再扣）。"""
+    row = conn.execute("SELECT name, remaining_qty FROM wheel_prizes WHERE id = ?", (prize_id,)).fetchone()
+    if not row or row["remaining_qty"] <= 0:
+        return None
+    conn.execute("UPDATE wheel_prizes SET remaining_qty = remaining_qty - 1 WHERE id = ?", (prize_id,))
+    conn.commit()
+    return row["name"]
 
 
 def upsert_signup(conn: sqlite3.Connection, event_id: int, name: str, phone: str, company_title: str) -> str:

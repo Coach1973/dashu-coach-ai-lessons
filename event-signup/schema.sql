@@ -41,3 +41,13 @@ CREATE TABLE IF NOT EXISTS wheel_winners (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     UNIQUE (event_id, attendee_id)
 );
+
+-- 獎品清單：這場活動有哪些獎項、各自總數/剩餘數，轉盤下拉選單直接讀這裡，抽中自動扣庫存
+CREATE TABLE IF NOT EXISTS wheel_prizes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id INTEGER NOT NULL REFERENCES events(id),
+    name TEXT NOT NULL,
+    total_qty INTEGER NOT NULL,
+    remaining_qty INTEGER NOT NULL,
+    sort_order INTEGER NOT NULL DEFAULT 0
+);
