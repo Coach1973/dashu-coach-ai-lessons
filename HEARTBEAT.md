@@ -66,3 +66,23 @@ https:/
 ## ⚠️ peipei 自動 force-restart 2026-07-28 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 心跳 2026-07-28 18:01（傍晚）
+- ✅ Telegram 通道探針實測 ok:true
+- ⚠️ message 工具仍缺 bot token（cron-event session 限制，與 09:03 / 16:03 / 16:32 同），無法主動推送
+- ✅ JUNSHI queue 空、軍師 hook 健康
+- ✅ 16 cron 全綠（最近一次健康檢查 16:32 consecutiveErrors=1 未達門檻）
+- 🕐 教練沉默 46.2h+（自 7/26 19:51 起），18:00 屬傍晚非 quiet hours 但仍無法主動推送，待教練下次聯絡時口頭同步重啟 + 待辦
+- 📋 接力棒下一場：🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備）+ 8 項其他待辦
+
+## 🔴 健康檢查 2026-07-28 18:06（升級通知教練）
+- **連續錯誤 CE=3，達紅線**（過去 24h+ 從未連續 3 次失敗，這次模式中斷）
+- 最近 3 次 fire：
+  - 17:30 ❌（73.5s ≪ 600s timeout，minimax overloaded）
+  - 17:33 ❌（57.0s，Update Goal complete failed）
+  - 18:00 ❌（114.2s ≪ 600s timeout，minimax overloaded，當前 lastRun）
+- 自動修復規則全不適用（皆 transient overloaded）
+- ✅ **message 工具推送成功（messageId 8923）**——推翻舊記錄「cron-event session 無 Telegram bot token」，framework 已修復或 bot token 已重新注入！
+- 建議：再觀察 18:30 fire，依歷史高機率自然恢復；若仍 ❌ → CE=4 升級
+- 🕐 教練沉默 46.2h+，本次已破例推送，後續若恢復就回歸安靜模式
+- 📋 修正舊記錄：「message 工具 cron-event session 無 bot token」已不適用（2026-07-28 18:06 驗證可推送）

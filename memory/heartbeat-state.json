@@ -2,19 +2,19 @@
   "lastChecks": {
     "gmail": 1784851264,
     "calendar": 1784851264,
-    "heartbeat_poll": 1785189600,
-    "system_health": 1785189600,
-    "telegram_channel": 1785189600,
-    "junshi_queue": 1785189600,
-    "cron_list": 1785189600,
-    "care_4h": 1785189600
+    "heartbeat_poll": 1785233006,
+    "system_health": 1785233006,
+    "telegram_channel": 1785233006,
+    "junshi_queue": 1785233006,
+    "cron_list": 1785233006,
+    "care_4h": 1785233006
   },
-  "lastHeartbeat": "2026-07-28T06:03:30+08:00",
-  "lastHeartbeatNote": "週二 06:03 清晨心跳（重啟後第一次）。03:38 context overflow 自動重啟已穩定 2.5h。Telegram 通道探針實測 ok:true。16 cron 全綠（除昨晚 bbb7a348 三機總結 error 已記錄）。接力棒下一場任務 🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（軍師）。教練已 34h+ 未對話（自 7/26 19:51 起）。06:00 起床摘要 cron 4m 前已跑過但內容不含 context 重啟告知 → 本次補發重啟通知（disable_notification:true 避免打擾，message_id 8913）。",
+  "lastHeartbeat": "2026-07-28T18:03:26+08:00",
+  "lastHeartbeatNote": "週二 18:01 傍晚心跳（重啟後 14h23m 穩定）。Telegram 通道探針實測 ok:true。message 工具仍缺 bot token（與 09:03/16:03/16:32 同），無法主動推送。教練已 46.2h+ 未對話（自 7/26 19:51 起）。16 cron 全綠，JUNSHI queue 空，軍師 hook 健康。下一場待命：🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備）+ 8 項其他待辦。教練回來直接從接力棒接續。",
   "systemSnapshot": {
-    "timeOfDay": "early_morning",
+    "timeOfDay": "evening",
     "dayOfWeek": "Tuesday",
-    "isQuietHours": true,
+    "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 4,
@@ -32,8 +32,8 @@
     "gatewayUptime": "2026.6.33 重啟後穩定逾 36 小時",
     "telegramChannelOk": true,
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
-    "coachSilentSince": "2026-07-26 19:51",
-    "coachSilentHours": 34.2,
+    "coachSilentSince": "2026-07-26T19:51:00+08:00",
+    "coachSilentHours": 46.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -49,6 +49,7 @@
     "restartMessageId": 8913,
     "restartMessageQuiet": true,
     "note": "週二 06:03 清晨心跳 — 03:38 context 重啟已穩定恢復 2.5h，已發安靜版重啟通知給教練（disable_notification:true）。教練 34h+ 未對話、深夜時段不打擾。通道健康、cron 全綠。下一個主動關懷窗口為 10:00（4h 關懷 cron）。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-28T06:03:00+08:00 (getMe+getChat 實測 ok)"
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-28T06:03:00+08:00 (getMe+getChat 實測 ok)",
+    "messageToolAvailable": false
   }
 }
