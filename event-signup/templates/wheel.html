@@ -46,14 +46,22 @@
   .spin-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
   .done-note { margin-top:24px; text-align:center; color:rgba(255,255,255,.5); font-size:16px; }
 
-  .modal { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:50; }
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:50; }
   .modal.show { display:flex; }
-  .modal-box { background:#1c1c1c; border:1px solid var(--gold); border-radius:20px; padding:40px; text-align:center;
-    max-width:360px; width:90%; }
-  .modal-box h2 { font-size:22px; margin-bottom:16px; }
-  .modal-box .winner-name { font-size:36px; font-weight:900; color:var(--gold); margin:16px 0 28px; }
-  .modal-box button { background:var(--gold); color:var(--dark); font-weight:900; font-size:16px;
-    padding:12px 32px; border:none; border-radius:999px; cursor:pointer; }
+  .modal-box { background:#1c1c1c; border:2px solid var(--gold); border-radius:24px; padding:48px 32px; text-align:center;
+    max-width:480px; width:92%; }
+  .modal-box h2 { font-size:24px; margin-bottom:20px; }
+  .modal-box .winner-name { font-size:72px; font-weight:900; line-height:1.15; color:var(--gold);
+    margin:20px 0 12px; text-shadow:0 0 30px rgba(200,169,110,.6); word-break:break-word; }
+  .modal-box .winner-prize { font-size:22px; color:#fff; margin-bottom:32px; opacity:.85; }
+  .modal-box .winner-name.pop { animation: winnerPop .55s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes winnerPop {
+    0%   { transform:scale(0); opacity:0; }
+    60%  { transform:scale(1.18); opacity:1; }
+    100% { transform:scale(1); opacity:1; }
+  }
+  .modal-box button { background:var(--gold); color:var(--dark); font-weight:900; font-size:18px;
+    padding:14px 40px; border:none; border-radius:999px; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -99,6 +107,7 @@
     <div class="modal-box">
       <h2 id="resultMessage">🎉 恭喜中獎！</h2>
       <div class="winner-name" id="winnerName">－</div>
+      <div class="winner-prize" id="winnerPrize"></div>
       <button onclick="closeModal()">確定</button>
     </div>
   </div>
@@ -225,8 +234,21 @@ function drawWheel() {
   }
 }
 
-function spin() {
-  if (isSpinning || roster.length === 0) return;
+async function spin() {
+  if (isSpinning) return;
+
+  // 送出抽獎前，先問一次資料庫有沒有新簽到的人，不要背景一直輪詢——
+  // 只更新名單本身，不動獎品下拉選單（避免洗掉主持人剛選好的獎項）
+  const res = await fetch('/wheel/data');
+  if (res.ok) {
+    const data = await res.json();
+    roster = data.roster;
+    winners = data.winners;
+    renderWinners();
+    drawWheel();
+  }
+
+  if (isSpinning || roster.length === 0) { updateSpinAvailability(); return; }
   if (prizes.length > 0 && !document.getElementById('prizeSelect').value) {
     alert('獎品都發完了，請重置或設定新的獎品清單');
     return;
@@ -283,7 +305,14 @@ async function stopRotateWheel() {
 function showResult(name, prize) {
   const randomMsg = funMessages[Math.floor(Math.random() * funMessages.length)];
   document.getElementById('resultMessage').innerText = randomMsg;
-  document.getElementById('winnerName').innerText = name + (prize ? `　（${prize}）` : '');
+
+  const nameEl = document.getElementById('winnerName');
+  nameEl.innerText = name;
+  nameEl.classList.remove('pop');
+  void nameEl.offsetWidth; // 強制reflow，讓動畫每次都能重新觸發
+  nameEl.classList.add('pop');
+
+  document.getElementById('winnerPrize').innerText = prize ? `🎁 ${prize}` : '';
   document.getElementById('resultModal').classList.add('show');
 }
 
@@ -301,10 +330,6 @@ async function resetWheel() {
 }
 
 loadData();
-
-// 有人現場簽到會即時寫進資料庫，這裡每15秒偷看一次有沒有新人，
-// 只在沒有轉動時才更新（避免正在轉的動畫被打斷、或轉到一半名單被抽換）
-setInterval(() => { if (!isSpinning) loadData(); }, 15000);
 </script>
 </body>
 </html>
