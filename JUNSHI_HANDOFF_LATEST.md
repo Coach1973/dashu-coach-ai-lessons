@@ -22,7 +22,7 @@
 | 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅已完成 | 詳見v80完整戰果，三個hook都已重啟驗證+commit。會員ID對照hook本場(v81)已泛化為全LINE帳號通用，不影響原有功能 |
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
 | 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
-| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | 一直是credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。目前`state/netlify_deploy_quota.json`最新記錄剩66次(2026-07-25，聯想機序列)——Mac這棒也部署過2次(bigtree-tw/ai-talk-tw)，但發生在教練貼credit截圖查明真制度**之前**，71這個基準值本身已經是教練當下實測的真實餘額(已經反映過Mac那2次的扣減)，聯想後續3次部署往下扣到66，兩邊沒有重複計算，66可信。但這只是本地推算，下次部署前仍建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
+| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩64次(2026-07-28，ai-talk-tw報名人數更新部署後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
@@ -37,6 +37,50 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-28 v84（Mac桌面版 Sonnet 5，AI微型論壇7/29籌備衝刺：簽到系統重構+多站內容更新）
+
+> 建立時間：2026-07-27 深夜～07-28 上午（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v83（Mac桌面版Sonnet5，系統權限缺口解決+開工額度瘦身）
+> 本棒主軸：**教練密集為7/29「AI微型論壇」籌備做最後衝刺，本場處理6件獨立任務，多數當場教練實測/確認後結案。核心戰果是event-signup簽到系統重構——教練發現來賓線上報名後現場掃碼還要重填資料，設計出「手機號碼比對」新流程，免重填又保留集點功能，教練親自實測通過。另完成bymyway.com/ai/品牌頁三輪內容改版、event.bymyway.com場次資料校正、ai-talk-tw.netlify.app兩次數據更新(甜點份額、報名人數)、OCR通用工具教練驗收確認採用。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 event-signup簽到系統重構：手機號碼比對，免重填資料又保留集點功能
+教練指出`event.bymyway.com/qr/checkin-print.html`(現場簽到QR立牌)的問題：來賓在`bigtree-tw`/`ai-talk-tw`網站報名時已留過姓名/電話，現場掃碼進`/checkin`卻要整份表單重填一次，多此一舉。過程分三階段收斂：
+1. 第一版直接把QR改指向`/slides`(加好友+下載簡報，零輸入)，但教練指出這樣會失去「集滿5次活動送禮物」的簽到紀錄功能
+2. 教練提出「我的紙本簽到表本來就有手機號碼」的思路，追問是否還需要數位輸入
+3. 最終定案：`/checkin`拆成GET(手機輸入頁)+POST(比對邏輯)——輸入手機號碼比對`attendees`表，比對成功記進`signups`表(集點功能保留)+導向`/slides`顯示個人化「OOO，簽到成功」；查無資料的現場臨時來賓才導去完整表單(手機號碼已預填，只需補姓名)。用真實資料(已知電話/未知電話/格式錯誤)三種情境本機測試通過，教練實測確認採用。commit序列：`fd480212a`→`022051eba`→`0ef5ee98a`。7/29立牌已印好，QR網址沒變不用重印。
+
+### 2. 🎯🎯 bymyway.com/ai/ 品牌頁三輪內容改版
+GitHub Pages(`coach1973.github.io/bymyway-website/ai.html`)透過iframe嵌入`bymyway.com/ai/`。教練分三輪交辦：①案例清單新增「大樹小講．無話不談」、移除「AI特助案例集」「特助心法專屬頁面」兩項舊連結 ②CTA區塊文字簡化為「真實案例公開上線」，按鈕改連`coach1973.github.io/coach-case4/` ③新增「近期活動」按鈕連到大樹小講。每次改動都先用Chrome本機預覽給教練看過才推，commit `f8a7a89`，GitHub Pages約1分鐘內自動生效。
+
+### 3. 🎯 event.bymyway.com/admin 場次資料校正
+教練告知8/1場次已取消，改為8/26、9/5、9/19三場，比對`bigtree-tw.netlify.app`線上場次資料(topic/時段/地點)校正到`event.db`。確認8/1場次0人報名可安全刪除，三個新場次的`/e/<slug>`報名頁curl驗證正常顯示。同時回答教練「綁定/未綁定」判斷邏輯的疑問——查證LINE webhook原始碼確認：綁定要求來賓傳送固定格式文字「我是OOO，剛報名了」，webhook只處理`message.type=="text"`，**單純傳貼圖/表情符號不會觸發綁定**(教練原本以為表情符號算數，已當場更正)。
+
+### 4. 🎯 ai-talk-tw.netlify.app 兩次數據更新
+①甜點下午茶限量份數60→50份(兩處：入門禮段落+煦多午茶設攤卡片同步)，commit `52ff47a`；②已報名人數重新校準為88、遞增速率從「每6小時+1人」改「每3小時+2人」(教練回報現場報名超過88位)，commit `16d72b4`。部署前發現本機GitHub工作稿落後聯想機4個commit(缺現場設攤廠商卡片)，先`git pull`同步再改，避免蓋掉別台機器的成果。兩次都用Chrome本機預覽+curl驗證文字/圖片Content-Type後才推，Netlify quota紀錄同步更新(`state/netlify_deploy_quota.json`)，目前剩64次。
+
+### 5. 🎯 OCR通用工具教練驗收+使用範圍界定
+教練詢問建置OCR工具的原始動機，查證`reference_namecard_ocr_pipeline_reusable`記憶檔確認源頭(教練親自讀截圖時看錯陳慧雯→陳薏雯的真實案例)後準確回答。教練確認「之後讀圖片文字改用OCR」的方向，本場也順手釐清使用界線：**讀字→用OCR；看畫面(排版/設計判斷)→AI還是要自己看**，避免教練誤以為所有圖片任務都能靠OCR繞過。
+
+## 📋 下一場直接開工任務
+
+教練本場結束時表示「有新的Netlify的更新要做」，**但尚未說明具體內容**——會開新對話框交辦，下一場先問教練這次要更新哪個站、改什麼，不用預先假設。另外仍有queue中的舊任務：
+- **🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（v77已設計好cron事件驅動架構，方向清楚，多場未動手，優先度最高）
+- 真誠/真愛/真實AI分會願景說明書（教練仍未給細節）
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/app.py`：`/checkin`拆GET+POST、`/slides`新增`name`參數個人化、`/e/<slug>`支援`phone`預填
+- `event-signup/templates/checkin.html`：新模板，單一手機號碼欄位
+- `event-signup/make_qr.py`：`make_checkin()`新增`event_label`參數
+- `github_repos/bymyway-website/ai.html`：案例清單+CTA三輪改版
+- `github_repos/ai-talk/index.html`：甜點份數+報名人數公式
+- `state/netlify_deploy_quota.json`：本場3次部署紀錄(ai-talk-tw×3)
+- commit序列：`f8a7a89`(bymyway.com/ai) → `52ff47a`(甜點份數) → `fd480212a`→`022051eba`→`0ef5ee98a`(簽到系統) → `16d72b4`(報名人數)
 
 ---
 
@@ -78,41 +122,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-07-26 v82（Mac桌面版 Sonnet 5，結繩領導學戰報系統全功能上線+Cloudflare Token安全清理+下一場OCR工具交辦）
-
-> 建立時間：2026-07-26 傍晚（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v81（Mac終端機Sonnet5，「教練都在想什麼」LINE帳號完整搬遷上線）
-> 本棒主軸：**接手聯想機寫好的jiesheng-report程式碼，完成Mac端部署上線，過程中修好一個真bug（.env密碼雜湊被bash source吃掉導致密碼永遠登不進去），並依教練多輪追加需求把系統做完整（一次全部儲存/序號/姓名可編輯/排序/邀請人與資料提交人）。中途發現並清理2個先前seabiscuit任務遺留的Cloudflare臨時Token（安全debt清償）。尾聲教練提出Token成本疑慮，查證確認screenshot截圖真的貴，教練也回憶起namecard-db已有驗證過的PaddleOCR+MiniMax辨識管線可複用，本場對話長度已高（10+小時/30+輪）教練主動要求總結收尾，開新對話繼續做OCR通用工具。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯🎯 結繩領導學工作坊戰報系統(jiesheng-report)完整部署上線
-接手聯想機已寫好的Flask+SQLite程式碼，建venv+LaunchAgent(`com.coach.jiesheng-webapp.plist`)常駐port 5063(原建議5061跟既有peipei-event撞了)，Cloudflare Route(CLI+臨時API Token比照seabiscuit做法，用完即刪)接上`rpl-workshop.bymyway.com`。過程順手清掉2個seabiscuit任務遺留、忘記刪除的Cloudflare臨時API Token(安全debt清償)。
-
-### 2. 🔴🔴🔴 真bug：.env密碼雜湊被bash source吃掉，密碼永遠登不進去
-教練實測登入失敗、給出真實密碼(42710762)要我確認，本機雜湊比對(不經過網頁登入表單)發現密碼雜湊值裡的`$`符號被LaunchAgent的`bash -c "source .env"`當成shell變數展開吃掉一截。修復：`.env`裡含`$`的值一律加單引號。這條試金石早有記錄（[[feedback_settings_hook_verify]]附近文件曾提過.env含$要加引號）但這次是真的踩到才發現新專案沒套用到，教訓已寫進[[project_jiesheng_report_launch_2026-07-26]]。
-
-### 3. 🎯🎯 歷史資料匯入15筆(台南4/台中1/台北10)
-教練提供4張報名截圖(3張分場+1張金流總表)，交叉比對姓名+日期，台北10筆裡8筆有精確付款日期(比對金流總表)、2筆無金流紀錄的(含教練指定的「沒有金流的都標6/29」規則)。教練事後親自登入系統新增1筆(邱于騰)+修改1筆(林俊瑋改已繳費)，證實系統正常運作。
-
-### 4. 🎯🎯🎯 教練多輪追加需求，系統做到「一次全部儲存」
-教練反映「改一個欄位就要按一次儲存」太繁瑣，整個table改成單一表單設計，底部一個「💾全部儲存」按鈕一次送出所有列的變動；刪除維持各自獨立按鈕(不受影響)。另加序號欄#、姓名改可編輯(教練舉例「李俊國」打錯成「林俊偉」的情境)、排序改依報名日期(舊到新，最新報名排最下面)、新增「資料提交人」欄位(同帳號共用登入，用這欄記錄誰實際操作，四選一曜董/大樹/佩君/Lavi)、新增表單直接支援金流欄位(已繳費/繳費方式/金額，一次到位不用事後補)。標題「後台」字樣依教練指示全數移除，只留「即時戰報」。全部功能均用真實瀏覽器互動測試(非DOM操作)驗證通過。
-
-### 5. 🎯 Token成本意識+找到更好的圖片辨識方案
-教練發現本場截圖近40張，質疑Token消耗，查證後誠實回報「無法給精確Token數字」（沒有即時計數器）。教練指示「智慧地截圖」——同批功能改完再截一次，不要每改一處截一次，已寫入[[feedback_screenshot_rules_consolidated]]。教練接著提出用Hermes/MiniMax做圖片辨識省Token的構想，查證MiniMax-M3確實支援原生視覺輸入，但更進一步教練想起`namecard-db`已有驗證過、比直接視覺辨識更準的**PaddleOCR+MiniMax兩階段管線**(本機OCR免費+MiniMax不限流量整理成JSON，零Token成本)，已寫入[[reference_namecard_ocr_pipeline_reusable]]。
-
-## 📋 下一場直接開工任務（教練已交辦，方向清楚不用再問）
-
-**把`namecard-db/extract.py`的兩階段OCR管線抽成通用小工具**，不綁死名片欄位，讓「讀圖片建檔」這類任務都能複用（不用AI自己盯圖片瞇眼看，且免費/不耗Token）。
-- 核心參考：`namecard-db/extract.py`的`extract_card_fields()`函式（PaddleOCR→MiniMax兩階段）、`paddle_extract.py`（獨立Python3.11環境跑PaddleOCR的子行程）
-- `.env`裡已有`ANTHROPIC_API_KEY`/`ANTHROPIC_BASE_URL`(指向MiniMax端點)/`NAMECARD_MODEL`設定可直接沿用
-- 設計方向：把SYSTEM_PROMPT參數化（不寫死名片JSON schema），讓呼叫端可以傳入「這次要辨識什麼欄位」
-- 下一場直接讀[[reference_namecard_ocr_pipeline_reusable]]這份記憶+上述兩支程式碼即可開工，不用重新查證能力/找檔案
-
-
----
-
-> 📦 **v81及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`
+> 📦 **v82及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v83/v82)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新2棒(v84/v83)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
