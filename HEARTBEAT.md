@@ -32,3 +32,13 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-28 09:15:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+- 雲端同步：✅ 已推上雲端（commit 22df8a4b1）
+
+## 🩺 軍師 Hook 自檢 2026-07-28 10:50（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+我要更新報名連結
+
+https:/
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: dfdc781a-3a1d-47bd-a45c-cea2785d5a3a
