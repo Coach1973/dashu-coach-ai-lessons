@@ -47,3 +47,13 @@ https:/
 - ✅ 同步成功
 - HANDOFF mtime: 1785206863
 - 雲端同步：✅ 已推上雲端（commit c22b24025）
+
+## 🩺 健康檢查 2026-07-28 14:32（cron 自動）
+- ✅ Cron 監控：僅本機 1 個任務（健康檢查本身），上次 error 為「AI service overloaded」暫時性問題，consecutiveErrors=1 未達 3 次門檻
+- ✅ HEARTBEAT.md：無超 48 小時未動 ⬜ 項目
+- ✅ 無需教練裁決，安靜處理
+
+## 🩺 健康檢查 2026-07-28 16:03（cron 自動）
+- ✅ Cron 監控：僅健康檢查本身 1 個任務，上次 error 同樣為「AI service overloaded」暫時性問題，consecutiveErrors=1 未達 3 次門檻
+- ✅ HEARTBEAT.md：無超 48 小時未動 ⬜ 項目，無新待辦
+- ✅ 無需教練裁決，安靜處理
