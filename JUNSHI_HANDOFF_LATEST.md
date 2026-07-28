@@ -6,6 +6,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **Email自動發送系統** | 🔒卡住-等教練給細節 | 2026-07-28教練提出下一個任務方向，僅先記錄，教練尚未說明要發什麼內容/給誰/觸發時機(定期報表？表單提交後自動回信？行銷群發？)，下一場先問清楚用途再評估技術方案(SMTP/SendGrid/Gmail API等) |
+| 🟢 | **event-signup抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤** | ✅v85已完成，教練實測確認 | 詳見下方v85完整戰果。名單直接查簽到記錄不用手動輸入、獎品清單(教練自訂文字框隨時增減)+抽中自動扣庫存+庫存0自動從選單消失、中獎彈窗放大加彈跳動畫+15句趣味台詞、教練糾正15秒輪詢改成按旋轉鍵當下才查詢最新名單。commit序列見v85段落 |
 | 🟢 | 「教練都在想什麼」LINE帳號完整搬遷到Mac+MiniMax-M3 | ✅本場已完成 | 詳見下方v81完整戰果。人設逐字搬遷+46萬字知識庫+FTS5全文檢索+webhook正式上線服務121位好友+dmPolicy修復+seabiscuit.bymyway.com監控後台+User ID對照hook泛化。教練待自行測試seabiscuit.bymyway.com登入(密碼Bymyway7，第一次會卡裝置配對，把畫面ID給軍師) |
 | 🟡 | 「教練都在想什麼」案例庫深度待擴充 | ⏳待教練提供更多素材 | 目前只有教練提供的4份文件(大樹使命之旅/禮物諮詢法/海餅乾文化核心逐字稿/海餅乾語錄，共46萬字)，教練原話「提供更多資料庫讓AI做更大的品牌宣傳」——若教練還有其他素材(更多逐字稿/文章/Podcast)，補進`agents/jiaolian_thoughts/knowledge/`後跑一次`python3 scripts/build_search_index.py`重建索引即可 |
 | 🟡 | 教練其他類似LINE帳號待比照搬遷 | ⏳待教練指定下一個帳號 | 教練原話「我還有其他類似的帳號也要這麼做」，已產出完整SOP：`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，下次教練指定帳號直接照SOP 12步驟走，不用重新摸索 |
@@ -37,6 +39,98 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-28 v85（Mac桌面版 Sonnet 5，抽獎轉盤上線+付款連結批次更新+新任務登記）
+
+> 建立時間：2026-07-28 下午～晚間（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v84（Mac桌面版Sonnet5，AI微型論壇籌備衝刺：簽到系統重構+多站更新）
+> 本棒主軸：**教練開場交辦結繩領導學工作坊4站付款連結批次更新(從Google表單/pse.is短網址統一換成PayUNi直連)，接著教練提出想法：看到一個現成轉盤小程式，希望串接event-signup簽到系統做成現場抽獎工具，省去人工輸入名單。當場評估可行性後動手做，過程中連續處理教練多輪細節回饋(HTML預覽跳出方式/瀏覽器ERR_UNSAFE_PORT/獎品庫存追蹤/中獎彈窗戲劇效果/趣味台詞)，其中最重要的一次糾正是「15秒輪詢查簽到名單」又踩到教練已經講過4次的「事件驅動優於輪詢」同一個坑，這是第5次發作，已修正為「按旋轉鍵當下才查詢」並更新對應記憶檔強化教訓。收工前教練提出下一個任務方向「Email自動發送系統」，先記錄不動手。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 結繩領導學工作坊4站付款連結批次換成PayUNi直連
+教練給定台南/台中/台北3組新付款連結，起初是Netlify轉址短網址(pse.is)，過程中教練發現pse.is
+轉址頁顯示的「讀者優惠日期」是舊資訊，要求改用PayUNi的`receive_info`直連網址(3組長網址)。
+範圍先問清楚(教練指定workshop-richard/workshop-lavi/workshop-peipei三站要換，加上原本
+已上線pse.is版本的workshop-invite一併更新成PayUNi版，bni-invite/bni-peipei兩站不動)，
+再問清楚3個新連結對應台南/台中/台北的順序(照原順序)。本機Chrome預覽經教練確認後4站分次
+部署(間隔40秒避免token鎖定)，部署後curl驗證新連結生效+舊連結清除+圖片Content-Type正常。
+順手更新`ai-talk-tw.netlify.app`贊助人清單新增第12/13位(教練指定)並補上1-13編號。
+Netlify quota同步扣5次部署(64→59)。commit `f03d356cf`(4站PayUNi連結)、`7f7225a5d`
+(贊助人清單)。
+
+### 2. 🔴🔴🔴 event-signup新增抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤
+教練提出構想：有一個現成轉盤小程式(`tourmaline-panda-82be5e.netlify.app`，GitHub自動部署型，
+直接clone原始碼比教練貼過來省token)，想串接既有數位簽到系統，簽到的人自動成為轉盤名單，
+省去人工輸入。評估可行性後直接動手：
+- `schema.sql`新增`wheel_winners`(記錄本場中獎者防重複抽中)、`wheel_prizes`(獎品清單+
+  總數/剩餘數)兩張表
+- `app.py`新增`/wheel`(頁面)、`/wheel/data`、`/wheel/winner`、`/wheel/reset`、
+  `/wheel/prizes/set`路由，沿用`/admin`既有session登入保護
+- `wheel.html`：canvas手繪轉盤(邏輯取自tourmaline-panda)，名單改為即時查詢簽到記錄
+  (不用手動輸入)；「本輪獎項」從自由輸入文字改成下拉選單(顯示剩餘數量)，抽中自動扣庫存，
+  發完自動從選單消失；新增「設定獎品清單」小工具(教練自己隨時用文字框增減獎項，不用碰程式碼)；
+  中獎彈窗放大到72px字體+彈跳動畫，戲劇效果更強；15句趣味中獎台詞(教練給4個梗：樂透/閃電/
+  相親一次中/驗孕棒兩條槓，延伸創作到15句隨機播放)
+- 已幫教練把明天正式獎品清單建進資料庫：雲朵包1、下午茶組3、迷你水杯5、杯套3、洗髮組1、
+  手工皂1，共14份
+- 用Flask test_client完整測試全流程(抓名單/標記中獎/防重複中獎/扣庫存/庫存0時擋掉/
+  重置復原庫存+名單)，全部通過，測試資料已清空不影響明天正式使用
+
+**過程中的教訓**：
+- **教練要求「你要直接跳出來給我」**——不要叫教練自己切視窗/自己打網址驗證，AI能自我驗證的
+  就自己做完再回報，這次改用Flask test_client模擬登入session產生真實資料的靜態快照，
+  用真正Google Chrome開給教練看(內建無頭瀏覽器截圖只能自己除錯用，不能取代教練親眼看)
+- **ERR_UNSAFE_PORT**：教練連`127.0.0.1:5060`出現「無法連上」，一開始誤判是網路問題，
+  查證後發現是瀏覽器對SIP協議常用埠(5060等)內建安全黑名單直接擋掉，跟服務本身是否正常
+  無關。已寫入`reference_browser_unsafe_port_5060`記憶檔，以後架本機測試服務要避開這類埠號
+- **🔴🔴🔴 15秒輪詢，第5次踩「事件驅動優於輪詢」同一個坑**：第一版設計成前端JS每15秒
+  `setInterval`自動查詢有沒有新簽到，教練直接點破「一場活動四五個小時要掃描多少次，浪費
+  資源」，並指出這是重複提醒很多次的問題。改法是教練親自提出的：把查詢動作掛在「按下開始
+  旋轉」這個使用者操作的當下才做一次，完全不需要背景計時器。已更新
+  `feedback_event_driven_not_polling_pattern`記憶檔，明確記錄「前端UI的setInterval跟後端
+  排程輪詢是同一個坑，不分前後端」，避免下次又用「這是前端dashboard常見寫法」自我說服
+
+commit序列：`aae07796f`(新增/wheel功能主體) → 中獎彈窗放大+移除輪詢改按需查詢(尚未commit，
+下一動作立即補上) → `543ca4ec3`(15句趣味台詞)。
+
+### 3. 🔴🔒 瀏覽器不安全埠攔截升級成確定性Hook(不只是記憶)
+教練要求：「不要每次都要我說『記得跳HTML』然後結果無法顯示網頁，把它寫進SOP。」新增
+PreToolUse hook `scripts/unsafe_port_check.sh`：偵測`open -a "Google Chrome"`/`start chrome`
+真的執行指向本機黑名單埠(如5060)時直接攔截，提醒改用對外網址或換安全埠。第一版寫完立刻
+自打臉——commit訊息描述這支hook自己時同時含有觸發文字，被自己誤判攔下2次，修正後仿照
+`netlify_deploy_guard.sh`加白名單+要求真實指令位置才算數，6種情境測試通過。已註冊進
+`~/.claude/settings.json`。commit `cb3ff2c12`。
+
+### 4. 🎯 下一個任務登記：Email自動發送系統
+教練收工前提出「我有下一個任務，是想要做一個email自動發送系統，你先記錄下來」——僅先記錄
+方向，教練尚未說明具體用途(报表？表單提交自動回信？行銷群發？)，下一場開工先問清楚場景
+再評估技術方案，不預先假設架構。
+
+## 📋 下一場直接開工任務
+
+- **Email自動發送系統**：教練只給了方向，還沒給細節，下一場先問清楚「要發什麼、給誰、
+  什麼時候發」，用守則#16好問句工具箱釐清後再評估技術方案
+- **🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（v77已設計好cron事件驅動架構，方向清楚，
+  已多場未動手，優先度持續最高）
+- 真誠/真愛/真實AI分會願景說明書（教練仍未給細節）
+- 明天(7/29) AI微型論壇現場實際使用抽獎轉盤，若教練現場回報任何問題，優先處理
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/schema.sql`：新增`wheel_winners`/`wheel_prizes`兩張表
+- `event-signup/db.py`：新增`get_wheel_roster`/`add_wheel_winner`/`get_wheel_prizes`/
+  `set_wheel_prizes`/`decrement_wheel_prize`/`clear_wheel_winners`(含復原庫存)
+- `event-signup/app.py`：新增`/wheel`、`/wheel/data`、`/wheel/winner`、`/wheel/reset`、
+  `/wheel/prizes/set`
+- `event-signup/templates/wheel.html`：轉盤主頁面，獎品下拉選單+設定小工具+中獎動畫+
+  15句趣味台詞
+- `github_repos/ai-talk/index.html`：贊助人清單12/13編號
+- `state/netlify_deploy_quota.json`：本場5次部署紀錄
+- commit序列：`f03d356cf`(PayUNi連結) → `7f7225a5d`(贊助人清單) → `aae07796f`(轉盤獎品庫存) →
+  `543ca4ec3`(趣味台詞)
 
 ---
 
