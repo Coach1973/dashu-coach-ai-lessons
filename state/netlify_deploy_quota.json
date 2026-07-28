@@ -2,7 +2,7 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-07-28",
-  "quota_remaining": 64,
+  "quota_remaining": 60,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
     {"name": "Personal plan credits", "remaining": 924.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 61},
@@ -10,6 +10,34 @@
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-07-28",
+      "site": "workshop-invite",
+      "deploy_id": "6a6825810035f007b379",
+      "change": "結繩領導學工作坊報名頁付款連結：舊pse.is短網址(顯示過期優惠日期)換成PayUNi直連連結，台南/台中/台北3組",
+      "remaining_after": 60
+    },
+    {
+      "date": "2026-07-28",
+      "site": "workshop-peipei",
+      "deploy_id": "6a6825518608b4977ad5",
+      "change": "結繩領導學工作坊報名頁付款連結：Google表單舊連結換成PayUNi直連連結，台南/台中/台北3組",
+      "remaining_after": 61
+    },
+    {
+      "date": "2026-07-28",
+      "site": "workshop-lavi",
+      "deploy_id": "6a6824d0cc83a0b0c404",
+      "change": "結繩領導學工作坊報名頁付款連結：Google表單舊連結換成PayUNi直連連結，台南/台中/台北3組",
+      "remaining_after": 62
+    },
+    {
+      "date": "2026-07-28",
+      "site": "workshop-richard",
+      "deploy_id": "6a68249d3931cc9fc796",
+      "change": "結繩領導學工作坊報名頁付款連結：Google表單舊連結換成PayUNi直連連結，台南/台中/台北3組",
+      "remaining_after": 63
+    },
     {
       "date": "2026-07-28",
       "site": "ai-talk-tw",
