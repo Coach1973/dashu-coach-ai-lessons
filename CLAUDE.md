@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-28 19:10:29**
+> **最後同步：2026-07-28 19:15:34**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -109,7 +109,15 @@ Netlify quota同步扣5次部署(64→59)。commit `f03d356cf`(4站PayUNi連結)
 commit序列：`aae07796f`(新增/wheel功能主體) → 中獎彈窗放大+移除輪詢改按需查詢(尚未commit，
 下一動作立即補上) → `543ca4ec3`(15句趣味台詞)。
 
-### 3. 🎯 下一個任務登記：Email自動發送系統
+### 3. 🔴🔒 瀏覽器不安全埠攔截升級成確定性Hook(不只是記憶)
+教練要求：「不要每次都要我說『記得跳HTML』然後結果無法顯示網頁，把它寫進SOP。」新增
+PreToolUse hook `scripts/unsafe_port_check.sh`：偵測`open -a "Google Chrome"`/`start chrome`
+真的執行指向本機黑名單埠(如5060)時直接攔截，提醒改用對外網址或換安全埠。第一版寫完立刻
+自打臉——commit訊息描述這支hook自己時同時含有觸發文字，被自己誤判攔下2次，修正後仿照
+`netlify_deploy_guard.sh`加白名單+要求真實指令位置才算數，6種情境測試通過。已註冊進
+`~/.claude/settings.json`。commit `cb3ff2c12`。
+
+### 4. 🎯 下一個任務登記：Email自動發送系統
 教練收工前提出「我有下一個任務，是想要做一個email自動發送系統，你先記錄下來」——僅先記錄
 方向，教練尚未說明具體用途(报表？表單提交自動回信？行銷群發？)，下一場開工先問清楚場景
 再評估技術方案，不預先假設架構。
