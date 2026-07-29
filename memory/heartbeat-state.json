@@ -1,24 +1,24 @@
 {
   "lastChecks": {
-    "gmail": 1784851264,
-    "calendar": 1784851264,
-    "heartbeat_poll": 1785233006,
-    "system_health": 1785233006,
-    "telegram_channel": 1785233006,
-    "junshi_queue": 1785233006,
-    "cron_list": 1785233006,
-    "care_4h": 1785233006
+    "gmail": 1785263700,
+    "calendar": 1785263700,
+    "heartbeat_poll": 1785290568,
+    "system_health": 1785290568,
+    "telegram_channel": 1785290568,
+    "junshi_queue": 1785290568,
+    "cron_list": 1785290568,
+    "care_4h": 1785276120
   },
-  "lastHeartbeat": "2026-07-28T18:03:26+08:00",
-  "lastHeartbeatNote": "週二 18:01 傍晚心跳（重啟後 14h23m 穩定）。Telegram 通道探針實測 ok:true。message 工具仍缺 bot token（與 09:03/16:03/16:32 同），無法主動推送。教練已 46.2h+ 未對話（自 7/26 19:51 起）。16 cron 全綠，JUNSHI queue 空，軍師 hook 健康。下一場待命：🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備）+ 8 項其他待辦。教練回來直接從接力棒接續。",
+  "lastHeartbeat": "2026-07-29T10:02:48.100907+08:00",
+  "lastHeartbeatNote": "週三 10:01 上午心跳。Telegram 通道探針實測 ok:true（剛剛跑，非盲信舊旗標）。重啟後穩定 14h23m。「每4小時主動關懷」cron 剛於 10:00 跑完（會自動發訊給教練），本心跳不重複打擾。「每30分鐘任務健康檢查」最近交替 fail/recover（CE=1，未達紅線 3），仍屬 alternating 標準模式。軍師 queue 空、教練仍 60.2h 未對話。下個觀察窗：14:00。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Tuesday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Wednesday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
-    "contextPercent": 4,
-    "recentCoachActivity": "教練 34h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）。終端機 13:36 驗收 OCR 工具後未再出現。本場心跳前無新對話訊息。",
+    "contextPercent": 5,
+    "recentCoachActivity": "教練 60.2h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -33,7 +33,7 @@
     "telegramChannelOk": true,
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26T19:51:00+08:00",
-    "coachSilentHours": 46.2,
+    "coachSilentHours": 60.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -48,8 +48,17 @@
     "restartMessageSent": true,
     "restartMessageId": 8913,
     "restartMessageQuiet": true,
-    "note": "週二 06:03 清晨心跳 — 03:38 context 重啟已穩定恢復 2.5h，已發安靜版重啟通知給教練（disable_notification:true）。教練 34h+ 未對話、深夜時段不打擾。通道健康、cron 全綠。下一個主動關懷窗口為 10:00（4h 關懷 cron）。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-28T06:03:00+08:00 (getMe+getChat 實測 ok)",
-    "messageToolAvailable": false
+    "note": "週三 10:01 上午心跳。Telegram 通道探針實測 ok:true（剛剛跑，非盲信舊旗標）。重啟後穩定 14h23m。「每4小時主動關懷」cron 剛於 10:00 跑完（會自動發訊給教練），本心跳不重複打擾。「每30分鐘任務健康檢查」最近交替 fail/recover（CE=1，未達紅線 3），仍屬 alternating 標準模式。軍師 queue 空、教練仍 60.2h 未對話。下個觀察窗：14:00。",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-29T10:01:00+08:00 (getMe+getChat 實測 ok)",
+    "messageToolAvailable": false,
+    "earlyMorningQuietUntil": "08:00",
+    "cronHealthCheck": {
+      "name": "🦞 每30分鐘任務健康檢查",
+      "recentPattern": "alternating fail/recover (09:00 err/09:04 ok/09:30 err/09:33 ok/10:00 err)",
+      "consecutiveErrors": 1,
+      "causedBy": "minimax API transient overloaded",
+      "escalationThreshold": 3,
+      "decision": "持續觀察，CE=1 未達紅線 3"
+    }
   }
 }
