@@ -50,42 +50,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-07-17)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:21:24 -->
-- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:21-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:25:28 -->
-- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:25-28]
-
-## Promoted From Short-Term Memory (2026-07-18)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:5:8 -->
-- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:5-8]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-07.md:9:12 -->
-- 📨 對話記錄 02:47（共約 62 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-07.md:9-12]
-
-## Promoted From Short-Term Memory (2026-07-19)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-09.md:284:287 -->
-- 📨 對話記錄 10:48（共約 11 條，從第 0 行起）: 👤 教練：可以去信箱幫我查看信件嗎？ 🦞 小龍蝦：教練，我去信箱看看。先查收件匣最近 7 天的信。 🦞 小龍蝦：教練，我整理一下信箱給您看。我先把幾封重要的打開看詳細內容（桂田酒店 15,000 付款、Apple 訂閱到期、BNI 真誠分會會議），其它的先列清單。 🦞 小龍蝦：教練，我看完信箱了。整理一份重要信件給您： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-09.md:284-287]
-
-## Promoted From Short-Term Memory (2026-07-21)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-10.md:256:258 -->
-- 📨 對話記錄 08:18（共約 2 條，從第 0 行起）: 👤 教練：https://ai-coding.wiselychen.com/openclaw-architecture-deep-dive-context-memory-token-crusher/ 研究一下這篇文章，看看我們的系統有沒有需要完善的。也就是說，有沒有哪裡可以做得更好、哪些是可以少做一點的，或者是可以更加精簡、更加有智慧的？ 總之，請深度剖析一下那篇文章，然後看看我們還有什麼差異。 🦞 小龍蝦：開工。先抓文章 + 讀接力棒 + 看 knowledges 跟 memory 脈絡，並行跑。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-10.md:256-258]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-11.md:5:8 -->
-- 12:03 蒸餾檢查: 指令來源:cron 961021a7-6536-4075-ab2a-af4596b6e246(每2小時增量記憶蒸餾); 執行結果:NO_NEW_ENTRIES(0 個有效紀錄); 處理:本次無新對話紀錄需蒸餾,任務結束; CLIENT_PROFILE.md:未更新(無新內容) [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-11.md:5-8]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:11:12 -->
-- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: Current time: Sunday, July 12th, 2026 - 12:00 AM (Asia/Taipei) Reference UTC: 2026-07-11 16:00 UTC [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:11-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:5:5 -->
-- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:7:10 -->
-- 📨 對話記錄 00:18（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-12.md:7-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:280:280 -->
-- 📨 對話記錄 08:18（共約 18 條，從第 0 行起）: 👤 教練：[cron:28cd69d9-b911-4112-b4ca-5499cb7f5247 📦 每週記憶檔自動蒸餾（>30KB 直接處理）] 你是記憶檔自動蒸餾助理，**自己動手做完**，不要叫教練做事。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-12.md:280-280]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-12.md:283:285 -->
-- 📨 對話記錄 08:18（共約 18 條，從第 0 行起）: 執行 `ls -la ~/.openclaw/workspace/memory/*.md`，找出檔案大小超過 30720 bytes（30KB）的 memory 檔案; 若全部都 < 30KB，**靜默結束**（不通知教練）; 對每個過大的檔案，自動執行以下蒸餾流程： [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-12.md:283-285]
-
 ## Promoted From Short-Term Memory (2026-07-26)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-17.md:282:282 -->
@@ -108,3 +72,14 @@
 - 📮 軍師任務派遣（2026-07-20 教練原話）: > 「你寫一封信給蘋果電腦的軍師，問他一下這個問題怎麼解決？」 → 小龍蝦派出 Task ID `20260720-084757` 給軍師，要求用 `claude -p` 執行、SSH 到 VPS（密碼見路徑大全）、找出 73 天停止的真因，再回 Telegram 給教練。小龍蝦這邊會自動讀 `state/JUNSHI_TASK_RESULT` 結果。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:756-777]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:686:719 -->
 - 💡 心好公益平台業務模式（杉榕陳 trial-8626705510，2026-07-20）: 杉榕陳的業務是 **心好公益平台**（heartgood.lovable.app），口號是「**您消費，我捐錢**」。7/4 那 17 張圖不是教材，而是**教店家導入這套銷售模式的整套行銷視覺系統**（立牌設計 / 玻璃門 LOGO + QR Code / 屋頂招牌 / 合作夥伴合影 SOP 等 4 條主線）。7/14 Esther 21 張圖則是 **安東尼·羅賓「21 步驟公眾銷售演說成交術」**（5 大區塊：開場 → 鋪墊 → 痛點 → 解方 → 成交；三條成交曲線：情緒、信任、價值）。已存到 VPS workspace 供教練參考。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:686-719]
+
+## Promoted From Short-Term Memory (2026-07-29)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:13:16 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:13-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:18:19 -->
+- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:18-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:5:5 -->
+- 📨 對話記錄 00:50（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:9:9 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:9-9]
