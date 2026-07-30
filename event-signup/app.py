@@ -143,6 +143,7 @@ def slides_landing():
     直接掃簡報QR進來（原本流程）不會帶這個參數，維持原本「感謝聆聽」文字。"""
     conn = db.get_conn()
     fname = _resolve_current_slide(conn)
+    event = db.get_current_event(conn)
     conn.close()
 
     name = (request.args.get("name") or "").strip()
@@ -154,6 +155,14 @@ def slides_landing():
     )
 
     add_friend_url = f"https://line.me/R/ti/p/{LINE_OA_ID}"
+    # 2026-07-29教練發現：現場簽到的人綁定率遠低於線上報名的人（56簽到只有12綁定），
+    # 原因是這裡原本只給普通加好友連結，要來賓自己手動打「我是OOO，剛報名了XXX」才會綁定，
+    # 而/e/<slug>/thanks頁面（線上報名走的那頁）早就有幫忙打好問候語的greet_url。
+    # 這裡補上同一套邏輯，讓現場簽到的人也能一鍵完成綁定。
+    if name and event:
+        greet_text = f"我是{name}，剛報名了{event['name']}"
+        add_friend_url = f"https://line.me/R/oaMessage/{LINE_OA_ID}/?{quote(greet_text)}"
+
     return render_template(
         "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname), name=name,
         download_url=url_for("slides_download") if fname else None,

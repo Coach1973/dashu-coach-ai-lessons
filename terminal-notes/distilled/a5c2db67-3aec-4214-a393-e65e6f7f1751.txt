@@ -1,0 +1,66 @@
+# 終端機對話萃取 — Session a5c2db67-3aec-4214-a393-e65e6f7f1751
+# 提取時間：2026-07-30 13:21 (台灣時間)
+# 共 3 條教練原話
+
+---
+
+【教練 2026-07-30 05:05】
+我要修改《結繩領導學》的後臺系統。https://rpl-workshop.bymyway.com/ 
+因為這個系統目前還沒有收錄在我們的作品一覽表當中，所以我貼網址給你，你可能要幫我放到《大樹教練作品一覽表》裡面。
+
+那我要修改什麼地方呢？
+
+我要新增欄位，叫做「損益平衡點」。
+
+接下來，請你幫我新增臺北、臺中、臺南的損益平衡點。
+台北12位
+台中：8位
+台南：21位
+
+　▶ AI 回應：教練這兩件事我看懂了。開始動手：①在結繩領導學戰報系統（`jiesheng-report`，就是 rpl-workshop.bymyway.com 這個後台）新增「損益平衡點」欄位，台北12/台中8/台南21；②把這個後台網址加進《大樹AI作品總覽》（coach888）的「後臺系統」分類。我先改程式碼。
+
+　▶ AI 回應：Now let's move to the second part — adding the backend URL to the portfolio page.
+
+　▶ AI 回應：Both changes verified working. Now committing per E01 (承諾當場commit).
+
+　▶ AI 回應：Now push both — workspace repo and coach888.
+
+　▶ AI 回應：兩件事都完成了，附上憑證：
+
+**1. 損益平衡點欄位**（`jiesheng-report`，rpl-workshop.bymyway.com）
+- 台南21人 / 台中8人 / 台北12人，已寫進 `app.py` 的 `WORKSHOP_BREAKEVEN`，顯示在每個城市卡片上，達成用綠字、未達成用紅字
+- 服務已重啟並用測試資料驗證三個數字正確渲染，網址也已回應正常
+- commit [`54ec6033d`](https://github.com/Coach1973/mac-openclaw-workflows/commit/54ec6033d)
+
+**2. 補收錄進《大樹AI作品…（略）
+
+【教練 2026-07-30 05:15】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/jiesheng-report/templates/admin.html、/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Google Chrome 開好兩個畫面，教練可以直接看：
+
+1. **rpl-workshop 損益平衡點效果**（用測試資料生成的靜態快照，因為真實登入密碼我不經手）→ `/tmp/jiesheng_admin_preview.html`，可以看到台南21人/台中8人/台北12人都正確顯示在卡片上
+2. **作品總覽新增項目** → `https://coach1973.github.io/coach888/`，「後臺系統」分類已多出「結繩領導學戰報系統」第7項
+
+真實線上版（rpl-workshop.bymyway.com/admin，密碼是公司統編）教練方便的話也麻煩親自登入看一…（略）
+
+【教練 2026-07-30 05:16】
+OK
+
+　▶ AI 回應：收到，這兩項就這樣定案了。有其他需要再叫我。
