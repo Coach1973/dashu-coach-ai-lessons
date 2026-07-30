@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯🎯🎯 BNI Connect官方網站後台操作能力驗證，教練理念「動嘴讓AI做事」重要進度(2026-07-31)](project_bni_connect_backend_access_verified_2026-07-31.md) — claude-in-chrome連上教練真實Chrome、DOM純文字操作不截圖；換機器要重新登入+裝擴充功能，方法已共用但登入狀態per機器
+- [🔧 BNI Connect CMS後台網站ID索引+存取方法(2026-07-31)](reference_bni_connect_cms_structure.md) — 大台南南區12261+5分會ID列表，真誠分會有重複記錄待處理，正確分會名是「真AI」非「真實AI」
 - [🔒 瀏覽器不安全埠(如5060)已升級成PreToolUse Hook攔截，非僅記憶(2026-07-28)](reference_browser_unsafe_port_5060.md) — open Chrome前先擋黑名單埠，教練要求別再靠提醒；同場見[[feedback_html_preview_chrome_only]]第8次犯
 - [🎯🎯 結繩領導學工作坊戰報系統(jiesheng-report)上線rpl-workshop.bymyway.com(2026-07-26)](project_jiesheng_report_launch_2026-07-26.md) — 帳號RPL(大寫)+全部儲存一次搞定+邀請人/資料提交人四選一；.env含$符號要單引號否則密碼被bash吃掉
 - [🔧 名片辨識系統(namecard-db)的PaddleOCR+MiniMax兩階段管線可複用於任何讀圖辨識場景(2026-07-26)](reference_namecard_ocr_pipeline_reusable.md) — 已驗證比AI直接看圖準確、零Token成本，下次「讀截圖建檔」任務優先用這套不要自己瞇眼看
