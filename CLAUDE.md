@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-30 23:40:41**
+> **最後同步：2026-07-30 23:45:49**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -37,7 +37,8 @@
 | 🟢 | 開工六步驟+MEMORY.md額度瘦身 | ✅v83已完成 | 教練要求評估「開工」占用多少KB(對應1M上限)。實測發現workspace/CLAUDE.md已自動鏡像接力棒全文，六步驟hook卻又重複cat一次；另有claude-sessions/死code(18天未更新)。已修復：接力棒改「確認同步新鮮度才決定貼短版或全文」的安全網設計(不冒漏接風險)、砍死code、試金石3→2案例、memory最新日改尾端6000字。單次注入實測49,593→20,588 bytes(降58%)。MEMORY.md索引退休7條已解決舊專案記憶(31.5KB→30KB)。commit `e9144daf8`+`12e7b6b54` |
 | 🟢 | bni_tainan行事曆同步cron實際上從未存在過，已修復 | ✅已完成 | 查證發現v75紀錄的cron job 99bdac4a 在 cron list 裡根本查無此ID，行事曆檔案卡在40+小時沒更新。新建 cron `7048432e`（每4小時，已修好delivery歧義設定），手動觸發驗證 exitCode 0 + 檔案內容確實更新 |
 | 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅已完成 | 詳見v80完整戰果，三個hook都已重啟驗證+commit。會員ID對照hook本場(v81)已泛化為全LINE帳號通用，不影響原有功能 |
-| 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
+| 🟢 | BNI大台南小幫手「主動提醒」功能 | ✅v87已完成，教練實測LINE推播成功 | v77原設計要agent自己exec呼叫cron，但v83鎖了非教練發送者的exec/cron權限，此設計已失效。改用`hooks/bni-reminder-schedule/`伺服器端hook解析中文時間(相對/絕對，含中文數字)+提醒內容直接排一次性cron，不需要任何會員拿到工具權限，架構上對所有會員一視同仁(非教練專屬)。教練真實傳LINE訊息測試收到推播確認成功。commit `e3608229` |
+| 🟡 | 「教練都在想什麼」LINE語音訊息無法辨識 | ⏳v87已修復待驗證 | 查production log證實2026-07-29有真實會員傳語音、transcribe失敗(reason=Command failed)。已改`tools.media.audio`明確指定完整路徑`/opt/homebrew/bin/whisper`+已快取的base模型(避開PATH解析與模型下載逾時兩個嫌疑根因)+120秒逾時。無法自己模擬真實LINE語音webhook，待教練或任一會員實際傳一句語音給「教練都在想什麼」驗證是否真的修好。commit `e3608229` |
 | 🟡 | **真誠分會／真愛分會／真實AI分會＋大台南南區網站** | ⏳待教練回覆5項細節 | 連續v72起多棒未開始，2026-07-29(v87)教練終於給細節：兩個參考網址(bnidahan.com.tw／bni-tainan.com/Training-Program)+要求BNI標準色系。已產出**兩份完整HTML版型草稿**(色系實測抓自兩參考站真實CSS`#A22026`)：真誠分會(比照bnidahan結構：參訪須知/核心價值/分會之光)、大台南南區(比照bni-tainan結構：轄下分會/培訓計畫/最新消息)，三分會共用同一套版型套版。教練Comet預覽後確認「方向正確」，交棒給Mac接手，詳見v87。**卡住點**：等教練回覆5項細節——①參訪須知實際數字(名片張數/早餐費用/自介秒數，教練說「部分不同」但尚未給確切值) ②真愛/真實AI分會各自slogan ③分會之光要不要放真實數據 ④大台南南區是否僅此三分會 ⑤各分會FB/Line連結。檔案：`knowledges/2026-07-29_bni-nantai-mockup/真誠分會_index.html`、`knowledges/2026-07-29_bni-nantai-mockup/大台南南區_index.html`(暫放knowledges，尚未建立實體GitHub repo，等內容定案後再轉正式repo)。部署位置教練已選定GitHub Pages測試稿(非Netlify正式站) |
 | ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩58次(2026-07-29，ai-talk-tw活動回顧頁部署後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
