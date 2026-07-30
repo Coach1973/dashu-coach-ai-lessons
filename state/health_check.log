@@ -719,3 +719,26 @@
 
 [2026-07-28 14:04 CST] cron=health-check | CE=1 | lastStatus=error | lastDurationMs=100322 | reason=overloaded (minimax provider 瞬時過載) | 13:30 fire ❌ (100.3s ≪ 600s timeout) → 本場 14:02 retry ✅ | model=minimax/MiniMax-M3 ✅ | timeout=600s ✅ | 無 INVALID_API_KEY、無 scp/ssh VPS、無 CE≥3 (CE=1 距紅線 2 次) | alternating fail/recover 模式穩定（provider 端常態波動，教練無法介入）| Cron 盤點：本場可見 1 個任務（健康檢查本身，isolated cron RESTRICTED scope 只能看自己）| HEARTBEAT.md ⬜ 待自動化項：0 | 安靜結束（delivery.mode=none，週二下午 14:04 教練可能在忙碌，不打擾）| 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）| ⚠️ 警戒：14:30 fire 若再失敗 → CE=2；15:00 fire 又失敗 → CE=3 紅線 → 屆時必須 announce 教練
 [2026-07-28 20:33 CST] cron=health-check | CE=1 | lastStatus=error (20:30 fire 失敗) | lastDurationMs=164848 | reason=overloaded (minimax provider 瞬時過載) | 20:30 fire ❌ (164.8s ≪ 600s timeout) → 本場 20:33 retry ✅ | model=minimax/MiniMax-M3 ✅ | timeout=600s ✅ | 無 INVALID_API_KEY、無 scp/ssh VPS、無 CE≥3 (CE=1 距紅線 2 次) | alternating fail/recover 模式穩定 250+ 場次（provider 端常態波動，教練無法介入）| Cron 盤點：本場可見 1 個任務（健康檢查本身，isolated cron RESTRICTED scope 只能看自己）| HEARTBEAT.md ⬜ 待自動化項：0 | 安靜結束（delivery.mode=none，週二晚間 20:33 教練可能在休息/家庭時間，不打擾）| 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）| ⚠️ 警戒：21:00 fire 若再失敗 → CE=2；21:30 fire 又失敗 → CE=3 紅線 → 屆時必須 announce 教練
+
+[2026-07-30 03:02 CST] cron=health-check | CE=1 | lastStatus=error (03:00 fire 失敗) | lastDurationMs=135559 | reason=overloaded (minimax provider 暫時性過載) | 03:00 fire ❌ (135.5s ≪ 600s timeout, provider transient) → 本場 03:02 retry ✅ | model=minimax/MiniMax-M3 ✅ | timeout=600s ✅ | delivery=none ✅ | alternating fail/recover 模式穩定（自 7/28 20:33 起算 30h+ 觀察未變，provider 端常態波動，教練無法介入）| HEARTBEAT.md ⬜ 待自動化項：0（重啟後標準模板）| 自動修復規則：#1 timeout 不適用（135s≪600s）｜#3 INVALID_API_KEY 不適用（model 已 minimax）｜#4 CE≥3 不適用（CE=1 距紅線 2 次）| CE=1 未達紅線 3，無需 announce 教練 | 安靜結束（週四凌晨 03:02 教練睡眠時段）| 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）| ⚠️ 警戒：03:30 fire 若再失敗 → CE=2 警戒；04:00 fire 又失敗 → CE=3 紅線升級，立即 announce 教練
+[2026-07-30 09:03 Asia/Taipei] 健康檢查完成（09:00 fire 失敗 → 本場 09:03 retry ✅）
+- consecutiveErrors = 1（09:00 fire ❌ 失敗 → 本場 09:03 retry ✅ 成功 → CE 應 reset 回 0，下場驗證）
+- lastStatus = error（09:00 fire 失敗紀錄）
+- lastErrorReason = overloaded（minimax provider 端暫時過載）
+- lastDurationMs = 171,440ms（171 秒） ≪ 600s timeoutSeconds → 非配置 timeout 問題
+- model = minimax/MiniMax-M3 ✅（2026-07-15 已自動修復 apiKey 失效）
+- timeout = 600s ✅ / delivery = none ✅ / failureAlert = false ✅
+- Cron 盤點：isolated cron RESTRICTED scope 只能看 1 個任務（健康檢查本身）
+- HEARTBEAT.md ⬜ 待自動化項：0（僅有重啟觸發協議，非自動化項）
+- alternating fail/recover 模式穩定 250+ 場次（自 7/25 起 5+ 天，provider 端常態波動，教練無法介入）
+- 自動修復評估：
+  ❌ #1 timeout 不適用（171s ≪ 600s）
+  ❌ #2 scp/ssh VPS 不適用（本場無可見此類任務）
+  ❌ #3 INVALID_API_KEY 不適用（model 已 minimax）
+  ❌ #4 CE≥3 不適用（CE=1 距紅線 2 次）
+- CE=1 未達紅線 3，不 announce 教練
+- 安靜結束（delivery.mode=none，週四上午 09:03 教練可能晨間安排/工作中，無需打擾）
+- 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）
+- ⚠️ 警戒：09:30 fire 若再失敗 → CE=2；10:00 fire 又失敗 → CE=3 紅線 → 屆時必須 announce 教練
+[2026-07-30 12:03 CST] cron=health-check | CE=1 | lastStatus=error (12:00 fire 失敗 121.3s) | lastDurationMs=121294 | reason=overloaded (minimax provider 暫時性過載) | 12:00 fire ❌ (121.3s ≪ 600s timeout, provider transient) → 本場 12:02 retry ✅ running → CE 應 reset 回 0 | model=minimax/MiniMax-M3 ✅ | timeout=600s ✅ | delivery=none ✅ | alternating fail/recover 模式穩定 250+ 場次（自 7/25 起算 5+ 天，provider 端常態波動，教練無法介入）| HEARTBEAT.md ⬜ 待自動化項：0（僅有重啟觸發協議，非自動化項）| 自動修復規則：#1 timeout 不適用（121s≪600s）｜#2 scp/ssh VPS 不適用（本場無可見此類任務）｜#3 INVALID_API_KEY 不適用（model 已 minimax）｜#4 CE≥3 不適用（CE=1 距紅線 2 次）| CE=1 未達紅線 3，無需 announce 教練 | 安靜結束（delivery.mode=none，週四中午 12:03 教練可能在工作中，無需打擾）| 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）| ⚠️ 警戒：12:30 fire 若再失敗 → CE=2 警戒；13:00 fire 又失敗 → CE=3 紅線升級，立即 announce 教練
+[2026-07-30 20:33 Asia/Taipei] cron=health-check | CE=1 | lastStatus=error (20:30 fire 失敗 175.1s) | lastDurationMs=175143 | reason=overloaded (minimax provider 暫時性過載) | 20:30 fire ❌ (175.1s ≪ 600s timeout, provider transient) → 本場 20:33 retry ✅ running → CE 應 reset 回 0 | model=minimax/MiniMax-M3 ✅ | timeout=600s ✅ | delivery=none ✅ | alternating fail/recover 模式穩定 250+ 場次（自 7/25 起算 5+ 天，provider 端常態波動，教練無法介入）| Cron 盤點：本場可見 1 個任務（健康檢查本身，isolated cron RESTRICTED scope 只能看自己）| HEARTBEAT.md ⬜ 待自動化項：0（重啟觸發協議 + peipei auto-restart 為狀態記錄，非自動化項）| 自動修復規則：#1 timeout 不適用（175s≪600s）｜#2 scp/ssh VPS 不適用（本場無可見此類任務）｜#3 INVALID_API_KEY 不適用（model 已 minimax）｜#4 CE≥3 不適用（CE=1 距紅線 2 次）| CE=1 未達紅線 3，無需 announce 教練 | 安靜結束（delivery.mode=none，週四晚間 20:33 教練可能在休息/家庭時間，無需打擾）| 不 commit/push、不 append HEARTBEAT.md（遵循 2026-07-05 教練拍板）| ⚠️ 警戒：21:00 fire 若再失敗 → CE=2 警戒；21:30 fire 又失敗 → CE=3 紅線升級，立即 announce 教練

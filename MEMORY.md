@@ -50,29 +50,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-07-26)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-17.md:282:282 -->
-- 🚗 8036 車貸繳費資訊（教練原話）: > 「我的8036車號的車貸，我溢交四個月的費用，所以下次交費是12月1日。」 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-17.md:282-282]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-18.md:13:16 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-18.md:13-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-18.md:18:19 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-18.md:18-19]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-18.md:5:5 -->
-- 📨 對話記錄 00:19（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-18.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-18.md:9:9 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-18.md:9-9]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:328:340 -->
-- 📊 VPS 小龍蝦（對外體驗版）活躍用戶盤點（2026-07-20 教練原話）: > 「我問一個問題，就是我們的 VPS 版小龍蝦，你能否知道現在活躍的用戶有哪些？我知道其中有一個叫 East 的用戶⋯」 → 小龍蝦 SSH 到 43.245.60.200 實測查到 8 個 agent（1 main + 7 trial），最近一週（2026-07-13 之後）還在用的只有 3 個：(1) **杉榕 陳** trial-8626705510（心好公益平台創辦人，業務「您消費，我捐錢」，heartgood.lovable.app）；(2) CHIU YuJung trial-8364394153（一般體驗用戶）；(3) 8820573555（測試/剛接觸）。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:328-340]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:457:476 -->
-- 🗣️ 語音糾偏慘痛教訓「East」四次才搞對（2026-07-20）: 教練語音說「East」，小龍蝦：(1) 先猜 Esther（語音諧音，方向走偏）；(2) 又翻到杉榕陳 7/4 上傳 17 張圖就改猜杉榕陳；(3) 教練糾正「不是山姆/大A三姆，是 Easter，提到安東尼·羅賓」，小龍蝦又挖 Esther 7/14 session 上傳 21 張安東尼·羅賓圖卡確認 Easter=Esther；(4) 教練第三次糾正「不是這『三』，是『杉林溪』的『杉』」，小龍蝦才恍然大悟。**教訓**：語音諧音不要硬湊外國名字，先確認中文同音（杉→三→East 全是 s 開頭）。Easter 是錯的，Esther 也是錯的，最後答案是「杉」。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:457-476]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:511:529 -->
-- 🔴 VPS 小龍蝦記憶搜尋功能實測結果（壞消息，2026-07-20，教練原話）: > 「如果資料存放了一個外部署或兩個月，當我們這些『vps 小龍蝦』的用戶想要搜尋過去的對話紀錄，是否也都能找得到？⋯小龍蝦目前的記憶搜尋功能，是不是處於一種最佳的狀態？」 → 小龍蝦實測結果：VPS 蒸餾記憶庫 chunks 僅 103 條（只到 5/7，**停了 73 天**）；VPS trial-8970866856（Esther）SQLite 0 條 chunks；VPS trial-8626705510（杉榕陳）SQLite 0 條 chunks。**結論：VPS trial 用戶完全沒有記憶搜尋能力**；Mac 主機雖有 4,228 chunks 也卡了。已派軍師 Task ID `20260720-084757` 找出 73 天停止真因，4 個推測根因：memsearch provider、模型切換、trial 路徑、cron 失敗；4 個改進方案 A/B/C/D 請軍師評估優先順序。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:511-529]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:756:777 -->
-- 📮 軍師任務派遣（2026-07-20 教練原話）: > 「你寫一封信給蘋果電腦的軍師，問他一下這個問題怎麼解決？」 → 小龍蝦派出 Task ID `20260720-084757` 給軍師，要求用 `claude -p` 執行、SSH 到 VPS（密碼見路徑大全）、找出 73 天停止的真因，再回 Telegram 給教練。小龍蝦這邊會自動讀 `state/JUNSHI_TASK_RESULT` 結果。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:756-777]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:686:719 -->
-- 💡 心好公益平台業務模式（杉榕陳 trial-8626705510，2026-07-20）: 杉榕陳的業務是 **心好公益平台**（heartgood.lovable.app），口號是「**您消費，我捐錢**」。7/4 那 17 張圖不是教材，而是**教店家導入這套銷售模式的整套行銷視覺系統**（立牌設計 / 玻璃門 LOGO + QR Code / 屋頂招牌 / 合作夥伴合影 SOP 等 4 條主線）。7/14 Esther 21 張圖則是 **安東尼·羅賓「21 步驟公眾銷售演說成交術」**（5 大區塊：開場 → 鋪墊 → 痛點 → 解方 → 成交；三條成交曲線：情緒、信任、價值）。已存到 VPS workspace 供教練參考。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-20.md:686-719]
-
 ## Promoted From Short-Term Memory (2026-07-29)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:13:16 -->
@@ -83,3 +60,14 @@
 - 📨 對話記錄 00:50（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:5-5]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:9:9 -->
 - 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:9-9]
+
+## Promoted From Short-Term Memory (2026-07-30)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:270:270 -->
+- 📨 對話記錄 04:50（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:270-270]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:274:274 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:274-274]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:278:281 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:278-281]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:283:284 -->
+- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:283-284]
