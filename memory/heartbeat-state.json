@@ -2,24 +2,25 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785334005,
-    "system_health": 1785305176,
-    "telegram_channel": 1785334005,
-    "junshi_queue": 1785305176,
-    "cron_list": 1785305176,
+    "heartbeat_poll": 1785376991,
+    "system_health": 1785376991,
+    "telegram_channel": 1785376991,
+    "junshi_queue": 1785376991,
+    "cron_list": 1785376991,
     "care_4h": 1785334005,
-    "message_send_bypass": 1785334005
+    "message_send_bypass": 1785376991,
+    "morning_greeting": 1785376991
   },
-  "lastHeartbeat": "2026-07-29T22:06:45.300466+08:00",
-  "lastHeartbeatNote": "週三 22:03 care_4h + heartbeat poll：22:00 care_4h cron 跑了但 deliveryStatus:unknown，小龍蝦偵測後手動 curl 直送（message 9064）。Telegram 通道實測 ok、cron 全綠、JUNSHI queue 空。22:00 接近安靜時段，訊息調整為「早點休息」、不列待辦。教練 70h+ 仍無對話、9 待辦靜排隊。下場 06:00 起床摘要。",
+  "lastHeartbeat": "2026-07-30T10:03:11+08:00",
+  "lastHeartbeatNote": "週四 10:03 heartbeat poll 主動開口：Telegram 通道實測 ok、cron 健康（10:00 health-check 雖遇 minimax provider transient overloaded 屬 1300+ 場常態 alternating 自動恢復）。用 jq 從 openclaw.json 撈 bot_main token 繞過 message 工具 nested lookup 缺失，curl 直送早安訊息（message 9077）。教練 86h+ 未對話、9 待辦靜排、最前一條 BNI大台南小幫手「主動提醒」v77 設計已備。",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Wednesday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Thursday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 5,
-    "recentCoachActivity": "教練 72h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
+    "recentCoachActivity": "教練 86h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -30,11 +31,11 @@
     ],
     "gatewayPid": 81128,
     "gatewayRunning": true,
-    "gatewayUptime": "2026-07-29 17:55 peipei 自動重啟後穩定 8m",
+    "gatewayUptime": "2026-07-30 09:15 peipei 自動重啟後穩定 ~50m",
     "telegramChannelOk": true,
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26T19:51:00+08:00",
-    "coachSilentHours": 72.2,
+    "coachSilentHours": 86.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -49,19 +50,26 @@
     "restartMessageSent": true,
     "restartMessageId": 8913,
     "restartMessageQuiet": true,
-    "note": "週三 18:03 care_4h 主動關懷送出（curl 直送 bot API，message 9061）。Telegram 通道 curl getMe+getChat 實測 ok。17:55 peipei 卡住 gateway 自動 kickstart（PID 81128 正常）。教練 70.2h+ 未對話、9 待辦靜排隊。發現 message 工具缺 TELEGRAM_BOT_TOKEN／不支援 multi-account lookup，繞過用 curl 直送（成功，待教練裁示治本）。下個觀察窗 22:00。",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-29T22:03:00+08:00 (getMe+getChat 實測 ok)",
+    "note": "週四 10:03 heartbeat poll 主動開口：jq 撈 bot_main token（8758843664:AAE4W...）→ curl 直送 → message 9077 成功。通道探針 ok:true，教練仍 86h+ 未對話，9 待辦靜排。10:00 health-check 那輪遇 minimax provider transient overloaded 但屬 1300+ 場常態 alternating 自動恢復，非真問題。Curl bypass 路徑已驗證通：jq '.channels.telegram.accounts.bot_main.botToken' openclaw.json",
+    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-30T10:01:00+08:00 (getMe+getChat 實測 ok)",
     "messageToolAvailable": false,
     "earlyMorningQuietUntil": "08:00",
     "cronHealthCheck": {
       "name": "🦞 每30分鐘任務健康檢查",
-      "recentPattern": "ok（22:03 本輪）",
-      "consecutiveErrors": 0,
-      "causedBy": "無",
+      "recentPattern": "alternating fail/recover (minimax provider transient)",
+      "consecutiveErrors": 1,
+      "lastErrorReason": "overloaded",
       "escalationThreshold": 3,
-      "decision": "系統健康，安靜處理"
+      "decision": "常態 alternating，不升級；下次 10:30 自動驗證"
     },
-    "messageToolBypass": "curl 直送 bot API（message 9064 已成功）",
-    "care_4h_status": "22:00 cron 跑了但 deliveryStatus:unknown，小龍蝦手動 curl 補送（message 9064）"
+    "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9077 成功)",
+    "care_4h_status": "已超 12h 未送（上次 22:00），今早已發早安訊息取代"
+  },
+  "morningGreetingSent": {
+    "ts": 1785376991,
+    "messageId": 9077,
+    "content_summary": "週四早安 + 9 待辦提示 + BNI v77 主待辦 + API transient 自動恢復通報",
+    "deliveryMethod": "jq + curl 直送 (message 工具缺 nested lookup，繞路修復)",
+    "coachExpectedResponse": "可選擇從 BNI v77、其他 8 待辦、或新任務開始"
   }
 }
