@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>BNI真誠分會</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#A22026; --red-dark:#791F1F; --ink:#2A2829; --paper:#FAF7F2;
+    --line:#E5DFD3; --gold:#B08D57; --sub:#6B665D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Noto Sans TC",sans-serif;color:var(--ink);background:var(--paper);line-height:1.7;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:10;}
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{font-size:20px;font-weight:900;color:var(--red-dark);letter-spacing:1px;}
+  .logo span{font-weight:400;font-size:13px;color:var(--sub);display:block;margin-top:2px;letter-spacing:2px;}
+  nav ul{display:flex;gap:32px;list-style:none;font-size:15px;font-weight:500;}
+  nav a:hover{color:var(--red);}
+  .btn{display:inline-block;background:var(--red);color:#fff;padding:12px 28px;border-radius:4px;font-weight:700;font-size:14px;letter-spacing:1px;transition:background .2s;}
+  .btn:hover{background:var(--red-dark);}
+  .btn-outline{background:transparent;border:2px solid #fff;color:#fff;}
+  .btn-outline:hover{background:#fff;color:var(--red-dark);}
+  .hero{background:var(--ink);color:#fff;padding:100px 0 90px;text-align:center;position:relative;}
+  .hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:6px;background:var(--red);}
+  .hero h1{font-size:52px;font-weight:900;letter-spacing:2px;margin-bottom:18px;}
+  .hero p{font-size:18px;color:#D8D0C0;max-width:560px;margin:0 auto 40px;}
+  section{padding:90px 0;}
+  .section-tag{color:var(--red);font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  h2{font-size:34px;font-weight:900;margin-bottom:16px;}
+  .lead{color:var(--sub);font-size:16px;max-width:640px;margin-bottom:56px;}
+  .notice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .notice-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px 20px;text-align:center;}
+  .notice-num{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+  .notice-card h3{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .notice-card p{font-size:13px;color:var(--sub);}
+  .value{background:#fff;}
+  .value-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .value-card{border-left:4px solid var(--red);padding:8px 0 8px 24px;}
+  .value-card h3{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--red-dark);}
+  .value-card p{font-size:14px;color:var(--sub);}
+  .glory{background:var(--red);color:#fff;}
+  .glory .section-tag{color:#F0D9DA;}
+  .glory h2{color:#fff;}
+  .glory .lead{color:#F0D9DA;}
+  .glory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .glory-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:28px 24px;}
+  .glory-card .num{font-size:36px;font-weight:900;margin-bottom:8px;}
+  .glory-card p{font-size:14px;color:#F0D9DA;}
+  footer{background:var(--ink);color:#D8D0C0;padding:48px 0 32px;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-slogan{font-size:15px;font-weight:700;color:#fff;}
+  .foot-links a{margin-left:20px;font-size:13px;color:#D8D0C0;}
+  .foot-links a:hover{color:#fff;}
+  .copyright{margin-top:24px;font-size:12px;color:#8A8577;border-top:1px solid rgba(255,255,255,.1);padding-top:20px;}
+  .placeholder-note{background:#FFF3CD;border:1px solid #E5C158;color:#7A5C00;font-size:13px;padding:14px 20px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="placeholder-note">版型草稿・參訪須知數字待教練確認（目前沿用bnidahan參考值，非最終定案）</div>
+
+<header>
+  <div class="wrap navbar">
+    <div class="logo">BNI 真誠分會<span>ZHENCHENG CHAPTER・大台南南區</span></div>
+    <nav><ul>
+      <li><a href="#">認識分會</a></li>
+      <li><a href="#">特色團隊</a></li>
+      <li><a href="#">會員名錄</a></li>
+      <li><a href="#">分會之光</a></li>
+      <li><a href="#">活動</a></li>
+    </ul></nav>
+    <a href="#" class="btn">預約參訪</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>真誠付出．贏得信任</h1>
+    <p>大台南南區・BNI真誠分會 — 全球最大商務引薦平台，一個專業一個代表</p>
+    <a href="#" class="btn btn-outline">預約參訪真誠分會</a>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag">Before You Visit</div>
+    <h2>參訪須知</h2>
+    <p class="lead">歡迎您來真誠分會參訪，請提前準備以下事項，讓這次商務交流更順暢。</p>
+    <div class="notice-grid">
+      <div class="notice-card"><div class="notice-num">1</div><h3>請著正式服裝</h3><p>展現專業商務形象</p></div>
+      <div class="notice-card"><div class="notice-num">2</div><h3>準備50張名片</h3><p>與全體會員交換聯繫</p></div>
+      <div class="notice-card"><div class="notice-num">3</div><h3>20秒自我介紹</h3><p>精彩簡介您的專業</p></div>
+      <div class="notice-card"><div class="notice-num">4</div><h3>800元早餐Buffet</h3><p>現場繳費，含會議茶點</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="value">
+  <div class="wrap">
+    <div class="section-tag">Our Core Value</div>
+    <h2>核心價值與分會精神</h2>
+    <p class="lead">真誠分會秉持BNI全球核心理念，建立長期、值得信賴的商業關係。</p>
+    <div class="value-grid">
+      <div class="value-card">
+        <h3>Givers Gain．施比受更有福</h3>
+        <p>會員彼此做專業交流、建立信任關係，在信任的基礎上互相引薦生意，不需支付任何薪水或佣金，唯一限制是一個專業僅有一個代表。</p>
+      </div>
+      <div class="value-card">
+        <h3>真誠待人．長期共贏</h3>
+        <p>「真誠」二字是本分會立會精神——用真心對待每一位夥伴，用專業累積口碑，讓引薦成為自然發生的結果。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="glory">
+  <div class="wrap">
+    <div class="section-tag">Chapter Glory</div>
+    <h2>分會之光</h2>
+    <p class="lead">真誠分會的成長軌跡與會員實績（示意數字，待正式資料填入）。</p>
+    <div class="glory-grid">
+      <div class="glory-card"><div class="num">40+</div><p>在籍會員・涵蓋多元專業產業</p></div>
+      <div class="glory-card"><div class="num">連續39年</div><p>BNI全球正成長紀錄</p></div>
+      <div class="glory-card"><div class="num">76國</div><p>BNI全球據點・大台南南區在地深耕</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-slogan">真誠分會・熱誠付出．高效共贏</div>
+      <div class="foot-links"><a href="#">Facebook</a><a href="#">Line官方帳號</a><a href="#">聯絡我們</a></div>
+    </div>
+    <div class="copyright">Copyright © 2026 BNI真誠分會・大台南南區</div>
+  </div>
+</footer>
+
+</body>
+</html>
