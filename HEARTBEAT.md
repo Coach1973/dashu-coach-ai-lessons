@@ -24,3 +24,14 @@
 ## ⚠️ peipei 自動 force-restart 2026-07-30 09:15:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-07-30 12:30
+- ✅ 同步成功
+- HANDOFF mtime: 1785385602
+- 雲端同步：✅ 已推上雲端（commit f5f0c6331）
+
+## 🩺 軍師 Hook 自檢 2026-07-30 12:35（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: 12a9e7aa-87bb-4073-aa4d-afc84b09fb93
