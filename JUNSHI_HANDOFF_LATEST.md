@@ -7,7 +7,10 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🟡 | **Email自動發送系統** | 🔒卡住-等教練給細節 | 2026-07-28教練提出下一個任務方向，僅先記錄，教練尚未說明要發什麼內容/給誰/觸發時機(定期報表？表單提交後自動回信？行銷群發？)，下一場先問清楚用途再評估技術方案(SMTP/SendGrid/Gmail API等) |
-| 🟢 | **event-signup抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤** | ✅v85已完成，教練實測確認 | 詳見下方v85完整戰果。名單直接查簽到記錄不用手動輸入、獎品清單(教練自訂文字框隨時增減)+抽中自動扣庫存+庫存0自動從選單消失、中獎彈窗放大加彈跳動畫+15句趣味台詞、教練糾正15秒輪詢改成按旋轉鍵當下才查詢最新名單。commit序列見v85段落 |
+| 🟢 | **event-signup抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤** | ✅v85完成，7/29現場正式使用 | 詳見v85完整戰果。名單直接查簽到記錄不用手動輸入、獎品清單+抽中自動扣庫存+中獎彈窗+15句趣味台詞。7/29教練現場異地登入密碼重設(改成教練指定的新密碼)+實測登入成功，詳見v86 |
+| 🟢 | **LINE綁定率低(56簽到僅12綁定)真正原因+修復** | ✅v86已完成 | `/checkin`簽到路徑的`/slides`頁面沒有像線上報名`/thanks`頁面一樣幫來賓預填「我是OOO，剛報名了XXX」問候語，來賓要自己手動輸入才會綁定，多數人卡在這步放棄。已修復`slides_landing()`補上同一套`greet_url`邏輯，測試通過並部署，未來場次現場簽到綁定率應明顯改善 |
+| 🟢 | **AI微型論壇台南場轉型為活動回顧頁** | ✅v86已完成 | 仿照全球健康發展協會(northern-tw.netlify.app)做法，`ai-talk-tw.netlify.app`從報名頁轉成歷史紀錄：花絮換成教練提供的24張現場真實照片、拿掉倒數計時器/報名區塊、CTA全改「加入LINE」、新增下一場嘉義場預告。GitHub commit `78213ed`，Netlify部署`6a6a1a24` |
+| 🟡 | **下一場：嘉義場** | 🔒卡住-等教練給細節 | 教練7/29晚間提到下一場預計辦在嘉義，尚未給時間/地點/講師等任何細節，教練給了之後可直接比照台南場經驗開工 |
 | 🟢 | 「教練都在想什麼」LINE帳號完整搬遷到Mac+MiniMax-M3 | ✅本場已完成 | 詳見下方v81完整戰果。人設逐字搬遷+46萬字知識庫+FTS5全文檢索+webhook正式上線服務121位好友+dmPolicy修復+seabiscuit.bymyway.com監控後台+User ID對照hook泛化。教練待自行測試seabiscuit.bymyway.com登入(密碼Bymyway7，第一次會卡裝置配對，把畫面ID給軍師) |
 | 🟡 | 「教練都在想什麼」案例庫深度待擴充 | ⏳待教練提供更多素材 | 目前只有教練提供的4份文件(大樹使命之旅/禮物諮詢法/海餅乾文化核心逐字稿/海餅乾語錄，共46萬字)，教練原話「提供更多資料庫讓AI做更大的品牌宣傳」——若教練還有其他素材(更多逐字稿/文章/Podcast)，補進`agents/jiaolian_thoughts/knowledge/`後跑一次`python3 scripts/build_search_index.py`重建索引即可 |
 | 🟡 | 教練其他類似LINE帳號待比照搬遷 | ⏳待教練指定下一個帳號 | 教練原話「我還有其他類似的帳號也要這麼做」，已產出完整SOP：`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，下次教練指定帳號直接照SOP 12步驟走，不用重新摸索 |
@@ -24,7 +27,7 @@
 | 🟢 | BNI大台南小幫手LINE送達備援+網址防呆+會員ID對照 | ✅已完成 | 詳見v80完整戰果，三個hook都已重啟驗證+commit。會員ID對照hook本場(v81)已泛化為全LINE帳號通用，不影響原有功能 |
 | 🔴🔴🔴 | BNI大台南小幫手「主動提醒」功能 | ⏳待動手 | v77已設計好事件驅動流程（cron --at --delete-after-run），下一場直接照設計實測，本場只寫了計畫沒動手 |
 | 🔴🔴🔴 | 真誠分會／真愛分會／真實AI分會願景+產業分佈圖說明書 | 🔒卡住-等教練 | 連續v72起多棒未開始，教練還沒給細節 |
-| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩64次(2026-07-28，ai-talk-tw報名人數更新部署後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
+| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩58次(2026-07-29，ai-talk-tw活動回顧頁部署後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
@@ -39,6 +42,47 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-29 v86（Mac桌面版 Sonnet 5，AI微型論壇台南場正式登場：現場緊急支援+LINE綁定bug修復+活動轉型回顧頁）
+
+> 建立時間：2026-07-29 下午～深夜（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v85（Mac桌面版Sonnet5，抽獎轉盤上線+付款連結批次更新）
+> 本棒主軸：**v85做好的抽獎轉盤在7/29當天正式上場，本場處理三件事：①教練人在別台電腦要現場登入/wheel，密碼是雜湊值無法提供明文，改幫教練重設成他指定的新密碼並實測登入成功②活動結束後教練發現56位簽到只有12位完成LINE綁定，查證抓到真正原因是/checkin這條路徑沒有像線上報名表單那樣幫來賓「打好問候語草稿」，當場修復③教練提出要仿照全球健康發展協會(northern-tw.netlify.app)的做法，把已結束的活動頁轉型成歷史紀錄，用教練提供的24張現場真實照片做成活動花絮，同時記錄下一場預計辦在嘉義。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴 現場緊急支援：教練異地登入密碼重設
+教練在別台電腦要用`/wheel`轉盤功能，但登入密碼只存了scrypt雜湊值，技術上無法逆推明文。教練直接指定新密碼`123457`，用`werkzeug.security.generate_password_hash`生成新雜湊值寫入`.env`，重啟`com.coach.event-webapp`服務，並用真實的`POST /admin/login`+session cookie完整測試登入到`/wheel`成功(非test client模擬)，才回報教練帳密可用。全程沒有經手明文密碼被輸入到任何第三方系統，只是更新自己維護系統的密碼設定。
+
+### 2. 🔴🔴🔴 抓到LINE綁定率低的真正原因並修復：`/checkin`少了「幫來賓打好問候語草稿」這一步
+教練回報：56位透過現場手機號碼簽到、參與抽獎的來賓，只有12位完成LINE綁定(後續無法收到通知)。查證發現LINE綁定機制要求來賓在LINE手動輸入固定格式文字「我是OOO，剛報名了XXX」，webhook才會寫入`line_user_id`。比對兩條路徑：`/e/<slug>/thanks`(線上事先填表單的人看到的頁面)早就有`greet_url`自動把這句問候語預填好，來賓只要按「加好友」就一鍵送出；但`/checkin`(手機比對簽到)導向的`/slides`頁面，只給了一個普通的「加好友」按鈕，來賓要自己手動輸入正確格式才能綁定——這才是今天現場56人只有12人綁定的真正原因，不是來賓不想綁，是系統少做了這一步引導。修復：`slides_landing()`在有`name`參數時比照`thanks()`同樣邏輯生成`greet_url`，測試通過(有name→智慧連結、無name→維持原本通用連結)後部署。commit在`event-signup`獨立repo內(該repo不透過workspace追蹤，改動已上線生效，未來場次現場簽到綁定率應該會明顯改善)。
+
+### 3. 🎯🎯 AI微型論壇台南場正式轉型為活動回顧頁，仿照全球健康發展協會做法
+教練參考`northern-tw.netlify.app`(全球健康發展協會論壇官網，帶「歷屆回顧」板塊)的呈現方式，要求把已結束的`ai-talk-tw.netlify.app`報名頁變成歷史紀錄，教練提供的24張現場照片(下載資料夾裡的LINE傳圖，設攤+滿場講座畫面)做成花絮。動手內容：
+- 24張照片壓縮到900px寬(10MB→3.4MB)，取代原本首頁「精彩花絮」輪播的12張示意照(舊照片備份在`images/carousel_archive_previous/`不刪除)，`CAROUSEL_TOTAL`12→24
+- Hero區拿掉倒數計時器+報名進度條，改成「圓滿落幕，感謝每一位到場的朋友」，對應JS(`updateCountdown`/`updateLiveCount`兩個IIFE)一併移除，避免抓不到已刪除DOM元素而報錯
+- 整個「選擇你的報名方式」區塊(個人報名/企業合作兩張大卡片)直接移除
+- navbar桌面版/手機版、sticky底部欄、agenda區「手刀搶免費名額」按鈕，全部從「立即報名」(`onclick="showTypeModal()"`)改成「加入LINE」(直接連`line.me`)，不再觸發已經不合時宜的報名彈窗
+- signup區塊改寫成「下一場預告：嘉義場籌備中」
+- 本機Chrome預覽經教練確認後部署，curl驗證文字/圖片Content-Type/舊CTA清除，全部通過。GitHub commit `78213ed`，Netlify部署`6a6a1a24`，quota扣1次(59→58)
+
+## 📋 下一場直接開工任務
+- **嘉義場籌備**：教練已提到下一場預計辦在嘉義，尚未給任何細節(時間/地點/講師)，下一場教練給了細節後可以直接比照台南場經驗開工，不用重新摸索
+- **Email自動發送系統**：v85記錄的方向，教練仍未給細節，下一場先問清楚用途(報表/自動回信/行銷群發)再評估技術方案
+- **🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（v77已設計好cron事件驅動架構，方向清楚，已多場未動手，優先度持續最高）
+- 真誠/真愛/真實AI分會願景說明書（教練仍未給細節）
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/.env`：`EVENT_ADMIN_PASSWORD_HASH`更新為教練指定新密碼的雜湊值
+- `event-signup/app.py`：`slides_landing()`新增`greet_url`智慧預填問候語邏輯
+- `github_repos/ai-talk/index.html`：Hero區/gallery/signup/navbar全面改寫成回顧版語氣，移除報名相關區塊與JS
+- `github_repos/ai-talk/images/carousel/`：24張真實花絮照(取代舊12張，舊版存於`carousel_archive_previous/`)
+- `state/netlify_deploy_quota.json`：本場2次部署紀錄(贊助人清單+活動回顧頁)
+- commit序列（workspace repo）：`f268d7039`起延續v85抽獎轉盤 → `86ace9420`(quota記錄回顧頁部署)
+- commit序列（github_repos/ai-talk獨立repo）：`cdcdf0c`(贊助人12/13) → `78213ed`(活動回顧頁轉型)
 
 ---
 
@@ -178,44 +222,6 @@ GitHub Pages(`coach1973.github.io/bymyway-website/ai.html`)透過iframe嵌入`by
 
 ---
 
-# 軍師接力棒 · 2026-07-26 v83（Mac桌面版 Sonnet 5，系統權限缺口正式解決+開工額度瘦身58%+教練雙LINE身份釐清）
-
-> 建立時間：2026-07-26 深夜～07-27 凌晨（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v82（Mac桌面版Sonnet5，結繩領導學戰報系統上線）
-> 本棒主軸：**接續v82尾聲留下的兩個未解問題：①系統權限缺口(public agent沒有工具限制)②圖片OCR工具。本場教練先轉發小龍蝦整理的LINE綁定時間軸研究，逐行查證全部準確後，發現OpenClaw原生`tools.toolsBySender`機制，比之前設計的「移除exec+hook替代」方案更直接，當場實作+驗證+commit，權限缺口正式解決。教練釐清「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook補上訪客記憶功能。教練親測時意外發現自己有第二個LINE身份「贏家思路」，也一併加入白名單。教練接著要求評估「開工」占用多少KB，實測抓出接力棒被workspace/CLAUDE.md與六步驟hook重複注入的問題，修好後單場注入降58%，順手清理MEMORY.md索引裡7條已解決的舊記憶。教練詢問接力棒實際內容，也詢問小龍蝦後台為何不顯示中文名稱——查證後確認是OpenClaw原生介面已知限制，評估自建頁面成本後教練裁示不做，改用隨問隨查方式。OCR工具本場雖未動，但交接棒走出v83後終端機那邊07:01已抽出通用工具完成（commit `1488b6c68`），13:36 教練親自驗收，標記為「已完成」。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 系統權限缺口正式解決：OpenClaw原生`tools.toolsBySender`取代卡關已久的exec移除方案
-教練轉發一份小龍蝦整理的「LINE龍蝦小助教綁定教練ID完整時間軸」，逐行核對`verbatim/*.jsonl`原始記錄+`.memsearch`檔案，確認每一筆引用(含精確行號、教練原話)全部準確。但該文件建議的解法（把`allowFrom`限縮成只有教練ID）會打臉教練同一份文件自己引用的SOP、也會打斷BNI會員/121位好友的開放聊天功能，予以指出並修正方向。上網查證(WebSearch+直接讀本機安裝的OpenClaw原始碼`/opt/homebrew/lib/node_modules/openclaw/dist`確認非文件想像)找到`tools.toolsBySender`：可依發送者ID分別設定`deny`/`alsoAllow`，且證實運作在**主要工具判斷流程**(非僅sandbox模式)。為`bni_tainan`/`jiaolian_thoughts`兩帳號設定：教練LINE ID(`id:U895a0ad8...`)保留完整權限，`"*"`(其他所有人)deny掉`group:runtime`(exec/process)+`group:fs`(read/write/edit)+`group:automation`(cron/gateway)。同時修好`knowledge-search-inject`/`bni-calendar-inject`兩支hook缺少`path`欄位的註冊bug並正式啟用(之前一直是"disabled"從未被驗證過會不會觸發，這次修好bug後兩者都顯示`✓ready`)，確保知識庫問答功能在鎖權限後仍正常運作。commit `fb222757`。
-
-### 2. 🔴🔴🔴 教練提醒「鎖權限不能連個人化服務都擋掉」，新增line-user-memory hook
-教練指出要像VPS版小龍蝦一樣，訪客仍要能被記住喜好、能搜尋、能對話、能被分析圖片——單純deny整組`group:fs`會連這些合理功能都砍掉。查證VPS版做法(`clients/{id}.md`per-user檔案)後，設計新hook`line-user-memory`：**完全不給agent任何write/exec工具**，改由Node.js伺服器端(不受LLM對話內容影響)幫每位訪客維護`agents/<accountId>/clients/{userId}.md`，每則訊息自動讀取歷史+注入context+append新內容。教練本人(含後述第二身份)排除在外。本機模擬呼叫測試3種情境(新用戶首次/二次讀到歷史/教練身份正確跳過)全部通過才commit。
-
-### 3. 🎯 教練測試「龍蝦小助教」意外發現第二LINE身份「贏家思路」
-教練逐一測試三個LINE帳號，小幫手/教練都在想什麼皆正常，但測試「龍蝦小助教」(default帳號，綁`main` agent)觸發陌生人配對碼。查證這組ID(`U168903487f0ba2b666ddc62b854de351`)，直接呼叫LINE API確認displayName是「贏家思路」——教練確認這是他自己的第二個LINE帳號。已核准該配對碼(僅此帳號一次性approve，non-broadcast)，並把這組ID也加進`bni_tainan`/`jiaolian_thoughts`的toolsBySender白名單，確保教練用任一身份測試都保有完整權限。**教練明確裁示：「龍蝦小助教」維持個人專用，不比照另外兩個帳號開放allowFrom:["\*"]**——因main agent本身無工具層級限制，開放給陌生人風險遠高於已鎖權限的bni_tainan/jiaolian_thoughts。
-
-### 4. 🎯🎯 開工KB額度評估+瘦身58%
-教練要求實測「開工」占用多少KB(對應對話1M上限)。逐項量測後發現：①`workspace/CLAUDE.md`本身已由既有`sync_handoff_to_claudemd.sh`每5分鐘自動鏡像接力棒全文，桌面版啟動讀CLAUDE.md就會看到；②六步驟hook(`feed_junshi_handoff.sh`)卻又完整cat一次同一份接力棒——等於同一份東西送兩次；③`claude-sessions/`最新session總結機制已死掉18天(卡在07-08一次性匯入，注入的是07-01一場無關的ACER設定總結)。修復：接力棒改成先比對sync marker時間戳，確認CLAUDE.md鏡像是最新的才用短版指向(不重複貼)，若鏡像不新鮮則安全退回完整貼上(**接力棒內容本身完全沒被簡化，教練2026-05-29的「接力棒不可簡化」鐵律沒有被違反，只是不重複送**)；砍掉死掉的session總結注入；試金石案例3→2；memory最新日改尾端約6000字。本機實測：故意把sync marker調到過期狀態，確認安全網真的會退回完整貼上才commit。單場注入從49,593 bytes降到20,588 bytes(降58%)。另外配合教練確認，把`MEMORY.md`索引裡7條已完全解決、跟現有待辦無牽連的舊專案記憶退休(31,497→30,052 bytes，原始檔案保留磁碟未刪)。commit `e9144daf8`(六步驟)+`12e7b6b54`(MEMORY.md)。
-
-### 5. 🎯 教練詢問接力棒內容+小龍蝦後台中文名稱問題查證
-教練直接問「接力棒的內容是什麼」，用白話向教練說明接力棒=「現在還欠什麼」的追蹤表+「最近做了什麼」的詳細日記兩塊構成。另外教練反映小龍蝦後台(OpenClaw原生「控制」Control UI)一直看不到用戶中文名稱，查證CLI選項+GitHub議題(至少8個開發者提過同樣需求，官方均未解決)確認這是原生介面本身的功能缺口，不是設定漏掉，也澄清`seabiscuit.bymyway.com`其實只是同一套原生介面的另一個網址別名，不是獨立打造的頁面。評估「另建自訂頁面」的時間(30~90分鐘)/token成本後，教練裁示**不建頁面，看到陌生ID直接問軍師查`state/{account}_line_id_map.json`對照表即可**。
-
-## 📋 下一場直接開工任務
-
-**🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（工作總表最熱項目，v77 已設計好整套事件驅動流程 cron `--at --delete-after-run` 架構，方向清楚動手即可，不再傾向空泛討論）：教練提出「BNI 會員加入/業績達標/特定節日/會議前 1 小時」等情境要主動打給對方。詳見v77設計文件。註：v83 接力棒本來寫「OCR 通用工具」但實際上 07:01 終端機那邊已抽出 `tools/ocr-extract/ocr_extract.py` 完成（commit `1488b6c68`），且 13:34 教練已親自在終端機跟軍師確認「未來會用 OCR 取代燒 Token 視覺看圖方式」，本場順手換成下一個真正待辦。
-
-## 🔑 本場關鍵檔案索引
-- `openclaw.json`：新增`agents.list[bni_tainan/jiaolian_thoughts].tools.toolsBySender`(教練兩個LINE身份白名單+`*`deny規則)、`hooks.internal.entries`修好path+啟用knowledge-search-inject/bni-calendar-inject/line-user-memory
-- `hooks/line-user-memory/{HOOK.md,handler.js}`：新hook，訪客個人化記憶不靠write工具
-- `scripts/feed_junshi_handoff.sh`：接力棒防重複注入安全網設計+死code清理+試金石/memory瘦身
-- `claude-brain/MEMORY.md`：退休7條舊記憶
-- `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`：v81併入封存
-- commit序列：`fb222757`(權限鎖+line-user-memory) → `e9144daf8`(六步驟瘦身) → `12e7b6b54`(MEMORY.md瘦身)
-
----
-
-> 📦 **v82及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v83及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v84/v83)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新3棒(v86/v85/v84)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
