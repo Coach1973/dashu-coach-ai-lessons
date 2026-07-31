@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-07-31 04:41:03**
+> **最後同步：2026-07-31 13:40:39**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -57,6 +57,45 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+
+---
+
+# 軍師接力棒 · 2026-07-31 v88（Mac桌面版 Sonnet 5，BNI Connect官方網站後台操作能力驗證+見證頁正式上線）
+
+> 建立時間：2026-07-30 深夜～07-31 凌晨（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v87（聯想Windows Sonnet 5，BNI大台南南區＋真誠分會網站版型規劃）
+> 本棒主軸：**教練登入BNI Connect CMS後台，要求驗證Claude是否有能力接管維護他的BNI官方網站——這是教練「動嘴就能讓AI做事」理念的具體試金石。從權限查證一路做到真實內容編輯+正式Publish上線，過程踩了好幾個技術坑（隔離瀏覽器分頁不同步/CMS安全過濾器濾掉Base64與flex樣式/圖片解析度縮圖陷阱/img固定寬高被外部CSS拉變形），每個坑都靠實測數據抓出根因並修正，最終見證頁三則見證（含教練親自口述+照片）已正式對外發布。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯🎯 BNI Connect CMS後台操作能力驗證（本場主軸開端）
+教練提供BNI Connect後台網址，要我評估能不能接管維護。踩的第一個坑：一開始用Claude自己獨立的瀏覽器分頁開後台，教練登入後我這邊仍顯示session invalid——因為那是跟教練畫面隔離的假環境，教練當場糾正「你在幕後進行，我什麼都看不到」「我們是在平行時空」。改用`claude-in-chrome`工具連上教練本機真實已登入的Chrome才真正同步（教練確認畫面出現綠色圖示代表接管成功）。查證確認：教練帳號對「大台南南區」（區域ID`12261`）+5個真實分會（真富`25503`/真愛`26706`/真誠`18487`舊&`18640`新/真鑫`28446`/真鑽`12262`，最後一個由第三方代理商Outback Global建立）都有編輯權限。發現真誠分會有2筆重複CMS記錄，且分會層級沒有Delete/Unpublish功能（跟區域層級不同）。教練順口澄清接力棒上記錄多場的「真實AI分會」是筆誤，正式名稱是「真AI分會」，且該分會尚未登記，CMS裡自然查不到。完整方法+ID索引寫入記憶系統`reference_bni_connect_cms_structure`+`project_bni_connect_backend_access_verified_2026-07-31`（commit `6acef6316`，透過`.claude/projects`記憶庫跨機共用）。教練明確授權：以後口頭講要改什麼直接去改，發布前提醒一聲即可。**三機注意**：操作方法/ID三機共用，但登入狀態per機器，換機器要教練親自重新登入+確認該機器claude-in-chrome已連線。
+
+### 2. 🔴🔴🔴 大台南南區「見證」頁中文化+教練親自見證，正式Publish上線
+教練發現「見證」頁除了官方模板文字，見證內容全是英文（Marim/Amanda），且「View Story」按鈕會跳到BNI國際網站。查證發現這是`Testimonial`小工具的資料（Content/Name/Person URL/Designation/Company/Company URL六個欄位，Name欄位其實被拿來當按鈕顯示文字用），直接改欄位值即可中文化+清空Person URL避免跳走，兩則見證都已翻成「瑪琳」「安曼達」並存檔。
+
+教練接著想放自己的見證（BNI信任感引薦新加坡馬來西亞商機+上市公司培訓演講+改變傳統做生意方式），但`Testimonial`小工具本身沒有照片欄位，改用「客製可視資料」（其實是完整HTML富文本編輯器）新增自訂區塊。**照片這條線走了好幾輪返工**：
+- 第一次用Base64把壓縮後照片直接內嵌，CMS存檔時把整段`<img>`過濾掉（安全機制不接受data URI）
+- 改用CMS圖片庫網址，但發現這個網址背後其實是「後台縮圖」用途，被壓成200×300小尺寸，硬拉大顯示才會糊
+- 教練指出構圖問題（全身照臉太小、跟前兩則不協調），换了一張更近的半身照，且要求排版改成跟前兩則交錯呼應（圖右文左）
+- 排版樣式從flex改成表格結構（flex的CSS樣式也被CMS濾掉，表格結構比較不會被濾）
+- 最後一次真正的失誤：img同時給了固定`width`+`height`兩個HTML屬性，遇到BNI全站CSS只覆蓋width導致高度沒等比例縮放，整張照片被拉變形，教練當場抓到（「我的照片被拉得變形了」），改成只給width讓瀏覽器自動算高度即修復，數據驗證比例完全吻合原始檔案才算數，不是憑感覺
+- 過程中也踩過「瀏覽伺服器」原生彈窗這個automation構不到的坑——後來發現直接讀取畫面URL欄位裡教練選好的網址，繞過卡住的確定按鈕一樣有效；也發現這個彈窗卡住的真正原因是瀏覽器在小預覽框硬解碼6千萬像素照片造成當機，不是按鈕真的壞掉
+
+教練最終確認排版+清晰度沒問題後下令「發佈」，執行`Publish`（觸發本身也曾一度timeout，屬於伺服器端真的在處理，非卡死），用**完全沒有BNI登入狀態的獨立瀏覽器分頁**打開`bnitainan.com.tw/zh-TW/testimonials`公開網址，確認真實訪客也看得到三則中文見證——這一步刻意避開「用自己已登入的分頁自證」的陷阱，是真正的第三方驗證。commit `dc72fbb5d`→`8ee6db5d0`。
+
+## 📋 下一場直接開工任務
+- **BNI真誠/真愛/真AI分會＋大台南南區網站**：等教練回覆5項細節（v87已產出兩份HTML草稿），教練已澄清分會正確名稱是「真AI」非「真實AI」
+- **真誠分會重複CMS記錄**：CMS對分會層級無Delete功能，待教練決定是否透過BNI客服或Outback Global代理商帳號處理
+- **BNI後台其他頁面**：教練本場結尾提到還有其他頁面要維護（連繫我們/尋找分會/行事曆等他表示不用動，「為什麼選擇BNI」他表示可能要改），下一場直接問要動哪個頁面
+- Email自動發送系統、嘉義場籌備：仍卡在等教練給細節（v85/v86已記錄，多場未更新）
+
+## 🔑 本場關鍵檔案索引
+- 記憶系統：`reference_bni_connect_cms_structure.md`、`project_bni_connect_backend_access_verified_2026-07-31.md`（commit `6acef6316`）
+- BNI CMS頁面：`bnicms/v3/backend/page/editPage/773612`（見證頁）、`bnicms/v3/backend/pagecontentwidget/edit/835851`&`835852`（Marim/Amanda小工具）
+- 公開驗證網址：`https://bnitainan.com.tw/zh-TW/testimonials`
+- commit序列（workspace repo）：`6acef6316`（記憶系統）→ `a0cbb6dd1`→`dc72fbb5d`→`8ee6db5d0`（接力棒進度記錄）
 
 ---
 
@@ -236,53 +275,9 @@ PreToolUse hook `scripts/unsafe_port_check.sh`：偵測`open -a "Google Chrome"`
 
 ---
 
-# 軍師接力棒 · 2026-07-28 v84（Mac桌面版 Sonnet 5，AI微型論壇7/29籌備衝刺：簽到系統重構+多站內容更新）
-
-> 建立時間：2026-07-27 深夜～07-28 上午（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v83（Mac桌面版Sonnet5，系統權限缺口解決+開工額度瘦身）
-> 本棒主軸：**教練密集為7/29「AI微型論壇」籌備做最後衝刺，本場處理6件獨立任務，多數當場教練實測/確認後結案。核心戰果是event-signup簽到系統重構——教練發現來賓線上報名後現場掃碼還要重填資料，設計出「手機號碼比對」新流程，免重填又保留集點功能，教練親自實測通過。另完成bymyway.com/ai/品牌頁三輪內容改版、event.bymyway.com場次資料校正、ai-talk-tw.netlify.app兩次數據更新(甜點份額、報名人數)、OCR通用工具教練驗收確認採用。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 event-signup簽到系統重構：手機號碼比對，免重填資料又保留集點功能
-教練指出`event.bymyway.com/qr/checkin-print.html`(現場簽到QR立牌)的問題：來賓在`bigtree-tw`/`ai-talk-tw`網站報名時已留過姓名/電話，現場掃碼進`/checkin`卻要整份表單重填一次，多此一舉。過程分三階段收斂：
-1. 第一版直接把QR改指向`/slides`(加好友+下載簡報，零輸入)，但教練指出這樣會失去「集滿5次活動送禮物」的簽到紀錄功能
-2. 教練提出「我的紙本簽到表本來就有手機號碼」的思路，追問是否還需要數位輸入
-3. 最終定案：`/checkin`拆成GET(手機輸入頁)+POST(比對邏輯)——輸入手機號碼比對`attendees`表，比對成功記進`signups`表(集點功能保留)+導向`/slides`顯示個人化「OOO，簽到成功」；查無資料的現場臨時來賓才導去完整表單(手機號碼已預填，只需補姓名)。用真實資料(已知電話/未知電話/格式錯誤)三種情境本機測試通過，教練實測確認採用。commit序列：`fd480212a`→`022051eba`→`0ef5ee98a`。7/29立牌已印好，QR網址沒變不用重印。
-
-### 2. 🎯🎯 bymyway.com/ai/ 品牌頁三輪內容改版
-GitHub Pages(`coach1973.github.io/bymyway-website/ai.html`)透過iframe嵌入`bymyway.com/ai/`。教練分三輪交辦：①案例清單新增「大樹小講．無話不談」、移除「AI特助案例集」「特助心法專屬頁面」兩項舊連結 ②CTA區塊文字簡化為「真實案例公開上線」，按鈕改連`coach1973.github.io/coach-case4/` ③新增「近期活動」按鈕連到大樹小講。每次改動都先用Chrome本機預覽給教練看過才推，commit `f8a7a89`，GitHub Pages約1分鐘內自動生效。
-
-### 3. 🎯 event.bymyway.com/admin 場次資料校正
-教練告知8/1場次已取消，改為8/26、9/5、9/19三場，比對`bigtree-tw.netlify.app`線上場次資料(topic/時段/地點)校正到`event.db`。確認8/1場次0人報名可安全刪除，三個新場次的`/e/<slug>`報名頁curl驗證正常顯示。同時回答教練「綁定/未綁定」判斷邏輯的疑問——查證LINE webhook原始碼確認：綁定要求來賓傳送固定格式文字「我是OOO，剛報名了」，webhook只處理`message.type=="text"`，**單純傳貼圖/表情符號不會觸發綁定**(教練原本以為表情符號算數，已當場更正)。
-
-### 4. 🎯 ai-talk-tw.netlify.app 兩次數據更新
-①甜點下午茶限量份數60→50份(兩處：入門禮段落+煦多午茶設攤卡片同步)，commit `52ff47a`；②已報名人數重新校準為88、遞增速率從「每6小時+1人」改「每3小時+2人」(教練回報現場報名超過88位)，commit `16d72b4`。部署前發現本機GitHub工作稿落後聯想機4個commit(缺現場設攤廠商卡片)，先`git pull`同步再改，避免蓋掉別台機器的成果。兩次都用Chrome本機預覽+curl驗證文字/圖片Content-Type後才推，Netlify quota紀錄同步更新(`state/netlify_deploy_quota.json`)，目前剩64次。
-
-### 5. 🎯 OCR通用工具教練驗收+使用範圍界定
-教練詢問建置OCR工具的原始動機，查證`reference_namecard_ocr_pipeline_reusable`記憶檔確認源頭(教練親自讀截圖時看錯陳慧雯→陳薏雯的真實案例)後準確回答。教練確認「之後讀圖片文字改用OCR」的方向，本場也順手釐清使用界線：**讀字→用OCR；看畫面(排版/設計判斷)→AI還是要自己看**，避免教練誤以為所有圖片任務都能靠OCR繞過。
-
-## 📋 下一場直接開工任務
-
-教練本場結束時表示「有新的Netlify的更新要做」，**但尚未說明具體內容**——會開新對話框交辦，下一場先問教練這次要更新哪個站、改什麼，不用預先假設。另外仍有queue中的舊任務：
-- **🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（v77已設計好cron事件驅動架構，方向清楚，多場未動手，優先度最高）
-- 真誠/真愛/真實AI分會願景說明書（教練仍未給細節）
-
-## 🔑 本場關鍵檔案索引
-- `event-signup/app.py`：`/checkin`拆GET+POST、`/slides`新增`name`參數個人化、`/e/<slug>`支援`phone`預填
-- `event-signup/templates/checkin.html`：新模板，單一手機號碼欄位
-- `event-signup/make_qr.py`：`make_checkin()`新增`event_label`參數
-- `github_repos/bymyway-website/ai.html`：案例清單+CTA三輪改版
-- `github_repos/ai-talk/index.html`：甜點份數+報名人數公式
-- `state/netlify_deploy_quota.json`：本場3次部署紀錄(ai-talk-tw×3)
-- commit序列：`f8a7a89`(bymyway.com/ai) → `52ff47a`(甜點份數) → `fd480212a`→`022051eba`→`0ef5ee98a`(簽到系統) → `16d72b4`(報名人數)
-
----
-
-> 📦 **v83及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v84及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新3棒(v86/v85/v84)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新3棒(v88/v87/v86)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
 
 ---
