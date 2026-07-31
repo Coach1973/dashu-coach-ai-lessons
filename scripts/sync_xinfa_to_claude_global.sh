@@ -48,9 +48,9 @@ target_content = target.read_text(encoding="utf-8")
 source_content = source.read_text(encoding="utf-8")
 stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-core_match = re.search(r"(## 最高指導原則.*?)\n## 執行細則（9條）", source_content, re.DOTALL)
+core_match = re.search(r"(## 最高指導原則.*?)\n## 執行細則", source_content, re.DOTALL)
 if not core_match:
-    print("⚠️ 找不到特助心法.md 的段落邊界（## 最高指導原則 ... ## 執行細則（9條）），未寫入，請人工檢查")
+    print("⚠️ 找不到特助心法.md 的段落邊界（## 最高指導原則 ... ## 執行細則），未寫入，請人工檢查")
     sys.exit(1)
 core = core_match.group(1).rstrip()
 
