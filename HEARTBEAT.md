@@ -43,3 +43,7 @@
 ## 🔄 特助心法.md→~/.claude/CLAUDE.md 自動同步 2026-07-31 14:38
 - ✅ 同步成功
 - SOURCE mtime: 1785479916
+
+## 🔄 執行細則.md→~/.claude/CLAUDE.md 自動同步 2026-07-31 15:15
+- ✅ 同步成功
+- SOURCE mtime: 1785482120
