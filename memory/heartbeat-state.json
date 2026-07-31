@@ -2,17 +2,17 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785406910,
-    "system_health": 1785406910,
-    "telegram_channel": 1785406910,
-    "junshi_queue": 1785405739,
-    "cron_list": 1785406910,
-    "care_4h": 1785406910,
+    "heartbeat_poll": 1785427446,
+    "system_health": 1785427446,
+    "telegram_channel": 1785427446,
+    "junshi_queue": 1785427446,
+    "cron_list": 1785427446,
+    "care_4h": 1785427446,
     "message_send_bypass": 1785376991,
     "morning_greeting": 1785406910
   },
-  "lastHeartbeat": "2026-07-31T09:01:50+08:00",
-  "lastHeartbeatNote": "週五 09:01 heartbeat poll：Telegram 探針 ok、週五早安已送（message 9096）、junshi queue 空、其他 cron 昨夜到今早無異常。教練仍 ~109h 未對話（自 2026-07-26 19:51 起），9 待辦靜排，今早主動關懷不催工，準備好就動。",
+  "lastHeartbeat": "2026-07-31T14:04:06+08:00",
+  "lastHeartbeatNote": "週五 14:04 4h cron heartbeat poll：Telegram 探針重驗 ok:true、junshi queue 空（最後結果仍是 7/20 VPS 記憶搜尋修復）、接力棒 v88 掌握中（BNI Connect 見證頁正式上線 + CMS 操作能力驗證完成）。教練仍 ~110h 未對話（自 2026-07-26 19:51 起），9 待辦靜排。週五下午工作時間，本輪採靜默原則（早安才 5 小時前，未達 8h 主動關懷閾值；教練可能正與軍師處理 BNI 業務，下一輪 18:00 再評估）。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Friday",
@@ -63,7 +63,7 @@
       "decision": "常態 alternating，不升級；下次 10:30 自動驗證"
     },
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9077 成功)",
-    "care_4h_status": "已送（週五 09:01 早安），下次 ~13:00 4h cron 自動觸發"
+    "care_4h_status": "已驗證（週五 14:04 探針 ok:true），本輪採靜默：教練 ~110h 未對話+早安才 5 小時前+軍師接力棒顯示 7/30 深夜到 7/31 凌晨密集 BNI 工作+未達 8h 主動關懷閾值 → 不催工不打擾。下一輪 18:00 cron 自動觸發再評估（屆時若教練仍未對話且天將晚，視情況送簡短關懷或維持靜默）"
   },
   "morningGreetingSent": {
     "ts": 1785406910,
