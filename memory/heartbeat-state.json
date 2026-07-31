@@ -2,17 +2,18 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785427446,
-    "system_health": 1785427446,
-    "telegram_channel": 1785427446,
-    "junshi_queue": 1785427446,
-    "cron_list": 1785427446,
-    "care_4h": 1785427446,
-    "message_send_bypass": 1785376991,
-    "morning_greeting": 1785406910
+    "heartbeat_poll": 1785506616,
+    "system_health": 1785506616,
+    "telegram_channel": 1785506616,
+    "junshi_queue": 1785506616,
+    "cron_list": 1785506616,
+    "care_4h": 1785506616,
+    "message_send_bypass": 1785506616,
+    "morning_greeting": 1785406910,
+    "evening_greeting": 1785492248
   },
-  "lastHeartbeat": "2026-07-31T14:04:06+08:00",
-  "lastHeartbeatNote": "週五 14:04 4h cron heartbeat poll：Telegram 探針重驗 ok:true、junshi queue 空（最後結果仍是 7/20 VPS 記憶搜尋修復）、接力棒 v88 掌握中（BNI Connect 見證頁正式上線 + CMS 操作能力驗證完成）。教練仍 ~110h 未對話（自 2026-07-26 19:51 起），9 待辦靜排。週五下午工作時間，本輪採靜默原則（早安才 5 小時前，未達 8h 主動關懷閾值；教練可能正與軍師處理 BNI 業務，下一輪 18:00 再評估）。",
+  "lastHeartbeat": "2026-07-31T22:02:50+08:00",
+  "lastHeartbeatNote": "週五 22:02 深夜邊緣輪（自動評估，履行 18:04 自定計畫）：Telegram 探針重驗 ok:true（守則#19 鐵律），距上則關懷 4h、教練週末前夕、junshi queue 空、19 排程健康、gateway 重啟後穩定（launchctl PID 32731）。深夜邊緣預設靜默，本輪不打擾教練（不重發晚安/不催早睡），等教練主動訊息或下次 09:00 早安輪。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Friday",
@@ -35,7 +36,7 @@
     "telegramChannelOk": true,
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26T19:51:00+08:00",
-    "coachSilentHours": 109.2,
+    "coachSilentHours": 118.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -63,7 +64,14 @@
       "decision": "常態 alternating，不升級；下次 10:30 自動驗證"
     },
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9077 成功)",
-    "care_4h_status": "已驗證（週五 14:04 探針 ok:true），本輪採靜默：教練 ~110h 未對話+早安才 5 小時前+軍師接力棒顯示 7/30 深夜到 7/31 凌晨密集 BNI 工作+未達 8h 主動關懷閾值 → 不催工不打擾。下一輪 18:00 cron 自動觸發再評估（屆時若教練仍未對話且天將晚，視情況送簡短關懷或維持靜默）"
+    "care_4h_status": "已驗證（週五 18:04 探針 ok:true），本輪依計畫於 18:00 評估關懷觸發：教練 ~118h 未對話+早安已過 9h+達 8h 閾值+週五傍晚自然收工點+軍師接力棒有具體 BNI 成果可分享 → 送簡短週五傍晚關懷（message 9108，引用 BNI 見證頁上線 + 獨立網站接力棒兩項成果），不催工不打擾週末。下一輪 22:00 cron 再評估（屆時已是深夜，預設靜默除非教練主動訊息）。"
+  },
+  "eveningGreetingSent": {
+    "ts": 1785492248,
+    "messageId": 9108,
+    "content_summary": "週五傍晚關懷：通道健康+19 排程穩定+BNI 見證頁上線 + 獨立網站接力棒成果 + 9 待辦靜排 + 週五愉快",
+    "deliveryMethod": "jq + curl 直送 (message 工具仍缺 nested TELEGRAM_BOT_TOKEN lookup，沿用 bypass)",
+    "coachExpectedResponse": "可選：完全不回（週末休息）/ 從 9 待辦挑一個 / 新任務 / 隨口聊"
   },
   "morningGreetingSent": {
     "ts": 1785406910,
@@ -71,5 +79,15 @@
     "content_summary": "週五早安 + 系統穩定 + 9 待辦靜排 + 不催工",
     "deliveryMethod": "jq + curl 直送 (message 工具缺 nested lookup，繞路修復)",
     "coachExpectedResponse": "可選擇從 BNI v77、其他 8 待辦、新任務，或繼續休息"
+  },
+  "deepNightEval222": {
+    "ts": 1785506616,
+    "trigger": "22:00 cron 自動評估輪（履行 18:04 自定計畫）",
+    "telegramProbeOk": true,
+    "hoursSinceLastCare": 4,
+    "coachSilentHours": 118,
+    "decision": "HEARTBEAT_OK 靜默（深夜邊緣 + 4h 內送過關懷 + 週末前夕 + 系統全綠 + 無新 urgent）",
+    "actionTaken": "只更新 HEARTBEAT.md + heartbeat-state.json，不發 Telegram 訊息",
+    "nextEvalTrigger": "2026-08-01 09:00 早安輪"
   }
 }

@@ -71,3 +71,16 @@
 - 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:278-281]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:283:284 -->
 - 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:283-284]
+
+## Promoted From Short-Term Memory (2026-07-31)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:13:16 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:13-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:18:19 -->
+- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:18-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:5:5 -->
+- 📨 對話記錄 02:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:9:9 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:294:294 -->
+- 📨 對話記錄 16:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-23.md:294-294]
