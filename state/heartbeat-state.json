@@ -1,30 +1,30 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-07-30T14:02:51.892580+08:00",
-    "system_health": "2026-07-25T18:03:48.083830+08:00",
-    "telegram_channel": "2026-07-30T14:02:51.892580+08:00",
+    "heartbeat_poll": "2026-08-01T18:04:06.334244+08:00",
+    "system_health": "2026-08-01T17:55:00+08:00",
+    "telegram_channel": "2026-08-01T18:04:06.334244+08:00",
     "netlify_quota": "2026-07-25T14:25:00+08:00"
   },
-  "lastHeartbeat": 1785391371,
-  "lastHeartbeatNote": "週四 14:01 午後心跳。探針早 06:03 實測 ok:true 仍生效。距 09:03 週四早安推送 5.0h，未達 6h 重推門檻。教練沉默 182h。系統健康 context 8% fresh。pendingCoachItems 維持不變（多項卡等教練給細節）。",
+  "lastHeartbeat": 1785578646,
+  "lastHeartbeatNote": "週六 18:02 傍晚心跳。探針實測 ok:true 通道健康。系統 19 排程穩定（CE=2 安穩，未觸發紅線）。Context 8% 全新。教練沉默 145h+（自 2026-07-26 19:51）。送出週六傍晚輕量關懷，週末不密集打擾。",
   "systemSnapshot": {
-    "timeOfDay": "thursday-afternoon-post-lunch",
-    "dayOfWeek": "Thursday",
+    "timeOfDay": "saturday-evening",
+    "dayOfWeek": "Saturday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh",
     "contextPercent": 8,
-    "recentRestarts": "2026-07-29 22:38 (overflow)",
-    "gatewayPid": 76264,
+    "recentRestarts": "2026-08-01 02:07 (overflow)",
+    "gatewayPid": null,
     "gatewayRunning": true,
     "gatewayUptime": "穩定中",
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh @ 2026-07-30T06:03:00+08:00",
+    "telegramChannelSource": "telegram_channel_probe.sh @ 2026-08-01T18:02:00+08:00",
     "junshiQueueEmpty": true,
     "netlifyQuota": 59,
     "netlifyQuotaCheckNote": "2026-07-28 v85 推 5 次後剩 59 次（71→64→59），建議教練有空時親自到 Netlify 後台核對",
-    "coachSilentSince": "2026-07-23T00:30:00+08:00",
-    "coachSilentHours": 181.5,
+    "coachSilentSince": "2026-07-26T19:51:00+08:00",
+    "coachSilentHours": 145.5,
     "pendingCoachItems": [
       "🟡 v85：Email 自動發送系統（教練尚未給細節）",
       "🟡 v85：明天 AI 微型論壇現場抽獎轉盤使用回饋",
@@ -33,25 +33,6 @@
       "🟡 聯想 C 槽 94GB 暫緩刪除（觀察新備份穩定後再議）",
       "🟡 ACER 36.3GB 待刪（需教練在 ACER 開對話）",
       "🟡 光線尺顧問 ATM NT$10,000 入金(07-13) 待對帳"
-    ],
-    "note": "週四上午活躍時段心跳：探針健康、教練沉默 175h、推送週四早安+論壇回饋詢問（msg_id=9076 成功送出）。發現 openclaw message 工具配置路徑問題，已 fallback Python urllib 直推。",
-    "lastOutboundMessageId": 9076,
-    "lastOutboundAt": "2026-07-30T09:03:30+08:00",
-    "lastOutboundChannel": "telegram (bot_main, fallback urllib)",
-    "telegramChannelVerifiedBy": "telegram_channel_probe.sh @ 2026-07-30T06:03:00+08:00 (getMe+getChat 實測 ok)"
-  },
-  "lastHeartbeatReason": "thursday-afternoon-routine-pulse",
-  "telegramChannelOk": true,
-  "telegramChannelSource": "telegram_channel_probe.sh @ 2026-07-30T14:02:51+08:00",
-  "pendingCoachItems": [
-    "🟡 v85：Email 自動發送系統（教練尚未給細節）",
-    "🟡 v85/v86：AI 微型論壇台南場 7/29 現場抽獎轉盤+綁定率改善後續追蹤",
-    "🟡 v85：嘉義場籌備細節（時間/地點/講師皆待教練給）",
-    "🟡 v77：BNI 大台南小幫手「主動提醒」功能（方向清楚，待教練下指令動手）",
-    "🔴🔴🔴 真誠/真愛/真實 AI 分會願景說明書（多場未動）",
-    "🟡 聯想 C 槽 94GB 暫緩刪除（觀察新備份穩定後再議）",
-    "🟡 ACER 36.3GB 待刪（需教練在 ACER 開對話）",
-    "🟡 光線尺顧問 ATM NT,000 入金(07-13) 待對帳",
-    "🟡 教練提到「下一個 Netlify 更新」內容（v84 結束時提及，未說明細節）"
-  ]
+    ]
+  }
 }
