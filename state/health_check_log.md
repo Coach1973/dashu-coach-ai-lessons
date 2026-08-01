@@ -111,3 +111,105 @@ HEARTBEAT.md 內容：
 - 健康檢查本身 30 分鐘後再 fire（若持續 overload 升級 3 次則通知教練）
 
 **動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。
+
+---
+
+## 2026-08-01 16:32 CST (週六午後)
+
+**檢查範圍**：cron_jobs 表 21 個啟用任務全覽（sqlite 直接查 openclaw.sqlite）。
+
+**整體健康**：
+- 19/21 啟用任務 last_status = ok
+- 1/21 last_status = error（本任務本身，consecutive_errors=1）
+- 0/21 達連續錯誤 ≥3 紅線
+- 無 invalid_api_key、無 timeout、無 VPS scp 錯誤
+
+**錯誤任務（1 個）**：
+
+| Job | agent | consecutive | lastDurationMs | error |
+|---|---|---|---|---|
+| 🦞 每30分鐘任務健康檢查（本任務） | main | 1 | 113258ms（< 600s timeout） | FailoverError: AI service overloaded |
+
+**分析**：
+- 與 2026-07-27 23:03 事件**同型**：MiniMax provider 端瞬時 overload
+- durationMs 113s ≪ timeoutSeconds 600s → **非 timeout 設定問題**
+- model 已是 minimax/MiniMax-M3 → **非 auth 問題**
+- consecutive_errors=1 → **遠未達 3 次紅線**
+
+**自動修復**：無（provider 端瞬時事件，等下次重試自然恢復）。
+- 16:00 跑是 ok，16:30 撞 overload，預期 17:00 自動恢復
+- 若連續 3 次仍 overload 才升級通知教練
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- pendingCoachItems 多為卡等教練給細節的任務，非自動化可解
+
+**動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。
+
+## 2026-08-01 18:34 CST (週六傍晚)
+
+**檢查範圍**：cron_jobs 表 21 個啟用任務全覽（sqlite 直接查 openclaw.sqlite）。
+
+**整體健康**：
+- 19/21 啟用任務 last_status = ok
+- 1/21 last_status = error（本任務本身，consecutive_errors=1）
+- 0/21 達連續錯誤 ≥3 紅線
+- 無 invalid_api_key、無 timeout、無 VPS scp 錯誤
+
+**錯誤任務（1 個）**：
+
+| Job | agent | consecutive | lastDurationMs | error |
+|---|---|---|---|---|
+| 🦞 每30分鐘任務健康檢查（本任務） | main | 1 | 146401ms（< 600s timeout） | FailoverError: The AI service is temporarily overloaded |
+
+**分析**：
+- 與 2026-07-27 23:03 / 2026-08-01 16:32 事件**完全同型**：MiniMax provider 端瞬時 overload
+- durationMs 146s ≪ timeoutSeconds 600s → **非 timeout 設定問題**
+- model 已是 minimax/MiniMax-M3 → **非 auth 問題**
+- consecutive_errors=1 → **遠未達 3 次紅線**
+- alternating fail/recover 模式穩定 5+ 天，純屬 provider 端波動
+
+**自動修復**：無（provider 端瞬時事件，等下次重試自然恢復）。
+- 18:00 fire 撞 overload，預期 18:30 retry 自動恢復（pattern 穩定）
+- 若連續 3 次仍 overload 才升級通知教練
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- pendingCoachItems 多為卡等教練給細節的任務，非自動化可解
+- 教練 11:58 已上線，原 122h+ 靜默紀錄作廢
+
+**動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。
+
+## 2026-08-01 19:32 CST (週六傍晚)
+
+**檢查範圍**：cron_jobs 表 21 個啟用任務全覽（sqlite 直接查 openclaw.sqlite）。
+
+**整體健康**：
+- 20/21 啟用任務 last_status = ok
+- 1/21 last_status = error（本任務本身，consecutive_errors=1）
+- 0/21 達連續錯誤 ≥3 紅線
+- 無 invalid_api_key、無 timeout、無 VPS scp 錯誤
+
+**錯誤任務（1 個）**：
+
+| Job | agent | consecutive | lastDurationMs | error |
+|---|---|---|---|---|
+| 🦞 每30分鐘任務健康檢查（本任務） | main | 1 | 144,801ms（< 600s timeout） | FailoverError: The AI service is temporarily overloaded |
+
+**分析**：
+- 與 2026-07-27 23:03 / 2026-08-01 16:32 / 18:34 事件**完全同型**：MiniMax provider 端瞬時 overload
+- durationMs 144s ≪ timeoutSeconds 600s → **非 timeout 設定問題**
+- model 已是 minimax/MiniMax-M3 → **非 auth 問題**
+- consecutive_errors=1 → **遠未達 3 次紅線**
+- alternating fail/recover 模式穩定 5+ 天，純屬 provider 端波動
+
+**自動修復**：無（provider 端瞬時事件，等下次重試自然恢復）。
+- 19:00 fire 撞 overload，預期 19:30 retry 自動恢復（pattern 穩定）
+- 若連續 3 次仍 overload 才升級通知教練
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- pendingCoachItems 多為卡等教練給細節的任務，非自動化可解
+- 教練 11:58 已上線（HEARTBEAT.md 已於 18:11 修正靜默紀錄）
+
+**動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。

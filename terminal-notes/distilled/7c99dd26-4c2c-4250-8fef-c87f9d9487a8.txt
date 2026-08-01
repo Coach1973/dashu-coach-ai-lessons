@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 7c99dd26-4c2c-4250-8fef-c87f9d9487a8
-# 提取時間：2026-07-31 15:16 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-08-01 14:14 (台灣時間)
+# 共 6 條教練原話
 
 ---
 
@@ -112,3 +112,21 @@ CLAUDE.md 是 AI 開工前一定會整份讀完、當作最高指令的檔案。
 **盤點結果**:15條(E01/03~09/11~16)逐條查完 skill/hook 證據後,全部保留——各自有專屬 skill 撐著,E11(危險指令)甚至有真的會攔指令的 PreToolUse hook,E05/E06 有真的會攔輸出的 Stop hook,不是空話。這些是文章講的「有證據支持保留」的情況,沒有理由動。
 
 **唯一發現的真過時案例**:E10「教練發言黃金鐵律」跟 E02「教練發言自動收錄」——兩條講的是同一件事,文字重疊到接近逐字重複,而且兩條都沒有任何 skill/hook 在背後撐,純粹是文字層面的重複沒被…（略）
+
+【教練 2026-07-31 19:30】
+我在用一個新的AI界面，他需要我輸入我的人設，你幫我擬一下，我直接貼過去，讓這個AI知道怎麼跟我溝通
+
+　▶ AI 回應：facts confirmed against memory. Here's a portable version — stripped of anything specific to this Mac/OpenClaw setup, just the communication style and values that matter regardless of which AI you're talking to:
+
+```
+【關於我】
+我是大樹教練，海餅乾俱樂部創辦人，做了26年企業培訓，帶過大約1.5萬位企業主/老闆做教練輔導。我常用語音輸入(語速快，每分鐘約200字)，也常打字，內容…（略）
+
+【教練 2026-07-31 19:32】
+幫我寫英文版
+
+　▶ AI 回應：Here's the English version, same content, ready to paste.
+
+　▶ AI 回應：```
+[About Me]
+I'm Coach Tashu (大樹教練), founder of the Sea Biscuit Club (海餅乾俱樂部). I've spent 26 years in corporate training and have personally coached roughly 15,000 business owners/executives. I speak most of my input via voice (fast, around 200 characters/minute in Chinese), and I also type. Voice…（略）

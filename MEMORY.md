@@ -7,6 +7,7 @@
 - [先問再改](feedback_ask_before_reversing_unusual_config.md) — 發現軟體設定跟預期不同，先問是不是教練故意的，別自己當錯誤修正
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
 - [ACER 分割區調整後D槽清理待辦](claude-brain/project_acer_c_d_cleanup_20260708.md) — 觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（36.3GB）
+- [Heartbeat 不要拿舊靜默紀錄當事實](feedback_heartbeat_stale_silence_count.md) — 任何「靜默 N 小時/天」描述前必須先查教練最後訊息時間，禁止直接沿用 HEARTBEAT 上次留下的數字（教練 2026-08-01 11:58 已回來下指令，但 18:04 仍寫「5.8 天沒說話」被糾正）
 
 ## 每30分鐘健康檢查 cron 常見錯誤自動修復 SOP（2026-07-10 整併，原本被自動晉升機制重複收錄4次)
 
@@ -84,3 +85,14 @@
 - 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:9-9]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:294:294 -->
 - 📨 對話記錄 16:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-23.md:294-294]
+
+## Promoted From Short-Term Memory (2026-08-01)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:274:274 -->
+- 📨 對話記錄 07:51（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:274-274]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:278:278 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:278-278]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:282:285 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:282-285]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:287:288 -->
+- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:287-288]
