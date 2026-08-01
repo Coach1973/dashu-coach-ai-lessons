@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>BNI真AI籌備會</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#A22026; --red-dark:#791F1F; --ink:#2A2829; --paper:#FAF7F2;
+    --line:#E5DFD3; --gold:#B08D57; --sub:#6B665D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Noto Sans TC",sans-serif;color:var(--ink);background:var(--paper);line-height:1.7;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:10;}
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{font-size:20px;font-weight:900;color:var(--red-dark);letter-spacing:1px;}
+  .logo span{font-weight:400;font-size:13px;color:var(--sub);display:block;margin-top:2px;letter-spacing:2px;}
+  nav ul{display:flex;gap:32px;list-style:none;font-size:15px;font-weight:500;}
+  nav a:hover{color:var(--red);}
+  .btn{display:inline-block;background:var(--red);color:#fff;padding:12px 28px;border-radius:4px;font-weight:700;font-size:14px;letter-spacing:1px;transition:background .2s;}
+  .btn:hover{background:var(--red-dark);}
+  .btn-outline{background:transparent;border:2px solid #fff;color:#fff;}
+  .btn-outline:hover{background:#fff;color:var(--red-dark);}
+  .badge{display:inline-block;background:var(--gold);color:#fff;padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:20px;}
+  .hero{background:var(--ink);color:#fff;padding:100px 0 90px;text-align:center;position:relative;}
+  .hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:6px;background:var(--red);}
+  .hero h1{font-size:52px;font-weight:900;letter-spacing:2px;margin-bottom:18px;}
+  .hero p{font-size:18px;color:#D8D0C0;max-width:600px;margin:0 auto 40px;}
+  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  section{padding:90px 0;}
+  .section-tag{color:var(--red);font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  h2{font-size:34px;font-weight:900;margin-bottom:16px;}
+  .lead{color:var(--sub);font-size:16px;max-width:640px;margin-bottom:56px;}
+  .notice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .notice-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px 20px;text-align:center;}
+  .notice-num{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+  .notice-card h3{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .notice-card p{font-size:13px;color:var(--sub);}
+  .value{background:#fff;}
+  .value-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .value-card{border-left:4px solid var(--red);padding:8px 0 8px 24px;}
+  .value-card h3{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--red-dark);}
+  .value-card p{font-size:14px;color:var(--sub);}
+  .glory{background:var(--red);color:#fff;}
+  .glory .section-tag{color:#F0D9DA;}
+  .glory h2{color:#fff;}
+  .glory .lead{color:#F0D9DA;}
+  .glory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .glory-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:28px 24px;}
+  .glory-card .num{font-size:36px;font-weight:900;margin-bottom:8px;}
+  .glory-card p{font-size:14px;color:#F0D9DA;}
+  .faq{background:#fff;}
+  .faq-item{border-bottom:1px solid var(--line);padding:24px 0;}
+  .faq-item h3{font-size:17px;font-weight:700;margin-bottom:8px;color:var(--red-dark);}
+  .faq-item p{font-size:14px;color:var(--sub);}
+  footer{background:var(--ink);color:#D8D0C0;padding:48px 0 32px;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-slogan{font-size:15px;font-weight:700;color:#fff;}
+  .foot-links a{margin-left:20px;font-size:13px;color:#D8D0C0;}
+  .foot-links a:hover{color:#fff;}
+  .copyright{margin-top:24px;font-size:12px;color:#8A8577;border-top:1px solid rgba(255,255,255,.1);padding-top:20px;}
+  .placeholder-note{background:#FFF3CD;border:1px solid #E5C158;color:#7A5C00;font-size:13px;padding:14px 20px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="placeholder-note">版型草稿・真AI籌備會尚未在BNI Connect正式登記，本頁為招募創始會員用的籌備期行銷頁，內容待教練確認後完善</div>
+
+<header>
+  <div class="wrap navbar">
+    <div class="logo">BNI 真AI籌備會<span>ZHEN AI CHAPTER（FORMING）・大台南南區</span></div>
+    <nav><ul>
+      <li><a href="#">關於真AI</a></li>
+      <li><a href="#">為何現在加入</a></li>
+      <li><a href="#">招募資格</a></li>
+      <li><a href="#">常見問題</a></li>
+    </ul></nav>
+    <a href="#" class="btn">登記成為創始會員</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="badge">籌備中・招募創始會員</div>
+    <h1>真心經營．AI時代</h1>
+    <p>大台南南區・BNI真AI籌備會 — 全球最大商務引薦平台，鎖定AI與科技相關產業，一個專業一個代表</p>
+    <div class="cta-row">
+      <a href="#" class="btn">登記成為創始會員</a>
+      <a href="#" class="btn btn-outline">了解籌備說明會</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag">About Zhen AI</div>
+    <h2>為什麼是「真AI」</h2>
+    <p class="lead">AI浪潮正在改變每一個產業的做生意方式。真AI籌備會希望集結一群走在時代前面的專業人士，用BNI「Givers Gain」的信任引薦精神，讓AI相關產業的夥伴彼此成就。</p>
+    <div class="notice-grid">
+      <div class="notice-card"><div class="notice-num">1</div><h3>鎖定AI／科技產業</h3><p>軟體、數據、自動化、數位轉型相關專業優先</p></div>
+      <div class="notice-card"><div class="notice-num">2</div><h3>創始會員資格</h3><p>籌備期加入即為創始會員，享優先專業代表權</p></div>
+      <div class="notice-card"><div class="notice-num">3</div><h3>一個專業一個代表</h3><p>同產業別越早卡位，正式成立後保障唯一代表</p></div>
+      <div class="notice-card"><div class="notice-num">4</div><h3>籌備說明會</h3><p>了解BNI制度與真AI籌備進度，免費參加</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="value">
+  <div class="wrap">
+    <div class="section-tag">Our Core Value</div>
+    <h2>核心價值與籌備初衷</h2>
+    <p class="lead">真AI籌備會秉持BNI全球核心理念，同時鎖定AI時代的商業機會。</p>
+    <div class="value-grid">
+      <div class="value-card">
+        <h3>Givers Gain．施比受更有福</h3>
+        <p>會員彼此做專業交流、建立信任關係，在信任的基礎上互相引薦生意，不需支付任何薪水或佣金，唯一限制是一個專業僅有一個代表。</p>
+      </div>
+      <div class="value-card">
+        <h3>真誠面對．擁抱AI</h3>
+        <p>「真AI」呼應真誠分會的立會精神，用真心對待每一位夥伴，同時聚焦AI帶來的產業變革，讓引薦不只是人脈，更是走在趨勢前面的商業眼光。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="glory">
+  <div class="wrap">
+    <div class="section-tag">Founding Progress</div>
+    <h2>籌備進度</h2>
+    <p class="lead">真AI籌備會的招募現況（示意數字，待教練提供實際籌備資料）。</p>
+    <div class="glory-grid">
+      <div class="glory-card"><div class="num">籌備中</div><p>尚未在BNI Connect正式登記，招募創始會員階段</p></div>
+      <div class="glory-card"><div class="num">連續39年</div><p>BNI全球正成長紀錄</p></div>
+      <div class="glory-card"><div class="num">76國</div><p>BNI全球據點・大台南南區在地深耕</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="section-tag">FAQ</div>
+    <h2>常見問題</h2>
+    <div class="faq-item">
+      <h3>真AI籌備會現在是正式分會嗎？</h3>
+      <p>還不是。目前正在籌備招募創始會員階段，尚未在BNI Connect正式登記，成立時間待籌備進度確定。</p>
+    </div>
+    <div class="faq-item">
+      <h3>什麼樣的人適合加入？</h3>
+      <p>從事AI、軟體、數據、自動化、數位轉型等相關專業，或想提早卡位這個產業類別代表資格的夥伴。</p>
+    </div>
+    <div class="faq-item">
+      <h3>創始會員有什麼不同？</h3>
+      <p>籌備期加入的創始會員，在分會正式成立後將優先保有其專業類別的唯一代表資格。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-slogan">真AI籌備會・真心經營．AI時代</div>
+      <div class="foot-links"><a href="#">Facebook</a><a href="#">Line官方帳號</a><a href="#">聯絡我們</a></div>
+    </div>
+    <div class="copyright">Copyright © 2026 BNI真AI籌備會（籌備中）・大台南南區</div>
+  </div>
+</footer>
+
+</body>
+</html>
