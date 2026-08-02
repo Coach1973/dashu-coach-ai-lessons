@@ -145,7 +145,7 @@
 - [各機commit邊界](feedback_agent_commit_boundary.md) — 中央發布設定變更由我commit；各機自己sessions/memory不碰
 - [🔴 不限流量只屬於小龍蝦/MiniMax，Claude助教不適用](feedback_token_model_distinction.md) — 終端機/桌面版Claude計費另計，不可套用「不限流量」假設
 - [🔴🔴🔴 openclaw模型切換必改設定檔——UI切換無效](feedback_openclaw_model_switch_permanent.md) — 損失$60USD教訓；必須直接改openclaw.json，開工必查main model
-- [🔴🔴🔴 Netlify的_headers規則不能用/*萬用，會蓋過圖片Content-Type(2026-07-25第4次血淚)](feedback_netlify_headers_content_type.md) — 明明有SOP卻只驗證文字沒驗證圖片，3次部署才修好；教練要求全機通報，見試金石案例54
+- [🔴🔴🔴 Netlify圖片部署SOP，每次血淚加一條(最新2026-08-02第5坑:輪播要preload)](feedback_netlify_headers_content_type.md) — _headers精確路徑/Windows zip/文字圖片分開驗證/輪播切換前要預先載入，見試金石案例54
 - [🔴 未經允許禁止自行使用FORK功能](feedback_no_fork_without_permission.md) — Fork繼承完整歷史context token消費極高，須等教練說要fork
 - [🔴 創作類任務必先讀已上線版本，不可從零重做](feedback_read_existing_before_creating.md) — 已有教練認可模板，系統內成果也是OPE，先對齊再寫
 - [🔴 網頁圖片壓縮場景分流(守則#17)](feedback_image_compression_by_scenario.md) — 展示型大圖保持高畫質；重複型小圖壓縮去重(節省96.6%)

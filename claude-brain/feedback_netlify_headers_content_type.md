@@ -1,11 +1,11 @@
 ---
 name: feedback-netlify-headers-content-type
-description: Netlify 手動上傳型部署必須帶 _headers 檔案寫死 Content-Type，否則顯示原始碼；若站台含圖片等資源，_headers 規則要用精確路徑不能用/*萬用（否則圖片會被蓋成text/html顯示不出來，2026-07-25第4次血淚）
+description: Netlify圖片類部署一次做對checklist——_headers精確路徑(非/*萬用)/Windows zip不用Compress-Archive/文字圖片分開驗證/輪播類圖片要預先載入(preload)不能等切換才下載，每次遇到血淚就加一條
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 6d045433-c07e-4194-8146-7178d4ce8a81
-  modified: 2026-07-25T08:09:26.010Z
+  modified: 2026-08-02T08:40:40.307Z
 ---
 
 Netlify 手動上傳型站台，zip 裡只放 index.html 而不帶 `_headers` 檔案時，Content-Type 預設為 `text/plain`，瀏覽器會顯示 HTML 原始碼而非渲染網頁。
@@ -30,4 +30,17 @@ Netlify 手動上傳型站台，zip 裡只放 index.html 而不帶 `_headers` �
    - 文字內容：`curl -s <url> | grep <關鍵字>` 確認新增文字出現
    - 圖片等資源：對每個新增的圖片路徑跑 `curl -sI <url>/images/xxx.jpg`，確認 `HTTP/1.1 200` **且** `Content-Type: image/jpeg`（不是只看狀態碼，Content-Type 錯了狀態碼照樣是 200 但瀏覽器不顯示）
 
-相關記憶：[[project-coolcase-xinfa-website]]、[[feedback-netlify-deploy-zip-api]]
+**🔴 2026-08-02更新（第5個坑，ai-talk-tw活動花絮輪播）：** 教練回報「活動花絮一開始都沒有照片，要等一段時間才出現」。根因跟 Content-Type 無關——是輪播/幻燈片這類「自動切換顯示」的圖片功能，程式碼只在切換的當下才去下載下一張（`img.src = 下一張網址`），完全沒有預先準備。網路稍慢時，切換那一瞬間新照片還沒下載完，畫面就空白，等下載完才補上；且不是只發生一次，是每次自動切換（每 4 秒）都可能重演。這種問題**部署前用 curl 測 Content-Type 完全測不出來**，因為圖片本身沒壞，只是「臨時才下載」的時機點錯了。
+
+4. **任何輪播/幻燈片/多張切換顯示的圖片功能，部署前檢查是否有預先載入(preload)機制**：初始化時應該用 `new Image()` 把該輪播會用到的「全部」圖片網址都跑一輪觸發下載進瀏覽器快取，不要讓「使用者切換到那一張」才是該圖片第一次被請求。範例寫法：
+```js
+function preloadCarouselImages(){
+  for (let i = 1; i <= TOTAL; i++){
+    const img = new Image();
+    img.src = `images/carousel/photo-${String(i).padStart(2,'0')}.jpg`;
+  }
+}
+```
+在輪播 init 時呼叫一次即可，靠瀏覽器原生快取機制，不用等使用者主動切換才臨時抓。
+
+相關記憶：[[project-coolcase-xinfa-website]]、[[feedback-netlify-deploy-zip-api]]、[[feedback-web-push-sop]]
