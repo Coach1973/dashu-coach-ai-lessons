@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯 mentor100後台新增「複製修改連結」按鈕，教練自助發送不用問AI(2026-08-02)](project_mentor100_edit_link_selfservice_2026-08-02.md) — edit_token早就存在資料庫，純UI缺口；CONTEXT.md已預寫答案，證實新專案先讀CONTEXT.md省時間
 - [🎯🎯🎯 BNI Connect官方網站後台操作能力驗證，教練理念「動嘴讓AI做事」重要進度(2026-07-31)](project_bni_connect_backend_access_verified_2026-07-31.md) — claude-in-chrome連上教練真實Chrome、DOM純文字操作不截圖；換機器要重新登入+裝擴充功能，方法已共用但登入狀態per機器
 - [🔧 BNI Connect CMS後台網站ID索引+存取方法(2026-07-31)](reference_bni_connect_cms_structure.md) — 大台南南區12261+5分會ID列表，真誠分會有重複記錄待處理，正確分會名是「真AI」非「真實AI」
 - [🔒 瀏覽器不安全埠(如5060)已升級成PreToolUse Hook攔截，非僅記憶(2026-07-28)](reference_browser_unsafe_port_5060.md) — open Chrome前先擋黑名單埠，教練要求別再靠提醒；同場見[[feedback_html_preview_chrome_only]]第8次犯
