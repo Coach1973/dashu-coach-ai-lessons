@@ -31,6 +31,14 @@ set -euo pipefail
 
 MEMORY_DIR="$HOME/.openclaw/workspace/memory"
 STATE_FILE="$HOME/.openclaw/workspace/state/heartbeat-state.json"
+# 🔴 v3.3修復（2026-08-02 18:03「7天沒互動」誤報血淚）：
+#   系統裡實際存在兩份 heartbeat-state.json（state/ 和 memory/ 各一份，
+#   彼此互不同步）。之前v3.0~v3.2的修復只碰了 state/ 那份，但18:03那次
+#   agent turn（context overflow重啟+API 429限流+config reload三重疊加
+#   導致執行環境不穩定）讀到的卻是 memory/ 那份——它從7/26後就沒再被
+#   更新過，166.2小時換算下來剛好是「7天」，誤報就是這樣產生的。
+#   不確定 agent 未來還會讀哪一份，兩份都寫，才不會再被舊值咬到。
+STATE_FILE_LEGACY="$HOME/.openclaw/workspace/memory/heartbeat-state.json"
 LOG_PREFIX="[sync_coach_last_message]"
 
 if [[ ! -d "$MEMORY_DIR" ]]; then
@@ -88,32 +96,32 @@ fi
 
 echo "$LOG_PREFIX 真正教練最後訊息時間：$REAL_LAST_DATE"
 
-# === 寫回 state ===
+# === 寫回 state（兩份都寫，不確定 agent 實際讀哪一份） ===
 python3 << PYEOF
 import json, os
 from datetime import datetime, timezone, timedelta
 tz = timezone(timedelta(hours=8))
-state_path = "$STATE_FILE"
 real_date_str = "$REAL_LAST_DATE"
-
-if os.path.exists(state_path):
-    with open(state_path, 'r') as f:
-        state = json.load(f)
-else:
-    state = {'lastChecks': {}, 'systemSnapshot': {}}
-
-state.setdefault('systemSnapshot', {})['coachSilentSince'] = real_date_str
 real_dt = datetime.fromisoformat(real_date_str)
 now_dt = datetime.now(tz)
 diff_hours = round((now_dt - real_dt).total_seconds() / 3600, 1)
-state['systemSnapshot']['coachSilentHours'] = diff_hours
+sync_ts = datetime.now(tz).isoformat()
 
-state.setdefault('lastChecks', {})['coach_silence_sync'] = datetime.now(tz).isoformat()
+for state_path in ["$STATE_FILE", "$STATE_FILE_LEGACY"]:
+    if os.path.exists(state_path):
+        with open(state_path, 'r') as f:
+            state = json.load(f)
+    else:
+        state = {'lastChecks': {}, 'systemSnapshot': {}}
 
-with open(state_path, 'w', encoding='utf-8') as f:
-    json.dump(state, f, indent=2, ensure_ascii=False)
+    state.setdefault('systemSnapshot', {})['coachSilentSince'] = real_date_str
+    state['systemSnapshot']['coachSilentHours'] = diff_hours
+    state.setdefault('lastChecks', {})['coach_silence_sync'] = sync_ts
 
-print(f"✅ coachSilentSince = {real_date_str}（已排除cron/心跳系統注入訊息）")
+    with open(state_path, 'w', encoding='utf-8') as f:
+        json.dump(state, f, indent=2, ensure_ascii=False)
+
+print(f"✅ coachSilentSince = {real_date_str}（已排除cron/心跳系統注入訊息，state/與memory/兩份都已同步）")
 print(f"✅ coachSilentHours = {diff_hours}")
 PYEOF
 
