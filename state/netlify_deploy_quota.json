@@ -1,8 +1,8 @@
 {
   "system": "credit",
   "credits_per_deploy": 15,
-  "quota_as_of": "2026-07-28",
-  "quota_remaining": 58,
+  "quota_as_of": "2026-08-02",
+  "quota_remaining": 57,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
   "credit_pools": [
     {"name": "Personal plan credits", "remaining": 924.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 61},
@@ -10,6 +10,13 @@
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-02",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a6f03f80217be568d0394b4",
+      "change": "修復活動花絮輪播「一開始沒照片要等一段時間才出現」：切換到下一張時才臨時下載改成頁面載入後background先預載全部24張，避免網路稍慢時切換出現空白",
+      "remaining_after": 57
+    },
     {
       "date": "2026-07-29",
       "site": "ai-talk-tw",
