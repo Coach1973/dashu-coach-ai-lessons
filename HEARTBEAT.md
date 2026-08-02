@@ -24,3 +24,9 @@
 ## ⚠️ peipei 自動 force-restart 2026-08-02 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 軍師 Hook 自檢 2026-08-02 19:26（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：怎麼又跟我說，我7天沒有互動
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: 3b2a9f5b-e76f-47e1-82d9-76f9301b1c99
