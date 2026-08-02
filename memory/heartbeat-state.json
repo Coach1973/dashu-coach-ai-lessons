@@ -2,42 +2,39 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785632738,
-    "system_health": 1785621779,
-    "telegram_channel": 1785632738,
+    "heartbeat_poll": 1785650520,
+    "system_health": 1785650520,
+    "telegram_channel": 1785650520,
     "junshi_queue": 1785599760,
-    "cron_list": 1785632738,
+    "cron_list": 1785650520,
     "care_4h": 1785535384,
-    "message_send_bypass": 1785506616,
+    "message_send_bypass": 1785650520,
     "morning_greeting": 1785546060,
     "evening_greeting": 1785492248
   },
-  "lastHeartbeat": "2026-08-02T09:05:38.713988+08:00",
-  "lastHeartbeatNote": "週日 09:00 結繩領導學閱讀提醒 cron 觸發（af137f9b）：Telegram 探針 ok:true（守則#19 重跑）、cron list 21 個全 ok、本 cron 為 systemEvent + announce + telegram 自動發送閱讀提醒訊息，bestEffort=false 系統保證送出；教練 154h+ 靜默 + 週日上午 + 無緊急項目 → 不打擾模式，HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-08-02T14:02:00.000000+08:00",
+  "lastHeartbeatNote": "週日 14:02 heartbeat poll：守則#19 探針重跑 ok:true（Telegram 通道健康）、cron 40 個全清單查過無重大異常（僅「每30分鐘任務健康檢查」本身這次 lastRunStatus=error，待下次觀察）、HEARTBEAT.md 重啟後第一件事已執行——已透過 curl bypass 送 Telegram 訊息（message_id 9225）告知教練「13:38 對話已自動重啟 + 6 天未對話提醒」；教練 158h+ 靜默 + 週日下午 + 剛重啟已主動告知 → 不重複打擾，HEARTBEAT_OK。",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "afternoon",
     "dayOfWeek": "Sunday",
     "isQuietHours": false,
-    "quietHoursReason": "週日 06:02 清晨 + 教練 154h+ 靜默 + 週末推定休息，進入不打擾模式",
+    "quietHoursReason": null,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 32,
-    "recentCoachActivity": "教練 154h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
+    "recentCoachActivity": "教練 158h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
     "junshiQueueTask": "✅ VPS 記憶搜尋修復已完成（07-20 12:56 寫入 result）— 仍待教練裁示 5 個優先動作",
-    "junshiCommitHashes": [
-      "d816bc8a",
-      "e0711644"
-    ],
+    "junshiCommitHashes": ["d816bc8a", "e0711644"],
     "gatewayPid": 48632,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-02T09:05:38.713988+08:00 (守則#19 探針 ok:true)",
+    "telegramChannelLastVerified": "2026-08-02T14:02:00.000000+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26T19:51:00+08:00",
-    "coachSilentHours": 157.2,
+    "coachSilentHours": 158.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -50,22 +47,33 @@
       "小龍蝦紀律移植計劃 階段二/三"
     ],
     "restartInfo": {
-      "restartedAt": "2026-08-01T02:07:00+08:00",
+      "restartedAt": "2026-08-02T13:38:00+08:00",
       "reason": "Context Overflow 自動重啟",
-      "memorySavedTo": "memory/2026-08-01.md",
-      "recordNumber": "8913",
-      "messageSent": true,
-      "messageId": 8913
+      "memorySavedTo": "memory/2026-08-02.md",
+      "notificationSent": true,
+      "notificationMessageId": 9225,
+      "notificationChannel": "telegram",
+      "notificationMethod": "curl bypass (message tool disabled)"
     },
     "messageToolAvailable": false,
     "morningGreetingSent": true,
-    "nextPlannedAction": "2026-08-01 23:00 cron 健康檢查",
+    "nextPlannedAction": "下一場 heartbeat（預計 14:30+，等「每30分鐘任務健康檢查」下次跑）",
     "cronHealthCheck": {
       "name": "🦞 每30分鐘任務健康檢查",
-      "recentPattern": "20 個 cron 全 ok，連續錯誤 0",
+      "recentPattern": "本次 lastRunStatus=error（首筆），需下次觀察；其他 39 個 cron 全 ok 或 null（at 尚未到點）",
       "consecutiveErrors": 0,
-      "decision": "穩定，無需升級"
+      "decision": "待下次 heartbeat 再觀察（這次觸發本身即為該 cron，error 可能是上一次 09:05 後 context overflow 中斷所留下）"
     },
-    "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9077 成功)"
+    "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9225 成功)",
+    "restartNoticeDelivered": true,
+    "lastDeliveries": [
+      {
+        "ts": "2026-08-02T14:02:00+08:00",
+        "channel": "telegram",
+        "to": "6124913915",
+        "messageId": 9225,
+        "purpose": "重啟通知 + 6天靜默提醒"
+      }
+    ]
   }
 }
