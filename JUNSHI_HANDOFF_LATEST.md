@@ -45,6 +45,50 @@
 | 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
+| 🟢 | **Mac版Web Search修復（Telegram三帳號+LINE三帳號共用）** | ✅v90已完成 | 教練發現Mac版打不開Web Search只能退而求其次DuckDuckGo，查證原生`web_search`綁死MiniMax專屬鑰匙（未申請）。改用系統內建`duckduckgo`外掛（官方標明無需API Key）：`openclaw plugins enable duckduckgo`+`config set tools.web.search.provider duckduckgo`+重啟gateway，production log證實真實搜尋成功。commit `c9cc8072`。VPS版查證後發現本來就正常（容器內`MINIMAX_API_KEY`恰好也能當搜尋備援），誤改後已撤銷復原，VPS無需任何動作。詳見v90完整戰果+[[試金石案例55]] |
+| 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
+
+---
+
+---
+
+# 軍師接力棒 · 2026-08-02 v90（Mac桌面版 Sonnet 5，Mac版Web Search修復+VPS/LINE版全面盤點，過程中兩次被教練抓到查證不完整）
+
+> 建立時間：2026-08-02 深夜（台灣時間）
+> 本棒執行者：Mac桌面版 Sonnet 5
+> 上一棒：v89（Mac桌面版Sonnet5，ai-talk-tw輪播花絮修復+小龍蝦系統全面健檢）
+> 本棒主軸：**教練發現Mac版小龍蝦（教練/孔大哥/佩佩老師）用不了Web Search、只能退而求其次用DuckDuckGo，追問原因。查證+修復完成後，教練追問VPS版跟LINE版是否也需要同樣的開關，過程中軍師連續兩次查證不完整被教練當場糾正：①沒先查`路徑大全_憑證層.md`就回報「VPS查不到」②盤點LINE版帳號時漏算沒有名稱標籤的「龍蝦小助教」，只回報兩個。教練藉此機會給出更高層的期許：軍師是整個特助系統的大總管，要自己設計方法確保「用戶說的每句話都記得住、資訊都查得全」，不是每次都靠教練提醒。已將這兩次疏失連同技術修復一併寫入試金石案例55。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 Mac版Web Search真正修復：啟用DuckDuckGo外掛+明確指定為預設provider
+教練質疑「Mac本機本來就能上網，為什麼Web Search要綁死MiniMax專屬鑰匙才能用」，查證OpenClaw原始碼確認：`web_search`工具需要一個「已註冊的搜尋provider」，MiniMax原生搜尋走的是獨立於聊天Key之外的「Coding Plan」專屬鑰匙（`MINIMAX_CODE_PLAN_KEY`等），這台Mac從未申請過。但系統內建的`duckduckgo`外掛官方文件寫明「no API key required」，只是裝了沒開。執行`openclaw plugins enable duckduckgo`+`openclaw config set tools.web.search.provider duckduckgo`+`openclaw daemon restart`後，從production log直接看到真實cron任務成功用duckduckgo查到「台南天氣」的真實搜尋結果（標題/網址/摘要齊全），確認修復生效。commit `c9cc8072`。
+
+影響範圍：`tools.web.search`是整台Mac唯一一份`openclaw.json`的全域設定，main/kong/peipei（Telegram）+bni_tainan/jiaolian_thoughts/**default（龍蝦小助教）**（LINE）五個agent同一個gateway程序，一次設定全部生效，不需要逐一開。
+
+**過程中一個技術細節記錄**：`openclaw agent --agent main`這個CLI測試指令，即使在plugin確實生效之後，仍持續回報「web_search is disabled or no provider is available」，跟同時間production log裡真實cron任務成功的結果互相矛盾。判斷是這個CLI測試指令本身有獨立於正式gateway之外的runtime快取/隔離問題，不是修復沒生效——最終以production log的真實成功案例為準，不是以這個測試指令為準。下次要驗證web_search功能，直接查`openclaw logs`裡有沒有真實`provider: duckduckgo`成功記錄最準，不要只信`openclaw agent`測試指令。
+
+### 2. 🔴🔴 犯錯記錄：VPS查證沒先讀路徑大全+LINE帳號盤點漏算一個（試金石案例55）
+教練追問VPS/LINE版是否也需要開Web Search，軍師連續兩處查證不完整，教練當場兩次糾正，完整過程與教訓已寫入`試金石/試金石_案例庫.md`**案例55**，此處只記結論：
+
+- **VPS真相**：用路徑大全的憑證(`sshpass -p '9kdxvQN2' ssh root@43.245.60.200`，容器名`openclaw`)連進去查證後發現，VPS的Docker容器環境變數裡本來就有`MINIMAX_API_KEY`，這把鑰匙OpenClaw原始碼裡剛好也接受當搜尋功能的備援認證，**VPS的Web Search本來就是通的**（走MiniMax原生搜尋，不是DuckDuckGo）。軍師一開始誤判VPS跟Mac同病，動手開了duckduckgo外掛並設為預設provider，事後查log發現VPS原本就有真實成功搜尋記錄，判斷是多此一舉的改動，**已撤銷（`openclaw config unset tools.web.search.provider`）+重啟容器確認恢復原狀+VPS維持健康**。結論：VPS不需要任何開關，是軍師一開始沒查證就誤判。
+- **LINE帳號真相**：`channels.line.accounts`底下其實有3個key，`default`(綁main agent，龍蝦小助教，教練pairing制專屬)、`bni_tainan`(大台南南區小幫手)、`jiaolian_thoughts`(教練都在想什麼)。軍師最初只點名了有名稱標籤的後兩個，教練糾正後補上第三個。三者都在Mac同一gateway程序，Web Search修復已一併覆蓋全部三個。
+
+### 3. 🎯 教練期許：軍師是特助系統大總管，要自行設計「查得全、記得住」的方法
+教練在指出兩次疏失後，明確拉高格局：「你是所有資訊的大總管，是我們整個特助系統的軍師，所以你自己要想辦法完善……用你的邏輯跟系統去完成。」這不是單一任務的糾正，而是對「頂級特助如何自我要求」的期許——已寫入試金石案例55的「悟到什麼」段落，核心是兩條可執行的自我檢查動作：①任何「查不到/做不到」結論說出口前，先確認有沒有查過該環境的萬用索引檔（這台Mac是路徑大全）②任何「盤點/列舉」類任務，直接對著底層資料結構（JSON物件的key數量）逐一點名核對，不能只挑印象中顯眼的幾筆。
+
+## 📋 下一場直接開工任務
+- 沿用v89未完成事項：ai-talk-tw延遲問題需追問教練三個細節、memory自動快照卡住5小時以上待查根因、OpenClaw升級待node版本處理
+- 真誠/真愛/真AI分會＋大台南南區網站：仍等教練回覆5項細節，多場未更新
+- Email自動發送系統、嘉義場籌備：仍卡在等教練給細節
+- 若教練之後測試Telegram/LINE任一帳號問「查資料」類問題，可順手確認Web Search回覆是否正常帶出真實網址（非硬性待辦，僅供驗證參考）
+
+## 🔑 本場關鍵檔案索引
+- `openclaw.json`：新增`tools.web.search`區塊（enabled+provider=duckduckgo）、`plugins.entries.duckduckgo.enabled=true`
+- `試金石/試金石_案例庫.md`：新增案例55（VPS查證+LINE盤點兩次疏失完整記錄）
+- commit（workspace main分支）：`c9cc8072`（Web Search修復：啟用duckduckgo外掛+明確指定provider）
+- VPS：已連線查證+誤改後撤銷，VPS本身無任何commit異動（設定已還原）
+- 路徑大全位置：`workspace/路徑大全_憑證層.md`（VPS/Hermes SSH密碼、sshpass快速連線指令）
 
 ---
 
@@ -149,50 +193,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-07-29 v87（聯想Windows Sonnet 5，BNI大台南南區＋真誠分會網站版型規劃，教練交棒給Mac）
-
-> 建立時間：2026-07-29（台灣時間）
-> 本棒執行者：聯想Windows桌面版 Sonnet 5
-> 上一棒：v86（Mac桌面版Sonnet5，AI微型論壇台南場正式登場：現場緊急支援+LINE綁定bug修復+活動轉型回顧頁）
-> 本棒主軸：**開工六步驟後，教練交辦卡了多棒的「真誠/真愛/真實AI分會願景說明書」——這次終於給了具體參考：bnidahan.com.tw（教練心目中理想範例）+bni-tainan.com/Training-Program（區域參考頁），要求BNI標準色系。實際瀏覽兩站抓出真實CSS色碼後，產出真誠分會＋大台南南區兩份完整HTML版型草稿，教練用Comet看過確認「方向正確」。教練接著問要不要親自逐步交代細節，軍師表態自己先動手做，但教練提醒公開網路查得到的分會資料很少，上網查詢是浪費token，直接問比較快——已改口直接列5項關鍵事實請教練回覆。教練最後決定切換到Mac電腦接手，本棒任務是把目前進度完整交棒。**
-
-## 🎯 本場戰果
-
-### 1. 開工六步驟＋一個當場未解的小疑點
-執行六步驟時查`state/recall_index.jsonl`發現：v85接力棒寫完(7/28 19:06)後教練同晚又開新對話(20:03-20:32)，已把AI微論壇60位報名者Email整理進Gmail草稿匣(BCC保護隱私)準備寄提醒信，教練最後一句是「一會兒我就來寄信了」。開工回報時主動提出詢問是否已送出，教練當下沒回答就轉向其他任務。**事後對照Mac的v86才確認：AI微論壇7/29台南場當天已經正式辦過(見v86完整戰果)，代表這封提醒信的時效已經過去，不再是急件，純粹是個可以順口收個尾的小疑點，不影響任何現況任務。**
-
-### 2. 🎯🎯 BNI真誠分會＋大台南南區網站版型規劃（本場主軸）
-教練給定兩個參考網址，先用Browser工具實際瀏覽並用`javascript_tool`抓取頁面真實computed style，取得BNI品牌色實測值：bnidahan.com.tw主色`rgb(162,32,38)`≈`#A22026`、bni-tainan.com主色`rgb(145,14,20)`≈`#910E14`，確認BNI標準色系是深酒紅色系，非憑印象猜測。
-
-**版型設計邏輯**：
-- **真誠分會**（單一分會品牌站，比照bnidahan.com.tw結構）：Header導覽(認識分會/特色團隊/會員名錄/分會之光/活動)→Hero+「預約參訪」CTA→參訪須知4卡(正式服裝/50張名片/20秒自介/早餐Buffet，文字沿用bnidahan原文，教練已表示部分數字要改但尚未給確切值)→核心價值(Givers Gain)→分會之光(示意數據待填)→Footer社群連結
-- **大台南南區**（區域總站，比照bni-tainan.com/Training-Program結構）：Header導覽(認識BNI/轄下分會/培訓計畫/最新消息)→滿版酒紅色Hero→轄下分會卡片(真誠/真愛/真實AI，此區為延伸設計，原站沒有因為它是單分會頁)→培訓計畫卡片(MSP/成功藍圖/引薦/帶來賓)→最新消息列表→Footer
-
-先用`mcp__visualize__show_widget`做過一版精簡wireframe給教練看方向，教練確認「方向正確」後，因教練說「你至少要跳HTML出來給我看吧」，改用這台機器既有SOP（`feedback_html_preview_chrome_only`：聯想這台Chrome會跳空白頁，改用Comet）——寫出兩份**完整靜態HTML**(非簡化widget版，含真實CSS排版/hover效果/Noto Sans TC字型)存到`D:\Users\Desktop\`，用`comet.exe`跳出兩個視窗給教練看，教練確認滿意。
-
-**教練釐清協作模式**：教練問「你要自己先動手做，還是我一步一步跟你說？」，軍師表態自己先動手做（守則#12拒絕當資訊搬運工），原打算上網查真誠/真愛/真實AI分會有沒有公開資料可引用，**教練當場糾正**：「網路上可以公開查詢的資訊不多，直接問我比較快」——BNI分會資料屬於內部/私有性質，本來就不是WebSearch查得到的範疇，已改為直接列出5項需要教練親自提供的關鍵事實(參訪須知數字/真愛與真實AI分會slogan/分會之光是否放真實數據/大台南南區轄下分會範圍/各分會FB與Line連結)。
-
-**部署位置**：教練確認先放GitHub Pages測試稿(非Netlify正式站)，已放進`knowledges/2026-07-29_bni-nantai-mockup/`(注意：github_repos/整個資料夾被.gitignore排除，每個子資料夾其實是獨立GitHub repo，不能直接放草稿進去，這是本場才發現的真規則，暫放knowledges等內容定案後再由Mac建立實體GitHub repo)。
-
-### 3. 🎯 Chrome新使用者資料夾位置（快速問答）
-教練問Chrome新增使用者的User Data會落在C槽還是E槽，查證這台機器`C:\Users\bymyw\AppData\Local\Google\Chrome\User Data`本身是Junction指向`E:\Claude-Data\AppData\Chrome-User-Data`，回答新增的Profile會落在E槽（因為整個User Data資料夾早就搬家了）。
-
-## 📋 下一場（Mac）直接開工任務
-
-- **🟡 主線**：等教練回覆5項BNI網站細節後，把`knowledges/2026-07-29_bni-nantai-mockup/`兩份草稿的佔位內容(黃色提示條標記處)換成真實資料，並產出真愛分會/真實AI分會兩個套版版本，之後視教練指示建立實體GitHub repo+開Pages
-- **🔴🔴🔴 BNI大台南小幫手「主動提醒」功能**（v77已設計好cron事件驅動架構，方向清楚，已多場未動手，優先度持續最高）
-- 順手可問一句：AI微論壇那封60位BCC提醒信Gmail草稿後來寄了嗎（非急件，見上方戰果1說明）
-- 嘉義場籌備（見v86，教練尚未給細節）
-
-## 🔑 本場關鍵檔案索引
-- `knowledges/2026-07-29_bni-nantai-mockup/真誠分會_index.html`：真誠分會版型草稿(比照bnidahan.com.tw)
-- `knowledges/2026-07-29_bni-nantai-mockup/大台南南區_index.html`：大台南南區版型草稿(比照bni-tainan.com/Training-Program)
-- `D:\Users\Desktop\bni_真誠分會_mockup.html`、`D:\Users\Desktop\bni_大台南南區_mockup.html`：教練Comet驗收用的桌面副本(與repo版內容相同)
-- 本場無commit（版型草稿存於knowledges，尚未有正式commit對應的獨立repo）
-
----
-
-> 📦 **v85及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v87及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新3棒(v89/v88/v87)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新3棒(v90/v89/v88)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
