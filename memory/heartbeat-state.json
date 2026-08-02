@@ -2,18 +2,18 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785650520,
-    "system_health": 1785650520,
-    "telegram_channel": 1785650520,
+    "heartbeat_poll": 1785665043,
+    "system_health": 1785665043,
+    "telegram_channel": 1785665043,
     "junshi_queue": 1785599760,
     "cron_list": 1785650520,
     "care_4h": 1785535384,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785546060,
-    "evening_greeting": 1785492248
+    "evening_greeting": 1785665043
   },
-  "lastHeartbeat": "2026-08-02T14:02:00.000000+08:00",
-  "lastHeartbeatNote": "週日 14:02 heartbeat poll：守則#19 探針重跑 ok:true（Telegram 通道健康）、cron 40 個全清單查過無重大異常（僅「每30分鐘任務健康檢查」本身這次 lastRunStatus=error，待下次觀察）、HEARTBEAT.md 重啟後第一件事已執行——已透過 curl bypass 送 Telegram 訊息（message_id 9225）告知教練「13:38 對話已自動重啟 + 6 天未對話提醒」；教練 158h+ 靜默 + 週日下午 + 剛重啟已主動告知 → 不重複打擾，HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-08-02T18:04:03.317518+08:00",
+  "lastHeartbeatNote": "週日 18:01 heartbeat poll：守則#19 探針 ok:true（通道健康）、系統盤點：openclaw gateway PID 44124 正常 / peipei gateway 不在本機（不歸我管）、cron 39 個全清單查過無重大異常（僅「每30分鐘任務健康檢查」上次 error，預期內）、重大發現：今晚 22:20 「Day 1/20 寄 50 封信」提醒會自動觸發（教練前幾天設定的 20 天計畫），教練已 166h+（7 天）靜默——剛透過 curl bypass 送 Telegram 訊息（message_id 9249）禮貌性晚間問候 + 22:20 任務預警 + 詢問是否要停。",
   "systemSnapshot": {
     "timeOfDay": "afternoon",
     "dayOfWeek": "Sunday",
@@ -21,20 +21,23 @@
     "quietHoursReason": null,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
-    "contextPercent": 32,
-    "recentCoachActivity": "教練 158h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
+    "contextPercent": 28,
+    "recentCoachActivity": "教練 166.2h+ 沒跟小龍蝦 Telegram 對話（自 2026-07-26 19:51 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
     "junshiQueueTask": "✅ VPS 記憶搜尋修復已完成（07-20 12:56 寫入 result）— 仍待教練裁示 5 個優先動作",
-    "junshiCommitHashes": ["d816bc8a", "e0711644"],
+    "junshiCommitHashes": [
+      "d816bc8a",
+      "e0711644"
+    ],
     "gatewayPid": 48632,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-02T14:02:00.000000+08:00 (守則#19 探針 ok:true)",
+    "telegramChannelLastVerified": "2026-08-02T18:04:03.317518+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-07-26T19:51:00+08:00",
-    "coachSilentHours": 158.2,
+    "coachSilentHours": 166.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -75,5 +78,14 @@
         "purpose": "重啟通知 + 6天靜默提醒"
       }
     ]
-  }
+  },
+  "lastDeliveries": [
+    {
+      "ts": "2026-08-02T18:04:03.317518+08:00",
+      "channel": "telegram",
+      "to": "6124913915",
+      "messageId": 9249,
+      "purpose": "週日晚間關懷 + 22:20 Day 1/20 寄信任務預警"
+    }
+  ]
 }
