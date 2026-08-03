@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785546060,
     "evening_greeting": 1785665043,
-    "coach_silence_sync": "2026-08-03T21:32:26.639971+08:00"
+    "coach_silence_sync": "2026-08-03T22:00:05.052427+08:00"
   },
   "lastHeartbeat": "2026-08-02T18:04:03.317518+08:00",
   "lastHeartbeatNote": "週日 18:01 heartbeat poll：守則#19 探針 ok:true（通道健康）、系統盤點：openclaw gateway PID 44124 正常 / peipei gateway 不在本機（不歸我管）、cron 39 個全清單查過無重大異常（僅「每30分鐘任務健康檢查」上次 error，預期內）、重大發現：今晚 22:20 「Day 1/20 寄 50 封信」提醒會自動觸發（教練前幾天設定的 20 天計畫），教練已 166h+（7 天）靜默——剛透過 curl bypass 送 Telegram 訊息（message_id 9249）禮貌性晚間問候 + 22:20 任務預警 + 詢問是否要停。",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-02T18:04:03.317518+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 7.6,
+    "coachSilentHours": 8.1,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
