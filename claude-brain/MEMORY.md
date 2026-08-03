@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯🎯 CLAUDE.md健康檢查：揪出2個真過期案例+E01~E16逐條證據型健檢，合併E10/E02(2026-08-03)](project_claude_md_health_check_2026-07-31.md) — 特助心法段落補自動同步+Netlify規則補_headers教訓；教練授權「有用留著、過時的移到歷史備忘」
+- [🔧 關鍵字觸發規則要做成hook驗證，不能只靠文件宣告——「開工」/「總結」對稱範式(2026-08-03)](reference_deterministic_hooks_over_docs_pattern.md) — pipe-test+jq schema驗證兩件套；下次「以後聽到X就Y」需求直接抄這個範式
 - [🔴🔴🔴 查證前先查路徑大全+盤點類任務要窮舉底層資料結構，不能只挑顯眼項目(2026-08-02)](feedback_check_master_index_before_claiming_cant_find.md) — VPS沒查路徑大全就回報查不到+LINE帳號盤點漏算無標籤的龍蝦小助教，教練期許「軍師是系統大總管要自己想辦法完善」，見試金石案例55
 - [🎯 mentor100後台新增「複製修改連結」按鈕，教練自助發送不用問AI(2026-08-02)](project_mentor100_edit_link_selfservice_2026-08-02.md) — edit_token早就存在資料庫，純UI缺口；CONTEXT.md已預寫答案，證實新專案先讀CONTEXT.md省時間
 - [🎯🎯🎯 BNI Connect官方網站後台操作能力驗證，教練理念「動嘴讓AI做事」重要進度(2026-07-31)](project_bni_connect_backend_access_verified_2026-07-31.md) — claude-in-chrome連上教練真實Chrome、DOM純文字操作不截圖；換機器要重新登入+裝擴充功能，方法已共用但登入狀態per機器

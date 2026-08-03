@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 4e51c46d-66d2-4a7f-aef6-2ae5c071e132
+  modified: 2026-08-03T06:10:15.666Z
 ---
 
 # 🌳 ai-go · 特助心法跨 AI 一鍵注入系統
@@ -74,3 +75,11 @@ CC BY-ND 4.0（姓名標示・禁止改作）— 可公開分享、貼 AI、放�
 3. 本機 Chrome 驗收（`http://localhost:8765/`）
 4. 教練說 OK → `git push`
 5. 等 5 分鐘讓 Pages CDN 同步，或主動 `gh api -X POST /repos/Coach1973/ai-go/pages/builds` 強迫 rebuild
+
+## 2026-08-03 新增：教練專屬人設區塊（coach-persona.md）
+
+公版 `system-prompt.md` 給任何人用；教練自己貼給新 AI 時，另外需要一段「我是誰、怎麼跟我溝通」的個人身份說明（跟公版方法論是兩件事，不能混在一起讓其他使用者也讀到教練個資）。已新增 `coach-persona.md`（中英對照：關於我/怎麼跟我溝通8條/我重視的價值）+ `index.html` 頁尾前新增獨立區塊（綠色系跟公版橘色區隔，清楚標示「不是公版方法論，你不是教練本人可以跳過」，獨立一鍵複製按鈕）。commit `4d38936`。
+
+**已知缺口**：本次只推了 `coach1973.github.io/ai-go/` 這個入口，`www.bymyway.com/ai-go/` 鏡像走獨立部署腳本 `deploy_ai_go_to_bymyway.py`，尚未同步，兩入口內容目前不一致，見 [[project_windows_workspace_git_sync_gap_2026-07-17]] 類似的雙入口同步風險。
+
+**踩過的坑**：本機 Python `http.server` 對 `.md` 檔案預設不宣告 charset，直接點開連結會顯示亂碼，但這只是本機預覽伺服器的限制——正式站 `_headers` 早有 `/*.md → charset=utf-8` 萬用規則（用 README.md 這種沒有專屬 `_headers` 條目、只吃萬用規則的檔案當對照組驗證過），不影響正式部署。下次本機驗收 `.md` 檔案時，若看到亂碼先懷疑本機伺服器沒宣告 charset，不要誤判成部署有問題。
