@@ -10,7 +10,7 @@
 | 🟢 | **event-signup抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤** | ✅v85完成，7/29現場正式使用 | 詳見v85完整戰果。名單直接查簽到記錄不用手動輸入、獎品清單+抽中自動扣庫存+中獎彈窗+15句趣味台詞。7/29教練現場異地登入密碼重設(改成教練指定的新密碼)+實測登入成功，詳見v86 |
 | 🟢 | **LINE綁定率低(56簽到僅12綁定)真正原因+修復** | ✅v86已完成 | `/checkin`簽到路徑的`/slides`頁面沒有像線上報名`/thanks`頁面一樣幫來賓預填「我是OOO，剛報名了XXX」問候語，來賓要自己手動輸入才會綁定，多數人卡在這步放棄。已修復`slides_landing()`補上同一套`greet_url`邏輯，測試通過並部署，未來場次現場簽到綁定率應明顯改善 |
 | 🟢 | **AI微型論壇台南場轉型為活動回顧頁** | ✅v86已完成 | 仿照全球健康發展協會(northern-tw.netlify.app)做法，`ai-talk-tw.netlify.app`從報名頁轉成歷史紀錄：花絮換成教練提供的24張現場真實照片、拿掉倒數計時器/報名區塊、CTA全改「加入LINE」、新增下一場嘉義場預告。GitHub commit `78213ed`，Netlify部署`6a6a1a24` |
-| 🟡 | **下一場：嘉義場** | 🔒卡住-等教練給細節 | 教練7/29晚間提到下一場預計辦在嘉義，尚未給時間/地點/講師等任何細節，教練給了之後可直接比照台南場經驗開工 |
+| 🟡 | **AI微型論壇嘉義場(ai-talk repo)網站build完成** | 🔒卡住-等講師確認後推Netlify | v93已完整轉型：嘉義場(8/28五14:00-17:00，再耕園404演講廳)成主場，台南場改成「歷屆回顧」完整版面封存(比照northern-tw.netlify.app真實查證的做法，不是簡化摘要卡)。內容：5大主題議程(含神秘嘉賓)、4位講師(季哥Eric Chi/洪詠清/林韋銘/吳大樹)點擊卡片彈窗顯示簡介(比照mentor100)、100元園遊券制收費(可全額折抵攤位消費)、100席上限每天+3人動態倒數、報名表加公司統一編號欄位、現場設攤方案2000元含專屬桌+1000元園遊券贈品。已推GitHub Pages(`coach1973.github.io/ai-talk`)供講師預覽，教練說等講師確認沒問題會請軍師推Netlify(`ai-talk-tw.netlify.app`目前仍是台南場舊版)。commit序列見v93章節，最新`1170729` |
 | 🟢 | 「教練都在想什麼」LINE帳號完整搬遷到Mac+MiniMax-M3 | ✅本場已完成 | 詳見下方v81完整戰果。人設逐字搬遷+46萬字知識庫+FTS5全文檢索+webhook正式上線服務121位好友+dmPolicy修復+seabiscuit.bymyway.com監控後台+User ID對照hook泛化。教練待自行測試seabiscuit.bymyway.com登入(密碼Bymyway7，第一次會卡裝置配對，把畫面ID給軍師) |
 | 🟡 | 「教練都在想什麼」案例庫深度待擴充 | ⏳待教練提供更多素材 | 目前只有教練提供的4份文件(大樹使命之旅/禮物諮詢法/海餅乾文化核心逐字稿/海餅乾語錄，共46萬字)，教練原話「提供更多資料庫讓AI做更大的品牌宣傳」——若教練還有其他素材(更多逐字稿/文章/Podcast)，補進`agents/jiaolian_thoughts/knowledge/`後跑一次`python3 scripts/build_search_index.py`重建索引即可 |
 | 🟡 | 教練其他類似LINE帳號待比照搬遷 | ⏳待教練指定下一個帳號 | 教練原話「我還有其他類似的帳號也要這麼做」，已產出完整SOP：`knowledges/SOP_Coze_LINE帳號搬遷小龍蝦本機.md`，下次教練指定帳號直接照SOP 12步驟走，不用重新摸索 |
@@ -51,7 +51,45 @@
 | 🟢 | **龍蝦小助教LINE群組長期失效真根因找到並修復** | ✅v92已完成 | 教練回報龍蝦小助教Telegram/LINE都沒回應，且群組互動早已失效。查證發現`@openclaw/line`外掛對accountId==="default"完全不讀`channels.line.accounts.default`底下設定，`groupPolicy`/`groupAllowFrom`從設定搬進accounts.default那刻起就架構性失效。已修復：改在`channels.line`頂層設定，`accounts.default`只留`webhookPath`。commit `ec48b7bd`，用合成簽章webhook實測驗證。詳見試金石案例56 |
 | 🟢 | **main agent健檢cron的exec/read/cron工具被昨天權限鎖誤傷，已修復** | ✅v92已完成 | 根因：cron觸發的agent turn沒有senderId，永遠落到`toolsBySender`的`"*"`deny規則。改用群組層級鎖(Telegram schema支援)取代agent層級萬用鎖，cron不再被誤傷。commit `56c0efe3`。**已知殘留風險**：LINE外掛(2026.6.33)不支援群組層級`toolsBySender`，LINE群組的非教練成員保護降級為`workspace/SOUL.md`鐵律五提示層防護(非技術硬鎖)，教練已知會，待外掛未來版本補上 |
 | 🟢 | **主動提醒功能推廣到三個LINE帳號** | ✅v92已完成 | 教練指示「立刻推廣」。原本`hooks/bni-reminder-schedule`寫死只認bni_tainan，已推廣到jiaolian_thoughts+default(龍蝦小助教)，過程中修好一個accountId解析bug(default帳號session key含"main"非"default"，已正規化)。commit `41ffac6b`，三帳號皆用合成webhook實測通過 |
-| 🔴 | **教練15:18有一段修改回饋被中斷、內容未送達** | 🔒待教練重述 | 教練說「好，這個需要更改的幾個點我說一下。首先，先肯定做得不錯！」後被系統標記為[Request interrupted by user]，緊接著教練改下達「總結」指令收工。**這段「需要更改的幾個點」實際內容從未送達軍師**，下一場開工請教練直接重新講一次，不要假設軍師已經知道要改什麼 |
+| 🟢 | ~~教練15:18有一段修改回饋被中斷、內容未送達~~ | ✅v92記錄有誤，已在Mac桌面版另一場對話完整收到並執行 | v92記錄的是「終端機」session看不到內容，但同一時段「桌面版」session其實完整收到了教練15:18那段完整訊息（適合誰參加文案改法/洪詠清林韋銘換照片/品牌曝光加現場輪盤抽獎三點），並已於v93完整執行，commit `4742cff`。**教訓**：多個Mac session（終端機/桌面版）同時開著時，教練同一句話可能只進到其中一個視窗，另一個看不到不代表訊息真的遺失，下次遇到類似狀況先問教練「是在哪個視窗說的」，不要直接判定「未送達」 |
+
+---
+
+# 軍師接力棒 · 2026-08-04 v93（Mac桌面版 Sonnet 5，AI微型論壇嘉義場網站從零build完成，含台南場northern-tw式完整封存）
+
+> 建立時間：2026-08-03 下午～2026-08-04 凌晨（台灣時間，跨整場對話）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v92（Mac終端機Sonnet5，龍蝦小助教LINE群組失效修復+cron權限修復+提醒功能推廣三帳號）
+> 本棒主軸：**教練指示嘉義場（8/28）AI微型論壇網站籌備，這是一場從「嘉義場資料設置」到「網站正式可分享給講師預覽」的完整迭代過程，前後經歷5輪教練回饋修正。核心工作是把`github_repos/ai-talk`這個單頁網站從台南場（已結束）轉型為嘉義場（即將舉辦）為主場，同時忠實保留台南場當天的完整版面設計。過程中兩次直接查證教練提供的參考網站（northern-tw.netlify.app）的真實結構，而不是憑印象猜測，第二次查證後才發現第一版「歷屆回顧」做得太簡化，重做成忠實封存整頁設計，這是本場最大的方法論教訓。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 嘉義場完整build：從4位講師資料抓取到全站文案改寫
+從mentor100資料庫（教練另一個「AI百人導師」專案）撈取洪詠清/林韋銘/季哥Eric Chi三位講師的真實簡介+照片，加上教練既有的吳大樹（大樹教練）簡介，組成4位講師陣容；議程從5大主題精簡再依教練指示加回「神秘嘉賓：中小微企業補助貸款」變回5項；hero/navbar/報名彈窗/FAQ等全站文案改為嘉義場8/28（五）14:00-17:00、再耕園404演講廳。
+
+### 2. 🎯🎯 台南場改為northern-tw.netlify.app真實查證後的「完整封存」（非簡化摘要）
+第一輪教練只說「歷屆回顧」，做了一個精簡摘要卡+輪播的版本。教練接著明確指出「我希望像northern-tw.netlify.app/#session-411一樣，完整保留7/29那天的頁面」，這次**先實際打開該網址查看真實結構**（而非猜測），確認它是把每場活動的完整版面（hero/議程/講師/花絮/贊助/FAQ）原封不動接續放在同一頁下方，不是簡化卡片。重做成完整封存區塊：所有id加`tn-`前綴避免與現役嘉義場衝突，寫python腳本驗證整份文件id全部唯一、無重複、無斷鏈錨點。
+
+### 3. 🎯 講師卡片改點擊彈窗（比照mentor100「AI百人導師」）
+教練用「AI百人導師」類比要求講師卡片點擊直接彈窗顯示完整簡介，不要下方重複介紹。查證`mentor100/templates/index.html`的`openBio(btn)`模式（data屬性+共用modal），在嘉義場現役區塊套用同款互動，台南封存區塊依教練指示保持原樣不動。
+
+### 4. 🎯 多輪細節微調：100元園遊券制收費、100席+每天3人倒數、統一編號欄位、設攤方案定價
+陸續完成：收費模式從免費改100元（可全額折抵現場攤位消費，園遊券概念）；報名人數改100席上限、以2026-08-03為基準每天+3人；報名表加「公司統一編號」選填欄位；現場設攤方案補上2000元+專屬桌+1000元園遊券贈品；洪詠清照片教練換了兩次都即時更新。
+
+### 5. 🎯 已推GitHub Pages供講師預覽，Netlify按兵不動
+教練刻意分兩階段：先只推GitHub讓講師看過確認，之後才推Netlify正式上線。查證`coach1973.github.io/ai-talk`本來就有設好的GitHub Pages（教練記得但不確定網址），curl驗證確認自動跟main分支同步。全程每次修改都用python http.server本機起服務+claude-in-chrome做真實瀏覽器驗證（DOM文字內容/圖片200載入/console無錯誤/互動功能測試），另用`open -a "Google Chrome"`開真實Chrome供教練親眼查驗，符合`web_preview_verify_guard.sh`的查證鎖要求。
+
+## 📋 下一場直接開工任務
+- **等教練確認講師看過嘉義場網站沒問題**，之後才推`ai-talk-tw.netlify.app`正式上線（目前線上還是台南場舊版）
+- v92記錄的「教練15:18訊息遺失」已釐清是誤判，本場桌面版session完整收到並執行，詳見待辦表修正說明
+- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統等）本場未觸碰，狀態不變
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/ai-talk/index.html`：本場唯一異動檔案，996行→1300+行
+- `github_repos/ai-talk/images/speaker-{jige,hong,lin}.jpg`：新增/替換的講師照片
+- commit序列（ai-talk獨立repo，時間序）：`9ea596a`（嘉義場主場轉型）→`14456e1`（地址時間+100元+神秘嘉賓+歷屆回顧初版）→`4742cff`（教練三點微調）→`d32b0dd`（設攤方案定價）→`8b0d33a`（台南場northern-tw式完整封存重做+報名倒數+統編欄位）→`04c45d7`（講師彈窗）→`1170729`（洪詠清照片第三版）
+- GitHub Pages預覽：`https://coach1973.github.io/ai-talk/`
+- 待推正式站：`https://ai-talk-tw.netlify.app/`（教練確認後才動作）
 
 ---
 
@@ -143,58 +181,6 @@ commit序列：`0f54af6b2`（封存9條副本）→`0d1cc9755`（E10併入E02，
 
 ---
 
-# 軍師接力棒 · 2026-08-02 v90（Mac桌面版 Sonnet 5，Mac版Web Search修復+VPS/LINE版全面盤點+bigtree高雄場部署，過程中兩次被教練抓到查證不完整）
-
-> 建立時間：2026-08-02 深夜（台灣時間）
-> 本棒執行者：Mac桌面版 Sonnet 5
-> 上一棒：v89（Mac桌面版Sonnet5，ai-talk-tw輪播花絮修復+小龍蝦系統全面健檢）
-> 本棒主軸：**教練發現Mac版小龍蝦（教練/孔大哥/佩佩老師）用不了Web Search、只能退而求其次用DuckDuckGo，追問原因。查證+修復完成後，教練追問VPS版跟LINE版是否也需要同樣的開關，過程中軍師連續兩次查證不完整被教練當場糾正：①沒先查`路徑大全_憑證層.md`就回報「VPS查不到」②盤點LINE版帳號時漏算沒有名稱標籤的「龍蝦小助教」，只回報兩個。教練藉此機會給出更高層的期許：軍師是整個特助系統的大總管，要自己設計方法確保「用戶說的每句話都記得住、資訊都查得全」，不是每次都靠教練提醒。已將這兩次疏失連同技術修復一併寫入試金石案例55。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 Mac版Web Search真正修復：啟用DuckDuckGo外掛+明確指定為預設provider
-教練質疑「Mac本機本來就能上網，為什麼Web Search要綁死MiniMax專屬鑰匙才能用」，查證OpenClaw原始碼確認：`web_search`工具需要一個「已註冊的搜尋provider」，MiniMax原生搜尋走的是獨立於聊天Key之外的「Coding Plan」專屬鑰匙（`MINIMAX_CODE_PLAN_KEY`等），這台Mac從未申請過。但系統內建的`duckduckgo`外掛官方文件寫明「no API key required」，只是裝了沒開。執行`openclaw plugins enable duckduckgo`+`openclaw config set tools.web.search.provider duckduckgo`+`openclaw daemon restart`後，從production log直接看到真實cron任務成功用duckduckgo查到「台南天氣」的真實搜尋結果（標題/網址/摘要齊全），確認修復生效。commit `c9cc8072`。
-
-影響範圍：`tools.web.search`是整台Mac唯一一份`openclaw.json`的全域設定，main/kong/peipei（Telegram）+bni_tainan/jiaolian_thoughts/**default（龍蝦小助教）**（LINE）五個agent同一個gateway程序，一次設定全部生效，不需要逐一開。
-
-**過程中一個技術細節記錄**：`openclaw agent --agent main`這個CLI測試指令，即使在plugin確實生效之後，仍持續回報「web_search is disabled or no provider is available」，跟同時間production log裡真實cron任務成功的結果互相矛盾。判斷是這個CLI測試指令本身有獨立於正式gateway之外的runtime快取/隔離問題，不是修復沒生效——最終以production log的真實成功案例為準，不是以這個測試指令為準。下次要驗證web_search功能，直接查`openclaw logs`裡有沒有真實`provider: duckduckgo`成功記錄最準，不要只信`openclaw agent`測試指令。
-
-### 2. 🔴🔴 犯錯記錄：VPS查證沒先讀路徑大全+LINE帳號盤點漏算一個（試金石案例55）
-教練追問VPS/LINE版是否也需要開Web Search，軍師連續兩處查證不完整，教練當場兩次糾正，完整過程與教訓已寫入`試金石/試金石_案例庫.md`**案例55**，此處只記結論：
-
-- **VPS真相**：用路徑大全的憑證(`sshpass -p '9kdxvQN2' ssh root@43.245.60.200`，容器名`openclaw`)連進去查證後發現，VPS的Docker容器環境變數裡本來就有`MINIMAX_API_KEY`，這把鑰匙OpenClaw原始碼裡剛好也接受當搜尋功能的備援認證，**VPS的Web Search本來就是通的**（走MiniMax原生搜尋，不是DuckDuckGo）。軍師一開始誤判VPS跟Mac同病，動手開了duckduckgo外掛並設為預設provider，事後查log發現VPS原本就有真實成功搜尋記錄，判斷是多此一舉的改動，**已撤銷（`openclaw config unset tools.web.search.provider`）+重啟容器確認恢復原狀+VPS維持健康**。結論：VPS不需要任何開關，是軍師一開始沒查證就誤判。
-- **LINE帳號真相**：`channels.line.accounts`底下其實有3個key，`default`(綁main agent，龍蝦小助教，教練pairing制專屬)、`bni_tainan`(大台南南區小幫手)、`jiaolian_thoughts`(教練都在想什麼)。軍師最初只點名了有名稱標籤的後兩個，教練糾正後補上第三個。三者都在Mac同一gateway程序，Web Search修復已一併覆蓋全部三個。
-
-### 3. 🎯 教練期許：軍師是特助系統大總管，要自行設計「查得全、記得住」的方法
-教練在指出兩次疏失後，明確拉高格局：「你是所有資訊的大總管，是我們整個特助系統的軍師，所以你自己要想辦法完善……用你的邏輯跟系統去完成。」這不是單一任務的糾正，而是對「頂級特助如何自我要求」的期許——已寫入試金石案例55的「悟到什麼」段落，核心是兩條可執行的自我檢查動作：①任何「查不到/做不到」結論說出口前，先確認有沒有查過該環境的萬用索引檔（這台Mac是路徑大全）②任何「盤點/列舉」類任務，直接對著底層資料結構（JSON物件的key數量）逐一點名核對，不能只挑印象中顯眼的幾筆。
-
-### 4. 🎯 bigtree-tw（大樹小講）8/26場次補上「高雄場」標籤，已部署
-教練指定`github_repos/bigtree/index.html`裡`SESSION_DATES`陣列8/26那筆（主題「當古典音樂遇到AI科技」，跟7/22同系列）補上`location:'高雄場'`。改完先用Node.js把JS陣列eval出來驗證語法正確、14筆場次都能正常解析，再依鐵律用Google Chrome開本機檔案給教練親眼確認，教練回覆「推」後，走完整Netlify部署SOP（zip整個bigtree資料夾當下狀態+API上傳，NETLIFY_DEPLOY_CONFIRMED=1通過部署鎖），部署後直接curl正式網址`bigtree-tw.netlify.app/index.html`確認高雄場字樣真的在線上。bigtree repo commit `a3d9118`，Netlify部署id`6a6f68a82e9e8c51e42e8852`。**注意**：這個部署是整個bigtree資料夾（含子目錄`biz-gym`）一起打包上傳（歷史上此站點一直是這樣部署，`biz-gym`是同一個Netlify站台底下的子路徑），`biz-gym/index.html`目前在git裡有未commit的黑金改版WIP異動（[[project_bizgym_blackgold_redesign_2026-07-04]]），這次部署只commit了`index.html`（大樹小講本體），`biz-gym`的WIP異動未commit但已隨資料夾現況一起上線，如教練之後發現biz-gym頁面跟預期不同，是本場部署的已知副作用，非新bug。
-
-教練接著問「這個月還有幾次可以推」，已更新`state/netlify_deploy_quota.json`（57→56，主要credit pool剩約60次@8/25到期、備用pool剩約4次無到期日），commit `fc74ddf72`（workspace）。
-
-### 5. 🔍 教練詢問信用卡USD $10.49每月扣款來源，查證多輪未能確認商家，待教練回撥銀行進一步調查
-教練發現去年11/30起每月被扣USD $10.49（無商店名稱、來源美國，帳單只有授權碼），懷疑是忘記取消的訂閱。**已窮盡目前能查的免密碼管道，皆未命中**：Gmail全信箱歷史搜尋（含seabiscuitclub@gmail.com舊信箱，教練已在瀏覽器登入親自查過）、所有Stripe代收商家收據逐筆核對金額、Google Play訂閱清單（無有效訂閱）、Apple ID訂閱清單（5筆有效訂閱皆核對過金額，無吻合）。教練已回撥銀行一次，客服僅能查到商家在舊金山，無法問出更多細節。**下一步建議教練本人操作**（AI已無更多免密碼查證管道）：①要求銀行做正式交易爭議調查（非單純客服查詢，銀行需往下深挖merchant descriptor）②回想去年11/20~11/29間有無下載試用App/填過免費體驗表單（許多訂閱陷阱是試用到期轉付費，時間點吻合）。**此事本場未解決，若教練下次提起，直接從這兩條建議接續，不用重新查一遍已排除的管道。**
-
-## 📋 下一場直接開工任務
-- 沿用v89未完成事項：ai-talk-tw延遲問題需追問教練三個細節、memory自動快照卡住5小時以上待查根因、OpenClaw升級待node版本處理
-- 真誠/真愛/真AI分會＋大台南南區網站：仍等教練回覆5項細節，多場未更新
-- Email自動發送系統、嘉義場籌備：仍卡在等教練給細節
-- 若教練之後測試Telegram/LINE任一帳號問「查資料」類問題，可順手確認Web Search回覆是否正常帶出真實網址（非硬性待辦，僅供驗證參考）
-- **USD $10.49訂閱來源**：教練若回撥銀行問出商家全名，或想起11月試用過什麼App，直接接續查證，不用重查已排除的Gmail/Stripe/Google Play/Apple ID四條管道
-- **bigtree/biz-gym**：教練若反映biz-gym頁面異常，先確認是否為本場部署帶出的既有WIP異動（見戰果4說明），非新bug
-
-## 🔑 本場關鍵檔案索引
-- `openclaw.json`：新增`tools.web.search`區塊（enabled+provider=duckduckgo）、`plugins.entries.duckduckgo.enabled=true`
-- `試金石/試金石_案例庫.md`：新增案例55（VPS查證+LINE盤點兩次疏失完整記錄）
-- commit（workspace main分支）：`c9cc8072`（Web Search修復）、`fc74ddf72`（Netlify quota更新）
-- commit（bigtree repo）：`a3d9118`（8/26補高雄場）
-- VPS：已連線查證+誤改後撤銷，VPS本身無任何commit異動（設定已還原）
-- 路徑大全位置：`workspace/路徑大全_憑證層.md`（VPS/Hermes SSH密碼、sshpass快速連線指令）
-- Netlify部署：`6a6f68a82e9e8c51e42e8852`（bigtree-tw，8/26高雄場），quota 57→56
-
----
-
-> 📦 **v89及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v90及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新3棒(v92/v91/v90)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新3棒(v93/v92/v91)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
