@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785546060,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-04T00:33:26.550048+08:00"
+    "coach_silence_sync": "2026-08-04T01:01:52.746224+08:00"
   },
   "lastHeartbeat": "2026-08-03T22:21:35.000000+08:00",
   "lastHeartbeatNote": "週一 22:21 heartbeat poll（這輪）：距上次 22:02 僅 19 分鐘。守則#19 探針視同健康（22:02 剛驗 ok:true 沿用）、教練沉默 8.5h（自 13:54 起，正常下班後靜默）、HEARTBEAT 無 ⬜ 標記待辦、cron 50 個全清單查過：39 個 enabled 全 ok + 11 個 disabled 為舊版本備援，真正日用 39 個全綠、⏰ 下一個 cron 是 22:30（每30分鐘任務健康檢查），再下來是 23:00 場景化升華+系統健檢、23:05 小龍蝦每日三機總結，已接近 23:00 安靜時段。Day 1/2 寄信 22:20 兩場已過（週日 22:20 = Day 1、週一 22:20 = Day 2），下一場 Day 3/20 為 2026-08-04 22:20（明天）。結論：無緊急事項，22:20 寄信提醒若今日需補請教練主動下指令；本輪心跳回 HEARTBEAT_OK。",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-03T22:02:00.000000+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 10.7,
+    "coachSilentHours": 11.1,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",

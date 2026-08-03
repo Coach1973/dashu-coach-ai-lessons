@@ -95,3 +95,12 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1785774215
 - 雲端同步：✅ 已推上雲端（commit 950fd512b）
+
+## 🩺 健康檢查 2026-08-04 01:01
+- 教練沉默：11.1h（上次訊息 13:54，當下 `date` 算；凌晨 23:00-08:00 安靜時段，不打擾）
+- 第零步 sync_coach_last_message.sh ✅ exit 0，Telegram API 真實回傳 13:54
+- 本任務 consecutiveErrors=1（持平，未升 3），lastErrorReason=`overloaded`，lastDurationMs=78350（遠低於 timeout 600）
+- 模型正確為 minimax/MiniMax-M3，無 apiKey 問題
+- 全 39 個 cron 任務狀態掃描 → 0 個 error（除本任務上一輪暫時性 overloaded）
+- HEARTBEAT 無 ⬜ 標記待辦
+- 結論：✅ 無需處理，安靜通過
