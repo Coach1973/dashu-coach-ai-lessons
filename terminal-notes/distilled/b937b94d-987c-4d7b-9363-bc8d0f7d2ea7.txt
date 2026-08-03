@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b937b94d-987c-4d7b-9363-bc8d0f7d2ea7
-# 提取時間：2026-08-02 23:20 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-08-03 13:44 (台灣時間)
+# 共 5 條教練原話
 
 ---
 
@@ -101,3 +101,22 @@ https://bigtree-tw.netlify.app/  我要修改
 3. **9/23（三）～9/24（四）09:00–17:00** → 新增「AI微論壇 台中場」（兩天各一張卡片，因為原本系統一張卡片對應一天）
 
 **注意：這只是本機修改 + GitHub 更新，還沒推上正式網站** `bigtree-tw.netlify.app`—…（略）
+
+【教練 2026-08-03 05:09】
+推
+
+　▶ AI 回應：Now deploying via the Netlify API with the coach's confirmation:
+
+　▶ AI 回應：Deploy is ready. Now verifying the live site actually reflects all changes:
+
+　▶ AI 回應：Now let me commit this quota tracking update and clean up the temp zip file.
+
+　▶ AI 回應：**已推上線，三項修改都已生效**，我用線上網址直接驗證過（非只看部署狀態）：
+
+1. **7/29 台南場** → 顯示「AI微論壇」，按鈕已變成「已截止報名」
+2. **8/28（五）14:00–17:00** → 新增「AI微論壇 嘉義場」
+3. **9/23（三）～9/24（四）09:00–17:00** → 新增「AI微論壇 台中場」（兩天各一張卡片）
+
+**憑證：**
+- Netlify 部署 ID `6a7022d462886708ef4a8222`，狀態 ready
+- 線上網址 `bigtree-tw.netlify.app` 直接 curl 驗證，四個關鍵字（AI微論壇、已…（略）

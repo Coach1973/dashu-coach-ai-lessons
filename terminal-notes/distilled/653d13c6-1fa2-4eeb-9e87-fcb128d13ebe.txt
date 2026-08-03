@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 653d13c6-1fa2-4eeb-9e87-fcb128d13ebe
-# 提取時間：2026-08-02 23:57 (台灣時間)
-# 共 17 條教練原話
+# 提取時間：2026-08-03 13:31 (台灣時間)
+# 共 19 條教練原話
 
 ---
 
@@ -381,3 +381,39 @@ Stop hook feedback:
 - 另一組沒有到期日的：還有約4次
 
 所以嚴格說「這個月」（到8/25前）您手上有大概56次的推送額度可以用，8/…（略）
+
+【教練 2026-08-02 15:57】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_taiwan_time_check.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：這次沒有回報任何時鐘時間（只提到「8/25」是日期不是時間點），純粹是我處理了Netlify回傳的UTC時間戳做內部核對，沒有把UTC時刻講給您聽，所以這條提醒可以略過，不用修正。
+
+【教練 2026-08-02 15:59】
+總結上傳，我要開新對話
+
+　▶ AI 回應：Now let me update the header summary line to reflect the fuller scope, then commit and push.
+
+　▶ AI 回應：**已總結上傳，commit [`6336b21fe`](https://github.com/Coach1973/mac-openclaw-workflows/commit/6336b21fe)。**
+
+本場（v90接力棒）完整記錄五件事：
+1. Mac版Web Search修復（開DuckDuckGo外掛，Telegram三帳號+LINE三帳號一次全通）
+2. 我兩次查證不完整被您糾正（VPS沒查路徑大全、LINE帳號漏算龍蝦小助教）＋您給的「大總管」期許，已寫入試金石案例55
+3. VPS查證後撤銷誤改，恢復原狀
+4. bigtree-tw「大樹小講」8/26補上高雄場，已部署上線，co…（略）
