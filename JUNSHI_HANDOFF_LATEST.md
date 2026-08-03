@@ -20,7 +20,7 @@
 | 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
 | 🟢 | **系統權限缺口：public agent(bni_tainan/jiaolian_thoughts)沒有工具層級限制** | ✅v83已完成 | 詳見下方v83戰果。改用OpenClaw原生`tools.toolsBySender`機制(查證版本原始碼確認真的存在且生效於主要工具判斷流程，非僅sandbox)，教練LINE ID白名單保留完整權限、其他發送者deny掉`group:runtime`+`group:fs`+`group:automation`。新增`line-user-memory`hook讓非教練用戶仍保有個人化記憶(不靠write工具，伺服器端維護)。commit `fb222757` |
 | 🟡 | 教練第二身份「贏家思路」(LINE ID `U168903487f0ba2b666ddc62b854de351`)已加入白名單 | ✅v83已完成 | 教練親測時發現用這個帳號測試bni_tainan/jiaolian_thoughts會被當一般訪客擋權限，查證+教練確認後已加進toolsBySender白名單，兩個帳號都生效 |
-| 🟢 | 「龍蝦小助教」(default LINE帳號，綁main agent)僅供教練個人使用，維持pairing制不開放 | ✅v83已裁示 | 教練測試時觸發配對碼，已核准教練這組LINE ID(`U168903487f0ba2b666ddc62b854de351`，同贏家思路帳號)。教練明確裁示「不需要開放給其他人」——main agent無工具限制，不可比照bni_tainan/jiaolian_thoughts開放allowFrom:["*"] |
+| 🟢 | 「龍蝦小助教」(default LINE帳號，綁main agent)僅供教練個人使用，維持pairing制不開放 | ⚠️v92已推翻，見下方新項目 | v83原裁示不開放；2026-08-03教練親口要求「跟其他兩個帳號一樣開放，不需要再經過我同意」，已改為群組互動開放，詳見v92 |
 | 🟡 | 小龍蝦後台(OpenClaw原生控制介面)不顯示用戶中文名稱 | 🔒卡住-教練決定用問答方式 | 查證確認這是OpenClaw原生Control UI的已知限制(GitHub上至少8個未解決的相同feature request)，非設定缺漏。已評估「另建自訂監控頁面」的時間/token成本，教練裁示「若有問,你再回我就好」——不建頁面，教練看到陌生ID直接問軍師，軍師查`state/{account}_line_id_map.json`即時回覆即可 |
 | 🟢 | 開工六步驟+MEMORY.md額度瘦身 | ✅v83已完成 | 教練要求評估「開工」占用多少KB(對應1M上限)。實測發現workspace/CLAUDE.md已自動鏡像接力棒全文，六步驟hook卻又重複cat一次；另有claude-sessions/死code(18天未更新)。已修復：接力棒改「確認同步新鮮度才決定貼短版或全文」的安全網設計(不冒漏接風險)、砍死code、試金石3→2案例、memory最新日改尾端6000字。單次注入實測49,593→20,588 bytes(降58%)。MEMORY.md索引退休7條已解決舊專案記憶(31.5KB→30KB)。commit `e9144daf8`+`12e7b6b54` |
 | 🟢 | bni_tainan行事曆同步cron實際上從未存在過，已修復 | ✅已完成 | 查證發現v75紀錄的cron job 99bdac4a 在 cron list 裡根本查無此ID，行事曆檔案卡在40+小時沒更新。新建 cron `7048432e`（每4小時，已修好delivery歧義設定），手動觸發驗證 exitCode 0 + 檔案內容確實更新 |
@@ -48,8 +48,49 @@
 | 🟢 | **Mac版Web Search修復（Telegram三帳號+LINE三帳號共用）** | ✅v90已完成 | 教練發現Mac版打不開Web Search只能退而求其次DuckDuckGo，查證原生`web_search`綁死MiniMax專屬鑰匙（未申請）。改用系統內建`duckduckgo`外掛（官方標明無需API Key）：`openclaw plugins enable duckduckgo`+`config set tools.web.search.provider duckduckgo`+重啟gateway，production log證實真實搜尋成功。commit `c9cc8072`。VPS版查證後發現本來就正常（容器內`MINIMAX_API_KEY`恰好也能當搜尋備援），誤改後已撤銷復原，VPS無需任何動作。詳見v90完整戰果+[[試金石案例55]] |
 | 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
 | 🟡 | ai-go新增「教練專屬人設」區塊，僅推了GitHub Pages入口，bymyway.com鏡像未同步 | ⏳待軍師動手 | v91已在`coach1973.github.io/ai-go/`新增「大樹教練的與AI指令設定」中英對照區塊(commit`4d38936`於獨立ai-go repo)。查`project_ai_go_xinfa_system`記憶得知這個系統其實有雙入口，`www.bymyway.com/ai-go/`是另一個對外分享的鏡像，走獨立的`deploy_ai_go_to_bymyway.py`部署腳本，本場沒有觸碰，兩個入口內容目前不同步。下一場若教練需要，可執行該部署腳本同步過去 |
+| 🟢 | **龍蝦小助教LINE群組長期失效真根因找到並修復** | ✅v92已完成 | 教練回報龍蝦小助教Telegram/LINE都沒回應，且群組互動早已失效。查證發現`@openclaw/line`外掛對accountId==="default"完全不讀`channels.line.accounts.default`底下設定，`groupPolicy`/`groupAllowFrom`從設定搬進accounts.default那刻起就架構性失效。已修復：改在`channels.line`頂層設定，`accounts.default`只留`webhookPath`。commit `ec48b7bd`，用合成簽章webhook實測驗證。詳見試金石案例56 |
+| 🟢 | **main agent健檢cron的exec/read/cron工具被昨天權限鎖誤傷，已修復** | ✅v92已完成 | 根因：cron觸發的agent turn沒有senderId，永遠落到`toolsBySender`的`"*"`deny規則。改用群組層級鎖(Telegram schema支援)取代agent層級萬用鎖，cron不再被誤傷。commit `56c0efe3`。**已知殘留風險**：LINE外掛(2026.6.33)不支援群組層級`toolsBySender`，LINE群組的非教練成員保護降級為`workspace/SOUL.md`鐵律五提示層防護(非技術硬鎖)，教練已知會，待外掛未來版本補上 |
+| 🟢 | **主動提醒功能推廣到三個LINE帳號** | ✅v92已完成 | 教練指示「立刻推廣」。原本`hooks/bni-reminder-schedule`寫死只認bni_tainan，已推廣到jiaolian_thoughts+default(龍蝦小助教)，過程中修好一個accountId解析bug(default帳號session key含"main"非"default"，已正規化)。commit `41ffac6b`，三帳號皆用合成webhook實測通過 |
+| 🔴 | **教練15:18有一段修改回饋被中斷、內容未送達** | 🔒待教練重述 | 教練說「好，這個需要更改的幾個點我說一下。首先，先肯定做得不錯！」後被系統標記為[Request interrupted by user]，緊接著教練改下達「總結」指令收工。**這段「需要更改的幾個點」實際內容從未送達軍師**，下一場開工請教練直接重新講一次，不要假設軍師已經知道要改什麼 |
 
 ---
+
+# 軍師接力棒 · 2026-08-03 v92（Mac終端機 Sonnet 5，龍蝦小助教LINE群組長期失效真根因+健檢cron權限誤傷修復+提醒功能推廣三帳號）
+
+> 建立時間：2026-08-03 下午（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v91（Mac桌面版Sonnet5，CLAUDE.md規則健檢+ai-go教練專屬人設上線+新增「總結」收工暗號E17）
+> 本棒主軸：**教練發現龍蝦小助教（LINE default帳號）Telegram/LINE都沒回應，且過去能用的群組互動也失效。第一輪查證方向被教練當場糾正（去查LINE官方後台是錯的），改用「合成真實簽章的LINE webhook直接測本機端點」查出真根因：`@openclaw/line`外掛對accountId==="default"完全忽略`accounts.default`底下的設定，群組互動從設定被搬進這個巢狀結構那一刻起就架構性失效，跟教練猜的一樣是「我們自己設定的問題」不是LINE後台問題。修復後教練又用一句話點出另一個問題：main agent的健檢cron失去exec/read/cron工具（昨天toolsBySender權限鎖的連帶副作用），教練進一步用VPS提醒功能反向挑戰「提醒功能根本不需要exec」，逼出一個更精準的修復方向：把「系統自動化需要exec」跟「用戶要求服務不需要exec」兩件事分開處理，最終健檢cron跟三帳號提醒功能都修好，同時老實跟教練報告一個技術限制（LINE群組工具鎖只能靠提示層，非技術硬鎖）。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 龍蝦小助教LINE群組長期失效真根因：`accounts.default`設定被外掛原始碼結構性忽略
+教練回報Telegram/LINE都對他沒反應，且過去能用的群組互動（如「思伽與施樂恩討論區」）現在也失效。第一輪查證方向錯誤：先去查LINE官方後台webhook設定，教練當場指正「這個方向不對，如果後台設定壞了，現在小龍蝦就不會運作」。改走基礎設施逐層排除法（cloudflared tunnel→gateway→webhook→channelAccessToken全部實測健康），確認infra沒問題後，用**合成一個帶正確HMAC簽章的假LINE webhook直接打本機`/line/webhook`端點**這招，配合短暫開啟`OPENCLAW_LOG_LEVEL=debug`，抓到鐵證：`"Blocked line group message (groupPolicy: allowlist, no groupAllowFrom)"`——查原始碼確認`resolveLineAccount()`對accountId==="default"這個特例完全不讀`accounts.default`底下任何欄位（`dmPolicy`/`groupPolicy`/`groupAllowFrom`全部被忽略，只有具名帳號如bni_tainan/jiaolian_thoughts才會讀自己accounts下的設定），內建預設值剛好是「allowlist+空白名單」，等於這個設定被搬進accounts.default巢狀結構那一刻起就架構性失效，不分寄件人。已修復：改在`channels.line`頂層設定`groupPolicy: open`+`groupAllowFrom: ["*"]`+`dmPolicy: pairing`，`accounts.default`只留`webhookPath`（真正被使用的欄位）。commit `ec48b7bd`。
+
+教練實測「帥帥養龍蝦」群組確認有回應；「思伽與施樂恩討論區」另一次沒反應，查證後發現是MiniMax API暫時過載的一次性問題（訊息確實送達並開始處理，只是模型呼叫失敗），跟權限無關，教練重試後應已恢復。過程中也順手回答教練「提醒需要記住LINE ID」的疑問：不是LINE平台分辨不出誰是誰（每則訊息本來就帶唯一身份碼），是agent想主動把「身份碼↔真實姓名」的對應記進GROUP_IDENTITY.md避免認錯人，跟平台限制無關。
+
+### 2. 🔴🔴 main agent健檢cron失去exec/read/cron工具，真根因是cron沒有「傳話人身分」
+電報版小龍蝦回報「🦞健康檢查14:37—⚠️無法執行」，工具全部缺漏。查證發現：昨天(commit 2f498962)幫main/kong/peipei上的`tools.toolsBySender`萬用deny規則，設計上比對「傳話人身分」，但cron觸發的agent turn完全沒有傳話人身分（空senderId，實測驗證——manual cron run 5次皆重現同一筆deny記錄），永遠落到`"*"`那條deny規則，導致main agent所有需要exec/read/cron的定時任務被誤判成陌生發送者擋掉。教練追問VPS版的「提醒我禮拜三下午喝咖啡」功能，逼出更精準的思路：教練指出「提醒」功能根本不需要exec（VPS版每個用戶各自獨立、伺服器端程式直接處理），點破軍師一開始把「健檢cron需要exec」跟「用戶提醒功能」錯誤地綁在一起建議「放寬定時任務權限」的方向錯誤。
+
+教練裁決「健檢cron是我個人的問題,跟其他用戶無關,那就去做啊」後，改用**群組層級鎖取代agent層級萬用鎖**：Telegram外掛schema支援群組層級`toolsBySender`（已在`channels.telegram.accounts.bot_main.groups["*"]`補上，技術硬鎖，只保護真人群組聊天不影響cron，因cron沒有群組context）；但查證`@openclaw/line`外掛(2026.6.33)的`LineGroupConfigSchema`不支援`tools`/`toolsBySender`欄位，LINE群組這邊技術上做不到硬鎖，改在`workspace/SOUL.md`新增鐵律五（系統提示層防護：非教練本人一律只提供對話服務，不執行系統操作）。commit `56c0efe3`。手動觸發健檢cron驗證：`lastRunStatus: ok`，連續錯誤歸零，exec/read/cron三個工具正常運作無deny記錄。**已老實告知教練這個LINE側的殘留風險**（提示層非技術硬鎖），教練知情。
+
+### 3. 🎯🎯 主動提醒功能推廣到三個LINE帳號
+延續上一項的思路，教練指示「當然現在就立刻把提醒功能推廣到三個帳號」。原本`hooks/bni-reminder-schedule/handler.js`寫死只認bni_tainan一個帳號的sessionKey格式（`agent:<accountId>:line:direct:<userId>`），推廣時發現一個新bug：default帳號綁在main agent，其session key實際是`agent:main:line:group:<groupId>`（群組）或直接共用`agent:main:main`（私訊，跟Telegram同一把key），兩種情況`parts[agentIdx+1]`抓到的都是"main"而非"default"，若不處理會讓default帳號的提醒請求被靜默略過。已修復：加上main→default正規化；`send_line_push.py`從寫死bni_tainan token改成`--account`參數化，default帳號走`channels.line`共用的channelAccessToken；順手補上`--no-deliver`旗標避免cron系統自己的announce機制誤報error（實際訊息已送達，只是完成回報機制找不到明確投遞對象而拒絕）。commit `41ffac6b`。用真實簽章的合成webhook逐一測試bni_tainan+default兩帳號，皆確認cron job正確建立、command exitCode=0、LINE Push API回應200，測試job事後清除不留殘留。
+
+### 4. ⚠️ 教練一段修改回饋被中斷，內容未送達
+教練在15:18說「好，這個需要更改的幾個點我說一下。首先，先肯定做得不錯！」後被系統標記中斷，緊接著改下達「總結」指令。**這段回饋的具體內容從未真正送達**，下一場開工不能假設已經知道要改什麼，需請教練重新講一次。
+
+## 📋 下一場直接開工任務
+- **🔴 優先：教練15:18中斷的回饋內容**，請教練重新完整講一次
+- LINE群組工具鎖技術限制：待`@openclaw/line`外掛未來版本支援群組層級`toolsBySender`後，補上硬鎖取代目前的SOUL.md提示層防護
+- ai-go雙入口同步、BNI真誠/真愛/真AI分會網站、Email自動發送系統、嘉義場籌備：仍卡在等教練，多場未更新
+
+## 🔑 本場關鍵檔案索引
+- `openclaw.json`（`~/.openclaw`外層master分支）：LINE default帳號群組設定搬遷、main/telegram群組層級toolsBySender
+- `workspace/SOUL.md`：新增鐵律五（系統指令只認教練本人）
+- `hooks/bni-reminder-schedule/handler.js`＋`agents/bni_tainan/scripts/send_line_push.py`：推廣三帳號
+- `試金石/試金石_案例庫.md`：新增案例56
+- commit（`~/.openclaw`外層master分支）：`ec48b7bd`（LINE default群組修復）→ `56c0efe3`（cron權限修復）→ `41ffac6b`（提醒功能推廣）
 
 ---
 
@@ -154,69 +195,6 @@ commit序列：`0f54af6b2`（封存9條副本）→`0d1cc9755`（E10併入E02，
 
 ---
 
----
-
-# 軍師接力棒 · 2026-08-02 v89（Mac桌面版 Sonnet 5，ai-talk-tw輪播花絮修復+小龍蝦系統全面健檢：找到並修好兩個真正未被發現的bug）
-
-> 建立時間：2026-08-02 下午～晚間（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v88（Mac桌面版Sonnet5，BNI Connect官方網站後台操作能力驗證+見證頁正式上線）
-> 本棒主軸：**教練反映ai-talk-tw.netlify.app活動花絮輪播「一開始沒照片、要等一段時間才出現」，查到根因是輪播切換時才臨時下載下一張、沒有預先載入，已修復上線。教練接著要求「除了解決，也一併檢查小龍蝦是否還有其他問題」，順勢做了一次沒有敷衍的全面健檢——過程中意外挖出兩個之前完全沒被發現、真實存在的系統性問題：①main/kong/peipei三個agent完全沒有「只有教練能下系統指令」的權限鎖 ②沉默計數bug（教練已痛罵三次）的真正根因其實是系統裡藏著兩份互不同步的heartbeat-state.json，之前三次「修復」全部只改到其中一份。過程中還嘗試升級OpenClaw本體，撞上node版本不相容導致gateway短暫真的停機，已回滾恢復。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 ai-talk-tw活動花絮輪播「一開始沒照片」真正根因+修復
-教練反映開啟`ai-talk-tw.netlify.app`時，活動花絮輪播一開始都沒照片，要等一段時間才出現，已經不是第一次。查證伺服器端（Content-Type、CDN快取、部署新鮮度）全部正常，排除伺服器bug。真正根因是前端邏輯：輪播每4秒自動切換到下一張，但程式碼是「切換的當下才臨時去下載新照片」，完全沒有預先準備，網路稍慢時切換那一瞬間就會出現空白，且每次自動切換都可能重演，不是只發生一次。修復：頁面載入後在背景用`new Image()`把全部24張照片預先塞進瀏覽器快取，切換時直接顯示。本機驗證通過（24張照片一開頁面就全部開始下載，非切換時才臨時抓）。**這個站其實是手動zip上傳型，GitHub push不會自動部署**（一開始誤判成auto-deploy型，查證後修正認知），照SOP走zip+API手動部署。GitHub commit `c0c860b`，Netlify部署`6a6f03f80217be568d0394b4`，quota扣1次(58→57)。
-
-教練後續指出「這種錯誤讓我又要多消耗一次推送」，要求把教訓寫進SOP——已更新既有的`feedback_netlify_headers_content_type.md`（Netlify圖片部署SOP，累積血淚教訓的同一份檔案），新增第5坑：任何輪播/幻燈片類圖片功能，部署前要檢查是否有preload機制。commit `871dc0196`。
-
-### 2. 🔴🔴🔴 小龍蝦沉默計數bug（教練痛罵三次）真正根因：系統裡藏著兩份互不同步的heartbeat-state.json
-教練轉貼小龍蝦對話記錄，問「怎麼又跟我說我7天沒有互動」——這是教練今天第4次被誤報沉默時間（8/1「5.8天」、8/2中午「160h+」、8/2下午三度重申鐵律、8/2晚間「7天」），且是小龍蝦當天下午才宣稱「v3.0修好」之後又發作。
-
-**第一輪查證**（v3.2）：發現小龍蝦寫的`scripts/sync_coach_last_message.sh`本身就是新bug的來源——它只看memory檔案裡「## 對話記錄 HH:MM」段落**標題**時間，沒看**內容**是誰說的，但每30分鐘健康檢查cron、每4小時主動關懷cron都會被memory記成「👤 教練：[cron:xxx]」或「👤 教練：[OpenClaw heartbeat poll]」——只要cron還在跑，就算教練真沉默3天也會被算成剛說過話，跟原本「誤報好幾天」方向相反、一樣是假數字，且更難被發現。改成逐段檢查內容，只採計非中括號開頭的「真正教練訊息」，並加上回溯7天的邏輯。commit `caf2376d6`+學習記錄`e0c515127`。
-
-**第二輪查證**（v3.3，才是真根因）：v3.2部署後幾小時，18:03又發作「7天」，一度以為新版邏輯又壞了。深挖後發現**跟regex/雜訊過濾完全無關**：系統裡同時存在`state/heartbeat-state.json`與`memory/heartbeat-state.json`兩份彼此不同步的檔案。v3.0~v3.2所有修復都只寫入`state/`那份，但`memory/`那份從**7月26日**之後就沒被任何流程碰過，`coachSilentHours`停在166.2小時（=6.9天，四捨五入正是「7天」）。18:03那次agent turn剛好同時撞上main agent 17:38剛經歷context overflow重啟（全新session）、18:00 cron觸發時遇到minimax API 429限流讓turn拖了近4分鐘、桌面版軍師同一時間對gateway做config reload——三者疊加，agent很可能因此讀到了從沒被同步過的舊值。**不追究agent那次turn內部到底走了哪條讀取路徑**（LLM行為層面難以100%重現鎖定），改成結構性防呆：sync腳本現在`state/`與`memory/`兩份都寫，不管未來讀哪一份都是對的。已實測驗證兩份數字一致。commit `365cb7a25`+學習記錄`0578b8dc2`。
-
-### 3. 🔴🔴 全面cron健檢：發現並停用重複跑了近2個月的「場景化升華」cron
-查`openclaw cron list`發現兩個「場景化升華」cron都排在每晚23:00執行、內容幾乎一模一樣，其中一個從6/11建立後已經默默重複跑了快2個月，每天多燒一次不必要的處理成本，且查git log證實至少有一次真的因此寫入重複案例、被人工手動清過（7/23的commit可查）。已停用舊的那個（`533cfe54`，用`openclaw cron disable`），保留功能較完整（多了系統健檢步驟）的新版。其餘41個cron逐一檢查consecutiveErrors/timeout/殭屍腳本引用，全部正常，無其他重複。
-
-### 4. 🔴🔴🔴 安全稽核發現：main/kong/peipei完全沒有「只有教練能下系統指令」的權限鎖
-教練追問先前健檢報告裡「Telegram groupPolicy=open」這條，指出這是他之前就明確下過的既有指令（查證確認open policy確實從帳號建立時就存在，非近期異動，這條確認結案），但同時追問「你是不是已經把只有教練能發指令、其他人只能當用戶這件事做到？」。跑`openclaw security audit`查出真相：**只有bni_tainan/jiaolian_thoughts兩個對外服務agent有做這道鎖**，main（教練自己）、kong（孔大哥的學弟）、peipei（佩佩老師的學妹）三個完全沒有——系統列為CRITICAL。已比照bni_tainan/jiaolian_thoughts已驗證上線的模式，補上`tools.toolsBySender`：教練Telegram ID(`6124913915`)+LINE ID保留完整權限，其餘（含孔大哥、佩佩老師本人）一律deny掉`group:runtime`/`group:fs`/`group:automation`，一般對話不受影響。**不是只信任設定寫對就交差**——直接呼叫OpenClaw實際的`resolveToolsBySender`原始碼邏輯做測試：教練ID進去→`{}`無限制；陌生ID進去→正確被deny三個危險工具群組。Gateway重啟後確認config生效。commit `2f498962`（注意：這個commit在`~/.openclaw`外層repo的**master分支**，不是workspace的main分支，因為openclaw.json不在workspace裡）。
-
-### 5. 🎯 OpenClaw本體升級評估與嘗試：內容確認有價值，但撞上node版本不相容導致短暫真實斷線
-教練要求「認真查升級到底改了什麼」而非空口說風險不明。查官方changelog確認2026.6.33→2026.7.1三個教練關心的面向都有實質改善：**Memory/session**（105個PR修一致性、減少狀態遺失跨session混亂）、**穩定度**（Gateway crash loop不再無限重啟）、**安全性**（憑證/密鑰加固）。判斷值得升級並執行，但升級後doctor檢查發現gateway managed service用的node是25.6.1，卡在新版要求的支援區間外，**導致gateway真的停止服務、LINE/Telegram一度真的斷線**（不是可能，是真的發生）。第一次回滾又踩到系統記憶裡早記載過的「雙node環境」舊坑（npm指令解析到錯的node環境，裝到假地方），改用完整路徑`/opt/homebrew/bin/npm`才真正修好，`openclaw status --deep`確認LINE/Telegram皆OK後才算數。已回滾至2026.6.33穩定運作，升級本身擱置待node環境處理好後再議。記錄進記憶系統`reference_openclaw_node_version_upgrade_blocker`，commit `2fc408054`。
-
-### 6. 🔴 ai-talk-tw輪播修復後教練回報「還是延遲」，尚未真正解決＋順手發現memory自動快照卡住超過5小時
-戰果1修復並部署後，教練晚間10:27再次打開網頁回報「照片還是延遲」。查證部署本身確認是修復後的版本（`preloadCarouselImages`確實在線上），但這次photo-01.jpg實測下載花了1.14秒（比之前測的0.4秒慢），意識到**戰果1的修復（预载後續22張）跟教練這次講的「還是延遲」可能是兩個不同層面的問題**——如果教練是指「打開網頁那一刻連第一張都要等」，那是CDN/網路延遲層面，不是我修的「切換時才臨時下載」那個問題。已詢問教練三個關鍵細節（開頁瞬間或切換瞬間延遲／手機或電腦／延遲多久），**教練只簡短回「好，我已經用上了」沒有給出具體細節**，接著就說要開新對話收工。**這件事尚未真正解決，下一場開工第一件事必須先追問這三個細節才能繼續診斷，不要假設已經修好。**
-
-過程中意外發現一個獨立但重要的系統問題：小龍蝦的`memory/YYYY-MM-DD.md`自動快照機制，從**下午17:53之後就完全沒有再更新**（查到22:43仍是舊的），已超過5小時無新內容——這呼應了本場戰果2查證時就已經看到的「⚠️ Pull 警告：本地有衝突或網路失敗」線索，但當時判斷git本身無真正衝突（fetch後領先/落後都是0）就沒有深究，事後看這個snapshot卡住的問題其實一直持續到收工都沒解決。這會持續影響任何依賴memory檔案判斷「教練最後說話時間」的邏輯（包含本場才修好的`sync_coach_last_message.sh`），下一場應該優先查清楚是哪個流程負責定期把對話寫進`memory/YYYY-MM-DD.md`、為什麼卡住。
-
-## 📋 下一場直接開工任務
-- **🔴 優先：ai-talk-tw延遲問題追問**：教練10:27回報「還是延遲」但沒給出具體細節，開工第一件事先問清楚——是打開網頁那一刻還是切換照片時延遲？手機還是電腦？大概延遲多久？才能判斷這是CDN/網路層面問題還是還有程式碼漏洞，不要假設已經修好
-- **🔴 memory自動快照卡住**：`memory/YYYY-MM-DD.md`從8/2 17:53後沒再更新，超過5小時，需查清楚是哪個流程負責定期snapshot、為什麼停了——這會持續影響sync_coach_last_message.sh等依賴memory時間戳的邏輯
-- **OpenClaw升級**：內容已確認值得（v89已查證），卡在node版本不相容，若教練希望完成升級，下一場先處理node版本（`brew upgrade node@22`或裝`node@24`，目前裝的22.22.0差一點點不夠新），確認gateway用的node符合支援區間後再重跑`openclaw update`
-- **真誠/真愛/真AI分會＋大台南南區網站**：仍等教練回覆5項細節（v87已產出兩份HTML草稿），多場未更新
-- Email自動發送系統、嘉義場籌備：仍卡在等教練給細節，多場未更新
-- **BNI大台南小幫手「主動提醒」功能**：v87已完成上線，本場未變動，若教練近期實際使用有問題請回報
-
-## 🔑 本場關鍵檔案索引
-- `github_repos/ai-talk/index.html`：輪播preload修復
-- `scripts/sync_coach_last_message.sh`：v3.2(過濾cron雜訊)→v3.3(雙檔案同步寫入)
-- `openclaw.json`（`~/.openclaw`外層master分支）：main/kong/peipei補上toolsBySender
-- `claude-brain/feedback_netlify_headers_content_type.md`：Netlify圖片部署SOP第5坑
-- `claude-brain/reference_openclaw_node_version_upgrade_blocker.md`：升級前置檢查清單
-- `.learnings/feedback_silence_count_must_be_real_time.md`：沉默計數bug完整5次錯誤時間軸
-- commit序列（workspace main分支）：`c0c860b`(github_repos/ai-talk獨立repo，輪播修復) →
-  `871dc0196`(SOP記錄) → `e8ba43b2a`(quota記錄) → `caf2376d6`(sync腳本v3.2) →
-  `e0c515127`(v3.2學習記錄) → `2fc408054`(node blocker記錄) → `365cb7a25`(sync腳本v3.3真根因) →
-  `0578b8dc2`(v3.3學習記錄)
-- commit（`~/.openclaw`外層master分支）：`2f498962`(main/kong/peipei權限鎖)
-- Netlify部署：`6a6f03f80217be568d0394b4`（ai-talk-tw輪播修復，quota 58→57）
-- Cron變更：`533cfe54`（重複的場景化升華）已用`openclaw cron disable`停用
-
----
-
-> 📦 **v88及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v89及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新3棒(v90/v89/v88)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
-
+> 只保留最新3棒(v92/v91/v90)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
