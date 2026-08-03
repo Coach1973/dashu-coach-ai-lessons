@@ -1,15 +1,22 @@
 {
   "system": "credit",
   "credits_per_deploy": 15,
-  "quota_as_of": "2026-08-02",
-  "quota_remaining": 56,
-  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。",
+  "quota_as_of": "2026-08-03",
+  "quota_remaining": 55,
+  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。⚠️2026-08-03發現：netlify_deploy_guard.sh的自動扣減邏輯要求指令結尾剛好是`/deploys`，若curl後面接了`| python3 ...`等管道處理，正則比對不到結尾，不會自動扣。這次是手動補記，之後部署指令若有接pipe，記得手動確認這個檔案有沒有真的被hook扣到。",
   "credit_pools": [
-    {"name": "Personal plan credits", "remaining": 909.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 60},
+    {"name": "Personal plan credits", "remaining": 894.5, "total": 1000, "granted": "2026-07-25", "expires": "2026-08-25", "deploys_remaining_approx": 59},
     {"name": "無到期日 credits", "remaining": 70.1, "total": 500, "granted": "2026-05-30", "expires": null, "deploys_remaining_approx": 4}
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-03",
+      "site": "bigtree-tw",
+      "deploy_id": "6a7022d462886708ef4a8222",
+      "change": "7/29台南場正名「AI微論壇」並改截止報名；新增8/28(五)14:00-17:00嘉義場+9/23(三)-9/24(四)09:00-17:00台中場",
+      "remaining_after": 55
+    },
     {
       "date": "2026-08-02",
       "site": "bigtree-tw",
