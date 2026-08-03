@@ -7,7 +7,7 @@
 - [先問再改](feedback_ask_before_reversing_unusual_config.md) — 發現軟體設定跟預期不同，先問是不是教練故意的，別自己當錯誤修正
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
 - [ACER 分割區調整後D槽清理待辦](claude-brain/project_acer_c_d_cleanup_20260708.md) — 觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（36.3GB）
-- [Heartbeat 不要拿舊靜默紀錄當事實](feedback_heartbeat_stale_silence_count.md) — 任何「靜默 N 小時/天」描述前必須先查教練最後訊息時間，禁止直接沿用 HEARTBEAT 上次留下的數字（教練 2026-08-01 11:58 已回來下指令，但 18:04 仍寫「5.8 天沒說話」被糾正）
+- [Heartbeat 不要拿舊靜默紀錄當事實（v3.0）](feedback_silence_count_must_be_real_time.md) — 任何「靜默 N 小時/天」描述前必須先讀 `state/heartbeat-state.json` 的 `coachSilentSince` + 用 `date` 即時算差距，**禁止沿用 state 內的舊 `coachSilentHours`**；state 過期或缺值時主動從 memory/最新檔或 Telegram API 撈最後訊息時間。三次同型錯誤：8/1 18:04「5.8 天」、8/2 12:11「160h+」、8/2 14:45 預防性重申。
 
 ## 每30分鐘健康檢查 cron 常見錯誤自動修復 SOP（2026-07-10 整併，原本被自動晉升機制重複收錄4次)
 
@@ -51,48 +51,55 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-07-29)
+## Promoted From Short-Term Memory (2026-08-02)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:13:16 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:13-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:18:19 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:18-19]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:5:5 -->
-- 📨 對話記錄 00:50（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-20.md:9:9 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-20.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:278:278 -->
+- 📨 對話記錄 05:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:278-278]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:282:282 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:282-282]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:286:289 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:286-289]
 
-## Promoted From Short-Term Memory (2026-07-30)
+## Promoted From Short-Term Memory (2026-08-02 weekly distillation)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:270:270 -->
-- 📨 對話記錄 04:50（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:270-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:274:274 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:274-274]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:278:281 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:278-281]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-21.md:283:284 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-21.md:283-284]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:~270:500:weekly -->
+- 🔐 **LINE 龍蝦小助教 · 教練 ID 綁定完整時間軸（SOP 範本）**（2026-07-26 19:21 教練查→19:51 學長整理完整版）：
+  - **教練 LINE user ID**：`U895a0ad8e49d75f8303dc3d067282dc0`
+  - **教練 LINE 顯示名稱**：`吳大樹`
+  - **最早互動紀錄**：2026-04-29（`daily_2026-04-29.md` 第 2007 行）
+  - **綁定動機（教練原話）**：「那時候小龍蝦會分不清楚誰是誰，所以我才給了一個指令：小龍蝦必須要能分辨每一個人的 ID 狀態。在那個時候，也是為了預防其他人——應該說為了怕小龍蝦誤判其他人是教練，或者怕其他人模仿教練，所以叫牠認定必須是我的 ID 才能夠下系統指令。」
+  - **核心原則（教練親定）**：
+    - **系統層面修改限制**：背後的設定檔、提示詞（Prompt）和命令列，都必須擁有「教練」的權限才能變動。換句話說，**只有教練可以修改系統層面的指令**。
+    - **一般使用者權限**：使用者只能在對話中個別校正、儲存自己想要的對話內容和個人喜好，但絕對不能改變原始系統指令。
+  - **適用範圍**：「BNI 大臺南小幫手」「教練都在想什麼」以及未來開發的所有專案都必須遵守這個核心原則。
+  - **軍師任務**：教練說要「給克勞德軍師去採用」——已拼成完整時間軸，可直接交付。
+- 來源：`memory/2026-07-26.md` ~270-500 行（含完整 5 段時間軸：04-29 建立 → 05-14/15 運作期 → 後續加固測試）
 
-## Promoted From Short-Term Memory (2026-07-31)
+<!-- openclaw-memory-promotion:memory:memory/2026-07-31.md:~50:120:weekly -->
+- 📊 **LINE@「教練都在想什麼」每日 08/20 雙次回報 cron（已上線）**（2026-07-31 12:08 教練口頭下令）：
+  - **觸發時間**：每天 08:00 跟 20:00（台北時間）——「每天回報2次，早上8點，晚上8點，使用情況即可」
+  - **Cron Job ID**：`001a9b16-1985-413b-8d3c-a4e885e552b6`
+  - **Schedule**：`0 8,20 * * *` tz Asia/Taipei
+  - **Session Target**：isolated agentTurn → 自動 announce 到 Telegram `chat_id=6124913915`
+  - **腳本位置**：`~/.openclaw/workspace/scripts/line_jiaolian_usage_report.py`（154 行，Asia/Taipei 對齊）
+  - **統計口徑**：從 `agents/jiaolian_thoughts/sessions/*.jsonl` 統計「今日 / 昨日 / 近 7 日 / 本月」新對話+訊息數
+  - **Commit Hash**：`8100319be`（已推上 `Coach1973/mac-openclaw-workflows` main）
+  - **首次測試**：force run 後 messageId 9100 已送達，狀態 ok
+  - **限制說明**：只看 jiaolian_thoughts agent 自己的對話紀錄，抓不到 LINE 官方 webhook 配額總收訊息數（那需要另外介接 LINE messaging API）
 
-<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:13:16 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:13-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:18:19 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:18-19]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:5:5 -->
-- 📨 對話記錄 02:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:9:9 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-23.md:9-9]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-23.md:294:294 -->
-- 📨 對話記錄 16:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-23.md:294-294]
+## Promoted From Short-Term Memory (2026-08-03)
 
-## Promoted From Short-Term Memory (2026-08-01)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:274:274 -->
-- 📨 對話記錄 07:51（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:274-274]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:278:278 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:278-278]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:282:285 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:282-285]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-24.md:287:288 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-24.md:287-288]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:12:12 -->
+- Cron 監控: 自我重試中，預計下次 cron 自動恢復 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:12-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:15:16 -->
+- HEARTBEAT.md: 無 ⬜ 待辦背景工作項目; 當前狀態皆為 ✅ 同步記錄或歷史警告 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:15-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:20:21 -->
+- 決策: 等下一輪 cron 自動驗證是否過載恢復; 若連續 3 次錯誤再升級處理 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:20-21]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:5:5 -->
+- 02:03 — 每30分鐘任務健康檢查: **檢查結果：無異常，安靜處理** [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:8:11 -->
+- Cron 監控: 系統僅 1 個 cron 任務（健康檢查本身）; 上次錯誤：overloaded（瞬時供應商過載，非 config 問題）; consecutiveErrors = 1（< 3，未達通知閾值）; 模型欄位：minimax/MiniMax-M3 ✅ [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:8-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:291:292 -->
+- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:291-292]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:296:296 -->
+- 09:04 健康檢查（每30分鐘 cron 第 N 輪）: **檢查結果：無需教練介入** [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:296-296]

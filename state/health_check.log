@@ -104,3 +104,46 @@ Alternating fail/recover 模式：1300+ 場穩定驗證。連續 2 次 fail 是�
 若 17:30 fire 也連帶 fail → CE=3 → 必須 announce 教練（依守則 #4）。
 
 結論：安靜通過，週六午後不打擾教練。下次定檢 17:30。🟢
+
+[2026-08-02 12:31 Asia/Taipei] 健康檢查 #46e67e2e (12:30 fire retry)
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 12:30 fire: ❌ overloaded（68.524s ≪ 600s timeout，minimax provider transient）
+- 本輪 12:31 retry: ✅ 成功（CE: 1 → 0）
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+
+自動修復判定：
+- ❌ #1 timeout 不適用（68.524s ≪ 600s）
+- ❌ #2 VPS scp/ssh 不適用（無此類任務）
+- ❌ #3 INVALID_API_KEY 不適用（model 正確，2026-07-15 已修 apiKey）
+- ❌ #4 CE≥3 不適用（CE 從 1 歸零）
+
+HEARTBEAT.md：無 ⬜ 待自動化項，教練週末午後靜默（不打擾）。
+Alternating fail/recover 模式：1300+ 場穩定驗證。
+
+結論：安靜通過，12:31 週日午後不打擾教練。下次定檢 13:00。🟢
+
+[2026-08-02 14:02 Asia/Taipei] 健康檢查 #46e67e2e (14:00 fire retry)
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 13:30 fire: ❌ overloaded（142.056s ≪ 600s timeout，minimax provider transient）
+- 本輪 14:02 retry: ✅ 成功（CE: 1 → 0）
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider)
+- lastDurationMs: 142056 (≈142s ≪ 600s timeout)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+
+自動修復判定：
+- ❌ #1 timeout 不適用（142.056s ≪ 600s，差距懸殊）
+- ❌ #2 VPS scp/ssh 不適用（無此類任務）
+- ❌ #3 INVALID_API_KEY 不適用（model 正確，2026-07-15 已修 apiKey）
+- ❌ #4 CE≥3 不適用（CE 從 1 歸零）
+
+HEARTBEAT.md：無 ⬜ 待自動化項（剛 13:38 context overflow 重啟，正常狀態）。
+Alternating fail/recover 模式：1300+ 場穩定驗證。教練週日午後靜默（不打擾）。
+
+結論：安靜通過，14:02 週日午後不打擾教練。下次定檢 14:30。🟢
