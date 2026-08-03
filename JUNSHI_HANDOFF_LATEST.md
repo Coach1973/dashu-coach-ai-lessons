@@ -47,8 +47,58 @@
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
 | 🟢 | **Mac版Web Search修復（Telegram三帳號+LINE三帳號共用）** | ✅v90已完成 | 教練發現Mac版打不開Web Search只能退而求其次DuckDuckGo，查證原生`web_search`綁死MiniMax專屬鑰匙（未申請）。改用系統內建`duckduckgo`外掛（官方標明無需API Key）：`openclaw plugins enable duckduckgo`+`config set tools.web.search.provider duckduckgo`+重啟gateway，production log證實真實搜尋成功。commit `c9cc8072`。VPS版查證後發現本來就正常（容器內`MINIMAX_API_KEY`恰好也能當搜尋備援），誤改後已撤銷復原，VPS無需任何動作。詳見v90完整戰果+[[試金石案例55]] |
 | 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
+| 🟡 | ai-go新增「教練專屬人設」區塊，僅推了GitHub Pages入口，bymyway.com鏡像未同步 | ⏳待軍師動手 | v91已在`coach1973.github.io/ai-go/`新增「大樹教練的與AI指令設定」中英對照區塊(commit`4d38936`於獨立ai-go repo)。查`project_ai_go_xinfa_system`記憶得知這個系統其實有雙入口，`www.bymyway.com/ai-go/`是另一個對外分享的鏡像，走獨立的`deploy_ai_go_to_bymyway.py`部署腳本，本場沒有觸碰，兩個入口內容目前不同步。下一場若教練需要，可執行該部署腳本同步過去 |
 
 ---
+
+---
+
+# 軍師接力棒 · 2026-08-03 v91（Mac桌面版 Sonnet 5，CLAUDE.md規則健檢+ai-go教練專屬人設上線+新增「總結」收工暗號E17）
+
+> 建立時間：2026-07-31～2026-08-03（台灣時間，跨多場對話）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v90（Mac桌面版Sonnet5，Mac版Web Search修復+VPS/LINE版全面盤點+bigtree高雄場部署）
+> 本棒主軸：**教練看完一篇講「CLAUDE.md規則只進不出、悄悄過期」的文章，要求對照健檢——這場對話做了四件互不相同但都圍繞「讓系統指令保持可信、可執行」的事：①實測揪出`~/.claude/CLAUDE.md`兩個真過期案例並修好，進而授權對執行細則E01~E16逐條做證據型健檢，合併掉一組重複規則②幫教練寫了一份中英對照的個人溝通人設，發布成ai-go一鍵注入頁的新區塊③教練提出「以後說『總結』＝收工暗號」的新指令，比照既有「開工」機制做成真正的hook而非只靠記憶④用這次的「總結」收工暗號完成本篇接力棒撰寫，形成閉環驗證。全程貫穿同一個原則：教練不要口頭承諾或文件宣告，要看得到證據(pipe-test輸出、curl驗證、真實Chrome預覽)。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 CLAUDE.md健康檢查：揪出2個真過期案例並修復，執行細則E01~E16逐條證據型健檢
+教練分享一篇文章（Anthropic自己砍掉系統提示詞80%舊規則的故事），要我對照`~/.claude/CLAUDE.md`做實測而非空談。查證發現兩個真問題：①「特助心法」段落是手動貼上去的，沒有像E01~E15那樣的自動同步機制，已跟源頭`特助心法.md`出現格式/日期標籤飄移——新增`scripts/sync_xinfa_to_claude_global.sh`（比照既有`sync_zhixingxize_to_claude_global.sh`的mtime-marker模式）根治②Netlify部署鐵律段落停留在2026-05-30版本，沒收錄2026-07-25才發生的`_headers`萬用字元蓋掉圖片Content-Type教訓（案例54），已補上三條具體規則。
+
+教練接著把整個健檢任務正式授權給我：「你去評估哪些是必要的、有用的、可執行的，就留著；沒用的、過時的，就想辦法移到歷史備忘紀錄」。逐條查證E01~E16每一條是否有專屬skill或Stop/PreToolUse hook撐著（不是憑印象猜），發現：
+- **E02跟E10幾乎逐字重複**（都在講「教練說的話自動記錄不用想」），且兩者都沒有專屬hook——判定為真過期，原文完整併入E02，E10編號保留空缺不重用，寫進執行細則.md既有的「刪除記錄」區塊
+- 其餘14條（E01/03~09/11~16）逐一查證都有專屬skill或hook撐著（E11危險指令甚至有真的會攔指令的PreToolUse hook `delete_guard.sh`），判定持續有積極作用，保留不動
+- 順手發現`特助心法.md`檔案內部自己也藏著一份過時的執行細則9條舊副本（引用的檔名`failure_cases_handbook.md`跟現況`試金石_案例庫.md`對不上），教練指示「留在歷史檔案，不要清掉」——完整原文搬進`_archive/xinfa_zhixingxize_9tiao_stale_duplicate_archived_2026-07-31.md`，原處留一句指向正確來源的說明
+- 標題「E01~E15」也順手修正成「E01~E16」（內容其實7/26已到E16，標題沒跟上，本身就是活教材）
+
+commit序列：`0f54af6b2`（封存9條副本）→`0d1cc9755`（E10併入E02，標題修正）。所有異動都重跑對應sync腳本驗證`~/.claude/CLAUDE.md`正確同步、二次執行冪等。
+
+### 2. 🎯 教練個人溝通人設（中英對照）上線ai-go一鍵注入頁
+教練要在新AI介面貼一份「怎麼跟我溝通」的人設，先在對話裡幫他擬好中英文兩版（涵蓋講人話/方向清楚直接做/解決問題優先/誠實說不知道/不當資訊搬運工/記住脈絡/比喻是線索/簡單優先八條原則）。教練接著提出更好的想法：既然`coach1973.github.io/ai-go/`這個一鍵注入頁本來就是公版特助心法給任何人用，應該在裡面加一個「教練專屬」的特別欄位，這樣以後不用每次重新請軍師擬一份。
+
+新增`github_repos/ai-go/coach-persona.md`（中英對照人設全文）+ `index.html`頁尾前新增獨立區塊（綠色系跟公版橘色區隔，標示「不是公版方法論，你不是教練本人可以跳過」，獨立的一鍵複製按鈕）。過程中踩到並修好一個問題：本機Python `http.server`預設對`.md`檔案不宣告charset，教練點開連結看到亂碼——查證確認這**只是本機預覽伺服器的bug**（用README.md對照組證實正式站的`_headers`萬用規則`/*.md`早就有正確宣告`charset=utf-8`），但仍動手把本機預覽伺服器也修好讓教練能眼見為憑再放行推送。教練確認後說「推」，commit `4d38936`（獨立ai-go repo），已用curl+輪詢確認正式站`coach1973.github.io/ai-go/coach-persona.md`真的上線且Content-Type正確。**已知缺口**：這個系統其實有雙入口（見`project_ai_go_xinfa_system`記憶），另一個`www.bymyway.com/ai-go/`鏡像走獨立部署腳本，本場沒有同步，已記錄進待辦狀態表。
+
+### 3. 🎯🎯 新增「總結」收工暗號（E17），比照「開工」做成真正的hook
+教練提出新指令：以後只要說「總結」兩個字，就代表要執行「總結並上傳」全部步驟，同時代表他要開新的對話框——就像「開工」這個既有暗號一樣。沒有停在「記住這個規則」，而是查證了「開工」實際上是靠`scripts/feed_junshi_handoff.sh`（UserPromptSubmit hook）偵測關鍵字、在session開始時注入六步驟內容做到的，於是做了一支對稱設計的新hook。
+
+用Skill(`update-config`)取得hook配置正確格式後，寫`scripts/summary_upload_trigger.sh`：偵測「總結」「總結上傳」「總結一下」等短語pattern（刻意用錨定寫法，避免「幫我寫年度總結報告」這種長句子順口提到總結被誤觸發），命中就注入收工四步驟提醒（總結本場守則#14/更新接力棒E05/判斷記憶寫入E12六條清單/commit+push E01）。用5組真實prompt做pipe-test驗證：三種應觸發的都觸發、兩種不該觸發的都沒觸發，才註冊進`~/.claude/settings.json`並用`jq -e`驗證schema正確。寫進`執行細則.md`正式列為**E17**，標題同步更新，重跑同步腳本確認`~/.claude/CLAUDE.md`正確反映。commit `c0a9f30ac`。
+
+**本篇接力棒本身就是這個新機制的第一次真實驗證**——教練說「總結」後，hook確實注入了提醒，我依提醒的四步驟寫這篇總結+更新接力棒，形成完整閉環。
+
+## 📋 下一場直接開工任務
+- **ai-go雙入口同步**：`www.bymyway.com/ai-go/`鏡像尚未同步新增的教練人設區塊，若教練需要對外分享這個版本，執行`projects/bymyway-bridge/examples/deploy_ai_go_to_bymyway.py`
+- BNI真誠/真愛/真AI分會＋大台南南區網站、Email自動發送系統、嘉義場籌備：仍卡在等教練給細節，多場未更新
+- 小龍蝦紀律移植計劃階段二/三：仍待排時機（v83已完成階段一）
+
+## 🔑 本場關鍵檔案索引
+- `scripts/sync_xinfa_to_claude_global.sh`：新增，特助心法.md核心內容自動同步
+- `執行細則.md`：E02合併E10、標題E01~E16→E01~E17、新增E17
+- `_archive/xinfa_zhixingxize_9tiao_stale_duplicate_archived_2026-07-31.md`：封存的過時9條副本
+- `github_repos/ai-go/coach-persona.md`＋`index.html`：教練專屬人設區塊（獨立repo）
+- `scripts/summary_upload_trigger.sh`：新增，「總結」收工暗號hook
+- `~/.claude/settings.json`：新增summary_upload_trigger.sh進UserPromptSubmit陣列（該檔含密鑰不進git）
+- commit序列（workspace main分支）：`0f54af6b2`→`0d1cc9755`（CLAUDE.md健檢）→`c0a9f30ac`（E17）
+- commit（ai-go獨立repo）：`4d38936`（教練人設區塊）
 
 ---
 
@@ -166,46 +216,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-07-31 v88（Mac桌面版 Sonnet 5，BNI Connect官方網站後台操作能力驗證+見證頁正式上線）
-
-> 建立時間：2026-07-30 深夜～07-31 凌晨（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v87（聯想Windows Sonnet 5，BNI大台南南區＋真誠分會網站版型規劃）
-> 本棒主軸：**教練登入BNI Connect CMS後台，要求驗證Claude是否有能力接管維護他的BNI官方網站——這是教練「動嘴就能讓AI做事」理念的具體試金石。從權限查證一路做到真實內容編輯+正式Publish上線，過程踩了好幾個技術坑（隔離瀏覽器分頁不同步/CMS安全過濾器濾掉Base64與flex樣式/圖片解析度縮圖陷阱/img固定寬高被外部CSS拉變形），每個坑都靠實測數據抓出根因並修正，最終見證頁三則見證（含教練親自口述+照片）已正式對外發布。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯🎯 BNI Connect CMS後台操作能力驗證（本場主軸開端）
-教練提供BNI Connect後台網址，要我評估能不能接管維護。踩的第一個坑：一開始用Claude自己獨立的瀏覽器分頁開後台，教練登入後我這邊仍顯示session invalid——因為那是跟教練畫面隔離的假環境，教練當場糾正「你在幕後進行，我什麼都看不到」「我們是在平行時空」。改用`claude-in-chrome`工具連上教練本機真實已登入的Chrome才真正同步（教練確認畫面出現綠色圖示代表接管成功）。查證確認：教練帳號對「大台南南區」（區域ID`12261`）+5個真實分會（真富`25503`/真愛`26706`/真誠`18487`舊&`18640`新/真鑫`28446`/真鑽`12262`，最後一個由第三方代理商Outback Global建立）都有編輯權限。發現真誠分會有2筆重複CMS記錄，且分會層級沒有Delete/Unpublish功能（跟區域層級不同）。教練順口澄清接力棒上記錄多場的「真實AI分會」是筆誤，正式名稱是「真AI分會」，且該分會尚未登記，CMS裡自然查不到。完整方法+ID索引寫入記憶系統`reference_bni_connect_cms_structure`+`project_bni_connect_backend_access_verified_2026-07-31`（commit `6acef6316`，透過`.claude/projects`記憶庫跨機共用）。教練明確授權：以後口頭講要改什麼直接去改，發布前提醒一聲即可。**三機注意**：操作方法/ID三機共用，但登入狀態per機器，換機器要教練親自重新登入+確認該機器claude-in-chrome已連線。
-
-### 2. 🔴🔴🔴 大台南南區「見證」頁中文化+教練親自見證，正式Publish上線
-教練發現「見證」頁除了官方模板文字，見證內容全是英文（Marim/Amanda），且「View Story」按鈕會跳到BNI國際網站。查證發現這是`Testimonial`小工具的資料（Content/Name/Person URL/Designation/Company/Company URL六個欄位，Name欄位其實被拿來當按鈕顯示文字用），直接改欄位值即可中文化+清空Person URL避免跳走，兩則見證都已翻成「瑪琳」「安曼達」並存檔。
-
-教練接著想放自己的見證（BNI信任感引薦新加坡馬來西亞商機+上市公司培訓演講+改變傳統做生意方式），但`Testimonial`小工具本身沒有照片欄位，改用「客製可視資料」（其實是完整HTML富文本編輯器）新增自訂區塊。**照片這條線走了好幾輪返工**：
-- 第一次用Base64把壓縮後照片直接內嵌，CMS存檔時把整段`<img>`過濾掉（安全機制不接受data URI）
-- 改用CMS圖片庫網址，但發現這個網址背後其實是「後台縮圖」用途，被壓成200×300小尺寸，硬拉大顯示才會糊
-- 教練指出構圖問題（全身照臉太小、跟前兩則不協調），换了一張更近的半身照，且要求排版改成跟前兩則交錯呼應（圖右文左）
-- 排版樣式從flex改成表格結構（flex的CSS樣式也被CMS濾掉，表格結構比較不會被濾）
-- 最後一次真正的失誤：img同時給了固定`width`+`height`兩個HTML屬性，遇到BNI全站CSS只覆蓋width導致高度沒等比例縮放，整張照片被拉變形，教練當場抓到（「我的照片被拉得變形了」），改成只給width讓瀏覽器自動算高度即修復，數據驗證比例完全吻合原始檔案才算數，不是憑感覺
-- 過程中也踩過「瀏覽伺服器」原生彈窗這個automation構不到的坑——後來發現直接讀取畫面URL欄位裡教練選好的網址，繞過卡住的確定按鈕一樣有效；也發現這個彈窗卡住的真正原因是瀏覽器在小預覽框硬解碼6千萬像素照片造成當機，不是按鈕真的壞掉
-
-教練最終確認排版+清晰度沒問題後下令「發佈」，執行`Publish`（觸發本身也曾一度timeout，屬於伺服器端真的在處理，非卡死），用**完全沒有BNI登入狀態的獨立瀏覽器分頁**打開`bnitainan.com.tw/zh-TW/testimonials`公開網址，確認真實訪客也看得到三則中文見證——這一步刻意避開「用自己已登入的分頁自證」的陷阱，是真正的第三方驗證。commit `dc72fbb5d`→`8ee6db5d0`。
-
-## 📋 下一場直接開工任務
-- **BNI真誠/真愛/真AI分會＋大台南南區網站**：等教練回覆5項細節（v87已產出兩份HTML草稿），教練已澄清分會正確名稱是「真AI」非「真實AI」
-- **真誠分會重複CMS記錄**：CMS對分會層級無Delete功能，待教練決定是否透過BNI客服或Outback Global代理商帳號處理
-- **BNI後台其他頁面**：教練本場結尾提到還有其他頁面要維護（連繫我們/尋找分會/行事曆等他表示不用動，「為什麼選擇BNI」他表示可能要改），下一場直接問要動哪個頁面
-- Email自動發送系統、嘉義場籌備：仍卡在等教練給細節（v85/v86已記錄，多場未更新）
-
-## 🔑 本場關鍵檔案索引
-- 記憶系統：`reference_bni_connect_cms_structure.md`、`project_bni_connect_backend_access_verified_2026-07-31.md`（commit `6acef6316`）
-- BNI CMS頁面：`bnicms/v3/backend/page/editPage/773612`（見證頁）、`bnicms/v3/backend/pagecontentwidget/edit/835851`&`835852`（Marim/Amanda小工具）
-- 公開驗證網址：`https://bnitainan.com.tw/zh-TW/testimonials`
-- commit序列（workspace repo）：`6acef6316`（記憶系統）→ `a0cbb6dd1`→`dc72fbb5d`→`8ee6db5d0`（接力棒進度記錄）
-
----
-
-> 📦 **v87及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v88及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新3棒(v90/v89/v88)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
