@@ -45,3 +45,37 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1785737389
 - 雲端同步：✅ 已推上雲端（commit 9695b9d2f）
+
+## 🩺 健康檢查 2026-08-03 16:32
+- 教練沉默：2.6h（上次訊息 13:54）
+- 本任務（健康檢查）consecutiveErrors=1，lastErrorReason=`overloaded`（暫時性 AI provider 過載，非 apiKey 失效、非 timeout）
+- lastDurationMs=97559 << timeoutSeconds=600（沒踩到 timeout）
+- 未達 ≥3 連續錯誤閾值，不通知教練，下次 17:00 自動重試
+- HEARTBEAT 無 ⬜ 標記待辦
+- 結論：✅ 無需處理，安靜通過
+
+## 🩺 健康檢查 2026-08-03 18:02
+- 教練沉默：4.2h（上次訊息 13:54，當下 `date` 算）
+- 第零步 sync_coach_last_message.sh ✅ exit 0，Telegram API 真實回傳 13:54
+- 本任務 consecutiveErrors=1，lastErrorReason=`overloaded`，lastDurationMs=129530（遠低於 timeout 600）
+- 模型正確為 minimax/MiniMax-M3，無 apiKey 問題
+- HEARTBEAT 無 ⬜ 標記待辦
+- 結論：✅ 無需處理，安靜通過
+
+## ⚠️ peipei 自動 force-restart 2026-08-03 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 健康檢查 2026-08-03 18:32
+- 教練沉默：4.6h（上次訊息 13:54，當下 `date` 算）
+- 第零步 sync_coach_last_message.sh ✅ exit 0，Telegram API 真實回傳 13:54
+- 本任務 consecutiveErrors=1（持平，未升 3），lastErrorReason=`overloaded`，lastDurationMs=122991（遠低於 timeout 600）
+- 模型正確為 minimax/MiniMax-M3，無 apiKey 問題
+- 全 39 個 cron 任務最近 5 次執行掃描 → 0 個 error
+- HEARTBEAT 無 ⬜ 標記待辦
+- 結論：✅ 無需處理，安靜通過
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-03 20:20
+- ✅ 同步成功
+- HANDOFF mtime: 1785759557
+- 雲端同步：✅ 已推上雲端（commit cdb504dc0）
