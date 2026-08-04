@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9911d787-45a4-4790-8678-ef746e2505a6
-# 提取時間：2026-08-03 21:59 (台灣時間)
-# 共 8 條教練原話
+# 提取時間：2026-08-04 02:12 (台灣時間)
+# 共 13 條教練原話
 
 ---
 
@@ -255,3 +255,70 @@ https://northern-tw.netlify.app/#session-411 說明一下我想要的歷史回�
 我直接用 curl 查證過，這個網址現在顯示的就是最新的嘉義場版本（標題已經是「AI微型論壇 嘉義場｜8月28日」，頁面裡也找得到「再耕園404演講廳」的字樣），因為 GitHub Pages 會自動跟著 main 分支的最新 commit 更新，不用我額外做任何部署動作。
 
 您可以直接把這個連結傳給講師們看，是真正…（略）
+
+【教練 2026-08-03 14:00】
+好的，已經推上github 了嗎？
+
+　▶ AI 回應：是的，已經推上去了，本地跟 GitHub 完全同步，沒有任何未推送的變更，最新 commit 是 `d32b0dd`（現場設攤方案補上費用）。
+
+預覽連結：**https://coach1973.github.io/ai-talk/**，可以直接傳給講師們看。
+
+【教練 2026-08-03 16:13】
+洪詠清的照片 換一下，在下載資料夾1785773461607
+
+　▶ AI 回應：Found it. Let's replace the photo and verify.
+
+　▶ AI 回應：洪詠清的照片換好了，commit `1170729` 已推上 GitHub，本機驗證正常載入。GitHub Pages 預覽連結會自動跟著更新：https://coach1973.github.io/ai-talk/
+
+【教練 2026-08-03 16:19】
+好的，這裡先總結，等講師確認沒問題，我會請你上傳到netlify
+
+　▶ AI 回應：Now let's archive v90 and prepare the file edits.
+
+　▶ AI 回應：Now let's remove v90's full section (lines 144-196, the separator through the trailing blank before the next `---`) and update the archive footer note.
+
+　▶ AI 回應：Let's verify the removal was clean, then update the archive footer note and add my v93 entry.
+
+　▶ AI 回應：Good, v93 is free. Let's insert the new round right before v92.
+
+　▶ AI 回應：Now let's update the archive footer note to reflect v90 being archived and the new 3-round window (v93/v92/v91).
+
+　▶ AI 回應：Now let's write the memory for the key lesson from this session — verify external reference URLs before building, not after.
+
+　▶ AI 回應：Under the 17.1KB target now. Let's verify the file still looks sane.
+
+　▶ AI 回應：Let's commit and push these workspace/memory changes.
+
+　▶ AI 回應：總結完成，commit `aeb5e6c8a` 已推上雲端。
+
+**這場對話做了什麼：**
+從零把 AI微型論壇「嘉義場」（8/28週五，再耕園404演講廳）的網站建起來——4位講師資料（洪詠清/林韋銘/季哥從您的 mentor100 資料庫撈，吳大樹沿用既有）、5大主題議程（含神秘嘉賓）、100元園遊券制收費、100席上限每天+3人倒數、報名表加統一編號欄位、設攤方案2000元。台南場則依您指示，實際查看 northern-tw.netlify.app 的真實結構後，改成完整保留當天整頁版面的「歷屆回顧」封存區塊（不是我一開始做的簡化摘要卡）。講師卡片也比照 mentor100 的「AI百人…（略）
+
+【教練 2026-08-03 16:28】
+不好意思，在結束之前再幫我修正一件事：
+
+就是擺攤 2,000 元這件事情，還是改回 1,000 元吧。因為經過討論之後，大家覺得 1,000 元是可以接受的，所以我們送 100 元的那個 10 張園遊券也都取消，這上面就直接寫「設攤方案 1,000 元」這樣就好了。
+
+另外，每一攤的設攤者不用再付 100 元入場費。如果工作人員多帶一位，那多帶的那一位工作人員就要付入場費。
+
+這樣理解我的意思吧？
+
+　▶ AI 回應：Now let's update this per the new instructions.
+
+　▶ AI 回應：No stray references left. Let's validate structure and verify in browser.
+
+　▶ AI 回應：No errors. Cleaning up and committing.
+
+　▶ AI 回應：理解正確，已修好，commit `819a35d` 已推上 GitHub：
+
+**現場設攤：設攤方案 1,000 元**
+- 提供專屬桌子，與參與企業直接互動
+- 設攤者本人免入場費；多帶一位工作人員，該位需另付 100 元入場費
+- 現場發放贊助商品牌/伴手禮
+
+原本 1000 元園遊券贈品已拿掉。本機驗證過內容正確，沒有錯誤。GitHub Pages 預覽連結會自動更新：https://coach1973.github.io/ai-talk/
+
+【教練 2026-08-03 16:35】
+那我這個頁面就關了唷
+
+　▶ AI 回應：好的，都已經存好了，沒有任何未儲存的變更，關閉沒問題。今天辛苦了，晚安 🦞

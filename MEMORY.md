@@ -51,15 +51,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-02)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:278:278 -->
-- 📨 對話記錄 05:21（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:278-278]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:282:282 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:282-282]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:286:289 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-25.md:286-289]
-
 ## Promoted From Short-Term Memory (2026-08-02 weekly distillation)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:~270:500:weekly -->
@@ -103,3 +94,18 @@
 - 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:291-292]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:296:296 -->
 - 09:04 健康檢查（每30分鐘 cron 第 N 輪）: **檢查結果：無需教練介入** [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:296-296]
+
+## Promoted From Short-Term Memory (2026-08-04)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:275:275 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **Cron 任務監控：** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:275-275]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:276:279 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 本任務（46e67e2e）：上一場 19:30 fire ❌（109s，minimax provider `AI service temporarily overloaded`）; `consecutiveErrors: 1`（<3 紅線）; lastDurationMs 109s ≪ timeoutSeconds 600s → 非逾時; AI 服務瞬時過載 → 非 config 問題，不自動修復（無法修復，待重試） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:276-279]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:280:281 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 其餘 17 個 cron job：全部 `status=ok`; 唯一注意點：`37593697`（sync-執行細則-to-claude-g）delivery 路由 "will fail-closed"，但任務本體成功（背景同步不需要 announce），且 cron 工具自我隔離限制無法從此 session 修改該 job → 跳過 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:280-281]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:283:283 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **HEARTBEAT.md 背景工作：** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:283-283]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:284:286 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 無 ⬜ 標記項目; 多數為 ✅ 軍師 Hook 自檢 + 接力棒同步紀錄; 唯一警告：「🩺 軍師 Hook 自檢 2026-07-27 00:34 ⚠️ Pull 警告」—— 屬 git 問題，需教練/軍師手動處理，非 cron 可自動化 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:284-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:288:288 -->
+- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **結論：** 無法自動修復的嚴重問題、無連續錯誤 ≥3 次、無需教練裁決的項目 → **不通知教練，安靜完成。** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:288-288]

@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-04 02:08
+> 重啟時間：2026-08-04 17:37
 > 對話記錄已完整存入 memory/2026-08-04.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -20,3 +20,7 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
+
+## ⚠️ peipei 自動 force-restart 2026-08-04 17:55:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）

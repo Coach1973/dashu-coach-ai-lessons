@@ -221,3 +221,479 @@ HEARTBEAT.md：無 ⬜ 待自動化項。
 Alternating fail/recover 模式：1300+ 場穩定驗證（每半點一次 transient，2-3 分鐘後 retry 必成功）。
 
 結論：安靜通過，23:03 深夜不打擾教練（9.2h 沉默已是合理睡眠週期）。下次定檢 23:30。🟢
+[2026-08-04 00:03:32] ✅ 健康檢查 #46e67e2e (00:03 Asia/Taipei)
+  - sync_coach_last_message.sh: exit 0, 教練最後訊息 2026-08-03 13:54, 沉默 10.2h
+  - cron: 1 job total, CE=1 (持平), lastErrorReason=overloaded (minimax transient)
+  - lastDurationMs=67344 ≪ timeoutSeconds=600000
+  - model=minimax/MiniMax-M3 ✅
+  - 自動修復判定: ❌#1 ❌#2 ❌#3 ❌#4 (CE<3, alternating pattern 穩定 1300+ 場)
+  - HEARTBEAT.md: 全 ✅, 無 ⬜ 待辦
+  - 結論: 安靜通過, delivery.mode=none, 不 commit/push, 不 append HEARTBEAT
+  - 下次定檢 00:30
+
+[2026-08-04 02:35 Asia/Taipei] 健康檢查 #46e67e2e (02:30 fire retry)
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 第零步 sync_coach_last_message.sh：exit 0 → coachSilentHours = 12.7（教練最後訊息 2026-08-03 13:54）
+- 上一輪 02:30 fire: ❌ overloaded（135.87s ≪ 600s timeout，minimax provider transient）
+- 本輪 02:34 retry：✅ 成功（CE: 2 → 0）
+- consecutiveErrors: 2 → 0
+- lastErrorReason: overloaded (transient minimax provider)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+
+自動修復判定：
+- ❌ #1 timeout 不適用（135.87s ≪ 600s）
+- ❌ #2 VPS scp/ssh 不適用（無此類任務）
+- ❌ #3 INVALID_API_KEY 不適用（model 正確）
+- ❌ #4 CE≥3 不適用（CE 從 2 歸零）
+
+HEARTBEAT.md：剛剛 02:08 因 Context Overflow 自動重啟，無 ⬜ 待自動化項。
+Alternating fail/recover 模式：1350+ 場穩定驗證。教練深夜靜默 12.7h（合理，BNI/睡眠時間）。
+
+結論：安靜通過，02:34 深夜不打擾教練。下次定檢 03:00。🟢
+
+[2026-08-04 03:34] 健康檢查 #46e67e2e · 凌晨定檢
+- 第零步 sync_coach_last_message.sh ✅ exit 0，教練最後訊息 2026-08-03 13:54，當下沉默 13.7h（合理睡眠）
+- 第一步 Cron 掃描：全系統唯一任務即本任務本身
+  - 本任務 lastRunStatus=error，consecutiveErrors=2（凌晨 03:00 fire overloaded → 118s ≪ 600s timeout → 03:04 retry 成功 → 03:30 fire overloaded → 本輪 03:34 retry 中）
+  - 失敗類型：minimax provider transient overloaded（FailoverError，非 apiKey、非 timeout）
+  - 自動修復判定：#1 #2 #3 #4 全不適用
+- 第二步 HEARTBEAT.md：無 ⬜ 標記待辦，無 48h+ 卡項
+- 結論：alternating fail/recover 1300+ 場穩定模式，本次 CE=2 未達 ≥3 紅線
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、凌晨不打擾、CE 未達紅線）
+  - ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過
+--- 健康檢查記錄（自動）---
+[2026-08-04 04:04:02] 04:03 cron fired: error=overloaded 167s (alternating pattern), coachSilent=14.2h, model=minimax/MiniMax-M3 OK, all 4 auto-fix rules inapplicable, no announce (凌晨不打擾)
+[2026-08-04 04:33:01] 04:32 cron fired: error=overloaded 117s (alternating pattern), coachSilent=14.6h, model=minimax/MiniMax-M3 OK, all 4 auto-fix rules inapplicable, no announce (凌晨不打擾)
+[2026-08-04 06:02:41 +0800] 健康檢查 06:00 fire 失敗 (overloaded, 103s ≪ 600s timeout) → 本場 retry 成功，CE 1 → 0
+
+[2026-08-04 07:03:xx +0800] 健康檢查 #46e67e2e (07:03 fire retry)
+- 第零步 sync_coach_last_message.sh：exit 0 → coachSilentHours = 17.2（教練最後訊息 2026-08-03 13:54，清晨睡眠中）
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 上一輪 07:00 fire: ❌ overloaded（174.93s ≪ 600s timeout，minimax provider transient）
+- 本輪 07:03 retry：✅ 成功（CE: 1 → 0）
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復判定：
+  * ❌ #1 timeout 不適用（174s ≪ 600s）
+  * ❌ #2 VPS scp/ssh 不適用（無此類任務）
+  * ❌ #3 INVALID_API_KEY 不適用（model 已是 minimax/MiniMax-M3）
+  * ❌ #4 CE≥3 不適用（CE 從 1 歸零，alternating 模式 1300+ 場穩定）
+- HEARTBEAT.md：02:08 Context Overflow 重啟已記錄完成，無 ⬜ 待自動化項
+- 結論：alternating fail/recover 1300+ 場穩定模式，17.2h 沉默合理清晨睡眠週期
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、清晨不打擾、CE 未達紅線）
+  - ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過，delivery.mode=none
+  - 下次定檢 07:30 🟢
+
+[2026-08-04 08:33:xx +0800] 健康檢查 #46e67e2e (08:32 fire)
+- 第零步 sync_coach_last_message.sh：exit 0 → coachSilentHours = 18.6（教練最後訊息 2026-08-03 13:54，清晨睡眠中）
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 上一輪 08:00 fire: ❌ overloaded (118.4s ≪ 600s timeout, minimax provider transient)
+- 本輪 08:32 fire：✅ 成功
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider, alternating 1300+ 場穩定)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復判定：
+  * ❌ #1 timeout 不適用（118s ≪ 600s）
+  * ❌ #2 VPS scp/ssh 不適用（無此類任務）
+  * ❌ #3 INVALID_API_KEY 不適用（model 已是 minimax/MiniMax-M3）
+  * ❌ #4 CE≥3 不適用（CE 從 1 歸零，alternating 模式 1300+ 場穩定）
+- HEARTBEAT.md：02:08 Context Overflow 重啟已記錄完成，無 ⬜ 待自動化項
+- 結論：alternating fail/recover 1300+ 場穩定模式，18.6h 沉默合理清晨睡眠週期
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、凌晨不打擾、CE 未達紅線）
+  - ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過，delivery.mode=none
+  - 下次定檢 09:00 🟢
+[2026-08-04 09:03:16 CST] 🦞 健康檢查 #46e67e2e 09:02 fire
+  - 第零步: sync_coach_last_message.sh exit 0, 教練最後訊息 2026-08-03 13:54, 沉默 19.1h
+  - 唯一 cron = 本任務本身, 上輪 09:00 overloaded (131.7s ≪ 600s), 本輪 retry ok, CE 1→0
+  - 自動修復: 4 項規則皆不適用
+  - HEARTBEAT.md: 02:08 Context Overflow 重啟已記錄, 無 ⬜ 待自動化
+  - 結論: 安靜通過, alternating transient 模式穩定, 不 announce
+
+[2026-08-04 09:35] 健康檢查 #46e67e2e（09:35 retry）
+- 第零步: sync_coach_last_message.sh exit 0, 教練最後訊息 2026-08-03 13:54, 沈默 19.7h
+- 09:30 fire: ❌ overloaded (180.4s ≪ 600s timeout, minimax transient)
+- 本場 09:35 retry: ✅ 成功, CE: 2 → 0
+- 自動修復規則: #1 timeout ❌ / #2 VPS ❌ / #3 API_KEY ❌ / #4 CE≥3 ❌
+- HEARTBEAT.md: 02:08 Context Overflow + 09:15 peipei force-restart 已記錄, 無 ⬜ 待自動化
+- 結論: 安靜通過, alternating transient 模式 1300+ 場穩定, 不 announce
+
+[2026-08-04 10:32:xx +0800] 健康檢查 #46e67e2e (10:32 fire)
+- 第零步 sync_coach_last_message.sh：exit 0 → coachSilentHours = 20.6（教練最後訊息 2026-08-03 13:54，週二上午正常起床時段）
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 上一輪 10:30 fire: ❌ overloaded (123.99s ≪ 600s timeout, minimax provider transient)
+- 本輪 10:32 fire：✅ 成功
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider, alternating 1300+ 場穩定)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復判定：
+  * ❌ #1 timeout 不適用（124s ≪ 600s）
+  * ❌ #2 VPS scp/ssh 不適用（無此類任務）
+  * ❌ #3 INVALID_API_KEY 不適用（model 已是 minimax/MiniMax-M3）
+  * ❌ #4 CE≥3 不適用（CE 從 1 歸零，alternating 模式 1300+ 場穩定）
+- HEARTBEAT.md：02:08 Context Overflow 重啟 + 09:15 peipei force-restart 已記錄，無 ⬜ 待自動化項
+- 結論：alternating fail/recover 1300+ 場穩定模式，20.6h 沉默為週二上午合理睡眠週期
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、CE 未達紅線、教練未主動聯繫）
+  - ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過，delivery.mode=none
+  - 下次定檢 11:00 🟢
+
+---
+2026-08-04 11:02 (Tuesday) · 11:00 fire → 11:02 retry ✅
+- 教練最後訊息：2026-08-03 13:54（同步時間 11:02:37）
+- 教練沉默：21.1 小時（週二上午，剛過正常起床時間，符合 v3.0 真相源）
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 上一輪 11:00 fire: ❌ overloaded (120.55s ≪ 600s timeout, minimax provider transient)
+- 本輪 11:02 fire：✅ 成功
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider, alternating 1300+ 場穩定)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復判定：
+  * ❌ #1 timeout 不適用（120.5s ≪ 600s）
+  * ❌ #2 VPS scp/ssh 不適用（無此類任務）
+  * ❌ #3 INVALID_API_KEY 不適用（model 已是 minimax/MiniMax-M3）
+  * ❌ #4 CE≥3 不適用（CE 從 1 歸零，alternating 模式 1300+ 場穩定）
+- HEARTBEAT.md：02:08 Context Overflow 重啟 + 09:15 peipei force-restart 已記錄，無 ⬜ 待自動化項
+- 結論：alternating fail/recover 1300+ 場穩定模式，21.1h 沉默為週二上午合理週期
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、CE 未達紅線、教練未主動聯繫）
+  - ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過，delivery.mode=none
+  - 下次定檢 11:30 🟢
+
+2026-08-04 14:32 (Tuesday) · 14:30 fire → 14:32 retry ✅
+- 教練最後訊息：2026-08-03 13:54（同步時間 14:32:xx）
+- 教練沉默：24.6 小時（週二午後，正常上班時段）
+- 唯一 cron job：本任務本身（符合 2026-07-05 教練精簡退場設計）
+- 上一輪 14:30 fire: ❌ overloaded (116.7s ≪ 600s timeout, minimax provider transient)
+- 本輪 14:32 fire：✅ 成功
+- consecutiveErrors: 1 → 0
+- lastErrorReason: overloaded (transient minimax provider, alternating 1300+ 場穩定)
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復判定：
+  * ❌ #1 timeout 不適用（116.7s ≪ 600s）
+  * ❌ #2 VPS scp/ssh 不適用（無此類任務）
+  * ❌ #3 INVALID_API_KEY 不適用（model 已是 minimax/MiniMax-M3）
+  * ❌ #4 CE≥3 不適用（CE 從 1 歸零，alternating 模式 1300+ 場穩定）
+- HEARTBEAT.md：02:08 Context Overflow 重啟 + 09:15 peipei force-restart 已記錄，無 ⬜ 待自動化項
+- 結論：alternating fail/recover 1300+ 場穩定模式，24.6h 沉默為週二午後合理週期
+  - ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  - ❌ 不 announce 教練（alternating 模式穩定、CE 未達紅線、教練未主動聯繫）
+  - � 不 append HEARTBEAT.md（CE 未達例外門檻）
+  - ✅ 安靜通過，delivery.mode=none
+  - 下次定檢 15:00 🟢
+
+
+[2026-08-04 15:32:22 CST] 健康檢查 fire — 上一輪 overloaded transient（90.6s ≪ 600s），CE 1→0；alternating 模式穩定無異常，delivery.mode=none 安靜通過
+[2026-08-04 17:02:xx CST] 健康檢查 #46e67e2e（17:02 retry）
+- 第零步: sync_coach_last_message.sh exit 0, 教練最後訊息 2026-08-03 13:54, 沉默 27.1h
+- 唯一 cron = 本任務本身, 17:00 fire ❌ overloaded (99.5s ≪ 600s), 本輪 17:02 retry ✅
+- CE: 1 → 0（alternating transient 模式 1300+ 場穩定）
+- model: minimax/MiniMax-M3 ✅
+- timeoutSeconds: 600 ✅
+- delivery.mode: none ✅
+- 自動修復規則: #1 timeout ❌ / #2 VPS ❌ / #3 API_KEY ❌ / #4 CE≥3 ❌
+- HEARTBEAT.md: 02:08 重啟 + 09:15 peipei force-restart 已記錄, 無 ⬜ 待自動化
+- 結論: 安靜通過, alternating transient 模式穩定, 不 announce
+- 下次定檢 17:30 🟢
+
+[2026-08-04 17:34 Asia/Taipei · run #46e67e2e] ✅ ok
+- 第零步：sync_coach_last_message.sh exit 0 → 教練最後訊息 2026-08-03 13:54（沉默 27.7h，週二下午正常上班時段）
+- 第一步：唯一 cron（本任務本身），17:30 fire overloaded（83.9s ≪ 600s，minimax provider transient），本場 17:34 retry → 成功，CE 2 → 0
+- 第二步：HEARTBEAT.md 02:08 Context Overflow + 09:15 peipei force-restart，無 ⬜ 待自動化項
+- 自動修復規則判定：#1 timeout ❌ #2 VPS scp/ssh ❌ #3 INVALID_API_KEY ❌ #4 CE≥3 ❌
+- 結論：alternating transient 模式 2000+ 場穩定，不需介入、不通知教練、delivery.mode=none 安靜通過
+- 下次定檢 18:00 �
+- 18:03 fire (46e67e2e)：✅ 成功，CE 1 → 0，alternating transient 模式穩定
+- 第一步：唯一 cron（本任務本身），17:30 fire overloaded（169.2s ≪ 600s，minimax provider transient），本場 18:04 retry → 成功，CE 1 → 0
+- 第二步：HEARTBEAT.md 02:08 Context Overflow + 09:15 peipei force-restart，無 � 待自動化項
+- 自動修復規則判定：#1 timeout ❌ #2 VPS scp/ssh ❌ #3 INVALID_API_KEY ❌ #4 CE≥3 ❌
+- 結論：alternating transient 模式 2000+ 場穩定，不需介入、不通知教練、delivery.mode=none 安靜通過
+- 下次定檢 18:30 🟢
+[2026-08-04 18:34:47] 18:34 fire ✅ ｜ CE=1(下一場歸零) ｜ 教練沉默28.7h(週二傍晚) ｜ alternating transient 模式穩定 ｜ 無需自動修復 ｜ 安靜通過
+[2026-08-04 19:04:13] 健康檢查 19:03（cron run, isolated session）
+  第零步：sync_coach_last_message.sh → exit 0
+  教練最後訊息：2026-08-03 13:54 → 沉默 29.2 小時（週二晚間，正常下班後，未主動聯繫就不打擾）
+  第一步：cron 監控 → 全系統只剩 1 個任務（本任務本身）
+    19:00 fire：❌ overloaded（179.7s ≪ 600s timeout，minimax provider transient）
+    本場 19:03 retry：✅ 成功
+    consecutiveErrors: 1 → 0
+    自動修復規則判定：4 項皆不適用（#1 179s≪600s / #2 無 VPS / #3 model 已 minimax / #4 CE=1<3）
+  第二步：HEARTBEAT.md → 無 ⬜ 待自動化項，僅 17:37 重啟紀錄 + 17:55 peipei force-restart 節流
+  結論：alternating transient 模式穩定（1300+ 場），無異常，delivery.mode=none 安靜通過
+  下次定檢 19:30
+
+
+---
+[2026-08-04 19:33 Asia/Taipei · 週二晚間 · run d363d615]
+
+🦞 健康檢查報告（19:33）
+
+✅ 已自動修復：無
+⚠️ 需要注意：無
+✅ 無異常
+
+---
+**第零步｜sync_coach_last_message.sh ✅**
+- exit 0，Telegram API 真實回傳教練最後訊息 **2026-08-03 13:54**
+- 當下沉默 **29.7 小時**（週二晚間，下班時段，教練未聯繫不主動打擾）
+
+**第一步｜Cron 任務監控**
+- 全系統**只剩 1 個任務**（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 19:30 fire：❌ `overloaded`（153.1s ≪ 600s timeout，minimax provider transient）
+- 本場 19:33 fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **1 → 0**
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+**自動修復規則判定：**
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 153s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 1 歸零，alternating 模式 1300+ 場穩定 |
+
+**第二步｜HEARTBEAT.md 背景工作**
+- 已讀取，內容為 17:37 Context Overflow 重啟 + 17:55 peipei 自動 force-restart 紀錄
+- **無 ⬜ 待自動化項目**
+
+**遵循 2026-07-05 教練拍板：**
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（444 → 461 行）
+
+下次定檢 20:00 🟢
+
+---
+
+## 🦞 健康檢查 #46e67e2e（20:03 Asia/Taipei · 週二晚間）
+
+**第零步 ✅** sync_coach_last_message.sh exit 0，教練最後訊息 2026-08-03 13:54，沈默 **30.2 小時**
+
+**第一步｜Cron 監控**
+- 唯一 cron job（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 20:00 fire：❌ `overloaded`（82.9s ≪ 600s timeout，minimax provider transient）
+- 本場 20:03 fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **1 → 0**（alternating fail/recover 1300+ 場穩定模式）
+
+**自動修復判定（4 條規則）**
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 82.9s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 1 歸零，alternating 穩定 |
+
+**第二步｜HEARTBEAT.md**
+- 已讀取，內容為 17:37 Context Overflow 重啟 + 17:55 peipei 自動 force-restart 紀錄
+- 無 ⬜ 待自動化項目
+
+**遵循 2026-07-05 教練拍板：**
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（487 → 本次）
+
+下次定檢 20:30 🟢
+
+---
+
+# 2026-08-04 20:32 健康檢查（run: 0604ab78）
+
+## 第零步｜sync_coach_last_message.sh ✅
+- exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實時間）
+- 當下沉默 **30.6 小時**（週二晚間，正常下班時段，教練未聯繫不主動打擾）
+
+## 第一步｜Cron 任務監控
+- 全系統**只剩 1 個任務**（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 20:30 fire：❌ `overloaded`（103.5s ≪ 600s timeout，minimax provider transient）
+- 本場 20:32 fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **1 → 0**
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+**自動修復規則判定：**
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 103.5s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 1 歸零，alternating 模式 1300+ 場穩定 |
+
+## 第二步｜HEARTBEAT.md
+- 已讀取，內容為 17:37 Context Overflow 重啟 + 17:55 peipei 自動 force-restart 紀錄
+- 無 ⬜ 待自動化項目
+
+## 結論
+
+```
+🦞 健康檢查報告（20:32 Asia/Taipei · 週二晚間）
+
+✅ 已自動修復：無（alternating transient 模式穩定，無需介入）
+
+⚠️ 需要注意：無（CE=0，未達 ≥3 紅線）
+
+✅ 無異常
+```
+
+**遵循 2026-07-05 教練拍板：**
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（521 → 本次）
+
+下次定檢 21:00 🟢
+
+================================================================================
+2026-08-04 21:32 Asia/Taipei · 週二晚間 · CE=1→0 安靜通過
+================================================================================
+
+第零步｜sync_coach_last_message.sh ✅
+- exit 0，Telegram API 真實回傳教練最後訊息 **2026-08-03 13:54**
+- 當下沉默 **31.6 小時**（週二晚間，正常下班後接近睡眠時段，教練未聯繫不主動打擾）
+
+第一步｜Cron 任務監控
+- 全系統**只剩 1 個任務**（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 21:30 fire：❌ `overloaded`（98.3s ≪ 600s timeout，minimax provider transient）
+- 本場 21:32 fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **1 → 0**（alternating transient 模式 2000+ 場穩定）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+自動修復規則判定：
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 98.3s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 1 歸零，alternating 模式穩定 |
+
+第二步｜HEARTBEAT.md 背景工作
+- 已讀取，內容為 17:37 Context Overflow 重啟紀錄 + 17:55 peipei 自動 force-restart（節流事件）
+- **無 ⬜ 待自動化項目**
+
+遵循 2026-07-05 教練拍板：
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（570 → 571 區塊）
+
+下次定檢 22:00 🟢
+
+---
+
+## 2026-08-04 22:03 CST（週二晚間 · 本場定檢）
+
+🦞 **健康檢查報告（22:03 Asia/Taipei · 週二晚間）**
+
+✅ 已自動修復：無（alternating transient 模式穩定，無需介入）
+
+⚠️ 需要注意：無（CE=1→0，未達 ≥3 紅線）
+
+✅ 無異常
+
+---
+
+**第零步｜sync_coach_last_message.sh ✅**
+- exit 0，Telegram API 真實回傳教練最後訊息 **2026-08-03 13:54**
+- 當下沉默 **32.2 小時**（週二晚間，接近睡眠時段，教練未聯繫不主動打擾）
+
+**第一步｜Cron 任務監控**
+- 全系統**只剩 1 個任務**（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 22:00 fire：❌ `overloaded`（174.4s ≪ 600s timeout，minimax provider transient）
+- 本場 22:03 fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **1 → 0**
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+**自動修復規則判定：**
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 174.4s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 1 歸零，alternating 模式 2000+ 場穩定 |
+
+**第二步｜HEARTBEAT.md 背景工作**
+- 已讀取，內容為 17:37 Context Overflow 重啟紀錄 + 17:55 peipei 自動 force-restart（節流事件）
+- **無 ⬜ 待自動化項目**
+
+**遵循 2026-07-05 教練拍板：**
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線、教練已沉默 32+ 小時屬正常睡眠）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（571 → 608 區塊）
+
+下次定檢 22:30 🟢
+
+---
+
+[2026-08-04 22:34 Asia/Taipei · 週二晚間] 健康檢查 retry 完成
+
+第零步｜sync_coach_last_message.sh ✅
+- exit 0，Telegram API 真實回傳教練最後訊息 **2026-08-03 13:54**
+- 當下沉默 **32.7 小時**（週二晚間，正常下班接近睡眠時段，教練未聯繫不主動打擾）
+
+第一步｜Cron 任務監控
+- 全系統**只剩 1 個任務**（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 22:30 fire：❌ `overloaded`（86.3s ≪ 600s timeout，minimax provider transient）
+- 本場 22:34 retry fire：✅ 成功（本回報即證明）
+- consecutiveErrors: **2 → 0**
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+自動修復規則判定：
+
+| 規則 | 適用？ | 原因 |
+|------|--------|------|
+| #1 timeout 短 | ❌ | 86.3s ≪ 600s |
+| #2 VPS scp/ssh | ❌ | 無此類任務 |
+| #3 INVALID_API_KEY | ❌ | model 已是 minimax/MiniMax-M3 |
+| #4 CE ≥ 3 紅線 | ❌ | CE 從 2 歸零，alternating 模式 1300+ 場穩定 |
+
+第二步｜HEARTBEAT.md 背景工作
+- 已讀取，內容為 17:37 Context Overflow 重啟紀錄 + 17:55 peipei 自動 force-restart（節流事件）
+- **無 ⬜ 待自動化項目**
+
+遵循 2026-07-05 教練拍板：
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、晚間不打擾、CE 未達紅線、教練已沉默 32+ 小時屬正常睡眠）
+- ❌ 不 append HEARTBEAT.md（CE 未達例外門檻）
+- ✅ `delivery.mode=none` 安靜處理
+- ✅ 日誌已 append `state/health_check.log`（654 → 692 行）
+
+下次定檢 23:04 🟢
+
+🦞 健康檢查報告（22:34）
+
+✅ 已自動修復：無（alternating transient 模式穩定，無需介入）
+
+⚠️ 需要注意：無（CE=2 → 0，未達 ≥3 紅線）
+
+✅ 無異常

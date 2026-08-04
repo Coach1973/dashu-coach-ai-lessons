@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-03T14:52:06Z",
+  "ts": "2026-08-04T14:53:05Z",
   "status": "ok",
   "alert": false,
   "reason": "",
@@ -7,6 +7,6 @@
   "spool_processing": 0,
   "last_inbound": "",
   "last_inbound_age_minutes": 0,
-  "last_restart_age_minutes": 16666,
-  "container_uptime": "2026-08-02T15:27:57.775464414Z"
+  "last_restart_age_minutes": 819,
+  "container_uptime": "2026-08-04T01:27:29.607378894Z"
 }
