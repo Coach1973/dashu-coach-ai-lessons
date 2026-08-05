@@ -31,7 +31,8 @@
 | 🟢 | **BNI Connect官方網站CMS後台操作能力驗證** | ✅2026-07-31本場完成，教練親口確認「非常棒」 | 教練登入BNI Connect後台(bniconnectglobal.com/bnicms/v3)，用`claude-in-chrome`連上教練本機真實已登入Chrome(不是Claude自己的隔離分頁，這個坑先踩過一次教練當場糾正)，確認有編輯權限：大台南南區(區域ID`12261`)+5個分會(真富25503/真愛26706/真誠18487舊&18640新/真鑫28446/真鑽12262)，可改地址/電話/聯絡人/分會頁面內容。全程DOM純文字讀取不截圖，Token消耗低。教練明確授權「以後我口頭講要改什麼，你直接去改」，發布上線前口頭提醒一聲即可，不用每欄都確認。**完整存取方法+網站ID索引已寫入記憶系統**`reference_bni_connect_cms_structure`+`project_bni_connect_backend_access_verified_2026-07-31`(commit `6acef6316`，透過`.claude/projects`記憶庫git同步三機)。**⚠️三機注意**：操作方法/網站ID三機共用，但**登入狀態是per機器**——聯想/宏碁要操作BNI網站前，教練需在那台機器的Chrome親自重新登入BNI Connect(帳密僅教練本人輸入)+確認該機器claude-in-chrome擴充功能已連線，登入後直接套用同一套方法即可，不用重新摸索。**待處理**：真誠分會有2筆重複CMS記錄(舊18487/新18640)，該CMS對分會層級無Delete/Unpublish功能，教練決定先不動，待確認正式處理管道(BNI客服或Outback Global代理商帳號) |
 | 🟢 | **大台南南區「見證」頁中文化+教練親自見證** | ✅2026-07-31已正式Publish上線，教練親口下令「發佈」 | 原頁面兩則英文見證(Marim/Amanda)已翻譯成中文(瑪琳/安曼達)+清空會跳到bni.com國際網站的連結。新增第三則教練親自口述的見證(BNI信任感引薦新加坡馬來西亞商機+上市公司培訓演講)，用表格排版做出「圖右文左」跟前兩則交錯呼應。**過程三次返工**：①Base64內嵌照片被CMS存檔時整個過濾掉(安全機制) ②改用CMS圖片庫網址但只有200×300小尺寸還被我拉大顯示糊掉 ③教練親自透過「瀏覽伺服器」選圖流程確認可以拿到真正原始解析度(6336×9504)網址，但同時給了寬高兩個固定數字，被BNI全站CSS只限制寬不限制高，拉變形，教練當場抓到糾正，已改成只給寬度讓高度自動跟隨比例，數據驗證比例0.667完全吻合原始檔案。**照片解析度追加修復**：發布前教練又抓到第一版照片(6336×9504全身照)顯示比例失真變形——原因是同時給了固定width+height兩個HTML屬性，被BNI全站CSS只覆蓋width導致高度沒等比例縮放，改成只給width讓瀏覽器自動算高度即修復；後來教練覺得全身照臉太小，換成教練提供的另一張近距離半身照(1785442736710.jpg)，改用圖片庫縮圖網址(最長邊300px、比例正確不失真)。**已於2026-07-31 12:39(BNI系統時間)正式Publish**，用獨立無登入瀏覽器分頁實測`bnitainan.com.tw/zh-TW/testimonials`公開網址確認三則中文見證真實對外可見，非僅CMS預覽。**教訓**：img同時設width+height兩個HTML屬性，遇到外部CSS只覆蓋其中一個屬性時會失真變形，之後只設一個維度讓瀏覽器自動等比例換算更安全 |
 | ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩50次(2026-08-05，jiesheng-leadership git-auto-deploy推送後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
-| 🟢 | **結繩領導學(jiesheng-leadership.netlify.app)座談會轉歷史紀錄+工作坊改主要動線+台中場取消** | ✅本場完成，已推正式站 | 教練提5項調整：①活動已結束但保留歷史紀錄②座談會區塊搬到工作坊下方③標題加註「11場均已圓滿結束」④「立即報名活動」按鈕改跳轉「立即報名工作坊」⑤工作坊區塊移除「報名線上座談會」按鈕⑥台中場取消僅留台南/台北(FAQ同步)。查證確認此站是**GitHub自動部署型**(git push main觸發Netlify，非22個手動zip站之一)，commit `2807592`推送後curl+真實Chrome雙重驗證正式站生效 |
+| 🟢 | **結繩領導學官網重構：從新書發表轉為兩日工作坊銷售頁** | ✅v99完成，已推正式站(GitHub自動部署) | 依教練提供指令書(`~/Downloads/結繩領導學_官網重構指令書.docx`)11區塊重寫首頁，舊版(新書發表+11場座談會)完整封存於`archive/`不遺失。過程含多輪UI微調(表頭四連結+CTA/右側浮動導覽/手機漢堡選單/成交區按鈕置中/品牌字級22px/Hero改雙欄+書封面)+og標籤補齊(舊版LINE預覽卡「現場座談會」需靠`?v=`繞過快取，跟AI微論壇同根因)。**教訓**：`jiesheng-leadership`是GitHub自動部署型，「推GitHub」對這站=同時推Netlify，本場因未查證這點導致教練還沒說「推」就已上線，詳見下方永久提醒 |
+| 🔴🔴🔴 | **Netlify站分兩型，動手前必查是哪型(2026-08-05二度誤推)** | ⚠️永久提醒 | `feedback_netlify_deploy_zip_api.md`早就記載`jiesheng-leadership`是GitHub自動部署型(2026-06-09第一次血淚)，本場(2026-08-05)Sonnet 5仍然只想著「教練說先推GitHub」沒有觸發查證動作，導致同一個錯犯第二次。已補進記憶+更新MEMORY.md索引標題直接寫「動手前必查是哪型」。**新鐵律**：聽到「推GitHub」這類指令，只要牽涉Netlify網站，一律先查是不是自動部署型，不能拆開處理成「先推一半」 |
 | 🟡 | coach888拖拉排序功能 | ⏳待教練回饋 | v72已用真實滑鼠事件測試交付，尚無教練實際使用回饋記錄，下一場先問「好用了嗎」 |
 | 🟡 | 「全世界最優秀的團隊計畫」報名連結 | 🔒卡住-等教練 | 兩顆按鈕還沒掛真實報名連結，等教練給LINE或表單網址 |
 | 🟡 | 企業健身房正式建站（coach1973.github.io/Business.gym） | 🔒卡住-等教練 | 網址教練已親貼確認，但尚未正式交辦開工 |
@@ -62,6 +63,52 @@
 | 🟢 | **大樹小講(bigtree-tw)新增金門兩場次+歷史講座紀錄頁改宮格牆** | ✅v96本場完成，已推Netlify | 教練口述新增8/21(五)19:30-21:00金門場(西浦頭社區)+8/22(六)13:30-16:30金門場(向陽吉第社區，教練口誤「吉弟」經WebSearch官方資料查證更正)，主題皆「零基礎學AI，起步比較快」(順手統一全站舊寫法)。歷史講座紀錄頁應教練要求從縱向16張大圖列表改版為4×4宮格牆+點擊彈窗看完整資訊，本機預覽經教練確認後推上正式站(deploy`6a72a1b619a971632cad6833`)，curl驗證文字/圖片Content-Type皆正常。GitHub commit `620ca09`(場次)+`d567976`(宮格牆)+`4262ea8`(場地補正) |
 | 🟢 | **健康檢查cron假警報根因修復(v4.0三關判定)** | ✅v96本場完成 | 教練回報「小龍蝦老是出現奇怪訊息」，查證發現`🦞每30分鐘任務健康檢查`(jobId`46e67e2e`)因minimax provider暫時過載連錯5場觸發舊規則「連續≥3必announce」，但警報送達當下該輪其實已恢復成功，等於送出假警報。教練當場糾正「不影響工作就別吵我，浪費我注意力」。已用`openclaw cron edit --message`把規則#4改版為v4.0：只有「現在仍壞+非provider暫時過載+真影響工作」三關全過才准announce，並用`openclaw cron run --wait`實跑驗證同款情境下確實不再誤發(`delivered:false`)。已寫入記憶`feedback_alert_only_when_actually_broken` |
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
+
+---
+
+# 軍師接力棒 · 2026-08-05 v99（Mac終端機 Sonnet 5，opencode環境檢查報告review+bigtree金門場資訊補齊+結繩領導學官網大改版）
+
+> 建立時間：2026-08-05 下午～晚上（台灣時間 19:00~21:10）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v98（Mac終端機 Sonnet 5，結繩領導學5項調整+GitHub自動部署推送，同日較早的獨立session）
+> 本棒主軸：**三條主線。①教練把 opencode(MiniMax-M3) 寫的環境檢查報告轉來要我複審+反思「軍師為何沒抓到」，查證後發現報告本身也有兩處沒查證就下筆的瑕疵(自稱Opus5/CLAUDE.md鏡像關係)，回信給opencode+CORE_RULES新增R20+E12/E17鐵律擴充，順手在Repo1盤點時抓到`credentials/`真實金鑰從沒被`.gitignore`保護的真安全漏洞並修復。②bigtree大樹小講金門兩場補地址/座位/費用+時間修正(19:30-21:30)+隱藏3個已結束場次+新增「近期活動花絮」7/29真實照片輪播。③結繩領導學官網依教練提供的重構指令書全面重寫(新書發表→兩日工作坊銷售頁)，過程多輪UI微調，最後因未查證`jiesheng-leadership`是GitHub自動部署型，教練還沒說「推」就已經上線，是本場最大教訓。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 opencode環境檢查報告review+CORE_RULES新增R20
+教練把 opencode(MiniMax-M3) 主動做的「環境檢查」報告轉來，要我①檢查有無問題②反思「軍師為何沒抓到這些問題」。查證後發現報告本身有兩處未查證就下筆：a) 報告作者把自己(MiniMax-M3)誤植成「Opus 5」；b) 斷言`~/.claude/CLAUDE.md`跟`workspace/CLAUDE.md`「完全獨立、不是bug」，但實際上`scripts/sync_xinfa_to_claude_global.sh`等腳本真的存在部分鏡像關係。寫了一封回信給opencode(`knowledges/2026-08-05_軍師給OpenCode的回信_環境檢查報告回饋.md`)，並把「斷言前先查證、落款前先確認自己是誰」新增為CORE_RULES.md的R20，確保opencode下次開工必讀時看得到。同時把報告建議落地：E12鐵律新增「設定檔打架」判斷項、E17收工流程補環境健檢動作。commit `85a9c0644`（workspace）。
+
+### 2. 🔴🔴 Repo1(~/.openclaw)盤點時發現真安全漏洞：`credentials/`從沒被`.gitignore`保護
+盤點134行untracked時發現整個repo從未設過`.gitignore`，而`credentials/`目錄裝著真實LINE/Telegram secret/token(權限600)，一旦有人`git add -A`就會永久寫進git歷史。已新增`.gitignore`排除`credentials/`+`node_modules/`+資料庫備份快照，並補commit兩個乾淨的遺留變更(jiaolian_thoughts語音辨識誠實回覆+舊版opencode報告改名收尾)。commit `6965a61e`+`cd174376`（外層master repo）。
+
+### 3. 🎯 bigtree大樹小講：金門兩場資訊補齊+活動花絮輪播
+教練口述補齊8/21西浦頭社區(金門縣金寧鄉西浦頭231號，座位80人)+8/22向陽吉第社區(金門縣金城鎮西海路三段86號，座位60人)，皆免費、歡迎邀請非社區住戶參加；8/21時間修正為19:30-21:30(原寫21:00結束)；隱藏已結束的7/18線上讀書會+7/22高雄場+7/29台南場(資料留在git歷史，教練說法「反正在歷史紀錄裡面都看得到」)；新增「近期活動花絮」輪播(近期場次後、學員見證前)，7/29 AI微論壇台南場24張真實現場照片(`photos-carousel-0729/`，跟「緣起」輪播用的舊版活動剪影`photos-carousel/`是完全不同的兩批照片，md5核對過)。GitHub commit `e198f6e`。
+
+### 4. 🎯🎯🎯 結繩領導學官網大改版：新書發表→兩日工作坊銷售頁
+教練提供官網重構指令書(`~/Downloads/結繩領導學_官網重構指令書.docx`)，依11區塊架構全面重寫`index.html`：Hero雙欄(左文案/右書封，沿用舊版浮動動畫)→六大痛點→書/一般課程/工作坊比較表→四大工具(沿用原書內容改寫成「團隊問題→工作坊操作」格式)→兩天四階段(看見/判斷/操作/帶走)→學員見證(含3支FB見證影片連結)→關於曜董(後移)→成交區(NT$10,000，台南8/19-20+台北11/25-26)→FAQ。**舊版首頁(新書發表+11場座談會歷史)完整封存於`archive/`，圖片一併保留，首頁下方留連結可查看，不遺失**。過程多輪教練回饋微調：表頭四連結(工作坊/課程方法/學員回饋/關於曜董)+置中「立即報名工作坊」CTA+右側浮動導覽(仿舊版4圓形按鈕)+手機版漢堡選單+成交區報名按鈕置中(桌面版曾因Hero改版誤傷全域`.cta-row`置中樣式，已修正用`.hero-grid .cta-row`單獨override)+品牌字級22px+補齊`og:`/`twitter:`標籤(乾淨世界頻道連結`https://www.ganjingworld.com/@RPL50`同時補進footer)。每一輪修改都本機驗證(用瀏覽器互動測試按鈕/漢堡選單/RWD斷點)+開真實Chrome給教練看才進下一輪。
+
+### 5. 🔴🔴🔴 教訓：Netlify自動部署型站台未查證，教練還沒說「推」就已上線
+教練說「可以先推到GitHub，我讓團隊看完後再決定要不要推Netlify」，我直接執行`git push`——**沒有查證`jiesheng-leadership`是GitHub自動部署型**，想當然爾套用同場對話裡bigtree等手動上傳型站台的經驗。結果Netlify自動部署上線，教練親自發現「已經是新內容了」才揭穿，教練當場糾正：「這個就是你的問題，因為你沒有讀取開工檔案，你不曉得我每一次推播都會扣點數。」查證發現這個教訓其實**早就記錄在案**——`feedback_web_push_sop.md`判斷表格第一行代表站台就是`jiesheng-leadership`，`feedback_netlify_deploy_zip_api.md`也記著2026-06-09一模一樣的事故(當時是Sonnet 4.6犯的)。問題不是沒有經驗，是行動前沒有主動查記憶。已把這次(2026-08-05)重複犯錯的完整經過補進`feedback_netlify_deploy_zip_api.md`，更新description+MEMORY.md索引標題直接寫「動手前必查是哪型」。**教練裁示**：現狀不動(已上線的新版就保留)，之後所有修改一律只在GitHub上處理，不再碰Netlify。commit `7d8dbb5`(改版)+og標籤修正待下次一併commit。
+
+## 📋 下一場直接開工任務
+- 結繩領導學：og標籤修正(補`?v=`繞過LINE快取說明)還有一個小commit待處理(教練已知會，本場收工時一併commit)
+- Repo1剩餘94行untracked(5個agent目錄個人化設定檔全未進git)：涉及三機同步SOP架構決定，需要教練裁示方向，不要片面處理
+- 接力棒瘦身：主檔現有v99/v98/v97三棒，超過E16規定的「最新1~2棒」，下場建議封存v97
+
+## 🔑 本場關鍵檔案索引
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_netlify_deploy_zip_api.md`：新增2026-08-05二度誤推血淚段落+新鐵律
+- `~/.openclaw/CORE_RULES.md`：新增R20(斷言前先查證)
+- `~/.openclaw/執行細則.md`：E12新增設定檔打架判斷項、E17補環境健檢動作
+- `~/.openclaw/.gitignore`：新增，排除credentials/+node_modules+db備份快照
+- `~/.openclaw/knowledges/2026-08-05_軍師給OpenCode的回信_環境檢查報告回饋.md`：新增
+- `github_repos/bigtree/index.html`：金門場資訊補齊+活動花絮輪播區塊+JS
+- `github_repos/bigtree/photos-carousel-0729/`：新增，24張7/29真實照片
+- `github_repos/jiesheng-leadership/index.html`：全面重寫(11區塊)
+- `github_repos/jiesheng-leadership/archive/`：新增，舊版首頁+圖片完整封存
+- commit(openclaw master)：`6965a61e`+`cd174376`
+- commit(openclaw workspace)：`85a9c0644`
+- commit(bigtree)：`e198f6e`
+- commit(jiesheng-leadership)：`7d8dbb5`
 
 ---
 
