@@ -1,6 +1,8 @@
 # Memory Index
 
-- [🎯🎯 BNI大台南南區9分會後台系統(bni-chapters)正式對外開通chapters.bymyway.com(2026-08-03)](project_bni_chapters_public_launch_2026-08-03.md) — 取代7/29靜態mockup草稿，10組帳號仍是預設密碼Admin/88888待改
+- [🎯🎯 BNI大台南南區9分會系統(bni-chapters)開通後密集迭代——核心價值/常用連結/傳統道德規範/參訪須知線上實體分流(2026-08-04)](project_bni_chapters_public_launch_2026-08-03.md) — 10組帳號仍是預設密碼Admin/88888待改
+- [🔴🔴 測試「整批覆寫」表單POST前先讀出完整既有資料，漏填欄位會被清空(2026-08-04)](feedback_test_form_post_read_before_write.md) — bni-chapters真誠分會Hero文字曾被測試指令誤清空，靠seed.py救回
+- [🔴🔴🔴 不能用「看起來相關」的既有欄位推論教練沒明講的新分類，兩者可能無關(2026-08-04)](feedback_dont_infer_unrelated_attribute.md) — 用status(active/forming)猜線上/實體分會全猜錯，應直接問
 - [🔴🔴 教練已授權操控真實瀏覽器時，OAuth式登入流程也要用claude-in-chrome完成，不要叫教練點(2026-08-03)](feedback_use_chrome_control_for_oauth_flows.md) — cloudflared tunnel login案例，既有授權要類推到新情境，見試金石
 - [🎯🎯 AI微型論壇嘉義場網站build完成，台南場改northern-tw式完整封存(2026-08-03)](project_ai_talk_jiayi_launch_2026-08-03.md) — ai-talk repo已推GitHub Pag…
 - [🔧 教練提參考網址時動手前先打開查看真實結構，不要憑印象猜(2026-08-03)](feedback_verify_reference_url_before_building.md) — northern-tw.netlify.app「…
