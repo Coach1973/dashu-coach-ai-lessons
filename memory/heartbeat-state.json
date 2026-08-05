@@ -2,7 +2,7 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785880953,
+    "heartbeat_poll": 1785895250,
     "system_health": 1785665043,
     "telegram_channel": 1785809004,
     "junshi_queue": 1785599760,
@@ -13,8 +13,8 @@
     "evening_greeting": 1785766895,
     "coach_silence_sync": "2026-08-05T08:34:42.520966+08:00"
   },
-  "lastHeartbeat": "2026-08-05T09:03:32+08:00",
-  "lastHeartbeatNote": "週三 09:02 心跳（亮天後第一輪）：Telegram 探針守則#19 實測 ok:true、教練沉默 42.7h+（自 08-03 13:54 起）、所有 cron 健康、context 28%、無 ⬜ 待辦、quiet hours 已過。已主動發週三早安關懷訊息（messageId 9321）詢問今天從哪件事開始，並列出 5 項待辦可挑。",
+  "lastHeartbeat": "2026-08-05T10:00:50.877236+08:00",
+  "lastHeartbeatNote": "週三 10:00 心跳（重啟後 22 分鐘首輪）：按 HEARTBEAT.md 鐵律送出 09:38 重啟通知（Telegram messageId 9322，curl bypass 成功）、Telegram 通道實測 ok:true、教練沉默 44.1h+（自 08-03 13:54）。無新任務、無待辦新增、cron 全綠、context 28%。靜候教練覆。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Tuesday",
@@ -23,7 +23,7 @@
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 28,
-    "recentCoachActivity": "教練 19.2h 沒跟小龍蝦 Telegram 對話（自 2026-08-03 13:54 起）",
+    "recentCoachActivity": "教練 20.1h 沒跟小龍蝦 Telegram 對話（自 2026-08-03 13:54 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-04T09:03:25.000000+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 42.7,
+    "coachSilentHours": 44.1,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -61,7 +61,7 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": true,
-    "nextPlannedAction": "等候教練回覆，或下一場 heartbeat 09:30+",
+    "nextPlannedAction": "靜候教練覆（09:03 早安 + 09:38 重啟通知已發，等教練下指令）",
     "cronHealthCheck": {
       "name": "🦞 每30分鐘任務健康檢查",
       "recentPattern": "lastRunStatus=ok（22:00 已過），無連續錯誤",
@@ -80,35 +80,35 @@
     ],
     "lastDeliveries": [
       {
-        "ts": "2026-08-04T09:03:25+08:00",
+        "ts": "2026-08-05T10:00:10+08:00",
         "channel": "telegram",
         "to": "6124913915",
-        "messageId": 9309,
-        "purpose": "02:08 重啟後首輪早安通知 + 詢問今天從哪件事開始"
+        "messageId": 9322,
+        "purpose": "09:38 context overflow 重啟後第一時間通知教練"
       },
       {
-        "ts": "2026-08-02T18:04:03.317518+08:00",
+        "ts": "2026-08-05T09:03:32+08:00",
         "channel": "telegram",
         "to": "6124913915",
-        "messageId": 9249,
-        "purpose": "週日晚間關懷 + 22:20 Day 1/20 寄信任務預警"
+        "messageId": 9321,
+        "purpose": "週三早安關懷 + 教練沉默 42h+ 主動詢問今天從哪件事開始"
       }
     ]
   },
   "lastDeliveries": [
+    {
+      "ts": "2026-08-05T10:00:10+08:00",
+      "channel": "telegram",
+      "to": "6124913915",
+      "messageId": 9322,
+      "purpose": "09:38 context overflow 重啟後第一時間通知教練"
+    },
     {
       "ts": "2026-08-05T09:03:32+08:00",
       "channel": "telegram",
       "to": "6124913915",
       "messageId": 9321,
       "purpose": "週三早安關懷 + 教練沉默 42h+ 主動詢問今天從哪件事開始"
-    },
-    {
-      "ts": "2026-08-02T18:04:03.317518+08:00",
-      "channel": "telegram",
-      "to": "6124913915",
-      "messageId": 9249,
-      "purpose": "週日晚間關懷 + 22:20 Day 1/20 寄信任務預警"
     }
   ]
 }
