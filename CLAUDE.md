@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-05 21:15:26**
+> **最後同步：2026-08-05 23:25:45**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -103,7 +103,8 @@
 教練說「可以先推到GitHub，我讓團隊看完後再決定要不要推Netlify」，我直接執行`git push`——**沒有查證`jiesheng-leadership`是GitHub自動部署型**，想當然爾套用同場對話裡bigtree等手動上傳型站台的經驗。結果Netlify自動部署上線，教練親自發現「已經是新內容了」才揭穿，教練當場糾正：「這個就是你的問題，因為你沒有讀取開工檔案，你不曉得我每一次推播都會扣點數。」查證發現這個教訓其實**早就記錄在案**——`feedback_web_push_sop.md`判斷表格第一行代表站台就是`jiesheng-leadership`，`feedback_netlify_deploy_zip_api.md`也記著2026-06-09一模一樣的事故(當時是Sonnet 4.6犯的)。問題不是沒有經驗，是行動前沒有主動查記憶。已把這次(2026-08-05)重複犯錯的完整經過補進`feedback_netlify_deploy_zip_api.md`，更新description+MEMORY.md索引標題直接寫「動手前必查是哪型」。**教練裁示**：現狀不動(已上線的新版就保留)，之後所有修改一律只在GitHub上處理，不再碰Netlify。commit `7d8dbb5`(改版)+og標籤修正待下次一併commit。
 
 ## 📋 下一場直接開工任務
-- 結繩領導學：og標籤修正(補`?v=`繞過LINE快取說明)還有一個小commit待處理(教練已知會，本場收工時一併commit)
+- 結繩領導學og標籤修正已收工時補commit `8acfa56`
+- **LINE快取後續**：教練問「快取多久會變」，WebSearch+DNS實測確認LINE無官方TTL、無除錯工具，`?v=`參數是唯一可靠解法；教練回報「快取已更新」時軍師一度誤判成jiesheng-leadership(45分鐘)，經教練澄清其實是指`ai-talk-tw.netlify.app`(約10-11小時)，已更正記憶`reference_line_share_preview_cache_bust.md`。教訓：教練提一句「快取改了」不要直接套用當下正在處理的網址，先確認是哪一個
 - Repo1剩餘94行untracked(5個agent目錄個人化設定檔全未進git)：涉及三機同步SOP架構決定，需要教練裁示方向，不要片面處理
 - 接力棒瘦身：主檔現有v99/v98/v97三棒，超過E16規定的「最新1~2棒」，下場建議封存v97
 
