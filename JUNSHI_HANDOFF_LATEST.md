@@ -60,6 +60,67 @@
 | 🟢 | **AI微論壇嘉義場推上Netlify正式站+LINE預覽快取修復+講師連結補齊** | ✅v95本場完成，教練親口說「推」x2 | 第一次推(deploy`6a729de183c3119517084d98`)：嘉義場取代台南場舊版上線。教練實測貼LINE發現預覽仍顯示台南場——查證這頁20個歷史版本從未有`og:`標籤，LINE只能猜`<title>`且會快取住。第二次推(deploy`6a72a2e75b98ebc94b95d4be`)：補齊16條og:/twitter:標籤(圖片教練親自從24張裡挑)、活動全站正名「AI微型論壇」→「AI微論壇」(對齊bigtree-tw主站)、依教練指示比照mentor100幫四位講師簡介補外部連結(從mentor100.db撈取)。查證LINE官方除錯工具Page Poker已停用(DNS查無)，確認`?v=2`網址參數是唯一可行的快取繞過法，教練往後行銷網址統一貼`ai-talk-tw.netlify.app/?v=2`。ai-talk獨立repo commit `45090d8`。額度扣至剩52次 |
 | 🟢 | **大樹小講(bigtree-tw)新增金門兩場次+歷史講座紀錄頁改宮格牆** | ✅v96本場完成，已推Netlify | 教練口述新增8/21(五)19:30-21:00金門場(西浦頭社區)+8/22(六)13:30-16:30金門場(向陽吉第社區，教練口誤「吉弟」經WebSearch官方資料查證更正)，主題皆「零基礎學AI，起步比較快」(順手統一全站舊寫法)。歷史講座紀錄頁應教練要求從縱向16張大圖列表改版為4×4宮格牆+點擊彈窗看完整資訊，本機預覽經教練確認後推上正式站(deploy`6a72a1b619a971632cad6833`)，curl驗證文字/圖片Content-Type皆正常。GitHub commit `620ca09`(場次)+`d567976`(宮格牆)+`4262ea8`(場地補正) |
 | 🟢 | **健康檢查cron假警報根因修復(v4.0三關判定)** | ✅v96本場完成 | 教練回報「小龍蝦老是出現奇怪訊息」，查證發現`🦞每30分鐘任務健康檢查`(jobId`46e67e2e`)因minimax provider暫時過載連錯5場觸發舊規則「連續≥3必announce」，但警報送達當下該輪其實已恢復成功，等於送出假警報。教練當場糾正「不影響工作就別吵我，浪費我注意力」。已用`openclaw cron edit --message`把規則#4改版為v4.0：只有「現在仍壞+非provider暫時過載+真影響工作」三關全過才准announce，並用`openclaw cron run --wait`實跑驗證同款情境下確實不再誤發(`delivered:false`)。已寫入記憶`feedback_alert_only_when_actually_broken` |
+| 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
+
+---
+
+# 軍師接力棒 · 2026-08-05 v97（Mac終端機，opencode 兩次當機根因修復：snapshot 關閉＋model 改 minimax 自家）
+
+> 建立時間：2026-08-05 中午 12:00~12:36（台北時間）
+> 本棒執行者：Mac 終端機軍師
+> 上一棒：v96（Mac終端機Opus 5，大樹小講金門場次+歷史紀錄宮格牆改版+健康檢查cron假警報修復）
+> 本棒主軸：**教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），找三層根因：①snapshot對empty git repo失敗②並行git lock衝突→Bun AbortError→TUI崩③預設model跑錯provider（opencode-go/minimax-m3 vs minimax/MiniMax-M3大小寫差異）。第一版報告建議「去opencode.ai workspace充值」被教練當場糾正「我們是用minimax自家API Key，跟額度無關」——後續curl驗證minimax自家Key HTTP 200有效，確認是opencode預設model跑錯provider而非額度問題。修法4個改動全部完成，knowledges紀錄+試金石案例57同步commit + push。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 opencode 兩次當機根因（三層）
+
+| 層次 | 根因 | 證據 |
+|---|---|---|
+| 表面 | snapshot 警告噪音 | log 53次 `_archive_2026-05-20/agents_bak/kong.bak/' does not have a commit checked out` |
+| 致命 | git index.lock 並行衝突 | log `fatal: Unable to create '...index.lock': File exists` + `AbortError: Aborted` from Bun runtime |
+| 體驗 | opencode 預設 model 跑錯 provider | log `providerID=opencode-go modelID=minimax-m3`（應為 `providerID=minimax modelID=MiniMax-M3`）|
+
+### 2. ✅ 修法（4 個改動，全部已驗證生效）
+
+| # | 改動 | 驗證 |
+|---|---|---|
+| 1 | `~/.config/opencode/opencode.json` 加 `"snapshot": false` | log 不再出現 kong.bak warning |
+| 2 | `opencode upgrade` 1.15.13 → 1.18.13 | `opencode --version` 顯示 1.18.13 |
+| 3 | `~/.config/opencode/opencode.json` 加 `"model": "minimax/MiniMax-M3"` | `opencode run` 確認 log `providerID=minimax modelID=MiniMax-M3` |
+| 4 | 同檔加 `"small_model": "minimax/MiniMax-M2.5-highspeed"` | 解決 `server unavailable key=claude type=local` warning |
+
+**附帶驗證**：minimax 自家 API Key curl 實測 `https://api.minimax.io/anthropic/v1/messages` 回 HTTP 200 → 從頭到尾都有效，不需要去 opencode.ai 充值任何東西。
+
+### 3. 🔴 教練當場糾正：軍師第一版報告錯了
+
+軍師看到 log 報 `providerID=opencode-go` 就直覺聯想「opencode.ai workspace 額度歸零」，建議教練去 `https://opencode.ai/workspace/wrk_01KSYW4B3DF6PWB9MRG95BT6VT/billing` 充值。
+
+**教練原話**：「你沒有搞清楚，之前我們設定 Opencode 使用的是 MiniMax，是我們自己的 API Key，所以跟額度有什麼關係？」
+
+**教訓**（已寫入試金石案例57）：
+- 陌生 provider name 必須先 `opencode models` 查證再下結論
+- 不要從「錯誤訊息字眼」直接聯想到「對應服務的帳號問題」
+- 看到 `Insufficient balance` 要先確認實際用的 provider 跟教練設定的是不是同一個
+
+### 4. 📁 Knowledges 紀錄 + 試金石案例
+
+- `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`（含「教訓段」提醒未來軍師）
+- `試金石/試金石_案例庫.md` 新增案例57（陌生provider name瞎猜教訓）
+
+## 📋 下一場直接開工任務
+
+- 接力棒瘦身：目前主檔有 v97/v96/v95/v94 四棒，超過 E16 規定的「最新 1~2 棒」，**下場建議封存 v94/v95 到 handoff_archive**（v93 已在此前測試時封存失敗，本場已 git restore 回原始 214 行版本，待下場重新封存）
+- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統等）本場未觸碰，狀態不變
+
+## 🔑 本場關鍵檔案索引
+
+- `~/.config/opencode/opencode.json`：加 `snapshot: false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed`（教練後續手動完整化了 provider.minimax 區塊）
+- `~/.local/share/opencode/log/opencode.log`：642行（最後更新 12:05，無新錯誤）
+- commit（openclaw workspace）：`48c99e9e`（snapshot關+升級）→ `d78d48f8`（model修正+knowledges重寫）
+- commit（試金石案例57）：見下一行 commit hash（本場收工產生）
+- knowledges 紀錄：`knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`
+- 試金石案例：案例 57（陌生 provider name 瞎猜教訓）
 
 ---
 
