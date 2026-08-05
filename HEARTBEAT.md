@@ -73,3 +73,14 @@
 - HEARTBEAT.md 無 ⬜ 待辦項
 - 本輪 run 正在處理中（產出本段紀錄），預期稍晚 state 會把 CE 重置為 0
 - 不 commit/push（每日 23:05 三機總結統一做）
+
+## 🩺 10:37 心跳探針（守則 #19 通道健康鐵律實測）
+- ✅ Telegram 通道探針回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（不沿用舊旗標）
+- Cron 狀態檢查：36 個任務，僅 2 個 lastRunStatus=error
+  - `001a9b16` LINE@每日兩次（8/3 10:00 fail：`reply to 1, thread 1` failed，message tool 推播層錯誤）
+  - `bbb7a348` 小龍蝦每日三機總結（8/3 23:07 fail：`reply to 1, thread 0` failed；8/2 23:06 fail：同型）
+  - **判定**：非連續錯誤（任務本體 AI 跑完、commit push 成功，僅 Telegram 推播失敗），不觸發 SOP 規則 #4
+  - **後續**：8/3 與 8/2 三機總結實際已完成並推送雲端（commit hash 見 cron runs summary），但教練未收到 Telegram 通知 → 下次教練上線主動提醒補看 `distill/三機每日總結_2026-08-03.md` 與 `2026-08-02.md`
+- 距上次主動通知（10:34 messageId 9323）僅 3 分鐘 → 不再打擾教練
+- 教練最後訊息 2026-08-03 13:54，沉默 44.7+ 小時（仍待覆，靜默中合理）
+- **結論**：HEARTBEAT_OK，不送通知
