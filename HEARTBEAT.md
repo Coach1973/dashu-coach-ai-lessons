@@ -89,3 +89,17 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1785897853
 - 雲端同步：✅ 已推上雲端（commit f0d6cc5d7）
+
+## 🩺 10:51 健康檢查（v4.0 SOP 三關判定）
+- 第零步 ✅ sync_coach_last_message.sh → 教練沉默 45.0h（2026-08-03 13:54 起）
+- 第一步 → Cron runs latest：本任務自身 ts=1785897444087 已 status=ok（產出 10:34 那份完整報告）；本輪 run 也正在產出本段文字
+- 過往連錯（08:00/09:00/09:30/10:00/10:30）皆 `FailoverError: AI service temporarily overloaded`
+- **v4.0 SOP 三關判定**：
+  - 關卡一（現在還壞嗎）：❌**已恢復**（本輪 AI 正常回應 = 鐵證）
+  - 關卡二（provider 暫時過載）：❌**正是**，100% minimax provider 端暫時塞車
+  - 關卡三（影響教練工作）：❌**無**——只是「健康檢查機器人自己在打嗝」的 meta 失敗，不影響任何會員/LINE/行事曆功能
+- 三關全未通過（至少有兩關是「已恢復/provider transient」）→ 結論：**不安靜 announce，不修正任何 cron 配置**
+- 10:34 messageId 9323 是 v3.0 規則下發出的，v4.0 不會再發；現在 CE 已自然歸 0
+- HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 統一做）
+- 教練沉默 45h（週日最後發言，今週三正常作息不主動打擾）
+- ✅ `delivery.mode=none` 安靜處理
