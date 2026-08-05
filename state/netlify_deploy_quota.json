@@ -2,16 +2,16 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-08-05",
-  "quota_remaining": 52,
+  "quota_remaining": 51,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。⚠️2026-08-03發現：netlify_deploy_guard.sh的自動扣減邏輯要求指令結尾剛好是`/deploys`，若curl後面接了`| python3 ...`等管道處理，正則比對不到結尾，不會自動扣。這次是手動補記，之後部署指令若有接pipe，記得手動確認這個檔案有沒有真的被hook扣到。",
   "credit_pools": [
     {
       "name": "Personal plan credits",
-      "remaining": 864.5,
+      "remaining": 849.5,
       "total": 1000,
       "granted": "2026-07-25",
       "expires": "2026-08-25",
-      "deploys_remaining_approx": 57
+      "deploys_remaining_approx": 56
     },
     {
       "name": "無到期日 credits",
@@ -205,6 +205,15 @@
       "deploy_id": "6a5c9c4d5ef99905058c12af",
       "change": "已報名人數公式調整：起始50人、7/19起每6小時+1人，讓現況更接近真實報名節奏",
       "remaining_after": 13
+    }
+  ],
+  "deploy_log": [
+    {
+      "date": "2026-08-05 11:31 (台灣時間)",
+      "site": "bigtree-tw",
+      "deploy_id": "6a72ae7ca2b05205cc4701c7",
+      "what": "報名串接後端通知(sme-register-fn)+成功視窗+8/26高雄場地點",
+      "note": "guard未自動扣(指令有輸出重導向)，手動補記 52→51"
     }
   ]
 }
