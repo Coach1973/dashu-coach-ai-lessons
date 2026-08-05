@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 教練常同時開多個對話框下指令，某視窗只看到訊息片段是常態非事故(2026-08-05)](feedback_multiwindow_partial_message_not_lost.md) — 教練親口確認「另外一邊他會處理」，看到片段先問別直接判定未送達
+- [🔴🔴🔴 監控/健康檢查cron通知教練前要過三關：現在還壞嗎+非provider暫時過載+真影響工作(2026-08-05)](feedback_alert_only_when_actually_broken.md) — 健康檢查cron連錯5場但已自行恢復卻還announce，教練當場糾正浪費注意力
 - [🔴🔴 LINE分享連結預覽卡舊內容——官方Page Poker已停用，?v=參數是唯一解法(2026-08-05)](reference_line_share_preview_cache_bust.md) — og:標籤本身沒快取問題，快取發生在分享之後，越早補越安全
 - [🔴🔴 OpenClaw plugins.allow是全域嚴格白名單，只列幾個會關掉其他全部外掛(2026-08-05)](reference_openclaw_plugins_allow_strict_whitelist.md) — 查證原始碼not-in-allowlist判斷；接力棒原建議的7個清單會打死另外41個
 - [🎯🎯 BNI大台南南區9分會系統(bni-chapters)開通後密集迭代——核心價值/常用連結/傳統道德規範/參訪須知線上實體分流(2026-08-04)](project_bni_chapters_public_launch_2026-08-03.md) — 10組帳號仍是預設密碼Admin/88888待改
