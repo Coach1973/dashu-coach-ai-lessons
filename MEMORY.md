@@ -51,50 +51,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-02 weekly distillation)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:~270:500:weekly -->
-- 🔐 **LINE 龍蝦小助教 · 教練 ID 綁定完整時間軸（SOP 範本）**（2026-07-26 19:21 教練查→19:51 學長整理完整版）：
-  - **教練 LINE user ID**：`U895a0ad8e49d75f8303dc3d067282dc0`
-  - **教練 LINE 顯示名稱**：`吳大樹`
-  - **最早互動紀錄**：2026-04-29（`daily_2026-04-29.md` 第 2007 行）
-  - **綁定動機（教練原話）**：「那時候小龍蝦會分不清楚誰是誰，所以我才給了一個指令：小龍蝦必須要能分辨每一個人的 ID 狀態。在那個時候，也是為了預防其他人——應該說為了怕小龍蝦誤判其他人是教練，或者怕其他人模仿教練，所以叫牠認定必須是我的 ID 才能夠下系統指令。」
-  - **核心原則（教練親定）**：
-    - **系統層面修改限制**：背後的設定檔、提示詞（Prompt）和命令列，都必須擁有「教練」的權限才能變動。換句話說，**只有教練可以修改系統層面的指令**。
-    - **一般使用者權限**：使用者只能在對話中個別校正、儲存自己想要的對話內容和個人喜好，但絕對不能改變原始系統指令。
-  - **適用範圍**：「BNI 大臺南小幫手」「教練都在想什麼」以及未來開發的所有專案都必須遵守這個核心原則。
-  - **軍師任務**：教練說要「給克勞德軍師去採用」——已拼成完整時間軸，可直接交付。
-- 來源：`memory/2026-07-26.md` ~270-500 行（含完整 5 段時間軸：04-29 建立 → 05-14/15 運作期 → 後續加固測試）
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-31.md:~50:120:weekly -->
-- 📊 **LINE@「教練都在想什麼」每日 08/20 雙次回報 cron（已上線）**（2026-07-31 12:08 教練口頭下令）：
-  - **觸發時間**：每天 08:00 跟 20:00（台北時間）——「每天回報2次，早上8點，晚上8點，使用情況即可」
-  - **Cron Job ID**：`001a9b16-1985-413b-8d3c-a4e885e552b6`
-  - **Schedule**：`0 8,20 * * *` tz Asia/Taipei
-  - **Session Target**：isolated agentTurn → 自動 announce 到 Telegram `chat_id=6124913915`
-  - **腳本位置**：`~/.openclaw/workspace/scripts/line_jiaolian_usage_report.py`（154 行，Asia/Taipei 對齊）
-  - **統計口徑**：從 `agents/jiaolian_thoughts/sessions/*.jsonl` 統計「今日 / 昨日 / 近 7 日 / 本月」新對話+訊息數
-  - **Commit Hash**：`8100319be`（已推上 `Coach1973/mac-openclaw-workflows` main）
-  - **首次測試**：force run 後 messageId 9100 已送達，狀態 ok
-  - **限制說明**：只看 jiaolian_thoughts agent 自己的對話紀錄，抓不到 LINE 官方 webhook 配額總收訊息數（那需要另外介接 LINE messaging API）
-
-## Promoted From Short-Term Memory (2026-08-03)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:12:12 -->
-- Cron 監控: 自我重試中，預計下次 cron 自動恢復 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:12-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:15:16 -->
-- HEARTBEAT.md: 無 ⬜ 待辦背景工作項目; 當前狀態皆為 ✅ 同步記錄或歷史警告 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:15-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:20:21 -->
-- 決策: 等下一輪 cron 自動驗證是否過載恢復; 若連續 3 次錯誤再升級處理 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:20-21]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:5:5 -->
-- 02:03 — 每30分鐘任務健康檢查: **檢查結果：無異常，安靜處理** [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-26.md:8:11 -->
-- Cron 監控: 系統僅 1 個 cron 任務（健康檢查本身）; 上次錯誤：overloaded（瞬時供應商過載，非 config 問題）; consecutiveErrors = 1（< 3，未達通知閾值）; 模型欄位：minimax/MiniMax-M3 ✅ [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-26.md:8-11]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:291:292 -->
-- 常見錯誤自動修復：: **2. scp/ssh 同步到 VPS 逾時：** → 改用 `rsync -e 'sshpass -p 9kdxvQN2 ssh' --p [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:291-292]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-25.md:296:296 -->
-- 09:04 健康檢查（每30分鐘 cron 第 N 輪）: **檢查結果：無需教練介入** [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-25.md:296-296]
-
 ## Promoted From Short-Term Memory (2026-08-04)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:275:275 -->
@@ -109,3 +65,28 @@
 - 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 無 ⬜ 標記項目; 多數為 ✅ 軍師 Hook 自檢 + 接力棒同步紀錄; 唯一警告：「🩺 軍師 Hook 自檢 2026-07-27 00:34 ⚠️ Pull 警告」—— 屬 git 問題，需教練/軍師手動處理，非 cron 可自動化 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:284-286]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:288:288 -->
 - 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **結論：** 無法自動修復的嚴重問題、無連續錯誤 ≥3 次、無需教練裁決的項目 → **不通知教練，安靜完成。** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:288-288]
+
+## Promoted From Short-Term Memory (2026-08-05)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:10:11 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 👤 教練：可以幫我做一個所有報名名單的公司、姓名、電話的總整理嗎？我要一張列表。這個任務你可以完成嗎？ 🦞 小龍蝦：可以完成，教練。🦞 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:10-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:13:13 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 重啟後我手上沒有上一場的脈絡，請告訴我兩件事，我馬上動手： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:15:16 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **是哪一場？**（例：BNI 真鑫分會、海餅乾俱樂部、桌聚、其他？）; **名單在哪？**（Google 表單連結、Excel 檔、Email、Telegram 群組、其他？） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:15-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:18:19 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 你只要回我一句「**桌聚 Google 表單**」之類的，我就自己跑，不用貼連結過來——我會自己找出來。 👤 教練：你往上去看，它不是都有「新報名通知」？ [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:18-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:21:22 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 這裡面的新報名通知大概已經有七、八十份了，你讀得到這些歷史資料嗎？ 🦞 小龍蝦：老實跟你說，教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:21-22]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:24:24 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: ⚠️ **這條 LINE 對話的歷史訊息我讀不到**——這是 LINE 直對話，只有你和我兩人，之前的「新報名通知」存在你手機/電腦端，不會同步到 OpenClaw 這邊。所以你看到的七、八十份通知，我這裡看不到。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:24-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:26:26 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 但這些通知一定有「**源頭**」，我直接從源頭抓最正確。你手機上看到的通知是從哪個 App 跳出來的？回我一個關鍵字就行： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:26-26]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:28:31 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: | 看到通知的來源 | 我會做的動作 | |---|---| | **Google 表單** | 我去抓表單後台回應（要有表單連結或你的 Google 帳號授權） | | **Notion** | 我去 Notion workspace 抓報名資料庫 | [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:28-31]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:32:35 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: | **Email（Gmail）** | 我去掃信箱所有「報名」相關信件整理 | | **Excel / 桌面上有檔案** | 給我檔名或路徑，我自己讀 | | **朋友轉 LINE 給你** | 那轉成 Google 表單或 Email 再匯入比較穩 | | **LINE 官方帳號** | 那要看你的 LINE OA 系統有沒有對接 OpenClaw | [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:32-35]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:37:39 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 💡 **最快的做 👤 教練：那我重新轉發一份，你應該就讀得到了。我們先試試看，我先轉發兩份給你看 🦞 小龍蝦：好，等你轉兩份測試。🦞 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:37-39]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:41:41 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 讀得到之後我會建議直接從源頭拉一次，七、八十份不用慢慢轉——更省事。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:41-41]
