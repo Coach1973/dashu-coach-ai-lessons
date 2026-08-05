@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785805405,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-05T08:34:42.520966+08:00"
+    "coach_silence_sync": "2026-08-05T10:37:13.479364+08:00"
   },
   "lastHeartbeat": "2026-08-05T10:00:50.877236+08:00",
   "lastHeartbeatNote": "週三 10:00 心跳（重啟後 22 分鐘首輪）：按 HEARTBEAT.md 鐵律送出 09:38 重啟通知（Telegram messageId 9322，curl bypass 成功）、Telegram 通道實測 ok:true、教練沉默 44.1h+（自 08-03 13:54）。無新任務、無待辦新增、cron 全綠、context 28%。靜候教練覆。",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-04T09:03:25.000000+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 44.1,
+    "coachSilentHours": 44.7,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",

@@ -62,3 +62,14 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1785896500
 - 雲端同步：✅ 已推上雲端（commit 2eb96b8e7）
+
+## 🔴 健康檢查告警 2026-08-05 10:34（SOP 規則 #4 觸發）
+- **consecutiveErrors = 5**（≥3 紅線）—— alternating 1300+ 場穩定以來首次連錯 5 場
+- 連錯時序：08:00 ❌ → 09:00 ❌ → 09:30 ❌（retry ×3）→ 10:00 ❌ → 10:30 ❌
+- 根因：`FailoverError: AI service temporarily overloaded`（minimax provider 端）
+- 自動修復 4 條規則判定：#1 #2 #3 皆不適用、#4 ✅ 已觸發教練通知
+- ✅ Telegram messageId 9323 已送出（announce 教練）
+- 教練最後訊息 2026-08-03 13:54，沉默 44.7 小時
+- HEARTBEAT.md 無 ⬜ 待辦項
+- 本輪 run 正在處理中（產出本段紀錄），預期稍晚 state 會把 CE 重置為 0
+- 不 commit/push（每日 23:05 三機總結統一做）
