@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-05 10:55:35**
+> **最後同步：2026-08-05 11:00:39**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -70,6 +70,45 @@
 | 🟢 | **OpenClaw plugins.allow白名單補上（修正接力棒原建議會打壞系統）** | ✅v95本場完成 | 查原始碼發現`plugins.allow`是全域嚴格白名單，接力棒原建議只列7個外掛會把另外41個(含telegram/browser/duckduckgo)全部關掉——跟案例56的toolsBySender誤傷cron同一種形狀的坑。改用程式化取自`plugins list`的48個實際載入外掛ID，重啟實測48 loaded/20 disabled與改動前一致、警告消失。commit `8b7e7dde`。已寫入記憶`reference_openclaw_plugins_allow_strict_whitelist` |
 | 🟢 | **小龍蝦紀律移植計劃階段二上線+E08官方文本版追加開放給BNI小幫手** | ✅v95本場完成 | 階段二三條規則(E09 cron驗證/E12記憶寫入/E08引用查證)進`hooks/rule-reminder/handler.js`，全部`scope:['main']`，18項test_scope.js全過。commit `fe86890a`。**教練當場追加裁示**：BNI官方條文(出席/道德規範/會議流程等)本來就寫死要求一字不差回答，不用等觀察期，直接新增「E08官方文本版」開放給`bni_tainan`+`jiaolian_thoughts`(E09/E12因小幫手無exec/fs/cron權限維持只給main)。commit `d04241a4` |
 | 🟢 | **AI微論壇嘉義場推上Netlify正式站+LINE預覽快取修復+講師連結補齊** | ✅v95本場完成，教練親口說「推」x2 | 第一次推(deploy`6a729de183c3119517084d98`)：嘉義場取代台南場舊版上線。教練實測貼LINE發現預覽仍顯示台南場——查證這頁20個歷史版本從未有`og:`標籤，LINE只能猜`<title>`且會快取住。第二次推(deploy`6a72a2e75b98ebc94b95d4be`)：補齊16條og:/twitter:標籤(圖片教練親自從24張裡挑)、活動全站正名「AI微型論壇」→「AI微論壇」(對齊bigtree-tw主站)、依教練指示比照mentor100幫四位講師簡介補外部連結(從mentor100.db撈取)。查證LINE官方除錯工具Page Poker已停用(DNS查無)，確認`?v=2`網址參數是唯一可行的快取繞過法，教練往後行銷網址統一貼`ai-talk-tw.netlify.app/?v=2`。ai-talk獨立repo commit `45090d8`。額度扣至剩52次 |
+| 🟢 | **大樹小講(bigtree-tw)新增金門兩場次+歷史講座紀錄頁改宮格牆** | ✅v96本場完成，已推Netlify | 教練口述新增8/21(五)19:30-21:00金門場(西浦頭社區)+8/22(六)13:30-16:30金門場(向陽吉第社區，教練口誤「吉弟」經WebSearch官方資料查證更正)，主題皆「零基礎學AI，起步比較快」(順手統一全站舊寫法)。歷史講座紀錄頁應教練要求從縱向16張大圖列表改版為4×4宮格牆+點擊彈窗看完整資訊，本機預覽經教練確認後推上正式站(deploy`6a72a1b619a971632cad6833`)，curl驗證文字/圖片Content-Type皆正常。GitHub commit `620ca09`(場次)+`d567976`(宮格牆)+`4262ea8`(場地補正) |
+| 🟢 | **健康檢查cron假警報根因修復(v4.0三關判定)** | ✅v96本場完成 | 教練回報「小龍蝦老是出現奇怪訊息」，查證發現`🦞每30分鐘任務健康檢查`(jobId`46e67e2e`)因minimax provider暫時過載連錯5場觸發舊規則「連續≥3必announce」，但警報送達當下該輪其實已恢復成功，等於送出假警報。教練當場糾正「不影響工作就別吵我，浪費我注意力」。已用`openclaw cron edit --message`把規則#4改版為v4.0：只有「現在仍壞+非provider暫時過載+真影響工作」三關全過才准announce，並用`openclaw cron run --wait`實跑驗證同款情境下確實不再誤發(`delivered:false`)。已寫入記憶`feedback_alert_only_when_actually_broken` |
+
+---
+
+# 軍師接力棒 · 2026-08-05 v96（Mac終端機 Opus 5，大樹小講金門場次+歷史紀錄宮格牆改版+健康檢查cron假警報修復）
+
+> 建立時間：2026-08-05 上午（台灣時間）
+> 本棒執行者：Mac 終端機 Opus 5
+> 上一棒：v95（Mac終端機Opus5，三項待辦清理+AI微論壇嘉義場上線與LINE預覽修復，與本棒同日不同session並行）
+> 本棒主軸：**教練口述新增大樹小講(bigtree-tw)金門場兩場次，過程中補了教練口誤的地名（查WebSearch官方資料更正）；接著教練要求把「講座歷史紀錄頁」從一場一張大圖直式捲動改版成一眼看到總場次的宮格牆，做完本機預覽給教練確認後推上正式站。最後教練回報「小龍蝦老是出現奇怪訊息」，查證是每30分鐘健康檢查cron因AI供應商暫時過載連錯5場觸發假警報（送達時其實已自行恢復），教練當場糾正「不影響工作就別吵我」，已重寫該cron的判斷邏輯為三關判定並實跑驗證有效。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 大樹小講(bigtree-tw)新增金門兩場次
+教練口述「8月21日週五金門場西浦頭社區晚上7點半到9點」+「8月22日週六下午1點半到4點半」，後續補充「主題都叫零基礎學AI，起步比較快」+糾正第二場地名為「向陽吉第社區」（教練口誤「吉弟」，WebSearch查金門縣政府/金門日報官方資料確認正式用字並告知教練已更正）。順手把站上既有3場同主題但寫法不一致（無逗號無空格）的舊資料統一成教練這次的寫法。GitHub commit `620ca09`+`d567976`+`4262ea8`。
+
+### 2. 🎯🎯 歷史講座紀錄頁改版為4×4宮格牆
+教練要求「不需要完整呈現照片，一眼看到這裡面有幾場活動，每一場再點進去看」。改版重點：頂部大字場次計數（資料筆數自動算，不用手改）、EDM海報裁成正方形卡片（桌機4欄/手機2欄，hover上浮+微放大）、點擊彈窗看完整未裁切海報+完整資訊+原始網頁按鈕（無網頁的場次按鈕自動隱藏）。16場資料抽成EVENTS陣列，日後新增一場只要加一筆。本機預覽經教練確認「沒問題可以推了」後，走部署SOP推上正式站(deploy`6a72a1b619a971632cad6833`，額度53→52)，curl驗證文字/圖片Content-Type皆正常。
+
+### 3. 🔴🔴🔴 健康檢查cron假警報根因修復：從「看歷史連錯幾次」改成「三關判定」
+教練貼出Telegram收到的健康檢查告警，查證發現`🦞每30分鐘任務健康檢查`(jobId`46e67e2e`)08:00~10:30連錯5場，錯誤全是`FailoverError: AI service temporarily overloaded`(minimax provider暫時過載)，觸發舊規則「連續錯誤≥3必announce教練」——但**送出警報的那一輪執行本身其實已經成功**，等於教練收到一則「早就解決」的假警報。教練當場糾正：「像這種事情就不要跟我報告了，因為根本不影響我的工作。不正常的時候，再來跟我報告。真的是浪費我的注意力。」
+
+用`openclaw cron edit --message`把規則#4改版為v4.0，announce前必須連過三關：①**現在還壞著嗎**（本輪執行成功=已恢復的鐵證，不能只看歷史連錯次數）②**是不是provider暫時過載**（`overloaded`/`FailoverError`字眼→教練無法介入，通知無意義，除非持續超過2小時仍未恢復）③**真的影響工作嗎**（健康檢查機器人檢查自己的meta迴圈不算）。改完用`openclaw cron run --wait`**實際強制執行驗證**（非紙上談兵）：同款「已恢復+provider過載+不影響工作」情境下，新邏輯正確判定「三關全未通過」，系統紀錄確認`delivered:false`，證明不會再對同類情況發假警報。已寫入記憶`feedback_alert_only_when_actually_broken`（監控類通知的通用設計原則，非僅此一個cron適用）。
+
+## 📋 下一場直接開工任務
+- bigtree-tw金門兩場已上線，若教練後續有更明確的主題（目前沿用「零基礎學AI，起步比較快」），可再更新
+- v95遺留：紀律移植計劃階段二觀察期到2026-08-12；AI微論壇嘉義場行銷網址記得用`?v=2`
+- BNI真誠/真愛/真AI分會網站、Email自動發送系統：仍卡在等教練給細節
+- bni-chapters 10組帳號仍是預設密碼Admin/88888，教練尚未裁示是否/何時要求改密碼
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/bigtree/index.html`：SESSION_DATES新增金門2場+SLOTS新增「夜」「下午」時段+場地顯示條件放寬
+- `github_repos/bigtree/archive/大樹小講_歷史講座紀錄.html`：整頁重寫為EVENTS陣列驅動的宮格牆
+- `state/netlify_deploy_quota.json`：額度記錄至剩52次
+- openclaw cron `46e67e2e-6332-4589-aae2-ee7e10dd7279`（🦞每30分鐘任務健康檢查）：payload.message改版v4.0
+- 記憶新增：`feedback_alert_only_when_actually_broken`
+- commit（bigtree獨立repo）：`620ca09`→`d567976`→`4262ea8`
+- commit（workspace main）：本場收工時產生（見下方commit hash）
 
 ---
 
