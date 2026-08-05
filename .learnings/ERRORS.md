@@ -237,3 +237,43 @@ ValueError: too many values to unpack (expected 2)
 ### Resolution
 - **Resolved**: 2026-07-18T23:10:00+08:00
 - **Notes**: 改用字串分割邏輯；同時採用既有案例 ID 檢查，避免重複寫入。
+
+## [ERR-20260805-PUSH] mac-openclaw-workflows push Internal Server Error
+
+**Logged**: 2026-08-05T23:09:30+08:00
+**Priority**: high
+**Status**: resolved
+**Area**: infra
+
+### Summary
+推 `auto: 三機每日總結 2026-08-05` 第一次 push 收到 GitHub `Internal Server Error`（Request ID D31C:286443:28C59C:2FC541:6A735218），commit `b841429bc` 並未立刻被遠端接受。
+
+### Error
+```
+remote: Internal Server Error
+remote: Request ID D31C:286443:28C59C:2FC541:6A735218
+remote: Time 2026-08-05T15:09:14Z
+To https://github.com/Coach1973/mac-openclaw-workflows.git
+ ! [remote rejected] HEAD -> main (Internal Server Error)
+```
+
+### Context
+- 操作：每日三機總結完成後 `git add` + `git commit -m 'auto: 三機每日總結 YYYY-MM-DD'` + `git push origin HEAD`。
+- Commit 內容：`distill/三機每日總結_2026-08-05.md`（新檔，57 行）。
+- 重試一次後成功：`1491e10f9..b841429bc  HEAD -> main`，`git ls-remote` 已驗證遠端有該 commit。
+- 本地 commit 已就位，但若不再重試，遠端實際並未更新，會被誤判為「推過了」。
+
+### Suggested Fix
+1. push 收到 `Internal Server Error` / `5xx` 類回應時，一律重試一次，再以 `git ls-remote origin <branch>` 確認 commit hash 真的出現在遠端，才算「推過了」。
+2. 在 HEARTBEAT.md 的「推播前最後確認」加上此步驟。
+3. 寫進 `TOOLS.md`：GitHub 5xx 不代表 commit 沒建好；commit 與 push 是兩件事，必須分別驗證。
+
+### Metadata
+- **Reproducible**: unknown（GitHub 5xx 屬上游問題，可重現性低）
+- **Related Files**: distill/三機每日總結_2026-08-05.md
+- **See Also**: ERR-20260717-TELEGRAM-SEND（類似的「送出成功」不可信、需遠端驗證教訓）
+
+### Resolution
+- **Resolved**: 2026-08-05T23:09:45+08:00
+- **Commit/PR**: b841429bc
+- **Notes**: 重試一次 push 成功，遠端已驗證收下。

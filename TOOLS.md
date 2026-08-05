@@ -5,6 +5,17 @@
 - **位置**：所有 Bot（1號機、2號機、3號機）都在同一臺 Mac mini 上，不在 VPS
 - **主機名稱**：wudashudeMac-mini.local
 
+## ⚠️ Git 推送驗證鐵律（2026-08-05 GitHub 5xx 學到）
+
+`git push` 收到 `Internal Server Error` / 任何 5xx 時，**commit 本身仍然在本地建好，但遠端實際沒收**。本場 23:09 第一次推 `三機每日總結 2026-08-05` 就遇到 GitHub 回 `Internal Server Error`（Request ID D31C:286443:28C59C:2FC541:6A735218），重試一次才成功。
+
+**鐵律**：
+1. push 收到 5xx 一定要重試一次。
+2. 重試後用 `git ls-remote origin <branch>` 確認 commit hash 真的出現在遠端，才算「推過了」。
+3. commit ≠ push：「本地 commit 已就位」不等於「教練能看到」。
+
+---
+
 ## ⚠️ 關鍵路徑（cron 環境 PATH 不含 /opt/homebrew/bin）
 
 | 工具 | 絕對路徑 |
