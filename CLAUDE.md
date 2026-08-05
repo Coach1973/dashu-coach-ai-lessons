@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-05 09:41:01**
+> **最後同步：2026-08-05 09:55:48**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -54,7 +54,7 @@
 | 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
 | 🟡 | 光線尺顧問ATM NT$10,000入金(07-13)對帳 | 🔒卡住-等教練 | 待教練對帳 |
 | 🟢 | 「連接」按鈕自動化點擊無反應（真人操作無此問題） | ✅已排除疑慮 | 教練親自兩台電腦實測「連接」按鈕正常，先前疑慮的bug只影響自動化工具合成點擊事件，教練不會遇到，暫不需修 |
-| 🟡 | plugins.allow白名單未設定 | ⏳待軍師動手 | 07-24更新後新增警告：「plugins.allow is empty」，非阻斷性，建議之後找空檔補上明確允許清單（minimax/active-memory/memory-core/google/safety-locks/line/llama-cpp），非緊急 |
+| 🟢 | plugins.allow白名單未設定 | ✅v94已完成 | 查原始碼發現**本表原本建議的7個外掛清單會把系統打壞**：`config-normalization-shared`的判斷是`if (allow.length > 0 && !allow.includes(id)) → not-in-allowlist`，等於plugins.allow是「全域嚴格白名單」不是只管非內建外掛，只列7個會把另外41個（含telegram/browser/duckduckgo/anthropic/canvas）全關掉——跟案例56的toolsBySender萬用deny誤傷cron同一種形狀。改法：白名單＝程式化取自`plugins list`的48個實際載入中外掛ID。重啟實測48 loaded/20 disabled與改動前完全一致、警告消失、三個LINE+三個Telegram全部正常。commit `8b7e7dde`，備份`/tmp/openclaw.json.bak-202608050950` |
 | 🟢 | ~/.claude/CLAUDE.md與執行細則.md的E10~E12分岔 | ✅已完成 | 教練裁示「合併，因為這樣才簡單」。執行細則.md保留權威版，Karpathy三原則改編號E13~E15追加。新增`scripts/sync_zhixingxize_to_claude_global.sh`+openclaw cron(job 37593697,每30分鐘)自動鏡像，結構性根治，不會再分岔。commit `0a4271d80` |
 | 🟡 | 小龍蝦紀律移植計劃 階段二／三 | ⏳待軍師動手 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
 | 🟢 | **Mac版Web Search修復（Telegram三帳號+LINE三帳號共用）** | ✅v90已完成 | 教練發現Mac版打不開Web Search只能退而求其次DuckDuckGo，查證原生`web_search`綁死MiniMax專屬鑰匙（未申請）。改用系統內建`duckduckgo`外掛（官方標明無需API Key）：`openclaw plugins enable duckduckgo`+`config set tools.web.search.provider duckduckgo`+重啟gateway，production log證實真實搜尋成功。commit `c9cc8072`。VPS版查證後發現本來就正常（容器內`MINIMAX_API_KEY`恰好也能當搜尋備援），誤改後已撤銷復原，VPS無需任何動作。詳見v90完整戰果+[[試金石案例55]] |
