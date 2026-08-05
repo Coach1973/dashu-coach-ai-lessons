@@ -175,6 +175,27 @@
 - 教練最後訊息 2026-08-03 13:54，沉默 45.7+ 小時（仍待覆，週三上午屬正常作息）
 - **結論**：HEARTBEAT_OK，不送通知，讓 14:00 主動關懷 cron 統一處理
 
+## 🩺 12:33 健康檢查（v4.0 SOP 三關判定）
+- 第零步 ✅ sync_coach_last_message.sh → 教練沉默 **46.6h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值）
+- 第一步 → Cron runs latest（本任務 46e67e2e）：
+  - 12:30 fire (ts=1785904200038)：❌ `FailoverError: AI service temporarily overloaded`（117.0s ≪ 600s timeout）
+  - 12:03 fire (ts=1785902598243)：✅ ok
+  - 12:00 fire (ts=1785902400027)：❌ 同型 overloaded
+  - 11:33 fire (ts=1785900793286)：✅ ok
+  - 11:30 fire (ts=1785900600030)：❌ 同型 overloaded
+- 本任務 CE = **1**（12:03 成功重置 → 12:30 失敗 = 1，未達 ≥3 紅線）
+- 時間軸（alternating 模式延續）：11:30 ❌ → 11:33 ✅ → 12:00 ❌ → 12:03 ✅ → 12:30 ❌ → **12:33 ✅**（本輪）
+- **v4.0 SOP 三關判定**：
+  - 關卡一（本輪還壞嗎）：❌ **已恢復**（本輪 AI 正常回應 = 鐵證）→ 未通過
+  - 關卡二（provider transient）：❌ **正是**（100% minimax `FailoverError`）→ 未通過
+  - 關卡三（影響教練工作）：❌ **無**（健康檢查機器人自我打�的 meta 失敗，不影響 LINE/行事曆/會員功能）→ 未通過
+- 三關全未通過 ⇒ **不 announce 教練，不修任何 cron 配置**
+- 全系統仍只剩 1 個任務（本任務本身，符合 2026-07-05 教練精簡退場設計）
+- 自動修復 4 條規則全部 ❌ 不適用：#1 timeout 充裕（117s ≪ 600s）｜#2 無 VPS 任務｜#3 model 已是 minimax/MiniMax-M3｜#4 三關未過不 announce
+- HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 統一做）
+- 教練沉默 46.6h（週三中午，正常作息，靜默中合理；距 48h 邊界剩 1.4h）
+- ✅ `delivery.mode=none` 安靜處理
+
 ## 🩺 12:06 心跳探針（守則 #19 通道健康鐵律實測）
 - ✅ Telegram 通道探針回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（不沿用舊旗標）
 - 12:03 健康檢查剛剛跑過 ✅（距 3 分鐘），alternating transient 模式穩定、CE=1、三關全未過 → 不 announce 結論已記錄
