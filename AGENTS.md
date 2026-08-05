@@ -20,6 +20,34 @@ When you wake up in a new session, you MUST read your own workspace `AGENTS.md` 
 
 Your workspace AGENTS.md will tell you to read the following files in order:
 
+### 🔴 第 0 步：環境快速健檢（每次開工必跑，5 秒擋一半設定問題）
+
+> 起源：2026-08-05 軍師環境檢查發現 8 條設定問題（詳見 `knowledges/2026-08-05_環境檢查修復報告_給克勞德看.md`），其中 3 條可由本步即時偵測。先跑這個，再進熱啟動三核心。
+
+**三條 bash（複製貼上執行）：**
+
+```bash
+# 1. 確認 SOUL.md 沒有三份打架（問題 1）
+ls -la ~/.openclaw/SOUL.md ~/.openclaw/workspace/SOUL.md ~/.openclaw/agents/main/agent/SOUL.md 2>&1
+
+# 2. 看 git 工作區有沒有異常 untracked/modified（問題 5、8）
+echo "Repo1 untracked/modified 行數：$(cd ~/.openclaw && git status --short 2>&1 | wc -l)"
+echo "Repo2 untracked/modified 行數：$(cd ~/.openclaw/workspace && git status --short 2>&1 | wc -l)"
+
+# 3. 看有沒有遺留的鎖定檔或 .! 前綴檔案（問題 6）
+find ~/.openclaw/workspace -maxdepth 2 -name ".!*" 2>/dev/null
+```
+
+**判斷標準：**
+- 三份 SOUL.md 都應該存在，且 `~/.openclaw/SOUL.md` 跟 `~/.openclaw/agents/main/agent/SOUL.md` 開頭必須有「⚠️ 本檔已棄用」標記（指向 `workspace/SOUL.md`）。如果沒有，就是有人誤改，必須立刻補上棄用標記
+- Repo1 + Repo2 的 `git status --short` 總行數不該暴增。如果突然超過 50 行，看是不是有大量 untracked 檔案（可能是 agent 新增但沒 commit）
+- 不該有任何 `.!` 開頭的檔案。有就是編輯器遺留鎖定檔，必須 `mv` 改名加 `.LOCK_OLD_` 前綴（不要直接刪除，E11 不可逆鐵律）
+
+**異常處置（不在熱啟動前處理，會進入待辦）：**
+- SOUL.md 沒棄用標記 → 加上去，commit
+- git untracked 暴增 → 停下來看是哪些檔案，判斷該 commit 還是保留
+- 有 `.!` 鎖定檔 → 改名標記，commit
+
 ### 🔥 第一層：熱啟動（每次啟動，無例外，只有這 3 個）
 
 1. Read `特助心法.md` — 🔴 最高正典，21 守則一字不差（約 11.9KB）
