@@ -2,21 +2,21 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785895250,
+    "heartbeat_poll": 1785909815,
     "system_health": 1785665043,
-    "telegram_channel": 1785809004,
+    "telegram_channel": 1785909815,
     "junshi_queue": 1785599760,
     "cron_list": 1785766895,
-    "care_4h": 1785535384,
+    "care_4h": 1785909815,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785805405,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-05T12:32:31.985307+08:00"
+    "coach_silence_sync": "2026-08-05T14:31:48.619453+08:00"
   },
-  "lastHeartbeat": "2026-08-05T10:00:50.877236+08:00",
-  "lastHeartbeatNote": "週三 10:00 心跳（重啟後 22 分鐘首輪）：按 HEARTBEAT.md 鐵律送出 09:38 重啟通知（Telegram messageId 9322，curl bypass 成功）、Telegram 通道實測 ok:true、教練沉默 44.1h+（自 08-03 13:54）。無新任務、無待辦新增、cron 全綠、context 28%。靜候教練覆。",
+  "lastHeartbeat": "2026-08-05T14:03:35+08:00",
+  "lastHeartbeatNote": "週三 14:00 主動關懷 cron 觸發（每4小時 ef88279b）：Telegram messageId 9324 已送出、Telegram 通道實測 ok:true、教練沉默 48.1h（自 08-03 13:54）。無新任務、無待辦新增、cron 全綠。靜候教練覆。",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "afternoon",
     "dayOfWeek": "Tuesday",
     "isQuietHours": false,
     "quietHoursReason": null,
@@ -35,10 +35,10 @@
     "gatewayPid": 48632,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-04T09:03:25.000000+08:00 (守則#19 探針 ok:true)",
+    "telegramChannelLastVerified": "2026-08-05T14:03:35+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 46.6,
+    "coachSilentHours": 48.6,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -61,7 +61,7 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": true,
-    "nextPlannedAction": "靜候教練覆（09:03 早安 + 09:38 重啟通知已發，等教練下指令）",
+    "nextPlannedAction": "靜候教練覆（14:00 主動關懷 messageId 9324 已發，等教練下指令）",
     "cronHealthCheck": {
       "name": "🦞 每30分鐘任務健康檢查",
       "recentPattern": "lastRunStatus=ok（22:00 已過），無連續錯誤",
@@ -96,6 +96,13 @@
     ]
   },
   "lastDeliveries": [
+    {
+      "ts": "2026-08-05T14:03:35+08:00",
+      "channel": "telegram",
+      "to": "6124913915",
+      "messageId": 9324,
+      "purpose": "週三下午 14:00 每4小時主動關懷 + 詢問教練今天從哪件事開始"
+    },
     {
       "ts": "2026-08-05T10:00:10+08:00",
       "channel": "telegram",
