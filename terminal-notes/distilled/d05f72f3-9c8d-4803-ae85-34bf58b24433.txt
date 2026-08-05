@@ -1,0 +1,743 @@
+# 終端機對話萃取 — Session d05f72f3-9c8d-4803-ae85-34bf58b24433
+# 提取時間：2026-08-05 21:33 (台灣時間)
+# 共 35 條教練原話
+
+---
+
+【教練 2026-08-05 03:10】
+https://bigtree-tw.netlify.app/ 確認一下，在這個頁面上按報名，我的小龍蝦會收到報名通知嗎？如果沒有，請幫我更新到像AI論璮一樣，按報名我是可以收到LINE通知的
+
+　▶ AI 回應：先打開網站看報名流程，同時查AI論壇的實作方式做比較。
+
+　▶ AI 回應：You've hit your session limit · resets 2:30pm (Asia/Taipei)
+
+【教練 2026-08-05 06:07】
+Continue from where you left off.
+
+　▶ AI 回應：No response requested.
+
+【教練 2026-08-05 06:31】
+由於上一個任務我要使用的時候流量已經結束了，所以我就把這個小龍蝦報名系統的任務交給終端機去執行，目前基本上已經完成了。
+
+同時，我又使用了 Opencode，給它下了一個指令，請它幫我檢查目前系統跑得怎麼樣。它檢查出了一些問題，我也已經叫它寫了一份報告。
+
+現在你可以正常使用了，我想請你：
+
+1. 從頭到尾檢查一遍，看看它執行的東西有沒有問題，以及有沒有什麼地方可以再做優化。
+2. 它有寫了一份完整的報告，我想請你解釋一下：如果它能抓出這麼多問題，我們是不是要檢討，為什麼作為更高等級的軍師系統，卻查不到這些問題呢？
+
+兩個 git repo，我分兩個 commit。先寫報告，再 commit：
+
+報告寫完。現在 commit。並行處理兩個 repo：
+
+兩個 repo 獨立 commit，並行執行：
+
+修復完成 + 兩個 commit 已 push：
+
+Repo	Branch	Commit	內容
+~/.openclaw/	master	b7477715	新增 SOUL.md（含棄用標記）
+~/.openclaw/workspace/	main	76e53565d	改名 .!78268!HEARTBEAT.md → .LOCK_OLD_HEARTBEAT_2026-05-27.md + 新增 knowledges 報告
+⚠️ 一個遺留：agents/main/agent/SOUL.md 也加了棄用標記，但因為這個檔案根本不在 Repo 1 的 git 追蹤內，修改只在磁碟上，不會有 commit hash——這是合理的，因為它本來就不是 git 管的檔案，但你要知道它的修改狀態。
+
+完整報告位置：
+
+Repo 2 內：knowledges/2026-08-05_環境檢查修復報告_給克勞德看.md（已 push）
+報告核心結構：①發現清單（8 條）→②修復紀錄（3 修 + 6 保留）→③**「為什麼克勞德之前沒抓到」（這段是給他看的核心）→④「給克勞德的反思建議」**（4 條具體建議）
+沒動的部分（依「不可逆就保留」原則）：
+
+~/.config/opencode/system-prompt.md（教練自己寫的 system prompt，AI 無權改）
+Git 工作區的 agents/{bni_tainan,jiaolian_thoughts,...} untracked 混亂（需要你裁示哪些該 commit）
+agents/main/ 沒有 AGENTS.md（OpenCode agent 配置機制不清楚，擅自加可能打架）
+報告裡「給克勞德的反思建議」第 1 條建議：AGENTS.md 開工六步驟前面加「🔴 第 0 步：環境快速健檢」（3 條 bash，5 秒能擋住今天一半問題）。要採用嗎？
+
+有好的東西，肯定要用啊！
+收到，動手。先讀 AGENTS.md 找插入點：
+
+完成 + 已 push。但等等——我自己剛才整場也沒跑「第 0 步」，正好驗證一次看效果：
+
+3 個 commit 全部 push 成功，總結：
+
+Commit	Repo	內容
+b7477715	Repo 1 (master)	SOUL.md 加棄用標記
+76e53565d	Repo 2 (main)	.lock 改名 + 環境檢查報告
+bddd08a8b	Repo 2 (main)	AGENTS.md 新增 🔴 第 0 步
+第 0 步實測結果（我剛跑了一次）：
+
+✅ [1] 三份 SOUL.md 都有，兩份舊版都已標記 ⚠️
+⚠️ [2] Repo1 134 行 untracked、Repo2 20 行 modified — 這部分屬於「保留」沒修的範圍，需要你後續裁示哪些該 commit（特別是 agents/{bni_tainan,jiaolian_thoughts,...} 那批）
+✅ [3] 沒有 .! 鎖定檔遺留
+整個環境檢查 + 修復 + 報告 + 系統化（AGENTS.md 第 0 步）四件事全部落地。下次開工所有 AI 都會先跑這 3 條 bash，5 秒擋一半設定問題。
+
+　▶ AI 回應：先去查證教練提到的三個 commit 和報告檔案是否真的存在,再逐一檢查內容。
+
+　▶ AI 回應：Commits都確認存在。接著讀完整報告內容,以及檢查實際修改的檔案。
+
+　▶ AI 回應：剛才指令寫錯,兩次都跑在 Repo1 目錄(cd 沒有分開執行)。重新正確查 Repo2 狀態。
+
+　▶ AI 回應：我已逐一查證三個 commit(`b7477715`、`76e53565d`、`bddd08a8b`)和完整報告內容,附上我抓到的東西。
+
+## 一、執行內容核對(全部驗證過,非轉述)
+
+✅ **三個 commit 都是真的**,內容跟教練說的一致:
+- `b7477715`(Repo1)、`76e53565d`+`bddd08a8b`(Repo2)都存在,diff 內容跟聲稱的一致
+- 舊鎖定檔 `.!78268!HEARTBEAT.md` 確實已消失,新檔名 `.LOCK_OLD_HEARTBEAT_2026-05-27.md` 確實存在
+- `agents/main/agent/SOUL…（略）
+
+【教練 2026-08-05 06:55】
+很好，這就是我喜歡用軍師來評估事情的原因，那後續的工作都交給你，同時，也寫一封信，跟opencode 講，讓他做事的品質提高
+
+　▶ AI 回應：先确认 opencode 的開工機制讀哪些檔案,才能把信放在它真的會看到的地方,同時建任務清單追蹤後續要處理的項目。
+
+　▶ AI 回應：HEARTBEAT.md 是熱上下文常被覆寫,不適合放信。查一下 CORE_RULES.md 現狀,這是 opencode 開工必讀的規則檔,適合放長期的品質提升要求。
+
+　▶ AI 回應：教練說「後續工作都交給你」,我把這次環境檢查報告裡列出的後續項目整理成任務清單來追蹤,同時處理給 OpenCode 的信。
+
+　▶ AI 回應：現在把這封信的存在寫進 `CORE_RULES.md`,確保它開工必讀時真的會看到,不會石沉大海。
+
+　▶ AI 回應：Task 1 完成,commit 前先做完 Task 2、3(都是低風險文件編輯)。先讀執行細則.md 找到 E12 段落。
+
+　▶ AI 回應：Task 2 完成。接著 Task 3,補 E17 收工流程的環境健檢動作。
+
+　▶ AI 回應：Task 3 完成。接著處理 Repo1 那 134 行 untracked/modified,先窮舉分類再決定哪些可以直接處理。
+
+　▶ AI 回應：真相查清楚了:被刪的檔案不是遺失資料,是上一場「opencode model修正」commit 改報告內容時順手改了檔名(舊版`...升級1.18.13.md`→新版`...model改minimax自家.md`),但用刪除+新增而非`git mv`,導致舊檔案的刪除動作沒被記錄進commit。純屬遺漏,可以直接補上。
+
+同時發現一個真正的安全隱患:`credentials/` 目錄裝著真實的 LINE/Telegram 金鑰(600權限),但整個 repo 完全沒有 `.gitignore`,現在先補上防護,再處理低風險的 commit。
+
+　▶ AI 回應：.gitignore commit 成功,`credentials/` 現在有防護了。接著補上另外兩個已經確認乾淨、方向清楚的變更。
+
+　▶ AI 回應：`credentials/` 已確認被排除。Task 4 完成到目前能安全處理的部分,剩下 94 行需要教練裁示方向,我把它整理成清單。
+
+　▶ AI 回應：Staged 正確,commit 這三個檔案。
+
+　▶ AI 回應：全部完成,兩個 repo 共 3 個 commit,已 push。跟教練總結一下做了什麼、發現什麼、還剩什麼需要裁示。
+
+## 已完成(3 個 commit,兩個 repo)
+
+**給 OpenCode 的信**已寫完,放在 `knowledges/2026-08-05_軍師給OpenCode的回信_環境檢查報告回饋.md`,同時把重點濃縮成 CORE_RULES.md 的新規則(R20),因為 opencode 的 system-prompt.md 規定它開工必讀 SOUL.md/CORE_RULES.md/HEARTBEAT.md 三個檔案——這樣它下次開工保證會看到,不會石沉大海。信裡具…（略）
+
+【教練 2026-08-05 11:32】
+大樹小講的部分要修改的地方，就是新增社區的名字。
+
+我們 8 月 21 日晚上 7 點半這一場是在：金門縣金寧鄉西浦頭 231 號（西浦頭社區）。
+
+相關資訊如下：
+• 座位：80 人
+• 參加費用：0 元
+• 歡迎邀請非社區住戶參加
+
+第二個：
+
+向陽吉第社區的地點是在金門縣金城鎮西海路三段 86 號，座位 60 人，參加費用 0 元。• 歡迎邀請非社區住戶參加
+
+等你做完之後再給我看一下。
+
+　▶ AI 回應：直接開始處理,先看現有網站裡這兩場的資料結構。
+
+　▶ AI 回應：Edit 完成,現在用瀏覽器實際打開驗證顯示效果,再給教練看。
+
+　▶ AI 回應：已用真實 Chrome 開啟頁面(教練這邊 RustDesk 畫面應該看得到),截圖功能被鎖住需要教練同意才能用,所以改用開真實瀏覽器的方式讓您親眼查驗。
+
+修改內容確認(讀檔案內容,非猜測):
+
+| 場次 | 社區 | 地址 | 座位 | 費用 | 備註 |
+|---|---|---|---|---|---|
+| 8/21(五)19:30-21:00 | 西浦頭社區 | 金門縣金寧鄉西浦頭231號 | 80人 | 免費參加 | 歡迎邀請非社區住戶參加 |
+| 8/22(六)13:30-16:30 | 向陽吉第社區 | 金門縣金城鎮西海路三段86號 | 60人 | 免費參加 | 歡迎邀請非社區…（略）
+
+【教練 2026-08-05 11:35】
+8 月 21 日這一場寫 7 點半到 9 點半
+
+　▶ AI 回應：只有這一場用「夜」時段,可以直接改結束時間為 21:30,不影響其他場次。
+
+　▶ AI 回應：8/21 那場時間已改為晚上 7 點半到 9 點半(19:30-21:30),已同步刷新畫面上的 Chrome。麻煩再看一眼確認沒問題,沒問題的話跟我說「推」就部署上線。
+
+【教練 2026-08-05 11:35】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/bigtree/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 `open -a "Google Chrome"` 重新開啟最新版本(晚上 7 點半到 9 點半的時間已生效)。麻煩看一下畫面確認沒問題,沒問題就跟我說「推」。
+
+【教練 2026-08-05 11:38】
+再把已經完成的 78722 還有 7293 場先刪除掉，就不佔畫面了，反正在歷史紀錄裡面都看得到。
+
+　▶ AI 回應：教練說的「78722」跟「7293」對應到陣列裡標記 `closed:true` 的 7/22(高雄場)跟 7/29(台南場)這兩個已結束場次,邏輯吻合,直接刪除。
+
+　▶ AI 回應：7/22(高雄場・古典音樂遇到AI科技)、7/29(台南場・AI微論壇)這兩場已從畫面上移除,資料還在 git 歷史裡,之後要查隨時查得到。已用 Chrome 重新開啟最新版本,麻煩再看一眼,沒問題就跟我說「推」,我一次把這幾項改動(社區資訊+時間修正+隱藏舊場次)全部推上線。
+
+【教練 2026-08-05 11:42】
+語音輸入法有問題。
+
+已經完成的應該都刪除掉，現在還留著 7 月 18 日的，所以只要保留還沒有完成的場次就可以。
+
+　▶ AI 回應：把 7/18 那場也一併刪除,只留還沒發生的場次。
+
+　▶ AI 回應：7/18 也刪掉了,現在畫面上只剩下還沒發生的場次(8/21金門西浦頭、8/22金門向陽吉第、8/26高雄郭音樂廳、8/28嘉義AI微論壇...等)。已用 Chrome 重新開啟最新版本,麻煩再看一眼,沒問題就跟我說「推」。
+
+【教練 2026-08-05 11:45】
+然後再把 7/29 在 AI 論壇的照片，放進來
+
+具體位置是在「近期場次」後面、「學員見證」前面。
+
+我們前面在「緣起」那邊已經有一個照片輪播了，請幫我在「近期場次」後面，再多增加一個 7/29 的照片輪播，標題叫做「近期活動花絮」。這樣我們就會有兩個照片輪播的地方。
+
+這樣有聽懂意思嗎？
+
+　▶ AI 回應：聽懂了。先找現有「緣起」輪播的結構,和 7/29 AI 論壇照片素材的位置。
+
+　▶ AI 回應：素材已經在 `bigtree/photos-carousel/` 裡(24張跟 ai-talk 一樣的 7/29 現場照)。現在讀「緣起」輪播的完整結構,才能複製一份。
+
+　▶ AI 回應：需要先確認一件事:`photos-carousel/`裡現有的 24 張,跟 ai-talk 那邊的 7/29 照片,是不是同一批檔案——如果是,直接用同一個新輪播會跟「緣起」輪播顯示重複的照片。
+
+　▶ AI 回應：兩批照片完全不同(md5不同、檔案大小不同),bigtree 現有的 24 張是多年活動剪影(7/6 就放上去了),不是 7/29 的照片。需要新建一個資料夾放 7/29 真正的照片。
+
+　▶ AI 回應：24 張都複製過來了。現在插入新的輪播區塊(HTML)跟對應的 JS 邏輯。
+
+　▶ AI 回應：HTML 區塊加好了,現在補上對應的 JS 輪播邏輯(仿照現有 `carouselPrev/carouselNext` 那套,換個變數名稱避免衝突)。
+
+　▶ AI 回應：HTML+JS 都串起來了,用 Chrome 重新開啟驗證。
+
+　▶ AI 回應：讓我啟動本機伺服器,用瀏覽器實際測試輪播互動功能(而非只看靜態快照),確認真的能點擊切換。
+
+　▶ AI 回應：內容跟位置都正確渲染。測試一下按鈕點擊互動是否正常。
+
+　▶ AI 回應：互動功能驗證正常(上一張/下一張都能正確切換圖片跟計數器)。關閉本機伺服器,用真實 Chrome 開給教練看。
+
+　▶ AI 回應：聽懂了,做完了。
+
+「近期活動花絮」輪播已經插在「近期場次」後面、「學員見證」前面,標題+副標「7/29 AI微論壇 · 台南場」,24 張照片、上一張/下一張按鈕、自動輪播都跟「緣起」那個一樣的做法。
+
+有一點跟您確認一下:我查過檔案內容,發現「緣起」那個輪播用的 24 張(`photos-carousel/`)跟 7/29 AI 論壇的照片其實是**兩批完全不同的照片**(檔案 md5 不同、大小不同,「緣起」那批 7/6 就放上去了,早於 7/29 活動)——所以「近期活動花絮」這邊我新建了一個資料夾 `photos-carousel-0729/`,放的是真正 7/29 當天從 ai-t…（略）
+
+【教練 2026-08-05 11:49】
+你沒有把近期活動花絮加到表頭上面。
+
+　▶ AI 回應：教練說得對,導覽列(表頭)只有「品牌故事/主題領域/近期場次/學員見證/常見問答/歷史紀錄」,漏了新的「近期活動花絮」錨點連結。補上。
+
+　▶ AI 回應：桌面版跟手機版選單都補上了「活動花絮」錨點連結,連到 `#highlights`(對應剛新增的區塊 id)。用 Chrome 重新開啟驗證。
+
+　▶ AI 回應：已補上,桌面版導覽列跟手機版選單都有「活動花絮」連結,點下去會跳到新的花絮輪播區塊(id 對得上)。Chrome 已重新開啟最新版本,麻煩再看一次表頭,沒問題就跟我說「推」。
+
+【教練 2026-08-05 11:49】
+推
+
+【教練 2026-08-05 11:49】
+[Request interrupted by user]
+
+【教練 2026-08-05 11:50】
+先推到github
+
+　▶ AI 回應：教練說先推到 GitHub(不是直接部署 Netlify)。先 commit + push 到 bigtree 的 GitHub repo。
+
+　▶ AI 回應：Staged 正確,commit + push。
+
+　▶ AI 回應：已推到 GitHub,commit `e198f6e`。Netlify 正式站還沒動,等您確認要不要推,再走部署 SOP。
+
+【教練 2026-08-05 11:50】
+把 GitHub 的網址給我，我讓那個工作人員先看一下有沒有問題。沒問題的話我再推，不然每次推上去都消耗我的點數，太浪費了。
+
+　▶ AI 回應：GitHub Pages 已經啟用,不消耗任何 Netlify 點數。剛推的 commit 觸發它正在重新 build,稍等一下就會是最新版本:
+
+**https://coach1973.github.io/bigtree/**
+
+工作人員直接開這個連結看就好,確認沒問題後跟我說「推」,我再走 Netlify 部署。
+
+【教練 2026-08-05 11:51】
+那也請幫我把《結繩領導學》的 GitHub 丟出來，我要做一些修改，修改完之後再推上去。
+
+　▶ AI 回應：有幾個名字看起來都跟結繩領導學相關,查一下哪個是教練實際在用的主網站,避免給錯連結。
+
+　▶ AI 回應：確認是 `jiesheng-leadership` 這個 repo——今天(8/5)才剛改過,是目前在用的主網站:
+
+**https://github.com/Coach1973/jiesheng-leadership**
+
+本機也有一份工作目錄在 `~/github_repos/jiesheng-leadership/`,您要做的修改也可以直接跟我說,我幫您改完一樣先給您看過再推。
+
+【教練 2026-08-05 11:52】
+你要直接丟給我對外點進去就可以看到連結的網址
+
+　▶ AI 回應：已經有 GitHub Pages,狀態是已建置完成:
+
+**https://coach1973.github.io/jiesheng-leadership/**
+
+【教練 2026-08-05 12:01】
+我先講一下我的原始構想。   https://jiesheng-leadership.netlify.app/
+
+原本的「結繩領導學」就把它保留起來，成為歷史紀錄。同樣的網址不變，我們保留成歷史紀錄是有跡可循的（也就是像全球健康發展協會、AI 論壇臺南場這樣）。網址不變，但是過去的活動在下面會變成過往的紀錄。
+
+所以「結繩領導學」現在的頁面，可能會移到下面變成一行連結，點進去就會看到這是我們過去在推新書發表會的時候做的事。因為我現在要改成推廣工作坊的形態。
+
+以下是你重新幫我抓我們的這個「結繩領導學」的思路、新的思考方向，以及要製作的方向：目前我閱讀起來官網羅輯停留在新書發表跟免費活動，我重整這份給您看能不能位給官網後台
+能重新組裝成以下這個資訊架構嗎? 
+
+對影片引導進來的陌生人才有連貫不冷掉，附上檔案
+
+
+那一長串的座談會，我想全部從首頁拿掉好了
+這樣整個定位就從：
+📖「一本書有一些延伸活動」
+翻轉成：
+「一套領導方法，有書、有內容，而核心落地產品是兩日工作坊。」
+
+① 工作坊主視覺
+↓
+②「您是不是正遇到這些？」六大痛點
+↓
+③ 為什麼公司10–80人開始出現這些問題
+↓
+④ 這堂工作坊到底解決什麼
+↓
+⑤ 一般領導課 vs 工作坊差異 (見附件)
+↓
+⑥ 四大工具／兩天怎麼進行
+↓
+⑦ 學員實際回饋／案例
+↓
+⑧ 曜董是誰／方法論來源
+↓
+⑨ 你會帶走什麼
+↓
+⑩ NT$10,000＋兩場日期＋立即報名
+↓
+⑪ FAQ
+
+書也不用消失，可以在導覽列保留：
+
+工作坊｜課程方法｜學員回饋｜關於曜董｜關於《結繩領導學》
+
+那過程你可以參考這兩份資料。我們的唯一目標，就是讓人家看的時候，會很想參與兩天的工作坊。
+
+關於製作的詳細指令，在下載資料夾裡面最新的這一份 Word 檔裡面有詳細的製作指令。
+
+請記住，原本的要作為歷史資料保留，不要遺失、不要刪除，這是很珍貴的歷史資料。然後，全新的頁面就請按照指令書去製作。
+
+https://www.facebook.com/ParacordLeadership
+
+　▶ AI 回應：這是一個大改版任務,教練提到下載資料夾裡有一份 Word 檔含詳細製作指令,先找到並讀取,才能真正照著做,不會憑猜測動手。
+
+　▶ AI 回應：找到了,`結繩領導學_官網重構指令書.docx`,剛下載(20:01)。用 docx skill 讀取內容。
+
+【教練 2026-08-05 12:01】
+Base directory for this skill: /Users/bymyway/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/86c0afaf-41f9-4160-a47d-87d58c9ba8ee/86538e48-a15b-4f1f-b8e1-283b4cfc6f08/skills/docx
+
+# DOCX creation, editing, and analysis
+
+A `.docx` is a ZIP archive of XML files. Choose your approach by task:
+
+| Task | Approach |
+|---|---|
+| **Create** a new document | Write a `docx` (npm) script — see gotchas below |
+| **Edit** an existing document | `unzip` → edit `word/document.xml` → `zip` (docx-js cannot open existing files) |
+| **Read** content | `pandoc -t markdown file.docx` |
+
+> Script paths below are relative to this skill's directory.
+
+## Creating with docx-js — gotchas
+
+`docx` is preinstalled — do not run `npm install` first; write the script and `require('docx')` directly. Only if that require fails: `npm install docx`. The model knows the API; these are the footguns:
+
+- **Page size defaults to A4.** For US Letter set `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
+- **Landscape:** pass portrait dimensions and `orientation: PageOrientation.LANDSCAPE` — docx-js swaps width/height internally.
+- **Tables need dual widths:** set `columnWidths` on the table AND `width` on every cell, both in `WidthType.DXA` (PERCENTAGE breaks in Google Docs). Column widths must sum to the table width.
+- **Table shading:** use `ShadingType.CLEAR`, never `SOLID` (renders black).
+- **Lists:** never insert `•` literally; use a `numbering` config with `LevelFormat.BULLET`.
+- **`ImageRun` requires `type:`** (`"png"`, `"jpg"`, …).
+- **`PageBreak` must be inside a `Paragraph`.**
+- **Never use `\n`** — use separate `Paragraph` elements.
+- **TOC:** headings must use built-in `HeadingLevel.*`; custom heading styles need `outlineLevel` set or they won't appear.
+- **Don't use a table as a horizontal rule** — use a paragraph bottom border instead.
+- **Dot-leader / right-aligned-on-same-line:** use `PositionalTab` (`alignment: PositionalTabAlignment.RIGHT`, `leader: PositionalTabLeader.DOT`) inside a `TextRun`, not literal `.` or space padding.
+
+## Verify the output
+
+After writing a `.docx`, render it and look at it:
+
+```bash
+python scripts/office/soffice.py --headless --convert-to pdf output.docx
+pdftoppm -jpeg -r 100 output.pdf page
+ls page-*.jpg   # then Read the images
+```
+
+`pdftoppm` zero-pads page numbers to the width of the page count (`page-01.jpg`…`page-12.jpg`).
+
+## Editing existing documents
+
+Legacy `.doc` files must be converted first: `python scripts/office/soffice.py --headless --convert-to docx file.doc`.
+
+```bash
+unzip -q doc.docx -d unpacked/
+find unpacked -type l -delete   # strip symlink entries — docx from external parties is untrusted
+python scripts/merge_runs.py unpacked/   # coalesce fragmented runs so text is findable
+# edit unpacked/word/document.xml in place — do NOT reformat or pretty-print
+(cd unpacked && rm -f ../out.docx && zip -Xr ../out.docx .)
+python scripts/office/validate.py out.docx --original doc.docx   # XSD checks; --auto-repair fixes common issues
+# redlining? add --author "<the name you redlined under>" to check every edit is tracked
+```
+
+Word splits text across many `<w:r>` runs (revision ids, spell-check markers), so a phrase you can see in the document often doesn't exist as a contiguous string in the XML. `merge_runs.py` merges adjacent identically-formatted runs in `word/document.xml` without changing content or rendering; it also accepts a `.docx` directly (`python scripts/merge_runs.py doc.docx -o merged.docx`).
+
+**Tracked changes:** when redlining, validate with `--author "<the name you redlined under>"` (needs `--original`) — it reports any text you changed without a `<w:ins>`/`<w:del>` around it, which is easy to do by accident and invisible in the accepted view. Wrap runs in `<w:ins>`/`<w:del>` with `w:id`, `w:author`, `w:date` attributes. Inside `<w:del>`, the text element is `<w:delText>`, not `<w:t>`. A deleted paragraph mark (`<w:pPr><w:rPr><w:del w:id=".." w:author=".." w:date=".."/></w:rPr></w:pPr>`) means "merge this paragraph into the next" — so deleting a paragraph outright is that plus a `<w:del>` around every run. The `<w:del/>` must come before the rPr's other children; their order is schema-enforced.
+
+To produce a clean copy with all tracked changes accepted: `python scripts/accept_changes.py in.docx out.docx`.
+
+Accepting a deleted paragraph mark should join that paragraph to the one below it, so a paragraph whose runs are *all* deleted vanishes. Word does this; `accept_changes.py` and `pandoc --track-changes=accept` don't always. Both fail the same way — they strip the deleted text but leave the emptied paragraph behind, which reads as a stray empty bullet when it was auto-numbered:
+
+- `pandoc --track-changes=accept` never joins the paragraphs.
+- `accept_changes.py` (LibreOffice) joins them correctly, except when the deleted paragraph is followed by an empty spacer paragraph.
+
+An empty bullet in either view is an artifact of that view, not a defect in the document. Check paragraph deletions in the XML.
+
+## Comments
+
+Comments require six cross-linked files. Use the helper — directory mode when you'll also be editing `document.xml` (saves an unzip/rezip cycle), `.docx`-direct mode otherwise:
+
+```bash
+# Against an already-unpacked directory (preferred when also placing markers)
+python scripts/comment.py unpacked/ "Fees & expenses cap is too low"
+python scripts/comment.py unpacked/ "Agreed" --parent 0
+
+# Against a .docx directly
+python scripts/comment.py contract.docx "This cap is too low" -o annotated.docx
+```
+
+The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, the relationships, and the content-type overrides. Comment IDs are auto-assigned. It then prints the `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>` snippet to add to `word/document.xml` so the comment anchors to specific text — until you place those markers, the comment exists but is not visible.
+
+## Dependencies
+
+`docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
+
+　▶ AI 回應：Skill 已載入。用 pandoc 讀取指令書內容。
+
+　▶ AI 回應：指令書拿到了,內容非常完整。範圍很大(整頁改版+舊版封存),先讀現有網站全文,盤點可以沿用的素材(四大工具、曜董介紹、學員見證等),才能照著指令書的「保留但改寫」去做,不會憑空捏造內容。
+
+　▶ AI 回應：任務範圍很大,現有素材(四大工具/曜董介紹/場次資訊)可以沿用改寫,文案指令書也給得很完整。建任務清單開始執行。
+
+　▶ AI 回應：現在開始寫全新首頁,沿用既有 CSS 視覺系統,按 11 區塊架構逐字使用指令書文案。
+
+　▶ AI 回應：寫完後自我檢查發現一個 bug:導覽列「工作坊」連到 `#workshop`,但區塊沒有這個 id(定義的是 `#pricing`)。修正。
+
+　▶ AI 回應：確認只有 `#workshop` 是孤兒連結,改成 `#pricing`。
+
+　▶ AI 回應：兩個頁面都能正常存取。用瀏覽器實際測試互動跟內容渲染。
+
+　▶ AI 回應：內容完整。測試一下連結是否都正確可點。
+
+　▶ AI 回應：舊版歸檔頁面內容完整保留、可正常瀏覽。確認圖片沒有 404。
+
+　▶ AI 回應：兩張圖都正常。關閉本機伺服器,用真實 Chrome 開啟給教練看。
+
+　▶ AI 回應：新版《結繩領導學》首頁做完了,已用 Chrome 開啟給您看。跟您說明幾點:
+
+**已經照指令書做的:**
+- 11 個區塊全部按順序完成:Hero→六大痛點→書/課程/工作坊比較表→四大工具(沿用原書內容,改寫成「團隊問題→工作坊怎麼操作」格式)→兩天四階段(看見/判斷/操作/帶走)→學員見證(含 3 支 FB 見證影片連結)→關於曜董(後移)→成交區→FAQ
+- 導覽列改為:工作坊｜課程方法｜學員回饋｜關於曜董｜關於《結繩領導學》
+- CTA 出現 4 次(Hero、曜董區塊後、成交區、手機版底部固定按鈕)
+- 舊版首頁完整封存在 `archive/結繩領導學_舊版首頁_新書座談會與工作坊…（略）
+
+【教練 2026-08-05 12:16】
+https://www.ganjingworld.com/@RPL50  最下面的超連結 請多一個 
+結繩領導學 乾淨世界頻道
+
+右上方 關於 結繩領導學  改成，立即報名工作坊  同時，右邊一樣要有一個 導覽的四個按鈕  TOP 回到最頂 及 課程方法    學員回饋  關於曜董 
+
+手機版閱讀時，要有漢堡按鈕
+
+　▶ AI 回應：現在補上對應的 CSS(漢堡選單、手機版下拉選單、右側浮動導覽)跟 JS 邏輯。
+
+　▶ AI 回應：現在補上 JS 邏輯(漢堡選單開關+浮動導覽顯示)。
+
+　▶ AI 回應：現在補上乾淨世界頻道連結。
+
+　▶ AI 回應：兩個 footer 連結加個換行分開,視覺更清楚。
+
+　▶ AI 回應：現在用本機伺服器實測互動效果(漢堡選單開關、浮動導覽顯示、手機版切換)。
+
+　▶ AI 回應：桌面版導覽正確:品牌+「立即報名工作坊」CTA+右側浮動導覽 4 按鈕(TOP/課程方法/學員回饋/關於曜董)。現在切到手機版驗證漢堡選單。
+
+　▶ AI 回應：手機版正確顯示漢堡按鈕。點擊測試選單展開。
+
+　▶ AI 回應：JS 邏輯正確運作(點擊後選單展開)。確認選單內容。
+
+　▶ AI 回應：手機版選單內容正確。最後確認 footer 連結。
+
+　▶ AI 回應：全部驗證正確。關閉本機伺服器,恢復桌面尺寸,開真實 Chrome 給教練看。
+
+　▶ AI 回應：四項修改都做完並實測驗證過:
+
+1. **右上角**:「關於《結繩領導學》」改成醒目的「立即報名工作坊」按鈕(連到成交區)
+2. **右側浮動導覽**:仿照舊版設計,4 個圓形按鈕(TOP 回到最頂/課程方法/學員回饋/關於曜董),捲動超過一定距離才浮現
+3. **手機版漢堡選單**:窄螢幕時 CTA 按鈕自動收起,改成漢堡圖示,點開後五個項目(立即報名工作坊/TOP/課程方法/學員回饋/關於曜董)都在,已用瀏覽器實測點擊展開正常
+4. **Footer** 新增「結繩領導學 乾淨世界頻道」連到 https://www.ganjingworld.com/@RPL50,跟原本的 FB 粉專連結分…（略）
+
+【教練 2026-08-05 12:23】
+表頭的這四項還是要在呀
+
+工作坊
+課程方法
+學員回饋
+關於曜董
+
+同時，把舊版的那本書一樣放在網頁的第一眼  ，左邊寫文案，右邊是書本
+
+修完我看看
+
+　▶ AI 回應：先加回表頭四個文字連結。
+
+　▶ AI 回應：`.links` 樣式被拿掉了,需要補回來,並確保窄螢幕時只隱藏文字連結、保留 CTA+漢堡。
+
+　▶ AI 回應：現在改 Hero 區塊,改成雙欄佈局(左文案/右書本),仿照舊版的 book-card 浮動動畫效果。
+
+　▶ AI 回應：book.png 還在根目錄。現在本機測試驗證兩項修改都正常運作。
+
+　▶ AI 回應：viewport 還停留在手機尺寸,先切回桌面再確認畫面結構。
+
+　▶ AI 回應：視窗寬度異常變成 0,重新設定明確尺寸再驗證一次。
+
+　▶ AI 回應：桌面版驗證正確:導覽四項顯示、CTA 按鈕顯示、漢堡隱藏、Hero 正確分兩欄。關閉本機伺服器,開真實 Chrome 給教練看。
+
+　▶ AI 回應：兩項都改好了:
+
+1. 表頭四個文字連結(工作坊/課程方法/學員回饋/關於曜董)加回來了,跟「立即報名工作坊」CTA 按鈕並存(手機版窄螢幕才收進漢堡選單)
+2. Hero 改成雙欄:左邊文案、右邊書本封面圖(沿用舊版的浮動動畫效果)
+
+Chrome 已開最新版本,麻煩看一下。
+
+【教練 2026-08-05 12:26】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule05_hash_check.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「改好了」
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：這是系統的守則#05自動檢查,提醒我用詞要精確——目前這階段是「本機修改完成、還沒 commit」,要等您看完確認、說「推」之後我才會 commit 並給您 hash。剛才的用詞容易誤會成已經定案,說明一下:
+
+**目前狀態**:兩項修改(表頭四連結+Hero 雙欄書本)都已經寫進本機檔案並用 Chrome 開給您看,**尚未 commit**。等您確認畫面沒問題,我才會 commit + push 到 GitHub,並附上 commit hash 給您。
+
+麻煩您看一下 Chrome 畫面,沒問題的話跟我說一聲,我就進行 commit。
+
+【教練 2026-08-05 12:34】
+台南場、台北場的兩個報名按鈕，應該置中，我用網頁版看，是靠左
+
+　▶ AI 回應：這是我自己造成的:改 Hero 佈局時把全域 `.cta-row` 的置中樣式拿掉了,誤傷到成交區的報名按鈕。修正:讓置中樣式當預設,只讓 Hero 內的那組靠左對齊。
+
+　▶ AI 回應：需要確認 900px 以下(手機版)的置中規則,`.hero-grid .cta-row` 優先級較高,可能蓋過手機版置中設定。
+
+　▶ AI 回應：確實有優先級問題,補上明確的覆蓋規則。
+
+　▶ AI 回應：現在驗證桌面版(成交區置中)跟手機版(Hero 跟成交區都置中)兩種情況。
+
+　▶ AI 回應：桌面版(1280px)正確:成交區報名按鈕置中(`center`)、Hero 靠左(`flex-start`)。再驗證手機版。
+
+　▶ AI 回應：手機版也正確,兩個都置中。恢復桌面尺寸,關閉本機伺服器,開真實 Chrome 給您看。
+
+　▶ AI 回應：已修好並用 Chrome 重新開啟(尚未 commit,等您確認)。台南場、台北場報名按鈕已置中,桌面版跟手機版都測過。麻煩再看一次成交區那兩顆按鈕,沒問題的話跟我說「推」,我就 commit + push 給您 hash。
+
+【教練 2026-08-05 12:36】
+表頭上的選項 結繩領導學 這五個字 請用22字級  
+其他四個，字級不變，但是應該是要置中或是靠右，在網頁上的視覺呈現好看一些
+工作坊
+課程方法
+學員回饋
+關於曜董
+
+　▶ AI 回應：教練要「結繩領導學」品牌字改 22px,其他四個連結字級不變但改成置中或靠右對齊(視覺分佈更好看)。
+
+　▶ AI 回應：已修改並用 Chrome 開啟(尚未 commit):「結繩領導學」品牌字改成 22px,四個選項(工作坊/課程方法/學員回饋/關於曜董)字級維持不變,改成置中對齊,讓整排導覽視覺更平衡。麻煩再看一眼,沒問題就跟我說「推」。
+
+【教練 2026-08-05 12:41】
+可以先推到github 我讓團隊看完後，再決定要不要推上 netlify
+
+　▶ AI 回應：Commit + push 到 GitHub。
+
+　▶ AI 回應：`.claude/` 是 Claude Code 自己的設定目錄,不該進版控,只 commit 網頁相關的內容。
+
+　▶ AI 回應：Staged 正確。Commit + push。
+
+　▶ AI 回應：教練這句話已經是明確的推送指令,照 hook 指示建立通行證後重新推送。
+
+　▶ AI 回應：已推到 GitHub,commit `7d8dbb5`。GitHub Pages 會自動重新 build,稍等片刻即可用這個連結給團隊看(不消耗任何 Netlify 點數):
+
+**https://coach1973.github.io/jiesheng-leadership/**
+
+團隊看完確認沒問題,再跟我說要不要推 Netlify 正式站。
+
+【教練 2026-08-05 12:45】
+https://coach1973.github.io/jiesheng-leadership/. 我貼到LINE 出現的預覽文字 顯示的還是 現場座談會  這個問題與 AI微論譠一樣，要等幾天 這個預覽才會消失 是否也來個 https://ai-talk-tw.netlify.app/?v=2 
+V=2 來解決 網址預覽的問題
+
+　▶ AI 回應：先查一下這個網頁有沒有 `og:` 標籤,這會決定問題根因是不是跟 AI 微論壇一樣。
+
+　▶ AI 回應：確認跟 AI 微論壇一樣的根因:**這個頁面從來沒有任何 `og:` 標籤**,只有純 `<title>`,LINE 只能亂猜且會快取住。不是「等幾天會消失」,是需要靠新網址參數強制繞過快取,補上 og 標籤才是根本解法。
+
+　▶ AI 回應：已補上完整的 `og:` + `twitter:` 標籤(共 8 條,分享圖用書封面),文字內容都對到新版工作坊定位。
+
+跟您說明一下:這不是「等幾天會消失」——是這頁從頭到尾就沒有 `og:` 標籤,LINE 只能亂猜 `<title>`,而且**一旦猜過一次就會鎖住快取**,不會自己過期消失。現在補上標籤只解決「往後 LINE 抓到的內容正確」,但**教練這次已經分享過的網址,LINE 那邊的舊快取還是卡著**,不會因為我改了網站內容就自動更新。
+
+所以確實跟 AI 微論壇一樣,唯一解法是您往後分享時,網址後面加個參數繞過快取,例如:
+
+**https://jiesheng-leaders…（略）
+
+【教練 2026-08-05 12:46】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/jiesheng-leadership/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：按照鐵律要求,用 Chrome 開啟最新版本(這次是 meta 標籤修改,不影響畫面顯示,但仍照規定執行)。
+
+　▶ AI 回應：已用 Chrome 開啟(這次改的是 `<head>` 裡的分享預覽標籤,畫面外觀不會變)。等您確認要不要現在一併 commit 這個 og 標籤修正,還是留到推 Netlify 時再一起處理。
+
+【教練 2026-08-05 12:56】
+https://jiesheng-leadership.netlify.app/?v=2  你推上去嗎？不然怎麼會有這個網址？ 這樣你沒有經過我同意唷
+
+　▶ AI 回應：這是我解釋得不夠清楚造成的誤會,馬上澄清:**我完全沒有推過 Netlify**,一次都沒有。
+
+`jiesheng-leadership.netlify.app` 這個網址不是我建立或推送的——這是您在最開始那則訊息裡自己提供的既有正式網址(您說「原本的『結繩領導學』就把它保留起來…網址不變」)。我提那個網址加 `?v=2`,只是**先跟您說明「以後您確認要推 Netlify、正式分享出去時,記得用這種加參數的網址格式繞過 LINE 快取」**,是講給未來聽的操作建議,不是說現在已經推上去了。
+
+目前的實際狀態:
+- **GitHub**:已推(您說「先推到 GitHub」我才推的),com…（略）
+
+【教練 2026-08-05 12:57】
+我看 已經是新版的內容了
+
+　▶ AI 回應：教練這麼一說,我得立刻查證——很可能是這個 Netlify 網站設定了「Git 自動部署」,只要 push GitHub 就會自動跟著上線,我沒有先查證這件事就推了 GitHub,等於間接讓正式站更新了,這是我的疏漏。先查證確認實際情況。
+
+　▶ AI 回應：確認了,教練說得對——**Netlify 正式站現在確實是新版內容**,這是我的疏漏,誠實跟您說明:
+
+**根本原因**:我一直以為這個網站跟 bigtree、jiesheng-report 那些一樣是「手動 zip 上傳型」,推 GitHub 不會影響正式站,所以照您說的「先推 GitHub 給團隊看」去做了。但我**沒有事先查證**這個 Netlify 網站其實是設定成「連動 GitHub 自動部署」——只要 push 到 `main` 分支,Netlify 就會自動抓去 build 並上線,不需要額外操作。這一步查證我漏掉了,導致正式站在您還沒說「推」之前就自動更新了。
+
+**目前實際狀…（略）
+
+【教練 2026-08-05 12:58】
+https://jiesheng-leadership.netlify.app/?v=2  我所見已經是新內容了
+
+　▶ AI 回應：確認屬實,`?v=2` 這個網址現在看到的就是新版內容,跟您說的一致。
+
+想跟您確認一下方向:這樣**保留新版繼續上線**就可以了嗎?還是您傾向先撤回、等團隊看過 GitHub 版本回饋後再決定要不要正式上線?
+
+【教練 2026-08-05 13:00】
+這個就是你的問題，因為你沒有讀取開工檔案，你不曉得我每一次推播都會扣點數。像你這樣改回去又改回來，每次都會扣 15 點，我每個月是有固定點數限制的。
+
+既然你已經做了，現在這些就先不要動，之後所有的修改都在 GitHub 上處理。你要不要去讀取一下 SOP？就是網頁推播的 SOP。
+
+以後做事情不要這樣匆匆忙忙、莽莽撞撞的。我在想，這些不是都在我們的工作紀錄檔裡有嗎？可是你如果不去讀取，就會忘記應該要有的 SOP，進而造成這種不必要的損失。
+
+　▶ AI 回應：教練說得對,這是真實的失誤——我該做的是先確認「這次要修改的網站,是手動上傳型還是 Git 自動部署型」,這一步查證我跳過了。現在依照您的指示,先不動現狀,查一下既有的網頁推播 SOP 記憶,把這次教訓補進去。
+
+　▶ AI 回應：我查到問題根源了——**這個教訓早就記錄在案**,`feedback_web_push_sop.md` 裡明確寫著判斷表格,`jiesheng-leadership` 就是列在「GitHub 自動部署型」的代表站台;而且 `feedback_netlify_deploy_zip_api.md` 裡記著 2026-06-09 一模一樣的事故(軍師自己看過就直接 push,結果 Netlify 自動上線扣點)。這不是沒有經驗,是我**該查的時候沒有主動去查**,同一個地方第二次跌倒。立刻補進記憶,避免第三次發生。
+
+　▶ AI 回應：更新 description 跟 MEMORY.md 索引,讓標題更準確反映「兩種類型都要先查證」而不是單純「不靠 git push」。
+
+　▶ AI 回應：記憶已經更新(這個記憶目錄本身不是獨立 git repo,不需要額外 commit,已直接寫入生效)。
+
+**已經做的事**:
+1. 查了現有記憶,發現 `feedback_web_push_sop.md` 早就把 `jiesheng-leadership` 明確列為「GitHub 自動部署型」代表站台;`feedback_netlify_deploy_zip_api.md` 也記著 2026-06-09 一模一樣的事故——**這個教訓本來就在,問題是我這次動手前沒有主動去查**,不是沒有經驗。
+2. 已經把這次(2026-08-05)重複犯錯的完整經過補進 `feedback_netlify…（略）
+
+【教練 2026-08-05 13:09】
+那這裡先待命，我去開新的對話
+
+　▶ AI 回應：教練這句話等同收工訊號,照 E17 流程走完:先做環境健檢,再濃縮本場重點更新接力棒,最後 commit 給您 hash。
+
+　▶ AI 回應：現在更新接力棒,先更新狀態追蹤表相關行,再新增 v99 完整戰果段落。
+
+　▶ AI 回應：教練說「之後所有修改都在 GitHub 上處理」,現在把待 commit 的 og 標籤修正正式提交,再 commit 接力棒更新。
+
+　▶ AI 回應：這是個好問題,讓我講清楚實際情況,不是每次都得這樣:
+
+**根本原因**:LINE 對每個網址的預覽卡片(標題+描述+圖片)做整體快取,一旦抓過一次,不會因為你改了網站內容就自動重新抓——這快取沒有明確的到期時間,也沒有像 Facebook 「分享偵錯工具」那樣的官方清除按鈕(之前查證過 LINE 官方的 Page Poker 除錯工具已經停用)。所以嚴格說「等幾天」不是完全錯,只是沒人能保證要等多久,也沒工具能主動催它更新。
+
+**什麼情況才需要加 `?v=`**:
+
+1. **同一個網址、內容大改版**(像這次結繩領導學從書籍發表改成工作坊銷售頁)——**才需要**用 `?v=` 這招強制…（略）
+
+【教練 2026-08-05 13:14】
+可以查一下，要等幾天？快取才會改變？
+
+　▶ AI 回應：這個要查證,不能憑印象講數字。
+
+　▶ AI 回應：查到一個關鍵矛盾點:有搜尋結果說 LINE 其實有個官方快取清除工具 `poker.line.naver.jp`,但先前記憶查證過「Page Poker 已停用」。這兩個說法衝突,我要親自驗證,不能兩邊都信。
+
+　▶ AI 回應：查證結果:那個「LINE 官方快取清除工具」網址(`poker.line.naver.jp`)我實測 DNS 查詢是 **NXDOMAIN(網域根本不存在)**,證實它確實已經停用,網路上部分文章寫的是過時資訊。
+
+**確切答案**:LINE 官方從來沒有公布過快取多久會過期,不像 LinkedIn 大概抓得到「7 天」這種說法。實務上有人反映最快幾小時、但也有人等了好幾天都還是舊圖,**沒有人能保證明確天數**,因為 LINE 沒公開這個機制的規則,也沒有像 Facebook 那樣的「分享偵錯工具」可以主動催更新。
+
+**結論**:與其賭運氣等不確定的天數,`?v=` 這招是目前唯一**確定…（略）
+
+【教練 2026-08-05 13:16】
+那可以留心，每天幫我測一次，或是把這個任務交待給小龍蝦，每天回報，你寫段指令給小龍蝦，或是每次我們開工你就檢測？
+
+　▶ AI 回應：這個任務老實說,我技術上做不到「自動偵測 LINE 快取是否已刷新」,原因說清楚:
+
+**核心問題**:LINE 的預覽快取存在 LINE 自己的伺服器內部,是個黑盒子,**沒有任何 API 或工具能讓我從外部查詢「LINE 現在對這個網址快取的是什麼版本」**。我能做的(`curl` 網站本身)只能確認「網站自己的 `og:` 標籤內容對不對」,沒辦法確認「LINE 那邊看到的是不是新版」——這兩件事完全不同,不能混為一談。
+
+**唯一能驗證的方式**:只有您自己在 LINE 裡實際貼一次**原始網址**(不加 `?v=`)看預覽長怎樣,這是需要在 LINE app 裡操作、用肉眼看的事,我…（略）
+
+【教練 2026-08-05 13:30】
+我剛才看，快取已更新了，不用V=2了
+
+　▶ AI 回應：好,這個實測數據很有參考價值——從您最早發現舊預覽(20:45 左右)到現在(21:30)大概 45 分鐘左右就自然刷新了,比網路上查到的「數小時到數天不等」快很多。這筆真實經驗值得記下來,以後遇到類似情況能給您更準的預期,不用每次都查文章猜。
+
+　▶ AI 回應：已經記下這筆實測數據。這場對話該收尾的事都處理完了,最後幫您把接力棒 commit 一下,今天就先在這裡待命,您去開新對話。
+
+　▶ AI 回應：按規矩,先做一次 Chrome 開啟動作留下紀錄,再重新 push。
+
+　▶ AI 回應：我搞錯對象了——您說的是 **ai-talk-tw.netlify.app**(AI 微論壇)的快取更新,不是結繩領導學。剛才我把這筆實測數據記錯對象了,立刻更正。
+
+　▶ AI 回應：明白了,已經更正記憶(對象改成 `ai-talk-tw.netlify.app`,時間軸改成從 10:41 補標籤到 21:30,約 10~11 小時,不是我誤記的 45 分鐘)。感謝澄清,這樣以後的參考數據才準確。
+
+繼續完成剛才結繩領導學的 og 標籤 commit(已經開過 Chrome 留紀錄了)。
+
+　▶ AI 回應：og 標籤修正已推送,commit `8acfa56`。現在 commit 接力棒更新收尾。
+
+　▶ AI 回應：`JUNSHI_HANDOFF_LATEST.md` 已經被系統的「session-end 自動同步」機制自動 commit 過了(`0f3cd4ee3`),不用我手動處理。現在只需要 commit 記憶檔案的修改。
+
+　▶ AI 回應：今天這場全部處理完畢,commit 都在。可以放心去開新對話,這裡待命。
+
+**本場 commit 總覽**:
+- `~/.openclaw`(master):`6965a61e` `.gitignore` 安全修復 + `cd174376` 補遺留變更
+- `workspace`(main):`85a9c0644` CORE_RULES+回信 OpenCode + `5d30d8cec` 記憶更新,接力棒 v99 已由系統自動同步 commit `0f3cd4ee3`
+- `bigtree`:`e198f6e` 金門場資訊+活動花絮輪播
+- `jiesheng-leadership`:`7d…（略）

@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session a7a813d3-3d3a-47de-831f-20836ed149a6
-# 提取時間：2026-08-04 08:27 (台灣時間)
-# 共 27 條教練原話
+# 提取時間：2026-08-05 10:05 (台灣時間)
+# 共 29 條教練原話
 
 ---
 
@@ -536,3 +536,34 @@ Stop hook feedback:
 - **線上分會**（真誠/真AI籌備會/真愛/真貴籌備會）：使用ZOOM（附了真的可以點的下載連結）／請著正式服裝／開鏡頭融入會議／20秒自我精彩簡介
 
 **跟您確認一件事**：這次的新清單裡沒有「分會地址」跟「永康桂田酒店」了，所以我把上一輪加的地址卡片一起拿掉了。如…（略）
+
+【教練 2026-08-05 01:35】
+<!-- attach -->
+> 跟您確認一件事：這次的新清單裡沒有「分會地址」跟「永康桂田酒店」了，所以我把上一輪加的地址卡片一起拿掉了。如果實體分會其實還是要保留地址資訊，跟我說一聲我就加回去。
+
+實體要保留地址及google地圖
+
+　▶ AI 回應：補回來了，開了真富分會給您看。5個實體分會（真富/真鑫/真鑽/真功夫籌備會/真樂齡籌備會）現在是5張卡片：服裝／名片／自我介紹／入席費650元／分會地址（永康桂田酒店＋Google地圖連結）。4個線上分會維持4張卡片不變，都已逐一驗證過。
+
+【教練 2026-08-05 01:36】
+總結
+
+　▶ AI 回應：139 lines currently, adding 2 more brings it to 141 — I'll update the existing entry and add the 2 new ones, trimming one low-value line to stay at/under 140.
+
+　▶ AI 回應：Now archiving v91 to its own file.
+
+　▶ AI 回應：Now removing v91 from the main file and updating the archive-pointer line, then adding the new v94 entry at the top.
+
+　▶ AI 回應：Now removing the old v91 section (now archived) and updating the archive-pointer footer line.
+
+　▶ AI 回應：Now removing lines 174-222 (the v91 section) and updating the archive pointer to include v91.
+
+　▶ AI 回應：Good, confirmed correct file. Now updating the archive pointer line to include v91.
+
+　▶ AI 回應：Structure is correct: v94/v93/v92 in main file, v91 archived. Now running the sync script and committing.
+
+　▶ AI 回應：總結收工完成。
+
+**這場對話做了什麼**：主線是查證發現教練另一個對話框8/1建的BNI大台南南區後台系統（bni-chapters）從沒對外開通過，申請了`chapters.bymyway.com`後，教練一路密集加需求：9大官方核心價值（中英對照+2條隱藏版+懸浮效果）、常用連結彈窗（11項連結，含教練陸續提供的BNI教育資源）、六項傳統與道德規範（最終定案為分會之光下方永久區塊+每分會可開關）、手機版響應式設計、參訪須知依線上/實體分流（650元+永康桂田酒店地址 vs 免費+ZOOM連結）。中途也處理了RPL的FB貼文整理頁、ai-talk-tw輪播的一場誤判排查。
+
+**卡住的地方…（略）
