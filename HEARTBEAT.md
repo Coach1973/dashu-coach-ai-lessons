@@ -165,3 +165,12 @@
 - HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 統一做）
 - 教練沉默 45.7h（週三上午，正常作息，靜默中合理）
 - ✅ `delivery.mode=none` 安靜處理
+
+## 🩺 11:36 心跳探針（守則 #19 通道健康鐵律實測）
+- ✅ Telegram 通道探針回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（不沿用舊旗標）
+- Cron 狀態檢查：36 個任務，僅 2 個 lastRunStatus=error（皆 message tool 推播 transient 失敗，非連續錯誤）
+- 11:33 健康檢查剛剛跑過 ✅，alternating transient 模式 2000+ 場穩定，CE=1 未達紅線
+- 距上次主動通知（10:34 messageId 9323）已 62 分鐘 → 接近合理關懷時點
+- 距 14:00 每4小時主動關懷 cron 還有 2.5 小時 → 該 cron 會自動觸發
+- 教練最後訊息 2026-08-03 13:54，沉默 45.7+ 小時（仍待覆，週三上午屬正常作息）
+- **結論**：HEARTBEAT_OK，不送通知，讓 14:00 主動關懷 cron 統一處理
