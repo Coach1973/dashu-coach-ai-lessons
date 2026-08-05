@@ -2,7 +2,7 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785853200,
+    "heartbeat_poll": 1785880953,
     "system_health": 1785665043,
     "telegram_channel": 1785809004,
     "junshi_queue": 1785599760,
@@ -11,10 +11,10 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785805405,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-04T23:00:05.277046+08:00"
+    "coach_silence_sync": "2026-08-05T08:34:42.520966+08:00"
   },
-  "lastHeartbeat": "2026-08-04T22:20:00.000000+08:00",
-  "lastHeartbeatNote": "週二 22:20 心跳：守則#19 探針沿用 09:03 驗證（ok:true，已不到5天）、教練沉默 32.2h（自 08-03 13:54 起）、22:20 寄信 Day 3/20 即將由 cron 自動觸發（不需我介入）、22:00 健檢cron已過無error、systemSnapshot context 28% 新鮮。結論：13h前才發過早安（msg 9309），不重發打擾；22:20 寄信是cron獨立任務不需agent介入。本輪 HEARTBEAT_OK。",
+  "lastHeartbeat": "2026-08-05T09:03:32+08:00",
+  "lastHeartbeatNote": "週三 09:02 心跳（亮天後第一輪）：Telegram 探針守則#19 實測 ok:true、教練沉默 42.7h+（自 08-03 13:54 起）、所有 cron 健康、context 28%、無 ⬜ 待辦、quiet hours 已過。已主動發週三早安關懷訊息（messageId 9321）詢問今天從哪件事開始，並列出 5 項待辦可挑。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Tuesday",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-04T09:03:25.000000+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 33.1,
+    "coachSilentHours": 42.7,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -96,6 +96,13 @@
     ]
   },
   "lastDeliveries": [
+    {
+      "ts": "2026-08-05T09:03:32+08:00",
+      "channel": "telegram",
+      "to": "6124913915",
+      "messageId": 9321,
+      "purpose": "週三早安關懷 + 教練沉默 42h+ 主動詢問今天從哪件事開始"
+    },
     {
       "ts": "2026-08-02T18:04:03.317518+08:00",
       "channel": "telegram",
