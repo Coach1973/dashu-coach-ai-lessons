@@ -427,3 +427,11 @@
 - ✅ `delivery.mode=none` 安靜處理
 
 下次定檢 **15:33** 🟢
+
+## 🩺 15:06 心跳探針（守則 #19 通道健康鐵律實測）
+- ✅ Telegram 通道探針回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（不沿用舊旗標）
+- 15:03 健康檢查剛跑過 ✅（距 3 分鐘），alternating transient 模式穩定 2000+ 場、CE=1、三關全未過 → 不 announce 結論已記錄
+- 距上次主動通知（14:00 messageId 9324）已 1 小時 6 分鐘 → 發關懷顯打擾
+- 距 18:00 下次主動關懷 cron 還有 2 小時 53 分鐘 → 該 cron 會自動觸發
+- sync_coach_last_message.sh ✅ exit 0 → 教練最後訊息 2026-08-03 13:54，沉默 49.2+ 小時（已過 48h 邊界）
+- **結論**：HEARTBEAT_OK，不送通知，讓 18:00 主動關懷 cron 統一處理
