@@ -54,6 +54,44 @@
 | 🟢 | **主動提醒功能推廣到三個LINE帳號** | ✅v92已完成 | 教練指示「立刻推廣」。原本`hooks/bni-reminder-schedule`寫死只認bni_tainan，已推廣到jiaolian_thoughts+default(龍蝦小助教)，過程中修好一個accountId解析bug(default帳號session key含"main"非"default"，已正規化)。commit `41ffac6b`，三帳號皆用合成webhook實測通過 |
 | 🟢 | ~~教練15:18有一段修改回饋被中斷、內容未送達~~ | ✅v92記錄有誤，已在Mac桌面版另一場對話完整收到並執行 | v92記錄的是「終端機」session看不到內容，但同一時段「桌面版」session其實完整收到了教練15:18那段完整訊息（適合誰參加文案改法/洪詠清林韋銘換照片/品牌曝光加現場輪盤抽獎三點），並已於v93完整執行，commit `4742cff`。**教訓**：多個Mac session（終端機/桌面版）同時開著時，教練同一句話可能只進到其中一個視窗，另一個看不到不代表訊息真的遺失，下次遇到類似狀況先問教練「是在哪個視窗說的」，不要直接判定「未送達」 |
 | 🟢 | **BNI大台南南區9分會系統(bni-chapters)對外開通+密集功能迭代** | ✅v94本場完成 | 8/3深夜查證發現這套系統(教練另一對話框8/1建置)從未對外開通，已申請`chapters.bymyway.com`(過程cert.pem過期，改用claude-in-chrome完成OAuth授權)+加進coach888第13/14項。8/3~8/4密集迭代：9大官方核心價值(中英對照+2條隱藏版+懸浮hover效果，後台改唯讀不可增刪)、常用連結彈窗(漢堡圖示，含紅綠燈看板/LINE小幫手/培訓行事曆+6項教練提供的BNI教育資源)、六項傳統與道德規範(定案為分會之光下方永久區塊+`show_traditions`開關)、響應式設計(手機版隱藏文字導覽只留漢堡選單)、參訪須知依線上/實體分流(**線上**=真誠/真AI籌備會/真愛/真貴籌備會，**實體**=真富/真鑫/真鑽/真功夫籌備會/真樂齡籌備會，此分類與`status`(正式營運/籌備中)欄位無關，教練糾正2次才拿到正確名單)。**教訓**：測試表單POST漏填欄位曾誤清空真誠分會Hero文字(已從seed.py救回)+不能用不相關欄位推論新分類，兩條都寫入記憶，詳見[[project_bni_chapters_public_launch_2026-08-03]]。**待處理**：10組帳號仍是預設密碼Admin/88888，教練尚未裁示是否/何時要求改密碼 |
+| 🟢 | **www.bymyway.com/ai-go/ 空白頁修復（新增就地同步腳本）** | ✅v95本場完成 | 查WordPress修訂紀錄發現這個對外入口在2026-06-25被清空(revision 27392 len=0)，整頁空白約6週。新增`sync_ai_go_to_bymyway.py`就地更新頁面27390(既有的`deploy_*.py`是新建draft，再跑會產生重複頁面)。驗證：curl抓到iframe+OG meta 10條、瀏覽器實測iframe正常渲染、內嵌教練專屬人設區塊確實存在。commit `92eaaaa0e` |
+| 🟢 | **OpenClaw plugins.allow白名單補上（修正接力棒原建議會打壞系統）** | ✅v95本場完成 | 查原始碼發現`plugins.allow`是全域嚴格白名單，接力棒原建議只列7個外掛會把另外41個(含telegram/browser/duckduckgo)全部關掉——跟案例56的toolsBySender誤傷cron同一種形狀的坑。改用程式化取自`plugins list`的48個實際載入外掛ID，重啟實測48 loaded/20 disabled與改動前一致、警告消失。commit `8b7e7dde`。已寫入記憶`reference_openclaw_plugins_allow_strict_whitelist` |
+| 🟢 | **小龍蝦紀律移植計劃階段二上線+E08官方文本版追加開放給BNI小幫手** | ✅v95本場完成 | 階段二三條規則(E09 cron驗證/E12記憶寫入/E08引用查證)進`hooks/rule-reminder/handler.js`，全部`scope:['main']`，18項test_scope.js全過。commit `fe86890a`。**教練當場追加裁示**：BNI官方條文(出席/道德規範/會議流程等)本來就寫死要求一字不差回答，不用等觀察期，直接新增「E08官方文本版」開放給`bni_tainan`+`jiaolian_thoughts`(E09/E12因小幫手無exec/fs/cron權限維持只給main)。commit `d04241a4` |
+| 🟢 | **AI微論壇嘉義場推上Netlify正式站+LINE預覽快取修復+講師連結補齊** | ✅v95本場完成，教練親口說「推」x2 | 第一次推(deploy`6a729de183c3119517084d98`)：嘉義場取代台南場舊版上線。教練實測貼LINE發現預覽仍顯示台南場——查證這頁20個歷史版本從未有`og:`標籤，LINE只能猜`<title>`且會快取住。第二次推(deploy`6a72a2e75b98ebc94b95d4be`)：補齊16條og:/twitter:標籤(圖片教練親自從24張裡挑)、活動全站正名「AI微型論壇」→「AI微論壇」(對齊bigtree-tw主站)、依教練指示比照mentor100幫四位講師簡介補外部連結(從mentor100.db撈取)。查證LINE官方除錯工具Page Poker已停用(DNS查無)，確認`?v=2`網址參數是唯一可行的快取繞過法，教練往後行銷網址統一貼`ai-talk-tw.netlify.app/?v=2`。ai-talk獨立repo commit `45090d8`。額度扣至剩52次 |
+
+---
+
+# 軍師接力棒 · 2026-08-05 v95（Mac終端機 Opus 5，三項待辦清理+AI微論壇嘉義場上線與LINE預覽修復）
+
+> 建立時間：2026-08-05 上午（台灣時間）
+> 本棒執行者：Mac 終端機 Opus 5
+> 上一棒：v94（Mac終端機Sonnet5，BNI大台南南區bni-chapters系統對外開通+一整場密集功能迭代）
+> 本棒主軸：**開工時教練直接點名三項上一棒留下的待辦（ai-go雙入口/plugins.allow白名單/紀律移植階段二），全部查證後才動手——其中兩項發現實際狀況比接力棒記錄的更嚴重或方向錯誤，沒有照抄舊建議直接做。三項做完後教練把焦點轉到AI微論壇嘉義場：先問「推了嗎」發現還卡在GitHub預覽沒推正式站，教練說「推」後照SOP走完部署上線；隨後教練實測發現LINE分享預覽仍顯示台南場舊內容，查出真根因是全站從未設過og:標籤；教練接著要求比照AI百人導師mentor100幫講師補外部連結，一次性做完三件事二次部署；最後教練問有沒有更快的方法繞過LINE快取，查證確認官方工具已停用、`?v=`參數是唯一解法。整場貫穿「教練點頭前先查證，不照舊記錄或直覺動手」的節奏。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴 ai-go bymyway.com空白頁修復 + plugins.allow白名單——兩項都推翻了接力棒原本的說法/建議
+教練指名三項待辦「直接動手」。**ai-go**：接力棒記錄是「雙入口不同步」，實際查WordPress修訂紀錄發現是**整頁被清空、空白了6週**（revision 27392 於2026-06-25內容變成0字元）。新增`sync_ai_go_to_bymyway.py`就地修復（原有部署腳本是新建draft，會產生重複頁面）。**plugins.allow**：接力棒建議只列7個外掛，查原始碼發現這是「全域嚴格白名單」不是「只管非內建外掛」——照做會把另外41個（telegram/browser/duckduckgo等）全部關掉，跟案例56 toolsBySender誤傷cron同一種形狀的坑。改用程式化取自`plugins list`的48個實際載入外掛ID，重啟驗證數量一致、六個通道（3 LINE+3 Telegram）全部正常。已寫入記憶`reference_openclaw_plugins_allow_strict_whitelist`避免其他機器重蹈覆轍。
+
+### 2. 🎯🎯 小龍蝦紀律移植計劃階段二上線 + 教練當場追加E08官方文本版
+三條規則（E09 cron驗證/E12記憶寫入/E08引用查證）進`hooks/rule-reminder/handler.js`，全部`scope:['main']`只對教練自己的小龍蝦生效，新增`test_scope.js`18項測試全過。教練接著問「開放給BNI小幫手什麼功能」，查證小幫手權限後回報：E09/E12在那邊沒有對象（會員身分被擋掉exec/fs/cron），只有E08有意義。教練當場糾正「這不用問，我的原始設定本來就要求官方條文一字不差回答，這是必須的」——查證`agents/bni_tainan/AGENTS.md`確認教練說的規範真的寫死在裡面（模式B Official Text Mode、總政策19條「不得節錄」），立刻新增「E08官方文本版」開放給`bni_tainan`+`jiaolian_thoughts`，不等原訂的一週觀察期。
+
+### 3. 🎯🎯🎯 AI微論壇嘉義場推上Netlify正式站，過程中修好LINE分享預覽卡台南場舊內容的根因
+教練問「AI微論壇推上去了嗎」，查證發現只推了GitHub Pages供講師預覽，正式站`ai-talk-tw.netlify.app`還是台南場舊版。走完部署SOP（本機預覽+開Chrome給教練看+教練說「推」）後第一次部署上線。教練隨即實測貼到LINE，發現預覽仍顯示「台南場」——查了20個歷史commit確認這頁**從來沒有過`og:`標籤**，LINE只能退而求其次去猜`<title>`且會把結果快取住，換內容不換網址不會重讀。同時教練要求比照AI百人導師（mentor100）幫四位講師簡介補上FB/IG/官網等外部連結，從`mentor100.db`撈出四位講師既有填寫的連結（季哥2條/洪詠清6條/林韋銘4條/大樹教練7條，大樹教練填的IG欄位其實是這個網站自己、屬自我指涉未收錄已告知教練），比照mentor100的`openBio`模式做成彈窗按鈕。三件事（og標籤16條+活動正名「AI微型論壇」→「AI微論壇」12處+講師連結）合併成第二次部署一次推上去。教練問有沒有更快的方法清LINE快取，查證LINE官方除錯工具Page Poker已停用（DNS查無此網域），確認`?v=`參數是唯一可行的繞過法，教練往後行銷網址統一改貼`ai-talk-tw.netlify.app/?v=2`。
+
+## 📋 下一場直接開工任務
+- 紀律移植計劃階段二（E09/E12僅main）觀察期到2026-08-12，期間看`rule-reminder-probe.log`確認無誤觸發
+- AI微論壇嘉義場已上線，教練近期要開始行銷，網址記得用`?v=2`版本；已分享出去的舊訊息（若有）需教練自行刪除重貼才會更新預覽
+- BNI真誠/真愛/真AI分會網站、Email自動發送系統：仍卡在等教練，多場未更新
+
+## 🔑 本場關鍵檔案索引
+- `projects/bymyway-bridge/examples/sync_ai_go_to_bymyway.py`：新增，ai-go就地同步腳本
+- `openclaw.json`（外層master）：新增`plugins.allow`48個外掛ID
+- `hooks/rule-reminder/handler.js`＋`test_scope.js`：新增scope機制+E09/E12/E08(軍師版)+E08官方文本版
+- `github_repos/ai-talk/index.html`：og:標籤16條+活動正名12處+四位講師`data-links`
+- `state/netlify_deploy_quota.json`：額度記錄至剩52次
+- commit（workspace main）：`92eaaaa0e`→`8b7e7dde`（外層master）→`fe86890a`（外層master）→`d04241a4`（外層master）→`839748623`→`1c10d92bf`
+- commit（ai-talk獨立repo）：`45090d8`
 
 ---
 
@@ -131,47 +169,7 @@
 - GitHub Pages預覽：`https://coach1973.github.io/ai-talk/`
 - 待推正式站：`https://ai-talk-tw.netlify.app/`（教練確認後才動作）
 
----
 
-# 軍師接力棒 · 2026-08-03 v92（Mac終端機 Sonnet 5，龍蝦小助教LINE群組長期失效真根因+健檢cron權限誤傷修復+提醒功能推廣三帳號）
-
-> 建立時間：2026-08-03 下午（台灣時間）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v91（Mac桌面版Sonnet5，CLAUDE.md規則健檢+ai-go教練專屬人設上線+新增「總結」收工暗號E17）
-> 本棒主軸：**教練發現龍蝦小助教（LINE default帳號）Telegram/LINE都沒回應，且過去能用的群組互動也失效。第一輪查證方向被教練當場糾正（去查LINE官方後台是錯的），改用「合成真實簽章的LINE webhook直接測本機端點」查出真根因：`@openclaw/line`外掛對accountId==="default"完全忽略`accounts.default`底下的設定，群組互動從設定被搬進這個巢狀結構那一刻起就架構性失效，跟教練猜的一樣是「我們自己設定的問題」不是LINE後台問題。修復後教練又用一句話點出另一個問題：main agent的健檢cron失去exec/read/cron工具（昨天toolsBySender權限鎖的連帶副作用），教練進一步用VPS提醒功能反向挑戰「提醒功能根本不需要exec」，逼出一個更精準的修復方向：把「系統自動化需要exec」跟「用戶要求服務不需要exec」兩件事分開處理，最終健檢cron跟三帳號提醒功能都修好，同時老實跟教練報告一個技術限制（LINE群組工具鎖只能靠提示層，非技術硬鎖）。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 龍蝦小助教LINE群組長期失效真根因：`accounts.default`設定被外掛原始碼結構性忽略
-教練回報Telegram/LINE都對他沒反應，且過去能用的群組互動（如「思伽與施樂恩討論區」）現在也失效。第一輪查證方向錯誤：先去查LINE官方後台webhook設定，教練當場指正「這個方向不對，如果後台設定壞了，現在小龍蝦就不會運作」。改走基礎設施逐層排除法（cloudflared tunnel→gateway→webhook→channelAccessToken全部實測健康），確認infra沒問題後，用**合成一個帶正確HMAC簽章的假LINE webhook直接打本機`/line/webhook`端點**這招，配合短暫開啟`OPENCLAW_LOG_LEVEL=debug`，抓到鐵證：`"Blocked line group message (groupPolicy: allowlist, no groupAllowFrom)"`——查原始碼確認`resolveLineAccount()`對accountId==="default"這個特例完全不讀`accounts.default`底下任何欄位（`dmPolicy`/`groupPolicy`/`groupAllowFrom`全部被忽略，只有具名帳號如bni_tainan/jiaolian_thoughts才會讀自己accounts下的設定），內建預設值剛好是「allowlist+空白名單」，等於這個設定被搬進accounts.default巢狀結構那一刻起就架構性失效，不分寄件人。已修復：改在`channels.line`頂層設定`groupPolicy: open`+`groupAllowFrom: ["*"]`+`dmPolicy: pairing`，`accounts.default`只留`webhookPath`（真正被使用的欄位）。commit `ec48b7bd`。
-
-教練實測「帥帥養龍蝦」群組確認有回應；「思伽與施樂恩討論區」另一次沒反應，查證後發現是MiniMax API暫時過載的一次性問題（訊息確實送達並開始處理，只是模型呼叫失敗），跟權限無關，教練重試後應已恢復。過程中也順手回答教練「提醒需要記住LINE ID」的疑問：不是LINE平台分辨不出誰是誰（每則訊息本來就帶唯一身份碼），是agent想主動把「身份碼↔真實姓名」的對應記進GROUP_IDENTITY.md避免認錯人，跟平台限制無關。
-
-### 2. 🔴🔴 main agent健檢cron失去exec/read/cron工具，真根因是cron沒有「傳話人身分」
-電報版小龍蝦回報「🦞健康檢查14:37—⚠️無法執行」，工具全部缺漏。查證發現：昨天(commit 2f498962)幫main/kong/peipei上的`tools.toolsBySender`萬用deny規則，設計上比對「傳話人身分」，但cron觸發的agent turn完全沒有傳話人身分（空senderId，實測驗證——manual cron run 5次皆重現同一筆deny記錄），永遠落到`"*"`那條deny規則，導致main agent所有需要exec/read/cron的定時任務被誤判成陌生發送者擋掉。教練追問VPS版的「提醒我禮拜三下午喝咖啡」功能，逼出更精準的思路：教練指出「提醒」功能根本不需要exec（VPS版每個用戶各自獨立、伺服器端程式直接處理），點破軍師一開始把「健檢cron需要exec」跟「用戶提醒功能」錯誤地綁在一起建議「放寬定時任務權限」的方向錯誤。
-
-教練裁決「健檢cron是我個人的問題,跟其他用戶無關,那就去做啊」後，改用**群組層級鎖取代agent層級萬用鎖**：Telegram外掛schema支援群組層級`toolsBySender`（已在`channels.telegram.accounts.bot_main.groups["*"]`補上，技術硬鎖，只保護真人群組聊天不影響cron，因cron沒有群組context）；但查證`@openclaw/line`外掛(2026.6.33)的`LineGroupConfigSchema`不支援`tools`/`toolsBySender`欄位，LINE群組這邊技術上做不到硬鎖，改在`workspace/SOUL.md`新增鐵律五（系統提示層防護：非教練本人一律只提供對話服務，不執行系統操作）。commit `56c0efe3`。手動觸發健檢cron驗證：`lastRunStatus: ok`，連續錯誤歸零，exec/read/cron三個工具正常運作無deny記錄。**已老實告知教練這個LINE側的殘留風險**（提示層非技術硬鎖），教練知情。
-
-### 3. 🎯🎯 主動提醒功能推廣到三個LINE帳號
-延續上一項的思路，教練指示「當然現在就立刻把提醒功能推廣到三個帳號」。原本`hooks/bni-reminder-schedule/handler.js`寫死只認bni_tainan一個帳號的sessionKey格式（`agent:<accountId>:line:direct:<userId>`），推廣時發現一個新bug：default帳號綁在main agent，其session key實際是`agent:main:line:group:<groupId>`（群組）或直接共用`agent:main:main`（私訊，跟Telegram同一把key），兩種情況`parts[agentIdx+1]`抓到的都是"main"而非"default"，若不處理會讓default帳號的提醒請求被靜默略過。已修復：加上main→default正規化；`send_line_push.py`從寫死bni_tainan token改成`--account`參數化，default帳號走`channels.line`共用的channelAccessToken；順手補上`--no-deliver`旗標避免cron系統自己的announce機制誤報error（實際訊息已送達，只是完成回報機制找不到明確投遞對象而拒絕）。commit `41ffac6b`。用真實簽章的合成webhook逐一測試bni_tainan+default兩帳號，皆確認cron job正確建立、command exitCode=0、LINE Push API回應200，測試job事後清除不留殘留。
-
-### 4. ⚠️ 教練一段修改回饋被中斷，內容未送達
-教練在15:18說「好，這個需要更改的幾個點我說一下。首先，先肯定做得不錯！」後被系統標記中斷，緊接著改下達「總結」指令。**這段回饋的具體內容從未真正送達**，下一場開工不能假設已經知道要改什麼，需請教練重新講一次。
-
-## 📋 下一場直接開工任務
-- **🔴 優先：教練15:18中斷的回饋內容**，請教練重新完整講一次
-- LINE群組工具鎖技術限制：待`@openclaw/line`外掛未來版本支援群組層級`toolsBySender`後，補上硬鎖取代目前的SOUL.md提示層防護
-- ai-go雙入口同步、BNI真誠/真愛/真AI分會網站、Email自動發送系統、嘉義場籌備：仍卡在等教練，多場未更新
-
-## 🔑 本場關鍵檔案索引
-- `openclaw.json`（`~/.openclaw`外層master分支）：LINE default帳號群組設定搬遷、main/telegram群組層級toolsBySender
-- `workspace/SOUL.md`：新增鐵律五（系統指令只認教練本人）
-- `hooks/bni-reminder-schedule/handler.js`＋`agents/bni_tainan/scripts/send_line_push.py`：推廣三帳號
-- `試金石/試金石_案例庫.md`：新增案例56
-- commit（`~/.openclaw`外層master分支）：`ec48b7bd`（LINE default群組修復）→ `56c0efe3`（cron權限修復）→ `41ffac6b`（提醒功能推廣）
-
----
-
-> 📦 **v91及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v92及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新3棒(v93/v92/v91)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新3棒(v95/v94/v93)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。

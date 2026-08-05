@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 LINE分享連結預覽卡舊內容——官方Page Poker已停用，?v=參數是唯一解法(2026-08-05)](reference_line_share_preview_cache_bust.md) — og:標籤本身沒快取問題，快取發生在分享之後，越早補越安全
 - [🔴🔴 OpenClaw plugins.allow是全域嚴格白名單，只列幾個會關掉其他全部外掛(2026-08-05)](reference_openclaw_plugins_allow_strict_whitelist.md) — 查證原始碼not-in-allowlist判斷；接力棒原建議的7個清單會打死另外41個
 - [🎯🎯 BNI大台南南區9分會系統(bni-chapters)開通後密集迭代——核心價值/常用連結/傳統道德規範/參訪須知線上實體分流(2026-08-04)](project_bni_chapters_public_launch_2026-08-03.md) — 10組帳號仍是預設密碼Admin/88888待改
 - [🔴🔴 測試「整批覆寫」表單POST前先讀出完整既有資料，漏填欄位會被清空(2026-08-04)](feedback_test_form_post_read_before_write.md) — bni-chapters真誠分會Hero文字曾被測試指令誤清空，靠seed.py救回
