@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785805405,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-05T22:38:02.425070+08:00"
+    "coach_silence_sync": "2026-08-05T23:06:34.129538+08:00"
   },
   "lastHeartbeat": "2026-08-05T18:04:48+08:00",
   "lastHeartbeatNote": "週三 18:00 主動關懷 cron 觸發（每4小時 ef88279b）：Telegram message_id 9326 已送出（curl bypass）、系統全綠、教練沉默 52.1h（自 08-03 13:54）。context 28% 充裕、無新任務、無待辦新增。",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-05T18:04:48+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 56.7,
+    "coachSilentHours": 57.2,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
