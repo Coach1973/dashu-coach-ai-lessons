@@ -1,5 +1,14 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 📋 健康檢查存查（不通知教練，2026-08-06 00:02）
+- 本任務 00:00 fire � `overloaded`（123.5s ≪ 600s）→ CE 由 0 變 1
+- 23:30 ✅ → 00:00 ❌（minimax `FailoverError`）= alternating 模式延續
+- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
+- 三關都沒過 → 安靜存查，不通知教練
+- 教練沉默 58.1h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 00:02 屬正常作息）
+- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
+- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+
 ## 📋 健康檢查存查（不通知教練，2026-08-05 23:33）
 - 本任務 23:30 fire ✅ 成功（CE 由 1 變 0 已恢復；sync / cron list / HEARTBEAT 讀寫皆 OK）
 - 22:42 ❌ `overloaded`（158.0s ≪ 600s）→ 23:30 ✅ = provider 過載恢復鐵證
