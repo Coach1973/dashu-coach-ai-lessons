@@ -1,5 +1,14 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 📋 健康檢查存查（不通知教練，2026-08-06 00:32）
+- 本任務 00:30 fire ❌ `overloaded`（115.2s ≪ 600s）→ CE 由 0 變 1
+- 00:00 ❌（123.5s）→ 00:30 ❌（115.2s）連 2 次 overloaded = alternating 模式升溫
+- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
+- 三關都沒過 → 安靜存查，不通知教練
+- 教練沉默 58.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 00:32 屬正常作息）
+- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
+- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+
 ## 📋 健康檢查存查（不通知教練，2026-08-06 00:02）
 - 本任務 00:00 fire � `overloaded`（123.5s ≪ 600s）→ CE 由 0 變 1
 - 23:30 ✅ → 00:00 ❌（minimax `FailoverError`）= alternating 模式延續
@@ -145,3 +154,33 @@
 - 觸發詞：開工
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - Session: 0042945d-d90c-456c-8ebb-8c6d854b1f9d
+
+## 📋 健康檢查存查（不通知教練，2026-08-06 01:02）
+- 本任務 01:00 fire ❌ `overloaded`（99.2s ≪ 600s）→ CE 由 1 變 2（alternating 模式升溫）
+- 00:32 ✅（25.5s）→ 01:00 ❌（99.2s）= provider 過載重現
+- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
+- 三關都沒過 → 安靜存查，不通知教練
+- 教練沉默 59.1h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 01:02 屬正常作息）
+- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
+- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+- ⚠️ 觀察：CE 累積至 2（雖 alternating 模式穩定），若 02:30 仍 fail + 03:00 仍 fail（連 3 場）才升級 announce；目前 alternating 模式（成功↔失敗）未觸發紅線
+
+## 📋 健康檢查存查（不通知教練，2026-08-06 02:04）
+- 本任務 02:04 fire ✅ 成功（CE 由 1 → 0 已恢復；sync / cron get / HEARTBEAT 讀寫皆 OK）
+- 02:00 ❌ `overloaded`（98.9s ≪ 600s）→ 02:04 ✅ = provider 過載恢復鐵證
+- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
+- 三關都沒過 → 安靜存查，不通知教練
+- 教練沉默 60.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 02:04 屬正常作息）
+- 02:00 主動關懷 cron 應已自動送過 → 讓它統一處理教練窗口
+- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+- alternating 模式延續（成功↔失敗），CE 重新降至 0，未觸發連 3 場紅線
+
+## 📋 健康檢查存查（不通知教練，2026-08-06 01:32）
+- 本任務 01:30 fire ✅ 成功（CE 由 1 → 0 已恢復；sync / cron get / HEARTBEAT 讀寫皆 OK）
+- 01:00 ❌ `overloaded`（111.4s ≪ 600s）→ 01:30 ✅ = provider 過載恢復鐵證
+- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
+- 三關都沒過 → 安靜存查，不通知教練
+- 教練沉默 59.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 01:32 屬正常作息）
+- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
+- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+- 觀察：alternating 模式延續（成功↔失敗）；CE 重新降至 0，未觸發連 3 場紅線
