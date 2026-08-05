@@ -174,3 +174,39 @@
 - 距 14:00 每4小時主動關懷 cron 還有 2.5 小時 → 該 cron 會自動觸發
 - 教練最後訊息 2026-08-03 13:54，沉默 45.7+ 小時（仍待覆，週三上午屬正常作息）
 - **結論**：HEARTBEAT_OK，不送通知，讓 14:00 主動關懷 cron 統一處理
+
+## 🩺 12:06 心跳探針（守則 #19 通道健康鐵律實測）
+- ✅ Telegram 通道探針回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（不沿用舊旗標）
+- 12:03 健康檢查剛剛跑過 ✅（距 3 分鐘），alternating transient 模式穩定、CE=1、三關全未過 → 不 announce 結論已記錄
+- 距 10:34 上次主動通知已 1 小時 32 分鐘
+- 距 14:00 每4小時主動關懷 cron 還有 1 小時 54 分鐘 → 該 cron 會自動觸發
+- 教練最後訊息 2026-08-03 13:54，沉默 46.2+ 小時（週三中午，接近 48h 邊界但未達）
+- **結論**：HEARTBEAT_OK，不送通知，讓 14:00 主動關懷 cron 統一處理
+
+## 🩺 12:03 健康檢查（v4.0 SOP 三關判定 + 全任務盤點）
+- 第零步 ✅ sync_coach_last_message.sh → 教練沉默 **46.2h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值）
+- 第一步 → Cron runs latest（本任務 46e67e2e）：
+  - 12:00 fire (ts=1785902400027)：❌ `FailoverError: AI service temporarily overloaded`（97.5s ≪ 600s timeout）
+  - 11:33 fire (ts=1785899054845)：✅ ok
+  - 11:30 fire (ts=1785900763258)：❌ 同型 overloaded
+  - 11:00 fire (ts=1785898963608)：❌ 同型
+- 本任務 CE = **1**（11:33 成功重置 → 12:00 失敗 = 1，未達 ≥3 紅線）
+- **全任務盤點（36 個任務，4 個非健康）**：
+  | ID | 名稱 | errs | 原因 | 關卡二（provider transient）| 關卡三（影響工作）|
+  |---|---|---|---|---|---|
+  | `46e67e2e` | 本任務（健康檢查）| 1 | `overloaded` (minimax) | ✅ 是 | ❌ 無（meta 迴圈）|
+  | `9c3fc55d` | 每2小時增量記憶蒸餾 | 1 | `overloaded` (minimax) | ✅ 是 | ⚠️ 可能（影響蒸餾時效）|
+  | `001a9b16` | LINE@ 每日兩次使用回報 | 2 | `reply to 1, thread 1` failed（推播層）| ❌ 否 | ⚠️ 是（影響 LINE@ 報告）|
+  | `bbb7a348` | 小龍蝦每日三機總結 | 1 | `reply to 1, thread 0` failed（推播層）| ❌ 否 | ⚠️ 是（影響每日總結）|
+- **v4.0 SOP 三關判定逐項**：
+  - **46e67e2e 本任務**：關卡一 ❌已恢復（本輪 AI 正常回應=鐵證）｜關卡二 ✅provider transient｜關卡三 ❌無 → 三關未過 → **不 announce**
+  - **9c3fc55d 記憶蒸餾**：關卡一 ❌12:00 失敗但 provider 端會自癒｜關卡二 ✅provider transient｜→ **不 announce**
+  - **001a9b16 LINE@ 回報**：關卡一 ⚠️ 08:00 失敗、20:00 才能確認｜關卡二 ❌非 provider overload｜關卡三 ⚠️ 影響功能但 CE=2 未達 ≥3 紅線 → **三關未過，不 announce**
+  - **bbb7a348 三機總結**：關卡一 ⚠️ 昨晚失敗、今晚 23:05 才能確認｜關卡二 ❌非 provider overload｜關卡三 ⚠️ 影響功能但 CE=1 → **三關未過，不 announce**
+- 自動修復 4 條規則全部 ❌ 不適用：#1 timeout 充裕（97.5s ≪ 600s）｜#2 無 VPS 任務｜#3 model 已是 minimax/MiniMax-M3｜#4 三關未過不 announce
+- 觀察記錄（非立即修復）：
+  - `001a9b16` / `bbb7a348` 的 `reply to 1, thread X` 錯誤是 Telegram message tool 推播層問題（reply-to 訊息不存在或 thread 已關閉），不是 cron 配置問題，無法從 cron patch 修
+  - 等今晚 23:05 三機總結跑出來，如果今晚又壞再升級處理
+- HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 統一做）
+- 教練沉默 46.2h（週三中午，正常作息，靜默中合理）
+- ✅ `delivery.mode=none` 安靜處理
