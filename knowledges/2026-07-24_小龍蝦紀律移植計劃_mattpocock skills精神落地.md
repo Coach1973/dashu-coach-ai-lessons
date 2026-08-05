@@ -51,8 +51,16 @@ Claude Code的Skill系統（`~/.claude/skills/*/SKILL.md`）是Anthropic自家�
 1. **真相源驗證**：偵測「沒回應/斷線/失效/顯示異常/查無/連續X天沒有」等詞 → 提醒「這是不是衍生旗標？有沒有查過真相源(API實測/git log/原始檔案)？」（案例52/53教訓）
 2. **語音糾偏**：偵測陌生詞彙模式無法用簡單regex偵測，改用行為提示——當AI自己判斷「聽起來像但過去沒出現過」時主動問，寫進提醒文字強化這個習慣
 
-### 階段二（教練確認階段一運作一週無異常後）
+### 階段二（✅ 2026-08-05 已執行，commit `fe86890a`）
 擴充cron驗證、記憶寫入雙鐵律、引用查證三條，優先只對`main`（教練自己的小龍蝦）生效觀察，穩定後再開放給`bni_tainan`。
+
+**實作結果**：`RULES`陣列新增可選`scope`欄位（帶scope的只對指定agent生效，沒帶scope的維持全agent通用，原有12條行為零變動），agentId解析直接沿用`bot-relay-inbound` v2.5已驗證的三層fallback（`event.agentId → ctx.agentId → sessionKey`）。
+
+**案例56的教訓有帶進來**：LINE default帳號（龍蝦小助教）綁在main agent，sessionKey是`agent:main:line:...`，解析出來一律是"main"——這正是要的效果，`scope:['main']`同時涵蓋教練的Telegram跟龍蝦小助教，不會誤傷服務真實會員的bni_tainan/jiaolian_thoughts。
+
+**驗證**：新增`hooks/rule-reminder/test_scope.js`，12項測試全過（正向：main觸發、龍蝦小助教sessionKey也觸發；反向：bni_tainan/jiaolian_thoughts完全不注入；回歸：既有守則#04/#12仍全agent通用；誤觸發防呆：普通閒聊完全不注入）。重啟gateway實測13個hook載入、三個LINE+三個Telegram全部正常啟動、零error。
+
+**觀察期**：一週（至 2026-08-12）。期間看`~/.openclaw/logs/rule-reminder-probe.log`確認新規則真的有命中而且沒有誤觸發，確認穩定後再考慮開放給`bni_tainan`。
 
 ### 階段三（視教練後續需求）
 危險指令防禦、方向分流半部，視小龍蝦後續有沒有真的用到exec/檔案操作能力再決定要不要裝。
