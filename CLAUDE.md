@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-04 00:25:10**
+> **最後同步：2026-08-05 09:40:42**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -64,6 +64,45 @@
 | 🟢 | **main agent健檢cron的exec/read/cron工具被昨天權限鎖誤傷，已修復** | ✅v92已完成 | 根因：cron觸發的agent turn沒有senderId，永遠落到`toolsBySender`的`"*"`deny規則。改用群組層級鎖(Telegram schema支援)取代agent層級萬用鎖，cron不再被誤傷。commit `56c0efe3`。**已知殘留風險**：LINE外掛(2026.6.33)不支援群組層級`toolsBySender`，LINE群組的非教練成員保護降級為`workspace/SOUL.md`鐵律五提示層防護(非技術硬鎖)，教練已知會，待外掛未來版本補上 |
 | 🟢 | **主動提醒功能推廣到三個LINE帳號** | ✅v92已完成 | 教練指示「立刻推廣」。原本`hooks/bni-reminder-schedule`寫死只認bni_tainan，已推廣到jiaolian_thoughts+default(龍蝦小助教)，過程中修好一個accountId解析bug(default帳號session key含"main"非"default"，已正規化)。commit `41ffac6b`，三帳號皆用合成webhook實測通過 |
 | 🟢 | ~~教練15:18有一段修改回饋被中斷、內容未送達~~ | ✅v92記錄有誤，已在Mac桌面版另一場對話完整收到並執行 | v92記錄的是「終端機」session看不到內容，但同一時段「桌面版」session其實完整收到了教練15:18那段完整訊息（適合誰參加文案改法/洪詠清林韋銘換照片/品牌曝光加現場輪盤抽獎三點），並已於v93完整執行，commit `4742cff`。**教訓**：多個Mac session（終端機/桌面版）同時開著時，教練同一句話可能只進到其中一個視窗，另一個看不到不代表訊息真的遺失，下次遇到類似狀況先問教練「是在哪個視窗說的」，不要直接判定「未送達」 |
+| 🟢 | **BNI大台南南區9分會系統(bni-chapters)對外開通+密集功能迭代** | ✅v94本場完成 | 8/3深夜查證發現這套系統(教練另一對話框8/1建置)從未對外開通，已申請`chapters.bymyway.com`(過程cert.pem過期，改用claude-in-chrome完成OAuth授權)+加進coach888第13/14項。8/3~8/4密集迭代：9大官方核心價值(中英對照+2條隱藏版+懸浮hover效果，後台改唯讀不可增刪)、常用連結彈窗(漢堡圖示，含紅綠燈看板/LINE小幫手/培訓行事曆+6項教練提供的BNI教育資源)、六項傳統與道德規範(定案為分會之光下方永久區塊+`show_traditions`開關)、響應式設計(手機版隱藏文字導覽只留漢堡選單)、參訪須知依線上/實體分流(**線上**=真誠/真AI籌備會/真愛/真貴籌備會，**實體**=真富/真鑫/真鑽/真功夫籌備會/真樂齡籌備會，此分類與`status`(正式營運/籌備中)欄位無關，教練糾正2次才拿到正確名單)。**教訓**：測試表單POST漏填欄位曾誤清空真誠分會Hero文字(已從seed.py救回)+不能用不相關欄位推論新分類，兩條都寫入記憶，詳見[[project_bni_chapters_public_launch_2026-08-03]]。**待處理**：10組帳號仍是預設密碼Admin/88888，教練尚未裁示是否/何時要求改密碼 |
+
+---
+
+# 軍師接力棒 · 2026-08-04 v94（Mac終端機 Sonnet 5，BNI大台南南區bni-chapters系統對外開通+一整場密集功能迭代）
+
+> 建立時間：2026-08-03 深夜～2026-08-05 凌晨（台灣時間，跨整場對話）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v93（Mac桌面版Sonnet5，AI微型論壇嘉義場網站build完成）
+> 本棒主軸：**教練要求把「大台南南區的總表」跟「後台系統」網址列出來加進coach888，查證後發現這套`bni-chapters`系統（教練另一個對話框8/1建置，這場對話之前完全不知道它存在）從未對外開通過，只能本機存取。開通網址只是起點，接下來教練一路密集加需求：BNI官方9大核心價值、常用連結彈窗、六項傳統與道德規範、響應式設計、參訪須知線上/實體分流——幾乎每一輪都是教練看完成果後立刻提出下一個優化方向，屬於「邊做邊定案」的密集迭代型任務。過程中犯了兩個值得記住的錯：①測試表單時漏填欄位誤清空真誠分會的Hero文字（當場查seed.py救回）②用`status`(正式營運/籌備中)欄位去猜「線上/實體」分類，猜錯了，教練糾正2次才拿到正確名單，兩條教訓都已寫入記憶。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 bni-chapters系統對外開通：申請chapters.bymyway.com，途中修好過期的cloudflared憑證
+查證發現系統本身運作正常（Flask+SQLite，9個分會：真誠/真AI籌備會/真富/真愛/真鑫/真鑽/真功夫籌備會/真樂齡籌備會/真貴籌備會），但從未申請公開網址。比照mentor100/namecard既有模式建立新tunnel時，發現這台Mac的cloudflared憑證(cert.pem)已過期，連`tunnel list`都被拒。教練提醒「你可以操控我的瀏覽器，為什麼要我來點」，改用`claude-in-chrome`直接在教練真實登入的Chrome裡完成Cloudflare的網域選擇+Authorize按鈕點擊，不再請教練自己操作（見[[feedback_use_chrome_control_for_oauth_flows]]）。成功後建立`bni-chapters-app`tunnel+DNS route+`com.coach.bni-chapters-tunnel`launchd常駐，coach888新增第13/14項連結，commit `a3c7cad`。
+
+### 2. 🎯🎯 核心價值卡片：從零散佔位文字→BNI官方9大價值(中英對照+2條隱藏版)+懸浮質感
+先用bnidahan.com.tw官網逐字抓7大核心價值灌入9分會（取代每分會原本1~2條零散佔位文字），教練接著要求視覺升級（立體懸浮hover效果，滑鼠移過去上浮+陰影加深），並提供BNI官方定義全文+英文對照+2條「隱藏版」（感恩Gratitude、謙遜Humility，共9條）。`db.py`的`MAX_VALUES`從3一路調整到9。教練後來發現後台仍顯示過期的「已達上限3項」提示文字（我改常數但漏改寫死的UI文字），順勢做了更根本的決定：核心價值是官方固定內容，後台不該讓分會自行增刪，改成唯讀顯示，並移除對應的新增/刪除後端路由（不只藏按鈕，連API都關閉）。commit序列：`98277ac`→`5e64b84`→`62fd1f1`。
+
+### 3. 🎯🎯 常用連結彈窗+六項傳統與道德規範：三次改版才定案
+教練要求新增「常用連結」功能，歷經多輪調整：①一開始是導覽列文字連結→教練要求改成漢堡圖示按鈕(☰)②內容從3項(紅綠燈看板/LINE AI小幫手/培訓行事曆)擴充到教練陸續提供的11項(加6個BNI教育資源：1則FB貼文+4支YouTube+1集Podcast，YouTube標題用oEmbed API自動抓取真實標題，不用教練自己打字)。「六項傳統與道德規範」則獨立經歷3次改版：常用連結彈窗裡的文字區塊→教練嫌不夠正式改成獨立雙欄彈窗→最終定案為「分會之光」下方的**永久展示區塊**（不用點擊），並加上`chapters.show_traditions`欄位讓每個分會自己勾選顯示/隱藏（跟既有「分會之光」的條件式顯示邏輯一致）。同場也把整站做成**響應式**：手機版隱藏文字導覽只留Logo(可點回首頁)+漢堡圖示常用連結按鈕+CTA。commit序列：`66819cf`→`18296cc`→`b7fe3e9`。
+
+### 4. 🔴🔴 差點犯的錯：測試表單POST漏填欄位，誤清空真誠分會Hero文字
+測試「顯示/隱藏傳統區塊」勾選框功能時，用curl送出一個只填3、4個欄位的POST，忘記`update_chapter()`是整批覆寫語意——沒送的欄位被存成空字串，真誠分會的Hero標題/說明/參訪須知標題說明/頁尾標語全部被清空。當場發現+從`seed.py`原始種子資料查回正確內容補救，沒有造成永久損失，但已寫入教訓：測試「整批覆寫」型表單前一定要先讀出完整既有資料再送出，見[[feedback_test_form_post_read_before_write]]。
+
+### 5. 🔴🔴🔴 參訪須知線上/實體分流：用status欄位猜分類，猜錯2次
+教練要求「參訪須知」依線上分會/實體分會顯示不同內容（線上免出席費，實體650元+永康桂田酒店地址+Google地圖連結）。第一版偷懶用系統既有的`status`欄位(active正式營運/forming籌備中)去猜對應關係，結果**真誠分會、真愛分會雖是active但其實是線上分會，真功夫/真樂齡籌備會雖是forming但其實是實體分會**，教練逐一糾正2次才拿到正確名單：**線上**=真誠/真AI籌備會/真愛/真貴籌備會，**實體**=真富/真鑫/真鑽/真功夫籌備會/真樂齡籌備會。教訓：不能拿「看起來相關」的既有欄位去推論教練沒明講的新分類，見[[feedback_dont_infer_unrelated_attribute]]。最終版：實體分會5張卡(服裝/名片/自我介紹/650元/地址+Google地圖)，線上分會4張卡(ZOOM下載連結/服裝/開鏡頭/自我介紹)。commit `bc050ba`+後續資料修正(DB內容，無新commit)。
+
+## 📋 下一場直接開工任務
+- **10組bni-chapters帳號仍是預設密碼Admin/88888**：系統已對外公開，教練尚未裁示是否/何時要求各分會改密碼，下次提到這套系統應主動提醒
+- 7/29的靜態mockup草稿(`knowledges/2026-07-29_bni-nantai-mockup/`)已完全過時，真正系統是`chapters.bymyway.com`，別再對著舊草稿改
+- 真誠/真愛/真AI分會＋大台南南區網站(BNI Connect CMS官方版，跟bni-chapters是兩個獨立系統)、Email自動發送系統：仍卡在等教練給細節
+- AI微型論壇嘉義場：仍在等講師確認後才推Netlify正式站（v93遺留）
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/bni-chapters/`：app.py(移除values增刪路由)、db.py(MAX_VALUES 3→9)、schema.sql(新增show_traditions欄位)、templates/{base,chapter,admin_edit}.html、seed_bni_values_links.py(新增，可重跑的核心價值+連結種子腳本)
+- `~/.cloudflared/bni-chapters-config.yml`+`~/Library/LaunchAgents/com.coach.bni-chapters-tunnel.plist`：新增
+- commit序列（bni-chapters獨立repo，時間序）：`a3c7cad`(coach888新增連結，非此repo)→`98277ac`→`5e64b84`→`8022846`→`32778a0`→`66819cf`→`18296cc`→`b7fe3e9`→`62fd1f1`→`bc050ba`
+- 記憶更新：[[project_bni_chapters_public_launch_2026-08-03]]（主檔，已更新到本場）、[[feedback_use_chrome_control_for_oauth_flows]]、[[feedback_test_form_post_read_before_write]]（新增）、[[feedback_dont_infer_unrelated_attribute]]（新增）
 
 ---
 
@@ -141,55 +180,6 @@
 - `hooks/bni-reminder-schedule/handler.js`＋`agents/bni_tainan/scripts/send_line_push.py`：推廣三帳號
 - `試金石/試金石_案例庫.md`：新增案例56
 - commit（`~/.openclaw`外層master分支）：`ec48b7bd`（LINE default群組修復）→ `56c0efe3`（cron權限修復）→ `41ffac6b`（提醒功能推廣）
-
----
-
-# 軍師接力棒 · 2026-08-03 v91（Mac桌面版 Sonnet 5，CLAUDE.md規則健檢+ai-go教練專屬人設上線+新增「總結」收工暗號E17）
-
-> 建立時間：2026-07-31～2026-08-03（台灣時間，跨多場對話）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v90（Mac桌面版Sonnet5，Mac版Web Search修復+VPS/LINE版全面盤點+bigtree高雄場部署）
-> 本棒主軸：**教練看完一篇講「CLAUDE.md規則只進不出、悄悄過期」的文章，要求對照健檢——這場對話做了四件互不相同但都圍繞「讓系統指令保持可信、可執行」的事：①實測揪出`~/.claude/CLAUDE.md`兩個真過期案例並修好，進而授權對執行細則E01~E16逐條做證據型健檢，合併掉一組重複規則②幫教練寫了一份中英對照的個人溝通人設，發布成ai-go一鍵注入頁的新區塊③教練提出「以後說『總結』＝收工暗號」的新指令，比照既有「開工」機制做成真正的hook而非只靠記憶④用這次的「總結」收工暗號完成本篇接力棒撰寫，形成閉環驗證。全程貫穿同一個原則：教練不要口頭承諾或文件宣告，要看得到證據(pipe-test輸出、curl驗證、真實Chrome預覽)。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 CLAUDE.md健康檢查：揪出2個真過期案例並修復，執行細則E01~E16逐條證據型健檢
-教練分享一篇文章（Anthropic自己砍掉系統提示詞80%舊規則的故事），要我對照`~/.claude/CLAUDE.md`做實測而非空談。查證發現兩個真問題：①「特助心法」段落是手動貼上去的，沒有像E01~E15那樣的自動同步機制，已跟源頭`特助心法.md`出現格式/日期標籤飄移——新增`scripts/sync_xinfa_to_claude_global.sh`（比照既有`sync_zhixingxize_to_claude_global.sh`的mtime-marker模式）根治②Netlify部署鐵律段落停留在2026-05-30版本，沒收錄2026-07-25才發生的`_headers`萬用字元蓋掉圖片Content-Type教訓（案例54），已補上三條具體規則。
-
-教練接著把整個健檢任務正式授權給我：「你去評估哪些是必要的、有用的、可執行的，就留著；沒用的、過時的，就想辦法移到歷史備忘紀錄」。逐條查證E01~E16每一條是否有專屬skill或Stop/PreToolUse hook撐著（不是憑印象猜），發現：
-- **E02跟E10幾乎逐字重複**（都在講「教練說的話自動記錄不用想」），且兩者都沒有專屬hook——判定為真過期，原文完整併入E02，E10編號保留空缺不重用，寫進執行細則.md既有的「刪除記錄」區塊
-- 其餘14條（E01/03~09/11~16）逐一查證都有專屬skill或hook撐著（E11危險指令甚至有真的會攔指令的PreToolUse hook `delete_guard.sh`），判定持續有積極作用，保留不動
-- 順手發現`特助心法.md`檔案內部自己也藏著一份過時的執行細則9條舊副本（引用的檔名`failure_cases_handbook.md`跟現況`試金石_案例庫.md`對不上），教練指示「留在歷史檔案，不要清掉」——完整原文搬進`_archive/xinfa_zhixingxize_9tiao_stale_duplicate_archived_2026-07-31.md`，原處留一句指向正確來源的說明
-- 標題「E01~E15」也順手修正成「E01~E16」（內容其實7/26已到E16，標題沒跟上，本身就是活教材）
-
-commit序列：`0f54af6b2`（封存9條副本）→`0d1cc9755`（E10併入E02，標題修正）。所有異動都重跑對應sync腳本驗證`~/.claude/CLAUDE.md`正確同步、二次執行冪等。
-
-### 2. 🎯 教練個人溝通人設（中英對照）上線ai-go一鍵注入頁
-教練要在新AI介面貼一份「怎麼跟我溝通」的人設，先在對話裡幫他擬好中英文兩版（涵蓋講人話/方向清楚直接做/解決問題優先/誠實說不知道/不當資訊搬運工/記住脈絡/比喻是線索/簡單優先八條原則）。教練接著提出更好的想法：既然`coach1973.github.io/ai-go/`這個一鍵注入頁本來就是公版特助心法給任何人用，應該在裡面加一個「教練專屬」的特別欄位，這樣以後不用每次重新請軍師擬一份。
-
-新增`github_repos/ai-go/coach-persona.md`（中英對照人設全文）+ `index.html`頁尾前新增獨立區塊（綠色系跟公版橘色區隔，標示「不是公版方法論，你不是教練本人可以跳過」，獨立的一鍵複製按鈕）。過程中踩到並修好一個問題：本機Python `http.server`預設對`.md`檔案不宣告charset，教練點開連結看到亂碼——查證確認這**只是本機預覽伺服器的bug**（用README.md對照組證實正式站的`_headers`萬用規則`/*.md`早就有正確宣告`charset=utf-8`），但仍動手把本機預覽伺服器也修好讓教練能眼見為憑再放行推送。教練確認後說「推」，commit `4d38936`（獨立ai-go repo），已用curl+輪詢確認正式站`coach1973.github.io/ai-go/coach-persona.md`真的上線且Content-Type正確。**已知缺口**：這個系統其實有雙入口（見`project_ai_go_xinfa_system`記憶），另一個`www.bymyway.com/ai-go/`鏡像走獨立部署腳本，本場沒有同步，已記錄進待辦狀態表。
-
-### 3. 🎯🎯 新增「總結」收工暗號（E17），比照「開工」做成真正的hook
-教練提出新指令：以後只要說「總結」兩個字，就代表要執行「總結並上傳」全部步驟，同時代表他要開新的對話框——就像「開工」這個既有暗號一樣。沒有停在「記住這個規則」，而是查證了「開工」實際上是靠`scripts/feed_junshi_handoff.sh`（UserPromptSubmit hook）偵測關鍵字、在session開始時注入六步驟內容做到的，於是做了一支對稱設計的新hook。
-
-用Skill(`update-config`)取得hook配置正確格式後，寫`scripts/summary_upload_trigger.sh`：偵測「總結」「總結上傳」「總結一下」等短語pattern（刻意用錨定寫法，避免「幫我寫年度總結報告」這種長句子順口提到總結被誤觸發），命中就注入收工四步驟提醒（總結本場守則#14/更新接力棒E05/判斷記憶寫入E12六條清單/commit+push E01）。用5組真實prompt做pipe-test驗證：三種應觸發的都觸發、兩種不該觸發的都沒觸發，才註冊進`~/.claude/settings.json`並用`jq -e`驗證schema正確。寫進`執行細則.md`正式列為**E17**，標題同步更新，重跑同步腳本確認`~/.claude/CLAUDE.md`正確反映。commit `c0a9f30ac`。
-
-**本篇接力棒本身就是這個新機制的第一次真實驗證**——教練說「總結」後，hook確實注入了提醒，我依提醒的四步驟寫這篇總結+更新接力棒，形成完整閉環。
-
-## 📋 下一場直接開工任務
-- **ai-go雙入口同步**：`www.bymyway.com/ai-go/`鏡像尚未同步新增的教練人設區塊，若教練需要對外分享這個版本，執行`projects/bymyway-bridge/examples/deploy_ai_go_to_bymyway.py`
-- BNI真誠/真愛/真AI分會＋大台南南區網站、Email自動發送系統、嘉義場籌備：仍卡在等教練給細節，多場未更新
-- 小龍蝦紀律移植計劃階段二/三：仍待排時機（v83已完成階段一）
-
-## 🔑 本場關鍵檔案索引
-- `scripts/sync_xinfa_to_claude_global.sh`：新增，特助心法.md核心內容自動同步
-- `執行細則.md`：E02合併E10、標題E01~E16→E01~E17、新增E17
-- `_archive/xinfa_zhixingxize_9tiao_stale_duplicate_archived_2026-07-31.md`：封存的過時9條副本
-- `github_repos/ai-go/coach-persona.md`＋`index.html`：教練專屬人設區塊（獨立repo）
-- `scripts/summary_upload_trigger.sh`：新增，「總結」收工暗號hook
-- `~/.claude/settings.json`：新增summary_upload_trigger.sh進UserPromptSubmit陣列（該檔含密鑰不進git）
-- commit序列（workspace main分支）：`0f54af6b2`→`0d1cc9755`（CLAUDE.md健檢）→`c0a9f30ac`（E17）
-- commit（ai-go獨立repo）：`4d38936`（教練人設區塊）
 
 ---
 
