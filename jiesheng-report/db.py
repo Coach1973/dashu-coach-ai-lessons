@@ -5,7 +5,7 @@ from datetime import date
 DB_PATH = os.path.join(os.path.dirname(__file__), "jiesheng_report.db")
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "schema.sql")
 
-WORKSHOPS = ["台南", "台中", "台北"]
+WORKSHOPS = ["台南", "台北"]
 PAID_METHODS = ["ATM", "PAYUNi", "其他"]
 REFERRERS = ["曜董", "大樹", "佩君", "Lavi"]
 
