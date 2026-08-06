@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1785978217,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-06T17:02:53.981359+08:00"
+    "coach_silence_sync": "2026-08-06T22:33:16.204285+08:00"
   },
   "lastHeartbeat": "2026-08-06T14:04:20+08:00",
   "lastHeartbeatNote": "週四 14:03 心跳觸發：14:00 fire overload（典型 alternating 1300+ 場）→ 本輪 14:03 恢復。CE=1，三關判定 v4.0 未過不 announce。守則#19 探針 ok:true。教練沉默 72.2h。",
@@ -38,7 +38,7 @@
     "telegramChannelLastVerified": "2026-08-06T14:04:20+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 75.1,
+    "coachSilentHours": 80.7,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
