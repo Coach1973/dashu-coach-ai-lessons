@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session d05f72f3-9c8d-4803-ae85-34bf58b24433
-# 提取時間：2026-08-05 21:33 (台灣時間)
-# 共 35 條教練原話
+# 提取時間：2026-08-05 23:38 (台灣時間)
+# 共 36 條教練原話
 
 ---
 
@@ -741,3 +741,12 @@ https://jiesheng-leadership.netlify.app/?v=2  我所見已經是新內容了
 - `workspace`(main):`85a9c0644` CORE_RULES+回信 OpenCode + `5d30d8cec` 記憶更新,接力棒 v99 已由系統自動同步 commit `0f3cd4ee3`
 - `bigtree`:`e198f6e` 金門場資訊+活動花絮輪播
 - `jiesheng-leadership`:`7d…（略）
+
+【教練 2026-08-05 15:24】
+總結
+
+　▶ AI 回應：Commit 這次的補充。
+
+　▶ AI 回應：## 本場總結(commit `7f35de36f`)
+
+**做了什麼**:三條主線。①複審 opencode(MiniMax-M3)寫的環境檢查報告,發現報告本身也有兩處沒查證就下筆的瑕疵,回信給 opencode+CORE_RULES 新增 R20,盤點時抓到 `credentials/` 真實金鑰從沒被 `.gitignore` 保護的安全漏洞並修復(`6965a61e`)。②bigtree 大樹小講金門兩場補齊地址/座位/費用+時間修正+隱藏舊場次+新增花絮輪播(`e198f6e`)。③結繩領導學官網依教練指令書全面重寫成兩日工作坊銷售頁,舊版完整封存,過程多輪 UI 微調(`7d8d…（略）

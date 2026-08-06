@@ -1080,3 +1080,32 @@ HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 三機總結統一�
   自動修復 4 條規則：#1 timeout 充裕（163s≪600s）｜#2 無 VPS 任務｜#3 model 已是 minimax/MiniMax-M3｜#4 CE=1 未達紅線 ⇒ 全部 ❌
   HEARTBEAT.md ⬜ 無待辦；不 commit/push（每日 23:05 統一做）
   教練沉默 45.7h（週三上午）；✅ delivery.mode=none 安靜處理
+
+[2026-08-06 18:32:30 Asia/Taipei] 🩺 健康檢查 #18:32（v4.0 SOP 三關判定）
+  第零步 sync_coach_last_message.sh exit 0 → 教練沉默 76.6h（2026-08-03 13:54 起，週日最後發言）
+  全系統 36 個 enabled 任務，CE>0 共 4 個（sqlite 直查）：
+  ┌─────────────────────────────────────────────────────────────────────
+  │ 1. 🦞 健康檢查（本任務）46e67e2e: CE=1, 18:00 fire ❌ minimax overload 105.9s
+  │    → 本輪 AI 正常回應 = 已恢復鐵證
+  │ 2. 🦞 每日三機總結 bbb7a348: CE=2, 8/5 23:06 Update Goal: complete failed
+  │    → Telegram delivery.delivered=true 教練實質收到；今晚 23:05 驗證
+  │ 3. 教練考駕照提醒 99a038bc: CE=2, 「Delivering to LINE requires target」
+  │    → schedule=at 一次性任務, at 已過期, 修復無意義
+  │ 4. BNI提醒 957f567b: CE=1, delivery.channel=last 失敗
+  │    → schedule=at 一次性任務, payload 已直接 python 推 LINE
+  │ → 其他 32 個 enabled 任務 CE=0 ✅
+  └─────────────────────────────────────────────────────────────────────
+  v4.0 SOP 三關判定：
+  • 本任務 CE=1：關卡一❌已恢復｜關卡二✅provider transient｜關卡三❌meta 自打嗝 ⇒ 不 announce
+  • 每日三機 CE=2：錯因 Update Goal tool 失敗（不是 provider 過載），Telegram 已送達，今晚 23:05 驗證
+  • 教練考駕照 CE=2：一次性任務，at 已過期，無後續影響
+  • BNI 提醒 CE=1：一次性任務，CE 未達 3 紅線
+  自動修復 4 條規則判定：
+  • #1 timeout 短：❌（105.9s ≪ 600s）
+  • #2 VPS scp/ssh：❌（無此類任務）
+  • #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+  • #4 CE ≥ 3 紅線：❌（4 個失敗任務最高 CE=2，皆未達 3）
+  HEARTBEAT.md ⬜ 掃描：0 個待辦
+  結論：不 announce 教練，不修任何 cron 配置
+  不 commit/push（每日 23:05 三機總結統一做）
+  下次定檢 19:02 🟢

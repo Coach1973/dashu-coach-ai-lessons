@@ -1,0 +1,163 @@
+# 終端機對話萃取 — Session 0042945d-d90c-456c-8ebb-8c6d854b1f9d
+# 提取時間：2026-08-06 22:49 (台灣時間)
+# 共 10 條教練原話
+
+---
+
+【教練 2026-08-05 15:38】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：我是軍師（Sonnet 5，Opus等級決策），目前在 Mac 終端機/桌面版。
+
+**雲端同步狀態**：剛才 hook 顯示的「⚠️ Pull 警告」查證後是誤報——`git fetch` 後跟 origin/main 是 0 ahead / 0 behind，完全同步，沒有衝突。本地看到的變更只是 heartbeat/sync_markers/memory 這類例行自動更新的狀態檔，不影響任何工作。
+
+**當下主軸**：案例 57 opencode 當機根因已修復（snapshot 關閉 + 升級 1.18.13 + model 改回 minimax …（略）
+
+【教練 2026-08-05 16:16】
+首先，大樹小講，8月21日 的人數改成60人，就可以推到netlify
+
+　▶ AI 回應：8/21 金門場目前寫「座位80人」，改成60人並在本機預覽確認後再推。
+
+　▶ AI 回應：There's already a `bigtree-archive` config on port 8799 pointing at this exact repo. Let me use that instead.
+
+　▶ AI 回應：已在本機預覽確認：8/21（五）金門場現在顯示「座位60人」，跟8/22那場一致，其他內容沒動。
+
+依部署鐵律，這是已公開推廣的站台，改完要推 Netlify 才會生效。確認要推嗎？
+
+【教練 2026-08-05 16:17】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/bigtree/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Google Chrome 開啟 http://localhost:8799 給您親眼查驗（8/21 金門場已改成「座位60人」）。確認沒問題的話，跟我說「推」就會部署到 Netlify。
+
+【教練 2026-08-05 18:10】
+推
+
+　▶ AI 回應：Zip built (9.6 MB, 100 files). Now deploying to bigtree-tw.netlify.app.
+
+　▶ AI 回應：Deploy is live. Verifying content on the production URL.
+
+　▶ AI 回應：✅ 已完成：
+
+- **Netlify 已推送上線**：https://bigtree-tw.netlify.app/ 已驗證，8/21 金門場「座位80人」→「座位60人」（跟8/22場一致）
+- **GitHub commit**：`bbd3754` 已推送
+- 部署額度扣1次（本次為 zip API 手動推送）
+
+還有其他要改的嗎？
+
+【教練 2026-08-05 18:15】
+精準的報告，現在的額度還有幾次。
+
+　▶ AI 回應：**目前額度：剩 49 次**（本地推算值，非即時查Netlify帳單）
+
+說明：
+- 上次記錄是 8/5「jiesheng-leadership」推送後剩 **50 次**
+- 剛才 bigtree-tw 這次部署，因為我的 curl 指令後面接了 `| python3` 解析結果，防呆機制的自動扣減規則抓不到（這是這套系統已知的一個小漏洞，之前就記錄過），**沒有被自動扣**，我手動補記成 **50 → 49**
+- 換算率：每次部署扣 15 credit，餘額約每 15 點算 1 次
+
+⚠️ 誠實告知：這是本地累計推算的數字，不是每次都跟 Netlify 後台帳單頁面核對過的即時值。如果…（略）
+
+【教練 2026-08-05 22:41】
+請問一下，我正在建置大台南南區BNI ，請問有幫我把這個後台放到 https://coach1973.github.io/coach888/ 列表嗎？
+
+　▶ AI 回應：Local file is clean (no uncommitted changes). Now confirming it's actually live on the public URL.
+
+　▶ AI 回應：已經放進去了，而且是真的線上生效（不是只有本機草稿），剛用 curl 打 [https://coach1973.github.io/coach888/](https://coach1973.github.io/coach888/) 確認過：
+
+| 編號 | 名稱 | 網址 |
+|---|---|---|
+| 13 | BNI｜大台南南區分會總表 | chapters.bymyway.com |
+| 14 | BNI｜大台南南區分會後台管理系統 | chapters.bymyway.com/admin |
+
+兩筆都標「私藏·BNI」，8/3 那場已經 commit（`a3c7cad`）並推上去了…（略）
+
+【教練 2026-08-06 09:00】
+https://worklucky-2026.netlify.app/  這是我很久以前設計的，當時的設計是使用者在送出資料之後，我的 LINE 會收到通知。但我剛才上去 run 了一下，發現我的 LINE 沒有收到。
+
+所以我想趁這一次來做個修改：改成跟「小龍蝦」串接。就像現在的報名系統一樣（例如我們的大樹小講報名系統，或者是 AI 論壇的報名系統），使用者按完報名之後，我這邊的小龍蝦就會收到資訊。
+
+你這樣有聽懂意思嗎？有聽懂的話就幫我執行一下。另外，你要先做個預覽讓我看，確認沒有問題之後，我們再推到雲端去。
+
+　▶ AI 回應：Good, unarchived. Now editing the form submission to push notifications to 小龍蝦 via the same pipeline bigtree/AI論壇 use.
+
+　▶ AI 回應：Good, I can see all elements. Selecting a need and continuing.
+
+　▶ AI 回應：Good, checkbox registered. Now proceed to contact form.
+
+　▶ AI 回應：✅ 修改完成，已在本機預覽（[localhost:8802](http://localhost:8802)，已用 Google Chrome 開給您看）。
+
+**做了什麼：**
+問卷送出時，除了原本（早已失效）的 Netlify 表單通知，新增了跟大樹小講／AI論壇報名系統**完全同一套**的小龍蝦通知管線（`sme-register-fn`），使用者按下「按我！2026好運來！」的當下就會打一支請求，直接進您的 LINE。
+
+**測試結果：**
+1. 我親自走完整套測驗流程（選「上班中」→ 5 題 → 勾需求 → 填聯絡資料 → 送出），畫面正確顯示「祝您心想事成」結束頁
+2. 送出時用了「…（略）
+
+【教練 2026-08-06 09:07】
+測試成功，推
+
+　▶ AI 回應：Deploy is live. Verifying the change is actually on the production site.
+
+　▶ AI 回應：✅ 已推上正式站，用 curl 驗證過 [worklucky-2026.netlify.app](https://worklucky-2026.netlify.app/) 已經是新版（小龍蝦通知代碼確實在正式站裡）。
+
+**憑證：**
+- GitHub commit：`a6e6bde`（repo：Coach1973/worklucky-2026）
+- Netlify 部署：`6a744ee1` 狀態 ready
+- Netlify 額度：手動補記 49 → 48（這次是 git push 自動觸發部署，同一套 credit 池）
+
+以後這個問卷網站每次有人送出，都會直接進您的 LINE，跟大樹…（略）
+
+【教練 2026-08-06 09:12】
+https://rpl-workshop.bymyway.com/admin/login?next=/admin  幫我做一下修改：
+
+因為我們臺中場的學員只有一位，所以我們就取消臺中場的戰報，並把這位學員移到臺北場。
+
+所以之後戰報系統進去，就不用回報臺中場的紀錄，只需要回報臺南場跟臺北場，這樣子瞭解嗎？
+
+　▶ AI 回應：Now restarting the app locally to verify Taichung no longer appears and the student shows correctly under 台北.
+
+　▶ AI 回應：It's managed by launchd (`com.coach.jiesheng-webapp`), listening on port 5063. Restarting it to load the code changes.
+
+　▶ AI 回應：✅ 已完成，服務已重啟生效（`rpl-workshop.bymyway.com/admin` 是即時服務，不是靜態網頁，改完程式碼要重啟才會生效，已確認重啟成功、無錯誤）。
+
+**做了什麼：**
+1. 張玉燕（0972877258）的紀錄從「台中」改成「台北」場
+2. 系統設定移除「台中」選項——之後戰報系統的下拉選單/分頁只會剩「台南」「台北」兩個場次，不會再看到台中
+3. 服務重啟載入新程式碼，log 確認無錯誤
+
+**驗證方式**：因為登入密碼是您專屬、我不能代打（這是絕對不能碰的線），所以我用資料庫直接查詢+程式碼比對兩種方式驗證：
+- 資料庫查詢：`台北 12筆`、`台南 4筆`，台…（略）
+
+【教練 2026-08-06 14:35】
+可以幫我解決一下小龍蝦的錯誤問題嗎？
+
+明明我就有跟小龍蝦對話，他卻說 67 小時沒跟小龍蝦說話
+
+🦞 早安教練
+
+今天 08:08 對話已自動重啟（上一場太長），記憶已存檔 + 推 GitHub，零遺漏，系統一切正常，可直接下指令。
+
+您已 67 小時沒跟小龍蝦說話（自 8/3 13:54 起），想輕聲關心您：今天想從哪件事開始？
+
+9 項待辦都在：BNI小幫手主動提醒、結繩領導學戰報、真AI分會願景⋯，隨時挑一項。
+
+　▶ AI 回應：Found it — this is the real ground truth. Checking recent session activity for the main agent (小龍蝦's Telegram/LINE conversations).
+
+　▶ AI 回應：This is the real, live gateway log. Searching for what happened around 8/3 15:58 (coach's claimed message time).

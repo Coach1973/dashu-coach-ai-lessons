@@ -1,5 +1,43 @@
 # 🦞 健康檢查歷史日誌
 
+## 2026-08-06 02:32 CST (週四凌晨)
+
+**檢查範圍**：cron_jobs 全部 50 個任務（從 sqlite 直接查，cron list API 只列 1 個有 bug，已用 workaround）。
+
+**整體健康**：
+- 36 個 enabled 任務，2 個有 CE > 0
+- 34 個 enabled 任務 CE = 0 ✅（18 個 recurring + 18 個未來 at）
+
+**錯誤任務**：
+
+| Job | CE | lastDurationMs | lastError |
+|---|---|---|---|
+| 🦞 小龍蝦每日三機總結（每日23:05） | **2** | 283,593ms | `⚠️ 🎯 Update Goal: complete failed` |
+| 🦞 每30分鐘任務健康檢查（本任務） | 1 | 88,464ms | `FailoverError: temporarily overloaded` |
+
+**🦞 三機總結分析**（CE=2）：
+- 2026-08-04 23:13 error：`⚠️ ✉️ Message: reply to 1, thread 0 failed`（duration 327s）→ **教練當天沒收到總結推播**（failureNotificationDelivery.delivered=false）
+- 2026-08-05 23:11 error：`⚠️ 🎯 Update Goal: complete failed`（duration 283s）→ 教練**有收到** Telegram 推播（delivery.delivered=true），失敗的是 cron 內部 metadata 寫入，cron 系統誤判失敗
+- 8/3 23:16 OK（commit 84a069f20 已 push）→ 8/4 失敗 → 8/5 失敗 = alternating 中斷，連 2 錯
+
+**v4.0 三關判斷**：
+- 關卡一（現在還壞？）：任務只在 23:05 跑，下次是今晚 23:05。現在 02:31，**沒過**（不屬於「正在壞」）。
+- 關卡二（provider overload？）：錯誤是 tool-level（Message reply failed / Update Goal failed），不是 provider 端。**沒過**（不是 overload 但也不是設定錯）。
+- 關卡三（影響工作？）：8/4 真影響（沒收到推播），8/5 偽失敗（有收到）。**過了**。
+
+三關必須都過才 announce → 關卡一沒過 → **不 announce**，但升級警戒。
+
+**自動修復**：無（不是設定問題、不是 timeout、不是 apiKey）。今晚 23:05 自動重試驗證。
+
+**今晚升級觸發點**：今晚 23:05 跑完後若 CE ≥ 3 → 立即升級 announce「每日總結連 3 天未送達」，不再靜默。
+
+**HEARTBEAT.md ⬜ 檢查**：
+- 無 ⬜ 標記項目
+- pendingCoachItems = 空
+- 22:20 寄信提醒 Day 5/20 即將於今晚 22:20 觸發（at=2026-08-06T22:20+08:00）
+
+**動作**：靜默處理，不發訊息給教練（cron delivery=none + failure_alert 未設 + v4.0 三關未全過）。
+
 ## 2026-07-25 05:33 CST
 
 **檢查範圍**：cron list 總計 1 個任務（只有「健康檢查」本身，無其他任務需監控）。

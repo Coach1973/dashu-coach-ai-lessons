@@ -51,21 +51,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-04)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:275:275 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **Cron 任務監控：** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:275-275]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:276:279 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 本任務（46e67e2e）：上一場 19:30 fire ❌（109s，minimax provider `AI service temporarily overloaded`）; `consecutiveErrors: 1`（<3 紅線）; lastDurationMs 109s ≪ timeoutSeconds 600s → 非逾時; AI 服務瞬時過載 → 非 config 問題，不自動修復（無法修復，待重試） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:276-279]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:280:281 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 其餘 17 個 cron job：全部 `status=ok`; 唯一注意點：`37593697`（sync-執行細則-to-claude-g）delivery 路由 "will fail-closed"，但任務本體成功（背景同步不需要 announce），且 cron 工具自我隔離限制無法從此 session 修改該 job → 跳過 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:280-281]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:283:283 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **HEARTBEAT.md 背景工作：** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:283-283]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:284:286 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: 無 ⬜ 標記項目; 多數為 ✅ 軍師 Hook 自檢 + 接力棒同步紀錄; 唯一警告：「🩺 軍師 Hook 自檢 2026-07-27 00:34 ⚠️ Pull 警告」—— 屬 git 問題，需教練/軍師手動處理，非 cron 可自動化 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:284-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-27.md:288:288 -->
-- 🩺 健康檢查 2026-07-27 07:32（cron 自動，安靜處理）: **結論：** 無法自動修復的嚴重問題、無連續錯誤 ≥3 次、無需教練裁決的項目 → **不通知教練，安靜完成。** [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-27.md:288-288]
-
 ## Promoted From Short-Term Memory (2026-08-05)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:10:11 -->
@@ -90,3 +75,24 @@
 - 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 💡 **最快的做 👤 教練：那我重新轉發一份，你應該就讀得到了。我們先試試看，我先轉發兩份給你看 🦞 小龍蝦：好，等你轉兩份測試。🦞 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:37-39]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:41:41 -->
 - 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 讀得到之後我會建議直接從源頭拉一次，七、八十份不用慢慢轉——更省事。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:41-41]
+
+## Promoted From Short-Term Memory (2026-08-06)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:7:7 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 剛才對話記錄滿了，自動重啟，零遺漏（已存到 `memory/2026-07-28.md` 並推上 GitHub）。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-28.md:7-7]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:46:46 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 場次：【新報名通知】AI微型論壇－台南場（7/29 安平維悅酒店） [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:46-46]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:52:53 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 報名時間：2026/7/27 下午10:34:45 🦞 小龍蝦：收到，欄位都讀得到。🦞 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:52-53]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:55:55 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **第 1 份**：魏淑華（家管）／電話 1212131313／Email 未填／報名 2026/7/27 22:34 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:55-55]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:57:57 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **場次**：AI微型論壇－台南場（7/29 安平維悅酒店） [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:57-57]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:59:61 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 第二份你傳。讀完我就建議你直接給我 Google 表單後台（如果有的話），七、八十份一次拉，不用慢慢轉。 👤 教練：那既然做總整理，你就一併把 email 也都整理進去，因為到時候我們還可以通過 email 發信給對方，通知他們來開會 🦞 小龍蝦：好，Email 一定列入。🦞 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:59-61]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:63:64 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **整理表欄位我預定用這個：** `場次｜公司｜姓名｜電話｜Email｜報名時間` [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:63-64]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:66:66 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: Email 沒填的我會**保留空欄、絕不亂填**，之後要發信時自動跳過缺漏的人。 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:66-66]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:5:5 -->
+- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 🦞 小龍蝦：在的，教練。🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-28.md:5-5]
