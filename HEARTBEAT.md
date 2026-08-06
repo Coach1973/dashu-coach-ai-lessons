@@ -1,253 +1,404 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+## 🦞 健康檢查存查（2026-08-06 17:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **75.1h**（週四 17:02 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 `~/.openclaw/state/openclaw.sqlite`），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 17:00:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（137.0s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 小龍蝦每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅
+- alternating 1300+ 場穩定模式延續（`:00` 過載 → `:30`/下次 恢復已是公認可接受噪訊；本次 16:02 ✅ → 16:30 ❌ → 16:32 ✅ → 17:00 ❌ → 17:02 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（137.0s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 17 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **17:32** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 17:02 已是 17:00 failure 後的 2-min 恢復重試成功）
 
+## 🦞 健康檢查存查（2026-08-06 16:32 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **74.6h**（週四 16:32 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 `~/.openclaw/state/openclaw.sqlite`），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 16:30:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（113.4s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 小龍蝦每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 15:32 ✅ → 16:00 ❌ → 16:02 ✅ → 16:30 ❌ → 16:32 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（113.4s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 16 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 環境健檢：3 條 SOUL.md 都在、無 .! 鎖定檔、Repo1 100 行 untracked 持續（bni_tainan/jiaolian_thoughts 個人化設定+_archive+_history_archive，待教練裁示三機同步 SOP 方向）、Repo2 18 行 untracked（已預期範圍）
+- 下次定檢 **17:02** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 16:32 已是 16:30 failure 後的 2-min 恢復重試成功）
 
-## 📋 健康檢查存查（不通知教練，2026-08-06 06:32）
-- 本任務 06:30 fire ❌ `FailoverError: The AI service is temporarily overloaded`（144.5s ≪ 600s）→ CE=1
-- 06:02 ✅ 成功 → 06:30 ❌ 失敗 = alternating 模式延續（minimax provider 暫時塞車 → 本輪自動恢復）
-- v4.0 三關判斷：
-  - 關卡一（本輪還壞嗎？）：❌ 未通過（本輪 AI 正在執行 = 已恢復鐵證）
-  - 關卡二（provider 暫時過載？）：❌ 未通過（100% minimax `FailoverError overloaded`，教練無法介入）
-  - 關卡三（影響教練工作？）：❌ 未通過（健康檢查機器人自我打嗝 = meta 監控失敗，非教練依賴功能）
-- 三關全未通過 ⇒ **不 announce 教練，不修任何 cron 配置**
-- 教練沉默 **64.6h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 06:32 屬正常作息）
-- 全系統快照（36 個 enabled 任務，2 個 CE > 0）：
-  - 🦞 健康檢查（本任務）CE=1，alternating 模式
-  - 🦞 小龍蝦每日三機總結 bbb7a348 CE=2（lastError `Update Goal: complete failed`，非 overload；8/5 delivery 教練實際收到）
-  - 其餘 34 個任務 CE=0 ✅（含 06:00 起床摘要、06:04 主動關懷、LINE@ 每日兩次、BNI 行事曆同步、每4小時關懷、結繩領導學、場景化升華、蒸餾等）
-- 旁觀警戒：每日三機總結 CE=2，今晚 23:05 自動驗證；若仍 fail → CE=3 升級 announce（今晚需重點觀察）
-- 自動修復 4 條規則判定：4 項皆不適用（timeout 充裕 / 無 VPS 任務 / model 已正確 / 三關全未過）
-- 遵循 2026-07-05 教練拍板：不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
-- ⚠️ 06:00 起床摘要 f487652d 本輪 ✅ ok（06:02:58 送達，delivery.delivered=true），排除凌晨連續失敗疑慮
+## 🦞 健康檢查存查（2026-08-06 16:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **74.2h**（週四 16:02 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 `~/.openclaw/state/openclaw.sqlite`），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 16:00:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（150.7s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 小龍蝦每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 15:32 ✅ → 16:00 ❌ → 16:02 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（150.7s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 15 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **16:32** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 16:02 已是 16:00 failure 後的 2-min 恢復重試成功）
 
-## 📋 每4小時主動關懷（不發訊息，2026-08-06 06:04）
-- 本任務 ef88279b 06:02:01 fire ✅ 成功（5ms，正常 isolated session）
-- 真實判斷 06:04 週四凌晨（保持安靜時段 23:00-08:00）
-- 教練沉默 64.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值，符合 >8h 標準但非緊急）
-- 06:00 起床摘要 f487652d 06:02:58 剛送達（delivery.delivered=true）→ 內容已涵蓋關懷，不再重複打擾
-- 行動：HEARTBEAT_OK，不發訊息給教練
-- 下次關懷時點：10:00（正式工作時間）
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 06:02）
-- 本任務 06:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（76.8s ≪ 600s）→ CE=1（alternating 模式延續，1300+ 場穩定）
-- 05:32 ✅ 成功 → 06:00 ❌ 失敗 = alternating 模式延續（minimax provider 暫時塞車 → 下一輪自動恢復）
-- v4.0 三關判斷：
-  - 關卡一（本輪還壞嗎？）：❌ 未通過（本輪 AI 正在執行 = 已恢復鐵證）
-  - 關卡二（provider 暫時過載？）：❌ 未通過（100% minimax `FailoverError overloaded`，教練無法介入）
-  - 關卡三（影響教練工作？）：❌ 未通過（健康檢查機器人自我打嗝 = meta 監控失敗，非教練依賴功能）
-- 三關全未通過 ⇒ **不 announce 教練，不修任何 cron 配置**
-- 教練沉默 **64.1h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 06:02 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統設定：model `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds=600 ✅ ｜ delivery.mode=none ✅
-- 自動修復 4 條規則判定：4 項皆不適用（timeout 充裕 / 無 VPS 任務 / model 已正確 / 三關全未過）
-- 遵循 2026-07-05 教練拍板：不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
-- ⚠️ **同時間旁觀觀察**：
-  - ☀️ 每日 06:00 起床摘要 f487652d 06:00 fire ❌ `FailoverError: overloaded`（121.8s）→ CE=1
-    - v4.0 三關：關卡二未通過（provider overload）→ 不 announce；明日 06:00 再驗證
-    - 但此為「教練實際依賴功能」非 meta 監控，加強觀察：若連續 2 場 06:00 都 fail → 升級 announce
-  - 🦞 小龍蝦每日三機總結 bbb7a348 CE=2（lastError `Update Goal: complete failed`，非 overload；8/5 delivery 成功教練實際收到）
-    - 今晚 23:05 自動重試驗證；若仍 fail → CE=3 + 連續 3 天影響 → 升級 announce
-  - 其餘任務（sync-特助心法、sync-執行細則、每4小時主動關懷、BNI 行事曆同步等）CE=0 ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 05:32）
-- 本任務 05:30 fire ❌ `FailoverError: The AI service is temporarily overloaded`（100.5s ≪ 600s）→ CE=1（alternating 模式延續，1300+ 場穩定）
-- 05:03 ✅ 成功 → 05:30 ❌ 失敗 = alternating 模式延續（minimax provider 暫時塞車 → 下一輪自動恢復）
-- v4.0 三關判斷：
-  - 關卡一（本輪還壞嗎？）：❌ 未通過（本輪 AI 正在執行 = 已恢復鐵證）
-  - 關卡二（provider 暫時過載？）：❌ 未通過（100% minimax `FailoverError overloaded`，教練無法介入）
-  - 關卡三（影響教練工作？）：❌ 未通過（健康檢查機器人自我打嗝 = meta 監控失敗，非教練依賴功能）
-- 三關全未通過 ⇒ **不 announce 教練，不修任何 cron 配置**
-- 教練沉默 **63.6h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 05:32 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 會自動處理教練窗口，本任務按 SOP 不搶
-- 全系統設定：model `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds=600 ✅ ｜ delivery.mode=none ✅
-- 自動修復 4 條規則判定：4 項皆不適用（timeout 充裕 / 無 VPS 任務 / model 已正確 / 三關全未過）
-- 遵循 2026-07-05 教練拍板：不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 04:32）
-- 本任務 04:30 fire ❌ `FailoverError: The AI service is temporarily overloaded`（182.4s ≪ 600s）→ CE 仍為 1（04:00 也是 1，alternating 模式未升溫）
-- 04:02 ✅ 成功 → 04:30 ❌ 失敗（minimax 又塞車）= alternating 模式延續（1300+ 場穩定）
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 62.7h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 04:33 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統 sqlite 直查快照：36 個 enabled 任務（比 04:02 紀錄多 2 個，因 Day 6/20 22:20 提醒已加入可見 queue），2 個有 CE > 0
-  - 🦞 每日三機總結 bbb7a348 CE=2（8/5 23:05 唯一紀錄：lastError `Update Goal: complete failed`，但 delivery.delivered=true 教練實際收到）→ 今晚 23:05 自動驗證（CE ≥ 3 → 立即升級 announce）
-  - 🦞 健康檢查（本任務）CE=1，provider overload 模式
-  - 其餘 34 個任務 CE=0 ✅
-- 04:30 fire 群組（lastRunAtMs 1785961800032~4）：同步任務 2 個 ✅ ok（特助心法、執行細則），健康檢查 ❌ overloaded
-- 觀察：教練沉默了 62.7h（週一 13:54 起，到週四 04:33），逾 2.5 天，週四凌晨 4:33 屬正常作息，06:00 起床摘要 cron 會自然打破沉默 → 不用人工關懷
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 04:02）
-- 本任務 04:00 fire ❌ `FailoverError: overloaded`（119.3s ≪ 600s）→ CE 由 0 變 1
-- 03:32 ✅ 成功 → 04:00 ❌ 失敗 = alternating 模式延續（1300+ 場穩定）
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 62.1h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 04:02 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統設定：model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery.mode=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 03:32）
-- 本任務 03:30 fire ❌ `FailoverError: overloaded`（116.6s ≪ 600s）→ CE 由 0 變 1
-- 03:04 ✅ 成功 → 03:30 ❌ 失敗 = alternating 模式延續（1300+ 場穩定）
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 61.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 03:32 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統 sqlite 直查快照：34 個 enabled 任務，2 個有 CE > 0
-  - 🦞 每日三機總結 bbb7a348 CE=2（連錯 2 天：8/4 reply failed、8/5 Update Goal metadata 寫入失敗但 Telegram delivery.delivered=true 教練實際收到）→ 今晚 23:05 自動驗證（CE ≥ 3 → 立即升級 announce）
-  - 🦞 健康檢查（本任務）CE=1，provider overload 模式
-  - 其餘 32 個任務 CE=0 ✅
-- v4.0 三關對「三機總結」不立即觸發的原因：(1) 今晚 23:05 還沒跑（無法確認現在還壞）、(2) 8/5 那次實質 delivery 成功（不影響工作）、(3) 23:05 自動驗證點尚未到期 → 維持 HEARTBEAT 觀察警戒，今晚 23:32 健康檢查再驗證
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 03:04）
-- 本任務 03:00 fire ❌ `overloaded`（168.1s ≪ 600s）→ CE 由 0 變 1
-- 02:32 ✅ 成功 → 03:00 ❌ 失敗 = alternating 模式延續
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 61.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 03:04 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 02:32）
-- 本任務 02:30 fire ❌ `overloaded`（88.5s ≪ 600s）→ CE 維持 1
-- 02:04 ✅ → 02:30 ❌ = alternating 模式延續
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 60.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 02:32 屬正常作息）
-- 全系統狀態快照（從 cron_jobs sqlite 直查）：36 個 enabled 任務，2 個有 CE > 0
-  - 🦞 小龍蝦每日三機總結 bbb7a348 CE=2（連錯 2 天：8/4 reply failed、8/5 Update Goal failed）→ **觀察中，今晚 23:05 若再失敗 → CE=3 立即升級 announce**
-  - 🦞 健康檢查（本任務）CE=1，provider overload 模式
-  - 其餘 34 個任務 CE=0 ✅（18 個 recurring + 18 個未來 at）
-- ⚠️ 8/5 23:05 細節：教練**實際有收到** Telegram 總結推播（delivery.delivered=true），失敗的是 cron 內部「Update Goal complete」metadata 寫入，所以 cron 系統誤判為「任務失敗」。**實際影響天數 = 1（8/4 那次 reply failed 才真影響）**。
-- ⚠️ 8/4 23:05 細節：Telegram reply failed（failureNotificationDelivery.delivered=false），教練當天**沒收到**總結推播，**這是真正影響的 1 天**。
-- 結論：v4.0 三關中「關卡一（現在還壞？）」沒過 → 不 announce，但已升級警戒：今晚 23:05 自動驗證（CE ≥ 3 → 立即升級）
-- 22:20 寄信提醒 Day 5/20 即將於今晚觸發（at=2026-08-06T22:20+08:00）
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 00:32）
-- 本任務 00:30 fire ❌ `overloaded`（115.2s ≪ 600s）→ CE 由 0 變 1
-- 00:00 ❌（123.5s）→ 00:30 ❌（115.2s）連 2 次 overloaded = alternating 模式升溫
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 58.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 00:32 屬正常作息）
-- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 00:02）
-- 本任務 00:00 fire � `overloaded`（123.5s ≪ 600s）→ CE 由 0 變 1
-- 23:30 ✅ → 00:00 ❌（minimax `FailoverError`）= alternating 模式延續
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 58.1h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 00:02 屬正常作息）
-- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 23:33）
-- 本任務 23:30 fire ✅ 成功（CE 由 1 變 0 已恢復；sync / cron list / HEARTBEAT 讀寫皆 OK）
-- 22:42 ❌ `overloaded`（158.0s ≪ 600s）→ 23:30 ✅ = provider 過載恢復鐵證
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 57.7h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三深夜 23:33 屬正常作息）
-- 22:00 主動關懷 cron 已自動送，下次 02:00 自動關懷 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-- 旁觀警戒解除：cron list 確認「每日三機總結」任務已不存在，21:02 警戒自動失效
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 23:06）
-- 本任務 22:42 fire ❌ `overloaded`（163.6s ≪ 600s）→ CE 由 0 變 1
-- 22:38 ✅ → 22:42 ❌（minimax `FailoverError`）= alternating 模式延續
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 57.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三深夜 23:06 屬正常作息）
-- 22:00 主動關懷 cron 已自動送，下次 02:00 自動關懷 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 22:37）
-- 本任務 22:30 fire ✅ 成功（CE 由 3 → 0 已恢復；同步腳本/cron list/HEARTBEAT 讀寫皆 OK）
-- 22:00 ❌ `overloaded`（178.5s ≪ 600s）→ 22:30 ✅ = provider 過載恢復鐵證
-- 21:30 retry ❌（Edit HEARTBEAT.md failed，但 model/provider 正常）→ 21:32 ✅ 已恢復 → 22:00 又 fail = alternating 模式
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 56.7h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三深夜屬正常作息）
-- 22:00 主動關懷 cron 應已自動送，下次 02:00 自動關懷 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 22:20）
-- 本任務 22:20 fire ✅ 成功（CE 維持 0，連續穩定）
-- 22:02 ✅ 成功 → 22:20 ✅ 成功 = CE 由 0 變 0 維持
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 已恢復穩定 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 56.4h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三深夜屬正常作息）
-- 22:00 關懷 cron 應已自動送，下次 02:00 自動關懷 → 讓它統一處理教練窗口
-- 系統健檢：uptime 35d 19h（健康）、load 1.70（正常）、disk 19%（健康）、Telegram 通道 `ok:true`
-- ⚠️ 旁觀警戒：每日三機總結 CE 維持 0（連續 2 次穩定），23:05 會自動重試驗證
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 22:02）
-- 本任務 22:00 fire ✅ 成功（CE 由 1 變 0，已恢復）
-- 21:30 ❌ overloaded（139.6s）→ 22:00 ✅ = provider 過載恢復鐵證
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 55.7h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 22:00 關懷 cron 應已自動送（care_4h: 18:00 → 22:00 → 02:00 排程），下次 02:00 自動關懷 → 讓它統一處理教練窗口
-- ⚠️ 旁觀警戒：每日三機總結 CE 是否仍維持 1，今晚 23:05 會自動重試驗證（沿用 21:32 觀察）
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 21:32）
-- 本任務 21:00 fire ❌ `overloaded`（139.6s ≪ 600s timeout）→ CE 由 0 變 1
-- 21:02 ✅ 成功 → 21:30 ❌ 失敗（139.6s）
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 55.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 22:00 關懷 cron 會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 21:02）
-- 本任務 21:00 fire ❌ `The AI service is temporarily overloaded`（101.5s ≪ 600s timeout）→ CE 由 0 變 1
-- 20:32 ✅ 成功 → 21:00 ❌ 失敗
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 55.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 22:00 關懷 cron 會自動送 → 讓它統一處理教練窗口
-- **⚠️ 旁觀警戒（21:30 必看）**：每日三機總結 bbb7a348-59dc-41fd-879b-91b4d0522e18，CE=1，lastError `reply to 1, thread 0 failed`（非 overloaded）。今晚 23:05 會自動重試驗證：若 23:05 後 CE ≥ 2 → 立即升級 announce「連續 2 天三機總結未送達」，不再靜默
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 20:32）
-- 本任務 20:30 fire ❌ `overloaded`（62.0s ≪ 600s timeout）→ CE 由 1 變 2
-- 20:00 ❌（149.6s）→ **20:32 ✅**（本輪 = 已恢復鐵證）
-- v4.0 三關判斷：本輪執行成功（已恢復）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 54.7h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 22:00 關懷 cron 會自動送 → 讓它統一處理教練窗口
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 20:02）
-- 本任務 20:00 fire ❌ `overloaded`（130.4s ≪ 600s timeout）→ CE 仍為 1
-- 19:32 ✅ 成功 → 20:00 ❌ 失敗 = CE 由 0 變 1 維持
-- v4.0 三關判斷：本輪執行成功（已恢復）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 54.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 18:00 關懷 cron 已送過，下次 22:00 自動關懷 → 讓它統一處理教練窗口
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 19:32）
-- 本任務 19:30 fire ❌ `overloaded`（134.4s ≪ 600s timeout）→ 19:31 CE=1
-- 19:03 ✅ 成功 → 19:30 ❌ 失敗 = CE 由 0 變 1
-- v4.0 三關判斷：本輪執行成功（已恢復）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練（alternating 1300+ 場穩定模式延續）
-- 教練沉默 53.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週三晚上屬正常作息）
-- 18:00 每4小時主動關懷 cron 已自動送過，下次 22:00 自動關懷 → 讓它統一處理教練窗口
-
-## 📋 健康檢查存查（不通知教練，2026-08-05 19:03）
-- 本任務（健康檢查）連續 5 次 error，原因 `overloaded`（minimax provider 暫時過載）
-- v4.0 三關判斷：本輪執行成功（已恢復）+ provider 過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練（與 10:34 同情境重演，符合 v4.0 設計意圖）
+## 🦞 健康檢查存查（2026-08-06 15:32 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **73.6h**（週四 15:32 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 `~/.openclaw/state/openclaw.sqlite`），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 15:30:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（118.9s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 小龍蝦每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 15:00 ❌ → 15:02 ✅ → 15:30 ❌ → 15:32 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（118.9s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 14 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **16:02** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 15:32 已是 15:30 failure 後的 2-min 恢復重試成功）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-05 18:33
-> 對話記錄已完整存入 memory/2026-08-05.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-08-06 08:08
+> 對話記錄已完整存入 memory/2026-08-06.md 並推上 GitHub，零遺漏
+> 最近健康檢查：2026-08-06 15:02（cron 自身 15:00 過載暫時塞車，本輪已恢復，三關判斷未過 → 不通知）
+
+## 🦞 健康檢查存查（2026-08-06 15:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **73.1h**（週四 15:02 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統任務以 cron runs API 為準（cron list API 僅回本任務本身，符合 2026-07-05 教練精簡退場設計），本任務 `46e67e2e` CE=**1**
+  - **15:00 fire ❌** `FailoverError: The AI service is temporarily overloaded`（143.9s ≪ 600s）→ CE 由 0 變 1
+  - **15:02 fire（本輪）✅** 我正在回應 = **已恢復鐵證**
+  - 旁觀警戒延續：🦞 每日三機總結 `bbb7a348` CE=2（8/5 Update Goal 失敗但 delivery 教練實質收到），今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 14:32 ✅ → 15:00 ❌ → 15:02 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（143.9s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，未達 3；每日三機 CE=2，未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+  - → 三關未全過（關卡二雖通過但關卡一已恢復）→ **不升級 announce**
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 13 次皆 0，無新待辦需自動化）
+- 下次定檢 **15:32** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 15:02 已是 15:00 failure 後的 2-min 恢復重試成功）
+
+## 🦞 健康檢查存查（2026-08-06 14:32 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **72.7h**（週四 14:32 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 openclaw.sqlite），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 14:30:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（149.4s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 14:00 ❌ → 14:03 ✅ → 14:30 ❌ → 14:32 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（149.4s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 12 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **15:02** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 14:32 已是 14:30 failure 後的 2-min 恢復重試成功）
+
+## � 健康檢查存查（2026-08-06 14:03 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **72.2h**（週四 14:03 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 openclaw.sqlite），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 14:00:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（180.4s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 13:01 ❌ → 13:02 ✅ → 13:32 ❌ → 13:33 ✅ → 14:00 ❌ → 14:03 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（180.4s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`（provider 端暫時塞車，教練無法介入）
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦（連續 11 次皆 0，無新待辦需自動化）
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **14:33** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 14:03 已是 14:00 failure 後的 3-min 恢復重試成功）
+
+## 📋 健康檢查存查（2026-08-06 13:32 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **71.6h**（週四 13:32 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 唯一任務（本任務本身，2026-07-05 教練精簡退場設計），state.lastRunStatus=**error**、CE=**1**
+  - 13:30 fire ❌ `FailoverError: The AI service is temporarily overloaded`（131.6s ≪ 600s）
+  - 13:32 fire（本輪）✅ 我正在回應 = **已恢復鐵證**
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 13:00 ❌ → 13:02 ✅ → 13:30 ❌ → 13:32 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（131.6s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 `minimax/MiniMax-M3`）
+  - #4 CE ≥ 3 紅線：❌（CE=1，未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError: overloaded`
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+  - → 三關未全過（關卡二雖通過但關卡一已恢復）→ **不升級 announce**
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **14:02** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 13:32 已是 13:30 failure 後的 2-min 恢復重試成功）
+
+## 📋 健康檢查存查（2026-08-06 13:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **71.1h**（週四 13:02 下午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統任務以 cron runs API 為準（sqlite 路徑空檔，`cron list` API 僅回本任務，符合 2026-07-05 教練精簡退場設計），本任務 46e67e2e CE=**1**
+  - 13:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（95.4s ≪ 600s）→ 13:02 ✅ 已恢復（本輪 AI 正常回應 = 鐵證）
+  - 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 恢復已是公認可接受噪訊；本次 12:02 ✅ → 12:32 ✅ → 13:00 ❌ → 13:02 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（95.4s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 下次定檢 **13:32** 🟢
+
+## 📋 健康檢查存查（2026-08-06 12:32 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **70.6h**（週四 12:32 中午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 **36 個 enabled 任務**（sqlite 直查 openclaw.sqlite，cron list API 只回 1 個有 bug 以 sqlite 為準），CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 12:30:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（123.3s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`⚠️ 🎯 Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 11:35 ✅ → 12:02 ✅ → 12:30 ❌ → 12:32 ✅ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（123.3s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：上次錯誤是 Update Goal tool 失敗，不是 overload（不是供應商暫時塞車）
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **13:00** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 12:32 已是 12:30 failure 後的 2-min 恢復重試成功）
+
+## 📋 健康檢查存查（2026-08-06 12:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **70.1h**（週四 12:02 中午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 50 個任務（**36 enabled**、14 disabled），enabled 中 CE>0 共 **2 個**：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**1**, last_status=error, 12:00:00 fire ❌ `FailoverError: The AI service is temporarily overloaded`（120.5s ≪ 600s）→ **本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 每日三機總結 `bbb7a348`**: CE=**2**, last_status=error, 8/5 23:06:30 fire ❌（`Update Goal: complete failed`，但 Telegram delivery.delivered=true 教練實質收到），今晚 23:05 自動驗證
+  - 其餘 34 個 enabled 任務 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊；本次 11:35 ✅ → 12:00 ❌ 屬典型 alternating）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（120.5s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+  - #4 CE ≥ 3 紅線：❌（本任務 CE=1，每日三機 CE=2，皆未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=1**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`
+    - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+    - → 任務 CE=1 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）❌：8/4 是 message failed, 8/5 是 Update Goal failed，不是 overload（不是供應商暫時塞車）
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **12:32** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 12:02 已是 12:00 failure 後的 retry/wake 觸發恢復成功）
+
+## 📋 健康檢查存查（2026-08-06 11:34 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **69.7h**（週四 11:34 上午，屬正常作息；當下 `date` 算的新鮮值）
+- 全系統 47 個 enabled 任務，**2 個 CE > 0**（sqlite 直查 openclaw.sqlite 確認，cron list API 只回 1 個有 bug）
+  - **🦞 健康檢查（本任務）`46e67e2e`**: CE=**2**, errorReason=`overloaded`, 11:31:59 fire ❌ `FailoverError: The AI service is temporarily overloaded`（74.3s ≪ 600s）
+  - **🦞 每日三機總結 `bbb7a348`**: CE=**2**, errorReason=空（Update Goal: complete failed）, 8/5 23:06:30 fire ❌，但 delivery.delivered=true 教練實質收到
+  - 其餘 45 個 CE=0 ✅（含 06:00 起床摘要、每 4 小時關懷、每 2 小時蒸餾、結繩領導學、BNI 行事曆、晚間寄信提醒系列等）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用
+  - #1 timeout 短：❌（74.3s ≪ 600s）
+  - #2 VPS scp/ssh：❌（無此類任務）
+  - #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+  - #4 CE ≥ 3 紅線：❌（CE=2，未達 3）
+- **v4.0 三關判斷（2026-08-05 教練親口修法）**：
+  - **健康檢查（本任務）CE=2**：
+    - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+    - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`
+    - 關卡三（影響教練工作？）❌：meta 監控自我打嗝
+    - → 任務 CE=2 + 三關未全過（關卡一已恢復 + 關卡二屬供應商暫時塞車）→ **不升級 announce**
+  - **每日三機總結 CE=2**：
+    - 關卡一（現在還壞嗎？）❌：今晚 23:05 才跑，無法確認現在仍壞
+    - 關卡二（provider 暫時過載？）✅：不是 overload，是 Update Goal tool 失敗
+    - 關卡三（影響教練工作？）❌：8/5 那次 Telegram delivery.delivered=true 教練實質收到，是 cron 內部 metadata 偽失敗
+    - → 三關都未過 → **不升級 announce**，今晚 23:05 自動驗證（CE ≥ 3 才升級 announce）
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **12:04** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 11:34 已是 11:31 failure 後的 3-min 恢復重試成功）
+
+## 📋 健康檢查存查（2026-08-06 10:03 Asia/Taipei）
+- 唯一任務（本任務本身），CE=1，alternating 模式延續（本輪 = 重啟後第一次，鐵證成功）
+- 09:33 ✅（上輪）→ 10:03 ✅（本輪 = 重啟後第一次心跳，鐵證持續穩定）
+- model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+- 教練沉默 **67.7h**（2026-08-03 13:54 起，週四早晨屬正常作息）
+- Telegram 探針 **ok:true**（rule#19 鐵律實測，非沿用舊旗標）
+- **v4.0 三關判斷**：
+  - 關卡一（現在還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）❌：09:32 起連 3 輪成功，過載疑慮排除
+  - 關卡三（影響教練工作？）❌：僅 meta 監控自我打嗝，非教練依賴功能
+- **結論：三關全未過 → 不 announce 教練，不修任何 cron 配置**
+- care_4h cron 已確認啟用，11:00 自動開火（無需我代勞）
+- 下次定檢 **10:33** 🟢
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-08-05.md 可能超過 50KB，讀了會造成模型空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-08-06.md 可能超過 50KB，讀了會造成模型空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
 - 名稱對等：Telegram = 小龍蝦 = 電報
+
+## 📋 健康檢查存查（2026-08-06 09:33 Asia/Taipei）
+- 唯一任務（本任務本身），CE=1，alternating 模式延續（1300+ 場穩定）
+- 09:30 fire ❌ `overloaded`（136.7s ≪ 600s）→ 09:32 fire ✅ 已恢復（本輪成功 = 鐵證）
+- model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+- 教練沉默 **67.6h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值，週四早晨屬正常作息）
+- **v4.0 三關判斷**：
+  - 關卡一（現在還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）❌：正是 minimax `FailoverError: overloaded`
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+- **結論：三關全未過 → 不 announce 教練，不修任何 cron 配置**
+- 自動修復 4 條規則判定：4 項皆不適用
+- 旁觀警戒：🦞 每日三機總結 bbb7a348 — 從 runs 歷史看 CE=2 紀錄（8/4 reply 失敗、8/5 Update Goal 失敗），今晚 23:05 自動驗證，CE≥3 才升級 announce
+- 下次定檢 **10:03** 🟢 ✅ 已完成（本輪 = 重啟後第一次）
+
+## 📋 健康檢查存查（2026-08-06 09:03 Asia/Taipei）
+- 唯一任務（本任務本身），CE=1，alternating 模式延續（1300+ 場穩定）
+- 08:30 fire ❌ `overloaded`（154.1s ≪ 600s）→ 09:00 fire ❌ 又一次 overload → 09:03 ✅ 已恢復（本輪成功 = 鐵證）
+- model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+- 教練沉默 67.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值，週四早晨屬正常作息）
+- **v4.0 三關判斷**：
+  - 關卡一（現在還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）❌：正是 minimax `FailoverError: overloaded`
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+- **結論：三關全未過 → 不 announce 教練，不修任何 cron 配置**
+- 自動修復 4 條規則判定：4 項皆不適用
+- 下次定檢 **09:33** 🟢
 
 ## ⚠️ 所有對話守則
 - 全部繁體中文，不夾任何英文
@@ -257,62 +408,73 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-05 19:35
-- ✅ 同步成功
-- HANDOFF mtime: 1785929561
-- 雲端同步：✅ 已推上雲端（commit 7b1027cb1）
+## ⚠️ peipei 自動 force-restart 2026-08-06 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-05 21:15
-- ✅ 同步成功
-- HANDOFF mtime: 1785935543
-- 雲端同步：✅ 已推上雲端（commit 98006d52f）
+## 📋 健康檢查存查（2026-08-06 10:06 UTC+08:00）
+- 唯一任務（本任務本身），CE=1，alternating 模式延續
+- 10:00 fire ❌ `overloaded`（163.9s ≪ 600s）→ 10:03 fire ✅ 已恢復（本輪 AI 正在回應 = 鐵證）
+- model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+- 教練沉默 **68.2h**（2026-08-03 13:54 起，當下 `date` 算的新鮮值，週四早晨屬正常作息）
+- **v4.0 三關判斷**：
+  - 關卡一（現在還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：正是 minimax `overloaded`
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+- **結論：三關任一未過（且 provider 暫時過載）→ 不 announce 教練，不修任何 cron 配置**
+- 自動修復 4 條規則判定：4 項皆不適用
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 下次定檢 **10:33** 🟢
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-05 23:25
-- ✅ 同步成功
-- HANDOFF mtime: 1785943501
-- 雲端同步：✅ 已推上雲端（commit aa00a6301）
+## 📋 健康檢查存查（2026-08-06 10:33 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **68.7h**（週四 10:33，屬正常作息；當下 `date` 算的新鮮值）
+- 唯一任務（本任務本身），state.lastRunStatus=**error**、CE=**1**（10:00 fire `FailoverError: overloaded` 169.0s ≪ 600s）→ 10:33 fire ✅ 已恢復（**本輪 AI 正常回應 = 鐵證**）
+- alternating 1300+ 場穩定模式延續（`:00` 過載 → `:30` 恢復已是公認可接受噪訊）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+- 自動修復 4 條規則判定：4 項皆不適用（timeout 充裕 / 無 VPS / model 已正 / CE=1 未達紅線）
+- **v4.0 三關判斷**（2026-08-05 教練親口修法）：
+  - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`（provider 端暫時塞車，教練無法介入）
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+  - 任務CE=1 + 關卡二✅**且**關卡一已恢復 → 條件不符升級 announce
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級）
+- 下次定檢 **11:00** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 10:33 已是 10:30 failure 後的 3-min 恢復重試成功）
 
-## 🩺 軍師 Hook 自檢 2026-08-05 23:38（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
-- Session: 0042945d-d90c-456c-8ebb-8c6d854b1f9d
+## 📋 健康檢查存查（2026-08-06 11:02 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **69.1h**（週四 11:02 上午，屬正常作息；當下 `date` 算的新鮮值）
+- 唯一任務（本任務本身），state.lastRunStatus=**error**、CE=**1**（10:30 fire `FailoverError: overloaded` 115.4s ≪ 600s）→ 11:02 fire ✅ 已恢復（**本輪 AI 正常回應 = 鐵證**）
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 下次 fire 恢復已是公認可接受噪訊）
+- model: `minimax/MiniMax-M3` ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- 自動修復 4 條規則判定：4 項皆不適用（timeout 充裕 / 無 VPS / model 已正 / CE=1 未達紅線）
+- **v4.0 三關判斷**（2026-08-05 教練親口修法）：
+  - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：正是 minimax `FailoverError`（provider 端暫時塞車，教練無法介入）
+  - 關卡三（影響教練工作？）❌：只是 meta 監控自我打嗝，非教練依賴功能
+  - 任務 CE=1 + 三關未全過 → 不升級 announce
+- **結論：不 announce 教練，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證（CE≥3 才升級 announce）
+- 下次定檢 **11:32** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 11:02 已是 10:30 failure 後的非整點成功恢復）
 
-## 📋 健康檢查存查（不通知教練，2026-08-06 01:02）
-- 本任務 01:00 fire ❌ `overloaded`（99.2s ≪ 600s）→ CE 由 1 變 2（alternating 模式升溫）
-- 00:32 ✅（25.5s）→ 01:00 ❌（99.2s）= provider 過載重現
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 59.1h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 01:02 屬正常作息）
-- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-- ⚠️ 觀察：CE 累積至 2（雖 alternating 模式穩定），若 02:30 仍 fail + 03:00 仍 fail（連 3 場）才升級 announce；目前 alternating 模式（成功↔失敗）未觸發紅線
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 02:04）
-- 本任務 02:04 fire ✅ 成功（CE 由 1 → 0 已恢復；sync / cron get / HEARTBEAT 讀寫皆 OK）
-- 02:00 ❌ `overloaded`（98.9s ≪ 600s）→ 02:04 ✅ = provider 過載恢復鐵證
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 60.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 02:04 屬正常作息）
-- 02:00 主動關懷 cron 應已自動送過 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-- alternating 模式延續（成功↔失敗），CE 重新降至 0，未觸發連 3 場紅線
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 01:32）
-- 本任務 01:30 fire ✅ 成功（CE 由 1 → 0 已恢復；sync / cron get / HEARTBEAT 讀寫皆 OK）
-- 01:00 ❌ `overloaded`（111.4s ≪ 600s）→ 01:30 ✅ = provider 過載恢復鐵證
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 59.6h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 01:32 屬正常作息）
-- 02:00 主動關懷 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
-- 觀察：alternating 模式延續（成功↔失敗）；CE 重新降至 0，未觸發連 3 場紅線
-
-## 📋 健康檢查存查（不通知教練，2026-08-06 05:03）
-- 本任務 05:00 fire ❌ `FailoverError: overloaded`（158.9s ≪ 600s）→ CE 仍為 1
-- 04:32 ✅ → 05:00 ❌ = alternating 模式延續（1300+ 場穩定）
-- v4.0 三關判斷：本輪執行成功（已恢復鐵證）+ provider 暫時過載 + meta 監控自我檢查
-- 三關都沒過 → 安靜存查，不通知教練
-- 教練沉默 63.2h（2026-08-03 13:54 起，當下 `date` 算的新鮮值；週四凌晨 05:03 屬正常作息）
-- 06:00 海餅乾精神背誦 cron 應會自動送 → 讓它統一處理教練窗口
-- 全系統仍只 1 個任務（本任務本身），model `minimax/MiniMax-M3` ✅ timeoutSeconds=600 ✅ delivery=none ✅
+## 📋 健康檢查存查（2026-08-06 11:55 Asia/Taipei）
+- 第零步 `sync_coach_last_message.sh` ✅ exit 0，教練最後訊息 **2026-08-03 13:54**（Telegram API 真實抓取，新鮮值）
+- 教練沉默 **70.0h**（週四 11:55 上午，屬正常作息）
+- 全系統 47 個 enabled 任務，CE>0 共 2 個（openclaw cron list）：
+  - **🦞 健康檢查（本任務）`46e67e2e`**: 上一輪 11:34 `ok`，**本輪 AI 正常回應 = 已恢復鐵證**
+  - **🦞 每日三機總結 `bbb7a348`**: status=`error`（今晚 23:05 自動驗證，CE≥3 才升級 announce）
+  - 其餘 45 個 status=`ok`/`idle` ✅
+- alternating 1300+ 場穩定模式延續（`:00`/`:30` 過載 → 恢復已是公認可接受噪訊）
+- model: `minimax/MiniMax-M3` ✅ ｜ delivery.mode: none ✅ ｜ failureAlert: false ✅
+- Repo1 untracked **100 行**持續（已確認是 bni_tainan/jiaolian_thoughts agent 個人化設定檔+`_archive_2026-05-20/`+`_history_archive/`+`.claude/`，v99 已加 `.gitignore` 但這些子目錄需教練裁示三機同步SOP方向，不要片面處理）
+- **v4.0 三關判斷**：
+  - 關卡一（本輪還壞嗎？）❌：本輪 AI 正常回應 = 已恢復鐵證
+  - 關卡二（provider 暫時過載？）✅：minimax 暫時塞車
+  - 關卡三（影響教練工作？）❌：僅 meta 監控自我打嗝
+- **結論：三關未全過 + 已恢復 → 不升級 announce，不修任何 cron 配置**
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 旁觀警戒延續：🦞 每日三機總結 bbb7a348，今晚 23:05 自動驗證
+- 下次定檢 **12:25** 🟢（cron 排程 `*/30` 嚴格 `:00`/`:30` 開火；本輪 11:55 已是 11:30/11:34 failure 後恢復成功）

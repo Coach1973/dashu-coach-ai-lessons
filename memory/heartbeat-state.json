@@ -2,28 +2,28 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1785924288,
+    "heartbeat_poll": 1785978217,
     "system_health": 1785665043,
-    "telegram_channel": 1785924288,
+    "telegram_channel": 1785978217,
     "junshi_queue": 1785599760,
     "cron_list": 1785766895,
-    "care_4h": 1785924288,
+    "care_4h": 1785978217,
     "message_send_bypass": 1785650520,
-    "morning_greeting": 1785805405,
+    "morning_greeting": 1785978217,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-06T06:32:57.208935+08:00"
+    "coach_silence_sync": "2026-08-06T17:02:53.981359+08:00"
   },
-  "lastHeartbeat": "2026-08-05T18:04:48+08:00",
-  "lastHeartbeatNote": "週三 18:00 主動關懷 cron 觸發（每4小時 ef88279b）：Telegram message_id 9326 已送出（curl bypass）、系統全綠、教練沉默 52.1h（自 08-03 13:54）。context 28% 充裕、無新任務、無待辦新增。",
+  "lastHeartbeat": "2026-08-06T14:04:20+08:00",
+  "lastHeartbeatNote": "週四 14:03 心跳觸發：14:00 fire overload（典型 alternating 1300+ 場）→ 本輪 14:03 恢復。CE=1，三關判定 v4.0 未過不 announce。守則#19 探針 ok:true。教練沉默 72.2h。",
   "systemSnapshot": {
     "timeOfDay": "afternoon",
-    "dayOfWeek": "Tuesday",
+    "dayOfWeek": "Thursday",
     "isQuietHours": false,
     "quietHoursReason": null,
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
-    "contextPercent": 28,
-    "recentCoachActivity": "教練 52.1h 沒跟小龍蝦 Telegram 對話（自 2026-08-03 13:54 起）",
+    "contextPercent": 15,
+    "recentCoachActivity": "教練 72.2h 沒跟小龍蝦 Telegram 對話（自 2026-08-03 13:54 起）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -35,10 +35,10 @@
     "gatewayPid": 48632,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-05T18:04:48+08:00 (守則#19 探針 ok:true)",
+    "telegramChannelLastVerified": "2026-08-06T14:04:20+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-03T13:54:00+08:00",
-    "coachSilentHours": 64.6,
+    "coachSilentHours": 75.1,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -61,12 +61,12 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": true,
-    "nextPlannedAction": "靜候教練覆（14:00 主動關懷 messageId 9324 已發，等教練下指令）",
+    "nextPlannedAction": "靜候教練覆（09:03 已合併發送重啟通知+早安關懷）",
     "cronHealthCheck": {
       "name": "🦞 每30分鐘任務健康檢查",
-      "recentPattern": "lastRunStatus=ok（22:00 已過），無連續錯誤",
-      "consecutiveErrors": 0,
-      "decision": "✅ 觀察中，沒有 error 累積"
+      "recentPattern": "14:00 fire overload (180.4s ≪ 600s) → 14:03 恢復成功，alternating 模式",
+      "consecutiveErrors": 1,
+      "decision": "✅ alternating 已恢復，未達 CE≥3 紅線，不升級 announce"
     },
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9249 成功)",
     "restartNoticeDelivered": true,
@@ -96,6 +96,13 @@
     ]
   },
   "lastDeliveries": [
+    {
+      "ts": "2026-08-06T09:03:37.532261+08:00",
+      "channel": "telegram",
+      "to": "6124913915",
+      "messageId": 9336,
+      "purpose": "週四早安關懷 + 補發 08:08 context overflow 重啟通知 + 詢問今天從哪件事開始（教練沉默 67.2h）"
+    },
     {
       "ts": "2026-08-05T14:03:35+08:00",
       "channel": "telegram",
