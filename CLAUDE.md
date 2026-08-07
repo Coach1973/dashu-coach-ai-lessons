@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-05 23:25:45**
+> **最後同步：2026-08-07 21:55:20**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -75,6 +75,60 @@
 | 🟢 | **大樹小講(bigtree-tw)新增金門兩場次+歷史講座紀錄頁改宮格牆** | ✅v96本場完成，已推Netlify | 教練口述新增8/21(五)19:30-21:00金門場(西浦頭社區)+8/22(六)13:30-16:30金門場(向陽吉第社區，教練口誤「吉弟」經WebSearch官方資料查證更正)，主題皆「零基礎學AI，起步比較快」(順手統一全站舊寫法)。歷史講座紀錄頁應教練要求從縱向16張大圖列表改版為4×4宮格牆+點擊彈窗看完整資訊，本機預覽經教練確認後推上正式站(deploy`6a72a1b619a971632cad6833`)，curl驗證文字/圖片Content-Type皆正常。GitHub commit `620ca09`(場次)+`d567976`(宮格牆)+`4262ea8`(場地補正) |
 | 🟢 | **健康檢查cron假警報根因修復(v4.0三關判定)** | ✅v96本場完成 | 教練回報「小龍蝦老是出現奇怪訊息」，查證發現`🦞每30分鐘任務健康檢查`(jobId`46e67e2e`)因minimax provider暫時過載連錯5場觸發舊規則「連續≥3必announce」，但警報送達當下該輪其實已恢復成功，等於送出假警報。教練當場糾正「不影響工作就別吵我，浪費我注意力」。已用`openclaw cron edit --message`把規則#4改版為v4.0：只有「現在仍壞+非provider暫時過載+真影響工作」三關全過才准announce，並用`openclaw cron run --wait`實跑驗證同款情境下確實不再誤發(`delivered:false`)。已寫入記憶`feedback_alert_only_when_actually_broken` |
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
+| 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
+| 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+
+---
+
+# 軍師接力棒 · 2026-08-07 v100（Mac終端機 Sonnet 5，小龍蝦訊息遺失真根因修復+軍師互動算聯繫+三個站台維護任務）
+
+> 建立時間：2026-08-06 深夜 ~ 2026-08-07 晚間（台灣時間）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v99（Mac終端機 Sonnet 5，opencode環境檢查報告review+bigtree金門場資訊補齊+結繩領導學官網大改版）
+> 本棒主軸：**四條主線。①大樹小講(bigtree-tw)8/21金門場座位80→60人並推Netlify；確認coach888作品清單已收錄BNI大台南南區後台。②教練舊系統worklucky-2026(職涯測驗，GitHub repo原本archived)串接小龍蝦LINE通知管線(sme-register-fn)，比照大樹小講/AI論壇報名系統。③結繩領導學戰報系統(jiesheng-report)取消台中場(僅1位學員)，該學員改列台北場，服務已重啟驗證。④教練回報「小龍蝦說我67小時沒說話，但我明明有講」——查證`~/Library/Logs/openclaw/gateway.log`真正原始日誌挖出鐵證：2026-08-03 15:58:42教練Telegram訊息真的被收到，但當時MiniMax API連續429限流疑似讓那輪agent turn卡死，4小時沒回覆、內容也沒寫進memory，事後完全查不到。新建`hooks/inbound-message-echo-log`（訊息一進來當下就落地存底，不等agent turn跑完）+ 修好`sync_coach_last_message.sh`(v3.4，優先讀echo log)。教練接著提出「跟軍師互動也該算有理小龍蝦」，選最寬範圍，新建`scripts/log_junshi_activity_to_echo.sh`（Claude Code UserPromptSubmit hook）自動記錄每則對話。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 大樹小講(bigtree-tw)8/21金門場座位人數修正+coach888核對
+教練口述8/21西浦頭社區座位80人改60人（跟8/22向陽吉第社區一致），本機Chrome預覽確認後推Netlify（deploy `6a737cf590ab7b6463f485b9`），curl驗證正式站生效。GitHub commit `bbd3754`。順手核對coach888作品清單（`coach1973.github.io/coach888/`）確認BNI大台南南區分會總表+後台管理系統(chapters.bymyway.com)兩筆都已在列，且curl驗證是真的線上生效非本機草稿。
+
+### 2. 🎯🎯 worklucky-2026 串接小龍蝦LINE通知（GitHub repo解除封存）
+教練舊職涯測驗網站`worklucky-2026.netlify.app`原本設計會通知教練LINE但已失效。查證GitHub repo `Coach1973/worklucky-2026`是早期archived的19個repo之一，且Netlify站台是GitHub自動部署型（非zip手動上傳）。解除封存後在`submitFinalData()`新增打`sme-register-fn`後端的fetch呼叫（比照bigtree/ai-talk既有模式），因問卷資料比單純報名複雜，把完整測驗結果（職涯狀態/需求勾選/城市/方便時間/聯絡方式/完整問答記錄）都塞進通知欄位。本機預覽走完整套測驗流程驗證UI正確+用「【系統測試·請忽略】」標記測試資料驗證端點真的收得到，教練確認「測試成功」後推送，commit `a6e6bde`，Netlify自動部署`6a744ee1`已驗證生效。
+
+### 3. 🎯 結繩領導學戰報系統：取消台中場
+教練告知台中場僅1位學員（張玉燕），決定取消該場戰報回報、學員改列台北場。修改`jiesheng-report/db.py`的`WORKSHOPS`清單+`app.py`的日期/目標/損益平衡對照表（拿掉台中），資料庫`UPDATE registrants SET workshop='台北' WHERE id=5`。這是`launchd`常駐服務（`com.coach.jiesheng-webapp`），改完程式碼後用`launchctl kickstart -k`重啟才生效，重啟後log無錯誤。因登入密碼是教練專屬、不能代打，改用資料庫直接查詢+程式碼比對（模板動態讀取`db.WORKSHOPS`非寫死）驗證正確性。commit `bc16bd9e6`。
+
+### 4. 🔴🔴🔴 小龍蝦訊息遺失真根因挖出+兩層修復（本場核心）
+
+**教練回報**：「小龍蝦說我67小時沒說話，但我明明有跟他對話」。
+
+**查證過程**：沒有直接信任`heartbeat-state.json`裡的`coachSilentSince`（那是`sync_coach_last_message.sh`算出來的中繼值），而是直接查`agents/main/sessions/*.jsonl`確認8/3~8/6期間主agent收到的全是cron/心跳自動觸發、沒有教練真人訊息；再往上查真正的gateway原始日誌`~/Library/Logs/openclaw/gateway.log`（不是`~/.openclaw/logs/gateway.log`，那份是6月的舊檔），用`grep "Inbound message telegram:6124913915"`抓到教練提到的「3點58分」訊息確實存在——2026-08-03 15:58:42，24字，Telegram真的收到了。但查後續4小時完全沒有`outbound send`回覆記錄（下次回覆是20:02），且該訊息內容從未寫進`memory/2026-08-03.md`。同期gateway log顯示MiniMax API連續多次429限流（16:01/16:02/16:31，單次卡60~150秒），研判是agent turn被卡死/中斷，導致訊息「收到了但整輪處理死掉、沒有留下任何痕跡」。
+
+**修復①（教練確認「可以」後動手）**：新建`hooks/inbound-message-echo-log/handler.js`（OpenClaw internal hook，事件`message:preprocessed`，在agent開始處理前就同步落地寫入`state/inbound_echo/YYYY-MM-DD.jsonl`）。欄位擷取邏輯對照openclaw原始碼`dist/message-hook-mappers-*.js`的`toInternalInboundMessageHookContextBase`查證過（`body`/`senderId`/`conversationId`/`channelId`等正確欄位名稱，非憑猜測），用假事件單元測試通過。同步修好`scripts/sync_coach_last_message.sh`（v3.4）：新增優先讀這份echo log（用教練Telegram/LINE三組身份ID比對），跟舊的memory掃描兩邊取「較新」的時間，測過兩種情境（有echo log資料/無資料退回memory）皆正確。已在openclaw.json註冊hook，`launchctl kickstart -k`重啟gateway確認14個外掛+6個頻道正常上線無錯誤。commit `e99184f4`(hook)+`a051525a0`(sync腳本)已推送。
+
+**修復②（教練接著提出，選最寬範圍）**：教練問「怎麼讓小龍蝦知道我不是沒理他」，提議「只要跟軍師聊到小龍蝦的事都算」。軍師提醒範圍若定太寬會讓沉默警示失去意義，建議縮小成「只算小龍蝦本身的問題」，教練否決、明確選「不限，只要是跟軍師互動就算」。新建`scripts/log_junshi_activity_to_echo.sh`（Claude Code UserPromptSubmit hook，註冊進`~/.claude/settings.json`），每則教練發給軍師的訊息都同步寫一筆進同一份echo log（chatId標教練Telegram ID，跟真實LINE/Telegram訊息共用同一份檔案、同一套下游讀取邏輯，不用再改sync腳本）。測試驗證sync腳本確實能抓到軍師互動、算出0小時沉默。commit `4072fca44`。**注意**：這場對話進行到一半才加的hook，理論上要下一場新對話框才會自動生效，已口頭告知教練這場已手動補記一筆不會被漏算。
+
+兩則新記憶已寫入：`reference_inbound_message_echo_log_system`（技術機制說明）+`feedback_junshi_activity_counts_as_xiaolongxia_contact`（教練決策記錄），commit `decc8b697`。
+
+## 📋 下一場直接開工任務
+- 確認`log_junshi_activity_to_echo.sh`在新對話框確實有自動生效（本場是中途註冊，下一場開工可順手驗證第一句話有沒有寫進當天echo log）
+- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統、bni-chapters預設密碼等）本場未觸碰，狀態不變
+- 接力棒瘦身：本場已封存v97~v98到`handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`，主檔現只留v100+v99
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/bigtree/index.html`：8/21座位人數修正
+- `github_repos/worklucky-2026`（原archived repo，已解除封存）：新增LINE通知串接
+- `jiesheng-report/db.py`+`app.py`：取消台中場
+- `~/.openclaw/hooks/inbound-message-echo-log/`：新建
+- `~/.openclaw/openclaw.json`：註冊新hook
+- `scripts/sync_coach_last_message.sh`：v3.4，優先讀echo log
+- `scripts/log_junshi_activity_to_echo.sh`：新建
+- `~/.claude/settings.json`：註冊軍師互動echo hook
+- `claude-brain/reference_inbound_message_echo_log_system.md`+`feedback_junshi_activity_counts_as_xiaolongxia_contact.md`：新增
+- commit(bigtree)：`bbd3754`
+- commit(worklucky-2026)：`a6e6bde`
+- commit(openclaw workspace)：`bc16bd9e6`(戰報台中場)、`a051525a0`(sync腳本)、`4072fca44`(軍師echo hook)、`decc8b697`(記憶)
+- commit(openclaw master)：`e99184f4`(inbound echo hook)
 
 ---
 
@@ -124,103 +178,9 @@
 - commit(jiesheng-leadership)：`7d8dbb5`
 
 ---
-
-# 軍師接力棒 · 2026-08-05 v98（Mac終端機 Sonnet 5，結繩領導學網站5項調整+GitHub自動部署推送+Netlify額度更新）
-
-> 建立時間：2026-08-05 下午（台灣時間 15:00~19:27）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v97（Mac終端機，opencode兩次當機根因修復）
-> 本棒主軸：**教練提出結繩領導學(jiesheng-leadership.netlify.app)網站5項調整。開工先用MD5比對確認正確本地repo(`github_repos/jiesheng-leadership`，排除另一份`~/jiesheng-leadership`已過時的舊複本)，完成全部調整後用本機Chrome實測驗證，教練確認後說「推到netlify」，查證此站是GitHub自動部署型(git push main觸發，跟22個手動zip站不同)，commit `2807592`推送後curl+Chrome雙重驗證正式站生效。教練追問部署額度剩幾次，查證git-auto-deploy也計入同一credit池(依7/22歷史先例)，51→50已更新記錄。全程無教練糾正、無新教訓，屬於乾淨執行既定SOP的任務。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 結繩領導學網站5項調整全部完成並推上正式站
-- 「立即報名活動」按鈕改跳轉至`#workshopRegBtn`(座談會已全數結束，主要動線改導向工作坊報名)
-- 座談會場次區塊搬到「兩天工作坊」下方，標題加註「（11場活動均已圓滿結束）」，notice-bar改回顧感謝語氣
-- 工作坊區塊移除「報名線上座談會」按鈕，只保留「立即報名工作坊」
-- 台中場取消，只留台南/台北兩場，FAQ「台南、台中、台北三個城市場次」同步改「台南、台北兩個城市場次」
-- 依教練回覆，Hero小字從「線上座談會10場‧免費線上報名」改為「11場活動圓滿結束，可看歷史回顧」
-
-### 2. 🎯 查證確認jiesheng-leadership是GitHub自動部署型站台
-本機Chrome預覽(`open -a "Google Chrome"`)驗證版面+按鈕動線無誤後，教練說「推到netlify」。原想用curl查Netlify API核對站台設定，但`netlify_deploy_guard.sh`因指令含真實token被擋下——查`knowledges/SOP_netlify_website_edit.md`既有記載：jiesheng-leadership的Netlify站台`build_settings.repo_url`已連github.com/Coach1973/jiesheng-leadership，**唯一更新路徑是`git push main`**，不走zip+API。依SOP走`git add`+`git commit`+`touch PUSH_APPROVED`(推送鎖通行證)+`git push origin main`，commit `2807592`推送成功，等待Netlify自動build後curl驗證正式站三項關鍵文字皆已生效，並依Stop hook提醒補開一次Chrome看正式站確認。
-
-### 3. 🎯 Netlify部署額度更新：51→50
-教練問「還剩下多少次可以推」。查`state/netlify_deploy_quota.json`發現guard的自動扣減機制只認curl POST `.../deploys`結尾指令，git push不會觸發自動扣減——但查歷史紀錄(2026-07-22 jiesheng-leadership那筆`git-auto-deploy`確有計入扣減)，確認git-auto-deploy一樣消耗同一credit池，手動補記本次推送51→50，並誠實告知教練這是本地推算非即時查詢Netlify帳單頁的數字。
-
-## 📋 下一場直接開工任務
-- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統、bni-chapters預設密碼等）本場未觸碰，狀態不變
-- 接力棒瘦身：本場已封存v93~v96到`handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`，主檔現只留v98+v97
-
-## 🔑 本場關鍵檔案索引
-- `github_repos/jiesheng-leadership/index.html`：5項調整全部完成
-- `state/netlify_deploy_quota.json`：新增jiesheng-leadership本次推送記錄，額度51→50
-- `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`：新增，封存v93/v94/v95/v96
-- commit（jiesheng-leadership獨立repo）：`2807592`
-
----
-
-# 軍師接力棒 · 2026-08-05 v97（Mac終端機，opencode 兩次當機根因修復：snapshot 關閉＋model 改 minimax 自家）
-
-> 建立時間：2026-08-05 中午 12:00~12:36（台北時間）
-> 本棒執行者：Mac 終端機軍師
-> 上一棒：v96（Mac終端機Opus 5，大樹小講金門場次+歷史紀錄宮格牆改版+健康檢查cron假警報修復）
-> 本棒主軸：**教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），找三層根因：①snapshot對empty git repo失敗②並行git lock衝突→Bun AbortError→TUI崩③預設model跑錯provider（opencode-go/minimax-m3 vs minimax/MiniMax-M3大小寫差異）。第一版報告建議「去opencode.ai workspace充值」被教練當場糾正「我們是用minimax自家API Key，跟額度無關」——後續curl驗證minimax自家Key HTTP 200有效，確認是opencode預設model跑錯provider而非額度問題。修法4個改動全部完成，knowledges紀錄+試金石案例57同步commit + push。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 opencode 兩次當機根因（三層）
-
-| 層次 | 根因 | 證據 |
-|---|---|---|
-| 表面 | snapshot 警告噪音 | log 53次 `_archive_2026-05-20/agents_bak/kong.bak/' does not have a commit checked out` |
-| 致命 | git index.lock 並行衝突 | log `fatal: Unable to create '...index.lock': File exists` + `AbortError: Aborted` from Bun runtime |
-| 體驗 | opencode 預設 model 跑錯 provider | log `providerID=opencode-go modelID=minimax-m3`（應為 `providerID=minimax modelID=MiniMax-M3`）|
-
-### 2. ✅ 修法（4 個改動，全部已驗證生效）
-
-| # | 改動 | 驗證 |
-|---|---|---|
-| 1 | `~/.config/opencode/opencode.json` 加 `"snapshot": false` | log 不再出現 kong.bak warning |
-| 2 | `opencode upgrade` 1.15.13 → 1.18.13 | `opencode --version` 顯示 1.18.13 |
-| 3 | `~/.config/opencode/opencode.json` 加 `"model": "minimax/MiniMax-M3"` | `opencode run` 確認 log `providerID=minimax modelID=MiniMax-M3` |
-| 4 | 同檔加 `"small_model": "minimax/MiniMax-M2.5-highspeed"` | 解決 `server unavailable key=claude type=local` warning |
-
-**附帶驗證**：minimax 自家 API Key curl 實測 `https://api.minimax.io/anthropic/v1/messages` 回 HTTP 200 → 從頭到尾都有效，不需要去 opencode.ai 充值任何東西。
-
-### 3. 🔴 教練當場糾正：軍師第一版報告錯了
-
-軍師看到 log 報 `providerID=opencode-go` 就直覺聯想「opencode.ai workspace 額度歸零」，建議教練去 `https://opencode.ai/workspace/wrk_01KSYW4B3DF6PWB9MRG95BT6VT/billing` 充值。
-
-**教練原話**：「你沒有搞清楚，之前我們設定 Opencode 使用的是 MiniMax，是我們自己的 API Key，所以跟額度有什麼關係？」
-
-**教訓**（已寫入試金石案例57）：
-- 陌生 provider name 必須先 `opencode models` 查證再下結論
-- 不要從「錯誤訊息字眼」直接聯想到「對應服務的帳號問題」
-- 看到 `Insufficient balance` 要先確認實際用的 provider 跟教練設定的是不是同一個
-
-### 4. 📁 Knowledges 紀錄 + 試金石案例
-
-- `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`（含「教訓段」提醒未來軍師）
-- `試金石/試金石_案例庫.md` 新增案例57（陌生provider name瞎猜教訓）
-
-## 📋 下一場直接開工任務
-
-- 接力棒瘦身：目前主檔有 v97/v96/v95/v94 四棒，超過 E16 規定的「最新 1~2 棒」，**下場建議封存 v94/v95 到 handoff_archive**（v93 已在此前測試時封存失敗，本場已 git restore 回原始 214 行版本，待下場重新封存）
-- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統等）本場未觸碰，狀態不變
-
-## 🔑 本場關鍵檔案索引
-
-- `~/.config/opencode/opencode.json`：加 `snapshot: false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed`（教練後續手動完整化了 provider.minimax 區塊）
-- `~/.local/share/opencode/log/opencode.log`：642行（最後更新 12:05，無新錯誤）
-- commit（openclaw workspace）：`48c99e9e`（snapshot關+升級）→ `d78d48f8`（model修正+knowledges重寫）
-- commit（試金石案例57）：見下一行 commit hash（本場收工產生）
-- knowledges 紀錄：`knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`
-- 試金石案例：案例 57（陌生 provider name 瞎猜教訓）
-
----
-> 📦 **v96及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v98及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v98/v97)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新2棒(v100/v99)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
 
 ---
