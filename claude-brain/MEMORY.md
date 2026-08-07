@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🎯🎯 mentor100百人導師計劃改人工審核上架流程上線+訪客計數器+點擊排行榜(2026-08-08)](project_mentor100_review_gated_signup_2026-08-08.md) — 申請/apply→產生填寫連結→自填→預覽→確認上架三段式，教練刻意要「人工申請」感
+- [🔧🔧 測試已上線功能前先用隔離副本(整個repo複製到/tmp)，不能直接在production db測試(2026-08-08)](feedback_isolate_test_env_before_prod_db_testing.md) — 清測試資料時序撞上教練實測時間，誤以為計數器有bug
+- [🔧 claude-in-chrome操作密碼欄位可能被其他擴充功能浮層卡死，改用Flask test_client驗證(2026-08-08)](reference_claude_in_chrome_password_field_extension_conflict.md) — 環境限制非程式bug，誠實告知教練視覺驗證缺口
 - [🔧🔧🔧 訊息一進來當下就落地存底系統，修復8/3教練訊息遺失問題(2026-08-07)](reference_inbound_message_echo_log_system.md) — state/inbound_echo/，查「教練最後說話時間」先看這裡不信舊快取
 - [🔧🔧 教練跟軍師互動不限內容一律算「有理小龍蝦」，已用hook自動記錄(2026-08-07)](feedback_junshi_activity_counts_as_xiaolongxia_contact.md) — 8/3訊息遺失查證後教練提出，範圍選最寬版
 - [🔧 教練常同時開多個對話框下指令，某視窗只看到訊息片段是常態非事故(2026-08-05)](feedback_multiwindow_partial_message_not_lost.md) — 教練親口確認「另外一邊他會處理」，看到片段先問別直接判定未送達
