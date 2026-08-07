@@ -38,7 +38,9 @@ def wants_screenshot():
                 "mcp__Claude_Preview__preview_screenshot"):
         return True
     # Chrome 的 computer 工具：只有 action 是截圖/放大才算
-    if tool == "mcp__Claude_in_Chrome__computer":
+    # 2026-08-08 教練抓到：實際MCP工具名稱是全小寫連字號 claude-in-chrome，
+    # 不是 Title_Case 底線的 Claude_in_Chrome，比對從沒對上過，鎖形同虛設
+    if tool == "mcp__claude-in-chrome__computer":
         return ti.get("action") in SHOT_ACTIONS
     # Browser pane 的 computer 工具：同樣只有 action 是截圖/放大才算
     # 2026-07-13 教練抓到：這支工具當時完全沒被鎖檢查到，重複截圖沒被擋
@@ -58,7 +60,7 @@ def wants_screenshot():
                 if isinstance(sub, dict) and sub.get("action") in SHOT_ACTIONS:
                     return True
         return False
-    if tool == "mcp__Claude_in_Chrome__browser_batch":
+    if tool == "mcp__claude-in-chrome__browser_batch":
         for a in (ti.get("actions") or []):
             if not isinstance(a, dict):
                 continue
