@@ -6,6 +6,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **bni-chapters：BNI官方品牌色系套用+分會列表首頁表頭一致性修復** | ✅v102本場完成 | 官方色(#CF2030紅+#000000黑)套用9分會(commit `958eea2`)+首頁導覽列補齊(commit `1f2c1a5`)。教練裁示「之後一定要用官方指定色系」，10組帳號預設密碼Admin/88888仍未處理 |
+| 🔴🔴🔴🔴 | **三機hook同步待辦（教練要求優先）** | ⏳待聯想/ACER動手 | Mac本場修好3支hook(截圖鎖工具名稱/改html自動跳Chrome/長對話守則重載)已推雲端，但`~/.claude/settings.json`各機不同步且是macOS專屬指令，Windows需PowerShell版本+自行註冊。完整待辦見[[project_cross_machine_hook_sync_todo_2026-08-08]] |
 | 🟢 | **mentor100百人導師計劃：訪客計數器+人工審核上架流程** | ✅v101本場完成 | 首頁到訪次數計數器+導師點擊排行榜+「加入計劃」改人工申請(申請→教練產生填寫連結→自填草稿→教練預覽確認上架)，教練刻意要「人工申請」體驗設計。詳見v101完整戰果+[[project_mentor100_review_gated_signup_2026-08-08]]。**待驗證**：教練尚未實際走過一輪完整真實申請人流程 |
 | 🟢 | **workshop-invite.netlify.app 移除台中場按鈕** | ✅v101本場完成 | 只留台南/台北場，其餘5個姊妹邀請頁教練裁示暫不動。deploy `6a75de3e8d2a6c2aadd104d4` |
 | 🟡 | **Email自動發送系統** | 🔒卡住-等教練給細節 | 2026-07-28教練提出下一個任務方向，僅先記錄，教練尚未說明要發什麼內容/給誰/觸發時機(定期報表？表單提交後自動回信？行銷群發？)，下一場先問清楚用途再評估技術方案(SMTP/SendGrid/Gmail API等) |
@@ -70,6 +72,54 @@
 
 ---
 
+# 軍師接力棒 · 2026-08-08 v102（Mac桌面版 Sonnet 5，bni-chapters官方色系+表頭一致性修復+三個系統性hook修復）
+
+> 建立時間：2026-08-08 台灣時間 06:10~07:03
+> 本棒執行者：Mac 桌面版 Sonnet 5（教練當場糾正非CLI，已補建自我判定法）
+> 上一棒：v101（Mac終端機 Sonnet 5，mentor100人工審核上架流程+workshop-invite台中場移除）
+> 本棒主軸：**兩條主線。①`bni-chapters`（大台南南區9分會系統）：查證BNI官方2020 Brand Standards Manual確認正確色號（BNI Red #CF2030 + Power Black #000000），改在共用`base.html`的`:root`一次套用全9分會；接著修復分會列表首頁(index.html)表頭導覽列消失問題，補上跟分會頁一致的5項導覽。②教練連續追問「截圖鎖為何沒執行/為何不能讀完守則再做事」，查到並修復兩個真正的系統性bug：截圖鎖的工具名稱寫錯(claude-in-chrome大小寫/連字號比對從沒對上過)、Claude Code長對話CLAUDE.md可能被context壓縮導致守則流失。三個都做成技術鎖(hook)而非承諾，並查證OpenClaw原始碼確認小龍蝦Mac版架構不受同款問題影響。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 bni-chapters：官方品牌色系套用九分會
+教練質疑真誠分會hero區塊黑色是否為BNI官方色，查證BNI 2020年6月版Brand Standards Manual第6頁確認正確色號（BNI Red `#CF2030`、Power Black `#000000`，非原本自訂的`#A22026`/`#2A2829`）。改在共用模板`templates/base.html`的`:root`，一處修改9分會同步套用，含hover陰影色同步更新。commit `958eea2`。教練裁示「之後一定要用官方指定色系」，已寫入記憶`reference_bni_official_brand_colors`。
+
+### 2. 🎯 bni-chapters：分會列表首頁表頭一致性修復
+教練發現從真誠分會點「分會列表」跳回首頁後，導覽列(認識分會/核心價值/分會之光/六項傳統)整組消失。首頁`index.html`原本`<nav></nav>`是空的，補上跟分會頁一致的5項導覽，後4項連到排序第一的真誠分會對應錨點區塊。commit `1f2c1a5`。已用claude-in-chrome實際點擊測試確認跳轉正確。
+
+### 3. 🔴🔴🔴 截圖鎖真根因修復：工具名稱大小寫/連字號寫錯
+教練連續追問「既然有截圖鎖，為何不執行？」查證發現`scripts/screenshot_lock.sh`跟`~/.claude/settings.json`的matcher都把claude-in-chrome的工具名稱寫成`mcp__Claude_in_Chrome__computer`（Title_Case+底線），但實際MCP工具註冊名稱是`mcp__claude-in-chrome__computer`（全小寫+連字號），字串比對從未對上，鎖形同虛設。已修正兩處，模擬輸入測試通過（截圖動作攔截/一般點擊放行/browser_batch巢狀截圖也攔截）。commit `b52934ad9`。
+
+### 4. 🔴🔴 改完HTML自動跳Chrome（PostToolUse hook，不再靠記憶）
+查證過去30天教練提醒「沒跳HTML/Chrome給我看」達7次，既有`rule_html_chrome_check.sh`是Stop hook(事後補救)，每次都要教練等被攔下才想起。教練點出守則#04「解決問題比解釋問題更重要」，新增`scripts/auto_chrome_after_html_edit.sh`（PostToolUse hook，matcher: Edit|Write），Edit/Write一碰`.html`檔案立刻自動`open -a "Google Chrome" file://...`，不用等事後攔截。commit `17147771f`，模擬測試通過。
+
+### 5. 🔴🔴🔴 Claude Code長對話守則流失根因+修復
+教練質問「如果不能讀守則，那我花費心思寫出來的守則意義是什麼？VPS版小龍蝦都知道，為何claude不能？」查證發現：`~/.claude/CLAUDE.md`（含21條守則全文）只在session開始載入一次，隨對話變長系統可能把最早context壓縮掉（本場對話到20輪時才被既有`session_length_hook.sh`偵測到，但那支只提醒換視窗、完全沒補回守則文字）。新增`scripts/periodic_xinfa_reload_hook.sh`，複用同一套「20輪起、每10輪一個band」節流設計，每個新band把21條守則完整原文重新貼進context。commit `6ae54fd6c`，已在本場對話第20輪實際觸發驗證生效（非僅模擬測試）。
+
+**進一步查證（教練當場抓到我第一次回答是憑印象猜測，非查證）**：直接讀OpenClaw編譯後原始碼`workspace-Bfegr71x.js`+`bootstrap-cache-NNMZ7U6Y.js`確認：小龍蝦Mac版的SOUL.md是靠mtime比對的per-session快取，內容會當成系統提示詞穩定前綴附加在每次LLM請求裡，架構上不會有Claude Code CLI這種「長對話被壓縮流失」的問題，這條不用額外補hook。
+
+### 6. 🔧 環境教訓：桌面版/終端機自我判定法
+教練糾正「你不是CLI，你是桌面版APP」，查證`ps`父行程路徑(`/Applications/Claude.app`)+`TERM_PROGRAM`(空值=非終端機)可靠判定，已寫入記憶`feedback_desktop_gui_selfcheck_method`，避免下次又預設猜錯介面。
+
+## 📋 下一場直接開工任務
+- **三機hook同步待辦（教練要求優先）**：本場3支新/修正的hook腳本已推上雲端，但`~/.claude/settings.json`是各機本機設定檔不隨git同步，且是Mac bash+macOS專屬指令，Windows(聯想/ACER)需要各自PowerShell版本並在當地settings.json註冊。完整待辦清單已寫入記憶`project_cross_machine_hook_sync_todo_2026-08-08`，聯想/ACER下次開工應優先處理。
+- bni-chapters其餘卡住項目（10組帳號預設密碼Admin/88888）本場未觸碰，教練仍未裁示
+- 接力棒瘦身：本場已封存v100到`handoff_archive/handoff_v100_archived_2026-08-08.md`，主檔現只留v102+v101
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/bni-chapters/templates/base.html`：官方品牌色系(:root變數)
+- `github_repos/bni-chapters/templates/index.html`+`app.py`：首頁表頭導覽列補齊
+- `scripts/screenshot_lock.sh`：工具名稱修正
+- `scripts/auto_chrome_after_html_edit.sh`：新建，PostToolUse自動跳Chrome
+- `scripts/periodic_xinfa_reload_hook.sh`：新建，長對話守則全文定期重載
+- `~/.claude/settings.json`：三處hook註冊更新（非git追蹤，僅本機）
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/`：本場新增6份記憶檔+MEMORY.md索引更新
+- commit(bni-chapters獨立repo)：`958eea2`（品牌色）→`1f2c1a5`（表頭）
+- commit(mac-openclaw-workflows workspace)：`b52934ad9`（截圖鎖）→`17147771f`（自動跳Chrome）→`6ae54fd6c`（守則重載）
+- commit(claude-brain記憶庫)：`c0a2df839`
+
+---
+
 # 軍師接力棒 · 2026-08-08 v101（Mac終端機 Sonnet 5，mentor100人工審核上架流程+workshop-invite台中場移除）
 
 > 建立時間：2026-08-07 深夜 ~ 2026-08-08 凌晨（台灣時間 21:11~02:58）
@@ -114,57 +164,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-07 v100（Mac終端機 Sonnet 5，小龍蝦訊息遺失真根因修復+軍師互動算聯繫+三個站台維護任務）
-
-> 建立時間：2026-08-06 深夜 ~ 2026-08-07 晚間（台灣時間）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v99（Mac終端機 Sonnet 5，opencode環境檢查報告review+bigtree金門場資訊補齊+結繩領導學官網大改版）
-> 本棒主軸：**四條主線。①大樹小講(bigtree-tw)8/21金門場座位80→60人並推Netlify；確認coach888作品清單已收錄BNI大台南南區後台。②教練舊系統worklucky-2026(職涯測驗，GitHub repo原本archived)串接小龍蝦LINE通知管線(sme-register-fn)，比照大樹小講/AI論壇報名系統。③結繩領導學戰報系統(jiesheng-report)取消台中場(僅1位學員)，該學員改列台北場，服務已重啟驗證。④教練回報「小龍蝦說我67小時沒說話，但我明明有講」——查證`~/Library/Logs/openclaw/gateway.log`真正原始日誌挖出鐵證：2026-08-03 15:58:42教練Telegram訊息真的被收到，但當時MiniMax API連續429限流疑似讓那輪agent turn卡死，4小時沒回覆、內容也沒寫進memory，事後完全查不到。新建`hooks/inbound-message-echo-log`（訊息一進來當下就落地存底，不等agent turn跑完）+ 修好`sync_coach_last_message.sh`(v3.4，優先讀echo log)。教練接著提出「跟軍師互動也該算有理小龍蝦」，選最寬範圍，新建`scripts/log_junshi_activity_to_echo.sh`（Claude Code UserPromptSubmit hook）自動記錄每則對話。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 大樹小講(bigtree-tw)8/21金門場座位人數修正+coach888核對
-教練口述8/21西浦頭社區座位80人改60人（跟8/22向陽吉第社區一致），本機Chrome預覽確認後推Netlify（deploy `6a737cf590ab7b6463f485b9`），curl驗證正式站生效。GitHub commit `bbd3754`。順手核對coach888作品清單（`coach1973.github.io/coach888/`）確認BNI大台南南區分會總表+後台管理系統(chapters.bymyway.com)兩筆都已在列，且curl驗證是真的線上生效非本機草稿。
-
-### 2. 🎯🎯 worklucky-2026 串接小龍蝦LINE通知（GitHub repo解除封存）
-教練舊職涯測驗網站`worklucky-2026.netlify.app`原本設計會通知教練LINE但已失效。查證GitHub repo `Coach1973/worklucky-2026`是早期archived的19個repo之一，且Netlify站台是GitHub自動部署型（非zip手動上傳）。解除封存後在`submitFinalData()`新增打`sme-register-fn`後端的fetch呼叫（比照bigtree/ai-talk既有模式），因問卷資料比單純報名複雜，把完整測驗結果（職涯狀態/需求勾選/城市/方便時間/聯絡方式/完整問答記錄）都塞進通知欄位。本機預覽走完整套測驗流程驗證UI正確+用「【系統測試·請忽略】」標記測試資料驗證端點真的收得到，教練確認「測試成功」後推送，commit `a6e6bde`，Netlify自動部署`6a744ee1`已驗證生效。
-
-### 3. 🎯 結繩領導學戰報系統：取消台中場
-教練告知台中場僅1位學員（張玉燕），決定取消該場戰報回報、學員改列台北場。修改`jiesheng-report/db.py`的`WORKSHOPS`清單+`app.py`的日期/目標/損益平衡對照表（拿掉台中），資料庫`UPDATE registrants SET workshop='台北' WHERE id=5`。這是`launchd`常駐服務（`com.coach.jiesheng-webapp`），改完程式碼後用`launchctl kickstart -k`重啟才生效，重啟後log無錯誤。因登入密碼是教練專屬、不能代打，改用資料庫直接查詢+程式碼比對（模板動態讀取`db.WORKSHOPS`非寫死）驗證正確性。commit `bc16bd9e6`。
-
-### 4. 🔴🔴🔴 小龍蝦訊息遺失真根因挖出+兩層修復（本場核心）
-
-**教練回報**：「小龍蝦說我67小時沒說話，但我明明有跟他對話」。
-
-**查證過程**：沒有直接信任`heartbeat-state.json`裡的`coachSilentSince`（那是`sync_coach_last_message.sh`算出來的中繼值），而是直接查`agents/main/sessions/*.jsonl`確認8/3~8/6期間主agent收到的全是cron/心跳自動觸發、沒有教練真人訊息；再往上查真正的gateway原始日誌`~/Library/Logs/openclaw/gateway.log`（不是`~/.openclaw/logs/gateway.log`，那份是6月的舊檔），用`grep "Inbound message telegram:6124913915"`抓到教練提到的「3點58分」訊息確實存在——2026-08-03 15:58:42，24字，Telegram真的收到了。但查後續4小時完全沒有`outbound send`回覆記錄（下次回覆是20:02），且該訊息內容從未寫進`memory/2026-08-03.md`。同期gateway log顯示MiniMax API連續多次429限流（16:01/16:02/16:31，單次卡60~150秒），研判是agent turn被卡死/中斷，導致訊息「收到了但整輪處理死掉、沒有留下任何痕跡」。
-
-**修復①（教練確認「可以」後動手）**：新建`hooks/inbound-message-echo-log/handler.js`（OpenClaw internal hook，事件`message:preprocessed`，在agent開始處理前就同步落地寫入`state/inbound_echo/YYYY-MM-DD.jsonl`）。欄位擷取邏輯對照openclaw原始碼`dist/message-hook-mappers-*.js`的`toInternalInboundMessageHookContextBase`查證過（`body`/`senderId`/`conversationId`/`channelId`等正確欄位名稱，非憑猜測），用假事件單元測試通過。同步修好`scripts/sync_coach_last_message.sh`（v3.4）：新增優先讀這份echo log（用教練Telegram/LINE三組身份ID比對），跟舊的memory掃描兩邊取「較新」的時間，測過兩種情境（有echo log資料/無資料退回memory）皆正確。已在openclaw.json註冊hook，`launchctl kickstart -k`重啟gateway確認14個外掛+6個頻道正常上線無錯誤。commit `e99184f4`(hook)+`a051525a0`(sync腳本)已推送。
-
-**修復②（教練接著提出，選最寬範圍）**：教練問「怎麼讓小龍蝦知道我不是沒理他」，提議「只要跟軍師聊到小龍蝦的事都算」。軍師提醒範圍若定太寬會讓沉默警示失去意義，建議縮小成「只算小龍蝦本身的問題」，教練否決、明確選「不限，只要是跟軍師互動就算」。新建`scripts/log_junshi_activity_to_echo.sh`（Claude Code UserPromptSubmit hook，註冊進`~/.claude/settings.json`），每則教練發給軍師的訊息都同步寫一筆進同一份echo log（chatId標教練Telegram ID，跟真實LINE/Telegram訊息共用同一份檔案、同一套下游讀取邏輯，不用再改sync腳本）。測試驗證sync腳本確實能抓到軍師互動、算出0小時沉默。commit `4072fca44`。**注意**：這場對話進行到一半才加的hook，理論上要下一場新對話框才會自動生效，已口頭告知教練這場已手動補記一筆不會被漏算。
-
-兩則新記憶已寫入：`reference_inbound_message_echo_log_system`（技術機制說明）+`feedback_junshi_activity_counts_as_xiaolongxia_contact`（教練決策記錄），commit `decc8b697`。
-
-## 📋 下一場直接開工任務
-- 確認`log_junshi_activity_to_echo.sh`在新對話框確實有自動生效（本場是中途註冊，下一場開工可順手驗證第一句話有沒有寫進當天echo log）
-- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統、bni-chapters預設密碼等）本場未觸碰，狀態不變
-- 接力棒瘦身：本場已封存v97~v98到`handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`，主檔現只留v100+v99
-
-## 🔑 本場關鍵檔案索引
-- `github_repos/bigtree/index.html`：8/21座位人數修正
-- `github_repos/worklucky-2026`（原archived repo，已解除封存）：新增LINE通知串接
-- `jiesheng-report/db.py`+`app.py`：取消台中場
-- `~/.openclaw/hooks/inbound-message-echo-log/`：新建
-- `~/.openclaw/openclaw.json`：註冊新hook
-- `scripts/sync_coach_last_message.sh`：v3.4，優先讀echo log
-- `scripts/log_junshi_activity_to_echo.sh`：新建
-- `~/.claude/settings.json`：註冊軍師互動echo hook
-- `claude-brain/reference_inbound_message_echo_log_system.md`+`feedback_junshi_activity_counts_as_xiaolongxia_contact.md`：新增
-- commit(bigtree)：`bbd3754`
-- commit(worklucky-2026)：`a6e6bde`
-- commit(openclaw workspace)：`bc16bd9e6`(戰報台中場)、`a051525a0`(sync腳本)、`4072fca44`(軍師echo hook)、`decc8b697`(記憶)
-- commit(openclaw master)：`e99184f4`(inbound echo hook)
-
----
-> 📦 **v99及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v100及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒(v101/v100)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
