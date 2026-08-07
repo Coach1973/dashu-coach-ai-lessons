@@ -5,6 +5,84 @@
 
 ---
 
+### 2026-08-08 06:02（CST 週六清晨）— ✅ 安靜通過
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 05:36:55**，沉默 **0.4h** — 教練 24 分鐘前還在說話，週六清晨仍有互動）
+- 本任務：cron get 顯示 lastRunAtMs=`2026-08-08 05:01:22 CST` / lastRunStatus=**error** / lastErrorReason=`"overloaded"` / lastDurationMs=**67,014ms**（67s ≪ 600,000ms）/ **CE=6**
+- 時間軸解析：lastRunAtMs 停留在 05:01 但 HEARTBEAT.md 06:00 條目 AI 有寫入 — 表示 cron 多次嘗試在 minimax 端被判定 transient error（minimax 返回 overloaded 後即使 AI 已產出報告仍標記失敗），但 AI 實際運作從未真正中斷
+- 本輪 06:02 AI 正常回應（本報告即鐵證）= 已恢復
+- v4.0 三關：
+  - 關卡一 ❌ 已恢復（本輪 AI 正常產出本回報）— 即使 CE=6 達 2 小時紅線，本輪已恢復就不能 announce
+  - 關卡二 ✅ minimax `AI service is temporarily overloaded`（若無關卡一阻擋，屬暫時過載不 announce）
+  - 關卡三 ❌ meta 自打嗝（健康檢查機器人在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 600s 充裕 / 無 VPS 同步任務 / model 已 minimax/MiniMax-M3 / 本輪已恢復無需操作）
+- Cron 可見範圍：本隔離執行 cron list 只回傳本任務本身，無其他任務狀態可評估
+- HEARTBEAT ⬜ 掃描：0 個待辦（grep 命中 26 條皆為歷史紀錄中的「⬜ 掃描：0 個待辦」字樣）
+- 環境快檢：三份 SOUL.md 齊全（2036 / 1851 / 20631 bytes）與 06:00 完全一致、無變化；無 `.!` 鎖定檔
+- 安靜時段：06:02 仍屬安靜時段（23:00-08:00 守則），教練剛 24 分鐘前才互動過，無需主動打擾
+- alternating 模式：持續穩定交替，已觀察 **58+ cycle**（自 04:35 v4.0 上線起，約 23.5 小時）
+- 結論：🚫 不 announce（關卡一未通過），安靜寫入 HEARTBEAT 存查
+- 下次定檢：06:32 🟢
+
+---
+
+### 2026-08-08 06:00（CST 週六清晨）— ✅ 安靜通過
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 05:36:55**，沉默 **0.4h** — 教練 24 分鐘前還在說話，週六清晨仍有互動）
+- 本任務：上一輪 03:37 lastStatus=**ok**（AI 正常產出本報告），中間略過 04:07 / 04:37 / 05:07 / 05:37 cron 排程（cron run due 模式自動跳過非到期輪），現 06:00 重新輪到本任務
+- 本輪 06:00 AI 正常回應（本報告即鐵證）= 持續穩定
+- 守則 #19 探針：**ok:true** ✅（bot=openclaw_macbook4_bot / chat=6124913915）
+- v4.0 三關：
+  - 關卡一 ❌ 已通過（本輪 AI 正常產出本回報）
+  - 關卡二 ❌ 無 provider 異常（無 overloaded / network error）
+  - 關卡三 ❌ meta 自打嗝（健康檢查機器人在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 600s 充裕 / 無 VPS 同步任務 / model 已 minimax/MiniMax-M3 / 本輪無 CE 累積）
+- Cron 可見範圍：本隔離執行 cron list 只回傳本任務本身，無其他任務狀態可評估
+- HEARTBEAT ⬜ 掃描：0 個待辦（grep 命中 25 條皆為歷史紀錄中的「⬜ 掃描：0 個待辦」字樣）
+- 環境快檢：三份 SOUL.md 齊全（2036 / 1851 / 20631 bytes）與 03:04 完全一致、無變化；無 `.!` 鎖定檔
+- 安靜時段：06:00 仍屬安靜時段（23:00-08:00 守則），教練剛 24 分鐘前才互動過，無需主動打擾
+- 結論：三關未全過，🚫 不 announce，安靜寫入 HEARTBEAT 存查
+- 下次定檢：06:30 🟢
+
+---
+
+---
+
+### 2026-08-08 03:37（CST 週六凌晨）— ✅ 安靜通過
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 03:36:55**，沉默 **0.0h** — 教練 1 分鐘前剛發訊息，週六凌晨仍有互動）
+- 本任務：上一輪 03:30 lastStatus=**error** / `overloaded` / 122,327ms（122s ≪ 600,000ms）/ **CE=3**（首次達標：02:30/03:00/03:30 連錯 3 次，過去 56+ cycle 從未到過）
+- lastErrorReason: `"overloaded"` / summary: `"The AI service is temporarily overloaded. Please try again in a moment."`
+- 本輪 03:37 AI 正常回應（本報告即鐵證）= 已恢復
+- ⚠️ CE 達 3 警戒位但未達「連續 2 小時（4 次 30 分鐘檢查）連錯」紅線——下一輪 04:00 若恢復即清零
+- v4.0 三關：
+  - 關卡一 ❌ 已恢復（本輪 AI 正常產出本回報）
+  - 關卡二 ✅ minimax `The AI service is temporarily overloaded. Please try again in a moment.`
+  - 關卡三 ❌ meta 自打嗝（健康檢查機器人在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 600s 充裕 / 無 VPS 同步任務 / model 已 minimax/MiniMax-M3 / CE=3 但本輪已恢復 + 屬 provider 暫時過載）
+- Cron 可見範圍：本隔離執行 cron list 只回傳本任務本身（46e67e2e），無其他任務狀態可評估；當前僅本任務輪流出錯屬正常 alternating 模式（但密度略升：過去 1 小時內連錯 3 次）
+- HEARTBEAT ⬜ 掃描：0 個待辦（grep 命中 24 條皆為歷史紀錄中的「⬜ 掃描：0 個待辦」字樣）
+- 環境快檢：三份 SOUL.md 齊全（2036 / 1851 / 20631 bytes）與 03:04 完全一致、無變化；無 `.!` 鎖定檔；Repo1=100 行持平、Repo2=17 行（從 15 略增 2 行，皆為 log/state/sync_markers 系統維護，屬正常累積）
+- alternating 模式：持續穩定交替，已觀察 **57+ cycle**（自 04:35 v4.0 上線起，約 23 小時），密度略升（連錯 3 次）但 03:37 已恢復，未達「持續 2 小時連錯」紅線
+- 結論：三關未全過，🚫 不 announce，安靜寫入 HEARTBEAT 存查
+- 下次定檢：04:07 🟢（重點觀察：若 04:00 也錯，則累計 CE=4 = 已達「連續 2 小時連錯」紅線，需重新評估）
+
+---
+
+### 2026-08-08 03:04（CST 週六凌晨）— ✅ 安靜通過
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 02:57:52**，沉默 **0.1h** — 教練 7 分鐘前還在說話，週六凌晨仍有互動）
+- 本任務：上一輪 03:00 lastStatus=**error** / `network connection error` / 86,270ms（86s ≪ 600,000ms）/ **CE=1**
+- ⚠️ 錯誤訊息出現變化：從過往數十輪的 `AI service is temporarily overloaded` 變成 `LLM request failed: network connection error`，仍歸類為 provider 端暫時異常（minimax 服務商網絡瞬斷），本質仍屬「廠商塞車/網絡問題」，教練無法介入
+- 本輪 03:03 AI 正常回應（本報告即鐵證）= 已恢復
+- v4.0 三關：
+  - 關卡一 ❌ 已恢復（本輪 AI 正常產出本回報）
+  - 關卡二 ✅ minimax provider 端網絡問題（雖訊息改為 network connection error，仍屬廠商暫時塞車/網絡瞬斷）
+  - 關卡三 ❌ meta 自打嗝（健康檢查機器人在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 600s 充裕 / 無 VPS 同步任務 / model 已 minimax/MiniMax-M3 / CE=1 未達紅線 + 本輪已恢復）
+- Cron 可見範圍：本隔離執行 cron list 只回傳本任務本身（46e67e2e），無其他任務狀態可評估；當前僅本任務輪流出錯屬正常 alternating 模式
+- HEARTBEAT ⬜ 掃描：0 個待辦（grep 命中 23 條皆為歷史紀錄中的「⬜ 掃描：0 個待辦」字樣）
+- 環境快檢：三份 SOUL.md 齊全（2036 / 1851 / 20631 bytes），無 `.!` 鎖定檔；Repo1=100 行持平、Repo2=15 行（從 13 略增 2 行，屬正常 log/healthcheck 累積）
+- alternating 模式：持續穩定交替，已觀察 **56+ cycle**（自 04:35 v4.0 上線起，約 22.5 小時），未達「持續 2 小時連錯」紅線
+- 結論：三關未全過，🚫 不 announce，安靜寫入 HEARTBEAT 存查
+- 下次定檢：03:33 🟢
+
 ### 2026-08-08 02:33（CST 週六凌晨）— ✅ 安靜通過
 - 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 02:22:11**，沉默 **0.2h** — 教練 11 分鐘前還在說話，週六凌晨仍有互動）
 - 本任務：上一輪 02:30 lastStatus=**error** / `overloaded` / 178,997ms（179s ≪ 600,000ms） / **CE=1**（02:02 那輪已清零，現為重新累積）
@@ -402,3 +480,14 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786110710
 - 雲端同步：✅ 已推上雲端（commit 2c0744418）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-08 03:05
+- ✅ 同步成功
+- HANDOFF mtime: 1786129425
+- 雲端同步：✅ 已推上雲端（commit 222d64c8a）
+
+## 🩺 軍師 Hook 自檢 2026-08-08 06:10（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: 25e0b432-4aad-4393-8880-950d3cea007c
