@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧🔧🔧 訊息一進來當下就落地存底系統，修復8/3教練訊息遺失問題(2026-08-07)](reference_inbound_message_echo_log_system.md) — state/inbound_echo/，查「教練最後說話時間」先看這裡不信舊快取
+- [🔧🔧 教練跟軍師互動不限內容一律算「有理小龍蝦」，已用hook自動記錄(2026-08-07)](feedback_junshi_activity_counts_as_xiaolongxia_contact.md) — 8/3訊息遺失查證後教練提出，範圍選最寬版
 - [🔧 教練常同時開多個對話框下指令，某視窗只看到訊息片段是常態非事故(2026-08-05)](feedback_multiwindow_partial_message_not_lost.md) — 教練親口確認「另外一邊他會處理」，看到片段先問別直接判定未送達
 - [🔴🔴🔴 監控/健康檢查cron通知教練前要過三關：現在還壞嗎+非provider暫時過載+真影響工作(2026-08-05)](feedback_alert_only_when_actually_broken.md) — 健康檢查cron連錯5場但已自行恢復卻還announce，教練當場糾正浪費注意力
 - [🔴🔴 LINE分享連結預覽卡舊內容——官方Page Poker已停用，?v=參數是唯一解法(2026-08-05)](reference_line_share_preview_cache_bust.md) — og:標籤本身沒快取問題，快取發生在分享之後，越早補越安全
