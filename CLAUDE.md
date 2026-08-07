@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-07 21:55:20**
+> **最後同步：2026-08-08 03:05:29**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **mentor100百人導師計劃：訪客計數器+人工審核上架流程** | ✅v101本場完成 | 首頁到訪次數計數器+導師點擊排行榜+「加入計劃」改人工申請(申請→教練產生填寫連結→自填草稿→教練預覽確認上架)，教練刻意要「人工申請」體驗設計。詳見v101完整戰果+[[project_mentor100_review_gated_signup_2026-08-08]]。**待驗證**：教練尚未實際走過一輪完整真實申請人流程 |
+| 🟢 | **workshop-invite.netlify.app 移除台中場按鈕** | ✅v101本場完成 | 只留台南/台北場，其餘5個姊妹邀請頁教練裁示暫不動。deploy `6a75de3e8d2a6c2aadd104d4` |
 | 🟡 | **Email自動發送系統** | 🔒卡住-等教練給細節 | 2026-07-28教練提出下一個任務方向，僅先記錄，教練尚未說明要發什麼內容/給誰/觸發時機(定期報表？表單提交後自動回信？行銷群發？)，下一場先問清楚用途再評估技術方案(SMTP/SendGrid/Gmail API等) |
 | 🟢 | **event-signup抽獎轉盤(/wheel)：簽到名單自動帶入+獎品庫存追蹤** | ✅v85完成，7/29現場正式使用 | 詳見v85完整戰果。名單直接查簽到記錄不用手動輸入、獎品清單+抽中自動扣庫存+中獎彈窗+15句趣味台詞。7/29教練現場異地登入密碼重設(改成教練指定的新密碼)+實測登入成功，詳見v86 |
 | 🟢 | **LINE綁定率低(56簽到僅12綁定)真正原因+修復** | ✅v86已完成 | `/checkin`簽到路徑的`/slides`頁面沒有像線上報名`/thanks`頁面一樣幫來賓預填「我是OOO，剛報名了XXX」問候語，來賓要自己手動輸入才會綁定，多數人卡在這步放棄。已修復`slides_landing()`補上同一套`greet_url`邏輯，測試通過並部署，未來場次現場簽到綁定率應明顯改善 |
@@ -80,6 +82,50 @@
 
 ---
 
+# 軍師接力棒 · 2026-08-08 v101（Mac終端機 Sonnet 5，mentor100人工審核上架流程+workshop-invite台中場移除）
+
+> 建立時間：2026-08-07 深夜 ~ 2026-08-08 凌晨（台灣時間 21:11~02:58）
+> 本棒執行者：Mac 終端機 Sonnet 5
+> 上一棒：v100（Mac終端機 Sonnet 5，小龍蝦訊息遺失真根因修復+軍師互動算聯繫+三個站台維護任務）
+> 本棒主軸：**兩條主線。①`workshop-invite.netlify.app`（結繩領導學工作坊邀請頁，手動zip上傳型站台）移除已取消的台中場按鈕，本機預覽經教練確認後部署。②`mentor100.bymyway.com`（百人導師計劃）密集迭代：先加訪客計數器(熱度+精準人數)+導師點擊排行榜，接著把「我要加入百人導師計劃」從自動自助送出改成人工審核上架流程——教練原話「刻意營造你現在就是要人工申請的感覺」，最終落地三段式：申請(/apply三欄)→教練後台產生填寫連結(沿用最早設計的完整表單)→申請人自填仍是草稿→教練預覽後確認上架才公開。過程多次依教練回饋微調文案/欄位/UI，本場也踩到兩個環境教訓：自己清測試資料的時序撞上教練實測造成計數器誤判、claude-in-chrome在密碼欄位操作卡進其他擴充功能衝突，皆已寫入記憶。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 workshop-invite.netlify.app 移除台中場按鈕
+教練指定只留台南場+台北場。查證確認這是6個姊妹邀請頁(workshop-invite/peipei/richard/lavi、bni-invite/peipei)共用同一套內容，其餘5站教練明確裁示暫不動、只改這一個。本機`/tmp`建好HTML用Chrome預覽確認，教練說「推」後走zip+Netlify API部署，curl驗證台中場文字/按鈕完全移除、圖片Content-Type正常。額度手動補記48→47（deploy `6a75de3e8d2a6c2aadd104d4`，guard因指令有`-o`輸出重導向未自動扣）。commit `da2edc606`（workspace，額度記錄）。
+
+### 2. 🎯 mentor100：訪客計數器(熱度+精準人數)+導師點擊排行榜
+首頁新增到訪次數計數卡(取代原「我要參與導師同行計劃」按鈕位置，教練確認文案要用「次數」不用「人數」)，後台`/admin/stats`新增：累計來訪次數/不重複IP數兩張stat卡、重複造訪IP清單(哪些IP常回訪)、導師被點擊排行榜(金色長條+前三名獎牌)。全程用隔離副本(rsync整個repo到`/tmp`測試，避免污染production資料庫)驗證邏輯後才部署。commit `9cf57aa`+`3ec52ae`+`e1a9f5c`（mentor100獨立repo）。
+
+### 3. 🎯🎯🎯 mentor100：加入計劃改人工審核上架流程（本場核心）
+教練原話：「我本來就是要做的一件事，就是前期我都讓他們自動送出，那個階段已經結束了。我現在就是要刻意營造『你現在就是要人工申請』的感覺」。落地三段式：
+- **①申請**：首頁「我要加入百人導師計劃」連到`/apply`，只收姓名/公司職稱/LINE ID三欄，送出後寫入`applications`表+透過`sme-register-fn`(跟大樹小講同一套管線)通知教練LINE。舊的`/join`公開自助全欄位表單(GET+POST)已關閉、轉址到`/apply`；`/join/edit/<token>`(既有56位導師的自助修改連結)完全不受影響。
+- **②教練審核**：後台「導師申請名單」（教練要求`/admin`首頁最上方+`/admin/stats`兩處都要看得到）按「產生填寫連結」，建一筆`status='draft'`空白導師+沿用最早設計的完整自助編輯頁`/join/edit/<token>`專屬連結（教練原話「這個要回到最早我設計的那些、它可以填寫的所有欄位」，姓名/公司/簡介/照片/9組可自訂標籤連結一個都沒少），教練複製後親自傳給申請人。
+- **③預覽上架**：申請人自填資料仍是草稿、不會自動上架，教練在後台「預覽」(仿首頁卡片+modal樣式WYSIWYG)看過沒問題才按「確認上架」，`mentors.status`才變`published`，才會出現在公開首頁。
+
+`mentors`表新增`status`欄位(ALTER TABLE遷移，56筆既有資料全部保留published不受影響)，`applications`表新增`mentor_id`關聯欄位。過程中教練澄清兩次：拿掉「加LINE官方帳號」快捷按鈕改純資料送出；申請頁文案改三步驟流程說明。commit `7072acc`→`ae60923`→`6f563d9`→`6ce1df6`→`7ff1cbb`（mentor100獨立repo）。
+
+### 4. 🔧🔧 環境教訓兩則（已寫入記憶）
+①測試已上線功能（教練會盯著數字看的功能）不能直接在production db上測後清空，要用完整隔離副本(`rsync`整個repo到`/tmp`)，這場計數器一度讓教練誤以為「Mac 8次、Windows卻是第1次」是bug，查證後發現是自己清測試資料的時序撞上教練實測——已寫記憶`feedback_isolate_test_env_before_prod_db_testing`。②`claude-in-chrome`操作密碼欄位（後台登入）時卡進疑似密碼管理器擴充功能的浮層衝突，導致自動化截圖/點擊全部失敗，改用Flask `test_client()`等效驗證+誠實告知教練視覺確認缺口——已寫記憶`reference_claude_in_chrome_password_field_extension_conflict`。
+
+## 📋 下一場直接開工任務
+- mentor100人工審核流程教練尚未實際走過一輪真實申請人流程，下一場可主動問「有申請人試過完整流程了嗎」
+- 其餘卡住項目（BNI真誠/真愛/真AI分會、Email自動發送系統、bni-chapters預設密碼等）本場未觸碰，狀態不變
+- 接力棒瘦身：本場已封存v99到`handoff_archive/handoff_v99_archived_2026-08-08.md`，主檔現只留v101+v100
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/mentor100/app.py`+`db.py`+`schema.sql`：計數器/點擊排行榜/申請審核流程全部邏輯
+- `github_repos/mentor100/templates/apply.html`+`apply_thanks.html`+`admin_preview.html`：新增
+- `github_repos/mentor100/templates/admin_list.html`+`admin_stats.html`+`index.html`：更新
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/project_mentor100_review_gated_signup_2026-08-08.md`：新增，完整技術脈絡
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_isolate_test_env_before_prod_db_testing.md`：新增
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/reference_claude_in_chrome_password_field_extension_conflict.md`：新增
+- commit(mentor100獨立repo)：`9cf57aa`→`3ec52ae`→`e1a9f5c`→`7072acc`→`ae60923`→`6f563d9`→`6ce1df6`→`7ff1cbb`
+- commit(workspace，額度記錄)：`da2edc606`
+- commit(claude-brain記憶庫)：`d89b008f7`
+
+---
+
 # 軍師接力棒 · 2026-08-07 v100（Mac終端機 Sonnet 5，小龍蝦訊息遺失真根因修復+軍師互動算聯繫+三個站台維護任務）
 
 > 建立時間：2026-08-06 深夜 ~ 2026-08-07 晚間（台灣時間）
@@ -131,56 +177,9 @@
 - commit(openclaw master)：`e99184f4`(inbound echo hook)
 
 ---
-
-# 軍師接力棒 · 2026-08-05 v99（Mac終端機 Sonnet 5，opencode環境檢查報告review+bigtree金門場資訊補齊+結繩領導學官網大改版）
-
-> 建立時間：2026-08-05 下午～晚上（台灣時間 19:00~21:10）
-> 本棒執行者：Mac 終端機 Sonnet 5
-> 上一棒：v98（Mac終端機 Sonnet 5，結繩領導學5項調整+GitHub自動部署推送，同日較早的獨立session）
-> 本棒主軸：**三條主線。①教練把 opencode(MiniMax-M3) 寫的環境檢查報告轉來要我複審+反思「軍師為何沒抓到」，查證後發現報告本身也有兩處沒查證就下筆的瑕疵(自稱Opus5/CLAUDE.md鏡像關係)，回信給opencode+CORE_RULES新增R20+E12/E17鐵律擴充，順手在Repo1盤點時抓到`credentials/`真實金鑰從沒被`.gitignore`保護的真安全漏洞並修復。②bigtree大樹小講金門兩場補地址/座位/費用+時間修正(19:30-21:30)+隱藏3個已結束場次+新增「近期活動花絮」7/29真實照片輪播。③結繩領導學官網依教練提供的重構指令書全面重寫(新書發表→兩日工作坊銷售頁)，過程多輪UI微調，最後因未查證`jiesheng-leadership`是GitHub自動部署型，教練還沒說「推」就已經上線，是本場最大教訓。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 opencode環境檢查報告review+CORE_RULES新增R20
-教練把 opencode(MiniMax-M3) 主動做的「環境檢查」報告轉來，要我①檢查有無問題②反思「軍師為何沒抓到這些問題」。查證後發現報告本身有兩處未查證就下筆：a) 報告作者把自己(MiniMax-M3)誤植成「Opus 5」；b) 斷言`~/.claude/CLAUDE.md`跟`workspace/CLAUDE.md`「完全獨立、不是bug」，但實際上`scripts/sync_xinfa_to_claude_global.sh`等腳本真的存在部分鏡像關係。寫了一封回信給opencode(`knowledges/2026-08-05_軍師給OpenCode的回信_環境檢查報告回饋.md`)，並把「斷言前先查證、落款前先確認自己是誰」新增為CORE_RULES.md的R20，確保opencode下次開工必讀時看得到。同時把報告建議落地：E12鐵律新增「設定檔打架」判斷項、E17收工流程補環境健檢動作。commit `85a9c0644`（workspace）。
-
-### 2. 🔴🔴 Repo1(~/.openclaw)盤點時發現真安全漏洞：`credentials/`從沒被`.gitignore`保護
-盤點134行untracked時發現整個repo從未設過`.gitignore`，而`credentials/`目錄裝著真實LINE/Telegram secret/token(權限600)，一旦有人`git add -A`就會永久寫進git歷史。已新增`.gitignore`排除`credentials/`+`node_modules/`+資料庫備份快照，並補commit兩個乾淨的遺留變更(jiaolian_thoughts語音辨識誠實回覆+舊版opencode報告改名收尾)。commit `6965a61e`+`cd174376`（外層master repo）。
-
-### 3. 🎯 bigtree大樹小講：金門兩場資訊補齊+活動花絮輪播
-教練口述補齊8/21西浦頭社區(金門縣金寧鄉西浦頭231號，座位80人)+8/22向陽吉第社區(金門縣金城鎮西海路三段86號，座位60人)，皆免費、歡迎邀請非社區住戶參加；8/21時間修正為19:30-21:30(原寫21:00結束)；隱藏已結束的7/18線上讀書會+7/22高雄場+7/29台南場(資料留在git歷史，教練說法「反正在歷史紀錄裡面都看得到」)；新增「近期活動花絮」輪播(近期場次後、學員見證前)，7/29 AI微論壇台南場24張真實現場照片(`photos-carousel-0729/`，跟「緣起」輪播用的舊版活動剪影`photos-carousel/`是完全不同的兩批照片，md5核對過)。GitHub commit `e198f6e`。
-
-### 4. 🎯🎯🎯 結繩領導學官網大改版：新書發表→兩日工作坊銷售頁
-教練提供官網重構指令書(`~/Downloads/結繩領導學_官網重構指令書.docx`)，依11區塊架構全面重寫`index.html`：Hero雙欄(左文案/右書封，沿用舊版浮動動畫)→六大痛點→書/一般課程/工作坊比較表→四大工具(沿用原書內容改寫成「團隊問題→工作坊操作」格式)→兩天四階段(看見/判斷/操作/帶走)→學員見證(含3支FB見證影片連結)→關於曜董(後移)→成交區(NT$10,000，台南8/19-20+台北11/25-26)→FAQ。**舊版首頁(新書發表+11場座談會歷史)完整封存於`archive/`，圖片一併保留，首頁下方留連結可查看，不遺失**。過程多輪教練回饋微調：表頭四連結(工作坊/課程方法/學員回饋/關於曜董)+置中「立即報名工作坊」CTA+右側浮動導覽(仿舊版4圓形按鈕)+手機版漢堡選單+成交區報名按鈕置中(桌面版曾因Hero改版誤傷全域`.cta-row`置中樣式，已修正用`.hero-grid .cta-row`單獨override)+品牌字級22px+補齊`og:`/`twitter:`標籤(乾淨世界頻道連結`https://www.ganjingworld.com/@RPL50`同時補進footer)。每一輪修改都本機驗證(用瀏覽器互動測試按鈕/漢堡選單/RWD斷點)+開真實Chrome給教練看才進下一輪。
-
-### 5. 🔴🔴🔴 教訓：Netlify自動部署型站台未查證，教練還沒說「推」就已上線
-教練說「可以先推到GitHub，我讓團隊看完後再決定要不要推Netlify」，我直接執行`git push`——**沒有查證`jiesheng-leadership`是GitHub自動部署型**，想當然爾套用同場對話裡bigtree等手動上傳型站台的經驗。結果Netlify自動部署上線，教練親自發現「已經是新內容了」才揭穿，教練當場糾正：「這個就是你的問題，因為你沒有讀取開工檔案，你不曉得我每一次推播都會扣點數。」查證發現這個教訓其實**早就記錄在案**——`feedback_web_push_sop.md`判斷表格第一行代表站台就是`jiesheng-leadership`，`feedback_netlify_deploy_zip_api.md`也記著2026-06-09一模一樣的事故(當時是Sonnet 4.6犯的)。問題不是沒有經驗，是行動前沒有主動查記憶。已把這次(2026-08-05)重複犯錯的完整經過補進`feedback_netlify_deploy_zip_api.md`，更新description+MEMORY.md索引標題直接寫「動手前必查是哪型」。**教練裁示**：現狀不動(已上線的新版就保留)，之後所有修改一律只在GitHub上處理，不再碰Netlify。commit `7d8dbb5`(改版)+og標籤修正待下次一併commit。
-
-## 📋 下一場直接開工任務
-- 結繩領導學og標籤修正已收工時補commit `8acfa56`
-- **LINE快取後續**：教練問「快取多久會變」，WebSearch+DNS實測確認LINE無官方TTL、無除錯工具，`?v=`參數是唯一可靠解法；教練回報「快取已更新」時軍師一度誤判成jiesheng-leadership(45分鐘)，經教練澄清其實是指`ai-talk-tw.netlify.app`(約10-11小時)，已更正記憶`reference_line_share_preview_cache_bust.md`。教訓：教練提一句「快取改了」不要直接套用當下正在處理的網址，先確認是哪一個
-- Repo1剩餘94行untracked(5個agent目錄個人化設定檔全未進git)：涉及三機同步SOP架構決定，需要教練裁示方向，不要片面處理
-- 接力棒瘦身：主檔現有v99/v98/v97三棒，超過E16規定的「最新1~2棒」，下場建議封存v97
-
-## 🔑 本場關鍵檔案索引
-- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_netlify_deploy_zip_api.md`：新增2026-08-05二度誤推血淚段落+新鐵律
-- `~/.openclaw/CORE_RULES.md`：新增R20(斷言前先查證)
-- `~/.openclaw/執行細則.md`：E12新增設定檔打架判斷項、E17補環境健檢動作
-- `~/.openclaw/.gitignore`：新增，排除credentials/+node_modules+db備份快照
-- `~/.openclaw/knowledges/2026-08-05_軍師給OpenCode的回信_環境檢查報告回饋.md`：新增
-- `github_repos/bigtree/index.html`：金門場資訊補齊+活動花絮輪播區塊+JS
-- `github_repos/bigtree/photos-carousel-0729/`：新增，24張7/29真實照片
-- `github_repos/jiesheng-leadership/index.html`：全面重寫(11區塊)
-- `github_repos/jiesheng-leadership/archive/`：新增，舊版首頁+圖片完整封存
-- commit(openclaw master)：`6965a61e`+`cd174376`
-- commit(openclaw workspace)：`85a9c0644`
-- commit(bigtree)：`e198f6e`
-- commit(jiesheng-leadership)：`7d8dbb5`
-
----
-> 📦 **v98及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v99及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v100/v99)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新2棒(v101/v100)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
 
 ---
