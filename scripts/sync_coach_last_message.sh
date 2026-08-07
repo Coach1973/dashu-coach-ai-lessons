@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
-# 教練最後訊息時間真相源 — v3.2 (2026-08-02 健檢修復)
+# 教練最後訊息時間真相源 — v3.4 (2026-08-07 補強：echo log 優先於 memory 掃描)
 # 用途：任何要寫「教練沉默 N 小時/天」之前，必須先跑這支腳本
 #       把教練最後一則「真正」訊息時間，從 OpenClaw 自動寫的 memory/YYYY-MM-DD.md
 #       找出來，寫回 state/heartbeat-state.json
 #       然後才用 `date` 即時算差
 #       **禁止**沿用舊 coachSilentHours 數字（8/1/8/2 三次犯錯的根因）
+#
+# 🔴 v3.4 修復（2026-08-06 教練回報「明明有說話」查證發現的真根因）：
+#   2026-08-03 15:58:42 教練從 Telegram 傳訊息，gateway log 證實收到了，
+#   但那輪 agent turn 疑似被 API 429 卡死，訊息內容從沒寫進 memory/YYYY-MM-DD.md，
+#   導致這支腳本（只掃 memory）完全找不到，算出錯誤的沉默時數。
+#   新增 hooks/inbound-message-echo-log 在訊息「一進來」當下就同步落地存檔
+#   （不等 agent turn 跑完），這支腳本現在優先讀 echo log，
+#   跟 memory 掃描兩邊取「更新的那個」，不會再因為某輪 agent turn 死掉而漏算。
 #
 # 🔴 v3.2 修復（v3.1 遺留的致命 bug，健檢時發現）：
 #   memory/YYYY-MM-DD.md 裡「## 📨 對話記錄 HH:MM」段落標題，代表的是
@@ -46,7 +54,50 @@ if [[ ! -d "$MEMORY_DIR" ]]; then
   exit 1
 fi
 
-# === 逐天往回找，直到找到真的有教練訊息的那一天（最多回溯7天） ===
+# === v3.4 新增：先掃 inbound-message-echo-log（訊息一進來當下就落地，不受 agent turn 死掉影響） ===
+ECHO_DIR="$HOME/.openclaw/workspace/state/inbound_echo"
+ECHO_LAST_DATE=$(python3 << PYEOF
+import json, os
+from datetime import datetime, timezone, timedelta
+
+echo_dir = "$ECHO_DIR"
+tz = timezone(timedelta(hours=8))
+today = datetime.now(tz).date()
+
+# 教練本人的識別碼（Telegram chatId + LINE 兩組帳號），避免把其他發送者的訊息誤算進來
+COACH_IDS = {"6124913915", "u895a0ad8e49d75f8303dc3d067282dc0", "u168903487f0ba2b666ddc62b854de351"}
+
+latest = None
+if os.path.isdir(echo_dir):
+    for back in range(7):
+        d = today - timedelta(days=back)
+        path = os.path.join(echo_dir, d.strftime("%Y-%m-%d.jsonl"))
+        if not os.path.isfile(path):
+            continue
+        with open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                except Exception:
+                    continue
+                chat_id = str(entry.get('chatId', '')).lower()
+                if chat_id not in COACH_IDS:
+                    continue
+                ts_ms = entry.get('ts')
+                if not ts_ms:
+                    continue
+                dt = datetime.fromtimestamp(ts_ms / 1000, tz=tz)
+                if latest is None or dt > latest:
+                    latest = dt
+
+print(latest.strftime('%Y-%m-%dT%H:%M:%S+08:00') if latest else "")
+PYEOF
+)
+
+# === 逐天往回找，直到找到真的有教練訊息的那一天（最多回溯7天，memory 掃描作為備援） ===
 REAL_LAST_DATE=$(python3 << PYEOF
 import re, os
 from datetime import datetime, timezone, timedelta, date
@@ -88,8 +139,15 @@ print(result)
 PYEOF
 )
 
+# === 取 echo log 與 memory 掃描兩邊「較新」的那個，不因單一來源漏算而錯報沉默 ===
+if [[ -n "$ECHO_LAST_DATE" ]]; then
+  if [[ -z "$REAL_LAST_DATE" || "$ECHO_LAST_DATE" > "$REAL_LAST_DATE" ]]; then
+    REAL_LAST_DATE="$ECHO_LAST_DATE"
+  fi
+fi
+
 if [[ -z "$REAL_LAST_DATE" ]]; then
-  echo "$LOG_PREFIX ⚠️ 回溯7天都找不到真正的教練訊息（排除cron/心跳系統注入後）" >&2
+  echo "$LOG_PREFIX ⚠️ 回溯7天都找不到真正的教練訊息（echo log + memory 掃描皆無，排除cron/心跳系統注入後）" >&2
   echo "  → 請手動從 Telegram 確認教練最後訊息時間，不要編數字" >&2
   exit 1
 fi
