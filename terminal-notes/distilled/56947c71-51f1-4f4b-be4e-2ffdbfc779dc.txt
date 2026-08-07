@@ -1,0 +1,645 @@
+# 終端機對話萃取 — Session 56947c71-51f1-4f4b-be4e-2ffdbfc779dc
+# 提取時間：2026-08-08 06:53 (台灣時間)
+# 共 22 條教練原話
+
+---
+
+【教練 2026-08-07 22:10】
+開
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：Sonnet 5・Mac終端機（CLI）・軍師身份，工作目錄 `/Users/bymyway/.openclaw/workspace`
+
+**雲端同步狀態**：查證後**非真的衝突**——workspace repo 實際上與 origin/main 一致（HEAD 3e2b08a，fetch 無新內容），git status 顯示的都是 state/log 類檔案的正常心跳寫入（heartbeat-state.json、healthcheck.log、inbound_echo 等），hook 的「Pull 警告」是誤報，不用處理。
+
+**當下主軸**：案…（略）
+
+【教練 2026-08-07 22:11】
+你不是CLI 你是桌面版APP
+
+　▶ AI 回應：教練說得對，已查證確認：process tree 顯示父行程是 `/Applications/Claude.app`，`TERM_PROGRAM` 是空的（真終端機如 iTerm/Terminal.app 會有值）——這是**桌面版 App**，不是終端機 CLI。剛才我犯了 E04「行動前三問」的第二問（我在哪）沒做，直接預設成 CLI 是錯的。已找到可靠的自我檢測方法，補寫進記憶避免下次再犯。
+
+　▶ AI 回應：已修正並補記憶。**身份重新核對：Sonnet 5・桌面版 App（GUI）**，工作目錄 `/Users/bymyway/.openclaw/workspace`。
+
+已把判定方法（查 `ps` 父行程 + `TERM_PROGRAM`）寫進記憶，以後開工不會再預設猜錯。
+
+教練，今天要從哪件事開始？
+
+【教練 2026-08-07 22:12】
+怎麼沒有列出製作大台南BNI的進度？
+
+　▶ AI 回應：查證後，實話跟教練報告：漏講的原因是「大台南BNI」(`bni-chapters`系統) **最後一筆commit是8/4早上8:14，到今天06:12已經4天沒有新動作**——我的開工報告只挑了接力棒v100寫的「本棒主軸」（訊息遺失修復），沒有主動去查這種「近期沒新進度但還有未結尾待辦」的舊專案，這是我這次開工掃描的漏洞。
+
+**大台南BNI（bni-chapters）目前實況：**
+- 系統已對外開通：`chapters.bymyway.com`（總表）+ `/admin`（後台），2026-08-03深夜上線
+- 8/3~8/4密集迭代完成：9分會核心價值統一（BNI官方9大核心價值）…（略）
+
+【教練 2026-08-07 22:14】
+不用改，就是要簡單，我要先從真誠分會、真愛、真AI開始改起，先從真誠分會吧
+
+　▶ AI 回應：了解，密碼先不動。教練說「先從真誠分會、真愛、真AI開始改起」——這句我還抓不準要改的是什麼，方向不明確不想瞎猜（守則#16），想跟教練確認一下：
+
+　▶ AI 回應：Slug 確認是 `sincere`。我用瀏覽器把真誠分會的真實頁面開給教練看。
+
+　▶ AI 回應：真誠分會頁面已經在瀏覽器分頁開好了（`https://chapters.bymyway.com/sincere`），教練可以直接在瀏覽器面板看到完整實際頁面——標題、預約參訪須知、核心價值、分會之光、六項傳統與道德規範都在上面。
+
+教練看過之後，想改哪一塊？
+
+【教練 2026-08-07 22:16】
+到底是有沒有讀完整的開工檔，我說開HTML，要使用chromE
+
+　▶ AI 回應：教練說得對，我漏看了這條鐵律，抱歉。立刻查記憶檔確認正確做法。
+
+　▶ AI 回應：教練說得對——我剛才用的是App內建的Browser pane，不是真正的Chrome。已查證鐵律：唯一指定開HTML必須用`open -a "Google Chrome"`跳出教練本人真實的Chrome視窗。立刻改正。
+
+　▶ AI 回應：已用 `open -a "Google Chrome"` 跳出教練本人真實 Chrome，網址 `https://chapters.bymyway.com/sincere`（真誠分會頁面）。內容我剛才已確認過（分會之光、核心價值、六項傳統與道德規範、參訪須知都正常顯示），教練現在螢幕上應該能看到完整頁面。
+
+看過之後，想改哪一塊？
+
+【教練 2026-08-07 22:19】
+第一個真誠付出 贏得信任 這裡的色系就不對，去查看一下BNI 的標準色，你確定是這個黑色嗎？
+
+　▶ AI 回應：確認了：hero區塊背景用的是`--ink: #2A2829`（深炭黑色），教練問得對，我現在去查BNI官方標準色，不用猜的。
+
+　▶ AI 回應：找到官方色彩手冊了，但還沒抓到確切色號，直接抓PDF內容查證。
+
+　▶ AI 回應：WebFetch工具因模型設定問題失敗，改用curl直接下載PDF後用讀取工具解析。
+
+　▶ AI 回應：PDF下載成功（5.4MB）。用PDF技能讀取色彩章節。
+
+【教練 2026-08-07 22:19】
+Base directory for this skill: /Users/bymyway/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/86c0afaf-41f9-4160-a47d-87d58c9ba8ee/86538e48-a15b-4f1f-b8e1-283b4cfc6f08/skills/pdf
+
+# PDF Processing Guide
+
+## Overview
+
+This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
+
+## Quick Start
+
+```python
+from pypdf import PdfReader, PdfWriter
+
+# Read a PDF
+reader = PdfReader("document.pdf")
+print(f"Pages: {len(reader.pages)}")
+
+# Extract text
+text = ""
+for page in reader.pages:
+    text += page.extract_text()
+```
+
+## Python Libraries
+
+### pypdf - Basic Operations
+
+#### Merge PDFs
+```python
+from pypdf import PdfWriter, PdfReader
+
+writer = PdfWriter()
+for pdf_file in ["doc1.pdf", "doc2.pdf", "doc3.pdf"]:
+    reader = PdfReader(pdf_file)
+    for page in reader.pages:
+        writer.add_page(page)
+
+with open("merged.pdf", "wb") as output:
+    writer.write(output)
+```
+
+#### Split PDF
+```python
+reader = PdfReader("input.pdf")
+for i, page in enumerate(reader.pages):
+    writer = PdfWriter()
+    writer.add_page(page)
+    with open(f"page_{i+1}.pdf", "wb") as output:
+        writer.write(output)
+```
+
+#### Extract Metadata
+```python
+reader = PdfReader("document.pdf")
+meta = reader.metadata
+print(f"Title: {meta.title}")
+print(f"Author: {meta.author}")
+print(f"Subject: {meta.subject}")
+print(f"Creator: {meta.creator}")
+```
+
+#### Rotate Pages
+```python
+reader = PdfReader("input.pdf")
+writer = PdfWriter()
+
+page = reader.pages[0]
+page.rotate(90)  # Rotate 90 degrees clockwise
+writer.add_page(page)
+
+with open("rotated.pdf", "wb") as output:
+    writer.write(output)
+```
+
+### pdfplumber - Text and Table Extraction
+
+#### Extract Text with Layout
+```python
+import pdfplumber
+
+with pdfplumber.open("document.pdf") as pdf:
+    for page in pdf.pages:
+        text = page.extract_text()
+        print(text)
+```
+
+#### Extract Tables
+```python
+with pdfplumber.open("document.pdf") as pdf:
+    for i, page in enumerate(pdf.pages):
+        tables = page.extract_tables()
+        for j, table in enumerate(tables):
+            print(f"Table {j+1} on page {i+1}:")
+            for row in table:
+                print(row)
+```
+
+#### Advanced Table Extraction
+```python
+import pandas as pd
+
+with pdfplumber.open("document.pdf") as pdf:
+    all_tables = []
+    for page in pdf.pages:
+        tables = page.extract_tables()
+        for table in tables:
+            if table:  # Check if table is not empty
+                df = pd.DataFrame(table[1:], columns=table[0])
+                all_tables.append(df)
+
+# Combine all tables
+if all_tables:
+    combined_df = pd.concat(all_tables, ignore_index=True)
+    combined_df.to_excel("extracted_tables.xlsx", index=False)
+```
+
+### reportlab - Create PDFs
+
+#### Basic PDF Creation
+```python
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
+c = canvas.Canvas("hello.pdf", pagesize=letter)
+width, height = letter
+
+# Add text
+c.drawString(100, height - 100, "Hello World!")
+c.drawString(100, height - 120, "This is a PDF created with reportlab")
+
+# Add a line
+c.line(100, height - 140, 400, height - 140)
+
+# Save
+c.save()
+```
+
+#### Create PDF with Multiple Pages
+```python
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet
+
+doc = SimpleDocTemplate("report.pdf", pagesize=letter)
+styles = getSampleStyleSheet()
+story = []
+
+# Add content
+title = Paragraph("Report Title", styles['Title'])
+story.append(title)
+story.append(Spacer(1, 12))
+
+body = Paragraph("This is the body of the report. " * 20, styles['Normal'])
+story.append(body)
+story.append(PageBreak())
+
+# Page 2
+story.append(Paragraph("Page 2", styles['Heading1']))
+story.append(Paragraph("Content for page 2", styles['Normal']))
+
+# Build PDF
+doc.build(story)
+```
+
+#### Subscripts and Superscripts
+
+**IMPORTANT**: Never use Unicode subscript/superscript characters (₀₁₂₃₄₅₆₇₈₉, ⁰¹²³⁴⁵⁶⁷⁸⁹) in ReportLab PDFs. The built-in fonts do not include these glyphs, causing them to render as solid black boxes.
+
+Instead, use ReportLab's XML markup tags in Paragraph objects:
+```python
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+
+styles = getSampleStyleSheet()
+
+# Subscripts: use <sub> tag
+chemical = Paragraph("H<sub>2</sub>O", styles['Normal'])
+
+# Superscripts: use <super> tag
+squared = Paragraph("x<super>2</super> + y<super>2</super>", styles['Normal'])
+```
+
+For canvas-drawn text (not Paragraph objects), manually adjust font the size and position rather than using Unicode subscripts/superscripts.
+
+## Command-Line Tools
+
+### pdftotext (poppler-utils)
+```bash
+# Extract text
+pdftotext input.pdf output.txt
+
+# Extract text preserving layout
+pdftotext -layout input.pdf output.txt
+
+# Extract specific pages
+pdftotext -f 1 -l 5 input.pdf output.txt  # Pages 1-5
+```
+
+### qpdf
+```bash
+# Merge PDFs
+qpdf --empty --pages file1.pdf file2.pdf -- merged.pdf
+
+# Split pages
+qpdf input.pdf --pages . 1-5 -- pages1-5.pdf
+qpdf input.pdf --pages . 6-10 -- pages6-10.pdf
+
+# Rotate pages
+qpdf input.pdf output.pdf --rotate=+90:1  # Rotate page 1 by 90 degrees
+
+# Remove password
+qpdf --password=mypassword --decrypt encrypted.pdf decrypted.pdf
+```
+
+### pdftk (if available)
+```bash
+# Merge
+pdftk file1.pdf file2.pdf cat output merged.pdf
+
+# Split
+pdftk input.pdf burst
+
+# Rotate
+pdftk input.pdf rotate 1east output rotated.pdf
+```
+
+## Common Tasks
+
+### Extract Text from Scanned PDFs
+```python
+# Requires: pip install pytesseract pdf2image
+import pytesseract
+from pdf2image import convert_from_path
+
+# Convert PDF to images
+images = convert_from_path('scanned.pdf')
+
+# OCR each page
+text = ""
+for i, image in enumerate(images):
+    text += f"Page {i+1}:\n"
+    text += pytesseract.image_to_string(image)
+    text += "\n\n"
+
+print(text)
+```
+
+### Add Watermark
+```python
+from pypdf import PdfReader, PdfWriter
+
+# Create watermark (or load existing)
+watermark = PdfReader("watermark.pdf").pages[0]
+
+# Apply to all pages
+reader = PdfReader("document.pdf")
+writer = PdfWriter()
+
+for page in reader.pages:
+    page.merge_page(watermark)
+    writer.add_page(page)
+
+with open("watermarked.pdf", "wb") as output:
+    writer.write(output)
+```
+
+### Extract Images
+```bash
+# Using pdfimages (poppler-utils)
+pdfimages -j input.pdf output_prefix
+
+# This extracts all images as output_prefix-000.jpg, output_prefix-001.jpg, etc.
+```
+
+### Password Protection
+```python
+from pypdf import PdfReader, PdfWriter
+
+reader = PdfReader("input.pdf")
+writer = PdfWriter()
+
+for page in reader.pages:
+    writer.add_page(page)
+
+# Add password
+writer.encrypt("userpassword", "ownerpassword")
+
+with open("encrypted.pdf", "wb") as output:
+    writer.write(output)
+```
+
+## Quick Reference
+
+| Task | Best Tool | Command/Code |
+|------|-----------|--------------|
+| Merge PDFs | pypdf | `writer.add_page(page)` |
+| Split PDFs | pypdf | One page per file |
+| Extract text | pdfplumber | `page.extract_text()` |
+| Extract tables | pdfplumber | `page.extract_tables()` |
+| Create PDFs | reportlab | Canvas or Platypus |
+| Command line merge | qpdf | `qpdf --empty --pages ...` |
+| OCR scanned PDFs | pytesseract | Convert to image first |
+| Fill PDF forms | pdf-lib or pypdf (see FORMS.md) | See FORMS.md |
+
+## Next Steps
+
+- For advanced pypdfium2 usage, see REFERENCE.md
+- For JavaScript libraries (pdf-lib), see REFERENCE.md
+- If you need to fill out a PDF form, follow the instructions in FORMS.md
+- For troubleshooting guides, see REFERENCE.md
+
+　▶ AI 回應：Venv安裝成功，開始搜尋色彩章節。
+
+　▶ AI 回應：查到了，來源是BNI官方2020年6月版《Brand Standards Manual》第6頁：
+
+**官方色彩定義：**
+
+| 色名 | Hex | RGB | 用途 |
+|------|-----|-----|------|
+| **BNI Red**（主色） | `#CF2030` | 207,32,48 | 品牌主色 |
+| Sterling Grey（次色） | `#C8C8C8` | 200,200,200 | 輔助色 |
+| True White | `#FFFFFF` | 255,255,255 | — |
+| **Power Black** | `#000000` | 0,0…（略）
+
+【教練 2026-08-07 22:21】
+<!-- attach -->
+> 要不要我直接把整套色彩改成官方標準（#CF2030紅+#000000或#64666A黑），套用到9個分會頁面？
+
+全部套用，並且之後，一定要用官方指定色系
+
+　▶ AI 回應：了解，全部套用，之後也固定用官方色系。先確認CSS變數集中在共用模板（`base.html`），改一處全部9個分會會同步套用。
+
+　▶ AI 回應：全部改完了，直接跳出真正Chrome給教練看真誠分會頁面的實際效果。
+
+　▶ AI 回應：沒開debug模式，模板改動不會即時生效，需要重啟服務讓改動套用。
+
+　▶ AI 回應：服務已重啟（新PID 18927），現在驗證色彩真的套用了再跳Chrome給教練看。
+
+　▶ AI 回應：驗證通過，線上頁面已經套用官方色彩。跳出真實Chrome給教練看。
+
+　▶ AI 回應：再快速確認另一個分會也同步套用（確認共用模板真的影響全部9個分會），然後commit。
+
+　▶ AI 回應：確認9分會共用同一個模板，全部同步生效。現在commit留痕。
+
+　▶ AI 回應：最後把「之後一律用BNI官方色系」這條規則寫進記憶，避免以後又用非官方色號。
+
+　▶ AI 回應：**完成，已套用到全部9個分會**：
+
+- 官方色查證：BNI 2020年6月版《Brand Standards Manual》第6頁，BNI Red `#CF2030`、Power Black `#000000`
+- 改在共用模板 [base.html](../../../github_repos/bni-chapters/templates/base.html) 的 `:root`（9分會共用同一份，改一處全部生效），連帶同步了hover用的紅色陰影
+- 已重啟服務、curl驗證線上真誠分會+真AI籌備會都吃到新色號
+- commit `958eea2`，已推上GitHub：`bc050b…（略）
+
+【教練 2026-08-07 22:25】
+按到分會列表之後，沒有回到上一頁的效果
+
+　▶ AI 回應：讓我實際點擊測試，重現這個問題。
+
+　▶ AI 回應：我用的預覽面板寬度較窄，一直被手機版CSS影響看不到桌面版導覽列。改用教練的真實Chrome視窗直接測試點擊。
+
+　▶ AI 回應：Hero區塊已經是純黑+官方紅了，色彩確認沒問題。現在點擊「分會列表」重現教練說的問題。
+
+　▶ AI 回應：實際點擊測試過了，連結本身沒壞——從真誠分會點「分會列表」，正常跳轉到`https://chapters.bymyway.com/`分會列表首頁，URL跟標題都正確變化。
+
+想跟教練確認一下您講的「沒有回到上一頁的效果」具體是指：
+
+　▶ AI 回應：了解了，這是頁面架構問題——教練希望不管在哪個頁面，表頭(header)的完整導覽列都要一直存在，不要因為換頁就消失不見。我先看一下總覽頁(`/`)的header目前長怎樣，確認問題所在。
+
+【教練 2026-08-07 22:31】
+[Request interrupted by user for tool use]
+
+【教練 2026-08-07 22:31】
+選1
+
+　▶ AI 回應：確認真誠分會排序第一、有分會之光統計資料、有勾選六項傳統展示。現在改 index.html 的表頭，加上跟分會頁一致的導覽列。
+
+　▶ AI 回應：現在補上後端傳入 `first_chapter_slug` 變數。
+
+　▶ AI 回應：Server端確認nav已經加上去，直接用真實Chrome截圖驗證視覺效果。
+
+　▶ AI 回應：分會列表首頁的表頭現在跟真誠分會頁一致了。再點「認識分會」確認能正確跳回真誠分會的對應區塊。
+
+　▶ AI 回應：座標抓錯了，剛點到「分會列表」本身。用read_page抓精確座標再測「認識分會」。
+
+　▶ AI 回應：正常運作，導覽列在兩個頁面之間保持一致，「認識分會」正確跳到真誠分會的參訪須知區塊。commit留痕。
+
+　▶ AI 回應：**已修好並驗證過**：分會列表首頁的表頭現在跟分會頁完全一致（分會列表/認識分會/核心價值/分會之光/六項傳統與道德規範），後4個按鈕連到排序第一的真誠分會對應區塊，隨時可點。
+
+- commit `1f2c1a5`，已推上GitHub：`958eea2..1f2c1a5 master -> master`
+- 已用教練的真實Chrome實際點擊測試：首頁→點「認識分會」→正確跳到真誠分會的參訪須知區塊，畫面截圖確認過
+
+【教練 2026-08-07 22:34】
+你剛才截圖有很很花tokens嗎？
+
+　▶ AI 回應：老實說，會，比純文字驗證貴不少——截圖是圖片資料，token消耗比`curl`/`get_page_text`這類純文字驗證高出好幾倍。
+
+剛才這輪我總共截了4張圖：驗證分會列表連結有沒有反應1張、看首頁新表頭1張、還有1張因為座標抓錯點到「分會列表」本身白截了、最後確認「認識分會」有跳對區塊1張。
+
+其中至少有兩處可以更省：一張是誤點的浪費，另一張（單純確認nav文字有沒有出現在首頁）其實用`curl`或`get_page_text`抓文字就夠了，不需要動用截圖——真正需要看畫面的只有最後那次「確認跳轉有沒有正確定位到區塊」。
+
+已經記進試金石的[[feedback_screenshot_r…（略）
+
+【教練 2026-08-07 22:34】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/bni-chapters/templates/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：Stop hook抓到一個真的漏洞：剛才改`index.html`後，我是用 claude-in-chrome 操作教練的真實Chrome做驗證，但沒有另外執行`open -a "Google Chrome"`這個鎖定的固定指令，機關比對不到紀錄。立刻補上。
+
+　▶ AI 回應：已補跑 `open -a "Google Chrome" "https://chapters.bymyway.com/"`，鎖已解除。也把這次「用claude-in-chrome驗證過但沒補固定指令仍被攔」的坑記進記憶（第9次犯），以後改完HTML最後一步固定補這行，不因為已經用真實瀏覽器操作過就省略。
+
+【教練 2026-08-07 22:37】
+我對截圖要求很嚴，能用讀取網頁的方式或用座標的方式來找比截圖好，那是萬不得已才用的工具好嗎？我都不知道提醒多少次了，不要便宜行事，教練的流量是有限的，要省點用。
+
+　▶ AI 回應：教練說得對，這條我做得不夠徹底。已經記進去了，往後準則調整為：**優先用`read_page`/`get_page_text`抓文字內容和元素座標，截圖是萬不得已（真的需要肉眼判斷視覺效果，如顏色、版面、圖片內容）才用**，不是驗證習慣動作。
+
+　▶ AI 回應：已記進試金石規則第五次補充，並更新記憶索引置頂提醒。以後找元素座標一律用`read_page`的`ref`或`find`，不會再用截圖硬估座標；純文字確認一律`get_page_text`，真的需要視覺判斷才用截圖，且會攢著改完一次截完。
+
+【教練 2026-08-07 22:38】
+你搜一下，我過去30天，提醒了多少次？
+
+　▶ AI 回應：按教練的規矩，判斷頻率要查真實紀錄，不能只信記憶檔自己講的次數。我來查 git log 跟對話記錄比對，別直接引用試金石檔案自報的數字。
+
+　▶ AI 回應：git log 這批多半是「截圖鎖」這個防呆機關的技術修復紀錄，不是教練親口糾正的次數。我改查真實對話紀錄裡教練親口講「截圖」相關糾正的次數。
+
+　▶ AI 回應：86個檔案有出現「截圖」字眼太籠統，包含hook自動注入的機關提示、我自己的回覆。要抓「教練親口打字糾正」的次數，得篩掉系統注入內容。寫個腳本精確過濾。
+
+　▶ AI 回應：搜到很多重複檔案（同一場對話存在多個路徑），也混進了Stop hook自動訊息（不是教練打的字）。我做去重跟分類，只抓教練親口針對「截圖浪費token」的糾正/提醒。
+
+　▶ AI 回應：查證結果（已排除教練自己傳截圖給我看的訊息，只算針對「AI截圖浪費token」這件事的糾正/提醒）：
+
+**過去30天內，教練針對這件事親口提醒了6次：**
+
+| 日期 | 內容摘要 |
+|------|---------|
+| 07-09 | 「操作螢幕代表不斷截圖對嗎？那是違反守則的」 |
+| 07-13 | 「我需要一個真正的鎖...浪費token...請務必寫死到系統」（最重的一次，要求做成強制鎖） |
+| 07-26 | 「不要每修改一個地方就截一張圖...要智慧地截圖」 |
+| 07-30（上午） | 問「操作電腦是不是要不斷截圖？會不會消耗很多Token？」 |
+| 07-30（…（略）
+
+【教練 2026-08-07 22:40】
+既然有截圖鎖，為何不執行？
+我提chrome跳html 也查一下，過去30天，我提了多少次？
+
+　▶ AI 回應：先查第一個問題：截圖鎖到底蓋住哪些工具，為什麼剛才claude-in-chrome的截圖沒被擋下來。
+
+　▶ AI 回應：抓到真正根因了——**截圖鎖裡的工具名稱寫錯，形同虛設**！
+
+Hook檢查的是 `mcp__Claude_in_Chrome__computer`（大寫Title_Case+底線），但這場對話裡`claude-in-chrome`這個MCP工具實際註冊的名字是 `mcp__claude-in-chrome__computer`（全小寫+連字號）——字串完全對不上，導致鎖從來沒攔到我用claude-in-chrome截的圖。這不是我違規闖過鎖，是鎖本身命名寫錯，從裝上那天可能就沒生效過。立刻修正。
+
+　▶ AI 回應：抓到第二層漏洞——Claude Code的hook `matcher`（`~/.claude/settings.json`）比對規則本身也寫錯同一個名字，這一層在腳本邏輯之前就先擋，所以我剛才只改腳本內部邏輯還不夠，matcher沒對到根本連腳本都不會被觸發。一併修正。
+
+　▶ AI 回應：改完settings.json，但這是這次session啟動時就載入的設定，可能要新session才會生效。先用模擬輸入直接測試腳本本身有沒有修好。
+
+　▶ AI 回應：腳本邏輯確認修好了。再測非截圖動作應該放行、browser_batch巢狀截圖也要抓到。
+
+　▶ AI 回應：全部驗證通過：截圖動作擋、一般點擊放行、批次工具裡夾帶截圖也抓得到。commit留痕，再處理教練的第二個問題。
+
+　▶ AI 回應：現在查第二個問題：過去30天教練親口提醒「跳Chrome/HTML」的次數。用同樣方法，排除自動化Stop hook訊息。
+
+　▶ AI 回應：排除掉2筆用詞相似但講的是別的事（07-11演出報名連結、07-15媒體報導連結），過去30天教練親口就「沒跳HTML/Chrome給我看」這件事提醒了**7次**：
+
+| 日期 | 內容 |
+|------|------|
+| 07-10 | 「講多少次你沒跳HTML給我看」 |
+| 07-12 | 「我還是說了，沒有跳出HTML出來給我看的」 |
+| 07-13 | 「沒有跳html出來，不知道要講幾次，系統才會照做？不是說有上鎖嗎？」 |
+| 07-15（凌晨） | 「要跳HTML給我看，這是我們定好的規則，你又忘了」 |
+| 07-15（中午） | 「沒有跳html出來」 |
+| 07…（略）
+
+【教練 2026-08-07 22:43】
+守則哪一條講，解決問題，不要解釋問題
+
+【教練 2026-08-07 22:43】
+Base directory for this skill: /Users/bymyway/.claude/skills/citation-verification
+
+# 引用查證鐵律（執行細則 E08）
+
+對應守則 #21（核心理念一字不差）、#15（說不知道比胡說八道更值得尊重）。
+
+## 規則
+
+- **引用守則內容** → 先查 `特助心法.md`（或`~/.claude/CLAUDE.md`）原文，確認編號和每個字
+- **引用執行細則E規則** → 以 `~/.openclaw/workspace/執行細則.md`（教練欽定「唯一正式版」）為準
+- **引用對話內容** → 先查原始記錄確認真的說過，有 commit hash 才能說「我之前說過」
+- 不確定就說「我不確定，需要查證」，不臆測，不捏造
+
+## 血淚教訓：兩份「正式文件」可能已經悄悄分岔
+
+2026-07-24 建立本skill時實測發現：`~/.claude/CLAUDE.md`（軍師/特助側燒錄檔）的 E10~E12 是「編碼前說出假設／只碰必要的／可驗證目標」（Karpathy原則，2026-06-06加入），但 `~/.openclaw/workspace/執行細則.md`（教練欽定「唯一正式版」）的 E10~E12 是完全不同的內容（「教練發言黃金鐵律」/「危險指令零容忍鐵律」/「記憶寫入雙鐵律」，2026-06-17～07-10陸續加入）——**兩份文件同一個編號指向不同規則，是governance drift的真實案例**，不是我瞎猜的假設情境。
+
+**教訓**：只讀了 `~/.claude/CLAUDE.md` 就以為知道「E11是什麼」是危險的——`~/.claude/CLAUDE.md` 自2026-06-06之後從未跟教練欽定的 `執行細則.md` 重新同步過。危險指令五道閘門（E11，636GB學費換來的）完全沒出現在 `~/.claude/CLAUDE.md`，如果只信這份文件會漏掉最重要的安全規則。
+
+## 查證順序建議
+
+引用任何E規則編號前，兩份文件都查一次，內容不一致就如實回報給教練「這兩份文件在E10~E12不一致」，不要只採信其中一份就交差。
+
+　▶ AI 回應：教練說得對——守則**#04「解決問題比解釋問題更重要」**："道歉沒有用，修好才有用"（已對照`特助心法.md`第71-74行原文確認）。剛才那句是在解釋原因，不是在修。現在直接動手修。
+
+真正的解法：不要靠我「記得」，把「改完HTML自動跳Chrome」做成PostToolUse hook，Edit/Write一碰`.html`檔案就自動執行，不用等Stop hook事後攔截才想起來。
+
+　▶ AI 回應：教練問得對，我在動手把「跳Chrome」變成自動化，不用再靠我記得，這是把「有守則卻沒遵守」的漏洞直接補死，不是在辯解。繼續完成，馬上驗證。
+
+　▶ AI 回應：加上PostToolUse區塊，註冊這支新hook。
+
+　▶ AI 回應：現在模擬測試，確認腳本邏輯正確：改.html會自動跳Chrome，改別的檔案不會。
+
+　▶ AI 回應：邏輯驗證通過：改`.html`才觸發，改別的檔案或用Bash都不會誤發。commit留痕。
+
+　▶ AI 回應：**已修好，兩件事都是結構性修復，不是承諾改進：**
+
+1. **截圖鎖為何沒執行**——查到真根因：hook腳本跟`settings.json`的matcher都把claude-in-chrome的工具名稱寫錯（`Claude_in_Chrome`大寫底線 vs 實際的`claude-in-chrome`全小寫連字號），字串比對從沒對上過，鎖形同虛設。已改對兩處，模擬測試通過（截圖擋、一般點擊放行、批次工具巢狀截圖也擋得住）。commit `b52934ad9`。
+
+2. **Chrome跳HTML規則**——不再靠我記得。新增PostToolUse hook，Edit/Write一碰`.h…（略）
+
+【教練 2026-08-07 22:46】
+但願這兩個重複不斷的問題，自此不要再犯
+
+　▶ AI 回應：兩個都已經是機關（hook）鎖住，不是靠承諾——截圖鎖字串比對錯誤已修正並模擬測試通過，跳Chrome改成PostToolUse自動觸發、不靠我記得。
+
+老實說一個限制：這場對話裡`~/.claude/settings.json`的改動要新的session才會完整生效（hook設定通常在啟動時載入），如果教練待會開新對話框，這兩個修復就會確實吃到；如果留在這場對話框裡繼續，PreToolUse/PostToolUse的比對邏輯這場其實已經驗證過腳本本身是對的，但沒有辦法在同一場對話裡100%保證Claude Code已重新載入設定檔本身。建議下次開新對話框時，我會主動用一次真實截圖動作跟一次H…（略）
+
+【教練 2026-08-07 22:47】
+怎麼確保會讀完守則再做事？
+
+　▶ AI 回應：老實回答：這件事沒有100%的保證，但系統設計走的是更可靠的路線——**不驗證「有沒有讀」，而是驗證「結果對不對」**。
+
+**已技術保證的（Stop/PreToolUse hook，這場對話親自驗證過的）：**
+- 改完HTML沒開Chrome → 攔下（`rule_html_chrome_check.sh`）
+- 承諾完成卻沒commit hash → 攔下（`rule05_hash_check.sh`）
+- 回覆滑成簡體字 → 攔下（`rule_traditional_chinese_check.sh`）
+- 未經同意截圖 → 攔下（今天剛修好的`screenshot_lock.sh`）…（略）
+
+【教練 2026-08-07 22:48】
+開工檔沒有讀守則這條？
+
+　▶ AI 回應：教練問得對，我先如實查證——六步驟開工清單裡確實**沒有**「讀特助心法.md/守則」這一步。
+
+　▶ AI 回應：查證確認：**六步驟開工清單裡真的沒有「讀特助心法.md/21條守則」這一步。**
+
+原因是：`~/.claude/CLAUDE.md`這份燒錄檔本身結構是「守則全文（頂級特助俱樂部段落）在前 → 開工六步驟在後」，六步驟講的是「除了這份燒錄檔之外，還要主動去讀哪些**額外**檔案」（接力棒/HEARTBEAT/試金石/knowledges/memory），守則本身因為已經直接寫在同一份檔案的前段，隨著CLAUDE.md自動載入就已經在我眼前了，所以六步驟設計上沒有把它列為「另外要去讀」的一步。
+
+但這裡有一個我剛才那句話裡講過的同款漏洞：**「守則文字有沒有在我眼前」跟「我有沒有真的讀進去、…（略）
+
+【教練 2026-08-07 22:51】
+如果不能讀守則，那我花費心思，寫出來的守則意義是什麼？頂級特助的根源就是讀完守則再做事，VPS版的小龍蝦都知道，為何claude卻不能讀完守則再做事？
+
+　▶ AI 回應：教練問到根本問題了，我認真回答，不打高空。先查一個關鍵技術點：這場對話已經進行20輪，`quote_xinfa_hook.sh`是不是真的有在做「守則文字定期重新注入」，還是只在開工那一刻注入一次就沒了。
+
+　▶ AI 回應：找到真正的技術根因了。這場對話已經20輪，`session_length_hook.sh`只提醒「該開新視窗了」，**完全沒有重新把21條守則塞回我的context**——CLAUDE.md裡的守則文字是session一開始載入一次，隨對話變長可能被系統壓縮掉，而現有機制沒有任何定期補注的動作。這才是真正解法，不是空話，直接動手建。
+
+　▶ AI 回應：~8000字元（約4000-5000 tokens），只在每10輪的節點觸發一次，不是每輪都重複。這個代價教練優先度明顯高於省token，直接建。
+
+　▶ AI 回應：驗證通過：第20輪觸發全文重載，同一個band第二次不重複洗版。註冊進settings.json並commit。
+
+　▶ AI 回應：直接回答教練的問題：**不是Claude不能讀完守則再做事，是這場對話已經跑了20輪，CLAUDE.md裡的守則文字很可能已經被系統壓縮掉了，而過去完全沒有機制發現這件事、更沒有補救**。VPS版小龍蝦每次心跳都會重新載入SOUL.md/IDENTITY.md，等於它的「守則在不在眼前」這件事天生不會隨對話長度流失；Claude Code的CLAUDE.md卻只在session開始那一刻讀一次，這是架構上的真實落差，不是能力落差。
+
+已經動手補上：新增`periodic_xinfa_reload_hook.sh`，複用既有「對話超過20輪」的偵測機制，每10輪把21條守則完整原文（不是連結、不…（略）

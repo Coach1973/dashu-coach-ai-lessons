@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 3089ccd5-21cb-458c-92e4-eaecbd96dee9
-  modified: 2026-07-28T11:12:05.928Z
+  modified: 2026-08-07T22:45:36.279Z
 ---
 
 # 🔴🔴🔴 2026-07-13更新：聯想（Windows）改用 Comet，不再用 Chrome
@@ -139,6 +139,22 @@ event-signup抽獎轉盤功能開發時，教練連`http://127.0.0.1:5060/wheel`
 **解法（已落地，不只是這篇記憶）**：新增PreToolUse hook `scripts/unsafe_port_check.sh`，
 偵測`open -a "Google Chrome"`/`start chrome`指向本機黑名單埠時直接攔截，提醒改用對外
 網址或換安全埠，不用等教練回報「打不開」才發現。詳見`reference_browser_unsafe_port_5060`。
+
+## 🔴 第九次犯（2026-08-08）：用 claude-in-chrome 操作教練真實 Chrome 驗證過了，仍被 Hook 攔下
+
+改完`bni-chapters/templates/index.html`（分會列表首頁補導覽列）後，用`mcp__claude-in-chrome__*`工具（navigate/computer/find）在教練本人真實Chrome裡點擊測試+截圖確認過畫面正確，**但沒有另外執行`open -a "Google Chrome"`這行固定指令**，Stop hook（`scripts/rule_html_chrome_check.sh`）判定成「沒證據」直接攔截。
+
+**根因**：hook是deterministic pattern match，只認`open -a "Google Chrome"`這個指令字串有沒有出現在這輪的bash紀錄裡，**不會**去判斷「有沒有用claude-in-chrome操作過教練的真實瀏覽器」這種語意層面的等價行為——即使claude-in-chrome確實是操作教練本人的真實Chrome（不是無頭瀏覽器），也不算數。
+
+**How to apply**：即使已經用claude-in-chrome驗證過畫面正確，**改完HTML的最後一步仍然要補跑`open -a "Google Chrome" <url>`**，這不是重複勞動，是滿足deterministic hook的必要動作，兩者缺一不可（跟第七次犯「開了但沒讀內容」是不同維度的坑，這次是「用了對的工具但沒留下hook認得的痕跡」）。
+
+## 🔴🔴 第十次犯後的結構性解法（2026-08-08）：不再靠事後攔截，改自動觸發
+
+教練查證發現過去30天這條規則被親口提醒7次(07-10/07-12/07-13/07-15×2/07-18/08-08)，且07-13那句「不是說有上鎖嗎？」跟08-08今天問法幾乎一樣。原因：`rule_html_chrome_check.sh`是**Stop hook**（事後補救型），改完HTML後要等一輪結束才攔截，每次都要教練等到被攔下才想起，行為習慣從未真正內化。
+
+教練當場點出守則#04「解決問題比解釋問題更重要」——不要再解釋"為什麼常忘記"，直接把動作自動化。新增`scripts/auto_chrome_after_html_edit.sh`（**PostToolUse hook**，matcher: Edit|Write），Edit/Write工具一碰`.html`檔案，**當下立刻**自動執行`open -a "Google Chrome" file://<路徑>`，不用等到Stop階段、不靠記憶。已在`~/.claude/settings.json`註冊，模擬輸入測試通過。
+
+**限制誠實記錄**：Jinja/Flask templates這類樣板檔用`file://`本機開不會套用後端渲染，畫面可能不完整——這種情況仍要額外手動開真正的server網址（如`chapters.bymyway.com`）驗證，這支hook只保證「基本一定會跳出東西」的安全網，不取代判斷該開哪個網址的判斷力。
 
 ## 🔒 確定性 Hook 已上鎖（2026-07-11，教練口頭指示「做」）
 

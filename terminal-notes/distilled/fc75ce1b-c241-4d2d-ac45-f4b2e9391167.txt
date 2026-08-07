@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session fc75ce1b-c241-4d2d-ac45-f4b2e9391167
-# 提取時間：2026-08-07 21:52 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-08-08 06:11 (台灣時間)
+# 共 17 條教練原話
 
 ---
 
@@ -59,3 +59,271 @@ Stop hook feedback:
 1. **接力棒**：v99（Mac 終端機 Sonnet 5）——opencode 環境檢查報告 review、Repo1 `credentials/` 安全漏洞修復（已補 `.gitignore`）、bigtree 金門場資訊補齊、結繩領導學官網大改版（教訓：Netlify 自動部署型站台未查證就推，已補進記憶）
 2. **HEARTBEAT**：系統穩定，健康檢查 cron 過去幾輪都是「三關未過→安靜存查」，無異常待處理
 3. **試金石**：最新案例是 opencode 陌生 provider name 瞎猜教訓（案例57）——已內化：看到陌生服務名稱先…（略）
+
+【教練 2026-08-07 17:28】
+https://mentor100.bymyway.com/  8月8日開始，我要做計數表，看來訪人數有幾個人。後台，我想要看每個老師被點擊的次數。你覺得怎麼做會很大器？
+
+　▶ AI 回應：我看了一下現在的網站結構——首頁 100 位老師是卡片，每張卡片有「查看簡介」按鈕點開會跳出彈窗（modal），這個點擊動作最適合當作「該老師被點擊次數」的計數點；後台目前只有一張純文字表格，走深色+金色的質感風格。
+
+我的建議：後台頂端加一個「數據總覽」區塊——左邊一個大數字卡片顯示「8/8 至今累計來訪人次」，右邊做一個**金色條狀排行榜**，把 100 位老師依點擊次數由高到低排列，前三名掛🥇🥈🥉，長條粗細直接反映點擊量差距，一眼看出誰最受歡迎。這樣比純數字表格更有「大器」感，也不需要額外前端框架，純 HTML/CSS 就能做出質感。
+
+主要取捨：來訪人數統計有兩種算法——「每次載入首頁…（略）
+
+【教練 2026-08-07 17:30】
+我兩個都要，因為我非常瞭解這個網頁的特質，同一個人會進來很多次（因為我們裡面有很多講師，所以他不會只來一次，可能想到了就進來看一下、想到了就進來看一下）。
+
+所以呢，熱度要有，但同時不重複的 IP 我們也要有，這樣我們才會知道是哪些 IP 重複上來，這兩個都要做。
+
+然後我們的首頁，這個總來訪量就是以「熱度」為主。我們在後臺，再來另外看「精準人數」，這樣可以嗎？
+
+　▶ AI 回應：Now updating db.py with the tracking and query functions.
+
+　▶ AI 回應：Now adding the `/admin/stats` route.
+
+　▶ AI 回應：Now creating the `admin_stats.html` template with the "熱度" total, unique-IP count, repeat-IP list, and the mentor click leaderboard.
+
+　▶ AI 回應：Now starting a test instance on a separate port to verify the whole flow end-to-end without touching the live production process.
+
+　▶ AI 回應：All endpoints behave correctly. Now checking the DB aggregation and admin dashboard rendering.
+
+　▶ AI 回應：Now stopping the test instance and cleaning up temp session artifacts.
+
+　▶ AI 回應：Restarting the production service so the live site picks up the new tracking code.
+
+　▶ AI 回應：功能已上線，正式站 `mentor100.bymyway.com` 已在跑新版本。整套設計：
+
+**首頁**：每次載入自動記一筆造訪（走 Cloudflare Tunnel 真實 IP，不是內部位址）；點「簡介」時同步回報該老師被點擊一次。
+
+**後台 `/admin/stats`**（名單頁右上角多了「數據總覽」入口）：
+- 兩張大數字卡片：**累計來訪次數（熱度）**＝含重複造訪、**不重複IP數（精準人數）**＝同一人只算一次
+- **重複造訪 IP 清單**：每個 IP 的造訪次數＋首次/最近一次時間，一眼看出誰常回來看
+- **導師點擊排行榜**：依「查看簡介」次數由高到低排，金色長…（略）
+
+【教練 2026-08-07 17:51】
+https://mentor100.bymyway.com/  我想做一個大大的或者小小的「本頁來訪次數」（也就是熱度，到底有多少人進來這個網頁看過）。
+
+首頁要有一個地方放這個數據，放在哪裡呢？應該是要放在這裡：你把前面那個「我要參與導師同行計劃」的按鈕，改成本頁「自 2026 年 8 月 8 日起到訪的人數」，好不好？這樣可以吧？
+
+　▶ AI 回應：Now updating the template — CSS and the header markup.
+
+　▶ AI 回應：Confirmed removed. Let me view it visually in real Chrome before deploying.
+
+　▶ AI 回應：視覺確認沒問題，質感跟整體風格一致。現在清理測試資料並部署到正式站。
+
+　▶ AI 回應：Now committing and pushing.
+
+　▶ AI 回應：已改好並上線，[mentor100.bymyway.com](https://mentor100.bymyway.com/) 現在首頁「我要參與導師同行計劃」按鈕的位置，換成一張跟網站風格一致的深色金框卡片，顯示大大的數字＋「自 2026 年 8 月 8 日起到訪的人數」，用真實 Chrome 看過畫面確認質感沒問題（用的是「熱度」算法，同一人重複進來都算，跟您上一輪要的邏輯一致）。下方原本第二顆「我要加入百人導師計劃」CTA 按鈕維持不動。
+
+計數器目前歸零乾淨，從您或任何人下一次真正點進網頁開始算數。commit [`3ec52ae`](https://github.com/Coach19…（略）
+
+【教練 2026-08-07 17:55】
+同時到今天晚上 23 點 59 分，我們就要關閉自動發送的按鈕，也就是我們下面的那一個按鈕，把它取消之後，變成人工申請所以當他按了「我要加入百人導師團隊」的時候，請你把它設計成像「大樹小講」一樣，會直接發送訊息到我的 LINE（小龍蝦）。
+
+因為我需要他加我個人的 LINE，所以在「我要加入百人導師團隊」那個連結點進去之後，他需要留下他的 LINE ID 給我。欄位包含：
+
+1. 姓名
+2. 聯絡方式（LINE ID）
+
+另外，頁面上可能也要留一下大樹教練的 LINE ID。緊接著就是說，到時候大樹教練會發一個輸入介面給他。
+
+你有聽懂我的意思吧？
+
+　▶ AI 回應：Now restarting the service to load the label fix — I'll explain the accumulation issue below.
+
+　▶ AI 回應：文案已改成「到訪次數」並部署，commit [`e1a9f5c`](https://github.com/Coach1973/mentor100/commit/e1a9f5c9e957e887a7c8c32f6927e5253830544e)。
+
+關於「Windows 只顯示第1次」——我查了資料庫，這顆計數器程式邏輯上**本來就是全站共用的一個總數**，沒有任何依瀏覽器/裝置分開計算的設計，Mac 跟 Windows 理論上看到的應該是同一個累加中的數字。我查目前資料庫紀錄，看到您 Mac（IP開頭210.62.21）跟 Windows（IP開頭58.114.41）的造訪其實都確實被記錄進同…（略）
+
+【教練 2026-08-07 18:02】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/mentor100/templates/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Google Chrome 開正式站給您看，「到訪次數」文案已生效。接下來繼續處理「加入百人導師團隊」改人工申請＋LINE通知的功能。
+
+【教練 2026-08-07 18:05】
+https://mentor100.bymyway.com/join我目前點進去看，它還是像之前一樣，所有的欄目都有。
+
+可是我現在要的不是這樣，我現在要的是他只需要送出他的姓名、公司，就是說寫一個「我想要申請加入 AI 百人導師團」，然後我的 LINE 會收到。
+
+所以我想請問，是不是這樣填完、送出之後，資料就會發到我的 LINE？就是你現在讓我看到的這一頁？
+
+　▶ AI 回應：Let me remove this leftover stub entirely — it's dead/broken code from my edit.
+
+　▶ AI 回應：Clean now. Let's verify the file compiles.
+
+　▶ AI 回應：Now removing the orphaned `join.html` template and repointing the homepage CTA.
+
+　▶ AI 回應：Now let's visually check the apply page and admin stats in real Chrome.
+
+　▶ AI 回應：Looks great — LINE add-friend button visible and styled correctly. Let's check the thanks page too.
+
+　▶ AI 回應：Both pages look clean and on-brand. Cleaning up the isolated test environment now and deploying to production.
+
+　▶ AI 回應：All live. Committing and pushing.
+
+　▶ AI 回應：Regression check passed. Now opening real Chrome for a final look at the live production page, per policy.
+
+　▶ AI 回應：已完成並上線，這次先誠實說一下前面的狀況：您稍早看到的 `/join` 完整表單確實是我還沒做完就被計數器 bug 岔開了，現在已經補上。
+
+**完整流程**：
+- 「我要加入百人導師計劃」按鈕現在連到全新的 `/apply`，只收**姓名／公司職稱／LINE ID**三欄（照您最後確認的版本）
+- 送出後：① 寫進資料庫留底（後台 `/admin/stats` 新增「導師申請名單」區塊可查） ② 透過 `sme-register-fn`（跟大樹小講同一套管線）直接通知您的 LINE ③ 頁面上跟送出成功頁都放了「小龍蝦」LINE官方帳號的加好友按鈕，讓對方也能直接主動加您
+- 舊的 `/jo…（略）
+
+【教練 2026-08-07 18:16】
+把可以先直接加「大樹教育」LINE 官方帳號，加快聯繫速度，這個拿掉，單純送出資料給我就行
+
+　▶ AI 回應：Now the thank-you page.
+
+　▶ AI 回應：Verifying no leftover references and syntax is valid.
+
+　▶ AI 回應：Clean, no leftover references. Restarting production and verifying.
+
+　▶ AI 回應：Confirmed removed on both pages. Let me view it in real Chrome.
+
+　▶ AI 回應：已拿掉，申請頁跟送出成功頁都只剩單純表單／確認文字，沒有加LINE官方帳號的區塊了。已用 Chrome 開正式站確認過，commit [`ae60923`](https://github.com/Coach1973/mentor100/commit/ae6092311c6c69a80bde28ae290feab3eb12f1d3)。
+
+【教練 2026-08-07 18:22】
+留下您的資料，教練會親自跟您聯繫，加您 LINE 後再請您填寫完整的導師介紹資料。
+
+改成－申請流程
+1.送出申請。2.大樹教練會親自跟您聯繫。3.會發一串網址給你讓您編輯您想呈現的資訊及您要上傳的資料。
+
+
+
+那麼問題來了，若有人要申請，我還是要送出https://mentor100.bymyway.com/join   這個網址讓他們填寫對嗎
+
+　▶ AI 回應：改好了、已上線。不過您問的問題正好戳到一個還沒補上的缺口，我老實說清楚：
+
+**`/join` 現在已經不能用了**——我上一步把它關掉、直接轉址到 `/apply`（就是您現在這個簡易申請頁）。所以如果您把 `https://mentor100.bymyway.com/join` 發給申請人，他們點進去只會看到跟現在一樣的「姓名/公司/LINE ID」申請表，不會是能填簡介、傳照片的完整編輯頁。
+
+流程說明裡的第3步「發一串網址給您編輯資訊」——這個網址目前**還沒有辦法產生**。原本能生成這種專屬連結的機制，是舊版自助送出表單填完後系統自動生成的；現在那條路關了，而後台「新增導師」又要求您…（略）
+
+【教練 2026-08-07 18:37】
+我來跟你說一下我的邏輯。
+
+我本來就是要做的一件事，就是前期我都讓他們自動送出，那個階段已經結束了。我現在就是要刻意營造「你現在就是要人工申請」的感覺。
+
+所以當他發他的 LINE 給我的時候。你說繞了一圈又回到原點，沒錯，我就是要這個結果，所以它不是繞一圈。我們要創造出一種「以前我讓你可以自己上傳的階段已經過了，現在你就是要先透過 LINE 跟我申請，我才會給你這個網址」的流程。
+
+你需要幫我補一個功能：在後台「導師申請名單」那邊，每筆申請按一個「產生填寫連結」，系統會建一筆空白導師資料＋專屬連結給我複製傳給對方，對方點進去就能自己填簡介、傳照片、加社群連結。
+
+8月8日之後需要審核。所以在後臺，你就可以做一下「預覽」，我看過沒問題再送出或者上架。
+
+這樣有了解嗎？
+
+　▶ AI 回應：Let's start with the schema and db layer.
+
+　▶ AI 回應：Now the migration logic in `db.py`'s `init_db()`.
+
+　▶ AI 回應：Now filter published-only in the click leaderboard.
+
+　▶ AI 回應：Now generating a placeholder photo for draft mentors.
+
+　▶ AI 回應：Now let's view the admin section to insert the new routes cleanly.
+
+　▶ AI 回應：Now adding preview and publish routes near the end.
+
+　▶ AI 回應：Now let's verify syntax and build the templates.
+
+　▶ AI 回應：Now let's run a full isolated test of the entire new flow.
+
+　▶ AI 回應：Migration works correctly, all existing mentors default to `published`. Now re-running the full flow test.
+
+　▶ AI 回應：Now clicking and typing via coordinates to avoid the extension conflict on the password field.
+
+　▶ AI 回應：It works now on this fresh tab. Continuing the login flow.
+
+　▶ AI 回應：No errors. Confirming migration applied to the real database and the site is up.
+
+　▶ AI 回應：已完成並部署到正式站，資料庫遷移也確認過（56位既有導師全數保留為「已上架」，一筆都沒受影響）。
+
+**完整流程**：
+1. 後台「數據總覽」的「導師申請名單」，每筆申請多了「產生填寫連結」按鈕
+2. 按下去會建一筆**空白草稿導師**（狀態=草稿，不會出現在首頁）＋沿用您最早設計的那個**完整自助編輯頁**（姓名/公司/簡介/照片/9組可自訂標籤的連結——原本 `/join/edit/` 那一套一個欄位都沒少），生成專屬連結給您複製
+3. 您把連結傳給申請人，對方自己填完資料、傳照片——**填完也還是草稿，不會自動上架**
+4. 您在後台按「預覽」，會看到跟首頁一模一樣的卡片呈現（照片/姓名…（略）
+
+【教練 2026-08-07 18:51】
+https://mentor100.bymyway.com/admin/mentors/new  我是要把這行發給申請人嗎？
+
+　▶ AI 回應：不是，那個網址（`/admin/mentors/new`）是您自己登入後台手動新增導師用的，不是要給申請人的連結。
+
+**申請人的連結要這樣拿**：
+1. 登入後台 → 點右上角「數據總覽」
+2. 找到「導師申請名單」那個表格
+3. 該筆申請按「產生填寫連結」
+4. 按鈕會變成「複製連結」，點一下就複製到剪貼簿
+5. 把這個連結傳給申請人（長相會像 `mentor100.bymyway.com/join/edit/一串亂碼`）
+
+申請人點進這個連結，才是他能自己填姓名、簡介、上傳照片、加社群連結的那一頁。
+
+【教練 2026-08-07 18:54】
+好，那我看到了。那請你再幫我修改一下：
+
+1. 把「導師申請名單」放在「導師名單」的最上面，讓我一點進來後臺就能看到。
+2. 「數據總覽」這邊也同步放。
+
+這樣的話，我不管是在「數據總覽」或者是「名單總覽」，我都能看到導師申請名單。
+
+　▶ AI 回應：Now let's update `admin_list.html` to add the applications section at the top, reusing the same styling from `admin_stats.html`.
+
+　▶ AI 回應：Now let's verify with the isolated test copy before deploying.
+
+　▶ AI 回應：Both pages render correctly, including his own real test entry. Cleaning up and deploying.
+
+　▶ AI 回應：No errors, live and correct. Committing and pushing.
+
+　▶ AI 回應：已完成並上線，`/admin`（導師名單頁，登入後第一眼看到的頁面）跟 `/admin/stats`（數據總覽）現在都在最上方有「導師申請名單」區塊，功能完全一樣（產生填寫連結／複製連結／預覽／草稿或已上架標記）。
+
+我也發現您稍早自己實測過的那筆申請（大樹教練／大樹教育／seabiscuit514）已經在兩邊都正常顯示，而且您已經按過「產生填寫連結」，所以現在兩頁都會看到「複製連結」按鈕可以用。
+
+commit：[`7ff1cbb`](https://github.com/Coach1973/mentor100/commit/7ff1cbb524b3a971057223bc0ce77e2d0…（略）
+
+【教練 2026-08-07 18:56】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/mentor100/templates/admin_list.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Google Chrome 開 `/admin` 給您看，登入後就會看到最上方的「導師申請名單」區塊。
+
+【教練 2026-08-07 18:57】
+收工，總結
+
+　▶ AI 回應：Now the two feedback/reference memory entries.
+
+　▶ AI 回應：**總結**（本場 2026-08-07 21:11 ~ 2026-08-08 02:58）：
+
+**做了什麼**：
+1. `workshop-invite.netlify.app` 移除已取消的台中場按鈕，只留台南/台北場，已部署驗證
+2. `mentor100.bymyway.com` 新增首頁「到訪次數」計數卡＋後台「導師被點擊排行榜」
+3. 「我要加入百人導師計劃」從自動自助送出改成**人工審核上架**三段式流程：申請人填姓名/公司/LINE ID → LINE通知您 → 您在後台按「產生填寫連結」拿到沿用最早完整版的自助編輯連結轉發 → 對方自填仍是草稿 → 您「預覽」確認沒問題才「…（略）

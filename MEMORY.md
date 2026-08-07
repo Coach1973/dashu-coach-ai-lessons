@@ -51,40 +51,29 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-06)
+## Promoted From Short-Term Memory (2026-08-08)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:7:7 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 剛才對話記錄滿了，自動重啟，零遺漏（已存到 `memory/2026-07-28.md` 並推上 GitHub）。 [score=0.886 recalls=0 avg=0.620 source=memory/2026-07-28.md:7-7]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:46:46 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 場次：【新報名通知】AI微型論壇－台南場（7/29 安平維悅酒店） [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:46-46]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:52:53 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 報名時間：2026/7/27 下午10:34:45 🦞 小龍蝦：收到，欄位都讀得到。🦞 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:52-53]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:55:55 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **第 1 份**：魏淑華（家管）／電話 1212131313／Email 未填／報名 2026/7/27 22:34 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:55-55]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:57:57 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **場次**：AI微型論壇－台南場（7/29 安平維悅酒店） [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:57-57]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:59:61 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 第二份你傳。讀完我就建議你直接給我 Google 表單後台（如果有的話），七、八十份一次拉，不用慢慢轉。 👤 教練：那既然做總整理，你就一併把 email 也都整理進去，因為到時候我們還可以通過 email 發信給對方，通知他們來開會 🦞 小龍蝦：好，Email 一定列入。🦞 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:59-61]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:63:64 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **整理表欄位我預定用這個：** `場次｜公司｜姓名｜電話｜Email｜報名時間` [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:63-64]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:66:66 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: Email 沒填的我會**保留空欄、絕不亂填**，之後要發信時自動跳過缺漏的人。 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:66-66]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:5:5 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 🦞 小龍蝦：在的，教練。🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-28.md:5-5]
-
-## Promoted From Short-Term Memory (2026-08-07)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:274:274 -->
-- 📨 對話記錄 12:52（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:274-274]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:278:278 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:278-278]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:282:285 -->
-- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:282-285]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:276:277 -->
-- 第一步｜Cron 任務狀態: 目前 cron 系統**僅有 1 個任務**：本任務「🦞 每30分鐘任務健康檢查」; 舊任務（每日 23:05 三機總結、06:00 海餅乾精神背誦、VPS 同步等）已被清理或停用，未在 cron list 中 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:276-277]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:280:283 -->
-- 第二步｜本次檢查結論: **任務本身**：前次 8:00 執行失敗; `lastErrorReason: "overloaded"`（minimax API 服務端暫時性過載）; `consecutiveErrors: 1`（紅線 3，目前未達）; `lastDurationMs: 178735`（3 分鐘，**未達** timeoutSeconds 600 上限，**非** timeout 類錯誤） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:280-283]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:284:286 -->
-- 第二步｜本次檢查結論: `lastDiagnosticSummary: "The AI service is temporarily overloaded. Please try again in a moment."`; **判定**：transient overloaded，**無法以 cron 設定修復**（不是 apiKey 失效、不是 timeout 設定過短）; **HEARTBEAT.md**：已讀，**無 ⬜ 標記待辦項目**、無 48 小時無進展項目 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:284-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:289:291 -->
-- 第三步｜處置: ✅ 不自動修復（overloaded 是服務端暫時問題，非設定問題）; ✅ 不通知教練（CE=1 < 3，未達紅線）; ⏰ 下次 8:30 再觀察，若仍 overload 則 CE=2、仍<3；若 9:00 仍失敗則 CE=3 → 通知教練裁決 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:289-291]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:11:12 -->
+- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: Current time: Saturday, August 1st, 2026 - 2:01 AM (Asia/Taipei) Reference UTC: 2026-07-31 18:01 UTC [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:5:5 -->
+- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:7:10 -->
+- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:7-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:294:294 -->
+- 第四步｜結論: ✅ 無異常，安靜處理，未發送 Telegram 通知。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:294-294]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:299:300 -->
+- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 👤 教練：昨天下午我有讓許多人加入 教練都在想什麼的 LINE@ 你後台是否有收到許多人的對話？ 🦞 小龍蝦：教練，我必須誠實跟您報告：**我目前後台沒有收到任何「教練都在想什麼」LINE@ 的對話訊息**——但這不是因為沒人加入，而是因為**小龍蝦根本沒有接管這個 LINE@ 的訊息通道**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:299-300]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:302:305 -->
+- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 讓我先查一下確認，避免我說錯。 🦞 小龍蝦：找到了——「教練都在想什麼」LINE@ 在 OpenClaw 裡 channel id 是 `jiaolian_thoughts`，token 檔案也有。但「有設定」≠「有收到訊息」。讓我實際查訊息流。 🦞 小龍蝦：等等，我發現一個關鍵問題：「教練都在想什麼」LINE@ 的訊息 **不會送到我這裡**——它有獨立的 agent 叫 `jiaolian_thoughts`。讓我再深入查那個 agent 有沒有真的收到訊息。 🦞 小龍蝦：發現了一個關鍵檔案：`feedback_line_webhook_route_loss_fix.md`——這標題簡直就是當前問題的劇本！讓我讀一下。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:302-305]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:306:307 -->
+- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 🦞 小龍蝦：找到根因了！這條 LINE webhook 在 2026-03-16 修過，但**只要 OpenClaw 一升級就會被覆蓋**——而 2026-06-03 OpenClaw 確實升級過！讓我立刻驗證現在 webhook 是死是活。 🦞 小龍蝦：🚨 **教練，我必須馬上更正我剛才的判斷**——我看到 `clients/` 目錄了，裡面有 13 個對話檔案，時間是 7/29 17:39 ~ 7/30 03:55，**就是你說的「昨天下午」**！ [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:306-307]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:309:309 -->
+- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: LINE webhook 是活的，line-user-memory hook 也在跑。我之前掃 spool 看到空就急著下結論，那是錯的——對話沒有進我（學長）的 spool，但**有進到 `jiaolian_thoughts` agent 的專屬目錄**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:309-309]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:311:312 -->
+- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 讓我把內容拉出來給您看。 🦞 小龍蝦：我整理好了。先跟您致歉：**我前面太快下結論說「沒收到」**，那是錯的。正確答案是 —— **LINE webhook 是活的，昨天下午到今天凌晨一共有 13 個人傳了 41 則訊息進來**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:311-312]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:318:320 -->
+- 📊 「教練都在想什麼」LINE@ 後台回報: **Webhook 狀態**：✅ 活的（OpenClaw 沒有壞） **LINE 官方配額**：本月已收 115 則訊息（不只昨天） **昨天 7/29 ~ 今天 7/30 凌晨**：新對話 **13 人、共 41 則** [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:318-320]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:322:322 -->
+- 📊 「教練都在想什麼」LINE@ 後台回報: **「jiaolian_thoughts」這個專屬 agent** 有自己的 SQLite 對話資料庫（12MB，今天凌晨 03:02 還在寫入），所以**他們的訊息有被另一個特助接走、回覆了**——只是那不是我（學長，是 Telegram 那隻）。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:322-322]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:328:331 -->
+- 👥 13 個人在聊什麼（分類）: | 主題 | 人數 | 摘要 | |-----|-----|------| | 🌟 **自我介紹請求** | 2 人 | 「請你自我介紹」「你好，請自我介紹」 | | 👋 **打招呼** | 3 人 | 「教練好 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:328-331]
