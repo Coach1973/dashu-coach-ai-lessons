@@ -5,6 +5,24 @@
 
 ---
 
+### 2026-08-08 01:32（CST 週六凌晨）— ✅ 安靜通過
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 01:30:52**，沉默 **0.0h** — 教練 2 分鐘前剛發訊息）
+- 本任務：上一輪 01:30 lastStatus=**error** / `overloaded` / 98,807ms（99s ≪ 600,000ms） / **CE=1**（01:02 那輪已清零，現為重新累積）
+- lastErrorReason: `"overloaded"` / summary: `"The AI service is temporarily overloaded. Please try again in a moment."`
+- 本輪 01:32 AI 正常回應（本報告即鐵證）= 已恢復
+- v4.0 三關：
+  - 關卡一 ❌ 已恢復（本輪 AI 正常產出本回報）
+  - 關卡二 ✅ minimax `The AI service is temporarily overloaded. Please try again in a moment.`
+  - 關卡三 ❌ meta 自打嗝（健康檢查機器人在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 600s 充裕 / 無 VPS 同步任務 / model 已 minimax/MiniMax-M3 / CE=1 未達紅線 + 本輪已恢復）
+- Cron 可見範圍：本隔離執行 cron list 只回傳本任務本身（46e67e2e），無其他任務狀態可評估；當前僅本任務輪流出錯屬正常 alternating 模式
+- HEARTBEAT ⬜ 掃描：0 個待辦（grep 命中皆為歷史紀錄中的「⬜ 掃描：0 個待辦」字樣）
+- alternating 模式：持續穩定交替，已觀察 **53+ cycle**（自 04:35 v4.0 上線起，約 21 小時），未達「持續 2 小時連錯」紅線
+- 結論：三關未全過，🚫 不 announce，安靜寫入 HEARTBEAT 存查
+- 下次定檢：02:02 🟢
+
+---
+
 ### 2026-08-08 01:02（CST 週六凌晨）— ✅ 安靜通過
 - 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 **2026-08-08 00:36:55**，沉默 **0.4h** — 教練 25 分鐘前還有說話，週六凌晨仍有互動）
 - 本任務：上一輪 01:00 lastStatus=**error** / `overloaded` / 84,868ms（85s ≪ 600,000ms） / **CE=1**（00:32 那輪已清零，現為重新累積）
