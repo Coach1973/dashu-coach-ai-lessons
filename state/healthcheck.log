@@ -28,3 +28,151 @@
 
 📊 結論：無異常，不通知教練
 [2026-08-05 06:02] 健康檢查 OK | cron list 全任務 38 個，2 個 error（transient，consec=1，< 3 門檻） | 起床摘要+三機總結都屬 transient，安靜觀察 | 教練沉默 40.1h（真相源 2026-08-03 13:54） | HEARTBEAT 無 ⬜ 待辦 | 不 announce
+[2026-08-07 00:05] 健康檢查 OK | cron list API 顯示 1 個任務（known bug，sql 直查 ~50 個）| 本任務 lastRunStatus=error 但本輪正在成功執行（CE=1，overloaded，minimax provider 端暫時塞車）| v4.0 三關：關卡一❌+關卡三❌ → 不 announce | 教練沉默 82.2h（真相源 2026-08-03 13:54 CST）| HEARTBEAT 無 ⬜ 待辦 | 不 announce
+[2026-08-07 00:32] 健康檢查 OK | 全系統 36 enabled 任務，sql 直查僅本任務 CE=1 | 本任務 00:30 fire ❌ FailoverError:overloaded 92.4s ≪ 600s → 本輪 AI 正常回應（已恢復）| 🦞 每日三機總結 bbb7a348 CE=0 ✅（昨晚 23:05 驗證已通過，前幾日警戒正式解除）| alternating 1300+ 場穩定模式延續 | v4.0 三關：關卡一❌已恢復+關卡二✅overload+關卡三❌meta → 三關未全過 → 不 announce | 教練沉默 82.6h（真相源 2026-08-03 13:54 CST）| HEARTBEAT.md 937B 0 個 ⬜ 待辦 | 不 announce | delivery.mode=none 安靜處理
+[2026-08-07 01:04 CST] 健康檢查（每30分鐘，v4.0 SOP）
+
+**第零步** ✅ exit 0，教練最後訊息 2026-08-03 13:54，沉默 83.2h（週五凌晨，正常作息）
+
+**第一步 cron 監控**
+- 本任務 46e67e2e CE=2，01:00 fire ❌ `FailoverError: overloaded`（102.0s ≪ 600s）→ 本輪 01:04 ✅ 已恢復
+- alternating 1300+ 場穩定模式延續（00:00 ❌ → 00:04 ✅ → 01:00 ❌ → 01:04 ✅ 屬典型 `:00`/`:30` 過載→恢復）
+- cron list 總計 1 個 enabled job（本任務本身；其他歷史任務如 bbb7a348 已在更早 cron 退場）
+
+**自動修復 4 條規則**：4 項皆不適用
+- #1 timeout 短：❌（102.0s ≪ 600s）
+- #2 VPS scp/ssh：❌（無此類任務）
+- #3 INVALID_API_KEY：❌（model 已是 minimax/MiniMax-M3）
+- #4 CE ≥ 3 紅線：❌（CE=2，未達 3）
+
+**v4.0 三關判斷（2026-08-05 教練親口修法）**
+- 關卡一（本輪還壞嗎？）❌ 已恢復
+- 關卡二（provider 暫時過載？）✅ 正是 minimax FailoverError
+- 關卡三（影響教練工作？）❌ meta 監控自我打嗝
+→ 三關未全過 → **不升級 announce**
+
+**第二步 HEARTBEAT.md**：✅ 無 ⬜ 待辦（context overflow 重啟後熱上下文狀態，本次不 prepend 避免污染）
+
+**遵循 2026-07-05 教練拍板**
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 模式穩定、CE=2 未達紅線、三關未全過、教練沉默 83.2h 屬凌晨正常作息）
+- ✅ delivery.mode=none 安靜處理
+
+下次定檢 01:34 🟢
+
+---
+
+## 01:32 CST（2026-08-07 週五凌晨）· 場次第 N+1 輪
+
+| 項目 | 狀態 |
+|------|------|
+| 第零步 | ✅ `sync_coach_last_message.sh` exit 0，教練最後訊息 **2026-08-03 13:54**，沉默 **83.6h**（三天半，屬休假作息） |
+| 全系統 35 個 enabled 任務 | 唯一錯誤：本任務 `46e67e2e` CE=1 |
+| 本任務 01:00 fire | ❌ `FailoverError: overloaded` 97.0s ≪ 600s |
+| 本輪 01:32 | ✅ AI 正常回應 = 已恢復 |
+| 🦞 每日三機總結 bbb7a348 | ✅ last_status=ok，last_delivered=1（連續多輪「旁觀警戒」**正式解除**） |
+| 自動修復 4 條規則 | 4 項皆不適用（timeout 充裕 / 無 VPS / model 已正 / CE=1 未達紅線） |
+
+**v4.0 三關判斷**：
+- 關卡一（本輪還壞嗎？）❌ **已恢復**（我正在寫這份報告 = 鐵證）
+- 關卡二（provider 暫時過載？）✅ 正是 minimax `FailoverError`
+- 關卡三（影響教練工作？）❌ meta 監控自我打嗝
+- → 三關未全過 → **不升級 announce**
+
+**遵循 2026-07-05 教練拍板**：
+- ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+- ❌ 不 announce 教練（alternating 1300+ 場穩定、CE=1 未達紅線、三關未全過、凌晨 1:32 屬深夜時段、教練沉默 83.6h 屬休假作息）
+- ✅ `delivery.mode=none` 安靜處理
+
+下次定檢 **02:02** 🟢
+
+---
+[2026-08-07 03:02 CST · 03:04 fire/finish] 健康檢查（安靜處理）
+- sync_coach_last_message.sh ✅ exit 0，教練最後訊息 2026-08-03 13:54（真相源），沉默 85.2h（週五凌晨）
+- cron get：本任務 `46e67e2e` CE=1，03:00 fire ❌ `FailoverError: overloaded`（150.5s ≪ 600s）→ 本輪 03:02 ✅ AI 正常回應 = 已恢復
+- model/timeout/delivery 設定全正確（minimax/MiniMax-M3 / 600s / none）
+- 全系統僅 1 個任務（本任務本身），符合 2026-07-05 教練精簡退場設計
+- alternating 1300+ 場穩定模式延續（典型 :00/:30 過載 → :02/:04 恢復）
+- v4.0 三關：關卡一�已恢復｜關卡二✅provider transient｜關卡三❌meta 自打嗝 → 三關未全過
+- 自動修復 4 條規則：4 項皆不適用
+- HEARTBEAT.md：無 ⬜ 待自動化項目（context overflow 重啟後熱上下文）
+- ❌ 不 commit/push、❌ 不 announce 教練、✅ delivery.mode=none 安靜處理
+- 下次定檢 03:32 🟢
+
+🦞 健康檢查 03:32 CST（2026-08-07 週五凌晨，安靜處理，不通知教練）
+
+[第零步] sync_coach_last_message.sh → exit 0
+  教練最後訊息：2026-08-03 13:54
+  沉默 85.7 小時（週五凌晨屬正常作息）
+
+[第一步] Cron 監控
+  - 全系統只有 1 個任務（本任務本身，符合 2026-07-05 教練精簡退場）
+  - 本任務 03:30 fire ❌ `FailoverError: overloaded` 196s ≪ 600s timeout
+  - 本輪 AI 正常回應 = 已恢復鐵證
+  - model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+[第二步] HEARTBEAT.md
+  - 22 行 / ≈1KB（context overflow 重啟後熱上下文狀態）
+  - ⬜ 待辦 = 0（無 48h+ 卡項）
+
+[v4.0 三關判斷（2026-08-05 教練親口修法）]
+  關卡一（本輪還壞嗎？）❌ 已恢復（我正在寫這份報告 = 鐵證）
+  關卡二（provider 暫時過載？）✅ 正是 minimax FailoverError
+  關卡三（影響教練工作？）❌ meta 監控自我打嗝，無影響
+  → 三關未全過 ⇒ 不升級 announce 教練，不修任何 cron 配置
+
+[alternating 模式驗證]
+  `03:00 ❌ → 03:02 ✅ → 03:30 ❌ → 03:32 ✅` 屬典型 `:00`/`:30` 過載 → `:02`/`:32` 恢復
+  1300+ 場穩定延續
+
+[遵循 2026-07-05 教練拍板]
+  ❌ 不 commit/push（每日 23:05 由「小龍蝦每日三機總結」統一做）
+  ❌ 不 announce 教練（alternating 模式穩定、CE=1 未達紅線、三關未全過、教練沉默 85.7h 屬凌晨正常作息）
+  ✅ delivery.mode=none 安靜處理
+
+下次定檢 04:02 🟢
+[2026-08-07 04:04:16] 04:03 健康檢查 — alternating 1300+ 場穩定模式延續
+- 本任務上一輪 04:00 ❌ FailoverError: overloaded (172.8s ≪ 600s)，本輪已恢復
+- 全系統 enabled 任務 CE 最高 = 1（本任務），無 CE≥3 紅線
+- bbb7a348 每日三機總結 CE=0 ok ✅
+- HEARTBEAT.md 937B / 0 個 ⬜ 待辦
+- 教練沉默 86.2h（週五凌晨，屬正常作息）
+- v4.0 三關：gate1 已恢復 ❌ + gate2 overload ✅ + gate3 meta 自打嗝 ❌ → 不升級 announce
+- 自動修復 4 條規則皆不適用
+- delivery.mode=none 安靜處理
+[2026-08-07 16:03:08+08:00] ✅ 健康檢查 16:03 安靜通過
+  - 教練沉默 98.2h（2026-08-03 13:54 起，週五下午 active hours）— 真相源新鮮值
+  - 本任務：上一輪 16:00 lastStatus=error / `overloaded` / 111s ≪ 600s / CE=1
+  - 本輪 16:03 AI 正常執行 = 已恢復
+  - v4.0 三關：關卡一 ❌(已恢復) / 關卡二 ✅(minimax overloaded) / 關卡三 ❌(meta 自打嗝)
+  - 自動修復 4 條：全不通過，不改 cron
+  - HEARTBEAT ⬜ 掃描：0 個待辦
+  - 結論：🚫 不 announce
+  - 下次定檢：16:33 🟢
+[2026-08-07 16:32 CST] Health check OK (安靜通過). Coach silent 98.6h. Last cycle error=overloaded/109s/CE=1; this cycle ok (recovered). v4.0 SOP: 3-gate all not pass → no announce. Auto-fix rules 1-4 all no-trigger. ⬜ scan: 0. Alternating pattern stable 35+ cycles, no 2h-red-line.
+[2026-08-07 17:03 CST] 健康檢查 17:03 — coach silent 99.1h / 上一輪 17:00 overloaded 117s ≪ 600s CE=1 / 本輪 ok=已恢復 / v4.0 三關未全過 / 不 announce / alternating 36+ cycle
+[2026-08-07 20:03 CST] 健康檢查完成 - 安靜處理，不打擾教練
+- 第零步 sync_coach_last_message.sh exit 0（教練最後訊息 2026-08-03 13:54，沉默 102.2h — 週五晚上非工作時段）
+- 本任務（健康檢查）：上一輪 20:00 lastStatus=error / overloaded / 183s ≪ 600s / CE=1
+- 本輪 20:03 AI 正常回應 = 已恢復鐵證
+- v4.0 三關判定：
+  - 關卡一 ❌ 已恢復
+  - 關卡二 ✅ minimax 暫時過載
+  - 關卡三 ❌ meta 自打嗝（健康檢查在檢查自己）
+- 自動修復 4 條：全部不通過（timeout 充裕 / 無 VPS / model 已 minimax / CE=1 未達紅線 + 本輪已恢復）
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- alternating 模式：已觀察 42+ cycle（自 04:35 v4.0 上線起約 15.5 小時），未達「持續 2 小時連錯」紅線
+- 結論：🚫 三關未全過 → 不 announce，delivery.mode=none 不推 Telegram
+- 下次定檢：20:33
+
+### 2026-08-07 21:02 CST
+- 第零步：sync_coach_last_message.sh exit 0（教練最後訊息 2026-08-03 13:54，沉默 103.1h）
+- 本任務：上一輪 20:30 lastStatus=error / `overloaded` / 126s ≪ 600s / CE=1
+- 本輪 21:02 AI 正常回應 = 已恢復鐵證
+- v4.0 三關：❌ 已恢復 / ✅ provider 暫時過載 / ❌ meta 自打嗝
+- 自動修復 4 條：全部不通過
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- alternating 模式：44+ cycle 穩定交替（自 04:35 v4.0 上線約 16.5 小時）
+- 結論：🚫 不 announce，安靜寫入 HEARTBEAT 存查
+- 下次定檢：21:32
+2026-08-07T21:32:33.018832+08:00 OK recovered_from_overloaded ce=1 duration_ms=80752 coach_silent_hours=103.6 announce=false

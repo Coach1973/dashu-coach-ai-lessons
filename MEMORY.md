@@ -51,31 +51,6 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-05)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:10:11 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 👤 教練：可以幫我做一個所有報名名單的公司、姓名、電話的總整理嗎？我要一張列表。這個任務你可以完成嗎？ 🦞 小龍蝦：可以完成，教練。🦞 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:10-11]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:13:13 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 重啟後我手上沒有上一場的脈絡，請告訴我兩件事，我馬上動手： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:13-13]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:15:16 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: **是哪一場？**（例：BNI 真鑫分會、海餅乾俱樂部、桌聚、其他？）; **名單在哪？**（Google 表單連結、Excel 檔、Email、Telegram 群組、其他？） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:15-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:18:19 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 你只要回我一句「**桌聚 Google 表單**」之類的，我就自己跑，不用貼連結過來——我會自己找出來。 👤 教練：你往上去看，它不是都有「新報名通知」？ [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:18-19]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:21:22 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 這裡面的新報名通知大概已經有七、八十份了，你讀得到這些歷史資料嗎？ 🦞 小龍蝦：老實跟你說，教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:21-22]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:24:24 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: ⚠️ **這條 LINE 對話的歷史訊息我讀不到**——這是 LINE 直對話，只有你和我兩人，之前的「新報名通知」存在你手機/電腦端，不會同步到 OpenClaw 這邊。所以你看到的七、八十份通知，我這裡看不到。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:24-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:26:26 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 但這些通知一定有「**源頭**」，我直接從源頭抓最正確。你手機上看到的通知是從哪個 App 跳出來的？回我一個關鍵字就行： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:26-26]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:28:31 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: | 看到通知的來源 | 我會做的動作 | |---|---| | **Google 表單** | 我去抓表單後台回應（要有表單連結或你的 Google 帳號授權） | | **Notion** | 我去 Notion workspace 抓報名資料庫 | [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:28-31]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:32:35 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: | **Email（Gmail）** | 我去掃信箱所有「報名」相關信件整理 | | **Excel / 桌面上有檔案** | 給我檔名或路徑，我自己讀 | | **朋友轉 LINE 給你** | 那轉成 Google 表單或 Email 再匯入比較穩 | | **LINE 官方帳號** | 那要看你的 LINE OA 系統有沒有對接 OpenClaw | [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:32-35]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:37:39 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 💡 **最快的做 👤 教練：那我重新轉發一份，你應該就讀得到了。我們先試試看，我先轉發兩份給你看 🦞 小龍蝦：好，等你轉兩份測試。🦞 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:37-39]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:41:41 -->
-- 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 讀得到之後我會建議直接從源頭拉一次，七、八十份不用慢慢轉——更省事。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-28.md:41-41]
-
 ## Promoted From Short-Term Memory (2026-08-06)
 
 <!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:7:7 -->
@@ -96,3 +71,20 @@
 - 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: Email 沒填的我會**保留空欄、絕不亂填**，之後要發信時自動跳過缺漏的人。 [score=0.869 recalls=0 avg=0.620 source=memory/2026-07-28.md:66-66]
 <!-- openclaw-memory-promotion:memory:memory/2026-07-28.md:5:5 -->
 - 📨 對話記錄 00:22（共約 16 條，從第 0 行起）: 🦞 小龍蝦：在的，教練。🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-28.md:5-5]
+
+## Promoted From Short-Term Memory (2026-08-07)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:274:274 -->
+- 📨 對話記錄 12:52（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:274-274]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:278:278 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openclaw cron list` 或 cron tool 檢查所有任務的 consecutiveErrors 與 lastStatus。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:278-278]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-29.md:282:285 -->
+- 常見錯誤自動修復：: **1. timeout 錯誤（lastDurationMs ≈ timeoutSeconds）：** → 表示腳本本身正常，但 timeoutSeconds 設定太短 → 使用 `cron update <jobId> --patch '{"payload":{"timeoutSeconds":300}}'` 將 timeout 改為 300秒 → 注意：不要改 06:00 海餅乾精神背誦（60秒即可） [score=0.876 recalls=0 avg=0.620 source=memory/2026-07-29.md:282-285]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:276:277 -->
+- 第一步｜Cron 任務狀態: 目前 cron 系統**僅有 1 個任務**：本任務「🦞 每30分鐘任務健康檢查」; 舊任務（每日 23:05 三機總結、06:00 海餅乾精神背誦、VPS 同步等）已被清理或停用，未在 cron list 中 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:276-277]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:280:283 -->
+- 第二步｜本次檢查結論: **任務本身**：前次 8:00 執行失敗; `lastErrorReason: "overloaded"`（minimax API 服務端暫時性過載）; `consecutiveErrors: 1`（紅線 3，目前未達）; `lastDurationMs: 178735`（3 分鐘，**未達** timeoutSeconds 600 上限，**非** timeout 類錯誤） [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:280-283]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:284:286 -->
+- 第二步｜本次檢查結論: `lastDiagnosticSummary: "The AI service is temporarily overloaded. Please try again in a moment."`; **判定**：transient overloaded，**無法以 cron 設定修復**（不是 apiKey 失效、不是 timeout 設定過短）; **HEARTBEAT.md**：已讀，**無 ⬜ 標記待辦項目**、無 48 小時無進展項目 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:284-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:289:291 -->
+- 第三步｜處置: ✅ 不自動修復（overloaded 是服務端暫時問題，非設定問題）; ✅ 不通知教練（CE=1 < 3，未達紅線）; ⏰ 下次 8:30 再觀察，若仍 overload 則 CE=2、仍<3；若 9:00 仍失敗則 CE=3 → 通知教練裁決 [score=0.866 recalls=0 avg=0.620 source=memory/2026-07-30.md:289-291]

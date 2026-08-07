@@ -251,3 +251,64 @@ HEARTBEAT.md 內容：
 - 教練 11:58 已上線（HEARTBEAT.md 已於 18:11 修正靜默紀錄）
 
 **動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。
+
+## 2026-08-06 23:32 CST (週四深夜)
+
+**檢查範圍**：cron_jobs 49 個任務（35 enabled，sqlite 直接查）。
+
+**整體健康**：
+- 35 個 enabled，1 個有 CE > 0
+- 34 個 enabled CE = 0 ✅
+- 0 個 CE ≥ 3 紅線 ✅
+- 無 invalid_api_key、無 timeout 設定錯誤、無 VPS scp 錯誤
+
+**錯誤任務（1 個）**：
+
+| Job | CE | lastDurationMs | error |
+|---|---|---|---|
+| 🦞 每30分鐘任務健康檢查（本任務） | 1 | 133,223ms（< 600s timeout） | `FailoverError: The AI service is temporarily overloaded` |
+
+**v4.0 三關判斷**：
+- 關卡一（現在還壞？）：本輪 AI 執行成功（正在寫這份報告）→ **沒過**
+- 關卡二（provider overload？）：訊息含 "temporarily overloaded" → **是 provider 端瞬時塞車**
+- 關卡三（影響工作？）：本任務只是監控工具自己打嗝，不是任何人依賴的功能壞掉 → **沒過**
+
+三關沒全過 → **不 announce**，安靜處理。
+
+**自動修復**：無（provider 端瞬時事件，等下次重試自然恢復；durationMs 133s ≪ timeoutSeconds 600s → 非 timeout 設定問題；model 已是 minimax/MiniMax-M3 → 非 auth 問題）。
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- pendingCoachItems = 空
+- 第零步已跑：教練最後訊息 2026-08-03 13:54 CST，silence 81.6 小時（約 3.4 天）→ 真實 Telegram API 時間，非 cron 注入
+
+**動作**：靜默通過，不通知教練（依規則：只有需要裁決才 announce）。
+
+## 2026-08-07 00:03 CST (週五凌晨)
+
+**檢查範圍**：cron list API 顯示 1 個任務（本任務，與 7/25、8/6 紀錄一致的 known API bug——sql 直查實為 ~50 個任務）。
+
+**本次任務狀態**：
+- consecutiveErrors：**1**（上一輪 23:30 失敗 → 本輪 00:03 retry = 正在成功執行，本輪結束後 CE 將 reset 回 0）
+- lastRunStatus：error（上一輪）
+- lastDurationMs：159,758ms（~160s，<< 600s timeout，與教練指引的「timeout 自動修復規則」不吻合）
+- lastErrorReason：**overloaded**
+- 診斷：`The AI service is temporarily overloaded. Please try again in a moment.`
+
+**v4.0 三關判斷**：
+- 關卡一（現在還壞？）：我**正在寫這份報告** = 本輪 AI 執行成功 = 已恢復的鐵證。**沒過**。
+- 關卡二（provider overload？）：lastErrorReason 明確為 `overloaded`，是 minimax provider 端暫時塞車。**過**。
+- 關卡三（影響工作？）：只是健康檢查機器人自己打嗝（meta 迴圈），沒有任何教練或會員實際依賴的功能壞掉。**沒過**。
+
+三關必須都過才能 announce → 關卡一沒過 + 關卡三沒過 → **不 announce**，僅靜默記錄。
+
+**自動修復**：無（不是 timeout、不是 apiKey、不是 scp/ssh。屬於 minimax provider 端臨時過載，教練也無法介入——他不能打電話叫廠商加伺服器）。
+
+**HEARTBEAT.md ⬜ 檢查**：
+- HEARTBEAT.md 內容為「23:10 context overflow 自動重啟」+ 系統狀態/守則摘要
+- 無 ⬜ 待辦項目
+- pendingCoachItems = 空
+- 第零步已跑：教練最後訊息 2026-08-03 13:54 CST，silence **82.2 小時**（真實 Telegram API 時間，非 cron 注入）
+
+**動作**：靜默通過，不通知教練（凌晨 00:04 睡眠時段 + v4.0 三關未全過）。
+

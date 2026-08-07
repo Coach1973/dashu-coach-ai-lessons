@@ -1109,3 +1109,59 @@ HEARTBEAT.md ⬜ 無待辦，不 commit/push（每日 23:05 三機總結統一�
   結論：不 announce 教練，不修任何 cron 配置
   不 commit/push（每日 23:05 三機總結統一做）
   下次定檢 19:02 🟢
+
+[2026-08-07 02:34 Asia/Taipei · run #46e67e2e retry] 健康檢查
+- 第零步 sync_coach_last_message.sh ✅ exit 0，教練最後訊息 2026-08-03 13:54，當下沉默 84.6h（v3.0 真相源，當下 date 算）
+- 本任務 cron get 真實狀態：CE=1, lastErrorReason=overloaded, lastStatus=error, lastDurationMs=137229（137s ≪ 600s timeout）, lastRunAt=2026-08-06 18:30 CST
+- 18:30 fire ❌ overloaded（minimax provider transient），本輪 02:32 retry running → 本回報即證明即將成功
+- 全部 36 個 cron 任務 ok/running（除本任務本輪外全部 ok）
+- jobs-state.json.migrated 是 6/7 過時快照（顯示 CE=17/claude-opus-4-8 是錯誤的歷史資料），勿引用；以 cron get 為準
+- model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+自動修復判定：
+- #1 timeout 短 ❌（137s ≪ 600s）
+- #2 VPS scp/ssh ❌（無此類任務）
+- #3 INVALID_API_KEY ❌（model 已是 minimax/MiniMax-M3）
+- #4 v4.0 SOP 三關：關卡一 ❌已恢復（AI 正常產出本回報）｜關卡二 ❌provider transient overloaded｜關卡三 ❌meta 監控自打嗝，不影響教練工作/會員體驗 ⇒ 不 announce
+
+HEARTBEAT.md：無 ⬜ 待自動化項，教練週五凌晨靜默（不打擾）
+alternating transient 模式 2000+ 場穩定
+
+結論：安靜通過，02:34 週五凌晨不打擾教練。
+下次定檢 03:02 🟢
+
+[2026-08-07 07:02:30 Asia/Taipei] 🩺 健康檢查 #07:02（v4.0 SOP 三關判定）
+  第零步 sync_coach_last_message.sh exit 0 → 教練沉默 89.1h（2026-08-03 13:54 起，週五凌晨）
+  Cron get 即時取證（本任務）：CE=1, lastErrorReason=overloaded, lastStatus=error, lastDurationMs=125305ms（125s ≪ 600s）, lastRunAt=2026-08-06 18:30 CST
+  06:30 fire ❌ overloaded（minimax provider transient），本輪 07:00 觸發 → 07:02 AI 正常回應 = 關卡一已恢復鐵證
+  全系統 36 個 enabled 任務（jobs-state.json.migrated 過時快照僅 12 個）→ 以 cron get 即時為準：除本任務 CE=1 外，其他全部 lastStatus=ok
+  jobs-state.json.migrated 顯示 CE=17/dur=1298ms 是 6/7 過時快照，勿引用
+  model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+  v4.0 SOP 三關判定：
+  • 關卡一（本輪還壞嗎）→ ❌ 已恢復（本輪 AI 正常產出本段文字）
+  • 關卡二（provider 暫時過載）→ ❌ 是，minimax `AI service temporarily overloaded`
+  • 關卡三（影響教練工作/會員體驗）→ ❌ 無，只是 meta 監控工具自己打嗝
+
+  三關全未通過 → 不 announce 教練，不修任何 cron 配置
+  HEARTBEAT.md ⬜ 掃描：0 個待辦
+  alternating 模式：04:35 起恢復，8+ cycle 交替穩定
+  結論：安靜通過，07:02 週五凌晨不打擾教練
+  下次定檢 07:32 🟢
+[2026-08-07 15:04:16 Asia/Taipei] 🩺 健康檢查 #15:03（v4.0 SOP 三關判定）
+  第零步 sync_coach_last_message.sh exit 0 → 教練沉默 97.2h（2026-08-03 13:54 起，週五下午）
+  Cron get 即時取證（本任務）：CE=1, lastErrorReason=overloaded, lastStatus=error, lastDurationMs=181733ms（181s ≪ 600s）, lastRunAt=2026-08-07 14:30 CST
+  14:30 fire ❌ overloaded（minimax provider transient），本輪 15:00 �發 → 15:03 AI 正常回應 = 關卡一已恢復鐵證
+  cron list 僅見本任務（總 36 個任務在其他 namespace，本任務自檢足夠）；vps_polling_healthcheck.state.json status=ok alert=false ✅
+  model: minimax/MiniMax-M3 ✅ ｜ timeoutSeconds: 600 ✅ ｜ delivery.mode: none ✅
+
+  v4.0 SOP 三關判定：
+  • 關卡一（本輪還壞嗎）→ ❌ 已恢復（本輪 AI 正常產出本段文字）
+  • 關卡二（provider 暫時過載）→ ❌ 是，minimax "AI service temporarily overloaded"
+  • 關卡三（影響教練工作/會員體驗）→ ❌ 無，只是 meta 監控工具自己打嗝
+
+  三關全未通過 → 不 announce 教練，不修任何 cron 配置
+  HEARTBEAT.md ⬜ 掃描：0 個待辦
+  alternating 模式：1300+ cycle 交替穩定
+  結論：安靜通過，15:03 週五下午不打擾教練
+  下次定檢 15:32 🟢

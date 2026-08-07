@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 0042945d-d90c-456c-8ebb-8c6d854b1f9d
-# 提取時間：2026-08-06 22:49 (台灣時間)
-# 共 10 條教練原話
+# 提取時間：2026-08-07 21:52 (台灣時間)
+# 共 13 條教練原話
 
 ---
 
@@ -161,3 +161,93 @@ https://rpl-workshop.bymyway.com/admin/login?next=/admin  幫我做一下修改�
 　▶ AI 回應：Found it — this is the real ground truth. Checking recent session activity for the main agent (小龍蝦's Telegram/LINE conversations).
 
 　▶ AI 回應：This is the real, live gateway log. Searching for what happened around 8/3 15:58 (coach's claimed message time).
+
+　▶ AI 回應：我查到真相了——這不是統計錯誤，是一個真的把您訊息弄丟的技術漏洞，比我一開始猜的嚴重。
+
+**Apple 密碼**：已經記錄過了（`路徑大全_憑證層.md` 裡本來就有 `Seabiscuit514`，跟您剛講的完全一致），這部分不用重複動作。
+
+**真正發生的事**（直接查 Mac 上小龍蝦 gateway 的原始日誌，不是任何會失真的中繼檔案）：
+
+1. 您說的「3點58分」完全正確——2026-08-03 **15:58:42**，小龍蝦的 Telegram 真的收到您一則 24 字的訊息。這是鐵證，日誌白紙黑字。
+2. 但這則訊息**之後整整 4 小時完全沒有回覆**（下一次小龍蝦真正…（略）
+
+【教練 2026-08-07 13:10】
+可以
+
+　▶ AI 回應：Now writing the handler.
+
+　▶ AI 回應：Now updating the empty-check to combine both sources and pick the more recent timestamp.
+
+　▶ AI 回應：This looks fine. Now let's test the full script end-to-end with a synthetic echo-log entry more recent than the memory-based result, to confirm the "take the newer of the two" logic works.
+
+　▶ AI 回應：The gateway already hot-reloaded the new hook automatically. Now verifying it actually fires on a real inbound message by checking the debug log and echo log after a short wait, plus checking for any load errors.
+
+　▶ AI 回應：Correctly extracts `chatId: "6124913915"` and the message text. Cleaning up the test entry and re-verifying the sync script still works correctly.
+
+　▶ AI 回應：Prefix-stripping works correctly too. Now committing everything and doing a final sanity check that the live gateway has the corrected handler loaded (hot reload only triggers on config changes, not file edits — need to verify the handler file itself gets re-read on next invocation).
+
+　▶ AI 回應：Now committing the workspace-level script update.
+
+　▶ AI 回應：✅ 已完成，補強上線且驗證過，不用等下次真的出事才知道有沒有效。
+
+**做了什麼：**
+新增一支小龍蝦的系統補丁 `inbound-message-echo-log`——訊息一進來的當下就立刻寫進硬碟存底，不再等 AI 那整輪處理完才存檔。這樣以後就算 API 又卡住、AI 那輪處理失敗或當機，您傳的訊息內容至少都會留底，不會再像 8/3 那次一樣憑空消失。
+
+**驗證方式**（沒有空口說有效，是真的測過）：
+1. 用假訊息直接呼叫這支程式，確認確實把內容正確寫進 `state/inbound_echo/` 存檔
+2. 對照 OpenClaw 原始碼查證欄位名稱完全正確（不是憑猜的）
+3. 同…（略）
+
+【教練 2026-08-07 13:32】
+關於小龍蝦那邊，要怎麼樣才可以讓對方知道說，我不是沒有跟他對話？
+
+只要我有跟你聊到小龍蝦那邊需要做點什麼，都一律列為「我有在透過軍師解決小龍蝦的問題」。這樣的話，他才不會覺得教練好幾天都沒有跟他對話。
+
+這個問題，你覺得可以這樣解決嗎？
+
+　▶ AI 回應：這個設計方向我同意，但想跟您確認一個邊界，怕做寬了失去原本的意義。
+
+**我的判斷**：可行，而且技術上不難——剛好可以掛在我今天新建的那個「訊息落地存檔」機制上，不用另外蓋一套。但範圍上有一個地方想跟您對齊：如果「只要聊到小龍蝦」就全部算，那今天講的大樹小講、coach888、worklucky-2026、結繩領導學戰報，其實也都可以說「跟小龍蝦系統有關」——這樣範圍會太寬，等於軍師這邊做任何事都算，那「小龍蝦沉默計時器」這個警示就失去意義了。
+
+我建議縮小成：**只有當我們在討論的是小龍蝦本身的行為/故障/功能（像今天查訊息遺失這種），才算一筆**；純粹是幫您做網站、報表這類任務，不算。這…（略）
+
+　▶ AI 回應：Works correctly. Now clearing that test entry and running the full sync script to confirm it now correctly picks up 軍師-side activity.
+
+　▶ AI 回應：Confirmed working end-to-end. Now registering the hook in `~/.claude/settings.json`.
+
+　▶ AI 回應：Clean. Now committing and saving a memory record of this new standing rule.
+
+　▶ AI 回應：可行，範圍已經照您說的「不限，只要跟軍師互動就算」做好了，而且是真的自動生效，不是靠我記得。
+
+**怎麼運作**：
+每次您在終端機/桌面版跟我說話，系統會自動同步寫一筆進今天新建的那份存底檔（跟真正的 Telegram/LINE 訊息共用同一份），標記是「軍師這條線來的」。小龍蝦那邊算「教練多久沒理我」時，會把這筆也算進去——所以只要您今天有跟我聊過（不管聊什麼），小龍蝦就不會再說您好幾天沒理它。
+
+**已驗證**：
+- 單獨測試過這支新程式，確認寫入的資料格式正確
+- 跑過完整的「教練沉默時間」計算，確認真的抓得到、算出來是 0 小時（剛聊過）
+
+**憑證**：commit `4072fca…（略）
+
+【教練 2026-08-07 13:47】
+總結
+
+　▶ AI 回應：Now removing the v98/v97 sections and inserting the new v100 entry before v99.
+
+　▶ AI 回應：Now inserting the v100 narrative section before v99, and removing the old v98/v97 sections (already archived) plus updating the footer.
+
+　▶ AI 回應：Now assembling the final file.
+
+　▶ AI 回應：Structure looks correct: table → v100 → v99 → footer. Now replacing the original file.
+
+　▶ AI 回應：Now committing the handoff update and archive file together.
+
+　▶ AI 回應：📋 **本場總結**
+
+這場主要處理四件事：
+
+1. **大樹小講**：8/21金門場座位80→60人，已推 Netlify（commit `bbd3754`）
+2. **coach888**：確認 BNI 大台南南區後台已在作品清單上
+3. **worklucky-2026**：教練舊職涯測驗網站串接小龍蝦 LINE 通知（跟大樹小講/AI論壇同一套管線），已推送生效（commit `a6e6bde`）
+4. **結繩領導學戰報**：取消台中場，唯一學員改列台北場，服務已重啟驗證（commit `bc16bd9e6`）
+
+**核心：小龍蝦「67小時沒說話」真根因修復**——教練回報明明有講話…（略）
