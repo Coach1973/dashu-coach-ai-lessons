@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-08 07:05:39**
+> **最後同步：2026-08-08 19:05:51**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,9 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **bni-chapters：「真誠分會」網頁主架構問題** | 🔒卡住-等教練說明 | 教練提出要處理，但還沒說明具體是哪個架構問題，下一場先問清楚再動手 |
+| 🟢 | **mentor100：申請名單UI優化+姓名同步bug修復+自動上架+首頁大改版** | ✅v103本場完成 | 詳見下方v103完整戰果，5個commit：申請名單搬到來訪次數/排行榜中間+加刪除按鈕(`567a37f`)、修復申請名單姓名沒同步導師編輯結果的bug+改自動上架不需教練逐一確認(`dfddc73`)、申請已送出頁文案改「大樹教練」置中兩行(`8eceeb1`)、首頁改版(固定表頭+右側浮動導覽+手機漢堡選單+導師卡片依人氣排序，後台導師名單維持原順序不動)(`c57a3d1`) |
+| 🟢 | **bigtree-tw：8/26高雄場（當古典音樂遇到AI科技）補上報名費100元** | ✅v103本場完成，已推正式站 | commit `e3a6ad6`，Netlify deploy `6a76c91e`，額度47→46 |
 | 🟢 | **bni-chapters：BNI官方品牌色系套用+分會列表首頁表頭一致性修復** | ✅v102本場完成 | 官方色(#CF2030紅+#000000黑)套用9分會(commit `958eea2`)+首頁導覽列補齊(commit `1f2c1a5`)。教練裁示「之後一定要用官方指定色系」，10組帳號預設密碼Admin/88888仍未處理 |
 | 🔴🔴🔴🔴 | **三機hook同步待辦（教練要求優先）** | ⏳待聯想/ACER動手 | Mac本場修好3支hook(截圖鎖工具名稱/改html自動跳Chrome/長對話守則重載)已推雲端，但`~/.claude/settings.json`各機不同步且是macOS專屬指令，Windows需PowerShell版本+自行註冊。完整待辦見[[project_cross_machine_hook_sync_todo_2026-08-08]] |
 | 🟢 | **mentor100百人導師計劃：訪客計數器+人工審核上架流程** | ✅v101本場完成 | 首頁到訪次數計數器+導師點擊排行榜+「加入計劃」改人工申請(申請→教練產生填寫連結→自填草稿→教練預覽確認上架)，教練刻意要「人工申請」體驗設計。詳見v101完整戰果+[[project_mentor100_review_gated_signup_2026-08-08]]。**待驗證**：教練尚未實際走過一輪完整真實申請人流程 |
@@ -81,6 +84,48 @@
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
 | 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
 | 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+
+---
+
+# 軍師接力棒 · 2026-08-08 v103（Mac桌面版 Sonnet 5，mentor100密集迭代五連發+bigtree-tw收費更新）
+
+> 建立時間：2026-08-08 台灣時間 11:07~19:00
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v102（Mac桌面版 Sonnet 5，bni-chapters官方色系+表頭一致性修復+三個系統性hook修復）
+> 本棒主軸：**`mentor100.bymyway.com` 教練密集提出5輪需求，逐一處理：申請名單UI動線優化+新增刪除功能→發現並修復申請名單姓名沒同步導師編輯結果的bug→順勢改成自動上架不用教練逐一確認→申請成功頁文案調整→教練提出「網站要對外公開了」，首頁做固定表頭+右側浮動導覽+手機漢堡選單+導師頭像改依人氣點擊排序的整體改版。中途穿插`bigtree-tw`8/26高雄場補上報名費100元(手動上傳型站台，走完整三步驟部署鐵律)。全程延續既有隔離副本測試習慣，5次production改動零意外。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 mentor100數據總覽：申請名單UI動線優化+新增刪除按鈕
+教練回報點「產生連結」後頁面跳回最上方、得往下滑才看得到申請名單，操作不順。改成「申請名單」搬到「來訪次數」跟「導師點擊排行榜」中間，同時新增刪除按鈕（測試資料/重複申請用），刪除邏輯順手處理乾淨：若該申請連到的導師還是草稿狀態，一併清掉那筆空白草稿避免孤兒資料。`/admin`跟`/admin/stats`兩處同步更新。commit `567a37f`。
+
+### 2. 🔧 修復申請名單姓名沒同步導師編輯結果的bug+改自動上架
+教練用編輯功能把導師姓名改掉（陳彥瑋→丁兆弘、大樹教練→書銘老師），發現「申請名單」最上面顯示的還是舊名字。查證發現`list_applications`原本直接拉`applications.name`（最初送出的原始值），從沒跟`mentors.name`同步過。改成`COALESCE(m.name, a.name)`優先顯示對應導師目前資料。同一輪教練也提出：現在全面走人工申請流程，希望申請人填寫送出後直接自動上架，不用再等教練按「確認上架」。已改成只有「還是草稿狀態」的申請人送出時自動發布，既有56位已上架導師自行編輯簡介不受影響（用test_client模擬完整流程+對照組驗證兩種情境皆正確）。commit `dfddc73`。
+
+### 3. 🎨 申請已送出頁面文案調整
+教練用語音輸入指示把「教練已經收到您的申請」改成「大樹教練已收到你的申請」+兩行無標點置中排版，已改好並confirm教練確認資料庫顯示的丁兆弘/書銘老師是正確的（語音輸入落差，非bug）。commit `8eceeb1`。
+
+### 4. 🎯 bigtree-tw：8/26高雄場補上報名費100元
+教練口頭確認「經過討論要收100元」。查場次資料`SESSION_DATES`陣列，仿金門場既有寫法把費用資訊加進`transport`備註欄。本機用Chrome預覽確認畫面後，教練說「推」，走`bigtree-tw`既有的手動zip+Netlify API部署（查證確認這是手動上傳型站台，非GitHub自動部署，依鐵律走完整三步驟）。commit `e3a6ad6`，deploy `6a76c91e`，curl驗證文字+圖片Content-Type皆正常，額度47→46（手動補記，因指令帶多個flag被guard正則漏掉，已寫進`state/netlify_deploy_quota.json`備註）。
+
+### 5. 🎯🎯🎯 mentor100首頁大改版（本場核心）
+教練說明網站接下來要對外公開，提出四項需求：①固定表頭放起心動念/免責聲明/計劃緣起連結 ②讓使用者更快捲到導師卡片 ③右側浮動導覽+Top鍵仿結繩領導學 ④手機漢堡選單。教練主動要求先確認理解再動手，用AskUserQuestion問了3個不確定點但教練選擇直接用文字說明取代選單：**兩段文字（起心動念+計劃源起）留最上面，另外兩段（這是一個怎樣的地方+免責聲明）移到導師卡片後面，不管在哪都要能從導覽點得到**。落地：仿結繩領導學同款CSS（`.topnav`/`.hamburger`/`.mobile-menu`/`.float-nav`）套用mentor100既有金黑配色；`db.list_mentors_published()`改成LEFT JOIN `mentor_clicks`依`COUNT(c.id) DESC, m.id ASC`排序，後台`admin_list.html`完全沒動維持建立時間排序。全程先在`/tmp`隔離副本驗證：卡片順序跟後台排行榜逐一比對一致、375px手機寬度下漢堡選單能正常展開顯示5個連結，才推正式站。commit `c57a3d1`。
+
+## 📋 下一場直接開工任務
+- **bni-chapters「真誠分會」網頁主架構問題**：教練提出但本場對話結束前還沒說明具體是什麼問題，下一場先問清楚再動手
+- **三機hook同步待辦（教練要求優先，v102延續）**：聯想/ACER仍未處理，見[[project_cross_machine_hook_sync_todo_2026-08-08]]
+- mentor100人工審核流程：5位draft狀態導師（書銘老師/陳宜璟/梁文宣/陳彥瑋/丁兆弘）已發連結，尚無人實際走完整填寫送出流程驗證自動上架，下一場可問「有人送出了嗎」
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/mentor100/app.py`+`db.py`：刪除申請路由+姓名同步查詢+自動上架邏輯+人氣排序查詢
+- `github_repos/mentor100/templates/admin_stats.html`+`admin_list.html`：刪除按鈕+版面調整
+- `github_repos/mentor100/templates/apply_thanks.html`：文案調整
+- `github_repos/mentor100/templates/index.html`：首頁大改版（表頭/浮動導覽/漢堡選單/版面重排）
+- `github_repos/bigtree/index.html`：8/26場次加報名費
+- `~/.openclaw/workspace/state/netlify_deploy_quota.json`：bigtree-tw部署額度記錄
+- commit(mentor100獨立repo)：`567a37f`→`dfddc73`→`8eceeb1`→`c57a3d1`
+- commit(bigtree獨立repo)：`e3a6ad6`
+- commit(workspace，額度記錄)：`de56987f8`
 
 ---
 
@@ -176,9 +221,9 @@
 
 ---
 
-> 📦 **v100及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v101及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v101_archived_2026-08-08.md`（v101）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒(v101/v100)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+> 只保留最新2棒(v103/v102)在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
 
 ---
