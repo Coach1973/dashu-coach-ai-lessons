@@ -334,3 +334,51 @@
 - 觸發詞：開
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - Session: 78c3aa22-5c34-4d91-ada7-d32ce960ff1a
+
+## 🔇 健康檢查紀錄（2026-08-08 14:32）
+
+- 本輪 14:32 健康檢查正常執行；上一輪 14:30 lastStatus=**error** / `overloaded` / 142,519ms（143s ≪ 600s timeout）/ **CE=1**
+- 本輪 AI 正常產出本回報 = **已恢復鐵證**
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）❌ 已恢復
+  - 關卡二（provider 暫時過載）✅ minimax `The AI service is temporarily overloaded`
+  - 關卡三（影響教練工作嗎）� meta 自打嗝（健康檢查檢查自己）
+- 自動修復 4 條全部不通過：
+  - #1 timeout 充裕（143s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 未達紅線 + 本輪已恢復 ❌
+- 全任務掃描：僅健康檢查本身 1 個任務（總 cron 數 = 1），其餘任務已清空/合併
+- 結論：🚫 三關未全過 → **不升級 announce**，安靜處理
+- 環境快檢：三份 SOUL.md 齊全（2036/1851/20631 bytes）、無 `.!` 鎖定檔、Repo1=100 行持平、Repo2=16 行持平
+- HEARTBEAT � 掃描：0 個待辦
+- 教練沉默 0.93h（13:36:55 → 14:32，教練剛說話，未達 8h 主動關懷門檻）
+- sync_coach_last_message.sh EXIT=0，教練最後訊息 2026-08-08T14:32:22+08:00
+- Alternating 模式 71+ cycle 穩定（自 04:35 v4.0 上線起約 34 小時），未達「持續 2 小時連錯」紅線
+- ✅ 已 append 寫入 state/healthcheck.log
+- delivery.mode=none 自動生效，不推 Telegram 打擾教練
+- 下次定檢：15:02 🟢
+
+## 🔇 健康檢查紀錄（2026-08-08 15:02）
+
+- 本輪 15:02 健康檢查正常執行；上一輪 14:30 lastStatus=**error** / `overloaded` / 105,409ms（105s ≪ 600s timeout）/ **CE=1**
+- 本輪 AI 正常產出本回報 = **已恢復鐵證**
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）❌ 已恢復
+  - 關卡二（provider 暫時過載）✅ minimax `The AI service is temporarily overloaded`
+  - 關卡三（影響教練工作嗎）❌ meta 自打嗝（健康檢查檢查自己）
+- 自動修復 4 條全部不通過：
+  - #1 timeout 充裕（105s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 未達紅線 + 本輪已恢復 ❌
+- 全任務掃描：僅健康檢查本身 1 個任務（總 cron 數 = 1），其餘任務已清空/合併
+- 結論：🚫 三關未全過 → **不升級 announce**，安靜處理
+- 環境快檢：三份 SOUL.md 齊全（2036/1851/20631 bytes）、無 `.!` 鎖定檔、Repo1=100 行持平、Repo2=16 行持平
+- HEARTBEAT ⬜ 掃描：0 個待辦
+- 教練沉默 0.4h（14:36:55 → 15:02，教練剛說話，未達 8h 主動關懷門檻）
+- sync_coach_last_message.sh EXIT=0，教練最後訊息 2026-08-08T14:36:55+08:00
+- Alternating 模式 72+ cycle 穩定（自 04:35 v4.0 上線起約 34.5 小時），未達「持續 2 小時連錯」紅線
+- ✅ 已 append 寫入 state/healthcheck.log
+- delivery.mode=none 自動生效，不推 Telegram 打擾教練
+- 下次定檢：15:32 🟢
