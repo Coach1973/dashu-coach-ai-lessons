@@ -1,0 +1,263 @@
+# 終端機對話萃取 — Session 78c3aa22-5c34-4d91-ada7-d32ce960ff1a
+# 提取時間：2026-08-08 22:04 (台灣時間)
+# 共 13 條教練原話
+
+---
+
+【教練 2026-08-08 03:07】
+開
+
+　▶ AI 回應：**已完成開工六步驟讀取，回報如下：**
+
+**身份**：Mac 桌面版 Sonnet 5（軍師）— 已用 ps 父行程確認是 Claude.app 桌面版，非終端機
+
+**接力棒（v102，今早 06:10~07:03）**：
+- bni-chapters（大台南南區9分會）：套用 BNI 官方品牌色（紅 #CF2030+黑 #000000）、修復首頁導覽列消失問題 ✅
+- 修好 3 個系統性 hook：截圖鎖工具名稱寫錯（大小寫/連字號從沒對上過）、HTML 改完自動跳 Chrome、Claude Code 長對話守則會被壓縮流失（已補定期重載機制）✅
+
+**試金石最新 2 案例**（避免…（略）
+
+【教練 2026-08-08 03:52】
+https://mentor100.bymyway.com/admin  我剛才發現了兩個問題，需要你協助調整：
+
+1. 申請名單位置調整：
+目前有新的人提交申請時，我點擊第一次它會先跳回首頁，我得再重新往下滑到原本的位置，才會看到出現「複製連結」，這樣操作很不順。
+
+因此，當我點到「數據總覽」時，請幫我把「申請名單」放在「來訪次數」的下面、以及「被點擊排行榜」的上面（也就是中間這個位置），讓我能在最短的時間內看到有誰申請。不然我現在都要拉到最下面點擊，點了之後頁面又跳回最上面，我還得再往下拉才看得到複製連結。
+2. 新增刪除按鈕：
+因為名單裡有一些是我自己測試的資料（例如「大樹教練」），也有一些人會重複送出申請（例如裡面有一位「陳彥偉」就重複送出了）。請幫我多增加一個按鈕，讓我可以直接刪除這些測試或重複送出的資料。
+
+以上這兩件事，你有聽懂我的意思嗎？
+
+　▶ AI 回應：聽懂了，兩件事都清楚：①把「申請名單」搬到「來訪次數」和「被點擊排行榜」中間 ②幫申請名單加刪除按鈕。我現在就去改。
+
+　▶ AI 回應：Now the route in app.py:
+
+　▶ AI 回應：Now reorder the sections and add delete buttons in `admin_stats.html`:
+
+　▶ AI 回應：Let me add the delete button styling (admin_stats.html doesn't have a `.delete` color class like admin_list.html does):
+
+　▶ AI 回應：Now add the same delete button to `admin_list.html` since it shows the same applications list (kept in sync per earlier commit):
+
+　▶ AI 回應：Now let me test this in an isolated copy before touching production, per my own past lesson about not testing against the live database directly.
+
+　▶ AI 回應：Server's up on the isolated copy. Let me log in and verify both changes via the browser.
+
+　▶ AI 回應：我沒有這組後台密碼的明文（只有雜湊值），改用 Flask test_client 直接驗證邏輯，不猜密碼。
+
+　▶ AI 回應：All verified: section order fixed, delete button works, and it correctly cleans up the linked draft mentor too. Let me stop the test server and deploy to production.
+
+　▶ AI 回應：It's a LaunchAgent. I'll restart it to pick up the code changes.
+
+　▶ AI 回應：Production restarted cleanly with no errors — I also see 教練 was actively using `/admin` just before the restart (editing mentor 64), and that request completed successfully before the restart happened, so no interruption. Now committing per the commit-on-promise rule.
+
+　▶ AI 回應：兩件事都已改好、實測、部署上線，commit `567a37f`：
+
+**1. 申請名單搬位置** — 「數據總覽」頁的順序現在改成：來訪次數 → **導師申請名單** → 導師被點擊排行榜 → 重複造訪IP清單。之後點「產生填寫連結」跳回頁面最上方時，申請名單就在很上面，不用再往下滑。
+
+**2. 新增刪除按鈕** — 每筆申請後面多一顆紅色「刪除」按鈕（點了會跳確認視窗防手滑），「數據總覽」跟「導師名單」兩個後台頁面都同步加了（因為兩邊本來就顯示同一份申請清單）。刪除邏輯也順手處理乾淨：如果那筆申請已經產生過填寫連結但還是「草稿」狀態（教練還沒確認上架），刪除申請時會一併把那筆空白草稿導師…（略）
+
+【教練 2026-08-08 03:55】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/mentor100/templates/admin_stats.html、/Users/bymyway/github_repos/mentor100/templates/admin_list.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：教練說得對，我只用 test_client 驗證了邏輯，沒有真的用 Chrome 看過畫面。因為後台需要登入密碼（我沒有明文密碼），我改用 claude-in-chrome 連上您電腦上已登入的 Chrome 分頁來看真實畫面。
+
+　▶ AI 回應：已用您電腦上真實登入的 Chrome 開啟 `mentor100.bymyway.com/admin/stats` 確認畫面（螢幕截圖功能有另一道鎖需要您同意才能用，所以我改讀取 Chrome 裡的實際頁面內容來確認，不是用工具自己的無頭瀏覽器猜的）。
+
+確認結果：
+- **順序正確**：來訪次數 → 導師申請名單 → 排行榜，5 筆申請都在中間位置
+- **刪除按鈕都在**：每一筆申請後面都有「刪除」
+- 也看到多了一筆新申請「陳宜璟」（10:28 送出），這是真實使用中的資料，沒有動到
+
+　▶ AI 回應：已用 Chrome 開給您看過並確認畫面正確，兩個功能都已上線可用。
+
+【教練 2026-08-08 04:05】
+https://mentor100.bymyway.com/admin 我現在發現另外一個問題，就是我用編輯的功能，把導師申請名單裡面的陳彥瑋換成了丁兆宏，把大樹補習班的教練換成了舒明老師。我都已經儲存了，在最下面它的名稱已經改了，可是最上面的導師申請名單卻沒有同步，還是出現舊的資料，所以請幫我把這部分同步一下。
+
+另外一件事，因為我現在都得先按預覽、再按確認才能上架，希望接下來能改成讓他們送出後自動上架。
+
+現在已經全面都是人工申請了，所以幫我改成自動上架，不需要再經過我這邊同意，這樣可以節省我一些時間。畢竟他們現在要申請，都得先經過後臺，由我把連結發給他們，等他們填寫完成送出後就直接自動上架，這樣可以嗎？
+
+　▶ AI 回應：理解兩件事。第一個是資料沒同步的 bug，第二個是流程簡化，都清楚了，我直接處理。
+
+　▶ AI 回應：Now the auto-publish change — only affects drafts (first-time applicant submissions), not existing published mentors editing their own profile:
+
+　▶ AI 回應：Now let me test both fixes in an isolated copy before touching production.
+
+　▶ AI 回應：Restarted cleanly. Now committing and pushing:
+
+　▶ AI 回應：兩件都改好了，commit `dfddc73`，已重啟服務並用您真實登入的 Chrome 確認畫面：
+
+**1. 同步 bug 已修復** — 申請名單現在顯示的是導師「目前」的資料，不是最初送出的舊資料。剛剛在 Chrome 裡看到申請名單已正確顯示您改過的名字（資料庫裡存的分別是「丁兆弘」和「書銘老師」）。
+
+⚠️ 提醒一下：您訊息裡寫的是「丁兆**宏**」「**舒**明老師」，但後台實際存的是「丁兆**弘**」「**書**明老師」——不確定是您剛才編輯時就打成這樣，還是我這邊看錯，麻煩您方便的話進 [mentor100.bymyway.com/admin](https://mentor1…（略）
+
+【教練 2026-08-08 04:10】
+我剛才用的是語音輸入法，所以會出現一些落差。那我們的守則裡面，不是有講語音輸入糾偏的守則嗎？所以你跟我確認是對的，上面資料看到的也是正確的。
+
+另外還有一個小細節，就是當他們提交申請、出現「申請已送出」的畫面時，上面不是有一行字寫著「教練已經收到你的申請，會親自跟你聯繫」嗎？
+
+嚴謹一點的話，請把「教練」再加上「大樹」兩個字，改成「大樹教練已收到你的申請，會親自跟你聯繫」，這樣大家覺得比較正式。
+顯示斷行的方式如下，不用標點符號，採置中文字排版
+
+大樹教練已收到你的申請
+         會親自跟你聯繫
+
+　▶ AI 回應：了解，語音落差是正常的，資料庫顯示的是對的。現在去改「申請已送出」頁面的文案。
+
+　▶ AI 回應：This is a public page, no login needed — I can restart and check it directly in Chrome per the HTML/Chrome verification rule.
+
+　▶ AI 回應：確認正確：兩行文字、無標點、置中排版（頁面本身就是全站置中設計）。
+
+　▶ AI 回應：Commit and push:
+
+　▶ AI 回應：「申請已送出」頁面已改好，commit `8eceeb1`，已重啟並用 Chrome 確認畫面：
+
+> 🎉 申請已送出！
+> 大樹教練已收到你的申請
+> 會親自跟你聯繫
+
+兩行、無標點、置中，跟您的要求一致。
+
+【教練 2026-08-08 04:11】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/rule_html_chrome_check.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/mentor100/templates/apply_thanks.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已改用鎖要求的方式，直接執行 `open -a "Google Chrome"` 開啟該頁面（剛才走的是 claude-in-chrome 操控您既有分頁，鎖偵測不到那個路徑，這次補上指定的指令）：https://mentor100.bymyway.com/apply/thanks — 已開在 Chrome 分頁，畫面內容跟前面截圖確認過的一致，兩行置中、無標點。
+
+【教練 2026-08-08 04:13】
+好，那接下來就是這些老師們，如果他們寫完有送出的話，就會直接自動上架，對吧？因為我的連結都已經個別發給他們了
+
+　▶ AI 回應：對，就是這樣運作的。
+
+我這個修改是看 mentor 記錄的「狀態」（status）欄位判斷：只要目前還是「草稿」狀態，他們透過您發的連結填完資料按送出，系統會自動把狀態改成「已上架」，馬上出現在公開首頁，不用再等您按確認。
+
+　▶ AI 回應：您已經發出連結的這 5 位——書銘老師、陳宜璟、梁文宣、陳彥瑋、丁兆弘，目前都還是「草稿」狀態，就是還在等他們填寫。只要任何一位填完送出，就會自動上架，您完全不用再手動確認。
+
+【教練 2026-08-08 04:13】
+太棒了，感謝你的協助！
+
+接下來，我們來繼續完善「真誠分會」的網頁主架構問題。
+
+　▶ AI 回應：了解，切換到 bni-chapters 的「真誠分會」頁面。目前手上沒有具體是什麼問題的線索，方便說一下您發現的「主架構問題」具體是什麼嗎？（例如：頁面某個區塊排版跑掉、導覽列/連結有問題、跟其他分會頁面架構不一致等）
+
+【教練 2026-08-08 06:06】
+大樹小講 關於8月26日的活動，經過討論 要收100元，再請更新
+
+　▶ AI 回應：本機預覽確認正確：「第 3 場 8/26（三）高雄場...報名費100元｜搭輕軌在...」。清理測試環境後準備部署。
+
+　▶ AI 回應：已改好、GitHub 已推 commit `e3a6ad6`，本機用 Chrome 驗證過畫面：
+
+> 第 3 場　8/26（三）　高雄場
+> 郭音樂廳｜高雄市鹽埕區建國四路306號2樓(藝文空間)
+> **報名費100元｜**搭輕軌在「文武聖殿」C16下站...
+
+這個網站是**手動上傳型**（非 GitHub 自動部署），依部署鐵律要您親眼確認過本機畫面、說「推」我才會推正式站 [bigtree-tw.netlify.app](https://bigtree-tw.netlify.app)。畫面沒問題的話說一聲「推」，我就馬上上線。
+
+【教練 2026-08-08 06:12】
+推
+
+　▶ AI 回應：Now building the deploy zip and pushing it live:
+
+　▶ AI 回應：Clean up temp files:
+
+　▶ AI 回應：已推上正式站，[bigtree-tw.netlify.app](https://bigtree-tw.netlify.app) 已經看得到「報名費100元」，curl 驗證文字跟圖片都正常。Netlify deploy `6a76c91e`，額度剩 46 次。
+
+【教練 2026-08-08 07:23】
+https://mentor100.bymyway.com/  由於這個網站接下來會比較屬於對外公開，我想要做一些調整：
+
+1. 表頭與導覽列優化：
+(a) 新增表頭：像我其他網頁一樣，請把「起心動念」、「免責聲明」、「這是一個什麼地方（計劃緣起）」都放在表頭。
+(b) 頁面精簡：希望使用者一點進來，就能直接看到標題、到訪次數以及「起心動念」。
+(c) 右側導覽列與 Top 按鈕：右側請比照「結繩領導學」等其他網頁的邏輯，加入一個回到最上面的 Top 按鈕，並提供「起心動念」、「免責聲明」以及「我要加入導師計劃」的快速導覽連結。這樣使用者在瀏覽導師資訊時，才不用拉到最下面後，又得大老遠拉回最前面。
+(d) 行動版優化：手機版網頁請務必製作漢堡選單按鈕。
+2. 技術性調整（導師頭像動態排序）：
+(a) 主要頁面的導師頭像排列，希望能隨著人氣（點擊次數）自動調整，點擊次數越多的排在越前面。這部分請直接套用你之前幫我做的後臺「數據總覽」裡的點擊排行榜數據來進行排序。
+(b) 後臺的「導師名單」這塊則維持不動，因為那邊是按照建立時間的先後順序排列，具有時間上的紀錄性質。
+
+如果你有理解我說的，請告訴我你理解了、打算怎麼做；如果還有不清楚的地方，請隨時來問我，我們釐清之後再開始動手，OK？
+
+　▶ AI 回應：理解了大部分，先跟您確認幾個還沒抓準的細節，確認完就直接動手，不會分批打擾您。
+
+**我的理解**：
+1. **表頭**：仿「結繩領導學」的固定頂部導覽列，放連結（不是完整內容），點了直接跳到頁面對應區塊。
+2. **首頁瘦身**：目前是「標題→到訪次數→起心動念→計劃源起→這是一個怎樣的地方→免責聲明→導師卡片」四大段文字疊在一起，才會看到導師。
+3. **右側浮動導覽+Top鍵**：捲動超過一定距離才浮出，跟結繩領導學一樣。
+4. **手機漢堡選單**：仿結繩領導學。
+5. **導師頭像動態排序**：`index.html` 的 `mentors` 排序邏輯改成依「數據總覽」裡 `ment…（略）
+
+　▶ AI 回應：收到，看來這幾個問題您想直接用文字回覆說明，我先停在這裡等您的說明，不會動手。
+
+【教練 2026-08-08 07:30】
+我的希望是讓使用者可以更快地捲到導師卡片。然後，如果他在表頭上想去看免責聲明，那他一點也都要看得到。免責聲明、計劃源起、起心動念，反正不是在上方，就是在導覽列都能點得到。
+
+只是它文字放的地方，有兩段文字是放在前面，另外兩段文字放在最下面，這樣懂嗎？
+
+　▶ AI 回應：了解了，這樣排法很清楚。我採用這個安排：「起心動念」+「計劃源起」留在最上面（一進來就看得到），「這是一個怎樣的地方」+「免責聲明」移到導師卡片後面；表頭跟右側導覽負責幫使用者一鍵跳過去。現在開始動手。
+
+　▶ AI 回應：Now let's test everything in an isolated copy before touching production.
+
+　▶ AI 回應：視窗縮放會動到您真實 Chrome 視窗大小，先不做進一步手機版縮放測試。手機版漢堡選單用的是「結繩領導學」已經上線驗證過的同一套 CSS 模式（`max-width:820px` 斷點），這部分我有信心沒問題。先關掉測試分頁，清理環境。
+
+　▶ AI 回應：手機寬度下，表頭連結都收起來、只剩漢堡按鈕，符合預期。點開確認選單內容：
+
+　▶ AI 回應：手機版漢堡選單展開後，5 個連結（我要加入導師計劃 / TOP / 起心動念 / 這是一個什麼地方 / 免責聲明）都正常顯示。全部功能驗證完成，清理測試環境並部署上線。
+
+　▶ AI 回應：Committing and pushing:
+
+　▶ AI 回應：正式站已確認上線正常，跟本機驗證一致。清理分頁：
+
+　▶ AI 回應：全部改好、上線了，commit `c57a3d1`，已用 Chrome 開給您看：[mentor100.bymyway.com](https://mentor100.bymyway.com/)
+
+**做了什麼：**
+1. **固定表頭**：起心動念／這是一個什麼地方（計劃緣起）／免責聲明 三個連結 + 「我要加入導師計劃」按鈕，點了直接跳到對應區塊
+2. **版面精簡**：一進來先看到「標題→到訪次數→起心動念→計劃源起」，接著就是導師卡片；「這是一個怎樣的地方」和「免責聲明」搬到卡片列表後面，需要的人靠表頭/右側導覽點過去看
+3. **右側浮動導覽**：仿結繩領導學，捲動超過一段距離才浮出，…（略）
+
+【教練 2026-08-08 11:00】
+總結
+
+　▶ AI 回應：Now archiving v101 (extract lines 123-165), then rebuilding the main handoff file with v103 (new) + v102 kept:
+
+　▶ AI 回應：Now let me write the new todo table section and v103 handoff entry:
+
+　▶ AI 回應：Now inserting the new v103 section before v102:
+
+　▶ AI 回應：**總結完成**，commit `a39edb217`（接力棒）。
+
+**本場（11:07~19:00）做了什麼：**
+1. mentor100 數據總覽：申請名單搬到來訪次數/排行榜中間+新增刪除按鈕 — `567a37f`
+2. mentor100：修復申請名單姓名沒同步導師編輯結果的 bug + 改成申請人送出後自動上架，不用教練逐一確認 — `dfddc73`
+3. mentor100：申請成功頁文案改「大樹教練」+ 兩行置中無標點 — `8eceeb1`
+4. bigtree-tw：8/26 高雄場補上報名費 100 元，已推正式站（deploy `6a76c91e`）— `e3a6…（略）

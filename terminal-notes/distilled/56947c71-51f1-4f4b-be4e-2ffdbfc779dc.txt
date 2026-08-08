@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 56947c71-51f1-4f4b-be4e-2ffdbfc779dc
-# 提取時間：2026-08-08 06:53 (台灣時間)
-# 共 22 條教練原話
+# 提取時間：2026-08-08 11:55 (台灣時間)
+# 共 25 條教練原話
 
 ---
 
@@ -643,3 +643,61 @@ Base directory for this skill: /Users/bymyway/.claude/skills/citation-verificati
 　▶ AI 回應：直接回答教練的問題：**不是Claude不能讀完守則再做事，是這場對話已經跑了20輪，CLAUDE.md裡的守則文字很可能已經被系統壓縮掉了，而過去完全沒有機制發現這件事、更沒有補救**。VPS版小龍蝦每次心跳都會重新載入SOUL.md/IDENTITY.md，等於它的「守則在不在眼前」這件事天生不會隨對話長度流失；Claude Code的CLAUDE.md卻只在session開始那一刻讀一次，這是架構上的真實落差，不是能力落差。
 
 已經動手補上：新增`periodic_xinfa_reload_hook.sh`，複用既有「對話超過20輪」的偵測機制，每10輪把21條守則完整原文（不是連結、不…（略）
+
+　▶ AI 回應：已記進記憶，這場對話下次進到第30輪時（或教練開新對話框跑到第20輪），這個新hook就會實際自動生效，屆時可以驗證真的有守則全文重新出現在context裡。
+
+【教練 2026-08-07 22:54】
+8000字元，佔1M的多少%比
+
+　▶ AI 回應：剛才那個hook實際上真的在這場對話觸發了（教練訊息上方那大段守則全文重載提醒），代表機制確認生效，不是紙上談兵。
+
+**8000字元佔1M的比例：**
+
+- 若1M指字元數：`8000 / 1,000,000 = 0.8%`
+- 若1M指token數（`MiniMax-M3[1M]`的1M context是token單位，中文約1.5~2字元換算1個token）：換算約4,000~5,300 tokens，佔1M token context約**0.4%~0.53%**
+
+不管哪種算法，每10輪重載一次守則全文，佔用的context比例都很小（不到1%），跟教練優先要的「守則不能流失」相比，…（略）
+
+【教練 2026-08-07 22:56】
+上傳到雲，每台電腦都要知道這個優先順序小龍蝦MAC版，是否也該讀完守則再來跟我溝通？
+
+　▶ AI 回應：兩件事分開處理。第一件先查證小龍蝦Mac版（OpenClaw主agent，不是我現在這個Claude Code）實際的守則載入機制，不能只憑我剛才對VPS版的推測就下結論。
+
+　▶ AI 回應：第二件事我已經查了「小龍蝦Mac版」（OpenClaw主agent，不是這個Claude Code）的機制。老實講兩個問題的答案都要誠實面對限制，不能又給空話。
+
+　▶ AI 回應：教練說得對，我剛才那句話確實是推測，不是查證過的事實——這正是我不該犯的錯（守則#15/E08）。查證指令還在背景跑，我等結果出來再回答，不再猜。
+
+　▶ AI 回應：`system-prompt-config-CK1eJh37.js` 這個檔名直接對應到系統提示詞組裝邏輯，查這個最準。
+
+　▶ AI 回應：找到關鍵證據了，直接讀OpenClaw編譯後原始碼`workspace-Bfegr71x.js`的`readWorkspaceFileWithGuards`函式。
+
+　▶ AI 回應：抱歉教練，剛才是我沒查證就講。現在有真的查到證據了，直接讀OpenClaw編譯後原始碼確認的，不是推測。
+
+**查證結果（`/opt/homebrew/lib/node_modules/openclaw/dist/`原始碼）：**
+
+`workspace-Bfegr71x.js`的`loadWorkspaceBootstrapFiles()`函式會讀SOUL.md/IDENTITY.md/USER.md/HEARTBEAT.md等檔案，用`workspaceFileIdentity()`（比對檔案的mtime+size+inode）做快取失效判斷——檔案沒變就用快取內容、檔案變了就重讀。這份內…（略）
+
+　▶ AI 回應：`~/.claude/settings.json`是每台機器各自的本機設定檔，不在git追蹤範圍內——雖然3支腳本本身已經推上雲端（`workspace/scripts/`，其他機器`git pull`就拿得到檔案），但**hook的註冊（settings.json裡的matcher/PostToolUse/UserPromptSubmit設定）不會自動同步**，而且這3支腳本目前是Mac bash+macOS專屬指令（`open -a "Google Chrome"`），Windows機器（聯想/ACER）不能直接套用，需要各自的PowerShell版本。
+
+我現在把這件事清楚寫進跨機共用記…（略）
+
+　▶ AI 回應：**兩件事都處理完了：**
+
+1. **小龍蝦Mac版不用補**——查證OpenClaw編譯後原始碼確認（`workspace-Bfegr71x.js`+`bootstrap-cache-NNMZ7U6Y.js`），SOUL.md是每次請求都重新組裝進系統提示詞，架構上不會有Claude Code CLI那種「長對話context被壓縮掉」的問題。這次是真查證，不是推測。
+
+2. **已上傳雲端，但誠實講一個限制**：3支腳本檔案本身已推上`mac-openclaw-workflows`，聯想/ACER `git pull`就拿得到；但`~/.claude/settings.json`是每台機…（略）
+
+【教練 2026-08-07 23:03】
+總結
+
+　▶ AI 回應：v100段落(117~167行)要搬進封存檔，保留v102+v101在主檔。
+
+　▶ AI 回應：現在準備v102新棒內容，寫進主檔開頭替換v100段落。
+
+　▶ AI 回應：Structure正確：v102+v101在主檔，v100封存。現在更新頂部的待辦追蹤總表，加入本場bni-chapters相關項目。
+
+　▶ AI 回應：現在同步接力棒到CLAUDE.md（既有sync腳本），然後commit+push。
+
+　▶ AI 回應：**總結完成，commit `cb3ce71c4`**
+
+**本場300字重點：** bni-chapters（大台南南區9分會系統）改用BNI官方標準色系（紅#CF2030+黑#000000）套用全9分會，並修好分會列表首頁表頭導覽列消失問題。教練連續追問「截圖鎖為何沒執行」「為何不能讀完守則再做事」，查到兩個真正的系統性bug並修復：截圖鎖比對claude-in-chrome工具名稱大小寫/連字號寫錯導致從未真正生效、Claude Code長對話（超過20輪）CLAUDE.md守則文字可能被context壓縮流失卻無人發現。三個都做成技術鎖（PreToolUse/PostToolUse/U…（略）

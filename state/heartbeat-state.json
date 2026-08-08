@@ -1,21 +1,21 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-06T10:04:01.687007+08:00",
+    "heartbeat_poll": 1786151081,
     "system_health": "2026-08-02T12:10:00+08:00",
-    "telegram_channel": "2026-08-06T10:04:01.687007+08:00",
+    "telegram_channel": 1786151081,
     "netlify_quota": "2026-07-25T14:25:00+08:00",
-    "coach_silence_sync": "2026-08-08T06:35:32.278709+08:00",
+    "coach_silence_sync": "2026-08-08T23:02:30.685774+08:00",
     "care_4h": 1785823670
   },
-  "lastHeartbeat": "2026-08-06T10:04:01.687007+08:00",
-  "lastHeartbeatNote": "週四 10:02 心跳：08:08 context overflow 重啟後第一輪心跳，AI 正常回應（CE=1 舊帳，本輪成功 = 已恢復鐵證）。Telegram 探針 ok:true。care_4h 11:00 將自動開火（三關判斷全未過 → 不打擾教練）。教練沉默 67.6h 週四早晨屬正常作息。",
+  "lastHeartbeat": "2026-08-08T09:04:41.380633+08:00",
+  "lastHeartbeatNote": "週六 09:03 心跳：探針 ok:true、教練沉默 1.9h（自 07:06:55 context overflow 後）、軍師今早密集工作已 07:03 收工、教練可能在休息。v4.0 三關全未過，不打擾。沿用 4h SOP 等 10:00 接手。",
   "systemSnapshot": {
-    "timeOfDay": "thursday-morning",
-    "dayOfWeek": "Thursday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Saturday",
     "isQuietHours": false,
     "allCronsHealthy": true,
     "contextStatus": "fresh",
-    "contextPercent": 8,
+    "contextPercent": 15,
     "recentRestarts": "2026-08-01 02:07 + 2026-08-02 10:42 (兩次 overflow)",
     "gatewayPid": null,
     "gatewayRunning": true,
@@ -25,8 +25,8 @@
     "junshiQueueEmpty": true,
     "netlifyQuota": 59,
     "netlifyQuotaCheckNote": "2026-07-28 v85 推 5 次後剩 59 次（71→64→59），建議教練有空時親自到 Netlify 後台核對",
-    "coachSilentSince": "2026-08-08T06:34:14+08:00",
-    "coachSilentHours": 0.0,
+    "coachSilentSince": "2026-08-08T22:01:23+08:00",
+    "coachSilentHours": 1.0,
     "pendingCoachItems": [
       "🟡 v85：Email 自動發送系統（教練尚未給細節）",
       "🟡 v85：明天 AI 微型論壇現場抽獎轉盤使用回饋",
@@ -36,7 +36,9 @@
       "🟡 ACER 36.3GB 待刪（需教練在 ACER 開對話）",
       "🟡 光線尺顧問 ATM NT$10,000 入金(07-13) 待對帳"
     ],
-    "care_4h": "2026-08-04T14:07:50.858106+08:00"
+    "care_4h": "2026-08-04T14:07:50.858106+08:00",
+    "recentCoachActivity": "教練今早密集跟軍師對話 BNI 大台南（01:28-07:03），07:06:55 最後在小龍蝦發訊息（context overflow 前），至今沉默 1.9h",
+    "telegramChannelLastVerified": "2026-08-08T09:04:41.380633+08:00"
   },
   "lastDeliveries": [
     {
