@@ -1,6 +1,8 @@
 [2026-08-08 19:32] 健康檢查 cycle=81+ | coach_silent=0.5h | 上一輪 19:30 lastStatus=error(overloaded) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
 [2026-08-08 19:06] 健康檢查 cycle=80+ | coach_silent=0.1h | 上一輪 19:00 lastStatus=error(overloaded, 173s≪600s) CE=2 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
 
+[2026-08-08 20:02] 健康檢查 cycle=82+ | coach_silent=1.0h | 上一輪 20:00 lastStatus=error(overloaded, 142s≪600s) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
+
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
