@@ -1,3 +1,6 @@
+[2026-08-08 19:32] 健康檢查 cycle=81+ | coach_silent=0.5h | 上一輪 19:30 lastStatus=error(overloaded) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
+[2026-08-08 19:06] 健康檢查 cycle=80+ | coach_silent=0.1h | 上一輪 19:00 lastStatus=error(overloaded, 173s≪600s) CE=2 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
+
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
@@ -26,3 +29,8 @@
 ## ⚠️ peipei 自動 force-restart 2026-08-08 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-08 19:05
+- ✅ 同步成功
+- HANDOFF mtime: 1786186982
+- 雲端同步：✅ 已推上雲端（commit 7feac14ab）
