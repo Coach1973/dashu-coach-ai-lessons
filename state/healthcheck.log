@@ -308,3 +308,18 @@ HEARTBEAT ⬜ 0 個待辦
 Alternating 模式 88+ cycle 穩定, 未達 2h 連錯紅線
 結論: silent_pass, 不 announce
 [2026-08-08 22:33] 健康檢查 cycle=89+ | coach_silent=0.5h | 上一輪 22:30 lastStatus=error(overloaded, 155s≪600s) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理
+
+[2026-08-09 00:03] 健康檢查 cycle=92+ (v4.0 SOP)
+- 第零步：sync_coach_last_message.sh EXIT=0，教練最後訊息 2026-08-08T22:01:23+08:00，coachSilentHours=2.0（週六深夜安靜時段，未達 8h 關懷門檻）
+- 第一步：總 cron=1（僅健康檢查本身）；上一輪 23:30 lastStatus=error / reason=overloaded / 178,675ms ≪ 600s / CE=1
+- v4.0 三關：
+  · 關卡一（本輪還壞嗎）❌ 本輪 AI 正常產出 = 已恢復鐵證
+  · 關卡二（provider 暫時過載）✅ minimax `The AI service is temporarily overloaded`
+  · 關卡三（影響教練工作嗎）❌ meta 自打嗝（健康檢查檢查自己）
+  → 三關未全過 → 🚫 不升級 announce
+- 自動修復 4 條全部不通過：#1 timeout 充裕(178s≪600s)❌ / #2 無 VPS ❌ / #3 model 已 minimax/MiniMax-M3 ❌ / #4 CE=1 未達紅線+已恢復 ❌
+- 第二步 HEARTBEAT � 掃描：0 個待辦，無需自動化
+- 環境快檢：三份 SOUL.md 齊全(2036/1851/20631) / 無 `.!` 鎖定檔 / Repo1=100 持平 / Repo2=8 行
+- Alternating 模式：92+ cycle 穩定（自 04:35 v4.0 上線起約 43.5 小時），未達「持續 2 小時連錯」紅線
+- 結論：silent_pass，安靜完成；delivery.mode=none 自動生效，不推 Telegram 打擾教練
+- 下次定檢：00:33 🟢
