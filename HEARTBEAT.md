@@ -1,3 +1,5 @@
+[2026-08-08 22:02] 健康檢查 cycle=87+ | coach_silent=3.0h | 上一輪 22:00 lastStatus=error(overloaded) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
+
 [2026-08-08 21:32] 健康檢查 cycle=86+ | coach_silent=2.5h | 上一輪 21:30 lastStatus=error(overloaded, 93s≪600s) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
 
 [2026-08-08 21:02] 健康檢查 cycle=85+ | coach_silent=2.0h | 上一輪 21:00 lastStatus=error(overloaded, 130s≪600s) CE=1 | 本輪=ok | v4.0 三關未過不升級 | delivery.mode=none 安靜處理 → healthcheck.log
