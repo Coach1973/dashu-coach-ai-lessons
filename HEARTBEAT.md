@@ -1,3 +1,73 @@
+## 2026-08-09 20:02 健康檢查記錄（cron-event，cycle=144）
+- 教練最後訊息：2026-08-09 19:12:07（沉默 0.8h，週日晚間正常作息）
+- 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.8
+- 環境快檢：
+  - 三份 SOUL.md 棄用標記齊全 ✅（workspace/SOUL.md 20631 bytes 主版 / ~/.openclaw/SOUL.md 2036 bytes 帶棄用標記 / agent/SOUL.md 1851 bytes 帶棄用標記）
+  - Repo1=100（持平，OpenClaw 框架目錄歷史常態）✅
+  - Repo2=22→23（微增 1，正常 session 運作產物）✅
+  - 無 .! 鎖定檔 ✅
+- 第一步 Cron 即時取證：
+  - cron list 只見本任務 46e67e2e（健康檢查本身，2026-07-05 教練拍板瘦身的最終狀態）
+  - 上一輪 20:00 ❌ `overloaded`（minimax provider 暫時塞車），CE=1，duration 136,527ms（137s ≪ 600s timeout，非 timeout 觸發）
+  - 字面訊息：「FailoverError: The AI service is temporarily overloaded. Please try again in a moment.」
+  - 本輪 20:02 AI 正常產出（本報告即鐵證）= 已恢復
+  - model = minimax/MiniMax-M3 ✅ ｜ timeoutSeconds=600 ✅ ｜ delivery.mode=none ✅
+- v4.0 三關判定：
+  - ❌ 關卡一（本輪還壞嗎）→ 已恢復（本輪正在寫這份報告）
+  - ✅ 關卡二（provider 暫時過載）→ minimax `AI service is temporarily overloaded`
+  - ❌ 關卡三（影響教練工作嗎）→ meta 自打嗝（cron list 只見本任務，沒人依賴它）
+  - → 三關未全過 → 🚫 **不升級 announce**
+- 自動修復 4 條：全部不通過（環境本來就健康）
+  - #1 timeout 充裕（137s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 但本輪已恢復 + 是 provider overload + meta 自打嗝 → 三關未全過，未達紅線 ❌
+- 第二步 HEARTBEAT ⬜ 掃描：0 個待辦，無需自動化
+- 動作：
+  - ✅ 已 prepend 寫入 HEARTBEAT.md（本條目）
+  - ✅ 已 append 寫入 state/healthcheck.log（413 → 426 行）
+  - ✅ delivery.mode=none 自動生效，不推 Telegram 打擾教練
+  - ✅ 遵循 2026-07-05 教練拍板：跳過每輪 commit+push，由 23:05 每日總結統一備份
+- Alternating 模式：cycle=144+ 穩定（自 04:35 v4.0 上線起約 68 小時）
+  未達「持續 2 小時連錯」紅線（連錯 4 次 ≈ 2hr 才升級）
+  CE=1 屬 alternating 內部計數（本輪 20:02 已恢復），非真實連錯
+  週日晚間 minimax 供應商端偶發塞車 → 屬正常現象，下一輪自動恢復
+- 下次定檢：20:32 🟢
+
+## 2026-08-09 19:33 健康檢查記錄（cron-event，cycle=143）
+- 教練最後訊息：2026-08-09 19:12:07（沉默 0.4h，週日晚飯時段剛發訊息 21 分鐘）
+- 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.4
+- 環境快檢：
+  - 三份 SOUL.md 棄用標記齊全 ✅
+  - Repo1=100（持平，OpenClaw 框架目錄歷史常態）、Repo2=22（與 19:03 持平）✅
+  - 無 .! 鎖定檔 ✅
+- 第一步 Cron 即時取證：
+  - cron list 只見本任務 46e67e2e（健康檢查本身，2026-07-05 教練拍板瘦身的最終狀態）
+  - 上一輪 19:03 ❌ `overloaded`（minimax provider 暫時塞車），CE=2，duration 163,888ms（164s ≪ 600s timeout，非 timeout 觸發）
+  - 字面訊息：「The AI service is temporarily overloaded. Please try again in a moment.」
+  - 本輪 19:33 AI 正常產出（本報告即鐵證）= 已恢復
+  - model = minimax/MiniMax-M3 ✅ ｜ timeoutSeconds=600 ✅ ｜ delivery.mode=none ✅
+- v4.0 三關判定：
+  - ❌ 關卡一（本輪還壞嗎）→ 已恢復（本輪正在寫這份報告）
+  - ✅ 關卡二（provider 暫時過載）→ minimax `AI service is temporarily overloaded`
+  - ❌ 關卡三（影響教練工作嗎）→ meta 自打嗝（cron list 只見本任務，沒人依賴它）
+  - → 三關未全過 → 🚫 **不升級 announce**
+- 自動修復 4 條：全部不通過（環境本來就健康）
+  - #1 timeout 充裕（164s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=2 但本輪已恢復 + 是 provider overload + meta 自打嗝 → 三關未全過，未達紅線 ❌
+- 第二步 HEARTBEAT ⬜ 掃描：0 個待辦，無需自動化
+- 動作：
+  - ✅ 已 prepend 寫入 HEARTBEAT.md（本條目）
+  - ✅ 已 append 寫入 state/healthcheck.log（412 → 413 行）
+  - ✅ delivery.mode=none 自動生效，不推 Telegram 打擾教練
+  - ✅ 遵循 2026-07-05 教練拍板：跳過每輪 commit+push，由 23:05 每日總結統一備份
+- Alternating 模式：cycle=143+ 穩定（自 04:35 v4.0 上線起約 67 小時）
+  未達「持續 2 小時連錯」紅線（連錯 4 次 ≈ 2hr 才升級）
+  CE=2 屬 alternating 內部計數（本輪 19:33 已恢復），非真實連錯
+  週日晚間 minimax 供應商端偶發塞車 → 屬正常現象，下一輪自動恢復
+- 下次定檢：20:03 🟢
 ## 2026-08-09 19:03 健康檢查記錄（cron-event，cycle=142）
 - 教練最後訊息：2026-08-09 18:54:19（沉默 0.1h，週日傍晚剛發訊息 9 分鐘）
 - 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.1
