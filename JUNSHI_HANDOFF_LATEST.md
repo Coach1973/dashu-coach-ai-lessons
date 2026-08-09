@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **event-signup：簽到+抽獎登記合併成單一介面，通用QR立牌上線** | ✅v105本場完成 | 詳見下方v105完整戰果。核心改動：`/checkin`不再顯示「已完成線上報名」中繼畫面，改標「我要參加抽獎」，填手機送出同一步直接跳轉LINE完成binding+抽獎登記(commit`7227e1812`)；新增通用版「掃碼玩抽獎」QR立牌`qr/wheel-print.html`取代單場活動專屬立牌(commit`dc90140e3`)；後台場次已同步大樹小講8/21+8/22+8/26+8/28四場(DB直改，不進git)。作品總覽表同步更新3次(改名/改連結)，commit`ef8e6a6`+`7bc25f5`+`0d80f93` |
 | 🟡 | **bni-chapters：「真誠分會」網頁主架構問題** | 🔒卡住-等教練說明 | 教練提出要處理，但還沒說明具體是哪個架構問題，下一場先問清楚再動手 |
 | 🟢 | **bni-chapters：後台社群／外部連結新增「編輯」功能** | ✅2026-08-09完成 | 教練回報FB/LINE/聯絡我們只有新增刪除、缺編輯，得先刪再建。已補`db.update_link()`+`/links/<id>/edit`路由+模板改成可直接編輯label/url。已重啟服務+登入實測更新真的存進資料庫(改完再改回原值，沒留測試假資料)。commit `3a5ae8e4` |
 | 🟢 | **mentor100：申請名單UI優化+姓名同步bug修復+自動上架+首頁大改版** | ✅v103本場完成 | 詳見下方v103完整戰果，5個commit：申請名單搬到來訪次數/排行榜中間+加刪除按鈕(`567a37f`)、修復申請名單姓名沒同步導師編輯結果的bug+改自動上架不需教練逐一確認(`dfddc73`)、申請已送出頁文案改「大樹教練」置中兩行(`8eceeb1`)、首頁改版(固定表頭+右側浮動導覽+手機漢堡選單+導師卡片依人氣排序，後台導師名單維持原順序不動)(`c57a3d1`) |
@@ -77,6 +78,63 @@
 
 ---
 
+# 軍師接力棒 · 2026-08-10 v105（Mac桌面版 Sonnet 5，event-signup抽獎報到流程重新設計+bymyway.com/coach888多站維護）
+
+> 建立時間：2026-08-09 18:45 ~ 2026-08-10 00:28（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報）
+> 本棒主軸：**教練密集測試event-signup抽獎報到系統，從「找不到7/29做的QR轉盤頁面」一路挖到重新設計整套現場報到流程。過程中兩次猜錯教練要找的頁面，最後查git log+對話逐字稿才找到真相；教練確認方向後，把簽到+LINE綁定+抽獎登記合併成單一介面。同場也處理了www.bymyway.com首頁活動同步、jiesheng-report數字調整、大樹作品總覽表多次更新、bigtree-tw場次深連結查證。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 event-signup：現場報到+抽獎登記重新設計（本場核心）
+教練回報找不到7/29做的「掃QR進轉盤遊戲」頁面。**過程中兩次判斷錯誤**：第一次以為是`/wheel`(需登入，非教練要找的)，第二次補了7/29專屬立牌也不對——最後查`distill/terminal_2026-07-28.md`+`terminal_2026-07-29.md`逐字稿，用教練7/29現場真實提問「請問我的轉盤抽獎的網址是哪個」+「56位加入抽獎但只有16位綁定」當鐵證，確認`/checkin`(掃碼)→`/wheel`(教練操作)本來就是完整正確的一套，沒有遺漏頁面。
+
+教練接著問「綁定是不是一定要加LINE好友」，查`app.py`/`line_webhook`程式碼確認：**綁定條件是「送出訊息」不是「加好友」**(LINE的`follow`事件這支程式完全沒處理，只處理`message`事件)，且比對邏輯是**用姓名比對**、跟手機號碼無關。教練據此提出重新設計：
+- 拿掉「簽到成功」中繼畫面，`/checkin`直接以「我要參加抽獎」為主視覺，手機號碼欄位就在同一頁
+- 填手機、按送出的同一步，直接轉跳LINE(帶好「我是OOO，剛報名了XXX。我要現場立即參加抽獎（送出才算登記成功）」)，不用再點第二次「加好友」
+- 新增可重複使用的通用版「掃碼玩抽獎」QR立牌(`make_qr.py --wheel`)，不押日期，取代單場活動專屬立牌，之後每場都用同一張
+
+全部改動用「插入測試用戶→POST正式站驗證302導向LINE網址→解碼確認文字→清除測試資料」的方式驗證過，非憑程式碼推論；每次改完.html都用`open -a "Google Chrome"`開真實網址給教練看。commit `7227e1812`(核心流程)+`dc90140e3`(新QR立牌)。
+
+### 2. 🎯 event.bymyway.com/admin 場次同步大樹小講
+教練要求「後台活動應該跟大樹小講同步」，直接寫入`event.db`補上8/21金門+8/22金門+8/28嘉義三場(8/26已存在)。`routing_mode=auto`本來就會自動抓「日期最近未過期」的場次，已用curl驗證`/checkin`自動切到8/21。資料庫檔案本身`.gitignore`排除，這次沒有commit hash，改動紀錄僅在此接力棒。
+
+### 3. 🎯 www.bymyway.com 首頁「最新消息」同步大樹小講+bigtree-tw查證深連結
+教練要求首頁最新消息①取消結繩領導學台中場②拿掉過期活動③跟大樹小講同步。查出`www.bymyway.com`是WordPress iframe嵌`coach1973.github.io/bigtree/speakers-2026/`，直接編輯該頁：移除台中場結繩領導學+7則過期活動，新增8/21~9/23共6場真實現行場次。本機起http.server預覽用`read_page`驗證渲染正確(9場、無殘留)才推送，commit `95273a04b`(bigtree repo)。
+
+另外，教練問「能不能做一個直接跳出8/26報名視窗的連結」，查bigtree-tw原始碼發現**這個功能早就存在**(`?session=YYYY-MM-DD`參數，`openRegisterFromQuery()`)，不用開發，直接用JS實測確認`https://bigtree-tw.netlify.app/?session=2026-08-26`真的會自動彈出預選好場次的報名視窗，交給教練即可用，同時告知教練換日期就能自己生出其他場次的連結。
+
+### 4. 🟢 jiesheng-report：台南場數字調整
+教練口頭指示：損益平衡21→13人(commit`03ffbf766`)、目標人數25→20人(commit`6cddd95b4`)。皆重啟服務驗證。
+
+### 5. 🟢 語音糾偏規則泛化+大樹作品總覽表多次維護
+- 教練親口把「真愛鋒會=真愛分會」的糾正升級為通用規則「真XX鋒會/峰會一律=真XX分會」，已更新記憶檔`feedback_fenhui_not_fenghui_voice_correction`，commit`a4198b2e8`(claude-brain記憶庫)
+- `coach888`作品總覽表本場新增第8/9項(抽獎轉盤系統/QR立牌)後又依教練指示改名+改連結共4次，最終定案：第8項「抽獎轉盤系統」(拿掉日期)、第9項「掃 QR Code 玩抽獎」(連向新版`wheel-print.html`)，commit`ef8e6a6`+`7bc25f5`+`0d80f93`
+
+## 📋 下一場直接開工任務
+- **event-signup新流程**：8/21金門場是第一次實戰，教練現場測試後若有回饋(例如綁定率有沒有真的提升)，下一場先問結果
+- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
+- 企業健身房、BNI分會網站架構(峰會/分會混淆待確認哪個系統)：皆延續v104未解決，教練尚未回覆
+- 三機hook同步：ACER仍待處理
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/app.py`：`_lottery_greet_url()`新helper、`checkin_submit()`改直接跳LINE、`slides_landing()`複用helper
+- `event-signup/templates/checkin.html`：文案改「我要參加抽獎」
+- `event-signup/make_qr.py`：新增`make_wheel()`+`--wheel`參數
+- `event-signup/qr/wheel-print.html`+`wheel.png`：新版通用QR立牌
+- `event-signup/event.db`：場次表新增8/21+8/22+8/28(不進git)
+- `github_repos/bigtree/speakers-2026/index.html`：首頁最新消息同步
+- `github_repos/bigtree/index.html`：確認`?session=`深連結功能已存在，未改動
+- `github_repos/jiesheng-report/app.py`(rpl-workshop)：損益平衡+目標人數
+- `github_repos/coach888/index.html`：作品總覽表4次更新
+- commit(workspace)：`7227e1812`+`dc90140e3`+`03ffbf766`+`6cddd95b4`
+- commit(bigtree)：`95273a04b`
+- commit(coach888)：`ef8e6a6`+`7bc25f5`+`0d80f93`
+- commit(claude-brain)：`a4198b2e8`
+
+---
+
 # 軍師接力棒 · 2026-08-09 v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報+bymyway.com架構查證）
 
 > 建立時間：2026-08-09 台灣時間 14:00~18:45
@@ -120,41 +178,6 @@ Email自動發送系統(教練自己執行完成)、mentor100申請流程(已有
 
 ---
 
-# 軍師接力棒 · 2026-08-09（聯想 Windows 終端機 Sonnet 5，補齊三機hook同步待辦）
-
-> 建立時間：2026-08-09 台灣時間
-> 本棒執行者：聯想 Windows 終端機 Sonnet 5
-> 上一棒：v103（Mac桌面版 Sonnet 5，mentor100密集迭代五連發+bigtree-tw收費更新）
-> 本棒主軸：**教練說「開工」，走完六步驟開工協議後，優先處理教練要求優先的三機hook同步待辦([[project_cross_machine_hook_sync_todo_2026-08-08]])——Mac 8/8修好的3支hook裡，聯想只欠2支(截圖鎖工具名稱查證後發現本來就是對的，不用改)。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 補上Windows版兩支hook：auto_chrome_after_html_edit.ps1 + periodic_xinfa_reload_hook.ps1
-仿Mac版邏輯用純PowerShell重寫（這台python3只是Windows Store執行別名樁，exit code 49無真直譯器，不能shell out）：
-- `auto_chrome_after_html_edit.ps1`：PostToolUse(matcher: Edit|Write)，碰.html檔自動`start chrome file://...`
-- `periodic_xinfa_reload_hook.ps1`：UserPromptSubmit，對話滿20輪起每10輪重載21條守則全文（讀session jsonl算真實user turn數，含band去重debounce）
-
-兩支都寫合成JSON模擬輸入實測驗證過（非只憑寫完就當生效）：html/非html分流、Edit/Write以外工具不觸發、20輪門檻/debounce邏輯用25行合成jsonl驗證curBand正確計算+第二次同band不重複輸出。已在`~/.claude/settings.json`(本機專屬，不隨git同步)註冊。
-
-### 2. 🔴🔴 過程中額外抓到兩個這台機器才有的環境坑（模擬測試實際踩到，非憑印象）
-①**PowerShell 5.1 + Big5 codepage誤讀無BOM的UTF-8原始碼**：`periodic_xinfa_reload_hook.ps1`裡有中文檔名字面量(`特助心法.md`)，第一版寫完模擬測試發現hook永遠靜默無輸出、exit 0零報錯——追查發現`Test-Path`對這個被誤讀成亂碼的路徑永遠回傳False，整支hook形同虛設。修法是給.ps1檔案本身補UTF-8 BOM（`printf '\xEF\xBB\xBF'`接原始內容），跟`screenshot_lock.ps1`原本靠「維持ASCII-only」繞開同一個坑是同根因、不同修法。
-②**`[Console]::InputEncoding`預設Big5**：stdin JSON若含中文文字(例如中文檔名的`file_path`)，讀進來就先壞掉，跟腳本自身編碼問題是兩個獨立層次的同根因坑。已在兩支新hook開頭強制`[Console]::InputEncoding = UTF8`。這個坑理論上會影響任何讀stdin JSON又可能碰到中文內容的Windows PowerShell hook，值得其他機器之後寫類似hook時留意。
-
-commit `72776028`(mac-openclaw-workflows)，已push。已同步更新接力棒狀態總表第14項。
-
-## 📋 下一場直接開工任務
-- 三機hook同步待辦剩ACER：可直接抄這兩支.ps1，但要先確認ACER的python3/jq環境限制是否跟聯想相同(這台的坑是機器特有的環境問題，不確定ACER是否也有同款python3 Windows Store樁)
-- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
-- 其餘卡住項目本場未觸碰，狀態不變（見狀態總表）
-
-## 🔑 本場關鍵檔案索引
-- `scripts/auto_chrome_after_html_edit.ps1`：新建
-- `scripts/periodic_xinfa_reload_hook.ps1`：新建，含UTF-8 BOM
-- `C:\Users\bymyw\.claude\settings.json`：新增PostToolUse+UserPromptSubmit兩處註冊（本機專屬，不隨git同步）
-- commit(mac-openclaw-workflows workspace)：`72776028`
-
----
-
-> 📦 **v101及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v104(聯想)及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
