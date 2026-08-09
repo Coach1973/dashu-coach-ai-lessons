@@ -160,7 +160,10 @@ def slides_landing():
     # 而/e/<slug>/thanks頁面（線上報名走的那頁）早就有幫忙打好問候語的greet_url。
     # 這裡補上同一套邏輯，讓現場簽到的人也能一鍵完成綁定。
     if name and event:
-        greet_text = f"我是{name}，剛報名了{event['name']}"
+        greet_text = (
+            f"我是{name}，剛報名了{event['name']}。"
+            f"我要現場立即參加抽獎（送出才算登記成功）"
+        )
         add_friend_url = f"https://line.me/R/oaMessage/{LINE_OA_ID}/?{quote(greet_text)}"
 
     return render_template(
