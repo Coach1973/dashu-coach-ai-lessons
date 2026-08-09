@@ -12,7 +12,7 @@
     "morning_greeting": 1786241043,
     "last_care_telegram_msg_id": 9367,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-09T15:03:30.649100+08:00"
+    "coach_silence_sync": "2026-08-09T18:35:04.396799+08:00"
   },
   "lastHeartbeat": "2026-08-09T10:02:23.000000+08:00",
   "lastHeartbeatNote": "週日 10:02 心跳：探針 ok:true（守則#19 親驗）、教練沉默 12.0h（22:01:23 真相源）、環境健檢全綠、送出週日早安關懷（message 9367，比照 8/5~8/7 連三天 09:00~09:04 早安節奏）、接力棒停 v103 無 pending、下一場待教練回覆三個起點選項或新指令",
@@ -38,8 +38,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-09T06:02:41.884871+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
-    "coachSilentSince": "2026-08-09T14:59:30+08:00",
-    "coachSilentHours": 0.1,
+    "coachSilentSince": "2026-08-09T15:28:23+08:00",
+    "coachSilentHours": 3.1,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
