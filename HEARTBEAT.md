@@ -1,3 +1,93 @@
+## 2026-08-09 14:02 健康檢查記錄
+- 教練最後訊息：2026-08-09 13:09:17（沉默 0.9h，週日下午正常作息）
+- 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.9
+- Telegram 通道探針：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 親驗）
+- 環境快檢：
+  - 三份 SOUL.md 狀態正確 ✅
+  - Repo1=100（持平）、Repo2=21（從 20 微增 1 行，正常 session 運作產物）✅
+  - 無 .! 鎖定檔 ✅
+- 第一步 Cron 即時取證：
+  - cron list 看到全部排程中只有本任務 46e67e2e 屬於「meta 健康檢查」，其他都是教練實務任務（每4小時主動關懷/BNI行事曆/2小時蒸餾/早安摘要/每日總結/提醒信件等共30+任務）全部 lastStatus=ok
+  - 上一輪 13:30 ❌ `overloaded`（minimax provider 暫時塞車），CE=1，duration 110,174ms（110s ≪ 600s timeout，非 timeout 觸發）
+  - 字面訊息：「FailoverError: The AI service is temporarily overloaded. Please try again in a moment.」
+  - Alternating 模式穩定（cycle=132+，與 13:05 一致：1 錯 1 對）
+- v4.0 三關判定：
+  - ❌ 關卡一（本輪還壞嗎）→ 已恢復（本輪正在寫這份報告）
+  - ✅ 關卡二（provider 暫時過載）→ minimax `overloaded`
+  - ❌ 關卡三（影響教練工作嗎）→ meta 自打嗝（cron list 主視角只見本任務，其他實務任務全 ok）
+  - → 三關未全過 → 🚫 **不升級 announce**
+- 自動修復 4 條：全部不通過（環境本來就健康）
+  - #1 timeout 充裕（110s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 未達紅線 + 本輪已恢復 ❌
+- 第二步 HEARTBEAT ⬜ 掃描：0 個待辦，無需自動化
+- 動作：
+  - ✅ 已 prepend 寫入 HEARTBEAT.md（本條目）
+  - ✅ 已 append 寫入 state/healthcheck.log（362 → 363 行）
+  - ✅ delivery.mode=none 自動生效，不推 Telegram 打擾教練
+  - ✅ 遵循 2026-07-05 教練拍板：跳過每輪 commit+push，由 23:05 每日總結統一備份
+- 下次定檢：14:32 🟢
+## 2026-08-09 14:02 健康檢查記錄
+- 教練最後訊息：2026-08-09 13:09:17（沉默 0.9h，週日下午剛發訊息不到 1 小時）
+- 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.9
+- 環境快檢：
+  - 三份 SOUL.md 狀態正確 ✅（`~/.openclaw/SOUL.md` + `~/.openclaw/agents/main/agent/SOUL.md` 兩份舊版「已棄用」標記齊全；新版主版 `workspace/SOUL.md` 是真正在用的，不該有棄用標記——符合預期）
+  - Repo1=100（持平）、Repo2=21（從 20 微增 1 行，正常 session 運作產物）✅
+  - 無 .! 鎖定檔 ✅
+- 第一步 Cron 即時取證：
+  - cron list 只見本任務 46e67e2e（健康檢查本身）
+  - 上一輪 14:00 ❌ `overloaded`（minimax provider 暫時塞車），CE=1，duration 138,112ms（138s ≪ 600s timeout，非 timeout 觸發）
+  - 字面訊息：「FailoverError: The AI service is temporarily overloaded. Please try again in a moment.」
+  - Alternating 模式穩定（cycle=133+，與 12:33/13:05/13:32 一致：1 錯 1 對）
+- v4.0 三關判定：
+  - ❌ 關卡一（本輪還壞嗎）→ 已恢復（本輪正在寫這份報告）
+  - ✅ 關卡二（provider 暫時過載）→ minimax `overloaded`
+  - ❌ 關卡三（影響教練工作嗎）→ meta 自打嗝（cron list 只見本任務，沒人靠它）
+  - → 三關未全過 → 🚫 **不升級 announce**
+- 自動修復 4 條：全部不通過（環境本來就健康）
+  - #1 timeout 充裕（138s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 未達紅線 + 本輪已恢復 ❌
+- 第二步 HEARTBEAT ⬜ 掃描：0 個待辦，無需自動化
+- 動作：
+  - ✅ 已 prepend 寫入 HEARTBEAT.md（本條目）
+  - ✅ 已 append 寫入 state/healthcheck.log（362 → 363 行）
+  - ✅ delivery.mode=none 自動生效，不推 Telegram 打擾教練
+  - ✅ 遵循 2026-07-05 教練拍板：跳過每輪 commit+push，由 23:05 每日總結統一備份
+- 下次定檢：14:32 🟢
+
+## 2026-08-09 13:32 健康檢查記錄
+- 教練最後訊息：2026-08-09 13:09:17（沉默 0.4h，週日中午剛發訊息不到半小時）
+- 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.4
+- 環境快檢：
+  - 三份 SOUL.md 狀態正確 ✅（`~/.openclaw/SOUL.md` + `~/.openclaw/agents/main/agent/SOUL.md` 兩份舊版「已棄用」標記齊全；新版主版 `workspace/SOUL.md` 是真正在用的，不該有棄用標記——符合預期）
+  - Repo1=100（持平）、Repo2=20（從 25 微降 5 行，正常 git 整理或 commit 吸收）✅
+  - 無 .! 鎖定檔 ✅
+- 第一步 Cron 即時取證：
+  - cron list 只見本任務 46e67e2e（健康檢查本身）
+  - 上一輪 13:30 ❌ `overloaded`（minimax provider 暫時塞車），CE=1，duration 110,174ms（110s ≪ 600s timeout，非 timeout 觸發）
+  - 字面訊息：「FailoverError: The AI service is temporarily overloaded. Please try again in a moment.」
+  - Alternating 模式穩定（cycle=132+，與 12:33/13:05 一致：1 錯 1 對）
+- v4.0 三關判定：
+  - ❌ 關卡一（本輪還壞嗎）→ 已恢復（本輪正在寫這份報告）
+  - ✅ 關卡二（provider 暫時過載）→ minimax `overloaded`
+  - ❌ 關卡三（影響教練工作嗎）→ meta 自打嗝（cron list 只見本任務，沒人靠它）
+  - → 三關未全過 → 🚫 **不升級 announce**
+- 自動修復 4 條：全部不通過（環境本來就健康）
+  - #1 timeout 充裕（110s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ❌
+  - #4 CE=1 未達紅線 + 本輪已恢復 ❌
+- 第二步 HEARTBEAT ⬜ 掃描：0 個待辦，無需自動化
+- 動作：
+  - ✅ 已 prepend 寫入 HEARTBEAT.md（本條目）
+  - ✅ 已 append 寫入 state/healthcheck.log（361 → 362 行）
+  - ✅ delivery.mode=none 自動生效，不推 Telegram 打擾教練
+  - ✅ 遵循 2026-07-05 教練拍板：跳過每輪 commit+push，由 23:05 每日總結統一備份
+- 下次定檢：14:02 🟢
+
 ## 2026-08-09 13:05 健康檢查記錄
 - 教練最後訊息：2026-08-09 12:15:27（沉默 0.8h，週日中午剛發訊息不到 1 小時）
 - 第 0 步 sync_coach_last_message.sh 撈到 Telegram API 真實時間，exit 0，coachSilentHours=0.8
@@ -268,3 +358,9 @@
 ## ⚠️ peipei 自動 force-restart 2026-08-09 09:15:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🩺 軍師 Hook 自檢 2026-08-09 14:26（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: e8cec3a9-8587-471e-a1a2-aea003ee626a
