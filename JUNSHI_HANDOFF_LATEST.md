@@ -77,6 +77,49 @@
 
 ---
 
+# 軍師接力棒 · 2026-08-09 v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報+bymyway.com架構查證）
+
+> 建立時間：2026-08-09 台灣時間 14:00~18:45
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：聯想 Windows 終端機 Sonnet 5（補齊三機hook同步待辦）
+> 本棒主軸：**四條主線。①`bni-chapters`後台社群連結補「編輯」功能，教練回報只有新增刪除很麻煩。②`mentor100`首頁補正式頁尾（版權/訪客計數/官網連結/LINE聯絡）。③教練口頭確認三項舊任務結案（Email自動發送/mentor100申請流程/光線尺對帳），並延伸討論一支影片講的AI使用技巧（自我審查邏輯漏洞、個人使用說明書confirm已有ai-go/coach-persona.md不用重做、影片講的第三~六階段AI實踐程度逐項查證評估），落地建立「☕幕僚長晨報」cron統整bni_tainan+jiaolian_thoughts兩個對外AI員工每日動態。④教練問切換聯想電腦做BNI/mentor100任務會不會有落差，查證確認這兩個網站是Mac本機Flask+Cloudflare Tunnel（非教練原本以為的WordPress），過程中教練親自釐清bymyway.com網域下WordPress(根網域+課程)跟Mac本機網站(子網域群)的分流，順手查證VPS真實規格(3.8GB/100GB/1CPU)驗證教練決定網站維持Mac不搬VPS的判斷正確。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 bni-chapters：後台社群／外部連結新增「編輯」功能
+教練回報FB/LINE/聯絡我們只有新增刪除、缺編輯，得先刪再建很麻煩。補`db.update_link()`+`/links/<id>/edit`路由+模板改成可直接編輯label/url，重啟服務+登入實測更新真的存進資料庫（改完再改回原值，沒留測試假資料）。commit `3a5ae8e4`。
+
+### 2. 🎯 mentor100：首頁補正式頁尾
+教練要求頁面最下面要有正式頁尾：版權標示+正式計算訪客次數(沿用既有`total_views`)+連結大樹教練官網(bigtree-tw.netlify.app)+LINE官方帳號直接聯絡(沿用bigtree既有`lin.ee/o5pODV8`)。重啟服務+curl正式站驗證通過。commit `63f967a9`。
+
+### 3. 🎯🎯 影片技巧討論+第六階段落地：☕幕僚長晨報cron
+教練分享影片兩段指令（①自我審查邏輯漏洞②個人使用說明書），評估後confirm教練現有`coach1973.github.io/ai-go/`的`coach-persona.md`已經是完善的「個人使用說明書」，不用重做（過程中我一度誤判「系統還沒有這個東西」，查證後自行更正，避免重蹈試金石案例55「沒查證就下結論」）。接著逐項查證教練實踐影片講的第三~六階段(高級玩家/數位工頭/數位建構者/終極指揮官)程度，發現對外服務的兩個AI員工(bni_tainan/jiaolian_thoughts)動態教練完全看不到，是第六階段唯一缺口。教練核准後新建cron `b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`，每天07:00讀這兩個agent的每日記憶檔，用「三關」過濾挑出值得教練知道的事，沒事就說沒事不硬編內容。已手動觸發測試：16.4秒完成、真的送達Telegram、正確判斷「今天無notable互動」。
+
+### 4. 🔧🔧 bymyway.com網域架構查證+VPS真實規格
+教練誤以為chapters.bymyway.com/mentor100.bymyway.com是WordPress，直接curl驗證wp-json/wp-content特徵，確認實際跑在Mac本機Flask+LaunchAgent+Cloudflare Tunnel（教練稱「傳送門」，帳號最早的tunnel `openclaw-macmini` 2026-03-15建立，吻合教練「當初為了串聯小龍蝦申請」的說法）。同時驗證`www.bymyway.com`根網域+課程頁才是真WordPress。教練決定BNI/mentor100等網站維持Mac架構不搬VPS，理由包括VPS規格偏低——已SSH直接查證VPS真實規格：3.8GB RAM(教練原本印象「4G」正確)、100GB硬碟、僅1顆CPU，驗證教練判斷正確。記憶已寫入`reference_bymyway_domain_architecture`，commit `5af35c96e`（claude-brain記憶庫）。
+
+### 5. 🟢 教練口頭確認三項結案
+Email自動發送系統(教練自己執行完成)、mentor100申請流程(已有申請者實測無問題)、光線尺顧問對帳(已解決)——三項寫入接力棒結案，commit `4b055995e`。
+
+## 📋 下一場直接開工任務
+- **bni-chapters「真誠分會」網頁主架構問題**：教練仍未說明具體是什麼，見到教練先問清楚
+- **企業健身房**：教練表示需要繼續，但尚未給出具體下一步指示，下一場先問清楚要繼續哪個部分（正式建站？4項文案修改？）
+- **BNI分會網站架構**：教練表示需要繼續，但用詞疑似「峰會/分會」語音混淆，上一場已提醒待確認是指bni-chapters系統內問題還是真誠/真愛/真AI分會+大台南南區網站草稿，教練尚未回覆，下一場先確認
+- **☕幕僚長晨報**：觀察一週，教練回饋內容準不準再決定要不要調整判斷標準
+- 三機hook同步：聯想已完成，ACER仍待處理
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/bni-chapters/db.py`+`app.py`+`templates/admin_edit.html`：連結編輯功能
+- `github_repos/mentor100/templates/index.html`：首頁頁尾
+- openclaw cron `b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`：幕僚長晨報
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/reference_bymyway_domain_architecture.md`：新建
+- commit(bni-chapters獨立repo)：`3a5ae8e4`
+- commit(mentor100獨立repo)：`63f967a9`
+- commit(workspace)：`4b055995e`（三項結案）→`215b0f623`（幕僚長晨報記錄）
+- commit(claude-brain記憶庫)：`5af35c96e`
+
+---
+
 # 軍師接力棒 · 2026-08-09（聯想 Windows 終端機 Sonnet 5，補齊三機hook同步待辦）
 
 > 建立時間：2026-08-09 台灣時間
