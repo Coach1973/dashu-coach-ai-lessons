@@ -17,7 +17,7 @@ ADMIN_PASSWORD_HASH = os.environ.get("JIESHENG_ADMIN_PASSWORD_HASH", "")
 
 WORKSHOP_DATES = {"台南": "2026-08-19", "台北": "2026-11-25"}
 WORKSHOP_TARGETS = {"台南": 25, "台北": 50}
-WORKSHOP_BREAKEVEN = {"台南": 21, "台北": 12}
+WORKSHOP_BREAKEVEN = {"台南": 13, "台北": 12}
 
 
 def _countdown_days(date_str: str) -> int:
