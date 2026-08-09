@@ -3,9 +3,12 @@
   venv/bin/python3 make_qr.py <slug>     單一活動的QR（掃了直接進那場報名頁，網址含slug）
   venv/bin/python3 make_qr.py --checkin  固定簽到QR（掃了永遠導向後台設定的「目前活動」，
                                           網址不含slug，一勞永逸不用重印，後台切換場次見/admin）
+  venv/bin/python3 make_qr.py --wheel    掃碼玩抽獎立牌（2026-08-09教練指示，跟--checkin同一個
+                                          後端網址，只是不押日期、文案改「掃QRCODE玩抽獎」，
+                                          往後每場活動都用這張取代--checkin立牌）
   venv/bin/python3 make_qr.py --slides   簡報QR（掃了進/slides頁：加LINE好友+下載今日簡報，
                                           網址固定不用重印，後台上傳/切換今日簡報見/admin）
-輸出：qr/<slug 或 checkin 或 slides-drop>.png（高解析，印刷可用）+ 對應 -print.html（A4立牌頁）
+輸出：qr/<slug 或 checkin 或 wheel 或 slides-drop>.png（高解析，印刷可用）+ 對應 -print.html（A4立牌頁）
 """
 import os
 import sys
@@ -102,6 +105,21 @@ def make_checkin(event_label: str = "") -> None:
     )
 
 
+def make_wheel() -> None:
+    """通用「掃碼玩抽獎」立牌：2026-08-09教練指示，不押特定場次日期，往後每場活動
+    都用這張立牌取代原本的checkin立牌。網址、後端流程跟--checkin完全相同（掃了進
+    /checkin輸入手機號碼比對報名資料，比對成功即完成報到並自動列入現場抽獎轉盤名單），
+    只是把文案從「數位簽到」改包裝成「掃碼玩抽獎」，讓來賓更有參與抽獎的動機去掃碼。
+    後台看得到每筆簽到記錄對應到哪一場（依日期自動判斷目前活動），不受這張立牌影響。"""
+    name_html = "掃 QRCODE<br>玩抽獎"
+    _write(
+        "wheel", CHECKIN_URL, "掃碼玩抽獎", name_html, "",
+        gift_html=f'<div class="gift">{CHECKIN_GIFT_NOTE}</div>',
+        cta_html='手機掃描 <span>立即報到＋抽獎資格</span>',
+        sub_text="掃碼完成報到，直接列入現場抽獎名單", alt_text="掃碼玩抽獎QR",
+    )
+
+
 def make_slides() -> None:
     """簡報QR：固定網址/slides，印一次永久用。每次上台前只要去/admin上傳今天的簡報檔
     （檔名開頭寫今天日期，例如2026-07-16-AI微型論壇.pdf），系統自動比對，不用重印QR。"""
@@ -129,12 +147,14 @@ def main() -> None:
     arg = sys.argv[1] if len(sys.argv) > 1 else ""
     if arg == "--checkin":
         make_checkin()
+    elif arg == "--wheel":
+        make_wheel()
     elif arg == "--slides":
         make_slides()
     elif arg:
         make_event(arg)
     else:
-        print("用法：make_qr.py <slug> 或 make_qr.py --checkin 或 make_qr.py --slides")
+        print("用法：make_qr.py <slug> 或 make_qr.py --checkin 或 make_qr.py --wheel 或 make_qr.py --slides")
         sys.exit(1)
 
 
