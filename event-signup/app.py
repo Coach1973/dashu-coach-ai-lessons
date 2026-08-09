@@ -37,6 +37,16 @@ LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
 LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", "")
 
+
+def _lottery_greet_url(name: str, event_name: str) -> str:
+    """組出「加好友同時帶問候語」的LINE連結：對方點開LINE就看到預填好的訊息，
+    按下傳送才算完成binding+登記抽獎（webhook比對這句話裡的姓名寫入line_user_id）。"""
+    greet_text = (
+        f"我是{name}，剛報名了{event_name}。"
+        f"我要現場立即參加抽獎（送出才算登記成功）"
+    )
+    return f"https://line.me/R/oaMessage/{LINE_OA_ID}/?{quote(greet_text)}"
+
 GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 
 SLIDES_DIR = os.path.join(os.path.dirname(__file__), "slides")
@@ -115,7 +125,9 @@ def checkin_submit():
 
     db.upsert_signup(conn, event["id"], row["name"], phone, row["company_title"] or "")
     conn.close()
-    return redirect(url_for("slides_landing", name=row["name"]))
+    # 2026-08-10教練指示：不要停在「簽到成功」中繼畫面等他再按一次加好友，
+    # 填手機送出的同一步直接跳進LINE把問候語準備好，按傳送就同時完成binding+登記抽獎。
+    return redirect(_lottery_greet_url(row["name"], event["name"]))
 
 
 def _resolve_current_slide(conn) -> str | None:
@@ -160,11 +172,7 @@ def slides_landing():
     # 而/e/<slug>/thanks頁面（線上報名走的那頁）早就有幫忙打好問候語的greet_url。
     # 這裡補上同一套邏輯，讓現場簽到的人也能一鍵完成綁定。
     if name and event:
-        greet_text = (
-            f"我是{name}，剛報名了{event['name']}。"
-            f"我要現場立即參加抽獎（送出才算登記成功）"
-        )
-        add_friend_url = f"https://line.me/R/oaMessage/{LINE_OA_ID}/?{quote(greet_text)}"
+        add_friend_url = _lottery_greet_url(name, event["name"])
 
     return render_template(
         "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname), name=name,

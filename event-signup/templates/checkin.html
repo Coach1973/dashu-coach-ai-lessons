@@ -42,12 +42,12 @@
   <div class="card">
     <div class="eyebrow">歡迎蒞臨</div>
     <h1>{{ event.name }}</h1>
-    <p class="hint">您已完成線上報名<br>輸入手機號碼即可完成簽到</p>
+    <p class="hint">🎉 我要現場參加抽獎<br>輸入手機號碼，送出後立即進入LINE完成登記</p>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
     <form method="POST">
       <label>手機號碼</label>
       <input type="tel" name="phone" value="{{ phone }}" placeholder="09xxxxxxxx" required inputmode="numeric" autofocus>
-      <button type="submit">完成簽到</button>
+      <button type="submit">🎉 我要參加抽獎</button>
     </form>
     <p class="foot">查無報名資料的話，會引導您補填一次基本資料</p>
   </div>
