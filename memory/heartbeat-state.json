@@ -2,19 +2,20 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1786198844,
+    "heartbeat_poll": 1786226561,
     "system_health": 1785665043,
-    "telegram_channel": 1786198844,
+    "telegram_channel": 1786226561,
     "junshi_queue": 1785599760,
     "cron_list": 1786168978,
     "care_4h": 1786064646,
     "message_send_bypass": 1785650520,
-    "morning_greeting": 1786064646,
+    "morning_greeting": 1786241043,
+    "last_care_telegram_msg_id": 9367,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-08T23:02:30.685774+08:00"
+    "coach_silence_sync": "2026-08-09T10:03:15.070825+08:00"
   },
-  "lastHeartbeat": "2026-08-08T22:20:44.622641+08:00",
-  "lastHeartbeatNote": "週六 22:20 心跳：探針 ok:true、教練沉默 3.0h、Gateway HTTP 200 (PID 89442)、alternating 模式 88+ cycle 穩定，安靜處理。下輪 22:50 心跳（22:20 寄信 Day 7/20 cron 將由 cron daemon 自動 fire）。",
+  "lastHeartbeat": "2026-08-09T10:02:23.000000+08:00",
+  "lastHeartbeatNote": "週日 10:02 心跳：探針 ok:true（守則#19 親驗）、教練沉默 12.0h（22:01:23 真相源）、環境健檢全綠、送出週日早安關懷（message 9367，比照 8/5~8/7 連三天 09:00~09:04 早安節奏）、接力棒停 v103 無 pending、下一場待教練回覆三個起點選項或新指令",
   "systemSnapshot": {
     "timeOfDay": "night",
     "dayOfWeek": "Saturday",
@@ -35,10 +36,10 @@
     "gatewayPid": 89442,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-08T22:20:44.622641+08:00 (守則#19 探針 ok:true)",
+    "telegramChannelLastVerified": "2026-08-09T06:02:41.884871+08:00 (守則#19 探針 ok:true)",
     "openTask": "🔴🔴🔴 BNI大台南小幫手「主動提醒」功能（v77 設計已備，下一場直接照實測）",
     "coachSilentSince": "2026-08-08T22:01:23+08:00",
-    "coachSilentHours": 1.0,
+    "coachSilentHours": 12.0,
     "pendingCoachItems": [
       "下一場直接開工：BNI大台南小幫手「主動提醒」功能",
       "結繩領導學戰報系統教練親測編輯體驗回饋",
@@ -79,6 +80,13 @@
       "23:05 🦞 小龍蝦每日三機總結"
     ],
     "lastDeliveries": [
+      {
+        "ts": "2026-08-09T10:02:23+08:00",
+        "channel": "telegram",
+        "to": "6124913915",
+        "messageId": 9367,
+        "purpose": "週日早安關懷 + 詢問今天從哪件事開始（接力棒 v103 三個起點選項 + 週末先休彈性）"
+      },
       {
         "ts": "2026-08-07T09:04:06+08:00",
         "channel": "telegram",
