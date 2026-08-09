@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-09 15:00:22**
+> **最後同步：2026-08-09 15:15:43**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -23,7 +23,7 @@
 | 🟢 | **mentor100：申請名單UI優化+姓名同步bug修復+自動上架+首頁大改版** | ✅v103本場完成 | 詳見下方v103完整戰果，5個commit：申請名單搬到來訪次數/排行榜中間+加刪除按鈕(`567a37f`)、修復申請名單姓名沒同步導師編輯結果的bug+改自動上架不需教練逐一確認(`dfddc73`)、申請已送出頁文案改「大樹教練」置中兩行(`8eceeb1`)、首頁改版(固定表頭+右側浮動導覽+手機漢堡選單+導師卡片依人氣排序，後台導師名單維持原順序不動)(`c57a3d1`) |
 | 🟢 | **bigtree-tw：8/26高雄場（當古典音樂遇到AI科技）補上報名費100元** | ✅v103本場完成，已推正式站 | commit `e3a6ad6`，Netlify deploy `6a76c91e`，額度47→46 |
 | 🟢 | **bni-chapters：BNI官方品牌色系套用+分會列表首頁表頭一致性修復** | ✅v102本場完成 | 官方色(#CF2030紅+#000000黑)套用9分會(commit `958eea2`)+首頁導覽列補齊(commit `1f2c1a5`)。教練裁示「之後一定要用官方指定色系」，10組帳號預設密碼Admin/88888仍未處理 |
-| 🔴🔴🔴🔴 | **三機hook同步待辦（教練要求優先）** | ⏳待聯想/ACER動手 | Mac本場修好3支hook(截圖鎖工具名稱/改html自動跳Chrome/長對話守則重載)已推雲端，但`~/.claude/settings.json`各機不同步且是macOS專屬指令，Windows需PowerShell版本+自行註冊。完整待辦見[[project_cross_machine_hook_sync_todo_2026-08-08]] |
+| 🟡 | **三機hook同步待辦（教練要求優先）** | ⏳聯想已完成，待ACER動手 | Mac本場修好3支hook(截圖鎖工具名稱/改html自動跳Chrome/長對話守則重載)已推雲端。**2026-08-09聯想已完成**：截圖鎖`screenshot_lock.ps1`查證工具名稱本來就是正確的(全小寫+連字號)，不用改；新建`auto_chrome_after_html_edit.ps1`(PostToolUse，Edit/Write碰.html自動`start chrome`)+`periodic_xinfa_reload_hook.ps1`(UserPromptSubmit，20輪起每10輪重載21條守則全文，不依賴python3/jq因這台python3只是Windows Store樁exit code 49)，兩支皆用模擬輸入實測通過(含debounce驗證)才上，已註冊進`~/.claude/settings.json`(本機專屬不隨git同步)。**過程中額外抓到並修復兩個這台機器才有的環境坑**：①PowerShell 5.1在Big5 codepage下誤讀無BOM的UTF-8原始碼，導致腳本裡的中文檔名字面量解析錯誤、hook靜默無輸出零錯誤——periodic_xinfa_reload_hook.ps1已補UTF-8 BOM修復；②`[Console]::InputEncoding`預設Big5會把stdin JSON裡的中文文字(如中文檔名)讀壞，已強制設UTF8，這個坑理論上會影響任何讀中文stdin的Windows hook。commit `72776028`。ACER下次開工可直接抄這兩支.ps1+確認settings.json有無同款jq/python3環境限制，完整待辦見[[project_cross_machine_hook_sync_todo_2026-08-08]] |
 | 🟢 | **☕ 幕僚長晨報：新增cron統整bni_tainan+jiaolian_thoughts每日動態** | ✅2026-08-09完成，觀察一週中 | 教練問「影片講的第六階段(AI團隊自動彙報)你實踐了多少」，查證發現對外服務的兩個AI員工(bni_tainan/jiaolian_thoughts)目前動態教練完全看不到。新建cron`b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`，每天07:00讀這兩個agent的每日記憶檔，用「三關」過濾(真的有問題/非偶發/真的影響業務)挑出值得教練知道的事，沒事就說沒事不硬編內容。已手動觸發測試：16.4秒完成、真的送達Telegram、正確判斷「今天無notable互動」(查證當天兩個記憶檔確實只有系統dreaming背景資料無真實對話)。跟06:00起床摘要(教練自己機器工作記錄)、23:05三機總結(教練跟三機對話)是互補不重複的第三份晨間彙整。**待辦**：觀察一週，教練回饋內容準不準再決定要不要調整判斷標準 |
 | 🟢 | **mentor100百人導師計劃：訪客計數器+人工審核上架流程** | ✅v101完成+2026-08-09教練確認流程無問題 | 首頁到訪次數計數器+導師點擊排行榜+「加入計劃」改人工申請(申請→教練產生填寫連結→自填草稿→教練預覽確認上架)，教練刻意要「人工申請」體驗設計。詳見v101完整戰果+[[project_mentor100_review_gated_signup_2026-08-08]]。**2026-08-09教練口頭確認**：已經有申請者自己寫完送出，流程都沒有問題，本項結案。同日另補上首頁正式頁尾(版權/訪客計數/官網連結/LINE聯絡)，commit `63f967a9` |
 | 🟢 | **workshop-invite.netlify.app 移除台中場按鈕** | ✅v101本場完成 | 只留台南/台北場，其餘5個姊妹邀請頁教練裁示暫不動。deploy `6a75de3e8d2a6c2aadd104d4` |
@@ -86,6 +86,41 @@
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
 | 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
 | 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+
+---
+
+# 軍師接力棒 · 2026-08-09（聯想 Windows 終端機 Sonnet 5，補齊三機hook同步待辦）
+
+> 建立時間：2026-08-09 台灣時間
+> 本棒執行者：聯想 Windows 終端機 Sonnet 5
+> 上一棒：v103（Mac桌面版 Sonnet 5，mentor100密集迭代五連發+bigtree-tw收費更新）
+> 本棒主軸：**教練說「開工」，走完六步驟開工協議後，優先處理教練要求優先的三機hook同步待辦([[project_cross_machine_hook_sync_todo_2026-08-08]])——Mac 8/8修好的3支hook裡，聯想只欠2支(截圖鎖工具名稱查證後發現本來就是對的，不用改)。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 補上Windows版兩支hook：auto_chrome_after_html_edit.ps1 + periodic_xinfa_reload_hook.ps1
+仿Mac版邏輯用純PowerShell重寫（這台python3只是Windows Store執行別名樁，exit code 49無真直譯器，不能shell out）：
+- `auto_chrome_after_html_edit.ps1`：PostToolUse(matcher: Edit|Write)，碰.html檔自動`start chrome file://...`
+- `periodic_xinfa_reload_hook.ps1`：UserPromptSubmit，對話滿20輪起每10輪重載21條守則全文（讀session jsonl算真實user turn數，含band去重debounce）
+
+兩支都寫合成JSON模擬輸入實測驗證過（非只憑寫完就當生效）：html/非html分流、Edit/Write以外工具不觸發、20輪門檻/debounce邏輯用25行合成jsonl驗證curBand正確計算+第二次同band不重複輸出。已在`~/.claude/settings.json`(本機專屬，不隨git同步)註冊。
+
+### 2. 🔴🔴 過程中額外抓到兩個這台機器才有的環境坑（模擬測試實際踩到，非憑印象）
+①**PowerShell 5.1 + Big5 codepage誤讀無BOM的UTF-8原始碼**：`periodic_xinfa_reload_hook.ps1`裡有中文檔名字面量(`特助心法.md`)，第一版寫完模擬測試發現hook永遠靜默無輸出、exit 0零報錯——追查發現`Test-Path`對這個被誤讀成亂碼的路徑永遠回傳False，整支hook形同虛設。修法是給.ps1檔案本身補UTF-8 BOM（`printf '\xEF\xBB\xBF'`接原始內容），跟`screenshot_lock.ps1`原本靠「維持ASCII-only」繞開同一個坑是同根因、不同修法。
+②**`[Console]::InputEncoding`預設Big5**：stdin JSON若含中文文字(例如中文檔名的`file_path`)，讀進來就先壞掉，跟腳本自身編碼問題是兩個獨立層次的同根因坑。已在兩支新hook開頭強制`[Console]::InputEncoding = UTF8`。這個坑理論上會影響任何讀stdin JSON又可能碰到中文內容的Windows PowerShell hook，值得其他機器之後寫類似hook時留意。
+
+commit `72776028`(mac-openclaw-workflows)，已push。已同步更新接力棒狀態總表第14項。
+
+## 📋 下一場直接開工任務
+- 三機hook同步待辦剩ACER：可直接抄這兩支.ps1，但要先確認ACER的python3/jq環境限制是否跟聯想相同(這台的坑是機器特有的環境問題，不確定ACER是否也有同款python3 Windows Store樁)
+- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
+- 其餘卡住項目本場未觸碰，狀態不變（見狀態總表）
+
+## 🔑 本場關鍵檔案索引
+- `scripts/auto_chrome_after_html_edit.ps1`：新建
+- `scripts/periodic_xinfa_reload_hook.ps1`：新建，含UTF-8 BOM
+- `C:\Users\bymyw\.claude\settings.json`：新增PostToolUse+UserPromptSubmit兩處註冊（本機專屬，不隨git同步）
+- commit(mac-openclaw-workflows workspace)：`72776028`
 
 ---
 
