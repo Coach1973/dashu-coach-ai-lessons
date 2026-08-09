@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧🔧 bymyway.com網域架構分流：真WordPress(www根網域/課程頁) vs Mac本機Flask(chapters/mentor100)+VPS真實規格(2026-08-09)](reference_bymyway_domain_architecture.md) — curl驗證wp-json特徵；VPS 3.8GB/100GB/1CPU，教練裁示網站維持Mac不搬VPS
 - [🔴🔴🔴🔴 三機hook同步待辦：Windows需補screenshot_lock.ps1名稱檢查+auto_chrome.ps1+守則重載(2026-08-08)](project_cross_machine_hook_sync_todo_2026-08-08.md) — 教練要求優先，腳本已推雲端但settings.json需各機自己註冊
 - [🔴🔴🔴 Claude Code長對話守則會被context壓縮流失，已補10輪自動重載(2026-08-08)](reference_claude_code_long_session_rule_decay.md) — VPS小龍蝦每次心跳重讀SOUL.md天生無此問題，架構落差非能力落差
 - [🎨 BNI官方品牌色標準表(紅#CF2030+黑#000000)，往後BNI網頁一律遵守(2026-08-08)](reference_bni_official_brand_colors.md) — bni-chapters 9分會已套用commit 958eea2，教練親定「之後一定要用官方指定色系」
