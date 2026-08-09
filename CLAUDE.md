@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-10 00:30:29**
+> **最後同步：2026-08-10 00:35:42**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -190,42 +190,7 @@ Email自動發送系統(教練自己執行完成)、mentor100申請流程(已有
 
 ---
 
-# 軍師接力棒 · 2026-08-09（聯想 Windows 終端機 Sonnet 5，補齊三機hook同步待辦）
-
-> 建立時間：2026-08-09 台灣時間
-> 本棒執行者：聯想 Windows 終端機 Sonnet 5
-> 上一棒：v103（Mac桌面版 Sonnet 5，mentor100密集迭代五連發+bigtree-tw收費更新）
-> 本棒主軸：**教練說「開工」，走完六步驟開工協議後，優先處理教練要求優先的三機hook同步待辦([[project_cross_machine_hook_sync_todo_2026-08-08]])——Mac 8/8修好的3支hook裡，聯想只欠2支(截圖鎖工具名稱查證後發現本來就是對的，不用改)。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 補上Windows版兩支hook：auto_chrome_after_html_edit.ps1 + periodic_xinfa_reload_hook.ps1
-仿Mac版邏輯用純PowerShell重寫（這台python3只是Windows Store執行別名樁，exit code 49無真直譯器，不能shell out）：
-- `auto_chrome_after_html_edit.ps1`：PostToolUse(matcher: Edit|Write)，碰.html檔自動`start chrome file://...`
-- `periodic_xinfa_reload_hook.ps1`：UserPromptSubmit，對話滿20輪起每10輪重載21條守則全文（讀session jsonl算真實user turn數，含band去重debounce）
-
-兩支都寫合成JSON模擬輸入實測驗證過（非只憑寫完就當生效）：html/非html分流、Edit/Write以外工具不觸發、20輪門檻/debounce邏輯用25行合成jsonl驗證curBand正確計算+第二次同band不重複輸出。已在`~/.claude/settings.json`(本機專屬，不隨git同步)註冊。
-
-### 2. 🔴🔴 過程中額外抓到兩個這台機器才有的環境坑（模擬測試實際踩到，非憑印象）
-①**PowerShell 5.1 + Big5 codepage誤讀無BOM的UTF-8原始碼**：`periodic_xinfa_reload_hook.ps1`裡有中文檔名字面量(`特助心法.md`)，第一版寫完模擬測試發現hook永遠靜默無輸出、exit 0零報錯——追查發現`Test-Path`對這個被誤讀成亂碼的路徑永遠回傳False，整支hook形同虛設。修法是給.ps1檔案本身補UTF-8 BOM（`printf '\xEF\xBB\xBF'`接原始內容），跟`screenshot_lock.ps1`原本靠「維持ASCII-only」繞開同一個坑是同根因、不同修法。
-②**`[Console]::InputEncoding`預設Big5**：stdin JSON若含中文文字(例如中文檔名的`file_path`)，讀進來就先壞掉，跟腳本自身編碼問題是兩個獨立層次的同根因坑。已在兩支新hook開頭強制`[Console]::InputEncoding = UTF8`。這個坑理論上會影響任何讀stdin JSON又可能碰到中文內容的Windows PowerShell hook，值得其他機器之後寫類似hook時留意。
-
-commit `72776028`(mac-openclaw-workflows)，已push。已同步更新接力棒狀態總表第14項。
-
-## 📋 下一場直接開工任務
-- 三機hook同步待辦剩ACER：可直接抄這兩支.ps1，但要先確認ACER的python3/jq環境限制是否跟聯想相同(這台的坑是機器特有的環境問題，不確定ACER是否也有同款python3 Windows Store樁)
-- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
-- 其餘卡住項目本場未觸碰，狀態不變（見狀態總表）
-
-## 🔑 本場關鍵檔案索引
-- `scripts/auto_chrome_after_html_edit.ps1`：新建
-- `scripts/periodic_xinfa_reload_hook.ps1`：新建，含UTF-8 BOM
-- `C:\Users\bymyw\.claude\settings.json`：新增PostToolUse+UserPromptSubmit兩處註冊（本機專屬，不隨git同步）
-- commit(mac-openclaw-workflows workspace)：`72776028`
-
----
-
-> 📦 **v101及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v104(聯想)及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
