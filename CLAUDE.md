@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-09 18:50:58**
+> **最後同步：2026-08-10 00:30:29**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **event-signup：簽到+抽獎登記合併成單一介面，通用QR立牌上線** | ✅v105本場完成 | 詳見下方v105完整戰果。核心改動：`/checkin`不再顯示「已完成線上報名」中繼畫面，改標「我要參加抽獎」，填手機送出同一步直接跳轉LINE完成binding+抽獎登記(commit`7227e1812`)；新增通用版「掃碼玩抽獎」QR立牌`qr/wheel-print.html`取代單場活動專屬立牌(commit`dc90140e3`)；後台場次已同步大樹小講8/21+8/22+8/26+8/28四場(DB直改，不進git)。作品總覽表同步更新3次(改名/改連結)，commit`ef8e6a6`+`7bc25f5`+`0d80f93` |
 | 🟡 | **bni-chapters：「真誠分會」網頁主架構問題** | 🔒卡住-等教練說明 | 教練提出要處理，但還沒說明具體是哪個架構問題，下一場先問清楚再動手 |
 | 🟢 | **bni-chapters：後台社群／外部連結新增「編輯」功能** | ✅2026-08-09完成 | 教練回報FB/LINE/聯絡我們只有新增刪除、缺編輯，得先刪再建。已補`db.update_link()`+`/links/<id>/edit`路由+模板改成可直接編輯label/url。已重啟服務+登入實測更新真的存進資料庫(改完再改回原值，沒留測試假資料)。commit `3a5ae8e4` |
 | 🟢 | **mentor100：申請名單UI優化+姓名同步bug修復+自動上架+首頁大改版** | ✅v103本場完成 | 詳見下方v103完整戰果，5個commit：申請名單搬到來訪次數/排行榜中間+加刪除按鈕(`567a37f`)、修復申請名單姓名沒同步導師編輯結果的bug+改自動上架不需教練逐一確認(`dfddc73`)、申請已送出頁文案改「大樹教練」置中兩行(`8eceeb1`)、首頁改版(固定表頭+右側浮動導覽+手機漢堡選單+導師卡片依人氣排序，後台導師名單維持原順序不動)(`c57a3d1`) |
@@ -86,6 +87,63 @@
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
 | 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
 | 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+
+---
+
+# 軍師接力棒 · 2026-08-10 v105（Mac桌面版 Sonnet 5，event-signup抽獎報到流程重新設計+bymyway.com/coach888多站維護）
+
+> 建立時間：2026-08-09 18:45 ~ 2026-08-10 00:28（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報）
+> 本棒主軸：**教練密集測試event-signup抽獎報到系統，從「找不到7/29做的QR轉盤頁面」一路挖到重新設計整套現場報到流程。過程中兩次猜錯教練要找的頁面，最後查git log+對話逐字稿才找到真相；教練確認方向後，把簽到+LINE綁定+抽獎登記合併成單一介面。同場也處理了www.bymyway.com首頁活動同步、jiesheng-report數字調整、大樹作品總覽表多次更新、bigtree-tw場次深連結查證。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 event-signup：現場報到+抽獎登記重新設計（本場核心）
+教練回報找不到7/29做的「掃QR進轉盤遊戲」頁面。**過程中兩次判斷錯誤**：第一次以為是`/wheel`(需登入，非教練要找的)，第二次補了7/29專屬立牌也不對——最後查`distill/terminal_2026-07-28.md`+`terminal_2026-07-29.md`逐字稿，用教練7/29現場真實提問「請問我的轉盤抽獎的網址是哪個」+「56位加入抽獎但只有16位綁定」當鐵證，確認`/checkin`(掃碼)→`/wheel`(教練操作)本來就是完整正確的一套，沒有遺漏頁面。
+
+教練接著問「綁定是不是一定要加LINE好友」，查`app.py`/`line_webhook`程式碼確認：**綁定條件是「送出訊息」不是「加好友」**(LINE的`follow`事件這支程式完全沒處理，只處理`message`事件)，且比對邏輯是**用姓名比對**、跟手機號碼無關。教練據此提出重新設計：
+- 拿掉「簽到成功」中繼畫面，`/checkin`直接以「我要參加抽獎」為主視覺，手機號碼欄位就在同一頁
+- 填手機、按送出的同一步，直接轉跳LINE(帶好「我是OOO，剛報名了XXX。我要現場立即參加抽獎（送出才算登記成功）」)，不用再點第二次「加好友」
+- 新增可重複使用的通用版「掃碼玩抽獎」QR立牌(`make_qr.py --wheel`)，不押日期，取代單場活動專屬立牌，之後每場都用同一張
+
+全部改動用「插入測試用戶→POST正式站驗證302導向LINE網址→解碼確認文字→清除測試資料」的方式驗證過，非憑程式碼推論；每次改完.html都用`open -a "Google Chrome"`開真實網址給教練看。commit `7227e1812`(核心流程)+`dc90140e3`(新QR立牌)。
+
+### 2. 🎯 event.bymyway.com/admin 場次同步大樹小講
+教練要求「後台活動應該跟大樹小講同步」，直接寫入`event.db`補上8/21金門+8/22金門+8/28嘉義三場(8/26已存在)。`routing_mode=auto`本來就會自動抓「日期最近未過期」的場次，已用curl驗證`/checkin`自動切到8/21。資料庫檔案本身`.gitignore`排除，這次沒有commit hash，改動紀錄僅在此接力棒。
+
+### 3. 🎯 www.bymyway.com 首頁「最新消息」同步大樹小講+bigtree-tw查證深連結
+教練要求首頁最新消息①取消結繩領導學台中場②拿掉過期活動③跟大樹小講同步。查出`www.bymyway.com`是WordPress iframe嵌`coach1973.github.io/bigtree/speakers-2026/`，直接編輯該頁：移除台中場結繩領導學+7則過期活動，新增8/21~9/23共6場真實現行場次。本機起http.server預覽用`read_page`驗證渲染正確(9場、無殘留)才推送，commit `95273a04b`(bigtree repo)。
+
+另外，教練問「能不能做一個直接跳出8/26報名視窗的連結」，查bigtree-tw原始碼發現**這個功能早就存在**(`?session=YYYY-MM-DD`參數，`openRegisterFromQuery()`)，不用開發，直接用JS實測確認`https://bigtree-tw.netlify.app/?session=2026-08-26`真的會自動彈出預選好場次的報名視窗，交給教練即可用，同時告知教練換日期就能自己生出其他場次的連結。
+
+### 4. 🟢 jiesheng-report：台南場數字調整
+教練口頭指示：損益平衡21→13人(commit`03ffbf766`)、目標人數25→20人(commit`6cddd95b4`)。皆重啟服務驗證。
+
+### 5. 🟢 語音糾偏規則泛化+大樹作品總覽表多次維護
+- 教練親口把「真愛鋒會=真愛分會」的糾正升級為通用規則「真XX鋒會/峰會一律=真XX分會」，已更新記憶檔`feedback_fenhui_not_fenghui_voice_correction`，commit`a4198b2e8`(claude-brain記憶庫)
+- `coach888`作品總覽表本場新增第8/9項(抽獎轉盤系統/QR立牌)後又依教練指示改名+改連結共4次，最終定案：第8項「抽獎轉盤系統」(拿掉日期)、第9項「掃 QR Code 玩抽獎」(連向新版`wheel-print.html`)，commit`ef8e6a6`+`7bc25f5`+`0d80f93`
+
+## 📋 下一場直接開工任務
+- **event-signup新流程**：8/21金門場是第一次實戰，教練現場測試後若有回饋(例如綁定率有沒有真的提升)，下一場先問結果
+- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
+- 企業健身房、BNI分會網站架構(峰會/分會混淆待確認哪個系統)：皆延續v104未解決，教練尚未回覆
+- 三機hook同步：ACER仍待處理
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/app.py`：`_lottery_greet_url()`新helper、`checkin_submit()`改直接跳LINE、`slides_landing()`複用helper
+- `event-signup/templates/checkin.html`：文案改「我要參加抽獎」
+- `event-signup/make_qr.py`：新增`make_wheel()`+`--wheel`參數
+- `event-signup/qr/wheel-print.html`+`wheel.png`：新版通用QR立牌
+- `event-signup/event.db`：場次表新增8/21+8/22+8/28(不進git)
+- `github_repos/bigtree/speakers-2026/index.html`：首頁最新消息同步
+- `github_repos/bigtree/index.html`：確認`?session=`深連結功能已存在，未改動
+- `github_repos/jiesheng-report/app.py`(rpl-workshop)：損益平衡+目標人數
+- `github_repos/coach888/index.html`：作品總覽表4次更新
+- commit(workspace)：`7227e1812`+`dc90140e3`+`03ffbf766`+`6cddd95b4`
+- commit(bigtree)：`95273a04b`
+- commit(coach888)：`ef8e6a6`+`7bc25f5`+`0d80f93`
+- commit(claude-brain)：`a4198b2e8`
 
 ---
 
