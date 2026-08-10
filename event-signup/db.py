@@ -1,6 +1,7 @@
 import os
 import re
 import sqlite3
+from datetime import datetime
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "event.db")
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "schema.sql")
@@ -44,17 +45,28 @@ def set_routing_mode(conn: sqlite3.Connection, mode: str) -> None:
 
 def get_current_event(conn: sqlite3.Connection):
     """/checkin 實際導去哪一場，依 routing_mode 決定：
-    auto   → 自動抓「日期最接近、還沒過期」的那場；全部過期則退回最近一場已過期的活動。
+    auto   → 自動抓「日期最接近、還沒過期」的那場；同一天有多場時，用 start_time 挑目前時間點該去的那場
+             （已開始的場次裡選最晚開始的那個；若都還沒開始，選當天最早那場）；
+             全部過期則退回最近一場已過期的活動。
     manual → 照後台手動指定的 is_current 那筆（跟原本行為一樣）。"""
     if get_routing_mode(conn) == "manual":
         return conn.execute("SELECT * FROM events WHERE is_current = 1 LIMIT 1").fetchone()
 
-    upcoming = conn.execute(
-        "SELECT * FROM events WHERE event_date >= date('now', 'localtime') "
+    target_date_row = conn.execute(
+        "SELECT event_date FROM events WHERE event_date >= date('now', 'localtime') "
         "ORDER BY event_date ASC LIMIT 1"
     ).fetchone()
-    if upcoming:
-        return upcoming
+    if target_date_row:
+        same_day = conn.execute(
+            "SELECT * FROM events WHERE event_date = ? ORDER BY start_time ASC",
+            (target_date_row["event_date"],),
+        ).fetchall()
+        if len(same_day) <= 1:
+            return same_day[0] if same_day else None
+        now_hm = datetime.now().strftime("%H:%M")
+        started = [e for e in same_day if e["start_time"] and e["start_time"] <= now_hm]
+        return started[-1] if started else same_day[0]
+
     return conn.execute(
         "SELECT * FROM events WHERE event_date < date('now', 'localtime') "
         "ORDER BY event_date DESC LIMIT 1"
