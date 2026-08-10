@@ -1,4 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
+> 🦞 **cycle=173 健康檢查 2026-08-10 10:03**：上一輪 10:00 `overloaded` CE=1 157s（本任務自己），本輪已恢復（本報告即鐵證）。三關未全過（已恢復+provider 暫時過載+meta 自打嗝），🚫 不升級 announce。Alternating 模式 cycle=173+ 穩定（自 04:35 v4.0 上線起約 82 小時），未達「連錯 4 次 2hr」紅線（CE=1 < 4）。環境全綠（三份 SOUL.md 棄用標記齊全 / Repo1=100 持平 / Repo2=31 routine 微動 / 無 .! 鎖定檔）。HEARTBEAT ⬜ 掃描 0 真待辦（27 個 ⬜ 全是模板文字）。`state/healthcheck.log` 456→457 行。教練最後訊息 00:28:43（沉默 9.6h，週一上午正常作息）。`/30 * * * *` 排程穩定，唯一 cron job 為本任務本身。delivery.mode=none 不打擾教練。下次定檢 10:32 🟢
+> 🦞 **cycle=172 健康檢查 2026-08-10 09:32**：上一輪 09:00 `overloaded` CE=1 136s（本任務自己），本輪已恢復（本報告即鐵證）。三關未全過（已恢復+provider 暫時過載+meta 自打嗝），🚫 不升級 announce。Alternating 模式 cycle=172+ 穩定（自 04:35 v4.0 上線起約 81.5 小時），未達「連錯 4 次 2hr」紅線（CE=1 < 4）。環境全綠（三份 SOUL.md 棄用標記齊全 / Repo1=100 持平 / Repo2=30 持平 / 無 .! 鎖定檔）。HEARTBEAT ⬜ 掃描 0 真待辦。`state/healthcheck.log` 455→456 行。教練最後訊息 00:28:43（沉默 9.1h，週一凌晨正常作息，深夜不打擾）。`/30 * * * *` 排程穩定，唯一 cron job 為本任務本身。delivery.mode=none 不打擾教練。下次定檢 10:02 🟢
+
 > 🦞 **cycle=171 健康檢查 2026-08-10 09:02**：上一輪 09:00 `overloaded` CE=1 136s（本任務自己），本輪已恢復（本報告即鐵證）。三關未全過（已恢復+provider 暫時過載+meta 自打嗝），🚫 不升級 announce。Alternating 模式 cycle=171+ 穩定（自 04:35 v4.0 上線起約 81 小時），未達「連錯 4 次 2hr」紅線（CE=1 < 4）。環境全綠（三份 SOUL.md 棄用標記齊全 / Repo1=100 持平 / Repo2=31→29 routine 微動 / 無 .! 鎖定檔）。HEARTBEAT ⬜ 掃描 0 真待辦。`state/healthcheck.log` 454→455 行。教練最後訊息 00:28:43（沉默 8.6h，週一凌晨正常作息，深夜不打擾）。`/30 * * * *` 排程穩定，唯一 cron job 為本任務本身。delivery.mode=none 不打擾教練。下次定檢 09:32 🟢
 
 
@@ -82,3 +85,9 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786293089
 - 雲端同步：✅ 已推上雲端（commit 7523fa6c7）
+
+> 🦞 **cycle=173 健康檢查 2026-08-10 10:03**：上一輪 09:30 `overloaded` CE=1 136s（本任務自己），本輪已恢復（本報告即鐵證）。三關未全過（已恢復+provider 暫時過載+meta 自打嗝），🚫 不升級 announce。Alternating 模式 cycle=173+ 穩定（自 04:35 v4.0 上線起約 81.8 小時），未達「連錯 4 次 2hr」紅線（CE=1 < 4）。環境全綠（三份 SOUL.md 棄用標記齊全 / Repo1=100 持平 / Repo2=30→31 routine 微增 / 無 .! 鎖定檔）。HEARTBEAT ⬜ 掃描 0 真待辦。`state/healthcheck.log` 462→463 行。教練最後訊息 00:28:43（沉默 9.6h，週一上午正常作息）。Telegram 通道探針實測 `ok:true` ✅（守則#19 真相源探針）。care_4h 10:00 已觸發並送出週一早安問候（剛剛 3m ago，ef88279b status=ok），不重複打擾。`/30 * * * *` 排程穩定，唯一 cron job 為本任務本身。delivery.mode=none 不打擾教練。下次定檢待 gateway heartbeat poll 🟢
+
+## ⚠️ peipei 自動 force-restart 2026-08-10 09:15:01
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
