@@ -112,6 +112,9 @@
 - 教練親口把「真愛鋒會=真愛分會」的糾正升級為通用規則「真XX鋒會/峰會一律=真XX分會」，已更新記憶檔`feedback_fenhui_not_fenghui_voice_correction`，commit`a4198b2e8`(claude-brain記憶庫)
 - `coach888`作品總覽表本場新增第8/9項(抽獎轉盤系統/QR立牌)後又依教練指示改名+改連結共4次，最終定案：第8項「抽獎轉盤系統」(拿掉日期)、第9項「掃 QR Code 玩抽獎」(連向新版`wheel-print.html`)，commit`ef8e6a6`+`7bc25f5`+`0d80f93`
 
+### 6. 🟢 bigtree-tw：報名視窗補地址+費用資訊(2026-08-10上午追加)
+教練指示`?session=`深連結彈出的報名視窗要多顯示①地址②費用備註。新增`findSessionMeta()`依sessionLabel反查`SESSION_DATES`拿venue/address/transport，`showRegisterModal()`動態渲染進`modalSessionMeta`區塊，不用逐場硬編。本機http.server預覽+`javascript_tool`實測驗證渲染正確(含無資料時正確隱藏的邊界情況)才推送，commit`bf0cbd6`。**這是`bigtree-tw`站首次在本場對話中真的部署**(先前查`?session=`功能只是測試既有功能沒有變更，不扣點)——教練事後追問「昨天測試連結有沒有扣點」，藉此機會確認清楚跟教練說明「純瀏覽=不扣點，改內容才要部署=扣點」的界線，教練表示理解。教練說「推」後執行：查site ID(`40e580f0-1def-4777-adb8-587ef023ed36`)→打包index.html+photos-carousel+photos-carousel-0729+archive共75檔案→API部署→輪詢確認`state:ready`→curl驗證圖片Content-Type正常→正式網址javascript_tool二次確認渲染正確→Chrome開給教練看。deploy`6a793dc68c5929aa18bea1c3`，額度46→45，已記錄`state/netlify_deploy_quota.json`，commit`6c483ece9`。
+
 ## 📋 下一場直接開工任務
 - **event-signup新流程**：8/21金門場是第一次實戰，教練現場測試後若有回饋(例如綁定率有沒有真的提升)，下一場先問結果
 - bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
