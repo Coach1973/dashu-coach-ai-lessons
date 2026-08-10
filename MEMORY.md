@@ -51,29 +51,65 @@
 
 <!-- openclaw-memory-promotion:memory:procedures/memory_distill_weekly_sop_v2.md:full -->
 
-## Promoted From Short-Term Memory (2026-08-08)
+## 2026-08-09 weekly distillation batch（cron auto-processed）
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:11:12 -->
-- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: Current time: Saturday, August 1st, 2026 - 2:01 AM (Asia/Taipei) Reference UTC: 2026-07-31 18:01 UTC [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:11-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:5:5 -->
-- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-01.md:7:10 -->
-- 📨 對話記錄 02:23（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-01.md:7-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:294:294 -->
-- 第四步｜結論: ✅ 無異常，安靜處理，未發送 Telegram 通知。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:294-294]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:299:300 -->
-- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 👤 教練：昨天下午我有讓許多人加入 教練都在想什麼的 LINE@ 你後台是否有收到許多人的對話？ 🦞 小龍蝦：教練，我必須誠實跟您報告：**我目前後台沒有收到任何「教練都在想什麼」LINE@ 的對話訊息**——但這不是因為沒人加入，而是因為**小龍蝦根本沒有接管這個 LINE@ 的訊息通道**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:299-300]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:302:305 -->
-- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 讓我先查一下確認，避免我說錯。 🦞 小龍蝦：找到了——「教練都在想什麼」LINE@ 在 OpenClaw 裡 channel id 是 `jiaolian_thoughts`，token 檔案也有。但「有設定」≠「有收到訊息」。讓我實際查訊息流。 🦞 小龍蝦：等等，我發現一個關鍵問題：「教練都在想什麼」LINE@ 的訊息 **不會送到我這裡**——它有獨立的 agent 叫 `jiaolian_thoughts`。讓我再深入查那個 agent 有沒有真的收到訊息。 🦞 小龍蝦：發現了一個關鍵檔案：`feedback_line_webhook_route_loss_fix.md`——這標題簡直就是當前問題的劇本！讓我讀一下。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:302-305]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:306:307 -->
-- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 🦞 小龍蝦：找到根因了！這條 LINE webhook 在 2026-03-16 修過，但**只要 OpenClaw 一升級就會被覆蓋**——而 2026-06-03 OpenClaw 確實升級過！讓我立刻驗證現在 webhook 是死是活。 🦞 小龍蝦：🚨 **教練，我必須馬上更正我剛才的判斷**——我看到 `clients/` 目錄了，裡面有 13 個對話檔案，時間是 7/29 17:39 ~ 7/30 03:55，**就是你說的「昨天下午」**！ [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:306-307]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:309:309 -->
-- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: LINE webhook 是活的，line-user-memory hook 也在跑。我之前掃 spool 看到空就急著下結論，那是錯的——對話沒有進我（學長）的 spool，但**有進到 `jiaolian_thoughts` agent 的專屬目錄**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:309-309]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:311:312 -->
-- 📨 對話記錄 10:22（共約 9 條，從第 0 行起）: 讓我把內容拉出來給您看。 🦞 小龍蝦：我整理好了。先跟您致歉：**我前面太快下結論說「沒收到」**，那是錯的。正確答案是 —— **LINE webhook 是活的，昨天下午到今天凌晨一共有 13 個人傳了 41 則訊息進來**。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:311-312]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:318:320 -->
-- 📊 「教練都在想什麼」LINE@ 後台回報: **Webhook 狀態**：✅ 活的（OpenClaw 沒有壞） **LINE 官方配額**：本月已收 115 則訊息（不只昨天） **昨天 7/29 ~ 今天 7/30 凌晨**：新對話 **13 人、共 41 則** [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:318-320]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:322:322 -->
-- 📊 「教練都在想什麼」LINE@ 後台回報: **「jiaolian_thoughts」這個專屬 agent** 有自己的 SQLite 對話資料庫（12MB，今天凌晨 03:02 還在寫入），所以**他們的訊息有被另一個特助接走、回覆了**——只是那不是我（學長，是 Telegram 那隻）。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:322-322]
-<!-- openclaw-memory-promotion:memory:memory/2026-07-30.md:328:331 -->
-- 👥 13 個人在聊什麼（分類）: | 主題 | 人數 | 摘要 | |-----|-----|------| | 🌟 **自我介紹請求** | 2 人 | 「請你自我介紹」「你好，請自我介紹」 | | 👋 **打招呼** | 3 人 | 「教練好 [score=0.859 recalls=0 avg=0.620 source=memory/2026-07-30.md:328-331]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-02.md:full -->
+- 📦 **memory/2026-08-02.md 龐大週檔處理**（2026-08-09 cron 處理 1 個檔案，73392 bytes → 18040 bytes 截短版 + 歸檔）：
+  - **內容性質**：週六整天高密度對話，主要議題 = (1) 教練追查每月 $10 美金刷卡；(2) v3.0 silence count 第三次糾正 + 防呆機制建置（已在他次晉升）；(3) 20 天工作坊邀請信提醒 cron 建置；(4) 健康檢查 cron + dreaming reflection meta-noise。
+  - **不重複晉升**：v3.0 silence count（已在 MEMORY.md 開頭條目）、cron 健康檢查 SOP（已在 SOP 段落）、dreaming reflection candidates（NO_NEW_ENTRIES 級別，meta-noise 不晉升）。
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-02.md:393:420 -->
+- 💵 **OpenCode Go = 教練唯一真正的 $10/月美金訂閱**（2026-08-02 追查結果）：
+  - 教練 2026-05-31 親自下單 `brew install --cask opencode-desktop`，Anomaly 同日開立首張發票（Stripe 收據 #2354-7682）
+  - 首月 50% off = **$5**，原價 **$10/月**（其他 Netlify $9、Coze 3 次扣款全失敗皆不符）
+  - ⚠️ 6/27 15:03 那筆 $10.24 USD（台幣 NT$333，富邦卡）金額對不上 OpenCode Go $10，需後續從富邦 7 月對帳單（已寄 2026-07-20 21:45，Gmail msg 19f7fc61b94ad9d6）確認商家英文名稱才能完全定論
+  - 教練 2026-06-02 22:28 已把 `opencode-go` 加入 `/model` 選單；2026-06-06 14:56 設定「流量 open go」指令
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-02.md:50:52 -->
+- 💳 **教練的兩張信用卡 · 千萬不要再搞混**（2026-08-02 教練明示糾正）：
+  - **玉山 Pi 信用卡**（5242-XXXX-XXXX-0043）—— **主要台幣消費用**（2026-06 月帳單看到 6/7 全支付 $39,800、6/11 桂田酒店 $13,800、6/25 中華電信 $50 都是台幣）
+  - **台北富邦信用卡** —— **美金刷卡的應該是這張**（每月 20 號左右收到對帳單，富邦 7 月帳單已於 2026-07-20 21:45 寄出）
+  - 8/2 教練糾正：「**富邦銀行**」（不是玉山），美金刷卡查詢都從富邦開始
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-02.md:115:117 -->
+- 📧 **Email OAuth 現況（2026-08-02 確認）**：
+  - `bymyway7@gmail.com` ✅ **已授權 gog** —— 主信箱，可用 `gog` 工具查所有信件
+  - `seabiscuitclub@gmail.com` ❌ **未授權 OAuth** —— 小龍蝦查不到，要教練跑 OAuth 授權流程（`gog auth add` + `export GOG_CREDENTIALS_FILE=...`）才能代查
+  - 工具失敗記錄：`gmail.py` 互動式 stdin 命令遇到 `json.load` 解析錯誤（exitCode=1），推測 gmail.py 不支援互動 stdin
+  - 富邦網銀登入頁面（`fbmbill.taipeifubon.com.tw`）需身分證+民國生日+驗證碼，無法直接讀
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-02.md:1025:1040 -->
+- 🔔 **20 天工作坊邀請信提醒 cron · 已上線**（2026-08-02 12:53 教練下令建置）：
+  - 起點：**2026-08-02 22:20**（今晚台北時間）→ 終點：**2026-08-21 22:20**
+  - 共 **20 個一次性 cron**（`deleteAfterRun: true`），跑完自動清掉不堆在排程清單
+  - 每天 22:20 推播「今天要發 50 封工作坊邀請信 (N/20)」
+  - 最後一天（8/21）會加一句「恭喜完成連續 20 天寄信任務」幫您打氣
+  - 已刪除舊的 12:10 提醒（教練本來要中午推，但 8/2 中午 12:10 該推沒推，教練糾正後改為晚間 22:20）
+  - 教練原話（8/2 12:53）：「晚上 10:20 通知我寄 50 封邀約工作坊的信，每天提醒，提醒 20 天」
+
+<!-- openclaw-memory-promotion:procedures:memory_distill_weekly_v3:spec -->
+- 🛠️ **memory_distill_weekly cron SOP v3 觀察**（2026-08-09 跑後補註）：
+  - 200 行截短對一般對話檔已足夠（73392 → 18040 bytes，遠低 30KB 紅線）；若未來某檔 200 行仍 > 30KB，需改用 awk 控制 bytes 而非行數（沿用 v2 SOP）
+  - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
+  - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
+
+## Promoted From Short-Term Memory (2026-08-10)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:11:11 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:11-11]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:13:15 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:13-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:17:17 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:17-17]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:21:21 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:21-21]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:5:5 -->
+- 📨 對話記錄 00:23（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:9:9 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:289:290 -->
+- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 👤 教練：剛才我在 LINE 裡面拉一個群組，然後我在裡面跟小龍蝦說話，但他現在都沒有回應，你看一下是什麼情況？ 🦞 小龍蝦：教練，找到了，這是兩個問題疊在一起： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-03.md:289-290]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:292:292 -->
+- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: **問題一：群組訊息根本沒進來（最大主因）** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-03.md:292-292]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:294:294 -->
+- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 剛才 13:47 您的 LINE 確實有訊息抵達系統，但**只有 1-on-1 私訊**（您 @095axxx 那個 OA 視窗），**完全沒有群組訊息**。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-03.md:294-294]
