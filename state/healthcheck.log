@@ -482,3 +482,121 @@ Alternating 模式 88+ cycle 穩定, 未達 2h 連錯紅線
 [2026-08-10 22:03:31 CST] cycle=199 healthcheck: ✅ no anomaly, quiet, no announce (coachSilentHours=0.4, only this-job error overloaded+recovered, CE=1, gates all fail)
 [2026-08-10 22:32] cycle=200 | coach=0.9hr | step0=OK | step1=本任務overloaded(93s) CE=1 | step2=0待辦 | step3=announce否(三關不通過) | delivery=none
 [2026-08-10 23:07:00 CST] cycle=201 | coach=0.3hr | step0=OK | step1=2個任務overloaded(111s/134s) CE=1 | step2=0待辦(9個⬜都是標籤) | step3=announce否(三關不通過) | delivery=none
+[2026-08-11 01:02:55 CST] cycle=205 | lastRunStatus=error | CE=1 (alternating 模式：00:30 overloaded 140s) | reason=overloaded | dur=140833ms (141s ≪ 600s) | coachLast=01:02:31 silent=0.0h (剛觸發/剛發言) | v4.0: �✅❌ 三關未全過 → 不升級 announce (已恢復+provider暫時過載+meta自打嗝) | env=全綠（SOUL×3✅/Repo1=100/Repo2=10/無.!檔/VPS ok） | HEARTBEAT cycle=205 條目已 prepend | delivery=none → 不打擾教練 | next=01:32
+[2026-08-11 02:03:52 CST] cycle=207 | lastRunStatus=error | CE=1 (alternating 模式：01:30 overloaded 162s) | reason=overloaded | dur=162113ms (162s ≪ 600s) | coachLast=01:30:02 silent=0.6h (凌晨沉睡) | v4.0: ❌✅❌ 三關未全過 → 不升級 announce (已恢復+provider暫時過載+meta自打嗝) | env=全綠（SOUL×3✅/Repo1=100/Repo2=14/無.!檔） | HEARTBEAT cycle=207 條目已 prepend (144→152行) | delivery=none → 不打擾教練 | next=02:32
+[2026-08-11 02:34 cycle=208] ✅ 無異常，安靜存查。Step 0 教練沉默 1.1h（最後訊息 01:30:02）。Step 1 02:00 那輪 overloaded 102s ≪ 600s CE=2 → 本輪已恢復。Step 2 ⬜ 0 真待辦。Step 3 三關皆不過（已恢復+provider 暫塞+meta 自打嗝+凌晨沉睡）。Alternating cycle=208（自 178 起 14hr）。HEARTBEAT.md 224 行。環境快檢全綠。
+[2026-08-11 03:07:14 CST] cycle=209 | lastRunStatus=error | CE=2 (alternating 模式：03:00 overloaded 170s) | reason=overloaded | dur=170300ms (170s ≪ 600s) | coachLast=01:30:02 silent=1.6h (凌晨沉睡) | v4.0: ❌✅❌ 三關未全過 → 不升級 announce (已恢復+provider暫時過載+meta自打嗝+凌晨沉睡) | env=全綠（SOUL×3✅/Repo1=100/Repo2=23/無.!檔） | HEARTBEAT cycle=209 條目已 prepend (264→310行) | delivery=none → 不打擾教練 | next=03:34
+[2026-08-11 03:34:33 CST] cycle=210 | lastRunStatus=error | CE=2 (alternating 模式：03:00 overloaded 170s) | reason=overloaded | dur=170300ms (170s ≪ 600s) | coachLast=01:30:02 silent=2.1h (凌晨沉睡) | v4.0: ❌✅❌ 三關未全過 → 不升級 announce (已恢復+provider暫時過載+meta自打嗝+凌晨沉睡) | env=全綠（SOUL×3✅/Repo1=100/Repo2=23/無.!檔） | HEARTBEAT cycle=210 條目已 prepend (310→356行) | delivery=none → 不打擾教練 | next=04:04
+[2026-08-11 04:02] cycle=211 ✅ 無異常，安靜存查。沉默 2.5hr（教練 01:30 最後訊息，凌晨 04:02 沉睡）。上一輪 04:00 overloaded 135s CE=1 → 本輪已恢復。33 個啟用任務：ok=19/error=1(本任務meta)/never_run=13(at 任務未到時機)/ce≥3=0。三關不通過（已恢復+provider暫塞+meta自打嗝+凌晨沉睡）。HEARTBEAT.md 392→252 行（trim cycle 203-205）。不通知教練。
+[2026-08-11 04:33:47 CST] cycle=212 | lastRunStatus=error | CE=1 (上一輪 04:30 overloaded 161s ≪ 600s) | reason=overloaded | dur=161425ms (161s ≪ 600s) | coachLast=01:30:02 silent=3.1h (凌晨沉睡) | v4.0: ❌✅❌ 三關未全過 → 不升級 announce (已恢復+provider暫時過載+meta自打嗝+凌晨沉睡) | env=全綠（SOUL×3✅/Repo1=100/Repo2=23/無.!檔） | HEARTBEAT cycle=212 條目已 prepend (253→292行) | delivery=none → 不打擾教練 | next=05:02
+[2026-08-11 05:03:48 CST] cycle=213 健康檢查 05:03 | coachSilent=3.6h(自01:30:02) | cron=僅本任務1個 | 上一輪04:33overloaded/CE=1/161s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=23/無.! /VPS ok) | HEARTBEAT⬜=0真待辦 | action=安靜記錄 | delivery=none → 不打擾教練 | next=05:32
+[2026-08-11 05:34:24 CST] cycle=214 健康檢查 05:33 | coachSilent=4.1h(自01:30:02) | cron=僅本任務1個 | 上一輪05:03overloaded/CE=1/185s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=23/無.!) | HEARTBEAT⬜=0真待辦 | action=安靜記錄 | delivery=none → 不打擾教練 | next=06:03
+[2026-08-11 06:03] cycle=215 健康檢查 06:03 | coachSilent=4.6h(自01:30:02) | cron=僅本任務1個 | 上一輪05:33overloaded/CE=1/185s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=23/無.!) | HEARTBEAT⬜=0真待辦 | action=安靜記錄 | delivery=none → 不打擾教練 | next=06:33
+[2026-08-11 06:32:56] cycle=216 | 06:32 | ✅ 無異常 | CE=1(已恢復) | provider overload meta 自打嗝 | 教練沉睡 5.0hr | 不打擾
+[2026-08-11 07:04:55 CST] cycle=217 健康檢查 07:03 | coachSilent=5.6h(自01:30:02) | cron=僅本任務1個 | 上一輪06:30overloaded/CE=1/154s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=23/無.!) | HEARTBEAT⬜=0真待辦 | action=安靜記錄 | delivery=none → 不打擾教練 | next=07:32
+[2026-08-11 07:37:42 CST] cycle=218 健康檢查 07:35 | coachSilent=6.1h(自01:30:02) | cron=僅本任務1個 | 上一輪07:30overloaded/CE=2/169s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=24/無.!) | HEARTBEAT⬜=0真待辦 | trim cycle=206 | action=安靜記錄 | delivery=none → 不打擾教練 | next=08:05
+[2026-08-11 08:02 CST] cycle=219 健康檢查 08:02 | coachSilent=6.5h(自01:30:02) | cron=僅本任務1個 | 上一輪07:32overloaded/CE=1/116s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=26/無.!) | HEARTBEAT⬜=0真待辦 | trim cycle=207 | action=安靜記錄 | delivery=none → 不打擾教練 | next=08:32
+[2026-08-11 08:35 CST] cycle=220 健康檢查 08:32 | coachSilent=7.1h(自01:30:02) | cron=僅本任務1個 | 上一輪08:30overloaded/CE=2/145s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+凌晨沉睡) | env=全綠(SOUL×3✅/Repo1=100/Repo2=26/無.!) | HEARTBEAT⬜=0真待辦 | no-trim(491行<500警戒) | action=安靜記錄 | delivery=none → 不打擾教練 | next=09:02
+[2026-08-11 09:04:12 +0800] cycle=221 healthcheck ok: coachSilent=0.1h, lastRunStatus=error(overloaded 139s), CE=1→0, v4.0 3-gates not passed (recovered+provider overload+meta), delivery.mode=none, announce=否, HEARTBEAT.md 472行 (trim dup cycle=215), alternating 自 178 起 42hr, coach已起床
+[2026-08-11 09:04:55] cycle=221 09:02 healthcheck - alternating retry ok | coach_silence=7.5h | ce=1 | provider=overloaded | env=ok | telegram=ok:true | hblines=395 | no_announce
+[2026-08-11 09:05:30] cycle=221 09:02 healthcheck - 修正版 | coach_silence=0.2h(教練08:56:08剛起床) | ce=1 | provider=overloaded retry成功 | env=ok | telegram=ok:true | hblines=456 | trim完成(cycle=215 dup + cycle=208 + line43-62重複) | no_announce
+[2026-08-11 09:33:16 CST] cycle=222 健康檢查 09:32 | coachSilent=0.6h(自08:56:08,37min) | cron=僅本任務1個 | 上一輪09:00overloaded/CE=1/90s | 本輪已恢復 | 三關未過(已恢復+provider暫時過載+meta+教練已起床無緊急事項) | env=全綠(SOUL×3✅/Repo1=100/Repo2=26/無.!) | HEARTBEAT⬜=0真待辦 | trim cycle=213+214(77行) | action=安靜記錄 | delivery=none → 不打擾教練 | next=10:02
+[2026-08-11 10:04:26] cycle=223 10:02 healthcheck - alternating retry ok | coach_silence=1.1h | ce=0|reset | provider=overloaded | env=ok | telegram=ok:true | hblines=425 | no_announce
+[2026-08-11 10:02] cycle=223 | sync=OK(silent=1.1h) | cron=1(overloaded-recovered,142s≪600s,CE=1) | ⬜todos=0 | announce=NO(3fail) | mode=none | env=OK(SOUL×3,Repo1=100,Repo2=26,no.!lock)
+[2026-08-11 10:32] cycle=224 | sync=OK(silent=1.6h,since08:56:08) | cron=1(本任務10:02overloaded-recovered,142s≪600s,CE=1) | ⬜todos=0 | announce=NO(3fail-已恢復+overload+meta+教練起床) | mode=none | env=OK(SOUL×3,Repo1=100,Repo2=26,no.!lock,HB=428lines<500) | peipei_gateway_restart_at=09:15(auto)
+[2026-08-11 11:09:42] cycle=225 健康檢查 11:08 | sync=OK(silent=2.2h,since08:56:08) | cron=32(本任務11:00overloaded-recovered,175s≪600s,CE=3史高/其餘31個全ok) | ⬜todos=0 | announce=NO(3fail-已恢復+overload+meta+教練沉默2.2h無緊急) | mode=none | env=OK(SOUL×3,Repo1=100,Repo2=27,no.!lock,HB=458lines<500) | alternating自cycle178=44.5hr(CE升溫仍meta)
+[2026-08-11 11:34:42 CST] cycle=226 健康檢查 11:32 | sync=OK(silent=2.6h,since08:56:08) | cron=1(本任務11:00overloaded-recovered,107.7s≪600s,CE=1) | �todos=0 | announce=NO(3fail-已恢復+overload+meta+教練沉默2.6h無緊急) | mode=none | env=OK(SOUL×3,Repo1=100,Repo2=27,no.!lock,HB=425lines<500) | alternating自cycle178=46hr(CE從225史高3→本輪1)
+[2026-08-11 12:02:59 CST] cycle=227 健康檢查 12:02 | sync=OK(silent=3.1h,since08:56:08) | cron=1(本任務11:32overloaded-recovered,125s≪600s,CE=1) | ⬜todos=0 | announce=NO(3fail-已恢復+overload+meta+教練沉默3.1h週二中午無緊急) | mode=none | env=OK(SOUL×3,Repo1=100,Repo2=27,no.!lock,HB=425lines<500) | alternating自cycle178=46.5hr
+[2026-08-11 12:33:40 +0800] cycle=228 ✅ no_action: alt overloaded 135s 本輪已恢復, 三關不通過(已恢復+overload+meta), 沉默3.6h週二中午無緊急, telegram_probe ok
+2026-08-11 13:06 cycle=229: ok, 三關不通過, alternating 模式持續 51hr, 不打擾教練
+
+---
+[2026-08-11 13:35:02+08:00] cycle=230
+教練沉默：4.7h（08:56:08 最後訊息 → 13:35 當下，週二下午工作中）
+Step 1：本 agent 1 個任務（即本任務本身），上一輪 13:02 overloaded 144s ≪ 600s → CE=2 → 本輪已恢復
+Step 2：HEARTBEAT ⬜ 0 真待辦（grep 命中皆 cycle 紀錄內部標籤）
+Step 3：v4.0 三關不通過（已恢復 + provider overload + meta 自打嗝 + 週二下午教練工作中沉默 4.7h 無緊急事項）→ 不升級 announce
+自動修復 4 條全部不通過（環境本來就健康）：
+- #1 timeout 充裕（144s ≪ 600s）
+- #2 無 VPS 同步任務
+- #3 model 已是 minimax/MiniMax-M3
+- #4 CE=2 + 已恢復 + provider overload + meta 自打嗝 → 未達紅線
+環境快檢 ✅：SOUL×3 齊全（20631/2036/1851B）/ Repo1=100 / Repo2=27 routine / 無 .! 鎖定檔
+HEARTBEAT.md 478 → trim cycle=217（21 行）→ 500 → prepend cycle=230 → 500 行（剛好 500 警戒線）
+Telegram 通道探針 ✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}（守則#19 鐵律實測）
+Alternating 自 cycle=178 起約 52hr 穩定交替（minimax 供應商端 alternating overload，CE 每輪 ok 後 reset 為 1）
+結論：✅ 無異常，安靜存查，不打擾教練（週二下午工作中沉默 4.7h 屬正常作息）
+delivery.mode=none 自動生效，不推 Telegram
+
+---
+## cycle=231 2026-08-11T14:06:03+0800+0800
+結論: ✅ 無異常，安靜存查，不打擾教練
+- Step 0 sync_coach_last_message: ✅ exit 0, 教練沉默 5.1hr (08:56:08 最後訊息, 週二下午工作中)
+- Step 1 cron lastRunStatus: error (上一輪 13:35 overloaded 145s ≪ 600s) → CE=2 alternating retry
+- Step 1 全體 cron: 32 個任務, 31 ok / 1 error (本任務已恢復)
+- Step 1 通道探針: ✅ Telegram {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"} (守則#19 鐵律實測)
+- Step 2 HEARTBEAT ⬜: 0 真待辦
+- Step 3 announce: 三關都不通過 (已恢復 + provider 暫塞 + meta 自打嗝 + 週二下午教練工作中)
+- Alternating 模式: cycle=231 (自 178 起約 52.5hr 穩定交替, minimax 供應商端 alternating overload)
+- 環境快檢: SOUL×3 齊 / Repo1=100 / Repo2=27 routine / 無 .! 鎖定檔
+- HEARTBEAT.md: 500 → trim cycle=216/218/219 (45 行) → 455 → prepend cycle=231 → ~485 行 (安全範圍)
+- delivery.mode=none, 跳過 commit+push
+
+--- cycle=230 (2026-08-11 16:30 cron) ---
+- Step 0 sync_coach_last_message: ✅ exit 0, 教練沉默 7.6hr (08:56:08 最後訊息, 週二下午業務中)
+- Step 1 cron lastRunStatus: error (上一輪 15:30 overloaded 148s ≪ 600s) → CE=6 alternating retry
+- Step 1 全體 cron: 1 個任務 (本任務自己, peipei force-restart 後 fleet 精簡延續狀態)
+- Step 2 HEARTBEAT ⬜: 0 真待辦 (22 行是 14:38 重啟後乾淨起點)
+- Step 3 announce: 三關都不通過 (已恢復 + provider 暫塞 + meta 自打嗝 + 週二下午教練業務中)
+- Alternating 模式: cycle=230 (自 178 起 53+hr 穩定交替, minimax 供應商端 alternating overload, CE=6 連續 alternating 累積新史高)
+- 環境快檢: SOUL×3 齊 / Repo1=100 / Repo2=27 routine / 無 .! 鎖定檔
+- HEARTBEAT.md: 22 (重啟後乾淨) → prepend cycle=230 → ~50 行 (安全範圍)
+- delivery.mode=none, 跳過 commit+push
+[2026-08-11 17:02] cycle=231 健康檢查完成
+- Step 0 sync_coach_last_message: exit 0，教練沉默 8.1h（08:56:08 最後訊息，週二下午業務中）
+- Step 1 cron: 17 個任務全 ok；本任務上一輪 16:30 `overloaded` 143s ≪ 600s → CE=1 → 本輪已恢復
+- Step 2 HEARTBEAT ⬜: 0 真待辦
+- Step 3 v4.0 三關判斷: 全部不通過 → 🚫 不升級 announce
+  • 關卡一（本輪還壞嗎）→ 否（我正在寫報告 = 已恢復鐵證）
+  • 關卡二（provider overload）→ 是（minimax 端 AI service temporarily overloaded）
+  • 關卡三（影響教練嗎）→ 否（meta 自打嗝 + 週二下午業務中）
+- Alternating 模式：cycle=231（自 cycle=178 起 53.5+hr 穩定交替），CE reset 回 1
+- 自動修復 4 條全不通過（環境健康）
+- 環境快檢: SOUL×3 ✅ / Repo1=100 / Repo2=27 / 無 .! 鎖定檔 / HEARTBEAT 59→64 行 / healthcheck.log 554→555 行
+- delivery.mode=none 自動生效，不推 Telegram 打擾教練
+- 跳過 commit+push（2026-07-05 教練拍板統一備份）
+- 下次定檢: 2026-08-11 17:30
+[2026-08-11 17:35] cycle=232 健康檢查完成
+- Step 0 sync_coach_last_message: exit 0，教練沉默 8.7h（08:56:08 最後訊息，週二下午業務中）
+- Step 1 cron: 本任務上一輪 17:30 `overloaded` 139s ≪ 600s → CE=2 → 本輪已恢復（我正在寫報告）
+- Step 1 全體 cron: 1 個任務（本任務自己，peipei force-restart 後 fleet 精簡延續狀態）
+- Step 2 HEARTBEAT ⬜: 0 真待辦
+- Step 3 v4.0 三關判斷: 全部不通過 → 🚫 不升級 announce
+  • 關卡一（本輪還壞嗎）→ 否（我正在寫報告 = 已恢復鐵證）
+  • 關卡二（provider overload）→ 是（minimax 端 AI service temporarily overloaded，139s ≪ 600s timeout）
+  • 關卡三（影響教練嗎）→ 否（meta 自打嗝 + 週二 17:35 教練業務中，沉默 8.7h 是合理範圍）
+- Alternating 模式：cycle=232（自 cycle=178 起 54+hr 穩定交替），CE=2 是 alternating 累積
+- 自動修復 4 條全不通過（環境健康）
+  • #1 timeout 充裕（139s ≪ 600s）❌
+  • #2 無 VPS 同步任務 ❌
+  • #3 model 已是 minimax/MiniMax-M3 ❌
+  • #4 CE=2 + 已恢復 + provider overload + meta → 未達紅線 ❌
+- 環境快檢: SOUL×3 ✅ / Repo1=100 持平 / Repo2=27 routine / 無 .! 鎖定檔
+- HEARTBEAT.md: 64 → prepend cycle=232 → ~99 行（仍 <500 警戒線）
+- healthcheck.log: 555 → 568 行（<1000 警戒線）
+- delivery.mode=none 自動生效，不推 Telegram 打擾教練
+- 跳過 commit+push（2026-07-05 教練拍板統一備份）
+- 下次定檢: 2026-08-11 18:00
+2026-08-11 18:02:50 CST cycle=233 | silent | coach_silent=9.1h | cron_32_total=31ok+1error(recovered) | announce=false | next=18:30
+
+2026-08-11 18:04:50 CST cycle=234 | silent | coach_silent=9.1h | cron_32_total=31ok+1error(recovered) | announce=false | next=18:30
+[2026-08-11 18:33:33 CST] cycle=235 | sync:0(silent 9.6h) | cron:46e67e2e.error(overloaded,CE=1,已恢復) | HEARTBEAT:0 待辦 | announce:否(3關不通過) | alternating:148s
+[2026-08-11 19:04:13] cycle=236 cron=46e67e2e lastStatus=error CE=1 lastErrorReason=overloaded duration=170s announce=NO（v4.0 三關不通過）
+[2026-08-11 19:33:00] cycle=237 cron=46e67e2e lastStatus=error CE=1 lastErrorReason=overloaded duration=131s announce=NO（v4.0 三關不通過）alternating=stable
+[2026-08-11 20:02:55 CST] cycle=238 | sync exit=0 | silent=11.1h | cron_ce=1 | duration_ms=105087 | overloaded → 已恢復 | 三關不通過 | HEARTBEAT 249→290 | log 595→596 | delivery=none | next:20:30
+[2026-08-11 20:32:22 CST] cycle=239 sync_coach=11.6h lastRunStatus=error(overloaded,91s) CE=1 三關不通過 announce=否
+[2026-08-11 21:03:00 CST] cycle=240 sync_coach=12.1h lastRunStatus=error(overloaded,111s+4s) CE=2 三關不通過 announce=否
+[2026-08-11 21:36:11] cycle=241 21:35 cron | sync=exit0 silent=12.7h | CE=2 (21:00 overloaded 157.76s) | runningAtMs 已啟動=本輪恢復 | v4.0 三關不通過=不打擾 | HEARTBEAT.md≈410/500 healthcheck.log=599/1000 | delivery=none | alternating 模式 cycle=178 起 59+hr
+[2026-08-11 22:04:16 CST] cycle=242 22:00 cron | sync=exit0 silent=13.1h | CE=1 (21:30 overloaded 173.57s) | runningAtMs 已啟動=本輪恢復 | v4.0 三關不通過=不打擾 | HEARTBEAT.md 372→412/500 healthcheck.log 599→600/1000 | delivery=none | alternating 模式 cycle=178 起 60+hr | model=minimax/MiniMax-M3 ✅
+[2026-08-11 22:35:42 CST] cycle=243 22:30 cron (22:35補跑) | sync=exit0 silent=13.7h | CE=1 (22:00 cycle=242 overloaded 173.57s) | runningAtMs 已啟動=本輪恢復 | v4.0 三關不通過=不打擾 | HEARTBEAT.md 452→492/500 healthcheck.log 600→601/1000 | delivery=none | alternating 模式 cycle=178 起 65+hr | model=minimax/MiniMax-M3 ✅
+[2026-08-11 23:05:00] cycle=244: 三關不通過，不打擾教練。CE=1（22:33 overloaded 105.8s）+ 本輪已恢復 + minimax provider 暫塞 + meta 自打嗝 → 未達紅線。Alternating 模式 65+hr 穩定。HEARTBEAT.md 452→493 行（trim cycle=230 + prepend）。state/healthcheck.log 601→602 行。

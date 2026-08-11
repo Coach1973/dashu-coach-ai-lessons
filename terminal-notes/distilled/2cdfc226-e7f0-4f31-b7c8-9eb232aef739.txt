@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2cdfc226-e7f0-4f31-b7c8-9eb232aef739
-# 提取時間：2026-08-10 20:00 (台灣時間)
-# 共 8 條教練原話
+# 提取時間：2026-08-11 01:29 (台灣時間)
+# 共 14 條教練原話
 
 ---
 
@@ -113,3 +113,111 @@ Stop hook feedback:
 
 `.openclaw` 12GB 裡面主要是：
 - workspace（大腦本體，5.3G）—— s…（略）
+
+【教練 2026-08-10 16:48】
+8月25日新增活動到大樹小講，下午，晚上各一場，資料如下
+
+
+
+🔥主題－AI精準提問+AI基因晶片檢測
+費用－1人200，座位50人，附點心飲料
+地址－台南市中西區成功路77號三道門文創旅店
+日期.8/25（二）午場  下午14:00-16:30（13:30進場，17:00轉場）
+
+
+日期.8/25（二）晚場  
+🔥主題：轉念之間游刃有餘+HOWA改善情緒睡眠品質
+費用：1人888，座位50人，附高級餐盒+小提琴演出
+時間：晚上18:00-20:30
+（17:30進場，20:30 QA收尾）
+
+　▶ AI 回應：Both sessions correctly appear in the registration dropdown. Let's stop the preview and verify visually in real Chrome per the hard lock.
+
+　▶ AI 回應：Confirmed working, real Chrome window is open showing the two new 8/25 sessions. Now committing, pushing, and cleaning up the temp server.
+
+　▶ AI 回應：Only `index.html` staged, `biz-gym/` untouched changes left as-is. Committing and pushing.
+
+　▶ AI 回應：✅ 8/25 台南場（三道門文創旅店）午晚兩場已新增到「大樹小講」，commit `8a6c699` 已推送 GitHub，並用 Chrome 開給您看過確認渲染正確：
+
+- **午半場** 14:00–16:30：AI精準提問+AI基因晶片檢測，200元/50人，附點心飲料
+- **晚半場** 18:00–20:30：轉念之間游刃有餘+HOWA改善情緒睡眠品質，888元/50人，附高級餐盒+小提琴演出
+
+這步只更新了原始碼＋GitHub，**正式站 bigtree-tw.netlify.app 還沒同步**（這站是手動 zip 部署型，推 GitHub 不會自動上線，會扣 Netlify 額…（略）
+
+【教練 2026-08-10 16:57】
+請幫忙把所有場次名稱統一改用「時間」兩個字來取代。
+
+原本想說要把夜場改成晚場、下午場和午半場改成午場、晚半場改成晚場，但後來想想這樣太麻煩了。所以我們更新一下，不要再寫什麼午場、晚場、早場、午半場、晚半場、全日場或早上場了，全部都統一寫具體的時間就好。
+
+這樣所有的東西就一致了，可以吧？
+
+　▶ AI 回應：findSessionMeta 跟 buildSessions 兩邊的場次名稱組法對得上，晚場的地址跟費用細節也正確帶出。停掉本機預覽，改用真實 Chrome 給您確認。
+
+　▶ AI 回應：Server is running and serving updated content, real Chrome is open with it. Now committing and pushing.
+
+　▶ AI 回應：Diff is clean, exactly the 4 intended changes. Staging only `index.html`, leaving the unrelated `biz-gym/` work untouched again.
+
+　▶ AI 回應：✅ 完成，commit `cfa30d9` 已推送。全站 15 個場次現在一律只顯示時間（例如「14:00–16:30」），不再出現「午場／午半場／晚場／晚半場／夜場／全日場」這些字樣，卡片文字、報名下拉選單、報名彈窗都同步改好，已用真實 Chrome 開給您確認過。
+
+目前連同剛才新增的 8/25 兩場，都還只在 GitHub，**正式站 bigtree-tw.netlify.app 還沒同步**——要一起推上正式站嗎？
+
+【教練 2026-08-10 17:02】
+主題：轉念之間游刃有餘+HOWA改善情緒睡眠品質
+改成
+
+主題：從從容容.游刃有餘之轉念心法+HOWA改善情緒睡眠品質
+
+　▶ AI 回應：已用 Chrome 開給您看，主題文字確認正確。提交並推送。
+
+　▶ AI 回應：✅ 完成，commit `82ff888` 已推送。8/25 晚半場主題已改為「從從容容.游刃有餘之轉念心法+HOWA改善情緒睡眠品質」。
+
+目前這三次改動（新增8/25兩場、場次名稱改時間制、主題文字修正）都還只在 GitHub，正式站尚未同步——要一起推上 bigtree-tw.netlify.app 嗎？
+
+【教練 2026-08-10 17:04】
+先給我github 確認
+
+　▶ AI 回應：GitHub Pages 版本已經是最新內容，可以直接用這個網址看（跟正式站分開，純粹給您核對用，不會扣 Netlify 額度）：
+
+**https://coach1973.github.io/bigtree/**
+
+confirm 沒問題的話，跟我說「推」我就上正式站 bigtree-tw.netlify.app。
+
+【教練 2026-08-10 17:21】
+推
+
+　▶ AI 回應：Now packaging and deploying to Netlify via API.
+
+　▶ AI 回應：70 個檔案打包完成（8.7MB）。開始部署到 Netlify。
+
+　▶ AI 回應：部署已上傳，輪詢確認建置完成。
+
+　▶ AI 回應：部署已完成。用 curl 驗證正式站文字跟圖片是否正常。
+
+　▶ AI 回應：✅ **正式站已上線**：https://bigtree-tw.netlify.app/
+
+- deploy `6a7a08d0e7c10ed04663c831`，已確認狀態 ready
+- curl 驗證：8/25 兩場文字、修正後的主題文字都正確帶出；圖片、歷史紀錄頁 Content-Type 正常
+- 已用真實 Chrome 開給您看
+- Netlify 額度 45 → **44**（已記錄，commit `8b5c8b760`）
+
+三項改動（新增8/25午晚兩場、全站場次改時間制、主題文字修正）都已同步上線。
+
+【教練 2026-08-10 17:24】
+那請問你有沒有同步更新我們的後臺作業系統？也都同步更新？如果沒有的話，請記得我們是連動的。如果我在「大樹小講」有更新新的場次，你後臺也要跟著一起更新，這樣理解吧？
+
+然後你有測試過更新之後，按資料送出我都能接收到檔案嗎？
+
+另外，每一場都有這種掃描直接就進入輪盤抽獎的，這個全部都有保持一致嗎？
+
+　▶ AI 回應：Now let's add a `start_time` column and update the routing logic to handle same-day multi-session events correctly.
+
+　▶ AI 回應：Now updating the routing logic in `db.py` to correctly pick between same-day sessions based on current time.
+
+　▶ AI 回應：It's running under launchd (`com.coach.event-webapp`). Restarting to load the code fix.
+
+　▶ AI 回應：三個問題都已查證跟修好，逐項回報：
+
+**1. 後臺有沒有跟著更新？**
+一開始沒有——您說的沒錯，這是漏掉的環節，已經現在補上並確立這條「連動」規則：
+- `event.db` 後臺新增了 8/25 午晚兩筆場次資料（commit `c3501af57`）
+- **過程中意外抓到一個真的會出包的 bug**：後臺的「自動導向」邏輯原本只看日期，同一天如果有兩場（像這次的午/晚），會永遠只認第一筆，等於晚場來賓掃碼簽到/抽獎，資料會被誤記到午場去。已經修好：新增開始時間欄位，同一天多場時會依照當下時間自動判斷該導去哪一場（14:00 前導午場、18:00 起導晚場），本機模擬多個時間點測試過，…（略）
