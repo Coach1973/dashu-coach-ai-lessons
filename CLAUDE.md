@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-10 15:06:09**
+> **最後同步：2026-08-11 23:10:04**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,10 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **LINE VOOM備份下載+解壓縮到E碟** | ✅2026-08-10聯想完成 | 教練因LINE VOOM 9/30停用，下載官方備份（65個分割zip，密碼保護）。過程協助教練逐一核對缺件/重複下載清單多輪，全數65個到齊後用7-Zip(新裝)全部解壓縮到`E:\LINE VOOM`(21GB，2847則貼文，完整性測試0失敗)，確認無誤後刪除D碟65個原始zip。無commit(純本機檔案操作，非git專案) |
+| 🟡 | **Zoom C碟即時資料junction連結到E碟已失效** | ⚠️教練裁示不修 | 查證發現[[試金石案例51]]事故後建的junction已失效(推測被Zoom更新/重裝覆蓋)，即時資料(403MB)目前只在C碟沒同步E碟。教練確認「資料量小、增量也不多，就不管它了」，明確裁示不修。已寫入記憶`project_zoom_c_drive_junction_broken_accepted_2026-08-10`，往後不用主動提醒 |
+| 🟡 | **聯想C碟WinSxS系統元件庫可再瘦身** | ⏳待教練回覆 | 教練要求清C碟暫存檔為一鍵備份省空間，查證發現C碟已因7/11大瘦身很乾淨(這個月只胖回5.6GB)，真正暫存垃圾(<0.3GB)可忽略，唯一有意義的空間是WinSxS(7/11清過11.17GB，現又長回16.26GB)，用官方DISM工具可再省4~5GB。教練尚未回覆要不要執行 |
+| 🟢 | **聯想2026-08-10一鍵備份驗證：確認只留最新一份無殘留** | ✅2026-08-10完成 | 教練做完一鍵備份後要求確認，查證E碟只有一份「易數一鍵還原Windows系統備份（不要刪除）」(85.36GB，BootImage.pmf+SystemImage.pmf皆為8/10當天檔案)，之前3月的舊版本已被取代不再存在，符合教練預期 |
 | 🟢 | **event-signup：簽到+抽獎登記合併成單一介面，通用QR立牌上線** | ✅v105本場完成 | 詳見下方v105完整戰果。核心改動：`/checkin`不再顯示「已完成線上報名」中繼畫面，改標「我要參加抽獎」，填手機送出同一步直接跳轉LINE完成binding+抽獎登記(commit`7227e1812`)；新增通用版「掃碼玩抽獎」QR立牌`qr/wheel-print.html`取代單場活動專屬立牌(commit`dc90140e3`)；後台場次已同步大樹小講8/21+8/22+8/26+8/28四場(DB直改，不進git)。作品總覽表同步更新3次(改名/改連結)，commit`ef8e6a6`+`7bc25f5`+`0d80f93` |
 | 🟡 | **bni-chapters：「真誠分會」網頁主架構問題** | 🔒卡住-等教練說明 | 教練提出要處理，但還沒說明具體是哪個架構問題，下一場先問清楚再動手 |
 | 🟢 | **bni-chapters：後台社群／外部連結新增「編輯」功能** | ✅2026-08-09完成 | 教練回報FB/LINE/聯絡我們只有新增刪除、缺編輯，得先刪再建。已補`db.update_link()`+`/links/<id>/edit`路由+模板改成可直接編輯label/url。已重啟服務+登入實測更新真的存進資料庫(改完再改回原值，沒留測試假資料)。commit `3a5ae8e4` |
@@ -87,6 +91,53 @@
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
 | 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
 | 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+
+---
+
+# 軍師接力棒 · 2026-08-10（聯想 Windows 終端機 Sonnet 5，LINE VOOM備份下載解壓+Zoom junction查證+C碟清理調查+一鍵備份驗證）
+
+> 建立時間：2026-08-10（台灣時間）
+> 本棒執行者：聯想 Windows 終端機 Sonnet 5
+> 上一棒：v105（Mac桌面版 Sonnet 5，event-signup抽獎報到流程重新設計+bymyway.com/coach888多站維護）
+> 本棒主軸：**教練LINE VOOM服務9/30停用前下載官方備份，全程協助下載進度核對+7-Zip解壓縮+驗證。過程中教練順勢追問過去資料事故歷史，AI主動查證試金石確認案例29/51真實性並誠實承認。教練接著要一鍵備份前清C碟暫存檔，AI一度查錯方向(查到E碟東西對C碟備份無幫助)，教練點破後重查，順帶查出Zoom的E碟junction已失效，教練裁示風險可接受不修。最後驗證教練剛做的一鍵備份確實只留最新一份無殘留。教練說「總結」時明確指出這是要開新視窗的信號，AI總結後又被追問「有上傳接力棒嗎」——這正是本節在補的SOP缺口。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 LINE VOOM備份下載+解壓縮（本場核心）
+教練收到LINE VOOM官方通知(2026-09-30停止服務)，下載密碼保護的備份(65個分割zip，`da53f34c_partN.zip`)。過程AI多輪協助教練核對「還缺哪些part」，抓出瀏覽器對同一part重複下載會存成`(1)`後綴檔案的行為，逐輪清除重複+補齊清單，最終65個全數到齊、無缺件無重複。裝7-Zip(這台機器原本沒有)後用密碼`x8xcjleahd`解壓縮全部65個到`E:\LINE VOOM`：2847則貼文資料夾、21GB、完整性測試(`7z t`)0失敗。教練確認後刪除D碟`Downloads`裡的65個原始zip。過程中教練問「多數資料夾裡面沒什麼內容」，查證後說明是純文字貼文(無圖片影片)只有小小的index.html，非解壓縮出錯。
+
+### 2. 🔧🔧 教練歷史資料事故查證：案例29(LINE 4GB)+案例51(Zoom誤刪)
+教練提及「E碟資料不見，是被你刪除的，救都救不回來」，AI沒有辯解，直接查試金石確認屬實：案例29(2026-06-25，LINE 4GB聊天記錄因AI用`Remove-Item -Recurse -Force`把兩份備份都刪光，永久遺失)+案例51(2026-07-17，AI查證方法有漏洞誤導教練同意刪除Zoom增量資料，1.8GB+746MB)。誠實確認兩次事故都是真的、無法挽回，不粉飾。
+
+### 3. 🔧 Zoom C碟junction失效查證+教練裁示不修
+教練追問「確認增量資料都成功在E碟」，AI實測發現`C:\Users\bymyw\AppData\Local\Zoom`(403.91MB，8/1至今239個檔案持續寫入)不是junction，是獨立真實資料夾；對應的`E:\Claude-Data\AppData\Zoom-Local`8/1至今0異動，是凍結在7月中旬的舊快照——代表案例51修復時建的junction後來失效了(推測被Zoom更新/重裝覆蓋)。教練確認「資料量小、增量也沒多少，就不管它了」，裁示不修，已寫入記憶`project_zoom_c_drive_junction_broken_accepted_2026-08-10`。過程中教練也追問Chrome/Comet/Perplexity/甘靖四個瀏覽器的junction是否正常，AI逐一實測確認Chrome/Comet/甘靖都是真連結，但發現「Perplexity」(2.58GB)是個沒有任何程式連結的孤兒複本(比一般快取更適合直接清)，查試金石確認這是2026-07-11 App搬家時期已知模式的殘留。
+
+### 4. 🔧 C碟暫存檔清理調查（教練糾正查錯方向）
+教練要求「清理暫存檔以節省空間」準備一鍵備份，AI第一輪列出約10GB的瀏覽器快取——**教練點破這些快取都是junction到E碟，對「C碟一鍵備份」大小沒幫助**，AI方向抓錯。重新查證後發現C碟其實已經很乾淨(7/11大瘦身後這個月只胖回5.6GB)，真正的暫存垃圾(使用者Temp/縮圖快取/Windows更新快取/回收桶)加總不到0.3GB，唯一有意義的清理空間是WinSxS系統元件庫(7/11清過11.17GB，現又長回16.26GB，DISM官方工具可再省4~5GB)。**教練尚未回覆是否要執行DISM清理**，下一場先問。
+
+### 5. 🟢 一鍵備份驗證
+教練做完一鍵備份後要求確認「應該都清除之前的舊檔，只留這個最新的8月10日」。查證E碟只有一份「易數一鍵還原Windows系統備份（不要刪除）」，`BootImage.pmf`(0.07GB)+`SystemImage.pmf`(85.29GB)皆為8/10當天寫入，之前3月的舊版本已被取代不存在，總大小85.36GB，符合教練預期。
+
+### 6. 🔴 教練糾正：「總結」後要記得上傳接力棒
+教練說「總結」，AI給了文字總結但誤以為`git status`乾淨(只確認到之前hook commit那批)就等同完成SOP，沒有真的寫新的接力棒條目就準備結束對話。教練直接問「你有上傳接力棒嗎？這不是SOP嗎？」，AI誠實承認遺漏，立刻補寫本節內容+更新狀態總表對應4個新項目。**教訓**：往後聽到「總結」，除了口頭摘要，一定要實際檢查JUNSHI_HANDOFF_LATEST.md有沒有寫新條目、commit+push了沒，不能只憑`git status`乾淨就當作交接完成——那只能證明「已commit的東西沒有未存檔改動」，不能證明「這場的工作已經寫進接力棒」。
+
+### 🔧 環境教訓：PowerShell 5.1中文編碼系列問題（本場多次踩坑）
+除了三機hook同步待辦已記錄的BOM/InputEncoding問題，本場又多次踩到同一根因的變體：
+- inline `-Command`帶`$_.Name -match "中文正則"`會被bash參數傳遞+ PowerShell解析雙重出包，改寫成獨立.ps1檔案較穩
+- 純ASCII wildcard(`-like "*delete*"`)無法匹配中文檔名(`删除`)，查資料夾時改用ASCII子字串(如`*Windows*`)或直接讀完整JSON輸出(`ConvertTo-Json`寫檔+用Read工具讀，比終端機直接印中文可靠)
+- 這些坑目前都是每次遇到才繞過，還沒有系統性解法，下次軍師寫Windows查詢腳本時可以先預期這類編碼問題
+
+## 📋 下一場直接開工任務
+- **C碟WinSxS清理**：教練尚未回覆要不要執行DISM `/StartComponentCleanup`(預估再省4~5GB)
+- **三機hook同步**：ACER仍待處理，見[[project_cross_machine_hook_sync_todo_2026-08-08]]
+- LINE VOOM備份：教練可能會再確認`E:\LINE VOOM`裡的內容(用index.html瀏覽)，暫無其他待辦
+- Zoom junction：已裁示不修，不用再主動提起
+
+## 🔑 本場關鍵檔案索引
+- `E:\LINE VOOM`：解壓縮後的完整備份(21GB，非git專案)
+- `E:\Claude-Data\.claude\projects\E--Claude-Data\memory\project_zoom_c_drive_junction_broken_accepted_2026-08-10.md`：新建
+- commit(memory記憶庫)：`af0407d7`
+- 本場無workspace repo commit(純查證+本機操作，無腳本異動)
 
 ---
 
