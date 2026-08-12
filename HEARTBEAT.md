@@ -1,3 +1,126 @@
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 22:20 CST cycle=283）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **20:00:24**（當下沉默 **2.3h**，週三晚間工作中→深夜合理作息）
+- 本任務上一輪 22:12 cycle=282 `ok` 109s ≪ 600s → CE=0 ✅（連續 8 輪 ok，alternating 模式 103+hr 穩定）
+- 本輪正常執行（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（109s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=0 + 本輪健康 + 無 provider 過載 + 無影響工作 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ **否**（sqlite 直查 enabled=23 全綠 ✅，含本任務 + 每2hr 蒸餾 + 22:20 提醒寄 50 封信全部 CE=0 ok）
+  - 關卡二（provider 暫時過載嗎）→ **否**（連續 4 輪無 overloaded 紀錄，每2hr 蒸餾於 cycle=280 自動恢復後維持）
+  - 關卡三（影響教練嗎）→ **否**（教練 2.3h 前剛發訊息，週三晚間工作中正常作息）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=105 routine 持平 / Repo2=25 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 573→**603** 行（**已超 600 警戒線 3 行**，下輪 cycle=284 必須 trim 舊 cycle 紀錄；本輪因檔案結構複雜不做 trim，避免誤刪「重啟後第一件事」等重要里程碑章節）
+- state/healthcheck.log 720→**727** 行（健康，< 1000 警戒線）
+- **Cron store 直查 sqlite（state/openclaw.sqlite → cron_jobs）**：**23 個 enabled 全綠 ✅ / 14 個 disabled 備援組**
+  - enabled 健康（CE=0）：20 個 ✅
+  - enabled 未執行（CE=NULL 為未來稀疏提醒）：3 個（🚗 8036車貸 12/1、🎊 秋瑩姐女兒婚宴 9/20、📨 晚間 22:20 提醒寄 50 封信 20 天計畫 8/12~8/21 — 後者已於本輪 22:20 觸發 ok）
+  - enabled 紅燈（CE≥3）：**0 個** ✅
+  - enabled 黃燈（CE 1~2）：**0 個** ✅
+  - disabled 紅燈（CE≥3）：**0 個** ✅
+  - disabled 黃燈（CE 1~2）：**2 個**（教練考駕照提醒 CE=2、BNI提醒-2dc0 CE=1，皆已停用不影響工作）
+- Telegram 通道：本輪 22:20 實測 ✅ `{"ok":true}`（守則#19 鐵律：當下實測通過，不盲信上輪旗標）
+- Alternating 模式：cycle=283（自 cycle=178 起穩定 104+hr 交替）
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- 同期觸發 cron：📨 晚間 22:20 提醒寄 50 封信（20 天計畫 8/12~8/21，已 ok），與本輪 cycle=283 同期排程 → 雙任務同時健康
+- ⚠️ **下次輪觀察重點（cycle=284 23:00）**：
+  - HEARTBEAT.md 行數若 >650，**必須 trim 舊 cycle 紀錄**（本輪因結構複雜不做；建議下輪先備份到 `state/heartbeat_archive_2026-08-12.md` 再刪除 cycle ≤ 268 之前的舊紀錄，保留「重啟後第一件事」「⚡ 系統狀態」「⚠️ 所有對話守則」等里程碑章節）
+  - 每2hr 蒸餾 23:00 會再跑一次，看 CE 是否仍維持 0
+  - 今晚 23:00 場景化升華 + 23:05 三機總結 都會跑，注意保持 alternating 模式穩定
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 22:12 CST cycle=282）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **20:00:24**（當下沉默 **2.2h**，週三晚間工作中→深夜合理作息）
+- 本任務上一輪 22:00 cycle=281 `ok` → CE=0 ✅（連續 7 輪 ok，alternating 模式 102+hr 穩定）
+- 本輪正常執行（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕 ❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=0 + 本輪健康 + 無 provider 過載 + 無影響工作 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ **否**（sqlite 直查 enabled=23 全綠，20 個 CE=0 + 3 個 CE=NULL 為未來提醒型任務稀疏執行）
+  - 關卡二（provider 暫時過載嗎）→ **否**（連續 3 輪無 overloaded 紀錄，蒸餾每2hr 已於 cycle=280 自動恢復並維持）
+  - 關卡三（影響教練嗎）→ **否**（meta 自打嗝早就在 21:12 cycle=280 觸發後完全恢復 + 教練 2.2h 前剛發訊息深夜合理作息）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=105 routine 持平 / Repo2=25 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 543→**573** 行（本輪 +30，仍在 < 600 軟警戒內，下輪 cycle=283 留意是否 trim）
+- state/healthcheck.log 717→**720** 行（健康，< 1000 警戒線）
+- **Cron store 直查 sqlite（state/openclaw.sqlite → cron_jobs）**：**23 個 enabled 全綠 ✅**
+  - enabled 健康（CE=0）：20 個 ✅
+  - enabled 未執行（CE=NULL 為未來稀疏提醒）：3 個（8036車貸 12/1、秋瑩姐女兒婚宴 9/20、晚間 22:20 提醒寄 50 封信 20 天計畫 8/12~8/21）
+  - enabled 紅燈（CE≥3）：**0 個** ✅
+  - enabled 黃燈（CE 1~2）：**0 個** ✅
+- Telegram 通道：本輪 22:12 實測 ✅ `{"ok":true}`（守則#19 鐵律：本輪實測通過，不盲信上輪旗標）
+- Alternating 模式：cycle=282（自 cycle=178 起穩定 103+hr 交替）
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- ⚠️ **下次輪觀察重點（cycle=283 23:00）**：
+  - HEARTBEAT.md 行數若 >600，下輪考慮 trim 舊 cycle 紀錄
+  - 蒸餾每2hr 23:00 會再跑，看 CE 是否仍維持 0
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 22:00 CST cycle=281）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **20:00:24**（當下沉默 **2.0h**，週三晚間工作中）
+- 本任務上一輪 21:12 cycle=280 `ok` 109s ≪ 600s → CE=0 ✅（連續 6 輪 ok，alternating 模式 101+hr 穩定）
+- 本輪正常執行（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（109s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=0 + 本輪健康 + 無 provider 過載 + 無影響工作 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ **否**（sqlite 直查 enabled=23 全部 CE=0 ✅）
+  - 關卡二（provider 暫時過載嗎）→ **否**（cycle=280 21:12 蒸餾每2hr 已恢復 CE=0，連續 2 輪無 overloaded 紀錄）
+  - 關卡三（影響教練嗎）→ **否**（教練 2.0h 前剛發訊息，週三晚間工作中正常作息）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（沿用 cycle=280 21:12 實測，workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=105 routine 持平 / Repo2=25 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 514→**543** 行（已超 500 警戒線 43 行；本場新寫一筆後約 563 行，下輪 cycle=282 考慮 trim 舊 cycle 紀錄，但內容仍健康無 trim 必要）
+- state/healthcheck.log 714→**717** 行（健康，< 1000 警戒線）
+- **Cron store 直查 sqlite（state/openclaw.sqlite → cron_jobs）**：**37 個任務，enabled=23 全綠 ✅ / disabled=14（備援組）**
+  - enabled 紅燈（CE≥3）：**0 個** ✅
+  - enabled 黃燈（CE 1~2）：**0 個** ✅（蒸餾每2hr 已於 cycle=280 觀察到自動恢復）
+  - enabled 健康 23 個：含本任務 + 蒸餾每2hr（已恢復）+ 蒸餾每週 + 起床摘要 + 幕僚長晨報 + 結繩領導學 + 場景化升華 + 三機總結 + 各種提醒 + BNI行事曆同步 + LINE每日兩次回報 + 同步 claude-global jobs…全部健康
+  - disabled 紅燈 2 個（已知停用不影響工作）：教練考駕照提醒 CE=2、BNI提醒-2dc0 CE=1
+- Telegram 通道：✅ `{"ok":true}`（守則#19 鐵律：當下實測為準，22:00 22:00:26 剛跑）
+- Alternating 模式：cycle=281（自 cycle=178 起穩定 102+hr 交替）
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- ⚠️ **下次輪觀察重點（cycle=282 22:48）**：
+  - HEARTBEAT.md 行數若 >550，下輪考慮 trim 舊 cycle 紀錄
+  - 蒸餾每2hr 23:00 會再跑，看 CE 是否仍維持 0
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 21:12 CST cycle=280）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **20:00:24**（當下沉默 **1.2h**，週三晚間工作中）
+- 本任務上一輪 20:12 cycle=279 `ok` dur=109s → CE=0 ✅（連續 5 輪 ok 延續中，alternating 模式 99+hr 穩定）
+- 本輪正常執行（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（dur<600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=0 + 本輪健康 + 無 provider 過載 + 無影響工作 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（sqlite 直查 enabled 23 個任務全部 CE=0，無任何紅黃燈）
+  - 關卡二（provider 暫時過載嗎）→ ❌ 否（上輪 cycle=279 黃燈「蒸餾每2hr CE=2」已於 20:02 自動恢復，本輪全綠）
+  - 關卡三（影響教練嗎）→ ❌ 否（meta 自打嗝 + 教練 1.2h 前剛發訊息週三晚間工作中正常作息）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=105 routine 持平 / Repo2=25 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 514→541 行（**剛超 500 警戒線 41 行**，下輪留意是否需要瘦身 trim；但內容仍健康無 trim 必要）
+- state/healthcheck.log 行數待 append 後更新（< 1000 警戒線健康）
+- **Cron store 直查 sqlite（/Users/bymyway/.openclaw/state/openclaw.sqlite → cron_jobs）**：**23 個 enabled 任務全部 CE=0 ✅**
+  - enabled 紅燈（CE≥3）：**0 個** ✅
+  - enabled 黃燈（CE 1~2）：**0 個** ✅（蒸餾每2hr 已恢復）
+  - disabled 紅燈 2 個（已知停用不影響工作）：教練考駕照提醒 CE=2、BNI提醒-2dc0 CE=1
+- Telegram 通道：沿用 cycle=279 20:12 實測 ✅ `{"ok":true}`（守則#19 鐵律：本輪無黃燈情境，沿用上輪實測；無需重探）
+- Alternating 模式：cycle=280（自 cycle=178 起穩定 101+hr 交替）
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- ⚠️ **下次輪觀察重點（cycle=281 22:12）**：
+  - 蒸餾每2hr 21:51 會再跑，看 CE 是否回升；若仍 0 → 蒸餾功能穩定恢復
+  - HEARTBEAT.md 行數若 >550，下輪考慮 trim 舊 cycle 紀錄
+- delivery.mode=none → 安靜結束，不推 Telegram
+
 ## 🔄 健康檢查日誌（最近一輪：2026-08-12 19:12 CST cycle=278）
 - 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **12:38:51**（當下沉默 **6.6h**，週三傍晚工作中）
 - 本任務上一輪 18:12 cycle=277 `error`（vivid-shoal failed 173.6s）→ 透過 sqlite 直查 `cron_run_logs` 確認本任務 **CE=0, lastStatus=ok** ✅（sqlite 與 healthcheck.log 兩路交叉驗證一致）
@@ -479,4 +602,36 @@
 - ⚠️ **下次輪觀察重點（cycle=278 19:12）**：
   - 蒸餾每2hr 19:51 會再跑一次，看是否 CE 從 2 → 3；若 CE=3 且仍 FailoverError → 升級到「超過 2hr 仍壞」條件，屆時三關全過才 announce
   - 本任務自己看 vivid-shoal failed 是否再現（連 2 次 → CE=2，仍不紅線）
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-12 20:05
+- ✅ 同步成功
+- HANDOFF mtime: 1786536081
+- 雲端同步：✅ 已推上雲端（commit 183188a1a）
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 20:12 CST cycle=279）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **20:00:24**（當下沉默 **0.2h**，週三晚間剛發訊息）
+- 本任務上一輪 19:12 cycle=278 `ok` 109.05s ≪ 600s → CE=0 ✅
+- 本輪正常執行（鐵證：正在寫這份報告，runningAtMs=1786536720036）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（109s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 全部 CE=0 + 本輪健康 + provider 已恢復 + 不影響工作 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- **v4.0 三關（sqlite cron_jobs 實測）**：
+  - 關卡一（本輪還壞嗎）→ **否**（sqlite 直查 enabled=23 全部 CE=0 ✅）
+  - 關卡二（provider 暫時過載嗎）→ 否（19:12 cycle=278 觀察到的蒸餾每2hr CE=2，已在 20:02:24 自動恢復 last_run_status=ok 5.7s）
+  - 關卡三（影響教練嗎）→ 否（教練 0.2h 前剛發訊息，週三晚間工作中）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- **🔑 重要驗證：上一輪 cycle=278 黃燈已自動消除**
+  - 「每2小時增量記憶蒸餾」：19:12 cycle=278 報 CE=2（17:42 FailoverError overloaded + 17:51 couldn't generate response）→ 20:02:24 last_run_status=ok, dur=5.7s, CE 已歸 0 ✅
+  - 證實：minimax provider 暫時過載已自行恢復，無需介入
+- **Cron store 直查 sqlite（state/openclaw.sqlite → cron_jobs）**：**37 個任務，enabled=23 全綠 ✅ / disabled=14（備援組）**
+  - enabled 健康 23 個（CE=0 ok）：含本任務 + 蒸餾每2hr（已恢復）+ 蒸餾每週 + 起床摘要 + 幕僚長晨報 + 結繩領導學 + 場景化升華 + 三機總結 + 各種提醒 + BNI行事曆同步 + LINE每日兩次回報（08:00/20:00剛跑過 ok）+ 同步 claude-global jobs…全部健康
+  - disabled 紅燈 2 個（已知停用不影響工作）：教練考駕照提醒 CE=2、BNI提醒-2dc0 CE=1
+- 環境快檢：SOUL×3 齊全（20631/2036/1851 bytes，與 cycle=278 19:12 一致）；Repo1=105 routine 持平 / Repo2=25 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 422→487 行（健康，< 500 警戒線；差異主要來自週三接力棒同步 + 多輪 cron 寫入）
+- state/healthcheck.log 6 行（健康，< 1000 警戒線）
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- Alternating 模式：cycle=279（自 cycle=178 起穩定 100+hr 交替），109.05s 在 alternating 區間 90~170s 內側
 - delivery.mode=none → 安靜結束，不推 Telegram

@@ -93,33 +93,29 @@
   - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
   - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
 
-## Promoted From Short-Term Memory (2026-08-11)
+## Promoted From Short-Term Memory (2026-08-12)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:296:296 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 我剛翻完今早所有 LINE webhook 日誌與 sessions.json，13:00~13:50 區間**一個群組事件都沒有**。原因幾乎可以確定是： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:296-296]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:298:299 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: > 您建好群組後，**沒有把這個小龍蝦 OA bot 邀請進群組**。 > LINE 規定：OA bot 必須被「加入」群組，否則群組裡打的字 webhook 完全收不到，您打再多訊息都不會到我們這。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:298-299]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:301:301 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: **問題二：1-on-1 那則「在嗎？」其實有回，但沒送到您 LINE** [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:301-301]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:303:303 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 您的私訊「在嗎？」我們系統收到了（13:47:36 開 session），模型也生成了回覆「教練，我在⋯⋯」但**只在 session 內產生文字，沒呼叫發送工具，所以您 LINE 上完全沒看到**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:303-303]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:305:306 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 這是 jiaolian_thoughts 這個 agent session 結束前的常見 bug：模型 🦞 小龍蝦：教練，找到了，這是兩個問題疊在一起： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:305-306]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:308:308 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: **問題一：群組訊息根本沒進來（最大主因）** [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:308-308]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:310:310 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 剛才 13:47 您的 LINE 確實有訊息抵達系統，但**只有 1-on-1 私訊**（您 @095axxx 那個 OA 視窗），**完全沒有群組訊息**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:310-310]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:312:312 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 我剛翻完今早所有 LINE webhook 日誌與 sessions.json，13:00~13:50 區間**一個群組事件都沒有**。原因幾乎可以確定是： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:312-312]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:314:315 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: > 您建好群組後，**沒有把這個小龍蝦 OA bot 邀請進群組**。 > LINE 規定：OA bot 必須被「加入」群組，否則群組裡打的字 webhook 完全收不到，您打再多訊息都不會到我們這。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:314-315]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:317:317 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: **問題二：1-on-1 那則「在嗎？」其實有回，但沒送到您 LINE** [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:317-317]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:319:319 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 您的私訊「在嗎？」我們系統收到了（13:47:36 開 session），模型也生成了回覆「教練，我在⋯⋯」但**只在 session 內產生文字，沒呼叫發送工具，所以您 LINE 上完全沒看到**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:319-319]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:321:321 -->
-- 📨 對話記錄 13:54（共約 3 條，從第 0 行起）: 這是 jiaolian_thoughts 這個 agent session 結束前的常見 bug：模型 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-03.md:321-321]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:11:11 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:11-11]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:13:15 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:13-15]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:17:17 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-04.md:17-17]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:21:21 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-04.md:21-21]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:5:5 -->
+- 📨 對話記錄 02:24（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-04.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:9:9 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-04.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:289:289 -->
+- 📨 對話記錄 17:54（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:289-289]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:293:293 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:293-293]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:295:295 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:295-295]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:297:299 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:297-299]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:301:301 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:301-301]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-04.md:305:305 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-04.md:305-305]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:326:326 -->
+- 📨 對話記錄 14:54（共約 5 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.847 recalls=0 avg=0.620 source=memory/2026-08-03.md:326-326]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-03.md:330:330 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.847 recalls=0 avg=0.620 source=memory/2026-08-03.md:330-330]

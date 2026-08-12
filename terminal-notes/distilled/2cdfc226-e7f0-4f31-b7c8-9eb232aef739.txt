@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 2cdfc226-e7f0-4f31-b7c8-9eb232aef739
-# 提取時間：2026-08-11 01:29 (台灣時間)
-# 共 14 條教練原話
+# 提取時間：2026-08-12 10:54 (台灣時間)
+# 共 16 條教練原話
 
 ---
 
@@ -221,3 +221,34 @@ confirm 沒問題的話，跟我說「推」我就上正式站 bigtree-tw.netlif
 一開始沒有——您說的沒錯，這是漏掉的環節，已經現在補上並確立這條「連動」規則：
 - `event.db` 後臺新增了 8/25 午晚兩筆場次資料（commit `c3501af57`）
 - **過程中意外抓到一個真的會出包的 bug**：後臺的「自動導向」邏輯原本只看日期，同一天如果有兩場（像這次的午/晚），會永遠只認第一筆，等於晚場來賓掃碼簽到/抽獎，資料會被誤記到午場去。已經修好：新增開始時間欄位，同一天多場時會依照當下時間自動判斷該導去哪一場（14:00 前導午場、18:00 起導晚場），本機模擬多個時間點測試過，…（略）
+
+【教練 2026-08-10 17:30】
+太棒了
+
+　▶ AI 回應：太好了！那筆測試報名記得幫我刪掉就好。還有其他要處理的嗎？
+
+【教練 2026-08-12 02:31】
+總結
+
+　▶ AI 回應：Now let's remove lines 134–231 (the marker through end of v104 content, keeping line 232's `---` before the footer) using sed for precision.
+
+　▶ AI 回應：Good, line 231 is `---` and line 233 is the footer. I'll delete lines 134–230 (the marker + v105 + v104 content, keeping the trailing `---` at 231-232).
+
+　▶ AI 回應：There's a duplicate `---`. Let me clean that up and update the archive footer to reference the new archive file.
+
+　▶ AI 回應：Clean structure now: 待辦表 → `---` → 聯想 section → `---` → footer. Now inserting the new v106 section at the top, right after line 85's separator.
+
+　▶ AI 回應：Clean structure, 2 sections in main file now (v106 + 聯想), consistent with E16's 1-2棒 rule. Now let's write the two memory files identified earlier.
+
+　▶ AI 回應：Now updating `MEMORY.md` index with pointers to these two new entries.
+
+　▶ AI 回應：139行，已在140行限制內。清理完成，現在完成總結收尾三步驟：commit workspace + memory 兩個倉庫。
+
+　▶ AI 回應：Now committing the actual `.claude/projects` memory repo (the primary memory store).
+
+　▶ AI 回應：✅ 總結完成，四步驟都已執行：
+
+**本場摘要（2026-08-10~08-12）**
+
+1. **coach888作品總覽表**：新增大項標題/標籤可直接編輯功能（commit `3b7ca65`），接著改版為六大項兩欄並排顯示減少滑動（commit `d1f8e21`）。
+2. **大樹小講(bigtree-tw)**：新增8/25台南場午晚兩場，全站場次名稱統一改用具體時間（拿掉早/午/晚/夜等代稱），修正主題文字，教練確認後已推正式站（deploy `6a7a08d0e7c10ed04663c831`，額度45→44）。commit `8a6c699`+`cfa30d9`+`82ff8…（略）
