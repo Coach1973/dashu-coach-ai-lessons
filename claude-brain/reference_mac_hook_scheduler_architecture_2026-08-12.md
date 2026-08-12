@@ -5,10 +5,18 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 6bf670cc-d91d-434c-8604-176dc6a9794a
-  modified: 2026-08-12T04:53:43.261Z
+  modified: 2026-08-12T12:01:30.096Z
 ---
 
 2026-08-12 教練要求全面體檢後，Mac 端的 hook 與排程架構已經改變，**動手改任何 hook 或排程前先看這份，不要照舊印象操作**。
+
+## 🔴 settings.json 何時生效（2026-08-12 同場對話實測更正）
+
+改完 `~/.claude/settings.json` **不需要開新對話框**——同一場對話內，下一次 UserPromptSubmit
+或 Stop 事件觸發時就會讀到新設定並立刻生效。實測證據：合併 Stop hook 進
+`stop_rules_master.sh` 後，同一場對話教練下一句話就被新腳本正確攔下（時間鎖判斷邏輯與
+原版一致），不是要等下一場全新 session 才生效。修好 hook 後想驗證，直接在同一場對話裡
+講一句會觸發的話測試即可，不用叫教練特地開新視窗。
 
 ## Claude Code hook（`~/.claude/settings.json`，本機專屬不進 git）
 
