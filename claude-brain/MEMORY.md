@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧🔧🔧 Mac端hook/排程新架構：Stop已合併成單一總管、時間注入已合併、系統crontab並未被daemon全接管(2026-08-12)](reference_mac_hook_scheduler_architecture_2026-08-12.md) — 改hook或排程前必看；查自動化要三套排程都查才不會下錯結論
 - [🔴🔴🔴 大樹小講新場次必連動更新event-signup後台，發現同日多場次路由誤記bug(2026-08-11)](project_bigtree_eventsignup_sync_rule.md) — 教練明定連動規則；順手修好auto路由同一天多場次只認第一筆的架構坑
 - [🔧 測試LINE推播通知後AI無法刪除教練已收到的訊息，測試前要先講清楚(2026-08-11)](feedback_cannot_delete_coach_line_messages.md) — sme-register-fn純轉發不落地資料庫，清理只能教練自己動手
 - [🔧🔧 event-signup的LINE綁定機制(送出訊息才算非加好友)+bigtree-tw已內建?session=場次深連結(2026-08-10)](reference_event_signup_line_binding_and_bigtree_deeplink.md) — follow事件未處理只認message事件；深連結早就做好不用重開發
