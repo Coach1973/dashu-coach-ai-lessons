@@ -35,7 +35,12 @@ while true; do
     # 3. distill_watchdog + VPS polling healthcheck: */15 (:00, :15, :30, :45)
     if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
         bash "$WS/scripts/distill_watchdog.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ distill_watchdog 失敗" >> "$LOG"
-        bash "$WS/scripts/vps_polling_healthcheck.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ vps_polling_healthcheck 失敗" >> "$LOG"
+        # vps_polling_healthcheck: 已移除（2026-08-12 全面體檢，教練核准）
+        #   重複原因：LaunchAgent ai.openclaw.vps-polling-healthcheck.plist 已經
+        #   用 StartInterval=900（每 15 分鐘）跑同一支腳本，等於同一件事每 15 分鐘
+        #   被做兩次。保留 LaunchAgent 版（有 RunAtLoad、開機即跑、不依賴本 daemon 存活），
+        #   本處移除。腳本本身檔頭註解寫的觸發來源也是 launchd，不是這裡。
+        #   原行存檔：bash "$WS/scripts/vps_polling_healthcheck.sh"
     fi
 
     # 4. distill: 已移交 openclaw cron「每2小時增量記憶蒸餾」單引擎（2026-07-08 Fable5 稽核，教練核准）
@@ -48,11 +53,18 @@ while true; do
         LAST_HEARTBEAT_DAY="$CURRENT_DAY"
     fi
 
-    # 6. backup_terminal + commit: */15 (:00, :15, :30, :45)
+    # 6. backup_terminal: 每 15 分鐘複製檔案（資料安全不打折，維持原頻率）
+    #    commit/push: 2026-08-12 全面體檢後改成「每小時整點」才做（教練核准）
+    #    起因：原本每 15 分鐘就 commit 一次，活躍日一天產生 40~79 筆 auto commit
+    #    （實測 8/8 是 79 筆 / 全部 92 筆），教練真正要看的人工紀錄被淹沒。
+    #    分開處理的理由：檔案「複製到 raw_sessions/」才是備份本體，維持 15 分鐘不動；
+    #    commit 只是把它同步上雲端，批次到整點做，最多延後 45 分鐘上雲，
+    #    且 session 結束時 session_end_auto_push.sh 會立刻補推一次，不會真的漏。
     #    2026-06-20 從系統 crontab 接管：原 cron 與 sync_handoff 撞 lock 96% 失敗
-    #    改由 daemon 跑備份 + 用 safe_git.sh commit/push（含 flock）
     if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
         bash "$WS/scripts/backup_terminal_sessions.sh" >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ backup_terminal_sessions 失敗" >> "$LOG"
+    fi
+    if [ "$CURRENT_MIN" = "00" ]; then
         bash "$WS/scripts/safe_git.sh" "$WS" "auto: 終端機對話備份 $(date '+%H:%M')" terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ safe_git(backup) 失敗" >> "$LOG"
     fi
 
