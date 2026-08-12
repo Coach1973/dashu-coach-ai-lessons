@@ -16,38 +16,10 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 [[ "$STOP_HOOK_ACTIVE" == "true" ]] && exit 0
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-RESULT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-
-last_assistant_text = ""
-for i in range(len(lines) - 1, -1, -1):
-    try:
-        evt = json.loads(lines[i])
-    except Exception:
-        continue
-    if evt.get('type') == 'assistant':
-        msg = evt.get('message', {})
-        content = msg.get('content')
-        if isinstance(content, list):
-            texts = [c.get('text', '') for c in content if isinstance(c, dict) and c.get('type') == 'text']
-            last_assistant_text = '\n'.join(texts)
-        elif isinstance(content, str):
-            last_assistant_text = content
-        break
-
-print(json.dumps({'last_assistant_text': last_assistant_text}))
-PYEOF
-)
-
-[[ -z "$RESULT" ]] && exit 0
-LAST_TEXT=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.last_assistant_text')
+# 2026-08-12 體檢第2項：transcript 解析改走 lib/stop_ctx.sh 共用快取
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
 [[ -z "$LAST_TEXT" ]] && exit 0
 
 # 簡體字專用字元表（僅列「簡體特有、不會出現在正常繁體文字」的高頻字，避免誤判）

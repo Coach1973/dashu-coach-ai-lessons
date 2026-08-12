@@ -18,28 +18,10 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 [[ "$STOP_HOOK_ACTIVE" == "true" ]] && exit 0
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-LAST_TEXT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-        if evt.get('type') == 'assistant':
-            contents = evt.get('message', {}).get('content', [])
-            texts = [c.get('text', '') for c in contents if c.get('type') == 'text']
-            print('\n'.join(texts))
-            break
-    except Exception:
-        continue
-PYEOF
-)
+# 2026-08-12 體檢第2項：transcript 解析改走 lib/stop_ctx.sh 共用快取
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
 
 [[ -z "$LAST_TEXT" ]] && exit 0
 
@@ -92,35 +74,9 @@ while IFS= read -r LINE; do
 done <<< "$LAST_TEXT"
 
 # 肯定式誤判額外檢查：這輪對話有沒有查過記憶檔/SOP的證據（Grep/Read命中memory或特助心法/SOP）
-if [[ -n "$CONFIDENT_HITS" && -n "$TRANSCRIPT_PATH" && -f "$TRANSCRIPT_PATH" ]]; then
-  HAS_MEMORY_CHECK=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-path = sys.argv[1]
-try:
-    with open(path, encoding='utf-8') as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    print("unknown"); sys.exit(0)
-recent = lines[-40:]
-found = False
-for line in recent:
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    if evt.get('type') != 'assistant':
-        continue
-    for c in evt.get('message', {}).get('content', []):
-        if not isinstance(c, dict) or c.get('type') != 'tool_use':
-            continue
-        name = c.get('name', '')
-        tin = c.get('input', {})
-        target = str(tin.get('file_path', '')) + str(tin.get('pattern', '')) + str(tin.get('path', ''))
-        if name in ('Grep', 'Read') and ('memory' in target or 'SOP' in target or '特助心法' in target or '試金石' in target):
-            found = True
-print("yes" if found else "no")
-PYEOF
-)
+# 2026-08-12 體檢第2項：改讀共用快取的 checked_memory_files 欄位（原本這裡是第二次解析整份 jsonl）
+if [[ -n "$CONFIDENT_HITS" ]]; then
+  HAS_MEMORY_CHECK=$(printf '%s' "$CTX" | /usr/bin/jq -r 'if .checked_memory_files then "yes" else "no" end' 2>/dev/null)
   # 已經查過記憶檔 → 這則肯定式宣稱是有根據的，不算違規
   [[ "$HAS_MEMORY_CHECK" == "yes" ]] && CONFIDENT_HITS=""
 fi

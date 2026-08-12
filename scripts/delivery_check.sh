@@ -21,26 +21,19 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 TRANSCRIPT_PATH=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.transcript_path // ""' 2>/dev/null)
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json, re
+# 2026-08-12 體檢第2項：最終回覆改讀 lib/stop_ctx.sh 共用快取（原本自己再解析一次整份 jsonl），
+# 下面的交付宣稱／憑證／白名單三段正則判斷邏輯完全不動。
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
+[[ -z "$LAST_TEXT" ]] && exit 0
 
-path = sys.argv[1]
-try:
-    lines = [l for l in open(path) if l.strip()]
-except Exception:
-    sys.exit(0)
+# 🔴 回覆文字必須用參數傳（不能用管線）——`python3 -` 的 stdin 已經被 heredoc
+# 腳本本體佔用，改用管線會讓 python 讀到自己的原始碼當成「教練看到的回覆」。
+python3 - "$LAST_TEXT" <<'PYEOF'
+import sys, re
 
-text = ""
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    if evt.get("type") == "assistant":
-        contents = evt.get("message", {}).get("content", [])
-        text = "\n".join(c.get("text", "") for c in contents if c.get("type") == "text")
-        break
-
+text = sys.argv[1] if len(sys.argv) > 1 else ''
 if not text:
     sys.exit(0)
 

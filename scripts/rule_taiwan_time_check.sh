@@ -23,102 +23,16 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 # 抓「這一輪」的內容：從最後一個 type=="user" 事件之後，到檔案結尾為止的所有內容
 # （tool_use / tool_result / assistant text 全部納入，用來判斷這一輪有沒有碰過 UTC timestamp）
 # 同時單獨抓出「最後一條 assistant text」，用來檢查有沒有講「台灣時間」
-RESULT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
+#
+# 2026-08-12 體檢第2項：抽取邏輯（含案例38 兩道防誤報：跳過信封層 timestamp、
+# 排除 attachment 事件）已整段搬進 lib/stop_ctx_extract.py 的 touched_utc()，
+# 語意逐字不變，只是改成 10 支 Stop hook 共用一次解析。
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+[[ -z "$CTX" ]] && exit 0
 
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-
-# 找最後一個 type=="user" 事件的位置（且非 tool_result 型態的 user 事件，儘量抓真人發話）
-last_user_idx = None
-for i in range(len(lines) - 1, -1, -1):
-    try:
-        evt = json.loads(lines[i])
-    except Exception:
-        continue
-    if evt.get('type') == 'user':
-        msg = evt.get('message', {})
-        content = msg.get('content')
-        # 純文字使用者訊息才算「這一輪的起點」；跳過 tool_result 型態的 user 事件
-        if isinstance(content, str) or (isinstance(content, list) and any(
-            isinstance(c, dict) and c.get('type') == 'text' for c in content
-        )):
-            last_user_idx = i
-            break
-
-if last_user_idx is None:
-    last_user_idx = 0
-
-turn_lines = lines[last_user_idx:]
-
-# 🔴 只抓「實際內容文字」（訊息文字、tool_result 文字），
-# 不可用整行 raw JSONL（每個事件本身的 "timestamp" 信封欄位一定含 UTC Z 格式，
-# 會讓 touched_utc 恆為 true，2026-07-03 案例38後首次真實對話就誤報過一次）
-def extract_texts(node):
-    texts = []
-    if isinstance(node, dict):
-        for k, v in node.items():
-            if k == 'timestamp':
-                continue  # 信封層的事件時間戳，不算「AI 處理過的內容」
-            if k == 'text' and isinstance(v, str):
-                texts.append(v)
-            elif k == 'content' and isinstance(v, str):
-                texts.append(v)
-            else:
-                texts.extend(extract_texts(v))
-    elif isinstance(node, list):
-        for item in node:
-            texts.extend(extract_texts(item))
-    return texts
-
-content_texts = []
-for line in turn_lines:
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    # 🔴 排除 type=="attachment"：這是 UserPromptSubmit hook 每輪自動注入的
-    # 守則提醒文字（本身寫死含範例 "2026-06-09T06:25:36.752Z" 當教材），
-    # 不是 AI 真正讀取/處理的外部資料，會讓 touched_utc 恆為 true
-    # （2026-07-03 案例38後首次真實對話誤報，根因就是這段範例文字）
-    if evt.get('type') == 'attachment':
-        continue
-    content_texts.extend(extract_texts(evt.get('message', evt)))
-turn_raw_text = '\n'.join(content_texts)
-
-# 這一輪是否出現過原始 UTC ISO timestamp（T..:..:..Z 或 T..:..:...Z 帶毫秒）
-import re
-utc_pattern = re.compile(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z')
-touched_utc = bool(utc_pattern.search(turn_raw_text))
-
-# 抓最後一條 assistant text（給教練看的最終回覆）
-last_assistant_text = ''
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    if evt.get('type') == 'assistant':
-        contents = evt.get('message', {}).get('content', [])
-        texts = [c.get('text', '') for c in contents if isinstance(c, dict) and c.get('type') == 'text']
-        last_assistant_text = '\n'.join(texts)
-        break
-
-print(json.dumps({
-    'touched_utc': touched_utc,
-    'last_assistant_text': last_assistant_text,
-}))
-PYEOF
-)
-
-[[ -z "$RESULT" ]] && exit 0
-
-TOUCHED_UTC=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.touched_utc')
-LAST_TEXT=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.last_assistant_text')
+TOUCHED_UTC=$(printf '%s' "$CTX" | /usr/bin/jq -r '.touched_utc' 2>/dev/null)
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
 
 # 這一輪沒碰過 UTC timestamp → 跟本機關無關，放行
 [[ "$TOUCHED_UTC" != "true" ]] && exit 0

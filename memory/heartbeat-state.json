@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786241043,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-12T10:32:19.341037+08:00"
+    "coach_silence_sync": "2026-08-12T12:33:32.493563+08:00"
   },
   "lastHeartbeat": "2026-08-12T10:02:59+08:00",
   "lastHeartbeatNote": "週三 10:02 心跳：TG 探針 ok:true（守則#19 當下實測）+ 教練沉默 2.0h（08:00:06 剛發完訊息上午工作中）+ 環境快檢無變化（Repo1=100 / Repo2=24 routine 微動 / 無 .! 鎖定檔）+ cron CE=0 健康 + v4.0 三關全不通過 → 安靜通過不通知。8 項 pendingCoachItems 不變皆為長期待辦，距 23:00 場景化升華 ~13hr / 23:05 三機總結 ~13hr / 下一輪 10:30 cron 心跳。",
@@ -37,8 +37,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-12T10:02:59+08:00 (守則#19 探針 cycle=263 本輪實測通過)",
     "openTask": "接力棒 v105 已收尾待教練新指令；下一場主軸候選：bni-chapters 真誠分會架構（等教練說明）/ 企業健身房（等教練指示）/ 幕僚長晨報觀察期",
-    "coachSilentSince": "2026-08-12T10:31:33+08:00",
-    "coachSilentHours": 0.0,
+    "coachSilentSince": "2026-08-12T10:47:32+08:00",
+    "coachSilentHours": 1.8,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",

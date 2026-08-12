@@ -18,48 +18,15 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 [[ "$STOP_HOOK_ACTIVE" == "true" ]] && exit 0
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-LAST_TEXT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-
 # 案例：v76設計寫進Write工具的檔案內容，沒出現在最後一句assistant文字，
-# 舊版只看「最後一筆assistant事件的text區塊」完全漏抓——改成往回掃到
+# 舊版只看「最後一筆assistant事件的text區塊」完全漏抓——所以要往回掃到
 # 上一個user事件為止（=這整個回合），同時抓text + Write/Edit/Bash的
 # 工具輸入內容，不然設計寫進檔案就繞過偵測。
-segments = []
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    t = evt.get('type')
-    if t == 'user':
-        break
-    if t != 'assistant':
-        continue
-    contents = evt.get('message', {}).get('content', [])
-    for c in contents:
-        ctype = c.get('type')
-        if ctype == 'text':
-            segments.append(c.get('text', ''))
-        elif ctype == 'tool_use':
-            name = c.get('name', '')
-            inp = c.get('input', {}) or {}
-            if name in ('Write', 'Edit'):
-                segments.append(inp.get('content', ''))
-                segments.append(inp.get('new_string', ''))
-            elif name == 'Bash':
-                segments.append(inp.get('command', ''))
-
-print('\n'.join(reversed(segments)))
-PYEOF
-)
+# 2026-08-12 體檢第2項：這段抽取搬進 lib/stop_ctx_extract.py 的 turn_segments()，
+# 語意逐字不變（含 Write/Edit 的 content+new_string、Bash 的 command）。
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.turn_segments // ""' 2>/dev/null)
 
 [[ -z "$LAST_TEXT" ]] && exit 0
 

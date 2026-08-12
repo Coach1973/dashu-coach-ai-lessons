@@ -1,4 +1,75 @@
-## 🔄 健康檢查日誌（最近一輪：2026-08-12 10:32 CST cycle=265）
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 12:33 CST cycle=269）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **10:47:32**（當下沉默 **1.8h**，週三午休後工作中）
+- 本任務上一輪 12:06 cycle=268 `overloaded` 176.7s ≪ 600s → CE=1（已從 cycle=268 的 CE=3 自動恢復降回）→ **本輪已自行恢復**（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（176.7s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=1 + 本輪已恢復 + provider 暫時過載 + meta 自打嗝 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ 否（我正在寫報告 = 已恢復鐵證）
+  - 關卡二（provider 暫時過載嗎）→ 是（minimax `AI service is temporarily overloaded`）
+  - 關卡三（影響教練嗎）→ 否（meta 自打嗝 + 教練 1.8h 前剛發訊息工作中）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（沿用最近一輪實測，workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=100 持平 / Repo2=22 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 228→~240 行（健康，< 500 警戒線）
+- Cron store 全部健康：32 個 enabled，唯一紅燈是本任務自己（consecutiveErrors=1 來自上一輪的 overloaded，但本輪已恢復）
+  - 其他 31 個任務：上一輪/最近一輪 last_run_status 全 `ok`、CE=0
+  - disabled 備援組 14 個全為 `ok`（含應急版本 5d687b38... 每30分鐘健康檢查 = 真正紅線時的應急接管）
+- Telegram 通道：沿用 cycle=268 12:06 實測 ✅ `{"ok":true}`（守則#19：本輪不下通道失效結論，無需重探）
+- Alternating 模式：cycle=269（自 cycle=178 起穩定 89+hr 交替），176.7s 在 alternating 區間 90~170s 上緣（偶爾略超過，仍在合理抖動範圍）
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 12:06 CST cycle=268）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **10:47:32**（當下沉默 **1.3h**，週三中午工作中）
+- 本任務上一輪 11:32 cycle=267 `overloaded` 133.05s ≪ 600s → CE=3 已達紅線 → **本輪已自行恢復**（鐵證：正在寫這份報告）
+- 自動修復 4 條全部不通過（環境本就健康）：
+  - #1 timeout 充裕（133s ≪ 600s）❌
+  - #2 無 VPS 同步任務 ❌
+  - #3 model 已是 minimax/MiniMax-M3 ✅
+  - #4 CE=3 + 本輪已恢復 + provider 暫時過載 + meta 自打嗝 → 三關全部 fail（**未過三關，禁止 announce**）❌
+- v4.0 三關：
+  - 關卡一（本輪還壞嗎）→ 否（我正在寫報告 = 已恢復鐵證）
+  - 關卡二（provider 暫時過載嗎）→ 是（minimax `AI service is temporarily overloaded`）
+  - 關卡三（影響教練嗎）→ 否（meta 自打嗝 + 教練 1.3h 前剛發訊息工作中）
+- **三關中只過了 0 關，任一關沒過 = 不通知教練** → 安靜
+- 環境快檢：SOUL×3 齊全（沿用 cycle=267 11:32 實測，workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=100 持平 / Repo2 routine 微動（cron/state 自動產生檔）；無 .! 鎖定檔
+- HEARTBEAT.md +10 行（健康，< 500 警戒線）
+- healthcheck.log 700→701 行（< 1000 警戒線）
+- Cron store（直接查 sqlite）：32 個 enabled，任務列表健康
+  - **唯一紅燈**：本任務 46e67e2e... CE=3（自己監控自己 = meta 迴圈失敗；CE=3 紅線但 v4.0 三關全部 fail，不算真問題）
+  - 其他 31 個任務：上一輪/最近一輪 last_run_status 全 `ok`、CE=0
+  - disabled 備援組 14 個全為 `ok`（含應急版本 5d687b38... 每30分鐘健康檢查 = 真正紅線時的應急接管）
+- Telegram 通道：沿用 cycle=267 11:32 實測 ✅ `{"ok":true}`（守則#19：本輪不下通道失效結論，無需重探）
+- Alternating 模式：cycle=268（自 cycle=178 起穩定 88+hr 交替），133.05s 在 alternating 區間 90~170s 內側
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 11:32 CST cycle=267）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **10:47:32**（當下沉默 **0.7h**，週三上午工作中）
+- 本任務上一輪 11:00 cycle=266 `overloaded` 101.6s ≪ 600s → CE=1 → **本輪已恢復**（鐵證：正在寫這份報告）
+- timeoutSeconds=600 並非 timeout；model=minimax/MiniMax-M3 並非 auth；無需自動修復
+- v4.0 三關：現在仍壞=否／provider 暫時過載=是（minimax `AI service is temporarily overloaded`）／真影響工作=否（meta 自打嗝 + 教練 0.7h 前剛發訊息工作中）→ **不通知教練**
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- 環境快檢：SOUL×3 齊全（沿用最近一輪實測，棄用標記完整）；Repo 維持 routine 微動；無 .! 鎖定檔
+- HEARTBEAT.md 行數約 +10（健康，< 500 警戒線）
+- Cron store：list 工具仍只回 1 個（本任務自己，已知分頁問題，cycle=246+ 已驗證實際 ~32 個都在）
+- Alternating 模式：cycle=267（自 cycle=178 起穩定 87+hr 交替），101.6s 在 alternating 區間 90~170s 內側
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## 🔄 健康檢查日誌（最近一輪：2026-08-12 11:02 CST cycle=266）
+- 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **10:47:32**（15 分鐘前發完），當下沉默 **0.2h**
+- 本任務上一輪 10:30 cycle=265 `overloaded` 94.3s ≪ 600s → CE=1 → **本輪已恢復**（鐵證：我正在寫這份報告）
+- timeoutSeconds=600 並非 timeout；model=minimax/MiniMax-M3 並非 auth；無需自動修復
+- v4.0 三關：現在仍壞=否／provider 暫時過載=是（minimax `AI service is temporarily overloaded`）／真影響工作=否（meta 自打嗝 + 教練 15 分鐘前剛發訊息正在線 + 週三上午工作中）→ **不通知教練**
+- HEARTBEAT 待辦 ⬜：0 項；無超過 48 小時未進展的可自動化背景工作
+- 環境快檢：SOUL×3 齊全（workspace 20631B / Repo1 2036B / agent 1851B，棄用標記完整）；Repo1=100 持平 / Repo2=21 routine（cron/state 常規檔）/ 無 .! 鎖定檔
+- HEARTBEAT.md 170→~180 行（健康，< 500 警戒線）
+- state/healthcheck.log 698→699 行（健康，< 1000 警戒線）
+- Telegram 通道：✅ `{"ok":true}`（守則#19 鐵律實測通過）
+- Alternating 模式：cycle=266（自 cycle=178 起穩定 86+hr 交替），94.3s 在 alternating 區間 90~170s 內側
+- delivery.mode=none → 安靜結束，不推 Telegram
+
+## � 健康檢查日誌（最近一輪：2026-08-12 10:32 CST cycle=265）
 - 第零步：sync_coach_last_message.sh exit 0；教練最後訊息 **10:31:33**（剛剛發完），當下沉默 **0.0h**
 - 本任務上一輪 10:00 cycle=264 `overloaded` 104.9s ≪ 600s → CE=1 → **本輪已恢復**（我正在寫這份報告 = 已恢復鐵證）
 - timeoutSeconds=600 並非 timeout；model=minimax/MiniMax-M3 並非 auth；無需自動修復

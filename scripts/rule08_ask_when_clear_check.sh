@@ -22,28 +22,10 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 [[ "$STOP_HOOK_ACTIVE" == "true" ]] && exit 0
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-LAST_TEXT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-        if evt.get('type') == 'assistant':
-            contents = evt.get('message', {}).get('content', [])
-            texts = [c.get('text', '') for c in contents if c.get('type') == 'text']
-            print('\n'.join(texts))
-            break
-    except Exception:
-        continue
-PYEOF
-)
+# 2026-08-12 體檢第2項：transcript 解析改走 lib/stop_ctx.sh 共用快取
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
 
 [[ -z "$LAST_TEXT" ]] && exit 0
 

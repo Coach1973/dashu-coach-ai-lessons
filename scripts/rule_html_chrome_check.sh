@@ -23,84 +23,17 @@ STOP_HOOK_ACTIVE=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.stop_hook_active // f
 [[ "$STOP_HOOK_ACTIVE" == "true" ]] && exit 0
 [[ -z "$TRANSCRIPT_PATH" || ! -f "$TRANSCRIPT_PATH" ]] && exit 0
 
-RESULT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json, re
+# 2026-08-12 體檢第2項：偵測邏輯整段搬進 lib/stop_ctx_extract.py 的 html_chrome()，
+# 語意逐字不變——包含「只看最近 100 筆事件」、「只認明確的 open -a Google Chrome
+# 不收無頭預覽工具」、以及案例52 同日兩次調校後的部署指令正則（要求 cp/mv/rsync/
+# git add 後面緊接真正的檔案路徑，避免 commit message 裡的純文字描述被誤抓）。
+SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/null)
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+[[ -z "$CTX" ]] && exit 0
 
-path = sys.argv[1]
-try:
-    with open(path, encoding='utf-8') as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    print(json.dumps({'html_files': [], 'has_chrome_evidence': False}))
-    sys.exit(0)
-
-# 只看最近 100 筆事件（這一輪對話的範圍已經足夠，避免抓到很久以前的舊改動）
-recent = lines[-100:]
-
-html_edit_idx = -1
-html_files = []
-chrome_evidence_idx = -1
-
-for i, line in enumerate(recent):
-    try:
-        evt = json.loads(line)
-    except Exception:
-        continue
-    if evt.get('type') != 'assistant':
-        continue
-    for c in evt.get('message', {}).get('content', []):
-        if not isinstance(c, dict) or c.get('type') != 'tool_use':
-            continue
-        name = c.get('name', '')
-        tin = c.get('input', {})
-
-        if name in ('Edit', 'Write'):
-            fp = str(tin.get('file_path', ''))
-            if fp.lower().endswith('.html'):
-                html_edit_idx = i
-                if fp not in html_files:
-                    html_files.append(fp)
-
-        if name == 'Bash':
-            command = str(tin.get('command', ''))
-            # 只認明確的 open -a "Google Chrome"（或不帶引號版本），
-            # 不接受無頭預覽工具當證據
-            if re.search(r"open\s+-a\s+\"?Google Chrome\"?", command, re.IGNORECASE):
-                chrome_evidence_idx = i
-
-            # 2026-07-20 案例52後補：Edit/Write 只抓得到「直接編輯 .html」，
-            # 但用 Bash 把 .html 複製/部署到別的 repo 再 push 上線（cp/mv/rsync/
-            # git add 動作）完全繞過上面的偵測，導致教練看到的是「已上線」文字
-            # 回報而不是真的被跳 Chrome 出來驗證。
-            # 2026-07-20 同日修正：原正則太寬——只要整段指令字串「同時含 .html
-            # 字樣」與「cp/mv/git 等關鍵字」就誤判，導致連 commit message 裡
-            # 用文字描述「用cp把index.html複製」這種純說明文字都被誤抓成真的
-            # 執行過複製。改成要求動詞後面緊接著一個真正的檔案路徑（前面必須
-            # 是空白或路徑符號，不能是中文字或其他字元直接黏著），只認得
-            # cp/mv/rsync/git add 這種「後面帶檔名參數」的指令，拿掉純字面
-            # 存在的 git commit / git push 關鍵字比對（這兩個動作本身不帶檔名）。
-            m = re.search(
-                r'\b(?:cp|mv|rsync|git\s+add)\s+(?:[\w.-]+\s+)*([~./][\w./~-]*\.html)\b',
-                command
-            )
-            if m:
-                html_edit_idx = i
-                if m.group(1) not in html_files:
-                    html_files.append(m.group(1))
-
-print(json.dumps({
-    'html_edit_idx': html_edit_idx,
-    'html_files': html_files,
-    'chrome_evidence_idx': chrome_evidence_idx,
-}))
-PYEOF
-)
-
-[[ -z "$RESULT" ]] && exit 0
-
-HTML_EDIT_IDX=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.html_edit_idx')
-CHROME_EVIDENCE_IDX=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.chrome_evidence_idx')
-HTML_FILES=$(printf '%s' "$RESULT" | /usr/bin/jq -r '.html_files | join("、")')
+HTML_EDIT_IDX=$(printf '%s' "$CTX" | /usr/bin/jq -r '.html_edit_idx' 2>/dev/null)
+CHROME_EVIDENCE_IDX=$(printf '%s' "$CTX" | /usr/bin/jq -r '.chrome_evidence_idx' 2>/dev/null)
+HTML_FILES=$(printf '%s' "$CTX" | /usr/bin/jq -r '.html_files | join("、")' 2>/dev/null)
 
 # 這一輪沒改過 .html，不干預
 [[ "$HTML_EDIT_IDX" -lt 0 ]] && exit 0

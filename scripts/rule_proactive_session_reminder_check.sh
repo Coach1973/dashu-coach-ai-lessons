@@ -24,26 +24,10 @@ THRESHOLD=20
 BAND=10
 
 # 跟 session_length_hook.sh 用同一套算法數輪數，保持一致
-TURNS=$(python3 -c "
-import json
-n=0
-try:
-    with open('$TRANSCRIPT_PATH') as f:
-        for line in f:
-            try: o=json.loads(line)
-            except: continue
-            if o.get('type')=='user':
-                c=(o.get('message') or {}).get('content')
-                if isinstance(c,str) and c.strip():
-                    n+=1
-                elif isinstance(c,list):
-                    has_text=any(isinstance(b,dict) and b.get('type')=='text' for b in c)
-                    has_tr=any(isinstance(b,dict) and b.get('type')=='tool_result' for b in c)
-                    if has_text and not has_tr:
-                        n+=1
-except: pass
-print(n)
-" 2>/dev/null)
+# 2026-08-12 體檢第2項：輪數與最終回覆都改讀 lib/stop_ctx.sh 共用快取
+# （原本這支自己解析整份 jsonl 兩次：一次算輪數、一次抓最後回覆）
+CTX=$(bash /Users/bymyway/.openclaw/workspace/scripts/lib/stop_ctx.sh "$TRANSCRIPT_PATH" "$SESSION_ID" 2>/dev/null) || exit 0
+TURNS=$(printf '%s' "$CTX" | /usr/bin/jq -r '.user_turns // 0' 2>/dev/null)
 
 [[ -z "$TURNS" || "$TURNS" -lt "$THRESHOLD" ]] && exit 0
 
@@ -56,26 +40,7 @@ LAST_MENTIONED=0
 # 這個輪數帶已經主動提過了，不用再提醒
 [[ "$CUR_BAND" -le "$LAST_MENTIONED" ]] && exit 0
 
-LAST_TEXT=$(python3 - "$TRANSCRIPT_PATH" <<'PYEOF'
-import sys, json
-path = sys.argv[1]
-try:
-    with open(path) as f:
-        lines = [l for l in f if l.strip()]
-except Exception:
-    sys.exit(0)
-for line in reversed(lines):
-    try:
-        evt = json.loads(line)
-        if evt.get('type') == 'assistant':
-            contents = evt.get('message', {}).get('content', [])
-            texts = [c.get('text', '') for c in contents if c.get('type') == 'text']
-            print('\n'.join(texts))
-            break
-    except Exception:
-        continue
-PYEOF
-)
+LAST_TEXT=$(printf '%s' "$CTX" | /usr/bin/jq -r '.last_assistant_text // ""' 2>/dev/null)
 
 # 檢查AI這輪的回覆有沒有主動提到「開新視窗/總結上傳」相關字眼
 if printf '%s' "$LAST_TEXT" | grep -qE '開新視窗|開新的對話|新對話框|總結.{0,4}上傳|換新視窗|/clear'; then
