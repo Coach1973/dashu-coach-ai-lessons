@@ -6,6 +6,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **coach888作品總覽表：大項標題+標籤改可直接編輯、六大項改兩欄並排顯示** | ✅2026-08-10~11完成 | 教練要求自己能改「常用/後臺」這類大項標題跟「待啟用/公開」這類標籤文字，仿照既有拖曳排序機制(contenteditable+localStorage+複製按鈕貼給AI固化)實作，commit`3b7ca65`。接著教練要求改成三排兩欄並排(一常用/二後臺、三對外公開/四不公開、五保留/六BNI)減少往下滑，commit`d1f8e21`，900px以下自動收回單欄不影響手機瀏覽 |
+| 🔴🔴🔴 | **大樹小講(bigtree-tw)新增8/25台南場+場次名稱改時間制+event-signup後台同步連動+修復同日多場次路由bug** | ✅v106本場完成，8/25當天待實測 | 詳見下方v106完整戰果。新增8/25午半(14:00-16:30)/晚半(18:00-20:30)兩場，教練接著要求全站場次一律只顯示具體時間、拿掉早/午/晚/夜/全日等代稱(commit`8a6c699`+`cfa30d9`+`82ff888`)，教練「推」後已部署正式站(deploy`6a7a08d0e7c10ed04663c831`，額度45→44)。教練追問「後臺有沒有連動」，查證真的沒同步，補上`event.db`兩筆8/25場次(workspace commit`c3501af57`)，**過程中意外抓到真bug**：後臺auto路由原本同一天有多場次只認第一筆，會讓晚場來賓資料誤記到午場，已加`start_time`欄位+改路由邏輯修復，本機模擬多時間點驗證切換點正確(14:00/18:00)，已重啟`com.coach.event-webapp`確認無誤。**教練確立新規則：往後大樹小講新增場次，後臺event.db必須同一輪同步更新，兩邊連動**，已寫入記憶`project_bigtree_eventsignup_sync_rule`。測試報名通知管線送出「系統測試-請忽略」一筆確認API回應200，**教練請求刪除該則LINE測試訊息，但查證sme-register-fn純轉發不落地任何資料庫，AI沒有管道能刪教練LINE裡收到的訊息，此步驟教練需自行到LINE app手動刪除**，已寫入記憶`feedback_cannot_delete_coach_line_messages`提醒下次測試前要先講清楚 |
 | 🟢 | **LINE VOOM備份下載+解壓縮到E碟** | ✅2026-08-10聯想完成 | 教練因LINE VOOM 9/30停用，下載官方備份（65個分割zip，密碼保護）。過程協助教練逐一核對缺件/重複下載清單多輪，全數65個到齊後用7-Zip(新裝)全部解壓縮到`E:\LINE VOOM`(21GB，2847則貼文，完整性測試0失敗)，確認無誤後刪除D碟65個原始zip。無commit(純本機檔案操作，非git專案) |
 | 🟡 | **Zoom C碟即時資料junction連結到E碟已失效** | ⚠️教練裁示不修 | 查證發現[[試金石案例51]]事故後建的junction已失效(推測被Zoom更新/重裝覆蓋)，即時資料(403MB)目前只在C碟沒同步E碟。教練確認「資料量小、增量也不多，就不管它了」，明確裁示不修。已寫入記憶`project_zoom_c_drive_junction_broken_accepted_2026-08-10`，往後不用主動提醒 |
 | 🟡 | **聯想C碟WinSxS系統元件庫可再瘦身** | ⏳待教練回覆 | 教練要求清C碟暫存檔為一鍵備份省空間，查證發現C碟已因7/11大瘦身很乾淨(這個月只胖回5.6GB)，真正暫存垃圾(<0.3GB)可忽略，唯一有意義的空間是WinSxS(7/11清過11.17GB，現又長回16.26GB)，用官方DISM工具可再省4~5GB。教練尚未回覆要不要執行 |
@@ -82,6 +84,59 @@
 
 ---
 
+# 軍師接力棒 · 2026-08-11 v106（Mac桌面版 Sonnet 5，coach888作品總覽表編輯功能+大樹小講8/25新場次+event-signup後臺連動修復）
+
+> 建立時間：2026-08-10 15:08 ~ 2026-08-11 01:30（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：聯想 Windows 終端機 Sonnet 5（LINE VOOM備份下載解壓+Zoom junction查證+C碟清理調查+一鍵備份驗證）
+> 本棒主軸：**三條主線。①`coach888`作品總覽表依教練要求加上「大項標題/標籤可直接編輯」+「六大項改兩欄並排」兩次改版，減少教練操作時要滑動的距離。②大樹小講(bigtree-tw)新增8/25台南場午晚兩場，教練接著要求全站場次名稱統一改用具體時間、拿掉早/午/晚/夜/全日等代稱，教練用GitHub Pages自行確認後說「推」正式部署。③教練追問「大樹小講新增場次，後臺event-signup是否有連動更新」，查證發現真的沒同步，補上資料的同時意外抓到一個潛在真bug：後臺auto路由模式遇到同一天有兩場次時只認第一筆，會讓晚場來賓資料誤記到午場，當場修好並用多時間點模擬驗證。過程中也誠實測試了報名通知會不會真的送達教練LINE，並誠實告知一項做不到的事——AI沒有管道能刪除教練LINE裡收到的測試訊息。**
+
+## 🎯 本場戰果
+
+### 1. 🎯 coach888作品總覽表：大項標題+標籤改可直接編輯
+教練希望能自己改「常用/後臺系統」這類大項標題、跟「待啟用/公開」這類標籤文字。仿照既有拖曳排序機制（`contenteditable`+`localStorage`+複製按鈕貼給AI固化），讓6個大項標題跟51個標籤全部變成可直接點擊修改，離開文字框自動記住。本機模擬編輯+重新整理測試持久化正確、清除測試資料後畫面正確恢復原樣才推送。commit `3b7ca65`。
+
+### 2. 🎯 coach888作品總覽表：六大項改兩欄並排
+教練接著要求「左邊一常用、右邊二後臺，以此類推」減少往下滑動。改用CSS Grid把六個大項包成三排、每排兩欄（一常用/二後臺、三對外公開/四不公開、五保留/六BNI），900px以下自動收回單欄不影響手機瀏覽。用`resize_window`實測桌面寬度確認兩欄並排生效、手機寬度確認正確收回單欄。commit `d1f8e21`。
+
+### 3. 🎯🎯 大樹小講(bigtree-tw)：新增8/25台南場午晚兩場+全站場次名稱統一改時間制
+教練提供8/25（二）台南場三道門文創旅店兩場資料：午半場(14:00-16:30，200元/50人)「AI精準提問+AI基因晶片檢測」、晚半場(18:00-20:30，888元/50人)「轉念之間游刃有餘+HOWA改善情緒睡眠品質」（後改標題為「從從容容.游刃有餘之轉念心法」）。新增`SESSION_DATES`兩筆條目+`SLOTS`補`晚半`時段。本機http.server預覽+`javascript_tool`驗證卡片渲染、報名下拉選單、`findSessionMeta()`地址費用帶出皆正確，用真實Chrome開給教練確認。
+
+教練接著要求「所有場次名稱統一改用『時間』兩個字取代」，不要再顯示早/午/晚/夜/午半/晚半/全日等代稱。修改`buildSessions()`/`findSessionMeta()`/`openRegisterFromQuery()`三處sessionLabel組法，統一只顯示`${d.label} ${t.start}–${t.end}`。本機驗證15張場次卡片+報名下拉選單全部改為純時間顯示。教練用GitHub Pages(`coach1973.github.io/bigtree/`)自行確認內容後說「推」，正式部署上線：deploy `6a7a08d0e7c10ed04663c831`，curl驗證文字/圖片Content-Type正常，額度45→44（已記錄`state/netlify_deploy_quota.json`）。commit(bigtree) `8a6c699`+`cfa30d9`+`82ff888`。
+
+### 4. 🔴🔴🔴 event-signup後臺同步連動+修復同日多場次路由bug（本場最重要發現）
+教練追問「大樹小講更新場次，後臺是否有連動」，查`event.db`確認**真的沒同步**（誠實承認，不裝作已做）。補上`bigtree-0825-day`/`bigtree-0825-night`兩筆場次資料前，**意外發現一個真實會出包的架構坑**：`db.py`的`get_current_event()`在`auto`路由模式下，同一天若有多場次，`ORDER BY event_date ASC LIMIT 1`只會抓到第一筆——代表8/25晚場來賓掃碼簽到/抽獎登記的資料會被誤記到午場去，教練現場立牌沒有換的情況下不會有人發現這個問題，是本場主動查出來、非教練指出。
+
+修法：`events`表新增`start_time`欄位，重寫路由邏輯——同一天有多場次時，找「已開始的場次裡最晚開始那一個」，若都還沒開始則回傳當天最早那場。寫獨立Python腳本模擬08:00~23:59共9個時間點驗證切換點正確落在14:00/18:00。已`launchctl kickstart -k`重啟`com.coach.event-webapp`並curl驗證`/checkin`無錯誤。commit(workspace) `c3501af57`。
+
+**教練當場確立新規則**：往後大樹小講新增/修改場次，event-signup後臺`event.db`必須同一輪同步更新，兩邊連動，已寫入記憶`project_bigtree_eventsignup_sync_rule`。
+
+### 5. 🔧 報名通知管線end-to-end測試+誠實告知做不到的事
+教練問「送出報名你真的收得到嗎」，實際POST一筆標註「系統測試-請忽略」的假報名到`sme-register-fn`驗證，API回應`{"ok":true}`（HTTP 200）。但誠實告知教練：這只證明系統端有正常接收，無法從我這端百分之百確認訊息真的跳進他的LINE，請他自己看手機確認。教練後續要求「記得幫我刪掉」，查證`sme-register-fn`只是純轉發通知、不落地任何資料庫（教練先前已裁示不用查其原始碼），AI沒有工具能刪除教練LINE app裡已收到的訊息——已誠實告知這一步只能教練自己在LINE手動刪，寫入記憶`feedback_cannot_delete_coach_line_messages`避免下次又忘記先講清楚。
+
+### 6. 🔧 Mac本機+GitHub雲端AI資料容量盤點
+教練問「AI相關資料佔多少容量」，實測回報：Mac本機約12.6GB（`.openclaw`12G為主，workspace5.3G/agents1.3G/browser快取1.0G/memory617M）+`.claude`371M+`github_repos`171M；GitHub雲端用`gh repo list`查證Coach1973帳號52個repo實際`diskUsage`加總僅0.72GB（雲端只存壓縮過的程式碼，本機才有辨識模型/快取/逐字稿等大檔案）。純查證，無檔案異動。
+
+## 📋 下一場直接開工任務
+- **8/25當天實測**：event-signup後臺路由修復是本場邏輯驗證，尚未經過8/25當天真實場次交叉驗證，教練現場測試後若有回饋要問結果
+- **測試LINE訊息清理**：教練需自行到LINE app刪除那則「系統測試-請忽略」訊息，AI無法代勞
+- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
+- 企業健身房、BNI分會網站架構：延續多棒未解決，教練尚未回覆
+- 三機hook同步：ACER仍待處理
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/coach888/index.html`：contenteditable標題/標籤+兩欄並排CSS Grid
+- `github_repos/bigtree/index.html`：`SESSION_DATES`新增8/25兩筆、`SLOTS`補`晚半`、三處sessionLabel組法改純時間
+- `event-signup/db.py`：`get_current_event()`改寫，新增同日多場次時間路由邏輯
+- `event-signup/schema.sql`：`events`表新增`start_time`欄位
+- `event-signup/event.db`：新增`bigtree-0825-day`/`bigtree-0825-night`兩筆(DB直改，不進git)
+- commit(coach888)：`3b7ca65`+`d1f8e21`
+- commit(bigtree)：`8a6c699`+`cfa30d9`+`82ff888`
+- commit(workspace)：`c3501af57`
+- deploy(bigtree-tw)：`6a7a08d0e7c10ed04663c831`，額度45→44
+
+---
+
 # 軍師接力棒 · 2026-08-10（聯想 Windows 終端機 Sonnet 5，LINE VOOM備份下載解壓+Zoom junction查證+C碟清理調查+一鍵備份驗證）
 
 > 建立時間：2026-08-10（台灣時間）
@@ -129,109 +184,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-10 v105（Mac桌面版 Sonnet 5，event-signup抽獎報到流程重新設計+bymyway.com/coach888多站維護）
-
-> 建立時間：2026-08-09 18:45 ~ 2026-08-10 00:28（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報）
-> 本棒主軸：**教練密集測試event-signup抽獎報到系統，從「找不到7/29做的QR轉盤頁面」一路挖到重新設計整套現場報到流程。過程中兩次猜錯教練要找的頁面，最後查git log+對話逐字稿才找到真相；教練確認方向後，把簽到+LINE綁定+抽獎登記合併成單一介面。同場也處理了www.bymyway.com首頁活動同步、jiesheng-report數字調整、大樹作品總覽表多次更新、bigtree-tw場次深連結查證。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 event-signup：現場報到+抽獎登記重新設計（本場核心）
-教練回報找不到7/29做的「掃QR進轉盤遊戲」頁面。**過程中兩次判斷錯誤**：第一次以為是`/wheel`(需登入，非教練要找的)，第二次補了7/29專屬立牌也不對——最後查`distill/terminal_2026-07-28.md`+`terminal_2026-07-29.md`逐字稿，用教練7/29現場真實提問「請問我的轉盤抽獎的網址是哪個」+「56位加入抽獎但只有16位綁定」當鐵證，確認`/checkin`(掃碼)→`/wheel`(教練操作)本來就是完整正確的一套，沒有遺漏頁面。
-
-教練接著問「綁定是不是一定要加LINE好友」，查`app.py`/`line_webhook`程式碼確認：**綁定條件是「送出訊息」不是「加好友」**(LINE的`follow`事件這支程式完全沒處理，只處理`message`事件)，且比對邏輯是**用姓名比對**、跟手機號碼無關。教練據此提出重新設計：
-- 拿掉「簽到成功」中繼畫面，`/checkin`直接以「我要參加抽獎」為主視覺，手機號碼欄位就在同一頁
-- 填手機、按送出的同一步，直接轉跳LINE(帶好「我是OOO，剛報名了XXX。我要現場立即參加抽獎（送出才算登記成功）」)，不用再點第二次「加好友」
-- 新增可重複使用的通用版「掃碼玩抽獎」QR立牌(`make_qr.py --wheel`)，不押日期，取代單場活動專屬立牌，之後每場都用同一張
-
-全部改動用「插入測試用戶→POST正式站驗證302導向LINE網址→解碼確認文字→清除測試資料」的方式驗證過，非憑程式碼推論；每次改完.html都用`open -a "Google Chrome"`開真實網址給教練看。commit `7227e1812`(核心流程)+`dc90140e3`(新QR立牌)。
-
-### 2. 🎯 event.bymyway.com/admin 場次同步大樹小講
-教練要求「後台活動應該跟大樹小講同步」，直接寫入`event.db`補上8/21金門+8/22金門+8/28嘉義三場(8/26已存在)。`routing_mode=auto`本來就會自動抓「日期最近未過期」的場次，已用curl驗證`/checkin`自動切到8/21。資料庫檔案本身`.gitignore`排除，這次沒有commit hash，改動紀錄僅在此接力棒。
-
-### 3. 🎯 www.bymyway.com 首頁「最新消息」同步大樹小講+bigtree-tw查證深連結
-教練要求首頁最新消息①取消結繩領導學台中場②拿掉過期活動③跟大樹小講同步。查出`www.bymyway.com`是WordPress iframe嵌`coach1973.github.io/bigtree/speakers-2026/`，直接編輯該頁：移除台中場結繩領導學+7則過期活動，新增8/21~9/23共6場真實現行場次。本機起http.server預覽用`read_page`驗證渲染正確(9場、無殘留)才推送，commit `95273a04b`(bigtree repo)。
-
-另外，教練問「能不能做一個直接跳出8/26報名視窗的連結」，查bigtree-tw原始碼發現**這個功能早就存在**(`?session=YYYY-MM-DD`參數，`openRegisterFromQuery()`)，不用開發，直接用JS實測確認`https://bigtree-tw.netlify.app/?session=2026-08-26`真的會自動彈出預選好場次的報名視窗，交給教練即可用，同時告知教練換日期就能自己生出其他場次的連結。
-
-### 4. 🟢 jiesheng-report：台南場數字調整
-教練口頭指示：損益平衡21→13人(commit`03ffbf766`)、目標人數25→20人(commit`6cddd95b4`)。皆重啟服務驗證。
-
-### 5. 🟢 語音糾偏規則泛化+大樹作品總覽表多次維護
-- 教練親口把「真愛鋒會=真愛分會」的糾正升級為通用規則「真XX鋒會/峰會一律=真XX分會」，已更新記憶檔`feedback_fenhui_not_fenghui_voice_correction`，commit`a4198b2e8`(claude-brain記憶庫)
-- `coach888`作品總覽表本場新增第8/9項(抽獎轉盤系統/QR立牌)後又依教練指示改名+改連結共4次，最終定案：第8項「抽獎轉盤系統」(拿掉日期)、第9項「掃 QR Code 玩抽獎」(連向新版`wheel-print.html`)，commit`ef8e6a6`+`7bc25f5`+`0d80f93`
-
-### 6. 🟢 bigtree-tw：報名視窗補地址+費用資訊(2026-08-10上午追加)
-教練指示`?session=`深連結彈出的報名視窗要多顯示①地址②費用備註。新增`findSessionMeta()`依sessionLabel反查`SESSION_DATES`拿venue/address/transport，`showRegisterModal()`動態渲染進`modalSessionMeta`區塊，不用逐場硬編。本機http.server預覽+`javascript_tool`實測驗證渲染正確(含無資料時正確隱藏的邊界情況)才推送，commit`bf0cbd6`。**這是`bigtree-tw`站首次在本場對話中真的部署**(先前查`?session=`功能只是測試既有功能沒有變更，不扣點)——教練事後追問「昨天測試連結有沒有扣點」，藉此機會確認清楚跟教練說明「純瀏覽=不扣點，改內容才要部署=扣點」的界線，教練表示理解。教練說「推」後執行：查site ID(`40e580f0-1def-4777-adb8-587ef023ed36`)→打包index.html+photos-carousel+photos-carousel-0729+archive共75檔案→API部署→輪詢確認`state:ready`→curl驗證圖片Content-Type正常→正式網址javascript_tool二次確認渲染正確→Chrome開給教練看。deploy`6a793dc68c5929aa18bea1c3`，額度46→45，已記錄`state/netlify_deploy_quota.json`，commit`6c483ece9`。
-
-## 📋 下一場直接開工任務
-- **event-signup新流程**：8/21金門場是第一次實戰，教練現場測試後若有回饋(例如綁定率有沒有真的提升)，下一場先問結果
-- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼，見到教練先問清楚
-- 企業健身房、BNI分會網站架構(峰會/分會混淆待確認哪個系統)：皆延續v104未解決，教練尚未回覆
-- 三機hook同步：ACER仍待處理
-
-## 🔑 本場關鍵檔案索引
-- `event-signup/app.py`：`_lottery_greet_url()`新helper、`checkin_submit()`改直接跳LINE、`slides_landing()`複用helper
-- `event-signup/templates/checkin.html`：文案改「我要參加抽獎」
-- `event-signup/make_qr.py`：新增`make_wheel()`+`--wheel`參數
-- `event-signup/qr/wheel-print.html`+`wheel.png`：新版通用QR立牌
-- `event-signup/event.db`：場次表新增8/21+8/22+8/28(不進git)
-- `github_repos/bigtree/speakers-2026/index.html`：首頁最新消息同步
-- `github_repos/bigtree/index.html`：確認`?session=`深連結功能已存在，未改動
-- `github_repos/jiesheng-report/app.py`(rpl-workshop)：損益平衡+目標人數
-- `github_repos/coach888/index.html`：作品總覽表4次更新
-- commit(workspace)：`7227e1812`+`dc90140e3`+`03ffbf766`+`6cddd95b4`
-- commit(bigtree)：`95273a04b`
-- commit(coach888)：`ef8e6a6`+`7bc25f5`+`0d80f93`
-- commit(claude-brain)：`a4198b2e8`
-
----
-
-# 軍師接力棒 · 2026-08-09 v104（Mac桌面版 Sonnet 5，bni-chapters編輯功能+mentor100頁尾+幕僚長晨報+bymyway.com架構查證）
-
-> 建立時間：2026-08-09 台灣時間 14:00~18:45
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：聯想 Windows 終端機 Sonnet 5（補齊三機hook同步待辦）
-> 本棒主軸：**四條主線。①`bni-chapters`後台社群連結補「編輯」功能，教練回報只有新增刪除很麻煩。②`mentor100`首頁補正式頁尾（版權/訪客計數/官網連結/LINE聯絡）。③教練口頭確認三項舊任務結案（Email自動發送/mentor100申請流程/光線尺對帳），並延伸討論一支影片講的AI使用技巧（自我審查邏輯漏洞、個人使用說明書confirm已有ai-go/coach-persona.md不用重做、影片講的第三~六階段AI實踐程度逐項查證評估），落地建立「☕幕僚長晨報」cron統整bni_tainan+jiaolian_thoughts兩個對外AI員工每日動態。④教練問切換聯想電腦做BNI/mentor100任務會不會有落差，查證確認這兩個網站是Mac本機Flask+Cloudflare Tunnel（非教練原本以為的WordPress），過程中教練親自釐清bymyway.com網域下WordPress(根網域+課程)跟Mac本機網站(子網域群)的分流，順手查證VPS真實規格(3.8GB/100GB/1CPU)驗證教練決定網站維持Mac不搬VPS的判斷正確。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 bni-chapters：後台社群／外部連結新增「編輯」功能
-教練回報FB/LINE/聯絡我們只有新增刪除、缺編輯，得先刪再建很麻煩。補`db.update_link()`+`/links/<id>/edit`路由+模板改成可直接編輯label/url，重啟服務+登入實測更新真的存進資料庫（改完再改回原值，沒留測試假資料）。commit `3a5ae8e4`。
-
-### 2. 🎯 mentor100：首頁補正式頁尾
-教練要求頁面最下面要有正式頁尾：版權標示+正式計算訪客次數(沿用既有`total_views`)+連結大樹教練官網(bigtree-tw.netlify.app)+LINE官方帳號直接聯絡(沿用bigtree既有`lin.ee/o5pODV8`)。重啟服務+curl正式站驗證通過。commit `63f967a9`。
-
-### 3. 🎯🎯 影片技巧討論+第六階段落地：☕幕僚長晨報cron
-教練分享影片兩段指令（①自我審查邏輯漏洞②個人使用說明書），評估後confirm教練現有`coach1973.github.io/ai-go/`的`coach-persona.md`已經是完善的「個人使用說明書」，不用重做（過程中我一度誤判「系統還沒有這個東西」，查證後自行更正，避免重蹈試金石案例55「沒查證就下結論」）。接著逐項查證教練實踐影片講的第三~六階段(高級玩家/數位工頭/數位建構者/終極指揮官)程度，發現對外服務的兩個AI員工(bni_tainan/jiaolian_thoughts)動態教練完全看不到，是第六階段唯一缺口。教練核准後新建cron `b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`，每天07:00讀這兩個agent的每日記憶檔，用「三關」過濾挑出值得教練知道的事，沒事就說沒事不硬編內容。已手動觸發測試：16.4秒完成、真的送達Telegram、正確判斷「今天無notable互動」。
-
-### 4. 🔧🔧 bymyway.com網域架構查證+VPS真實規格
-教練誤以為chapters.bymyway.com/mentor100.bymyway.com是WordPress，直接curl驗證wp-json/wp-content特徵，確認實際跑在Mac本機Flask+LaunchAgent+Cloudflare Tunnel（教練稱「傳送門」，帳號最早的tunnel `openclaw-macmini` 2026-03-15建立，吻合教練「當初為了串聯小龍蝦申請」的說法）。同時驗證`www.bymyway.com`根網域+課程頁才是真WordPress。教練決定BNI/mentor100等網站維持Mac架構不搬VPS，理由包括VPS規格偏低——已SSH直接查證VPS真實規格：3.8GB RAM(教練原本印象「4G」正確)、100GB硬碟、僅1顆CPU，驗證教練判斷正確。記憶已寫入`reference_bymyway_domain_architecture`，commit `5af35c96e`（claude-brain記憶庫）。
-
-### 5. 🟢 教練口頭確認三項結案
-Email自動發送系統(教練自己執行完成)、mentor100申請流程(已有申請者實測無問題)、光線尺顧問對帳(已解決)——三項寫入接力棒結案，commit `4b055995e`。
-
-## 📋 下一場直接開工任務
-- **bni-chapters「真誠分會」網頁主架構問題**：教練仍未說明具體是什麼，見到教練先問清楚
-- **企業健身房**：教練表示需要繼續，但尚未給出具體下一步指示，下一場先問清楚要繼續哪個部分（正式建站？4項文案修改？）
-- **BNI分會網站架構**：教練表示需要繼續，但用詞疑似「峰會/分會」語音混淆，上一場已提醒待確認是指bni-chapters系統內問題還是真誠/真愛/真AI分會+大台南南區網站草稿，教練尚未回覆，下一場先確認
-- **☕幕僚長晨報**：觀察一週，教練回饋內容準不準再決定要不要調整判斷標準
-- 三機hook同步：聯想已完成，ACER仍待處理
-
-## 🔑 本場關鍵檔案索引
-- `github_repos/bni-chapters/db.py`+`app.py`+`templates/admin_edit.html`：連結編輯功能
-- `github_repos/mentor100/templates/index.html`：首頁頁尾
-- openclaw cron `b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`：幕僚長晨報
-- `~/.claude/projects/-Users-bymyway--openclaw/memory/reference_bymyway_domain_architecture.md`：新建
-- commit(bni-chapters獨立repo)：`3a5ae8e4`
-- commit(mentor100獨立repo)：`63f967a9`
-- commit(workspace)：`4b055995e`（三項結案）→`215b0f623`（幕僚長晨報記錄）
-- commit(claude-brain記憶庫)：`5af35c96e`
-
----
-
-> 📦 **v104(聯想)及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v105/v104及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
