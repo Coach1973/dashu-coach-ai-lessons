@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 6d045433-c07e-4194-8146-7178d4ce8a81
-  modified: 2026-08-02T08:40:40.307Z
+  modified: 2026-08-13T09:46:50.951Z
 ---
 
 Netlify 手動上傳型站台，zip 裡只放 index.html 而不帶 `_headers` 檔案時，Content-Type 預設為 `text/plain`，瀏覽器會顯示 HTML 原始碼而非渲染網頁。
@@ -42,5 +42,18 @@ function preloadCarouselImages(){
 }
 ```
 在輪播 init 時呼叫一次即可，靠瀏覽器原生快取機制，不用等使用者主動切換才臨時抓。
+
+**🔴 2026-08-13更新（第6個坑，Mac端`git archive`中文檔名編碼，bigtree-tw）：** 教練糾正「這種失敗是不能接受的，SOP應該要防止」。根因：Mac 用 `git archive --format=zip -o x.zip HEAD` 打包部署 zip，repo 裡含中文檔名（如 `archive/2026-07-01_創業x政府xAI講座/`）時，git archive 產生的 zip **沒有設定檔名的 UTF-8 旗標**（`ZipInfo.flag_bits & 0x800` 為 0），Netlify 伺服器端解壓時直接整包判定失敗（`error_message: "Deploy failed while extracting zip"`），不是內容錯誤，是打包工具本身的編碼缺陷，且本機用 `unzip -l` 或 macOS `zip` 指令重新打包**同樣會誤判**（macOS Info-ZIP 對 UTF-8 旗標的支援不可靠，即使設了 `LANG=en_US.UTF-8` 也一樣）。這一類 bug 光在 localhost 瀏覽器預覽（SOP 第2步）完全看不出來，因為預覽測的是「內容對不對」，不是「zip 打包機制本身能不能被 Netlify 正確解壓」——兩者是不同層次的驗證，SOP 原本沒有涵蓋後者。
+
+**How to apply：** Mac 端只要 repo 目錄含中文檔名／路徑，打包部署 zip 一律不用 `git archive` 直接產出 zip、也不用 macOS 內建 `zip` 指令，改用 Python 標準庫手動控制：
+```python
+import zipfile, os
+with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
+    for root, dirs, files in os.walk(src):
+        for f in files:
+            full = os.path.join(root, f)
+            zf.write(full, os.path.relpath(full, src))
+```
+Python 3 的 `zipfile.write()` 遇到非 ASCII 檔名會自動設定 UTF-8 旗標（可用 `info.flag_bits & 0x800` 驗證為 True）。**部署前務必先跑這行驗證**，確認旗標為 True 才送出 POST，不要等 Netlify 回傳 `error_message` 才發現——這一步現在併入 SOP 第1步「本機建好檔案」的必經檢查，跟 Windows 端禁用 `Compress-Archive` 是同一種坑的 macOS 版本，兩邊都源自「作業系統內建打包工具對非 ASCII 檔名的 zip 編碼不可靠」。
 
 相關記憶：[[project-coolcase-xinfa-website]]、[[feedback-netlify-deploy-zip-api]]、[[feedback-web-push-sop]]
