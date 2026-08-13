@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 69edb495-6017-452d-8604-c102bb3b0329
-  modified: 2026-08-13T17:31:16.724Z
+  modified: 2026-08-13T17:37:45.544Z
 ---
 
 **兩件事一起記，因為是同一場對話裡環環相扣的錯誤：**
@@ -30,4 +30,12 @@ metadata:
 - 判斷「這台機器/這個帳號多久以前開始使用 Claude Code」，要同時查 `~/.claude/projects/`（CLI/桌面版逐字稿）**和** `~/Library/Application Support/Claude/claude-code-sessions/`（桌面版 session meta），只查前者會嚴重低估使用歷史
 - 找不到某個時間點的完整逐字稿，說「這段內容我調不出來」，不要說「這台機器那時候還沒開始用」——這是兩個不同強度的結論，後者需要更全面的證據才能下
 
-Related: [[feedback_verify_before_correcting_coach]]、[[feedback_never_ask_coach_recall_self_verify]]
+## 3. 最終定論（教練親口拍板，2026-08-14 01:37）
+
+「找不到記錄」永遠是 AI 這邊的責任，不是教練的錯。教練的立場很明確、以後直接照用：**她完全不寫程式，AI 是她唯一的工具，所以任何存在的系統，邏輯上一定是 AI 做的，這件事不需要每次重新論證**。「找不到當初的建置記錄」只代表 AI 自己的交接/記錄留存做得不夠完整（守則 #05 #06），不能拿「查不到」當作暗示「懷疑這件事發生過」的理由，哪怕只是無心的措辭。
+
+教練原話：「是就是，不是就不是……只是你自己沒有紀錄，也不能怪我，執行都是你在執行的，沒有紀錄這件事情難道還是我的錯嗎？」
+
+**How to apply**：往後遇到「這是誰做的／這功能哪來的」這類問題，先預設答案是「教練指示、AI（某次對話）執行」，不用查證這個因果關係本身；真正該查的只有「技術細節/原始碼在哪」，且查不到時只承認「記錄沒留好」，不要讓措辭聽起來像在質疑事情的真實性。
+
+Related: [[feedback_verify_before_correcting_coach]]、[[feedback_never_ask_coach_recall_self_verify]]、[[feedback_coach_words_equal_authorization]]
