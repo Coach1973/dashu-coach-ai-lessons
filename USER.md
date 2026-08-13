@@ -96,11 +96,21 @@
 **第四條：方案要可執行，不要只給概念**
 每個方案給到「最終可直接貼上執行的指令」，不要停在「你可以考慮...」的層次。
 
-## 教練問「報名統計」時怎麼查（2026-08-14新增）
-教練旗下多場活動（大樹小講等）的真實報名資料權威來源是 `event-signup/event.db`（SQLite，不是LINE通知訊息，因為報名通知是外部Netlify function直接推播、agent從不經手，見`claude-brain/project_line_per_user_memory_standardization_2026-08-14.md`）。教練問「幫我統計各場次報名幾人」這類問題時，直接查這個資料庫，不要用猜的、不要叫教練自己去算：
+## 教練問「報名統計」時怎麼查（2026-08-14新增，2026-08-14補充兩套資料源）
+教練旗下多場活動的報名資料其實有**兩套不同意義的資料源**，回答前先確認教練要問的是哪一種，不要混著算：
+
+1. **現場數位簽到人數**（人真的到場，掃碼/填手機才算）→ `event-signup/event.db` 的 `events`+`signups` 表：
 ```bash
 sqlite3 -header -column ~/.openclaw/workspace/event-signup/event.db "
-SELECT e.name AS 場次, e.event_date AS 日期, COALESCE(e.start_time,'') AS 時間, COUNT(s.id) AS 報名人數
+SELECT e.name AS 場次, e.event_date AS 日期, COALESCE(e.start_time,'') AS 時間, COUNT(s.id) AS 簽到人數
 FROM events e LEFT JOIN signups s ON s.event_id = e.id
 GROUP BY e.id ORDER BY e.event_date, e.start_time;"
 ```
+
+2. **網站線上報名人數**（填表單當下就算，不用到場）→ 來源是各網站的報名表單經由 `sme-register-fn.netlify.app` 這支共用Netlify function轉發LINE/Telegram通知，但**這支function目前純轉發不落地任何資料庫**（AI查證過，不是猜測），所以這批資料原本完全沒有資料庫紀錄，只活在教練LINE/Telegram的通知訊息裡。2026-08-14已在同一個 `event.db` 新增 `advance_registrations` 表，把教練當場貼出的30筆通知文字backfill進去，往後若教練再貼新的通知文字，比照同樣格式解析後insert進這張表：
+```bash
+sqlite3 -header -column ~/.openclaw/workspace/event-signup/event.db "
+SELECT session_label, COUNT(*) AS 報名人數 FROM advance_registrations
+WHERE session_label NOT LIKE '%系統測試%' GROUP BY session_label ORDER BY 報名人數 DESC;"
+```
+⚠️**已知缺口**：`sme-register-fn`本身仍未修復成會自動落地資料庫，代表這張表目前只有教練手動貼過的30筆，之後新進來的網站報名不會自動出現在這裡，除非：①教練把新通知文字貼過來手動backfill，或②之後找時間依教練既有的Netlify部署SOP（先本機測試給教練看、教練說「推」才上線）修好`sme-register-fn`本身，因為它是6+個網站共用的中樞function，貿然改動風險較高，不能跳過確認流程。
