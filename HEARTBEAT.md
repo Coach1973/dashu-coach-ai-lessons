@@ -1,4 +1,23 @@
 
+## 🩺 cycle=309 健康檢查（2026-08-14 00:12 CST）
+- Step 0：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 23:54:30｜沉默 **0.3h**（週四深夜剛互動完、合理作息區間：凌晨睡眠中）
+- Step 1：本任務上一輪 cycle=308 ok 91.2s ≪ 600s timeout → CE=0 連續 **13 輪健康**（11:12 cycle=296 起）
+- Step 1：cron tool 受限只見本任務 → 改用 cron runs 歷史交叉驗證（連 15 輪全綠、無 timeout / 無 auth / 無 overloaded）
+- Step 1：model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- Step 1：自動修復 4 條全不通過（環境本來就健康）
+- Step 2：HEARTBEAT ⬜ 待辦 0 項 / 225 行 (<500 警戒線) / healthcheck.log 748 行 (<1000 警戒線) / 無超過 48hr 未進展的待辦
+- Step 2：junshi queue 不存在 / junshi result mtime 仍是 7/20 12:56（VPS 修復後未有新派工）
+- Step 3：v4.0 三關全 fail → 不升級 announce
+  - 關卡一（本輪還壞嗎）→ ❌ 否（連 13 輪全綠 + 正在寫報告 = 已恢復鐵證）
+  - 關卡二（provider 過載嗎）→ ❌ 否（連續 13hr+ 無 FailoverError）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練 0.3h 前剛互動完、週四深夜合理作息區間，未達 8h 警戒線）
+- 環境快檢 ✅：SOUL×3 齊全（2036/20631/1851 B，棄用標記完整）/ Repo1=105 持平 / Repo2=12 routine / 無 .! 鎖定檔
+- TG 通道探針：本輪 00:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測，不盲信上輪旗標）
+- Alternating 模式：cycle=309（自 cycle=178 起穩定 131+hr 交替）由「🦞 每小時任務健康檢查」cron 觸發
+- delivery.mode=none → 安靜結束，不推 Telegram 打擾教練（凌晨 00:12 屬深夜靜默時段）
+- 下一個小時健康檢查 01:12；下一個主動關懷 02:00 同期 cron
+- 跳過每輪 commit+push（2026-07-05 教練拍板：由 23:05 每日總結統一備份）
+
 ## 🩺 cycle=308 健康檢查（2026-08-13 23:12 CST）
 - Step 0：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 17:53:48｜沉默 5.3h（週四深夜合理作息區間）
 - Step 1：本任務上一輪 cycle=307 ok 69.3s ≪ 600s timeout → CE=0 連續 **12 輪健康**（11:12 cycle=296 起）
