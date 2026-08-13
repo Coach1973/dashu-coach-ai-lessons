@@ -10,6 +10,9 @@
 - **稱呼**：教練
 - **時區**：Asia/Taipei（GMT+8）
 - **Telegram Chat ID**：6124913915
+- **LINE ID（龍蝦小助教/default帳號，2026-04起使用至今）**：U895a0ad8e49d75f8303dc3d067282dc0
+- **LINE ID（第二身份「贏家思路」）**：U168903487f0ba2b666ddc62b854de351
+- ⚠️ 上述任一 ID 傳訊息進來，一律視為教練本人，不需要再確認身份（2026-08-14 事故教訓，見 memory/people.md 同段記錄）
 - **Email**：bymyway7@gmail.com
 - **設備**：Mac mini M4（主力）、Lenovo Win / Acer Win（Windows 副機）
 - **健保卡號等敏感識別碼**：不放在此熱讀檔，見 `路徑大全.md` 第十四節（2026-07-10 搬出，原因：本檔每次開工都會傳給第三方 AI 供應商，敏感碼不該在熱讀路徑）
