@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴🔴 LINE進來的教練被問「您是哪一位」，根因是people.md/USER.md漏登LINE ID(2026-08-14)](feedback_line_identity_missing_from_people_md.md) — 白名單≠身份識別，開新通道要同步補身份名冊；附13小時斷線時間換算錯誤更正
 - [🔴🔴🔴 「黑箱」措辭是教練地雷字+桌面版真正session路徑是claude-code-sessions非.claude/projects(2026-08-14)](feedback_desktop_session_storage_and_blackbox_wording.md) — 查不到細節說「調不出來」不要說「黑箱」；判斷機器使用歷史要查兩個路徑
 - [🔧🔧🔧 Mac端hook/排程新架構：Stop已合併成單一總管、時間注入已合併、系統crontab並未被daemon全接管(2026-08-12)](reference_mac_hook_scheduler_architecture_2026-08-12.md) — 改hook或排程前必看；查自動化要三套排程都查才不會下錯結論
 - [🔴🔴🔴 大樹小講新場次必連動更新event-signup後台，發現同日多場次路由誤記bug(2026-08-11)](project_bigtree_eventsignup_sync_rule.md) — 教練明定連動規則；順手修好auto路由同一天多場次只認第一筆的架構坑
