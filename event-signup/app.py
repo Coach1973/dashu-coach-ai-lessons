@@ -263,6 +263,59 @@ def signup_submit(slug):
     return redirect(url_for("thanks", slug=slug, s=status, n=name))
 
 
+@app.route("/api/register", methods=["POST", "OPTIONS"])
+def api_register():
+    """給外部網站（大樹小講等）跨網域直接寫入報名資料用的輕量JSON端點。
+    2026-08-14教練裁示：報名資料要落地在bymyway.com自己的資料庫，不能只活在LINE/Telegram通知訊息裡。
+    跟原本/e/<slug>的HTML表單流程共用db.upsert_signup()同一套邏輯，但走JSON+CORS，給fetch()呼叫用。
+    設計成雙寫並存期的其中一路：外部網站原本呼叫的Netlify通知(sme-register-fn/xiaolongxia-notify)
+    完全不動，這支只是「多一路」，任何失敗都不能影響訪客報名體驗——所以永遠回200，錯誤只記log不拋出。
+    """
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    try:
+        payload = request.get_json(force=True, silent=True) or {}
+        slug = (payload.get("slug") or "").strip()
+        name = (payload.get("name") or "").strip()
+        phone_raw = (payload.get("phone") or "").strip()
+        company_title = (payload.get("company") or "").strip()
+
+        if not slug or not name or not phone_raw:
+            return Response(
+                json.dumps({"ok": False, "error": "missing slug/name/phone"}),
+                status=200, headers={**resp_headers, "Content-Type": "application/json"},
+            )
+
+        phone = db.normalize_phone(phone_raw)
+        conn = db.get_conn()
+        event = db.get_event(conn, slug)
+        if not event:
+            conn.close()
+            return Response(
+                json.dumps({"ok": False, "error": f"unknown slug: {slug}"}),
+                status=200, headers={**resp_headers, "Content-Type": "application/json"},
+            )
+
+        status = db.upsert_signup(conn, event["id"], name, phone, company_title)
+        conn.close()
+        return Response(
+            json.dumps({"ok": True, "status": status}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+    except Exception as e:
+        # 任何未預期錯誤都不能讓訪客報名體驗中斷（這支是雙寫的其中一路，不是唯一路徑）
+        return Response(
+            json.dumps({"ok": False, "error": str(e)}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+
 @app.route("/e/<slug>/thanks")
 def thanks(slug):
     conn = db.get_conn()
