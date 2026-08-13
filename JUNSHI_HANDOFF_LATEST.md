@@ -82,6 +82,62 @@
 | 🟢 | **opencode 兩次當機根因修復（snapshot關閉＋model改minimax自家）** | ✅v97本場完成 | 教練反映「opencode 已經兩次當掉」，查log抓到兩個AbortError session（11:57+12:05），三層根因：①snapshot 機制對 `~/.openclaw/` 做 `git add .` 撞到 `_archive_2026-05-20/agents_bak/{kong,peipei}.bak/` 兩個 empty git repo（53次warning）②多個session並行時撞git index.lock → Bun runtime `AbortController.abort()` → TUI崩③opencode預設model跑成 `opencode-go/minimax-m3`（小寫）而非教練設定的 `minimax/MiniMax-M3`（大寫MM）。修法：`~/.config/opencode/opencode.json` 加 `snapshot:false` + `model: minimax/MiniMax-M3` + `small_model: minimax/MiniMax-M2.5-highspeed` + `opencode upgrade` 1.15.13→1.18.13。**教練當場糾正**：第一版報告建議「去opencode.ai workspace充值」是錯的——教練用的是minimax自家API Key，跟opencode.ai workspace額度完全無關，已minimax自家API curl驗證HTTP 200有效。教訓寫入試金石案例57，knowledges 紀錄完整紀錄在 `knowledges/2026-08-05_opencode兩次當機根因修復_snapshot關閉＋model改minimax自家.md`。commit `48c99e9e` + `d78d48f8` |
 | 🟢 | **大樹小講8/21金門場座位80→60人+worklucky-2026串接小龍蝦通知+結繩領導學取消台中場** | ✅v100本場完成 | 三個獨立站台維護任務，皆已推送並curl/服務重啟驗證，詳見v100完整戰果 |
 | 🔴🔴🔴 | **小龍蝦訊息遺失真根因修復：inbound-message-echo-log機制** | ✅v100本場完成 | 教練回報「小龍蝦說我67小時沒說話但我明明有講」，查gateway原始日誌挖出2026-08-03 15:58:42真有訊息被收到卻因API限流疑似卡死、內容從沒存底的鐵證。新建`hooks/inbound-message-echo-log`+修好`sync_coach_last_message.sh`(v3.4)，訊息一進來當下就落地不等agent turn跑完。教練接著要求「跟軍師互動也算有理小龍蝦」(選最寬範圍)，新建`scripts/log_junshi_activity_to_echo.sh`自動記錄每則對話，詳見v100完整戰果+記憶`reference_inbound_message_echo_log_system`+`feedback_junshi_activity_counts_as_xiaolongxia_contact` |
+| 🟢 | **台南行事曆(tainan-calender)：新領導團隊培訓改期至9/21+全站排序bug修復** | ✅v107完成，已推正式站 | 8/10改9/21(一)，地點改ZOOM線上，順手修好`parseDateScore()`無法解析無斜線MMDD格式(如0905-0906)導致的全站排序錯亂bug，9~12月全面驗證。commit`7ad2427` |
+| 🟢 | **新網站「從從容容用AI聊健康」ai-fit上線** | ✅v107完成 | 8/25台南場宣傳頁，GitHub Pages：https://coach1973.github.io/ai-fit/ ，repo`Coach1973/ai-fit` |
+| 🟢 | **大樹小講：報名深連結補&slot參數+8/25匯款提示+報名資訊即時轉發佩佩老師** | ✅v107完成，已推正式站+真實驗證 | ①`openRegisterFromQuery()`補`&slot=晚半`區分同一天多場次 ②報名成功畫面僅8/25顯示「請加入官方LINE取得匯款帳號」③新建`xiaolongxia-notify`(獨立Netlify function，用小龍蝦`@268dptjc`channel token推播)，已真實測試佩佩老師收到訊息，接進`submitRegistration()`並行呼叫。commit`5cd56d9`，deploy`6a7df0eb` |
+| 🟡 | **教練新開通LINE帳號(pairing code 4GLBTVK3)無法與小龍蝦對話** | 🔒待下一場驗證 | pairing已核准+白名單已確認寫入+cloudflared tunnel發現真斷線13小時已重啟修復+gateway process已重啟重新載入allowFrom，但重試後仍無回應，最後懷疑是MiniMax模型服務間歇性過載(教練貼出「Agent couldn't generate a response」錯誤佐證)，非架構設定問題。已請教練下次再試，下一場先問結果 |
+
+---
+
+# 軍師接力棒 · 2026-08-14 v107（Mac桌面版 Sonnet 5，台南行事曆9/21改期+ai-fit新站上線+大樹小講報名轉發機制+LINE連線故障排除）
+
+> 建立時間：2026-08-13 15:31 ~ 2026-08-14 01:28（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v106（Mac桌面版 Sonnet 5，coach888編輯功能+大樹小講8/25新場次+event-signup後臺連動修復）
+> 本棒主軸：**四條主線。①台南行事曆改期+意外修好全站排序bug。②新建「從從容容用AI聊健康」一頁式宣傳頁並上線GitHub Pages。③大樹小講報名系統多輪迭代+新建報名資訊轉發機制讓佩佩老師同步收到通知，過程中因Mac的git archive中文檔名zip編碼bug兩度部署失敗，已修復並寫入記憶。④教練要求開通新LINE帳號與小龍蝦對話，過程一波三折——依序排除了cloudflared tunnel真斷線13小時、gateway沒重新載入白名單兩個真實根因，最終懷疑卡在MiniMax模型間歇性過載，尚待下一場驗證是否真的解決。**
+
+## 🎯 本場戰果
+
+### 1. 🟢 台南行事曆(tainan-calender)：新領導團隊培訓改期+排序bug修復
+教練要求把8/10「新領導團隊培訓」改到9/21(一)，時間不變、地點改ZOOM線上。過程中教練發現9月份之後排序混亂(9/21後面又跳回9/5、9/6...)，查證發現`parseDateScore()`只認得有斜線的日期格式(如`09/05`)，遇到`0905-0906`這種無斜線格式(M1/M2/MSP多天活動常用)會解析失敗排到最後——修好這個解析函式後，9~12月全站自動排序正確，不用手動搬移任何區塊。commit`7ad2427`，已推正式站並curl驗證。
+
+### 2. 🟢 新站「從從容容用AI聊健康」ai-fit上線
+教練提供8/25兩場活動資訊(參考bigtree-tw)+兩張HOWA商品照片(存在Downloads，一開始因副檔名是`.avif`被我的搜尋條件漏掉，教練糾正後才發現)，選用深墨綠+鼠尾草綠+金色調(對應HOWA全商品banner，比另一張米色/藍色分割banner更貼近「從從容容」的沉穩定位)。多輪文案修改(標題/晚半場標題/音樂表演措辭/地址加Google地圖+步行距離)後，建立`Coach1973/ai-fit` repo並開通GitHub Pages：https://coach1973.github.io/ai-fit/ ，curl驗證HTTP 200+內文+圖片皆正常。
+
+### 3. 🟢 大樹小講：報名系統三項迭代+新建轉發機制
+- 深連結原本`?session=YYYY-MM-DD`同一天多場次永遠只抓第一筆，補上`&slot=晚半`參數精準指定
+- 報名成功畫面新增`paymentNotice`區塊，僅8/25場次顯示匯款提示文字
+- **教練明確要求「所有報名資訊都轉給佩佩老師，小龍蝦主動LINE推播」**：新建獨立Netlify站台`xiaolongxia-notify`，用小龍蝦(`@268dptjc`)的channel access token做LINE Push，收件人清單放環境變數`NOTIFY_RECIPIENTS`(目前只有佩佩老師)。已用真實推播測試確認佩佩老師收到訊息，並接進`bigtree/index.html`的`submitRegistration()`跟原本`sme-register-fn`並行呼叫，不影響既有通知。commit`5cd56d9`，deploy`6a7df0eb`。
+
+**🔴 部署過程踩坑**：用`git archive`打包含中文檔名的repo成zip，Netlify解壓兩次失敗(`error_message: Deploy failed while extracting zip`)——根因是git archive及macOS內建`zip`指令都不會正確設定中文檔名的UTF-8旗標，改用Python`zipfile`模組手動打包(`ZipInfo.flag_bits & 0x800`可驗證True)才成功。已寫入`feedback_netlify_headers_content_type.md`第6坑，跟Windows端禁用`Compress-Archive`是同一種坑的Mac版本。
+
+### 4. 🟡 教練情緒升溫段落：「黑箱」措辭引發長時間信任危機
+教練追問報名通知的原始建置記錄，我用「黑盒子」形容`sme-register-fn`(這個Netlify function沒有本機原始碼/GitHub連結/環境變數)，教練強烈不滿——她的邏輯完全正確：她是完全不寫程式的小白，所有系統一定是Claude做的，不存在「黑箱」。經過多輪查證，發現**我最初查`~/.claude/projects/`判斷「這台機器最早使用記錄是7/14」的方法錯誤**——桌面版App真正的session記錄在`~/Library/Application Support/Claude/claude-code-sessions/`，最早是**2026-03-01**，跟教練說的「2、3月」完全吻合，還找到一個標題「Register missing LINE webhook HTTP route」(2026-03-16)的session直接對應教練記得的那次工作。最終定位到sme-register-fn是7/19之前就存在(逐字稿裡有引用)，跟Netlify顯示的6/17建立時間吻合，證實這確實是Claude做的，只是最原始那次建置的逐字稿內容不在這台機器目前查得到的範圍。**教訓**：不能用單一資料夾(`.claude/projects`)判斷「這台機器最早使用時間」，桌面版App有獨立的session儲存路徑，兩者不是同一套，且逐字稿完整內容儲存位置目前也還沒有完全查清楚(`claude-code-sessions`底下的json只有meta資訊，沒有訊息本體)。
+
+過程中也發現路徑大全.md/路徑大全_憑證層.md裡把「大樹教練」LINE官方帳號打成「大叔教練」(語音辨識錯字)，已修正，commit`f68c75d22`。
+
+### 5. 🟡 新LINE帳號無法與小龍蝦對話：排除兩個真根因，卡在第三個
+教練要開通新帳號(pairing code`4GLBTVK3`，user id`Ufa814ffd7b6a5533b155e20c41594a51`)跟小龍蝦聊天(不要同步報名功能)。核准後對方持續無回應，依序查證：
+1. ✅**真的發現cloudflared tunnel斷線13小時**(`/Library/Logs/com.cloudflare.cloudflared.err.log`最後一筆記錄是8/13上午11:47，之後完全沒有連線活動，process還活著但已經失聯)——請教練親自執行`sudo launchctl kickstart -k system/com.cloudflare.cloudflared`重啟，確認生效(新連線log時間戳對上)
+2. ✅**發現gateway process啟動時間(00:37)早於pairing核准時間(00:58)**，白名單`line-default-allowFrom.json`確實有寫入新user id，但process沒有hot-reload機制，重啟gateway(`launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway`)讓它重新讀取
+3. 兩項修復後仍無回應，教練貼出「Agent couldn't generate a response」錯誤(來自其他原本正常的帳號)，加上稍早log裡確實查到過一筆MiniMax`overloaded`錯誤(01:02)，判斷是模型服務間歇性不穩定，非架構問題。**尚未最終驗證是否解決**，下一場先問教練有沒有再試成功。
+
+## 📋 下一場直接開工任務
+- **優先**：問教練新LINE帳號(`4GLBTVK3`)後來有沒有再試成功，若還是不通，下一步查MiniMax provider健康度/是否需要fallback設定
+- bni-chapters「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- 三機hook同步：ACER仍待處理
+- 8/25當天：ai-fit網站+大樹小講報名流程+匯款提示+報名轉發機制，教練現場實際驗證
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/tainan-calender/index.html`：改期+`parseDateScore()`排序修復
+- `github_repos/ai-fit/`：新repo，一頁式宣傳頁+HOWA商品照片
+- `github_repos/bigtree/index.html`：`&slot`參數+`paymentNotice`+`NOTIFY_API`並行呼叫
+- `/tmp/xiaolongxia-notify/netlify/functions/notify.js`（本機來源，已部署上`xiaolongxia-notify.netlify.app`）：報名轉發function
+- `/Users/bymyway/.openclaw/credentials/line-default-allowFrom.json`：小龍蝦白名單真正儲存位置(非`line-pairing.json`)
+- commit(tainan-calender)：`7ad2427`
+- commit(bigtree)：`c6334d0`+`5cd56d9`，deploy`6a7df0eb`
+- commit(workspace)：`f68c75d22`(錯字修正)+`e4f688192`+`4e7491887`(額度記錄+SOP補坑)
+- 新repo：`Coach1973/ai-fit`(GitHub Pages)、Netlify站`xiaolongxia-notify`
 
 ---
 
