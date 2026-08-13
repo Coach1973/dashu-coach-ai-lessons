@@ -6,6 +6,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **LINE三帳號個人記憶標準化：main/default頻道從未真正運作過** | ✅v108本場完成 | 教練被龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因：①people.md/USER.md漏登教練LINE ID②line-user-memory hook對main帳號sessionKey格式判斷有bug、從未真正運作過。兩層都修好+合成webhook實測驗證，commit`246e51766`+`d12bc391`。三機同步：Windows/ACER待處理 |
+| 🟡 | **報名系統雙寫遷移bymyway.com（觀察期，尚未拔Netlify）** | ⏳v108本場上線，待觀察 | 教練發現線上報名資料完全沒有資料庫紀錄(sme-register-fn純轉發不落地)，裁示遷回bymyway.com。已建`/api/register`端點+15場session slug+bigtree前端雙寫，deploy`6a7e15b116b28f7990b3a616`已上線。**教練尚未指定觀察多久才拔掉舊Netlify通知**，下次先問bymyway.com資料是否穩定累積。49人歷史backfill名單教練要用來印簽到表，查詢SOP見USER.md |
 | 🟢 | **系統全面體檢六項修復（Mac hook + 小龍蝦排程）** | ✅2026-08-12完成 | 教練要求體檢「邏輯不對/重複/浪費資源/無效/衝突/可優化」的規則，Mac 端 25 支 hook 腳本 + 小龍蝦端 20 個 hook / 32 個 cron 全查過。六項全修：①時間注入 hook 每則重貼規則全文 → 每場只講一次（806→335 bytes/則）②Stop hook 12 支中有 10 支各自重讀同一份 transcript → 合併成單一總管 `stop_rules_master.py`（14MB 檔實測 1.111 秒→0.066 秒，快 17 倍；11 項情境與原版逐一比對行為一致）③`vps_polling_healthcheck.sh` 被 LaunchAgent 與 cron-daemon 各跑一次 → 移除 daemon 那份 ④自動 commit 過碎（8/8 實測 79 筆/92 筆）→ 備份複製維持 15 分鐘、commit 上雲改每小時 ⑤22:20 寄信提醒 10 個獨立一次性排程 → 1 筆 cron（日期鎖 8/12~8/21）⑥健康檢查每 30 分 → 每小時（一天 48 次 AI 呼叫降 24 次）。排程總數 32→23，原腳本全保留可回退。commit `aa8a5952a`+`a10af7c75`。**✅ 已用真實對話驗證，非僅測試腳本**：合併後同一場對話裡，教練下一句話就觸發 Stop hook，`stop_rules_master.sh` 正確攔下時間鎖違規（判斷邏輯與原版一致）——**證實原先猜測「settings.json 要開新視窗才生效」是錯的，實際是每次 Stop/UserPromptSubmit 事件當下即時讀取設定檔，同場對話內編輯完立刻生效**，已更正進記憶`reference_mac_hook_scheduler_architecture_2026-08-12`，不用再等開新視窗才能驗證 hook 改動。備份 `/tmp/settings.json.bak-20260812124802` 仍保留可回退。三機同步：Windows/ACER 端對應 hook 尚未套用這次合併，見 [[project_cross_machine_hook_sync_todo_2026-08-08]] |
 | 🟢 | **coach888作品總覽表：大項標題+標籤改可直接編輯、六大項改兩欄並排顯示** | ✅2026-08-10~11完成 | 教練要求自己能改「常用/後臺」這類大項標題跟「待啟用/公開」這類標籤文字，仿照既有拖曳排序機制(contenteditable+localStorage+複製按鈕貼給AI固化)實作，commit`3b7ca65`。接著教練要求改成三排兩欄並排(一常用/二後臺、三對外公開/四不公開、五保留/六BNI)減少往下滑，commit`d1f8e21`，900px以下自動收回單欄不影響手機瀏覽 |
 | 🔴🔴🔴 | **大樹小講(bigtree-tw)新增8/25台南場+場次名稱改時間制+event-signup後台同步連動+修復同日多場次路由bug** | ✅v106本場完成，8/25當天待實測 | 詳見下方v106完整戰果。新增8/25午半(14:00-16:30)/晚半(18:00-20:30)兩場，教練接著要求全站場次一律只顯示具體時間、拿掉早/午/晚/夜/全日等代稱(commit`8a6c699`+`cfa30d9`+`82ff888`)，教練「推」後已部署正式站(deploy`6a7a08d0e7c10ed04663c831`，額度45→44)。教練追問「後臺有沒有連動」，查證真的沒同步，補上`event.db`兩筆8/25場次(workspace commit`c3501af57`)，**過程中意外抓到真bug**：後臺auto路由原本同一天有多場次只認第一筆，會讓晚場來賓資料誤記到午場，已加`start_time`欄位+改路由邏輯修復，本機模擬多時間點驗證切換點正確(14:00/18:00)，已重啟`com.coach.event-webapp`確認無誤。**教練確立新規則：往後大樹小講新增場次，後臺event.db必須同一輪同步更新，兩邊連動**，已寫入記憶`project_bigtree_eventsignup_sync_rule`。測試報名通知管線送出「系統測試-請忽略」一筆確認API回應200，**教練請求刪除該則LINE測試訊息，但查證sme-register-fn純轉發不落地任何資料庫，AI沒有管道能刪教練LINE裡收到的訊息，此步驟教練需自行到LINE app手動刪除**，已寫入記憶`feedback_cannot_delete_coach_line_messages`提醒下次測試前要先講清楚 |
@@ -87,6 +89,50 @@
 | 🟢 | **大樹小講：報名深連結補&slot參數+8/25匯款提示+報名資訊即時轉發佩佩老師** | ✅v107完成，已推正式站+真實驗證 | ①`openRegisterFromQuery()`補`&slot=晚半`區分同一天多場次 ②報名成功畫面僅8/25顯示「請加入官方LINE取得匯款帳號」③新建`xiaolongxia-notify`(獨立Netlify function，用小龍蝦`@268dptjc`channel token推播)，已真實測試佩佩老師收到訊息，接進`submitRegistration()`並行呼叫。commit`5cd56d9`，deploy`6a7df0eb` |
 | 🟡 | **教練新開通LINE帳號(pairing code 4GLBTVK3)無法與小龍蝦對話** | 🔒待下一場驗證 | pairing已核准+白名單已確認寫入+cloudflared tunnel發現真斷線13小時已重啟修復+gateway process已重啟重新載入allowFrom，但重試後仍無回應，最後懷疑是MiniMax模型服務間歇性過載(教練貼出「Agent couldn't generate a response」錯誤佐證)，非架構設定問題。已請教練下次再試，下一場先問結果 |
 | 🟢 | **「有人報名LINE收到通知」根因水落石出：其實走的是Telegram不是LINE** | ✅v107完成 | 教練請小龍蝦(Telegram/LINE介面)查證，回報是`event-signup/app.py`的`_notify_xiaolongxia()`函式做的——我親自核對程式碼確認**完全屬實**：該函式打Telegram Bot API送到教練chat_id`6124913915`，觸發點是`/slides`路由「有人掃簡報QR碼/現場簽到」，文字是「📊 有人簽到/掃了簡報QR碼」。但小龍蝦報告裡提到的「📋 新報名通知」文字經全機搜尋，只存在於今天(8/14)才新建的`xiaolongxia-notify`，不可能是7/28的紀錄，已誠實告知教練這個時間軸細節對不上。**教練最終拍板定論**：找不到記錄永遠是AI的問題不是教練的錯，AI是教練唯一的工具，任何存在的系統邏輯上就是AI做的，不需要每次重新論證，已寫入記憶`feedback_desktop_session_storage_and_blackbox_wording`第3節 |
+
+---
+
+# 軍師接力棒 · 2026-08-14 v108（Mac桌面版 Sonnet 5，LINE三帳號個人記憶標準化修復+報名系統雙寫遷移bymyway.com）
+
+> 建立時間：2026-08-14 01:38 ~ 03:46（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v107（Mac桌面版 Sonnet 5，台南行事曆9/21改期+ai-fit新站上線+大樹小講報名轉發機制+LINE連線故障排除）
+> 本棒主軸：**兩條主線都是教練親自發現問題、逐層深挖到底的架構修復。①教練被LINE版龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因（people.md/USER.md漏登LINE ID＋line-user-memory hook對main/default頻道sessionKey格式判斷有bug，main帳號從未真正運作過），兩層都修好並用合成webhook實測驗證。②教練問報名統計，發現event.db只算現場簽到、線上報名完全沒有資料庫紀錄；深入查證+教練親自糾正後確認sme-register-fn（Netlify）是純轉發不落地的真正缺口，教練裁示要遷回bymyway.com，執行雙寫並存架構（event-signup新增CORS端點+bigtree前端新增第三條寫入路徑），本機+瀏覽器實測後教練確認「推」，已上線。過程中教練兩批共貼51筆歷史報名通知文字，backfill進資料庫，去重複後49人，教練明確表示要用來印簽到表。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴🔴🔴 LINE三帳號個人記憶標準化：main/default頻道從未真正運作過
+教練在LINE傳訊息給「龍蝦小助教」，被問「您是哪一位」當場動怒。查證發現兩層根因：①`people.md`/`USER.md`教練條目只登記Telegram ID，從沒登記過LINE ID，已補上兩個已知LINE ID並註明一律視為教練本人（commit`246e51766`）。②更深層、影響所有人的bug：`hooks/line-user-memory/handler.js`的`parseSession()`原本只靠`sessionKey.includes('line')`判斷頻道，但`main`帳號的sessionKey固定是`agent:main:main`（不含"line"字串），導致這支hook對main頻道的**所有人**從第一關就`return null`，整套機制形同虛設；同時也移除了原本寫死排除教練LINE ID的`COACH_LINE_IDS`清單（教練裁示三帳號要用同一套標準，含教練本人）。改用`ctx.channelId`判斷頻道（跟`inbound-message-echo-log`已驗證過的正式欄位一致），commit`d12bc391`。用合成簽章webhook實測驗證：教練LINE ID傳訊息後`agents/main/clients/{教練LINE ID}.md`真的被建立且正確累積，測試假資料已清除。詳見記憶`project_line_per_user_memory_standardization_2026-08-14`。
+
+### 2. 🔴🔴🔴 報名統計雙資料源發現+bymyway.com雙寫遷移上線
+教練問「幫我統計各場次報名幾人」，一開始只查到`event.db`的現場簽到人數。教練點破這只算現場簽到、不算線上報名，後者完全沒有資料庫紀錄。深入查證+教練親自糾正一輪（教練一度誤以為跟Netlify無關，AI用Netlify API+bigtree原始碼註解「送出後教練的LINE會直接收到通知」兩項證據攤開，教練接受後裁示「資料庫要建在bymyway.com」）後確認：`sme-register-fn`（`sme-register-fn.netlify.app`，6+網站共用）純轉發LINE/Telegram通知、完全不落地任何資料庫，這是真正缺口。
+
+教練要求安全雙寫並存（新舊不衝突，確認bymyway.com穩定後才拔Netlify），已執行：
+- `event-signup/app.py`新增`/api/register`端點（CORS支援，跟既有`/e/<slug>`共用`db.upsert_signup()`邏輯，任何失敗都回200不拋錯），commit`e773c4dd6`
+- `event.db`補齊大樹小講全部15場session的slug對照（含9~12月未來場次）
+- `bigtree/index.html`新增第三條並行fetch路徑寫進`event.bymyway.com/api/register`，原本`sme-register-fn`+`xiaolongxia-notify`兩支Netlify通知完全不動，repo commit`3130b93`
+- 瀏覽器實測驗證slug對照正確（特別驗證8/25同天雙場次day/night有正確分開）+資料成功寫入資料庫，教練確認「可以推了」後正式部署：deploy`6a7e15b116b28f7990b3a616`，curl驗證文字/新程式碼/圖片皆正常，額度41→40（workspace commit`f395b1ff5`）
+
+**backfill歷史資料**：教練分兩批共貼51筆真實線上報名通知文字，解析寫入`event.db`新建的`advance_registrations`表，去重複（抓到1筆真重複）後49位不重複報名者，統計交付教練。**教練明確表示「要記得這份名單，我到時要印簽到表」**——這是重要下游用途，須確保不被誤刪。詳見記憶`project_dual_registration_data_sources_2026-08-14`。
+
+### 3. 🔧 附帶修正：13小時斷線是時區換算錯誤
+教練質疑「cloudflared斷線13小時」跟「LINE正常對話」矛盾，查證發現是UTC時間被直接當台灣時間念（少換算+8小時），實際只斷約5.4小時（8/13 19:47~8/14 01:09台灣時間），且教練對話是01:19才開始，已在斷線恢復之後，兩者並無矛盾。已寫入記憶提醒此類時區換算錯誤模式。
+
+## 📋 下一場直接開工任務
+- **雙寫並存觀察期**：教練尚未指定要觀察多久才拔掉`sme-register-fn`/`xiaolongxia-notify`，下次先問教練bymyway.com這邊資料是否穩定累積
+- **三機同步**：Windows/ACER的`line-user-memory`hook修復（main/default頻道支援）本場只在Mac完成，其他機器待處理
+- **49人backfill名單**：教練要用來印簽到表，查詢方式已寫進`USER.md`（`SELECT session_label, COUNT(*) FROM advance_registrations ...`）
+- 「真誠分會」網頁主架構問題、新LINE帳號(4GLBTVK3)驗證結果等v107遺留待辦仍未處理
+
+## 🔑 本場關鍵檔案索引
+- `hooks/line-user-memory/handler.js`+`HOOK.md`：main/default頻道支援修復
+- `workspace/memory/people.md`+`USER.md`：教練LINE ID身份對照+報名統計SOP
+- `event-signup/app.py`：新增`/api/register`端點
+- `event-signup/event.db`：新增`advance_registrations`表(49人backfill)+15場session slug補齊
+- `github_repos/bigtree/index.html`：新增BYMYWAY_API第三條寫入路徑
+- commit(workspace)：`246e51766`+`d12bc391`+`65869b86c`+`a14a9d05e`+`e773c4dd6`+`f395b1ff5`
+- commit(bigtree)：`3130b93`，deploy`6a7e15b116b28f7990b3a616`
+- commit(memory記憶庫)：`730d2824a`+`9d96abf66`+`33f1aed91`
 
 ---
 
@@ -195,53 +241,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-10（聯想 Windows 終端機 Sonnet 5，LINE VOOM備份下載解壓+Zoom junction查證+C碟清理調查+一鍵備份驗證）
-
-> 建立時間：2026-08-10（台灣時間）
-> 本棒執行者：聯想 Windows 終端機 Sonnet 5
-> 上一棒：v105（Mac桌面版 Sonnet 5，event-signup抽獎報到流程重新設計+bymyway.com/coach888多站維護）
-> 本棒主軸：**教練LINE VOOM服務9/30停用前下載官方備份，全程協助下載進度核對+7-Zip解壓縮+驗證。過程中教練順勢追問過去資料事故歷史，AI主動查證試金石確認案例29/51真實性並誠實承認。教練接著要一鍵備份前清C碟暫存檔，AI一度查錯方向(查到E碟東西對C碟備份無幫助)，教練點破後重查，順帶查出Zoom的E碟junction已失效，教練裁示風險可接受不修。最後驗證教練剛做的一鍵備份確實只留最新一份無殘留。教練說「總結」時明確指出這是要開新視窗的信號，AI總結後又被追問「有上傳接力棒嗎」——這正是本節在補的SOP缺口。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯 LINE VOOM備份下載+解壓縮（本場核心）
-教練收到LINE VOOM官方通知(2026-09-30停止服務)，下載密碼保護的備份(65個分割zip，`da53f34c_partN.zip`)。過程AI多輪協助教練核對「還缺哪些part」，抓出瀏覽器對同一part重複下載會存成`(1)`後綴檔案的行為，逐輪清除重複+補齊清單，最終65個全數到齊、無缺件無重複。裝7-Zip(這台機器原本沒有)後用密碼`x8xcjleahd`解壓縮全部65個到`E:\LINE VOOM`：2847則貼文資料夾、21GB、完整性測試(`7z t`)0失敗。教練確認後刪除D碟`Downloads`裡的65個原始zip。過程中教練問「多數資料夾裡面沒什麼內容」，查證後說明是純文字貼文(無圖片影片)只有小小的index.html，非解壓縮出錯。
-
-### 2. 🔧🔧 教練歷史資料事故查證：案例29(LINE 4GB)+案例51(Zoom誤刪)
-教練提及「E碟資料不見，是被你刪除的，救都救不回來」，AI沒有辯解，直接查試金石確認屬實：案例29(2026-06-25，LINE 4GB聊天記錄因AI用`Remove-Item -Recurse -Force`把兩份備份都刪光，永久遺失)+案例51(2026-07-17，AI查證方法有漏洞誤導教練同意刪除Zoom增量資料，1.8GB+746MB)。誠實確認兩次事故都是真的、無法挽回，不粉飾。
-
-### 3. 🔧 Zoom C碟junction失效查證+教練裁示不修
-教練追問「確認增量資料都成功在E碟」，AI實測發現`C:\Users\bymyw\AppData\Local\Zoom`(403.91MB，8/1至今239個檔案持續寫入)不是junction，是獨立真實資料夾；對應的`E:\Claude-Data\AppData\Zoom-Local`8/1至今0異動，是凍結在7月中旬的舊快照——代表案例51修復時建的junction後來失效了(推測被Zoom更新/重裝覆蓋)。教練確認「資料量小、增量也沒多少，就不管它了」，裁示不修，已寫入記憶`project_zoom_c_drive_junction_broken_accepted_2026-08-10`。過程中教練也追問Chrome/Comet/Perplexity/甘靖四個瀏覽器的junction是否正常，AI逐一實測確認Chrome/Comet/甘靖都是真連結，但發現「Perplexity」(2.58GB)是個沒有任何程式連結的孤兒複本(比一般快取更適合直接清)，查試金石確認這是2026-07-11 App搬家時期已知模式的殘留。
-
-### 4. 🔧 C碟暫存檔清理調查（教練糾正查錯方向）
-教練要求「清理暫存檔以節省空間」準備一鍵備份，AI第一輪列出約10GB的瀏覽器快取——**教練點破這些快取都是junction到E碟，對「C碟一鍵備份」大小沒幫助**，AI方向抓錯。重新查證後發現C碟其實已經很乾淨(7/11大瘦身後這個月只胖回5.6GB)，真正的暫存垃圾(使用者Temp/縮圖快取/Windows更新快取/回收桶)加總不到0.3GB，唯一有意義的清理空間是WinSxS系統元件庫(7/11清過11.17GB，現又長回16.26GB，DISM官方工具可再省4~5GB)。**教練尚未回覆是否要執行DISM清理**，下一場先問。
-
-### 5. 🟢 一鍵備份驗證
-教練做完一鍵備份後要求確認「應該都清除之前的舊檔，只留這個最新的8月10日」。查證E碟只有一份「易數一鍵還原Windows系統備份（不要刪除）」，`BootImage.pmf`(0.07GB)+`SystemImage.pmf`(85.29GB)皆為8/10當天寫入，之前3月的舊版本已被取代不存在，總大小85.36GB，符合教練預期。
-
-### 6. 🔴 教練糾正：「總結」後要記得上傳接力棒
-教練說「總結」，AI給了文字總結但誤以為`git status`乾淨(只確認到之前hook commit那批)就等同完成SOP，沒有真的寫新的接力棒條目就準備結束對話。教練直接問「你有上傳接力棒嗎？這不是SOP嗎？」，AI誠實承認遺漏，立刻補寫本節內容+更新狀態總表對應4個新項目。**教訓**：往後聽到「總結」，除了口頭摘要，一定要實際檢查JUNSHI_HANDOFF_LATEST.md有沒有寫新條目、commit+push了沒，不能只憑`git status`乾淨就當作交接完成——那只能證明「已commit的東西沒有未存檔改動」，不能證明「這場的工作已經寫進接力棒」。
-
-### 🔧 環境教訓：PowerShell 5.1中文編碼系列問題（本場多次踩坑）
-除了三機hook同步待辦已記錄的BOM/InputEncoding問題，本場又多次踩到同一根因的變體：
-- inline `-Command`帶`$_.Name -match "中文正則"`會被bash參數傳遞+ PowerShell解析雙重出包，改寫成獨立.ps1檔案較穩
-- 純ASCII wildcard(`-like "*delete*"`)無法匹配中文檔名(`删除`)，查資料夾時改用ASCII子字串(如`*Windows*`)或直接讀完整JSON輸出(`ConvertTo-Json`寫檔+用Read工具讀，比終端機直接印中文可靠)
-- 這些坑目前都是每次遇到才繞過，還沒有系統性解法，下次軍師寫Windows查詢腳本時可以先預期這類編碼問題
-
-## 📋 下一場直接開工任務
-- **C碟WinSxS清理**：教練尚未回覆要不要執行DISM `/StartComponentCleanup`(預估再省4~5GB)
-- **三機hook同步**：ACER仍待處理，見[[project_cross_machine_hook_sync_todo_2026-08-08]]
-- LINE VOOM備份：教練可能會再確認`E:\LINE VOOM`裡的內容(用index.html瀏覽)，暫無其他待辦
-- Zoom junction：已裁示不修，不用再主動提起
-
-## 🔑 本場關鍵檔案索引
-- `E:\LINE VOOM`：解壓縮後的完整備份(21GB，非git專案)
-- `E:\Claude-Data\.claude\projects\E--Claude-Data\memory\project_zoom_c_drive_junction_broken_accepted_2026-08-10.md`：新建
-- commit(memory記憶庫)：`af0407d7`
-- 本場無workspace repo commit(純查證+本機操作，無腳本異動)
-
----
-
-> 📦 **v105/v104及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v105(聯想)/v105/v104及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
