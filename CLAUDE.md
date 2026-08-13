@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-14 01:30:52**
+> **最後同步：2026-08-14 01:40:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -98,6 +98,7 @@
 | 🟢 | **新網站「從從容容用AI聊健康」ai-fit上線** | ✅v107完成 | 8/25台南場宣傳頁，GitHub Pages：https://coach1973.github.io/ai-fit/ ，repo`Coach1973/ai-fit` |
 | 🟢 | **大樹小講：報名深連結補&slot參數+8/25匯款提示+報名資訊即時轉發佩佩老師** | ✅v107完成，已推正式站+真實驗證 | ①`openRegisterFromQuery()`補`&slot=晚半`區分同一天多場次 ②報名成功畫面僅8/25顯示「請加入官方LINE取得匯款帳號」③新建`xiaolongxia-notify`(獨立Netlify function，用小龍蝦`@268dptjc`channel token推播)，已真實測試佩佩老師收到訊息，接進`submitRegistration()`並行呼叫。commit`5cd56d9`，deploy`6a7df0eb` |
 | 🟡 | **教練新開通LINE帳號(pairing code 4GLBTVK3)無法與小龍蝦對話** | 🔒待下一場驗證 | pairing已核准+白名單已確認寫入+cloudflared tunnel發現真斷線13小時已重啟修復+gateway process已重啟重新載入allowFrom，但重試後仍無回應，最後懷疑是MiniMax模型服務間歇性過載(教練貼出「Agent couldn't generate a response」錯誤佐證)，非架構設定問題。已請教練下次再試，下一場先問結果 |
+| 🟢 | **「有人報名LINE收到通知」根因水落石出：其實走的是Telegram不是LINE** | ✅v107完成 | 教練請小龍蝦(Telegram/LINE介面)查證，回報是`event-signup/app.py`的`_notify_xiaolongxia()`函式做的——我親自核對程式碼確認**完全屬實**：該函式打Telegram Bot API送到教練chat_id`6124913915`，觸發點是`/slides`路由「有人掃簡報QR碼/現場簽到」，文字是「📊 有人簽到/掃了簡報QR碼」。但小龍蝦報告裡提到的「📋 新報名通知」文字經全機搜尋，只存在於今天(8/14)才新建的`xiaolongxia-notify`，不可能是7/28的紀錄，已誠實告知教練這個時間軸細節對不上。**教練最終拍板定論**：找不到記錄永遠是AI的問題不是教練的錯，AI是教練唯一的工具，任何存在的系統邏輯上就是AI做的，不需要每次重新論證，已寫入記憶`feedback_desktop_session_storage_and_blackbox_wording`第3節 |
 
 ---
 
