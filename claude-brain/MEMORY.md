@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 報名統計有兩套資料源：現場簽到(event.db)vs線上報名(sme-register-fn純轉發不落地)(2026-08-14)](project_dual_registration_data_sources_2026-08-14.md) — 已backfill 30筆真實資料進advance_registrations表；sme-register-fn自動落地仍是待辦
 - [🔴🔴🔴🔴🔴 三LINE帳號個人記憶標準化：main/default頻道從未真正運作過，兩層根因已修復驗證(2026-08-14)](project_line_per_user_memory_standardization_2026-08-14.md) — sessionKey格式坑會讓hook對main帳號全員失效，改用ctx.channelId判斷頻道
 - [🔴🔴🔴🔴 LINE進來的教練被問「您是哪一位」，根因是people.md/USER.md漏登LINE ID(2026-08-14)](feedback_line_identity_missing_from_people_md.md) — 白名單≠身份識別，開新通道要同步補身份名冊；附13小時斷線時間換算錯誤更正
 - [🔴🔴🔴 「黑箱」措辭是教練地雷字+桌面版真正session路徑是claude-code-sessions非.claude/projects(2026-08-14)](feedback_desktop_session_storage_and_blackbox_wording.md) — 查不到細節說「調不出來」不要說「黑箱」；判斷機器使用歷史要查兩個路徑
