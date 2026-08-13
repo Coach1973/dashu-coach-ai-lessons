@@ -95,3 +95,12 @@
 
 **第四條：方案要可執行，不要只給概念**
 每個方案給到「最終可直接貼上執行的指令」，不要停在「你可以考慮...」的層次。
+
+## 教練問「報名統計」時怎麼查（2026-08-14新增）
+教練旗下多場活動（大樹小講等）的真實報名資料權威來源是 `event-signup/event.db`（SQLite，不是LINE通知訊息，因為報名通知是外部Netlify function直接推播、agent從不經手，見`claude-brain/project_line_per_user_memory_standardization_2026-08-14.md`）。教練問「幫我統計各場次報名幾人」這類問題時，直接查這個資料庫，不要用猜的、不要叫教練自己去算：
+```bash
+sqlite3 -header -column ~/.openclaw/workspace/event-signup/event.db "
+SELECT e.name AS 場次, e.event_date AS 日期, COALESCE(e.start_time,'') AS 時間, COUNT(s.id) AS 報名人數
+FROM events e LEFT JOIN signups s ON s.event_id = e.id
+GROUP BY e.id ORDER BY e.event_date, e.start_time;"
+```
