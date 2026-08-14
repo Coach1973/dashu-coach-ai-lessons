@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **品牌短網域go.bymyway.com上線+Cloudflare API Token申請完成** | ✅v109本場完成 | 教練想設定品牌短網域(參考PicSee)，查證發現`coach.bymyway.com`目前是VPS小龍蝦對外入口(43.245.60.200)，**PicSee原本指示要教練刪掉這筆A紀錄會直接打斷VPS小龍蝦服務**，已攔下並改用全新子網域`go.bymyway.com`(A→3.231.64.15，Proxy關閉/DNS only)，教練手動加好後curl+`dig`驗證DNS已生效、其餘21筆現有紀錄零異動。過程中Cloudflare新版介面「Welcome to new DNS experience」導覽彈窗擋住claude-in-chrome自動化點擊，教練親手點掉彈窗後才排除，已寫入記憶`feedback_browser_automation_ai_should_complete`。教練接著申請Cloudflare API Token(僅限bymyway.com的Zone:DNS:Edit權限)，已用`user/tokens/verify`+查zone雙重驗證有效，存進`路徑大全_憑證層.md`，往後DNS操作可直接下指令不用開瀏覽器。commit(workspace)`ce163eef9`+`3b50f6757` |
 | 🟢 | **LINE三帳號個人記憶標準化：main/default頻道從未真正運作過** | ✅v108本場完成，已查證不需三機同步 | 教練被龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因：①people.md/USER.md漏登教練LINE ID②line-user-memory hook對main帳號sessionKey格式判斷有bug、從未真正運作過。兩層都修好+合成webhook實測驗證，commit`246e51766`+`d12bc391`。**2026-08-14查證更正**：原註記「三機同步：Windows/ACER待處理」是誤植——查`openclaw.json`確認三個LINE帳號(default/bni_tainan/jiaolian_thoughts)全部只在這台Mac mini單一gateway設定裡，Windows/ACER並未各自跑一份OpenClaw LINE gateway，git push（已完成）就是唯一需要的同步動作，沒有需要各機手動移植的PowerShell腳本或設定登記，此項結案 |
 | 🟡 | **報名系統雙寫遷移bymyway.com＋官方LINE推播已補上，觀察期中，尚未拔Netlify** | ⏳教練親口裁示觀察期，等他確認收到幾筆真實報名再下令 | 教練發現線上報名資料完全沒有資料庫紀錄(sme-register-fn純轉發不落地)，裁示遷回bymyway.com。已建`/api/register`端點+15場session slug+bigtree前端雙寫，deploy`6a7e15b116b28f7990b3a616`已上線。**2026-08-14加碼**：教練指出bymyway那條路徑本身不會發通知(只存資料)，若拔Netlify會完全收不到報名——已補上`_notify_coach_line()`，`/api/register`報名成功時複用龍蝦小助教(@268dptjc)LINE token直接推播教練本人，commit`0fbe4902b`，兩層測試皆HTTP 200成功送達(直接呼叫LINE API+完整走production端點模擬報名)，測試資料已從event.db清除。**教練裁示**：「先保留，等有幾個報名，我確實兩邊都收到之後，再請你拔掉舊的Netlify網址」——下次開工先問教練是否已確認雙邊都收到，收到指令才能動手拔`sme-register-fn`。49人歷史backfill名單教練要用來印簽到表，查詢SOP見USER.md |
 | 🟢 | **系統全面體檢六項修復（Mac hook + 小龍蝦排程）** | ✅2026-08-12完成 | 教練要求體檢「邏輯不對/重複/浪費資源/無效/衝突/可優化」的規則，Mac 端 25 支 hook 腳本 + 小龍蝦端 20 個 hook / 32 個 cron 全查過。六項全修：①時間注入 hook 每則重貼規則全文 → 每場只講一次（806→335 bytes/則）②Stop hook 12 支中有 10 支各自重讀同一份 transcript → 合併成單一總管 `stop_rules_master.py`（14MB 檔實測 1.111 秒→0.066 秒，快 17 倍；11 項情境與原版逐一比對行為一致）③`vps_polling_healthcheck.sh` 被 LaunchAgent 與 cron-daemon 各跑一次 → 移除 daemon 那份 ④自動 commit 過碎（8/8 實測 79 筆/92 筆）→ 備份複製維持 15 分鐘、commit 上雲改每小時 ⑤22:20 寄信提醒 10 個獨立一次性排程 → 1 筆 cron（日期鎖 8/12~8/21）⑥健康檢查每 30 分 → 每小時（一天 48 次 AI 呼叫降 24 次）。排程總數 32→23，原腳本全保留可回退。commit `aa8a5952a`+`a10af7c75`。**✅ 已用真實對話驗證，非僅測試腳本**：合併後同一場對話裡，教練下一句話就觸發 Stop hook，`stop_rules_master.sh` 正確攔下時間鎖違規（判斷邏輯與原版一致）——**證實原先猜測「settings.json 要開新視窗才生效」是錯的，實際是每次 Stop/UserPromptSubmit 事件當下即時讀取設定檔，同場對話內編輯完立刻生效**，已更正進記憶`reference_mac_hook_scheduler_architecture_2026-08-12`，不用再等開新視窗才能驗證 hook 改動。備份 `/tmp/settings.json.bak-20260812124802` 仍保留可回退。三機同步：Windows/ACER 端對應 hook 尚未套用這次合併，見 [[project_cross_machine_hook_sync_todo_2026-08-08]] |
@@ -120,9 +121,9 @@
 
 ## 📋 下一場直接開工任務
 - **雙寫並存觀察期**：教練尚未指定要觀察多久才拔掉`sme-register-fn`/`xiaolongxia-notify`，下次先問教練bymyway.com這邊資料是否穩定累積
-- **三機同步**：Windows/ACER的`line-user-memory`hook修復（main/default頻道支援）本場只在Mac完成，其他機器待處理
+- ~~三機同步：Windows/ACER的`line-user-memory`hook修復待處理~~ **2026-08-14查證更正並結案**：`line-user-memory`是OpenClaw gateway hook（`ai.openclaw.gateway.plist`，只在這台Mac mini跑），非Claude Code的`~/.claude/settings.json` hook，Windows/ACER並未各自安裝OpenClaw gateway，git push就是唯一需要的同步動作，不需要教練開機、不需要任何機器移植腳本。**教訓見同棒下方新增記錄**，避免下次又照抄這行過時文字
 - **49人backfill名單**：教練要用來印簽到表，查詢方式已寫進`USER.md`（`SELECT session_label, COUNT(*) FROM advance_registrations ...`）
-- 「真誠分會」網頁主架構問題、新LINE帳號(4GLBTVK3)驗證結果等v107遺留待辦仍未處理
+- 「真誠分會」網頁主架構問題等v107遺留待辦仍未處理（新LINE帳號4GLBTVK3已於2026-08-14教練確認測試正常，結案）
 
 ## 🔑 本場關鍵檔案索引
 - `hooks/line-user-memory/handler.js`+`HOOK.md`：main/default頻道支援修復
