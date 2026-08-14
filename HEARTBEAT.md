@@ -1,3 +1,58 @@
+
+## 🦞 健康檢查紀錄 2026-08-15 05:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 5.1h（週六凌晨合理作息，23:00-08:00 不主動打擾區間）
+- self 本任務：lastStatus=running（執行中）, CE=0
+- 22 個 cron 全部 lastRunStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=33 持平 / 無 .! 鎖定檔
+- HEARTBEAT.md 187 行（<500 警戒線）
+- TG 通道探針本輪 05:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- 已知噪音（非本次新發現）：兩個 sync-* cron（37593697/aa1ad73b）delivery 顯示 `fail-closed: no route`，但 lastStatus=ok、CE=0，job 本身跑成功只是 announce->last 無 route；屬於教練不直接依賴的內部 sync job，連續多日如此，不升級 announce
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（22 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練週六凌晨 05:12 合理作息 + 無緊急待辦 + 屬於不主動打擾時段）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：06:00 ☀️ 起床摘要
+
+## 🦞 健康檢查紀錄 2026-08-15 04:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 4.1h（週六凌晨合理作息）
+- self 本任務：lastStatus=running（執行中）, CE=0｜durationMs 待回收
+- 22 個 cron 全部 lastRunStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：Repo1=112 持平 / Repo2=33 持平（vs 03:12） / 無 .! 鎖定檔
+- HEARTBEAT.md 169 行（<500 警戒線）
+- TG 通道探針本輪 04:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- 已知噪音（非本次新發現）：兩個 sync-* cron（37593697/aa1ad73b）delivery 顯示 `fail-closed: no route`，但 lastStatus=ok、CE=0，job 本身跑成功只是 announce->last 無 route；屬於教練不直接依賴的內部 sync job，連續多日如此，不升級 announce
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（22 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練週六凌晨 04:12 合理作息 + 無緊急待辦 + 屬不主動打擾時段）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：06:00 ☀️ 起床摘要
+
+## 🦞 健康檢查紀錄 2026-08-15 03:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 3.1h（週六凌晨合理作息）
+- self 本任務：lastStatus=running（執行中）, CE=0
+- 23 個 cron 全部 lastRunStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=33 微動 +7（合理範圍） / 無 .! 鎖定檔
+- HEARTBEAT.md 150 行（<500 警戒線）
+- TG 通道探針本輪 03:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- 已知噪音（非本次新發現）：兩個 sync-* cron（37593697/aa1ad73b）delivery 顯示 `fail-closed: no route`，但 lastStatus=ok、CE=0，job 本身跑成功只是 announce->last 無 route；屬於教練不直接依賴的內部 sync job，連續多日如此，不升級 announce
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（23 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練週六凌晨 03:12 合理作息 + 無緊急待辦 + 屬不主動打擾時段）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：04:00 📦 每2小時增量記憶蒸餾
+
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
@@ -96,4 +151,55 @@
   - 關卡三（影響教練嗎）→ ❌ 否（教練週五深夜工作中合理作息 + 無緊急待辦 + 23:05 每日總結已正常完成）
 - → 三關皆 fail，安靜結束，未 announce 教練
 - delivery.mode=none → 安靜結束不推 Telegram
-- 下一個 cron：00:00 📦 每2小時增量記憶蒸餾
+- 下一個 cron：00:00 � 每2小時增量記憶蒸餾
+
+## 🦞 健康檢查紀錄 2026-08-15 00:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 0.1h（剛發訊息，正常工作中）
+- self 本任務：lastStatus=ok, CE=0
+- 22 個 cron 全部 lastStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=24 微動 -1（合理範圍） / 無 .! 鎖定檔
+- HEARTBEAT.md 99 行（<500 警戒線）
+- TG 通道探針本輪 00:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（22 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練 00:07 剛發訊息 + 週六凌晨合理作息 + 無緊急待辦）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：02:00 📦 每2小時增量記憶蒸餾
+
+## 🦞 健康檢查紀錄 2026-08-15 01:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 1.1h（週六凌晨工作中合理）
+- self 本任務：lastStatus=running（執行中）, CE=0
+- 23 個 cron 全部 lastRunStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=26 微動 +1（合理範圍） / 無 .! 鎖定檔
+- HEARTBEAT.md 116 行（<500 警戒線）
+- TG 通道探針本輪 01:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（23 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練 00:07 剛發訊息後安靜 1.1h + 週六凌晨合理作息 + 無緊急待辦）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：02:00 📦 每2小時增量記憶蒸餾
+
+## 🦞 健康檢查紀錄 2026-08-15 02:12（v4.0 規則）
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 00:07:17｜當下沉默 2.1h（週六凌晨合理作息，23:00-08:00 不主動打擾區間）
+- self 本任務：lastStatus=running（執行中）, CE=0
+- 23 個 cron 全部 lastRunStatus=ok（從 `openclaw cron list` CLI 確認，無 FailoverError/timeout/auth 任一異常）
+- 自動修復 4 條全不通過（環境本來就健康）
+- ⬜ 待辦：0 項
+- 環境快檢 ✅：SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=26 持平 / 無 .! 鎖定檔
+- HEARTBEAT.md 133 行（<500 警戒線）
+- TG 通道探針本輪 02:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- v4.0 三關判斷：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（23 cron 全綠 + 本輪成功 + 連續多輪無 FailoverError）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練週六凌晨 02:12 合理作息 + 無緊急待辦 + 屬於不主動打擾時段）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 下一個 cron：03:00 🧠 Memory Dreaming Promo（每週一次）
