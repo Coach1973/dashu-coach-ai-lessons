@@ -578,3 +578,5 @@
 {"t": "2026-08-14 19:49", "src": "終端機", "who": "教練", "text": "不好意思，我這樣子從電腦版看起來，字型大小還是保持一樣，這樣的話才會協調。 那你就確保在不會換行的情況底下，字型幫我保持同樣大小，因為這是視覺的呈現感受。"}
 {"t": "2026-08-14 20:12", "src": "終端機", "who": "教練", "text": "我剛才看了一下，講師裡面有一位施育廷，她的頭被切到了。你能夠重新調整一下她的照片，讓她往下一點，不要切到頭嗎？"}
 {"t": "2026-08-14 21:02", "src": "終端機", "who": "教練", "text": "書銘老師的資料已更新，他叫JC老師，所以您同步改一下網頁顯示的名稱，就叫JC老師 去百人導師抓資訊"}
+{"t": "2026-08-14 23:29", "src": "終端機", "who": "教練", "text": "請問8月26日報名的人數？"}
+{"t": "2026-08-15 00:00", "src": "終端機", "who": "教練", "text": "https://mentor100.bymyway.com/admin 這個後臺系統當掉了Internal Server Error The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application."}
