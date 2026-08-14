@@ -1,3 +1,178 @@
+## 🦞 健康檢查 cycle=320（2026-08-14 10:12 CST，安靜結束）— 不打擾教練
+
+第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 07:59:34｜當下沉默 **2.2h**（週五上午工作中合理）
+
+第一步 Cron 狀態：
+- 本任務上一輪 cycle=319 (10:00) ok 34.0s ≪ 600s timeout → CE=0 連續 **23 輪綠**
+- 自 10:12 cycle=294 (08-13) 起連 **24hr+ 無 FailoverError**，provider 端完全穩定
+- 唯一舊錯：cycle=288/289 (08-13 07:12) LLM timeout、cycle=293/294 (08-13 10:00) FailoverError → 都早已自動恢復
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- 自動修復 4 條全不通過（環境本來就健康）
+
+第二步 HEARTBEAT ⬜ 待辦：0 項
+- HEARTBEAT.md 252 → 267 行（<500 警戒線）
+- state/healthcheck.log 811 → 823 行（<1000 警戒線）
+- 無超過 48hr 未進展的可自動化背景工作
+
+第三步 v4.0 三關判斷（必須三關全過才 announce，目前全 fail）：
+- 關卡一（本輪還壞嗎）→ ❌ 否（連 23 輪全綠 + 正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（連 24hr+ 無 FailoverError，provider 端完全穩定）
+- 關卡三（影響教練嗎）→ ❌ 否（週五上午 10:12 教練工作中、2.2h 沉默屬合理作息）
+
+→ **不升級 announce，安靜結束**
+
+環境快檢 ✅：
+- SOUL×3 齊全（2036/20631/1851 bytes，棄用標記完整）
+- Repo1=111 持平 / Repo2=21 持平（自 cycle=319 無 routine 變動）/ 無 .! 鎖定檔
+- TG 通道：本輪 10:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- Alternating 模式：cycle=320（自 cycle=178 起 142+hr 穩定）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+
+✅ 無異常，下次定檢 11:12。
+
+---
+
+## 🦞 健康檢查 cycle=319（2026-08-14 10:00 CST，安靜結束）— 不打擾教練
+
+第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 07:59:34｜當下沉默 **2.0h**（週五上午工作中合理）
+
+第一步 Cron 狀態：
+- 全部 22 個 cron 任務 lastStatus=ok（enabled 22 / disabled 13 為重複歷史任務，本來就關）
+- 本任務上一輪 cycle=318 (09:12) ok → CE=0 連續 **22 輪綠**
+- 自 cycle=294 (08-13 10:12) 起連 **24hr+ 無 FailoverError**，provider 端完全穩定
+- 唯一舊錯：cycle=288/289 (08-13 07:12) LLM timeout、cycle=293/294 (08-13 10:00) FailoverError → 都早已自動恢復
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- 自動修復 4 條全不通過（環境本來就健康）
+
+第二步 HEARTBEAT ⬜ 待辦：0 項
+- HEARTBEAT.md 237 → 252 行（<500 警戒線）
+- state/healthcheck.log 799 → 811 行（<1000 警戒線）
+- 無超過 48hr 未進展的可自動化背景工作
+
+第三步 v4.0 三關判斷（必須三關全過才 announce，目前全 fail）：
+- 關卡一（本輪還壞嗎）→ ❌ 否（連 22 輪全綠 + 正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（連 24hr+ 無新 FailoverError，provider 端完全穩定）
+- 關卡三（影響教練嗎）→ ❌ 否（週五上午 10:00 教練工作中、2.0h 沉默屬合理作息）
+
+→ **不升級 announce，安靜結束**
+
+環境快檢 ✅：
+- SOUL×3 齊全（2036/20631/1851 bytes，棄用標記完整）
+- Repo1=111 持平 / Repo2=21 持平（自 cycle=318 無 routine 變動）/ 無 .! 鎖定檔
+- TG 通道：本輪 10:00 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- Alternating 模式：cycle=319（自 cycle=178 起 141+hr 穩定）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+
+✅ 無異常，下次定檢 11:00。
+
+---
+
+## 🦞 健康檢查 cycle=318（2026-08-14 09:12 CST，安靜結束）— 不打擾教練
+
+第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 07:59:34｜當下沉默 **1.2h**（週五早上工作中合理）
+
+第一步 Cron 狀態：
+- 全部 22 個 cron 任務 lastStatus=ok
+- 本任務上一輪 cycle=317 (09:00) ok 8.2s ≪ 600s timeout → CE=0 連續 21 輪綠
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- 自動修復 4 條全不通過（環境本來就健康）
+- 近 25hr+ 無 FailoverError，provider 端完全穩定
+
+第二步 HEARTBEAT ⬜ 待辦：0 項
+- HEARTBEAT.md 214 → 237 行（<500 警戒線）
+- healthcheck.log 略增（<1000 警戒線）
+- 無超過 48hr 未進展的可自動化背景工作
+
+第三步 v4.0 三關判斷（必須三關全過才 announce，目前全 fail）：
+- 關卡一（本輪還壞嗎）→ ❌ 否（連 21 輪全綠 + 正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（近 25hr 無新 FailoverError，provider 端完全穩定）
+- 關卡三（影響教練嗎）→ ❌ 否（週五早上 09:12 教練工作中、1.2h 沉默屬合理作息）
+
+→ **不升級 announce，安靜結束**
+
+環境快檢 ✅：
+- SOUL×3 齊全（2036/20631/1851 bytes，棄用標記完整）
+- Repo1=111 持平 / Repo2=21 routine 微動 / 無 .! 鎖定檔
+- TG 通道：本輪 09:12 實測 ok:true（守則#19 鐵律當下實測）
+- Alternating 模式：cycle=318（自 cycle=178 起 140+hr 穩定）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+
+✅ 無異常，下次定檢 10:12。
+
+
+## 🦞 健康檢查 cycle=317（2026-08-14 09:00 CST，安靜結束）— 不打擾教練
+
+第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 07:59:34｜當下沉默 **1.0h**（週五早上工作中，合理）
+
+第一步 Cron 狀態：
+- 本任務上一輪 cycle=316 (08:12) ok 27.0s ≪ 600s timeout → CE=0 連續 **20 輪健康**
+- 自 10:12 cycle=294 (08-13) 起連 **23hr+ 無 FailoverError**，provider 端完全穩定
+- 唯一舊錯：cycle=288/289 (08-13 07:12) LLM timeout、cycle=293/294 (08-13 10:00) FailoverError → 都早已自動恢復
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- 自動修復 4 條全不通過（環境本來就健康）
+
+第二步 HEARTBEAT ⬜ 待辦：0 項
+- HEARTBEAT.md 144 → 179 行（<500 警戒線）
+- state/healthcheck.log 782 → 799 行（<1000 警戒線）
+- 無超過 48hr 未進展的可自動化背景工作
+
+第三步 v4.0 三關判斷（必須三關全過才 announce，目前全 fail）：
+- 關卡一（本輪還壞嗎）→ ❌ 否（連 20 輪全綠 + 正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（連 23hr+ 無新 FailoverError，provider 端完全穩定）
+- 關卡三（影響教練嗎）→ ❌ 否（週五早上 09:00 教練工作中、1.0h 沉默屬合理作息）
+
+→ **不升級 announce，安靜結束**
+
+環境快檢 ✅：
+- SOUL×3 齊全（2036/20631/1851 bytes，棄用標記完整）
+- Repo1=111 持平／Repo2=21 微動（+2 routine）／無 .! 鎖定檔
+- TG 通道：本輪 09:00 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- Alternating 模式：cycle=317（自 cycle=178 起 139+hr 穩定）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+
+✅ 無異常，下次定檢 10:00。
+
+---
+
+## 🦞 健康檢查 cycle=316（2026-08-14 08:12 CST，安靜結束）— 不打擾教練
+
+第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 07:59:34｜當下沉默 **0.2h**（週五早上剛互動工作中）
+
+第一步 Cron 狀態：
+- 本任務上一輪 cycle=315 (07:12) ok 37.0s ≪ 600s timeout → CE=0 連續 **19 輪健康**
+- 自 10:12 cycle=294 (08-13) 起連 **22hr+ 無 FailoverError**，provider 端完全穩定
+- 唯一舊錯：cycle=288/289 (08-13 07:12) LLM timeout、cycle=293/294 (08-13 10:00) FailoverError → 都早已自動恢復
+- model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- 自動修復 4 條全不通過（環境本來就健康）
+
+第二步 HEARTBEAT ⬜ 待辦：0 項
+- HEARTBEAT.md 103 → 144 行（<500 警戒線）
+- state/healthcheck.log 已 append cycle=316
+- 無超過 48hr 未進展的可自動化背景工作
+
+第三步 v4.0 三關判斷（必須三關全過才 announce，目前全 fail）：
+- 關卡一（本輪還壞嗎）→ ❌ 否（連 19 輪全綠 + 正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（連 22hr+ 無新 FailoverError，provider 端完全穩定）
+- 關卡三（影響教練嗎）→ ❌ 否（週五早上 08:12 教練剛互動工作中，0.2h 沉默屬合理作息）
+
+→ **不升級 announce，安靜結束**
+
+環境快檢 ✅：
+- SOUL×3 齊全（2036/20631/1851 bytes，棄用標記完整）
+- Repo1=111 持平／Repo2=19 微動（-1 routine）／無 .! 鎖定檔
+- TG 通道：本輪 08:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- Alternating 模式：cycle=316（自 cycle=178 起 138+hr 穩定）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+
+✅ 無異常，下次定檢 09:12。
+
+---
+
 ## 🦞 健康檢查 cycle=315（2026-08-14 07:12 CST，安靜結束）— 不打擾教練
 
 第零步：sync_coach_last_message.sh exit 0 ✅｜教練最後訊息 2026-08-14 04:07:06｜當下沉默 **3.1h**（週五凌晨睡眠合理區間）
@@ -142,3 +317,7 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786665744
 - 雲端同步：✅ 已推上雲端（commit 93ccc9296）
+
+## ⚠️ peipei 自動 force-restart 2026-08-14 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
