@@ -52,6 +52,30 @@ GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 SLIDES_DIR = os.path.join(os.path.dirname(__file__), "slides")
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "6124913915"  # 教練跟小龍蝦的對話，路徑大全.md已記錄
+COACH_LINE_USER_ID = "U895a0ad8e49d75f8303dc3d067282dc0"  # 教練本人LINE ID，workspace/memory/people.md已記錄
+
+
+def _notify_coach_line(text: str) -> bool:
+    """用龍蝦小助教（@268dptjc，OpenClaw預設LINE帳號）推播訊息給教練本人LINE。
+    2026-08-14教練要求：長期要把報名通知改由bymyway.com自己發，不能只靠外部Netlify黑箱
+    (sme-register-fn)。跟_notify_xiaolongxia()是同一等級的通知，只是換LINE通道，
+    token直接讀openclaw.json（跟default帳號共用同一份，不新增憑證檔）。"""
+    try:
+        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
+            config = json.load(f)
+        token = config["channels"]["line"]["channelAccessToken"]
+        body = json.dumps({
+            "to": COACH_LINE_USER_ID,
+            "messages": [{"type": "text", "text": text}],
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.line.me/v2/bot/message/push", data=body, method="POST",
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status == 200
+    except Exception:
+        return False  # 通知失敗不該擋住報名資料落地，呼叫端不拋錯
 
 
 def _notify_xiaolongxia(text: str) -> None:
@@ -303,7 +327,12 @@ def api_register():
             )
 
         status = db.upsert_signup(conn, event["id"], name, phone, company_title)
+        event_name = event["name"]
         conn.close()
+        _notify_coach_line(
+            f"【大樹小講・官網報名】\n場次：{event_name}\n姓名：{name}\n電話：{phone}\n"
+            f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
+        )
         return Response(
             json.dumps({"ok": True, "status": status}),
             status=200, headers={**resp_headers, "Content-Type": "application/json"},
