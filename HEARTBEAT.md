@@ -31,3 +31,27 @@
 - v4.0 三關判斷：關卡一（現在仍壞）fail、關卡二（provider 暫時過載）fail、關卡三（影響工作）fail
 - → 三關皆 fail，安靜結束，未 announce 教練
 - 教練最後訊息 19:57:19（沉默 0.2h，工作中合理）
+
+## 🦞 健康檢查紀錄 2026-08-14 21:12（v4.0 規則）
+- 唯一 cron「🦞 每小時任務健康檢查」本輪 CE=0｜lastStatus=ok｜durationMs=121.5s ≪ 600s
+- 上一輪 cycle=328 (20:12) 提到今日 5 次 FailoverError 皆已自動 retry 成功 → 環境本就健康
+- v4.0 三關判斷：關卡一（本輪健康+連續多輪全綠）fail、關卡二（provider 已自行恢復）fail、關卡三（meta 自打嗝+教練工作中）fail
+- → 三關皆 fail，安靜結束，未 announce 教練
+- 環境快檢：SOUL×3 齊全（2036/20631/1851 B）、HEARTBEAT.md 33 行（<500）、healthcheck.log 875 行（<1000）
+- Repo1=111 持平 / Repo2=23 微動 / 無 .! 鎖定檔
+- TG 通道探針本輪 21:12 實測 ✅ `{"ok":true}`（守則#19 鐵律當下實測）
+- Alternating 模式 cycle=329（自 cycle=178 起持續穩定交替）
+- delivery.mode=none → 安靜結束不推 Telegram
+- 教練最後訊息 21:02:44（沉默 0.2h，週五晚間工作中合理）
+
+## 🦞 健康檢查紀錄 2026-08-14 22:00（v4.0 規則）
+- 觸發 cron：每4小時主動關懷 ef88279b（last <1m ago, ok）
+- 22 個 cron 全 healthy｜無 FailoverError｜無 pending 阻塞
+- 環境快檢：SOUL×3 齊全（2036/20631/1851 B，無變動）、HEARTBEAT.md 45 行（<500）、無 .! 鎖定檔
+- Repo1=111 持平 / Repo2=25 微動 +2（合理範圍，無暴增）
+- TG 通道探針本輪 22:00 實測 ✅ `{"ok":true}`（守則#19 鐵律當下實測）
+- 下一個 cron：22:20 📨 晚間提醒寄 50 封信（day 3/20）→ 23:00 🔴 場景化升華+系統健檢 → 23:05 🦞 每日三機總結
+- v4.0 三關判斷：關卡一（cron 全綠+環境齊全）fail、關卡二（無 provider 異常）fail、關卡三（教練 22:00 工作中+無新急事+下週日秋瑩姐婚宴提醒已建立）fail
+- → 三關皆 fail，安靜結束，未 announce 教練
+- delivery.mode=none → 安靜結束不推 Telegram
+- 教練最後訊息 21:02:44（沉默 ~1h，週五晚間 22:00 工作中合理，離 23:00 靜音時段還有 1h）

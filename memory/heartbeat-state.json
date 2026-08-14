@@ -2,28 +2,28 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1786701694,
-    "system_health": 1786701694,
-    "telegram_channel": 1786701694,
+    "heartbeat_poll": 1786716000,
+    "system_health": 1786716000,
+    "telegram_channel": 1786716000,
     "junshi_queue": 1785599760,
-    "cron_list": 1786672800,
-    "care_4h": 1786672800,
+    "cron_list": 1786716000,
+    "care_4h": 1786716000,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786241043,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-14T20:12:05.260880+08:00"
+    "coach_silence_sync": "2026-08-14T22:00:30+08:00"
   },
-  "lastHeartbeat": "2026-08-14T18:01:34.403639+08:00",
-  "lastHeartbeatNote": "週五 18:00 重啟後第一次心跳 cycle=321：TG 探針 ok:true（守則#19 當下實測）+ 17:38 因對話滿自動重啟（memory 2026-08-14.md 33KB+ 已 commit 零遺漏）+ 教練沉默 0.3h（17:12 最後活動 → 工作合理作息）+ SOUL×3 齊全 + Repo1=111/Repo2=27 微增 4 行（無暴增）+ 無 .! 鎖定檔 + peipei 17:55 已 force-restart 恢復 + 22 個 cron 全 healthy + 8 項 pendingCoachItems 不變（皆等教練指示，無新增緊急）→ 已按 HEARTBEAT.md 規定 curl bypass 通知教練「已重啟、無急事、請下指令」，下次定檢 22:00。",
+  "lastHeartbeat": "2026-08-14T22:00:30+08:00",
+  "lastHeartbeatNote": "週五 22:00 每4小時主動關懷 cycle=330：TG 探針 ok:true（守則#19 當下實測）+ 22 cron 全 healthy+連續多輪全綠 + SOUL×3 齊全 + HEARTBEAT.md 45 行（<500）+ Repo1=111 持平/Repo2=25 微動 +2（合理，無暴增）+ 無 .! 鎖定檔 + 教練沉默 ~1h（週五晚間 22:00 工作中合理，離 23:00 靜音時段還有 1h）+ 8 項 pendingCoachItems 不變（皆等教練指示，無新增緊急）+ 下一個 cron 22:20 晚間提醒寄 50 封信（day 3/20）→ v4.0 三關皆 fail → 安靜結束不推 Telegram，下次定檢 23:00 場景化升華+系統健檢。",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "evening",
     "dayOfWeek": "Friday",
     "isQuietHours": false,
-    "quietHoursReason": "10:00 已過 08:00 靜音時段，工作中合理作息",
+    "quietHoursReason": "週五晚間 22:00，距 23:00 靜音時段還有 1h，教練工作中合理作息",
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 12,
-    "recentCoachActivity": "教練 17:12 最後活動（週五下午工作中），沉默 0.3h",
+    "recentCoachActivity": "教練 21:02 最後活動（週五晚間工作中），沉默 ~1h",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -35,10 +35,10 @@
     "gatewayPid": 89442,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-14T18:01:34.403639+08:00",
+    "telegramChannelLastVerified": "2026-08-14T22:00:30+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
-    "coachSilentSince": "2026-08-14T19:57:19+08:00",
-    "coachSilentHours": 0.2,
+    "coachSilentSince": "2026-08-14T21:02:44+08:00",
+    "coachSilentHours": 1.0,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
@@ -60,22 +60,28 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": false,
-    "nextPlannedAction": "安靜結束，下次定檢 11:00",
+    "nextPlannedAction": "安靜結束，下次定檢 23:00 場景化升華+系統健檢",
     "cronHealthCheck": {
-      "name": "🦞 主心跳 cron（健康檢查）",
-      "recentPattern": "每 4 小時 cycle=302（接續 18:00 cycle=301）",
+      "name": "🦞 每4小時主動關懷",
+      "recentPattern": "每 4 小時 cycle=330（接續 18:00 cycle=321、21:12 cycle=329）",
       "consecutiveErrors": 0,
-      "decision": "✅ 連 22 輪全綠，安靜結束，下次定檢 11:00"
+      "decision": "✅ 連續全綠，安靜結束，下次定檢 23:00"
     },
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + curl 直送 (message 9367 成功)",
     "restartNoticeDelivered": true,
     "nextScheduledCrons": [
-      "11:00 � 主心跳 cron（健康檢查，下次定檢）",
       "22:20 📨 晚間提醒寄 50 封信（20天計畫 day 3/20）",
       "23:00 🔴 場景化升華+系統健檢",
-      "23:05 🦞 小龍蝦每日三機總結"
+      "23:05 🦞 小龍蝦每日三機總結",
+      "06:00 ☀️ 每日 06:00 起床摘要"
     ],
     "lastDeliveries": [
+      {
+        "ts": "2026-08-14T22:00:30+08:00",
+        "channel": "telegram-channel-probe",
+        "to": "6124913915",
+        "purpose": "週五 22:00 守則#19 通道健康探針（cycle=330 每4小時主動關懷 cron 觸發，ok:true，安靜結束不推教練）"
+      },
       {
         "ts": "2026-08-14T18:01:34.403639+08:00",
         "channel": "telegram-curl-bypass",
@@ -93,12 +99,6 @@
         "channel": "telegram-channel-probe",
         "to": "6124913915",
         "purpose": "週五 10:00 守則#19 通道健康探針（cycle=319 主心跳，ok:true，工作中故不打擾）"
-      },
-      {
-        "ts": "2026-08-14T06:03:29+08:00",
-        "channel": "telegram-channel-probe",
-        "to": "6124913915",
-        "purpose": "週五 06:03 守則#19 通道健康探針（cron-event 內部輪詢，ok:true，凌晨靜音故不打擾）"
       }
     ]
   }
