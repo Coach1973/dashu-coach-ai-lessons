@@ -2,19 +2,19 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1786687292,
-    "system_health": 1786687292,
-    "telegram_channel": 1786687292,
+    "heartbeat_poll": 1786701694,
+    "system_health": 1786701694,
+    "telegram_channel": 1786701694,
     "junshi_queue": 1785599760,
     "cron_list": 1786672800,
     "care_4h": 1786672800,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786241043,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-14T16:12:12.346471+08:00"
+    "coach_silence_sync": "2026-08-14T18:12:02.422415+08:00"
   },
-  "lastHeartbeat": "2026-08-14T14:01:32.727288+08:00",
-  "lastHeartbeatNote": "週五 14:00 主心跳 cycle=320：TG 探針 ok:true（守則#19 當下實測）+ 教練沉默 2.9h（11:08 最後活動後工作中合理）+ SOUL×3 齊全 + Repo1=111/Repo2=23 持平 + 無 .! 鎖定檔 + 22 個 cron 全 healthy（無新增 FailoverError）+ 8 項 pendingCoachItems 不變（皆等教練指示，無新增緊急）+ 14:00 週五下午工作中合理作息 + 22:20 晚間提醒 50封信 + 23:00 場景化升華 + 23:05 三機總結皆到位 → 不打擾教練安靜結束，下次定檢 18:00。",
+  "lastHeartbeat": "2026-08-14T18:01:34.403639+08:00",
+  "lastHeartbeatNote": "週五 18:00 重啟後第一次心跳 cycle=321：TG 探針 ok:true（守則#19 當下實測）+ 17:38 因對話滿自動重啟（memory 2026-08-14.md 33KB+ 已 commit 零遺漏）+ 教練沉默 0.3h（17:12 最後活動 → 工作合理作息）+ SOUL×3 齊全 + Repo1=111/Repo2=27 微增 4 行（無暴增）+ 無 .! 鎖定檔 + peipei 17:55 已 force-restart 恢復 + 22 個 cron 全 healthy + 8 項 pendingCoachItems 不變（皆等教練指示，無新增緊急）→ 已按 HEARTBEAT.md 規定 curl bypass 通知教練「已重啟、無急事、請下指令」，下次定檢 22:00。",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Friday",
@@ -23,7 +23,7 @@
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 12,
-    "recentCoachActivity": "教練 07:59 最後訊息（週五上午工作中），沉默 2.0h",
+    "recentCoachActivity": "教練 17:12 最後活動（週五下午工作中），沉默 0.3h",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "junshiResultMtime": "2026-07-20T12:56:45",
@@ -35,10 +35,10 @@
     "gatewayPid": 89442,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-14T10:00:17+08:00",
-    "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選：bni-chapters 真誠分會架構（等教練說明）/ 企業健身房（等教練指示）/ 幕僚長晨報觀察期",
-    "coachSilentSince": "2026-08-14T16:02:32+08:00",
-    "coachSilentHours": 0.2,
+    "telegramChannelLastVerified": "2026-08-14T18:01:34.403639+08:00",
+    "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
+    "coachSilentSince": "2026-08-14T18:08:07+08:00",
+    "coachSilentHours": 0.1,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
@@ -77,6 +77,12 @@
     ],
     "lastDeliveries": [
       {
+        "ts": "2026-08-14T18:01:34.403639+08:00",
+        "channel": "telegram-curl-bypass",
+        "to": "6124913915",
+        "purpose": "週五 18:00 重啟後第一次心跳 cycle=321 通知教練「已重啟、無急事、請下指令」"
+      },
+      {
         "ts": "2026-08-13T18:00:37+08:00",
         "channel": "telegram-channel-probe",
         "to": "6124913915",
@@ -93,12 +99,6 @@
         "channel": "telegram-channel-probe",
         "to": "6124913915",
         "purpose": "週五 06:03 守則#19 通道健康探針（cron-event 內部輪詢，ok:true，凌晨靜音故不打擾）"
-      },
-      {
-        "ts": "2026-08-13T18:00:37+08:00",
-        "channel": "telegram-channel-probe",
-        "to": "6124913915",
-        "purpose": "週四 18:00 守則#19 通道健康探針（cycle=301 每4小時主動關懷 cron 觸發，ok:true）"
       }
     ]
   }
