@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-14 03:50:18**
+> **最後同步：2026-08-14 08:02:27**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,7 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🟢 | **LINE三帳號個人記憶標準化：main/default頻道從未真正運作過** | ✅v108本場完成 | 教練被龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因：①people.md/USER.md漏登教練LINE ID②line-user-memory hook對main帳號sessionKey格式判斷有bug、從未真正運作過。兩層都修好+合成webhook實測驗證，commit`246e51766`+`d12bc391`。三機同步：Windows/ACER待處理 |
+| 🟢 | **LINE三帳號個人記憶標準化：main/default頻道從未真正運作過** | ✅v108本場完成，已查證不需三機同步 | 教練被龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因：①people.md/USER.md漏登教練LINE ID②line-user-memory hook對main帳號sessionKey格式判斷有bug、從未真正運作過。兩層都修好+合成webhook實測驗證，commit`246e51766`+`d12bc391`。**2026-08-14查證更正**：原註記「三機同步：Windows/ACER待處理」是誤植——查`openclaw.json`確認三個LINE帳號(default/bni_tainan/jiaolian_thoughts)全部只在這台Mac mini單一gateway設定裡，Windows/ACER並未各自跑一份OpenClaw LINE gateway，git push（已完成）就是唯一需要的同步動作，沒有需要各機手動移植的PowerShell腳本或設定登記，此項結案 |
 | 🟡 | **報名系統雙寫遷移bymyway.com（觀察期，尚未拔Netlify）** | ⏳v108本場上線，待觀察 | 教練發現線上報名資料完全沒有資料庫紀錄(sme-register-fn純轉發不落地)，裁示遷回bymyway.com。已建`/api/register`端點+15場session slug+bigtree前端雙寫，deploy`6a7e15b116b28f7990b3a616`已上線。**教練尚未指定觀察多久才拔掉舊Netlify通知**，下次先問bymyway.com資料是否穩定累積。49人歷史backfill名單教練要用來印簽到表，查詢SOP見USER.md |
 | 🟢 | **系統全面體檢六項修復（Mac hook + 小龍蝦排程）** | ✅2026-08-12完成 | 教練要求體檢「邏輯不對/重複/浪費資源/無效/衝突/可優化」的規則，Mac 端 25 支 hook 腳本 + 小龍蝦端 20 個 hook / 32 個 cron 全查過。六項全修：①時間注入 hook 每則重貼規則全文 → 每場只講一次（806→335 bytes/則）②Stop hook 12 支中有 10 支各自重讀同一份 transcript → 合併成單一總管 `stop_rules_master.py`（14MB 檔實測 1.111 秒→0.066 秒，快 17 倍；11 項情境與原版逐一比對行為一致）③`vps_polling_healthcheck.sh` 被 LaunchAgent 與 cron-daemon 各跑一次 → 移除 daemon 那份 ④自動 commit 過碎（8/8 實測 79 筆/92 筆）→ 備份複製維持 15 分鐘、commit 上雲改每小時 ⑤22:20 寄信提醒 10 個獨立一次性排程 → 1 筆 cron（日期鎖 8/12~8/21）⑥健康檢查每 30 分 → 每小時（一天 48 次 AI 呼叫降 24 次）。排程總數 32→23，原腳本全保留可回退。commit `aa8a5952a`+`a10af7c75`。**✅ 已用真實對話驗證，非僅測試腳本**：合併後同一場對話裡，教練下一句話就觸發 Stop hook，`stop_rules_master.sh` 正確攔下時間鎖違規（判斷邏輯與原版一致）——**證實原先猜測「settings.json 要開新視窗才生效」是錯的，實際是每次 Stop/UserPromptSubmit 事件當下即時讀取設定檔，同場對話內編輯完立刻生效**，已更正進記憶`reference_mac_hook_scheduler_architecture_2026-08-12`，不用再等開新視窗才能驗證 hook 改動。備份 `/tmp/settings.json.bak-20260812124802` 仍保留可回退。三機同步：Windows/ACER 端對應 hook 尚未套用這次合併，見 [[project_cross_machine_hook_sync_todo_2026-08-08]] |
 | 🟢 | **coach888作品總覽表：大項標題+標籤改可直接編輯、六大項改兩欄並排顯示** | ✅2026-08-10~11完成 | 教練要求自己能改「常用/後臺」這類大項標題跟「待啟用/公開」這類標籤文字，仿照既有拖曳排序機制(contenteditable+localStorage+複製按鈕貼給AI固化)實作，commit`3b7ca65`。接著教練要求改成三排兩欄並排(一常用/二後臺、三對外公開/四不公開、五保留/六BNI)減少往下滑，commit`d1f8e21`，900px以下自動收回單欄不影響手機瀏覽 |
