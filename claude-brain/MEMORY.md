@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md) — Cloudflare彈窗卡自動化案例；解除障礙後要主動驗證+誠實說明原因
 - [🔧 OpenClaw gateway hooks只跑Mac mini單一gateway，不像Claude Code hooks需三機移植(2026-08-14)](feedback_openclaw_gateway_hooks_not_per_machine.md) — 修完hook前先分清這支是gateway hook還是settings.json hook，再決定要不要排三機同步待辦
 - [🔴🔴 advance_registrations表49筆是教練要印簽到表的正式名單，非測試資料(2026-08-14)](project_advance_registrations_backfill_purpose_2026-08-14.md) — 清理event.db或查報名統計時絕對不能誤刪這張表
 - [🔴🔴🔴 報名統計有兩套資料源：現場簽到(event.db)vs線上報名(sme-register-fn純轉發不落地)(2026-08-14)](project_dual_registration_data_sources_2026-08-14.md) — 已backfill 51筆真實資料(去重複後49人)；已裁示遷回bymyway.com雙寫上線
