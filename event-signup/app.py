@@ -309,6 +309,7 @@ def api_register():
         name = (payload.get("name") or "").strip()
         phone_raw = (payload.get("phone") or "").strip()
         company_title = (payload.get("company") or "").strip()
+        email = (payload.get("email") or "").strip()
 
         if not slug or not name or not phone_raw:
             return Response(
@@ -326,11 +327,12 @@ def api_register():
                 status=200, headers={**resp_headers, "Content-Type": "application/json"},
             )
 
-        status = db.upsert_signup(conn, event["id"], name, phone, company_title)
+        status = db.upsert_signup(conn, event["id"], name, phone, company_title, email)
         event_name = event["name"]
         conn.close()
         _notify_coach_line(
-            f"【大樹小講・官網報名】\n場次：{event_name}\n姓名：{name}\n電話：{phone}\n"
+            f"【大樹小講・官網報名】\n場次：{event_name}\n姓名：{name}\n"
+            f"公司：{company_title or '-'}\n電話：{phone}\nEmail：{email or '未填'}\n"
             f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
         )
         return Response(

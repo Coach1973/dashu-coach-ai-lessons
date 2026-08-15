@@ -221,20 +221,21 @@ def decrement_wheel_prize(conn: sqlite3.Connection, prize_id: int) -> str | None
     return row["name"]
 
 
-def upsert_signup(conn: sqlite3.Connection, event_id: int, name: str, phone: str, company_title: str) -> str:
+def upsert_signup(conn: sqlite3.Connection, event_id: int, name: str, phone: str, company_title: str, email: str = "") -> str:
     """回傳 'new'（首次報名）或 'repeat'（這場已報過）"""
     row = conn.execute("SELECT id FROM attendees WHERE phone = ?", (phone,)).fetchone()
     if row:
         attendee_id = row["id"]
         conn.execute(
             """UPDATE attendees SET name = ?, company_title = COALESCE(NULLIF(?, ''), company_title),
+               email = COALESCE(NULLIF(?, ''), email),
                updated_at = datetime('now', 'localtime') WHERE id = ?""",
-            (name, company_title, attendee_id),
+            (name, company_title, email, attendee_id),
         )
     else:
         cur = conn.execute(
-            "INSERT INTO attendees (name, phone, company_title) VALUES (?, ?, ?)",
-            (name, phone, company_title or None),
+            "INSERT INTO attendees (name, phone, company_title, email) VALUES (?, ?, ?, ?)",
+            (name, phone, company_title or None, email or None),
         )
         attendee_id = cur.lastrowid
 
