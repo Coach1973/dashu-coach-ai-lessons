@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786241043,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-15T18:01:01.639528+08:00"
+    "coach_silence_sync": "2026-08-15T18:12:04.635322+08:00"
   },
   "lastHeartbeat": "2026-08-15T14:00:00+08:00",
   "lastHeartbeatNote": "週六 14:00 每4h主動關懷 cycle=345：守則#19 探針首次抖動重試 2 次 ok:true（最新實測通過）+ 22 個 cron 全綠 + 教練沉默 1.7h（週六午後正常作息）+ 8 項 pendingCoachItems 不變 + 50封信 day 4/20 今晚 22:20 會自動提醒 → 已發週末午後輕關懷（message_id 9489）+ 50封信提醒。",
@@ -37,8 +37,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-15T14:00:00+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
-    "coachSilentSince": "2026-08-15T17:12:39+08:00",
-    "coachSilentHours": 0.8,
+    "coachSilentSince": "2026-08-15T18:08:19+08:00",
+    "coachSilentHours": 0.1,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
