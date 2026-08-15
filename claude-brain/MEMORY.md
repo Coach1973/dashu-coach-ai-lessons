@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 AI微論壇台中場(9/23-24)網頁概念稿建置中+mentor100後台500錯誤(孤兒外鍵)修復(2026-08-15)](project_ai_forum_taichung_and_mentor100_fix_2026-08-15.md) — 講師僅剩彭晉澄查無資料；delete類操作要記得查外鍵關聯
 - [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md) — Cloudflare彈窗卡自動化案例；解除障礙後要主動驗證+誠實說明原因
 - [🔧 OpenClaw gateway hooks只跑Mac mini單一gateway，不像Claude Code hooks需三機移植(2026-08-14)](feedback_openclaw_gateway_hooks_not_per_machine.md) — 修完hook前先分清這支是gateway hook還是settings.json hook，再決定要不要排三機同步待辦
 - [🔴🔴 advance_registrations表49筆是教練要印簽到表的正式名單，非測試資料(2026-08-14)](project_advance_registrations_backfill_purpose_2026-08-14.md) — 清理event.db或查報名統計時絕對不能誤刪這張表
