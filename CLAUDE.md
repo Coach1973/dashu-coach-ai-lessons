@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-14 16:56:07**
+> **最後同步：2026-08-15 18:30:43**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,10 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **AI微論壇台中場(9/23-24)網頁概念稿：9位講師僅剩彭晉澄查無資料** | ⏳待教練確認GitHub Pages概念稿+提供彭晉澄資料 | 新repo`ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。多輪迭代：兩天套票2988元(單日1800)、大樹教練固定排每天下午第一堂並各有專屬分享主題(只出一張嘴叫AI做事/如何將AI導入LINE成為你的生活小幫手)、場地沃茲新創空間忠明館(台中市南屯區忠明南路478號B1)、報名費含午餐+下午茶、藍新金流付款連結已接上。講師資料從mentor100撈取：書銘改名JC老師、林佳伶=Lavi、廖韋評皆已補齊簡介/照片/連結。王俊甫查證發現mentor100照片其實是FB預設空白大頭貼截圖、簡介只有姓名重複，已請教練協調補件，同步在mentor100後台改為草稿不對外顯示。**彭晉澄仍完全查無mentor100任何記錄**，等教練提供才能補上。下次開工先問教練GitHub Pages概念稿看過沒問題了嗎，沒問題才能推正式站 |
+| 🟢 | **mentor100後台/admin頁500錯誤修復+新增「改為草稿/已發佈」一鍵切換功能** | ✅2026-08-15本場完成 | 教練回報`mentor100.bymyway.com/admin`當機Internal Server Error，查log抓到根因：`db.delete_mentor()`只刪mentors記錄，沒同步清理applications表的孤兒外鍵(教練刪除id69導師後，申請名單裡仍有一筆指向已刪除記錄，模板嘗試組連結時BuildError)。已止血(清空壞資料)+根治(delete_mentor()同步清空關聯外鍵+模板判斷改用`not a.edit_token`更穩健)，用真實app物件完整模擬render_template()驗證通過，commit`87031ec`。教練接著要求後台要能自己把已發佈的講師改回草稿(某些是教練先建好架子但講師本人還沒補資料)，原系統完全沒有這個功能入口，已新增`toggle_mentor_status()`+新route+列表頁一鍵切換按鈕，commit`23304df`。王俊甫已依此改為草稿 |
+| 🟢 | **mentor100「種子」標籤依教練指示重新盤點** | ✅2026-08-15本場完成 | 教練要求AI微論壇/7-29場/8-28嘉義場有實際擔任講師的才標種子，其餘(含教練手動建立的)都不算種子。已查證3個活動講師名單並更新，目前種子14位：7/29場3位(王彤/蘇秦/燒茶林祥禔)+8/28嘉義場3位(季哥/洪詠清/林韋銘)+AI微論壇台中場8位(大樹教練/施育廷/曾思遠/李中閔/JC老師/廖韋評/Lavi/王俊甫)。彭晉澄因mentor100查無記錄暫無法標記，待教練補資料後一併處理 |
+| 🟢 | **8月26日(高雄場)報名人數查詢：6人** | ✅2026-08-14完成 | 查`event.db`的`advance_registrations`表，原始7筆backfill記錄中2筆(gl t86/燒茶)電話號碼相同判斷為同一人重複報名，去重複後6人。已提醒教練這個數字只反映教練貼過的歷史通知文字，非即時查詢，雙寫系統上線後這場目前0筆新報名(signups表) |
 | 🟢 | **品牌短網域go.bymyway.com上線+Cloudflare API Token申請完成** | ✅v109本場完成 | 教練想設定品牌短網域(參考PicSee)，查證發現`coach.bymyway.com`目前是VPS小龍蝦對外入口(43.245.60.200)，**PicSee原本指示要教練刪掉這筆A紀錄會直接打斷VPS小龍蝦服務**，已攔下並改用全新子網域`go.bymyway.com`(A→3.231.64.15，Proxy關閉/DNS only)，教練手動加好後curl+`dig`驗證DNS已生效、其餘21筆現有紀錄零異動。過程中Cloudflare新版介面「Welcome to new DNS experience」導覽彈窗擋住claude-in-chrome自動化點擊，教練親手點掉彈窗後才排除，已寫入記憶`feedback_browser_automation_ai_should_complete`。教練接著申請Cloudflare API Token(僅限bymyway.com的Zone:DNS:Edit權限)，已用`user/tokens/verify`+查zone雙重驗證有效，存進`路徑大全_憑證層.md`，往後DNS操作可直接下指令不用開瀏覽器。commit(workspace)`ce163eef9`+`3b50f6757` |
 | 🟢 | **LINE三帳號個人記憶標準化：main/default頻道從未真正運作過** | ✅v108本場完成，已查證不需三機同步 | 教練被龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因：①people.md/USER.md漏登教練LINE ID②line-user-memory hook對main帳號sessionKey格式判斷有bug、從未真正運作過。兩層都修好+合成webhook實測驗證，commit`246e51766`+`d12bc391`。**2026-08-14查證更正**：原註記「三機同步：Windows/ACER待處理」是誤植——查`openclaw.json`確認三個LINE帳號(default/bni_tainan/jiaolian_thoughts)全部只在這台Mac mini單一gateway設定裡，Windows/ACER並未各自跑一份OpenClaw LINE gateway，git push（已完成）就是唯一需要的同步動作，沒有需要各機手動移植的PowerShell腳本或設定登記，此項結案 |
 | 🟡 | **報名系統雙寫遷移bymyway.com＋官方LINE推播已補上，觀察期中，尚未拔Netlify** | ⏳教練親口裁示觀察期，等他確認收到幾筆真實報名再下令 | 教練發現線上報名資料完全沒有資料庫紀錄(sme-register-fn純轉發不落地)，裁示遷回bymyway.com。已建`/api/register`端點+15場session slug+bigtree前端雙寫，deploy`6a7e15b116b28f7990b3a616`已上線。**2026-08-14加碼**：教練指出bymyway那條路徑本身不會發通知(只存資料)，若拔Netlify會完全收不到報名——已補上`_notify_coach_line()`，`/api/register`報名成功時複用龍蝦小助教(@268dptjc)LINE token直接推播教練本人，commit`0fbe4902b`，兩層測試皆HTTP 200成功送達(直接呼叫LINE API+完整走production端點模擬報名)，測試資料已從event.db清除。**教練裁示**：「先保留，等有幾個報名，我確實兩邊都收到之後，再請你拔掉舊的Netlify網址」——下次開工先問教練是否已確認雙邊都收到，收到指令才能動手拔`sme-register-fn`。49人歷史backfill名單教練要用來印簽到表，查詢SOP見USER.md |
@@ -148,52 +152,54 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-14 v108（Mac桌面版 Sonnet 5，LINE三帳號個人記憶標準化修復+報名系統雙寫遷移bymyway.com）
+# 軍師接力棒 · 2026-08-15 v110（Mac桌面版 Sonnet 5，AI微論壇台中場網頁概念稿+mentor100後台500錯誤修復）
 
-> 建立時間：2026-08-14 01:38 ~ 03:46（台灣時間）
+> 建立時間：2026-08-14 17:12 ~ 2026-08-15 18:25（台灣時間）
 > 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v107（Mac桌面版 Sonnet 5，台南行事曆9/21改期+ai-fit新站上線+大樹小講報名轉發機制+LINE連線故障排除）
-> 本棒主軸：**兩條主線都是教練親自發現問題、逐層深挖到底的架構修復。①教練被LINE版龍蝦小助教問「您是哪一位」動怒，查證抓到兩層根因（people.md/USER.md漏登LINE ID＋line-user-memory hook對main/default頻道sessionKey格式判斷有bug，main帳號從未真正運作過），兩層都修好並用合成webhook實測驗證。②教練問報名統計，發現event.db只算現場簽到、線上報名完全沒有資料庫紀錄；深入查證+教練親自糾正後確認sme-register-fn（Netlify）是純轉發不落地的真正缺口，教練裁示要遷回bymyway.com，執行雙寫並存架構（event-signup新增CORS端點+bigtree前端新增第三條寫入路徑），本機+瀏覽器實測後教練確認「推」，已上線。過程中教練兩批共貼51筆歷史報名通知文字，backfill進資料庫，去重複後49人，教練明確表示要用來印簽到表。**
+> 上一棒：v109（Mac桌面版 Sonnet 5，官方LINE推播驗證+品牌短網域上線+Cloudflare API Token申請）
+> 本棒主軸：**兩條主線。①教練交辦新任務：9/23-24台中場AI微論壇（收費、9位講師）要先做GitHub Pages概念稿來回確認。從0建立`ai-forum-taichung`新repo，比照既有AI微論壇風格但升級優化，經過十餘輪教練逐步調整（套票價格/大樹教練專屬分享主題/場地/議程排序/付款連結/字級/講師照片裁切）逐步定案，講師資料持續從mentor100撈取補齊，最終只剩彭晉澄一位完全查無資料。②教練回報mentor100後台500當機，查證抓到「刪除導師記錄未清理申請名單孤兒外鍵」的真根因，止血+根治雙管齊下，並依教練要求新增後台從未有過的「已發佈改草稿」一鍵切換功能，同時依教練指示重新盤點14位「種子」講師標籤。**
 
 ## 🎯 本場戰果
 
-### 1. 🔴🔴🔴🔴🔴 LINE三帳號個人記憶標準化：main/default頻道從未真正運作過
-教練在LINE傳訊息給「龍蝦小助教」，被問「您是哪一位」當場動怒。查證發現兩層根因：①`people.md`/`USER.md`教練條目只登記Telegram ID，從沒登記過LINE ID，已補上兩個已知LINE ID並註明一律視為教練本人（commit`246e51766`）。②更深層、影響所有人的bug：`hooks/line-user-memory/handler.js`的`parseSession()`原本只靠`sessionKey.includes('line')`判斷頻道，但`main`帳號的sessionKey固定是`agent:main:main`（不含"line"字串），導致這支hook對main頻道的**所有人**從第一關就`return null`，整套機制形同虛設；同時也移除了原本寫死排除教練LINE ID的`COACH_LINE_IDS`清單（教練裁示三帳號要用同一套標準，含教練本人）。改用`ctx.channelId`判斷頻道（跟`inbound-message-echo-log`已驗證過的正式欄位一致），commit`d12bc391`。用合成簽章webhook實測驗證：教練LINE ID傳訊息後`agents/main/clients/{教練LINE ID}.md`真的被建立且正確累積，測試假資料已清除。詳見記憶`project_line_per_user_memory_standardization_2026-08-14`。
+### 1. 🔴🔴🔴 AI微論壇台中場(9/23-24)網頁概念稿：十餘輪迭代定案
+教練提供9位講師名單+基本場次資訊，要求先做視覺概念稿在GitHub上來回確認再推正式站。新建`Coach1973/ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。查證mentor100發現9位裡僅5位有完整資料，其餘4位（林佳伶/王俊甫/彭晉澄/廖韋評）誠實標示「資料籌備中」不瞎編，逐一交代給教練。
 
-### 2. 🔴🔴🔴 報名統計雙資料源發現+bymyway.com雙寫遷移上線
-教練問「幫我統計各場次報名幾人」，一開始只查到`event.db`的現場簽到人數。教練點破這只算現場簽到、不算線上報名，後者完全沒有資料庫紀錄。深入查證+教練親自糾正一輪（教練一度誤以為跟Netlify無關，AI用Netlify API+bigtree原始碼註解「送出後教練的LINE會直接收到通知」兩項證據攤開，教練接受後裁示「資料庫要建在bymyway.com」）後確認：`sme-register-fn`（`sme-register-fn.netlify.app`，6+網站共用）純轉發LINE/Telegram通知、完全不落地任何資料庫，這是真正缺口。
+教練持續加碼調整，逐輪落實：兩天套票2988元(單日1800，比分開報名省612)；大樹教練除開場/總結外，兩天各安排一場專屬分享（只出一張嘴叫AI做事／如何將AI導入LINE成為你的生活小幫手），且教練主動要求固定排在「下午第一堂最容易犯睏的時段」由自己扛；場地補上沃茲新創空間忠明館（台中市南屯區忠明南路478號B1）；議程從「上午3下午2」改「上午2下午3」；報名費含午餐+下午茶；接上藍新金流付款連結（`core.newebpay.com`），誠實告知教練連結對應金額尚未逐一核對；亮點bar字級歷經兩輪調整（先放大到56/40px，教練回饋電腦版看起來不協調，改成四組說明文字統一字級、以最長文字不換行為準抓出24px）。
 
-教練要求安全雙寫並存（新舊不衝突，確認bymyway.com穩定後才拔Netlify），已執行：
-- `event-signup/app.py`新增`/api/register`端點（CORS支援，跟既有`/e/<slug>`共用`db.upsert_signup()`邏輯，任何失敗都回200不拋錯），commit`e773c4dd6`
-- `event.db`補齊大樹小講全部15場session的slug對照（含9~12月未來場次）
-- `bigtree/index.html`新增第三條並行fetch路徑寫進`event.bymyway.com/api/register`，原本`sme-register-fn`+`xiaolongxia-notify`兩支Netlify通知完全不動，repo commit`3130b93`
-- 瀏覽器實測驗證slug對照正確（特別驗證8/25同天雙場次day/night有正確分開）+資料成功寫入資料庫，教練確認「可以推了」後正式部署：deploy`6a7e15b116b28f7990b3a616`，curl驗證文字/新程式碼/圖片皆正常，額度41→40（workspace commit`f395b1ff5`）
+期間主動查證並修復兩張講師照片頭部被裁切的問題（施育廷、JC老師原名書銘）——正方形頭像框用cover模式對直式照片預設置中裁切，頭頂距原圖邊緣太近會被切掉，改用`object-position:center top`精準修復，且JC老師這張是主動預防、不等教練回報。
 
-**backfill歷史資料**：教練分兩批共貼51筆真實線上報名通知文字，解析寫入`event.db`新建的`advance_registrations`表，去重複（抓到1筆真重複）後49位不重複報名者，統計交付教練。**教練明確表示「要記得這份名單，我到時要印簽到表」**——這是重要下游用途，須確保不被誤刪。詳見記憶`project_dual_registration_data_sources_2026-08-14`。
+**講師資料補齊進度**：書銘→JC老師（更名+補齊簡介/照片/連結）、林佳伶=Lavi（教練澄清是同一人）、廖韋評（含教練事後更新照片的二次同步）皆已從mentor100完整撈取上線。**王俊甫查證發現mentor100照片其實是Facebook預設空白大頭貼截圖、簡介只有姓名重複**，未採用，同步在mentor100後台改為草稿。**彭晉澄仍完全查無mentor100任何記錄**，是唯一卡住項。commit序列：`d27464b`→`f6b5c5e`→`c2cda50`→`1d4b6d8`→`aa90a9a`→`4d1c48c`→`6ab0649`→`932a652`→`424ac65`→`495546d`。
 
-### 3. 🔧 附帶修正：13小時斷線是時區換算錯誤
-教練質疑「cloudflared斷線13小時」跟「LINE正常對話」矛盾，查證發現是UTC時間被直接當台灣時間念（少換算+8小時），實際只斷約5.4小時（8/13 19:47~8/14 01:09台灣時間），且教練對話是01:19才開始，已在斷線恢復之後，兩者並無矛盾。已寫入記憶提醒此類時區換算錯誤模式。
+### 2. 🔴🔴🔴🔴 mentor100後台/admin頁500錯誤：孤兒外鍵根因修復
+教練回報`mentor100.bymyway.com/admin`顯示Internal Server Error。查`webapp.error.log`抓到`werkzeug.routing.exceptions.BuildError`，追溯到`templates/admin_list.html`第73行對已刪除的mentor記錄組`url_for('join_edit', token=None)`失敗。根因：`db.delete_mentor()`只執行`DELETE FROM mentors`，沒有同步清理`applications`表指向該id的外鍵——教練先前刪除id69導師後，申請名單裡「Jack Du」那筆記錄變成指向空氣的孤兒引用，模板渲染到那一筆就整頁死。
+
+止血：清空該筆孤兒外鍵資料，立即用真實app物件+資料庫連線完整模擬`render_template()`驗證恢復正常（非僅推論）。根治：①`delete_mentor()`刪除時同步`UPDATE applications SET mentor_id=NULL WHERE mentor_id=?`②模板判斷條件從`not a.mentor_id`改為`not a.edit_token`雙重防護。commit`87031ec`，重啟服務後本機+正式網域皆驗證200/302正常。
+
+### 3. 🟢 後台新增「改為草稿/已發佈」一鍵切換功能
+教練指出：某些講師是教練自己先建好資料架子、但講師本人還沒補齊資料，這種情況需要能隨時改回草稿不對外顯示——查證確認`admin_mentor_edit`從未處理過`status`欄位，教練確實沒有任何入口能自己切換發佈狀態。新增`db.toggle_mentor_status()`（CASE WHEN切換published/draft）+新route`/admin/mentors/<id>/toggle-status`+列表頁按鈕（文字依當前狀態動態顯示）。commit`23304df`，已用真實資料庫模擬驗證64筆published正確顯示「改為草稿」、王俊甫(draft)正確顯示「改為已發佈」。
+
+### 4. 🟢 mentor100「種子」標籤依教練指示重新盤點
+教練要求：AI微論壇+其他有實際擔任講師的活動才標種子，教練自己手動建的（非講師身份）都不算種子。第一輪只設AI微論壇8位講師為種子，教練隨即澄清王彤/蘇秦/燒茶林祥禔是「7/29的講師」需要保留種子——查證後改為完整盤點三場活動：7/29場3位+8/28嘉義場3位（查ai-talk repo講師陣容比對mentor100 id）+AI微論壇台中場8位，共14位種子，其餘全部改回自助送出。直接改資料庫並用真實模板渲染驗證badge數量正確。
 
 ## 📋 下一場直接開工任務
-- **雙寫並存觀察期**：教練尚未指定要觀察多久才拔掉`sme-register-fn`/`xiaolongxia-notify`，下次先問教練bymyway.com這邊資料是否穩定累積
-- ~~三機同步：Windows/ACER的`line-user-memory`hook修復待處理~~ **2026-08-14查證更正並結案**：`line-user-memory`是OpenClaw gateway hook（`ai.openclaw.gateway.plist`，只在這台Mac mini跑），非Claude Code的`~/.claude/settings.json` hook，Windows/ACER並未各自安裝OpenClaw gateway，git push就是唯一需要的同步動作，不需要教練開機、不需要任何機器移植腳本。**教訓見同棒下方新增記錄**，避免下次又照抄這行過時文字
-- **49人backfill名單**：教練要用來印簽到表，查詢方式已寫進`USER.md`（`SELECT session_label, COUNT(*) FROM advance_registrations ...`）
-- 「真誠分會」網頁主架構問題等v107遺留待辦仍未處理（新LINE帳號4GLBTVK3已於2026-08-14教練確認測試正常，結案）
+- **AI微論壇概念稿**：問教練GitHub Pages版本整體看過確認沒問題了嗎，確認後才能推正式站（且要問是否要新建bigtree-tw之外的獨立正式網址，或整合進既有大樹小講/AI微論壇品牌）
+- **彭晉澄資料**：教練若已取得資料，記得同步更新mentor100+AI微論壇網頁+標記種子
+- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
+- 報名雙寫觀察期：先問教練bymyway.com新舊系統是否都已確認收到真實報名
 
 ## 🔑 本場關鍵檔案索引
-- `hooks/line-user-memory/handler.js`+`HOOK.md`：main/default頻道支援修復
-- `workspace/memory/people.md`+`USER.md`：教練LINE ID身份對照+報名統計SOP
-- `event-signup/app.py`：新增`/api/register`端點
-- `event-signup/event.db`：新增`advance_registrations`表(49人backfill)+15場session slug補齊
-- `github_repos/bigtree/index.html`：新增BYMYWAY_API第三條寫入路徑
-- commit(workspace)：`246e51766`+`d12bc391`+`65869b86c`+`a14a9d05e`+`e773c4dd6`+`f395b1ff5`
-- commit(bigtree)：`3130b93`，deploy`6a7e15b116b28f7990b3a616`
-- commit(memory記憶庫)：`730d2824a`+`9d96abf66`+`33f1aed91`
+- `github_repos/ai-forum-taichung/index.html`：全新9/23-24 AI微論壇台中場概念稿
+- `github_repos/mentor100/db.py`：`delete_mentor()`同步清理孤兒外鍵+新增`toggle_mentor_status()`
+- `github_repos/mentor100/app.py`：新route`admin_mentor_toggle_status`
+- `github_repos/mentor100/templates/admin_list.html`：判斷條件加固+新增切換按鈕
+- `github_repos/mentor100/mentors.db`：source(種子)欄位14位重新盤點，直接改資料庫
+- commit(ai-forum-taichung)：`d27464b`~`495546d`共10筆
+- commit(mentor100)：`87031ec`+`23304df`
 
 ---
 
-
-> 📦 **v106~v107及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+> 📦 **v108及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
