@@ -1,5 +1,16 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+> 📝 2026-08-15 18:00 每4h主動關懷 cycle=350 已送出（msg_id 9490）
+- sync_coach_last_message.sh exit 0｜教練最後訊息 **17:12:39**（剛剛 0.8h，週六傍晚合理作息）
+- Cron 4 個（本體+sync×2+每4h關懷）皆 lastStatus=ok、CE=0：本體 46e67e2e 17:12 跑過 dur ≪ 600s
+- HEARTBEAT.md 104 行 → 本輪寫入後約 117（<500 警戒線）
+- SOUL×3 齊全 (2036/1851/20631 bytes) / Repo1=112 持平 / Repo2=33 持平 / 無 .! 鎖
+- TG 通道探針本輪 18:01 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- 已 curl bypass 發「週六 18:00 承接關懷」——只在 14:00 cycle=345 訊息（msg_id 9489）後補一句「安心陪家人，22:20 50封信提醒」；17:12 教練剛發的訊息已被接收、無新增待辦
+- 7 項 pendingCoachItems 不變、無新增 ⬜ 達 48h 紅線
+- 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+- 下一個 cron：18:12 每小時任務健康檢查
+
 > 📝 2026-08-15 17:12 健康檢查 cycle=349 安靜結束
 > - sync_coach_last_message.sh exit 0｜教練最後訊息 12:17:28｜沉默 **4.9h**（週六午後正常作息）
 > - Cron 4 個（main agent + 3 sync-* + 每4h關懷）皆 lastStatus=ok、CE=0：本體 46e67e2e dur ≪ 600s；sync-* delivery 仍 `no route fail-closed`（已知配置問題不升級，非本輪新發生）
@@ -100,5 +111,9 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## ⚠️ peipei 自動 force-restart 2026-08-15 09:15:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## ⚠️ peipei 自動 force-restart 2026-08-15 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
