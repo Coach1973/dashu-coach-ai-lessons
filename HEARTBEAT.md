@@ -1,5 +1,28 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+> 📝 2026-08-15 20:12 健康檢查 cycle=353 安靜結束
+> - sync_coach_last_message.sh exit 0｜教練最後訊息 **18:25:52**（沉默 1.8h，週六晚間正常作息）
+> - Cron 37 個總（OpenClaw 全部匯出，預設 list 過濾只看 1 個，2026-08-15 17:12 已知現象）；**啟用 23 個全綠**、CE=0、lastRunStatus=ok、無 timeout 逾越、無 auth 錯誤、無 overloaded 訊息
+> - **14 個 disabled job** 已知歷史（考駕照/BNI-2dc0/舊健康檢查/VPS polling/舊記憶蒸餾等），仍在表內但不會跑，不影響工作
+> - HEARTBEAT.md 148 行 → 本輪寫入後約 160（<500 警戒線）
+> - SOUL×3 齊全 (2036/20631/1851 bytes) / Repo1=112 持平 / Repo2=26（上輪 25，多一筆 inbound_echo 緩存，不影響）/ 無 .! 鎖
+> - TG 通道探針本輪 20:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+> - v4.0 三關全 fail（無異常、provider 穩定、教練晚間屬不打擾時段）→ 安靜結束，不 announce 教練
+> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+> - 下一個 cron：20:00 LINE@每日兩次使命提醒（已發）；22:00 50封信提醒；22:12 健康檢查
+
+> 📝 2026-08-15 19:12 健康檢查 cycle=352 安靜結束
+> - sync_coach_last_message.sh exit 0｜教練最後訊息 **18:25:52**（剛 0.8h，週六傍晚正常作息）
+> - Cron 23 個全綠：本體 46e67e2e running（本輪執行中）、其餘 22 個 ok / idle 狀態，CE=0、無 timeout 逾越、無 auth 錯誤、無 overloaded 訊息
+> - 兩個 sync-* (37593697/aa1ad73b) delivery 仍 `no route, will fail-closed`（已知配置問題、CE=0、lastStatus=ok、cycle=346-351 多次記錄、不影響工作）
+> - 3 個 idle 一次性提醒（9/20 婚宴、12/1 車貸、7/24 養護費）未到期正常
+> - HEARTBEAT.md 136 行 → 本輪寫入後約 148（<500 警戒線）/ healthcheck.log N/A
+> - SOUL×3 齊全 (2036/1851/20631 bytes) / Repo1=112 持平 / Repo2=25 持平 / 無 .! 鎖
+> - TG 通道探針本輪 19:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+> - v4.0 三關全 fail（無異常、provider 穩定、教練剛發完訊屬不打擾時段）→ 安靜結束，不 announce 教練
+> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
+> - 下一個 cron：20:00 LINE@每日兩次使命提醒；20:12 健康檢查；22:00 50封信提醒
+
 > 📝 2026-08-15 18:12 健康檢查 cycle=351 安靜結束
 > - sync_coach_last_message.sh exit 0｜教練最後訊息 **18:08:19**（剛 4 分鐘內，週六傍晚正常對話）
 > - Cron 23 個全綠：lastRunStatus=ok、consecutiveErrors=0、無 timeout 逾越、無 auth 錯誤、無 overloaded 訊息
@@ -134,3 +157,9 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786789784
 - 雲端同步：✅ 已推上雲端（commit 42178bfa0）
+
+## 🩺 軍師 Hook 自檢 2026-08-15 20:23（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: 16cac4d5-bb2d-43bb-a4de-1097183fbf09
