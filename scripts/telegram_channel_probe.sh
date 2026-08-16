@@ -48,7 +48,7 @@ if [ -z "$TOKEN" ]; then
 fi
 
 # 1. getMe
-ME=$(curl -s --max-time 15 "https://api.telegram.org/bot${TOKEN}/getMe")
+ME=$(curl -s --max-time 60 "https://api.telegram.org/bot${TOKEN}/getMe")
 ME_OK=$(echo "$ME" | python3 -c "import sys,json;print('1' if json.load(sys.stdin).get('ok') else '0')" 2>/dev/null)
 BOT_NAME=$(echo "$ME" | python3 -c "import sys,json;print(json.load(sys.stdin).get('result',{}).get('username',''))" 2>/dev/null)
 
@@ -59,7 +59,7 @@ if [ "$ME_OK" != "1" ]; then
 fi
 
 # 2. getChat 教練對話
-CHAT=$(curl -s --max-time 15 "https://api.telegram.org/bot${TOKEN}/getChat?chat_id=${COACH_CHAT}")
+CHAT=$(curl -s --max-time 60 "https://api.telegram.org/bot${TOKEN}/getChat?chat_id=${COACH_CHAT}")
 CHAT_OK=$(echo "$CHAT" | python3 -c "import sys,json;print('1' if json.load(sys.stdin).get('ok') else '0')" 2>/dev/null)
 
 if [ "$CHAT_OK" != "1" ]; then
