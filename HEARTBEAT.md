@@ -88,3 +88,26 @@
 - ✅ Repo1=112 持平 / Repo2=12 modified（皆為狀態檔，非新增 untracked）/ 無 .! 鎖定檔
 - ✅ **自動修復：healthcheck.log 1008 行破警戒線 → 已截到 500 行（前 508 行歸檔至 state/healthcheck-archive/rotation.log）**
 - v4.0 三關全 fail（現在沒壞 + 非 provider 過載 + 不影響工作）→ 安靜結束不推 Telegram
+
+## 🩺 健康檢查 cycle=377 2026-08-16 23:12（v4.0 安靜結束）
+- Step 0: sync_coach_last_message.sh exit 0｜教練最後訊息 2026-08-16T23:07:39｜當下沉默 0.1h（週日深夜剛發言活躍）
+- Step 1: SQLite 直查 cron_jobs → 24 cron 全 healthy（22 ok + 2 idle 待觸發 + 0 error / 0 個 CE≥3）
+- Step 1: self cron 46e67e2e lastStatus=ok / lastDurationMs=107171ms(107s) ≪ 600s timeout / CE=0
+- Step 1: model=minimax/MiniMax-M3 ✅ / timeout=600s ✅ / delivery.mode=none ✅
+- Step 2: HEARTBEAT.md 90 行 (<500 警戒線) / 0 個 ⬜ 真實待辦（grep 結果皆是歷史「0 ⬜」字串）
+- Step 2: healthcheck.log 45 行（<1000 警戒線，cycle=376 22:12 自動縮減歸檔生效）
+- Step 2: 環境快檢 ✅ SOUL×3 齊全 (2036/20631/1851 bytes) 兩份舊版皆有「⚠️ 本檔已棄用」標記 / Repo1=112 持平 / Repo2=5 微動（皆狀態檔）/ 無 .! 鎖定檔
+- Step 2: TG 通道探針本輪 23:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
+- 已知噪音（非本次新發現）：sync-* 兩個 cron (37593697/aa1ad73b) delivery fail-closed: no route，但 lastStatus=ok、CE=0，屬教練不直接依賴的內部 sync job，連續多日如此，不升級 announce
+- v4.0 三關全 fail：
+  - 關卡一（本輪還壞嗎）→ ❌ 否（24 cron 全 healthy + 本輪成功 + CE=0）
+  - 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError 紀錄）
+  - 關卡三（影響教練嗎）→ ❌ 否（教練 23:07 剛發言活躍 + 健康檢查本身正常 + 無會員功能受影響）
+- → 三關皆 fail，安靜結束，未 announce 教練
+- 下個 cron: 00:00 海餅乾精神背誦（in 48m）→ 06:00 起床摘要（in 6h48m）→ 07:00 ☕ 幕僚長晨報（in 7h48m）
+
+## 🩺 軍師 Hook 自檢 2026-08-16 23:52（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: ed21277a-b31b-465c-951d-965316ab4b7f

@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786842037,
     "evening_greeting": 1786888846,
-    "coach_silence_sync": "2026-08-16T22:50:05.798090+08:00",
+    "coach_silence_sync": "2026-08-16T23:37:04.558657+08:00",
     "heartbeat_22_20": 1786890065739,
     "system_overview": 1786890065739
   },
@@ -39,7 +39,7 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-16T22:00:46.483373+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
-    "coachSilentSince": "2026-08-16T22:50:00+08:00",
+    "coachSilentSince": "2026-08-16T23:36:55+08:00",
     "coachSilentHours": 0.0,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
