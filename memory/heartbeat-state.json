@@ -2,19 +2,19 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1786874449,
+    "heartbeat_poll": 1786888846,
     "system_health": 1786802624,
-    "telegram_channel": 1786874449,
+    "telegram_channel": 1786888846,
     "junshi_queue": 1785599760,
     "cron_list": 1786773600,
-    "care_4h": 1786874449,
+    "care_4h": 1786888846,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786842037,
-    "evening_greeting": 1786874449,
+    "evening_greeting": 1786888846,
     "coach_silence_sync": "2026-08-16T21:37:01.627836+08:00"
   },
-  "lastHeartbeat": "2026-08-16T18:00:49+08:00",
-  "lastHeartbeatNote": "週日 18:00 4h cycle=350 主動關懷：傍晚輕量關懷（msg_id 9516）+ 提醒今晚 22:20 50封信 day 5/20、TG 通道剛實測 ok、8 項待辦不變、無急事",
+  "lastHeartbeat": "2026-08-16T22:00:46.483373+08:00",
+  "lastHeartbeatNote": "週日 22:00 cycle=355 每4h主動關懷：晚安收尾關懷（msg_id 9519）✅ + 預告 22:20 50封信提醒（20天計畫 day 5/20）",
   "systemSnapshot": {
     "timeOfDay": "evening",
     "dayOfWeek": "Sunday",
@@ -35,7 +35,7 @@
     "gatewayPid": 89442,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-16T18:00:48+08:00",
+    "telegramChannelLastVerified": "2026-08-16T22:00:46.483373+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
     "coachSilentSince": "2026-08-16T21:36:55+08:00",
     "coachSilentHours": 0.0,
@@ -61,12 +61,12 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": false,
-    "nextPlannedAction": "22:00 cycle=355 晚安關懷 / 22:20 提醒寄 50 封信",
+    "nextPlannedAction": "22:20 提醒寄 50 封信（20天 day 5/20，自動 cron）→ 23:00 場景化升華 → 23:05 每日三機總結 → 下次主動關懷 02:00 cycle=360",
     "cronHealthCheck": {
       "name": "🦞 每4小時主動關懷",
-      "recentPattern": "cycle=345 (14:00) → cycle=350 (18:00) → cycle=355 (22:00)",
+      "recentPattern": "cycle=345 (週六14:00) → cycle=350 (週日18:00) → cycle=355 (週日22:00) → 下次 cycle=360 (02:00)",
       "consecutiveErrors": 0,
-      "decision": "✅ 已發週六 22:00 晚安關懷（msg_id 9493），下次定檢 02:00"
+      "decision": "✅ 已發週日 22:00 晚安關懷（msg_id 9519），下次定檢 02:00"
     },
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + python urllib 直送 (message 9489 成功)",
     "restartNoticeDelivered": true,
@@ -80,6 +80,12 @@
       "23:05 🦞 小龍蝦每日三機總結"
     ],
     "lastDeliveries": [
+      {
+        "ts": "2026-08-16T22:00:46.483373+08:00",
+        "channel": "telegram-curl-bypass",
+        "to": "6124913915",
+        "purpose": "週日 22:00 cycle=355 「每4小時主動關懷」：週日晚安收尾關懷（msg_id 9519）+ 預告 22:20 50封信提醒"
+      },
       {
         "ts": "2026-08-16T18:00:49+08:00",
         "channel": "telegram-curl-bypass",
