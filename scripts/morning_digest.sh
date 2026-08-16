@@ -23,8 +23,18 @@ COMMITS=$(git log --since="$SINCE" --no-merges --pretty=format:"%h|%s|%an" 2>/de
 TOTAL=$(echo "$COMMITS" | grep -c "|" 2>/dev/null || echo 0)
 TOTAL=${TOTAL:-0}
 
+# === 待辦到期提醒（賈維斯計畫Phase3，2026-08-16）：不受commit有無影響，獨立檢查 ===
+TODO_ALERT=$(bash /Users/bymyway/.openclaw/workspace/scripts/todo_staleness_check.sh 2>/dev/null)
+
 if [ "$TOTAL" = "0" ]; then
-    # 沒任何 commit，安靜
+    # 沒任何 commit——但待辦提醒仍要照跑，不能因為沒commit就整段安靜跳過
+    if [ -n "$TODO_ALERT" ]; then
+        echo "☀️ 早安，教練。$TS 起床摘要"
+        echo ""
+        echo "過去 12 小時無新工作 commit，但待辦表有東西要提醒您："
+        echo ""
+        echo "$TODO_ALERT"
+    fi
     exit 0
 fi
 
@@ -37,7 +47,14 @@ NOTABLE_COUNT=$(echo "$NOTABLE" | grep -c "|" 2>/dev/null || echo 0)
 NOTABLE_COUNT=${NOTABLE_COUNT:-0}
 
 if [ "$NOTABLE_COUNT" = "0" ]; then
-    # 全部都是 auto-backup，安靜
+    # 全部都是 auto-backup——但待辦提醒仍要照跑
+    if [ -n "$TODO_ALERT" ]; then
+        echo "☀️ 早安，教練。$TS 起床摘要"
+        echo ""
+        echo "過去 12 小時只有自動備份，但待辦表有東西要提醒您："
+        echo ""
+        echo "$TODO_ALERT"
+    fi
     exit 0
 fi
 
@@ -60,3 +77,9 @@ cat <<EOF
 
 💡 看完整 log：\`cd ~/.openclaw/workspace && git log --since="$SINCE"\`
 EOF
+
+if [ -n "$TODO_ALERT" ]; then
+    echo ""
+    echo "---"
+    echo "$TODO_ALERT"
+fi
