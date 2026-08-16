@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 ezPay電子發票開立作業教練裁示轉交聯想機器，Mac不再主責(2026-08-16)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 登入狀態per機器跟BNI Connect CMS同款限制，聯想需重新登入
+- [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md) — 單價數量欄位programmatic填值常不觸發計算；表單清空不代表真的送出成功
 - [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md) — 已在真實對話驗證接線員觸發成功；新增專案記得建卡+加路由
 - [🔴🔴 教練要的是結果導向委派+生活化指涉理解，不是堆關鍵字庫(2026-08-16)](feedback_jarvis_outcome_delegation_style.md) — 事實基礎(專案卡)+語言理解力才是正解；反面教材：口頭說存記憶卻沒真的寫檔案
 - [🎯🎯 AI微論壇台中場(9/23-24)網頁概念稿建置中+mentor100後台500錯誤(孤兒外鍵)修復(2026-08-15)](project_ai_forum_taichung_and_mentor100_fix_2026-08-15.md) — 講師僅剩彭晉澄查無資料；delete類操作要記得查外鍵關聯
