@@ -98,57 +98,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-16 v111（Mac桌面版 Sonnet/Fable 5，賈維斯計畫通盤規劃+全四階段落地）
-
-> 建立時間：2026-08-16 09:44 ~ 10:30（台灣時間）
-> 本棒執行者：Mac 桌面版 Fable 5（規劃）+ Sonnet 5（施工）
-> 上一棒：v110（Mac桌面版 Sonnet 5，AI微論壇台中場網頁概念稿+mentor100後台500錯誤修復）
-> 本棒主軸：**上半場處理v110遺留的報名雙寫觀察期疑慮——教練回報今天只有一筆「大樹小講」報名收到官網通知，查證後發現這不是故障，是AI微論壇/百人導師申請這兩個系統本來就沒接官網雙寫（各自獨立系統，非同一套）。教練順勢裁示「所有報名系統都要走官網」，於是幫官網API補上公司/Email欄位、把AI微論壇接上官網雙寫並推上Netlify正式站，mentor100因表單只收LINE ID沒收手機號碼、教練裁示B案暫不接。下半場教練用最高等級Fable 5拋出「賈維斯計畫」構想——希望AI變成像鋼鐵人賈維斯一樣的總管家，不用每次交代背景。先產出通盤規劃報告，教練說「做」後，同一場session內完整落地四階段：專案卡+自動接線員、Token每月自動體檢、待辦到期提醒掛進晨報、小龍蝦背景研究派工SOP+首航驗證。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴 報名雙寫「故障」查證：其實是誤會，順勢擴大範圍
-教練回報今天4則LINE通知只有1則有「官網」標籤，懷疑官網雙寫不穩定。查`event.db`+`webapp.log`確認：今天唯一一筆大樹小講報名（鄭幗瓏，8/22金門場）官網+舊版通知都成功，資料庫`POST /api/register`回應200。另外兩則（AI微論壇的Han、百人導師申請的廖韋評）是完全不同的獨立系統，程式碼從未接官網雙寫，不是今天壞掉。教練聽完後裁示「所有報名系統都要走官網」，並指出官網訊息缺公司/Email兩欄。
-
-### 2. 🔴🔴🔴 官網API補齊公司/Email+AI微論壇接上官網雙寫，已推正式站
-`event-signup/db.py`的`attendees`表新增email欄位，`upsert_signup()`同步儲存；`app.py`的`/api/register`通知訊息加上公司/Email兩行(比照舊版格式)。已用真實POST測試驗證資料庫正確寫入(測試資料已清除，但過程中誤觸發一則真的LINE推播給教練，已誠實告知)。commit(workspace)`b8c837a45`。
-
-AI微論壇(嘉義場，ai-talk repo)新增第三路fetch打`event.bymyway.com/api/register`(slug=`bigtree-0828`)，GitHub commit`97dc479`後，教練說「推」，已完成Netlify手動zip部署(deploy`6a80639be6c3ebafa0b860bf`，額度40→39，手動補記quota)，curl驗證文字/圖片Content-Type/新JS程式碼皆已上線，用Chrome開啟正式站確認。
-
-百人導師申請(mentor100)：查證發現申請表單只收LINE ID沒收手機號碼，跟官網系統「手機=同一人身分證」的設計不合，直接塞LINE ID進手機欄位會導致誤判撞名或寫入失敗。提交A(表單加手機欄位)/B(先不動)兩個選項，**教練裁示B案**，已把先前預建的`mentor100-apply`事件格從event.db清除，不留孤兒設定。
-
-### 3. 🎯🎯🎯 賈維斯計畫：通盤規劃報告+全四階段同場落地
-教練用Fable 5拋出構想：希望AI像鋼鐵人的賈維斯一樣，開口就懂，不用每次交代背景。盤點現有家底(24個repo/35個Netlify站/23筆cron/10個本機服務/130+條記憶/57個試金石案例)後，核心診斷是「知識按時間存(日記)、不是按主題存(病歷)」，產出通盤規劃報告存於`knowledges/2026-08-16_賈維斯計畫_三合一智能管家系統通盤規劃.md`(commit`5fd6bf8e0`)，含現況盤點/核心診斷/解決方案(專案卡+自動接線員)/四大管理問題解答/小龍蝦分工可行性/誠實做不到清單(#15)/四階段施工計畫。
-
-教練說「做」後，同一場session內完整落地：
-
-**Phase 1（專案卡+自動接線員）**：`projects/cards/`建11張核心專案病歷(大樹小講/AI微論壇嘉義+台中/mentor100/event-signup/bni-chapters/BNI Connect/結繩領導學/tainan-calender/LINE三帳號/VPS)，`projects/INDEX.md`做別名路由表，`scripts/project_card_router.sh`做UserPromptSubmit hook自動接線員(教練訊息命中別名如「金門的活動」自動注入對應卡片，同session去重、單則訊息上限2張)。4組模擬測試(命中/去重/多卡/不誤觸發)全過，已註冊進`~/.claude/settings.json`(備份`/tmp/settings.json.bak-20260816101722`)。commit`70fa68ef7`。
-
-**Phase 2（Token每月自動體檢）**：`scripts/monthly_token_healthcheck.sh`逐一curl驗證9項憑證(Netlify/Cloudflare/WordPress/LINE三帳號/Telegram三帳號)，全綠靜默、有壞才輸出FAIL詳情。已用真實token(9/9 OK)+注入假token(正確觸發FAIL分支)雙向測試。用`openclaw cron create`建月度cron(id`5d7acd65`，每月1日09:20 Asia/Taipei，`--no-deliver`讓agent自主判斷，比照46e67e2e三關精神)，`cron run --wait`手動觸發驗證：全綠時正確安靜收隊、`deliveryStatus:not-requested`，沒有誤發訊息。`路徑大全_憑證層.md`新增Token總表(用途/到期日/上次驗證)。commit`cacef61f5`。
-
-**Phase 3（待辦到期提醒掛進晨報）**：`scripts/todo_staleness_check.py`解析待辦表格，對🔒/⏳/⚠️狀態列做①用task文字hash比對first_seen日期，卡住≥7天才提醒②抓文字裡M/D日期格式，未來3天內才提醒，全正常時安靜不輸出。3組測試驗證(真實表首跑建25筆baseline不誤報/手動backdate驗證卡住偵測/注入測試日期驗證到期偵測)全過。`morning_digest.sh`新增呼叫，刻意讓待辦提醒獨立於「有沒有commit」判斷之外(原本零commit會整段安靜跳過，改成沒commit但有待辦警示仍輸出)，既有06:00晨報cron(`f487652d`)完全不用改。commit`83adc0381`。
-
-**Phase 4（小龍蝦背景研究派工）**：`knowledges/SOP_小龍蝦背景研究派工.md`定義派工單五要素。首航實測：用`openclaw cron create --agent main --session isolated --delete-after-run`一次性派工「找5個BNI風格網站」，小龍蝦用web_search+web_fetch實測5個真實站點(BNI Global/Japan/Atlanta/Hong Kong/ニュース子站)HTTP 200存在，按四欄格式產出研究筆記存於`knowledges/研究_BNI分會參考網站_2026-08-16.md`，並自主整理共通元素摘要表。已用`ls`+`cat`實際讀取驗證(非空檔/非散文)，job跑完自動刪除不留重複排程。commit`289b83c17`。
-
-## 📋 下一場直接開工任務
-- **Phase 1驗收**：下次教練提到任一張卡的別名時，確認自動接線員真的有觸發(目前僅模擬測試過，未經過真實對話框驗證)
-- **報名雙寫觀察期**：先問教練是否已確認AI微論壇官網通知有正常收到，收到指令才考慮下一步
-- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
-- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
-- **賈維斯計畫Phase 2月度cron**：下次1號09:20會自動跑第一次真實排程(今天是手動觸發驗證的)，之後留意HEARTBEAT.md有無異常記錄
-
-## 🔑 本場關鍵檔案索引
-- `event-signup/app.py`+`db.py`：官網API補email欄位
-- `github_repos/ai-talk/index.html`：新增BYMYWAY_API第三路fetch
-- `knowledges/2026-08-16_賈維斯計畫_三合一智能管家系統通盤規劃.md`：通盤規劃報告
-- `projects/cards/`（11檔）+`projects/INDEX.md`+`scripts/project_card_router.sh`：Phase 1
-- `scripts/monthly_token_healthcheck.sh`+openclaw cron `5d7acd65`：Phase 2
-- `scripts/todo_staleness_check.py`+`.sh`+`morning_digest.sh`：Phase 3
-- `knowledges/SOP_小龍蝦背景研究派工.md`+`knowledges/研究_BNI分會參考網站_2026-08-16.md`：Phase 4
-- commit序列：`b8c837a45`→`97dc479`(ai-talk repo)→`a9fb72fca`→`5fd6bf8e0`→`70fa68ef7`→`cacef61f5`→`83adc0381`→`289b83c17`
-
----
-
 # 軍師接力棒 · 2026-08-16 v112（Mac桌面版 Sonnet 5，賈維斯計畫真實驗證+多項AI微論壇台中場後續任務）
 
 > 建立時間：2026-08-16 10:38 ~ 20:22（台灣時間）
@@ -204,6 +153,46 @@ AI微論壇(嘉義場，ai-talk repo)新增第三路fetch打`event.bymyway.com/a
 
 ---
 
-> 📦 **v110及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+# 軍師接力棒 · 2026-08-16 v113（Mac桌面版 Sonnet 5，ezPay電子發票操作能力驗證+3張真實發票開立+任務轉交聯想）
+
+> 建立時間：2026-08-16 20:47 ~ 22:03（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v112（Mac桌面版 Sonnet 5，賈維斯計畫真實驗證+多項AI微論壇台中場後續任務）
+> 本棒主軸：**教練問「可以幫我操作ezPay開發票嗎」，用claude-in-chrome連上教練已登入的Chrome實測全程可行。過程中摸清一整套開票SOP(自訂編號規則/含稅計算易踩坑/查詢3個月上限)，並用JS繞過瀏覽器分頁大量scrape出過去2年177筆發票歷史，抓出34位重複買受人+2組真重複+2組作廢重開案例。教練接著要開蘇志揚、宋映璇兩位會員的發票，查證發現「會員姓名只寫在發票備註欄，買受人名稱是公司行號」這個關鍵規律，靠開發票明細modal核對備註+Email+金額，順利備好兩張草稿。過程中宋映璇那張第一次送出「表單清空但其實沒真的建立」，回頭查證才抓到，重送一次才成功——已寫成試金石案例58通用提醒。最後教練裁示這項任務以後轉交聯想機器負責，已把完整SOP寫進待辦表+2份記憶檔。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯🎯 ezPay電子發票開立能力驗證成功，3張真實發票已開立
+教練提供可蕎有限公司(統編93734422)資料，用claude-in-chrome連上教練已登入的Chrome操作`inv.ezpay.com.tw`。過程摸清：①`單價/數量`欄位programmatic填值(`form_input`/直接改`.value`)常不觸發站方JS計算，要用真人打字(triple_click+type)或`element.click()`才穩定 ②「含稅」checkbox決定單價是否已含稅，勾了才會用26,800反推稅額而非另外加稅變28,140 ③教練自訂編號規則＝MMDD+兩碼流水號(如081601)。逐欄位填好、算出總計26,800後才讓教練確認，教練說「開」才送出。**三張發票皆已回頭查證存在**：可蕎有限公司(DQ92460802/081601)、蘇志揚所屬群岳大山生命工坊有限公司(DQ92460803/081602)、宋映璇所屬昇陽資產管理股份有限公司(DQ92460804/081603)，皆$26,800、已開立狀態。
+
+### 2. 🎯🎯 過去2年177筆發票歷史盤點+重複買受人分析
+教練要求查近2年發票清單。查證發現查詢區間最長3個月(超過會跳原生`alert()`卡住整個分頁，需`window.alert=function(){}`覆蓋)，改用JS累加8個季度查詢+自動翻頁，抓出177筆完整紀錄。分析出142位不同買受人、34位重複開立(多為BNI會員年度續約)，並主動抓到2組同日同金額的真重複(富貴傳承管理顧問股份有限公司、泓昱企業有限公司，教練尚未回覆是否需要處理)+2組作廢重開的正常修正案例(供教練參考)。
+
+### 3. 🔴🔴 發現「會員姓名藏在發票備註欄」的規律，靠查明細modal破解
+教練說「查蘇志揚及宋映璇」但用姓名搜尋查無結果，教練點破「他們是公司抬頭開票，姓名只在備註欄才看得到」。改用教練提供的統編查詢，開「查看/補發」發票明細modal核對備註欄，抓到蘇志揚=群岳大山生命工坊有限公司(備註「真鑽-蘇志揚」)、宋映璇=昇陽資產管理股份有限公司(備註「真鑽-宋映璇」)，連同Email/歷史金額一併取得，減少教練需要重複提供資料。
+
+### 4. 🔴🔴🔴 試金石案例58：ezPay表單「清空」不等於「真的送出成功」
+宋映璇那張發票第一次送出後表單清空，比照前兩次成功經驗判斷為成功，**回頭查證才發現ezPay系統裡查無這筆紀錄**，重新填一次(改用JS直接觸發`.click()`而非只改`.checked`屬性)才真的送出成功(DQ92460804)。已寫入試金石案例58：任何第三方網頁表單的「送出」動作，UI回饋不能當作成功的唯一證據，每一筆都要用查詢功能獨立驗證，尤其是金錢/法律效力的操作。完整SOP已寫入`claude-brain/reference_ezpay_invoice_issuing_procedure.md`。
+
+### 5. 🎯 教練裁示ezPay開發票任務轉交聯想機器
+教練問「同樣任務讓聯想電腦執行也可以嗎」，答覆技術上可行但登入狀態per機器不共通(跟BNI Connect CMS同款限制)。教練確認後裁示「之後這個工作給聯想做」。已把完整SOP(自訂編號規則/品項代碼/含稅計算陷阱/送出後查證方法)寫進待辦表第一條+`claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`+`reference_ezpay_invoice_issuing_procedure.md`，聯想下次開工讀接力棒即可直接上手，不用重新摸索。commit`9400216ff`。
+
+## 📋 下一場直接開工任務
+- **聯想機器**：下次開工先確認claude-in-chrome擴充功能已裝+已連線，並請教練在聯想那台電腦的Chrome重新登入一次ezPay，之後ezPay開發票任務由聯想接手
+- **2組真重複發票**(富貴傳承管理顧問股份有限公司2025-05-30/泓昱企業有限公司2025-01-21各重複開立一次)：教練尚未回覆是否需要處理(補折讓單或其他)
+- **過去2年177筆發票完整CSV清單**：教練尚未回覆是否要匯出成檔案下載(需要下載權限確認)
+- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
+- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
+
+## 🔑 本場關鍵檔案索引
+- `claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`：任務轉交決策記憶
+- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：完整ezPay操作SOP
+- `試金石/試金石_案例庫.md`案例58：表單清空≠送出成功的通用教訓
+- commit序列：`9400216ff`（接力棒+記憶檔更新）
+
+---
+
+> 📦 **v110及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
