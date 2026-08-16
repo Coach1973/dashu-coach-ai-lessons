@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-16 22:05:52**
+> **最後同步：2026-08-16 22:10:55**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -165,7 +165,47 @@
 
 ---
 
-> 📦 **v110及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+# 軍師接力棒 · 2026-08-16 v113（Mac桌面版 Sonnet 5，ezPay電子發票操作能力驗證+3張真實發票開立+任務轉交聯想）
+
+> 建立時間：2026-08-16 20:47 ~ 22:03（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v112（Mac桌面版 Sonnet 5，賈維斯計畫真實驗證+多項AI微論壇台中場後續任務）
+> 本棒主軸：**教練問「可以幫我操作ezPay開發票嗎」，用claude-in-chrome連上教練已登入的Chrome實測全程可行。過程中摸清一整套開票SOP(自訂編號規則/含稅計算易踩坑/查詢3個月上限)，並用JS繞過瀏覽器分頁大量scrape出過去2年177筆發票歷史，抓出34位重複買受人+2組真重複+2組作廢重開案例。教練接著要開蘇志揚、宋映璇兩位會員的發票，查證發現「會員姓名只寫在發票備註欄，買受人名稱是公司行號」這個關鍵規律，靠開發票明細modal核對備註+Email+金額，順利備好兩張草稿。過程中宋映璇那張第一次送出「表單清空但其實沒真的建立」，回頭查證才抓到，重送一次才成功——已寫成試金石案例58通用提醒。最後教練裁示這項任務以後轉交聯想機器負責，已把完整SOP寫進待辦表+2份記憶檔。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯🎯 ezPay電子發票開立能力驗證成功，3張真實發票已開立
+教練提供可蕎有限公司(統編93734422)資料，用claude-in-chrome連上教練已登入的Chrome操作`inv.ezpay.com.tw`。過程摸清：①`單價/數量`欄位programmatic填值(`form_input`/直接改`.value`)常不觸發站方JS計算，要用真人打字(triple_click+type)或`element.click()`才穩定 ②「含稅」checkbox決定單價是否已含稅，勾了才會用26,800反推稅額而非另外加稅變28,140 ③教練自訂編號規則＝MMDD+兩碼流水號(如081601)。逐欄位填好、算出總計26,800後才讓教練確認，教練說「開」才送出。**三張發票皆已回頭查證存在**：可蕎有限公司(DQ92460802/081601)、蘇志揚所屬群岳大山生命工坊有限公司(DQ92460803/081602)、宋映璇所屬昇陽資產管理股份有限公司(DQ92460804/081603)，皆$26,800、已開立狀態。
+
+### 2. 🎯🎯 過去2年177筆發票歷史盤點+重複買受人分析
+教練要求查近2年發票清單。查證發現查詢區間最長3個月(超過會跳原生`alert()`卡住整個分頁，需`window.alert=function(){}`覆蓋)，改用JS累加8個季度查詢+自動翻頁，抓出177筆完整紀錄。分析出142位不同買受人、34位重複開立(多為BNI會員年度續約)，並主動抓到2組同日同金額的真重複(富貴傳承管理顧問股份有限公司、泓昱企業有限公司，教練尚未回覆是否需要處理)+2組作廢重開的正常修正案例(供教練參考)。
+
+### 3. 🔴🔴 發現「會員姓名藏在發票備註欄」的規律，靠查明細modal破解
+教練說「查蘇志揚及宋映璇」但用姓名搜尋查無結果，教練點破「他們是公司抬頭開票，姓名只在備註欄才看得到」。改用教練提供的統編查詢，開「查看/補發」發票明細modal核對備註欄，抓到蘇志揚=群岳大山生命工坊有限公司(備註「真鑽-蘇志揚」)、宋映璇=昇陽資產管理股份有限公司(備註「真鑽-宋映璇」)，連同Email/歷史金額一併取得，減少教練需要重複提供資料。
+
+### 4. 🔴🔴🔴 試金石案例58：ezPay表單「清空」不等於「真的送出成功」
+宋映璇那張發票第一次送出後表單清空，比照前兩次成功經驗判斷為成功，**回頭查證才發現ezPay系統裡查無這筆紀錄**，重新填一次(改用JS直接觸發`.click()`而非只改`.checked`屬性)才真的送出成功(DQ92460804)。已寫入試金石案例58：任何第三方網頁表單的「送出」動作，UI回饋不能當作成功的唯一證據，每一筆都要用查詢功能獨立驗證，尤其是金錢/法律效力的操作。完整SOP已寫入`claude-brain/reference_ezpay_invoice_issuing_procedure.md`。
+
+### 5. 🎯 教練裁示ezPay開發票任務轉交聯想機器
+教練問「同樣任務讓聯想電腦執行也可以嗎」，答覆技術上可行但登入狀態per機器不共通(跟BNI Connect CMS同款限制)。教練確認後裁示「之後這個工作給聯想做」。已把完整SOP(自訂編號規則/品項代碼/含稅計算陷阱/送出後查證方法)寫進待辦表第一條+`claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`+`reference_ezpay_invoice_issuing_procedure.md`，聯想下次開工讀接力棒即可直接上手，不用重新摸索。commit`9400216ff`。
+
+## 📋 下一場直接開工任務
+- **聯想機器**：下次開工先確認claude-in-chrome擴充功能已裝+已連線，並請教練在聯想那台電腦的Chrome重新登入一次ezPay，之後ezPay開發票任務由聯想接手
+- **2組真重複發票**(富貴傳承管理顧問股份有限公司2025-05-30/泓昱企業有限公司2025-01-21各重複開立一次)：教練尚未回覆是否需要處理(補折讓單或其他)
+- **過去2年177筆發票完整CSV清單**：教練尚未回覆是否要匯出成檔案下載(需要下載權限確認)
+- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
+- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
+
+## 🔑 本場關鍵檔案索引
+- `claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`：任務轉交決策記憶
+- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：完整ezPay操作SOP
+- `試金石/試金石_案例庫.md`案例58：表單清空≠送出成功的通用教訓
+- commit序列：`9400216ff`（接力棒+記憶檔更新）
+
+---
+
+> 📦 **v110及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
