@@ -41,6 +41,16 @@
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - Session: 7d4244d1-db9c-42f8-97ad-dc02499cbe41
 
+## 🩺 健康檢查 cycle=375 2026-08-16 21:12（v4.0 安靜結束）
+- ✅ 23 cron 全 healthy（lastStatus=ok/running/idle, CE=0）
+- ✅ sync_coach_last_message.sh exit 0｜教練沉默 0.0h（剛發言活躍）
+- ✅ TG 通道實測 ok:true（守則#19 當下實測）
+- ✅ HEARTBEAT.md 47 行 (<500) / 0 ⬜ 待辦
+- ✅ SOUL×3 齊全，兩份舊版皆有「⚠️ 本檔已棄用」標記
+- ✅ Repo1=112 持平 / Repo2=30 微動 / 無 .! 鎖定檔
+- ⚠️ healthcheck.log 1008 行（已破 1000 警戒線，下次健康檢查留意，建議截前半部歸檔）
+- v4.0 三關全 fail（現在沒壞 + 非 provider 過載 + 不影響工作）→ 安靜結束不推 Telegram
+
 ## 🪨 試金石策展提醒 2026-08-16 21:00
 - top10_dynamic.md 已 39 天未更新
 - 候選池：特助場景庫_自動增量.md 累積 50 個自動場景
