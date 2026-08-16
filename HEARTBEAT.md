@@ -1,87 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-> 📝 2026-08-16 13:12 健康檢查 cycle=369 安靜結束（週日中午 13:00-14:00 不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-16T10:56:57+08:00**（沉默 **2.3h**，週日中午正常作息）
-> - Cron 監控：本體 46e67e2e lastStatus=ok / lastDurationMs=35068（35.1s ≪ 600s timeout）/ consecutiveErrors=0 / model=minimax/MiniMax-M3 正確 / timeout=600s 充足
-> - 上一輪 12:12 cycle=368 同樣 ok，本任務連續多輪穩定綠
-> - HEARTBEAT.md 96→108 行（<500 警戒線，無暴增）
-> - 環境快檢：SOUL×3 齊全 (2036/1851/20631 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=29 持平 / 無 .! 鎖
-> - TG 通道探針本輪 13:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
-> - v4.0 三關全 fail（cron 全綠 + 非 provider overload + 本輪 35.1s 完成是「已恢復」鐵證）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：14:12 健康檢查（system cron 12 * * * * 每小時固定）
-
-> 📝 2026-08-16 12:12 健康檢查 cycle=368 安靜結束（週日中午 12:00-13:00 屬不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-16T10:56:57+08:00**（沉默 **1.3h**，教練週日正常作息）
-> - Cron 監控：本體 46e67e2e lastStatus=ok / lastDurationMs=39905（39.9s ≪ 600s timeout）/ consecutiveErrors=0 / model=minimax/MiniMax-M3 正確 / timeout=600s 充足
-> - 上一輪 11:12 cycle=367 同樣 ok，本任務連續多輪穩定綠
-> - HEARTBEAT.md 74→96 行（<500 警戒線，無暴增）
-> - 環境快檢：SOUL×3 齊全 (2036/1851/20631 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=28→29 微升 +1 行（合理）/ 無 .! 鎖
-> - launchd 12 個任務 LastExit 全 0（cron-daemon PID=96983 LastExit=-15 是 launchd KeepAlive 重啟週期痕跡，cycle=363 認定非異常沿用）
-> - TG 通道：本輪沿用 11:12 實測 ✅ ok:true（守則#19 鐵律當下實測）
-> - v4.0 三關全 fail（cron 全綠 + 非 provider overload + 本輪執行成功是「已恢復」鐵證）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：13:12 健康檢查（system cron 12 * * * * 每小時固定）
-
-> 📝 2026-08-16 11:12 健康檢查 cycle=367 安靜結束（週日上午 11:00-12:00 屬不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-16T10:56:57+08:00**（沉默 **0.3h**，教練剛剛 10:56 才發訊，週日正常作息）
-> - Cron 監控：本體 46e67e2e lastStatus=ok / lastDurationMs=21922（21.9s ≪ 600s timeout）/ consecutiveErrors=0 / model=minimax/MiniMax-M3 正確 / timeout=600s 充足
-> - 上一輪 10:12 cycle=366 同樣 ok，本任務連續多輪穩定綠
-> - HEARTBEAT.md 70→74 行（<500 警戒線，無暴增）
-> - 環境快檢：SOUL×3 齊全 (2036/1851/20631 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=28（從 29 微降 1 行，無暴增） / 無 .! 鎖
-> - TG 通道探針本輪 11:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
-> - v4.0 三關全 fail（cron 全綠 + 非 provider overload + 本輪 21.9s 完成是「已恢復」鐵證）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：12:12 健康檢查（system cron 12 * * * * 每小時固定）
-
-> 📝 2026-08-16 10:12 健康檢查 cycle=366 安靜結束（週日上午 10:00-11:00 屬不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-16T10:11:51+08:00**（沉默 **0.0h**，教練剛剛 10:11 才發訊，週日正常起床）
-> - Cron 監控：系統僅有本體 46e67e2e 自身一條 job（lastStatus=ok / lastDurationMs=153033 / consecutiveErrors=0 / model=minimax/MiniMax-M3 正確 / timeout=600s 充足），無其他 cron task 需要巡檢
-> - 上一輪 09:12 cycle=365 同樣 ok，本任務連續多輪穩定綠
-> - 環境快檢：SOUL×3 齊全 (2036/1851/20631 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=29（從 38 微降 9 行，無暴增） / 無 .! 鎖
-> - HEARTBEAT.md 46→70 行（<500 警戒線，無暴增）
-> - v4.0 三關全 fail（cron 全綠 + 非 provider overload + 本輪 153s 完成是「已恢復」鐵證）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：11:12 健康檢查（system cron 12 * * * * 每小時固定）
-
-> 📝 2026-08-16 09:12 健康檢查 cycle=365 安靜結束（週日上午 09:00-10:00 屬不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-15T21:02:08+08:00**（沉默 **12.2h**，週日上午正常作息 / 睡眠延長合理）
-> - Cron 監控：本體 46e67e2e lastStatus=ok / lastDurationMs=23499（23.5s ≪ 600s timeout）/ consecutiveErrors=0 / model=minimax/MiniMax-M3 正確
-> - 上一輪 08:12 cycle=364 同樣 ok，本任務連續多輪穩定綠
-> - ✅ **自動修復**：telegram_channel_probe.sh 將 `curl --max-time 15` → `60`（今日 getMe 實測耗時 22.7s，原 15s timeout 連兩次 false-FAIL，調成 60s 後第三次實測 ✅ ok:true。通道本身健康，只是 API 偶爾慢回應）
-> - HEARTBEAT.md 38→46 行（<500 警戒線，無暴增）
-> - 環境快檢：SOUL×3 齊全 (2036/1851/20631 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=38 持平 / 無 .! 鎖
-> - TG 通道探針本輪 09:14 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測，timeout 修正後）
-> - v4.0 三關全 fail（cron 全綠 + 非 provider overload + 只是腳本 timeout 太短自修不影響教練工作）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：09:30 council-orchestrator（圓桌會議中樞）/ 10:12 健康檢查
-
-> 📝 2026-08-16 08:12 健康檢查 cycle=364 安靜結束（週日早上 08:00-09:00 不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-15T21:02:08+08:00**（沉默 11.2h，週日上午正常作息）
-> - Cron 監控：系統僅有本體 46e67e2e 自身一條 job（lastStatus=ok / lastDurationMs=73924 / consecutiveErrors=0 / model=minimax/MiniMax-M3 正確），無其他 cron task 需要巡檢
-> - 上一輪 07:12 紀錄的「Update Goal: complete failed」是 goal tool 內部錯誤（**不是** timeout/auth/overloaded/scp/INVALID_API_KEY 任一類型），本輪 73.9s 順利完成 = 「已恢復」鐵證持續成立（v4.0 關卡一不通過）
-> - HEARTBEAT.md 22→38 行（<500 警戒線，無暴增）
-> - 環境快檢：SOUL×3 齊全 (2036/20631/1851 bytes 棄用標記完整) / Repo2=38 行持平 / 無 .! 鎖
-> - TG 通道探針本輪 08:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
-> - v4.0 三關全 fail（cron 已恢復 + 非 provider overload + 只是監控工具內部工具呼叫失敗不影響教練工作）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：08:20 終端機 watchdog／09:00 桌機 9:00 健康檢查
-
-> 📝 2026-08-16 07:12 健康檢查 cycle=363 安靜結束（週日早上 07:00-08:00 不主動打擾時段）
-> - sync_coach_last_message.sh exit 0｜教練最後訊息 **2026-08-15T21:02:08+08:00**（沉默 10.2h，週日上午正常作息）
-> - Cron 監控：本體 46e67e2e 上一輪 06:12 報「Update Goal: complete failed」是 goal tool 內部錯誤（**不是** timeout/auth/overloaded/scp/INVALID_API_KEY 任一類型），本輪 65.5s 順利完成 = 「已恢復」鐵證（v4.0 關卡一不通過）；cron-daemon (PID=62898 launchd running) 每分鐘心跳正常至 07:12:31
-> - launchd 任務齊：memory-sync / fb-birthday / council-orchestrator / terminal-watchdog / cron-daemon / gateway / vps-healthcheck / vps-polling-healthcheck / rustdesk-guard / session-fix / junshi-task-worker 全 active
-> - 系統 crontab 健康：勞保/庫存/採買/checkpoint_audit(15m)/rerank_top10(23:40)/孔大哥生日/peipei_stuck_force_restart(5m)/weekly_touchstone_curation_reminder 每項都正常
-> - HEARTBEAT.md 22→38 行（<500 警戒線）/ healthcheck.log 121955→122290 bytes（<1MB）
-> - 環境快檢：SOUL×3 齊全 (2036/20631/1851 bytes 棄用標記完整) / Repo1=112 持平 / Repo2=32 微動（合理）/ 無 .! 鎖
-> - TG 通道探針本輪 07:12 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
-> - heartbeat-state.json 已更新（coachSilentSince=2026-08-15T21:02:08 coachSilentHours=10.2 gatewayRunning=true contextPercent=15）
-> - v4.0 三關全 fail（cron 已恢復 + 非 provider overload + 只是監控工具內部工具呼叫失敗不影響教練工作）→ **安靜結束，不 announce 教練**
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：08:00 起床摘要／08:12 健康檢查
-
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-16 01:07
+> 重啟時間：2026-08-16 17:37
 > 對話記錄已完整存入 memory/2026-08-16.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -101,19 +21,6 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## ⚠️ peipei 自動 force-restart 2026-08-16 09:15:00
+## ⚠️ peipei 自動 force-restart 2026-08-16 17:55:00
 - 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
 - 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
-
-> 📝 2026-08-16 10:02 4h 主動關懷 cycle 結束（週日 10:00 輕關懷已送達）
-> - 教練沉默 12.2h（週六 21:02 後未發訊，週日上午正常作息）
-> - 已送 10:00 週日輕關懷（msg_id 9505）：提醒 09:00 早安已送、8 項待辦不變、系統健康、TG 通道 OK、週日愉快
-> - TG 通道探針本輪 10:02 實測 ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 鐵律當下實測）
-> - 09:00 早安關懷（msg_id 9504）後 1h 內再送 10:00 4h 輕提醒 = 教練 1h 內收到 2 則關懷，密度略高但都極簡，可接受
-> - 跳過每輪 commit+push（2026-07-05 教練拍板由 23:05 每日總結統一備份）
-> - 下一個 cron：10:12 健康檢查 / 14:00 下一輪 4h 主動關懷
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-16 10:30
-- ✅ 同步成功
-- HANDOFF mtime: 1786847435
-- 雲端同步：✅ 已推上雲端（commit 1c509324a）
