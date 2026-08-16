@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🟡 | **AI微論壇台中場(9/23-24)網頁概念稿：9位講師僅剩彭晉澄查無資料** | ⏳待教練確認GitHub Pages概念稿+提供彭晉澄資料 | 新repo`ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。多輪迭代：兩天套票2988元(單日1800)、大樹教練固定排每天下午第一堂並各有專屬分享主題(只出一張嘴叫AI做事/如何將AI導入LINE成為你的生活小幫手)、場地沃茲新創空間忠明館(台中市南屯區忠明南路478號B1)、報名費含午餐+下午茶、藍新金流付款連結已接上。講師資料從mentor100撈取：書銘改名JC老師、林佳伶=Lavi、廖韋評皆已補齊簡介/照片/連結。王俊甫查證發現mentor100照片其實是FB預設空白大頭貼截圖、簡介只有姓名重複，已請教練協調補件，同步在mentor100後台改為草稿不對外顯示。**彭晉澄仍完全查無mentor100任何記錄**，等教練提供才能補上。下次開工先問教練GitHub Pages概念稿看過沒問題了嗎，沒問題才能推正式站 |
+| 🟡 | **AI微論壇台中場(9/23-24)網頁概念稿：彭晉澄申請已處理，等他自填資料** | ⏳待彭晉澄自填+教練確認GitHub Pages概念稿 | 新repo`ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。多輪迭代：兩天套票2988元(單日1800)、大樹教練固定排每天下午第一堂並各有專屬分享主題(只出一張嘴叫AI做事/如何將AI導入LINE成為你的生活小幫手)、場地沃茲新創空間忠明館(台中市南屯區忠明南路478號B1)、報名費含午餐+下午茶、藍新金流付款連結已接上。講師資料從mentor100撈取：JC老師、Lavi(全站已統一英文名，含2026-08-16修復時間軸殘留)、廖韋評皆已補齊簡介/照片/連結。王俊甫查證發現mentor100照片其實是FB預設空白大頭貼截圖、簡介只有姓名重複，已請教練協調補件，同步在mentor100後台改為草稿不對外顯示。**彭晉澄2026-08-16已送出mentor100申請，已建草稿+編輯連結交給教練轉發**，等他自己填完+教練後台預覽確認才算補齊。Lavi主題2026-08-16改為「AI× Canva：把專業轉譯成「看得懂、記得住、願意買」的品牌圖文」。下次開工先問教練彭晉澄填完了嗎、GitHub Pages概念稿整體看過沒問題了嗎，沒問題才能推正式站 |
 | 🟢 | **mentor100後台/admin頁500錯誤修復+新增「改為草稿/已發佈」一鍵切換功能** | ✅2026-08-15本場完成 | 教練回報`mentor100.bymyway.com/admin`當機Internal Server Error，查log抓到根因：`db.delete_mentor()`只刪mentors記錄，沒同步清理applications表的孤兒外鍵(教練刪除id69導師後，申請名單裡仍有一筆指向已刪除記錄，模板嘗試組連結時BuildError)。已止血(清空壞資料)+根治(delete_mentor()同步清空關聯外鍵+模板判斷改用`not a.edit_token`更穩健)，用真實app物件完整模擬render_template()驗證通過，commit`87031ec`。教練接著要求後台要能自己把已發佈的講師改回草稿(某些是教練先建好架子但講師本人還沒補資料)，原系統完全沒有這個功能入口，已新增`toggle_mentor_status()`+新route+列表頁一鍵切換按鈕，commit`23304df`。王俊甫已依此改為草稿 |
 | 🟢 | **mentor100「種子」標籤依教練指示重新盤點** | ✅2026-08-15本場完成 | 教練要求AI微論壇/7-29場/8-28嘉義場有實際擔任講師的才標種子，其餘(含教練手動建立的)都不算種子。已查證3個活動講師名單並更新，目前種子14位：7/29場3位(王彤/蘇秦/燒茶林祥禔)+8/28嘉義場3位(季哥/洪詠清/林韋銘)+AI微論壇台中場8位(大樹教練/施育廷/曾思遠/李中閔/JC老師/廖韋評/Lavi/王俊甫)。彭晉澄因mentor100查無記錄暫無法標記，待教練補資料後一併處理 |
 | 🟢 | **8月26日(高雄場)報名人數查詢：6人** | ✅2026-08-14完成 | 查`event.db`的`advance_registrations`表，原始7筆backfill記錄中2筆(gl t86/燒茶)電話號碼相同判斷為同一人重複報名，去重複後6人。已提醒教練這個數字只反映教練貼過的歷史通知文字，非即時查詢，雙寫系統上線後這場目前0筆新報名(signups表) |
@@ -97,53 +97,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-15 v110（Mac桌面版 Sonnet 5，AI微論壇台中場網頁概念稿+mentor100後台500錯誤修復）
-
-> 建立時間：2026-08-14 17:12 ~ 2026-08-15 18:25（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v109（Mac桌面版 Sonnet 5，官方LINE推播驗證+品牌短網域上線+Cloudflare API Token申請）
-> 本棒主軸：**兩條主線。①教練交辦新任務：9/23-24台中場AI微論壇（收費、9位講師）要先做GitHub Pages概念稿來回確認。從0建立`ai-forum-taichung`新repo，比照既有AI微論壇風格但升級優化，經過十餘輪教練逐步調整（套票價格/大樹教練專屬分享主題/場地/議程排序/付款連結/字級/講師照片裁切）逐步定案，講師資料持續從mentor100撈取補齊，最終只剩彭晉澄一位完全查無資料。②教練回報mentor100後台500當機，查證抓到「刪除導師記錄未清理申請名單孤兒外鍵」的真根因，止血+根治雙管齊下，並依教練要求新增後台從未有過的「已發佈改草稿」一鍵切換功能，同時依教練指示重新盤點14位「種子」講師標籤。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 AI微論壇台中場(9/23-24)網頁概念稿：十餘輪迭代定案
-教練提供9位講師名單+基本場次資訊，要求先做視覺概念稿在GitHub上來回確認再推正式站。新建`Coach1973/ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。查證mentor100發現9位裡僅5位有完整資料，其餘4位（林佳伶/王俊甫/彭晉澄/廖韋評）誠實標示「資料籌備中」不瞎編，逐一交代給教練。
-
-教練持續加碼調整，逐輪落實：兩天套票2988元(單日1800，比分開報名省612)；大樹教練除開場/總結外，兩天各安排一場專屬分享（只出一張嘴叫AI做事／如何將AI導入LINE成為你的生活小幫手），且教練主動要求固定排在「下午第一堂最容易犯睏的時段」由自己扛；場地補上沃茲新創空間忠明館（台中市南屯區忠明南路478號B1）；議程從「上午3下午2」改「上午2下午3」；報名費含午餐+下午茶；接上藍新金流付款連結（`core.newebpay.com`），誠實告知教練連結對應金額尚未逐一核對；亮點bar字級歷經兩輪調整（先放大到56/40px，教練回饋電腦版看起來不協調，改成四組說明文字統一字級、以最長文字不換行為準抓出24px）。
-
-期間主動查證並修復兩張講師照片頭部被裁切的問題（施育廷、JC老師原名書銘）——正方形頭像框用cover模式對直式照片預設置中裁切，頭頂距原圖邊緣太近會被切掉，改用`object-position:center top`精準修復，且JC老師這張是主動預防、不等教練回報。
-
-**講師資料補齊進度**：書銘→JC老師（更名+補齊簡介/照片/連結）、林佳伶=Lavi（教練澄清是同一人）、廖韋評（含教練事後更新照片的二次同步）皆已從mentor100完整撈取上線。**王俊甫查證發現mentor100照片其實是Facebook預設空白大頭貼截圖、簡介只有姓名重複**，未採用，同步在mentor100後台改為草稿。**彭晉澄仍完全查無mentor100任何記錄**，是唯一卡住項。commit序列：`d27464b`→`f6b5c5e`→`c2cda50`→`1d4b6d8`→`aa90a9a`→`4d1c48c`→`6ab0649`→`932a652`→`424ac65`→`495546d`。
-
-### 2. 🔴🔴🔴🔴 mentor100後台/admin頁500錯誤：孤兒外鍵根因修復
-教練回報`mentor100.bymyway.com/admin`顯示Internal Server Error。查`webapp.error.log`抓到`werkzeug.routing.exceptions.BuildError`，追溯到`templates/admin_list.html`第73行對已刪除的mentor記錄組`url_for('join_edit', token=None)`失敗。根因：`db.delete_mentor()`只執行`DELETE FROM mentors`，沒有同步清理`applications`表指向該id的外鍵——教練先前刪除id69導師後，申請名單裡「Jack Du」那筆記錄變成指向空氣的孤兒引用，模板渲染到那一筆就整頁死。
-
-止血：清空該筆孤兒外鍵資料，立即用真實app物件+資料庫連線完整模擬`render_template()`驗證恢復正常（非僅推論）。根治：①`delete_mentor()`刪除時同步`UPDATE applications SET mentor_id=NULL WHERE mentor_id=?`②模板判斷條件從`not a.mentor_id`改為`not a.edit_token`雙重防護。commit`87031ec`，重啟服務後本機+正式網域皆驗證200/302正常。
-
-### 3. 🟢 後台新增「改為草稿/已發佈」一鍵切換功能
-教練指出：某些講師是教練自己先建好資料架子、但講師本人還沒補齊資料，這種情況需要能隨時改回草稿不對外顯示——查證確認`admin_mentor_edit`從未處理過`status`欄位，教練確實沒有任何入口能自己切換發佈狀態。新增`db.toggle_mentor_status()`（CASE WHEN切換published/draft）+新route`/admin/mentors/<id>/toggle-status`+列表頁按鈕（文字依當前狀態動態顯示）。commit`23304df`，已用真實資料庫模擬驗證64筆published正確顯示「改為草稿」、王俊甫(draft)正確顯示「改為已發佈」。
-
-### 4. 🟢 mentor100「種子」標籤依教練指示重新盤點
-教練要求：AI微論壇+其他有實際擔任講師的活動才標種子，教練自己手動建的（非講師身份）都不算種子。第一輪只設AI微論壇8位講師為種子，教練隨即澄清王彤/蘇秦/燒茶林祥禔是「7/29的講師」需要保留種子——查證後改為完整盤點三場活動：7/29場3位+8/28嘉義場3位（查ai-talk repo講師陣容比對mentor100 id）+AI微論壇台中場8位，共14位種子，其餘全部改回自助送出。直接改資料庫並用真實模板渲染驗證badge數量正確。
-
-## 📋 下一場直接開工任務
-- **AI微論壇概念稿**：問教練GitHub Pages版本整體看過確認沒問題了嗎，確認後才能推正式站（且要問是否要新建bigtree-tw之外的獨立正式網址，或整合進既有大樹小講/AI微論壇品牌）
-- **彭晉澄資料**：教練若已取得資料，記得同步更新mentor100+AI微論壇網頁+標記種子
-- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
-- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
-- 報名雙寫觀察期：先問教練bymyway.com新舊系統是否都已確認收到真實報名
-
-## 🔑 本場關鍵檔案索引
-- `github_repos/ai-forum-taichung/index.html`：全新9/23-24 AI微論壇台中場概念稿
-- `github_repos/mentor100/db.py`：`delete_mentor()`同步清理孤兒外鍵+新增`toggle_mentor_status()`
-- `github_repos/mentor100/app.py`：新route`admin_mentor_toggle_status`
-- `github_repos/mentor100/templates/admin_list.html`：判斷條件加固+新增切換按鈕
-- `github_repos/mentor100/mentors.db`：source(種子)欄位14位重新盤點，直接改資料庫
-- commit(ai-forum-taichung)：`d27464b`~`495546d`共10筆
-- commit(mentor100)：`87031ec`+`23304df`
-
----
-
 # 軍師接力棒 · 2026-08-16 v111（Mac桌面版 Sonnet/Fable 5，賈維斯計畫通盤規劃+全四階段落地）
 
 > 建立時間：2026-08-16 09:44 ~ 10:30（台灣時間）
@@ -195,6 +148,55 @@ AI微論壇(嘉義場，ai-talk repo)新增第三路fetch打`event.bymyway.com/a
 
 ---
 
-> 📦 **v109及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+# 軍師接力棒 · 2026-08-16 v112（Mac桌面版 Sonnet 5，賈維斯計畫真實驗證+多項AI微論壇台中場後續任務）
+
+> 建立時間：2026-08-16 10:38 ~ 20:22（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v111（Mac桌面版 Sonnet/Fable 5，賈維斯計畫通盤規劃+全四階段落地）
+> 本棒主軸：**教練深化賈維斯協作默契的討論後，連續丟出多個「生活化指涉」測試任務，賈維斯接線員在真實對話中被驗證多次成功觸發。完成大樹作品總覽上架台中場+mentor100新增佩佩老師簡介(教練故意不給網址考驗查找能力)，隨後修復佩佩老師照片頭部留白過多問題，處理彭晉澄申請的編輯連結產生，最後完成Lavi主題更新+全站「林佳伶」統一改用英文名，過程中順手抓出並修復「書銘」殘留的舊帳。本棒也自我抓到一個誠信缺口：稍早口頭承諾「已存進記憶」但沒有真的寫檔案，總結流程盤點時發現並補上，寫入試金石等級的反面教材。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯 賈維斯計畫深化討論+真實驗證成功
+教練用「鋼鐵人賈維斯」比喻進一步闡述理想協作模式：只講結果和生活化指涉（日期/場合），不用交代技術背景，且要求AI主動評估「有沒有更簡單的做法」而非機械照做。當場示範判斷：教練問要不要為口語表達建關鍵字庫，答案是不用——事實基礎（專案卡）打好，語言理解力自然發揮，比堆關鍵字規則庫更簡單也更有效。**這場對話裡賈維斯接線員被驗證多次成功觸發**（教練提到「大樹小講」「臺中論壇」「百人導師」「簽到系統」時，對應專案卡皆自動注入），證明Phase 1機制真實可用，不只是模擬測試。
+
+### 2. 🔴🔴 簽到／抽獎系統重複性評估：查證後發現已於8/9合併，不需重做
+教練要求評估數位簽到跟掃QR玩抽獎是否重複。查`make_qr.py`docstring+`checkin.html`按鈕文字+`/checkin`與`/wheel`共用`get_current_event()`三項證據，確認**這兩套系統已在2026-08-09合併成同一套**（QR立牌換了標語，但背後同一個網址同一套邏輯），教練感覺到的重複是真的但已被處理過。同場確認「依照最新場次自動排」的需求也已存在（`get_current_event()`的auto模式，含同日多場次依start_time判斷邏輯），無需新開發。
+
+### 3. 🎯 大樹作品總覽上架9/23-24台中場+mentor100新增佩佩老師（教練故意不給網址測試查找能力）
+`coach888`放進「不公開（個人檢索用）」區，commit`d842648`，已推送GitHub Pages確認上線。mentor100新增佩佩老師簡介：教練只說「個人品牌頁」不給連結，自己從GitHub作品清單裡找到`peipei-art`repo（標題「陳佩君老師｜鋼琴家・音樂教育家」）確認吻合，用真實頁面文字寫簡介、抓肖像照、連結設到GitHub Pages，新增mentor id=75，服務重啟+Chrome視覺確認。
+
+### 4. 🔧 佩佩老師照片頭部留白過多修復
+教練回報照片「太低」，實際查看圖片後診斷根因：原始照片背景留白約佔上方15%，套用全站共用的`object-position:top`裁切規則後臉被往下推。因為是全站共用CSS（不是per-mentor override），選擇裁切照片本身而非動CSS（避免影響其他74位講師）。用PIL模擬「修復前/修復後」卡片裁切效果比對確認改善後才套用，更新mentor id=75的photo_filename，刪除舊檔案不留孤兒。mentor100的DB/uploads不進git（`.gitignore`排除），純本機操作。
+
+### 5. 🎯 彭晉澄申請處理+923最後一位講師確認
+彭晉澄13:19送出mentor100申請，直接用`db.create_draft_mentor()`+`db.link_application_mentor()`建草稿(id=76)+編輯連結給教練。**過程中自我抓到一個小失誤**：手動建立時把Python變數名稱`DRAFT_PLACEHOLDER_PHOTO`字面字串打進資料庫，而非它代表的真實檔名`_placeholder.jpg`，送出前自查發現並修正，如實告知教練沒有隱瞞。17:30教練問「923最後一位講師」的編輯連結，查證applications表確認沒有更新的申請，判斷就是彭晉澄本人，回覆同一個連結。
+
+### 6. 🎯 Lavi主題更新+全站「林佳伶」改用英文名+順手修復「書銘」殘留
+教練指定Lavi(9/23場)主題改為「AI× Canva：把專業轉譯成「看得懂、記得住、願意買」的品牌圖文」。全站搜尋「林佳伶」確認只殘留在ai-forum-taichung時間軸+checklist兩處（SPEAKERS陣列本來就是Lavi），一併改掉。**同一行順手發現「書銘」在同樣兩處也還沒改成「JC老師」**（先前改名時漏了時間軸），跟本次是同類問題一併修復，已誠實告知教練這是順手多做的部分。commit`d715b2c`，已推送GitHub Pages確認上線+Chrome視覺確認。
+
+### 7. 🔴 誠信缺口自我糾正：口頭承諾「已存記憶」卻沒真的寫檔案
+稍早回應教練賈維斯協作默契時，說了「已把這段對話的核心默契存進記憶」，但實際上沒有呼叫Write工具——是說了沒做，違反守則#05「凡走過必留痕跡」。「總結」流程盤點時自己發現這個缺口，立即補寫`project_jarvis_plan_2026-08-16.md`+`feedback_jarvis_outcome_delegation_style.md`兩份記憶（後者內含這次的反面教材段落），commit`5ef5c3214`。
+
+## 📋 下一場直接開工任務
+- **AI微論壇台中場概念稿**：9位講師資料全部到齊（彭晉澄申請已處理，等他自己填完+教練預覽確認），下次可以問教練整體概念稿是否可以推正式站
+- **報名雙寫觀察期**：先問教練bymyway.com新舊系統是否都已確認收到真實報名
+- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
+- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
+- 佩佩老師照片角度：教練尚未回饋修復後效果是否滿意，下次先問
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/coach888/index.html`：新增台中場概念稿連結
+- `github_repos/mentor100/mentors.db`：新增佩佩老師(id=75)+彭晉澄草稿(id=76)，DB直改不進git
+- `github_repos/ai-forum-taichung/index.html`：Lavi主題+林佳伶/書銘改名
+- `claude-brain/project_jarvis_plan_2026-08-16.md`+`feedback_jarvis_outcome_delegation_style.md`：新增記憶
+- commit(coach888)：`d842648`
+- commit(ai-forum-taichung)：`d715b2c`
+- commit(記憶庫)：`5ef5c3214`
+
+---
+
+> 📦 **v110及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
