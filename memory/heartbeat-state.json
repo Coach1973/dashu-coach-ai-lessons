@@ -2,24 +2,24 @@
   "lastChecks": {
     "gmail": 1785263700,
     "calendar": 1785263700,
-    "heartbeat_poll": 1786842037,
+    "heartbeat_poll": 1786845777,
     "system_health": 1786802624,
-    "telegram_channel": 1786842037,
+    "telegram_channel": 1786845777,
     "junshi_queue": 1785599760,
     "cron_list": 1786773600,
-    "care_4h": 1786842037,
+    "care_4h": 1786845777,
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786842037,
     "evening_greeting": 1785766895,
-    "coach_silence_sync": "2026-08-16T09:12:03.787459+08:00"
+    "coach_silence_sync": "2026-08-16T10:12:04.014732+08:00"
   },
-  "lastHeartbeat": "2026-08-16T09:00:37.815576+08:00",
-  "lastHeartbeatNote": "週日 09:00 早安關懷：教練沉默 12h（週六 21:02 後未發訊）｜TG 通道探針 ok:true｜週日無急事｜morningGreetingSent:true｜msg_id 9504 送達｜系統快照：Repo1 112 untracked + Repo2 38 modified 為常態基線",
+  "lastHeartbeat": "2026-08-16T10:02:57.431651+08:00",
+  "lastHeartbeatNote": "週日 10:00 4h cycle 輕關懷：09:00 早安已送、10:00 4h 再輕提醒（msg_id 9505）、8 項待辦不變、TG 通道 OK、系統健康",
   "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Saturday",
+    "timeOfDay": "morning",
+    "dayOfWeek": "Sunday",
     "isQuietHours": true,
-    "quietHoursReason": "週六 22:00 屬晚間休息時段前緣，宜極簡關懷",
+    "quietHoursReason": "週日 10:00 仍屬週末早休時段，輕量關懷不施壓",
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "contextPercent": 14,
@@ -37,8 +37,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-15T22:03:44.349846+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
-    "coachSilentSince": "2026-08-15T21:02:08+08:00",
-    "coachSilentHours": 12.2,
+    "coachSilentSince": "2026-08-16T10:11:51+08:00",
+    "coachSilentHours": 0.0,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
@@ -61,7 +61,7 @@
     },
     "messageToolAvailable": false,
     "morningGreetingSent": false,
-    "nextPlannedAction": "安靜結束。22:20 50封信提醒會自動發，22:12 健康檢查會自動 loop。",
+    "nextPlannedAction": "10:12 健康檢查 / 14:00 下一輪 4h 主動關懷",
     "cronHealthCheck": {
       "name": "🦞 每4小時主動關懷",
       "recentPattern": "cycle=345 (14:00) → cycle=350 (18:00) → cycle=355 (22:00)",
@@ -71,12 +71,21 @@
     "messageToolBypass": "✅ 已驗證：jq '.channels.telegram.accounts.bot_main.botToken' + python urllib 直送 (message 9489 成功)",
     "restartNoticeDelivered": true,
     "nextScheduledCrons": [
-      "22:12 🦞 每小時任務健康檢查",
-      "22:20 📨 晚間提醒寄 50 封信（20天計畫 day 4/20）",
+      "10:12 🦞 每小時任務健康檢查",
+      "10:30 🔄 sync-執行細則/sync-特助心法",
+      "14:00 🦞 每4小時主動關懷",
+      "20:00 📊 LINE@教練都在想什麼 每日兩次使用回報",
+      "22:20 📨 晚間 22:20 提醒寄 50 封信（20天計畫 day 5/20）",
       "23:00 🔴 場景化升華+系統健檢",
       "23:05 🦞 小龍蝦每日三機總結"
     ],
     "lastDeliveries": [
+      {
+        "ts": "2026-08-16T10:02:57.431651+08:00",
+        "channel": "telegram-curl-bypass",
+        "to": "6124913915",
+        "purpose": "週日 10:00 「每4小時主動關懷」：週日早安輕關懷（msg_id 9505）"
+      },
       {
         "ts": "2026-08-16T09:00:37.815576+08:00",
         "channel": "telegram-curl-bypass",
