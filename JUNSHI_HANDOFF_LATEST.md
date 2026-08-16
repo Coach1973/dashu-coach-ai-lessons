@@ -178,6 +178,9 @@ AI微論壇(嘉義場，ai-talk repo)新增第三路fetch打`event.bymyway.com/a
 ### 7. 🔴 誠信缺口自我糾正：口頭承諾「已存記憶」卻沒真的寫檔案
 稍早回應教練賈維斯協作默契時，說了「已把這段對話的核心默契存進記憶」，但實際上沒有呼叫Write工具——是說了沒做，違反守則#05「凡走過必留痕跡」。「總結」流程盤點時自己發現這個缺口，立即補寫`project_jarvis_plan_2026-08-16.md`+`feedback_jarvis_outcome_delegation_style.md`兩份記憶（後者內含這次的反面教材段落），commit`5ef5c3214`。
 
+### 8. 🎯🎯 賈維斯計畫同步到小龍蝦（教練：「至少邏輯要過去」），OpenClaw版接線員上線
+教練「總結」收工後追加要求：賈維斯專案卡機制不能只在終端機/桌面版生效，要同步到小龍蝦（Telegram/LINE）。查證確認Claude Code hooks(`~/.claude/settings.json`)跟OpenClaw gateway hooks(`~/.openclaw/hooks/`)是完全不同的runtime，Phase 1做的`project_card_router.sh`對小龍蝦沒有作用，必須另建OpenClaw版本。比照已驗證運作的`rule-reminder`/`knowledge-search-inject`兩支hook的`message:preprocessed`+`event.context.inject.push({role:'system',content})`注入模式，新增`~/.openclaw/hooks/project-card-router/handler.js`，跟軍師版共用同一份`projects/INDEX.md`+`projects/cards/`（單一事實來源，教練新增卡片兩邊自動生效）。Scope限定`agentId==='main'`（比照案例56教訓，涵蓋教練Telegram直接對話+龍蝦小助教LINE default帳號，不對bni_tainan/jiaolian_thoughts等public agent生效，避免內部專案病歷外洩）。7組單元測試全過（命中/去重/多卡/scope隔離/LINE default帳號解析/不誤觸發）。已重啟gateway，**用真實gateway log而非僅dry-run驗證**：log證實`config hot reload applied (hooks.internal.entries.project-card-router)`，loaded internal hook handlers數量14→15，無任何error紀錄。commit(外層`~/.openclaw`倉庫)`6e7cc1a0`，備份`/tmp/openclaw.json.bak-20260816203240`。**尚未做的驗證**：還沒讓教練實際傳一則真實Telegram/LINE訊息測試小龍蝦端真的有注入到agent turn，下次教練用小龍蝦聊到專案別名時可以順口確認。
+
 ## 📋 下一場直接開工任務
 - **AI微論壇台中場概念稿**：9位講師資料全部到齊（彭晉澄申請已處理，等他自己填完+教練預覽確認），下次可以問教練整體概念稿是否可以推正式站
 - **報名雙寫觀察期**：先問教練bymyway.com新舊系統是否都已確認收到真實報名
@@ -185,15 +188,18 @@ AI微論壇(嘉義場，ai-talk repo)新增第三路fetch打`event.bymyway.com/a
 - 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
 - **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
 - 佩佩老師照片角度：教練尚未回饋修復後效果是否滿意，下次先問
+- **賈維斯計畫小龍蝦端驗證**：下次教練用Telegram/LINE跟小龍蝦聊到專案別名，確認`project-card-router`hook真的有注入卡片內容
 
 ## 🔑 本場關鍵檔案索引
 - `github_repos/coach888/index.html`：新增台中場概念稿連結
 - `github_repos/mentor100/mentors.db`：新增佩佩老師(id=75)+彭晉澄草稿(id=76)，DB直改不進git
 - `github_repos/ai-forum-taichung/index.html`：Lavi主題+林佳伶/書銘改名
 - `claude-brain/project_jarvis_plan_2026-08-16.md`+`feedback_jarvis_outcome_delegation_style.md`：新增記憶
+- `~/.openclaw/hooks/project-card-router/`：賈維斯計畫小龍蝦端OpenClaw hook
 - commit(coach888)：`d842648`
 - commit(ai-forum-taichung)：`d715b2c`
 - commit(記憶庫)：`5ef5c3214`
+- commit(外層`~/.openclaw`)：`6e7cc1a0`
 
 ---
 
