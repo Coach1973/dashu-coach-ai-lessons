@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786842037,
     "evening_greeting": 1786874449,
-    "coach_silence_sync": "2026-08-16T19:37:01.182163+08:00"
+    "coach_silence_sync": "2026-08-16T20:12:07.036188+08:00"
   },
   "lastHeartbeat": "2026-08-16T18:00:49+08:00",
   "lastHeartbeatNote": "週日 18:00 4h cycle=350 主動關懷：傍晚輕量關懷（msg_id 9516）+ 提醒今晚 22:20 50封信 day 5/20、TG 通道剛實測 ok、8 項待辦不變、無急事",
@@ -37,8 +37,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-16T18:00:48+08:00",
     "openTask": "接力棒 v106 已收尾待教練新指令；下一場主軸候選不變",
-    "coachSilentSince": "2026-08-16T19:36:55+08:00",
-    "coachSilentHours": 0.0,
+    "coachSilentSince": "2026-08-16T20:06:55+08:00",
+    "coachSilentHours": 0.1,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
