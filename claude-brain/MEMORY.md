@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md) — 已在真實對話驗證接線員觸發成功；新增專案記得建卡+加路由
+- [🔴🔴 教練要的是結果導向委派+生活化指涉理解，不是堆關鍵字庫(2026-08-16)](feedback_jarvis_outcome_delegation_style.md) — 事實基礎(專案卡)+語言理解力才是正解；反面教材：口頭說存記憶卻沒真的寫檔案
 - [🎯🎯 AI微論壇台中場(9/23-24)網頁概念稿建置中+mentor100後台500錯誤(孤兒外鍵)修復(2026-08-15)](project_ai_forum_taichung_and_mentor100_fix_2026-08-15.md) — 講師僅剩彭晉澄查無資料；delete類操作要記得查外鍵關聯
 - [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md) — Cloudflare彈窗卡自動化案例；解除障礙後要主動驗證+誠實說明原因
 - [🔧 OpenClaw gateway hooks只跑Mac mini單一gateway，不像Claude Code hooks需三機移植(2026-08-14)](feedback_openclaw_gateway_hooks_not_per_machine.md) — 修完hook前先分清這支是gateway hook還是settings.json hook，再決定要不要排三機同步待辦
