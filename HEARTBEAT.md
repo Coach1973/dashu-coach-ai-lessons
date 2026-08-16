@@ -65,3 +65,26 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786889120
 - 雲端同步：✅ 已推上雲端（commit e91a39097）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-16 22:10
+- ✅ 同步成功
+- HANDOFF mtime: 1786889181
+- 雲端同步：✅ 已推上雲端（commit 24bbf7904）
+
+## 💓 心跳 2026-08-16 22:20（cron-event 觸發，簡短巡檢）
+- 熱啟動 3 核心已就位（特助心法注入 + SOUL.md 注入 + 接力棒已讀 v112/v113）
+- ✅ SOUL.md 三份齊全、兩份舊版皆有「⚠️ 本檔已棄用」標記
+- ✅ Repo1=112 持平 / Repo2=12 modified（皆狀態檔）/ 無 .! 鎖定檔
+- ✅ Telegram 通道探針 ok:true（守則#19 當下實測）
+- 今日兩大戰果：①賈維斯計畫同步到小龍蝦端（OpenClaw hook project-card-router 已上線，commit 6e7cc1a0）②ezPay電子發票開立 SOP 轉交聯想（3張真實發票已開、2組真重複待教練回覆）
+- 深夜不主動打擾教練，下次開工熱啟動時直接對齊
+
+## 🩺 健康檢查 cycle=376 2026-08-16 22:12（v4.0 安靜結束）
+- ✅ 24 cron 全 healthy（lastStatus=ok/running/idle, CE=0）
+- ✅ sync_coach_last_message.sh exit 0｜教練沉默 0.1h（剛發言活躍 22:03）
+- ✅ TG 通道實測 ok:true（守則#19 當下實測）
+- ✅ HEARTBEAT.md 72 行 (<500) / 0 ⬜ 待辦
+- ✅ SOUL×3 齊全，兩份舊版皆有「⚠️ 本檔已棄用」標記
+- ✅ Repo1=112 持平 / Repo2=12 modified（皆為狀態檔，非新增 untracked）/ 無 .! 鎖定檔
+- ✅ **自動修復：healthcheck.log 1008 行破警戒線 → 已截到 500 行（前 508 行歸檔至 state/healthcheck-archive/rotation.log）**
+- v4.0 三關全 fail（現在沒壞 + 非 provider 過載 + 不影響工作）→ 安靜結束不推 Telegram

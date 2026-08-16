@@ -4,7 +4,7 @@
     "system_health": "2026-08-15T10:12:25+08:00",
     "telegram_channel": 1786756345,
     "netlify_quota": "2026-07-25T14:25:00+08:00",
-    "coach_silence_sync": "2026-08-16T21:12:05.906826+08:00",
+    "coach_silence_sync": "2026-08-16T22:50:05.798090+08:00",
     "health_check_344": "2026-08-16T01:13:00+08:00",
     "care_4h": 1786788000,
     "healthcheck": "2026-08-16T21:12:30+08:00"
@@ -27,7 +27,7 @@
     "junshiQueueEmpty": true,
     "netlifyQuota": 59,
     "netlifyQuotaCheckNote": "2026-07-28 v85 推 5 次後剩 59 次（71→64→59），建議教練有空時親自到 Netlify 後台核對",
-    "coachSilentSince": "2026-08-16T21:10:10+08:00",
+    "coachSilentSince": "2026-08-16T22:50:00+08:00",
     "coachSilentHours": 0.0,
     "pendingCoachItems": [
       "🟡 v85：Email 自動發送系統（教練尚未給細節）",
