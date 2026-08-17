@@ -179,7 +179,8 @@
 教練問「同樣任務讓聯想電腦執行也可以嗎」，答覆技術上可行但登入狀態per機器不共通(跟BNI Connect CMS同款限制)。教練確認後裁示「之後這個工作給聯想做」。已把完整SOP(自訂編號規則/品項代碼/含稅計算陷阱/送出後查證方法)寫進待辦表第一條+`claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`+`reference_ezpay_invoice_issuing_procedure.md`，聯想下次開工讀接力棒即可直接上手，不用重新摸索。commit`9400216ff`。
 
 ## 📋 下一場直接開工任務
-- **聯想機器**：下次開工先確認claude-in-chrome擴充功能已裝+已連線，並請教練在聯想那台電腦的Chrome重新登入一次ezPay，之後ezPay開發票任務由聯想接手
+- **🔴🔴🔴 聯想機器看到這條先讀（2026-08-17教練裁示）：browser automation改用Edge，不要用Chrome**——Mac跟聯想若同時開Chrome版Claude擴充功能執行任務，連線會搶到對方機器（教練實測踩過，過程+根因見[[feedback_two_machines_same_chrome_extension_conflict_2026-08-17]]）。教練已在聯想那台裝好官方Claude擴充功能到**Microsoft Edge**（來源限定`https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn`這個Anthropic官方版本，Edge市集裡的「Claude Helper」「Claude Studio」等都是第三方仿冒品不能裝）。以後聯想這邊呼叫claude-in-chrome MCP工具前，先確認操作的是Edge視窗，不是Chrome，Mac維持用Chrome不變
+- **聯想機器**：下次開工先確認claude-in-chrome擴充功能已裝+已連線（改連Edge），並請教練在聯想那台電腦的Edge重新登入一次ezPay，之後ezPay開發票任務由聯想接手
 - ~~2組真重複發票(富貴傳承管理顧問股份有限公司2025-05-30/泓昱企業有限公司2025-01-21各重複開立一次)~~：**2026-08-17教練確認不處理**——教練想先看明細比對，但當時177筆是即時爬蟲掃過就結束，沒有落地存檔，重查需重新連線ezPay；教練考量都是2025年的舊帳、時隔一年補折讓單意義不大，裁示不用為了核對特地重查，此項結案
 - ~~過去2年177筆發票完整CSV清單~~：**2026-08-17已完成**，教練說要跟大樹教育培訓發票核對統編(BNI會員跟培訓學員是同一批人)。實測發現昨天漏抓2024-01~2024-07共61筆，補齊後總計**238筆**，存於`claude-brain/data/ezpay_invoices_2024-01-01_to_2026-08-17.csv`(108個不同統編，37個統編重複開立)。同步寫成可重現的爬取SOP`claude-brain/reference_ezpay_bulk_invoice_scraping_procedure.md`（含實測過的JS程式碼+alert攔截+查詢邊界2024-01-01+分季不分迴圈的逾時教訓），聯想電腦的軍師卡在抓取這件事上，這份SOP可以直接照抄解決
 - 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
