@@ -184,3 +184,8 @@
 **已知非新發現噪音**（cycle=391 起持續，標記存疑不影響）：
 - cron tool `list` API 只回 1 個（呼叫端過濾問題，CLI 真相源顯示 24 個全綠）
 - sync-* 兩個 cron delivery fail-closed: no route，但 lastStatus=ok/CE=0
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-17 16:40
+- ✅ 同步成功
+- HANDOFF mtime: 1786956000
+- 雲端同步：✅ 已推上雲端（commit 80e750bd8）
