@@ -627,3 +627,16 @@
 {"t": "2026-08-16 21:47", "src": "終端機", "who": "教練", "text": "那沒有問題，你先寫信給聯想，之後這個工作給聯想做，你還有別的工作，先開這兩張發票吧"}
 {"t": "2026-08-16 22:03", "src": "終端機", "who": "教練", "text": "總結"}
 {"t": "2026-08-16 23:52", "src": "終端機", "who": "教練", "text": "開"}
+{"t": "2026-08-17 00:01", "src": "終端機", "who": "教練", "text": "如果很麻煩就不要了。為什麼呢？因為那都 2025 年了，現在基本上已經隔一年了，來不及了。 我只是想說，如果不麻煩、有紀錄的話，我來比對一下這重複的發票是怎麼一回事？"}
+{"t": "2026-08-17 00:02", "src": "終端機", "who": "教練", "text": "好"}
+{"t": "2026-08-17 09:13", "src": "bni_tainan", "who": "真人訊息", "text": "[Image] User text: [LINE group:C6bb24bc41996a0f01006b250bc5bdc8c +11h Mon 2026-08-17 09:13:13 GMT+8] U521d831e6d28b0ec77f10d67aa27247e: <media:image> Description: A man in a dark suit, white shirt, and red tie stands at a white podium, holding a microphone and a presentation clicker. He wears glasses and appears to be giving a business presentation. Behind him, a large projection screen displays a slide in Chinese with the heading \"...級健身房\" (referring to a gym). The slide contrasts two scenarios: the left side shows an icon of a person sitting with a phone, marked with an \"X,\" with text \"只繳費、洗澡、滑手機\" (only pay, shower, scroll phone) and \"準時出席、偶爾一對一 = 毫無改變與"}
+{"t": "2026-08-17 09:15", "src": "bni_tainan", "who": "真人訊息", "text": "[System] Your previous turn was interrupted by a gateway restart while OpenClaw was waiting on tool/model work. Continue from the existing transcript and finish the interrupted response."}
+{"t": "2026-08-17 10:16", "src": "小龍蝦群", "who": "真人訊息", "text": "請問，能更新 828 微論壇的講師資料嗎？彭晉澄己經提交資料了，現在需要同步資料到828的網頁(AI微論壇.嘉義場)"}
+{"t": "2026-08-17 10:23", "src": "小龍蝦群", "who": "真人訊息", "text": "mac有sop可以參考軍師是怎麼完成的"}
+{"t": "2026-08-17 10:37", "src": "小龍蝦群", "who": "真人訊息", "text": "抱歉，正式網頁版還沒有發佈，請在這裡進行修改 https://coach1973.github.io/ai-forum-taichung/"}
+{"t": "2026-08-17 10:45", "src": "小龍蝦群", "who": "真人訊息", "text": "mac有sop可以參考軍師是怎麼完成的"}
+{"t": "2026-08-17 10:45", "src": "小龍蝦群", "who": "真人訊息", "text": "抱歉，正式網頁版還沒有發佈，請在這裡進行修改 https://coach1973.github.io/ai-forum-taichung/"}
+{"t": "2026-08-17 10:45", "src": "小龍蝦群", "who": "真人訊息", "text": "對，我說錯了，是台中場"}
+{"t": "2026-08-17 10:48", "src": "小龍蝦群", "who": "真人訊息", "text": "請問，你推到netlify了嗎？若有，在推之前你有先經過我同意說「推」嗎？ 你知道推到netlify每次要扣15點，你有計算扣了幾點嗎？"}
+{"t": "2026-08-17 10:56", "src": "小龍蝦群", "who": "真人訊息", "text": "沒關係，只要是github不扣點都沒關係，現在我可以去看了嗎？"}
+{"t": "2026-08-17 16:12", "src": "bni_tainan", "who": "真人訊息", "text": "當責信"}
