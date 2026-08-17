@@ -335,3 +335,41 @@
 - cron tool `list` API 只回 1 個（呼叫端過濾問題，CLI 真相源顯示 24 個全綠）
 - sync-* 兩個 cron delivery fail-closed: no route，但 lastStatus=ok/CE=0（腳本本身執行成功，僅 announce 無法投遞）
 - healthcheck.log 不存在（外部清理後 healthcheck cron 尚未補回，標記存疑不影響）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-17 23:10
+- ✅ 同步成功
+- HANDOFF mtime: 1786979218
+- 雲端同步：✅ 已推上雲端（commit bdfa70b5b）
+
+## 🩺 cycle=408 健康檢查（2026-08-17 23:12 週一深夜工作中）
+
+| 項目 | 結果 |
+|------|------|
+| 第零步 sync_coach_last_message | ✅ exit 0｜教練沉默 **0.0h**（23:09 剛剛在講話，活躍）|
+| Cron 本體（CLI 真相源）| ✅ 24 任務全綠（22 ok + 2 idle 待觸發 + 1 running 本任務）/ 無 FailoverError |
+| Cron 連錯檢查 | ✅ 全體 CE=0 / 全部 enabled |
+| Timeout 健康度 | ✅ 全任務 ≪ timeout，無 ≈ timeout 紅線 |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| HEARTBEAT.md 行數 | 342 行（<500 警戒線，健康區間）|
+| healthcheck.log | 563 行（<1000 警戒線）|
+| SOUL×3 齊全 + 棄用標記 | ✅ 2036/1851/20631 bytes |
+| Repo1 / Repo2 | 112 持平 / 7（從 cycle=407=29 大幅下降：23:05 三機總結 commit 35a44e142 把待辦檔收掉，正常）|
+| .! 鎖定檔 | ✅ 無 |
+| TG 通道探針（守則#19） | ✅ 本輪 23:12 當下實測 `{"ok":true}`（重新跑探針，非沿用 22:12 旗標）|
+
+**v4.0 三關全 fail**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron 全綠 + CE=0 + 本輪正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError / 無 overloaded）
+- 關卡三（影響教練嗎）→ ❌ 否（週一深夜 23:12 + 教練 3 分鐘前剛講話 + 無任何教練/會員功能壞掉）
+
+→ 三關皆 fail + 教練沉默 0.0h，**安靜結束，不 announce 教練**（守則「該靜就靜」）
+
+**下一個即將觸發的任務**：
+- � 00:12 下一輪每小時健康檢查 cycle=409
+
+**已知非新發現噪音**（cycle=391 起持續，標記存疑不影響）：
+- cron tool `list` API 只回 1 個（呼叫端過濾問題，CLI 真相源顯示 24 個全綠）
+- sync-* 兩個 cron delivery fail-closed: no route，但 lastStatus=ok/CE=0（腳本本身執行成功，僅 announce 無法投遞）
+
+**本次 cycle=408 更新**：
+- heartbeat-state.json 重整為 cycle=408 / coachSilentHours=0.0 / tgChannel 23:12 當下實測通過

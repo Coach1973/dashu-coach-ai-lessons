@@ -4,7 +4,7 @@
     "telegram_channel": 1786976400,
     "cron_list": 1786976400,
     "system_health": 1786976400,
-    "coach_silence_sync": "2026-08-17T22:20:00.000000+08:00",
+    "coach_silence_sync": "2026-08-17T23:12:03.909206+08:00",
     "care_4h": 1786976400
   },
   "lastHeartbeat": "2026-08-17T22:20:00.000000+08:00",
@@ -22,8 +22,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-17T22:20:00.000000+08:00",
-    "coachSilentSince": "2026-08-17T21:42:30+08:00",
-    "coachSilentHours": 0.6,
+    "coachSilentSince": "2026-08-17T23:09:52+08:00",
+    "coachSilentHours": 0.0,
     "nextPlannedAction": "23:00 場景化升華+系統健檢 + 23:05 每日三機總結；下次定檢 cycle=408 (週二 02:00)"
   }
 }
