@@ -166,7 +166,7 @@ git pull時發現聯想同一天(2026-08-17)已完成一套完整系統：公開
 
 ## 📋 下一場直接開工任務
 - ~~coach888加入BNI-Training公開版連結~~：**2026-08-17 21:30已完成**，加入「一、大樹常用」第14項，commit`7dc9234`(coach888 repo)，curl確認GitHub Pages已生效
-- **coach888私有後台`bni_training_admin.html`連結**：⏳仍待教練回覆——是本機靜態檔無公開URL，需要決定用localhost持久化server方式或其他方案才能達成教練要的「隨時隨地點進去」，下次先問教練這個私有後台平常主要在哪台機器打開來決定URL形式
+- ~~coach888私有後台`bni_training_admin.html`連結~~：**2026-08-17 21:38更正結案**——先前記錄「需要決定localhost/URL形式」是Mac端查證錯誤(`find`指令`-maxdepth 4`深度不夠，沒搜到已經存在的檔案，誤判成「本機無此檔案」)。**真相**：這份私有後台本來就已經是`claude-brain/data/bni_training_admin.html`，跟其他claude-brain記憶檔一樣隨`workspace`私有repo(`mac-openclaw-workflows`)一起git同步，教練在任何一台機器`git pull`+`open`這個檔案就能開，不需要另外架server或URL。已用`open -a "Google Chrome"`實測在Mac開啟成功，畫面正常。coach888暫不加這條連結(純本機檔案沒有URL可掛連結)，教練若想要「隨時隨地點進去」的體驗，可考慮之後包成小型Flask服務掛上網址，屬另一個獨立任務，教練未提出前不主動做
 - **ezPay發票備註查詢，範圍已定案108個不同統編**：⏳2026-08-17 21:30嘗試執行，但這台Mac的Chrome目前**未登入**ezPay(inv.ezpay.com.tw帳號gtbctainan)，登入狀態per機器不共通，需教練在這台Mac的Chrome手動重新登入一次才能繼續。技巧見`claude-brain/reference_ezpay_bulk_invoice_scraping_procedure.md`(需額外處理發票明細modal的token，跟這份SOP的清單抓取略有不同，抓token時用`search_invoice_info.search_invoice_detail(token)`)
 - ~~聯想改用Edge~~：**2026-08-17 21:23教練口頭確認已切換完成**，Chrome搶線問題結案，見`feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`
 - 「真誠分會」網頁主架構問題：**2026-08-17教練裁示擱置**，暫不處理
