@@ -95,6 +95,35 @@
 
 ---
 
+## 🩺 cycle=399 健康檢查（2026-08-17 17:12 週一下午工作中）
+
+| 項目 | 結果 |
+|------|------|
+| 第零步 sync_coach_last_message | ✅ exit 0｜教練沉默 **0.0h**（17:10 剛剛在講話）|
+| Cron 本體（CLI 真相源）| ✅ 22 任務全綠（19 ok + 2 idle + 1 running 本任務）/ 無 FailoverError |
+| Cron 連錯檢查 | ✅ 全體 lastStatus=ok 或 idle（無 CE>0、無 error）|
+| Timeout 健康度 | ✅ 全任務 ≪ timeout，無 ≈ timeout 紅線 |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| HEARTBEAT.md 行數 | 191 → 約 200 行（<500 警戒線）|
+| healthcheck.log | 562 行（<1000 警戒線）|
+| SOUL×3 齊全 + 棄用標記 | ✅ 2036/1851/20631 bytes |
+| Repo1 / Repo2 | 112 持平 / 25（-7 vs cycle=398=32，正常 commit 進度）|
+| .! 鎖定檔 | ✅ 無 |
+| TG 通道探針（守則#19） | ✅ 本輪 17:12 當下實測 `{"ok":true}` |
+
+**v4.0 三關全 fail**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron 全綠 + 本輪正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（無 overloaded）
+- 關卡三（影響教練嗎）→ ❌ 否（週一下午工作中 + 教練 17:10 剛剛講話 + 無任何教練/會員功能壞掉）
+
+→ 三關皆 fail，**安靜結束，不 announce 教練**
+
+**已知非新發現噪音**（cycle=391 起持續，標記存疑不影響）：
+- cron tool `list` API 只回 1 個（呼叫端過濾問題，CLI 真相源顯示 22 個全綠）
+- sync-* 兩個 cron delivery fail-closed: no route，但 lastStatus=ok（腳本本身執行成功，僅 announce 無法投遞）
+
+---
+
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
 - 名稱對等：Telegram = 小龍蝦 = 電報
