@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴 find -maxdepth太淺誤判檔案不存在，害教練跨機比對出矛盾(2026-08-17)](feedback_find_maxdepth_false_negative.md) — 有成本的「查無結果」結論需交叉驗證；試金石案例59
 - [🔴 ezPay開票送出前務必多確認再送出，教練親口交代(2026-08-18)](feedback_ezpay_confirm_before_submit_2026-08-18.md) — 逐項核對統編/金額/Email/自訂編號，跟「送出後查證」互補不重複
 - [🔴🔴🔴 建網站自己build+測直接deploy --prod，跳過網頁推SOP的教練確認關卡(2026-08-18)](feedback_skipped_web_push_sop_2026-08-18.md) — 任何要推正式環境的任務，動手前先查有沒有SOP+給教練看預覽+等親口說「推」
 - [🎯🎯 BNI培訓紀錄總資料庫：公開版GitHub Pages+私有開票後台雙軌上線(2026-08-17)](project_bni_training_records_db_2026-08-17.md) — 公開只放姓名/分會/出席；統編/載具/金額進私有repo後台，勿混淆
