@@ -125,8 +125,55 @@ TAX_INFO = {
     "陳穗青": {"type": "carrier", "label": "個人載具", "code": "AMU2DXY"},
 }
 
-# ---- 電話（尚未有任何來源提供，全部待補，欄位先留著方便教練之後口述補上）----
-PHONE = {}
+# ---- 電話/Email（來源：BNI Connect官方「地區會員培訓報告」2026-08-17教練提供，跟61人MSP名單比對姓名后
+#      45人有對到，16人查無(可能是還沒登記在BNI Connect或名字有出入)，剩下的16人維持待補）----
+PHONE = {
+    "張騰文": ("0925978176", "janjan0210@gmail.com"),
+    "買駿航": ("0916071122", "hankmai@hotmail.com"),
+    "柯朝陽": ("0916252199", "ted0916252199@gmail.com"),
+    "吳亞平": ("0938276282", "aaeee81@yahoo.com.tw"),
+    "古禹澤": ("0911402529", "kudyun123@gmail.com"),
+    "李美花": ("0910-388-096", "l0910388096@gmail.com"),
+    "黃一恭": ("0933274338", "golden463310@gmail.com"),
+    "張敬雍": ("0909071516", "aa7661403@gmail.com"),
+    "康文彬": ("062995666", "kboris002@yahoo.com.tw"),
+    "張晴晴": ("+886922119111", "Forching.zhang@gmail.com"),
+    "陳佩君": ("0988004118", "johnpeggy0706@gmail.com"),
+    "陳淑玲": ("0927-808352", "c58suelin@gmail.com"),
+    "楊在珍": ("0912181212", "a0912181212@gmail.com"),
+    "林佳伶": ("+886 982156945", "lavisiontw@gmail.com"),
+    "杜亞洛": ("062988090", "kingsman12330@gmail.com"),
+    "劉彥彬": ("0980225525", "liujerry68@gmail.com"),
+    "許朝竣": ("063565711", "lovepooh0212@gmail.com"),
+    "蔡瑞穠": ("0933334570", "golife99@gmail.com"),
+    "莊政川": ("0981897696", "j3939558569z39@gmail.com"),
+    "楊博丞": ("0978001089", "jeff56381@gmail.com"),
+    "陳俊源": ("0926916809", "chunyuan0410@gmail.com"),
+    "林佳慧": ("0901174279", "a0983072095@gmail.com"),
+    "楊智帆": ("0987511503", "me26cc@yahoo.com.tw"),
+    "邱南寅": ("0913958599", "asionthree@yahoo.com.tw"),
+    "陳佳玲": ("+886975628217", "wanli2300192@gmail.com"),
+    "宋映璇": ("0905005303", "z0933408418@gmail.com"),
+    "郭展鴻": ("0918989150", "chin.kwok2014@gmail.com"),
+    "葉建葳": ("0923-711-725", "x52042001@gmail.com"),
+    "陳新典": ("0900370777", "xin84513@gmail.com"),
+    "顏淳峯": ("0900156339", "yanmusen27@gmail.com"),
+    "楊仁豪": ("062566418", "sb930311@ms31.hinet.net"),
+    "王聖凱": ("0929380309", "z2463412@gmail.com"),
+    "吳玫萱": ("0966876261", "a50301201@gmail.com"),
+    "黃鑫豊": ("0982107225", "a0982107225note5@gmail.com"),
+    "吳志煒": ("0987895531", "koutianwuinteriordesign@gmail.com"),
+    "楊尚儒": ("0909131345", "shangjyang@gmail.com"),
+    "林宜宏": ("06 261 1181", "n41352007@gmail.com"),
+    "柯炫任": ("0981947772", "iooming6180@yahoo.com.tw"),
+    "薛如媛": ("062996630", "lyrhsueh@gmail.com"),
+    "柯宗佑": ("0925285919", "a0925285919@gmail.com"),
+    "林富郎": ("06-2996630", "frankzoy@yahoo.com.tw"),
+    "洪嘉妘": ("0918891283", "c0918891283@gmail.com"),
+    "傅恩平": ("0955467226", "fuenping@gmail.com"),
+    "郭馨文": ("0919991131", "aa0963631151@gmail.com"),
+    "陳穗青": ("0913729828", "julia660127@gmail.com"),
+}
 
 # ---- ezPay培訓費發票比對（來源：damushu_jiaoyu_invoices_1year_2026-08-17.csv，店代337643900/344031309）----
 # 注意：跟BNI入會/續約費(店代337391376)是完全不同的發票類別，不可混用，本表只收培訓費金額量級($300~$3000)的紀錄。
@@ -190,7 +237,11 @@ def render_row(rank, name, chapter, att, due, tax_info, phone, invoices, invoice
         cells.append('<td class="%s">%s</td>' % (cls, label))
     cells.append('<td class="total-score">$%s</td>' % format(due, ","))
     cells.append('<td class="taxcell">%s</td>' % tax_cell(tax_info))
-    cells.append('<td class="phonecell">%s</td>' % (phone or '<span class="missing">⚠️待補</span>'))
+    if phone:
+        phone_html = '%s<br><span class="taxid-no">%s</span>' % (phone[0], phone[1])
+    else:
+        phone_html = '<span class="missing">⚠️待補</span>'
+    cells.append('<td class="phonecell">%s</td>' % phone_html)
     if invoices:
         detail = "<br>".join("%s $%s (%s)" % (i["date"], format(i["amount"], ","), i["status"]) for i in invoices)
         inv_html = '<span class="%s">%s</span><br><span class="inv-amt">%s</span>' % (inv_cls, inv_status, detail)
@@ -306,7 +357,7 @@ tbody tr:hover {{ background: rgba(0,240,255,.05); }}
     <div class="stat-card"><div class="num gold">${total_due}</div><div class="lbl">累計應收金額</div></div>
     <div class="stat-card"><div class="num">{with_tax}</div><div class="lbl">已有統編/載具</div></div>
     <div class="stat-card"><div class="num red">{missing_tax}</div><div class="lbl">⚠️尚無統編對照</div></div>
-    <div class="stat-card"><div class="num red">{with_phone}</div><div class="lbl">已有電話(尚無來源)</div></div>
+    <div class="stat-card"><div class="num gold">{with_phone}</div><div class="lbl">已有電話/Email</div></div>
     <div class="stat-card"><div class="num">{with_invoice}</div><div class="lbl">已比對到歷史發票</div></div>
 </div>
 <div class="controls">
@@ -320,7 +371,7 @@ tbody tr:hover {{ background: rgba(0,240,255,.05); }}
 <thead><tr>
     <th>排名</th><th style="text-align:left;padding-left:14px;">姓名</th><th>分會</th>
     {header_ths}
-    <th>累計應收</th><th>統編/載具</th><th>電話</th><th>歷史發票比對</th><th>發票類型</th>
+    <th>累計應收</th><th>統編/載具</th><th>電話/Email</th><th>歷史發票比對</th><th>發票類型</th>
 </tr></thead>
 <tbody id="tbody">
 {rows_html}

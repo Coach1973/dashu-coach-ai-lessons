@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 BNI培訓紀錄總資料庫：公開版GitHub Pages+私有開票後台雙軌上線(2026-08-17)](project_bni_training_records_db_2026-08-17.md) — 公開只放姓名/分會/出席；統編/載具/金額進私有repo後台，勿混淆
 - [🔴🔴 ezPay電子發票開立作業教練裁示轉交聯想機器，Mac不再主責(2026-08-16)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 登入狀態per機器跟BNI Connect CMS同款限制，聯想需重新登入
 - [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md) — 單價數量欄位programmatic填值常不觸發計算；表單清空不代表真的送出成功
 - [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md) — 已在真實對話驗證接線員觸發成功；新增專案記得建卡+加路由
