@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **BNI培訓紀錄總資料庫：私有開票後台要不要做成真正網址+登入** | 🔒卡住-等教練 | 2026-08-17聯想本場從零建置。目前後台(`claude-brain/data/bni_training_admin.html`)只是本機檔案，含統編/電話/email等會員個資，教練問過要不要部署成網址+寫進coach888(帳密Admin/88888)，AI主動指出風險(coach888是公開repo，寫進去等於帳密全公開；且Admin/88888是已知弱密碼)，**教練裁示「先不要動」**。下次教練若想清楚要怎麼保護(不公開URL/真伺服器登入/接受風險)，直接照裁示做，不用重新提risk。詳見[[project_bni_training_records_db_2026-08-17]] |
 | 🟢 | **大樹教練照片換新（mentor100 + AI微論壇台中場9/23-24）** | ✅2026-08-17完成 | 教練用LINE傳了一張較清晰的正式照(`~/Downloads/1775414250751(1).jpg`)，要求換掉mentor100跟原先誤講的「828」網站。①mentor100(id=4)：DB `photo_filename`改`speaker-dashu-baa91d2d.jpg`，舊檔已刪除不留孤兒，服務重啟後curl驗證新檔已生效 ②教練隨即更正「828不用改，改9/23-24」：828站(`ai-talk`)的改動已用`git checkout`還原，改對`ai-forum-taichung`(9/23-24台中場GitHub Pages)套用同一張照片，commit`7ac6b0e`推送後curl確認GitHub Pages build完成、新照片(633×631)已對外生效。三站台皆用同一套處理邏輯(EXIF轉正+最長邊900px+JPEG quality88)，未動其他講師照片或版面 |
 | 🔴🔴 | **ezPay電子發票開立作業，教練裁示以後交給聯想機器做（2026-08-16教練親口指示）** | ⏳聯想下次開工先確認claude-in-chrome擴充功能已裝+已連線，並請教練在聯想那台電腦的Chrome重新登入一次ezPay(inv.ezpay.com.tw，帳號gtbctainan，登入狀態per機器不會跟Mac同步，跟BNI Connect CMS同款限制) | Mac本場(2026-08-16)已實測跑通完整SOP：①開立發票用`https://inv.ezpay.com.tw/Invoice_issue/create_invoice`，②查詢舊發票用`.../Invoice_issue/search_invoice`(查詢期間最長3個月，超過會跳原生`alert()`卡住整個分頁，務必先`window.alert=function(){}`覆蓋掉再操作，卡住時用`navigate`或`get_page_text`嘗試恢復，不要用截圖) ③商店固定是「(337391376)BNI台南南區」，品項多半是`B02`/`BNI續約`(續約$26,800)或`B01`/`BNI入會`(入會$36,000~39,800，價格教練口頭給的跟系統舊紀錄可能有出入以教練當下說的為準) ④自訂編號規則＝當天日期MMDD+兩碼流水號(教練親定，如0816**01**代表8/16第一張，開立前**務必**先查當天有沒有人已經開過，避免號碼撞號) ⑤買受人是公司行號(B2B)時，把該會員所屬BNI分會+姓名寫進「發票備註」欄(格式`分會名-會員姓名`，例：`真鑽-蘇志揚`)——**這是查會員舊發票對應買受人統編的關鍵**，統編本身查不到會員姓名，姓名只在備註欄，開立前可用「查看/補發」連結開發票明細modal核對備註+Email+金額 ⑥**單價/數量欄位程式化填值容易不觸發站方JS計算**：用`form_input`或直接改`.value`常常算不出稅額，务必用真人打字方式(triple_click選取+type輸入)或JS呼叫`element.click()`(不是只改`.checked`+dispatch `change`事件)才能穩定觸發計算，送出前一定要讀`TotleAmount`欄位數字核對是否等於教練講的金額，兩次都出現金額算錯(28,140而非26,800)的狀況都是這個原因 ⑦**送出「確定開立」按鈕id是`create_btn`**，點擊後有時分頁會短暫卡住(像是原生對話框或整頁reload)，屬正常現象，等1~2秒後查`Invoice_issue/search_invoice`用自訂編號或統編搜尋確認發票真的建立成功，不能只看表單有沒有清空就當作成功(本場宋映璇那張表單清空但發票其實沒建立，重試一次才成功，教訓：**每張發票開立後都要回頭查證存在，不可省略**)。完整過程細節見本場對話記錄，聯想那邊沒有等效記憶檔可讀，需要重新走一次才會摸熟，此段落就是濃縮版SOP |
 | 🟡 | **AI微論壇台中場(9/23-24)網頁概念稿：彭晉澄申請已處理，等他自填資料** | ⏳待彭晉澄自填+教練確認GitHub Pages概念稿 | 新repo`ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。多輪迭代：兩天套票2988元(單日1800)、大樹教練固定排每天下午第一堂並各有專屬分享主題(只出一張嘴叫AI做事/如何將AI導入LINE成為你的生活小幫手)、場地沃茲新創空間忠明館(台中市南屯區忠明南路478號B1)、報名費含午餐+下午茶、藍新金流付款連結已接上。講師資料從mentor100撈取：JC老師、Lavi(全站已統一英文名，含2026-08-16修復時間軸殘留)、廖韋評皆已補齊簡介/照片/連結。王俊甫查證發現mentor100照片其實是FB預設空白大頭貼截圖、簡介只有姓名重複，已請教練協調補件，同步在mentor100後台改為草稿不對外顯示。**彭晉澄2026-08-16已送出mentor100申請，已建草稿+編輯連結交給教練轉發**，等他自己填完+教練後台預覽確認才算補齊。Lavi主題2026-08-16改為「AI× Canva：把專業轉譯成「看得懂、記得住、願意買」的品牌圖文」。下次開工先問教練彭晉澄填完了嗎、GitHub Pages概念稿整體看過沒問題了嗎，沒問題才能推正式站 |
@@ -99,47 +100,6 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-16 v113（Mac桌面版 Sonnet 5，ezPay電子發票操作能力驗證+3張真實發票開立+任務轉交聯想）
-
-> 建立時間：2026-08-16 20:47 ~ 22:03（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v112（Mac桌面版 Sonnet 5，賈維斯計畫真實驗證+多項AI微論壇台中場後續任務）
-> 本棒主軸：**教練問「可以幫我操作ezPay開發票嗎」，用claude-in-chrome連上教練已登入的Chrome實測全程可行。過程中摸清一整套開票SOP(自訂編號規則/含稅計算易踩坑/查詢3個月上限)，並用JS繞過瀏覽器分頁大量scrape出過去2年177筆發票歷史，抓出34位重複買受人+2組真重複+2組作廢重開案例。教練接著要開蘇志揚、宋映璇兩位會員的發票，查證發現「會員姓名只寫在發票備註欄，買受人名稱是公司行號」這個關鍵規律，靠開發票明細modal核對備註+Email+金額，順利備好兩張草稿。過程中宋映璇那張第一次送出「表單清空但其實沒真的建立」，回頭查證才抓到，重送一次才成功——已寫成試金石案例58通用提醒。最後教練裁示這項任務以後轉交聯想機器負責，已把完整SOP寫進待辦表+2份記憶檔。**
-
-## 🎯 本場戰果
-
-### 1. 🎯🎯🎯 ezPay電子發票開立能力驗證成功，3張真實發票已開立
-教練提供可蕎有限公司(統編93734422)資料，用claude-in-chrome連上教練已登入的Chrome操作`inv.ezpay.com.tw`。過程摸清：①`單價/數量`欄位programmatic填值(`form_input`/直接改`.value`)常不觸發站方JS計算，要用真人打字(triple_click+type)或`element.click()`才穩定 ②「含稅」checkbox決定單價是否已含稅，勾了才會用26,800反推稅額而非另外加稅變28,140 ③教練自訂編號規則＝MMDD+兩碼流水號(如081601)。逐欄位填好、算出總計26,800後才讓教練確認，教練說「開」才送出。**三張發票皆已回頭查證存在**：可蕎有限公司(DQ92460802/081601)、蘇志揚所屬群岳大山生命工坊有限公司(DQ92460803/081602)、宋映璇所屬昇陽資產管理股份有限公司(DQ92460804/081603)，皆$26,800、已開立狀態。
-
-### 2. 🎯🎯 過去2年177筆發票歷史盤點+重複買受人分析
-教練要求查近2年發票清單。查證發現查詢區間最長3個月(超過會跳原生`alert()`卡住整個分頁，需`window.alert=function(){}`覆蓋)，改用JS累加8個季度查詢+自動翻頁，抓出177筆完整紀錄。分析出142位不同買受人、34位重複開立(多為BNI會員年度續約)，並主動抓到2組同日同金額的真重複(富貴傳承管理顧問股份有限公司、泓昱企業有限公司，教練尚未回覆是否需要處理)+2組作廢重開的正常修正案例(供教練參考)。
-
-### 3. 🔴🔴 發現「會員姓名藏在發票備註欄」的規律，靠查明細modal破解
-教練說「查蘇志揚及宋映璇」但用姓名搜尋查無結果，教練點破「他們是公司抬頭開票，姓名只在備註欄才看得到」。改用教練提供的統編查詢，開「查看/補發」發票明細modal核對備註欄，抓到蘇志揚=群岳大山生命工坊有限公司(備註「真鑽-蘇志揚」)、宋映璇=昇陽資產管理股份有限公司(備註「真鑽-宋映璇」)，連同Email/歷史金額一併取得，減少教練需要重複提供資料。
-
-### 4. 🔴🔴🔴 試金石案例58：ezPay表單「清空」不等於「真的送出成功」
-宋映璇那張發票第一次送出後表單清空，比照前兩次成功經驗判斷為成功，**回頭查證才發現ezPay系統裡查無這筆紀錄**，重新填一次(改用JS直接觸發`.click()`而非只改`.checked`屬性)才真的送出成功(DQ92460804)。已寫入試金石案例58：任何第三方網頁表單的「送出」動作，UI回饋不能當作成功的唯一證據，每一筆都要用查詢功能獨立驗證，尤其是金錢/法律效力的操作。完整SOP已寫入`claude-brain/reference_ezpay_invoice_issuing_procedure.md`。
-
-### 5. 🎯 教練裁示ezPay開發票任務轉交聯想機器
-教練問「同樣任務讓聯想電腦執行也可以嗎」，答覆技術上可行但登入狀態per機器不共通(跟BNI Connect CMS同款限制)。教練確認後裁示「之後這個工作給聯想做」。已把完整SOP(自訂編號規則/品項代碼/含稅計算陷阱/送出後查證方法)寫進待辦表第一條+`claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`+`reference_ezpay_invoice_issuing_procedure.md`，聯想下次開工讀接力棒即可直接上手，不用重新摸索。commit`9400216ff`。
-
-## 📋 下一場直接開工任務
-- **🔴🔴🔴 聯想機器看到這條先讀（2026-08-17教練裁示）：browser automation改用Edge，不要用Chrome**——Mac跟聯想若同時開Chrome版Claude擴充功能執行任務，連線會搶到對方機器（教練實測踩過，過程+根因見[[feedback_two_machines_same_chrome_extension_conflict_2026-08-17]]）。教練已在聯想那台裝好官方Claude擴充功能到**Microsoft Edge**（來源限定`https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn`這個Anthropic官方版本，Edge市集裡的「Claude Helper」「Claude Studio」等都是第三方仿冒品不能裝）。以後聯想這邊呼叫claude-in-chrome MCP工具前，先確認操作的是Edge視窗，不是Chrome，Mac維持用Chrome不變
-- **聯想機器**：下次開工先確認claude-in-chrome擴充功能已裝+已連線（改連Edge），並請教練在聯想那台電腦的Edge重新登入一次ezPay，之後ezPay開發票任務由聯想接手
-- ~~2組真重複發票(富貴傳承管理顧問股份有限公司2025-05-30/泓昱企業有限公司2025-01-21各重複開立一次)~~：**2026-08-17教練確認不處理**——教練想先看明細比對，但當時177筆是即時爬蟲掃過就結束，沒有落地存檔，重查需重新連線ezPay；教練考量都是2025年的舊帳、時隔一年補折讓單意義不大，裁示不用為了核對特地重查，此項結案
-- ~~過去2年177筆發票完整CSV清單~~：**2026-08-17已完成**，教練說要跟大樹教育培訓發票核對統編(BNI會員跟培訓學員是同一批人)。實測發現昨天漏抓2024-01~2024-07共61筆，補齊後總計**238筆**，存於`claude-brain/data/ezpay_invoices_2024-01-01_to_2026-08-17.csv`(108個不同統編，37個統編重複開立)。同步寫成可重現的爬取SOP`claude-brain/reference_ezpay_bulk_invoice_scraping_procedure.md`（含實測過的JS程式碼+alert攔截+查詢邊界2024-01-01+分季不分迴圈的逾時教訓），聯想電腦的軍師卡在抓取這件事上，這份SOP可以直接照抄解決
-- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
-- 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
-- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
-
-## 🔑 本場關鍵檔案索引
-- `claude-brain/project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`：任務轉交決策記憶
-- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：完整ezPay操作SOP
-- `試金石/試金石_案例庫.md`案例58：表單清空≠送出成功的通用教訓
-- commit序列：`9400216ff`（接力棒+記憶檔更新）
-
----
-
 # 軍師接力棒 · 2026-08-17 v114（Mac桌面版 Sonnet 5，Mac/聯想Chrome擴充功能搶線根因+ezPay統編去重優化+coach888作品連結更新）
 
 > 建立時間：2026-08-17 16:30 ~ 21:05（台灣時間）
@@ -185,6 +145,52 @@ git pull時發現聯想同一天(2026-08-17)已完成一套完整系統：公開
 
 ---
 
-> 📦 **v111及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+# 軍師接力棒 · 2026-08-17 v115（聯想Windows Claude Code Sonnet 5，BNI培訓紀錄總資料庫從零建置完整上線）
+
+> 建立時間：2026-08-17（聯想這台整天）
+> 本棒執行者：聯想 Windows Claude Code Sonnet 5
+> ⚠️ 這是**跟v114平行的另一條任務線**，不是接續v114——教練當天同時在Mac跟聯想開兩個對話框處理不同任務（Mac顧ezPay發票，聯想顧這個培訓資料庫），兩邊互不覆蓋
+> 本棒主軸：**教練丟出「1月至今BNI培訓出席資料庫，仿照bni-dna」需求，從零建置成一個雙軌系統：公開GitHub Pages(只放姓名/分會/出席，任何人都能看)+私有開票後台(統編/電話/email，只放私有repo)。教練接著追加更大量資料(BNI Connect官方753筆地區培訓報表)，升級成真正的「培訓總覽App」：時間窗篩選(3~60個月任選+自訂輸入)、TOP10表揚榜(教練指定要有頒獎感)、分會排名比較、反向「誰沒上課」查詢。過程中連續處理教練口述的多輪資料品質修正(分會回填/姓名糾錯/重複人物合併/已離會會員清理/種子講師歷史補值)，並在教練指定下改用BNI官方品牌色系與字型。最後一段教練當面指出AI生成中文字時出現同音/形似字錯誤(竣/窻、鑽/鑑、丞/承)，AI誠實說明這是生成過程本身的弱點、非「手滑」，並承諾關鍵名稱以後直接複製既有資料而非重新輸出。**
+
+## 🎯 本場戰果
+
+### 1. 🎯🎯🎯 從零建置BNI-Training雙軌系統：公開GitHub Pages + 私有開票後台
+新建公開repo `Coach1973/BNI-Training`（GitHub Pages：https://coach1973.github.io/BNI-Training/），對照bni-dna的深色霓虹戰情儀表板風格，先做出MSP初階/進階/主題培訓6場次(4/13~8/17)、61人出席資料庫。**教練當場拍板隱私分層**：公開版只放姓名/分會/出席狀態；統編/個人ezPay載具/email/累計應收金額/歷史發票比對這些他人財務個資，全部放進私有repo(`mac-openclaw-workflows`，GitHub上確認是private)的`claude-brain/data/bni_training_admin.html`，教練原話「後台要方便我做事，我需要統編或手機條碼、電郵，以方便開立發票」。過程中比對統編對照docx時意外抓到60人名單漏收「陳穗青」1人，更正為61人。資料源設計成`build_data.py`/`build_html.py`分離腳本，之後補資料改腳本重跑即可，不用碰HTML。
+
+### 2. 🎯🎯🎯 教練丟出BNI Connect官方753筆地區培訓報表，升級成全區培訓總覽App
+教練貼出`培訓紀錄.xlsx`（大台南南區官方培訓報表，2018~2026共753筆、87人、5分會），要求做成有時間窗篩選(近3/6/12/18/24個月，以此類推)+TOP10排行+分會排名的「網頁App」。查證發現MSP資料完全不在這份官方報表裡(官方類別是會員成功專案/董事培訓/領導團隊培訓/Workshop/BNI台灣會員大會，跟教練自訂的MSP體系是兩條平行資料)，教練點破後**兩條資料源合併**(753官方+108自訂MSP)成新首頁`index.html`，原MSP頁面搬到`msp.html`保留。功能實作：①時間窗3/6/12/18/24/36/48/60個月+全部(8年)按鈕，另加「自訂查詢：近N個月」輸入框(教練說「或者是你給我一個欄位」——兩個方案都做，不是二選一)②TOP10排行榜做成頒獎台視覺(前三名podium+獎牌，教練指定「要有表揚的感覺」)③分會排名比較(總人次+參與人數+平均次數)④反向查詢「⚠️未參加培訓名單」，同一組時間窗控制，顯示每個人「最後受訓日期」方便判斷急迫性。原始xlsx+完整個資(電話/email)欄位存進私有repo `claude-brain/data/bni_region_training_raw.json`+`bni_region_training_report_source.xlsx`備份，避免依賴教練Downloads資料夾。
+
+### 3. 🎨 全站改用BNI官方品牌色系+字型
+教練指定「參考 https://chapters.bymyway.com/sincere 使用BNI官方指定的字型及顏色」。實際查那個頁面的computed style+CSS變數，抓到官方色碼：紅`#CF2030`、黑`#000000`、金`#B08D57`、米白底`#FAF7F2`、次要文字`#6B665D`、邊框`#E5DFD3`，字型`Helvetica Neue/PingFang TC/Microsoft JhengHei/Noto Sans TC`。首頁跟msp.html都改版(從深色霓虹改成BNI官方的白底紅黑金企業風)，逐一比對computed style確認色碼完全吻合(rgb(207,32,48)等)才算驗證通過，不是憑印象套用。
+
+### 4. 🔴🔴 教練連續多輪口述資料品質修正，逐一落地
+- **分會過濾**：教練裁示只留真鑫/真誠/真鑽3分會，真愛/真富資料整個從首頁拿掉(`CHAPTER_ALLOWLIST`機制)，分會不明的記錄也一併排除(寧可不顯示也不顯示錯)
+- **已離會會員**：「江維宣」教練舉例但查證後兩份資料源本來就沒有他；後續教練又指名陳家煖/陳欣佑/江紫緹已離會，**已從公開訓練頁刪除，但陳欣佑在私有後台的統編/發票歷史(承恕法律事務所$1200已開立)刻意保留**——離會不代表已發生的金流憑空消失，這是本場一個重要的判斷分野，寫進記憶避免以後搞混「公開出席頁的刪除」跟「金流紀錄的刪除」是兩件事
+- **陳佩君種子講師歷史補值**：教練指出她是真誠分會種子講師，入會以來每月MSP都有上，但原始6場資料只有4~8月。查證MSP=BNI官方「Member Success Program」對應官方報表「會員成功專案」(教練確認此推論正確)，規則是「有紀錄的月份不重複算，沒紀錄的月份才補估算值」，最終只補了2025-05~09+12共6個月(其餘月份都已有真實資料)。結果12個月/24個月時間窗她變第一名，但首頁預設「近6個月」窗口她仍是第二名(因為估算的月份不在6個月窗口內，這是真實資料算出來的，教練認可不用調整)
+- **msp.html分會回填+姓名去重**：61人裡55人分會原本空白，用官方報表姓名比對(完全+前綴比對)先救回41人，剩14人教練逐一口述。過程中發現2組「重複人物」：「蔡佩彤」其實是「蔡珮彤」(batch1既有真人)的重複記錄、「許超尊」教練確認就是「許朝竣」的同音異字——兩組都合併成一筆，7/20出席狀態衝突時採信「有明確出席確認」的那筆。最終56人(msp.html)/57人(私有後台，陳欣佑保留)全數分會補齊。**私有後台`build_bni_training_admin.py`跟公開版是分開維護的兩份程式碼，做完公開版修正後要記得手動同步一份到私有後台，本場一開始漏了這步，後來補做**
+
+### 5. 🔴🔴🔴 私有後台部署+coach888連結：教練評估風險後裁示「先不要動」
+教練要求把私有後台網址寫進coach888作品展覽，帳密用Admin/88888(跟bni-chapters等系統同款預設密碼)。AI主動指出風險：coach888本身是公開GitHub Pages，帳密直接寫進去等於公開；且這個後台含其他會員的統編/電話/email真實個資，Admin/88888早就是已知待改的弱密碼。教練聽完裁示「先不要動好了」。**現狀**：私有後台維持純本機檔案(`claude-brain/data/bni_training_admin.html`)，沒有對外網址，教練或其他機器要用時直接「git pull」+開檔即可(已示範聯想端用`start`指令直接開瀏覽器給教練看，Mac端則是`/Users/bymyway/.openclaw/workspace/claude-brain/data/bni_training_admin.html`)。coach888本場**沒有**寫入任何後台連結（Mac那邊v114有另外加了BNI-Training**公開版**連結進coach888，那個沒有個資疑慮，跟這裡是兩回事）。
+
+### 6. 🔴 中文字生成錯誤誠實說明
+教練發現AI在AskUserQuestion裡把「竣」打成「窻」、「鑽」打成「鑑」、把「丞」打成「承」，質疑「電腦怎麼會手滑打錯字」。AI放棄「手滑」這個不準確的人類比喻，誠實說明：這是逐字生成文字的過程本身在形似字/音似字上的真實弱點，不是打字失誤。已查證確認**實際資料檔案沒有受影響**(只有AI重新輸出文字時的問題句子出錯，底層git檔案內容一直是對的)，並承諾以後遇到姓名/公司名等關鍵字直接從既有檔案複製顯示，不再重新輸出。
+
+## 📋 下一場直接開工任務
+- **私有後台保護方式**：教練說「先不要動」，等他想清楚要怎麼保護(不公開URL/真伺服器登入/接受風險)再繼續，不用主動提醒
+- 若教練之後想起還有其他已離會會員，比照本場SOP直接口述姓名+分會即可
+- `林宜宏`/`柯炫任`/`楊尚儒`/`薛如媛`/`柯宗佑`/`林富郎` 這6人在msp.html裡目前分會仍是`-`(官方報表查無比對)，教練若知道他們的分會可以隨時補
+- BNI-Training兩個頁面(首頁+msp.html)都已驗證上線，資料源分別是`region_build_data.py`(讀私有raw json+msp_build_data.py合併)+`msp_build_data.py`，之後教練若有新的BNI Connect匯出報表，重新整理進`bni_region_training_raw.json`即可
+
+## 🔑 本場關鍵檔案索引
+- `github_repos/BNI-Training/`：公開repo根目錄，`index.html`(全區總覽App)+`msp.html`(MSP頁面)+`region_build_data.py`/`region_build_html.py`/`region_template.html`+`msp_build_data.py`/`msp_build_html.py`
+- `claude-brain/data/bni_training_admin.html`+`build_bni_training_admin.py`：私有開票後台，不對外
+- `claude-brain/data/bni_region_training_raw.json`+`bni_region_training_report_source.xlsx`：官方報表私有備份
+- `claude-brain/project_bni_training_records_db_2026-08-17.md`：完整脈絡記憶檔(公開/私有分層決策+多輪資料修正細節)
+- commit(BNI-Training)：`1989071`→`b1ec368`(共約10次迭代commit，含初版/隱私分層/表揚榜/BNI品牌色/分會過濾/陳佩君補值/資料修正)
+- commit(私有repo mac-openclaw-workflows)：`c26dc346`+`b4b95fd6`等
+
+---
+
+> 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
