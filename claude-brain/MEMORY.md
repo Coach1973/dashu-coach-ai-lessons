@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴 ezPay開票送出前務必多確認再送出，教練親口交代(2026-08-18)](feedback_ezpay_confirm_before_submit_2026-08-18.md) — 逐項核對統編/金額/Email/自訂編號，跟「送出後查證」互補不重複
+- [🔴🔴🔴 建網站自己build+測直接deploy --prod，跳過網頁推SOP的教練確認關卡(2026-08-18)](feedback_skipped_web_push_sop_2026-08-18.md) — 任何要推正式環境的任務，動手前先查有沒有SOP+給教練看預覽+等親口說「推」
 - [🎯🎯 BNI培訓紀錄總資料庫：公開版GitHub Pages+私有開票後台雙軌上線(2026-08-17)](project_bni_training_records_db_2026-08-17.md) — 公開只放姓名/分會/出席；統編/載具/金額進私有repo後台，勿混淆
 - [🔴🔴 ezPay電子發票開立作業教練裁示轉交聯想機器，Mac不再主責(2026-08-16)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 登入狀態per機器跟BNI Connect CMS同款限制，聯想需重新登入
 - [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md) — 單價數量欄位programmatic填值常不觸發計算；表單清空不代表真的送出成功
