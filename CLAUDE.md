@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-18 04:20:26**
+> **最後同步：2026-08-18 04:25:29**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -160,7 +160,50 @@
 
 ---
 
-> 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v115_archived_2026-08-18.md`（v115）+ `handoff_archive/handoff_v114_archived_2026-08-18.md`（v114）+ `handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
+# 軍師接力棒 · 2026-08-18 v118（Mac桌面版 Sonnet 5，教練指定五項任務逐一執行+ezPay 108統編備註查詢完成+一次真實查證失誤自我更正）
+
+> 建立時間：2026-08-17 21:17 ~ 2026-08-18 04:14（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v114（Mac桌面版，Chrome搶線根因+ezPay 238筆+coach888連結，已封存）
+> 本棒主軸：**教練排定五項任務執行順序：①coach888加BNI-Training連結②ezPay 108統編備註查詢③確認聯想Edge切換④真誠分會擱置⑤解說賈維斯Phase2為何9/1才觸發。逐一完成，過程中教練問「私有後台跟聯想講的不一樣」，查證後發現是自己一開始用`find -maxdepth 4`深度不夠，把明明已存在、已git同步的檔案誤判成「不存在、需要架設URL」，當場承認查證錯誤並更正。ezPay 108統編查詢過程中Chrome擴充功能斷線一次(教練閒置1.5小時觸發)，瀏覽器分頁記憶體累積的51筆結果全部遺失，改用「每批查完立刻寫檔」的方式重做，最終108/108全部查完存檔。**
+
+## 🎯 本場戰果
+
+### 1. 🟢 coach888新增BNI-Training公開版連結
+公開版GitHub Pages(`coach1973.github.io/BNI-Training`)加進「一、大樹常用」第14項，commit`7dc9234`(coach888獨立repo)，curl驗證GitHub Pages已生效。
+
+### 2. 🔴 一次真實查證失誤：`find -maxdepth 4`太淺，誤判私有後台「不存在」
+教練問起coach888私有後台`bni_training_admin.html`該不該加連結，我用`find /Users/bymyway -maxdepth 4 -iname "bni_training_admin.html"`查無結果，就直接告訴教練「本機沒有這個檔案，需要決定架設localhost server或其他URL方案才能『隨時隨地點進去』」。教練隔天(其實是同一天更晚，因為聯想那邊也在跟教練對話同一份檔案)貼出聯想那邊AI的說法「檔案存在雲端私有倉庫，git pull後直接開就好」，兩邊說法對不上，教練要求釐清。**重新查證發現**：實際路徑`/Users/bymyway/.openclaw/workspace/claude-brain/data/bni_training_admin.html`，從`/Users/bymyway`算起要深入5層才會找到，我原本的`-maxdepth 4`剛好少一層，檔案早就存在、早就git同步好了，我的結論是錯的，聯想說的才對。已用`open -a "Google Chrome"`實際開啟驗證畫面正常，當場向教練承認錯誤並更正待辦表記錄，commit`c9670811a`。**教訓**：`find`指令的「查不到」不能直接等同「不存在」，尤其在深層巢狀目錄結構裡，一次失敗的查詢不足以支撐「需要教練做架構決策」這麼大的結論，應該多一層交叉驗證(如`ls`往下逐層看、或用不限深度的`find`)才能下定論。**已寫入試金石案例59**。
+
+### 3. 🎯🎯🎯 ezPay 108個統編發票備註全部查完，過程含一次資料遺失重做
+教練確認在這台Mac的Chrome重新登入ezPay後，開始查詢108個B2B統編各自代表發票的「發票備註」欄(找出對應哪位會員/分會)。**技術過程**：查詢頁本身沒有「統編搜尋」欄位，只能用日期查+從搜尋結果列表的「查看/補發」連結`onclick`屬性抓出每筆發票專屬的加密token(無法預先推算，且列表跟明細modal是兩個獨立DOM結構)，呼叫`search_invoice_info.search_invoice_detail(token)`開明細modal後讀取內容。**踩過的坑**：①頁面同時存在`#invoice_detail`(真正的發票明細)跟`#notify_detail`(開立通知記錄)兩個modal，兩者都用`class="modal_div"`，一開始選錯導致讀到空內容②明細modal走AJAX非同步載入，固定等待1.6秒不夠穩定，常抓到上一筆殘留資料，改成「輪詢直到讀到的發票號碼等於預期值」才穩定抓對。**中途Chrome擴充功能斷線一次**(教練閒置1.5小時期間，原因不明，重新連線後發現頁面JS記憶體裡累積的51筆查詢結果全部消失，因為只存在瀏覽器分頁記憶體、沒有落地存檔)，改成「每查完一批(約10筆)立刻寫入硬碟json檔、最後再合併」的方式重做，最終108/108全部查完、跟原始名單交叉比對0缺漏0多餘，存於`claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv`，commit`dbd55d47d`。**發現3筆備註內容異常需教練自行核對**：`TJ90077465`(烏克島文化事業有限公司)備註空白、`DQ92460800`(泓朔有限公司)備註寫「mini mac 4」、`RJ66500559`(韵律音樂工作室)備註寫「變更專業別」，都不是正常的「分會-姓名」格式。
+
+### 3.5 待辦表衝突小插曲：本場commit一度被聯想那邊的待辦表整批更新覆蓋回舊文字
+本場中途發現先前(45c21baf3)寫的ezPay狀態更新，在聯想那邊push v115時的待辦表整批更新中被覆蓋回更早的舊文字(具體成因待查，兩邊在同一天密集交錯commit可能是主因)。已在本棒重新校正該行內容為正確的完成狀態，往後若發現待辦表某行內容「感覺倒退」，先懷疑是不是被另一台機器的整批更新覆蓋，不用假設是自己記錯。
+
+### 4. 🟢 確認聯想已切換Edge，Chrome搶線問題結案
+教練口頭確認聯想那台已完成瀏覽器切換，已更新記憶`feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`加上確認段落。
+
+### 5. 🔧 解說賈維斯Phase2 cron為何9/1才觸發（純說明，非bug）
+教練質疑「現在才8/17，為什麼要等到9/1」，查cron設定(`5d7acd65`，`cron 20 9 1 * *`)確認這是設計上的「每月1號跑一次」排程，8/16的那次是Phase 2上線時的手動驗證，不是排程觸發，9/1是排程邏輯本身自然的下一次觸發時間，非異常。教練沒有要求調整頻率，維持現狀。
+
+### 6. 🟢 真誠分會架構問題：教練裁示擱置，已標記不再主動提醒
+
+## 📋 下一場直接開工任務
+- 「真誠分會」網頁主架構問題：教練裁示擱置，暫不用主動提問
+- 三機hook同步（Windows/ACER的Claude Code settings.json hook）：ACER仍待處理
+- **賈維斯計畫Phase 2月度cron**：9/1第一次真實自動觸發，屬正常排程非異常，留意HEARTBEAT.md
+- 私有開票後台`bni_training_admin.html`陳欣佑記錄是否移除：聯想v117提出教練尚未回覆的問題，跟Mac本場無關但屬同一份檔案，下次任一機器開工都可以問
+
+## 🔑 本場關鍵檔案索引
+- `claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv`：108個統編發票備註查詢結果
+- `claude-brain/feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`：新增Edge切換確認段落
+- `試金石/試金石_案例庫.md`案例59：find -maxdepth太淺誤判檔案不存在
+- commit：`7dc9234`(coach888)+`c9670811a`(查證更正)+`dbd55d47d`(ezPay 108筆)+`4483489b7`+本棒校正commit
+
+---
+
+> 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v116_archived_2026-08-18.md`（v116）+ `handoff_archive/handoff_v115_archived_2026-08-18.md`（v115）+ `handoff_archive/handoff_v114_archived_2026-08-18.md`（v114）+ `handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
 
