@@ -1,3 +1,30 @@
+## 🩺 cycle=404 健康檢查（2026-08-17 21:12 週一晚間工作中）
+
+| 項目 | 結果 |
+|------|------|
+| 第零步 sync_coach_last_message | ✅ exit 0｜教練沉默 **0.2h**（21:00 剛剛在講話，活躍）|
+| Cron 本體（CLI 真相源）| ✅ 24 任務全綠（含 2 at 待觸發 idle）/ 無 FailoverError |
+| Cron 連錯檢查 | ✅ 全體 CE=0 / 全部 enabled |
+| Timeout 健康度 | ✅ 全任務 ≪ timeout，無 ≈ timeout 紅線 |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| HEARTBEAT.md 行數 | 314 → 347 行（<500 警戒線，本輪 +33 健康區間）|
+| SOUL×3 齊全 + 棄用標記 | ✅ 2036/1851/20631 bytes（與 cycle=403 完全一致）|
+| Repo1 / Repo2 | 112 持平 / 26（-1 vs cycle=403=27，正常浮動）|
+| .! 鎖定檔 | ✅ 無 |
+
+**v4.0 三關全 fail**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（24 個任務全 healthy + CE=0 + 本輪正在寫報告 = 已恢復鐵證）
+- 關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError / 無 overloaded）
+- 關卡三（影響教練嗎）→ ❌ 否（週一晚間 21:12 + 教練 0.2h 前剛講話 + 無任何教練/會員功能壞掉）
+
+→ 三關皆 fail + 教練剛講話不到 1h，**安靜結束，不 announce 教練**（守則「該靜就靜」）
+
+**已知非新發現噪音**（cycle=391 起持續，標記存疑不影響）：
+- cron tool `list` API 只回 1 個（呼叫端過濾問題，CLI 真相源顯示 24 個全綠）
+- sync-* 兩個 cron delivery fail-closed: no route，但 lastStatus=ok/CE=0（腳本本身執行成功，僅 announce 無法投遞）
+
+---
+
 ## 🩺 cycle=403 健康檢查（2026-08-17 20:12 週一晚間工作中）
 
 | 項目 | 結果 |
@@ -340,3 +367,19 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1786965608
 - 雲端同步：✅ 已推上雲端（commit 52453f783）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-17 21:05
+- ✅ 同步成功
+- HANDOFF mtime: 1786971896
+- 雲端同步：✅ 已推上雲端（commit 6d7c83927）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-17 21:15
+- ✅ 同步成功
+- HANDOFF mtime: 1786971961
+- 雲端同步：✅ 已推上雲端（commit 9221eee77）
+
+## 🩺 軍師 Hook 自檢 2026-08-17 21:17（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- Session: f7125d75-b0da-4c6a-92ba-99012f90285d
