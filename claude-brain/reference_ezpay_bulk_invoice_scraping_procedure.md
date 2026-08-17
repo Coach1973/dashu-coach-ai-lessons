@@ -105,4 +105,16 @@ document.body.appendChild(a); a.click(); document.body.removeChild(a);
 ## 2026-08-17實測結果(供比對驗證用)
 分12個時間窗(2024-01-01~2026-08-17)查完，總計**238筆**(2026-08-16當時只抓177筆，少了2024-01~2024-07這段61筆，是漏抓邊界導致，不是資料變動)。已存檔`claude-brain/data/ezpay_invoices_2024-01-01_to_2026-08-17.csv`。
 
+## 進階：批次查每張發票的「發票備註」欄(2026-08-17實測，跟上面的清單抓取是兩個獨立步驟)
+
+清單抓取只拿得到`發票號碼`/`買受人統編`等欄位表，**買受人所屬會員分會+姓名要另外開每張發票的明細modal才看得到**(藏在「發票備註」欄，格式`分會-姓名`)。技巧：
+
+1. **明細modal的token藏在「查看/補發」連結的`onclick`屬性**，格式`onclick="search_invoice_info.search_invoice_detail('一長串token')"`，每張發票的token不同、無法預先推算，必須先查到那筆發票在列表裡的那一列(用日期查詢)才能抓到token。
+2. **頁面同時存在兩個modal，都叫`class="modal_div"`，容易抓錯**：`#invoice_detail`才是真正的發票明細(含備註欄)，`#notify_detail`是開立通知記錄(不含備註)。讀取時務必鎖定`document.querySelector('#invoice_detail .modal_div')`，不要用`document.querySelector('.modal_div')`(會抓到不確定是哪一個)。
+3. **modal內容欄位是`<td>`標籤/值配對**，穩定的讀法是找`textContent.trim()==='發票備註'`的`<td>`，取它下一個`<td>`的`innerText`，不要用innerText整段regex(不同發票的HTML縮排/是否有作廢欄位會讓文字結構不一致，regex常抓錯)。
+4. **modal內容是AJAX非同步載入，固定等待時間不可靠**：呼叫`search_invoice_info.search_invoice_detail(token)`後，內容不會立刻出現，實測固定等1.6秒常常抓到「上一筆殘留內容」。正確做法是**輪詢直到讀到的`發票號碼`欄位等於你剛剛請求的那筆**才算真的載入完成(最多等5秒)，讀完後點`.close`按鈕關閉modal再處理下一筆。
+5. **⚠️長時間批次作業務必邊查邊寫檔，不要只累積在瀏覽器分頁的JS記憶體裡**——2026-08-17查108筆統編備註時，查到51筆後Chrome擴充功能連線中斷(教練閒置1.5小時觸發)，重新連線後整個分頁的JS執行環境已重置，`window.xxx`存的所有中間結果全部消失，只好從頭重查。改成「每查完一批(約10~12筆)就把JS回傳的資料直接寫進本機檔案」才安全，即使斷線重連，最多只需要補救最後一批。
+
+**2026-08-17實測結果**：238筆篩到163筆B2B(買受人統編非空)，再依「同一統編只查一次代表性發票」去重到108個不同統編，全部查完存於`claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv`。
+
 參見 [[reference_ezpay_invoice_issuing_procedure]]（單張發票開立SOP，跟本文件互補：一個是開新發票、一個是查歷史發票）。
