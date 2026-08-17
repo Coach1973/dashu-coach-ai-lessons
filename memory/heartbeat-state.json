@@ -11,7 +11,7 @@
     "message_send_bypass": 1785650520,
     "morning_greeting": 1786842037,
     "evening_greeting": 1786888846,
-    "coach_silence_sync": "2026-08-17T18:05:19.979848+08:00",
+    "coach_silence_sync": "2026-08-17T18:12:05.846365+08:00",
     "heartbeat_22_20": 1786890065739,
     "system_overview": 1786961119
   },
@@ -39,8 +39,8 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-17T18:05:19.979848+08:00",
     "openTask": "cycle=400 4h 主動關懷安靜結束（教練剛講話 0.85h + 系統全� + 無急事）",
-    "coachSilentSince": "2026-08-17T17:10:19+08:00",
-    "coachSilentHours": 0.85,
+    "coachSilentSince": "2026-08-17T18:10:26+08:00",
+    "coachSilentHours": 0.0,
     "pendingCoachItems": [
       "bni-chapters 真誠分會網頁主架構問題（等教練說明具體是什麼）",
       "企業健身房正式建站 + 4項文案修改（等教練指示下一步）",
