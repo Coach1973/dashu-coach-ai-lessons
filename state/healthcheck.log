@@ -498,3 +498,66 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
     關卡三（影響教練嗎）→ ❌ 否（教練週日 21:10 剛發言活躍 + 健康檢查本身正常 + 無會員功能受影響）
   • → 三關皆 fail，安靜結束，未 announce 教練
   • 下個 cron: 22:00 每4小時主動關懷（in 48m）→ 22:20 提醒寄 50 封信（in 1h08m）→ 23:00 場景化升華+系統健檢（in 1h48m）→ 23:05 小龍蝦每日三機總結（in 1h53m）
+[2026-08-17T03:12:07+08:00] cycle=381 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-17T00:06:55｜沉默 3.1h（週一凌晨 sleep time）
+  - Cron 本體 46e67e2e: lastStatus=ok / dur≈25s / CE=0 / model=minimax/MiniMax-M3 ✅
+  - 環境快檢: SOUL×3 齊全+棄用標記完整 / Repo1=112 持平 / Repo2=26 微升 / 無 .! 鎖
+  - HEARTBEAT.md 50→64 行（<500 警戒線）/ 0 真實 � 待辦
+  - v4.0 三關全 fail → 安靜結束，不 announce 教練
+
+[2026-08-17T04:12:30+08:00] cycle=383 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-17T00:06:55｜沉默 4.1h（週一凌晨 sleep time）
+  - Step 1 真相源切換：openclaw cron list --json CLI → 24 個任務（22 enabled + 2 idle）全部 ok/CE=0，cron tool list API 只回 1 個 = 已知過濾限制
+  - Cron 本體 46e67e2e: lastStatus=ok / dur=81.78s ≪ 600s / CE=0 / model=minimax/MiniMax-M3 ✅
+  - 其他任務亮點: 起床摘要 10s / 增量蒸餾 10s / 幕僚長晨報 13s / LINE@ 15s / 場景化升華 158s / 每日三機總結 131s / Memory Dreaming 359s / 發財樹�水 38s / 每週記憶蒸餾 61s
+  - Timeout 健康度: 最接近上限 81.78s/600s = 13.6%（遠低於 90% 紅線）
+  - 環境快檢: SOUL×3 齊全+棄用標記完整 / Repo1=112 持平 / Repo2=26→27 微升 / 無 .! 鎖
+  - HEARTBEAT.md 64→79 行（<500 警戒線）/ 0 真實 ⬜ 待辦
+  - healthcheck.log 506 行（<1000 警戒線，逼近中但仍安全）
+  - TG 通道探針 04:12 當下實測 ✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}
+  - v4.0 三關全 fail → 安靜結束，不 announce 教練
+[2026-08-17T05:12:xx+08:00] cycle=384 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-17T00:06:55｜沉默 5.1h（週一凌晨 sleep time）
+  - Cron 全體 24 個（CLI 真相源）：22 enabled + 2 idle（婚宴/車貸待觸發），全 healthy（lastStatus=ok, CE=0）
+  - Cron 本體 46e67e2e: lastStatus=ok / dur=426537ms ≈ 426s / CE=0 / model=minimax/MiniMax-M3 ✅ / timeout=600s
+  - Timeout 健康度：本任務 71% 最高（426s/600s，離 90% 紅線 19%）→ 發財樹 64%（38s/60s）→ 其他 <25%
+  - HEARTBEAT.md 79 行（<500 警戒線）/ 0 真實 ⬜ 待辦 / healthcheck.log 510 行（<1000）
+  - 環境快檢 ✅：SOUL×3 齊全+棄用標記 / Repo1=112 持平 / Repo2=28 微升 / 無 .! 鎖
+  - TG 通道探針 05:12 當下實測 ✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}
+  - 已知噪音（非本次新發現）：sync-* 兩個 cron (37593697/aa1ad73b) delivery fail-closed: no route，但 lastStatus=ok、CE=0 屬內部 sync
+  - v4.0 三關全 fail → 安靜結束，不 announce 教練
+[2026-08-17 09:12] cycle=389 健康檢查安靜結束｜教練沉默 9.1h（週一上午）｜Cron 本體 46e67e2e 上一輪 08:12 fail (45s, 不含 overloaded/auth/scp) 本輪已恢復｜24 cron 全綠｜HEARTBEAT.md 150→163 行（<500）｜healthcheck.log 528 行（<1000）｜TG 通道本輪實測 ok:true｜v4.0 三關全 fail → 安靜結束不 announce
+[2026-08-17 10:15:33 CST] cycle=391 健康檢查完成｜24 cron 全綠/本任務 ok/CE=0｜HEARTBEAT ⬜ 0 項｜TG ✅｜三關全 fail → 安靜結束
+[2026-08-17 12:12:33 CST] cycle=393 健康檢查完成｜24 cron 全綠/本任務 ok/CE=0/minimax｜教練沉默 0.5h（週一工作中）｜HEARTBEAT.md 22→46 行｜HEARTBEAT ⬜ 0 項｜TG 探針本輪實測 ok:true｜v4.0 三關全 fail → 安靜結束不 announce
+[2026-08-17T13:12:xx+08:00] cycle=394 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-17T11:36:55｜沉默 1.6h（週一下午工作中）
+  - Cron 全體（CLI 真相源）：24 個任務（21 ok + 2 idle + 1 running 本任務）全 healthy，CE=0，無 lastStatus=error
+  - Cron 本體 46e67e2e: lastStatus=running / model=minimax/MiniMax-M3 ✅ / CE=0 / timeout=600s
+  - Timeout 健康度：全任務 ≪ timeout，無 ≈ timeout 紅線
+  - HEARTBEAT.md 50 行（<500 警戒線）/ 0 真實 ⬜ 待辦
+  - healthcheck.log 531 行（<1000 警戒線，仍安全）
+  - 環境快檢 ✅：SOUL×3 齊全+棄用標記完整 / Repo1=112 持平 / Repo2=32 持平 / 無 .! 鎖
+  - TG 通道探針 13:12 當下實測 ✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}
+  - 已知噪音（非本次新發現）：sync-* 兩個 cron (37593697/aa1ad73b) delivery fail-closed: no route，但 lastStatus=ok、CE=0
+  - v4.0 三關全 fail：
+    關卡一（本輪還壞嗎）→ ❌ 否（cron 全綠 + CE=0 + 本輪正在寫報告 = 已恢復鐵證）
+    關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError/overloaded）
+    關卡三（影響教練嗎）→ ❌ 否（週一下午工作中 + 無任何教練/會員功能壞掉）
+  - → 三關皆 fail，安靜結束，未 announce 教練
+[2026-08-17T15:13:xx+08:00] cycle=397 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-17T11:36:55｜沉默 3.6h（週一下午工作中）
+  - Cron 全體（CLI 真相源）：24 個任務（22 ok + 2 at 待觸發）全 healthy，CE=0，無 lastStatus=error
+  - Cron 本體 46e67e2e: lastStatus=ok / model=minimax/MiniMax-M3 ✅ / CE=0 / timeout=600s
+  - Timeout 健康度：60/300/600/1800s 全合理，無 ≈ timeout 紅線
+  - HEARTBEAT.md 128→157 行（<500 警戒線）/ 0 真實 ⬜ 待辦
+  - healthcheck.log 546 行（<1000 警戒線，仍安全）
+  - 環境快檢 ✅：SOUL×3 齊全+棄用標記完整 / Repo1=112 持平 / Repo2=32 持平 / 無 .! 鎖
+  - TG 通道探針 15:13 當下實測 ✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}
+  - 已知噪音（非本次新發現）：sync-* 兩個 cron (37593697/aa1ad73b) delivery fail-closed: no route，但 lastStatus=ok、CE=0
+  - 已知非新發現：2 個 disabled at-提醒 (99a038bc/957f567b) 有 CE>0，但已停用忽略
+  - v4.0 三關全 fail：
+    關卡一（本輪還壞嗎）→ � 否（cron 全綠 + CE=0 + 本輪正在寫報告 = 已恢復鐵證）
+    關卡二（provider 過載嗎）→ ❌ 否（無 FailoverError/overloaded）
+    關卡三（影響教練嗎）→ ❌ 否（週一下午工作中 + 無任何教練/會員功能壞掉）
+  - → 三關皆 fail，安靜結束，未 announce 教練
+[2026-08-17 22:12:00+08:00] cycle=406 健康檢查｜24 cron 全綠 CE=0｜TG 探針 ok:true｜教練沉默 0.5h｜三關全 fail｜安靜結束，不 announce 教練

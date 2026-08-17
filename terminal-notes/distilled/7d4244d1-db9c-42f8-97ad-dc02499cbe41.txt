@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session 7d4244d1-db9c-42f8-97ad-dc02499cbe41
-# 提取時間：2026-08-16 22:06 (台灣時間)
+# 提取時間：2026-08-17 16:34 (台灣時間)
 # 共 14 條教練原話
 
 ---
@@ -245,3 +245,9 @@ https://inv.ezpay.com.tw/Invoice_issue/search_invoice 我目前已經登入好�
 　▶ AI 回應：Good, v111 spans lines 101-150 (including the `---` separator). Let me archive it.
 
 　▶ AI 回應：Now I'll insert the v113 baton right after v112's closing (line 153) and update the archive pointer to include v111.
+
+　▶ AI 回應：**本場總結已完成，收工。**
+
+**做了什麼**：驗證了ezPay電子發票的完整操作能力——連上教練已登入的Chrome，摸清自訂編號規則、含稅計算陷阱、查詢3個月上限等眉角，成功開出3張真實發票（可蕎有限公司、蘇志揚、宋映璇，皆$26,800，都回頭查證確實存在）。順手盤點了過去2年177筆發票歷史，抓出34位重複買受人+2組疑似真重複待教練確認。過程中發現「會員姓名藏在發票備註欄」的規律，並踩到一個「表單清空但發票沒真的送出」的坑，已寫成試金石案例58作通用提醒。
+
+**卡在哪**：無阻塞，唯二筆真重複發票（富貴傳承管理顧問、泓昱企業）教練還沒回覆要不要處理；177筆完整清單要不要匯出C…（略）

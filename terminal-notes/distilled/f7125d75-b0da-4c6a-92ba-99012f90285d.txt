@@ -1,0 +1,115 @@
+# 終端機對話萃取 — Session f7125d75-b0da-4c6a-92ba-99012f90285d
+# 提取時間：2026-08-17 21:52 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-08-17 13:17】
+開工
+
+　▶ AI 回應：我已讀完接力棒（v114，2026-08-17 21:15）。
+
+**身份核對**：Mac 桌面版 Sonnet 5（非終端機），確認 parent process 為 `claude.app` 桌面版。
+
+**本棒主軸**：教練回報 mentor100 照片不清晰換照+更正 828→9/23-24 台中場後，處理 ezPay 238 筆歷史發票抓取，中途撞見 Mac/聯想兩台電腦同時搶用同一組 Chrome 擴充功能連線的根因，教練裁示聯想改用 Edge、Mac 維持 Chrome 物理隔離。
+
+**雲端同步狀態**：hook 顯示「⚠️ Pull 警告」，但我實際查證後發現是**誤報**—…（略）
+
+【教練 2026-08-17 13:23】
+<!-- attach -->
+> 教練，今天要從哪件事開始？
+
+好，那我來告訴你順序：
+
+1. 請執行
+2. 請執行
+3. 已切換 Edge 完成
+4. 請擱置
+5. 請解說為什麼 9 月 1 號首次真實觸發？現在才 8 月 17 日，為什麼要到 9 月 1 號？什麼意思？可以解釋一下嗎？
+
+　▶ AI 回應：## 5. 為什麼 9/1 才觸發？
+
+先回答這題,查了 cron 設定,原因很單純：
+
+`🔑 每月Token/憑證健康體檢`(cron ID `5d7acd65`)的排程本來就設計成**每月 1 號早上 9:20 跑一次**,不是壞掉或延遲,是它原本的設計就是「一個月跑一次」。
+
+**為什麼是「月跑一次」而不是天天跑**:這支 cron 檢查的是 Netlify token、Cloudflare token、LINE channel token 這類憑證「還活不活著」——這種東西通常幾個月甚至一年才會過期一次,不會今天好好的明天突然壞。賈維斯計畫規劃時的判斷是:天天查等於浪費 AI 呼叫次數…（略）
+
+　▶ AI 回應：HTML edit confirmed correct. Now committing and pushing (per E01, this is a coach-authorized "請執行").
+
+　▶ AI 回應：執行進度回報:
+
+**1. coach888 加 BNI-Training 公開版連結** ✅ 已完成
+加進「一、大樹常用」第14項,commit `7dc9234`,已 push,GitHub Pages 確認已生效(curl 驗證 last-modified 已更新)。
+
+**私有後台(`bni_training_admin.html`)那條連結還卡著**,不是我沒做,是有個真的要你決定的問題:這個私有後台平常主要在哪台機器打開?因為它現在是一份本機靜態檔案,沒有對外網址,如果你常在 Mac 開就簡單(架個 localhost 常駐服務即可);如果你也會想在手機或聯想那邊開,就要另外架一個…（略）
+
+【教練 2026-08-17 13:29】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 開啟 [coach888/index.html](https://github.com/Coach1973/coach888/blob/master/index.html) 給您看,「一、大樹常用」區塊最下面第14項是新加的「BNI培訓紀錄總資料庫」連結,可以確認畫面正確。
+
+【教練 2026-08-17 13:35】
+我昨天聯想電腦這邊的螢幕打的字，跟你講的有點不太一樣，你幫我釐清一下。
+
+Chrome已經幫你開好了，這份後台頁面現在應該就在你螢幕上了——不需要點任何東西找路徑，我直接用系統指令把它叫出來。
+
+之後如果視窗被關掉想再打開，就是這個檔案的位置：E:\Claude-Data\mac-openclaw-workflows\claude-brain\data\bni_training_admin.html，在檔案總管找到它雙擊就會用瀏覽器打開（不需要網址，是純本機檔案）。
+
+那我用 Mac 電腦能開嗎？
+
+
+Ran 3 commands, read reference_all_conversation_paths.md
+可以，這個檔案是存在雲端私有倉庫（不是只在聯想這台機器），Mac那邊只要跟Mac上的小龍蝦或Claude說一聲，讓它做這兩件事就好：
+
+先同步最新資料（git pull）
+打開這個檔案：/Users/bymyway/.openclaw/workspace/claude-brain/data/bni_training_admin.html
+你可以直接跟Mac那邊說「幫我開培訓開票查詢表」，它就會像我剛才一樣，直接把瀏覽器叫出來給你看，不用你自己找路徑。
+
+　▶ AI 回應：釐清結果:**聯想講的是對的,我剛才講錯了。**
+
+我之前跟你說「私有後台是本機靜態檔、需要決定架構」——這句話是錯的。原因是我當時用 `find` 指令查這個檔案,搜尋深度設得太淺(`-maxdepth 4`),少算了一層資料夾,結果明明檔案就在那裡,卻被我誤判成「找不到、不存在」。
+
+**實際狀況跟聯想跟你說的一致**:`bni_training_admin.html` 本來就存在 `claude-brain/data/` 這個資料夾裡,跟其他記憶檔一樣,隨 workspace 這個私有 GitHub 倉庫(`mac-openclaw-workflows`)一起同步。所以:
+- 聯想那邊路…（略）
+
+【教練 2026-08-17 13:38】
+所以我隨時隨地可以開啟這個，我直接就使用「我的最愛」作為網頁隨時打開。那如果我要更新的話，該怎麼辦呢？
+
+　▶ AI 回應：可以,「我的最愛」收藏這個做法完全沒問題,因為這是本機檔案、不是掛在網路上的網站,收藏起來很安全,不會外流。有一點要提醒你:**這個書籤是「哪台電腦收藏,就只在那台電腦有效」**——因為它指向的是硬碟上的實際路徑,不是網址。如果你收藏在這台 Mac(或用 RustDesk 遠端連這台 Mac),以後點書籤都會打開;但如果哪天你直接坐在聯想電腦前想點同一個書籤,行不通,要在聯想那邊另外收藏一次它自己的路徑(`E:\Claude-Data\...`)。兩邊各收藏一次就好,以後互不影響。
+
+**更新方式**,我剛查了產生這個頁面的程式(`build_bni_training_admin.py`),它…（略）
+
+【教練 2026-08-17 13:41】
+好，現在有另外一個，就是任務二，你還沒有登入去查那 108 筆資料，現在要查吧？
+
+　▶ AI 回應：還沒有,我剛才查了一次,這台 Mac 的 Chrome 現在還是顯示 ezPay 的登入頁,還沒有登入狀態(帳號 gtbctainan)。
+
+麻煩你先在這台 Mac 的 Chrome 視窗手動登入一次 `inv.ezpay.com.tw`,登入完成後跟我說一聲「登入好了」,我就馬上開始查那 108 個統編的發票備註。
+
+【教練 2026-08-17 13:42】
+好了
+
+　▶ AI 回應：Progress: 20 of 108 統編 done so far. Continuing.
+
+　▶ AI 回應：32/108 done. Continuing.
+
+　▶ AI 回應：41/108 done.
+
+　▶ AI 回應：51/108 done.

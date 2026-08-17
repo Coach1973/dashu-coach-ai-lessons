@@ -93,56 +93,23 @@
   - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
   - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
 
-## Promoted From Short-Term Memory (2026-08-16)
+## Promoted From Short-Term Memory (2026-08-17)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-08.md:325:327 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-08.md:325-327]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-08.md:329:329 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-08.md:329-329]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-08.md:333:333 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-08.md:333-333]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:267:267 -->
-- 📨 對話記錄 07:25（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:267-267]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:271:271 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:271-271]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:273:273 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:273-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:275:277 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:275-277]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:279:279 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:279-279]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:283:283 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-09.md:283-283]
-
----
-
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:3:181 -->
-- 🏗️ **event.bymyway.com 報名通知系統真相（2026-08-14 教練深夜追查結果）**：
-  - **教練原問題（00:13 終端機）**：「請幫我完成『有人報名，我的 LINE 就可以收到通知』這個功能」
-  - **真相**：實際走 Telegram Bot API，不是 LINE Notify。教練以為是 LINE 通知，但實作是「通知到小龍蝦（Telegram）」，命名落差。LINE Notify token recall 搜不到也合理——因為根本沒用。
-  - **完整技術棧**：Python Flask + Cloudflare Tunnel + Telegram Bot API 三件套
-    - Flask 後端：`/Users/bymyway/.openclaw/workspace/event-signup/app.py`（最後修改 2026-08-10，23,438 bytes，預設 port 5060）
-    - Cloudflare Tunnel：`event-app`（與 line-bot-relay、card-share 獨立）
-    - 推播機制（app.py 第 57 行附近）：透過 Telegram Bot API 把「📋 新報名通知」送到教練 chat_id `6124913915`
-  - **軍師做的時間軸**：
-    - 2026-07-12 18:41 event-signup 目錄建立
-    - 2026-07-12 21:07 切到 `event.bymyway.com/line/`（LINE 端點）
-    - 2026-07-28 00:14 第一筆「📋 新報名通知」送達（魏淑華）
-    - 2026-07-28 00:21~22 連續 3 筆（潘作薇、侯小姐、林群翔）
-  - **教練原話（8/14 00:49 終端機）**：「event.bymyway.com 這套系統也是你去幫我建的，在建置的過程當中，你多次要求我登入這個雲端的帳號，cloudflared 通道這也是你去做的」
-  - **未完成（教練原始問題的延伸）**：佩佩老師（贏家思維）LINE 群發權限——現有機制只推 Telegram 個人 chat_id，教練要的 LINE OA multicast/push 還沒做（教練確認才開工）
-
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:104:112 -->
-- 🗣️ **教練問「是不是軍師做的？跑了哪個程式？」的回答 SOP（2026-08-14 教練明示）**：
-  - **要的是**：具體技術棧 + 檔案 + 程式碼佐證（行號、函數名、路徑）
-  - **不要**：模糊的「是的 / 不是的」
-  - **找不到程式碼佐證時**：直接讀 `app.py` 等源碼比 recall.py 更快（程式碼本身就是最權威的「實作證據」）
-  - **教練糾正訊號**：「宕機了就不會自己回復嗎？這麼被動？」→ 中途不能空窗，必須持續回報進度；「你到底可不可以正常工作了？」→ LINE 對話 session 失憶直接觸發
-
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:113:128 -->
-- 🌐 **cloudflared 通道家族（2026-08-14 盤點 · 三條獨立 tunnel）**：
-  - `event-app`：event.bymyway.com 報名系統
-  - `line-bot-relay`：LINE 通道
-  - `card-share`：名片通道
-  - 三條獨立運作，設定檔在 `~/.cloudflared/event-config.yml`
-  - ⚠️ 「LINE 通知」的命名落差：event 系統裡的 LINE 端點（`event.bymyway.com/line/`）≠ 推播到 LINE OA；實作是推到 Telegram chat_id 6124913915
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:288:288 -->
+- 📨 對話記錄 21:22（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:288-288]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:292:292 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:292-292]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:294:294 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:294-294]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:296:298 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:296-298]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:300:300 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:300-300]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-09.md:304:304 -->
+- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-09.md:304-304]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:274:274 -->
+- 📨 對話記錄 10:52（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-10.md:274-274]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:278:278 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-10.md:278-278]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:280:280 -->
+- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-10.md:280-280]

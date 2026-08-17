@@ -1,60 +1,23 @@
 {
+  "lastHeartbeat": "2026-08-17T22:12:00+08:00",
+  "lastHeartbeatNote": "cycle=406 安靜結束｜cron 24 任務全綠 + CE=0 + 三關全 fail + 教練 21:42 剛講話 0.5h + TG 通道 22:12 當下實測通過",
   "lastChecks": {
-    "heartbeat_poll": 1786756345,
-    "system_health": "2026-08-15T10:12:25+08:00",
-    "telegram_channel": 1786756345,
-    "netlify_quota": "2026-07-25T14:25:00+08:00",
-    "coach_silence_sync": "2026-08-16T22:50:05.798090+08:00",
-    "health_check_344": "2026-08-16T01:13:00+08:00",
-    "care_4h": 1786788000,
-    "healthcheck": "2026-08-16T21:12:30+08:00"
+    "healthcheck": "2026-08-17T22:12:00+08:00",
+    "system_health": "2026-08-17T22:12:00+08:00",
+    "coach_silence_sync": "2026-08-17T22:20:19.212000+08:00",
+    "cron": "2026-08-17T22:12:00+08:00",
+    "environment": "2026-08-17T22:12:00+08:00",
+    "tgChannel": "2026-08-17T22:12:00+08:00"
   },
-  "lastHeartbeat": "2026-08-16T21:12:30+08:00",
-  "lastHeartbeatNote": "cycle=375 健康檢查安靜結束，教練沉默 0.0h（剛發言活躍），23 cron 全 healthy，TG 通道實測 ok:true，healthcheck.log 1008 行（已破 1000 警戒線，待下次備份）",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
-    "dayOfWeek": "Sunday",
-    "isQuietHours": false,
     "allCronsHealthy": true,
-    "contextStatus": "fresh",
-    "contextPercent": 15,
-    "recentRestarts": "2026-08-01 02:07 + 2026-08-02 10:42 (兩次 overflow)",
-    "gatewayPid": null,
-    "gatewayRunning": true,
-    "gatewayUptime": "穩定中",
     "telegramChannelOk": true,
-    "telegramChannelSource": "telegram_channel_probe.sh 實測 @ 2026-08-15T06:12:54+08:00",
-    "junshiQueueEmpty": true,
-    "netlifyQuota": 59,
-    "netlifyQuotaCheckNote": "2026-07-28 v85 推 5 次後剩 59 次（71→64→59），建議教練有空時親自到 Netlify 後台核對",
-    "coachSilentSince": "2026-08-16T22:50:00+08:00",
-    "coachSilentHours": 0.0,
-    "pendingCoachItems": [
-      "🟡 v85：Email 自動發送系統（教練尚未給細節）",
-      "🟡 v85：明天 AI 微型論壇現場抽獎轉盤使用回饋",
-      "🟡 v77：BNI 大台南小幫手「主動提醒」功能（方向清楚，待教練下指令動手）",
-      "🔴🔴🔴 真誠/真愛/真實 AI 分會願景說明書（多場未動）",
-      "🟡 聯想 C 槽 94GB 暫緩刪除（觀察新備份穩定後再議）",
-      "🟡 ACER 36.3GB 待刪（需教練在 ACER 開對話）",
-      "🟡 光線尺顧問 ATM NT$10,000 入金(07-13) 待對帳"
-    ],
-    "care_4h": "2026-08-04T14:07:50.858106+08:00",
-    "recentCoachActivity": "教練週日晚間 21:10 最後訊息後工作中，至今沉默 0.0h（剛發言活躍）",
-    "telegramChannelLastVerified": "2026-08-16T21:12:30+08:00",
-    "healthcheckLogLines": 1008,
-    "healthcheckLogNote": "已破 1000 警戒線，下次健康檢查（22:00 之後）若仍>1000 建議截行歸檔（截前半部保留近 200 輪）"
+    "telegramChannelLastVerified": "2026-08-17T22:12 (守則#19 本輪實測通過，非沿用舊旗標)",
+    "coachSilentSince": "2026-08-17T21:42:30+08:00",
+    "coachSilentHours": 0.6
   },
-  "lastDeliveries": [
-    {
-      "ts": "2026-08-04T14:07:50.858106+08:00",
-      "channel": "telegram",
-      "to": "6124913915",
-      "messageId": 9312,
-      "purpose": "週二下午關懷（每4小時主動關懷 cron 觸發），輕量版不提待辦"
-    }
-  ],
-  "coachSilentSince": "2026-08-16T10:56:57+08:00",
-  "coachSilentHours": 1.3,
-  "gatewayRunning": true,
-  "contextPercent": 15
+  "coachSilentHours": 0.5,
+  "timeOfDay": "evening",
+  "dayOfWeek": "Monday",
+  "lastCycle": 406
 }
