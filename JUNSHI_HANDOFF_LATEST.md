@@ -165,12 +165,13 @@
 git pull時發現聯想同一天(2026-08-17)已完成一套完整系統：公開版`https://coach1973.github.io/BNI-Training/`(GitHub Pages，只放姓名/分會/出席，753筆官方培訓報表+45人電話email回填)+私有後台`claude-brain/data/bni_training_admin.html`(私有repo專用，含統編/載具/email，教練原話「後台要方便我做事」)。完整脈絡見`claude-brain/project_bni_training_records_db_2026-08-17.md`。教練要求把這兩個網址加進coach888作品總覽，**本場結束時此任務仍在執行中**（已確認coach888的`二、後臺系統`/`四、不公開`兩個section位置，尚未實際寫入HTML）。
 
 ## 📋 下一場直接開工任務
-- **🔴 coach888加入BNI-Training兩個連結（上一場中斷，優先處理）**：公開版加到「三、對外公開」或「一、大樹常用」區(教練說「隨時隨地可以點進去」暗示常用)；私有後台`bni_training_admin.html`是本機靜態檔無公開URL，需要決定用localhost持久化server方式或其他方案才能達成教練要的「隨時隨地點進去」，下次開工先問教練這個私有後台平常主要在哪台機器打開來決定URL形式
-- **ezPay發票備註查詢，範圍已定案108個不同統編**：直接照這個範圍執行，不用重新推導優化邏輯，技巧見`claude-brain/reference_ezpay_bulk_invoice_scraping_procedure.md`(需額外處理發票明細modal的token，跟這份SOP的清單抓取略有不同，抓token時用`search_invoice_info.search_invoice_detail(token)`)
-- **聯想改用Edge**：待教練確認聯想那邊實際切換完成、Chrome版擴充功能已登出或移除
-- 「真誠分會」網頁主架構問題：教練仍未說明具體是什麼
+- ~~coach888加入BNI-Training公開版連結~~：**2026-08-17 21:30已完成**，加入「一、大樹常用」第14項，commit`7dc9234`(coach888 repo)，curl確認GitHub Pages已生效
+- ~~coach888私有後台`bni_training_admin.html`連結~~：**2026-08-17 21:38更正結案**——先前記錄「需要決定localhost/URL形式」是Mac端查證錯誤(`find`指令`-maxdepth 4`深度不夠，沒搜到已經存在的檔案，誤判成「本機無此檔案」)。**真相**：這份私有後台本來就已經是`claude-brain/data/bni_training_admin.html`，跟其他claude-brain記憶檔一樣隨`workspace`私有repo(`mac-openclaw-workflows`)一起git同步，教練在任何一台機器`git pull`+`open`這個檔案就能開，不需要另外架server或URL。已用`open -a "Google Chrome"`實測在Mac開啟成功，畫面正常。coach888暫不加這條連結(純本機檔案沒有URL可掛連結)，教練若想要「隨時隨地點進去」的體驗，可考慮之後包成小型Flask服務掛上網址，屬另一個獨立任務，教練未提出前不主動做
+- **ezPay發票備註查詢，範圍已定案108個不同統編**：⏳2026-08-17 21:30嘗試執行，但這台Mac的Chrome目前**未登入**ezPay(inv.ezpay.com.tw帳號gtbctainan)，登入狀態per機器不共通，需教練在這台Mac的Chrome手動重新登入一次才能繼續。技巧見`claude-brain/reference_ezpay_bulk_invoice_scraping_procedure.md`(需額外處理發票明細modal的token，跟這份SOP的清單抓取略有不同，抓token時用`search_invoice_info.search_invoice_detail(token)`)
+- ~~聯想改用Edge~~：**2026-08-17 21:23教練口頭確認已切換完成**，Chrome搶線問題結案，見`feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`
+- 「真誠分會」網頁主架構問題：**2026-08-17教練裁示擱置**，暫不處理
 - 三機hook同步（Windows/ACER的Claude Code settings.json hook，非OpenClaw gateway hook）：ACER仍待處理
-- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行，留意HEARTBEAT.md有無異常
+- **賈維斯計畫Phase 2月度cron**：9/1會第一次真實自動執行(cron`5d7acd65`，每月1日09:20)，8/16已手動驗證過一次全綠，9/1是排程本身的自然下次觸發時間，非異常，留意HEARTBEAT.md有無異常
 
 ## 🔑 本場關鍵檔案索引
 - `claude-brain/data/ezpay_invoices_2024-01-01_to_2026-08-17.csv`：238筆完整清單

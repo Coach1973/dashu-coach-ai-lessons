@@ -18,3 +18,5 @@ Mac跟聯想電腦如果**同時**登入Claude瀏覽器擴充功能、又**同�
 - **Mac**：維持用Chrome
 - **聯想（Windows）**：改用**Microsoft Edge**，教練已在聯想那台裝好官方Claude擴充功能（來源必須是`https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn`這個Anthropic官方認證版本，Edge市集裡另外那些「Claude Helper」「Claude Studio」都是第三方仿冒品，不能裝）
 - **給聯想那邊軍師的提醒**：以後任何開網頁操作（claude-in-chrome MCP工具）一律確認是在Edge裡執行，不要用Chrome，這樣就不會再跟Mac這邊的Chrome擴充功能搶線串連
+
+**✅ 2026-08-17 21:23教練口頭確認：聯想已切換Edge完成**——教練當面確認聯想那台機器的browser automation已改用Edge，Chrome版搶線問題視為結案，往後兩機物理隔離常態化，不用再追蹤。
