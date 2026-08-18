@@ -4,7 +4,7 @@
     "telegram_channel": "2026-08-19T06:01:24.515066+08:00",
     "cron_list": "2026-08-19T00:12:30+08:00",
     "system_health": "2026-08-19T00:12:30+08:00",
-    "coach_silence_sync": "2026-08-19T06:12:02.492179+08:00",
+    "coach_silence_sync": "2026-08-19T07:12:05.625738+08:00",
     "care_4h": "2026-08-18T22:20:42.145037+08:00",
     "cron_health_audit": 1787044360
   },
@@ -23,8 +23,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-19 00:12 當下實測通過",
-    "coachSilentSince": "2026-08-19T03:09:00+08:00",
-    "coachSilentHours": 3.1,
+    "coachSilentSince": "2026-08-19T07:04:11+08:00",
+    "coachSilentHours": 0.1,
     "nextPlannedAction": "凌晨安靜時段，下個 cron 01:12 健康檢查"
   },
   "telegramChannelOk": true,
