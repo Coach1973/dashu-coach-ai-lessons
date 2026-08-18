@@ -1,29 +1,30 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-18T01:15:12+08:00",
-    "telegram_channel": "2026-08-18T01:15:12+08:00",
-    "cron_list": "2026-08-18T01:15:12+08:00",
-    "system_health": "2026-08-18T01:15:12+08:00",
-    "coach_silence_sync": "2026-08-18T04:12:04.461045+08:00",
-    "care_4h": "2026-08-18T01:15:12+08:00"
+    "heartbeat_poll": "2026-08-18T14:00:42+08:00",
+    "telegram_channel": "2026-08-18T14:00:42+08:00",
+    "cron_list": "2026-08-18T14:00:42+08:00",
+    "system_health": "2026-08-18T14:00:42+08:00",
+    "coach_silence_sync": "2026-08-18T14:12:04.134530+08:00",
+    "care_4h": "2026-08-18T14:00:42+08:00"
   },
-  "lastHeartbeat": "2026-08-18T01:15:12+08:00",
-  "lastHeartbeatNote": "cycle=410 安靜結束｜26 個 cron 全部 CE=0（21 ok + 4 idle + 1 running）+ 三關全 fail + 教練 01:06 剛講話約 0.1h + TG 通道 01:15 當下實測通過",
+  "lastHeartbeat": "2026-08-18T14:00:42+08:00",
+  "lastHeartbeatNote": "cycle=426 安靜結束｜TG 14:00 probe ok + 24 cron 全綠 + 教練沉默 9.3h + 待辦 0 + 三關全 fail",
   "systemSnapshot": {
-    "timeOfDay": "late_night",
+    "timeOfDay": "afternoon",
     "dayOfWeek": "Tuesday",
-    "isQuietHours": true,
-    "quietHoursReason": "週二凌晨 01:15，教練約 8 分鐘前仍活躍；沒有需要主動打擾的異常",
+    "isQuietHours": false,
+    "quietHoursReason": "14:00 下午正常時段，無緊急事故",
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
-    "recentCoachActivity": "教練最後 sync 2026-08-18T01:06:56+08:00，當下沉默約 0.138h，凌晨仍活躍",
+    "recentCoachActivity": "教練最後訊息 04:42:01，當下沉默 9.3h",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-18 01:15 當下實測通過（非沿用舊旗標）",
-    "coachSilentSince": "2026-08-18T02:36:55+08:00",
-    "coachSilentHours": 1.6,
-    "nextPlannedAction": "02:12 下一輪每小時健康檢查 cycle=411"
-  }
+    "telegramChannelLastVerified": "2026-08-18 14:00 當下實測通過（非沿用舊旗標）",
+    "coachSilentSince": "2026-08-18T13:45:18+08:00",
+    "coachSilentHours": 0.4,
+    "nextPlannedAction": "14:12 健康檢查"
+  },
+  "telegramChannelOk": true
 }
