@@ -1,30 +1,35 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-18T14:00:42+08:00",
-    "telegram_channel": "2026-08-18T14:00:42+08:00",
-    "cron_list": "2026-08-18T14:00:42+08:00",
-    "system_health": "2026-08-18T14:00:42+08:00",
-    "coach_silence_sync": "2026-08-18T16:12:06.023175+08:00",
-    "care_4h": "2026-08-18T14:00:42+08:00"
+    "heartbeat_poll": "2026-08-19T00:12:30+08:00",
+    "telegram_channel": "2026-08-19T00:12:30+08:00",
+    "cron_list": "2026-08-19T00:12:30+08:00",
+    "system_health": "2026-08-19T00:12:30+08:00",
+    "coach_silence_sync": "2026-08-19T02:12:04.030743+08:00",
+    "care_4h": "2026-08-18T22:20:42.145037+08:00",
+    "cron_health_audit": 1787044360
   },
-  "lastHeartbeat": "2026-08-18T14:00:42+08:00",
-  "lastHeartbeatNote": "cycle=426 安靜結束｜TG 14:00 probe ok + 24 cron 全綠 + 教練沉默 9.3h + 待辦 0 + 三關全 fail",
+  "lastHeartbeat": "2026-08-19T00:12:30+08:00",
+  "lastHeartbeatNote": "cycle=435 00:12 健康檢查｜sync_coach_last_message exit 0｜教練沉默 0.1h（00:06:55 剛發言活躍）｜唯一 cron=本任務自己 lastRunStatus=ok/CE=0｜TG 通道當下實測 ok:true｜HEARTBEAT ⬜ 待辦 0 項｜HEARTBEAT.md 92行/healthcheck.log 48行｜三關皆 fail → 安靜結束",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
-    "dayOfWeek": "Tuesday",
-    "isQuietHours": false,
-    "quietHoursReason": "14:00 下午正常時段，無緊急事故",
+    "timeOfDay": "midnight",
+    "dayOfWeek": "Wednesday",
+    "isQuietHours": true,
+    "quietHoursReason": "凌晨 00:12 進入安靜模式（已過 23:00 宵禁線）",
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
-    "recentCoachActivity": "教練最後訊息 04:42:01，當下沉默 9.3h",
+    "recentCoachActivity": "教練最後訊息 2026-08-19 00:06:55，當下沉默 0.1h（凌晨剛發言活躍）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-18 14:00 當下實測通過（非沿用舊旗標）",
-    "coachSilentSince": "2026-08-18T15:19:31+08:00",
-    "coachSilentHours": 0.9,
-    "nextPlannedAction": "14:12 健康檢查"
+    "telegramChannelLastVerified": "2026-08-19 00:12 當下實測通過",
+    "coachSilentSince": "2026-08-19T02:06:55+08:00",
+    "coachSilentHours": 0.1,
+    "nextPlannedAction": "凌晨安靜時段，下個 cron 01:12 健康檢查"
   },
-  "telegramChannelOk": true
+  "telegramChannelOk": true,
+  "lastCycle": 435,
+  "lastResult": "ok",
+  "lastNotes": "cron 全綠 + 本輪自癒 + 非 provider 過載 + 不影響工作 → 三關皆 fail → 安靜結束不 announce",
+  "telegramChannelLastVerified": "2026-08-19 00:12 當下實測通過"
 }
