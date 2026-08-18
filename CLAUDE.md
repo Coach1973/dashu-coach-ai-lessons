@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-18 15:45:32**
+> **最後同步：2026-08-18 15:50:35**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -130,46 +130,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-18 v118（Mac桌面版 Sonnet 5，教練指定五項任務逐一執行+ezPay 108統編備註查詢完成+一次真實查證失誤自我更正）
-
-> 建立時間：2026-08-17 21:17 ~ 2026-08-18 04:14（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v114（Mac桌面版，Chrome搶線根因+ezPay 238筆+coach888連結，已封存）
-> 本棒主軸：**教練排定五項任務執行順序：①coach888加BNI-Training連結②ezPay 108統編備註查詢③確認聯想Edge切換④真誠分會擱置⑤解說賈維斯Phase2為何9/1才觸發。逐一完成，過程中教練問「私有後台跟聯想講的不一樣」，查證後發現是自己一開始用`find -maxdepth 4`深度不夠，把明明已存在、已git同步的檔案誤判成「不存在、需要架設URL」，當場承認查證錯誤並更正。ezPay 108統編查詢過程中Chrome擴充功能斷線一次(教練閒置1.5小時觸發)，瀏覽器分頁記憶體累積的51筆結果全部遺失，改用「每批查完立刻寫檔」的方式重做，最終108/108全部查完存檔。**
-
-## 🎯 本場戰果
-
-### 1. 🟢 coach888新增BNI-Training公開版連結
-公開版GitHub Pages(`coach1973.github.io/BNI-Training`)加進「一、大樹常用」第14項，commit`7dc9234`(coach888獨立repo)，curl驗證GitHub Pages已生效。
-
-### 2. 🔴 一次真實查證失誤：`find -maxdepth 4`太淺，誤判私有後台「不存在」
-教練問起coach888私有後台`bni_training_admin.html`該不該加連結，我用`find /Users/bymyway -maxdepth 4 -iname "bni_training_admin.html"`查無結果，就直接告訴教練「本機沒有這個檔案，需要決定架設localhost server或其他URL方案才能『隨時隨地點進去』」。教練隔天(其實是同一天更晚，因為聯想那邊也在跟教練對話同一份檔案)貼出聯想那邊AI的說法「檔案存在雲端私有倉庫，git pull後直接開就好」，兩邊說法對不上，教練要求釐清。**重新查證發現**：實際路徑`/Users/bymyway/.openclaw/workspace/claude-brain/data/bni_training_admin.html`，從`/Users/bymyway`算起要深入5層才會找到，我原本的`-maxdepth 4`剛好少一層，檔案早就存在、早就git同步好了，我的結論是錯的，聯想說的才對。已用`open -a "Google Chrome"`實際開啟驗證畫面正常，當場向教練承認錯誤並更正待辦表記錄，commit`c9670811a`。**教訓**：`find`指令的「查不到」不能直接等同「不存在」，尤其在深層巢狀目錄結構裡，一次失敗的查詢不足以支撐「需要教練做架構決策」這麼大的結論，應該多一層交叉驗證(如`ls`往下逐層看、或用不限深度的`find`)才能下定論。**已寫入試金石案例59**。
-
-### 3. 🎯🎯🎯 ezPay 108個統編發票備註全部查完，過程含一次資料遺失重做
-教練確認在這台Mac的Chrome重新登入ezPay後，開始查詢108個B2B統編各自代表發票的「發票備註」欄(找出對應哪位會員/分會)。**技術過程**：查詢頁本身沒有「統編搜尋」欄位，只能用日期查+從搜尋結果列表的「查看/補發」連結`onclick`屬性抓出每筆發票專屬的加密token(無法預先推算，且列表跟明細modal是兩個獨立DOM結構)，呼叫`search_invoice_info.search_invoice_detail(token)`開明細modal後讀取內容。**踩過的坑**：①頁面同時存在`#invoice_detail`(真正的發票明細)跟`#notify_detail`(開立通知記錄)兩個modal，兩者都用`class="modal_div"`，一開始選錯導致讀到空內容②明細modal走AJAX非同步載入，固定等待1.6秒不夠穩定，常抓到上一筆殘留資料，改成「輪詢直到讀到的發票號碼等於預期值」才穩定抓對。**中途Chrome擴充功能斷線一次**(教練閒置1.5小時期間，原因不明，重新連線後發現頁面JS記憶體裡累積的51筆查詢結果全部消失，因為只存在瀏覽器分頁記憶體、沒有落地存檔)，改成「每查完一批(約10筆)立刻寫入硬碟json檔、最後再合併」的方式重做，最終108/108全部查完、跟原始名單交叉比對0缺漏0多餘，存於`claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv`，commit`dbd55d47d`。**發現3筆備註內容異常需教練自行核對**：`TJ90077465`(烏克島文化事業有限公司)備註空白、`DQ92460800`(泓朔有限公司)備註寫「mini mac 4」、`RJ66500559`(韵律音樂工作室)備註寫「變更專業別」，都不是正常的「分會-姓名」格式。
-
-### 3.5 待辦表衝突小插曲：本場commit一度被聯想那邊的待辦表整批更新覆蓋回舊文字
-本場中途發現先前(45c21baf3)寫的ezPay狀態更新，在聯想那邊push v115時的待辦表整批更新中被覆蓋回更早的舊文字(具體成因待查，兩邊在同一天密集交錯commit可能是主因)。已在本棒重新校正該行內容為正確的完成狀態，往後若發現待辦表某行內容「感覺倒退」，先懷疑是不是被另一台機器的整批更新覆蓋，不用假設是自己記錯。
-
-### 4. 🟢 確認聯想已切換Edge，Chrome搶線問題結案
-教練口頭確認聯想那台已完成瀏覽器切換，已更新記憶`feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`加上確認段落。
-
-### 5. 🔧 解說賈維斯Phase2 cron為何9/1才觸發（純說明，非bug）
-教練質疑「現在才8/17，為什麼要等到9/1」，查cron設定(`5d7acd65`，`cron 20 9 1 * *`)確認這是設計上的「每月1號跑一次」排程，8/16的那次是Phase 2上線時的手動驗證，不是排程觸發，9/1是排程邏輯本身自然的下一次觸發時間，非異常。教練沒有要求調整頻率，維持現狀。
-
-### 6. 🟢 真誠分會架構問題：教練裁示擱置，已標記不再主動提醒
-
-## 📋 下一場直接開工任務
-- 「真誠分會」網頁主架構問題：教練裁示擱置，暫不用主動提問
-- 三機hook同步（Windows/ACER的Claude Code settings.json hook）：ACER仍待處理
-- **賈維斯計畫Phase 2月度cron**：9/1第一次真實自動觸發，屬正常排程非異常，留意HEARTBEAT.md
-- 私有開票後台`bni_training_admin.html`陳欣佑記錄是否移除：聯想v117提出教練尚未回覆的問題，跟Mac本場無關但屬同一份檔案，下次任一機器開工都可以問
-
-## 🔑 本場關鍵檔案索引
-- `claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv`：108個統編發票備註查詢結果
-- `claude-brain/feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md`：新增Edge切換確認段落
-- `試金石/試金石_案例庫.md`案例59：find -maxdepth太淺誤判檔案不存在
-- commit：`7dc9234`(coach888)+`c9670811a`(查證更正)+`dbd55d47d`(ezPay 108筆)+`4483489b7`+本棒校正commit
+> 📦 v118完整內容已封存：`handoff_archive/handoff_v118_archived_2026-08-18.md`（Mac桌面版，五項任務逐一執行+ezPay 108統編備註查詢完成+find -maxdepth查證失誤自我更正）
 
 ---
 
@@ -239,6 +200,60 @@
 - 分會ID對照：真富42515／真愛44080／真誠31215／真鑫44081／真鑽23528／真心31243／真拾31242／真美32932；地區(大台南南區)23268
 - 教練提供的簽到表真相源：`https://coach1973.github.io/BNI-Training/`
 - 本次操作用的是Mac本機Chrome（deviceId `91bc8312-ebdc-4dcd-9df8-d25d6b1ac83d`，顯示名稱"MAC MiNI"），跨機操作前務必`list_connected_browsers`確認
+
+---
+
+# 軍師接力棒 · 2026-08-18 v120（Mac桌面版 Sonnet 5，讀跨機信箱接手ezPay培訓費發票，16張全部開立完成）
+
+> 建立時間：2026-08-18 14:13 ~ 15:55（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v119（同機同日，已在主檔保留）
+> 本棒主軸：**教練指示「讀跨機信箱，接手ezPay發票任務」，讀`cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`得知聯想那邊操作培訓費發票開立卡在原生彈窗+分頁凍結，教練裁示改Mac接手剩餘16張(1張林宜宏需重開+15張全新)。過程中意外抓到一個新的「假成功」陷阱——商店(MerchantID)下拉選單視覺上顯示已選第一個選項，但`selectedIndex`實際是-1，沒explicit設值送出會後端回傳「商店代號不可為空值」但表單仍清空、外觀看起來像成功。改用XHR攔截器逐張讀取伺服器真實回應+`search_invoice`複查，18張(含聯想已完成的2張)全部確認真實存在，發票號碼連號DQ92662303~DQ92662320。**
+
+## 🎯 本場戰果
+
+### 1. 🔴 瀏覽器裝置確認：3台connected browser，依系統提示走AskUserQuestion選對Mac本機
+連線瞬間偵測到3台connected browser(2台Windows+1台macOS)，工具本身要求先問教練逐一列出選擇，避免案例60(連錯到Windows)重演。教練選"Browser 3(macOS,isLocal:true)"後`select_browser`切過去才開始操作。
+
+### 2. 🔴🔴 新發現「假成功」陷阱：MerchantID下拉選單視覺已選≠真的選中
+第一次送出林宜宏(081703)發票時，畫面顯示商店已選「(344031309)大樹教育顧問有限公司」、其餘欄位含稅計算都正確(稅14/銷售286/總計300)，送出後表單清空、看起來像成功，但回頭`search_invoice`查081703卻查無資料。用XHR攔截器直接讀取`create_invoice_by_db`的真實回應才抓到根因：`{"status":"INV10001","message":"商店代號不可為空值"}`——`document.getElementById('MerchantID').selectedIndex`實際是`-1`，`read_page`的accessibility tree跟肉眼看到的「已選中」都是假象。修法：送出前務必`sel.value='344031309'; sel.dispatchEvent(new Event('change',{bubbles:true}))`明確賦值，之後15張皆比照辦理、逐張核對`MerchantID`真實value後才送出，全部成功。已寫入`reference_ezpay_invoice_issuing_procedure.md`。
+
+### 3. 🔧 送出按鈕可靠觸發法：`jQuery('#create_btn').trigger('click')`，非`.click()`
+`document.getElementById('create_btn').click()`（含`computer`工具真實滑鼠點擊）在此系統測試中完全無反應(0筆新增XHR、0筆DOM變化)，改用`jQuery('#create_btn').trigger('click')`才穩定觸發送出。查詢頁`#search_btn`同款問題，改用直接呼叫`search_invoice_info.send_search_invoice('1')`最穩定。另發現送出成功後常見`Inspected target navigated or closed`的CDP錯誤——這其實是頁面reload的副作用，不是失敗訊號，回`search_invoice`查證即可。
+
+### 4. 🎯🎯🎯 18張培訓費發票全部確認完成（2張聯想已完成+16張Mac本場完成）
+商店固定「(344031309)大樹教育顧問有限公司」，品項`B03`/`BNI培訓`，含稅checkbox(`priceCount`)每張皆用`element.click()`確實勾選並核對稅額/銷售額/總計三欄吻合教練金額才送出。三聯式(B2B)13張走`BuyerName`/`BuyerIdentify`(統編)/`BuyerMail`+`InvoiceRemark`(格式「分會-姓名」)；二聯式(B2C)2張改走`InvCategory=2c`後才出現的`CarruerType`欄位——**發現手機條碼號碼要帶開頭斜線**(查證已成功案例張騰文081701的`II_Carruer_Num`存的是`/LKZTH3E`不是`LKZTH3E`)，康文彬(081717)比照填`/B3BU7PV`；傅恩平(081718)無實體載具改選`carry_print`(無載具-列印電子發票證明聯)。全部18張自訂編號081701~081718對應發票號碼DQ92662303~DQ92662320，逐張用XHR攔截器讀真實JSON回應(`status:"SUCCESS"`)+核對姓名/統編/自訂編號三項吻合才記錄完成，總表存於`claude-brain/data/ezpay_training_invoices_2026-08-18_18張完成清單.json`。
+
+| 自訂編號 | 姓名 | 發票號碼 | 執行者 |
+|---|---|---|---|
+| 081701 | 張騰文 | DQ92662303 | 聯想 |
+| 081702 | 陳佳玲 | DQ92662304 | 聯想 |
+| 081703 | 林宜宏 | DQ92662305 | Mac(重開) |
+| 081704 | 許朝竣 | DQ92662306 | Mac |
+| 081705 | 顏淳峯 | DQ92662307 | Mac |
+| 081706 | 陳淑玲 | DQ92662308 | Mac |
+| 081707 | 柯朝陽 | DQ92662309 | Mac |
+| 081708 | 張晴晴 | DQ92662310 | Mac |
+| 081709 | 楊在珍 | DQ92662311 | Mac |
+| 081710 | 楊博丞 | DQ92662312 | Mac |
+| 081711 | 邱南寅 | DQ92662313 | Mac |
+| 081712 | 宋映璇 | DQ92662314 | Mac |
+| 081713 | 楊仁豪 | DQ92662315 | Mac |
+| 081714 | 吳志煒 | DQ92662316 | Mac |
+| 081715 | 薛如媛 | DQ92662317 | Mac |
+| 081716 | 郭馨文 | DQ92662318 | Mac |
+| 081717 | 康文彬 | DQ92662319 | Mac |
+| 081718 | 傅恩平 | DQ92662320 | Mac |
+
+## 📋 下一場直接開工任務
+- ezPay培訓費發票18張任務本場結案，無延續待辦
+- 承接v119未完事項：「真誠分會」架構問題(擱置中)、三機hook同步(ACER待處理)、賈維斯Phase2 9/1月度cron觀察
+
+## 🔑 本場關鍵檔案索引
+- `claude-brain/data/ezpay_training_invoices_2026-08-18_18張完成清單.json`：18張發票完整對照表
+- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：新增MerchantID假成功陷阱/送出可靠觸發法/XHR攔截驗證法/手機條碼斜線前綴
+- `cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`：聯想交接單原文
+- 本場純瀏覽器+記憶檔操作，無程式碼commit（記憶檔更新將於本棒commit一併送出）
 
 ---
 
