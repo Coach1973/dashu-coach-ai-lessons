@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-19 07:30:46**
+> **最後同步：2026-08-19 07:35:56**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -139,57 +139,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-18 v120（Mac桌面版 Sonnet 5，讀跨機信箱接手ezPay培訓費發票，16張全部開立完成）
-
-> 建立時間：2026-08-18 14:13 ~ 15:55（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v119（同機同日，已在主檔保留）
-> 本棒主軸：**教練指示「讀跨機信箱，接手ezPay發票任務」，讀`cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`得知聯想那邊操作培訓費發票開立卡在原生彈窗+分頁凍結，教練裁示改Mac接手剩餘16張(1張林宜宏需重開+15張全新)。過程中意外抓到一個新的「假成功」陷阱——商店(MerchantID)下拉選單視覺上顯示已選第一個選項，但`selectedIndex`實際是-1，沒explicit設值送出會後端回傳「商店代號不可為空值」但表單仍清空、外觀看起來像成功。改用XHR攔截器逐張讀取伺服器真實回應+`search_invoice`複查，18張(含聯想已完成的2張)全部確認真實存在，發票號碼連號DQ92662303~DQ92662320。**
-
-## 🎯 本場戰果
-
-### 1. 🔴 瀏覽器裝置確認：3台connected browser，依系統提示走AskUserQuestion選對Mac本機
-連線瞬間偵測到3台connected browser(2台Windows+1台macOS)，工具本身要求先問教練逐一列出選擇，避免案例60(連錯到Windows)重演。教練選"Browser 3(macOS,isLocal:true)"後`select_browser`切過去才開始操作。
-
-### 2. 🔴🔴 新發現「假成功」陷阱：MerchantID下拉選單視覺已選≠真的選中
-第一次送出林宜宏(081703)發票時，畫面顯示商店已選「(344031309)大樹教育顧問有限公司」、其餘欄位含稅計算都正確(稅14/銷售286/總計300)，送出後表單清空、看起來像成功，但回頭`search_invoice`查081703卻查無資料。用XHR攔截器直接讀取`create_invoice_by_db`的真實回應才抓到根因：`{"status":"INV10001","message":"商店代號不可為空值"}`——`document.getElementById('MerchantID').selectedIndex`實際是`-1`，`read_page`的accessibility tree跟肉眼看到的「已選中」都是假象。修法：送出前務必`sel.value='344031309'; sel.dispatchEvent(new Event('change',{bubbles:true}))`明確賦值，之後15張皆比照辦理、逐張核對`MerchantID`真實value後才送出，全部成功。已寫入`reference_ezpay_invoice_issuing_procedure.md`。
-
-### 3. 🔧 送出按鈕可靠觸發法：`jQuery('#create_btn').trigger('click')`，非`.click()`
-`document.getElementById('create_btn').click()`（含`computer`工具真實滑鼠點擊）在此系統測試中完全無反應(0筆新增XHR、0筆DOM變化)，改用`jQuery('#create_btn').trigger('click')`才穩定觸發送出。查詢頁`#search_btn`同款問題，改用直接呼叫`search_invoice_info.send_search_invoice('1')`最穩定。另發現送出成功後常見`Inspected target navigated or closed`的CDP錯誤——這其實是頁面reload的副作用，不是失敗訊號，回`search_invoice`查證即可。
-
-### 4. 🎯🎯🎯 18張培訓費發票全部確認完成（2張聯想已完成+16張Mac本場完成）
-商店固定「(344031309)大樹教育顧問有限公司」，品項`B03`/`BNI培訓`，含稅checkbox(`priceCount`)每張皆用`element.click()`確實勾選並核對稅額/銷售額/總計三欄吻合教練金額才送出。三聯式(B2B)13張走`BuyerName`/`BuyerIdentify`(統編)/`BuyerMail`+`InvoiceRemark`(格式「分會-姓名」)；二聯式(B2C)2張改走`InvCategory=2c`後才出現的`CarruerType`欄位——**發現手機條碼號碼要帶開頭斜線**(查證已成功案例張騰文081701的`II_Carruer_Num`存的是`/LKZTH3E`不是`LKZTH3E`)，康文彬(081717)比照填`/B3BU7PV`；傅恩平(081718)無實體載具改選`carry_print`(無載具-列印電子發票證明聯)。全部18張自訂編號081701~081718對應發票號碼DQ92662303~DQ92662320，逐張用XHR攔截器讀真實JSON回應(`status:"SUCCESS"`)+核對姓名/統編/自訂編號三項吻合才記錄完成，總表存於`claude-brain/data/ezpay_training_invoices_2026-08-18_18張完成清單.json`。
-
-| 自訂編號 | 姓名 | 發票號碼 | 執行者 |
-|---|---|---|---|
-| 081701 | 張騰文 | DQ92662303 | 聯想 |
-| 081702 | 陳佳玲 | DQ92662304 | 聯想 |
-| 081703 | 林宜宏 | DQ92662305 | Mac(重開) |
-| 081704 | 許朝竣 | DQ92662306 | Mac |
-| 081705 | 顏淳峯 | DQ92662307 | Mac |
-| 081706 | 陳淑玲 | DQ92662308 | Mac |
-| 081707 | 柯朝陽 | DQ92662309 | Mac |
-| 081708 | 張晴晴 | DQ92662310 | Mac |
-| 081709 | 楊在珍 | DQ92662311 | Mac |
-| 081710 | 楊博丞 | DQ92662312 | Mac |
-| 081711 | 邱南寅 | DQ92662313 | Mac |
-| 081712 | 宋映璇 | DQ92662314 | Mac |
-| 081713 | 楊仁豪 | DQ92662315 | Mac |
-| 081714 | 吳志煒 | DQ92662316 | Mac |
-| 081715 | 薛如媛 | DQ92662317 | Mac |
-| 081716 | 郭馨文 | DQ92662318 | Mac |
-| 081717 | 康文彬 | DQ92662319 | Mac |
-| 081718 | 傅恩平 | DQ92662320 | Mac |
-
-## 📋 下一場直接開工任務
-- ezPay培訓費發票18張任務本場結案，無延續待辦
-- 承接v119未完事項：「真誠分會」架構問題(擱置中)、三機hook同步(ACER待處理)、賈維斯Phase2 9/1月度cron觀察
-
-## 🔑 本場關鍵檔案索引
-- `claude-brain/data/ezpay_training_invoices_2026-08-18_18張完成清單.json`：18張發票完整對照表
-- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：新增MerchantID假成功陷阱/送出可靠觸發法/XHR攔截驗證法/手機條碼斜線前綴
-- `cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`：聯想交接單原文
-- 本場純瀏覽器+記憶檔操作，無程式碼commit（記憶檔更新將於本棒commit一併送出）
+> 📦 v120完整內容已封存：`handoff_archive/handoff_v120_archived_2026-08-19.md`（Mac桌面版，讀跨機信箱接手ezPay培訓費發票，16張全部開立完成，MerchantID假成功陷阱首次發現）
 
 ---
 
@@ -224,6 +174,38 @@ Session開始時距離上次操作已隔近12小時，`list_connected_browsers`�
 - `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：已更新推翻規則+下次接續指引，剩8人資料待補
 - `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：v120已寫入的SOP本場沿用零修改，證明有效
 - 本場純瀏覽器+記憶檔操作，無程式碼commit（記憶檔更新將於本棒commit一併送出）
+
+---
+
+# 軍師接力棒 · 2026-08-19 v122（Mac桌面版 Sonnet 5，教練糾正「查無Email」誤判，補齊BNI會員資料庫永久指引）
+
+> 建立時間：2026-08-19 06:59 ~ 07:29（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v121（同機同日，已在主檔保留）
+> 本棒主軸：**v121交付24張發票後，教練指出3張(蔡珮彤/吳亞平/楊凱為)標記「查無Email」是錯的，因為他先前已親自逐一進BNI Connect查過全部94位現任會員的Email/電話（commit`c254629cf`，2026-08-18 01:51建立的`bni_region_members_contact_2026-08-18.csv`）。重新查證證實教練是對的：問題不是資料缺漏，是姓名比對邏輯漏掉了同音異字(蔡珮彤=CSV「蔡姵彤」)、純漏看(吳亞平其實有登記)、姓名順序顛倒(楊凱為=CSV「楊為凱」，教練當場口頭確認同一人)。教練當場拍板兩件永久性要求：①這份94人資料庫要記進路徑大全，下次查會員資料不准再花時間重查②遇到姓名比對「查無」要主動提出同音字/近似字候選跟教練確認，不能悶著只回報「查無」。**
+
+## 🎯 本場戰果
+
+### 1. 🔴 3張發票「查無Email」誤判查證+更正
+教練糾正後，重新用分會/公司名等線索交叉比對CSV，找到蔡珮彤(蔡姵彤)、吳亞平的真實Email，並在CSV裡找到疑似「楊為凱」(姓名顛倒)候選，教練口頭確認即楊凱為本人。三人正確Email已寫入`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`。**這3張發票(081907/081922/081924)目前Email欄位仍是空的**，因ezPay session已過期（30分鐘閒置登出），需教練重新登入後才能用「查看/補發」功能補上重發通知。
+
+### 2. 🔴🔴🔴 永久記憶+路徑大全落地：BNI 94人會員資料庫是查會員資料的唯一權威第一站
+`路徑大全.md`新增「四（續）、常用資料庫」節，明確標示`claude-brain/data/bni_region_members_contact_2026-08-18.csv`用途+使用鐵律；同時寫入永久記憶`feedback_bni_member_db_authoritative_source.md`：查任何BNI大台南南區會員Email/電話一律先查這份CSV；姓名精確比對查無時要用分會/統編/電話/金額交叉比對，找到疑似同音字/顛倒字候選要主動跟教練確認，不能默默回報「查無」或悄悄套用不講。commit`e9c5c3bad`(路徑大全)+`782af6e66`(記憶檔)。
+
+### 3. 🔧 試金石案例61記錄
+把這次「查無」誤判的完整根因、修復過程、悟到的教訓寫進`試金石/試金石_案例庫.md`案例61，跟案例59(find查無先懷疑查詢方法)同一種思維模式的延伸——對「已知完整/權威」資料源做精確比對查無時，先懷疑比對邏輯不是資料本身。
+
+## 📋 下一場直接開工任務
+- **教練重新登入ezPay後**：用「查看/補發」功能幫081907(蔡珮彤)、081922(吳亞平)、081924(楊凱為)三張發票補上正確Email重發通知
+- 剩8人(杜亞洛/劉彥彬/莊政川/林佳慧/陳新典/吳玫萱/謝盛峰/柯炫任)資料到齊後，自訂編號從081925接續開立
+- 承接v119/v120/v121未完事項：「真誠分會」架構問題(擱置中)、三機hook同步(ACER待處理)、賈維斯Phase2 9/1月度cron觀察
+
+## 🔑 本場關鍵檔案索引
+- `路徑大全.md`第四（續）節：BNI 94人會員資料庫指引+同音字比對鐵律
+- `claude-brain/feedback_bni_member_db_authoritative_source.md`：對應永久記憶
+- `試金石/試金石_案例庫.md`案例61：查無Email誤判完整記錄
+- `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：3人正確Email已補上
+- commit：`dd8132341`(初步查證2人Email)+`0cb20121f`(楊凱為確認)+`e9c5c3bad`(路徑大全)+`782af6e66`(記憶檔)
 
 ---
 
