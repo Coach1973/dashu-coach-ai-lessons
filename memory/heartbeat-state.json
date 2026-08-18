@@ -1,20 +1,20 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-19T00:12:30+08:00",
-    "telegram_channel": "2026-08-19T00:12:30+08:00",
+    "heartbeat_poll": "2026-08-19T06:01:24.515066+08:00",
+    "telegram_channel": "2026-08-19T06:01:24.515066+08:00",
     "cron_list": "2026-08-19T00:12:30+08:00",
     "system_health": "2026-08-19T00:12:30+08:00",
-    "coach_silence_sync": "2026-08-19T02:12:04.030743+08:00",
+    "coach_silence_sync": "2026-08-19T06:12:02.492179+08:00",
     "care_4h": "2026-08-18T22:20:42.145037+08:00",
     "cron_health_audit": 1787044360
   },
-  "lastHeartbeat": "2026-08-19T00:12:30+08:00",
+  "lastHeartbeat": "2026-08-19T06:01:24.515066+08:00",
   "lastHeartbeatNote": "cycle=435 00:12 健康檢查｜sync_coach_last_message exit 0｜教練沉默 0.1h（00:06:55 剛發言活躍）｜唯一 cron=本任務自己 lastRunStatus=ok/CE=0｜TG 通道當下實測 ok:true｜HEARTBEAT ⬜ 待辦 0 項｜HEARTBEAT.md 92行/healthcheck.log 48行｜三關皆 fail → 安靜結束",
   "systemSnapshot": {
-    "timeOfDay": "midnight",
+    "timeOfDay": "dawn",
     "dayOfWeek": "Wednesday",
     "isQuietHours": true,
-    "quietHoursReason": "凌晨 00:12 進入安靜模式（已過 23:00 宵禁線）",
+    "quietHoursReason": "凌晨 06:01 仍安靜模式（06-08 為教練起床前緩衝）",
     "allCronsHealthy": true,
     "contextStatus": "fresh-post-restart",
     "recentCoachActivity": "教練最後訊息 2026-08-19 00:06:55，當下沉默 0.1h（凌晨剛發言活躍）",
@@ -23,13 +23,13 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-19 00:12 當下實測通過",
-    "coachSilentSince": "2026-08-19T02:06:55+08:00",
-    "coachSilentHours": 0.1,
+    "coachSilentSince": "2026-08-19T03:09:00+08:00",
+    "coachSilentHours": 3.1,
     "nextPlannedAction": "凌晨安靜時段，下個 cron 01:12 健康檢查"
   },
   "telegramChannelOk": true,
-  "lastCycle": 435,
+  "lastCycle": 441,
   "lastResult": "ok",
-  "lastNotes": "cron 全綠 + 本輪自癒 + 非 provider 過載 + 不影響工作 → 三關皆 fail → 安靜結束不 announce",
-  "telegramChannelLastVerified": "2026-08-19 00:12 當下實測通過"
+  "lastNotes": "cycle=441 06:01 心跳｜TG 通道當下實測 ok:true｜教練沈默 2.9h（最後 03:09 凌晨在睡）｜cron 全綠 + 本輪自癒 + 非 provider 過載 + 不影響工作 → 三關皆 fail → 安靜結束不 announce",
+  "telegramChannelLastVerified": "2026-08-19 06:01 當下實測通過"
 }
