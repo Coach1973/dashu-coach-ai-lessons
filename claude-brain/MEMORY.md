@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 BNI大台南南區94人Email/電話資料庫位置+同音字近似字主動確認鐵律(2026-08-19)](feedback_bni_member_db_authoritative_source.md) — 查會員資料先看`bni_region_members_contact_2026-08-18.csv`；姓名對不上要主動提出近似字配對不猜不悶
 - [🎯🎯 BNI Connect活動出席勾選任務Mac首次上線，8場活動101人次標記完成+完整SOP(2026-08-18)](project_bni_connect_attendance_marking_2026-08-18.md) — 系統已註冊≠已出席，一律依簽到表為準；jQuery trigger click是穩定送出方法
 - [🔴🔴 claude-in-chrome連錯教練Windows電腦而非Mac本機，動手前沒查連線裝置(2026-08-18)](feedback_claude_in_chrome_wrong_device.md) — 跨機比較類任務前先list_connected_browsers確認isLocal:true；試金石案例60
 - [🔴 find -maxdepth太淺誤判檔案不存在，害教練跨機比對出矛盾(2026-08-17)](feedback_find_maxdepth_false_negative.md) — 有成本的「查無結果」結論需交叉驗證；試金石案例59
