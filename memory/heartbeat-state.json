@@ -4,7 +4,7 @@
     "telegram_channel": "2026-08-18T14:00:42+08:00",
     "cron_list": "2026-08-18T14:00:42+08:00",
     "system_health": "2026-08-18T14:00:42+08:00",
-    "coach_silence_sync": "2026-08-18T14:12:04.134530+08:00",
+    "coach_silence_sync": "2026-08-18T16:12:06.023175+08:00",
     "care_4h": "2026-08-18T14:00:42+08:00"
   },
   "lastHeartbeat": "2026-08-18T14:00:42+08:00",
@@ -22,8 +22,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-18 14:00 當下實測通過（非沿用舊旗標）",
-    "coachSilentSince": "2026-08-18T13:45:18+08:00",
-    "coachSilentHours": 0.4,
+    "coachSilentSince": "2026-08-18T15:19:31+08:00",
+    "coachSilentHours": 0.9,
     "nextPlannedAction": "14:12 健康檢查"
   },
   "telegramChannelOk": true
