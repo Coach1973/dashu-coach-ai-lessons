@@ -1,0 +1,203 @@
+# 終端機對話萃取 — Session b59b568c-76b3-471b-b4da-1682bd216216
+# 提取時間：2026-08-19 07:33 (台灣時間)
+# 共 8 條教練原話
+
+---
+
+【教練 2026-08-18 06:13】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**當下主軸**：v119（最新一棒）——BNI Connect活動出席勾選任務已全部完成：8場例行活動101人次 + 教練醒來後追加的4/13進階MSP補建15人，共9場、116人次標記出席，並用GitHub Pages簽到表(`coach1973.github.io/BNI-Training`)交叉驗證持久化。4-8月出席補登任務至此結案（僅6/12曜董DnA、6/8+7/6總部工作坊三項依教練裁示不處理）。
+
+**身份核對**：Sonnet 5，Mac **桌面版**（剛用`ps`查證父行程是`claude.app`，非終端機CLI）。
+
+**雲端同步狀態**：wor…（略）
+
+【教練 2026-08-18 07:19】
+「讀跨機信箱，接手ezPay發票任務」
+
+　▶ AI 回應：瀏覽器目前有3個連線裝置（2個Windows+1個Mac本機），系統要求逐一列出讓您確認要用哪一個，避免像上次(案例60)連錯到您的Windows電腦。
+
+　▶ AI 回應：Now setting the search value and clicking search, using real click via computer tool this time.
+
+　▶ AI 回應：Now verifying the field values and calculated tax amounts before submitting.
+
+　▶ AI 回應：Now filling the form again and submitting once, this time capturing the actual response.
+
+　▶ AI 回應：Confirmed 稅額14+銷售額286+總計300。Now submitting once and reading the actual server response.
+
+　▶ AI 回應：All fields intact and correct. Submitting now.
+
+　▶ AI 回應：Correct: 300含稅→稅14/銷售286。送出。
+
+　▶ AI 回應：Correct (600含稅→稅29/銷售571)。送出。
+
+　▶ AI 回應：1500含稅→稅71/銷售1429，正確。送出。
+
+　▶ AI 回應：900含稅→稅43/銷售857，正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出（這張是SOP特別提醒過的疑難案例，送出後會加倍查證）。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確（統編00066364含前導零已保留）。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：All correct: B2C/手機條碼/B3BU7PV/900含稅→稅43/銷售857。送出。
+
+　▶ AI 回應：B2C/無載具/300含稅→稅14/銷售286，正確。送出（最後一張）。
+
+　▶ AI 回應：Now updating the reference SOP file with today's key technical findings, then updating the handoff and待辦表.
+
+　▶ AI 回應：Now updating the ezPay row in the handoff status table and adding a new v120 entry.
+
+　▶ AI 回應：Now removing v118's full text from the main file and replacing with a pointer, then appending v120.
+
+　▶ AI 回應：Now appending the v120 section after v119's block.
+
+　▶ AI 回應：Inserting v120 right after v119's index section, before the archive footer.
+
+　▶ AI 回應：Now pushing to remote.
+
+　▶ AI 回應：ezPay培訓費發票16張全部開立完成，commit [9c72bc48d](https://github.com/Coach1973/mac-openclaw-workflows.git)已推送。
+
+**完成清單**（081701~081718，共18張，發票號碼DQ92662303~DQ92662320連號）：
+- 林宜宏(081703，聯想沒真的送出的那張)重開成功
+- 許朝竣、顏淳峯、陳淑玲、柯朝陽、張晴晴、楊在珍、楊博丞、邱南寅、宋映璇、楊仁豪、吳志煒、薛如媛、郭馨文（13張三聯式）
+- 康文彬、傅恩平（2張二聯式）
+
+每一張都用攔截伺服器真實回應+回頭`search_invoice…（略）
+
+【教練 2026-08-18 08:16】
+感謝你出色的完成任務
+
+　▶ AI 回應：不客氣！這次18張ezPay培訓費發票（含幫聯想重開的林宜宏那張）已經全部確認開立成功，commit `9c72bc48d`已推送，接力棒v120也更新好了。
+
+有其他事要繼續嗎？
+
+【教練 2026-08-18 17:45】
+「這是要給Mac軍師開發票用的資料， knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md 這個檔案」
+
+還有 8 張發票還沒有到齊，但是我也不曉得那會等到什麼時候，所以最好的方法就是現有的都先給它開起來，這樣的話到時候只需要處理最後的 8 張就可以。
+
+那我網頁都已經開好了，你現在就可以開始開立發票，資料夾裡面都已經收集好，就麻煩你先開一下囉。
+
+　▶ AI 回應：Same tab, showing ezPay login page (session expired since last time). Let me check its content.
+
+　▶ AI 回應：1500含稅→稅71/銷售1429，正確。送出。
+
+　▶ AI 回應：1200含稅→稅57/銷售1143，正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確（Email查無登記，已留空）。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：1800含稅→稅86/銷售1714，正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確（統編00260424前導零已保留）。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確。送出。
+
+　▶ AI 回應：正確（Email查無登記已留空）。送出（最後一張）。
+
+　▶ AI 回應：Now removing v119 full text from main file, replacing with pointer, and adding v121.
+
+　▶ AI 回應：Now appending v121 after v120's block, before the archive footer.
+
+　▶ AI 回應：Now committing and pushing all the changes.
+
+　▶ AI 回應：Good, it's staged. Now committing.
+
+　▶ AI 回應：24張ezPay培訓費發票全部開立完成，commit [25ea80e0e](https://github.com/Coach1973/mac-openclaw-workflows.git)已推送。
+
+**買駿航那筆已收到**——「/CCCUKN2」是他的手機條碼，這批資料裡本來就有，已經開好了。
+
+**24張完成清單**（自訂編號081901~081924，發票號碼DQ92662321~DQ92662344連號）：
+- 三聯式10張：伍芬群、洪嘉妘、林富郎、范郁琪、柯宗佑、徐偉倫、杜泱峻、林尹渰
+- 二聯式14張：買駿航、李美花、黃一恭、蔡瑞穠、陳俊源、楊尚儒、蔡珮彤、王聖凱、葉建葳、吳三貴…（略）
+
+【教練 2026-08-18 22:59】
+我不是有一個一個進去查每個會員的 email 嗎？所以不可能有會員沒有 email。
+
+　▶ AI 回應：Committing this correction now, then reporting back.
+
+　▶ AI 回應：您說得對，重新查證後發現是我這邊的比對疏漏，不是真的查無資料。commit [dd8132341](https://github.com/Coach1973/mac-openclaw-workflows.git)。
+
+具體查了`bni_region_members_contact_2026-08-18.csv`（BNI Connect官方94人會員資料庫）：
+
+- **吳亞平**：CSV裡本來就登記了Email `aaeee81@yahoo.com.tw`，先前比對時漏掉
+- **蔡珮彤**：CSV裡登記的姓名是同音字「蔡姵彤」，Email是`S0928717068@gmail.com`——用…（略）
+
+【教練 2026-08-18 23:04】
+我們之前有讓你進 BNI Connect 系統，然後一個一個去找到我們。我們那時候是在統計培訓的名單，同時收集所有會員的資料，你還記得這件事情嗎？
+
+　▶ AI 回應：Still on the login page — not logged back in yet.楊凱為=楊為凱已更正，commit [0cb20121f](https://github.com/Coach1973/mac-openclaw-workflows.git)。
+
+关于您问的那次「進 BNI Connect 一個一個找會員」——誠實說：
+
+　▶ AI 回應：查了git紀錄，確認這件事真實發生過——commit `c254629cf`（2026-08-18 凌晨01:51）：「新增BNI大台南南區94位現任會員Email/電話完整資料庫，來源BNI Connect官方後台」，這份`bni_region_members_contact_2026-08-18.csv`裡完整收錄了94位現任會員的Email/電話，時間點就在這次開票任務前一天凌晨。
+
+老實說，我（這個對話的AI）沒有那場親自逐一查會員的第一手記憶——那是另一場對話/session做的事，不在我這次能直接調閱的範圍。但git紀錄證實了這94人資料庫確實存在且完整，跟您說的「一個一個進去查」…（略）
+
+【教練 2026-08-18 23:21】
+一定要在「路線大全」裡面，或者找一個什麼地方、或者在資料庫裡面，一定要記住：我們現在有 BNI 大臺南南區所有會員的電話跟 Email。
+
+所以下次不要再花這麼久時間去查，這樣瞭解嗎？然後，因為經常會出現這種同音字、諧音字，或者差一個字的情況，那像這種情況下，你要主動地說 OK 嗎？
+
+　▶ AI 回應：Good, confirmed same repo. Committing the memory files now.
+
+　▶ AI 回應：两件事都已經寫進永久記憶，commit [e9c5c3bad](https://github.com/Coach1973/mac-openclaw-workflows.git)（路徑大全）+ [782af6e66](https://github.com/Coach1973/mac-openclaw-workflows.git)（記憶檔）：
+
+**1. 資料庫位置**——已寫進「路徑大全.md」第四（續）節：`claude-brain/data/bni_region_members_contact_2026-08-18.csv`是BNI大台南南區94位現任會員的完整Email+電話資料庫，往後任…（略）
+
+【教練 2026-08-18 23:29】
+總結
+
+　▶ AI 回應：Now removing v120's full text and adding v122 after v121.
+
+　▶ AI 回應：Now appending v122 after v121's block.
+
+　▶ AI 回應：Now committing and pushing the final wrap-up.

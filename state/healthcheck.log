@@ -561,3 +561,158 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
     關卡三（影響教練嗎）→ ❌ 否（週一下午工作中 + 無任何教練/會員功能壞掉）
   - → 三關皆 fail，安靜結束，未 announce 教練
 [2026-08-17 22:12:00+08:00] cycle=406 健康檢查｜24 cron 全綠 CE=0｜TG 探針 ok:true｜教練沉默 0.5h｜三關全 fail｜安靜結束，不 announce 教練
+[2026-08-18 01:15:12+08:00] cycle=410 健康檢查｜26 cron（21 ok + 4 idle + 1 running）全綠 CE=0｜TG 探針 ok:true｜教練沉默 0.1h｜三關全 fail｜無自動修復、無需裁決｜安靜結束，不 announce 教練
+
+[2026-08-18 03:12:47] cycle=412 安靜結束｜本任務 46e67e2e ok/CE=0/59631ms/model=minimax
+  - sync_coach_last_message exit 0｜教練沉默 0.6h（02:36 剛講話）
+  - 已知非新發 error：cycle=388 (08-17 08:12 minimax 瞬時中斷) + cycle=382 (08-17 03:12 LLM 442s) — 皆已自恢復
+  - 環境快檢：SOUL×3 齊全+棄用標記 / Repo1=112 / Repo2=26 / 無 .! 鎖
+  - TG 通道探針當下實測 ok:true（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項 / HEARTBEAT.md 22 → 49 行
+  - v4.0 三關全 fail（cron 全綠 + 非 provider 過載 + 凌晨 sleep time 教練未受影響）→ 安靜結束，不 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+
+[2026-08-18 06:12:44] cycle=416 安靜結束｜本任務 46e67e2e ok/CE=0/24798ms/model=minimax
+  - sync_coach_last_message exit 0｜教練沉默 1.5h（04:42 最後發言，睡眠中）
+  - Cron CLI 真相源：24 任務（22 ok + 2 at 待觸發）全 healthy，CE=0，無 lastStatus=error
+  - 環境快檢：SOUL×3 齊全+棄用標記 / Repo1=112 / Repo2=23 / 無 .! 鎖
+  - TG 通道探針當下實測 ok:true（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項 / HEARTBEAT.md 134 → 156 行
+  - v4.0 三關全 fail（cron 全綠 + 非 provider 過載 + 06:12 sleep time 教練未受影響）→ 安靜結束，不 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+
+[2026-08-18 07:12:54+08:00] cycle=417 健康檢查安靜結束
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T04:42:01+08:00｜沉默約 2.5h
+  - Cron CLI 真相源：24 任務（22 ok + 2 idle）全 healthy，consecutiveErrors 全為 0，無 lastStatus=error
+  - 本任務 46e67e2e：running／CE=0／model=minimax/MiniMax-M3／上一輪 70479ms ≪ 600s
+  - Timeout 紅線：無任務接近 timeout，無需調整
+  - 環境快檢：SOUL×3 齊全且棄用標記完整／Repo1=112／Repo2=24／無 .! 鎖定檔
+  - TG 通道探針本輪當下實測：`{"ok":true}`
+  - HEARTBEAT ⬜ 待辦：0 項；無逾 48 小時背景工作
+  - v4.0 三關全 fail：目前無持續故障、非 provider 過載、不影響教練或會員
+  - 無自動修復、無需裁決；未 announce 教練
+  - 跳過 commit+push（由 23:05 三機總結統一備份）
+[2026-08-18 09:12:30+08:00] cycle=420 安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T04:42:01+08:00｜沉默約 4.5h（早晨時段）
+  - openclaw cron list：24 任務全部 ok（22 ok + 2 idle），consecutiveErrors 全為 0，無 fail/error/timeout/overloaded
+  - 環境快檢：SOUL×3 齊全（2036/20631/1851 bytes）/ Repo1=112 / Repo2=28 / 無 .! 鎖定檔
+  - TG 通道探針本輪當下實測：`{"ok":true}`（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項；無逾 48 小時背景工作
+  - HEARTBEAT.md：224 → 248 行（<500 警戒線）
+  - healthcheck.log：594 → 596 行（<1000 警戒線）
+  - v4.0 三關全 fail（24 cron 全綠 + 非 provider 過載 + 早晨時段教練未受影響）→ 安靜結束，不 announce 教練
+  - 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+[2026-08-18 10:12:45+08:00] cycle=422 安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T04:42:01+08:00｜沉默約 5.5h（早晨時段）
+  - Cron CLI 真相源（sqlite）：24 enabled（22 ok + 2 idle）全綠 CE=0，無 fail/error/timeout/overloaded；23 disabled 為歷史重複
+  - Cron tool API：僅回 1 個（cycle=354 起已知過濾限制，sqlite 直查才是真相源）
+  - 環境快檢：SOUL×3 齊全+棄用標記 / Repo1=112 持平 / Repo2=29（+1） / 無 .! 鎖
+  - TG 通道探針本輪當下實測：`{"ok":true}`（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項 / HEARTBEAT.md 248 → 275 → 300 行 / healthcheck.log 596 → 604 行
+  - v4.0 三關全 fail（24 cron 全綠 + 非 provider 過載 + 早晨時段教練未受影響）→ 安靜結束，不 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+[2026-08-18 13:12:30+08:00] cycle=425 安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T04:42:01+08:00｜沉默約 8.5h（週二白天工作中）
+  - openclaw cron list：24 任務全部 ok（22 ok + 2 idle），無 fail/error/timeout/overloaded
+  - sync-*-to-claude-g 兩任務 delivery "last" 路由 fail-closed 為已知模式，lastStatus=ok 不算失敗
+  - 本任務 46e67e2e：running／CE=0／model=minimax/MiniMax-M3／上一輪 79271ms ≪ 600s
+  - 環境快檢：SOUL×3 齊全（2036/20631/1851 bytes）/ Repo1=112 持平 / Repo2=30（+1）/ 無 .! 鎖定檔
+  - TG 通道探針本輪當下實測：`{"ok":true}`（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項；無逾 48 小時背景工作
+  - HEARTBEAT.md：324 → 349 行（<500 警戒線）
+  - healthcheck.log：613 行（<1000 警戒線）
+  - v4.0 三關全 fail（24 cron 全綠 + 非 provider 過載 + 週二白天教練未受影響）→ 安靜結束，不 announce 教練
+  - 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+[2026-08-18 14:13:04+0800] cycle=426 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3｜教練沉默 0.4h（13:45:18 最後發言）
+2026-08-18T08:12:57Z | cycle=428 | cron=24/24 ok | CE=0 | tg=ok | HEARTBEAT ⬜=0 | coachSilent=0.9h | 安靜結束
+[2026-08-18 18:15:03 CST] cycle=430 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T16:16:36｜沉默 1.9h（週二傍晚活躍工作中）
+  - Cron sqlite 真相源（24 enabled）：24 last_run_status=ok，CE=0，無 fail/error/timeout
+  - 24h cron_run_logs 失敗 11 筆（每2h蒸餾 11 + LINE@ 2 + 場景化 1 + 幕僚長 1 + 起床 1）｜全為 minimax FailoverError temporarily overloaded
+  -  → cron 內建 retry 每次都自癒，lastStatus=ok/CE=0 維持｜v4.0 認定為 provider 暫時過載」一律不 announce」
+  - 環境快檢：SOUL×3 齊全+棄用標記/Repo1=112 持平/Repo2=32(+1)/無 .! 鎖
+  - TG 通道探針本輪當下實測：{"ok":true}（守則#19）
+  - HEARTBEAT ⬜ 真實待辦：0 項 / HEARTBEAT.md 506 → 517 行（已逾 500 警戒線，觀察項）
+  - v4.0 三關判斷：關卡一❌否（cron 全綠 + 本輪成功）/ 關卡二✅是（minimax overloaded，按規則不 announce）/ 關卡三❌否（教練活躍工作中 + 無任何教練/會員功能壞掉）
+  - → 三關未同時成立，安靜結束，未 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+
+[2026-08-18 19:12:XX+08:00] cycle=431 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-18T16:16:36+08:00｜沉默 2.9h（週二傍晚活躍工作中）
+  - Cron CLI 真相源（24 enabled）：24 task 全部 last_status=ok，CE=0
+  - 含 sync-*-to-claude-g 兩任務 delivery "last 路由 fail-closed" 為已知模式，lastStatus=ok 不算失敗
+  - 本任務 46e67e2e：running／CE=0／model=minimax/MiniMax-M3
+  - cron.db 為 0 bytes（重啟後空），sqlite 直查不適用；改用 openclaw cron list CLI 為真相源
+  - 環境快檢：SOUL×3 齊全（2036/20631/1851 bytes）+ 棄用標記 / Repo1=112 持平 / Repo2=32 持平 / 無 .! 鎖
+  - TG 通道探針本輪當下實測：{"ok":true}（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項；HEARTBEAT.md 23 行（剛重啟很短）/ healthcheck.log 639 行（<1000 警戒線）
+  - v4.0 三關判斷：關卡一❌否（24 cron 全綠 + 本輪成功）/ 關卡二❌否（無 FailoverError/overloaded）/ 關卡三❌否（教練傍晚活躍工作中 + 無任何教練/會員功能壞掉）
+  - → 三關皆 fail，安靜結束，未 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+
+---
+[cycle=439 | 2026-08-19 04:12 Asia/Taipei | Context Overflow 重啟後首次完整健康檢查]
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 03:09，沉默 1.1h（凌晨睡眠中）
+- 真相源：state/openclaw.sqlite (57MB, 表格 cron_jobs + cron_run_logs 直查)
+- cron.db 是 0 bytes（重啟副作用）→ 已改用 openclaw.sqlite 取代
+- 25 個 enabled 任務：全部 last_run_status=ok / CE=0；本任務自己 CE=1（上一輪 03:13 cycle=438 process:good-river-2 failed，重啟副作用）
+- 24h 內 36 筆失敗：minimax 過載 16 + process failed 1（重啟副作用）+ disabled 歷史 18 + timeout 0
+- 環境：SOUL×3 齊全 / Repo1=112 持平 / Repo2=40（+6 重啟後浮動）/ 無 .! 鎖定檔
+- TG 通道探針 04:13 當下實測：{"ok":true}
+- v4.0 三關判斷：關卡一❌否（本輪成功 + 重啟後已恢復）/ 關卡二✅是（minimax 過載持續）/ 關卡三❌否（凌晨 + 教練在睡 + 無功能壞）→ 三關未同時成立
+- → 安靜結束，不 announce 教練
+- HEARTBEAT.md 22 → 64 行（<500 警戒線）
+- 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+
+[cycle=441 | 2026-08-19 06:12 Asia/Taipei | 每小時健康檢查]
+- 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 2026-08-19T03:09:00+08:00｜沉默 3.1h（週三凌晨睡眠中）
+- 真相源：state/openclaw.sqlite (57MB, cron_jobs + cron_run_logs 直查) — cron.db 仍 0 bytes（重啟副作用）
+- 25 enabled 任務：全部 last_run_status=ok / CE=0
+- 24h 失敗 37 筆分類：
+  · minimax FailoverError overloaded = 17（每2h蒸餾×12 + 起床摘要×1 + 場景化×1 + LINE@回報×1 + 每小時本任務×0 + 重啟 06:01 + 04:03 + 02:02 + 00:02 + 23:02 + 22:02 + 20:02）→ cron retry 每次自癒
+  · cmd exit 1 = 18（皆 enabled=0 舊提醒殘留）
+  · process failed = 1（03:13 cycle=438 重啟副作用）
+  · other = 0
+- 環境快檢：SOUL×3 2036/20631/1851 bytes 齊全+棄用標記 / Repo1=112 / Repo2=40 / 無 .! 鎖
+- TG 通道探針 04:13 當下實測：{"ok":true}（守則#19，cycle=441 沿用前次成功探針）
+- HEARTBEAT.md ⬜ 待辦：0 項 / 無逾 48h 背景工作
+- v4.0 三關判斷：
+  · 關卡一❌否（25 cron 全綠 + 本輪正在執行 = 已恢復鐵證）
+  · 關卡二✅是（minimax 過載 = provider 端塞車，教練無法介入）
+  · 關卡三❌否（凌晨 6:12 + 教練在睡 + cron retry 都自癒 + 無教練/會員實際依賴功能壞掉）
+- → 三關未同時成立，安靜結束，不 announce 教練
+- 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+[2026-08-19 07:12:48] cycle=442 健康檢查完成（2026-08-19 07:12 Asia/Taipei）— 三關未同時成立 → 安靜結束，不 announce 教練
+2026-08-19 10:14:23 CST cycle=446 10:12 健康檢查安靜結束（蒸餾 CE=2，minimax 過載連鎖，關卡三未過不 announce）
+
+[2026-08-19 14:12:XX+08:00] cycle=452 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-19T11:27:30+08:00｜沉默 2.7h（週三下午活躍工作中）
+  - Cron CLI 真相源（24 enabled）：24 task 全部 last_status=ok，CE=0
+  - 含 sync-*-to-claude-g 兩任務 delivery "fail-closed" 為已知模式，lastStatus=ok 不算失敗
+  - 本任務 46e67e2e：running／CE=0／model=minimax/MiniMax-M3
+  - 環境快檢：SOUL×3 齊全（2036/20631/1851 bytes）+ 棄用標記 / Repo1=112 持平 / Repo2=40 持平 / 無 .! 鎖
+  - TG 通道探針本輪當下實測：{"ok":true}（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項；HEARTBEAT.md 471 行（<500 警戒線）
+  - v4.0 三關判斷：關卡一❌否（24 cron 全綠 + 本輪成功）/ 關卡二❌否（無 FailoverError/overloaded）/ 關卡三❌否（教練下午活躍工作中 + 無任何教練/會員功能壞掉）
+  - → 三關皆 fail，安靜結束，未 announce 教練
+  - 跳過 commit+push（07-05 教練拍板統一由 23:05 三機總結備份）
+2026-08-19 15:13:07 +0800 cycle=453 | Coach 11:27 沉默 3.7h | 24 cron 全綠 CE=0 | SOUL×3 齊全 | Repo1=112/Repo2=40 持平 | 無 .! 鎖 | TG ok | HEARTBEAT 501 行（略逾 500，待 23:05 評估 archive） | 三關全 fail → 安靜結束
+[2026-08-19 18:12:XX+08:00] cycle=458 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-19T17:36:55+08:00｜沉默 0.6h（週三傍晚工作中）
+  - 真相源 openclaw cron list CLI (sqlite 直查局限 → 已 fallback 到 JSON+state.lastRunStatus)：24 enabled（22 ok + 2 idle 一次性未到時）
+  - 抽樣 24h runs：蒸餾 21/40 + 起床摘要 21/40 + 幕僚長晨報 11/22 + 三機總結 33/40（皆 minimax overloaded 自癒，未升級）
+  - BNI 行事曆 40/40 + 每4小時主動關懷 40/40 全綠
+  - 本任務 46e67e2e：running / CE=0 / model=minimax/MiniMax-M3 / 上一輪 70050ms 
+[2026-08-19 18:12:XX+08:00] cycle=458 健康檢查安靜結束｜本任務 46e67e2e ok/CE=0/model=minimax/MiniMax-M3
+  - sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-19T17:36:55+08:00｜沉默 0.6h（週三傍晚工作中）
+  - 真相源 openclaw cron list CLI (sqlite 直查局限 → 已 fallback 到 JSON+state.lastRunStatus)：24 enabled（22 ok + 2 idle 一次性未到時）
+  - 抽樣 24h runs：蒸餾 21/40 + 起床摘要 21/40 + 幕僚長晨報 11/22 + 三機總結 33/40（皆 minimax overloaded 自癒，未升級）
+  - BNI 行事曆 40/40 + 每4小時主動關懷 40/40 全綠
+  - 本任務 46e67e2e：running / CE=0 / model=minimax/MiniMax-M3 / 上一輪 70050ms << 600s
+  - 環境快檢：SOUL×3 2036/20631/1851 bytes 齊全+棄用標記 / Repo1=112 持平 / Repo2=43 持平 / 無 .! 鎖
+  - TG 通道探針本輪當下實測：{"ok":true}（守則#19）
+  - HEARTBEAT ⬜ 待辦：0 項 / HEARTBEAT.md 642 -> 677 行
+  - v4.0 三關判斷：關卡一❌ 否（cron 全綠 + 本輪成功 + 已恢復）/ 關卡二✅ 是（minimax 過載，教練無法介入 -> 不 announce）/ 關卡三❌ 否（傍晚工作中 + cron retry 自癒 + 無會員功能壞）
+  - → 三關未同時成立，安靜結束，未 announce 教練
+  - 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）

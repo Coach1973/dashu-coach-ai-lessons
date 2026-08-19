@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session f7125d75-b0da-4c6a-92ba-99012f90285d
-# 提取時間：2026-08-17 21:52 (台灣時間)
-# 共 7 條教練原話
+# 提取時間：2026-08-18 05:02 (台灣時間)
+# 共 9 條教練原話
 
 ---
 
@@ -113,3 +113,59 @@ Ran 3 commands, read reference_all_conversation_paths.md
 　▶ AI 回應：41/108 done.
 
 　▶ AI 回應：51/108 done.
+
+　▶ AI 回應：進度回報:108 個統編已經查完 **51 個**,資料都存在瀏覽器分頁記憶體裡沒有遺失。但現在 Chrome 擴充功能連線突然斷了(`Claude in Chrome is not connected`),我這邊沒辦法繼續操作瀏覽器。
+
+可以麻煩你確認一下:
+1. 這台 Mac 的 Chrome 視窗(剛才在查 ezPay 的那個分頁)還開著嗎?**不要關掉它**,一關資料就沒了
+2. Chrome 右上角有沒有看到 Claude 擴充功能的圖示,狀態是不是還顯示已連線
+
+我這邊會稍等一下再重試連線,如果你那邊有動到 Chrome(切換視窗、關分頁之類的)先跟我說一聲。
+
+【教練 2026-08-17 15:13】
+我剛才也在忙，所以不曉得它為什麼會斷掉。我現在已經重新登入，繼續
+
+　▶ AI 回應：Functions rebuilt. Restarting from date 1 (previous 51 results were lost when the connection dropped — saving to disk after every batch this time so that can't happen again).
+
+　▶ AI 回應：Saved to disk. Continuing with the remaining dates.
+
+　▶ AI 回應：20/108 done. Continuing with 2024-10-27 (12 invoices, largest single day).
+
+　▶ AI 回應：32/108 done, saved to disk. Continuing.
+
+　▶ AI 回應：41/108 done. Continuing.
+
+　▶ AI 回應：51/108 done — matches where we were before the disconnect. Continuing into new territory now.
+
+　▶ AI 回應：61/108 done.
+
+　▶ AI 回應：71/108 done.
+
+　▶ AI 回應：82/108 done.
+
+　▶ AI 回應：92/108 done. Continuing with the remaining 16.
+
+　▶ AI 回應：99/108 done. Final stretch — 9 left.
+
+　▶ AI 回應：109 lines (header + 108 rows) confirmed. Now committing and pushing.
+
+　▶ AI 回應：**ezPay 108 個統編備註查詢完成**,108/108 全部查到,存於 [ezpay_invoice_remarks_108taxid_2026-08-17.csv](https://github.com/Coach1973/mac-openclaw-workflows/blob/main/claude-brain/data/ezpay_invoice_remarks_108taxid_2026-08-17.csv),commit `dbd55d47d`。
+
+過程中 Chrome 擴充功能又斷線一次(那次你在忙、閒置 1.5 小時觸發的),原本已查到的 51 筆因為存在瀏覽器分頁記憶體…（略）
+
+【教練 2026-08-17 20:14】
+總結，總結，總結！上場，開啟新對話
+
+　▶ AI 回應：Now archiving v116 per E16 rule and adding my v118 baton.
+
+　▶ AI 回應：Now inserting the v118 baton.
+
+　▶ AI 回應：Now adding case 59 in the same style.
+
+　▶ AI 回應：All wrap-up steps done, final commit `12ad8c142`.
+
+## 總結（本場 21:17~04:14，約 7 小時）
+
+**做了什麼**：教練排定五項任務逐一完成——①coach888 加入 BNI-Training 公開連結（commit `7dc9234`）②ezPay 108 個 B2B 統編發票備註全部查完，找出各自對應的分會/會員（`dbd55d47d`）③確認聯想已切換 Edge，Chrome 搶線問題結案④真誠分會架構問題依教練裁示擱置⑤說明賈維斯計畫 Phase 2 月度 cron 為何要等 9/1（排程設計本身如此，非異常）。
+
+**…（略）

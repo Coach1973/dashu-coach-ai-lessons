@@ -181,7 +181,7 @@ Use NUL-delimited raw output (`git diff --cached --name-only -z`) and compare de
 ## [ERR-20260717-MSG] Telegram message tool rejected optional thread fields
 
 **Logged**: 2026-07-17T23:07:00+08:00
-**Priority**: medium
+**Priority**: high
 **Status**: pending
 **Area**: infra
 
@@ -197,13 +197,17 @@ The Telegram `message` send operation failed repeatedly because private-chat sen
 - Target was the authorized private Telegram chat for the daily summary.
 - The summary itself was already written, committed, pushed, and remote-verified.
 - Fallback: rely on the cron turn's final plain-text reply, which OpenClaw delivers automatically to the originating Telegram chat.
+- **2026-08-18 recurrence**: the message wrapper again serialized empty optional `threadId`/`replyTo` fields; empty values failed local validation (`must be a positive integer`), while placeholder `1` reached Telegram and failed with `message thread not found`. No direct message was delivered, so the cron final reply remains the safe fallback.
 
 ### Suggested Fix
 For private Telegram sends, omit `replyTo` and `threadId` entirely unless a valid inbound message/topic id is available; tool wrappers should not serialize empty or placeholder optional fields.
 
 ### Metadata
 - Reproducible: yes
-- Related Files: distill/三機每日總結_2026-07-17.md
+- Related Files: distill/三機每日總結_2026-07-17.md, distill/三機每日總結_2026-08-18.md
+- Recurrence-Count: 2
+- First-Seen: 2026-07-17
+- Last-Seen: 2026-08-18
 
 ---
 

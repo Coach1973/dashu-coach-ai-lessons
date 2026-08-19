@@ -1,23 +1,42 @@
 {
-  "lastHeartbeat": "2026-08-17T22:12:00+08:00",
-  "lastHeartbeatNote": "cycle=406 安靜結束｜cron 24 任務全綠 + CE=0 + 三關全 fail + 教練 21:42 剛講話 0.5h + TG 通道 22:12 當下實測通過",
-  "lastChecks": {
-    "healthcheck": "2026-08-17T22:12:00+08:00",
-    "system_health": "2026-08-17T22:12:00+08:00",
-    "coach_silence_sync": "2026-08-17T22:20:19.212000+08:00",
-    "cron": "2026-08-17T22:12:00+08:00",
-    "environment": "2026-08-17T22:12:00+08:00",
-    "tgChannel": "2026-08-17T22:12:00+08:00"
+  "lastCycle": 446,
+  "lastCoachMessage": "2026-08-19T03:09:00+08:00",
+  "coachSilentSince": "2026-08-19T03:09:00+08:00",
+  "coachSilentHours": 2.7,
+  "telegramChannelOk": true,
+  "telegramChannelProbedAt": "2026-08-19T04:13:00+08:00",
+  "soulFilesConsistent": true,
+  "soulFilesBytes": {
+    "main": 2036,
+    "workspace": 20631,
+    "agentMain": 1851
+  },
+  "repoStatusLines": {
+    "repo1": 112,
+    "repo2": 40
+  },
+  "lockFiles": 0,
+  "heartbeatLines": 70,
+  "healthcheckLogLines": 656,
+  "lastCheckAt": "2026-08-19T10:14:23.180543+08:00",
+  "verdict": "silent_ok_v4_0_three_gates_all_fail_post_restart_recovery",
+  "contextOverflowRestart": {
+    "restartedAt": "2026-08-19T03:07:00+08:00",
+    "recoveredAt": "2026-08-19T04:13:00+08:00",
+    "note": "重啟後 cron.db 被清成 0 bytes，但 state/openclaw.sqlite 仍是 57MB 真相源。本任務 03:12 cycle=438 process:good-river-2 failed 為重啟副作用；04:12 cycle=439 已恢復。"
   },
   "systemSnapshot": {
-    "allCronsHealthy": true,
-    "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-17T22:12 (守則#19 本輪實測通過，非沿用舊旗標)",
-    "coachSilentSince": "2026-08-17T21:42:30+08:00",
-    "coachSilentHours": 0.6
+    "coachSilentSince": "2026-08-19T19:36:55+08:00",
+    "coachSilentHours": 3.2,
+    "enabledCronJobs": 25,
+    "allGreen": true,
+    "selfCE": 1
   },
-  "coachSilentHours": 0.5,
-  "timeOfDay": "evening",
-  "dayOfWeek": "Monday",
-  "lastCycle": 406
+  "lastChecks": {
+    "coach_silence_sync": "2026-08-19T22:50:20.203213+08:00",
+    "telegram_channel_probe": "2026-08-19T04:13:00+08:00",
+    "sqlite_truth_source": "2026-08-19T04:13:00+08:00"
+  },
+  "tgChannelCheckedAt": "2026-08-19T10:14:23.180555+08:00",
+  "notes": "cycle=446: 蒸餾 CE=2 minimax 過載連鎖；關卡三未過，安靜結束"
 }

@@ -1,9 +1,14 @@
 {
-  "lastChecks": {
-    "distill": "2026-06-01T17:31:00+08:00",
-    "youtube_monitor": "2026-06-01T12:32:00+08:00",
-    "cron_health": "2026-06-01T17:31:00+08:00"
-  },
-  "lastHeartbeat": "2026-06-01T17:36:00+08:00",
-  "note": "17:36 heartbeat completed, model MiniMax M2.7, 15 cron green, no pending tasks"
+  "lastCycle": 453,
+  "lastCheckAt": "2026-08-19T15:12:00+08:00",
+  "telegramChannelOk": true,
+  "telegramChannelProbedAt": "2026-08-19T15:12:00+08:00",
+  "environmentHealthy": true,
+  "cronEnabledCount": 24,
+  "cronCeZero": 24,
+  "cronLastErrorAge": "無",
+  "coachLastMessageAt": "2026-08-19T11:27:30+08:00",
+  "coachSilentHours": 3.7,
+  "threeGatesAnnounceRequired": false,
+  "notes": "cycle=453 全部綠，3.7h 沈默正常（週三下午工作中），三關皆 fail，安靜結束。"
 }

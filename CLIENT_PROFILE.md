@@ -1,5 +1,16 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-08-19（共 6 則）
+1. mentor100 (id=64) 是真相源；ai-forum-taichung 是目標
+2. 改了 3 處：照片（新 head crop 1200x800）、bio（換行版新文案）、IG URL（mentor100 含 igsh 參數）
+3. 其他 8 位講師 (Lavi/大樹教練/曾思遠/廖韋評/彭晉澄/施育廷/王俊甫/李中閔) 一字未動
+4. Commit：`e0881fe`（已 push origin/master）
+5. 線上 90 秒後生效驗證 ✅：新 bio 1 次／舊 0 次／IG 參數 1 次／照片 67314 bytes
+6. IG URL 含 `?igsh=...&igsi=...` 追蹤參數，照 mentor100 同步上去了；
+
+---
+
+
 ## 蒸餾 2026-08-16（共 3 則）
 1. 9 個社群連結（官網、FB、IG、Threads、YouTube、GJW、LINE、Podcast、Blog）
 2. 把這條連結 + 「歡迎加入，請補上大頭照跟社群連結」訊息組成一段話，方便您直接複製貼到 LINE 給彭先生
