@@ -93,25 +93,25 @@
   - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
   - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
 
-## Promoted From Short-Term Memory (2026-08-19)
+## Promoted From Short-Term Memory (2026-08-20)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:334:335 -->
-- 📨 對話記錄 17:23（共約 5 條，從第 0 行起）: 您決定，小龍蝦照辦。 🦞 小龍蝦：教練好，是的，這個任務是**自動化的**，不是小龍蝦手動跑的： [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-10.md:334-335]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:337:337 -->
-- 📨 對話記錄 17:23（共約 5 條，從第 0 行起）: **📊 LINE@「教練都在想什麼」每日兩次使用情況** [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-10.md:337-337]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:338:341 -->
-- 📨 對話記錄 17:23（共約 5 條，從第 0 行起）: cron ID：`001a9b16-1985-413b-8d3c-a4e885e552b6`; 頻率：**每天 08:00 跟 20:00** 各一次; 跑完直接 Telegram 推到您這裡（chat 6124913915）; 使用的模型：minimax/MiniMax-M3 [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-10.md:338-341]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:274:274 -->
-- 📨 對話記錄 06:53（共約 1 條，從第 0 行起）: 👤 教練：[cron:46e67e2e-6332-4589-aae2-ee7e10dd7279 🦞 每30分鐘任務健康檢查] 你是健康檢查助理。安靜執行以下檢查並自動修復，不需要通知教練（除非發現無法自動修復的嚴重問題）： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:274-274]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:278:278 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: **每次開工第一步**先執行： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:278-278]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:280:280 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: bash ~/.openclaw/workspace/scripts/sync_coach_last_message.sh [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:280-280]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:282:284 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: exit 0 → state 已用 Telegram API 真實時間回寫; exit 1 → 手動從 memory/最新檔撈，禁止沿用舊 `coachSilentHours`; exit 2 → TELEGRAM_BOT_TOKEN 沒設，記到 HEARTBEAT 待辦，下次跑前手動處理 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:282-284]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:286:286 -->
-- 第零步：🔴 v3.0 鐵律 — 教練最後訊息時間真相源（2026-08-02 教練拍板）: 跑完才開始下面的檢查。所有寫到回報的「教練沉默了 N」必須是當下 `date` 算的新鮮值，**絕對不可用 state 裡面的舊值**。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:286-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-12.md:290:290 -->
-- 第一步：檢查 Cron 任務失敗記錄: 使用 `openc [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-12.md:290-290]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-10.md:343:343 -->
-- 📨 對話記錄 17:23（共約 5 條，從第 0 行起）: 剛剛您看到的是 08:03 那一輪的結果。下一輪今晚 20:00 會再跑一次。 [score=0.847 recalls=0 avg=0.620 source=memory/2026-08-10.md:343-343]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:14:14 -->
+- 📨 對話記錄 00:53（共約 2 條，從第 0 行起）: 👤 教練：Hello，幫我查詢一下，我是什麼時候跟軍師版（就是 Claude code，克勞德的助教軍師版）跟他說：請幫我完成「有人報名，我的 LINE 就可以收到通知」這個功能？ [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:14-14]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:16:16 -->
+- 📨 對話記錄 00:53（共約 2 條，從第 0 行起）: 這是我在什麼時候的對話？幫我查一下這個關鍵字。我當時的要求就是：我希望有人在網頁上按報名的時候，我的 LINE 就可以收到通知。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:16-16]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:18:19 -->
+- 📨 對話記錄 00:53（共約 2 條，從第 0 行起）: 我是什麼時候叫他去完成這個任務的？你幫我找到歷史對話紀錄。 👤 教練：宕機了就不會自己回復嗎？這麼被動？ [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:18-19]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:23:25 -->
+- 📨 對話記錄 01:21～01:25（共約 3 條，從第 0 行起）: 👤 教練（LINE 禮貌確認）：hello hello，有人在嗎？ 👤 教練：我想了解一下，就是 7 月 11 號完成的這一套「報名時 LINE 可收到通知」的系統，是不是由軍師那邊去完成的？然後，他是跑了哪一個程式，所以完成了這個任務？你能找得到嗎？ 👤 教練（LINE 禮貌確認）：Hello, hello，你在？ [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:23-25]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:29:29 -->
+- 🔴 本場交付的核心事實（2026-08-14 01:21 已完成教練問題）: **確認 1：是軍師做的** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:29-29]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:30:30 -->
+- 🔴 本場交付的核心事實（2026-08-14 01:21 已完成教練問題）: 教練 2026-08-14 00:49 終端機親口：「event.bymyway.com 這套系統也是你去幫我建的，在建置的過程當中，你多次要求我登入這個雲端的帳號，cloudflared 通道這也是你去做的」 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:30-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:32:32 -->
+- 🔴 本場交付的核心事實（2026-08-14 01:21 已完成教練問題）: **確認 2：是 Python Flask + Cloudflare Tunnel + Telegram Bot API 三件套** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:32-32]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:35:38 -->
+- 技術棧完整盤點: **Python Flask 後端**; 路徑：`/Users/bymyway/.openclaw/workspace/event-signup/`; 主程式：`app.py`（23,438 bytes，2026-08-10 最後修改）; 資料庫：`event.db`（SQLite） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:35-38]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:39:40 -->
+- 技術棧完整盤點: 預設 port：5060; 啟動：`cd ~/.openclaw/workspace/event-signup && ./venv/bin/python3 app.py` [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:39-40]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:42:45 -->
+- 技術棧完整盤點: **Cloudflare Tunnel**; Tunnel 名稱：`event-app`; Tunnel ID：`739a34e4`; 設定檔：`~/.cloudflared/event-config.yml` [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-14.md:42-45]

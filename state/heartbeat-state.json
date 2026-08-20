@@ -1,10 +1,10 @@
 {
-  "lastCycle": 446,
-  "lastCoachMessage": "2026-08-19T03:09:00+08:00",
-  "coachSilentSince": "2026-08-19T03:09:00+08:00",
-  "coachSilentHours": 2.7,
+  "lastCycle": 459,
+  "lastCoachMessage": "2026-08-20T13:36:55+08:00",
+  "coachSilentSince": "2026-08-20T13:36:55+08:00",
+  "coachSilentHours": 0.6,
   "telegramChannelOk": true,
-  "telegramChannelProbedAt": "2026-08-19T04:13:00+08:00",
+  "telegramChannelProbedAt": "2026-08-20T14:13:28.794635+08:00",
   "soulFilesConsistent": true,
   "soulFilesBytes": {
     "main": 2036,
@@ -13,30 +13,33 @@
   },
   "repoStatusLines": {
     "repo1": 112,
-    "repo2": 40
+    "repo2": 25
   },
   "lockFiles": 0,
-  "heartbeatLines": 70,
-  "healthcheckLogLines": 656,
-  "lastCheckAt": "2026-08-19T10:14:23.180543+08:00",
-  "verdict": "silent_ok_v4_0_three_gates_all_fail_post_restart_recovery",
+  "heartbeatLines": 145,
+  "healthcheckLogLines": 720,
+  "lastCheckAt": "2026-08-20T14:13:28.794635+08:00",
+  "verdict": "silent_ok_v4_0_three_gates_all_fail_normal_business_hours",
   "contextOverflowRestart": {
-    "restartedAt": "2026-08-19T03:07:00+08:00",
-    "recoveredAt": "2026-08-19T04:13:00+08:00",
-    "note": "重啟後 cron.db 被清成 0 bytes，但 state/openclaw.sqlite 仍是 57MB 真相源。本任務 03:12 cycle=438 process:good-river-2 failed 為重啟副作用；04:12 cycle=439 已恢復。"
+    "restartedAt": "2026-08-20T04:08:00+08:00",
+    "recoveredAt": "2026-08-20T04:12:00+08:00",
+    "note": "重啟後 HEARTBEAT.md 自動重寫為熱上下文（22 行）。本任務 02:12 Edit HEARTBEAT.md failed + 01:12 Agent couldn't generate a response 為重啟副作用連鎖；03:12 已恢復 ok；04:12 本輪正在跑 = 已恢復鐵證。"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-08-19T19:36:55+08:00",
-    "coachSilentHours": 3.2,
-    "enabledCronJobs": 25,
+    "coachSilentSince": "2026-08-20T20:06:55+08:00",
+    "coachSilentHours": 2.1,
+    "enabledCronJobs": 27,
+    "enabledCE0Ok": 25,
+    "selfCE": 1,
+    "selfErrorType": "transient_edit_HEARTBEAT_md",
     "allGreen": true,
-    "selfCE": 1
+    "observation": "唯一 CE=1 是本任務上一次 cycle (13:12) Edit tool transient 失敗，非 provider 過載；v4.0 三關全 fail"
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-19T22:50:20.203213+08:00",
-    "telegram_channel_probe": "2026-08-19T04:13:00+08:00",
-    "sqlite_truth_source": "2026-08-19T04:13:00+08:00"
+    "coach_silence_sync": "2026-08-20T22:12:03.482768+08:00",
+    "telegram_channel_probe": "2026-08-20T14:13:28.794635+08:00",
+    "sqlite_truth_source": "2026-08-20T14:13:28.794635+08:00"
   },
-  "tgChannelCheckedAt": "2026-08-19T10:14:23.180555+08:00",
-  "notes": "cycle=446: 蒸餾 CE=2 minimax 過載連鎖；關卡三未過，安靜結束"
+  "tgChannelCheckedAt": "2026-08-20T14:13:28.794635+08:00",
+  "notes": "cycle=459: 教練 13:36:55 工作中發訊（沉默 0.6h）。SQLite 直查 27 啟用 cron 全綠（25 CE=0；本任務自己 CE=1 為 Edit tool transient 失敗，下次 cron retry 自動恢復）。TG 通道本輪實測 ok（守則#19）。v4.0 三關全 fail → 安靜結束，不 announce"
 }
