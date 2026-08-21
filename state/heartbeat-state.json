@@ -1,45 +1,49 @@
 {
-  "lastCycle": 459,
-  "lastCoachMessage": "2026-08-20T13:36:55+08:00",
-  "coachSilentSince": "2026-08-20T13:36:55+08:00",
-  "coachSilentHours": 0.6,
-  "telegramChannelOk": true,
-  "telegramChannelProbedAt": "2026-08-20T14:13:28.794635+08:00",
-  "soulFilesConsistent": true,
-  "soulFilesBytes": {
-    "main": 2036,
-    "workspace": 20631,
-    "agentMain": 1851
-  },
-  "repoStatusLines": {
-    "repo1": 112,
-    "repo2": 25
-  },
-  "lockFiles": 0,
-  "heartbeatLines": 145,
-  "healthcheckLogLines": 720,
-  "lastCheckAt": "2026-08-20T14:13:28.794635+08:00",
-  "verdict": "silent_ok_v4_0_three_gates_all_fail_normal_business_hours",
-  "contextOverflowRestart": {
-    "restartedAt": "2026-08-20T04:08:00+08:00",
-    "recoveredAt": "2026-08-20T04:12:00+08:00",
-    "note": "重啟後 HEARTBEAT.md 自動重寫為熱上下文（22 行）。本任務 02:12 Edit HEARTBEAT.md failed + 01:12 Agent couldn't generate a response 為重啟副作用連鎖；03:12 已恢復 ok；04:12 本輪正在跑 = 已恢復鐵證。"
-  },
-  "systemSnapshot": {
-    "coachSilentSince": "2026-08-20T20:06:55+08:00",
-    "coachSilentHours": 2.1,
-    "enabledCronJobs": 27,
-    "enabledCE0Ok": 25,
-    "selfCE": 1,
-    "selfErrorType": "transient_edit_HEARTBEAT_md",
-    "allGreen": true,
-    "observation": "唯一 CE=1 是本任務上一次 cycle (13:12) Edit tool transient 失敗，非 provider 過載；v4.0 三關全 fail"
-  },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-20T22:12:03.482768+08:00",
-    "telegram_channel_probe": "2026-08-20T14:13:28.794635+08:00",
-    "sqlite_truth_source": "2026-08-20T14:13:28.794635+08:00"
+    "heartbeat_poll": "2026-08-21T18:13:15.417134+08:00",
+    "telegram_channel": "2026-08-21T18:13:15.417134+08:00",
+    "system_health": "2026-08-21T18:13:15.417134+08:00",
+    "coach_silence_sync": "2026-08-21T22:20:25.425185+08:00"
   },
-  "tgChannelCheckedAt": "2026-08-20T14:13:28.794635+08:00",
-  "notes": "cycle=459: 教練 13:36:55 工作中發訊（沉默 0.6h）。SQLite 直查 27 啟用 cron 全綠（25 CE=0；本任務自己 CE=1 為 Edit tool transient 失敗，下次 cron retry 自動恢復）。TG 通道本輪實測 ok（守則#19）。v4.0 三關全 fail → 安靜結束，不 announce"
+  "lastHeartbeat": "2026-08-21T18:13:15.417134+08:00",
+  "lastHeartbeatNote": "cycle=498 18:12 健康檢查｜cron tool ok/CE=0/durationMs=77778｜教練沈默 0.3h（17:54 訊息，週五傍晚工作中）｜v4.0 三關全 fail → 不 announce，安靜記錄",
+  "systemSnapshot": {
+    "timeOfDay": "evening",
+    "dayOfWeek": "Friday",
+    "isQuietHours": false,
+    "quietHoursReason": "18:00 週五傍晚，下班時段，非安靜時段",
+    "allCronsHealthy": true,
+    "contextStatus": "stable",
+    "recentCoachActivity": "教練最後訊息 2026-08-21 17:54:18，當下沉默 0.3h（週五傍晚工作中，剛發訊息）",
+    "urgentGmailCount": 0,
+    "junshiQueueEmpty": true,
+    "junshiLastResultTs": "2026-07-20T12:56:45.728235+08:00",
+    "gatewayRunning": true,
+    "telegramChannelOk": true,
+    "telegramChannelLastVerified": "2026-08-21T18:13:15.417134+08:00 當下實測通過",
+    "coachSilentSince": "2026-08-21T21:36:55+08:00",
+    "coachSilentHours": 0.7,
+    "nextPlannedAction": "19:00 下次心跳",
+    "triggerSource": "cron-event:hourly-heartbeat",
+    "lettersReminderProgress": "20/20 今晚 22:20 最後一天",
+    "lettersReminderDelivered": false
+  },
+  "telegramChannelOk": true,
+  "lastCycle": 498,
+  "lastResult": "ok",
+  "lastNotes": "cycle=498 18:12 健康檢查｜cron 自身 ok｜教練沈默 0.3h 週五傍晚工作中｜v4.0 三關全 fail → 不 announce",
+  "telegramChannelLastVerified": "2026-08-21T18:13:15.417134+08:00",
+  "lastCycleAt": "2026-08-21T18:13:15.417134+08:00",
+  "lastCycleConclusion": "no_announce",
+  "triple_gate_v4": {
+    "gate1_now_broken": false,
+    "gate2_provider_overloaded": false,
+    "gate3_affects_work": false
+  },
+  "cronHealth": {
+    "enabled_total": 24,
+    "ce_ge3": 0,
+    "last_status_error": 0,
+    "past_1h_errors": 0
+  }
 }
