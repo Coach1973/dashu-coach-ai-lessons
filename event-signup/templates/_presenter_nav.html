@@ -1,0 +1,15 @@
+<!-- 展示用快速切換列：2026-08-21教練反映現場展示常要在簽到/轉盤/後台三個網頁間切換，
+     加這個固定在右下角的小工具列，點一下直接跳轉，不用另開分頁找網址。
+     三顆都指向固定網址（不用帶場次代號），跟現有「目前活動」機制相容。 -->
+<div id="presenter-nav" style="position:fixed;bottom:16px;right:16px;z-index:999;
+  display:flex;gap:8px;font-family:'Noto Sans TC',sans-serif;">
+  <a href="/checkin" title="簽到頁" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    background:rgba(20,20,20,.85);border:1px solid rgba(200,169,110,.5);border-radius:50%;
+    font-size:20px;text-decoration:none;color:#c8a96e;backdrop-filter:blur(4px);">📷</a>
+  <a href="/wheel" title="抽獎轉盤" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    background:rgba(20,20,20,.85);border:1px solid rgba(200,169,110,.5);border-radius:50%;
+    font-size:20px;text-decoration:none;color:#c8a96e;backdrop-filter:blur(4px);">🎡</a>
+  <a href="/admin" title="後台" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    background:rgba(20,20,20,.85);border:1px solid rgba(200,169,110,.5);border-radius:50%;
+    font-size:20px;text-decoration:none;color:#c8a96e;backdrop-filter:blur(4px);">⚙️</a>
+</div>
