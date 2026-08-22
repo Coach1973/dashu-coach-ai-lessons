@@ -2,7 +2,7 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-08-15",
-  "quota_remaining": 39,
+  "quota_remaining": 38,
   "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。⚠️2026-08-03發現：netlify_deploy_guard.sh的自動扣減邏輯要求指令結尾剛好是`/deploys`，若curl後面接了`| python3 ...`等管道處理，正則比對不到結尾，不會自動扣。這次是手動補記，之後部署指令若有接pipe，記得手動確認這個檔案有沒有真的被hook扣到。⚠️2026-08-08再發現：不只pipe，指令POST後面接了-H/--data-binary/-o等多個flag（沒有直接以/deploys結尾）guard正則一樣抓不到，bigtree-tw這次部署也是手動補記才扣到。之後只要deploy指令不是單純以/deploys收尾，都要記得檢查quota_remaining有沒有真的被扣到。",
   "credit_pools": [
     {
@@ -24,6 +24,13 @@
   ],
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-22",
+      "site": "bigtree-tw",
+      "deploy_id": "6a89bc69126dab54a5fa417d",
+      "change": "救回8/14寫好卻從未推送的報名雙寫程式碼(BYMYWAY_API/slug fetch)：8/18另一台機器在origin/main缺這段程式碼的狀態下加了8/26早半場「晨光美學」+4樓地址修正並push，意外把雙寫功能從git歷史裡蓋掉且沒人發現。本場merge兩邊(保留新場次資料+救回雙寫邏輯)，用event.db真實15個slug逐一核對相符，本機http.server+真實Chrome預覽經教練確認，教練親口說「推」。guard未自動扣(指令有--data-binary/-o等flag非單純/deploys收尾)，手動補記 39→38",
+      "remaining_after": 38
+    },
     {
       "date": "2026-08-15",
       "site": "ai-talk-tw",
