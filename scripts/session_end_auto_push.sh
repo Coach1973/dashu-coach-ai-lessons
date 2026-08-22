@@ -89,4 +89,46 @@ fi
   echo "- 同步路徑：${DIRTY[*]}"
 } >> "$LOG" 2>/dev/null || true
 
+# ===== Phase 2：掃描 github_repos/* 網站專案，push 掉任何領先 origin 的 commit =====
+# 2026-08-23新增。起因：bigtree-tw 8/14的雙寫程式碼commit在本機做完就結束，
+# 沒有push，剛好這類站台用git archive HEAD本機打包部署，deploy當下成功掩蓋了
+# 「沒推」這件事——一週後另一台機器在缺這段程式碼的origin基礎上疊加新commit並push，
+# 把它永久蓋掉，直到金門場報名數對不上才被查出來。上面這段只保護workspace自己，
+# 完全沒保護底下22個網站專案repo，這裡補上同等保護：E01「commit必須同輪push」
+# 這條鐵律過去只是文件承諾、沒有工具強制，現在改成每輪結束自動檢查+補推，
+# 讓「commit了卻忘記push」這件事在架構上不可能再安靜躺過一週不被發現。
+REPOS_ROOT="/Users/bymyway/github_repos"
+REPO_LOCK="/tmp/session_end_repo_push.lock"
+
+if [[ -d "$REPOS_ROOT" ]]; then
+  REPO_LOCK_STALE=1
+  if [[ -f "$REPO_LOCK" ]]; then
+    REPO_AGE=$(( $(date +%s) - $(stat -f %m "$REPO_LOCK" 2>/dev/null || echo 0) ))
+    [[ "$REPO_AGE" -lt 10 ]] && REPO_LOCK_STALE=0
+  fi
+
+  if [[ "$REPO_LOCK_STALE" -eq 1 ]]; then
+    touch "$REPO_LOCK"
+    for repo_dir in "$REPOS_ROOT"/*/; do
+      [[ -d "$repo_dir/.git" ]] || continue
+      repo_name=$(basename "$repo_dir")
+      ( cd "$repo_dir" 2>/dev/null || exit 0
+        # 沒設定 upstream 的跳過（可能是刻意的本機專案，不動它）
+        git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1 || exit 0
+        AHEAD=$(git rev-list '@{u}..HEAD' --count 2>/dev/null || echo 0)
+        [[ "$AHEAD" -gt 0 ]] || exit 0
+        if git push >/dev/null 2>&1; then
+          echo "$(date '+%Y-%m-%d %H:%M') ✅ $repo_name: 補推了 $AHEAD 筆先前未推送的 commit" >> "$LOG"
+        else
+          {
+            echo ""
+            echo "## ⚠️ 未推送 commit 補推失敗 $STAMP（$repo_name）"
+            echo "- $repo_name 有 $AHEAD 筆本機 commit 領先 origin，自動 push 失敗（離線/衝突），需人工檢查 \`cd $repo_dir && git push\`"
+          } >> "$WS/HEARTBEAT.md" 2>/dev/null || true
+        fi
+      )
+    done
+  fi
+fi
+
 exit 0
