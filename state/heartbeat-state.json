@@ -1,49 +1,26 @@
 {
-  "lastChecks": {
-    "heartbeat_poll": "2026-08-21T18:13:15.417134+08:00",
-    "telegram_channel": "2026-08-21T18:13:15.417134+08:00",
-    "system_health": "2026-08-21T18:13:15.417134+08:00",
-    "coach_silence_sync": "2026-08-21T22:20:25.425185+08:00"
-  },
-  "lastHeartbeat": "2026-08-21T18:13:15.417134+08:00",
-  "lastHeartbeatNote": "cycle=498 18:12 健康檢查｜cron tool ok/CE=0/durationMs=77778｜教練沈默 0.3h（17:54 訊息，週五傍晚工作中）｜v4.0 三關全 fail → 不 announce，安靜記錄",
-  "systemSnapshot": {
-    "timeOfDay": "evening",
-    "dayOfWeek": "Friday",
-    "isQuietHours": false,
-    "quietHoursReason": "18:00 週五傍晚，下班時段，非安靜時段",
-    "allCronsHealthy": true,
-    "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-21 17:54:18，當下沉默 0.3h（週五傍晚工作中，剛發訊息）",
-    "urgentGmailCount": 0,
-    "junshiQueueEmpty": true,
-    "junshiLastResultTs": "2026-07-20T12:56:45.728235+08:00",
-    "gatewayRunning": true,
-    "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-21T18:13:15.417134+08:00 當下實測通過",
-    "coachSilentSince": "2026-08-21T21:36:55+08:00",
-    "coachSilentHours": 0.7,
-    "nextPlannedAction": "19:00 下次心跳",
-    "triggerSource": "cron-event:hourly-heartbeat",
-    "lettersReminderProgress": "20/20 今晚 22:20 最後一天",
-    "lettersReminderDelivered": false
-  },
+  "lastCheck": "2026-08-22T22:12:00+08:00",
+  "lastCycle": 530,
+  "lastStatus": "ok_no_action",
+  "cumulativeGreen": 24,
   "telegramChannelOk": true,
-  "lastCycle": 498,
-  "lastResult": "ok",
-  "lastNotes": "cycle=498 18:12 健康檢查｜cron 自身 ok｜教練沈默 0.3h 週五傍晚工作中｜v4.0 三關全 fail → 不 announce",
-  "telegramChannelLastVerified": "2026-08-21T18:13:15.417134+08:00",
-  "lastCycleAt": "2026-08-21T18:13:15.417134+08:00",
-  "lastCycleConclusion": "no_announce",
-  "triple_gate_v4": {
-    "gate1_now_broken": false,
-    "gate2_provider_overloaded": false,
-    "gate3_affects_work": false
+  "telegramChannelProbeAt": "2026-08-22T22:12:00.000000+08:00",
+  "coachSilentHours": 19.0,
+  "coachLastMessageAt": "2026-08-22T03:10:00+08:00",
+  "nextScheduledCheck": "2026-08-22T23:12:00+08:00 (cycle=531)",
+  "tripleGate": {
+    "gate1_currentBroken": false,
+    "gate2_providerOverloaded": false,
+    "gate3_affectsCoach": false,
+    "verdict": "all_fail_no_announce"
   },
-  "cronHealth": {
-    "enabled_total": 24,
-    "ce_ge3": 0,
-    "last_status_error": 0,
-    "past_1h_errors": 0
-  }
+  "systemSnapshot": {
+    "coachSilentSince": "2026-08-22T03:10:00+08:00",
+    "coachSilentHours": 19.0
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-08-22T22:12:00.000000+08:00"
+  },
+  "lastPollCheck": "2026-08-22T22:12:00+08:00",
+  "lastPollStatus": "ok_no_action"
 }

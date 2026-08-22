@@ -736,3 +736,34 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
 2026-08-21 16:12 cycle=495 | coach_silent=3.6h | CE=2 (minimax卡死+retry Edit transient) | v4.0 三關全 fail → 不 announce | 跳過 commit+push
 2026-08-21T17:12:00+08:00 | cycle=496 | coachSilentHours=4.6 | cron=24/24 綠 | CE>=3=0 | lastStatusError=0 | past1hErrors=0 | SOUL×3 齊全 | TG 通道 ok | HEARTBEAT.md 68→83 行 | append 成功 | 結論：無異常、不 announce、不 commit+push
 2026-08-21T18:13:18+0800 | cycle=498 | coachSilentHours=0.3 (17:54 訊息) | cron tool ok/CE=0/durationMs=77778 | model=minimax/MiniMax-M3 | SQLite 4 檔 0 bytes (cron tool 為真相源) | SOUL×3 齊全 | TG 通道 ok | HEARTBEAT.md 118→119 行 | append 成功 | 三關全 fail → 不 announce / 不 commit+push
+2026-08-22 01:12:16 cycle=505 ✅ 無異常（24 jobs 全綠 / TG ok / 三關全 fail）
+2026-08-22 03:12:37 CST | cycle=507 | cron=ok/CE=0 | coachSilent=0.04h | env=ok | tg=ok | announce=no
+[2026-08-22 04:12:41 CST] cycle=508 | cron=ok/CE=0 | coachSilent=1.0h | env=ok | tg=ok | HEARTBEAT.md 52→80 行 | announce=no | v4.0三關全fail→安靜
+[2026-08-22 05:12:25] cycle=509 週六凌晨｜sync_coach_last_message.sh exit 0｜教練沉默 2.0h｜TG ok｜cron tool lastRunStatus=ok/CE=0｜SOUL×3 齊全｜無 .! 鎖｜HEARTBEAT 0 ⬜｜v4.0 三關全 fail → 不 announce｜安靜通過
+[2026-08-22 06:02 cycle=510] TG ok:true | 教練沉默2.9h睡眠 | SOUL×3齊 | Repo1=112 Repo2=20 | 無.!鎖 | ⚠️ f487652d 06:00起床摘要連兩次FailoverError過載失敗(06:00+06:02) | cron系統已排第三輪retry(already-running) | 不announce(教練睡眠+07:00幕僚長晨報會兜底)
+[2026-08-22 07:13:00] cycle=512 健康檢查 ok｜教練沉默 4.0h｜本任務 cron ok/CE=0｜無異常，安靜通過
+[2026-08-22 08:12:29 CST] cycle=513 健康檢查完成：✅ 無異常，安靜通過，不通知教練｜沉默 5.0h｜過去 1h error=0｜TG ok=true｜HEARTBEAT 232 行
+[2026-08-22 09:00:38 CST] cycle=514 09:00 OpenClaw polling | TG ok:true | 教練沉默 5.8h（週六上午睡眠中）| cron list 25 jobs 全 ok | 起床摘要 f487652d 已自癒 | 環境快檢全綠 | v4.0三關全fail→安靜通過 不announce
+2026-08-22 09:12:20 CST cycle=515 status=ok coachSilent=6.0h TG=ok cron_ok=1
+1787364023|cycle=516|2026-08-22T10:00:00+08:00|✅ 無異常 安靜通過|教練沉默 6.8h 週六上午睡眠|25 enabled cron 全 ok|TG 探針當下實測 ✅|cumulative=10輪連綠
+1787368320|cycle=518|2026-08-22T11:12:00+08:00|✅ 無異常 安靜通過|教練沉默 8.0h 週六上午補眠|過去 24h 12 輪連綠|cron runs 50 筆全綠|TG 探針當下實測 ✅|cumulative=12輪連綠
+2026-08-22T12:12:28+08:00 cycle=519 status=ok coachSilentHours=9.0 model=minimax/MiniMax-M3 consecutiveErrors=0 trigger=cron
+[2026-08-22 13:12 Asia/Taipei] cycle=520 健康檢查完成 · 無異常 · 安靜通過 · 教練沉默 10.0h · cron ok/CE=0 · TG通道ok · cumulativeGreen=14
+[2026-08-22 14:00:08+08:00] cycle=521 OpenClaw polling（非 cron）｜TG 通道探針 ok:true｜cron 真相源：上一輪 cycle=520 13:12 lastRunStatus=ok/CE=0｜教練沈默 10.8h（週六下午正常）｜v4.0 三關全 fail → ✅ 不 announce｜HEARTBEAT.md 504 → ~530 行
+[2026-08-22 14:12:42] cycle=522 健康檢查完成 ✅ | cron 46e67e2e ok CE=0 durationMs=30278 | 教練沉默 11.0h 週六補眠正常 | HEARTBEAT 556行 | cumulativeGreen=16輪連綠 | v4.0三關全fail→不announce
+[2026-08-22 15:12:47+08:00] cycle=523 · 15:12 Asia/Taipei · 週六下午（cron 觸發）
+  - sync_coach_last_message.sh: exit 0, coachSilentHours=12.0
+  - cron job 46e67e2e: lastRunStatus=ok, CE=0, durationMs=49531, model=minimax/MiniMax-M3
+  - TG channel probe: ok (chat=6124913915)
+  - HEARTBEAT.md: 613 → 264 行（已 archive cycle=507~516 到 state/archive/heartbeat_2026-08-22.md）
+  - 環境快檢: SOUL×3 齊全, Repo1=112, Repo2=24, 無 .! 鎖
+  - cumulativeGreen=17 輪連綠
+  - v4.0 三關全 fail → 不 announce
+2026-08-22T16:12:21+08:00 cycle=524 安靜通過（週六下午）｜教練沉默13.0h｜cron runs 50筆全綠｜v4.0三關全fail→不announce｜cumulativeGreen=18輪連綠
+2026-08-22T17:12:xx+08:00 cycle=525 ✅ ok_no_action (cumulativeGreen=19) coachSilent=14.0h TG=ok HEARTBEAT=384行 cron=全綠/本任務CE=0 duration=55966ms
+[2026-08-22 18:01:08 +0800] cycle=525+1 OpenClaw polling ✅ all-green | coach_silence=14.8h | TG=ok | cumulativeGreen=19
+2026-08-22T18:12:37+0800 cycle=526 ✅ ok_no_action (cumulativeGreen=20) coachSilent=15.0h TG=ok HEARTBEAT=406行 cron=全綠/本任務CE=0 duration=~36000ms
+[2026-08-22 19:12:24 +0800] cycle=527 ✅ ok_no_action (cumulativeGreen=21) coachSilent=16.0h TG=ok HEARTBEAT=55行 cron=全綠/本任務CE=0 duration=41241ms ContextOverflow重啟後正常運作
+[2026-08-22 20:12:00 +0800] cycle=528 ✅ ok_no_action (cumulativeGreen=22) coachSilent=17.0h TG=ok HEARTBEAT=55行 cron=全綠/本任務CE=0 duration=28186ms
+2026-08-22T13:12:33+08:00 cycle=529 status=ok_no_action coachSilentHours=18.0 TG=ok cron=全綠/本任務CE=0 duration=31900ms cumulativeGreen=23輪連綠 v4.0三關全fail→不announce
+2026-08-22T22:12:00+08:00 cycle=530 安靜通過（週六深夜）｜教練沉默19.0h｜cron 24/24全綠｜本任務CE=0 duration=~32000ms｜v4.0三關全fail→不announce｜cumulativeGreen=24輪連綠
