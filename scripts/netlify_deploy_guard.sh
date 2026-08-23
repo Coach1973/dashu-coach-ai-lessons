@@ -20,6 +20,32 @@ fi
 #   - curl POST 到 api.netlify.com/api/v1/sites/.../deploys
 #   - netlify deploy CLI
 #   - 任何含 Netlify token (nfp_xxx) 的 curl
+# 🔴 2026-08-24 教練「全面檢查」時抓到的繞道漏洞：
+# 上面三種模式只認「Bash 裡直接出現 netlify 字樣」的指令，但 `bigtree_publish.py` 的
+# publish() 是在 Python 內部用 urllib 打 api.netlify.com，指令列上一個 netlify 字都沒有。
+# 也就是說 AI 只要下 `python3 -c "import bigtree_publish; bigtree_publish.publish(conn)"`
+# 或 `python3 bigtree_publish.py`，這道鐵律就形同虛設、額度直接被扣。
+# （教練本人在後台按「一鍵發佈」不受影響——那是走網頁後台，不經過這個 Bash hook。）
+if echo "$CMD" | grep -qE "bigtree_publish|reorder_and_deploy"; then
+  if ! echo "$CMD" | grep -q "^NETLIFY_DEPLOY_CONFIRMED=1 "; then
+    cat >&2 <<'PY_GUARD_EOF'
+🔴 Netlify 部署鐵律觸發（Python 發佈腳本路徑，2026-08-24 補上）
+
+偵測到你要跑 bigtree_publish / reorder_and_deploy——這些腳本內部會直接呼叫
+Netlify API 建立新部署，會真的扣點數，跟手動 curl 是同一件事。
+
+【教練 2026-08-24 重申的鐵律】
+草稿與測試期間一律只推 GitHub；唯有教練明確說「推」才可以部署 Netlify。
+
+【怎麼做】
+· 只想更新網頁內容不想部署 → 改用 write_index(conn) 寫檔 + git push，不要呼叫 publish()
+· 教練已親口說「推」 → 重新執行並在最前面加上 NETLIFY_DEPLOY_CONFIRMED=1
+· 教練想自己按 → 請他到 event.bymyway.com/admin/sessions 按「一鍵發佈」（本人授權，不受此限）
+PY_GUARD_EOF
+    exit 2
+  fi
+fi
+
 if echo "$CMD" | grep -qE "api\.netlify\.com/api/v1/sites/[^/]+/deploys|netlify deploy|nfp_[A-Za-z0-9]{30,}"; then
   # 已過二次確認的指令放行（教練親口「推」後，Claude 重發指令加前綴）
   if echo "$CMD" | grep -q "^NETLIFY_DEPLOY_CONFIRMED=1 "; then

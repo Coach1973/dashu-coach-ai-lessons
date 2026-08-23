@@ -55,8 +55,17 @@ TELEGRAM_NOTIFY_CHAT_ID = "6124913915"  # 教練跟小龍蝦的對話，路徑�
 TELEGRAM_REGISTRATION_GROUP_CHAT_ID = "-5349981085"  # 教練2026-08-24建立「活動報名即時通知」群組，教練+佩佩老師+bot三方共見
 
 
-def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> None:
-    """發Telegram訊息，預設給教練個人對話；報名通知改傳group chat_id同時通知佩佩老師。失敗不影響網頁本身回應。"""
+NOTIFY_FAIL_LOG = os.path.join(os.path.dirname(__file__), "notify_failures.log")
+
+
+def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> bool:
+    """發Telegram訊息，預設給教練個人對話；報名通知改傳group chat_id同時通知佩佩老師。
+
+    失敗不影響網頁本身回應，但 🔴 一定要留下痕跡——
+    2026-08-17~08-23 教練整整一週收不到報名通知，就是因為舊版 LINE 通知函式
+    用 `except: pass` 把 HTTP 429（月配額用完）整個吞掉，沒有任何 log、沒有任何人知道，
+    教練還以為報名系統壞了（試金石案例62）。從此：靜默失敗一律不准，至少寫一行。
+    """
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             config = json.load(f)
@@ -66,9 +75,26 @@ def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> No
             f"https://api.telegram.org/bot{bot_token}/sendMessage",
             data=body, method="POST", headers={"Content-Type": "application/json"},
         )
-        urllib.request.urlopen(req, timeout=10)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read().decode("utf-8"))
+        if not result.get("ok"):
+            _log_notify_failure(chat_id, f"telegram回傳ok=false: {result}", text)
+            return False
+        return True
+    except Exception as e:
+        _log_notify_failure(chat_id, repr(e), text)
+        return False
+
+
+def _log_notify_failure(chat_id: str, reason: str, original_text: str) -> None:
+    """通知送不出去時，把「誰、什麼時候、為什麼、原本要送什麼」寫進檔案，事後查得到。"""
+    try:
+        stamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open(NOTIFY_FAIL_LOG, "a", encoding="utf-8") as f:
+            f.write(f"[{stamp}] chat_id={chat_id} 失敗原因={reason}\n"
+                    f"    原訊息：{original_text[:300].replace(chr(10), ' / ')}\n")
     except Exception:
-        pass  # 通知失敗不該擋住聽眾拿到簡報
+        pass  # 連寫 log 都失敗就真的沒辦法了，但至少不能讓網頁掛掉
 
 
 @app.route("/")
@@ -288,7 +314,22 @@ def api_register():
         company_title = (payload.get("company") or "").strip()
         email = (payload.get("email") or "").strip()
 
+        source = (payload.get("source") or "").strip()  # 哪個網站送來的，方便追來源
+
+        # 🔴 2026-08-24 教練「全面檢查」時抓到的靜默漏洞：
+        # 原本 slug 對不上 / 欄位缺漏就直接 return，資料沒寫進資料庫、教練也收不到任何通知，
+        # 等於「有人報名了但全世界都不知道」——跟 8/17~8/23 那次 LINE 配額用完的靜默失敗同一種形狀
+        # （見試金石案例62）。從現在起：只要有姓名或電話，就算寫不進資料庫也一定要吼一聲。
         if not slug or not name or not phone_raw:
+            if name or phone_raw:
+                _notify_xiaolongxia(
+                    "⚠️【報名資料不完整，沒能存檔】\n"
+                    f"來源：{source or '未標示'}\n場次代碼：{slug or '（沒帶）'}\n"
+                    f"姓名：{name or '（沒填）'}\n電話：{phone_raw or '（沒填）'}\n"
+                    f"公司：{company_title or '-'}\nEmail：{email or '未填'}\n"
+                    "請人工確認這位有沒有真的報名成功。",
+                    chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+                )
             return Response(
                 json.dumps({"ok": False, "error": "missing slug/name/phone"}),
                 status=200, headers={**resp_headers, "Content-Type": "application/json"},
@@ -299,6 +340,15 @@ def api_register():
         event = db.get_event(conn, slug)
         if not event:
             conn.close()
+            # 場次代碼對不上（新場次忘了建、slug 打錯、活動頁寫死舊代碼）→ 資料進不了資料庫，
+            # 但人是真的報名了，通知一定要發出去，不能讓這個人憑空消失。
+            _notify_xiaolongxia(
+                "⚠️【報名成功但場次代碼對不上，資料沒入庫】\n"
+                f"來源：{source or '未標示'}\n場次代碼：{slug}（資料庫查無此場次）\n"
+                f"姓名：{name}\n電話：{phone}\n公司：{company_title or '-'}\nEmail：{email or '未填'}\n"
+                "👉 請到 event.bymyway.com/admin/sessions 確認這個場次代碼是否已建立。",
+                chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+            )
             return Response(
                 json.dumps({"ok": False, "error": f"unknown slug: {slug}"}),
                 status=200, headers={**resp_headers, "Content-Type": "application/json"},
