@@ -1,7 +1,7 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-23 05:39
+> 重啟時間：2026-08-23 20:08
 > 對話記錄已完整存入 memory/2026-08-23.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
@@ -23,177 +23,72 @@
 
 ---
 
-## 🦞 cycle=538 健康檢查紀錄（2026-08-23 06:12 Asia/Taipei · 週日清晨）
+## cycle=553 健康檢查紀錄（2026-08-23 20:12 Asia/Taipei · 週日晚間）
 
-**結論：✅ 無異常，安靜通過，不通知教練**
+**結論**：✅ 無異常，安靜通過，不通知教練
 
-| 檢查項目 | 結果 |
-|---------|------|
-| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T01:21:47+08:00`｜當下沉默 **4.8h**（週日凌晨睡眠，正常不打擾）|
-| Cron 真實狀態（24 enabled jobs，SQLite 真相源） | 23 個 lastRunStatus=ok / CE=0；**1 個 CE=1**：每2小時增量記憶蒸餾（job_id=9c3fc55d...） |
-| 每2小時增量記憶蒸餾 錯誤分析 | 最新 run 06:02:50 error = `Update Goal: complete failed`（transient tool 失敗）<br>前次 04:01 FailoverError 已於 04:02 retry 自癒<br>CE=1 遠低於 ≥3 警戒線，cron 08:00 會自然 retry |
-| Telegram 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| HEARTBEAT ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（2036/1851/20631 bytes + 兩份舊版棄用標記都在）｜Repo1=112 持平｜Repo2=27 微增（healthcheck.log 累積正常）｜無 `.!` 鎖定檔 ✅ |
-| HEARTBEAT.md 大小 | 22 → 96 行（<500 警戒線舒適） |
+**檢查結果**：
+- 第零步 sync_coach_last_message.sh：✅ exit 0｜教練最後訊息 `2026-08-23T09:30:38+08:00`｜當下沉默 **10.7h**（週日晚間正常不打擾）
+- Cron 真相源（SQLite openclaw.sqlite）：24 個 enabled jobs 全 `lastRunStatus=ok` + `consecutiveErrors=0`（22 ok + 2 pending + 0 err）
+- 本任務 46e67e2e：上一輪 cycle=552 `lastRunStatus=ok / CE=0 / durationMs=48637` / model=minimax/MiniMax-M3 ✅
+- Telegram 通道探針（守則#19 當下實測）：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+- 環境快檢：SOUL×3 齊全（2036/1851/20631 bytes）｜Repo1=112 持平｜Repo2=29 微增（healthcheck.log 累積）｜無 `.!` 鎖定檔 ✅
+- HEARTBEAT ⬜ 真實待辦：0 項
+- HEARTBEAT.md 大小：22 行（20:08 因 context overflow 重啟為系統 preamble，cycle=507~552 已完整保留於 `memory/2026-08-23.md` 281 行 22KB）
 
-**v4.0 三關判斷**（對 1 個 CE=1 的任務逐項檢驗，三關全 fail → 不 announce）：
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron 24/24 ok + CE=0 + 本輪正在執行 = 已恢復鐵證）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / 無 overloaded / 無 INVALID_API_KEY）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週日晚間 20:12 + 教練週末外出/休息 10.7h + 零會員功能壞 + cron 全綠穩定）
 
-- **關卡一**（本輪還壞嗎）→ ❌ 否
-  - cron CE=1 是單次 transient 失敗，不是持續卡住
-  - 本輪健康檢查自身 cron 執行成功 = 已恢復鐵證
-  - cron 系統排程 08:00 會自動 retry
-- **關卡二**（provider 暫時過載嗎）→ ❌ 否
-  - 06:02 最新錯誤是 `Update Goal: complete failed`（內部 tool 失敗）
-  - 不是 `FailoverError / overloaded / INVALID_API_KEY`
-  - 04:01 FailoverError 雖出現但已於 04:02 retry 自癒
-- **關卡三**（影響教練/會員嗎）→ ❌ 否
-  - 「記憶蒸餾」是背景資料處理任務，不影響 LINE 回覆、行事曆、提醒、會員體驗
-  - 教練凌晨睡眠中（沉默 4.8h），屬正常不打擾時段
-  - 真正用戶依賴的功能（LINE 通知、TG 探針 ✅、cron 觸發流程）全部健康
-
-**累計**：連續 32 輪綠燈（cycle=507~538）
+**累計**：連續 **47 輪綠燈**（cycle=507~553）
 
 **已落痕跡**：
-- ✅ HEARTBEAT.md cycle=538 已 append（heredoc 繞過 Edit tool transient pattern）
-- ✅ state/heartbeat-state.json 更新
+- ✅ HEARTBEAT.md cycle=553 已 append
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=47）
 - ✅ state/healthcheck.log 追加
+- ✅ state/healthcheck_cycle 更新至 cycle=553
 
 ⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
 
-下個 cron：06:00 起床摘要已於本輪前跑完 + 下一個健康檢查 07:12（cycle=539）。
+下個 cron：21:12 健康檢查（cycle=554）。
+
+## 🪨 試金石策展提醒 2026-08-23 21:00
+- top10_dynamic.md 已 46 天未更新
+- 候選池：特助場景庫_自動增量.md 累積 50 個自動場景
+- 動作：教練動嘴「策展試金石」→ 軍師讀候選池挑出值得收錄的，升級成 top10_dynamic.md 條目
 
 ---
 
-## 🦞 cycle=539 健康檢查紀錄（2026-08-23 07:12 Asia/Taipei · 週日清晨）
+## 🦞 cycle=554 健康檢查 · 2026-08-23 21:12 Asia/Taipei · 週日晚間
 
-**結論：✅ 無異常，安靜通過，不通知教練**
+**結論**：✅ **無異常，安靜通過，不通知教練**
 
-| 檢查項目 | 結果 |
-|---------|------|
-| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T01:21:47+08:00`｜當下沉默 **5.8h**（週日凌晨睡眠，正常不打擾）|
-| Cron 真實狀態（cron list API） | **1 個 enabled job**（本任務本身，46e67e2e，lastRunStatus=ok） |
-| ⚠️ 重要狀態變化 | 與 cycle=538 的「24 jobs」對比，cron list API 現在只回 1 個 job |
-| 原因推測 | 2026-08-22 23:00 之後到本輪之間發生 cron 系統大清理（runs.sqlite 0 bytes 從 2026-08-19 就空，cron.db 從 2026-08-18 就空）|
-| Telegram 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| HEARTBEAT ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（2036/1851/20631 bytes）｜Repo1=112 持平｜Repo2=27 微增（healthcheck.log 累積正常）｜無 `.!` 鎖定檔 ✅ |
-| HEARTBEAT.md 大小 | 96 → 64+α 行（<500 警戒線舒適） |
+**檢查結果**：
 
-**v4.0 三關判斷**（無失敗項目 → 直接安靜通過）：
-
-- **關卡一**（本輪還壞嗎）→ ❌ 否
-  - 本任務 cron lastRunStatus=ok，無錯誤
-  - 唯一 1 個 cron job 自身執行成功
-- **關卡二**（provider 暫時過載嗎）→ ❌ 否
-  - 無 FailoverError / overloaded / INVALID_API_KEY
-- **關卡三**（影響教練/會員嗎）→ ❌ 否
-  - cron 系統狀態變化（24→1）是系統清理，不影響 TG/LINE/提醒等會員功能
-  - 教練凌晨睡眠中（沉默 5.8h），不主動打擾
-
-**累計**：連續 33 輪綠燈（cycle=507~539）
-
-**已落痕跡**：
-- ✅ HEARTBEAT.md cycle=539 已 append
-- ✅ state/heartbeat-state.json 更新
-- ✅ state/healthcheck.log 追加
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：下一個健康檢查 08:12（cycle=540）。
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-23 08:45
-- ✅ 同步成功
-- HANDOFF mtime: 1787445648
-- 雲端同步：✅ 已推上雲端（commit 059fb0949）
-
----
-
-## 🦞 cycle=540 健康檢查紀錄（2026-08-23 09:00 Asia/Taipei · 週日上午）
-
-**結論：✅ 無異常，安靜通過，不通知教練**
-
-| 檢查項目 | 結果 |
-|---------|------|
-| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T08:52:18+08:00`｜當下沉默 **0.1h**（教練剛發完訊息 8 分鐘）|
-| Cron 真實狀態（24 enabled jobs，全綠）| 24 個 enabled jobs 全 `lastRunStatus=ok`（與上次 cycle=539 只有 1 個的推測差異→**更正**：cron 系統並未真的損壞，前次 list API 應該是臨時查詢時機問題/競態，當下查詢正常顯示 24 個）|
+| 項目 | 結果 |
+|------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T09:30:38+08:00`｜沉默 **11.7h**（週日晚間週末補眠正常不打擾）|
+| Cron 真相源（SQLite openclaw.sqlite 64MB）| **24 個 enabled jobs 全 `last_run_status=ok` + `consecutive_errors=0`** |
+| 本任務 46e67e2e 自身 | cycle=553 `lastRunStatus=ok / CE=0 / durationMs=45339`（遠低於 timeout=600s）｜model=minimax/MiniMax-M3 ✅ |
 | Telegram 通道探針（守則#19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL×3 齊全（2036/1851/20631 bytes + 兩份棄用標記都在）｜Repo1=112 持平｜Repo2=29 持平｜無 `.!` 鎖定檔 ✅ |
+| HEARTBEAT.md 大小 | 59 行（context overflow 重啟後 preamble 精簡，<500 警戒線舒適）|
 | HEARTBEAT ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（2036/1851/20631 bytes）｜Repo1=112 持平｜Repo2=27 微增（healthcheck.log 累積正常）｜無 `.!` 鎖定檔 ✅ |
-| HEARTBEAT.md 大小 | 64+α → 82 行（<500 警戒線舒適） |
 
-**v4.0 三關判斷**（無失敗項目 → 直接安靜通過）：
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron ok + CE=0 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / 無 overloaded / 無 INVALID_API_KEY）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週日晚間 + 教練週末補眠 11.7h + 零會員功能壞 + cron 全綠穩定）
 
-- **關卡一**（本輪還壞嗎）→ ❌ 否
-  - 24 個 enabled cron 全 OK
-  - 本任務 cron lastRunStatus=ok，無錯誤
-- **關卡二**（provider 暫時過載嗎）→ ❌ 否
-  - 無 FailoverError / overloaded / INVALID_API_KEY
-- **關卡三**（影響教練/會員嗎）→ ❌ 否
-  - 教練 0.1h 前剛發訊息，正當處理中
-  - 真正用戶依賴的功能（LINE 通知、TG 探針 ✅、cron 觸發流程）全部健康
-  - 三項等教練外部動作的待辦（ezPay 8 人補資料 / ezPay session 重登補 3 張 Email / AI 微論壇彭晉澄填資料）皆屬正常等待狀態，無 urgent
-
-**🔄 自我修正**（cycle=539 的推測）：
-- cycle=539 記錄「cron list API 從 24→1」→cycle=540 查回 24 個全綠
-- 推測「cron 系統大清理」是過度推論，**真正原因應該是 cycle=539 查詢瞬間 API 競態或暫時故障**
-- 已修正：cron 系統健康，不需特別關注
-
-**累計**：連續 34 輪綠燈（cycle=507~540）
+**累計**：連續 **48 輪綠燈**（cycle=507~554）
 
 **已落痕跡**：
-- ✅ HEARTBEAT.md cycle=540 已 append
-- ✅ state/heartbeat-state.json 更新
+- ✅ HEARTBEAT.md cycle=554 已 append
 - ✅ state/healthcheck.log 追加
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=48）
+- ✅ state/healthcheck_cycle 更新至 cycle=554
 
 ⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
 
-下個 cron：09:12 健康檢查（cycle=541）。
-
-## 🦞 cycle=541 健康檢查紀錄（2026-08-23 09:12 Asia/Taipei · 週日上午）
-
-**結論：✅ 無異常，安靜通過，不通知教練**
-
-| 檢查項目 | 結果 |
-|---------|------|
-| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T08:52:18+08:00`｜當下沉默 **0.3h**（教練剛發完訊息 19 分鐘）|
-| Cron 真實狀態（24 enabled jobs）| 24 個 enabled jobs **全 `lastRunStatus=ok`** + 全部 `consecutiveErrors=0` |
-| ⚠️ 唯一 warning | job_id=`bbb7a348`（🦞 小龍蝦每日三機總結 23:05）有 1 條 warn-level diagnostic：`view git history -> search "[ACER]|acer|[Win]|聯想" failed`（lastStatus=ok，consecutiveErrors=0，影響主功能否 → 否，三機總結照常送出）|
-| Telegram 通道探針（守則#19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| HEARTBEAT ⬜ 真實待辦 | 0 項 |
-| HEARTBEAT.md 大小 | 82 → 100 行（<500 警戒線舒適）|
-
-**v4.0 三關判斷**（對 1 條 warning 逐項檢驗，三關全 fail → 不 announce）：
-
-- **關卡一**（本輪還壞嗎）→ ❌ 否
-  - job lastStatus=ok、consecutiveErrors=0
-  - 本輪健康檢查自身 cron 執行成功 = 一切正常
-- **關卡二**（provider 暫時過載嗎）→ ❌ 否
-  - 失敗訊息是 `view git history -> search` 工具失敗（內部子任務）
-  - 不是 `FailoverError / overloaded / INVALID_API_KEY`
-  - 屬於工具層級失敗，非供應商問題
-- **關卡三**（影響教練/會員嗎）→ ❌ 否
-  - 「git history 搜尋 ACER/acer/Win/聯想」是 23:05 三機總結裡的子工具之一
-  - 主功能（三機總結彙整 + Telegram 送出）正常運作
-  - 該子任務是輔助性質（給特定裝置相關 commit 統計），缺它不影響教練收到三機總結
-  - 屬於「監控工具自己打嗝」情況，教練/會員實際使用的功能完全沒受影響
-
-**累計**：連續 35 輪綠燈（cycle=507~541）
-
-**已落痕跡**：
-- ✅ HEARTBEAT.md cycle=541 已 append
-- ✅ state/heartbeat-state.json 更新
-- ✅ state/healthcheck.log 追加
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：10:12 健康檢查（cycle=542）。
-
-## ⚠️ peipei 自動 force-restart 2026-08-23 09:15:01
-- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
-- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-23 09:15
-- ✅ 同步成功
-- HANDOFF mtime: 1787447446
-- 雲端同步：✅ 已推上雲端（commit 5f4a3658d）
+下個 cron：22:12 健康檢查（cycle=555）。
