@@ -14,7 +14,6 @@ import os
 import re
 import subprocess
 import tempfile
-import zipfile
 from datetime import date, datetime
 from pathlib import Path
 
@@ -259,13 +258,16 @@ def publish(conn, message: str = "") -> dict:
         return {"ok": False, "step": "部署 Netlify",
                 "message": "找不到 Netlify 金鑰，網頁已存進 GitHub，但沒有部署上線。"}
 
-    # 打包規則（兩個都是血淚換來的，不要為了省事改掉任何一個）：
-    # 1. 內容只取「已 commit 的版本」(git archive HEAD)，不是工作區現況，
-    #    否則同一個 repo 裡其他還沒確認的修改會被一起送上線。
-    # 2. 但**不能**直接用 `git archive --format=zip`——它不會替非 ASCII 檔名設 UTF-8 旗標，
-    #    這個站的 archive/ 底下全是中文資料夾名，Netlify 會解壓失敗，
-    #    部署停在 uploaded 永遠不會 ready（2026-08-13 踩過一次、2026-08-23 又踩一次）。
-    #    先解到暫存資料夾，再用 Python zipfile 打包（會正確設 UTF-8 旗標）。
+    # 打包方式：git archive HEAD 解到暫存目錄 → 用系統 zip 指令打包。
+    # 這是 2026-08-22 實測部署成功的組合，一字都不要改，理由如下：
+    #   * 用 git archive HEAD 而非工作區現況 → 不會夾帶其他還沒確認的修改上線
+    #   * 不可用 `git archive --format=zip` 直接產 zip（2026-08-13、08-23 兩次
+    #     都因此部署失敗，Netlify 回 "Deploy failed while extracting zip"）
+    #   * 也不要改用 Python zipfile 自己走訪檔案：那樣產生的壓縮檔「沒有目錄項」
+    #     （只有檔案、沒有 archive/ 這種資料夾條目），Netlify 同樣解壓失敗。
+    #     2026-08-23 實測比對過成功／失敗兩包，唯一實質差異就是這 9 個目錄項。
+    #     系統 zip 指令會自動寫入目錄項，中文檔名雖然沒設 UTF-8 旗標，但位元組
+    #     本身就是 UTF-8，Netlify 解得正確（線上中文路徑實測 200）。
     zip_path = Path("/tmp/bigtree_publish.zip")
     if zip_path.exists():
         zip_path.unlink()
@@ -273,11 +275,8 @@ def publish(conn, message: str = "") -> dict:
         tar = subprocess.Popen(["git", "archive", "HEAD"], cwd=BIGTREE_REPO, stdout=subprocess.PIPE)
         subprocess.run(["tar", "-x", "-C", tmpdir], stdin=tar.stdout, check=True, timeout=180)
         tar.wait()
-        root = Path(tmpdir)
-        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-            for src in sorted(root.rglob("*")):
-                if src.is_file():
-                    zf.write(src, str(src.relative_to(root)))  # 相對路徑一律正斜線
+        subprocess.run(["zip", "-qr", str(zip_path), ".", "-x", ".git*"],
+                       cwd=tmpdir, check=True, timeout=300)
 
     import urllib.request
     req = urllib.request.Request(
