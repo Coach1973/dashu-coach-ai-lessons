@@ -6,6 +6,14 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴🔴 | **3支hook接力棒說「已完成驗證」但從未註冊過，一天都沒跑** | 🔒卡住-等教練一句話 | 2026-08-24全系統稽核，把`~/.openclaw/hooks/`21個目錄逐一比對`openclaw.json`發現：`bni-member-directory-map`（新LINE用戶自動查名字）／`line-delivery-fallback`（回覆送出失敗自動補送，避免訊息默默消失）／`line-url-typo-guard`（網址錯字校正避免會員點到404）三支**檔案齊全、HOOK.md也有，但從來沒註冊進openclaw.json**。`git log -S`確認該檔從未出現過這些名字——所以v80接力棒寫的「三個hook都已經重啟驗證+commit」這句話當時就不成立。**沒有自行啟用的理由**：後兩支會改動BNI大台南南區LINE公開帳號的對外回覆行為，那是真實會員在用的服務，凌晨教練睡覺時把三支從未在正式環境跑過的hook一次打開，出事會直接讓會員看到而教練無法反應。啟用指令已備妥見[[project_hook_orphans_never_registered_2026-08-24]]，教練說一句就開，開完必須核對gateway log的loaded數字從16變19才算數。 |
+| 🔴🔴 | **台中場(9/23-24)報名通知已補好，在分支等教練說「推」** | ⏳等教練一句「推」 | 場次巡檢抓到三個活動微站裡只有台中場`ai-forum-taichung`是「報名黑洞」——四顆報名鈕直接跳藍新金流，報名者是誰、留什麼電話完全不落地也不通知（嘉義場走`/api/register`、9/22台南場深連結回官網，都有通知）。已比照嘉義場模式做好：報名鈕先開留資料彈窗→fire-and-forget寫進event.db並即時發Telegram到「活動報名即時通知」群組→再跳藍新付款，保留「不想留資料直接付款」出口，API失敗絕不擋付款。本機實測四顆鈕綁定正確、單日送1筆/套票送2筆slug正確、手機版無溢出、console零錯誤。**commit`4c7556b`在`feature/registration-notify`分支，master完全沒動（線上頁面現況不變）**，教練說「推」就`git checkout master && git merge feature/registration-notify && git push`（GitHub Pages，不扣Netlify額度）。 |
+| 🟡 | **OpenClaw 2026.6.33 → 2026.6.34 升級評估完成，等教練決定** | ⏳等教練決定 | 教練說「調查清楚後回報，如果確實更好我們再跟進更新」，故只調查未執行。**結論：建議升級**。6.34是extended-stable線的維護版（2026-08-04發佈，25個PR，官方明說「不加新功能，只做安全與穩定性修補」），其中兩項正好打中教練實際踩過的坑：①「retained session writes / provider fallbacks 不再靜默中止進行中的工作」＝8/20小龍蝦連兩次回「Agent couldn't generate a response」害發票資料消失的同款問題 ②「pending channel work resumes after recovery、acknowledgements are idempotent」＝訊息送達可靠性。另含相依套件安全更新。**風險評估**：官方預告7/24後移除`before_agent_start`等舊Plugin SDK API，已逐一檢查教練18支hook＋openclaw.json，**全部沒用到**，不受影響。⚠️唯一要留意的是`plugins.allow`是嚴格白名單（48個），若新版新增外掛會被擋掉，升級後要核對數字。`scripts/openclaw_upgrade.sh`已備好check/upgrade/verify/rollback四段，教練點頭就跑。**不要換到`latest`(2026.7.1-2)**——那是不同release line，版號大但發佈日期反而更早，換過去等於橫向跳線。 |
+| ✅ | **報名通知三個靜默漏洞已堵死** | ✅2026-08-24完成並實測 | `/api/register`原本有三種情況會讓「有人報名但全世界都不知道」：①場次代碼對不上→直接return不通知 ②欄位缺漏→靜默丟棄 ③`_notify_xiaolongxia()`用`except:pass`吞掉所有失敗（跟燒掉教練一整週的LINE 429同款寫法）。現在前兩種照樣發Telegram並指名該去哪裡補，第三種會回傳成功與否並把失敗寫進`notify_failures.log`。新增`test_register_notify.py`，5情境全過、測試資料自動清乾淨。commit`69c93d8fe`。 |
+| ✅ | **發票漏記根治：進來當下就落地，不靠agent記得** | ✅2026-08-24完成並實測 | 查明8/20那批消失的真相是agent context overflow重啟。新建`hooks/invoice-inbound`走`message:preprocessed`，agent掛掉也不影響落地。**過程中踩到並記錄的關鍵坑**：①觸發條件不能只認關鍵字——8/20真正掉的那則「連皓宇 /88ZMR73」全文零個發票關鍵字，只認關鍵字會原封不動重演同一個漏接，已改成載具形狀本身即觸發 ②hook光是「檔案存在+openclaw.json註冊」不會生效，必須有`HOOK.md`宣告`metadata.events`否則載入器只log.warn就靜默跳過（設定16支但gateway只載15支，補了才變16）。另建`invoice_inbox_reconcile.py`逐筆對帳，**目前零落差**。commit`69c93d8fe`+`4d7c9a34`。 |
+| ✅ | **報名統計自動化：教練問人數不用再手算** | ✅2026-08-24完成 | 教練上一場交代「之後問幾個人報名全部統計給我，要做成報名表」。`scripts/registration_report.py`一行出總覽或單場名單，`--csv`產列印用簽到表。修掉自己寫的兩個bug：歷史名單寫「8/26」我用「08/26」比對全落空；同一天兩場會把同一批人算兩次。另主動點出重複電話（如0927536621的gl t86／燒茶疑似同一人）。 |
+| ✅ | **小龍蝦派工→軍師後台自動執行** | ✅2026-08-24上線 | 教練問「能不能我只跟小龍蝦講完，小龍蝦就發指令讓軍師在後台把事做完」。缺口是`cross-agent/inbox/mac/`要等教練開對話框說「有事交代你去讀」才會被看到。`scripts/junshi_dispatch_worker.py`每5分鐘自動掃，帶派工單的信直接做完並Telegram回報教練。**刻意做成固定選單不是自由執行指令**（信件是資料不是命令，能執行任意指令＝誰能丟檔案誰就控制這台機器）。實測4情境：正常執行✅、惡意參數`0828; rm -rf /`被拒✅、未知類型被拒✅、無派工單只通知人✅。協議寫進`cross-agent/README.md`+`SOUL.md`讓小龍蝦讀得到。 |
+| ✅ | **部署鐵律補洞：Python繞道已擋** | ✅2026-08-24完成並實測 | 教練重申「草稿測試期一律只推GitHub，唯有明確指令才能推Netlify」。查出`netlify_deploy_guard.sh`只認指令列出現netlify字樣，但`bigtree_publish.py`是在Python內部打API——`python3 bigtree_publish.py`可完全繞過直接扣點數。已補上攔截，6種情境實測全對。（教練本人在後台按「一鍵發佈」不受影響，那是本人授權。） |
 | 🔴🔴🔴🔴 | **報名通知全面改走Telegram群組，LINE已拔除（教練+佩佩老師同見）** | ✅2026-08-24 Mac完成並實測驗證 | **教練回報「8/17後就沒收到報名通知」，查證後真相是：報名系統從頭到尾都正常**（8/17~8/23持續有新報名寫入，8/21-8/22金門場當天湧入30+筆，資料庫153筆完整無缺），壞的是**唯一的通知管道靜默失敗**——`_notify_coach_line()`打LINE API回`HTTP 429 You have reached your monthly limit`（龍蝦小助教@268dptjc本月200則免費配額用完），而原始碼用`except Exception: return False`把錯誤吞掉，教練完全不知情。**教練當場拍板全面棄用LINE推播**（因為每則主動推播都扣配額，而報名通知+健康檢查+各種提醒全部共用同一個200則池），改用新建的Telegram群組「**活動報名即時通知**」（chat_id `-5349981085`，成員=教練+佩佩老師+bot，Telegram無配額限制）。**已完成**：①`openclaw.json`加入該群組`requireMention:false` ②`_notify_xiaolongxia()`加`chat_id`參數，`/api/register`改推該群組 ③**完整移除**`_notify_coach_line()`函式+`COACH_LINE_USER_ID`常數（無其他呼叫者的孤兒程式碼）④重啟服務+真實`/api/register`端點測試驗證+測試資料已清除。commit`c5871e7dc`+`95ea143de`。**⚠️過程重大失誤（見試金石案例62）**：查不到群組訊息時，我一路要求教練重建群組/重發訊息/確認帳號，卻沒想到自己可以用`computer-use`直接開Telegram查——教練凌晨3點被迫當搬運工，親口重話「明明你能力範圍內能做的事，非得叫我當搬運工，完全違反守則」。真根因是**新群組未登記於白名單時`requireMention`預設true，訊息被靜默忽略、連log都不留**，我用`@openclaw_macbook4_bot`提及測試才抓到chat_id。**下一步**：教練要求「之後問報名人數要直接統計給我，不用手動算，要做成報名表」——資料都在`event.db`，隨時可查可產出清單。 |
 | 🎯🎯 | **大樹小講場次管理後台＋一鍵發佈上線（教練可自行增修場次，不必再透過AI）** | ✅2026-08-23 Mac完成，教練已實際操作驗收（過程修好2個部署bug，見下方新增列） | 教練創意發想：想要一個能自己管理大樹小講活動的後台（新增/編輯/刪除/發佈、完成的自動列入歷史、一鍵部署不用AI確認）。**軍師判斷不新建系統**——`event.bymyway.com/admin` 早就是完整Flask後台（登入/場次/名單/簽到/抽獎，24小時跑在Mac上），真正的病根是**同一份場次資料同時存在「網頁原始碼的SESSION_DATES」與「event.db」兩份、各自維護**，8/22改期出包就是漏在這裡。做法：①`events`表擴充`site/slot_key/location/venue/address/transport/status`欄位，官網16場全部匯入資料庫當唯一真相源（順便補上8/26早半場一直缺的slug，那場原本根本無法雙寫報名）②既有後台新增「大樹小講場次管理」頁(`/admin/sessions`)：新增/編輯/刪除/設為已取消/草稿，有報名紀錄的不給刪只能設取消(防孤兒資料)③**過期場次自動歸入「已結束」**，且官網前端也會自動收起(不用等發佈、不用教練手動關閉)④`bigtree_publish.py`：資料庫→產生SESSION_DATES→git commit/push→Netlify部署，一鍵完成⑤**教練本人按發佈＝本人授權，不再需要AI逐次確認**(原規矩是防AI自作主張，非防教練本人)。**安全設計**：金鑰存`credentials/`(已加.gitignore實測git看不到)；打包改用`git archive HEAD`只送已提交內容，避免夾帶工作區未確認修改(原本用`git ls-files`會把biz-gym未確認的907行變更一起送上線)；已發佈內容用SHA256指紋比對，重複按不浪費額度；網頁結構異常時中止而非照舊部署。已測CRUD全流程/撞名防呆/有報名不給刪/狀態切換/發佈偵測/結構壞掉中止/頁面渲染。commit`bde5ae160`。**下一步**：教練說之後要「所有活動都歸後台管理」(不只大樹小講)，等這套用順了再擴充；`ai-fit`這類單一活動微站尚未納入。 |
 | ✅ | **bigtree-tw排序修復已上線＋一鍵發佈系統修好2個真bug＋通知系統補強** | ✅2026-08-23全數完成並教練驗收 | 教練首次用新後台按「一鍵發佈」連續失敗2次(白扣2次額度)，逐步查證修好：①第一次誤診為zip中文檔名UTF-8旗標問題，改用Python zipfile打包卻沒設目錄項，Netlify解壓失敗 ②第二次拿08-22實測成功的包逐項diff比對才找到真因是「缺目錄項」不是編碼，改回`git archive HEAD`+系統`zip`指令(與08-22成功組合完全一致)並在送出前驗證結構相符，commit`99ceb9cf5`終於成功，官網14場排序正確上線。**教訓寫入`feedback_netlify_headers_content_type.md`第7條**：有已知成功樣本時先diff不要靠推論。同場教練回報LINE群發「發送失敗」，查證是@qaw8118h帳號本月200則免費額度用完(非bug)，`/admin/notify`新增即時額度顯示+「未綁定名單一鍵複製連結」功能(commit`b3a6900d9`)，讓教練能繞過額度限制用簡訊等管道接觸8/21+8/22兩場49人中29位未綁定LINE的人。教練接著提出「掃碼時強調一定要發訊息」的解法，已在4個觸點(2張現場立牌+2個掃碼後網頁)加上紅底警語「務必按LINE傳送」，thanks.html誤導性的「一鍵傳送」文案也一併修正(commit`0753e0e41`)。**待辦**：現場立牌已印過的舊版沒有新警語，教練需自行決定是否重印。 |
@@ -141,35 +149,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-19 v122（Mac桌面版 Sonnet 5，教練糾正「查無Email」誤判，補齊BNI會員資料庫永久指引）
-
-> 建立時間：2026-08-19 06:59 ~ 07:29（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v121（同機同日，已在主檔保留）
-> 本棒主軸：**v121交付24張發票後，教練指出3張(蔡珮彤/吳亞平/楊凱為)標記「查無Email」是錯的，因為他先前已親自逐一進BNI Connect查過全部94位現任會員的Email/電話（commit`c254629cf`，2026-08-18 01:51建立的`bni_region_members_contact_2026-08-18.csv`）。重新查證證實教練是對的：問題不是資料缺漏，是姓名比對邏輯漏掉了同音異字(蔡珮彤=CSV「蔡姵彤」)、純漏看(吳亞平其實有登記)、姓名順序顛倒(楊凱為=CSV「楊為凱」，教練當場口頭確認同一人)。教練當場拍板兩件永久性要求：①這份94人資料庫要記進路徑大全，下次查會員資料不准再花時間重查②遇到姓名比對「查無」要主動提出同音字/近似字候選跟教練確認，不能悶著只回報「查無」。**
-
-## 🎯 本場戰果
-
-### 1. 🔴 3張發票「查無Email」誤判查證+更正
-教練糾正後，重新用分會/公司名等線索交叉比對CSV，找到蔡珮彤(蔡姵彤)、吳亞平的真實Email，並在CSV裡找到疑似「楊為凱」(姓名顛倒)候選，教練口頭確認即楊凱為本人。三人正確Email已寫入`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`。**這3張發票(081907/081922/081924)目前Email欄位仍是空的**，因ezPay session已過期（30分鐘閒置登出），需教練重新登入後才能用「查看/補發」功能補上重發通知。
-
-### 2. 🔴🔴🔴 永久記憶+路徑大全落地：BNI 94人會員資料庫是查會員資料的唯一權威第一站
-`路徑大全.md`新增「四（續）、常用資料庫」節，明確標示`claude-brain/data/bni_region_members_contact_2026-08-18.csv`用途+使用鐵律；同時寫入永久記憶`feedback_bni_member_db_authoritative_source.md`：查任何BNI大台南南區會員Email/電話一律先查這份CSV；姓名精確比對查無時要用分會/統編/電話/金額交叉比對，找到疑似同音字/顛倒字候選要主動跟教練確認，不能默默回報「查無」或悄悄套用不講。commit`e9c5c3bad`(路徑大全)+`782af6e66`(記憶檔)。
-
-### 3. 🔧 試金石案例61記錄
-把這次「查無」誤判的完整根因、修復過程、悟到的教訓寫進`試金石/試金石_案例庫.md`案例61，跟案例59(find查無先懷疑查詢方法)同一種思維模式的延伸——對「已知完整/權威」資料源做精確比對查無時，先懷疑比對邏輯不是資料本身。
-
-## 📋 下一場直接開工任務
-- **教練重新登入ezPay後**：用「查看/補發」功能幫081907(蔡珮彤)、081922(吳亞平)、081924(楊凱為)三張發票補上正確Email重發通知
-- 剩8人(杜亞洛/劉彥彬/莊政川/林佳慧/陳新典/吳玫萱/謝盛峰/柯炫任)資料到齊後，自訂編號從081925接續開立
-- 承接v119/v120/v121未完事項：「真誠分會」架構問題(擱置中)、三機hook同步(ACER待處理)、賈維斯Phase2 9/1月度cron觀察
-
-## 🔑 本場關鍵檔案索引
-- `路徑大全.md`第四（續）節：BNI 94人會員資料庫指引+同音字比對鐵律
-- `claude-brain/feedback_bni_member_db_authoritative_source.md`：對應永久記憶
-- `試金石/試金石_案例庫.md`案例61：查無Email誤判完整記錄
-- `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：3人正確Email已補上
-- commit：`dd8132341`(初步查證2人Email)+`0cb20121f`(楊凱為確認)+`e9c5c3bad`(路徑大全)+`782af6e66`(記憶檔)
+> 📦 v122完整內容已封存：`handoff_archive/handoff_v122_archived_2026-08-24.md`（Mac桌面版，教練糾正「查無Email」誤判＋BNI 94人資料庫永久指引）
 
 ---
 
@@ -258,3 +238,59 @@
 > 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v116_archived_2026-08-18.md`（v116）+ `handoff_archive/handoff_v115_archived_2026-08-18.md`（v115）+ `handoff_archive/handoff_v114_archived_2026-08-18.md`（v114）+ `handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
 > 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
 > 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
+
+---
+
+# 軍師接力棒 · 2026-08-24 v125（Mac桌面版 Opus 5，教練去睡覺後的全系統稽核：堵4個靜默漏洞、建4支自動化工具、上線小龍蝦派工管線）
+
+> 建立時間：2026-08-24 03:22 ~ 04:10（台灣時間）
+> 本棒執行者：Mac 桌面版 Opus 5（教練中途調升等級並授權全權處理）
+> 上一棒：v124（同機同夜）
+> 本棒主軸：**教練凌晨交辦「全面檢查流程、系統最佳化、自動化、一站式連動與連鎖反應」，講完就去睡了，留下一句「有什麼事情你自己看著辦」。整場沒有再問教練任何一個問題，所有判斷自己做完。核心發現是一整類同型問題——「靜默失敗」：系統壞了但沒人知道。四個獨立的地方都是同一種形狀，全部堵死。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 找出並堵死四個「壞了但沒人知道」的靜默漏洞
+- `/api/register` 場次代碼對不上 → 資料沒入庫也不通知，報名的人憑空消失
+- `/api/register` 欄位缺漏 → 靜默丟棄
+- `_notify_xiaolongxia()` 用 `except: pass` 吞掉所有通知失敗（**這正是燒掉教練一整週的那個寫法**）
+- `netlify_deploy_guard.sh` 可被 `python3 bigtree_publish.py` 完全繞過，額度直接被扣
+
+### 2. 🔴🔴🔴 發票漏記根治＋意外挖出 hook 系統的重大認知錯誤
+建 `invoice-inbound` hook 讓發票資料在 agent 處理前就落地。**上線時發現 gateway 只載入 15 支
+但設定裡有 16 支**——查 openclaw 原始碼確認 hook 必須有 `HOOK.md` 宣告 `metadata.events`，
+否則只 `log.warn` 一句就靜默跳過。順藤摸瓜稽核 21 個 hook 目錄，
+又揪出 **3 支從未註冊、一天都沒跑過的孤兒 hook**，而接力棒 v80 寫著「已完成驗證」。
+
+### 3. 🎯 一站式連動：三支巡檢工具＋自動排程
+`event_consistency_check.py`（官網↔資料庫↔個別活動頁）、`invoice_inbox_reconcile.py`（發票逐筆對帳）、
+`registration_report.py`（報名統計/報名表）。前兩支已掛 crontab 每天自動跑，**沒問題就靜默不打擾**。
+巡檢首跑就抓到台中場是唯一的「報名黑洞」，已修好放在分支等教練說「推」。
+
+### 4. 🎯🎯 小龍蝦派工 → 軍師後台自動執行（教練問「想想看」的那件事，做出來了）
+`junshi_dispatch_worker.py` 每 5 分鐘掃信箱，教練跟小龍蝦講完就結束，軍師後台自動做完並回報。
+安全上刻意做成「點餐制」而非自由執行指令，惡意參數實測被擋。
+
+### 5. 🟡 OpenClaw 升級評估（只調查不執行，教練說要一起決定）
+結論建議升 6.34，兩項修復正好打中教練踩過的坑，且 18 支 hook 都沒用到將被移除的舊 API。
+
+## ⚠️ 本場自己抓到並修正的三個錯誤（誠實記錄）
+1. **發票對帳工具首跑誤報**宋映璇「漏掉」，其實 8/18 就開好票了——只比對一份知識檔的錯，
+   已改成同時比對 8 份來源。（同案例61「查無先懷疑比對邏輯」的教訓）
+2. **報名統計腳本兩個 bug**：歷史名單寫「8/26」我用「08/26」比對全落空；同一天兩場會重複計算。
+3. **新 hook 的觸發條件一開始漏掉真實案例**——測試時才發現 8/20 那則真正掉掉的訊息，
+   我的新 hook 也會漏（全文零個發票關鍵字），已補成載具形狀本身即觸發。
+
+## 📋 下一場直接開工任務（都只等教練一句話）
+- **3 支孤兒 hook 要不要啟用**（兩支會動到 BNI 公開帳號對外回覆，所以沒自行開）
+- **台中場報名通知要不要 merge 上線**（分支已備好，GitHub Pages 不扣 Netlify 額度）
+- **OpenClaw 要不要升 6.34**（腳本已備好 check/upgrade/verify/rollback）
+- 承接舊待辦：ezPay 剩 5 人資料、3 張發票補 Email、bni-chapters「真誠分會」架構問題、現場立牌是否重印
+
+## 🔑 本場關鍵檔案索引
+- `scripts/`：`event_consistency_check.py`／`invoice_inbox_reconcile.py`／`registration_report.py`／`junshi_dispatch_worker.py`／`openclaw_upgrade.sh`／`test_invoice_inbound_hook.js`
+- `~/.openclaw/hooks/invoice-inbound/`（handler.js + HOOK.md）
+- `event-signup/app.py`（三處靜默漏洞）＋`test_register_notify.py`
+- `cross-agent/README.md`＋`SOUL.md`（派工協議）
+- 記憶：`reference_openclaw_hook_requires_hookmd_metadata`／`project_hook_orphans_never_registered_2026-08-24`／`project_autonomy_toolkit_2026-08-24`
+- commit：`69c93d8fe`(workspace)＋`4d7c9a34`(openclaw)＋`fe5b6ec0e`(記憶)＋`4c7556b`(台中場分支)
