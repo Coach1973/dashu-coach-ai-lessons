@@ -1,26 +1,45 @@
 {
-  "lastCheck": "2026-08-22T22:12:00+08:00",
-  "lastCycle": 530,
-  "lastStatus": "ok_no_action",
-  "cumulativeGreen": 24,
-  "telegramChannelOk": true,
-  "telegramChannelProbeAt": "2026-08-22T22:12:00.000000+08:00",
-  "coachSilentHours": 19.0,
-  "coachLastMessageAt": "2026-08-22T03:10:00+08:00",
-  "nextScheduledCheck": "2026-08-22T23:12:00+08:00 (cycle=531)",
-  "tripleGate": {
-    "gate1_currentBroken": false,
-    "gate2_providerOverloaded": false,
-    "gate3_affectsCoach": false,
-    "verdict": "all_fail_no_announce"
-  },
-  "systemSnapshot": {
-    "coachSilentSince": "2026-08-22T03:10:00+08:00",
-    "coachSilentHours": 19.0
-  },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-22T22:12:00.000000+08:00"
+    "heartbeat_poll": "2026-08-23T18:00:31.000000+08:00",
+    "telegram_channel": "2026-08-23T21:12:05.513991+08:00",
+    "cron_list": "2026-08-23T18:00:31.000000+08:00",
+    "system_health": "2026-08-23T18:00:31.000000+08:00",
+    "repo_git_status": "2026-08-23T18:00:31.000000+08:00",
+    "coach_silence_sync": "2026-08-23T22:12:05.284677+08:00",
+    "care_4h": "2026-08-21T14:00:00",
+    "cron_health_audit": 1787277600
   },
-  "lastPollCheck": "2026-08-22T22:12:00+08:00",
-  "lastPollStatus": "ok_no_action"
+  "lastHeartbeat": "2026-08-23T21:12:05+08:00",
+  "lastHeartbeatNote": "21:12 健康檢查（cycle=554）｜本任務 cron running 正常｜TG 通道探針 ok:true 當下實測｜教練沉默 11.7h 週日晚間週末補眠正常不打擾｜Repo1=112 持平｜Repo2=29 持平｜HEARTBEAT.md 59 行舒適｜不 announce（連 48 輪綠燈 + 三關全 fail）",
+  "systemSnapshot": {
+    "timeOfDay": "evening",
+    "dayOfWeek": "Sunday",
+    "isQuietHours": false,
+    "quietHoursReason": "",
+    "allCronsHealthy": true,
+    "contextStatus": "restarted_05:39_stable",
+    "recentCoachActivity": "教練最後訊息 2026-08-23 09:30:38，11.7h 前（週日晚間週末補眠正常不打擾）",
+    "urgentGmailCount": 0,
+    "junshiQueueEmpty": true,
+    "junshiLastResultTs": "2026-07-20T12:56:45.728235+08:00",
+    "gatewayRunning": true,
+    "telegramChannelOk": true,
+    "telegramChannelLastVerified": "2026-08-23T21:12:05.513991+08:00 當下實測通過",
+    "coachSilentSince": "2026-08-23T22:05:06+08:00",
+    "coachSilentHours": 0.1,
+    "repo1_untracked": 112,
+    "repo2_untracked": 29,
+    "heartbeat_md_lines": 59,
+    "heartbeat_md_over_limit": false
+  },
+  "lastCycle": 555,
+  "consecutiveGreen": 48,
+  "greenStreakRange": "cycle=507~554",
+  "lastCheck": "2026-08-23T22:12:15+08:00",
+  "healthyStreak": 48,
+  "telegramChannelOk": true,
+  "cumulativeGreen": 49,
+  "coach_silence_sync": "2026-08-23T09:30:38+08:00",
+  "coachSilentHours": 0.1,
+  "heartbeat_md_lines": 94
 }

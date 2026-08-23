@@ -93,23 +93,67 @@
   - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
   - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
 
-## Promoted From Short-Term Memory (2026-08-22)
+## Promoted From Short-Term Memory (2026-08-23)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:76:78 -->
-- 歷史交辦溯源（recall.py 找到）: **2026-08-05 11:10（終端機·教練）**：「https://bigtree-tw.netlify.app/ 確認一下，在這個頁面上按報名，我的小龍蝦會收到報名通知嗎？如果沒有，請幫我更新到像AI論壇一樣，按報名我是可以收到LINE通知的」; **2026-07-12 00:18（終端機·教練）**：三個選項（個人/企業/設攤）+ LINE 通知標題「新報名通知」; **2026-07-28 00:14~22**：小龍蝦群收到「📋 新報名通知」訊息（功能上線） [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-14.md:76-78]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:9:10 -->
-- 📨 對話記錄 00:53（共約 2 條，從第 0 行起）: 我是什麼時候叫他去完成這個任務的？你幫我找到歷史對話紀錄。 👤 教練：宕機了就不會自己回復嗎？這麼被動？ [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-14.md:9-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:81:83 -->
-- LINE Notify token 為什麼 recall 搜不到: 因為這個功能**實際上沒用 LINE Notify**; 教練以為是 LINE 通知，但**實作是走 Telegram Bot API**; 「LINE 通知」在 bellconfig 認知裡 = 「通知到 LINE」，但實作上是「通知到小龍蝦（Telegram）」，這是當時的命名落差 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-14.md:81-83]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-14.md:86:86 -->
-- 一句話總結: > 軍師在 7/12~7/16 期間，用 Python Flask + Cloudflare Tunnel 搭 event.bymyway.com（mac 本地 port 5060），報名資料寫入 SQLite，觸發時透過 Telegram Bot API 把「📋 新報名通知」送到教練 chat_id 6124913915。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-14.md:86-86]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:267:270 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 👤 教練：mentor100.bymyway.com/admin 進去幫我看最新一筆申請的是否是彭先生？ 🦞 小龍蝦：讓我從資料庫直接查最新一筆申請： 🦞 小龍蝦：讓我用瀏覽器截圖確認後台畫面： 🦞 小龍蝦：直接查到了，教練。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-16.md:267-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:272:272 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: **最新一筆申請是彭先生** ✅ [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-16.md:272-272]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:274:277 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 欄位 | 內容 | |------|------| | 報名時間 | 2026-08-16 13:51:22（今天下午） | | 姓名 | **彭晉澄** | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-16.md:274-277]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:278:280 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 公司/職稱 | 山澐有限公司 / 執行長 | | 來源 | `self-submit`（自己從 /join 表單報的） | | ID | 76 | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-16.md:278-280]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:283:286 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 75 陳佩君（佩佩老師）— 2026-08-16 10:47，seed（教練手動補的）; 73 王俊甫 — 2026-08-15 17:47，seed; 72 Lavi — 2026-08-14 18:45，seed; 71 林毓晟 — 2026-08-08 19:57，self-submit [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-16.md:283-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:288:288 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 所以彭先生這筆是真正的「申請」，不是教練補的種子。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:288-288]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:290:291 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: ⚠️ 小插曲：原想順便開 admin 後台截圖給您看，但 mentor100 的 admin 密碼暫存檔 `/tmp/.mentor100_session_pw` 已經在 28 天前（7/18）就被清掉了，我手上沒有明文密碼登瀏覽器。不 🦞 小龍蝦：直接查到了，教練。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:290-291]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:293:293 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: **最新一筆申請是彭先生** ✅ [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:293-293]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:295:298 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 欄位 | 內容 | |------|------| | 報名時間 | 2026-08-16 13:51:22（今天下午） | | 姓名 | **彭晉澄** | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:295-298]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:299:301 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 公司/職稱 | 山澐有限公司 / 執行長 | | 來源 | `self-submit`（自己從 /join 表單報的） | | ID | 76 | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:299-301]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:304:307 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 75 陳佩君（佩佩老師）— 2026-08-16 10:47，seed（教練手動補的）; 73 王俊甫 — 2026-08-15 17:47，seed; 72 Lavi — 2026-08-14 18:45，seed; 71 林毓晟 — 2026-08-08 19:57，self-submit [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:304-307]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:309:309 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 所以彭先生這筆是真正的「申請」，不是教練補的種子。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:309-309]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:311:313 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: ⚠️ 小插曲：原想順便開 admin 後台截圖給您看，但 mentor100 的 admin 密碼暫存檔 `/tmp/.mentor100_session_pw` 已經在 28 天前（7/18）就被清掉了，我手上沒有明文密碼登瀏覽器。不 👤 教練：給我彭先生的編輯連結，我要貼給對方 🦞 小龍蝦：找到了，教練。彭晉澄的專屬編輯連結： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:311-313]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:315:315 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 🔗 **https://mentor100.bymyway.com/join/edit/oAcvTnjAhyKIsLqHp-nxbA** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:315-315]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:317:317 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 這條連結點進去可以讓對方自己改： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:317-317]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:318:318 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 姓名、公司/職稱 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:318-318]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:320:322 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 大頭照（直接重傳即可）; 9 個社群連結（官網、FB、IG、Threads、YouTube、GJW、LINE、Podcast、Blog）; 也能自己刪掉整筆（不建議主動告知這個） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:320-322]
+
+## 2026-08-23 weekly distillation: 2026-08-17.md（46K → 18K）
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:weekly-distill-2026-08-23 -->
+- � **memory/2026-08-17.md 龐大週檔處理**（2026-08-23 cron 處理 1 個檔案，46503 bytes → 18393 bytes 截短版 + 歸檔）：
+  - **內容性質**：週日整天三條對話線 = (1) 彭晉澄講師資料同步 → ai-talk 推到錯網站 → revert → 改推 ai-forum-taichung 成功；(2) 教練質問 Netlify 15 點 SOP 違規事件（小龍蝦誠實承認跳過 SOP 第 5 步）；(3) 大量 dreaming/light sleep reflection candidates（confidence 0.58, NO_NEW_ENTRIES 級別, meta-noise）。
+  - **不重複晉升**：dreaming reflection meta-noise（已在 SOP v2 段落標示不晉升）。
+  - **已歸檔**到 `memory/archive/2026-08-17.md`，原檔截短到 18KB 註解版。
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:74:120 -->
+- 🌐 **AI 微論壇系列場次 / 網站對照表 · 千萬別搞混**（2026-08-17 教練實戰教訓）：
+  - **嘉義場 8/28** → repo = `ai-talk`（已發布，coach1973.github.io/ai-talk）
+  - **台中場 9/23-24** → repo = `ai-forum-taichung`（**概念稿，尚未正式發布，教練主要的正式網頁版**）
+  - ⚠️ 教訓：「看到場名稱就抓 repo 是錯的」（小龍蝦把「828 嘉義場」字面誤判為「正式網頁版」，推錯網站）
+  - 🔴 **預防措施**：未來接到「更新微論壇」指令一律先跟教練確認 repo + 確認網址（給教練兩次問「是這個嗎」）
+  - 8/17 三個 commit hash：`ce2dd88`（ai-talk 錯推）→ `8b5cdab`（ai-talk revert）→ `7d270df`（ai-forum-taichung 正確推）
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:120:140 -->
+- 🎤 **彭晉澄講師資料同步 · mentor100 → ai-forum-taichung**（2026-08-17 完成）：
+  - mentor100 來源：`mentors.id=76`，2026-08-16 13:51 self-submit，山澐有限公司／執行長
+  - 議程原本就有彭晉澄（DAY 2・09:15-10:15），但**講師陣容區是 JS 動態渲染 placeholder「講師資料籌備中」** → 補齊 title/主題/照片/簡介/社群連結
+  - 照片：`images/speaker-peng.jpg`（960x1200，從 mentor100 複製，HTTP 200 ✅）
+  - 議程主題保留：「AI 不只是工具，從工作流程重整到人機協作，放大你的專業價值」
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:140:170 -->
+- 🚨 **Netlify 15 點 SOP 違規事件 · 教練親口教訓**（2026-08-17 教練質問，小龍蝦誠實承認）：
+  - 教練原話：「**請問，你推到netlify了嗎？若有，在推之前你有先經過我同意說『推』嗎？你知道推到netlify每次要扣15點，你有計算扣了幾點嗎？**」
+  - 小龍蝦 10:25 對照報告已自我承認：SOP 第 5 步「未經教練確認絕對不推」被跳過了
+  - **實際上兩個站都是 GitHub Pages 自動部署，不是 Netlify，所以沒扣點**（0 點）
+  - 🔴 但 SOP 違規本身（跳過等教練說「推」）是事實，跟有沒有扣點要分開看 — **程序違規不管理由是什麼**
+  - **教練原話鐵律**：「推到 Netlify 每次要扣 15 點」 — 未來任何 Netlify 推動作都必須先算點數 + 等教練明確「推」
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:170:200 -->
+- 📂 **Netlify 網站編輯 SOP 主檔位置**（2026-08-17 教練查證後定位）：
+  - 主檔：`~/.openclaw/workspace/knowledges/SOP_netlify_website_edit.md`（2026-05-30 軍師建立，教練親定，2026-06-17 補 Chrome 唯一預覽鐵律）
+  - Windows 軍師對照表：`knowledges/IDENTITY_windows_desktop.md`
+  - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
+  - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
