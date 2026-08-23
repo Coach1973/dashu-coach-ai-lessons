@@ -330,11 +330,16 @@ def api_register():
         status = db.upsert_signup(conn, event["id"], name, phone, company_title, email)
         event_name = event["name"]
         conn.close()
-        _notify_coach_line(
+        notify_text = (
             f"【大樹小講・官網報名】\n場次：{event_name}\n姓名：{name}\n"
             f"公司：{company_title or '-'}\n電話：{phone}\nEmail：{email or '未填'}\n"
             f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
         )
+        # 2026-08-24發現：LINE(龍蝦小助教@268dptjc)是唯一通知管道，
+        # 帳號月額度用完時_notify_coach_line()靜默失敗(except吞掉)，
+        # 教練完全不知情、以為系統壞了。改雙管道並行，Telegram不受LINE額度限制。
+        _notify_coach_line(notify_text)
+        _notify_xiaolongxia(notify_text)
         return Response(
             json.dumps({"ok": True, "status": status}),
             status=200, headers={**resp_headers, "Content-Type": "application/json"},
