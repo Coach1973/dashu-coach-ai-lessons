@@ -4,7 +4,7 @@
     "telegram_channel": "2026-08-23T09:00:57.116551+08:00",
     "cron_list": "2026-08-23T09:00:57.116551+08:00",
     "system_health": "2026-08-23T09:00:57.116551+08:00",
-    "coach_silence_sync": "2026-08-23T09:00:57.116551+08:00",
+    "coach_silence_sync": "2026-08-23T09:12:04.405579+08:00",
     "care_4h": "2026-08-21T14:00:00",
     "cron_health_audit": 1787277600
   },
@@ -25,7 +25,7 @@
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-23T09:00:57.116551+08:00 當下實測通過",
     "coachSilentSince": "2026-08-23T08:52:18+08:00",
-    "coachSilentHours": 0.1,
+    "coachSilentHours": 0.3,
     "nextPlannedAction": "等教練下一輪訊息",
     "triggerSource": "cron-event:hourly-heartbeat",
     "cronErrors": []

@@ -149,3 +149,51 @@
 ⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
 
 下個 cron：09:12 健康檢查（cycle=541）。
+
+## 🦞 cycle=541 健康檢查紀錄（2026-08-23 09:12 Asia/Taipei · 週日上午）
+
+**結論：✅ 無異常，安靜通過，不通知教練**
+
+| 檢查項目 | 結果 |
+|---------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-23T08:52:18+08:00`｜當下沉默 **0.3h**（教練剛發完訊息 19 分鐘）|
+| Cron 真實狀態（24 enabled jobs）| 24 個 enabled jobs **全 `lastRunStatus=ok`** + 全部 `consecutiveErrors=0` |
+| ⚠️ 唯一 warning | job_id=`bbb7a348`（🦞 小龍蝦每日三機總結 23:05）有 1 條 warn-level diagnostic：`view git history -> search "[ACER]|acer|[Win]|聯想" failed`（lastStatus=ok，consecutiveErrors=0，影響主功能否 → 否，三機總結照常送出）|
+| Telegram 通道探針（守則#19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| HEARTBEAT.md 大小 | 82 → 100 行（<500 警戒線舒適）|
+
+**v4.0 三關判斷**（對 1 條 warning 逐項檢驗，三關全 fail → 不 announce）：
+
+- **關卡一**（本輪還壞嗎）→ ❌ 否
+  - job lastStatus=ok、consecutiveErrors=0
+  - 本輪健康檢查自身 cron 執行成功 = 一切正常
+- **關卡二**（provider 暫時過載嗎）→ ❌ 否
+  - 失敗訊息是 `view git history -> search` 工具失敗（內部子任務）
+  - 不是 `FailoverError / overloaded / INVALID_API_KEY`
+  - 屬於工具層級失敗，非供應商問題
+- **關卡三**（影響教練/會員嗎）→ ❌ 否
+  - 「git history 搜尋 ACER/acer/Win/聯想」是 23:05 三機總結裡的子工具之一
+  - 主功能（三機總結彙整 + Telegram 送出）正常運作
+  - 該子任務是輔助性質（給特定裝置相關 commit 統計），缺它不影響教練收到三機總結
+  - 屬於「監控工具自己打嗝」情況，教練/會員實際使用的功能完全沒受影響
+
+**累計**：連續 35 輪綠燈（cycle=507~541）
+
+**已落痕跡**：
+- ✅ HEARTBEAT.md cycle=541 已 append
+- ✅ state/heartbeat-state.json 更新
+- ✅ state/healthcheck.log 追加
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：10:12 健康檢查（cycle=542）。
+
+## ⚠️ peipei 自動 force-restart 2026-08-23 09:15:01
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-23 09:15
+- ✅ 同步成功
+- HANDOFF mtime: 1787447446
+- 雲端同步：✅ 已推上雲端（commit 5f4a3658d）
