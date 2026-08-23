@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "personal_ai_assistant_core_v1",
+  "generatedAt": "2026-08-24T00:14:45+08:00",
+  "ownerProfile": {
+    "displayName": "大樹教練（吳大樹）",
+    "companyName": "海餅乾俱樂部／大樹小講",
+    "title": "企業培訓教練／海餅乾俱樂部創辦人",
+    "region": "台南（大台南地區為主，全台巡講）",
+    "phone": "",
+    "email": "bymyway7@gmail.com",
+    "website": "https://www.bymyway.com",
+    "lineUrl": "https://line.me/R/ti/p/@qaw8118h"
+  },
+  "businessIdentity": {
+    "oneLinePositioning": "26年企業培訓資歷、1.5萬位老闆實戰經驗，用三歲小孩都聽得懂的話講出深刻的人生道理；近年更以親身3個月AI實戰歷程打造「AI導入教練」新定位",
+    "serviceSummary": "涵蓋公益巡講（大樹小講．無話不談，2013年至今）、企業內訓、團隊組建、演講訓練、AI導入輔導，以及BNI大台南南區分會培訓；核心團隊「海餅乾俱樂部」自2007年創辦，每年僅1-2位正式成員",
+    "coreStrengths": [
+      "25年以上企業培訓與公益巡講經驗",
+      "口才幽默生動，擅長把複雜道理講得三歲小孩都懂",
+      "累積1.5萬位老闆實戰輔導經驗",
+      "多家媒體專訪報導（大紀元、雜誌、電臺Podcast等）",
+      "近3個月AI實戰導入，親身示範「動口就能讓AI自動執行」"
+    ],
+    "differentiators": [
+      "主題最廣、最貼近生活的公益巡講系列，從2013年持續至今超過10年",
+      "自己就是AI導入的活案例，不是純理論教學",
+      "海餅乾俱樂部每年僅1-2位正式成員，稀缺性與篩選機制強"
+    ],
+    "proofPoints": [
+      "大紀元2014年3月17日報導",
+      "多位獅子會/學校邀約演講",
+      "官網多篇學員五星見證",
+      "乾淨世界平台專欄文章",
+      "《大樹教練》《教練都在想什麼》Podcast節目"
+    ],
+    "brandTone": "溫暖、直白、幽默風趣、真誠善良——用三歲小孩聽得懂的話講深刻道理（⚠️待教練確認是否就是希望AI寫訊息時的語氣）"
+  },
+  "productsAndOffers": [
+    {
+      "name": "大樹小講．無話不談（公益巡講）",
+      "description": "溝通表達、親子教育、行銷策略、兩性相處、人際話題、職場關係、團隊組建、零基礎學AI、口才訓練等9大主題，每場3小時，線上與實體並行",
+      "targetCustomer": "企業主管、創業者、業務人員、教師及一般大眾",
+      "priceRange": "",
+      "salesAngle": "十幾年公益巡講口碑，主題最廣最貼近生活",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    },
+    {
+      "name": "海餅乾俱樂部（核心人才培育計畫）",
+      "description": "2007年創辦，使命「培育人才，創造奇蹟，做對社會有貢獻的事」，每年僅1-2位正式成員",
+      "targetCustomer": "高度認同理念、願意長期投入的企業經營者/儲備幹部",
+      "priceRange": "",
+      "salesAngle": "稀缺性強，學員見證豐富",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    },
+    {
+      "name": "BNI大台南南區分會培訓",
+      "description": "BNI大台南南區9個分會的培訓課程",
+      "targetCustomer": "BNI大台南南區會員",
+      "priceRange": "約300元/場（依實際場次數累計，依2026年8月開票紀錄）",
+      "salesAngle": "",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    },
+    {
+      "name": "AI導入教練／AI特助心法輔導",
+      "description": "近期核心新方向，親自用AI（小龍蝦/Claude）實戰打造「老闆動嘴，AI全自動執行」的心法體系與落地方法",
+      "targetCustomer": "想導入AI但不知從何開始的企業主/教練",
+      "priceRange": "",
+      "salesAngle": "自己就是活案例，真實3個月AI實戰歷程而非純理論",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    },
+    {
+      "name": "企業內訓／團隊組建／演講訓練",
+      "description": "25年以上企業培訓資歷，涵蓋團隊組建與演講訓練",
+      "targetCustomer": "企業內訓需求方、學校、社團單位",
+      "priceRange": "",
+      "salesAngle": "",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    }
+  ],
+  "targetCustomers": {
+    "idealCustomers": [
+      "企業主管/經營者",
+      "創業者",
+      "業務人員",
+      "教師",
+      "BNI大台南南區會員",
+      "想導入AI但無從下手的教練/顧問"
+    ],
+    "partnerTypes": [],
+    "lowFitCustomers": [],
+    "qualificationQuestions": []
+  },
+  "crmRules": {
+    "defaultTags": [
+      "企業主管",
+      "BNI會員",
+      "海餅乾俱樂部學員",
+      "AI導入潛在客戶",
+      "公益/社團合作"
+    ],
+    "customerStages": [
+      "新名片",
+      "已初次聯繫",
+      "有興趣",
+      "已邀約",
+      "已成交",
+      "長期經營",
+      "暫緩"
+    ],
+    "classificationRules": [],
+    "followUpPlan": {
+      "within24Hours": "",
+      "within3Days": "",
+      "within7Days": "",
+      "within30Days": "",
+      "noResponse": ""
+    }
+  },
+  "messagePlaybook": {
+    "selfIntroduction": "我是大樹教練，用三歲小孩都聽得懂的話，講26年來遇過的1.5萬位老闆的真實故事。（草稿，待教練確認語氣）",
+    "firstContactMessage": "",
+    "followUpMessage": "",
+    "eventInvitationMessage": "",
+    "couponMessage": "",
+    "oneOnOneInvitationMessage": "",
+    "closingMessage": "",
+    "doNotSay": []
+  },
+  "dailyAssistantRules": {
+    "morningSuggestions": [],
+    "cardScanSuggestions": [],
+    "followUpSuggestions": [],
+    "salesOpportunitySignals": [],
+    "riskSignals": []
+  },
+  "complianceAndPrivacy": {
+    "restrictedClaims": [],
+    "sensitiveDataRules": [
+      "不可提供身分證字號、銀行帳號、密碼、API Key"
+    ],
+    "industryComplianceNotes": [],
+    "publicContentAllowed": true
+  },
+  "uploadReview": {
+    "isComplete": false,
+    "missingFields": [
+      "ownerProfile.phone",
+      "productsAndOffers[].priceRange（除BNI培訓外）",
+      "targetCustomers.lowFitCustomers",
+      "targetCustomers.qualificationQuestions",
+      "crmRules.classificationRules",
+      "crmRules.followUpPlan（4個時間點）",
+      "messagePlaybook（除自我介紹外6項）",
+      "dailyAssistantRules（全部4項）",
+      "complianceAndPrivacy.restrictedClaims",
+      "complianceAndPrivacy.industryComplianceNotes"
+    ],
+    "recommendedNextStep": "教練確認/補充上述missingFields欄位後再上傳系統"
+  }
+}
