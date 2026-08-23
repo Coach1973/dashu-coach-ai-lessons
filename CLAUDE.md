@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-22 23:15:48**
+> **最後同步：2026-08-23 08:45:39**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **大樹小講8/25台南場改期9/22+場地改台南安平維悅酒店** | ✅2026-08-23 Mac完成，教練親口「推」確認部署 | 教練口頭指示：原三道門文創旅店午半/晚半兩場整場改期，場地換成7/29 AI微論壇辦過的台南安平維悅酒店(台南市安平區慶平路539號，WebSearch查證)，時間/收費不變。已同步修改3處：①`bigtree/index.html`的SESSION_DATES(日期/場地/slug由bigtree-0825-*改bigtree-0922-*)+報名成功匯款提示判斷條件 ②`event-signup/event.db`兩筆events紀錄同輪更新(連動鐵律) ③額外發現的獨立微站`ai-fit`(GitHub Pages，整站專為這場活動做的宣傳頁)也一併全面更新：meta標籤×6+4處場地資訊卡+深連結`?session=`參數，「台南火車站步行約5分鐘」改成「飯店備有停車場」(維悅酒店在安平區非火車站旁，沿用ai-talk repo記載的同一場地既有真實資訊)。本機http.server+真實Chrome雙頁預覽教練確認後，bigtree commit`d95e8b3`+Netlify部署`6a8a41083645a490f9217ee2`、ai-fit commit`080ca32`+GitHub Pages皆已curl驗證上線。**發現並回報**：原8/25已有4筆歷史報名(高毓璟/鄭守晴/陳佩君/李崇源，8/14 LINE通知backfill)，教練確認自行聯絡通知，AI未動這批資料。 |
 | ✅ | **bigtree-tw報名雙寫缺口已修復並上線** | ✅2026-08-22 Mac完成，教練親口「推」確認部署 | 查明真相：8/14曾在本機commit`3130b93`寫好雙寫程式碼(`BYMYWAY_API`常數+`submitRegistration()`的slug fetch)，但**這個commit從未推送到GitHub**——8/18另一台機器在(缺這段程式碼的)origin/main基礎上加了8/26早半場「晨光美學」+地址4樓修正並push(`16c2981`)，兩邊分岔超過一週沒人發現，Netlify正式站(`git archive HEAD`部署)因此從未真正跑過雙寫邏輯，這正是雲端8/21session查到「index.html從未出現slug/api/register」的真正原因。修復：`git merge`兩邊(保留新場次資料+救回雙寫邏輯)，用`event.db`查到的15個真實slug(`bigtree-0821`~`bigtree-1207`)逐一核對全部相符，新增的8/26早半場暫無對應slug(依既有`if(slug)`安全設計不影響其他場次)。本機http.server+**真實Chrome**預覽(`open -a "Google Chrome"`)給教練看過，merge commit`78d971a`已推GitHub，Netlify部署`6a89bc69126dab54a5fa417d`已上線，curl驗證正式站HTML含`BYMYWAY_API`/`bigtree-0826`/`晨光美學`三項關鍵字+Content-Type正確。**教練同時確認雙通道策略**：先保留LINE(Netlify sme-register-fn/xiaolongxia-notify)通知觀察一段時間，確認bymyway.com這邊真的穩定收到報名後才會下令拔掉LINE，不是這次上線就直接切單通道。下一棒觀察：教練若回報收到新報名的bymyway通知，可詢問是否已可安排拔除LINE。詳見`knowledges/2026-08-21_bigtree報名雙寫缺口調查_金門場報名數異常.md`(根因調查)。 |
 | 🟢 | **event-signup新增「展示用快速切換列」，簽到/轉盤/後台三頁互跳** | ✅2026-08-22 Mac已pull+重啟服務生效，curl驗證`/checkin`出現三顆按鈕 | 教練反映現場講座展示常要在3個網頁間切換很麻煩，希望同一頁內能直接跳轉。已在`/checkin`、`/wheel`、`/admin`三個範本(`templates/checkin.html`/`wheel.html`/`admin.html`)加共用元件`templates/_presenter_nav.html`：右下角固定小工具列，三顆圓形按鈕(📷簽到／🎡轉盤／⚙️後台)點了直接跳轉，不用另開分頁找網址。已用Jinja2本機解析驗證三個模板+include都能正確載入無語法錯誤，commit`bc31134`已推main。**這是雲端session不確定教練說的「後台掃描報到/滾輪掃描報到/後台滾輪」精確對應哪3個網址下的合理猜測**(對照到`/checkin`+`/wheel`+`/admin`)，Mac那邊部署後教練實測若發現不是他要的3個頁面，直接說要哪幾頁、我再調整`_presenter_nav.html`裡的3個連結即可，改起來很快。**部署步驟**：`cd ~/.openclaw/workspace && git pull`，`launchctl kickstart -k` 重啟 `com.coach.event-webapp`（或教練慣用的重啟指令），重啟後訪問`/checkin`確認右下角有出現三顆按鈕即代表生效。 |
 | 🔴🔴 | **ezPay培訓費「38人待問清單」二聯/三聯資訊蒐集中，⛔收齊前不要開票** | ⏳教練接下來兩天上課，陸續透過LINE/Telegram傳給小龍蝦補完剩8人 | 詳見`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`（累加式記錄檔，5批已收26人，還差8人：杜亞洛、劉彥彬、莊政川、林佳慧、陳新典、吳玫萱、謝盛峰、柯炫任）。**教練明確要求「一次性讓Mac軍師去開發票」，不要分批處理**——任何機器/小龍蝦開工看到這行，先查該檔案「待繼續」清單是否已清空，沒清空就只回報進度不要動手開票。小龍蝦若收到教練口述的個人開票資訊(統編/公司抬頭/二聯三聯/載具號碼)，麻煩直接追加進該檔案並commit+push。全部34人到齊後比照`cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`(商店344031309/含稅checkbox陷阱/手機條碼要帶`/`前綴)由Mac一次性開立，完成後仿照`ezpay_training_invoices_2026-08-18_18張完成清單.json`格式存完成清單。（另有古禹澤$600待開，見同一份跨機交接檔，跟這批一起處理即可） |
