@@ -29,6 +29,8 @@
   .step-label { font-size:14px; color:rgba(255,255,255,.5); font-weight:700; text-align:left; margin:22px 0 6px 4px; }
   .step-label:first-of-type { margin-top:0; }
   .note { font-size:14px; color:rgba(255,255,255,.4); margin-top:24px; line-height:1.7; }
+  .warn { font-size:16px; font-weight:900; color:#fff; background:#a02020; border-radius:10px;
+    padding:14px 18px; margin-top:10px; line-height:1.7; text-align:left; }
 </style>
 </head>
 <body>
@@ -42,6 +44,7 @@
 
     <p class="step-label">STEP 1</p>
     <a class="cta line" href="{{ add_friend_url }}">🎉 我要現場參加抽獎</a>
+    <p class="warn">⚠️ 按下去後 LINE 會自動打開，訊息也打好了，<b>請務必在 LINE 裡按「傳送」</b>——沒按傳送，我們收不到資料，就沒辦法幫您登記抽獎喔！</p>
 
     <p class="step-label">STEP 2</p>
     {% if has_slide %}
