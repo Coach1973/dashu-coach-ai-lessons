@@ -53,30 +53,6 @@ SLIDES_DIR = os.path.join(os.path.dirname(__file__), "slides")
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "6124913915"  # 教練跟小龍蝦的對話，路徑大全.md已記錄
 TELEGRAM_REGISTRATION_GROUP_CHAT_ID = "-5349981085"  # 教練2026-08-24建立「活動報名即時通知」群組，教練+佩佩老師+bot三方共見
-COACH_LINE_USER_ID = "U895a0ad8e49d75f8303dc3d067282dc0"  # 教練本人LINE ID，workspace/memory/people.md已記錄
-
-
-def _notify_coach_line(text: str) -> bool:
-    """用龍蝦小助教（@268dptjc，OpenClaw預設LINE帳號）推播訊息給教練本人LINE。
-    2026-08-14教練要求：長期要把報名通知改由bymyway.com自己發，不能只靠外部Netlify黑箱
-    (sme-register-fn)。跟_notify_xiaolongxia()是同一等級的通知，只是換LINE通道，
-    token直接讀openclaw.json（跟default帳號共用同一份，不新增憑證檔）。"""
-    try:
-        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
-            config = json.load(f)
-        token = config["channels"]["line"]["channelAccessToken"]
-        body = json.dumps({
-            "to": COACH_LINE_USER_ID,
-            "messages": [{"type": "text", "text": text}],
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            "https://api.line.me/v2/bot/message/push", data=body, method="POST",
-            headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"},
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status == 200
-    except Exception:
-        return False  # 通知失敗不該擋住報名資料落地，呼叫端不拋錯
 
 
 def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> None:
@@ -336,10 +312,8 @@ def api_register():
             f"公司：{company_title or '-'}\n電話：{phone}\nEmail：{email or '未填'}\n"
             f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
         )
-        # 2026-08-24發現：LINE(龍蝦小助教@268dptjc)是唯一通知管道，
-        # 帳號月額度用完時_notify_coach_line()靜默失敗(except吞掉)，
-        # 教練完全不知情、以為系統壞了。改雙管道並行，Telegram不受LINE額度限制。
-        _notify_coach_line(notify_text)
+        # 2026-08-24教練裁示：LINE會扣月配額，全面停用，只留Telegram
+        # 「活動報名即時通知」群組(教練+佩佩老師同見，不受配額限制)。
         _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
         return Response(
             json.dumps({"ok": True, "status": status}),
