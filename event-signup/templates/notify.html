@@ -31,6 +31,25 @@
     font-size:17px; line-height:1.8;
   }
   .result b { color:#06C755; font-size:20px; }
+
+  .quota-box { margin-top:18px; padding:14px 18px; border-radius:10px; font-size:16px; font-weight:700; }
+  .quota-box.ok { background:#0f2a1a; border:1px solid rgba(6,199,85,.4); }
+  .quota-box.warn { background:#2a1414; border:1px solid rgba(255,107,107,.5); color:#ffb3b3; }
+  .quota-box .n { font-size:20px; }
+
+  .unbound-wrap { max-width:760px; margin:44px auto 0; }
+  .unbound-wrap h2 { font-size:22px; font-weight:900; color:var(--gold); margin-bottom:6px; }
+  .unbound-wrap .lead { font-size:15px; color:rgba(255,255,255,.6); line-height:1.8; margin-bottom:20px; }
+  details.ev { background:#0f0f0f; border:1px solid var(--line); border-radius:12px; margin-bottom:12px; }
+  details.ev summary { cursor:pointer; padding:16px 18px; font-size:17px; font-weight:700; list-style:none; }
+  details.ev summary::-webkit-details-marker { display:none; }
+  details.ev summary .n { color:var(--gold); font-weight:900; }
+  .person { display:flex; align-items:center; gap:10px; padding:10px 18px; border-top:1px solid rgba(255,255,255,.06); flex-wrap:wrap; }
+  .person .who { font-size:16px; font-weight:700; min-width:150px; }
+  .person .who .ph { display:block; font-size:13px; color:rgba(255,255,255,.45); font-weight:500; }
+  .copy-btn { margin-left:auto; padding:9px 16px; font-size:14px; font-weight:900; border-radius:8px; border:none;
+    background:var(--gold); color:var(--dark); cursor:pointer; font-family:inherit; }
+  .copy-btn.copied { background:#06C755; color:#fff; }
 </style>
 </head>
 <body>
@@ -60,6 +79,49 @@
 
       <button type="submit">送出通知</button>
     </form>
+
+    {% if quota %}
+    <div class="quota-box {{ 'warn' if quota.remaining <= 0 else 'ok' }}">
+      {% if quota.remaining <= 0 %}
+        ⚠️ 本月 LINE 推播額度已用完（<span class="n">{{ quota.used }}/{{ quota.limit }}</span>），送出通知會全部失敗，要等下個月初重置，或到下方名單用其他方式聯絡
+      {% else %}
+        本月 LINE 推播額度還剩 <span class="n">{{ quota.remaining }}</span> 則（已用 {{ quota.used }}/{{ quota.limit }}）
+      {% endif %}
+    </div>
+    {% endif %}
   </div>
+
+  {% if unbound_lists %}
+  <div class="unbound-wrap">
+    <h2>各場次尚未綁定 LINE 的來賓</h2>
+    <p class="lead">
+      這些人已經報名／參加抽獎，但還沒完成「加好友＋傳送問候語」最後一步，收不到上面的群發通知。
+      這一步一定要本人自己按傳送，沒有辦法代勞——點「複製訊息」就會把姓名跟專屬連結一起複製起來，
+      貼到簡訊、電話留言或其他管道傳給對方，對方點開連結會直接跳出 LINE 並帶好文字，只要按傳送就完成。
+    </p>
+    {% for grp in unbound_lists %}
+    <details class="ev">
+      <summary>{{ grp.event.event_date or '' }}　{{ grp.event.name }}　<span class="n">{{ grp.unbound|length }}</span> 人未綁定（共 {{ grp.event.signup_count }} 人）</summary>
+      {% for p in grp.unbound %}
+      <div class="person">
+        <div class="who">{{ p.name }}<span class="ph">{{ p.phone }}</span></div>
+        <button type="button" class="copy-btn" data-text="{{ p.sms }}" onclick="copySms(this)">複製訊息</button>
+      </div>
+      {% endfor %}
+    </details>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <script>
+  function copySms(btn) {
+    navigator.clipboard.writeText(btn.dataset.text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '已複製 ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+  </script>
 </body>
 </html>

@@ -448,6 +448,60 @@ def _line_push(line_user_id: str, text: str) -> bool:
         return False
 
 
+def _line_quota() -> dict | None:
+    """查LINE官方帳號本月推播額度用量。查不到（沒設金鑰/網路問題）回None，不擋頁面。"""
+    if not LINE_CHANNEL_ACCESS_TOKEN:
+        return None
+    try:
+        req1 = urllib.request.Request("https://api.line.me/v2/bot/message/quota",
+            headers={"Authorization": f"Bearer {LINE_CHANNEL_ACCESS_TOKEN}"})
+        req2 = urllib.request.Request("https://api.line.me/v2/bot/message/quota/consumption",
+            headers={"Authorization": f"Bearer {LINE_CHANNEL_ACCESS_TOKEN}"})
+        with urllib.request.urlopen(req1, timeout=6) as r1, urllib.request.urlopen(req2, timeout=6) as r2:
+            limit = json.loads(r1.read()).get("value", 0)
+            used = json.loads(r2.read()).get("totalUsage", 0)
+        return {"limit": limit, "used": used, "remaining": max(limit - used, 0)}
+    except Exception:
+        return None
+
+
+def _unbound_lists(conn):
+    """各場次「已報名但尚未綁定LINE」的名單，附上一鍵複製用的個人化文字。
+
+    2026-08-23教練發現：8/21+8/22兩場合計49人參加抽獎，只有20人真的綁定LINE。
+    根因是LINE官方帳號的oaMessage連結最後一步（按下傳送）無法代勞，一定要本人
+    手動點——這個環節本來就無法用推播訊息催促，加上剛好這陣子推播額度也用完，
+    唯一能做的是讓教練自己（用簡訊/電話/其他管道）把「一鍵開好LINE、只差按傳送」
+    的連結送到這些人手上，這裡把名單跟訊息文字準備好，教練不用自己一個個組字。"""
+    events = conn.execute(
+        """SELECT e.slug, e.name, e.event_date,
+                  COUNT(s.id) AS signup_count,
+                  SUM(CASE WHEN a.line_user_id IS NOT NULL THEN 1 ELSE 0 END) AS line_bound_count
+           FROM events e
+           LEFT JOIN signups s ON s.event_id = e.id
+           LEFT JOIN attendees a ON a.id = s.attendee_id
+           GROUP BY e.id HAVING signup_count > 0 ORDER BY e.event_date DESC"""
+    ).fetchall()
+    result = []
+    for e in events:
+        unbound = conn.execute(
+            """SELECT a.name, a.phone FROM attendees a
+               JOIN signups s ON s.attendee_id = a.id
+               JOIN events ev ON ev.id = s.event_id
+               WHERE ev.slug = ? AND a.line_user_id IS NULL ORDER BY a.name""",
+            (e["slug"],),
+        ).fetchall()
+        if not unbound:
+            continue
+        people = []
+        for a in unbound:
+            url = _lottery_greet_url(a["name"], e["name"])
+            sms = f"{a['name']}您好，補登記「{e['name']}」抽獎資格請點此連結，開啟LINE後記得按「傳送」才算完成：{url}"
+            people.append({"name": a["name"], "phone": a["phone"], "url": url, "sms": sms})
+        result.append({"event": e, "unbound": people})
+    return result
+
+
 @app.route("/admin/notify", methods=["GET"])
 def notify_form():
     if not _logged_in():
@@ -461,8 +515,9 @@ def notify_form():
            LEFT JOIN attendees a ON a.id = s.attendee_id
            GROUP BY e.id ORDER BY e.event_date DESC"""
     ).fetchall()
+    unbound_lists = _unbound_lists(conn)
     conn.close()
-    return render_template("notify.html", events=events, result=None)
+    return render_template("notify.html", events=events, result=None, unbound_lists=unbound_lists, quota=_line_quota())
 
 
 @app.route("/admin/notify", methods=["POST"])
@@ -501,8 +556,9 @@ def notify_send():
             else:
                 failed += 1
         result = {"sent": sent, "failed": failed, "total": len(recipients)}
+    unbound_lists = _unbound_lists(conn)
     conn.close()
-    return render_template("notify.html", events=events, result=result)
+    return render_template("notify.html", events=events, result=result, unbound_lists=unbound_lists, quota=_line_quota())
 
 
 @app.route("/admin/set-current", methods=["POST"])
