@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 7d4244d1-db9c-42f8-97ad-dc02499cbe41
-  modified: 2026-08-18T15:50:00.000Z
+  modified: 2026-08-23T17:03:30.628Z
 ---
 
 操作對象：inv.ezpay.com.tw，帳號bymyway。**同一帳號下有兩個商店**：①「(337391376)BNI台南南區」——BNI入會/續約發票 ②「(344031309)大樹教育顧問有限公司」——培訓費發票(品項`B03`/`BNI培訓`)，不要跟另一個舊代號`(337643900)大樹教育顧問`搞混。開立用`Invoice_issue/create_invoice`，查詢用`Invoice_issue/search_invoice`。
@@ -51,5 +51,7 @@ XMLHttpRequest.prototype.send = function(b){
 ```
 
 **二聯式(B2C)專屬欄位**：`InvCategory`選`2c`後才出現`CarruerType`選項——`carry_mobile`(手機條碼)/`carry_person`(自然人憑證條碼)/`carry_p2g`(ezPay電子發票載具)/`carry_print`(無載具，列印電子發票證明聯，適合單純Email通知、無實體載具的情況)。**手機條碼號碼要帶開頭斜線**，例如條碼`B3BU7PV`實際要填`/B3BU7PV`，查證既有成功案例(張騰文081701)的`II_Carruer_Num`欄位存的就是`/LKZTH3E`，不是`LKZTH3E`，這是ezPay載具格式的固定慣例，不是打字疏漏。B2C的`BuyerIdentify`(統編)欄位不存在，改用`BuyerName`(受贈人/買受人姓名，非必填但建議填)。
+
+**🔴 2026-08-24教練裁示：只要對方給的是手機條碼，一律直接判定二聯式，不用再問「這是二聯還是三聯」**——起因是小龍蝦連續兩次收到教練LINE傳的「姓名+手機條碼」都停下來反問類型，教練覺得多此一舉，明確拍板這條快捷規則。往後任何機器收到「姓名+手機條碼」格式的發票資訊，可直接定案為二聯式，不用再逐一確認，只需要再補金額（查`大台南南區4至8月培訓出席與開票總清冊`等權威出席表）跟Email（查`bni_region_members_contact_2026-08-18.csv`）即可準備開票。
 
 參見 [[project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16]]。
