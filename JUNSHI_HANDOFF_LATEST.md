@@ -6,8 +6,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🎯🎯 | **大樹小講場次管理後台＋一鍵發佈上線（教練可自行增修場次，不必再透過AI）** | ✅2026-08-23 Mac完成，⏳待教練實際操作驗收 | 教練創意發想：想要一個能自己管理大樹小講活動的後台（新增/編輯/刪除/發佈、完成的自動列入歷史、一鍵部署不用AI確認）。**軍師判斷不新建系統**——`event.bymyway.com/admin` 早就是完整Flask後台（登入/場次/名單/簽到/抽獎，24小時跑在Mac上），真正的病根是**同一份場次資料同時存在「網頁原始碼的SESSION_DATES」與「event.db」兩份、各自維護**，8/22改期出包就是漏在這裡。做法：①`events`表擴充`site/slot_key/location/venue/address/transport/status`欄位，官網16場全部匯入資料庫當唯一真相源（順便補上8/26早半場一直缺的slug，那場原本根本無法雙寫報名）②既有後台新增「大樹小講場次管理」頁(`/admin/sessions`)：新增/編輯/刪除/設為已取消/草稿，有報名紀錄的不給刪只能設取消(防孤兒資料)③**過期場次自動歸入「已結束」**，且官網前端也會自動收起(不用等發佈、不用教練手動關閉)④`bigtree_publish.py`：資料庫→產生SESSION_DATES→git commit/push→Netlify部署，一鍵完成⑤**教練本人按發佈＝本人授權，不再需要AI逐次確認**(原規矩是防AI自作主張，非防教練本人)。**安全設計**：金鑰存`credentials/`(已加.gitignore實測git看不到)；打包改用`git archive HEAD`只送已提交內容，避免夾帶工作區未確認修改(原本用`git ls-files`會把biz-gym未確認的907行變更一起送上線)；已發佈內容用SHA256指紋比對，重複按不浪費額度；網頁結構異常時中止而非照舊部署。已測CRUD全流程/撞名防呆/有報名不給刪/狀態切換/發佈偵測/結構壞掉中止/頁面渲染。commit`bde5ae160`。**下一步**：教練說之後要「所有活動都歸後台管理」(不只大樹小講)，等這套用順了再擴充；`ai-fit`這類單一活動微站尚未納入。 |
-| 🟡 | **bigtree-tw 排序修復＋9/22場次尚未部署上線** | ⏳等教練在新後台按「一鍵發佈」即可上線 | 教練指出官網場次沒照日期排序(9/22卻排在8/26前面)，根因是當初排序靠人工維護陣列順序。已改成`buildSessions()`自動依日期+時段排序，且過期場次自動隱藏，日後改期不用再手動搬位置。**本機已改好但教練當時說先不推**，現在剛好可以當作新後台的第一次驗收——教練登入`/admin/sessions`按「一鍵發佈到官網」就會連同這個修復一起上線，不用AI代勞。 |
+| 🎯🎯 | **大樹小講場次管理後台＋一鍵發佈上線（教練可自行增修場次，不必再透過AI）** | ✅2026-08-23 Mac完成，教練已實際操作驗收（過程修好2個部署bug，見下方新增列） | 教練創意發想：想要一個能自己管理大樹小講活動的後台（新增/編輯/刪除/發佈、完成的自動列入歷史、一鍵部署不用AI確認）。**軍師判斷不新建系統**——`event.bymyway.com/admin` 早就是完整Flask後台（登入/場次/名單/簽到/抽獎，24小時跑在Mac上），真正的病根是**同一份場次資料同時存在「網頁原始碼的SESSION_DATES」與「event.db」兩份、各自維護**，8/22改期出包就是漏在這裡。做法：①`events`表擴充`site/slot_key/location/venue/address/transport/status`欄位，官網16場全部匯入資料庫當唯一真相源（順便補上8/26早半場一直缺的slug，那場原本根本無法雙寫報名）②既有後台新增「大樹小講場次管理」頁(`/admin/sessions`)：新增/編輯/刪除/設為已取消/草稿，有報名紀錄的不給刪只能設取消(防孤兒資料)③**過期場次自動歸入「已結束」**，且官網前端也會自動收起(不用等發佈、不用教練手動關閉)④`bigtree_publish.py`：資料庫→產生SESSION_DATES→git commit/push→Netlify部署，一鍵完成⑤**教練本人按發佈＝本人授權，不再需要AI逐次確認**(原規矩是防AI自作主張，非防教練本人)。**安全設計**：金鑰存`credentials/`(已加.gitignore實測git看不到)；打包改用`git archive HEAD`只送已提交內容，避免夾帶工作區未確認修改(原本用`git ls-files`會把biz-gym未確認的907行變更一起送上線)；已發佈內容用SHA256指紋比對，重複按不浪費額度；網頁結構異常時中止而非照舊部署。已測CRUD全流程/撞名防呆/有報名不給刪/狀態切換/發佈偵測/結構壞掉中止/頁面渲染。commit`bde5ae160`。**下一步**：教練說之後要「所有活動都歸後台管理」(不只大樹小講)，等這套用順了再擴充；`ai-fit`這類單一活動微站尚未納入。 |
+| ✅ | **bigtree-tw排序修復已上線＋一鍵發佈系統修好2個真bug＋通知系統補強** | ✅2026-08-23全數完成並教練驗收 | 教練首次用新後台按「一鍵發佈」連續失敗2次(白扣2次額度)，逐步查證修好：①第一次誤診為zip中文檔名UTF-8旗標問題，改用Python zipfile打包卻沒設目錄項，Netlify解壓失敗 ②第二次拿08-22實測成功的包逐項diff比對才找到真因是「缺目錄項」不是編碼，改回`git archive HEAD`+系統`zip`指令(與08-22成功組合完全一致)並在送出前驗證結構相符，commit`99ceb9cf5`終於成功，官網14場排序正確上線。**教訓寫入`feedback_netlify_headers_content_type.md`第7條**：有已知成功樣本時先diff不要靠推論。同場教練回報LINE群發「發送失敗」，查證是@qaw8118h帳號本月200則免費額度用完(非bug)，`/admin/notify`新增即時額度顯示+「未綁定名單一鍵複製連結」功能(commit`b3a6900d9`)，讓教練能繞過額度限制用簡訊等管道接觸8/21+8/22兩場49人中29位未綁定LINE的人。教練接著提出「掃碼時強調一定要發訊息」的解法，已在4個觸點(2張現場立牌+2個掃碼後網頁)加上紅底警語「務必按LINE傳送」，thanks.html誤導性的「一鍵傳送」文案也一併修正(commit`0753e0e41`)。**待辦**：現場立牌已印過的舊版沒有新警語，教練需自行決定是否重印。 |
 | ✅ | **大樹小講8/25台南場改期9/22+場地改台南安平維悅酒店** | ✅2026-08-23 Mac完成，教練親口「推」確認部署 | 教練口頭指示：原三道門文創旅店午半/晚半兩場整場改期，場地換成7/29 AI微論壇辦過的台南安平維悅酒店(台南市安平區慶平路539號，WebSearch查證)，時間/收費不變。已同步修改3處：①`bigtree/index.html`的SESSION_DATES(日期/場地/slug由bigtree-0825-*改bigtree-0922-*)+報名成功匯款提示判斷條件 ②`event-signup/event.db`兩筆events紀錄同輪更新(連動鐵律) ③額外發現的獨立微站`ai-fit`(GitHub Pages，整站專為這場活動做的宣傳頁)也一併全面更新：meta標籤×6+4處場地資訊卡+深連結`?session=`參數，「台南火車站步行約5分鐘」改成「飯店備有停車場」(維悅酒店在安平區非火車站旁，沿用ai-talk repo記載的同一場地既有真實資訊)。本機http.server+真實Chrome雙頁預覽教練確認後，bigtree commit`d95e8b3`+Netlify部署`6a8a41083645a490f9217ee2`、ai-fit commit`080ca32`+GitHub Pages皆已curl驗證上線。**發現並回報**：原8/25已有4筆歷史報名(高毓璟/鄭守晴/陳佩君/李崇源，8/14 LINE通知backfill)，教練確認自行聯絡通知，AI未動這批資料。 |
 | ✅ | **bigtree-tw報名雙寫缺口已修復並上線** | ✅2026-08-22 Mac完成，教練親口「推」確認部署 | 查明真相：8/14曾在本機commit`3130b93`寫好雙寫程式碼(`BYMYWAY_API`常數+`submitRegistration()`的slug fetch)，但**這個commit從未推送到GitHub**——8/18另一台機器在(缺這段程式碼的)origin/main基礎上加了8/26早半場「晨光美學」+地址4樓修正並push(`16c2981`)，兩邊分岔超過一週沒人發現，Netlify正式站(`git archive HEAD`部署)因此從未真正跑過雙寫邏輯，這正是雲端8/21session查到「index.html從未出現slug/api/register」的真正原因。修復：`git merge`兩邊(保留新場次資料+救回雙寫邏輯)，用`event.db`查到的15個真實slug(`bigtree-0821`~`bigtree-1207`)逐一核對全部相符，新增的8/26早半場暫無對應slug(依既有`if(slug)`安全設計不影響其他場次)。本機http.server+**真實Chrome**預覽(`open -a "Google Chrome"`)給教練看過，merge commit`78d971a`已推GitHub，Netlify部署`6a89bc69126dab54a5fa417d`已上線，curl驗證正式站HTML含`BYMYWAY_API`/`bigtree-0826`/`晨光美學`三項關鍵字+Content-Type正確。**教練同時確認雙通道策略**：先保留LINE(Netlify sme-register-fn/xiaolongxia-notify)通知觀察一段時間，確認bymyway.com這邊真的穩定收到報名後才會下令拔掉LINE，不是這次上線就直接切單通道。下一棒觀察：教練若回報收到新報名的bymyway通知，可詢問是否已可安排拔除LINE。詳見`knowledges/2026-08-21_bigtree報名雙寫缺口調查_金門場報名數異常.md`(根因調查)。 |
 | 🟢 | **event-signup新增「展示用快速切換列」，簽到/轉盤/後台三頁互跳** | ✅2026-08-22 Mac已pull+重啟服務生效，curl驗證`/checkin`出現三顆按鈕 | 教練反映現場講座展示常要在3個網頁間切換很麻煩，希望同一頁內能直接跳轉。已在`/checkin`、`/wheel`、`/admin`三個範本(`templates/checkin.html`/`wheel.html`/`admin.html`)加共用元件`templates/_presenter_nav.html`：右下角固定小工具列，三顆圓形按鈕(📷簽到／🎡轉盤／⚙️後台)點了直接跳轉，不用另開分頁找網址。已用Jinja2本機解析驗證三個模板+include都能正確載入無語法錯誤，commit`bc31134`已推main。**這是雲端session不確定教練說的「後台掃描報到/滾輪掃描報到/後台滾輪」精確對應哪3個網址下的合理猜測**(對照到`/checkin`+`/wheel`+`/admin`)，Mac那邊部署後教練實測若發現不是他要的3個頁面，直接說要哪幾頁、我再調整`_presenter_nav.html`裡的3個連結即可，改起來很快。**部署步驟**：`cd ~/.openclaw/workspace && git pull`，`launchctl kickstart -k` 重啟 `com.coach.event-webapp`（或教練慣用的重啟指令），重啟後訪問`/checkin`確認右下角有出現三顆按鈕即代表生效。 |
@@ -136,37 +136,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-19 v121（Mac桌面版 Sonnet 5，教練推翻「34人收齊才開票」規則，24張ezPay培訓費發票先開立）
-
-> 建立時間：2026-08-19 01:45 ~ 02:40（台灣時間）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v120（同機前一日，已在主檔保留）
-> 本棒主軸：**教練指示閱讀`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`（聯想Windows持續統計中的38人培訓費發票清冊，原規則是「34人全部收齊才一次性開立」），並當場推翻該規則：「還有8張發票還沒到齊，不曉得要等到什麼時候，最好的方法是現有的都先開起來，這樣到時候只需要處理最後8張」。已收集的24人（第一~五批）全部開立完成，剩8人（杜亞洛/劉彥彬/莊政川/林佳慧/陳新典/吳玫萱/謝盛峰/柯炫任）資料仍待教練利用課堂空檔口述補齊。沿用v120已驗證的完整SOP（MerchantID explicit賦值/`jQuery('#create_btn').trigger('click')`送出/XHR攔截器驗證/手機條碼斜線前綴），全程零失誤一次到位，24張皆首次提交即成功。**
-
-## 🎯 本場戰果
-
-### 1. 🔧 沿用v120驗證過的SOP，24張零重工一次到位
-今日(0819)自訂編號從081901起連續編到081924，商店同樣固定「(344031309)大樹教育顧問有限公司」、品項`B03`/`BNI培訓`。三聯式(B2B，統編/公司抬頭)10張走`BuyerIdentify`+`InvoiceRemark`(格式「分會-姓名」)；二聯式(B2C)14張依載具類型分兩種：手機條碼(9張)走`CarruerType=carry_mobile`+`CarruerNumber`(帶開頭`/`前綴)，無載具Email通知(5張)走`CarruerType=carry_print`。每張送出前都先讀`total_count_table`核對稅額/銷售額/總計三欄吻合教練提供的金額才送出，24張全部一次提交成功（v120踩過的「MerchantID视覺已選≠真的選中」陷阱這次全程避開，因為送出前逐張都用JS明確賦值+核對真實value）。24筆自訂編號081901~081924對應發票號碼DQ92662321~DQ92662344，逐張用XHR攔截器讀真實回應(`status:"SUCCESS"`)+姓名核對才記錄完成，總表存於`claude-brain/data/ezpay_training_invoices_2026-08-19_24人完成清單.json`。
-
-### 2. 🔴 3筆Email查無登記，誠實留空未亂填
-蔡珮彤(081907)、吳亞平(081922)、楊凱為(081924)三人BNI Connect官方資料庫查無登記Email，`knowledges`檔案本身已標註此狀況，本場依E15「誠實回報不亂猜」原則，這3張發票的`BuyerMail`欄位直接留空，未杜撰任何Email地址，教練若日後補到正確Email可個別到`Invoice_issue/search_invoice`頁面用「補發通知」功能重發。
-
-### 3. 🔧 瀏覽器連線重新確認+session過期自動恢復
-Session開始時距離上次操作已隔近12小時，`list_connected_browsers`重新偵測到3台裝置（deviceId與前一場相同，只是顯示順序改變），依系統提示走`AskUserQuestion`重新選定Mac本機裝置。首次`navigate`到`search_invoice`頁時遇到CDP逾時凍結（疑似停在登入導轉頁），改用`navigate`強制重載一次後恢復正常，確認ezPay登入session仍有效（30分鐘閒置倒數重新開始），全程未需要教練重新輸入密碼。
-
-### 4. 🔧 已更新來源清冊檔案，標記推翻規則+下次接續指引
-`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`已加註2026-08-19更新區塊：24人開立完成事實+推翻原「34人收齊才開票」規則的教練原話+8人待補齊清單維持不變+**下次直接接續指引：自訂編號從081925起，不用等其他人到齊**。任何機器（含小龍蝦/聯想/ACER）看到8人資料到齊，可直接依此檔案接續開票，不需要重新確認規則。
-
-## 📋 下一場直接開工任務
-- **8人待補齊**：杜亞洛、劉彥彬、莊政川、林佳慧、陳新典、吳玫萱、謝盛峰、柯炫任——教練透過LINE/Telegram口述傳給小龍蝦時，任何機器收到「XX 二聯/三聯」「XX 統編/公司抬頭」這類資訊且姓名對得上，請直接追加進`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`
-- 8人資料到齊後，任何機器直接接續開立（自訂編號081925起），不用等全部8人一次到齊，也不用重新詢問是否可以開始
-- 承接v119/v120未完事項：「真誠分會」架構問題(擱置中)、三機hook同步(ACER待處理)、賈維斯Phase2 9/1月度cron觀察
-
-## 🔑 本場關鍵檔案索引
-- `claude-brain/data/ezpay_training_invoices_2026-08-19_24人完成清單.json`：24張發票完整對照表
-- `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：已更新推翻規則+下次接續指引，剩8人資料待補
-- `claude-brain/reference_ezpay_invoice_issuing_procedure.md`：v120已寫入的SOP本場沿用零修改，證明有效
-- 本場純瀏覽器+記憶檔操作，無程式碼commit（記憶檔更新將於本棒commit一併送出）
+> 📦 v121完整內容已封存：`handoff_archive/handoff_v121_archived_2026-08-23.md`（Mac桌面版，教練推翻「34人收齊才開票」規則，24張ezPay培訓費發票先開立）
 
 ---
 
@@ -199,6 +169,49 @@ Session開始時距離上次操作已隔近12小時，`list_connected_browsers`�
 - `試金石/試金石_案例庫.md`案例61：查無Email誤判完整記錄
 - `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：3人正確Email已補上
 - commit：`dd8132341`(初步查證2人Email)+`0cb20121f`(楊凱為確認)+`e9c5c3bad`(路徑大全)+`782af6e66`(記憶檔)
+
+---
+
+# 軍師接力棒 · 2026-08-23 v123（Mac桌面版 Sonnet 5→Opus 5混用，大樹小講事件密集場：救回失蹤的雙寫程式碼、改期、自建管理後台、修好2次部署bug、抓出LINE綁定率低的真因並四點補強）
+
+> 建立時間：2026-08-22 22:35 ~ 2026-08-23 22:36（台灣時間，跨日長場）
+> 本棒執行者：Mac 桌面版 Sonnet 5（中途教練切換至 Opus 5）
+> 上一棒：v122（同機前四日）
+> 本棒主軸：**這一整場圍繞`bigtree-tw`(大樹小講)官網跟`event-signup`報名後台展開，從「救回一段消失的程式碼」開始，一路做到「教練自己就能管理活動、不用再靠AI改網頁」。過程中兩次因為自己改壞部署流程讓教練白扣額度，都當場拿「已知成功的樣本」逐項diff揪出真因並修好，同時把每個教訓寫回永久記憶。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴🔴 救回8/14寫好卻從未推送的報名雙寫程式碼
+查明8/14曾在本機commit`3130b93`寫好`event.bymyway.com/api/register`雙寫邏輯，但**這個commit從未git push**——8/18另一台機器在缺這段程式碼的origin/main上加了新場次並推送，兩邊分岔一週沒人發現。`git merge`救回後confirm教練「推」，部署上線。**同一輪順手把這個問題結構性根治**：擴充`session_end_auto_push.sh`（原本只保護workspace自身），新增每輪對話結束自動掃描`~/github_repos/`全部22個站台repo，任何有unpushed commit就自動補推，用真實測試commit驗證過(`ai-fit`repo)確實會被抓到並自動推送。commit`763f7ab00`。
+
+### 2. 🎯 大樹小講8/25台南場改期9/22＋場地改台南安平維悅酒店
+教練口頭指示改期+換場地(7/29 AI微論壇同一場地，WebSearch查證地址)，時間/收費不變。同步修改bigtree官網+event.db+**意外發現的獨立微站`ai-fit`**(整站專為這場活動做，6處meta標籤+4處場地卡+深連結全部要跟著改)。真實Chrome雙頁預覽教練確認後上線。**發現原8/25已有4筆歷史報名，教練確認自行聯絡通知**。commit`d95e8b3`+`080ca32`。
+
+### 3. 🎯🎯 大樹小講場次管理後台：event.db成唯一真相源
+教練提出想要「自己能管理活動的後台」，軍師判斷**不新建系統**——`event.bymyway.com/admin`早就是完整後台，真正病根是場次資料同時活在「網頁原始碼」跟「event.db」兩份、必定會漏（8/22改期出包就是這樣）。做法：events表擴充欄位、新增`/admin/sessions`管理頁（新增/編輯/刪除/取消，有報名不給刪）、`bigtree_publish.py`一鍵發佈（資料庫→網頁→git→Netlify）、**教練本人按發佈不需AI再確認**。commit`bde5ae160`。
+
+### 4. 🔴🔴 一鍵發佈踩雷2次，最終用「跟成功樣本diff」抓到真因
+教練首次使用就連續失敗2次、額度白扣2次。第一次誤診為zip中文檔名UTF-8旗標問題（改用Python zipfile打包）；第二次拿08-22實測成功的zip逐項比對，才發現真因是**缺少目錄項**（zipfile自行走訪檔案不會寫目錄項，Netlify解壓需要），改回`git archive HEAD`+系統`zip`指令，並加上`_wait_until_live()`輪詢真正state=ready才算成功（原本誤把HTTP 200當成功）。commit`7a096531b`→`99ceb9cf5`，教訓寫入`feedback_netlify_headers_content_type.md`第7條：**有已知成功樣本時先diff，不要靠單一可疑現象推論**。
+
+### 5. 🔧 LINE群發「發送失敗」查證：非bug，是官方帳號月額度用完
+查證`@qaw8118h`(event-signup專用LINE帳號，跟龍蝦小助教是不同帳號)本月200則免費額度用滿(用LINE quota API確認)。`/admin/notify`新增即時額度顯示+「未綁定名單一鍵複製連結」功能，讓教練能繞過額度限制用簡訊等管道接觸8/21+8/22兩場49人中29位未綁定LINE的人。commit`b3a6900d9`。
+
+### 6. 🎯 「掃碼時強調一定要發訊息」四點補強
+教練提出解法後，查現有4個觸點（2張現場立牌+2個掃碼後網頁）全部沒有明確講出「LINE打開後還要自己按傳送」，線上報名頁按鈕文案「一鍵傳送」甚至可能誤導。已全部加上紅底警語，thanks.html文案同步修正。**待辦**：已印過的舊版立牌沒有新警語，需教練決定是否重印。commit`0753e0e41`。
+
+## 📋 下一場直接開工任務
+- **現場立牌是否重印**：詢問教練`qr/wheel-print.html`+`qr/checkin-print.html`的新警語版本要不要重新列印替換現場舊立牌
+- **LINE推播額度**：約9/1重置，屆時可針對8/21+8/22未綁定的29人做精準補發提醒
+- **大樹小講後台擴充**：教練表態長期要「所有活動都歸後台管理」，`ai-fit`這類單一活動微站尚未納入`site`欄位體系
+- 承接舊待辦：ezPay「38人待問清單」剩8人資料待補齊（見主表）、bni-chapters「真誠分會」架構問題(擱置中)
+
+## 🔑 本場關鍵檔案索引
+- `event-signup/bigtree_publish.py`：一鍵發佈核心邏輯，含兩次修好的打包+輪詢驗證機制
+- `event-signup/templates/sessions.html`+`_session_card.html`：場次管理後台頁面
+- `event-signup/templates/notify.html`：未綁定名單+額度顯示
+- `event-signup/qr/wheel-print.html`+`checkin-print.html`、`templates/slides.html`+`thanks.html`：四點警語補強
+- `scripts/session_end_auto_push.sh`：新增github_repos全域unpushed commit自動補推
+- 記憶：`feedback_netlify_headers_content_type.md`第7條、`reference_event_line_oa_push_quota.md`、`project_bigtree_session_admin_backend_2026-08-23.md`
 
 ---
 
