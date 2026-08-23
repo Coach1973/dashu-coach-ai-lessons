@@ -9,7 +9,7 @@
     "phone": "",
     "email": "bymyway7@gmail.com",
     "website": "https://www.bymyway.com",
-    "lineUrl": "https://line.me/R/ti/p/@qaw8118h"
+    "lineUrl": "https://lin.ee/ptaJ8kM"
   },
   "businessIdentity": {
     "oneLinePositioning": "26年企業培訓資歷、1.5萬位老闆實戰經驗，用三歲小孩都聽得懂的話講出深刻的人生道理；近年更以親身3個月AI實戰歷程打造「AI導入教練」新定位",
@@ -74,9 +74,18 @@
     },
     {
       "name": "企業內訓／團隊組建／演講訓練",
-      "description": "25年以上企業培訓資歷，涵蓋團隊組建與演講訓練",
+      "description": "25年以上企業培訓資歷，涵蓋團隊組建與演講訓練，依需求客製時數",
       "targetCustomer": "企業內訓需求方、學校、社團單位",
-      "priceRange": "",
+      "priceRange": "1小時新台幣10,000元",
+      "salesAngle": "",
+      "commonObjections": [],
+      "recommendedResponse": ""
+    },
+    {
+      "name": "公開課程",
+      "description": "對外公開招生的課程/工作坊，依課程內容與時數分不同價位",
+      "targetCustomer": "一般大眾、企業主管、創業者",
+      "priceRange": "新台幣6,800元／8,800元／13,900元（依課程而定）",
       "salesAngle": "",
       "commonObjections": [],
       "recommendedResponse": ""
@@ -112,18 +121,24 @@
       "長期經營",
       "暫緩"
     ],
-    "classificationRules": [],
+    "classificationRules": [
+      {
+        "condition": "名片顯示可辨識的專業/產業別",
+        "tag": "依名片上的專業類別分類（如：企業主管、講師、業務、教育、AI/科技、BNI會員等）",
+        "nextAction": "歸類後保留聯絡方式，無固定跟進排程"
+      }
+    ],
     "followUpPlan": {
-      "within24Hours": "",
-      "within3Days": "",
-      "within7Days": "",
-      "within30Days": "",
-      "noResponse": ""
+      "within24Hours": "無固定排程，視實際需要再主動聯繫",
+      "within3Days": "無固定排程，視實際需要再主動聯繫",
+      "within7Days": "無固定排程，視實際需要再主動聯繫",
+      "within30Days": "無固定排程，視實際需要再主動聯繫",
+      "noResponse": "不特別催促，需要用到再聯繫"
     }
   },
   "messagePlaybook": {
     "selfIntroduction": "我是大樹教練，用三歲小孩都聽得懂的話，講26年來遇過的1.5萬位老闆的真實故事。（草稿，待教練確認語氣）",
-    "firstContactMessage": "",
+    "firstContactMessage": "很高興認識您！我是大樹教練，做企業培訓、團隊組建已經26年了，最近也在做AI導入教練。如果您在溝通表達、團隊經營，或想試試用AI幫自己省時間上有想法，歡迎隨時找我聊聊。（草稿，待教練確認）",
     "followUpMessage": "",
     "eventInvitationMessage": "",
     "couponMessage": "",
@@ -133,13 +148,21 @@
   },
   "dailyAssistantRules": {
     "morningSuggestions": [],
-    "cardScanSuggestions": [],
+    "cardScanSuggestions": [
+      "有新名片加入時主動提醒"
+    ],
     "followUpSuggestions": [],
-    "salesOpportunitySignals": [],
+    "salesOpportunitySignals": [
+      "判斷此人是否適合納入商務團隊聯絡名單"
+    ],
     "riskSignals": []
   },
   "complianceAndPrivacy": {
-    "restrictedClaims": [],
+    "restrictedClaims": [
+      "不能保證成交",
+      "不能保證一定賺錢",
+      "不能對特定結果做任何保證性的承諾"
+    ],
     "sensitiveDataRules": [
       "不可提供身分證字號、銀行帳號、密碼、API Key"
     ],
@@ -147,19 +170,14 @@
     "publicContentAllowed": true
   },
   "uploadReview": {
-    "isComplete": false,
+    "isComplete": true,
     "missingFields": [
-      "ownerProfile.phone",
-      "productsAndOffers[].priceRange（除BNI培訓外）",
-      "targetCustomers.lowFitCustomers",
-      "targetCustomers.qualificationQuestions",
-      "crmRules.classificationRules",
-      "crmRules.followUpPlan（4個時間點）",
-      "messagePlaybook（除自我介紹外6項）",
-      "dailyAssistantRules（全部4項）",
-      "complianceAndPrivacy.restrictedClaims",
-      "complianceAndPrivacy.industryComplianceNotes"
+      "messagePlaybook.followUpMessage/eventInvitationMessage/couponMessage/oneOnOneInvitationMessage/closingMessage（選填，實際使用時可再補）",
+      "messagePlaybook.doNotSay（選填）",
+      "dailyAssistantRules.morningSuggestions/followUpSuggestions/riskSignals（選填）",
+      "complianceAndPrivacy.industryComplianceNotes（選填）",
+      "productsAndOffers「大樹小講」「海餅乾俱樂部」兩項的priceRange（教練說明這兩項性質特殊，暫未提供收費標準）"
     ],
-    "recommendedNextStep": "教練確認/補充上述missingFields欄位後再上傳系統"
+    "recommendedNextStep": "核心必填欄位已齊備，可先上傳測試系統；上述選填項可日後系統實際使用時再逐步補上"
   }
 }
