@@ -13,6 +13,8 @@ import json
 import os
 import re
 import subprocess
+import tempfile
+import zipfile
 from datetime import date, datetime
 from pathlib import Path
 
@@ -113,23 +115,80 @@ def _set_published_hash(conn, value: str) -> None:
     conn.commit()
 
 
+def fetch_live_sessions(timeout: int = 6) -> dict | None:
+    """抓目前官網上真正在跑的場次。抓不到（沒網路等）回 None，不讓後台開不起來。"""
+    import urllib.request
+    try:
+        html = urllib.request.urlopen("https://bigtree-tw.netlify.app/", timeout=timeout).read().decode("utf-8")
+    except Exception:
+        return None
+    m = re.search(r"const SESSION_DATES = \[([\s\S]*?)\n\];", html)
+    if not m:
+        return None
+    live = {}
+    for date_, slot, topic, rest in re.findall(
+            r"\{date:'([^']*)'.*?slots:\['([^']*)'\].*?topic:'([^']*)'(.*?)\}", m.group(1)):
+        slug_m = re.search(r"slug:'([^']*)'", rest)
+        venue_m = re.search(r"venue:'([^']*)'", rest)
+        live[(date_, slot)] = {"topic": topic,
+                               "slug": slug_m.group(1) if slug_m else None,
+                               "venue": venue_m.group(1) if venue_m else None}
+    return live
+
+
 def diff_summary(conn) -> dict:
-    """發佈前給教練看的摘要。
+    """發佈前給教練看的摘要：按下去到底會發生什麼事。
 
     「還沒發佈」要比對的是『線上官網』而不是本機檔案——本機檔案先被改好、
     但還沒部署上去的情況是存在的（例如 AI 先改好檔案），若拿本機檔案比，
     會誤判成「已經一致」，教練按了發佈也不會有動作，官網就一直停在舊版。
-    改成記錄「上次真正部署成功時的內容指紋」來比對。
+
+    另外，教練要看的是「這次會變動什麼」，不是「總共幾場」——只報總數會被
+    理解成「要改這麼多場」（2026-08-23 教練當場點出這個誤解），所以這裡直接
+    跟線上內容逐場比對，算出「下架／新增／內容有改／只是順序調整」。
     """
     rows = read_sessions(conn)
-    return {
+    result = {
         "sessions": [
             {"date": r["event_date"], "label": make_label(r["event_date"]),
              "slot": r["slot_key"], "topic": r["name"], "venue": r["venue"], "slug": r["slug"]}
             for r in rows
         ],
         "has_changes": _content_hash(rows) != _get_published_hash(conn),
+        "removed": [], "added": [], "modified": [], "live_ok": False, "reordered": False,
     }
+
+    live = fetch_live_sessions()
+    if live is None:
+        return result
+    result["live_ok"] = True
+
+    new = {(r["event_date"], r["slot_key"]): r for r in rows}
+    for key in live.keys() - new.keys():
+        result["removed"].append({"label": make_label(key[0]), "slot": key[1],
+                                  "topic": live[key]["topic"]})
+    for key in new.keys() - live.keys():
+        result["added"].append({"label": make_label(key[0]), "slot": key[1],
+                                "topic": new[key]["name"]})
+    for key in live.keys() & new.keys():
+        r, l = new[key], live[key]
+        diffs = []
+        if r["name"] != l["topic"]:
+            diffs.append(f"主題：{l['topic']} → {r['name']}")
+        if (r["venue"] or None) != (l["venue"] or None):
+            diffs.append(f"場地：{l['venue'] or '未填'} → {r['venue'] or '未填'}")
+        if (r["slug"] or None) != (l["slug"] or None):
+            diffs.append(f"報名識別碼：{l['slug'] or '（原本沒有，報名寫不進資料庫）'} → {r['slug']}")
+        if diffs:
+            result["modified"].append({"label": make_label(key[0]), "slot": key[1], "diffs": diffs})
+
+    # 內容都沒動，但排序不同 → 這次發佈的作用只是把順序排正確
+    live_order = [k for k in live.keys()]
+    new_order = sorted(new.keys(), key=lambda k: (k[0], new[k]["start_time"] or ""))
+    common = [k for k in live_order if k in new.keys()]
+    expected = [k for k in new_order if k in live.keys()]
+    result["reordered"] = common != expected
+    return result
 
 
 def _netlify_token() -> str | None:
@@ -200,14 +259,25 @@ def publish(conn, message: str = "") -> dict:
         return {"ok": False, "step": "部署 Netlify",
                 "message": "找不到 Netlify 金鑰，網頁已存進 GitHub，但沒有部署上線。"}
 
-    # 只打包「已經 commit 的內容」（git archive HEAD），不是工作區現況——
-    # 否則同一個 repo 裡其他還沒確認的修改（例如改到一半的別站頁面）會被一起送上線。
+    # 打包規則（兩個都是血淚換來的，不要為了省事改掉任何一個）：
+    # 1. 內容只取「已 commit 的版本」(git archive HEAD)，不是工作區現況，
+    #    否則同一個 repo 裡其他還沒確認的修改會被一起送上線。
+    # 2. 但**不能**直接用 `git archive --format=zip`——它不會替非 ASCII 檔名設 UTF-8 旗標，
+    #    這個站的 archive/ 底下全是中文資料夾名，Netlify 會解壓失敗，
+    #    部署停在 uploaded 永遠不會 ready（2026-08-13 踩過一次、2026-08-23 又踩一次）。
+    #    先解到暫存資料夾，再用 Python zipfile 打包（會正確設 UTF-8 旗標）。
     zip_path = Path("/tmp/bigtree_publish.zip")
     if zip_path.exists():
         zip_path.unlink()
-    with open(zip_path, "wb") as f:
-        subprocess.run(["git", "archive", "--format=zip", "HEAD"], cwd=BIGTREE_REPO,
-                       check=True, stdout=f, timeout=120)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tar = subprocess.Popen(["git", "archive", "HEAD"], cwd=BIGTREE_REPO, stdout=subprocess.PIPE)
+        subprocess.run(["tar", "-x", "-C", tmpdir], stdin=tar.stdout, check=True, timeout=180)
+        tar.wait()
+        root = Path(tmpdir)
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+            for src in sorted(root.rglob("*")):
+                if src.is_file():
+                    zf.write(src, str(src.relative_to(root)))  # 相對路徑一律正斜線
 
     import urllib.request
     req = urllib.request.Request(
@@ -223,7 +293,37 @@ def publish(conn, message: str = "") -> dict:
                 "message": f"網頁已存進 GitHub，但上線失敗：{e}"}
 
     deploy_id = result.get("id", "")
-    _set_published_hash(conn, target_hash)  # 部署成功才記錄，失敗時下次仍會顯示「待發佈」
-    remaining = _bump_quota(deploy_id, commit_msg)
+    # Netlify 回 200 只代表「檔案收到了」，不代表已經上線——
+    # 壓縮檔如果解不開，狀態會一直停在 uploaded 永遠不會 ready。
+    # 2026-08-23 就是把 200 當成功，畫面報「已發佈」但官網其實還是舊版。
+    # 一定要等到真的 ready 才算數。
+    state = _wait_until_live(deploy_id, token)
+    remaining = _bump_quota(deploy_id, commit_msg)  # 失敗的部署 Netlify 一樣計費，照扣
+    if state != "ready":
+        return {"ok": False, "step": "部署 Netlify", "remaining": remaining,
+                "message": f"檔案已上傳但官網沒有更新成功（狀態：{state}）。"
+                           f"這次額度仍會被計算，請找軍師查原因，不要重複按。"}
+
+    _set_published_hash(conn, target_hash)  # 只有真的上線才記錄，否則下次仍顯示「待發佈」
     return {"ok": True, "deploy_id": deploy_id, "remaining": remaining,
             "message": f"已發佈上線（{len(rows)} 場）。"}
+
+
+def _wait_until_live(deploy_id: str, token: str, timeout: int = 120) -> str:
+    """等 Netlify 真的把這次部署發佈出去，回傳最後狀態（ready 才是成功）。"""
+    import time
+    import urllib.request
+    url = f"https://api.netlify.com/api/v1/sites/{NETLIFY_SITE_ID}/deploys/{deploy_id}"
+    deadline = time.time() + timeout
+    state = "unknown"
+    while time.time() < deadline:
+        try:
+            req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                state = json.loads(resp.read()).get("state", "unknown")
+        except Exception:
+            state = "查詢失敗"
+        if state in ("ready", "error"):
+            return state
+        time.sleep(4)
+    return f"{state}（等待逾時）"

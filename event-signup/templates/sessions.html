@@ -26,6 +26,12 @@
   .publish-box .state { font-size:19px; font-weight:900; margin-bottom:14px; }
   .publish-box .state.dirty { color:var(--gold); }
   .publish-box .state.clean { color:rgba(255,255,255,.55); }
+  .changes { margin-bottom:14px; }
+  .chg { font-size:17px; font-weight:700; line-height:1.9; }
+  .chg-out { color:#ffb3b3; }
+  .chg-in { color:#7ff0ad; }
+  .chg-mod { color:var(--gold); }
+  .chg .why { font-size:14px; font-weight:500; color:rgba(255,255,255,.5); }
   .publish-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
   .publish-row input[type=text] { flex:1; min-width:220px; padding:12px; font-size:16px; border-radius:8px;
     border:1px solid var(--line); background:#0a0a0a; color:#fff; font-family:inherit; }
@@ -81,11 +87,34 @@
     {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
 
     <div class="publish-box">
-      <div class="label">官網發佈狀態</div>
-      {% if has_changes %}
-        <div class="state dirty">● 有 {{ live_count }} 場要上架，尚未發佈到官網</div>
-      {% else %}
+      <div class="label">按下發佈後，官網會有這些變動</div>
+      {% set s = summary %}
+      {% if not s.has_changes %}
         <div class="state clean">✓ 官網目前與這裡一致，沒有待發佈的異動</div>
+      {% elif not s.live_ok %}
+        <div class="state dirty">● 有待發佈的異動（暫時連不上官網，無法列出詳細差異）</div>
+      {% elif not (s.removed or s.added or s.modified or s.reordered) %}
+        <div class="state dirty">● 有待發佈的異動</div>
+      {% else %}
+        <div class="changes">
+          {% for r in s.removed %}
+            <div class="chg chg-out">－ 下架　{{ r.label }} {{ r.slot }}　{{ r.topic }}<span class="why">（活動已過，自動下架）</span></div>
+          {% endfor %}
+          {% for a in s.added %}
+            <div class="chg chg-in">＋ 新增　{{ a.label }} {{ a.slot }}　{{ a.topic }}</div>
+          {% endfor %}
+          {% for m in s.modified %}
+            <div class="chg chg-mod">～ 修改　{{ m.label }} {{ m.slot }}
+              {% for d in m.diffs %}<div class="why" style="margin-left:22px">{{ d }}</div>{% endfor %}
+            </div>
+          {% endfor %}
+          {% if s.reordered %}
+            <div class="chg chg-mod">↕ 重新排序　場次改成依日期先後顯示<span class="why">（其他場次內容不動）</span></div>
+          {% endif %}
+        </div>
+        <div class="state dirty" style="font-size:16px;margin-top:12px">
+          發佈後官網共 {{ live_count }} 場（上面列出的才是這次的變動）
+        </div>
       {% endif %}
       <form method="post" action="/admin/sessions/publish" class="publish-row"
             onsubmit="return confirm('確定要把目前的場次發佈到官網嗎？\n\n按下確定後會直接上線，不需要再經過任何人確認。');">

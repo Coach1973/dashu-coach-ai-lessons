@@ -715,7 +715,7 @@ def admin_sessions():
     conn.close()
     return render_template(
         "sessions.html", sessions=sessions, slot_choices=bp.SLOT_CHOICES,
-        has_changes=summary["has_changes"], live_count=len(summary["sessions"]),
+        summary=summary, live_count=len(summary["sessions"]),
         quota=bp.quota_remaining(), today=date.today().isoformat(),
         notice=request.args.get("notice", ""), error=request.args.get("error", ""),
     )
