@@ -27,3 +27,6 @@ namecard-db/paddleocr_venv/
 # 跨機操作通行證只限本機單次授權，禁止同步到其他機器（2026-07-13）
 state/CROSS_MACHINE_APPROVED
 ESUN_202606.pdf
+
+# 一鍵發佈用的 Netlify 金鑰等機密，禁止納入版控（2026-08-23）
+credentials/

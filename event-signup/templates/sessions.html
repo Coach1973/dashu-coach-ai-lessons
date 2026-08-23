@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大樹小講場次管理｜大樹教練活動系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:28px 16px 80px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:26px; font-weight:900; margin-bottom:4px; }
+  h1 span { color:var(--gold); }
+  .lead { font-size:17px; color:rgba(255,255,255,.7); margin-bottom:22px; line-height:1.7; }
+  .logout { display:inline-block; text-decoration:none; padding:11px 20px; float:right;
+    font-size:16px; font-weight:700; color:rgba(255,255,255,.6); background:#1c1c1c;
+    border:1px solid var(--line); border-radius:8px; }
+  .msg { padding:14px 18px; border-radius:10px; font-size:17px; font-weight:700; margin-bottom:20px; line-height:1.7; }
+  .msg.ok { background:rgba(6,199,85,.12); border:1px solid rgba(6,199,85,.5); color:#7ff0ad; }
+  .msg.err { background:rgba(255,107,107,.12); border:1px solid rgba(255,107,107,.5); color:#ffb3b3; }
+
+  .publish-box { background:var(--dark2); border:1px solid var(--line); border-radius:12px;
+    padding:20px; margin-bottom:26px; }
+  .publish-box .label { font-size:15px; color:rgba(255,255,255,.6); font-weight:700; margin-bottom:6px; }
+  .publish-box .state { font-size:19px; font-weight:900; margin-bottom:14px; }
+  .publish-box .state.dirty { color:var(--gold); }
+  .publish-box .state.clean { color:rgba(255,255,255,.55); }
+  .publish-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .publish-row input[type=text] { flex:1; min-width:220px; padding:12px; font-size:16px; border-radius:8px;
+    border:1px solid var(--line); background:#0a0a0a; color:#fff; font-family:inherit; }
+  .btn { padding:13px 24px; font-size:17px; font-weight:900; border-radius:8px; border:none;
+    cursor:pointer; font-family:inherit; }
+  .btn-gold { background:var(--gold); color:var(--dark); }
+  .btn-green { background:#06C755; color:#fff; }
+  .btn-sm { padding:8px 14px; font-size:15px; font-weight:700; border-radius:6px; }
+  .btn-ghost { background:#1c1c1c; color:rgba(255,255,255,.8); border:1px solid var(--line); }
+  .btn-danger { background:#3a1414; color:#ffb3b3; border:1px solid rgba(255,107,107,.4); }
+  .quota { font-size:15px; color:rgba(255,255,255,.5); margin-top:12px; }
+
+  h2 { font-size:20px; font-weight:900; color:var(--gold); margin:30px 0 12px; }
+  .card { background:var(--dark2); border:1px solid rgba(255,255,255,.1); border-radius:12px;
+    padding:18px; margin-bottom:12px; }
+  .card.past { opacity:.55; }
+  .card.cancelled { border-color:rgba(255,107,107,.4); }
+  .card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+  .card-date { font-size:21px; font-weight:900; }
+  .card-topic { font-size:17px; color:var(--gold); font-weight:700; margin:4px 0 8px; }
+  .card-meta { font-size:15px; color:rgba(255,255,255,.65); line-height:1.8; }
+  .tag { display:inline-block; padding:3px 10px; border-radius:999px; font-size:14px; font-weight:700; }
+  .tag-active { background:rgba(6,199,85,.15); color:#7ff0ad; }
+  .tag-cancelled { background:rgba(255,107,107,.15); color:#ffb3b3; }
+  .tag-draft { background:rgba(255,255,255,.1); color:rgba(255,255,255,.6); }
+  .tag-past { background:rgba(255,255,255,.08); color:rgba(255,255,255,.5); }
+  .card-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .card-actions form { display:inline; }
+
+  details.editor { margin-top:14px; }
+  details.editor summary { cursor:pointer; font-size:16px; font-weight:700; color:var(--gold); padding:6px 0; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+  .grid .full { grid-column:1 / -1; }
+  .fld label { display:block; font-size:14px; color:rgba(255,255,255,.6); font-weight:700; margin-bottom:5px; }
+  .fld input, .fld select { width:100%; padding:11px; font-size:16px; border-radius:8px;
+    border:1px solid var(--line); background:#0a0a0a; color:#fff; font-family:inherit; }
+  .fld .hint { font-size:13px; color:rgba(255,255,255,.4); margin-top:4px; }
+  .empty { padding:30px 0; text-align:center; color:rgba(255,255,255,.45); font-size:17px; }
+  @media (max-width:640px){ .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  {% include "_presenter_nav.html" %}
+  <div class="wrap">
+    <a class="logout" href="/admin">← 回來賓名單</a>
+    <h1>大樹小講<span>｜場次管理</span></h1>
+    <p class="lead">
+      在這裡改場次，官網跟簽到系統會吃到同一份資料，不會再有兩邊對不上的問題。<br>
+      <strong style="color:var(--gold)">活動日期過了就會自動從官網收起來</strong>，不用手動關閉；臨時取消的才需要按「設為已取消」。
+    </p>
+
+    {% if notice %}<div class="msg ok">{{ notice }}</div>{% endif %}
+    {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
+
+    <div class="publish-box">
+      <div class="label">官網發佈狀態</div>
+      {% if has_changes %}
+        <div class="state dirty">● 有 {{ live_count }} 場要上架，尚未發佈到官網</div>
+      {% else %}
+        <div class="state clean">✓ 官網目前與這裡一致，沒有待發佈的異動</div>
+      {% endif %}
+      <form method="post" action="/admin/sessions/publish" class="publish-row"
+            onsubmit="return confirm('確定要把目前的場次發佈到官網嗎？\n\n按下確定後會直接上線，不需要再經過任何人確認。');">
+        <input type="text" name="message" placeholder="這次改了什麼？（選填，會記在版本紀錄裡）">
+        <button class="btn btn-green" type="submit">🚀 一鍵發佈到官網</button>
+      </form>
+      <div class="quota">
+        發佈後約 1 分鐘官網生效。可以一次改好幾場再按發佈，比較省額度。
+        {% if quota is not none %}目前剩餘發佈額度約 <strong>{{ quota }}</strong> 次。{% endif %}
+      </div>
+    </div>
+
+    <details class="editor" style="margin-bottom:24px">
+      <summary style="font-size:18px">＋ 新增一場活動</summary>
+      <form method="post" action="/admin/sessions/save">
+        <div class="grid">
+          <div class="fld"><label>日期</label><input type="date" name="event_date" required value="{{ today }}"></div>
+          <div class="fld"><label>時段</label>
+            <select name="slot_key">
+              {% for s in slot_choices %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+            </select>
+            <div class="hint">時段決定官網顯示的起訖時間</div>
+          </div>
+          <div class="fld full"><label>主題</label><input type="text" name="name" required placeholder="例：零基礎學 AI，起步比較快"></div>
+          <div class="fld"><label>地區標籤</label><input type="text" name="location" placeholder="例：台南場"></div>
+          <div class="fld"><label>場地名稱</label><input type="text" name="venue" placeholder="例：台南安平維悅酒店"></div>
+          <div class="fld full"><label>地址</label><input type="text" name="address" placeholder="例：台南市安平區慶平路539號"></div>
+          <div class="fld full"><label>費用／座位／交通備註</label>
+            <input type="text" name="transport" placeholder="例：費用1人200元｜座位50人｜附點心飲料">
+            <div class="hint">用「｜」分隔，會原樣顯示在官網場次卡片上</div>
+          </div>
+          <div class="fld"><label>網址短名</label><input type="text" name="slug" required placeholder="例：bigtree-0922-day">
+            <div class="hint">報名資料靠這個對應，建好之後盡量不要改</div>
+          </div>
+          <div class="fld"><label>狀態</label>
+            <select name="status"><option value="active">進行中</option><option value="draft">草稿（不對外）</option></select>
+          </div>
+        </div>
+        <div style="margin-top:14px"><button class="btn btn-gold" type="submit">新增這場活動</button></div>
+      </form>
+    </details>
+
+    <h2>即將舉辦</h2>
+    {% set upcoming = sessions | rejectattr('is_past') | list %}
+    {% if not upcoming %}<div class="empty">目前沒有即將舉辦的場次</div>{% endif %}
+    {% for e in upcoming %}
+      {% include "_session_card.html" %}
+    {% endfor %}
+
+    <h2>已結束（官網已自動收起）</h2>
+    {% set past = sessions | selectattr('is_past') | list %}
+    {% if not past %}<div class="empty">還沒有結束的場次</div>{% endif %}
+    {% for e in past %}
+      {% include "_session_card.html" %}
+    {% endfor %}
+  </div>
+</body>
+</html>

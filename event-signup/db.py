@@ -250,3 +250,78 @@ def upsert_signup(conn: sqlite3.Connection, event_id: int, name: str, phone: str
         )
     conn.commit()
     return "repeat" if dup else "new"
+
+
+# ---- 大樹小講場次管理（2026-08-23 教練交辦：場次改資料庫當唯一真相源，後台自己管） ----
+
+def list_site_sessions(conn: sqlite3.Connection, site: str = "bigtree"):
+    """後台列表用：該站台全部場次，未來的排前面、過去的排後面（各自依日期排序）。"""
+    return conn.execute(
+        """SELECT e.*, COUNT(s.id) AS signup_count,
+                  CASE WHEN e.event_date < date('now','localtime') THEN 1 ELSE 0 END AS is_past
+           FROM events e LEFT JOIN signups s ON s.event_id = e.id
+           WHERE e.site = ?
+           GROUP BY e.id
+           ORDER BY is_past, e.event_date, COALESCE(e.start_time,'')""",
+        (site,),
+    ).fetchall()
+
+
+def get_session(conn: sqlite3.Connection, event_id: int):
+    return conn.execute("SELECT * FROM events WHERE id = ?", (event_id,)).fetchone()
+
+
+def save_session(conn: sqlite3.Connection, data: dict, event_id: int | None = None) -> tuple[bool, str]:
+    """新增或更新一場活動。回傳 (成功與否, 訊息)。"""
+    required = ("slug", "name", "event_date")
+    for key in required:
+        if not (data.get(key) or "").strip():
+            return False, "網址短名、主題、日期都要填。"
+
+    fields = ("slug", "name", "event_date", "start_time", "slot_key",
+              "location", "venue", "address", "transport", "status", "site")
+    vals = {k: (data.get(k) or "").strip() or None for k in fields}
+    vals["site"] = vals["site"] or "bigtree"
+    vals["status"] = vals["status"] or "active"
+
+    clash = conn.execute(
+        "SELECT id FROM events WHERE slug = ? AND id IS NOT ?", (vals["slug"], event_id)
+    ).fetchone()
+    if clash:
+        return False, f"網址短名「{vals['slug']}」已經被其他場次用了，請換一個。"
+
+    if event_id:
+        conn.execute(
+            f"UPDATE events SET {', '.join(f'{k}=?' for k in fields)} WHERE id = ?",
+            (*vals.values(), event_id),
+        )
+        msg = "已更新這場活動。"
+    else:
+        conn.execute(
+            f"INSERT INTO events ({', '.join(fields)}) VALUES ({', '.join('?' * len(fields))})",
+            tuple(vals.values()),
+        )
+        msg = "已新增一場活動。"
+    conn.commit()
+    return True, msg
+
+
+def set_session_status(conn: sqlite3.Connection, event_id: int, status: str) -> None:
+    if status not in ("active", "cancelled", "draft"):
+        return
+    conn.execute("UPDATE events SET status = ? WHERE id = ?", (status, event_id))
+    conn.commit()
+
+
+def delete_session(conn: sqlite3.Connection, event_id: int) -> tuple[bool, str]:
+    """刪除場次。已經有人報名的不給刪（避免報名紀錄變成孤兒），改建議設為已取消。"""
+    row = conn.execute(
+        "SELECT COUNT(*) AS c FROM signups WHERE event_id = ?", (event_id,)
+    ).fetchone()
+    if row["c"]:
+        return False, f"這場已經有 {row['c']} 筆報名紀錄，不能直接刪除。請改用「設為已取消」，紀錄才不會不見。"
+    conn.execute("DELETE FROM wheel_prizes WHERE event_id = ?", (event_id,))
+    conn.execute("DELETE FROM wheel_winners WHERE event_id = ?", (event_id,))
+    conn.execute("DELETE FROM events WHERE id = ?", (event_id,))
+    conn.commit()
+    return True, "已刪除這場活動。"

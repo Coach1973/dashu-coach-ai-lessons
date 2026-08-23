@@ -12,7 +12,7 @@ import os
 import re
 import urllib.error
 import urllib.request
-from datetime import datetime
+from datetime import date, datetime
 from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
@@ -699,6 +699,74 @@ def export_csv():
     out = "﻿" + buf.getvalue()  # BOM讓Excel直接開不亂碼
     return Response(out, mimetype="text/csv",
                     headers={"Content-Disposition": "attachment; filename=attendees.csv"})
+
+
+# ---- 大樹小講場次管理（2026-08-23 教練交辦：以前改場次都要透過AI改網頁原始碼，
+#      資料庫與網頁兩份各自維護必定會漏。改成資料庫當唯一真相源＋後台一鍵發佈） ----
+
+@app.route("/admin/sessions")
+def admin_sessions():
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    import bigtree_publish as bp
+    conn = db.get_conn()
+    sessions = db.list_site_sessions(conn)
+    summary = bp.diff_summary(conn)
+    conn.close()
+    return render_template(
+        "sessions.html", sessions=sessions, slot_choices=bp.SLOT_CHOICES,
+        has_changes=summary["has_changes"], live_count=len(summary["sessions"]),
+        quota=bp.quota_remaining(), today=date.today().isoformat(),
+        notice=request.args.get("notice", ""), error=request.args.get("error", ""),
+    )
+
+
+@app.route("/admin/sessions/save", methods=["POST"])
+def admin_sessions_save():
+    if not _logged_in():
+        return redirect(url_for("admin_login"))
+    raw_id = request.form.get("event_id", "").strip()
+    conn = db.get_conn()
+    ok, msg = db.save_session(conn, request.form.to_dict(), int(raw_id) if raw_id else None)
+    conn.close()
+    return redirect(url_for("admin_sessions", **({"notice": msg} if ok else {"error": msg})))
+
+
+@app.route("/admin/sessions/status", methods=["POST"])
+def admin_sessions_status():
+    if not _logged_in():
+        return redirect(url_for("admin_login"))
+    conn = db.get_conn()
+    db.set_session_status(conn, int(request.form["event_id"]), request.form.get("status", "active"))
+    conn.close()
+    return redirect(url_for("admin_sessions", notice="已更新狀態。記得按「發佈到官網」才會對外生效。"))
+
+
+@app.route("/admin/sessions/delete", methods=["POST"])
+def admin_sessions_delete():
+    if not _logged_in():
+        return redirect(url_for("admin_login"))
+    conn = db.get_conn()
+    ok, msg = db.delete_session(conn, int(request.form["event_id"]))
+    conn.close()
+    return redirect(url_for("admin_sessions", **({"notice": msg} if ok else {"error": msg})))
+
+
+@app.route("/admin/sessions/publish", methods=["POST"])
+def admin_sessions_publish():
+    """教練本人按下按鈕＝本人授權，不需要再經過任何確認流程。"""
+    if not _logged_in():
+        return redirect(url_for("admin_login"))
+    import bigtree_publish as bp
+    conn = db.get_conn()
+    result = bp.publish(conn, request.form.get("message", ""))
+    conn.close()
+    if result["ok"]:
+        left = f"，剩餘額度約 {result['remaining']} 次" if result.get("remaining") is not None else ""
+        return redirect(url_for("admin_sessions",
+                                notice=f"✅ {result['message']}官網已更新{left}。"))
+    return redirect(url_for("admin_sessions",
+                            error=f"（{result['step']}）{result['message']}"))
 
 
 if __name__ == "__main__":

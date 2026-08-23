@@ -1,0 +1,80 @@
+{# 單一場次卡片，upcoming／past 兩區共用；變數 e 由外層 for 迴圈提供 #}
+<div class="card {% if e.is_past %}past{% endif %} {% if e.status == 'cancelled' %}cancelled{% endif %}">
+  <div class="card-head">
+    <div>
+      <div class="card-date">
+        {{ e.event_date }}{% if e.slot_key %}　<span style="font-size:17px;color:rgba(255,255,255,.7)">{{ e.slot_key }}</span>{% endif %}
+      </div>
+      <div class="card-topic">{{ e.name }}</div>
+      <div class="card-meta">
+        {% if e.venue or e.address %}📍 {{ e.venue or '' }}{% if e.venue and e.address %}｜{% endif %}{{ e.address or '' }}<br>{% endif %}
+        {% if e.transport %}💬 {{ e.transport }}<br>{% endif %}
+        🔗 {{ e.slug }}
+        {% if e.signup_count %}　👥 已報名 {{ e.signup_count }} 人{% endif %}
+      </div>
+    </div>
+    <div>
+      {% if e.is_past %}<span class="tag tag-past">已結束</span>
+      {% elif e.status == 'cancelled' %}<span class="tag tag-cancelled">已取消</span>
+      {% elif e.status == 'draft' %}<span class="tag tag-draft">草稿</span>
+      {% else %}<span class="tag tag-active">進行中</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="card-actions">
+    {% if not e.is_past %}
+      {% if e.status != 'cancelled' %}
+        <form method="post" action="/admin/sessions/status"
+              onsubmit="return confirm('確定把這場設為「已取消」嗎？官網會立刻不再顯示（發佈後生效），報名紀錄會保留。');">
+          <input type="hidden" name="event_id" value="{{ e.id }}">
+          <input type="hidden" name="status" value="cancelled">
+          <button class="btn btn-sm btn-ghost" type="submit">設為已取消</button>
+        </form>
+      {% else %}
+        <form method="post" action="/admin/sessions/status">
+          <input type="hidden" name="event_id" value="{{ e.id }}">
+          <input type="hidden" name="status" value="active">
+          <button class="btn btn-sm btn-ghost" type="submit">恢復為進行中</button>
+        </form>
+      {% endif %}
+    {% endif %}
+    <form method="post" action="/admin/sessions/delete"
+          onsubmit="return confirm('確定要刪除「{{ e.name }}」這場嗎？此動作無法復原。');">
+      <input type="hidden" name="event_id" value="{{ e.id }}">
+      <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+    </form>
+  </div>
+
+  <details class="editor">
+    <summary>✎ 編輯這場</summary>
+    <form method="post" action="/admin/sessions/save">
+      <input type="hidden" name="event_id" value="{{ e.id }}">
+      <div class="grid">
+        <div class="fld"><label>日期</label><input type="date" name="event_date" required value="{{ e.event_date }}"></div>
+        <div class="fld"><label>時段</label>
+          <select name="slot_key">
+            {% for s in slot_choices %}
+              <option value="{{ s }}" {% if e.slot_key == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="fld full"><label>主題</label><input type="text" name="name" required value="{{ e.name }}"></div>
+        <div class="fld"><label>地區標籤</label><input type="text" name="location" value="{{ e.location or '' }}"></div>
+        <div class="fld"><label>場地名稱</label><input type="text" name="venue" value="{{ e.venue or '' }}"></div>
+        <div class="fld full"><label>地址</label><input type="text" name="address" value="{{ e.address or '' }}"></div>
+        <div class="fld full"><label>費用／座位／交通備註</label><input type="text" name="transport" value="{{ e.transport or '' }}"></div>
+        <div class="fld"><label>網址短名</label><input type="text" name="slug" required value="{{ e.slug }}">
+          <div class="hint">已有報名資料時改這個會對不上，非必要別動</div>
+        </div>
+        <div class="fld"><label>狀態</label>
+          <select name="status">
+            <option value="active" {% if e.status == 'active' or not e.status %}selected{% endif %}>進行中</option>
+            <option value="cancelled" {% if e.status == 'cancelled' %}selected{% endif %}>已取消</option>
+            <option value="draft" {% if e.status == 'draft' %}selected{% endif %}>草稿（不對外）</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-gold" type="submit">儲存修改</button></div>
+    </form>
+  </details>
+</div>
