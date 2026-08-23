@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴🔴 查不到就自己想辦法查，禁止把工作轉嫁教練——凌晨3點搬運工事件(2026-08-24)](feedback_exhaust_own_tools_before_asking_coach.md) — computer-use開App/讀原始碼/自己發測試訊息，窮盡自己手段前不准請教練重做
+- [🔴🔴🔴 報名通知改走Telegram群組「活動報名即時通知」，LINE已拔除(2026-08-24)](reference_telegram_registration_notify_group.md) — LINE每則主動推播扣月配額200則；含新群組requireMention靜默忽略陷阱+接通SOP
+
 - [🔧 event-signup用LINE官方帳號@qaw8118h每月推播額度200則，用完不是bug(2026-08-23)](reference_event_line_oa_push_quota.md) — /admin/notify已內建即時額度顯示，先查額度再查程式碼
 - [🎯🎯 大樹小講場次管理後台上線：event.db成唯一真相源，教練可自行增修場次+一鍵發佈(2026-08-23)](project_bigtree_session_admin_backend_2026-08-23.md) — 改場次先問教練要不要自己改；AI要改請改資料庫別改網頁原始碼
 - [🔴🔴🔴 BNI大台南南區94人Email/電話資料庫位置+同音字近似字主動確認鐵律(2026-08-19)](feedback_bni_member_db_authoritative_source.md) — 查會員資料先看`bni_region_members_contact_2026-08-18.csv`；姓名對不上要主動提出近似字配對不猜不悶
