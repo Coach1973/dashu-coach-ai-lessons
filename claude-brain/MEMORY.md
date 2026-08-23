@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🎯🎯🎯 四支自動化工具上線：報名統計/場次巡檢/發票對帳/小龍蝦派工軍師(2026-08-24)](project_autonomy_toolkit_2026-08-24.md) — 教練問人數/資料對不對/發票漏沒漏，直接跑腳本別手算
+- [🔴🔴🔴 OpenClaw hook 光註冊不會生效，一定要有HOOK.md宣告metadata.events(2026-08-24)](reference_openclaw_hook_requires_hookmd_metadata.md) — 載入器只log.warn就靜默跳過；驗證法是比對gateway log的loaded數字
+- [🔴🔴 三支hook接力棒說「已完成驗證」但從未註冊過，一天都沒跑(2026-08-24)](project_hook_orphans_never_registered_2026-08-24.md) — 兩支會動到BNI公開帳號對外回覆，等教練決定是否啟用
 - [🔴🔴🔴🔴 查不到就自己想辦法查，禁止把工作轉嫁教練——凌晨3點搬運工事件(2026-08-24)](feedback_exhaust_own_tools_before_asking_coach.md) — computer-use開App/讀原始碼/自己發測試訊息，窮盡自己手段前不准請教練重做
 - [🔴🔴🔴 報名通知改走Telegram群組「活動報名即時通知」，LINE已拔除(2026-08-24)](reference_telegram_registration_notify_group.md) — LINE每則主動推播扣月配額200則；含新群組requireMention靜默忽略陷阱+接通SOP
 
