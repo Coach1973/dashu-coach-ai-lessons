@@ -52,6 +52,7 @@ GREET_PATTERN = re.compile(r"^我是(.+?)，剛報名了")
 SLIDES_DIR = os.path.join(os.path.dirname(__file__), "slides")
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "6124913915"  # 教練跟小龍蝦的對話，路徑大全.md已記錄
+TELEGRAM_REGISTRATION_GROUP_CHAT_ID = "-5349981085"  # 教練2026-08-24建立「活動報名即時通知」群組，教練+佩佩老師+bot三方共見
 COACH_LINE_USER_ID = "U895a0ad8e49d75f8303dc3d067282dc0"  # 教練本人LINE ID，workspace/memory/people.md已記錄
 
 
@@ -78,13 +79,13 @@ def _notify_coach_line(text: str) -> bool:
         return False  # 通知失敗不該擋住報名資料落地，呼叫端不拋錯
 
 
-def _notify_xiaolongxia(text: str) -> None:
-    """發Telegram訊息給小龍蝦（教練本人的對話），失敗不影響網頁本身回應。"""
+def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> None:
+    """發Telegram訊息，預設給教練個人對話；報名通知改傳group chat_id同時通知佩佩老師。失敗不影響網頁本身回應。"""
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             config = json.load(f)
         bot_token = config["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
-        body = json.dumps({"chat_id": TELEGRAM_NOTIFY_CHAT_ID, "text": text}).encode("utf-8")
+        body = json.dumps({"chat_id": chat_id, "text": text}).encode("utf-8")
         req = urllib.request.Request(
             f"https://api.telegram.org/bot{bot_token}/sendMessage",
             data=body, method="POST", headers={"Content-Type": "application/json"},
@@ -339,7 +340,7 @@ def api_register():
         # 帳號月額度用完時_notify_coach_line()靜默失敗(except吞掉)，
         # 教練完全不知情、以為系統壞了。改雙管道並行，Telegram不受LINE額度限制。
         _notify_coach_line(notify_text)
-        _notify_xiaolongxia(notify_text)
+        _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
         return Response(
             json.dumps({"ok": True, "status": status}),
             status=200, headers={**resp_headers, "Content-Type": "application/json"},
