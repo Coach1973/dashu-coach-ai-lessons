@@ -81,16 +81,17 @@ cmd_verify() {
     rc=1
   fi
 
-  echo -n "② 自訂 hook 是否全部載入（應為 18 支）："
-  local hooks
-  hooks=$(/usr/bin/python3 -c "
+  echo -n "② 自訂 hook 是否全部載入（設定裡啟用幾支，gateway 就該載入幾支）："
+  local hooks_enabled hooks_loaded
+  hooks_enabled=$(/usr/bin/python3 -c "
 import json
 d=json.load(open('$HOME/.openclaw/openclaw.json'))
 e=d['hooks']['internal']['entries']
 print(sum(1 for v in e.values() if v.get('enabled')))
 " 2>/dev/null)
-  echo "$hooks 支已啟用"
-  [[ "${hooks:-0}" -lt 18 ]] && { echo "   🔴 hook 數量不對"; rc=1; }
+  hooks_loaded=$(grep -a "loaded .* internal hook" "$HOME/Library/Logs/openclaw/gateway.log" 2>/dev/null | tail -1 | grep -oE "loaded [0-9]+" | grep -oE "[0-9]+")
+  echo "設定啟用 ${hooks_enabled:-?} 支／gateway 實際載入 ${hooks_loaded:-?} 支"
+  [[ "${hooks_enabled:-0}" != "${hooks_loaded:-1}" ]] && { echo "   🔴 兩個數字對不上，代表有 hook 沒載入"; rc=1; }
 
   echo -n "③ Telegram 通道實測："
   local tg
@@ -102,10 +103,13 @@ print(json.load(urllib.request.urlopen(f'https://api.telegram.org/bot{t}/getMe',
 " 2>/dev/null)
   if [[ -n "$tg" ]]; then echo "✅ $tg"; else echo "🔴 打不通"; rc=1; fi
 
-  echo -n "④ 排程是否還在："
-  local crons
-  crons=$("$OPENCLAW" cron list 2>/dev/null | grep -c "enabled" || echo 0)
-  echo "$crons 筆"
+  echo -n "④ 排程是否還在（Status 欄應為 ok，不應出現 error/failed）："
+  local cron_out cron_ok cron_bad
+  cron_out=$("$OPENCLAW" cron list 2>/dev/null)
+  cron_ok=$(echo "$cron_out" | grep -cE "\bok\b")
+  cron_bad=$(echo "$cron_out" | grep -cE "\b(error|failed)\b")
+  echo "${cron_ok} 筆正常"
+  [[ "$cron_bad" -gt 0 ]] && { echo "   🔴 有 ${cron_bad} 筆排程狀態異常"; rc=1; }
 
   echo -n "⑤ 報名端點是否還活著："
   curl -s -m 15 -X POST https://event.bymyway.com/api/register \

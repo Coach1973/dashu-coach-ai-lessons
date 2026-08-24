@@ -150,6 +150,36 @@ def main() -> int:
         print("\n小龍蝦寫信時，在檔案最前面放：\n<!-- DISPATCH\ntype: registration-report\nargs: 0828\n-->")
         return 0
 
+    # 🔴 2026-08-24 教練覆核時揪出的真正 bug：這支 worker 從來沒做過 git pull，
+    # 只查本地檔案。而這個 repo 唯一會拉雲端的時機，是教練開 Mac 對話框說「開工」
+    # 才觸發（見 feed_junshi_handoff.sh）。也就是說小龍蝦在 VPS 寫信、推上 GitHub，
+    # Mac 端不管檢查幾次都是查本地舊資料，這裡不先 pull，整個機制形同虛設。
+    if not dry:
+        try:
+            # 跟 feed_junshi_handoff.sh 同款做法：workspace 常態有心跳自動產生的
+            # 未提交狀態檔（HEARTBEAT.md/state/*.json），直接 pull --rebase 會被這些
+            # 檔案擋下。先 stash 再 pull，不會弄丟教練或其他機器的真正工作。
+            dirty = subprocess.run(["git", "status", "--porcelain"], cwd=WORKSPACE,
+                                    capture_output=True, text=True, timeout=15).stdout.strip()
+            stashed = False
+            if dirty:
+                st = subprocess.run(
+                    ["git", "stash", "push", "-u", "-m",
+                     f"dispatch-worker-auto-{datetime.now(TPE).strftime('%Y%m%d%H%M%S')}", "--quiet"],
+                    cwd=WORKSPACE, capture_output=True, text=True, timeout=15)
+                stashed = st.returncode == 0
+            r = subprocess.run(["git", "pull", "--quiet", "--rebase"],
+                                cwd=WORKSPACE, capture_output=True, text=True, timeout=30)
+            if r.returncode != 0:
+                log(f"GIT_PULL_FAIL {r.stderr.strip()[:200]}")
+            if stashed:
+                pop = subprocess.run(["git", "stash", "pop", "--quiet"],
+                                      cwd=WORKSPACE, capture_output=True, text=True, timeout=15)
+                if pop.returncode != 0:
+                    log(f"STASH_POP_FAIL {pop.stderr.strip()[:200]}（stash 仍保留在清單裡，不會遺失）")
+        except Exception as e:
+            log(f"GIT_PULL_ERROR {e!r}")
+
     if not os.path.isdir(INBOX):
         return 0
     letters = sorted(f for f in os.listdir(INBOX) if f.endswith(".md"))
