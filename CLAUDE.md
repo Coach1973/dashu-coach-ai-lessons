@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-24 04:10:04**
+> **最後同步：2026-08-24 15:25:51**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,10 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **stop_rules_master.py規則D（輪詢偵測）regex覆蓋面不夠，這次同義改寫繞過去** | ⏳待軍師找時間動手 | 2026-08-24第6次「定時輪詢vs事件觸發」教訓時發現：這台Mac本來就有防呆機關會攔「每.*分鐘.*檢查」「cron.*輪詢」這類措辭，但這次我寫「每5分鐘掃一次」「每15分鐘查一次」全部同義改寫繞過，機關形同虛設。需要把`scripts/stop_rules_master.py`規則D的regex擴充成涵蓋更多同義動詞（掃/查/讀取/巡邏/處理），詳見[[feedback_event_driven_not_polling_pattern]]2026-08-24第6次發作段落。 |
+| ✅ | **小龍蝦派工機制+自動化工具四支，全部依教練覆核意見修正完畢** | ✅2026-08-24完成 | 教練逐項核對凌晨的稽核報告後三處覆核：①08:25發票對帳daily cron移除，改按需觸發(教練:發票是一兩個月才開一次的階段性任務)②派工worker從cron定時(5分鐘→15分鐘)整個改成掛在「開工」hook後面觸發，完全移除排程，教練不開工Mac不會為此做任何事(commit`a673c8d97`)③8/17~23報名數字疑慮已用log對DB逐筆比對19筆全部吻合，確認38人無漏記，非用猜的。OpenClaw已實測升級2026.6.33→2026.6.34，5項健檢全過。 |
+| ✅ | **台中場報名通知已上線+Netlify帳號大掃除(54→39個站台)** | ✅2026-08-24完成，教練親口「推」確認 | 教練貼出台中場既有GitHub Pages路徑即為Netlify正式站名，已建站`ai-forum-taichung.netlify.app`上線(deploy`6a8bea15`)。教練逐條看過Netlify後台後指定12個測試/廢棄站台+2個追加站台(fluffy-puffpuff-b5a65b空頁面/tree-coach-book舊電子書原型)刪除，過程中教練抓到我的疏漏——`xiaolongxia-notify`(通知佩佩老師)/`sme-register-fn`(通知教練)兩支舊LINE轉發路徑跟稍早「全面改Telegram」是同一件事沒清乾淨，已從`bigtree`+`ai-talk`兩repo原始碼移除並推上GitHub+manual zip部署Netlify正式站(deploy`6a8bed91`+`6a8bed9c`)，兩個舊站台也一併刪除。**站台數最終54→39**。**教訓**：`bigtree`/`ai-talk`是「推GitHub不會自動觸發Netlify」的手動zip部署型，即使`web_preview_verify_guard.sh`把它們列在「push即上線」清單也只是保守防呆，不是真的自動部署——需要另外手動zip+API才會上線，兩者不衝突。 |
+| ✅ | **「活動討論群」開放AI自動接話+建立獨立記憶檔+彙整時完整灌回** | ✅2026-08-24完成並實測 | 教練把新建的Telegram活動群組(chat_id`-1003537129853`)設定成不用@提及、誰講話AI都自動接。**用inbound_echo log直接查到chat_id，全程沒開瀏覽器沒截圖**(呼應[[feedback_exhaust_own_tools_before_asking_coach]]同精神，這次用讀檔查證取代電腦操作)。教練接著要求群組要有獨立記憶——長時間討論攤販/廠商/idea後會說「幫我彙整」，若只靠agent自己的對話記憶(可能因context太長被壓縮/重啟)會漏掉討論前段。新建`hooks/group-activity-memory`：走`message:preprocessed`，①每則發言即時落地`workspace/group_memory/活動討論群.md`②偵測「彙整/整理/統整/總結/摘要」關鍵字時把整份記憶檔用`ctx.inject`灌回當輪context。9案例測試全過，補登hook建立前已發生的3則對話，gateway重啟後hook數16→17確認生效。commit`cba97a00`(hook)+`e035318c2`(記憶檔)。 |
 | 🔴🔴🔴 | **3支hook接力棒說「已完成驗證」但從未註冊過，一天都沒跑** | 🔒卡住-等教練一句話 | 2026-08-24全系統稽核，把`~/.openclaw/hooks/`21個目錄逐一比對`openclaw.json`發現：`bni-member-directory-map`（新LINE用戶自動查名字）／`line-delivery-fallback`（回覆送出失敗自動補送，避免訊息默默消失）／`line-url-typo-guard`（網址錯字校正避免會員點到404）三支**檔案齊全、HOOK.md也有，但從來沒註冊進openclaw.json**。`git log -S`確認該檔從未出現過這些名字——所以v80接力棒寫的「三個hook都已經重啟驗證+commit」這句話當時就不成立。**沒有自行啟用的理由**：後兩支會改動BNI大台南南區LINE公開帳號的對外回覆行為，那是真實會員在用的服務，凌晨教練睡覺時把三支從未在正式環境跑過的hook一次打開，出事會直接讓會員看到而教練無法反應。啟用指令已備妥見[[project_hook_orphans_never_registered_2026-08-24]]，教練說一句就開，開完必須核對gateway log的loaded數字從16變19才算數。 |
 | 🔴🔴 | **台中場(9/23-24)報名通知已補好，在分支等教練說「推」** | ⏳等教練一句「推」 | 場次巡檢抓到三個活動微站裡只有台中場`ai-forum-taichung`是「報名黑洞」——四顆報名鈕直接跳藍新金流，報名者是誰、留什麼電話完全不落地也不通知（嘉義場走`/api/register`、9/22台南場深連結回官網，都有通知）。已比照嘉義場模式做好：報名鈕先開留資料彈窗→fire-and-forget寫進event.db並即時發Telegram到「活動報名即時通知」群組→再跳藍新付款，保留「不想留資料直接付款」出口，API失敗絕不擋付款。本機實測四顆鈕綁定正確、單日送1筆/套票送2筆slug正確、手機版無溢出、console零錯誤。**commit`4c7556b`在`feature/registration-notify`分支，master完全沒動（線上頁面現況不變）**，教練說「推」就`git checkout master && git merge feature/registration-notify && git push`（GitHub Pages，不扣Netlify額度）。 |
 | 🟡 | **OpenClaw 2026.6.33 → 2026.6.34 升級評估完成，等教練決定** | ⏳等教練決定 | 教練說「調查清楚後回報，如果確實更好我們再跟進更新」，故只調查未執行。**結論：建議升級**。6.34是extended-stable線的維護版（2026-08-04發佈，25個PR，官方明說「不加新功能，只做安全與穩定性修補」），其中兩項正好打中教練實際踩過的坑：①「retained session writes / provider fallbacks 不再靜默中止進行中的工作」＝8/20小龍蝦連兩次回「Agent couldn't generate a response」害發票資料消失的同款問題 ②「pending channel work resumes after recovery、acknowledgements are idempotent」＝訊息送達可靠性。另含相依套件安全更新。**風險評估**：官方預告7/24後移除`before_agent_start`等舊Plugin SDK API，已逐一檢查教練18支hook＋openclaw.json，**全部沒用到**，不受影響。⚠️唯一要留意的是`plugins.allow`是嚴格白名單（48個），若新版新增外掛會被擋掉，升級後要核對數字。`scripts/openclaw_upgrade.sh`已備好check/upgrade/verify/rollback四段，教練點頭就跑。**不要換到`latest`(2026.7.1-2)**——那是不同release line，版號大但發佈日期反而更早，換過去等於橫向跳線。 |
@@ -165,46 +169,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-23 v123（Mac桌面版 Sonnet 5→Opus 5混用，大樹小講事件密集場：救回失蹤的雙寫程式碼、改期、自建管理後台、修好2次部署bug、抓出LINE綁定率低的真因並四點補強）
-
-> 建立時間：2026-08-22 22:35 ~ 2026-08-23 22:36（台灣時間，跨日長場）
-> 本棒執行者：Mac 桌面版 Sonnet 5（中途教練切換至 Opus 5）
-> 上一棒：v122（同機前四日）
-> 本棒主軸：**這一整場圍繞`bigtree-tw`(大樹小講)官網跟`event-signup`報名後台展開，從「救回一段消失的程式碼」開始，一路做到「教練自己就能管理活動、不用再靠AI改網頁」。過程中兩次因為自己改壞部署流程讓教練白扣額度，都當場拿「已知成功的樣本」逐項diff揪出真因並修好，同時把每個教訓寫回永久記憶。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴🔴 救回8/14寫好卻從未推送的報名雙寫程式碼
-查明8/14曾在本機commit`3130b93`寫好`event.bymyway.com/api/register`雙寫邏輯，但**這個commit從未git push**——8/18另一台機器在缺這段程式碼的origin/main上加了新場次並推送，兩邊分岔一週沒人發現。`git merge`救回後confirm教練「推」，部署上線。**同一輪順手把這個問題結構性根治**：擴充`session_end_auto_push.sh`（原本只保護workspace自身），新增每輪對話結束自動掃描`~/github_repos/`全部22個站台repo，任何有unpushed commit就自動補推，用真實測試commit驗證過(`ai-fit`repo)確實會被抓到並自動推送。commit`763f7ab00`。
-
-### 2. 🎯 大樹小講8/25台南場改期9/22＋場地改台南安平維悅酒店
-教練口頭指示改期+換場地(7/29 AI微論壇同一場地，WebSearch查證地址)，時間/收費不變。同步修改bigtree官網+event.db+**意外發現的獨立微站`ai-fit`**(整站專為這場活動做，6處meta標籤+4處場地卡+深連結全部要跟著改)。真實Chrome雙頁預覽教練確認後上線。**發現原8/25已有4筆歷史報名，教練確認自行聯絡通知**。commit`d95e8b3`+`080ca32`。
-
-### 3. 🎯🎯 大樹小講場次管理後台：event.db成唯一真相源
-教練提出想要「自己能管理活動的後台」，軍師判斷**不新建系統**——`event.bymyway.com/admin`早就是完整後台，真正病根是場次資料同時活在「網頁原始碼」跟「event.db」兩份、必定會漏（8/22改期出包就是這樣）。做法：events表擴充欄位、新增`/admin/sessions`管理頁（新增/編輯/刪除/取消，有報名不給刪）、`bigtree_publish.py`一鍵發佈（資料庫→網頁→git→Netlify）、**教練本人按發佈不需AI再確認**。commit`bde5ae160`。
-
-### 4. 🔴🔴 一鍵發佈踩雷2次，最終用「跟成功樣本diff」抓到真因
-教練首次使用就連續失敗2次、額度白扣2次。第一次誤診為zip中文檔名UTF-8旗標問題（改用Python zipfile打包）；第二次拿08-22實測成功的zip逐項比對，才發現真因是**缺少目錄項**（zipfile自行走訪檔案不會寫目錄項，Netlify解壓需要），改回`git archive HEAD`+系統`zip`指令，並加上`_wait_until_live()`輪詢真正state=ready才算成功（原本誤把HTTP 200當成功）。commit`7a096531b`→`99ceb9cf5`，教訓寫入`feedback_netlify_headers_content_type.md`第7條：**有已知成功樣本時先diff，不要靠單一可疑現象推論**。
-
-### 5. 🔧 LINE群發「發送失敗」查證：非bug，是官方帳號月額度用完
-查證`@qaw8118h`(event-signup專用LINE帳號，跟龍蝦小助教是不同帳號)本月200則免費額度用滿(用LINE quota API確認)。`/admin/notify`新增即時額度顯示+「未綁定名單一鍵複製連結」功能，讓教練能繞過額度限制用簡訊等管道接觸8/21+8/22兩場49人中29位未綁定LINE的人。commit`b3a6900d9`。
-
-### 6. 🎯 「掃碼時強調一定要發訊息」四點補強
-教練提出解法後，查現有4個觸點（2張現場立牌+2個掃碼後網頁）全部沒有明確講出「LINE打開後還要自己按傳送」，線上報名頁按鈕文案「一鍵傳送」甚至可能誤導。已全部加上紅底警語，thanks.html文案同步修正。**待辦**：已印過的舊版立牌沒有新警語，需教練決定是否重印。commit`0753e0e41`。
-
-## 📋 下一場直接開工任務
-- **現場立牌是否重印**：詢問教練`qr/wheel-print.html`+`qr/checkin-print.html`的新警語版本要不要重新列印替換現場舊立牌
-- **LINE推播額度**：約9/1重置，屆時可針對8/21+8/22未綁定的29人做精準補發提醒
-- **大樹小講後台擴充**：教練表態長期要「所有活動都歸後台管理」，`ai-fit`這類單一活動微站尚未納入`site`欄位體系
-- 承接舊待辦：ezPay「38人待問清單」剩8人資料待補齊（見主表）、bni-chapters「真誠分會」架構問題(擱置中)
-
-## 🔑 本場關鍵檔案索引
-- `event-signup/bigtree_publish.py`：一鍵發佈核心邏輯，含兩次修好的打包+輪詢驗證機制
-- `event-signup/templates/sessions.html`+`_session_card.html`：場次管理後台頁面
-- `event-signup/templates/notify.html`：未綁定名單+額度顯示
-- `event-signup/qr/wheel-print.html`+`checkin-print.html`、`templates/slides.html`+`thanks.html`：四點警語補強
-- `scripts/session_end_auto_push.sh`：新增github_repos全域unpushed commit自動補推
-- 記憶：`feedback_netlify_headers_content_type.md`第7條、`reference_event_line_oa_push_quota.md`、`project_bigtree_session_admin_backend_2026-08-23.md`
+> 📦 v123完整內容已封存：`handoff_archive/handoff_v123_archived_2026-08-24.md`（Mac桌面版，大樹小講事件密集場：救回雙寫程式碼+場次管理後台+修好2次部署bug）
 
 ---
 
@@ -306,6 +271,62 @@
 - `cross-agent/README.md`＋`SOUL.md`（派工協議）
 - 記憶：`reference_openclaw_hook_requires_hookmd_metadata`／`project_hook_orphans_never_registered_2026-08-24`／`project_autonomy_toolkit_2026-08-24`
 - commit：`69c93d8fe`(workspace)＋`4d7c9a34`(openclaw)＋`fe5b6ec0e`(記憶)＋`4c7556b`(台中場分支)
+
+---
+
+# 軍師接力棒 · 2026-08-24 v126（Mac桌面版 Sonnet 5→Opus 5混用，教練逐項覆核凌晨稽核成果並追加兩項新任務）
+
+> 建立時間：2026-08-24 13:21 ~ 15:21（台灣時間，白天長場，v125凌晨稽核的覆核場）
+> 本棒執行者：Mac 桌面版（教練用/model指令切換過Sonnet 5，混用執行）
+> 上一棒：v125（同機同日凌晨）
+> 本棒主軸：**教練起床後逐項核對v125凌晨的稽核報告，三次糾正設計方向（發票對帳不該天天跑/派工不該定時排程要綁開工動作/hook說明要講白話），一次重話糾正「不要把自己發現、教練沒問的事丟出來浪費釐清時間」（已寫入永久記憶）。接著實際執行了OpenClaw升級、Netlify帳號大掃除(54→39)、台中場正式上線、活動討論群自動接話+獨立記憶檔四項新工作，全部完成並實測驗證。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴🔴 教練重話糾正：自己發現的無關緊要的事不要丟給教練釐清
+連續2~3輪對話澄清「3支hook從未啟用」這件事，教練點破這根本不需要他做任何決定，
+純粹是我自己稽核時發現、自己覺得該提。已寫入永久記憶`feedback_dont_surface_own_tangential_findings`，
+核心判準：教練沒問+不影響教練正在依賴的功能 → 不主動提，或最多一句話帶過。
+
+### 2. 🔴🔴🔴 派工機制+發票對帳，依教練覆核意見重新設計
+①發票對帳08:25 daily cron移除，改成按需觸發(教練:一兩個月才開一次發票，天天巡檢無意義)
+②派工worker從cron(5分鐘→15分鐘)整個改成掛在既有「開工」hook之後觸發，完全移除排程。
+**這是本場最重要的技術教訓**：查證發現這台Mac本來就有專門攔「定時輪詢」語言的Stop hook
+(`stop_rules_master.py`規則D)，但我這次用的「每5分鐘掃一次」「每15分鐘查一次」跟過去
+事故的原話措辭不同，regex完全沒攔到——第6次犯同一種錯，且揪出防呆機關本身失靈的根因。
+詳見[[feedback_event_driven_not_polling_pattern]]。
+
+### 3. 🔧 8/17~23報名數字疑慮，用log對DB逐筆比對親自查證
+教練問LINE額度用完期間會不會漏記報名，沒有用程式邏輯推論，而是把伺服器access log
+裡19筆`/api/register`成功請求跟資料庫實際記錄逐筆比對時間戳，100%吻合，證實38人數字
+準確、寫入資料庫跟LINE通知是兩個獨立步驟互不影響。
+
+### 4. 🎯 OpenClaw升級執行完成
+2026.6.33→2026.6.34，5項健檢全過(外掛48/20不變、hook 16/16、Telegram通道、22筆排程、
+報名端點)，過程順手修正驗證腳本自己的兩個門檻錯誤(hook應為16非18、cron欄位是Status非enabled)。
+
+### 5. 🎯🎯 Netlify帳號大掃除+台中場正式上線
+54個站台清到39個。查證`xiaolongxia-notify`/`sme-register-fn`還在被bigtree/ai-talk即時呼叫
+未刪，教練追問「全面改Telegram了跟他還有什麼關係」點出我沒串起來的疏漏，補上程式碼清理+
+Netlify重新部署驗證。台中場依教練提供命名建站`ai-forum-taichung.netlify.app`上線。
+
+### 6. 🎯 活動討論群自動接話+獨立記憶檔
+chat_id用inbound_echo log查到，未開瀏覽器未截圖。新建`hooks/group-activity-memory`實現
+「每則發言落地+彙整關鍵字觸發完整歷史灌回」，9案例測試全過。
+
+## 📋 下一場直接開工任務
+- **stop_rules_master.py規則D的regex要擴充**（本場發現的防呆漏洞，需要涵蓋更多同義動詞）
+- 3支孤兒hook要不要啟用（仍等教練一句話，見上方待辦表）
+- ezPay剩5人資料、3張發票補Email（舊待辦）
+- bni-chapters「真誠分會」架構問題（舊待辦，長期擱置）
+
+## 🔑 本場關鍵檔案索引
+- `scripts/junshi_dispatch_worker.py`+`scripts/feed_junshi_handoff.sh`：派工改開工觸發
+- `scripts/openclaw_upgrade.sh`：升級腳本，本場實測跑過check+upgrade+verify全流程
+- `hooks/group-activity-memory/`：活動討論群獨立記憶
+- `github_repos/bigtree/index.html`+`github_repos/ai-talk/index.html`：移除舊LINE通知路徑
+- 記憶：`feedback_dont_surface_own_tangential_findings`、`feedback_event_driven_not_polling_pattern`(2026-08-24第6次發作段落)
+- commit：`a673c8d97`／`856df350f`／`1434559`(bigtree)／`bd91f7f`(ai-talk)／`dba7aacc`／`cba97a00`／`e035318c2`
 
 
 ---
