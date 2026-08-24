@@ -63,6 +63,22 @@ if [[ -d "$WORKSPACE/.git" ]]; then
   fi
 fi
 
+# ───────── 🗂 小龍蝦派工信箱：教練開工當下才檢查，不設定時巡邏 ─────────
+# 2026-08-24 教練親口拍板：「我每次開工的時候，它再去讀取小龍蝦那邊有沒有新資訊就好，
+# 跟15分鐘無關；因為我有可能是3個小時才開工一次，那就3個小時開工時讀一次即可。」
+# 原本試過每5分鐘、又改每15分鐘定時檢查，教練說不管多久都是「定時巡邏」，
+# 他要的是「跟開工這個動作綁在一起」，不是跟時間綁在一起——上面這段 git pull 剛把
+# 雲端最新信件拉下來，這裡緊接著就檢查信箱，天然吻合「開工當下讀一次」的需求，
+# 不用另外設定時任務，Mac 在教練沒開工的時候完全不會為了這件事去動一下。
+DISPATCH_STATUS="（信箱查無新信）"
+DISPATCH_SCRIPT="$WORKSPACE/scripts/junshi_dispatch_worker.py"
+if [[ -f "$DISPATCH_SCRIPT" ]]; then
+  DISPATCH_OUT=$(/usr/bin/python3 "$DISPATCH_SCRIPT" 2>&1)
+  if printf '%s' "$DISPATCH_OUT" | grep -q "▶ "; then
+    DISPATCH_STATUS="📬 開工時發現小龍蝦有新派工，已在後台處理完：$(printf '%s' "$DISPATCH_OUT" | grep -c '▶ ') 封"
+  fi
+fi
+
 # Self-test 寫入 HEARTBEAT（防假回報）
 if [[ -f "$HEARTBEAT" ]]; then
   {
@@ -71,6 +87,7 @@ if [[ -f "$HEARTBEAT" ]]; then
     echo "- ✅ Hook 觸發 + 六步驟內容注入完成"
     echo "- 觸發詞：$(printf '%s' "$PROMPT" | head -c 40)"
     echo "- 雲端狀態：${PULL_STATUS}"
+    echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
     echo "- Session: ${SESSION_ID:-unknown}"
   } >> "$HEARTBEAT" 2>/dev/null || true
 fi
@@ -86,6 +103,7 @@ INJECT_CONTENT=$(
   echo "## 🌐 雲端同步狀態"
   echo ""
   echo "- ${PULL_STATUS}"
+  echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
   echo "- workspace: \`${WORKSPACE}\`"
   echo ""
   echo "## 🪪 身份硬性告知"
