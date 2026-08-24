@@ -355,10 +355,23 @@ def api_register():
             )
 
         status = db.upsert_signup(conn, event["id"], name, phone, company_title, email)
-        event_name = event["name"]
+        # 2026-08-25教練回報：多場活動共用同一個活動名稱（如「AI微論壇」同時是嘉義/台中DAY1/台中DAY2），
+        # 通知只印event_name完全分不出是哪一場。用events表既有的location+event_date組成明確標籤。
+        event_label = event["name"]
+        label_extra = []
+        if event["location"]:
+            label_extra.append(event["location"])
+        if event["event_date"]:
+            try:
+                mmdd = event["event_date"][5:].replace("-", "/")
+                label_extra.append(mmdd)
+            except Exception:
+                pass
+        if label_extra:
+            event_label = f'{event_label}（{"・".join(label_extra)}）'
         conn.close()
         notify_text = (
-            f"【大樹小講・官網報名】\n場次：{event_name}\n姓名：{name}\n"
+            f"【大樹小講・官網報名】\n場次：{event_label}\n姓名：{name}\n"
             f"公司：{company_title or '-'}\n電話：{phone}\nEmail：{email or '未填'}\n"
             f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
         )
