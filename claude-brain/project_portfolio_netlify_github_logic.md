@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 2ce84fc7-8f65-4c4f-ba82-ee34b77d76aa
+  modified: 2026-08-24T16:52:20.313Z
 ---
 
 教練 2026-07-12 親自定調「大樹AI作品一覽表」的建置邏輯，往後任何一台機器的軍師處理教練作品清單，一律照這套規則走，不用每次重新解釋或重新判斷。
@@ -41,5 +42,13 @@ metadata:
 - 看到某個repo在GitHub上是archived狀態，**不能直接假設它的Netlify網址也失效**，兩邊要分開查證（[[reference_coach_websites]]記錄了2026-07-12 `goeasy-ai`就是一次「archived但Netlify還在活跳跳用」的真實案例）
 - 教練問「改名字要不要扣點」這類Netlify操作成本問題，答案已經確認：改名免費，部署才扣點，可以直接引用不用重查
 - 遇到列表裡「名稱」跟「網址」對不上的情況（如本場`cool-case`vs`大台南BNI培訓行事曆`的錯位疑雲），比照[[feedback_markdown_link_mismatch_verify]]的標準：先查證兩邊網址真實內容再回報教練，不要照單全收也不要自己默默改掉
+
+## 🔴 2026-08-25更正：作品總覽的更新現在是SOP的一部分，不是「Netlify才算數」而已
+
+教練當場糾正：AI微論壇台中場先推GitHub Pages測試、後推Netlify正式上線，兩個階段都沒有主動同步更新`coach888/index.html`（作品總覽），教練親口拍板往後這是SOP：
+1. **構想/製作階段先推GitHub測試** → 當下就要把GitHub Pages網址加進作品總覽（可放「不公開／個人檢索用」區）
+2. **測試完成推Netlify** → 同一時間把作品總覽該筆項目的網址改成Netlify正式網址，並依內容性質搬到對應公開區（本次案例搬進「大樹常用」，跟同系列的[[微型論壇]]放一起）
+
+**How to apply**：往後任何一個網站專案走到「推GitHub測試」或「推Netlify」這兩個動作，都要在同一輪順手打開`/Users/bymyway/github_repos/coach888/index.html`同步更新，不能等教練事後問「有沒有放進作品總覽」才想起來。這條跟上面「只有Netlify.app算作品」的舊邏輯不衝突——舊邏輯講的是「哪些算對外公開作品」的判斷標準，這條講的是「不管哪個階段，只要用戶看得到，作品總覽都要跟著更新」的執行紀律。
 
 Related: [[reference_coach_websites]]、[[feedback_netlify_autodeploy_cost_awareness]]、[[feedback_markdown_link_mismatch_verify]]
