@@ -1,0 +1,14 @@
+[
+  {"custom_num": "082401", "name": "柯宗佑", "buyer": "佑曄空調工程", "ubn": "61563152", "type": "三聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460805", "status": "done"},
+  {"custom_num": "082402", "name": "連皓宇", "buyer": "連皓宇", "carrier": "/88ZMR73", "type": "二聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460806", "status": "done"},
+  {"custom_num": "082403", "name": "莊政川", "buyer": "昇川工程行", "ubn": "00442987", "type": "三聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460807", "status": "done"},
+  {"custom_num": "082404", "name": "謝盛峰", "buyer": "盛俐空間設計工程行", "ubn": "00441185", "type": "三聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460808", "status": "done"},
+  {"custom_num": "082405", "name": "吳玫萱", "buyer": "吳玫萱", "carrier": "/1.IXOIR", "type": "二聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460809", "status": "done"},
+  {"custom_num": "082406", "name": "蔡姵彤", "buyer": "蔡姵彤", "carrier": "/Z8PJ5K2", "type": "二聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460810", "status": "done"},
+  {"custom_num": "082407", "name": "杜亞洛", "buyer": "宿易智能有限公司", "ubn": "89163511", "type": "三聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460811", "status": "done"},
+  {"custom_num": "082408", "name": "買駿航", "buyer": "買駿航", "carrier": "/CCCUKN2", "type": "二聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460812", "status": "done"},
+  {"custom_num": "082409", "name": "范郁琪", "buyer": "鑫泉工程行", "ubn": "89016482", "type": "三聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460813", "status": "done"},
+  {"custom_num": "082410", "name": "劉彥彬", "buyer": "劉彥彬", "carrier": "/VPGYN9U", "type": "二聯", "amount": 39800, "item": "BNI入會", "invoice_number": "DQ92460814", "status": "done"},
+  {"custom_num": "082411", "name": "徐偉倫", "buyer": "富品室內裝修工程有限公司", "ubn": "24403904", "type": "三聯", "amount": 26800, "item": "BNI續約", "invoice_number": "DQ92460815", "status": "done"},
+  {"custom_num": "082412", "name": "柯炫任", "buyer": "柯炫任", "carrier": "/GG1CUU2", "type": "二聯", "amount": 26800, "item": "BNI續約", "invoice_number": "DQ92460816", "status": "done", "note": "去年10/3已開過入會發票TJ90077466 $36,000，本次為續約，教練確認非重複"}
+]
