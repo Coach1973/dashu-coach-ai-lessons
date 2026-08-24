@@ -1,11 +1,11 @@
 ---
 name: project-ezpay-invoice-task-delegated-to-lenovo
-description: ezPay電子發票開立作業教練裁示改由聯想機器負責，Mac不再主責這項任務
+description: 【已作廢2026-08-24】2026-08-16曾裁示改聯想負責，但08-18起Mac桌面版持續大量開票(38人培訓費批次全數由Mac完成)，現況是Mac照常開票，見feedback_ezpay_invoice_sop
 metadata: 
   node_type: memory
   type: project
   originSessionId: 7d4244d1-db9c-42f8-97ad-dc02499cbe41
-  modified: 2026-08-16T13:58:42.283Z
+  modified: 2026-08-24T08:26:39.229Z
 ---
 
 2026-08-16教練親口裁示：ezPay電子發票開立（inv.ezpay.com.tw，帳號gtbctainan，商店337391376 BNI台南南區）這項工作以後交給聯想電腦做，Mac空出來做別的事。
