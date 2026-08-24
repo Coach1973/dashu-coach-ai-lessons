@@ -1,17 +1,18 @@
 {
   "system": "credit",
   "credits_per_deploy": 15,
-  "quota_as_of": "2026-08-15",
-  "quota_remaining": 31,
-  "note": "🔴2026-07-25更正：Netlify帳號本來就是credit制，不是「改制」——「剩幾次」這個數字一直是我們自己拿credit餘額換算出來的（每次部署扣15點credit）。教練親貼帳單頁截圖：①「Personal plan credits」1000點，2026-07-25核發，2026-08-25到期；②另一組500點credits，2026-05-30核發、無到期日。credit依到期日先扣（soonest first，先扣8/25到期那組）。舊有「16次」是舊credit餘額換算出來的數字，現在credit餘額變多了所以次數也跟著變多，不是規則變了。⚠️2026-08-03發現：netlify_deploy_guard.sh的自動扣減邏輯要求指令結尾剛好是`/deploys`，若curl後面接了`| python3 ...`等管道處理，正則比對不到結尾，不會自動扣。這次是手動補記，之後部署指令若有接pipe，記得手動確認這個檔案有沒有真的被hook扣到。⚠️2026-08-08再發現：不只pipe，指令POST後面接了-H/--data-binary/-o等多個flag（沒有直接以/deploys結尾）guard正則一樣抓不到，bigtree-tw這次部署也是手動補記才扣到。之後只要deploy指令不是單純以/deploys收尾，都要記得檢查quota_remaining有沒有真的被扣到。",
+  "quota_as_of": "2026-08-25",
+  "quota_remaining": 9,
+  "billing_cycle": "每月25日結算/重置（帳單頁面顯示「Current billing period runs from Jul 25 to Aug 24」，帳戶API的current_billing_period_start/next_billing_period_start皆為每月25日00:00 -07:00＝台灣時間當天下午3點），教練誤記成24日，正確是25日重置、24日是週期最後一天",
+  "note": "🔴2026-08-25教練親自要求查證：直接進app.netlify.com/teams/bymyway7/billing/general讀取真實數字（非估算），此前的849.5/1000是2026-07-25核發當下的初始值，從未追蹤實際消耗，跟真實餘額嚴重脫節（8/24一天內12張ezPay發票查詢+2次ai-forum-taichung部署等操作實際上沒有消耗這裡的credit，credit只在真的執行Netlify部署動作時扣，之前數字沒錯，只是很久沒有回頭核對真實餘額）。往後SOP：**每次執行Netlify部署後，必須查一次真實帳單頁面數字更新這個檔案**，不能只靠估算遞減（估算會跟真實值長期偏移，例如本次核對發現8/24~8/25兩次deploy後估算值仍停在34次，但真實只剩9次）。🔴2026-08-03發現：netlify_deploy_guard.sh的自動扣減邏輯要求指令結尾剛好是`/deploys`，若curl後面接了`| python3 ...`等管道處理，正則比對不到結尾，不會自動扣。⚠️2026-08-08再發現：指令POST後面接了-H/--data-binary/-o等多個flag（沒有直接以/deploys結尾）guard正則一樣抓不到。**這兩條舊教訓現在已經不重要**——estimate遞減法本身就不可靠，改成每次部署後直接查真實帳單頁面才是正確做法。",
   "credit_pools": [
     {
       "name": "Personal plan credits",
-      "remaining": 849.5,
+      "remaining": 76.4,
       "total": 1000,
       "granted": "2026-07-25",
       "expires": "2026-08-25",
-      "deploys_remaining_approx": 56
+      "deploys_remaining_approx": 5
     },
     {
       "name": "無到期日 credits",
@@ -22,6 +23,20 @@
       "deploys_remaining_approx": 4
     }
   ],
+  "verified_from_billing_page": {
+    "checked_at": "2026-08-25T01:09:00+08:00",
+    "url": "https://app.netlify.com/teams/bymyway7/billing/general",
+    "current_billing_period": "Jul 25 to Aug 24",
+    "total_credits_available": 147,
+    "this_period_usage_breakdown": {
+      "production_deploys": {"count": 49, "credits": 735},
+      "ai_inference": {"credits": 0},
+      "web_requests": {"count": 99186, "credits": 19.8},
+      "compute": {"credits": 0.4},
+      "bandwidth": {"credits": 168.4},
+      "total_consumed": 923.6
+    }
+  },
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
     {
