@@ -404,3 +404,33 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1787556295
 - 雲端同步：✅ 已推上雲端（commit 76e08d122）
+
+## 🩺 Cycle=573 健康檢查紀錄（2026-08-24 16:12 Asia/Taipei · 週一下午）
+
+**結論**：✅ **無異常，安靜通過，不通知教練**
+
+| 檢查項目 | 結果 |
+|---------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-24T15:48:59+08:00`｜當下沉默 **0.4h**（週一下午，教練剛剛才互動中，正常不打擾）|
+| Cron（本任務自身）| ⚠️ 上輪 cycle=572 框架層級 `lastRunStatus=error` / CE=1 / `lastDeliveryError="cron: job interrupted by gateway restart"`（gateway 重啟打斷 cron worker）；但 AI 實際跑完所有檢查並寫入 healthcheck.log 視為成功。本輪 cycle=573 正常觸發 runningAtMs=1787559120121，繼續監測。|
+| Cron list API | 仍只回 1 job（本任務本身，cycle=539 後已知清理現象，非故障）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（剛 16:12 實測）|
+| 環境快檢 | SOUL×3 齊全（2036/1851/22220 bytes + 兩份棄用標記都在）｜Repo1=112 持平｜Repo2=39（cycle=572 的 37 微增 2，HEARTBEAT/state/healthcheck.log 正常寫入）｜無 `.!` 鎖定檔 ✅ |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（正在寫這份報告 = 本輪執行成功；上輪失敗是 gateway 重啟偶發事件，非持續故障）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / overloaded / INVALID_API_KEY；上次失敗訊息是 gateway 重啟）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週一下午 + 教練 24 分鐘前才互動 + 零會員功能壞 + cron worker 仍正常運作）
+
+**累計**：連續 **67 輪綠燈**（cycle=507~573）
+
+**已落痕跡**：
+- ✅ HEARTBEAT.md cycle=573 已 append
+- ✅ state/healthcheck.log 追加 cycle=573
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=67）
+- ✅ state/healthcheck_cycle 更新至 573
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：17:12 健康檢查（cycle=574）。
