@@ -20,7 +20,7 @@
 - [🔴🔴 ezPay電子發票開立作業教練裁示轉交聯想機器，Mac不再主責(2026-08-16)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 登入狀態per機器跟BNI Connect CMS同款限制，聯想需重新登入
 - [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md) — 單價數量欄位programmatic填值常不觸發計算；表單清空不代表真的送出成功
 - [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md) — 已在真實對話驗證接線員觸發成功；新增專案記得建卡+加路由
-- [🔴🔴 教練要的是結果導向委派+生活化指涉理解，不是堆關鍵字庫(2026-08-16)](feedback_jarvis_outcome_delegation_style.md) — 事實基礎(專案卡)+語言理解力才是正解；反面教材：口頭說存記憶卻沒真的寫檔案
+- [🔴🔴🔴 賈維斯目標=結果導向委派+記得住+自動串連，不用重複交代(2026-08-25擴充)](feedback_jarvis_outcome_delegation_style.md) — 狀態型記憶要附驗證法；同主題多次追問要主動串連前文
 - [🎯🎯 AI微論壇台中場(9/23-24)網頁概念稿建置中+mentor100後台500錯誤(孤兒外鍵)修復(2026-08-15)](project_ai_forum_taichung_and_mentor100_fix_2026-08-15.md) — 講師僅剩彭晉澄查無資料；delete類操作要記得查外鍵關聯
 - [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md) — Cloudflare彈窗卡自動化案例；解除障礙後要主動驗證+誠實說明原因
 - [🔧 OpenClaw gateway hooks只跑Mac mini單一gateway，不像Claude Code hooks需三機移植(2026-08-14)](feedback_openclaw_gateway_hooks_not_per_machine.md) — 修完hook前先分清這支是gateway hook還是settings.json hook，再決定要不要排三機同步待辦
@@ -66,7 +66,7 @@
 - [🔴🔴🔴 判斷機器有沒有活動要查git log真相，不能信中繼蒸餾檔案(2026-07-19)](feedback_verify_activity_via_git_log_not_relay_file.md) — 三機總結cron誤報「聯想連續11天無對話」，實…
 - [🔴🔴🔴 真誠/真愛/真實AI分會願景說明書連續多棒未開始(2026-07-19)](project_bni_three_chapters_vision_pending.md) — 三個BNI分會的願景+產業分佈圖，卡在等教練給細…
 - [🔴 語音糾偏通用規則：「真XX鋒會/峰會」一律=「真XX分會」，適用所有BNI分會(2026-08-09擴充)](feedback_fenhui_not_fenghui_voice_correction.md) — 教練親口升級為通用判斷邏輯，不用逐一問；真AI分會非真實AI分會
-- [🔴🔴🔴 Netlify帳號是credit制，「剩幾次」＝credit餘額÷15換算(2026-07-25更正)](project_netlify_deploy_quota_2026-07.md) — 非「改制」，2026-07-25核發新credi…
+- [🔴🔴🔴 Netlify每25日重置週期，每次部署後必查真實帳單頁更新(2026-08-25教練拍板SOP)](project_netlify_deploy_quota_2026-07.md) — 估算會失準(曾誤差34→9次)，不能只靠遞減記錄
 - [🎯🎯🔴 大樹AI作品一覽表分類邏輯+更新是SOP一部分(2026-08-25更新)](project_portfolio_netlify_github_logic.md) — 推GitHub測試/推Netlify當下都要同步更新coach888/index.html，不等教練問
 - [🔴🔴🔴 密碼界線vs搬運工衝突的化解法+已列入JUNSHI_RULES規則#6(2026-07-12)](feedback_password_boundary_vs_courier_resolution.md) — AI絕不代打密碼(唯一不因授權鬆動的線，即使教練…
 - [🔴🔴 聯想C槽94GB備份刪除計畫作廢，已用於真實還原(2026-07-25更新)](project_lenovo_c_drive_slimdown_2026-07-11.md) — 7/11備份7/24真的救過一次LINE事故，不…

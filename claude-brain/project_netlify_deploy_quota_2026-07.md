@@ -1,44 +1,51 @@
 ---
 name: project-netlify-deploy-quota-2026-07
-description: Netlify部署額度追蹤——本質一直是credit制，「剩幾次」是拿credit餘額除以15(每次部署耗15點)換算出來的，2026-07-25credit核發後額度回升到約71次
-metadata: 
+description: Netlify部署額度SOP——每月25日重置周期、credit÷15算剩幾次，每次部署後必須查真實帳單頁更新，不能只靠估算遞減
+metadata:
   node_type: memory
   type: project
-  originSessionId: 54392333-a164-49b3-b17d-eae26af22220
-  modified: 2026-07-25T07:56:38.477Z
+  originSessionId: ca65df7a-23a8-43a7-996d-71d26e2119b8
+  modified: 2026-08-24T17:13:22.764Z
 ---
 
-# Netlify部署額度追蹤（2026-07月）
+# Netlify部署額度SOP（2026-08-25教練拍板正式版）
 
-## 🔴 2026-07-25更正：不是改制，是credit餘額變多了
+## 🔴 帳單周期：每月25日重置，不是24日
 
-教練糾正：Netlify帳號**一直都是**credit制，不是今天才「改制」。之前追蹤的「剩幾次」這個數字，本來就是我們自己拿credit餘額換算出來的——**每次部署扣15點credit**。
+帳單頁面（`app.netlify.com/teams/bymyway7/billing/general`）明載「Current billing period runs from Jul 25 to Aug 24」——**24日是週期最後一天，25日才是真正重置那天**（帳戶API的`next_billing_period_start`為每月25日00:00 -07:00，換算台灣時間是當天下午3點）。教練口頭記成「24日結算」，正確講法是「25日重置、24日是舊週期最後一天」，兩種講法指的是同一件事，不用糾正教練，理解成同一天即可。
 
-教練親貼Netlify帳單頁（`app.netlify.com/teams/bymyway7/billing/general#credit-balance`）截圖，目前credit餘額：
+## 換算公式（每次部署後都要用）
 
-- **Personal plan credits**：1000點，2026-07-25核發，2026-08-25到期，目前剩**999.5點** → 約66次部署額度
-- **無到期日credits**：500點，2026-05-30核發、無到期日，目前剩**70.1點** → 約4次部署額度
-- 兩池合計約**71次**部署額度
-- Credit依到期日先扣（soonest first），會先扣8/25到期那組
+**剩餘部署次數 = 帳單頁「Credits available」總數 ÷ 15**（無條件捨去，因為credit依到期日先扣完才會扣下一個池，兩池加總算即可，不用個別分開算再加總的次數）
+
+## 🔴 核心教訓：估算遞減法會長期失準，必須定期回頭核對真實帳單頁
+
+`state/netlify_deploy_quota.json`原本用「每次部署扣15點，遞減記錄」的估算法追蹤，但2026-08-25教練要求直接查真實帳單頁時發現：估算值停留在「約34次」，真實只剩**9次**（總額147點：Personal plan池76.4點+無到期日池70.1點）。落差原因是這段時間有多次部署沒有被正確記錄扣減（`netlify_deploy_guard.sh`的自動扣減邏輯依賴指令結尾剛好是`/deploys`，接了pipe或多個flag的curl指令會漏抓，見下方舊教訓），估算法只要漏抓一次就會開始跟真實值脫鉤，而且不會自己修正。
+
+**結論：估算遞減法只能當「部署當下的即時提醒」用，不能取代真實查證。**
+
+## ✅ 教練2026-08-25拍板的新SOP
+
+1. **每次執行Netlify部署後**，直接查一次`https://app.netlify.com/teams/bymyway7/billing/general`（用claude-in-chrome連教練本機已登入Chrome，或Personal Access Token查`/api/v1/accounts`拿billing period日期，但credit餘額本身目前只能從網頁的Usage & billing頁面讀到，API沒有直接回傳「剩餘credit」欄位）
+2. 讀取頁面上「Credits available」總數，除以15算出剩餘部署次數
+3. 回報教練時附上這個數字，同時更新`state/netlify_deploy_quota.json`的`quota_as_of`/`quota_remaining`/`credit_pools`欄位為真實值（不要再只做遞減估算，要真的去查）
+4. 若剩餘次數≤3且非教練明確要求的緊急部署，主動提醒額度快用完
+
+## 2026-08-25查證的真實數字（供下次快速比對用）
+
+- 當期週期：Jul 25 ~ Aug 24（8/25即將重置）
+- Personal plan credits：76.4 / 1,000 remaining（2026-07-25核發，2026-08-25到期）
+- 無到期日 credits：70.1 / 500 remaining（2026-05-30核發，無到期日）
+- 合計147點 → **約9次部署額度**
+- 本期消耗明細：Production deploys 49次=735點／Web requests 99,186次=19.8點／Bandwidth=168.4點／Compute=0.4點／AI inference=0點，合計消耗923.6點
 
 ## Why
 
-7/17記錄的「16次」是當時credit餘額換算出來的數字，7/25這天核發了新一批1000點credit，餘額大漲，換算出來的次數自然跟著跳升到71次——這不是系統規則變了，只是餘額本身變多了。之後每次真的部署，都要用「credit餘額差 ÷ 15」來確認換算率有沒有跑掉。
+教練親口點出：這套系統的最高目標是像鋼鐵人的賈維斯——教練交代過、說過的每一句話，AI都要記得並且能自動串連起來，不用每次重複交代。額度快沒了卻不知道、教練得自己上網去查，就是「AI沒有主動幫教練把關」的反面案例；估算法失準卻沒人發現，正是「記得了但沒有用出來」（對應守則#01「記不住就是不在乎」的延伸——這裡是「記錯了、不驗證，比不記得更糟」）。
 
 ## How to apply
 
-**每次要推Netlify之前**：
-1. 先報目前剩餘次數（餘額/15換算），例如「這次推完約剩70次」
-2. 若剩餘次數低（≤3次）且不是緊急/教練明確要求，主動提醒額度快用完
-3. 推送完成後，比對前後credit餘額差異是否仍是15點，更新這份記憶檔與`state/netlify_deploy_quota.json`
-
-## 額度使用紀錄（每次更新剩餘次數，換算率15點/次）
-
-| 日期 | 事件 | 扣除後剩餘 |
-|------|------|-----------|
-| 2026-07-17 | 教練告知起始額度 | 16 |
-| 2026-07-19~07-24 | 陸續多次部署（tainan-calender/bigtree-tw/ai-talk-tw/jiesheng-leadership等） | 見`state/netlify_deploy_quota.json`history區塊 |
-| 2026-07-25 | 教練貼帳單截圖，新credit核發，餘額換算回升 | 約71 |
-| 2026-07-25 | ai-talk-tw部署：現場設攤6家廠商+贊助好禮+贊助人名單+入門禮補充(deploy 6a646c0213e4778b1f227e4e) | 70 |
+- 之後任何一台機器的軍師要推Netlify前，先用這份SOP的公式估個大概（沒空查真實頁面時的備援），但**部署完成後一定要抽空查一次真實帳單頁**，不能讓估算值連續好幾天沒人回頭核對
+- 8/25當天或之後，額度會重置回1000點（Personal plan池），到時候直接更新這份記憶檔的「當期週期」跟餘額，不用重新推導公式
 
 Related: [[reference_netlify_token]], [[feedback_netlify_autodeploy_cost_awareness]]
