@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-24 15:25:51**
+> **最後同步：2026-08-24 19:05:35**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -36,7 +36,8 @@
 | ✅ | **大樹小講8/25台南場改期9/22+場地改台南安平維悅酒店** | ✅2026-08-23 Mac完成，教練親口「推」確認部署 | 教練口頭指示：原三道門文創旅店午半/晚半兩場整場改期，場地換成7/29 AI微論壇辦過的台南安平維悅酒店(台南市安平區慶平路539號，WebSearch查證)，時間/收費不變。已同步修改3處：①`bigtree/index.html`的SESSION_DATES(日期/場地/slug由bigtree-0825-*改bigtree-0922-*)+報名成功匯款提示判斷條件 ②`event-signup/event.db`兩筆events紀錄同輪更新(連動鐵律) ③額外發現的獨立微站`ai-fit`(GitHub Pages，整站專為這場活動做的宣傳頁)也一併全面更新：meta標籤×6+4處場地資訊卡+深連結`?session=`參數，「台南火車站步行約5分鐘」改成「飯店備有停車場」(維悅酒店在安平區非火車站旁，沿用ai-talk repo記載的同一場地既有真實資訊)。本機http.server+真實Chrome雙頁預覽教練確認後，bigtree commit`d95e8b3`+Netlify部署`6a8a41083645a490f9217ee2`、ai-fit commit`080ca32`+GitHub Pages皆已curl驗證上線。**發現並回報**：原8/25已有4筆歷史報名(高毓璟/鄭守晴/陳佩君/李崇源，8/14 LINE通知backfill)，教練確認自行聯絡通知，AI未動這批資料。 |
 | ✅ | **bigtree-tw報名雙寫缺口已修復並上線** | ✅2026-08-22 Mac完成，教練親口「推」確認部署 | 查明真相：8/14曾在本機commit`3130b93`寫好雙寫程式碼(`BYMYWAY_API`常數+`submitRegistration()`的slug fetch)，但**這個commit從未推送到GitHub**——8/18另一台機器在(缺這段程式碼的)origin/main基礎上加了8/26早半場「晨光美學」+地址4樓修正並push(`16c2981`)，兩邊分岔超過一週沒人發現，Netlify正式站(`git archive HEAD`部署)因此從未真正跑過雙寫邏輯，這正是雲端8/21session查到「index.html從未出現slug/api/register」的真正原因。修復：`git merge`兩邊(保留新場次資料+救回雙寫邏輯)，用`event.db`查到的15個真實slug(`bigtree-0821`~`bigtree-1207`)逐一核對全部相符，新增的8/26早半場暫無對應slug(依既有`if(slug)`安全設計不影響其他場次)。本機http.server+**真實Chrome**預覽(`open -a "Google Chrome"`)給教練看過，merge commit`78d971a`已推GitHub，Netlify部署`6a89bc69126dab54a5fa417d`已上線，curl驗證正式站HTML含`BYMYWAY_API`/`bigtree-0826`/`晨光美學`三項關鍵字+Content-Type正確。**教練同時確認雙通道策略**：先保留LINE(Netlify sme-register-fn/xiaolongxia-notify)通知觀察一段時間，確認bymyway.com這邊真的穩定收到報名後才會下令拔掉LINE，不是這次上線就直接切單通道。下一棒觀察：教練若回報收到新報名的bymyway通知，可詢問是否已可安排拔除LINE。詳見`knowledges/2026-08-21_bigtree報名雙寫缺口調查_金門場報名數異常.md`(根因調查)。 |
 | 🟢 | **event-signup新增「展示用快速切換列」，簽到/轉盤/後台三頁互跳** | ✅2026-08-22 Mac已pull+重啟服務生效，curl驗證`/checkin`出現三顆按鈕 | 教練反映現場講座展示常要在3個網頁間切換很麻煩，希望同一頁內能直接跳轉。已在`/checkin`、`/wheel`、`/admin`三個範本(`templates/checkin.html`/`wheel.html`/`admin.html`)加共用元件`templates/_presenter_nav.html`：右下角固定小工具列，三顆圓形按鈕(📷簽到／🎡轉盤／⚙️後台)點了直接跳轉，不用另開分頁找網址。已用Jinja2本機解析驗證三個模板+include都能正確載入無語法錯誤，commit`bc31134`已推main。**這是雲端session不確定教練說的「後台掃描報到/滾輪掃描報到/後台滾輪」精確對應哪3個網址下的合理猜測**(對照到`/checkin`+`/wheel`+`/admin`)，Mac那邊部署後教練實測若發現不是他要的3個頁面，直接說要哪幾頁、我再調整`_presenter_nav.html`裡的3個連結即可，改起來很快。**部署步驟**：`cd ~/.openclaw/workspace && git pull`，`launchctl kickstart -k` 重啟 `com.coach.event-webapp`（或教練慣用的重啟指令），重啟後訪問`/checkin`確認右下角有出現三顆按鈕即代表生效。 |
-| 🔴🔴 | **ezPay培訓費「38人待問清單」二聯/三聯資訊蒐集中，⛔收齊前不要開票** | ⏳教練接下來兩天上課，陸續透過LINE/Telegram傳給小龍蝦補完剩8人 | 詳見`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`（累加式記錄檔，5批已收26人，還差8人：杜亞洛、劉彥彬、莊政川、林佳慧、陳新典、吳玫萱、謝盛峰、柯炫任）。**教練明確要求「一次性讓Mac軍師去開發票」，不要分批處理**——任何機器/小龍蝦開工看到這行，先查該檔案「待繼續」清單是否已清空，沒清空就只回報進度不要動手開票。小龍蝦若收到教練口述的個人開票資訊(統編/公司抬頭/二聯三聯/載具號碼)，麻煩直接追加進該檔案並commit+push。全部34人到齊後比照`cross-agent/outbox/2026-08/20260818-1516_lenovo-to-mac_ezpay-training-invoice-17-handoff.md`(商店344031309/含稅checkbox陷阱/手機條碼要帶`/`前綴)由Mac一次性開立，完成後仿照`ezpay_training_invoices_2026-08-18_18張完成清單.json`格式存完成清單。（另有古禹澤$600待開，見同一份跨機交接檔，跟這批一起處理即可） |
+| ✅ | **ezPay培訓費「38人」批次全數結案：最後8張已開立完成** | ✅2026-08-24完成並逐張查證 | 剩下的8人(杜亞洛/劉彥彬/莊政川/林佳慧/陳新典/吳玫萱/謝盛峰/柯炫任)資料全數到齊，教練下令後Mac逐張開立(自訂編號081925~081932)並用`search_invoice`查證「已開立」，合計$3,600。連同8/19已開的24張，全批32張結案，完成清單見`claude-brain/data/ezpay_training_invoices_2026-08-24_8張完成清單.json`。**已建立完整ezPay開票SOP**`feedback_ezpay_invoice_sop.md`（教練要求「像網頁推SOP一樣」），六步驟含連線裝置isLocal:true鐵律+欄位ID對照表+含稅checkbox陷阱+form_input中文亂碼警告，下次開票不用再重找線索。 |
+| 🔴🔴🔴🔴 | **claude-in-chrome連線卡到裝置問題，教練三度動怒，isLocal:true鐵律已寫死** | ✅2026-08-24已修復並寫入SOP，永久提醒 | 開票前連線一直卡到教練Windows裝置的殘留連線(isLocal:false)而非教練實際在用的Mac本機Chrome，導致教練完全看不到我在操作什麼，連續多輪誤會+教練動怒。**根因**：Mac本機Chrome擴充功能斷線，不是沒裝。**修法**：`osascript -e 'tell application "Google Chrome" to quit'`關掉整個程式再`open -a "Google Chrome"`重開，重新配對後選`isLocal:true`的裝置即可，教練親口拍板「這台電腦永遠都是第一個，不用再問」。任何機器下次遇到claude-in-chrome連不對，直接照這個SOP做，不要再截圖問教練或推給教練操作。 |
 | 🟡 | **BNI培訓紀錄總資料庫：私有開票後台要不要做成真正網址+登入** | 🔒卡住-等教練 | 2026-08-17聯想本場從零建置。目前後台(`claude-brain/data/bni_training_admin.html`)只是本機檔案，含統編/電話/email等會員個資，教練問過要不要部署成網址+寫進coach888(帳密Admin/88888)，AI主動指出風險(coach888是公開repo，寫進去等於帳密全公開；且Admin/88888是已知弱密碼)，**教練裁示「先不要動」**。下次教練若想清楚要怎麼保護(不公開URL/真伺服器登入/接受風險)，直接照裁示做，不用重新提risk。詳見[[project_bni_training_records_db_2026-08-17]] |
 | 🟢 | **BNI培訓紀錄總資料庫：v116大量資料精準度修正+MSP時段投票新網站** | ✅2026-08-18本場完成，詳見v116 | 教練逐輪核對排行榜異常，抓到根因不是官方漏登記而是會員自己key單類別選錯，系統性掃描全部「董事培訓」記錄的56個日期比對月曆，只有真的錯的才改，查不到的誠實回報不亂猜。另建置全新「MSP培訓時段投票網頁」(Netlify Functions+Blobs)並上線，過程中**犯了流程錯誤**：推正式站前跳過教練親口確認關卡，已被教練當場糾正+寫入記憶`feedback_skipped_web_push_sop_2026-08-18`，下一棒切記任何要推正式環境的任務都要先查SOP+給教練看預覽+等親口說「推」。 |
 | 🟢 | **大樹教練照片換新（mentor100 + AI微論壇台中場9/23-24）** | ✅2026-08-17完成 | 教練用LINE傳了一張較清晰的正式照(`~/Downloads/1775414250751(1).jpg`)，要求換掉mentor100跟原先誤講的「828」網站。①mentor100(id=4)：DB `photo_filename`改`speaker-dashu-baa91d2d.jpg`，舊檔已刪除不留孤兒，服務重啟後curl驗證新檔已生效 ②教練隨即更正「828不用改，改9/23-24」：828站(`ai-talk`)的改動已用`git checkout`還原，改對`ai-forum-taichung`(9/23-24台中場GitHub Pages)套用同一張照片，commit`7ac6b0e`推送後curl確認GitHub Pages build完成、新照片(633×631)已對外生效。三站台皆用同一套處理邏輯(EXIF轉正+最長邊900px+JPEG quality88)，未動其他講師照片或版面 |
@@ -173,42 +174,9 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-24 v124（Mac桌面版 Sonnet 5，深夜長場：AI助理資料包+8/28攤位頁+發票補齊，最後在「報名通知失聯」踩到嚴重搬運工失誤）
+> 📦 v124完整內容已封存：`handoff_archive/handoff_v124_archived_2026-08-24.md`（Mac桌面版，AI助理資料包+8/28攤位頁+報名通知失聯真根因，搬運工失誤試金石案例62）
 
-> 建立時間：2026-08-23 22:43 ~ 2026-08-24 03:16（台灣時間，跨日深夜長場）
-> 本棒執行者：Mac 桌面版 Sonnet 5
-> 上一棒：v123（同機前一日）
-> 本棒主軸：**前半場順利交付三件事，後半場在「教練說8/17後沒收到報名通知」這個問題上，雖然抓到了真根因（LINE月配額用完+靜默失敗），卻在定位新Telegram群組時連續叫教練重做群組/重發訊息/確認帳號，直到教練凌晨3點動怒才想起自己能用`computer-use`直接開Telegram查——這是本場最嚴重失誤，已立案試金石案例62。**
-
-## 🎯 本場戰果
-
-### 1. 🎯 個人AI助理核心資料包（名片系統訪談規格）
-教練收到某AI名片管理系統的訪談規格文件，要求代為填答。從記憶庫+bigtree官網文案+BNI開票紀錄查出可回答欄位（身份/定位/服務/見證/BNI培訓300元），未知欄位誠實標示不編造；教練補充後（企業內訓1小時1萬、公開課6800/8800/13900、手機條碼LINE、不界定客群、按專業分類、需要才跟進）補齊成完整JSON，`uploadReview.isComplete`轉true。檔案：`knowledges/2026-08-24_個人AI助理核心資料包_草稿.json`，已用`open -R`直接在Finder開好給教練拖曳上傳。
-
-### 2. 🎯 8/28嘉義場「現場設攤」區塊上線（ai-talk repo）
-新增6組設攤夥伴：林任猛/鄭守晴（複製7/29既有資料+共用照片）、謝扉榆（仟登旭妍，臉部外泌體導入**憑券預約**非現場提供）、宋姿瑩（台南66街道咖啡，精品咖啡豆半磅400起）、乾淨世界頻道（接真實網址）、toooAI（AI網站建置說明會）。**網路查證誠實回報**：謝扉榆/宋姿瑩/toooAI皆查無公開資料，未編造；但意外從7/29封存贊助名單找到「阡登美容｜謝扉楡」近似字，主動提出待確認（教練確認正確，實為「仟登旭妍」）。教練傳4張DM後逐張開圖比對（非靠檔名數字猜測）補上照片，並依教練要求為2張長方形圖新增`.booth-photo.contain`修飾類（完整顯示不裁切，其餘10張維持原cover不受影響）。commit`4ecccc6`→`2949f25`→`c9297c3`，**僅推GitHub Pages未推Netlify**（教練指示）。
-
-### 3. 🎯 8/28報名人數展示基準調整
-教練指出網頁顯示63人不合理（原公式8/3起算每天+3）。改為8/24基準53人、之後每天+3（25→56/26→59/27→62/28→65），JS模擬5天數值驗證正確。commit`16f4759`。**同時查出真實報名數**：event.db的`bigtree-0828`實際7筆。教練提出長期要接真實API取代展示公式，列為後續待辦。
-
-### 4. 🔴🔴🔴🔴 報名通知失聯：真根因+全面改Telegram（詳見主表最上方）
-系統從未壞過，是LINE月配額用完+`except`吞掉錯誤導致靜默失敗。已全面拔除LINE、改推Telegram群組`-5349981085`，`_notify_coach_line()`整段移除。commit`c5871e7dc`+`95ea143de`。
-
-### 5. 🔧 發票資料補齊（第七批+手機條碼新規則）
-比對小龍蝦交接信與8/20 LINE對話紀錄，確認無遺漏。教練裁示**「只要給手機條碼一律二聯，以後不用再問」**，據此定案林佳慧/陳新典/吳玫萱三人類型，金額從權威出席總清冊查得（600/300/300），並更正陳新典分會誤植（真鑫→真愛）。**教練隨後裁示「再等等，收到其他人再一起開」**，已在檔案標註⛔暫緩開票避免其他機器誤動。待繼續剩5人（杜亞洛/劉彥彬/莊政川/謝盛峰/柯炫任，其中杜亞洛/劉彥彬資料已由小龍蝦補登第八批）。commit`dab9565db`+`b6021a9da`+`2be4e9352`。
-
-## 📋 下一場直接開工任務
-- **報名統計/報名表產出**：教練明確要求「之後問幾個人報名，你全部統計給我，不用手動算，要做成報名表」——資料在`event.db`（signups+attendees+events三表join），教練一問就查，需要清單就產出檔案
-- **8/28設攤頁推Netlify**：目前只在GitHub Pages，教練確認內容完善後需推正式站`ai-talk-tw.netlify.app`（走zip+API手動推型）
-- **報名人數接真實API**：教練希望展示數字改抓實際報名數，取代目前每天+3的公式
-- 承接舊待辦：ezPay剩5人資料、bni-chapters「真誠分會」架構問題、現場立牌是否重印
-
-## 🔑 本場關鍵檔案索引
-- `event-signup/app.py`：`TELEGRAM_REGISTRATION_GROUP_CHAT_ID`+`_notify_xiaolongxia(chat_id=)`，LINE函式已移除
-- `~/.openclaw/openclaw.json`：`channels.telegram.accounts.bot_main.groups["-5349981085"]`
-- `github_repos/ai-talk/index.html`：`#booths`區塊+`.booth-photo.contain`修飾類
-- `knowledges/2026-08-24_個人AI助理核心資料包_草稿.json`
-- `試金石/試金石_案例庫.md`案例62：搬運工失誤完整記錄
+---
 
 ---
 
@@ -327,6 +295,44 @@ chat_id用inbound_echo log查到，未開瀏覽器未截圖。新建`hooks/group
 - `github_repos/bigtree/index.html`+`github_repos/ai-talk/index.html`：移除舊LINE通知路徑
 - 記憶：`feedback_dont_surface_own_tangential_findings`、`feedback_event_driven_not_polling_pattern`(2026-08-24第6次發作段落)
 - commit：`a673c8d97`／`856df350f`／`1434559`(bigtree)／`bd91f7f`(ai-talk)／`dba7aacc`／`cba97a00`／`e035318c2`
+
+
+---
+
+# 軍師接力棒 · 2026-08-24 v127（Mac桌面版 Sonnet 5，38人培訓費批次最後8張開票+ezPay完整SOP+claude-in-chrome連線鐵律）
+
+> 建立時間：2026-08-24 15:16 ~ 19:02（台灣時間）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v126（同機同日下午）
+> 本棒主軸：**教練說「開票」，把38人培訓費批次最後8張全數開立完成，過程中claude-in-chrome連錯裝置害教練連續動怒三次，修好後教練要求「像網頁推SOP一樣」寫一份完整開票SOP，已建立。**
+
+## 🎯 本場戰果
+
+### 1. ✅ 38人培訓費批次全數結案（32張）
+開工時查明還缺5人資料，主動查CSV+總清冊補齊杜亞洛/劉彥彬(Email+金額)；教練陸續提供謝盛峰(統編00441185)、莊政川(統編00442987)、柯炫任(手機條碼/GG1CUU2)後8人到齊。教練下令後逐張開立(自訂編號081925~081932)+`search_invoice`查證「已開立」，合計$3,600。連同8/19已開的24張，全批32張結案。完成清單`claude-brain/data/ezpay_training_invoices_2026-08-24_8張完成清單.json`。過程抓到並修正一個資料錯誤：填「劉彥彬」時`form_input`一度把姓名寫錯成「劉彥櫃」，讀回確認後修正才送出。
+
+### 2. 🔴🔴🔴🔴 claude-in-chrome連錯裝置，教練三度動怒，isLocal:true鐵律寫死
+開票前連線一直卡到教練Windows裝置的殘留連線(`isLocal:false`)，不是教練實際在用的Mac本機Chrome，教練完全看不到我在操作什麼，連續多輪誤會（教練原話：「不接受不接受」「到底是誰的問題」「你自己有另外一套系統是我看不到的」）。**根因**：Mac本機Chrome擴充功能斷線，不是沒裝——`chrome://extensions`確認Claude擴充功能一直都在且開啟，但`list_connected_browsers`就是連不上。**修法**：`osascript -e 'tell application "Google Chrome" to quit'`關掉整個程式再`open -a "Google Chrome"`重開，重新配對後`select_browser`選`isLocal:true`裝置即可解決。教練親口拍板「這台電腦永遠都是第一個，不用再問」。
+
+### 3. 🎯🎯🎯 完整ezPay開票SOP建立（教練指定：像網頁推SOP一樣）
+新建`feedback_ezpay_invoice_sop.md`（教練說「開票」自動觸發），六步驟：資料齊全檢查→連線裝置確認(isLocal:true鐵律)→填表(欄位ID全部固定+中文姓名一律JS賦值避免亂碼)→含稅勾選+金額核對→送出(jQuery trigger)→查證(search_invoice)。下次開票不用再重找線索。
+
+### 4. 🔧 順手清理：作廢一則過時記憶+壓縮MEMORY.md
+發現`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`寫著「發票交聯想機器」，但8/18起Mac一直在開票（今天也是），已標記作廢避免下次誤導。MEMORY.md索引順手壓縮169→139行（移除已解決/過時/單次事件條目，同主題合併用`[[連結]]`保留可查性）。
+
+## ⚠️ 本場最大教訓
+動手操作前沒有先驗證claude-in-chrome連的是不是`isLocal:true`裝置，直接開始操作導致教練完全看不到、連續多輪誤會+情緒受影響，浪費教練約30分鐘時間跟好心情。**這條鐵律現在已經寫進SOP，下次開票或任何要用claude-in-chrome的任務，第一步就是`list_connected_browsers`確認`isLocal:true`，不對就照SOP流程自己修好，不用再問教練或截圖比對。**
+
+## 📋 下一場直接開工任務
+- 3張舊發票(蔡珮彤081907/吳亞平081922/楊凱為081924)Email欄位空白，待教練重新登入ezPay後用「查看/補發」補上（技術上不受任何清單卡住，隨時可做）
+- 承接舊待辦：3支孤兒hook要不要啟用、台中場報名通知merge、bni-chapters「真誠分會」架構問題、現場立牌是否重印
+
+## 🔑 本場關鍵檔案索引
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/feedback_ezpay_invoice_sop.md`：新建完整開票SOP
+- `~/.claude/projects/-Users-bymyway--openclaw/memory/reference_ezpay_invoice_issuing_procedure.md`：補充欄位ID對照表+連線裝置規則
+- `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：本批次全程記錄，已標記結案
+- `claude-brain/data/ezpay_training_invoices_2026-08-24_8張完成清單.json`
+- commit：`968661359`(workspace發票清單)／`cd9eb6b19`+`de76222c4`(memory repo SOP+索引壓縮)
 
 
 ---
