@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴🔴 自己發現的無關緊要的事不要丟給教練花時間釐清(2026-08-24)](feedback_dont_surface_own_tangential_findings.md) — 只講教練當下問的+真正影響現有功能的，技術債類發現存knowledges就好
 - [🎯🎯🎯 四支自動化工具上線：報名統計/場次巡檢/發票對帳/小龍蝦派工軍師(2026-08-24)](project_autonomy_toolkit_2026-08-24.md) — 教練問人數/資料對不對/發票漏沒漏，直接跑腳本別手算
 - [🔴🔴🔴 OpenClaw hook 光註冊不會生效，一定要有HOOK.md宣告metadata.events(2026-08-24)](reference_openclaw_hook_requires_hookmd_metadata.md) — 載入器只log.warn就靜默跳過；驗證法是比對gateway log的loaded數字
 - [🔴🔴 三支hook接力棒說「已完成驗證」但從未註冊過，一天都沒跑(2026-08-24)](project_hook_orphans_never_registered_2026-08-24.md) — 兩支會動到BNI公開帳號對外回覆，等教練決定是否啟用
