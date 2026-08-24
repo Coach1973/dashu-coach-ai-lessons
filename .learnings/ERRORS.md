@@ -281,3 +281,32 @@ To https://github.com/Coach1973/mac-openclaw-workflows.git
 - **Resolved**: 2026-08-05T23:09:45+08:00
 - **Commit/PR**: b841429bc
 - **Notes**: 重試一次 push 成功，遠端已驗證收下。
+
+## [ERR-20260823-HEALTHCHECK] startup_file_and_edit_anchor
+
+**Logged**: 2026-08-23T23:13:10+08:00
+**Priority**: low
+**Status**: pending
+**Area**: config
+
+### Summary
+健康檢查啟動時，文件路徑與精確編輯操作各出現一次可恢復的工具錯誤。
+
+### Error
+```
+read ~/.openclaw/agents/main/agent/AGENTS.md → ENOENT
+edit HEARTBEAT.md → Could not find the exact text（首次大段尾端匹配失敗）
+```
+
+### Context
+- workspace `AGENTS.md` 已存在並成功提供啟動規範；因此主代理可依 workspace 規範繼續。
+- 首次以整段尾部文字匹配 `HEARTBEAT.md` 失敗，改用唯一尾端錨點後成功追加 cycle=556。
+- 本輪健康檢查結果本身正常：22 個已完成 cron 全綠、consecutiveErrors=0，另有 2 個未到期一次性提醒待執行；TG 探針 ok。
+
+### Suggested Fix
+啟動前確認 `~/.openclaw/agents/main/agent/AGENTS.md` 是否存在；若不存在，明確記錄為環境觀察，不自行虛構內容。編輯長檔案時先讀尾端，再以最小唯一錨點做追加。
+
+### Metadata
+- **Reproducible**: yes
+- **Related Files**: AGENTS.md, HEARTBEAT.md
+

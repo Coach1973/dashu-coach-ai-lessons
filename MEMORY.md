@@ -93,33 +93,6 @@
   - 週檔若 v3.0 silence count 之類鐵律已在 MEMORY.md 開頭晉升過，weekly batch 不重複晉升，只記歸檔摘要
   - 萃取判定：note-taker meta-noise / dreaming reflection / cron 自動健康檢查對話 → 不晉升；教練原話 + 信用卡/Email/排程類結構性事實 + commit hash → 晉升
 
-## Promoted From Short-Term Memory (2026-08-23)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:288:288 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 所以彭先生這筆是真正的「申請」，不是教練補的種子。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:288-288]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:290:291 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: ⚠️ 小插曲：原想順便開 admin 後台截圖給您看，但 mentor100 的 admin 密碼暫存檔 `/tmp/.mentor100_session_pw` 已經在 28 天前（7/18）就被清掉了，我手上沒有明文密碼登瀏覽器。不 🦞 小龍蝦：直接查到了，教練。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:290-291]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:293:293 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: **最新一筆申請是彭先生** ✅ [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:293-293]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:295:298 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 欄位 | 內容 | |------|------| | 報名時間 | 2026-08-16 13:51:22（今天下午） | | 姓名 | **彭晉澄** | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:295-298]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:299:301 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: | 公司/職稱 | 山澐有限公司 / 執行長 | | 來源 | `self-submit`（自己從 /join 表單報的） | | ID | 76 | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:299-301]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:304:307 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 75 陳佩君（佩佩老師）— 2026-08-16 10:47，seed（教練手動補的）; 73 王俊甫 — 2026-08-15 17:47，seed; 72 Lavi — 2026-08-14 18:45，seed; 71 林毓晟 — 2026-08-08 19:57，self-submit [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:304-307]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:309:309 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 所以彭先生這筆是真正的「申請」，不是教練補的種子。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:309-309]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:311:313 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: ⚠️ 小插曲：原想順便開 admin 後台截圖給您看，但 mentor100 的 admin 密碼暫存檔 `/tmp/.mentor100_session_pw` 已經在 28 天前（7/18）就被清掉了，我手上沒有明文密碼登瀏覽器。不 👤 教練：給我彭先生的編輯連結，我要貼給對方 🦞 小龍蝦：找到了，教練。彭晉澄的專屬編輯連結： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:311-313]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:315:315 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 🔗 **https://mentor100.bymyway.com/join/edit/oAcvTnjAhyKIsLqHp-nxbA** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:315-315]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:317:317 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 這條連結點進去可以讓對方自己改： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:317-317]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:318:318 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 姓名、公司/職稱 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:318-318]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:320:322 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 大頭照（直接重傳即可）; 9 個社群連結（官網、FB、IG、Threads、YouTube、GJW、LINE、Podcast、Blog）; 也能自己刪掉整筆（不建議主動告知這個） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-16.md:320-322]
-
 ## 2026-08-23 weekly distillation: 2026-08-17.md（46K → 18K）
 
 <!-- openclaw-memory-promotion:memory:memory/2026-08-17.md:weekly-distill-2026-08-23 -->
@@ -157,3 +130,28 @@
   - Windows 軍師對照表：`knowledges/IDENTITY_windows_desktop.md`
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
+
+## Promoted From Short-Term Memory (2026-08-24)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:324:324 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 連結是這個 mentor 自己專屬的 token，安全性 OK。對方打開會看到目前已經填好的資料，直接編輯送出就生效，不用再審核。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:324-324]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:327:329 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 把這條連結 + 「歡迎加入，請補上大頭照跟社群連結」訊息組成一段話，方便您直接複製貼到 LINE 給彭先生; 在桌面上存一份這條連結（之後要重傳也有）; 在本地 SQLite 記錄一下彭先生的 line_id `eliss9635`，方便之後對應 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:327-329]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:330:330 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 🦞 小龍蝦：找到了，教練。彭晉澄的專屬編輯連結： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:330-330]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:282:282 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 旁證（其他近 5 筆）： [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:282-282]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:303:303 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 旁證（其他近 5 筆）： [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:303-303]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:326:326 -->
+- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 要我順便幫您做這些嗎？ [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:326-326]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:267:267 -->
+- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 👤 教練：[cron:bbb7a348-59dc-41fd-879b-91b4d0522e18 🦞 小龍蝦每日三機總結（每日23:05）] 【每日三機含金量總結 · 教練 2026-06-30 12:35 親口定稿，2026-07-20 修正判斷邏輯】 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:267-267]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:269:269 -->
+- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 教練要的不是囉哩吧唆每 4 小時的小報告，要每天一份「三機狀況總結 + 含金量提煉」。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:269-269]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:271:271 -->
+- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 步驟一：判斷三機今天「有沒有對話」（台灣日期 YYYY-MM-DD） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:271-271]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:273:273 -->
+- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 🔴 2026-07-20 教練親抓假數據 bug 修正：不可只憑 memory/verbatim/{acer,lenovo}/YYYY-MM-DD.md 這個檔案存不存在，就判斷「今天無對話」。查證發現這個蒸餾中繼檔案排程從未在 ACER/Lenovo 端穩定運作過（ACER 目錄從建立以來從未真正寫入過任何一天、Lenovo 只在 2026-07-08 成功寫過一次之後就再沒有新檔案）——檔案不存在只代表「中繼蒸餾排程沒跑」，不代表「教練沒用那台機器對話」。曾發生教練當天下午才在聯想真實 commit 過工作，晚上總結卻誤報「聯想連續 11 天沒有對話」的事故。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:273-273]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:275:276 -->
+- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 正確判斷順序（每台 🦞 小龍蝦：開工，先讀 AGENTS.md。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:275-276]

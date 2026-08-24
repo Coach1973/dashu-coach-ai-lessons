@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-08-24T08:20:02.113282+08:00",
+  "future_sessions": 14,
+  "problems": [
+    "個別活動頁「AI微論壇 台中場」(ai-forum-taichung) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道"
+  ],
+  "satellites": {
+    "ai-talk": {
+      "desc": "AI微論壇 嘉義場",
+      "slugs": [
+        "bigtree-0828"
+      ],
+      "exists": true,
+      "has_api": true,
+      "has_deeplink": false,
+      "notified": true,
+      "how": "自己打 /api/register"
+    },
+    "ai-fit": {
+      "desc": "從從容容用AI聊健康 台南場",
+      "slugs": [
+        "bigtree-0922-day",
+        "bigtree-0922-night"
+      ],
+      "exists": true,
+      "has_api": false,
+      "has_deeplink": true,
+      "notified": true,
+      "how": "深連結回官網報名"
+    },
+    "ai-forum-taichung": {
+      "desc": "AI微論壇 台中場",
+      "slugs": [
+        "bigtree-0923",
+        "bigtree-0924"
+      ],
+      "exists": true,
+      "has_api": false,
+      "has_deeplink": false,
+      "notified": false,
+      "how": "❌ 沒有任何通知管線"
+    }
+  }
+}

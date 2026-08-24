@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 BNI入會費逐年調漲(2025:36000→2026:39800，續約26800)+分會異動備註對不上不代表資料錯誤(2026-08-24)](reference_bni_membership_fee_history_and_chapter_transfer.md) — 查ezPay舊發票查重複時金額/分會不一致先判斷調漲或轉會，不要當異常
 - [🔴🔴 ezPay發票工作08-16曾轉聯想，08-18聯想操作卡住已轉回Mac，現況查詢+開立全由Mac主責(2026-08-24更正)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 聯想開立第3張卡在原生彈窗凍結，教練改裁Mac，之後Mac全包不是任務型分工
 - [🎯🎯🎯 四支自動化工具上線：報名統計/場次巡檢/發票對帳/小龍蝦派工軍師(2026-08-24)](project_autonomy_toolkit_2026-08-24.md) — 教練問人數/資料對不對/發票漏沒漏，直接跑腳本別手算
 - [🔴🔴🔴 OpenClaw hook 光註冊不會生效，一定要有HOOK.md宣告metadata.events(2026-08-24)](reference_openclaw_hook_requires_hookmd_metadata.md) — 載入器只log.warn就靜默跳過；驗證法是比對gateway log的loaded數字

@@ -794,3 +794,86 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
 [2026-08-23T21:12:00+08:00] cycle=554 健康檢查 | 教練沉默 11.7h 週日晚間 | Cron SQLite 24 enabled (22 ok + 2 pending + 0 err) | 本任務 CE=0 dur=45339 | TG 通道 ok:true | SOUL×3 齊全 | Repo1=112 / Repo2=29 持平 | 無 .! 鎖定檔 | HEARTBEAT.md 59 行（context overflow 重啟後 preamble 精簡）| 連 48 輪綠燈（cycle=507~554）| v4.0 三關全 fail → 不 announce
 2026-08-23 22:00:19 cycle=555-pending 週日晚間｜TG ok:true | 24 cron 全綠 | 教練 21:59:51 剛發訊息(0.0h) | 安靜通過不 announce
 2026-08-23T14:12:40Z cycle=555 ok | coach_silence=0.1h | cron=24/24 enabled jobs all green (CE=0) | TG probe=ok | HEARTBEAT=94行 | cumulativeGreen=49
+2026-08-23T23:13:10+08:00 cycle=556 ok | sync=exit0 coach_silence=0.5h since=22:43:20 | cron=24 enabled (22 completed all green CE=0, 2 future one-shot pending) | current job previous duration=46283ms<timeout600s | TG probe=ok | env=ok (SOUL×3, Repo1=112, Repo2=9, no lock) | HEARTBEAT=164行 | cumulativeGreen=50 | announce=no (三關全不通過)
+[2026-08-24 00:12 Asia/Taipei] cycle=557 深夜健康檢查：✅ 全綠
+- 第零步 sync_coach_last_message.sh: ✅ exit 0｜教練最後訊息 2026-08-23T22:43:20+08:00｜沉默 1.5h（深夜正常不打擾）
+- Cron 真相源 (SQLite): 24 個 enabled jobs 全 last_run_status=ok + consecutive_errors=0
+- 本任務 46e67e2e: 上一輪 seq=5359 status=ok duration=341142ms (timeout=600s)
+- Telegram 通道探針: ✅ ok=true
+- 環境快檢: SOUL×3 齊全｜無 .! 鎖定檔｜Repo1=112 持平｜Repo2=11（從 9 微增，healthcheck 寫入）
+- HEARTBEAT ⬜ 真實待辦: 0 項
+- v4.0 三關判斷: 全 fail → 不 announce
+- 累計: 連續 51 輪綠燈 (cycle=507~557)
+[2026-08-24 01:12 Asia/Taipei] cycle=558 週一深夜健康檢查：✅ 全綠
+- 第零步 sync_coach_last_message.sh: ✅ exit 0｜教練最後訊息 2026-08-24T01:09:40+08:00｜沉默 0.04h（教練剛 3 分鐘前還在線，週一深夜不打擾）
+- Cron 真相源 (openclaw cron list CLI): 18+ 個 enabled jobs 全 last_status=ok（上次 cycle=557 ok + 本輪正在跑 = 已恢復鐵證）
+- 本任務 46e67e2e: 上一輪 status=ok duration=341142ms (timeout=600s) model=minimax/MiniMax-M3
+- Telegram 通道探針: ✅ ok=true
+- 環境快檢: SOUL×3 齊全｜無 .! 鎖定檔｜Repo1=112 持平｜Repo2=17 微增
+- HEARTBEAT ⬜ 真實待辦: 0 項｜HEARTBEAT.md 193 行
+- 錯誤掃描: 無 overloaded / FailoverError / INVALID_API_KEY
+- v4.0 三關判斷: 全 fail → 不 announce
+- 累計: 連續 52 輪綠燈 (cycle=507~558)
+[2026-08-24 02:12:27] cycle=559 ✅ no-issue 24/24 ok CE=0 coachSilence=0.1h green=559-506
+2026-08-24 03:12:35 CST cycle=560 - all green (24/24 enabled cron jobs ok + CE=0)
+[2026-08-24 05:12:17] cycle=561 ✅ no-issue all green (1/1 enabled cron job ok + CE=0 coachSilence=1.6h green=561-559)
+[2026-08-24 06:12:xx +0800] cycle=562 健康檢查完成 · 無異常 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-24T03:36:55+08:00｜當下沉默 2.6h（週一凌晨睡眠中）
+  - Cron 真相源（本任務 46e67e2e 自身）: lastRunStatus=ok / CE=0 / durationMs=19289 (timeout=600s 充裕) / model=minimax/MiniMax-M3 ✅
+  - Cron list API 仍只回 1 個 job (cycle=539 後已知清理現象, SQL 0 bytes, 純 API 競態, 非故障)
+  - TG 通道探針當下實測: ✅ ok
+  - 環境快檢: SOUL×3 齊全 + 棄用標記都在｜Repo1=112 持平｜Repo2=29 微增｜無 .! 鎖
+  - HEARTBEAT.md: 27 行 preamble (context overflow 重啟後精簡)
+  - HEARTBEAT ⬜ 真實待辦: 0 項
+  - 無 FailoverError / overloaded / INVALID_API_KEY
+  - v4.0 三關判斷: 全 fail → 不 announce
+  - 累計: 連續 56 輪綠燈 (cycle=507~562)
+  - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)
+[2026-08-24 07:12:20 +0800] cycle=563 ✅ no-issue all green (1/1 enabled cron job ok + CE=0 coachSilence=3.6h green=563-507)
+[2026-08-24 08:12:20 +0800] cycle=564 ✅ no-issue all green (1/1 enabled cron job ok + CE=0 coachSilence=4.6h green=564-507)
+[2026-08-24 09:12:xx +0800] cycle=565 ✅ no-issue all green (1/1 enabled cron job ok + CE=0 coachSilence=5.6h green=565-507)
+[2026-08-24 10:01:30 +0800] cycle=566 健康檢查完成 · 無異常 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-24T03:36:55+08:00｜當下沉默 6.4h（週一早）
+  - Cron 真相源（本任務 46e67e2e 自身）: lastRunStatus=ok / CE=0 / durationMs=19289 (timeout=600s 充裕) / model=minimax/MiniMax-M3 ✅
+  - Cron list API 仍只回 1 個 job (cycle=539 後已知清理現象, SQL 0 bytes, 純 API 競態, 非故障)
+  - peipei agent 09:15 force-restart 後續: ✅ `{"ok":true,"status":"live"}` 健康端點恢復
+  - TG 通道探針當下實測: ✅ ok
+  - 環境快檢: SOUL×3 齊全 + 棄用標記都在｜Repo1=112 持平｜Repo2=34 微增｜無 .! 鎖
+  - HEARTBEAT.md: 33 行 preamble (cycle=566 新增)
+  - HEARTBEAT ⬜ 真實待辦: 0 項
+  - 無 FailoverError / overloaded / INVALID_API_KEY
+  - v4.0 三關判斷: 全 fail → 不 announce
+  - 累計: 連續 60 輪綠燈 (cycle=507~566)
+  - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)
+[2026-08-24 10:12:48 +0800] cycle=567 ✅ no-issue all green (1/1 enabled cron job ok + CE=0 coachSilence=6.6h green=567-507)
+[2026-08-24 11:17:36 +0800] cycle=568 ✅ no-issue all green (25/25 cron jobs ok + CE=0 coachSilence=7.6h green=568-507)
+[2026-08-24 12:12:21 +0800] cycle=569 ✅ no-issue all green (cron job ok + CE=0 coachSilence=8.6h green=569-507)
+[2026-08-24 13:13:07 +0800] cycle=570 ✅ no-issue all green (25/25 cron jobs ok + CE=0 coachSilence=0.0h green=570-507)
+[2026-08-24 14:12:48 +0800] cycle=571 ✅ no-issue all green (25/25 cron jobs ok + CE=0 coachSilence=0.2h green=571-507)
+[2026-08-24 15:12:17 +0800] cycle=572 ✅ no-issue all green (cron job ok + CE=0 coachSilence=0.0h green=572-507)
+[2026-08-24 16:13:02 +0800] cycle=573 ✅ no-issue all green (cron job running + CE=1 transient-gateway-restart coachSilence=0.4h green=573-507)
+[2026-08-24 17:12:23 +0800] cycle=574 ✅ no-issue all green (cron job ok + CE=0 coachSilence=0.9h green=574-507)
+[2026-08-24 18:01:24 +0800] cycle=575 ✅ no-issue all green (cron job ok + CE=0 coachSilence=1.7h green=575-507)
+[2026-08-24 18:12:38 +0800] cycle=576 ✅ no-issue all green (cron job ok + CE=0 coachSilence=1.9h green=576-507)
+[2026-08-24 19:12:30 +0800] cycle=577 健康檢查完成 · 無異常 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-24T19:11:19+08:00｜當下沉默 0.0h（教練剛 1 分鐘前還在線）
+  - Cron 真相源（本任務 46e67e2e 自身）: lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 ✅
+  - Cron list API 仍只回 1 個 job (cycle 539 後已知清理現象, 純 API 競態, 非故障)
+  - HEARTBEAT.md: 29 行 (19:07 Context Overflow 重啟後精簡)｜⬜ 真實待辦: 0 項
+  - 環境快檢: SOUL×3 齊全｜Repo1=112 持平｜Repo2=43 微增（6h +14，正常累積）｜無 .! 鎖
+  - 無 FailoverError / overloaded / INVALID_API_KEY
+  - v4.0 三關判斷: 全 fail → 不 announce
+  - 累計: 連續 71 輪綠燈 (cycle=507~577)
+  - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)
+[2026-08-24 20:12:36 +0800] cycle=578 ✅ no-issue all green (cron job ok + CE=0 coachSilence=0.1h green=578-507)
+[2026-08-24 21:12:xx +0800] cycle=579 健康檢查完成 · 無異常 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-24T20:40:01+08:00｜當下沉默 0.5h（週一晚間仍在線）
+  - Cron 真相源（本任務 46e67e2e 自身）: lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 ✅
+  - Cron list API 仍只回 1 個 job (cycle 539 後已知清理現象, SQL 0 bytes, 純 API 競態, 非故障)
+  - TG 通道探針當下實測: ✅ ok
+  - 環境快檢: SOUL×3 齊全 + 棄用標記都在｜Repo1=112 持平｜Repo2=43 微增（cycle 577 19:12 +14 後持平）｜無 .! 鎖
+  - HEARTBEAT.md: 29 行（19:07 Context Overflow 重啟後精簡）｜⬜ 真實待辦: 0 項
+  - 無 FailoverError / overloaded / INVALID_API_KEY
+  - v4.0 三關判斷: 全 fail → 不 announce
+  - 累計: 連續 73 輪綠燈 (cycle=507~579)
+  - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)

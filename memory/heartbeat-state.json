@@ -1,32 +1,32 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-24T06:03:10.234383+08:00",
-    "telegram_channel": "2026-08-24T06:03:10.234383+08:00",
-    "system_health": "2026-08-24T06:03:10.234383+08:00",
-    "coach_silence_sync": "2026-08-24T20:12:03.535046+08:00"
+    "heartbeat_poll": "2026-08-24T22:00:11+08:00",
+    "telegram_channel": "2026-08-24T22:00:11+08:00",
+    "system_health": "2026-08-24T22:00:11+08:00",
+    "coach_silence_sync": "2026-08-24T22:12:07.511717+08:00"
   },
-  "lastHeartbeat": "2026-08-24T06:03:10.234383+08:00",
-  "lastHeartbeatNote": "cycle=556 06:03 週一早安｜TG 通道探針 ok:true（當下實測）｜靜音時段（23:00-08:00）教練睡眠中｜無 announce、無 urgent｜JUNSHI queue 空、context 穩定",
+  "lastHeartbeat": "2026-08-24T22:00:11+08:00",
+  "lastHeartbeatNote": "cycle=560 22:00 週日夜間｜TG 通道探針 ok:true（當下實測通過，遵守守則#19 通道健康鐵律）｜教練 20:40 後靜默 1.3h，接近靜音時段（23:00-08:00）不打擾｜無 announce、無 urgent｜JUNSHI queue 空、context 穩定",
   "systemSnapshot": {
-    "timeOfDay": "early_morning",
-    "dayOfWeek": "Monday",
-    "isQuietHours": true,
-    "quietHoursReason": "06:03 仍在靜音時段（23:00-08:00），教練睡眠中不打擾",
+    "timeOfDay": "night",
+    "dayOfWeek": "Sunday",
+    "isQuietHours": false,
+    "quietHoursReason": "22:00 尚未進入靜音時段（23:00-08:00），但教練已 1.3h 未發訊，傾向不打擾",
     "allCronsHealthy": true,
-    "contextStatus": "restarted_03:37_stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-24 03:36:55（2.4h 前，凌晨，已進入睡眠）",
+    "contextStatus": "stable",
+    "recentCoachActivity": "教練最後訊息 2026-08-24 20:40（1.3h 前，晚上，可能在準備休息）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-24T06:03:10.234383+08:00 當下實測通過",
-    "coachSilentSince": "2026-08-24T20:06:26+08:00",
-    "coachSilentHours": 0.1,
+    "telegramChannelLastVerified": "2026-08-24T22:00:11+08:00 當下實測通過",
+    "coachSilentSince": "2026-08-24T20:40:01+08:00",
+    "coachSilentHours": 1.5,
     "nextPlannedAction": "等教練起床或下輪訊息；下一輪 cron 約 5 分鐘後",
     "triggerSource": "cron-event:heartbeat-poll",
     "cronErrors": []
   },
   "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-08-24T06:03:10.234383+08:00",
+  "telegramChannelLastVerified": "2026-08-24T22:00:11+08:00",
   "urgentGmailCount": 0
 }
