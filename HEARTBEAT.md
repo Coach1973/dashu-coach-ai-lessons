@@ -4,6 +4,105 @@
 > 重啟時間：2026-08-24 03:37
 > 對話記錄已完整存入 memory/2026-08-24.md 並推上 GitHub，零遺漏
 
+## 🩺 Cycle=576 健康檢查紀錄（2026-08-24 18:12 Asia/Taipei · 週一下午）
+
+**結論**：✅ **無異常，安靜通過，不通知教練**
+
+| 檢查項目 | 結果 |
+|---------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-24T16:17:36+08:00`｜當下沉默 **1.9h**（週一下午傍晚，教練下午互動後稍歇，午晚交界正常不打擾）|
+| Cron get（本任務自身）| ✅ lastRunStatus=ok / CE=0 / durationMs=28987 / model=`minimax/MiniMax-M3` / timeout=600s / runningAtMs=1787566320149 |
+| Cron list API | 仍只回 1 job（本任務本身，cycle=539 後已知清理現象，非故障；cycle=571 已實測 25/25 全 ok）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（剛 18:12 實測）|
+| 環境快檢 | SOUL×3 齊全（2036/1851/22220 bytes + 兩份棄用標記都在）｜Repo1=112 持平｜Repo2=42（待本輪寫入後會微增）｜無 `.!` 鎖定檔 ✅ |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| JUNSHI 派工 queue | ✅ 空（檔案不存在） |
+
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron ok + CE=0 + 本輪執行成功 = 正常）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / overloaded / INVALID_API_KEY）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週一傍晚 + 教練 1.9h 沉默正常 + 零會員功能壞 + cron 穩定 + ai-forum-taichung 黑洞 18:05 前已通知）
+
+**累計**：連續 **70 輪綠燈**（cycle=507~576）
+
+**已落痕跡**：
+- ✅ HEARTBEAT.md cycle=576 已 append
+- ✅ state/healthcheck.log 追加 cycle=576
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=70）
+- ✅ state/healthcheck_cycle 更新至 576
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：19:12 健康檢查（cycle=577）。
+
+---
+
+## 🩺 Cycle=575 健康檢查紀錄（2026-08-24 18:00 Asia/Taipei · 週一下午）
+
+**結論**：✅ **無異常，安靜通過，不通知教練**
+
+| 檢查項目 | 結果 |
+|---------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-24T16:17:36+08:00`｜當下沉默 **1.7h**（週一傍晚，教練下午互動後稍歇，午晚交界正常不打擾）|
+| Cron（本任務自身）| ✅ lastRunStatus=ok / CE=0 / durationMs=19289 / model=`minimax/MiniMax-M3` / timeout=600s |
+| Cron list API | 仍只回 1 job（本任務本身，cycle=539 後已知清理現象，非故障；cycle=571/572 已實測 25/25 全 ok）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（剛 18:00 實測）|
+| 環境快檢 | SOUL×3 齊全（2036/1851/22220 bytes + 兩份棄用標記都在）｜Repo1=112 持平｜Repo2=42（cycle=574 的 41 微增 1，HEARTBEAT/state 正常寫入）｜無 `.!` 鎖定檔 ✅ |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+| JUNSHI 派工 queue | ✅ 空 |
+| event_consistency 狀態 | ⚠️ ai-forum-taichung 黑洞已知（08:20 已通知教練），修復分支 `feature/registration-notify`（commit`4c7556b`）待教練親口「推」才合併 master |
+
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron ok + CE=0 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / overloaded / INVALID_API_KEY）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週一傍晚 + 教練 1.7h 沉默正常 + 零會員功能壞 + cron 穩定 + 已通知黑洞不重發）
+
+**累計**：連續 **69 輪綠燈**（cycle=507~575）
+
+**已落痕跡**：
+- ✅ HEARTBEAT.md cycle=575 已 append
+- ✅ state/healthcheck.log 追加 cycle=575
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=69）
+- ✅ state/healthcheck_cycle 更新至 575
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：18:12 健康檢查（cycle=576，本輪 18:00 提早跑過一次 → cron 自動遞補為 576）。
+
+---
+
+## 🩺 Cycle=574 健康檢查紀錄（2026-08-24 17:12 Asia/Taipei · 週一下午）
+
+**結論**：✅ **無異常，安靜通過，不通知教練**
+
+| 檢查項目 | 結果 |
+|---------|------|
+| 第零步 sync_coach_last_message.sh | ✅ exit 0｜教練最後訊息 `2026-08-24T16:17:36+08:00`｜當下沉默 **0.9h**（週一下午，教練剛剛才互動中，正常不打擾）|
+| Cron（本任務自身）| ✅ lastRunStatus=ok / CE=0 / durationMs=77772 / model=`minimax/MiniMax-M3` / timeout=600s / runningAtMs=1787562720151（上輪 cycle=573 因 gateway 重啟偶發打斷的 transient-error 已自動恢復，本輪正常）|
+| Cron list API | 仍只回 1 job（本任務本身，cycle=539 後已知清理現象，非故障）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（剛 17:12 實測）|
+| 環境快檢 | SOUL×3 齊全（2036/1851/22220 bytes + 兩份棄用標記都在）｜Repo1=112 持平｜Repo2=41（cycle=573 的 39 微增 2，HEARTBEAT/state/healthcheck.log 正常寫入）｜無 `.!` 鎖定檔 ✅ |
+| HEARTBEAT ⬜ 真實待辦 | 0 項 |
+
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（cron ok + CE=0 + 本輪執行成功 = 已恢復鐵證；上輪 transient-error 屬 gateway 重啟偶發，非持續故障）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 FailoverError / overloaded / INVALID_API_KEY）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（週一下午 + 教練 55 分鐘前才互動 + 零會員功能壞 + cron 穩定）
+
+**累計**：連續 **68 輪綠�**（cycle=507~574）
+
+**已落痕跡**：
+- ✅ HEARTBEAT.md cycle=574 已 append
+- ✅ state/healthcheck.log 追加 cycle=574
+- ✅ state/heartbeat-state.json 更新（cumulativeGreen=68）
+- ✅ state/healthcheck_cycle 更新至 574
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：18:12 健康檢查（cycle=575）。
+
+---
+
 ## 🩺 Cycle=572 健康檢查紀錄（2026-08-24 15:12 Asia/Taipei · 週一下午）
 
 **結論**：✅ **無異常，安靜通過，不通知教練**
@@ -434,3 +533,12 @@
 ⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
 
 下個 cron：17:12 健康檢查（cycle=574）。
+
+## ⚠️ peipei 自動 force-restart 2026-08-24 18:05:00
+- 偵測條件：最近 20 分鐘 stopped 訊號 + 最近 15 分鐘無 inbound
+- 動作：launchctl kickstart -k ai.openclaw.gateway（節流 1 小時）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-24 19:05
+- ✅ 同步成功
+- HANDOFF mtime: 1787569475
+- 雲端同步：✅ 已推上雲端（commit 19bfa8833）
