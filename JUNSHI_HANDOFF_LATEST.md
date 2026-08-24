@@ -7,11 +7,13 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🟡 | **stop_rules_master.py規則D（輪詢偵測）regex覆蓋面不夠，這次同義改寫繞過去** | ⏳待軍師找時間動手 | 2026-08-24第6次「定時輪詢vs事件觸發」教訓時發現：這台Mac本來就有防呆機關會攔「每.*分鐘.*檢查」「cron.*輪詢」這類措辭，但這次我寫「每5分鐘掃一次」「每15分鐘查一次」全部同義改寫繞過，機關形同虛設。需要把`scripts/stop_rules_master.py`規則D的regex擴充成涵蓋更多同義動詞（掃/查/讀取/巡邏/處理），詳見[[feedback_event_driven_not_polling_pattern]]2026-08-24第6次發作段落。 |
+| ✅ | **ezPay BNI台南南區入會/續約發票18張全數開立完成** | ✅2026-08-24晚~08-25凌晨完成並逐張查證 | 商店代號337391376（聚寶盆商業顧問有限公司），自訂編號082401~082418。第一批12張：10位入會$39,800+2位(徐偉倫/柯炫任)續約$26,800，查重複時只有柯炫任查到去年入會舊紀錄，教練確認「去年新會入今年續約」非重複照開。第二批6張續約$26,800（王聖凱/吳志煒/林尹渰/陳俊源/黃鑫豊/薛如媛），查證均無$26,800重複紀錄；查到3人有2025年$36,000入會舊紀錄（吳志煒/薛如媛/陳俊源），另查到林尹渰統編有一筆備註對不上姓名的舊紀錄，教練確認是分會轉會(真富→真鑫)+公司舊稱造成，非資料錯誤。所有查重複皆用XHR攔截讀取8季度、192筆去重後的真實資料比對，非用猜的。完成清單`claude-brain/data/ezpay_bni_membership_invoices_2026-08-24_12張完成清單.json`+`ezpay_bni_renewal_invoices_2026-08-24_6張完成清單.json`。教練當場問今年/去年開票總額，用同套XHR方法查出今年(1-8月)$1,882,890、去年全年$3,240,000（含1張已作廢$26,000未列入）。已寫入記憶`reference_bni_membership_fee_history_and_chapter_transfer`（入會費逐年調漲36000→39800，備註對不上先假設分會異動不是錯誤）。 |
+| 🔴🔴🔴 | **Netlify額度追蹤SOP兩度修正：從估算失準→改每次都查→教練推翻改7~10天校正一次** | ✅2026-08-25完成，教練親自拍板校正頻率 | 查真實帳單頁(`app.netlify.com/teams/bymyway7/billing/general`)發現舊估算值(849.5/1000)跟真實餘額(76.4/1000)嚴重脫節，真實只剩約9次部署額度(147點)。第一版SOP寫「每次部署都要查真實頁面」，教練當場推翻：「這種每一次都要進去查的思維你要打斷，非常不智慧，會耗token+要教練登入」，改拍板**每7~10天校正一次，日常用15點/次估算法即可**。帳單週期確認是每月25日重置(非教練口頭講的24日，24日是週期最後一天)。下次校正約2026-09-01~09-04，或估算值≤3次時提前查證。完整SOP見[[project_netlify_deploy_quota_2026-07]]。**教練同場提出最高目標宣言**：AI要像鋼鐵人賈維斯——記得教練說過的每句話並自動串連，不用重複交代，已寫入[[feedback_jarvis_outcome_delegation_style]]。 |
 | ✅ | **小龍蝦派工機制+自動化工具四支，全部依教練覆核意見修正完畢** | ✅2026-08-24完成 | 教練逐項核對凌晨的稽核報告後三處覆核：①08:25發票對帳daily cron移除，改按需觸發(教練:發票是一兩個月才開一次的階段性任務)②派工worker從cron定時(5分鐘→15分鐘)整個改成掛在「開工」hook後面觸發，完全移除排程，教練不開工Mac不會為此做任何事(commit`a673c8d97`)③8/17~23報名數字疑慮已用log對DB逐筆比對19筆全部吻合，確認38人無漏記，非用猜的。OpenClaw已實測升級2026.6.33→2026.6.34，5項健檢全過。 |
 | ✅ | **台中場報名通知已上線+Netlify帳號大掃除(54→39個站台)** | ✅2026-08-24完成，教練親口「推」確認 | 教練貼出台中場既有GitHub Pages路徑即為Netlify正式站名，已建站`ai-forum-taichung.netlify.app`上線(deploy`6a8bea15`)。教練逐條看過Netlify後台後指定12個測試/廢棄站台+2個追加站台(fluffy-puffpuff-b5a65b空頁面/tree-coach-book舊電子書原型)刪除，過程中教練抓到我的疏漏——`xiaolongxia-notify`(通知佩佩老師)/`sme-register-fn`(通知教練)兩支舊LINE轉發路徑跟稍早「全面改Telegram」是同一件事沒清乾淨，已從`bigtree`+`ai-talk`兩repo原始碼移除並推上GitHub+manual zip部署Netlify正式站(deploy`6a8bed91`+`6a8bed9c`)，兩個舊站台也一併刪除。**站台數最終54→39**。**教訓**：`bigtree`/`ai-talk`是「推GitHub不會自動觸發Netlify」的手動zip部署型，即使`web_preview_verify_guard.sh`把它們列在「push即上線」清單也只是保守防呆，不是真的自動部署——需要另外手動zip+API才會上線，兩者不衝突。 |
 | ✅ | **「活動討論群」開放AI自動接話+建立獨立記憶檔+彙整時完整灌回** | ✅2026-08-24完成並實測 | 教練把新建的Telegram活動群組(chat_id`-1003537129853`)設定成不用@提及、誰講話AI都自動接。**用inbound_echo log直接查到chat_id，全程沒開瀏覽器沒截圖**(呼應[[feedback_exhaust_own_tools_before_asking_coach]]同精神，這次用讀檔查證取代電腦操作)。教練接著要求群組要有獨立記憶——長時間討論攤販/廠商/idea後會說「幫我彙整」，若只靠agent自己的對話記憶(可能因context太長被壓縮/重啟)會漏掉討論前段。新建`hooks/group-activity-memory`：走`message:preprocessed`，①每則發言即時落地`workspace/group_memory/活動討論群.md`②偵測「彙整/整理/統整/總結/摘要」關鍵字時把整份記憶檔用`ctx.inject`灌回當輪context。9案例測試全過，補登hook建立前已發生的3則對話，gateway重啟後hook數16→17確認生效。commit`cba97a00`(hook)+`e035318c2`(記憶檔)。 |
 | 🔴🔴🔴 | **3支hook接力棒說「已完成驗證」但從未註冊過，一天都沒跑** | 🔒卡住-等教練一句話 | 2026-08-24全系統稽核，把`~/.openclaw/hooks/`21個目錄逐一比對`openclaw.json`發現：`bni-member-directory-map`（新LINE用戶自動查名字）／`line-delivery-fallback`（回覆送出失敗自動補送，避免訊息默默消失）／`line-url-typo-guard`（網址錯字校正避免會員點到404）三支**檔案齊全、HOOK.md也有，但從來沒註冊進openclaw.json**。`git log -S`確認該檔從未出現過這些名字——所以v80接力棒寫的「三個hook都已經重啟驗證+commit」這句話當時就不成立。**沒有自行啟用的理由**：後兩支會改動BNI大台南南區LINE公開帳號的對外回覆行為，那是真實會員在用的服務，凌晨教練睡覺時把三支從未在正式環境跑過的hook一次打開，出事會直接讓會員看到而教練無法反應。啟用指令已備妥見[[project_hook_orphans_never_registered_2026-08-24]]，教練說一句就開，開完必須核對gateway log的loaded數字從16變19才算數。 |
-| 🔴🔴 | **台中場(9/23-24)報名通知已補好，在分支等教練說「推」** | ⏳等教練一句「推」 | 場次巡檢抓到三個活動微站裡只有台中場`ai-forum-taichung`是「報名黑洞」——四顆報名鈕直接跳藍新金流，報名者是誰、留什麼電話完全不落地也不通知（嘉義場走`/api/register`、9/22台南場深連結回官網，都有通知）。已比照嘉義場模式做好：報名鈕先開留資料彈窗→fire-and-forget寫進event.db並即時發Telegram到「活動報名即時通知」群組→再跳藍新付款，保留「不想留資料直接付款」出口，API失敗絕不擋付款。本機實測四顆鈕綁定正確、單日送1筆/套票送2筆slug正確、手機版無溢出、console零錯誤。**commit`4c7556b`在`feature/registration-notify`分支，master完全沒動（線上頁面現況不變）**，教練說「推」就`git checkout master && git merge feature/registration-notify && git push`（GitHub Pages，不扣Netlify額度）。 |
+| ✅ | **台中場(9/23-24)報名通知已上線+場次辨識修復+概念稿標示移除+作品總覽同步** | ✅2026-08-25完成，教練親口「推」確認 | `feature/registration-notify`分支(commit`4c7556b`)已merge進master推上GitHub Pages+Netlify雙平台。教練實測發現Telegram通知場次全顯示「AI微論壇」分不出嘉義/台中DAY1/DAY2，查明event.db三場活動同名，改用`location+event_date`組成標籤(commit`f34d9fbc5`)，如「AI微論壇（台中場・09/23）」。教練接著指出網頁還留著「概念稿」字樣(title/meta/頁首橫幅/CTA/頁尾共5處)，既然已正式上線就拿掉，已清除+順手砍掉孤兒CSS，重新推GitHub+Netlify。**新SOP**：教練當場拍板「推GitHub測試/推Netlify都要同步更新作品總覽(coach888)」，此站已補進「大樹常用」區(從「不公開個人檢索」區搬過去)，詳見[[project_portfolio_netlify_github_logic]]。 |
 | 🟡 | **OpenClaw 2026.6.33 → 2026.6.34 升級評估完成，等教練決定** | ⏳等教練決定 | 教練說「調查清楚後回報，如果確實更好我們再跟進更新」，故只調查未執行。**結論：建議升級**。6.34是extended-stable線的維護版（2026-08-04發佈，25個PR，官方明說「不加新功能，只做安全與穩定性修補」），其中兩項正好打中教練實際踩過的坑：①「retained session writes / provider fallbacks 不再靜默中止進行中的工作」＝8/20小龍蝦連兩次回「Agent couldn't generate a response」害發票資料消失的同款問題 ②「pending channel work resumes after recovery、acknowledgements are idempotent」＝訊息送達可靠性。另含相依套件安全更新。**風險評估**：官方預告7/24後移除`before_agent_start`等舊Plugin SDK API，已逐一檢查教練18支hook＋openclaw.json，**全部沒用到**，不受影響。⚠️唯一要留意的是`plugins.allow`是嚴格白名單（48個），若新版新增外掛會被擋掉，升級後要核對數字。`scripts/openclaw_upgrade.sh`已備好check/upgrade/verify/rollback四段，教練點頭就跑。**不要換到`latest`(2026.7.1-2)**——那是不同release line，版號大但發佈日期反而更早，換過去等於橫向跳線。 |
 | ✅ | **報名通知三個靜默漏洞已堵死** | ✅2026-08-24完成並實測 | `/api/register`原本有三種情況會讓「有人報名但全世界都不知道」：①場次代碼對不上→直接return不通知 ②欄位缺漏→靜默丟棄 ③`_notify_xiaolongxia()`用`except:pass`吞掉所有失敗（跟燒掉教練一整週的LINE 429同款寫法）。現在前兩種照樣發Telegram並指名該去哪裡補，第三種會回傳成功與否並把失敗寫進`notify_failures.log`。新增`test_register_notify.py`，5情境全過、測試資料自動清乾淨。commit`69c93d8fe`。 |
 | ✅ | **發票漏記根治：進來當下就落地，不靠agent記得** | ✅2026-08-24完成並實測 | 查明8/20那批消失的真相是agent context overflow重啟。新建`hooks/invoice-inbound`走`message:preprocessed`，agent掛掉也不影響落地。**過程中踩到並記錄的關鍵坑**：①觸發條件不能只認關鍵字——8/20真正掉的那則「連皓宇 /88ZMR73」全文零個發票關鍵字，只認關鍵字會原封不動重演同一個漏接，已改成載具形狀本身即觸發 ②hook光是「檔案存在+openclaw.json註冊」不會生效，必須有`HOOK.md`宣告`metadata.events`否則載入器只log.warn就靜默跳過（設定16支但gateway只載15支，補了才變16）。另建`invoice_inbox_reconcile.py`逐筆對帳，**目前零落差**。commit`69c93d8fe`+`4d7c9a34`。 |
@@ -174,116 +176,8 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-24 v125（Mac桌面版 Opus 5，教練去睡覺後的全系統稽核：堵4個靜默漏洞、建4支自動化工具、上線小龍蝦派工管線）
 
-> 建立時間：2026-08-24 03:22 ~ 04:10（台灣時間）
-> 本棒執行者：Mac 桌面版 Opus 5（教練中途調升等級並授權全權處理）
-> 上一棒：v124（同機同夜）
-> 本棒主軸：**教練凌晨交辦「全面檢查流程、系統最佳化、自動化、一站式連動與連鎖反應」，講完就去睡了，留下一句「有什麼事情你自己看著辦」。整場沒有再問教練任何一個問題，所有判斷自己做完。核心發現是一整類同型問題——「靜默失敗」：系統壞了但沒人知道。四個獨立的地方都是同一種形狀，全部堵死。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴 找出並堵死四個「壞了但沒人知道」的靜默漏洞
-- `/api/register` 場次代碼對不上 → 資料沒入庫也不通知，報名的人憑空消失
-- `/api/register` 欄位缺漏 → 靜默丟棄
-- `_notify_xiaolongxia()` 用 `except: pass` 吞掉所有通知失敗（**這正是燒掉教練一整週的那個寫法**）
-- `netlify_deploy_guard.sh` 可被 `python3 bigtree_publish.py` 完全繞過，額度直接被扣
-
-### 2. 🔴🔴🔴 發票漏記根治＋意外挖出 hook 系統的重大認知錯誤
-建 `invoice-inbound` hook 讓發票資料在 agent 處理前就落地。**上線時發現 gateway 只載入 15 支
-但設定裡有 16 支**——查 openclaw 原始碼確認 hook 必須有 `HOOK.md` 宣告 `metadata.events`，
-否則只 `log.warn` 一句就靜默跳過。順藤摸瓜稽核 21 個 hook 目錄，
-又揪出 **3 支從未註冊、一天都沒跑過的孤兒 hook**，而接力棒 v80 寫著「已完成驗證」。
-
-### 3. 🎯 一站式連動：三支巡檢工具＋自動排程
-`event_consistency_check.py`（官網↔資料庫↔個別活動頁）、`invoice_inbox_reconcile.py`（發票逐筆對帳）、
-`registration_report.py`（報名統計/報名表）。前兩支已掛 crontab 每天自動跑，**沒問題就靜默不打擾**。
-巡檢首跑就抓到台中場是唯一的「報名黑洞」，已修好放在分支等教練說「推」。
-
-### 4. 🎯🎯 小龍蝦派工 → 軍師後台自動執行（教練問「想想看」的那件事，做出來了）
-`junshi_dispatch_worker.py` 每 5 分鐘掃信箱，教練跟小龍蝦講完就結束，軍師後台自動做完並回報。
-安全上刻意做成「點餐制」而非自由執行指令，惡意參數實測被擋。
-
-### 5. 🟡 OpenClaw 升級評估（只調查不執行，教練說要一起決定）
-結論建議升 6.34，兩項修復正好打中教練踩過的坑，且 18 支 hook 都沒用到將被移除的舊 API。
-
-## ⚠️ 本場自己抓到並修正的三個錯誤（誠實記錄）
-1. **發票對帳工具首跑誤報**宋映璇「漏掉」，其實 8/18 就開好票了——只比對一份知識檔的錯，
-   已改成同時比對 8 份來源。（同案例61「查無先懷疑比對邏輯」的教訓）
-2. **報名統計腳本兩個 bug**：歷史名單寫「8/26」我用「08/26」比對全落空；同一天兩場會重複計算。
-3. **新 hook 的觸發條件一開始漏掉真實案例**——測試時才發現 8/20 那則真正掉掉的訊息，
-   我的新 hook 也會漏（全文零個發票關鍵字），已補成載具形狀本身即觸發。
-
-## 📋 下一場直接開工任務（都只等教練一句話）
-- **3 支孤兒 hook 要不要啟用**（兩支會動到 BNI 公開帳號對外回覆，所以沒自行開）
-- **台中場報名通知要不要 merge 上線**（分支已備好，GitHub Pages 不扣 Netlify 額度）
-- **OpenClaw 要不要升 6.34**（腳本已備好 check/upgrade/verify/rollback）
-- 承接舊待辦：ezPay 剩 5 人資料、3 張發票補 Email、bni-chapters「真誠分會」架構問題、現場立牌是否重印
-
-## 🔑 本場關鍵檔案索引
-- `scripts/`：`event_consistency_check.py`／`invoice_inbox_reconcile.py`／`registration_report.py`／`junshi_dispatch_worker.py`／`openclaw_upgrade.sh`／`test_invoice_inbound_hook.js`
-- `~/.openclaw/hooks/invoice-inbound/`（handler.js + HOOK.md）
-- `event-signup/app.py`（三處靜默漏洞）＋`test_register_notify.py`
-- `cross-agent/README.md`＋`SOUL.md`（派工協議）
-- 記憶：`reference_openclaw_hook_requires_hookmd_metadata`／`project_hook_orphans_never_registered_2026-08-24`／`project_autonomy_toolkit_2026-08-24`
-- commit：`69c93d8fe`(workspace)＋`4d7c9a34`(openclaw)＋`fe5b6ec0e`(記憶)＋`4c7556b`(台中場分支)
-
----
-
-# 軍師接力棒 · 2026-08-24 v126（Mac桌面版 Sonnet 5→Opus 5混用，教練逐項覆核凌晨稽核成果並追加兩項新任務）
-
-> 建立時間：2026-08-24 13:21 ~ 15:21（台灣時間，白天長場，v125凌晨稽核的覆核場）
-> 本棒執行者：Mac 桌面版（教練用/model指令切換過Sonnet 5，混用執行）
-> 上一棒：v125（同機同日凌晨）
-> 本棒主軸：**教練起床後逐項核對v125凌晨的稽核報告，三次糾正設計方向（發票對帳不該天天跑/派工不該定時排程要綁開工動作/hook說明要講白話），一次重話糾正「不要把自己發現、教練沒問的事丟出來浪費釐清時間」（已寫入永久記憶）。接著實際執行了OpenClaw升級、Netlify帳號大掃除(54→39)、台中場正式上線、活動討論群自動接話+獨立記憶檔四項新工作，全部完成並實測驗證。**
-
-## 🎯 本場戰果
-
-### 1. 🔴🔴🔴🔴 教練重話糾正：自己發現的無關緊要的事不要丟給教練釐清
-連續2~3輪對話澄清「3支hook從未啟用」這件事，教練點破這根本不需要他做任何決定，
-純粹是我自己稽核時發現、自己覺得該提。已寫入永久記憶`feedback_dont_surface_own_tangential_findings`，
-核心判準：教練沒問+不影響教練正在依賴的功能 → 不主動提，或最多一句話帶過。
-
-### 2. 🔴🔴🔴 派工機制+發票對帳，依教練覆核意見重新設計
-①發票對帳08:25 daily cron移除，改成按需觸發(教練:一兩個月才開一次發票，天天巡檢無意義)
-②派工worker從cron(5分鐘→15分鐘)整個改成掛在既有「開工」hook之後觸發，完全移除排程。
-**這是本場最重要的技術教訓**：查證發現這台Mac本來就有專門攔「定時輪詢」語言的Stop hook
-(`stop_rules_master.py`規則D)，但我這次用的「每5分鐘掃一次」「每15分鐘查一次」跟過去
-事故的原話措辭不同，regex完全沒攔到——第6次犯同一種錯，且揪出防呆機關本身失靈的根因。
-詳見[[feedback_event_driven_not_polling_pattern]]。
-
-### 3. 🔧 8/17~23報名數字疑慮，用log對DB逐筆比對親自查證
-教練問LINE額度用完期間會不會漏記報名，沒有用程式邏輯推論，而是把伺服器access log
-裡19筆`/api/register`成功請求跟資料庫實際記錄逐筆比對時間戳，100%吻合，證實38人數字
-準確、寫入資料庫跟LINE通知是兩個獨立步驟互不影響。
-
-### 4. 🎯 OpenClaw升級執行完成
-2026.6.33→2026.6.34，5項健檢全過(外掛48/20不變、hook 16/16、Telegram通道、22筆排程、
-報名端點)，過程順手修正驗證腳本自己的兩個門檻錯誤(hook應為16非18、cron欄位是Status非enabled)。
-
-### 5. 🎯🎯 Netlify帳號大掃除+台中場正式上線
-54個站台清到39個。查證`xiaolongxia-notify`/`sme-register-fn`還在被bigtree/ai-talk即時呼叫
-未刪，教練追問「全面改Telegram了跟他還有什麼關係」點出我沒串起來的疏漏，補上程式碼清理+
-Netlify重新部署驗證。台中場依教練提供命名建站`ai-forum-taichung.netlify.app`上線。
-
-### 6. 🎯 活動討論群自動接話+獨立記憶檔
-chat_id用inbound_echo log查到，未開瀏覽器未截圖。新建`hooks/group-activity-memory`實現
-「每則發言落地+彙整關鍵字觸發完整歷史灌回」，9案例測試全過。
-
-## 📋 下一場直接開工任務
-- **stop_rules_master.py規則D的regex要擴充**（本場發現的防呆漏洞，需要涵蓋更多同義動詞）
-- 3支孤兒hook要不要啟用（仍等教練一句話，見上方待辦表）
-- ezPay剩5人資料、3張發票補Email（舊待辦）
-- bni-chapters「真誠分會」架構問題（舊待辦，長期擱置）
-
-## 🔑 本場關鍵檔案索引
-- `scripts/junshi_dispatch_worker.py`+`scripts/feed_junshi_handoff.sh`：派工改開工觸發
-- `scripts/openclaw_upgrade.sh`：升級腳本，本場實測跑過check+upgrade+verify全流程
-- `hooks/group-activity-memory/`：活動討論群獨立記憶
-- `github_repos/bigtree/index.html`+`github_repos/ai-talk/index.html`：移除舊LINE通知路徑
-- 記憶：`feedback_dont_surface_own_tangential_findings`、`feedback_event_driven_not_polling_pattern`(2026-08-24第6次發作段落)
-- commit：`a673c8d97`／`856df350f`／`1434559`(bigtree)／`bd91f7f`(ai-talk)／`dba7aacc`／`cba97a00`／`e035318c2`
-
+> 📦 v125+v126完整內容已封存：`handoff_archive/handoff_v125_to_v126_archived_2026-08-25.md`（Mac桌面版，凌晨全系統稽核+教練覆核追加任務）
 
 ---
 
@@ -321,3 +215,48 @@ chat_id用inbound_echo log查到，未開瀏覽器未截圖。新建`hooks/group
 - `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`：本批次全程記錄，已標記結案
 - `claude-brain/data/ezpay_training_invoices_2026-08-24_8張完成清單.json`
 - commit：`968661359`(workspace發票清單)／`cd9eb6b19`+`de76222c4`(memory repo SOP+索引壓縮)
+
+
+---
+
+# 軍師接力棒 · 2026-08-25 v128（Mac桌面版 Sonnet 5，ezPay BNI入會/續約發票18張+AI微論壇台中場正式上線+Netlify額度SOP兩度修正）
+
+> 建立時間：2026-08-24 19:08 ~ 2026-08-25 01:22（台灣時間，跨夜長場）
+> 本棒執行者：Mac 桌面版 Sonnet 5
+> 上一棒：v127（同機前一場）
+> 本棒主軸：**教練連續交辦ezPay發票、AI微論壇台中場報名通知上線、Netlify額度查證三件事，過程中兩次被教練當場糾正並修正做法（場次通知辨識度不夠、額度查證頻率太高），最後教練提出「賈維斯」最高目標宣言收尾。**
+
+## 🎯 本場戰果
+
+### 1. ✅ ezPay BNI台南南區入會/續約發票18張全數開立（商店337391376聚寶盆）
+自訂編號082401~082418。第一批12張（10位入會$39,800+2位續約$26,800），查重複時用XHR攔截讀取8季度192筆去重資料比對，只有柯炫任查到去年入會舊紀錄，教練確認「去年新會入今年續約」非重複照開。第二批6張續約$26,800，查到3人有$36,000入會舊紀錄（正常入會→續約關係）、林尹渰一筆備註對不上姓名的舊紀錄，教練確認是分會轉會(真富→真鑫)+公司舊稱，非資料錯誤。教練同場問今年/去年開票總額，用同套方法查出今年$1,882,890、去年$3,240,000。已寫入記憶`reference_bni_membership_fee_history_and_chapter_transfer`（入會費逐年調漲36000→39800）。
+
+### 2. 🎯🎯 AI微論壇台中場(9/23-24)報名通知正式上線+兩輪修正
+`feature/registration-notify`分支merge進master，GitHub Pages+Netlify雙平台上線。教練實測後發現Telegram通知場次全顯示「AI微論壇」分不出嘉義/台中DAY1/DAY2，查明event.db三場活動同名，改用`location+event_date`組成標籤修復(commit`f34d9fbc5`)。教練又發現網頁還留著「概念稿」字樣5處，既然已正式上線就拿掉+順手清孤兒CSS，重新推兩平台。
+
+### 3. 🔴🔴🔴 補救：作品總覽(coach888)漏更新，教練當場立SOP
+教練發現AI微論壇台中場推上Netlify後，作品總覽沒有同步更新網址，指出「推GitHub測試/推Netlify都要同步更新作品總覽」是SOP的一部分，不是事後才想起來。已補上（從「不公開個人檢索」搬到「大樹常用」，網址改Netlify正式版），寫入記憶`project_portfolio_netlify_github_logic`。
+
+### 4. 🔴🔴🔴 Netlify額度追蹤SOP兩度修正
+教練要求查真實帳單頁，發現本機估算值(849.5/1000)跟真實(76.4/1000)嚴重脫節，真實只剩約9次部署額度。第一版SOP寫「每次部署都查真實頁面」，教練當場推翻：「這種每一次都要進去查非常不智慧，會耗token+要教練登入」，改拍板**每7~10天校正一次，日常用估算法即可**。帳單週期確認每月25日重置。已寫入記憶`project_netlify_deploy_quota_2026-07`。
+
+### 5. 🎯🎯🎯 教練提出最高目標宣言：賈維斯
+教練親口：「你的最高目標，就是鋼鐵人裡面的那個賈維斯，對於大樹教練所有交待的事情，說過的每一句話都記得，並且能夠自動串連起來，不用我每件事情都要一再交待！」已寫入永久記憶`feedback_jarvis_outcome_delegation_style`，核心：狀態型記憶要附驗證法（不能只記一個數字放著不動）、同主題多次追問要主動串連前文。
+
+## ⚠️ 本場兩次被教練當場糾正的教訓
+1. **場次通知只印活動名稱不夠**——多場活動共用同一個名稱時，通知看起來像同一場，改用地點+日期組合標籤才能真正辨識。
+2. **驗證頻率不是越高越好**——第一次修正過度反應（改成每次都查），教練點破這是「機械化修正」不是「智慧修正」，真正的解法是找一個合理的抽查頻率（7~10天），不是把驗證成本推到最高。
+
+## 📋 下一場直接開工任務
+- 3張舊ezPay發票(蔡珮彤081907/吳亞平081922/楊凱為081924)Email欄位空白，待教練重新登入ezPay後補（隨時可做，不受任何清單卡住）
+- Netlify額度下次校正約2026-09-01~09-04，或估算值≤3次時提前查
+- 承接舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題、現場立牌是否重印
+
+## 🔑 本場關鍵檔案索引
+- `claude-brain/data/ezpay_bni_membership_invoices_2026-08-24_12張完成清單.json`+`ezpay_bni_renewal_invoices_2026-08-24_6張完成清單.json`
+- `event-signup/app.py`：Telegram通知場次標籤修復
+- `github_repos/ai-forum-taichung/index.html`：報名通知功能+概念稿字樣移除
+- `github_repos/coach888/index.html`：作品總覽同步更新
+- `state/netlify_deploy_quota.json`：真實額度校正
+- 記憶：`reference_bni_membership_fee_history_and_chapter_transfer`／`project_portfolio_netlify_github_logic`／`project_netlify_deploy_quota_2026-07`／`feedback_jarvis_outcome_delegation_style`
+- commit：`9d22495a5`+`9922f67f9`(ezPay清單)／`4c7556b`+`f34d9fbc5`+`c7ce4fe`(ai-forum-taichung)／`d89955e`(coach888)／`d9463272a`+`18fba071c`+`dddc9b301`(memory repo)／`befc00c13`+`cbc26851a`(quota state)
