@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 7d4244d1-db9c-42f8-97ad-dc02499cbe41
-  modified: 2026-08-23T17:03:30.628Z
+  modified: 2026-08-24T08:03:37.194Z
 ---
 
 操作對象：inv.ezpay.com.tw，帳號bymyway。**同一帳號下有兩個商店**：①「(337391376)BNI台南南區」——BNI入會/續約發票 ②「(344031309)大樹教育顧問有限公司」——培訓費發票(品項`B03`/`BNI培訓`)，不要跟另一個舊代號`(337643900)大樹教育顧問`搞混。開立用`Invoice_issue/create_invoice`，查詢用`Invoice_issue/search_invoice`。
@@ -53,5 +53,25 @@ XMLHttpRequest.prototype.send = function(b){
 **二聯式(B2C)專屬欄位**：`InvCategory`選`2c`後才出現`CarruerType`選項——`carry_mobile`(手機條碼)/`carry_person`(自然人憑證條碼)/`carry_p2g`(ezPay電子發票載具)/`carry_print`(無載具，列印電子發票證明聯，適合單純Email通知、無實體載具的情況)。**手機條碼號碼要帶開頭斜線**，例如條碼`B3BU7PV`實際要填`/B3BU7PV`，查證既有成功案例(張騰文081701)的`II_Carruer_Num`欄位存的就是`/LKZTH3E`，不是`LKZTH3E`，這是ezPay載具格式的固定慣例，不是打字疏漏。B2C的`BuyerIdentify`(統編)欄位不存在，改用`BuyerName`(受贈人/買受人姓名，非必填但建議填)。
 
 **🔴 2026-08-24教練裁示：只要對方給的是手機條碼，一律直接判定二聯式，不用再問「這是二聯還是三聯」**——起因是小龍蝦連續兩次收到教練LINE傳的「姓名+手機條碼」都停下來反問類型，教練覺得多此一舉，明確拍板這條快捷規則。往後任何機器收到「姓名+手機條碼」格式的發票資訊，可直接定案為二聯式，不用再逐一確認，只需要再補金額（查`大台南南區4至8月培訓出席與開票總清冊`等權威出席表）跟Email（查`bni_region_members_contact_2026-08-18.csv`）即可準備開票。
+
+**🔴🔴🔴 2026-08-24教練親定：claude-in-chrome連線裝置一律選isLocal:true的那台，永遠不用再問**——本場一開始連到一個殘留的isLocal:false裝置(標示Windows)，浪費大量時間+教練當場動怒。正確SOP：`list_connected_browsers`若只顯示isLocal:false裝置，代表這台Mac本機Chrome的擴充功能連線斷了(不是沒裝，裝了也開著也會斷)，修法是用Bash `osascript -e 'tell application "Google Chrome" to quit'` 完全關閉Chrome程式再 `open -a "Google Chrome"` 重開，之後`list_connected_browsers`就會多出一個`isLocal:true`、name可能顯示"MAC MiNI"的裝置，直接`select_browser`選那個，不用再問教練、不用截圖比對。教練原話：「這一台電腦永遠都是第一個」。
+
+**🔴 2026-08-24發現：`form_input`工具對中文姓名欄位偶爾會發生字元錯置**（例如「劉彥彬」被寫成「劉彥櫃」），純文字欄位改用JS直接賦值最可靠：
+```js
+function setVal(id, val){
+  const el = document.getElementById(id);
+  el.value = val;
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+}
+```
+**每次設完中文姓名/公司名欄位，送出前務必`document.getElementById(id).value`讀回來核對逐字正確**，不能只看工具回報的「Set text value to...」訊息（那個回報本身可能就是錯的）。數量/單價欄位仍必須用真人打字方式(`triple_click`+`type`)，JS賦值不會觸發站方金額計算。
+
+**🔴 2026-08-24發現：`priceCount`(含稅)checkbox在B2C(二聯)表單有時預設已勾選**，直接`.click()`反而會取消勾選(未稅630≠含稅600)。正確做法：先讀`document.getElementById('priceCount').checked`目前狀態，**只有目前是false才click()**，click完一定要重讀`TotleAmount`核對等於教練講的金額才能送出。
+
+**開立頁完整欄位ID對照表**(2026-08-24驗證，`create_invoice`頁)：
+`MerchantID`(商店代號select)／`2b`/`2c`(B2B/B2C radio)／`CustomNum`(自訂編號)／`BuyerName`(買受人名稱/B2C受贈人)／`BuyerIdentify`(統編，僅B2B)／`BuyerMail`(Email)／`carry_mobile`(手機條碼radio，選2c後才出現)／`CarruerNumber`(載具號碼，需帶`/`前綴)／`ItemNum1`/`ItemName1`/`ItemCount1`/`ItemWord1`/`ItemPrice1`/`ItemAmount1`(單一課稅表格第一列六欄)／`priceCount`(含稅checkbox)／`create_btn`(送出鈕)。總計三欄用`[name="TotleAmount"]`/`[name="TaxAmount"]`/`[name="SalesAmount"]`取(這三個沒有id)。
+
+**查詢頁(`search_invoice`)欄位**：`select[name="SearchItem"]`(查詢項目，設`value='CustomNum'`查自訂編號)＋`input[placeholder="請輸入查詢條件"]`(查詢框，無id/name)，**只吃精確比對，不支援前綴/部分比對**(測試`08192`查不到`081925`)。送出查詢用`search_invoice_info.send_search_invoice('1')`，跟開立頁的送出可靠觸發法同一個道理，不要依賴點擊按鈕。
 
 參見 [[project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16]]。
