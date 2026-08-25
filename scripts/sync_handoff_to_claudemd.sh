@@ -115,6 +115,10 @@ if [[ "$RC" -eq 0 ]]; then
     if git add CLAUDE.md 2>/dev/null \
        && git commit -m "auto: 接力棒鏡像同步 $(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1; then
       COMMIT_HASH=$(git rev-parse --short HEAD)
+      # 2026-08-26 跟進聯想同款修復：commit 後直接 push，若同時間有其他機器
+      # 也推過就會被拒（! [rejected] fetch first），東西永遠卡在本機。
+      # 推送前先 pull --rebase 一次，失敗才是真的離線/衝突。
+      git pull --rebase origin main >/dev/null 2>&1
       if git push origin main >/dev/null 2>&1; then
         PUSH_RESULT="✅ 已推上雲端（commit $COMMIT_HASH）"
       else
