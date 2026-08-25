@@ -84,6 +84,37 @@ def update_card_after_extraction(conn: sqlite3.Connection, card_id: int, fields:
     conn.commit()
 
 
+def delete_card(conn: sqlite3.Connection, card_id: int) -> None:
+    """刪除名片，連同關聯的產業鏈角色/跟進紀錄一併清掉，不留孤兒資料"""
+    follow_up = conn.execute("SELECT id FROM follow_ups WHERE card_id = ?", (card_id,)).fetchone()
+    if follow_up:
+        conn.execute("DELETE FROM follow_up_logs WHERE follow_up_id = ?", (follow_up["id"],))
+        conn.execute("DELETE FROM follow_ups WHERE id = ?", (follow_up["id"],))
+    conn.execute("DELETE FROM chain_members WHERE card_id = ?", (card_id,))
+    conn.execute("DELETE FROM cards WHERE id = ?", (card_id,))
+    conn.commit()
+
+
+def update_card_manual(conn: sqlite3.Connection, card_id: int, fields: dict) -> None:
+    """團隊成員手動編輯修正AI辨識錯誤的欄位"""
+    keywords = fields.get("keywords")
+    conn.execute(
+        """UPDATE cards SET name=?, title=?, company=?, mobile=?, landline=?, email=?,
+           line_id=?, website=?, address=?, tagline=?, category=?, standard_category=?,
+           keywords=?, status=? WHERE id=?""",
+        (
+            fields.get("name"), fields.get("title"), fields.get("company"),
+            fields.get("mobile"), fields.get("landline"), fields.get("email"),
+            fields.get("line_id"), fields.get("website"), fields.get("address"),
+            fields.get("tagline"), fields.get("category"), fields.get("standard_category"),
+            json.dumps(keywords, ensure_ascii=False) if keywords is not None else None,
+            "ok",
+            card_id,
+        ),
+    )
+    conn.commit()
+
+
 def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> int:
     if "_error" in fields:
         cur = conn.execute(

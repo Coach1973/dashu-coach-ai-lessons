@@ -192,6 +192,52 @@ def team_login_required(view):
     return wrapped
 
 
+@app.route("/card/<int:card_id>/delete", methods=["POST"])
+@team_login_required
+def card_delete(card_id):
+    conn = db.get_conn()
+    db.delete_card(conn, card_id)
+    conn.close()
+    return redirect(url_for("index"))
+
+
+@app.route("/card/<int:card_id>/edit", methods=["GET", "POST"])
+@team_login_required
+def card_edit(card_id):
+    conn = db.get_conn()
+    if request.method == "POST":
+        keywords_raw = (request.form.get("keywords") or "").strip()
+        fields = {
+            "name": (request.form.get("name") or "").strip() or None,
+            "title": (request.form.get("title") or "").strip() or None,
+            "company": (request.form.get("company") or "").strip() or None,
+            "mobile": (request.form.get("mobile") or "").strip() or None,
+            "landline": (request.form.get("landline") or "").strip() or None,
+            "email": (request.form.get("email") or "").strip() or None,
+            "line_id": (request.form.get("line_id") or "").strip() or None,
+            "website": (request.form.get("website") or "").strip() or None,
+            "address": (request.form.get("address") or "").strip() or None,
+            "tagline": (request.form.get("tagline") or "").strip() or None,
+            "category": (request.form.get("category") or "").strip() or None,
+            "standard_category": (request.form.get("standard_category") or "").strip() or None,
+            "keywords": [k.strip() for k in keywords_raw.split("、") if k.strip()],
+        }
+        db.update_card_manual(conn, card_id, fields)
+        conn.close()
+        return redirect(url_for("index"))
+
+    card = conn.execute("SELECT * FROM cards WHERE id = ?", (card_id,)).fetchone()
+    conn.close()
+    if card is None:
+        return "找不到這張名片", 404
+    keywords = []
+    try:
+        keywords = json.loads(card["keywords"] or "[]")
+    except json.JSONDecodeError:
+        pass
+    return render_template("card_edit.html", card=card, keywords_text="、".join(keywords))
+
+
 @app.route("/team/login", methods=["GET", "POST"])
 def team_login():
     if request.method == "GET":

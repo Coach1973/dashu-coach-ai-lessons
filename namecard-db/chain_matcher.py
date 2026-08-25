@@ -20,38 +20,52 @@ import re
 
 import anthropic
 
+from extract import _TAXONOMY_BLOCK
+
 MODEL = None  # 動態從extract模組讀，避免重複讀環境變數
 
-CHAIN_MATCH_PROMPT = """你是產業鏈媒合顧問。你的任務是判斷一張新收到的名片，適合被安插進現有的產業鏈，
+CHAIN_MATCH_PROMPT = f"""你是產業鏈媒合顧問。你的任務是判斷一張新收到的名片，適合被安插進現有的產業鏈，
 還是應該建議組成一條全新的產業鏈。
 
-「產業鏈」的定義：以某個核心需求或客群為中心，把互補的專業角色組合起來，一起為同一位客戶服務。
-例如「珠寶業」核心，可以延伸出：珠寶鑑定師、財富傳承律師、保險顧問、藝術品經紀、公關活動策展
-等角色，這些角色彼此不是同一個行業，但服務的是同一種客戶的不同需求面向。
+「產業鏈」的定義（教練親自定義，仿BNI九宮格）：以這張名片的核心專業為中心，往外排出一整圈互補角色，
+組成一張完整的九宮格產業鏈地圖——上下左右加中心自己，至少要有8個其他角色圍繞著這張名片，
+一起服務同一種客群的不同需求面向。例如「珠寶業」核心可以完整長成：珠寶鑑定師、金工修復師、
+裸鑽貿易商、產物保險顧問、家族辦公室、遺產律師、稅務顧問、高端當舖精品融資、海外資產配置顧問、
+藝術品經紀、拍賣策展人、高級鐘錶經銷、整體造型顧問、彩妝美學師、公關活動策展、商業攝影、
+短影音自媒體行銷、私廚無菜單料理、進口名車經銷、雪茄威士忌俱樂部…這種規模才叫完整的產業鏈，
+不是隨便湊兩三個相關的人就算數。
 
 輸入會給你：
 1. 這張新名片的資料（姓名/公司/職稱/標準分類/標語）
 2. 目前資料庫裡「還缺人補位」的產業鏈角色清單（可能是空的，代表目前還沒有任何產業鏈）
+3. 下方【標準分類詞庫】：BNI官方533項+大台南南區682+產業全生態戰略總庫整合而成的905個
+   標準專業名稱，suggested_gaps的角色要優先從這裡面選、逐字照抄，確保跟名片辨識時用的
+   是同一套詞彙，日後才配得上、比對得到
 
 請判斷並只輸出一個JSON物件，不要有其他文字、不要用markdown code block包起來：
 
 情況A - 這張名片剛好能補進某個現有缺口：
-{"action": "fill_gap", "chain_id": 缺口所屬的產業鏈id(數字), "role_name": "缺口的角色名稱(照抄)"}
+{{"action": "fill_gap", "chain_id": 缺口所屬的產業鏈id(數字), "role_name": "缺口的角色名稱(照抄)"}}
 
 情況B - 沒有合適的現有缺口，建議組一條新產業鏈：
-{"action": "new_chain", "chain_name": "產業鏈名稱(4到10字，具體描述這條鏈服務誰、圍繞什麼核心需求)",
+{{"action": "new_chain", "chain_name": "產業鏈名稱(4到10字，具體描述這條鏈服務誰、圍繞什麼核心需求)",
  "core_theme": "一句話說明這條產業鏈為誰服務、解決什麼需求",
  "this_card_role": "這張名片在這條鏈裡扮演的角色名稱",
- "suggested_gaps": ["建議再補2到4個互補角色名稱，這些角色目前還沒有人，屬於待招募缺口"]}
+ "suggested_gaps": ["這是硬性規定：至少要列8個、可以更多不能更少的互補角色名稱，
+ 這些角色目前還沒有人，屬於待招募缺口，彼此不重複、都要跟this_card_role圍繞同一種
+ 客群服務需求，盡量從下方標準分類詞庫挑選貼切的專業名稱"]}}
 
 情況C - 這張名片的專業太籠統或太個人化，不適合放進任何產業鏈：
-{"action": "skip", "reason": "簡短說明為什麼不適合"}
+{{"action": "skip", "reason": "簡短說明為什麼不適合"}}
 
 判斷原則：
 - 優先選情況A，只有在真的沒有任何現有缺口貼合這張名片的專業時，才選情況B
 - 產業鏈要有明確的服務對象或核心需求，不能只是把同行業的人湊在一起
-- suggested_gaps的角色要跟this_card_role互補、不重複，共同能服務同一種客戶
+- suggested_gaps「至少8個」是硬性要求，少於8個視為不合格答案，你必須認真發想到8個以上
 - 姓名/公司/職稱完全空白、只剩下錯誤訊息的名片，一律選情況C
+
+【標準分類詞庫】：
+{_TAXONOMY_BLOCK}
 """
 
 
@@ -110,16 +124,19 @@ def match_card_to_chain(conn, client: anthropic.Anthropic, card_id: int, model: 
         + (json.dumps(gap_list, ensure_ascii=False, indent=2) if gap_list else "（目前沒有任何缺口，資料庫裡還沒有產業鏈）")
     )
 
-    message = client.messages.create(
-        model=model,
-        max_tokens=1024,
-        system=CHAIN_MATCH_PROMPT,
-        messages=[{"role": "user", "content": [{"type": "text", "text": user_content}]}],
-    )
-    raw_text = "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
-    result = _extract_json(raw_text)
+    def _call_ai(prompt_content: str) -> dict:
+        message = client.messages.create(
+            model=model,
+            max_tokens=2048,
+            system=CHAIN_MATCH_PROMPT,
+            messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+        )
+        raw_text = "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
+        return _extract_json(raw_text)
 
+    result = _call_ai(user_content)
     action = result.get("action")
+
     if action == "fill_gap":
         chain_id = result.get("chain_id")
         role_name = result.get("role_name")
@@ -128,15 +145,15 @@ def match_card_to_chain(conn, client: anthropic.Anthropic, card_id: int, model: 
             (chain_id, role_name),
         ).fetchone()
         if gap_row is None:
-            # AI給的chain_id/role_name對不上真實缺口(幻覺)，降級為new_chain處理
-            result = {
-                "action": "new_chain",
-                "chain_name": f"{card_info['standard_category'] or '未分類'}相關產業鏈",
-                "core_theme": "AI媒合回應對不上實際缺口，先建立單點產業鏈待後續補充",
-                "this_card_role": card_info["standard_category"] or card_info["title"] or "成員",
-                "suggested_gaps": [],
-            }
-            action = "new_chain"
+            # AI給的chain_id/role_name對不上真實缺口(幻覺)——明確請AI改走new_chain
+            # 重新設計一條完整的產業鏈，而不是直接生一個空殼(教練要求至少8個角色)
+            retry_content = user_content + (
+                "\n\n（上一次你判斷這張名片能補進某個現有缺口，但比對不到真實資料，"
+                "這次請改走情況B(new_chain)，針對這張名片重新設計一條完整的新產業鏈，"
+                "suggested_gaps務必列滿至少8個互補角色）"
+            )
+            result = _call_ai(retry_content)
+            action = result.get("action")
         else:
             conn.execute(
                 "UPDATE chain_members SET card_id = ?, is_gap = 0, match_reason = ? WHERE id = ?",
@@ -144,6 +161,19 @@ def match_card_to_chain(conn, client: anthropic.Anthropic, card_id: int, model: 
             )
             conn.commit()
             return {"action": "fill_gap", "chain_id": chain_id, "role_name": role_name}
+
+    # LLM有隨機性，偶爾new_chain會漏給suggested_gaps(教練要求至少8個角色)，重試一次補救
+    if action == "new_chain" and len(result.get("suggested_gaps") or []) < 7:
+        retry_content = user_content + (
+            "\n\n（重要提醒：上一次回應的suggested_gaps數量不足，這次務必列滿至少8個"
+            "互補角色，這是硬性規定，不可省略）"
+        )
+        retry_result = _call_ai(retry_content)
+        if retry_result.get("action") == "new_chain" and len(
+            retry_result.get("suggested_gaps") or []
+        ) > len(result.get("suggested_gaps") or []):
+            result = retry_result
+            action = "new_chain"
 
     if action == "new_chain":
         chain_name = (result.get("chain_name") or "未命名產業鏈").strip()

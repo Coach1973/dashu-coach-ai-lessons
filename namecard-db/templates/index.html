@@ -18,8 +18,9 @@
   .card .body { flex: 1; min-width: 0; }
   .card .name { font-size: 17px; font-weight: 700; }
   .pending-badge { display: inline-block; background: #fdf3e7; color: #b45309; font-size: 12px; padding: 3px 10px; border-radius: 10px; }
-  .actions-row { display: flex; gap: 12px; margin-top: 8px; }
+  .actions-row { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
   .actions-row a { font-size: 13px; }
+  .actions-row form { margin: 0; }
   .card .company { color: #444; margin-bottom: 6px; }
   .card .tagline { color: #777; font-size: 13px; margin: 4px 0; }
   .card .row { font-size: 14px; margin: 2px 0; }
@@ -77,9 +78,16 @@
     {% for k in c.keywords %}<span class="tag">{{ k }}</span>{% endfor %}
   </div>
   {% if c.status == 'needs_review' %}<div class="review">⚠️ AI辨識沒把握，建議人工核對：{{ c.confidence_notes }}</div>{% endif %}
+  {% if c.status == 'failed' %}<div class="review">❌ 未辨識，AI沒能讀出任何資料</div>{% endif %}
   <div class="actions-row">
     <a href="/card/{{ c.id }}/match">🔗 媒合</a>
     <a href="/card/{{ c.id }}/follow">📋 跟進紀錄</a>
+    <a href="/card/{{ c.id }}/edit">✏️ 編輯</a>
+    {% if c.status == 'failed' %}
+    <form method="POST" action="/card/{{ c.id }}/delete" onsubmit="return confirm('確定刪除這筆未辨識的名片？');" style="display:inline;">
+      <button type="submit" style="all:unset;cursor:pointer;color:#b3261e;font-size:13px;">🗑 刪除</button>
+    </form>
+    {% endif %}
   </div>
   {% endif %}
   </div>

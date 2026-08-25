@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>編輯名片｜{{ card.name or "名片" }}</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 560px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  .back { display: block; margin-bottom: 14px; color: #1f3a5f; text-decoration: none; font-size: 14px; }
+  .box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .photo { width: 100%; max-height: 260px; object-fit: contain; border-radius: 10px; margin-bottom: 16px; background: #f0efe9; }
+  label { display: block; font-size: 13px; color: #666; font-weight: 700; margin: 12px 0 4px; }
+  input, textarea { width: 100%; padding: 10px 12px; font-size: 15px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 > div { flex: 1; }
+  button { width: 100%; padding: 13px; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; background: #1f3a5f; color: white; margin-top: 18px; }
+  .hint { font-size: 12px; color: #999; margin-top: 4px; }
+</style>
+</head>
+<body>
+<a class="back" href="/">← 回名片搜尋首頁</a>
+
+<div class="box">
+  <img class="photo" src="/image/{{ card.image_filename }}" alt="名片照片" onerror="this.style.display='none'">
+  <form method="POST">
+    <div class="row2">
+      <div><label>姓名</label><input type="text" name="name" value="{{ card.name or '' }}"></div>
+      <div><label>職稱</label><input type="text" name="title" value="{{ card.title or '' }}"></div>
+    </div>
+    <label>公司</label>
+    <input type="text" name="company" value="{{ card.company or '' }}">
+    <div class="row2">
+      <div><label>手機</label><input type="text" name="mobile" value="{{ card.mobile or '' }}"></div>
+      <div><label>市話</label><input type="text" name="landline" value="{{ card.landline or '' }}"></div>
+    </div>
+    <div class="row2">
+      <div><label>Email</label><input type="text" name="email" value="{{ card.email or '' }}"></div>
+      <div><label>LINE ID</label><input type="text" name="line_id" value="{{ card.line_id or '' }}"></div>
+    </div>
+    <label>網址</label>
+    <input type="text" name="website" value="{{ card.website or '' }}">
+    <label>地址</label>
+    <input type="text" name="address" value="{{ card.address or '' }}">
+    <label>標語／服務項目</label>
+    <textarea name="tagline" rows="2">{{ card.tagline or '' }}</textarea>
+    <div class="row2">
+      <div><label>行業分類</label><input type="text" name="category" value="{{ card.category or '' }}"></div>
+      <div><label>標準分類</label><input type="text" name="standard_category" value="{{ card.standard_category or '' }}"></div>
+    </div>
+    <label>關鍵字</label>
+    <input type="text" name="keywords" value="{{ keywords_text }}">
+    <div class="hint">多個關鍵字用「、」分隔</div>
+    <button type="submit">儲存修正</button>
+  </form>
+</div>
+
+</body>
+</html>
