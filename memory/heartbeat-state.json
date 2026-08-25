@@ -1,32 +1,32 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-25T10:02:00+08:00",
-    "telegram_channel": "2026-08-25T10:02:00+08:00",
-    "system_health": "2026-08-25T10:02:00+08:00",
-    "coach_silence_sync": "2026-08-25T13:12:04.705238+08:00"
+    "heartbeat_poll": "2026-08-25T14:00:22+08:00",
+    "telegram_channel": "2026-08-25T14:00:22+08:00",
+    "system_health": "2026-08-25T13:12:00+08:00",
+    "coach_silence_sync": "2026-08-25T16:12:02.669129+08:00"
   },
-  "lastHeartbeat": "2026-08-25T10:02:00+08:00",
-  "lastHeartbeatNote": "cycle=??? 10:02 週二上午｜TG 通道探針 ok:true（當下實測通過，遵守守則#19 通道健康鐵律）｜教練 01:51 後靜默 8.2h（昨夜連夜完成ezPay 18張+AI微論壇台中場上線，合理休息）｜已過靜音時段但教練仍未發訊，靜默觀察中｜無 announce、無 urgent｜JUNSHI queue 空、context 穩定（08:38 重啟後已恢復）｜v128 接力棒已讀，主待辦：3張ezPay Email空白待教練登入補、3支孤兒hook待啟用裁示",
+  "lastHeartbeat": "2026-08-25T14:00:22+08:00",
+  "lastHeartbeatNote": "cycle=588 14:00 週二下午｜TG 通道探針 ok:true（當下實測通過，遵守守則#19 通道健康鐵律）｜教練最後訊息 13:11（49 分鐘前，本輪靜默觀察）｜dialog round=2（08:38 重啟後僅 2 輪，遠低於 30 觸發點）｜memory/2026-08-25.md 24K（<30KB 安全）｜無 announce、無 urgent｜JUNSHI queue 空、context 穩定、累計 82 輪綠燈",
   "systemSnapshot": {
-    "timeOfDay": "morning",
+    "timeOfDay": "afternoon",
     "dayOfWeek": "Tuesday",
     "isQuietHours": false,
     "quietHoursReason": "",
     "allCronsHealthy": true,
     "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-25 01:51（約 8.2 小時前，凌晨連夜工作後休息）",
+    "recentCoachActivity": "教練最後訊息 2026-08-25 13:11:46（約 49 分鐘前，下午工作中）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-25T10:02:00+08:00 當下實測通過",
-    "coachSilentSince": "2026-08-25T13:11:46+08:00",
-    "coachSilentHours": 0.0,
-    "nextPlannedAction": "靜默觀察，等教練主動訊息或下輪 cron（5 分鐘後）；如有緊急事項才打擾",
+    "telegramChannelLastVerified": "2026-08-25T14:00:22+08:00 當下實測通過",
+    "coachSilentSince": "2026-08-25T16:06:55+08:00",
+    "coachSilentHours": 0.1,
+    "nextPlannedAction": "靜默觀察，等教練主動訊息或下輪 cron",
     "triggerSource": "cron-event:heartbeat-poll",
     "cronErrors": []
   },
   "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-08-25T10:02:00+08:00",
+  "telegramChannelLastVerified": "2026-08-25T14:00:22+08:00",
   "urgentGmailCount": 0
 }
