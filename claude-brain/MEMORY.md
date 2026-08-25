@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 查自動化要問「結果有沒有人看到」不只是「有沒有在跑」+送教練通知的正確寫法(2026-08-25)](feedback_automation_must_reach_a_human.md) — 體檢揪出一批跑幾個月但成果沒人看的自動化；notify_coach.sh是唯一正確出口(底線版非連字號版)
 - [🔴🔴🔴 ezPay開票SOP六步驟(教練說「開票」自動觸發)：連線裝置isLocal:true→欄位ID→含稅核對→送出→查證(2026-08-24)](feedback_ezpay_invoice_sop.md) — 教練指定「像網頁推SOP一樣」，開票前先讀這份不用重找線索
 - [🔴🔴 不要把自己發現、教練沒問的事丟出來浪費釐清時間(2026-08-24)](feedback_dont_surface_own_tangential_findings.md) — 除非能精簡到一句話且真的重要，否則自己消化
 - [🔧 ezPay發票查詢頁批次爬取歷史資料的JS技巧(分季查詢/分頁/alert攔截)(2026-08-18)](reference_ezpay_bulk_invoice_scraping_procedure.md) — 查重複/對帳要撈大量歷史發票時用這套，2026-08-17實測可動
