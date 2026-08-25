@@ -7,6 +7,11 @@
 
 $ErrorActionPreference = "SilentlyContinue"
 
+# stdin 編碼鐵律（2026-08-26 聯想，同 feed_junshi_handoff.ps1）：
+# PS 5.1 -File 模式下 InputEncoding 預設 Big5，stdin 中文會讀壞
+[Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # 讀 stdin JSON
 $raw = [Console]::In.ReadToEnd()
 try { $payload = $raw | ConvertFrom-Json -ErrorAction Stop } catch { exit 0 }

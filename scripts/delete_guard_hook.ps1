@@ -16,6 +16,11 @@
 # ============================================================
 $ErrorActionPreference = 'Stop'
 
+# stdin 編碼鐵律（2026-08-26 聯想，同 feed_junshi_handoff.ps1）：
+# PS 5.1 -File 模式下 InputEncoding 預設 Big5，含中文檔名的刪除指令會讀壞而漏擋
+[Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # 讀 PreToolUse 傳入的 JSON（stdin）
 try {
     $raw  = [Console]::In.ReadToEnd()

@@ -11,6 +11,14 @@
 
 $ErrorActionPreference = 'Continue'
 
+# ───────── stdin 編碼鐵律（2026-08-26 聯想查出，跟案例 64 同源）─────────
+# PS 5.1 在 -File 模式下 [Console]::InputEncoding 預設是系統 codepage（Big5），
+# stdin JSON 裡的中文會被讀壞（實測「開工」958B,5DE5 → 003F,F55D,6975），
+# 觸發詞永遠比對不到 → 整支 hook 靜默不觸發、不報錯。
+# 對稱寫法見 summary_upload_trigger.ps1 / periodic_xinfa_reload_hook.ps1。
+[Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # ───────── 雲端真相源（固定，不需動）─────────
 $REPO_URL = "https://github.com/Coach1973/mac-openclaw-workflows.git"
 
