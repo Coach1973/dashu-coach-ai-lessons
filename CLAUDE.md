@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-25 01:23:00**
+> **最後同步：2026-08-25 12:10:39**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -228,6 +228,87 @@
 - `claude-brain/data/ezpay_training_invoices_2026-08-24_8張完成清單.json`
 - commit：`968661359`(workspace發票清單)／`cd9eb6b19`+`de76222c4`(memory repo SOP+索引壓縮)
 
+
+---
+
+# 軍師接力棒 · 2026-08-25 v129（Mac桌面版 Opus 5，賈維斯全系統體檢＋10項修復）
+
+> 建立時間：2026-08-25 01:28 ~ 12:40（台灣時間，中間因教練 RustDesk 遠端連線於 01:53 中斷而停擺約 9.5 小時）
+> 上一棒：v128（同機同日凌晨）
+> 本棒主軸：**教練要求「進入賈維斯狀態做全盤體檢，看哪些流程能更自動化、佈局有無矛盾」，
+> 隨後裁示「你講一堆我不見得聽得懂，對系統有好處的事你就動手做」，全程自主執行 10 項修復。**
+
+## 🎯 本場戰果（全部已驗證＋推雲端）
+
+### 體檢揪出的核心問題形狀：自動化「有在跑」≠「有發揮作用」
+歸納成三層檢查（已寫成記憶 `feedback_automation_must_reach_a_human`）：
+① 有在跑嗎 ② 判斷邏輯真的執行了嗎（靜默失效）③ **結果有沒有送到該看的人手上**（最常漏）
+
+### 1. 🔴 記憶寫了卻讀不到（最嚴重）
+`claude-brain/` 有 **112 個記憶檔沒被 MEMORY.md 收錄**，含前一天才寫的 `feedback_ezpay_invoice_sop.md`
+（試金石案例63 宣稱「已寫入」，但索引沒收錄＝下次開新對話讀不到＝等於白寫），直接違反守則#01。
+→ 補進 30 天內的 9 筆；`stop_rules_master.py` 新增規則K：Stop 時自動偵測 24 小時內寫過但沒進索引的記憶檔。commit `5d5eaf58f`
+
+### 2. 死管道全面接上通知（機器做了幾個月，教練一則都沒收到）
+桌面 `reminder.txt` 堆積 61 行從沒被打開（且勞保/庫存兩條設成「每天」卻寫「今天是最後繳費日」＝每天喊狼來了）；
+`checkpoint_audit` 每 15 分偵測到「資料沒備份」只寫 /tmp log；試金石策展提醒只寫 HEARTBEAT.md（那是 AI 看的）。
+→ 新增 `scripts/notify_coach.sh` 統一出口並實測送達。**踩通三個坑**：`openclaw message send` 從 cron 呼叫會先報
+`Channel is required`（系統同時接 telegram+line），加了 `--channel` 又報 `token missing`（token 在 gateway 進程不在環境變數），
+最終改成從 openclaw.json 讀 token 直接打 API。commit `84b8948b7`
+
+### 3. 正在跑卻沒備份的東西全部納管
+6 個 hook（auto-goal/group-identity/round-table-orchestrator/self-improvement 完全沒進版控，bot-relay 兩支只進一半）、
+**4 個 AI 員工的人設檔**（SOUL/IDENTITY/USER/TOOLS/DREAMS 全部沒備份，硬碟壞就沒了）、
+agent 知識庫（含 46 萬字教練語料）、`~/.openclaw/scripts` 底下 14 支手寫腳本（其中兩支是 LaunchAgent 正在跑的）。
+`.gitignore` 補上約 8GB 執行時資料，git status 雜訊 112→28 筆。commit `c98b51b1`
+
+### 4. 金鑰防護做成「擋得住」的機關
+**本場自己踩的坑**：納管時「有做金鑰掃描」也掃出 2 個，但掃描跟 commit 寫在同一串指令、沒有阻斷，token 照樣推上去。
+查證後確認 repo 是 PRIVATE 且同組 token 早在 openclaw.json 裡，**沒有實際外洩**，但教訓是「檢查不能擋就等於沒有」。
+→ `scripts/git_secret_guard.sh` 掛進兩個 repo 的 pre-commit，實測擋得住。commit `73303871a`
+⚠️ 安裝時差點覆蓋掉 workspace 原有的 pre-commit（案例25 的 .ps1 BOM 機關），發現後改成兩道並存。
+
+### 5. 硬編碼金鑰全機清除（機關自己抓出來的）
+新機關擋下一筆提交，追查發現是體檢時 `head` 讀取 `council_orchestrator.sh`，該腳本硬編碼的 token 被記進對話逐字備份、
+再被自動備份 cron 推上雲端——**只要腳本裡有寫死的金鑰，任何時候讀取它都會外流一次**。
+全機掃描後 4 支腳本（heartbeat-monitor / reminder_hsr_0505 / council_orchestrator / junshi_task_worker）
+全部改成從設定檔讀取。commit `809fdc1f`+`2902ea9b6`
+
+### 6. 教練親自點破的死碼：額度用盡自動換模型
+教練說「我現在沒有額度用完的問題，這應該是很久以前不用的東西」——查證完全屬實：
+它讀的 log 檔最後寫入 2026-06-03（83 天沒新內容）、要找的關鍵字整份 log 出現 0 次、現在主模型是 MiniMax-M3。
+＝ 就算沒壞也永遠不會執行。**稍早那筆「修好判斷式」等於修了一段永遠不會跑的程式碼**，直接移除 85 行。
+保留腳本本體 A/B/D/E/F 五段（Context Overflow 自動重啟今早 08:38 才真的用過）。commit `abe44cb2`
+
+### 7. 39 支死腳本歸檔（搬不刪）
+重做引用掃描（第一版邏輯寫錯，沒把不可信的數字給教練）。掃 403 份來源文件。
+⚠️ 第一版盲點：漏掃 `.git/hooks/`，害 `precommit_check_ps1_bom.sh` 被誤判，補上後排除。
+歸檔 33 支一次性挖掘工具（score_top30/_v2/_v3 多版本並存即是用完即棄的證據）+ 6 支測試腳本。
+scripts 161→105 支。commit `2902ea9b6`
+
+### 8. 停掉一支空跑兩個月的排程
+`ai.openclaw.council-orchestrator` 每 2 分鐘跑一次（一天 720 次），但它所屬的 bot-relay 機制
+2026-07-02 就由教練決定退役，搭檔 hook 早已 disabled，自己的 log 最後真的做事是 2026-06-28。
+→ plist 移到 `~/Library/LaunchAgents/_disabled_2026-08-25/` 附完整理由與復原指令。
+**每日輪詢 2256 → 1536 次（降 32%）**
+
+### 9. 清掉每次開機都報錯的死外掛
+`memsearch` 未編譯的 TypeScript，累計 881 次啟動報錯，且不在 plugins.allow 白名單內（本來就沒生效）。
+搬到 `extensions_disabled/`，重啟驗證報錯歸零、hooks 仍載入 17 支、通道正常。
+
+### 10. 修好每 2 分鐘噴錯 549 次的判斷式（後來連同死碼一起移除，見第 6 項）
+
+## 📋 下一場可接手的
+- **23 支查無引用的腳本待個別判斷**（含 `notify-coach.sh` 已標棄用、`reminder_hsr_0505.sh` 是 5/5 過期提醒、
+  `auto-switch-model.sh` 與剛移除的額度死碼同一時代），本次保守未動
+- **剩餘 5 支輪詢型自動化待逐一評估**：session-fix（每2分，確認有用）、terminal-watchdog（每5分）、
+  memory-sync（每30分）、vps-polling-healthcheck（每15分）、peipei_stuck（每5分，昨天才真的救過一次不能拆）
+- 勞保繳費/庫存清點兩條提醒已停用，**等教練給正確日期再重建**
+- 承接舊待辦：3 支孤兒 hook 要不要啟用、bni-chapters「真誠分會」架構問題
+
+## 🔑 本場 commit
+`5d5eaf58f`（記憶索引）／`2c57c11a`（判斷式）／`84b8948b7`（通知管道）／`c98b51b1`（納管）／
+`73303871a`（金鑰機關）／`809fdc1f`（token 改設定檔）／`776b6c807`（記憶）／`abe44cb2`（死碼移除）／`2902ea9b6`（歸檔+金鑰清除）
 
 ---
 
