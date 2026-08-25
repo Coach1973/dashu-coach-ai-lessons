@@ -1,0 +1,16 @@
+{
+  "chapter": "真富",
+  "name": "朱正文",
+  "event_date": "2026-01-07",
+  "event_type": "董事培訓 - Taiwan",
+  "role": "",
+  "phone": "0976-452930",
+  "email": "peterchu761@gmail.com",
+  "induction_date": "2026-04-01"
+}
+
+keys: ['chapter', 'name', 'event_date', 'event_type', 'role', 'phone', 'email', 'induction_date']
+
+chapters: ['真富', '真愛', '真誠', '真鑫', '真鑽']
+
+date range: 2018-02-03 ~ 2026-07-17
