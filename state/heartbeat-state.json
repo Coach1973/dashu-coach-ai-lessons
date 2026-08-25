@@ -1,33 +1,33 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-26T00:37:03.988283+08:00",
-    "telegram_channel": "2026-08-26T00:37:03.988283+08:00",
-    "system_health": "2026-08-26T00:37:03.988283+08:00",
-    "coach_silence_sync": "2026-08-26T00:12:04.625098+08:00"
+    "heartbeat_poll": "2026-08-26T01:14:33.797583+08:00",
+    "telegram_channel": "2026-08-26T01:14:33.797583+08:00",
+    "system_health": "2026-08-26T01:14:33.797583+08:00",
+    "coach_silence_sync": "2026-08-26T01:12:04.931323+08:00"
   },
-  "lastHeartbeat": "2026-08-26T00:37:03.988283+08:00",
-  "lastHeartbeatNote": "cycle=597 00:36 週三凌晨｜靜默時段（教練最後訊息 00:30 備忘清單，無新指令）｜無 announce、無 urgent｜累計 88 連綠",
+  "lastHeartbeat": "2026-08-26T01:14:33.797583+08:00",
+  "lastHeartbeatNote": "cycle=598 01:14 週三凌晨｜教練剛 7 分鐘前還在線｜靜默時段 (01:00-08:00)｜無 announce、無 urgent｜累計 91 連綠",
   "systemSnapshot": {
     "timeOfDay": "late_night",
     "dayOfWeek": "Tuesday",
     "isQuietHours": true,
-    "quietHoursReason": "週二深夜 23:00-08:00 靜默時段",
+    "quietHoursReason": "週三凌晨 01:00-08:00 靜默時段",
     "allCronsHealthy": true,
     "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-26T00:30:00+08:00（沉默 0.1h，剛發備忘清單）",
+    "recentCoachActivity": "教練最後訊息 2026-08-26T01:06:55+08:00（沉默 0.12h，週三凌晨剛互動）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-25T22:12:00+08:00 當下實測通過",
-    "coachSilentSince": "2026-08-26T00:08:57+08:00",
+    "telegramChannelLastVerified": "2026-08-26T01:14:33.797583+08:00",
+    "coachSilentSince": "2026-08-26T01:06:55+08:00",
     "coachSilentHours": 0.1,
-    "nextPlannedAction": "等下輪 cron（23:12 cycle=596）或教練新訊息",
+    "nextPlannedAction": "等下輪 cron (02:12 cycle=599) 或教練新訊息",
     "triggerSource": "cron-event:46e67e2e",
     "cronErrors": []
   },
   "telegramChannelOk": true,
   "telegramChannelLastVerified": "2026-08-25T22:12:00+08:00",
   "urgentGmailCount": 0,
-  "cumulativeGreen": 89
+  "cumulativeGreen": 91
 }

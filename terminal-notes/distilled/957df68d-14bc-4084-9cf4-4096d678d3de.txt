@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 957df68d-14bc-4084-9cf4-4096d678d3de
-# 提取時間：2026-08-26 00:48 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-08-26 01:03 (台灣時間)
+# 共 5 條教練原話
 
 ---
 
@@ -98,3 +98,39 @@ Base directory for this skill: /Users/bymyway/.claude/skills/memory-write-discip
 　▶ AI 回應：Refs held across reopens. Fetching 真愛 chapter's data.
 
 　▶ AI 回應：Working well. Continuing through the remaining chapters/groups: 真誠, 真鑫, 真鑽, then the 3 core groups.
+
+　▶ AI 回應：教練，我剛才在您給的網址上實測了一下：直接讀那個網址（不點任何分會），搜尋欄位全部空白按下「搜尋會員」，系統回應是「請先設定您的過濾器」+ 0筆資料——這個網址本身似乎沒有預設帶出全部分會的名單，一定要點選「選擇分會/核心小組」裡的個別分會才會出資料。
+
+不過好消息是：逐一點分會這個方法本身很快，我已經抓到3個分會的完整名單了（真富47人、真愛27人、真誠116人，在籍/離開狀態都有），大台南南區總共只有8個分會/核心小組（真富/真愛/真誠/真鑫/真鑽+真心/真拾/真美三個核心小組），剩下5個馬上就能抓完，不會很慢。
+
+我繼續照這個方式把剩下5個抓完，可以嗎？還是您那邊畫面上有看到什麼我這邊沒…（略）
+
+【教練 2026-08-25 16:51】
+好吧，那就用你的方法，儘快吧。
+
+　▶ AI 回應：真鑫 done (30 members). Continuing to 真鑽.
+
+　▶ AI 回應：Got page 2 (101-200). Getting page 3 now.
+
+　▶ AI 回應：真鑽全數288筆完成。繼續三個核心小組：真心、真拾、真美。
+
+　▶ AI 回應：Also 0. Checking the last one, 真美.
+
+　▶ AI 回應：Good, page 1 of 100 captured (only 2 pages now, not 3). Let me overwrite the 真誠 file with the complete first 100, then get page 2.
+
+　▶ AI 回應：Now getting page 2 of 真誠 (remaining 16 records).
+
+　▶ AI 回應：真誠完整116筆拿到了。附加到檔案。
+
+　▶ AI 回應：116 lines confirmed correct. Now saving 真鑫 and 真鑽 raw data files.
+
+　▶ AI 回應：BNI Connect大台南南區5個分會的會員名冊已經全部匯入完成。
+
+**結果：**
+- 爬回508筆原始紀錄（真富47、真愛27、真誠116、真鑫30、真鑽288）
+- 依姓名合併去重後，總共**430個人**
+- **92人現任**（標記所屬分會），**338人前會員**（標記「前會員・曾隸屬XX分會」）
+- 有跨分會經歷的人也抓出來了，例如「林尹渰」真富→真鑫轉會，會顯示「真鑫分會現任會員（曾隸屬：真富）」
+- 其中2人本來就有名片照片在系統裡（李育宗、劉宸宏），直接更新標記；其餘428人是全新加入的資料（沒有名片照片，但已進媒合名單）
+
+已推上雲端存證：[b6361b3f6](htt…（略）
