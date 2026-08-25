@@ -15,7 +15,8 @@
   .tag { display: inline-block; background: #eef1f6; color: #1f3a5f; font-size: 12px; padding: 2px 8px; border-radius: 12px; margin: 2px 4px 0 0; }
   .review { color: #b45309; font-size: 12px; margin-top: 6px; }
   .errmsg { color: #b3261e; font-size: 14px; }
-  .actions { display: flex; gap: 10px; margin-top: 20px; }
+  .actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .actions a { min-width: 100px; }
   .actions a { flex: 1; text-align: center; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; }
   .btn-primary { background: #1f3a5f; color: white; }
   .btn-secondary { background: white; color: #1f3a5f; border: 1px solid #1f3a5f; }
@@ -51,6 +52,7 @@
 
 <div class="actions">
   <a class="btn-primary" href="/upload">再上傳一張</a>
+  <a class="btn-secondary" href="/chains">看產業鏈媒合</a>
   <a class="btn-secondary" href="/">回搜尋首頁</a>
 </div>
 </body>

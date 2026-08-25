@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>產業鏈媒合總覽</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 760px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 18px; }
+  .chain-card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .chain-name { font-size: 18px; font-weight: 900; color: #1f3a5f; margin-bottom: 4px; }
+  .chain-theme { color: #666; font-size: 13px; margin-bottom: 14px; line-height: 1.6; }
+  .role-list { display: flex; flex-direction: column; gap: 8px; }
+  .role { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #f7f6f2; }
+  .role.filled { background: #eef7ee; }
+  .role.gap { background: #fdf3e7; }
+  .role-name { font-weight: 700; font-size: 14px; }
+  .role-status { font-size: 13px; }
+  .role-status.filled { color: #2e7d32; }
+  .role-status.gap { color: #b45309; }
+  .empty { color: #888; text-align: center; padding: 60px 0; }
+  .nav { display: flex; gap: 10px; margin-bottom: 18px; }
+  .nav a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; background: white; border: 1px solid #ddd; color: #1f3a5f; text-decoration: none; font-size: 14px; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>🔗 產業鏈媒合總覽</h1>
+<div class="subtitle">每張上傳的名片，AI 都會判斷它適合補進哪條產業鏈的哪個角色，或組成一條新的產業鏈。「待招募」代表這個位置還缺人，歡迎上傳符合的名片來補位。</div>
+
+<div class="nav">
+  <a href="/">📇 搜尋名片</a>
+  <a href="/upload">📸 上傳名片</a>
+</div>
+
+{% if not chains %}
+<div class="empty">目前還沒有形成任何產業鏈，上傳第一張名片開始吧</div>
+{% endif %}
+
+{% for c in chains %}
+<div class="chain-card">
+  <div class="chain-name">{{ c.chain.name }}</div>
+  <div class="chain-theme">{{ c.chain.core_theme or "" }}</div>
+  <div class="role-list">
+    {% for m in c.members %}
+    <div class="role {{ 'gap' if m.is_gap else 'filled' }}">
+      <div class="role-name">{{ m.role_name }}</div>
+      {% if m.is_gap %}
+      <div class="role-status gap">⏳ 待招募</div>
+      {% else %}
+      <div class="role-status filled">✅ {{ m.card_name or "（未辨識姓名）" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+</body>
+</html>

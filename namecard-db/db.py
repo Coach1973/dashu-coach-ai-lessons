@@ -19,6 +19,8 @@ def init_db() -> None:
     existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(cards)")}
     if "extra_images" not in existing_cols:
         conn.execute("ALTER TABLE cards ADD COLUMN extra_images TEXT")
+    if "standard_category" not in existing_cols:
+        conn.execute("ALTER TABLE cards ADD COLUMN standard_category TEXT")
     conn.commit()
     conn.close()
 
@@ -30,22 +32,22 @@ def already_processed(conn: sqlite3.Connection, image_filename: str) -> bool:
     return row is not None
 
 
-def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> None:
+def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> int:
     if "_error" in fields:
-        conn.execute(
+        cur = conn.execute(
             "INSERT INTO cards (image_filename, status, raw_response) VALUES (?, 'failed', ?)",
             (image_filename, fields.get("_raw", "")),
         )
         conn.commit()
-        return
+        return cur.lastrowid
 
     keywords = fields.get("keywords") or []
-    conn.execute(
+    cur = conn.execute(
         """INSERT INTO cards
            (image_filename, name, title, company, mobile, landline, email,
-            line_id, website, address, tagline, category, keywords,
+            line_id, website, address, tagline, category, standard_category, keywords,
             confidence_notes, raw_response, status)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
         (
             image_filename,
             fields.get("name"),
@@ -59,6 +61,7 @@ def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> 
             fields.get("address"),
             fields.get("tagline"),
             fields.get("category"),
+            fields.get("standard_category"),
             json.dumps(keywords, ensure_ascii=False),
             fields.get("confidence_notes"),
             json.dumps(fields, ensure_ascii=False),
@@ -66,3 +69,100 @@ def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> 
         ),
     )
     conn.commit()
+    return cur.lastrowid
+
+
+# ---------- 產業鏈 ----------
+
+def create_chain(conn: sqlite3.Connection, name: str, core_theme: str = "") -> int:
+    cur = conn.execute(
+        "INSERT INTO industry_chains (name, core_theme) VALUES (?, ?)", (name, core_theme)
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
+def find_chain_by_name(conn: sqlite3.Connection, name: str):
+    return conn.execute(
+        "SELECT * FROM industry_chains WHERE name = ?", (name,)
+    ).fetchone()
+
+
+def add_chain_member(
+    conn: sqlite3.Connection, chain_id: int, card_id: int | None, role_name: str,
+    is_gap: bool = False, match_reason: str = "",
+) -> int:
+    cur = conn.execute(
+        """INSERT INTO chain_members (chain_id, card_id, role_name, is_gap, match_reason)
+           VALUES (?, ?, ?, ?, ?)""",
+        (chain_id, card_id, role_name, 1 if is_gap else 0, match_reason),
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
+def list_chains_with_members(conn: sqlite3.Connection):
+    """回傳每條產業鏈+其所有角色位置(含已補位名片基本資料/待補位缺口)"""
+    chains = conn.execute("SELECT * FROM industry_chains ORDER BY id").fetchall()
+    result = []
+    for chain in chains:
+        members = conn.execute(
+            """SELECT cm.*, c.name AS card_name, c.company AS card_company, c.mobile AS card_mobile
+               FROM chain_members cm
+               LEFT JOIN cards c ON c.id = cm.card_id
+               WHERE cm.chain_id = ? ORDER BY cm.id""",
+            (chain["id"],),
+        ).fetchall()
+        result.append({"chain": chain, "members": members})
+    return result
+
+
+def card_already_in_chain(conn: sqlite3.Connection, chain_id: int, card_id: int) -> bool:
+    row = conn.execute(
+        "SELECT 1 FROM chain_members WHERE chain_id = ? AND card_id = ?", (chain_id, card_id)
+    ).fetchone()
+    return row is not None
+
+
+# ---------- 團隊成員與跟進紀錄 ----------
+
+def get_team_member(conn: sqlite3.Connection, username: str):
+    return conn.execute(
+        "SELECT * FROM team_members WHERE username = ?", (username,)
+    ).fetchone()
+
+
+def get_or_create_follow_up(conn: sqlite3.Connection, card_id: int):
+    row = conn.execute("SELECT * FROM follow_ups WHERE card_id = ?", (card_id,)).fetchone()
+    if row:
+        return row
+    conn.execute(
+        "INSERT INTO follow_ups (card_id, stage) VALUES (?, '待邀約')", (card_id,)
+    )
+    conn.commit()
+    return conn.execute("SELECT * FROM follow_ups WHERE card_id = ?", (card_id,)).fetchone()
+
+
+def update_follow_up_stage(conn: sqlite3.Connection, card_id: int, stage: str, assigned_to: str = "") -> None:
+    conn.execute(
+        """UPDATE follow_ups SET stage = ?, assigned_to = ?, updated_at = datetime('now', 'localtime')
+           WHERE card_id = ?""",
+        (stage, assigned_to, card_id),
+    )
+    conn.commit()
+
+
+def add_follow_up_log(conn: sqlite3.Connection, follow_up_id: int, channel: str, content: str, logged_by: str) -> None:
+    conn.execute(
+        """INSERT INTO follow_up_logs (follow_up_id, channel, content, logged_by)
+           VALUES (?, ?, ?, ?)""",
+        (follow_up_id, channel, content, logged_by),
+    )
+    conn.commit()
+
+
+def list_follow_up_logs(conn: sqlite3.Connection, follow_up_id: int):
+    return conn.execute(
+        "SELECT * FROM follow_up_logs WHERE follow_up_id = ? ORDER BY contacted_at DESC",
+        (follow_up_id,),
+    ).fetchall()

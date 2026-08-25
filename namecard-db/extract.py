@@ -12,6 +12,7 @@ import json
 import os
 import re
 import subprocess
+from collections import defaultdict
 
 import anthropic
 
@@ -20,14 +21,35 @@ MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 _PADDLE_PYTHON = os.path.join(_THIS_DIR, "paddleocr_venv", "bin", "python3")
 _PADDLE_SCRIPT = os.path.join(_THIS_DIR, "paddle_extract.py")
+_TAXONOMY_PATH = os.path.join(_THIS_DIR, "taxonomy.json")
 
-SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一段用OCR從名片照片辨識出來的文字，
+
+def _build_taxonomy_block() -> str:
+    """把標準分類詞庫(taxonomy.json)整理成給AI參考的分組文字塊，
+    供AI從中挑選最貼近的standard_category，不再自由發揮文字。"""
+    if not os.path.exists(_TAXONOMY_PATH):
+        return "（尚未建立標準分類詞庫，此欄位可留空）"
+    with open(_TAXONOMY_PATH, encoding="utf-8") as f:
+        taxonomy = json.load(f)
+    grouped: dict[str, list[str]] = defaultdict(list)
+    for item in taxonomy["items"]:
+        grouped[item["category"]].append(item["name"])
+    lines = []
+    for category, names in grouped.items():
+        unique_names = sorted(set(names))
+        lines.append(f"[{category}] " + "、".join(unique_names))
+    return "\n".join(lines)
+
+
+_TAXONOMY_BLOCK = _build_taxonomy_block()
+
+SYSTEM_PROMPT = f"""你是名片資料判讀助手。使用者會給你一段用OCR從名片照片辨識出來的文字，
 這段文字是逐行的偵測結果，順序可能跟名片上的排版不完全一致，也可能有少數辨識雜訊。
 請根據這些文字整理成結構化資料。名片可能是繁體中文、簡體中文、英文，或中英夾雜。
 
 只輸出一個 JSON 物件，不要有任何其他文字、不要用 markdown code block 包起來。欄位如下：
 
-{
+{{
   "name": "姓名，沒有就填 null",
   "title": "職稱，沒有就填 null",
   "company": "公司名稱，沒有就填 null",
@@ -39,9 +61,10 @@ SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一段用O
   "address": "地址，沒有就填 null",
   "tagline": "名片上印的產品/服務標語、口號、業務項目條列文字，逐字照抄，沒有就填 null",
   "category": "根據公司名稱、職稱、標語，用 4 個字以內判斷這家是做什麼產業/行業別，例如：保險、室內設計、食品批發、法律服務、餐飲設備。無法判斷就填 null",
+  "standard_category": "從下方【標準分類詞庫】裡選一個語意最貼近的專業項目名稱，必須逐字照抄詞庫裡的寫法，不可自己改寫或縮寫；詞庫裡真的找不到任何貼近的項目才填 null",
   "keywords": ["3 到 8 個跟這家公司業務相關的關鍵字，中文為主，供之後搜尋與產業媒合使用"],
   "confidence_notes": "如果有欄位讀得不確定或看不清楚，簡短說明是哪個欄位，全部有把握就填 null"
-}
+}}
 
 規則：
 - 電話號碼統一整理成台灣常見格式（例如 0912-345-678 或 02-1234-5678），但不要臆測缺漏的數字
@@ -52,6 +75,10 @@ SYSTEM_PROMPT = """你是名片資料判讀助手。使用者會給你一段用O
   OCR可能把這類裝飾文字的殘影字元跟姓名/職稱等欄位排在相鄰行，不要把不相關的零星字元
   拼進姓名欄位——姓名通常是2到4個連續、語意通順的中文字，不要把明顯不相關或語意不通的
   字元硬湊進去
+
+【標準分類詞庫】（standard_category必須從這裡面逐字選一項，這是BNI官方533項專業分類
++ 大台南南區682+產業全生態戰略總庫整合而成的權威詞庫，用於後續產業鏈精準媒合）：
+{_TAXONOMY_BLOCK}
 """
 
 

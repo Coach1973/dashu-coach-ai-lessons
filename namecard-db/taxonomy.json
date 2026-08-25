@@ -1,0 +1,5937 @@
+{
+  "generated_from": [
+    "/Users/bymyway/Downloads/gemini-code-1787668824032.py",
+    "/Users/bymyway/.openclaw/agents/bni_tainan/knowledge/industry_database.md"
+  ],
+  "total_items": 921,
+  "unique_item_count": 905,
+  "items": [
+    {
+      "category": "BNI",
+      "name": "BNI專業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "家具維修/室內裝潢",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "家電維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "機械設備維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "泳池、水療池和三溫暖維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "珠寶維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "修理",
+      "name": "電腦維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "乾洗/洗衣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "化妝品/護膚品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "化妝師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "占卜師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "司禮人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "婚禮規劃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "沙龍/水療中心",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "色彩&風格顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "葬禮策劃/服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "語言教育服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "高級服務商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "個人服務",
+      "name": "髮型師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "一般牙醫",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "保健品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "健康&保健服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "健康教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "健康管家服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "健康設施/健身房/俱樂部",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "催眠治療師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "另類健康",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "婦科醫生",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "居家護理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "按摩治療師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "整骨醫生",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "正畸醫生",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "營養師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "營養補充劑",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "物理治療師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "皮膚科醫生",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "眼鏡銷售員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "私人教練-健身",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "精油",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "美容師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "聽力/聽力學",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "脊椎指壓治療師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "臨床實驗室",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "臨終關懷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "自然療法師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "藥劑師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "足科醫生",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "身心放鬆療法師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "輔導員/心理治療師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "輸液水療中心",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "醫生/醫師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "醫療服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "醫療水療中心",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "針灸",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "健康&保健",
+      "name": "體重管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "寵物商店",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "寵物寄宿",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "寵物美容",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "寵物食品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "水族館/魚",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "犬隻訓練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "獸醫",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "動物",
+      "name": "野生動物移除",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "人生導師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "商務培訓/教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "學習中心",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "家長教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "心靈教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "教育服務/導師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "教育設施",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "溝通教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "理財教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "管理教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "線上培訓",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "聲樂教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "語言教學",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "銷售培訓/教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "關係教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "培訓&輔導",
+      "name": "領導力教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "中央電視台",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "保全人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "保全系統",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "職業安全",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "調查服務/偵探",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "鎖匠",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "安全&調查",
+      "name": "防火",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "人力資源",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "僱用外籍勞工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "就業服務法顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "招聘人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "職業介紹所",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "虛擬助手",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "就業活動",
+      "name": "行政服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "AI顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "促銷產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "公共關係",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "出版商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "刺繡",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "印刷業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "印刷業-大圖輸出",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "印刷業-數位",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "印刷業-膠印",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "品牌推廣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "媒體服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "平面廣告",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "平面設計師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "廣告代理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "廣播廣告",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "戶外廣告看板(廣告看板)",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "折扣促銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "搜索引擎優化",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "播客",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "攝影師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "攝影師/電影製片人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "攝影師- 商業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "數位內容",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "數字營銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "文案/作家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "潛在客戶開發",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "營銷顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "社交媒體",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "簽約公司",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "網上商店服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "網版印刷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "網路行銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "網頁設計",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "網頁開發",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "關係營銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "電子商務服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "廣告&行銷",
+      "name": "電視廣告",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "IT安裝人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "主承包商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "低壓電工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "住宅屋頂",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "住宅改造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "住宅油漆工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "供熱工程師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "保護塗層/密封劑",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "修復",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "化糞池系統",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "商業屋頂",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "商業建築商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "商業改造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "商業油漆工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "圍欄",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "土木工程承包商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "地板",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "地面工程",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "壁爐&烤箱製造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "天花板/假天花板",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "太陽能",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "客製化住宅建造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "室內設計",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "室內設計-商業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "家庭自動化",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "廚房建設",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "建築商/總承包商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "建設項目管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "強力洗滌",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "房屋建造者",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "拆遷承包商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "排水",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "排水溝",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "暖通空調-暖氣和空氣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "木匠",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "檯面",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "櫥櫃製造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "水暖",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "水泥/混凝土",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "泥水匠",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "游泳池、水療和桑拿",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "灌溉",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "煙肉清潔工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "燈光",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "玻璃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "環境服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "瓦工/石匠",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "瓷磚工人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "發電機",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "百葉窗和遮陽蓬",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "石膏板",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "租賃設備",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "窗飾",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "管道工程",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "細木工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "絕緣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "能源服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "車庫門",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "金屬加工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "鋁製設備",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "鋪路",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "鐵匠",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "門窗",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "防水-防風雨",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "陽台",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "雜工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "電工",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "電工-商業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "電梯",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "預立醫療照護諮商ACP Services",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築",
+      "name": "鷹架",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "3D建模",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "伐木",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "商業建築師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "園林和景觀設計師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "土木/結構工程師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "室內建築",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "工料測量師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "工業自動化",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "建築師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "建築服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "建築設計師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "景觀服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "測量員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "瓦斯圖建築",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "硬質景觀",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築&工程",
+      "name": "風水",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "代購",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "住宅地產代理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "住宅害蟲防治",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "住宅清潔",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "倉儲租賃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "公寓管理員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "商業害蟲防治",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "商業房地產",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "商業清潔",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "商業物業管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "地毯、室內裝潢清潔劑",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "垃圾桶租賃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "垃圾清運",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "害蟲防治-蚊子",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "家庭舞台",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "居家鑑定",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "廢物處理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產估價",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產免稅",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產投資",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產督察",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產租賃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產維護/看護員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產規劃顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "房地產開發",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "清潔- 外部",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "清潔服務-泳池、水療中心和三溫暖",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "清潔- 通風口",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "物業管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "產權服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "窗戶清潔",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "草坪護理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "遺產拍賣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "除草",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "房地產服務",
+      "name": "電力和天然氣經銷商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "旅行",
+      "name": "售票處",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "旅行",
+      "name": "旅行社",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "旅行",
+      "name": "旅遊/導遊",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "旅行",
+      "name": "簽證顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "GPS/衛星導航系統",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "二手車銷售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "加油站",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "卡車維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "商用車經銷商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/汽車租賃/租賃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/汽車細節",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/汽車維修",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/汽車銷售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/汽車零件及配件",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車/車身商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車專家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "汽車玻璃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "車輛拖運",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "車輛清潔/洗車",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "輪胎銷售/更換",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "汽車&摩托車",
+      "name": "駕駛教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "人身傷害法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "健康法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "公司法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "公司組建",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "公證人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "刑事辯護法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "商務法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "執法人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "家庭法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "審核員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "就業/勞動法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "律師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "房地產法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "政府服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "會計服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "法律服務計劃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "海外公司成立",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "消費者法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "知識產權法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "破產法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "移民法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "稅務顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "稅收法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "簿記",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "薪資服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "行政法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "訴訟",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "註冊會計師(CPA)",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "調解員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "退休金/退休法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "過戶",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "遺囑/信託",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "遺產規劃法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "法律&會計",
+      "name": "長老法",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "公司活動",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "共享工作空間",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "技術人員-音訊、影片",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "活動",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "活動場地/房間出租",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "活動租賃",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "活動策劃人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "活動經理/營銷人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "碎紙服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "翻譯/語言服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "行動調酒服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "辦公服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "酒店",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "活動&商務服務",
+      "name": "電話服務中心/代接電話服務站",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "組織&其他",
+      "name": "付出者收穫Ⓡ",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "組織&其他",
+      "name": "商會/協會",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "組織&其他",
+      "name": "非營利/籌款組織",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "藝術&娛樂",
+      "name": "唱片騎師(DJ)",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "藝術&娛樂",
+      "name": "藝人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "藝術&娛樂",
+      "name": "藝術家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "藝術&娛樂",
+      "name": "音樂家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "CNC 服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "包裝",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "化學產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "商用車製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "地板製造商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "基本金屬",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "塑鋼門窗",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "家具製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "服飾",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "木材和軟木(家具除外)",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "機動車",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "機械設備製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "橡膠和塑料",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "油漆製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "煙草製品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "燈飾製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "皮革製品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "石油產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "紙和紙製品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "紡織品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "膠合板供應商/分銷商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "製藥",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "記錄媒體",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "運輸設備",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "鋼鐵製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "電氣設備製造",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "電能生產",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "電腦、電子&光學",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "非金屬礦物",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "食物產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "製造業",
+      "name": "飲料",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "農業",
+      "name": "農學家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "娛樂場所",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "武術",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "游泳",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "瑜伽/皮拉提斯/氣功教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "課程",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "高爾夫",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運動&休閒",
+      "name": "高爾夫教練",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "商業運輸",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "快遞",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "搬家公司",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "班車/豪華轎車服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "貨運服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "運輸",
+      "name": "郵寄服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "人壽和傷殘保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "住宅抵押貸款",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "保險理算員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "保險經紀人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "保險顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "信用修復",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "信用卡/商戶服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "個人貸款",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "健康保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "公司秘書",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "共同基金",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "加密貨幣",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "反向抵押貸款",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "商業保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "商業融資",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "商業貸款",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "商業銀行服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "團體福利",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "外匯",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "收藏",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "物業建設貸款",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "破產從業人員",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "私人銀行家",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "聯盟管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "股票經紀人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "補充保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "財務受託人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "財務顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "財富管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "財產保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "貸款服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "資產融資",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "車輛保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "醫療保險",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "金融投資",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "銀行服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "金融&保險",
+      "name": "養老金",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "IT硬體",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "不斷電系統/變流器",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "光學產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "列印產品/墨盒",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "制服",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "國際貿易",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "地板零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "地毯/墊子",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "塗料零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "壁紙",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "女裝",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "定制服裝/裁縫",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "家具零售商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "家居用品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "家庭影院",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "家電零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "床墊",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "建材零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "建築產品零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "時尚首飾",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "書商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "服裝及配飾零售商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "木材商人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "水系統",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "浴缸配件",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "清潔產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "燃料",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "燈具零售商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "環保產品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "瓷磚",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "禮物",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "窗簾/百葉窗",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "精細珠寶",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "花店",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "藝術品經銷商/畫廊所有者",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "蠟燭",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "衛生/清潔用品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "超市",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "辦公家具",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "辦公用品",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "辦公設備/機器",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "造船",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "鑽石",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "門零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "電子產品零售商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "電氣設備零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "電腦配件",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "香水",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "零售",
+      "name": "體育用品零售商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "IT硬體供應商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "企業資源規劃軟件",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "入口網站和內容提供者",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "應用程式開發者",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "程式設計師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "網路安全服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "網路服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "資料安全",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "資訊科技&網絡",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "資訊科技顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "軟體整合",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "雲端服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "電腦培訓",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "電腦軟體",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電腦&程式設計",
+      "name": "電腦零售",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電訊",
+      "name": "移動通訊",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "電訊",
+      "name": "電信產品/服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "商業經紀人",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "商業顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "商業顧問-周轉",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "商業顧問-小型企業",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "商業顧問-管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "多樣性、公平性和包容性",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "專業組織",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "招標",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "教育諮詢",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "業務顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "業務顧問-品質管理",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "業務顧問-組織&流程",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "能源諮詢",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "隱私專家/資料保護官",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "顧問",
+      "name": "風水顧問",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "咖啡",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "咖啡分銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "咖啡館/商店",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "巧克力師",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "糖果點心",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "茶商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "茶葉分銷",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "蔬菜供應商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "酒商/酒",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "飲料服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "飲料經銷商",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "餐廳",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "餐飲服務",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "餐飲業者",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "食品&飲料",
+      "name": "麵包師傅",
+      "source": "bni_official_533"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "建築師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "大地技師(地質鑽探)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "結構技師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "土木技師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "建設公司",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "都市計畫顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "土地開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "不動產土地開發銷售",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "商用不動產",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "海外房產投資",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "地政士/土地代書",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "房屋建案代銷(新建案)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "房地產經紀/房仲",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "品牌房仲(豪宅/一般住宅)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "資深房仲店長",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "包租包管/包租代管",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "租屋仲介",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "老屋整合規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "不動產遺囑信託",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "特定工廠登記顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "資產管理公司",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "危老重建顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "房產與源頭",
+      "name": "土地重劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "智慧家庭系統(AIoT)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "全戶式空氣清淨設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "全戶淨水/軟水系統",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "綠建材/無毒建材",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "除濕/恆溫系統",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "智慧門鎖/電子鎖",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "居家無障礙設施",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "建築隔熱節能",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "聲學工程/隔音規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "健康照明系統(晝夜節律)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "太陽能光電(屋頂/電站)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "儲能系統",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "家庭自動化",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "智慧與健康宅",
+      "name": "對講機系統",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "室內設計(北/中/南區)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "居家室內設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "商業空間設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "景觀園藝設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "展場設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "家飾軟裝設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "系統櫥櫃設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "廚具規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "照明設計/LED照明",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "低溫冷凍防水燈具",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設計與規劃",
+      "name": "建築風水/陽宅堪輿/陰宅地理擇日",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "營造業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "統包工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "拆除工程(含廢棄物清運)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "泥作業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "水電工程(家庭)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "商用水電工程(廠房/大電)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "弱電工程(機房/監控)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "油漆塗料/特殊塗裝",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "壁紙裱貼",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "防水工程/科技抓漏",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "地坪整飾業(拋光/晶化)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "木工裝潢",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "兒童實木傢俱",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "木地板工程(超耐磨/實木)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "塑膠地板",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "鐵工/鐵皮工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "鍛件工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "不鏽鋼訂製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "鐵捲門業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "鋁門窗/氣密窗/防盜窗",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "後裝門框工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "大捲玻璃工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "採光罩工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "隔間工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "鋼筋板模",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "水泥砂石",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "大理石/石材加工",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "磁磚工程(國產/進口)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "衛浴設備/淋浴拉門",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "消防工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "電梯製造/維修保養",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "化糞池系統",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "強力洗滌(外牆清洗)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "工程與施工",
+      "name": "屋頂防水",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "冷氣空調(家用/商用)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "冷凍空調工程(工業級)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "通風降溫(負壓排風扇)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "暖通空調(HVAC)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "清潔服務業(居家/商辦)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "除蟎專家",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "病媒防治/除蟲/白蟻防治",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "搬家公司",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "驗屋公司",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "鎖匠/鎖印規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "商用帳篷屋",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "物業管理",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "建築、工程與健康宅",
+      "sub_category": "設施與維護",
+      "name": "石材養護",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "走刀式車床(長軸心)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "走心式車床(微細零件)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "全方位雷射加工",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "流體動力機電整合",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "金屬線材加工",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "各類五金零件製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "五金批發零售",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "塑膠模具",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "橡膠五金/橡膠塑管製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "塑膠回收原料造粒",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "金屬回收",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "工業用圓鋸片",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "玻璃纖維公仔模型",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "鎖心製造開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "織標編織業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "精密加工與製造",
+      "name": "產品瑕疵光學檢測(AOI)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "AGV自動搬運機器人",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "PLC/SCADA軟體設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "MES製程自動化",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "全廠秤重檢測設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "無油氣體壓縮設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "自動包裝機(臥式/袋裝)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "食品加工機械",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "蔬果截切清洗設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "食品加熱設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "臭氧水設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "機電整合工程",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "自動化與設備",
+      "name": "泵浦/發電機設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "紙箱製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "工業膠帶包材",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "包裝彩盒設計/印刷",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "塑膠軟袋/捲膜製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "雨傘批發製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "飯店紡織業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "木箱行(出口包裝)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "電腦耗材(碳粉/墨水)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "工業製造與智慧工廠",
+      "sub_category": "傳產升級與代工",
+      "name": "辦公家具/OA設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "進口新車銷售",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "國產二手車買賣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "外匯車",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "商用貨車買賣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "行銷商用車",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "汽車租賃/租購",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "超跑租賃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "企業長租",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "遊覽車/中型巴士",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "銷售與租賃",
+      "name": "私人包車/機場接送",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車保修",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車鈑金烤漆",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車天棚修復",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車音響改裝",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車皮椅訂製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車隔熱紙",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "輪胎/底盤定位/鋁圈",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車電池行",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "汽車改裝",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "機車保養/改裝",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "維修與改裝",
+      "name": "腳踏車行/單車維修",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "汽車美容/鍍膜",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "洗車場",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "汽車地墊/百貨",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "汽車檢驗(代驗廠)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "汽車回收(報廢)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "車禍理賠顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "加油站",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "汽車服務產業鏈",
+      "sub_category": "美容與周邊",
+      "name": "車體包膜",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "植物蛋(Plant Egg)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "素食代工(OEM)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "泰式冷凍調理(素)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "素食熱炒/調理包",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "杏鮑菇生技農場",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "腰果脆糖/果乾代工",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "素食早午餐連鎖",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "全素中式點心開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "素食保健品",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "素食與植物基",
+      "name": "科技餅乾",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "珍珠與糖漿製造(手搖飲源頭)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "半成品原料OEM/ODM",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "養生粉",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "冷凍水產批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "豬肉批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "豬肉屠宰業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "雞蛋批發/機能蛋",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "和牛貿易",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "生薑蒜頭批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "蒜頭加工食品",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "青蔥生產批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "進口大白菜批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "冷凍雲吞批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "蔬菜裁切配送",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "海鮮肉品批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "進口咖啡豆買賣/商業豆烘焙",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "茶葉生產批發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "高山茶葉",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "蜂蜜業(養蜂/批發)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "商用飲水設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "餐飲設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "大台灣汽水株式會社",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "水果批發商",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "餐飲供應鏈",
+      "name": "酒商(葡萄酒/清酒/威士忌/香檳)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "手搖飲連鎖加盟",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "連鎖火鍋",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "日式燒肉Bar",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "泰式餐廳",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "餐酒館",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "串燒店",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "輕食網美餐廳",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "健康廚房/健康餐盒",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "早餐店",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "甜點業/法式甜點",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "烘焙坊/伴手禮",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "爆米花食品製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "糖葫蘆/傳統點心",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "外燴業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "行動餐車",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "餐廳訂貨平台",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "牛排館",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "中餐廳",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "餐飲、食品與素食產業",
+      "sub_category": "品牌與終端",
+      "name": "貓咖/寵物餐廳",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "手術器械",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "病床寢具",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "基因療法",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "細胞治療",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "醫療數據分析",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "遠程醫療技術",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "醫事檢驗所(獨立檢驗)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "腸道菌檢測",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "醫美醫師/診所",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "整形外科",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "牙醫(植牙/矯正/美白)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "眼科醫師/雷射",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "骨科/復健科醫師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "中醫師/漢方調理",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "耳鼻喉科",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "尖端醫療與設備",
+      "name": "醫療耗材儀器",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "日間照護機構",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "居家照護員",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "醫療床/輔具租賃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "復康巴士",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "無障礙交通",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "送餐服務",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "養老院",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "生命禮儀/生前契約/殯葬業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "臨終關懷",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "長照 2.0",
+      "name": "助聽器產業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "外泌體生技",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "美妝PIF認證",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "保健食品代工",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "牛樟芝/益生菌/薑黃素/葉黃素",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "膠原蛋白",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "口服玻尿酸",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "原生益菌",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "微整型綠拿鐵",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "活性離子鈣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "酵素牙膏",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "藥師/藥局",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "生技與營養",
+      "name": "營養師/體重管理",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "物理治療師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "運動物理治療師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "職能治療師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "語言治療師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "聽力師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "整骨醫生",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "推拿整復",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "足體SPA/按摩",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "採耳/耳道SPA",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "妊娠矯色撫紋術(產後修復)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "頭皮管理(落髮護理)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "白髮專業泡泡染",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "美髮設計/沙龍",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "紋繡美學/霧眉",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "美甲美睫",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "熱蠟除毛",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "機能護脊衣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "有機棉產品",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "醫療、生技與長照 2.0",
+      "sub_category": "美業與復健",
+      "name": "蕾絲業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "報驗行(檢驗代辦)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "各類商品檢驗所",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "木箱行",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "保稅倉庫/倉儲",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "國際物流/海空運",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "報關行",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "跨境電商代營運",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "新馬市場開發顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "日本酒代理",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "泰國食品原料進口",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "跨境貿易",
+      "name": "票卷代購",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "會計師(CPA)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "記帳士",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "商務律師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "家事律師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "涉外律師(跨國商務)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "IP智財律師/專利商標",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "勞資顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "ISO認證輔導顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "ESG永續發展顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "政府補助申請顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "SBIR補助顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "企業併購顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "企業管理顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "家族辦公室/股權規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "外籍人力仲介/人力派遣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "商務英漢通譯",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "辦公室設備(OA)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "電話服務中心",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "商業經紀人",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "紙箱製造",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "工業膠帶包材",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "企業營運支援",
+      "name": "禮贈品開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "連鎖餐飲企業顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "零售業企管顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "電商業企管顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "家族財富規劃顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "企業財務輔導顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "企業績效教練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "領導力教練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "垂直領域顧問",
+      "name": "中國區財務規劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "銀行企金/信貸/房貸",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "證券業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "基金投資",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "境外資產配置",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "財富傳承",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "保險經紀人",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "產物保險(車險/火險/工程險)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "人壽保險",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "保險理賠服務",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "第三方支付(醫療/商務)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "反向抵押貸款",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "當舖/資金週轉",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "黃金買賣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "跨境貿易與企業服務",
+      "sub_category": "金融與風險",
+      "name": "信用卡商戶服務",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "ERP企業資源規劃(Odoo)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "雲端主機/資安服務",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "客製化軟體開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "APP開發",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "AI生成式行銷",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "AI社群小編",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "TikTok創業導師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "語音/視覺辨識AI",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "藍牙定位器技術",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "電路板設計(PCB)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "電腦維修/資訊整合",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "手機維修",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "IT 與 AI",
+      "name": "3C周邊配件",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "品牌推廣顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "CIS企業識別設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "SEO搜尋引擎優化",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "數位廣告投放",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "臉書自動行銷",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "短影音行銷/拍攝",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "網紅經紀/KOL",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "直播帶貨",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "網站架設",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "數位名片",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "平面設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "包裝設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "大圖輸出",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "商業攝影/人像攝影/空間攝影",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "光電廣告(LED牆)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "影視導演",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "導播",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "影片剪輯後製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "新聞媒體發布",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "行銷與媒體",
+      "name": "攝影經紀",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "公關宣傳",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "活動執行",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "節目策劃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "婚禮顧問",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "主持人",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "新娘秘書",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "婚禮佈置/小物",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "音樂藝術策展",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "演藝經紀",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "燈光音響租賃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "資訊科技與行銷",
+      "sub_category": "活動與公關",
+      "name": "活動相關設備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "財富流教練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "高爾夫教練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "歌唱老師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "小提琴/鋼琴/烏克麗麗教學",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "圍棋教學",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "心算數學補教",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "兒童專注力訓練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "創意積木教學",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "幼兒運動產業",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "探索教育",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "補習班/美語教學",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "小說家(寫作教學)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "留學遊學代辦",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "教育與技能",
+      "name": "紙模型職人",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "精緻旅遊/旅行社",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "在地導遊",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "郵輪/遊艇租賃",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "休閒農場",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "游泳設施/教練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "運動工作室",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "登山裝備",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "健身教練/俱樂部",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "觀光與休閒",
+      "name": "百人跳床館(Trampoline Park)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "整理師(收納)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "寵物溝通師",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "寵物訓練",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "月嫂仲介",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "交友平台",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "寵物旅館/美容/潔牙骨",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "西服訂製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "精品服飾/代購",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "團體服訂製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "寶石能量健康衣",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "花藝設計/永生花",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "文創底片相機客製",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "命理堪輿/靈魂八字/紫微斗數",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "家族系統排列",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "希塔療癒",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "心理諮商",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "道教法師(祭改/動土)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "銀樓(黃金買賣)",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "珠寶設計",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "宗教百貨/佛具",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "惜食媒合平台",
+      "source": "taiwan_682"
+    },
+    {
+      "category": "優質生活、教育與特殊服務",
+      "sub_category": "生活風格與特殊服務",
+      "name": "慈善機構(公益團體)",
+      "source": "taiwan_682"
+    }
+  ],
+  "unique_names": [
+    "3C周邊配件",
+    "3D建模",
+    "AGV自動搬運機器人",
+    "AI生成式行銷",
+    "AI社群小編",
+    "AI顧問",
+    "APP開發",
+    "BNI專業",
+    "CIS企業識別設計",
+    "CNC 服務",
+    "ERP企業資源規劃(Odoo)",
+    "ESG永續發展顧問",
+    "GPS/衛星導航系統",
+    "IP智財律師/專利商標",
+    "ISO認證輔導顧問",
+    "IT安裝人員",
+    "IT硬體",
+    "IT硬體供應商",
+    "MES製程自動化",
+    "PLC/SCADA軟體設計",
+    "SBIR補助顧問",
+    "SEO搜尋引擎優化",
+    "TikTok創業導師",
+    "一般牙醫",
+    "不動產土地開發銷售",
+    "不動產遺囑信託",
+    "不斷電系統/變流器",
+    "不鏽鋼訂製",
+    "中國區財務規劃",
+    "中央電視台",
+    "中醫師/漢方調理",
+    "中餐廳",
+    "串燒店",
+    "主承包商",
+    "主持人",
+    "乾洗/洗衣",
+    "二手車銷售",
+    "五金批發零售",
+    "交友平台",
+    "人力資源",
+    "人壽保險",
+    "人壽和傷殘保險",
+    "人生導師",
+    "人身傷害法",
+    "付出者收穫Ⓡ",
+    "代購",
+    "企業併購顧問",
+    "企業管理顧問",
+    "企業績效教練",
+    "企業財務輔導顧問",
+    "企業資源規劃軟件",
+    "企業長租",
+    "伐木",
+    "休閒農場",
+    "低壓電工",
+    "低溫冷凍防水燈具",
+    "住宅地產代理",
+    "住宅害蟲防治",
+    "住宅屋頂",
+    "住宅抵押貸款",
+    "住宅改造商",
+    "住宅油漆工",
+    "住宅清潔",
+    "供熱工程師",
+    "促銷產品",
+    "保健品",
+    "保健食品代工",
+    "保全人員",
+    "保全系統",
+    "保稅倉庫/倉儲",
+    "保護塗層/密封劑",
+    "保險理算員",
+    "保險理賠服務",
+    "保險經紀人",
+    "保險顧問",
+    "信用修復",
+    "信用卡/商戶服務",
+    "信用卡商戶服務",
+    "修復",
+    "倉儲租賃",
+    "個人貸款",
+    "健康&保健服務",
+    "健康保險",
+    "健康廚房/健康餐盒",
+    "健康教練",
+    "健康法",
+    "健康照明系統(晝夜節律)",
+    "健康管家服務",
+    "健康設施/健身房/俱樂部",
+    "健身教練/俱樂部",
+    "催眠治療師",
+    "僱用外籍勞工",
+    "儲能系統",
+    "光學產品",
+    "光電廣告(LED牆)",
+    "兒童實木傢俱",
+    "兒童專注力訓練",
+    "入口網站和內容提供者",
+    "全廠秤重檢測設備",
+    "全戶式空氣清淨設備",
+    "全戶淨水/軟水系統",
+    "全方位雷射加工",
+    "全素中式點心開發",
+    "公共關係",
+    "公司法",
+    "公司活動",
+    "公司秘書",
+    "公司組建",
+    "公寓管理員",
+    "公證人",
+    "公關宣傳",
+    "共享工作空間",
+    "共同基金",
+    "冷凍水產批發",
+    "冷凍空調工程(工業級)",
+    "冷凍雲吞批發",
+    "冷氣空調(家用/商用)",
+    "出版商",
+    "刑事辯護法",
+    "列印產品/墨盒",
+    "制服",
+    "刺繡",
+    "創意積木教學",
+    "加密貨幣",
+    "加油站",
+    "助聽器產業",
+    "勞資顧問",
+    "包租包管/包租代管",
+    "包裝",
+    "包裝彩盒設計/印刷",
+    "包裝設計",
+    "化妝品/護膚品",
+    "化妝師",
+    "化學產品",
+    "化糞池系統",
+    "半成品原料OEM/ODM",
+    "占卜師",
+    "卡車維修",
+    "印刷業",
+    "印刷業-大圖輸出",
+    "印刷業-數位",
+    "印刷業-膠印",
+    "危老重建顧問",
+    "原生益菌",
+    "反向抵押貸款",
+    "口服玻尿酸",
+    "另類健康",
+    "司禮人",
+    "各類五金零件製造",
+    "各類商品檢驗所",
+    "命理堪輿/靈魂八字/紫微斗數",
+    "和牛貿易",
+    "咖啡",
+    "咖啡分銷",
+    "咖啡館/商店",
+    "品牌房仲(豪宅/一般住宅)",
+    "品牌推廣",
+    "品牌推廣顧問",
+    "售票處",
+    "唱片騎師(DJ)",
+    "商務培訓/教練",
+    "商務律師",
+    "商務法",
+    "商務英漢通譯",
+    "商會/協會",
+    "商業保險",
+    "商業害蟲防治",
+    "商業屋頂",
+    "商業建築商",
+    "商業建築師",
+    "商業房地產",
+    "商業攝影/人像攝影/空間攝影",
+    "商業改造商",
+    "商業油漆工",
+    "商業清潔",
+    "商業物業管理",
+    "商業空間設計",
+    "商業經紀人",
+    "商業融資",
+    "商業貸款",
+    "商業運輸",
+    "商業銀行服務",
+    "商業顧問",
+    "商業顧問-周轉",
+    "商業顧問-小型企業",
+    "商業顧問-管理",
+    "商用不動產",
+    "商用帳篷屋",
+    "商用水電工程(廠房/大電)",
+    "商用貨車買賣",
+    "商用車經銷商",
+    "商用車製造",
+    "商用飲水設備",
+    "國產二手車買賣",
+    "國際物流/海空運",
+    "國際貿易",
+    "圍棋教學",
+    "圍欄",
+    "園林和景觀設計師",
+    "團體服訂製",
+    "團體福利",
+    "土地重劃",
+    "土地開發",
+    "土木/結構工程師",
+    "土木工程承包商",
+    "土木技師",
+    "在地導遊",
+    "地坪整飾業(拋光/晶化)",
+    "地政士/土地代書",
+    "地板",
+    "地板製造商",
+    "地板零售",
+    "地毯/墊子",
+    "地毯、室內裝潢清潔劑",
+    "地面工程",
+    "垃圾桶租賃",
+    "垃圾清運",
+    "執法人員",
+    "基因療法",
+    "基本金屬",
+    "基金投資",
+    "報關行",
+    "報驗行(檢驗代辦)",
+    "塑膠回收原料造粒",
+    "塑膠地板",
+    "塑膠模具",
+    "塑膠軟袋/捲膜製造",
+    "塑鋼門窗",
+    "塗料零售",
+    "境外資產配置",
+    "壁爐&烤箱製造商",
+    "壁紙",
+    "壁紙裱貼",
+    "外匯",
+    "外匯車",
+    "外泌體生技",
+    "外燴業",
+    "外籍人力仲介/人力派遣",
+    "多樣性、公平性和包容性",
+    "大台灣汽水株式會社",
+    "大圖輸出",
+    "大地技師(地質鑽探)",
+    "大捲玻璃工程",
+    "大理石/石材加工",
+    "天花板/假天花板",
+    "太陽能",
+    "太陽能光電(屋頂/電站)",
+    "女裝",
+    "妊娠矯色撫紋術(產後修復)",
+    "娛樂場所",
+    "婚禮佈置/小物",
+    "婚禮規劃",
+    "婚禮顧問",
+    "婦科醫生",
+    "媒體服務",
+    "學習中心",
+    "宗教百貨/佛具",
+    "定制服裝/裁縫",
+    "客製化住宅建造商",
+    "客製化軟體開發",
+    "室內建築",
+    "室內設計",
+    "室內設計(北/中/南區)",
+    "室內設計-商業",
+    "害蟲防治-蚊子",
+    "家事律師",
+    "家具維修/室內裝潢",
+    "家具製造",
+    "家具零售商",
+    "家居用品",
+    "家庭影院",
+    "家庭法",
+    "家庭自動化",
+    "家庭舞台",
+    "家族系統排列",
+    "家族財富規劃顧問",
+    "家族辦公室/股權規劃",
+    "家長教練",
+    "家電維修",
+    "家電零售",
+    "家飾軟裝設計",
+    "審核員",
+    "寵物商店",
+    "寵物寄宿",
+    "寵物旅館/美容/潔牙骨",
+    "寵物溝通師",
+    "寵物美容",
+    "寵物訓練",
+    "寵物食品",
+    "寶石能量健康衣",
+    "專業組織",
+    "對講機系統",
+    "導播",
+    "小提琴/鋼琴/烏克麗麗教學",
+    "小說家(寫作教學)",
+    "就業/勞動法",
+    "就業服務法顧問",
+    "居家室內設計",
+    "居家無障礙設施",
+    "居家照護員",
+    "居家護理",
+    "居家鑑定",
+    "屋頂防水",
+    "展場設計",
+    "工料測量師",
+    "工業用圓鋸片",
+    "工業膠帶包材",
+    "工業自動化",
+    "巧克力師",
+    "希塔療癒",
+    "平面廣告",
+    "平面設計",
+    "平面設計師",
+    "幼兒運動產業",
+    "床墊",
+    "廚具規劃",
+    "廚房建設",
+    "廢物處理",
+    "廣告代理",
+    "廣播廣告",
+    "建材零售",
+    "建築商/總承包商",
+    "建築師",
+    "建築服務",
+    "建築產品零售",
+    "建築設計師",
+    "建築隔熱節能",
+    "建築風水/陽宅堪輿/陰宅地理擇日",
+    "建設公司",
+    "建設項目管理",
+    "弱電工程(機房/監控)",
+    "強力洗滌",
+    "強力洗滌(外牆清洗)",
+    "影片剪輯後製",
+    "影視導演",
+    "律師",
+    "後裝門框工程",
+    "復康巴士",
+    "微整型綠拿鐵",
+    "心理諮商",
+    "心算數學補教",
+    "心靈教練",
+    "快遞",
+    "惜食媒合平台",
+    "慈善機構(公益團體)",
+    "應用程式開發者",
+    "戶外廣告看板(廣告看板)",
+    "房地產估價",
+    "房地產免稅",
+    "房地產投資",
+    "房地產法",
+    "房地產督察",
+    "房地產租賃",
+    "房地產經紀/房仲",
+    "房地產維護/看護員",
+    "房地產規劃顧問",
+    "房地產開發",
+    "房屋建案代銷(新建案)",
+    "房屋建造者",
+    "手搖飲連鎖加盟",
+    "手機維修",
+    "手術器械",
+    "技術人員-音訊、影片",
+    "折扣促銷",
+    "拆遷承包商",
+    "拆除工程(含廢棄物清運)",
+    "招標",
+    "招聘人員",
+    "按摩治療師",
+    "排水",
+    "排水溝",
+    "採光罩工程",
+    "採耳/耳道SPA",
+    "探索教育",
+    "推拿整復",
+    "搜索引擎優化",
+    "搬家公司",
+    "播客",
+    "攝影師",
+    "攝影師- 商業",
+    "攝影師/電影製片人",
+    "攝影經紀",
+    "收藏",
+    "政府服務",
+    "政府補助申請顧問",
+    "教育服務/導師",
+    "教育設施",
+    "教育諮詢",
+    "整形外科",
+    "整理師(收納)",
+    "整骨醫生",
+    "數位內容",
+    "數位名片",
+    "數位廣告投放",
+    "數字營銷",
+    "文創底片相機客製",
+    "文案/作家",
+    "新娘秘書",
+    "新聞媒體發布",
+    "新馬市場開發顧問",
+    "旅行社",
+    "旅遊/導遊",
+    "日式燒肉Bar",
+    "日本酒代理",
+    "日間照護機構",
+    "早餐店",
+    "時尚首飾",
+    "景觀園藝設計",
+    "景觀服務",
+    "智慧家庭系統(AIoT)",
+    "智慧門鎖/電子鎖",
+    "暖通空調(HVAC)",
+    "暖通空調-暖氣和空氣",
+    "書商",
+    "會計師(CPA)",
+    "會計服務",
+    "月嫂仲介",
+    "有機棉產品",
+    "服裝及配飾零售商",
+    "服飾",
+    "木匠",
+    "木地板工程(超耐磨/實木)",
+    "木工裝潢",
+    "木材和軟木(家具除外)",
+    "木材商人",
+    "木箱行",
+    "木箱行(出口包裝)",
+    "杏鮑菇生技農場",
+    "植物蛋(Plant Egg)",
+    "業務顧問",
+    "業務顧問-品質管理",
+    "業務顧問-組織&流程",
+    "機動車",
+    "機械設備維修",
+    "機械設備製造",
+    "機能護脊衣",
+    "機車保養/改裝",
+    "機電整合工程",
+    "橡膠五金/橡膠塑管製造",
+    "橡膠和塑料",
+    "檯面",
+    "櫥櫃製造商",
+    "歌唱老師",
+    "正畸醫生",
+    "武術",
+    "水族館/魚",
+    "水暖",
+    "水果批發商",
+    "水泥/混凝土",
+    "水泥砂石",
+    "水系統",
+    "水電工程(家庭)",
+    "汽車/汽車租賃/租賃",
+    "汽車/汽車細節",
+    "汽車/汽車維修",
+    "汽車/汽車銷售",
+    "汽車/汽車零件及配件",
+    "汽車/車身商",
+    "汽車保修",
+    "汽車回收(報廢)",
+    "汽車地墊/百貨",
+    "汽車天棚修復",
+    "汽車專家",
+    "汽車改裝",
+    "汽車檢驗(代驗廠)",
+    "汽車玻璃",
+    "汽車皮椅訂製",
+    "汽車租賃/租購",
+    "汽車美容/鍍膜",
+    "汽車鈑金烤漆",
+    "汽車隔熱紙",
+    "汽車電池行",
+    "汽車音響改裝",
+    "沙龍/水療中心",
+    "油漆塗料/特殊塗裝",
+    "油漆製造",
+    "法律服務計劃",
+    "泥作業",
+    "泥水匠",
+    "泰國食品原料進口",
+    "泰式冷凍調理(素)",
+    "泰式餐廳",
+    "泳池、水療池和三溫暖維修",
+    "泵浦/發電機設備",
+    "洗車場",
+    "活動",
+    "活動執行",
+    "活動場地/房間出租",
+    "活動相關設備",
+    "活動租賃",
+    "活動策劃人",
+    "活動經理/營銷人員",
+    "活性離子鈣",
+    "流體動力機電整合",
+    "浴缸配件",
+    "海外公司成立",
+    "海外房產投資",
+    "海鮮肉品批發",
+    "消費者法",
+    "消防工程",
+    "涉外律師(跨國商務)",
+    "清潔- 外部",
+    "清潔- 通風口",
+    "清潔服務-泳池、水療中心和三溫暖",
+    "清潔服務業(居家/商辦)",
+    "清潔產品",
+    "測量員",
+    "游泳",
+    "游泳池、水療和桑拿",
+    "游泳設施/教練",
+    "溝通教練",
+    "演藝經紀",
+    "潛在客戶開發",
+    "灌溉",
+    "烘焙坊/伴手禮",
+    "無油氣體壓縮設備",
+    "無障礙交通",
+    "煙肉清潔工",
+    "煙草製品",
+    "照明設計/LED照明",
+    "熱蠟除毛",
+    "燃料",
+    "燈光",
+    "燈光音響租賃",
+    "燈具零售商",
+    "燈飾製造",
+    "營造業",
+    "營銷顧問",
+    "營養師",
+    "營養師/體重管理",
+    "營養補充劑",
+    "爆米花食品製造",
+    "牙醫(植牙/矯正/美白)",
+    "牛排館",
+    "牛樟芝/益生菌/薑黃素/葉黃素",
+    "物業建設貸款",
+    "物業管理",
+    "物理治療師",
+    "特定工廠登記顧問",
+    "犬隻訓練",
+    "獸醫",
+    "玻璃",
+    "玻璃纖維公仔模型",
+    "珍珠與糖漿製造(手搖飲源頭)",
+    "珠寶維修",
+    "珠寶設計",
+    "班車/豪華轎車服務",
+    "理財教練",
+    "瑜伽/皮拉提斯/氣功教練",
+    "環保產品",
+    "環境服務",
+    "瓦工/石匠",
+    "瓦斯圖建築",
+    "瓷磚",
+    "瓷磚工人",
+    "甜點業/法式甜點",
+    "生命禮儀/生前契約/殯葬業",
+    "生薑蒜頭批發",
+    "產品瑕疵光學檢測(AOI)",
+    "產權服務",
+    "產物保險(車險/火險/工程險)",
+    "留學遊學代辦",
+    "當舖/資金週轉",
+    "病媒防治/除蟲/白蟻防治",
+    "病床寢具",
+    "登山裝備",
+    "發電機",
+    "白髮專業泡泡染",
+    "百人跳床館(Trampoline Park)",
+    "百葉窗和遮陽蓬",
+    "皮膚科醫生",
+    "皮革製品",
+    "直播帶貨",
+    "眼科醫師/雷射",
+    "眼鏡銷售員",
+    "知識產權法",
+    "短影音行銷/拍攝",
+    "石材養護",
+    "石油產品",
+    "石膏板",
+    "破產從業人員",
+    "破產法",
+    "硬質景觀",
+    "碎紙服務",
+    "磁磚工程(國產/進口)",
+    "社交媒體",
+    "票卷代購",
+    "禮物",
+    "禮贈品開發",
+    "私人包車/機場接送",
+    "私人教練-健身",
+    "私人銀行家",
+    "科技餅乾",
+    "租屋仲介",
+    "租賃設備",
+    "移動通訊",
+    "移民法",
+    "稅務顧問",
+    "稅收法",
+    "程式設計師",
+    "窗戶清潔",
+    "窗簾/百葉窗",
+    "窗飾",
+    "第三方支付(醫療/商務)",
+    "管理教練",
+    "管道工程",
+    "節目策劃",
+    "簽約公司",
+    "簽證顧問",
+    "簿記",
+    "精品服飾/代購",
+    "精油",
+    "精細珠寶",
+    "精緻旅遊/旅行社",
+    "糖果點心",
+    "糖葫蘆/傳統點心",
+    "系統櫥櫃設計",
+    "紋繡美學/霧眉",
+    "紙和紙製品",
+    "紙模型職人",
+    "紙箱製造",
+    "素食代工(OEM)",
+    "素食保健品",
+    "素食早午餐連鎖",
+    "素食熱炒/調理包",
+    "紡織品",
+    "細木工",
+    "細胞治療",
+    "結構技師",
+    "絕緣",
+    "統包工程",
+    "綠建材/無毒建材",
+    "網上商店服務",
+    "網版印刷",
+    "網站架設",
+    "網紅經紀/KOL",
+    "網路安全服務",
+    "網路服務",
+    "網路行銷",
+    "網頁設計",
+    "網頁開發",
+    "線上培訓",
+    "織標編織業",
+    "美妝PIF認證",
+    "美容師",
+    "美甲美睫",
+    "美髮設計/沙龍",
+    "翻譯/語言服務",
+    "老屋整合規劃",
+    "耳鼻喉科",
+    "聯盟管理",
+    "聲學工程/隔音規劃",
+    "聲樂教練",
+    "職業介紹所",
+    "職業安全",
+    "職能治療師",
+    "聽力/聽力學",
+    "聽力師",
+    "股票經紀人",
+    "能源服務",
+    "能源諮詢",
+    "脊椎指壓治療師",
+    "腰果脆糖/果乾代工",
+    "腳踏車行/單車維修",
+    "腸道菌檢測",
+    "膠原蛋白",
+    "膠合板供應商/分銷商",
+    "臉書自動行銷",
+    "臨床實驗室",
+    "臨終關懷",
+    "自動包裝機(臥式/袋裝)",
+    "自然療法師",
+    "臭氧水設備",
+    "色彩&風格顧問",
+    "花店",
+    "花藝設計/永生花",
+    "茶商",
+    "茶葉分銷",
+    "茶葉生產批發",
+    "草坪護理",
+    "葬禮策劃/服務",
+    "蒜頭加工食品",
+    "蔬果截切清洗設備",
+    "蔬菜供應商",
+    "蔬菜裁切配送",
+    "蕾絲業",
+    "薪資服務",
+    "藍牙定位器技術",
+    "藝人",
+    "藝術品經銷商/畫廊所有者",
+    "藝術家",
+    "藥劑師",
+    "藥師/藥局",
+    "虛擬助手",
+    "蜂蜜業(養蜂/批發)",
+    "蠟燭",
+    "行動調酒服務",
+    "行動餐車",
+    "行政服務",
+    "行政法",
+    "行銷商用車",
+    "衛浴設備/淋浴拉門",
+    "衛生/清潔用品",
+    "補充保險",
+    "補習班/美語教學",
+    "製藥",
+    "西服訂製",
+    "記帳士",
+    "記錄媒體",
+    "訴訟",
+    "註冊會計師(CPA)",
+    "語言教學",
+    "語言教育服務",
+    "語言治療師",
+    "語音/視覺辨識AI",
+    "課程",
+    "調查服務/偵探",
+    "調解員",
+    "證券業",
+    "豬肉屠宰業",
+    "豬肉批發",
+    "貓咖/寵物餐廳",
+    "財務受託人",
+    "財務顧問",
+    "財富傳承",
+    "財富流教練",
+    "財富管理",
+    "財產保險",
+    "貨運服務",
+    "貸款服務",
+    "資料安全",
+    "資深房仲店長",
+    "資產管理公司",
+    "資產融資",
+    "資訊科技&網絡",
+    "資訊科技顧問",
+    "走刀式車床(長軸心)",
+    "走心式車床(微細零件)",
+    "超市",
+    "超跑租賃",
+    "足科醫生",
+    "足體SPA/按摩",
+    "跨境電商代營運",
+    "身心放鬆療法師",
+    "車庫門",
+    "車禍理賠顧問",
+    "車輛保險",
+    "車輛拖運",
+    "車輛清潔/洗車",
+    "車體包膜",
+    "軟體整合",
+    "輔導員/心理治療師",
+    "輕食網美餐廳",
+    "輪胎/底盤定位/鋁圈",
+    "輪胎銷售/更換",
+    "輸液水療中心",
+    "辦公室設備(OA)",
+    "辦公家具",
+    "辦公家具/OA設備",
+    "辦公服務",
+    "辦公用品",
+    "辦公設備/機器",
+    "農學家",
+    "退休金/退休法",
+    "送餐服務",
+    "通風降溫(負壓排風扇)",
+    "造船",
+    "連鎖火鍋",
+    "連鎖餐飲企業顧問",
+    "進口咖啡豆買賣/商業豆烘焙",
+    "進口大白菜批發",
+    "進口新車銷售",
+    "遊覽車/中型巴士",
+    "運動工作室",
+    "運動物理治療師",
+    "運輸設備",
+    "過戶",
+    "道教法師(祭改/動土)",
+    "遠程醫療技術",
+    "遺囑/信託",
+    "遺產拍賣",
+    "遺產規劃法",
+    "郵寄服務",
+    "郵輪/遊艇租賃",
+    "都市計畫顧問",
+    "酒商(葡萄酒/清酒/威士忌/香檳)",
+    "酒商/酒",
+    "酒店",
+    "酵素牙膏",
+    "醫事檢驗所(獨立檢驗)",
+    "醫生/醫師",
+    "醫療保險",
+    "醫療床/輔具租賃",
+    "醫療數據分析",
+    "醫療服務",
+    "醫療水療中心",
+    "醫療耗材儀器",
+    "醫美醫師/診所",
+    "野生動物移除",
+    "金屬加工",
+    "金屬回收",
+    "金屬線材加工",
+    "金融投資",
+    "針灸",
+    "銀樓(黃金買賣)",
+    "銀行企金/信貸/房貸",
+    "銀行服務",
+    "銷售培訓/教練",
+    "鋁製設備",
+    "鋁門窗/氣密窗/防盜窗",
+    "鋪路",
+    "鋼筋板模",
+    "鋼鐵製造",
+    "鍛件工程",
+    "鎖匠",
+    "鎖匠/鎖印規劃",
+    "鎖心製造開發",
+    "鐵匠",
+    "鐵工/鐵皮工程",
+    "鐵捲門業",
+    "鑽石",
+    "長老法",
+    "門窗",
+    "門零售",
+    "關係教練",
+    "關係營銷",
+    "防水-防風雨",
+    "防水工程/科技抓漏",
+    "防火",
+    "除濕/恆溫系統",
+    "除草",
+    "除蟎專家",
+    "陽台",
+    "隔間工程",
+    "隱私專家/資料保護官",
+    "雜工",
+    "雞蛋批發/機能蛋",
+    "雨傘批發製造",
+    "雲端主機/資安服務",
+    "雲端服務",
+    "零售業企管顧問",
+    "電信產品/服務",
+    "電力和天然氣經銷商",
+    "電商業企管顧問",
+    "電子商務服務",
+    "電子產品零售商",
+    "電工",
+    "電工-商業",
+    "電梯",
+    "電梯製造/維修保養",
+    "電氣設備製造",
+    "電氣設備零售",
+    "電能生產",
+    "電腦、電子&光學",
+    "電腦培訓",
+    "電腦維修",
+    "電腦維修/資訊整合",
+    "電腦耗材(碳粉/墨水)",
+    "電腦軟體",
+    "電腦配件",
+    "電腦零售",
+    "電視廣告",
+    "電話服務中心",
+    "電話服務中心/代接電話服務站",
+    "電路板設計(PCB)",
+    "青蔥生產批發",
+    "非營利/籌款組織",
+    "非金屬礦物",
+    "音樂家",
+    "音樂藝術策展",
+    "預立醫療照護諮商ACP Services",
+    "領導力教練",
+    "頭皮管理(落髮護理)",
+    "風水",
+    "風水顧問",
+    "食品加工機械",
+    "食品加熱設備",
+    "食物產品",
+    "飯店紡織業",
+    "飲料",
+    "飲料服務",
+    "飲料經銷商",
+    "養生粉",
+    "養老金",
+    "養老院",
+    "餐廳",
+    "餐廳訂貨平台",
+    "餐酒館",
+    "餐飲服務",
+    "餐飲業者",
+    "餐飲設備",
+    "香水",
+    "駕駛教練",
+    "驗屋公司",
+    "骨科/復健科醫師",
+    "體育用品零售商",
+    "體重管理",
+    "高山茶葉",
+    "高爾夫",
+    "高爾夫教練",
+    "高級服務商",
+    "髮型師",
+    "鷹架",
+    "麵包師傅",
+    "黃金買賣"
+  ]
+}

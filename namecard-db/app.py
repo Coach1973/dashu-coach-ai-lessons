@@ -6,15 +6,19 @@ import os
 import time
 import uuid
 from collections import defaultdict, deque
+from functools import wraps
 
 import anthropic
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, session, url_for
+from werkzeug.security import check_password_hash
 
 import db
+from chain_matcher import match_card_to_chain
 from dedup import run_dedup
-from extract import extract_card_fields
+from extract import MODEL, extract_card_fields
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("NAMECARD_SECRET_KEY", "")
 IMAGE_FOLDER = os.environ.get("NAMECARD_FOLDER", "")
 
 # 公開上傳辨識：任何人都能丟名片照片，AI辨識後直接收錄進同一個名片資料庫
@@ -99,6 +103,93 @@ def matches():
     return render_template("matches.html", pairs=rows)
 
 
+@app.route("/chains")
+def chains_page():
+    conn = db.get_conn()
+    chains = db.list_chains_with_members(conn)
+    conn.close()
+    return render_template("chains.html", chains=chains)
+
+
+def team_login_required(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if not session.get("team_username"):
+            return redirect(url_for("team_login", next=request.path))
+        return view(*args, **kwargs)
+    return wrapped
+
+
+@app.route("/team/login", methods=["GET", "POST"])
+def team_login():
+    if request.method == "GET":
+        return render_template("team_login.html", error=None)
+    username = (request.form.get("username") or "").strip()
+    password = request.form.get("password") or ""
+    conn = db.get_conn()
+    member = db.get_team_member(conn, username)
+    conn.close()
+    if member and check_password_hash(member["password_hash"], password):
+        session["team_username"] = username
+        session["team_display_name"] = member["display_name"] or username
+        session.permanent = True
+        return redirect(request.args.get("next") or url_for("index"))
+    return render_template("team_login.html", error="帳號或密碼不對，請再試一次"), 401
+
+
+@app.route("/team/logout")
+def team_logout():
+    session.pop("team_username", None)
+    session.pop("team_display_name", None)
+    return redirect(url_for("index"))
+
+
+@app.route("/card/<int:card_id>/follow", methods=["GET"])
+@team_login_required
+def card_follow(card_id):
+    conn = db.get_conn()
+    card = conn.execute("SELECT * FROM cards WHERE id = ?", (card_id,)).fetchone()
+    if card is None:
+        conn.close()
+        return "找不到這張名片", 404
+    follow_up = db.get_or_create_follow_up(conn, card_id)
+    logs = db.list_follow_up_logs(conn, follow_up["id"])
+    chain_context = conn.execute(
+        """SELECT ic.name AS chain_name, ic.core_theme, cm.role_name
+           FROM chain_members cm JOIN industry_chains ic ON ic.id = cm.chain_id
+           WHERE cm.card_id = ?""",
+        (card_id,),
+    ).fetchall()
+    conn.close()
+    return render_template(
+        "card_follow.html", card=card, follow_up=follow_up, logs=logs,
+        chain_context=chain_context, display_name=session.get("team_display_name"),
+    )
+
+
+@app.route("/card/<int:card_id>/follow/update_stage", methods=["POST"])
+@team_login_required
+def card_follow_update_stage(card_id):
+    stage = request.form.get("stage", "待邀約")
+    conn = db.get_conn()
+    db.update_follow_up_stage(conn, card_id, stage, session.get("team_display_name"))
+    conn.close()
+    return redirect(url_for("card_follow", card_id=card_id))
+
+
+@app.route("/card/<int:card_id>/follow/add_log", methods=["POST"])
+@team_login_required
+def card_follow_add_log(card_id):
+    channel = request.form.get("channel", "")
+    content = (request.form.get("content") or "").strip()
+    if content:
+        conn = db.get_conn()
+        follow_up = db.get_or_create_follow_up(conn, card_id)
+        db.add_follow_up_log(conn, follow_up["id"], channel, content, session.get("team_display_name") or "")
+        conn.close()
+    return redirect(url_for("card_follow", card_id=card_id))
+
+
 @app.route("/upload", methods=["GET"])
 def upload_page():
     return render_template("upload.html", error=None)
@@ -130,11 +221,15 @@ def upload_submit():
             fields = extract_card_fields(saved_path, client)
         except Exception as e:  # noqa: BLE001 — 單張失敗不能讓整批停掉
             fields = {"_error": str(e), "_raw": ""}
-        db.insert_card(conn, saved_name, fields)
+        card_id = db.insert_card(conn, saved_name, fields)
         if "_error" in fields:
             results.append({"filename": f.filename, "error": fields["_error"]})
         else:
             any_success = True
+            try:
+                match_card_to_chain(conn, client, card_id, MODEL)
+            except Exception:  # noqa: BLE001 — 媒合失敗不影響名片本身已收錄
+                pass
             results.append({"filename": f.filename, "fields": fields})
     conn.close()
 

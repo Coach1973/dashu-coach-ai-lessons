@@ -18,8 +18,9 @@ import os
 import anthropic
 
 import db
+from chain_matcher import match_card_to_chain
 from dedup import run_dedup
-from extract import extract_card_fields
+from extract import MODEL, extract_card_fields
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
 
@@ -40,13 +41,19 @@ def scan_once(folder: str, client: anthropic.Anthropic) -> None:
             fields = extract_card_fields(image_path, client)
         except Exception as e:  # noqa: BLE001 — 單張失敗不能讓整批停掉
             fields = {"_error": str(e), "_raw": ""}
-        db.insert_card(conn, filename, fields)
+        card_id = db.insert_card(conn, filename, fields)
         if "_error" in fields:
             print(f"  ⚠️ 失敗：{fields['_error']}")
         elif fields.get("confidence_notes"):
             print(f"  ⚠️ 需人工複查：{fields['confidence_notes']}")
         else:
             print(f"  ✅ {fields.get('name')} / {fields.get('company')}")
+        if "_error" not in fields:
+            try:
+                match_result = match_card_to_chain(conn, client, card_id, MODEL)
+                print(f"  🔗 產業鏈媒合：{match_result}")
+            except Exception as e:  # noqa: BLE001 — 媒合失敗不影響名片本身已收錄
+                print(f"  ⚠️ 產業鏈媒合失敗：{e}")
     conn.close()
     print(f"本次掃描完成，新處理 {new_count} 張，資料夾內共 {len(filenames)} 張。")
 
