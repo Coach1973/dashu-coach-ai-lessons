@@ -1,5 +1,10 @@
 #!/bin/bash
-# Hook：Stop（Claude Code 在回應結束前觸發）
+# ⚠️ 【功能已合併，本檔不再單獨註冊】2026-08-25 賈維斯體檢標註
+# 這支的邏輯已於 2026-08-12 併入 scripts/stop_rules_master.py（12 支 Stop hook 合成單一總管，
+# 避免每支各自重讀同一份 transcript，實測 14MB 檔 1.111 秒 → 0.066 秒）。
+# 所以它「沒註冊進 settings.json」是正確狀態，不是漏裝。
+# 原本的「# Hook：Stop」宣告改成下面這行，避免 audit_claude_hooks_registered.sh 每次都誤報。
+# 已合併：Stop（實際執行者為 stop_rules_master.py）
 # 用途：session_length_hook.sh（UserPromptSubmit）每過門檻就把「本場已約N輪」
 #       塞進AI自己看得到的系統提醒，但那只是「餵給AI看」，不保證AI會主動
 #       講給教練聽。這支 hook 補上那一段——檢查AI這輪的回覆有沒有真的把

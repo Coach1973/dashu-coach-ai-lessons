@@ -1,5 +1,8 @@
 #!/bin/bash
-# Hook：Stop（Claude Code 在回應結束前觸發，這台Windows聯想機專用版）
+# ⚠️ 【Windows 聯想機專用，本機（Mac）不適用】2026-08-25 賈維斯體檢標註
+# Mac 端同功能已在 stop_rules_master.py 規則 I（繁體字鎖）內，這支是給聯想那台用的，
+# 在 Mac 沒註冊進 settings.json 是正確狀態，不是漏裝。
+# 已合併：Stop（Windows 端專用，Mac 實際執行者為 stop_rules_master.py）
 # 用途：掃描這一輪最終回覆文字，偵測是否混入簡體字，命中 → exit 2 強制重新檢查並修正
 # 設計理念：不靠模型自覺（教練第4次抓到AI輸出滑成簡體字，前3次都在Mac的OpenClaw系統靠rule_traditional_chinese_check.sh擋下，
 #           這台Windows的Claude Code從沒配過同款機制），用grep確定性檢查，比照Mac那套邏輯

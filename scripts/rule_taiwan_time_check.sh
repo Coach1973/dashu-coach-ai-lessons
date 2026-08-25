@@ -1,5 +1,10 @@
 #!/bin/bash
-# Hook：Stop（Claude Code 在回應結束前觸發）
+# ⚠️ 【功能已合併，本檔不再單獨註冊】2026-08-25 賈維斯體檢標註
+# 這支的邏輯已於 2026-08-12 併入 scripts/stop_rules_master.py（12 支 Stop hook 合成單一總管，
+# 避免每支各自重讀同一份 transcript，實測 14MB 檔 1.111 秒 → 0.066 秒）。
+# 所以它「沒註冊進 settings.json」是正確狀態，不是漏裝。
+# 原本的「# Hook：Stop」宣告改成下面這行，避免 audit_claude_hooks_registered.sh 每次都誤報。
+# 已合併：Stop（實際執行者為 stop_rules_master.py）
 # 用途：偵測 AI 這一輪是否處理過原始 UTC timestamp（jsonl/log 的 "...T..:..:..Z" 格式），
 #       但最終回覆裡出現時鐘數字（HH:MM）卻沒有明確講「台灣時間」/「+8」換算的痕跡
 #       命中 → exit 2 強制 Claude 重新檢查換算，並輸出修正指引

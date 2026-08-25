@@ -1,5 +1,10 @@
 #!/bin/bash
-# Hook：UserPromptSubmit
+# ⚠️ 【評估後決定不註冊】2026-08-25 賈維斯體檢
+# 功能（偵測教練關鍵字 → 注入 SOP 提醒）與已註冊的 pre_task_hook.sh 高度重疊，
+# 後者做的是「偵測關鍵字 → 注入守則提醒＋教練原話故事」，涵蓋範圍更廣且已穩定運作。
+# 且 settings.json 的 UserPromptSubmit 已掛 12 支，每則訊息都要跑，不宜再疊。
+# 保留檔案供日後參考，但拿掉 hook 宣告避免 audit_claude_hooks_registered.sh 誤報。
+# 未註冊：UserPromptSubmit（功能由 pre_task_hook.sh 涵蓋）
 # 用途：教練每發一句話，自動偵測觸發詞，注入對應的 SOP 提醒到 context。
 # 設計：根據 教練高頻語錄_SOP.md 的真實統計，偵測教練說的關鍵字
 #       → 注入對應的 SOP 動作（不靠模型記得、靠系統強制）
