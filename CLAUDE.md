@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-25 22:15:16**
+> **最後同步：2026-08-25 22:20:19**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **孔大哥/佩佩老師AI人設備份(kong/peipei)本地已commit，但無法推上雲端** | ⏳待軍師找時間動手 | 2026-08-25發現kong/peipei各自是獨立git repo，本地65+個檔案異動已commit（不會因硬碟壞掉遺失），但kong的遠端跟`workspace`主repo共用同一個`mac-openclaw-workflows`卻用不同branch名稱造成推送被拒(fetch first)，peipei完全沒設定遠端。需要決定：開新的專屬repo還是換一個不衝突的branch名稱，才能真正做到雲端備份，目前只是本機安全、非離線安全。 |
+| 🟡 | **VPS(43.245.60.200)這邊的git repo也缺.gitignore，誤commit了50MB瀏覽器快取檔案** | ⏳待軍師找時間動手 | 2026-08-25修復VPS 35天備份卡住問題時發現，跟Mac今早發現的同款問題（缺.gitignore導致執行期雜訊混進版控）。這次先讓備份救回成功優先，.gitignore補強留待下次順手處理。 |
 | 🟡 | **stop_rules_master.py規則D（輪詢偵測）regex覆蓋面不夠，這次同義改寫繞過去** | ⏳待軍師找時間動手 | 2026-08-24第6次「定時輪詢vs事件觸發」教訓時發現：這台Mac本來就有防呆機關會攔「每.*分鐘.*檢查」「cron.*輪詢」這類措辭，但這次我寫「每5分鐘掃一次」「每15分鐘查一次」全部同義改寫繞過，機關形同虛設。需要把`scripts/stop_rules_master.py`規則D的regex擴充成涵蓋更多同義動詞（掃/查/讀取/巡邏/處理），詳見[[feedback_event_driven_not_polling_pattern]]2026-08-24第6次發作段落。 |
 | ✅ | **ezPay BNI台南南區入會/續約發票18張全數開立完成** | ✅2026-08-24晚~08-25凌晨完成並逐張查證 | 商店代號337391376（聚寶盆商業顧問有限公司），自訂編號082401~082418。第一批12張：10位入會$39,800+2位(徐偉倫/柯炫任)續約$26,800，查重複時只有柯炫任查到去年入會舊紀錄，教練確認「去年新會入今年續約」非重複照開。第二批6張續約$26,800（王聖凱/吳志煒/林尹渰/陳俊源/黃鑫豊/薛如媛），查證均無$26,800重複紀錄；查到3人有2025年$36,000入會舊紀錄（吳志煒/薛如媛/陳俊源），另查到林尹渰統編有一筆備註對不上姓名的舊紀錄，教練確認是分會轉會(真富→真鑫)+公司舊稱造成，非資料錯誤。所有查重複皆用XHR攔截讀取8季度、192筆去重後的真實資料比對，非用猜的。完成清單`claude-brain/data/ezpay_bni_membership_invoices_2026-08-24_12張完成清單.json`+`ezpay_bni_renewal_invoices_2026-08-24_6張完成清單.json`。教練當場問今年/去年開票總額，用同套XHR方法查出今年(1-8月)$1,882,890、去年全年$3,240,000（含1張已作廢$26,000未列入）。已寫入記憶`reference_bni_membership_fee_history_and_chapter_transfer`（入會費逐年調漲36000→39800，備註對不上先假設分會異動不是錯誤）。 |
 | 🔴🔴🔴 | **Netlify額度追蹤SOP兩度修正：從估算失準→改每次都查→教練推翻改7~10天校正一次** | ✅2026-08-25完成，教練親自拍板校正頻率 | 查真實帳單頁(`app.netlify.com/teams/bymyway7/billing/general`)發現舊估算值(849.5/1000)跟真實餘額(76.4/1000)嚴重脫節，真實只剩約9次部署額度(147點)。第一版SOP寫「每次部署都要查真實頁面」，教練當場推翻：「這種每一次都要進去查的思維你要打斷，非常不智慧，會耗token+要教練登入」，改拍板**每7~10天校正一次，日常用15點/次估算法即可**。帳單週期確認是每月25日重置(非教練口頭講的24日，24日是週期最後一天)。下次校正約2026-09-01~09-04，或估算值≤3次時提前查證。完整SOP見[[project_netlify_deploy_quota_2026-07]]。**教練同場提出最高目標宣言**：AI要像鋼鐵人賈維斯——記得教練說過的每句話並自動串連，不用重複交代，已寫入[[feedback_jarvis_outcome_delegation_style]]。 |
@@ -239,6 +241,51 @@
 - `state/netlify_deploy_quota.json`：額度重新校正為真實數字
 - `~/.claude/projects/-Users-bymyway--openclaw/memory/project_netlify_deploy_quota_2026-07.md`：更正重置時間點推算錯誤
 - commit：`27ad73e`+`455e599`+`d4b9650`(ai-forum-taichung GitHub)／`6a8d110f`+`6a8d1a4e`(Netlify deploy)／`86cb3101c`+`6983f896d`+`c58fc74c3`(workspace額度state)／`2beccc4db`(memory repo)
+
+
+---
+
+# 軍師接力棒 · 2026-08-25 v132（Mac桌面版 Sonnet 5，Q1「總結」功能上線+context-overflow-guard改版+賈維斯標籤+VPS全面體檢升級）
+
+> 建立時間：2026-08-25 13:06 ~ 22:12（台灣時間，長場）
+> 上一棒：v131（同機同日下午）
+> 本棒主軸：**教練交辦Q1（小龍蝦總結功能）並全程授權「你是賈維斯，你決定」；下午教練回報Telegram出現一連串矛盾訊息，深入診斷後發現是小龍蝦自己編造假監控機制（非真實hook/cron），改版既有context-overflow-guard根治；教練要求區分「AI講的話」跟「系統自動發的話」，全機加賈維斯標籤；最後教練要求「全面看VPS」，完成一次真正的升級+修復+清理。**
+
+## 🎯 本場戰果
+
+### 1. ✅ Q1：小龍蝦「總結」功能上線（v130交辦，commit `9d1866e7`）
+新建`hooks/session-summary-trigger`：教練對小龍蝦說「總結」→蒸餾存檔(`sync-telegram-memory.sh --force`)+標記待清空+直發Telegram確認，不依賴模型配合(inject是fire-and-forget)。同時修好`do_clear_sessions()`對已被sqlite取代的`auth-profiles.json`缺乏容錯的既有小bug。順手處理教練指示：terminal-watchdog確認停用(已在disabled資料夾)、孔大哥/佩佩老師人設備份(kong/peipei獨立git repo，已commit本地，但push卡在遠端分支結構混亂——kong遠端跟workspace共用`mac-openclaw-workflows`同一repo但branch衝突，peipei完全沒設遠端，**尚未解決，留待下一棒**)。
+
+### 2. 🔴🔴🔴 深度診斷：下午context輪數混亂事件，真相是小龍蝦自己編造假機制
+教練貼出下午跟小龍蝦的完整對話記錄，問「賈維斯等級的思考，是否全面深入了解問題」。查證`dialog_round_counter.json`後發現**沒有任何hook/cron讀寫這個檔案**——小龍蝦當下只是口頭承諾建機制，實際上是自己心算輪數+編訊息（82%/3MB/4MB三個數字互相矛盾、4MB上限系統裡根本不存在），並非任何真實系統故障。同場也確認：我自己早上建的session-summary-trigger完全沒有觸發這場混亂（log證實13:50教練說「總結」時這支hook完全沒反應——因為真實訊息body有信封包裝`[Telegram coach id:...] coach: 內容`，我的觸發判斷沒剝掉信封，已修復commit`187a0f7b`）。
+
+### 3. 🎯 賈維斯決策：context-overflow-guard改版，取代小龍蝦的假機制（commit `20a63d33`）
+教練說「你是賈維斯，你決定」，改版既有hook：門檻從20/30/38改成教練指定的30/50/80/100；新增判斷只計教練本人真人訊息，排除heartbeat輪詢(3166次/天等級雜訊)/排程提醒/其他群組訊息；四個門檻都直發Telegram，統一引導教練說「總結」跟Q1功能形成完整閉環。12案例測試全過。`dialog_round_counter.json`標記停用留存查證。
+
+### 4. 🔧 教練要求：AI講的話跟系統自動發的話要分清楚，全機加「賈維斯」標籤
+教練舉報名系統官方通知為例，要求程式自動發的Telegram訊息要標明來源。全機盤點後統一加「🤖【賈維斯自動通知】」：`notify_coach.sh`統一出口(涵蓋7支cron呼叫者)+今日新建/改版的2支hook+既有3支hook(line-url-typo-guard/namecard-inbound/invoice-inbound)+2支現行排程腳本(junshi_task_worker.sh/vps_polling_healthcheck.sh)。commit `d889ac5c`(outer)+`faf4b0f95`(workspace)。
+
+### 5. 🔴 教訓：自己的測試腳本沒mock網路呼叫，重跑測試真的轟炸教練Telegram
+教練回報連續收到8則一模一樣的「收到總結」訊息，查log發現是我剛才重跑`test_session_summary_trigger_hook.js`造成的真實發送——這支測試從建立起就沒攔截Telegram API呼叫，今天重跑3次(建功能/修bug/驗證標籤)，只有第一次有提醒教練，後兩次忘記說明。已修復加上跟`test_context_overflow_guard_hook.js`同款的https攔截，commit`9279d6b4`。
+
+### 6. 🎯🎯 VPS全面體檢+修正（教練問「有需要修正嗎，例如升級」）
+- **OpenClaw升級**：2026.6.11→2026.6.34，用`--tag`明確版本號避開`openclaw@latest`會橫向跳線到不同release line(2026.7.1-2)的陷阱（跟Mac評估6.34時的警告同一個坑，VPS再次驗證）
+- apt系統套件更新29項(含3項安全更新)，SSH自動重啟仍正常
+- Docker清理：舊image 1.3GB + 孤兒volume 7GB(教練「OK」明確授權後執行，>1GB門檻不自主執行)
+- 移除沒在用的防火牆規則(8080)
+- **VPS git自主備份修復**：35天沒推送(最後commit 7/20)，根因是Docker更新後觸發git「dubious ownership」安全機制導致所有push靜默失敗。補commit 65個累積異動+merge遠端(SOUL.md衝突，查證遠端版本自己標記deprecated，保留VPS本地活躍版本)+成功推送，commit`1595638fb`
+- 清理5月舊備份檔(330MB，教練授權後執行)
+- 發現未處理：SSH偏鬆(PermitRootLogin+密碼登入+無fail2ban，教練裁示「不用管」)、VPS repo也缺.gitignore(50MB瀏覽器快取被誤commit，下次補)
+
+## 📋 下一場開工先做
+1. **kong/peipei備份仍未真正推上雲端**：kong遠端跟workspace repo共用`mac-openclaw-workflows`但branch衝突(都想用類似main的名字)，peipei完全沒設遠端——需要決定是開新repo還是換分支名，本地commit已安全但未離線備份
+2. Q1「總結」功能尚未比照做給佩佩老師的巴哈助理(記憶架構跟小龍蝦不同，需另外評估)
+3. VPS repo補`.gitignore`(清掉50MB瀏覽器快取誤commit)
+4. 承接v131：等朋友確認AI微論壇台中場RWD修復、Netlify額度下次校正約09-01~09-04
+5. 承接舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題
+
+## 🔑 本場commit
+`9d1866e7`(Q1總結hook)／`187a0f7b`(信封格式bug修復)／`20a63d33`(context-overflow-guard改版)／`d889ac5c`+`faf4b0f95`(賈維斯標籤)／`9279d6b4`(測試腳本mock修復)／VPS `1595638fb`(35天備份救回)
 
 
 ---
