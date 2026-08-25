@@ -52,15 +52,85 @@ if [[ -d "$WORKSPACE/.git" ]]; then
       STASHED=1
     fi
   fi
+  PULL_FAILED=0
   if git pull --quiet --rebase 2>/dev/null; then
     HEAD_HASH=$(git rev-parse --short HEAD 2>/dev/null)
     PULL_STATUS="✅ 已拉雲端最新（HEAD: ${HEAD_HASH}）"
   else
     PULL_STATUS="⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）"
+    PULL_FAILED=1
   fi
   if [[ "$STASHED" -eq 1 ]]; then
     git stash pop --quiet 2>/dev/null || true
   fi
+  # 2026-08-26 教練當場糾正：這行警告過去只塞進注入文字裡，靠AI自己在回覆裡
+  # 提一句才會被看到——這次AI自己就漏講了，教練完全沒看過這行字。
+  # 不能再靠「AI會不會主動講」這種不保證的環節，改成腳本自己直接發Telegram，
+  # 跟AI有沒有讀、有沒有轉述完全無關，失敗必達。節流1小時避免連續開工洗版。
+  # 通知動作刻意放在 stash pop *之後*：實測發現如果在 stash 還沒 pop 回來前呼叫
+  # notify_coach.sh，萬一這支腳本自己當下是未提交狀態，會被 `stash -u` 連帶掃進
+  # stash 暫存、暫時從磁碟上消失，導致這裡呼叫落空又不報錯——原地重演同一種
+  # 「靜默失敗」，所以等工作區完全還原後才呼叫，確保腳本本身一定在。
+  if [[ "$PULL_FAILED" -eq 1 ]]; then
+    "$WORKSPACE/scripts/notify_coach.sh" \
+      "Mac開工時發現git pull失敗（本地有衝突或網路問題），這次讀到的接力棒/守則可能不是雲端最新版，需要有人手動處理 workspace repo。" \
+      3600 "mac_feed_handoff_pull_fail" >/dev/null 2>&1
+  fi
+fi
+
+# ───────── 🩺 同步健康狀態落地（給 Mac 之後檢查聯想/ACER 用，也給聯想/ACER 之後照抄）─────────
+# 不管這次pull成功或失敗，都留一筆本機時間戳記，之後才能判斷「這台機器多久沒真正同步過」。
+SYNC_HEALTH_DIR="$WORKSPACE/state/sync_health"
+mkdir -p "$SYNC_HEALTH_DIR" 2>/dev/null
+python3 - "$SYNC_HEALTH_DIR/mac.json" "$PULL_STATUS" <<'PYEOF' 2>/dev/null || true
+import json, sys, datetime
+path, status = sys.argv[1], sys.argv[2]
+data = {
+    "machine": "mac",
+    "last_attempt": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+    "pull_ok": status.startswith("✅"),
+    "status_text": status,
+}
+with open(path, "w") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+PYEOF
+
+# ───────── 🔍 順手檢查聯想/ACER 多久沒真正同步過（開工當下才查，不設定時輪詢）─────────
+# 2026-08-26：ACER查出49天沒被打開過、聯想的「總結」hook缺jq靜默失效近一個月，
+# 兩者都是「沒人看、也沒人被通知」才拖這麼久。剛才git pull已經把聯想/ACER最新的
+# sync_health狀態拉下來了，這裡直接檢查，不用等教練自己發現或另外設定巡邏排程。
+STALE_MACHINES=""
+# 已知的兩台兄弟機一定要檢查(即使它們還沒拉到這支新腳本、檔案還不存在，
+# 那本身就是「從未回報過」的正確結果)；另外用萬用字元抓任何已經在回報、
+# 但實際檔名跟這裡預期不同的機器(例如Windows端寫入的是電腦實際hostname)，
+# 避免因為猜錯檔名而漏掉真正在運作的機器。
+KNOWN_MACHINES="lenovo acer"
+DISCOVERED=$(find "$SYNC_HEALTH_DIR" -maxdepth 1 -name "*.json" ! -name "mac.json" 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/\.json$//')
+ALL_MACHINES=$(printf '%s\n%s\n' "$KNOWN_MACHINES" "$DISCOVERED" | tr ' ' '\n' | grep -v '^$' | sort -u)
+for M in $ALL_MACHINES; do
+  MF="$SYNC_HEALTH_DIR/${M}.json"
+  if [[ -f "$MF" ]]; then
+    AGE_H=$(python3 -c "
+import json, datetime
+try:
+    d = json.load(open('$MF'))
+    last = datetime.datetime.fromisoformat(d['last_attempt'])
+    now = datetime.datetime.now(last.tzinfo)
+    print(int((now - last).total_seconds() / 3600))
+except Exception:
+    print(-1)
+" 2>/dev/null)
+    if [[ "$AGE_H" -gt 72 || "$AGE_H" -eq -1 ]]; then
+      STALE_MACHINES="${STALE_MACHINES}${M}(${AGE_H}小時未同步) "
+    fi
+  else
+    STALE_MACHINES="${STALE_MACHINES}${M}(從未回報過) "
+  fi
+done
+if [[ -n "$STALE_MACHINES" ]]; then
+  "$WORKSPACE/scripts/notify_coach.sh" \
+    "開工時檢查發現這些機器超過72小時沒有真正同步過：${STALE_MACHINES}——它們讀到的規則/接力棒可能是舊版，建議找時間去那台機器開一次對話讓它讀信。" \
+    43200 "mac_feed_handoff_stale_siblings" >/dev/null 2>&1
 fi
 
 # ───────── 🗂 小龍蝦派工信箱：教練開工當下才檢查，不設定時巡邏 ─────────

@@ -92,6 +92,29 @@ try {
     $pullStatus = "❌ Git 操作失敗: $_"
 }
 
+# ───────── 🩺 同步健康狀態落地（2026-08-26，讓Mac那邊能查這台機器多久沒真正同步過）─────────
+# 這台機器沒有直接發Telegram的管道(bot只跑在Mac mini上)，所以這裡只負責老實記錄
+# 「我剛才有沒有真的拉到雲端最新」，Mac那邊的feed_junshi_handoff.sh開工時會讀取
+# 所有機器這份紀錄，超過72小時沒更新就會主動用Telegram通知教練。
+# 教練若想確認這台機器的識別名稱是否正確，可直接看下面 machineKey 的值。
+try {
+    $machineKey = ($env:COMPUTERNAME).ToLower()
+    if (-not $machineKey) { $machineKey = "windows-unknown" }
+    $syncHealthDir = Join-Path $workspace "state\sync_health"
+    if (-not (Test-Path $syncHealthDir)) { New-Item -ItemType Directory -Path $syncHealthDir -Force | Out-Null }
+    $syncHealthFile = Join-Path $syncHealthDir "$machineKey.json"
+    $pullOkForJson = $pullStatus.StartsWith("✅")
+    $healthData = @{
+        machine       = $machineKey
+        last_attempt  = (Get-Date).ToString("yyyy-MM-ddTHH:mm:sszzz")
+        pull_ok       = $pullOkForJson
+        status_text   = $pullStatus
+    }
+    $healthData | ConvertTo-Json | Set-Content -Path $syncHealthFile -Encoding UTF8
+} catch {
+    # 這只是輔助紀錄，寫失敗不該擋到主流程繼續注入接力棒內容
+}
+
 # ───────── 接力棒不存在 → 印雲端狀態給教練看 ─────────
 if (-not (Test-Path $handoff)) {
     Write-Output "# ⚠️ 軍師接力棒從雲端拉不下來"
