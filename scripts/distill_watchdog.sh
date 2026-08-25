@@ -42,7 +42,7 @@ Session：${FILE_LIST}
 這些 pending 檔案超過 2 小時沒被蒸餾，請檢查 cron / 狀態檔。"
 
     # 透過 openclaw CLI 推 Telegram
-    /opt/homebrew/bin/openclaw message send \
+    /opt/homebrew/bin/openclaw message send --channel telegram \
         -t 6124913915 \
         -m "$MSG" \
         >> "$LOG" 2>&1
@@ -63,7 +63,7 @@ if [ ! -f "$TODAY_FILE" ]; then
     HOURS_PAST=$((HOURS_PAST / 3600))
     if [ "$HOURS_PAST" -gt 4 ]; then
         echo "[$TODAY] ⚠️ 今天已過 $HOURS_PAST 小時，蒸餾檔案仍不存在：$TODAY_FILE" >> "$LOG"
-        /opt/homebrew/bin/openclaw message send \
+        /opt/homebrew/bin/openclaw message send --channel telegram \
             -t 6124913915 \
             -m "🦞 蒸餾 watchdog 提醒
 

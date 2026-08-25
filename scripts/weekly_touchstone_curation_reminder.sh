@@ -36,6 +36,13 @@ if (( TOP10_AGE_DAYS > 7 )) && (( RECENT_SCENES > 0 )); then
     if ! grep -q "試金石策展提醒 $(date '+%Y-%m-%d')" "$HEARTBEAT" 2>/dev/null; then
         echo "$REMINDER" >> "$HEARTBEAT"
         echo "[${ts}] 寫入策展提醒（age=${TOP10_AGE_DAYS}d, scenes=${RECENT_SCENES}）" >> "$LOG"
+        # 2026-08-25 賈維斯體檢：只寫 HEARTBEAT.md 教練看不到，補上真的送達教練
+        /Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "🪨 試金石該策展了
+
+top10_dynamic.md 已經 ${TOP10_AGE_DAYS} 天沒更新，
+自動場景庫累積了 ${RECENT_SCENES} 個候選案例等著挑。
+
+要的話跟軍師說一句「策展試金石」就好。" 604800 touchstone_curation
     fi
 else
     echo "[${ts}] no reminder（age=${TOP10_AGE_DAYS}d, scenes=${RECENT_SCENES}）" >> "$LOG"

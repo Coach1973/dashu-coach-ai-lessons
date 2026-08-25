@@ -70,6 +70,13 @@ if (( RECENT_STOPPED == 1 && RECENT_INBOUND == 0 )); then
     sleep 5
     if launchctl list | grep -q ai.openclaw.gateway; then
         echo "[$(ts)] kickstart OK, gateway re-loaded" >> "$LOG"
+        # 2026-08-25 賈維斯體檢：真的重啟過教練該知道，原本只寫 log 沒人看得到
+        /Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "🔄 小龍蝦剛剛自動重啟了一次
+
+偵測到佩佩老師那條線卡住沒回應，系統自動重開了小龍蝦（中斷約 1~2 分鐘，已恢復）。
+這是預防性處理，您不用做任何事，講給您知道而已。
+
+時間：$(ts)" 3600 peipei_restart
     else
         echo "[$(ts)] kickstart FAILED, gateway 未重啟" >> "$LOG"
     fi
