@@ -3,7 +3,7 @@
     "heartbeat_poll": "2026-08-25T10:02:00+08:00",
     "telegram_channel": "2026-08-25T10:02:00+08:00",
     "system_health": "2026-08-25T10:02:00+08:00",
-    "coach_silence_sync": "2026-08-25T11:12:04.901406+08:00"
+    "coach_silence_sync": "2026-08-25T12:12:04.049022+08:00"
   },
   "lastHeartbeat": "2026-08-25T10:02:00+08:00",
   "lastHeartbeatNote": "cycle=??? 10:02 週二上午｜TG 通道探針 ok:true（當下實測通過，遵守守則#19 通道健康鐵律）｜教練 01:51 後靜默 8.2h（昨夜連夜完成ezPay 18張+AI微論壇台中場上線，合理休息）｜已過靜音時段但教練仍未發訊，靜默觀察中｜無 announce、無 urgent｜JUNSHI queue 空、context 穩定（08:38 重啟後已恢復）｜v128 接力棒已讀，主待辦：3張ezPay Email空白待教練登入補、3支孤兒hook待啟用裁示",
@@ -20,8 +20,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-25T10:02:00+08:00 當下實測通過",
-    "coachSilentSince": "2026-08-25T01:51:55+08:00",
-    "coachSilentHours": 9.3,
+    "coachSilentSince": "2026-08-25T12:08:11+08:00",
+    "coachSilentHours": 0.1,
     "nextPlannedAction": "靜默觀察，等教練主動訊息或下輪 cron（5 分鐘後）；如有緊急事項才打擾",
     "triggerSource": "cron-event:heartbeat-poll",
     "cronErrors": []
