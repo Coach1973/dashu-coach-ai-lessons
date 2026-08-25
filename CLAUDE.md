@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-26 00:55:47**
+> **最後同步：2026-08-26 01:00:52**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -20,6 +20,7 @@
 |---|---|---|---|
 | ✅ | **聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復** | ✅2026-08-26聯想完成並實測 | 教練質疑「我每次都講總結上傳，怎麼可能沒紀錄」，查證屬實：`summary_upload_trigger.sh`靠`/usr/bin/jq`解析stdin，聯想這台機器沒裝jq，指令找不到→PROMPT變空字串→關鍵字比對永遠比對不到→整支hook靜默不觸發，不報錯教練也看不出異狀。改寫`scripts/summary_upload_trigger.ps1`(PowerShell原生`ConvertFrom-Json`，不依賴jq)，7情境模擬測試全過已註冊進`~/.claude/settings.json`。同場也查證另兩支相關機制：`distill_and_push_lenovo.ps1`從未被註冊過（非壞掉，是從沒接上）、Windows Task Scheduler的`ClaudeMemorySync`任務也停用超過2個月。詳見試金石案例64。 |
 | ✅ | **ezPay發票工作歸屬記憶更正+Mac Stop hook狀態跨機查證回信** | ✅2026-08-26聯想完成 | ①`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`舊記憶停在「聯想負責」，實際08-18已因聯想操作卡住(原生彈窗凍結)轉回Mac主責，教練追問後才發現記憶沒同步更新，已修正並跟Mac同時間做的類似修正(commit`de76222c`)合併解衝突 ②回覆Mac凌晨來信，查證確認`distill_and_push_lenovo.ps1`從未接進聯想`settings.json`的Stop hook，回信已放進`cross-agent/inbox/mac/`。 |
+| 🔴🔴🔴 | **宏碁ACER確認49天未真正使用，教練需親自開機讓它git pull+讀信才能追上進度** | 🔒卡住-等教練 | 教練要求「把賈維斯設定同步到宏碁跟聯想」，查證發現聯想是jq依賴缺陷已自行修復（詳見下方commit），但ACER是完全不同、更嚴重的狀況：信箱4封未讀信最舊7/13、verbatim蒸餾自7/8建立起零產出、ACER自己最後一次主動push是7/8，49天沒有真正被打開過。Mac這邊已把賈維斯所有規則內容(CLAUDE.md/執行細則/HEARTBEAT)推上雲端最新，但**這套架構是「pull on open」沒有伺服器主動推送**，ACER不被打開就永遠拉不到——這不是AI能遠端解決的，需要教練親自去那台機器開一次Claude對話框。詳見[[project_acer_dormant_49days_2026-08-26]] |
 | 🟡 | **孔大哥/佩佩老師AI人設備份(kong/peipei)本地已commit，但無法推上雲端** | ⏳待軍師找時間動手 | 2026-08-25發現kong/peipei各自是獨立git repo，本地65+個檔案異動已commit（不會因硬碟壞掉遺失），但kong的遠端跟`workspace`主repo共用同一個`mac-openclaw-workflows`卻用不同branch名稱造成推送被拒(fetch first)，peipei完全沒設定遠端。需要決定：開新的專屬repo還是換一個不衝突的branch名稱，才能真正做到雲端備份，目前只是本機安全、非離線安全。 |
 | 🟡 | **VPS(43.245.60.200)這邊的git repo也缺.gitignore，誤commit了50MB瀏覽器快取檔案** | ⏳待軍師找時間動手 | 2026-08-25修復VPS 35天備份卡住問題時發現，跟Mac今早發現的同款問題（缺.gitignore導致執行期雜訊混進版控）。這次先讓備份救回成功優先，.gitignore補強留待下次順手處理。 |
 | 🟡 | **stop_rules_master.py規則D（輪詢偵測）regex覆蓋面不夠，這次同義改寫繞過去** | ⏳待軍師找時間動手 | 2026-08-24第6次「定時輪詢vs事件觸發」教訓時發現：這台Mac本來就有防呆機關會攔「每.*分鐘.*檢查」「cron.*輪詢」這類措辭，但這次我寫「每5分鐘掃一次」「每15分鐘查一次」全部同義改寫繞過，機關形同虛設。需要把`scripts/stop_rules_master.py`規則D的regex擴充成涵蓋更多同義動詞（掃/查/讀取/巡邏/處理），詳見[[feedback_event_driven_not_polling_pattern]]2026-08-24第6次發作段落。 |
