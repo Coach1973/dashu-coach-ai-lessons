@@ -2,9 +2,9 @@
   "system": "credit",
   "credits_per_deploy": 15,
   "quota_as_of": "2026-08-25",
-  "quota_remaining": 9,
+  "quota_remaining": 8,
   "billing_cycle": "每月25日結算/重置（帳單頁面顯示「Current billing period runs from Jul 25 to Aug 24」，帳戶API的current_billing_period_start/next_billing_period_start皆為每月25日00:00 -07:00＝台灣時間當天下午3點），教練誤記成24日，正確是25日重置、24日是週期最後一天",
-  "note": "🔴2026-08-25教練查證+隨即校正SOP：先查真實帳單頁(app.netlify.com/teams/bymyway7/billing/general)發現舊估算值(849.5/1000)嚴重脫節於真實餘額(76.4/1000)，一度改成「每次部署後都要查真實頁面」，但教練當場推翻這個做法——「每一次都要進去查非常不智慧，會耗token+要教練登入」，明確拍板改成**每7~10天校正一次即可，日常用15點/次估算法追蹤**，不用每次部署都查。完整SOP見記憶檔`project_netlify_deploy_quota_2026-07.md`。下次真實校正約在2026-09-01~09-04，或額度估算低於3次時提前查證。",
+  "note": "🔴2026-08-25教練查證+隨即校正SOP：先查真實帳單頁(app.netlify.com/teams/bymyway7/billing/general)發現舊估算值(849.5/1000)嚴重脫節於真實餘額(76.4/1000)，一度改成「每次部署後都要查真實頁面」，但教練當場推翻這個做法——「每一次都要進去查非常不智慧，會耗token+要教練登入」，明確拍板改成**每7~10天校正一次即可，日常用15點/次估算法追蹤**，不用每次部署都查。完整SOP見記憶檔`project_netlify_deploy_quota_2026-07.md`。下次真實校正約在2026-09-01~09-04，或額度估算低於3次時提前查證。**2026-08-25當天教練親口提醒「今天就會更新」——今天(25日)正是帳單週期重置日，下次真實查證時額度會跳回較高數字，屬正常現象非估算錯誤，不要誤判成bug。**",
   "credit_pools": [
     {
       "name": "Personal plan credits",
@@ -39,6 +39,13 @@
   },
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-25",
+      "site": "ai-forum-taichung",
+      "deploy_id": "6a8d110fee9b1a5b00a11abe",
+      "change": "修復Android手機講師簡介彈窗被切版問題(modal max-height改用dvh動態視窗高度)，講師反應後查證是vh在Android上以「網址列收起」為基準計算導致實際可視空間不足。教練親口說「推」，GitHub Pages+Netlify雙平台皆已curl驗證84dvh生效",
+      "remaining_after": 8
+    },
     {
       "date": "2026-08-23",
       "site": "bigtree-tw",
