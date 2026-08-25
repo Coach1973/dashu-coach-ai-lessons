@@ -21,10 +21,10 @@
 <div class="box">
   <div class="icon">📥</div>
   {% if saved_count > 0 %}
-  <div class="headline">已收到 {{ saved_count }} 張名片</div>
-  <div class="desc">AI 正在後台慢慢辨識，不用等在這頁——過一會兒回搜尋首頁，辨識完的名片會自動出現，還在處理中的會標示「處理中」。</div>
+  <div class="headline">已收到 {{ saved_count }} 張照片</div>
+  <div class="desc">AI 正在後台慢慢辨識，不用等在這頁——如果照片裡有好幾張名片，AI 會自動拆分成獨立的名片，最後看到的名片數量可能比照片數量多。過一會兒回搜尋首頁，辨識完的名片會自動出現，還在處理中的會標示「處理中」。</div>
   {% else %}
-  <div class="headline">沒有成功收到任何名片</div>
+  <div class="headline">沒有成功收到任何照片</div>
   <div class="desc">請確認選的是圖片檔（JPG／PNG／HEIC）</div>
   {% endif %}
   {% if skipped %}

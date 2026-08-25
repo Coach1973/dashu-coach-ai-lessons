@@ -36,6 +36,17 @@ def already_processed(conn: sqlite3.Connection, image_filename: str) -> bool:
     return row is not None
 
 
+def insert_split_marker(conn: sqlite3.Connection, image_filename: str) -> int:
+    """一張照片被偵測出含多張名片、已裁切成獨立圖片後，原始合照仍要留一筆佔位
+    記錄(避免下次掃描重複偵測裁切)，但它不是真實名片，status='split'讓首頁
+    搜尋結果排除顯示，不會誤導成「辨識失敗」。"""
+    cur = conn.execute(
+        "INSERT INTO cards (image_filename, status) VALUES (?, 'split')", (image_filename,)
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
 def insert_card_pending(conn: sqlite3.Connection, image_filename: str) -> int:
     """上傳當下先佔位存檔名，欄位皆空、狀態pending，實際辨識交給背景worker慢慢處理"""
     cur = conn.execute(

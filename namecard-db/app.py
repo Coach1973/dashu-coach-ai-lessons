@@ -67,7 +67,7 @@ def index():
         ).fetchall()
     ]
 
-    sql = "SELECT * FROM cards WHERE 1=1"
+    sql = "SELECT * FROM cards WHERE status != 'split'"
     params: list[str] = []
     if query:
         sql += """ AND (name LIKE ? OR company LIKE ? OR address LIKE ?
