@@ -1,6 +1,7 @@
 # Memory Index
 
 - [🔴🔴🔴 宏碁ACER確認49天未真正使用，信箱堆積未讀信+verbatim零產出，跟聯想jq問題完全不同根因(2026-08-26)](project_acer_dormant_49days_2026-08-26.md) — 「pull on open」架構下沒人開的機器永遠追不上；唯一解法是教練親自開機讓它git pull+讀信
+- [🔴 ACER七支hook重裝+跟進聯想總結上傳修復，發現setup_windows_hooks.ps1在PS5.1會吃掉原設定(2026-08-26)](project_acer_hooks_restored_2026-08-26.md) — installer腳本`-AsHashtable`參數PS5.1不支援，靜默清空env/permissions/model，靠備份救回；已補summary_upload_trigger.ps1並實測四情境
 - [🔧 verbatim蒸餾機制只抓CLI/Code面板不抓Desktop一般聊天(2026-08-26)](reference_verbatim_pipeline_cli_only_not_desktop_chat.md) — 查「查無對話紀錄」先問走哪個介面；跨機腳本死活判斷要連對方hook一起查
 - [🔴🔴🔴🔴 聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復(2026-08-26)](reference_lenovo_summary_hook_jq_missing_fixed_2026-08-26.md) — 教練質疑「明明每次都講總結上傳」查證屬實；Mac的.sh搬到聯想前先查有無依賴jq/python3等Unix工具
 - [🔴🔴🔴 小龍蝦自稱「已建立監控機制」實為心算編數字，非真實hook/cron(2026-08-25)](feedback_ai_claimed_mechanism_verify_before_trust.md) — 82%/3MB/4MB矛盾訊息真相；AI自稱「已建立」先查有無真程式碼支撐
