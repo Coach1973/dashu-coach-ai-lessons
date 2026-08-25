@@ -66,10 +66,16 @@ if [[ -z "$BOT_TOKEN" ]]; then
     exit 1
 fi
 
+# 2026-08-25 教練親口要求：這種訊息是程式自動發的、不是小龍蝦(AI)決定要講的，
+# 但共用同一個Telegram bot帳號送出，教練分不出來哪句是AI講的、哪句是系統插播的
+# （下午context輪數bug事件的直接教訓）。統一加標籤，教練一眼就能分辨來源。
+LABELED_MSG="🤖【賈維斯自動通知】
+${MSG}"
+
 OUT=$(curl -s --max-time 20 \
     -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
     -d "chat_id=${COACH_CHAT_ID}" \
-    --data-urlencode "text=${MSG}" 2>&1)
+    --data-urlencode "text=${LABELED_MSG}" 2>&1)
 
 if echo "$OUT" | grep -q '"ok":true'; then
     RC=0

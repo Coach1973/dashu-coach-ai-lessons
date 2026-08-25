@@ -32,9 +32,11 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOGFILE"; }
 
 notify_telegram() {
   local msg="$1"
+  # 2026-08-25教練親口要求：跟小龍蝦(AI)自己講的話要分得清楚，統一加標籤
   curl -sS -X POST "https://api.telegram.org/bot${MAIN_BOT_TOKEN}/sendMessage" \
     -d chat_id="$COACH_CHAT_ID" \
-    -d text="$msg" \
+    -d text="🤖【賈維斯自動通知】
+$msg" \
     -d parse_mode="Markdown" > /dev/null 2>&1 || true
 }
 

@@ -239,7 +239,8 @@ COACH_CHAT_ID="6124913915"
 
 if [ "$AUTOFIX_SUCCESS" = "true" ]; then
     log "📨 發送輕量通報（已自動修復，非求救）"
-    FIXED_MSG="🔧 VPS 小龍蝦剛才 polling 卡住，已自動修復
+    FIXED_MSG="🤖【賈維斯自動通知】
+🔧 VPS 小龍蝦剛才 polling 卡住，已自動修復
 
 原因：${ALERT_REASON}
 處置：自動執行 docker restart openclaw，已確認 polling 恢復正常，不需要您動手
@@ -267,7 +268,8 @@ if [ "$SHOULD_ALERT" = "true" ]; then
         AUTOFIX_NOTE="這個症狀不符合已知的自動修復條件（可能是 spool 堆積類問題，需要不同的排查方式）。"
     fi
 
-    ALERT_MSG="🚨 VPS 小龍蝦（對外體驗版）polling 異常！
+    ALERT_MSG="🤖【賈維斯自動通知】
+🚨 VPS 小龍蝦（對外體驗版）polling 異常！
 
 原因：${ALERT_REASON}
 
