@@ -133,6 +133,16 @@ if [[ -n "$STALE_MACHINES" ]]; then
     43200 "mac_feed_handoff_stale_siblings" >/dev/null 2>&1
 fi
 
+# ───────── 📋 報名通知空窗期稽核：教練開工當下順便查，不等教練追問三次才查出來 ─────────
+# 2026-08-26教練親口糾正：金門場報名資料落差問過三次才被告知完整名單，教練從金門
+# 回來後名單才給到，痛批「早給還能打電話問，現在給也沒用了，是很嚴重的失職」。
+# 以後改成每次開工自動查一次尚未開始的場次有沒有落在已知通知空窗期的報名，
+# 有發現才通知(24小時節流)，不用等教練主動懷疑、追問才一層層挖出真相。
+GAP_CHECK_SCRIPT="$WORKSPACE/scripts/registration_notify_gap_check.py"
+if [[ -f "$GAP_CHECK_SCRIPT" ]] && command -v python3 >/dev/null 2>&1; then
+  /usr/bin/python3 "$GAP_CHECK_SCRIPT" --notify >/dev/null 2>&1
+fi
+
 # ───────── 🗂 小龍蝦派工信箱：教練開工當下才檢查，不設定時巡邏 ─────────
 # 2026-08-24 教練親口拍板：「我每次開工的時候，它再去讀取小龍蝦那邊有沒有新資訊就好，
 # 跟15分鐘無關；因為我有可能是3個小時才開工一次，那就3個小時開工時讀一次即可。」

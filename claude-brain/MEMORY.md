@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴🔴🔴 金門場報名落差問三次才給完整名單，教練從金門回來才被告知，痛批嚴重失職(2026-08-26)](feedback_registration_gap_must_surface_immediately_2026-08-26.md) — 已建registration_notify_gap_check.py掛進開工hook，每次自動查空窗期報名不用教練追問
 - [🔴🔴🔴🔴🔴 「三台各自為政」完整答案：聯想跨機同步四層根因全修(2026-08-26)](project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md) — hook沒註冊+workspace指向7/23死clone+stdin中文Big5讀壞+push沒先pull；附四步驗證法，ACER/Mac也中同款坑
 - [🔴🔴🔴 宏碁ACER確認49天未真正使用，信箱堆積未讀信+verbatim零產出，跟聯想jq問題完全不同根因(2026-08-26)](project_acer_dormant_49days_2026-08-26.md) — 「pull on open」架構下沒人開的機器永遠追不上；唯一解法是教練親自開機讓它git pull+讀信
 - [🔴 ACER七支hook重裝+跟進聯想總結上傳修復，發現setup_windows_hooks.ps1在PS5.1會吃掉原設定(2026-08-26)](project_acer_hooks_restored_2026-08-26.md) — installer腳本`-AsHashtable`參數PS5.1不支援，靜默清空env/permissions/model，靠備份救回；已補summary_upload_trigger.ps1並實測四情境
