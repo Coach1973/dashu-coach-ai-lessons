@@ -17,7 +17,11 @@ ADMIN_PASSWORD_HASH = os.environ.get("JIESHENG_ADMIN_PASSWORD_HASH", "")
 
 WORKSHOP_DATES = {"台南": "2026-08-19", "台北": "2026-11-25"}
 WORKSHOP_TARGETS = {"台南": 20, "台北": 50}
-WORKSHOP_BREAKEVEN = {"台南": 13, "台北": 12}
+WORKSHOP_BREAKEVEN = {"台南": 13, "台北": 11}
+
+# 即時戰報只顯示現役場次；已結束的場次資料保留、改列「歷史記錄」連結，不刪除
+ACTIVE_WORKSHOPS = ["台北"]
+HISTORY_WORKSHOPS = [w for w in db.WORKSHOPS if w not in ACTIVE_WORKSHOPS]
 
 
 def _countdown_days(date_str: str) -> int:
@@ -62,25 +66,26 @@ def admin_logout():
 def admin():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
-    workshop = request.args.get("workshop", db.WORKSHOPS[0])
+    workshop = request.args.get("workshop", ACTIVE_WORKSHOPS[0])
     if workshop not in db.WORKSHOPS:
-        workshop = db.WORKSHOPS[0]
+        workshop = ACTIVE_WORKSHOPS[0]
 
     conn = db.get_conn()
     registrants = db.list_registrants(conn, workshop)
     stats = db.get_stats(conn)
     conn.close()
 
-    countdown_days = {w: _countdown_days(WORKSHOP_DATES[w]) for w in db.WORKSHOPS}
+    countdown_days = {w: _countdown_days(WORKSHOP_DATES[w]) for w in ACTIVE_WORKSHOPS}
     percent = {
         w: round(stats[w]["total"] / WORKSHOP_TARGETS[w] * 100) if WORKSHOP_TARGETS[w] else 0
-        for w in db.WORKSHOPS
+        for w in ACTIVE_WORKSHOPS
     }
-    breakeven_reached = {w: stats[w]["total"] >= WORKSHOP_BREAKEVEN[w] for w in db.WORKSHOPS}
+    breakeven_reached = {w: stats[w]["total"] >= WORKSHOP_BREAKEVEN[w] for w in ACTIVE_WORKSHOPS}
 
     return render_template(
         "admin.html",
-        workshops=db.WORKSHOPS,
+        workshops=ACTIVE_WORKSHOPS,
+        history_workshops=HISTORY_WORKSHOPS,
         workshop_dates=WORKSHOP_DATES,
         workshop_targets=WORKSHOP_TARGETS,
         workshop_breakeven=WORKSHOP_BREAKEVEN,
@@ -101,9 +106,9 @@ def admin():
 def add():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
-    workshop = request.form.get("workshop", db.WORKSHOPS[0])
+    workshop = request.form.get("workshop", ACTIVE_WORKSHOPS[0])
     if workshop not in db.WORKSHOPS:
-        workshop = db.WORKSHOPS[0]
+        workshop = ACTIVE_WORKSHOPS[0]
     name = (request.form.get("name") or "").strip()
     phone = (request.form.get("phone") or "").strip()
     register_date = (request.form.get("register_date") or date.today().isoformat()).strip()
@@ -131,9 +136,9 @@ def add():
 def save_all():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
-    workshop = request.form.get("workshop", db.WORKSHOPS[0])
+    workshop = request.form.get("workshop", ACTIVE_WORKSHOPS[0])
     if workshop not in db.WORKSHOPS:
-        workshop = db.WORKSHOPS[0]
+        workshop = ACTIVE_WORKSHOPS[0]
 
     conn = db.get_conn()
     for reg_id in request.form.getlist("ids"):
@@ -168,7 +173,7 @@ def delete(reg_id):
         return redirect(url_for("admin_login", next=request.path))
     conn = db.get_conn()
     reg = db.get_registrant(conn, reg_id)
-    workshop = reg["workshop"] if reg else db.WORKSHOPS[0]
+    workshop = reg["workshop"] if reg else ACTIVE_WORKSHOPS[0]
     db.delete_registrant(conn, reg_id)
     conn.close()
     return redirect(url_for("admin", workshop=workshop))

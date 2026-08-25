@@ -16,6 +16,10 @@
     font-size:15px; font-weight:700; color:rgba(255,255,255,.6); background:#1c1c1c; border:1px solid var(--line); border-radius:8px; }
 
   .stat-row { display:flex; gap:12px; margin:22px 0 28px; flex-wrap:wrap; }
+  .history-row { margin:-14px 0 24px; font-size:14px; color:rgba(255,255,255,.5); }
+  .history-link { color:rgba(255,255,255,.6); text-decoration:none; margin-left:8px; padding:4px 10px;
+    border:1px solid var(--line); border-radius:6px; font-weight:700; }
+  .history-link.active { color:var(--gold); border-color:var(--gold); }
   .stat-card { flex:1; min-width:220px; text-decoration:none; color:#fff; background:#1c1c1c;
     border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
   .stat-card.active { border-color:var(--gold); background:#20190f; }
@@ -98,6 +102,15 @@
       </a>
       {% endfor %}
     </div>
+
+    {% if history_workshops %}
+    <div class="history-row">
+      歷史記錄：
+      {% for w in history_workshops %}
+      <a class="history-link {{ 'active' if w == selected else '' }}" href="/admin?workshop={{ w }}">{{ w }}場（已結束）</a>
+      {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="box">
       <h2>新增報名者｜{{ selected }}場</h2>
