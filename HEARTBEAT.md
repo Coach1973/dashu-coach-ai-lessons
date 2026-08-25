@@ -150,3 +150,7 @@
 - 觸發詞：開工
 - 雲端狀態：✅ 已拉雲端最新（HEAD: b53f9998，本地改動已 stash/pop）
 - Session: fix-test-1
+
+## 🚀 Session-End 雲端同步 2026-08-26 01:31（Windows）
+- ⚠️ commit b8c294dc 本機留底，push 失敗（離線/credential）
+- 同步路徑：HEARTBEAT.md, scripts/
