@@ -53,3 +53,20 @@
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: 84150fda-42bc-4356-acc0-ad3d3b4a8c7a
+
+## 🩺 健康檢查 cycle=587 自動跑完（2026-08-25 13:12 週二下午）
+- ✅ 第零步 `sync_coach_last_message.sh` exit 0｜教練最後訊息 `2026-08-25T13:11:46+08:00`｜當下沉默 **0.0h**（教練剛 0.5 分鐘前還在線，下午剛互動）
+- ✅ Cron 真相源（本任務 46e67e2e）：`lastRunStatus=ok` / `CE=0` / `durationMs=68.6s`（遠低於 timeout=600s）/ model=`minimax/MiniMax-M3`
+- ✅ TG 通道探針（守則#19 當下實測 13:12）：`{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+- ✅ 環境快檢：SOUL×3 齊全（2036/1851/22220 bytes）｜無 `.!` 鎖定檔
+- ✅ HEARTBEAT.md ⬜ 真實待辦：0 項
+- ✅ 錯誤掃描：無 FailoverError / overloaded / INVALID_API_KEY
+
+**v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否
+- 關卡二（provider 暫時過載嗎）→ ❌ 否
+- 關卡三（影響教練/會員嗎）→ ❌ 否
+
+**累計**：連續 **81 輪綠燈**（cycle=507~587）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
