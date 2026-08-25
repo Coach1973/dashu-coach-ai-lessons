@@ -177,10 +177,35 @@ Write-Output ""
 Write-Output "教練說「開工/開/工作/幹活」=暗號觸發。讀完本段即可無縫接續。"
 
 # ───────── 第 1 步：接力棒 ─────────
+# 2026-08-26 聯想補（對齊 Mac 版 feed_junshi_handoff.sh 第 192~210 行的既有設計）：
+# workspace/CLAUDE.md 已由 scripts/sync_handoff_to_claudemd.sh 自動鏡像接力棒全文，
+# 桌面版讀 CLAUDE.md 時本來就會看到。鏡像若是最新的（sync marker >= HANDOFF mtime）
+# 就不重複貼一次全文，省下約 114KB；鏡像不是最新（sync 掛掉/沒跑過）才照舊完整貼上，安全優先。
 Write-Output ""
-Write-Output "## 📜 第 1 步：接力棒（JUNSHI_HANDOFF_LATEST.md 全文 · 剛從雲端拉的）"
+Write-Output "## 📜 第 1 步：接力棒"
 Write-Output ""
-Get-Content -Path $handoff -Encoding UTF8 | ForEach-Object { Write-Output $_ }
+# 判斷方式刻意跟 Mac 版不同：Mac 比對 .sync_markers 時間戳，但 git pull 會把檔案 mtime
+# 改成 pull 當下時間，在聯想/ACER 上永遠比 Mac 寫的 marker 新 → 瘦身永遠不會生效。
+# 改成直接比對內容指紋（接力棒尾端 300 字是否出現在 CLAUDE.md 鏡像裡），跨機通用且更準。
+$mirrorFresh = $false
+$claudeMdPath = Join-Path $workspace "CLAUDE.md"
+if ((Test-Path $claudeMdPath) -and (Test-Path $handoff)) {
+    try {
+        $handoffRaw = Get-Content $handoff -Raw -Encoding UTF8
+        if ($handoffRaw.Length -gt 400) {
+            $probe = $handoffRaw.Substring($handoffRaw.Length - 300).Trim()
+            $claudeMdRaw = Get-Content $claudeMdPath -Raw -Encoding UTF8
+            if ($probe -and $claudeMdRaw.Contains($probe)) { $mirrorFresh = $true }
+        }
+    } catch { $mirrorFresh = $false }
+}
+if ($mirrorFresh) {
+    Write-Output "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 ``JUNSHI_HANDOFF_LATEST.md`` 原檔。）"
+} else {
+    Write-Output "⚠️（CLAUDE.md 鏡像非最新，改為完整貼上，確保接力棒不漏接）"
+    Write-Output ""
+    Get-Content -Path $handoff -Encoding UTF8 | ForEach-Object { Write-Output $_ }
+}
 
 # ───────── 注入 JUNSHI_RULES.md（三機共讀軍師鐵律正典）─────────
 $junshiRules = if ($env:JUNSHI_HOOK_ROOT) {

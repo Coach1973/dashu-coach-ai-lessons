@@ -155,9 +155,27 @@
 - ⚠️ commit b8c294dc 本機留底，push 失敗（離線/credential）
 - 同步路徑：HEARTBEAT.md, scripts/
 
+<<<<<<< Updated upstream
 ## 🩺 軍師 Hook 自檢 2026-08-26 01:32（Mac v2 六步驟注入）
 - ✅ Hook 觸發 + 六步驟內容注入完成
 - 觸發詞：聯想電腦開工，台灣時間 2026-0
 - 雲端狀態：✅ 已拉雲端最新（HEAD: 5828b1b8e）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: 8010b34f-132f-41d0-acbb-14c68bda5cde
+=======
+## 🚀 Session-End 雲端同步 2026-08-26 01:32（Windows）
+- ✅ pushed 91ffefd7
+- 同步路徑：HEARTBEAT.md, scripts/
+
+## 🩺 軍師 Hook 自檢 2026-08-26 01:34（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 91ffefd7，本地改動已 stash/pop）
+- Session: slim-test-1
+>>>>>>> Stashed changes
+
+## 🩺 軍師 Hook 自檢 2026-08-26 01:35（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: ef39e551，本地改動已 stash/pop）
+- Session: slim-2
