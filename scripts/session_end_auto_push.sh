@@ -72,10 +72,43 @@ COMMIT_MSG="[Mac] session-end 自動同步 $STAMP"
 PUSH_RESULT="❓ unknown"
 if git commit -m "$COMMIT_MSG" >/dev/null 2>&1; then
   COMMIT_HASH=$(git rev-parse --short HEAD)
+
+  # 2026-08-26 聯想查出「三台各自為政」第4層根因，Mac的.sh版同樣中招：
+  # 原本commit完直接push，只要聯想/ACER剛好在這之間推過東西就會被"fetch first"
+  # 拒絕，東西永遠留在本機、其他機器看不到，而且訊息誤標成「離線/網路」蓋掉真因。
+  # 修法跟聯想的.ps1版本對齊：push前先stash(保護剛commit後可能還有的雜項變動)→
+  # pull --rebase → push → stash pop。
+  STASHED=0
+  if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+    if git stash push -u -m "auto-push-stash-$(date +%Y%m%d%H%M%S)" --quiet 2>/dev/null; then
+      STASHED=1
+    fi
+  fi
+
+  PULL_OK=0
+  if git pull --rebase --quiet 2>/dev/null; then
+    PULL_OK=1
+  fi
+
+  PUSH_OK=0
   if git push origin main >/dev/null 2>&1; then
-    PUSH_RESULT="✅ pushed $COMMIT_HASH"
+    PUSH_OK=1
+  fi
+  COMMIT_HASH=$(git rev-parse --short HEAD)
+
+  STASH_NOTE=""
+  if [[ "$STASHED" -eq 1 ]]; then
+    if ! git stash pop --quiet 2>/dev/null; then
+      STASH_NOTE="（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）"
+    fi
+  fi
+
+  if [[ "$PUSH_OK" -eq 1 ]]; then
+    PUSH_RESULT="✅ pushed ${COMMIT_HASH}${STASH_NOTE}"
+  elif [[ "$PULL_OK" -eq 0 ]]; then
+    PUSH_RESULT="⚠️ commit ${COMMIT_HASH} 本機留底，pull --rebase 失敗（衝突需手動處理）${STASH_NOTE}"
   else
-    PUSH_RESULT="⚠️ commit $COMMIT_HASH 本機留底，push 失敗（離線/網路）"
+    PUSH_RESULT="⚠️ commit ${COMMIT_HASH} 本機留底，push 失敗（離線/credential）${STASH_NOTE}"
   fi
 else
   PUSH_RESULT="ℹ️ 沒實質變動"
