@@ -1,0 +1,100 @@
+# 終端機對話萃取 — Session 957df68d-14bc-4084-9cf4-4096d678d3de
+# 提取時間：2026-08-26 00:48 (台灣時間)
+# 共 4 條教練原話
+
+---
+
+【教練 2026-08-25 16:31】
+開工
+
+　▶ AI 回應：Good, restored. Now let me write the reply letter and the dispatch letters to ACER/Lenovo.
+
+　▶ AI 回應：Good, the fallback `mv` succeeded. Now let me write the dispatch letters to ACER and Lenovo, then move the original letter from 小龍蝦 to outbox.
+
+　▶ AI 回應：教練要先看內容再決定，這是我準備發給 ACER 軍師的信全文（聯想那封內容幾乎一樣，只是把「ACER」換成「聯想」）：
+
+---
+
+**標題**：請查：verbatim蒸餾Stop hook是否還在、有沒有真的觸發過
+
+**內容重點**：
+1. 告知「你的 `distill_and_push_acer.sh` 昨天被 Mac 誤歸檔為死腳本，我已經搬回原位」，提醒對方檢查 Stop hook 有沒有因為找不到檔案而報錯。
+2. 請對方自查兩件事：
+   - `settings.json` 裡的 Stop hook 設定還在不在、路徑對不對
+   - 8月教練在該機上的對話，是走 **Claud…（略）
+
+　▶ AI 回應：Got approval. Sending both letters now.
+
+　▶ AI 回應：Both letters sent. Now archiving 小龍蝦's original letter and committing everything.
+
+　▶ AI 回應：All staged correctly. Committing now.
+
+【教練 2026-08-25 16:37】
+Base directory for this skill: /Users/bymyway/.claude/skills/memory-write-discipline
+
+# 記憶寫入雙鐵律（執行細則 E12，2026-07-10）
+
+對應守則 #01 #14 #15。
+
+## 鐵律一：該不該記，不靠當下心情，靠明確清單
+
+命中以下6種情況之一，直接判定「這件事要記」，不用臨場判斷：
+
+1. 指令執行失敗
+2. 教練當場糾正（含語氣重話、口頭指正）
+3. 教練要求一個目前不存在的功能/檔案
+4. 外部 API／服務呼叫失敗
+5. 發現既有記憶檔/守則已經過時、跟現狀不符
+6. 發現一個比現行做法更好的方法
+
+同一件事命中多條也只記一次；不同機器（Mac/Windows/VPS）看到同樣6條，判斷標準才會一致。
+
+## 鐵律二：寫入前先過敏感資料檢查
+
+起因：2026-07-10密碼分層時意外發現 MEMORY.md 混進一組真實VPS密碼，是事後抓漏，不是事前防護。
+
+寫入前檢查內容是否含：**密碼／API Key／Token／身分證字號／完整帳號憑證**等敏感字串。命中就先遮蔽，或抽到權限受限的獨立檔案（如`路徑大全_憑證層.md`），再寫入敘事型記憶檔。不能靠「反正之後會發現」。
+
+## 補充：教練的每一句話都值得記（守則#13 #01）
+
+教練說的每一句話都是用生命換來的指導——語音輸入每分鐘200字，26年培訓經驗的心血。教練發言自動視為「需要記錄」，不問、不確認、不猶豫。教練提到任何比喻，背後都藏著他重視的價值觀，是線索，要理解並記下。
+
+　▶ AI 回應：Good, it's untracked/ignored — no cleanup needed there. Everything's committed and pushed.
+
+**開工完成回報：**
+
+處理了小龍蝦跨機信箱的緊急派工單（verbatim對話紀錄查無資料的bug）：
+
+1. **查到根因**：蒸餾機制（`memory/verbatim/{acer,lenovo,mac}/`）只在CLI/Code面板session結束時透過Stop hook觸發，**不會抓Desktop App一般聊天內容**——教練8月在ACER/聯想的對話如果是走一般聊天介面，這套機制本來就不會收到，…（略）
+
+【教練 2026-08-25 16:42】
+我現在正在完善名片系統，還要再加進一個龐大的資料庫。
+
+一會兒我會登入 BNI 的 Connect，然後給你一個網址，裡面有所有在籍與離會的會員：https://www.bniconnectglobal.com/web/secure/operationsChapterManageMembership?countryId=7699&regionId=23268&chapterId=23528
+
+1. 在籍會員：全部標示在 BNI 隸屬哪一個分會
+2. 離會會員：標示為「前會員」，以及曾經隸屬哪一個分會
+
+這個資料庫會做比較久一點，你就繼續一樣把它列入到我們名片的媒合名單當中。因為就算是離會的會員，如果有需要引薦的時候還是可以找回來；而且我覺得也需要透過這個機制篩一下，看有沒有機會把離會的會員再次溝通回團隊。
+
+　▶ AI 回應：了解，這個資料庫會分兩類匯入名片媒合系統：
+
+- **在籍會員**：標記所屬分會
+- **離會會員**：標記「前會員」＋曾隸屬分會
+
+跟現有名片資料一樣，全部會走同一套產業鏈媒合流程（`chain_matcher.py`），就算沒有名片照片、只有BNI Connect的資料也一樣會出現在媒合建議跟BNI狀態標記裡——這樣離會會員也能被篩出來，看有沒有機會重新邀請回來。
+
+您登入BNI Connect、開好那個會員管理頁面後，跟我說一聲，我用claude-in-chrome連上您本機真實已登入的Chrome直接讀取名單就可以開始了（不用您截圖或複製貼上）。
+
+【教練 2026-08-25 16:44】
+我已經登入啦，你去找一下那個 Claude 操作網頁的 SOP，不要再搞錯了。是在 Mac 電腦這臺上，不要再跑到別臺電腦去了。
+
+我已經登入，跟你說一聲。
+
+　▶ AI 回應：Confirmed the SOP. Now checking connected browser devices before touching anything.
+
+　▶ AI 回應：只有一台裝置連線，且是Mac本機（`isLocal:true`），確認無誤，開始讀取頁面。
+
+　▶ AI 回應：Refs held across reopens. Fetching 真愛 chapter's data.
+
+　▶ AI 回應：Working well. Continuing through the remaining chapters/groups: 真誠, 真鑫, 真鑽, then the 3 core groups.

@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 verbatim蒸餾機制只抓CLI/Code面板不抓Desktop一般聊天(2026-08-26)](reference_verbatim_pipeline_cli_only_not_desktop_chat.md) — 查「查無對話紀錄」先問走哪個介面；跨機腳本死活判斷要連對方hook一起查
 - [🔴🔴🔴 小龍蝦自稱「已建立監控機制」實為心算編數字，非真實hook/cron(2026-08-25)](feedback_ai_claimed_mechanism_verify_before_trust.md) — 82%/3MB/4MB矛盾訊息真相；AI自稱「已建立」先查有無真程式碼支撐
 - [🔴🔴 測試腳本會打真實網路要mock，重跑test轟炸教練Telegram 8則的教訓(2026-08-25)](feedback_test_script_must_mock_side_effects.md) — session-summary-trigger測試漏了防護，跟context-overflow-guard測試同款教訓沒有互相套用
 - [🔧 openclaw update預設latest會橫向跳線，VPS升級再次驗證要用--tag明確版本(2026-08-25)](reference_openclaw_update_latest_wrong_release_line.md) — Mac評估6.34時已知的坑，VPS 6.11升級時同樣命中
