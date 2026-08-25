@@ -16,9 +16,9 @@
   .role-me { display: inline-block; background: #1f3a5f; color: white; font-size: 12px; padding: 3px 10px; border-radius: 10px; margin-bottom: 10px; }
   .other-role { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; margin-top: 6px; flex-wrap: wrap; gap: 6px; }
   .other-role.filled { background: #eef7ee; }
+  .other-role.filled.bni-member { background: #eaf2fb; }
+  .other-role.filled.not-bni { background: #fdecea; }
   .other-role.gap { background: #fdf3e7; }
-  .other-role.gap.bni-member { background: #eaf2fb; }
-  .other-role.gap.not-bni { background: #fdecea; }
   .other-name { font-size: 13px; font-weight: 700; }
   .other-status { font-size: 12px; }
   .other-status.filled { color: #2e7d32; }
@@ -38,6 +38,30 @@
 <div class="box">
   <div class="name">{{ card.name or "（未辨識姓名）" }} {% if card.title %}<span style="font-weight:400;color:#666;">・{{ card.title }}</span>{% endif %}</div>
   <div class="company">{{ card.company or "" }}</div>
+  {% set my_bni = card.bni_status or 'unknown' %}
+  {% if my_bni == 'bni_member' %}
+  <div class="other-status bni-member" style="margin-top:6px;">🔵 已是BNI會員{% if card.bni_note %}・{{ card.bni_note }}{% endif %}</div>
+  {% elif my_bni == 'not_bni' %}
+  <div class="other-status not-bni" style="margin-top:6px;">🎯 非BNI會員</div>
+  {% endif %}
+  {% if logged_in %}
+  <div class="bni-controls" style="margin-top:8px;">
+    <form method="POST" action="/card/{{ card.id }}/bni_status" style="display:inline;">
+      <input type="hidden" name="bni_status" value="bni_member">
+      <button type="submit" class="{{ 'active' if my_bni=='bni_member' else '' }}" style="color:#1f5fa8;">🔵已是會員</button>
+    </form>
+    <form method="POST" action="/card/{{ card.id }}/bni_status" style="display:inline;">
+      <input type="hidden" name="bni_status" value="not_bni">
+      <button type="submit" class="{{ 'active' if my_bni=='not_bni' else '' }}" style="color:#b3261e;">🎯非會員</button>
+    </form>
+    {% if my_bni != 'unknown' %}
+    <form method="POST" action="/card/{{ card.id }}/bni_status" style="display:inline;">
+      <input type="hidden" name="bni_status" value="unknown">
+      <button type="submit">重置</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endif %}
 </div>
 
 {% if match_error %}
@@ -53,37 +77,37 @@
   <div class="chain-theme">{{ item.chain.core_theme or "" }}</div>
   <div class="role-me">這張名片的角色：{{ item.chain.role_name }}</div>
   {% for m in item.other_members %}
-  {% set bni = m.bni_status or 'unknown' %}
-  <div class="other-role {{ 'gap' if m.is_gap else 'filled' }} {{ 'bni-member' if (m.is_gap and bni=='bni_member') else '' }} {{ 'not-bni' if (m.is_gap and bni=='not_bni') else '' }}">
+  {% set bni = m.card_bni_status or 'unknown' %}
+  <div class="other-role {{ 'gap' if m.is_gap else 'filled' }} {{ 'bni-member' if (not m.is_gap and bni=='bni_member') else '' }} {{ 'not-bni' if (not m.is_gap and bni=='not_bni') else '' }}">
     <div class="other-name">{{ m.role_name }}</div>
     {% if m.is_gap %}
+    <div class="other-status gap">⏳ 待招募</div>
+    {% else %}
       {% if bni == 'bni_member' %}
-      <div class="other-status bni-member">🔵 已是BNI會員{% if m.bni_note %}・{{ m.bni_note }}{% endif %}</div>
+      <div class="other-status bni-member">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🔵已是BNI會員{% if m.card_bni_note %}({{ m.card_bni_note }}){% endif %}</div>
       {% elif bni == 'not_bni' %}
-      <div class="other-status not-bni">🎯 非BNI會員(招募目標)</div>
+      <div class="other-status not-bni">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🎯非會員</div>
       {% else %}
-      <div class="other-status gap">⏳ 待招募（未確認）</div>
+      <div class="other-status filled">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
       {% endif %}
       {% if logged_in %}
       <div class="bni-controls">
-        <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+        <form method="POST" action="/card/{{ m.card_id }}/bni_status" style="display:inline;">
           <input type="hidden" name="bni_status" value="bni_member">
           <button type="submit" class="{{ 'active' if bni=='bni_member' else '' }}" style="color:#1f5fa8;">🔵已是會員</button>
         </form>
-        <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+        <form method="POST" action="/card/{{ m.card_id }}/bni_status" style="display:inline;">
           <input type="hidden" name="bni_status" value="not_bni">
           <button type="submit" class="{{ 'active' if bni=='not_bni' else '' }}" style="color:#b3261e;">🎯非會員</button>
         </form>
         {% if bni != 'unknown' %}
-        <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+        <form method="POST" action="/card/{{ m.card_id }}/bni_status" style="display:inline;">
           <input type="hidden" name="bni_status" value="unknown">
           <button type="submit">重置</button>
         </form>
         {% endif %}
       </div>
       {% endif %}
-    {% else %}
-    <div class="other-status filled">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
     {% endif %}
   </div>
   {% endfor %}

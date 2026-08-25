@@ -91,7 +91,8 @@ def index():
     conn.close()
 
     return render_template(
-        "index.html", cards=cards, categories=categories, query=query, selected_category=category
+        "index.html", cards=cards, categories=categories, query=query, selected_category=category,
+        logged_in=bool(session.get("team_username")),
     )
 
 
@@ -146,8 +147,9 @@ def card_match(card_id):
     chains_detail = []
     for row in existing:
         members = conn.execute(
-            """SELECT cm.id AS member_id, cm.role_name, cm.is_gap, cm.bni_status, cm.bni_note,
-                      c.name AS card_name, c.company AS card_company
+            """SELECT cm.id AS member_id, cm.card_id, cm.role_name, cm.is_gap,
+                      c.name AS card_name, c.company AS card_company,
+                      c.bni_status AS card_bni_status, c.bni_note AS card_bni_note
                FROM chain_members cm LEFT JOIN cards c ON c.id = cm.card_id
                WHERE cm.chain_id = ? AND cm.card_id IS NOT ? """,
             (row["chain_id"], card_id),
@@ -194,17 +196,19 @@ def team_login_required(view):
     return wrapped
 
 
-@app.route("/chain_member/<int:member_id>/bni_status", methods=["POST"])
+@app.route("/card/<int:card_id>/bni_status", methods=["POST"])
 @team_login_required
-def chain_member_bni_status(member_id):
+def card_bni_status(card_id):
+    """標記這張名片(已有真實聯絡資料的人)是否為BNI會員。只套用在真實名片上，
+    不套用在AI建議的抽象待招募角色——沒聯絡方式標了也聯絡不到，沒有意義(教練親定)。"""
     bni_status = request.form.get("bni_status", "unknown")
     bni_note = (request.form.get("bni_note") or "").strip()
     if bni_status not in ("unknown", "bni_member", "not_bni"):
         bni_status = "unknown"
     conn = db.get_conn()
-    db.update_gap_bni_status(conn, member_id, bni_status, bni_note)
+    db.update_card_bni_status(conn, card_id, bni_status, bni_note)
     conn.close()
-    return redirect(request.referrer or url_for("chains_page"))
+    return redirect(request.referrer or url_for("index"))
 
 
 @app.route("/card/<int:card_id>/delete", methods=["POST"])
