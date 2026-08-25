@@ -21,10 +21,12 @@
   .review { color: #b45309; font-size: 12px; }
   .empty { color: #888; text-align: center; padding: 40px 0; }
   .count { color: #666; font-size: 13px; margin-bottom: 8px; }
+  .upload-cta { display: block; text-align: center; background: #1f3a5f; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 700; margin-bottom: 16px; }
 </style>
 </head>
 <body>
 <h1>📇 名片資料庫搜尋</h1>
+<a class="upload-cta" href="/upload">📸 上傳名片，AI 幫你辨識並收錄</a>
 <form method="get">
   <input type="text" name="q" placeholder="搜姓名／公司／地區／產品服務關鍵字" value="{{ query }}">
   <select name="category">

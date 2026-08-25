@@ -6,3 +6,4 @@ watch.error.log
 com.coach.namecard-watch.plist
 .env
 venv/
+public_uploads/
