@@ -8,3 +8,4 @@ com.coach.namecard-watch.plist
 venv/
 public_uploads/
 team_uploads/
+heic_cache/

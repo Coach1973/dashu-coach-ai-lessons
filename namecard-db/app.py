@@ -96,20 +96,42 @@ def index():
     )
 
 
+HEIC_CACHE_FOLDER = os.path.join(_THIS_DIR, "heic_cache")
+os.makedirs(HEIC_CACHE_FOLDER, exist_ok=True)
+
+
 @app.route("/image/<path:filename>")
 def serve_image(filename):
     """名片原始照片，供搜尋頁核對辨識結果用。public_開頭是公開上傳的，存在
     public_uploads；其餘是團隊從Amber私有雲上傳的，已複製一份到本機team_uploads
-    (不依賴SMB即時掛載，掛載斷線也看得到既有照片)。"""
+    (不依賴SMB即時掛載，掛載斷線也看得到既有照片)。iPhone拍的HEIC瀏覽器無法
+    原生顯示，即時轉JPEG並快取，避免每次重轉。"""
     if "/" in filename or ".." in filename:
         abort(404)
     if filename.startswith("public_"):
-        return send_from_directory(PUBLIC_UPLOAD_FOLDER, filename)
-    if os.path.exists(os.path.join(TEAM_UPLOAD_FOLDER, filename)):
-        return send_from_directory(TEAM_UPLOAD_FOLDER, filename)
-    if IMAGE_FOLDER and os.path.exists(os.path.join(IMAGE_FOLDER, filename)):
-        return send_from_directory(IMAGE_FOLDER, filename)
-    abort(404)
+        base_folder = PUBLIC_UPLOAD_FOLDER
+    elif os.path.exists(os.path.join(TEAM_UPLOAD_FOLDER, filename)):
+        base_folder = TEAM_UPLOAD_FOLDER
+    elif IMAGE_FOLDER and os.path.exists(os.path.join(IMAGE_FOLDER, filename)):
+        base_folder = IMAGE_FOLDER
+    else:
+        abort(404)
+
+    ext = os.path.splitext(filename)[1].lower()
+    if ext not in (".heic", ".heif"):
+        return send_from_directory(base_folder, filename)
+
+    cache_name = filename + ".jpg"
+    cache_path = os.path.join(HEIC_CACHE_FOLDER, cache_name)
+    if not os.path.exists(cache_path):
+        import pillow_heif
+        from PIL import Image
+
+        pillow_heif.register_heif_opener()
+        img = Image.open(os.path.join(base_folder, filename)).convert("RGB")
+        img.thumbnail((900, 900))
+        img.save(cache_path, format="JPEG", quality=88)
+    return send_from_directory(HEIC_CACHE_FOLDER, cache_name, mimetype="image/jpeg")
 
 
 @app.route("/card/<int:card_id>/match", methods=["GET", "POST"])
