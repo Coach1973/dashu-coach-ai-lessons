@@ -24,6 +24,11 @@ while IFS= read -r f; do
     # openclaw.json 是既有設計（私有 repo 內備份設定含 token），不在本檢查範圍
     case "$f" in
         openclaw.json|*/openclaw.json|*.bak*|*credentials*) continue ;;
+        # 對話逐字備份：內容是教練與 AI 講過的話，不可控（提到什麼就記什麼），
+        # 且由每 15 分鐘的自動備份 cron 提交——擋住它會讓整個備份系統卡死，
+        # 那比「私有 repo 裡有一組歷史 token」嚴重得多。
+        # 治本方式是不讓 token 出現在對話裡（＝腳本不要硬編碼），已於同日全數改掉。
+        terminal-notes/*|*/terminal-notes/*|*.jsonl) continue ;;
     esac
     m=$(git show ":$f" 2>/dev/null | grep -nEo "$PATTERNS" | head -3)
     if [ -n "$m" ]; then

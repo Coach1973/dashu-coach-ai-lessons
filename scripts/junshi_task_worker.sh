@@ -13,7 +13,15 @@ QUEUE="/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE"
 RESULT="/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_RESULT"
 LOCKFILE="/tmp/junshi_task_worker.lock"
 LOGFILE="/Users/bymyway/Library/Logs/openclaw/junshi_task_worker.log"
-MAIN_BOT_TOKEN="8758843664:AAE4W-hGh2mPxNt89b2donZ0Q--YZ9uwdsA"
+# 2026-08-25 體檢：token 原本硬編碼在此行，改成從 openclaw.json 讀
+MAIN_BOT_TOKEN=$(python3 -c "
+import json
+try:
+    d = json.load(open('/Users/bymyway/.openclaw/openclaw.json'))
+    print(d['channels']['telegram']['accounts']['bot_main']['botToken'])
+except Exception:
+    print('')
+")
 COACH_CHAT_ID="6124913915"
 CLAUDE_CLI="/Users/bymyway/.local/bin/claude"
 GH_CLI="/opt/homebrew/bin/gh"

@@ -8,7 +8,15 @@ set -uo pipefail
 # ── 設定 ────────────────────────────────────────────────
 LOG=/Users/bymyway/.openclaw/workspace/BOT_MESSAGES.md
 CHAT_ID=-1003877502911
-MAIN_BOT_TOKEN="8758843664:AAE4W-hGh2mPxNt89b2donZ0Q--YZ9uwdsA"
+# 2026-08-25 體檢：token 原本硬編碼在此行，改成從 openclaw.json 讀
+MAIN_BOT_TOKEN=$(python3 -c "
+import json
+try:
+    d = json.load(open('/Users/bymyway/.openclaw/openclaw.json'))
+    print(d['channels']['telegram']['accounts']['bot_main']['botToken'])
+except Exception:
+    print('')
+")
 TRIGGER_LOG=/Users/bymyway/.openclaw/workspace/logs/council_orchestrator.log
 LOCK=/tmp/.council_orchestrator.lock
 LOCK_TTL=300   # 5 分鐘內已觸發過就 skip
