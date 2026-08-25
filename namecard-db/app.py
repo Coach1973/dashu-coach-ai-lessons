@@ -3,13 +3,15 @@
 """
 import json
 import os
+import subprocess
+import sys
 import time
 import uuid
 from collections import defaultdict, deque
 from functools import wraps
 
 import anthropic
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, abort, redirect, render_template, request, send_from_directory, session, url_for
 from werkzeug.security import check_password_hash
 
 import db
@@ -21,18 +23,23 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("NAMECARD_SECRET_KEY", "")
 IMAGE_FOLDER = os.environ.get("NAMECARD_FOLDER", "")
 
-# 公開上傳辨識：任何人都能丟名片照片，AI辨識後直接收錄進同一個名片資料庫
-PUBLIC_UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "public_uploads")
-os.makedirs(PUBLIC_UPLOAD_FOLDER, exist_ok=True)
-ALLOWED_UPLOAD_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
-MAX_FILES_PER_UPLOAD = 5
-MAX_FILE_SIZE = 15 * 1024 * 1024  # 單檔15MB
-app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE * MAX_FILES_PER_UPLOAD
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 辨識本身不收費（PaddleOCR本機跑+MiniMax端點無流量限制），節流只是防對外公開端點
-# 被腳本瞬間灌爆導致資料庫塞進大量垃圾/惡意資料，門檻設寬鬆不擋正常大量匯入
+# 公開上傳辨識：任何人都能丟名片照片，存檔後立即放行，不等辨識完成——
+# 教練的構想是「不追求立即出結果，後台慢慢消化」，一次丟幾百張也不卡住使用者
+PUBLIC_UPLOAD_FOLDER = os.path.join(_THIS_DIR, "public_uploads")
+os.makedirs(PUBLIC_UPLOAD_FOLDER, exist_ok=True)
+# 團隊從Amber私有雲上傳的名片，複製一份存本機，不依賴SMB即時掛載狀態
+TEAM_UPLOAD_FOLDER = os.path.join(_THIS_DIR, "team_uploads")
+os.makedirs(TEAM_UPLOAD_FOLDER, exist_ok=True)
+ALLOWED_UPLOAD_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
+MAX_FILE_SIZE = 15 * 1024 * 1024  # 單檔15MB，防單一異常大檔案
+app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024  # 單次請求總量500MB，容納大量批次上傳
+
+# 節流只是防對外公開端點被腳本瞬間灌爆導致資料庫塞垃圾/惡意資料，
+# 門檻設得夠寬鬆，不擋教練團隊一次上傳整批名片相簿的正常使用情境
 _upload_log: dict[str, deque] = defaultdict(deque)
-RATE_LIMIT_COUNT = 200
+RATE_LIMIT_COUNT = 2000
 RATE_LIMIT_WINDOW = 3600
 
 
@@ -85,6 +92,71 @@ def index():
 
     return render_template(
         "index.html", cards=cards, categories=categories, query=query, selected_category=category
+    )
+
+
+@app.route("/image/<path:filename>")
+def serve_image(filename):
+    """名片原始照片，供搜尋頁核對辨識結果用。public_開頭是公開上傳的，存在
+    public_uploads；其餘是團隊從Amber私有雲上傳的，已複製一份到本機team_uploads
+    (不依賴SMB即時掛載，掛載斷線也看得到既有照片)。"""
+    if "/" in filename or ".." in filename:
+        abort(404)
+    if filename.startswith("public_"):
+        return send_from_directory(PUBLIC_UPLOAD_FOLDER, filename)
+    if os.path.exists(os.path.join(TEAM_UPLOAD_FOLDER, filename)):
+        return send_from_directory(TEAM_UPLOAD_FOLDER, filename)
+    if IMAGE_FOLDER and os.path.exists(os.path.join(IMAGE_FOLDER, filename)):
+        return send_from_directory(IMAGE_FOLDER, filename)
+    abort(404)
+
+
+@app.route("/card/<int:card_id>/match", methods=["GET", "POST"])
+def card_match(card_id):
+    """點一下「媒合」：如果這張名片還沒分析過，當場呼叫AI判斷一次並存起來；
+    已經分析過的直接顯示既有結果，不重複觸發(避免公開端點被重複濫用)。"""
+    conn = db.get_conn()
+    card = conn.execute("SELECT * FROM cards WHERE id = ?", (card_id,)).fetchone()
+    if card is None:
+        conn.close()
+        return "找不到這張名片", 404
+
+    existing = conn.execute(
+        """SELECT cm.role_name, ic.id AS chain_id, ic.name AS chain_name, ic.core_theme
+           FROM chain_members cm JOIN industry_chains ic ON ic.id = cm.chain_id
+           WHERE cm.card_id = ?""",
+        (card_id,),
+    ).fetchall()
+
+    match_error = None
+    if not existing and card["status"] in ("ok", "needs_review"):
+        try:
+            client = anthropic.Anthropic()
+            match_card_to_chain(conn, client, card_id, MODEL)
+            existing = conn.execute(
+                """SELECT cm.role_name, ic.id AS chain_id, ic.name AS chain_name, ic.core_theme
+                   FROM chain_members cm JOIN industry_chains ic ON ic.id = cm.chain_id
+                   WHERE cm.card_id = ?""",
+                (card_id,),
+            ).fetchall()
+        except Exception as e:  # noqa: BLE001
+            match_error = str(e)
+
+    # 同一條產業鏈裡，這張名片以外的其他角色位置(已補位或待招募)，方便看出可以合作誰
+    chains_detail = []
+    for row in existing:
+        members = conn.execute(
+            """SELECT cm.role_name, cm.is_gap, c.name AS card_name, c.company AS card_company
+               FROM chain_members cm LEFT JOIN cards c ON c.id = cm.card_id
+               WHERE cm.chain_id = ? AND cm.card_id IS NOT ? """,
+            (row["chain_id"], card_id),
+        ).fetchall()
+        chains_detail.append({"chain": row, "other_members": members})
+
+    conn.close()
+    return render_template(
+        "card_match.html", card=card, chains_detail=chains_detail, match_error=match_error,
+        analyzed=bool(existing) or card["status"] not in ("ok", "needs_review"),
     )
 
 
@@ -199,47 +271,38 @@ def upload_page():
 def upload_submit():
     ip = (request.headers.get("X-Forwarded-For", "") or request.remote_addr or "").split(",")[0].strip()
     if _rate_limited(ip):
-        return render_template("upload.html", error="上傳太頻繁了，請稍後再試（每小時上限200張）")
+        return render_template("upload.html", error="上傳太頻繁了，請稍後再試")
 
-    files = [f for f in request.files.getlist("photos") if f and f.filename][:MAX_FILES_PER_UPLOAD]
+    files = [f for f in request.files.getlist("photos") if f and f.filename]
     if not files:
         return render_template("upload.html", error="請選擇至少一張名片照片")
 
-    client = anthropic.Anthropic()
     conn = db.get_conn()
-    results = []
-    any_success = False
+    saved_count = 0
+    skipped = []
     for f in files:
         ext = os.path.splitext(f.filename)[1].lower()
         if ext not in ALLOWED_UPLOAD_EXTS:
-            results.append({"filename": f.filename, "error": "不支援的檔案格式"})
+            skipped.append(f.filename)
             continue
         saved_name = f"public_{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
         saved_path = os.path.join(PUBLIC_UPLOAD_FOLDER, saved_name)
         f.save(saved_path)
-        try:
-            fields = extract_card_fields(saved_path, client)
-        except Exception as e:  # noqa: BLE001 — 單張失敗不能讓整批停掉
-            fields = {"_error": str(e), "_raw": ""}
-        card_id = db.insert_card(conn, saved_name, fields)
-        if "_error" in fields:
-            results.append({"filename": f.filename, "error": fields["_error"]})
-        else:
-            any_success = True
-            try:
-                match_card_to_chain(conn, client, card_id, MODEL)
-            except Exception:  # noqa: BLE001 — 媒合失敗不影響名片本身已收錄
-                pass
-            results.append({"filename": f.filename, "fields": fields})
+        db.insert_card_pending(conn, saved_name)
+        saved_count += 1
     conn.close()
 
-    if any_success:
-        try:
-            run_dedup(client)
-        except Exception:  # noqa: BLE001 — 去重失敗不影響已收錄的名片
-            pass
+    if saved_count > 0:
+        # 非阻塞觸發背景worker，不等它處理完就直接回應——上傳這個動作本身就是
+        # 事件觸發點，不是定時輪詢；子行程繼承父行程環境變數(含.env裡的API金鑰)
+        subprocess.Popen(
+            [sys.executable, os.path.join(_THIS_DIR, "process_pending.py"), "--limit", str(saved_count)],
+            cwd=_THIS_DIR,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
-    return render_template("upload_result.html", results=results)
+    return render_template("upload_result.html", saved_count=saved_count, skipped=skipped)
 
 
 if __name__ == "__main__":

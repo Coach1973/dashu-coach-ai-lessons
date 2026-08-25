@@ -14,6 +14,7 @@
 """
 import argparse
 import os
+import shutil
 
 import anthropic
 
@@ -23,9 +24,12 @@ from dedup import run_dedup
 from extract import MODEL, extract_card_fields
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+TEAM_UPLOAD_FOLDER = os.path.join(_THIS_DIR, "team_uploads")
 
 
 def scan_once(folder: str, client: anthropic.Anthropic) -> None:
+    os.makedirs(TEAM_UPLOAD_FOLDER, exist_ok=True)
     conn = db.get_conn()
     filenames = sorted(
         f for f in os.listdir(folder) if os.path.splitext(f)[1].lower() in IMAGE_EXTS
@@ -36,6 +40,10 @@ def scan_once(folder: str, client: anthropic.Anthropic) -> None:
             continue
         new_count += 1
         image_path = os.path.join(folder, filename)
+        # 複製一份到本機，網站顯示縮圖才不依賴Amber SMB即時掛載狀態
+        local_copy = os.path.join(TEAM_UPLOAD_FOLDER, filename)
+        if not os.path.exists(local_copy):
+            shutil.copy2(image_path, local_copy)
         print(f"[處理中] {filename}")
         try:
             fields = extract_card_fields(image_path, client)

@@ -7,3 +7,4 @@ com.coach.namecard-watch.plist
 .env
 venv/
 public_uploads/
+team_uploads/

@@ -30,13 +30,13 @@
 
 <div class="box">
   <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
-    <div class="dropzone">📸 點擊選擇名片照片（可一次選多張，最多 5 張）</div>
+    <div class="dropzone">📸 點擊選擇名片照片（一次可選幾十、幾百張都沒關係）</div>
     <input type="file" name="photos" accept="image/*" multiple required id="fileInput">
     <div class="preview" id="preview"></div>
-    <button type="submit" id="submitBtn">開始辨識</button>
-    <div class="hint">支援 JPG / PNG / HEIC，單檔上限 15MB。辨識過程約需 10~30 秒，請耐心等候。</div>
+    <button type="submit" id="submitBtn">送出上傳</button>
+    <div class="hint">支援 JPG / PNG / HEIC，單檔上限 15MB。上傳完就可以離開，AI 會在後台慢慢辨識，稍後回搜尋頁查看結果即可。</div>
   </form>
-  <div class="loading" id="loading">⏳ AI 辨識中，請稍候…</div>
+  <div class="loading" id="loading">⏳ 存檔中，請稍候…</div>
 </div>
 
 <a class="back" href="/">← 回名片搜尋首頁</a>
@@ -46,11 +46,18 @@
   const preview = document.getElementById('preview');
   fileInput.addEventListener('change', () => {
     preview.innerHTML = '';
-    [...fileInput.files].slice(0, 5).forEach(file => {
+    const total = fileInput.files.length;
+    [...fileInput.files].slice(0, 24).forEach(file => {
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
       preview.appendChild(img);
     });
+    if (total > 24) {
+      const more = document.createElement('div');
+      more.style.cssText = 'align-self:center;color:#888;font-size:13px;';
+      more.textContent = `還有 ${total - 24} 張…`;
+      preview.appendChild(more);
+    }
   });
   document.getElementById('uploadForm').addEventListener('submit', () => {
     document.getElementById('submitBtn').disabled = true;

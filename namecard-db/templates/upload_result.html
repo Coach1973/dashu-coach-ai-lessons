@@ -3,57 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>辨識結果｜名片上傳</title>
+<title>上傳完成｜名片上傳</title>
 <style>
-  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 560px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
-  h1 { font-size: 20px; margin-bottom: 16px; }
-  .card { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-  .card.err { background: #fdecea; }
-  .name { font-size: 17px; font-weight: 700; }
-  .company { color: #444; margin-bottom: 6px; }
-  .row { font-size: 14px; margin: 2px 0; }
-  .tag { display: inline-block; background: #eef1f6; color: #1f3a5f; font-size: 12px; padding: 2px 8px; border-radius: 12px; margin: 2px 4px 0 0; }
-  .review { color: #b45309; font-size: 12px; margin-top: 6px; }
-  .errmsg { color: #b3261e; font-size: 14px; }
-  .actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-  .actions a { min-width: 100px; }
-  .actions a { flex: 1; text-align: center; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; }
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 480px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  .box { background: white; border-radius: 12px; padding: 26px 22px; margin-top: 40px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .icon { font-size: 44px; margin-bottom: 10px; }
+  .headline { font-size: 19px; font-weight: 900; margin-bottom: 8px; }
+  .desc { color: #666; font-size: 14px; line-height: 1.7; }
+  .skipped { margin-top: 14px; font-size: 13px; color: #b3261e; background: #fdecea; padding: 10px 14px; border-radius: 8px; text-align: left; }
+  .actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .actions a { flex: 1; min-width: 100px; text-align: center; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; }
   .btn-primary { background: #1f3a5f; color: white; }
   .btn-secondary { background: white; color: #1f3a5f; border: 1px solid #1f3a5f; }
-  .success-badge { color: #2e7d32; font-size: 13px; margin-top: 10px; }
 </style>
 </head>
 <body>
-<h1>✅ 辨識完成（共 {{ results|length }} 張）</h1>
-
-{% for r in results %}
-  {% if r.error %}
-  <div class="card err">
-    <div class="errmsg">⚠️ {{ r.filename }} 辨識失敗：{{ r.error }}</div>
-  </div>
+<div class="box">
+  <div class="icon">📥</div>
+  {% if saved_count > 0 %}
+  <div class="headline">已收到 {{ saved_count }} 張名片</div>
+  <div class="desc">AI 正在後台慢慢辨識，不用等在這頁——過一會兒回搜尋首頁，辨識完的名片會自動出現，還在處理中的會標示「處理中」。</div>
   {% else %}
-  <div class="card">
-    <div class="name">{{ r.fields.name or "（未辨識姓名）" }} {% if r.fields.title %}<span style="font-weight:400;color:#666;">・{{ r.fields.title }}</span>{% endif %}</div>
-    <div class="company">{{ r.fields.company or "" }}</div>
-    {% if r.fields.mobile %}<div class="row">📱 {{ r.fields.mobile }}</div>{% endif %}
-    {% if r.fields.landline %}<div class="row">☎️ {{ r.fields.landline }}</div>{% endif %}
-    {% if r.fields.email %}<div class="row">✉️ {{ r.fields.email }}</div>{% endif %}
-    {% if r.fields.line_id %}<div class="row">💬 LINE：{{ r.fields.line_id }}</div>{% endif %}
-    {% if r.fields.address %}<div class="row">📍 {{ r.fields.address }}</div>{% endif %}
-    <div>
-      {% if r.fields.category %}<span class="tag">{{ r.fields.category }}</span>{% endif %}
-      {% for k in (r.fields.keywords or []) %}<span class="tag">{{ k }}</span>{% endfor %}
-    </div>
-    {% if r.fields.confidence_notes %}<div class="review">⚠️ AI辨識沒把握：{{ r.fields.confidence_notes }}，已標記待人工複查</div>{% endif %}
-    <div class="success-badge">已收錄進名片資料庫</div>
-  </div>
+  <div class="headline">沒有成功收到任何名片</div>
+  <div class="desc">請確認選的是圖片檔（JPG／PNG／HEIC）</div>
   {% endif %}
-{% endfor %}
-
-<div class="actions">
-  <a class="btn-primary" href="/upload">再上傳一張</a>
-  <a class="btn-secondary" href="/chains">看產業鏈媒合</a>
-  <a class="btn-secondary" href="/">回搜尋首頁</a>
+  {% if skipped %}
+  <div class="skipped">以下 {{ skipped|length }} 個檔案格式不支援，已略過：{{ skipped|join("、") }}</div>
+  {% endif %}
+  <div class="actions">
+    <a class="btn-primary" href="/upload">再上傳一批</a>
+    <a class="btn-secondary" href="/">回搜尋首頁</a>
+  </div>
 </div>
 </body>
 </html>

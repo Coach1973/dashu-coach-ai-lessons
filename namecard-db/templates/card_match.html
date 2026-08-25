@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>產業鏈媒合｜{{ card.name or "名片" }}</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 620px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  .back { display: block; margin-bottom: 14px; color: #1f3a5f; text-decoration: none; font-size: 14px; }
+  .box { background: white; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .name { font-size: 20px; font-weight: 900; }
+  .company { color: #444; margin: 2px 0 4px; }
+  .chain-box { background: #f7f6f2; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .chain-name { font-weight: 900; color: #1f3a5f; font-size: 16px; margin-bottom: 2px; }
+  .chain-theme { color: #666; font-size: 13px; margin-bottom: 10px; }
+  .role-me { display: inline-block; background: #1f3a5f; color: white; font-size: 12px; padding: 3px 10px; border-radius: 10px; margin-bottom: 10px; }
+  .other-role { display: flex; justify-content: space-between; padding: 8px 10px; border-radius: 8px; margin-top: 6px; }
+  .other-role.filled { background: #eef7ee; }
+  .other-role.gap { background: #fdf3e7; }
+  .other-name { font-size: 13px; font-weight: 700; }
+  .other-status { font-size: 12px; }
+  .other-status.filled { color: #2e7d32; }
+  .other-status.gap { color: #b45309; }
+  .empty { color: #888; text-align: center; padding: 30px 0; font-size: 14px; }
+  .error { background: #fdecea; color: #b3261e; padding: 12px 14px; border-radius: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+<a class="back" href="/">← 回名片搜尋首頁</a>
+
+<div class="box">
+  <div class="name">{{ card.name or "（未辨識姓名）" }} {% if card.title %}<span style="font-weight:400;color:#666;">・{{ card.title }}</span>{% endif %}</div>
+  <div class="company">{{ card.company or "" }}</div>
+</div>
+
+{% if match_error %}
+<div class="error">⚠️ 媒合分析失敗：{{ match_error }}，可以重新整理這頁再試一次</div>
+{% elif not analyzed %}
+<div class="empty">這張名片還沒完成基本辨識，暫時無法分析產業鏈</div>
+{% elif not chains_detail %}
+<div class="empty">AI 判斷這張名片目前不適合放進任何產業鏈（可能專業描述太籠統），之後有更多相關名片進來可能會改變</div>
+{% else %}
+{% for item in chains_detail %}
+<div class="chain-box">
+  <div class="chain-name">🔗 {{ item.chain.chain_name }}</div>
+  <div class="chain-theme">{{ item.chain.core_theme or "" }}</div>
+  <div class="role-me">這張名片的角色：{{ item.chain.role_name }}</div>
+  {% for m in item.other_members %}
+  <div class="other-role {{ 'gap' if m.is_gap else 'filled' }}">
+    <div class="other-name">{{ m.role_name }}</div>
+    {% if m.is_gap %}
+    <div class="other-status gap">⏳ 待招募</div>
+    {% else %}
+    <div class="other-status filled">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endif %}
+
+</body>
+</html>

@@ -32,6 +32,58 @@ def already_processed(conn: sqlite3.Connection, image_filename: str) -> bool:
     return row is not None
 
 
+def insert_card_pending(conn: sqlite3.Connection, image_filename: str) -> int:
+    """上傳當下先佔位存檔名，欄位皆空、狀態pending，實際辨識交給背景worker慢慢處理"""
+    cur = conn.execute(
+        "INSERT INTO cards (image_filename, status) VALUES (?, 'pending')", (image_filename,)
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
+def list_pending_cards(conn: sqlite3.Connection, limit: int = 20):
+    return conn.execute(
+        "SELECT * FROM cards WHERE status = 'pending' ORDER BY id LIMIT ?", (limit,)
+    ).fetchall()
+
+
+def claim_for_processing(conn: sqlite3.Connection, card_id: int) -> bool:
+    """搶下這筆pending記錄要開始處理，避免多個背景worker並行搶同一筆。回傳是否搶成功。"""
+    cur = conn.execute(
+        "UPDATE cards SET status = 'processing' WHERE id = ? AND status = 'pending'", (card_id,)
+    )
+    conn.commit()
+    return cur.rowcount > 0
+
+
+def update_card_after_extraction(conn: sqlite3.Connection, card_id: int, fields: dict) -> None:
+    """背景worker辨識完成後，把pending/processing記錄補上實際內容"""
+    if "_error" in fields:
+        conn.execute(
+            "UPDATE cards SET status = 'failed', raw_response = ? WHERE id = ?",
+            (fields.get("_raw", ""), card_id),
+        )
+        conn.commit()
+        return
+    keywords = fields.get("keywords") or []
+    conn.execute(
+        """UPDATE cards SET name=?, title=?, company=?, mobile=?, landline=?, email=?,
+           line_id=?, website=?, address=?, tagline=?, category=?, standard_category=?,
+           keywords=?, confidence_notes=?, raw_response=?, status=? WHERE id=?""",
+        (
+            fields.get("name"), fields.get("title"), fields.get("company"),
+            fields.get("mobile"), fields.get("landline"), fields.get("email"),
+            fields.get("line_id"), fields.get("website"), fields.get("address"),
+            fields.get("tagline"), fields.get("category"), fields.get("standard_category"),
+            json.dumps(keywords, ensure_ascii=False), fields.get("confidence_notes"),
+            json.dumps(fields, ensure_ascii=False),
+            "needs_review" if fields.get("confidence_notes") else "ok",
+            card_id,
+        ),
+    )
+    conn.commit()
+
+
 def insert_card(conn: sqlite3.Connection, image_filename: str, fields: dict) -> int:
     if "_error" in fields:
         cur = conn.execute(
