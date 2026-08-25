@@ -32,7 +32,7 @@ transcript jsonl 再用 python3/jq 解析一次——同一份檔案被重複讀
 不做提早跳出，確保提醒不會因為前面有人擋下就消失。
 """
 
-import sys, json, re, os
+import sys, json, re, os, time
 from datetime import datetime
 
 HOME = os.path.expanduser("~")
@@ -600,6 +600,41 @@ if HTML_EDIT_IDX >= 0 and not CHROME_EVIDENCE_IDX > HTML_EDIT_IDX:
         "  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」\n"
         "  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事\n" + BAR + "\n")
     BLOCK = True
+
+# ════════════════════════════════════════════════
+# K. 記憶寫了但沒進索引（提醒，不擋）—— 2026-08-25 賈維斯體檢新增
+#    守則#01「記不住，肯定就用不出來」：MEMORY.md 是唯一會載進 context 的索引，
+#    記憶檔沒收錄進去 = 下次 session 根本讀不到 = 等於沒寫。
+#    只看最近 24 小時碰過的檔案，避免每次噴出一長串舊帳。
+# ════════════════════════════════════════════════
+BRAIN_DIR = os.path.expanduser("~/.openclaw/workspace/claude-brain")
+try:
+    _idx_path = os.path.join(BRAIN_DIR, "MEMORY.md")
+    with open(_idx_path, encoding="utf-8") as f:
+        _idx_text = f.read()
+    _linked = set(re.findall(r"\]\(([^)]+\.md)\)", _idx_text))
+    _cutoff = time.time() - 86400
+    _missing = []
+    for _fn in os.listdir(BRAIN_DIR):
+        if not _fn.endswith(".md") or _fn == "MEMORY.md" or _fn.startswith("daily_"):
+            continue
+        if _fn in _linked:
+            continue
+        if os.path.getmtime(os.path.join(BRAIN_DIR, _fn)) >= _cutoff:
+            _missing.append(_fn)
+    if _missing:
+        MESSAGES.append(
+            "\n🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）\n" + BAR + "\n"
+            "這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：\n" +
+            "".join("  • %s\n" % m for m in sorted(_missing)) +
+            "\n📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」\n"
+            "  「記不住，肯定就用不出來。」\n\n"
+            "⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。\n"
+            "  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。\n\n"
+            "✅ 立刻補上（一行就好）：\n"
+            "  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它\n" + BAR + "\n")
+except Exception:
+    pass
 
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2

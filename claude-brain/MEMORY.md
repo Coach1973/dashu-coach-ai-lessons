@@ -1,5 +1,14 @@
 # Memory Index
 
+- [🔴🔴🔴 ezPay開票SOP六步驟(教練說「開票」自動觸發)：連線裝置isLocal:true→欄位ID→含稅核對→送出→查證(2026-08-24)](feedback_ezpay_invoice_sop.md) — 教練指定「像網頁推SOP一樣」，開票前先讀這份不用重找線索
+- [🔴🔴 不要把自己發現、教練沒問的事丟出來浪費釐清時間(2026-08-24)](feedback_dont_surface_own_tangential_findings.md) — 除非能精簡到一句話且真的重要，否則自己消化
+- [🔧 ezPay發票查詢頁批次爬取歷史資料的JS技巧(分季查詢/分頁/alert攔截)(2026-08-18)](reference_ezpay_bulk_invoice_scraping_procedure.md) — 查重複/對帳要撈大量歷史發票時用這套，2026-08-17實測可動
+- [🔴🔴 Mac跟聯想同時開Claude瀏覽器擴充功能會搶線，自動化連到對方機器(2026-08-17)](feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md) — 教練親自抓出根因，跟isLocal:true鐵律配套看
+- [🔧 claude-in-chrome操作密碼欄位可能被其他擴充功能浮層卡死(2026-08-08)](reference_claude_in_chrome_password_field_extension_conflict.md) — 改用Flask test_client等效驗證+誠實告知視覺驗證缺口
+- [🔴 教練給外部網址當參考時，動手前先實際打開看真實結構(2026-08-04)](feedback_verify_reference_url_before_building.md) — 不要憑域名或印象猜測就開始做
+- [🔧 mentor100後台可自行複製任一導師的修改連結(2026-08-02)](project_mentor100_edit_link_selfservice_2026-08-02.md) — 教練要轉發編輯連結給講師時不用再問AI查資料庫
+- [🔴 OpenClaw升級到2026.7.1-2卡在node版本，本機homebrew node 25.6.1不在支援區間(2026-08-02)](reference_openclaw_node_version_upgrade_blocker.md) — 升級前必須先處理node版本，跟6.34維護版升級是兩回事
+- [🔧 結繩領導學工作坊即時戰報系統上線rpl-workshop.bymyway.com(2026-07-26)](project_jiesheng_report_launch_2026-07-26.md) — 帳號RPL(大寫)，密碼公司統編，教練已自行操作驗證
 - [🔧 BNI入會費逐年調漲(2025:36000→2026:39800，續約26800)+分會異動備註對不上不代表資料錯誤(2026-08-24)](reference_bni_membership_fee_history_and_chapter_transfer.md) — 查ezPay舊發票查重複時金額/分會不一致先判斷調漲或轉會，不要當異常
 - [🔴🔴 ezPay發票工作08-16曾轉聯想，08-18聯想操作卡住已轉回Mac，現況查詢+開立全由Mac主責(2026-08-24更正)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 聯想開立第3張卡在原生彈窗凍結，教練改裁Mac，之後Mac全包不是任務型分工
 - [🎯🎯🎯 四支自動化工具上線：報名統計/場次巡檢/發票對帳/小龍蝦派工軍師(2026-08-24)](project_autonomy_toolkit_2026-08-24.md) — 教練問人數/資料對不對/發票漏沒漏，直接跑腳本別手算
@@ -17,7 +26,6 @@
 - [🔴 ezPay開票送出前務必多確認再送出，教練親口交代(2026-08-18)](feedback_ezpay_confirm_before_submit_2026-08-18.md) — 逐項核對統編/金額/Email/自訂編號，跟「送出後查證」互補不重複
 - [🔴🔴🔴 建網站自己build+測直接deploy --prod，跳過網頁推SOP的教練確認關卡(2026-08-18)](feedback_skipped_web_push_sop_2026-08-18.md) — 任何要推正式環境的任務，動手前先查有沒有SOP+給教練看預覽+等親口說「推」
 - [🎯🎯 BNI培訓紀錄總資料庫：公開版GitHub Pages+私有開票後台雙軌上線(2026-08-17)](project_bni_training_records_db_2026-08-17.md) — 公開只放姓名/分會/出席；統編/載具/金額進私有repo後台，勿混淆
-- [🔴🔴 ezPay電子發票開立作業教練裁示轉交聯想機器，Mac不再主責(2026-08-16)](project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md) — 登入狀態per機器跟BNI Connect CMS同款限制，聯想需重新登入
 - [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md) — 單價數量欄位programmatic填值常不觸發計算；表單清空不代表真的送出成功
 - [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md) — 已在真實對話驗證接線員觸發成功；新增專案記得建卡+加路由
 - [🔴🔴🔴 賈維斯目標=結果導向委派+記得住+自動串連，不用重複交代(2026-08-25擴充)](feedback_jarvis_outcome_delegation_style.md) — 狀態型記憶要附驗證法；同主題多次追問要主動串連前文
