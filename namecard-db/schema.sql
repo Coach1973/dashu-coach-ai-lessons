@@ -43,12 +43,16 @@ CREATE TABLE IF NOT EXISTS industry_chains (
 
 -- 名片與產業鏈的關聯：這張名片適合放進哪條產業鏈的哪個角色位置
 -- card_id為NULL代表這個角色位置目前是空缺(待招募)
+-- 待招募細分兩種意義不同的狀態(教練親定)：已是BNI會員(連結度好，只是還沒連結上
+-- 具體名片)、確定非BNI會員(真正需要對外招募的目標)，bni_status區分這兩種
 CREATE TABLE IF NOT EXISTS chain_members (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     chain_id INTEGER NOT NULL REFERENCES industry_chains(id),
     card_id INTEGER REFERENCES cards(id),
     role_name TEXT NOT NULL,
     is_gap INTEGER DEFAULT 0,
+    bni_status TEXT DEFAULT 'unknown',  -- unknown / bni_member / not_bni，只對待招募缺口有意義
+    bni_note TEXT,                       -- 選填備註，如「真誠分會-王小明」
     match_reason TEXT,
     created_at TEXT DEFAULT (datetime('now'))
 );

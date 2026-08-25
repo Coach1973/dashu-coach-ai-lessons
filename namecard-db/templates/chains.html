@@ -12,13 +12,20 @@
   .chain-name { font-size: 18px; font-weight: 900; color: #1f3a5f; margin-bottom: 4px; }
   .chain-theme { color: #666; font-size: 13px; margin-bottom: 14px; line-height: 1.6; }
   .role-list { display: flex; flex-direction: column; gap: 8px; }
-  .role { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #f7f6f2; }
+  .role { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #f7f6f2; flex-wrap: wrap; gap: 6px; }
   .role.filled { background: #eef7ee; }
   .role.gap { background: #fdf3e7; }
+  .role.gap.bni-member { background: #eaf2fb; }
+  .role.gap.not-bni { background: #fdecea; }
   .role-name { font-weight: 700; font-size: 14px; }
   .role-status { font-size: 13px; }
   .role-status.filled { color: #2e7d32; }
   .role-status.gap { color: #b45309; }
+  .role-status.bni-member { color: #1f5fa8; }
+  .role-status.not-bni { color: #b3261e; }
+  .bni-controls { display: flex; gap: 4px; }
+  .bni-controls button { padding: 3px 8px; font-size: 11px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; }
+  .bni-controls button.active { border-color: currentColor; font-weight: 700; }
   .empty { color: #888; text-align: center; padding: 60px 0; }
   .nav { display: flex; gap: 10px; margin-bottom: 18px; }
   .nav a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; background: white; border: 1px solid #ddd; color: #1f3a5f; text-decoration: none; font-size: 14px; font-weight: 700; }
@@ -43,10 +50,35 @@
   <div class="chain-theme">{{ c.chain.core_theme or "" }}</div>
   <div class="role-list">
     {% for m in c.members %}
-    <div class="role {{ 'gap' if m.is_gap else 'filled' }}">
+    {% set bni = m.bni_status or 'unknown' %}
+    <div class="role {{ 'gap' if m.is_gap else 'filled' }} {{ 'bni-member' if (m.is_gap and bni=='bni_member') else '' }} {{ 'not-bni' if (m.is_gap and bni=='not_bni') else '' }}">
       <div class="role-name">{{ m.role_name }}</div>
       {% if m.is_gap %}
-      <div class="role-status gap">⏳ 待招募</div>
+        {% if bni == 'bni_member' %}
+        <div class="role-status bni-member">🔵 已是BNI會員{% if m.bni_note %}・{{ m.bni_note }}{% endif %}</div>
+        {% elif bni == 'not_bni' %}
+        <div class="role-status not-bni">🎯 非BNI會員(招募目標)</div>
+        {% else %}
+        <div class="role-status gap">⏳ 待招募（未確認）</div>
+        {% endif %}
+        {% if logged_in %}
+        <div class="bni-controls">
+          <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+            <input type="hidden" name="bni_status" value="bni_member">
+            <button type="submit" class="{{ 'active' if bni=='bni_member' else '' }}" style="color:#1f5fa8;">🔵已是會員</button>
+          </form>
+          <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+            <input type="hidden" name="bni_status" value="not_bni">
+            <button type="submit" class="{{ 'active' if bni=='not_bni' else '' }}" style="color:#b3261e;">🎯非會員</button>
+          </form>
+          {% if bni != 'unknown' %}
+          <form method="POST" action="/chain_member/{{ m.member_id }}/bni_status" style="display:inline;">
+            <input type="hidden" name="bni_status" value="unknown">
+            <button type="submit">重置</button>
+          </form>
+          {% endif %}
+        </div>
+        {% endif %}
       {% else %}
       <div class="role-status filled">✅ {{ m.card_name or "（未辨識姓名）" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
       {% endif %}

@@ -21,6 +21,11 @@ def init_db() -> None:
         conn.execute("ALTER TABLE cards ADD COLUMN extra_images TEXT")
     if "standard_category" not in existing_cols:
         conn.execute("ALTER TABLE cards ADD COLUMN standard_category TEXT")
+    chain_member_cols = {row["name"] for row in conn.execute("PRAGMA table_info(chain_members)")}
+    if "bni_status" not in chain_member_cols:
+        conn.execute("ALTER TABLE chain_members ADD COLUMN bni_status TEXT DEFAULT 'unknown'")
+    if "bni_note" not in chain_member_cols:
+        conn.execute("ALTER TABLE chain_members ADD COLUMN bni_note TEXT")
     conn.commit()
     conn.close()
 
@@ -198,6 +203,16 @@ def list_chains_with_members(conn: sqlite3.Connection):
         ).fetchall()
         result.append({"chain": chain, "members": members})
     return result
+
+
+def update_gap_bni_status(conn: sqlite3.Connection, member_id: int, bni_status: str, bni_note: str = "") -> None:
+    """標記待招募缺口的BNI會員狀態：unknown(未確認)/bni_member(已是BNI會員)/
+    not_bni(確定非BNI會員，真正的招募目標)。只對is_gap=1的缺口有意義。"""
+    conn.execute(
+        "UPDATE chain_members SET bni_status = ?, bni_note = ? WHERE id = ? AND is_gap = 1",
+        (bni_status, bni_note or None, member_id),
+    )
+    conn.commit()
 
 
 def card_already_in_chain(conn: sqlite3.Connection, chain_id: int, card_id: int) -> bool:

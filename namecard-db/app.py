@@ -146,7 +146,8 @@ def card_match(card_id):
     chains_detail = []
     for row in existing:
         members = conn.execute(
-            """SELECT cm.role_name, cm.is_gap, c.name AS card_name, c.company AS card_company
+            """SELECT cm.id AS member_id, cm.role_name, cm.is_gap, cm.bni_status, cm.bni_note,
+                      c.name AS card_name, c.company AS card_company
                FROM chain_members cm LEFT JOIN cards c ON c.id = cm.card_id
                WHERE cm.chain_id = ? AND cm.card_id IS NOT ? """,
             (row["chain_id"], card_id),
@@ -157,6 +158,7 @@ def card_match(card_id):
     return render_template(
         "card_match.html", card=card, chains_detail=chains_detail, match_error=match_error,
         analyzed=bool(existing) or card["status"] not in ("ok", "needs_review"),
+        logged_in=bool(session.get("team_username")),
     )
 
 
@@ -180,7 +182,7 @@ def chains_page():
     conn = db.get_conn()
     chains = db.list_chains_with_members(conn)
     conn.close()
-    return render_template("chains.html", chains=chains)
+    return render_template("chains.html", chains=chains, logged_in=bool(session.get("team_username")))
 
 
 def team_login_required(view):
@@ -190,6 +192,19 @@ def team_login_required(view):
             return redirect(url_for("team_login", next=request.path))
         return view(*args, **kwargs)
     return wrapped
+
+
+@app.route("/chain_member/<int:member_id>/bni_status", methods=["POST"])
+@team_login_required
+def chain_member_bni_status(member_id):
+    bni_status = request.form.get("bni_status", "unknown")
+    bni_note = (request.form.get("bni_note") or "").strip()
+    if bni_status not in ("unknown", "bni_member", "not_bni"):
+        bni_status = "unknown"
+    conn = db.get_conn()
+    db.update_gap_bni_status(conn, member_id, bni_status, bni_note)
+    conn.close()
+    return redirect(request.referrer or url_for("chains_page"))
 
 
 @app.route("/card/<int:card_id>/delete", methods=["POST"])
