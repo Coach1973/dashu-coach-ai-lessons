@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-26 00:15:33**
+> **最後同步：2026-08-26 00:55:47**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復** | ✅2026-08-26聯想完成並實測 | 教練質疑「我每次都講總結上傳，怎麼可能沒紀錄」，查證屬實：`summary_upload_trigger.sh`靠`/usr/bin/jq`解析stdin，聯想這台機器沒裝jq，指令找不到→PROMPT變空字串→關鍵字比對永遠比對不到→整支hook靜默不觸發，不報錯教練也看不出異狀。改寫`scripts/summary_upload_trigger.ps1`(PowerShell原生`ConvertFrom-Json`，不依賴jq)，7情境模擬測試全過已註冊進`~/.claude/settings.json`。同場也查證另兩支相關機制：`distill_and_push_lenovo.ps1`從未被註冊過（非壞掉，是從沒接上）、Windows Task Scheduler的`ClaudeMemorySync`任務也停用超過2個月。詳見試金石案例64。 |
+| ✅ | **ezPay發票工作歸屬記憶更正+Mac Stop hook狀態跨機查證回信** | ✅2026-08-26聯想完成 | ①`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`舊記憶停在「聯想負責」，實際08-18已因聯想操作卡住(原生彈窗凍結)轉回Mac主責，教練追問後才發現記憶沒同步更新，已修正並跟Mac同時間做的類似修正(commit`de76222c`)合併解衝突 ②回覆Mac凌晨來信，查證確認`distill_and_push_lenovo.ps1`從未接進聯想`settings.json`的Stop hook，回信已放進`cross-agent/inbox/mac/`。 |
 | 🟡 | **孔大哥/佩佩老師AI人設備份(kong/peipei)本地已commit，但無法推上雲端** | ⏳待軍師找時間動手 | 2026-08-25發現kong/peipei各自是獨立git repo，本地65+個檔案異動已commit（不會因硬碟壞掉遺失），但kong的遠端跟`workspace`主repo共用同一個`mac-openclaw-workflows`卻用不同branch名稱造成推送被拒(fetch first)，peipei完全沒設定遠端。需要決定：開新的專屬repo還是換一個不衝突的branch名稱，才能真正做到雲端備份，目前只是本機安全、非離線安全。 |
 | 🟡 | **VPS(43.245.60.200)這邊的git repo也缺.gitignore，誤commit了50MB瀏覽器快取檔案** | ⏳待軍師找時間動手 | 2026-08-25修復VPS 35天備份卡住問題時發現，跟Mac今早發現的同款問題（缺.gitignore導致執行期雜訊混進版控）。這次先讓備份救回成功優先，.gitignore補強留待下次順手處理。 |
 | 🟡 | **stop_rules_master.py規則D（輪詢偵測）regex覆蓋面不夠，這次同義改寫繞過去** | ⏳待軍師找時間動手 | 2026-08-24第6次「定時輪詢vs事件觸發」教訓時發現：這台Mac本來就有防呆機關會攔「每.*分鐘.*檢查」「cron.*輪詢」這類措辭，但這次我寫「每5分鐘掃一次」「每15分鐘查一次」全部同義改寫繞過，機關形同虛設。需要把`scripts/stop_rules_master.py`規則D的regex擴充成涵蓋更多同義動詞（掃/查/讀取/巡邏/處理），詳見[[feedback_event_driven_not_polling_pattern]]2026-08-24第6次發作段落。 |
@@ -293,6 +295,37 @@
 
 ## 🔑 本場commit（namecard-db，依時間序）
 `73d5f902b`(戰報系統)／`2a1d0b052`(公開上傳)／`7eed628ba`(產業鏈媒合初版)／`20048ed43`(非同步上傳+媒合按鈕+照片本機化)／`f13d50e24`(產業鏈至少8角色+編輯刪除)／`e005b4f41`(BNI標記改掛名片本身)／`82a099280`(HEIC轉檔+救回遺失圖片)／`d7cde90a0`(多名片自動裁切)
+
+---
+
+# 軍師接力棒 · 2026-08-26 v134（聯想Windows Sonnet 5，機制健檢日：Windows當機根因+ezPay記憶更正+跨機Stop hook查證+總結hook缺jq修復）
+
+> 建立時間：2026-08-26 約01:00 ~ 01:50（台灣時間）
+> 上一棒：v133（Mac桌面版，同日稍早）
+> 本棒主軸：**教練「開工」後一連串追問，逐一揭開聯想這台機器上好幾個「看起來有但其實沒真的在運作」的機制，每一個都查到底修到好，不是表面回應。**
+
+## 🎯 本場戰果
+
+### 1. Windows今早不正常關機根因查明
+教練問「剛才當機的原因」，查Windows事件記錄確認**不是藍屏**（無minidump），是一顆外接USB讀卡機（`Harddisk3`，跟另一顆磁碟識別碼重複，KB2983588已知問題）從04:29到11:07反覆丟出控制器錯誤，最終在11:15拖垮整台機器被迫不正常關機重啟。C/D/E三顆主要SSD狀態皆OK，`E:\Claude-Data`資料無風險。建議教練檢查/更換該外接裝置。
+
+### 2. ezPay發票工作歸屬記憶更正（撞上Mac同時間做的類似修正）
+查證教練「查詢沒問題、開立會卡住」的印象基本正確：08-16原本Mac驗證完交給聯想，08-18聯想操作到第3張卡在ezPay網站原生彈窗、分頁反覆凍結，教練評估token成本後改回Mac，此後查詢+開立都是Mac在做。修正舊記憶`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`時發現Mac同一天也在修同一份記憶（commit`de76222c`），rebase撞出conflict，已合併兩邊版本（保留Mac的作廢標記+補上聯想查到的完整根因細節）解決。
+
+### 3. 跨機信箱：回覆Mac凌晨來信，查證Stop hook狀態
+Mac軍師來信問`memory/verbatim/lenovo/`為何從7/8後再無新檔案。查證`~/.claude/settings.json`確認`distill_and_push_lenovo.ps1`從未被註冊進Stop hook（不是介面問題，是根本沒接線），另查到Windows Task Scheduler裡一個路徑完全不同、平行設計的`ClaudeMemorySync`任務也停用超過2個月。已寫回信放進`cross-agent/inbox/mac/`，原信移至`outbox/2026-08/`。
+
+### 4. 🔴🔴 「總結」收工hook缺jq指令，靜默失效近一個月（本場最重要發現）
+教練追問「我每次都講總結上傳，怎麼可能沒紀錄」，這句反問才是真正抓到問題的關鍵。查證`summary_upload_trigger.sh`（2026-08-03定案的「總結」收工暗號機制，跟「開工」對稱）在聯想這台機器上**從未真正生效過**——不是沒註冊，是腳本執行時因為`/usr/bin/jq`不存在而靜默失敗（不報錯、Claude Code看不出異狀）。改寫`scripts/summary_upload_trigger.ps1`（PowerShell原生JSON解析），7情境模擬測試全過（4觸發+3防呆），已正式註冊生效。**教訓寫入試金石案例64**：教練基於自身行為的直覺質疑，往往比AI自己回頭排查更快找到問題方向；任何從Mac(.sh)搬到聯想的hook，動手前要先確認腳本依賴的外部指令在這台機器上真的存在。
+
+## 📋 下一場開工先做
+1. **確認「總結」hook真的在跑**：下次教練說「總結」，應該會看到自動注入的收工清單提示，若沒看到要再查
+2. 那台外接USB讀卡機是否已排除/更換，避免同款當機再發生
+3. Mac回信裡提議的：`distill_and_push_lenovo.ps1`要不要正式接進Stop hook、Task Scheduler的`ClaudeMemorySync`要不要處理，等教練或Mac裁示
+4. 承接舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題、OpenClaw 6.34升級教練決定
+
+## 🔑 本場commit
+`8f7c9dc6`(ezPay記憶合併)／`620a99ac`(回信Mac)／`30a49989`(總結hook PowerShell版+註冊)／`1c72e605`(claude-brain記憶：jq缺失修復記錄)
 
 
 ---
