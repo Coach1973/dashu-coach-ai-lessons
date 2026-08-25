@@ -49,5 +49,33 @@ if [ -x "$WS/scripts/vps_polling_healthcheck.sh" ]; then
     say "VPS 健康檢查完成"
 fi
 
+# ── 4. 【教練 2026-08-25 親口要求】小龍蝦對話快滿了要「事前」提醒 ──
+#    教練原話：「我們很早以前就跟小龍蝦提醒過，如果額度要快滿了它要主動提醒我，
+#              其實我從來沒有聽到小龍蝦提醒過我。」
+#    為什麼舊機制沒響：既有的 context-overflow-guard hook 用「對話輪次」計數（20/30/38 輪），
+#    但真正觸發搶救的是「檔案大小超過 5MB」——兩把不同的尺。
+#    一輪如果貼了大量內容，檔案可能還沒到 38 輪就先爆，預警根本來不及響。
+#    解法：預警改用跟搶救同一把尺（檔案大小），到 70% 就先講，讓教練有時間自己收尾。
+LIMIT=5000000          # 跟 auto-fix-session-lock.sh 的 JSONL_SIZE_LIMIT 一致
+WARN=$(( LIMIT * 70 / 100 ))
+NEWEST=$(ls -t /Users/bymyway/.openclaw/agents/main/sessions/*.jsonl 2>/dev/null | head -1)
+if [ -n "$NEWEST" ] && [ -f "$NEWEST" ]; then
+    SZ=$(stat -f%z "$NEWEST" 2>/dev/null || echo 0)
+    PCT=$(( SZ * 100 / LIMIT ))
+    say "小龍蝦對話用量：${PCT}%（$(( SZ / 1048576 ))MB / $(( LIMIT / 1048576 ))MB）"
+    if [ "$SZ" -ge "$WARN" ]; then
+        # 節流 4 小時：避免同一個快滿的對話每小時都吵一次
+        "$WS/scripts/notify_coach.sh" "🦞 小龍蝦的對話快滿了（已用 ${PCT}%）
+
+目前這個對話累積到 $(( SZ / 1048576 ))MB，上限是 $(( LIMIT / 1048576 ))MB。
+
+滿了我會自動存檔重開、不會掉資料，但那當下的對話脈絡會斷。
+如果您手上這件事快談完了，收個尾再繼續會比較順。
+
+（不用回覆，讓您心裡有底而已）" 14400 lobster_ctx_warn
+        say "已發出對話快滿預警（${PCT}%）"
+    fi
+fi
+
 say "───── 巡檢結束 ─────"
 exit 0
