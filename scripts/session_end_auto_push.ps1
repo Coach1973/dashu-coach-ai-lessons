@@ -76,11 +76,38 @@ try {
     & git commit -m $commitMsg 2>$null | Out-Null
     if ($LASTEXITCODE -eq 0) {
         $commitHash = (& git rev-parse --short HEAD 2>$null).Trim()
+
+        # 2026-08-26 聯想補：push 前一定要先同步遠端。
+        # 原本 commit 完直接 push，只要 Mac 在這期間推過東西就會被 "fetch first" 拒絕，
+        # 而 Mac 每 15 分鐘就自動 commit 一次接力棒 → 聯想的 push 幾乎必然失敗，
+        # 東西永遠留在本機、其他機器看不到。這是「三台各自為政」四層根因的最後一層。
+        # commit 之後工作區還可能有未追蹤檔（含本腳本稍後要寫的 HEARTBEAT），先 stash 再 rebase。
+        $stashed = $false
+        if (& git status --porcelain 2>$null) {
+            & git stash push -u -m "auto-push-stash-$(Get-Date -Format yyyyMMddHHmmss)" --quiet 2>$null | Out-Null
+            if ($LASTEXITCODE -eq 0) { $stashed = $true }
+        }
+
+        & git pull --rebase --quiet 2>$null | Out-Null
+        $pullOk = ($LASTEXITCODE -eq 0)
+
         & git push origin main 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
-            $pushResult = "✅ pushed $commitHash"
+        $pushOk = ($LASTEXITCODE -eq 0)
+        $commitHash = (& git rev-parse --short HEAD 2>$null).Trim()
+
+        $stashNote = ""
+        if ($stashed) {
+            & git stash pop --quiet 2>$null | Out-Null
+            # pop 失敗不刪 stash，改動仍在 git stash list 裡（教練鐵律：珍貴資料只搬不刪）
+            if ($LASTEXITCODE -ne 0) { $stashNote = "（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）" }
+        }
+
+        if ($pushOk) {
+            $pushResult = "✅ pushed $commitHash$stashNote"
+        } elseif (-not $pullOk) {
+            $pushResult = "⚠️ commit $commitHash 本機留底，pull --rebase 失敗（衝突需手動處理）$stashNote"
         } else {
-            $pushResult = "⚠️ commit $commitHash 本機留底，push 失敗（離線/credential）"
+            $pushResult = "⚠️ commit $commitHash 本機留底，push 失敗（離線/credential）$stashNote"
         }
     } else {
         $pushResult = "ℹ️ 沒實質變動"

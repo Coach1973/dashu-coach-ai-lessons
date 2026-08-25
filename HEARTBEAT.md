@@ -151,6 +151,10 @@
 - 雲端狀態：✅ 已拉雲端最新（HEAD: b53f9998，本地改動已 stash/pop）
 - Session: fix-test-1
 
+## 🚀 Session-End 雲端同步 2026-08-26 01:31（Windows）
+- ⚠️ commit b8c294dc 本機留底，push 失敗（離線/credential）
+- 同步路徑：HEARTBEAT.md, scripts/
+
 ## 🩺 軍師 Hook 自檢 2026-08-26 01:32（Mac v2 六步驟注入）
 - ✅ Hook 觸發 + 六步驟內容注入完成
 - 觸發詞：聯想電腦開工，台灣時間 2026-0
