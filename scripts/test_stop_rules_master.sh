@@ -4,6 +4,18 @@
 # 做法：造出各種假 transcript（乾淨/搬運工/缺hash/簡體字/輪詢/猜測/UTC時間/HTML未跳Chrome），
 #       同一份輸入分別餵給「原本 10 支」跟「合併版」，比對最終是否擋下（exit 2）。
 #       HOME 導向暫存目錄，避免測試汙染真實的違規記錄檔。
+#
+# 🔴 2026-08-27 發現的重大限制（案例：rule07輪詢偵測瞎眼超過一個月才被抓到）：
+#   下面 OLD_SCRIPTS 這 10 支「原版」全部呼叫 `lib/stop_ctx.sh`，但這支共用
+#   快取層已經在 2026-08-12（跟本測試檔同一天）被刪除（合併進 stop_rules_master.py
+#   後，原本的快取檔案被認為多餘而清掉）。結果這 10 支原版腳本從那天起呼叫
+#   一定失敗（`|| exit 0`），永遠回報「沒擋下」——也就是說，這份測試從建立當天
+#   起，「原版」那一欄的比對基準就已經失效，「不一致」的紅字只代表「合併版有動作、
+#   原版打不開」，不是真的行為分歧。這個測試本身也是本次調查揪出的「監控機制看
+#   似正常實則失效」案例之一，記錄在試金石。
+#   ✅ 因此：run_case()（老比對邏輯）的結果僅供參考，不能當作「合併版是否正確」
+#   的唯一依據；真正的正確性判斷請看下面新增、直接斷言合併版 exit code 的
+#   run_case_direct()。
 set -uo pipefail
 
 SCRIPTS="/Users/bymyway/.openclaw/workspace/scripts"
@@ -55,12 +67,13 @@ print(json.dumps({'session_id':sys.argv[1],'transcript_path':sys.argv[2],'stop_h
   printf '%s' "$payload2" | HOME="$TESTHOME" bash "$SCRIPTS/stop_rules_master.sh" >/dev/null 2>&1 || rc=$?
   [[ "$rc" -eq 2 ]] && new_blocked=1
 
+  # 🔴 2026-08-27：old_blocked 這個基準已知失效（見檔頭說明，10支原版都依賴
+  # 已刪除的 lib/stop_ctx.sh，永遠回報 0）。這裡只印出來給人看，不計入
+  # PASS/FAIL、不影響本檔的 exit code——真正的正確性判斷交給 run_case_direct()。
   if [[ "$old_blocked" == "$new_blocked" ]]; then
     printf '  ✅ %-28s 原版擋下=%s 合併版擋下=%s（一致）\n' "$name" "$old_blocked" "$new_blocked"
-    PASS=$((PASS+1))
   else
-    printf '  ❌ %-28s 原版擋下=%s 合併版擋下=%s（不一致！）\n' "$name" "$old_blocked" "$new_blocked"
-    FAIL=$((FAIL+1))
+    printf '  ⚠️  %-28s 原版擋下=%s 合併版擋下=%s（原版基準已失效，僅供參考）\n' "$name" "$old_blocked" "$new_blocked"
   fi
 }
 
@@ -77,6 +90,70 @@ with open(path,'w') as f:
 PY
   echo "$f"
 }
+
+# 直接斷言合併版（stop_rules_master.py）的 exit code，不依賴已失效的舊版比對。
+run_case_direct() {
+  local name="$1" transcript="$2" expect_blocked="$3"
+  local sid="testdirect-$(echo "$name" | tr -cd 'a-zA-Z0-9')"
+  local payload
+  payload=$(python3 -c "
+import json,sys
+print(json.dumps({'session_id':sys.argv[1],'transcript_path':sys.argv[2],'stop_hook_active':False}))
+" "$sid" "$transcript")
+  local rc=0
+  printf '%s' "$payload" | HOME="$TESTHOME" python3 "$SCRIPTS/stop_rules_master.py" >/dev/null 2>&1 || rc=$?
+  local got=0
+  [[ "$rc" -eq 2 ]] && got=1
+  if [[ "$got" == "$expect_blocked" ]]; then
+    printf '  ✅ %-28s 預期擋下=%s 實際擋下=%s\n' "$name" "$expect_blocked" "$got"
+    PASS=$((PASS+1))
+  else
+    printf '  ❌ %-28s 預期擋下=%s 實際擋下=%s（不符！）\n' "$name" "$expect_blocked" "$got"
+    FAIL=$((FAIL+1))
+  fi
+}
+
+# 🔴 造出「真實對話會有的樣子」：一個回合裡違規話講在前面，後面還接了好幾次
+# 工具呼叫（每次工具結果在 transcript 裡都是 type=="user"）。這正是
+# 2026-08-27 抓到的真根因：舊邏輯一遇到 type=="user" 就当成「回合邊界」，
+# 但工具回音也是 type=="user"，導致往回掃描被最近一次工具呼叫擋住，
+# 掃不到更早之前（同一回合）講的違規內容。
+mk_multitool() {  # mk_multitool <檔名> <早期違規文字> <工具呼叫次數> <最後文字（無違規）>
+  local f="$FIXDIR/$1.jsonl"
+  python3 - "$f" "$2" "$3" "$4" <<'PY'
+import json, sys
+path, early_text, n_tools, final_text = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4]
+lines = []
+lines.append({'type':'user','timestamp':'2026-08-27T00:00:00.000Z',
+               'message':{'role':'user','content':'幫我看一下這個問題'}})
+lines.append({'type':'assistant','timestamp':'2026-08-27T00:00:01.000Z',
+              'message':{'content':[{'type':'text','text': early_text}]}})
+for i in range(n_tools):
+    lines.append({'type':'assistant','timestamp':f'2026-08-27T00:00:{2+i:02d}.000Z',
+                  'message':{'content':[{'type':'tool_use','name':'Bash',
+                  'input':{'command': f'echo step{i}'}}]}})
+    # 工具結果：type=="user"，但 content 只有 tool_result 區塊、沒有 text 區塊
+    # ——這才是真實 transcript 的樣子，也是舊邏輯誤判成真人發話的地方。
+    lines.append({'type':'user','timestamp':f'2026-08-27T00:00:{2+i:02d}.500Z',
+                  'message':{'role':'user','content':[
+                      {'type':'tool_result','tool_use_id':f'toolu_{i}','content':f'step{i} ok'}]}})
+lines.append({'type':'assistant','timestamp':'2026-08-27T00:00:99.000Z',
+              'message':{'content':[{'type':'text','text': final_text}]}})
+with open(path, 'w') as f:
+    for l in lines:
+        f.write(json.dumps(l, ensure_ascii=False) + '\n')
+PY
+  echo "$f"
+}
+
+echo ""
+echo "════ 🔴 2026-08-27 迴歸測試：違規話講在多次工具呼叫之前，仍須被抓到 ════"
+run_case_direct "回合前段違規+5次工具呼叫後結束" \
+  "$(mk_multitool multitool_violation '這次我打算把檢查頻率從每天一次改成每3分鐘檢查一次，這樣比較保險。' 5 '好了，處理完畢，這是結果摘要。')" \
+  1
+run_case_direct "回合前段乾淨+5次工具呼叫(對照組不應誤判)" \
+  "$(mk_multitool multitool_clean '我先看一下目前的狀態，再決定怎麼處理。' 5 '好了，處理完畢，這是結果摘要。')" \
+  0
 
 echo "════ Stop hook 合併版 vs 原版 行為比對 ════"
 

@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: e800e341-3d04-4ed4-bf2a-f43e799bb9e4
-  modified: 2026-08-24T07:23:26.796Z
+  modified: 2026-08-26T18:13:34.914Z
 ---
 
 2026-07-02，軍師設計「陌生用戶自動開通」機制時，第一版方案是「VPS主機層每分鐘跑一次cron檢查旗標檔」。教練直接點破：「每分鐘看一次，一天要看幾次？不能用觸發機制嗎？」
@@ -110,4 +110,27 @@ assistant輸出裡「每.*分鐘.*檢查」「cron.*輪詢」等字樣並擋下�
    `每.*分鐘.*(掃|查|讀取|巡邏|跑|處理)一?次`這類更寬的動詞組），不要只靠這個機關
    單一道防線，自己回答前也要先對照這篇記憶檔的關鍵詞主動检查。
 
-Related: [[project_vps_multiagent_rollout_2026-07-02]]、[[feedback_lock_must_be_hook_not_optin]]
+Related: [[project_vps_multiagent_rollout_2026-07-02]]、[[feedback_lock_must_be_hook_not_optin]]、[[reference_stop_hook_tool_result_boundary_bug_2026-08-27]]
+
+## 2026-08-27 第7次發作：RustDesk記憶體監控腳本，且揪出比第6次更根本的機關失效原因
+
+修RustDesk記憶體監控腳本時，又自己講出「把排程頻率從每天一次改成每10分鐘檢查一次」，
+教練當場親口糾正——這是同一句規則D理論上100%命中的措辭（跟第6次不同，這次不是同義
+改寫繞過regex）。查`distill/rule07_polling_violations.log`，最後一筆真實違規記錄停在
+2026-07-24，之後只有2026-08-12的假測試session「通過」，2026-08-27完全沒有紀錄——
+代表這支機關在真實對話裡已經瞎眼超過一個月，即使規則本身精準命中也抓不到。
+
+**根因跟第6次完全不同、更根本**：不是regex覆蓋面問題，是「往回掃描transcript找這一
+整回合的AI輸出」這段抽取邏輯本身壞了。Claude Code transcript裡，每次工具呼叫
+（Bash/Read/Edit/Write）執行完的結果也記錄成`type=='user'`（只是工具回音，不是教練
+真人講話），舊邏輯「遇到第一個`type=='user'`就當回合邊界停止」，導致真實對話（幾乎
+必然有多次工具呼叫）裡，掃描永遠被最近一次工具回音提早打斷，抓不到更早（同一回合稍早）
+講的違規內容——包括這次真實寫進`rustdesk_memory_guard.sh`檔案註解裡的那句設計。
+用真實歷史transcript重播驗證：修好後exit code從沒抓到→正確變2。完整技術細節見
+[[reference_stop_hook_tool_result_boundary_bug_2026-08-27]]、試金石案例66。
+
+**跟第6次合起來的教訓**：同一支防呆機關可能同時存在「規則覆蓋面不夠」（第6次，表層）
+跟「抽取邏輯本身有結構性bug」（第7次，底層）兩種不同層次的失效原因，兩者要分開排查——
+regex加得再寬，如果餵給它的TURN_TEXT內容本身就抓漏了，還是攔不到。之後懷疑機關失效時，
+除了檢查regex，也要親自印出/debug機關實際收到的文字內容，確認它真的看到了完整的
+這一輪對話，而不是只看到片段。

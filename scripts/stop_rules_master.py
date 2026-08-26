@@ -99,6 +99,21 @@ def _content_list(evt):
     return c if isinstance(c, list) else []
 
 
+def _is_real_user_prompt(evt):
+    """type=='user' 事件裡，只有『真人打的話』才算真正的回合邊界。
+    Claude Code 把工具執行結果也記成 type=='user'（content 是
+    [{"type":"tool_result",...}]），沒有任何 text 區塊——那不是教練
+    講話，只是工具回音。用這個判斷式排除掉工具回音，才不會一輪對話
+    中間隨便一個工具呼叫的回音就被誤判成『上一句教練說的話』，
+    害往回掃描提早打住（2026-08-27 案例：rule07 因此瞎眼超過一個月）。"""
+    content = (evt.get("message") or {}).get("content")
+    if isinstance(content, str):
+        return True
+    if isinstance(content, list):
+        return any(isinstance(c, dict) and c.get("type") == "text" for c in content)
+    return False
+
+
 # 1) 最後一條 assistant 的純文字（給教練看的最終回覆）
 LAST_TEXT = ""
 for evt in reversed(EVENTS):
@@ -117,13 +132,18 @@ for evt in reversed(EVENTS):
 LAST_LINES = LAST_TEXT.split("\n") if LAST_TEXT else []
 
 # 2) 這一整回合的 assistant 文字 + Write/Edit/Bash 工具輸入（rule07 用）
-#    照抄原腳本：往回掃到上一個 user 事件為止，設計寫進檔案也要抓得到
+#    往回掃到「上一句教練真人講的話」為止，設計寫進檔案也要抓得到
+#    🔴 2026-08-27 修復：原本用 `t == "user"` 當邊界，但工具執行結果
+#       (tool_result) 在 transcript 裡也是 type=="user"，一輪對話只要
+#       呼叫超過一次工具，掃描就會被最近一次工具回音提早打斷，抓不到
+#       更早之前（同一輪）講的違規內容。改用 _is_real_user_prompt()
+#       只在遇到「真人真的講話」的 user 事件才停止，工具回音直接跳過。
 _segments = []
 for evt in reversed(EVENTS):
     if not isinstance(evt, dict):
         continue
     t = evt.get("type")
-    if t == "user":
+    if t == "user" and _is_real_user_prompt(evt):
         break
     if t != "assistant":
         continue
@@ -151,12 +171,9 @@ for i in range(len(EVENTS) - 1, -1, -1):
     evt = EVENTS[i]
     if not isinstance(evt, dict):
         continue
-    if evt.get("type") == "user":
-        content = (evt.get("message") or {}).get("content")
-        if isinstance(content, str) or (isinstance(content, list) and any(
-                isinstance(c, dict) and c.get("type") == "text" for c in content)):
-            _last_user_idx = i
-            break
+    if evt.get("type") == "user" and _is_real_user_prompt(evt):
+        _last_user_idx = i
+        break
 if _last_user_idx is None:
     _last_user_idx = 0
 
