@@ -1,20 +1,20 @@
 {
   "system": "credit",
   "credits_per_deploy": 15,
-  "quota_as_of": "2026-08-25 (教練親自查證真實帳單頁)",
-  "quota_remaining": 70,
+  "quota_as_of": "2026-08-26 (教練親自查真實帳單頁截圖回報)",
+  "quota_remaining": 62,
   "billing_cycle": "每月25日結算/重置（帳單頁面顯示「Current billing period runs from Jul 25 to Aug 24」，帳戶API的current_billing_period_start/next_billing_period_start皆為每月25日00:00 -07:00＝台灣時間當天下午3點），教練誤記成24日，正確是25日重置、24日是週期最後一天",
   "note": [
-    "🔴2026-08-25教練親自查證真實帳單頁兩次：①01:09查到舊週期只剩76.4/1000瀕臨用盡②12:31查到新週期已重置983.4/1000。確認額度非常充裕，不用再為了省額度而猶豫。**SOP維持不變**：每7~10天校正一次即可，日常用15點/次估算法追蹤，下次校正約2026-09-01~09-04。"
+    "🔴2026-08-26教練親自截圖回報帳單頁真實數字：剩餘949.9/1000，過期2026-09-25，已覆蓋掉先前的推算值(983.4，8/25 12:31查證)。教練同時指出根本問題：聯想這台機器推部署完全沒被扣點過，跟Mac對不上帳——查證後根因是netlify_deploy_guard.sh(額度自動扣點守衛)從未移植到聯想，聯想端所有部署都是「裸推」不經過守衛。已補scripts/netlify_deploy_guard.ps1並註冊進聯想settings.json PreToolUse，此後聯想的部署會自動同步扣點寫回這份共用檔案，三機經git同步後數字應保持一致。"
   ],
   "credit_pools": [
     {
       "name": "Personal plan credits",
-      "remaining": 983.4,
+      "remaining": 934.9,
       "total": 1000,
       "granted": "2026-08-25",
       "expires": "2026-09-25",
-      "deploys_remaining_approx": 65,
+      "deploys_remaining_approx": 62,
       "note": "🔴教練2026-08-25 12:31親自查真實帳單頁確認新週期已重置，983.4/1000＝已用約16.6點(1次部署+些微bandwidth)。原本記錄猜測「下午3點重置」不準確，實際重置時間點早於中午12:31，已用教練查證數字覆蓋估算值"
     },
     {
@@ -54,6 +54,20 @@
   },
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-26 10:22",
+      "site": "ai-talk-tw",
+      "deploy_id": "6a8e4ddf",
+      "change": "嘉義場新增設攤廠商10：KR廚房(金門高粱酒喜宴酒)",
+      "remaining_after": 62
+    },
+    {
+      "date": "2026-08-26 10:20",
+      "site": "(額度校正，非部署)",
+      "deploy_id": null,
+      "change": "教練親自截圖回報真實帳單頁：剩餘949.9/1000，過期2026-09-25。同時發現聯想端netlify_deploy_guard守衛從未移植，過去聯想的部署(含今早ai-talk嘉義場9家設攤廠商上線 deploy 6a8e45fe)都沒被自動扣點——本次校正即已涵蓋這些累計耗用，校正後補上聯想版守衛已註冊生效。",
+      "remaining_after": 63
+    },
     {
       "date": "2026-08-25 12:31",
       "site": "(額度校正，非部署)",
