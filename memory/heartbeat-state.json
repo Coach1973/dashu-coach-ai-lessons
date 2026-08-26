@@ -3,7 +3,7 @@
     "heartbeat_poll": "2026-08-26T18:00:25.000000+08:00",
     "telegram_channel": "2026-08-26T18:00:25.000000+08:00",
     "system_health": "2026-08-25T22:00:22+08:00",
-    "coach_silence_sync": "2026-08-27T01:12:04.434810+08:00"
+    "coach_silence_sync": "2026-08-27T02:12:05.141454+08:00"
   },
   "lastHeartbeat": "2026-08-26T18:00:25.000000+08:00",
   "lastHeartbeatNote": "cycle=613 後 18:00 週三傍晚 session heartbeat-poll｜TG 通道探針 ok:true（18:00 當下實測，遵守守則#19）｜教練最後訊息 17:06:55（0.9h 前，下班時段沉默中）｜下午 6 點非 quiet hours，但下班時段不宜打擾｜HEARTBEAT.md 待辦 0 項｜JUNSHI queue 空、cross-agent inbox 目錄未建立（待軍師首次開工時建立）｜無 urgent gmail｜本輪 session heartbeat 純記錄、不 announce",
@@ -20,7 +20,7 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-26T18:00:25.000000+08:00",
-    "coachSilentSince": "2026-08-27T01:06:55+08:00",
+    "coachSilentSince": "2026-08-27T02:07:30+08:00",
     "coachSilentHours": 0.1,
     "nextPlannedAction": "下班時段，靜默觀察；下輪 cron 健康檢查 22:00 (晚間時段)",
     "triggerSource": "cron-event:heartbeat-poll",
