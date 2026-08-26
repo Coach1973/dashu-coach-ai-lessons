@@ -146,13 +146,23 @@ def main():
             matched += 1
         else:
             synthetic_filename = f"bniconnect__{p['current_chapter']}__{p['name_key']}.novalue"
-            conn.execute(
+            cur = conn.execute(
                 """INSERT OR IGNORE INTO cards
                    (image_filename, name, company, category, status, bni_status, bni_note)
                    VALUES (?, ?, ?, ?, 'ok', 'bni_member', ?)""",
                 (synthetic_filename, p["name"], p["company"], p["category"], p["bni_note"]),
             )
-            inserted += 1
+            if cur.rowcount == 0:
+                # image_filename撞名(教練2026-08-26糾正案例：田伸強/林尹渰等4人INSERT
+                # OR IGNORE被靜默跳過，bni_status/bni_note從沒被寫入)——用同一把filename
+                # 補UPDATE，確保這人一定拿到正確分類，不會又靜默漏掉
+                conn.execute(
+                    "UPDATE cards SET bni_status = 'bni_member', bni_note = ? WHERE image_filename = ?",
+                    (p["bni_note"], synthetic_filename),
+                )
+                matched += 1
+            else:
+                inserted += 1
     conn.commit()
     conn.close()
     print(f"比對到既有名片並更新標記: {matched} 人")
