@@ -30,3 +30,4 @@ ESUN_202606.pdf
 
 # 一鍵發佈用的 Netlify 金鑰等機密，禁止納入版控（2026-08-23）
 credentials/
+scripts/__pycache__/

@@ -21,6 +21,7 @@
 
 - **事件觸發，不用輪詢**：這是本系統唯一一條被教練親自糾正過4次的鐵律——聽到「多久檢查一次比較好」這種念頭要先反問自己能不能直接事件觸發
 - **必須在Mac mini跑，不是聯想/ACER**：因為只有Mac能連到Amber私有雲的SMB掛載，且已裝Python
+- **🔴🔴🔴 任何呼叫MiniMax API的地方都必須先過`scripts/minimax_batch_guard.py`的`guard_call()`**：2026-08-26案例65教訓（`chain_matcher.py`批次跑428人沒節流沒快取，一次燒150萬token把帳號5小時4500次額度全部打滿，教練所有服務停擺3小時），教練2026-08-27親口拍板「畫下一條紅線」。這不是建議，是寫死在程式碼裡的硬性上限（批次腳本專屬400次/5小時，越線直接拋`MiniMaxBatchGuardError`中止並發Telegram通知，不可用try/except吞掉）。已接上`chain_matcher.py`／`extract.py`／`match.py`三個真正的API呼叫點。**任何新增會呼叫MiniMax的程式碼（不限這個專案，整個workspace都適用同一套規則），第一行動作就是`from minimax_batch_guard import guard_call`並在呼叫`client.messages.create()`前呼叫`guard_call("<呼叫端名稱>")`，沒有例外。**
 
 ## 已知狀態（寫給下一場軍師）
 

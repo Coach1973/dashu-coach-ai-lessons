@@ -17,10 +17,15 @@
 """
 import json
 import re
+import sys
+from pathlib import Path
 
 import anthropic
 
 from extract import _TAXONOMY_BLOCK
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from minimax_batch_guard import guard_call  # noqa: E402
 
 MODEL = None  # 動態從extract模組讀，避免重複讀環境變數
 
@@ -125,6 +130,7 @@ def match_card_to_chain(conn, client: anthropic.Anthropic, card_id: int, model: 
     )
 
     def _call_ai(prompt_content: str) -> dict:
+        guard_call("chain_matcher")
         message = client.messages.create(
             model=model,
             max_tokens=2048,

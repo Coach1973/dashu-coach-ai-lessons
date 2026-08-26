@@ -12,9 +12,14 @@ import json
 import os
 import re
 import subprocess
+import sys
 from collections import defaultdict
+from pathlib import Path
 
 import anthropic
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from minimax_batch_guard import guard_call  # noqa: E402
 
 MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 
@@ -132,6 +137,7 @@ def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = No
         return {"_error": "PaddleOCR沒有讀到任何文字", "_raw": ""}
     ocr_text = "\n".join(ocr_lines)
 
+    guard_call("extract_card_fields")
     message = client.messages.create(
         model=MODEL,
         max_tokens=1024,

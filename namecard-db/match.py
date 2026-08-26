@@ -11,10 +11,15 @@
 import itertools
 import json
 import os
+import sys
+from pathlib import Path
 
 import anthropic
 
 import db
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from minimax_batch_guard import guard_call  # noqa: E402
 
 MODEL = os.environ.get("NAMECARD_MODEL", "MiniMax-M3")
 
@@ -42,6 +47,7 @@ def build_category_relationships(categories: list[str], client: anthropic.Anthro
     if len(categories) < 2:
         return []
     prompt = MATCH_PROMPT.format(categories="\n".join(categories))
+    guard_call("match_category_relationships")
     message = client.messages.create(
         model=MODEL,
         max_tokens=2048,
