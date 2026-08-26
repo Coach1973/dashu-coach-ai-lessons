@@ -1,0 +1,231 @@
+[2026-08-26 09:26:32]   [346] 許 書綺／安邑悅企業社（前會員・曾隸屬真鑽分會） -> {'action': 'new_chain', 'chain_id': 227, 'chain_name': '清潔用品與環境衛生鏈', 'role': '清潔產品'}
+[2026-08-26 09:27:00]   [347] 許 高楓／大誠台南業務發展中心（前會員・曾隸屬真鑽分會） -> {'action': 'new_chain', 'chain_id': 228, 'chain_name': '家庭人壽保障與人生風險防護鏈', 'role': '人壽保險'}
+[2026-08-26 09:27:12]   [348] 許 敦傑／晟傑空調工程有限公司（前會員・曾隸屬真鑽分會） -> {'action': 'fill_gap', 'chain_id': 57, 'role_name': '冷氣空調(家用/商用)'}
+[2026-08-26 09:27:23]   [349] 許 朝竣／百聖廣告（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 229, 'chain_name': '廣告印刷與視覺傳播鏈', 'role': '印刷業-大圖輸出'}
+[2026-08-26 09:27:34]   [350] 許 漢宗／米蘭時尚髮型有限公司（前會員・曾隸屬真鑽分會） -> {'action': 'fill_gap', 'chain_id': 100, 'role_name': '髮型師'}
+[2026-08-26 09:27:48]   [351] 郭 明哲／明珊科技有限公司（前會員・曾隸屬真鑽分會） -> {'action': 'new_chain', 'chain_id': 230, 'chain_name': '眼鏡視力保健整合鏈', 'role': '眼鏡銷售員'}
+[2026-08-26 09:28:03]   [352] 郭 育汝／YCH宥星科技（前會員・曾隸屬真鑽分會） -> {'action': 'new_chain', 'chain_id': 231, 'chain_name': '電腦銷售與數位生活整合鏈', 'role': '電腦零售'}
+[2026-08-26 09:28:16]   [353] 郭 育銘／御茗茶業（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 232, 'chain_name': '茶飲品牌與門市經營鏈', 'role': '茶葉供應商/茶商'}
+[2026-08-26 09:28:28]   [354] 郭 政輝／樟捷企業有限公司（真鑽分會現任會員） -> {'action': 'skip', 'reason': '這張名片僅有公司名稱（樟捷企業有限公司）和模糊的標準分類（建築 - 電工 - 商業），缺乏姓名、職稱、tagline 等具體資訊，無法判斷其專業核心服務內容，不適合放進任何產業鏈'}
+[2026-08-26 09:28:32]   ⚠️ card 355 第1次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd743f0290e1a3b39d9bf74bfed110'}
+[2026-08-26 09:28:43]   ⚠️ card 355 第2次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd744bbefd32e2a865ac67e5437b8a'}
+[2026-08-26 09:28:55]   ⚠️ card 355 第3次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd7457b560ff500d039311bfa07965'}
+[2026-08-26 09:28:55]   ❌ [355] 郭 若潔 三次重試皆失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd7457b560ff500d039311bfa07965'}
+[2026-08-26 09:28:56] Traceback (most recent call last):
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 85, in main
+    result = match_with_retry(conn, client, card["id"], MODEL)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 56, in match_with_retry
+    raise last_err  # 三次都失敗，往外拋，由主迴圈記錄+計入連續失敗
+    ^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 50, in match_with_retry
+    return match_card_to_chain(conn, client, card_id, model)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 137, in match_card_to_chain
+    result = _call_ai(user_content)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 128, in _call_ai
+    message = client.messages.create(
+        model=model,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+    )
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 1050, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd7457b560ff500d039311bfa07965'}
+
+[2026-08-26 09:29:02]   ⚠️ card 356 第1次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd745ef3c1e5ab5d1b2a4056be18c1'}
+[2026-08-26 09:29:15]   ⚠️ card 356 第2次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd746b0cb676cd9f60dca3651be998'}
+[2026-08-26 09:29:29]   ⚠️ card 356 第3次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74796d8b4fbecdae4658872b054b'}
+[2026-08-26 09:29:29]   ❌ [356] 郭 家宏 三次重試皆失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74796d8b4fbecdae4658872b054b'}
+[2026-08-26 09:29:29] Traceback (most recent call last):
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 85, in main
+    result = match_with_retry(conn, client, card["id"], MODEL)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 56, in match_with_retry
+    raise last_err  # 三次都失敗，往外拋，由主迴圈記錄+計入連續失敗
+    ^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 50, in match_with_retry
+    return match_card_to_chain(conn, client, card_id, model)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 137, in match_card_to_chain
+    result = _call_ai(user_content)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 128, in _call_ai
+    message = client.messages.create(
+        model=model,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+    )
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 1050, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74796d8b4fbecdae4658872b054b'}
+
+[2026-08-26 09:29:35]   ⚠️ card 357 第1次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd747f76dd7e6d412d97fc272ff5a5'}
+[2026-08-26 09:29:49]   ⚠️ card 357 第2次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd748d53f3bfb0da122de960666db9'}
+[2026-08-26 09:30:05]   ⚠️ card 357 第3次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd749c23ec8713fa0fabb171d43631'}
+[2026-08-26 09:30:05]   ❌ [357] 郭 家麟Kevin kuo 三次重試皆失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd749c23ec8713fa0fabb171d43631'}
+[2026-08-26 09:30:05] Traceback (most recent call last):
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 85, in main
+    result = match_with_retry(conn, client, card["id"], MODEL)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 56, in match_with_retry
+    raise last_err  # 三次都失敗，往外拋，由主迴圈記錄+計入連續失敗
+    ^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 50, in match_with_retry
+    return match_card_to_chain(conn, client, card_id, model)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 137, in match_card_to_chain
+    result = _call_ai(user_content)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 128, in _call_ai
+    message = client.messages.create(
+        model=model,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+    )
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 1050, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd749c23ec8713fa0fabb171d43631'}
+
+[2026-08-26 09:30:11]   ⚠️ card 358 第1次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74a31d4be3fb25c32b8d1c1931c0'}
+[2026-08-26 09:30:27]   ⚠️ card 358 第2次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74b24638e2bd546c5c73c15c27ec'}
+[2026-08-26 09:30:40]   ⚠️ card 358 第3次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74bf2f6656c11c735f3e4ca37559'}
+[2026-08-26 09:30:40]   ❌ [358] 郭 峯志 三次重試皆失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74bf2f6656c11c735f3e4ca37559'}
+[2026-08-26 09:30:40] Traceback (most recent call last):
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 85, in main
+    result = match_with_retry(conn, client, card["id"], MODEL)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 56, in match_with_retry
+    raise last_err  # 三次都失敗，往外拋，由主迴圈記錄+計入連續失敗
+    ^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 50, in match_with_retry
+    return match_card_to_chain(conn, client, card_id, model)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 137, in match_card_to_chain
+    result = _call_ai(user_content)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 128, in _call_ai
+    message = client.messages.create(
+        model=model,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+    )
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 1050, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74bf2f6656c11c735f3e4ca37559'}
+
+[2026-08-26 09:30:46]   ⚠️ card 359 第1次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74c5d5aa697513a03011eafb7492'}
+[2026-08-26 09:31:00]   ⚠️ card 359 第2次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74d471d422dd564fa1005ace3c6a'}
+[2026-08-26 09:31:19]   ⚠️ card 359 第3次失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74e72b13145bfffe233de4786b75'}
+[2026-08-26 09:31:19]   ❌ [359] 郭 聰南 三次重試皆失敗：Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74e72b13145bfffe233de4786b75'}
+[2026-08-26 09:31:19] Traceback (most recent call last):
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 85, in main
+    result = match_with_retry(conn, client, card["id"], MODEL)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 56, in match_with_retry
+    raise last_err  # 三次都失敗，往外拋，由主迴圈記錄+計入連續失敗
+    ^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/bni_connect_import/run_chain_match.py", line 50, in match_with_retry
+    return match_card_to_chain(conn, client, card_id, model)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 137, in match_card_to_chain
+    result = _call_ai(user_content)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/chain_matcher.py", line 128, in _call_ai
+    message = client.messages.create(
+        model=model,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
+    )
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 1050, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bymyway/.openclaw/workspace/namecard-db/venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)'}, 'request_id': '06dd74e72b13145bfffe233de4786b75'}
+
+[2026-08-26 09:31:20] === 連續失敗達門檻，已通知教練並停止 ===
+[2026-08-26 13:56:49] === BNI Connect 現任會員 產業鏈媒合開始（前會員已排除，改走手動按鈕） ===
+[2026-08-26 13:56:49] 目標名單（僅現任會員）共 89 人
+[2026-08-26 13:57:19]   [358] 郭 峯志／鴻耀汽車（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 45, 'chain_name': '汽車銷售與用車服務鏈', 'role': '汽車銷售'}
+[2026-08-26 13:57:35]   [361] 郭 馨文／萬臨聯合記帳士事務所（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 33, 'role_name': '記帳士'}
+[2026-08-26 13:57:54]   [367] 陳 佳玲／億生多有限公司（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 233, 'chain_name': '電氣設備零售與居家電力整合鏈', 'role': '電氣設備零售'}
+[2026-08-26 13:58:09]   [368] 陳 坤成／安心市集股份有限公司（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 234, 'chain_name': '安心市集團購促銷鏈', 'role': '促銷產品團購供應商'}
+[2026-08-26 13:58:25]   [378] 陳 建清／亞諾系統科技（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 235, 'chain_name': '企業通訊與資訊整合鏈', 'role': '電信產品/服務'}
+[2026-08-26 13:58:49]   [384] 陳 淑玲／正和地政士事務所（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 60, 'role_name': '地政士/土地代書'}
+[2026-08-26 13:59:03]   [387] 陳 逸凡／奕生圍棋（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 53, 'role_name': '圍棋教學'}
+[2026-08-26 13:59:17]   [392] 陳 穗青／錠嵂保經（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 61, 'role_name': '財富管理'}
+[2026-08-26 13:59:48]   [396] 傅 恩平／榮益齋有限公司 Gracious Benefacts LLC（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 236, 'chain_name': '翻譯口筆譯與跨境商務服務鏈', 'role': '翻譯/語言服務'}
+[2026-08-26 14:00:05]   [401] 黃 玠瑛／昇億嚮度國際有限公司（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 237, 'chain_name': '會展活動統籌服務鏈', 'role': '活動租賃商'}
+[2026-08-26 14:00:18]   [413] 黃 智宏／台新新光金控（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 38, 'role_name': '人壽保險'}
+[2026-08-26 14:00:48]   [419] 楊 仁豪／聖橋國際專利商標事務所（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 238, 'chain_name': '品牌智財佈局與商標服務鏈', 'role': '智慧財產權律師/專利商標代理人'}
+[2026-08-26 14:01:09]   [421] 楊 尚儒／宸音音樂教室（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 53, 'chain_name': '兒童音樂才藝教育鏈', 'role': '音樂教室教師'}
+[2026-08-26 14:01:26]   [426] 楊 智帆／鴻羽網路有限公司（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 42, 'role_name': 'SEO搜尋引擎優化'}
+[2026-08-26 14:01:41]   [427] 楊 朝欽／立野汽車（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 45, 'role_name': '汽車/汽車維修'}
+[2026-08-26 14:02:10]   [430] 葉 彤黎／敦品窗飾（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 239, 'chain_name': '窗簾窗飾與居家美學鏈', 'role': '窗簾/百葉窗'}
+[2026-08-26 14:02:36]   [444] 蔡 丞弘／台品飲水設備有限公司（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 31, 'role_name': '商用飲水設備'}
+[2026-08-26 14:03:08]   [449] 蔡 瑞穠／道家陰陽五術研究院（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 240, 'chain_name': '玄學命理與人生指引鏈', 'role': '命理堪輿/靈魂八字/紫微斗數'}
+[2026-08-26 14:03:38]   [456] 鄭 樫峯／永成企業社（永興鋼板）（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 241, 'chain_name': '鋼板建材與鐵工工程整合鏈', 'role': '永興鋼板（鋼板材料供應商）'}
+[2026-08-26 14:04:10]   [466] 謝 緯翔／方碩顧問有限公司（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 242, 'chain_name': '產物保險與家庭風險防護鏈', 'role': '保險理算員'}
+[2026-08-26 14:04:35]   [469] 顏 淳峯／沐森實木地板（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 243, 'chain_name': '實木地板居家品味鏈', 'role': '實木地板'}
+[2026-08-26 14:04:55]   [470] 羅 琳／米蘭時尚髮型有限公司（真鑽分會現任會員） -> {'action': 'fill_gap', 'chain_id': 46, 'role_name': '髮型師'}
+[2026-08-26 14:05:24]   [473] 蘇 志揚／群岳大山生命工坊（真鑽分會現任會員） -> {'action': 'new_chain', 'chain_id': 244, 'chain_name': '尊嚴送行與禮儀服務鏈', 'role': '葬禮策劃/服務'}
+[2026-08-26 14:05:27] === BNI Connect現任會員產業鏈媒合完成：目標89人中，本次新處理23人、已有結果跳過66人、失敗0人。前會員一律不再批次跑，改由網頁手動點「媒合」按鈕逐一觸發。 ===

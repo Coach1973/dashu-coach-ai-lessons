@@ -1,0 +1,98 @@
+# 終端機對話萃取 — Session 454fbcb4-70a8-4a88-832e-8ef2cbc35b65
+# 提取時間：2026-08-26 18:39 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-08-26 05:45】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**當下主軸（v136）**：教練出門前交辦「3小時內完全不碰MiniMax媒合，純資料收集」，本場已獨立完成兩項待辦——①真富/真愛/真鑫/真鑽4分會392筆會員電話/Email 100%收集完成 ②BNI Connect大台南南區來賓資料庫3712筆訪問紀錄完整收集，去重後3216位來賓全數具備電話+email，已建`guests`表匯入。
+
+**身份核對**：Sonnet 5，Mac 終端機/桌面版（Claude Code），身份為軍師。
+
+**雲端同步狀態**：心跳提示「⚠️ Pull 警告：本地有衝突或網路失敗」，我剛查證過——`workspace`主倉庫實際上跟…（略）
+
+【教練 2026-08-26 05:52】
+<!-- attach -->
+> 🔒 MiniMax產業鏈媒合剩127人——鎖定時間雖已過13:00，但教練尚未親口說「繼續」，維持鎖定不主動重跑
+
+記住，不要再把我的額度占完，我給的新方法，不要預先媒合，重新製作一個按鈕，叫媒合，改成手動觸發，誰需要時再媒合。
+
+需要預先媒合的就是現有的92個會員
+聽懂幹活，不就就問我問到懂
+
+　▶ AI 回應：我已查證清楚，不用再問細節了——直接說明我理解到的狀況跟已完成的修正：
+
+**查證發現：手動「媒合」按鈕其實早就存在**（`/card/<id>/match`路由+首頁每張名片旁的「🔗 媒合」連結），本來就是「誰需要時、點了才觸發AI」的設計，不會主動預先跑。我剛用一筆現任會員(郭政輝)實測這顆按鈕，確認正常運作、只花一次API呼叫。真正燒token的是`run_chain_match.py`這支批次腳本被拿去對全部428人一次性硬跑。
+
+**已修正**：把`run_chain_match.py`改成**只鎖定現任會員**（89人，符合您說的92人左右），前會員(335人)已從批次名單移除，之…（略）
+
+【教練 2026-08-26 06:05】
+<task-notification>
+<task-id>bl28dppmb</task-id>
+<tool-use-id>toolu_013XpuQou4hKKQbySTxEX7QH</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/454fbcb4-70a8-4a88-832e-8ef2cbc35b65/tasks/bl28dppmb.output</output-file>
+<status>completed</status>
+<summary>Background command "Run scoped chain match for remaining current members with venv" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：現任會員89人全數媒合完成了，剛才背景跑的23人0失敗，commit已推上雲端：`f7b4c1b52`。
+
+**現狀總結**：
+- ✅ 現任89位會員：全數完成媒合（66人先前已跑+這次補23人）
+- ✅ 前會員335人：批次腳本已改為只鎖現任會員，前會員不會再被自動掃到，之後誰要查誰就點名片旁的「🔗 媒合」按鈕手動觸發
+- ✅ 這次補跑23人只用了23次API呼叫（有cache_control快取+節流），額度影響很小
+
+MiniMax這邊不會再被批次任務占滿了，往後只有真人點按鈕時才會呼叫一次。
+
+【教練 2026-08-26 10:05】
+不對，connect 的來賓是有專業別的，所以請您重新查詢，不可能沒有專業別，因為每位來賓沒有專業別是無法收錄，所以請重新查詢
+
+　▶ AI 回應：我已經證實您說的完全正確——BNI Connect的來賓資料庫確實有「行業」欄位（我剛在「來賓登記」列表頁的表格標題親眼看到：來賓登記人｜**公司**｜**行業**｜訪問日期｜電話｜電子郵件），這代表我當初(v136)抓資料時漏抓了公司跟行業這兩個關鍵欄位，只抓了姓名/電話/email三欄——這是我的疏漏，已確認需要重新收集。
+
+但我卡在一個技術問題上：目前這個「來賓登記」頁面（單一分會、日期範圍搜尋）目前顯示0筆結果，跟當初抓到3712筆的那個「地區-查看來賓」報表看起來像是**兩個不同的功能入口**（一個是分會層級的線上報名紀錄，可能真的還沒人用過；另一個是能看到全區5分會、上千筆歷史訪客…（略）
+
+　▶ AI 回應：了解，這正是我剛找到的同一個報表——「地區-查看來賓」表單上真的有「Profession」欄位（還有分會下拉選單，我才發現原來有真富/真愛/真誠/真鑫/真鑽以外，還有真心/真拾/真美三個分會，比我原本掌握的5個分會多）。
+
+我先停手，等您把檔案給我，收到後直接處理：把公司/行業補進資料庫，重新確認3216位來賓的媒合可行性。
+
+【教練 2026-08-26 10:27】
+@"/Users/bymyway/Downloads/__-__-__-___26-08-2026_3-26_AM.xls"
+看檔案
+
+　▶ AI 回應：Data looks solid. Let me commit this and report back.
+
+　▶ AI 回應：補齊完成並已推送，commit `a16323030`。
+
+**結果**：您的檔案裡3712筆訪問紀錄，去重後3216位來賓，**全部**比對回填成功，其中3210人（99.8%）現在有職業資料（剩6人是BNI Connect原始資料本身職業欄位空白，非抓取遺漏）。同一人多次訪問若填過不同職業，取最新一次的為準。
+
+現在guests表結構是：姓名｜電話｜email｜**公司｜職業｜分會**，資料已經足夠拿去做產業鏈媒合了。
+
+不過媒合這3216人要打3216次MiniMax API——考量到今天已經出過一次額度事故，這批我還沒動手跑，想先跟您確認方向：要現在排進媒合佇列，還是也比照現任會員的做…（略）
+
+【教練 2026-08-26 10:31】
+手動觸發媒合，你只要做進我們的名單資料庫
+
+　▶ AI 回應：Works. Let me quickly verify card-only search still functions, then commit.
+
+　▶ AI 回應：Confirmed working correctly for both cards and guests. Let me commit this.
+
+　▶ AI 回應：已推送，commit `f2b0cb778`。
+
+現在3216位來賓真的能被找到了——您直接在Telegram/LINE問「找水電的」「查XX這個人」，會同時搜到名片跟來賓兩邊資料，來賓結果會標示[來賓]跟分會來源，方便您組產業鏈或找人組團隊。媒合系統維持手動按鈕觸發、不自動批次跑，額度不會再被燒。
+
+【教練 2026-08-26 10:33】
+做一個簡約大方好看的搜尋界面，有各種搜尋關鍵字，我只要打關鍵字，就可以出現相關的人或是專業，我按媒合時，就可以去使用AI，這才不會暴掉
+
+　▶ AI 回應：Now update `db.py`'s migration block:
+
+　▶ AI 回應：Now let's add the `/find` and `/guest/<id>/match` routes right after `/chains`:
+
+　▶ AI 回應：HTTP 200. Let's confirm the migration actually ran (column exists) and test search + guest match flow end to end.
+
+　▶ AI 回應：Good — column exists, search returns 2 guest results for "水電". Now let's test the full guest-to-match conversion flow end to end.
+
+　▶ AI 回應：Now let's commit everything.

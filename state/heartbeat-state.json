@@ -1,36 +1,47 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-26T01:37:05.449419+08:00",
-    "telegram_channel": "2026-08-26T01:37:05.449419+08:00",
+    "heartbeat_poll": "2026-08-26T22:13:30+08:00",
+    "telegram_channel": "2026-08-26T22:13:30+08:00",
     "system_health": "2026-08-26T01:37:05.449419+08:00",
-    "coach_silence_sync": "2026-08-26T01:12:04.931323+08:00"
+    "coach_silence_sync": "2026-08-26T22:12:03.933523+08:00",
+    "cron_health_audit": "2026-08-26T22:13:30+08:00"
   },
-  "lastHeartbeat": "2026-08-26T01:37:05.449419+08:00",
-  "lastHeartbeatNote": "cycle=594 01:36 週三凌晨｜深夜靜默（教練最後訊息 00:08，沉默 1.5h）｜3 件未完成已全 commit｜派工單 4d086ba86 等軍師回信｜無 announce、無 urgent｜累計 89 連綠",
+  "lastHeartbeat": "2026-08-26T22:13:30+08:00",
+  "lastHeartbeatNote": "poll=22:13 週三深夜｜教練最後訊息 21:36:55（沉默 0.6h，當下 date 新鮮值，晚間活躍中）｜cycle=618 安靜通過 cumulativeGreen=2（從 cycle=617 的 1 +1）｜🎉 蒸餾任務 9c3fc55d 22:00 那輪已恢復（lastRunStatus=ok / CE=0 / durationMs=9319ms），連 10+ 小時的 minimax provider overloaded 終於自動解除｜21:12 cycle=616 那輪連 3 次 retry 失敗（CDN HTML 阻擋 + 503 timeout，全部 provider 端問題）+ 22:00 那輪 Edit 失敗（Context Overflow 重啟前最後寫入失敗），本輪 cycle=618 完全恢復｜其他 22 個 enabled cron 全部 ok｜v4.0 三關全 fail（關卡一：本任務成功 + 蒸餾已恢復；關卡二：provider 已恢復；關卡三：本任務=meta 迴圈失敗 + 蒸餾=內部流程不影響教練/會員）→ 不 announce",
   "systemSnapshot": {
-    "timeOfDay": "deep_night",
-    "dayOfWeek": "Tuesday",
-    "isQuietHours": true,
-    "quietHoursReason": "週三凌晨 01:00-08:00 靜默時段",
+    "timeOfDay": "evening",
+    "dayOfWeek": "Wednesday",
+    "isQuietHours": false,
+    "quietHoursReason": "",
     "allCronsHealthy": true,
     "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-26T00:08:56+08:00（沉默 1.5h，深夜睡眠中）",
+    "recentCoachActivity": "教練最後訊息 2026-08-26T21:36:55+08:00（沉默 0.6h，當下 date 新鮮值，晚間活躍中）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-26T01:14:33.797583+08:00",
-    "coachSilentSince": "2026-08-26T01:06:55+08:00",
-    "coachSilentHours": 0.1,
-    "nextPlannedAction": "等下輪 cron (02:12 cycle=599) 或教練新訊息",
-    "triggerSource": "cron-event:46e67e2e",
+    "telegramChannelLastVerified": "2026-08-26T22:13:30+08:00",
+    "coachSilentSince": "2026-08-26T21:36:55+08:00",
+    "coachSilentHours": 0.6,
+    "nextPlannedAction": "等下輪 healthcheck cron (23:12 cycle=619) 或教練新訊息",
+    "triggerSource": "cron-event:healthcheck_cron",
     "cronErrors": [],
     "pendingTasks": [
       "等軍師/賈維斯對派工單 4d086ba86 回信（被動）"
+    ],
+    "providerOverloadObservations": [],
+    "cycle618Notes": [
+      "21:12 cycle=616 連 3 次 retry 失敗（CDN HTML 阻擋 2 次 + 503 timeout 1 次，全部 provider 端）",
+      "22:00 那輪 Edit 失敗（Context Overflow 重啟前最後寫入失敗）",
+      "本輪 cycle=618 完全恢復，蒸餾任務 9c3fc55d 也同步恢復"
     ]
   },
   "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-08-25T22:12:00+08:00",
+  "telegramChannelLastVerified": "2026-08-26T22:13:30+08:00",
+  "tgChannelProbeAt": "2026-08-26T22:13:30+08:00",
   "urgentGmailCount": 0,
-  "cumulativeGreen": 89
+  "cumulativeGreen": 2,
+  "coachSilenceHours": 0.6,
+  "lastCycle": 618,
+  "note": "cycle=618 安靜通過，cumulativeGreen=2（從 cycle=617 的 1 +1）。🎉 蒸餾任務 9c3fc55d 在 22:00 那一輪已恢復，連 10+ 小時的 minimax provider overloaded 終於自動解除，consecutiveErrors=0。其他 22 個 enabled cron 全部 ok。21:12 cycle=616 連 3 次 retry 失敗（CDN HTML 阻擋 + 503）+ 22:00 Edit 失敗（Context Overflow 重啟前），本輪完全恢復。v4.0 三關全 fail → 不 announce。"
 }

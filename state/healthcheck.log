@@ -902,3 +902,48 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
   - v4.0 三關判斷: 全 fail → 不 announce
   - 累計: 連續 91 輪綠燈 (cycle=507~598)
   - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)
+[2026-08-26 13:12:xx +0800] cycle=608 健康檢查完成 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-26T13:06:55+08:00｜當下沉默 0.1h（週三下午活躍）
+  - Cron 真相源（本任務 46e67e2e）: 本輪執行成功｜consecutiveErrors=6（從 cron state 讀到）｜lastRunStatus=error（上一輪 12:12 失敗）
+  - 失敗時間軸：10:12 起 minimax Token Plan quota 連續觸頂，迄今 3 小時未恢復（cycle=605~607 三連失敗 + 10:12 三 retry）
+  - 失敗原因：minimax 商業額度觸頂（教練無法靠技術手段介入，要花錢升級）
+  - 0 個 CE≥3 / 0 個 timeout 危險 / 0 個 auth 錯誤
+  - TG 通道探針（守則#19 當下實測）: ✅ ok
+  - 環境快檢: SOUL×3 齊全｜Repo1=23｜Repo2=19｜無 .! 鎖
+  - HEARTBEAT.md: ⬜ 真實待辦 0 項
+  - v4.0 三關判斷: 關卡一/三 fail（meta 迴圈失敗排除）→ 不 announce
+  - 累計: cumulativeGreen 重置為 1（cycle=605~607 三連失敗中斷 cycle=507~604 的 98 連綠）
+  - 升級條件達標：minimax quota 持續 3 小時未恢復 → 提醒 23:05 三機總結關注「minimax 商業額度是否足夠」
+  - 跳過 commit+push (2026-07-05 教練拍板由 23:05 三機總結統一備份)
+
+- [2026-08-26T14:00:44+08:00] heartbeat poll 14:00（cron-event，非 healthcheck cron）
+  - 教練沉默 0.1h（13:52 剛互動，活躍中）
+  - TG 通道當下實測 ok
+  - cumulativeGreen=1（cycle=608 quota 觸頂重置）
+  - 環境快檢：SOUL.md 三份存在 / Repo1=23 / Repo2=24 / 無 .! 鎖定檔
+  - 不 announce（教練活躍中，無緊急，quota 觀察留待 23:05 三機總結）
+  - 下輪 healthcheck cron：14:12 cycle=609
+
+── cycle=609（2026-08-26 14:12 週三下午）──
+  - 健康檢查通過：本任務 lastRunStatus=ok / CE=0 / durationMs=84519ms < timeout=600s
+  - sync_coach_last_message.sh exit 0，教練最後訊息 14:05（沉默 0.1h，活躍中）
+  - 觀察：minimax Token Plan quota 觸頂已 4+ 小時（cycle=605~607 三連失敗 + 10:12 三 retry）
+  - cycle=608 13:12 恢復 / 本輪 cycle=609 14:12 連 2 輪綠
+  - v4.0 三關：關卡一 fail（本輪成功）→ 不 announce
+  - TG 通道當下實測 ok:true｜累計 cumulativeGreen 重置為 2
+  - 環境快檢：SOUL.md 三份存在（8707/1851/22220 bytes）/ Repo1=23 / Repo2=23 / 無 .! 鎖定檔
+  - 下輪 healthcheck cron：15:12 cycle=610
+2026-08-26 15:12 cycle=610 教練沉默 0.1h（最後訊息 15:06） TG 通道 ok 安靜通過不 announce cumulativeGreen=3
+2026-08-26 16:12 cycle=611 教練沉默 0.1h（最後訊息 16:06） TG 通道 ok 安靜通過不 announce cumulativeGreen=4
+  - 蒸餾任務 16:00 仍失敗（第 7 連失敗，overloaded_error，minimax 端 AI 服務暫時塞車）
+  - 從 2026-08-26 10:00 起連 7 輪失敗（10:00/12:00/14:00/16:00 + 10:00 那輪 2 retry = 共 7 次），迄今 6+ 小時
+  - 失敗原因：overloaded_error（minimax AI 服務暫時塞車）
+  - 本任務（健康檢查）成功跑起來 = AI 端已恢復，但蒸餾任務仍壞
+  - v4.0 三關：關卡二 fail（provider 暫時過載，教練無法介入）+ 關卡三 fail（內部流程不影響教練/會員）→ 不 announce
+  - 下輪 healthcheck cron：17:12 cycle=612
+[2026-08-26 17:12:00+08:00] cycle=612｜教練最後訊息 17:06:55（沉默 0.1h，活躍中）｜本任務上一輪 cycle=611 Apply Patch meta 失敗 + 本輪成功恢復｜cumulativeGreen=5｜蒸餾任務 16:00 仍壞（第 7 連，minimax provider 端 overloaded，內部流程不影響教練/會員）｜v4.0 三關未全過（關卡二/三 fail）→ 不 announce｜TG 通道當下實測 ok｜安靜通過
+[2026-08-26 18:13:15+0800] cycle=613｜教練最後訊息 18:05:23（沉默 0.1h，活躍中）｜本任務 cycle=612 ok / CE=0 / 95s < 600s / model=minimax/MiniMax-M3｜cumulativeGreen=6（cycle=608~613 連 6 輪綠）｜蒸餾任務 9c3fc55d 18:00 那輪本機 cron tool 受限無法直接查證（沿用 cycle=612 觀察：16:00 仍壞第 7 連 minimax provider 端 overloaded，內部流程不影響教練/會員）｜v4.0 三關全 fail（關卡一：本任務成功；關卡二：provider 端；關卡三：內部蒸餾流程不影響教練/會員）→ 不 announce｜TG 通道當下實測 ok｜安靜通過
+[2026-08-26T19:13:13+08:00] cycle=614｜教練最後訊息 19:06:55（沉默 0.1h，活躍中）｜本任務 cycle=613 ok / CE=0 / 132s < 600s / model=minimax/MiniMax-M3｜cumulativeGreen=7（cycle=608~614 連 7 輪綠）｜蒸餾任務 9c3fc55d 18:00 那輪仍壞（第 8 連 minimax provider 端 overloaded，連 8+ 小時，本機 CLI get 已驗證 consecutiveErrors=8 / lastError='The AI service is temporarily overloaded'）｜v4.0 三關全 fail（關卡一：本任務成功 + 蒸餾任務 18:00 仍壞；關卡二：provider 端 AI 服務暫時過載；關卡三：內部蒸餾流程不影響教練/會員）→ 不 announce｜TG 通道當下實測 ok｜安靜通過
+[2026-08-26T20:13:30+08:00] cycle=615｜教練最後訊息 20:06:55（沉默 0.1h，活躍中）｜本任務 cycle=614 ok / CE=0 / 153s < 600s / model=minimax/MiniMax-M3｜cumulativeGreen=8（cycle=608~615 連 8 輪綠）｜蒸餾任務 9c3fc55d 20:00 那輪仍壞（第 9 連 minimax provider 端 overloaded，連 10+ 小時，本機 CLI get 已驗證 consecutiveErrors=9 / lastError="The AI service is temporarily overloaded" / durationMs=179300ms / nextRunAt=22:00）｜v4.0 三關全 fail（關卡一：本任務成功 + 蒸餾任務 20:00 仍壞；關卡二：provider 端 AI 服務暫時過載；關卡三：內部蒸餾流程不影響教練/會員 + 教練 20:06 仍在 Telegram 互動 = AI 對話 session 仍可用）→ 不 announce｜TG 通道當下實測 ok｜安靜通過
+[2026-08-26 21:19:26] cycle=617 安靜通過（不 announce，consecutiveErrors=3 reset → 1）
+[2026-08-26T22:13:30+08:00] cycle=618｜教練最後訊息 21:36:55（沉默 0.6h，當下 date 新鮮值，晚間活躍中）｜本任務 cycle=617 ok / 21:12 cycle=616 那輪連 3 次 retry 失敗（CDN HTML 阻擋 + 503 timeout，全部 provider 端問題）+ 22:00 那輪 Edit 失敗（Context Overflow 重啟前最後寫入失敗）｜cumulativeGreen=2（從 cycle=617 的 1 +1；cycle=616 那輪重置）｜🎉 蒸餾任務 9c3fc55d 22:00 那輪已恢復（lastRunStatus=ok / CE=0 / durationMs=9319ms）！連 10+ 小時的 minimax provider overloaded 終於在 22:00 自動解除｜其他 22 個 enabled cron 全部 ok（無 timeout / auth / FailoverError）｜v4.0 三關全 fail（關卡一：本任務成功 + 蒸餾已恢復；關卡二：provider 已恢復；關卡三：本任務=meta 迴圈失敗 + 蒸餾=內部流程不影響教練/會員）→ 不 announce｜TG 通道當下實測 ok｜安靜通過
