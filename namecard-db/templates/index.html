@@ -27,11 +27,12 @@
   .card a { color: #1f3a5f; text-decoration: none; }
   .tag { display: inline-block; background: #eef1f6; color: #1f3a5f; font-size: 12px; padding: 2px 8px; border-radius: 12px; margin: 2px 4px 0 0; }
   .review { color: #b45309; font-size: 12px; }
-  .bni-badge { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
-  .bni-badge.bni-member { background: #eaf2fb; color: #1f5fa8; }
+  .bni-badge { display: inline-block; font-size: 15px; font-weight: 700; padding: 4px 12px; border-radius: 10px; margin-top: 4px; }
+  .bni-badge.bni-active { background: #e6f6ea; color: #1e7d34; }
+  .bni-badge.bni-former { background: #eaf2fb; color: #1f5fa8; }
   .bni-badge.not-bni { background: #fdecea; color: #b3261e; }
-  .bni-controls { display: flex; gap: 4px; margin-top: 6px; }
-  .bni-controls button { padding: 3px 8px; font-size: 11px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; }
+  .bni-controls { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .bni-controls button { padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; }
   .bni-controls button.active { border-color: currentColor; font-weight: 700; }
   .bni-controls form { margin: 0; }
   .empty { color: #888; text-align: center; padding: 40px 0; }
@@ -88,25 +89,28 @@
   {% if c.status == 'failed' %}<div class="review">❌ 未辨識，AI沒能讀出任何資料</div>{% endif %}
   {% if c.status != 'failed' %}
     {% set bni = c.bni_status or 'unknown' %}
-    {% if bni == 'bni_member' %}
-    <div class="bni-badge bni-member">🔵 已是BNI會員{% if c.bni_note %}・{{ c.bni_note }}{% endif %}</div>
+    {% set is_former = bni == 'bni_member' and c.bni_note and '前會員' in c.bni_note %}
+    {% if bni == 'bni_member' and is_former %}
+    <div class="bni-badge bni-former">🔵 前會員{% if c.bni_note %}・{{ c.bni_note.replace('前會員・', '').replace('前會員', '') }}{% endif %}</div>
+    {% elif bni == 'bni_member' %}
+    <div class="bni-badge bni-active">🟢 現任會員{% if c.bni_note %}・{{ c.bni_note.replace('現任會員', '') }}{% endif %}</div>
     {% elif bni == 'not_bni' %}
-    <div class="bni-badge not-bni">🎯 非BNI會員</div>
+    <div class="bni-badge not-bni">🔴 非會員</div>
     {% endif %}
     {% if logged_in %}
     <div class="bni-controls">
       <form method="POST" action="/card/{{ c.id }}/bni_status">
         <input type="hidden" name="bni_status" value="bni_member">
-        <button type="submit" class="{{ 'active' if bni=='bni_member' else '' }}" style="color:#1f5fa8;">🔵已是會員</button>
+        <button type="submit" class="{{ 'active' if (bni=='bni_member' and not is_former) else '' }}" style="color:#1e7d34;">🟢標為現任會員</button>
       </form>
       <form method="POST" action="/card/{{ c.id }}/bni_status">
         <input type="hidden" name="bni_status" value="not_bni">
-        <button type="submit" class="{{ 'active' if bni=='not_bni' else '' }}" style="color:#b3261e;">🎯非會員</button>
+        <button type="submit" class="{{ 'active' if bni=='not_bni' else '' }}" style="color:#b3261e;">🔴標為非會員</button>
       </form>
       {% if bni != 'unknown' %}
       <form method="POST" action="/card/{{ c.id }}/bni_status">
         <input type="hidden" name="bni_status" value="unknown">
-        <button type="submit">重置</button>
+        <button type="submit" style="color:#666;">↺清除標記</button>
       </form>
       {% endif %}
     </div>

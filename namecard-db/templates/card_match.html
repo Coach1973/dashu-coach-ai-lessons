@@ -39,10 +39,13 @@
   <div class="name">{{ card.name or "（未辨識姓名）" }} {% if card.title %}<span style="font-weight:400;color:#666;">・{{ card.title }}</span>{% endif %}</div>
   <div class="company">{{ card.company or "" }}</div>
   {% set my_bni = card.bni_status or 'unknown' %}
-  {% if my_bni == 'bni_member' %}
-  <div class="other-status bni-member" style="margin-top:6px;">🔵 已是BNI會員{% if card.bni_note %}・{{ card.bni_note }}{% endif %}</div>
+  {% set my_is_former = my_bni == 'bni_member' and card.bni_note and '前會員' in card.bni_note %}
+  {% if my_bni == 'bni_member' and my_is_former %}
+  <div class="other-status bni-member" style="margin-top:6px;">🔵 前會員{% if card.bni_note %}・{{ card.bni_note.replace('前會員・', '').replace('前會員', '') }}{% endif %}</div>
+  {% elif my_bni == 'bni_member' %}
+  <div class="other-status bni-member" style="margin-top:6px;">🟢 現任會員{% if card.bni_note %}・{{ card.bni_note.replace('現任會員', '') }}{% endif %}</div>
   {% elif my_bni == 'not_bni' %}
-  <div class="other-status not-bni" style="margin-top:6px;">🎯 非BNI會員</div>
+  <div class="other-status not-bni" style="margin-top:6px;">🔴 非會員</div>
   {% endif %}
   {% if logged_in %}
   <div class="bni-controls" style="margin-top:8px;">
@@ -83,10 +86,13 @@
     {% if m.is_gap %}
     <div class="other-status gap">⏳ 待招募</div>
     {% else %}
-      {% if bni == 'bni_member' %}
-      <div class="other-status bni-member">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🔵已是BNI會員{% if m.card_bni_note %}({{ m.card_bni_note }}){% endif %}</div>
+      {% set is_former = bni == 'bni_member' and m.card_bni_note and '前會員' in m.card_bni_note %}
+      {% if bni == 'bni_member' and is_former %}
+      <div class="other-status bni-member">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🔵前會員{% if m.card_bni_note %}({{ m.card_bni_note.replace('前會員・', '').replace('前會員', '') }}){% endif %}</div>
+      {% elif bni == 'bni_member' %}
+      <div class="other-status bni-member">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🟢現任會員{% if m.card_bni_note %}({{ m.card_bni_note.replace('現任會員', '') }}){% endif %}</div>
       {% elif bni == 'not_bni' %}
-      <div class="other-status not-bni">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🎯非會員</div>
+      <div class="other-status not-bni">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}・🔴非會員</div>
       {% else %}
       <div class="other-status filled">✅ {{ m.card_name or "未知" }}{% if m.card_company %}・{{ m.card_company }}{% endif %}</div>
       {% endif %}
