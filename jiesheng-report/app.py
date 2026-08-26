@@ -1,6 +1,9 @@
 """
 結繩領導學工作坊（台南／台中／台北）即時戰報。跑法：python app.py（預設 port 5061）
-純工作人員內部工具，不對外公開報名——資料全靠工作人員手動輸入，帳密登入才看得到。
+純工作人員內部工具，不對外公開報名——資料全靠工作人員手動輸入。
+2026-08-27 教練要求改免登錄：「除了我們，不會有其他人看」，_logged_in() 已改成
+永遠回傳 True。登入頁/帳密機制程式碼保留不刪，若日後要重新上鎖，改回
+`return bool(session.get("logged_in"))` 即可。
 """
 import os
 from datetime import date, datetime
@@ -30,7 +33,8 @@ def _countdown_days(date_str: str) -> int:
 
 
 def _logged_in() -> bool:
-    return bool(session.get("logged_in"))
+    # 2026-08-27 教練要求改免登錄（見檔頭說明），永遠放行。
+    return True
 
 
 @app.route("/")
