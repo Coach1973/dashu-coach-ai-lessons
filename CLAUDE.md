@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-26 01:15:02**
+> **最後同步：2026-08-26 10:10:43**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴🔴🔴 | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：前會員+來賓資料收集待新對話框接手** | 🔒媒合任務3小時內(教練下令時間09:52+3hr≈13:00前)不得碰，⏳收集任務待新對話框動手 | 詳見v135完整戰果。**教練2026-08-26 10:08親口下令給下一場對話框**：①收集BNI Connect裡「所有前會員」的資料 ②收集「所有來賓」資料，兩者都存進資料庫 ③**3小時之內完全不要碰MiniMax媒合系統**（純資料收集，不要順手跑媒合） ④「一次就做對」，資料存進DB後不要重複進去搜尋同樣的人。**待辦細節**：真富/真愛/真鑫/真鑽4分會共392筆會員電話/Email尚未收集，方法見`namecard-db/bni_connect_import/HANDOFF_剩餘電話收集方法.md`；來賓資料庫(可能數千筆)是全新任務，BNI Connect上入口待新對話框查找；產業鏈媒合剩127人(428人中已301人)，`chain_matcher.py`已修復加cache_control快取+`run_chain_match.py`加3秒節流，**但完全停止自動重跑，要等教練親口說「繼續」才能再動**。**🔴🔴🔴🔴事故重點**：短時間內對428人批次呼叫AI(系統提示詞未做cache_control，每次重複燒5140token)，300多次呼叫燒約150萬token，打到教練與全機服務(小龍蝦/BNI小幫手/教練都在想什麼/VPS)共用的唯一MiniMax帳號額度上限，教練回報「帳號有史以來第一次5小時內打滿4500次額度」且非常生氣。**任何批次AI呼叫任務動手前必讀試金石案例65**。同場教練指出路徑大全_憑證層.md有「總表列名沒附實際數值」的系統性缺口，已全面查核補齊9組真實憑證數值(MiniMax/Telegram×3/LINE×3/GitHub)，Netlify/Cloudflare/WordPress已核對過原本就正確，往後查憑證不會再找不到。 |
 | ✅ | **ACER機49天未開機導致settings.json全部hooks消失，本場（教練親自開機）重裝七支hook+跟進聯想總結修復** | ✅2026-08-26 ACER本場完成並實測 | 教練親自打開ACER下指令，這正是Mac稍早報告裡說「唯一解法」的那個時刻。查證確認`~/.claude/settings.json`原本完全沒有`hooks`區塊（開工六步驟/截圖鎖/跨機信箱掃描/總結上傳全部沒註冊，跟聯想的jq依賴問題不同根因）。同時也第一次真正走完「開工六步驟」被教練當場糾正前的落差：本場一開始跳過血淚試金石案例庫直接動手，被教練點出才回頭補讀，讀到案例60（claude-in-chrome連錯裝置）跟HEARTBEAT.md「截圖禁用」規則，直接解釋了稍早bigtree部署過程中一直卡在截圖的原因。跑`scripts/setup_windows_hooks.ps1`重裝七支hook時，**發現這支安裝腳本本身有bug**：`ConvertFrom-Json -AsHashtable`在這台機器的PowerShell 5.1（非pwsh 7）會拋例外，觸發catch分支把原有`env`/`permissions`/`model`等設定全部清空，只剩新寫的hooks——靠腳本自帶的備份救回，手動合併寫回。額外把聯想剛寫好的`summary_upload_trigger.ps1`一併加進ACER的UserPromptSubmit，四情境（總結/總結上傳觸發、年度總結報告/閒聊不誤觸發）全部用假指令實測通過。本場另完成：大樹小講(bigtree-tw)新增8/26早半場「晨光美學」10:00-12:30(地址同步改4樓)，已推GitHub+Netlify雙邊驗證上線；回信Mac完成verbatim/Stop hook查證。**下一棒待辦**：①`event-signup`後台`event.db`仍未同步8/26早半場資料，現場QR簽到當天可能路由錯場次，需請Mac或聯想在能碰到該DB的機器上補②`setup_windows_hooks.ps1`的PS5.1 bug本場只記錄未回頭修，下次任何機器要跑這支installer前應先查`$PSVersionTable.PSVersion`。詳見`claude-brain/project_acer_dormant_49days_2026-08-26.md`+`claude-brain/project_acer_hooks_restored_2026-08-26.md`。 |
 | ✅ | **聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復** | ✅2026-08-26聯想完成並實測 | 教練質疑「我每次都講總結上傳，怎麼可能沒紀錄」，查證屬實：`summary_upload_trigger.sh`靠`/usr/bin/jq`解析stdin，聯想這台機器沒裝jq，指令找不到→PROMPT變空字串→關鍵字比對永遠比對不到→整支hook靜默不觸發，不報錯教練也看不出異狀。改寫`scripts/summary_upload_trigger.ps1`(PowerShell原生`ConvertFrom-Json`，不依賴jq)，7情境模擬測試全過已註冊進`~/.claude/settings.json`。同場也查證另兩支相關機制：`distill_and_push_lenovo.ps1`從未被註冊過（非壞掉，是從沒接上）、Windows Task Scheduler的`ClaudeMemorySync`任務也停用超過2個月。詳見試金石案例64。 |
 | ✅ | **ezPay發票工作歸屬記憶更正+Mac Stop hook狀態跨機查證回信** | ✅2026-08-26聯想完成 | ①`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`舊記憶停在「聯想負責」，實際08-18已因聯想操作卡住(原生彈窗凍結)轉回Mac主責，教練追問後才發現記憶沒同步更新，已修正並跟Mac同時間做的類似修正(commit`de76222c`)合併解衝突 ②回覆Mac凌晨來信，查證確認`distill_and_push_lenovo.ps1`從未接進聯想`settings.json`的Stop hook，回信已放進`cross-agent/inbox/mac/`。 |
@@ -212,91 +213,8 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-25 v132（Mac桌面版 Sonnet 5，Q1「總結」功能上線+context-overflow-guard改版+賈維斯標籤+VPS全面體檢升級）
 
-> 建立時間：2026-08-25 13:06 ~ 22:12（台灣時間，長場）
-> 上一棒：v131（同機同日下午）
-> 本棒主軸：**教練交辦Q1（小龍蝦總結功能）並全程授權「你是賈維斯，你決定」；下午教練回報Telegram出現一連串矛盾訊息，深入診斷後發現是小龍蝦自己編造假監控機制（非真實hook/cron），改版既有context-overflow-guard根治；教練要求區分「AI講的話」跟「系統自動發的話」，全機加賈維斯標籤；最後教練要求「全面看VPS」，完成一次真正的升級+修復+清理。**
-
-## 🎯 本場戰果
-
-### 1. ✅ Q1：小龍蝦「總結」功能上線（v130交辦，commit `9d1866e7`）
-新建`hooks/session-summary-trigger`：教練對小龍蝦說「總結」→蒸餾存檔(`sync-telegram-memory.sh --force`)+標記待清空+直發Telegram確認，不依賴模型配合(inject是fire-and-forget)。同時修好`do_clear_sessions()`對已被sqlite取代的`auth-profiles.json`缺乏容錯的既有小bug。順手處理教練指示：terminal-watchdog確認停用(已在disabled資料夾)、孔大哥/佩佩老師人設備份(kong/peipei獨立git repo，已commit本地，但push卡在遠端分支結構混亂——kong遠端跟workspace共用`mac-openclaw-workflows`同一repo但branch衝突，peipei完全沒設遠端，**尚未解決，留待下一棒**)。
-
-### 2. 🔴🔴🔴 深度診斷：下午context輪數混亂事件，真相是小龍蝦自己編造假機制
-教練貼出下午跟小龍蝦的完整對話記錄，問「賈維斯等級的思考，是否全面深入了解問題」。查證`dialog_round_counter.json`後發現**沒有任何hook/cron讀寫這個檔案**——小龍蝦當下只是口頭承諾建機制，實際上是自己心算輪數+編訊息（82%/3MB/4MB三個數字互相矛盾、4MB上限系統裡根本不存在），並非任何真實系統故障。同場也確認：我自己早上建的session-summary-trigger完全沒有觸發這場混亂（log證實13:50教練說「總結」時這支hook完全沒反應——因為真實訊息body有信封包裝`[Telegram coach id:...] coach: 內容`，我的觸發判斷沒剝掉信封，已修復commit`187a0f7b`）。
-
-### 3. 🎯 賈維斯決策：context-overflow-guard改版，取代小龍蝦的假機制（commit `20a63d33`）
-教練說「你是賈維斯，你決定」，改版既有hook：門檻從20/30/38改成教練指定的30/50/80/100；新增判斷只計教練本人真人訊息，排除heartbeat輪詢(3166次/天等級雜訊)/排程提醒/其他群組訊息；四個門檻都直發Telegram，統一引導教練說「總結」跟Q1功能形成完整閉環。12案例測試全過。`dialog_round_counter.json`標記停用留存查證。
-
-### 4. 🔧 教練要求：AI講的話跟系統自動發的話要分清楚，全機加「賈維斯」標籤
-教練舉報名系統官方通知為例，要求程式自動發的Telegram訊息要標明來源。全機盤點後統一加「🤖【賈維斯自動通知】」：`notify_coach.sh`統一出口(涵蓋7支cron呼叫者)+今日新建/改版的2支hook+既有3支hook(line-url-typo-guard/namecard-inbound/invoice-inbound)+2支現行排程腳本(junshi_task_worker.sh/vps_polling_healthcheck.sh)。commit `d889ac5c`(outer)+`faf4b0f95`(workspace)。
-
-### 5. 🔴 教訓：自己的測試腳本沒mock網路呼叫，重跑測試真的轟炸教練Telegram
-教練回報連續收到8則一模一樣的「收到總結」訊息，查log發現是我剛才重跑`test_session_summary_trigger_hook.js`造成的真實發送——這支測試從建立起就沒攔截Telegram API呼叫，今天重跑3次(建功能/修bug/驗證標籤)，只有第一次有提醒教練，後兩次忘記說明。已修復加上跟`test_context_overflow_guard_hook.js`同款的https攔截，commit`9279d6b4`。
-
-### 6. 🎯🎯 VPS全面體檢+修正（教練問「有需要修正嗎，例如升級」）
-- **OpenClaw升級**：2026.6.11→2026.6.34，用`--tag`明確版本號避開`openclaw@latest`會橫向跳線到不同release line(2026.7.1-2)的陷阱（跟Mac評估6.34時的警告同一個坑，VPS再次驗證）
-- apt系統套件更新29項(含3項安全更新)，SSH自動重啟仍正常
-- Docker清理：舊image 1.3GB + 孤兒volume 7GB(教練「OK」明確授權後執行，>1GB門檻不自主執行)
-- 移除沒在用的防火牆規則(8080)
-- **VPS git自主備份修復**：35天沒推送(最後commit 7/20)，根因是Docker更新後觸發git「dubious ownership」安全機制導致所有push靜默失敗。補commit 65個累積異動+merge遠端(SOUL.md衝突，查證遠端版本自己標記deprecated，保留VPS本地活躍版本)+成功推送，commit`1595638fb`
-- 清理5月舊備份檔(330MB，教練授權後執行)
-- 發現未處理：SSH偏鬆(PermitRootLogin+密碼登入+無fail2ban，教練裁示「不用管」)、VPS repo也缺.gitignore(50MB瀏覽器快取被誤commit，下次補)
-
-## 📋 下一場開工先做
-1. **kong/peipei備份仍未真正推上雲端**：kong遠端跟workspace repo共用`mac-openclaw-workflows`但branch衝突(都想用類似main的名字)，peipei完全沒設遠端——需要決定是開新repo還是換分支名，本地commit已安全但未離線備份
-2. Q1「總結」功能尚未比照做給佩佩老師的巴哈助理(記憶架構跟小龍蝦不同，需另外評估)
-3. VPS repo補`.gitignore`(清掉50MB瀏覽器快取誤commit)
-4. 承接v131：等朋友確認AI微論壇台中場RWD修復、Netlify額度下次校正約09-01~09-04
-5. 承接舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題
-
-## 🔑 本場commit
-`9d1866e7`(Q1總結hook)／`187a0f7b`(信封格式bug修復)／`20a63d33`(context-overflow-guard改版)／`d889ac5c`+`faf4b0f95`(賈維斯標籤)／`9279d6b4`(測試腳本mock修復)／VPS `1595638fb`(35天備份救回)
-
----
-
-# 軍師接力棒 · 2026-08-26 v133（Mac桌面版 Sonnet 5，名片系統從私有工具擴建成完整產業鏈媒合CRM）
-
-> 建立時間：2026-08-25 21:20 ~ 2026-08-26 00:07（台灣時間，長場）
-> 上一棒：v132（同機前一日）
-> 本棒主軸：**戰報系統小修正後，教練提出名片辨識系統(namecard-db)要做成賈維斯級的產業鏈媒合工具，從「內部私有搜尋頁」一路擴建成公開上傳+AI產業鏈媒合+跟進CRM+BNI會員標記+多名片自動裁切的完整系統，過程多次因教練實測回饋而返工修正，是真正落地可用的成果。**
-
-## 🎯 本場戰果
-
-### 0. 結繩領導學戰報小修正（commit`73d5f902b`）
-戰報卡片只留現役台北場，台南場資料保留但改列「歷史記錄」連結不刪除；台北損益平衡13→11人。已用Flask test_client驗證（密碼是公司統編，AI不碰，改注入session測試）。
-
-### 1. 名片系統公開上傳（commit`2a1d0b052`）
-既有`namecard-db`只是教練/孔大哥/佩佩老師從Amber私有雲丟照片的內部工具，`namecard.bymyway.com`早有tunnel但無登入保護。新增`/upload`路由複用既有PaddleOCR+MiniMax辨識管線，任何人都能上傳、辨識完直接收錄進同一資料庫。**過程中查出這個正式launchd服務(`com.coach.namecard-webapp`)長期缺少`ANTHROPIC_API_KEY`等環境變數**（plist只設NAMECARD_FOLDER/PORT，之前搜尋頁不呼叫AI才沒被發現），改用`source .env`模式修復。
-
-### 2. 產業鏈動態媒合系統（commit`7eed628ba`）
-教練提出完整願景：「大家一起貢獻名片，AI給精準的產業鏈媒合建議」，並給了三份素材——BNI官方533項專業清單(教練用Gemini提取，存於Downloads)、大台南南區AI小幫手既有的「682+產業全生態戰略總庫」(`industry_database.md`)、兩張教練提供的產業鏈範例圖(真誠產業圖九宮格/珠寶業產業鍊同心圓)。整合成905項標準分類詞庫(`build_taxonomy.py`→`taxonomy.json`)取代原本AI自由發揮的category文字。新建`chain_matcher.py`：AI判斷新名片能否補進現有產業鏈缺口，或建議組一條新產業鏈。**教練實測後兩度糾正修正**：①媒合角色太少(只有2-4個)，要求「至少8個」(九宮格規模)，改prompt+加重試機制修復LLM隨機性偶爾漏給角色的bug，重跑全部22張全數達標(commit`f13d50e24`) ②BNI會員狀態標記原本設計錯掛在「AI建議的抽象待招募缺口」上，教練點破「沒有聯絡資料標了也聯絡不到人，沒意義」，改掛在cards表(已有真實姓名電話的名片)身上，登入才能標記(commit`e005b4f41`)。
-
-### 3. 團隊登入+跟進紀錄簿+編輯/刪除
-簡單帳密登入(`/team/login`)：**教練帳號`bymyway`/`123457`**、佩君老師`0988004118`/`88888`，教練明訂「其他成員一律用手機號碼當帳號、預設密碼88888」，下次教練給名單直接照此模式建(`create_team_member.py`)。跟進紀錄簿(`/card/<id>/follow`)：階段(待邀約/已邀約/跟進中/已合作/婉拒/暫緩)+聯絡歷程。編輯(`/card/<id>/edit`)讓教練手動修正AI認錯的字(同音異字問題，如邱莉儒/邱立儒、鄧力瑋/鄧立偉)；「未辨識」(status=failed)名片可一鍵刪除。教練規則：上傳/查詢媒合完全公開不設限，但跟進/編輯/刪除/BNI標記需要登入。
-
-### 4. 上傳體驗優化：非同步+多名片自動裁切+圖片本機化
-- **非同步上傳**(commit`20048ed43`)：教練要求「不追求立即辨識，後台慢慢消化」，拿掉5張上限，`/upload`存檔即回應，`subprocess`非阻塞觸發`process_pending.py`背景worker逐張處理（事件觸發不是輪詢）
-- **一張照片拍多張名片自動裁切**(commit`d7cde90a0`，本場壓軸)：教練要求一次拍6~8張名片提升效率。實測確認MiniMax-M3有vision能力且邊界框判斷準確，新建`card_splitter.py`：AI視覺分析一張照片裡有幾張名片+各自邊界框，2張以上自動裁切成獨立圖片各自辨識+媒合。整合進`/upload`背景worker跟`watch_and_extract.py`(Amber監看)兩個入口，原始合照留`status='split'`佔位記錄避免重複偵測、但不算真實名片不會顯示在首頁。用真實4合1名片合照端到端驗證：自動偵測4張、裁切、逐一辨識全部正確，`watch_and_extract.py`版本還額外驗證了dedup機制正確合併重複名片。
-- **圖片本機化+HEIC顯示修復+救回遺失圖片**(commit`82a099280`)：Amber私有雲SMB沒掛載時舊照片完全看不到，19張既有照片複製進`team_uploads/`不再依賴即時掛載。教練回報首頁多筆名片顯示不出來，查證是兩個根因：HEIC格式瀏覽器無法原生顯示(改即時轉JPEG+快取)；4筆記錄的圖檔案從未真正存在(在Amber資料夾找到同編號的原始合照，確認是4張名片拼貼照片，重新照內容裁切救回)。
-
-### 5. 架構認知釐清
-教練問「上傳的名片存在bymyway.com官網還是Mac裡」——誠實說明`namecard.bymyway.com`只是Cloudflare Tunnel把網域導向Mac mini本機，資料(照片+SQLite)完全存在本機`namecard-db/`目錄，沒有雲端備份。教練同時表態**以後不再透過Amber私有雲上傳，改用`/upload`網頁直接丟照片**（更有效率），Amber路徑保留但預期使用頻率會降低。
-
-## ⚠️ 本場教訓
-1. **不要把用戶標記類功能設計掛在AI生成的抽象概念上**——BNI會員狀態一開始掛在「AI建議但沒有真人對應的待招募角色」，教練一句「沒有聯絡資料你聯絡不到人，標了也沒意義」點破設計錯誤。任何「人工標記/跟進」類功能，都要先確認掛載對象是「有實體資料可用」的東西，不是AI憑空想像的佔位符。
-2. **AI視覺(vision)能做的事比想像中更多**——測試前以為要用OpenCV等傳統CV演算法做多名片邊界偵測，一測發現MiniMax-M3直接餵圖片就能準確回傳邊界框比例座標，比手動裁切還精準。遇到「偵測物件位置」類需求，先測試現有多模態模型能不能直接做，不用急著上傳統CV方案。
-3. **正式launchd服務環境變數要跟.env來源一致**——namecard-webapp長期缺少API金鑰環境變數卻沒被發現，因為舊功能(純搜尋)不需要呼叫AI。新增會呼叫AI的路由前，先確認正式服務process的環境變數是否完整，不能只在自己的bash session裡source .env測試就當作正式環境也正常。
-
-## 📋 下一場開工先做
-1. 5筆name/company為None的needs_review名片，教練可能會陸續用`/edit`修正或詢問進度
-2. 教練說會陸續提供其他團隊成員手機號碼，直接用`create_team_member.py`建帳號(手機號碼當username+預設密碼88888)
-3. 承接v132：kong/peipei備份未推上雲端、Q1功能未比照給佩佩老師、VPS repo補.gitignore
-4. 承接舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題
-
-## 🔑 本場commit（namecard-db，依時間序）
-`73d5f902b`(戰報系統)／`2a1d0b052`(公開上傳)／`7eed628ba`(產業鏈媒合初版)／`20048ed43`(非同步上傳+媒合按鈕+照片本機化)／`f13d50e24`(產業鏈至少8角色+編輯刪除)／`e005b4f41`(BNI標記改掛名片本身)／`82a099280`(HEIC轉檔+救回遺失圖片)／`d7cde90a0`(多名片自動裁切)
+> 📦 v132+v133完整內容已封存：（Mac桌面版，Q1總結功能+context-overflow-guard改版+名片系統CRM擴建）
 
 ---
 
@@ -328,6 +246,51 @@ Mac軍師來信問`memory/verbatim/lenovo/`為何從7/8後再無新檔案。查�
 
 ## 🔑 本場commit
 `8f7c9dc6`(ezPay記憶合併)／`620a99ac`(回信Mac)／`30a49989`(總結hook PowerShell版+註冊)／`1c72e605`(claude-brain記憶：jq缺失修復記錄)
+
+---
+
+# 軍師接力棒 · 2026-08-26 v135（Mac桌面版 Sonnet 5，名片系統BNI Connect大量匯入+MiniMax額度事故+路徑大全憑證全面稽核）
+
+> 建立時間：2026-08-26 00:31 ~ 10:08（台灣時間，長場）
+> 上一棒：v134（聯想Windows，同日凌晨）
+> 本棒主軸：**BNI Connect大台南南區5分會430位會員名冊匯入名片系統，過程中因產業鏈媒合批次任務設計缺陷（系統提示詞未做快取）短時間燒掉全機共用MiniMax帳號150萬token額度，教練首次遇到「帳號有史以來第一次被打滿」，情緒強烈；順帶揭露路徑大全憑證層文件本身有系統性缺口（總表列名沒附實際數值），全面稽核補齊9組真實憑證。**
+
+## 🎯 本場戰果
+
+### 1. 跨機信箱處理（開工承接）
+處理小龍蝦來信（verbatim蒸餾bug查證：ACER腳本誤歸檔已修復+發現機制只抓CLI/Code面板不抓Desktop一般聊天）、跟進聯想的跨機同步4層根因報告（補上Mac版push前先pull--rebase的修復）、讀取ACER回信（確認7/1整組hooks設定消失非bug非介面問題）。
+
+### 2. BNI Connect大台南南區5分會430人匯入名片媒合系統（commit`b6361b3f6`）
+教練交辦BNI Connect「管理會員」頁面（真富/真愛/真誠/真鑫/真鑽5分會）爬取全部會員名冊。爬回508筆原始紀錄，consolidate成430人（92現任+338前會員），跨分會轉會歷程也正確抓出（如林尹渰真富→真鑫）。全數以`bni_status=bni_member`寫入`cards`表，`bni_note`標記現任分會或前會員曾隸屬分會。**教練中途發現我誤判「網址已列出全部分會」，糾正後改用逐分會點選+搜尋的正確方法**。
+
+### 3. 產業鏈媒合分析（教練交辦「428位新加入排進去」）+ MiniMax額度事故（🔴🔴🔴🔴案例65）
+執行`chain_matcher.py`批次媒合，02:14啟動跑到02:38（215人）、09:02重啟跑到09:31（再301人）兩度撞到`RateLimitError: Token Plan usage limit reached`。教練追問後查出真因：系統提示詞`CHAIN_MATCH_PROMPT`(905項分類詞庫)約5140 token，每次呼叫都完整重複傳送、完全沒做Anthropic API的`cache_control`快取，300多次呼叫燒約150萬token。教練登入MiniMax後台確認：這是他**全部服務共用的唯一一組帳號**（小龍蝦/BNI大台南小幫手/教練都在想什麼/VPS小龍蝦/namecard-db全部共用），帳號「有史以來第一次5小時內打滿4500次額度」，直接影響正在服務真人的機器人，教練情緒強烈。已修復：`chain_matcher.py`加`cache_control:ephemeral`快取（commit待查`main`分支）、`run_chain_match.py`加`PACE_SLEEP_SEC=3`節流。**教練明確裁示：媒合剩127人完全停止自動重跑，要教練親口說「繼續」才能再動**。
+
+### 4. 路徑大全憑證層全面稽核（教練點名要求，非AI主動發現）
+查MiniMax金鑰時一度誤判「路徑大全查不到、可能是不同帳號」，教練嚴正糾正——路徑大全本來就該有、AI自己造成查不到的缺口不能推給教練。全面稽核後補齊**9組真實憑證數值**：MiniMax Subscription Key（登入`platform.minimax.io/console/plan`查證`sk-cp-...QnvlC8`，跟`namecard-db/.env`完全一致，Yearly Plus方案~1.7B token/月）、Telegram三隻bot（main/kong/peipei）、LINE三隻bot（default/bni_tainan/jiaolian_thoughts）、GitHub（`~/.git-credentials`裡的token）。核對確認Netlify/Cloudflare/WordPress原本就有正確記錄，非缺口。
+
+### 5. 名片系統UI三項修復（教練回饋，commit`40145c955`）
+BNI狀態燈號改三色（🟢綠=現任會員/🔵藍=前會員/🔴紅=非會員，原本只有藍紅兩色分不出現任/前會員）、字體從12px放大到15px粗體、原本無圖示的「重置」按鈕改成「↺清除標記」並補回被誤刪的手動標記按鈕。已用Chrome開啟正式站給教練確認（Stop hook截圖鎖規則要求）。
+
+### 6. 94位會員電話/Email複用既有資料+真誠分會108人新抓（commit`d328f85de`+`e9abca48e`）
+教練提醒「開發票時已收集過94人電話，不要重複收集」，比對後92人直接命中430人名單，2人因姓名格式差異(暱稱/姓名順序顛倒)加姓氏模糊比對後全數命中。真誠分會另外用BNI Connect個人編輯頁（發現同步XHR+regex擷取`memberPhoneNumber`/`memberMobileNumber`/`memberEmail`欄位的可行方法，PDF報表格式讀不到內容此路不通）抓到108人。430人中現有181人有電話/Email。
+
+## ⚠️ 本場最重要教訓
+
+1. **批次AI呼叫任務動手前必查三件事**：系統提示詞是否重複且未加`cache_control`快取／呼叫規模對共用帳號額度的影響／能否先用小樣本測試。詳見試金石案例65。
+2. **「幾乎無限流量」不是「真正無限流量」**——教練親口澄清這個長期認知落差，MiniMax帳號有真實的月配額(~1.7B token)，不能無腦批次高頻呼叫。
+3. **查證共用帳號/憑證資訊時，教練的直接陳述是最高優先真相來源**——不該因為某份文件查不到就懷疑教練記錯，文件缺口要立刻補上而非拿文件缺口質疑教練。
+4. **路徑大全類主索引文件，「由XX系統管理」這種指向式描述必須一併附上實際查詢方法**，否則等於留了一個「看起來有記錄、實際查不到值」的假象缺口——這次全面稽核揪出9組都有這個問題。
+
+## 📋 下一場開工先做（教練2026-08-26 10:08親口指示，開新對話框執行）
+
+1. **收集BNI Connect所有「前會員」資料**——目前430人裡338人已標記前會員，但真富/真愛/真鑫/真鑽4分會392筆的電話/Email尚未收集，方法見`namecard-db/bni_connect_import/HANDOFF_剩餘電話收集方法.md`
+2. **收集大台南南區所有「來賓」資料**——全新任務，教練說可能有幾千筆，需要姓名/專業別/電話/Email+曾經來賓的時間點，BNI Connect上的入口待查找
+3. **🔴3小時之內完全不要碰MiniMax媒合系統**（教練10:08下令，約13:00前不得跑`run_chain_match.py`），純資料收集，「一次就做對」不要重複搜尋同樣的人
+4. 產業鏈媒合剩127人，等教練明確說「繼續」才能重跑（已修復cache_control+節流）
+
+## 🔑 本場commit
+`91c3e7604`(跨機verbatim查證)／`24a3e0ac3`(push race condition修復)／`b6361b3f6`(430人BNI Connect匯入)／`a9a0501b6`(ACER回信歸檔)／`d328f85de`(94人電話複用)／`093317616`(節流)／`e9abca48e`(真誠108人電話+交接文件)／`40145c955`(UI三色燈號)／`aff21e902`(chain_matcher快取修復+憑證層補6組)／`f193a4eba`(GitHub憑證補齊)
 
 
 ---
