@@ -128,7 +128,13 @@ def match_card_to_chain(conn, client: anthropic.Anthropic, card_id: int, model: 
         message = client.messages.create(
             model=model,
             max_tokens=2048,
-            system=CHAIN_MATCH_PROMPT,
+            system=[
+                {
+                    "type": "text",
+                    "text": CHAIN_MATCH_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[{"role": "user", "content": [{"type": "text", "text": prompt_content}]}],
         )
         raw_text = "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
