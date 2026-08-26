@@ -1,8 +1,12 @@
 """
-把2026-08-26匯入的428位BNI Connect會員(無名片照片)跑一次AI產業鏈媒合，
-排進chains頁面的九宮格。教練交辦後就去睡覺，要求「卡住要自己有呼叫機制」，
-所以這支腳本比backfill_chain_match.py多了：重試、連續失敗自動通知教練、
-逐筆進度落地成可恢復的log(重跑會自動跳過已完成的)。
+2026-08-26教練事故後改版：批次跑全部428人一次燒了150萬token（案例65），
+教練當場拍板新規則——不再預先批次媒合，改成`/card/<id>/match`手動按鈕、
+誰要看誰才觸發（此按鈕在app.py/index.html早就存在，本場查證確認可正常運作）。
+
+這支腳本**只保留給現任會員**（bni_note含「現任」，約89~92人）用，因為這批
+是教練指定「需要預先媒合」的例外，其餘前會員(335人)一律不再用這支腳本批次跑，
+只能透過網頁手動點「媒合」按鈕逐一觸發。重試、連續失敗自動通知教練、
+逐筆進度落地成可恢復的log(重跑會自動跳過已完成的)等既有安全機制保留不動。
 """
 import subprocess
 import sys
@@ -59,7 +63,7 @@ def match_with_retry(conn, client, card_id: int, model: str) -> dict:
 
 def main() -> None:
     LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    log("=== BNI Connect 428人 產業鏈媒合開始 ===")
+    log("=== BNI Connect 現任會員 產業鏈媒合開始（前會員已排除，改走手動按鈕） ===")
     conn = db.get_conn()
     client = anthropic.Anthropic()
 
@@ -67,9 +71,10 @@ def main() -> None:
         """SELECT id, name, company, bni_note FROM cards
            WHERE image_filename LIKE 'bniconnect\\_\\_%' ESCAPE '\\'
            AND status = 'ok'
+           AND bni_note LIKE '%現任%'
            ORDER BY id"""
     ).fetchall()
-    log(f"目標名單共 {len(cards)} 人")
+    log(f"目標名單（僅現任會員）共 {len(cards)} 人")
 
     done, skipped, failed = 0, 0, 0
     consecutive_fail = 0
@@ -109,9 +114,9 @@ def main() -> None:
 
     conn.close()
     summary = (
-        f"BNI Connect產業鏈媒合完成：428人名單中，本次新處理{done}人、"
-        f"已有結果跳過{skipped}人、失敗{failed}人。"
-        f"每個人在媒合頁面會標示現任會員或前會員及所屬分會。"
+        f"BNI Connect現任會員產業鏈媒合完成：目標{len(cards)}人中，本次新處理{done}人、"
+        f"已有結果跳過{skipped}人、失敗{failed}人。前會員一律不再批次跑，改由網頁"
+        f"手動點「媒合」按鈕逐一觸發。"
     )
     log(f"=== {summary} ===")
     notify_coach(summary)
