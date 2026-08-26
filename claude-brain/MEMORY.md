@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 macOS用ps -o rss量測記憶體會嚴重低估，跟Activity Monitor可差10倍以上(2026-08-27)](reference_macos_ps_rss_vs_footprint_2026-08-27.md) — RustDesk監控腳本6週來門檻形同虛設的根因，改top -stats mem才對得上教練看到的數字
 - [🔴🔴🔴🔴🔴 MiniMax批次呼叫紅線：程式碼硬上限400次/5小時，越線自動中止+通知(2026-08-27)](feedback_minimax_batch_call_redline_guard_2026-08-27.md) — 教練列為僅次於硬碟被刪的第二嚴重事故後拍板；scripts/minimax_batch_guard.py已接上namecard-db三個呼叫點並實測驗證
 - [🎯 名片系統媒合永久改手動觸發：現任92人例外預先媒合，其餘按鈕才呼叫AI(2026-08-27)](project_namecard_manual_trigger_matching_design_2026-08-27.md) — 案例65額度事故後教練拍板定案，/find搜尋頁+guest媒合入口已上線
 - [🔧 BNI Connect「地區-查看來賓」報表正確路徑+職業欄位證明+SpreadsheetML(.xls)解析法(2026-08-27)](reference_bni_connect_guest_report_navigation_2026-08-27.md) — 教練糾正「來賓一定有專業別」查證屬實，含8分會完整名單(比原知5個多3個)
