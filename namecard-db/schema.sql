@@ -93,3 +93,17 @@ CREATE TABLE IF NOT EXISTS follow_up_logs (
 );
 
 CREATE INDEX IF NOT EXISTS idx_follow_up_logs_followup ON follow_up_logs(follow_up_id);
+
+-- BNI Connect大台南南區「來賓」名單(訪客，非會員)，來源：地區-查看來賓報告
+-- 同一人常有多筆訪問紀錄(不同分會/日期)，依電話去重後每人一筆
+CREATE TABLE IF NOT EXISTS guests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    mobile TEXT,
+    email TEXT,
+    source TEXT DEFAULT 'bniconnect_region_visitor_report',
+    created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_guests_name ON guests(name);
+CREATE INDEX IF NOT EXISTS idx_guests_mobile ON guests(mobile);
