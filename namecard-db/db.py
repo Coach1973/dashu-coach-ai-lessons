@@ -25,6 +25,12 @@ def init_db() -> None:
         conn.execute("ALTER TABLE cards ADD COLUMN bni_status TEXT DEFAULT 'unknown'")
     if "bni_note" not in existing_cols:
         conn.execute("ALTER TABLE cards ADD COLUMN bni_note TEXT")
+    if "source_guest_id" not in existing_cols:
+        conn.execute("ALTER TABLE cards ADD COLUMN source_guest_id INTEGER REFERENCES guests(id)")
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_cards_source_guest_id "
+        "ON cards(source_guest_id) WHERE source_guest_id IS NOT NULL"
+    )
     conn.commit()
     conn.close()
 

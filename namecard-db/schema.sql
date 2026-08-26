@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS cards (
                                  -- AI建議的抽象待招募角色(chain_members.is_gap=1)
                                  -- 沒有聯絡方式，標示會員與否沒有實際用途(教練親定)
     bni_note TEXT,               -- 選填備註，如「真誠分會」
+    source_guest_id INTEGER REFERENCES guests(id),  -- 由guests表「媒合」按鈕
+                                 -- 首次點擊時轉入的來賓，避免重複轉入同一人
     created_at TEXT DEFAULT (datetime('now'))
 );
 
@@ -37,6 +39,8 @@ CREATE TABLE IF NOT EXISTS matches (
 CREATE INDEX IF NOT EXISTS idx_cards_name ON cards(name);
 CREATE INDEX IF NOT EXISTS idx_cards_company ON cards(company);
 CREATE INDEX IF NOT EXISTS idx_cards_category ON cards(category);
+-- idx_cards_source_guest_id：只在db.py的init_db()建立(既有DB要先ALTER加欄位
+-- 才能建索引，寫在這裡對舊DB會在欄位補上前就先執行而報錯)
 
 -- 產業鏈：AI動態判斷/累積形成的產業鏈主題（不是預先寫死，隨名片收錄逐漸成形）
 CREATE TABLE IF NOT EXISTS industry_chains (

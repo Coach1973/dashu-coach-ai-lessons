@@ -209,6 +209,80 @@ def chains_page():
     return render_template("chains.html", chains=chains, logged_in=bool(session.get("team_username")))
 
 
+@app.route("/find")
+def find_page():
+    """簡約搜尋頁：教練打一個關鍵字，同時查cards(名片/BNI會員)+guests(來賓)，
+    每筆結果都有「媒合」按鈕——按下去才呼叫AI，平常瀏覽/搜尋完全不耗MiniMax額度。"""
+    query = request.args.get("q", "").strip()
+    results = []
+    if query:
+        conn = db.get_conn()
+        like = f"%{query}%"
+        card_rows = conn.execute(
+            """SELECT id, name, title, company, mobile, email, bni_status, bni_note
+               FROM cards
+               WHERE status != 'failed'
+                 AND (name LIKE ? OR company LIKE ? OR title LIKE ?
+                      OR standard_category LIKE ? OR category LIKE ?
+                      OR mobile LIKE ? OR email LIKE ?)
+               ORDER BY name""",
+            (like, like, like, like, like, like, like),
+        ).fetchall()
+        guest_rows = conn.execute(
+            """SELECT id, name, profession, company, mobile, email, chapter
+               FROM guests
+               WHERE name LIKE ? OR company LIKE ? OR profession LIKE ?
+                     OR mobile LIKE ? OR email LIKE ?
+               ORDER BY name""",
+            (like, like, like, like, like),
+        ).fetchall()
+        conn.close()
+        for r in card_rows:
+            results.append({"source": "card", **dict(r)})
+        for r in guest_rows:
+            d = dict(r)
+            results.append({
+                "source": "guest", "id": d["id"], "name": d["name"],
+                "title": d["profession"], "company": d["company"],
+                "mobile": d["mobile"], "email": d["email"], "bni_note": d["chapter"],
+            })
+    return render_template("find.html", query=query, results=results)
+
+
+@app.route("/guest/<int:guest_id>/match")
+def guest_match(guest_id):
+    """來賓版「媒合」入口：第一次點擊才把這位來賓轉成一筆card(用source_guest_id
+    記住避免重複轉入)，接著直接沿用既有card媒合流程，不重造一套邏輯。"""
+    conn = db.get_conn()
+    guest = conn.execute("SELECT * FROM guests WHERE id = ?", (guest_id,)).fetchone()
+    if guest is None:
+        conn.close()
+        return "找不到這位來賓", 404
+
+    existing_card = conn.execute(
+        "SELECT id FROM cards WHERE source_guest_id = ?", (guest_id,)
+    ).fetchone()
+    if existing_card:
+        card_id = existing_card["id"]
+    else:
+        bni_note = f"BNI來賓・{guest['chapter']}分會" if guest["chapter"] else "BNI來賓"
+        cur = conn.execute(
+            """INSERT INTO cards
+               (image_filename, name, company, category, standard_category,
+                mobile, email, bni_status, bni_note, status, source_guest_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?, 'unknown', ?, 'ok', ?)""",
+            (
+                f"guest__{guest_id}", guest["name"], guest["company"],
+                guest["profession"], guest["profession"],
+                guest["mobile"], guest["email"], bni_note, guest_id,
+            ),
+        )
+        conn.commit()
+        card_id = cur.lastrowid
+    conn.close()
+    return redirect(url_for("card_match", card_id=card_id))
+
+
 def team_login_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
