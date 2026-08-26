@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-27 00:30:58**
+> **最後同步：2026-08-27 00:35:05**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,7 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴🔴🔴 | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：前會員+來賓資料收集已完成** | ✅資料收集2026-08-26本場完成，🔒媒合任務仍鎖定至13:00前不得碰 | 詳見v135完整戰果+本場戰果。**教練2026-08-26 10:08親口下令**：①收集BNI Connect裡「所有前會員」的資料 ②收集「所有來賓」資料，兩者都存進資料庫 ③3小時內不得碰MiniMax媒合系統 ④一次就做對，不重複搜尋同樣的人——**本場全數達成**：①真富/真愛/真鑫/真鑽4分會392筆會員電話/Email已100%收集完成，寫回`cards`表(用`namecard-db/bni_connect_import/import_contact_batches.py`) ②來賓資料庫：從「地區-查看來賓」報告(2015~今，涵蓋5分會)完整抓取3712筆訪問紀錄，用phone-diff交叉驗證做到100%完整覆蓋（無遺漏），依電話去重後3216位不重複來賓、**全數具備電話+email**，新建`guests`表匯入(`namecard-db/bni_connect_import/import_guests.py`)。commit`195611245`(前會員)+`f9b344bfe`(來賓)。**已知小缺陷（僅供知悉，非錯誤）**：guests表中5筆(0.16%)電話欄位過短(如"0"/"09")，這是BNI Connect來源資料本身的缺漏，非抓取遺漏，未擅自刪除保留原樣。產業鏈媒合剩127人(428人中已301人)，`chain_matcher.py`已修復加cache_control快取+`run_chain_match.py`加3秒節流，**仍完全停止自動重跑，要等教練親口說「繼續」才能再動**（鎖定至09:52+3hr≈13:00前）。**🔴🔴🔴🔴事故重點回顧**：短時間內對428人批次呼叫AI(系統提示詞未做cache_control)燒約150萬token，打到教練與全機服務共用的唯一MiniMax帳號額度上限，**任何批次AI呼叫任務動手前必讀試金石案例65**。 |
+| ✅ | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：教練拍板改「手動觸發媒合」設計，已上線/find搜尋頁** | ✅2026-08-26本場完成，設計定案並上線 | 詳見v135/v136完整戰果+本場v137戰果。**教練這場定案新規則**：不再對任何一批人批次自動媒合，改成**手動點按鈕才呼叫AI**——現任92人(唯一預先批次媒合的例外，已100%完成)之外，前會員336人＋來賓3216人一律等教練或使用者實際需要時才觸發。已上線`/find`統一搜尋頁（cards+guests雙表搜尋，零AI呼叫）＋`/guest/<id>/match`來賓版媒合入口（首次點擊才轉一筆card+跑媒合，`source_guest_id`防重複轉入），`run_chain_match.py`已改成只鎖現任會員範圍，不會再被誤觸批次跑全部人。**來賓資料重大補正**：教練糾正「BNI Connect來賓一定有專業別」，查證屬實——v136只抓了姓名/電話/email三欄，漏了報表本來就有的公司/職業/分會欄位，已用教練提供的完整報表(.xls/SpreadsheetML)重新解析回填，3216人中3210人(99.8%)已補上職業資料。**額外揪出的資料品質bug**：教練從/find頁面發現田伸強/林尹渰等4人BNI身分沒標示，查證是`parse_and_import.py`的INSERT OR IGNORE遇檔名撞名時靜默跳過、且無UPDATE補救路徑，4人資料已修正+全428人重新稽核0遺漏+腳本已加rowcount==0的UPDATE fallback防再犯。 |
 | ✅ | **ACER機49天未開機導致settings.json全部hooks消失，本場（教練親自開機）重裝七支hook+跟進聯想總結修復** | ✅2026-08-26 ACER本場完成並實測 | 教練親自打開ACER下指令，這正是Mac稍早報告裡說「唯一解法」的那個時刻。查證確認`~/.claude/settings.json`原本完全沒有`hooks`區塊（開工六步驟/截圖鎖/跨機信箱掃描/總結上傳全部沒註冊，跟聯想的jq依賴問題不同根因）。同時也第一次真正走完「開工六步驟」被教練當場糾正前的落差：本場一開始跳過血淚試金石案例庫直接動手，被教練點出才回頭補讀，讀到案例60（claude-in-chrome連錯裝置）跟HEARTBEAT.md「截圖禁用」規則，直接解釋了稍早bigtree部署過程中一直卡在截圖的原因。跑`scripts/setup_windows_hooks.ps1`重裝七支hook時，**發現這支安裝腳本本身有bug**：`ConvertFrom-Json -AsHashtable`在這台機器的PowerShell 5.1（非pwsh 7）會拋例外，觸發catch分支把原有`env`/`permissions`/`model`等設定全部清空，只剩新寫的hooks——靠腳本自帶的備份救回，手動合併寫回。額外把聯想剛寫好的`summary_upload_trigger.ps1`一併加進ACER的UserPromptSubmit，四情境（總結/總結上傳觸發、年度總結報告/閒聊不誤觸發）全部用假指令實測通過。本場另完成：大樹小講(bigtree-tw)新增8/26早半場「晨光美學」10:00-12:30(地址同步改4樓)，已推GitHub+Netlify雙邊驗證上線；回信Mac完成verbatim/Stop hook查證。**下一棒待辦**：①`event-signup`後台`event.db`仍未同步8/26早半場資料，現場QR簽到當天可能路由錯場次，需請Mac或聯想在能碰到該DB的機器上補②`setup_windows_hooks.ps1`的PS5.1 bug本場只記錄未回頭修，下次任何機器要跑這支installer前應先查`$PSVersionTable.PSVersion`。詳見`claude-brain/project_acer_dormant_49days_2026-08-26.md`+`claude-brain/project_acer_hooks_restored_2026-08-26.md`。 |
 | ✅ | **聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復** | ✅2026-08-26聯想完成並實測 | 教練質疑「我每次都講總結上傳，怎麼可能沒紀錄」，查證屬實：`summary_upload_trigger.sh`靠`/usr/bin/jq`解析stdin，聯想這台機器沒裝jq，指令找不到→PROMPT變空字串→關鍵字比對永遠比對不到→整支hook靜默不觸發，不報錯教練也看不出異狀。改寫`scripts/summary_upload_trigger.ps1`(PowerShell原生`ConvertFrom-Json`，不依賴jq)，7情境模擬測試全過已註冊進`~/.claude/settings.json`。同場也查證另兩支相關機制：`distill_and_push_lenovo.ps1`從未被註冊過（非壞掉，是從沒接上）、Windows Task Scheduler的`ClaudeMemorySync`任務也停用超過2個月。詳見試金石案例64。 |
 | ✅ | **ezPay發票工作歸屬記憶更正+Mac Stop hook狀態跨機查證回信** | ✅2026-08-26聯想完成 | ①`project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16.md`舊記憶停在「聯想負責」，實際08-18已因聯想操作卡住(原生彈窗凍結)轉回Mac主責，教練追問後才發現記憶沒同步更新，已修正並跟Mac同時間做的類似修正(commit`de76222c`)合併解衝突 ②回覆Mac凌晨來信，查證確認`distill_and_push_lenovo.ps1`從未接進聯想`settings.json`的Stop hook，回信已放進`cross-agent/inbox/mac/`。 |
@@ -256,6 +256,47 @@ v134完整內容封存至`handoff_archive/handoff_v134_archived_2026-08-26.md`�
 
 ## 🔑 本場commit
 `195611245`(4分會392筆會員電話/Email)／`f9b344bfe`(來賓3712筆收集+guests表匯入)／`48c9d2942`(接力棒更新)
+
+---
+
+# 軍師接力棒 · 2026-08-26 v137（Mac桌面版 Sonnet 5，媒合改手動觸發設計定案+來賓職業資料補正+/find搜尋頁上線+4人分類遺漏修復）
+
+> 建立時間：2026-08-26 13:45 ~ 2026-08-27 00:28（台灣時間，長場）
+> 上一棒：v136（Mac桌面版，同日上午）
+> 本棒主軸：**教練針對案例65額度事故拍板永久解法——媒合全面改成人點按鈕才觸發，AI不再自動批次跑；過程中發現並修正兩個資料品質問題：來賓漏抓職業欄位、4位會員BNI分類被靜默漏寫。**
+
+## 🎯 本場戰果
+
+### 1. MiniMax媒合設計定案：只留現任會員預先媒合，其餘一律手動觸發（commit`f7b4c1b52`）
+教練裁示「不要再把我的額度占完...重新製作一個按鈕，叫媒合，改成手動觸發，誰需要時再媒合。需要預先媒合的就是現有的92個會員」。查證發現`/card/<id>/match`手動按鈕其實早就存在(index.html已有連結)，真正的問題是`run_chain_match.py`被拿去對全部428人批次硬跑。已把該腳本改成只鎖定現任會員(SQL加`bni_note LIKE '%現任%'`)，補跑剩餘23人後**92位現任會員100%媒合完成、0失敗**；前會員336人從此不會再被批次腳本掃到，只能靠網頁手動點擊觸發。
+
+### 2. 來賓資料重大補正：職業/公司/分會欄位補齊（commit`a16323030`）
+教練糾正「connect的來賓是有專業別的，所以請您重新查詢，不可能沒有專業別」——查證屬實，v136只抓了姓名/電話/email三欄，漏了「地區-查看來賓」報告本來就有的公司/職業/分會欄位。花了不少時間才在BNI Connect介面裡重新定位到正確報表(`reportsHome`→地區結構→`ui-tabs-5`查看來賓，含Profession篩選欄位)，最後教練直接匯出完整報表(.xls，實為SpreadsheetML格式)給我解析，3216人全數比對回填、3210人(99.8%)已有職業資料。同時擴充`query.py`搜尋範圍涵蓋`guests`表（commit`f2b0cb778`），教練點明任務本質：「方便我隨時可以找到人，來組成產業服務鍊或是連絡一起來組團隊」。
+
+### 3. 新增/find簡約搜尋頁+來賓版媒合入口（commit`8fb15419d`）
+教練要求「簡約大方好看的搜尋界面...我按媒合時，就可以去使用AI，這才不會爆掉」。新增：
+- `/find`：統一搜尋cards+guests，結果卡片含身分標籤(🟢現任/🔵前會員/🧑‍🤝‍🧑來賓/📇名片)+聯絡方式+媒合按鈕，純瀏覽零AI呼叫
+- `/guest/<id>/match`：來賓版媒合，首次點擊才把該來賓轉一筆card(`cards.source_guest_id`+partial unique index防重複轉入)，接著沿用既有card媒合邏輯不重造一套
+- 已用真實guest(id=1)端到端測試：首次點擊建立媒合結果，重複點擊確認302導回同筆card不重複扣token
+
+### 4. 🔴資料品質bug：4位會員BNI分類被靜默漏寫，已修復+硬化腳本（commit`36648c277`）
+教練從`/find`頁面親自發現田伸強(前會員/真富)、林尹渰(現任/真鑫)完全沒標示BNI身分，查證後在430人名單裡揪出4筆(另含王聖凱/朱正文)`bni_status='unknown'`且`bni_note`空白。**根因**：`parse_and_import.py`用`INSERT OR IGNORE`寫入，遇到`image_filename`(分會+姓名組成)撞到既有列時被靜默跳過，且完全沒有UPDATE補救路徑——無法百分之百確認歷史上是哪個環節造成撞名(git只有一次提交紀錄，不像是重跑造成)，但用`raw_*.txt`重新跑`consolidate()`驗證出正確標籤後直接UPDATE修正4筆，並對全部428人重新稽核(0筆遺漏、0筆重複)。已修復腳本邏輯：`INSERT OR IGNORE`後檢查`cursor.rowcount==0`，是的話改用同一把filename做UPDATE，確保以後同款撞名不會再靜默漏寫。
+
+## ⚠️ 本場最重要教訓
+
+1. **教練糾正「查不到不代表不存在」時，先假設自己漏抓欄位，而非急著查證失敗**——來賓職業欄位一開始就在報表裡，是我抓取範圍不夠廣，不是資料源頭真的沒有。
+2. **手動觸發媒合的設計，優先重用既有基礎設施**——`/card/<id>/match`早就是手動按鈕，不需要重新發明；guest的媒合改成「首次點擊時轉一筆card」而非另建一套平行邏輯，複用了chain_matcher/card_match.html全部既有程式碼。
+3. **`INSERT OR IGNORE`沒有搭配rowcount檢查等於埋了一顆不會報錯的地雷**——這次4人分類遺漏完全零錯誤訊息，是教練自己肉眼比對搜尋結果才發現的，任何用`OR IGNORE`類SQL語法的批次寫入都該養成檢查受影響筆數的習慣。
+4. **教練在瀏覽器裡帶著我一起找到正確報表入口(`reportsHome`的地區結構`ui-tabs-5`)**——BNI Connect介面極深，光靠自己盲點很花時間，教練最終直接給URL片段+匯出檔案，比我自己摸索更有效率。
+
+## 📋 下一場開工先做
+
+1. 產業鏈媒合剩127人(前會員，428人中現任92人已100%完成)，維持**只能靠`/find`頁面手動點擊觸發**，不再批次跑
+2. 3216位來賓現在都有職業資料，理論上都能透過`/guest/<id>/match`按需媒合，但尚未大量測試——教練或使用者實際用起來若有問題再回報
+3. 承接v135/v136舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題、OpenClaw 6.34升級教練決定、孔大哥/佩佩老師備份repo衝突、VPS缺.gitignore、event-signup後台8/26早半場event.db同步
+
+## 🔑 本場commit
+`f7b4c1b52`(run_chain_match.py只鎖現任會員)／`a16323030`(guests表補職業/公司/分會)／`f2b0cb778`(query.py搜尋擴及guests)／`8fb15419d`(/find搜尋頁+guest媒合路由)／`36648c277`(4人分類遺漏修復+腳本硬化)
 
 
 ---
