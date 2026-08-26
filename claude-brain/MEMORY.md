@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🎯 名片系統媒合永久改手動觸發：現任92人例外預先媒合，其餘按鈕才呼叫AI(2026-08-27)](project_namecard_manual_trigger_matching_design_2026-08-27.md) — 案例65額度事故後教練拍板定案，/find搜尋頁+guest媒合入口已上線
+- [🔧 BNI Connect「地區-查看來賓」報表正確路徑+職業欄位證明+SpreadsheetML(.xls)解析法(2026-08-27)](reference_bni_connect_guest_report_navigation_2026-08-27.md) — 教練糾正「來賓一定有專業別」查證屬實，含8分會完整名單(比原知5個多3個)
+- [🔴🔴 INSERT OR IGNORE不查rowcount會靜默漏寫資料，零錯誤訊息(2026-08-27)](feedback_insert_or_ignore_silent_failure_2026-08-27.md) — 4位BNI會員分類憑空消失，教練肉眼比對搜尋結果才發現
 - [🔧 javascript_tool爬取瀏覽器大量資料的高效模式：平行呼叫+輸入不限輸出限縮+程式diff驗證(2026-08-26)](reference_browser_bulk_extraction_parallel_calls_2026-08-26.md) — BNI Connect來賓3712筆資料抓取實戰，含失敗過的下載/AppleScript路徑不用重試
 - [🔴🔴🔴🔴🔴 金門場報名落差問三次才給完整名單，教練從金門回來才被告知，痛批嚴重失職(2026-08-26)](feedback_registration_gap_must_surface_immediately_2026-08-26.md) — 已建registration_notify_gap_check.py掛進開工hook，每次自動查空窗期報名不用教練追問
 - [🔴🔴🔴🔴🔴 「三台各自為政」完整答案：聯想跨機同步四層根因全修(2026-08-26)](project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md) — hook沒註冊+workspace指向7/23死clone+stdin中文Big5讀壞+push沒先pull；附四步驗證法，ACER/Mac也中同款坑
