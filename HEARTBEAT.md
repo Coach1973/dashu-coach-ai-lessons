@@ -23,6 +23,61 @@
 
 ---
 
+
+## cycle=608（2026-08-26 13:12 週三下午）— 安靜通過，不 announce
+
+**第零步** ✅ sync_coach_last_message.sh exit 0
+- 教練最後訊息：`2026-08-26T13:06:55+08:00`（0.1h 前，教練剛互動完，活躍中）
+
+**第一步 Cron 真相源**：
+- 本任務自身：本輪執行中（已成功讀取 cron runs + get + 跑 sync_coach_last_message.sh = AI 端沒壞）
+- `consecutiveErrors=6`（從 cron 系統 state 讀到）｜`lastRunStatus=error`｜`lastDurationMs=1604`
+- `lastErrorReason=rate_limit` ｜ `lastDiagnostics`：`⚠️ Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits for more usage. (2056)`
+- 時間軸（從 cron runs 撈）：
+  - 02:12 ✅ cycle=598
+  - 03:12 ❌❌❌❌（quota 觸頂 4 retry，cycle=598 後）
+  - 04:12 ✅ cycle=599 → 09:14 ✅ cycle=604（連 6 輪綠）
+  - **10:12 ❌❌❌（quota 三連 retry）→ 11:12 ❌ → 12:12 ❌ → 13:12 進行中（本輪）**
+  - 本輪 13:12 從 12:12:02 之後再觸發，cron 系統尚未標記完成
+- 失敗原因：minimax Token Plan **商業額度觸頂**（不是短時間塞車，是配額用完）
+- cron list API 仍只回 1 job（cycle=539 後已知 API 競態，純 CLI 觀察現象，非故障）
+
+**第二步 HEARTBEAT.md ⬜ 真實待辦**：0 項
+
+**環境快檢觀察（5 秒擋一半設定問題）**：
+- SOUL.md 三份檔案均存在（8707/1851/22220 bytes）
+- `~/.openclaw/SOUL.md` 仍未含「⚠️ 已棄用」標記（沿用 cycle=601+ 的 VPS commit 3e1eb011 跨機同步觀察，不擅自修改）
+- Repo1=23 / Repo2=19（均遠低於 50 警戒線）
+- 無 `.!` 鎖定檔 ✅
+
+**第三步 v4.0 三關判斷**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（本輪能跑 sync_coach + 讀 cron runs + get + 探針 = AI 端已恢復）
+- 關卡二（provider 暫時過載嗎）→ ✅ **是**（minimax Token Plan 商業額度觸頂，連 6 輪失敗 3 小時，已超過「持續 2 小時未恢復」升級條件；教練無法靠技術手段介入，要花錢買 credits / 升級 Token Plan）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（健康檢查自己不健康 = meta 迴圈失敗，不算影響教練工作或會員體驗；其他 24 個 cron 本身健康狀態未知，因健康檢查自己也跑不起來無法驗證——這是雞生蛋問題）
+
+**結論**：三關中關卡一、三 fail → **不 announce**（依 v4.0 規則）。但 v4.0 「持續超過 2 小時未恢復」條件符合，需要在 HEARTBEAT.md 累積觀察、提醒 23:05 三機總結關注「minimax 商業額度是否足夠」議題。
+
+**累計**：cumulativeGreen 重置為 **1**（cycle=604 後連 6 綠 → cycle=605~607 三連失敗中斷 90 連綠 → 本輪 cycle=608 成功恢復為 1）
+
+**🔴 累計觀察（靜默存查，給 23:05 三機總結看）**：
+- minimax Token Plan quota 從 2026-08-26 10:12 起再次連續觸頂，迄今 3 小時未恢復（cycle=605~607 三連失敗 + 10:12 三 retry）
+- 教練 13:06 還在 Telegram 互動 = AI 配額被持續消耗
+- 若未來 24h 內再出現 4 連錯（cycle=609 之後），**建議主動升級 minimax Token Plan 或購買 Credits**，避免 cron 健康檢查持續打嗝
+- 目前不通知教練（依 v4.0 + meta 迴圈排除）
+
+**TG 通道探針**：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（守則#19 當下實測）
+
+**已落痕跡**：
+- ✅ `state/healthcheck_cycle` = 608
+- ✅ `state/heartbeat-state.json`（cumulativeGreen=1、TG 通道當下實測時間 13:12、coachSilence=0.1h）
+- ✅ `state/healthcheck.log` 追加 cycle=608
+- ✅ 本 HEARTBEAT.md cycle=608 已 prepend
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：14:12 健康檢查（cycle=609）。
+
+
 ## cycle=604（2026-08-26 09:14 週三上午）— 安靜通過，不 announce
 
 **第零步** ✅ sync_coach_last_message.sh exit 0
@@ -251,3 +306,13 @@
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: bae7c68e-400f-478f-a3d8-5d27eb6b1211
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-26 12:00
+- ✅ 同步成功
+- HANDOFF mtime: 1787716550
+- 雲端同步：✅ 已推上雲端（commit c0d39c5b4）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-26 13:35
+- ✅ 同步成功
+- HANDOFF mtime: 1787722494
+- 雲端同步：✅ 已推上雲端（commit 014204d26）
