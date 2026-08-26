@@ -1,10 +1,11 @@
 """
-查詢名片資料庫，給 LINE/Telegram 對話用。
+查詢名片資料庫，給 LINE/Telegram 對話用。教練要找人組產業服務鏈或組團隊，
+搜尋範圍涵蓋 cards(真實名片+BNI會員) 跟 guests(BNI Connect來賓)兩張表。
 
 用法：
     python query.py <關鍵字>
 
-比對欄位：name / company / title / mobile / email / line_id
+比對欄位：name / company / title / profession / mobile / email / line_id
 """
 import sys
 
@@ -14,8 +15,9 @@ import db
 def search(keyword: str) -> list[dict]:
     conn = db.get_conn()
     like = f"%{keyword}%"
-    rows = conn.execute(
-        """SELECT name, title, company, mobile, landline, email, line_id, website, status
+    card_rows = conn.execute(
+        """SELECT 'card' AS source, name, title, company, mobile, landline, email,
+                  line_id, website, status, bni_note
            FROM cards
            WHERE status != 'failed'
              AND (name LIKE ? OR company LIKE ? OR title LIKE ?
@@ -23,8 +25,18 @@ def search(keyword: str) -> list[dict]:
            ORDER BY name""",
         (like, like, like, like, like, like),
     ).fetchall()
+    guest_rows = conn.execute(
+        """SELECT 'guest' AS source, name, profession AS title, company, mobile,
+                  NULL AS landline, email, NULL AS line_id, NULL AS website,
+                  NULL AS status, chapter AS bni_note
+           FROM guests
+           WHERE name LIKE ? OR company LIKE ? OR profession LIKE ?
+                 OR mobile LIKE ? OR email LIKE ?
+           ORDER BY name""",
+        (like, like, like, like, like),
+    ).fetchall()
     conn.close()
-    return [dict(r) for r in rows]
+    return [dict(r) for r in card_rows] + [dict(r) for r in guest_rows]
 
 
 def format_result(rows: list[dict]) -> str:
@@ -32,9 +44,12 @@ def format_result(rows: list[dict]) -> str:
         return "查無符合的名片資料。"
     blocks = []
     for r in rows:
-        lines = [f"👤 {r['name'] or '（無姓名）'}"]
+        tag = "👤" if r["source"] == "card" else "🧑‍🤝‍🧑 [來賓]"
+        lines = [f"{tag} {r['name'] or '（無姓名）'}"]
         if r["title"] or r["company"]:
             lines.append(f"　{r['title'] or ''} {r['company'] or ''}".rstrip())
+        if r["bni_note"]:
+            lines.append(f"🏷️ {r['bni_note']}")
         if r["mobile"]:
             lines.append(f"📱 {r['mobile']}")
         if r["landline"]:
