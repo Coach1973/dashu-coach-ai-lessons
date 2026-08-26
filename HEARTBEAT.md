@@ -23,6 +23,42 @@
 
 ---
 
+## cycle=604（2026-08-26 09:14 週三上午）— 安靜通過，不 announce
+
+**第零步** ✅ sync_coach_last_message.sh exit 0
+- 教練最後訊息：`2026-08-26T09:07:22+08:00`（0.1h 前；使用本輪 Telegram API 真相源）
+
+**第一步 Cron 真相源**：
+- CLI 全清點 24 enabled cron：22 個已執行任務全部 `lastRunStatus=ok`；2 個尚未到期的一次性提醒為 `idle`；本任務上一輪 `consecutiveErrors=0`
+- `0` 個 CE≥3、`0` 個 timeout 危險、`0` 個 INVALID_API_KEY/auth/overloaded 錯誤
+- 2 個同步命令的 delivery 為 `not-delivered`（`last` 無 route），但命令本身 `lastRunStatus=ok`，不影響同步工作本體，未擅自改設定
+
+**第二步 HEARTBEAT.md ⬜ 真實待辦**：0 項
+
+**環境快檢觀察（5 秒擋一半設定問題）**：
+- SOUL.md 三份檔案均存在；`~/.openclaw/SOUL.md` 仍未含「⚠️ 已棄用」標記，延續既有 VPS 跨機同步觀察，不擅自修改
+- Repo1=23 / Repo2=21（均遠低於 50 警戒線）；無 `.!` 鎖定檔
+
+**第三步 v4.0 三關判斷（三關全 fail → 不 announce）**：
+- 關卡一（本輪還壞嗎）→ ❌ 否（本輪健康檢查執行成功）
+- 關卡二（provider 暫時過載嗎）→ ❌ 否（無 overloaded / rate_limit 訊息）
+- 關卡三（影響教練/會員嗎）→ ❌ 否（無持續性工作影響）
+
+**累計**：cumulativeGreen **6**（cycle=599 quota 觸頂後連 6 輪綠）
+
+**TG 通道探針**：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`（09:15 當下實測）
+
+**已落痕跡**：
+- ✅ `state/healthcheck_cycle` = 604
+- ✅ `state/heartbeat-state.json`（cumulativeGreen=6、TG 通道當下實測時間 09:15、coachSilence=0.1h）
+- ✅ `state/healthcheck.log` 追加 cycle=604
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：下個健康檢查 cycle=605 10:12。
+
+---
+
 ## cycle=601（2026-08-26 06:12 週三凌晨）— 安靜通過，不 announce
 
 **第零步** ✅ sync_coach_last_message.sh exit 0
