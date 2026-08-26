@@ -23,6 +23,7 @@ NOTIFY_SCRIPT = Path(__file__).resolve().parent.parent.parent / "scripts" / "not
 MAX_RETRIES = 3
 RETRY_SLEEP_SEC = 8
 CONSECUTIVE_FAIL_ALERT_THRESHOLD = 5
+PACE_SLEEP_SEC = 3  # 教練2026-08-26要求放慢速度、不要短時間連續狂打，每人之間留間隔
 
 
 def log(msg: str) -> None:
@@ -86,6 +87,7 @@ def main() -> None:
             log(f"  [{card['id']}] {card['name']}／{card['company']}（{card['bni_note']}） -> {result}")
             done += 1
             consecutive_fail = 0
+            time.sleep(PACE_SLEEP_SEC)
         except Exception as e:  # noqa: BLE001
             failed += 1
             consecutive_fail += 1
