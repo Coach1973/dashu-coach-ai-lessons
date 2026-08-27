@@ -28,3 +28,9 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1787821186
 - 雲端同步：✅ 已推上雲端（commit 102c6f5a5）
+
+## 🩺 軍師 Hook 自檢 2026-08-27 17:33（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.
+- Session: d5fe9c18-5091-4fff-8716-7d9c0b806495
