@@ -20,9 +20,11 @@
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
 ## 🧭 待辦 / 觀察（持續）
-- 教練最後訊息：2026-08-27 10:32:21 CST（當下 7.7h 前，週四傍晚；2026-08-27 18:12 healthcheck cycle 撈 Telegram API 真實時間刷新，舊值 12:36:55 已覆蓋）
+- 教練最後訊息：2026-08-27 21:06:55 CST（當下 0.1h 前，週四晚仍在線；2026-08-27 21:12 healthcheck cycle=628 撈 Telegram API 真實時間刷新）
 - 🩺 healthcheck cycle=625（2026-08-27 18:12）：cron list 只有本任務自己、狀態 ok；接力棒同步 18:05 push 失敗屬暫時網路問題下 cycle 自癒；無三關皆過之需裁決項目，安靜處理未通知教練
 - 🩺 healthcheck cycle=626（2026-08-27 19:12）：第零步 sync_coach_last_message.sh 撈回教練真正最後訊息 19:11:32（剛剛在線，coachSilentHours 0.0）；cron list 仍僅本任務且狀態 ok；無 timeout/API key/連錯，無三關皆過之需裁決項目，安靜處理未通知教練
+- 🩺 healthcheck cycle=627（2026-08-27 20:12）：第零步 sync_coach_last_message.sh 撈回教練真正最後訊息 19:29:15（coachSilentHours 0.7，週四晚正常）；cron list 仍僅本任務，狀態 ok（consecutiveErrors=0、lastDurationMs=35416ms ≪ timeoutSeconds=600s、model=minimax/MiniMax-M3）；無 ⬜ 待辦項目；無三關皆過之需裁決項目，安靜處理未通知教練
+- 🩺 healthcheck cycle=628（2026-08-27 21:12）：第零步 sync_coach_last_message.sh 撈回教練真正最後訊息 21:06:55（coachSilentHours 0.1，週四深夜仍在線）；cron list 仍僅本任務且狀態 ok；HEARTBEAT 內無新 ⬜ 待辦項目；幕僚長晨報 cron 已記於上方（CE=1，明日 07:00 自動重試）；接力棒 19:30 push 成功後穩定；無三關皆過之需裁決項目，安靜處理未通知教練
 - ☕ 幕僚長晨報 cron 標 error（CE=1，今早 07:00 因 13:00 context overflow 重啟被中斷，duration 5.1s；nextRun 2026-08-28 07:00 自動重試；與 8/24-26 alternating fail/recover 模式一致）
 - Repo1=23 / Repo2=22 untracked，屬正常範圍
 - 無 .! 鎖定檔，SOUL.md 三份齊全含棄用標記
@@ -68,3 +70,13 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1787828825
 - 雲端同步：✅ 已推上雲端（commit 56c3d729e）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 19:30
+- ✅ 同步成功
+- HANDOFF mtime: 1787830198
+- 雲端同步：✅ 已推上雲端（commit 0286b22b7）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 21:35
+- ✅ 同步成功
+- HANDOFF mtime: 1787837722
+- 雲端同步：✅ 已推上雲端（commit 7c967e977）
