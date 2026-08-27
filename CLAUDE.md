@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-27 01:15:22**
+> **最後同步：2026-08-27 10:35:38**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **聯想跨機同步四層根因全修+ai-talk嘉義場設攤廠商05~10上線+Netlify額度校正934.9** | ✅2026-08-26聯想完成，詳見v138 | 詳見`claude-brain/project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md`。四層根因：①7支對齊hook聯想從沒裝過(含收工自動push) ②所有hook讀到的`workspace`是7/23的死clone，已封存改junction指向活repo ③PS5.1讀stdin中文被Big5讀壞(「開工」變亂碼)，`feed_junshi_handoff.ps1`等3支已修 ④`session_end_auto_push.ps1`commit後沒先pull就push，必被拒，已補stash→pull--rebase→push。另完成教練交辦：ai-talk嘉義場設攤廠商05(乾淨世界補號)~10(KR廚房)全數上線並curl驗證；Netlify額度按教練截圖回報949.9/1000校正，本場部署2次後934.9，寫回共用檔案供三機同步。**教練當場糾正**我把額度同步做成PreToolUse自動攔截hook太複雜(還意外把自己下個指令攔到報錯)，已撤掉改成手動記數+總結時寫回，詳見[[feedback_netlify_quota_sync_simplify_2026-08-26]]。 |
 | ✅ | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：教練拍板改「手動觸發媒合」設計，已上線/find搜尋頁** | ✅2026-08-26本場完成，設計定案並上線 | 詳見v135/v136完整戰果+本場v137戰果。**教練這場定案新規則**：不再對任何一批人批次自動媒合，改成**手動點按鈕才呼叫AI**——現任92人(唯一預先批次媒合的例外，已100%完成)之外，前會員336人＋來賓3216人一律等教練或使用者實際需要時才觸發。已上線`/find`統一搜尋頁（cards+guests雙表搜尋，零AI呼叫）＋`/guest/<id>/match`來賓版媒合入口（首次點擊才轉一筆card+跑媒合，`source_guest_id`防重複轉入），`run_chain_match.py`已改成只鎖現任會員範圍，不會再被誤觸批次跑全部人。**來賓資料重大補正**：教練糾正「BNI Connect來賓一定有專業別」，查證屬實——v136只抓了姓名/電話/email三欄，漏了報表本來就有的公司/職業/分會欄位，已用教練提供的完整報表(.xls/SpreadsheetML)重新解析回填，3216人中3210人(99.8%)已補上職業資料。**額外揪出的資料品質bug**：教練從/find頁面發現田伸強/林尹渰等4人BNI身分沒標示，查證是`parse_and_import.py`的INSERT OR IGNORE遇檔名撞名時靜默跳過、且無UPDATE補救路徑，4人資料已修正+全428人重新稽核0遺漏+腳本已加rowcount==0的UPDATE fallback防再犯。 |
 | ✅ | **ACER機49天未開機導致settings.json全部hooks消失，本場（教練親自開機）重裝七支hook+跟進聯想總結修復** | ✅2026-08-26 ACER本場完成並實測 | 教練親自打開ACER下指令，這正是Mac稍早報告裡說「唯一解法」的那個時刻。查證確認`~/.claude/settings.json`原本完全沒有`hooks`區塊（開工六步驟/截圖鎖/跨機信箱掃描/總結上傳全部沒註冊，跟聯想的jq依賴問題不同根因）。同時也第一次真正走完「開工六步驟」被教練當場糾正前的落差：本場一開始跳過血淚試金石案例庫直接動手，被教練點出才回頭補讀，讀到案例60（claude-in-chrome連錯裝置）跟HEARTBEAT.md「截圖禁用」規則，直接解釋了稍早bigtree部署過程中一直卡在截圖的原因。跑`scripts/setup_windows_hooks.ps1`重裝七支hook時，**發現這支安裝腳本本身有bug**：`ConvertFrom-Json -AsHashtable`在這台機器的PowerShell 5.1（非pwsh 7）會拋例外，觸發catch分支把原有`env`/`permissions`/`model`等設定全部清空，只剩新寫的hooks——靠腳本自帶的備份救回，手動合併寫回。額外把聯想剛寫好的`summary_upload_trigger.ps1`一併加進ACER的UserPromptSubmit，四情境（總結/總結上傳觸發、年度總結報告/閒聊不誤觸發）全部用假指令實測通過。本場另完成：大樹小講(bigtree-tw)新增8/26早半場「晨光美學」10:00-12:30(地址同步改4樓)，已推GitHub+Netlify雙邊驗證上線；回信Mac完成verbatim/Stop hook查證。**下一棒待辦**：①`event-signup`後台`event.db`仍未同步8/26早半場資料，現場QR簽到當天可能路由錯場次，需請Mac或聯想在能碰到該DB的機器上補②`setup_windows_hooks.ps1`的PS5.1 bug本場只記錄未回頭修，下次任何機器要跑這支installer前應先查`$PSVersionTable.PSVersion`。詳見`claude-brain/project_acer_dormant_49days_2026-08-26.md`+`claude-brain/project_acer_hooks_restored_2026-08-26.md`。 |
 | ✅ | **聯想「總結」收工hook缺jq靜默失效近一個月，已改PowerShell版修復** | ✅2026-08-26聯想完成並實測 | 教練質疑「我每次都講總結上傳，怎麼可能沒紀錄」，查證屬實：`summary_upload_trigger.sh`靠`/usr/bin/jq`解析stdin，聯想這台機器沒裝jq，指令找不到→PROMPT變空字串→關鍵字比對永遠比對不到→整支hook靜默不觸發，不報錯教練也看不出異狀。改寫`scripts/summary_upload_trigger.ps1`(PowerShell原生`ConvertFrom-Json`，不依賴jq)，7情境模擬測試全過已註冊進`~/.claude/settings.json`。同場也查證另兩支相關機制：`distill_and_push_lenovo.ps1`從未被註冊過（非壞掉，是從沒接上）、Windows Task Scheduler的`ClaudeMemorySync`任務也停用超過2個月。詳見試金石案例64。 |
@@ -226,38 +227,8 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-26 v136（Mac桌面版 Sonnet 5，BNI Connect前會員電話/Email補齊+來賓資料庫3712筆完整收集）
 
-> 建立時間：2026-08-26 10:14 ~ 13:31（台灣時間）
-> 上一棒：v135（Mac桌面版，同日凌晨~上午）
-> 本棒主軸：**教練出門前交辦「3小時內完全不碰MiniMax媒合，純資料收集」，本場獨立完成v135留下的兩項待辦，且過程中發現一套可複用的「瀏覽器大量資料爬取」高效技巧。**
-
-## 🎯 本場戰果
-
-### 1. 真富/真愛/真鑫/真鑽4分會392筆會員電話/Email 100%收集完成（commit`195611245`）
-沿用`HANDOFF_剩餘電話收集方法.md`的同步XHR技巧，逐分會點選+搜尋（教練糾正過的「網址帶參數不會自動篩選分會」正確做法），4分會會員名冊全數抓齊，寫回`cards`表mobile/email欄位。4分會皆達100%覆蓋（31/23/29/256人）。真誠分會維持84/89（非本場任務範圍，前次已處理）。
-
-### 2. 🎯🎯 BNI Connect來賓資料庫3712筆完整收集+匯入guests表（commit`f9b344bfe`，本場核心戰果）
-在「報告」選單找到「地區-查看來賓」報告（`reports_custom_region_view_visitors`），日期範圍設2015~2026涵蓋全部歷史，一次撈出全區5分會共**3712筆訪問紀錄**（每筆含姓名/公司/電話/email/分會/訪問日期/邀請人，欄位以8列一組的直向卡片式排版呈現，非標準列表）。依電話去重後得到**3216位不重複來賓，全數具備電話+email**（教練09:52明確要求的硬指標），新建`guests`資料表匯入。已知5筆(0.16%)電話欄位本身在BNI Connect上就殘缺(如"0"/"09")，屬來源資料限制不是抓取遺漏，原樣保留未擅自刪除。
-
-### 3. 🔧 過程中摸索出「瀏覽器大量資料爬取」高效模式（已寫入`reference_browser_bulk_extraction_parallel_calls_2026-08-26`）
-一開始踩了三條死路：Blob+`<a download>`.click()被Chrome判定非真人手勢靜默不下載、`window.open(blobUrl)`被彈窗攔截器擋、`location.href='data:...'`被Chrome禁止頂層導覽、AppleScript控制Chrome執行JS的選項因擴充功能已連線而呈disabled灰字。最終找到的高效解法：①javascript_tool回傳值有~25筆(TSV格式)的硬性截斷，但**輸入不受限**，可以把已收集資料的電話清單整包塞回頁面當JS的Set比對②固定索引`slice(start,start+25)`取值不依賴前一輪cursor，可在同一輪對話一次送出10個獨立呼叫平行執行，效率大增③完整性驗證改用「程式diff兩邊唯一鍵」取代人工算行數(這次人工計數一度誤判有缺口，程式diff才抓到真正遺漏的22筆並精準補齊)。這套模式已記錄，下次類似大量資料抓取任務可直接套用。
-
-### 4. 接力棒瘦身（E16鐵律）
-v134完整內容封存至`handoff_archive/handoff_v134_archived_2026-08-26.md`，主檔維持只留最新2棒。
-
-## ⚠️ 教練離開期間的互動記錄
-教練10:19交辦後隨即出門辦事，中途兩次確認進度：①詢問若無法主動於3.5小時後接續做資料庫整合，能否請小龍蝦通知——已誠實告知終端機/桌面版Sonnet無背景喚醒機制(`ScheduleWakeup`僅限`/loop`模式且上限1小時)，AppleScript/`request_access`clipboard等替代方案在無人操作時也無法取得互動式授權②教練隨即回覆「小龍蝦現在也是限流的，不用回答了，你接下來就慢慢做吧」，本場即依此指示獨立完成上述任務，未再等待回覆。
-
-## 📋 下一場開工先做
-1. **MiniMax媒合鎖定時間已過**（09:52+3hr≈12:52，現在13:31已超過），但教練尚未親口說「繼續」，**維持鎖定狀態，不得主動重跑`run_chain_match.py`**，等教練明確指示
-2. 產業鏈媒合剩127人（428人中已301人），`chain_matcher.py`已修復cache_control快取+`run_chain_match.py`已加3秒節流，教練說「繼續」才能動
-3. 承接v135舊待辦：3支孤兒hook要不要啟用、bni-chapters「真誠分會」架構問題、OpenClaw 6.34升級教練決定、孔大哥/佩佩老師備份repo衝突、VPS缺.gitignore
-
-## 🔑 本場commit
-`195611245`(4分會392筆會員電話/Email)／`f9b344bfe`(來賓3712筆收集+guests表匯入)／`48c9d2942`(接力棒更新)
-
----
+> 📦 v136完整內容已封存：`handoff_archive/handoff_v136_archived_2026-08-26.md`（Mac桌面版，BNI Connect前會員電話/Email補齊+來賓資料庫3712筆完整收集）
 
 # 軍師接力棒 · 2026-08-26 v137（Mac桌面版 Sonnet 5，媒合改手動觸發設計定案+來賓職業資料補正+/find搜尋頁上線+4人分類遺漏修復）
 
@@ -297,6 +268,42 @@ v134完整內容封存至`handoff_archive/handoff_v134_archived_2026-08-26.md`�
 
 ## 🔑 本場commit
 `f7b4c1b52`(run_chain_match.py只鎖現任會員)／`a16323030`(guests表補職業/公司/分會)／`f2b0cb778`(query.py搜尋擴及guests)／`8fb15419d`(/find搜尋頁+guest媒合路由)／`36648c277`(4人分類遺漏修復+腳本硬化)
+
+---
+
+# 軍師接力棒 · 2026-08-26 v138（聯想Windows Sonnet 5，跨機同步四層根因全修+ai-talk嘉義場攤商05~10上線+Netlify額度校正）
+
+> 建立時間：2026-08-26 09:20 ~ 10:29（台灣時間）
+> 上一棒：v134（聯想Windows，同日凌晨）— 中間v135~v137是Mac桌面版並行工作，聯想這台從10:29後閒置至今（33小時視窗開著但無新動作，git log已查證確認）
+> 本棒主軸：**教練凌晨質問「三台又各自為政」，查出聯想這端有四層獨立根因疊在一起，全修並驗證；接著處理教練臨時交辦的ai-talk嘉義場設攤廠商新增，過程中教練糾正額度同步設計過度工程化。**
+
+## 🎯 本場戰果
+
+### 1. 「三台各自為政」四層根因全修（詳見`claude-brain/project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md`）
+①聯想從沒裝過標準七支對齊hook（含收工自動push）②所有hook讀的`workspace`是7/23的死clone，已確認零未推送內容後改名封存、原路徑改建junction指向活的`mac-openclaw-workflows` ③PS5.1在`-File`模式讀stdin中文被Big5讀壞（「開工」變亂碼），`feed_junshi_handoff.ps1`/`scan_cross_machine_commits.ps1`/`delete_guard_hook.ps1`已補`[Console]::InputEncoding=UTF8`修復 ④`session_end_auto_push.ps1`commit後沒先pull就push，Mac常在推，必被拒，已補stash→`pull --rebase`→push→stash pop。四項均已pipe-test驗證＋settings.json從5支hook補到12支。已寫信通知Mac/ACER（`cross-agent/inbox/mac`+`inbox/acer`）各自要查的事（ACER要查`workspace`是否也是死clone；Mac的`.sh`版也中push-before-pull同款問題）。
+
+### 2. ai-talk嘉義場新增設攤廠商05~10並上線（教練親口「推」確認）
+教練貼EDM要求整理現場設攤編號：乾淨世界補上編號05、toooAI改06，新增07孫承宣(TimeWaver Pro)、08凌榆舜(iSmart)、09李明燦(台灣模型車博物館)、10 KR廚房(金門高粱酒喜宴酒)，共10家。逐張處理EDM圖片(EXIF/尺寸校正)+本機預覽教練確認+GitHub commit+Netlify手動zip部署，全程curl驗證文字與圖片。台南場封存區01~09未受影響。
+
+### 3. Netlify額度校正+教練糾正設計過度工程化
+教練截圖回報真實帳單949.9/1000(過期2026-09-25)，同時指出聯想這台部署完全沒被扣點過。查證根因是Mac的`netlify_deploy_guard.sh`從沒移植到聯想。**第一版做法**：照抄寫`netlify_deploy_guard.ps1`註冊成PreToolUse自動攔截hook——結果**這支hook因BOM編碼問題把自己下一個指令攔到報錯**，教練隨即糾正「你這一次用了幾次之後，你就會總結上傳，軍師那邊讀到之後就會扣掉你這個用掉的次數，就這麼簡單啊！你要算那麼久，算什麼？」。已撤掉自動化hook，改成手動記數：本場部署2次(攤商09+10)，949.9→934.9，寫回`state/netlify_deploy_quota.json`供三機git pull同步。教訓寫入[[feedback_netlify_quota_sync_simplify_2026-08-26]]。
+
+### 4. 教練交辦：釋放聯想本機記憶體
+記憶體75.1%，查證無單一失控程式，是Comet瀏覽器(32分頁程序)+多個閒置Claude背景程序+一般通訊軟體疊加。逐項確認後關閉：8個凌晨03:27起閒置無視窗標題的Claude背景程序(教練確認「不記得開著幹嘛」)、Signal/Zoom/Typeless三個確認沒在用的程式，共釋放約2.5GB，75.1%→67.8%。過程有先追溯本次bash session的程序祖先鏈，確認不誤殺自己這個對話框。
+
+## ⚠️ 本場教訓
+1. **新寫的Windows PowerShell hook上線前務必檢查BOM編碼**——這是本週第二次同款坑（第一次是`summary_upload_trigger.ps1`缺jq，這次是`netlify_deploy_guard.ps1`寫入時PowerShell的`Set-Content -Encoding UTF8`自動加了BOM，導致下游python讀取失敗；本檔本身無BOM時PS5.1會用系統codepage誤讀中文字面量，連带把here-string終止符號讀壞）。
+2. **多機共享一個緩慢變動的數字，不必為了「絕對即時」建自動化攔截層**——教練親口糾正的核心判斷原則，跟先前「Netlify額度每7~10天校正一次」是同一種「別過度即時查證」的思維。
+
+## 📋 下一場開工先做
+1. 承接v135~v137舊待辦：3支孤兒hook要不要啟用（已由Mac於v135啟用，可核對）、bni-chapters「真誠分會」架構問題、OpenClaw 6.34升級教練決定、孔大哥/佩佩老師備份repo衝突（Mac v135疑似已解決，待核對）、VPS缺.gitignore（Mac v135疑似已解決，待核對）
+2. ACER若查出`workspace`也是死clone，需要同款封存+junction處理（信已寄出，等ACER回報）
+3. Mac的`session_end_auto_push.sh`是否也要補push-before-pull修復，等Mac自行評估
+
+## 🔑 本場commit
+`6b121713`(跨機同步四層根因全修)／`41b67ec`+`060c172`(ai-talk嘉義場攤商05~10，獨立repo)／`25b4b61d`(Netlify額度校正934.9)
+
+---
 
 
 ---
