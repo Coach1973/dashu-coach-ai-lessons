@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 workspace repo多機並發git衝突處理法+編輯前先重新Read確認未被改版(2026-08-28)](reference_workspace_git_concurrent_machine_race_2026-08-28.md) — push被拒先pull不要rebase abort（會清空自己剛commit的內容）；共用歷史頁/待辦表下手前先重讀最新結構
+- [🔧 用CronCreate排「未來某時間點自動做X」的一次性任務+多機保險寫法(2026-08-28)](reference_croncreate_future_date_automation_2026-08-28.md) — durable:true一次性任務只綁單機，務必同時寫進共用待辦表當保險
 - [🔴🔴🔴🔴🔴 第三方正式系統絕不點擊「產生/建立」類按鈕測試，誤觸產生真實BNI信用証(2026-08-28)](feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28.md) — href="#"靠JS事件觸發的按鈕=危險訊號，只能navigate+讀取文字判斷存在與否
 - [🔴🔴🔴 大量重複瀏覽器操作要委派背景Agent，教練當場肯定「早該這麼做」(2026-08-27)](feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27.md) — BNI信用証清查231人案例；驗證SOP可行後打包委派，不要自己逐輪手動跑browser_batch
 - [🎯🎯 bni-chapters新增會員自助簡介機制(真誠分會示範)，比照mentor100第一階段設計(2026-08-27)](project_bni_chapters_member_selfsubmit_2026-08-27.md) — chapter_id分流+9分會共用同一套後端，教練驗收真誠分會通過即等於全部分會同步完成

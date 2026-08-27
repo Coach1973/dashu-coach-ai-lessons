@@ -483,3 +483,43 @@ SQL交叉比對確認211個目標memberId全部已存在資料庫（`SELECT coun
 見本次總結commit（HANDOFF.md + namecards.db + knowledges檔一併提交）。
 
 ---
+
+# 軍師接力棒 · 2026-08-28 v145（聯想Windows Sonnet 5，AI微論壇嘉義場贊助/抽獎更新+全新「當古典音樂遇到AI科技」9/16高雄場網頁改版建置獨立ai-art站+排程9/16活動後自動部署bigtree）
+
+> 建立時間：2026-08-28 02:20 ~ 03:11（台灣時間）
+> 上一棒：v144（Mac終端機，同日較早，BNI信用証清查結案）
+> 本棒主軸：**兩件獨立網頁任務。①ai-talk(嘉義場)加贊助人名單+現場抽獎並推正式站。②教練給一份Lovart AI生成的「當古典音樂遇到AI科技」9/16高雄場設計稿，重新安排活動流程/收費/表演者，建立全新獨立GitHub repo「ai-art」上線，並串進bigtree歷史頁面宮格牆。教練指示bigtree正式站Netlify暫緩推送，等9/16活動結束再自動部署，已建排程機制。**
+
+## 🎯 本場戰果
+
+### 1. ai-talk嘉義場（8/28當天）新增贊助人名單+現場抽獎，已推正式站
+教練提供5位贊助人名單（謝扉榆/林昱孜/李明燦/黃子芸/蔡佩茹）比照7/29台南場donor-chip樣式加入，接著追加「現場抽獎」區塊（一~五獎+特獎+廠商加碼獎）。GitHub commit`c47f4d7`，Netlify deploy`6a9082161871b27f3a803901`已curl驗證上線。此站Netlify額度扣約15點。
+
+### 2.「當古典音樂遇到AI科技」9/16高雄場：Lovart設計稿全面改版
+教練提供本機檔案`D:\Users\Downloads\design (2).html`（Lovart AI生成的landing page），逐步給出新流程：上午10:00-12:30/午餐12:30-13:30(4樓)/下午13:00-17:00，9個環節（音樂鑑賞30分/AI音樂創作入門90分/即席創作60分/小型歌唱比賽60分/小型演奏會15-30分/AI話題漫談60分/觀眾互動30-45分/QA15分/體驗分享15分）+8位真實表演者名單+收費改單一「一日通票600元含午餐下午茶」+2樓不能用餐限制。用演算法把9段活動精準嵌入時間格（小型演奏會排進上午用最大值30分、觀眾互動用最小值30分，達到10:00-12:30+13:00-17:00零縫隙剛好放滿），修改表演陣容區塊(8張真實卡片)+學習內容4卡對齊新流程+收費區塊改單卡。
+
+### 3. 建立全新GitHub Pages「ai-art」承載此頁
+教練明確要求「這個專屬的GitHub網頁就是AI-ART」。用`gh repo create`建立`Coach1973/ai-art`公開repo，`gh api`開啟GitHub Pages，curl驗證`https://coach1973.github.io/ai-art/`已正確顯示新內容。
+
+### 4. bigtree歷史頁面加入9/16卡片，過程中遇到跨機並發衝突
+教練要求把這場加進「大樹小講」歷史頁面。**編輯時發現該檔案`archive/大樹小講_歷史講座紀錄.html`已被Mac在本場進行中同步重構成「宮格牆+EVENTS陣列」新格式**（原本是簡單`.item`卡片列表），第一次git pull --rebase出現merge conflict，已正確辨識並改用新格式的JS陣列語法重新插入9/16項目（非強行套用舊格式），沒有圖片可用時誠實借用本頁自己的Lovart hero底圖(而非亂套其他活動的EDM圖，符合[[feedback_dont_substitute_placeholder_await_real_material_2026-08-27]]精神)。GitHub commit`c248eb0`，GitHub Pages(`coach1973.github.io/bigtree`)已curl驗證上線；bigtree-tw.netlify.app正式站依教練指示暫緩。
+
+### 5. 建立9/16活動結束後自動部署bigtree到Netlify的排程機制
+教練口諭「先不用，活動結束時，再自動移過去」。寫好`scripts/deploy_bigtree_after_0916_event.sh`(git pull+git archive打包+Netlify Deploy API，site_id`40e580f0-1def-4777-adb8-587ef023ed36`)，用Claude Code原生`CronCreate`在聯想本機排一次性durable任務(job`ee5beb77`，2026-09-16 17:30觸發)，並把腳本+風險說明寫進主表待辦（**這個排程只存在聯想機器，其他機器9/16當天/之後開工看到待辦表這行可直接手動跑腳本補上**），避免「口頭承諾自動化卻無真實機制」的錯誤。
+
+## ⚠️ 本場教訓（新發現，值得寫入記憶）
+
+1. **workspace repo同一時段有多台機器（本場是Mac）在跑「session-end自動同步」背景hook，跟軍師手動git commit/push會race condition**——本場兩度撞到，第一次`git rebase --abort`後發現連自己剛commit的內容都被清空（因為abort把working tree還原到rebase開始前，若那個commit本身就是rebase產生的一部分會整個消失），第二次靠先`git pull`拿到最新狀態、遇HEARTBEAT.md純append log衝突用手動合併兩段解決，才順利push成功。**下次任何機器在workspace repo做「非緊急、可延後」的git操作，先確認`git status`乾淨再動作，commit後立即push不要拖，若push被拒先pull（非rebase abort），衝突若是純append型log檔（如HEARTBEAT.md的心跳記錄）直接手動保留雙方段落即可，不要輕易abort。**
+2. **多機並發編輯同一份html歷史頁面時，開始編輯前的內容認知可能已經過期**——本場開工時讀到的bigtree歷史頁還是舊版`.item`列表格式，但實際編輯commit時Mac已經把它重構成宮格牆JS陣列格式，若沒有先重新Read最新內容就直接套用舊格式的old_string做Edit，會產生格式不一致的髒資料。已用重新Read+改用正確新格式解決，未造成資料污染。
+3. **教練口頭要求「活動結束時自動移過去」這類未來時間點觸發的自動化，Claude Code的`CronCreate`工具(durable:true)是可用的一次性排程機制**，但其持久性綁定在單一機器的`.claude/scheduled_tasks.json`，多機器環境下務必同步寫進共用待辦表當作保險，不能只依賴單機排程。
+
+## 📋 下一場開工先做
+
+1. FB粉專商家驗證結果（教練8/27 17:00送出，約8/29 17:00前後出結果）——等教練回報後才能繼續走`pages_manage_posts`授權流程
+2. 9/16活動結束後確認`scripts/deploy_bigtree_after_0916_event.sh`是否已由聯想排程或其他機器手動跑過，跑完把主表那行待辦改✅並清除
+3. BNI Connect信用証清查（v143/v144已結案）+ 本場ai-art/ai-talk皆無延續待辦
+
+## 🔑 本場commit
+`c47f4d7`(ai-talk)、`c248eb0`(bigtree歷史頁)、`ee5beb77`(ai-art repo初始commit，見`Coach1973/ai-art`)、`499b5c5f`(workspace排程腳本+待辦表)
+
+---
