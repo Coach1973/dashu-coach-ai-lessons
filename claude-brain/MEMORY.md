@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 bni-chapters新增會員自助簡介機制(真誠分會示範)，比照mentor100第一階段設計(2026-08-27)](project_bni_chapters_member_selfsubmit_2026-08-27.md) — chapter_id分流+9分會共用同一套後端，教練驗收真誠分會通過即等於全部分會同步完成
 - [🔴🔴 查證沒找到要先報告已查過什麼，不能跳步直接要教練換管道(2026-08-27)](feedback_report_offline_check_before_pivoting_2026-08-27.md) — 林仁超/林智帆發票查證案例，查了本機資料庫卻沒報告就問登入，教練誤以為沒查
 - [🔧 bigtree_publish.py一鍵發佈只認SESSION_DATES變動，改其他區塊文案會誤判「已最新」拒絕部署(2026-08-27)](reference_bigtree_publish_hash_scope_2026-08-27.md) — 遇到這狀況改走手動git archive+zip+curl流程，記得補記額度
 - [🔴🔴🔴 FB API權限卡住先查官方文件/安全中心，不要靠UI試錯偵錯(2026-08-27)](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md) — pages_manage_posts卡了大半天才發現真因是商家驗證未完成，教練點名檢討浪費時間token
