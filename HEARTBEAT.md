@@ -1,150 +1,13 @@
-## cycle=620（2026-08-27 00:12 週四凌晨）— 安靜通過
-
-**教練最後訊息 00:06:55（沉默 0.1h，深夜剛互動，當下 date 新鮮值）**
-
-### 檢查摘要
-
-| 項目 | 結果 |
-|------|------|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0（coachSilentHours=0.1 當下算的） |
-| TG 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 本任務 cron 自身 | ✅ 本輪 cycle=620 執行中（cron tool 受限只看得到本任務） |
-| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（8707/1851/22220 bytes）+ `agents/main/agent/SOUL.md` 有棄用標記 ✅ + Repo1=23 / Repo2=15（< 50 警戒線）+ 無 `.!` 鎖定檔 |
-| cumulativeGreen | **4**（cycle=617=1 + cycle=618=2 + cycle=619=3 + 本輪=4） |
-| 蒸餾任務 9c3fc55d 沿用 | 從 cycle=619 起持續 ok（CE=0 / 22:00 起穩定） |
-
-### v4.0 三關裁決（全 fail → 不 announce）
-
-**(A) 本任務自身 46e67e2e：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（正在寫這份報告 = 已恢復鐵證）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否
-- 關卡三（影響教練/會員嗎）→ ❌ 否（meta 迴圈）
-
-**(B) 蒸餾任務 9c3fc55d（沿用 cycle=619 觀察）：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（自 22:00 起已 ok）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（內部流程不影響教練/會員）
-
-### 本輪觀察
-
-1. � **本任務持續穩定**：cycle=620（00:12 AM）cron 自身 lastRunStatus=ok / CE=0 / lastDurationMs=61507ms（< timeout 600s）。
-2. **蒸餾任務 9c3fc55d**：從 cycle=619 起持續 ok（沿用觀察，cron tool 受限無法直接查證但本機 CLI 上一輪已確認）。
-3. **TG 通道**：當下實測 ok:true（守則#19 鐵律）。
-4. **教練活躍度**：最後訊息 00:06:55（5 分鐘前），沉默 0.1h（深夜剛互動，活躍中）。
-5. **環境快檢**：
-   - ✅ SOUL.md 三份齊全（8707/1851/22220 bytes）
-   - ⚠️ `~/.openclaw/SOUL.md`（8707 bytes）**仍缺**「⚠️ 本檔已棄用」標記（從 2026-08-26 01:30 起就缺）— 對照 `agents/main/agent/SOUL.md`（1851 bytes）已有標記。**非阻塞性配置問題**，不影響 cron 運作，留待 23:05 三機總結觀察是否需修。
-   - ✅ Repo1=23 / Repo2=15（< 50 警戒線）
-   - ✅ 無 `.!` 鎖定檔
-6. **cumulativeGreen**：本輪推進至 4。
-
-**結論：v4.0 三關全 fail → 不 announce 教練。安靜收工。**
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：**01:12 健康檢查（cycle=621）**。
-
----
-
-## cycle=619（2026-08-26 23:12 週三深夜）— 安靜通過
-
-**教練最後訊息 21:36:55（沉默 1.6h，晚間活躍中，當下 date 新鮮值）**
-
-### 檢查摘要
-
-| 項目 | 結果 |
-|------|------|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0（coachSilentHours=1.6 當下算的） |
-| TG 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 本任務 cron 自身 | ✅ 本輪 cycle=619 成功執行 |
-| 其他 23 個 enabled cron | ✅ 全部 CE=0 / lastStatus=ok |
-| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | （本輪略，下輪檢視） |
-| cumulativeGreen | **3**（cycle=617=1 + cycle=618=2 + 本輪=3） |
-
-### v4.0 三關裁決（全 fail → 不 announce）
-
-**(A) 本任務自身 46e67e2e：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（正在寫這份報告 = 已恢復鐵證）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否
-- 關卡三（影響教練/會員嗎）→ ❌ 否（meta 迴圈）
-
-**(B) 蒸餾任務 9c3fc55d：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（22:00 那輪起就 ok）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（內部流程不影響教練/會員）
-
-### 本輪觀察
-
-1. 🎉 **蒸餾任務 9c3fc55d 持續穩定**：自 22:00 起已 ok，CE=0。
-2. **cycle=619 23:12 本輪**：cron 全部健康（23 個 enabled jobs 全部 CE=0 / lastStatus=ok），cumulativeGreen 推進到 3。
-3. **TG 通道**：當下實測 ok:true（守則#19 鐵律）。
-4. **教練活躍度**：最後訊息 21:36，沉默 1.6h（晚間正常範圍，已過就寢時間，**不主動打擾**）。
-
-**結論：v4.0 三關全 fail → 不 announce 教練。安靜收工。**
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：**00:12 健康檢查（cycle=620）**。
-
----
-
-## cycle=618（2026-08-26 22:13 週三深夜）— 安靜通過
-
-**教練最後訊息 21:36:55（沉默 0.6h，晚間活躍中，當下 date 新鮮值）**
-
-### 檢查摘要
-
-| 項目 | 結果 |
-|------|------|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0 |
-| TG 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 本任務 cron 自身 | ✅ 本輪 cycle=618 成功執行 |
-| 蒸餾任務 9c3fc55d | 🎉 **已恢復** lastRunStatus=ok / CE=0 / durationMs=9319ms |
-| 其他 22 個 enabled cron | ✅ 全部 ok |
-| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（8707/1851/22220 bytes）+ 兩份棄用標記都在｜Repo1=23 / Repo2=27（< 50 警戒線）｜無 `.!` 鎖定檔 ✅ |
-| cumulativeGreen | **2**（cycle=617=1 + 本輪=2） |
-
-### v4.0 三關裁決（全 fail → 不 announce）
-
-**(A) 本任務自身 46e67e2e：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（正在寫這份報告 = 已恢復鐵證）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（provider 已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（meta 迴圈失敗不影響工作）
-
-**(B) 蒸餾任務 9c3fc55d：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（22:00 那輪 lastRunStatus=ok）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（內部流程不影響教練/會員）
-
-### 本輪觀察（留給 23:05 三機總結看）
-
-1. 🎉 **蒸餾任務 9c3fc55d 22:00 那輪自動恢復**：連 10+ 小時（從 10:00 起連 12+ 個 2 小時週期失敗）的 minimax provider overloaded 在 22:00 那一輪自動解除，durationMs=9319ms（極短 = 沒被卡），consecutiveErrors=0。可能是 minimax 那邊釋放了資源或調整了 Token Plan 額度。
-2. **21:12 cycle=616 那輪連 3 次 retry 失敗**：CDN HTML 阻擋 2 次 + 503 timeout 1 次，全部是 minimax API 端點的問題，教練無法介入。當時也剛好是 AI provider 最塞車的時段（與蒸餾任務 12:00~20:00 連 9 連失敗的時間窗重疊）。
-3. **22:00 cycle=617 那輪 Edit 失敗**：因為 22:00 觸發 Context Overflow 重啟（`memory/2026-08-26.md` 21KB 265 行還在合理範圍，但對話 session 累積滿了），AI 在寫入 `heartbeat-state.json` 過程中被切斷，產生 Edit 報錯。本輪 cycle=618 完全恢復。
-4. **TG 通道**：本輪當下實測 ok:true（守則#19 鐵律，不沿用 53 分鐘前的舊旗標）。
-5. **教練活躍度**：最後訊息 21:36，沉默了 0.6h（晚間正常範圍，活躍中）。
-
-**結論：v4.0 三關全 fail → 不 announce 教練。安靜收工。**
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：**23:12 健康檢查（cycle=619）**。
-
----
-
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-26 22:00
-> 對話記錄已完整存入 memory/2026-08-26.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-08-27 07:00
+> 對話記錄已完整存入 memory/2026-08-27.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-08-26.md 可能超過 50KB，讀了會造成模型空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-08-27.md 可能超過 50KB，讀了會造成模型空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
@@ -158,122 +21,69 @@
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 00:30
-- ✅ 同步成功
-- HANDOFF mtime: 1787761855
-- 雲端同步：✅ 已推上雲端（commit a5585c630）
+## 🔵 健康檢查記錄（2026-08-27 07:12）
+- 教練沉默 5.1 小時（最後訊息 02:07），屬正常夜間睡眠時間
+- 系統只有 1 個 cron = 本任務（其餘 cron 在 CLI 才看得到，這裡再記一下）
+- 3 個任務 error 狀態（皆 consecutiveErrors=1，**不過 v4.0 三關、不通知**）：
+  1. `sync-執行細則-to-claude-global`（每 30 分鐘）
+  2. `sync-特助心法-to-claude-global`（每 30 分鐘）
+  3. `☕ 幕僚長晨報`（每日 07:00）
+- **共同原因**：`cron: job interrupted by gateway restart`
+- **根因**：今天 07:00 系統因 context overflow 重啟時，把這 3 個任務打斷了（lastRunAtMs=1787785200046 = 07:00:00）
+- **判斷**：
+  - 關卡一「現在還壞嗎？」→ 不壞，腳本本身無錯誤，下一輪（sync=18 分鐘後、晨報=明天 07:00）會自動恢復
+  - 關卡二「provider 暫時過載？」→ 不是過載，是 gateway restart
+  - 關卡三「真的影響工作？」→ sync 漏一次不致命（下一輪就同步），晨報漏一天影響極有限（教練有 06:00 起床摘要、23:05 三機總結兩份主報可看）
+- **動作**：不通知教練，靜待下一輪自動恢復。下一輪 08:00 健康檢查再來驗證 sync 是否已恢復。
 
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 00:35
-- ✅ 同步成功
-- HANDOFF mtime: 1787761934
-- 雲端同步：✅ 已推上雲端（commit 90e80cb25）
+## 🔵 09:00 結繩領導學閱讀提醒（cron af137f9b）
+- 09:00:00 觸發，lastRunStatus=ok / CE=0 / duration=8ms
+- 訊息已 announce → telegram:6124913915（教練本人）
+- payload 原文：「🦞 教練，9:00 到了！記得花 10 分鐘閱讀《結繩領導學》喔～」
+- Telegram 通道探針：本輪 09:00 實測 ✅ `{"ok":true}`（守則#19 鐵律當下實測，不盲信上輪）
+- 教練沉默 6.9h（最後訊息 02:07:30，週三深夜→週四凌晨），09:00 屬正常起床時段，不另行打擾
+- 下輪 healthcheck cron：09:12 cycle=620（每小時任務健康檢查）
 
-## 🩺 軍師 Hook 自檢 2026-08-27 00:55（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
-- 小龍蝦信箱：（信箱查無新信）
-- Session: 65db632c-0f23-4fd8-aaf3-3f247ae2fd81
+## 🔵 健康檢查記錄（2026-08-27 08:13 cycle=619）
+- 教練沉默 6.1 小時（最後訊息 02:07:30），屬正常凌晨睡眠（02 才睡 → 8 點未醒合理）
+- 本任務 lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3
+- 驗證 sync 腳本（手動跑）：
+  - `sync_zhixingxize_to_claude_global.sh` exit 0 ✅
+  - `sync_xinfa_to_claude_global.sh` exit 0 ✅
+- 觀察 sync marker 與源頭 mtime：
+  - `zhixingxize_last_sync=1785913170` = 執行細則.md mtime (Aug 5 14:59)
+  - `xinfa_last_sync=1785479916` = 特助心法.md mtime (Jul 31 14:38)
+  - 兩 source 22 天沒改 → sync 22 天沒做事是 mtime-marker 機制預期行為，不是 bug
+- `~/.claude/CLAUDE.md` 內 AUTOINJECT 區段內容正確（grep XINFA_AUTOINJECT_START / ZHIXINGXIZE_AUTOINJECT_START 都正常）
+- 3 個任務（sync-執行細則、sync-特助心法、☕幕僚長晨報）v4.0 三關判斷：
+  - 關卡一（現在還壞嗎？）→ 不壞（sync 腳本手動測 exit 0）；晨報今天漏，預計明天 07:00 自動恢復
+  - 關卡二（provider 暫時過載？）→ 不是過載，是 07:00 gateway restart 中斷
+  - 關卡三（影響工作嗎？）→ 不影響（源頭沒改 → sync 沒事做；晨報漏一天有 06:00 起床摘要+23:05 三機總結兩份主報補位）
+- 結論：v4.0 三關全 fail → 不 announce，靜待 sync 下一輪（08:30）+ 晨報明天 07:00 自動恢復驗證
+- 下輪 healthcheck cron：09:12 cycle=620
 
-## cycle=622（2026-08-27 02:12 週四凌晨）— 安靜通過
-
-**教練最後訊息 02:07:30（沉默 0.1h，深夜剛互動，當下 date 新鮮值）**
-
-### 檢查摘要
-
-| 項目 | 結果 |
-|------|------|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0（coachSilentHours=0.1 當下算的） |
-| TG 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 本任務 cron 自身 | ✅ cycle=622 執行中（lastRunStatus=ok / CE=0） |
-| 其他 23 個 enabled cron 全部檢查 | ✅ 全部 CE=0 / lastStatus=ok |
-| 兩個 sync-to-claude-global（37593697 / aa1ad73b） | ✅ 腳本執行 ok（exit 0 / 25ms），僅 delivery-to-"last" 在 isolated cron 無對話可送（bestEffort=true，**非失敗**，status=ok） |
-| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（8707/1851/22220 bytes）+ `agents/main/agent/SOUL.md` 有棄用標記 ✅ + Repo1=23 / Repo2=22（< 50 警戒線）+ 無 `.!` 鎖定檔 |
-| cumulativeGreen | **6**（cycle=617~621 各 1 + 本輪=6） |
-| 蒸餾任務 9c3fc55d 沿用 | 從 cycle=619 起持續 ok（CE=0 / 22:00 起穩定，本輪未再重查節省 CLI 流量） |
-
-### v4.0 三關裁決（全 fail → 不 announce）
-
-**(A) 本任務自身 46e67e2e：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（正在寫這份報告 = 已恢復鐵證）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否
-- 關卡三（影響教練/會員嗎）→ ❌ 否（meta 迴圈）
-
-**(B) 蒸餾任務 9c3fc55d（沿用觀察）：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（自 22:00 起已 ok）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（內部流程不影響教練/會員）
-
-### 本輪觀察
-
-1. **本任務持續穩定**：cycle=622（02:12 AM）cron 自身 lastRunStatus=ok / CE=0。
-2. **24 個任務全綠**：本輪用 `openclaw cron list --json` 完整檢查全部 24 個任務（含 main agent + peipei agent + agentId=- 的孤立任務），**所有任務的 consecutiveErrors 都是 0、lastStatus=ok**。這是 cycle=618 22:13 蒸餾任務恢復後連續第 9 輪全綠。
-3. **兩個 sync-to-claude-global 任務**（37593697 / aa1ad73b）：腳本執行正常（exit 0、duration 25ms），狀態 ok，唯一小事是 delivery channel="last" 在 isolated cron 沒對話可送（bestEffort=true 已吞掉，**不是失敗**，status 仍記 ok）。若教練未來想收到 sync 完成通知，需改 delivery 設定，但腳本本身完全健康。**不影響教練或會員工作**，留觀不動。
-4. **TG 通道**：當下實測 ok:true（守則#19 鐵律）。
-5. **教練活躍度**：最後訊息 02:07:30（5 分鐘前），沉默 0.1h（凌晨剛互動，活躍中）。
-6. **環境快檢**：
-   - ✅ SOUL.md 三份齊全（8707/1851/22220 bytes）
-   - ⚠️ `~/.openclaw/SOUL.md`（8707 bytes，VPS 體系用的獨立檔）**仍缺**「⚠️ 本檔已棄用」標記（連 3 輪觀察至此：cycle=620/621/622）— 經兩輪分析判斷本檔是 VPS 體系獨立檔，**補棄用標記涉及 VPS 是否仍在運行的策略裁決**，超出本健康檢查職權，繼續留待 23:05 三機總結時統一處理。
-   - ✅ Repo1=23 / Repo2=22（< 50 警戒線，新增 6 筆全是運行狀態檔 + project_card，無 lock/手動殘留）
-   - ✅ 無 `.!` 鎖定檔
-7. **cumulativeGreen**：本輪推進至 6。
-
-**結論：v4.0 三關全 fail → 不 announce 教練。安靜收工。**
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：**03:12 健康檢查（cycle=623）**。
-
----
-
-## cycle=621（2026-08-27 01:12 週四凌晨）— 安靜通過
-
-**教練最後訊息 01:06:55（沉默 0.1h，深夜剛互動，當下 date 新鮮值）**
-
-### 檢查摘要
-
-| 項目 | 結果 |
-|------|------|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0（coachSilentHours=0.1 當下算的） |
-| TG 通道探針（守則#19 當下實測） | ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 本任務 cron 自身 | ✅ cycle=621 執行中（lastRunStatus=ok / CE=0 / lastDurationMs=122992ms） |
-| HEARTBEAT.md � 真實待辦 | 0 項 |
-| 環境快檢 | SOUL×3 齊全（8707/1851/22220 bytes）+ `agents/main/agent/SOUL.md` 有棄用標記 ✅ + Repo1=23 / Repo2=16（< 50 警戒線）+ 無 `.!` 鎖定檔 |
-| cumulativeGreen | **5**（cycle=617~620 各 1 + 本輪=5） |
-| 蒸餾任務 9c3fc55d 沿用 | 從 cycle=619 起持續 ok（CE=0 / 22:00 起穩定） |
-
-### v4.0 三關裁決（全 fail → 不 announce）
-
-**(A) 本任務自身 46e67e2e：**
-- 關卡一（本輪還壞嗎）→ � 否（正在寫這份報告 = 已恢復鐵證）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否
-- 關卡三（影響教練/會員嗎）→ ❌ 否（meta 迴圈）
-
-**(B) 蒸餾任務 9c3fc55d（沿用觀察）：**
-- 關卡一（本輪還壞嗎）→ ❌ 否（自 22:00 起已 ok）
-- 關卡二（provider 暫時過載嗎）→ ❌ 否（已恢復）
-- 關卡三（影響教練/會員嗎）→ ❌ 否（內部流程不影響教練/會員）
-
-### 本輪觀察
-
-1. **本任務持續穩定**：cycle=621（01:12 AM）cron 自身 lastRunStatus=ok / CE=0 / lastDurationMs=122992ms（< timeout 600s）。
-2. **TG 通道**：當下實測 ok:true（守則#19 鐵律）。
-3. **教練活躍度**：最後訊息 01:06:55（5 分鐘前），沉默 0.1h（深夜剛互動，活躍中）。
-4. **環境快檢**：
-   - ✅ SOUL.md 三份齊全（8707/1851/22220 bytes）
-   - ⚠️ `~/.openclaw/SOUL.md`（8707 bytes，給 VPS 用的版本）**仍缺**「⚠️ 本檔已棄用」標記（從 2026-08-26 01:30 起就缺，cycle=620 也記錄過）— 連續兩輪觀察到此問題。**判斷**：本檔是 VPS 體系用的獨立檔（內含「啟動第一步：讀取 VPS_CORE_RULES.md」），不是 main agent 的被取代檔；是否加棄用標記涉及 VPS 是否仍在運行的策略問題，**超出本健康檢查的職權範圍**。建議留到 23:05 三機總結時裁決（VPS 體系若已退役→補上棄用標記；若仍在用→保留原樣）。
-   - ✅ Repo1=23 / Repo2=16（< 50 警戒線）
-   - ✅ 無 `.!` 鎖定檔
-5. **cumulativeGreen**：本輪推進至 5。
-
-**結論：v4.0 三關全 fail → 不 announce 教練。安靜收工。**
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-下個 cron：**02:12 健康檢查（cycle=622）**。
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 01:15
-- ✅ 同步成功
-- HANDOFF mtime: 1787764458
-- 雲端同步：✅ 已推上雲端（commit 67c1f5dc4）
+## 🔵 健康檢查記錄（2026-08-27 09:12 cycle=620）
+- 教練沉默 7.1 小時（最後訊息 02:07:30，sync_coach_last_message.sh 真相源實測），剛過早 09 點，09:00 起床摘要已推播，正常起床時段，不另行打擾
+- 第零步 `sync_coach_last_message.sh` exit 0 ✅
+- 直接從 sqlite 抓全部 41 個 cron 任務狀態：
+  - **enabled=1 + last_run_status=ok** ← 全部正常，包含：
+    - `sync-執行細則-to-claude-global` 09:00:00 ok（20ms）✅ — 昨日中斷已自動恢復
+    - `sync-特助心法-to-claude-global` 09:00:00 ok（17ms）✅ — 昨日中斷已自動恢復
+    - `每2小時增量記憶蒸餾` 08:02:07 ok
+    - `BNI大台南行事曆同步` 08:02:07 ok
+    - `📊 LINE@教練都在想什麼 每日兩次使用回報` 08:02:34 ok
+    - `📚 每日結繩領導學閱讀提醒` 09:00:00 ok（8ms）✅ 已 announce
+    - `🔴 場景化升華+系統健檢` 2026-08-26 23:02:49 ok（150s）
+    - `🦞 小龍蝦每日三機總結` 2026-08-26 23:05:22 ok（287s）
+  - **唯一仍 error：☕ 幕僚長晨報** CE=1 / lastRun=2026-08-27 07:00 / lastError=`cron: job interrupted by gateway restart`
+    - nextRun = **2026-08-28 07:00:00** ← 明天 07:00 自動觸發
+- 驗證 sync marker 與源頭 mtime 完全對齊：
+  - `特助心法.md` Jul 31 14:38:36 ↔ `.sync_markers/xinfa_last_sync` Jul 31 14:38:52
+  - `執行細則.md` Aug 5 14:59:30 ↔ `.sync_markers/zhixingxize_last_sync` Aug 5 15:00:00
+  - mtime-marker 機制正常，sync 沒事做 = 源頭沒改 = 預期行為
+- v4.0 三關判斷（針對幕僚長晨報昨天那次中斷）：
+  - 關卡一（現在還壞嗎？）→ 不壞（昨天 07:00 一次性中斷事件，下次觸發 2026-08-28 07:00）
+  - 關卡二（provider 暫時過載？）→ 不是過載，是昨天 07:00 因 context overflow 重啟 gateway 時把 07:00 觸發的晨報打斷
+  - 關卡三（影響工作嗎？）→ 不影響（教練今天有 06:00 起床摘要、09:00 結繩閱讀提醒、23:00 場景化升華、23:05 三機總結四份主報可看，少一份 07:00 晨報完全可被補位）
+- 結論：v4.0 三關全 fail → **不 announce 教練**，靜待明天 07:00 驗證
+- 下輪 healthcheck cron：10:12 cycle=621
