@@ -22,6 +22,7 @@
 ## 🧭 待辦 / 觀察（持續）
 - 教練最後訊息：2026-08-27 10:32:21 CST（當下 7.7h 前，週四傍晚；2026-08-27 18:12 healthcheck cycle 撈 Telegram API 真實時間刷新，舊值 12:36:55 已覆蓋）
 - 🩺 healthcheck cycle=625（2026-08-27 18:12）：cron list 只有本任務自己、狀態 ok；接力棒同步 18:05 push 失敗屬暫時網路問題下 cycle 自癒；無三關皆過之需裁決項目，安靜處理未通知教練
+- 🩺 healthcheck cycle=626（2026-08-27 19:12）：第零步 sync_coach_last_message.sh 撈回教練真正最後訊息 19:11:32（剛剛在線，coachSilentHours 0.0）；cron list 仍僅本任務且狀態 ok；無 timeout/API key/連錯，無三關皆過之需裁決項目，安靜處理未通知教練
 - ☕ 幕僚長晨報 cron 標 error（CE=1，今早 07:00 因 13:00 context overflow 重啟被中斷，duration 5.1s；nextRun 2026-08-28 07:00 自動重試；與 8/24-26 alternating fail/recover 模式一致）
 - Repo1=23 / Repo2=22 untracked，屬正常範圍
 - 無 .! 鎖定檔，SOUL.md 三份齊全含棄用標記
