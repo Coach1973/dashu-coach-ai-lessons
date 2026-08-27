@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-27 19:10:38**
+> **最後同步：2026-08-27 19:30:42**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,7 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🎯 | **真誠分會自助送出簡介機制（示範點，之後套用到其他BNI分會）** | ✅2026-08-27完成並實測，教練可驗收 | 比照mentor100百人導師同行**第一階段**設計（查`git log`挖出`7072acc~1`那版`/join`舊程式碼，非現行「申請→教練產生連結→人工審核上架」版本），已在`bni-chapters`新增：`chapter_members`表(chapter_id範圍，9個分會共用同一套後端，不用逐分會重寫)＋`/<slug>/join`自助送出表單(姓名/公司職稱/產業別/簡介/照片必填+9組連結選填，honeypot+IP rate limit防灌水)＋送出即寫入DB立刻顯示在分會頁面(無審核關卡)＋專屬`edit_token`連結供本人日後自行修改/刪除＋後台`admin_edit`新增夥伴清單供刪除違規內容。本機測試port(5099)完整跑過送出→自動上架→自行編輯→自行刪除→跨分會隔離(sincere不會看到real-ai的資料)→honeypot擋假送出→缺欄位擋400→admin登入刪除全部通過，才用`launchctl kickstart`重啟正式服務(port 5064)，並用瀏覽器直連`chapters.bymyway.com/sincere`+`/sincere/join`確認正體中文顯示正確。commit`44fc3dd`已推GitHub。**下一步**：教練驗收沒問題後，因為機制已是9分會共用架構，其餘8個分會頁面**不需要重寫**，只要確認個別分會頁面版面接受同一個「分會夥伴」區塊即可視為同步完成 |
+| ✅ | **真誠分會自助送出簡介機制，已套用到全部9個BNI分會** | ✅2026-08-27完成，教練親口「很棒」驗收通過 | 比照mentor100百人導師同行**第一階段**設計，`bni-chapters`新增`chapter_members`表(chapter_id範圍)＋`/<slug>/join`自助送出表單(honeypot+IP rate limit防灌水)＋送出即自動上架＋`edit_token`自助編輯/刪除＋後台夥伴清單供刪違規內容，commit`44fc3dd`。**因架構本身是chapter_id分流、9分會共用同一套後端**，教練說「套用到所有分會」後，逐一curl驗證全部9個slug(sincere/real-ai/true-rich/true-love/zhenxin/real-diamonds/real-kungfu/real-age/real-wealth)的分會頁面+`/join`表單皆為200且各自顯示正確分會名稱，後台`admin_edit`(chapter_id=5/9實測)也都能看到各自夥伴清單，**確認9個分會全數已生效，無需額外程式碼異動**。此項結案 |
 | 🟡 | **BNI Connect查詢離會會員「信用証」開立狀況** | 🔒卡住-等教練釐清「信用証」確切定義 | 教練要求查詢哪些離會會員有/沒有開立「信用証」，軍師當場問清楚是指退會結清證明、還是ezPay發票(今天正好在查林仁超/林智帆的發票)、還是BNI Connect裡某個正式文件名稱，教練尚未回覆。下一場開工先問清楚再查，不要瞎猜方向去BNI Connect亂翻 |
 | 🔴🔴🔴 | **FB粉專行銷自動化：App+12個粉專發文權杖已建好，但「大樹教練」最重要粉專的pages_manage_posts權限卡在商家驗證未完成** | 🔒卡住-教練已於2026-08-27 17:00送出驗證，Facebook回覆約48小時(2個工作天)內出結果 | 聯想Windows本場從零建置Graph API App「大樹教練粉專發文小幫手」(App ID`1050871501278089`)，順利拿到12個一般粉專的Page Access Token(存於`fb_automation/page_tokens_2026-08-27.json`+`路徑大全_憑證層.md`，經debug_token驗證`expires_at:0`永不過期)，教練指定優先要發的4個是大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管。**卡住點**：教練最重視的「大樹教練」個人品牌粉專(facebook.com/bymyway，Page ID`252699914868764`)一直無法透過`/me/accounts`列出，且不管怎麼重新授權，真正的發文權限`pages_manage_posts`永遠拿不到（scope只剩前3個）。繞了一大圈試錯(切換使用案例分類/App後台加權限/開新分頁重來/猜New Pages Experience限制/加進Business Portfolio)才在Meta Business Suite「安全中心」頁面查到官方明講：「你的組織必須通過驗證，才能使用特定Meta產品」——真因是**商家驗證(Business Verification)未完成**，教練當場點名檢討「浪費了大半的時間最後才找到關鍵」，已寫入試金石案例67+記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`。教練決定自己找時間去`business.facebook.com`安全中心點「開始驗證」，完成後開新對話框回來繼續。**下一棒待辦**：教練商家驗證過了之後，重新走一次`pages_manage_posts`授權流程(教練需親自點擊「Generate Access Token」，自動化點擊會被瀏覽器攔截)，驗證12個粉專+大樹教練都能真正發文後才開始寫自動發文腳本；教練尚未提供「素材對應規則」(哪個活動配哪個粉專)，也要問清楚才能真正開始自動化。 |
 | ✅ | **Stop hook守則#07輪詢偵測瞎眼35天，工具回音誤判成回合邊界的根因已修復** | ✅2026-08-27完成，用真實對話重播+本場活體測試雙重驗證 | 教練修RustDesk腳本時自己講出「每10分鐘檢查一次」被親口糾正，查證發現這台Mac本來就有專門攔這句話的Stop hook，但log顯示從7/24起完全沒抓到過任何真實違規。根因：TURN_TEXT往回掃描transcript時，把工具執行結果（也是`type=='user'`）誤判成「教練講話」的回合邊界，真實對話一有多次工具呼叫（幾乎必然）就提早打斷掃描，抓不到更早講的違規內容。此bug自2026-07-23就存在，非08-12合併造成的新問題。已修復`scripts/stop_rules_master.py`+同步修好同一天失效的`test_stop_rules_master.sh`（比對基準依賴的檔案早被刪除，測試從建立當天就已失效）。詳見試金石案例66、[[reference_stop_hook_tool_result_boundary_bug_2026-08-27]]。commit`01a28f2fb`。 |
