@@ -80,3 +80,18 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1787837722
 - 雲端同步：✅ 已推上雲端（commit 7c967e977）
+
+## 🩺 healthcheck cycle=629（2026-08-27 22:00 cron-event heartbeat）
+- TG 通道探針 ok:true（22:00 當下實測，守則#19）
+- sync_coach_last_message 撈回教練真正最後訊息 21:39:09（coachSilentHours 0.4，剛剛在線）
+- JUNSHI queue 空、cron list 全 ok（僅幕僚長晨報 CE=1 明日 07:00 自動重試，屬正常 alternating）
+- SOUL.md 三份齊全含棄用標記、無 .! 鎖定檔、Repo1=23/Repo2=24 範圍正常
+- 無 ⬜ 待辦、無 urgent gmail、無三關皆過之需裁決項目
+- 安靜處理未通知教練（教練在線、無需打擾）
+
+## 🩺 healthcheck cycle=630（2026-08-27 22:12）
+- sync_coach_last_message.sh 撈回教練真正最後訊息 21:39:09（coachSilentHours 0.5，週四深夜仍在線）
+- cron list 仍僅本任務自己且 lastStatus=ok（consecutiveErrors=0、model=minimax/MiniMax-M3）
+- Repo1=23 / Repo2=25 untracked 屬正常範圍、無 .! 鎖定檔
+- HEARTBEAT 無新 ⬜ 待辦項目、幕僚長晨報 cron CE=1 明日 07:00 自動重試（屬正常 alternating）
+- 無三關皆過之需裁決項目，安靜處理未通知教練
