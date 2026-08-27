@@ -1,13 +1,13 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-27T08:12:00.000000+08:00",
-    "telegram_channel": "2026-08-27T09:02:06.614538+08:00",
-    "system_health": "2026-08-27T08:12:00+08:00",
-    "coach_silence_sync": "2026-08-27T09:12:05.134650+08:00",
+    "heartbeat_poll": "2026-08-27T10:00:00.000000+08:00",
+    "telegram_channel": "2026-08-27T10:00:00.000000+08:00",
+    "system_health": "2026-08-27T10:00:00+08:00",
+    "coach_silence_sync": "2026-08-27T10:12:05.436046+08:00",
     "jiesheng_reading_reminder_0900": "2026-08-27T09:02:06.614538+08:00"
   },
-  "lastHeartbeat": "2026-08-27T08:12:00.000000+08:00",
-  "lastHeartbeatNote": "cycle=619 08:12 週四早上 session heartbeat-poll｜TG 通道探針 ok:true（08:12 當下實測，遵守守則#19）｜教練最後訊息 02:07:30（6.1h 前，凌晨深睡中）｜連 13 輪全綠 stable baseline 已建立｜HEARTBEAT.md 待辦 0 項｜JUNSHI queue 空、無 urgent gmail｜3 個任務 CE=1（07:00 重啟中斷的 sync×2 + 幕僚長晨報，預計 08:30/明天 07:00 自動恢復）｜本輪 session heartbeat 純記錄、不 announce",
+  "lastHeartbeat": "2026-08-27T10:00:00.000000+08:00",
+  "lastHeartbeatNote": "cycle=621 10:00 週四早上 cron-event 整點心跳｜TG 通道探針 ok:true（10:00 當下實測，遵守守則#19）｜教練最後訊息 02:07:30（7.9h 前，凌晨 2 點才睡，10 點未醒屬合理作息）｜環境健檢 5 秒擋：SOUL.md 三份齊全含棄用標記、無 .! 鎖定檔、Repo1=23/Repo2=29 untracked 範圍正常｜HEARTBEAT.md 待辦 0 項｜JUNSHI queue 空、無 urgent gmail｜唯一仍 error=☕幕僚長晨報（nextRun=2026-08-28 07:00 自動恢復，其餘 41 cron 全綠含昨日中斷兩個 sync 已恢復）｜本輪 cron-event 整點心跳 純記錄、不 announce 教練",
   "systemSnapshot": {
     "timeOfDay": "morning",
     "dayOfWeek": "Thursday",
@@ -20,9 +20,9 @@
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-27T09:02:06.614538+08:00",
-    "coachSilentSince": "2026-08-27T02:07:30+08:00",
-    "coachSilentHours": 7.1,
+    "telegramChannelLastVerified": "2026-08-27T10:00:00.000000+08:00",
+    "coachSilentSince": "2026-08-27T10:11:04+08:00",
+    "coachSilentHours": 0.0,
     "nextPlannedAction": "本輪 09:00 結繩領導學閱讀提醒 cron 已 announce 完成；下輪 healthcheck cron：09:12 cycle=620",
     "triggerSource": "cron-event:📚每日結繩領導學閱讀提醒",
     "cronErrors": []

@@ -62,6 +62,21 @@
 - 結論：v4.0 三關全 fail → 不 announce，靜待 sync 下一輪（08:30）+ 晨報明天 07:00 自動恢復驗證
 - 下輪 healthcheck cron：09:12 cycle=620
 
+## 🔵 健康檢查記錄（2026-08-27 10:00 cycle=621）
+- 教練沉默 7.9h（最後訊息 02:07:30，sync_coach_last_message.sh 真相源實測），凌晨 2 點才睡，10 點未醒屬合理作息
+- 第零步 `sync_coach_last_message.sh` exit 0 ✅
+- 環境健檢（5 秒擋一半）：
+  - SOUL.md 三份齊全（`~/.openclaw/SOUL.md` 8707 bytes + `~/.openclaw/agents/main/agent/SOUL.md` 1851 bytes 均含「⚠️ 本檔已棄用」標記指向 workspace 版本 22KB）✅
+  - 無 `.!` 鎖定檔 ✅
+  - Repo1 untracked/modified: 23 / Repo2: 29（無暴增，範圍正常）
+- Telegram 通道探針（守則#19 當下實測）：`bash scripts/telegram_channel_probe.sh --json` 回 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` ✅
+- 心跳判斷 v4.0：
+  - 教練是否需要被叫醒？→ 凌晨 2 點睡、10 點未醒，正常
+  - 有無待辦/urgent？→ HEARTBEAT.md 待辦 0 / JUNSHI queue 空 / urgentGmailCount=0
+  - 任務是否全綠？→ 唯一仍 error = ☕幕僚長晨報（nextRun=2026-08-28 07:00 自動恢復），其餘 41 個 cron 包含昨日中斷的兩個 sync 已全恢復
+- 結論：純記錄，**不 announce 教練**
+- 下輪 healthcheck cron：10:12 cycle=622
+
 ## 🔵 健康檢查記錄（2026-08-27 09:12 cycle=620）
 - 教練沉默 7.1 小時（最後訊息 02:07:30，sync_coach_last_message.sh 真相源實測），剛過早 09 點，09:00 起床摘要已推播，正常起床時段，不另行打擾
 - 第零步 `sync_coach_last_message.sh` exit 0 ✅
