@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BNI信用証追蹤</title>
+<style>
+  body { font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 980px; margin: 0 auto; padding: 16px; background: #f7f6f2; color: #222; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .sub { color: #777; font-size: 13px; margin-bottom: 16px; }
+  .nav { margin-bottom: 14px; }
+  .nav a { color: #1f3a5f; font-size: 13px; margin-right: 14px; text-decoration: none; }
+
+  .filter-bar { background: white; border-radius: 10px; padding: 14px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+  .filter-row:last-child { margin-bottom: 0; }
+  .filter-label { font-size: 12px; color: #888; width: 56px; flex: 0 0 auto; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid #ddd; background: #f7f6f2; cursor: pointer; user-select: none; white-space: nowrap; }
+  .chip input { margin: 0; }
+  .chip .n { color: #999; font-size: 11px; }
+  .chip.checked { border-color: #1f3a5f; background: #eaf2fb; color: #1f3a5f; font-weight: 700; }
+  .searchbox { display: flex; gap: 8px; margin-top: 4px; }
+  .searchbox input[type=text] { flex: 1; padding: 8px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 8px; }
+  .searchbox button { padding: 8px 16px; font-size: 14px; border: none; border-radius: 8px; background: #1f3a5f; color: white; }
+
+  .count { color: #666; font-size: 13px; margin-bottom: 10px; }
+
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  th, td { padding: 9px 10px; font-size: 13px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
+  th { background: #f0efe9; color: #555; font-weight: 700; font-size: 12px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf7; }
+  td.name { font-weight: 700; }
+  td.company { color: #666; max-width: 180px; }
+  .chapter-tag { display: inline-block; background: #eef1f6; color: #1f3a5f; font-size: 11px; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+
+  .remain-wrap { min-width: 130px; }
+  .remain-bar { height: 6px; border-radius: 3px; background: #eee; overflow: hidden; margin-bottom: 3px; }
+  .remain-bar .fill { height: 100%; border-radius: 3px; }
+  .remain-label { font-size: 12px; font-weight: 700; }
+  .remain-label.ok { color: #1e7d34; }
+  .remain-bar .fill.ok { background: #34a853; }
+  .remain-label.warn { color: #b45309; }
+  .remain-bar .fill.warn { background: #f4a942; }
+  .remain-label.urgent { color: #b3261e; }
+  .remain-bar .fill.urgent { background: #e04b3f; }
+  .remain-label.overdue { color: #7a1410; }
+  .remain-bar .fill.overdue { background: #7a1410; }
+  .remain-none { color: #bbb; font-size: 12px; }
+
+  select.status-select { font-size: 12px; padding: 5px 6px; border-radius: 6px; border: 1px solid #ccc; background: white; font-weight: 700; }
+  select.status-select.status-active { color: #1e7d34; border-color: #b7e0c3; }
+  select.status-select.status-expired { color: #7a1410; border-color: #e6b5b0; }
+  select.status-select.status-not_issued { color: #666; border-color: #ddd; }
+  select.status-select.status-redeemed { color: #8a5a00; border-color: #ecd9a8; }
+  select.status-select.status-transferred { color: #1f5fa8; border-color: #b9d3f2; }
+  select.status-select.status-ineligible { color: #999; border-color: #ddd; }
+
+  .months-badge { font-size: 12px; background: #eef1f6; color: #1f3a5f; padding: 2px 8px; border-radius: 10px; }
+  .months-badge.unknown { background: #f4f4f0; color: #bbb; }
+  .empty { color: #888; text-align: center; padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/">📇 名片首頁</a>
+  <a href="/find">🔎 找人才・找專業</a>
+</div>
+
+<h1>🪪 BNI信用証追蹤（大台南南區5分會）</h1>
+<div class="sub">已開立仍有效的證會依到期日排序，越接近2年到期的排越前面。狀態欄可直接改，改完立即存檔。</div>
+
+<div class="filter-bar">
+  <form method="get" id="filter-form">
+    <div class="filter-row">
+      <span class="filter-label">狀態</span>
+      {% for key in status_order %}
+      <label class="chip {{ 'checked' if key in selected_statuses else '' }}">
+        <input type="checkbox" name="status" value="{{ key }}" {{ 'checked' if key in selected_statuses else '' }} onchange="document.getElementById('filter-form').submit()">
+        {{ status_labels[key] }} <span class="n">{{ status_counts.get(key, 0) }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">分會</span>
+      {% for c in chapters %}
+      <label class="chip {{ 'checked' if c in selected_chapters else '' }}">
+        <input type="checkbox" name="chapter" value="{{ c }}" {{ 'checked' if c in selected_chapters else '' }} onchange="document.getElementById('filter-form').submit()">
+        {{ c }}
+      </label>
+      {% endfor %}
+    </div>
+    <div class="searchbox">
+      <input type="text" name="q" placeholder="搜姓名或公司" value="{{ query }}">
+      <button type="submit">篩選</button>
+    </div>
+  </form>
+</div>
+
+<div class="count">共 {{ records|length }} 筆</div>
+
+{% if not records %}
+<div class="empty">目前篩選條件下沒有符合的資料</div>
+{% else %}
+<table>
+  <thead>
+    <tr>
+      <th>分會</th>
+      <th>姓名</th>
+      <th>公司</th>
+      <th>信用額度</th>
+      <th>發行日期</th>
+      <th>到期日 / 剩餘時間</th>
+      <th>狀態</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in records %}
+    <tr>
+      <td><span class="chapter-tag">{{ r.chapter }}</span></td>
+      <td class="name">{{ r.name }}</td>
+      <td class="company">{{ r.company or '' }}</td>
+      <td>
+        {% if r.credit_months %}
+        <span class="months-badge">{{ r.credit_months }} 個月</span>
+        {% else %}
+        <span class="months-badge unknown">—</span>
+        {% endif %}
+      </td>
+      <td>{{ r.issue_date or (r.scheduled_end_date and ('離會:' ~ r.scheduled_end_date)) or '' }}</td>
+      <td class="remain-wrap">
+        {% if r.status_key == 'active' and r.expiry_date %}
+          {% if r.remaining_days is not none %}
+            {% set pct = ((r.remaining_days / 730.0) * 100) | round(0, 'floor') %}
+            {% set pct = [pct, 100] | min %}
+            {% set pct = [pct, 2] | max %}
+            {% if r.remaining_days < 0 %}
+              <div class="remain-bar"><div class="fill overdue" style="width:2%"></div></div>
+              <div class="remain-label overdue">已超過到期日 {{ r.expiry_date }}</div>
+            {% elif r.remaining_days < 30 %}
+              <div class="remain-bar"><div class="fill urgent" style="width:{{ pct }}%"></div></div>
+              <div class="remain-label urgent">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
+            {% elif r.remaining_days < 180 %}
+              <div class="remain-bar"><div class="fill warn" style="width:{{ pct }}%"></div></div>
+              <div class="remain-label warn">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
+            {% else %}
+              <div class="remain-bar"><div class="fill ok" style="width:{{ pct }}%"></div></div>
+              <div class="remain-label ok">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
+            {% endif %}
+          {% else %}
+            <span class="remain-none">到期日未知</span>
+          {% endif %}
+        {% elif r.expiry_date %}
+          <span class="remain-none">{{ r.expiry_date }}</span>
+        {% else %}
+          <span class="remain-none">—</span>
+        {% endif %}
+      </td>
+      <td>
+        <form method="post" action="/bni-credit/{{ r.id }}/status">
+          <select name="status_key" class="status-select status-{{ r.status_key }}" onchange="this.className='status-select status-'+this.value; this.form.submit()">
+            {% for key in status_order %}
+            <option value="{{ key }}" {{ 'selected' if key == r.status_key else '' }}>{{ status_labels[key] }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+</body>
+</html>
