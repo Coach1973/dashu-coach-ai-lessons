@@ -362,6 +362,7 @@ BNI_CREDIT_STATUS_MAP = {
     "expired": {"cert_status": "issued", "usage_status": "expired"},
     "redeemed": {"cert_status": "issued", "usage_status": "redeemed"},
     "transferred": {"cert_status": "issued", "usage_status": "transferred"},
+    "invalidated": {"cert_status": "issued", "usage_status": "invalidated"},
 }
 BNI_CREDIT_STATUS_LABELS = {
     "active": "✅ 有效",
@@ -369,9 +370,10 @@ BNI_CREDIT_STATUS_LABELS = {
     "not_issued": "⬜ 未開立",
     "redeemed": "💰 已贖回",
     "transferred": "↪️ 已轉移",
-    "ineligible": "🚫 無資格",
+    "ineligible": "🈳 沒有額度",
+    "invalidated": "❌ 已失效",
 }
-BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "redeemed", "transferred", "ineligible"]
+BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "invalidated", "redeemed", "transferred", "ineligible"]
 
 
 def _bni_credit_status_key(cert_status, usage_status):
@@ -385,7 +387,7 @@ def _bni_credit_status_key(cert_status, usage_status):
 def bni_credit_list():
     from datetime import date
 
-    selected_statuses = request.args.getlist("status") or ["active", "expired", "not_issued"]
+    selected_statuses = request.args.getlist("status") or ["active", "expired", "not_issued", "invalidated"]
     selected_chapters = request.args.getlist("chapter")
     query = (request.args.get("q") or "").strip()
 
@@ -430,9 +432,9 @@ def bni_credit_list():
             else:
                 urgency = 3
         else:
-            urgency = {"expired": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8}.get(
-                status_key, 9
-            )
+            urgency = {
+                "expired": 4, "invalidated": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8,
+            }.get(status_key, 9)
 
         record = dict(r)
         record["status_key"] = status_key
