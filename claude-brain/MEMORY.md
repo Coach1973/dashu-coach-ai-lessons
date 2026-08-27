@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 教練糾正Netlify額度三機同步不用建自動化攔截hook，簡單記數+總結時同步就夠(2026-08-26)](feedback_netlify_quota_sync_simplify_2026-08-26.md) — 過度工程化的PreToolUse hook差點卡住自己指令；新Windows hook上線前先查BOM編碼
 - [🎯 活動前一天自動整理報名名單發教練，LINE@後台手動私訊避免推播額度(2026-08-27)](project_event_reminder_day_before_sop_2026-08-27.md) — event_reminder_day_before.py已上線，8/28嘉義場40人真實資料驗證成功
 - [📋 FB粉專行銷自動化：教練會陸續給粉專名單，尚未開始執行(2026-08-27)](project_fb_fanpage_marketing_automation_2026-08-27.md) — 缺粉專清單/操作權限/素材對應規則三要素才能動工，bigtree既有EDM可當素材源頭
 - [🔴🔴🔴🔴 Stop hook守則#07輪詢偵測瞎眼35天，工具回音被誤判成回合邊界(2026-08-27)](reference_stop_hook_tool_result_boundary_bug_2026-08-27.md) — 修改「往回掃描transcript找回合邊界」的程式碼前必讀；已用真實對話重播驗證+重寫失效的測試套件
