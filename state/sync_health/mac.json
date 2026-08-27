@@ -1,6 +1,6 @@
 {
   "machine": "mac",
-  "last_attempt": "2026-08-27T18:45:53+08:00",
-  "pull_ok": true,
-  "status_text": "✅ 已拉雲端最新（HEAD: 016fa40b0）"
+  "last_attempt": "2026-08-28T03:33:05+08:00",
+  "pull_ok": false,
+  "status_text": "⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）"
 }

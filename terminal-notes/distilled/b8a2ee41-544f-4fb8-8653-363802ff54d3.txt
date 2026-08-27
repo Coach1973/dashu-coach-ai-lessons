@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b8a2ee41-544f-4fb8-8653-363802ff54d3
-# 提取時間：2026-08-28 03:10 (台灣時間)
-# 共 16 條教練原話
+# 提取時間：2026-08-28 03:32 (台灣時間)
+# 共 20 條教練原話
 
 ---
 
@@ -497,3 +497,113 @@ BNI信用証複查任務(279筆已開立+61筆未開立,純唯讀模式)還在�
 　▶ AI 回應：完全符合預期:教練帳號能進,佩君老師的帳號被擋(403),名片首頁夥伴照常能用。現在重啟服務並處理coach888總覽表。
 
 　▶ AI 回應：現在來處理coach888總覽表,新增「名片系統」跟「信用証追蹤系統」兩個頁面。
+
+　▶ AI 回應：已在正式站驗證上線。做完的事情總結如下:
+
+**1. 權限隔離(這才是真正解決「只有我自己能看」的關鍵)**
+`/bni-credit`從原本team成員都能登入的權限,改成只有您自己的帳號(bymyway)能看,夥伴帳號(如佩君老師)登入後點進去會被擋(403),已實測驗證三種情況都正確:您200、夥伴403、沒登入導去登入頁。commit `ee90fc7fc`。也把首頁導覽列上原本任何人都看得到的「BNI信用証追蹤」連結拿掉了。
+
+**2. coach888總覽表新增「BNI｜信用証追蹤系統」**
+放在「六、BNI專用」分類(私藏·BNI徽章),連結`namecard.bymyway.c…（略）
+
+【教練 2026-08-27 19:10】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/namecard-db/templates/index.html、/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：
+  • project_event_reminder_day_before_sop_2026-08-27.md
+  • project_fb_fanpage_marketing_automation_2026-08-27.md
+
+📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」
+  「記不住，肯定就用不出來。」
+
+⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。
+  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。
+
+✅ 立刻補上（一行就好）：
+  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：兩件事都已處理:
+
+1. **HTML預覽鐵律**:剛才改的 [templates/index.html](../.openclaw/workspace/namecard-db/templates/index.html) 跟 [coach888/index.html](../github_repos/coach888/index.html) 都已經用真實Google Chrome開給您看了。
+
+2. **記憶索引漏收**:兩份24小時內寫的記憶檔(排名前一天報名提醒工具、FB粉專行銷待辦)補回索引,commit `762e0b997` 已推上雲端。
+
+【教練 2026-08-27 19:12】
+總結
+
+　▶ AI 回應：Now let me remove v143's block from the main handoff file and insert an archive pointer.
+
+　▶ AI 回應：Good, v143 archived properly. Now let me append the new v145 summary at the end of the file.
+
+　▶ AI 回應：Good, structure is correct. Now let's commit everything and push.
+
+　▶ AI 回應：Conflict resolved cleanly, no markers remain. Let me continue the rebase.
+
+　▶ AI 回應：Confirmed HEAD correctly contains origin's latest history plus my merged changes. Let me finalize the branch pointer and clean up the stuck rebase state.
+
+　▶ AI 回應：Now `main` is correctly ahead of origin by 1 commit with the merged history. Let me push.
+
+　▶ AI 回應：Git衝突處理完成,commit `076ce24e5` 已成功推上雲端(跟聯想同時段的另一個任務合併,沒有互相覆蓋)。現在來看您問的macOS更新問題。
+
+　▶ AI 回應：macOS 26.6.2是純安全性更新,沒有新功能、沒有介面變動。查了一下(2026-08-17發布):
+
+**內容**:修補將近30個安全漏洞(CVE),包含幾個比較嚴重的——圖片處理相關的漏洞可能被利用來執行任意程式碼、音訊元件有可能洩漏使用者敏感資訊的漏洞、還有幾個核心(Kernel)層級的漏洞跟WebKit(Safari引擎)記憶體損壞問題(可能導致當機或資料外洩)。這是Apple近三週內第三次安全更新,步調算密集。
+
+**我的建議:可以更新**,原因:
+1. 這次完全沒有新功能、沒有介面改版,不會動到您現有的使用習慣或畫面配置
+2. 因為沒有介面/系統行為變動,對您這台Mac上跑的R…（略）
+
+　▶ AI 回應：本場總結完成,收工報告如下:
+
+**做了什麼**:接續v144的BNI Connect信用証清查(5分會402人)，把資料做成教練專屬的`/bni-credit`追蹤網頁(狀態勾選、到期倒數色條、7欄位排序)。過程中誤觸BNI Connect正式系統產生一張真的信用証(教練已接手個別處理，並拍板「產生信用証」按鈕永不觸碰的鐵律)。委派背景agent複查340筆修正分類(0筆已失效、24筆改標沒有額度)。落實教練專屬權限隔離(owner_only，夥伴帳號403擋下)，coach888總覽表新增入口。收工前處理教練追加的排序功能需求，以及記憶系統整理(194個孤兒檔案分類、139行索引)。
+
+*…（略）
+
+【教練 2026-08-27 19:26】
+問一下哈，那個「已失效」跟「已過期」，感覺好像這兩個是一樣的東西，不然已失效的條件是什麼呢？
+
+　▶ AI 回應：好問題,我查一下當初怎麼定義的,老實跟您說清楚。
+
+　▶ AI 回應：查证清楚了,兩者確實很像——甚至可以說**本來就是同一件事**,我解釋一下來龍去脈:
+
+**「已過期」的判定方式**：在會員資料頁面上,「信用證」連結如果是`href="#"`(連不到真正的證書頁面),就直接判定過期,**不用點進去看**。這條規則的來源,就是最早查證真鑽分會丁大成這個人時,發現點進去顯示的正是「Please contact support for further assistance」這句話——所以後來乾脆訂規則:「看到連結是`#`,就代表點進去一定是這句話,不用再點一次浪費時間」。
+
+**「已失效」原本想涵蓋的情況**：連結是**正常的**(有真的證書編號,點得進去),但點…（略）
+
+【教練 2026-08-27 19:29】
+因為這個 context 已經到 55% 了，我們先總結，然後你把以下要改的東西先記錄下來。等我開新的對話框之後，我們再開始來改。
+
+第一個就是把這個已經失效、空的分類拿掉，同時
+
+你再把到期日用顏色標示。
+
+關於到期日的顏色，有兩種方案：
+
+• 方案一：12 個月以上（含 12 個月）用綠色，12 個月以下用黃色，剩下一個月的用紅色。
+• 方案二：12 個月用綠色，6 個月用黃色，3 個月用紅色。
+
+這樣子可視化效果是不是會好一點？
+
+另外就是，她們的公司應該都查得到，如果可以的話，也把公司打上去，你覺得怎麼樣？
+
+　▶ AI 回應：Now let me update the handoff table and commit.
