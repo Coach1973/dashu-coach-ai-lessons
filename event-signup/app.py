@@ -157,21 +157,19 @@ def checkin_submit():
     return redirect(_lottery_greet_url(row["name"], event["name"]))
 
 
-def _resolve_current_slide(conn) -> str | None:
-    """回傳目前應該給出的簡報檔名（slides/資料夾裡的檔名），找不到回傳None。
-    auto模式：抓檔名開頭是今天日期(YYYY-MM-DD)的檔案；manual模式：後台指定的那個檔案。"""
+def _resolve_current_slides(conn) -> list[str]:
+    """回傳目前應該給出的簡報檔名清單（slides/資料夾裡的檔名），可能不只一份。
+    auto模式：抓檔名開頭是今天日期(YYYY-MM-DD)的所有檔案；
+    manual模式：後台指定的那幾個檔案（逗號分隔），一次可以指定多份（例如同一場有兩份簡報）。"""
     mode = db.get_slides_mode(conn)
     if mode == "manual":
-        fname = db.get_manual_slide_file(conn)
-        if fname and os.path.exists(os.path.join(SLIDES_DIR, fname)):
-            return fname
-        return None
+        raw = db.get_manual_slide_file(conn) or ""
+        names = [n.strip() for n in raw.split(",") if n.strip()]
+        return [n for n in names if os.path.exists(os.path.join(SLIDES_DIR, n))]
     today = datetime.now().strftime("%Y-%m-%d")
     if os.path.isdir(SLIDES_DIR):
-        for fname in sorted(os.listdir(SLIDES_DIR)):
-            if fname.startswith(today):
-                return fname
-    return None
+        return sorted(f for f in os.listdir(SLIDES_DIR) if f.startswith(today))
+    return []
 
 
 @app.route("/slides")
@@ -181,7 +179,7 @@ def slides_landing():
     name（選填）：從/checkin手機比對成功導過來時會帶上，顯示個人化歡迎文字；
     直接掃簡報QR進來（原本流程）不會帶這個參數，維持原本「感謝聆聽」文字。"""
     conn = db.get_conn()
-    fname = _resolve_current_slide(conn)
+    fnames = _resolve_current_slides(conn)
     event = db.get_current_event(conn)
     conn.close()
 
@@ -190,7 +188,7 @@ def slides_landing():
     _notify_xiaolongxia(
         f"📊 有人{'簽到' if name else '掃了簡報QR碼'}\n"
         f"{f'姓名：{name}' + chr(10) if name else ''}"
-        f"檔案：{fname or '（尚未設定今日簡報）'}\n時間：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        f"檔案：{'、'.join(fnames) if fnames else '（尚未設定今日簡報）'}\n時間：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
     )
 
     add_friend_url = f"https://line.me/R/ti/p/{LINE_OA_ID}"
@@ -201,20 +199,21 @@ def slides_landing():
     if name and event:
         add_friend_url = _lottery_greet_url(name, event["name"])
 
+    slides = [{"name": f, "url": url_for("slides_download", filename=f)} for f in fnames]
     return render_template(
-        "slides.html", add_friend_url=add_friend_url, has_slide=bool(fname), name=name,
-        download_url=url_for("slides_download") if fname else None,
+        "slides.html", add_friend_url=add_friend_url, slides=slides, name=name,
     )
 
 
-@app.route("/slides/download")
-def slides_download():
+@app.route("/slides/download/<path:filename>")
+def slides_download(filename):
     conn = db.get_conn()
-    fname = _resolve_current_slide(conn)
+    fnames = _resolve_current_slides(conn)
     conn.close()
-    if not fname:
-        return "今天還沒有設定簡報檔，請洽大樹教練", 404
-    return send_from_directory(SLIDES_DIR, fname, as_attachment=True)
+    safe_name = os.path.basename(filename)
+    if safe_name not in fnames:
+        return "這份檔案目前沒有開放下載，請洽大樹教練", 404
+    return send_from_directory(SLIDES_DIR, safe_name, as_attachment=True)
 
 
 @app.route("/admin/slides-upload", methods=["POST"])
@@ -236,9 +235,9 @@ def slides_set_mode():
     mode = (request.form.get("mode") or "auto").strip()
     conn = db.get_conn()
     if mode == "manual":
-        fname = (request.form.get("manual_file") or "").strip()
-        if fname:
-            db.set_manual_slide_file(conn, fname)
+        fnames = [f.strip() for f in request.form.getlist("manual_file") if f.strip()]
+        if fnames:
+            db.set_manual_slide_file(conn, ",".join(fnames))
         db.set_slides_mode(conn, "manual")
     else:
         db.set_slides_mode(conn, "auto")
@@ -763,15 +762,15 @@ def admin():
     current_event = db.get_current_event(conn)
     routing_mode = db.get_routing_mode(conn)
     slides_mode = db.get_slides_mode(conn)
-    current_slide = _resolve_current_slide(conn)
-    manual_slide = db.get_manual_slide_file(conn)
+    current_slides = _resolve_current_slides(conn)
+    manual_slides = [f.strip() for f in (db.get_manual_slide_file(conn) or "").split(",") if f.strip()]
     conn.close()
     slide_files = sorted(os.listdir(SLIDES_DIR)) if os.path.isdir(SLIDES_DIR) else []
     return render_template(
         "admin.html", events=events, attendees=attendees,
         selected=selected, current_event=current_event, routing_mode=routing_mode,
-        slides_mode=slides_mode, current_slide=current_slide,
-        manual_slide=manual_slide, slide_files=slide_files,
+        slides_mode=slides_mode, current_slide="、".join(current_slides) if current_slides else None,
+        manual_slide=manual_slides, slide_files=slide_files,
     )
 
 

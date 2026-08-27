@@ -47,8 +47,10 @@
     <p class="warn">⚠️ 按下去後 LINE 會自動打開，訊息也打好了，<b>請務必在 LINE 裡按「傳送」</b>——沒按傳送，我們收不到資料，就沒辦法幫您登記抽獎喔！</p>
 
     <p class="step-label">STEP 2</p>
-    {% if has_slide %}
-    <a class="cta slide" href="{{ download_url }}">📄 下載今日簡報</a>
+    {% if slides %}
+      {% for s in slides %}
+      <a class="cta slide" href="{{ s.url }}">📄 下載簡報{{ '（' ~ loop.index ~ '）' if slides|length > 1 else '' }}</a>
+      {% endfor %}
     {% else %}
     <span class="cta disabled">今天還沒有設定簡報檔</span>
     {% endif %}

@@ -114,12 +114,13 @@
       {% if slide_files %}
       <form method="POST" action="/admin/slides-set-mode" style="display:inline">
         <input type="hidden" name="mode" value="manual">
-        <select name="manual_file">
+        <select name="manual_file" multiple size="{{ slide_files|length if slide_files|length < 6 else 6 }}">
           {% for f in slide_files %}
-          <option value="{{ f }}" {{ 'selected' if manual_slide == f else '' }}>{{ f }}</option>
+          <option value="{{ f }}" {{ 'selected' if f in manual_slide else '' }}>{{ f }}</option>
           {% endfor %}
         </select>
-        <button type="submit">手動指定為這一份</button>
+        <p style="font-size:12px;opacity:.7;margin:4px 0">按住 Cmd（Mac）或 Ctrl（Windows）可複選多份，一次指定會同時提供這幾份下載</p>
+        <button type="submit">手動指定為這幾份</button>
       </form>
       {% endif %}
       {% if slides_mode == 'manual' %}
