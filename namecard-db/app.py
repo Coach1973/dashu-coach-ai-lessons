@@ -293,6 +293,22 @@ def team_login_required(view):
     return wrapped
 
 
+# 教練專屬頁面（如BNI信用証追蹤）：夥伴帳號(如佩君老師)登入team系統後不能看，
+# 只有教練本人的帳號能進，跟「名片系統」開放給夥伴的權限刻意分開
+OWNER_USERNAME = "bymyway"
+
+
+def owner_only_required(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if not session.get("team_username"):
+            return redirect(url_for("team_login", next=request.path))
+        if session.get("team_username") != OWNER_USERNAME:
+            return "此頁面僅限教練本人查看", 403
+        return view(*args, **kwargs)
+    return wrapped
+
+
 @app.route("/card/<int:card_id>/bni_status", methods=["POST"])
 @team_login_required
 def card_bni_status(card_id):
@@ -389,7 +405,7 @@ def _bni_credit_status_key(cert_status, usage_status):
 
 
 @app.route("/bni-credit")
-@team_login_required
+@owner_only_required
 def bni_credit_list():
     from datetime import date
 
@@ -507,7 +523,7 @@ def bni_credit_list():
 
 
 @app.route("/bni-credit/<int:record_id>/status", methods=["POST"])
-@team_login_required
+@owner_only_required
 def bni_credit_update_status(record_id):
     new_status = request.form.get("status_key")
     mapping = BNI_CREDIT_STATUS_MAP.get(new_status)
