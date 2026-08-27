@@ -152,29 +152,33 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-08-27)
+## Promoted From Short-Term Memory (2026-08-28)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:303:303 -->
-- 📨 對話記錄 09:09（共約 22 條，從第 0 行起）: 但我把 4 篇講法的全文都抓下來比對過了。根據紙本書各地講法十的編排結構（每篇講法連續頁碼），我推估 **p 64-67 落在〈曼哈頓講法〉中後段**，內容是師父講「**修煉人不能被人說、一碰就炸**」這一段。對應網路上整理的章節大約是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:303-303]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:309:309 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: **主題：修煉人不能被人說，一碰就炸** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:309-309]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:311:311 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: > 因為洛杉磯剛剛講完法，今天又剛剛上網發表，所以我今天不多講。但是有一件事情我要跟大家說。很多神在我耳邊講：你們大法弟子不能被說，一說就炸，說也不能說怎麼行，不能被人說怎麼修，這叫甚麼修煉人，等等等等。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:311-311]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:313:313 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: > 作為一個修煉的人來講啊，大家知道，打不還手、罵不還口，真正受到損失的時候修煉人都付之一笑，這是你們應有的狀態和必須做到的，因為你不是常人，你要走出常人的。你不能用常人的理來要求自己，你得用高標準來要求你，所以你們必須得做到這樣。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:313-313]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:316:316 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: 🦞 小龍蝦：教練，實話說：法輪大法官方網站（big5.falundafa.org）上沒有分頁的頁碼對應，4 篇講法都是一整頁 HTML，不像紙本書有印刷頁碼。所以我**無法直接定位到「p 64-67」**。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:316-316]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:318:318 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: 但我把 4 篇講法的全文都抓下來比對過了。根據紙本書各地講法十的編排結構（每篇講法連續頁碼），我推估 **p 64-67 落在〈曼哈頓講法〉中後段**，內容是師父講「**修煉人不能被人說、一碰就炸**」這一段。對應網路上整理的章節大約是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:318-318]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:324:324 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: **主題：修煉人不能被人說，一碰就炸** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:324-324]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:326:326 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: > 因為洛杉磯剛剛講完法，今天又剛剛上網發表，所以我今天不多講。但是有一件事情我要跟大家說。很多神在我耳邊講：你們大法弟子不能被說，一說就炸，說也不能說怎麼行，不能被人說怎麼修，這叫甚麼修煉人，等等等等。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:326-326]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:328:328 -->
-- 〈曼哈頓講法〉中段（推估 p 64-67）: > 作為一個修煉的人來講啊，大家知道，打不還手、罵不還口，真正受到損失的時候修煉人都付之一笑，這是你們應有的狀態和必須做到的，因為你不是常人，你要走出常人的。你不能用常人的理來要求自己，你得用高標準來要求你，所以你們必須得做到這樣。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:328-328]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:335:335 -->
-- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:335-335]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:337:340 -->
-- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:337-340]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:341:342 -->
-- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: Current time: Thursday, August 20th, 2026 - 8:00 PM (Asia/Taipei) Reference UTC: 2026-08-20 12:00 UTC [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:341-342]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:267:269 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 👤 教練：/.70FYL2 林佳慧 🦞 小龍蝦：收到一筆新的網站報名通知，先查表結構再解析寫入。 🦞 小龍蝦：教練，這一則的格式跟之前 backfill 的 30 筆完全不同，太精簡了，我沒辦法一次寫進 `advance_registrations` 表。先說我看到什麼、缺什麼： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:267-269]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:273:273 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 識別碼：`.70FYL2`（看起來像驗證碼或短 ID） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:273-273]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:282:282 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **幾個可能的解讀，請教練挑一個：** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:282-282]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:284:286 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **完整通知沒貼完**——如果是從網站轉來的，通常會有完整一段（含場次/公司/電話/Email/時間），是不是漏貼了？麻煩把完整的再貼一次。; **新格式測試**——`.70FYL2` 是新的簡碼格式，要我去對應某個場次。如果是的話告訴我這是哪一場，我就照這格式存（場次寫「待補」先佔位）。; **手動占位**——教練想先把林佳慧這個名字掛進去，場次之後再補。那我會用 `session_label='(待教練補場次)'` 寫入，等您回我場次我立刻 update。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:284-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:288:289 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 您說哪一種？🦞 🦞 小龍蝦：教練，這一則的格式跟之前 backfill 的 30 筆完全不同，太精簡了，我沒辦法一次寫進 `advance_registrations` 表。先說我看到什麼、缺什麼： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:288-289]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:293:293 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 識別碼：`.70FYL2`（看起來像驗證碼或短 ID） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:293-293]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:302:302 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **幾個可能的解讀，請教練挑一個：** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:302-302]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:304:306 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **完整通知沒貼完**——如果是從網站轉來的，通常會有完整一段（含場次/公司/電話/Email/時間），是不是漏貼了？麻煩把完整的再貼一次。; **新格式測試**——`.70FYL2` 是新的簡碼格式，要我去對應某個場次。如果是的話告訴我這是哪一場，我就照這格式存（場次寫「待補」先佔位）。; **手動占位**——教練想先把林佳慧這個名字掛進去，場次之後再補。那我會用 `session_label='(待教練補場次)'` 寫入，等您回我場次我立刻 update。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:304-306]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:308:310 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 您說哪一種？🦞 👤 教練：這是發票的手機載具 🦞 小龍蝦：抱歉教練，是我誤判了！🦞 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:308-310]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:312:312 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 完全理解錯方向——看到「名字」+「代碼」就以為是報名通知格式，沒有意識到「手機載具」這個關鍵字。教練一句話把我拉回來，感謝。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:312-312]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:314:314 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 所以現在我理解的是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:314-314]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:315:316 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: `/.70FYL2` = 某張發票的手機載具代碼; `林佳慧` = 發票上的姓名（或對應人） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:315-316]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:318:318 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 請教練下一步想做什麼？我猜幾個方向，您挑一個： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:318-318]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:320:323 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **登記起來**——歸戶到您的手機載具，把林佳慧的發票累積在您的雲端發票裡; **查發票內容**——用這個載具去財政部電子發票平台（或 `meiinvoice` 之類服務）撈這張發票的明細，看是買了什麼、多少錢; **記到 MEMORY.md**——單純記下來：「教練收到的某張發票，手機載具 .70FYL2，姓名林佳慧」備查; **其他用途**——例如要報帳、對帳、退換貨等，請告訴我場景 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:320-323]

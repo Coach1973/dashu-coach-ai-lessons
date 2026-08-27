@@ -8,6 +8,8 @@
 - [🔴🔴🔴 FB API權限卡住先查官方文件/安全中心，不要靠UI試錯偵錯(2026-08-27)](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md) — pages_manage_posts卡了大半天才發現真因是商家驗證未完成，教練點名檢討浪費時間token
 - [🔴🔴 教練準備中的素材不要用其他圖片湊數代替，等真正提供才處理(2026-08-27)](feedback_dont_substitute_placeholder_await_real_material_2026-08-27.md) — bigtree歷史紀錄8/28用群眾照湊數被撤回，教練說「不要瞎跑」
 - [🔧 教練糾正Netlify額度三機同步不用建自動化攔截hook，簡單記數+總結時同步就夠(2026-08-26)](feedback_netlify_quota_sync_simplify_2026-08-26.md) — 過度工程化的PreToolUse hook差點卡住自己指令；新Windows hook上線前先查BOM編碼
+- [🎯 event_reminder_day_before.py已上線，活動前一天自動整理報名名單發教練(2026-08-27)](project_event_reminder_day_before_sop_2026-08-27.md) — LINE@後台手動私訊避免推播額度，8/28嘉義場40人驗證成功
+- [📋 FB粉專行銷自動化：教練會陸續給粉專名單，尚未開始執行(2026-08-27)](project_fb_fanpage_marketing_automation_2026-08-27.md) — 缺粉專清單/操作權限/素材對應規則三要素才能動工
 - [🔴🔴🔴🔴 Stop hook守則#07輪詢偵測瞎眼35天，工具回音被誤判成回合邊界(2026-08-27)](reference_stop_hook_tool_result_boundary_bug_2026-08-27.md) — 修改「往回掃描transcript找回合邊界」的程式碼前必讀；已用真實對話重播驗證+重寫失效的測試套件
 - [🔧 macOS用ps -o rss量測記憶體會嚴重低估，跟Activity Monitor可差10倍以上(2026-08-27)](reference_macos_ps_rss_vs_footprint_2026-08-27.md) — RustDesk監控腳本6週來門檻形同虛設的根因，改top -stats mem才對得上教練看到的數字
 - [🔴🔴🔴🔴🔴 MiniMax批次呼叫紅線：程式碼硬上限400次/5小時，越線自動中止+通知(2026-08-27)](feedback_minimax_batch_call_redline_guard_2026-08-27.md) — 教練列為僅次於硬碟被刪的第二嚴重事故後拍板；scripts/minimax_batch_guard.py已接上namecard-db三個呼叫點並實測驗證
