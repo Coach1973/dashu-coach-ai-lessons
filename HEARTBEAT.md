@@ -102,3 +102,9 @@
   - 關卡三（影響工作嗎？）→ 不影響（教練今天有 06:00 起床摘要、09:00 結繩閱讀提醒、23:00 場景化升華、23:05 三機總結四份主報可看，少一份 07:00 晨報完全可被補位）
 - 結論：v4.0 三關全 fail → **不 announce 教練**，靜待明天 07:00 驗證
 - 下輪 healthcheck cron：10:12 cycle=621
+
+## 🩺 軍師 Hook 自檢 2026-08-27 10:16（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.
+- Session: 27fec922-ba00-49e1-b7e3-ce98594f65a3
