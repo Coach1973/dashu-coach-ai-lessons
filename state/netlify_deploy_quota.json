@@ -1,8 +1,8 @@
 {
   "system": "credit",
   "credits_per_deploy": 15,
-  "quota_as_of": "2026-08-26 (教練親自查真實帳單頁截圖回報)",
-  "quota_remaining": 62,
+  "quota_as_of": "2026-08-27 11:01（教練親自查真實帳單頁回報）",
+  "quota_remaining": 60,
   "billing_cycle": "每月25日結算/重置（帳單頁面顯示「Current billing period runs from Jul 25 to Aug 24」，帳戶API的current_billing_period_start/next_billing_period_start皆為每月25日00:00 -07:00＝台灣時間當天下午3點），教練誤記成24日，正確是25日重置、24日是週期最後一天",
   "note": [
     "🔴2026-08-26教練親自截圖回報帳單頁真實數字：剩餘949.9/1000，過期2026-09-25，已覆蓋掉先前的推算值(983.4，8/25 12:31查證)。教練同時指出根本問題：聯想這台機器推部署完全沒被扣點過，跟Mac對不上帳——查證後根因是netlify_deploy_guard.sh(額度自動扣點守衛)從未移植到聯想，聯想端所有部署都是「裸推」不經過守衛。已補scripts/netlify_deploy_guard.ps1並註冊進聯想settings.json PreToolUse，此後聯想的部署會自動同步扣點寫回這份共用檔案，三機經git同步後數字應保持一致。"
@@ -10,11 +10,11 @@
   "credit_pools": [
     {
       "name": "Personal plan credits",
-      "remaining": 934.9,
+      "remaining": 903.3,
       "total": 1000,
       "granted": "2026-08-25",
       "expires": "2026-09-25",
-      "deploys_remaining_approx": 62,
+      "deploys_remaining_approx": 60,
       "note": "🔴教練2026-08-25 12:31親自查真實帳單頁確認新週期已重置，983.4/1000＝已用約16.6點(1次部署+些微bandwidth)。原本記錄猜測「下午3點重置」不準確，實際重置時間點早於中午12:31，已用教練查證數字覆蓋估算值"
     },
     {
@@ -54,6 +54,20 @@
   },
   "legacy_deploy_count_history_note": "以下history是「剩幾次」逐次遞減的紀錄（換算率15點/次），2026-07-25起額度從個位數跳升到約71次後開始遞減",
   "history": [
+    {
+      "date": "2026-08-27 11:01",
+      "site": "(額度校正，非部署)",
+      "deploy_id": null,
+      "change": "教練親自查真實帳單頁回報：剩餘903.3/1000。距8/26校正的949.9已消耗46.6點，換算約3.1次，跟本機這段期間實際部署2次(ai-talk KR廚房+bigtree 8/28 EDM)+些微bandwidth吻合，證實估算法準確。校正後約剩60次(903.3/15)。",
+      "remaining_after": 60
+    },
+    {
+      "date": "2026-08-27",
+      "site": "bigtree-tw",
+      "deploy_id": "6a8fa70b012805897560bf53",
+      "change": "新增8/28嘉義AI微論壇正式EDM，補上報名費資訊",
+      "remaining_after": 61
+    },
     {
       "date": "2026-08-26 10:22",
       "site": "ai-talk-tw",
