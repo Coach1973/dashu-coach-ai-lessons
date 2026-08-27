@@ -379,7 +379,6 @@ BNI_CREDIT_STATUS_MAP = {
     "expired": {"cert_status": "issued", "usage_status": "expired"},
     "redeemed": {"cert_status": "issued", "usage_status": "redeemed"},
     "transferred": {"cert_status": "issued", "usage_status": "transferred"},
-    "invalidated": {"cert_status": "issued", "usage_status": "invalidated"},
 }
 BNI_CREDIT_STATUS_LABELS = {
     "active": "✅ 有效",
@@ -388,9 +387,8 @@ BNI_CREDIT_STATUS_LABELS = {
     "redeemed": "💰 已贖回",
     "transferred": "↪️ 已轉移",
     "ineligible": "🈳 沒有額度",
-    "invalidated": "❌ 已失效",
 }
-BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "invalidated", "redeemed", "transferred", "ineligible"]
+BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "redeemed", "transferred", "ineligible"]
 # 表頭可點擊排序的欄位，key跟前端<a href>帶的sort參數一致；expiry_date/status_key
 # 排序時特別取代成實際比較用的值(見bni_credit_list()裡的_sort_value)
 BNI_CREDIT_SORTABLE_FIELDS = {
@@ -409,7 +407,7 @@ def _bni_credit_status_key(cert_status, usage_status):
 def bni_credit_list():
     from datetime import date
 
-    selected_statuses = request.args.getlist("status") or ["active", "expired", "not_issued", "invalidated"]
+    selected_statuses = request.args.getlist("status") or ["active", "expired", "not_issued"]
     selected_chapters = request.args.getlist("chapter")
     query = (request.args.get("q") or "").strip()
 
@@ -455,7 +453,7 @@ def bni_credit_list():
                 urgency = 3
         else:
             urgency = {
-                "expired": 4, "invalidated": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8,
+                "expired": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8,
             }.get(status_key, 9)
 
         record = dict(r)
