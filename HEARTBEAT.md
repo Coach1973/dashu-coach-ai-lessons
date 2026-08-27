@@ -100,3 +100,12 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1787842156
 - 雲端同步：✅ 已推上雲端（commit 181183ea3）
+
+## 🩺 healthcheck cycle=631（2026-08-27 23:13）
+- sync_coach_last_message.sh 撈回教練真正最後訊息 23:11:53（coachSilentHours 0.0，週四深夜剛互動，活躍中）
+- 本任務 46e67e2e 上輪 22:12 CE=1（lastError=「Edit HEARTBEAT.md failed」檔案寫入衝突，durationMs=50202 ≪ 600s timeout）；本輪已成功跑起來 = 已恢復
+- 幕僚長晨報 b73845c9 07:00 CE=1 error（13:00 context overflow 重啟中斷，durationMs=5116；屬 alternating 正常模式，nextRun 2026-08-28 07:00 自動重試）
+- 其他 22 個 cron 全部 ok（無 timeout / apiKey / FailoverError）
+- Repo1=23 / Repo2=7 untracked 屬正常範圍、無 .! 鎖定檔、SOUL.md 三份齊全
+- HEARTBEAT 無 ⬜ 待辦項目
+- v4.0 三關：本任務 CE=1（關卡一：本輪已恢復 → fail｜關卡二：檔案寫入衝突非 provider overload → fail）+ 幕僚長晨報（關卡一：alt 模式自動重試 → fail｜關卡二：gateway restart 非 overload → fail｜關卡三：晨報屬 meta 服務不影響教練/會員 → fail）→ 三關全未過 → 安靜處理不 announce
