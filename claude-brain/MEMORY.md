@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 查證沒找到要先報告已查過什麼，不能跳步直接要教練換管道(2026-08-27)](feedback_report_offline_check_before_pivoting_2026-08-27.md) — 林仁超/林智帆發票查證案例，查了本機資料庫卻沒報告就問登入，教練誤以為沒查
+- [🔧 bigtree_publish.py一鍵發佈只認SESSION_DATES變動，改其他區塊文案會誤判「已最新」拒絕部署(2026-08-27)](reference_bigtree_publish_hash_scope_2026-08-27.md) — 遇到這狀況改走手動git archive+zip+curl流程，記得補記額度
 - [🔴🔴🔴 FB API權限卡住先查官方文件/安全中心，不要靠UI試錯偵錯(2026-08-27)](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md) — pages_manage_posts卡了大半天才發現真因是商家驗證未完成，教練點名檢討浪費時間token
 - [🔴🔴 教練準備中的素材不要用其他圖片湊數代替，等真正提供才處理(2026-08-27)](feedback_dont_substitute_placeholder_await_real_material_2026-08-27.md) — bigtree歷史紀錄8/28用群眾照湊數被撤回，教練說「不要瞎跑」
 - [🔧 教練糾正Netlify額度三機同步不用建自動化攔截hook，簡單記數+總結時同步就夠(2026-08-26)](feedback_netlify_quota_sync_simplify_2026-08-26.md) — 過度工程化的PreToolUse hook差點卡住自己指令；新Windows hook上線前先查BOM編碼
