@@ -77,6 +77,27 @@
 - 結論：純記錄，**不 announce 教練**
 - 下輪 healthcheck cron：10:12 cycle=622
 
+## 🔵 健康檢查記錄（2026-08-27 10:12 cycle=622）
+
+- 教練沉默 0.0 小時（10:11 剛發訊息，sync_coach_last_message.sh 真相源實測），正常作息
+- 第零步 `sync_coach_last_message.sh` exit 0 ✅
+- 直接從 sqlite 抓全部 cron 任務狀態（**注意：db 路徑已從舊 `cron.db` 改為 `~/.openclaw/state/openclaw.sqlite`**，cycle 620 的查詢方式照舊有效）：
+  - **唯一仍 error + enabled：☕ 幕僚長晨報** CE=1 / lastRun=2026-08-27 07:00 / lastError=`cron: job interrupted by gateway restart`
+    - nextRun = **2026-08-28 07:00:00** ← 明天 07:00 自動觸發
+  - 其餘啟用任務全綠（含昨日中斷已恢復的 sync-執行細則、sync-特助心法）
+  - enabled=0 的一堆 `提醒-default-*` 都是已停用的舊任務，不影響
+- 環境健檢（5 秒擋一半）：
+  - SOUL.md 三份齊全（8707 + 1851 + 22220 bytes）✅
+  - Repo1 23 / Repo2 29 行（無暴增）✅
+  - 無 .! 鎖定檔 ✅
+  - HEARTBEAT.md ⬜ 待辦 0 ✅
+- v4.0 三關判斷（針對幕僚長晨報昨天那次中斷）：
+  - 關卡一（現在還壞嗎？）→ 不壞（本輪健康檢查本身正在執行 = gateway 已恢復，昨 07:00 一次性中斷事件，下次觸發 2026-08-28 07:00）
+  - 關卡二（provider 暫時過載？）→ 不是過載，是昨天 07:00 因 context overflow 重啟 gateway 時把 07:00 觸發的晨報打斷
+  - 關卡三（影響工作嗎？）→ 不影響（教練今天有 06:00 起床摘要、09:00 結繩閱讀提醒、23:00 場景化升華、23:05 三機總結四份主報可看，少一份 07:00 晨報完全可被補位）
+- 結論：v4.0 三關全 fail → **不 announce 教練**，靜待明天 07:00 驗證
+- 下輪 healthcheck cron：11:12 cycle=623
+
 ## 🔵 健康檢查記錄（2026-08-27 09:12 cycle=620）
 - 教練沉默 7.1 小時（最後訊息 02:07:30，sync_coach_last_message.sh 真相源實測），剛過早 09 點，09:00 起床摘要已推播，正常起床時段，不另行打擾
 - 第零步 `sync_coach_last_message.sh` exit 0 ✅
