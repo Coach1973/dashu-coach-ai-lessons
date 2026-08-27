@@ -1,11 +1,13 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-## ✅ 重啟已完成（已透過 14:00 整點心跳告知教練）
+> ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
+> 重啟時間：2026-08-28 02:00
+> 對話記錄已完整存入 memory/2026-08-28.md 並推上 GitHub，零遺漏
 
-- 重啟時間：2026-08-27 13:00（Context Overflow 自動重啟）
-- 對話記錄完整存入 memory/2026-08-27.md（19KB）並推上 GitHub，零遺漏
-- 教練已於 14:00 收到「請繼續下指令」通知（Telegram 6124913915）
-- 通道實測 ok:true（守則#19）
+## 🔴 重啟後第一件事
+
+直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
+⚠️ **不要讀 memory 大檔**（memory/2026-08-28.md 可能超過 50KB，讀了會造成模型空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
@@ -16,18 +18,13 @@
 - 能自己做直接做，不問確認
 - 截圖禁用，直接讀檔案
 - 執行完通報 Telegram（Chat ID: 6124913915）
-- 預估超過 5 萬 Token 先回報教練
+- 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
 
-## 🧭 待辦 / 觀察（持續）
-- 教練最後訊息：2026-08-27 12:36:55 CST（當下 3.6h 前，週四下午活躍中；2026-08-27 16:13 healthcheck cycle=624 撈 Telegram API 真實時間刷新）
-- ☕ 幕僚長晨報 cron 標 error（CE=1，今早 07:00 因 13:00 context overflow 重啟被中斷，duration 5.1s；nextRun 2026-08-28 07:00 自動重試；與 8/24-26 alternating fail/recover 模式一致）
-- Repo1=23 / Repo2=22 untracked，屬正常範圍
-- 無 .! 鎖定檔，SOUL.md 三份齊全含棄用標記
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-27 17:00
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 02:01
 - ✅ 同步成功
-- HANDOFF mtime: 1787821186
-- 雲端同步：✅ 已推上雲端（commit 102c6f5a5）
+- HANDOFF mtime: 1787853440
+- 雲端同步：✅ 已推上雲端（commit 9f352f04f）
 
 ## 🩺 軍師 Hook 自檢 2026-08-27 17:33（Windows v3 六步驟注入）
 - ✅ Hook 觸發 + git pull + 六步驟內容注入完成
@@ -38,3 +35,8 @@
 ## 🚀 Session-End 雲端同步 2026-08-27 17:34（Windows）
 - ✅ pushed c36dd7a2
 - 同步路徑：HEARTBEAT.md
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 02:55
+- ✅ 同步成功
+- HANDOFF mtime: 1787856639
+- 雲端同步：✅ 已推上雲端（commit 6eec1b585）

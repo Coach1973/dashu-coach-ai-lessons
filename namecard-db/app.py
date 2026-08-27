@@ -9,6 +9,7 @@ import time
 import uuid
 from collections import defaultdict, deque
 from functools import wraps
+from urllib.parse import urlencode
 
 import anthropic
 from flask import Flask, abort, redirect, render_template, request, send_from_directory, session, url_for
@@ -351,6 +352,175 @@ def card_edit(card_id):
     except json.JSONDecodeError:
         pass
     return render_template("card_edit.html", card=card, keywords_text="、".join(keywords))
+
+
+# BNI信用証追蹤：cert_status/usage_status兩個資料庫欄位合併成單一「狀態」給教練操作，
+# 內部拆解成兩欄寫回；教練切換狀態不清空cert_id/issue_date等既有查證資料，切回去時仍看得到原始紀錄。
+BNI_CREDIT_STATUS_MAP = {
+    "not_issued": {"cert_status": "not_issued", "usage_status": None},
+    "ineligible": {"cert_status": "ineligible", "usage_status": None},
+    "active": {"cert_status": "issued", "usage_status": "active"},
+    "expired": {"cert_status": "issued", "usage_status": "expired"},
+    "redeemed": {"cert_status": "issued", "usage_status": "redeemed"},
+    "transferred": {"cert_status": "issued", "usage_status": "transferred"},
+    "invalidated": {"cert_status": "issued", "usage_status": "invalidated"},
+}
+BNI_CREDIT_STATUS_LABELS = {
+    "active": "✅ 有效",
+    "expired": "⏰ 已過期",
+    "not_issued": "⬜ 未開立",
+    "redeemed": "💰 已贖回",
+    "transferred": "↪️ 已轉移",
+    "ineligible": "🈳 沒有額度",
+    "invalidated": "❌ 已失效",
+}
+BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "invalidated", "redeemed", "transferred", "ineligible"]
+# 表頭可點擊排序的欄位，key跟前端<a href>帶的sort參數一致；expiry_date/status_key
+# 排序時特別取代成實際比較用的值(見bni_credit_list()裡的_sort_value)
+BNI_CREDIT_SORTABLE_FIELDS = {
+    "chapter", "name", "company", "credit_months", "issue_date", "expiry_date", "status_key",
+}
+
+
+def _bni_credit_status_key(cert_status, usage_status):
+    if cert_status == "issued":
+        return usage_status or "active"
+    return cert_status
+
+
+@app.route("/bni-credit")
+@team_login_required
+def bni_credit_list():
+    from datetime import date
+
+    selected_statuses = request.args.getlist("status") or ["active", "expired", "not_issued", "invalidated"]
+    selected_chapters = request.args.getlist("chapter")
+    query = (request.args.get("q") or "").strip()
+
+    conn = db.get_conn()
+    chapters = [
+        r["chapter"]
+        for r in conn.execute("SELECT DISTINCT chapter FROM bni_credit_certificates ORDER BY chapter").fetchall()
+    ]
+    rows = conn.execute("SELECT * FROM bni_credit_certificates").fetchall()
+    conn.close()
+
+    today = date.today()
+    records = []
+    for r in rows:
+        status_key = _bni_credit_status_key(r["cert_status"], r["usage_status"])
+        if status_key not in selected_statuses:
+            continue
+        if selected_chapters and r["chapter"] not in selected_chapters:
+            continue
+        if query and query not in (r["name"] or "") and query not in (r["company"] or ""):
+            continue
+
+        remaining_days = None
+        remaining_months = None
+        urgency = 9
+        if status_key == "active" and r["expiry_date"]:
+            try:
+                y, m, d = (int(x) for x in r["expiry_date"].split("-"))
+                remaining_days = (date(y, m, d) - today).days
+                remaining_months = round(remaining_days / 30.44, 1)
+            except ValueError:
+                remaining_days = None
+        if status_key == "active":
+            if remaining_days is None:
+                urgency = 1
+            elif remaining_days < 0:
+                urgency = 0
+            elif remaining_days < 30:
+                urgency = 1
+            elif remaining_days < 180:
+                urgency = 2
+            else:
+                urgency = 3
+        else:
+            urgency = {
+                "expired": 4, "invalidated": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8,
+            }.get(status_key, 9)
+
+        record = dict(r)
+        record["status_key"] = status_key
+        record["status_label"] = BNI_CREDIT_STATUS_LABELS.get(status_key, status_key)
+        record["remaining_days"] = remaining_days
+        record["remaining_months"] = remaining_months
+        record["urgency"] = urgency
+        records.append(record)
+
+    sort_key = request.args.get("sort") or ""
+    sort_dir = request.args.get("dir") or "asc"
+    if sort_key in BNI_CREDIT_SORTABLE_FIELDS:
+        def _sort_value(r):
+            if sort_key == "expiry_date":
+                return r.get("expiry_date") or r.get("scheduled_end_date")
+            if sort_key == "status_key":
+                return r.get("status_label")
+            return r.get(sort_key)
+
+        with_value = [r for r in records if _sort_value(r) not in (None, "")]
+        without_value = [r for r in records if _sort_value(r) in (None, "")]
+        with_value.sort(key=_sort_value, reverse=(sort_dir == "desc"))
+        records = with_value + without_value
+    else:
+        sort_key = ""
+        records.sort(key=lambda r: (r["urgency"], r["remaining_days"] if r["remaining_days"] is not None else 99999, r["name"]))
+
+    counts_conn = db.get_conn()
+    all_rows = counts_conn.execute("SELECT cert_status, usage_status FROM bni_credit_certificates").fetchall()
+    counts_conn.close()
+    status_counts = {k: 0 for k in BNI_CREDIT_STATUS_ORDER}
+    for r in all_rows:
+        k = _bni_credit_status_key(r["cert_status"], r["usage_status"])
+        status_counts[k] = status_counts.get(k, 0) + 1
+
+    def sort_url(field):
+        params = []
+        for s in selected_statuses:
+            params.append(("status", s))
+        for c in selected_chapters:
+            params.append(("chapter", c))
+        if query:
+            params.append(("q", query))
+        next_dir = "desc" if (sort_key == field and sort_dir == "asc") else "asc"
+        params.append(("sort", field))
+        params.append(("dir", next_dir))
+        return "?" + urlencode(params)
+
+    return render_template(
+        "bni_credit.html",
+        records=records,
+        chapters=chapters,
+        selected_statuses=selected_statuses,
+        selected_chapters=selected_chapters,
+        query=query,
+        status_labels=BNI_CREDIT_STATUS_LABELS,
+        status_order=BNI_CREDIT_STATUS_ORDER,
+        status_counts=status_counts,
+        sort_key=sort_key,
+        sort_dir=sort_dir,
+        sort_url=sort_url,
+        display_name=session.get("team_display_name"),
+    )
+
+
+@app.route("/bni-credit/<int:record_id>/status", methods=["POST"])
+@team_login_required
+def bni_credit_update_status(record_id):
+    new_status = request.form.get("status_key")
+    mapping = BNI_CREDIT_STATUS_MAP.get(new_status)
+    if mapping is None:
+        return redirect(request.referrer or url_for("bni_credit_list"))
+    conn = db.get_conn()
+    conn.execute(
+        "UPDATE bni_credit_certificates SET cert_status = ?, usage_status = ? WHERE id = ?",
+        (mapping["cert_status"], mapping["usage_status"], record_id),
+    )
+    conn.commit()
+    conn.close()
+    return redirect(request.referrer or url_for("bni_credit_list"))
 
 
 @app.route("/team/login", methods=["GET", "POST"])

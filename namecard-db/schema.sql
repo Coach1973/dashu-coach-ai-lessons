@@ -116,3 +116,29 @@ CREATE TABLE IF NOT EXISTS guests (
 
 CREATE INDEX IF NOT EXISTS idx_guests_name ON guests(name);
 CREATE INDEX IF NOT EXISTS idx_guests_mobile ON guests(mobile);
+
+-- BNI Connect大台南南區5分會離會會員「信用証」開立狀況清查(2026-08-27)，
+-- 供 /bni-credit 網頁追蹤到期日+面額，教練可在網頁上直接改狀態(cert_status/usage_status)
+CREATE TABLE IF NOT EXISTS bni_credit_certificates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bni_member_id TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    chapter TEXT NOT NULL,
+    company TEXT,
+    profession TEXT,
+    scheduled_end_date TEXT,       -- 管理會員列表的「到期日」欄位(原定會期到期日,非實際離會日)
+    actual_termination_date TEXT,  -- 會員資格歷史「終止會員資格」事件的實際日期
+    cert_status TEXT NOT NULL,     -- issued / not_issued / ineligible(無剩餘會期)
+    cert_id TEXT,
+    issue_date TEXT,               -- 發行日期
+    expiry_date TEXT,              -- 發行日期+2年
+    usage_status TEXT,             -- active(尚可用) / transferred(已轉移) / redeemed(已贖回) / expired(已過期)
+    transferred_to TEXT,
+    transfer_date TEXT,
+    credit_months INTEGER,         -- 證書面額(信用額度個月數)，只回填status='active'的記錄
+    checked_at TEXT DEFAULT (datetime('now')),
+    notes TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_bcc_chapter ON bni_credit_certificates(chapter);
+CREATE INDEX IF NOT EXISTS idx_bcc_status ON bni_credit_certificates(cert_status);

@@ -277,6 +277,30 @@ HEARTBEAT.md 內容：
 
 **自動修復**：無（provider 端瞬時事件，等下次重試自然恢復；durationMs 133s ≪ timeoutSeconds 600s → 非 timeout 設定問題；model 已是 minimax/MiniMax-M3 → 非 auth 問題）。
 
+## 2026-08-27 20:12 CST (週四晚)
+
+**第零步**：sync_coach_last_message.sh 撈 Telegram API → 教練最後訊息 2026-08-27 19:29:15 CST（coachSilentHours 0.7，週四晚正常下班時段，無異常）。
+
+**cron list 檢查**：
+- API 只回 1 個任務（本任務本身，known API bug，自 cycle 178 起穩定呈現）
+- 本任務狀態：lastRunStatus=ok、consecutiveErrors=**0**、lastDurationMs=35416（~35s）、timeoutSeconds=600、model=minimax/MiniMax-M3
+- 診斷：所有健康指標都在綠區，無 timeout、無 auth 錯誤、無連錯
+
+**v4.0 三關判斷**：
+- 關卡一（本輪還壞？）：本輪 AI 正常產出本段 → 已恢復（事實上根本沒壞過）
+- 關卡二（provider overload？）：無錯誤
+- 關卡三（影響工作？）：cron 全部健康，無影響
+
+三關沒過 → **不 announce**。
+
+**HEARTBEAT.md ⬜ 檢查**：
+- 無 ⬜ 待辦項目
+- pendingCoachItems = 空
+
+**自動修復**：無。
+
+**動作**：靜默通過，不通知教練。cycle=627。
+
 **HEARTBEAT.md 檢查**：
 - 無 ⬜ 待辦項目
 - pendingCoachItems = 空
