@@ -71,14 +71,20 @@ def index():
     sql = "SELECT * FROM cards WHERE status != 'split'"
     params: list[str] = []
     if query:
-        sql += """ AND (name LIKE ? OR company LIKE ? OR address LIKE ?
-                        OR tagline LIKE ? OR keywords LIKE ? OR category LIKE ?)"""
+        # 姓名比對忽略空格差異，理由同/find(BNI Connect匯入姓名多帶「姓 名」空格)
+        no_space_like = f"%{query.replace(' ', '')}%"
         like = f"%{query}%"
-        params += [like] * 6
+        sql += """ AND (REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR address LIKE ?
+                        OR tagline LIKE ? OR keywords LIKE ? OR category LIKE ?)"""
+        params += [no_space_like, like, like, like, like, like]
     if category:
         sql += " AND category = ?"
         params.append(category)
-    sql += " ORDER BY created_at DESC LIMIT 200"
+    sql += " ORDER BY created_at DESC"
+    if not query and not category:
+        # 只有瀏覽首頁(無搜尋條件)才限制200筆當預覽，避免一次載入全部名片圖片；
+        # 有輸入關鍵字搜尋時結果集本來就小，不應該再被這個上限誤傷截斷。
+        sql += " LIMIT 200"
 
     rows = conn.execute(sql, params).fetchall()
     cards = []
@@ -219,23 +225,29 @@ def find_page():
     if query:
         conn = db.get_conn()
         like = f"%{query}%"
+        # 姓名比對忽略空格差異：BNI Connect匯入的姓名多半是「姓 名」中間帶空格
+        # (如「林 政志」)，但教練/資料庫其他來源慣用無空格寫法(如「林政志」)，
+        # 一般LIKE比對會因為這個空格直接比對失敗——名片系統451筆裡有422筆是
+        # 帶空格格式，這個問題影響絕大多數搜尋，不只單一個案。
+        no_space_query = query.replace(" ", "")
+        no_space_like = f"%{no_space_query}%"
         card_rows = conn.execute(
             """SELECT id, name, title, company, mobile, email, bni_status, bni_note
                FROM cards
                WHERE status != 'failed'
-                 AND (name LIKE ? OR company LIKE ? OR title LIKE ?
+                 AND (REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR title LIKE ?
                       OR standard_category LIKE ? OR category LIKE ?
                       OR mobile LIKE ? OR email LIKE ?)
                ORDER BY name""",
-            (like, like, like, like, like, like, like),
+            (no_space_like, like, like, like, like, like, like),
         ).fetchall()
         guest_rows = conn.execute(
             """SELECT id, name, profession, company, mobile, email, chapter
                FROM guests
-               WHERE name LIKE ? OR company LIKE ? OR profession LIKE ?
+               WHERE REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR profession LIKE ?
                      OR mobile LIKE ? OR email LIKE ?
                ORDER BY name""",
-            (like, like, like, like, like),
+            (no_space_like, like, like, like, like),
         ).fetchall()
         conn.close()
         for r in card_rows:
