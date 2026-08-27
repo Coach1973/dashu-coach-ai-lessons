@@ -71,12 +71,16 @@ def index():
     sql = "SELECT * FROM cards WHERE status != 'split'"
     params: list[str] = []
     if query:
-        # 姓名比對忽略空格差異，理由同/find(BNI Connect匯入姓名多帶「姓 名」空格)
+        # 所有欄位忽略空格差異比對，理由同/find——教練:「誰知道要空格？」使用者
+        # 不會知道資料庫存的格式，字對了就該找到，不該被空格擋下。
         no_space_like = f"%{query.replace(' ', '')}%"
-        like = f"%{query}%"
-        sql += """ AND (REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR address LIKE ?
-                        OR tagline LIKE ? OR keywords LIKE ? OR category LIKE ?)"""
-        params += [no_space_like, like, like, like, like, like]
+        sql += """ AND (REPLACE(name, ' ', '') LIKE ?
+                        OR REPLACE(company, ' ', '') LIKE ?
+                        OR REPLACE(address, ' ', '') LIKE ?
+                        OR REPLACE(tagline, ' ', '') LIKE ?
+                        OR REPLACE(keywords, ' ', '') LIKE ?
+                        OR REPLACE(category, ' ', '') LIKE ?)"""
+        params += [no_space_like] * 6
     if category:
         sql += " AND category = ?"
         params.append(category)
@@ -224,30 +228,35 @@ def find_page():
     results = []
     if query:
         conn = db.get_conn()
-        like = f"%{query}%"
-        # 姓名比對忽略空格差異：BNI Connect匯入的姓名多半是「姓 名」中間帶空格
-        # (如「林 政志」)，但教練/資料庫其他來源慣用無空格寫法(如「林政志」)，
-        # 一般LIKE比對會因為這個空格直接比對失敗——名片系統451筆裡有422筆是
-        # 帶空格格式，這個問題影響絕大多數搜尋，不只單一個案。
-        no_space_query = query.replace(" ", "")
-        no_space_like = f"%{no_space_query}%"
+        # 教練指示：不管空格，字對了就要找到——所有欄位都忽略空格差異比對，
+        # 不只姓名。資料來源不一(BNI Connect匯入常見「姓 名」中間帶空格、
+        # 公司/職稱欄位也可能有多餘空格)，一律把資料庫欄位跟查詢字串都去掉
+        # 空格再比對，任何一邊有沒有空格都不影響比對結果。
+        no_space_like = f"%{query.replace(' ', '')}%"
         card_rows = conn.execute(
             """SELECT id, name, title, company, mobile, email, bni_status, bni_note
                FROM cards
                WHERE status != 'failed'
-                 AND (REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR title LIKE ?
-                      OR standard_category LIKE ? OR category LIKE ?
-                      OR mobile LIKE ? OR email LIKE ?)
+                 AND (REPLACE(name, ' ', '') LIKE ?
+                      OR REPLACE(company, ' ', '') LIKE ?
+                      OR REPLACE(title, ' ', '') LIKE ?
+                      OR REPLACE(standard_category, ' ', '') LIKE ?
+                      OR REPLACE(category, ' ', '') LIKE ?
+                      OR REPLACE(mobile, ' ', '') LIKE ?
+                      OR REPLACE(email, ' ', '') LIKE ?)
                ORDER BY name""",
-            (no_space_like, like, like, like, like, like, like),
+            (no_space_like,) * 7,
         ).fetchall()
         guest_rows = conn.execute(
             """SELECT id, name, profession, company, mobile, email, chapter
                FROM guests
-               WHERE REPLACE(name, ' ', '') LIKE ? OR company LIKE ? OR profession LIKE ?
-                     OR mobile LIKE ? OR email LIKE ?
+               WHERE REPLACE(name, ' ', '') LIKE ?
+                     OR REPLACE(company, ' ', '') LIKE ?
+                     OR REPLACE(profession, ' ', '') LIKE ?
+                     OR REPLACE(mobile, ' ', '') LIKE ?
+                     OR REPLACE(email, ' ', '') LIKE ?
                ORDER BY name""",
-            (no_space_like, like, like, like, like),
+            (no_space_like,) * 5,
         ).fetchall()
         conn.close()
         for r in card_rows:
