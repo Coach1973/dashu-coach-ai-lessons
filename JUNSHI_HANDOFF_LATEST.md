@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴🔴 | **FB粉專行銷自動化：App+12個粉專發文權杖已建好，但「大樹教練」最重要粉專的pages_manage_posts權限卡在商家驗證未完成** | 🔒卡住-等教練完成商家驗證 | 聯想Windows本場從零建置Graph API App「大樹教練粉專發文小幫手」(App ID`1050871501278089`)，順利拿到12個一般粉專的Page Access Token(存於`fb_automation/page_tokens_2026-08-27.json`+`路徑大全_憑證層.md`，經debug_token驗證`expires_at:0`永不過期)，教練指定優先要發的4個是大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管。**卡住點**：教練最重視的「大樹教練」個人品牌粉專(facebook.com/bymyway，Page ID`252699914868764`)一直無法透過`/me/accounts`列出，且不管怎麼重新授權，真正的發文權限`pages_manage_posts`永遠拿不到（scope只剩前3個）。繞了一大圈試錯(切換使用案例分類/App後台加權限/開新分頁重來/猜New Pages Experience限制/加進Business Portfolio)才在Meta Business Suite「安全中心」頁面查到官方明講：「你的組織必須通過驗證，才能使用特定Meta產品」——真因是**商家驗證(Business Verification)未完成**，教練當場點名檢討「浪費了大半的時間最後才找到關鍵」，已寫入試金石案例67+記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`。教練決定自己找時間去`business.facebook.com`安全中心點「開始驗證」，完成後開新對話框回來繼續。**下一棒待辦**：教練商家驗證過了之後，重新走一次`pages_manage_posts`授權流程(教練需親自點擊「Generate Access Token」，自動化點擊會被瀏覽器攔截)，驗證12個粉專+大樹教練都能真正發文後才開始寫自動發文腳本；教練尚未提供「素材對應規則」(哪個活動配哪個粉專)，也要問清楚才能真正開始自動化。 |
 | ✅ | **聯想跨機同步四層根因全修+ai-talk嘉義場設攤廠商05~10上線+Netlify額度校正934.9** | ✅2026-08-26聯想完成，詳見v138 | 詳見`claude-brain/project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md`。四層根因：①7支對齊hook聯想從沒裝過(含收工自動push) ②所有hook讀到的`workspace`是7/23的死clone，已封存改junction指向活repo ③PS5.1讀stdin中文被Big5讀壞(「開工」變亂碼)，`feed_junshi_handoff.ps1`等3支已修 ④`session_end_auto_push.ps1`commit後沒先pull就push，必被拒，已補stash→pull--rebase→push。另完成教練交辦：ai-talk嘉義場設攤廠商05(乾淨世界補號)~10(KR廚房)全數上線並curl驗證；Netlify額度按教練截圖回報949.9/1000校正，本場部署2次後934.9，寫回共用檔案供三機同步。**教練當場糾正**我把額度同步做成PreToolUse自動攔截hook太複雜(還意外把自己下個指令攔到報錯)，已撤掉改成手動記數+總結時寫回，詳見[[feedback_netlify_quota_sync_simplify_2026-08-26]]。 |
 | ✅ | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：教練拍板改「手動觸發媒合」設計，已上線/find搜尋頁** | ✅2026-08-26本場完成，設計定案並上線 | 詳見v135/v136完整戰果+本場v137戰果。**教練這場定案新規則**：不再對任何一批人批次自動媒合，改成**手動點按鈕才呼叫AI**——現任92人(唯一預先批次媒合的例外，已100%完成)之外，前會員336人＋來賓3216人一律等教練或使用者實際需要時才觸發。已上線`/find`統一搜尋頁（cards+guests雙表搜尋，零AI呼叫）＋`/guest/<id>/match`來賓版媒合入口（首次點擊才轉一筆card+跑媒合，`source_guest_id`防重複轉入），`run_chain_match.py`已改成只鎖現任會員範圍，不會再被誤觸批次跑全部人。**來賓資料重大補正**：教練糾正「BNI Connect來賓一定有專業別」，查證屬實——v136只抓了姓名/電話/email三欄，漏了報表本來就有的公司/職業/分會欄位，已用教練提供的完整報表(.xls/SpreadsheetML)重新解析回填，3216人中3210人(99.8%)已補上職業資料。**額外揪出的資料品質bug**：教練從/find頁面發現田伸強/林尹渰等4人BNI身分沒標示，查證是`parse_and_import.py`的INSERT OR IGNORE遇檔名撞名時靜默跳過、且無UPDATE補救路徑，4人資料已修正+全428人重新稽核0遺漏+腳本已加rowcount==0的UPDATE fallback防再犯。 |
 | ✅ | **ACER機49天未開機導致settings.json全部hooks消失，本場（教練親自開機）重裝七支hook+跟進聯想總結修復** | ✅2026-08-26 ACER本場完成並實測 | 教練親自打開ACER下指令，這正是Mac稍早報告裡說「唯一解法」的那個時刻。查證確認`~/.claude/settings.json`原本完全沒有`hooks`區塊（開工六步驟/截圖鎖/跨機信箱掃描/總結上傳全部沒註冊，跟聯想的jq依賴問題不同根因）。同時也第一次真正走完「開工六步驟」被教練當場糾正前的落差：本場一開始跳過血淚試金石案例庫直接動手，被教練點出才回頭補讀，讀到案例60（claude-in-chrome連錯裝置）跟HEARTBEAT.md「截圖禁用」規則，直接解釋了稍早bigtree部署過程中一直卡在截圖的原因。跑`scripts/setup_windows_hooks.ps1`重裝七支hook時，**發現這支安裝腳本本身有bug**：`ConvertFrom-Json -AsHashtable`在這台機器的PowerShell 5.1（非pwsh 7）會拋例外，觸發catch分支把原有`env`/`permissions`/`model`等設定全部清空，只剩新寫的hooks——靠腳本自帶的備份救回，手動合併寫回。額外把聯想剛寫好的`summary_upload_trigger.ps1`一併加進ACER的UserPromptSubmit，四情境（總結/總結上傳觸發、年度總結報告/閒聊不誤觸發）全部用假指令實測通過。本場另完成：大樹小講(bigtree-tw)新增8/26早半場「晨光美學」10:00-12:30(地址同步改4樓)，已推GitHub+Netlify雙邊驗證上線；回信Mac完成verbatim/Stop hook查證。**下一棒待辦**：①`event-signup`後台`event.db`仍未同步8/26早半場資料，現場QR簽到當天可能路由錯場次，需請Mac或聯想在能碰到該DB的機器上補②`setup_windows_hooks.ps1`的PS5.1 bug本場只記錄未回頭修，下次任何機器要跑這支installer前應先查`$PSVersionTable.PSVersion`。詳見`claude-brain/project_acer_dormant_49days_2026-08-26.md`+`claude-brain/project_acer_hooks_restored_2026-08-26.md`。 |
@@ -341,5 +342,45 @@
 
 ## 🔑 本場commit
 `b13232eb1`+`b73ede5d`+`3aa9ba201`(RustDesk監控修復+事件觸發)／`19116a313`+`bc6a33516`(MiniMax紅線防護)／`ec7af2d62`(結繩戰報免登錄)／`5779162`~`ce46737`(bigtree多輪，共約8個commit，詳見bigtree repo log)／`22f1d5faf`(活動前提醒SOP)
+
+---
+
+# 軍師接力棒 · 2026-08-27 v140（聯想Windows Sonnet 5，FB粉專發文API從零建置+EDM照片置中微調+教練當場檢討試錯效率）
+
+> 建立時間：2026-08-27 10:16 ~ 16:49（台灣時間，教練「總結」觸發收工）
+> 上一棒：v139（Mac桌面版，同日凌晨~上午）
+> 本棒主軸：**教練交辦兩項獨立任務——AI微論壇嘉義場EDM講師照片置中修正、FB粉專自動發文系統從零建置，後者過程繞了一大圈UI試錯才找到根本原因，教練當場點名檢討並要求記取教訓。**
+
+## 🎯 本場戰果
+
+### 1. AI微論壇嘉義場EDM講師照片精準置中（本機檔案處理，未上線）
+教練傳來已完成的EDM海報，要求把網站上四位講師的真實照片（季哥/洪詠清/林韋銘/大樹教練）貼進海報對應圓框，教練回饋第一版照片沒有精準置中。用PIL重新計算每張照片的裁切座標，逐一zoom驗證後產出`edm_photos/0828_final.jpg`，教練確認四張都已置中滿意。
+
+### 2. FB粉專自動發文系統從零建置（App ID`1050871501278089`）
+教練提出FB粉專行銷自動化需求，帶著教練從零走完Meta開發者後台流程：建立商業用途App「大樹教練粉專發文小幫手」→ 設定三個使用案例（管理粉絲專頁/Instagram/Messenger）→ Graph API Explorer取得授權 → 成功拿到12個粉專的Page Access Token（BNl真愛分會/大台南策展中心/K R養生廚房/BNI真鑽分會/動感跳繩俱樂部/捂汗吠言/海餅乾俱樂部/跨界美.術.管/軌跡/真善忍的美好世界/不識廬山真面目/喬吉拉德分享群），教練指定優先要發的4個：大台南策展中心、K R養生廚房、海餅乾俱樂部、跨界美.術.管。已用`debug_token`官方工具驗證這12個粉專權杖`expires_at:0`（官方認定不過期），教練當場糾正「兩個月到期不叫永久」後查證更正——衍生用的User Token 60天到期但不影響已發出的Page Token本身。
+
+**卡住點（未解決，跨到下一棒）**：教練最重視的「大樹教練」個人品牌粉專(facebook.com/bymyway，Page ID`252699914868764`)始終無法透過`/me/accounts`列出，且不管怎麼重新授權都拿不到真正的發文權限`pages_manage_posts`。繞了一大圈試錯（切換使用案例分類、App後台手動加權限、開新分頁重新產生權杖、猜測New Pages Experience平台限制、把粉專加進Business Portfolio「大樹教育行銷管理中心」、教練親自點擊授權按鈕多次、猜App Review需求）才在Meta Business Suite「安全中心」頁面查到官方明講：「你的組織必須通過驗證，才能使用特定Meta產品」——真因是**商家驗證(Business Verification)未完成**，這一步涉及教練的身分/商業登記資料，需教練親自完成，AI無法代辦。
+
+### 3. 憑證安全存檔
+12個粉專的access_token（極敏感）已存入`fb_automation/page_tokens_2026-08-27.json`+`路徑大全_憑證層.md`，全程沒有把原始token貼在對話紀錄裡曝光。
+
+## ⚠️ 本場最重要教訓（教練當場點名檢討）
+
+**教練原話**：「那你就要早一點找到嘛，浪費了大半的時間最後才找到關鍵。這一點你要列入檢討：就是沒有先去找到關鍵資訊，浪費了一大堆時間、一大堆token，做了無數次的嘗試，結果發現到根本的關鍵點不在那裡。」
+
+排查`pages_manage_posts`權限失敗這件事，一開始就該假設Facebook這種大平台的權限卡點，網路上大機率已經有開發者踩過，第一步應該直接WebSearch查證官方文件/開發者論壇，或去查平台自己的「安全中心/必要動作」狀態頁面——結果反而先靠自己排列組合UI操作硬猜，繞了一大圈才想到查證，順序完全顛倒。已誠實承認檢討，不狡辯，並寫入記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`+試金石案例67，核心自我提醒：**遇到平台/API設定卡住類問題，先查證root cause，試錯超過3-5輪沒進展就該停下來查，不該繼續加碼再試。**
+
+同場另有兩次教練當場糾正細節錯誤都立即承認修正：①誤稱粉專權杖「60天到期」混淆了User Token跟Page Token兩種不同東西的到期規則 ②回覆中夾雜簡體字「应/该」，被繁體字鎖hook攔下立即改正。
+
+## 📋 下一場開工先做
+
+1. **等教練完成商家驗證**（教練自行前往`business.facebook.com`安全中心點「開始驗證」，完成後開新對話框回來），驗證過了才能重新走`pages_manage_posts`授權（教練需親自點擊「Generate Access Token」，自動化點擊會被瀏覽器攔截）
+2. 商家驗證通過後，逐一驗證12個粉專+大樹教練是否都真的拿到發文權限（用debug_token查scope是否含`pages_manage_posts`），不能只看App後台顯示「可供測試」就當作生效
+3. 教練尚未提供「素材對應規則」（哪個活動內容配哪個粉專），開始寫自動發文腳本前要先問清楚
+4. MEMORY.md索引檔已超過24.4KB讀取上限（現約33.5KB），需要找空檔壓縮（移細節到主題檔、只留一行索引），本場因教練在等FB進度未處理
+5. 承接v139舊待辦：bigtree-tw等教練「推」、8/28正式EDM待教練提供、Stop hook輪詢偵測修復background task結果待查看
+
+## 🔑 本場commit
+`f05460b1`(FB App建立+12個粉專token初版)／`2f86aa6e`(延伸長效權杖)／`11d4f793`(修正粉專token不過期說明)／記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`+試金石案例67(本次總結一併commit)
 
 ---
