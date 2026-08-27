@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 454fbcb4-70a8-4a88-832e-8ef2cbc35b65
-# 提取時間：2026-08-26 18:39 (台灣時間)
-# 共 7 條教練原話
+# 提取時間：2026-08-27 01:14 (台灣時間)
+# 共 10 條教練原話
 
 ---
 
@@ -96,3 +96,79 @@ MiniMax這邊不會再被批次任務占滿了，往後只有真人點按鈕時�
 　▶ AI 回應：Good — column exists, search returns 2 guest results for "水電". Now let's test the full guest-to-match conversion flow end to end.
 
 　▶ AI 回應：Now let's commit everything.
+
+　▶ AI 回應：已上線並推送，commit `8fb15419d`：
+
+**👉 https://namecard.bymyway.com/find**
+
+打關鍵字（姓名／公司／專業／分會，例如「水電」「真鑽分會」）就會同時列出名片庫跟3216位來賓裡符合的人，每筆都標示身分（🟢現任會員／🔵前會員／🧑‍🤝‍🧑來賓／📇一般名片）＋聯絡方式，平常搜尋瀏覽完全不會呼叫AI。只有按下「🔗 媒合」那顆按鈕，才會即時呼叫一次AI幫那個人找產業鏈定位——已經用真實資料端到端測試過（點一次就建立媒合結果，重複點不會重複扣token也不會產生重複資料）。
+
+首頁也加了入口連結方便找到這個新頁面。
+
+【教練 2026-08-26 10:39】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/namecard-db/templates/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 開啟給您看：新的搜尋頁 [namecard.bymyway.com/find](https://namecard.bymyway.com/find) 跟改過的首頁 [namecard.bymyway.com](https://namecard.bymyway.com/)（多了「🔎 找人才・找專業」入口）。
+
+【教練 2026-08-26 15:50】
+像你這個資料庫有點不精準喔。我指的是名片搜尋的這個頁面。
+
+像這個田伸強，他是前會員，為什麼沒有標示出來？那這個資料是怎麼會遺漏掉的？其他的都有標示他是前會員、隸屬哪個分會，田生強為什麼就沒有？
+
+然後那個林尹渰（弈元空間設計工程行），他是現任會員，你也沒有標示出來。
+
+所以你要再做一下盤查嗎？
+
+　▶ AI 回應：All 428 records now correctly classified, 0 remaining gaps. Now let's harden `parse_and_import.py` so this silent-skip failure mode can't recur, then do a broader sanity check across the whole dataset.
+
+　▶ AI 回應：No duplicates or conflicts found. Full audit is clean now. Let's harden the import script and commit everything.
+
+　▶ AI 回應：Both now display correctly. Let's restart the webapp and commit the fix.
+
+　▶ AI 回應：查完了，是我這邊的資料寫入漏洞，不是您搜尋錯誤。
+
+**根因**：匯入430人BNI Connect名冊時，程式用「INSERT OR IGNORE」寫入——如果某人的識別碼（分會+姓名組合的檔名）剛好跟資料庫裡已存在的一筆撞到，這行指令就會**靜默跳過**，完全不寫入、也不報錯，等於這個人的「現任/前會員」標籤就這樣憑空消失，我自己都看不出來哪裡漏了。
+
+**查出來共4人中招**：
+- 田伸強（大壹汽車）→ 前會員・曾隸屬真富分會 ✅已補上
+- 林尹渰（弈元空間設計工程行）→ 真鑫分會現任會員（曾隸屬：真富）✅已補上
+- 王聖凱（鴻達醬油行）→ 真鑫分會現任會員（曾隸屬：真富）✅已補上
+- …（略）
+
+【教練 2026-08-26 16:28】
+總結
+
+　▶ AI 回應：Now let me archive v135 to its own file and remove it from the main handoff.
+
+　▶ AI 回應：Now let's update the top-of-table row to reflect this session's outcome:
+
+　▶ AI 回應：Now let's append the new v137 handoff section at the end of the file:
+
+　▶ AI 回應：Now let's update MEMORY.md's index with these three new entries:
+
+　▶ AI 回應：Now let's commit the memory repo changes.
+
+　▶ AI 回應：Confirmed — same repo, files live under `claude-brain/`. Let me commit just these, leaving the unrelated housekeeping files (heartbeat, session logs) untouched.
+
+　▶ AI 回應：**總結（本場 13:45~00:28）**
+
+**做了什麼**：
+1. 教練針對案例65額度事故拍板永久解法——媒合改成**手動點按鈕才呼叫AI**，只留現任會員92人是唯一預先批次媒合的例外。已把`run_chain_match.py`鎖定只跑現任會員，剩127位前會員一律靠網頁按鈕觸發。
+2. 教練糾正「BNI Connect來賓一定有專業別」，查證屬實——原本抓資料時漏了報表本來就有的公司/職業/分會欄位，花了不少功夫才在系統深處重新定位到正確報表，最後靠教練提供匯出檔，3216位來賓中3210人補齊職業資料（99.8%）。
+3. 上線 [namecard.bymyway.com/fi…（略）

@@ -152,27 +152,29 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-08-24)
+## Promoted From Short-Term Memory (2026-08-27)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:324:324 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 連結是這個 mentor 自己專屬的 token，安全性 OK。對方打開會看到目前已經填好的資料，直接編輯送出就生效，不用再審核。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:324-324]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:327:329 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 把這條連結 + 「歡迎加入，請補上大頭照跟社群連結」訊息組成一段話，方便您直接複製貼到 LINE 給彭先生; 在桌面上存一份這條連結（之後要重傳也有）; 在本地 SQLite 記錄一下彭先生的 line_id `eliss9635`，方便之後對應 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:327-329]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:330:330 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 🦞 小龍蝦：找到了，教練。彭晉澄的專屬編輯連結： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-16.md:330-330]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:282:282 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 旁證（其他近 5 筆）： [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:282-282]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:303:303 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 旁證（其他近 5 筆）： [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:303-303]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-16.md:326:326 -->
-- 📨 對話記錄 17:54（共約 8 條，從第 0 行起）: 要我順便幫您做這些嗎？ [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-16.md:326-326]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:267:267 -->
-- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 👤 教練：[cron:bbb7a348-59dc-41fd-879b-91b4d0522e18 🦞 小龍蝦每日三機總結（每日23:05）] 【每日三機含金量總結 · 教練 2026-06-30 12:35 親口定稿，2026-07-20 修正判斷邏輯】 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:267-267]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:269:269 -->
-- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 教練要的不是囉哩吧唆每 4 小時的小報告，要每天一份「三機狀況總結 + 含金量提煉」。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:269-269]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:271:271 -->
-- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 步驟一：判斷三機今天「有沒有對話」（台灣日期 YYYY-MM-DD） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:271-271]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:273:273 -->
-- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 🔴 2026-07-20 教練親抓假數據 bug 修正：不可只憑 memory/verbatim/{acer,lenovo}/YYYY-MM-DD.md 這個檔案存不存在，就判斷「今天無對話」。查證發現這個蒸餾中繼檔案排程從未在 ACER/Lenovo 端穩定運作過（ACER 目錄從建立以來從未真正寫入過任何一天、Lenovo 只在 2026-07-08 成功寫過一次之後就再沒有新檔案）——檔案不存在只代表「中繼蒸餾排程沒跑」，不代表「教練沒用那台機器對話」。曾發生教練當天下午才在聯想真實 commit 過工作，晚上總結卻誤報「聯想連續 11 天沒有對話」的事故。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:273-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-18.md:275:276 -->
-- 📨 對話記錄 23:09（共約 2 條，從第 0 行起）: 正確判斷順序（每台 🦞 小龍蝦：開工，先讀 AGENTS.md。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-18.md:275-276]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:303:303 -->
+- 📨 對話記錄 09:09（共約 22 條，從第 0 行起）: 但我把 4 篇講法的全文都抓下來比對過了。根據紙本書各地講法十的編排結構（每篇講法連續頁碼），我推估 **p 64-67 落在〈曼哈頓講法〉中後段**，內容是師父講「**修煉人不能被人說、一碰就炸**」這一段。對應網路上整理的章節大約是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:303-303]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:309:309 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: **主題：修煉人不能被人說，一碰就炸** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:309-309]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:311:311 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: > 因為洛杉磯剛剛講完法，今天又剛剛上網發表，所以我今天不多講。但是有一件事情我要跟大家說。很多神在我耳邊講：你們大法弟子不能被說，一說就炸，說也不能說怎麼行，不能被人說怎麼修，這叫甚麼修煉人，等等等等。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:311-311]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:313:313 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: > 作為一個修煉的人來講啊，大家知道，打不還手、罵不還口，真正受到損失的時候修煉人都付之一笑，這是你們應有的狀態和必須做到的，因為你不是常人，你要走出常人的。你不能用常人的理來要求自己，你得用高標準來要求你，所以你們必須得做到這樣。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:313-313]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:316:316 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: 🦞 小龍蝦：教練，實話說：法輪大法官方網站（big5.falundafa.org）上沒有分頁的頁碼對應，4 篇講法都是一整頁 HTML，不像紙本書有印刷頁碼。所以我**無法直接定位到「p 64-67」**。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:316-316]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:318:318 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: 但我把 4 篇講法的全文都抓下來比對過了。根據紙本書各地講法十的編排結構（每篇講法連續頁碼），我推估 **p 64-67 落在〈曼哈頓講法〉中後段**，內容是師父講「**修煉人不能被人說、一碰就炸**」這一段。對應網路上整理的章節大約是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:318-318]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:324:324 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: **主題：修煉人不能被人說，一碰就炸** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:324-324]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:326:326 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: > 因為洛杉磯剛剛講完法，今天又剛剛上網發表，所以我今天不多講。但是有一件事情我要跟大家說。很多神在我耳邊講：你們大法弟子不能被說，一說就炸，說也不能說怎麼行，不能被人說怎麼修，這叫甚麼修煉人，等等等等。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:326-326]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:328:328 -->
+- 〈曼哈頓講法〉中段（推估 p 64-67）: > 作為一個修煉的人來講啊，大家知道，打不還手、罵不還口，真正受到損失的時候修煉人都付之一笑，這是你們應有的狀態和必須做到的，因為你不是常人，你要走出常人的。你不能用常人的理來要求自己，你得用高標準來要求你，所以你們必須得做到這樣。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:328-328]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:335:335 -->
+- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:335-335]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:337:340 -->
+- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:337-340]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-20.md:341:342 -->
+- 📨 對話記錄 20:09（共約 1 條，從第 0 行起）: Current time: Thursday, August 20th, 2026 - 8:00 PM (Asia/Taipei) Reference UTC: 2026-08-20 12:00 UTC [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-20.md:341-342]

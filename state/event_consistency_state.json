@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-08-24T08:20:02.113282+08:00",
-  "future_sessions": 14,
+  "checked_at": "2026-08-27T08:20:04.191139+08:00",
+  "future_sessions": 13,
   "problems": [
-    "個別活動頁「AI微論壇 台中場」(ai-forum-taichung) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道"
+    "資料庫有「當古典音樂遇到AI流水席活動（bigtree-0916／2026-09-16）」但官網沒列出——是不是忘了按一鍵發佈？"
   ],
   "satellites": {
     "ai-talk": {
@@ -35,10 +35,10 @@
         "bigtree-0924"
       ],
       "exists": true,
-      "has_api": false,
+      "has_api": true,
       "has_deeplink": false,
-      "notified": false,
-      "how": "❌ 沒有任何通知管線"
+      "notified": true,
+      "how": "自己打 /api/register"
     }
   }
 }

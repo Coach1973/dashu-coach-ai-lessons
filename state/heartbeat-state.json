@@ -3,11 +3,11 @@
     "heartbeat_poll": "2026-08-26T22:13:30+08:00",
     "telegram_channel": "2026-08-26T22:13:30+08:00",
     "system_health": "2026-08-26T01:37:05.449419+08:00",
-    "coach_silence_sync": "2026-08-26T22:12:03.933523+08:00",
+    "coach_silence_sync": "2026-08-27T10:12:05.436046+08:00",
     "cron_health_audit": "2026-08-26T22:13:30+08:00"
   },
-  "lastHeartbeat": "2026-08-26T22:13:30+08:00",
-  "lastHeartbeatNote": "poll=22:13 週三深夜｜教練最後訊息 21:36:55（沉默 0.6h，當下 date 新鮮值，晚間活躍中）｜cycle=618 安靜通過 cumulativeGreen=2（從 cycle=617 的 1 +1）｜🎉 蒸餾任務 9c3fc55d 22:00 那輪已恢復（lastRunStatus=ok / CE=0 / durationMs=9319ms），連 10+ 小時的 minimax provider overloaded 終於自動解除｜21:12 cycle=616 那輪連 3 次 retry 失敗（CDN HTML 阻擋 + 503 timeout，全部 provider 端問題）+ 22:00 那輪 Edit 失敗（Context Overflow 重啟前最後寫入失敗），本輪 cycle=618 完全恢復｜其他 22 個 enabled cron 全部 ok｜v4.0 三關全 fail（關卡一：本任務成功 + 蒸餾已恢復；關卡二：provider 已恢復；關卡三：本任務=meta 迴圈失敗 + 蒸餾=內部流程不影響教練/會員）→ 不 announce",
+  "lastHeartbeat": "2026-08-27T08:13:39+08:00",
+  "lastHeartbeatNote": "poll=08:13 週四清晨｜教練最後訊息 02:07:30（沉默 6.1h，當下 date 新鮮值，凌晨睡眠正常）｜cycle=619 安靜通過 cumulativeGreen=3（從 cycle=618 的 2 +1）｜驗證 sync 腳本手動跑 exit 0（zhixingxize/xinfa 都 ok），sync marker 與 source mtime 對齊（源頭 22 天沒改，mtime-marker 機制預期行為）｜3 個被 07:00 context overflow 重啟中斷的任務（sync-執行細則、sync-特助心法、☕幕僚長晨報）v4.0 三關全 fail（關卡一：手動驗證 sync 腳本不壞；關卡二：是 gateway restart 不是 provider 過載；關卡三：源頭沒改 → sync 沒事做；晨報有 06:00 起床摘要 + 23:05 三機總結補位）→ 不 announce｜下輪 09:12 cycle=620",
   "systemSnapshot": {
     "timeOfDay": "evening",
     "dayOfWeek": "Wednesday",
@@ -21,8 +21,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-26T22:13:30+08:00",
-    "coachSilentSince": "2026-08-26T21:36:55+08:00",
-    "coachSilentHours": 0.6,
+    "coachSilentSince": "2026-08-27T10:11:04+08:00",
+    "coachSilentHours": 0.0,
     "nextPlannedAction": "等下輪 healthcheck cron (23:12 cycle=619) 或教練新訊息",
     "triggerSource": "cron-event:healthcheck_cron",
     "cronErrors": [],
@@ -42,6 +42,6 @@
   "urgentGmailCount": 0,
   "cumulativeGreen": 2,
   "coachSilenceHours": 0.6,
-  "lastCycle": 618,
-  "note": "cycle=618 安靜通過，cumulativeGreen=2（從 cycle=617 的 1 +1）。🎉 蒸餾任務 9c3fc55d 在 22:00 那一輪已恢復，連 10+ 小時的 minimax provider overloaded 終於自動解除，consecutiveErrors=0。其他 22 個 enabled cron 全部 ok。21:12 cycle=616 連 3 次 retry 失敗（CDN HTML 阻擋 + 503）+ 22:00 Edit 失敗（Context Overflow 重啟前），本輪完全恢復。v4.0 三關全 fail → 不 announce。"
+  "lastCycle": 619,
+  "note": "cycle=619 安靜通過，cumulativeGreen=3（從 cycle=618 的 2 +1）。驗證 sync 腳本手動跑 exit 0（zhixingxize/xinfa 都正常），sync marker 與 source mtime 對齊（22 天沒改 → mtime-marker 機制預期行為）。3 個被 07:00 context overflow 重啟中斷的任務（sync-執行細則、sync-特助心法、☕幕僚長晨報）v4.0 三關全 fail（關卡一：手動驗證 sync 腳本不壞；關卡二：是 gateway restart 不是 provider 過載；關卡三：源頭沒改 → sync 沒事做；晨報有 06:00 起床摘要 + 23:05 三機總結補位）→ 不 announce。"
 }
