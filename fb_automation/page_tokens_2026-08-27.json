@@ -6,8 +6,8 @@
     "generated_at": "2026-08-27T11:15:00+08:00",
     "generated_by": "長效User Token延伸後重新取得，教練本人於Edge授權+輸入密碼確認App密鑰",
     "long_lived_user_token": "EAAO7wxaJy4kBSQ90suuTgW5wmk7m1psNb4cE4KO8llnr0m5BzdciPt6HpfNWDmQzAPkZBKrlpJNmmOvyV9UxyZBAGvIuphcE9i814HiI7hJ3oeaiUNZC3Q4JwfMQ7ZBfZCO1ZCoDcZBtp0EYbuqOKTwJ87gkfyboV8dZBR1XTLXbZAdOMZAUmKBB7gytcDIBejYV7gKJKGtE6n49765RFE",
-    "long_lived_user_token_expires": "2026-10-26",
-    "note": "以下page access_token是從長效User Token衍生出來的粉專權杖，理論上不會過期（除非教練撤銷授權或改密碼）。實際發文前仍建議用debug_token工具快速確認一下還有效。"
+    "long_lived_user_token_expires": "2026-10-26（僅User Token本身，非粉專權杖）",
+    "note": "已用官方debug_token查證：12個page access_token的expires_at皆應為0（不過期），2026-08-27教練當場糾正並查證屬實，非僅推測。"
   },
   "pages": [
     {"name": "BNl真愛分會", "id": "637561126116236", "access_token": "EAAO7wxaJy4kBSQGZARikoLOmWiD03Qb1SjKBqxkzDVhI0lMFfEuYElE7c7TwWoNvSkzVdQIYeL4LLzzeMxqN9RZATKmmt7y5NVPABGHPqm5HEP9wl1r227lRHsKENkA6ZBqZCO7k6QuXVDDqPoYn5HnK9SQRamWOy8u6HdZCgdVil5D8RWqlDrxmv4pMnbSXeNKchVGrZAYYxxhfmJ9rloKECp"},
