@@ -7,7 +7,7 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | ✅ | **真誠分會自助送出簡介機制，已套用到全部9個BNI分會** | ✅2026-08-27完成，教練親口「很棒」驗收通過 | 比照mentor100百人導師同行**第一階段**設計，`bni-chapters`新增`chapter_members`表(chapter_id範圍)＋`/<slug>/join`自助送出表單(honeypot+IP rate limit防灌水)＋送出即自動上架＋`edit_token`自助編輯/刪除＋後台夥伴清單供刪違規內容，commit`44fc3dd`。**因架構本身是chapter_id分流、9分會共用同一套後端**，教練說「套用到所有分會」後，逐一curl驗證全部9個slug(sincere/real-ai/true-rich/true-love/zhenxin/real-diamonds/real-kungfu/real-age/real-wealth)的分會頁面+`/join`表單皆為200且各自顯示正確分會名稱，後台`admin_edit`(chapter_id=5/9實測)也都能看到各自夥伴清單，**確認9個分會全數已生效，無需額外程式碼異動**。此項結案 |
-| 🟡 | **BNI Connect查詢離會會員「信用証」開立狀況** | 🔒卡住-等教練釐清「信用証」確切定義 | 教練要求查詢哪些離會會員有/沒有開立「信用証」，軍師當場問清楚是指退會結清證明、還是ezPay發票(今天正好在查林仁超/林智帆的發票)、還是BNI Connect裡某個正式文件名稱，教練尚未回覆。下一場開工先問清楚再查，不要瞎猜方向去BNI Connect亂翻 |
+| 🟡 | **BNI Connect查詢離會會員「信用証」開立狀況** | ⏳待軍師續作，真鑫/真愛/真富/真誠已完整查完(171人)，真鑽231人只查了10人 | 教練定義已釐清：查5分會(真鑽/真誠/真鑫/真富/真愛)離會會員信用証，已開立要發行日期(2年內有效)、未開立要離會日期。教練明確拍板：**過期看發行日期不是離會日期，不能用捷徑，逐一查**。資料已建`namecard-db/namecards.db`的`bni_credit_certificates`表。下一棒直接讀`knowledges/2026-08-27_BNI信用証清查進度與續作方法.md`，裡面有剩餘221個memberId清單+完整可複製JS腳本+3條最終交付SQL，續作不用重新摸索任何方法 |
 | 🔴🔴🔴 | **FB粉專行銷自動化：App+12個粉專發文權杖已建好，但「大樹教練」最重要粉專的pages_manage_posts權限卡在商家驗證未完成** | 🔒卡住-教練已於2026-08-27 17:00送出驗證，Facebook回覆約48小時(2個工作天)內出結果 | 聯想Windows本場從零建置Graph API App「大樹教練粉專發文小幫手」(App ID`1050871501278089`)，順利拿到12個一般粉專的Page Access Token(存於`fb_automation/page_tokens_2026-08-27.json`+`路徑大全_憑證層.md`，經debug_token驗證`expires_at:0`永不過期)，教練指定優先要發的4個是大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管。**卡住點**：教練最重視的「大樹教練」個人品牌粉專(facebook.com/bymyway，Page ID`252699914868764`)一直無法透過`/me/accounts`列出，且不管怎麼重新授權，真正的發文權限`pages_manage_posts`永遠拿不到（scope只剩前3個）。繞了一大圈試錯(切換使用案例分類/App後台加權限/開新分頁重來/猜New Pages Experience限制/加進Business Portfolio)才在Meta Business Suite「安全中心」頁面查到官方明講：「你的組織必須通過驗證，才能使用特定Meta產品」——真因是**商家驗證(Business Verification)未完成**，教練當場點名檢討「浪費了大半的時間最後才找到關鍵」，已寫入試金石案例67+記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`。教練決定自己找時間去`business.facebook.com`安全中心點「開始驗證」，完成後開新對話框回來繼續。**下一棒待辦**：教練商家驗證過了之後，重新走一次`pages_manage_posts`授權流程(教練需親自點擊「Generate Access Token」，自動化點擊會被瀏覽器攔截)，驗證12個粉專+大樹教練都能真正發文後才開始寫自動發文腳本；教練尚未提供「素材對應規則」(哪個活動配哪個粉專)，也要問清楚才能真正開始自動化。 |
 | ✅ | **Stop hook守則#07輪詢偵測瞎眼35天，工具回音誤判成回合邊界的根因已修復** | ✅2026-08-27完成，用真實對話重播+本場活體測試雙重驗證 | 教練修RustDesk腳本時自己講出「每10分鐘檢查一次」被親口糾正，查證發現這台Mac本來就有專門攔這句話的Stop hook，但log顯示從7/24起完全沒抓到過任何真實違規。根因：TURN_TEXT往回掃描transcript時，把工具執行結果（也是`type=='user'`）誤判成「教練講話」的回合邊界，真實對話一有多次工具呼叫（幾乎必然）就提早打斷掃描，抓不到更早講的違規內容。此bug自2026-07-23就存在，非08-12合併造成的新問題。已修復`scripts/stop_rules_master.py`+同步修好同一天失效的`test_stop_rules_master.sh`（比對基準依賴的檔案早被刪除，測試從建立當天就已失效）。詳見試金石案例66、[[reference_stop_hook_tool_result_boundary_bug_2026-08-27]]。commit`01a28f2fb`。 |
 | ✅ | **聯想跨機同步四層根因全修+ai-talk嘉義場設攤廠商05~10上線+Netlify額度校正934.9** | ✅2026-08-26聯想完成，詳見v138 | 詳見`claude-brain/project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md`。四層根因：①7支對齊hook聯想從沒裝過(含收工自動push) ②所有hook讀到的`workspace`是7/23的死clone，已封存改junction指向活repo ③PS5.1讀stdin中文被Big5讀壞(「開工」變亂碼)，`feed_junshi_handoff.ps1`等3支已修 ④`session_end_auto_push.ps1`commit後沒先pull就push，必被拒，已補stash→pull--rebase→push。另完成教練交辦：ai-talk嘉義場設攤廠商05(乾淨世界補號)~10(KR廚房)全數上線並curl驗證；Netlify額度按教練截圖回報949.9/1000校正，本場部署2次後934.9，寫回共用檔案供三機同步。**教練當場糾正**我把額度同步做成PreToolUse自動攔截hook太複雜(還意外把自己下個指令攔到報錯)，已撤掉改成手動記數+總結時寫回，詳見[[feedback_netlify_quota_sync_simplify_2026-08-26]]。 |
@@ -228,44 +228,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-27 v141（Mac終端機 Sonnet 5，bigtree 8/28 EDM上線+報名頁LINE誘因文案定案+/slides多簡報支援+ezPay發票查證）
-
-> 建立時間：2026-08-27 10:40 ~ 18:33（台灣時間，教練「總結」觸發收工）
-> 上一棒：v140（聯想Windows，同日）— 與本棒在不同機器並行進行，互不衝突
-> 本棒主軸：**教練提供8/28嘉義場正式EDM，補進歷史紀錄+報名頁上線；報名成功頁LINE加入誘因文案經三輪迭代定案並上線；event-signup簡報下載功能擴充為支援多份；查證林仁超/林智帆兩人ezPay發票紀錄；收工時教練交辦兩項新任務。**
-
-## 🎯 本場戰果
-
-### 1. bigtree-tw：8/28嘉義AI微論壇正式EDM上線（deploy `6a8fa70b`）
-教練下載正式EDM(`export (3).jpg`)後，補進`archive/大樹小講_歷史講座紀錄.html`第21場+報名頁`index.html`場次資訊(原本只有停車場資訊，補上報名費100元園遊券制說明)，同步更新`event.db`。本機http.server+真實Chrome預覽驗證後，教練親口「就可以推了」，已推GitHub+Netlify並curl驗證正式站三處(EDM圖片/歷史紀錄頁/報名頁文字)皆生效。
-
-### 2. Netlify額度校正+bigtree報名頁LINE誘因文案三輪迭代（deploy `6a8fb206c38ae66c7d2a843c`）
-教練親自查真實帳單頁回報903.3/1000（換算約60次部署），已寫回`state/netlify_deploy_quota.json`供三機同步基準，commit `17e477920`。順勢處理教練提出的「明天40位嘉賓沒綁LINE，如何通知」問題：查證LINE/Telegram皆需對方先加好友/啟動bot才能觸達，電話號碼本身無法直接推播；三竹簡訊申請牽涉MID身分識別驗證+帳號建立，屬於軍師規矩上不可代辦的動作（帳號/身分驗證類），已誠實告知並提供替代思路。接著把這個洞察落地成**報名成功頁的LINE加入誘因文案**，教練逐輪修改定案：加LINE→活動前提醒→經確認出席後優先入場+免填資料通過抽獎資格審核（開場前10分鐘到場，逾時不保留）。bigtree_publish.py因只比對SESSION_DATES內容而誤判「已是最新」拒絕部署，改用手動`git archive HEAD`+zip+curl流程成功部署，此坑已寫入記憶`reference_bigtree_publish_hash_scope_2026-08-27`。
-
-### 3. event-signup：/slides簡報下載功能擴充支援多份檔案（commit `8f65585ab`）
-教練昨天(8/26)高雄場有兩份簡報要分享，查證發現`/slides`原設計一次只能提供一份檔案（自動模式抓今日日期、手動模式僅能指定一個檔名）。已改造`_resolve_current_slides()`回傳list、manual_file改存逗號分隔清單、`/slides/download`改成`/slides/download/<filename>`並驗證檔名在目前開放清單內才給下載（擋路徑穿越）、後台manual_file下拉選單改multiple可複選。用test_client+直接render_template雙重驗證通過（兩檔案各自200下載、路徑穿越404、不存在檔名404），測試後已還原DB原始設定，服務已重啟上線。教練選擇自己上後台操作(選項B)，已給操作步驟。
-
-### 4. ezPay發票查證：林仁超(真鑽/旅行者企業社29412451)、林智帆(真鑽/鴻羽網路54082268)
-先查本機3份離線發票資料庫皆查無結果，但**沒有先報告查證過程就直接問教練登入ezPay**，教練當場糾正「你的資料庫裡面應該要有啊」——已寫入記憶`feedback_report_offline_check_before_pivoting_2026-08-27`。教練給出正確統編後，本機CSV改用統編查到兩人完整歷史：林智帆備註明確寫「真鑽-智帆續約」確認身分，2026年至今皆無新發票；林仁超2026-01-03有一筆$26,000（教練說明是接任職務提前續約，非重複）。兩人皆確認可正常開立，教練尚未下令開立。
-
-### 5. Trello connector澄清
-教練透過`claude.ai/directory/trello`連接了Trello，詢問能做什麼。查證本session（Claude Code終端機/桌面版）的工具清單無Trello相關工具，已誠實告知claude.ai與Claude Code是不同產品、外掛連接不互通，若要用需回claude.ai對話框操作。
-
-## ⚠️ 本場教訓
-
-1. **查證沒找到結果時，要先口頭報告「已查過什麼、結果是什麼」，再問是否要換管道**——省略報告直接問教練做動作(如登入)，會讓教練誤以為AI沒做功課，即使AI其實已經查過。
-2. **bigtree_publish.py的去重檢查只看SESSION_DATES內容，改其他區塊文案不會被偵測到**，遇到「明明改了卻說已是最新」要想到這個範圍限制，改走手動zip+curl流程。
-
-## 📋 下一場開工先做
-
-1. **真誠分會自助送出簡介機制**——本棒新任務，優先度最高，見待辦表詳細規格
-2. **BNI Connect離會會員信用証查詢**——先問教練「信用証」確切定義再動手，不要瞎猜
-3. MEMORY.md索引檔20.1KB逼近讀取上限，已拆背景任務`task_5332e76c`處理中，下次開工檢查是否完成
-4. 承接v140待辦：教練商家驗證完成後的FB粉專pages_manage_posts授權後續
-5. event-signup `/slides`多檔案功能上線後，教練若已自行上傳8/26高雄場兩份簡報，可主動確認是否運作正常
-
-## 🔑 本場commit
-`7dc3704`(8/28 EDM歷史紀錄+報名頁)／`17e477920`(Netlify額度校正903.3)／`fb127e5`(bigtree LINE誘因文案定案)／`8f65585ab`(/slides多檔案支援)／記憶`feedback_report_offline_check_before_pivoting_2026-08-27`+`reference_bigtree_publish_hash_scope_2026-08-27`(本次總結一併commit)
+> 📦 v141完整內容已封存：`handoff_archive/handoff_v141_archived_2026-08-27.md`（Mac終端機，bigtree 8/28 EDM上線+報名頁LINE誘因文案定案+/slides多簡報支援+ezPay發票查證）
 
 ---
 
@@ -301,5 +264,47 @@
 
 ## 🔑 本場commit
 `01a28f2fb`（修復stop_rules_master.py + 重寫test_stop_rules_master.sh + 試金石案例66 + 記憶檔，一次性commit）
+
+---
+
+# 軍師接力棒 · 2026-08-27 v143（Mac終端機 Sonnet 5，BNI Connect離會會員信用証清查——真鑫/真愛/真富/真誠4分會171人完整查完，真鑽231人查了10人，教練「總結」中途暫停待新對話框續作）
+
+> 建立時間：2026-08-27 18:45 ~ 21:00（台灣時間，教練主動提出context用量62%建議先總結）
+> 上一棒：v142（Mac終端機，同日較早，不同session）
+> 本棒主軸：**教練交辦BNI Connect離會會員信用証開立狀況清查（真鑽/真誠/真鑫/真富，後補加真愛共5分會），要求逐一查不能用捷徑。已完整查完4分會171人，最大的真鑽分會(231人)只查了10人，教練主動喊停，已寫好完整續作SOP+資料庫，下一棒可直接從第11人接續，不用重新摸索任何方法。**
+
+## 🎯 本場戰果
+
+### 1. 任務釐清+邏輯確認（教練親自糾正2次）
+教練原話：查BNI Connect離會會員的信用証開立狀況，做兩張表——①已開立的，要發行日期（因兩年內有效，避免過期失效）②未開立的，要離會日期（有機會回來的潛在會員）。過程中兩次重要澄清：①教練口誤「真鑫」實際指「真心」，查證真心在系統裡完全沒有任何會員紀錄（0人，任何狀態皆無）；後教練改口要求加入「真愛」分會(21人)②**教練明確拍板：過期是算「發行日期」不是「離會日期」，兩者常差很久，不能用「離會超過2年」的捷徑直接判定過期，要逐一點進去查，即使比較久也沒關係**。
+
+### 2. 建立資料庫（教練指示：以後不用每次重新進BNI Connect查）
+新建`namecard-db/namecards.db`的`bni_credit_certificates`表，欄位涵蓋cert_status(issued/not_issued/ineligible)、cert_id、issue_date、expiry_date、usage_status(active/transferred/redeemed/expired)、transferred_to等。完整schema+SQL範例見`knowledges/2026-08-27_BNI信用証清查進度與續作方法.md`。
+
+### 3. 四個分會171人已完整查完並存入資料庫
+- **真鑫(7人)**：3人已開立仍有效、1人已開立但已轉移、3人未開立
+- **真愛(21人)**：14人已開立仍有效、7人已開立已轉移/贖回、0人未開立（全分會集體離會事件，證都已開）
+- **真富(45人)**：16人active、13人redeemed、16人transferred，0人未開立、0人過期（全體都在2年內）
+- **真誠(98人)**：27人無資格(無剩餘會期)、11人active、7人**已過期**、7人redeemed、42人transferred、4人未開立
+
+### 4. 真鑽（231人，最大分會）只查了前10人，教練喊停
+已查：1839341,2076177,2076183,2076186,2076193,2085948,2085957,2085964,2085967,2087531（含最早驗證出「href=#點擊顯示Please contact support=已過期」規則的那位丁大成）。**剩221個memberId的完整清單+每一步的可複製JS腳本，都已寫進`knowledges/2026-08-27_BNI信用証清查進度與續作方法.md`**，下一棒開工直接讀這份檔案就能無縫接續，不用重新去BNI Connect抓名單、不用重新摸索判斷邏輯。
+
+### 5. 過程中建立的關鍵技術訣竅（已寫入knowledges檔案血淚教訓段落）
+①分會篩選要先真的點擊該分會連結讓session切換，URL帶chapterId參數不可靠②`#searchMembers`要用`jQuery.trigger('click')`而非真實滑鼠點擊③DataTables是client端渲染，`fnGetData()`可一次拿全部離會名單免翻頁④javascript_exec回傳物件常被安全過濾器整包擋掉變`{}}`，一律回傳純字串⑤信用証連結href="#"（無真實certId）＝該証已過期，不用再點進去確認，這規則已驗證多次。
+
+## ⚠️ 本場教訓
+
+1. 大型清查任務動手前，即使教練已明確拍板「逐一查不走捷徑」，也要坦白讓教練知道實際規模（如「還要查221人」），教練會自行判斷是否要先總結分批做，不要悶頭一路做到context用完才被動停下。
+2. 已建立的資料庫是這類「量大但規則固定」任務最好的中繼站——續作不用重新產生任何判斷邏輯，只要照著knowledges檔案的SOP繼續填資料即可。
+
+## 📋 下一場開工先做
+
+1. **BNI信用証清查續作**——直接讀`knowledges/2026-08-27_BNI信用証清查進度與續作方法.md`，從真鑽剩餘221個memberId的第一個開始查，方法/URL/JS腳本/DB schema都已寫好
+2. 全部231人查完後，用該檔案第5節的3條SQL撈出教練要的最終兩張表（已開立仍有效／已過期／未開立），輸出給教練
+3. 其餘待辦：真誠分會自助送出簡介機制已完成無新增待辦；FB粉專商家驗證後續等教練通知
+
+## 🔑 本場commit
+本場資料只寫入`namecard-db/namecards.db`（SQLite資料庫，非git追蹤的knowledges文字檔部分將隨本次總結commit），knowledges新檔`2026-08-27_BNI信用証清查進度與續作方法.md`會在本次總結一併commit。
 
 ---
