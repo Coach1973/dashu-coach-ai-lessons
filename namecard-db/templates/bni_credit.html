@@ -27,6 +27,9 @@
 
   table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   th, td { padding: 9px 10px; font-size: 13px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
+  th a.sort-link { color: #555; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  th a.sort-link:hover { color: #1f3a5f; }
+  th a.sort-link .arrow { color: #1f3a5f; font-size: 10px; }
   th { background: #f0efe9; color: #555; font-weight: 700; font-size: 12px; white-space: nowrap; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #fafaf7; }
@@ -107,13 +110,13 @@
 <table>
   <thead>
     <tr>
-      <th>分會</th>
-      <th>姓名</th>
-      <th>公司</th>
-      <th>信用額度</th>
-      <th>發行日期</th>
-      <th>到期日 / 剩餘時間</th>
-      <th>狀態</th>
+      <th><a class="sort-link" href="{{ sort_url('chapter') }}">分會{% if sort_key=='chapter' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('name') }}">姓名{% if sort_key=='name' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('company') }}">公司{% if sort_key=='company' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('credit_months') }}">信用額度{% if sort_key=='credit_months' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('issue_date') }}">發行日期{% if sort_key=='issue_date' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('expiry_date') }}">到期日 / 剩餘時間{% if sort_key=='expiry_date' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
+      <th><a class="sort-link" href="{{ sort_url('status_key') }}">狀態{% if sort_key=='status_key' %}<span class="arrow">{{ '▲' if sort_dir=='asc' else '▼' }}</span>{% endif %}</a></th>
     </tr>
   </thead>
   <tbody>

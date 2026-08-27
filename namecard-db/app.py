@@ -9,6 +9,7 @@ import time
 import uuid
 from collections import defaultdict, deque
 from functools import wraps
+from urllib.parse import urlencode
 
 import anthropic
 from flask import Flask, abort, redirect, render_template, request, send_from_directory, session, url_for
@@ -374,6 +375,11 @@ BNI_CREDIT_STATUS_LABELS = {
     "invalidated": "❌ 已失效",
 }
 BNI_CREDIT_STATUS_ORDER = ["active", "expired", "not_issued", "invalidated", "redeemed", "transferred", "ineligible"]
+# 表頭可點擊排序的欄位，key跟前端<a href>帶的sort參數一致；expiry_date/status_key
+# 排序時特別取代成實際比較用的值(見bni_credit_list()裡的_sort_value)
+BNI_CREDIT_SORTABLE_FIELDS = {
+    "chapter", "name", "company", "credit_months", "issue_date", "expiry_date", "status_key",
+}
 
 
 def _bni_credit_status_key(cert_status, usage_status):
@@ -444,7 +450,23 @@ def bni_credit_list():
         record["urgency"] = urgency
         records.append(record)
 
-    records.sort(key=lambda r: (r["urgency"], r["remaining_days"] if r["remaining_days"] is not None else 99999, r["name"]))
+    sort_key = request.args.get("sort") or ""
+    sort_dir = request.args.get("dir") or "asc"
+    if sort_key in BNI_CREDIT_SORTABLE_FIELDS:
+        def _sort_value(r):
+            if sort_key == "expiry_date":
+                return r.get("expiry_date") or r.get("scheduled_end_date")
+            if sort_key == "status_key":
+                return r.get("status_label")
+            return r.get(sort_key)
+
+        with_value = [r for r in records if _sort_value(r) not in (None, "")]
+        without_value = [r for r in records if _sort_value(r) in (None, "")]
+        with_value.sort(key=_sort_value, reverse=(sort_dir == "desc"))
+        records = with_value + without_value
+    else:
+        sort_key = ""
+        records.sort(key=lambda r: (r["urgency"], r["remaining_days"] if r["remaining_days"] is not None else 99999, r["name"]))
 
     counts_conn = db.get_conn()
     all_rows = counts_conn.execute("SELECT cert_status, usage_status FROM bni_credit_certificates").fetchall()
@@ -453,6 +475,19 @@ def bni_credit_list():
     for r in all_rows:
         k = _bni_credit_status_key(r["cert_status"], r["usage_status"])
         status_counts[k] = status_counts.get(k, 0) + 1
+
+    def sort_url(field):
+        params = []
+        for s in selected_statuses:
+            params.append(("status", s))
+        for c in selected_chapters:
+            params.append(("chapter", c))
+        if query:
+            params.append(("q", query))
+        next_dir = "desc" if (sort_key == field and sort_dir == "asc") else "asc"
+        params.append(("sort", field))
+        params.append(("dir", next_dir))
+        return "?" + urlencode(params)
 
     return render_template(
         "bni_credit.html",
@@ -464,6 +499,9 @@ def bni_credit_list():
         status_labels=BNI_CREDIT_STATUS_LABELS,
         status_order=BNI_CREDIT_STATUS_ORDER,
         status_counts=status_counts,
+        sort_key=sort_key,
+        sort_dir=sort_dir,
+        sort_url=sort_url,
         display_name=session.get("team_display_name"),
     )
 
