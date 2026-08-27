@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "app_name": "大樹教練粉專發文小幫手",
+    "app_id": "1050871501278089",
+    "generated_at": "2026-08-27T11:00:00+08:00",
+    "generated_by": "Graph API Explorer, me/accounts, 教練本人Edge授權",
+    "note": "短期用戶權杖衍生的粉專權杖，非長期權杖，過期需重新走一次授權流程"
+  },
+  "pages": [
+    {"name": "BNl真愛分會", "id": "637561126116236", "access_token": "EAAO7wxaJy4kBSVPZBmPidyvWAEZC12GpZBlmAjOMm14i1WAkwrcRhmp90qDGeUZCkS0RlxnDZCjzaiVy3VzCa8paT2iy2r31gVM3ULhW2oJWLgu0hyEp8g7X0IyleqJpSyLmwaAoG1Cl36m6qHEYXdTlMMJ0GppdCRexz3HZC7NlLZAQOk3NkM6BZAZBQRZAlBFecnfgd5aNXNjaCDqBNUpqwyrpIulZBjTBQYZActIjzwlc6FLnVZAt12I6fI2K5vcIZD"},
+    {"name": "大台南策展中心", "id": "612941615239114", "access_token": "EAAO7wxaJy4kBSWMdYW2yCiJbD2g8s7mlrJqeH3Kg5aZC9n4e1nUmEZCzzPpPxOf5UAcUMmWRIUjY1Bos4QPuekhSg3sUytOTCQGvBwZBPvEoysLZArUiSbnRbLocjuZAXm5bPjdMWkZAxwpJ9mw2AnZC8LS7F9fkI4Y2lkQwzgKAF90iyDEMdGBQFgYLha3UWryAVQgZC4raccri5QR1SJCjSoKnfxmZBkmb8M0kTxBsX6kj4mRaQdZAOrFqN0HL0ZD"},
+    {"name": "K R養生廚房", "id": "341405269791872", "access_token": "EAAO7wxaJy4kBSXjNc4hXnY8TP2l1ttaZCqVOrvipMPZBBqZCLQJCNfk2SJuXr8GPv1paFZC7gi9zzF38V52WrQhAfNCFvW0rt5ZAPZAN3bp3m3SmdbPLkZAdPZAsoZAJbfsQdE6wEc5ouQARUxA7HoDpoxbhOkNVjQR2r5ZC2wxCYp9SMliwfacNqWRzsE9uDnCZA2b961ZCH9SEM3YfcdeKqwjrt90qtF8v7XZBpkhW57Qsj8udfk4wCFAUMxv1yYS4ZD"},
+    {"name": "BNI大台南市區真鑽分會-我們重承諾", "id": "260832737976868", "access_token": "EAAO7wxaJy4kBSfFnZBbI1tquMIVuco5AcvZBGxIeDC6UZCIXMHeMBOBPrewpHCVeJSjzPC9tIkiepI6FDeosLKlezao3MPwiI6zYl6Q8OQv97EU1DyJoi2Oozln5VWc2LZBDUEZALclymrJQSDncAQoqGOGjFlSlEenJsnvWnZAWBmpieFsXQsZCWHDOYeZB2RCeoYgOjjNzZAFZAQMfHdTcEtcPJGlKxhmqCUgqvH2ZBFPL3moHeLmK1UNwooWcwZDZD"},
+    {"name": "動感跳繩俱樂部", "id": "114594070296743", "access_token": "EAAO7wxaJy4kBSbampaoZABQfJCndJspF5S4013XZC3hq1gH3tdXbXLmab88rV6dCTOOiACc3cPpvDp7CCfOf3OWpBPZC6ExlxZAInxZBaUp8r41DzSvRUxSphXVqM3tquIBDoUT6RjgGLuGngU8IVjh8w2LvDCCWEDmGeAbbleriwsdkZCFJRM9k2c6bVVTPUMtUUckmHjiXEOtSMQGyAgCK0Qmkj7zBOCcneZCW1w2XRU0zolKWfKqa5XmPwZDZD"},
+    {"name": "捂汗吠言", "id": "112363970420114", "access_token": "EAAO7wxaJy4kBSSWGzvuwNN3kXiw2qRNZCBJNrRfqWooK42rS4ufl5DSPM5i5o29OM7IAztIkz3uSewSdr5E6BZCmbZBFvS8hiCRmWsGZAuUb8GM0bXhPYrTbXZBBckwoAuJO6wU2SPGtCqrUDwqDIWmVyRbpwVQNMHVnS8Km4ZBXZCs41nSDvZAScDQGgEFZC9ETqNZC9j2KzCpyDtesRjoIAlKlUAcGb0xRXH1ga91omnF8S5RcbfLxNC9q88VwZDZD"},
+    {"name": "海餅乾俱樂部", "id": "241418512666105", "access_token": "EAAO7wxaJy4kBSW7ibzMqJ1iq7Nqn6Qd2EO0mFgwqaYAU41oNYxBc1uLRiOEOZBhvnq5HqEY1joEhe0vBmPAI9Wk5ddtqO3ZAUHPJfU7TrpcZCIc8SPvhBp9Q5bqn9N5njd9LJMryjHZBue75fAazxquAxR6ujae53T6dlaBZBdA22FtZAgQ4cS4ZA3GOFwu6HElqeu56qdv7w5msZBEIIKNIZAiAEuQIofG6a3ZA4zbZAcPacynImvAs4L8eT2EywZDZD"},
+    {"name": "跨界美.術.管", "id": "970806519790085", "access_token": "EAAO7wxaJy4kBSSQbZCHs2FXFgFP5tQjbOYOjbTpCqR09MXz8QQbnm0WcJkZAZAqwrBwPm6ijVmZCbnXLnCFxEa54Cei9qupyDh1y5YFcM8R5LbBw0mciHywS46Jlq3etR4zNKPjiJ1EkJyxUQVgP1bVemN2ymN9xOG8s9q7JB02dkfQg1Cds1ZB4AX8ojhyZBypQaNF6odnrCmuqxRDNepmNzyJtJr9sb0ZCqFTHfJNZBhizbWMgTZAr00ZBARqJoZD", "note": "缺MANAGE task"},
+    {"name": "軌跡-人生就是正負評的總合", "id": "475106246270108", "access_token": "EAAO7wxaJy4kBSSFOd8Kedve02KgvkZBYV3Ez6VWncsZB6D6PzaOE8uwl6SS7JfkCZAHgdELsAzDJdF1bzVSzXlGUSn7Onp76mhlypVD4WoncaZBjZCHZBVJM9nJgZBqYxpbvhirZAUoskgGjyWhqhtKl60pIKqfVHZBjgPgFJyMQKjPuympdeePMy6vXOE95AOofbbkJrPAm3nNHOtAkZBeRkKrgeyx5tRSnNlx1b6EvRZB3PswvexZBvaCs3gwxpMQZD"},
+    {"name": "真善忍的美好世界", "id": "1083497755137004", "access_token": "EAAO7wxaJy4kBSdgxbJZCOQNlHPrjP6jzFJKd5Tty7UvJ6jrSo8WsT9zDZB3aXVFv6DaIQYINJZBKwhF2W1VP63YLLFiXwZBhoqtIF57S27iBw4A3XFhe1exmtZCbkqmqTqsLZANpDuGcYZCPjgXjx8vIxabTHIJ7ZCQsUtMJD3drPNsM5faSIWfthShNasuBgs3IvVRK3qXbJVnlAOUzqfmYrqGNzwPxXVQYWiXvZCctFfwoi7hP3sODypvwgjtAZD"},
+    {"name": "不識廬山真面目", "id": "189817098295867", "access_token": "EAAO7wxaJy4kBSbhoLIMPgRa0cgF8hDgPpZAJOZBF8MRI4uLZAiICJQdkyz9XWXeiQeIlZAIT04jZCPiTeIZCVCKDfpJhHldiE8GD8MPLDIJnNj2MVzEpooklVfJDlYug6mZAhYPZAAJDNBm0K5jkztf9ZAcdjpasLW16aZCCQ7gdw2l7zZBURhyGx2RlmMvtvVqSPbn8UVjRsuvlSCY1HwioZB4CdXZCBd6suv6uVd2KaZAAIEybMq6g06vs6R44g7HAZDZD"},
+    {"name": "喬吉拉德/真實學員分享群", "id": "210343562656647", "access_token": "EAAO7wxaJy4kBSSZCO7pslZAdQn5wGPTx39ZAp2ovRwgJhwT0MgHdRtw3dsOQ8bOXaYGJa26qmuqcWfnfsNMzoELsllI75oEx5cYIZCayHNjkcOrKxxJUd7tSDbmzXbia3yibj010GtH00d9hcI1lRj3FefBTOvTHKrFSt3mvhmrIAiuTl3Msb9IaDZA4TONxlR0vo2Ckf8QE1DIyowMZClpiq7rhPYEDEVVssvwbjcwIlZBwPIxH6Xo4KNhmAZDZD"}
+  ]
+}
