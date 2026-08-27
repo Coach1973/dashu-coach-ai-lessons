@@ -3,7 +3,7 @@
     "heartbeat_poll": "2026-08-27T10:00:00.000000+08:00",
     "telegram_channel": "2026-08-27T10:00:00.000000+08:00",
     "system_health": "2026-08-27T10:00:00+08:00",
-    "coach_silence_sync": "2026-08-27T11:12:07.962997+08:00",
+    "coach_silence_sync": "2026-08-27T11:55:57.481659+08:00",
     "jiesheng_reading_reminder_0900": "2026-08-27T09:02:06.614538+08:00"
   },
   "lastHeartbeat": "2026-08-27T10:00:00.000000+08:00",
@@ -21,8 +21,8 @@
     "gatewayRunning": true,
     "telegramChannelOk": true,
     "telegramChannelLastVerified": "2026-08-27T10:00:00.000000+08:00",
-    "coachSilentSince": "2026-08-27T11:06:27+08:00",
-    "coachSilentHours": 0.1,
+    "coachSilentSince": "2026-08-27T11:41:13+08:00",
+    "coachSilentHours": 0.2,
     "nextPlannedAction": "本輪 09:00 結繩領導學閱讀提醒 cron 已 announce 完成；下輪 healthcheck cron：09:12 cycle=620",
     "triggerSource": "cron-event:📚每日結繩領導學閱讀提醒",
     "cronErrors": []
