@@ -440,27 +440,37 @@ def bni_credit_list():
                 remaining_months = round(remaining_days / 30.44, 1)
             except ValueError:
                 remaining_days = None
+        remain_tier = None
         if status_key == "active":
             if remaining_days is None:
                 urgency = 1
+                remain_tier = "urgent"
             elif remaining_days < 0:
                 urgency = 0
-            elif remaining_days < 30:
+                remain_tier = "overdue"
+            elif remaining_days < 91:
                 urgency = 1
-            elif remaining_days < 180:
+                remain_tier = "urgent"
+            elif remaining_days < 183:
                 urgency = 2
-            else:
+                remain_tier = "hot"
+            elif remaining_days < 365:
                 urgency = 3
+                remain_tier = "warn"
+            else:
+                urgency = 4
+                remain_tier = "ok"
         else:
             urgency = {
-                "expired": 4, "not_issued": 5, "transferred": 6, "redeemed": 7, "ineligible": 8,
-            }.get(status_key, 9)
+                "expired": 5, "not_issued": 6, "transferred": 7, "redeemed": 8, "ineligible": 9,
+            }.get(status_key, 10)
 
         record = dict(r)
         record["status_key"] = status_key
         record["status_label"] = BNI_CREDIT_STATUS_LABELS.get(status_key, status_key)
         record["remaining_days"] = remaining_days
         record["remaining_months"] = remaining_months
+        record["remain_tier"] = remain_tier
         record["urgency"] = urgency
         records.append(record)
 

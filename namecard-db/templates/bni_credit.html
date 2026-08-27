@@ -45,6 +45,8 @@
   .remain-bar .fill.ok { background: #34a853; }
   .remain-label.warn { color: #b45309; }
   .remain-bar .fill.warn { background: #f4a942; }
+  .remain-label.hot { color: #9a4a0a; }
+  .remain-bar .fill.hot { background: #e8871e; }
   .remain-label.urgent { color: #b3261e; }
   .remain-bar .fill.urgent { background: #e04b3f; }
   .remain-label.overdue { color: #7a1410; }
@@ -138,18 +140,12 @@
             {% set pct = ((r.remaining_days / 730.0) * 100) | round(0, 'floor') %}
             {% set pct = [pct, 100] | min %}
             {% set pct = [pct, 2] | max %}
-            {% if r.remaining_days < 0 %}
+            {% if r.remain_tier == 'overdue' %}
               <div class="remain-bar"><div class="fill overdue" style="width:2%"></div></div>
               <div class="remain-label overdue">已超過到期日 {{ r.expiry_date }}</div>
-            {% elif r.remaining_days < 30 %}
-              <div class="remain-bar"><div class="fill urgent" style="width:{{ pct }}%"></div></div>
-              <div class="remain-label urgent">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
-            {% elif r.remaining_days < 180 %}
-              <div class="remain-bar"><div class="fill warn" style="width:{{ pct }}%"></div></div>
-              <div class="remain-label warn">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
             {% else %}
-              <div class="remain-bar"><div class="fill ok" style="width:{{ pct }}%"></div></div>
-              <div class="remain-label ok">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
+              <div class="remain-bar"><div class="fill {{ r.remain_tier }}" style="width:{{ pct }}%"></div></div>
+              <div class="remain-label {{ r.remain_tier }}">剩 {{ r.remaining_months }} 個月（{{ r.expiry_date }}）</div>
             {% endif %}
           {% else %}
             <span class="remain-none">到期日未知</span>
