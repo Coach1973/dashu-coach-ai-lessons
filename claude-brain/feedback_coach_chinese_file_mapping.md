@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 216aaa42-ba45-4ef4-9218-6fa9b5ae428c
+  modified: 2026-08-27T18:01:36.667Z
 ---
 
 教練說中文詞，AI 必須直接對應到正確的英文檔案或目錄，不需要再問確認。
@@ -19,6 +20,8 @@ metadata:
 | 試金石 | `試金石/試金石_案例庫.md` |
 | 心跳檔 | `HEARTBEAT.md` |
 | 網頁推 | 啟動「網頁推 SOP」→ 見 [[feedback-web-push-sop]] |
+| 香草／嘸蝦米 | 教練慣用輸入法 OpenVanilla／嘸蝦米，絕不可移除否則無法打中文 |
+| Telegram 快取（Mac，教練傳照片） | `~/Library/Group Containers/`（Telegram Mac 的照片快取路徑） |
 
 **Why:** 教練用中文說話，AI 要自動翻譯到技術檔名，不應讓教練說「我是說那個叫 XXX 的英文檔」——那就是逼教練當搬運工（守則 #12）。
 

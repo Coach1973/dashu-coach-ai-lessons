@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session b8a2ee41-544f-4fb8-8653-363802ff54d3
-# 提取時間：2026-08-27 22:51 (台灣時間)
-# 共 5 條教練原話
+# 提取時間：2026-08-28 01:44 (台灣時間)
+# 共 11 條教練原話
 
 ---
 
@@ -212,3 +212,148 @@ Relevant paths: `/Users/bymyway/.claude/projects/-Users-bymyway--openclaw/memory
 - `/Users/bymyway/.openclaw/workspace/handoff_archive/handoff_v142_archived_2026-08-27.md`</result>
 <usage><subagent_tokens>433986</subagent_tokens><tool_uses>93</tool_uses><duration_ms>3356180</duration_ms></usage>
 </task-notification>
+
+　▶ AI 回應：BNI信用証清查任務全部完成,已驗證資料庫數字跟commit都對得上。
+
+**5分會(真鑽/真誠/真鑫/真富/真愛)離會會員信用証清查,共402人100%查完**,commit `7d67bcf26`已推上雲端(親自驗證過在origin/main歷史裡)。
+
+**表1:已開立且仍有效,共59人(您最關心的,要追蹤到期日)** — 最近到期的幾筆:
+- 真鑽 陳慧玲(阡絮整合行銷) 2027-01-15到期
+- 真鑽 邱錦華(串門子雲盟事業) 2027-03-31到期
+- 真富/真誠多人集中在2027-06~09到期
+- 最晚到期的是真誠 江維宣,2028-08-14
+
+完整59人名單在[JUN…（略）
+
+【教練 2026-08-27 15:05】
+你要製作成網頁版，讓我隨時可以勾選  已贖回 或 已過期 或未開立 
+然後，可以一目了然，信用證保留的月數及到期日，你想想怎麼呈現比較好
+
+　▶ AI 回應：Column added. Now let me get the 59 active records' cert_ids for the background backfill task, and start building the webpage in parallel.
+
+　▶ AI 回應：Now let me add the routes to app.py.
+
+　▶ AI 回應：Good, style conventions confirmed. Now let me write the template.
+
+　▶ AI 回應：Now let me restart the Flask service and verify it loads correctly.
+
+　▶ AI 回應：Service restarted fine (200). Now let me log in and check the new page actually renders through the browser.
+
+　▶ AI 回應：Good, DB is gitignored as expected. Let me add the schema documentation and commit the code changes (app.py routes + new template + index.html nav link).
+
+　▶ AI 回應：Now let me commit the code changes.
+
+　▶ AI 回應：BNI信用証追蹤網頁已上線,commit `fc235e7e0` 已推上雲端。
+
+**網頁功能:**
+- 網址:`namecard.bymyway.com/bni-credit`(需用您的team帳號登入,跟名片系統共用登入)
+- 頂部有狀態勾選(有效/已過期/未開立/已贖回/已轉移/無資格,可複選)+分會勾選+姓名公司搜尋,預設顯示您最關心的「有效/已過期/未開立」三種
+- 每一列的「狀態」欄位是下拉選單,**點選後立刻存檔**,不用另外按送出
+- 「到期日/剩餘時間」欄位用色條顯示:綠色(還剩6個月以上)、橘色(剩1~6個月)、紅色(不到1個月或已超過到期日),依到期日由近到遠排序,最急迫…（略）
+
+【教練 2026-08-27 15:17】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/tmp/bni_credit_preview.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已依規定用真實Google Chrome開啟頁面(`https://namecard.bymyway.com/bni-credit`),不是用Claude內建的無頭瀏覽器工具。頁面會先跳到team登入頁,用您的帳號登入後就能看到剛才說的BNI信用証追蹤畫面。
+
+【教練 2026-08-27 15:23】
+<task-notification>
+<task-id>af1135870cc472526</task-id>
+<tool-use-id>toolu_017FQempqd1pbUs8dwqwwDqT</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/b8a2ee41-544f-4fb8-8653-363802ff54d3/tasks/af1135870cc472526.output</output-file>
+<status>completed</status>
+<summary>Agent "補齊59筆信用証面額月數" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All 59 rows confirmed filled — 0 remaining nulls. Task complete.
+
+## 回報
+
+**59筆全部補齊，查詢過程零異常。**
+
+- 驗證SQL `SELECT count(*) FROM bni_credit_certificates WHERE cert_status='issued' AND usage_status='active' AND credit_months IS NULL;` 回傳 `0`，59筆全數補上`credit_months`欄位。
+- 逐頁查證方式：直接navigate到`https://www.bniconnectglobal.com/web/secure/viewAdminRegionCertificateOfCredit?isFormSubmit=true&amp;memberCertificateOfCreditId={cert_id}`，59個cert_id全部正常開啟，頁面格式跟預期一致，沒有遇到登入過期、連結失效或格式異常的狀況。
+- 分12批次(每批3~5人)用`browser_batch`查詢+`sqlite3`即時寫回，避免中途斷線遺失資料。
+- 有兩人的頁面缺少「轉移會員資格」操作連結(3320975張仕賢、3081888林薔薇)，但這只是頁面上少了一個操作按鈕(可能因為已到會期結束日等原因)，不影響資料抓取——「信用額度」欄位跟其他人一樣正常顯示，credit_months分別填了12和8，無需人工複查。
+
+檔案位置：`/Users/bymyway/.openclaw/workspace/namecard-db/namecards.db`（`bni_credit_certificates`表）
+
+未執行git commit，因為`namecards.db`本身已被`.gitignore`排除追蹤，這純粹是資料庫內容更新。</result>
+<usage><subagent_tokens>122882</subagent_tokens><tool_uses>34</tool_uses><duration_ms>420703</duration_ms></usage>
+</task-notification>
+
+　▶ AI 回應：59筆信用額度面額已全部補齊(59/59),資料庫確認無誤(如陳慧玲13個月、邱錦華13個月、林薔薇8個月等,數字合理分散)。網頁現在重新整理就能看到完整的「信用額度」欄位,不用等我再通知。
+
+兩筆(張仕賢、林薔薇)頁面缺少「轉移會員資格」按鈕但不影響資料抓取,已如實記錄不算異常。BNI信用証追蹤網頁功能到此完整上線,您可以直接在 `https://namecard.bymyway.com/bni-credit` 登入查看跟操作。
+
+【教練 2026-08-27 15:59】
+因為我們的流量已經用了 91%，還要 1 小時 55 分鐘（大概 2 個小時後）才會重新計算。我現在跟你說的事情，等有流量的時候，或者我去開啟付費流量再來跑。等於說你現在只是記錄我現在跟你說的事，然後有流量的時候，你再去跑，做出我要的結果來。
+
+有兩件事要跟你釐清和驗證：
+
+1. 查詢信用額度（會期月數）：
+我剛才沒有說清楚，我要的不是距離兩年的剩餘日期（當然這個也要），而是資料裡面的「信用額度」，也就是他剩餘的會期有幾個月。例如數字是 13 就代表 13 個月、2 就是 2 個月、5 就是 5 個月。請你去查他的信用額度有幾個月。
+2. 「未開立」的狀態標註：
+已過期的就不用說了。至於「未開立」的部分，有些並不是真的未開立，而是因為會期到了、沒有條件可以開立。像這種情況就應該標註為「沒有額度」，直接寫「沒有額度」就好。既然我們有名詞叫「信用額度」（例如 13 個月），那標註「沒有額度」就代表他是自然過期，這樣就能解決了。
+
+還有另外一種情況，就要寫已失效(例如吳承洋）跟你示範對照一下，點進去你會看到上面是寫「信用證」，所以它並不是「未開立」。
+
+可是你一旦點了信用證之後，上面就會寫一行字，你只要看到這一行字，就代表已失效。離開 Please contact support for further assistance.
+
+
+剛才可能查詢太多次，被 BNI 的網站限制訪問了，我先把錯誤訊息發給你。
+我用其他電腦查都沒有問題，就是你的這一臺被限制
+
+Error 1015 Ray ID: a31c395f5bd78282 • 2026-08-27 15:49:04 UTC
+You are being rate limited
+What happened?
+The owner of this website ([www.bniconnectglobal.com](https://www.bniconnectglobal.com)) has banned you temporarily from accessing this website.
+
+Please see https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015/ for more details.
+
+　▶ AI 回應：已收到並記錄,commit `ba4803d60` 已推上雲端,**現在不會碰BNI Connect,等您說流量恢復且確認這台機器沒有再被限流才會動手**。
+
+兩點釐清我的理解跟現況:
+
+**1. 信用額度=剩餘會期月數**——這個其實已經做完了,不用重查。昨天補的59筆`credit_months`欄位存的就是BNI Connect頁面上「信用額度: X」這一行數字(例如13就是13個月),跟到期日倒數是分開的兩個欄位,網頁上兩者都各自顯示。您方便的時候可以直接開 `namecard.bymyway.com/bni-credit` 核對「信用額度」那一欄。
+
+**2. 「未開立」62人要拆成…（略）
+
+【教練 2026-08-27 16:14】
+關於兩個小時以後，如果訪問還是受到限制的話，我可能就要換另外一臺電腦接著查。
+
+還有一件事情你也記錄一下，下一次有流量的時候你要做的：
+
+在信用額度上要有按鈕，可以讓我按一下就重新排列（從月份少到月份多）。到期日的剩餘時間也是，比如剩 4.6 個月、剩 7.1 個月，也要有一個可以排序的方式。
+
+狀態也是一樣，包括分會、姓名、公司、信用額度、發行日期、到期日、狀態這些，都要讓我可以透過按鈕去正向排序或反向排序，想必你理解我的意思了
+
+　▶ AI 回應：Now let me append the sorting feature requirement.
+
+　▶ AI 回應：Now let me update the handoff table entry to mention this second pending item, then commit and push.
+
+　▶ AI 回應：兩件事都已記錄,commit `e80cd9e76` 已推上雲端:
+
+1. **換機備案**:記下如果2小時後這台機器對BNI Connect的訪問還是受限,您可能會換另一台電腦繼續查——下一棒如果發現資料庫內容跟目前記錄的不一樣,會知道這是正常情況(您親自或用別台機器處理過了),不會誤判成資料異常。
+
+2. **排序功能需求**:分會、姓名、公司、信用額度、發行日期、到期日、狀態這7個欄位,表頭都要能點擊做正向/反向排序,信用額度跟到期日剩餘時間要按數字大小排(不是按文字)。這件事本身跟BNI Connect無關,不受流量或限流影響,已把實作方式寫清楚,下次有額度時可以直接動手,不用重新設計…（略）
+
+【教練 2026-08-27 17:42】
+好了，時間到了，你可以開始工作了
+
+　▶ AI 回應：时間到了,我先確認兩件事:BNI Connect這台機器的訪問限制是否真的解除,以及吳承洋案例的實際頁面結構,校準複查邏輯後再批次處理。
