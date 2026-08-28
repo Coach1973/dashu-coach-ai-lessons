@@ -336,3 +336,77 @@ HEARTBEAT.md 內容：
 
 **動作**：靜默通過，不通知教練（凌晨 00:04 睡眠時段 + v4.0 三關未全過）。
 
+
+## 2026-08-28 05:12 CST (週五凌晨)
+
+**檢查範圍**：cron list API 仍只回 1 個任務（本任務，與 2026-08-07 known API bug 一致）。
+
+**本次任務狀態**：
+- consecutiveErrors：0
+- lastRunStatus：ok
+- lastDurationMs：未變更
+- lastErrorReason：無
+
+**沿用 cycle=620（04:13）基準**：
+- 22 CE=0 + 1 CE=1（☕幕僚長晨報，06:00 gateway restart 一次性中斷，nextRun 07:00 自動重試）+ 0 CE≥3
+- 幕僚長晨報 nextRun = 2026-08-28 07:00，會自動重試
+
+**v4.0 三關判斷**：
+- 關卡一（現在還壞？）：本任務正常執行，無新失敗跡象。**沒過**。
+- 關卡二（provider overload？）：無 overload 訊息。**沒過**。
+- 關卡三（影響工作？）：無新影響教練工作的跡象。**沒過**。
+
+三關皆未過 → **不 announce**。
+
+**自動修復**：無。
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- 第零步已跑：教練最後訊息 2026-08-28 05:07:52 CST，silence 0.1h（真實 Telegram API 時間，當下在線）
+
+**動作**：靜默通過，不通知教練（凌晨 05:12 睡眠時段 + v4.0 三關皆未過）。cycle=621。cumulativeGreen=4。
+
+## 2026-08-28 22:12 CST (週五深夜)
+
+**第零步**：sync_coach_last_message.sh 跑完（exit 0），教練最後訊息 2026-08-28 22:09:33 CST，silence **0.0 小時**（教練當下剛說話）。
+
+**檢查範圍**：openclaw cron list 26 個任務（從 CLI 抓，不是 cron tool，因為 cron tool 限制只能看當前任務）。
+
+**抽查 12 個主要任務狀態**（CE / lastStatus）：
+- 🦞 每小時任務健康檢查：CE=0, last=ok, 92s（本任務）
+- sync-執行細則-to-claude-global：CE=0, last=ok, 21ms
+- sync-特助心法-to-claude-global：CE=0, last=ok, 20ms
+- 🔴 場景化升華+系統健檢：CE=0, last=ok（23h ago, 下一輪 23:00）
+- 🦞 小龍蝦每日三機總結：CE=0, last=ok（下一輪 23:05）
+- 每2小時增量記憶蒸餾：CE=0, last=ok（9m ago）
+- BNI大台南行事曆同步：CE=0, last=ok
+- Memory Dreaming Promotion：CE=0, last=ok
+- 每4小時主動關懷：CE=0, last=ok（12m ago）
+- ☀️ 每日 06:00 起床摘要：CE=0, last=ok
+- ☕ 幕僚長晨報：CE=0, last=ok
+- 📊 LINE@教練都在想什麼：CE=0, last=ok
+- 📚 每日結繩領導學閱讀提醒：CE=0, last=ok
+- 📦 每週記憶檔自動蒸餾：CE=0, last=ok
+- 🌱 發財樹澆水提醒：CE=0, last=ok
+- 行事曆每週同步：CE=0, last=ok
+- 🔑 每月Token/憑證健康體檢：CE=0, last=ok
+- 執董週會提醒：CE=0, last=ok
+- 🔔 Netlify 積分重置提醒：CE=0, last=ok
+- 每月25日信貸繳款提醒：CE=0, last=ok
+- bni-credit-expiry-reminder：CE=0, last=ok
+
+**已知小事（不影響工作、不 announce）**：
+- sync-執行細則 + sync-特助心法 兩個任務 delivery 設 `mode:announce, channel:last, bestEffort:true`，因為 `last` 沒 route 會 fail-closed。但 bestEffort=true 且任務本身 CE=0, last=ok，檔案同步成功（執行只花 20ms），不影響任何功能。**按教練 2026-08-05 指引「不影響工作就別吵我」，安靜存查。**
+
+**v4.0 三關判斷**：
+- 關卡一（現在還壞？）：本任務正常執行（92s << 600s timeout）。**沒過**。
+- 關卡二（provider overload？）：無任何 overload 訊息。**沒過**。
+- 關卡三（影響工作？）：無任何教練或會員實際依賴的功能壞掉。**沒過**。
+
+三關皆未過 → **不 announce**。
+
+**HEARTBEAT.md 檢查**：
+- 無 ⬜ 待辦項目
+- 第零步已跑：教練最後訊息 2026-08-28 22:09:33 CST，silence **0.0 小時**（當下剛說話）
+
+**動作**：靜默通過，不通知教練（深夜 22:12 + 三關皆未過）。cycle=637。cumulativeGreen+=1。

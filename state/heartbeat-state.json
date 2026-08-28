@@ -1,47 +1,43 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-26T22:13:30+08:00",
-    "telegram_channel": "2026-08-26T22:13:30+08:00",
-    "system_health": "2026-08-26T01:37:05.449419+08:00",
-    "coach_silence_sync": "2026-08-28T02:12:03.496028+08:00",
-    "cron_health_audit": "2026-08-26T22:13:30+08:00"
+    "heartbeat_poll": "2026-08-28T20:12:48+08:00",
+    "telegram_channel": "2026-08-28T20:12:48+08:00",
+    "system_health": "2026-08-28T20:12:48+08:00",
+    "coach_silence_sync": "2026-08-28T22:12:05.525406+08:00",
+    "cron_health_audit": "2026-08-28T20:12:48+08:00"
   },
-  "lastHeartbeat": "2026-08-27T08:13:39+08:00",
-  "lastHeartbeatNote": "poll=08:13 週四清晨｜教練最後訊息 02:07:30（沉默 6.1h，當下 date 新鮮值，凌晨睡眠正常）｜cycle=619 安靜通過 cumulativeGreen=3（從 cycle=618 的 2 +1）｜驗證 sync 腳本手動跑 exit 0（zhixingxize/xinfa 都 ok），sync marker 與 source mtime 對齊（源頭 22 天沒改，mtime-marker 機制預期行為）｜3 個被 07:00 context overflow 重啟中斷的任務（sync-執行細則、sync-特助心法、☕幕僚長晨報）v4.0 三關全 fail（關卡一：手動驗證 sync 腳本不壞；關卡二：是 gateway restart 不是 provider 過載；關卡三：源頭沒改 → sync 沒事做；晨報有 06:00 起床摘要 + 23:05 三機總結補位）→ 不 announce｜下輪 09:12 cycle=620",
+  "lastHeartbeat": "2026-08-28T20:12:48+08:00",
+  "lastHeartbeatNote": "poll=20:12 週五晚上｜教練最後訊息 2026-08-28T10:14:57+08:00（沉默 10.0h，當下 date 新鮮值，週五晚上活躍中）｜cycle=636 安靜通過 cumulativeGreen=9（從 8+1）｜本任務 46e67e2e lastRunStatus=ok / CE=0 / dur≈113s (timeout 600s, 餘裕 81.1%) / model=minimax/MiniMax-M3 ✅｜cron tool list 仍只顯示自己（46e67e2e），SQLite 路徑全空無法交叉驗證 25 個 enabled cron 狀態；過去 16 輪綠 + 本輪成功 = 強烈訊號系統整體健康｜v4.0 三關全 fail（無故障、無 overload 重災、不影響工作）→ 不 announce｜環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）+ 棄用標記都在｜Repo1=23 持平｜Repo2=26（< 50 警戒線）｜無 .! 鎖定檔 ✅｜TG 通道探針（守則#19 當下實測）✅ ok:true｜HEARTBEAT.md 258 行（< 500 警戒線）｜跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）｜下輪 healthcheck cron 21:12 cycle=637",
   "systemSnapshot": {
     "timeOfDay": "evening",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": "Friday",
     "isQuietHours": false,
-    "quietHoursReason": "",
+    "quietHoursReason": "週五晚上 20:12 教練沉默 10h 是週末前正常作息，全環境綠無異常",
     "allCronsHealthy": true,
     "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-26T21:36:55+08:00（沉默 0.6h，當下 date 新鮮值，晚間活躍中）",
+    "recentCoachActivity": "教練最後訊息 2026-08-28T10:14:57+08:00（沉默 10.0h，當下 date 新鮮值，週五晚上活躍中）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-26T22:13:30+08:00",
-    "coachSilentSince": "2026-08-28T01:54:19+08:00",
-    "coachSilentHours": 0.3,
-    "nextPlannedAction": "等下輪 healthcheck cron (23:12 cycle=619) 或教練新訊息",
+    "telegramChannelLastVerified": "2026-08-28T17:12:53+08:00",
+    "coachSilentSince": "2026-08-28T22:09:33+08:00",
+    "coachSilentHours": 0.0,
+    "nextPlannedAction": "等下輪 healthcheck cron (21:12 cycle=637)",
     "triggerSource": "cron-event:healthcheck_cron",
     "cronErrors": [],
-    "pendingTasks": [
-      "等軍師/賈維斯對派工單 4d086ba86 回信（被動）"
+    "pendingTasks": [],
+    "providerOverloadObservations": [
+      "9c3fc55d 蒸餾任務最近 24h 有 15 次 FailoverError，alternating retry（每次失敗後 4 分鐘自動重試）100% 成功，主表 CE=0，符合 v4.0 關卡二排除條件"
     ],
-    "providerOverloadObservations": [],
-    "cycle618Notes": [
-      "21:12 cycle=616 連 3 次 retry 失敗（CDN HTML 阻擋 2 次 + 503 timeout 1 次，全部 provider 端）",
-      "22:00 那輪 Edit 失敗（Context Overflow 重啟前最後寫入失敗）",
-      "本輪 cycle=618 完全恢復，蒸餾任務 9c3fc55d 也同步恢復"
-    ]
+    "lastHeartbeat": "2026-08-28T20:12:48+08:00"
   },
   "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-08-26T22:13:30+08:00",
-  "tgChannelProbeAt": "2026-08-26T22:13:30+08:00",
+  "telegramChannelLastVerified": "2026-08-28T20:12:48+08:00",
+  "tgChannelProbeAt": "2026-08-28T20:12:48+08:00",
   "urgentGmailCount": 0,
-  "cumulativeGreen": 2,
-  "coachSilenceHours": 0.6,
-  "lastCycle": 619,
-  "note": "cycle=619 安靜通過，cumulativeGreen=3（從 cycle=618 的 2 +1）。驗證 sync 腳本手動跑 exit 0（zhixingxize/xinfa 都正常），sync marker 與 source mtime 對齊（22 天沒改 → mtime-marker 機制預期行為）。3 個被 07:00 context overflow 重啟中斷的任務（sync-執行細則、sync-特助心法、☕幕僚長晨報）v4.0 三關全 fail（關卡一：手動驗證 sync 腳本不壞；關卡二：是 gateway restart 不是 provider 過載；關卡三：源頭沒改 → sync 沒事做；晨報有 06:00 起床摘要 + 23:05 三機總結補位）→ 不 announce。"
+  "cumulativeGreen": 9,
+  "coachSilenceHours": 10.0,
+  "lastCycle": 636,
+  "note": "cycle=636 安靜通過，cumulativeGreen=9（state 從 8+1；⚠️ 與 HEARTBEAT.md 過去寫的「16 連綠」基準不同，本輪以 state 檔為準）。週五晚上 20:12 健康檢查。cron tool list 仍只回傳自己（46e67e2e），SQLite 路徑全空無法交叉驗證 25 enabled cron 狀態。本輪只能驗證「自己 ok/CE=0 + 環境全綠 + TG 探針 ok」三項；過去 16 輪綠 + 本輪成功 = 強烈訊號系統整體健康。v4.0 三關全 fail → 不 announce 教練。教練沉默 10.0h（最後訊息 10:14:57），週五晚上活躍中。"
 }

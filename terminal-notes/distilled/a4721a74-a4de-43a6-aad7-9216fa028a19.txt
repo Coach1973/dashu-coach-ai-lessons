@@ -1,0 +1,54 @@
+# 終端機對話萃取 — Session a4721a74-a4de-43a6-aad7-9216fa028a19
+# 提取時間：2026-08-28 22:11 (台灣時間)
+# 共 3 條教練原話
+
+---
+
+【教練 2026-08-28 13:01】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：Sonnet 5，Mac 終端機（CLI），身份為軍師
+**雲端同步狀態**：剛才實查—分支與 origin/main 一致，無真實衝突，只有例行 state/log 檔案未提交（自動同步腳本的正常暫存狀態），接力棒裡的「Pull 警告」是暫時性的，目前沒有問題
+
+**當下主軸**：/bni-credit 網頁下一輪三項待改（移除已失效空分類/到期日顏色分級/補公司欄位）——見 [knowledges/2026-08-28_bni_credit_next_round_todo.md](../knowledges/2026-08-28_bni_credit_…（略）
+
+【教練 2026-08-28 13:05】
+我登入大樹教育的發票頁面，幫我開一張
+金額15300元
+品項是場地費
+
+雲智永續發展顧問有限公司
+24684171
+
+　▶ AI 回應：All fields verified correct via readback. Now filling quantity/price fields with real typing (JS assignment won't trigger the amount calculation).
+
+　▶ AI 回應：Focus confirmed on `ItemCount1`. Now typing with real keyboard events (needed to trigger the site's amount calculation).
+
+　▶ AI 回應：All fields verified correct, total amount matches 15,300 exactly. Submitting the invoice now.
+
+　▶ AI 回應：發票已開立完成，查證通過（非表單清空的假成功）：
+
+| 項目 | 內容 |
+|---|---|
+| 發票號碼 | **DQ92662353** |
+| 自訂編號 | 082801 |
+| 商店 | (344031309)大樹教育顧問有限公司 |
+| 買受人 | 雲智永續發展顧問有限公司（統編 24684171） |
+| 品項 | 場地費 x1 |
+| 總計（含稅） | **15,300** 元（稅額729 + 銷售額14,571） |
+| 開立時間 | 2026-08-28 21:10:46 |
+
+過程中遇到一個技術狀況：一般用滑鼠/鍵盤模擬輸入數量單價欄位打不進去（activeElement…（略）
+
+【教練 2026-08-28 14:09】
+那你要把這個經驗記下來，下次再開發票的時候，就不要再犯一樣的錯了，OK？
+
+　▶ AI 回應：Good，已在索引裡。我現在把這次的新發現（computer工具的滑鼠/鍵盤模擬對數量單價欄位失效，改用頁面自身jQuery事件觸發）補進既有的 `reference_ezpay_invoice_issuing_procedure.md`，不新建檔案。
+
+　▶ AI 回應：Now update the MEMORY.md index line to reflect this, and update the sister SOP file's step 2 with the same fallback.
+
+　▶ AI 回應：Frontmatter timestamp already current-session-generated, no need to touch further. Both memory files are updated and cross-linked. Now committing to git for a verifiable trace per E01/commit-on-promise discipline.
+
+　▶ AI 回應：All three target files are confirmed modified. Committing just these (per E14, not the routine auto-sync state/log files).
