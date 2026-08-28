@@ -1,11 +1,11 @@
 ---
 name: reference-ezpay-invoice-issuing-procedure
-description: ezPay電子發票開立操作SOP，含自訂編號規則/品項代碼/含稅計算易錯陷阱/送出後查證方法/JS直接呼叫送出法
+description: ezPay電子發票開立操作SOP，含自訂編號規則/品項代碼/含稅計算易錯陷阱/送出後查證方法/JS直接呼叫送出法/computer工具打字失效時改用jQuery trigger
 metadata: 
   node_type: memory
   type: reference
   originSessionId: 7d4244d1-db9c-42f8-97ad-dc02499cbe41
-  modified: 2026-08-24T08:03:37.194Z
+  modified: 2026-08-28T14:10:21.604Z
 ---
 
 操作對象：inv.ezpay.com.tw，帳號bymyway。**同一帳號下有兩個商店**：①「(337391376)BNI台南南區」——BNI入會/續約發票 ②「(344031309)大樹教育顧問有限公司」——培訓費發票(品項`B03`/`BNI培訓`)，不要跟另一個舊代號`(337643900)大樹教育顧問`搞混。開立用`Invoice_issue/create_invoice`，查詢用`Invoice_issue/search_invoice`。
@@ -49,6 +49,19 @@ XMLHttpRequest.prototype.send = function(b){
   return origSend.apply(this,arguments);
 };
 ```
+
+**🔴🔴 2026-08-28發現：`computer`工具的`triple_click`+`type`對`ItemCount1`/`ItemPrice1`欄位可能完全失效，且沒有任何錯誤訊息**——實測過程：`triple_click`後用JS確認`document.activeElement.id`確實等於目標欄位id（真的有focus），接著`computer type`打字，但欄位`.value`還是空字串，連原生`keydown`/`keypress`/`input`事件都完全沒有被監聽器捕捉到（用`addEventListener`掛在欄位上實測印證，一個事件都沒發生）。目前判斷是claude-in-chrome的`computer`工具在這個頁面對這兩個特定欄位的鍵盤模擬沒有真正送達（原因未明，`triple_click`用ref或用座標都一樣失效，跟extension/CDP鍵盤事件在這個頁面沒有正確落地有關，不是focus的問題）。
+
+**可靠替代方案**：改用JS直接設定`.value` + 觸發**jQuery風格**的事件（不是原生`dispatchEvent`，這個網站的金額試算邏輯是jQuery委派監聽`keyup`，原生`el.dispatchEvent(new Event('keyup'))`測試無效，必須用`jQuery(...).trigger(...)`）：
+```js
+document.getElementById('ItemCount1').value = '1';
+document.getElementById('ItemPrice1').value = '15300';
+jQuery('#ItemCount1').trigger('keyup');
+jQuery('#ItemPrice1').trigger('keyup');
+```
+`ItemAmount1`（單列金額）會先自動算出。接著含稅checkbox（`priceCount`，一樣先讀`.checked`現況，false才`click()`）之後，**如果`[name="TotleAmount"]`還是顯示0，再對兩個欄位各補觸發一次`jQuery(...).trigger('keyup')`跟`.trigger('change')`**，站方的`create_invoice_info.total_amont_n_tax_amount()`/`mix_total_amont_n_tax_amount()`函式可以手動呼叫但實測不會自動把總計算出來，真正觸發總計試算的是jQuery事件冒泡，不是呼叫那兩個函式本身。送出前一樣核對`[name="TotleAmount"]`等於教練講的金額才能送出。
+
+**遇到這個狀況不要死磕`computer`工具重試多次**——查清楚是「欄位没有任何事件觸發」（用`addEventListener`快速確認）就直接切換成jQuery trigger方案，不用浪費時間换座標、换ref、多次retry同一招。
 
 **二聯式(B2C)專屬欄位**：`InvCategory`選`2c`後才出現`CarruerType`選項——`carry_mobile`(手機條碼)/`carry_person`(自然人憑證條碼)/`carry_p2g`(ezPay電子發票載具)/`carry_print`(無載具，列印電子發票證明聯，適合單純Email通知、無實體載具的情況)。**手機條碼號碼要帶開頭斜線**，例如條碼`B3BU7PV`實際要填`/B3BU7PV`，查證既有成功案例(張騰文081701)的`II_Carruer_Num`欄位存的就是`/LKZTH3E`，不是`LKZTH3E`，這是ezPay載具格式的固定慣例，不是打字疏漏。B2C的`BuyerIdentify`(統編)欄位不存在，改用`BuyerName`(受贈人/買受人姓名，非必填但建議填)。
 

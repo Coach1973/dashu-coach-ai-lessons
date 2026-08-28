@@ -49,7 +49,7 @@
 - [🔴🔴 claude-in-chrome連錯教練Windows電腦而非Mac本機，動手前沒查連線裝置(2026-08-18)](feedback_claude_in_chrome_wrong_device.md)
 - [🔴 find -maxdepth太淺誤判檔案不存在，害教練跨機比對出矛盾(2026-08-17)](feedback_find_maxdepth_false_negative.md)
 - [🔴🔴🔴 建網站自己build+測直接deploy --prod，跳過網頁推SOP的教練確認關卡(2026-08-18)](feedback_skipped_web_push_sop_2026-08-18.md)
-- [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-16)](reference_ezpay_invoice_issuing_procedure.md)
+- [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-28補充computer打字失效改jQuery trigger)](reference_ezpay_invoice_issuing_procedure.md)
 - [🎯🎯🎯 賈維斯計畫：專案卡+自動接線員+Token體檢+待辦提醒+小龍蝦派工，全四階段落地(2026-08-16)](project_jarvis_plan_2026-08-16.md)
 - [🔴🔴🔴 賈維斯目標=結果導向委派+記得住+自動串連，不用重複交代(2026-08-25擴充)](feedback_jarvis_outcome_delegation_style.md)
 - [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md)

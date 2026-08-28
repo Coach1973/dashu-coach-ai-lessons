@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: e15817d4-1997-4a92-8dde-f4de975df4aa
-  modified: 2026-08-24T08:18:47.570Z
+  modified: 2026-08-28T14:10:34.738Z
 ---
 
 教練說「開票」「開發票」「幫我開＿＿的發票」= 啟動本SOP。
@@ -76,6 +76,15 @@ triple_click ref(數量欄) → type "1"
 triple_click ref(單價欄) → type 金額 → key "Tab"
 ```
 （用`find`工具找當下的ref，每次換頁ref會變）
+
+**🔴 2026-08-28發現：`triple_click`+`type`有時完全打不進去**（確認過`document.activeElement`真的是目標欄位、但`.value`還是空的、連原生keydown/input事件都沒觸發）——遇到這狀況不要重試同一招，改用：
+```js
+document.getElementById('ItemCount1').value = '1';
+document.getElementById('ItemPrice1').value = 金額;
+jQuery('#ItemCount1').trigger('keyup');
+jQuery('#ItemPrice1').trigger('keyup');
+```
+這個網站的金額試算綁的是jQuery委派的`keyup`事件，原生`dispatchEvent`無效，必須用`jQuery(...).trigger(...)`。含稅checkbox勾完後如果`TotleAmount`還是0，對兩欄位再各補一次`.trigger('keyup')`。詳細技術細節見[[reference-ezpay-invoice-issuing-procedure]]。
 
 ### 第三步：含稅勾選 + 送出前金額核對（不可省略）
 
