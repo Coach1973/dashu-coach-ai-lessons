@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴 教練陳述已說過的需求時不要重新查證，直接查技術根因解決(2026-08-28)](feedback_dont_reverify_stated_requirements_2026-08-28.md) — 花時間驗證「教練是否說過」浪費他流量跟時間，查了也只證明教練是對的
+- [🔧 BNI Connect信用証三種按鈕狀態判讀+confirm()對話框覆蓋解法(2026-08-28)](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md) — 產生信用証/信用證(已過期)/純離開(無額度)，第一次失敗值得重試1次
+- [🔧 名片系統搜尋姓名忽略空格差異修復(2026-08-28)](reference_namecard_search_space_insensitive_fix_2026-08-28.md) — 422/451筆姓名帶空格導致LIKE比對系統性失效，改REPLACE雙邊去空格比對
 - [🔧 workspace repo多機並發git衝突處理法+編輯前先重新Read確認未被改版(2026-08-28)](reference_workspace_git_concurrent_machine_race_2026-08-28.md) — push被拒先pull不要rebase abort（會清空自己剛commit的內容）；共用歷史頁/待辦表下手前先重讀最新結構
 - [🔧 用CronCreate排「未來某時間點自動做X」的一次性任務+多機保險寫法(2026-08-28)](reference_croncreate_future_date_automation_2026-08-28.md) — durable:true一次性任務只綁單機，務必同時寫進共用待辦表當保險
 - [🔴🔴🔴🔴🔴 第三方正式系統絕不點擊「產生/建立」類按鈕測試，誤觸產生真實BNI信用証(2026-08-28)](feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28.md) — href="#"靠JS事件觸發的按鈕=危險訊號，只能navigate+讀取文字判斷存在與否
