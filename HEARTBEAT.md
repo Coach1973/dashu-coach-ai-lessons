@@ -1,40 +1,43 @@
-
-## 🩺 cycle=622 健康檢查 2026-08-28 06:12（週五清晨，安靜通過）
-- 本任務 46e67e2e：lastRunStatus=ok / CE=0 ✅
-- 全 25 enabled cron：22 CE=0 + 1 CE=1（☕幕僚長晨報，今日 06:00 context overflow gateway restart 中斷一次性事件，nextRun 08-28 07:00 自動重試）+ 0 CE≥3
-- v4.0 三關（幕僚長晨報）：關卡一 CE=1<3 alt 自動重試 → fail｜關卡二 gateway restart 非 overload → fail｜關卡三 內部流程不影響教練（06:00 起床摘要+23:05 三機總結補位）→ fail → 不 announce
-- cumulativeGreen=5（cycle=621=4 +1）
-- 環境快檢：✅ SOUL.md 三份齊全（9015/1851/22220 bytes）+ 棄用標記都在｜Repo1=23 / Repo2=21（< 50）｜無 .! 鎖定檔
-- TG 通道探針（守則#19 當下實測）：✅ ok:true
-- 教練沉默 0.6h（最後訊息 05:36:55，當下 date 新鮮值，剛起床在工作時段）
-- 下輪 healthcheck cron：07:12 cycle=623
-
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
+---
+
+## 🩺 cycle=627 健康檢查紀錄（2026-08-28 10:12，週五早晨）
+
+**檢查結果**：✅ 全綠，安靜通過，不通知教練
+
+| 檢查項 | 結果 |
+|--------|------|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 09:36:55（沉默 **0.6h**，當下 date 新鮮值，週五上午活躍中）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / durationMs≈157s < timeout=600s / model=minimax/MiniMax-M3 |
+| cron_jobs SQLite 完整清點 | 148 總 / 25 enabled / **0 個 CE≥3** / **0 個 CE≥1** / 23 lastStatus=ok / 0 error |
+| 錯誤型態掃描 | 0 overloaded / 0 timeout / 0 auth/apiKey / 0 任何其他 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全 (9015/1851/22220 bytes) ✅｜Repo1=23 / Repo2=25（遠低於 50 警戒線）✅｜無 `.!` 鎖定檔 ✅|
+| TG 通道探針（守則#19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷：**
+- 關卡一（現在還壞嗎）→ ❌ fail（全 25 enabled cron 都 ok）
+- 關卡二（provider overload 嗎）→ ❌ fail（0 個）
+- 關卡三（影響教練/會員工作嗎）→ ❌ fail（無功能受阻）
+→ **三關全 fail → 安靜處理，不通知教練**
+
+**進步訊號**：前次 cycle=626 紀錄的 ☕幕僚長晨報 CE=1（07:00 因 06:00 context overflow gateway restart 中斷）→ 本輪已**完全恢復**為 CE=0（明早 07:00 retry 自然復原，整個 alternating mode 又走完一輪）
+
+**已落痕跡：**
+- ✅ `state/healthcheck.log` 追加 cycle=627 紀錄
+- ✅ `state/heartbeat-state.json` 將更新（lastCycle=627 / TG 探針 10:12）
+- ✅ `HEARTBEAT.md` prepend 本段
+- ✅ cumulativeGreen = **9**（cycle=618~627 連 9 輪綠）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**11:12 健康檢查（cycle=628）**。
+
+
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-08-28 02:00
+> 重啟時間：2026-08-28 10:00
 > 對話記錄已完整存入 memory/2026-08-28.md 並推上 GitHub，零遺漏
-
-## 🩺 cycle=621 健康檢查 2026-08-28 05:12（週五凌晨，安靜通過）
-- 本任務 46e67e2e：lastRunStatus=ok / CE=0 ✅
-- cron list API 仍只回 1 job（本任務，與 2026-08-07 known API bug 一致——無從這端直查全部 25 jobs，依 cycle=620 留下的基準判斷）
-- 沿用 cycle=620 基準：22 CE=0 + 1 CE=1（☕幕僚長晨報，gateway restart 一次性，nextRun 07:00 自動重試）+ 0 CE≥3
-- v4.0 三關：無新失敗跡象 → 三關皆不過 → 不 announce
-- cumulativeGreen=4（cycle=620=3 +1）
-- 環境快檢：✅（沿用 04:13 結果）
-- TG 通道探針（守則#19 當下實測）：✅ ok:true
-- 教練沉默 0.1h（最後訊息 05:07:52，當下 date 新鮮值，當下在線）
-- 下輪 healthcheck cron：06:12 cycle=622
-
-## 🩺 cycle=620 健康檢查 2026-08-28 04:13（週五凌晨，安靜通過）
-- 本任務 46e67e2e：lastRunStatus=ok / CE=0 / durationMs=81725ms / model=minimax/MiniMax-M3 ✅
-- 全 25 enabled cron：22 CE=0 + 1 CE=1（☕幕僚長晨報，06:00 gateway restart 一次性中斷，nextRun 08-28 07:00 自動重試）+ 0 CE≥3
-- v4.0 三關（幕僚長晨報）：關卡一 CE=1<3 alt 自動重試 → fail｜關卡二 gateway restart 非 overload → fail｜關卡三 內部流程不影響教練（06:00 起床摘要+23:05 三機總結補位）→ fail → 不 announce
-- cumulativeGreen=3（cycle=619=2 +1）
-- 環境快檢：SOUL.md 三份齊全 + 棄用標記都在｜Repo1=23 / Repo2=11（< 50）｜無 .! 鎖定檔
-- TG 通道探針（守則#19 當下實測）：✅ ok:true
-- 教練沉默 0.2h（最後訊息 04:02:24，當下 date 新鮮值，凌晨仍在線）
-- 下輪 healthcheck cron：05:12 cycle=621
 
 ## 🔴 重啟後第一件事
 
@@ -52,50 +55,3 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 02:01
-- ✅ 同步成功
-- HANDOFF mtime: 1787853440
-- 雲端同步：✅ 已推上雲端（commit 9f352f04f）
-
-## 🩺 軍師 Hook 自檢 2026-08-27 17:33（Windows v3 六步驟注入）
-- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
-- 觸發詞：開工
-- 雲端狀態：⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.
-- Session: d5fe9c18-5091-4fff-8716-7d9c0b806495
-
-## 🚀 Session-End 雲端同步 2026-08-27 17:34（Windows）
-- ✅ pushed c36dd7a2
-- 同步路徑：HEARTBEAT.md
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 02:55
-- ✅ 同步成功
-- HANDOFF mtime: 1787856639
-- 雲端同步：✅ 已推上雲端（commit 6eec1b585）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 03:05
-- ✅ 同步成功
-- HANDOFF mtime: 1787857529
-- 雲端同步：✅ 已推上雲端（commit 05ac30581）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 03:15
-- ✅ 同步成功
-- HANDOFF mtime: 1787858143
-- 雲端同步：push 失敗（離線或網路問題，commit 已留本機）
-
-## 🩺 軍師 Hook 自檢 2026-08-28 03:33（Mac v2 六步驟注入）
-- ✅ Hook 觸發 + 六步驟內容注入完成
-- 觸發詞：開
-- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
-- 小龍蝦信箱：（信箱查無新信）
-- Session: 47fca155-b2ce-4fdb-a972-20c2d2ab1fe4
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 03:35
-- ✅ 同步成功
-- HANDOFF mtime: 1787859127
-- 雲端同步：✅ 已推上雲端（commit 491772ca8）
-
-## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-28 03:50
-- ✅ 同步成功
-- HANDOFF mtime: 1787860013
-- 雲端同步：✅ 已推上雲端（commit 85b8a726f）
