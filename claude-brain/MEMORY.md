@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 bymyway.com子網域回傳Cloudflare 530=tunnel沒連線，peipei-event缺launchd看護掛5天(2026-08-29)](reference_bymyway_subdomain_530_missing_launchd_2026-08-29.md) — 診斷法：查DNS的CNAME目標cfargotunnel.com uuid比對本機process；已補launchd plist修復
 - [🔴🔴🔴 教練陳述已說過的需求時不要重新查證，直接查技術根因解決(2026-08-28)](feedback_dont_reverify_stated_requirements_2026-08-28.md) — 花時間驗證「教練是否說過」浪費他流量跟時間，查了也只證明教練是對的
 - [🔧 BNI Connect信用証三種按鈕狀態判讀+confirm()對話框覆蓋解法(2026-08-28)](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md) — 產生信用証/信用證(已過期)/純離開(無額度)，第一次失敗值得重試1次
 - [🔧 名片系統搜尋姓名忽略空格差異修復(2026-08-28)](reference_namecard_search_space_insensitive_fix_2026-08-28.md) — 422/451筆姓名帶空格導致LIKE比對系統性失效，改REPLACE雙邊去空格比對
