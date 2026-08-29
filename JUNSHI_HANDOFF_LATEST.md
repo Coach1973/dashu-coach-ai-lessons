@@ -6,6 +6,9 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **教練提出「釋放記憶體」指令要更全面：連同所有可關App一併關閉** | 🔒卡住-待教練確認白名單範圍 | 2026-08-29教練電腦變慢多輪診斷後提出構想，已給評估：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限，且既有的RustDesk釋放指令查證後對15GB量級記憶體壓力貢獻微乎其微(重啟後process反而一度變多)。若要動手寫這支腳本，需先問清楚白名單——Claude/Finder等系統必要項可以確定，但Typeless/Chrome/LINE等常用工具要不要保留，教練尚未回覆。詳見v148。 |
+| ✅ | **peipei-event.bymyway.com斷線5天已修復+永久看護機制建立** | ✅2026-08-29完成 | 教練詢問這個網址為何失效，查證是Cloudflare 530(tunnel connector沒連線)，根因是這組webapp+tunnel從2026-07-13建立以來唯一沒接launchd看護，8/24被terminated後斷線5天無人發現。已手動恢復服務+新增`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`永久修復，commit`2ffba5dc9`(記憶`reference_bymyway_subdomain_530_missing_launchd_2026-08-29`)。詳見v148。 |
+| ✅ | **乾淨世界頻道關注QR立牌上線+加入作品一覽** | ✅2026-08-29完成 | `make_qr.py`新增`--ganjing`模式，導流大樹教練乾淨世界頻道，拿掉集點文案改「300集免費影片」，commit`0669f44a2`；已加入coach888作品一覽第10項，commit`48520cd`。正式網址`event.bymyway.com/qr/ganjing-print.html`已驗證可用。詳見v148。 |
 | 🟡 | **9/16「當古典音樂遇到AI科技」高雄場活動結束後，把大樹小講(bigtree)自動部署到Netlify正式站** | ⏳排程等待9/16 17:30觸發 | 教練2026-08-28口諭「先不用，活動結束時，再自動移過去」——目前已推GitHub+GitHub Pages上線(coach1973.github.io/bigtree)，唯獨bigtree-tw.netlify.app(手動zip部署型)保留沒推，等活動結束才推。已寫好部署腳本`scripts/deploy_bigtree_after_0916_event.sh`(git pull+git archive打包+呼叫Netlify Deploy API，site_id`40e580f0-1def-4777-adb8-587ef023ed36`)，並在聯想Windows本機用Claude Code CronCreate排了一次性durable任務(job`ee5beb77`，2026-09-16 17:30觸發)。**風險**：這個排程只存在聯想這台機器的`.claude/scheduled_tasks.json`，只有教練那天有開這台機器的Claude Code才會觸發（或事後補跑會被catch-up機制偵測到）。**任何機器的軍師若在9/16當天或之後開工，看到這行待辦，直接跑`bash scripts/deploy_bigtree_after_0916_event.sh`即可完成部署**，不用等聯想觸發，完成後把這行狀態改成✅並刪除。同場相關：`ai-art`新repo已建立(https://coach1973.github.io/ai-art/)承載這場活動的獨立網頁，`archive/大樹小講_歷史講座紀錄.html`宮格牆已加9/16卡片連結該頁。 |
 | ✅ | **真誠分會自助送出簡介機制，已套用到全部9個BNI分會** | ✅2026-08-27完成，教練親口「很棒」驗收通過 | 比照mentor100百人導師同行**第一階段**設計，`bni-chapters`新增`chapter_members`表(chapter_id範圍)＋`/<slug>/join`自助送出表單(honeypot+IP rate limit防灌水)＋送出即自動上架＋`edit_token`自助編輯/刪除＋後台夥伴清單供刪違規內容，commit`44fc3dd`。**因架構本身是chapter_id分流、9分會共用同一套後端**，教練說「套用到所有分會」後，逐一curl驗證全部9個slug(sincere/real-ai/true-rich/true-love/zhenxin/real-diamonds/real-kungfu/real-age/real-wealth)的分會頁面+`/join`表單皆為200且各自顯示正確分會名稱，後台`admin_edit`(chapter_id=5/9實測)也都能看到各自夥伴清單，**確認9個分會全數已生效，無需額外程式碼異動**。此項結案 |
 | ✅ | **`/bni-credit`網頁三項待改全數完成+30天到期提醒上線+34筆離會會員補開真證+搜尋空格bug修復** | ✅2026-08-28本場完成，第3項(補公司)延後至下週三 | 5分會402人清查主線+340筆複查+權限隔離皆已結案(見v146)。**待辦一(移除已失效空分類)**：279筆複查0筆命中，commit`d6a2c0a4d`。**待辦二(到期日顏色分級)**：教練拍板12/6/3個月四段式，commit`da001f57f`。**待辦三(補公司欄位)**：教練裁示延後至下週三(2026-09-02)。**BNI信用証30天到期提醒**：`scripts/bni_credit_expiry_reminder.py`+openclaw cron`8211e054`每日08:57執行，真實資料驗證過，commit`91680dcfe`。**教練後續追加大量互動，逐一測試「產生信用証」按鈕**：胡宗奇誤分類(active無cert_id)發現後，教練授權點擊2024年以前25筆未開立記錄，**24+胡宗奇重試共25筆全部成功**產生真證(編號1348126~1348151)；教練再指定劉智揚(2076177,真鑽)+6筆(林政志/柯其宏/楊文忠/歐鎮平/蔡宜君/薛如雲)，**7筆全部成功**；補回吳承洋(v146事故cert 1348092)資料同步。合計本場新增/補回**34筆真證**寫入資料庫。抽測3筆「已過期」+5筆「沒有額度」確認分類正確不需重開；羅琳案例教練親查兩次入會歷史確認ineligible正確，並補充「信用証只適用已離會會期」通用原則。**額外發現並修復重大搜尋bug**：教練搜尋「林政志」查無結果，查出`cards`表451筆有422筆(93%)姓名是BNI Connect原始「姓 空格 名」格式，一般LIKE比對被空格擋下，教練要求「不要管空格，字對了就找到」，已把`/find`+首頁搜尋所有欄位(姓名/公司/職稱/分類/電話/Email/地址/關鍵字)全部改成雙邊去空格比對，commit`5e8be0c9a`+`e969f61a6`。**教練當場糾正**：花時間重新查證教練已經明講過的資料庫需求(現任/前會員/來賓三類)，浪費他流量跟時間——已寫入記憶`feedback_dont_reverify_stated_requirements_2026-08-28`。吳承洋等34筆信用証由AI直接產生非教練手動點擊，此為教練明確授權後執行(教練原話：「產生信用證之後還有24個月期限，沒有任何風險」)。 |
@@ -245,39 +248,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-28 v146（Mac終端機 Sonnet 5，BNI信用証清查後續建網頁+複查+權限隔離+誤觸事故）
-
-> 建立時間：2026-08-27 21:39 ~ 2026-08-28 03:12（台灣時間，接續v144結案後的新對話框）
-> 上一棒：v144（Mac終端機，5分會402人信用証清查主線結案）+ v145（聯想Windows，同時段AI微論壇/ai-art獨立任務，與本棒無交集）
-> 本棒主軸：**把v144查完的402人資料做成教練專屬的`/bni-credit`追蹤網頁，過程中發現分類邏輯有漏洞，委派背景agent複查340筆並修正，途中發生一次誤觸BNI Connect正式系統產生真證的事故，教練當場拍板永久鐵律。**
-
-## 🎯 本場戰果
-
-### 1. `/bni-credit`網頁從零建置並多輪迭代
-新增Flask路由+`bni_credit.html`模板：狀態勾選篩選(有效/已過期/未開立/已贖回/已轉移/沒有額度/已失效)+到期倒數色條(綠/橘/紅)+信用額度欄位+7個欄位表頭點擊排序(正反向切換，數字排序NULL統一排最後)。59筆active記錄的信用額度(`credit_months`，即剩餘會期面額月數)已委派背景agent查完補齊。commit`fc235e7e0`+`9dd24c8b3`+`813e16900`。
-
-### 2. 🔴 真實事故：誤觸BNI Connect正式系統產生新信用証
-為驗證教練提到的「已失效(吳承洋案例)」，用`jQuery.trigger('click')`點了「產生信用証」連結，**在正式系統上真的產生一張新官方證(編號1348092，吳承洋，3個月，發行日2026-08-27)**，無法撤銷。教練當場拍板永久鐵律：「所有只要有出現「產生信用証」這個按鈕的，都不要動它」，此案交由教練親自處理，資料庫該筆維持原樣未動。已寫入記憶`feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28`。
-
-### 3. 委派背景agent純唯讀複查340筆
-教練澄清「未開立」62人裡有些其實是「沒有額度」或「已失效」兩種被漏判的狀態，且BNI Connect一度對這台機器rate limit(推測查太快)。放慢節奏(每人2.5~3秒)、全程只用navigate+讀取文字，複查結果：279筆已開立記錄**0筆已失效**；61筆未開立(排除吳承洋)裡**37人維持未開立、24人(全真鑽)改標沒有額度**，0筆異常需人工複核。
-
-### 4. 教練專屬權限隔離
-教練明確要求「信用証追蹤是我的專屬權利，只有我自己能看」，新增`owner_only_required`裝飾器(限bymyway帳號)，夥伴帳號(如佩君老師)登入後訪問會被403擋下，已實測驗證。首頁導覽移除公開連結，coach888作品總覽表「六、BNI專用」新增「BNI｜信用証追蹤系統」入口(15項)，已推上GitHub Pages驗證上線。commit`ee90fc7fc`。
-
-### 5. 記憶系統維護
-委派背景agent做194個孤兒記憶檔整理，MEMORY.md從34.5KB精簡到139行/22.8KB；新增2條重要教訓記憶(委派背景agent處理大量瀏覽器操作、絕不點擊第三方系統產生類按鈕)；過程中自己犯的兩個小失誤(sqlite3參數順序打錯產生垃圾檔案、記憶索引漏收24小時內新檔)都當場被Stop hook攔到並修復。
-
-## ⚠️ 本場教訓
-1. **驗證假設不能靠實際操作有副作用的按鈕**——想確認「點下去會顯示什麼」這個念頭本身就該先停下來，改用DOM讀取判斷存在與否，唯讀跟唯讀以外的操作要嚴格區分。
-2. **量大但需要活瀏覽器session的重複查證任務，驗證SOP後應委派背景agent**，這次239→211→340人三個階段的BNI Connect查證全部照這個模式做，教練當場肯定「早該這麼做」。
-3. **教練說「只有我自己能看」是明確的存取控制要求**，不是單純的UI擺放問題——移動連結位置不等於做到權限隔離，必須真的加上身分驗證檢查。
-
-## 📋 下一場開工先做
-本任務已完整結案，無跨場遺留事項。吳承洋(memberId`2131986`)的信用証(編號1348092)由教練親自處理，AI不再碰。承接主表其餘待辦：FB粉專商家驗證後續（等教練通知）。
-
-## 🔑 本場commit
-`fc235e7e0` `9dd24c8b3` `813e16900` `ee90fc7fc` (namecard-db) + `bee25fc`(coach888) + 記憶系統整理見claude-brain repo commit。
+> 📦 v146完整內容已封存：`handoff_archive/handoff_v146_archived_2026-08-30.md`（Mac終端機，BNI信用証清查後續建網頁+複查+權限隔離+誤觸事故）
 
 ---
 
@@ -319,3 +290,38 @@
 
 ## 🔑 本場commit
 `d6a2c0a4d` `da001f57f` `91680dcfe` `2344fb53c` `267f37b42` `b5c89f2fc` `3929986a2` `abb46b5ed` `4d01141bb` `5e8be0c9a` `e969f61a6`（namecard-db，另有數筆`[Mac] 自動狀態檔同步`background hook commit穿插其中）。
+
+---
+
+# 軍師接力棒 · 2026-08-29 v148（Mac終端機 Sonnet 5，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
+
+> 建立時間：2026-08-29 16:34 ~ 2026-08-30 01:27（台灣時間，接續v147同一天新對話框）
+> 上一棒：v147（Mac終端機，同日較早，/bni-credit三項待改+34筆信用証補開+搜尋空格bug修復）
+> 本棒主軸：**三件獨立任務——乾淨世界頻道QR立牌上線並加入作品一覽、修復peipei-event.bymyway.com斷線5天的根因（缺launchd看護）、教練電腦變慢的多輪診斷與RustDesk釋放記憶體機制的效果評估。**
+
+## 🎯 本場戰果
+
+### 1. 乾淨世界頻道關注QR立牌上線
+教練要求仿照`event.bymyway.com/qr/checkin-print.html`風格，做一張導流到「大樹教練」乾淨世界頻道(`https://www.ganjingworld.com/s/3EBAgQObRg`)的QR立牌，拿掉「集滿5次送禮物」文案，改主打「高品質自我成長影片300集免費觀看」。`make_qr.py`新增`--ganjing`模式（比照既有`--wheel`/`--slides`同款設計），產出`qr/ganjing.png`+`qr/ganjing-print.html`，用文字工具核對繁體中文內容正確、QR圖案親眼看過無變形，commit`0669f44a2`。教練接著要求加入《大樹AI作品一覽》，已補進coach888「後臺系統」分類第10項，commit`48520cd`。列印用正式網址`https://event.bymyway.com/qr/ganjing-print.html`已驗證200可用。
+
+### 2. 🔴 peipei-event.bymyway.com斷線5天，根因是唯一缺launchd看護的站台
+教練詢問這個網址為何失效，查證發現HTTP 530（Cloudflare連不到tunnel connector）。追根究柢：`bymyway.com`底下共6組webapp+tunnel（event/mentor100/namecard/bni-chapters/jiesheng/peipei-event），前5組都有`com.coach.<站名>-webapp.plist`+`com.coach.<站名>-tunnel.plist`的launchd自動看護（`KeepAlive:true`），**唯獨peipei-event這組從2026-07-13建立以來就是純手動`nohup`跑起來**，2026-08-24某次收到`signal terminated`後，因為沒有任何自動看護，斷線整整5天無人發現。已手動重啟後端(port 5061)+tunnel恢復服務，並新增`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`永久修復（`launchctl load`後確認狀態碼0）。寫入記憶`reference_bymyway_subdomain_530_missing_launchd_2026-08-29`（含完整診斷SOP：curl狀態碼判讀530/502/522差異、Cloudflare API查CNAME目標uuid、比對`ps aux`/`launchctl list`），commit`2ffba5dc9`。
+
+### 3. 電腦變慢多輪診斷+RustDesk「釋放」指令效果評估
+教練懷疑手機上傳影片佔網速，查證：ping延遲正常(11~14ms)但下載速度偏慢(144~167KB/s)、記憶體一度只剩366~404MB可用(15GB used)。觸發既有「釋放」指令(`rustdesk_free_memory.sh`)後教練回報「好像沒啥用」，重新查證發現RustDesk重啟後反而同時有兩個process在跑（合計比重啟前更高），對15GB量級的系統記憶體壓力貢獻微乎其微。教練關閉一堆App後仍覺得慢，直到**教練自行重開機**才讓記憶體真正恢復健康(15G→8.34GB用量，前景GUI App只剩Claude/Finder/Typeless/Python等必要項)。教練提出構想：以後「釋放」指令要更全面，除RustDesk外把所有可關的App一併關閉。**已給出評估但尚未定案**：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限；且需要教練確認白名單範圍（Typeless/Chrome/LINE等常用工具是否要保留）才能動手寫這支腳本，教練尚未回覆。
+
+## ⚠️ 本場教訓（已寫入記憶）
+
+1. **`bymyway.com`底下的多組webapp+tunnel服務，只要有一組沒接上launchd看護，就會是斷線後永遠不會自己恢復的活地雷**——盤點法：`ls ~/.cloudflared/*-config.yml`跟`ls ~/Library/LaunchAgents/ | grep com.coach`兩份清單站名要能一一對應，缺一個就是下一個會犯同款錯的站台。
+2. **診斷Cloudflare 530要查DNS的CNAME目標(`<uuid>.cfargotunnel.com`)再比對本機process，不能只看HTTP狀態碼猜**——530明確代表tunnel connector沒連線，跟502(origin有回應但錯誤)、522(TCP逾時)是不同層次的問題。
+3. **`ps aux | grep cloudflare`查launchd管理狀態會誤判**——launchd Label命名是`com.coach.<站名>-tunnel`不含"cloudflare"字樣，要用`launchctl list | grep com.coach`才對，這次一度誤以為其餘5組站台也沒被管理，查證後發現是自己關鍵字下錯。
+4. **既有的「釋放記憶體」快捷指令（重啟RustDesk）對系統性記憶體壓力幫助有限**，不該預設觸發這個指令就代表問題解決——RustDesk本身在15GB量級的用量裡佔比很小，且重啟瞬間可能短暫出現新舊process並存反而更高。真正能徹底解決系統記憶體碎片化的只有重開機。
+
+## 📋 下一場開工先做
+1. 教練的「全面關App釋放記憶體」構想尚未拍板——需要先問清楚白名單範圍（除了Claude/Finder等系統必要項，Typeless/Chrome/LINE等常用工具要不要保留），確認後再動手寫腳本，並優先用AppleScript優雅`quit`而非`kill -9`避免未存檔資料遺失。
+2. Netlify→GitHub Pages+bymyway.com子網域策略（教練本場稍早提出的構想，已給評估但未決定是否套用到新專案，也沒選要不要先盤點哪些舊網站值得搬）——等教練下次想繼續討論時接續。
+3. FB粉專商家驗證後續（等教練通知，v147留下的舊待辦，本場未觸及）。
+4. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
+
+## 🔑 本場commit
+`0669f44a2`（event-signup，ganjing QR）+ `48520cd`（coach888，作品一覽新增第10項）+ `2ffba5dc9`（claude-brain，peipei-event 530修復記憶）。另有`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`兩份launchd設定檔（不在git版控範圍，位於`~/Library/LaunchAgents/`）。

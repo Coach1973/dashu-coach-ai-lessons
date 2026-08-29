@@ -1,11 +1,11 @@
 ---
 name: reference-macos-ps-rss-vs-footprint-2026-08-27
-description: macOS上用ps -o rss量測程式記憶體會嚴重低估，跟Activity Monitor/教練實際看到的「真實記憶體」可以差10倍以上，要用top -pid X -l 1 -stats mem才對得上
+description: macOS上用ps -o rss量測程式記憶體會嚴重低估，跟Activity Monitor/教練實際看到的「真實記憶體」可以差10倍以上，要用top -pid X -l 1 -stats mem才對得上；2026-08-29補充「釋放」指令對系統性記憶體壓力幫助有限
 metadata: 
   node_type: memory
   type: reference
   originSessionId: 65db632c-0f23-4fd8-aaf3-3f247ae2fd81
-  modified: 2026-08-26T17:48:41.002Z
+  modified: 2026-08-29T17:32:04.954Z
 ---
 
 2026-08-27發現：`scripts/rustdesk_memory_guard.sh`（2026-07-09建立，每天固定
@@ -48,3 +48,26 @@ top -pid "$PID" -l 1 -stats mem 2>/dev/null | tail -1
 Related: [[feedback_ai_claimed_mechanism_verify_before_trust]]（同類「機制
 看似正常實則失效」形狀，但根因不同）、[[feedback_lock_must_be_hook_not_optin]]
 （防呆機制要能真的擋下來才算數，不能只是存在）
+
+## 🔴 2026-08-29補充：「釋放」指令(重啟RustDesk)對系統性記憶體壓力幫助有限，不能預設觸發了就代表問題解決
+
+教練回報Mac反應變慢，說「釋放」觸發`scripts/rustdesk_free_memory.sh`（`kill -TERM`重啟RustDesk `--server`
+process）後，教練回報「好像沒啥用」。重新查證發現：**RustDesk重啟後短暫同時出現新舊兩個process
+（合計比重啟前的單一process記憶體用量還高）**，而且RustDesk本身在教練這台Mac整體15GB used的量級裡
+只佔一小部分（約200~350M），重啟它對緩解系統性記憶體壓力幾乎沒有實質幫助。教練最後**靠重開機**才讓
+記憶體真正從15GB used恢復到8.34GB，關閉一堆前景App也沒有達到重開機的效果。
+
+**Why**：這支「釋放」指令原本的設計目的很單純（RustDesk本身有記憶體洩漏，重啟它是對症下藥），但當
+教練用「反應變慢」這個更廣泛的症狀觸發它時，隱含的期待被放大成「這個指令能解決反應慢的問題」，兩者
+其實是不同量級的問題——單一App的洩漏 vs. 系統層級的記憶體碎片化。macOS的記憶體碎片化/compressor
+累積只有重啟核心（reboot）才能徹底清空，關App或重啟單一process都清不掉。
+
+**How to apply**：
+1. 教練說「反應變慢」時，不要直接假設「釋放」指令就是對症解法——先用`top -l 1 -n 0`查
+   `PhysMem`/`Load Avg`確認真正瓶頸在哪（記憶體/CPU/網路），再決定要不要觸發「釋放」
+2. 「釋放」指令本身仍然有效（RustDesk記憶體洩漏是真的），但只在教練明確要重啟RustDesk本身時才有意義，
+   不要把它當成通用的「電腦變慢急救按鈕」
+3. 如果診斷後發現是系統層級記憶體壓力（可用記憶體剩不到500M、Load Average持續偏高），誠實告訴教練
+   重開機是更徹底的解法，不要靠關App硬撐
+
+Related: [[project_coach_rustdesk_remote_env]]（RustDesk跨平台環境背景）
