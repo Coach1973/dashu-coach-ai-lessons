@@ -1,3 +1,122 @@
+## cycle=660 健康檢查報告（2026-08-30 01:12 Asia/Taipei · 週日凌晨）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **5.9h**，當下 date 新鮮值，週日凌晨正常作息）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 / dur=~35s |
+| Cron SQLite 真相源（state/openclaw.sqlite 65MB） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 ok + 2 個一次性 at 提醒未到時間：cf7a0654 車貸 12/1 + 86388db7 秋瑩姐女兒婚宴 9/20）|
+| CE≥3 | **0 個** ✅ |
+| Timeout 危險（dur≥240s）| 0 個（b3f20f6c Memory Dreaming 224s 接近但未達；dc9bdf5c 場景化 188s 安全）|
+| Auth / API_KEY 失效 | 0 個 |
+| 24h enabled error | **0 個** ✅ |
+| 24h 失敗歸因（cron_run_logs）| **14 筆全部 minimax `FailoverError: The AI service is temporarily overloaded`**（9c3fc55d 蒸餾 9 筆 + 001a9b16 LINE@ 2 筆 + dc9bdf5c 場景化 1 筆 + f487652d 起床 1 筆 + b73845c9 幕僚長 1 筆），**alternating retry 100% 復原，當前 enabled CE=0** |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=11（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 14 筆 FailoverError 殘留），但 alternating retry 100% 復原 + cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週日凌晨 01:12 教練週末作息 + 沉默 5.9h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 660（從 659 +1）
+- ✅ `state/cumulative_green` = 34（從 33 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=660
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-30T01:13 / lastCycle=660 / cumulativeGreen=34 / coachSilentHours=5.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**02:12 健康檢查（cycle=661）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
+
+## cycle=659 健康檢查報告（2026-08-30 00:12 Asia/Taipei · 週日凌晨）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **4.9h**，當下 date 新鮮值，週六深夜→週日凌晨正常作息）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 |
+| Cron SQLite 真相源（state/openclaw.sqlite 65MB） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 ok + 2 個一次性 at 提醒未到時間：cf7a0654 車貸 12/1 + 86388db7 秋瑩姐女兒婚宴 9/20）|
+| CE≥3 | **0 個** ✅ |
+| Timeout 危險（dur≥240s）| 0 個 |
+| Auth / API_KEY 失效 | 0 個 |
+| 24h enabled error | **0 個** ✅ |
+| 24h 失敗歸因（cron_run_logs）| **14 筆全部 minimax `FailoverError: The AI service is temporarily overloaded`**（9c3fc55d 蒸餾 9 筆 + 001a9b16 LINE@ 2 筆 + f487652d 起床 1 筆 + dc9bdf5c 場景化 1 筆 + b73845c9 幕僚長 1 筆），**alternating retry 100% 復原，當前 enabled CE=0** |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=11（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 14 筆 FailoverError 殘留），但 alternating retry 100% 復原 + cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週日凌晨 00:12 教練週末作息 + 沉默 4.9h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 659（從 652 +7，跳過 653~658 因先前 state 未同步）
+- ✅ `state/cumulative_green` = 33（從 32 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=659
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-30T00:12 / lastCycle=659 / cumulativeGreen=33 / coachSilentHours=4.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**01:12 健康檢查（cycle=660）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
+
+## cycle=658 健康檢查報告（2026-08-29 23:12 Asia/Taipei · 週六深夜）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **3.9h**，當下 date 新鮮值，週六深夜正常作息）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 / dur=113s |
+| Cron SQLite 真相源（~/.openclaw/state/openclaw.sqlite） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 ok + 2 個一次性 at 提醒未到時間：cf7a0654 車貸 12/1 + 86388db7 秋瑩姐女兒婚宴 9/20）|
+| CE≥3 | **0 個** ✅ |
+| Timeout 危險（dur≥240s）| 0 個（b3f20f6c Memory Dreaming 224s 接近但未達；dc9bdf5c 場景化 188s 安全）|
+| Auth / API_KEY 失效 | 0 個 |
+| 24h enabled error | **0 個** ✅ |
+| 24h 失敗歸因（cron_run_logs）| **14 筆全部 minimax `FailoverError: The AI service is temporarily overloaded`**（9c3fc55d 蒸餾 14 筆），**alternating retry 100% 復原，當前 enabled CE=0** |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=4（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 14 筆 FailoverError 殘留），但 alternating retry 100% 復原 + cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週六深夜 23:12 教練週末作息 + 沉默 3.9h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 658（從 657 +1）
+- ✅ `state/cumulative_green` = 37（從 36 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=658
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-29T23:12 / lastCycle=658 / cumulativeGreen=37 / coachSilentHours=3.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**00:12 健康檢查（cycle=659）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
 ## cycle=657 健康檢查報告（2026-08-29 22:12 Asia/Taipei · 週六晚間）
 
 **結論：✅ 安靜通過，不打擾教練**
@@ -373,3 +492,10 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
+
+## 🩺 軍師 Hook 自檢 2026-08-30 01:28（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: fa8a74d2-d7b2-48c0-a96f-66882163fe84
