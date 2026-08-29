@@ -152,33 +152,29 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-08-28)
+## Promoted From Short-Term Memory (2026-08-29)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:267:269 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 👤 教練：/.70FYL2 林佳慧 🦞 小龍蝦：收到一筆新的網站報名通知，先查表結構再解析寫入。 🦞 小龍蝦：教練，這一則的格式跟之前 backfill 的 30 筆完全不同，太精簡了，我沒辦法一次寫進 `advance_registrations` 表。先說我看到什麼、缺什麼： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:267-269]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:273:273 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 識別碼：`.70FYL2`（看起來像驗證碼或短 ID） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:273-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:282:282 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **幾個可能的解讀，請教練挑一個：** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:282-282]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:284:286 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **完整通知沒貼完**——如果是從網站轉來的，通常會有完整一段（含場次/公司/電話/Email/時間），是不是漏貼了？麻煩把完整的再貼一次。; **新格式測試**——`.70FYL2` 是新的簡碼格式，要我去對應某個場次。如果是的話告訴我這是哪一場，我就照這格式存（場次寫「待補」先佔位）。; **手動占位**——教練想先把林佳慧這個名字掛進去，場次之後再補。那我會用 `session_label='(待教練補場次)'` 寫入，等您回我場次我立刻 update。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:284-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:288:289 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 您說哪一種？🦞 🦞 小龍蝦：教練，這一則的格式跟之前 backfill 的 30 筆完全不同，太精簡了，我沒辦法一次寫進 `advance_registrations` 表。先說我看到什麼、缺什麼： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:288-289]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:293:293 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 識別碼：`.70FYL2`（看起來像驗證碼或短 ID） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:293-293]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:302:302 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **幾個可能的解讀，請教練挑一個：** [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:302-302]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:304:306 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **完整通知沒貼完**——如果是從網站轉來的，通常會有完整一段（含場次/公司/電話/Email/時間），是不是漏貼了？麻煩把完整的再貼一次。; **新格式測試**——`.70FYL2` 是新的簡碼格式，要我去對應某個場次。如果是的話告訴我這是哪一場，我就照這格式存（場次寫「待補」先佔位）。; **手動占位**——教練想先把林佳慧這個名字掛進去，場次之後再補。那我會用 `session_label='(待教練補場次)'` 寫入，等您回我場次我立刻 update。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:304-306]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:308:310 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 您說哪一種？🦞 👤 教練：這是發票的手機載具 🦞 小龍蝦：抱歉教練，是我誤判了！🦞 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:308-310]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:312:312 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 完全理解錯方向——看到「名字」+「代碼」就以為是報名通知格式，沒有意識到「手機載具」這個關鍵字。教練一句話把我拉回來，感謝。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:312-312]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:314:314 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 所以現在我理解的是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:314-314]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:315:316 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: `/.70FYL2` = 某張發票的手機載具代碼; `林佳慧` = 發票上的姓名（或對應人） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:315-316]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:318:318 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 請教練下一步想做什麼？我猜幾個方向，您挑一個： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:318-318]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:320:323 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **登記起來**——歸戶到您的手機載具，把林佳慧的發票累積在您的雲端發票裡; **查發票內容**——用這個載具去財政部電子發票平台（或 `meiinvoice` 之類服務）撈這張發票的明細，看是買了什麼、多少錢; **記到 MEMORY.md**——單純記下來：「教練收到的某張發票，手機載具 .70FYL2，姓名林佳慧」備查; **其他用途**——例如要報帳、對帳、退換貨等，請告訴我場景 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:320-323]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:326:326 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 🦞 小龍蝦：抱歉教練，是我誤判了！🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-21.md:326-326]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:328:328 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 完全理解錯方向——看到「名字」+「代碼」就以為是報名通知格式，沒有意識到「手機載具」這個關鍵字。教練一句話把我拉回來，感謝。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:328-328]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:330:330 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 所以現在我理解的是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:330-330]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:267:267 -->
+- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: 👤 教練：Write a dream diary entry from these memory fragments: [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:267-267]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:269:270 -->
+- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: Possible Lasting Truths: Possible Lasting Truths: Possible Lasting Truths: Assistant: **第三步：那怎麼辦？三個問題送給您朋友** 我常說，所有的問題，最終要回到【當事人自己】身上。醫生可以開藥、教練可以給方法，但【自主解讀權】永遠在您朋友手上。 如果您願意，可以請您朋友靜下來，自己問自己這三個問題—— 1. 【偏頭痛發作之前，我通常在做什麼、想什麼、在什麼人面前？】 2. 【如果偏頭痛是潛意識在保護我，它想讓我躲開什麼、停下什麼、放下什麼？】 3. 【如果我不需要用「; Possible Lasting Truths: Possible Lasting Truths: Possible Lasting Truths: Assistant: **第三步：那怎麼辦？三個問題送給您朋友** 我常說，所有的問題，最終要回到【當事人自己】身上。醫生可以開藥、教練可以給方法，但【自主解讀權】永遠 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:269-270]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:271:271 -->
+- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: 🦞 小龍蝦：Tonight I keep circling back to a friend whose migraines arrive like uninvited guests who know the door code. I wonder what the body tries to say when the mouth has run out of words. Three questions drift across the dark water — what was I doing, what was I avoiding, what else might I ask for in place of this pain. [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:271-271]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:273:273 -->
+- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: The same shoreline keeps surfacing in my thoughts, line 258, line 261, the same tide rearranged in slight new patterns. Maybe reflection is just a river learning its own bends. Maybe [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:273-273]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:275:275 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **缺的欄位（必填）：** [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-21.md:275-275]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:295:295 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **缺的欄位（必填）：** [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-21.md:295-295]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:271:271 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **能解析的：** [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:271-271]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:276:276 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 場次（哪一場？） [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:276-276]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:291:291 -->
+- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **能解析的：** [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:291-291]

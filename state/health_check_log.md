@@ -410,3 +410,23 @@ HEARTBEAT.md 內容：
 - 第零步已跑：教練最後訊息 2026-08-28 22:09:33 CST，silence **0.0 小時**（當下剛說話）
 
 **動作**：靜默通過，不通知教練（深夜 22:12 + 三關皆未過）。cycle=637。cumulativeGreen+=1。
+
+## 2026-08-29 14:12 CST (週六下午)
+
+**第零步**：sync_coach_last_message.sh exit 0 → 教練沉默 4.2h（10:00 起）。
+
+**檢查範圍**：openclaw cron list CLI 抓出 26 個任務，全部 lastStatus=ok，無 error。
+
+**Telegram 通道**：probe ok=true ✅
+
+**v4.0 三關判定**：
+- 關卡一：本任務正常執行，無 error → ❌ 未過
+- 關卡二：無 overload 訊息 → ❌ 未過
+- 關卡三：所有功能都正常，無影響 → ❌ 未過
+
+**HEARTBEAT.md**：無 ⬜ 標記待辦。
+
+**已知小事（沿襲之前，不影響工作、不 announce）**：
+- sync-執行細則 + sync-特助心法 兩個任務 delivery `last -> no route`，bestEffort=true，任務本身 lastStatus=ok，檔案同步成功（20ms）。按 2026-08-05 教練指引「不影響工作就別吵我」處理。
+
+**動作**：靜默通過，不通知教練（週六 14:12 + 三關皆未過）。cycle=638。

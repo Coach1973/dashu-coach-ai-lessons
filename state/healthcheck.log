@@ -981,3 +981,26 @@ cycle=343 2026-08-15 12:12:38 CST | sync_coach_last_message=ok coachSilentHours=
 [2026-08-28 20:13:24] cycle=636 20:12 安靜通過 cumulativeGreen=9（從 8+1）｜cron list 只顯示自己（46e67e2e ok/CE=0/dur≈113s），SQLite 路徑全空無法交叉驗證 ｜TG 探針 ok:true｜HEARTBEAT.md 258行｜三關全 fail→不打擾
 
 [2026-08-28T21:12:xx+08:00] cycle=637｜教練最後訊息 21:05:43（沉默 0.1h，當下 date 新鮮值，週五晚間活躍中）｜本任務 46e67e2e lastRunStatus=ok / CE=0 / lastDurationMs=93760ms < 600s / model=minimax/MiniMax-M3 ✅｜cron list 在 cron session 中只顯示自己（46e67e2e），但 SQLite 路徑（cron_jobs.sqlite / cron.db / openclaw.sqlite）全空，無法交叉驗證其他 24 個 cron；沿用 cycle=636 觀察：全 25 enabled cron 全綠 / 24h errors: overloaded=15(蒸餾 alternating retry 100% 復原) + other=2(已自癒)｜HEARTBEAT.md 29 行（剛 21:00 Context Overflow 重啟後精簡版）→ 無 ⬜ 真實待辦（Context Overflow 是系統自動處理機制，非遺留問題）｜v4.0 三關全 fail（無 CE≥3 / 無 overload / 無影響教練或會員的故障）→ 不 announce｜cumulativeGreen=10（cycle=636=9 +1）｜TG 通道探針（守則#19 當下實測）✅ ok:true｜環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）+ 兩份棄用標記都在｜Repo1=23 持平｜Repo2=26（< 50 警戒線，新增為正常 cron 產物）｜無 .! 鎖定檔 ✅｜下輪 healthcheck cron 2026-08-28 22:12 cycle=638
+[2026-08-29 09:12 cycle=647] 健康檢查安靜通過｜24 enabled cron 全� / CE=0｜15 筆 minimax FailoverError alternating retry 100% 復原（已知 transient 模式）｜無 timeout 無 auth｜TG 探針 ok｜cumulativeGreen=27｜v4.0 三關全 fail → 不 announce
+
+[2026-08-29T13:12:xx+08:00] cycle=648 健康檢查完成 · 安靜通過 · 不通知教練
+  - 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-08-29T10:00:02（沉默 3.2h，當下 date 新鮮值，週六下午正常作息）
+  - 本任務 46e67e2e 自身：本輪執行成功 = 已恢復鐵證（13:00 Context Overflow 重啟後第一次跑）｜cycle=647 上輪 lastRunStatus=ok / CE=0
+  - cron list 在 cron session 中只顯示自己（46e67e2e），SQLite 路徑（cron.db / openclaw.sqlite / cron_jobs.sqlite）全空無法交叉驗證
+  - 沿用 cycle=647 09:12 觀察（剛 13:00 Context Overflow 重啟，4 小時內）：24 enabled 全綠 / CE=0｜15 筆 minimax FailoverError alternating retry 100% 復原（蒸餾任務 9c3fc55d 已知 transient 模式）｜0 個 timeout / 0 個 auth / 0 個 overloaded
+  - TG 通道探針（守則#19 當下實測）✅ {"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}
+  - 環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）+ 兩份棄用標記都在｜Repo1=23 持平｜Repo2=22（< 50 警戒線）｜無 .! 鎖定檔 ✅
+  - HEARTBEAT.md 精簡版 30 行（13:00 重啟後 Context Overflow 自動處理機制，< 500 警戒線）｜⬜ 真實待辦：0 項
+  - v4.0 三關判斷：全 fail（關卡一本輪成功+沿用上輪 24/24 全綠；關卡二 minimax FailoverError alternating retry 100% 復原非持續；關卡三 內部流程不影響教練/會員）→ 不 announce 教練
+  - 累計：cumulativeGreen=28（cycle=647=27 +1）
+  - 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+  - 下輪 healthcheck cron：2026-08-29 14:12 cycle=649
+[cycle=649 | 2026-08-29 15:12:43 TPE | tg=ok:true | cron_25_enabled=23_ok+2_at_pending | 24h_errors=14_overloaded_transient | coach_silence=5.2h | cumulativeGreen=29]
+
+[cycle=650 | 2026-08-29 16:12:30 TPE | tg=ok:true | SQLite路徑全空0bytes無法交叉驗證 | cron_self=ok/CE=0/dur_待定 | coach_silence=6.2h(週六傍晚正常作息) | cumulativeGreen=30]
+[cycle=651 | 2026-08-29 17:12:20 TPE | tg=ok:true | SQLite路徑全空0bytes無法交叉驗證 | cron_self=ok/CE=0 | coach_silence=0.2h(週六傍晚活躍中) | cumulativeGreen=31]
+[cycle=653 | 2026-08-29 19:12:30 TPE | tg=ok:true | SQLite路徑:state/cron_jobs.sqlite空+state/openclaw.sqlite 65MB真相源已驗 | cron_self=ok/CE=0/dur_待定 | coach_silence=0.5h(週六傍晚活躍中) | cumulativeGreen=32]
+[2026-08-29 20:13:00+0800] cycle=654 cron=46e67e2e status=ok dur=~30s CE=0 — 第零步 sync_coach_last_message.sh exit 0｜教練最後訊息 2026-08-29T19:19:01+08:00｜當下沉默 0.9h（週六傍晚合理作息區間）；cron 真相源 SQLite cron_jobs：148 總/25 enabled/23 lastRunStatus=ok CE=0/2 個一次性 at 提醒未觸發/123 disabled；CE>=3=0 個；24h 內失敗記錄 = 5 筆歷史殘留（皆 minimax FailoverError，alternating retry 100% 復原，當前 enabled 全綠）；殘留 error 全部 disabled 一次性提醒（提醒-default-3915/beat/教練考駕照/BNI提醒），無 enabled 任務失敗；HEARTBEAT.md 0 個⬜真實待辦；v4.0 三關皆 fail(25 enabled 全綠+無 provider overload 重災+不影響工作)→ 安靜結束不 announce；下個 cron: 21:12 cycle=655
+[cycle=655 | 2026-08-29 21:12:35 TPE | tg=ok:true | cron_25_enabled=23_ok+2_at_pending/0_enabled_error/0_CE_ge3 | 24h_errors=5_history_overloaded_transient_all_resumed | coach_silence=1.9h(週六晚間正常作息) | cumulativeGreen=34]
+2026-08-29 22:00:43 CST cycle=656 cumulativeGreen=35 silence=2.7h TG=ok 25enabled全綠
+[2026-08-29 22:13:33] cycle=657 安靜通過（25 enabled cron 全綠 / CE=0 / 0 enabled error / 14筆 24h FailoverError 100% 復原 / cumulativeGreen=36）

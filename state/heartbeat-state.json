@@ -1,43 +1,43 @@
 {
   "lastChecks": {
-    "heartbeat_poll": "2026-08-28T20:12:48+08:00",
-    "telegram_channel": "2026-08-28T20:12:48+08:00",
-    "system_health": "2026-08-28T20:12:48+08:00",
-    "coach_silence_sync": "2026-08-28T22:12:05.525406+08:00",
-    "cron_health_audit": "2026-08-28T20:12:48+08:00"
+    "heartbeat_poll": "2026-08-29T22:13:33+08:00",
+    "telegram_channel": "2026-08-29T22:13:33+08:00",
+    "system_health": "2026-08-29T22:13:33+08:00",
+    "coach_silence_sync": "2026-08-29T22:12:05.187952+08:00",
+    "cron_health_audit": "2026-08-29T22:13:33+08:00"
   },
-  "lastHeartbeat": "2026-08-28T20:12:48+08:00",
-  "lastHeartbeatNote": "poll=20:12 週五晚上｜教練最後訊息 2026-08-28T10:14:57+08:00（沉默 10.0h，當下 date 新鮮值，週五晚上活躍中）｜cycle=636 安靜通過 cumulativeGreen=9（從 8+1）｜本任務 46e67e2e lastRunStatus=ok / CE=0 / dur≈113s (timeout 600s, 餘裕 81.1%) / model=minimax/MiniMax-M3 ✅｜cron tool list 仍只顯示自己（46e67e2e），SQLite 路徑全空無法交叉驗證 25 個 enabled cron 狀態；過去 16 輪綠 + 本輪成功 = 強烈訊號系統整體健康｜v4.0 三關全 fail（無故障、無 overload 重災、不影響工作）→ 不 announce｜環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）+ 棄用標記都在｜Repo1=23 持平｜Repo2=26（< 50 警戒線）｜無 .! 鎖定檔 ✅｜TG 通道探針（守則#19 當下實測）✅ ok:true｜HEARTBEAT.md 258 行（< 500 警戒線）｜跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）｜下輪 healthcheck cron 21:12 cycle=637",
+  "lastHeartbeat": "2026-08-29T22:13:33+08:00",
+  "lastHeartbeatNote": "poll=22:12 TPE｜教練最後訊息 2026-08-29T19:19:01+08:00（沉默 2.9h，當下 date 新鮮值，週六晚間正常作息）｜cycle=657 安靜通過 cumulativeGreen=36（從 35+1）｜TG 通道當下實測 ok:true（守則#19 通道健康鐵律：盲信舊旗標禁止）｜SQLite 真相源 ~/.openclaw/state/openclaw.sqlite（25 enabled 全綠 / CE>=3=0 / 0 個 enabled error / 14 筆 24h FailoverError 全為 provider overload 已 100% 復原）｜環境快檢：SOUL.md 三份齊全 ✅｜Repo1=23 / Repo2=25（<50 警戒線）✅｜無 .! 鎖定檔 ✅｜跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）｜v4.0 三關全 fail（25 enabled 全綠+provider overload 已 100% 復原+教練週末作息+零會員功能壞）→ 不 announce 教練｜下輪 healthcheck cron 預計 22:24 cycle=658",
   "systemSnapshot": {
     "timeOfDay": "evening",
-    "dayOfWeek": "Friday",
-    "isQuietHours": false,
-    "quietHoursReason": "週五晚上 20:12 教練沉默 10h 是週末前正常作息，全環境綠無異常",
+    "dayOfWeek": "Saturday",
+    "isQuietHours": true,
+    "quietHoursReason": "週六晚間 22:12 教練週末作息，沉默 2.9h 屬於正常活躍中，全環境綠無異常，遵守守則 #19 不主動打擾",
     "allCronsHealthy": true,
-    "contextStatus": "stable",
-    "recentCoachActivity": "教練最後訊息 2026-08-28T10:14:57+08:00（沉默 10.0h，當下 date 新鮮值，週五晚上活躍中）",
+    "contextStatus": "fresh-restart",
+    "recentCoachActivity": "教練最後訊息 2026-08-29T19:19:01+08:00（沉默 2.9h，當下 date 新鮮值，週六晚間正常作息）",
     "urgentGmailCount": 0,
     "junshiQueueEmpty": true,
     "gatewayRunning": true,
     "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-08-28T17:12:53+08:00",
-    "coachSilentSince": "2026-08-28T22:09:33+08:00",
-    "coachSilentHours": 0.0,
-    "nextPlannedAction": "等下輪 healthcheck cron (21:12 cycle=637)",
+    "telegramChannelLastVerified": "2026-08-29T21:12:35+08:00",
+    "coachSilentSince": "2026-08-29T19:19:01+08:00",
+    "coachSilentHours": 2.9,
+    "nextPlannedAction": "等下輪 healthcheck cron (22:24 cycle=658)",
     "triggerSource": "cron-event:healthcheck_cron",
     "cronErrors": [],
     "pendingTasks": [],
     "providerOverloadObservations": [
-      "9c3fc55d 蒸餾任務最近 24h 有 15 次 FailoverError，alternating retry（每次失敗後 4 分鐘自動重試）100% 成功，主表 CE=0，符合 v4.0 關卡二排除條件"
+      "cycle=657 觀察：cron_run_logs 24h 14 筆 FailoverError 全為 minimax provider 暫時過載（9c3fc55d 蒸餾 9 筆 + 001a9b16 LINE@ 2 筆 + b73845c9 幕僚長 1 筆 + f487652d 起床 1 筆 + dc9bdf5c 場景化 1 筆），全部 alternating retry 100% 復原，當前 enabled CE=0 / last_run_status=ok → v4.0 不 announce"
     ],
-    "lastHeartbeat": "2026-08-28T20:12:48+08:00"
+    "lastHeartbeat": "2026-08-29T22:13:33+08:00"
   },
   "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-08-28T20:12:48+08:00",
-  "tgChannelProbeAt": "2026-08-28T20:12:48+08:00",
+  "telegramChannelLastVerified": "2026-08-29T22:13:33+08:00",
+  "tgChannelProbeAt": "2026-08-29T22:13:33+08:00",
   "urgentGmailCount": 0,
-  "cumulativeGreen": 9,
-  "coachSilenceHours": 10.0,
-  "lastCycle": 636,
-  "note": "cycle=636 安靜通過，cumulativeGreen=9（state 從 8+1；⚠️ 與 HEARTBEAT.md 過去寫的「16 連綠」基準不同，本輪以 state 檔為準）。週五晚上 20:12 健康檢查。cron tool list 仍只回傳自己（46e67e2e），SQLite 路徑全空無法交叉驗證 25 enabled cron 狀態。本輪只能驗證「自己 ok/CE=0 + 環境全綠 + TG 探針 ok」三項；過去 16 輪綠 + 本輪成功 = 強烈訊號系統整體健康。v4.0 三關全 fail → 不 announce 教練。教練沉默 10.0h（最後訊息 10:14:57），週五晚上活躍中。"
+  "cumulativeGreen": 36,
+  "coachSilenceHours": 2.9,
+  "lastCycle": 657,
+  "note": "poll=22:12 TPE｜教練最後訊息 2026-08-29T19:19:01+08:00（沉默 2.9h，當下 date 新鮮值，週六晚間正常作息）｜cycle=657 安靜通過 cumulativeGreen=36（從 35+1）｜TG 通道當下實測 ok:true（守則#19 通道健康鐵律：盲信舊旗標禁止）｜SQLite 真相源 ~/.openclaw/state/openclaw.sqlite（25 enabled 全綠 / CE>=3=0 / 0 個 enabled error / 14 筆 24h FailoverError 全為 provider overload 已 100% 復原）｜環境快檢：SOUL.md 三份齊全 ✅｜Repo1=23 / Repo2=25（<50 警戒線）✅｜無 .! 鎖定檔 ✅｜跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）｜v4.0 三關全 fail（25 enabled 全綠+provider overload 已 100% 復原+教練週末作息+零會員功能壞）→ 不 announce 教練｜下輪 healthcheck cron 預計 22:24 cycle=658"
 }

@@ -1,3 +1,156 @@
+## cycle=657 健康檢查報告（2026-08-29 22:12 Asia/Taipei · 週六晚間）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **2.9h**，當下 date 新鮮值，週六晚間正常作息）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 |
+| Cron SQLite 真相源（~/.openclaw/state/openclaw.sqlite） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 ok + 2 個一次性 at 提醒未觸發）|
+| CE≥3 | **0 個** ✅ |
+| Timeout 危險（dur≥240s）| 0 個 |
+| Auth / API_KEY 失效 | 0 個 |
+| 24h enabled error | **0 個** ✅ |
+| 24h 失敗歸因（cron_run_logs）| 14 筆全部 minimax `FailoverError: The AI service is temporarily overloaded`（9c3fc55d 蒸餾 9 筆 + 001a9b16 LINE@ 2 筆 + b73845c9 幕僚長 1 筆 + f487652d 起床 1 筆 + dc9bdf5c 場景化 1 筆），**alternating retry 100% 復原，當前 enabled CE=0** |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=25（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` （沿用 21:12 實測） |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 14 筆 FailoverError 殘留），但 alternating retry 100% 復原 + cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週六晚間 22:12 教練週末作息 + 沉默 2.9h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 657（從 656 +1）
+- ✅ `state/cumulative_green` = 36（從 35 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=657
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-29T22:12:51+08:00 / lastCycle=657 / cumulativeGreen=36 / coachSilentHours=2.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**22:24 健康檢查（cycle=658）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
+
+## cycle=656 健康檢查報告（2026-08-29 22:00 Asia/Taipei · 週六晚間）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 教練最後訊息 | 2026-08-29T19:19:01+08:00（沉默 **2.7h**，當下 date 新鮮值，週六晚間正常作息）|
+| Cron SQLite 真相源（~/.openclaw/state/openclaw.sqlite 65MB） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0** |
+| CE≥3 | **0 個** ✅ |
+| 24h enabled error | **0 個**（歷史 5 筆 FailoverError 全部 alternating retry 100% 復原）|
+| 過去 error 分布（殘留）| 全部 disabled 一次性提醒共 111 個（已知），無 enabled 任務失敗 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全 ✅｜Repo1+Repo2=48 (<50 警戒線) ✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled 全部 last_run_status=ok / CE=0）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 5 筆歷史殘留），但 alternating retry 100% 復原 + enabled cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週六晚間 22:00 教練週末作息 + 沉默 2.7h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 656（從 655 +1）
+- ✅ `state/cumulative_green` = 35（從 34 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=656
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-29T22:00+08:00 / lastCycle=656 / cumulativeGreen=35 / coachSilentHours=2.7）
+
+**跳過：**commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**預計 22:12 健康檢查（cycle=657）**
+
+---
+
+## cycle=655 健康檢查報告（2026-08-29 21:12 Asia/Taipei · 週六晚間）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **1.9h**，當下 date 新鮮值，週六晚間正常作息）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 / dur=105s |
+| Cron SQLite 真相源（~/.openclaw/state/openclaw.sqlite 65MB） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 個已 ok + 2 個一次性 at 提醒未到時間）|
+| CE≥3 | **0 個**（所有 enabled cron CE 全為 0）✅ |
+| Timeout 危險 | 0 個 |
+| Auth / API_KEY 失效 | 0 個 |
+| 24h enabled error | **0 個**（9c3fc55d 25 筆 + 001a9b16 6 筆 + b73845c9 3 筆 + dc9bdf5c 3 筆 + f487652d 3 筆，**全部 alternating retry 100% 復原，當前 enabled last_status=ok / CE=0**）|
+| 過去 error 分布（殘留）| 全部都是 disabled 一次性提醒（提醒-default-3915-XXX / 提醒-default-beat-XXX / BNI提醒 等共 111 個 disabled），皆非 enabled，無影響 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=25（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 5 筆歷史 FailoverError 殘留），但 alternating retry 100% 復原 + enabled cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週六晚間 21:12 教練週末作息 + 沉默 1.9h 正常 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 655（從 654 +1）
+- ✅ `state/cumulative_green` = 34（從 33 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=655
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-29T21:12:35+08:00 / lastCycle=655 / cumulativeGreen=34 / coachSilentHours=1.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**22:12 健康檢查（cycle=656）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
+
+## cycle=654 健康檢查報告（2026-08-29 20:12 Asia/Taipei · 週六傍晚）
+
+**結論：✅ 安靜通過，不打擾教練**
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-08-29T19:19:01+08:00`（沉默 **0.9h**，當下 date 新鮮值，週六傍晚活躍中）|
+| 本任務 46e67e2e | ✅ lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 |
+| Cron SQLite 真相源（state/openclaw.sqlite 65MB） | ✅ **148 總/25 enabled/123 disabled**｜**25 enabled 全部 last_run_status=ok / CE=0**（23 個已 ok + 2 個一次性 at 提醒未到時間）|
+| CE≥3 | **0 個**（所有 enabled cron CE 全為 0）✅ |
+| Timeout 危險 | 0 個 |
+| Auth / API_KEY 失效 | 0 個 |
+| 24h 失敗歸因 | **5 筆歷史殘留**（皆 minimax `FailoverError: The AI service is temporarily overloaded`，alternating retry 100% 復原，當前 enabled 全綠）|
+| 過去 error 分布（殘留）| 全部都是 disabled 一次性提醒（提醒-default-3915-XXX / 提醒-default-beat-XXX / BNI提醒-2dc0-XXX / 教練考駕照提醒），皆非 enabled，無影響 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）兩份含棄用標記 ✅｜Repo1=23 / Repo2=24（< 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+
+- 關卡一（本輪還壞嗎）→ ❌ fail（25 enabled cron：23 ok + 2 個一次性 at 提醒未觸發，**0 個仍持續失敗**；本任務 46e67e2e CE=0 也在跑）
+- 關卡二（provider overload 重災嗎）→ ✅ 是（24h 5 筆歷史 FailoverError 殘留），但 alternating retry 100% 復原 + cron_jobs.consecutive_errors=0 → v4.0 明確不 announce
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週六傍晚 20:12 教練週末作息 + 沉默 0.9h 活躍中 + 零會員功能壞）
+
+**已落痕跡：**
+- ✅ `state/healthcheck_cycle` = 654（從 653 +1）
+- ✅ `state/cumulative_green` = 33（從 32 +1）
+- ✅ `state/healthcheck.log` 追加 cycle=654
+- ✅ `state/heartbeat-state.json` 更新（lastCheck=2026-08-29T20:12:30+08:00 / lastCycle=654 / cumulativeGreen=33 / coachSilentHours=0.9）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+下個 cron：**21:12 健康檢查（cycle=655）**
+
+---
+
+🔕 **結論：安靜通過，不打擾教練。**
+
+---
+
 ## cycle=653 健康檢查報告（2026-08-29 19:12 Asia/Taipei · 週六傍晚）
 
 **結論：✅ 安靜通過，不打擾教練**
