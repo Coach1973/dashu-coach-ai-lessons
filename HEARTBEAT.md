@@ -4,7 +4,22 @@
 > 重啟時間：2026-08-28 21:00
 > 對話記錄已完整存入 memory/2026-08-28.md 並推上 GitHub，零遺漏
 
-## � 健康檢查紀錄 2026-08-29 09:12 cycle=647（小龍蝦第零步 v3.0 已通過）
+## 🩺 健康檢查紀錄 2026-08-29 10:00 cycle=648（小龍蝦第零步 v3.0 已通過）
+- 教練最後訊息：2026-08-28 22:09:33（沉默 ~12 小時，Telegram API 真實時間，週六上午正常作息）
+- 本任務 46e67e2e：lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 ✅
+- cron tool list：**24 enabled 全部 lastStatus=ok**（2 個 at 一次性 reminder lastRunStatus=null 屬正常未觸發前狀態）
+- HEARTBEAT.md 無 ⬜ 真實待辦
+- 環境快檢：SOUL×3 齊全（9015/1851/22220 bytes）/ Repo1=23 / Repo2=19（皆 < 50 警戒線）/ 無 .! 鎖定檔
+- TG 通道探針（守則#19 當下實測）：✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+- v4.0 三關判斷（三關全 fail → 不 announce）：
+  - 關卡一（本輪還壞嗎）→ ❌ fail（24 enabled cron 全 lastStatus=ok + 本任務執行成功）
+  - 關卡二（provider overload 重災嗎）→ ❌ fail（無 FailoverError 觀察到）
+  - 關卡三（影響教練/會員嗎）→ ❌ fail（週六 10:00 教練週末作息 + 沉默 12hr 屬於正常 + 零會員功能壞）
+- 週六 10:00 教練週末通常晚起，12hr 沉默屬於正常作息，遵守守則 #19 不主動打擾
+- 三步驟全綠 → 安靜處理 ✅
+- cumulativeGreen = **28**（cycle=628~648 連 21 輪綠）
+
+## 🩺 健康檢查紀錄 2026-08-29 09:12 cycle=647（小龍蝦第零步 v3.0 已通過）
 - 教練最後訊息：2026-08-28 22:09:33（沉默 ~11 小時，Telegram API 真實時間，週六上午正常作息）
 - 本任務 46e67e2e：lastRunStatus=ok / CE=0 / model=minimax/MiniMax-M3 ✅
 - 直查 openclaw.sqlite cron_jobs：**24 enabled 全部 lastStatus=ok / 0 個 CE≥1 / 0 個 CE≥3** ✅
