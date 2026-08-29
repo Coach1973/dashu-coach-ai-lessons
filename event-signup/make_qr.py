@@ -8,7 +8,9 @@
                                           往後每場活動都用這張取代--checkin立牌）
   venv/bin/python3 make_qr.py --slides   簡報QR（掃了進/slides頁：加LINE好友+下載今日簡報，
                                           網址固定不用重印，後台上傳/切換今日簡報見/admin）
-輸出：qr/<slug 或 checkin 或 wheel 或 slides-drop>.png（高解析，印刷可用）+ 對應 -print.html（A4立牌頁）
+  venv/bin/python3 make_qr.py --ganjing  乾淨世界頻道關注QR（2026-08-29教練指示，導去外部
+                                          頻道連結，跟event.db活動場次無關，純推廣用）
+輸出：qr/<slug 或 checkin 或 wheel 或 slides-drop 或 ganjing>.png（高解析，印刷可用）+ 對應 -print.html（A4立牌頁）
 """
 import os
 import sys
@@ -24,6 +26,8 @@ CHECKIN_TITLE = "大樹小講系列講座 數位簽到系統"
 CHECKIN_GIFT_NOTE = "🎁 集滿 5 次活動場次，還會送神秘禮物！"
 SLIDES_URL = "https://event.bymyway.com/slides"
 SLIDES_TITLE = "簡報下載＋加好友"
+GANJING_URL = "https://www.ganjingworld.com/s/3EBAgQObRg"
+GANJING_TITLE = "大樹教練．乾淨世界頻道"
 QR_DIR = os.path.join(os.path.dirname(__file__), "qr")
 
 PRINT_TEMPLATE = """<!DOCTYPE html>
@@ -131,6 +135,18 @@ def make_slides() -> None:
     )
 
 
+def make_ganjing() -> None:
+    """乾淨世界頻道關注QR：固定網址，印一次永久用。跟活動簽到/抽獎無關，純粹導流
+    到大樹教練的乾淨世界頻道，主打「300集免費影片」的內容量，不提集點送禮（教練
+    2026-08-29指示不寫任何集點文字）。"""
+    name_html = "大樹教練<br>乾淨世界頻道"
+    _write(
+        "ganjing", GANJING_URL, GANJING_TITLE, name_html, "",
+        eyebrow="立即關注", cta_html='高品質自我成長影片<br><span>300 集</span>免費觀看',
+        sub_text="手機掃描 QRCode 馬上開始收看", alt_text="關注乾淨世界頻道QR",
+    )
+
+
 def make_event(slug: str) -> None:
     conn = db.get_conn()
     event = db.get_event(conn, slug)
@@ -151,10 +167,12 @@ def main() -> None:
         make_wheel()
     elif arg == "--slides":
         make_slides()
+    elif arg == "--ganjing":
+        make_ganjing()
     elif arg:
         make_event(arg)
     else:
-        print("用法：make_qr.py <slug> 或 make_qr.py --checkin 或 make_qr.py --wheel 或 make_qr.py --slides")
+        print("用法：make_qr.py <slug> 或 make_qr.py --checkin 或 make_qr.py --wheel 或 make_qr.py --slides 或 make_qr.py --ganjing")
         sys.exit(1)
 
 
