@@ -868,15 +868,19 @@ def admin_sessions_publish():
                             error=f"（{result['step']}）{result['message']}"))
 
 
-# ───────── 大樹小講／AI微論壇台中場(ai-forum-taichung)：bymyway 版本
-# （2026-08-30，逐步取代 Netlify 部署次數限制。命名故意不用泛稱「ai-talk」——
-#  那是另一個已辦完的嘉義/台南場舊repo，跟這裡的台中場是不同東西，教練當場糾正過）─────────
+# ───────── 大樹小講／AI微論壇：bymyway 版本（2026-08-30，逐步取代 Netlify 部署次數限制）
+# 教練 2026-08-30 裁示的命名邏輯：網址代表「活動格式／系列」，不代表某一次的地點——
+# 跟 ai-talk-tw.netlify.app 過去台南→嘉義直接覆寫同一個網址是同一套做法：
+#   /ai-forum → 兩天制場次（現在是台中9/23-24，之後10/7-8台南場一樣用這個網址，
+#               台中辦完就變成歷史紀錄，不會因為換地點就換網址）
+#   /ai-talk  → 半天制場次（現在是9/22台南場，之後換場地一樣沿用這個網址）
 # 設計/文案本體只有一份，就是各自的 github_repos git repo，這裡在請求當下直接讀
 # 原始檔案（+ 大樹小講額外疊上 event.db 即時場次資料）組合渲染，不另外複製一份，
 # 教練或軍師改任一邊都立刻反映，不需要「發佈」這個動作。GitHub Pages/Netlify 兩邊
-# 暫時繼續保留同步，穩定一陣子後才會退場（教練 2026-08-30 裁示）。
+# 暫時繼續保留同步，穩定一陣子後才會退場。
 BIGTREE_REPO = Path("/Users/bymyway/github_repos/bigtree")
-AI_FORUM_REPO = Path("/Users/bymyway/github_repos/ai-forum-taichung")
+AI_FORUM_REPO = Path("/Users/bymyway/github_repos/ai-forum-taichung")  # 目前是台中場內容，之後換場地時原地改內容，repo資料夾名稱不代表網址
+AI_TALK_REPO = Path("/Users/bymyway/github_repos/ai-talk")
 _REPO_BLOCKED_TOP_DIRS = {".git", "biz-gym"}
 
 
@@ -906,14 +910,24 @@ def bigtree_assets(filename):
     return _serve_repo_file(BIGTREE_REPO, filename)
 
 
-@app.route("/ai-forum-taichung/")
-def ai_forum_taichung_page():
+@app.route("/ai-forum/")
+def ai_forum_page():
     return _serve_repo_file(AI_FORUM_REPO, "index.html")
 
 
-@app.route("/ai-forum-taichung/<path:filename>")
-def ai_forum_taichung_assets(filename):
+@app.route("/ai-forum/<path:filename>")
+def ai_forum_assets(filename):
     return _serve_repo_file(AI_FORUM_REPO, filename)
+
+
+@app.route("/ai-talk/")
+def ai_talk_page():
+    return _serve_repo_file(AI_TALK_REPO, "index.html")
+
+
+@app.route("/ai-talk/<path:filename>")
+def ai_talk_assets(filename):
+    return _serve_repo_file(AI_TALK_REPO, filename)
 
 
 if __name__ == "__main__":
