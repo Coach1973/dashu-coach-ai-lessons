@@ -1,6 +1,6 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-> 最新心跳 cycle=665（2026-08-30 10:12 週日，安靜通過）｜25 enabled cron 全綠 / CE=0 / 24h 18 筆 FailoverError 100% 復原｜教練沉默 8.5h（最後訊息 01:41，週日清晨深度睡眠）｜TG 探針 ok:true｜v4.0 三關全 fail → 不 announce
+> 最新心跳 cycle=667（2026-08-30 14:12 週日，安靜通過）｜25 enabled cron 全綠 / CE=0 / 24h FailoverError 100% 復原｜教練沉默 0.1h（最後訊息 14:06，剛剛）｜TG 探針 ok:true｜v4.0 三關全 fail → 不 announce
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
 > 重啟時間：2026-08-30 02:00
@@ -32,3 +32,8 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1788062194
 - 雲端同步：✅ 已推上雲端（commit 4e947d53e）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-30 14:15
+- ✅ 同步成功
+- HANDOFF mtime: 1788070496
+- 雲端同步：push 失敗（離線或網路問題，commit 已留本機）
