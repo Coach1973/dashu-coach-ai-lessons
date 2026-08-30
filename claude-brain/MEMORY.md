@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🎯🔴 真誠分會邀約來賓/121/咖啡/見証/培訓系統sincere.bymyway.com上線，與另一對話框重複建置待裁示(2026-08-30)](project_sincere_bymyway_guest_tracker_2026-08-30.md) — 會員自助輸入即時存檔，bni-chapters有另一份唯讀重複版本教練尚未選定
+- [🔴🔴 接教練口頭構想開工前，先查相關repo近期git log防重複建置(2026-08-30)](feedback_check_git_log_for_parallel_builds_2026-08-30.md) — 兩對話框幾乎同時間各自獨立做出功能重疊、資料庫互不相通的實作
+- [🔧 Jinja2樣板dict鍵名叫values會撞內建方法，資料靜默消失不報錯(2026-08-30)](reference_jinja2_dict_values_key_collision_2026-08-30.md) — entry.values.xxx存取到dict.values方法物件而非資料，總計欄位因走不同邏輯掩蓋了bug
 - [🔧 bymyway.com子網域回傳Cloudflare 530=tunnel沒連線，peipei-event缺launchd看護掛5天(2026-08-29)](reference_bymyway_subdomain_530_missing_launchd_2026-08-29.md) — 診斷法：查DNS的CNAME目標cfargotunnel.com uuid比對本機process；已補launchd plist修復
 - [🔴🔴🔴 教練陳述已說過的需求時不要重新查證，直接查技術根因解決(2026-08-28)](feedback_dont_reverify_stated_requirements_2026-08-28.md) — 花時間驗證「教練是否說過」浪費他流量跟時間，查了也只證明教練是對的
 - [🔧 BNI Connect信用証三種按鈕狀態判讀+confirm()對話框覆蓋解法(2026-08-28)](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md) — 產生信用証/信用證(已過期)/純離開(無額度)，第一次失敗值得重試1次
