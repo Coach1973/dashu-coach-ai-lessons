@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴 | **真誠分會邀約來賓紀錄表被兩個對話框各自獨立重複建置，需教練裁示留哪一版** | 🔒卡住-等教練 | 2026-08-30本場（Mac終端機）從零建置獨立網站`sincere.bymyway.com`（Flask+SQLite，github_repos/zhencheng-guests，功能完整：來賓＋121＋咖啡會議＋全國見証分享會＋培訓出席，全部會員可自行輸入即時存檔，無需登入）。事後查git log才發現**幾乎同一時間（01:44）另一個對話框已經在bni-chapters裡做了一份功能重疊但架構完全不同的版本**（commit`c6ce0f2`，路徑`/admin/chapters/1/invites`，需登入才看得到，只有來賓矩陣沒有121/咖啡/見証/培訓，唯讀不可自填）。兩套系統資料庫互不相通，教練若同時使用會看到不一樣的數字。已在對話中回報教練利弊，教練尚未回覆要保留哪一版／要不要合併。詳見v149。 |
+| ✅ | **真誠分會邀約來賓紀錄表重複建置事件：根因已查明+重複版本已移除** | ✅2026-08-30本場完成，教練親自抓出根因 | 起因：查git log發現bni-chapters裡有一份`c6ce0f2`commit做出功能重疊的重複實作（`/admin/chapters/1/invites`）。**教練親自比對兩個session的原始.jsonl逐行找出精確分岔點**：01:37:48原session(`fa8a74d2`)正在忙背景Explore子代理查詢時，Claude桌面版App在01:38:11自動生成一則`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`的「Continue from where you left off.」內部握手訊息，**憑空分岔出這場對話**(`0f9618ae`)，繼承原session到01:37:48為止的歷史，之後兩條各自獨立發展——非教練或AI下達的fork指令，是App層級的自動行為。教練確認只需要`sincere.bymyway.com`一套，重複版本已移除：`/admin/chapters/1/invites`路由+`admin_invites.html`+db.py四個函式+schema.sql四張invite_*資料表全部移除，檔案歸檔於`_archive_duplicate_invites_feature_2026-08-30/`未刪除，資料庫既有資料保留未清空，commit`6b06bca`（bni-chapters）。詳見v149+v150、記憶`feedback_check_git_log_for_parallel_builds_2026-08-30`。 |
 | ✅ | **AI百人導師(mentor100)真誠分會5人簡介卡遷移到chapters.bymyway.com/sincere+後台新增編輯按鈕** | ✅2026-08-30本場完成 | 王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳，含照片，逐筆核對mentors表欄位對應chapter_members表（兩邊格式一致）搬移，commit`1f460f7`（bni-chapters）。教練隨後指出後台改資料只能靠AI代改的缺口（「我自己改不了」），已新增`/admin/chapters/<id>/members/<id>/edit`路由+`admin_member_edit.html`模板，沿用既有`member_join_edit.html`欄位結構跟`db.update_member()`函式，分會夥伴簡介列表每筆加「編輯」連結，commit`8cd9595`。**已用真實登入+存檔round-trip驗證**（改一個欄位→存檔→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣），非僅程式碼審查。詳見v149。 |
 | 🟡 | **教練提出「釋放記憶體」指令要更全面：連同所有可關App一併關閉** | 🔒卡住-待教練確認白名單範圍 | 2026-08-29教練電腦變慢多輪診斷後提出構想，已給評估：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限，且既有的RustDesk釋放指令查證後對15GB量級記憶體壓力貢獻微乎其微(重啟後process反而一度變多)。若要動手寫這支腳本，需先問清楚白名單——Claude/Finder等系統必要項可以確定，但Typeless/Chrome/LINE等常用工具要不要保留，教練尚未回覆。詳見v148。 |
 | ✅ | **peipei-event.bymyway.com斷線5天已修復+永久看護機制建立** | ✅2026-08-29完成 | 教練詢問這個網址為何失效，查證是Cloudflare 530(tunnel connector沒連線)，根因是這組webapp+tunnel從2026-07-13建立以來唯一沒接launchd看護，8/24被terminated後斷線5天無人發現。已手動恢復服務+新增`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`永久修復，commit`2ffba5dc9`(記憶`reference_bymyway_subdomain_530_missing_launchd_2026-08-29`)。詳見v148。 |
@@ -258,38 +258,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-29 v148（Mac終端機 Sonnet 5，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
-
-> 建立時間：2026-08-29 16:34 ~ 2026-08-30 01:27（台灣時間，接續v147同一天新對話框）
-> 上一棒：v147（Mac終端機，同日較早，/bni-credit三項待改+34筆信用証補開+搜尋空格bug修復）
-> 本棒主軸：**三件獨立任務——乾淨世界頻道QR立牌上線並加入作品一覽、修復peipei-event.bymyway.com斷線5天的根因（缺launchd看護）、教練電腦變慢的多輪診斷與RustDesk釋放記憶體機制的效果評估。**
-
-## 🎯 本場戰果
-
-### 1. 乾淨世界頻道關注QR立牌上線
-教練要求仿照`event.bymyway.com/qr/checkin-print.html`風格，做一張導流到「大樹教練」乾淨世界頻道(`https://www.ganjingworld.com/s/3EBAgQObRg`)的QR立牌，拿掉「集滿5次送禮物」文案，改主打「高品質自我成長影片300集免費觀看」。`make_qr.py`新增`--ganjing`模式（比照既有`--wheel`/`--slides`同款設計），產出`qr/ganjing.png`+`qr/ganjing-print.html`，用文字工具核對繁體中文內容正確、QR圖案親眼看過無變形，commit`0669f44a2`。教練接著要求加入《大樹AI作品一覽》，已補進coach888「後臺系統」分類第10項，commit`48520cd`。列印用正式網址`https://event.bymyway.com/qr/ganjing-print.html`已驗證200可用。
-
-### 2. 🔴 peipei-event.bymyway.com斷線5天，根因是唯一缺launchd看護的站台
-教練詢問這個網址為何失效，查證發現HTTP 530（Cloudflare連不到tunnel connector）。追根究柢：`bymyway.com`底下共6組webapp+tunnel（event/mentor100/namecard/bni-chapters/jiesheng/peipei-event），前5組都有`com.coach.<站名>-webapp.plist`+`com.coach.<站名>-tunnel.plist`的launchd自動看護（`KeepAlive:true`），**唯獨peipei-event這組從2026-07-13建立以來就是純手動`nohup`跑起來**，2026-08-24某次收到`signal terminated`後，因為沒有任何自動看護，斷線整整5天無人發現。已手動重啟後端(port 5061)+tunnel恢復服務，並新增`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`永久修復（`launchctl load`後確認狀態碼0）。寫入記憶`reference_bymyway_subdomain_530_missing_launchd_2026-08-29`（含完整診斷SOP：curl狀態碼判讀530/502/522差異、Cloudflare API查CNAME目標uuid、比對`ps aux`/`launchctl list`），commit`2ffba5dc9`。
-
-### 3. 電腦變慢多輪診斷+RustDesk「釋放」指令效果評估
-教練懷疑手機上傳影片佔網速，查證：ping延遲正常(11~14ms)但下載速度偏慢(144~167KB/s)、記憶體一度只剩366~404MB可用(15GB used)。觸發既有「釋放」指令(`rustdesk_free_memory.sh`)後教練回報「好像沒啥用」，重新查證發現RustDesk重啟後反而同時有兩個process在跑（合計比重啟前更高），對15GB量級的系統記憶體壓力貢獻微乎其微。教練關閉一堆App後仍覺得慢，直到**教練自行重開機**才讓記憶體真正恢復健康(15G→8.34GB用量，前景GUI App只剩Claude/Finder/Typeless/Python等必要項)。教練提出構想：以後「釋放」指令要更全面，除RustDesk外把所有可關的App一併關閉。**已給出評估但尚未定案**：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限；且需要教練確認白名單範圍（Typeless/Chrome/LINE等常用工具是否要保留）才能動手寫這支腳本，教練尚未回覆。
-
-## ⚠️ 本場教訓（已寫入記憶）
-
-1. **`bymyway.com`底下的多組webapp+tunnel服務，只要有一組沒接上launchd看護，就會是斷線後永遠不會自己恢復的活地雷**——盤點法：`ls ~/.cloudflared/*-config.yml`跟`ls ~/Library/LaunchAgents/ | grep com.coach`兩份清單站名要能一一對應，缺一個就是下一個會犯同款錯的站台。
-2. **診斷Cloudflare 530要查DNS的CNAME目標(`<uuid>.cfargotunnel.com`)再比對本機process，不能只看HTTP狀態碼猜**——530明確代表tunnel connector沒連線，跟502(origin有回應但錯誤)、522(TCP逾時)是不同層次的問題。
-3. **`ps aux | grep cloudflare`查launchd管理狀態會誤判**——launchd Label命名是`com.coach.<站名>-tunnel`不含"cloudflare"字樣，要用`launchctl list | grep com.coach`才對，這次一度誤以為其餘5組站台也沒被管理，查證後發現是自己關鍵字下錯。
-4. **既有的「釋放記憶體」快捷指令（重啟RustDesk）對系統性記憶體壓力幫助有限**，不該預設觸發這個指令就代表問題解決——RustDesk本身在15GB量級的用量裡佔比很小，且重啟瞬間可能短暫出現新舊process並存反而更高。真正能徹底解決系統記憶體碎片化的只有重開機。
-
-## 📋 下一場開工先做
-1. 教練的「全面關App釋放記憶體」構想尚未拍板——需要先問清楚白名單範圍（除了Claude/Finder等系統必要項，Typeless/Chrome/LINE等常用工具要不要保留），確認後再動手寫腳本，並優先用AppleScript優雅`quit`而非`kill -9`避免未存檔資料遺失。
-2. Netlify→GitHub Pages+bymyway.com子網域策略（教練本場稍早提出的構想，已給評估但未決定是否套用到新專案，也沒選要不要先盤點哪些舊網站值得搬）——等教練下次想繼續討論時接續。
-3. FB粉專商家驗證後續（等教練通知，v147留下的舊待辦，本場未觸及）。
-4. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
-
-## 🔑 本場commit
-`0669f44a2`（event-signup，ganjing QR）+ `48520cd`（coach888，作品一覽新增第10項）+ `2ffba5dc9`（claude-brain，peipei-event 530修復記憶）。另有`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`兩份launchd設定檔（不在git版控範圍，位於`~/Library/LaunchAgents/`）。
+> 📦 v148完整內容已封存：`handoff_archive/handoff_v148_archived_2026-08-30.md`（Mac終端機，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
 
 ---
 
@@ -336,3 +305,78 @@
 
 ## 🔑 本場commit
 `zhencheng-guests`（私有repo，即sincere.bymyway.com）：`6057c1a`（首次建置）+ `9d2a40f`（全國見証/培訓改會員自填）。`bni-chapters`：`1f460f7`（mentor100簡介卡遷移）+ `8cd9595`（後台編輯功能）。另有Cloudflare Tunnel/DNS設定+launchd plist（`com.coach.sincere-webapp`/`com.coach.sincere-tunnel`，不在git版控範圍）。
+
+---
+
+# 軍師接力棒 · 2026-08-30 v150（Mac終端機 Sonnet 5，就是被fork出來的那一條——bni-chapters重複實作+fork根因鑑識查證）
+
+> 建立時間：2026-08-30 01:28 ~ 14:12（台灣時間，跟v149是同一次fork事件的**另一條分支**，session id`fa8a74d2-d7b2-48c0-a96f-66882163fe84`）
+> 上一棒：v149（同一天、同一個起點，01:37:48之前完全逐字相同，之後各自獨立發展）
+> 本棒主軸：**先獨立做出跟v149重疊的bni-chapters邀約來賓功能（已被v149那條分支的教練裁示移除），被教練指出「你又自己生了一個fork」，查證後證明兩邊都沒下過fork指令，是Claude桌面版App自己的內部行為，並用兩份對話原始存檔逐行比對，把分岔的精確時間戳跟物證都挖出來了。**
+
+## 🎯 本場戰果
+
+### 1. 獨立建置bni-chapters內建的邀約來賓紀錄表（已被移除，過程完整記錄供對照）
+在不知道`0f9618ae`那條分支已經在做同一件事的情況下，本場從零設計了會員×週次矩陣＋連續無來賓自動標籤（4週🟡/8週🔴），整合進`bni-chapters`既有後台（`/admin/chapters/1/invites`），含四張新資料表(`invite_teams`/`invite_members`/`invite_weeks`/`invite_records`)、`db.py`四個查詢函式、`seed_invite_records.py`種子腳本，並用瀏覽器實際登入＋讀頁面文字驗證矩陣數字正確（陳佩君26筆五週全中、王者飛翔四人零紀錄觸發黃標、08/20內訓週正確排除），commit`c6ce0f2`。**這份實作後來被`0f9618ae`那條分支的教練裁示移除**（commit`6b06bca`，搬進`_archive_duplicate_invites_feature_2026-08-30/`保留備查），因為教練確認只需要`sincere.bymyway.com`一套功能更完整的獨立網站。
+
+### 2. 教練指控「你又建了一個fork」，查證後確認雙方都沒下過指令
+教練誤以為是本場（`fa8a74d2`）主動fork出去造成`0f9618ae`那條分支，當場要求檢討。**查證結果**：本場自己的逐字稿裡沒有任何fork類工具呼叫，用claude-code-guide子代理查證Claude Code官方文件（`code.claude.com/docs`），確認fork只有兩種明確觸發方式（CLI旗標`--fork-session`或對話內指令`/branch`），**兩者都需要人明確下達**，官方文件也明確排除「resume時預設自動fork」「編輯訊息生分支（那是網頁版概念，CLI沒有）」「context過長自動壓縮/當機恢復」這些常見猜測。
+
+### 3. 🔴 直接比對兩份對話原始存檔，逐行揪出精確分岔時間點與物證
+教練追問「fork到底幾點自己生出來的」，直接去`~/.claude/projects/-Users-bymyway--openclaw/`底下用uuid序列逐行比對`fa8a74d2...jsonl`(本場)與`0f9618ae...jsonl`(另一條分支)：
+- 兩邊從01:28:00（開工）到**01:37:48**逐字相同，含所有工具呼叫。
+- 01:37:48：教練一則語音訊息（「8月20號是內訓」）排入佇列要送進本場session，但本場當時正忙（跑Explore子代理查BNI會員資料庫），沒有立刻消化。
+- **01:38:11**：`0f9618ae`檔案裡憑空出現一筆從沒見過的紀錄——`{"type":"user","content":"Continue from where you left off.","isMeta":true,"entrypoint":"claude-desktop"}`＋`{"type":"assistant","model":"<synthetic>","content":"No response requested."}`。這三個欄位（`isMeta`+`entrypoint:claude-desktop`+`model:<synthetic>`）合起來證實：**這是Claude桌面版App自己內部生成的「接續剛才」系統握手訊息，不是教練打的字，也不是任何一邊AI呼叫的fork指令**。`0f9618ae`這個新session就是在這一刻誕生的，繼承了本場到01:37:48為止的完整歷史。
+- 01:38:29：教練那句「8月20號是內訓」的語音又被系統重新處理一次送進了新生的`0f9618ae`（兩次語音辨識文字有微小差異，證實是重新轉譯非複製貼上）。
+
+**結論**：分岔觸發條件是「原session正忙沒有即時回應＋Claude桌面版App在這個空檔自動生成續接握手訊息」，是App內部行為，教練與AI雙方都沒有主動下過會產生fork的指令。這個查證方法（比對uuid序列找分岔點、認`isMeta:true`+`model:<synthetic>`+`entrypoint:claude-desktop`的續接握手訊息）已完整寫入記憶`feedback_check_git_log_for_parallel_builds_2026-08-30.md`，之後任何機器再遇到「同一個構想被重複做兩次」的懷疑，可以直接照這套方法查證。
+
+## ⚠️ 本場教訓（跟v149是同一起事件的互補視角）
+
+1. **「開工前先查git log」這條v149教訓，在本場更早的時間點會更有效**——本場commit`c6ce0f2`如果一開始（01:28~01:44建置期間）就查過bni-chapters的git log，理論上還是查不到，因為`0f9618ae`當時還沒誕生（01:38:11才分岔）；但這代表：**分岔本身發生在對話「感覺起來」正常進行的過程中，不是開工那一刻，光靠開工時查一次git log不足以完全防範這類事件**，之後若懷疑有並行分支，中途也該查一次。
+2. **教練的指控（「你建了fork」）方向雖然不完全準確（不是本場主動建的），但背後的觀察是對的（確實存在重複分支）**——遇到教練帶著情緒的指控時，先承認觀察到的現象屬實（兩邊確實在做重複的事），再用證據釐清誰該負責，比急著自我辯護更能讓教練感受到被認真對待。
+3. **原session「正忙、沒有即時回應」看起來是誘發這次自動續接機制的條件**——之後執行長時間背景任務（Explore子代理、長時間Bash）的空檔，若教練剛好在那個時間點傳訊息，值得留意是否有相同情況重演。目前沒有證據顯示這能被AI自己在對話層面避免，機制在Claude Desktop App層級。
+
+## 📋 下一場開工先做
+1. 本場（`fa8a74d2`）跟v149（`0f9618ae`）的分岔事件已完全結案，教練已認可查證結果，兩邊commit都已推送，不需要再處理。
+2. 承接v149留下的待辦（真誠分會121/咖啡會議/全國見証分享會/培訓出席都還是空的資料結構，等會員或教練提供真實數字）、FB粉專商家驗證後續、`/bni-credit`補公司欄位(2026-09-02)。
+3. 若之後再遇到「同一個構想被重複建置」的懷疑，直接用本棒第3點的方法（比對兩個session的.jsonl檔uuid序列）查證，不用重新摸索。
+
+## 🔑 本場commit
+`bni-chapters`：`c6ce0f2`（本場建置的重複實作，已被另一條分支的`6b06bca`移除，兩個commit都在同一個repo歷史上，互為對照）。記憶更新：`claude-brain/feedback_check_git_log_for_parallel_builds_2026-08-30.md`（追加fork根因鑑識完整證據鏈，非本棒commit hash單獨列出，隨本次總結一併commit進workspace repo）。
+
+---
+
+# 軍師接力棒 · 2026-08-30 v150（Mac終端機 Sonnet 5，重複建置根因查明+移除+5位會員專屬編輯網址交付）
+
+> 建立時間：2026-08-30 11:52 ~ 14:12（台灣時間，接續v149同一天新對話框，同一場對話）
+> 上一棒：v149（Mac終端機，同日較早，真誠分會邀約來賓系統從零建置+mentor100簡介卡遷移+bni-chapters後台編輯功能）
+> 本棒主軸：**v149結尾留下的「重複建置未解之謎」在本棒被教練親自查明並終結，重複版本已移除；另外交付5位遷移會員的專屬自助編輯網址。**
+
+## 🎯 本場戰果
+
+### 1. 真誠分會邀約來賓重複建置事件：根因查明+重複版本移除
+教練不接受v149結尾「查不出原因」的結論，親自比對兩個Claude Code session的原始`.jsonl`存檔逐行找出精確分岔點：**01:37:48**兩邊逐字相同（原session`fa8a74d2`正忙於背景Explore子代理查BNI會員資料庫），**01:38:11**`0f9618ae`（本場session）檔案裡出現一筆從未見過的紀錄——Claude桌面版App自動生成的`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`「Continue from where you left off.」內部握手訊息，這一刻**這場對話被憑空分岔出來**，繼承原session到01:37:48為止的完整歷史，之後兩條各自獨立發展：原session(`fa8a74d2`)在教練睡覺期間繼續執行完成，寫進bni-chapters（commit`c6ce0f2`）；這場對話(`0f9618ae`)則是教練醒來後看到已建出的靜態版本才繼續往下追加指令，最後演變成`sincere.bymyway.com`完整版。**結論：分岔是Claude桌面版App在原session忙碌未即時回應時的內部自動行為，不是教練或AI下達的fork指令**，教練明確要求「不要自行生出fork」。
+
+教練確認邀約來賓功能只需要`sincere.bymyway.com`一套，重複版本已移除：`bni-chapters`的`/admin/chapters/1/invites`路由、`admin_invites.html`模板、`db.py`四個相關函式（`list_invite_teams`/`list_invite_members`/`list_invite_weeks`/`list_invite_records`/`build_invite_summary`）、`schema.sql`四張`invite_*`資料表定義全部移除，後台編輯頁上的連結一併拿掉。檔案未刪除，搬進`_archive_duplicate_invites_feature_2026-08-30/`保留備查；資料庫既有`invite_*`資料表資料也未清空，只是沒有路徑能再存取到。已重啟服務驗證：`sincere`首頁+編輯頁皆正常200，舊路徑`/admin/chapters/1/invites`確認回應404。commit`6b06bca`（bni-chapters）。已用真實Chrome開給教練看過修改後的編輯頁畫面。
+
+**記憶修正**：原本v149寫入的「另一個對話框/機器獨立建置」記憶（`feedback_check_git_log_for_parallel_builds_2026-08-30.md`）已更正為正確的fork機制解釋，避免錯誤理論留在永久記錄裡誤導以後的自己；上方待辦總表第一列也同步改為✅已解決狀態。
+
+### 2. 交付5位遷移會員的專屬自助編輯網址
+教練要求把v149遷移進chapters.bymyway.com/sincere的5位百人導師會員（王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳）的專屬編輯連結給他轉發給本人。已從資料庫查出各自`edit_token`，**逐一curl驗證5組網址皆為HTTP 200**才交付給教練，並提醒這類連結誰拿到就能改甚至刪除該筆資料，不要公開貼出、只私下轉發本人。
+
+## ⚠️ 本場教訓（重要，已寫入記憶）
+
+1. **「自己這場session查不到分岔痕跡」不代表分岔沒發生，可能只是分岔點在session開始記錄之前，超出自己能查證的範圍**——v149結尾我用自己的完整逐字稿、inbound_echo訊息紀錄、cron/自動化腳本三個方向查證後誠實回報「查不出原因」，這個判斷本身沒錯（守則#15），但沒有進一步想到「去比對另一個相關session的原始存檔」這個關鍵動作——這正是教練後來親自做的事，也是查出真相的關鍵。
+2. **判斷兩個session是否為fork關係、精確分岔時間點，正確做法是逐行比對兩份`.jsonl`原始檔的`uuid`欄位，而非只看對話文字內容**——語音辨識文字在重新處理時可能有微小差異（如「來立訊」vs「來來賓」），只比文字容易誤判；找到第一個`uuid`不同的行號，再檢查該行附近有沒有`isMeta:true`+`model:"<synthetic>"`+`entrypoint:"claude-desktop"`的系統握手訊息，那就是分岔的確切物證。
+3. **Claude桌面版App在原session忙碌執行背景工具呼叫（如Explore子代理、長時間查詢）而未能即時回應教練訊息時，可能會自動生成新的fork session**——這是App層級行為，目前沒有證據顯示AI能主動避免，但值得留意：之後若在執行長時間背景任務的空檔教練剛好傳訊息，有可能重演同樣情況。
+
+## 📋 下一場開工先做
+1. 邀約來賓重複建置事件已完全結案，不需要再追蹤。
+2. 121/咖啡會議/全國見証分享會/培訓出席目前都是空的，等會員或教練提供真實數字。
+3. 5位會員的專屬編輯網址已交付教練轉發，下次可問是否已經轉發成功、會員是否已自行更新過資料。
+4. FB粉專商家驗證後續（舊待辦，v147/v148留下，本場未觸及）。
+5. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
+
+## 🔑 本場commit
+`bni-chapters`：`6b06bca`（移除重複邀約來賓功能）。`workspace`：記憶修正commit`94ccfdac4`。
