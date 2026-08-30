@@ -13,6 +13,7 @@ import re
 import urllib.error
 import urllib.request
 from datetime import date, datetime
+from pathlib import Path
 from urllib.parse import quote
 
 from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
@@ -865,6 +866,52 @@ def admin_sessions_publish():
                                 notice=f"✅ {result['message']}官網已更新{left}。"))
     return redirect(url_for("admin_sessions",
                             error=f"（{result['step']}）{result['message']}"))
+
+
+# ───────── 大樹小講／AI微論壇：bymyway 版本（2026-08-30，逐步取代 Netlify 部署次數限制）─────────
+# 設計/文案本體只有一份，就是各自的 github_repos git repo，這裡在請求當下直接讀
+# 原始檔案（+ 大樹小講額外疊上 event.db 即時場次資料）組合渲染，不另外複製一份，
+# 教練或軍師改任一邊都立刻反映，不需要「發佈」這個動作。GitHub Pages/Netlify 兩邊
+# 暫時繼續保留同步，穩定一陣子後才會退場（教練 2026-08-30 裁示）。
+BIGTREE_REPO = Path("/Users/bymyway/github_repos/bigtree")
+AI_FORUM_REPO = Path("/Users/bymyway/github_repos/ai-forum-taichung")
+_REPO_BLOCKED_TOP_DIRS = {".git", "biz-gym"}
+
+
+def _serve_repo_file(repo: Path, filename: str):
+    top = filename.split("/", 1)[0]
+    if top in _REPO_BLOCKED_TOP_DIRS or filename.startswith("."):
+        abort(404)
+    return send_from_directory(repo, filename)
+
+
+@app.route("/bigtree/")
+def bigtree_page():
+    import bigtree_publish as bp
+    conn = db.get_conn()
+    rows = bp.read_sessions(conn)
+    conn.close()
+    html = (BIGTREE_REPO / "index.html").read_text(encoding="utf-8")
+    block = bp.render_session_dates(rows)
+    html, _n = re.subn(r"const SESSION_DATES = \[[\s\S]*?\n\];", block, html, count=1)
+    return Response(html, mimetype="text/html; charset=utf-8")
+
+
+@app.route("/bigtree/<path:filename>")
+def bigtree_assets(filename):
+    if filename == "index.html":
+        return bigtree_page()
+    return _serve_repo_file(BIGTREE_REPO, filename)
+
+
+@app.route("/ai-talk/")
+def ai_talk_page():
+    return _serve_repo_file(AI_FORUM_REPO, "index.html")
+
+
+@app.route("/ai-talk/<path:filename>")
+def ai_talk_assets(filename):
+    return _serve_repo_file(AI_FORUM_REPO, filename)
 
 
 if __name__ == "__main__":
