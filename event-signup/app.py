@@ -882,6 +882,7 @@ BIGTREE_REPO = Path("/Users/bymyway/github_repos/bigtree")
 AI_FORUM_REPO = Path("/Users/bymyway/github_repos/ai-forum-taichung")  # 目前是台中場內容，之後換場地時原地改內容，repo資料夾名稱不代表網址
 AI_TALK_REPO = Path("/Users/bymyway/github_repos/ai-talk")
 TAINAN_CALENDAR_REPO = Path("/Users/bymyway/github_repos/tainan-calender")  # 沿用既有repo/Netlify站台既有拼法，不擅自改成calendar
+BNI_TRAFFIC_REPO = Path("/Users/bymyway/github_repos/bni-traffic")  # 紅綠燈看板，原repo已在GitHub上archived但內容仍可讀取服務
 _REPO_BLOCKED_TOP_DIRS = {".git", "biz-gym"}
 
 
@@ -939,6 +940,16 @@ def tainan_calendar_page():
 @app.route("/tainan-calender/<path:filename>")
 def tainan_calendar_assets(filename):
     return _serve_repo_file(TAINAN_CALENDAR_REPO, filename)
+
+
+@app.route("/bni-traffic/")
+def bni_traffic_page():
+    return _serve_repo_file(BNI_TRAFFIC_REPO, "index.html")
+
+
+@app.route("/bni-traffic/<path:filename>")
+def bni_traffic_assets(filename):
+    return _serve_repo_file(BNI_TRAFFIC_REPO, filename)
 
 
 if __name__ == "__main__":
