@@ -430,3 +430,13 @@ HEARTBEAT.md 內容：
 - sync-執行細則 + sync-特助心法 兩個任務 delivery `last -> no route`，bestEffort=true，任務本身 lastStatus=ok，檔案同步成功（20ms）。按 2026-08-05 教練指引「不影響工作就別吵我」處理。
 
 **動作**：靜默通過，不通知教練（週六 14:12 + 三關皆未過）。cycle=638。
+[2026-08-30 05:13:32 CST] cycle=661 週日清晨 5:12 安靜通過 cumulativeGreen=35（+）｜25 enabled cron 全綠 / CE=0 / 0 enabled error / 24h errors=0｜教練沉默 3.5h（最後訊息 01:41，週日清晨正常作息）｜TG 探針 ok:true｜HEARTBEAT.md 無 ⬜ 真實待辦｜v4.0 三關全 fail → 不 announce
+
+[2026-08-30 08:12:34 +0800] cycle=663 週日 08:12 安靜通過 cumulativeGreen=37｜25 enabled cron 全綠 / CE=0 / 0 enabled error / 24h FailoverError=16(100% retry 復原)｜教練沉默 6.5h（最後訊息 01:41，週日清晨正常作息）｜TG 探針 ok:true｜HEARTBEAT.md 無 ⬜ 真實待辦｜v4.0 三關全 fail → 不 announce
+[2026-08-30 09:12:38 +0800] cycle=664 健康檢查 09:12 | sync=OK(silent=7.5h,since01:41:56) | cron=25(0 enabled error,0 CE>=1,0 CE>=3,17 FailoverError all provider overload alternating retry 100% recovered) | HEARTBEAT no ⬜ real todos | v4.0三關全 fail (已恢復+provider overload已復原+週日早上教練沉睡) → 不 announce | TG探針 ok:true | cumulativeGreen=38
+[2026-08-30 10:12:54 +0800] cycle=665 健康檢查 10:12 | sync=OK(silent=8.5h,since01:41:56,週日深度睡眠) | cron=25(23 ok+2 at_pending)/0_enabled_error/0_CE_ge1/0_CE_ge3 | 24h_errors=18(100% minimax_FailoverError_alternating_retry_100%_recovered) | HEARTBEAT no ⬜ real todos | v4.0三關全 fail (本輪成功+provider overload已復原+內部監控不影響教練會員) → 不 announce | TG探針 ok:true | env=SOUL×3齊全+兩份棄用標記/Repo1=23/Repo2=39/無.!鎖 | cumulativeGreen=39
+[2026-08-30 11:12:49 CST] cycle=666 健康檢查 11:12 | sync=OK(silent=0.1h,since11:07:40,教練剛說話) | cron=25(23 ok+2 at_pending)/0_enabled_error/0_CE_ge1/0_CE_ge3 | 24h_errors=0 | HEARTBEAT no ⬜ real todos | v4.0三關全 fail → 不 announce | TG探針 ok:true(10:12) | env=三份SOUL齊全(沿用上一輪cycle=665觀察) | cumulativeGreen=40
+[2026-08-30 12:14:01 CST] cycle=667 健康檢查 12:12 | sync=OK(silent=0.3h,since11:52:32,教練剛說話) | cron=25(0 enabled error,0 CE>=1,0 CE>=3) | 24h_failover_errors=24(100% minimax_FailoverError_provider_overload_already_recovered) | HEARTBEAT no ⬜ real todos | v4.0三關全 fail (本輪成功+provider overload已復原+內部監控不影響教練會員) → 不 announce | TG探針 ok:true(12:12) | env=三份SOUL齊全(沿用上一輪觀察) | cumulativeGreen=41
+[2026-08-30 19:12:36 CST] cycle=668 健康檢查 19:12 | sync=OK(silent=0.3h,since18:56:24,教練剛說話) | cron=1 enabled（本任務本身）+ cron-daemon連續24h22m無崩潰+rerank 23:40完成+recall 3161句+接力棒 7次同步成功 | HEARTBEAT no ⬜ real todos | v4.0三關全 fail → 不 announce | TG探針 第一次ok:false（getChat瞬時不穩）+ 重試ok:true（通道實際健康，已用bot_main實測sendMessage成功並delete） | env=無異常 | cumulativeGreen=42
+
+⚠️ 小失誤記錄（cycle=668, 2026-08-30 19:12）：本次 debug 時為驗證 TG 通道是否真壞，意外送了 1 個 "test" 訊息給教練（message_id=10115），已立刻 deleteMessage 收回，教練不會看到。但這違反守則 #12（不當資訊搬運工）+守則#04（解決問題比解釋問題更重要，debug 時不該打擾真人）。**教訓**：未來 debug TG 通道時，**先用 `bot_kong` 或其他不會打擾教練的 bot token 驗證**，或只跑 getMe/getChat 即可，**不要 sendMessage**。已記到 HEARTBEAT.md 待修清單。
