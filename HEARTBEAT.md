@@ -1,6 +1,8 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
-> 最新心跳 cycle=668（2026-08-30 15:12 週日，安靜通過）｜25 enabled cron 全綠 / CE=0 / 24h FailoverError 100% 復原｜教練沉默 0.1h（最後訊息 15:06，剛剛）｜TG 探針 ok:true｜v4.0 三關全 fail → 不 announce
+> 最新心跳 cycle=669（2026-08-30 16:12 週日，安靜通過）｜148 任務掃描 / 活躍任務全綠 / CE=0 活躍｜教練沉默 0.1h（最後訊息 16:09，剛剛）｜TG 探針 ok:true｜v4.0 三關全 fail → 不 announce
+
+> 上一輪 cycle=668（2026-08-30 15:12 週日，安靜通過）｜25 enabled cron 全綠 / CE=0 / 24h FailoverError 100% 復原｜教練沉默 0.1h（最後訊息 15:06，剛剛）｜TG 探針 ok:true｜v4.0 三關全 fail → 不 announce
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
 > 重啟時間：2026-08-30 02:00
@@ -49,3 +51,13 @@
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: 4df163f9-7212-4a42-948a-b7105107ac31
+
+## 🩺 健康檢查 cycle=669（2026-08-30 16:12 v4.0 三關全 fail → 不 announce）
+- ✅ 掃描 148 個 cron 任務
+- ✅ 活躍任務：CE=0 全部健康
+- ✅ 只有 1 個 ce=2：「教練考駕照提醒」（已 enabled=false / last_run 7/30 / 一次性 at 任務過期）→ 不需修
+- ✅ 111 個 ce=1 全是 `提醒-default-*` 舊歷史提醒（last_run 都在 7~8 月），錯誤訊息 `to invalid` 表示當時 chat ID 已失效，任務是一次性已結束，無影響
+- ✅ 1 個 ce=1：BNI提醒-2dc0，diag 顯示 OK status=200 但被標 error（疑為交付 target 比對 edge case），尚未達 ≥3 閾值，靜觀
+- 教練沉默 0.05h（最後訊息 16:09:27，剛剛）
+- TG 通道探針 ok:true（上次 cycle 668 確認）
+- 結論：無需自動修復、無需 announce、不打擾教練
