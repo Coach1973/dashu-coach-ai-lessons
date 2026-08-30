@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 mentor100百人導師申請通知改走Telegram，修復8/27靜默漏接(2026-08-30)](project_mentor100_application_notify_telegram_fix_2026-08-30.md) — 舊sme-register-fn(LINE)吞錯誤同event-signup案例62坑，全機已掃描確認無其他專案殘留
 - [🔧 event.bymyway.com前面Cloudflare會擋掉沒有瀏覽器UA的請求(403)(2026-08-30)](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md) — 任何腳本自動fetch這類bymyway子網域都要帶Mozilla/5.0樣式UA，否則被擋
 - [🎯🎯 大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，脫離Netlify部署次數限制(2026-08-30教練拍板)](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md) — 讀活repo+DB即時渲染取代手動zip部署，網址代表活動格式非地點，未來其他Netlify站台可比照
 - [🎯 真誠分會邀約來賓/121/咖啡/見証/培訓系統sincere.bymyway.com上線(2026-08-30)](project_sincere_bymyway_guest_tracker_2026-08-30.md) — 會員自助輸入即時存檔，bni-chapters重複版本已移除(根因是對話被fork)

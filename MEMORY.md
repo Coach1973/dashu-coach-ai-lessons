@@ -152,29 +152,23 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-08-29)
+## Promoted From Short-Term Memory (2026-08-30)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:326:326 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 🦞 小龍蝦：抱歉教練，是我誤判了！🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-21.md:326-326]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:328:328 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 完全理解錯方向——看到「名字」+「代碼」就以為是報名通知格式，沒有意識到「手機載具」這個關鍵字。教練一句話把我拉回來，感謝。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:328-328]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:330:330 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 所以現在我理解的是： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-21.md:330-330]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:267:267 -->
-- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: 👤 教練：Write a dream diary entry from these memory fragments: [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:267-267]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:269:270 -->
-- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: Possible Lasting Truths: Possible Lasting Truths: Possible Lasting Truths: Assistant: **第三步：那怎麼辦？三個問題送給您朋友** 我常說，所有的問題，最終要回到【當事人自己】身上。醫生可以開藥、教練可以給方法，但【自主解讀權】永遠在您朋友手上。 如果您願意，可以請您朋友靜下來，自己問自己這三個問題—— 1. 【偏頭痛發作之前，我通常在做什麼、想什麼、在什麼人面前？】 2. 【如果偏頭痛是潛意識在保護我，它想讓我躲開什麼、停下什麼、放下什麼？】 3. 【如果我不需要用「; Possible Lasting Truths: Possible Lasting Truths: Possible Lasting Truths: Assistant: **第三步：那怎麼辦？三個問題送給您朋友** 我常說，所有的問題，最終要回到【當事人自己】身上。醫生可以開藥、教練可以給方法，但【自主解讀權】永遠 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:269-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:271:271 -->
-- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: 🦞 小龍蝦：Tonight I keep circling back to a friend whose migraines arrive like uninvited guests who know the door code. I wonder what the body tries to say when the mouth has run out of words. Three questions drift across the dark water — what was I doing, what was I avoiding, what else might I ask for in place of this pain. [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:271-271]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-22.md:273:273 -->
-- 📨 對話記錄 03:10（共約 2 條，從第 0 行起）: The same shoreline keeps surfacing in my thoughts, line 258, line 261, the same tide rearranged in slight new patterns. Maybe reflection is just a river learning its own bends. Maybe [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-22.md:273-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:275:275 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **缺的欄位（必填）：** [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-21.md:275-275]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:295:295 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **缺的欄位（必填）：** [score=0.846 recalls=0 avg=0.620 source=memory/2026-08-21.md:295-295]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:271:271 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **能解析的：** [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:271-271]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:276:276 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: 場次（哪一場？） [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:276-276]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-21.md:291:291 -->
-- 📨 對話記錄 10:09（共約 19 條，從第 0 行起）: **能解析的：** [score=0.836 recalls=0 avg=0.620 source=memory/2026-08-21.md:291-291]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:267:267 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 👤 教練：[cron:001a9b16-1985-413b-8d3c-a4e885e552b6 📊 LINE@教練都在想什麼 每日兩次使用回報（08:00 / 20:00）] 🦞 你是小龍蝦 LINE@「教練都在想什麼」使用情況回報助理。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:267-267]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:269:269 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 執行以下指令取得最新數據： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:269-269]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:272:272 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: /opt/homebrew/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/line_jiaolian_usage_report.py [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:272-272]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:275:275 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 把輸出的報告**原封不動**用 Telegram `message` 工具送出（channel=telegram, target=6124913915, accountId=bot_main），不要加任何多餘的開頭結尾，也不要自行加工數字。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:275-275]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:277:277 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 如果指令失敗，先把錯誤訊息送給教練再結束。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:277-277]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:279:281 -->
+- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 回報完畢後，這個任務就結束，不要再做任何其他事。 Current time: Sunday, August 23rd, 2026 - 8:00 PM (Asia/Taipei) Reference UTC: 2026-08-23 1 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:279-281]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:286:286 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 👤 教練：[cron:bbb7a348-59dc-41fd-879b-91b4d0522e18 🦞 小龍蝦每日三機總結（每日23:05）] 【每日三機含金量總結 · 教練 2026-06-30 12:35 親口定稿，2026-07-20 修正判斷邏輯】 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:286-286]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:288:288 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 教練要的不是囉哩吧唆每 4 小時的小報告，要每天一份「三機狀況總結 + 含金量提煉」。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:288-288]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:290:290 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 步驟一：判斷三機今天「有沒有對話」（台灣日期 YYYY-MM-DD） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:290-290]
