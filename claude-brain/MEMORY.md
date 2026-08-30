@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 event.bymyway.com前面Cloudflare會擋掉沒有瀏覽器UA的請求(403)(2026-08-30)](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md) — 任何腳本自動fetch這類bymyway子網域都要帶Mozilla/5.0樣式UA，否則被擋
+- [🎯🎯 大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，脫離Netlify部署次數限制(2026-08-30教練拍板)](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md) — 讀活repo+DB即時渲染取代手動zip部署，網址代表活動格式非地點，未來其他Netlify站台可比照
 - [🎯 真誠分會邀約來賓/121/咖啡/見証/培訓系統sincere.bymyway.com上線(2026-08-30)](project_sincere_bymyway_guest_tracker_2026-08-30.md) — 會員自助輸入即時存檔，bni-chapters重複版本已移除(根因是對話被fork)
 - [🔴🔴🔴 Claude桌面版App會在原session忙碌未回應時自動生出fork分身，機制已逐行查證確認(2026-08-30)](feedback_check_git_log_for_parallel_builds_2026-08-30.md) — .jsonl比對uuid找到01:38:11精確分岔點+isMeta同步握手訊息物證，非教練或AI下的指令
 - [🔧 Jinja2樣板dict鍵名叫values會撞內建方法，資料靜默消失不報錯(2026-08-30)](reference_jinja2_dict_values_key_collision_2026-08-30.md) — entry.values.xxx存取到dict.values方法物件而非資料，總計欄位因走不同邏輯掩蓋了bug

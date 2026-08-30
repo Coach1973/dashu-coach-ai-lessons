@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🎯🎯 | **大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制** | ✅2026-08-30本場完成，教練親口「很棒」肯定方向 | 教練拍板方向：讀活repo+event.db即時渲染取代Netlify手動zip部署，GitHub Pages/Netlify暫時保留同步、穩定後才退場。已上線4個新路由，全部走`event-signup`既有Flask app（不新增子網域/Tunnel/launchd，降低服務被遺忘風險）：`event.bymyway.com/bigtree/`（疊event.db即時場次資料）、`/ai-forum/`（現為台中場9/23-24，2天制系列共用網址，教練明確要求網址代表格式非地點，之後10/7-8台南場沿用同網址）、`/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補凌榆舜/李明燦兩位講師資料後改9/22台南場）、`/tainan-calender/`、`/bni-traffic/`（純client端repo，零風險）。同步更新3處連動：①`bni-chapters`資料庫9分會×2連結共18筆改新網址 ②`bni_tainan`小幫手`AGENTS.md`4處member-facing連結+`sync_calendar.py`抓取來源（過程修好Cloudflare擋urllib預設UA的403問題）③`coach888`作品總覽新增「三、bymyway自架版」區塊（教練要求移到第三順位，其餘區塊順延），5個Netlify舊版標「待退場」橘色badge一眼可辨識。所有變更均先本機測試埠+真實Chrome驗證，重啟正式服務後在公開網址再次curl驗證才commit。commit一覽：`f8ac8fc`+`3df06cab7`+`fc58dc783`（event-signup）、`5fabb60d`（bni_tainan外層repo）、`230d735`+`cafe1f4`（coach888）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。**下一棒待辦**：等教練提供凌榆舜/李明燦兩位講師的職稱/講題/簡介/照片，把`/ai-talk`一次改成9/22台南場正式內容（設攤/贊助商區塊維持不動）。 |
 | ✅ | **真誠分會邀約來賓紀錄表重複建置事件：根因已查明+重複版本已移除** | ✅2026-08-30本場完成，教練親自抓出根因 | 起因：查git log發現bni-chapters裡有一份`c6ce0f2`commit做出功能重疊的重複實作（`/admin/chapters/1/invites`）。**教練親自比對兩個session的原始.jsonl逐行找出精確分岔點**：01:37:48原session(`fa8a74d2`)正在忙背景Explore子代理查詢時，Claude桌面版App在01:38:11自動生成一則`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`的「Continue from where you left off.」內部握手訊息，**憑空分岔出這場對話**(`0f9618ae`)，繼承原session到01:37:48為止的歷史，之後兩條各自獨立發展——非教練或AI下達的fork指令，是App層級的自動行為。教練確認只需要`sincere.bymyway.com`一套，重複版本已移除：`/admin/chapters/1/invites`路由+`admin_invites.html`+db.py四個函式+schema.sql四張invite_*資料表全部移除，檔案歸檔於`_archive_duplicate_invites_feature_2026-08-30/`未刪除，資料庫既有資料保留未清空，commit`6b06bca`（bni-chapters）。詳見v149+v150、記憶`feedback_check_git_log_for_parallel_builds_2026-08-30`。 |
 | ✅ | **AI百人導師(mentor100)真誠分會5人簡介卡遷移到chapters.bymyway.com/sincere+後台新增編輯按鈕** | ✅2026-08-30本場完成 | 王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳，含照片，逐筆核對mentors表欄位對應chapter_members表（兩邊格式一致）搬移，commit`1f460f7`（bni-chapters）。教練隨後指出後台改資料只能靠AI代改的缺口（「我自己改不了」），已新增`/admin/chapters/<id>/members/<id>/edit`路由+`admin_member_edit.html`模板，沿用既有`member_join_edit.html`欄位結構跟`db.update_member()`函式，分會夥伴簡介列表每筆加「編輯」連結，commit`8cd9595`。**已用真實登入+存檔round-trip驗證**（改一個欄位→存檔→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣），非僅程式碼審查。詳見v149。 |
 | 🟡 | **教練提出「釋放記憶體」指令要更全面：連同所有可關App一併關閉** | 🔒卡住-待教練確認白名單範圍 | 2026-08-29教練電腦變慢多輪診斷後提出構想，已給評估：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限，且既有的RustDesk釋放指令查證後對15GB量級記憶體壓力貢獻微乎其微(重啟後process反而一度變多)。若要動手寫這支腳本，需先問清楚白名單——Claude/Finder等系統必要項可以確定，但Typeless/Chrome/LINE等常用工具要不要保留，教練尚未回覆。詳見v148。 |
@@ -262,89 +263,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-30 v149（Mac終端機 Sonnet 5，真誠分會邀約來賓系統從零建置+mentor100簡介卡遷移+bni-chapters後台編輯功能）
-
-> 建立時間：2026-08-30 01:28 ~ 11:52（台灣時間，接續v148同一天新對話框）
-> 上一棒：v148（Mac終端機，同日較早，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
-> 本棒主軸：**教練構思真誠分會邀約來賓紀錄表，從DNA月報表格式仿製起步，逐步擴充成三項指標(來賓/121/咖啡會議)+全國見証分享會+培訓出席、全部會員自助輸入即時存檔的獨立網站(sincere.bymyway.com)；額外完成mentor100→bni-chapters的5人簡介卡遷移+後台新增編輯功能。**
-
-## 🎯 本場戰果
-
-### 1. 真誠分會邀約來賓戰情儀表板從零建置，正式上線 sincere.bymyway.com
-教練構想：仿照既有`bni-dna`（大台南南區DnA團隊戰情儀表板）月報表格式，改成週版，追蹤13位在籍會員（3個成功小組：王者飛翔/百聖維尼/羽宙奇蹟，各自指定助理大使）從07/23~08/27邀約來賓數，連續4週無來賓標🟡、連續8週標🔴（建議寄警告信）。08/20當週分會改內訓不列入計算。
-
-過程隨教練逐輪追加需求持續擴充：①指標從單一「來賓」擴增為三項（來賓/121一對一/咖啡會議），週欄位改成單一格內三行堆疊顯示 ②121與咖啡會議明確要求「開放會員自行輸入、即時更新」——這個要求讓系統從原本設想的靜態HTML（比照DNA由軍師手動更新）**升級成有資料庫的Flask小網站**，會員打數字、欄位失焦即時存檔，旁邊總數與連續無紀錄週數立刻更新 ③新增「全國見証分享會」出席（週一場3/10/17/24/31、週四場6/13/20/27，日期用Python反推8月真實日曆算出，非用猜的）與「培訓出席」（8月三場＋9月五場教練預先提供備存待用），兩者同樣改成會員自行點選YES/NO或打勾打叉即時存檔 ④新增「助理大使」姓名掛在分組名稱後面、字級與會員姓名同級 ⑤新增「真誠翻轉計劃－大事紀」區塊 ⑥8/27新會員張育慈加入王者飛翔組（教練澄清：入會日8/27，但邀約來賓起算週從9月開始算）⑦網址原本暫定`zhencheng.bymyway.com`，教練要求改成與bni-chapters分會slug一致的`sincere.bymyway.com`，已重新申請Cloudflare Tunnel+DNS、刪除舊網址記錄、launchd服務改名為`com.coach.sincere-webapp`/`com.coach.sincere-tunnel`。
-
-技術細節：repo`Coach1973/zhencheng-guests`（私有，注意repo名稱仍是舊名`zhencheng`，跟現在網址`sincere`不一致，純屬命名遺留，功能不受影響）；SQLite資料庫`members`/`weeks`/`weekly_data`/`testimony_sessions`/`testimony_attendance`/`training_sessions`/`training_attendance`七張表；`/api/update_metric`、`/api/update_testimony`、`/api/update_training`三組API供前端即時存檔。全部功能都用真實輸入round-trip驗證過（不只讀程式碼）：模擬打入數字→確認存檔成功→重新整理頁面確認資料庫真的持久化→測試值清除乾淨，包含在公開網址（非僅本機）上實測過一次。
-
-### 2. 過程中抓到並修復的兩個真bug
-①**Jinja2樣板`dict.values()`方法名稱衝突**：把每週三項指標包在鍵名叫`"values"`的dict裡，Jinja2用點記法`entry.values.guests`存取時會撞到Python字典內建的`.values()`方法，抓不到真正塞進去的資料，**導致整張表所有人、所有週次的來賓人數格子全部靜默顯示「0人」**（連陳佩君實際26人的紀錄都被蓋成0，右側「總邀約」欄位因算法不同沒受影響顯示仍正確，所以起初不容易發現）。已改名成`"metrics"`並重新驗證五週正確顯示8/1/5/6/6人。②**種子腳本(seed.py)原本是「先清空再重灌」的破壞性設計**，若後續要加新會員或補資料重跑一次，會把會員已經自己填好的121/咖啡會議資料整批洗掉。已改寫成UPSERT安全版，重跑只更新教練提供的部分（會員名單/週次/來賓數），絕不觸碰會員自填欄位，並用「模擬填值→重跑腳本→值還在」的方式實測驗證過。
-
-### 3. 🔴 意外發現：另一個對話框幾乎同時間獨立重複建置了同一個功能
-查bni-chapters的git log時發現commit`c6ce0f2`（作者CoachWU，2026-08-30 01:44:59，跟本場session開始時間幾乎重疊），標題「新增真誠分會邀約來賓紀錄表」——**另一台機器/對話框收到教練類似構想後，獨立在bni-chapters裡做了一份架構完全不同的實作**：整合進既有後台`/admin/chapters/1/invites`路由，需登入才看得到，唯讀顯示，只有最初版的來賓矩陣（沒有121/咖啡/見証/培訓這些後續擴充），資料庫也是各自獨立的SQLite，兩邊不會同步。已在對話中把兩套系統的差異列表回報教練（存取方式/功能範圍/資料庫），**教練尚未回覆要保留哪一版**，這是本棒最大的未決事項，寫進上方待辦總表第一列。
-
-### 4. AI百人導師(mentor100) → 真誠分會(chapters.bymyway.com/sincere) 5人簡介卡遷移
-教練指出兩邊`mentors`/`chapter_members`資料庫欄位格式一致，要求把已在mentor100填好完整簡介的5位真誠分會會員（王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳）簡介卡搬到chapters.bymyway.com/sincere。寫`migrate_sincere_from_mentor100.py`逐筆核對欄位（name/company_title/role_tag/bio/photo_filename+9組社群連結）搬移，5張照片一併複製進bni-chapters的`static/uploads/`，用bni-chapters既有的`db.insert_member()`函式寫入（不是手刻SQL），commit`1f460f7`。5張照片HTTP 200+Content-Type正確逐一curl驗證。教練隨即糾正Lavi姓名要加中文（「林佳伶 Lavi」），已修正並在公開頁確認顯示正確。
-
-### 5. bni-chapters後台新增「編輯」功能，教練可自行更新會員資料
-起因：教練想改林佳伶的名字卻只能請AI代改，指出「後台跟mentor100一樣要有編輯按鈕」的缺口——查證確認bni-chapters的`chapter_members`表原本只有「會員自己憑專屬token編輯」跟「教練刪除」兩條路，沒有教練直接編輯的管道。新增`/admin/chapters/<id>/members/<id>/edit`路由（GET+POST，`@login_required`）+ `admin_member_edit.html`模板（沿用既有`member_join_edit.html`的欄位結構跟`_extract_member_links()`/`_process_and_save_photo()`/`db.update_member()`既有函式，非重新發明），分會夥伴簡介列表每筆加上「編輯」連結。**已用真實登入+存檔round-trip完整驗證**：登入`chapters.bymyway.com/admin/sincere/login`（帳密Admin/88888）→點編輯→改一個測試欄位→送出→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣，commit`8cd9595`。
-
-## ⚠️ 本場教訓（重要，已寫入記憶）
-
-1. **Jinja2樣板裡千萬不要把資料塞進鍵名叫`values`（或其他dict內建方法名，如`keys`/`items`）的dict**——用點記法存取時會撞到Python字典內建方法，資料在Python端明明正確，樣板卻靜默顯示空白/預設值，錯誤不會報例外、很難察覺，且聚合統計如果剛好走不同的計算路徑（本例是`totals`不受影響），會讓局部bug被部分正確的數字掩蓋，更難發現。
-2. **接到「做一個XX紀錄表」這類教練口頭構想時，開工前應該先查一下相關repo的最近git log**，確認有沒有其他對話框/機器已經在做同一件事——本場如果一開始就查過bni-chapters的git log，可能會在早期就發現c6ce0f2這個並行commit，及早跟教練確認方向而不是兩邊都做到接近完成才發現。
-3. **種子/初始化腳本只要會被期待「之後還會再跑」（加新會員、補資料），就必須從一開始設計成UPSERT安全版，不能圖方便先寫「清空重灌」**——本場是在還沒正式上線前的測試階段就自己發現這個隱患並修正，但如果是上線後才發現，代價會是真實會員已填的資料被整批洗掉。
-4. **教練口頭給的日期範例，值得先驗證是不是真實日期而非純粹舉例**——本場教練說「例如3-10-17-24-31是週一」，一開始以為只是格式範例，用Python反推後發現剛好完全對上8月真實日曆，證實是教練提供的真實資料，不是憑空舉例。遇到教練給的具體數字/日期，先假設是真實資訊去查證，比預設「這只是舉例」更保險。
-
-## 📋 下一場開工先做
-1. **最優先**：真誠分會邀約來賓系統重複建置的裁示——問教練要保留`sincere.bymyway.com`獨立網站版還是bni-chapters後台`/admin/chapters/1/invites`版，或兩個都留但要說清楚以哪個數字為準。
-2. 121/咖啡會議/全國見証分享會/培訓出席目前都是空的（結構已建好，等會員或教練提供真實數字），需要教練或會員實際使用後才有資料可看。
-3. 張育慈的邀約來賓起算週是2026-09-03（教練指定），屆時要留意她那一列開始出現「連續無來賓」計算是否合理。
-4. FB粉專商家驗證後續（舊待辦，v147/v148留下，本場未觸及）。
-5. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
-
-## 🔑 本場commit
-`zhencheng-guests`（私有repo，即sincere.bymyway.com）：`6057c1a`（首次建置）+ `9d2a40f`（全國見証/培訓改會員自填）。`bni-chapters`：`1f460f7`（mentor100簡介卡遷移）+ `8cd9595`（後台編輯功能）。另有Cloudflare Tunnel/DNS設定+launchd plist（`com.coach.sincere-webapp`/`com.coach.sincere-tunnel`，不在git版控範圍）。
-
----
-
-# 軍師接力棒 · 2026-08-30 v151（Mac終端機 Sonnet 5，就是被fork出來的那一條——bni-chapters重複實作+fork根因鑑識查證）
-
-> ⚠️ **編號說明**：本棒原本也自編為v150，跟緊接在後面的另一條分支session（`0f9618ae`）的接力棒撞號——兩邊在同一個檔案上幾乎同時各自寫入，剛好是今天這整起fork事件的活教材，已改編號為v151避免混淆，內容不變。
-> 建立時間：2026-08-30 01:28 ~ 14:12（台灣時間，跟v149/v150是同一次fork事件的**另一條分支**，session id`fa8a74d2-d7b2-48c0-a96f-66882163fe84`）
-> 上一棒：v149/v150（同一天、同一個起點，01:37:48之前完全逐字相同，之後各自獨立發展成不同分支各自寫接力棒）
-> 本棒主軸：**先獨立做出跟v149重疊的bni-chapters邀約來賓功能（已被v149那條分支的教練裁示移除），被教練指出「你又自己生了一個fork」，查證後證明兩邊都沒下過fork指令，是Claude桌面版App自己的內部行為，並用兩份對話原始存檔逐行比對，把分岔的精確時間戳跟物證都挖出來了。**
-
-## 🎯 本場戰果
-
-### 1. 獨立建置bni-chapters內建的邀約來賓紀錄表（已被移除，過程完整記錄供對照）
-在不知道`0f9618ae`那條分支已經在做同一件事的情況下，本場從零設計了會員×週次矩陣＋連續無來賓自動標籤（4週🟡/8週🔴），整合進`bni-chapters`既有後台（`/admin/chapters/1/invites`），含四張新資料表(`invite_teams`/`invite_members`/`invite_weeks`/`invite_records`)、`db.py`四個查詢函式、`seed_invite_records.py`種子腳本，並用瀏覽器實際登入＋讀頁面文字驗證矩陣數字正確（陳佩君26筆五週全中、王者飛翔四人零紀錄觸發黃標、08/20內訓週正確排除），commit`c6ce0f2`。**這份實作後來被`0f9618ae`那條分支的教練裁示移除**（commit`6b06bca`，搬進`_archive_duplicate_invites_feature_2026-08-30/`保留備查），因為教練確認只需要`sincere.bymyway.com`一套功能更完整的獨立網站。
-
-### 2. 教練指控「你又建了一個fork」，查證後確認雙方都沒下過指令
-教練誤以為是本場（`fa8a74d2`）主動fork出去造成`0f9618ae`那條分支，當場要求檢討。**查證結果**：本場自己的逐字稿裡沒有任何fork類工具呼叫，用claude-code-guide子代理查證Claude Code官方文件（`code.claude.com/docs`），確認fork只有兩種明確觸發方式（CLI旗標`--fork-session`或對話內指令`/branch`），**兩者都需要人明確下達**，官方文件也明確排除「resume時預設自動fork」「編輯訊息生分支（那是網頁版概念，CLI沒有）」「context過長自動壓縮/當機恢復」這些常見猜測。
-
-### 3. 🔴 直接比對兩份對話原始存檔，逐行揪出精確分岔時間點與物證
-教練追問「fork到底幾點自己生出來的」，直接去`~/.claude/projects/-Users-bymyway--openclaw/`底下用uuid序列逐行比對`fa8a74d2...jsonl`(本場)與`0f9618ae...jsonl`(另一條分支)：
-- 兩邊從01:28:00（開工）到**01:37:48**逐字相同，含所有工具呼叫。
-- 01:37:48：教練一則語音訊息（「8月20號是內訓」）排入佇列要送進本場session，但本場當時正忙（跑Explore子代理查BNI會員資料庫），沒有立刻消化。
-- **01:38:11**：`0f9618ae`檔案裡憑空出現一筆從沒見過的紀錄——`{"type":"user","content":"Continue from where you left off.","isMeta":true,"entrypoint":"claude-desktop"}`＋`{"type":"assistant","model":"<synthetic>","content":"No response requested."}`。這三個欄位（`isMeta`+`entrypoint:claude-desktop`+`model:<synthetic>`）合起來證實：**這是Claude桌面版App自己內部生成的「接續剛才」系統握手訊息，不是教練打的字，也不是任何一邊AI呼叫的fork指令**。`0f9618ae`這個新session就是在這一刻誕生的，繼承了本場到01:37:48為止的完整歷史。
-- 01:38:29：教練那句「8月20號是內訓」的語音又被系統重新處理一次送進了新生的`0f9618ae`（兩次語音辨識文字有微小差異，證實是重新轉譯非複製貼上）。
-
-**結論**：分岔觸發條件是「原session正忙沒有即時回應＋Claude桌面版App在這個空檔自動生成續接握手訊息」，是App內部行為，教練與AI雙方都沒有主動下過會產生fork的指令。這個查證方法（比對uuid序列找分岔點、認`isMeta:true`+`model:<synthetic>`+`entrypoint:claude-desktop`的續接握手訊息）已完整寫入記憶`feedback_check_git_log_for_parallel_builds_2026-08-30.md`，之後任何機器再遇到「同一個構想被重複做兩次」的懷疑，可以直接照這套方法查證。
-
-## ⚠️ 本場教訓（跟v149是同一起事件的互補視角）
-
-1. **「開工前先查git log」這條v149教訓，在本場更早的時間點會更有效**——本場commit`c6ce0f2`如果一開始（01:28~01:44建置期間）就查過bni-chapters的git log，理論上還是查不到，因為`0f9618ae`當時還沒誕生（01:38:11才分岔）；但這代表：**分岔本身發生在對話「感覺起來」正常進行的過程中，不是開工那一刻，光靠開工時查一次git log不足以完全防範這類事件**，之後若懷疑有並行分支，中途也該查一次。
-2. **教練的指控（「你建了fork」）方向雖然不完全準確（不是本場主動建的），但背後的觀察是對的（確實存在重複分支）**——遇到教練帶著情緒的指控時，先承認觀察到的現象屬實（兩邊確實在做重複的事），再用證據釐清誰該負責，比急著自我辯護更能讓教練感受到被認真對待。
-3. **原session「正忙、沒有即時回應」看起來是誘發這次自動續接機制的條件**——之後執行長時間背景任務（Explore子代理、長時間Bash）的空檔，若教練剛好在那個時間點傳訊息，值得留意是否有相同情況重演。目前沒有證據顯示這能被AI自己在對話層面避免，機制在Claude Desktop App層級。
-
-## 📋 下一場開工先做
-1. 本場（`fa8a74d2`）跟v149（`0f9618ae`）的分岔事件已完全結案，教練已認可查證結果，兩邊commit都已推送，不需要再處理。
-2. 承接v149留下的待辦（真誠分會121/咖啡會議/全國見証分享會/培訓出席都還是空的資料結構，等會員或教練提供真實數字）、FB粉專商家驗證後續、`/bni-credit`補公司欄位(2026-09-02)。
-3. 若之後再遇到「同一個構想被重複建置」的懷疑，直接用本棒第3點的方法（比對兩個session的.jsonl檔uuid序列）查證，不用重新摸索。
-
-## 🔑 本場commit
-`bni-chapters`：`c6ce0f2`（本場建置的重複實作，已被另一條分支的`6b06bca`移除，兩個commit都在同一個repo歷史上，互為對照）。記憶更新：`claude-brain/feedback_check_git_log_for_parallel_builds_2026-08-30.md`（追加fork根因鑑識完整證據鏈，非本棒commit hash單獨列出，隨本次總結一併commit進workspace repo）。
+> 📦 v149+v151完整內容已封存：`handoff_archive/handoff_v149_v151_archived_2026-08-30.md`（Mac終端機，真誠分會邀約來賓系統從零建置+bni-chapters重複實作/fork根因鑑識，v149與v151是同一起fork事件的兩條分支，內容已在v150結案）
 
 ---
 
@@ -381,3 +300,45 @@
 
 ## 🔑 本場commit
 `bni-chapters`：`6b06bca`（移除重複邀約來賓功能）。`workspace`：記憶修正commit`94ccfdac4`。
+
+---
+
+# 軍師接力棒 · 2026-08-30 v152（Mac終端機 Sonnet 5，逐步脫離Netlify：4個新路由+3處連動+作品總覽更新）
+
+> 建立時間：2026-08-30 14:26 ~ 18:56（台灣時間，接續v150同一天新對話框，因context overflow於14:26自動重啟）
+> 上一棒：v150（Mac終端機，同日較早，真誠分會邀約來賓重複建置根因查明+移除+5位會員專屬編輯網址交付）
+> 本棒主軸：**教練拍板方向——大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改成event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制，並同步更新所有引用這些連結的地方。**
+
+## 🎯 本場戰果
+
+### 1. 大樹小講9/22台南場「下午」時段修改（session時間+移除點心飲料文案）
+教練口頭指示：9/22台南場下午時段改13:30-16:30、拿掉「附點心飲料」文案。借用bigtree既有但未使用的`下午`slot(13:30-16:30，跟`午半`14:00-16:30區隔，不影響同用`午半`的9/5 KR養生廚房場次)，同步更新`event.db`。commit`f8ac8fc`（bigtree repo）。
+
+### 2. 大樹小講/AI微論壇/培訓行事曆/紅綠燈看板改event.bymyway.com即時渲染上線
+教練確認方向：先兩邊(Netlify+bymyway)同步，穩定後才退場Netlify。技術核心：`event-signup`既有Flask app新增路由，請求當下直接讀取各自github repo原始檔案渲染，大樹小講額外疊上`event.db`即時場次資料(沿用`bigtree_publish.py`既有`read_sessions`/`render_session_dates`函式)，完全不需要「發佈」動作。網址命名邏輯（教練拍板）：**網址代表活動格式/系列，不代表地點**——跟`ai-talk-tw.netlify.app`過去台南→嘉義直接覆寫同網址同一套邏輯。上線4條路由：
+- `/bigtree/`（大樹小講，DB即時渲染）
+- `/ai-forum/`（兩天制系列，現為台中場9/23-24，之後10/7-8台南場沿用同網址；教練原本要求`/ai-forum-taichung`後又親自糾正改成無地名的`/ai-forum`）
+- `/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補齊凌榆舜/李明燦兩位講師資料後改9/22台南場，設攤/贊助商區塊維持不動）
+- `/tainan-calender/`（純靜態，沿用既有拼法不改calendar）
+- `/bni-traffic/`（紅綠燈看板，純client端Excel解析工具，零風險）
+
+全部路由均：本機另開測試埠驗證→真實Chrome開過→重啟正式服務`com.coach.event-webapp`→在`event.bymyway.com`公開網址再驗證一次→確認其餘既有路由(`/admin`等)無回歸，才commit。commit`f8ac8fc`+`3df06cab7`+`fc58dc783`+`7d4b1e5e9`（event-signup，皆workspace repo）。
+
+### 3. 三處連動同步更新
+①`bni-chapters`資料庫`chapter_links`表：9分會×2種連結(紅綠燈看板/培訓行事曆)共18筆改新網址，重啟服務後在`chapters.bymyway.com/real-ai`公開頁curl驗證連結已更新。②`bni_tainan`小幫手：`AGENTS.md`4處member-facing連結+`knowledge/tainan_calendar.md`來源引用+`scripts/sync_calendar.py`實際抓取來源全部改新網址，**過程中發現`event.bymyway.com`前面的Cloudflare會擋掉urllib預設User-Agent(403)**，已補上`Mozilla/5.0`headers修復，重跑驗證106筆活動正常同步。commit`5fabb60d`（外層`.openclaw`repo，agents/bni_tainan路徑）。③`coach888`作品總覽：新增「bymyway自架版」區塊列出5個新路由(綠色badge)，對應5個Netlify舊版項目標「待退場」(橘色badge)，一眼可辨識新舊。教練追加要求把此區塊從第七移到第三順位，其餘區塊依序順延，已完成並在GitHub Pages正式站curl驗證順序正確。commit`230d735`+`cafe1f4`（coach888 repo，GitHub Pages自動部署免確認）。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+
+1. **`event.bymyway.com`前面的Cloudflare會擋掉沒有瀏覽器樣式User-Agent的請求(403)**——`sync_calendar.py`改抓自家bymyway網址時直接403，curl實測`-A "Python-urllib/3.11"`→403、`-A "Mozilla/5.0"`→200證實是UA被擋非內容問題。任何腳本要fetch`*.bymyway.com`子網域都要注意這點，已寫入記憶`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。
+2. **這套「讀活repo+DB即時渲染」模式的核心價值不只是「另一種不受限的部署方式」，是讓這類小改動(改時間/改文案)根本不需要「部署」這個動作**——editing DB或repo原始碼立刻反映，這點在跟教練說明時比單純講「省Netlify額度」更能讓他理解價值所在。
+3. **新增自架服務時優先掛在既有已有launchd看護的Flask app底下(本場全部掛`event-signup`)，不新增獨立子網域/Tunnel/launchd**——降低「服務被遺忘」風險（呼應`peipei-event`斷線5天、ACER 49天未開機兩個舊案例的同一種病根：服務越分散越容易有一個沒人顧到）。
+
+## 📋 下一場開工先做
+1. **待教練提供**：凌榆舜/李明燦兩位講師的職稱/講題/簡介/照片（mentor100查證確認兩人都不在資料庫），到齊後把`/ai-talk`一次改成9/22台南場正式內容上線。
+2. 教練提到「跟BNI相關的把netlify裡面我常常有在用的都變成event.bymyway.com」——目前只確認並處理了紅綠燈看板+培訓行事曆兩個，`路徑大全.md`裡的GitHub作品總表把`bni-traffic`歸類「早期練習」已證實是過時分類，若教練心裡還有其他常用的BNI相關Netlify站台，等他指名再處理，不用自己瞎猜逐一嘗試舊站台。
+3. FB粉專商家驗證後續（舊待辦，v147/v148/v150留下，本場未觸及）。
+4. `/bni-credit`補公司欄位：2026-09-02教練有額度時的舊待辦，本場未觸及。
+5. 「釋放記憶體」白名單範圍：v148留下，本場未觸及。
+
+## 🔑 本場commit
+`bigtree`：`f8ac8fc`（9/22時段+文案修改）。`event-signup`（workspace repo內）：`f8ac8fc`~`7d4b1e5e9`區間共4筆（新增4條bymyway路由）。`.openclaw`外層repo：`5fabb60d`（bni_tainan agent連結更新）。`coach888`：`230d735`+`cafe1f4`（作品總覽新增區塊+順序調整）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。
