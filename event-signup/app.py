@@ -881,6 +881,7 @@ def admin_sessions_publish():
 BIGTREE_REPO = Path("/Users/bymyway/github_repos/bigtree")
 AI_FORUM_REPO = Path("/Users/bymyway/github_repos/ai-forum-taichung")  # 目前是台中場內容，之後換場地時原地改內容，repo資料夾名稱不代表網址
 AI_TALK_REPO = Path("/Users/bymyway/github_repos/ai-talk")
+TAINAN_CALENDAR_REPO = Path("/Users/bymyway/github_repos/tainan-calender")  # 沿用既有repo/Netlify站台既有拼法，不擅自改成calendar
 _REPO_BLOCKED_TOP_DIRS = {".git", "biz-gym"}
 
 
@@ -928,6 +929,16 @@ def ai_talk_page():
 @app.route("/ai-talk/<path:filename>")
 def ai_talk_assets(filename):
     return _serve_repo_file(AI_TALK_REPO, filename)
+
+
+@app.route("/tainan-calender/")
+def tainan_calendar_page():
+    return _serve_repo_file(TAINAN_CALENDAR_REPO, "index.html")
+
+
+@app.route("/tainan-calender/<path:filename>")
+def tainan_calendar_assets(filename):
+    return _serve_repo_file(TAINAN_CALENDAR_REPO, filename)
 
 
 if __name__ == "__main__":
