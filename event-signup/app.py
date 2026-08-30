@@ -868,7 +868,9 @@ def admin_sessions_publish():
                             error=f"（{result['step']}）{result['message']}"))
 
 
-# ───────── 大樹小講／AI微論壇：bymyway 版本（2026-08-30，逐步取代 Netlify 部署次數限制）─────────
+# ───────── 大樹小講／AI微論壇台中場(ai-forum-taichung)：bymyway 版本
+# （2026-08-30，逐步取代 Netlify 部署次數限制。命名故意不用泛稱「ai-talk」——
+#  那是另一個已辦完的嘉義/台南場舊repo，跟這裡的台中場是不同東西，教練當場糾正過）─────────
 # 設計/文案本體只有一份，就是各自的 github_repos git repo，這裡在請求當下直接讀
 # 原始檔案（+ 大樹小講額外疊上 event.db 即時場次資料）組合渲染，不另外複製一份，
 # 教練或軍師改任一邊都立刻反映，不需要「發佈」這個動作。GitHub Pages/Netlify 兩邊
@@ -904,13 +906,13 @@ def bigtree_assets(filename):
     return _serve_repo_file(BIGTREE_REPO, filename)
 
 
-@app.route("/ai-talk/")
-def ai_talk_page():
+@app.route("/ai-forum-taichung/")
+def ai_forum_taichung_page():
     return _serve_repo_file(AI_FORUM_REPO, "index.html")
 
 
-@app.route("/ai-talk/<path:filename>")
-def ai_talk_assets(filename):
+@app.route("/ai-forum-taichung/<path:filename>")
+def ai_forum_taichung_assets(filename):
     return _serve_repo_file(AI_FORUM_REPO, filename)
 
 
