@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 0f9618ae-e25f-4bf7-a476-73d71acabdd7
-  modified: 2026-08-30T03:57:29.683Z
+  modified: 2026-08-30T05:50:03.793Z
 ---
 
 **repo**：`Coach1973/zhencheng-guests`（私有，注意repo名稱仍是舊名，跟現在網址`sincere`不一致，純命名遺留不影響功能）｜本機路徑`/Users/bymyway/github_repos/zhencheng-guests`｜Flask+SQLite（`zhencheng_guests.db`，未版控）
@@ -20,7 +20,7 @@ metadata:
 
 **另外兩區塊**：全國見証分享會出席（週一場8/3~8/31、週四場8/6~8/27，YES/NO）、培訓出席（8月三場+9月五場，✅/❌），皆開放會員自行點選即時存檔。三者的門檻/連續無紀錄邏輯完全獨立計算。
 
-**🔴 待決事項**：bni-chapters裡有另一個對話框幾乎同時間獨立做的重複版本（`/admin/chapters/1/invites`，唯讀，功能較陽春），教練尚未裁示留哪一個，見[[feedback_check_git_log_for_parallel_builds_2026-08-30]]。
+**✅ 已解決的重複建置事件**：bni-chapters裡曾出現一份重複版本（`/admin/chapters/1/invites`，唯讀，功能較陽春），根因是**這場對話本身是從更早一場對話被靜默fork出來的分支**（教練親自抓出，非另開對話框/機器），詳見[[feedback_check_git_log_for_parallel_builds_2026-08-30]]。教練確認只需要`sincere.bymyway.com`一套，重複版本已於commit`6b06bca`移除（bni-chapters），檔案歸檔於`_archive_duplicate_invites_feature_2026-08-30/`未刪除，資料庫invite_*資料表保留未清空。
 
 **技術地雷**：Jinja2樣板dict鍵名不能叫`values`，會跟Python內建方法撞名導致資料靜默消失，見[[reference_jinja2_dict_values_key_collision_2026-08-30]]。seed.py已改成安全UPSERT版，重跑不會洗掉會員自填資料。
 
