@@ -1132,3 +1132,7 @@
 {"t": "2026-08-30 15:25", "src": "終端機", "who": "教練", "text": "先不推到netlify,因為我們之前有說，要把網頁都改到bymyway 因為這樣子就不用受限於佈署的次數"}
 {"t": "2026-08-30 15:40", "src": "終端機", "who": "教練", "text": "我看了一下，先不急，慢慢來，我們先同步兩邊都有，穩定之後，才徹掉netlify ，目前先把大樹小講移到bymyway 因為你有講github 只能是靜態的網頁，若是有資料庫就一定會用到bymyway 所以，我們先在bymyway那邊建一個大樹小講，之後，你會怎麼設網址呢？ 是bymyway.com/event 還是 event.bymyway.com/bigtree ？ 再來，AI微論壇，也要建一個在bymyway.com/ai.talk 或是你有更好的命名方式"}
 {"t": "2026-08-30 15:47", "src": "終端機", "who": "教練", "text": "先動手大樹小講，同時也把微論壇一起動手作，我們兩邊共用，再慢慢退出netlify的依賴"}
+{"t": "2026-08-30 16:09", "src": "終端機", "who": "教練", "text": "9月22日下午那場才是最新的，所以要請你修改一下。你們目前的那個，可以獨立一個，寫成 event.bymyway.com/[ai-forum-taichun](https://ai-forum-taichung.netlify.app)"}
+{"t": "2026-08-30 16:17", "src": "終端機", "who": "教練", "text": "9月22日台南場，收費是200元，講師是－凌榆舜，李明燦、吳大樹 設攤單位全部保留 贊助人也一樣，都先保留，只差我把另外兩位的講師資料給你就可以上線了 https://event.bymyway.com/ai-talk/ 你的理解正確，一下午的活動，就是 https://event.bymyway.com/ai-talk/ 兩天的活動就是 event.bymyway.com/ai-forum-taichung/ 只是10月7日-8日，舉辦在台南 所以，請您更改網址，把後面地名去除 event.bymyway.com/ai-forum 這樣就好 等台中辦完，一樣變成歷史記錄，我們的網址統一就是 event.bymyway.com/ai-forum 這個邏輯跟 https://event.bymyway.com/ai-talk/ 一樣，活動網址都一樣，但每次的時間地點不一樣，已舉辦過，就變成歷史資料"}
+{"t": "2026-08-30 16:25", "src": "終端機", "who": "教練", "text": "很棒，這樣的話就漸漸脫離 Netlify 的依賴，我們可以自主地來做這些事情，不用在那邊計算次數了。"}
+{"t": "2026-08-30 16:26", "src": "終端機", "who": "教練", "text": "https://tainan-calender.netlify.app/ 這個也改成到 bymyway.com/tainan-calender"}
