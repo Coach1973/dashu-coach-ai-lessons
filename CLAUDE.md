@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-30 11:55:08**
+> **最後同步：2026-08-30 12:00:13**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴 | **真誠分會邀約來賓紀錄表被兩個對話框各自獨立重複建置，需教練裁示留哪一版** | 🔒卡住-等教練 | 2026-08-30本場（Mac終端機）從零建置獨立網站`sincere.bymyway.com`（Flask+SQLite，github_repos/zhencheng-guests，功能完整：來賓＋121＋咖啡會議＋全國見証分享會＋培訓出席，全部會員可自行輸入即時存檔，無需登入）。事後查git log才發現**幾乎同一時間（01:44）另一個對話框已經在bni-chapters裡做了一份功能重疊但架構完全不同的版本**（commit`c6ce0f2`，路徑`/admin/chapters/1/invites`，需登入才看得到，只有來賓矩陣沒有121/咖啡/見証/培訓，唯讀不可自填）。兩套系統資料庫互不相通，教練若同時使用會看到不一樣的數字。已在對話中回報教練利弊，教練尚未回覆要保留哪一版／要不要合併。詳見v149。 |
+| ✅ | **AI百人導師(mentor100)真誠分會5人簡介卡遷移到chapters.bymyway.com/sincere+後台新增編輯按鈕** | ✅2026-08-30本場完成 | 王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳，含照片，逐筆核對mentors表欄位對應chapter_members表（兩邊格式一致）搬移，commit`1f460f7`（bni-chapters）。教練隨後指出後台改資料只能靠AI代改的缺口（「我自己改不了」），已新增`/admin/chapters/<id>/members/<id>/edit`路由+`admin_member_edit.html`模板，沿用既有`member_join_edit.html`欄位結構跟`db.update_member()`函式，分會夥伴簡介列表每筆加「編輯」連結，commit`8cd9595`。**已用真實登入+存檔round-trip驗證**（改一個欄位→存檔→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣），非僅程式碼審查。詳見v149。 |
 | 🟡 | **教練提出「釋放記憶體」指令要更全面：連同所有可關App一併關閉** | 🔒卡住-待教練確認白名單範圍 | 2026-08-29教練電腦變慢多輪診斷後提出構想，已給評估：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限，且既有的RustDesk釋放指令查證後對15GB量級記憶體壓力貢獻微乎其微(重啟後process反而一度變多)。若要動手寫這支腳本，需先問清楚白名單——Claude/Finder等系統必要項可以確定，但Typeless/Chrome/LINE等常用工具要不要保留，教練尚未回覆。詳見v148。 |
 | ✅ | **peipei-event.bymyway.com斷線5天已修復+永久看護機制建立** | ✅2026-08-29完成 | 教練詢問這個網址為何失效，查證是Cloudflare 530(tunnel connector沒連線)，根因是這組webapp+tunnel從2026-07-13建立以來唯一沒接launchd看護，8/24被terminated後斷線5天無人發現。已手動恢復服務+新增`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`永久修復，commit`2ffba5dc9`(記憶`reference_bymyway_subdomain_530_missing_launchd_2026-08-29`)。詳見v148。 |
 | ✅ | **乾淨世界頻道關注QR立牌上線+加入作品一覽** | ✅2026-08-29完成 | `make_qr.py`新增`--ganjing`模式，導流大樹教練乾淨世界頻道，拿掉集點文案改「300集免費影片」，commit`0669f44a2`；已加入coach888作品一覽第10項，commit`48520cd`。正式網址`event.bymyway.com/qr/ganjing-print.html`已驗證可用。詳見v148。 |
@@ -300,6 +302,52 @@
 
 ## 🔑 本場commit
 `0669f44a2`（event-signup，ganjing QR）+ `48520cd`（coach888，作品一覽新增第10項）+ `2ffba5dc9`（claude-brain，peipei-event 530修復記憶）。另有`com.coach.peipei-event-webapp.plist`+`com.coach.peipei-event-tunnel.plist`兩份launchd設定檔（不在git版控範圍，位於`~/Library/LaunchAgents/`）。
+
+---
+
+# 軍師接力棒 · 2026-08-30 v149（Mac終端機 Sonnet 5，真誠分會邀約來賓系統從零建置+mentor100簡介卡遷移+bni-chapters後台編輯功能）
+
+> 建立時間：2026-08-30 01:28 ~ 11:52（台灣時間，接續v148同一天新對話框）
+> 上一棒：v148（Mac終端機，同日較早，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
+> 本棒主軸：**教練構思真誠分會邀約來賓紀錄表，從DNA月報表格式仿製起步，逐步擴充成三項指標(來賓/121/咖啡會議)+全國見証分享會+培訓出席、全部會員自助輸入即時存檔的獨立網站(sincere.bymyway.com)；額外完成mentor100→bni-chapters的5人簡介卡遷移+後台新增編輯功能。**
+
+## 🎯 本場戰果
+
+### 1. 真誠分會邀約來賓戰情儀表板從零建置，正式上線 sincere.bymyway.com
+教練構想：仿照既有`bni-dna`（大台南南區DnA團隊戰情儀表板）月報表格式，改成週版，追蹤13位在籍會員（3個成功小組：王者飛翔/百聖維尼/羽宙奇蹟，各自指定助理大使）從07/23~08/27邀約來賓數，連續4週無來賓標🟡、連續8週標🔴（建議寄警告信）。08/20當週分會改內訓不列入計算。
+
+過程隨教練逐輪追加需求持續擴充：①指標從單一「來賓」擴增為三項（來賓/121一對一/咖啡會議），週欄位改成單一格內三行堆疊顯示 ②121與咖啡會議明確要求「開放會員自行輸入、即時更新」——這個要求讓系統從原本設想的靜態HTML（比照DNA由軍師手動更新）**升級成有資料庫的Flask小網站**，會員打數字、欄位失焦即時存檔，旁邊總數與連續無紀錄週數立刻更新 ③新增「全國見証分享會」出席（週一場3/10/17/24/31、週四場6/13/20/27，日期用Python反推8月真實日曆算出，非用猜的）與「培訓出席」（8月三場＋9月五場教練預先提供備存待用），兩者同樣改成會員自行點選YES/NO或打勾打叉即時存檔 ④新增「助理大使」姓名掛在分組名稱後面、字級與會員姓名同級 ⑤新增「真誠翻轉計劃－大事紀」區塊 ⑥8/27新會員張育慈加入王者飛翔組（教練澄清：入會日8/27，但邀約來賓起算週從9月開始算）⑦網址原本暫定`zhencheng.bymyway.com`，教練要求改成與bni-chapters分會slug一致的`sincere.bymyway.com`，已重新申請Cloudflare Tunnel+DNS、刪除舊網址記錄、launchd服務改名為`com.coach.sincere-webapp`/`com.coach.sincere-tunnel`。
+
+技術細節：repo`Coach1973/zhencheng-guests`（私有，注意repo名稱仍是舊名`zhencheng`，跟現在網址`sincere`不一致，純屬命名遺留，功能不受影響）；SQLite資料庫`members`/`weeks`/`weekly_data`/`testimony_sessions`/`testimony_attendance`/`training_sessions`/`training_attendance`七張表；`/api/update_metric`、`/api/update_testimony`、`/api/update_training`三組API供前端即時存檔。全部功能都用真實輸入round-trip驗證過（不只讀程式碼）：模擬打入數字→確認存檔成功→重新整理頁面確認資料庫真的持久化→測試值清除乾淨，包含在公開網址（非僅本機）上實測過一次。
+
+### 2. 過程中抓到並修復的兩個真bug
+①**Jinja2樣板`dict.values()`方法名稱衝突**：把每週三項指標包在鍵名叫`"values"`的dict裡，Jinja2用點記法`entry.values.guests`存取時會撞到Python字典內建的`.values()`方法，抓不到真正塞進去的資料，**導致整張表所有人、所有週次的來賓人數格子全部靜默顯示「0人」**（連陳佩君實際26人的紀錄都被蓋成0，右側「總邀約」欄位因算法不同沒受影響顯示仍正確，所以起初不容易發現）。已改名成`"metrics"`並重新驗證五週正確顯示8/1/5/6/6人。②**種子腳本(seed.py)原本是「先清空再重灌」的破壞性設計**，若後續要加新會員或補資料重跑一次，會把會員已經自己填好的121/咖啡會議資料整批洗掉。已改寫成UPSERT安全版，重跑只更新教練提供的部分（會員名單/週次/來賓數），絕不觸碰會員自填欄位，並用「模擬填值→重跑腳本→值還在」的方式實測驗證過。
+
+### 3. 🔴 意外發現：另一個對話框幾乎同時間獨立重複建置了同一個功能
+查bni-chapters的git log時發現commit`c6ce0f2`（作者CoachWU，2026-08-30 01:44:59，跟本場session開始時間幾乎重疊），標題「新增真誠分會邀約來賓紀錄表」——**另一台機器/對話框收到教練類似構想後，獨立在bni-chapters裡做了一份架構完全不同的實作**：整合進既有後台`/admin/chapters/1/invites`路由，需登入才看得到，唯讀顯示，只有最初版的來賓矩陣（沒有121/咖啡/見証/培訓這些後續擴充），資料庫也是各自獨立的SQLite，兩邊不會同步。已在對話中把兩套系統的差異列表回報教練（存取方式/功能範圍/資料庫），**教練尚未回覆要保留哪一版**，這是本棒最大的未決事項，寫進上方待辦總表第一列。
+
+### 4. AI百人導師(mentor100) → 真誠分會(chapters.bymyway.com/sincere) 5人簡介卡遷移
+教練指出兩邊`mentors`/`chapter_members`資料庫欄位格式一致，要求把已在mentor100填好完整簡介的5位真誠分會會員（王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳）簡介卡搬到chapters.bymyway.com/sincere。寫`migrate_sincere_from_mentor100.py`逐筆核對欄位（name/company_title/role_tag/bio/photo_filename+9組社群連結）搬移，5張照片一併複製進bni-chapters的`static/uploads/`，用bni-chapters既有的`db.insert_member()`函式寫入（不是手刻SQL），commit`1f460f7`。5張照片HTTP 200+Content-Type正確逐一curl驗證。教練隨即糾正Lavi姓名要加中文（「林佳伶 Lavi」），已修正並在公開頁確認顯示正確。
+
+### 5. bni-chapters後台新增「編輯」功能，教練可自行更新會員資料
+起因：教練想改林佳伶的名字卻只能請AI代改，指出「後台跟mentor100一樣要有編輯按鈕」的缺口——查證確認bni-chapters的`chapter_members`表原本只有「會員自己憑專屬token編輯」跟「教練刪除」兩條路，沒有教練直接編輯的管道。新增`/admin/chapters/<id>/members/<id>/edit`路由（GET+POST，`@login_required`）+ `admin_member_edit.html`模板（沿用既有`member_join_edit.html`的欄位結構跟`_extract_member_links()`/`_process_and_save_photo()`/`db.update_member()`既有函式，非重新發明），分會夥伴簡介列表每筆加上「編輯」連結。**已用真實登入+存檔round-trip完整驗證**：登入`chapters.bymyway.com/admin/sincere/login`（帳密Admin/88888）→點編輯→改一個測試欄位→送出→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣，commit`8cd9595`。
+
+## ⚠️ 本場教訓（重要，已寫入記憶）
+
+1. **Jinja2樣板裡千萬不要把資料塞進鍵名叫`values`（或其他dict內建方法名，如`keys`/`items`）的dict**——用點記法存取時會撞到Python字典內建方法，資料在Python端明明正確，樣板卻靜默顯示空白/預設值，錯誤不會報例外、很難察覺，且聚合統計如果剛好走不同的計算路徑（本例是`totals`不受影響），會讓局部bug被部分正確的數字掩蓋，更難發現。
+2. **接到「做一個XX紀錄表」這類教練口頭構想時，開工前應該先查一下相關repo的最近git log**，確認有沒有其他對話框/機器已經在做同一件事——本場如果一開始就查過bni-chapters的git log，可能會在早期就發現c6ce0f2這個並行commit，及早跟教練確認方向而不是兩邊都做到接近完成才發現。
+3. **種子/初始化腳本只要會被期待「之後還會再跑」（加新會員、補資料），就必須從一開始設計成UPSERT安全版，不能圖方便先寫「清空重灌」**——本場是在還沒正式上線前的測試階段就自己發現這個隱患並修正，但如果是上線後才發現，代價會是真實會員已填的資料被整批洗掉。
+4. **教練口頭給的日期範例，值得先驗證是不是真實日期而非純粹舉例**——本場教練說「例如3-10-17-24-31是週一」，一開始以為只是格式範例，用Python反推後發現剛好完全對上8月真實日曆，證實是教練提供的真實資料，不是憑空舉例。遇到教練給的具體數字/日期，先假設是真實資訊去查證，比預設「這只是舉例」更保險。
+
+## 📋 下一場開工先做
+1. **最優先**：真誠分會邀約來賓系統重複建置的裁示——問教練要保留`sincere.bymyway.com`獨立網站版還是bni-chapters後台`/admin/chapters/1/invites`版，或兩個都留但要說清楚以哪個數字為準。
+2. 121/咖啡會議/全國見証分享會/培訓出席目前都是空的（結構已建好，等會員或教練提供真實數字），需要教練或會員實際使用後才有資料可看。
+3. 張育慈的邀約來賓起算週是2026-09-03（教練指定），屆時要留意她那一列開始出現「連續無來賓」計算是否合理。
+4. FB粉專商家驗證後續（舊待辦，v147/v148留下，本場未觸及）。
+5. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
+
+## 🔑 本場commit
+`zhencheng-guests`（私有repo，即sincere.bymyway.com）：`6057c1a`（首次建置）+ `9d2a40f`（全國見証/培訓改會員自填）。`bni-chapters`：`1f460f7`（mentor100簡介卡遷移）+ `8cd9595`（後台編輯功能）。另有Cloudflare Tunnel/DNS設定+launchd plist（`com.coach.sincere-webapp`/`com.coach.sincere-tunnel`，不在git版控範圍）。
 
 
 ---
