@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-31 15:10:06**
+> **最後同步：2026-08-31 15:25:09**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -19,7 +19,7 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🎯🎯 | **大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制** | ✅2026-08-30本場完成，教練親口「很棒」肯定方向 | 教練拍板方向：讀活repo+event.db即時渲染取代Netlify手動zip部署，GitHub Pages/Netlify暫時保留同步、穩定後才退場。已上線4個新路由，全部走`event-signup`既有Flask app（不新增子網域/Tunnel/launchd，降低服務被遺忘風險）：`event.bymyway.com/bigtree/`（疊event.db即時場次資料）、`/ai-forum/`（現為台中場9/23-24，2天制系列共用網址，教練明確要求網址代表格式非地點，之後10/7-8台南場沿用同網址）、`/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補凌榆舜/李明燦兩位講師資料後改9/22台南場）、`/tainan-calender/`、`/bni-traffic/`（純client端repo，零風險）。同步更新3處連動：①`bni-chapters`資料庫9分會×2連結共18筆改新網址 ②`bni_tainan`小幫手`AGENTS.md`4處member-facing連結+`sync_calendar.py`抓取來源（過程修好Cloudflare擋urllib預設UA的403問題）③`coach888`作品總覽新增「三、bymyway自架版」區塊（教練要求移到第三順位，其餘區塊順延），5個Netlify舊版標「待退場」橘色badge一眼可辨識。所有變更均先本機測試埠+真實Chrome驗證，重啟正式服務後在公開網址再次curl驗證才commit。commit一覽：`f8ac8fc`+`3df06cab7`+`fc58dc783`（event-signup）、`5fabb60d`（bni_tainan外層repo）、`230d735`+`cafe1f4`（coach888）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。**`/ai-talk`9/22台南場內容已於v153完成上線**（凌榆舜+吳大樹雙講師版，李明燦講師身分已取消），詳見v153。 |
-| 🎯 | **BNI Connect新增大台南南區初階MSP/進階MSP/季度主題培訓/新領導團隊訓練/領導團隊期中訓等活動，供會員報名** | ⏳待軍師動手 | 教練2026-08-31交辦：進BNI Connect後台新增這幾種活動類型，讓會員可以在系統裡註冊/報名。尚未動手，下一場先進BNI Connect CMS後台查證現有活動類型清單+建立流程(參考`reference_bni_connect_cms_structure`記憶)，確認每種活動的欄位需求(日期/地點/講師/名額)再建立。 |
+| ✅ | **BNI Connect新增大台南南區初階MSP/進階MSP/季度主題培訓/新領導團隊訓練/領導團隊期中訓等活動，供會員報名** | ✅2026-08-31本場完成 | 軍師直接進`appsManageEvents`，用「複製活動」＋jQuery datepicker API＋CKEDITOR API批次建立7場：初階MSP(09/07、11/09，clone自484009)、進階MSP(10/12、12/21，clone自484008)、主題培訓(09/10「領導人的溝通藝術」、12/10「建團隊就是做事業」，clone自519187)、領導團隊期中訓(12/07，clone自522132)，皆已按「發佈」上線開放會員線上註冊。9/21「新領導團隊訓練」教練後來自己在BNI Connect手動建好(eventId 533117)，軍師已驗證資料正確。9月主題培訓內容依教練口述文字補上，12月主題培訓內容留白待教練提供。「執董與新會員有約」因無培訓分教練裁示整個放棄不建。詳見v154。 |
 | ✅ | **AI百人導師(mentor100)申請通知改走Telegram，修復8/27靜默漏接** | ✅2026-08-30本場完成 | 教練回報8/27有人申請完全沒收到通知，還誤重複提醒對方。查證根因是`apply_submit()`打的是舊版LINE通道(`sme-register-fn`)且吞掉錯誤，跟event-signup試金石案例62同款坑。已改用event-signup驗證過的Telegram Bot API直送方案(chat_id 6124913915)，失敗必寫`notify_failures.log`。已用真實`/apply`端點測試驗證，測試資料已清除。commit`1b9b816`(mentor100 repo)。全機掃描確認無其他專案殘留舊LINE通知路徑。記憶`project_mentor100_application_notify_telegram_fix_2026-08-30`。 |
 | ✅ | **真誠分會邀約來賓紀錄表重複建置事件：根因已查明+重複版本已移除** | ✅2026-08-30本場完成，教練親自抓出根因 | 起因：查git log發現bni-chapters裡有一份`c6ce0f2`commit做出功能重疊的重複實作（`/admin/chapters/1/invites`）。**教練親自比對兩個session的原始.jsonl逐行找出精確分岔點**：01:37:48原session(`fa8a74d2`)正在忙背景Explore子代理查詢時，Claude桌面版App在01:38:11自動生成一則`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`的「Continue from where you left off.」內部握手訊息，**憑空分岔出這場對話**(`0f9618ae`)，繼承原session到01:37:48為止的歷史，之後兩條各自獨立發展——非教練或AI下達的fork指令，是App層級的自動行為。教練確認只需要`sincere.bymyway.com`一套，重複版本已移除：`/admin/chapters/1/invites`路由+`admin_invites.html`+db.py四個函式+schema.sql四張invite_*資料表全部移除，檔案歸檔於`_archive_duplicate_invites_feature_2026-08-30/`未刪除，資料庫既有資料保留未清空，commit`6b06bca`（bni-chapters）。詳見v149+v150、記憶`feedback_check_git_log_for_parallel_builds_2026-08-30`。 |
 | ✅ | **AI百人導師(mentor100)真誠分會5人簡介卡遷移到chapters.bymyway.com/sincere+後台新增編輯按鈕** | ✅2026-08-30本場完成 | 王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳，含照片，逐筆核對mentors表欄位對應chapter_members表（兩邊格式一致）搬移，commit`1f460f7`（bni-chapters）。教練隨後指出後台改資料只能靠AI代改的缺口（「我自己改不了」），已新增`/admin/chapters/<id>/members/<id>/edit`路由+`admin_member_edit.html`模板，沿用既有`member_join_edit.html`欄位結構跟`db.update_member()`函式，分會夥伴簡介列表每筆加「編輯」連結，commit`8cd9595`。**已用真實登入+存檔round-trip驗證**（改一個欄位→存檔→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣），非僅程式碼審查。詳見v149。 |
@@ -386,6 +386,35 @@
 
 ## 🔑 本場commit
 `mentor100`：`1b9b816`（申請通知改Telegram）。`ai-talk`：`6dc29dc`+`cb69243`（9/22台南場上線+merge）+`f75d441`（時間/設攤/場地費三項修正）。記憶：`project_mentor100_application_notify_telegram_fix_2026-08-30`。接力棒瘦身：v150封存至`handoff_archive/handoff_v150_archived_2026-08-31.md`。
+
+---
+
+# 軍師接力棒 · 2026-08-31 v154（Mac終端機 Sonnet 5，BNI Connect 7場培訓活動上線+Hermes任務分工裁示+試金石全面蒸餾重建）
+
+> 建立時間：2026-08-31 13:57 ~ 15:30（台灣時間，接續v153同日開工）
+> 上一棒：v153（Mac終端機，同日，mentor100通知修復+AI微論壇9/22台南場上線+BNI Connect培訓新任務交辦）
+> 本棒主軸：**BNI Connect新增培訓活動任務執行完畢；Hermes嘗試接手9/21場次卡在工具集限制，裁示分工方案；教練交辦最後一項總結性任務——試金石蒸餾重建，確保系統真正吸收3個月的教訓。**
+
+## 🎯 本場戰果
+
+### 1. BNI Connect大台南南區7場培訓活動上線
+詳見上方待辦表已更新項目。核心技術突破：發現「複製活動」表單可用`jQuery('#eventStartDate').datepicker('setDate', new Date(...))`程式化設日期、`CKEDITOR.instances['eventDetls'].setData('')`清空繼承自範本的舊描述、`submitBTN`→復審畫面→`confirmBTN`兩段式送出流程。過程中發現並修正一個內容錯誤：clone自519187的9月主題培訓沿用了舊活動「陳孟專Amber執董」的描述文字，已在送出前清空，避免發布錯誤資訊。教練事後口述9月主題培訓正確內容「領導人的溝通藝術」，已編輯上線；12月「建團隊就是做事業」內容教練尚未提供，留白。「執董與新會員有約」教練最終裁示因無培訓分整個不建。
+
+### 2. Hermes嘗試接手9/21新領導團隊訓練，卡在工具集結構性限制，裁示分工方案D
+Hermes（MiniMax-M3桌面版，desktop preview pane）依軍師SOP操作BNI Connect創建新活動表單，連續卡兩輪：第一輪3個副作用（地區/活動類型欄位互相清空、線上付款被鎖、value與顯示文字不同步待軍師回覆），軍師實測驗證後找到根因是`getDataOnRegion()`非同步AJAX會重載活動類型/聯絡人/場所三個select的選項清單，設值時機早於AJAX完成就被蓋掉；第二輪Hermes提出4個更深層問題（原生select無法程式化選值/js evaluate缺失/複製活動隱藏同步機制/AJAX race連文字欄位也重置），寫成完整投降書，誠實分析出跟軍師（Browser Use雲端瀏覽器，有js/fill_input/screenshot）的差距是**工具集結構性差距**非模型能力問題，並自己提出方案A/B/C/D四種選項。軍師裁示採Hermes建議的**方案D**：BNI Connect等需要操作原生select/需要JS的網頁後台任務轉軍師，Hermes專注讀寫類任務（改DB/文案/查詢/接力棒/SOP/蒸餾），不投資給Hermes裝雲端瀏覽器（任務頻率低，ROI不划算）。教練9/21場次最終自己手動建好(eventId 533117)，軍師已驗證資料正確。三封信往返：`cross-agent/inbox/hermes/20260831-1450`(初版SOP)+`1510`(3問題答覆)+`1520`(方案D裁示)，Hermes原信已歸檔`outbox/2026-08/`。已存記憶`project_hermes_bni_connect_task_routing_2026-08-31`。
+
+### 3. 試金石全面蒸餾重建（教練交辦本場最後任務）
+教練指示：把試金石這段時間所有犯的錯、繞的彎、讓教練生氣的地方總結，寫進系統檔案，確保永遠不會再犯，同時保留歷史存檔。查證發現真正的問題：`distill/top10_dynamic.md`與`top10_errors_index.md`自2026-05-27（案例O）後就沒再更新，但`試金石/試金石_案例庫.md`已默默長到case 67（2026-08-27），3個月、40+個案例的教訓從未被蒸餾進「快速比對層」，開工六步驟第3步也只注入「最新2案例全文」，3個月前但還沒真正解決的舊模式（例如輪詢反覆犯6次）平常不會被提醒到，只有剛好是「最新2案例」才會露出。
+
+修復三件事：①重建`top10_errors_index.md` v2，讀完全部49案例歸納出10大高頻失敗模式（輪詢取代事件觸發累計6+次最高頻／機制看似存在實已失效／查證優先於試錯／部署SOP被跳過／危險指令防護／環境裝置確認／一字不差查證／讓教練當搬運工／交接心跳斷點／只信數字不看畫面），每個模式標註涉及案例編號+是否已有自動化防護(hook/測試)+觸發詞，改採「新案例只需在對應模式加一行索引」的低維護成本設計，避免重演v1「每案例要重寫整段觸發清單」導致3個月沒人維護的失敗模式本身。②`top10_dynamic.md`標記封存不刪除（資料處置原則：預設歷史存檔），內容完整保留供查閱舊格式紀錄。③`feed_junshi_handoff.sh`新增第3a步：開工時額外注入10大模式一句話+觸發詞摘要（awk擷取，不重複全文），跟原有3b「最新2案例全文」並存，**已用合成session_id實測跑通**（exit 0，10個模式全數正確出現，總注入量23KB仍在合理範圍，非空談）。`feed_junshi_handoff.ps1`（Windows）鏡像同步相同改動，但這台Mac無pwsh無法實測，**下次聯想/ACER開工時需驗證**（呼應案例66教訓：新機關必須用真實資料驗證過才算數）。commit`4432abb93`。
+
+## ⚠️ 下一場開工先做
+1. **Windows端`feed_junshi_handoff.ps1`第3a步尚未實測**，聯想或ACER下次開工時確認有無報錯、10個模式是否正確出現，有問題直接修，不要假設「跟Mac版同邏輯應該沒事」。
+2. 12月「建團隊就是做事業」主題培訓內容教練尚未提供，補齊後編輯eventId 533111上線。
+3. FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍——三項舊待辦本場均未觸及。
+
+## 🔑 本場commit
+`cross-agent/inbox/hermes/`三封信：`7c8f5e6ff`+`a62b91fd5`+`e1b8a343d`。試金石蒸餾重建：`4432abb93`。記憶：`project_hermes_bni_connect_task_routing_2026-08-31`。
 
 
 ---
