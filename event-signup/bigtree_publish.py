@@ -170,30 +170,47 @@ def diff_summary(conn) -> dict:
         return result
     result["live_ok"] = True
 
-    new = {(r["event_date"], r["slot_key"]): r for r in rows}
-    for key in live.keys() - new.keys():
-        result["removed"].append({"label": make_label(key[0]), "slot": key[1],
-                                  "topic": live[key]["topic"]})
-    for key in new.keys() - live.keys():
-        result["added"].append({"label": make_label(key[0]), "slot": key[1],
-                                "topic": new[key]["name"]})
-    for key in live.keys() & new.keys():
-        r, l = new[key], live[key]
+    # 2026-08-31教練指出：一堆場次莫名其妙顯示「已下架」，查證後發現真根因——
+    # 原本用(日期,時段)當比對鍵，只要動了「時段」欄位（例如把TBD改成AM/PM這種
+    # 正常編輯），舊鍵就對不上新鍵，被誤判成「這場下架了+多了一場新的」，
+    # 且不管真正原因是什麼，畫面一律寫死「活動已過，自動下架」，教練完全看不懂。
+    # 改用slug當比對鍵——slug是活動的穩定識別碼，同一個slug永遠代表同一場活動，
+    # 就算時段/場地/主題怎麼改，都該算「修改」而不是「下架一場、新增一場」的假動作。
+    live_by_slug = {v["slug"]: {**v, "date": d, "slot": s}
+                     for (d, s), v in live.items() if v.get("slug")}
+    new_by_slug = {r["slug"]: r for r in rows}
+
+    today_str = date.today().isoformat()
+    for slug in live_by_slug.keys() - new_by_slug.keys():
+        l = live_by_slug[slug]
+        is_expired = l["date"] < today_str
+        result["removed"].append({
+            "label": make_label(l["date"]), "slot": l["slot"], "topic": l["topic"],
+            "reason": "活動已過，自動下架" if is_expired else "狀態改為取消／草稿，暫不對外顯示",
+        })
+    for slug in new_by_slug.keys() - live_by_slug.keys():
+        r = new_by_slug[slug]
+        result["added"].append({"label": make_label(r["event_date"]), "slot": r["slot_key"],
+                                "topic": r["name"]})
+    for slug in live_by_slug.keys() & new_by_slug.keys():
+        l, r = live_by_slug[slug], new_by_slug[slug]
         diffs = []
         if r["name"] != l["topic"]:
             diffs.append(f"主題：{l['topic']} → {r['name']}")
-        if (r["venue"] or None) != (l["venue"] or None):
-            diffs.append(f"場地：{l['venue'] or '未填'} → {r['venue'] or '未填'}")
-        if (r["slug"] or None) != (l["slug"] or None):
-            diffs.append(f"報名識別碼：{l['slug'] or '（原本沒有，報名寫不進資料庫）'} → {r['slug']}")
+        if (r["venue"] or None) != (l.get("venue") or None):
+            diffs.append(f"場地：{l.get('venue') or '未填'} → {r['venue'] or '未填'}")
+        if (r["event_date"], r["slot_key"] or "TBD") != (l["date"], l["slot"] or "TBD"):
+            diffs.append(f"時間：{make_label(l['date'])}｜{l['slot'] or '未定'} → "
+                         f"{make_label(r['event_date'])}｜{r['slot_key'] or '未定'}")
         if diffs:
-            result["modified"].append({"label": make_label(key[0]), "slot": key[1], "diffs": diffs})
+            result["modified"].append({"label": make_label(r["event_date"]), "slot": r["slot_key"], "diffs": diffs})
 
     # 內容都沒動，但排序不同 → 這次發佈的作用只是把順序排正確
-    live_order = [k for k in live.keys()]
-    new_order = sorted(new.keys(), key=lambda k: (k[0], new[k]["start_time"] or ""))
-    common = [k for k in live_order if k in new.keys()]
-    expected = [k for k in new_order if k in live.keys()]
+    live_order = list(live_by_slug.keys())
+    new_order = [slug for slug, _ in sorted(
+        new_by_slug.items(), key=lambda kv: (kv[1]["event_date"], kv[1]["start_time"] or ""))]
+    common = [s for s in live_order if s in new_by_slug]
+    expected = [s for s in new_order if s in live_by_slug]
     result["reordered"] = common != expected
     return result
 

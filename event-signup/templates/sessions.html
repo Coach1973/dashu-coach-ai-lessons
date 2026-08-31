@@ -96,6 +96,15 @@
     {% if notice %}<div class="msg ok">{{ notice }}</div>{% endif %}
     {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
 
+    <div class="publish-box" style="margin-bottom:14px">
+      <div class="label" style="margin-bottom:8px">ℹ️「一鍵發佈到官網」在做什麼？</div>
+      <div style="font-size:15px;line-height:1.9;color:rgba(255,255,255,.75)">
+        您在這頁改的資料，<strong style="color:#7ff0ad">event.bymyway.com</strong> 這個網址是<strong style="color:#7ff0ad">即時生效</strong>的，改完存檔立刻看得到，不用按發佈。<br>
+        但大樹小講另外還有兩個對外門面——<strong style="color:var(--gold)">bigtree-tw.netlify.app</strong>（正式站）跟 <strong style="color:var(--gold)">coach1973.github.io/bigtree</strong>（備援站）——這兩個是各自獨立的網頁，<strong style="color:var(--gold)">不會自動跟著這裡的改動走</strong>，一定要按「一鍵發佈到官網」才會把最新場次資料同步過去。<br>
+        下面「按下發佈後會有這些變動」列出的，就是這兩個網址跟目前資料庫的差異——差異不是壞掉，是這幾個網址還沒同步到最新狀態。<span style="color:rgba(255,255,255,.5)">（Netlify 部署會消耗額度，所以不建議每改一筆就按，累積幾筆一起發佈比較省）</span>
+      </div>
+    </div>
+
     <div class="publish-box">
       <div class="label">按下發佈後，官網會有這些變動</div>
       {% set s = summary %}
@@ -108,7 +117,7 @@
       {% else %}
         <div class="changes">
           {% for r in s.removed %}
-            <div class="chg chg-out">－ 下架　{{ r.label }} {{ r.slot }}　{{ r.topic }}<span class="why">（活動已過，自動下架）</span></div>
+            <div class="chg chg-out">－ 下架　{{ r.label }} {{ r.slot }}　{{ r.topic }}<span class="why">（{{ r.reason }}）</span></div>
           {% endfor %}
           {% for a in s.added %}
             <div class="chg chg-in">＋ 新增　{{ a.label }} {{ a.slot }}　{{ a.topic }}</div>
