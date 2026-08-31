@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-31 15:35:20**
+> **最後同步：2026-08-31 19:30:59**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **網頁版小龍蝦GPT/MiniMax混合模型路由**（平常對話用GPT便宜輕量模型、需要工具/搜尋才切MiniMax） | 🔒卡住-等教練決定要不要繼續 | 2026-08-31教練提出構想，查證推翻前提：GPT-5.5/5.6 API本身沒有免費層(免費的是ChatGPT消費者App的輕量模型，API串接用不到)，OpenClaw原生也不支援跨廠牌provider自動路由(只有主模型/thinking模型兩層機制)。若要做需另外付費GPT API帳號+自建路由攔截層，工程量不小。已如實回報教練，教練尚未拍板是否要繼續投入，詳見v155。 |
 | 🎯🎯 | **大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制** | ✅2026-08-30本場完成，教練親口「很棒」肯定方向 | 教練拍板方向：讀活repo+event.db即時渲染取代Netlify手動zip部署，GitHub Pages/Netlify暫時保留同步、穩定後才退場。已上線4個新路由，全部走`event-signup`既有Flask app（不新增子網域/Tunnel/launchd，降低服務被遺忘風險）：`event.bymyway.com/bigtree/`（疊event.db即時場次資料）、`/ai-forum/`（現為台中場9/23-24，2天制系列共用網址，教練明確要求網址代表格式非地點，之後10/7-8台南場沿用同網址）、`/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補凌榆舜/李明燦兩位講師資料後改9/22台南場）、`/tainan-calender/`、`/bni-traffic/`（純client端repo，零風險）。同步更新3處連動：①`bni-chapters`資料庫9分會×2連結共18筆改新網址 ②`bni_tainan`小幫手`AGENTS.md`4處member-facing連結+`sync_calendar.py`抓取來源（過程修好Cloudflare擋urllib預設UA的403問題）③`coach888`作品總覽新增「三、bymyway自架版」區塊（教練要求移到第三順位，其餘區塊順延），5個Netlify舊版標「待退場」橘色badge一眼可辨識。所有變更均先本機測試埠+真實Chrome驗證，重啟正式服務後在公開網址再次curl驗證才commit。commit一覽：`f8ac8fc`+`3df06cab7`+`fc58dc783`（event-signup）、`5fabb60d`（bni_tainan外層repo）、`230d735`+`cafe1f4`（coach888）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。**`/ai-talk`9/22台南場內容已於v153完成上線**（凌榆舜+吳大樹雙講師版，李明燦講師身分已取消），詳見v153。 |
 | ✅ | **BNI Connect新增大台南南區初階MSP/進階MSP/季度主題培訓/新領導團隊訓練/領導團隊期中訓等活動，供會員報名** | ✅2026-08-31本場完成 | 軍師直接進`appsManageEvents`，用「複製活動」＋jQuery datepicker API＋CKEDITOR API批次建立7場：初階MSP(09/07、11/09，clone自484009)、進階MSP(10/12、12/21，clone自484008)、主題培訓(09/10「領導人的溝通藝術」、12/10「建團隊就是做事業」，clone自519187)、領導團隊期中訓(12/07，clone自522132)，皆已按「發佈」上線開放會員線上註冊。9/21「新領導團隊訓練」教練後來自己在BNI Connect手動建好(eventId 533117)，軍師已驗證資料正確。9月主題培訓內容依教練口述文字補上，12月主題培訓內容留白待教練提供。「執董與新會員有約」因無培訓分教練裁示整個放棄不建。詳見v154。 |
 | ✅ | **AI百人導師(mentor100)申請通知改走Telegram，修復8/27靜默漏接** | ✅2026-08-30本場完成 | 教練回報8/27有人申請完全沒收到通知，還誤重複提醒對方。查證根因是`apply_submit()`打的是舊版LINE通道(`sme-register-fn`)且吞掉錯誤，跟event-signup試金石案例62同款坑。已改用event-signup驗證過的Telegram Bot API直送方案(chat_id 6124913915)，失敗必寫`notify_failures.log`。已用真實`/apply`端點測試驗證，測試資料已清除。commit`1b9b816`(mentor100 repo)。全機掃描確認無其他專案殘留舊LINE通知路徑。記憶`project_mentor100_application_notify_telegram_fix_2026-08-30`。 |
@@ -285,11 +286,9 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-30 v152（Mac終端機 Sonnet 5，逐步脫離Netlify：4個新路由+3處連動+作品總覽更新）
+> 📦 v152完整內容已封存：`handoff_archive/handoff_v152_archived_2026-08-31.md`（Mac終端機，逐步脫離Netlify：4個新路由+3處連動+作品總覽更新）
 
-> 建立時間：2026-08-30 14:26 ~ 18:56（台灣時間，接續v150同一天新對話框，因context overflow於14:26自動重啟）
-> 上一棒：v150（Mac終端機，同日較早，真誠分會邀約來賓重複建置根因查明+移除+5位會員專屬編輯網址交付）
-> 本棒主軸：**教練拍板方向——大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改成event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制，並同步更新所有引用這些連結的地方。**
+---
 
 ## 🎯 本場戰果
 
@@ -419,6 +418,52 @@ Hermes（MiniMax-M3桌面版，desktop preview pane）依軍師SOP操作BNI Conn
 
 ## 🔑 本場commit
 `cross-agent/inbox/hermes/`四封信：`7c8f5e6ff`+`a62b91fd5`+`e1b8a343d`+（本次任務分工政策信，下方補齊hash）。試金石蒸餾重建：`4432abb93`。記憶：`project_hermes_bni_connect_task_routing_2026-08-31`+`project_hermes_default_owner_event_tasks_2026-08-31`。
+
+---
+
+# 軍師接力棒 · 2026-08-31 v155（Mac終端機 Sonnet 5，coach888作品總覽補漏+即時報名人數開關+場次深連結/QR系統+發佈預覽誤判bug修復+GPT/MiniMax混合路由評估）
+
+> 建立時間：2026-08-31 15:26 ~ 19:26（台灣時間，接續v154同日開工，同一場對話橫跨多輪教練即時互動與糾正）
+> 上一棒：v154（Mac終端機，同日，BNI Connect 7場培訓活動上線+Hermes任務分工裁示+試金石全面蒸餾重建）
+> 本棒主軸：**Hermes分工政策落地執行（一輪真實信件往返+ai-art架構問答）；教練連續發現coach888作品總覽/大樹小講後台的多個真實缺口並當場糾正，逐一修復；GPT/MiniMax混合路由屬純評估未執行。**
+
+## 🎯 本場戰果
+
+### 1. coach888作品總覽補漏：sincere.bymyway.com + ai-art + ai-fit
+教練指出`sincere.bymyway.com`（真誠分會邀約來賓）沒收錄進作品總覽，查證發現這是2026-08-25訂的「推GitHub/推Netlify要同步更新作品總覽」SOP第二次沒落實——已補上3項（另外主動查到`ai-fit`也漏掉），用`gh repo list`比對所有非封存repo逐一核對，寫入`claude-brain/project_portfolio_netlify_github_logic.md`加強稽核方法。commit`d1f88ac`（coach888）+`3e3a767b1`（workspace記憶更新）。
+
+### 2. Hermes任務分工政策落地：即時報名人數開關系統設計+3問答覆+架構修正
+教練15:26拍板「大樹小講/近期活動類任務盡可能丟給Hermes」後，教練18:29追加提出「即時報名人數，教練自己決定顯示/隱藏」的新系統構想並要求發信讓Hermes動工。已完成：①正式發信`cross-agent/inbox/hermes/`告知常態分工政策+設計即時人數開關系統規格②Hermes來信問ai-art架構3問，回覆時**修正Hermes誤判**（他只讀`app.py`前100行就以為`/bigtree/`等路由不存在，實際在896-950行，已用grep實測糾正）+確認ai-art算Hermes範圍（政策從「4個series列舉」改成「任何近期活動網站」原則性描述）+報名機制走`/api/register`。commit`861f77e98`+`cf75513c9`。
+
+### 2b. 【教練當場糾正】即時報名人數開關不能只寫規格交給Hermes，要親自做進軍師自己維護的後台
+教練問「你有幫我把這個開關做在後臺管理系統嗎」——答案是沒有，只寫了規格信。**當場補做**：`event.db`的`events`表新增`show_live_count`欄位，`/admin/sessions`每場活動的編輯/新增表單都加了checkbox，教練可直接勾選開關，不用叫AI改。已用`app.test_client()`做完整DB round-trip驗證（新增/勾選/取消勾選/list查詢都正確），服務重啟生效，用Chrome開給教練看。commit`fb697a918`。**教訓**：分給Hermes的僅限教練不會操作的內容維運，教練親自操作的控制項要當場做完不延後，已寫入記憶`feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31`。
+
+### 3. 場次分享深連結+QR code系統上線
+教練問slug「bigtree-1007」怎麼呈現，軍師解釋深連結機制（`/bigtree/?session=日期&slot=時段`）後，教練要求**每場活動都要有這個功能，直接做進後台**。已上線：`/admin/sessions`每張場次卡片新增深連結文字框(可複製)+QR code圖片（`/admin/qr/<id>.png`即時產生，不落地存檔）。**過程中發現真bug**：9/16高雄場上午/下午兩場`slot_key`都是空值，深連結無法區分是哪一場，當時選擇顯示警告而非硬猜連結。commit`0744dbca7`。
+
+### 3b. 【教練連續兩次糾正】9/16上午/下午該自己判斷+時段選單要標時間
+**第一次**：教練指出活動主題文字本身已寫「上午場」「下午場」，這麼簡單的事不該問教練決定。**第二次**：教練發現整個時段下拉選單（早/早半/午班等）從頭到尾沒有標示對應時間，教練根本無從選起。兩個問題一次修復：新增`AM`/`PM`兩個獨立時段模板（09:00-12:00/13:00-16:00，不共用既有「上午」「下午」模板，避免影響9/19領導力培訓那場沿用的10:00-12:00定義）；`bigtree_publish.py`新增`SLOT_TIMES`單一定義字典，`SLOT_CHOICES`改成從它自動衍生，兩處下拉選單都改成顯示「早（09:00–12:00）」格式，結構上保證以後新增選項不會再漏標時間。教練接著給出9/16更詳細的分段流程（9:00入場/9:30-12:00活動/12:00-13:00用餐/13:00入場/13:30-16:00活動/16:00-16:30 Q&A），已寫入該場`transport`欄位。commit（bigtree repo）`fc19316`+（workspace repo）`7461df26f`。記憶`feedback_dont_punt_decisions_show_underlying_values_2026-08-31`。
+
+### 4. 【教練發現】發佈預覽誤判「已過期」根因修復+新增操作說明區塊
+教練回報9/22、10/7、10/8、9/16等**未來日期**的場次卻顯示「活動已過，自動下架」，看不懂還跟著出現「新增」。查證抓到真根因：`diff_summary()`原本用「(日期,時段)」當比對鍵去比對線上Netlify內容跟資料庫，只要編輯了時段欄位（如TBD改AM/PM），新舊鍵就對不上，被誤判成「下架一場+新增一場」的假動作，且不分青紅皂白統一寫死「活動已過」。改用`slug`（活動穩定識別碼）當比對鍵徹底修復，「移除」原因也改成區分「真過期」vs「狀態改草稿/取消」兩種。教練同時問「一鍵發佈到官網」在做什麼，已直接寫進後台頁面一段說明文字（解釋event.bymyway.com即時生效 vs Netlify/GitHub Pages要按此鈕才同步），不用再口頭解釋。commit`fd5797584`。
+
+### 5. Hermes補充教育信：前後臺同步規則+兩條當日教訓
+教練要求「跟Hermes下指令時，後臺機制要跟前臺一起改」，已發信說明具體對應規則（改前臺內容一定要同步改`event.db`），並把本場兩次教練糾正的教訓（別把能自己判斷的小事丟回教練決定／選單UI要顯示底層真實數值）一併轉達給Hermes，讓他也吸收同樣的教訓，不用重犯。commit`8ee268f37`。
+
+### 6. GPT/MiniMax混合模型路由：純評估，未執行
+教練提出構想：網頁版小龍蝦平常用GPT模型聊天（因ChatGPT開放免費文字交流），需要工具/搜尋才切MiniMax。**查證後推翻前提**：GPT-5.5/5.6 **API本身沒有免費層**，免費的是ChatGPT消費者版App裡的輕量模型，API串接用不到那個免費額度。同時查證OpenClaw原生不支援「依任務類型自動切換不同廠牌provider」，只有「主模型/thinking模型」兩層機制，真要做需要外部路由層（OpenRouter）或自建攔截邏輯。已如實回報給教練，建議若真要做可用GPT便宜輕量模型(gpt-5.6-luna)+自建路由層，但屬於工程量不小的專案，教練尚未拍板要不要繼續，此項純評估結案待教練後續指示。
+
+### 7. 跨機信箱：讀取並歸檔ACER純資訊性回報
+ACER回報「這幾天沉默的真相」（純粹是137小時沒有教練互動，非故障）+回覆聯想8/26跨機四層根因信第2層，內容僅供參考不需動作，已讀取並移入`outbox/2026-08/`歸檔。commit`be063c002`。
+
+## ⚠️ 下一場開工先做
+1. **9/16高雄場的`transport`欄位現在很長**（原場地資訊+新增的詳細流程都塞在同一個｜分隔字串裡），若教練覺得官網卡片顯示太擠，可考慮拆成獨立欄位顯示，本場未處理視覺呈現，只確保資料正確。
+2. Hermes可能會依15:40+18:37+19:05三封信的內容開始建置ai-art頁面+即時人數開關的前端渲染邏輯，下次開工先查`cross-agent/inbox/mac/`有沒有Hermes回信。
+3. v151之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容）本場均未觸及，繼續掛著。
+4. GPT/MiniMax混合路由：教練若決定要做，需先確認要不要真的為此另外付費一個GPT API帳號，再評估自建路由層的具體設計（目前只有方向性建議，沒有實作規格）。
+
+## 🔑 本場commit
+`coach888`：`d1f88ac`（sincere/ai-art/ai-fit補漏）。`workspace`（cross-agent+event-signup+claude-brain）：`861f77e98`+`cf75513c9`（Hermes分工政策+ai-art問答）、`fb697a918`（即時人數開關）、`0744dbca7`（深連結+QR）、`fd5797584`（發佈預覽bug修復+說明區塊）、`8ee268f37`（發信Hermes前後臺同步）、`be063c002`（ACER信歸檔）、`3e3a767b1`（作品總覽稽核記憶）。`bigtree`：`fc19316`（AM/PM時段模板）。記憶：`project_hermes_default_owner_event_tasks_2026-08-31`（前棒）、`feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31`、`feedback_dont_punt_decisions_show_underlying_values_2026-08-31`。
 
 
 ---
