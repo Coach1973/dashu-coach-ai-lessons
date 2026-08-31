@@ -279,10 +279,13 @@ def save_session(conn: sqlite3.Connection, data: dict, event_id: int | None = No
             return False, "網址短名、主題、日期都要填。"
 
     fields = ("slug", "name", "event_date", "start_time", "slot_key",
-              "location", "venue", "address", "transport", "status", "site")
+              "location", "venue", "address", "transport", "status", "site",
+              "show_live_count")
     vals = {k: (data.get(k) or "").strip() or None for k in fields}
     vals["site"] = vals["site"] or "bigtree"
     vals["status"] = vals["status"] or "active"
+    # checkbox 欄位：勾了才會出現在 form data 裡（值是 "on"），沒勾則完全不會送出這個 key
+    vals["show_live_count"] = 1 if data.get("show_live_count") else 0
 
     clash = conn.execute(
         "SELECT id FROM events WHERE slug = ? AND id IS NOT ?", (vals["slug"], event_id)

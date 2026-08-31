@@ -73,6 +73,12 @@
             <option value="draft" {% if e.status == 'draft' %}selected{% endif %}>草稿（不對外）</option>
           </select>
         </div>
+        <div class="fld full">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer">
+            <input type="checkbox" name="show_live_count" {% if e.show_live_count %}checked{% endif %}>
+            在官網公開頁顯示即時報名人數（目前已報名 {{ e.signup_count or 0 }} 人，人數少可先不勾，之後隨時回來勾）
+          </label>
+        </div>
       </div>
       <div style="margin-top:14px"><button class="btn btn-gold" type="submit">儲存修改</button></div>
     </form>
