@@ -835,7 +835,7 @@ def admin_sessions():
     summary = bp.diff_summary(conn)
     conn.close()
     return render_template(
-        "sessions.html", sessions=sessions, slot_choices=bp.SLOT_CHOICES,
+        "sessions.html", sessions=sessions, slot_choices=bp.SLOT_CHOICES, slot_times=bp.SLOT_TIMES,
         summary=summary, live_count=len(summary["sessions"]),
         quota=bp.quota_remaining(), today=date.today().isoformat(),
         notice=request.args.get("notice", ""), error=request.args.get("error", ""),

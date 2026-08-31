@@ -68,7 +68,7 @@
         <div class="fld"><label>時段</label>
           <select name="slot_key">
             {% for s in slot_choices %}
-              <option value="{{ s }}" {% if e.slot_key == s %}selected{% endif %}>{{ s }}</option>
+              <option value="{{ s }}" {% if e.slot_key == s %}selected{% endif %}>{{ s }}（{{ slot_times[s] }}）</option>
             {% endfor %}
           </select>
         </div>

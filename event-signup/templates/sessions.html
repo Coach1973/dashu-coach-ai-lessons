@@ -144,7 +144,7 @@
           <div class="fld"><label>日期</label><input type="date" name="event_date" required value="{{ today }}"></div>
           <div class="fld"><label>時段</label>
             <select name="slot_key">
-              {% for s in slot_choices %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+              {% for s in slot_choices %}<option value="{{ s }}">{{ s }}（{{ slot_times[s] }}）</option>{% endfor %}
             </select>
             <div class="hint">時段決定官網顯示的起訖時間</div>
           </div>
