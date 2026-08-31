@@ -1,5 +1,6 @@
 # 專案卡：BNI Connect 官方後台（CMS）
 
+- **🎯 owner：軍師**（2026-08-31實測確認，Hermes desktop preview pane無js evaluate/fill_input/screenshot能力，無法程式化操作原生`<select>`表單，見`project_hermes_bni_connect_task_routing_2026-08-31`記憶）
 - **入口**：https://www.bniconnectglobal.com/bnicms/v3 （教練本機真實 Chrome 已登入，用 claude-in-chrome 操作，**不是** Claude 自己的隔離分頁）
 - **網站 ID**：大台南南區 `12261`｜真富 `25503`｜真愛 `26706`｜真誠 `18487`(舊)&`18640`(新，重複記錄暫不動)｜真鑫 `28446`｜真鑽 `12262`
 - **教練授權**（2026-07-31）：「以後我口頭講要改什麼，你直接去改」，發布上線前口頭提醒一聲即可

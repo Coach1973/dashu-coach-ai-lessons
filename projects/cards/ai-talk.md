@@ -1,5 +1,6 @@
 # 專案卡：AI微論壇 嘉義場（ai-talk）
 
+- **🎯 owner：Hermes**（2026-08-31教練拍板，網站內容維運類任務預設交Hermes，見`cross-agent/README.md`任務分工鐵律）
 - **repo**：`/Users/bymyway/github_repos/ai-talk`（分支 main）
 - **正式站**：https://ai-talk-tw.netlify.app（8/28 嘉義場主場；台南場已封存在頁面下方）
 - **部署型態**：🔴 Netlify 手動 zip 推型——**教練說「推」才部署**；zip 需含 `_headers`（精確路徑規則，不用 `/*`）

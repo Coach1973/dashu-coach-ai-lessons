@@ -1,5 +1,6 @@
 # 專案卡：AI微論壇 台中場 9/23-24（ai-forum-taichung）
 
+- **🎯 owner：Hermes**（2026-08-31教練拍板，網站內容維運類任務預設交Hermes，見`cross-agent/README.md`任務分工鐵律）
 - **repo**：`/Users/bymyway/github_repos/ai-forum-taichung`（分支 master）
 - **概念稿**：https://coach1973.github.io/ai-forum-taichung/ （GitHub Pages，push 即自動更新，**這站不用問「推」**）
 - **狀態**：概念稿確認階段，尚未推正式站；正式網址未定（要問教練：獨立網址或整合進既有品牌）

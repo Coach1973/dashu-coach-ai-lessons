@@ -1,5 +1,6 @@
 # 專案卡：大樹小講（bigtree-tw）
 
+- **🎯 owner：Hermes**（2026-08-31教練拍板，網站內容維運類任務預設交Hermes，完整操作手冊見`knowledges/2026-08-31_大樹小講四場活動維運SOP_備援指令給Hermes.md`；軍師只接需要JS/程式化select/截圖的BNI Connect等第三方後台任務）
 - **repo**：`/Users/bymyway/github_repos/bigtree`（分支 main）
 - **正式站**：https://bigtree-tw.netlify.app
 - **部署型態**：🔴 Netlify 手動 zip 推型——改完先 GitHub commit，**教練親口說「推」才部署**（zip + API，走 netlify_deploy_guard 流程）

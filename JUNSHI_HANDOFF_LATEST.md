@@ -396,10 +396,14 @@ Hermes（MiniMax-M3桌面版，desktop preview pane）依軍師SOP操作BNI Conn
 
 修復三件事：①重建`top10_errors_index.md` v2，讀完全部49案例歸納出10大高頻失敗模式（輪詢取代事件觸發累計6+次最高頻／機制看似存在實已失效／查證優先於試錯／部署SOP被跳過／危險指令防護／環境裝置確認／一字不差查證／讓教練當搬運工／交接心跳斷點／只信數字不看畫面），每個模式標註涉及案例編號+是否已有自動化防護(hook/測試)+觸發詞，改採「新案例只需在對應模式加一行索引」的低維護成本設計，避免重演v1「每案例要重寫整段觸發清單」導致3個月沒人維護的失敗模式本身。②`top10_dynamic.md`標記封存不刪除（資料處置原則：預設歷史存檔），內容完整保留供查閱舊格式紀錄。③`feed_junshi_handoff.sh`新增第3a步：開工時額外注入10大模式一句話+觸發詞摘要（awk擷取，不重複全文），跟原有3b「最新2案例全文」並存，**已用合成session_id實測跑通**（exit 0，10個模式全數正確出現，總注入量23KB仍在合理範圍，非空談）。`feed_junshi_handoff.ps1`（Windows）鏡像同步相同改動，但這台Mac無pwsh無法實測，**下次聯想/ACER開工時需驗證**（呼應案例66教訓：新機關必須用真實資料驗證過才算數）。commit`4432abb93`。
 
+### 4. 大樹小講／近期活動類任務預設分工正式定案（教練15:26親口拍板）
+教練緊接著上面的Hermes/BNI Connect分工裁示，進一步拍板：往後只要是大樹小講/近期活動這類任務，**盡可能丟給Hermes運作**，兩邊透過既有`cross-agent`信箱通訊，軍師持續給指導直到Hermes能完全接手網站活動建置。已把「這是常態預設、不只是額度用完前的備援」寫成永久協議：`cross-agent/README.md`新增「任務分工鐵律」章節（含分工範圍表+教學迴圈說明）；`projects/cards/bigtree.md`/`ai-talk.md`/`ai-forum-taichung.md`/`tainan-calender.md`加`owner:Hermes`標記，`bni-connect.md`加`owner:軍師`標記；正式發信到`cross-agent/inbox/hermes/`告知Hermes新政策+已具備的SOP手冊位置。記憶`project_hermes_default_owner_event_tasks_2026-08-31`。**教學迴圈的實際機制**：Hermes卡住寫信到`inbox/mac/`→軍師開工讀信給答案→答案同步補進SOP文件（不只回信了事）→SOP越補越完整、Hermes卡住頻率隨時間下降，這才是「教到完全能接手」的真正落地方式，不是一次性文件而已。
+
 ## ⚠️ 下一場開工先做
 1. **Windows端`feed_junshi_handoff.ps1`第3a步尚未實測**，聯想或ACER下次開工時確認有無報錯、10個模式是否正確出現，有問題直接修，不要假設「跟Mac版同邏輯應該沒事」。
 2. 12月「建團隊就是做事業」主題培訓內容教練尚未提供，補齊後編輯eventId 533111上線。
 3. FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍——三項舊待辦本場均未觸及。
+4. **下次Hermes來信到`inbox/mac/`時**，除了回答問題，記得同步把答案補進`knowledges/2026-08-31_大樹小講四場活動維運SOP_備援指令給Hermes.md`或對應專案卡，這是分工政策能否真正生效的關鍵動作。
 
 ## 🔑 本場commit
-`cross-agent/inbox/hermes/`三封信：`7c8f5e6ff`+`a62b91fd5`+`e1b8a343d`。試金石蒸餾重建：`4432abb93`。記憶：`project_hermes_bni_connect_task_routing_2026-08-31`。
+`cross-agent/inbox/hermes/`四封信：`7c8f5e6ff`+`a62b91fd5`+`e1b8a343d`+（本次任務分工政策信，下方補齊hash）。試金石蒸餾重建：`4432abb93`。記憶：`project_hermes_bni_connect_task_routing_2026-08-31`+`project_hermes_default_owner_event_tasks_2026-08-31`。
