@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-08-30 19:10:26**
+> **最後同步：2026-08-31 13:55:25**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,7 +18,9 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🎯🎯 | **大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制** | ✅2026-08-30本場完成，教練親口「很棒」肯定方向 | 教練拍板方向：讀活repo+event.db即時渲染取代Netlify手動zip部署，GitHub Pages/Netlify暫時保留同步、穩定後才退場。已上線4個新路由，全部走`event-signup`既有Flask app（不新增子網域/Tunnel/launchd，降低服務被遺忘風險）：`event.bymyway.com/bigtree/`（疊event.db即時場次資料）、`/ai-forum/`（現為台中場9/23-24，2天制系列共用網址，教練明確要求網址代表格式非地點，之後10/7-8台南場沿用同網址）、`/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補凌榆舜/李明燦兩位講師資料後改9/22台南場）、`/tainan-calender/`、`/bni-traffic/`（純client端repo，零風險）。同步更新3處連動：①`bni-chapters`資料庫9分會×2連結共18筆改新網址 ②`bni_tainan`小幫手`AGENTS.md`4處member-facing連結+`sync_calendar.py`抓取來源（過程修好Cloudflare擋urllib預設UA的403問題）③`coach888`作品總覽新增「三、bymyway自架版」區塊（教練要求移到第三順位，其餘區塊順延），5個Netlify舊版標「待退場」橘色badge一眼可辨識。所有變更均先本機測試埠+真實Chrome驗證，重啟正式服務後在公開網址再次curl驗證才commit。commit一覽：`f8ac8fc`+`3df06cab7`+`fc58dc783`（event-signup）、`5fabb60d`（bni_tainan外層repo）、`230d735`+`cafe1f4`（coach888）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。**下一棒待辦**：等教練提供凌榆舜/李明燦兩位講師的職稱/講題/簡介/照片，把`/ai-talk`一次改成9/22台南場正式內容（設攤/贊助商區塊維持不動）。 |
+| 🎯🎯 | **大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，逐步脫離Netlify部署次數限制** | ✅2026-08-30本場完成，教練親口「很棒」肯定方向 | 教練拍板方向：讀活repo+event.db即時渲染取代Netlify手動zip部署，GitHub Pages/Netlify暫時保留同步、穩定後才退場。已上線4個新路由，全部走`event-signup`既有Flask app（不新增子網域/Tunnel/launchd，降低服務被遺忘風險）：`event.bymyway.com/bigtree/`（疊event.db即時場次資料）、`/ai-forum/`（現為台中場9/23-24，2天制系列共用網址，教練明確要求網址代表格式非地點，之後10/7-8台南場沿用同網址）、`/ai-talk/`（半天制系列，現仍8/28嘉義場內容，等教練補凌榆舜/李明燦兩位講師資料後改9/22台南場）、`/tainan-calender/`、`/bni-traffic/`（純client端repo，零風險）。同步更新3處連動：①`bni-chapters`資料庫9分會×2連結共18筆改新網址 ②`bni_tainan`小幫手`AGENTS.md`4處member-facing連結+`sync_calendar.py`抓取來源（過程修好Cloudflare擋urllib預設UA的403問題）③`coach888`作品總覽新增「三、bymyway自架版」區塊（教練要求移到第三順位，其餘區塊順延），5個Netlify舊版標「待退場」橘色badge一眼可辨識。所有變更均先本機測試埠+真實Chrome驗證，重啟正式服務後在公開網址再次curl驗證才commit。commit一覽：`f8ac8fc`+`3df06cab7`+`fc58dc783`（event-signup）、`5fabb60d`（bni_tainan外層repo）、`230d735`+`cafe1f4`（coach888）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。**`/ai-talk`9/22台南場內容已於v153完成上線**（凌榆舜+吳大樹雙講師版，李明燦講師身分已取消），詳見v153。 |
+| 🎯 | **BNI Connect新增大台南南區初階MSP/進階MSP/季度主題培訓/新領導團隊訓練/領導團隊期中訓等活動，供會員報名** | ⏳待軍師動手 | 教練2026-08-31交辦：進BNI Connect後台新增這幾種活動類型，讓會員可以在系統裡註冊/報名。尚未動手，下一場先進BNI Connect CMS後台查證現有活動類型清單+建立流程(參考`reference_bni_connect_cms_structure`記憶)，確認每種活動的欄位需求(日期/地點/講師/名額)再建立。 |
+| ✅ | **AI百人導師(mentor100)申請通知改走Telegram，修復8/27靜默漏接** | ✅2026-08-30本場完成 | 教練回報8/27有人申請完全沒收到通知，還誤重複提醒對方。查證根因是`apply_submit()`打的是舊版LINE通道(`sme-register-fn`)且吞掉錯誤，跟event-signup試金石案例62同款坑。已改用event-signup驗證過的Telegram Bot API直送方案(chat_id 6124913915)，失敗必寫`notify_failures.log`。已用真實`/apply`端點測試驗證，測試資料已清除。commit`1b9b816`(mentor100 repo)。全機掃描確認無其他專案殘留舊LINE通知路徑。記憶`project_mentor100_application_notify_telegram_fix_2026-08-30`。 |
 | ✅ | **真誠分會邀約來賓紀錄表重複建置事件：根因已查明+重複版本已移除** | ✅2026-08-30本場完成，教練親自抓出根因 | 起因：查git log發現bni-chapters裡有一份`c6ce0f2`commit做出功能重疊的重複實作（`/admin/chapters/1/invites`）。**教練親自比對兩個session的原始.jsonl逐行找出精確分岔點**：01:37:48原session(`fa8a74d2`)正在忙背景Explore子代理查詢時，Claude桌面版App在01:38:11自動生成一則`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`的「Continue from where you left off.」內部握手訊息，**憑空分岔出這場對話**(`0f9618ae`)，繼承原session到01:37:48為止的歷史，之後兩條各自獨立發展——非教練或AI下達的fork指令，是App層級的自動行為。教練確認只需要`sincere.bymyway.com`一套，重複版本已移除：`/admin/chapters/1/invites`路由+`admin_invites.html`+db.py四個函式+schema.sql四張invite_*資料表全部移除，檔案歸檔於`_archive_duplicate_invites_feature_2026-08-30/`未刪除，資料庫既有資料保留未清空，commit`6b06bca`（bni-chapters）。詳見v149+v150、記憶`feedback_check_git_log_for_parallel_builds_2026-08-30`。 |
 | ✅ | **AI百人導師(mentor100)真誠分會5人簡介卡遷移到chapters.bymyway.com/sincere+後台新增編輯按鈕** | ✅2026-08-30本場完成 | 王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳，含照片，逐筆核對mentors表欄位對應chapter_members表（兩邊格式一致）搬移，commit`1f460f7`（bni-chapters）。教練隨後指出後台改資料只能靠AI代改的缺口（「我自己改不了」），已新增`/admin/chapters/<id>/members/<id>/edit`路由+`admin_member_edit.html`模板，沿用既有`member_join_edit.html`欄位結構跟`db.update_member()`函式，分會夥伴簡介列表每筆加「編輯」連結，commit`8cd9595`。**已用真實登入+存檔round-trip驗證**（改一個欄位→存檔→查資料庫確認真的更新→頁面顯示「已儲存修改」→測試值改回原樣），非僅程式碼審查。詳見v149。 |
 | 🟡 | **教練提出「釋放記憶體」指令要更全面：連同所有可關App一併關閉** | 🔒卡住-待教練確認白名單範圍 | 2026-08-29教練電腦變慢多輪診斷後提出構想，已給評估：系統層級記憶體碎片化只有重開機能徹底清空，關App效果有限，且既有的RustDesk釋放指令查證後對15GB量級記憶體壓力貢獻微乎其微(重啟後process反而一度變多)。若要動手寫這支腳本，需先問清楚白名單——Claude/Finder等系統必要項可以確定，但Typeless/Chrome/LINE等常用工具要不要保留，教練尚未回覆。詳見v148。 |
@@ -279,39 +281,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-08-30 v150（Mac終端機 Sonnet 5，重複建置根因查明+移除+5位會員專屬編輯網址交付）
-
-> 建立時間：2026-08-30 11:52 ~ 14:12（台灣時間，接續v149同一天新對話框，同一場對話）
-> 上一棒：v149（Mac終端機，同日較早，真誠分會邀約來賓系統從零建置+mentor100簡介卡遷移+bni-chapters後台編輯功能）
-> 本棒主軸：**v149結尾留下的「重複建置未解之謎」在本棒被教練親自查明並終結，重複版本已移除；另外交付5位遷移會員的專屬自助編輯網址。**
-
-## 🎯 本場戰果
-
-### 1. 真誠分會邀約來賓重複建置事件：根因查明+重複版本移除
-教練不接受v149結尾「查不出原因」的結論，親自比對兩個Claude Code session的原始`.jsonl`存檔逐行找出精確分岔點：**01:37:48**兩邊逐字相同（原session`fa8a74d2`正忙於背景Explore子代理查BNI會員資料庫），**01:38:11**`0f9618ae`（本場session）檔案裡出現一筆從未見過的紀錄——Claude桌面版App自動生成的`isMeta:true`+`entrypoint:claude-desktop`+`model:<synthetic>`「Continue from where you left off.」內部握手訊息，這一刻**這場對話被憑空分岔出來**，繼承原session到01:37:48為止的完整歷史，之後兩條各自獨立發展：原session(`fa8a74d2`)在教練睡覺期間繼續執行完成，寫進bni-chapters（commit`c6ce0f2`）；這場對話(`0f9618ae`)則是教練醒來後看到已建出的靜態版本才繼續往下追加指令，最後演變成`sincere.bymyway.com`完整版。**結論：分岔是Claude桌面版App在原session忙碌未即時回應時的內部自動行為，不是教練或AI下達的fork指令**，教練明確要求「不要自行生出fork」。
-
-教練確認邀約來賓功能只需要`sincere.bymyway.com`一套，重複版本已移除：`bni-chapters`的`/admin/chapters/1/invites`路由、`admin_invites.html`模板、`db.py`四個相關函式（`list_invite_teams`/`list_invite_members`/`list_invite_weeks`/`list_invite_records`/`build_invite_summary`）、`schema.sql`四張`invite_*`資料表定義全部移除，後台編輯頁上的連結一併拿掉。檔案未刪除，搬進`_archive_duplicate_invites_feature_2026-08-30/`保留備查；資料庫既有`invite_*`資料表資料也未清空，只是沒有路徑能再存取到。已重啟服務驗證：`sincere`首頁+編輯頁皆正常200，舊路徑`/admin/chapters/1/invites`確認回應404。commit`6b06bca`（bni-chapters）。已用真實Chrome開給教練看過修改後的編輯頁畫面。
-
-**記憶修正**：原本v149寫入的「另一個對話框/機器獨立建置」記憶（`feedback_check_git_log_for_parallel_builds_2026-08-30.md`）已更正為正確的fork機制解釋，避免錯誤理論留在永久記錄裡誤導以後的自己；上方待辦總表第一列也同步改為✅已解決狀態。
-
-### 2. 交付5位遷移會員的專屬自助編輯網址
-教練要求把v149遷移進chapters.bymyway.com/sincere的5位百人導師會員（王彤/陳佩君（佩佩老師）/楊在珍/林佳伶Lavi/葉建葳）的專屬編輯連結給他轉發給本人。已從資料庫查出各自`edit_token`，**逐一curl驗證5組網址皆為HTTP 200**才交付給教練，並提醒這類連結誰拿到就能改甚至刪除該筆資料，不要公開貼出、只私下轉發本人。
-
-## ⚠️ 本場教訓（重要，已寫入記憶）
-
-1. **「自己這場session查不到分岔痕跡」不代表分岔沒發生，可能只是分岔點在session開始記錄之前，超出自己能查證的範圍**——v149結尾我用自己的完整逐字稿、inbound_echo訊息紀錄、cron/自動化腳本三個方向查證後誠實回報「查不出原因」，這個判斷本身沒錯（守則#15），但沒有進一步想到「去比對另一個相關session的原始存檔」這個關鍵動作——這正是教練後來親自做的事，也是查出真相的關鍵。
-2. **判斷兩個session是否為fork關係、精確分岔時間點，正確做法是逐行比對兩份`.jsonl`原始檔的`uuid`欄位，而非只看對話文字內容**——語音辨識文字在重新處理時可能有微小差異（如「來立訊」vs「來來賓」），只比文字容易誤判；找到第一個`uuid`不同的行號，再檢查該行附近有沒有`isMeta:true`+`model:"<synthetic>"`+`entrypoint:"claude-desktop"`的系統握手訊息，那就是分岔的確切物證。
-3. **Claude桌面版App在原session忙碌執行背景工具呼叫（如Explore子代理、長時間查詢）而未能即時回應教練訊息時，可能會自動生成新的fork session**——這是App層級行為，目前沒有證據顯示AI能主動避免，但值得留意：之後若在執行長時間背景任務的空檔教練剛好傳訊息，有可能重演同樣情況。
-
-## 📋 下一場開工先做
-1. 邀約來賓重複建置事件已完全結案，不需要再追蹤。
-2. 121/咖啡會議/全國見証分享會/培訓出席目前都是空的，等會員或教練提供真實數字。
-3. 5位會員的專屬編輯網址已交付教練轉發，下次可問是否已經轉發成功、會員是否已自行更新過資料。
-4. FB粉專商家驗證後續（舊待辦，v147/v148留下，本場未觸及）。
-5. 待辦三(補公司欄位)：2026-09-02教練有額度時的舊待辦，本場未觸及。
-
-## 🔑 本場commit
-`bni-chapters`：`6b06bca`（移除重複邀約來賓功能）。`workspace`：記憶修正commit`94ccfdac4`。
+> 📦 v150完整內容已封存：`handoff_archive/handoff_v150_archived_2026-08-31.md`（Mac終端機，真誠分會邀約來賓重複建置根因查明+移除+5位會員專屬編輯網址交付）
 
 ---
 
@@ -354,6 +324,42 @@
 
 ## 🔑 本場commit
 `bigtree`：`f8ac8fc`（9/22時段+文案修改）。`event-signup`（workspace repo內）：`f8ac8fc`~`7d4b1e5e9`區間共4筆（新增4條bymyway路由）。`.openclaw`外層repo：`5fabb60d`（bni_tainan agent連結更新）。`coach888`：`230d735`+`cafe1f4`（作品總覽新增區塊+順序調整）。記憶：`project_bymyway_dynamic_hosting_escape_netlify_2026-08-30`+`reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30`。
+
+---
+
+# 軍師接力棒 · 2026-08-31 v153（Mac終端機 Sonnet 5，mentor100通知修復+AI微論壇9/22台南場上線+BNI Connect培訓活動新任務交辦）
+
+> 建立時間：2026-08-30 21:22 ~ 2026-08-31 13:50（台灣時間，接續v152開工，橫跨開工六步驟到教練說「總結」收工）
+> 上一棒：v152（Mac終端機，同上一日，逐步脫離Netlify：4個新路由上線）
+> 本棒主軸：**教練回報mentor100申請通知漏接，查證修復；AI微論壇9/22台南場網頁從零建置並依教練兩輪回饋修正上線；教練交辦下一場新任務——BNI Connect新增多種培訓活動供會員報名。**
+
+## 🎯 本場戰果
+
+### 1. AI百人導師(mentor100)申請通知改走Telegram，修復8/27靜默漏接
+教練回報8/27有人提交申請完全沒收到Telegram通知，還誤以為對方沒提交而重複提醒，結果發現重複。查證`apply_submit()`打的是舊版LINE通道`sme-register-fn`且用`except: pass`吞掉錯誤，跟event-signup試金石案例62（報名通知LINE月配額用完靜默失敗一週）同款坑，只是發生在另一個獨立專案身上。改用event-signup已驗證過的Telegram Bot API直送方案（chat_id 6124913915），失敗必寫`notify_failures.log`。已用真實`/apply`端點提交測試驗證（無失敗log產生），測試資料已清除。commit`1b9b816`（mentor100 repo）。全機掃描`sme-register-fn`/`_notify_coach_line`確認mentor100是唯一還沒遷移的專案，event-signup裡的殘留只是註解提及歷史。記憶`project_mentor100_application_notify_telegram_fix_2026-08-30`。
+
+### 2. 杜亞洛BNI發票查詢（唯讀，教練確認記得曾問過）
+查`claude-brain/data/`兩份完成清單json，確認杜亞洛有兩張BNI相關發票皆已開立：BNI入會$39,800（custom_num 082407，宿易智能有限公司，invoice DQ92460811）+ 培訓費$600（custom_num 081925，invoice DQ92662345），皆status=done無作廢紀錄，直接回報教練無需動手。
+
+### 3. AI微論壇9/22台南場網頁從零建置上線（`/ai-talk`repo）
+教練確認9/22台南場講師到齊（凌榆舜+李明燦+教練本人），先查證：凌榆舜資料已在mentor100(id=81)，李明燦全機查無資料（mentor100/applications/inbound_echo三方向都查過），回報教練後教練裁示**李明燦取消，只留凌榆舜+教練兩人**，凌榆舜主題「品牌數位轉型與商業應用」、教練主題「零基礎學AI，起步比較快」、教練說明文字「大樹教練的演講就像浪花一樣，每次都精彩，每次都不一樣」。
+
+場地/時間/費用查`event.db`的`bigtree-0922-day`登記資料核對：台南安平維悅酒店、200元、50席，跟教練口頭數字吻合。改寫`/ai-talk`repo的`index.html`：議程/講師陣容從嘉義場5人版換成2人版，凌榆舜簡介照片取自mentor100（複製進`images/speaker-ling.jpg`），og:/canonical改指向`event.bymyway.com/ai-talk/`，7/29台南場「歷屆回顧」封存區塊完全不動。**push時撞上git race**——另一場session同時往同一repo push了4筆嘉義場設攤廠商新增commit（含凌榆舜08/李明燦09兩個設攤卡片），`git pull --no-rebase`乾淨自動合併無衝突，已用javascript_tool直接呼叫`openSpeakerBio()`驗證講師簡介彈窗+照片載入正常，另用`open -a "Google Chrome"`實際打開驗證。commit`6dc29dc`+合併commit`cb69243`。
+
+教練隨後三項修正：①時間改「13:30開始，16:30結束」（原誤寫「13:30進場，17:00轉場」，教練糾正「不是入場」）②取消凌榆舜、李明燦的設攤卡片（兩位仍保留其他身分，只拿掉設攤，剩餘KR廚房重編為08）③強調200元報名費是支付場地費，四處文案補上說明。全頁6處時間文字+`event.db`的`bigtree-0922-day`的`transport`欄位同步更新，已curl+開Chrome驗證。commit`f75d441`。
+
+## ⚠️ 本場發現（未寫獨立記憶，順帶記錄）
+李明燦查無speaker資料的謎題，在git pull合併後找到答案：他是另一場session加進boothes區塊的**設攤廠商**（台灣模型車博物館），不是mentor100的講師資料——兩種身分（講師 vs 設攤）是完全不同的資料模型（mentor100 DB vs 直接寫死在ai-talk HTML），彼此不互通，下次遇到類似「查無此人」先想清楚問的是哪種身分再查對應資料源。
+
+## 📋 下一場開工先做（教練新交辦，尚未動手）
+**教練指示**：進BNI Connect後台，新增大台南南區「初階MSP」「進階MSP」「季度主題培訓」「新領導團隊訓練」「領導團隊期中訓」等活動，讓會員可以在系統裡註冊/報名這些活動。
+1. 先讀`reference_bni_connect_cms_structure`記憶，確認BNI Connect CMS後台的活動/培訓管理入口在哪（區域ID`12261`+5分會ID）。
+2. 查證這幾種活動類型是否已有既有分類/範本可套用，還是要從零新增。
+3. 確認每種活動需要的欄位（日期/時間/地點/講師/名額/費用）教練是否已有具體資料，還是要先問清楚才能建。
+4. 這件事本場完全未觸及，是全新任務。
+
+## 🔑 本場commit
+`mentor100`：`1b9b816`（申請通知改Telegram）。`ai-talk`：`6dc29dc`+`cb69243`（9/22台南場上線+merge）+`f75d441`（時間/設攤/場地費三項修正）。記憶：`project_mentor100_application_notify_telegram_fix_2026-08-30`。接力棒瘦身：v150封存至`handoff_archive/handoff_v150_archived_2026-08-31.md`。
 
 
 ---
