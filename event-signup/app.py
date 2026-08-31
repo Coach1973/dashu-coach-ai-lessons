@@ -313,6 +313,7 @@ def api_register():
         phone_raw = (payload.get("phone") or "").strip()
         company_title = (payload.get("company") or "").strip()
         email = (payload.get("email") or "").strip()
+        note = (payload.get("note") or "").strip()  # 選填備註（如票種），有值才會出現在通知裡
 
         source = (payload.get("source") or "").strip()  # 哪個網站送來的，方便追來源
 
@@ -373,7 +374,8 @@ def api_register():
         notify_text = (
             f"【大樹小講・官網報名】\n場次：{event_label}\n姓名：{name}\n"
             f"公司：{company_title or '-'}\n電話：{phone}\nEmail：{email or '未填'}\n"
-            f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
+            + (f"備註：{note}\n" if note else "")
+            + f"（{'新報名' if status == 'new' else '同場次重複報名'}，由bymyway.com官方發送）"
         )
         # 2026-08-24教練裁示：LINE會扣月配額，全面停用，只留Telegram
         # 「活動報名即時通知」群組(教練+佩佩老師同見，不受配額限制)。
