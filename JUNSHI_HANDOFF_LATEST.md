@@ -346,5 +346,17 @@
 3. 確認每種活動需要的欄位（日期/時間/地點/講師/名額/費用）教練是否已有具體資料，還是要先問清楚才能建。
 4. 這件事本場完全未觸及，是全新任務。
 
+## 🚧 Hermes 接手「9/21 新領導團隊訓練」進度（卡住，已寫信問軍師）
+- 教練在場下令接手，帳號「吳 大樹」已登入 BNI Connect
+- 用 Hermes preview pane 操作，到表單頁 `appsEventsCreateNewEvent?countryId=7699`
+- 教練已確認欄位：日期 2026-09-21、時間 9:00-12:00、形式 ZOOM、免費、不填 RTF、人數上限 100
+- 軍師 SOP（`cross-agent/inbox/hermes/20260831-1450_mac-to-hermes_bni-connect-create-new-event-sop.md`）已讀，照做時踩到 3 個 SOP 沒寫的副作用
+- ⚠️ 卡住的副作用：
+  1. **click 活動類型下拉會清空「地區」select value**（會踩到 SOP 警告的「Select a host region」雷）
+  2. **click 地區下拉會自動把「允許線上付款」改成 no 並鎖住**（免費活動剛好對，但 SOP 沒寫）
+  3. **誤推論活動類型 value 660 = 領導團隊培訓**（實際是 BNI台灣會員大會，正確 value 待軍師回覆）
+- 已寫信給軍師：`cross-agent/inbox/mac/20260831-1500_hermes-to-mac_bni-create-event-3-sop-gaps.md`
+- 教練目前待命中，等軍師回覆 3 個問題後繼續
+
 ## 🔑 本場commit
 `mentor100`：`1b9b816`（申請通知改Telegram）。`ai-talk`：`6dc29dc`+`cb69243`（9/22台南場上線+merge）+`f75d441`（時間/設攤/場地費三項修正）。記憶：`project_mentor100_application_notify_telegram_fix_2026-08-30`。接力棒瘦身：v150封存至`handoff_archive/handoff_v150_archived_2026-08-31.md`。
