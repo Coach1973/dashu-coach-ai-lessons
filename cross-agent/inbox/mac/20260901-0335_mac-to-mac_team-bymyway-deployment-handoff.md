@@ -9,6 +9,15 @@
 
 ✅ **程式本體 100% 完成並推上 GitHub**（Hermes 那邊 3.5 小時零進度，軍師直接動手，詳見 v156 接力棒記錄的 ai-art 模式）
 
+**最新狀態**：教練 2026-09-01 03:44 親口指示「先建 5 個」，已從 3 個擴充到 5 個（commit `173e035`）：
+- 第一分會（team-01 / id=1）
+- 第二分會（team-02 / id=2）
+- 第三分會（team-03 / id=3）
+- 第四分會（team-04 / id=4）
+- 第五分會（team-05 / id=5）
+
+全部驗證 200，首頁分會列表顯示 5 筆。
+
 ## 你（下一棒軍師）要做的事：正式網域部署
 
 跟 bni-chapters 一樣的標準流程（DNS + Cloudflare Tunnel + launchd 背景服務三件套）。
@@ -59,7 +68,8 @@
 
 ### Commit hash 跟 commit message
 
-`e9d87dc` — feat: team.bymyway.com 通用分會系統（複製bni-chapters架構，去BNI品牌）
+- `e9d87dc` — feat: team.bymyway.com 通用分會系統（複製bni-chapters架構，去BNI品牌）
+- `173e035` — feat: 示範分會從3個擴充到5個（新增team-04/team-05）
 
 ### 如果你（下一棒軍師）要查 v152 大樹小講怎麼脫離 Netlify
 
