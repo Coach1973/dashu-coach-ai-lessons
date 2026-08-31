@@ -465,3 +465,33 @@ ACER回報「這幾天沉默的真相」（純粹是137小時沒有教練互動�
 
 ## 🔑 本場commit
 `workspace`：`757854999`（信用証提醒兩段式）、`15305e072`（git衝突查證）、`5a312c940`（發信Hermes team交辦，已過時）、本場v157接力棒本身。`team-bymyway`：`fd9dfb8`（seed_admins.py，部署時新增）；程式本體`e9d87dc`+`173e035`為另一場對話框軍師所做，非本棒commit。`bni-chapters`：`69670de`（籌備會創始會員表單）。`coach888`：`34477e4`（作品總覽新增team.bymyway.com）。部署基礎設施：`~/.cloudflared/team-config.yml`+兩支launchd plist（非git追蹤，本機設定檔）。
+
+---
+
+# 軍師接力棒 · 2026-09-01 v158（Mac終端機 Sonnet 5，team.bymyway.com核心價值複製+預約參訪表單+bni-chapters分會精神新功能+PII誤commit修復）
+
+> 建立時間：2026-09-01 04:33 ~ 05:00（台灣時間，接續v157同場對話）
+> 上一棒：v157（team.bymyway.com部署上線+bni-chapters創始會員表單+信用証提醒兩段式）
+> 本棒主軸：**教練親自在team.bymyway.com後台寫好第一分會9個核心價值，交辦複製到其餘4分會+「預約參訪」按鈕接上表單通知；接著要求bni-chapters真誠分會新增「分會精神」區塊（教練同一批核心價值內容）取代「分會之光」示範；過程中發現並修復一次git add -A誤commit含真實個資db備份檔的事故。**
+
+## 🎯 本場戰果
+
+### 1. team.bymyway.com：第一分會9個核心價值複製到第二~第五分會
+教練在後台（v157修好的CRUD功能）親自寫完第一分會9個核心價值，直接SQL複製到chapter_id 2~5，5個分會皆curl驗證顯示一致。
+
+### 2. team.bymyway.com：「預約參訪」按鈕接上真實表單+Telegram通知
+不分分會狀態(forming/active)，新增`visit_signups`表+`/<slug>/visit-signup`路由(姓名/電話/Email/公司)+沿用honeypot/rate limit機制，送出即時notify_coach.sh→Telegram。5個分會按鈕皆已連上並curl驗證，test_client()全流程驗證含mock通知。commit`e477260`。
+
+### 3. bni-chapters：新增「分會精神」區塊，先在真誠分會示範
+教練要求把「分會之光」改名「分會精神」，核心價值(BNI官方9大)維持不動，分會精神放教練新寫的那9個(跟team.bymyway.com第一分會同一批內容)。設計成漸進式：新增`chapter_spirit`表，chapter.html改用「有spirit內容才顯示分會精神，否則顯示舊分會之光(chapter_stats)」的條件式渲染——真誠分會已寫入9筆自動切換，其餘8分會spirit為空維持顯示舊內容不受影響，教練確認滿意後可自行在後台複製到其他分會(已補CRUD介面)或請軍師代勞。舊chapter_stats資料完整保留未刪除。commit`a7773a7`。
+
+### 4. 【事故修復】git add -A誤commit含真實會員個資的.db備份檔
+上一個commit(`a7773a7`)用`git add -A`時，一個遺留的`chapters.db.bak-before-netlify-link-update-20260830-164330`（含7筆真實會員姓名/電話/Email）被誤commit——`.gitignore`的`*.db`規則擋不住`.db.bak-xxx`這種變體檔名。查證repo為private（`gh repo view`確認`isPrivate:true`），曝露風險有限，但立即`git rm --cached`+補`.gitignore`規則+新commit修復(`b33c327`)，本機檔案保留未刪除。已寫入記憶`feedback_git_add_a_risk_with_db_backup_files_2026-09-01`，往後在含真實個資的repo執行`git add -A`前先`git status --short`肉眼掃一眼。
+
+## ⚠️ 下一場開工先做
+1. 教練若確認真誠分會「分會精神」效果不錯，下一步是複製到其他8個分會（現在只有真誠分會有spirit資料）。
+2. team.bymyway.com/bni-chapters兩套系統後台密碼仍是預設Admin/88888，教練尚未裁示改密碼時程。
+3. v151之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容）本場均未觸及，繼續掛著。
+
+## 🔑 本場commit
+`team-bymyway`：`e477260`（預約參訪表單+通知）+核心價值SQL直接複製(無獨立commit，資料庫操作)。`bni-chapters`：`a7773a7`（分會精神新功能）+`b33c327`（PII誤commit修復）。`workspace`：`1c261394a`（git add -A教訓記憶）。
