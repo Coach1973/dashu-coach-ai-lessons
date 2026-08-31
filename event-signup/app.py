@@ -997,6 +997,34 @@ def bni_traffic_assets(filename):
     return _serve_repo_file(BNI_TRAFFIC_REPO, filename)
 
 
+AI_ART_REPO = Path("/Users/bymyway/github_repos/ai-art")
+
+
+@app.route("/ai-art/")
+def ai_art_page():
+    """9/16高雄場「當古典音樂遇到AI科技」。教練明確要求即時報名人數要能自己開關（show_live_count），
+    預設隱藏（怕人數少影響報名意願），教練在/admin/sessions勾選後才會顯示，比照bigtree的字串替換手法。"""
+    conn = db.get_conn()
+    event = db.get_event(conn, "ai-art-0916")
+    widget_html = ""
+    if event and event["show_live_count"]:
+        count = conn.execute(
+            "SELECT COUNT(*) c FROM signups WHERE event_id = ?", (event["id"],)
+        ).fetchone()["c"]
+        widget_html = f'<div class="live-count-badge">🔥 已有 {count} 人報名</div>'
+    conn.close()
+    html = (AI_ART_REPO / "index.html").read_text(encoding="utf-8")
+    html = html.replace("<!-- LIVE_COUNT_WIDGET -->", widget_html)
+    return Response(html, mimetype="text/html; charset=utf-8")
+
+
+@app.route("/ai-art/<path:filename>")
+def ai_art_assets(filename):
+    if filename == "index.html":
+        return ai_art_page()
+    return _serve_repo_file(AI_ART_REPO, filename)
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
