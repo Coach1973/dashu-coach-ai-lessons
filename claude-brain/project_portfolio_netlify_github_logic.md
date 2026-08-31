@@ -52,3 +52,11 @@ metadata:
 **How to apply**：往後任何一個網站專案走到「推GitHub測試」或「推Netlify」這兩個動作，都要在同一輪順手打開`/Users/bymyway/github_repos/coach888/index.html`同步更新，不能等教練事後問「有沒有放進作品總覽」才想起來。這條跟上面「只有Netlify.app算作品」的舊邏輯不衝突——舊邏輯講的是「哪些算對外公開作品」的判斷標準，這條講的是「不管哪個階段，只要用戶看得到，作品總覽都要跟著更新」的執行紀律。
 
 Related: [[reference_coach_websites]]、[[feedback_netlify_autodeploy_cost_awareness]]、[[feedback_markdown_link_mismatch_verify]]
+
+## 🔴🔴 2026-08-31再次發作：sincere.bymyway.com跟ai-art上線後都沒同步作品總覽，教練親自發現漏掉才提醒
+
+2026-08-30上線的`sincere.bymyway.com`（真誠分會邀約來賓）跟2026-08-31之前上線的`ai-art`（9/16高雄場活動微站）都沒有依上面2026-08-25訂的SOP同步進`coach888/index.html`，教練親自發現才要求補上，這是同一條規則第二次沒被落實——「同一輪順手更新」靠當下記得，證明不夠可靠。
+
+**已補上**：sincere.bymyway.com（七、BNI專用）、ai-art+ai-fit（一、大樹常用，ai-fit也是同批漏掉的，commit`d1f88ac`）。
+
+**How to apply（加強版）**：任何時候要判斷「作品總覽是否有遺漏」，不要只靠記憶回想最近做過什麼，改用`gh repo list Coach1973 --limit 100 --json name,isArchived --jq '.[] | select(.isArchived==false) | .name'`列出所有非封存repo，逐一對照`coach888/index.html`裡有沒有出現，這是2026-08-31查證時實際用來抓出遺漏的方法，比憑印象回想準確。教練現在的標準說法是「只要有一個新的網址，就要自動收錄」——這代表往後不用等教練問，任何新網站/新網址（不論GitHub Pages測試階段或Netlify/bymyway正式階段）建立當下就該同步這份總覽，這比"完成部署動作時才想起來"再往前一步。
