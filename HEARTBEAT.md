@@ -13,6 +13,13 @@
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
 - 名稱對等：Telegram = 小龍蝦 = 電報
 
+## 📋 健康檢查紀錄（2026-08-31 14:12）
+- cron 系統實際活躍任務：1 個（本健康檢查本身），state.lastStatus=ok、consecutiveErrors=0
+- HEARTBEAT.md 無 ⬜ 待辦
+- 教練最後訊息：2026-08-31 14:09:57（沉默 0 小時,剛剛還在對話）
+- 無自動修復動作,無需打擾教練
+- 註：先前紀錄寫的「25 個活躍 cron 任務」是過去快照，當下 cron 子系統已簡化至 1 個，不算異常
+
 ## 📋 健康檢查紀錄（2026-08-31 10:12）
 - 25 個活躍 cron 任務全數 ok,consecutiveErrors=0
 - HEARTBEAT.md 無 ⬜ 待辦
