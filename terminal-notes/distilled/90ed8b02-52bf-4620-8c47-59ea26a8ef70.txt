@@ -1,8 +1,109 @@
 # 終端機對話萃取 — Session 90ed8b02-52bf-4620-8c47-59ea26a8ef70
-# 提取時間：2026-08-30 21:25 (台灣時間)
-# 共 1 條教練原話
+# 提取時間：2026-08-31 14:29 (台灣時間)
+# 共 9 條教練原話
 
 ---
 
 【教練 2026-08-30 13:22】
 開工
+
+　▶ AI 回應：六步驟開工讀取完畢，向教練回報：
+
+**接力棒（最新v152，8/30 18:56）**：大樹小講/AI微論壇/培訓行事曆/紅綠燈看板已改用 event.bymyway.com 即時渲染，逐步脫離Netlify部署次數限制，教練親口「很棒」肯定方向，commit已上雲。下一棒待辦：等您提供凌榆舜、李明燦兩位講師的職稱/講題/簡介/照片，就能把 `/ai-talk` 一次改成9/22台南場正式內容。
+
+**HEARTBEAT**：18:00因對話太長自動重啟過一次，記錄已完整存檔零遺漏。有兩筆低優先度待修（healthcheck.log裁切事故已重建近14行、TG除錯誤發一則測試訊息已刪除），都…（略）
+
+【教練 2026-08-30 13:31】
+第一個要反映的問題：AI 百人導師團隊目前沒有通知機制。當有人提交申請的時候，至少我的 Telegram 要收到通知，不然我都收不到任何消息。
+
+像之前 8 月 27 日就有申請，可是我都沒收到通知，我還傻傻地去提醒對方記得提交申請，結果發現重複了。
+
+所以請幫我完善這個機制，只要有人提交申請，我的 Telegram 就要收到通知，這樣 OK 嗎？
+
+　▶ AI 回應：Config structure verified and syntax checks pass. Now restarting the mentor100 service and running a real end-to-end test submission.
+
+　▶ AI 回應：Good, there's a clean `delete_application()` for cleanup. Now submitting a real test through the live endpoint.
+
+　▶ AI 回應：已修復並驗證完成，回報如下：
+
+**根因**：`mentor100/app.py`的申請通知函式打的是舊版LINE通道（`sme-register-fn.netlify.app`），而且用`except: pass`把錯誤整個吞掉——跟8月時 event-signup 報名通知靜默失敗一整週（試金石案例62）是同一種坑，只是那次修好之後沒有連帶檢查其他專案是否也用同一條路徑，mentor100 就這樣被漏掉了。
+
+**修復**：改用 event-signup 已經驗證過、目前穩定在跑的 Telegram Bot API 直送方案，有人提交申請就直接發到您的 Telegram（chat_id 6…（略）
+
+【教練 2026-08-30 15:55】
+了解一下，杜亞洛有開過BNI的發票嗎？我記得之前問過
+
+　▶ AI 回應：有，杜亞洛開過兩張BNI相關發票，都已完成：
+
+| 類型 | 發票號碼 | 自訂編號 | 買受人 | 金額 | 狀態 |
+|---|---|---|---|---|---|
+| BNI入會 | DQ92460811 | 082407 | 宿易智能有限公司(統編89163511) | $39,800 | ✅已開立 |
+| 培訓費 | DQ92662345 | 081925 | — | $600 | ✅已開立 |
+
+入會費那張是2026-08-24晚~08-25凌晨那批18張BNI台南南區入會/續約發票之一；培訓費那張是同一天(08-24)結案的32人培訓費批次最後8張之一（他當時原本卡在「還沒問…（略）
+
+【教練 2026-08-31 03:04】
+9月22日的講師到齊了，可以製作 微論壇的網頁了
+
+　▶ AI 回應：我先幫您盤點了一下現有資料，發現還缺一塊，需要跟您確認：
+
+**已經到位的**：
+- ✅ **凌榆舜**：資料已經在系統裡（8/30晚上21:55新增的），公司/職稱/完整簡介/照片都有，是「智匯商機股份有限公司｜Ai商務經理」
+- ✅ **吳大樹（您）**：既有頁面本來就有現成簡介
+- ✅ 場地資訊：查了`event.db`裡9/22台南場的登記資料——**台南安平維悅酒店**（台南市安平區慶平路539號），13:30進場、17:00轉場，收費200元、座位50人，跟您說的完全對得上
+
+**卡住的是李明燦**：我把mentor100資料庫（申請名單+講師名單）、昨天到今天所有訊息紀錄都查過一…（略）
+
+【教練 2026-08-31 03:43】
+李明燦取消，只要我跟凌先生就行，凌先生的主題訂為∶品牌數位轉型與商業應用
+我的主題－零基礎學AI，起步比較快
+說明欄寫，大樹教練的演講就像浪花一樣，每次都精彩，每次都不一樣。
+
+　▶ AI 回應：Now updating the highlight/pricing sections and the current-event FAQ/signup/footer/register-modal that still reference the old fee and venue.
+
+　▶ AI 回應：Now the current #signup section, footer, sticky bar and register modal title text:
+
+　▶ AI 回應：Now the JS constants and live-counter script:
+
+　▶ AI 回應：Now fixing the hardcoded "嘉義場" text in the LINE message generator:
+
+　▶ AI 回應：Verified live and working. Now committing and pushing the changes.
+
+　▶ AI 回應：Clean merge, no conflicts. Re-verifying the live site once more and then pushing.
+
+　▶ AI 回應：Confirmed live and correct. Now pushing to GitHub for backup.
+
+　▶ AI 回應：已完成，9/22台南場的AI微論壇網頁已經上線，網址 [event.bymyway.com/ai-talk/](https://event.bymyway.com/ai-talk/)（改一次立即生效，不用額外部署）。
+
+**做了什麼**：
+- 議程/講師陣容從原本嘉義場5人版，換成您指定的2人版：凌榆舜（品牌數位轉型與商業應用）+ 您（零基礎學AI，起步比較快），您的簡介照您的原話「大樹教練的演講就像浪花一樣，每次都精彩，每次都不一樣」寫入
+- 場地資料我查了`event.db`裡已登記的9/22場次核對過：台南安平維悅酒店、13:30進場17:00轉場、200元、50席，跟您說的完全吻合
+-…（略）
+
+【教練 2026-08-31 04:23】
+時間要改，1點半開始，不是入場，4點半結束。設攤取消李明燦及凌的攤位，強調，這次收費200元是支付場地費。
+
+【教練 2026-08-31 04:23】
+[Request interrupted by user]
+
+【教練 2026-08-31 04:23】
+時間要改，1點半開始，不是入場，4點半結束。設攤取消李明燦及凌的攤位
+
+　▶ AI 回應：三項修正都已完成並上線，[event.bymyway.com/ai-talk/](https://event.bymyway.com/ai-talk/) 即時生效：
+
+1. **時間**：改成「13:30開始，16:30結束」，全頁6處時間文字＋`event.db`的場次登記資料同步更新
+2. **設攤**：凌榆舜、李明燦的攤位卡片已移除（兩位的其他身分不受影響——凌榆舜仍是講師），剩下KR廚房重新編為設攤廠商08
+3. **場地費說明**：首頁文案、常見問答、報名同意欄，四處都補上「200元用於支付場地費」的說明
+
+已用curl核對＋實際打開Chrome確認畫面正確，commit [f75d…（略）
+
+【教練 2026-08-31 05:50】
+總結，下場任務是進去connect 新增大台南南區初階MSP、進階MSP、季度主題培訓、新領導團隊訓練，領導團隊期中訓 等活動，以便讓會員註冊活動。
+
+　▶ AI 回應：**本場總結完成，接力棒已更新並推上雲端**（commit [8d98827ef](https://github.com/Coach1973/mac-openclaw-workflows/commit/8d98827ef)）。
+
+**本場做了什麼**：
+1. mentor100 百人導師申請通知漏接（8/27事故）已修復，改走 Telegram，commit `1b9b816`
+2. 查證杜亞洛的兩張 BNI 發票都已開立（唯讀查詢）
+3. AI微論壇 9/22 台南場網頁從零建好並依您兩輪回饋修正上線，commit `6dc29dc`+`cb69243`+`f75d441`
+4. 接力棒瘦身…（略）

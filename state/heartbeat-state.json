@@ -1,42 +1,44 @@
 {
-  "lastCheck": "2026-08-30T20:12:43+08:00",
-  "lastCycle": 669,
-  "cumulativeGreen": 42,
-  "telegramChannelOk": true,
-  "telegramProbeAt": "2026-08-30T20:12:43+08:00",
-  "coachLastMessage": "2026-08-30T18:56:24+08:00",
-  "coachSilentHours": 1.3,
-  "systemStatus": "ok",
-  "v40ThreeGates": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": true,
-    "gate3_affectsWork": false
+  "lastHealthcheckCycle": 687,
+  "lastHealthcheckAt": "2026-08-31T20:12:18+08:00",
+  "lastCoachMessageAt": "2026-08-31T19:42:01+08:00",
+  "coachSilentHours": 0.5,
+  "verdict": "silent_pass",
+  "v4ThreeGates": {
+    "gate1_now_broken": "fail_no",
+    "gate2_provider_overload": "fail_no",
+    "gate3_affects_work": "fail_no",
+    "decision": "silent_do_not_announce"
   },
+  "cronTruth": {
+    "total": 1,
+    "enabled": 1,
+    "ce_ge1": 0,
+    "ce_ge3": 0,
+    "last_err_present": 0,
+    "ce_ge1_note": "本輪僅有 cron 系統本身 1 個活躍任務（本健康檢查），其他歷史任務已全數 disabled",
+    "enabled_last_err": 0
+  },
+  "environmentQuickcheck": {
+    "soul_x3_present": true,
+    "soul_sizes": [9015, 1851, 22220],
+    "repo1_untracked_modified": 23,
+    "repo2_untracked_modified": 43,
+    "dotlock_present": 0
+  },
+  "tgChannelProbe": "{\"ok\":true,\"bot\":\"openclaw_macbook4_bot\",\"chat\":\"6124913915\"}",
+  "cumulativeGreen": 54,
+  "nextCycle": 688,
+  "nextCycleAt": "2026-08-31 21:12 +0800",
+  "note": "週一傍晚 20:12，沉默 0.5h，教練晚間正常作息，零會員功能壞，三關全 fail → 安靜通過",
   "systemSnapshot": {
-    "coachSilentSince": "2026-08-30T21:31:28+08:00",
-    "coachSilentHours": 0.7,
-    "enabledCronTotal": 25,
-    "enabledCronsCE0": 25,
-    "enabledCronsCE3Plus": 0,
-    "atPendingNotTriggered": 2,
-    "failoverError24h": 24,
-    "failoverRetryRecovered": "100%"
+    "coachSilentSince": "2026-08-31T19:42:01+08:00",
+    "coachSilentHours": 0.5
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-30T22:12:04.118139+08:00",
-    "telegram_probe": "2026-08-30T20:12:43+08:00",
-    "cron_sqlite_audit": "2026-08-30T12:14:00+08:00",
-    "heartbeat_check": "2026-08-30T20:12:43+08:00",
-    "heartbeat_poll": "2026-08-30T14:00:00+08:00",
-    "telegram_channel": "2026-08-30T20:12:43+08:00",
-    "system_health": "2026-08-30T20:12:43+08:00"
-  },
-  "lastHeartbeat": "2026-08-30T20:12:43+08:00",
-  "coachSilentSince": "2026-08-30T18:56:24+08:00",
-  "coachSilenceHours": 1.3,
-  "telegramChannelLastVerified": "2026-08-30T20:12:43+08:00",
-  "tgChannelProbeAt": "2026-08-30T20:12:43+08:00",
-  "urgentGmailCount": 0,
-  "note": "poll=20:12 TPE｜cycle=669 安靜通過 cumulativeGreen=42｜TG 通道當下實測 ok:true｜sync_coach_last_message.sh 實測：教練最後訊息 2026-08-30T18:56:24（1.3h 沉默，週日晚間正常作息）｜v4.0 三關：①25 cron 全綠 ✅ ②provider overload 已 100% 復原 ✅ ③零會員功能壞 ✅ → 三關全 OK 不 announce｜cycle=668(19:14) 本任務 1 次 edit 步驟失敗標 error 但 counter 已更新（屬內部檔案 lock 短暫衝突，不影響工作）｜本輪 cycle=669 已重建 healthcheck.log cycle=655~669 共 14 行（更早歷史永久遺失，教訓寫入 HEARTBEAT.md）｜下輪 healthcheck cron 預計 21:12",
-  "lastHeartbeatNote": "poll=20:12 TPE｜cycle=669 安靜通過 cumulativeGreen=42｜TG 通道當下實測 ok:true｜sync_coach_last_message.sh 實測：教練最後訊息 2026-08-30T18:56:24（1.3h 沉默，週日晚間正常作息）｜v4.0 三關：①25 cron 全綠 ✅ ②provider overload 已 100% 復原 ✅ ③零會員功能壞 ✅ → 三關全 OK 不 announce｜cycle=668(19:14) 本任務 1 次 edit 步驟失敗標 error 但 counter 已更新（屬內部檔案 lock 短暫衝突，不影響工作）｜本輪 cycle=669 已重建 healthcheck.log cycle=655~669 共 14 行（更早歷史永久遺失，教訓寫入 HEARTBEAT.md）｜下輪 healthcheck cron 預計 21:12"
+    "coach_silence_sync": "2026-08-31T20:12:06+08:00",
+    "cron_check": "2026-08-31T20:12:18+08:00",
+    "env_quickcheck": "2026-08-31T20:12:18+08:00",
+    "tg_probe": "2026-08-31T20:12:18+08:00"
+  }
 }

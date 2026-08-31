@@ -14,5 +14,13 @@
     "guessedMember": "疑似黃智宏（信用卡商戶服務，僅名字「智宏」命中，姓氏未確認）",
     "confidence": "medium_given_name_match",
     "firstSeenAt": "2026-07-25T06:03:48.088Z"
+  },
+  "uac532ba1b266c9a11a7e27772f64a2e6": {
+    "userId": "uac532ba1b266c9a11a7e27772f64a2e6",
+    "displayName": "陳俊源Sam",
+    "statusMessage": "退休金規劃\n資產傳承\n美金換匯\n月現金流",
+    "guessedMember": "陳俊源（共同基金）",
+    "confidence": "high_name_match",
+    "firstSeenAt": "2026-08-31T07:43:38.576Z"
   }
 }

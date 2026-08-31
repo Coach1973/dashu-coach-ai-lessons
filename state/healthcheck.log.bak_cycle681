@@ -1,0 +1,4 @@
+[2026-08-31 03:12:30 CST] cycle=676 健康檢查 03:12 (週一凌晨) | sync=OK(silent=3.3h) | cron=25/0_err | 24h_provider_overload=17+1舊歷史 | cumulativeGreen=47(claimed,未寫入file) | 安靜通過
+2026-08-31 02:12:30 cycle=675 ✅ 健康檢查通過（全綠，無失敗任務，無 HEARTBEAT 待辦，環境正常）
+[2026-08-31 05:12:38 +0800] cycle=678 ✅ 全綠｜CE=0/25 enabled｜24h 17 errors (16 overload+1 舊歷史)｜TG ok｜cumulativeGreen=48
+[2026-08-31 06:12:53] cycle=679 GREEN: 25 enabled / 0 CE≥1 / 0 CE≥3 / 0 last_err / cron tool 看得到本任務 CE=0 / SQLite 歷史 DB 已清理(0 bytes)，依靠 HEARTBEAT cycle=678 全局快照確認

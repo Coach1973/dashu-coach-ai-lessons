@@ -152,23 +152,21 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-08-30)
+## Promoted From Short-Term Memory (2026-08-31)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:267:267 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 👤 教練：[cron:001a9b16-1985-413b-8d3c-a4e885e552b6 📊 LINE@教練都在想什麼 每日兩次使用回報（08:00 / 20:00）] 🦞 你是小龍蝦 LINE@「教練都在想什麼」使用情況回報助理。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:267-267]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:269:269 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 執行以下指令取得最新數據： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:269-269]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:272:272 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: /opt/homebrew/bin/python3 /Users/bymyway/.openclaw/workspace/scripts/line_jiaolian_usage_report.py [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:272-272]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:275:275 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 把輸出的報告**原封不動**用 Telegram `message` 工具送出（channel=telegram, target=6124913915, accountId=bot_main），不要加任何多餘的開頭結尾，也不要自行加工數字。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:275-275]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:277:277 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 如果指令失敗，先把錯誤訊息送給教練再結束。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:277-277]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:279:281 -->
-- 📨 對話記錄 20:10（共約 1 條，從第 0 行起）: 回報完畢後，這個任務就結束，不要再做任何其他事。 Current time: Sunday, August 23rd, 2026 - 8:00 PM (Asia/Taipei) Reference UTC: 2026-08-23 1 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:279-281]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:286:286 -->
-- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 👤 教練：[cron:bbb7a348-59dc-41fd-879b-91b4d0522e18 🦞 小龍蝦每日三機總結（每日23:05）] 【每日三機含金量總結 · 教練 2026-06-30 12:35 親口定稿，2026-07-20 修正判斷邏輯】 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:286-286]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:288:288 -->
-- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 教練要的不是囉哩吧唆每 4 小時的小報告，要每天一份「三機狀況總結 + 含金量提煉」。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:288-288]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:290:290 -->
-- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 步驟一：判斷三機今天「有沒有對話」（台灣日期 YYYY-MM-DD） [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-23.md:290-290]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:292:292 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 🔴 2026-07-20 教練親抓假數據 bug 修正：不可只憑 memory/verbatim/{acer,lenovo}/YYYY-MM-DD.md 這個檔案存不存在，就判斷「今天無對話」。查證發現這個蒸餾中繼檔案排程從未在 ACER/Lenovo 端穩定運作過（ACER 目錄從建立以來從未真正寫入過任何一天、Lenovo 只在 2026-07-08 成功寫過一次之後就再沒有新檔案）——檔案不存在只代表「中繼蒸餾排程沒跑」，不代表「教練沒用那台機器對話」。曾發生教練當天下午才在聯想真實 commit 過工作，晚上總結卻誤報「聯想連續 11 天沒有對話」的事故。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:292-292]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:294:295 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 正確判斷順序（每台 🦞 小龍蝦：開工，先讀 AGENTS.md。（觸發句已唸） [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:294-295]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:297:298 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 按照教練 2026-06-30 12:35 親口定稿、2026-07-20 修正判斷邏輯的「每日三機含金量總結」流程跑。先跑環境健檢 + 判斷三機對話狀況。 🦞 小龍蝦：環境健檢 OK。三份 SOUL.md 都在、無鎖定檔。Repo1 有 112 條 untracked/modified（待會看是否需處理），Repo2 只有 2 條正常。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:297-298]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:300:302 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 接下來跑步驟一：三機對話狀況判斷（用 git log 真實證據，不用假資料）。 🦞 小龍蝦：Mac 今天對話非常密集（一看就是大樹小講場次後台建置相關）。ACER/聯想今天無 commit。需要進一步確認 ACER/聯想是不是真的「無對話」（不是中繼檔沒跑而已），還要讀 Mac memory + 小龍蝦自己 BOT_MESSAGES。 🦞 小龍蝦：ACER/聯想判斷結果： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:300-302]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:303:304 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: **ACER**：今天無 git commit，verbatim 資料夾從建立至今 0 筆（可確認為「中繼蒸餾完全沒跑」），不報天數（教練 2026-07-20 教訓）; **聯想**：今天無 git commit，verbatim 最後一筆是 2026-07-08，可確認無對話 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:303-304]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:306:306 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: Mac 今天對話極度密集——主要是「大樹小講場次後台建置」、「一鍵發佈」、「場次改期」、「LINE 推播額度」、「場景化升華」等。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:306-306]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:308:311 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 繼續讀 Mac memory + 小龍蝦自己 Telegram + 最近的 session-end 細節，做含金量提煉。 🦞 小龍蝦：Mac 今天對話極度豐富——主要圍繞「大樹小講場次後台」、「一鍵發佈」、「LINE 推播額度」、「場景化升華」。需要再查 BOT_MESSAGES 路徑以及終端機對話紀錄，以完整做含金量提煉。 🦞 小龍蝦：BOT_MESSAGES.md 最新停在 7/1，可能是歷史快照檔（不是活檔）。讓我直接讀今天的終端機對話檔（44KB）以及接力棒，把教練原話找出來。 🦞 小龍蝦：找到了大量教練原話。讓我繼續看後半段（22:00 後的「通知頁」、「四個觸點」相關對話）： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:308-311]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-23.md:312:312 -->
+- 📨 對話記錄 23:10（共約 9 條，從第 0 行起）: 🦞 小龍蝦：教練今天的原話庫已完整收集。讓我看一下昨天的三機總結當範本，以維持格式一致性。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-23.md:312-312]
