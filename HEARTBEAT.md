@@ -78,3 +78,46 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1788211245
 - 雲端同步：✅ 已推上雲端（commit a0117a161）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-31 14:55（ACER本機記錄，同事件不同commit記錄）
+- ✅ 同步成功
+- HANDOFF mtime: 1788159204
+- 雲端同步：✅ 已推上雲端（commit d274e57e3）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-31 15:10
+- ✅ 同步成功
+- HANDOFF mtime: 1788159967
+- 雲端同步：✅ 已推上雲端（commit 61ca15dcb）
+
+## 🩺 軍師 Hook 自檢 2026-08-31 15:21（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 29a0b3724）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: test-top10-verify-20260831
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-31 15:25
+- ✅ 同步成功
+- HANDOFF mtime: 1788161030
+- 雲端同步：✅ 已推上雲端（commit c2a599a5d）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-08-31 15:35
+- ✅ 同步成功
+- HANDOFF mtime: 1788161592
+- 雲端同步：✅ 已推上雲端（commit c6fd0f7b4）
+
+## 🩺 軍師 Hook 自檢 2026-08-31 18:57（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 7461df26，本地改動已 stash/pop）
+- Session: healthcheck-test2
+
+## 🚀 Session-End 雲端同步 2026-08-31 19:01（Windows）
+- ✅ pushed b8b6fecd
+- 同步路徑：scripts/
+
+## 🩺 軍師 Hook 自檢 2026-09-01 05:35（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 找到既有 repo（mac-openclaw-workflows）已補 junction，HEAD: b8b6fecd
+- Session: selfheal-test2

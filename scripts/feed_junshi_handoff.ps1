@@ -70,13 +70,37 @@ if ((-not $forceRefeed) -and $sessionId -and (Test-Path $marker)) { exit 0 }
 $pullStatus = ""
 try {
     if (-not (Test-Path $workspace)) {
+        # 2026-09-01 修復：先找有沒有同一份 repo 已經存在別的資料夾名稱（例如
+        # mac-openclaw-workflows），有就補 junction 過去，不要盲目重新 clone
+        # 整包 1GB+ 資料。這支腳本以前每次遇到 $workspace 對不上真正的 repo
+        # 資料夾名稱，就會無限重新 clone，見 claude-brain/project_acer_health_check_2026-08-31.md
         $parentDir = Split-Path $workspace -Parent
-        if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
-        $cloneResult = & git clone --quiet $REPO_URL $workspace 2>&1
-        if ($LASTEXITCODE -eq 0) {
-            $pullStatus = "✅ 首次 clone 雲端 repo 成功"
+        $normalizedTarget = $REPO_URL.TrimEnd('/') -replace '\.git$', ''
+        $existingRepo = $null
+        if (Test-Path $parentDir) {
+            $existingRepo = Get-ChildItem -Path $parentDir -Directory -ErrorAction SilentlyContinue |
+                Where-Object {
+                    $gitDir = Join-Path $_.FullName ".git"
+                    if (-not (Test-Path $gitDir)) { return $false }
+                    $remoteUrl = (& git -C $_.FullName remote get-url origin 2>$null)
+                    if (-not $remoteUrl) { return $false }
+                    $normalizedRemote = $remoteUrl.Trim().TrimEnd('/') -replace '\.git$', ''
+                    return ($normalizedRemote -eq $normalizedTarget)
+                } | Select-Object -First 1
+        }
+        if ($existingRepo) {
+            New-Item -ItemType Junction -Path $workspace -Target $existingRepo.FullName -Force | Out-Null
+            $pullResult = & git -C $workspace pull --quiet --rebase 2>&1
+            $headHash = (& git -C $workspace rev-parse --short HEAD 2>&1).Trim()
+            $pullStatus = "✅ 找到既有 repo（$($existingRepo.Name)）已補 junction，HEAD: $headHash"
         } else {
-            $pullStatus = "❌ Clone 失敗: $cloneResult"
+            if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
+            $cloneResult = & git clone --quiet $REPO_URL $workspace 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                $pullStatus = "✅ 首次 clone 雲端 repo 成功"
+            } else {
+                $pullStatus = "❌ Clone 失敗: $cloneResult"
+            }
         }
     } else {
         $dirty = & git -C $workspace status --porcelain 2>$null
