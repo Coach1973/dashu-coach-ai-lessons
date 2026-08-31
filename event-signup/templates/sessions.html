@@ -44,6 +44,16 @@
   .btn-danger { background:#3a1414; color:#ffb3b3; border:1px solid rgba(255,107,107,.4); }
   .quota { font-size:15px; color:rgba(255,255,255,.5); margin-top:12px; }
 
+  .deeplink-box { display:flex; gap:12px; align-items:center; margin-top:10px; padding:10px;
+    background:rgba(200,169,110,.06); border:1px solid var(--line); border-radius:8px; }
+  .deeplink-qr { width:64px; height:64px; border-radius:4px; flex-shrink:0; }
+  .deeplink-info { flex:1; min-width:0; }
+  .deeplink-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .deeplink-text { flex:1; min-width:180px; padding:8px 10px; font-size:14px; border-radius:6px;
+    border:1px solid var(--line); background:#0a0a0a; color:rgba(255,255,255,.85); font-family:monospace; }
+  .deeplink-warning { margin-top:10px; padding:10px 14px; font-size:14px; font-weight:700;
+    color:#ffb3b3; background:rgba(255,107,107,.1); border:1px solid rgba(255,107,107,.35); border-radius:8px; }
+
   h2 { font-size:20px; font-weight:900; color:var(--gold); margin:30px 0 12px; }
   .card { background:var(--dark2); border:1px solid rgba(255,255,255,.1); border-radius:12px;
     padding:18px; margin-bottom:12px; }
@@ -177,5 +187,17 @@
       {% include "_session_card.html" %}
     {% endfor %}
   </div>
+
+<script>
+function copyDeepLink(btn) {
+  const input = btn.previousElementSibling;
+  input.select();
+  navigator.clipboard.writeText(input.value).then(function () {
+    const orig = btn.textContent;
+    btn.textContent = '已複製 ✓';
+    setTimeout(function () { btn.textContent = orig; }, 1500);
+  });
+}
+</script>
 </body>
 </html>

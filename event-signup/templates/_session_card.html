@@ -12,6 +12,20 @@
         🔗 {{ e.slug }}
         {% if e.signup_count %}　👥 已報名 {{ e.signup_count }} 人{% endif %}
       </div>
+      {% if e.deep_link %}
+      <div class="deeplink-box">
+        <img class="deeplink-qr" src="{{ url_for('admin_session_qr', event_id=e.id) }}" alt="分享QR code">
+        <div class="deeplink-info">
+          <div class="hint" style="margin-bottom:4px">分享用深連結（掃碼或點連結直接彈出這場的報名視窗）</div>
+          <div class="deeplink-row">
+            <input type="text" class="deeplink-text" readonly value="{{ e.deep_link }}" onclick="this.select()">
+            <button type="button" class="btn btn-sm btn-ghost" onclick="copyDeepLink(this)">複製連結</button>
+          </div>
+        </div>
+      </div>
+      {% elif e.deep_link_warning %}
+      <div class="deeplink-warning">⚠️ {{ e.deep_link_warning }}</div>
+      {% endif %}
     </div>
     <div>
       {% if e.is_past %}<span class="tag tag-past">已結束</span>

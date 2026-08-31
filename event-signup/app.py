@@ -803,13 +803,35 @@ def export_csv():
 # ---- 大樹小講場次管理（2026-08-23 教練交辦：以前改場次都要透過AI改網頁原始碼，
 #      資料庫與網頁兩份各自維護必定會漏。改成資料庫當唯一真相源＋後台一鍵發佈） ----
 
+def _attach_deep_links(sessions):
+    """幫每場活動算出分享用深連結（event.bymyway.com/bigtree/?session=日期[&slot=時段]）。
+    2026-08-31教練交辦：常態需要分享/追蹤QR的網址，不用每次口頭問。
+    同一天有多場、但時段標籤缺漏或彼此重複時，前端的openRegisterFromQuery()
+    分不出是哪一場（見bigtree/index.html），這時不產生會誤導的連結，改標警告。"""
+    out = [dict(s) for s in sessions]
+    for s in out:
+        same_day = [x for x in out if x["event_date"] == s["event_date"] and x["status"] != "cancelled"]
+        if len(same_day) <= 1:
+            s["deep_link"] = f"https://event.bymyway.com/bigtree/?session={s['event_date']}"
+            s["deep_link_warning"] = None
+            continue
+        slot_vals = [x["slot_key"] for x in same_day]
+        if s["slot_key"] and slot_vals.count(s["slot_key"]) == 1:
+            s["deep_link"] = f"https://event.bymyway.com/bigtree/?session={s['event_date']}&slot={s['slot_key']}"
+            s["deep_link_warning"] = None
+        else:
+            s["deep_link"] = None
+            s["deep_link_warning"] = "同一天有多場活動，且「時段」欄位沒填或跟別場重複，目前無法產生準確的深連結——請先把上面「時段」改成不同的選項"
+    return out
+
+
 @app.route("/admin/sessions")
 def admin_sessions():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
     import bigtree_publish as bp
     conn = db.get_conn()
-    sessions = db.list_site_sessions(conn)
+    sessions = _attach_deep_links(db.list_site_sessions(conn))
     summary = bp.diff_summary(conn)
     conn.close()
     return render_template(
@@ -818,6 +840,29 @@ def admin_sessions():
         quota=bp.quota_remaining(), today=date.today().isoformat(),
         notice=request.args.get("notice", ""), error=request.args.get("error", ""),
     )
+
+
+@app.route("/admin/qr/<int:event_id>.png")
+def admin_session_qr(event_id):
+    """場次深連結的QR code，即時產生不落地存檔（後台頻繁改期時不用擔心QR圖跟著過期）。"""
+    if not _logged_in():
+        abort(403)
+    conn = db.get_conn()
+    event = db.get_session(conn, event_id)
+    conn.close()
+    if not event:
+        abort(404)
+    url = f"https://event.bymyway.com/bigtree/?session={event['event_date']}"
+    if event["slot_key"]:
+        url += f"&slot={event['slot_key']}"
+    import qrcode
+    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=8, border=2)
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return Response(buf.getvalue(), mimetype="image/png")
 
 
 @app.route("/admin/sessions/save", methods=["POST"])
