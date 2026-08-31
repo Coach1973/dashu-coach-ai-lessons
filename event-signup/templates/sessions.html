@@ -97,46 +97,51 @@
     {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
 
     <div class="publish-box" style="margin-bottom:14px">
-      <div class="label" style="margin-bottom:8px">ℹ️「一鍵發佈到官網」在做什麼？</div>
-      <div style="font-size:15px;line-height:1.9;color:rgba(255,255,255,.75)">
-        您在這頁改的資料，<strong style="color:#7ff0ad">event.bymyway.com</strong> 這個網址是<strong style="color:#7ff0ad">即時生效</strong>的，改完存檔立刻看得到，不用按發佈。<br>
-        但大樹小講另外還有兩個對外門面——<strong style="color:var(--gold)">bigtree-tw.netlify.app</strong>（正式站）跟 <strong style="color:var(--gold)">coach1973.github.io/bigtree</strong>（備援站）——這兩個是各自獨立的網頁，<strong style="color:var(--gold)">不會自動跟著這裡的改動走</strong>，一定要按「一鍵發佈到官網」才會把最新場次資料同步過去。<br>
-        下面「按下發佈後會有這些變動」列出的，就是這兩個網址跟目前資料庫的差異——差異不是壞掉，是這幾個網址還沒同步到最新狀態。<span style="color:rgba(255,255,255,.5)">（Netlify 部署會消耗額度，所以不建議每改一筆就按，累積幾筆一起發佈比較省）</span>
+      <div class="label" style="margin-bottom:8px">ℹ️ 這個網站其實有三個地方，這裡在比較哪兩個</div>
+      <div style="font-size:15px;line-height:2.0;color:rgba(255,255,255,.75)">
+        ① <strong style="color:#7ff0ad">event.bymyway.com</strong>（您現在正在改資料的地方）：改完存檔<strong style="color:#7ff0ad">立刻生效</strong>，不用按任何按鈕<br>
+        ② <strong style="color:var(--gold)">bigtree-tw.netlify.app</strong>（正式站）＋ <strong style="color:var(--gold)">coach1973.github.io/bigtree</strong>（備援站）：這是另外兩份「獨立副本」，<strong style="color:var(--gold)">不會自動跟著您改的資料走</strong>，一定要按「一鍵發佈」才會同步過去
+        <div style="margin-top:12px;padding:12px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:14px;color:rgba(255,255,255,.65)">
+          <strong style="color:#fff">下面框框列的，就是「② 那兩個網站」跟資料庫還沒同步的地方</strong>——不是壞掉，是還沒按發佈而已。<br><br>
+          <strong style="color:#fff">跟卡片上「進行中／已取消／草稿」完全是兩回事</strong>：那個標籤是「這場活動現在算不算有效」，跟「另外兩個網站有沒有同步到最新內容」互不相干——一場活動可以同時是「進行中」，又同時「還沒同步到Netlify」，兩件事並不矛盾。<br><br>
+          範例：您把某場的時間從「下午」改成「晚上」→ 這裡就會顯示「～修改，時間：...下午→...晚上」，意思是Netlify上現在顯示的還是舊的「下午」，發佈後才會變成新的「晚上」。
+        </div>
       </div>
     </div>
 
     <div class="publish-box">
-      <div class="label">按下發佈後，官網會有這些變動</div>
+      <div class="label">按下發佈後，②那兩個網站會有這些變動</div>
       {% set s = summary %}
       {% if not s.has_changes %}
-        <div class="state clean">✓ 官網目前與這裡一致，沒有待發佈的異動</div>
+        <div class="state clean">✓ ②那兩個網站目前跟資料庫一致，沒有需要同步的東西</div>
       {% elif not s.live_ok %}
-        <div class="state dirty">● 有待發佈的異動（暫時連不上官網，無法列出詳細差異）</div>
+        <div class="state dirty">● 有待同步的異動（暫時連不上Netlify，無法列出詳細差異）</div>
       {% elif not (s.removed or s.added or s.modified or s.reordered) %}
-        <div class="state dirty">● 有待發佈的異動</div>
+        <div class="state dirty">● 有待同步的異動</div>
       {% else %}
         <div class="changes">
           {% for r in s.removed %}
-            <div class="chg chg-out">－ 下架　{{ r.label }} {{ r.slot }}　{{ r.topic }}<span class="why">（{{ r.reason }}）</span></div>
+            <div class="chg chg-out">－ 清除舊資料　{{ r.label }} {{ r.slot }}　{{ r.topic }}<span class="why">（{{ r.reason }}，訪客本來就看不到，發佈只是把程式碼裡的舊資料清掉）</span></div>
           {% endfor %}
           {% for a in s.added %}
-            <div class="chg chg-in">＋ 新增　{{ a.label }} {{ a.slot }}　{{ a.topic }}</div>
+            <div class="chg chg-in">＋ 這兩個網站還沒有這場　{{ a.label }} {{ a.slot }}　{{ a.topic }}<span class="why">（您新建立的場次，發佈後才會出現在Netlify/GitHub Pages上）</span></div>
           {% endfor %}
           {% for m in s.modified %}
-            <div class="chg chg-mod">～ 修改　{{ m.label }} {{ m.slot }}
+            <div class="chg chg-mod">～ 這兩個網站現在顯示的是舊版　{{ m.label }} {{ m.slot }}
               {% for d in m.diffs %}<div class="why" style="margin-left:22px">{{ d }}</div>{% endfor %}
             </div>
           {% endfor %}
           {% if s.reordered %}
-            <div class="chg chg-mod">↕ 重新排序　場次改成依日期先後顯示<span class="why">（其他場次內容不動）</span></div>
+            <div class="chg chg-mod">↕ 只是排序不同　場次改成依日期先後顯示<span class="why">（其他場次內容不動）</span></div>
           {% endif %}
         </div>
         <div class="state dirty" style="font-size:16px;margin-top:12px">
-          發佈後官網共 {{ live_count }} 場（上面列出的才是這次的變動）
+          發佈後 event.bymyway.com（一直都是最新）跟 Netlify/GitHub Pages 會一致，共 {{ live_count }} 場
         </div>
       {% endif %}
       <form method="post" action="/admin/sessions/publish" class="publish-row"
             onsubmit="return confirm('確定要把目前的場次發佈到官網嗎？\n\n按下確定後會直接上線，不需要再經過任何人確認。');">
+        <div style="width:100%;margin-bottom:6px;font-size:13px;color:rgba(255,255,255,.4)">下面框框選填，純粹是給自己看的備註（例如「9/16改時段」），方便以後回頭查是哪次改的，不寫也不影響任何功能</div>
         <input type="text" name="message" placeholder="這次改了什麼？（選填，會記在版本紀錄裡）">
         <button class="btn btn-green" type="submit">🚀 一鍵發佈到官網</button>
       </form>
