@@ -16,6 +16,25 @@
 
 $ErrorActionPreference = 'Stop'
 
+# PS5.1（Windows 內建版）沒有 ConvertFrom-Json -AsHashtable（PS6+ 才有）
+# 沒判斷版本直接用會拋例外，觸發呼叫端 catch 把原有 settings.json 整個清空重寫
+# 2026-08-26 ACER 49天未開機重裝 hook 時實際踩過，靠備份救回，這裡補上根治
+function ConvertTo-HashtableCompat {
+    param($InputObject)
+    if ($null -eq $InputObject) { return $null }
+    if ($InputObject -is [System.Collections.IEnumerable] -and $InputObject -isnot [string]) {
+        return @($InputObject | ForEach-Object { ConvertTo-HashtableCompat $_ })
+    } elseif ($InputObject -is [psobject]) {
+        $hash = @{}
+        foreach ($property in $InputObject.PSObject.Properties) {
+            $hash[$property.Name] = ConvertTo-HashtableCompat $property.Value
+        }
+        return $hash
+    } else {
+        return $InputObject
+    }
+}
+
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  Windows Hook 一鍵對齊（Mac 同步版）" -ForegroundColor Cyan
@@ -104,7 +123,12 @@ if (-not (Test-Path $settingsDir)) {
 $settings = @{}
 if (Test-Path $settingsPath) {
     try {
-        $settings = Get-Content $settingsPath -Raw -Encoding UTF8 | ConvertFrom-Json -AsHashtable
+        if ($PSVersionTable.PSVersion.Major -ge 6) {
+            $settings = Get-Content $settingsPath -Raw -Encoding UTF8 | ConvertFrom-Json -AsHashtable
+        } else {
+            $parsed = Get-Content $settingsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            $settings = ConvertTo-HashtableCompat $parsed
+        }
     } catch {
         $backupPath = "$settingsPath.bak.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
         Copy-Item $settingsPath $backupPath
