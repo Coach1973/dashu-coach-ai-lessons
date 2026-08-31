@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 同一功能連問三次還不懂，別再加碼寫文字，換成具體範例+點破認知衝突點(2026-08-31)](feedback_repeated_confusion_use_example_not_more_words_2026-08-31.md) — 「一鍵發佈」功能教練卡在「進行中」跟「修改」字面矛盾，逐行示範真實畫面才真正講懂
 - [🔴🔴🔴 別把AI能自己判斷的小事丟回教練決定+選單UI要顯示底層真實數值不能只給標籤(2026-08-31)](feedback_dont_punt_decisions_show_underlying_values_2026-08-31.md) — 9/16上午下午該自己判斷卻問教練+時段選單只有標籤沒標時間，同天連中兩次同模式
 - [🔴🔴🔴 涉及教練會操作的介面(後台/開關)不能只寫規格交辦，要親自做進去讓教練能點(2026-08-31)](feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31.md) — 分工給Hermes只限教練不會操作的內容維運，教練親自操作的控制項當場做完不延後
 - [🎯🎯 教練拍板大樹小講/近期活動網站內容維運任務預設交Hermes，BNI Connect等後台仍歸軍師(2026-08-31)](project_hermes_default_owner_event_tasks_2026-08-31.md) — 教學迴圈已驗證可運作，政策寫入cross-agent/README.md+5張專案卡標owner，非一次性交辦
