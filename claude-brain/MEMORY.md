@@ -1,5 +1,10 @@
 # Memory Index
 
+- [🔴🔴🔴 別把AI能自己判斷的小事丟回教練決定+選單UI要顯示底層真實數值不能只給標籤(2026-08-31)](feedback_dont_punt_decisions_show_underlying_values_2026-08-31.md) — 9/16上午下午該自己判斷卻問教練+時段選單只有標籤沒標時間，同天連中兩次同模式
+- [🔴🔴🔴 涉及教練會操作的介面(後台/開關)不能只寫規格交辦，要親自做進去讓教練能點(2026-08-31)](feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31.md) — 分工給Hermes只限教練不會操作的內容維運，教練親自操作的控制項當場做完不延後
+- [🎯🎯 教練拍板大樹小講/近期活動網站內容維運任務預設交Hermes，BNI Connect等後台仍歸軍師(2026-08-31)](project_hermes_default_owner_event_tasks_2026-08-31.md) — 教學迴圈已驗證可運作，政策寫入cross-agent/README.md+5張專案卡標owner，非一次性交辦
+- [🎯 BNI Connect等需要JS/程式化select/截圖的網頁後台操作任務交軍師，Hermes做讀寫類(2026-08-31)](project_hermes_bni_connect_task_routing_2026-08-31.md) — Hermes desktop preview pane無js/select程式化/截圖三能力，教練當場裁示分工，非降級是工具集差距
+- [🎯🎯 Hermes是Mac上真實在跑的獨立桌面AI代理(Nous Research,非Claude)，跑MiniMax不吃Claude額度，workspace與軍師共用同一份大腦(2026-08-31)](project_hermes_desktop_agent_verified_2026-08-31.md) — 查Hermes近況讀~/.hermes/workspace/H_HANDOFF_LATEST.md；交辦文件寫進~/.openclaw/workspace/即可自動同步
 - [🔴🔴🔴 mentor100百人導師申請通知改走Telegram，修復8/27靜默漏接(2026-08-30)](project_mentor100_application_notify_telegram_fix_2026-08-30.md) — 舊sme-register-fn(LINE)吞錯誤同event-signup案例62坑，全機已掃描確認無其他專案殘留
 - [🔧 event.bymyway.com前面Cloudflare會擋掉沒有瀏覽器UA的請求(403)(2026-08-30)](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md) — 任何腳本自動fetch這類bymyway子網域都要帶Mozilla/5.0樣式UA，否則被擋
 - [🎯🎯 大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，脫離Netlify部署次數限制(2026-08-30教練拍板)](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md) — 讀活repo+DB即時渲染取代手動zip部署，網址代表活動格式非地點，未來其他Netlify站台可比照
