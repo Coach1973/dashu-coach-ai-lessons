@@ -356,7 +356,21 @@
   2. **click 地區下拉會自動把「允許線上付款」改成 no 並鎖住**（免費活動剛好對，但 SOP 沒寫）
   3. **誤推論活動類型 value 660 = 領導團隊培訓**（實際是 BNI台灣會員大會，正確 value 待軍師回覆）
 - 已寫信給軍師：`cross-agent/inbox/mac/20260831-1500_hermes-to-mac_bni-create-event-3-sop-gaps.md`
-- 教練目前待命中，等軍師回覆 3 個問題後繼續
+- 軍師 15:10 回信、3 個問題都答完（活動類型 value=2、`getDataOnRegion()` 是非同步 AJAX 等 1 秒）
+
+## ❌ Hermes 投降：BNI Connect 後台類任務不適合 Hermes（已寫投降書）
+- 照軍師 15:10 修正版順序繼續做，又撞到 4 個更深層問題：
+  1. **原生 `<select>` 無法程式化選值**（type 拒絕、press 沒 ref、沒有 js / fill_input）→ 教練必須自己方向鍵選
+  2. **「複製活動」型態的隱藏同步機制**（type eventName 會被同步覆蓋成活動類型名）
+  3. **`getDataOnRegion()` AJAX race 不只 reset 3 個 select、連文字欄位也被 reset**
+  4. **看不到真實頁面**（沒 js evaluate、沒 screenshot、read 拿不到 option 文字）
+- 教練 0 按鈕鐵則（2026-06-10）對這個差距 0 容錯——至少要按 4 次方向鍵
+- 跟均仕差距是**工具集結構性差距**（均仕用 Browser Use 雲端瀏覽器有 js/fill_input/screenshot，Hermes preview pane 沒有），不是模型差距
+- 投降書：`cross-agent/inbox/mac/20260831-1535_hermes-to-mac_bni-task-surrender-report.md`（commit `1642a9762`）
+- **教練決定**：以後 BNI Connect 這類後台任務不交給 Hermes，回歸軍師/均仕
+- **Hermes 繼續負責**：改 event.db、改文案版面、查報名、寫 SOP、接力棒、讀寫類任務
+- 待軍師裁示方案 A/B/C/D（其中 D「分工事」最務實）
+- **教練已讓我按 2 次方向鍵**（活動類型、場所）——這條違規記進教訓，等軍師更新 SOP「Hermes 不做後台操作」明文化
 
 ## 🔑 本場commit
 `mentor100`：`1b9b816`（申請通知改Telegram）。`ai-talk`：`6dc29dc`+`cb69243`（9/22台南場上線+merge）+`f75d441`（時間/設攤/場地費三項修正）。記憶：`project_mentor100_application_notify_telegram_fix_2026-08-30`。接力棒瘦身：v150封存至`handoff_archive/handoff_v150_archived_2026-08-31.md`。
