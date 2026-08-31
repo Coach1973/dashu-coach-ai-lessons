@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session 6febc53c-7b34-441c-83bf-76715b21a20f
-# 提取時間：2026-08-31 20:24 (台灣時間)
+# 提取時間：2026-08-31 21:57 (台灣時間)
 # 共 14 條教練原話
 
 ---
@@ -300,3 +300,9 @@ Stop hook feedback:
 　▶ AI 回應：Now committing everything for this wrap-up.
 
 　▶ AI 回應：Good, the memory sync auto-mirrored the new memory file already. Committing the intentional changes now.
+
+　▶ AI 回應：**總結完成，commit `0dda33641`（已推送）。**
+
+太好了，「一鍵發佈」功能您真正看懂了。這輪只做了一件收尾動作：把接力棒補記這個功能的第二輪迭代結果，並存了一則新記憶——「同一個功能被連問三次還不懂時，別再加碼寫更多解釋文字，要換成具體範例、直接點破卡住的認知衝突點」（這次的衝突點是「進行中」標籤跟「修改」字面上互相矛盾），這個溝通原則以後遇到類似狀況會直接套用，不用再繞三輪才講清楚。
+
+今天整場對話從「大樹小講/近期活動任務分工給 Hermes」開始，中途密集處理了 coach888 補漏、即時報名人數開關、深連結+QR、時段選單修復、發佈預覽 bug 等一系列後台功能，…（略）

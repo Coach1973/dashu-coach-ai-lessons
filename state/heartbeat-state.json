@@ -21,7 +21,11 @@
   },
   "environmentQuickcheck": {
     "soul_x3_present": true,
-    "soul_sizes": [9015, 1851, 22220],
+    "soul_sizes": [
+      9015,
+      1851,
+      22220
+    ],
     "repo1_untracked_modified": 23,
     "repo2_untracked_modified": 43,
     "dotlock_present": 0
@@ -32,11 +36,11 @@
   "nextCycleAt": "2026-08-31 21:12 +0800",
   "note": "週一傍晚 20:12，沉默 0.5h，教練晚間正常作息，零會員功能壞，三關全 fail → 安靜通過",
   "systemSnapshot": {
-    "coachSilentSince": "2026-08-31T19:42:01+08:00",
-    "coachSilentHours": 0.5
+    "coachSilentSince": "2026-08-31T21:58:15+08:00",
+    "coachSilentHours": 0.2
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-31T20:12:06+08:00",
+    "coach_silence_sync": "2026-08-31T22:12:04.594882+08:00",
     "cron_check": "2026-08-31T20:12:18+08:00",
     "env_quickcheck": "2026-08-31T20:12:18+08:00",
     "tg_probe": "2026-08-31T20:12:18+08:00"
