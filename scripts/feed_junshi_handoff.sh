@@ -12,6 +12,7 @@ WORKSPACE="/Users/bymyway/.openclaw/workspace"
 HANDOFF="$WORKSPACE/JUNSHI_HANDOFF_LATEST.md"
 HEARTBEAT="$WORKSPACE/HEARTBEAT.md"
 STONE="$WORKSPACE/試金石/試金石_案例庫.md"
+TOP10_INDEX="$WORKSPACE/distill/top10_errors_index.md"
 MEMORY_DIR="$WORKSPACE/memory"
 KNOWLEDGES_DIR="$WORKSPACE/knowledges"
 
@@ -230,12 +231,24 @@ INJECT_CONTENT=$(
     tail -50 "$HEARTBEAT"
   fi
 
-  # ───────── 第 3 步：血淚試金石最新 3 案例 ─────────
+  # ───────── 第 3 步：血淚試金石 ─────────
+  # 3a：Top10高頻模式一句話摘要（2026-08-31新增，避免只看「最新2案例」漏接3個月前但還沒解決的舊模式）
+  if [[ -f "$TOP10_INDEX" ]]; then
+    echo ""
+    echo "---"
+    echo ""
+    echo "## 🔴 第 3 步 (3a)：Top10 高頻失敗模式一句話比對（開工當下先掃過，命中就照做法走）"
+    echo ""
+    awk '/^## 🔴 模式/{h=$0} /^\*\*觸發詞\*\*/{print h; print $0; print ""}' "$TOP10_INDEX"
+    echo "（完整版含涉及案例編號/自動化防護狀態，見 distill/top10_errors_index.md）"
+  fi
+
+  # 3b：最新2案例全文
   if [[ -f "$STONE" ]]; then
     echo ""
     echo "---"
     echo ""
-    echo "## 🔴 第 3 步：血淚試金石最新 2 案例（守則 #07 同處跌倒鐵律）"
+    echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
     echo ""
     LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -2 | head -1 | cut -d: -f1)
     if [[ -n "$LAST_3_START" ]]; then

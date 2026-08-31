@@ -38,6 +38,7 @@ $identityCard  = Join-Path $workspace "knowledges\IDENTITY_windows_desktop.md"
 $sessionDump   = Join-Path $workspace "claude-sessions"
 $heartbeatPath = Join-Path $workspace "HEARTBEAT.md"
 $stonePath     = Join-Path $workspace "試金石\試金石_案例庫.md"
+$top10IndexPath = Join-Path $workspace "distill\top10_errors_index.md"
 $memoryDir     = Join-Path $workspace "memory"
 $knowledgesDir = Join-Path $workspace "knowledges"
 
@@ -232,12 +233,33 @@ if (Test-Path $heartbeatPath) {
     Get-Content -Path $heartbeatPath -Encoding UTF8 -Tail 50 | ForEach-Object { Write-Output $_ }
 }
 
-# ───────── 第 3 步：血淚試金石最新 3 案例 ─────────
+# ───────── 第 3 步：血淚試金石 ─────────
+# 3a：Top10高頻模式一句話摘要（2026-08-31新增，避免只看「最新案例」漏接3個月前但還沒解決的舊模式，跟Mac版對等）
+if (Test-Path $top10IndexPath) {
+    Write-Output ""
+    Write-Output "---"
+    Write-Output ""
+    Write-Output "## 🔴 第 3 步 (3a)：Top10 高頻失敗模式一句話比對（開工當下先掃過，命中就照做法走）"
+    Write-Output ""
+    $top10Lines = Get-Content -Path $top10IndexPath -Encoding UTF8
+    $header = ""
+    foreach ($line in $top10Lines) {
+        if ($line -match '^## 🔴 模式') { $header = $line }
+        if ($line -match '^\*\*觸發詞\*\*' -and $header -ne "") {
+            Write-Output $header
+            Write-Output $line
+            Write-Output ""
+        }
+    }
+    Write-Output "（完整版含涉及案例編號/自動化防護狀態，見 distill/top10_errors_index.md）"
+}
+
+# 3b：最新2案例全文
 if (Test-Path $stonePath) {
     Write-Output ""
     Write-Output "---"
     Write-Output ""
-    Write-Output "## 🔴 第 3 步：血淚試金石最新 3 案例（守則 #07 同處跌倒鐵律）"
+    Write-Output "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
     Write-Output ""
     $stoneLines = Get-Content -Path $stonePath -Encoding UTF8
     $caseIdx = @()
