@@ -37,10 +37,10 @@
   "note": "週一傍晚 20:12，沉默 0.5h，教練晚間正常作息，零會員功能壞，三關全 fail → 安靜通過",
   "systemSnapshot": {
     "coachSilentSince": "2026-08-31T21:58:15+08:00",
-    "coachSilentHours": 0.2
+    "coachSilentHours": 1.2
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-08-31T22:12:04.594882+08:00",
+    "coach_silence_sync": "2026-08-31T23:12:03.546514+08:00",
     "cron_check": "2026-08-31T20:12:18+08:00",
     "env_quickcheck": "2026-08-31T20:12:18+08:00",
     "tg_probe": "2026-08-31T20:12:18+08:00"

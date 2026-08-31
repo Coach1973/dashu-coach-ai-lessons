@@ -1,3 +1,4 @@
+- [🎯 Hermes開工要主動讀軍師接力棒（拉取取代推送）(2026-08-31)](claude-brain/project_hermes_pull_progress_rule_2026-08-31.md) — ai-art任務3.5小時零回報後教練拍板，已寫進H_AGENTS.md熱啟動4件套
 - [🔧 ACER 2026-08-31全機體檢：修復PS5.1 -AsHashtable+workspace路徑重複clone兩個真bug](claude-brain/project_acer_health_check_2026-08-31.md) — ACER再開機健檢報告，含沉默原因誠實查證
 - [Browser no full junction](feedback_browser_no_full_junction.md) — 瀏覽器絕不整個 junction，只搬書籤等增量檔案
 - [跨機備份 SOP 提醒](feedback_cross_machine_backup_reminder.md) — 教練新電腦（含佩佩老師那台）要做增量備份（junction 搬家）時主動提醒，引用試金石 W03 完整生命週期 SOP

@@ -69,6 +69,8 @@ cross-agent/
 ### Hermes / OpenClaude UI
 待對應 hook 上線前，教練動嘴：「去讀 cross-agent inbox 你那邊有沒有信」即可。
 
+**🔴 2026-08-31教練親定新規則**：H 聽到「開工」等同義觸發詞時，除了讀 `inbox/hermes/` 未讀信，**也要主動讀 `JUNSHI_HANDOFF_LATEST.md`（軍師最新接力棒進度）**——H 沒有 Claude Code 式的 hook 介面能被動接收軍師通知，改用「H 主動拉取」取代「軍師主動推送」，效果等同軍師每次做完事發信通知 H。起因：ai-art 任務教練交辦給 H 後 3.5 小時零回報，教練直接去問軍師才發現 H 卡住，軍師只好直接接手。詳細規則已寫進 `~/.hermes/workspace/AGENTS.md`「熱啟動 4 件套」第 3 項。
+
 ## 🔔 教練口令字典
 
 | 教練說 | 對應軍師動作 |
