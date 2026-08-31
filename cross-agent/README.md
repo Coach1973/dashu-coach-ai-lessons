@@ -95,7 +95,7 @@ cross-agent/
 
 | 任務類型 | 預設負責 | 原因 |
 |---|---|---|
-| 大樹小講/AI微論壇/培訓行事曆等**網站內容維運**（改場次時間地點費用、改文案版面、查報名人數、接力棒、SOP、蒸餾） | **Hermes** | 純讀寫類，不需要 JS/程式化 select/截圖，Hermes 工具集勝任（見`knowledges/2026-08-31_大樹小講四場活動維運SOP_備援指令給Hermes.md`完整操作手冊） |
+| **任何近期活動網站的內容維運或新頁面建置**（改場次時間地點費用、改文案版面、查報名人數、走 event.db + Telegram 通知、接力棒、SOP、蒸餾）——大樹小講/AI微論壇/培訓行事曆/ai-art 等只是已知範例，**不是窮舉清單**，新出現的活動網站只要不需要操作第三方後台原生表單，一律算 Hermes 範圍，不用先問 | **Hermes** | 純讀寫類 + 一般 Flask/HTML/DB 修改，不需要 JS/程式化 select/截圖，Hermes 工具集勝任（見`knowledges/2026-08-31_大樹小講四場活動維運SOP_備援指令給Hermes.md`完整操作手冊） |
 | **BNI Connect 等第三方官方後台**的網頁表單操作（新增活動、原生 `<select>` 選值等） | **軍師** | 2026-08-31 實測驗證：Hermes 的 desktop preview pane 沒有 js evaluate / fill_input / screenshot，無法程式化操作原生表單，會違反教練 0 按鈕鐵則；軍師的 Browser Use 雲端瀏覽器有完整能力（見`project_hermes_bni_connect_task_routing_2026-08-31`記憶） |
 | 需要教練親口確認才能執行的動作（Netlify 正式站部署等） | 誰接手任務誰負責問，兩邊都要遵守「教練說『推』才部署」鐵律，不因為換了執行者就放寬 |
 
