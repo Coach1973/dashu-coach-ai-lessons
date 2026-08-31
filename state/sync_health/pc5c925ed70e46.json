@@ -1,6 +1,6 @@
 ﻿{
-    "status_text":  "✅ 已拉雲端最新（HEAD: 7461df26，本地改動已 stash/pop）",
-    "last_attempt":  "2026-08-31T18:57:49+08:00",
+    "status_text":  "✅ 找到既有 repo（mac-openclaw-workflows）已補 junction，HEAD: b8b6fecd",
+    "last_attempt":  "2026-09-01T05:35:48+08:00",
     "pull_ok":  true,
     "machine":  "pc5c925ed70e46"
 }
