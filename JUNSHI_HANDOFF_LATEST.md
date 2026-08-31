@@ -415,3 +415,53 @@ ACER回報「這幾天沉默的真相」（純粹是137小時沒有教練互動�
 
 ## 🔑 本場commit
 `workspace`：`15305e072`（git衝突查證+44個狀態檔案整批commit）、`287e06d6d`（ai-art Flask路由+event.db場次）、`bc2e73199`（api_register新增note欄位）、`252db6c4a`（MEMORY.md補ACER健檢索引）+本場v156接力棒本身與v153/v154封存。`ai-art`：`8627f4f`（付款資訊+師資介紹+時間地點修正）、`ba0f025`（票種選擇+LINE導流）。`hermes-h-workspace`：`a7364ed`（熱啟動4件套規則）。記憶：`project_hermes_pull_progress_rule_2026-08-31`。
+
+---
+
+# 軍師接力棒 · 2026-09-01 v157（Mac終端機 Sonnet 5，team.bymyway.com正式部署+bni-chapters籌備會創始會員表單+BNI信用証提醒擴充兩段式）
+
+> 建立時間：2026-09-01 02:39 ~ 04:05（台灣時間，接續v156，同場對話跨到隔日凌晨）
+> 上一棒：v156（Mac終端機，ai-art完整上線接手完成+workspace git衝突查證修復+Hermes進度可見性規則）
+> 本棒主軸：**team.bymyway.com（複製bni-chapters去BNI品牌的通用分會系統）教練已在另一對話框讓軍師直接做完程式並推上GitHub，本棒接手正式部署上線；bni-chapters籌備中分會補上「登記成為創始會員」真實表單+Telegram通知；BNI信用証到期提醒擴充成2個月+1個月兩段式。**
+
+## 🎯 本場戰果
+
+### 1. BNI信用証到期提醒擴充：2個月+1個月兩段式通知
+教練交辦「當會員只剩2個月及1個月到期時，要記得通知我」。原`scripts/bni_credit_expiry_reminder.py`只有單一30天提醒點（`reminder_sent_at`發過就永久不再提醒同一筆）。新增`reminder_60d_sent_at`欄位（`namecards.db`已手動ALTER TABLE），改寫成兩個獨立里程碑：剩31~60天觸發「2個月提醒」、剩0~30天觸發「1個月提醒」，同一筆證書會各收到一次，互不影響不重複洗版同一里程碑。用合成測試資料驗證45天/20天/90天三種情境分類正確+已發送里程碑不重複觸發。既有cron(`8211e054`，每日08:57)無需異動，直接吃到新邏輯，通知一樣走`notify_coach.sh`→Telegram。commit`757854999`。
+
+### 2. workspace git狀態查證：小龍蝦回報pull失敗，證實非真正落後雲端
+小龍蝦轉達「Mac開工git pull失敗，接力棒/守則可能不是雲端最新版」。查證`git fetch`比對HEAD已包含origin/main最新commit（非落後），真因是44個routine狀態檔案長期未commit卡住fast-forward pull。已push一筆本地未上傳的commit+整批commit狀態檔案，重新驗證HEAD與origin/main完全一致。commit`15305e072`。
+
+### 3. ai-art（v156延續）教練實測後追加票種選擇+LINE導流，已完成（詳見v156完整記錄）
+
+### 4. team.bymyway.com通用分會系統：程式由另一場對話框軍師直接完成，本棒接手正式部署上線
+**背景**：教練要做`team.bymyway.com`，服務對象是還沒加入BNI的一群朋友，複製`chapters.bymyway.com`架構但拿掉BNI LOGO，分會名稱改通用編號「第一分會、第二分會…」。軍師原本規劃分工：Hermes寫程式、軍師部署，已發信`cross-agent/inbox/hermes/`交辦（commit`5a312c940`）。但教練在**另一個對話框**直接口頭要求軍師（另一個session）動手做完程式（原話：「教練親口指示不要等Hermes」），已完成並推上GitHub（`Coach1973/team-bymyway`，commit`e9d87dc`+`173e035`，5個分會team-01~05）。透過`cross-agent/inbox/mac/`一封「mac寫給下一棒mac」的信發現這個狀況，本棒（同一個對話框的延續）確認教練意向後直接接手部署。
+
+**部署內容**（比照bni-chapters既有模式，DNS+Tunnel+launchd三件套）：
+- Cloudflare DNS：`team.bymyway.com` CNAME
+- 新建獨立Tunnel `team-bymyway`（id`7bcba233-1544-49bf-b274-e5b818a6000a`），設定檔`~/.cloudflared/team-config.yml`
+- 兩支launchd plist：`com.coach.team-webapp.plist`（跑`app.py`，port 5073，借用`bni-chapters/venv/`）+ `com.coach.team-tunnel.plist`
+- `.env`寫入`TEAM_SECRET_KEY`（隨機32字）+`TEAM_PORT=5073`
+- **部署時發現的真缺口**：`admins`表完全是空的，`/admin/login`頁面存在但沒有任何帳號能登入。已補寫`seed_admins.py`（沿用bni-chapters的Admin/88888慣例）建立總管理員+5個分會各自帳號，用真實curl POST登入流程驗證（302→帶cookie訪問`/admin`回200），commit`fd9dfb8`。
+- 已curl驗證首頁200+`team-01`頁面200+5個分會名稱正確顯示+後台登入頁200，並用真實Chrome開啟確認視覺。
+- `coach888`作品總覽新增此站（「四、對外公開」區塊第7項，非BNI品牌），commit`34477e4`。
+
+**教訓**：多對話框並行時，同一個教練可能在不同視窗給不同AI實例下達會互相影響的指令（這次是「Hermes寫程式」vs「軍師直接寫程式」兩個決定疊在一起），跨機`cross-agent/inbox/mac/`信箱這次意外成為發現這個狀況的關鍵管道——下次類似情境，先查inbox有沒有「自己寫給自己下一棒」的信，可能代表另一個對話框已經動過手。
+
+### 5. bni-chapters籌備中分會新增「登記成為創始會員」真實表單
+教練指出真AI/真貴/真功夫/真樂齡等4個籌備中分會（`status='forming'`）的「登記成為創始會員」按鈕原本是死連結(`href="#"`)。新增：
+- `founder_signups`資料表（schema.sql+db.py，已對live DB跑`init_db()`套用，IF NOT EXISTS安全）
+- `/<slug>/founder-signup`（GET表單+POST送出）+`/<slug>/founder-signup/thanks`路由，欄位姓名/電話/Email/公司，沿用既有的honeypot+IP rate limit防灌水機制
+- 送出成功即時呼叫`workspace/scripts/notify_coach.sh`推播Telegram
+- `chapter.html`兩顆CTA按鈕改成：`status=='forming'`才連到新表單，正式營運分會維持原本`#`不受影響
+- 用`test_client()`驗證GET表單/POST驗證錯誤(400)/POST完整送出全流程(mock通知避免真的打教練Telegram)，4個籌備會slug皆curl驗證200，測試資料已從DB清除
+- commit`69670de`（bni-chapters repo）
+
+## ⚠️ 下一場開工先做
+1. **team.bymyway.com後台密碼**：跟bni-chapters一樣是預設Admin/88888，教練尚未裁示是否/何時要求改密碼，兩套系統可以一起處理。
+2. **team.bymyway.com示範內容**：5個分會目前是佔位文字（第一分會~第五分會），教練可能需要進一步調整視覺風格/文案，屬於後續內容維運，可以交給Hermes做（部署已完成，接下來就是內容層面）。
+3. Hermes那封「team-bymyway-new-site」交辦信（commit`5a312c940`）已經過時（程式已由軍師做完），若Hermes後續有動作或詢問，告知現況即可，不用真的做重複的事。
+4. v151之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容）本場均未觸及，繼續掛著。
+
+## 🔑 本場commit
+`workspace`：`757854999`（信用証提醒兩段式）、`15305e072`（git衝突查證）、`5a312c940`（發信Hermes team交辦，已過時）、本場v157接力棒本身。`team-bymyway`：`fd9dfb8`（seed_admins.py，部署時新增）；程式本體`e9d87dc`+`173e035`為另一場對話框軍師所做，非本棒commit。`bni-chapters`：`69670de`（籌備會創始會員表單）。`coach888`：`34477e4`（作品總覽新增team.bymyway.com）。部署基礎設施：`~/.cloudflared/team-config.yml`+兩支launchd plist（非git追蹤，本機設定檔）。
