@@ -1,0 +1,83 @@
+{
+  "_meta": {
+    "app_name": "大樹教練粉專發文小幫手",
+    "app_id": "1050871501278089",
+    "app_secret": "0fc74466c0a78283a564ae15091bd772",
+    "generated_at": "2026-09-01T16:50:00+08:00",
+    "generated_by": "教練本人於Graph API Explorer點擊Generate Access Token授權，新增pages_read_engagement權限後重新產生，14個粉專(含原卡住的大樹教練+大樹教練之BNi奇妙旅程)全部拿到",
+    "long_lived_user_token": "EAAO7wxaJy4kBSaIPL6mKGZB3qxMAROpSTuLvTR4qkJRaPM9f75RhZBRD3vsH1qR3C3DORCpAh54JMDu0uPOZBZCZAl5r6dKl4lSeA5VG2b2c4l6b5rZC6ZB1DAYM5Ik9sEZB5175w829UezZBEwEZATq1zNkHdt77OKaCPY83wPZAOZAF8lBZBAZAPWGw8la7ByKRCvXv4ZAbCbRu9kWPvx",
+    "note": "已用debug_token查證：14個page access_token的expires_at皆為0(不過期)，且都含pages_read_engagement，可正常GET/POST"
+  },
+  "pages": [
+    {
+      "name": "BNl真愛分會",
+      "id": "637561126116236",
+      "access_token": "EAAO7wxaJy4kBSehfibWYeTbTf0v4jo5ao7ae1sKMDQqvbOzqgz17ioGVZAS8oJkkX7wUsvMDSBHCDuD3cHfIOZBY2TCTPbJaoBZAe4PpaJjVtUz1IzSGLoBrodaSuW8wCdD44wBVpxq26hcepcdvI9x5IHsN1bwLlieM5Ukqpn9xkymzdBjPyfsNeNUQlOuuZCm9LFwoJygABvKd1et4TDXk"
+    },
+    {
+      "name": "大台南策展中心",
+      "id": "612941615239114",
+      "access_token": "EAAO7wxaJy4kBSeLNnWGDtn4ZCtaYyPUerKwWdFlH71Txjp06ALuxM9A3NFY7RJJOO8ZA2GGpNEK3yj6gwtQ6L7oZBqakHZCq38Q6rDMYNmEnsvzw5HfTrC0mG2uyDaghcNaI5AfpNQ4e0AyLBGn1ZBnw0IzJyGVIEI8YhFYQVwcF0JgFeZAQGyPhZAV4W9Hx4FVfIduPL10ZBuZBZAU7S4cyZB9CENs"
+    },
+    {
+      "name": "K R養生廚房",
+      "id": "341405269791872",
+      "access_token": "EAAO7wxaJy4kBSSUJ4WajEeAL6ZCGQ5sXnDToTtLrc87ZBon08viy3z9mRKAB4hyC4eiUtSVdAFMo7pgCjMI4RZAS1gb95CFVCZCBYEL0pghGMbwGIL2BEWZB6paa3stn2spXq2xAWSyXySL617dmeq65klOqyuXnvfSwrMzvRZAf2KGGSZCsuTYpEueHNEquTy7P0Ur3v3e05hYt4QCqo41d4HS"
+    },
+    {
+      "name": "BNI大台南市區真鑽分會-我們重承諾",
+      "id": "260832737976868",
+      "access_token": "EAAO7wxaJy4kBSdT1bFeZCznissjEBg5fBkcRAnBAbJGThoKZCZALDPAPeaqOKhlXFUMAC5eiwVp0JGxqTiR0EPTNpDnWyOfqFL9ZBdZAWG0PsxKPjVxATpZBOoisPDqQWEDLzp3LChnwgLnY5chqPxDJ1SNb88SiGRvob1UnQCZCi79wkUYwLMV5Tk7OuAmTL9vk3ZCXmXR3niNCnCPYkEsu2pUZD"
+    },
+    {
+      "name": "大樹教練之『BNi』 奇妙旅程",
+      "id": "1387338921366942",
+      "access_token": "EAAO7wxaJy4kBSTFWi8kIOATn0QFGDZA3juaqVT7Cv4aKZBI6HgIev85RmhROMsZBHIe58tlEyGSlhadlA9fvxN9AhFgKz31BMRdyzTpgviaUBUJpALPVcK2zjtsqKQ5dqJe07bJ3YShPow9gfK1rCCl2mCRONwCBjG24wExZCByCrN8k0EYZAqRtBeCEC6uA9PWrRdRO3vzjZBwyvI2Vl4kAnA"
+    },
+    {
+      "name": "動感跳繩俱樂部",
+      "id": "114594070296743",
+      "access_token": "EAAO7wxaJy4kBSeWzCHt6i8Ct44fMZAq75z6a8X3BGy409txPeEWs41mvp6Q7x98Yzr0DxApda5MZCZCh3pKS5xewQAByZB64NUWxawSxzQAn7D8beZCHIl4wCz0tqJWXTx6k2xij0BWqT9CrME644qXjKkSJBXNeUDMXPZCjsfX1hN5wtEcFIURiHfZAyT1YgaJ70hnypRgGNQmj7nx0ZArfOKYZD"
+    },
+    {
+      "name": "捂汗吠言",
+      "id": "112363970420114",
+      "access_token": "EAAO7wxaJy4kBSXvo5eiuPU3Rrp4clbv2t7c7JTbnk3eBz2h29HZBPuxbZAAZAYB5G5ZAgZBLio1JJrfBvVn0Q1DyajAXc1KjBBJtIAa6HrpZBJHF1EsPh1XHcoSwM1BKcpBn5TES5bVyc7n5v3Qz5RiZCehJ84hBnVV2VPqtmdbK5JxqSBWSMoBWRZAzHwxoa4wVqjCu61yeGndrWW8OaVuYJdIZD"
+    },
+    {
+      "name": "海餅乾俱樂部",
+      "id": "241418512666105",
+      "access_token": "EAAO7wxaJy4kBSQPIihDX3wByvkbrG6vkYdkpXUD7obzZBZBSZA66Cu3xVKYo0NGiUGienlDY2JuxeZAyczjWADtRbVDxfYLne8ZAJexi7vr8wZB3fd5WGYBvHGw61Ls2yi1AEvKieyWJSZAm6RaQIzuPspY2zP5FOFZC3vKgKjqA9ArTUOLVvxUvAhybszqEEvoqKqVOdhTNtkXMCGB3lmv4ZBu0ZD"
+    },
+    {
+      "name": "跨界美.術.管",
+      "id": "970806519790085",
+      "access_token": "EAAO7wxaJy4kBSaJYbfDwGVjPzAS7nNz66gJfsz4KCLWiKne9v8KMmxPFlZASEHPhTysAcVhar4Y9XeyOc2bq95GoNqQGWhoRPlPJgbfZCqG7lV2KQRlHL1lwjKYCU2PjqeBjwetPAs6DfVgqB5zhPYye8aeQjgBtbYH7CGLMTehonvNco8yWfzCNuc2CG4J7wkDZCK7vHOP3WfVZBdNELr2d"
+    },
+    {
+      "name": "軌跡-人生就是正負評的總合",
+      "id": "475106246270108",
+      "access_token": "EAAO7wxaJy4kBSRUrdAq109LhIZBgHIvhEbNhJegDQxPbKbnJlfZARWZA2n6QHGDZCVlmHZA07gFiZAbFzEnnYR1dESe9l9iAp7QSJeW7cDUA3J2CDLDid638fKRIJX29lFfcmRs2eCRQZAqx2umc85hgX6Sg56X4IDLnySS5dGI8pFmkICk0tdOTZB8ZCAZBJJGVE0QGOFd4CZBOoJlbH5yWtFO8HdS"
+    },
+    {
+      "name": "真善忍的美好世界",
+      "id": "1083497755137004",
+      "access_token": "EAAO7wxaJy4kBScd7t6cCWGngZBdfZB8q92MhwtsSIZBbIOtxRLXXUdvuRB0sqg0PaucB5Czb8ZBQMpQHiQm3w54ZB1lnUFG1ExYIdRcMJXN62GAD1PzyZBPQPccVDe4I3EclmwJDSRQBcVRmppVMxz3U0aczOgUqDd1F2henugEova4ptpBFaUdxqKXi6RRoZBAmXe0RUUNVp5lwmhTZBZCbrgIzq"
+    },
+    {
+      "name": "不識廬山真面目",
+      "id": "189817098295867",
+      "access_token": "EAAO7wxaJy4kBSSFK3HYurrgHReIactG3nL0dAuwfroOFlJTv2ckR5YvmaUuXy2X1Bm6XUqAmEPoWzm62ZAmn9OGSm7iZBe7kWcC5km1VGSUiKrGQafXndt2KPabrhL7kwtwdclyjRxxnPjwgVTsnU30EtdyyPa0PLlmgfNz3EWmL5HKUw7Ifaq2ZC0GTc4uhZAkNcmicIsolS77nqkZA8SnYZD"
+    },
+    {
+      "name": "大樹教練",
+      "id": "252699914868764",
+      "access_token": "EAAO7wxaJy4kBSVoZAqdCRkm0hyHlIzXxu20Ui1YUBRPZAs6WD9vpYNid5inqKaw8TAfm54XvHFUB4cWeuwaIdeidzWrl75d3tNfSnP3xkI3ZCUZAGdMHLZBpOTLFUx0kekCdKTLULvo5ui3zqPbs5CWa9yMegoeyjDSYpiSqHJG2Wf3cZBG6iOKlCMfVHnSQD2QHqg4GFK5IZC0DZAuZAqm1c97YZD"
+    },
+    {
+      "name": "喬吉拉德/真實學員分享群",
+      "id": "210343562656647",
+      "access_token": "EAAO7wxaJy4kBSTZBLjlQa0vB6PeIvODK1u4zZBfbGHF4KW0TPdy2lHvsbZCpcGVNXcoJrwHE2vGIECo73L9CHg3Krqi75xqHZBuARxRx1nlN7WZB0CANMBL6M3dcEFD9BGKz2GR927AfXmZBvxZAC9yW4IFaZCUf3ZCJaDluimnxq31VTFMJvGDMra9VDAwnKUQIFZBbASQ8ZBACzEvFA56ZC8TqatMZD"
+    }
+  ]
+}
