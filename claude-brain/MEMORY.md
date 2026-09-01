@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 CSS多欄流式排版(column-count)取代手動row/col配對+大幅HTML重排優先整檔重寫不用regex片段(2026-09-01)](reference_css_masonry_flow_vs_manual_row_pairing_2026-09-01.md) — coach888排版壓縮問題實戰，附div開合計數雙重驗證法
 - [🔴🔴🔴 UI改動位置要問清楚放哪一頁，不能自己假設個別頁面vs首頁(2026-09-01)](feedback_ui_change_location_must_confirm_2026-09-01.md) — bni-chapters「認識分會/核心價值」按鈕誤改到個別分會頁，教練要的是首頁，跟案例68同一類「先查證再動手」
 - [🔧 BNI Connect PALMS摘要報告跟明細報表的「來賓」數字口徑不同，PALMS才準(2026-09-01)](reference_bni_palms_vs_detail_report_discrepancy_2026-09-01.md) — 真鑽分會實測落差近3倍(106 vs 303)，之後查準確人數一律用PALMS報表
 - [🔴🔴🔴 用假資料驗證系統畫面要窮舉所有資料表,不能只看主schema(2026-09-01)](feedback_verify_all_tables_not_just_main_schema_2026-09-01.md) — 真鑫戰情儀表板guest_list表(app.py動態建立不在schema.sql)殘留真誠分會假資料到正式站,試金石案例69
@@ -126,7 +127,7 @@
 - [🔴 語音輸入數字矛盾必問不猜](feedback_voice_number_conflict_must_ask.md)
 - [🔴 VPS更新SOP(關鍵字觸發)](feedback_vps_update_sop_trigger.md)
 - [🔴 工作團隊架構鐵律(2026-05-25拍板)](project_team_structure.md)
-- [🔴🔴🔴🔴 截圖鐵律統合版(2026-08-08五次補充:read_page/get_page_text優先，截圖萬不得已)](feedback_screenshot_rules_consolidated.md)
+- [🔴🔴🔴🔴 截圖鐵律統合版(2026-09-01六次補充:不能自己寫核准旗標檔案繞過截圖鎖)](feedback_screenshot_rules_consolidated.md)
 - [Netlify Token(額度以handoff表最新校正為準)](reference_netlify_token.md)
 - [白話文鐵律](feedback_plain_chinese_no_jargon.md)
 - [🔴 不限流量只屬於小龍蝦/MiniMax，Claude助教不適用](feedback_token_model_distinction.md)
