@@ -43,39 +43,57 @@ if [[ ! -f "$HANDOFF" ]]; then
 fi
 
 # ───────── 🌐 先 git pull 拉雲端最新（跟 Windows v2 對齊）─────────
+# 2026-09-01 教練親口糾正：這段舊版用 `git pull --rebase`，但 workspace 裡
+# terminal-notes/raw_sessions/*.jsonl、state/inbound_echo/*.jsonl 這類檔案
+# 是這場對話自己即時在寫的（session逐字記錄+訊息落地），rebase 要求工作區
+# 完全乾淨，幾乎每次「開工」當下都會撞到這些正在被寫入的檔案，導致近乎每次
+# 都觸發「pull失敗」假警報（查 notify_coach.log 確認 8/30~9/1 至少6次）。
+# 改用 fetch+ff-only merge：這種合併方式不要求工作區乾淨，只要incoming
+# commits沒有動到本機正在變動的那幾個檔案就能成功，才是真正對應這個
+# workspace「本機一直有背景寫入」這個常態的做法。ff-only失敗（真正分岔，
+# 非僅髒污）才退回舊的 stash+rebase 流程搶救。
 PULL_STATUS="（本機非 git repo，略過 pull）"
 if [[ -d "$WORKSPACE/.git" ]]; then
   cd "$WORKSPACE" || exit 0
-  DIRTY=$(git status --porcelain 2>/dev/null)
-  STASHED=0
-  if [[ -n "$DIRTY" ]]; then
-    if git stash push -u -m "auto-pull-stash-$(date +%Y%m%d%H%M%S)" --quiet 2>/dev/null; then
-      STASHED=1
-    fi
-  fi
+  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   PULL_FAILED=0
-  if git pull --quiet --rebase 2>/dev/null; then
+  if git fetch --quiet 2>/dev/null && git merge --quiet --ff-only "origin/${BRANCH}" 2>/dev/null; then
     HEAD_HASH=$(git rev-parse --short HEAD 2>/dev/null)
     PULL_STATUS="✅ 已拉雲端最新（HEAD: ${HEAD_HASH}）"
   else
-    PULL_STATUS="⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）"
-    PULL_FAILED=1
+    # ff-only 失敗，代表本機有真正未推送的commit（非僅髒污檔案），才需要 stash+rebase 搶救
+    DIRTY=$(git status --porcelain 2>/dev/null)
+    STASHED=0
+    if [[ -n "$DIRTY" ]]; then
+      if git stash push -u -m "auto-pull-stash-$(date +%Y%m%d%H%M%S)" --quiet 2>/dev/null; then
+        STASHED=1
+      fi
+    fi
+    if git pull --quiet --rebase 2>/dev/null; then
+      HEAD_HASH=$(git rev-parse --short HEAD 2>/dev/null)
+      PULL_STATUS="✅ 已拉雲端最新（HEAD: ${HEAD_HASH}，經rebase搶救）"
+    else
+      PULL_FAILED=1
+    fi
+    if [[ "$STASHED" -eq 1 ]]; then
+      git stash pop --quiet 2>/dev/null || true
+    fi
   fi
-  if [[ "$STASHED" -eq 1 ]]; then
-    git stash pop --quiet 2>/dev/null || true
-  fi
-  # 2026-08-26 教練當場糾正：這行警告過去只塞進注入文字裡，靠AI自己在回覆裡
-  # 提一句才會被看到——這次AI自己就漏講了，教練完全沒看過這行字。
-  # 不能再靠「AI會不會主動講」這種不保證的環節，改成腳本自己直接發Telegram，
-  # 跟AI有沒有讀、有沒有轉述完全無關，失敗必達。節流1小時避免連續開工洗版。
-  # 通知動作刻意放在 stash pop *之後*：實測發現如果在 stash 還沒 pop 回來前呼叫
-  # notify_coach.sh，萬一這支腳本自己當下是未提交狀態，會被 `stash -u` 連帶掃進
-  # stash 暫存、暫時從磁碟上消失，導致這裡呼叫落空又不報錯——原地重演同一種
-  # 「靜默失敗」，所以等工作區完全還原後才呼叫，確保腳本本身一定在。
+  # 三關判定才通知（2026-08-05教練親口「不影響工作就別吵我」同一原則）：
+  # ①現在還真的壞嗎——跟origin比對HEAD，一致就代表最終結果是好的，不管中途
+  #   哪個步驟報過失敗字樣，都不算數，不通知。②非暫時性——已經試過ff-only
+  #   +stash rebase兩種手法都失敗才算真的卡住。二者都過才發Telegram。
   if [[ "$PULL_FAILED" -eq 1 ]]; then
-    "$WORKSPACE/scripts/notify_coach.sh" \
-      "Mac開工時發現git pull失敗（本地有衝突或網路問題），這次讀到的接力棒/守則可能不是雲端最新版，需要有人手動處理 workspace repo。" \
-      3600 "mac_feed_handoff_pull_fail" >/dev/null 2>&1
+    REMOTE_HASH=$(git rev-parse --short "origin/${BRANCH}" 2>/dev/null)
+    LOCAL_HASH=$(git rev-parse --short HEAD 2>/dev/null)
+    if [[ -n "$REMOTE_HASH" && "$REMOTE_HASH" == "$LOCAL_HASH" ]]; then
+      PULL_STATUS="✅ 已是雲端最新（HEAD: ${LOCAL_HASH}，中途fetch/merge雖報錯但結果一致）"
+    else
+      PULL_STATUS="⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）"
+      "$WORKSPACE/scripts/notify_coach.sh" \
+        "Mac開工時發現git pull失敗（本地有衝突或網路問題），這次讀到的接力棒/守則可能不是雲端最新版，需要有人手動處理 workspace repo。" \
+        3600 "mac_feed_handoff_pull_fail" >/dev/null 2>&1
+    fi
   fi
 fi
 
