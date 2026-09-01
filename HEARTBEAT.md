@@ -225,3 +225,9 @@
 - 雲端狀態：⚠️ Pull 警告：本地有衝突或網路失敗（請手動處理）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: 3f78a0b4-707b-4ef1-b821-93e5f2584e4f
+
+## 📚 結繩領導學閱讀提醒 2026-09-01 09:00（cron af137f9b 觸發）
+- 教練最後訊息：09:00:30（剛剛還在對話，沉默 0.0h）
+- 觸發類型：cron-event main session, systemEvent payload
+- 送出方式：純文字回應由 cron delivery announce→telegram:6124913915 自動送達（不走 message 工具，無需 token）
+- 判定：純 routine 提醒，不打擾太久，簡訊一則即結束
