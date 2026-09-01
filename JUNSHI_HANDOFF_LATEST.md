@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
 | 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
 | 🎯🎯 | **BNI-Training來賓排行榜(guests.html)+培訓總覽(index.html)：三分會PALMS官方資料+全區排名+單分會排名皆已上線** | ✅2026-09-01 v162完成 | `chapters.bymyway.com/guests`+`chapters.bymyway.com/training`(直接讀BNI-Training活repo渲染)。資料源改用PALMS摘要報表(比「地區-查看來賓」明細報表準確，教練提供20+份不同時間窗快照)，月數標籤以各分會實際成立月封頂。教練驗收關鍵數字：真鑽104個月郭政輝303/康文彬254皆對上。過程三輪重做+chapters.bymyway.com按鈕位置一次做錯，詳見v162完整教訓。 |
 | ✅ | **BNI大台南南區「來賓公開查詢」系統上線** | ✅2026-09-01本場完成 | `https://coach1973.github.io/BNI-Training/guests.html`，Hermes建置，commit`9cfebbb`。3718筆BNI Connect官方報表，門檻比照培訓總覽(固定按鈕+自訂輸入月數)，隱私原則對齊只顯示邀請人/分會/日期。詳見v161。 |
@@ -413,3 +414,28 @@
 
 ## 🔑 本場commit
 `fb_automation`+`路徑大全_憑證層.md`：`0c3bc8cb5`（FB粉專14個打通）。`coach888`：`0a06345`→`b4660c0`（新網址連結更新）。`zhenzuan-guests`：`de30793`→`a02249f`→`4b5d3a1`→`ebae7f3`。`zhengui-guests`：`9639052`。`zhenxin-guests`：`d5585ac`→`e6ebae9`（含補remote推送全部歷史）。`zhencheng-guests`：`ec8c780`→`dac7005`。`bni-chapters`：`40448f4`（403 bug修復）→`3023af3`（戰情儀表板頁）。`BNI-Training`：`2f22ad2`（互連按鈕）。`workspace`：`97b886023`（Hermes部署完成回信）+本場v163接力棒本身。
+
+---
+
+# 軍師接力棒 · 2026-09-01 v164（聯想Windows Sonnet 5，coach888作品總覽表重整：新增BNI最近常用置頂+補漏路由+排版改2欄流式）
+
+> 建立時間：2026-09-01 18:31 ~ 19:16（台灣時間）
+> 上一棒：v163（Mac終端機，FB粉專API打通+三個戰情儀表板部署+claude-in-chrome裝置確認）
+> 本棒主軸：**教練口述整理coach888作品總覽表分類，把BNI專用裡最常用的9項獨立成置頂新區「BNI最近常用」，其餘三個冷門區塊移到最後；隨後教練發現chapters.bymyway.com/guests沒列進去、且排版壓縮凌亂，一併修復。**
+
+## 🎯 本場戰果
+
+### 1. 「BNI最近常用」置頂新區上線
+教練唸序號指定：BNI專用第1項(出席戰情儀表板)+第13~20項(chapters總表/後台/信用証追蹤/真誠/真鑫/真鑽/真貴/team01共8個戰情儀表板)獨立成新區塊放最上面；對外公開/不公開/保留三區移到最後。逐筆核對68項全數保留無漏無重複，commit`c65712d`。
+
+### 2. 教練回報`chapters.bymyway.com/guests`沒列進總覽表+排版壓縮凌亂
+查證發現同一批上線的`/training`(培訓總覽)也一併漏掉（v162接力棒早有記載這兩個路由，本場整理時卻沒對照舊接力棒逐一核對，是本場疏漏）。排版問題：原本用手動`.row`+兩個`.col`把8個分區強制兩兩配對成4排，教練覺得「3、5、6放在一起」「5跟6都是壓縮的，7、8也是壓縮的」——診斷後判斷根因是短區塊(如bymyway 5項)跟長區塊(如後臺10項)硬配成一排時視覺不平衡。改用CSS `column-count:2`整頁流式兩欄排版（8個分區當作連續內容依序往下流動，各自`break-inside:avoid`不被欄位截斷），不再手動配對，徹底解決任何項目數變動造成的排版落差問題。
+
+### 3. 過程中一次技術教訓：大幅結構重排優先整檔案重寫，不要用regex片段替換
+第一輪用node正則替換`.row`/`.col`標籤改成`.section-block`時，因原始HTML巢狀結構（grid關閉+col關閉+col開啟三行連續）跟正則預期的兩行模式不一致，加上CRLF行尾一開始沒考慮到，導致替換後div開合數量不平衡（299開/298合）。沒有直接肉眼抓不平衡點在哪，改用node計算div opens/closes數量做為快速健檢，確認有問題後放棄regex修補，直接用完整內容重寫整個檔案，重寫後驗證307/307配平+70項逐筆核對正確才commit。
+
+## ⚠️ 下一場開工先做
+本任務已完整結案，coach888正式站已curl驗證上線（`column-count:2`+`來賓總覽`+`培訓總覽`皆確認存在）。無延續待辦。承接v163留下的舊待辦：真鑽/真貴資料待教練補、真誠早鳥資料是空的、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容、道德規範中英對照複製到其他8分會。**跨機信箱有1封ACER→Mac/聯想未讀信**（`20260831-1858_acer-to-mac-lenovo_status-report-and-workspace-clone-bug.md`），本場教練沒有要求處理，下一場若教練說「讀信」再處理。
+
+## 🔑 本場commit
+`coach888`：`c65712d`（BNI最近常用置頂+分區順序調整）→`a8e93cd`（補guests/training路由+排版改column-count:2）。`workspace`：本場v164接力棒本身。
