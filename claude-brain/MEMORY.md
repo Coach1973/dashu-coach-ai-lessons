@@ -1,5 +1,10 @@
 # Memory Index
 
+- [🔴🔴🔴 用假資料驗證系統畫面要窮舉所有資料表,不能只看主schema(2026-09-01)](feedback_verify_all_tables_not_just_main_schema_2026-09-01.md) — 真鑫戰情儀表板guest_list表(app.py動態建立不在schema.sql)殘留真誠分會假資料到正式站,試金石案例69
+- [🔴🔴🔴🔴 教練貼具體URL要求「照抄」，第一件事是打開查看，不能憑名稱聯想瞎猜(2026-09-01)](feedback_url_given_open_it_dont_guess_2026-09-01.md) — sincere.bymyway.com跟bni-chapters是兩個系統卻聯想搞混，連中3次糾正才查，浪費教練30分鐘+試金石案例68
+- [🔴 git add -A可能繞過.gitignore誤commit含真實個資的.db.bak備份檔(2026-09-01)](feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md) — bni-chapters曾誤commit含7筆真實會員個資的舊備份，*.db規則擋不住.db.bak-xxx變體檔名
+- [🔧 ACER 2026-08-31全機體檢：修復PS5.1 -AsHashtable+workspace路徑重複clone兩個真bug](project_acer_health_check_2026-08-31.md) — 回覆聯想跨機四層根因信，hostname pc5c925ed70e46
+- [🎯 Hermes聽到「開工」要主動讀JUNSHI_HANDOFF_LATEST.md，拉取模式取代軍師主動發信通知(2026-08-31)](project_hermes_pull_progress_rule_2026-08-31.md) — 教練拍板：Hermes無強制hook接收通知，改成開工當下自己去讀軍師進度
 - [🔴🔴 同一功能連問三次還不懂，別再加碼寫文字，換成具體範例+點破認知衝突點(2026-08-31)](feedback_repeated_confusion_use_example_not_more_words_2026-08-31.md) — 「一鍵發佈」功能教練卡在「進行中」跟「修改」字面矛盾，逐行示範真實畫面才真正講懂
 - [🔴🔴🔴 別把AI能自己判斷的小事丟回教練決定+選單UI要顯示底層真實數值不能只給標籤(2026-08-31)](feedback_dont_punt_decisions_show_underlying_values_2026-08-31.md) — 9/16上午下午該自己判斷卻問教練+時段選單只有標籤沒標時間，同天連中兩次同模式
 - [🔴🔴🔴 涉及教練會操作的介面(後台/開關)不能只寫規格交辦，要親自做進去讓教練能點(2026-08-31)](feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31.md) — 分工給Hermes只限教練不會操作的內容維運，教練親自操作的控制項當場做完不延後

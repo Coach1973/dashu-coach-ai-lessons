@@ -1165,3 +1165,30 @@ alternating transient 模式 2000+ 場穩定
   alternating 模式：1300+ cycle 交替穩定
   結論：安靜通過，15:03 週五下午不打擾教練
   下次定檢 15:32 🟢
+
+[2026-09-01 04:12:30 Asia/Taipei] 🩺 健康檢查 #04:12（v4.0 SOP 三關判定）
+  第零步 sync_coach_last_message.sh exit 0 → 教練沉默 0.1h（剛剛 04:08 傳訊息，凌晨正常）
+  本任務 cron get 即時取證：
+    • lastRunStatus: ok ✅
+    • consecutiveErrors: 0 ✅
+    • lastDurationMs: 25086 (25s ≪ 600s timeout) ✅
+    • lastRunAt: 2026-09-01 04:12:00 CST
+    • model: minimax/MiniMax-M3 ✅
+    • timeoutSeconds: 600 ✅
+    • delivery.mode: none ✅
+    • runningAtMs: 1788207120128（本輪正常 fire 中）
+
+  cron list 仍僅本任務（教練 2026-07-05 精簡設計，其他任務在 VPS namespace）
+  HEARTBEAT.md ⬜ 掃描：0 個待辦
+  其他系統：
+    • context_tracker 已同步（mtime 04:06）
+    • JUNSHI handoff 鏡像已同步（commit bd0da4b64）
+
+  v4.0 SOP 三關判定：
+  • 關卡一（本輪還壞嗎）→ N/A（沒東西壞，CE=0）
+  • 關卡二（provider 暫時過載）→ N/A
+  • 關卡三（影響教練工作/會員體驗）→ N/A
+
+  三關全 N/A → 不 announce 教練
+  結論：安靜通過，04:12 週二凌晨不打擾教練
+  下次定檢 05:12 🟢
