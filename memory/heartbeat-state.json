@@ -1,37 +1,50 @@
 {
-  "lastChecks": {
-    "heartbeat_poll": "2026-09-01T14:01:03.897889+08:00",
-    "telegram_channel": "2026-09-01T14:01:03.897889+08:00",
-    "system_health": "2026-08-31T18:01:12+08:00",
-    "coach_silence_sync": "2026-09-01T19:12:05.663363+08:00",
-    "context_overflow_restart_announce": "2026-08-27T14:01:40.952972+08:00",
-    "telegram_send_verified": "2026-08-27T14:01:40.952972+08:00"
+  "lastHealthcheckCycle": 703,
+  "lastHealthcheckAt": "2026-09-01T19:13:12+08:00",
+  "lastCoachMessageAt": "2026-09-01T19:10:09+08:00",
+  "coachSilentHours": 0.0,
+  "verdict": "silent_pass",
+  "v4ThreeGates": {
+    "gate1_now_broken": "fail_no",
+    "gate2_provider_overload": "fail_no",
+    "gate3_affects_work": "fail_no",
+    "decision": "silent_do_not_announce"
   },
-  "lastHeartbeat": "2026-09-01T14:01:03.897889+08:00",
-  "lastHeartbeatNote": "cycle=週二 14:00 cron-event heartbeat｜TG 通道探針 ok:true（剛實測）｜JUNSHI queue 空、cross-agent inbox 空、無 urgent Gmail、HEARTBEAT 無 ⬜ 真實待辦｜教練最後訊息 11:36（沉默 2.4h,週二下午正常作息）｜系統全綠｜週二下午服務時間但無待辦、無未讀,安靜通過不打擾",
+  "cronTruth": {
+    "total": 1,
+    "enabled": 1,
+    "ce_ge1": 0,
+    "ce_ge3": 0,
+    "last_err_present": 0,
+    "enabled_last_err": 0,
+    "idle": 0,
+    "running": 1,
+    "ok": 1,
+    "note": "cron list 只回報 1 個（本任務本身），lastStatus=ok、CE=0、lastDurationMs=14203 全綠"
+  },
+  "environmentQuickcheck": {
+    "soul_x3_present": true,
+    "soul_sizes": [
+      9015,
+      1851,
+      22220
+    ],
+    "repo1_short_count": 23,
+    "repo2_short_count": 38,
+    "lock_files_present": false,
+    "tg_probe_ok": true
+  },
+  "autoFix": [],
+  "decision": "silent_pass_no_announce",
+  "nextCycle": 704,
+  "nextRunAt": "2026-09-01T20:12:00+08:00",
   "systemSnapshot": {
-    "timeOfDay": "afternoon",
-    "dayOfWeek": "Tuesday",
-    "isQuietHours": false,
-    "quietHoursReason": "週二 14:00 下午服務時段,教練沉默 2.4h + 無待辦 + 系統全綠 → 安靜通過",
-    "allCronsHealthy": true,
-    "contextStatus": "fresh",
-    "recentCoachActivity": "教練最後訊息 2026-09-01 11:36:55（2.4h 前,週二上午下午）",
-    "urgentGmailCount": 0,
-    "junshiQueueEmpty": true,
-    "gatewayRunning": true,
-    "telegramChannelOk": true,
-    "telegramChannelLastVerified": "2026-09-01T14:01:03.897889+08:00",
     "coachSilentSince": "2026-09-01T19:10:09+08:00",
-    "coachSilentHours": 0.0,
-    "lastRestartTime": "2026-08-28T21:00:00+08:00",
-    "lastRestartReason": "Context Overflow（對話太長自動保護）",
-    "restartAnnounced": true,
-    "nextPlannedAction": "下輪心跳繼續常規輪詢",
-    "triggerSource": "cron-event:14:00 週二下午心跳",
-    "cronErrors": []
+    "coachSilentHours": 0.0
   },
-  "telegramChannelOk": true,
-  "telegramChannelLastVerified": "2026-09-01T14:01:03.897889+08:00",
-  "urgentGmailCount": 0
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-01T19:13:12+08:00",
+    "tg_probe": "2026-09-01T19:13:12+08:00",
+    "env_quickcheck": "2026-09-01T19:13:12+08:00"
+  }
 }
