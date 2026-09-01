@@ -1,6 +1,13 @@
 # Memory Index
 
 - [🔧 CSS多欄流式排版(column-count)取代手動row/col配對+大幅HTML重排優先整檔重寫不用regex片段(2026-09-01)](reference_css_masonry_flow_vs_manual_row_pairing_2026-09-01.md) — coach888排版壓縮問題實戰，附div開合計數雙重驗證法
+- [🔴🔴🔴 zhenxin-guests(真鑫)repo從建立以來從未設remote,commit從未推上GitHub(2026-09-01)](feedback_zhenxin_repo_never_had_remote_2026-09-01.md) — 正式站程式碼一度零雲端備份，已補建repo+推送，往後新repo要確認remote有設定
+- [🔧 bni-chapters分會帳號誤點通用/admin會被403擋下已修復,非process crash(2026-09-01)](reference_bni_chapters_admin_403_bug_fixed_2026-09-01.md) — commit 40448f4，教練回報「當掉」實為session scope邏輯漏洞
+- [🔴🔴🔴 複製模板建新網站只查title不夠,要grep全檔確認品牌文字沒殘留(2026-09-01)](feedback_verify_template_branding_after_copy_2026-09-01.md) — 真鑽/真貴複製真鑫程式碼，h1/規則說明多處殘留「真鑫分會」教練實測才發現
+- [🔴🔴🔴 複製模板建新網站要先查既有命名規則,不能自己音譯新名字(2026-09-01)](feedback_check_existing_naming_convention_before_new_subdomain_2026-09-01.md) — 真鑽/真貴誤取名zhenzuan/zhengui，正確應為chapters.bymyway.com既有的real-diamonds/real-wealth
+- [🔧 大樹AI作品一覽表分類邏輯：GitHub Pages測試階段vs Netlify正式作品](project_portfolio_netlify_github_logic.md) — 教練2026-07-12定調，處理作品清單一律照此規則不用重新判斷
+- [🔧 ACER全機體檢報告(2026-08-31)：修復PS5.1 -AsHashtable+workspace重複clone兩個真bug](project_acer_health_check_2026-08-31.md) — 回覆聯想跨機四層根因信，查ACER近況先讀這份
+- [🔧 FB粉專改名字不影響已核發權杖,不用重新授權；新建粉專才要重跑/me/accounts(2026-09-01)](reference_fb_page_rename_no_reauth_needed_2026-09-01.md) — 14個粉專2026-09-01完全打通後教練提問，順手記錄
 - [🔴🔴🔴 UI改動位置要問清楚放哪一頁，不能自己假設個別頁面vs首頁(2026-09-01)](feedback_ui_change_location_must_confirm_2026-09-01.md) — bni-chapters「認識分會/核心價值」按鈕誤改到個別分會頁，教練要的是首頁，跟案例68同一類「先查證再動手」
 - [🔧 BNI Connect PALMS摘要報告跟明細報表的「來賓」數字口徑不同，PALMS才準(2026-09-01)](reference_bni_palms_vs_detail_report_discrepancy_2026-09-01.md) — 真鑽分會實測落差近3倍(106 vs 303)，之後查準確人數一律用PALMS報表
 - [🔴🔴🔴 用假資料驗證系統畫面要窮舉所有資料表,不能只看主schema(2026-09-01)](feedback_verify_all_tables_not_just_main_schema_2026-09-01.md) — 真鑫戰情儀表板guest_list表(app.py動態建立不在schema.sql)殘留真誠分會假資料到正式站,試金石案例69

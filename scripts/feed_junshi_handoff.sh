@@ -114,43 +114,14 @@ with open(path, "w") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 PYEOF
 
-# ───────── 🔍 順手檢查聯想/ACER 多久沒真正同步過（開工當下才查，不設定時輪詢）─────────
-# 2026-08-26：ACER查出49天沒被打開過、聯想的「總結」hook缺jq靜默失效近一個月，
-# 兩者都是「沒人看、也沒人被通知」才拖這麼久。剛才git pull已經把聯想/ACER最新的
-# sync_health狀態拉下來了，這裡直接檢查，不用等教練自己發現或另外設定巡邏排程。
-STALE_MACHINES=""
-# 已知的兩台兄弟機一定要檢查(即使它們還沒拉到這支新腳本、檔案還不存在，
-# 那本身就是「從未回報過」的正確結果)；另外用萬用字元抓任何已經在回報、
-# 但實際檔名跟這裡預期不同的機器(例如Windows端寫入的是電腦實際hostname)，
-# 避免因為猜錯檔名而漏掉真正在運作的機器。
-KNOWN_MACHINES="lenovo acer"
-DISCOVERED=$(find "$SYNC_HEALTH_DIR" -maxdepth 1 -name "*.json" ! -name "mac.json" 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/\.json$//')
-ALL_MACHINES=$(printf '%s\n%s\n' "$KNOWN_MACHINES" "$DISCOVERED" | tr ' ' '\n' | grep -v '^$' | sort -u)
-for M in $ALL_MACHINES; do
-  MF="$SYNC_HEALTH_DIR/${M}.json"
-  if [[ -f "$MF" ]]; then
-    AGE_H=$(python3 -c "
-import json, datetime
-try:
-    d = json.load(open('$MF'))
-    last = datetime.datetime.fromisoformat(d['last_attempt'])
-    now = datetime.datetime.now(last.tzinfo)
-    print(int((now - last).total_seconds() / 3600))
-except Exception:
-    print(-1)
-" 2>/dev/null)
-    if [[ "$AGE_H" -gt 72 || "$AGE_H" -eq -1 ]]; then
-      STALE_MACHINES="${STALE_MACHINES}${M}(${AGE_H}小時未同步) "
-    fi
-  else
-    STALE_MACHINES="${STALE_MACHINES}${M}(從未回報過) "
-  fi
-done
-if [[ -n "$STALE_MACHINES" ]]; then
-  "$WORKSPACE/scripts/notify_coach.sh" \
-    "開工時檢查發現這些機器超過72小時沒有真正同步過：${STALE_MACHINES}——它們讀到的規則/接力棒可能是舊版，建議找時間去那台機器開一次對話讓它讀信。" \
-    43200 "mac_feed_handoff_stale_siblings" >/dev/null 2>&1
-fi
+# ───────── 🔕 2026-09-01教練拍板取消：跨機72小時未同步通知（原規則已移除）─────────
+# 原本這裡會比對 sync_health_dir 下 lenovo.json/acer.json 等固定檔名的心跳時間戳，
+# 超過72小時就發Telegram通知教練。但這個心跳檔案系統跟git commit是兩件不同的事：
+# acer/lenovo那幾台機器其實都有正常總結、有真實commit(教練這邊查得到)，但因為
+# 這支心跳腳本沒在那幾台機器上真正跑起來(或寫入的檔名跟這裡預期的不同，例如
+# Windows端曾經寫入的是電腦實際hostname而非"lenovo")，導致天天誤報「從未回報過」
+# 造成教練困擾。教練口頭裁示直接取消，不做檔名對照修正。若未來要重新做這類跨機
+# 健康檢查，判斷依據應改讀各機器workspace repo的git log，而不是這個自訂心跳檔案。
 
 # ───────── 📋 報名通知空窗期稽核：教練開工當下順便查，不等教練追問三次才查出來 ─────────
 # 2026-08-26教練親口糾正：金門場報名資料落差問過三次才被告知完整名單，教練從金門

@@ -1,7 +1,9 @@
 {
-  "checked_at": "2026-08-31T08:20:02.516616+08:00",
-  "future_sessions": 15,
-  "problems": [],
+  "checked_at": "2026-09-01T08:20:01.279247+08:00",
+  "future_sessions": 16,
+  "problems": [
+    "資料庫有「當古典音樂遇到AI - 映月（ai-art-0916／2026-09-16）」但官網沒列出——是不是忘了按一鍵發佈？"
+  ],
   "satellites": {
     "ai-talk": {
       "desc": "AI微論壇 嘉義場",
