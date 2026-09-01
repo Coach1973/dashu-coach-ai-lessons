@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-01 10:55:21**
+> **最後同步：2026-09-01 19:15:11**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -34,7 +34,7 @@
 | 🟡 | **9/16「當古典音樂遇到AI科技」高雄場活動結束後，把大樹小講(bigtree)自動部署到Netlify正式站** | ⏳排程等待9/16 17:30觸發 | 教練2026-08-28口諭「先不用，活動結束時，再自動移過去」——目前已推GitHub+GitHub Pages上線(coach1973.github.io/bigtree)，唯獨bigtree-tw.netlify.app(手動zip部署型)保留沒推，等活動結束才推。已寫好部署腳本`scripts/deploy_bigtree_after_0916_event.sh`(git pull+git archive打包+呼叫Netlify Deploy API，site_id`40e580f0-1def-4777-adb8-587ef023ed36`)，並在聯想Windows本機用Claude Code CronCreate排了一次性durable任務(job`ee5beb77`，2026-09-16 17:30觸發)。**風險**：這個排程只存在聯想這台機器的`.claude/scheduled_tasks.json`，只有教練那天有開這台機器的Claude Code才會觸發（或事後補跑會被catch-up機制偵測到）。**任何機器的軍師若在9/16當天或之後開工，看到這行待辦，直接跑`bash scripts/deploy_bigtree_after_0916_event.sh`即可完成部署**，不用等聯想觸發，完成後把這行狀態改成✅並刪除。同場相關：`ai-art`新repo已建立(https://coach1973.github.io/ai-art/)承載這場活動的獨立網頁，`archive/大樹小講_歷史講座紀錄.html`宮格牆已加9/16卡片連結該頁。 |
 | ✅ | **真誠分會自助送出簡介機制，已套用到全部9個BNI分會** | ✅2026-08-27完成，教練親口「很棒」驗收通過 | 比照mentor100百人導師同行**第一階段**設計，`bni-chapters`新增`chapter_members`表(chapter_id範圍)＋`/<slug>/join`自助送出表單(honeypot+IP rate limit防灌水)＋送出即自動上架＋`edit_token`自助編輯/刪除＋後台夥伴清單供刪違規內容，commit`44fc3dd`。**因架構本身是chapter_id分流、9分會共用同一套後端**，教練說「套用到所有分會」後，逐一curl驗證全部9個slug(sincere/real-ai/true-rich/true-love/zhenxin/real-diamonds/real-kungfu/real-age/real-wealth)的分會頁面+`/join`表單皆為200且各自顯示正確分會名稱，後台`admin_edit`(chapter_id=5/9實測)也都能看到各自夥伴清單，**確認9個分會全數已生效，無需額外程式碼異動**。此項結案 |
 | ✅ | **`/bni-credit`網頁三項待改全數完成+30天到期提醒上線+34筆離會會員補開真證+搜尋空格bug修復** | ✅2026-08-28本場完成，第3項(補公司)延後至下週三 | 5分會402人清查主線+340筆複查+權限隔離皆已結案(見v146)。**待辦一(移除已失效空分類)**：279筆複查0筆命中，commit`d6a2c0a4d`。**待辦二(到期日顏色分級)**：教練拍板12/6/3個月四段式，commit`da001f57f`。**待辦三(補公司欄位)**：教練裁示延後至下週三(2026-09-02)。**BNI信用証30天到期提醒**：`scripts/bni_credit_expiry_reminder.py`+openclaw cron`8211e054`每日08:57執行，真實資料驗證過，commit`91680dcfe`。**教練後續追加大量互動，逐一測試「產生信用証」按鈕**：胡宗奇誤分類(active無cert_id)發現後，教練授權點擊2024年以前25筆未開立記錄，**24+胡宗奇重試共25筆全部成功**產生真證(編號1348126~1348151)；教練再指定劉智揚(2076177,真鑽)+6筆(林政志/柯其宏/楊文忠/歐鎮平/蔡宜君/薛如雲)，**7筆全部成功**；補回吳承洋(v146事故cert 1348092)資料同步。合計本場新增/補回**34筆真證**寫入資料庫。抽測3筆「已過期」+5筆「沒有額度」確認分類正確不需重開；羅琳案例教練親查兩次入會歷史確認ineligible正確，並補充「信用証只適用已離會會期」通用原則。**額外發現並修復重大搜尋bug**：教練搜尋「林政志」查無結果，查出`cards`表451筆有422筆(93%)姓名是BNI Connect原始「姓 空格 名」格式，一般LIKE比對被空格擋下，教練要求「不要管空格，字對了就找到」，已把`/find`+首頁搜尋所有欄位(姓名/公司/職稱/分類/電話/Email/地址/關鍵字)全部改成雙邊去空格比對，commit`5e8be0c9a`+`e969f61a6`。**教練當場糾正**：花時間重新查證教練已經明講過的資料庫需求(現任/前會員/來賓三類)，浪費他流量跟時間——已寫入記憶`feedback_dont_reverify_stated_requirements_2026-08-28`。吳承洋等34筆信用証由AI直接產生非教練手動點擊，此為教練明確授權後執行(教練原話：「產生信用證之後還有24個月期限，沒有任何風險」)。 |
-| 🔴🔴🔴 | **FB粉專行銷自動化：App+12個粉專發文權杖已建好，但「大樹教練」最重要粉專的pages_manage_posts權限卡在商家驗證未完成** | 🔒卡住-教練已於2026-08-27 17:00送出驗證，Facebook回覆約48小時(2個工作天)內出結果 | 聯想Windows本場從零建置Graph API App「大樹教練粉專發文小幫手」(App ID`1050871501278089`)，順利拿到12個一般粉專的Page Access Token(存於`fb_automation/page_tokens_2026-08-27.json`+`路徑大全_憑證層.md`，經debug_token驗證`expires_at:0`永不過期)，教練指定優先要發的4個是大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管。**卡住點**：教練最重視的「大樹教練」個人品牌粉專(facebook.com/bymyway，Page ID`252699914868764`)一直無法透過`/me/accounts`列出，且不管怎麼重新授權，真正的發文權限`pages_manage_posts`永遠拿不到（scope只剩前3個）。繞了一大圈試錯(切換使用案例分類/App後台加權限/開新分頁重來/猜New Pages Experience限制/加進Business Portfolio)才在Meta Business Suite「安全中心」頁面查到官方明講：「你的組織必須通過驗證，才能使用特定Meta產品」——真因是**商家驗證(Business Verification)未完成**，教練當場點名檢討「浪費了大半的時間最後才找到關鍵」，已寫入試金石案例67+記憶`feedback_diagnose_root_cause_before_trial_and_error_2026-08-27`。教練決定自己找時間去`business.facebook.com`安全中心點「開始驗證」，完成後開新對話框回來繼續。**下一棒待辦**：教練商家驗證過了之後，重新走一次`pages_manage_posts`授權流程(教練需親自點擊「Generate Access Token」，自動化點擊會被瀏覽器攔截)，驗證12個粉專+大樹教練都能真正發文後才開始寫自動發文腳本；教練尚未提供「素材對應規則」(哪個活動配哪個粉專)，也要問清楚才能真正開始自動化。 |
+| ✅ | **FB粉專行銷自動化：14個粉專(含大樹教練本人)API+手動雙管道全部打通** | ✅2026-09-01完成，詳見v163 | 教練親自到Graph API Explorer補選`pages_read_engagement`權限並重新授權後，14個粉專(含原卡住的大樹教練+『BNi』奇妙旅程)全部驗證可正常GET/POST，權杖`expires_at:0`永不過期，存於`fb_automation/page_tokens_2026-09-01.json`。同場也用瀏覽器手動貼文5個粉專成功。 |
 | ✅ | **Stop hook守則#07輪詢偵測瞎眼35天，工具回音誤判成回合邊界的根因已修復** | ✅2026-08-27完成，用真實對話重播+本場活體測試雙重驗證 | 教練修RustDesk腳本時自己講出「每10分鐘檢查一次」被親口糾正，查證發現這台Mac本來就有專門攔這句話的Stop hook，但log顯示從7/24起完全沒抓到過任何真實違規。根因：TURN_TEXT往回掃描transcript時，把工具執行結果（也是`type=='user'`）誤判成「教練講話」的回合邊界，真實對話一有多次工具呼叫（幾乎必然）就提早打斷掃描，抓不到更早講的違規內容。此bug自2026-07-23就存在，非08-12合併造成的新問題。已修復`scripts/stop_rules_master.py`+同步修好同一天失效的`test_stop_rules_master.sh`（比對基準依賴的檔案早被刪除，測試從建立當天就已失效）。詳見試金石案例66、[[reference_stop_hook_tool_result_boundary_bug_2026-08-27]]。commit`01a28f2fb`。 |
 | ✅ | **聯想跨機同步四層根因全修+ai-talk嘉義場設攤廠商05~10上線+Netlify額度校正934.9** | ✅2026-08-26聯想完成，詳見v138 | 詳見`claude-brain/project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md`。四層根因：①7支對齊hook聯想從沒裝過(含收工自動push) ②所有hook讀到的`workspace`是7/23的死clone，已封存改junction指向活repo ③PS5.1讀stdin中文被Big5讀壞(「開工」變亂碼)，`feed_junshi_handoff.ps1`等3支已修 ④`session_end_auto_push.ps1`commit後沒先pull就push，必被拒，已補stash→pull--rebase→push。另完成教練交辦：ai-talk嘉義場設攤廠商05(乾淨世界補號)~10(KR廚房)全數上線並curl驗證；Netlify額度按教練截圖回報949.9/1000校正，本場部署2次後934.9，寫回共用檔案供三機同步。**教練當場糾正**我把額度同步做成PreToolUse自動攔截hook太複雜(還意外把自己下個指令攔到報錯)，已撤掉改成手動記數+總結時寫回，詳見[[feedback_netlify_quota_sync_simplify_2026-08-26]]。 |
 | ✅ | **名片系統BNI Connect匯入+媒合MiniMax額度事故（案例65）：教練拍板改「手動觸發媒合」設計，已上線/find搜尋頁** | ✅2026-08-26本場完成，設計定案並上線 | 詳見v135/v136完整戰果+本場v137戰果。**教練這場定案新規則**：不再對任何一批人批次自動媒合，改成**手動點按鈕才呼叫AI**——現任92人(唯一預先批次媒合的例外，已100%完成)之外，前會員336人＋來賓3216人一律等教練或使用者實際需要時才觸發。已上線`/find`統一搜尋頁（cards+guests雙表搜尋，零AI呼叫）＋`/guest/<id>/match`來賓版媒合入口（首次點擊才轉一筆card+跑媒合，`source_guest_id`防重複轉入），`run_chain_match.py`已改成只鎖現任會員範圍，不會再被誤觸批次跑全部人。**來賓資料重大補正**：教練糾正「BNI Connect來賓一定有專業別」，查證屬實——v136只抓了姓名/電話/email三欄，漏了報表本來就有的公司/職業/分會欄位，已用教練提供的完整報表(.xls/SpreadsheetML)重新解析回填，3216人中3210人(99.8%)已補上職業資料。**額外揪出的資料品質bug**：教練從/find頁面發現田伸強/林尹渰等4人BNI身分沒標示，查證是`parse_and_import.py`的INSERT OR IGNORE遇檔名撞名時靜默跳過、且無UPDATE補救路徑，4人資料已修正+全428人重新稽核0遺漏+腳本已加rowcount==0的UPDATE fallback防再犯。 |
@@ -338,42 +338,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-01 v161（Mac終端機 Sonnet 5，道德規範中英對照完成+分會精神複製8分會+真鑫/真鑽/真貴戰情儀表板從零建置+2次真金石教訓）
-
-> 建立時間：2026-09-01 05:22 ~ 08:10（台灣時間，接續v160，教練整晚未睡，本場密度極高）
-> 上一棒：v160（真誠分會「分會精神」配色多輪迭代收斂+下一場交辦：道德規範中英對照+全分會套用格式）
-> 本棒主軸：**v160交辦的兩項任務都完成；教練提出全新的「BNI大台南南區各分會來賓戰情儀表板」需求，過程中因軍師沒查證URL方向搞錯浪費教練30分鐘（試金石案例68），修正後查到官方會員名單，跟Hermes密集分工完成真鑫/真鑽/真貴三個分會的戰情儀表板+來賓公開查詢系統，過程再爆一次品質事故（試金石案例69）並修復。**
-
-## 🎯 本場戰果
-
-### 1. 道德規範中英對照（v160任務1）已完成
-查證兩個官方BNI分會網站（bniarizonasouth.com、bnirsb.com）逐字比對，確認BNI Code of Ethics官方英文6條，補進`bni-chapters`真誠分會`chapter.html`的`ethics-list`區塊+`base.html`新增對應CSS樣式，commit`4bcc161`，curl驗證正式站已生效。
-
-### 2. 分會精神複製到其他8個分會（v160任務2）已完成
-教練確認「全部都一樣，不用客製化」，判斷這是純SQL資料複製、可交給Hermes，發信委派（commit`52b42fc40`），Hermes直接動手完成（軍師另一場對話框接手，非Hermes本人），81筆資料（9分會×9條）全部到位，curl驗證9個分會頁面皆顯示「分會精神」。過程中發現並回信Hermes的身份混淆問題（第3次停擺），已把「身份確認」+「做完必回報」兩條硬規則寫進`~/.hermes/workspace/AGENTS.md`熱啟動流程，commit(hermes-h-workspace)`b36a140`。
-
-### 3. 【試金石案例68】BNI大台南南區各分會「來賓戰情儀表板」需求，軍師沒查證URL方向搞錯，浪費教練30分鐘
-教練貼`sincere.bymyway.com`要求「照抄」，軍師沒打開查看，憑印象聯想成`bni-chapters`系統，設計了一套錯誤的「後台CRUD+公開表單」方案，被教練連續糾正3次才查證發現這是完全獨立的repo`~/github_repos/zhencheng-guests`（真誠分會邀約來賓戰情儀表板，零登入、會員自己在網頁填121/咖啡會議）。教練當場要求寫入試金石，已記錄案例68+記憶`feedback_url_given_open_it_dont_guess_2026-09-01`。
-
-### 4. 真鑫/真鑽/真貴三分會戰情儀表板從零建置，軍師+Hermes分工完成
-- **真鑫**（`~/github_repos/zhenxin-guests`）：軍師先建骨架（commit`0e1d7ec`，複製`zhencheng-guests`+新增`early_bird`早鳥欄位），Hermes接手填真實資料。過程中會員名單經歷28人（Hermes從21場例會推算）→23人（軍師查`claude-brain/data/bni_region_members_contact_2026-08-18.csv`找到BNI Connect官方在籍名單，教練確認28人是「歷史上曾加入又離會的」，只做在籍23人），最終commit`4be45ad`定案。**已正式部署上線**：`https://zhenxin.bymyway.com/`（新建Cloudflare Tunnel`zhenxin-app`+DNS+兩支launchd plist，port 5092）。
-- **【試金石案例69】品質事故**：正式站被發現殘留真誠分會的假來賓姓名（李美花/張育慈），根因是軍師早前為了滿足Chrome查證鎖用真誠假資料測試時，`app.py`動態建立、不在`schema.sql`裡的`guest_list`表沒被後續seed腳本清空。已從21場彙整表重新解析102筆真鑫真實來賓明細，寫入`GUEST_LIST_DATA`並補進`seed.py`確保可重複執行，commit`9b36d4a`。後續教練再指出4筆「（無，會員自行出席）」解析錯誤的假資料+文案「教練/軍師提供更新」要改「由教練提供更新」（其他分會的人不知道軍師是誰），已修復commit`2387675`。記憶`feedback_verify_all_tables_not_just_main_schema_2026-09-01`。
-- **真鑽**（Hermes建置，`Coach1973/zhenzuan-guests`，commit`aaa268c`）：49人官方名單（軍師從同一份CSV查到），骨架完成，尚未部署正式網址。
-- **真貴**（Hermes建置，`Coach1973/zhengui-guests`，commit`48f47a5`）：籌備會，目前無會員名單，骨架先建好，尚未部署正式網址。
-
-### 5. BNI大台南南區「來賓公開查詢」系統上線（原v160之前已規劃，本場由Hermes完成）
-`https://coach1973.github.io/BNI-Training/guests.html`，commit(BNI-Training)`9cfebbb`。3718筆BNI Connect官方來賓報表，318個(邀請人,分會)組合，門檻比照培訓總覽既有查詢區塊（固定按鈕+自訂輸入任意月數），隱私原則對齊（只顯示邀請人/分會/日期，不顯示來賓聯絡資訊）。過程中軍師一度誤設計成13個固定門檻按鈕，教練更正「比照培訓查詢方式，重點是自訂輸入」，已即時攔截修正（commit`bd028f283`），Hermes還沒動工前就更正完成。
-
-## ⚠️ 下一場開工先做
-1. **讀Hermes完成信**（教練本場結尾特別交代）：真鑫/真鑽/真貴+來宾查詢系統都已回報完成，但可能還有後續進度或問題，開工先查`cross-agent/inbox/mac/`。
-2. **真鑽、真貴尚未部署正式網址**：Hermes只完成GitHub repo+本機測試，DNS/Tunnel/launchd這塊軍師還沒做（真鑫已完成部署當範本，`zhenxin.bymyway.com`），下一場比照同樣模式做`zhenzuan.bymyway.com`+`zhengui.bymyway.com`（或教練指定的網址）。
-3. **真鑫分組資料**：教練說「真鑫是有分小組的，只是我不知道它是怎麼分的」，之後教練會提供，目前`TEAMS`留空。
-4. **真鑽/真貴的來賓/121/咖啡歷史資料**：目前完全空白，等教練提供。
-5. v151之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容）本場均未觸及，繼續掛著。
-6. **試金石案例68+69都是同一個「來賓戰情儀表板」任務裡發生的**，下次類似「教練貼URL要求照抄」的任務，開頭第一步就是打開查看，不要再犯。
-
-## 🔑 本場commit
-`bni-chapters`：`4bcc161`（道德規範中英對照）。`workspace`：`52b42fc40`+多封cross-agent委派信（分會精神複製委派）、`feec99498`（試金石案例68）、`8a370ea91`等多封信（真鑫/真鑽/真貴+來賓查詢任務委派與更正）、`f5a1e3b26`等信件歸檔commit。`hermes-h-workspace`：`b36a140`（身份確認規則）。`zhenxin-guests`：`0e1d7ec`→`028ef0a`→`4be45ad`（會員名單迭代）→`9b36d4a`（guest_list品質修復）→`2387675`（自行出席假資料+文案修正）。`zhenzuan-guests`：`aaa268c`（Hermes建置）。`zhengui-guests`：`48f47a5`（Hermes建置）。`BNI-Training`：`9cfebbb`（來賓公開查詢guests.html）。部署基礎設施：`~/.cloudflared/zhenxin-config.yml`+`com.coach.zhenxin-webapp/tunnel.plist`（zhenxin.bymyway.com已上線）。
+> 📦 v161完整內容已封存：`handoff_archive/handoff_v161_archived_2026-09-01.md`（Mac終端機，道德規範中英對照+分會精神複製8分會+真鑫/真鑽/真貴戰情儀表板從零建置+2次試金石教訓）
 
 ---
 
@@ -412,6 +377,54 @@
 
 ## 🔑 本場commit
 `workspace`：`d8b44061c`（開工hook誤報修復）、`8fb8c0989`（Hermes真鑽資料+真貴部署委派信）+本場v162接力棒本身。`BNI-Training`：`be6f272`（排序tie-break+查詢節點調整）→`ccd9b09`（改TOP10排行榜邏輯）→`fb4ba5d`（改用PALMS官方資料源）→`db17d00`（三分會PALMS資料到齊）→`dd60308`（月數成立日封頂）→`270df6a`（全區排名）→`78c9a4d`（培訓總覽同步分會篩選）。`bni-chapters`：`9b1cdb7`（錯誤版，已修正）→`5ca9ada`（修正版：按鈕移到首頁）。
+
+---
+
+# 軍師接力棒 · 2026-09-01 v163（Mac終端機 Sonnet 5，FB粉專API完全打通14個+team01/真鑽/真貴三網址部署+真鑽資料四輪校正+chapters.bymyway.com戰情儀表板改版+claude-in-chrome裝置確認）
+
+> 建立時間：2026-09-01 16:27 ~ 19:10（台灣時間，接續v162，教練整天未睡到晚上，本場橫跨FB行銷+BNI戰情儀表板兩條主線）
+> 上一棒：v162（來賓排行榜三輪重做定案+chapters.bymyway.com整合培訓/來賓入口）
+> 本棒主軸：**FB粉專自動發文API從卡住5天到14個粉專全部打通；接手赫米斯Team01骨架完成team01/真鑽/真貴三網址部署，過程中真鑽資料被教練四輪校正（品牌文字殘留/命名錯誤/名單錯誤/週次認知落差）；chapters.bymyway.com首頁改版「戰情儀表板」+培訓來賓總覽互連；真誠/真鑫/真鑽三站視覺同步改版；發現並修復zhenxin-guests從未推上GitHub的真空窗；查出claude-in-chrome誤連聯想電腦Chrome的裝置混淆問題。**
+
+## 🎯 本場戰果
+
+### 1. FB粉專行銷自動化：14個粉專(含大樹教練本人)API完全打通
+教練要求發FB貼文，先用瀏覽器手動貼5個粉專（大樹教練/大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管）全部成功。教練追問API卡住原因，查出真因不是商家驗證（那個已經過了），是這個Graph API App的使用案例清單從未加過`pages_read_engagement`權限。已在App後台補上權限，教練親自到Graph API Explorer重新勾選6個權限點擊「Generate Access Token」授權，14個粉專（含原卡5天的「大樹教練」+「大樹教練之『BNi』奇妙旅程」）全部驗證可正常GET/POST，權杖`expires_at:0`永不過期，存於`fb_automation/page_tokens_2026-09-01.json`。教練確認往後改粉專名字不用重新授權，只有新建粉專才要重跑`/me/accounts`。
+
+### 2. 接手赫米斯Team01骨架，完成team01/真鑽/真貴三網址部署
+赫米斯建好Team01戰情儀表板骨架（`Coach1973/team01-guests`）後寫信交接部署，軍師比照`zhenxin.bymyway.com`模式，一次幫team01+真鑽+真貴三個都建好Cloudflare Tunnel+DNS+launchd（webapp+tunnel各一支plist）。過程中抓到並修好一個真bug：`zhenzuan-guests/app.py`硬編碼port=5092跟真鑫（zhenxin）撞埠，改5093並連鎖調整真貴為5094避免二次撞埠。
+
+### 3. 真鑽資料經教練四輪校正才定案
+- **第1輪**：教練發現網址命名錯誤——`zhenzuan.bymyway.com`/`zhengui.bymyway.com`是軍師自己音譯的，跟`chapters.bymyway.com`既有的英文代號（`real-diamonds`/`real-wealth`）不一致。已改DNS+Cloudflare Tunnel為正確網址，舊錯誤網址的DNS紀錄已刪除。
+- **第2輪**：教練發現網站內文（h1標題/大事紀/規則說明）殘留「真鑫分會」字樣，只有`<title>`標籤是對的——複製模板只改了title不夠。已全部改正，並補上真鑽/真貴原本缺的`early_bird`欄位。
+- **第3輪**：教練指出「洪嘉妘沒有離會，你打錯字了」+「蘇志揚8/31離會，先不列入計算」。查證後確認「洪嘉紜」是「洪嘉妘」的姓名誤植（不是不同的離會會員），已合併其邀約/早鳥紀錄；蘇志揚已從48人在籍名單移除。標籤文字「教練提供」全改「委員會提供」。
+- **第4輪（澄清非錯誤）**：教練質疑「我明明給30場會議，你算成27場」——查證後說明：教練貼了30則報告，但04/21・07/14・08/25三個日期各重複貼了2次（同一場例會的補充/修正版），不是3場不同會議，取內容較完整版本後仍是27場真實例會，非漏算。
+
+用Python程式化解析教練提供的27場BNI例會出席報告文字，交叉比對在籍名單過濾離會會員，寫入`GUEST_DATA`/`GUEST_LIST_DATA`。commit（zhenzuan-guests）`de30793`→`a02249f`→`d5585ac`→`ebae7f3`。
+
+### 4. chapters.bymyway.com首頁「分會之光」改「戰情儀表板」+新增/dashboards頁
+教練要求分會列表首頁的導覽列項目改名，點進去列出真誠/真鑫/真鑽三個分會的戰情儀表板外部連結（各自獨立子網域）。新增`/dashboards`路由+`dashboards.html`模板，commit（bni-chapters）`3023af3`。同場也修復`chapters.bymyway.com/admin`一個真bug：分會帳號(非super)誤訪問通用`/admin`會被403擋下（教練誤以為「當掉」），查`webapp.error.log`確認process從未crash，真因是`login_required`裝飾器對無`chapter_id`的路由必定abort，已改成導向自己分會編輯頁，commit`40448f4`。
+
+### 5. 培訓總覽⇄來賓總覽互相加上頂部+底部切換按鈕
+教練指出來賓總覽底下已有「培訓總覽」+「MSP進階培訓記錄」連結，但培訓總覽底下沒有來賓總覽，兩邊都要能互相跳轉。已在`BNI-Training/index.html`+`guests.html`的header下方跟footer各自加上對方連結，commit`2f22ad2`。
+
+### 6. 真誠/真鑫/真鑽三站視覺同步改版：姓名下方顯示四項指標摘要
+教練要求姓名格下方直接顯示「來賓X人・早鳥X次・121X次・咖啡X場」摘要，不用捲到最右邊看總計，並移除「新進會員（待教練指派小組）」文字。先在真誠分會(`sincere.bymyway.com`)做prototype給教練看，教練確認「視覺效果不錯」後追加121/咖啡兩項，並詢問即時更新是否有效——已用真實瀏覽器dispatch change事件實測驗證（填3次121，姓名下方摘要當場從0變3，不用重新整理），測試後還原資料庫。教練確認後套用到真鑫/真鑽。commit（zhencheng-guests）`ec8c780`→`dac7005`；（zhenxin-guests）`d5585ac`→`e6ebae9`；（zhenzuan-guests同批次）`4b5d3a1`→`ebae7f3`。
+
+### 7. 發現並修復zhenxin-guests從未推上GitHub的真空窗
+套用視覺改版時push失敗才發現：`zhenxin-guests`這個repo從v161建立以來從未設定git remote，所有先前接力棒記錄的commit（`4be45ad`/`9b36d4a`等）都只存在本機，正式站`zhenxin.bymyway.com`程式碼曾經零雲端備份。已用`gh repo create`補建私有repo `Coach1973/zhenxin-guests`並推送全部歷史commit，跟其他姊妹repo一樣有雲端備份了。
+
+### 8. claude-in-chrome裝置混淆：教練發現連到聯想電腦而非這台Mac
+教練點出用瀏覽器驗證時可能連錯裝置。查`list_connected_browsers`確認當下同時有Windows(聯想)+macOS(這台Mac)兩台已連線，系統規定必須讓教練親自選才能繼續，已請教練選定macOS這台後`select_browser`鎖定，重新驗證過`sincere.bymyway.com`畫面無誤。**釐清**：`open -a "Google Chrome"`這個Bash指令一直都是在Mac本機執行沒有問題，會混淆裝置的只有claude-in-chrome瀏覽器擴充功能連線對象。
+
+## ⚠️ 下一場開工先做
+1. **真鑽/真貴資料仍待補**：真貴目前完全空骨架，等教練提供會員名單；真鑽的121/咖啡會議兩項尚未有真實資料，早鳥次數教練說「會請人統計後填上」。
+2. **真誠/真鑫還沒做的細節**：教練確認真誠視覺改版後套用到真鑫/真鑽已完成，但真誠本身早鳥資料是空的(0)，等教練後續補資料。
+3. **v161之前已知舊待辦**（`/bni-credit`補公司欄位、「釋放記憶體」白名單範圍、12月主題培訓內容、v160交辦的道德規範中英對照複製到其他8分會）本場均未觸及，繼續掛著。
+4. **本場教訓（已寫入試金石/記憶）**：①複製模板建新網站要先查既有命名規則，不能自己音譯②複製模板只查title不夠要grep全檔確認品牌文字沒殘留③新repo建立時要確認git remote有設定，不能假設commit成功=已備份④claude-in-chrome多裝置連線時系統會強制要求詢問教練，不可自己選。
+
+## 🔑 本場commit
+`fb_automation`+`路徑大全_憑證層.md`：`0c3bc8cb5`（FB粉專14個打通）。`coach888`：`0a06345`→`b4660c0`（新網址連結更新）。`zhenzuan-guests`：`de30793`→`a02249f`→`4b5d3a1`→`ebae7f3`。`zhengui-guests`：`9639052`。`zhenxin-guests`：`d5585ac`→`e6ebae9`（含補remote推送全部歷史）。`zhencheng-guests`：`ec8c780`→`dac7005`。`bni-chapters`：`40448f4`（403 bug修復）→`3023af3`（戰情儀表板頁）。`BNI-Training`：`2f22ad2`（互連按鈕）。`workspace`：`97b886023`（Hermes部署完成回信）+本場v163接力棒本身。
 
 
 ---
