@@ -293,3 +293,8 @@
 - 觸發類型：cron-event main session, systemEvent payload
 - 送出方式：純文字回應由 cron delivery announce→telegram:6124913915 自動送達（不走 message 工具，無需 token）
 - 判定：純 routine 提醒，不打擾太久，簡訊一則即結束
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-01 10:55
+- ✅ 同步成功
+- HANDOFF mtime: 1788231195
+- 雲端同步：✅ 已推上雲端（commit 0b1700a16）
