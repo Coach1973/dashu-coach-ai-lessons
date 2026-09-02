@@ -1,5 +1,8 @@
 {
-  "coachSilentSince": "2026-09-01T11:06:55+08:00",
-  "coachSilentHours": 0.1,
-  "computedAt": "2026-09-01T11:12:05.889800+08:00"
+  "coachLastMessageAt": "2026-09-02T20:56:24+08:00",
+  "coachSilentSince": "2026-09-02T20:56:24+08:00",
+  "coachSilentHours": 1.27,
+  "source": "healthcheck_cycle=730_truth",
+  "fetchedAt": "2026-09-02T22:12:06.543461+08:00",
+  "cycle": 730
 }

@@ -18,3 +18,27 @@
 [2026-09-01 14:13:15 +0800] cycle=701 cumulative_green=67 第零步=exit0 教練沉默=2.6h(since11:36:55) cron=1ok(本任務) CE=0 lastDuration=61256 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=24 TG=ok 三關全fail→不announce
 [2026-09-01 16:12:57 +0800] cycle=702 cumulative_green=68 第零步=exit0 教練沉默=4.6h(since11:36:55) cron=1ok(本任務) CE=0 lastDuration=尚無紀錄 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=24 TG=ok 三關全fail→不announce
 [2026-09-01 19:13:12 +0800] cycle=703 cumulative_green=69 第零步=exit0 教練沉默=0.0h(since19:10:09) cron=1ok(本任務) CE=0 lastDuration=14203 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=38 TG=ok 三關全fail→不announce
+[2026-09-01 20:14:01 +0800] cycle=704 cumulative_green=70 第零步=exit0 教練沉默=0.83h(since19:24:06) cron=25啟用(23ok/1running/2idle/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=12 TG=ok 三關全fail→不announce
+[2026-09-01T21:13:00+08:00] cycle=705 cumulative_green=71 第零步=exit0 教練沉默=1.8h(since19:24:06) cron=25啟用(23ok/1running/2idle/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=12 TG=ok 三關全fail→不announce
+[2026-09-01 22:13:00 +0800] cycle=706 cumulative_green=72 第零步=exit0 教練沉默=2.8h(since19:24:06) cron=1啟用(1ok/0running/0idle/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=20 TG=ok 三關全fail→不announce
+[2026-09-01T23:13:00+0800] cycle=707 cumulative_green=73 第零步=exit0 教練沉默=1.0h(since22:15:46 sync抓到新訊息) cron=1ok(本任務) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=26 TG=ok 三關全fail→不announce
+[2026-09-02 00:13:56 +0800] cycle=708 cumulative_green=74 第零步=exit0 教練沉默=2.0h(since22:15:46) cron=1ok(本任務) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=30 TG=ok 三關全fail→不announce
+[2026-09-02T01:12:46 +0800] cycle=709 cumulative_green=75 第零步=exit0 教練沉默=2.9h(since22:15:46) cron=1啟用(1ok/0running/0idle/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=30 TG=ok 三關全fail→不announce
+[2026-09-02T02:12:22+0800] cycle=710 cumulative_green=76 第零步=exit0 教練沉默=3.94h(since22:15:46) cron=1啟用(1ok/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=23 TG=ok 三關全fail→不announce
+[2026-09-02T03:12:00+0800] cycle=711 cumulative_green=77 第零步=exit0 教練沉默=4.9h(since22:15:46 凌晨正常作息) cron=1啟用(1ok/0error) CE=0 HEARTBEAT=0真待辦 SOUL×3齊 Repo1=23/Repo2=34 TG=ok 三關全fail→不announce
+[2026-09-02T04:12:29+08:00] cycle=712 status=ok cumGreen=78 cronActive=1 ce3=0 silentH=5.93
+2026-09-02T05:13:00+08:00 cycle=713 status=ok cumGreen=79 cronActive=1 ce3=0 silentH=6.95
+[2026-09-02 06:12:17] cycle=714 ✅ 安靜通過 cumulativeGreen=80
+[2026-09-02 07:12:25] cycle=715 ✅ 安靜通過 cumulativeGreen=81 cronActive=1 ce=0 silentH=8.9 SOUL×3齊 Repo1=23/Repo2=38 TG=ok 三關全fail→不announce
+{"cycle":716,"ts":"2026-09-02T00:12:14Z","status":"ok","silentHours":9.9,"tgOk":true,"consecutiveErrors":0,"autofix":[]}
+[2026-09-02 09:12:18] cycle=717 ✅ 安靜通過 cumulativeGreen=83 cronActive=1 ce=0 silentH=10.9 SOUL×3齊 Repo1=23/Repo2=43 TG=ok 三關全fail→不announce
+[2026-09-02 10:12:56] cycle=718 ✅ 安靜通過 cumulativeGreen=84 cronActive=1 ce=0 silentH=11.95 SOUL×3齊 Repo1=23/Repo2=43 TG=ok 三關全fail→不announce
+[2026-09-02 11:12:37] cycle=719 ✅ 安靜通過 cumulativeGreen=85 cronActive=1 ce=0 silentH=12.9 SOUL×3齊 Repo1=23/Repo2=43 TG=ok 三關全fail→不announce
+[2026-09-02T04:13:09Z] cycle=720 status=ok cronOk=1 ce=0 silentH=13.9 tgOk=true env=soul3/repo1=23/repo2=44/lock=0 gates=全fail→silent_pass
+[2026-09-02T13:12:58+08:00] cycle=721 安靜通過｜cumulativeGreen=87｜教練沉默 0.05h（13:09:37 剛剛對話）
+[2026-09-02 14:12:47 CST] cycle=722 silent_pass (cron=ok/CE=0, TG=ok, coach_silent=1.05h)
+cycle=723 2026-09-02T15:12:28+08:00 status=ok silentHours=2.05 cumulativeGreen=89
+cycle=725 2026-09-02 17:13:50 status=ok silentH=0.2 (since17:02:16) cumGreen=90 cron=1ok(本任務) CE=0(本輪成功=已恢復) cycle724備註=16:12曾失敗(error=⚠️⏰Cron failed/lastDur=160725s<600s timeout/無詳細原因) CE=1未達≥3標準+v4.0三關全fail→不announce SOUL×3齊 Repo1=23/Repo2=34 TG=ok 三關全fail→不announce
+[2026-09-02T18:15:28.485426+08:00] cycle=726 status=ok cronOk=1 ce=0 silentH=1.22 tgOk=true env=soul3/repo1=23/repo2=35/lock=0 gates=全fail→silent_pass cumGreen=91
+[2026-09-02 19:12:21] cycle=727 健康檢查安靜通過 (Cron=1/OK, HEARTBEAT=0⬜, Env=✅, TG=ok)
+[2026-09-02 22:12:31] cycle=730 健康檢查安靜通過 (Cron=1/OK, CE=0, HEARTBEAT=0⬜, TG=ok, SOUL×3齊, Repo1=23/Repo2=45, 無鎖定檔, silent=1.27h, v4.0三關全fail→靜默不通報, cumGreen=95)

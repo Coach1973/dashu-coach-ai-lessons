@@ -155,25 +155,23 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-09-01)
+## Promoted From Short-Term Memory (2026-09-02)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:267:270 -->
-- 📨 對話記錄 03:10（共約 3 條，從第 0 行起）: 👤 教練：@openclaw_macbook4_bot 在嗎 🦞 小龍蝦：在的，教練 � 凌晨三點多了還醒著——這個群是活動報名通知，您是有新的報名要處理，還是單純確認我有沒有當機？ 需要我做什麼請直接說，我馬上動。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:267-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:271:273 -->
-- 📨 對話記錄 03:10（共約 3 條，從第 0 行起）: 🦞 小龍蝦：在的，教練 � 凌晨三點多了還醒著——這個群是活動報名通知，您是有新的報名要處理，還是單純確認我有沒有當機？ 需要我做什麼請直接說，我馬上動。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:271-273]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:278:281 -->
-- 📨 對話記錄 13:10（共約 6 條，從第 0 行起）: 👤 教練：@openclaw_macbook4_bot 您可以回答問題嗎？ 🦞 小龍蝦：在的，教練 🦞 小龍蝦可以回答，請說。 🦞 小龍蝦：在的，教練 🦞 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:278-281]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:282:285 -->
-- 📨 對話記錄 13:10（共約 6 條，從第 0 行起）: 小龍蝦可以回答，請說。 👤 教練：@openclaw_macbook4_bot 你好 🦞 小龍蝦：佩君老師好 🦞 小龍蝦在這裡～ 🦞 小龍蝦：佩君老師好 🦞 小龍蝦在這裡～ [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:282-285]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:290:293 -->
-- 📨 對話記錄 18:00（共約 4 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：I'll start the heartbeat check. Let me first look at recent state and the handoff file. 🦞 小龍蝦：Let me run the channel probe (per SOUL.md 守則 19 — never trust old `telegramChannelOk` flags) and check recent context. 🦞 小龍蝦：Let me look at the later part of today's memory and HEARTBEAT.md to see what's actually happening today. [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:290-293]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:298:298 -->
-- 📨 對話記錄 22:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:298-298]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:300:303 -->
-- 📨 對話記錄 22:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:300-303]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:304:305 -->
-- 📨 對話記錄 22:00（共約 1 條，從第 0 行起）: Current time: Monday, August 24th, 2026 - 10:00 PM (Asia/Taipei) Reference UTC: 2026-08-24 14:00 UTC [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:304-305]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:310:313 -->
-- 📨 對話記錄 22:30（共約 11 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:310-313]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-24.md:314:317 -->
-- 📨 對話記錄 22:30（共約 11 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-24.md:314-317]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:11:12 -->
+- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 12:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 16:00 UTC [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:11-12]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:17:17 -->
+- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:17-17]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:19:22 -->
+- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:19-22]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:23:24 -->
+- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 2:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 18:00 UTC [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:23-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:5:5 -->
+- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:5-5]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:7:10 -->
+- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:7-10]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:292:292 -->
+- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:292-292]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:294:297 -->
+- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:294-297]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:298:299 -->
+- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 4:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 20:00 UTC [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:298-299]

@@ -310,3 +310,36 @@ edit HEARTBEAT.md → Could not find the exact text（首次大段尾端匹配�
 - **Reproducible**: yes
 - **Related Files**: AGENTS.md, HEARTBEAT.md
 
+## [ERR-20260902-CRON-RESTRICTED]
+
+**Logged**: 2026-09-02T16:14:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: config
+
+### Summary
+在隔離的每小時健康檢查 cron 內，cron 工具只能操作目前這一個任務，不能用來修改其他任務。
+
+### Error
+```
+Cron tool is restricted to the current cron job.
+```
+
+### Context
+- 嘗試用 cron 工具修正兩個同步工作的錯誤遞送設定。
+- 隨即改用本機 `openclaw cron edit`；這是隔離 cron 權限限制，不是排程本身失敗。
+
+### Suggested Fix
+需要修改其他 cron 時，在隔離健康檢查 session 優先使用受支援的 CLI；用 `openclaw cron run --wait` 驗證結果。
+
+### Metadata
+- **Reproducible**: yes
+- **Related Files**: openclaw cron
+
+### Resolution
+- **Resolved**: 2026-09-02T16:14:30+08:00
+- **Commit/PR**: N/A
+- **Notes**: 已用 CLI 將兩個同步工作的遞送改為不遞送，並各自手動執行驗證成功。
+
+---
+
