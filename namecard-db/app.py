@@ -104,6 +104,7 @@ def index():
     return render_template(
         "index.html", cards=cards, categories=categories, query=query, selected_category=category,
         logged_in=bool(session.get("team_username")),
+        is_owner=session.get("team_username") == OWNER_USERNAME,
     )
 
 
@@ -574,6 +575,12 @@ def bni_credit_update_status(record_id):
     return redirect(request.referrer or url_for("bni_credit_list"))
 
 
+TEAM_STATUS_MESSAGES = {
+    "pending": "您的帳號申請正在等待大樹教練審核，核准後即可用同一組帳密登入",
+    "rejected": "此帳號申請未通過，如有疑問請洽大樹教練",
+}
+
+
 @app.route("/team/login", methods=["GET", "POST"])
 def team_login():
     if request.method == "GET":
@@ -584,6 +591,9 @@ def team_login():
     member = db.get_team_member(conn, username)
     conn.close()
     if member and check_password_hash(member["password_hash"], password):
+        if member["status"] != "approved":
+            error = TEAM_STATUS_MESSAGES.get(member["status"], "此帳號目前無法登入，請洽大樹教練")
+            return render_template("team_login.html", error=error), 403
         session["team_username"] = username
         session["team_display_name"] = member["display_name"] or username
         session.permanent = True
@@ -591,11 +601,55 @@ def team_login():
     return render_template("team_login.html", error="帳號或密碼不對，請再試一次"), 401
 
 
+@app.route("/apply", methods=["GET", "POST"])
+def apply_page():
+    """跟進功能專屬的自助申請帳號頁：姓名+行動電話即可送出，不需email驗證，
+    密碼統一預設88888，教練後台審核通過才能登入(教練2026-09-02拍板簡化版)。"""
+    if request.method == "GET":
+        return render_template("apply.html", error=None, submitted=False)
+    display_name = (request.form.get("display_name") or "").strip()
+    mobile = (request.form.get("mobile") or "").strip()
+    if not display_name or not mobile:
+        return render_template("apply.html", error="姓名跟行動電話都要填寫", submitted=False)
+    conn = db.get_conn()
+    result = db.apply_team_member(conn, mobile, display_name)
+    conn.close()
+    if result == "exists":
+        return render_template(
+            "apply.html", error=None, submitted=True,
+            note="這組行動電話已經申請過（或已核准），請直接用這組帳密登入，不用重複申請。",
+        )
+    return render_template("apply.html", error=None, submitted=True, note=None)
+
+
 @app.route("/team/logout")
 def team_logout():
     session.pop("team_username", None)
     session.pop("team_display_name", None)
     return redirect(url_for("index"))
+
+
+@app.route("/admin/team")
+@owner_only_required
+def admin_team():
+    conn = db.get_conn()
+    pending = db.list_team_members_by_status(conn, "pending")
+    approved = db.list_team_members_by_status(conn, "approved")
+    rejected = db.list_team_members_by_status(conn, "rejected")
+    conn.close()
+    return render_template("admin_team.html", pending=pending, approved=approved, rejected=rejected)
+
+
+@app.route("/admin/team/<int:member_id>/status", methods=["POST"])
+@owner_only_required
+def admin_team_status(member_id):
+    status = request.form.get("status", "")
+    if status not in ("approved", "rejected", "pending"):
+        return "不合法的狀態", 400
+    conn = db.get_conn()
+    db.set_team_member_status(conn, member_id, status)
+    conn.close()
+    return redirect(url_for("admin_team"))
 
 
 @app.route("/card/<int:card_id>/follow", methods=["GET"])
