@@ -1,32 +1,33 @@
 {
-  "lastChecks": {
-    "email": null,
-    "calendar": null,
-    "weather": null,
-    "telegramChannelOk": true,
-    "telegramChannelProbeAt": "2026-09-02T17:14:00+08:00",
-    "coach_silence_sync": "2026-09-02T18:13:12.272694+08:00"
+  "lastCheck": {
+    "telegramChannel": 1788347520126,
+    "cron": 1788347520126,
+    "environment": 1788347520126,
+    "heartbeatTodos": 1788347520126
   },
-  "v4_gates": {
-    "gate1_currentlyBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_impactsWork": false,
-    "verdict": "silent_pass"
-  },
-  "cron": {
-    "activeJobs": 1,
-    "consecutiveErrors": 0,
-    "lastRunStatus": "ok"
-  },
-  "heartbeatOk": true,
-  "lastCoachMessageAt": "2026-09-02T17:02:16+08:00",
-  "coachSilentHours": 1.21,
-  "lastCycle": 726,
+  "telegramChannelOk": true,
+  "telegramChannelProbeSource": "scripts/telegram_channel_probe.sh",
+  "lastTelegramProbeAt": 1788347520126,
+  "currentCycle": 727,
+  "currentCycleTimestamp": "2026-09-02T19:12:00+08:00",
   "cumulativeGreen": 91,
-  "cycleAt": "2026-09-02T18:15:09.620253+08:00",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-02T17:02:16+08:00",
-    "coachSilentHours": 1.21
+  "cronStatus": {
+    "totalActive": 1,
+    "withConsecutiveErrors": 0,
+    "withTimeoutRisk": 0,
+    "withAuthError": 0
   },
-  "notes": "cycle=726 (18:12) status=ok → 本輪執行成功 = 已恢復鐵證；v4.0 三關全 fail → 不 announce（無會員功能壞 + 無 provider overload + cron 全綠）"
+  "heartbeatTodos": 0,
+  "environment": {
+    "soulMdTriple": "ok",
+    "repo1Status": 23,
+    "repo2Status": 38,
+    "lockFiles": 0
+  },
+  "v4ThreeGateCheck": {
+    "gate1StillBroken": "fail",
+    "gate2ProviderOverload": "fail",
+    "gate3AffectsWork": "fail",
+    "verdict": "all-fail → 靜默不通報"
+  }
 }
