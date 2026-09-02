@@ -390,3 +390,10 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
+
+## 🩺 軍師 Hook 自檢 2026-09-02 15:44（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：Not Found
+The requested URL was not foun
+- 雲端狀態：⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.
+- Session: cbe8bfb7-5b8c-497d-b87b-3acdaf73d1b4
