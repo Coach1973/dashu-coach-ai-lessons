@@ -1,16 +1,16 @@
 {
   "lastCheck": {
-    "telegramChannel": 1788358351000,
-    "cron": 1788358351000,
-    "environment": 1788358351000,
-    "heartbeatTodos": 1788358351000
+    "telegramChannel": 1788361925000,
+    "cron": 1788361925000,
+    "environment": 1788361925000,
+    "heartbeatTodos": 1788361925000
   },
   "telegramChannelOk": true,
   "telegramChannelProbeSource": "scripts/telegram_channel_probe.sh",
-  "lastTelegramProbeAt": 1788358351000,
-  "currentCycle": 730,
-  "currentCycleTimestamp": "2026-09-02T22:12:31+08:00",
-  "cumulativeGreen": 95,
+  "lastTelegramProbeAt": 1788361925000,
+  "currentCycle": 731,
+  "currentCycleTimestamp": "2026-09-02T23:12:05+08:00",
+  "cumulativeGreen": 96,
   "cronStatus": {
     "totalActive": 1,
     "withConsecutiveErrors": 0,
@@ -20,9 +20,13 @@
   "heartbeatTodos": 0,
   "environment": {
     "soulMdTriple": "ok",
-    "soulMdSizes": [9015, 1851, 22220],
+    "soulMdSizes": [
+      9015,
+      1851,
+      22220
+    ],
     "repo1Status": 23,
-    "repo2Status": 45,
+    "repo2Status": 4,
     "lockFiles": 0
   },
   "v4ThreeGateCheck": {
@@ -34,11 +38,11 @@
   "systemSnapshot": {
     "coachLastMessageAt": "2026-09-02T20:56:24+08:00",
     "coachSilentSince": "2026-09-02T20:56:24+08:00",
-    "coachSilentHours": 1.27
+    "coachSilentHours": 2.3
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-02T22:12:06.543461+08:00",
-    "cycle_730_complete": "2026-09-02T22:12:31+08:00"
+    "coach_silence_sync": "2026-09-02T23:12:01+08:00",
+    "cycle_731_complete": "2026-09-02T23:12:05+08:00"
   },
-  "notes": "cycle=730 健康檢查（鏡像同步版）：cron 全綠（CE=0）、HEARTBEAT.md ⬜ 真實待辦 0 項、TG ok、SOUL×3 齊全、Repo1=23/Repo2=45、無鎖定檔。v4.0 三關全 fail → 靜默不通報。"
+  "notes": "cycle=731 健康檢查：cron 全綠（CE=0，本任務 lastStatus=ok）、HEARTBEAT.md ⬜ 真實待辦 0 項、Telegram 通道探針 ok=true、SOUL.md 三份齊全、Repo1=23/Repo2=4（皆 < 50 警戒線）、無 .! 鎖定檔。v4.0 三關全 fail（無錯誤 + 本輪成功 + 不影響教練/會員工作）→ 靜默不通報。"
 }

@@ -42,3 +42,4 @@ cycle=725 2026-09-02 17:13:50 status=ok silentH=0.2 (since17:02:16) cumGreen=90 
 [2026-09-02T18:15:28.485426+08:00] cycle=726 status=ok cronOk=1 ce=0 silentH=1.22 tgOk=true env=soul3/repo1=23/repo2=35/lock=0 gates=全fail→silent_pass cumGreen=91
 [2026-09-02 19:12:21] cycle=727 健康檢查安靜通過 (Cron=1/OK, HEARTBEAT=0⬜, Env=✅, TG=ok)
 [2026-09-02 22:12:31] cycle=730 健康檢查安靜通過 (Cron=1/OK, CE=0, HEARTBEAT=0⬜, TG=ok, SOUL×3齊, Repo1=23/Repo2=45, 無鎖定檔, silent=1.27h, v4.0三關全fail→靜默不通報, cumGreen=95)
+[2026-09-02 23:12:05] cycle=731 cumGreen=96 - 安靜通過
