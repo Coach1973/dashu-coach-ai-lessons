@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 namecard-db全站改需登入(含瀏覽)+guest_visits記錄來賓完整分會訪問歷程(2026-09-02)](project_namecard_login_gate_and_guest_history_2026-09-02.md) — 教練推翻「僅跟進需登入」改成整站要帳號，上傳記錄uploaded_by；3222位不重複來賓
 - [🎯 教練專屬待辦提醒系統(仿Microsoft To Do)：event.bymyway.com/todo，程式碼完成待Mac部署(2026-09-02)](project_coach_todo_reminder_system_2026-09-02.md) — 三決定：獨立分頁+核心夠用版+沿用個人Telegram通道，部署步驟見接力棒v165
 - [🔧 CSS多欄流式排版(column-count)取代手動row/col配對+大幅HTML重排優先整檔重寫不用regex片段(2026-09-01)](reference_css_masonry_flow_vs_manual_row_pairing_2026-09-01.md) — coach888排版壓縮問題實戰，附div開合計數雙重驗證法
 - [🔴🔴🔴 zhenxin-guests(真鑫)repo從建立以來從未設remote,commit從未推上GitHub(2026-09-01)](feedback_zhenxin_repo_never_had_remote_2026-09-01.md) — 正式站程式碼一度零雲端備份，已補建repo+推送，往後新repo要確認remote有設定
