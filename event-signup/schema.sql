@@ -53,6 +53,19 @@ CREATE TABLE IF NOT EXISTS wheel_prizes (
     sort_order INTEGER NOT NULL DEFAULT 0
 );
 
+-- 台南應用科技大學校友會「召集令」加入表單（2026-09-03交辦，聯想已完成前端，這裡接資料庫）
+-- 5個分會共用同一張表，chapter欄位分流；同時服務event.bymyway.com/tut跟GitHub Pages兩個入口
+CREATE TABLE IF NOT EXISTS tut_alumni_signups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    grad_year TEXT,                      -- 畢業年，選填，格式不固定(民國/西元皆可能)不正規化
+    department TEXT,                     -- 科系，選填
+    chapter TEXT NOT NULL,               -- 台南/台中/高雄/台北/嘉義
+    source TEXT,                         -- bymyway 或 github-pages，方便追蹤是哪個入口送出
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
 -- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
 -- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
 CREATE TABLE IF NOT EXISTS todos (

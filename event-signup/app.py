@@ -1000,6 +1000,100 @@ def bni_traffic_assets(filename):
     return _serve_repo_file(BNI_TRAFFIC_REPO, filename)
 
 
+TUT_ALUMNI_REPO = Path("/Users/bymyway/github_repos/tut-alumni")
+PEIPEI_LINE_OA_ID = "@701ohlly"  # 佩佩老師的LINE官方帳號(讀自peipei-event/.env的EVENT_LINE_OA_ID)，
+                                  # 跟本app全域LINE_OA_ID(@qaw8118h,大樹教育自己的)是不同帳號，不能共用常數
+
+
+@app.route("/tut/")
+def tut_alumni_page():
+    return _serve_repo_file(TUT_ALUMNI_REPO, "index.html")
+
+
+@app.route("/tut/<path:filename>")
+def tut_alumni_assets(filename):
+    return _serve_repo_file(TUT_ALUMNI_REPO, filename)
+
+
+TUT_ALUMNI_CHAPTERS = {"台南", "台中", "高雄", "台北", "嘉義"}
+
+
+@app.route("/api/tut/join", methods=["POST", "OPTIONS"])
+def api_tut_join():
+    """校友會加入表單的真正後端，取代原本純前端假成功。教練2026-09-03裁示：
+    同時服務event.bymyway.com/tut跟GitHub Pages(coach1973.github.io/tut-alumni)兩個入口，
+    所以CORS開放；不論資料庫寫入成功與否，都要讓前端能拿到佩佩老師LINE連結繼續往下走
+    （呼應/api/register同一套原則：訪客體驗永遠不能被後端錯誤卡住，但也不能靜默吞錯誤）。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    name = (payload.get("name") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    grad_year = (payload.get("gradYear") or "").strip()
+    department = (payload.get("department") or "").strip()
+    chapter = (payload.get("chapter") or "").strip()
+    source = (payload.get("source") or "unknown").strip()
+
+    add_friend_url = f"https://line.me/R/ti/p/{PEIPEI_LINE_OA_ID}"
+    greet_url = add_friend_url
+    if name:
+        greet_text = f"我是{name}，我已經送出台南應用科技大學校友會（{chapter or '尚未選擇分會'}）的資料了"
+        greet_url = f"https://line.me/R/oaMessage/{PEIPEI_LINE_OA_ID}/?{quote(greet_text)}"
+
+    if not name or not phone or chapter not in TUT_ALUMNI_CHAPTERS:
+        _notify_xiaolongxia(
+            "⚠️【校友會召集令・資料不完整，沒能存檔】\n"
+            f"來源：{source}\n姓名：{name or '（沒填）'}\n電話：{phone or '（沒填）'}\n"
+            f"分會：{chapter or '（沒選）'}\n請人工確認這位有沒有真的要加入。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": "missing name/phone/chapter",
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    try:
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO tut_alumni_signups (name, phone, grad_year, department, chapter, source) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (name, phone, grad_year, department, chapter, source),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(
+            "⚠️【校友會召集令・資料庫寫入失敗】\n"
+            f"來源：{source}\n姓名：{name}\n電話：{phone}\n分會：{chapter}\n錯誤：{e}\n"
+            "請人工補登這筆資料。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": str(e),
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    notify_text = (
+        "【台南應用科技大學校友會・召集令報名】\n"
+        f"分會：{chapter}\n姓名：{name}\n電話：{phone}\n"
+        f"畢業年：{grad_year or '未填'}\n科系：{department or '未填'}\n"
+        f"（來源：{'GitHub Pages' if source == 'github-pages' else 'event.bymyway.com/tut'}）"
+    )
+    _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return Response(
+        json.dumps({"ok": True, "add_friend_url": add_friend_url, "greet_url": greet_url}),
+        status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
 AI_ART_REPO = Path("/Users/bymyway/github_repos/ai-art")
 
 
