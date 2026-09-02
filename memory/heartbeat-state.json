@@ -1,41 +1,28 @@
 {
-  "lastHealthcheckCycle": 709,
-  "lastHealthcheckAt": "2026-09-02T01:12:52+008:000",
-  "lastCoachMessageAt": "2026-09-01T22:15:46+08:00",
-  "coachSilentHours": 2.9,
-  "v4Gates": {
-    "g1StillBroken": false,
-    "g2ProviderOverload": false,
-    "g3AffectsWork": false,
-    "announceRequired": false
-  },
-  "cronStatus": {
-    "totalEnabled": 1,
-    "ok": 1,
-    "running": 0,
-    "idle": 0,
-    "error": 0,
-    "consecutiveErrors": 0
-  },
-  "heartbeatRealTodos": 0,
+  "lastCheck": "2026-09-02T04:12:00.000000Z",
+  "cycle": 720,
+  "status": "ok",
+  "silentHours": 13.9,
+  "consecutiveErrors": 0,
+  "activeJobs": 1,
+  "telegramChannelOk": true,
   "envCheck": {
-    "soulFiles": 3,
-    "repo1StatusLines": 23,
-    "repo2StatusLines": 30,
+    "soulMdCount": 3,
+    "repo1Dirty": 23,
+    "repo2Dirty": 44,
     "lockFiles": 0
   },
-  "tgChannelProbe": {
-    "ok": true,
-    "bot": "openclaw_macbook4_bot",
-    "chat": "6124913915"
+  "v4Judgment": {
+    "gate1_stillFailing": false,
+    "gate2_providerOverload": false,
+    "gate3_impactsWork": false,
+    "decision": "silent_pass"
   },
-  "cumulativeGreen": 75,
-  "note": "週三凌晨 01:12 cycle=709，教練沉默 2.9h（凌晨正常作息），所有 cron 全綠、CE=0、TG ok，三關全 fail → 不 announce",
   "systemSnapshot": {
     "coachSilentSince": "2026-09-01T22:15:46+08:00",
-    "coachSilentHours": 2.9
+    "coachSilentHours": 13.9
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-02T01:12:52+008:000"
+    "coach_silence_sync": "2026-09-02T12:12:05.537908+08:00"
   }
 }
