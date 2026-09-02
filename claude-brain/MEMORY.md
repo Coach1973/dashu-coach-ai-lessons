@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 FB粉專圖片貼文首次驗證可行+FB社團(Groups)因Meta政策全面鎖死一般App發文權限(2026-09-02)](reference_fb_page_image_post_vs_groups_limitation_2026-09-02.md) — curl multipart上傳圖片+caption，5個粉專實測permalink_url驗證上線；社團問題直接引用不用重查
 - [🔧 launchd服務用subprocess呼叫openclaw/node/homebrew工具找不到指令，PATH只有/usr/bin等四個(2026-09-02)](reference_launchd_subprocess_missing_path_2026-09-02.md) — 待辦提醒系統排一次性cron時踩到，絕對路徑仍不夠要補env PATH
 - [🔧 namecard-db全站改需登入(含瀏覽)+guest_visits記錄來賓完整分會訪問歷程(2026-09-02)](project_namecard_login_gate_and_guest_history_2026-09-02.md) — 教練推翻「僅跟進需登入」改成整站要帳號，上傳記錄uploaded_by；3222位不重複來賓
 - [🎯 教練專屬待辦提醒系統(仿Microsoft To Do)：event.bymyway.com/todo，程式碼完成待Mac部署(2026-09-02)](project_coach_todo_reminder_system_2026-09-02.md) — 三決定：獨立分頁+核心夠用版+沿用個人Telegram通道，部署步驟見接力棒v165

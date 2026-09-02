@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **9/5+9/16兩場活動FB粉專行銷貼文：9/5已發5個粉專，9/16等教練補圖** | ⏳待教練提供9/16圖片 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練用文案自製9/5活動圖(`D:\Users\Downloads\export (13).jpg`)後，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布，**先發K R養生廚房單一粉專讓教練驗收效果**，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。5則貼文皆已用`permalink_url`欄位查證真實上線，非僅API回傳成功假設。**下一步**：教練9/16圖片做好後，直接問要發哪幾個粉專即可套用同一套流程。 |
 | ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已部署上線，提醒機制改事件觸發不輪詢** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信暫緩，v167教練說「動手做todo系統吧」後部署：①`git pull`②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功。**部署完成後Stop hook守則#07攔下最初的每15分鐘輪詢cron設計**，查證確認可以真正事件觸發：remind_at是已知未來時間點，改成新增待辦時用`openclaw cron create --at`當場排一個精確時刻的一次性cron（只查這一筆待辦），完成/刪除待辦時同步取消尚未觸發的cron，不再需要每隔幾分鐘重複掃描整張表。過程修好一個真bug：launchd服務預設PATH找不到openclaw(homebrew)跟node(~/.local/bin)，subprocess呼叫需額外傳入補齊PATH的`env`參數。已用真實流程完整驗證：一次性cron精確觸發+標記完成正確取消+真的等到排定時間觸發、Telegram收到通知、reminder_sent寫回、cron自動deleteAfterRun清除。已回信`inbox/lenovo/`+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。commit`58b3f0e46`+`527e907ce`（部署）→`0f241ce4f`（改事件觸發）。記憶`reference_launchd_subprocess_missing_path_2026-09-02`。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
 | 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
@@ -432,3 +433,37 @@
 
 ## 🔑 本場commit
 `workspace`：`58b3f0e46`+`527e907ce`（部署+接力棒）→`0f241ce4f`（改事件觸發，含`event-signup/app.py`+`db.py`+`schema.sql`+`scripts/todo_reminder_check.py`）+cross-agent回信歸檔。記憶：`reference_launchd_subprocess_missing_path_2026-09-02`。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v168（聯想Windows Sonnet 5，9/5+9/16活動FB行銷文案+9/5貼文已發5個粉專，含真實圖片發布首例）
+
+> 建立時間：2026-09-02 18:42 ~ 19:43（台灣時間）
+> 上一棒：v167（Mac終端機，教練待辦提醒系統正式部署上線）
+> 本棒主軸：**確認ai-talk 9/22台南場確實已上線（先前v165誤判commit遺失，實為本機clone沒fetch）；記錄新RustDesk密碼；回答FB社團發文能力問題；9/5+9/16兩場活動文案+9/16連結更新；首次用Graph API真實發布圖片貼文，5個粉專全數上線並用permalink_url驗證。**
+
+## 🎯 本場戰果
+
+### 1. 澄清v165對ai-talk的誤判：本機clone沒fetch，不是commit遺失
+上一棒(v165)發信給Hermes交辦"ai-talk 9/22台南場改版"時，本機`git log`看不到v153記錄的`6dc29dc`等commit，一度懷疑接力棒記錄不實。Mac軍師來信說明：GitHub遠端commit歷史完整，只是聯想這台機器的本機clone沒`git fetch`到最新，不是雲端記錄消失。已`git fetch`+`git pull --ff-only`確認`ai-talk`repo確實已是9/22台南場內容(commit`94ebb66`)，雙方inbox信件歸檔`outbox/2026-09/`。**教訓**：比對`git log`跟`git log origin/main`前一定要先`fetch`，否則本機clone落後也會被誤判成「遠端記錄不存在」。
+
+### 2. 記錄RustDesk連佩佩老師電腦的新密碼
+教練交付：RustDesk連佩佩老師電腦密碼`Bymyway7`，跟既有連Mac mini的密碼`Sea123457`分開記錄，寫入`路徑大全_憑證層.md`，commit`59eeb616`。同場也順手查證回答教練「RustDesk固定密碼」查詢(既有`Sea123457`)。
+
+### 3. 回答FB社團(Groups)發文能力問題
+教練問粉專發文能力可否延伸到他加入的FB社團。查證回覆：Meta自2018年劍橋分析事件後大幅收緊社團發文API權限(`publish_to_groups`)，一般App幾乎申請不到，這是Meta政策限制非本系統缺陷；唯一可行路徑是比照先前手動貼5個粉專的瀏覽器模擬點擊方式，但教練個人帳號在社團裡跑自動化行為被FB判定機器人的風險比粉專官方API高，已如實告知風險，教練尚未決定要不要嘗試。
+
+### 4. 9/5+9/16兩場活動文案定稿+9/16連結更新+coach888同步
+查證兩場活動最新正式資料(非舊草稿)：9/5「零基礎學AI，起步比較快」(KR養生廚房，免費，14:00-16:30)、9/16「當古典音樂遇到AI科技」(高雄郭音樂廳，一日通票600元含午餐下午茶，10:00-17:00，8位老師陣容)。**查`bigtree/archive/大樹小講_歷史講座紀錄.html`確認9/5這場KR養生廚房7/4已經辦過一次同主題同場地**，因此教練指定的「返場款」文案角度屬實非杜撰。9/16教練指定「降門檻款」，主打流水席隨到隨坐降低參與門檻焦慮。教練後續要求9/16連結改用`event.bymyway.com/ai-art/`(比GitHub Pages版更新)，同步更新coach888作品總覽該項目連結，commit`14e4036`(過程與Mac`99dcff3`批量搬移功能merge，div開合317/317驗證平衡無誤)。
+
+### 5. 首次用Graph API真實發布「圖片+文案」貼文，9/5活動上線5個粉專
+教練用9/5文案自製活動海報(`D:\Users\Downloads\export (13).jpg`，AI生成插畫+資訊卡設計，內容跟已核准文案逐字對應)，軍師自行到D槽下載資料夾取圖(未叫教練搬運)。技術做法：`POST /{page-id}/photos`帶`source`(multipart檔案)+`caption`(文案全文)+`access_token`，用既有`fb_automation/page_tokens_2026-09-01.json`裡的粉專權杖，沒有requests套件改用curl `-F`處理multipart上傳。**先發K R養生廚房單一粉專**讓教練驗收效果(教練回饋「效果不錯」)，再追加海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心四個。教練口語報出的「美術館」「大台南會展中心」跟粉專清單正式名稱有落差，軍師對應到清單裡最接近的「跨界美.術.管」「大台南策展中心」後先執行、同時列出對應請教練覆核，教練回「對的」確認無誤。**5則貼文皆用Graph API的`permalink_url`欄位真實查證上線**，不是只看POST回傳的`post_id`就假設成功。
+
+## ⚠️ 下一場開工先做
+1. **等教練提供9/16活動圖片**，圖片到位後問清楚要發哪幾個粉專，套用v168同一套流程(curl multipart上傳)即可，不用重新摸索。
+2. FB社團發文教練尚未決定要不要用瀏覽器模擬方式嘗試，若教練後續提起，直接引用本棒查證的風險說明，不用重新查證Meta政策。
+3. **跨機信箱有2封未讀**：`20260902-1725_mac-to-lenovo_todo-system-deployed-successfully.md`(已在本棒對話中透過CLAUDE.md鏡像讀到內容，todo系統確認部署成功，可歸檔)+`20260831-1858_acer-to-mac-lenovo_status-report-and-workspace-clone-bug.md`(教練未指示處理，繼續掛著)。
+4. v161之前已知舊待辦（FB粉專商家驗證後續、`/bni-credit`補公司欄位、12月主題培訓內容等）本場未觸及。
+
+## 🔑 本場commit
+`workspace`：`59eeb616`（RustDesk密碼記錄）+跨機信箱歸檔commit。`coach888`：`14e4036`（ai-art連結改bymyway版，含merge）。`fb_automation`：本場僅本機臨時檔案操作(用完即刪)，無新commit(page_tokens沿用既有9/1版本)。
