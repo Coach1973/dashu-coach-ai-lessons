@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯🎯 coach888排版狀態改伺服器集中同步，解決跨裝置Mac改完ACER看不到(2026-09-03)](project_coach888_cross_device_sync_2026-09-03.md) — event.bymyway.com/api/coach888/state新端點，已用真實跨瀏覽器測試驗證，取代localStorage各自為政
+- [🔴🔴🔴🔴🔴 清瀏覽器localStorage前先確認沒有教練未存檔的工作成果(2026-09-03)](feedback_never_clear_user_storage_without_backup_2026-09-03.md) — coach888排版45分鐘心血被誤clear掉教訓，附LevelDB WAL救援技巧(classic-level npm比plyvel好裝)
 - [🔴🔴🔴🔴🔴 同一死角最多試3次就要停手回報，不能悶頭硬剛燒教練時間/金錢/token(2026-09-03)](feedback_cap_retries_report_when_stuck_2026-09-03.md) — Google表單必填開關+Apps Script編輯器死磕十幾分鐘教練點名效率太慢，教練定調3次原則+主動回報再提替代方案
 - [🔴 coach888新增項目一律放分類第一項，不要放最後(2026-09-03)](feedback_coach888_new_items_go_first.md) — 教練找新項目找半天找不到，之後插入位置固定num=1
 - [🔴🔴🔴 BNI發票是兩套獨立系統(培訓費vs入會續約)+教練已提供全部資料不用再問(2026-09-03)](feedback_bni_invoice_two_independent_systems_sop.md) — 開票前直接查`/invoice-admin`兩個子頁，不問「資料你有嗎」；教練賈維斯期許再次強調

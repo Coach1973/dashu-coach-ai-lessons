@@ -80,3 +80,13 @@ CREATE TABLE IF NOT EXISTS todos (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     completed_at TEXT
 );
+
+-- coach888作品一覽的排版狀態(2026-09-03交辦)：教練反映在Mac改完排版，ACER開起來還是舊的，
+-- 因為原本純靠每個瀏覽器自己的localStorage存檔，不同裝置/清快取就各自獨立、互不同步。
+-- 這張表把layout/titles/badges/names/collapse五組狀態集中存一份，取代「靠localStorage各自
+-- 為政+手動複製貼給AI固化」的舊流程，coach888的JS改成save時順便POST這裡、load時先GET這裡。
+CREATE TABLE IF NOT EXISTS coach888_state (
+    key TEXT PRIMARY KEY,                -- coach888_layout / coach888_titles / coach888_badges / coach888_names / coach888_collapse
+    value TEXT NOT NULL,                 -- JSON字串，格式跟原本存進localStorage的值完全一致
+    updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
