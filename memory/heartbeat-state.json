@@ -1,16 +1,16 @@
 {
   "lastCheck": {
-    "telegramChannel": 1788347520126,
-    "cron": 1788347520126,
-    "environment": 1788347520126,
-    "heartbeatTodos": 1788347520126
+    "telegramChannel": 1788352380000,
+    "cron": 1788352380000,
+    "environment": 1788352380000,
+    "heartbeatTodos": 1788352380000
   },
   "telegramChannelOk": true,
   "telegramChannelProbeSource": "scripts/telegram_channel_probe.sh",
-  "lastTelegramProbeAt": 1788347520126,
-  "currentCycle": 727,
-  "currentCycleTimestamp": "2026-09-02T19:12:00+08:00",
-  "cumulativeGreen": 91,
+  "lastTelegramProbeAt": 1788352380000,
+  "currentCycle": 728,
+  "currentCycleTimestamp": "2026-09-02T20:12:00+08:00",
+  "cumulativeGreen": 93,
   "cronStatus": {
     "totalActive": 1,
     "withConsecutiveErrors": 0,
@@ -21,7 +21,7 @@
   "environment": {
     "soulMdTriple": "ok",
     "repo1Status": 23,
-    "repo2Status": 38,
+    "repo2Status": 41,
     "lockFiles": 0
   },
   "v4ThreeGateCheck": {
@@ -29,5 +29,12 @@
     "gate2ProviderOverload": "fail",
     "gate3AffectsWork": "fail",
     "verdict": "all-fail → 靜默不通報"
+  },
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-02T19:57:53+08:00",
+    "coachSilentHours": 0.2
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-02T20:12:04.834295+08:00"
   }
 }
