@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-02 20:00:20**
+> **最後同步：2026-09-02 20:59:54**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **`/bni-credit`補公司欄位：120筆(後修正為111筆)全數完成，312筆該查的全部有結果** | ✅2026-09-02本場完成 | 委派3個背景Agent平行處理，過程發現多Agent共用同一Chrome分頁會互相搶navigate造成資料污染，補指示各自開專屬分頁後全數完成。最終：active/transferred/redeemed共312筆，110筆補上真實公司名稱，2筆(張仕賢/林薔薇)確認官方頁面本身空白，0筆遺漏。commit待查(namecard-db資料庫直改，非git追蹤)。記憶`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`。 |
+| ✅ | **coach888新增「最近刪除」回收桶+「BNI最近常用」併入「BNI專用」** | ✅2026-09-02本場完成 | 教練要求「最近刪除」功能(像資源回收桶，刪除不直接消失可勾選移回)，已上線並用瀏覽器實測驗證。教練本機file://編輯內容因localStorage無法自動救回，教練口述澄清「把1移到5那邊，下面都沒動」，直接改正式檔案(11項併入BNI專用，該分類22項)，已用Chrome開給教練確認。commit`817691f`(最近刪除)+`731ffad`(分類合併)。教訓：CSS column-count多欄排版截圖不能用左右對齊直覺判斷歸屬，記憶`feedback_column_layout_screenshot_misread_2026-09-02`。**以後coach888編輯一律用`https://coach1973.github.io/coach888/`正式網址，不再開本機檔案**。 |
 | 🟡 | **9/5+9/16兩場活動FB粉專行銷貼文：9/5已發5個粉專，9/16等教練補圖** | ⏳待教練提供9/16圖片 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練用文案自製9/5活動圖(`D:\Users\Downloads\export (13).jpg`)後，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布，**先發K R養生廚房單一粉專讓教練驗收效果**，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。5則貼文皆已用`permalink_url`欄位查證真實上線，非僅API回傳成功假設。**下一步**：教練9/16圖片做好後，直接問要發哪幾個粉專即可套用同一套流程。 |
 | ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已部署上線，提醒機制改事件觸發不輪詢** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信暫緩，v167教練說「動手做todo系統吧」後部署：①`git pull`②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功。**部署完成後Stop hook守則#07攔下最初的每15分鐘輪詢cron設計**，查證確認可以真正事件觸發：remind_at是已知未來時間點，改成新增待辦時用`openclaw cron create --at`當場排一個精確時刻的一次性cron（只查這一筆待辦），完成/刪除待辦時同步取消尚未觸發的cron，不再需要每隔幾分鐘重複掃描整張表。過程修好一個真bug：launchd服務預設PATH找不到openclaw(homebrew)跟node(~/.local/bin)，subprocess呼叫需額外傳入補齊PATH的`env`參數。已用真實流程完整驗證：一次性cron精確觸發+標記完成正確取消+真的等到排定時間觸發、Telegram收到通知、reminder_sent寫回、cron自動deleteAfterRun清除。已回信`inbox/lenovo/`+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。commit`58b3f0e46`+`527e907ce`（部署）→`0f241ce4f`（改事件觸發）。記憶`reference_launchd_subprocess_missing_path_2026-09-02`。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
@@ -349,72 +351,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-02 v165（聯想Windows Sonnet 5，新增「大樹教練待辦事項」系統，事碼已完成待Mac部署上線）
-
-> 建立時間：2026-09-02 12:56 ~ 13:40（台灣時間）
-> 上一棒：v164（聯想Windows，coach888作品總覽表重整）
-> 本棒主軸：**教練交辦仿Microsoft To Do的個人待辦提醒系統，要嵌進作品總覽獨立分頁+到期主動發Telegram提醒。程式碼已寫完、本機測試通過，但這台機器碰不到event.bymyway.com的正式服務，需要Mac那邊pull+重啟+註冊cron才算真正上線。**
-
-## 🎯 本場戰果
-
-### 1. 待辦事項系統程式碼完成，路由掛在event-signup（不新增獨立子網域）
-教練確認三個方向：①放coach888獨立分頁（不擠進首頁）②核心夠用版（標題/到期日/提醒時間/完成/備註，先不做子步驟/重複規則）③提醒沿用教練個人Telegram通道(`chat_id 6124913915`，跟mentor100/信用証到期提醒同一條)。比照既有bymyway動態渲染架構，掛在`event-signup`這支24小時跑的Flask app底下（不新增子網域/Tunnel/launchd，同一套「降低服務被遺忘風險」邏輯）：
-- `schema.sql`新增`todos`表
-- `app.py`新增`/todo`(列表+新增表單)、`/todo/add`、`/todo/<id>/toggle`、`/todo/<id>/delete`四個路由，到期日徽章分四級（逾期紅/今天橘/3天內金/其餘灰）
-- `templates/todo.html`新模板，沿用`wheel.html`同款深色主題CSS變數
-- `scripts/todo_reminder_check.py`：獨立cron腳本，比照`bni_credit_expiry_reminder.py`同款設計（查remind_at到期未通知項目→`notify_coach.sh`發送→成功才寫回`reminder_sent`，避免送達失敗卻誤記已通知）
-
-### 2. 本機測試方法+驗證結果
-這台機器沒有正式`event.db`（只在Mac上是活的），用舊備份`event.db.bak-before-session-admin-20260823-085851`複製成臨時測試db、`EVENT_PORT=5099 python app.py`起本機Flask dev server，經由瀏覽器/curl實測：新增待辦（真實表單送出，含中文標題/備註/到期日/提醒時間）、到期徽章正確判斷「已逾期13天」、完成勾選切換（含已完成清單展開/取消完成）、刪除，全部正常；`todo_reminder_check.py --dry-run`正確抓到到期未通知項目並組出訊息。測試完已刪除臨時db，git status確認乾淨才commit。過程中發現`print()`遇到emoji在這台Windows主控台的cp950 codepage會UnicodeEncodeError（純Windows console限制，Mac預設UTF-8不會發生），順手加了`sys.stdout.reconfigure(encoding="utf-8")`防呆。
-
-### 3. coach888作品總覽新增連結，過程中合併衝突+意外揪出真的資料遺失
-新增「大樹教練待辦事項（特助主動提醒版）」到「四、bymyway自架版」分區（第6項），順手修正該分區ai-talk項目殘留的過時文字「9/22台南場更新中」（已於9/1由Mac完成上線，見v153/v155）。push時發現遠端同時有另一場session上線了收合/刪除項目/新增項目的編輯UI功能，手動解衝突保留兩邊改動。**過程中意外發現「大樹常用」分區的`BNI-Training`(BNI培訓紀錄總資料庫)整筆消失**，但該分區仍標「17項」跟實際16項目對不上——判斷是那次UI升級測試「刪除項目」按鈕時誤刪、複製排序貼回AI固化時沒發現少一筆，非教練或任何人刻意移除，已補回並確認全部8個分區「宣告項目數＝實際項目數＝連續編號」三者一致才收工。
-
-## ⚠️ 下一場開工先做（Mac優先，這是本棒唯一待完成的事）
-**`/todo`要真正上線，需要有Mac終端機存取權限的軍師做完以下步驟**（這台聯想機器碰不到`event.bymyway.com`正式服務跟Mac的OpenClaw cron系統）：
-1. `cd ~/.openclaw/workspace && git pull`（拉到本棒的`todos`表schema+四個路由+`todo.html`+`todo_reminder_check.py`）
-2. 重啟`com.coach.event-webapp`（`launchctl kickstart -k`或教練慣用指令）——`db.init_db()`會自動幫`event.db`補上`todos`表，不用手動下SQL
-3. `curl https://event.bymyway.com/todo`確認200，瀏覽器實測新增一筆待辦+切換完成+刪除，跟本機測試流程一樣跑一次
-4. 註冊OpenClaw cron，每15分鐘跑一次`python3 ~/.openclaw/workspace/scripts/todo_reminder_check.py`（比照信用証提醒cron`8211e054`的建法），先用`--dry-run`確認邏輯正常再拿掉
-5. 完成後回coach888確認`/todo`連結真的能點得進去，這棒才算真正結案
-**教練尚未提供任何真實待辦事項**，上線後是空清單，等教練自己輸入第一筆。
-
-## 🔑 本場commit
-`workspace`：`57d53268`（todos表+路由+模板+cron腳本）→`14d51a67`（pull merge，含namecard-db其他session的並行改動）。`coach888`：`54620ec`（新增待辦連結+ai-talk文字修正）→`0119f76`（解衝突+補回BNI-Training遺失項目）。
-
----
-
-# 軍師接力棒 · 2026-09-02 v166（Mac終端機 Sonnet 5，名片系統來賓完整訪問歷程+帳號審核機制(2輪設計)+coach888批量搬移/改名功能+RustDesk卡頓診斷+讀跨機信）
-
-> 建立時間：2026-09-02 12:40 ~ 17:02（台灣時間）
-> 上一棒：v165（聯想Windows，待辦提醒系統程式碼完成待Mac部署）
-> 本棒主軸：**名片系統(namecard-db)兩項重大功能——來賓完整分會訪問歷程(取代只顯示最新一筆)、帳號審核機制(教練需求歷經2輪簡化定案為全站需登入)；coach888新增批量搬移分類+項目改名功能；診斷並修復RustDesk記憶體異常，教練登出重登入後系統恢復正常；讀取聯想軍師來信但依教練指示暫不執行部署。**
-
-## 🎯 本場戰果
-
-### 1. namecard-db：來賓完整訪問歷程上線
-教練回報`/find`搜尋來賓只看得到現任/前會員標記，看不到「這是哪個分會的來賓、什麼時候來過」。查明`guests`表原本只保留「最新一次」訪問的分會、無日期欄位。新增`guest_visits`子表，從BNI Connect完整歷史報表（2018-08-08~2026-09-01全部訪問紀錄）重建，`/find`搜尋結果會列出每位來賓完整的分會+日期清單。3222位不重複來賓（依電話去重），320人有多筆歷史紀錄，最多7次橫跨2分會。已用真實資料在瀏覽器驗證（葉俊麟3次真鑽、黃建豪橫跨真富/真鑫共7次）。commit`db21d10a5`。教練隨後確認「不同電話號碼才是精準」數字口徑（namecard-db的3222 vs 另一套BNI-Training系統的3718是不同口徑：去重人數 vs 訪問紀錄總筆數，非誤差）。
-
-### 2. namecard-db：帳號審核機制，歷經2輪簡化才定案
-教練最初構想是完整的「AI資源媒合系統」品牌入口：正規申請審核+BNI分會/職稱/email欄位。經討論後教練親自簡化：**申請只要姓名+行動電話，密碼統一預設88888，不做email驗證**。第一版實作只鎖「跟進」功能需要登入（查詢/瀏覽維持公開），commit`bb25684eb`。上線後教練回報「如果他們上傳名片，我才知道是誰上傳的」，**推翻改成全站都要登入**（含`/`、`/find`、`/chains`、`/matches`、`/card/<id>/match`、`/guest/<id>/match`、`/upload`），`cards`表新增`uploaded_by`欄位記錄上傳者，commit`1aa5ddfba`。過程中發現`team_login_required`裝飾器原本定義在使用它的路由之後，Python裝飾器載入時期就要能解析到，已搬移到檔案最前面。教練自己(bymyway)＋既有夥伴帳號(佩君老師)透過schema遷移自動標記approved，完全不受影響，已用真實HTTP流程驗證申請→核准→登入→上傳全流程。詳見記憶`project_namecard_login_gate_and_guest_history_2026-09-02`（含更新舊記憶`project_namecard_manual_trigger_matching_design_2026-08-27`附加說明）。
-
-### 3. coach888：新增批量搬移分類+項目改名功能
-教練提出兩個UI痛點：①想勾選多個項目一次搬到某分類，不想一個個拖 ②想自己修改項目顯示名稱（把「BNI｜出席戰情儀表板」改成「DNA出席」，因為那顆儀表板其實是追蹤DNA出席狀況）。新增「☑️批量搬移模式」按鈕（開啟後每項目旁出現checkbox，勾選後下方浮現搬移列）+每個項目名稱旁新增✏️改名圖示，皆沿用既有localStorage固化模式(跟現有badge/title編輯機制一致)。「DNA出席」已直接改在原始碼。已用本機http server+瀏覽器JS互動測試驗證：勾選搬移1項到「BNI專用」分類，來源/目標分類編號+項目數正確更新；改名功能DOM+localStorage正確持久化；「複製排序」按鈕正確反映改名和搬移結果。commit`99dcff3`，已用Chrome實際打開確認畫面。同場也補上namecard-db帳號審核頁的coach888直達連結（`f35fc2f`+合併`5aff51c`，過程撞到聯想同時推送的收合/刪除功能merge衝突，已妥善解決）。
-
-### 4. RustDesk記憶體異常診斷+教練登出重登入排除卡頓
-教練回報Mac很卡，查證找到RustDesk（教練遠端操控這台Mac用的程式）記憶體膨脹到761MB，用既有`scripts/rustdesk_free_memory.sh`重啟後降回30MB，系統可用記憶體回到76~80%健康水準。教練詢問「登出再登入」是否可行，查證確認這台Mac已裝RustDesk系統層級unattended-access服務（`/Library/LaunchDaemons/com.carriez.RustDesk_service.plist`），登出後仍能透過RustDesk連到登入畫面，屬安全操作。教練登出重登入後，系統負載從瞬間飆升的43（多程式同時重啟造成的正常尖峰）在2.5分鐘內回落到12左右，記憶體維持80%健康水位，確認恢復正常。
-
-### 5. 讀取聯想軍師跨機來信，依教練指示暫不執行
-教練說「請收信，聯想軍師有任務，可以先讀，然後，我新開對話再執行」。已讀完v165交接信全文（待辦提醒系統部署5步驟），摘要回報教練，**依指示不執行部署**，信件保留在`inbox/mac/`未歸檔，等教練開新對話框時再走部署流程。
-
-## ⚠️ 下一場開工先做
-1. **最優先**：教練待辦提醒系統部署5步驟（詳見本表最上方新增列＋v165接力棒完整內容）。
-2. namecard-db後續：教練若反映其他分會(真誠/真鑫)PALMS資料或帳號審核流程有問題，優先處理。
-3. v161之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、12月主題培訓內容等）本場均未觸及，繼續掛著。
-4. **本場無新教訓寫入試金石**——過程順利，教練兩次推翻設計是正常需求釐清（先簡化申請流程、後推翻存取範圍），非AI犯錯。
-
-## 🔑 本場commit
-`namecard-db`（workspace repo內）：`db21d10a5`（guest_visits來賓完整訪問歷程）→`bb25684eb`（帳號審核第一版，跟進限定）→`1aa5ddfba`（帳號審核最終版，全站需登入+uploaded_by）。`coach888`：`f35fc2f`（帳號審核直達連結）+合併`5aff51c`→`99dcff3`（批量搬移+改名功能，DNA出席改名）。記憶：新增`project_namecard_login_gate_and_guest_history_2026-09-02`+更新`project_namecard_manual_trigger_matching_design_2026-08-27`。
+> 📦 v165+v166完整內容已封存：`handoff_archive/handoff_v165_v166_archived_2026-09-02.md`（v165聯想Windows待辦提醒系統程式碼／v166 Mac終端機名片系統來賓歷程+帳號審核+coach888批量搬移+RustDesk診斷）
 
 ---
 
@@ -479,6 +416,36 @@
 
 ## 🔑 本場commit
 `workspace`：`59eeb616`（RustDesk密碼記錄）+跨機信箱歸檔commit。`coach888`：`14e4036`（ai-art連結改bymyway版，含merge）。`fb_automation`：本場僅本機臨時檔案操作(用完即刪)，無新commit(page_tokens沿用既有9/1版本)。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v169（Mac終端機 Sonnet 5，「全部釋放」指令上線+/bni-credit補公司欄位120筆完成+coach888最近刪除功能+BNI信用証查詢）
+
+> 建立時間：2026-09-02 18:52 ~ 20:56（台灣時間）
+> 上一棒：v168（聯想Windows，FB行銷文案+9/5貼文首發5粉專）
+> 本棒主軸：**教練三個決策一次執行完（GPT/MiniMax路由放棄／「全部釋放」指令範圍定案並上線／9/16部署維持原排程）；`/bni-credit`補公司欄位312筆全數完成(委派3背景Agent平行處理，途中發現並修復多Agent共用瀏覽器分頁的資料污染風險)；coach888新增「最近刪除」回收桶+處理教練本機file://編輯遺失問題(改口述指令直接修正)；BNI Connect單筆信用証到期查詢。**
+
+## 🎯 本場戰果
+
+### 1. 三個教練決策執行：GPT/MiniMax路由放棄／「全部釋放」上線／9/16部署維持排程
+教練裁示GPT/MiniMax混合模型路由「不做了」，待辦表結案。**「全部釋放」指令**教練親口定義範圍：「關掉瀏覽器、關掉赫米斯、關掉LINE、關掉語音輸入法(Typeless)、同時重啟連線軟體」。新增`scripts/release_all_memory.sh`：Chrome/LINE/Typeless用osascript偵測是否在跑才關(避免誤開)，赫米斯用`launchctl bootout`四個launchd服務(KeepAlive會自動重啟需bootout才真正停止)，RustDesk沿用既有邏輯重啟。`hooks/rustdesk-free-memory-trigger/handler.js`改兩層觸發(先判「全部釋放」類詞組跑新腳本，否則才判單純「釋放」跑舊腳本，避免文字重疊雙觸發)。**已用真實指令執行驗證**（非模擬）：Chrome/赫米斯/Typeless確實被關閉，RustDesk重啟成功(495M→29M)。commit`d959b039`(hook,外層repo)+`b8e40c824`(腳本,workspace)。9/16高雄場後大樹小講自動部署維持原排程不動。
+
+### 2. `/bni-credit`補公司欄位：委派3背景Agent，途中發現並修復多Agent共用瀏覽器分頁污染
+教練問清楚token消耗後同意先跑10筆校準樣本（9/10成功，1筆確認官方本身空白），過程中意外把Chrome關掉（自己測全部釋放腳本造成），也連帶讓BNI Connect登入態失效，教練親自重新登入後恢復。校準後推算110筆剩餘任務約70~95萬token，教練同意分3批(37/37/36)各自開獨立背景Agent平行處理，**過程中第1批Agent回報讀到「別人的證書」中途停手**——查明3個Agent平行操作時共用了系統預設回傳的同一個瀏覽器分頁，navigate結果互相覆蓋。指示補開專屬分頁(`tabs_create_mcp`)後繼續，全數完成。**最終結果：312筆(active/transferred/redeemed)全部處理完，110筆補上真實公司名稱，2筆(張仕賢/林薔薇)確認官方頁面本身空白**，全程唯讀操作(navigate+讀頁面+寫DB)，未點擊任何BNI Connect按鈕。記憶`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`。
+
+### 3. coach888：「最近刪除」回收桶上線+處理教練file://本機編輯遺失
+教練提出「刪除只是為了整理方便，怕手滑刪錯忘記刪了什麼」的痛點，新增「最近刪除」暫存區(仿資源回收桶)：單一項目/整個分類刪除都先移入該區而非直接消失，用既有批量搬移機制勾選送回任何分類，確定不要才按「永久清空」。已用本機瀏覽器JS互動測試「刪除→進最近刪除→勾選搬回原分類」全程正確，commit`817691f`。**教練接著回報之前在`file:///Users/bymyway/github_repos/coach888/index.html`本機編輯的內容沒同步到聯想電腦**——查明是開了本機檔案而非正式GitHub Pages網址，編輯只存在瀏覽器localStorage，不影響檔案本身。嘗試直接讀Chrome LevelDB底層儲存檔案救回內容(UTF-16BE解碼+varint長度解析)，格式解析到JSON中途卡住(疑似LevelDB WAL跨block片段化)未能可靠還原，教練同意截圖查看後也因CSS `column-count`多欄排版誤判內容歸屬(截圖左右對齊看起來像項目被搬動，實為多欄自動平衡排版的視覺巧合)。**教練最終直接口述**：「把1移到5那邊，下面的都沒動」——即「一、BNI最近常用」11項全部併入「五、BNI專用」，其餘7分類不動，直接改正式檔案完成，commit`731ffad`，用Chrome開給教練確認。往後coach888編輯一律提供`https://coach1973.github.io/coach888/`正式網址，不再開本機檔案。記憶`feedback_column_layout_screenshot_misread_2026-09-02`。
+
+### 4. BNI Connect單筆信用証查詢
+教練貼memberId 2547603查詢是否過期，查頁面「信用證」連結(href=#)比對資料庫既有記錄(2026-08-27已查證同款「Please contact support」過期訊號)，確認陳宏恩(真誠分會)信用証已過期，未重複點擊測試。
+
+## ⚠️ 下一場開工先做
+1. FB粉專商家驗證後續、12月主題培訓內容等舊待辦本場未觸及，繼續掛著。
+2. 教練若反映`/bni-credit`頁面顯示效果或其他分會問題，優先處理。
+3. `/bni-credit`120筆補公司欄位的commit待查——資料庫是SQLite直改，非git追蹤範圍，若需要留存快照可考慮備份`namecards.db`。
+
+## 🔑 本場commit
+外層repo：`d959b039`（全部釋放hook）。`workspace`：`b8e40c824`（全部釋放腳本+接力棒更新）。`coach888`：`817691f`（最近刪除功能）+`731ffad`（BNI最近常用併入BNI專用）。記憶：`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`+`feedback_column_layout_screenshot_misread_2026-09-02`。
 
 
 ---
