@@ -55,7 +55,33 @@ def _rate_limited(ip: str) -> bool:
     return False
 
 
+def team_login_required(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if not session.get("team_username"):
+            return redirect(url_for("team_login", next=request.path))
+        return view(*args, **kwargs)
+    return wrapped
+
+
+# 教練專屬頁面（如BNI信用証追蹤）：夥伴帳號(如佩君老師)登入team系統後不能看，
+# 只有教練本人的帳號能進，跟「名片系統」開放給夥伴的權限刻意分開
+OWNER_USERNAME = "bymyway"
+
+
+def owner_only_required(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if not session.get("team_username"):
+            return redirect(url_for("team_login", next=request.path))
+        if session.get("team_username") != OWNER_USERNAME:
+            return "此頁面僅限教練本人查看", 403
+        return view(*args, **kwargs)
+    return wrapped
+
+
 @app.route("/")
+@team_login_required
 def index():
     query = request.args.get("q", "").strip()
     category = request.args.get("category", "").strip()
@@ -147,6 +173,7 @@ def serve_image(filename):
 
 
 @app.route("/card/<int:card_id>/match", methods=["GET", "POST"])
+@team_login_required
 def card_match(card_id):
     """點一下「媒合」：如果這張名片還沒分析過，當場呼叫AI判斷一次並存起來；
     已經分析過的直接顯示既有結果，不重複觸發(避免公開端點被重複濫用)。"""
@@ -199,6 +226,7 @@ def card_match(card_id):
 
 
 @app.route("/matches")
+@team_login_required
 def matches():
     conn = db.get_conn()
     rows = conn.execute(
@@ -214,6 +242,7 @@ def matches():
 
 
 @app.route("/chains")
+@team_login_required
 def chains_page():
     conn = db.get_conn()
     chains = db.list_chains_with_members(conn)
@@ -222,6 +251,7 @@ def chains_page():
 
 
 @app.route("/find")
+@team_login_required
 def find_page():
     """簡約搜尋頁：教練打一個關鍵字，同時查cards(名片/BNI會員)+guests(來賓)，
     每筆結果都有「媒合」按鈕——按下去才呼叫AI，平常瀏覽/搜尋完全不耗MiniMax額度。"""
@@ -279,6 +309,7 @@ def find_page():
 
 
 @app.route("/guest/<int:guest_id>/match")
+@team_login_required
 def guest_match(guest_id):
     """來賓版「媒合」入口：第一次點擊才把這位來賓轉成一筆card(用source_guest_id
     記住避免重複轉入)，接著直接沿用既有card媒合流程，不重造一套邏輯。"""
@@ -310,31 +341,6 @@ def guest_match(guest_id):
         card_id = cur.lastrowid
     conn.close()
     return redirect(url_for("card_match", card_id=card_id))
-
-
-def team_login_required(view):
-    @wraps(view)
-    def wrapped(*args, **kwargs):
-        if not session.get("team_username"):
-            return redirect(url_for("team_login", next=request.path))
-        return view(*args, **kwargs)
-    return wrapped
-
-
-# 教練專屬頁面（如BNI信用証追蹤）：夥伴帳號(如佩君老師)登入team系統後不能看，
-# 只有教練本人的帳號能進，跟「名片系統」開放給夥伴的權限刻意分開
-OWNER_USERNAME = "bymyway"
-
-
-def owner_only_required(view):
-    @wraps(view)
-    def wrapped(*args, **kwargs):
-        if not session.get("team_username"):
-            return redirect(url_for("team_login", next=request.path))
-        if session.get("team_username") != OWNER_USERNAME:
-            return "此頁面僅限教練本人查看", 403
-        return view(*args, **kwargs)
-    return wrapped
 
 
 @app.route("/card/<int:card_id>/bni_status", methods=["POST"])
@@ -699,11 +705,13 @@ def card_follow_add_log(card_id):
 
 
 @app.route("/upload", methods=["GET"])
+@team_login_required
 def upload_page():
     return render_template("upload.html", error=None)
 
 
 @app.route("/upload", methods=["POST"])
+@team_login_required
 def upload_submit():
     ip = (request.headers.get("X-Forwarded-For", "") or request.remote_addr or "").split(",")[0].strip()
     if _rate_limited(ip):
@@ -724,7 +732,7 @@ def upload_submit():
         saved_name = f"public_{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
         saved_path = os.path.join(PUBLIC_UPLOAD_FOLDER, saved_name)
         f.save(saved_path)
-        db.insert_card_pending(conn, saved_name)
+        db.insert_card_pending(conn, saved_name, uploaded_by=session.get("team_display_name"))
         saved_count += 1
     conn.close()
 

@@ -1,28 +1,26 @@
 {
-  "lastCheck": "2026-09-02T04:12:00.000000Z",
-  "cycle": 720,
-  "status": "ok",
-  "silentHours": 13.9,
-  "consecutiveErrors": 0,
-  "activeJobs": 1,
-  "telegramChannelOk": true,
-  "envCheck": {
-    "soulMdCount": 3,
-    "repo1Dirty": 23,
-    "repo2Dirty": 44,
-    "lockFiles": 0
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "telegramChannelOk": true,
+    "telegramChannelProbeAt": "2026-09-02T13:12:50+08:00"
   },
-  "v4Judgment": {
-    "gate1_stillFailing": false,
+  "v4_gates": {
+    "gate1_currentlyBroken": false,
     "gate2_providerOverload": false,
     "gate3_impactsWork": false,
-    "decision": "silent_pass"
+    "verdict": "silent_pass"
   },
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-01T22:15:46+08:00",
-    "coachSilentHours": 13.9
+  "cron": {
+    "activeJobs": 1,
+    "consecutiveErrors": 0,
+    "lastRunStatus": "ok"
   },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-02T12:12:05.537908+08:00"
-  }
+  "heartbeatOk": true,
+  "lastCoachMessageAt": "2026-09-02T13:09:37+08:00",
+  "coachSilentHours": 0.05,
+  "lastCycle": 721,
+  "cumulativeGreen": 87,
+  "cycleAt": "2026-09-02T13:12:50+08:00"
 }
