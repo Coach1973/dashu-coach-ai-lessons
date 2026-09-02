@@ -564,6 +564,54 @@ def bni_credit_list():
     )
 
 
+# 教練的開發票專用後台（2026-09-03交辦）：兩份靜態產生的私有查詢表(build_bni_training_admin.py
+# /build_bni_membership_admin.py，claude-brain/data/)本來只靠<meta robots noindex>+檔名冷門避人耳目，
+# 不是真的登入保護。改成掛owner_only_required真登入(跟/bni-credit同一套帳密)，資料本身不搬動，
+# 教練要更新資料時仍照原SOP改claude-brain/data/裡的腳本重跑，這裡只是多一層真的存取控管。
+_INVOICE_DATA_DIR = os.path.join(_THIS_DIR, "..", "claude-brain", "data")
+
+
+@app.route("/invoice-admin")
+@owner_only_required
+def invoice_admin_index():
+    return """<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>教練的開發票專用後台</title>
+    <style>
+    body{background:#0b0f19;color:#e2e8f0;font-family:'PingFang TC','Microsoft JhengHei',sans-serif;
+        display:flex;flex-direction:column;align-items:center;padding:60px 20px;}
+    h1{color:#00f0ff;text-shadow:0 0 15px rgba(0,240,255,.5);}
+    .card{background:#1a2333;border:1px solid #2d3748;border-radius:12px;padding:28px 36px;
+        margin:14px 0;width:100%;max-width:480px;text-decoration:none;color:#e2e8f0;display:block;}
+    .card:hover{border-color:#00f0ff;}
+    .card h2{margin:0 0 8px 0;color:#f59e0b;font-size:1.15rem;}
+    .card p{margin:0;color:#94a3b8;font-size:.88rem;line-height:1.6;}
+    </style></head><body>
+    <h1>教練的開發票專用後台</h1>
+    <a class="card" href="/invoice-admin/training"><h2>大樹教育・培訓費開票查詢</h2>
+        <p>培訓場次出席、統編/載具、電話、歷史發票比對。每月開票用，跟入會續約完全獨立。</p></a>
+    <a class="card" href="/invoice-admin/membership"><h2>聚寶盆・入會續約發票查詢</h2>
+        <p>2年完整入會/續約發票歷史，姓名比對電話/Email跟過往開票紀錄。一年開一次用。</p></a>
+    </body></html>""", 200, {"Content-Type": "text/html; charset=utf-8"}
+
+
+@app.route("/invoice-admin/training")
+@owner_only_required
+def invoice_admin_training():
+    path = os.path.join(_INVOICE_DATA_DIR, "bni_training_admin.html")
+    with open(path, encoding="utf-8") as f:
+        return f.read(), 200, {"Content-Type": "text/html; charset=utf-8"}
+
+
+@app.route("/invoice-admin/membership")
+@owner_only_required
+def invoice_admin_membership():
+    path = os.path.join(_INVOICE_DATA_DIR, "bni_membership_admin.html")
+    with open(path, encoding="utf-8") as f:
+        return f.read(), 200, {"Content-Type": "text/html; charset=utf-8"}
+
+
 @app.route("/bni-credit/<int:record_id>/status", methods=["POST"])
 @owner_only_required
 def bni_credit_update_status(record_id):

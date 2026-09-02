@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 BNI發票是兩套獨立系統(培訓費vs入會續約)+教練已提供全部資料不用再問(2026-09-03)](feedback_bni_invoice_two_independent_systems_sop.md) — 開票前直接查`/invoice-admin`兩個子頁，不問「資料你有嗎」；教練賈維斯期許再次強調
 - [🔧 多背景Agent平行共用同一Chrome分頁會互相搶navigate造成資料污染(2026-09-02)](reference_parallel_background_agents_shared_browser_contamination_2026-09-02.md) — 委派前先交代各自開專屬分頁+每筆核對編號才寫入，BNI信用証補公司欄位三批任務實戰教訓
 - [🔴🔴 CSS column-count多欄排版截圖不能用左右對齊直覺判斷DOM歸屬(2026-09-02)](feedback_column_layout_screenshot_misread_2026-09-02.md) — coach888截圖誤判教練改動內容，教練一句口述比截圖猜測更準確可靠
 - [🔧 FB粉專圖片貼文首次驗證可行+FB社團(Groups)因Meta政策全面鎖死一般App發文權限(2026-09-02)](reference_fb_page_image_post_vs_groups_limitation_2026-09-02.md) — curl multipart上傳圖片+caption，5個粉專實測permalink_url驗證上線；社團問題直接引用不用重查
