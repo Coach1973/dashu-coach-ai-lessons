@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS todos (
     remind_at TEXT,                      -- 提醒時間 YYYY-MM-DD HH:MM，選填，時間到會發Telegram
     completed INTEGER NOT NULL DEFAULT 0,
     reminder_sent INTEGER NOT NULL DEFAULT 0,
+    reminder_cron_id TEXT,               -- 對應的OpenClaw一次性cron job id，完成/刪除時要取消
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     completed_at TEXT
 );

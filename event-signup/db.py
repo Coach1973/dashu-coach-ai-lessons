@@ -24,6 +24,9 @@ def init_db() -> None:
     event_cols = {row["name"] for row in conn.execute("PRAGMA table_info(events)")}
     if "is_current" not in event_cols:
         conn.execute("ALTER TABLE events ADD COLUMN is_current INTEGER NOT NULL DEFAULT 0")
+    todo_cols = {row["name"] for row in conn.execute("PRAGMA table_info(todos)")}
+    if "reminder_cron_id" not in todo_cols:
+        conn.execute("ALTER TABLE todos ADD COLUMN reminder_cron_id TEXT")
     conn.commit()
     conn.close()
 

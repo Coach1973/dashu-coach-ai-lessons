@@ -10,6 +10,7 @@ import io
 import json
 import os
 import re
+import subprocess
 import urllib.error
 import urllib.request
 from datetime import date, datetime
@@ -1027,6 +1028,57 @@ def ai_art_assets(filename):
     return _serve_repo_file(AI_ART_REPO, filename)
 
 
+TODO_REMINDER_SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "todo_reminder_check.py"
+WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
+OPENCLAW_BIN = "/opt/homebrew/bin/openclaw"  # launchd服務的PATH不含homebrew，須用絕對路徑
+# openclaw本身是node script，launchd預設PATH(/usr/bin:/bin:/usr/sbin:/sbin)也找不到node，
+# 需要額外把homebrew/node安裝路徑塞進subprocess的環境變數
+_OPENCLAW_ENV = {**os.environ, "PATH": f"/opt/homebrew/bin:/Users/bymyway/.local/bin:{os.environ.get('PATH', '')}"}
+
+
+def _schedule_todo_reminder(todo_id, remind_at):
+    """待辦有填提醒時間時，註冊一個精確時間點的OpenClaw一次性cron（事件觸發，
+    不是每隔幾分鐘輪詢整張表——守則#07鐵律，2026-09-02 Stop hook攔下輪詢版本後改版）。
+    回傳cron job id，失敗回傳None（不擋待辦本身新增成功）。"""
+    if not remind_at:
+        return None
+    at_iso = remind_at.replace(" ", "T") + ":00"
+    try:
+        result = subprocess.run(
+            [
+                OPENCLAW_BIN, "cron", "create",
+                "--name", f"todo-reminder-{todo_id}",
+                "--at", at_iso,
+                "--tz", "Asia/Taipei",
+                "--command", f"python3 {TODO_REMINDER_SCRIPT} --todo-id {todo_id}",
+                "--command-cwd", str(WORKSPACE_ROOT),
+                "--no-deliver",
+            ],
+            capture_output=True, text=True, timeout=15, env=_OPENCLAW_ENV,
+        )
+        if result.returncode != 0:
+            print(f"[todo] 排程提醒失敗(todo_id={todo_id}): {result.stderr}", flush=True)
+            return None
+        data = json.loads(result.stdout)
+        return data.get("id")
+    except Exception as e:  # noqa: BLE001
+        print(f"[todo] 排程提醒發生例外(todo_id={todo_id}): {e}", flush=True)
+        return None
+
+
+def _cancel_todo_reminder(cron_id):
+    """取消尚未觸發的一次性提醒cron（待辦被完成或刪除時呼叫，避免多餘通知）。"""
+    if not cron_id:
+        return
+    try:
+        subprocess.run(
+            [OPENCLAW_BIN, "cron", "delete", cron_id],
+            capture_output=True, text=True, timeout=15, env=_OPENCLAW_ENV,
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[todo] 取消提醒cron失敗(cron_id={cron_id}): {e}", flush=True)
+
+
 def _todo_due_badge(due_date_str):
     """回傳到期日徽章的顏色分級跟文字，None代表沒設到期日。"""
     if not due_date_str:
@@ -1069,11 +1121,17 @@ def todo_add():
         due_date = (request.form.get("due_date") or "").strip() or None
         remind_at = (request.form.get("remind_at") or "").strip().replace("T", " ") or None
         conn = db.get_conn()
-        conn.execute(
+        cur = conn.execute(
             "INSERT INTO todos (title, notes, due_date, remind_at) VALUES (?, ?, ?, ?)",
             (title, notes, due_date, remind_at),
         )
+        todo_id = cur.lastrowid
         conn.commit()
+        if remind_at:
+            cron_id = _schedule_todo_reminder(todo_id, remind_at)
+            if cron_id:
+                conn.execute("UPDATE todos SET reminder_cron_id = ? WHERE id = ?", (cron_id, todo_id))
+                conn.commit()
         conn.close()
     return redirect(url_for("todo_page"))
 
@@ -1081,7 +1139,7 @@ def todo_add():
 @app.route("/todo/<int:todo_id>/toggle", methods=["POST"])
 def todo_toggle(todo_id):
     conn = db.get_conn()
-    row = conn.execute("SELECT completed FROM todos WHERE id = ?", (todo_id,)).fetchone()
+    row = conn.execute("SELECT completed, reminder_cron_id FROM todos WHERE id = ?", (todo_id,)).fetchone()
     if row:
         new_val = 0 if row["completed"] else 1
         completed_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S") if new_val else None
@@ -1090,6 +1148,9 @@ def todo_toggle(todo_id):
             (new_val, completed_at, todo_id),
         )
         conn.commit()
+        if new_val and row["reminder_cron_id"]:
+            # 完成待辦時，尚未觸發的提醒沒有意義了，取消掉避免多餘通知
+            _cancel_todo_reminder(row["reminder_cron_id"])
     conn.close()
     return redirect(url_for("todo_page"))
 
@@ -1097,6 +1158,9 @@ def todo_toggle(todo_id):
 @app.route("/todo/<int:todo_id>/delete", methods=["POST"])
 def todo_delete(todo_id):
     conn = db.get_conn()
+    row = conn.execute("SELECT reminder_cron_id FROM todos WHERE id = ?", (todo_id,)).fetchone()
+    if row and row["reminder_cron_id"]:
+        _cancel_todo_reminder(row["reminder_cron_id"])
     conn.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
     conn.commit()
     conn.close()
