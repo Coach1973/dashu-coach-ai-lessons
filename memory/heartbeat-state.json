@@ -5,7 +5,7 @@
     "weather": null,
     "telegramChannelOk": true,
     "telegramChannelProbeAt": "2026-09-02T17:14:00+08:00",
-    "coach_silence_sync": "2026-09-02T17:14:21.353229+08:00"
+    "coach_silence_sync": "2026-09-02T18:13:12.272694+08:00"
   },
   "v4_gates": {
     "gate1_currentlyBroken": false,
@@ -20,13 +20,13 @@
   },
   "heartbeatOk": true,
   "lastCoachMessageAt": "2026-09-02T17:02:16+08:00",
-  "coachSilentHours": 0.2,
-  "lastCycle": 725,
-  "cumulativeGreen": 90,
-  "cycleAt": "2026-09-02T17:14:00+08:00",
+  "coachSilentHours": 1.21,
+  "lastCycle": 726,
+  "cumulativeGreen": 91,
+  "cycleAt": "2026-09-02T18:15:09.620253+08:00",
   "systemSnapshot": {
     "coachSilentSince": "2026-09-02T17:02:16+08:00",
-    "coachSilentHours": 0.2
+    "coachSilentHours": 1.21
   },
-  "notes": "cycle=724 (16:12) error=⚠️⏰Cron failed / lastDur=160s / CE=1; cycle=725 (17:12) ok → 已恢復鐵證，v4.0 三關全 fail→不 announce"
+  "notes": "cycle=726 (18:12) status=ok → 本輪執行成功 = 已恢復鐵證；v4.0 三關全 fail → 不 announce（無會員功能壞 + 無 provider overload + cron 全綠）"
 }
