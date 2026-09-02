@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS cards (
     bni_note TEXT,               -- 選填備註，如「真誠分會」
     source_guest_id INTEGER REFERENCES guests(id),  -- 由guests表「媒合」按鈕
                                  -- 首次點擊時轉入的來賓，避免重複轉入同一人
+    uploaded_by TEXT,            -- 2026-09-02教練拍板：全站改需登入才能用，
+                                 -- 上傳名片時記錄登入者display_name，才知道是誰上傳的
     created_at TEXT DEFAULT (datetime('now'))
 );
 

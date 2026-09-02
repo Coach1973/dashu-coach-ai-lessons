@@ -85,6 +85,7 @@
   {% if c.email %}<div class="row">✉️ <a href="mailto:{{ c.email }}">{{ c.email }}</a></div>{% endif %}
   {% if c.line_id %}<div class="row">💬 LINE：{{ c.line_id }}</div>{% endif %}
   {% if c.address %}<div class="row">📍 {{ c.address }}</div>{% endif %}
+  {% if c.uploaded_by %}<div class="row" style="color:#999;font-size:12px;">👤 {{ c.uploaded_by }} 上傳</div>{% endif %}
   <div>
     {% if c.category %}<span class="tag">{{ c.category }}</span>{% endif %}
     {% for k in c.keywords %}<span class="tag">{{ k }}</span>{% endfor %}

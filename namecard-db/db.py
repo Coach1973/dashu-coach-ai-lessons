@@ -27,6 +27,8 @@ def init_db() -> None:
         conn.execute("ALTER TABLE cards ADD COLUMN bni_note TEXT")
     if "source_guest_id" not in existing_cols:
         conn.execute("ALTER TABLE cards ADD COLUMN source_guest_id INTEGER REFERENCES guests(id)")
+    if "uploaded_by" not in existing_cols:
+        conn.execute("ALTER TABLE cards ADD COLUMN uploaded_by TEXT")
     conn.execute(
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_cards_source_guest_id "
         "ON cards(source_guest_id) WHERE source_guest_id IS NOT NULL"
@@ -59,10 +61,11 @@ def insert_split_marker(conn: sqlite3.Connection, image_filename: str) -> int:
     return cur.lastrowid
 
 
-def insert_card_pending(conn: sqlite3.Connection, image_filename: str) -> int:
+def insert_card_pending(conn: sqlite3.Connection, image_filename: str, uploaded_by: str = None) -> int:
     """上傳當下先佔位存檔名，欄位皆空、狀態pending，實際辨識交給背景worker慢慢處理"""
     cur = conn.execute(
-        "INSERT INTO cards (image_filename, status) VALUES (?, 'pending')", (image_filename,)
+        "INSERT INTO cards (image_filename, status, uploaded_by) VALUES (?, 'pending', ?)",
+        (image_filename, uploaded_by),
     )
     conn.commit()
     return cur.lastrowid
