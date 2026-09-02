@@ -38,11 +38,44 @@
   "systemSnapshot": {
     "coachLastMessageAt": "2026-09-02T20:56:24+08:00",
     "coachSilentSince": "2026-09-02T20:56:24+08:00",
-    "coachSilentHours": 2.3
+    "coachSilentHours": 4.3,
+    "lastHealthCheck": {
+      "cycle": 733,
+      "ts": "2026-09-03T01:12:52.442933+08:00",
+      "status": "ok",
+      "silentHours": 4.3,
+      "silentSince": "2026-09-02T20:56:24+08:00",
+      "tgOk": true,
+      "tgBot": "openclaw_macbook4_bot",
+      "tgChat": "6124913915",
+      "consecutiveErrors": 0,
+      "cronActive": 1,
+      "cronOk": 1,
+      "cronError": 0,
+      "env": {
+        "soul3": true,
+        "repo1": 10,
+        "repo2": 8,
+        "lock": 0
+      },
+      "heartbeatPending": 0,
+      "autofix": [],
+      "gates": {
+        "gate1_currentlyBroken": false,
+        "gate2_providerOverload": false,
+        "gate3_affectsWork": false,
+        "verdict": "all_fail → no_announce"
+      },
+      "cumulativeGreen": 97,
+      "commitSkipped": true,
+      "commitReason": "2026-07-05 教練拍板由 23:05 三機總結統一備份"
+    }
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-02T23:12:01+08:00",
-    "cycle_731_complete": "2026-09-02T23:12:05+08:00"
+    "coach_silence_sync": "2026-09-03T01:12:34.657064+08:00",
+    "cycle_731_complete": "2026-09-02T23:12:05+08:00",
+    "healthcheck": "2026-09-03T01:12:52.442933+08:00",
+    "telegram_channel": "2026-09-03T01:12:52.442933+08:00"
   },
   "notes": "cycle=731 健康檢查：cron 全綠（CE=0，本任務 lastStatus=ok）、HEARTBEAT.md ⬜ 真實待辦 0 項、Telegram 通道探針 ok=true、SOUL.md 三份齊全、Repo1=23/Repo2=4（皆 < 50 警戒線）、無 .! 鎖定檔。v4.0 三關全 fail（無錯誤 + 本輪成功 + 不影響教練/會員工作）→ 靜默不通報。"
 }

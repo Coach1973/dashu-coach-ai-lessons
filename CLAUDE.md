@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-02 20:59:54**
+> **最後同步：2026-09-03 01:40:52**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | ✅ | **`/bni-credit`補公司欄位：120筆(後修正為111筆)全數完成，312筆該查的全部有結果** | ✅2026-09-02本場完成 | 委派3個背景Agent平行處理，過程發現多Agent共用同一Chrome分頁會互相搶navigate造成資料污染，補指示各自開專屬分頁後全數完成。最終：active/transferred/redeemed共312筆，110筆補上真實公司名稱，2筆(張仕賢/林薔薇)確認官方頁面本身空白，0筆遺漏。commit待查(namecard-db資料庫直改，非git追蹤)。記憶`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`。 |
 | ✅ | **coach888新增「最近刪除」回收桶+「BNI最近常用」併入「BNI專用」** | ✅2026-09-02本場完成 | 教練要求「最近刪除」功能(像資源回收桶，刪除不直接消失可勾選移回)，已上線並用瀏覽器實測驗證。教練本機file://編輯內容因localStorage無法自動救回，教練口述澄清「把1移到5那邊，下面都沒動」，直接改正式檔案(11項併入BNI專用，該分類22項)，已用Chrome開給教練確認。commit`817691f`(最近刪除)+`731ffad`(分類合併)。教訓：CSS column-count多欄排版截圖不能用左右對齊直覺判斷歸屬，記憶`feedback_column_layout_screenshot_misread_2026-09-02`。**以後coach888編輯一律用`https://coach1973.github.io/coach888/`正式網址，不再開本機檔案**。 |
-| 🟡 | **9/5+9/16兩場活動FB粉專行銷貼文：9/5已發5個粉專，9/16等教練補圖** | ⏳待教練提供9/16圖片 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練用文案自製9/5活動圖(`D:\Users\Downloads\export (13).jpg`)後，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布，**先發K R養生廚房單一粉專讓教練驗收效果**，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。5則貼文皆已用`permalink_url`欄位查證真實上線，非僅API回傳成功假設。**下一步**：教練9/16圖片做好後，直接問要發哪幾個粉專即可套用同一套流程。 |
+| ✅ | **9/5+9/16兩場活動FB粉專行銷貼文：兩場皆已發滿5個粉專，全數用permalink_url驗證上線** | ✅2026-09-02本場完成 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練分兩次自製活動圖(`D:\Users\Downloads\export (13).jpg`＝9/5、`export (14).jpg`＝9/16)，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布。**9/5**：先發K R養生廚房單一粉專讓教練驗收效果，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。**9/16**：教練問「KR養生廚房算不算」，軍師指出該粉專是9/5台南場地專屬、跟9/16高雄場無直接關係先確認，教練回覆「都發」，5個粉專(含KR養生廚房)全數發布。**兩場合計10則貼文皆已用`permalink_url`欄位查證真實上線**，非僅API回傳成功假設。教練同場詢問發文token消耗，已說明：發文動作本身(curl呼叫API)幾乎不耗token(等同執行一行指令非AI生成)，真正耗token的是讀圖確認內容+對話討論文字，跟粉專數量無關。 |
 | ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已部署上線，提醒機制改事件觸發不輪詢** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信暫緩，v167教練說「動手做todo系統吧」後部署：①`git pull`②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功。**部署完成後Stop hook守則#07攔下最初的每15分鐘輪詢cron設計**，查證確認可以真正事件觸發：remind_at是已知未來時間點，改成新增待辦時用`openclaw cron create --at`當場排一個精確時刻的一次性cron（只查這一筆待辦），完成/刪除待辦時同步取消尚未觸發的cron，不再需要每隔幾分鐘重複掃描整張表。過程修好一個真bug：launchd服務預設PATH找不到openclaw(homebrew)跟node(~/.local/bin)，subprocess呼叫需額外傳入補齊PATH的`env`參數。已用真實流程完整驗證：一次性cron精確觸發+標記完成正確取消+真的等到排定時間觸發、Telegram收到通知、reminder_sent寫回、cron自動deleteAfterRun清除。已回信`inbox/lenovo/`+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。commit`58b3f0e46`+`527e907ce`（部署）→`0f241ce4f`（改事件觸發）。記憶`reference_launchd_subprocess_missing_path_2026-09-02`。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
 | 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
@@ -446,6 +446,34 @@
 
 ## 🔑 本場commit
 外層repo：`d959b039`（全部釋放hook）。`workspace`：`b8e40c824`（全部釋放腳本+接力棒更新）。`coach888`：`817691f`（最近刪除功能）+`731ffad`（BNI最近常用併入BNI專用）。記憶：`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`+`feedback_column_layout_screenshot_misread_2026-09-02`。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v170（聯想Windows Sonnet 5，9/16活動FB貼文發滿5個粉專，9/5+9/16行銷任務全數結案）
+
+> 建立時間：2026-09-02 22:14 ~ 23:41（台灣時間）
+> 上一棒：v169（Mac終端機，全部釋放上線+/bni-credit補公司欄位312筆完成+coach888最近刪除功能）
+> 本棒主軸：**教練9/16活動圖片做好，延續v168同一套curl multipart流程發到5個粉專，教練確認KR養生廚房要不要一起發後回覆「都發」，兩場活動行銷任務至此全數結案；教練順口問發文token消耗，已說明清楚。**
+
+## 🎯 本場戰果
+
+### 1. 9/16活動圖片確認+發文範圍二次確認
+教練回報9/16圖片(`export (14).jpg`)也在下載資料夾，軍師自行到D槽抓取讀取確認：內容跟核准文案逐字對應(降門檻款/流水席/日期時間地點/票價/CTA連結皆為`event.bymyway.com/ai-art/`最新版)。發文前主動提出一個確認點：KR養生廚房是9/5台南場地的專屬粉專，跟9/16高雄場沒有直接地緣關係，先問教練是否要排除，教練回覆「都發」——即5個粉專(含KR養生廚房)全數發布，不因活動地點跟粉專屬性不完全對應而自行排除。
+
+### 2. 9/16貼文發滿5個粉專，全數permalink_url驗證上線
+沿用v168同一套技術流程(`POST /{page-id}/photos`帶`source`+`caption`+`access_token`)，一次性發送大台南策展中心/K R養生廚房/海餅乾俱樂部/跨界美.術.管/大樹教練共5個粉專，逐一用`permalink_url`欄位查證真實上線非僅信任API回傳的`post_id`。**兩場活動(9/5+9/16)合計10則貼文全部驗證成功**，教練待辦表該項目已改標✅結案。
+
+### 3. 回答教練發文token消耗疑問
+教練問這樣發文會不會很耗token。已說明：發文動作本身是用curl直接呼叫Facebook Graph API(等同執行一行指令)，不是叫AI模型生成內容，幾乎不耗token；真正耗token的是讀圖確認內容+對話討論文案的過程，跟粉專數量多寡無關——同一張圖不管發5個還是50個粉專，token消耗差異都很小。
+
+## ⚠️ 下一場開工先做
+1. **跨機信箱仍有1封未讀**：`20260831-1858_acer-to-mac-lenovo_status-report-and-workspace-clone-bug.md`，教練未指示處理，繼續掛著等教練說「讀信」。
+2. 9/5+9/16FB行銷任務已完整結案，教練若後續有其他場次要推廣，直接套用v168/v170建立的流程(自行取圖→確認文案內容對應→問清楚發文範圍有無需要排除的粉專→curl multipart發布→permalink_url逐一驗證)。
+3. v161之前已知舊待辦（FB粉專商家驗證後續、`/bni-credit`頁面顯示效果、12月主題培訓內容等）本場未觸及，繼續掛著。
+4. **本場無新教訓寫入試金石/memory**——流程順暢複用既有SOP，教練發文範圍的確認屬於當場澄清、非AI犯錯。
+
+## 🔑 本場commit
+`workspace`：本場v170接力棒本身。`fb_automation`：本場僅本機臨時檔案操作(用完即刪)，無新commit，沿用既有`page_tokens_2026-09-01.json`。
 
 
 ---
