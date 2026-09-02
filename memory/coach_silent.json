@@ -1,8 +1,7 @@
 {
-  "coachLastMessageAt": "2026-09-03T01:58:29+08:00",
-  "coachSilentSince": "2026-09-03T01:58:29+08:00",
-  "coachSilentHours": 0.23,
-  "source": "healthcheck_cycle=734_truth",
-  "fetchedAt": "2026-09-03T02:12:25+08:00",
-  "cycle": 734
+  "coachSilentSince": "2026-09-03T06:06:06+08:00",
+  "coachSilentHours": 0.1,
+  "syncedAt": "2026-09-03T06:12:53+08:00",
+  "source": "sync_coach_last_message.sh",
+  "freshValue": true
 }

@@ -1,81 +1,28 @@
 {
-  "lastCheck": {
-    "telegramChannel": 1788372749837,
-    "cron": 1788372749837,
-    "environment": 1788372749837,
-    "heartbeatTodos": 1788372749837
-  },
+  "version": "v4.0-3gates",
+  "lastCheckAt": "2026-09-03T06:12:53+08:00",
+  "cycle": 738,
+  "coachSilentSince": "2026-09-03T06:06:06+08:00",
+  "coachSilentHours": 0.1,
+  "cronJobsTotal": 1,
+  "cronJobsOk": 1,
+  "cronCE3Plus": 0,
+  "cronTimeoutDanger": 0,
+  "cronAuthFail": 0,
   "telegramChannelOk": true,
-  "telegramChannelProbeSource": "scripts/telegram_channel_probe.sh",
-  "lastTelegramProbeAt": 1788372749837,
-  "currentCycle": 734,
-  "currentCycleTimestamp": "2026-09-03T02:12:29+08:00",
-  "cumulativeGreen": 98,
-  "cronStatus": {
-    "totalActive": 1,
-    "withConsecutiveErrors": 0,
-    "withTimeoutRisk": 0,
-    "withAuthError": 0
-  },
-  "heartbeatTodos": 0,
-  "environment": {
-    "soulMdTriple": "ok",
-    "soulMdSizes": [
-      9015,
-      1851,
-      22220
-    ],
-    "repo1Status": 23,
-    "repo2Status": 16,
-    "lockFiles": 0
-  },
-  "v4ThreeGateCheck": {
-    "gate1StillBroken": "fail",
-    "gate2ProviderOverload": "fail",
-    "gate3AffectsWork": "fail",
-    "verdict": "all-fail → 靜默不通報"
-  },
+  "telegramProbeAt": "2026-09-03T06:12:53+08:00",
+  "v4Gate1_nowBroken": false,
+  "v4Gate2_providerOverload": false,
+  "v4Gate3_affectsWork": false,
+  "verdict": "quiet-pass",
+  "announce": false,
+  "cumulativeGreen": 102,
+  "cumulativeGreenNote": "v4.0 三關上線以來第 102 次安靜通過",
   "systemSnapshot": {
-    "coachLastMessageAt": "2026-09-02T20:56:24+08:00",
-    "coachSilentSince": "2026-09-03T01:58:29+08:00",
-    "coachSilentHours": 0.23,
-    "lastHealthCheck": {
-      "cycle": 734,
-      "ts": "2026-09-03T02:12:29+08:00",
-      "status": "ok",
-      "silentHours": 0.23,
-      "silentSince": "2026-09-03T01:58:29+08:00",
-      "tgOk": true,
-      "tgBot": "openclaw_macbook4_bot",
-      "tgChat": "6124913915",
-      "consecutiveErrors": 0,
-      "cronActive": 1,
-      "cronOk": 1,
-      "cronError": 0,
-      "env": {
-        "soul3": true,
-        "repo1": 23,
-        "repo2": 16,
-        "lock": 0
-      },
-      "heartbeatPending": 0,
-      "autofix": [],
-      "gates": {
-        "gate1_currentlyBroken": false,
-        "gate2_providerOverload": false,
-        "gate3_affectsWork": false,
-        "verdict": "all_fail → no_announce"
-      },
-      "cumulativeGreen": 98,
-      "commitSkipped": true,
-      "commitReason": "2026-07-05 教練拍板由 23:05 三機總結統一備份"
-    }
+    "coachSilentSince": "2026-09-03T06:06:06+08:00",
+    "coachSilentHours": 0.1
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-03T02:12:29+08:00",
-    "cycle_731_complete": "2026-09-02T23:12:05+08:00",
-    "healthcheck": "2026-09-03T02:12:29+08:00",
-    "telegram_channel": "2026-09-03T02:12:29+08:00"
-  },
-  "notes": "cycle=734 健康檢查：cron 全綠（CE=0，本任務 lastStatus=ok）、HEARTBEAT.md ⬜ 真實待辦 0 項、Telegram 通道探針 ok=true、SOUL.md 三份齊全、Repo1=23/Repo2=16（皆 < 50 警戒線）、無 .! 鎖定檔。v4.0 三關全 fail（無錯誤 + 本輪成功 + 不影響教練/會員工作）→ 靜默不通報。"
+    "coach_silence_sync": "2026-09-03T06:12:53+08:00"
+  }
 }
