@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🎯 | **教練待辦提醒系統(event.bymyway.com/todo)：聯想程式碼已完成，需Mac執行部署5步驟** | ⏳待新對話框執行 | v165聯想軍師已完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。本場(v166)Mac已收到跨機信讀完內容，教練明確指示「先讀不執行，我新開對話再執行」，信件保留在`inbox/mac/`未歸檔。**下次開工步驟**：①`git pull`②重啟`com.coach.event-webapp`③`curl https://event.bymyway.com/todo`+瀏覽器實測新增/切換/刪除④註冊每15分鐘的OpenClaw cron跑`todo_reminder_check.py`（先`--dry-run`）⑤確認coach888連結能點進去⑥回信`inbox/lenovo/`告知結果+把信移到`outbox/2026-09/`。 |
+| ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已完成部署5步驟並全數驗證** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信但依教練指示暫緩，v167教練說「動手做todo系統吧」後正式部署：①`git pull`已最新②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功，測試資料已清乾淨④註冊OpenClaw cron`todo-reminder-check`(`3b2f5274-b4fd-4813-9ea7-86d20708c23f`)每15分鐘跑一次，比照`bni-credit-expiry-reminder`模式(`delivery.mode:none`，腳本自己用`notify_coach.sh`發送)，`--dry-run`+`cron run --wait`皆驗證exit code 0⑤coach888連結curl確認可點。已回信`inbox/lenovo/`告知完成+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
 | 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
 | 🎯🎯 | **BNI-Training來賓排行榜(guests.html)+培訓總覽(index.html)：三分會PALMS官方資料+全區排名+單分會排名皆已上線** | ✅2026-09-01 v162完成 | `chapters.bymyway.com/guests`+`chapters.bymyway.com/training`(直接讀BNI-Training活repo渲染)。資料源改用PALMS摘要報表(比「地區-查看來賓」明細報表準確，教練提供20+份不同時間窗快照)，月數標籤以各分會實際成立月封頂。教練驗收關鍵數字：真鑽104個月郭政輝303/康文彬254皆對上。過程三輪重做+chapters.bymyway.com按鈕位置一次做錯，詳見v162完整教訓。 |
@@ -402,3 +402,29 @@
 
 ## 🔑 本場commit
 `namecard-db`（workspace repo內）：`db21d10a5`（guest_visits來賓完整訪問歷程）→`bb25684eb`（帳號審核第一版，跟進限定）→`1aa5ddfba`（帳號審核最終版，全站需登入+uploaded_by）。`coach888`：`f35fc2f`（帳號審核直達連結）+合併`5aff51c`→`99dcff3`（批量搬移+改名功能，DNA出席改名）。記憶：新增`project_namecard_login_gate_and_guest_history_2026-09-02`+更新`project_namecard_manual_trigger_matching_design_2026-08-27`。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v167（Mac終端機 Sonnet 5，教練待辦提醒系統正式部署上線）
+
+> 建立時間：2026-09-02 17:12 ~ 17:26（台灣時間）
+> 上一棒：v166（Mac終端機，名片系統來賓歷程+帳號審核+coach888批量搬移+RustDesk診斷）
+> 本棒主軸：**教練說「動手做todo系統吧」，完成聯想軍師v165交辦的待辦提醒系統部署5步驟，全數真實驗證通過。**
+
+## 🎯 本場戰果
+
+聯想v165已寫好程式碼待Mac部署，本場正式執行：
+1. `git pull`確認`todos`表schema/4個路由/`todo.html`/`todo_reminder_check.py`皆為最新。
+2. 重啟`com.coach.event-webapp`，`db.init_db()`自動幫`event.db`補上`todos`表。
+3. 真實HTTP測試：`GET /todo`回200；新增一筆測試待辦寫入DB成功；切換完成`completed=1`成功；刪除歸零成功。瀏覽器`get_page_text`確認頁面渲染正確（「特助主動提醒版」標題+空清單提示）。測試資料已清乾淨，正式站現為空清單。
+4. 註冊OpenClaw cron `todo-reminder-check`（`3b2f5274-b4fd-4813-9ea7-86d20708c23f`），每15分鐘一次，比照既有`bni-credit-expiry-reminder`模式建立（`--command`+`--command-cwd`，`--no-deliver`使delivery.mode=none，因為腳本自己用`notify_coach.sh`發送不靠OpenClaw announce）。`--dry-run`跑過+`cron run --wait`實際觸發exit code 0確認可動。
+5. coach888正式站curl確認`event.bymyway.com/todo`連結存在。
+
+已回信`cross-agent/inbox/lenovo/20260902-1725_mac-to-lenovo_todo-system-deployed-successfully.md`告知完成細節，原始委派信歸檔至`cross-agent/outbox/2026-09/`。
+
+## ⚠️ 下一場開工先做
+- 教練若已輸入真實待辦事項，可驗證到期提醒cron是否有正確送達Telegram。
+- v161之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、12月主題培訓內容等）本場未觸及。
+
+## 🔑 本場commit
+（下方commit待補）
