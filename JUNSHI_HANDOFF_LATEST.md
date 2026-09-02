@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已完成部署5步驟並全數驗證** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信但依教練指示暫緩，v167教練說「動手做todo系統吧」後正式部署：①`git pull`已最新②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功，測試資料已清乾淨④註冊OpenClaw cron`todo-reminder-check`(`3b2f5274-b4fd-4813-9ea7-86d20708c23f`)每15分鐘跑一次，比照`bni-credit-expiry-reminder`模式(`delivery.mode:none`，腳本自己用`notify_coach.sh`發送)，`--dry-run`+`cron run --wait`皆驗證exit code 0⑤coach888連結curl確認可點。已回信`inbox/lenovo/`告知完成+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。 |
+| ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已部署上線，提醒機制改事件觸發不輪詢** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信暫緩，v167教練說「動手做todo系統吧」後部署：①`git pull`②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功。**部署完成後Stop hook守則#07攔下最初的每15分鐘輪詢cron設計**，查證確認可以真正事件觸發：remind_at是已知未來時間點，改成新增待辦時用`openclaw cron create --at`當場排一個精確時刻的一次性cron（只查這一筆待辦），完成/刪除待辦時同步取消尚未觸發的cron，不再需要每隔幾分鐘重複掃描整張表。過程修好一個真bug：launchd服務預設PATH找不到openclaw(homebrew)跟node(~/.local/bin)，subprocess呼叫需額外傳入補齊PATH的`env`參數。已用真實流程完整驗證：一次性cron精確觸發+標記完成正確取消+真的等到排定時間觸發、Telegram收到通知、reminder_sent寫回、cron自動deleteAfterRun清除。已回信`inbox/lenovo/`+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。commit`58b3f0e46`+`527e907ce`（部署）→`0f241ce4f`（改事件觸發）。記憶`reference_launchd_subprocess_missing_path_2026-09-02`。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
 | 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
 | 🎯🎯 | **BNI-Training來賓排行榜(guests.html)+培訓總覽(index.html)：三分會PALMS官方資料+全區排名+單分會排名皆已上線** | ✅2026-09-01 v162完成 | `chapters.bymyway.com/guests`+`chapters.bymyway.com/training`(直接讀BNI-Training活repo渲染)。資料源改用PALMS摘要報表(比「地區-查看來賓」明細報表準確，教練提供20+份不同時間窗快照)，月數標籤以各分會實際成立月封頂。教練驗收關鍵數字：真鑽104個月郭政輝303/康文彬254皆對上。過程三輪重做+chapters.bymyway.com按鈕位置一次做錯，詳見v162完整教訓。 |
@@ -417,14 +417,18 @@
 1. `git pull`確認`todos`表schema/4個路由/`todo.html`/`todo_reminder_check.py`皆為最新。
 2. 重啟`com.coach.event-webapp`，`db.init_db()`自動幫`event.db`補上`todos`表。
 3. 真實HTTP測試：`GET /todo`回200；新增一筆測試待辦寫入DB成功；切換完成`completed=1`成功；刪除歸零成功。瀏覽器`get_page_text`確認頁面渲染正確（「特助主動提醒版」標題+空清單提示）。測試資料已清乾淨，正式站現為空清單。
-4. 註冊OpenClaw cron `todo-reminder-check`（`3b2f5274-b4fd-4813-9ea7-86d20708c23f`），每15分鐘一次，比照既有`bni-credit-expiry-reminder`模式建立（`--command`+`--command-cwd`，`--no-deliver`使delivery.mode=none，因為腳本自己用`notify_coach.sh`發送不靠OpenClaw announce）。`--dry-run`跑過+`cron run --wait`實際觸發exit code 0確認可動。
+4. 起初註冊OpenClaw cron `todo-reminder-check`每15分鐘檢查一次，比照`bni-credit-expiry-reminder`模式建立。**部署完成回報教練後，Stop hook守則#07 deterministic check攔下這個輪詢設計**，查證發現remind_at是已知的未來時間點，可以做到真正事件觸發：改成`/todo/add`當場用`openclaw cron create --at <remind_at>`排一個精確時刻的一次性cron（只查這一筆待辦id），`/todo/<id>/toggle`(完成時)+`/todo/<id>/delete`同步呼叫`cron delete`取消尚未觸發的提醒，`todos`表新增`reminder_cron_id`欄位追蹤。已刪除原本的每15分鐘recurring cron。
 5. coach888正式站curl確認`event.bymyway.com/todo`連結存在。
+
+**改事件觸發過程修好一個真bug**：launchd服務(`com.coach.event-webapp`)預設PATH只有`/usr/bin:/bin:/usr/sbin:/sbin`，Flask路由用`subprocess.run(["openclaw",...])`直接找不到指令；補絕對路徑`/opt/homebrew/bin/openclaw`後又因openclaw本身是node script、PATH仍找不到node而失敗；最後在`subprocess.run`額外傳入補齊PATH的`env`參數才成功。已寫入記憶`reference_launchd_subprocess_missing_path_2026-09-02`（其他launchd服務要shell out呼叫homebrew/node工具時可參考）。
+
+**已用真實流程完整驗證事件觸發機制**：①單純測試`openclaw cron create --at`精確時間點觸發(用`touch`驗證檔案準時出現)②新增待辦帶remind_at→`reminder_cron_id`正確寫入資料庫→`openclaw cron show`確認排程存在③標記完成→cron正確被取消(`cron show`查無此job)④讓另一筆真的等到排定時間觸發→`reminder_sent`正確寫回1、Telegram真的收到通知、cron因`deleteAfterRun`自動消失。所有測試資料已清除，正式站`todos`表歸零。
 
 已回信`cross-agent/inbox/lenovo/20260902-1725_mac-to-lenovo_todo-system-deployed-successfully.md`告知完成細節，原始委派信歸檔至`cross-agent/outbox/2026-09/`。
 
 ## ⚠️ 下一場開工先做
-- 教練若已輸入真實待辦事項，可驗證到期提醒cron是否有正確送達Telegram。
+- 教練若已輸入真實待辦事項，可驗證一次性提醒cron是否有在排定的精確時刻正確送達Telegram。
 - v161之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、12月主題培訓內容等）本場未觸及。
 
 ## 🔑 本場commit
-`workspace`：`58b3f0e46`（本場v167接力棒+cross-agent回信歸檔）。無其他repo變動（純部署/驗證，不涉及程式碼改動）。
+`workspace`：`58b3f0e46`+`527e907ce`（部署+接力棒）→`0f241ce4f`（改事件觸發，含`event-signup/app.py`+`db.py`+`schema.sql`+`scripts/todo_reminder_check.py`）+cross-agent回信歸檔。記憶：`reference_launchd_subprocess_missing_path_2026-09-02`。
