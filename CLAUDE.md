@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-02 17:15:12**
+> **最後同步：2026-09-02 17:15:17**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -414,6 +414,32 @@
 
 ## 🔑 本場commit
 `namecard-db`（workspace repo內）：`db21d10a5`（guest_visits來賓完整訪問歷程）→`bb25684eb`（帳號審核第一版，跟進限定）→`1aa5ddfba`（帳號審核最終版，全站需登入+uploaded_by）。`coach888`：`f35fc2f`（帳號審核直達連結）+合併`5aff51c`→`99dcff3`（批量搬移+改名功能，DNA出席改名）。記憶：新增`project_namecard_login_gate_and_guest_history_2026-09-02`+更新`project_namecard_manual_trigger_matching_design_2026-08-27`。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v167（Mac終端機 Sonnet 5，教練待辦提醒系統正式部署上線）
+
+> 建立時間：2026-09-02 17:12 ~ 17:26（台灣時間）
+> 上一棒：v166（Mac終端機，名片系統來賓歷程+帳號審核+coach888批量搬移+RustDesk診斷）
+> 本棒主軸：**教練說「動手做todo系統吧」，完成聯想軍師v165交辦的待辦提醒系統部署5步驟，全數真實驗證通過。**
+
+## 🎯 本場戰果
+
+聯想v165已寫好程式碼待Mac部署，本場正式執行：
+1. `git pull`確認`todos`表schema/4個路由/`todo.html`/`todo_reminder_check.py`皆為最新。
+2. 重啟`com.coach.event-webapp`，`db.init_db()`自動幫`event.db`補上`todos`表。
+3. 真實HTTP測試：`GET /todo`回200；新增一筆測試待辦寫入DB成功；切換完成`completed=1`成功；刪除歸零成功。瀏覽器`get_page_text`確認頁面渲染正確（「特助主動提醒版」標題+空清單提示）。測試資料已清乾淨，正式站現為空清單。
+4. 註冊OpenClaw cron `todo-reminder-check`（`3b2f5274-b4fd-4813-9ea7-86d20708c23f`），每15分鐘一次，比照既有`bni-credit-expiry-reminder`模式建立（`--command`+`--command-cwd`，`--no-deliver`使delivery.mode=none，因為腳本自己用`notify_coach.sh`發送不靠OpenClaw announce）。`--dry-run`跑過+`cron run --wait`實際觸發exit code 0確認可動。
+5. coach888正式站curl確認`event.bymyway.com/todo`連結存在。
+
+已回信`cross-agent/inbox/lenovo/20260902-1725_mac-to-lenovo_todo-system-deployed-successfully.md`告知完成細節，原始委派信歸檔至`cross-agent/outbox/2026-09/`。
+
+## ⚠️ 下一場開工先做
+- 教練若已輸入真實待辦事項，可驗證到期提醒cron是否有正確送達Telegram。
+- v161之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、12月主題培訓內容等）本場未觸及。
+
+## 🔑 本場commit
+（下方commit待補）
 
 
 ---
