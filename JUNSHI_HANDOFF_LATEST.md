@@ -439,3 +439,38 @@
 
 ## 🔑 本場commit
 `coach888`：`c65712d`（BNI最近常用置頂+分區順序調整）→`a8e93cd`（補guests/training路由+排版改column-count:2）。`workspace`：本場v164接力棒本身。
+
+---
+
+# 軍師接力棒 · 2026-09-02 v165（聯想Windows Sonnet 5，新增「大樹教練待辦事項」系統，事碼已完成待Mac部署上線）
+
+> 建立時間：2026-09-02 12:56 ~ 13:40（台灣時間）
+> 上一棒：v164（聯想Windows，coach888作品總覽表重整）
+> 本棒主軸：**教練交辦仿Microsoft To Do的個人待辦提醒系統，要嵌進作品總覽獨立分頁+到期主動發Telegram提醒。程式碼已寫完、本機測試通過，但這台機器碰不到event.bymyway.com的正式服務，需要Mac那邊pull+重啟+註冊cron才算真正上線。**
+
+## 🎯 本場戰果
+
+### 1. 待辦事項系統程式碼完成，路由掛在event-signup（不新增獨立子網域）
+教練確認三個方向：①放coach888獨立分頁（不擠進首頁）②核心夠用版（標題/到期日/提醒時間/完成/備註，先不做子步驟/重複規則）③提醒沿用教練個人Telegram通道(`chat_id 6124913915`，跟mentor100/信用証到期提醒同一條)。比照既有bymyway動態渲染架構，掛在`event-signup`這支24小時跑的Flask app底下（不新增子網域/Tunnel/launchd，同一套「降低服務被遺忘風險」邏輯）：
+- `schema.sql`新增`todos`表
+- `app.py`新增`/todo`(列表+新增表單)、`/todo/add`、`/todo/<id>/toggle`、`/todo/<id>/delete`四個路由，到期日徽章分四級（逾期紅/今天橘/3天內金/其餘灰）
+- `templates/todo.html`新模板，沿用`wheel.html`同款深色主題CSS變數
+- `scripts/todo_reminder_check.py`：獨立cron腳本，比照`bni_credit_expiry_reminder.py`同款設計（查remind_at到期未通知項目→`notify_coach.sh`發送→成功才寫回`reminder_sent`，避免送達失敗卻誤記已通知）
+
+### 2. 本機測試方法+驗證結果
+這台機器沒有正式`event.db`（只在Mac上是活的），用舊備份`event.db.bak-before-session-admin-20260823-085851`複製成臨時測試db、`EVENT_PORT=5099 python app.py`起本機Flask dev server，經由瀏覽器/curl實測：新增待辦（真實表單送出，含中文標題/備註/到期日/提醒時間）、到期徽章正確判斷「已逾期13天」、完成勾選切換（含已完成清單展開/取消完成）、刪除，全部正常；`todo_reminder_check.py --dry-run`正確抓到到期未通知項目並組出訊息。測試完已刪除臨時db，git status確認乾淨才commit。過程中發現`print()`遇到emoji在這台Windows主控台的cp950 codepage會UnicodeEncodeError（純Windows console限制，Mac預設UTF-8不會發生），順手加了`sys.stdout.reconfigure(encoding="utf-8")`防呆。
+
+### 3. coach888作品總覽新增連結，過程中合併衝突+意外揪出真的資料遺失
+新增「大樹教練待辦事項（特助主動提醒版）」到「四、bymyway自架版」分區（第6項），順手修正該分區ai-talk項目殘留的過時文字「9/22台南場更新中」（已於9/1由Mac完成上線，見v153/v155）。push時發現遠端同時有另一場session上線了收合/刪除項目/新增項目的編輯UI功能，手動解衝突保留兩邊改動。**過程中意外發現「大樹常用」分區的`BNI-Training`(BNI培訓紀錄總資料庫)整筆消失**，但該分區仍標「17項」跟實際16項目對不上——判斷是那次UI升級測試「刪除項目」按鈕時誤刪、複製排序貼回AI固化時沒發現少一筆，非教練或任何人刻意移除，已補回並確認全部8個分區「宣告項目數＝實際項目數＝連續編號」三者一致才收工。
+
+## ⚠️ 下一場開工先做（Mac優先，這是本棒唯一待完成的事）
+**`/todo`要真正上線，需要有Mac終端機存取權限的軍師做完以下步驟**（這台聯想機器碰不到`event.bymyway.com`正式服務跟Mac的OpenClaw cron系統）：
+1. `cd ~/.openclaw/workspace && git pull`（拉到本棒的`todos`表schema+四個路由+`todo.html`+`todo_reminder_check.py`）
+2. 重啟`com.coach.event-webapp`（`launchctl kickstart -k`或教練慣用指令）——`db.init_db()`會自動幫`event.db`補上`todos`表，不用手動下SQL
+3. `curl https://event.bymyway.com/todo`確認200，瀏覽器實測新增一筆待辦+切換完成+刪除，跟本機測試流程一樣跑一次
+4. 註冊OpenClaw cron，每15分鐘跑一次`python3 ~/.openclaw/workspace/scripts/todo_reminder_check.py`（比照信用証提醒cron`8211e054`的建法），先用`--dry-run`確認邏輯正常再拿掉
+5. 完成後回coach888確認`/todo`連結真的能點得進去，這棒才算真正結案
+**教練尚未提供任何真實待辦事項**，上線後是空清單，等教練自己輸入第一筆。
+
+## 🔑 本場commit
+`workspace`：`57d53268`（todos表+路由+模板+cron腳本）→`14d51a67`（pull merge，含namecard-db其他session的並行改動）。`coach888`：`54620ec`（新增待辦連結+ai-talk文字修正）→`0119f76`（解衝突+補回BNI-Training遺失項目）。
