@@ -1027,6 +1027,82 @@ def ai_art_assets(filename):
     return _serve_repo_file(AI_ART_REPO, filename)
 
 
+def _todo_due_badge(due_date_str):
+    """回傳到期日徽章的顏色分級跟文字，None代表沒設到期日。"""
+    if not due_date_str:
+        return None
+    try:
+        y, m, d = (int(x) for x in due_date_str.split("-"))
+        due = date(y, m, d)
+    except ValueError:
+        return None
+    diff = (due - date.today()).days
+    if diff < 0:
+        return {"cls": "overdue", "label": f"已逾期{-diff}天"}
+    if diff == 0:
+        return {"cls": "today", "label": "今天到期"}
+    if diff <= 3:
+        return {"cls": "soon", "label": f"{diff}天後到期（{due_date_str}）"}
+    return {"cls": "later", "label": due_date_str}
+
+
+@app.route("/todo")
+def todo_page():
+    conn = db.get_conn()
+    pending_rows = conn.execute(
+        "SELECT * FROM todos WHERE completed = 0 ORDER BY (due_date IS NULL), due_date ASC, id ASC"
+    ).fetchall()
+    completed_rows = conn.execute(
+        "SELECT * FROM todos WHERE completed = 1 ORDER BY completed_at DESC LIMIT 50"
+    ).fetchall()
+    conn.close()
+    pending = [dict(r, due_badge=_todo_due_badge(r["due_date"])) for r in pending_rows]
+    completed = [dict(r) for r in completed_rows]
+    return render_template("todo.html", pending=pending, completed=completed)
+
+
+@app.route("/todo/add", methods=["POST"])
+def todo_add():
+    title = (request.form.get("title") or "").strip()
+    if title:
+        notes = (request.form.get("notes") or "").strip() or None
+        due_date = (request.form.get("due_date") or "").strip() or None
+        remind_at = (request.form.get("remind_at") or "").strip().replace("T", " ") or None
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO todos (title, notes, due_date, remind_at) VALUES (?, ?, ?, ?)",
+            (title, notes, due_date, remind_at),
+        )
+        conn.commit()
+        conn.close()
+    return redirect(url_for("todo_page"))
+
+
+@app.route("/todo/<int:todo_id>/toggle", methods=["POST"])
+def todo_toggle(todo_id):
+    conn = db.get_conn()
+    row = conn.execute("SELECT completed FROM todos WHERE id = ?", (todo_id,)).fetchone()
+    if row:
+        new_val = 0 if row["completed"] else 1
+        completed_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S") if new_val else None
+        conn.execute(
+            "UPDATE todos SET completed = ?, completed_at = ? WHERE id = ?",
+            (new_val, completed_at, todo_id),
+        )
+        conn.commit()
+    conn.close()
+    return redirect(url_for("todo_page"))
+
+
+@app.route("/todo/<int:todo_id>/delete", methods=["POST"])
+def todo_delete(todo_id):
+    conn = db.get_conn()
+    conn.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("todo_page"))
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))

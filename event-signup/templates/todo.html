@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>大樹教練待辦事項｜特助主動提醒版</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:24px 16px 60px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  h1 { font-size:24px; font-weight:900; margin-bottom:4px; }
+  h1 span { color:var(--gold); }
+  .subtitle { color:rgba(255,255,255,.5); font-size:14px; margin-bottom:24px; }
+
+  .panel { background:#1c1c1c; border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; }
+  .panel h2 { font-size:16px; color:var(--gold); margin-bottom:14px; }
+
+  form.add-form { display:flex; flex-direction:column; gap:10px; }
+  .add-form input[type=text], .add-form textarea, .add-form input[type=date], .add-form input[type=datetime-local] {
+    width:100%; padding:10px 12px; font-size:15px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:inherit;
+  }
+  .add-form textarea { resize:vertical; min-height:44px; }
+  .add-form .row { display:flex; gap:10px; flex-wrap:wrap; }
+  .add-form .row > div { flex:1; min-width:180px; }
+  .add-form label { display:block; font-size:12px; color:rgba(255,255,255,.5); margin-bottom:4px; }
+  .add-btn { align-self:flex-start; margin-top:4px; padding:10px 24px; font-size:15px; font-weight:700;
+    color:#0a0a0a; background:var(--gold); border:none; border-radius:8px; cursor:pointer; }
+  .add-btn:hover { opacity:.9; }
+
+  ul.todo-list { list-style:none; }
+  ul.todo-list li { display:flex; align-items:flex-start; gap:12px; padding:12px 4px; border-bottom:1px solid rgba(255,255,255,.08); }
+  ul.todo-list li:last-child { border-bottom:none; }
+  .check-form button { width:22px; height:22px; border-radius:50%; border:2px solid var(--line); background:transparent;
+    cursor:pointer; flex-shrink:0; margin-top:2px; }
+  .check-form button:hover { border-color:var(--gold); }
+  .check-form.done button { background:var(--gold); border-color:var(--gold); }
+  .item-body { flex:1; min-width:0; }
+  .item-title { font-size:16px; font-weight:700; word-break:break-word; }
+  .item-title.done { text-decoration:line-through; color:rgba(255,255,255,.4); }
+  .item-notes { font-size:13px; color:rgba(255,255,255,.5); margin-top:2px; white-space:pre-wrap; word-break:break-word; }
+  .item-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+  .due-badge { font-size:12px; padding:2px 8px; border-radius:999px; font-weight:700; }
+  .due-badge.overdue { background:rgba(255,80,80,.18); color:#ff6b6b; }
+  .due-badge.today { background:rgba(255,165,60,.18); color:#ffb84d; }
+  .due-badge.soon { background:rgba(200,169,110,.2); color:var(--gold); }
+  .due-badge.later { background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); }
+  .remind-note { font-size:12px; color:rgba(124,180,255,.8); }
+  .del-form button { background:none; border:none; color:rgba(255,255,255,.3); font-size:18px; cursor:pointer; padding:2px 6px; }
+  .del-form button:hover { color:#ff6b6b; }
+  .empty-note { color:rgba(255,255,255,.4); font-size:14px; padding:8px 4px; }
+
+  details summary { cursor:pointer; color:rgba(255,255,255,.5); font-size:14px; padding:4px 0; }
+  .completed-meta { font-size:12px; color:rgba(255,255,255,.35); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>大樹教練<span>待辦事項</span></h1>
+  <div class="subtitle">特助主動提醒版｜到期前會透過 Telegram 主動通知</div>
+
+  <div class="panel">
+    <h2>新增待辦</h2>
+    <form class="add-form" method="POST" action="{{ url_for('todo_add') }}">
+      <input type="text" name="title" placeholder="要做什麼事？" required maxlength="200">
+      <div class="row">
+        <div>
+          <label>到期日（選填）</label>
+          <input type="date" name="due_date">
+        </div>
+        <div>
+          <label>提醒時間（選填，到時間會發Telegram）</label>
+          <input type="datetime-local" name="remind_at">
+        </div>
+      </div>
+      <textarea name="notes" placeholder="備註（選填）"></textarea>
+      <button class="add-btn" type="submit">新增待辦</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>待辦中（{{ pending|length }}）</h2>
+    {% if pending %}
+    <ul class="todo-list">
+      {% for t in pending %}
+      <li>
+        <form class="check-form" method="POST" action="{{ url_for('todo_toggle', todo_id=t.id) }}">
+          <button type="submit" title="標記完成"></button>
+        </form>
+        <div class="item-body">
+          <div class="item-title">{{ t.title }}</div>
+          {% if t.notes %}<div class="item-notes">{{ t.notes }}</div>{% endif %}
+          <div class="item-meta">
+            {% if t.due_badge %}<span class="due-badge {{ t.due_badge.cls }}">{{ t.due_badge.label }}</span>{% endif %}
+            {% if t.remind_at %}
+              <span class="remind-note">⏰ 提醒：{{ t.remind_at }}{% if t.reminder_sent %}（已提醒）{% endif %}</span>
+            {% endif %}
+          </div>
+        </div>
+        <form class="del-form" method="POST" action="{{ url_for('todo_delete', todo_id=t.id) }}"
+              onsubmit="return confirm('確定要刪除「{{ t.title }}」嗎？');">
+          <button type="submit" title="刪除">✕</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-note">目前沒有待辦事項，太棒了。</div>
+    {% endif %}
+  </div>
+
+  {% if completed %}
+  <div class="panel">
+    <details>
+      <summary>已完成（{{ completed|length }}）</summary>
+      <ul class="todo-list" style="margin-top:10px;">
+        {% for t in completed %}
+        <li>
+          <form class="check-form done" method="POST" action="{{ url_for('todo_toggle', todo_id=t.id) }}">
+            <button type="submit" title="取消完成">✓</button>
+          </form>
+          <div class="item-body">
+            <div class="item-title done">{{ t.title }}</div>
+            <div class="completed-meta">完成於 {{ t.completed_at }}</div>
+          </div>
+          <form class="del-form" method="POST" action="{{ url_for('todo_delete', todo_id=t.id) }}"
+                onsubmit="return confirm('確定要刪除「{{ t.title }}」嗎？');">
+            <button type="submit" title="刪除">✕</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>

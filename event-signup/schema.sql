@@ -52,3 +52,17 @@ CREATE TABLE IF NOT EXISTS wheel_prizes (
     remaining_qty INTEGER NOT NULL,
     sort_order INTEGER NOT NULL DEFAULT 0
 );
+
+-- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
+-- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
+CREATE TABLE IF NOT EXISTS todos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    notes TEXT,
+    due_date TEXT,                       -- 到期日 YYYY-MM-DD，選填
+    remind_at TEXT,                      -- 提醒時間 YYYY-MM-DD HH:MM，選填，時間到會發Telegram
+    completed INTEGER NOT NULL DEFAULT 0,
+    reminder_sent INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    completed_at TEXT
+);
