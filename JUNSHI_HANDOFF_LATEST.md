@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **台南應用科技大學校友會網頁(tut-alumni)：Design+Preview融合上線+資料庫/API/Telegram通知全部接通** | ✅2026-09-03本場完成，Mac+聯想平行完成 | 教練帶兩份AI生成設計稿(`design (3).html`版型+`preview.html`文案)要求融合，5項需求(文案移植/1964~2010母校沿革時間軸/加入倡議區塊/13位校友去重合併/5分會加入選項)全數完成，新建repo`Coach1973/tut-alumni`推GitHub Pages上線`https://coach1973.github.io/tut-alumni/`。教練接著明確裁示「資料庫只能在軍師那邊做」，聯想寫信交接`cross-agent/inbox/mac/`。**過程教訓**：教練另外提供一個真實的南應大官方Google表單要求複製+接Telegram，聯想在Google表單「必填」自訂開關(六七種點擊/事件模擬手法)+Apps Script程式碼編輯器(中文混打吃掉所有標點符號)兩個UI自動化死角上各自死磕十幾分鐘沒有及時停手，教練點名「效率太慢」「浪費時間/token/金錢/生命」，訂下新規則**同一死角試3次不行就要立刻回報**，已寫入記憶`feedback_cap_retries_report_when_stuck_2026-09-03`。改道放棄Google表單、準備自己接Telegram時，**發現Mac軍師已平行完成**同款資料庫+API+Telegram通知+LINE導流(`event.bymyway.com/tut`+`/api/tut/join`)，聯想直接`git reset --hard origin/main`採用Mac版本收尾，避免兩邊重工，已驗證GitHub Pages正式站同步生效。commit：tut-alumni倉庫`9cf4377`+`ca94ad6`。 |
 | ✅ | **`/bni-credit`補公司欄位：120筆(後修正為111筆)全數完成，312筆該查的全部有結果** | ✅2026-09-02本場完成 | 委派3個背景Agent平行處理，過程發現多Agent共用同一Chrome分頁會互相搶navigate造成資料污染，補指示各自開專屬分頁後全數完成。最終：active/transferred/redeemed共312筆，110筆補上真實公司名稱，2筆(張仕賢/林薔薇)確認官方頁面本身空白，0筆遺漏。commit待查(namecard-db資料庫直改，非git追蹤)。記憶`reference_parallel_background_agents_shared_browser_contamination_2026-09-02`。 |
 | ✅ | **coach888新增「最近刪除」回收桶+「BNI最近常用」併入「BNI專用」** | ✅2026-09-02本場完成 | 教練要求「最近刪除」功能(像資源回收桶，刪除不直接消失可勾選移回)，已上線並用瀏覽器實測驗證。教練本機file://編輯內容因localStorage無法自動救回，教練口述澄清「把1移到5那邊，下面都沒動」，直接改正式檔案(11項併入BNI專用，該分類22項)，已用Chrome開給教練確認。commit`817691f`(最近刪除)+`731ffad`(分類合併)。教訓：CSS column-count多欄排版截圖不能用左右對齊直覺判斷歸屬，記憶`feedback_column_layout_screenshot_misread_2026-09-02`。**以後coach888編輯一律用`https://coach1973.github.io/coach888/`正式網址，不再開本機檔案**。 |
 | ✅ | **9/5+9/16兩場活動FB粉專行銷貼文：兩場皆已發滿5個粉專，全數用permalink_url驗證上線** | ✅2026-09-02本場完成 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練分兩次自製活動圖(`D:\Users\Downloads\export (13).jpg`＝9/5、`export (14).jpg`＝9/16)，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布。**9/5**：先發K R養生廚房單一粉專讓教練驗收效果，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。**9/16**：教練問「KR養生廚房算不算」，軍師指出該粉專是9/5台南場地專屬、跟9/16高雄場無直接關係先確認，教練回覆「都發」，5個粉專(含KR養生廚房)全數發布。**兩場合計10則貼文皆已用`permalink_url`欄位查證真實上線**，非僅API回傳成功假設。教練同場詢問發文token消耗，已說明：發文動作本身(curl呼叫API)幾乎不耗token(等同執行一行指令非AI生成)，真正耗token的是讀圖確認內容+對話討論文字，跟粉專數量無關。 |
@@ -462,3 +463,33 @@
 
 ## 🔑 本場commit
 `workspace`：本場v170接力棒本身。`fb_automation`：本場僅本機臨時檔案操作(用完即刪)，無新commit，沿用既有`page_tokens_2026-09-01.json`。
+
+---
+
+# 軍師接力棒 · 2026-09-03 v171（聯想Windows Sonnet 5，tut-alumni校友會網站從融合設計到資料庫/API/Telegram全通，含一次效率教訓）
+
+> 建立時間：2026-09-03 01:13 ~ 02:38（台灣時間）
+> 上一棒：v170（聯想Windows，9/16活動FB貼文發滿5個粉專，9/5+9/16行銷任務全數結案）
+> 本棒主軸：**教練帶兩份AI生成的南應大校友會設計稿要求融合，完成後推GitHub Pages上線；教練接著要求資料庫接手交給Mac，聯想寫信交接；過程中在Google表單/Apps Script的UI自動化死角上死磕過久被教練點名「效率太慢」，教訓已寫入記憶；後來發現Mac已平行完成資料庫+API+Telegram通知全套，聯想採用Mac版本收尾。**
+
+## 🎯 本場戰果
+
+### 1. tut-alumni校友會網頁融合上線
+教練提供`design (3).html`(喜歡版型)+`preview.html`(喜歡文案)兩份AI生成設計稿，要求融合5項需求：①Hero文案換成Preview那句「我們曾經在同一個校園裡青春過...」②新增1964~2010母校沿革時間軸③新增「加入不只是留一筆資料」倡議區塊④校友名單合併(Design 8位+Preview不重複的5位，去重3位重複，共13位)⑤加入表單新增5個分會(台南/台中/高雄/台北/嘉義)選項。已用瀏覽器完整測試表單驗證流程，新建GitHub repo`Coach1973/tut-alumni`並開通Pages，`https://coach1973.github.io/tut-alumni/`已curl驗證上線。
+
+### 2. 資料庫工作交接Mac
+教練明確裁示「資料庫只能在軍師那邊做」，寫信`cross-agent/inbox/mac/`交接，說明表單目前純前端假成功、需要的5個欄位、GitHub repo位置。
+
+### 3. ⚠️ 效率教訓：同一死角死磕過久，教練訂下3次回報規則
+教練接著提供一個真實存在的Google表單連結(南應大校友會官方入會申請)，希望複製一份改介紹文字+接Telegram通知。查證發現無法直接複製別人的viewform連結(需編輯權限)，教練選擇「軍師重建等效新表單」路線。動手時卡在Google表單「必填」自訂開關(六七種點擊/事件模擬手法都點不動)+改用Apps Script程式碼編輯器又踩到中文混打吃掉所有標點符號的怪異行為，兩個技術死角各自磨了十幾分鐘沒有及時停手回報。教練直接點名「效率太慢」「浪費我時間/token/金錢/生命」，並訂下明確規則：**同一個問題試差不多3次不行，就要立刻回報，不能悶頭硬幹**。已寫入記憶`feedback_cap_retries_report_when_stuck_2026-09-03`，跟既有`feedback_exhaust_own_tools_before_asking_coach`是互補的兩面(該自己扛的扛，扛不動的要儘早講)。
+
+### 4. 改道後發現Mac已平行完成，避免重複
+放棄Google表單路線，改用「Mac資料庫+既有網頁」方案繼續，準備自己動手接Telegram通知時，查git log發現**Mac軍師已經同步完成**：`event.bymyway.com/tut`動態路由+`/api/tut/join`端點(CORS雙入口)+`tut_alumni_signups`資料表+Telegram通知「活動報名即時通知」群組+導流佩佩老師LINE官方帳號，已用真實POST驗證。聯想這邊也剛好寫了一版GitHub Pages前端串接程式碼，push時發現Mac已推送更完整的同款版本，直接`git reset --hard origin/main`採用Mac版本，避免兩份AI各自重工，已驗證GitHub Pages正式站同步生效。
+
+## ⚠️ 下一場開工先做
+1. 跨機信箱仍有1封未讀(ACER 8/31狀態回報)，教練未指示處理，繼續掛著。
+2. tut-alumni整體已全通(前端+後端+通知)，教練若有後續修改需求(如校友名單調整、文案微調)直接交辦即可。
+3. 這次「Mac跟聯想平行做同一件事」提醒：**日後接到跨機交辦任務、準備動手做「補強/延伸」動作前，先git pull確認對方是否已經處理過**，避免像今天這樣兩邊重工(雖然這次代價不大，只是白寫一版前端程式碼)。
+
+## 🔑 本場commit
+`tut-alumni`：`9cf4377`(融合上線)+`ca94ad6`(Mac版接資料庫，聯想reset採用)。`workspace`：跨機信箱交接信+`feedback_cap_retries_report_when_stuck_2026-09-03`記憶。
