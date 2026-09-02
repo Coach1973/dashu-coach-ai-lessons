@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-02 17:15:17**
+> **最後同步：2026-09-02 17:15:47**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -439,7 +439,7 @@
 - v161之前已知舊待辦（FB粉專商家驗證、`/bni-credit`補公司欄位、12月主題培訓內容等）本場未觸及。
 
 ## 🔑 本場commit
-（下方commit待補）
+`workspace`：`58b3f0e46`（本場v167接力棒+cross-agent回信歸檔）。無其他repo變動（純部署/驗證，不涉及程式碼改動）。
 
 
 ---
