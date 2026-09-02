@@ -117,6 +117,24 @@ CREATE TABLE IF NOT EXISTS guests (
 CREATE INDEX IF NOT EXISTS idx_guests_name ON guests(name);
 CREATE INDEX IF NOT EXISTS idx_guests_mobile ON guests(mobile);
 
+-- 來賓完整訪問歷程(2026-09-02)：guests表只保留「最新一次」訪問的分會/職業，
+-- 教練指出這樣看不到來賓是哪個分會、什麼時候來過——同一人常有多筆不同分會/
+-- 不同日期的訪問紀錄，來源：「地區-查看來賓」完整歷史報表(含訪問日期欄位)
+CREATE TABLE IF NOT EXISTS guest_visits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guest_id INTEGER NOT NULL REFERENCES guests(id),
+    chapter TEXT,
+    visit_date TEXT,
+    company TEXT,
+    profession TEXT,
+    invited_by TEXT,
+    visit_type TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(guest_id, chapter, visit_date)
+);
+
+CREATE INDEX IF NOT EXISTS idx_guest_visits_guest ON guest_visits(guest_id);
+
 -- BNI Connect大台南南區5分會離會會員「信用証」開立狀況清查(2026-08-27)，
 -- 供 /bni-credit 網頁追蹤到期日+面額，教練可在網頁上直接改狀態(cert_status/usage_status)
 CREATE TABLE IF NOT EXISTS bni_credit_certificates (

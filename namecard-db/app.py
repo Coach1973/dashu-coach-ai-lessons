@@ -258,16 +258,22 @@ def find_page():
                ORDER BY name""",
             (no_space_like,) * 5,
         ).fetchall()
-        conn.close()
         for r in card_rows:
             results.append({"source": "card", **dict(r)})
         for r in guest_rows:
             d = dict(r)
+            visits = conn.execute(
+                """SELECT chapter, visit_date FROM guest_visits
+                   WHERE guest_id = ? ORDER BY visit_date DESC""",
+                (d["id"],),
+            ).fetchall()
             results.append({
                 "source": "guest", "id": d["id"], "name": d["name"],
                 "title": d["profession"], "company": d["company"],
                 "mobile": d["mobile"], "email": d["email"], "bni_note": d["chapter"],
+                "visits": [dict(v) for v in visits],
             })
+        conn.close()
     return render_template("find.html", query=query, results=results)
 
 

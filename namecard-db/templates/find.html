@@ -22,6 +22,9 @@
   .tag.guest { background: #fdf3e7; color: #b45309; }
   .tag.plain { background: #eef1f6; color: #1f3a5f; }
   .row { font-size: 14px; margin: 3px 0; color: #333; }
+  .visits { margin: 8px 0 0; padding: 8px 10px; background: #fdf8f0; border-radius: 8px; }
+  .visits .vh { font-size: 12px; color: #b45309; font-weight: 700; margin-bottom: 4px; }
+  .visits .vrow { font-size: 13px; color: #444; }
   .row a { color: #1f3a5f; text-decoration: none; }
   .actions { margin-top: 10px; }
   .match-btn { display: inline-block; background: #1f3a5f; color: white; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 700; }
@@ -61,6 +64,14 @@
   {% if r.title or r.company %}<div class="role">{{ r.title or '' }} {{ r.company or '' }}</div>{% endif %}
   {% if r.mobile %}<div class="row">📱 <a href="tel:{{ r.mobile }}">{{ r.mobile }}</a></div>{% endif %}
   {% if r.email %}<div class="row">✉️ <a href="mailto:{{ r.email }}">{{ r.email }}</a></div>{% endif %}
+  {% if r.source == 'guest' and r.visits %}
+  <div class="visits">
+    <div class="vh">🗓 訪問紀錄（共 {{ r.visits|length }} 次）</div>
+    {% for v in r.visits %}
+    <div class="vrow">{{ v.chapter or '（分會不明）' }}分會・{{ v.visit_date or '（日期不明）' }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
   <div class="actions">
     {% if r.source == 'guest' %}
     <a class="match-btn" href="/guest/{{ r.id }}/match">🔗 媒合</a>
