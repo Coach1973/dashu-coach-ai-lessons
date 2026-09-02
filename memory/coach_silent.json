@@ -1,8 +1,8 @@
 {
-  "coachLastMessageAt": "2026-09-02T13:09:37+08:00",
-  "coachSilentSince": "2026-09-02T13:09:37+08:00",
-  "coachSilentHours": 2.06,
+  "coachLastMessageAt": "2026-09-02T17:02:16+08:00",
+  "coachSilentSince": "2026-09-02T17:02:16+08:00",
+  "coachSilentHours": 0.2,
   "source": "telegram_api_via_sync_coach_last_message.sh",
-  "fetchedAt": "2026-09-02T15:12:56.281731+08:00",
-  "cycle": 723
+  "fetchedAt": "2026-09-02T17:14:10.388336+08:00",
+  "cycle": 725
 }
