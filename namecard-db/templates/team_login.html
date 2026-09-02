@@ -18,17 +18,18 @@
 </head>
 <body>
 <h1>🔐 團隊登入</h1>
-<div class="subtitle">只有教練與團隊成員能標記名片跟進進度</div>
+<div class="subtitle">查詢/搜尋不需要帳號，只有「跟進紀錄」功能需要教練審核過的帳號</div>
 {% if error %}<div class="error">{{ error }}</div>{% endif %}
 <div class="box">
   <form method="POST">
-    <label>帳號</label>
+    <label>帳號（行動電話）</label>
     <input type="text" name="username" required autofocus>
     <label>密碼</label>
     <input type="password" name="password" required>
     <button type="submit">登入</button>
   </form>
 </div>
+<a class="back" href="/apply">還沒有帳號？向大樹教練申請 →</a>
 <a class="back" href="/">← 回名片搜尋首頁</a>
 </body>
 </html>

@@ -67,12 +67,18 @@ CREATE TABLE IF NOT EXISTS chain_members (
 CREATE INDEX IF NOT EXISTS idx_chain_members_chain ON chain_members(chain_id);
 CREATE INDEX IF NOT EXISTS idx_chain_members_card ON chain_members(card_id);
 
--- 團隊成員（教練+白名單，跟進紀錄簿登入用）
+-- 團隊成員（教練+白名單，跟進紀錄簿登入用）。2026-09-02教練拍板：查詢/瀏覽
+-- 全站不需要帳號，只有「跟進」功能需要，開放給領導團隊/DNA自助申請帳號
+-- （姓名+行動電話，密碼統一預設88888），教練後台審核通過才能登入。
 CREATE TABLE IF NOT EXISTS team_members (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,      -- 手機號碼或教練手動建立的帳號名
     password_hash TEXT NOT NULL,
     display_name TEXT,
+    status TEXT DEFAULT 'approved',     -- pending / approved / rejected
+                                         -- 教練既有手動建立的帳號預設approved(不受影響)，
+                                         -- 自助申請的新帳號預設pending，需教練審核
+    applied_at TEXT DEFAULT (datetime('now')),
     created_at TEXT DEFAULT (datetime('now'))
 );
 

@@ -31,6 +31,12 @@ def init_db() -> None:
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_cards_source_guest_id "
         "ON cards(source_guest_id) WHERE source_guest_id IS NOT NULL"
     )
+    existing_team_cols = {row["name"] for row in conn.execute("PRAGMA table_info(team_members)")}
+    if "status" not in existing_team_cols:
+        # 既有帳號(教練手動建立)一律視為approved，不受新審核流程影響
+        conn.execute("ALTER TABLE team_members ADD COLUMN status TEXT DEFAULT 'approved'")
+    if "applied_at" not in existing_team_cols:
+        conn.execute("ALTER TABLE team_members ADD COLUMN applied_at TEXT")
     conn.commit()
     conn.close()
 
@@ -244,10 +250,49 @@ def card_already_in_chain(conn: sqlite3.Connection, chain_id: int, card_id: int)
 
 # ---------- 團隊成員與跟進紀錄 ----------
 
+DEFAULT_APPLICANT_PASSWORD = "88888"  # 教練拍板：自助申請帳號統一預設密碼
+
+
 def get_team_member(conn: sqlite3.Connection, username: str):
     return conn.execute(
         "SELECT * FROM team_members WHERE username = ?", (username,)
     ).fetchone()
+
+
+def apply_team_member(conn: sqlite3.Connection, mobile: str, display_name: str) -> str:
+    """自助申請帳號(姓名+行動電話)，密碼統一預設88888，狀態待審核。
+    回傳 'created'(新申請) / 'reapplied'(原本rejected重新申請) / 'exists'(已是pending或approved)。"""
+    from werkzeug.security import generate_password_hash
+
+    existing = get_team_member(conn, mobile)
+    if existing is None:
+        conn.execute(
+            """INSERT INTO team_members (username, password_hash, display_name, status, applied_at)
+               VALUES (?, ?, ?, 'pending', datetime('now'))""",
+            (mobile, generate_password_hash(DEFAULT_APPLICANT_PASSWORD), display_name),
+        )
+        conn.commit()
+        return "created"
+    if existing["status"] == "rejected":
+        conn.execute(
+            """UPDATE team_members SET status = 'pending', display_name = ?,
+               applied_at = datetime('now') WHERE username = ?""",
+            (display_name, mobile),
+        )
+        conn.commit()
+        return "reapplied"
+    return "exists"
+
+
+def list_team_members_by_status(conn: sqlite3.Connection, status: str):
+    return conn.execute(
+        "SELECT * FROM team_members WHERE status = ? ORDER BY applied_at DESC", (status,)
+    ).fetchall()
+
+
+def set_team_member_status(conn: sqlite3.Connection, member_id: int, status: str) -> None:
+    conn.execute("UPDATE team_members SET status = ? WHERE id = ?", (status, member_id))
+    conn.commit()
 
 
 def get_or_create_follow_up(conn: sqlite3.Connection, card_id: int):
