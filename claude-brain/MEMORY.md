@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴 coach888新增項目一律放分類第一項，不要放最後(2026-09-03)](feedback_coach888_new_items_go_first.md) — 教練找新項目找半天找不到，之後插入位置固定num=1
 - [🔴🔴🔴 BNI發票是兩套獨立系統(培訓費vs入會續約)+教練已提供全部資料不用再問(2026-09-03)](feedback_bni_invoice_two_independent_systems_sop.md) — 開票前直接查`/invoice-admin`兩個子頁，不問「資料你有嗎」；教練賈維斯期許再次強調
 - [🔧 多背景Agent平行共用同一Chrome分頁會互相搶navigate造成資料污染(2026-09-02)](reference_parallel_background_agents_shared_browser_contamination_2026-09-02.md) — 委派前先交代各自開專屬分頁+每筆核對編號才寫入，BNI信用証補公司欄位三批任務實戰教訓
 - [🔴🔴 CSS column-count多欄排版截圖不能用左右對齊直覺判斷DOM歸屬(2026-09-02)](feedback_column_layout_screenshot_misread_2026-09-02.md) — coach888截圖誤判教練改動內容，教練一句口述比截圖猜測更準確可靠
