@@ -5,7 +5,7 @@
     "weather": null,
     "telegramChannelOk": true,
     "telegramChannelProbeAt": "2026-09-02T15:12:28+08:00",
-    "coach_silence_sync": "2026-09-02T15:12:28+08:00"
+    "coach_silence_sync": "2026-09-02T16:12:06.573738+08:00"
   },
   "v4_gates": {
     "gate1_currentlyBroken": false,
@@ -25,7 +25,7 @@
   "cumulativeGreen": 89,
   "cycleAt": "2026-09-02T15:12:28+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-02T13:09:37+08:00",
-    "coachSilentHours": 2.06
+    "coachSilentSince": "2026-09-02T15:59:59+08:00",
+    "coachSilentHours": 0.2
   }
 }
