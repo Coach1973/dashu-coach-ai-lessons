@@ -1,19 +1,19 @@
 {
   "lastChecks": {
-    "cron": 1788429625,
-    "telegramChannelProbe": 1788429625,
-    "envHealth": 1788429625,
+    "cron": 1788430376,
+    "telegramChannelProbe": 1788430376,
+    "envHealth": 1788430376,
     "coach_silence_sync": "2026-09-03T18:12:05.771320+08:00"
   },
-  "lastCoachMessageAt": "2026-09-03T17:57:30+08:00",
-  "coachSilentSince": "2026-09-03T17:57:30+08:00",
+  "lastCoachMessageAt": "2026-09-03T18:10:53+08:00",
+  "coachSilentSince": "2026-09-03T18:10:53+08:00",
   "coachSilentHours": 0.0,
   "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-03T18:00:32+08:00",
+  "telegramProbeAt": "2026-09-03T18:12:56+08:00",
   "cronState": {
     "enabledJobs": 25,
     "runningNow": 1,
-    "runningJob": "每2小時增量記憶蒸餾",
+    "runningJob": "🦞 每小時任務健康檢查",
     "lastRunStatus": "ok",
     "consecutiveErrors": 0,
     "consecutiveErrorsByJob": {}
@@ -24,14 +24,14 @@
     "gate3_affectsWork": false,
     "verdict": "all_fail_silent_pass"
   },
-  "currentCycle": 751,
-  "cumulativeGreen": 115,
-  "updatedAt": "2026-09-03T18:00:32+08:00",
+  "currentCycle": 752,
+  "cumulativeGreen": 116,
+  "updatedAt": "2026-09-03T18:12:56+08:00",
   "systemSnapshot": {
     "coachSilentSince": "2026-09-03T18:10:53+08:00",
     "coachSilentHours": 0.0,
-    "envHealth": "SOUL×3齊｜Repo1=23/Repo2=18(<50警戒線)｜無鎖定檔",
-    "cron": "25 enabled｜1 running(蒸餾)｜0 CE>=3"
+    "envHealth": "SOUL×3齊(皆有棄用標記)｜Repo1=23/Repo2=16(<50警戒線)｜無鎖定檔",
+    "cron": "25 enabled｜1 running(本任務)｜0 CE>=3｜22 ok｜2 idle"
   },
-  "notes": "cycle=751 安靜通過。cumulativeGreen 115 = 上輪 114 +1。本輪 cron list 25 個活躍任務，0 連錯，1 個正常 running（每2小時增量記憶蒸餾，狀態 ok）。教練最後訊息 17:57:30（剛剛 2.5 分鐘前），TG 通道探針當下實測 ok，環境快檢全綠。"
+  "notes": "cycle=752 安靜通過。cumulativeGreen 116 = 上輪 115 +1。本輪 cron list 25 個活躍任務（22 ok + 1 running 本任務 + 2 idle），0 連錯、無 timeout、無 auth。教練最後訊息 18:10:53（剛剛 2 分鐘前），TG 通道探針當下實測 ok，環境快檢全綠（SOUL.md 三份皆有棄用標記、git 23/16、無 .! 鎖定檔）。v4.0 三關全 fail，安靜不通報。"
 }
