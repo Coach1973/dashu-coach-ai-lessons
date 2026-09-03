@@ -1,17 +1,17 @@
 {
   "lastChecks": {
-    "cron": 1788412320,
-    "telegramChannelProbe": 1788412320,
-    "envHealth": 1788412320,
-    "coach_silence_sync": "2026-09-03T13:12:00+08:00"
+    "cron": 1788419520,
+    "telegramChannelProbe": 1788419520,
+    "envHealth": 1788419520,
+    "coach_silence_sync": "2026-09-03T15:12:00+08:00"
   },
-  "lastCoachMessageAt": "2026-09-03T13:06:55+08:00",
-  "coachSilentSince": "2026-09-03T13:06:55+08:00",
+  "lastCoachMessageAt": "2026-09-03T15:06:55+08:00",
+  "coachSilentSince": "2026-09-03T15:06:55+08:00",
   "coachSilentHours": 0.1,
   "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-03T13:12:00+08:00",
+  "telegramProbeAt": "2026-09-03T15:12:00+08:00",
   "cronState": {
-    "enabledJobs": 26,
+    "enabledJobs": 1,
     "lastRunStatus": "ok",
     "consecutiveErrors": 0
   },
@@ -21,12 +21,12 @@
     "gate3_affectsWork": false,
     "verdict": "all_fail_silent_pass"
   },
-  "currentCycle": 746,
-  "cumulativeGreen": 110,
-  "updatedAt": "2026-09-03T13:12:00+08:00",
+  "currentCycle": 748,
+  "cumulativeGreen": 112,
+  "updatedAt": "2026-09-03T15:12:00+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-03T13:06:55+08:00",
+    "coachSilentSince": "2026-09-03T15:06:55+08:00",
     "coachSilentHours": 0.1
   },
-  "notes": "cycle=746 安靜通過。cumulativeGreen 110 = 上輪 109 +1。注意 cron list via openclaw CLI 顯示 26 jobs（23 個 ok 狀態 + 3 個 idle 一次性任務尚未觸發），全部正常。"
+  "notes": "cycle=748 安靜通過。cumulativeGreen 112 = 上輪 111 +1。當前 cron list 僅顯示 1 個活躍任務（本健康檢查本身），其餘任務已不在主 agent view（估計移至軍師 Mac v2 端管轄）。上一輪 cycle=747（14:12）僅簡列於 HEARTBEAT 末尾，未進位 state/healthcheck_cycle，本輪一併校正。"
 }
