@@ -68,3 +68,7 @@ cycle=725 2026-09-02 17:13:50 status=ok silentH=0.2 (since17:02:16) cumGreen=90 
 [2026-09-03 18:01:35] cycle=751 ✅ 安靜通過 cumulativeGreen=115 silentH=0.0 cron=25/0/CE>=3 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=23/Repo2=18(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce
 2026-09-03 18:01:35 cycle=751 健康檢查完成｜安靜通過｜TG=ok｜v4.0 三關全 fail｜cumulativeGreen=115
 [2026-09-03 18:12:56] cycle=752 cumulativeGreen=116 | cron 25 個全綠 | CE≥3:0 timeout:0 auth:0 | TG probe ok=true | env 快檢 OK | 教練沉默 0.0h（18:10 剛對話）
+[2026-09-03 19:12:38 +0800] cycle=753 ✅ 安靜通過 cumulativeGreen=117 silentH=0.5 cron=1/1/ok CE>=3=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=23/Repo2=10(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce
+[2026-09-03 21:13:07 +0800] cycle=755 ✅ 安靜通過 cumulativeGreen=118 silentH=1.5 cron=1/1/ok CE>=3=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=27/Repo2=22(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce
+2026-09-03T22:00:25+08:00 cycle=756 安靜通過。cumulativeGreen=119 (118→119)。教練沉默 2.3h（週四夜晚正常）。25 enabled/0 CE/TG ok/環境全綠。v4.0 三關全 fail。
+[2026-09-03T22:14:26+08:00] cycle=757 ✅ 安靜通過 cumulativeGreen=120 silentH=2.5 cron=25/22/1 CE>=3=0 timeout=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=27/Repo2=25(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce

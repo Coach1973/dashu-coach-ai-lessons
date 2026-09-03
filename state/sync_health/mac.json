@@ -1,6 +1,6 @@
 {
   "machine": "mac",
-  "last_attempt": "2026-09-03T01:40:31+08:00",
+  "last_attempt": "2026-09-03T19:19:21+08:00",
   "pull_ok": true,
-  "status_text": "✅ 已拉雲端最新（HEAD: a42ba068e，經rebase搶救）"
+  "status_text": "✅ 已拉雲端最新（HEAD: 9956fd68e）"
 }

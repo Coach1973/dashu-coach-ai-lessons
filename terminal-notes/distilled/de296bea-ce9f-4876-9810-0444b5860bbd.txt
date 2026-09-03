@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session de296bea-ce9f-4876-9810-0444b5860bbd
-# 提取時間：2026-09-03 18:41 (台灣時間)
-# 共 26 條教練原話
+# 提取時間：2026-09-03 19:20 (台灣時間)
+# 共 27 條教練原話
 
 ---
 
@@ -442,3 +442,30 @@ commit：[`ba38d98`](https://github.com/Coach1973/leadership-knot-workshop/commi
 兩頁桌機版都沒有動，維持原樣。
 
 commit：[`bef235d`](https://github.com/Coach1973/leadership-knot-workshop/commit/bef23…（略）
+
+【教練 2026-09-03 10:42】
+好，總結
+
+　▶ AI 回應：Now updating the MEMORY.md index.
+
+　▶ AI 回應：Now updating the handoff document with today's session summary.
+
+　▶ AI 回應：Now let's archive v171 and create the v173 entry.
+
+　▶ AI 回應：Good, archived cleanly. Now removing v171 from the main file and replacing with a pointer.
+
+　▶ AI 回應：Now appending the v173 entry at the end of the file.
+
+　▶ AI 回應：Now doing the quick environment health check per the summary SOP.
+
+　▶ AI 回應：健檢正常（無棄用標記、無異常鎖定檔、git status行數正常）。現在提交所有變更。
+
+　▶ AI 回應：Now committing everything together.
+
+　▶ AI 回應：總結完成，已 commit + push，接力棒交接完畢。
+
+**本場戰果**（v173）：
+1. **ai-art**（9/16高雄場）：修正報名頁早鳥截止日錯誤（9/13六→9/12六，事件本身9/16從未寫錯），加上即時倒數計時、強化報名標題
+2. **/leader/**：接手聯想交接，部署「領導人溝通的藝術」報名頁，真實測試通過
+3. **/1010/**：從零建置「人生四席・一日共鳴」淺山綠茶席報名頁，含RWD表頭固定+匯款資訊
+4. **/DIY/ + /Leadership/**：從零建置「結繩工作坊」與「結繩領導學」兩個微站，歷經多輪迭代——場次資訊、講師簡介移植、真人照片、…（略）
