@@ -474,3 +474,9 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1788387158
 - 雲端同步：✅ 已推上雲端（commit e8c160d4a）
+
+## 🩺 軍師 Hook 自檢 2026-09-03 13:02（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: a7aeb8d9）
+- Session: a2f67d44-b4ff-4076-9802-1623f2bf53d1
