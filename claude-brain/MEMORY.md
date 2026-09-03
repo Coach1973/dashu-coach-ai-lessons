@@ -4,6 +4,8 @@
 - [🔴🔴🔴 給外部人看的網頁，管理控制項絕對不能跟公開內容共用同一網址(2026-09-04)](feedback_public_admin_separation_default_2026-09-04.md) — materials系統教訓，教練問「我的後台是哪一個」才發現沒拆分，一開始設計就要內建
 - [🔧 Google Cloud Console(Google Auth Platform)OAuth設定完整步驟+踩坑(2026-09-04)](reference_google_drive_oauth_setup_2026-09-04.md) — 測試使用者要在/auth/audience頁單獨加、重新導向URI別填錯欄位、gstatic.com JS載入失敗處理
 - [🎯 下一場開工：coach888作品一覽新增後台系統帳密分類，語音辨識詞待確認(2026-09-04)](project_backend_credentials_consolidation_pending_2026-09-04.md) — 教練說「大品一覽」疑似語音誤植，先問清楚+帳密敏感資料存放位置要先確認
+- [🔧 event-signup(event.bymyway.com)正式站只跑在Mac，非Mac機器改完程式碼還要交接Mac pull+重啟才生效(2026-09-03)](reference_event_signup_deploy_only_on_mac_2026-09-03.md) — /leader報名頁在聯想寫完測完卻無法自己上線的教訓，純靜態GitHub Pages站不受此限
+- [🔧 聯想Windows這台RustDesk沒有自動重啟機制，「釋放記憶體」不能比照Mac版重啟它(2026-09-03)](reference_lenovo_rustdesk_no_autostart_2026-09-03.md) — 教練說釋放記憶體時只處理LINE/Typeless，RustDesk除非異常飆高才動它且要先告知風險
 - [🔴🔴🔴 教練手機版Hero偏好「照片當全版背景」不是卡片式，回報「照片變背景」別急著當bug改(2026-09-03)](feedback_coach_likes_mobile_hero_photo_as_background_2026-09-03.md) — 結繩工作坊/結繩領導學兩頁教訓，附深色/淺色主題遮罩數值參考
 - [🔧 event.bymyway.com repo-served微站CSS/JS/HTML有4小時瀏覽器快取，改完要提醒教練重新整理(2026-09-03)](reference_repo_served_static_assets_4hr_cache_2026-09-03.md) — _serve_repo_file全域行為，同天AI自己+教練都各踩坑一次，用fetch(no-store)或?_cb=時間戳驗證
 - [🎯🎯 coach888排版狀態改伺服器集中同步，解決跨裝置Mac改完ACER看不到(2026-09-03)](project_coach888_cross_device_sync_2026-09-03.md) — event.bymyway.com/api/coach888/state新端點，已用真實跨瀏覽器測試驗證，取代localStorage各自為政
