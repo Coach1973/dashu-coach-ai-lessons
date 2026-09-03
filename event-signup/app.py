@@ -1256,6 +1256,33 @@ def api_event_1010_join():
     )
 
 
+DIY_KNOT_REPO = Path("/Users/bymyway/github_repos/diy-knot-workshop")
+LEADERSHIP_KNOT_REPO = Path("/Users/bymyway/github_repos/leadership-knot-workshop")
+# 2026-09-03交辦：DIY.zip「結繩工作坊3小時手作體驗」預覽頁，教練要求先掛兩個網址(/DIY/、/Leadership/)
+# 讓他看效果，兩份內容目前完全相同(zip來源本身就是同一頁匯出兩次)，之後教練若要區分文案各自獨立改。
+# 頁面本身無報名表單(教練提供的原稿寫死「請於粉專/來訊留下姓名，無虛假表單action」)，純靜態頁不需API。
+
+
+@app.route("/DIY/")
+def diy_knot_page():
+    return _serve_repo_file(DIY_KNOT_REPO, "index.html")
+
+
+@app.route("/DIY/<path:filename>")
+def diy_knot_assets(filename):
+    return _serve_repo_file(DIY_KNOT_REPO, filename)
+
+
+@app.route("/Leadership/")
+def leadership_knot_page():
+    return _serve_repo_file(LEADERSHIP_KNOT_REPO, "index.html")
+
+
+@app.route("/Leadership/<path:filename>")
+def leadership_knot_assets(filename):
+    return _serve_repo_file(LEADERSHIP_KNOT_REPO, filename)
+
+
 COACH888_STATE_KEYS = {
     "coach888_layout", "coach888_titles", "coach888_badges", "coach888_names", "coach888_collapse",
 }
