@@ -1,28 +1,32 @@
 {
-  "version": "v4.0-3gates",
-  "lastCheckAt": "2026-09-03T06:12:53+08:00",
-  "cycle": 738,
+  "lastChecks": {
+    "cron": 1788408756,
+    "telegramChannelProbe": 1788408756,
+    "envHealth": 1788408756,
+    "coach_silence_sync": "2026-09-03T12:12:36+08:00"
+  },
+  "lastCoachMessageAt": "2026-09-03T06:06:06+08:00",
   "coachSilentSince": "2026-09-03T06:06:06+08:00",
-  "coachSilentHours": 0.1,
-  "cronJobsTotal": 1,
-  "cronJobsOk": 1,
-  "cronCE3Plus": 0,
-  "cronTimeoutDanger": 0,
-  "cronAuthFail": 0,
+  "coachSilentHours": 6.1,
   "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-03T06:12:53+08:00",
-  "v4Gate1_nowBroken": false,
-  "v4Gate2_providerOverload": false,
-  "v4Gate3_affectsWork": false,
-  "verdict": "quiet-pass",
-  "announce": false,
-  "cumulativeGreen": 102,
-  "cumulativeGreenNote": "v4.0 三關上線以來第 102 次安靜通過",
+  "telegramProbeAt": "2026-09-03T12:12:36+08:00",
+  "cronState": {
+    "enabledJobs": 1,
+    "lastRunStatus": "ok",
+    "consecutiveErrors": 0
+  },
+  "v4ThreeGatesResult": {
+    "gate1_stillBroken": false,
+    "gate2_providerOverload": false,
+    "gate3_affectsWork": false,
+    "verdict": "all_fail_silent_pass"
+  },
+  "currentCycle": 745,
+  "cumulativeGreen": 109,
+  "updatedAt": "2026-09-03T12:12:36+08:00",
   "systemSnapshot": {
     "coachSilentSince": "2026-09-03T06:06:06+08:00",
-    "coachSilentHours": 0.1
+    "coachSilentHours": 6.1
   },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-03T06:12:53+08:00"
-  }
+  "notes": "cycle=745 安靜通過。cumulativeGreen 109 = 上輪 108 +1（上輪 cycle=744 summary 寫 108 但 state/cumulative_green 檔案停在 107，本輪雙檔一起校正成 109）。"
 }

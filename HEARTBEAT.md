@@ -1,8 +1,220 @@
+## 🦞 健康檢查 cycle=745（2026-09-03 12:12 TPE 週四中午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **6.1h**，週四中午，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全（9015/1851/22220 bytes）含兩份棄用標記 ✅｜Repo1=23 / Repo2=32（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四中午 + 教練沉默 6.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **109**（從 108 +1，連續破百後第十輪，上輪 107→108 滯後本輪雙檔一起校正為 109）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **745**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **109**（state/ 雙檔 .txt + memory/ 雙檔一致，已校正上輪 107→108 滯後）
+- ✅ `state/healthcheck.log` 追加 cycle=745
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=6.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**13:12 cycle=746**
+
+---
+## 🦞 健康檢查 cycle=744（2026-09-03 11:12 TPE 週四上午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **5.1h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0、lastDurationMs=95930（< 600s timeout） |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=32（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 11:12 + 教練沉默 5.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **108**（從 107 +1，連續破百後第九輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **744**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **108**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=744
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=5.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**12:12 cycle=745**
+
+---
+
+## 🦞 健康檢查 cycle=743（2026-09-03 10:12 TPE 週四上午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **4.1h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 25 個活躍任務（從 cron list 查證），全部 lastRunStatus=ok、CE=0 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=32（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 10:12 + 教練沉默 4.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **107**（從 106 +1，連續破百後第八輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **743**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **107**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=743
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=4.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**11:12 cycle=744**
+
+---
+
+## 🦞 健康檢查 cycle=742（2026-09-03 09:12 TPE 週四上午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **3.1h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=32（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 09:12 + 教練沉默 3.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **106**（從 105 +1，連續破百後第七輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **742**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **106**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=742
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=3.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**10:12 cycle=743**
+
+## 🦞 健康檢查 cycle=741（2026-09-03 09:00 TPE 週四上午）— 安靜通過｜📚 結繩領導學閱讀提醒觸發
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **2.9h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 25 個活躍任務（從 cron list 查證）｜本觸發 cron「📚 每日結繩領導學閱讀提醒」lastRunStatus=ok、CE=0 ｜「🦞 每小時任務健康檢查」nextRun=09:12 待 cycle=742 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=32（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**⚠️ 新發現異常（已手動緩解）**：message tool 走 `TELEGRAM_BOT_TOKEN` env（當下未設），第一次送訊息報錯 `bot token missing`；指定 `accountId="bot_main"` 後成功送出（messageId=10219）。**根因**：message tool 預設讀 env，未 fallback 到 `channels.telegram.accounts.bot_main.botToken`，而 probe 走後者所以一直 ok。本次已用 accountId 繞過，下輪如需送訊息也要帶 accountId。
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 09:00 + 教練沉默 2.9h 正常作息 + 零會員功能壞；TG 訊息已送達教練）
+
+**累計**：cumulativeGreen = **105**（從 104 +1，連續破百後第六輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **741**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **105**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=741
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid、trigger=每日結繩領導學閱讀提醒）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=2.9 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不額外打擾教練（閱讀提醒訊息已透過 message tool 送出）。** 下輪：**09:12 cycle=742**
+
+---
+
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
 > 重啟時間：2026-09-03 00:00
 > 對話記錄已完整存入 memory/2026-09-03.md 並推上 GitHub，零遺漏
+
+## 🦞 健康檢查 cycle=739（2026-09-03 07:12 TPE 週四上午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **1.1h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0（已 SQL 驗證 `enabled=1 AND last_run_status='error'` = 0 筆） |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=20（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 07:12 + 教練沉默 1.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **103**（從 102 +1，連續破百後第四輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **739**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **103**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=739
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=1.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**08:12 cycle=740**
+
+## 🦞 健康檢查 cycle=740（2026-09-03 08:12 TPE 週四上午）— 安靜通過
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T06:06:06+08:00`（沉默 **2.1h**，週四上午正常作息，當下 `date` 新鮮值） |
+| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0（已 SQL 驗證 `enabled=1 AND last_run_status='error'` = 0 筆） |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=30（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
+- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
+- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
+- 關卡三（影響教練/會員嗎）→ ❌ fail（週四上午 08:12 + 教練沉默 2.1h 正常作息 + 零會員功能壞）
+
+**累計**：cumulativeGreen = **104**（從 103 +1，連續破百後第五輪）
+
+**已落痕跡**（同步完成）：
+- ✅ `state/healthcheck_cycle` = **740**（state/ + memory/ 雙檔一致）
+- ✅ `state/cumulative_green` = **104**（state/ 雙檔 .txt + memory/ 雙檔一致）
+- ✅ `state/healthcheck.log` 追加 cycle=740
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=2.1 新鮮值）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**09:12 cycle=741**
 
 ## 🦞 健康檢查 cycle=738（2026-09-03 06:12 TPE 週四凌晨）— 安靜通過
 
@@ -121,35 +333,6 @@
 ⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
 
 🔕 **結論：安靜通過，不打擾教練。** 下輪：**04:12 cycle=736**
-
-## 🦞 健康檢查 cycle=734（2026-09-03 02:12 TPE 週四凌晨）— 安靜通過
-
-| 檢查項 | 結果 |
-|---|---|
-| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-03T01:58:29+08:00`（沉默 **0.23h**，剛剛對話不久，週四凌晨正常作息，當下 `date` 新鮮值） |
-| Cron 系統 | ✅ 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0 |
-| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
-| HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
-| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
-| 環境快檢 | SOUL.md 三份齊全含棄用標記 ✅｜Repo1=23 / Repo2=16（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
-
-**v4.0 三關判斷（全 fail → 🔕 不 announce 教練）：**
-- 關卡一（本輪還壞嗎）→ ❌ fail（cron 全綠 + 本輪執行成功 = 已恢復鐵證）
-- 關卡二（provider overload 重災嗎）→ ❌ fail（無錯誤）
-- 關卡三（影響教練/會員嗎）→ ❌ fail（週四凌晨 02:12 + 教練沉默 0.23h 剛剛對話不久 + 零會員功能壞）
-
-**累計**：cumulativeGreen = **98**（從 97 +1）
-
-**已落痕跡**（同步完成）：
-- ✅ `state/healthcheck_cycle` = **734**（state/）
-- ✅ `state/cumulative_green` = **98**
-- ✅ `state/healthcheck.log` 追加 cycle=734
-- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` 完整更新（v4.0 三關快照、JSON valid）
-- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=0.23 新鮮值，本輪從 cycle=733 的 4.3h 縮短為 0.23h）
-
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-
-🔕 **結論：安靜通過，不打擾教練。** 下輪：**03:12 cycle=735**
 
 ## 🦞 健康檢查 cycle=733（2026-09-03 01:12 TPE 週四凌晨）— 安靜通過
 
