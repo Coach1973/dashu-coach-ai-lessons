@@ -1094,6 +1094,83 @@ def api_tut_join():
     )
 
 
+LEADER_EVENT_NAME = "領導人溝通的藝術"
+
+
+@app.route("/leader/")
+def leader_page():
+    return render_template("leader.html")
+
+
+@app.route("/api/leader/join", methods=["POST", "OPTIONS"])
+def api_leader_join():
+    """「領導人溝通的藝術」9/10報名表單後端（2026-09-03交辦，design(4).html邀請函）。
+    比照/api/tut/join同一套原則：報名成功同時通知教練+佩佩老師共見的Telegram群組，
+    並導流佩佩老師LINE官方帳號，訪客體驗不能被後端錯誤卡住。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    name = (payload.get("name") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    source = (payload.get("source") or "event.bymyway.com/leader").strip()
+
+    add_friend_url = f"https://line.me/R/ti/p/{PEIPEI_LINE_OA_ID}"
+    greet_url = add_friend_url
+    if name:
+        greet_text = f"我是{name}，我已經報名了「{LEADER_EVENT_NAME}」9/10場次"
+        greet_url = f"https://line.me/R/oaMessage/{PEIPEI_LINE_OA_ID}/?{quote(greet_text)}"
+
+    if not name or not phone:
+        _notify_xiaolongxia(
+            "⚠️【領導人溝通的藝術・資料不完整，沒能存檔】\n"
+            f"姓名：{name or '（沒填）'}\n電話：{phone or '（沒填）'}\n請人工確認這位有沒有真的要報名。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": "missing name/phone",
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    try:
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO leader_workshop_signups (name, phone, source) VALUES (?, ?, ?)",
+            (name, phone, source),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(
+            "⚠️【領導人溝通的藝術・資料庫寫入失敗】\n"
+            f"姓名：{name}\n電話：{phone}\n錯誤：{e}\n請人工補登這筆資料。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": str(e),
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    notify_text = (
+        "【領導人溝通的藝術・報名通知】\n"
+        f"姓名：{name}\n電話：{phone}\n"
+        "日期：9/10（四）14:00-17:00\n地點：安平路176號\n"
+        f"（來源：{source}）"
+    )
+    _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return Response(
+        json.dumps({"ok": True, "add_friend_url": add_friend_url, "greet_url": greet_url}),
+        status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
 COACH888_STATE_KEYS = {
     "coach888_layout", "coach888_titles", "coach888_badges", "coach888_names", "coach888_collapse",
 }

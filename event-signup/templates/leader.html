@@ -1,0 +1,886 @@
+<!DOCTYPE html><html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>領導人溝通的藝術 — 邀請函</title>
+
+<!-- Fonts: Editorial bucket — Noto Serif SC (display/body), Noto Sans SC (sans), Cormorant Garamond (Latin accent), Barlow (num) -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@400;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Variables ─────────────────────────────────────────────── */
+:root {
+  --W: 1080px;
+  --bg: #0E1626;
+  --bg-top: #0B1220;
+  --bg-bot: #111D33;
+  --card: #16223A;
+  --fg: #F2E9D8;
+  --gold: #D4AF6A;
+  --bronze: #B08040;
+  --muted: #9FB0C8;
+  --hair: rgba(212,175,106,0.45);
+  --hair-solid: rgba(212,175,106,0.7);
+
+  --display: "Cormorant Garamond","Noto Serif SC","Songti SC",serif;
+  --cn: "Noto Serif SC","Songti SC","STSong",serif;
+  --sans: "Noto Sans SC","PingFang TC","Hiragino Sans GB",sans-serif;
+  --num: "Barlow","Inter",sans-serif;
+
+  --pad-x: 72px;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  max-width: var(--W);
+  margin: 0 auto;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 40%, var(--bg-bot) 100%);
+  color: var(--fg);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Shared Utilities ──────────────────────────────────────── */
+.gold { color: var(--gold); }
+.muted { color: var(--muted); }
+.serif { font-family: var(--cn); }
+.num { font-family: var(--num); }
+
+/* ─── Gold Hairline Divider ─────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hair-solid) 20%, var(--hair-solid) 80%, transparent);
+  margin: 0;
+}
+
+/* ─── SVG Rope Knot Decorations ─────────────────────────────── */
+.knot-deco {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 1 — TOP HERO
+   ════════════════════════════════════════════════════════════ */
+.section-hero {
+  position: relative;
+  width: 100%;
+  padding: 64px var(--pad-x) 56px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.section-hero::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(212,175,106,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-rope-band {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.invite-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.invite-label-cn {
+  font-family: var(--sans);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+}
+
+.invite-label-en {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.35em;
+  opacity: 0.75;
+}
+
+.invite-label-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.main-title { margin-bottom: 32px; }
+
+.main-title h1 {
+  font-family: var(--cn);
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--fg);
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  text-shadow: 0 2px 24px rgba(212,175,106,0.18);
+}
+
+.title-accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.title-accent-line {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.title-accent-line.right {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 2 — SPEAKER
+   ════════════════════════════════════════════════════════════ */
+.section-speaker {
+  padding: 60px var(--pad-x) 64px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 0 56px;
+  align-items: center;
+  position: relative;
+}
+
+.section-speaker::before {
+  content: "";
+  position: absolute;
+  left: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(ellipse at center, rgba(212,175,106,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.speaker-photo-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.speaker-photo-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  opacity: 0.8;
+}
+
+.speaker-photo-ring-outer {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid var(--hair);
+}
+
+.speaker-photo-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.speaker-photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.speaker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.speaker-tag {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.speaker-tag::before {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.speaker-name {
+  font-family: var(--cn);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+
+.speaker-bio {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 3 — KNOT ATMOSPHERE IMAGE
+   ════════════════════════════════════════════════════════════ */
+.section-knot-image { padding: 0 var(--pad-x) 56px; }
+
+.knot-image-frame {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--hair);
+}
+
+.knot-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.knot-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,18,32,0.1) 0%, rgba(11,18,32,0.65) 100%);
+}
+
+.knot-image-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px rgba(212,175,106,0.3);
+  pointer-events: none;
+}
+
+.knot-quote-wrap {
+  margin-top: 40px;
+  text-align: center;
+  padding: 0 40px;
+}
+
+.knot-quote {
+  font-family: var(--cn);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--fg);
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+}
+
+.knot-quote-mark {
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 36px;
+  line-height: 0.5;
+  vertical-align: -0.1em;
+  opacity: 0.8;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 4 — HIGHLIGHTS
+   ════════════════════════════════════════════════════════════ */
+.section-highlights { padding: 56px var(--pad-x) 56px; }
+
+.section-heading { text-align: center; margin-bottom: 48px; }
+
+.section-heading-label {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  margin-bottom: 12px;
+}
+
+.section-heading-title {
+  font-family: var(--cn);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: 0.06em;
+}
+
+.highlights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.highlight-item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0 28px;
+  align-items: start;
+}
+
+.highlight-icon { width: 64px; height: 64px; flex-shrink: 0; margin-top: 4px; }
+
+.highlight-text { display: flex; flex-direction: column; gap: 8px; }
+
+.highlight-title {
+  font-family: var(--cn);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.highlight-desc {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 5 — INFO CARD
+   ════════════════════════════════════════════════════════════ */
+.section-info { padding: 0 var(--pad-x) 56px; }
+
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 52px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  opacity: 0.6;
+}
+
+.info-card-heading {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.info-rows { display: flex; flex-direction: column; gap: 28px; }
+
+.info-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 0 24px;
+  align-items: start;
+}
+
+.info-icon { width: 44px; height: 44px; margin-top: 2px; flex-shrink: 0; }
+
+.info-content { display: flex; flex-direction: column; gap: 4px; }
+
+.info-label {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.info-value {
+  font-family: var(--sans);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+.info-value .num { font-family: var(--num); font-weight: 700; }
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 6 — REGISTER FORM
+   ════════════════════════════════════════════════════════════ */
+.section-register { padding: 0 var(--pad-x) 56px; }
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.register-field { display: flex; flex-direction: column; gap: 8px; }
+
+.register-field label {
+  font-family: var(--sans);
+  font-size: 18px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.register-field input {
+  background: rgba(11,18,32,0.6);
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 20px;
+  color: var(--fg);
+  font-family: var(--sans);
+  outline: none;
+}
+
+.register-field input:focus { border-color: var(--gold); }
+
+.register-submit {
+  margin-top: 8px;
+  background: linear-gradient(90deg, var(--bronze), var(--gold));
+  color: #0B1220;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 24px;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--sans);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.register-submit:disabled { opacity: 0.6; cursor: default; }
+
+.register-result { text-align: center; }
+
+.register-success {
+  font-family: var(--cn);
+  font-size: 22px;
+  color: var(--fg);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.register-line-btn {
+  display: inline-block;
+  background: #06C755;
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 20px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 7 — FOOTER / TARGET
+   ════════════════════════════════════════════════════════════ */
+.section-footer {
+  padding: 48px var(--pad-x) 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.target-block { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+.target-label {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.target-label::before,
+.target-label::after {
+  content: "";
+  display: inline-block;
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.target-text {
+  font-family: var(--cn);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--fg);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.closing-quote {
+  font-family: var(--cn);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  max-width: 820px;
+  text-align: center;
+}
+
+.closing-knot { margin-top: 8px; }
+
+@media (max-width: 720px) {
+  :root { --pad-x: 24px; }
+  .main-title h1 { font-size: 44px; }
+  .section-speaker { grid-template-columns: 1fr; text-align: center; }
+  .section-speaker::before { display: none; }
+  .speaker-info { align-items: center; }
+  .speaker-tag { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- SECTION 1 — HERO -->
+<section class="section-hero">
+  <svg class="hero-rope-band knot-deco" width="936" height="28" viewBox="0 0 936 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="0" y1="14" x2="400" y2="14" stroke="url(#ropeGradL)" stroke-width="1"></line>
+    <line x1="536" y1="14" x2="936" y2="14" stroke="url(#ropeGradR)" stroke-width="1"></line>
+    <circle cx="468" cy="14" r="10" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.85"></circle>
+    <circle cx="468" cy="14" r="5" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.6"></circle>
+    <circle cx="468" cy="14" r="2" fill="#D4AF6A" opacity="0.7"></circle>
+    <path d="M440 14 L448 8 L456 14 L448 20 Z" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.5"></path>
+    <path d="M480 14 L488 8 L496 14 L488 20 Z" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.5"></path>
+    <defs>
+      <linearGradient id="ropeGradL" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#D4AF6A" stop-opacity="0"></stop>
+        <stop offset="100%" stop-color="#D4AF6A" stop-opacity="0.7"></stop>
+      </linearGradient>
+      <linearGradient id="ropeGradR" x1="536" y1="0" x2="936" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#D4AF6A" stop-opacity="0.7"></stop>
+        <stop offset="100%" stop-color="#D4AF6A" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="invite-label">
+    <span class="invite-label-cn">誠摯邀請</span>
+    <span class="invite-label-dot"></span>
+    <span class="invite-label-en">INVITATION</span>
+  </div>
+
+  <div class="main-title">
+    <h1>領導人溝通的藝術</h1>
+    <div class="title-accent">
+      <span class="title-accent-line"></span>
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="18" cy="18" r="12" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.8"></circle>
+        <circle cx="18" cy="18" r="6" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.6"></circle>
+        <path d="M18 6 C14 10 10 14 10 18 C10 22 14 26 18 30" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.5"></path>
+        <path d="M18 6 C22 10 26 14 26 18 C26 22 22 26 18 30" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.5"></path>
+        <circle cx="18" cy="18" r="2.5" fill="#D4AF6A" opacity="0.7"></circle>
+      </svg>
+      <span class="title-accent-line right"></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2 — SPEAKER -->
+<section class="section-speaker">
+  <div class="speaker-photo-wrap">
+    <div class="speaker-photo-ring-outer"></div>
+    <div class="speaker-photo-ring"></div>
+    <div class="speaker-photo-container">
+      <img src="https://a.lovart.ai/artifacts/agent/IjhKwIx4PQFLND0V.png" alt="主講人蔡曜隆" loading="eager">
+    </div>
+  </div>
+  <div class="speaker-info">
+    <div class="speaker-tag">主講人</div>
+    <div class="speaker-name">蔡曜隆</div>
+    <div class="speaker-bio">資深領導力講師<br>溝通與團隊帶領</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3 — KNOT ATMOSPHERE IMAGE -->
+<section class="section-knot-image">
+  <div class="knot-image-frame">
+    <img src="https://a.lovart.ai/artifacts/agent/HpfwHyrKMp1cirKg.png" alt="結繩藝術氛圍圖" loading="eager">
+    <div class="knot-image-overlay"></div>
+  </div>
+  <div class="knot-quote-wrap">
+    <p class="knot-quote">
+      <span class="knot-quote-mark">「</span>從一條繩、一個結開始——<br>動手編織的，是人與人之間的連結與信任。<span class="knot-quote-mark">」</span>
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4 — HIGHLIGHTS -->
+<section class="section-highlights">
+  <div class="section-heading">
+    <div class="section-heading-label">活動內容</div>
+    <div class="section-heading-title">四大體驗主軸</div>
+  </div>
+
+  <div class="highlights-list">
+    <div class="highlight-item">
+      <svg class="highlight-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="32" r="20" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.3"></circle>
+        <path d="M20 32 C20 24 26 18 32 18 C38 18 44 24 44 32" stroke="#D4AF6A" stroke-width="2" fill="none" stroke-linecap="round"></path>
+        <path d="M20 32 C20 40 26 46 32 46 C38 46 44 40 44 32" stroke="#B08040" stroke-width="2" fill="none" stroke-linecap="round"></path>
+        <path d="M26 26 C28 30 30 32 32 32 C34 32 36 30 38 26" stroke="#D4AF6A" stroke-width="1.5" fill="none" stroke-linecap="round"></path>
+        <path d="M26 38 C28 34 30 32 32 32 C34 32 36 34 38 38" stroke="#B08040" stroke-width="1.5" fill="none" stroke-linecap="round"></path>
+        <circle cx="32" cy="32" r="3" fill="#D4AF6A" opacity="0.8"></circle>
+        <text x="32" y="60" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#D4AF6A" opacity="0.7">01</text>
+      </svg>
+      <div class="highlight-text">
+        <div class="highlight-title">DIY 動手做結繩</div>
+        <div class="highlight-desc">親手編織，感受一進一出之間的耐心與專注。</div>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <svg class="highlight-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="32" r="20" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.3"></circle>
+        <circle cx="26" cy="32" r="10" stroke="#D4AF6A" stroke-width="1.8" fill="none"></circle>
+        <circle cx="38" cy="32" r="10" stroke="#B08040" stroke-width="1.8" fill="none"></circle>
+        <circle cx="32" cy="32" r="2.5" fill="#D4AF6A" opacity="0.8"></circle>
+        <text x="32" y="60" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#D4AF6A" opacity="0.7">02</text>
+      </svg>
+      <div class="highlight-text">
+        <div class="highlight-title">領導人的溝通</div>
+        <div class="highlight-desc">像編繩一樣，讓不同的線彼此牽引、對話。</div>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <svg class="highlight-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="32" r="20" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.3"></circle>
+        <path d="M32 14 C40 14 46 20 46 28 C46 36 40 42 32 42 C24 42 18 36 18 28 C18 22 22 18 28 18 C34 18 38 22 38 28 C38 32 35 35 32 35" stroke="#D4AF6A" stroke-width="1.8" fill="none" stroke-linecap="round"></path>
+        <circle cx="32" cy="35" r="2.5" fill="#B08040" opacity="0.8"></circle>
+        <text x="32" y="60" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#D4AF6A" opacity="0.7">03</text>
+      </svg>
+      <div class="highlight-text">
+        <div class="highlight-title">藝術家動手體驗</div>
+        <div class="highlight-desc">在創作中放鬆、觀察，重新認識帶人的節奏。</div>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <svg class="highlight-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="32" r="20" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.3"></circle>
+        <path d="M32 14 L44 32 L32 50 L20 32 Z" stroke="#D4AF6A" stroke-width="1.8" fill="none"></path>
+        <path d="M32 20 L40 32 L32 44 L24 32 Z" stroke="#B08040" stroke-width="1.2" fill="none" opacity="0.7"></path>
+        <circle cx="32" cy="32" r="3" fill="#D4AF6A" opacity="0.8"></circle>
+        <text x="32" y="60" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#D4AF6A" opacity="0.7">04</text>
+      </svg>
+      <div class="highlight-text">
+        <div class="highlight-title">結繩領導力</div>
+        <div class="highlight-desc">每一個結，都是一次分工、承諾與凝聚力的練習。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 5 — INFO CARD -->
+<section class="section-info">
+  <div class="info-card">
+    <div class="info-card-heading">活動資訊</div>
+    <div class="info-rows">
+      <div class="info-row">
+        <svg class="info-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="8" width="36" height="32" rx="4" stroke="#D4AF6A" stroke-width="1.5" fill="none"></rect>
+          <line x1="4" y1="18" x2="40" y2="18" stroke="#D4AF6A" stroke-width="1" opacity="0.6"></line>
+          <line x1="14" y1="4" x2="14" y2="14" stroke="#D4AF6A" stroke-width="1.5" stroke-linecap="round"></line>
+          <line x1="30" y1="4" x2="30" y2="14" stroke="#D4AF6A" stroke-width="1.5" stroke-linecap="round"></line>
+          <rect x="12" y="24" width="8" height="8" rx="1" fill="#D4AF6A" opacity="0.5"></rect>
+        </svg>
+        <div class="info-content">
+          <span class="info-label">日期</span>
+          <span class="info-value"><span class="num">9/10</span>（四）</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <svg class="info-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="22" cy="22" r="17" stroke="#D4AF6A" stroke-width="1.5" fill="none"></circle>
+          <line x1="22" y1="10" x2="22" y2="22" stroke="#D4AF6A" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="22" y1="22" x2="30" y2="28" stroke="#D4AF6A" stroke-width="1.5" stroke-linecap="round"></line>
+          <circle cx="22" cy="22" r="2" fill="#D4AF6A"></circle>
+        </svg>
+        <div class="info-content">
+          <span class="info-label">時間</span>
+          <span class="info-value"><span class="num">14:00–17:00</span></span>
+          <span class="info-sub"><span class="num">1</span> 點半即可入場交流</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <svg class="info-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M22 4 C14 4 8 10 8 18 C8 28 22 40 22 40 C22 40 36 28 36 18 C36 10 30 4 22 4 Z" stroke="#D4AF6A" stroke-width="1.5" fill="none"></path>
+          <circle cx="22" cy="18" r="5" stroke="#D4AF6A" stroke-width="1.2" fill="none"></circle>
+        </svg>
+        <div class="info-content">
+          <span class="info-label">地點</span>
+          <span class="info-value">安平路<span class="num">176</span>號</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <svg class="info-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="22" cy="22" r="17" stroke="#D4AF6A" stroke-width="1.5" fill="none"></circle>
+          <text x="22" y="28" text-anchor="middle" font-family="Barlow,sans-serif" font-size="18" font-weight="700" fill="#D4AF6A">$</text>
+        </svg>
+        <div class="info-content">
+          <span class="info-label">費用</span>
+          <span class="info-value"><span class="num">600</span> 元</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 6 — REGISTER -->
+<section class="section-register">
+  <div class="info-card">
+    <div class="info-card-heading">立即報名</div>
+    <form id="registerForm" class="register-form">
+      <div class="register-field">
+        <label for="regName">姓名</label>
+        <input type="text" id="regName" name="name" required placeholder="請輸入您的姓名">
+      </div>
+      <div class="register-field">
+        <label for="regPhone">手機號碼</label>
+        <input type="tel" id="regPhone" name="phone" required placeholder="請輸入您的手機號碼">
+      </div>
+      <button type="submit" class="register-submit">確認報名</button>
+    </form>
+    <div id="registerResult" class="register-result" style="display:none;"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 7 — FOOTER / TARGET -->
+<section class="section-footer">
+  <div class="target-block">
+    <div class="target-label">適用對象</div>
+    <div class="target-text">想要學習領導力或正在帶領團隊的朋友</div>
+  </div>
+
+  <p class="closing-quote">
+    「誠摯邀請您，一起動手、一起對話，<br>在結繩之間，練習領導的藝術。」
+  </p>
+
+  <svg class="closing-knot knot-deco" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="30" cy="30" r="22" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.4"></circle>
+    <circle cx="30" cy="30" r="14" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.65"></circle>
+    <path d="M30 16 C22 20 18 26 18 30 C18 34 22 40 30 44" stroke="#D4AF6A" stroke-width="1.2" fill="none" opacity="0.6" stroke-linecap="round"></path>
+    <path d="M30 16 C38 20 42 26 42 30 C42 34 38 40 30 44" stroke="#B08040" stroke-width="1.2" fill="none" opacity="0.6" stroke-linecap="round"></path>
+    <circle cx="30" cy="30" r="4" stroke="#D4AF6A" stroke-width="1.5" fill="none" opacity="0.8"></circle>
+    <circle cx="30" cy="30" r="2" fill="#D4AF6A" opacity="0.7"></circle>
+  </svg>
+
+  <svg width="936" height="20" viewBox="0 0 936 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="0" y1="10" x2="936" y2="10" stroke="url(#bottomRope)" stroke-width="1"></line>
+    <defs>
+      <linearGradient id="bottomRope" x1="0" y1="0" x2="936" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#D4AF6A" stop-opacity="0"></stop>
+        <stop offset="20%" stop-color="#D4AF6A" stop-opacity="0.5"></stop>
+        <stop offset="50%" stop-color="#D4AF6A" stop-opacity="0.7"></stop>
+        <stop offset="80%" stop-color="#D4AF6A" stop-opacity="0.5"></stop>
+        <stop offset="100%" stop-color="#D4AF6A" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+</section>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  if (!name || !phone) return;
+
+  const form = this;
+  const btn = form.querySelector('.register-submit');
+  const resultEl = document.getElementById('registerResult');
+  btn.disabled = true;
+  btn.textContent = '送出中...';
+
+  try {
+    const resp = await fetch('/api/leader/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, phone: phone, source: 'event.bymyway.com/leader' })
+    });
+    const data = await resp.json();
+    form.style.display = 'none';
+    resultEl.style.display = 'block';
+    resultEl.innerHTML =
+      '<p class="register-success">報名成功，' + name + '！請加入佩佩老師LINE官方帳號，掌握活動最新資訊。</p>' +
+      '<a class="register-line-btn" href="' + data.greet_url + '" target="_blank">加入LINE好友</a>';
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = '確認報名';
+    resultEl.style.display = 'block';
+    resultEl.innerHTML = '<p class="register-success">網路異常，請稍後再試一次。</p>';
+  }
+});
+</script>
+
+</body></html>
