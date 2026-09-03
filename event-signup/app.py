@@ -1171,6 +1171,91 @@ def api_leader_join():
     )
 
 
+EVENT_1010_REPO = Path("/Users/bymyway/github_repos/1010")
+EVENT_1010_NAME = "人生四席・一日共鳴（淺山綠茶席生命故事）"
+
+
+@app.route("/1010/")
+def event_1010_page():
+    return _serve_repo_file(EVENT_1010_REPO, "index.html")
+
+
+@app.route("/1010/<path:filename>")
+def event_1010_assets(filename):
+    if filename == "index.html":
+        return event_1010_page()
+    return _serve_repo_file(EVENT_1010_REPO, filename)
+
+
+@app.route("/api/1010/join", methods=["POST", "OPTIONS"])
+def api_event_1010_join():
+    """「人生四席・一日共鳴」10/10淺山綠茶席報名（2026-09-03交辦，Designs.zip落地頁）。
+    比照/api/leader/join+/api/tut/join同一套模式，LINE導流用佩佩老師官方帳號
+    （教練原口頭指定大樹教育官方帳號，隨後改口「畢竟這是音樂藝術相關活動」改用佩佩老師帳號）。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    name = (payload.get("name") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    source = (payload.get("source") or "event.bymyway.com/1010").strip()
+
+    add_friend_url = f"https://line.me/R/ti/p/{PEIPEI_LINE_OA_ID}"
+    greet_url = add_friend_url
+    if name:
+        greet_text = f"我是{name}，我已經報名了「{EVENT_1010_NAME}」10/10場次"
+        greet_url = f"https://line.me/R/oaMessage/{PEIPEI_LINE_OA_ID}/?{quote(greet_text)}"
+
+    if not name or not phone:
+        _notify_xiaolongxia(
+            "⚠️【人生四席・一日共鳴・資料不完整，沒能存檔】\n"
+            f"姓名：{name or '（沒填）'}\n電話：{phone or '（沒填）'}\n請人工確認這位有沒有真的要報名。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": "missing name/phone",
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    try:
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO event_1010_signups (name, phone, source) VALUES (?, ?, ?)",
+            (name, phone, source),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(
+            "⚠️【人生四席・一日共鳴・資料庫寫入失敗】\n"
+            f"姓名：{name}\n電話：{phone}\n錯誤：{e}\n請人工補登這筆資料。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": str(e),
+                        "add_friend_url": add_friend_url, "greet_url": greet_url}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    notify_text = (
+        "【人生四席・一日共鳴・報名通知】\n"
+        f"姓名：{name}\n電話：{phone}\n"
+        "日期：10/10（六）10:00～下午\n地點：淺山綠（苗栗苑裡）\n"
+        f"（來源：{source}）"
+    )
+    _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return Response(
+        json.dumps({"ok": True, "add_friend_url": add_friend_url, "greet_url": greet_url}),
+        status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
 COACH888_STATE_KEYS = {
     "coach888_layout", "coach888_titles", "coach888_badges", "coach888_names", "coach888_collapse",
 }
