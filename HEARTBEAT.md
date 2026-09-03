@@ -514,3 +514,13 @@
 ## 🚀 Session-End 雲端同步 2026-09-03 13:03（Windows）
 - ✅ pushed 2dc5a1f4
 - 同步路徑：HEARTBEAT.md
+
+## 🩺 健康檢查 2026-09-03 14:12（cycle 747）
+- 第零步：sync_coach_last_message.sh exit 0 → 教練最後訊息 2026-09-03T13:41:38+08:00（沉默 0.5h，當下 date 新鮮值）
+- Cron：本任務 1/1 ok，CE=0
+- openclaw_cron_daemon.sh：心跳持續，最近 1 小時無失敗
+- 子系統：sync_handoff ✅ / backup_terminal ✅ / recall ✅ / distill_watchdog pending=0 ✅
+- 環境快速健檢：SOUL.md 三份齊全（含棄用標記）/ Repo1=23、Repo2=10（皆 < 50 警戒線）/ 無 .! 鎖定檔
+- TG 通道探針（守則 #19 當下實測）：ok
+- HEARTBEAT.md ⬜ 真實待辦 | 0 項 |
+- v4.0 三關：全 fail → 不 announce（cron 全綠 + 本輪成功 + 無錯誤）
