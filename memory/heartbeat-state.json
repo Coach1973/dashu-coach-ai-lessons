@@ -3,7 +3,7 @@
     "cron": 1788430376,
     "telegramChannelProbe": 1788430376,
     "envHealth": 1788430376,
-    "coach_silence_sync": "2026-09-03T18:12:05.771320+08:00"
+    "coach_silence_sync": "2026-09-03T19:12:05.573738+08:00"
   },
   "lastCoachMessageAt": "2026-09-03T18:10:53+08:00",
   "coachSilentSince": "2026-09-03T18:10:53+08:00",
@@ -28,8 +28,8 @@
   "cumulativeGreen": 116,
   "updatedAt": "2026-09-03T18:12:56+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-03T18:10:53+08:00",
-    "coachSilentHours": 0.0,
+    "coachSilentSince": "2026-09-03T18:42:29+08:00",
+    "coachSilentHours": 0.5,
     "envHealth": "SOUL×3齊(皆有棄用標記)｜Repo1=23/Repo2=16(<50警戒線)｜無鎖定檔",
     "cron": "25 enabled｜1 running(本任務)｜0 CE>=3｜22 ok｜2 idle"
   },
