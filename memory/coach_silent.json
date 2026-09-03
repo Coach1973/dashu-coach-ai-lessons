@@ -1,7 +1,7 @@
 {
-  "lastVerifiedAt": "2026-09-04T03:12:24+0800",
-  "lastCoachMessageAt": "2026-09-03T19:44:20+08:00",
-  "silentHours": 7.5,
+  "lastVerifiedAt": "2026-09-04T04:12:04+0800",
+  "lastCoachMessageAt": "2026-09-04T03:59:24+08:00",
+  "silentHours": 0.2,
   "source": "sync_coach_last_message.sh (Telegram API 真實時間)",
-  "cycle": 762
+  "cycle": 763
 }
