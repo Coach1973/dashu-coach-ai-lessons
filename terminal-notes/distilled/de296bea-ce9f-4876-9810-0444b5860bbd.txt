@@ -1,0 +1,101 @@
+# 終端機對話萃取 — Session de296bea-ce9f-4876-9810-0444b5860bbd
+# 提取時間：2026-09-03 12:39 (台灣時間)
+# 共 6 條教練原話
+
+---
+
+【教練 2026-09-03 04:19】
+開工  同時，立即處理  嚴重的錯誤，https://event.bymyway.com/ai-art/ 報名資訊竟然寫9月13(六)
+
+明明這活動一開始就是寫9月16(三)
+
+請立即修正
+
+　▶ AI 回應：Fix confirmed and applied. Making the edit now — the deadline was mislabeled, not the event date itself.
+
+　▶ AI 回應：Live site confirms the fix took effect immediately (Flask reads the file directly, no restart needed). Now committing per the commit-on-promise rule.
+
+　▶ AI 回應：修正完成，已上線驗證。
+
+**問題根因**：事件日期 9/16（三）本身從未寫錯，錯的是價格區兩處「早鳥優惠截止日」「裂變行銷方案截止日」——標成「9/13（六）」，但 2026 年 9/13 實際是星期日，不是星期六。查 git log 確認這是 8/31 新增優惠截止日時的日期打字誤差（意圖是「活動前一個週六」＝9/12，誤打成 9/13）。
+
+**已修正**：兩處截止日改為 **9/12（六）**，事件本身 9/16（三）維持不動。
+
+**驗證**：
+- `event.bymyway.com/ai-art/` 由 Flask 直接讀取 repo 檔案即時渲染，不需部署，改完立刻生效
+- …（略）
+
+【教練 2026-09-03 04:23】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/ai-art/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Google Chrome 開啟 `https://event.bymyway.com/ai-art/` 給教練看（依鐵律用真正的 Chrome，不是 AI 內建預覽工具）。價格區兩處截止日已顯示「9/12（六）」，事件日期「9月16日（星期三）」維持正確，教練可直接在畫面上確認。
+
+【教練 2026-09-03 04:32】
+為了避免造成誤會，請幫我優惠截止日，打上倒數時間。
+
+　▶ AI 回應：Now adding the countdown markup to both pricing cards.
+
+　▶ AI 回應：Now adding the JS logic to the existing script block.
+
+　▶ AI 回應：Now verifying it renders and computes correctly before committing.
+
+　▶ AI 回應：No errors, live and computing correctly. Committing and pushing.
+
+　▶ AI 回應：已完成，已用 Google Chrome 開給教練看。
+
+**改動**：兩個截止日（三人同行「優惠截止日」、裂變行銷「方案截止日」）下方各加一個即時倒數小標籤，格式「倒數 X 天 Y 時」，每分鐘自動更新；截止（9/12 23:59）過後自動變成「⛔ 已截止」灰底文字，不會停在一個誤導的數字上。
+
+**驗證**：正式站即時渲染（Flask 直讀檔案，改完立刻生效），已在真實網址上看到兩處都顯示「倒數 9 天 11 時」，主控台無錯誤。
+
+commit [`3a9e134`](https://github.com/Coach1973/ai-art/commit/3a9e1346d4c7a7ef9…（略）
+
+【教練 2026-09-03 04:34】
+可以是動態看到時間在減少的那種嗎？
+
+　▶ AI 回應：Making the countdown tick live to the second, with a monospace clock format so numbers don't jump around visually.
+
+　▶ AI 回應：Verifying it actually ticks live before committing.
+
+　▶ AI 回應：Confirmed ticking live — seconds dropped from `:06` to `:00` over 3 real seconds. Committing and pushing.
+
+　▶ AI 回應：改好了，已用 Google Chrome 開給教練看。
+
+倒數改成「9 天 11:25:03」這種數字鐘格式，秒數每秒真的在跳動遞減（已實測 3 秒內確認從 :06 跳到 :00），不再是每分鐘才變一次的靜態顯示。截止那刻會自動變成「⛔ 已截止」。
+
+commit [`8383d85`](https://github.com/Coach1973/ai-art/commit/8383d85d09c0aefd6a80052a754d51fa40273c44)。
+
+【教練 2026-09-03 04:36】
+在立即報名欄位，再加強，變成：立即報名 9月16日 音樂流水席活動
+
+　▶ AI 回應：This is the section heading — the right place to strengthen. Updating it now.
+
+　▶ AI 回應：Good, wraps naturally on mobile without overflow, no console errors. Committing and pushing.
+
+　▶ AI 回應：改好了，已用 Google Chrome 開給教練看報名區塊。
+
+「報名方式」區塊的標題已從「立即報名」加強為「**立即報名 9月16日 音樂流水席活動**」，手機版有測過會自然換行不會爆版，桌機版單行顯示正常。導覽列上那兩顆小按鈕（頂部+手機漢堡選單）維持原本簡短的「立即報名」沒動，因為空間較窄放長文字會擠壓版面。
+
+commit [`8582306`](https://github.com/Coach1973/ai-art/commit/858230621ee5427a3bc75eb5ad3aa4013de60d70)。
+
+【教練 2026-09-03 04:38】
+請斷行比較好看
+立即報名 9月16日 
+音樂流水席活動
+
+　▶ AI 回應：Confirmed live and rendering as two lines. Committing and pushing.

@@ -155,23 +155,19 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-09-02)
+## Promoted From Short-Term Memory (2026-09-03)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:11:12 -->
-- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 12:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 16:00 UTC [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:11-12]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:17:17 -->
-- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:17-17]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:19:22 -->
-- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:19-22]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:23:24 -->
-- 📨 對話記錄 02:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 2:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 18:00 UTC [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:23-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:5:5 -->
-- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:5-5]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:7:10 -->
-- 📨 對話記錄 00:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.876 recalls=0 avg=0.620 source=memory/2026-08-25.md:7-10]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:292:292 -->
-- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:9c3fc55d-d0f4-462f-9eeb-631a3599a710 每2小時增量記憶蒸餾] 你現在是「增量記憶蒸餾助理」，請安靜執行以下任務，不需要通知教練： [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:292-292]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:294:297 -->
-- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: 執行：node /Users/bymyway/.openclaw/workspace/scripts/distill_incremental.js; 如果輸出是 NO_NEW_ENTRIES，任務結束。; 如果有內容，從對話中提取有長期價值的資訊，更新 CLIENT_PROFILE.md。; 任務完成，不需要回覆教練。 [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:294-297]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:298:299 -->
-- 📨 對話記錄 04:00（共約 1 條，從第 0 行起）: Current time: Tuesday, August 25th, 2026 - 4:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 20:00 UTC [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-25.md:298-299]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:304:304 -->
+- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:f487652d-0696-4b54-ac7f-7dd1a94cdb8c ☀️ 每日 06:00 起床摘要（前 12 小時工作）] 你是起床摘要助理。請執行： [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:304-304]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:307:307 -->
+- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: bash /Users/bymyway/.openclaw/workspace/scripts/morning_digest.sh [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:307-307]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:310:313 -->
+- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: 腳本會輸出摘要（5-10 行），**請原封不動轉給教練**。 如果輸出是空的（沒有值得看的 commit），請回覆「✅ 起床摘要：過去 12 小時無新工作」，不要打擾教練。 Current time: Tuesday, August 25th, 2026 - 6:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 22:00 UTC [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:310-313]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:315:315 -->
+- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: Use the message tool if you need to notify the user directly with an explicit target. If you do not send directly, your final plain-text reply wi [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:315-315]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:320:320 -->
+- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:b73845c9-f653-4f9a-8869-0e2f2c0bd9b1 ☕ 幕僚長晨報（AI員工每日彙整，07:00）] 【幕僚長晨報‧教練2026-08-09核准建立，範圍：bni_tainan+jiaolian_thoughts兩個對外服務AI員工】 [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:320-320]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:322:322 -->
+- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 你現在要做的事：整理過去24小時，這兩位AI員工（服務BNI大台南分會會員的「bni_tainan」、服務121位LINE好友的「jiaolian_thoughts」）遇到什麼「老闆該知道」的事，濃縮成一份晨報推給教練。這跟06:00起床摘要(教練自己機器的git工作記錄)、23:05三機總結(教練自己跟三台機器對話的內容)是不同範疇，不要重複那兩份的內容，只講這兩個對外服務AI員工今天做了什麼。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:322-322]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:324:324 -->
+- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 步驟一：讀取今天日期的記憶檔（這兩個檔案凌晨03:04左右已自動生成，內容是前一天真實對話的蒸餾）： [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:324-324]

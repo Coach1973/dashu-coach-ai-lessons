@@ -1,5 +1,5 @@
 # 終端機對話萃取 — Session b5eadffb-228e-4bea-97d2-aebdae1e4788
-# 提取時間：2026-09-02 21:00 (台灣時間)
+# 提取時間：2026-09-03 01:42 (台灣時間)
 # 共 20 條教練原話
 
 ---
@@ -460,3 +460,11 @@ https://www.bniconnectglobal.com/web/secure/operationsRegionEditMembership?legac
 　▶ AI 回應：Good, boundary is clean. Now replace lines 342–410 in the main file with a single archive pointer.
 
 　▶ AI 回應：Good, now 3 versions (v167–v169) remain in the main file, with v165+v166 properly archived. Let me sync to CLAUDE.md mirror and commit everything.
+
+　▶ AI 回應：**總結完成，commit `e8280d54e` 已推上雲端。**
+
+**本場重點**（300-500字）：
+
+三個教練決策一次處理：GPT/MiniMax 混合模型路由確認放棄；「全部釋放」指令（關瀏覽器/赫米斯/LINE/Typeless+重啟RustDesk）依教練定義的範圍寫成腳本並真實測試過；9/16 高雄場後的大樹小講部署維持原排程不動。
+
+`/bni-credit` 補公司欄位任務全數完成：先跑 10 筆抓 token 用量，過程中我自己測「全部釋放」腳本誤關了 Chrome 連帶讓 BNI Connect 登入失效，教練重新登入後恢復。剩餘 110 筆分 3 批委派背景 Ag…（略）
