@@ -44,6 +44,8 @@
   .material-desc { font-size:13px; color:rgba(255,255,255,.55); padding:0 18px 12px; white-space:pre-wrap; }
   .material-frame-wrap { position:relative; width:100%; padding-top:62%; background:#000; }
   .material-frame-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+  .material-frame-wrap.is-folder { padding-top:0; height:520px; background:#fff; }
+  .material-type.folder { background:rgba(124,180,255,.18); color:#7cb4ff; }
   .del-form { padding:0; }
   .del-form button { background:none; border:none; color:rgba(255,255,255,.3); font-size:16px; cursor:pointer; padding:2px 6px; }
   .del-form button:hover { color:#ff6b6b; }
@@ -58,12 +60,12 @@
   <div class="panel">
     <h2>新增教材</h2>
     <div class="panel-hint">
-      Google 雲端硬碟操作步驟：
+      Google 雲端硬碟操作步驟（單一檔案／整個資料夾都可以）：
       <ol>
-        <li>把 PPT / PDF 上傳到雲端硬碟</li>
-        <li>檔案上按右鍵 →「共用」→ 一般存取改成「知道連結的任何人」，權限選「檢視者」</li>
-        <li>（選填）點「進階設定」把「檢視者及留言者可以下載、列印及複製這個檔案」關掉，防止學員下載</li>
-        <li>複製分享連結，貼到下面「Google雲端硬碟連結」欄位即可，不用自己抓檔案ID</li>
+        <li>把 PPT / PDF / 圖片上傳到雲端硬碟（單檔或整個資料夾皆可）</li>
+        <li>在檔案或資料夾上按右鍵 →「共用」→ 一般存取改成「知道連結的任何人」，權限選「檢視者」</li>
+        <li>（選填，僅單一檔案適用）點「進階設定」把「檢視者及留言者可以下載、列印及複製」關掉，防止學員下載</li>
+        <li>複製分享連結，貼到下面欄位即可——<strong>貼整個資料夾的連結</strong>會自動列出裡面所有檔案，不用一個個貼；貼單一檔案連結就只顯示那一份</li>
       </ol>
     </div>
     {% if error %}<div class="error-note">{{ error }}</div>{% endif %}
@@ -71,15 +73,16 @@
       <input type="text" name="title" placeholder="教材標題，例如：第三堂｜領導力實戰" required maxlength="200">
       <div class="row">
         <div>
-          <label>Google雲端硬碟連結</label>
-          <input type="text" name="drive_link" placeholder="貼上分享連結或檔案ID" required>
+          <label>Google雲端硬碟連結（單一檔案或整個資料夾皆可）</label>
+          <input type="text" name="drive_link" placeholder="貼上分享連結（檔案或資料夾）" required>
         </div>
         <div>
-          <label>類型（選填）</label>
+          <label>類型（選填，資料夾可不選）</label>
           <select name="file_type">
             <option value="">不指定</option>
             <option value="ppt">PPT／簡報</option>
             <option value="pdf">PDF</option>
+            <option value="image">圖片</option>
           </select>
         </div>
       </div>
@@ -95,16 +98,26 @@
       {% for m in items %}
       <div class="material-card">
         <div class="material-head">
-          <div class="material-title">{{ m.title }}{% if m.file_type %}<span class="material-type">{{ m.file_type|upper }}</span>{% endif %}</div>
+          <div class="material-title">
+            {{ m.title }}
+            {% if m.link_type == 'folder' %}<span class="material-type folder">資料夾</span>
+            {% elif m.file_type %}<span class="material-type">{{ m.file_type|upper }}</span>{% endif %}
+          </div>
           <form class="del-form" method="POST" action="{{ url_for('materials_delete', material_id=m.id) }}"
                 onsubmit="return confirm('確定要移除「{{ m.title }}」嗎？');">
             <button type="submit" title="移除">✕</button>
           </form>
         </div>
         {% if m.description %}<div class="material-desc">{{ m.description }}</div>{% endif %}
+        {% if m.link_type == 'folder' %}
+        <div class="material-frame-wrap is-folder">
+          <iframe src="https://drive.google.com/embeddedfolderview?id={{ m.drive_file_id }}#grid" loading="lazy"></iframe>
+        </div>
+        {% else %}
         <div class="material-frame-wrap">
           <iframe src="https://drive.google.com/file/d/{{ m.drive_file_id }}/preview" allow="autoplay" loading="lazy"></iframe>
         </div>
+        {% endif %}
       </div>
       {% endfor %}
     </div>

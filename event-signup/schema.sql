@@ -109,14 +109,16 @@ CREATE TABLE IF NOT EXISTS coach888_state (
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
--- 教練課程教材線上觀看區(2026-09-04交辦)：教練把PPT/PDF上傳Google雲端硬碟(檢視者權限)，
--- 這裡只存Drive檔案ID+標題，實際檔案渲染交給Google Drive自己的embed viewer(iframe /preview)，
--- 學員在我們自己的網址看到品牌一致的清單頁，但不需要自建PDF轉檔/儲存管線。
+-- 教練課程教材線上觀看區(2026-09-04交辦，同日追加link_type支援整個資料夾)：
+-- 教練把PPT/PDF/圖片上傳Google雲端硬碟(檢視者權限)，這裡只存Drive檔案或資料夾ID，
+-- 實際渲染交給Google Drive自己的embed viewer(單檔iframe /preview，整個資料夾用
+-- embeddedfolderview)，學員在我們自己的網址看到品牌一致的清單頁，不需要自建轉檔/儲存管線。
 CREATE TABLE IF NOT EXISTS materials (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     description TEXT,
-    drive_file_id TEXT NOT NULL,         -- 從Drive分享連結擷取出的檔案ID
-    file_type TEXT,                      -- ppt / pdf，純顯示用標籤
+    drive_file_id TEXT NOT NULL,         -- 從Drive分享連結擷取出的檔案ID或資料夾ID
+    file_type TEXT,                      -- ppt / pdf / image，純顯示用標籤
+    link_type TEXT NOT NULL DEFAULT 'file',  -- file=單一檔案 / folder=整個資料夾(自動列出裡面所有檔案)
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );

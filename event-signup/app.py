@@ -1533,6 +1533,7 @@ def todo_delete(todo_id):
 # 2026-09-04交辦：教練課程教材線上觀看區。教練把PPT/PDF上傳自己的Google雲端硬碟(設定「知道連結
 # 的人可檢視」)，這裡只存Drive檔案ID，實際畫面用Google Drive自己的embed viewer(iframe /preview)
 # 渲染——不用自建PPT/PDF轉檔管線，學員在教練自己的網址看，但畫面渲染仍是Google Drive在做。
+_DRIVE_FOLDER_PATTERN = re.compile(r"/folders/([a-zA-Z0-9_-]{10,})")
 _DRIVE_ID_PATTERNS = [
     re.compile(r"/file/d/([a-zA-Z0-9_-]{10,})"),
     re.compile(r"[?&]id=([a-zA-Z0-9_-]{10,})"),
@@ -1540,18 +1541,22 @@ _DRIVE_ID_PATTERNS = [
 ]
 
 
-def _extract_drive_file_id(text):
-    """接受完整Google Drive分享連結或純檔案ID，回傳純檔案ID；格式不對回傳None。"""
+def _extract_drive_link(text):
+    """接受完整Google Drive分享連結(單檔或資料夾)或純ID，回傳(link_type, drive_id)；
+    格式不對回傳(None, None)。資料夾連結長這樣：drive.google.com/drive/folders/FOLDER_ID"""
     text = (text or "").strip()
     if not text:
-        return None
+        return None, None
+    m = _DRIVE_FOLDER_PATTERN.search(text)
+    if m:
+        return "folder", m.group(1)
     if "/" not in text and "?" not in text:
-        return text  # 教練直接貼ID
+        return "file", text  # 教練直接貼ID
     for pat in _DRIVE_ID_PATTERNS:
         m = pat.search(text)
         if m:
-            return m.group(1)
-    return None
+            return "file", m.group(1)
+    return None, None
 
 
 @app.route("/materials/")
@@ -1566,14 +1571,14 @@ def materials_page():
 def materials_add():
     title = (request.form.get("title") or "").strip()
     link = (request.form.get("drive_link") or "").strip()
-    drive_file_id = _extract_drive_file_id(link)
-    if title and drive_file_id:
+    link_type, drive_id = _extract_drive_link(link)
+    if title and drive_id:
         description = (request.form.get("description") or "").strip() or None
         file_type = (request.form.get("file_type") or "").strip() or None
         conn = db.get_conn()
         conn.execute(
-            "INSERT INTO materials (title, description, drive_file_id, file_type) VALUES (?, ?, ?, ?)",
-            (title, description, drive_file_id, file_type),
+            "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, ?)",
+            (title, description, drive_id, file_type, link_type),
         )
         conn.commit()
         conn.close()
@@ -1581,7 +1586,7 @@ def materials_add():
         return render_template(
             "materials.html",
             items=[dict(r) for r in db.get_conn().execute("SELECT * FROM materials ORDER BY id DESC").fetchall()],
-            error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（連結要包含 drive.google.com/file/d/ 或直接貼檔案ID）。",
+            error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（單一檔案連結要包含 drive.google.com/file/d/，資料夾連結要包含 drive.google.com/drive/folders/，或直接貼ID）。",
         )
     return redirect(url_for("materials_page"))
 
