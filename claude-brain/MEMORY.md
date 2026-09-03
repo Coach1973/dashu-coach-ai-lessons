@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴🔴 教練手機版Hero偏好「照片當全版背景」不是卡片式，回報「照片變背景」別急著當bug改(2026-09-03)](feedback_coach_likes_mobile_hero_photo_as_background_2026-09-03.md) — 結繩工作坊/結繩領導學兩頁教訓，附深色/淺色主題遮罩數值參考
+- [🔧 event.bymyway.com repo-served微站CSS/JS/HTML有4小時瀏覽器快取，改完要提醒教練重新整理(2026-09-03)](reference_repo_served_static_assets_4hr_cache_2026-09-03.md) — _serve_repo_file全域行為，同天AI自己+教練都各踩坑一次，用fetch(no-store)或?_cb=時間戳驗證
 - [🎯🎯 coach888排版狀態改伺服器集中同步，解決跨裝置Mac改完ACER看不到(2026-09-03)](project_coach888_cross_device_sync_2026-09-03.md) — event.bymyway.com/api/coach888/state新端點，已用真實跨瀏覽器測試驗證，取代localStorage各自為政
 - [🔴🔴🔴🔴🔴 清瀏覽器localStorage前先確認沒有教練未存檔的工作成果(2026-09-03)](feedback_never_clear_user_storage_without_backup_2026-09-03.md) — coach888排版45分鐘心血被誤clear掉教訓，附LevelDB WAL救援技巧(classic-level npm比plyvel好裝)
 - [🔴🔴🔴🔴🔴 同一死角最多試3次就要停手回報，不能悶頭硬剛燒教練時間/金錢/token(2026-09-03)](feedback_cap_retries_report_when_stuck_2026-09-03.md) — Google表單必填開關+Apps Script編輯器死磕十幾分鐘教練點名效率太慢，教練定調3次原則+主動回報再提替代方案
@@ -16,7 +18,6 @@
 - [🔧 bni-chapters分會帳號誤點通用/admin會被403擋下已修復,非process crash(2026-09-01)](reference_bni_chapters_admin_403_bug_fixed_2026-09-01.md) — commit 40448f4，教練回報「當掉」實為session scope邏輯漏洞
 - [🔴🔴🔴 複製模板建新網站只查title不夠,要grep全檔確認品牌文字沒殘留(2026-09-01)](feedback_verify_template_branding_after_copy_2026-09-01.md) — 真鑽/真貴複製真鑫程式碼，h1/規則說明多處殘留「真鑫分會」教練實測才發現
 - [🔴🔴🔴 複製模板建新網站要先查既有命名規則,不能自己音譯新名字(2026-09-01)](feedback_check_existing_naming_convention_before_new_subdomain_2026-09-01.md) — 真鑽/真貴誤取名zhenzuan/zhengui，正確應為chapters.bymyway.com既有的real-diamonds/real-wealth
-- [🔧 大樹AI作品一覽表分類邏輯：GitHub Pages測試階段vs Netlify正式作品](project_portfolio_netlify_github_logic.md) — 教練2026-07-12定調，處理作品清單一律照此規則不用重新判斷
 - [🔧 ACER全機體檢報告(2026-08-31)：修復PS5.1 -AsHashtable+workspace重複clone兩個真bug](project_acer_health_check_2026-08-31.md) — 回覆聯想跨機四層根因信，查ACER近況先讀這份
 - [🔧 FB粉專改名字不影響已核發權杖,不用重新授權；新建粉專才要重跑/me/accounts(2026-09-01)](reference_fb_page_rename_no_reauth_needed_2026-09-01.md) — 14個粉專2026-09-01完全打通後教練提問，順手記錄
 - [🔴🔴🔴 UI改動位置要問清楚放哪一頁，不能自己假設個別頁面vs首頁(2026-09-01)](feedback_ui_change_location_must_confirm_2026-09-01.md) — bni-chapters「認識分會/核心價值」按鈕誤改到個別分會頁，教練要的是首頁，跟案例68同一類「先查證再動手」
@@ -61,10 +62,8 @@
 - [🔴🔴🔴 查自動化要問「結果有沒有人看到」不只是「有沒有在跑」+送教練通知的正確寫法(2026-08-25)](feedback_automation_must_reach_a_human.md) — 體檢揪出一批跑幾個月但成果沒人看的自動化；notify_coach.sh是唯一正確出口(底線版非連字號版)
 - [🔴🔴🔴 ezPay開票SOP六步驟(教練說「開票」自動觸發)：連線裝置isLocal:true→欄位ID→含稅核對→送出→查證(2026-08-24)](feedback_ezpay_invoice_sop.md) — 教練指定「像網頁推SOP一樣」，開票前先讀這份不用重找線索
 - [🔴🔴 不要把自己發現、教練沒問的事丟出來浪費釐清時間(2026-08-24)](feedback_dont_surface_own_tangential_findings.md) — 除非能精簡到一句話且真的重要，否則自己消化
-- [🔧 ezPay發票查詢頁批次爬取歷史資料的JS技巧(分季查詢/分頁/alert攔截)(2026-08-18)](reference_ezpay_bulk_invoice_scraping_procedure.md) — 查重複/對帳要撈大量歷史發票時用這套，2026-08-17實測可動
 - [🔴🔴 Mac跟聯想同時開Claude瀏覽器擴充功能會搶線，自動化連到對方機器(2026-08-17)](feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md) — 教練親自抓出根因，跟isLocal:true鐵律配套看
 - [🔧 claude-in-chrome操作密碼欄位可能被其他擴充功能浮層卡死(2026-08-08)](reference_claude_in_chrome_password_field_extension_conflict.md) — 改用Flask test_client等效驗證+誠實告知視覺驗證缺口
-- [🔴 教練給外部網址當參考時，動手前先實際打開看真實結構(2026-08-04)](feedback_verify_reference_url_before_building.md) — 不要憑域名或印象猜測就開始做
 - [🔧 BNI入會費逐年調漲(2025:36000→2026:39800，續約26800)+分會異動備註對不上不代表資料錯誤(2026-08-24)](reference_bni_membership_fee_history_and_chapter_transfer.md) — 查ezPay舊發票查重複時金額/分會不一致先判斷調漲或轉會，不要當異常
 - [🔴🔴🔴 OpenClaw hook 光註冊不會生效，一定要有HOOK.md宣告metadata.events(2026-08-24)](reference_openclaw_hook_requires_hookmd_metadata.md) — 載入器只log.warn就靜默跳過；驗證法是比對gateway log的loaded數字
 - [🔴🔴🔴🔴 查不到就自己想辦法查，禁止把工作轉嫁教練——凌晨3點搬運工事件(2026-08-24)](feedback_exhaust_own_tools_before_asking_coach.md) — computer-use開App/讀原始碼/自己發測試訊息，窮盡自己手段前不准請教練重做
@@ -91,7 +90,6 @@
 - [🔧 關鍵字觸發規則要做成hook驗證，不能只靠文件宣告——「開工」/「總結」對稱範式(2026-08-03)](reference_deterministic_hooks_over_docs_pattern.md)
 - [🔴🔴🔴 查證前先查路徑大全+盤點類任務要窮舉底層資料結構，不能只挑顯眼項目(2026-08-02)](feedback_check_master_index_before_claiming_cant_find.md)
 - [🔧 BNI Connect CMS後台網站ID索引+存取方法(2026-07-31)](reference_bni_connect_cms_structure.md)
-- [🔒 瀏覽器不安全埠(如5060)已升級成PreToolUse Hook攔截，非僅記憶(2026-07-28)](reference_browser_unsafe_port_5060.md)
 - [🔧 名片辨識系統(namecard-db)的PaddleOCR+MiniMax兩階段管線可複用於任何讀圖辨識場景(2026-07-26)](reference_namecard_ocr_pipeline_reusable.md)
 - [🕐 終端機/桌面版每則回覆開頭要標台灣時間戳記(2026-07-24)](feedback_timestamp_every_reply.md)
 - [🔴🔴🔴 判斷機器有沒有活動要查git log真相，不能信中繼蒸餾檔案(2026-07-19)](feedback_verify_activity_via_git_log_not_relay_file.md)
@@ -102,39 +100,26 @@
 - [🔴🔴🔴 教練糾正時先查證再回應，不要用舊印象頂撞(2026-07-10)](feedback_verify_before_correcting_coach.md)
 - [🔴🔴🔴 有能力自己驗證時絕不叫用戶當試錯手腳——Amber WebDAV血淚(2026-07-09)](feedback_self_verify_before_directing_user.md)
 - [🔴🔴🔴 部署SOP準則：「有沒有公開推廣」非「有沒有講Netlify」(2026-07-09教練親定)](feedback_netlify_autodeploy_cost_awareness.md)
-- [🧰 教練常用工具箱索引(2026-07-08)](reference_coach_common_toolbox.md)
 - [🔴🔴🔴 禁止問教練記不記得，AI自己查——七層查證系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md)
 - [📮 「小龍蝦專線」=cloudflared=LINE命脈，絕對不能關(2026-07-08)](reference_xiaolongxia_line_tunnel_cloudflared.md)
-- [🔴🔴 公開活動真實性看有人參加，不看有沒有做網頁(2026-07-06)](feedback_public_event_reality_not_webpage_existence.md)
 - [🔴🔴 openclaw cron/jobs.json是脫節靜態快照(2026-07-06)](reference_openclaw_cron_json_stale_snapshot.md)
-- [🔧 OpenClaw兩獨立git倉庫：外層master(cron)vs workspace/main(大腦)](reference_openclaw_nested_git_repos.md)
-- [🔴🔴 視覺類任務唯一可信驗證是截圖，不是DOM數字(2026-07-03)](feedback_visual_change_screenshot_not_dom_numbers.md)
 - [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md)
-- [🔴🔴 軍師不當兩AI系統間的傳話筒(2026-07-02)](feedback_dont_relay_between_ai_systems.md)
 - [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02)](feedback_verify_via_real_transcript_not_case_count.md)
 - [🔴🔴🔴🔴🔴 事件驅動優於輪詢——教練第5次糾正，這次是前端UI輪詢(2026-07-28)](feedback_event_driven_not_polling_pattern.md)
-- [🟢 說真話優先於顧全形象＋系統備份≠App備份(2026-07-01教練肯定)](feedback_truth_over_reassurance_backup_nuance.md)
 - [🔴🔴🔴 軍師流量稀缺，耗token動作寫腳本丟終端機跑(2026-06-30)](feedback_junshi_token_economy_outsource.md)
 - [🔴🔴🔴 軍師=Opus最高決策層，不請示教練小決策(多次發作)](feedback_junshi_role_decide_not_ask.md)
-- [📐 共用大腦命名公約(2026-06-25教練信念三拍板)](reference_brain_naming_convention.md)
-- [🧭 新對話開工脈絡](reference_new_session_context.md)
-- [👤 用戶＝大樹教練](user_coach_tree.md)
+- [🧭 基礎脈絡三份：[共用大腦命名公約](reference_brain_naming_convention.md)｜[新對話開工脈絡](reference_new_session_context.md)｜[用戶＝大樹教練](user_coach_tree.md)]
 - [🔴🔴🔴 防呆鎖必須是hook不能opt-in＋必須verify會擋](feedback_lock_must_be_hook_not_optin.md)
 - [🔴🔴🔴 自我定位到世界級大師＋交件前自評打分(2026-06-24)](feedback_self_position_elite_expert.md)
 - [🌳 ai-go·特助心法跨AI一鍵注入系統(2026-06-23)](project_ai_go_xinfa_system.md)
 - [🔴🔴🔴 對照版存在就直接diff/抄，禁止開preview診斷](feedback_compare_before_diagnose.md)
 - [🔴🔴🔴 教練部署詞彙字典：自動站／網頁推／推(2026-06-17)](feedback_coach_deploy_vocabulary.md)
-- [🔴🔴🔴 桌面版=GUI、終端機=CLI(永久燒錄字典)](feedback_desktop_equals_gui_terminal_equals_cli.md)
 - [🔴🔴🔴 不能承諾「主動監測/輪詢/定時做」——軍師沒背景進程](feedback_no_background_polling_lies.md)
 - [🔴🔴 教練親口＝完整授權，跨越禁區記憶](feedback_coach_words_equal_authorization.md)
-- [🔴🔴 防呆系統：海餅乾俱樂部19年鐵律](feedback_anti_fool_system_haibinggang_rule.md)
-- [🔴🔴 資料搬移鐵律：搬完刪源頭前必須du -sh比對](feedback_data_move_du_sh_verify.md)
-- [🩺 VPS小龍蝦每日健康檢查(08:00)](project_vps_xiaolongxia_healthcheck_2026-06-09.md)
+- [🔴🔴 防呆速記：[海餅乾俱樂部19年鐵律](feedback_anti_fool_system_haibinggang_rule.md)｜[資料搬移必du -sh比對](feedback_data_move_du_sh_verify.md)]
 - [🔴🔴🔴 全自動總結(最高優先任務)](project_auto_distill_mission.md)
 - [🔴 給Opus終端機指令必須用.openclaw絕對路徑](feedback_claude_code_path_is_openclaw.md)
 - [🔴🔴 Netlify站分兩型，動手前必查是哪型(jiesheng-leadership=GitHub自動部署，2度誤推)](feedback_netlify_deploy_zip_api.md)
-- [🔴 守則#13是貫穿元準則，不是21之一](feedback_rule13_is_meta_principle.md)
-- [🔴 接力棒不可簡化，信念三判得](feedback_handoff_no_simplification.md)
 - [🔴 模型選擇鐵律：品質優先，禁止Haiku+Opus混用(含Sonnet/Opus分工)](feedback_model_choice_quality_first.md)
 - [🔴 派外包指令兩鐵律：環境驗證三件套+鎖死一路執行到底](feedback_subagent_instruction_path_first.md)
 - [🔴🔴 教AI鐵律：禁止用「禁止X」反向錨點](feedback_negative_anchor_pollution.md)
@@ -142,17 +127,13 @@
 - [🔴 軍師絕不可沉默卡住等用戶提醒](feedback_no_silent_waiting.md)
 - [🔴 資料處置原則：預設「歷史存檔」絕不說「清除」](feedback_archive_not_delete.md)
 - [教練中文詞彙→檔案對照表(含輸入法/Telegram快取路徑)](feedback_coach_chinese_file_mapping.md)
-- [🔴 語音輸入數字矛盾必問不猜](feedback_voice_number_conflict_must_ask.md)
 - [🔴 VPS更新SOP(關鍵字觸發)](feedback_vps_update_sop_trigger.md)
 - [🔴 工作團隊架構鐵律(2026-05-25拍板)](project_team_structure.md)
 - [🔴🔴🔴🔴 截圖鐵律統合版(2026-09-01六次補充:不能自己寫核准旗標檔案繞過截圖鎖)](feedback_screenshot_rules_consolidated.md)
-- [Netlify Token(額度以handoff表最新校正為準)](reference_netlify_token.md)
-- [白話文鐵律](feedback_plain_chinese_no_jargon.md)
 - [🔴 不限流量只屬於小龍蝦/MiniMax，Claude助教不適用](feedback_token_model_distinction.md)
 - [🔴🔴🔴 openclaw模型切換必改設定檔——UI切換無效](feedback_openclaw_model_switch_permanent.md)
 - [🔴🔴🔴 Netlify圖片部署SOP，每次血淚加一條(最新2026-08-02第5坑:輪播要preload)](feedback_netlify_headers_content_type.md)
-- [🔴 未經允許禁止自行使用FORK功能](feedback_no_fork_without_permission.md)
-- [🔴 創作類任務必先讀已上線版本，不可從零重做](feedback_read_existing_before_creating.md)
+- [🔴 建站鐵律：[未經允許禁止用FORK](feedback_no_fork_without_permission.md)｜[創作類先讀已上線版本](feedback_read_existing_before_creating.md)]
 - [🔴 網頁推SOP(教練說「網頁推」觸發)](feedback_web_push_sop.md)
 - [🔧 Amber私有雲(192.168.0.35)家用儲存主機用SMB跨機存取](reference_amber_nas.md)
 - [🔴🔴🔴 時間顯示鐵律：一律換算台灣時間，系統注入日期字串也可能過期(4犯)](feedback_taiwan_time_always.md)
