@@ -34,6 +34,14 @@
   .add-btn:hover { opacity:.9; }
   .error-note { background:rgba(255,80,80,.12); border:1px solid rgba(255,80,80,.4); color:#ff8a8a;
     padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:14px; }
+  .auth-note { background:rgba(200,169,110,.1); border:1px solid var(--line); color:rgba(255,255,255,.75);
+    padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:14px; line-height:1.6; }
+  .auth-note a { color:var(--gold); text-decoration:underline; }
+  .auth-note.ok { background:rgba(80,200,120,.12); border-color:rgba(80,200,120,.4); color:#8ee0a8; }
+  .auth-note.warn { background:rgba(255,165,60,.12); border-color:rgba(255,165,60,.4); color:#ffb84d; }
+  .expand-form button { margin-top:8px; padding:6px 14px; font-size:12px; font-weight:700; color:var(--gold);
+    background:transparent; border:1px solid var(--line); border-radius:6px; cursor:pointer; }
+  .expand-form button:hover { background:rgba(200,169,110,.12); }
 
   .material-list { display:flex; flex-direction:column; gap:24px; }
   .material-card { background:#0a0a0a; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
@@ -65,9 +73,18 @@
         <li>把 PPT / PDF / 圖片上傳到雲端硬碟（單檔或整個資料夾皆可）</li>
         <li>在檔案或資料夾上按右鍵 →「共用」→ 一般存取改成「知道連結的任何人」，權限選「檢視者」</li>
         <li>（選填，僅單一檔案適用）點「進階設定」把「檢視者及留言者可以下載、列印及複製」關掉，防止學員下載</li>
-        <li>複製分享連結，貼到下面欄位即可——<strong>貼整個資料夾的連結</strong>會自動列出裡面所有檔案，不用一個個貼；貼單一檔案連結就只顯示那一份</li>
+        <li>複製分享連結，貼到下面欄位即可——<strong>貼整個資料夾的連結</strong>
+          {% if drive_authorized %}會自動用API展開成一筆一筆的個別檔案卡片{% else %}會自動嵌入整個資料夾瀏覽器{% endif %}，
+          不用一個個貼；貼單一檔案連結就只顯示那一份</li>
       </ol>
     </div>
+    {% if just_authorized == '1' %}<div class="auth-note ok">✅ Google雲端硬碟已授權成功，之後新增資料夾會自動展開成個別檔案卡片。</div>{% endif %}
+    {% if just_authorized == '0' %}<div class="auth-note warn">⚠️ 授權沒有拿到refresh_token（可能是之前已經授權過），請到 <a href="https://myaccount.google.com/permissions" target="_blank">Google帳戶權限管理</a> 移除「教練課程教材觀看系統」的存取權後，重新走一次 <a href="{{ url_for('materials_oauth_start') }}">授權連結</a>。</div>{% endif %}
+    {% if not drive_authorized %}
+    <div class="auth-note">
+      🔗 資料夾自動展開成個別檔案卡片的功能尚未授權。<a href="{{ url_for('materials_oauth_start') }}">點這裡完成一次性Google授權</a>（唯讀權限，只能看不能改/刪您的雲端硬碟）。授權前，貼資料夾連結仍可正常運作（用嵌入瀏覽器方式）。
+    </div>
+    {% endif %}
     {% if error %}<div class="error-note">{{ error }}</div>{% endif %}
     <form class="add-form" method="POST" action="{{ url_for('materials_add') }}">
       <input type="text" name="title" placeholder="教材標題，例如：第三堂｜領導力實戰" required maxlength="200">
@@ -110,6 +127,11 @@
         </div>
         {% if m.description %}<div class="material-desc">{{ m.description }}</div>{% endif %}
         {% if m.link_type == 'folder' %}
+        {% if drive_authorized %}
+        <form class="expand-form" method="POST" action="{{ url_for('materials_expand', material_id=m.id) }}" style="padding:0 18px 12px;">
+          <button type="submit">✨ 展開成個別檔案卡片</button>
+        </form>
+        {% endif %}
         <div class="material-frame-wrap is-folder">
           <iframe src="https://drive.google.com/embeddedfolderview?id={{ m.drive_file_id }}#grid" loading="lazy"></iframe>
         </div>

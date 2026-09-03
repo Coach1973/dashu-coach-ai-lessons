@@ -15,7 +15,7 @@ import urllib.error
 import urllib.request
 from datetime import date, datetime
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
 from werkzeug.security import check_password_hash
@@ -1530,6 +1530,128 @@ def todo_delete(todo_id):
     return redirect(url_for("todo_page"))
 
 
+# 2026-09-04交辦：Google Drive OAuth整合，讓/materials/新增資料夾時能自動用API列出裡面每個
+# 檔案各自建卡片(而不是只能整個資料夾嵌入瀏覽器)。教練用seabiscuitclub@gmail.com帳號一次性
+# 授權(drive.readonly唯讀範圍)，refresh_token永久存在credentials/google_drive_oauth.json
+# (workspace .gitignore已排除該目錄，不會進git)。沒授權或API呼叫失敗時，自動退回舊版
+# embeddedfolderview整個資料夾嵌入模式，不擋教練原本已經在用的流程。
+GOOGLE_OAUTH_CREDS_PATH = WORKSPACE_ROOT / "credentials" / "google_drive_oauth.json"
+GOOGLE_OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.readonly"
+GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
+GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
+GOOGLE_DRIVE_MIME_MAP = {
+    "presentation": "ppt",
+    "pdf": "pdf",
+    "image/": "image",
+}
+
+
+def _load_google_drive_creds():
+    if not GOOGLE_OAUTH_CREDS_PATH.exists():
+        return {}
+    try:
+        return json.loads(GOOGLE_OAUTH_CREDS_PATH.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def _save_google_drive_creds(data):
+    GOOGLE_OAUTH_CREDS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    GOOGLE_OAUTH_CREDS_PATH.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def _google_drive_access_token():
+    """用refresh_token換一個新的access_token；沒授權過或換失敗回傳None。"""
+    creds = _load_google_drive_creds()
+    if not creds.get("refresh_token"):
+        return None
+    data = urlencode({
+        "client_id": creds["client_id"],
+        "client_secret": creds["client_secret"],
+        "refresh_token": creds["refresh_token"],
+        "grant_type": "refresh_token",
+    }).encode()
+    try:
+        req = urllib.request.Request(GOOGLE_TOKEN_URL, data=data, method="POST")
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return json.loads(resp.read()).get("access_token")
+    except Exception as e:  # noqa: BLE001
+        print(f"[materials] 換取access_token失敗: {e}", flush=True)
+        return None
+
+
+def _google_drive_mime_to_type(mime):
+    for key, label in GOOGLE_DRIVE_MIME_MAP.items():
+        if key in (mime or ""):
+            return label
+    return None
+
+
+def _google_drive_list_folder(folder_id):
+    """列出資料夾內所有檔案(不含子資料夾遞迴)，回傳[{id,name,mimeType}]；沒授權或失敗回傳None。"""
+    token = _google_drive_access_token()
+    if not token:
+        return None
+    q = f"'{folder_id}' in parents and trashed = false"
+    url = "https://www.googleapis.com/drive/v3/files?" + urlencode({
+        "q": q,
+        "fields": "files(id,name,mimeType)",
+        "pageSize": 200,
+    })
+    try:
+        req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return json.loads(resp.read()).get("files", [])
+    except Exception as e:  # noqa: BLE001
+        print(f"[materials] 列出資料夾失敗(folder_id={folder_id}): {e}", flush=True)
+        return None
+
+
+@app.route("/materials/oauth/start")
+def materials_oauth_start():
+    creds = _load_google_drive_creds()
+    if not creds.get("client_id"):
+        return "尚未設定Google Drive憑證，請先完成credentials/google_drive_oauth.json設定。", 400
+    params = {
+        "client_id": creds["client_id"],
+        "redirect_uri": creds.get("redirect_uri", "https://event.bymyway.com/materials/oauth/callback"),
+        "response_type": "code",
+        "scope": GOOGLE_OAUTH_SCOPE,
+        "access_type": "offline",
+        "prompt": "consent",  # 強制每次都核發refresh_token，避免舊授權沒有refresh_token
+    }
+    return redirect(GOOGLE_AUTH_URL + "?" + urlencode(params))
+
+
+@app.route("/materials/oauth/callback")
+def materials_oauth_callback():
+    error = request.args.get("error")
+    if error:
+        return f"Google授權失敗：{error}", 400
+    code = request.args.get("code")
+    if not code:
+        return "缺少授權碼，請重新從 /materials/oauth/start 開始。", 400
+    creds = _load_google_drive_creds()
+    data = urlencode({
+        "code": code,
+        "client_id": creds["client_id"],
+        "client_secret": creds["client_secret"],
+        "redirect_uri": creds.get("redirect_uri", "https://event.bymyway.com/materials/oauth/callback"),
+        "grant_type": "authorization_code",
+    }).encode()
+    try:
+        req = urllib.request.Request(GOOGLE_TOKEN_URL, data=data, method="POST")
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            token_data = json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        return f"換取token失敗：{e.read().decode(errors='replace')}", 400
+    refresh_token = token_data.get("refresh_token")
+    if refresh_token:
+        creds["refresh_token"] = refresh_token
+        _save_google_drive_creds(creds)
+    return redirect(url_for("materials_page", authorized="1" if refresh_token else "0"))
+
+
 # 2026-09-04交辦：教練課程教材線上觀看區。教練把PPT/PDF上傳自己的Google雲端硬碟(設定「知道連結
 # 的人可檢視」)，這裡只存Drive檔案ID，實際畫面用Google Drive自己的embed viewer(iframe /preview)
 # 渲染——不用自建PPT/PDF轉檔管線，學員在教練自己的網址看，但畫面渲染仍是Google Drive在做。
@@ -1564,7 +1686,13 @@ def materials_page():
     conn = db.get_conn()
     rows = conn.execute("SELECT * FROM materials ORDER BY id DESC").fetchall()
     conn.close()
-    return render_template("materials.html", items=[dict(r) for r in rows])
+    drive_authorized = bool(_load_google_drive_creds().get("refresh_token"))
+    return render_template(
+        "materials.html",
+        items=[dict(r) for r in rows],
+        drive_authorized=drive_authorized,
+        just_authorized=request.args.get("authorized"),
+    )
 
 
 @app.route("/materials/add", methods=["POST"])
@@ -1576,16 +1704,35 @@ def materials_add():
         description = (request.form.get("description") or "").strip() or None
         file_type = (request.form.get("file_type") or "").strip() or None
         conn = db.get_conn()
-        conn.execute(
-            "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, ?)",
-            (title, description, drive_id, file_type, link_type),
-        )
+        if link_type == "folder":
+            # 有授權過就用Drive API把資料夾展開成一筆一筆個別檔案卡片；
+            # 沒授權或API失敗就退回舊版整個資料夾embeddedfolderview嵌入(不擋教練原有流程)
+            files = _google_drive_list_folder(drive_id)
+            if files is not None:
+                for f in files:
+                    f_title = f.get("name") or title
+                    f_type = _google_drive_mime_to_type(f.get("mimeType"))
+                    conn.execute(
+                        "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                        (f_title, description, f.get("id"), f_type),
+                    )
+            else:
+                conn.execute(
+                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'folder')",
+                    (title, description, drive_id, file_type),
+                )
+        else:
+            conn.execute(
+                "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                (title, description, drive_id, file_type),
+            )
         conn.commit()
         conn.close()
     else:
         return render_template(
             "materials.html",
             items=[dict(r) for r in db.get_conn().execute("SELECT * FROM materials ORDER BY id DESC").fetchall()],
+            drive_authorized=bool(_load_google_drive_creds().get("refresh_token")),
             error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（單一檔案連結要包含 drive.google.com/file/d/，資料夾連結要包含 drive.google.com/drive/folders/，或直接貼ID）。",
         )
     return redirect(url_for("materials_page"))
@@ -1596,6 +1743,25 @@ def materials_delete(material_id):
     conn = db.get_conn()
     conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
     conn.commit()
+    conn.close()
+    return redirect(url_for("materials_page"))
+
+
+@app.route("/materials/<int:material_id>/expand", methods=["POST"])
+def materials_expand(material_id):
+    """把一筆整個資料夾嵌入的舊卡片，展開成一筆一筆個別檔案卡片(授權完成後才會有這顆按鈕)。"""
+    conn = db.get_conn()
+    row = conn.execute("SELECT * FROM materials WHERE id = ? AND link_type = 'folder'", (material_id,)).fetchone()
+    if row:
+        files = _google_drive_list_folder(row["drive_file_id"])
+        if files:
+            for f in files:
+                conn.execute(
+                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                    (f.get("name") or row["title"], row["description"], f.get("id"), _google_drive_mime_to_type(f.get("mimeType"))),
+                )
+            conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
+            conn.commit()
     conn.close()
     return redirect(url_for("materials_page"))
 
