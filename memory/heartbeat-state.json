@@ -1,15 +1,15 @@
 {
   "lastChecks": {
-    "cron": 1788419520,
-    "telegramChannelProbe": 1788419520,
-    "envHealth": 1788419520,
-    "coach_silence_sync": "2026-09-03T15:12:00+08:00"
+    "cron": 1788423171,
+    "telegramChannelProbe": 1788423171,
+    "envHealth": 1788423171,
+    "coach_silence_sync": "2026-09-03T16:12:51+08:00"
   },
-  "lastCoachMessageAt": "2026-09-03T15:06:55+08:00",
-  "coachSilentSince": "2026-09-03T15:06:55+08:00",
+  "lastCoachMessageAt": "2026-09-03T16:06:55+08:00",
+  "coachSilentSince": "2026-09-03T16:06:55+08:00",
   "coachSilentHours": 0.1,
   "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-03T15:12:00+08:00",
+  "telegramProbeAt": "2026-09-03T16:12:00+08:00",
   "cronState": {
     "enabledJobs": 1,
     "lastRunStatus": "ok",
@@ -21,12 +21,12 @@
     "gate3_affectsWork": false,
     "verdict": "all_fail_silent_pass"
   },
-  "currentCycle": 748,
-  "cumulativeGreen": 112,
-  "updatedAt": "2026-09-03T15:12:00+08:00",
+  "currentCycle": 749,
+  "cumulativeGreen": 113,
+  "updatedAt": "2026-09-03T16:12:00+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-03T15:06:55+08:00",
+    "coachSilentSince": "2026-09-03T16:06:55+08:00",
     "coachSilentHours": 0.1
   },
-  "notes": "cycle=748 安靜通過。cumulativeGreen 112 = 上輪 111 +1。當前 cron list 僅顯示 1 個活躍任務（本健康檢查本身），其餘任務已不在主 agent view（估計移至軍師 Mac v2 端管轄）。上一輪 cycle=747（14:12）僅簡列於 HEARTBEAT 末尾，未進位 state/healthcheck_cycle，本輪一併校正。"
+  "notes": "cycle=749 安靜通過。cumulativeGreen 113 = 上輪 112 +1。本輪 cron list 仍僅 1 個活躍任務（本健康檢查本身），lastRunStatus=ok、CE=0；其餘任務已不在主 agent view（Mac v2 軍師端管轄）。教練最後訊息 16:06:55（剛剛對話 5 分鐘），TG 通道探針當下實測 ok，環境快檢全綠。"
 }
