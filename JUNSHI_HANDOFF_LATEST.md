@@ -351,34 +351,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-03 v171（聯想Windows Sonnet 5，tut-alumni校友會網站從融合設計到資料庫/API/Telegram全通，含一次效率教訓）
-
-> 建立時間：2026-09-03 01:13 ~ 02:38（台灣時間）
-> 上一棒：v170（聯想Windows，9/16活動FB貼文發滿5個粉專，9/5+9/16行銷任務全數結案）
-> 本棒主軸：**教練帶兩份AI生成的南應大校友會設計稿要求融合，完成後推GitHub Pages上線；教練接著要求資料庫接手交給Mac，聯想寫信交接；過程中在Google表單/Apps Script的UI自動化死角上死磕過久被教練點名「效率太慢」，教訓已寫入記憶；後來發現Mac已平行完成資料庫+API+Telegram通知全套，聯想採用Mac版本收尾。**
-
-## 🎯 本場戰果
-
-### 1. tut-alumni校友會網頁融合上線
-教練提供`design (3).html`(喜歡版型)+`preview.html`(喜歡文案)兩份AI生成設計稿，要求融合5項需求：①Hero文案換成Preview那句「我們曾經在同一個校園裡青春過...」②新增1964~2010母校沿革時間軸③新增「加入不只是留一筆資料」倡議區塊④校友名單合併(Design 8位+Preview不重複的5位，去重3位重複，共13位)⑤加入表單新增5個分會(台南/台中/高雄/台北/嘉義)選項。已用瀏覽器完整測試表單驗證流程，新建GitHub repo`Coach1973/tut-alumni`並開通Pages，`https://coach1973.github.io/tut-alumni/`已curl驗證上線。
-
-### 2. 資料庫工作交接Mac
-教練明確裁示「資料庫只能在軍師那邊做」，寫信`cross-agent/inbox/mac/`交接，說明表單目前純前端假成功、需要的5個欄位、GitHub repo位置。
-
-### 3. ⚠️ 效率教訓：同一死角死磕過久，教練訂下3次回報規則
-教練接著提供一個真實存在的Google表單連結(南應大校友會官方入會申請)，希望複製一份改介紹文字+接Telegram通知。查證發現無法直接複製別人的viewform連結(需編輯權限)，教練選擇「軍師重建等效新表單」路線。動手時卡在Google表單「必填」自訂開關(六七種點擊/事件模擬手法都點不動)+改用Apps Script程式碼編輯器又踩到中文混打吃掉所有標點符號的怪異行為，兩個技術死角各自磨了十幾分鐘沒有及時停手回報。教練直接點名「效率太慢」「浪費我時間/token/金錢/生命」，並訂下明確規則：**同一個問題試差不多3次不行，就要立刻回報，不能悶頭硬幹**。已寫入記憶`feedback_cap_retries_report_when_stuck_2026-09-03`，跟既有`feedback_exhaust_own_tools_before_asking_coach`是互補的兩面(該自己扛的扛，扛不動的要儘早講)。
-
-### 4. 改道後發現Mac已平行完成，避免重複
-放棄Google表單路線，改用「Mac資料庫+既有網頁」方案繼續，準備自己動手接Telegram通知時，查git log發現**Mac軍師已經同步完成**：`event.bymyway.com/tut`動態路由+`/api/tut/join`端點(CORS雙入口)+`tut_alumni_signups`資料表+Telegram通知「活動報名即時通知」群組+導流佩佩老師LINE官方帳號，已用真實POST驗證。聯想這邊也剛好寫了一版GitHub Pages前端串接程式碼，push時發現Mac已推送更完整的同款版本，直接`git reset --hard origin/main`採用Mac版本，避免兩份AI各自重工，已驗證GitHub Pages正式站同步生效。
-
-## ⚠️ 下一場開工先做
-1. 跨機信箱仍有1封未讀(ACER 8/31狀態回報)，教練未指示處理，繼續掛著。
-2. tut-alumni整體已全通(前端+後端+通知)，教練若有後續修改需求(如校友名單調整、文案微調)直接交辦即可。
-3. 這次「Mac跟聯想平行做同一件事」提醒：**日後接到跨機交辦任務、準備動手做「補強/延伸」動作前，先git pull確認對方是否已經處理過**，避免像今天這樣兩邊重工(雖然這次代價不大，只是白寫一版前端程式碼)。
-
-## 🔑 本場commit
-`tut-alumni`：`9cf4377`(融合上線)+`ca94ad6`(Mac版接資料庫，聯想reset採用)。`workspace`：跨機信箱交接信+`feedback_cap_retries_report_when_stuck_2026-09-03`記憶。
-
+> 📦 v171完整內容已封存：`handoff_archive/handoff_v171_archived_2026-09-03.md`（聯想Windows，tut-alumni校友會網站從融合設計到資料庫/API/Telegram全通，含一次效率教訓）
 
 ---
 
@@ -412,3 +385,37 @@
 
 ## 🔑 本場commit
 `workspace`：`8c77bbc81`(HEARTBEAT.md合併衝突修復)、`e434cbf7c`(教練發票後台+SOP)、`fca813dbf`(tut-alumni資料庫接通)、`3ff04565b`(coach888新規則記憶)、event-signup相關(coach888_state表+API)。`coach888`：`64f1397`+`cb92b18`(新項目上架+排序)、`db8ba6a`(排版搶救重建)、`9a23f8f`(跨裝置同步)。`tut-alumni`：`89aae7a`(checkbox修復+照片+版面)、`6118ce9`(分會改下拉選單)。`namecard-db`：發票後台路由(隨workspace commit)。記憶：`feedback_bni_invoice_two_independent_systems_sop`+`feedback_coach888_new_items_go_first`+`feedback_never_clear_user_storage_without_backup_2026-09-03`+`project_coach888_cross_device_sync_2026-09-03`。
+
+---
+
+# 軍師接力棒 · 2026-09-03 v173（Mac終端機 Sonnet 5，ai-art日期修正+四個新活動微站從零建置：leader/1010/DIY/Leadership）
+
+> 建立時間：2026-09-03 12:19 ~ 18:42（台灣時間）
+> 上一棒：v172（Mac終端機，發票後台+校友會網站全面完工，coach888誤clear排版搶救成功）
+> 本棒主軸：**修正ai-art報名頁截止日錯誤+加即時倒數；接手聯想交接的/leader/報名頁部署；從零建置/1010/（人生四席・一日共鳴）、/DIY/+/Leadership/（結繩工作坊/結繩領導學）三組活動微站，含多輪RWD/文案/講師照片迭代；修好repo-served微站4小時瀏覽器快取誤導教練與自己的坑。**
+
+## 🎯 本場戰果
+
+### 1. ai-art（9/16高雄場）截止日錯誤修正+倒數計時+文案強化
+教練回報「報名資訊竟然寫9月13(六)」，查證是8/31新增的「三人同行/裂變行銷」早鳥截止日誤植：9/13實際是星期日不是星期六，正確應為9/12（六），事件本身9/16（三）從未寫錯。已修正日期，並依教練要求加上即時倒數（HH:MM:SS動態時鐘，每秒遞減，截止自動變「⛔已截止」），「立即報名」標題加強為「立即報名 9月16日<br>音樂流水席活動」兩行斷行。commit `186bfcc`+`3a9e134`+`8383d85`+`8582306`+`3828104`（ai-art repo）。
+
+### 2. /leader/ 報名頁部署（接手聯想交接）
+聯想在`cross-agent/inbox/mac/`留信，`event-signup`已寫好`/leader/`路由+`/api/leader/join`+`leader_workshop_signups`表但聯想機器沒有Telegram token/launchd服務無法讓正式站生效。Mac這邊`git pull`+重啟`com.coach.event-webapp`，curl驗證200+地址文案「映璇公司一樓會議室」確認已移除，真實表單測試（DB寫入成功+Telegram群組無失敗紀錄）。commit `c02f3efd1`（workspace）。
+
+### 3. /1010/「人生四席・一日共鳴」（淺山綠茶席）從零建置
+教練提供design.zip，新建repo`Coach1973/1010`+`event-signup`新增`/1010/`路由+`/api/1010/join`+`event_1010_signups`表，LINE導流佩佩老師官方帳號。教練追問RWD後三項調整：①表頭改`position:fixed`往下滑不跟著捲動②滾動時自動加深底色（`.scrolled`class）③表頭字級調大到32px，桌機/手機/平板寬度皆已測試無跑版。追加匯款資訊（淺山綠植創生活實業社/合作金庫006后里分行/3627-717-007429）。1010 repo commit序列：初版建置→`57be273`（表頭固定+字級）→`c6308cf`（匯款資訊）。
+
+### 4. /DIY/+/Leadership/「結繩工作坊」/「結繩領導學」從零建置，多輪迭代
+教練先給DIY.zip，內容重複匯出（index.html與jiesheng-knot-workshop.html實為同一份「結繩工作坊3小時手作體驗」），先照做兩個網址讓教練看效果後才發現重複。教練隨即補給LEADER.zip，才是真正的「結繩領導學兩日實戰工作坊」內容（深藍/橘企業風，講師蔡曜隆）。新建`Coach1973/diy-knot-workshop`+`Coach1973/leadership-knot-workshop`兩個repo，`event-signup`新增`/DIY/`+`/Leadership/`路由（純靜態頁，原稿無表單action不需API）。**多輪迭代**：①Leadership報名連結換PayUNi付款連結（`api.payuni.com.tw/...`），只留台北場，拿掉舊的jiesheng-leadership.netlify.app連結②DIY新增台南10/21+台北10/24雙場次資訊卡+早鳥截止日(開課前1週)、「3人同行」費用卡改為早鳥價NT$600+送限量結繩③Leadership課程價值改16,800元+刪「教材與材料」項+CTA拿掉「刷卡」二字④DIY補「關於老師」講師簡介區塊（移植自Leadership版蔡曜隆老師介紹，教練指出「不能一堂課沒有老師的簡介」）⑤兩頁講師照片換成教練提供的真人照（蔡曜隆帶學員做傘繩手環）⑥**手機版Hero照片顯示問題兩輪修正**：教練回報手機版照片消失/變淡背景，第一輪誤判為bug改成「照片獨立卡片顯示在文字下方」；教練糾正「我其實很喜歡圖片當背景的感覺」，第二輪改回「照片鋪滿整個Hero區當背景」但把原本幾乎看不見的12%透明度提高到合理可見程度（Leadership: opacity 0.4+深色遮罩；DIY: opacity 1.0+米白遮罩），兩頁桌機版全程未受影響。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **repo-served微站（`_serve_repo_file`服務的所有`/ai-art/`、`/1010/`、`/DIY/`、`/Leadership/`等）CSS/JS/HTML都有4小時瀏覽器快取**，同一天AI自己的測試工具跟教練的真實Chrome都各踩坑一次，改完後必須主動提醒教練重新整理（或用`fetch(url,{cache:'no-store'})`/`?_cb=時間戳`繞過驗證）。記憶`reference_repo_served_static_assets_4hr_cache_2026-09-03`。
+2. **教練手機版偏好「照片當全版背景」的沉浸式質感，不是「照片獨立卡片」**——回報「照片變成背景/消失」不代表要改成常規排版，先確認他喜不喜歡背景效果本身，重點應放在能見度/遮罩深淺夠不夠。記憶`feedback_coach_likes_mobile_hero_photo_as_background_2026-09-03`。
+3. 教練直接在對話中貼圖時，圖片會落地到`~/Downloads/export (N).jpg`（依貼上順序遞增編號），可用`find ~/Downloads -mmin -N`配合時間戳確認是哪一張，不用靠教練另外講檔名。
+
+## 📋 下一場開工先做
+1. 四個新微站（leader/1010/DIY/Leadership）目前功能全通，教練若有後續文案/版面調整直接交辦即可。
+2. MEMORY.md索引本場已從161行壓縮到140行（移除7條低價值/過時/被新規則取代的舊條目，合併3組主題相近的短條目），詳細內容仍保留在各自檔案未刪除。
+
+## 🔑 本場commit
+`ai-art`：`186bfcc`+`3a9e134`+`8383d85`+`8582306`+`3828104`（日期修正+倒數+文案）。`workspace`：`c02f3efd1`（/leader部署）、`6e8d0239b`（/1010+/DIY+/Leadership路由新增）。`1010`：初版+`57be273`+`c6308cf`。`diy-knot-workshop`：初版+`32a0249`+`19abe8e`+`06b9001`+`ee79583`+`1bb9394`。`leadership-knot-workshop`：初版+`855260b`+`ba38d98`+`343d233`+`bef235d`。記憶：`reference_repo_served_static_assets_4hr_cache_2026-09-03`+`feedback_coach_likes_mobile_hero_photo_as_background_2026-09-03`。
