@@ -43,6 +43,14 @@
     background:transparent; border:1px solid var(--line); border-radius:6px; cursor:pointer; }
   .expand-form button:hover { background:rgba(200,169,110,.12); }
 
+  .visibility-list { max-height:420px; overflow-y:auto; display:flex; flex-direction:column; gap:2px;
+    border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:6px; }
+  .visibility-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:6px;
+    font-size:14px; cursor:pointer; }
+  .visibility-item:hover { background:rgba(255,255,255,.04); }
+  .visibility-item input[type=checkbox] { width:17px; height:17px; flex-shrink:0; accent-color:var(--gold); cursor:pointer; }
+  .visibility-title { flex:1; min-width:0; word-break:break-word; }
+
   .material-list { display:flex; flex-direction:column; gap:24px; }
   .material-card { background:#0a0a0a; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
   .material-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:16px 18px 10px; }
@@ -107,6 +115,26 @@
       <button class="add-btn" type="submit">加入教材列表</button>
     </form>
   </div>
+
+  {% if all_items %}
+  <div class="panel">
+    <h2>選擇要公開的教材（勾選的才會出現在下面的教材列表給學員看）</h2>
+    <div class="panel-hint">目前總共 {{ all_items|length }} 份，已公開 {{ items|length }} 份。勾選完按「儲存」即可，沒勾的不會刪除，只是先不顯示。</div>
+    <form method="POST" action="{{ url_for('materials_visibility') }}">
+      <div class="visibility-list">
+        {% for m in all_items %}
+        <label class="visibility-item">
+          <input type="checkbox" name="visible_ids" value="{{ m.id }}" {% if m.visible %}checked{% endif %}>
+          <span class="visibility-title">{{ m.title }}</span>
+          {% if m.link_type == 'folder' %}<span class="material-type folder">資料夾</span>
+          {% elif m.file_type %}<span class="material-type">{{ m.file_type|upper }}</span>{% endif %}
+        </label>
+        {% endfor %}
+      </div>
+      <button class="add-btn" type="submit" style="margin-top:14px;">儲存公開設定</button>
+    </form>
+  </div>
+  {% endif %}
 
   <div class="panel">
     <h2>教材列表（{{ items|length }}）</h2>

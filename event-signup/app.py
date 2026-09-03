@@ -1687,9 +1687,11 @@ def materials_page():
     rows = conn.execute("SELECT * FROM materials ORDER BY id DESC").fetchall()
     conn.close()
     drive_authorized = bool(_load_google_drive_creds().get("refresh_token"))
+    all_items = [dict(r) for r in rows]
     return render_template(
         "materials.html",
-        items=[dict(r) for r in rows],
+        items=[m for m in all_items if m["visible"]],
+        all_items=sorted(all_items, key=lambda m: m["title"]),
         drive_authorized=drive_authorized,
         just_authorized=request.args.get("authorized"),
     )
@@ -1706,32 +1708,37 @@ def materials_add():
         conn = db.get_conn()
         if link_type == "folder":
             # 有授權過就用Drive API把資料夾展開成一筆一筆個別檔案卡片；
-            # 沒授權或API失敗就退回舊版整個資料夾embeddedfolderview嵌入(不擋教練原有流程)
+            # 沒授權或API失敗就退回舊版整個資料夾embeddedfolderview嵌入(不擋教練原有流程)。
+            # 資料夾整批匯入的檔案預設不公開(visible=0)——教練上傳資料夾常常沒特別篩選過，
+            # 要先讓他勾選想公開的，不能整批直接show給學員看。
             files = _google_drive_list_folder(drive_id)
             if files is not None:
                 for f in files:
                     f_title = f.get("name") or title
                     f_type = _google_drive_mime_to_type(f.get("mimeType"))
                     conn.execute(
-                        "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                        "INSERT INTO materials (title, description, drive_file_id, file_type, link_type, visible) VALUES (?, ?, ?, ?, 'file', 0)",
                         (f_title, description, f.get("id"), f_type),
                     )
             else:
                 conn.execute(
-                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'folder')",
+                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type, visible) VALUES (?, ?, ?, ?, 'folder', 1)",
                     (title, description, drive_id, file_type),
                 )
         else:
+            # 教練貼單一檔案連結是明確指定要公開這一份，直接visible=1
             conn.execute(
-                "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                "INSERT INTO materials (title, description, drive_file_id, file_type, link_type, visible) VALUES (?, ?, ?, ?, 'file', 1)",
                 (title, description, drive_id, file_type),
             )
         conn.commit()
         conn.close()
     else:
+        all_items = [dict(r) for r in db.get_conn().execute("SELECT * FROM materials ORDER BY id DESC").fetchall()]
         return render_template(
             "materials.html",
-            items=[dict(r) for r in db.get_conn().execute("SELECT * FROM materials ORDER BY id DESC").fetchall()],
+            items=[m for m in all_items if m["visible"]],
+            all_items=sorted(all_items, key=lambda m: m["title"]),
             drive_authorized=bool(_load_google_drive_creds().get("refresh_token")),
             error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（單一檔案連結要包含 drive.google.com/file/d/，資料夾連結要包含 drive.google.com/drive/folders/，或直接貼ID）。",
         )
@@ -1749,7 +1756,8 @@ def materials_delete(material_id):
 
 @app.route("/materials/<int:material_id>/expand", methods=["POST"])
 def materials_expand(material_id):
-    """把一筆整個資料夾嵌入的舊卡片，展開成一筆一筆個別檔案卡片(授權完成後才會有這顆按鈕)。"""
+    """把一筆整個資料夾嵌入的舊卡片，展開成一筆一筆個別檔案卡片(授權完成後才會有這顆按鈕)。
+    展開出來的每一筆預設不公開(visible=0)，教練勾選過才會顯示給學員。"""
     conn = db.get_conn()
     row = conn.execute("SELECT * FROM materials WHERE id = ? AND link_type = 'folder'", (material_id,)).fetchone()
     if row:
@@ -1757,11 +1765,25 @@ def materials_expand(material_id):
         if files:
             for f in files:
                 conn.execute(
-                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type) VALUES (?, ?, ?, ?, 'file')",
+                    "INSERT INTO materials (title, description, drive_file_id, file_type, link_type, visible) VALUES (?, ?, ?, ?, 'file', 0)",
                     (f.get("name") or row["title"], row["description"], f.get("id"), _google_drive_mime_to_type(f.get("mimeType"))),
                 )
             conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
             conn.commit()
+    conn.close()
+    return redirect(url_for("materials_page"))
+
+
+@app.route("/materials/visibility", methods=["POST"])
+def materials_visibility():
+    """教練在勾選清單裡選好要公開哪些教材後送出，這裡整批更新visible狀態
+    (被勾選的checkbox才會出現在request.form，沒勾的完全不會送出，所以先全部設0再把勾選的設1)。"""
+    checked_ids = {int(x) for x in request.form.getlist("visible_ids") if x.isdigit()}
+    conn = db.get_conn()
+    all_ids = [r["id"] for r in conn.execute("SELECT id FROM materials").fetchall()]
+    for mid in all_ids:
+        conn.execute("UPDATE materials SET visible = ? WHERE id = ?", (1 if mid in checked_ids else 0, mid))
+    conn.commit()
     conn.close()
     return redirect(url_for("materials_page"))
 

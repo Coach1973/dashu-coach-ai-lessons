@@ -120,5 +120,6 @@ CREATE TABLE IF NOT EXISTS materials (
     drive_file_id TEXT NOT NULL,         -- 從Drive分享連結擷取出的檔案ID或資料夾ID
     file_type TEXT,                      -- ppt / pdf / image，純顯示用標籤
     link_type TEXT NOT NULL DEFAULT 'file',  -- file=單一檔案 / folder=整個資料夾(自動列出裡面所有檔案)
+    visible INTEGER NOT NULL DEFAULT 1,  -- 1=學員看得到 / 0=僅在管理清單勾選區看得到，還沒公開
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
