@@ -108,3 +108,15 @@ CREATE TABLE IF NOT EXISTS coach888_state (
     value TEXT NOT NULL,                 -- JSON字串，格式跟原本存進localStorage的值完全一致
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
+
+-- 教練課程教材線上觀看區(2026-09-04交辦)：教練把PPT/PDF上傳Google雲端硬碟(檢視者權限)，
+-- 這裡只存Drive檔案ID+標題，實際檔案渲染交給Google Drive自己的embed viewer(iframe /preview)，
+-- 學員在我們自己的網址看到品牌一致的清單頁，但不需要自建PDF轉檔/儲存管線。
+CREATE TABLE IF NOT EXISTS materials (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    drive_file_id TEXT NOT NULL,         -- 從Drive分享連結擷取出的檔案ID
+    file_type TEXT,                      -- ppt / pdf，純顯示用標籤
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);

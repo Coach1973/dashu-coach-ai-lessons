@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>課程教材線上觀看｜大樹教練</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:24px 16px 60px; }
+  .wrap { max-width:840px; margin:0 auto; }
+  h1 { font-size:24px; font-weight:900; margin-bottom:4px; }
+  h1 span { color:var(--gold); }
+  .subtitle { color:rgba(255,255,255,.5); font-size:14px; margin-bottom:24px; }
+
+  .panel { background:#1c1c1c; border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; }
+  .panel h2 { font-size:16px; color:var(--gold); margin-bottom:14px; }
+  .panel-hint { font-size:12px; color:rgba(255,255,255,.45); margin-bottom:14px; line-height:1.7; }
+  .panel-hint ol { padding-left:18px; margin-top:4px; }
+
+  form.add-form { display:flex; flex-direction:column; gap:10px; }
+  .add-form input[type=text], .add-form textarea, .add-form select {
+    width:100%; padding:10px 12px; font-size:15px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:inherit;
+  }
+  .add-form textarea { resize:vertical; min-height:44px; }
+  .add-form .row { display:flex; gap:10px; flex-wrap:wrap; }
+  .add-form .row > div { flex:1; min-width:180px; }
+  .add-form label { display:block; font-size:12px; color:rgba(255,255,255,.5); margin-bottom:4px; }
+  .add-btn { align-self:flex-start; margin-top:4px; padding:10px 24px; font-size:15px; font-weight:700;
+    color:#0a0a0a; background:var(--gold); border:none; border-radius:8px; cursor:pointer; }
+  .add-btn:hover { opacity:.9; }
+  .error-note { background:rgba(255,80,80,.12); border:1px solid rgba(255,80,80,.4); color:#ff8a8a;
+    padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:14px; }
+
+  .material-list { display:flex; flex-direction:column; gap:24px; }
+  .material-card { background:#0a0a0a; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+  .material-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:16px 18px 10px; }
+  .material-title { font-size:17px; font-weight:700; }
+  .material-type { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px;
+    background:rgba(200,169,110,.18); color:var(--gold); margin-left:8px; vertical-align:middle; }
+  .material-desc { font-size:13px; color:rgba(255,255,255,.55); padding:0 18px 12px; white-space:pre-wrap; }
+  .material-frame-wrap { position:relative; width:100%; padding-top:62%; background:#000; }
+  .material-frame-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+  .del-form { padding:0; }
+  .del-form button { background:none; border:none; color:rgba(255,255,255,.3); font-size:16px; cursor:pointer; padding:2px 6px; }
+  .del-form button:hover { color:#ff6b6b; }
+  .empty-note { color:rgba(255,255,255,.4); font-size:14px; padding:8px 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>課程教材<span>線上觀看</span></h1>
+  <div class="subtitle">學員可直接在這裡觀看，不用下載檔案</div>
+
+  <div class="panel">
+    <h2>新增教材</h2>
+    <div class="panel-hint">
+      Google 雲端硬碟操作步驟：
+      <ol>
+        <li>把 PPT / PDF 上傳到雲端硬碟</li>
+        <li>檔案上按右鍵 →「共用」→ 一般存取改成「知道連結的任何人」，權限選「檢視者」</li>
+        <li>（選填）點「進階設定」把「檢視者及留言者可以下載、列印及複製這個檔案」關掉，防止學員下載</li>
+        <li>複製分享連結，貼到下面「Google雲端硬碟連結」欄位即可，不用自己抓檔案ID</li>
+      </ol>
+    </div>
+    {% if error %}<div class="error-note">{{ error }}</div>{% endif %}
+    <form class="add-form" method="POST" action="{{ url_for('materials_add') }}">
+      <input type="text" name="title" placeholder="教材標題，例如：第三堂｜領導力實戰" required maxlength="200">
+      <div class="row">
+        <div>
+          <label>Google雲端硬碟連結</label>
+          <input type="text" name="drive_link" placeholder="貼上分享連結或檔案ID" required>
+        </div>
+        <div>
+          <label>類型（選填）</label>
+          <select name="file_type">
+            <option value="">不指定</option>
+            <option value="ppt">PPT／簡報</option>
+            <option value="pdf">PDF</option>
+          </select>
+        </div>
+      </div>
+      <textarea name="description" placeholder="說明（選填）"></textarea>
+      <button class="add-btn" type="submit">加入教材列表</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>教材列表（{{ items|length }}）</h2>
+    {% if items %}
+    <div class="material-list">
+      {% for m in items %}
+      <div class="material-card">
+        <div class="material-head">
+          <div class="material-title">{{ m.title }}{% if m.file_type %}<span class="material-type">{{ m.file_type|upper }}</span>{% endif %}</div>
+          <form class="del-form" method="POST" action="{{ url_for('materials_delete', material_id=m.id) }}"
+                onsubmit="return confirm('確定要移除「{{ m.title }}」嗎？');">
+            <button type="submit" title="移除">✕</button>
+          </form>
+        </div>
+        {% if m.description %}<div class="material-desc">{{ m.description }}</div>{% endif %}
+        <div class="material-frame-wrap">
+          <iframe src="https://drive.google.com/file/d/{{ m.drive_file_id }}/preview" allow="autoplay" loading="lazy"></iframe>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-note">目前還沒有教材，上面新增第一筆吧。</div>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>

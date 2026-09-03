@@ -1530,6 +1530,71 @@ def todo_delete(todo_id):
     return redirect(url_for("todo_page"))
 
 
+# 2026-09-04交辦：教練課程教材線上觀看區。教練把PPT/PDF上傳自己的Google雲端硬碟(設定「知道連結
+# 的人可檢視」)，這裡只存Drive檔案ID，實際畫面用Google Drive自己的embed viewer(iframe /preview)
+# 渲染——不用自建PPT/PDF轉檔管線，學員在教練自己的網址看，但畫面渲染仍是Google Drive在做。
+_DRIVE_ID_PATTERNS = [
+    re.compile(r"/file/d/([a-zA-Z0-9_-]{10,})"),
+    re.compile(r"[?&]id=([a-zA-Z0-9_-]{10,})"),
+    re.compile(r"/d/([a-zA-Z0-9_-]{10,})"),
+]
+
+
+def _extract_drive_file_id(text):
+    """接受完整Google Drive分享連結或純檔案ID，回傳純檔案ID；格式不對回傳None。"""
+    text = (text or "").strip()
+    if not text:
+        return None
+    if "/" not in text and "?" not in text:
+        return text  # 教練直接貼ID
+    for pat in _DRIVE_ID_PATTERNS:
+        m = pat.search(text)
+        if m:
+            return m.group(1)
+    return None
+
+
+@app.route("/materials/")
+def materials_page():
+    conn = db.get_conn()
+    rows = conn.execute("SELECT * FROM materials ORDER BY id DESC").fetchall()
+    conn.close()
+    return render_template("materials.html", items=[dict(r) for r in rows])
+
+
+@app.route("/materials/add", methods=["POST"])
+def materials_add():
+    title = (request.form.get("title") or "").strip()
+    link = (request.form.get("drive_link") or "").strip()
+    drive_file_id = _extract_drive_file_id(link)
+    if title and drive_file_id:
+        description = (request.form.get("description") or "").strip() or None
+        file_type = (request.form.get("file_type") or "").strip() or None
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO materials (title, description, drive_file_id, file_type) VALUES (?, ?, ?, ?)",
+            (title, description, drive_file_id, file_type),
+        )
+        conn.commit()
+        conn.close()
+    else:
+        return render_template(
+            "materials.html",
+            items=[dict(r) for r in db.get_conn().execute("SELECT * FROM materials ORDER BY id DESC").fetchall()],
+            error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（連結要包含 drive.google.com/file/d/ 或直接貼檔案ID）。",
+        )
+    return redirect(url_for("materials_page"))
+
+
+@app.route("/materials/<int:material_id>/delete", methods=["POST"])
+def materials_delete(material_id):
+    conn = db.get_conn()
+    conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("materials_page"))
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
