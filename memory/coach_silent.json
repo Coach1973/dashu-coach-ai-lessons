@@ -1,6 +1,7 @@
 {
-  "silentSince": "2026-09-03T19:44:20+08:00",
-  "silentHours": 2.5,
-  "updatedAt": "2026-09-03T22:14:26+08:00",
-  "note": "週四夜晚 22:14 教練沉默 2.5h 屬正常作息"
+  "lastVerifiedAt": "2026-09-04T03:12:24+0800",
+  "lastCoachMessageAt": "2026-09-03T19:44:20+08:00",
+  "silentHours": 7.5,
+  "source": "sync_coach_last_message.sh (Telegram API 真實時間)",
+  "cycle": 762
 }
