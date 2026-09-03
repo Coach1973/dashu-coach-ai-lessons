@@ -1258,6 +1258,7 @@ def api_event_1010_join():
 
 DIY_KNOT_REPO = Path("/Users/bymyway/github_repos/diy-knot-workshop")
 DIY_OUTDOOR_REPO = Path("/Users/bymyway/github_repos/diy-outdoor-workshop")
+DIY_STUDIO_REPO = Path("/Users/bymyway/github_repos/diy-studio-workshop")
 LEADERSHIP_KNOT_REPO = Path("/Users/bymyway/github_repos/leadership-knot-workshop")
 # 2026-09-03交辦：DIY.zip「結繩工作坊3小時手作體驗」預覽頁，教練要求先掛兩個網址(/DIY/、/Leadership/)
 # 讓他看效果，兩份內容目前完全相同(zip來源本身就是同一頁匯出兩次)，之後教練若要區分文案各自獨立改。
@@ -1286,6 +1287,20 @@ def diy_outdoor_page():
 @app.route("/Outdoor/<path:filename>")
 def diy_outdoor_assets(filename):
     return _serve_repo_file(DIY_OUTDOOR_REPO, filename)
+
+
+# 2026-09-03交辦：DIY-3「傘繩DIY-3專業研習教室」，同一套視覺(沿用DIY-2)但改室內教室/商務人士定位，
+# 報名/日期/費用/講師資訊比照第一版，純靜態頁不需API。
+
+
+@app.route("/DIY3/")
+def diy_studio_page():
+    return _serve_repo_file(DIY_STUDIO_REPO, "index.html")
+
+
+@app.route("/DIY3/<path:filename>")
+def diy_studio_assets(filename):
+    return _serve_repo_file(DIY_STUDIO_REPO, filename)
 
 
 @app.route("/Leadership/")
