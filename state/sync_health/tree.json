@@ -1,6 +1,6 @@
 ﻿{
-    "status_text":  "⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.",
-    "last_attempt":  "2026-09-03T00:51:22+08:00",
+    "status_text":  "⚠️ Pull 警告: You are not currently on a branch. Please specify which branch you want to rebase against. See git-pull(1) for details. System.Management.Automation.RemoteException     git pull \u003cremote\u003e \u003cbranch\u003e System.Management.Automation.RemoteException",
+    "last_attempt":  "2026-09-04T06:56:26+08:00",
     "pull_ok":  false,
     "machine":  "tree"
 }
