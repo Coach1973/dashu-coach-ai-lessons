@@ -1649,7 +1649,7 @@ def materials_oauth_callback():
     if refresh_token:
         creds["refresh_token"] = refresh_token
         _save_google_drive_creds(creds)
-    return redirect(url_for("materials_page", authorized="1" if refresh_token else "0"))
+    return redirect(url_for("materials_admin", authorized="1" if refresh_token else "0"))
 
 
 # 2026-09-04交辦：教練課程教材線上觀看區。教練把PPT/PDF上傳自己的Google雲端硬碟(設定「知道連結
@@ -1683,6 +1683,16 @@ def _extract_drive_link(text):
 
 @app.route("/materials/")
 def materials_page():
+    """學員看的乾淨頁面，只顯示教練勾選公開的教材，沒有任何管理控制項。"""
+    conn = db.get_conn()
+    rows = conn.execute("SELECT * FROM materials WHERE visible = 1 ORDER BY id DESC").fetchall()
+    conn.close()
+    return render_template("materials.html", items=[dict(r) for r in rows], is_admin=False)
+
+
+@app.route("/materials/admin")
+def materials_admin():
+    """教練自己的後台：新增教材、勾選要公開哪些、刪除/展開資料夾。"""
     conn = db.get_conn()
     rows = conn.execute("SELECT * FROM materials ORDER BY id DESC").fetchall()
     conn.close()
@@ -1694,6 +1704,7 @@ def materials_page():
         all_items=sorted(all_items, key=lambda m: m["title"]),
         drive_authorized=drive_authorized,
         just_authorized=request.args.get("authorized"),
+        is_admin=True,
     )
 
 
@@ -1741,8 +1752,9 @@ def materials_add():
             all_items=sorted(all_items, key=lambda m: m["title"]),
             drive_authorized=bool(_load_google_drive_creds().get("refresh_token")),
             error="標題或Google雲端硬碟連結格式看起來不對，請確認後再送出一次（單一檔案連結要包含 drive.google.com/file/d/，資料夾連結要包含 drive.google.com/drive/folders/，或直接貼ID）。",
+            is_admin=True,
         )
-    return redirect(url_for("materials_page"))
+    return redirect(url_for("materials_admin"))
 
 
 @app.route("/materials/<int:material_id>/delete", methods=["POST"])
@@ -1751,7 +1763,7 @@ def materials_delete(material_id):
     conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
     conn.commit()
     conn.close()
-    return redirect(url_for("materials_page"))
+    return redirect(url_for("materials_admin"))
 
 
 @app.route("/materials/<int:material_id>/expand", methods=["POST"])
@@ -1771,7 +1783,7 @@ def materials_expand(material_id):
             conn.execute("DELETE FROM materials WHERE id = ?", (material_id,))
             conn.commit()
     conn.close()
-    return redirect(url_for("materials_page"))
+    return redirect(url_for("materials_admin"))
 
 
 @app.route("/materials/visibility", methods=["POST"])
@@ -1785,7 +1797,7 @@ def materials_visibility():
         conn.execute("UPDATE materials SET visible = ? WHERE id = ?", (1 if mid in checked_ids else 0, mid))
     conn.commit()
     conn.close()
-    return redirect(url_for("materials_page"))
+    return redirect(url_for("materials_admin"))
 
 
 if __name__ == "__main__":

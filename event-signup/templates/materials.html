@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>課程教材線上觀看｜大樹教練</title>
+<title>{% if is_admin %}課程教材管理後台{% else %}課程教材線上觀看{% endif %}｜大樹教練</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
@@ -70,9 +70,15 @@
 </head>
 <body>
 <div class="wrap">
+  {% if is_admin %}
+  <h1>課程教材<span>管理後台</span></h1>
+  <div class="subtitle">這是您自己看的後台。要給學員的網址是 <a href="{{ url_for('materials_page', _external=True) }}" style="color:var(--gold);">{{ url_for('materials_page', _external=True) }}</a>（只會顯示您勾選公開的內容，沒有這些管理按鈕）</div>
+  {% else %}
   <h1>課程教材<span>線上觀看</span></h1>
   <div class="subtitle">學員可直接在這裡觀看，不用下載檔案</div>
+  {% endif %}
 
+  {% if is_admin %}
   <div class="panel">
     <h2>新增教材</h2>
     <div class="panel-hint">
@@ -118,7 +124,7 @@
 
   {% if all_items %}
   <div class="panel">
-    <h2>選擇要公開的教材（勾選的才會出現在下面的教材列表給學員看）</h2>
+    <h2>選擇要公開的教材（勾選的才會出現在學員看的頁面）</h2>
     <div class="panel-hint">目前總共 {{ all_items|length }} 份，已公開 {{ items|length }} 份。勾選完按「儲存」即可，沒勾的不會刪除，只是先不顯示。</div>
     <form method="POST" action="{{ url_for('materials_visibility') }}">
       <div class="visibility-list">
@@ -135,6 +141,7 @@
     </form>
   </div>
   {% endif %}
+  {% endif %}
 
   <div class="panel">
     <h2>教材列表（{{ items|length }}）</h2>
@@ -148,14 +155,16 @@
             {% if m.link_type == 'folder' %}<span class="material-type folder">資料夾</span>
             {% elif m.file_type %}<span class="material-type">{{ m.file_type|upper }}</span>{% endif %}
           </div>
+          {% if is_admin %}
           <form class="del-form" method="POST" action="{{ url_for('materials_delete', material_id=m.id) }}"
                 onsubmit="return confirm('確定要移除「{{ m.title }}」嗎？');">
             <button type="submit" title="移除">✕</button>
           </form>
+          {% endif %}
         </div>
         {% if m.description %}<div class="material-desc">{{ m.description }}</div>{% endif %}
         {% if m.link_type == 'folder' %}
-        {% if drive_authorized %}
+        {% if drive_authorized and is_admin %}
         <form class="expand-form" method="POST" action="{{ url_for('materials_expand', material_id=m.id) }}" style="padding:0 18px 12px;">
           <button type="submit">✨ 展開成個別檔案卡片</button>
         </form>
