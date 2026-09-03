@@ -428,3 +428,35 @@
 
 ## 🔑 本場commit
 `diy-studio-workshop`：初版`db83c2c`。`workspace`(event-signup)：`c81e8356a`(/DIY3路由)、`2dcd1a9f1`(materials系統+資料夾/圖片支援)、`18529b66a`(圖片類型+資料夾展開)、`a4d967f06`(Drive OAuth整合)、`4a1fd8aa7`(公開/隱藏勾選機制)、`5b4126ea2`(後台前台分離)。記憶：`project_materials_viewer_system_2026-09-04`+`feedback_public_admin_separation_default_2026-09-04`+`reference_google_drive_oauth_setup_2026-09-04`+`project_backend_credentials_consolidation_pending_2026-09-04`。
+
+---
+
+# 軍師接力棒 · 2026-09-03 v175（聯想Windows Sonnet 5，/leader報名頁建置+機器記憶體釋放+能力確認問答，與Mac v173平行作業）
+
+> 建立時間：2026-09-03 13:02 ~ 2026-09-04 06:56（台灣時間）
+> 上一棒：v174（Mac終端機，DIY3+教練課程教材線上觀看系統從零建置）
+> 本棒主軸：**教練提供design(4).html邀請函稿，聯想完成event.bymyway.com/leader報名頁全套(前端+後端+Telegram/LINE通知)並本機驗證，交接Mac部署——Mac已在v173同日完成部署上線，此項已結案；教練要求「釋放記憶體」，查證聯想這台RustDesk無自動重啟機制後改採保守範圍只關LINE+Typeless；教練確認「做網頁掛GitHub」完全在能力範圍內。本棒與Mac的v173/v174為同時段平行作業，兩邊各自處理不同任務，僅/leader一項有交集（已在Mac v173完整記錄部署細節，此處不重複）。**
+
+## 🎯 本場戰果
+
+### 1. event.bymyway.com/leader「領導人溝通的藝術」9/10報名頁（已由Mac v173完成部署，此項結案）
+教練貼`design (4).html`邀請函稿，要求：①移除「（映璇公司一樓會議室）」文案 ②報名成功同時推送Telegram通知+導流佩佩老師LINE官方帳號。比照`/tut`既有模式，新增`templates/leader.html`(邀請函+報名表單)+`/leader/`路由+`/api/leader/join`端點(CORS，寫入新表`leader_workshop_signups`，通知`TELEGRAM_REGISTRATION_GROUP_CHAT_ID`同時導流`PEIPEI_LINE_OA_ID`)。**已在聯想本機8899埠+獨立測試DB完整驗證**：地址文案確認已移除、控制台零錯誤、表單送出200、DB正確寫入一筆、Telegram通知因本機缺`openclaw.json`安全降級(寫入`notify_failures.log`不誤發真訊息)，測試產物已清除。commit`9dc78d09`。**聯想這台沒有`com.coach.event-webapp`服務也無法遠端重啟**，寫信交接`cross-agent/inbox/mac/`(commit`685798e7`)，**Mac已在同日讀信處理，git pull+重啟+curl驗證+真實表單測試全數通過，見接力棒v173第2節**，此項完全結案。已寫入記憶`reference_event_signup_deploy_only_on_mac_2026-09-03`，說明非Mac機器碰這套系統的架構限制，往後可直接查不用重新踩坑。
+
+### 2. 教練要求「釋放記憶體」，查明聯想RustDesk無自動重啟機制
+比照Mac既有「釋放記憶體」口令(重啟RustDesk)，查證聯想這台RustDesk沒有Windows Service/排程/Startup自動重啟機制——若直接砍掉會斷線且不會自動恢復，跟Mac靠launchd KeepAlive自動復活完全不同。已問教練要釋放範圍，教練選「無偏好」交由AI判斷，最終**只關閉LINE(~135MB)+Typeless語音輸入(8個process共~633MB)，RustDesk(232MB，數值正常)不動**，釋放約760MB。已寫入記憶`reference_lenovo_rustdesk_no_autostart_2026-09-03`。
+
+### 3. 教練確認「做網頁+掛GitHub」完全在AI能力範圍內
+教練直接提問確認，已用本場`/leader`頁+近期`tut-alumni`等實例佐證，答覆為肯定，涵蓋純靜態GitHub Pages站+需要後端/資料庫的動態頁面兩種情境。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **非Mac機器改`event-signup`程式碼，推上GitHub不等於上線生效**——這套系統只有Mac在跑活的process，任何機器要加新路由都要記得多一步「交接Mac部署」，不能自己宣稱已上線。
+2. **聯想這台的RustDesk跟Mac版「釋放記憶體」不能一視同仁**——沒有自動重啟保護網，動手前務必先查證有沒有等效機制，沒有就先問教練或縮小範圍。
+3. **本場親身經歷跟Mac同時段平行工作的接力棒版本號碰撞**（雙方都接在v172後面各自編了一次v173）——這次影響輕微(內容不衝突，只是編號重複)，但再次印證[[project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26]]類似教訓：多機同時活躍時，交接文件的版本號/待辦表狀態都可能在自己還沒收工前就被對方變動，收工時務必重新讀一次最新檔案內容再動筆，不能只憑自己記憶中的版本號往後接。
+
+## 📋 下一場開工先做
+1. `/leader`已全通，教練若有後續文案/版面調整直接交辦即可，不用重新查證部署狀態。
+2. 沿用v174下一棒待辦：`/materials/admin`教練待自己勾選公開項目、DIY3的LINE連結待補、「大品一覽」語音誤植待確認。
+3. FB粉專商家驗證後續、`/bni-credit`頁面顯示效果等舊待辦本場未觸及，繼續掛著。
+
+## 🔑 本場commit
+`workspace`：`9dc78d09`(`/leader`報名頁全套：app.py路由+schema.sql新表+templates/leader.html)、`685798e7`(交接信給Mac)。記憶：`reference_event_signup_deploy_only_on_mac_2026-09-03`+`reference_lenovo_rustdesk_no_autostart_2026-09-03`。
