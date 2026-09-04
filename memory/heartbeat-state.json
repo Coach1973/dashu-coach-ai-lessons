@@ -1,19 +1,17 @@
 {
-  "lastChecks": {
-    "healthcheck": 1756991550,
-    "telegramChannel": 1788530449,
-    "cron": 1788530449,
-    "coach_silence_sync": "2026-09-04T23:12:03.447957+08:00"
-  },
-  "telegramChannelOk": true,
-  "telegramChannelProbe": "{\"ok\":true,\"bot\":\"openclaw_macbook4_bot\",\"chat\":\"6124913915\"}",
-  "cycle": 771,
-  "cumulativeGreen": 135,
-  "v4ThreeGateResult": "all-fail-no-announce",
-  "silentHours": 0.0,
-  "syncedAt": "2026-09-04T22:00:49.592840+08:00",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-04T22:39:03+08:00",
-    "coachSilentHours": 0.6
-  }
+  "cycle": 776,
+  "ts": "2026-09-05T01:13:07+0800",
+  "verdict": "silent",
+  "reasons": [
+    "cron list: only 1 active job (this health check itself), lastRunStatus=ok",
+    "no consecutiveErrors, no timeout danger, no auth failure",
+    "HEARTBEAT.md ⬜ todos: 0",
+    "TG channel probe ok=true",
+    "env quick check clean",
+    "coach silent 1.57h, normal sleep hour"
+  ],
+  "cumulative_green": 138,
+  "coach_silent_hours": 1.57,
+  "cron_status": "ok",
+  "env_status": "ok"
 }
