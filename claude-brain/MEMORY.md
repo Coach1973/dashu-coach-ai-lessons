@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 真鑽/真貴來賓儀表板正確網址是real-diamonds/real-wealth非zhenzuan/zhengui(2026-09-04)](reference_bni_guest_dashboard_domain_rename_2026-09-04.md) — DNS不解析先查是否改名，別直接判定未部署
 - [🔴🔴 bymyway.com找不到內容先查iframe嵌入，不要只curl文字搜尋(2026-09-04)](feedback_check_iframe_before_text_search_2026-09-04.md) — /ai-go/與/coach/都是iframe嵌coach1973.github.io，教練點破繞路浪費時間token，試金石案例71
 - [🔴🔴🔴 教練問「網頁內容在哪」要先curl驗證線上版，不能只看本地檔案位置(2026-09-04)](feedback_verify_online_before_answering.md) — 同一內容可能嵌入多個不同網址(bymyway.com/ vs /coach/)，本地路徑≠實際部署網址
 - [🔧 coach888新增同步key要前端陣列+後端COACH888_STATE_KEYS白名單同一輪一起改(2026-09-04)](reference_coach888_sync_key_whitelist_pattern_2026-09-04.md) — 同場連踩兩次，前端不報錯只有curl查伺服器回傳才看得出漏加
