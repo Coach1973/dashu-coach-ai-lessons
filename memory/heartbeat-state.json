@@ -1,24 +1,30 @@
 {
-  "cycle": 776,
-  "ts": "2026-09-05T01:13:07+0800",
-  "verdict": "silent",
-  "reasons": [
-    "cron list: only 1 active job (this health check itself), lastRunStatus=ok",
-    "no consecutiveErrors, no timeout danger, no auth failure",
-    "HEARTBEAT.md ⬜ todos: 0",
-    "TG channel probe ok=true",
-    "env quick check clean",
-    "coach silent 1.57h, normal sleep hour"
-  ],
-  "cumulative_green": 138,
-  "coach_silent_hours": 1.57,
-  "cron_status": "ok",
-  "env_status": "ok",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-05T01:17:05+08:00",
-    "coachSilentHours": 0.9
+  "cycle": 778,
+  "cumulativeGreen": 139,
+  "previousGreenCycle": 776,
+  "previousGreenCycleNumber": 776,
+  "ranAt": "2026-09-05T03:12:55.721658+08:00",
+  "coachLastMessageAt": "2026-09-05T03:09:15+08:00",
+  "coachSilentHours": 0.06,
+  "cronJobs": {
+    "totalActive": 1,
+    "ok": 1,
+    "ceMax": 0,
+    "timeoutRisks": 0,
+    "authFailures": 0
   },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-05T02:12:11.885773+08:00"
-  }
+  "tgChannelProbe": {
+    "ok": true,
+    "bot": "openclaw_macbook4_bot",
+    "chat": "6124913915"
+  },
+  "v4ThreeGates": {
+    "gate1_stillBroken": false,
+    "gate2_providerOverload": false,
+    "gate3_affectsUsers": false,
+    "announce": false,
+    "reason": "三關全 fail：cron 全綠 + 本輪執行成功 + 無錯誤 + 03:12 凌晨教練剛對話 3 分鐘前 + 零會員功能壞"
+  },
+  "autoFix": [],
+  "announcePending": false
 }
