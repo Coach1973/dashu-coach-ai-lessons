@@ -938,6 +938,14 @@ def _serve_repo_file(repo: Path, filename: str):
     top = filename.split("/", 1)[0]
     if top in _REPO_BLOCKED_TOP_DIRS or filename.startswith("."):
         abort(404)
+    # 2026-09-04交辦(KR養生廚房)：多頁面靜態站的子頁面用「<slug>/index.html」資料夾結構，
+    # 請求路徑本身沒有副檔名時，退而找同名資料夾底下的index.html（nginx try_files的靜態站慣例）。
+    # 不影響既有單頁站(bigtree/tut/1010等)行為，那些請求的filename永遠直接對應真實檔案。
+    target = repo / filename
+    if not target.is_file() and "." not in filename.rsplit("/", 1)[-1]:
+        index_path = filename.rstrip("/") + "/index.html"
+        if (repo / index_path).is_file():
+            return send_from_directory(repo, index_path)
     return send_from_directory(repo, filename)
 
 
@@ -1334,6 +1342,82 @@ def api_tainan_shangquan_join():
         + (f"社群：{social}\n" if social else "")
         + (f"招牌商品：{items}\n" if items else "")
         + f"（來源：{source}）"
+    )
+    _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return Response(
+        json.dumps({"ok": True}),
+        status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
+KR_REPO = Path("/Users/bymyway/github_repos/KR")
+
+
+@app.route("/KR/")
+def kr_page():
+    return _serve_repo_file(KR_REPO, "index.html")
+
+
+@app.route("/KR/<path:filename>")
+def kr_assets(filename):
+    if filename == "index.html":
+        return kr_page()
+    return _serve_repo_file(KR_REPO, filename)
+
+
+@app.route("/api/KR/contact", methods=["POST", "OPTIONS"])
+def api_kr_contact():
+    """KR養生廚房聯絡表單（2026-09-04交辦，教練用Tooo.ai做的示範站原封不動搬過來）。
+    原站表單打的是Tooo.ai自家的api.tooo.ai/widgets/form-submit.js，搬到我們自己網域後
+    改推自己的DB+Telegram，不然訊息會送去教練管不到的第三方帳號，等於做半套。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    name = (payload.get("name") or "").strip()
+    email = (payload.get("email") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    subject = (payload.get("subject") or "").strip()
+    message = (payload.get("message") or "").strip()
+    source = (payload.get("source") or "event.bymyway.com/KR/contact").strip()
+
+    if not name or not message:
+        return Response(
+            json.dumps({"ok": False, "error": "missing name/message"}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    try:
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO kr_contact_messages (name, email, phone, subject, message, source) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (name, email, phone, subject, message, source),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(
+            f"⚠️【KR養生廚房・留言資料庫寫入失敗】\n姓名：{name}\n錯誤：{e}\n請人工補登。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": str(e)}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    notify_text = (
+        "【KR養生廚房・線上留言通知】\n"
+        f"姓名：{name}\n"
+        + (f"Email：{email}\n" if email else "")
+        + (f"電話：{phone}\n" if phone else "")
+        + (f"主旨：{subject}\n" if subject else "")
+        + f"訊息：{message}\n（來源：{source}）"
     )
     _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
     return Response(
