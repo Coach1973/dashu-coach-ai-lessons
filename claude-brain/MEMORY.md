@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯🎯 海餅乾俱樂部20週年官網(seabiscuit20)六項新功能：時光足跡/見證/語錄/完整守則/頁尾連結(2026-09-04)](project_seabiscuit20_six_features_2026-09-04.md) — 教練驗收中，完整頁面結構+URL清單，新增頁面記得nav/valid陣列/輪播模式三處要對齊
+- [🔧 搜尋教練提供的圖片檔案，副檔名清單要涵蓋webp/gif不能只寫jpg(2026-09-04)](reference_search_image_files_include_webp_2026-09-04.md) — 教練貼圖搜Downloads明明在對的資料夾卻找不到，因為是.webp被篩掉，試金石案例70
 - [🎯 聯想Windows記憶體98%洩漏排查：非中毒，核心層Nonpaged Pool驅動洩漏(2026-09-04)](project_lenovo_nonpaged_pool_leak_2026-09-04.md) — Nahimic音效驅動嫌疑最大，重開機驗證有效但2小時內更快復發，待確認移除狀態
 - [🔧 Git Bash呼叫PowerShell用雙引號會吃掉$_變數，改單引號包外層(2026-09-04)](reference_gitbash_powershell_dollar_underscore_quoting_2026-09-04.md) — Bash工具组PowerShell指令用到$_一律單引號包-Command參數
 - [🔴🔴 教練指令有歧義(插入vs替換/哪張圖檔)要先問清楚再動手(2026-09-04)](feedback_confirm_ambiguous_instructions_before_acting_2026-09-04.md) — seabiscuit20官網logo誤用錯圖+數據列誤增第5欄兩次教訓，教練特別強調原本版面意境不能破壞
