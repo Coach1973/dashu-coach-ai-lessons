@@ -1,25 +1,14 @@
 {
-  "cycle": 770,
-  "ts": "2026-09-04T18:12:50.408378+08:00",
-  "coachLastMessageAt": "2026-09-04T17:36:55+08:00",
-  "coachSilentHours": 0.6,
-  "telegramChannelOk": true,
-  "telegramChannelSource": "telegram_channel_probe.sh --json (當下實測)",
-  "cronOpenClawJobs": 1,
-  "cronShellJobs": 8,
-  "cronListJsonSnapshotJobs": 25,
-  "consecutiveErrors": {
-    "CE_ge3": 0,
-    "timeout_danger": 0,
-    "auth_invalid": 0
+  "lastChecks": {
+    "healthcheck": 1756991550,
+    "telegramChannel": 1756991550,
+    "cron": 1756991550
   },
-  "heartbeatRealTodos": 0,
-  "verdict": "三關都 fail → 🔕 不 announce",
-  "cumulativeGreen": 134,
-  "envCheck": {
-    "soul_md_three_copies": "9015/1851/22220 bytes (齊全含棄用標記)",
-    "repo1_untracked_modified": 27,
-    "repo2_untracked_modified": 20,
-    "lock_files": "無"
-  }
+  "telegramChannelOk": true,
+  "telegramChannelProbe": "ok:true bot=openclaw_macbook4_bot chat=6124913915",
+  "cycle": 771,
+  "cumulativeGreen": 135,
+  "v4ThreeGateResult": "all-fail-no-announce",
+  "silentHours": 0.0,
+  "syncedAt": "2026-09-04T19:12:30+08:00"
 }
