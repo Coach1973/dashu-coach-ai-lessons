@@ -72,6 +72,8 @@ def render_session_dates(rows) -> str:
             if r[key]:
                 parts.append(f"{key}:'{r[key]}'")
         parts.append(f"slug:'{r['slug']}'")
+        if r["event_url"]:
+            parts.append(f"eventUrl:'{r['event_url']}'")
         lines.append("  {" + ", ".join(parts) + "},")
     lines.append("];")
     return "\n".join(lines)

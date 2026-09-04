@@ -24,6 +24,10 @@ def init_db() -> None:
     event_cols = {row["name"] for row in conn.execute("PRAGMA table_info(events)")}
     if "is_current" not in event_cols:
         conn.execute("ALTER TABLE events ADD COLUMN is_current INTEGER NOT NULL DEFAULT 0")
+    if "event_url" not in event_cols:
+        # 2026-09-04交辦：場次若有自己的專屬活動網頁(如ai-art/ai-talk/ai-fit/ai-forum)，
+        # 存這裡供render_session_dates()帶出「我要看活動網頁」按鈕，選填。
+        conn.execute("ALTER TABLE events ADD COLUMN event_url TEXT")
     todo_cols = {row["name"] for row in conn.execute("PRAGMA table_info(todos)")}
     if "reminder_cron_id" not in todo_cols:
         conn.execute("ALTER TABLE todos ADD COLUMN reminder_cron_id TEXT")
