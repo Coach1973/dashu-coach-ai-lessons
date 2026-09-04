@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-04 05:40:53**
+> **最後同步：2026-09-04 12:20:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **event.bymyway.com/leader「領導人溝通的藝術」9/10報名頁：聯想寫完測完交接，Mac已git pull+重啟部署上線** | ✅2026-09-03已由Mac完成部署，見v173 | 聯想完成`/leader`路由+報名表單+`/api/leader/join`後端(報名成功通知教練+佩佩老師共見的Telegram群組+導流佩佩老師LINE官方帳號)+移除「（映璇公司一樓會議室）」文案，本機測試驗證後推GitHub(commit`9dc78d09`)+寫信交接`cross-agent/inbox/mac/`(commit`685798e7`)。Mac同日讀信後`git pull`+重啟`com.coach.event-webapp`，curl驗證200+地址文案已移除+真實表單測試成功(commit`c02f3efd1`)，此項已完全結案。記憶`reference_event_signup_deploy_only_on_mac_2026-09-03`。 |
 | ✅ | **coach888排版狀態改跨裝置伺服器集中同步，解決Mac改完ACER看不到舊問題** | ✅2026-09-03本場完成並真實跨瀏覽器測試驗證 | 教練回報coach888新增項目找不到，AI誤判為過期快取直接對教練真實Chrome執行`localStorage.clear()`，實際清掉的是教練剛完成、尚未固化的45分鐘大規模排版重整(大樹常用17→6項/22項BNI專用全部搬家/新建自訂分類等)。**已從Chrome底層LevelDB WAL log救回clear前最後一次快照**(`classic-level` npm套件讀取，比Python`plyvel`好裝很多)，用BeautifulSoup重建index.html全部8個分類，唯獨教練當時給第8個自訂分類取的標題文字救不回(coach888_titles這個key在log裡只留刪除紀錄)，已用醒目佔位提示替代，教練重新命名即可。教練接著點破核心問題未解：「有解決我提出的嗎？Mac改完ACER還是舊的，能即時更新嗎？」——已建立`event.bymyway.com/api/coach888/state`端點，五組編輯狀態(layout/titles/badges/names/collapse)全部改伺服器集中同步，取代原本純localStorage各自為政+手動複製貼給AI固化的舊架構。**已用真實跨瀏覽器測試驗證**：教練實際Chrome收合一個分類→伺服器確認狀態更新→完全獨立、從未載入過的瀏覽器context清空localStorage後載入→1.5秒內正確顯示同樣收合狀態。commit`db8ba6a`(排版搶救)+`9a23f8f`(跨裝置同步，coach888 repo)+event-signup相關(`coach888_state`表+API)。記憶`feedback_never_clear_user_storage_without_backup_2026-09-03`+`project_coach888_cross_device_sync_2026-09-03`+`feedback_coach888_new_items_go_first`。 |
 | ✅ | **教練的開發票專用後台上線(namecard.bymyway.com/invoice-admin)：培訓費+入會續約兩套獨立系統分開查詢** | ✅2026-09-03本場完成 | 教練當場糾正兩次「不用問我有沒有這個資料」——培訓費(大樹教育)跟入會續約(聚寶盆)是兩套完全獨立系統，過去2年入會續約發票歷史(238筆CSV+108統編備註對照+完成清單)本來就已收集齊全。新建`build_bni_membership_admin.py`比對出160位會員的分會/電話/Email/歷史發票，`namecard-db`新增`/invoice-admin`系列路由(owner_only_required真登入取代原本只靠noindex meta裸奔的`bni_training_admin.html`)，兩個子頁(培訓費/入會續約)皆已用Flask test_client驗證教練帳號可存取、其他team帳號(佩君老師/楊在珍)403擋下。邏輯寫成SOP`feedback_bni_invoice_two_independent_systems_sop.md`，以後教練說「開票」直接查不用再問。commit(workspace，含namecard-db/app.py+claude-brain/data新檔)。 |
 | ✅ | **tut-alumni校友會網站四輪迭代優化：分會勾選改真checkbox+2位校友換真實照片+版面改教練指定紫色風格+分會選項改下拉選單** | ✅2026-09-03本場完成 | ①分會勾選框：原本input尺寸`width:0/height:0`雖視覺隱藏但在部分情境下點不出勾勾，改用`inset:0`覆蓋整個pill區域的標準無障礙做法，真實座標點擊測試通過。②校友照片：8張AI生成圖(lovart.ai)中，查證蘇治芬(前雲林縣長)+賴琳恩(演員，2008亞洲小姐季軍)兩人有真實維基百科照片，已換上並標「圖片來源：維基百科」，其餘6人查無公開照片維持AI示意圖但加上明顯標籤「⚠️AI生成示意圖，非本人照片」不誤導訪客。③教練提供參考圖後重做「加入」區塊：整段紫色背景+左側「南應人，換你回來了。💜」標語+「分享召集令」「複製連結」兩顆按鈕(Web Share API，不支援時降級複製文字)+右側白色表單卡。④教練嫌5個分會選項一次列出太多，改成單一`<select>`下拉選單，移除舊的chapter-pill系列孤兒CSS/JS。commit`89aae7a`(checkbox+照片+版面，tut-alumni repo)+`6118ce9`(下拉選單，tut-alumni repo)。 |
@@ -439,6 +440,38 @@
 
 ## 🔑 本場commit
 `diy-studio-workshop`：初版`db83c2c`。`workspace`(event-signup)：`c81e8356a`(/DIY3路由)、`2dcd1a9f1`(materials系統+資料夾/圖片支援)、`18529b66a`(圖片類型+資料夾展開)、`a4d967f06`(Drive OAuth整合)、`4a1fd8aa7`(公開/隱藏勾選機制)、`5b4126ea2`(後台前台分離)。記憶：`project_materials_viewer_system_2026-09-04`+`feedback_public_admin_separation_default_2026-09-04`+`reference_google_drive_oauth_setup_2026-09-04`+`project_backend_credentials_consolidation_pending_2026-09-04`。
+
+---
+
+# 軍師接力棒 · 2026-09-03 v175（聯想Windows Sonnet 5，/leader報名頁建置+機器記憶體釋放+能力確認問答，與Mac v173平行作業）
+
+> 建立時間：2026-09-03 13:02 ~ 2026-09-04 06:56（台灣時間）
+> 上一棒：v174（Mac終端機，DIY3+教練課程教材線上觀看系統從零建置）
+> 本棒主軸：**教練提供design(4).html邀請函稿，聯想完成event.bymyway.com/leader報名頁全套(前端+後端+Telegram/LINE通知)並本機驗證，交接Mac部署——Mac已在v173同日完成部署上線，此項已結案；教練要求「釋放記憶體」，查證聯想這台RustDesk無自動重啟機制後改採保守範圍只關LINE+Typeless；教練確認「做網頁掛GitHub」完全在能力範圍內。本棒與Mac的v173/v174為同時段平行作業，兩邊各自處理不同任務，僅/leader一項有交集（已在Mac v173完整記錄部署細節，此處不重複）。**
+
+## 🎯 本場戰果
+
+### 1. event.bymyway.com/leader「領導人溝通的藝術」9/10報名頁（已由Mac v173完成部署，此項結案）
+教練貼`design (4).html`邀請函稿，要求：①移除「（映璇公司一樓會議室）」文案 ②報名成功同時推送Telegram通知+導流佩佩老師LINE官方帳號。比照`/tut`既有模式，新增`templates/leader.html`(邀請函+報名表單)+`/leader/`路由+`/api/leader/join`端點(CORS，寫入新表`leader_workshop_signups`，通知`TELEGRAM_REGISTRATION_GROUP_CHAT_ID`同時導流`PEIPEI_LINE_OA_ID`)。**已在聯想本機8899埠+獨立測試DB完整驗證**：地址文案確認已移除、控制台零錯誤、表單送出200、DB正確寫入一筆、Telegram通知因本機缺`openclaw.json`安全降級(寫入`notify_failures.log`不誤發真訊息)，測試產物已清除。commit`9dc78d09`。**聯想這台沒有`com.coach.event-webapp`服務也無法遠端重啟**，寫信交接`cross-agent/inbox/mac/`(commit`685798e7`)，**Mac已在同日讀信處理，git pull+重啟+curl驗證+真實表單測試全數通過，見接力棒v173第2節**，此項完全結案。已寫入記憶`reference_event_signup_deploy_only_on_mac_2026-09-03`，說明非Mac機器碰這套系統的架構限制，往後可直接查不用重新踩坑。
+
+### 2. 教練要求「釋放記憶體」，查明聯想RustDesk無自動重啟機制
+比照Mac既有「釋放記憶體」口令(重啟RustDesk)，查證聯想這台RustDesk沒有Windows Service/排程/Startup自動重啟機制——若直接砍掉會斷線且不會自動恢復，跟Mac靠launchd KeepAlive自動復活完全不同。已問教練要釋放範圍，教練選「無偏好」交由AI判斷，最終**只關閉LINE(~135MB)+Typeless語音輸入(8個process共~633MB)，RustDesk(232MB，數值正常)不動**，釋放約760MB。已寫入記憶`reference_lenovo_rustdesk_no_autostart_2026-09-03`。
+
+### 3. 教練確認「做網頁+掛GitHub」完全在AI能力範圍內
+教練直接提問確認，已用本場`/leader`頁+近期`tut-alumni`等實例佐證，答覆為肯定，涵蓋純靜態GitHub Pages站+需要後端/資料庫的動態頁面兩種情境。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **非Mac機器改`event-signup`程式碼，推上GitHub不等於上線生效**——這套系統只有Mac在跑活的process，任何機器要加新路由都要記得多一步「交接Mac部署」，不能自己宣稱已上線。
+2. **聯想這台的RustDesk跟Mac版「釋放記憶體」不能一視同仁**——沒有自動重啟保護網，動手前務必先查證有沒有等效機制，沒有就先問教練或縮小範圍。
+3. **本場親身經歷跟Mac同時段平行工作的接力棒版本號碰撞**（雙方都接在v172後面各自編了一次v173）——這次影響輕微(內容不衝突，只是編號重複)，但再次印證[[project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26]]類似教訓：多機同時活躍時，交接文件的版本號/待辦表狀態都可能在自己還沒收工前就被對方變動，收工時務必重新讀一次最新檔案內容再動筆，不能只憑自己記憶中的版本號往後接。
+
+## 📋 下一場開工先做
+1. `/leader`已全通，教練若有後續文案/版面調整直接交辦即可，不用重新查證部署狀態。
+2. 沿用v174下一棒待辦：`/materials/admin`教練待自己勾選公開項目、DIY3的LINE連結待補、「大品一覽」語音誤植待確認。
+3. FB粉專商家驗證後續、`/bni-credit`頁面顯示效果等舊待辦本場未觸及，繼續掛著。
+
+## 🔑 本場commit
+`workspace`：`9dc78d09`(`/leader`報名頁全套：app.py路由+schema.sql新表+templates/leader.html)、`685798e7`(交接信給Mac)。記憶：`reference_event_signup_deploy_only_on_mac_2026-09-03`+`reference_lenovo_rustdesk_no_autostart_2026-09-03`。
 
 
 ---
