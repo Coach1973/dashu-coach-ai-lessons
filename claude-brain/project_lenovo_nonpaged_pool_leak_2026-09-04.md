@@ -1,11 +1,11 @@
 ---
 name: project_lenovo_nonpaged_pool_leak_2026-09-04
-description: 聯想Windows記憶體98%滿載查明是核心層Nonpaged Pool驅動洩漏(非病毒)，重開機後2小時內又更快復發，待確認Nahimic驅動是否已移除
+description: 聯想Windows記憶體洩漏根因確診：Windows Update會自動把已解除安裝的Nahimic驅動裝回去，需群組原則封鎖才能斷根
 metadata: 
   node_type: memory
   type: project
   originSessionId: 1583342f-6c6a-4f3a-85c0-5749ee197c32
-  modified: 2026-09-04T05:51:07.961Z
+  modified: 2026-09-04T08:29:21.549Z
 ---
 
 教練回報這台聯想Windows開機後記憶體飆到98%，懷疑中毒，要求安全排查+網路流量檢查。全面排查（Defender即時防護開啟/病毒碼最新/零威脅紀錄、前25大耗記憶體程式全是教練平常在用的Comet/LINE/Claude/Typeless/Signal、對外連線埠全是443+高位隨機埠、無Temp/Public資料夾藏匿程式）排除中毒可能。
@@ -17,3 +17,13 @@ metadata:
 **Why**：教練半夜擔心中毒想直接用「一鍵還原」重灌，已用證據排除中毒疑慮改走驅動除錯路徑，避免不必要的大動作。
 
 **How to apply**：下次教練提到這台機器記憶體又飆高，先問「Nahimic移除了嗎／重開機後多久又飆高」；用 `powershell -NoProfile -Command 'Get-Counter "\Memory\Pool Nonpaged Bytes" | Select-Object -ExpandProperty CounterSamples | Select-Object CookedValue'` 快速確認是否為同一種洩漏（正常應僅幾百MB，超過1-2GB即視為異常）。若確認Nahimic已移除但洩漏仍快速復發，嫌疑轉移到新裝的Intel/NVIDIA/聯想電競驅動，可建議逐一解除安裝排除測試。參見 [[reference_gitbash_powershell_dollar_underscore_quoting_2026-09-04]]（本次診斷用到的PowerShell指令技巧）。
+
+---
+
+**2026-09-04 下午補充：真正根因確診——Windows Update自動把已解除安裝的Nahimic驅動裝回去**
+
+教練回報「沒開幾個網站記憶體就65%」，重新排查發現：這台機器當天下午3:42才剛開機，開機僅44分鐘Nonpaged Pool就已飆到10.1GB，比先前任何一次洩漏速度都快。查`Get-PnpDevice`/`Win32_SystemDriver`確認Nahimic兩支驅動(NahimicBTLink/Nahimic_Mirroring)當下仍是Running/OK狀態——**並未真正移除**。
+
+進一步查`Microsoft-Windows-Kernel-PnP/Configuration`事件記錄+`Microsoft-Windows-Servicing`記錄，抓到同一天完整時間軸：15:09裝上→15:13被解除安裝→**15:42開機那一刻自動裝回來**，事件記錄明確寫著「符合Windows更新更新ID 61ec07d9-d2a3-4531-9b0b-b8a62718311e」。結論：Nahimic驅動已被Windows Update登記為這張內建Realtek音效卡(INTELAUDIO\FUNC_01&VEN_10EC&DEV_0257)的驅動更新項目，**每次裝置管理員解除安裝之後，只要重開機/裝置重新列舉，Windows Update就會自動重裝**。這才是先前「重開機驗證有效但2小時內更快復發」的真正機制——不是解除安裝沒生效，是Windows主動裝回去的。
+
+**正確解法（比單純裝置管理員解除安裝多一步）**：這台是Windows 11專業工作站版，需先用`gpedit.msc`（電腦設定→系統管理範本→Windows元件→Windows Update）啟用「不要在Windows品質更新中包含驅動程式」，封鎖Windows Update推送驅動更新的管道，**再**重開機+裝置管理員解除安裝3個Nahimic裝置（勾選刪除驅動程式軟體），這樣才能真正斷根。此為系統設定變更，屬於AI不可自主執行的類別，已交由教練親自操作，待教練完成後需再次查Nonpaged Pool確認是否維持正常。
