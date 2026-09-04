@@ -653,6 +653,55 @@ try:
 except Exception:
     pass
 
+# ════════════════════════════════════════════════
+# L. 新網站上線但沒收錄進coach888作品一覽（擋）—— 2026-09-04教練親定
+#    起因：tainan-shangquan網站上線後漏放coach888，教練回報「怎麼我看不到」
+#    才發現，這是v179「7新站+1後台工具全漏」之後同款坑第二次發作。
+#    教練原話：「請寫入SOP新的網頁做好一律收錄，不要再讓我提醒」——
+#    純文字SOP靠AI自己記得會再忘第三次，改成deterministic check：
+#    只要這次對話執行過 `gh repo create ... --public`（=新公開網站上線的
+#    唯一入口動作），就檢查本機coach888/index.html有沒有提到這個repo名稱，
+#    沒有就擋下 Stop，逼自己補完才能收工。
+# ════════════════════════════════════════════════
+NEW_PUBLIC_REPOS = []
+for evt in EVENTS[-300:]:
+    if not isinstance(evt, dict) or evt.get("type") != "assistant":
+        continue
+    for c in _content_list(evt):
+        if not isinstance(c, dict) or c.get("type") != "tool_use" or c.get("name") != "Bash":
+            continue
+        command = str((c.get("input") or {}).get("command", ""))
+        for m in re.finditer(r"gh\s+repo\s+create\s+[\w.-]+/([\w.-]+)[^\n&|;]*--public", command):
+            name = m.group(1)
+            if name.lower() not in ("coach888",) and name not in NEW_PUBLIC_REPOS:
+                NEW_PUBLIC_REPOS.append(name)
+
+if NEW_PUBLIC_REPOS:
+    try:
+        with open(os.path.join(HOME, "github_repos", "coach888", "index.html"), encoding="utf-8") as f:
+            COACH888_HTML = f.read()
+    except Exception:
+        COACH888_HTML = None
+    if COACH888_HTML is not None:
+        missing_repos = [r for r in NEW_PUBLIC_REPOS if r not in COACH888_HTML]
+        if missing_repos:
+            MESSAGES.append(
+                "\n🔴🔒 coach888作品一覽收錄鎖（deterministic check，2026-09-04教練親定）\n" + BAR + "\n"
+                "這次對話用 `gh repo create ... --public` 建立了新網站repo，\n"
+                "但 ~/github_repos/coach888/index.html 裡查不到這個名字：\n" +
+                "".join("  • %s\n" % r for r in missing_repos) +
+                "\n教練原話：「請寫入SOP新的網頁做好一律收錄，不要再讓我提醒」。\n"
+                "（v179才漏過7新站+1後台工具，這是同款坑第二次發作）\n\n"
+                "✅ 立刻執行，收工前不能跳過：\n"
+                "  1. 打開 ~/github_repos/coach888/index.html，選一個最貼切的分類\n"
+                "     （通常是「大樹常用」，新項目一律放該分類第一項）\n"
+                "  2. 加入這個新網站的連結+名稱，其餘項目num自動+1\n"
+                "  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效\n"
+                "  4. 如果這個repo其實不是要給教練/會員看的網站（例如純備份/工具型\n"
+                "     repo），下次建立時改用 `gh repo create ... --private`，這條鎖\n"
+                "     只認 --public，不會誤攔私有備份repo\n" + BAR + "\n")
+            BLOCK = True
+
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
 # ────────────────────────────────────────────────
