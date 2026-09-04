@@ -1,45 +1,19 @@
 {
-  "cycle": 767,
-  "cumulativeGreen": 131,
-  "lastCoachMessageAt": "2026-09-04T14:12:01+08:00",
-  "coachSilentSince": "2026-09-04T14:12:01+08:00",
-  "coachSilentHours": 0.092,
-  "cron": {
-    "activeJobs": 25,
-    "healthcheckLastStatus": "ok",
-    "healthcheckConsecutiveErrors": 0,
-    "consecutiveErrorsAtLeast3": 0,
-    "timeoutRisk": 0,
-    "authErrors": 0,
-    "nonBlockingErrors": [
-      {
-        "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
-        "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
-        "status": "error",
-        "consecutiveErrors": 1,
-        "lastError": "cron: job interrupted by gateway restart",
-        "lastRunAtMs": 1788472800050
-      }
-    ]
+  "cycle": 768,
+  "cumulativeGreen": 132,
+  "lastCheckAt": "2026-09-04T17:12:00+08:00",
+  "coachSilentHours": 0.1,
+  "cronState": {
+    "enabledJobs": 1,
+    "consecutiveErrors": 0,
+    "lastRunStatus": "ok"
   },
-  "heartbeatTodos": 0,
-  "telegramProbe": {
-    "ok": true,
-    "bot": "openclaw_macbook4_bot",
-    "chat": "6124913915"
-  },
-  "v4": {
-    "gate1_currentFailure": false,
-    "gate2_providerOverloadPersistent": false,
-    "gate3_impact": false,
+  "v4ThreeGates": {
+    "gate1_stillBroken": false,
+    "gate2_providerOverload": false,
+    "gate3_affectsWork": false,
     "announce": false
   },
-  "updatedAt": "2026-09-04T14:17:32+08:00",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-04T17:06:55+08:00",
-    "coachSilentHours": 0.1
-  },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-04T17:12:07.209201+08:00"
-  }
+  "tgProbe": "ok",
+  "envCheck": "ok"
 }
