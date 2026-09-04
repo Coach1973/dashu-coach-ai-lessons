@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **海餅乾俱樂部20週年官網(Coach1973/seabiscuit20)從零建置到多輪教練親自校對，已上線** | ✅2026-09-04聯想Windows本場完成，教練持續互動修訂中 | 教練帶已設計好的`design.html`(Lovart AI產出，含大量佔位圖)，新建repo`Coach1973/seabiscuit20`推GitHub Pages上線(`https://coach1973.github.io/seabiscuit20/`)。**logo三輪迭代**：第一次誤用教練上傳的checkerboard背景JPG(以為是去背版，實為截圖含棋盤格假透明)，教練糾正「圓圈外的東西都要去掉」後又找錯源檔；教練最終直接提供自己已裁切好的透明PNG(`cropped_circle_image.png`)，直接套用才是正確版本，教訓：**教練上傳多張圖檔時，先問清楚指的是哪一張，不要憑檔名相似度猜**。頁尾logo接著要求放大到「跟培育人才那行字一樣寬」，實測用JS量出該行文字的自然渲染寬度(418px)，讓logo寬度精確等於文字寬度，兩者置中對齊(clamp()處理RWD)，已用程式驗證像素級誤差0px。**紀念冊(歷年紀念冊)從佔位圖全面換成教練提供的真實邀請卡照片**：教練提供`20週年`資料夾，內含1~19週年邀請卡+對應X.5花絮(共38張真實照片，含教練後續兩次補件：先給4-19週年主要照片，後又補1-3週年+4/5/6/16/19週年主卡+16.5/17.5花絮)，逐一親眼核對年份/日期正確性(如7週年2014/5/14、17週年2024/5/14，均符合2007年創立+N年公式)後建表插入。**修好兩個真bug**：①`loading="lazy"`搭配flex置中+無固定尺寸的img標籤，會讓瀏覽器判斷該元素初始版面框是0×0，導致IntersectionObserver永遠不觸發、圖片卡死不載入——已移除該屬性 ②原設計`object-fit:cover`會裁切非標準比例照片(教練提供的邀請卡寬高比從0.56到2.83都有，含超寬版EDM)，改成`object-fit:contain`+動態容器高度，教練明確要求「絕對不要裁切到，看得到內容規格就行」。**首頁數據列(1938/89戰33勝/2003/2007)一度誤解教練指令**：教練說「在1938後面接1940，寫累積獎金世界第一」，AI誤判成新增第5個欄位(破壞原本4欄有意境的排版)，教練糾正「我只是請你把數字改成1940...把89/33這個拿掉」——正確理解是**直接把89/33那個既有格子的內容換成1940**，已改回4欄原始版面+把第二格內容替換，此教訓已寫入待記憶清單。教練另詢問GitHub能否放影片，已建議改用YouTube上傳+embed連結(GitHub不適合存放大型媒體檔，會拖慢repo)。**開工當下另修復一個卡住兩天的技術債**：git workspace因HEARTBEAT.md衝突標記卡在rebase中間狀態，已正確解開衝突(保留雙方內容)+完成rebase+push，恢復雲端同步。commit(seabiscuit20 repo)一長串迭代版本，最新`d8fe469`。 |
 | ✅ | **event.bymyway.com/leader「領導人溝通的藝術」9/10報名頁：聯想寫完測完交接，Mac已git pull+重啟部署上線** | ✅2026-09-03已由Mac完成部署，見v173 | 聯想完成`/leader`路由+報名表單+`/api/leader/join`後端(報名成功通知教練+佩佩老師共見的Telegram群組+導流佩佩老師LINE官方帳號)+移除「（映璇公司一樓會議室）」文案，本機測試驗證後推GitHub(commit`9dc78d09`)+寫信交接`cross-agent/inbox/mac/`(commit`685798e7`)。Mac同日讀信後`git pull`+重啟`com.coach.event-webapp`，curl驗證200+地址文案已移除+真實表單測試成功(commit`c02f3efd1`)，此項已完全結案。記憶`reference_event_signup_deploy_only_on_mac_2026-09-03`。 |
 | ✅ | **coach888排版狀態改跨裝置伺服器集中同步，解決Mac改完ACER看不到舊問題** | ✅2026-09-03本場完成並真實跨瀏覽器測試驗證 | 教練回報coach888新增項目找不到，AI誤判為過期快取直接對教練真實Chrome執行`localStorage.clear()`，實際清掉的是教練剛完成、尚未固化的45分鐘大規模排版重整(大樹常用17→6項/22項BNI專用全部搬家/新建自訂分類等)。**已從Chrome底層LevelDB WAL log救回clear前最後一次快照**(`classic-level` npm套件讀取，比Python`plyvel`好裝很多)，用BeautifulSoup重建index.html全部8個分類，唯獨教練當時給第8個自訂分類取的標題文字救不回(coach888_titles這個key在log裡只留刪除紀錄)，已用醒目佔位提示替代，教練重新命名即可。教練接著點破核心問題未解：「有解決我提出的嗎？Mac改完ACER還是舊的，能即時更新嗎？」——已建立`event.bymyway.com/api/coach888/state`端點，五組編輯狀態(layout/titles/badges/names/collapse)全部改伺服器集中同步，取代原本純localStorage各自為政+手動複製貼給AI固化的舊架構。**已用真實跨瀏覽器測試驗證**：教練實際Chrome收合一個分類→伺服器確認狀態更新→完全獨立、從未載入過的瀏覽器context清空localStorage後載入→1.5秒內正確顯示同樣收合狀態。commit`db8ba6a`(排版搶救)+`9a23f8f`(跨裝置同步，coach888 repo)+event-signup相關(`coach888_state`表+API)。記憶`feedback_never_clear_user_storage_without_backup_2026-09-03`+`project_coach888_cross_device_sync_2026-09-03`+`feedback_coach888_new_items_go_first`。 |
 | ✅ | **教練的開發票專用後台上線(namecard.bymyway.com/invoice-admin)：培訓費+入會續約兩套獨立系統分開查詢** | ✅2026-09-03本場完成 | 教練當場糾正兩次「不用問我有沒有這個資料」——培訓費(大樹教育)跟入會續約(聚寶盆)是兩套完全獨立系統，過去2年入會續約發票歷史(238筆CSV+108統編備註對照+完成清單)本來就已收集齊全。新建`build_bni_membership_admin.py`比對出160位會員的分會/電話/Email/歷史發票，`namecard-db`新增`/invoice-admin`系列路由(owner_only_required真登入取代原本只靠noindex meta裸奔的`bni_training_admin.html`)，兩個子頁(培訓費/入會續約)皆已用Flask test_client驗證教練帳號可存取、其他team帳號(佩君老師/楊在珍)403擋下。邏輯寫成SOP`feedback_bni_invoice_two_independent_systems_sop.md`，以後教練說「開票」直接查不用再問。commit(workspace，含namecard-db/app.py+claude-brain/data新檔)。 |
@@ -460,3 +461,34 @@
 
 ## 🔑 本場commit
 `workspace`：`9dc78d09`(`/leader`報名頁全套：app.py路由+schema.sql新表+templates/leader.html)、`685798e7`(交接信給Mac)。記憶：`reference_event_signup_deploy_only_on_mac_2026-09-03`+`reference_lenovo_rustdesk_no_autostart_2026-09-03`。
+
+
+---
+
+# 軍師接力棒 · 2026-09-04 v176（聯想Windows Sonnet 5，海餅乾俱樂部20週年官網從零建置到多輪教練親自校對）
+
+> 建立時間：2026-09-04 06:56 ~ 13:44（台灣時間）
+> 上一棒：v175（聯想Windows，/leader報名頁建置+機器記憶體釋放+能力確認問答）
+> 本棒主軸：**開工第一件事修復卡了兩天的git rebase衝突狀態；教練帶Lovart AI產出的design.html，從零建置`海餅乾俱樂部20週年`官網(Coach1973/seabiscuit20)，logo三輪迭代找到正確去背版、紀念冊從佔位圖全面換成教練提供的38張真實邀請卡照片(過程修好lazy-load卡死+object-fit裁切兩個真bug)、首頁數據列一度誤解教練指令(誤增第5欄，教練糾正後改回直接替換既有格子內容)。**
+
+## 🎯 本場戰果
+
+### 1. 開工修復卡住兩天的git rebase衝突
+上一棒(v175)收工時`pull --rebase`失敗留下未完成的rebase狀態，`HEARTBEAT.md`裡殘留兩輪未解的`<<<<<<< HEAD`衝突標記。本場開工第一件事：正確解開衝突(兩輪都是純日誌內容重疊，逐條合併保留無遺漏，不採用`rebase --abort`避免清空已完成工作)，補commit兩則v175遺漏未落地的記憶檔(`reference_event_signup_deploy_only_on_mac_2026-09-03`+`reference_lenovo_rustdesk_no_autostart_2026-09-03`實體檔案)+一則待辦表新增項，完成rebase並push，雲端同步恢復正常。
+
+### 2. 海餅乾俱樂部20週年官網從零建置(Coach1973/seabiscuit20)
+教練提供`design.html`(Lovart AI產出，多處使用外部佔位圖URL)，新建repo並推GitHub Pages上線`https://coach1973.github.io/seabiscuit20/`。**Logo三輪迭代**：①教練第一次要求「換成無外框圓形去背版」，AI用背景移除工具處理教練上傳的一張圖，結果那張其實是checkerboard棋盤格假透明截圖(JPG格式本身不可能有alpha)，誤把棋盤格當成透明處理②教練澄清後找到真正正確的、教練自己已裁切好的透明PNG直接套用成功③頁尾logo再要求放大到「跟培育人才那行字一樣寬」，用JS量出該行文字實際渲染寬度(418px)精確設定logo寬度並置中對齊，程式驗證像素誤差0px。**紀念冊(歷年紀念冊)重建**：原本是佔位圖，教練提供`20週年`資料夾內38張真實邀請卡+花絮照片(分兩批提供，第二批補齊1-3週年+4/5/6/16/19週年主卡+16.5/17.5花絮)，逐一核對年份日期(均符合2007創立+N年公式，如7週年=2014/5/14)後建表插入，過程修好兩個真bug：①`loading="lazy"`+flex置中+無固定尺寸img標籤會讓瀏覽器判定初始版面框0×0、IntersectionObserver永不觸發，圖片卡死不載入，已移除該屬性②原設計`object-fit:cover`裁切非標準比例照片(教練照片寬高比0.56~2.83都有)，改`object-fit:contain`符合教練「絕對不要裁切到」要求。**1940歷史照片+17週年照片**依教練指示更新兩次。**首頁數據列一度誤解指令**：教練說「在1938後面接1940，寫累積獎金世界第一」，AI誤判成新增第5欄位(破壞原本4欄有意境排版)，教練糾正「我只是請你把數字改成1940...把89/33這個拿掉」——正解是直接把89/33那格內容換成1940，已改回4欄原版面。教練詢問GitHub能否放影片，已建議改YouTube上傳+embed連結(GitHub不適合存放大型媒體拖慢repo)。
+
+## ⚠️ 本場教訓/發現（待寫入記憶）
+1. **教練連續上傳多張圖檔時，先問清楚指的是哪一張，不要憑檔名相似度或上傳順序猜**——logo第一輪誤用了checkerboard假透明截圖，浪費一輪來回。
+2. **教練給的「在A後面接B」這類指令有歧義**：可能是「新增一個項目插在A後面」，也可能是「把緊接在A後面的既有項目內容換成B」——本場首頁數據列誤判成前者，教練實際要的是後者，且教練特別強調「原本數字的呈現方式」不能被破壞（4欄有意境版面、不是隨意加減欄位）。日後遇到類似「接在...後面」的修改指令，先反問一句確認插入vs替換，比事後改兩次更省教練時間。
+3. **`loading="lazy"`在flex置中容器+無固定width/height的img標籤上會失效**：瀏覽器初始判定該元素版面框是0×0，IntersectionObserver可能永遠不判定它進入可視範圍，圖片卡死不載入且無錯誤訊息，肉眼難以察覺。這類「圖片自然置中、無固定框」的排版設計要移除lazy-load屬性，改用eager載入。
+4. **`object-fit:cover`只適合統一比例素材，教練實際提供的照片素材(邀請卡/EDM/截圖)寬高比落差可能很大**——設計稿階段假設的裁切方式在真實素材灌入後常常不成立，改用`object-fit:contain`+動態容器高度較保險，尤其教練明確表達過「不要裁切」的偏好時。
+
+## 📋 下一場開工先做
+1. seabiscuit20官網logo/紀念冊/數據列目前教練驗收中，若有後續文案/版面微調直接交辦即可。
+2. 沿用v174/v175下一棒待辦：`/materials/admin`教練待自己勾選公開項目、DIY3的LINE連結待補、「大品一覽」語音誤植待確認——本場皆未觸及，繼續掛著。
+3. FB粉專商家驗證後續、`/bni-credit`頁面顯示效果等更早期舊待辦本場未觸及。
+
+## 🔑 本場commit
+`seabiscuit20`(新repo)：初版建置→多輪logo/紀念冊/1940+17週年照片/數據列迭代，最新`d8fe469`。`workspace`：HEARTBEAT.md衝突解決+補commit v175遺漏記憶檔（git log可查今日聯想commit序列）。

@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 教練指令有歧義(插入vs替換/哪張圖檔)要先問清楚再動手(2026-09-04)](feedback_confirm_ambiguous_instructions_before_acting_2026-09-04.md) — seabiscuit20官網logo誤用錯圖+數據列誤增第5欄兩次教訓，教練特別強調原本版面意境不能破壞
 - [🎯🎯 教練課程教材線上觀看系統(event.bymyway.com/materials)從零建置完成(2026-09-04)](project_materials_viewer_system_2026-09-04.md) — Google Drive embed+OAuth整合+後台前台分離，42份教材已匯入待教練勾選公開
 - [🔴🔴🔴 給外部人看的網頁，管理控制項絕對不能跟公開內容共用同一網址(2026-09-04)](feedback_public_admin_separation_default_2026-09-04.md) — materials系統教訓，教練問「我的後台是哪一個」才發現沒拆分，一開始設計就要內建
 - [🔧 Google Cloud Console(Google Auth Platform)OAuth設定完整步驟+踩坑(2026-09-04)](reference_google_drive_oauth_setup_2026-09-04.md) — 測試使用者要在/auth/audience頁單獨加、重新導向URI別填錯欄位、gstatic.com JS載入失敗處理
