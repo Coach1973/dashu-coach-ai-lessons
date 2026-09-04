@@ -22,7 +22,7 @@
 | ✅ | **9/5+9/16兩場活動FB粉專行銷貼文：兩場皆已發滿5個粉專，全數用permalink_url驗證上線** | ✅2026-09-02本場完成 | 教練交辦寫兩場活動文案：9/5(KR養生廚房「零基礎學AI，起步比較快」)寫**返場款**(查archive確認7/4已辦過同場地同主題一次，返場文字屬實非編造)；9/16(高雄場「當古典音樂遇到AI科技」)寫**降門檻款**(強調流水席隨到隨坐)。coach888的ai-art連結同時改成`event.bymyway.com/ai-art`取代舊版GitHub Pages，commit`14e4036`(過程與Mac的批量搬移功能merge，已妥善解決)。教練分兩次自製活動圖(`D:\Users\Downloads\export (13).jpg`＝9/5、`export (14).jpg`＝9/16)，軍師用Graph API(`fb_automation/page_tokens_2026-09-01.json`)以`/{page-id}/photos`帶`source`+`caption`發布。**9/5**：先發K R養生廚房單一粉專讓教練驗收效果，教練確認「效果不錯」後追加4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心，其中後兩個是教練口語化名稱、軍師對應到清單最接近的粉專名稱後先執行再確認，教練回覆「對的」)。**9/16**：教練問「KR養生廚房算不算」，軍師指出該粉專是9/5台南場地專屬、跟9/16高雄場無直接關係先確認，教練回覆「都發」，5個粉專(含KR養生廚房)全數發布。**兩場合計10則貼文皆已用`permalink_url`欄位查證真實上線**，非僅API回傳成功假設。教練同場詢問發文token消耗，已說明：發文動作本身(curl呼叫API)幾乎不耗token(等同執行一行指令非AI生成)，真正耗token的是讀圖確認內容+對話討論文字，跟粉專數量無關。 |
 | ✅ | **教練待辦提醒系統(event.bymyway.com/todo)：Mac已部署上線，提醒機制改事件觸發不輪詢** | ✅2026-09-02 v167完成 | v165聯想軍師完成程式碼(`todos`表/4個路由/`todo.html`/`todo_reminder_check.py`)+coach888連結，commit`57d53268`。v166讀信暫緩，v167教練說「動手做todo系統吧」後部署：①`git pull`②重啟`com.coach.event-webapp`後`todos`表自動建立③真實HTTP測試新增/切換完成/刪除全部成功。**部署完成後Stop hook守則#07攔下最初的每15分鐘輪詢cron設計**，查證確認可以真正事件觸發：remind_at是已知未來時間點，改成新增待辦時用`openclaw cron create --at`當場排一個精確時刻的一次性cron（只查這一筆待辦），完成/刪除待辦時同步取消尚未觸發的cron，不再需要每隔幾分鐘重複掃描整張表。過程修好一個真bug：launchd服務預設PATH找不到openclaw(homebrew)跟node(~/.local/bin)，subprocess呼叫需額外傳入補齊PATH的`env`參數。已用真實流程完整驗證：一次性cron精確觸發+標記完成正確取消+真的等到排定時間觸發、Telegram收到通知、reminder_sent寫回、cron自動deleteAfterRun清除。已回信`inbox/lenovo/`+原信歸檔`outbox/2026-09/`。教練尚未輸入任何真實待辦事項，正式站現為空清單。commit`58b3f0e46`+`527e907ce`（部署）→`0f241ce4f`（改事件觸發）。記憶`reference_launchd_subprocess_missing_path_2026-09-02`。 |
 | ✅ | **coach888作品總覽表：新增「BNI最近常用」置頂區+補chapters.bymyway.com/guests與/training+排版改2欄流式** | ✅2026-09-01聯想Windows完成 | 教練口述把BNI專用第1項+13~20項獨立成新區「BNI最近常用」放最上面，對外公開/不公開/保留移到最後。教練接著回報`chapters.bymyway.com/guests`(來賓總覽)不在列表裡+排版壓縮凌亂——補上該路由+同批漏掉的`/training`(培訓總覽)共11項，並把手動配對row/col排版改成CSS`column-count:2`流式排版(8個分區自然往下流動填滿兩欄，不再手動配對造成長短不一的視覺落差)。過程中一度用regex片段替換HTML結構導致div不平衡，改用完整重寫檔案收尾，div開合307/307配平+70項逐筆核對無漏無重複。commit`c65712d`→`a8e93cd`。 |
-| 🎯🎯 | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫已上線，真鑽已補資料待Hermes部署，真貴(籌備會)待Hermes部署** | ⏳等Hermes回信 | 真鑫`https://zhenxin.bymyway.com/`已正式上線。真鑽(`Coach1973/zhenzuan-guests`，不是籌備會)已由軍師從官方報表整理出20週真實資料(2026-04-14~08-25)寫進委派信(workspace commit`8fb8c0989`)，已發給Hermes貼上+順手修編碼bug+部署`zhenzuan.bymyway.com`。真貴(`Coach1973/zhengui-guests`，才是籌備會，資料空)只需Hermes部署`zhengui.bymyway.com`，不用補資料。過程踩了試金石案例68/69(v161)，詳見v162。 |
+| ✅ | **BNI大台南南區各分會「來賓戰情儀表板」：真鑫/真鑽/真貴三個都已正式上線** | ✅2026-09-04查證更正，三個皆已部署 | 真鑫`https://zhenxin.bymyway.com/`、真鑽`https://real-diamonds.bymyway.com/`、真貴`https://real-wealth.bymyway.com/`皆curl驗證HTTP 200。**2026-09-04教練當場糾正**：手上原紀錄的網址`zhenzuan.bymyway.com`/`zhengui.bymyway.com`是命名錯誤的舊網址（早已改成跟`chapters.bymyway.com`一致的英文slug命名`real-diamonds`/`real-wealth`），全面盤點報告誤用舊網址curl測出「還沒部署」的錯誤結論，教練指出「那都已經處理好了」才發現查證方法錯誤（查launchd plist+cloudflared config才找到真正網址），非真的未部署，此列狀態更正為結案。 |
 | 🎯🎯 | **BNI-Training來賓排行榜(guests.html)+培訓總覽(index.html)：三分會PALMS官方資料+全區排名+單分會排名皆已上線** | ✅2026-09-01 v162完成 | `chapters.bymyway.com/guests`+`chapters.bymyway.com/training`(直接讀BNI-Training活repo渲染)。資料源改用PALMS摘要報表(比「地區-查看來賓」明細報表準確，教練提供20+份不同時間窗快照)，月數標籤以各分會實際成立月封頂。教練驗收關鍵數字：真鑽104個月郭政輝303/康文彬254皆對上。過程三輪重做+chapters.bymyway.com按鈕位置一次做錯，詳見v162完整教訓。 |
 | ✅ | **BNI大台南南區「來賓公開查詢」系統上線** | ✅2026-09-01本場完成 | `https://coach1973.github.io/BNI-Training/guests.html`，Hermes建置，commit`9cfebbb`。3718筆BNI Connect官方報表，門檻比照培訓總覽(固定按鈕+自訂輸入月數)，隱私原則對齊只顯示邀請人/分會/日期。詳見v161。 |
 | 🎯 | **ai-art（9/16高雄場「當古典音樂遇到AI科技」）動態官網完整上線** | ✅2026-08-31本場完成，教練實測驗證通過 | 教練原交辦Hermes，3.5小時零進度後軍師直接接手。`event.bymyway.com/ai-art/`已上線：付款資訊(823將來銀行/8866-0901-056-777)、師資介紹(4位老師資料同步自mentor100，點頭像看完整簡介)、報名表單含票種選擇+送出後導流大樹教育官方LINE(`lin.ee/o5pODV8`)追蹤付款。commit`8627f4f`+`ba0f025`(ai-art repo)、`287e06d6d`+`bc2e73199`(workspace)，詳見v156。 |
@@ -370,47 +370,10 @@
 
 ---
 
-
-# 軍師接力棒 · 2026-09-04 v178（聯想Windows Sonnet 5，海餅乾俱樂部20週年官網六項新功能：時光足跡/學員見證/語錄/完整守則/頁尾快速連結）
-
-> 建立時間：2026-09-04 13:49 ~ 16:16（台灣時間）
-> 上一棒：v177（聯想Windows，記憶體98%洩漏安全排查，與本棒為同機不同任務的接續session）
-> 本棒主軸：**教練密集交辦seabiscuit20(海餅乾俱樂部20週年官網)六項新功能，全部本機測試通過才推上線，過程含一次教練糾正(語錄只搬4則太少)+一次AI自己抓到的div平衡bug+一次AI主動查證修正的搜尋條件疏漏(webp副檔名)。**
-
-## 🎯 本場戰果
-
-### 1. 「時光足跡」照片牆頁面，180+1張歷史照片
-教練提供`D:\Users\Downloads\20週年\時光足跡`資料夾(180張FB歷史合照)，新增導覽項目+CSS多欄masonry照片牆+獨立lightbox(不影響既有歷年紀念冊索引)。教練後續貼一張活動海報要求加進去，第一次搜尋`D:\Users\Downloads`用`find`只比對jpg/jpeg/png三種副檔名沒找到，教練澄清「就在下載資料夾」後才發現檔案是`.webp`格式被搜尋條件篩掉——**已寫入試金石案例70**，往後搜圖片預設涵蓋webp/gif。commit`ef2d945`(180張)+`caba5e2`(補第181張)。
-
-### 2. 「學員見證」獨立頁面，20則真實見證輪播
-從`bymyway-website`(大樹教育官網)移植20則真實學員見證(比照原站左右輪播+文字頁碼)。**教練事後發現找不到入口**——原本我把它放在「俱樂部」頁裡沒開獨立導覽按鈕，教練糾正「沒有出現一個可以按的地方，那我們怎麼去找呢」，已移出獨立成專屬頁面+桌機/手機導覽都加了「見證」按鈕。commit`caba5e2`(初版放club頁)+`bd1e1d6`(移出獨立頁面)。
-
-### 3. 「語錄」照片牆頁面，30張海餅乾語錄卡
-教練提供`D:\Users\Downloads\20週年\海餅乾語錄`(30張已設計好的深藍金色語錄卡圖片)，判斷用途後直接用圖片(檔案小、已有品牌質感、轉文字反而增加風險)，仿電影海報輪播模式(單張淡入+左右箭頭+觸控滑動+5秒自動輪播)。commit`a9b4685`。
-
-### 4. 「智慧之言」語錄輪播從4則擴充為22則
-**教練糾正**：原有的「信念與守則」頁內建4則語錄太少，要求把大樹教育官網的「經典金句」全部22則搬過來(不是只搬照片)。已一字不差移植含分類標籤，補上對應英文翻譯維持雙語一致性，沿用既有單張輪播機制動態22個圓點導覽。**過程AI自己抓到一個bug**：第一次替換時漏了`.carousel-track`的閉合`</div>`，div計數974 open/973 close，本機測試前先跑計數腳本抓到後補上，才推正式站。commit`d53237c`。
-
-### 5. 「完整守則」發光連結+彈窗(文字版+守則卡圖片+2支YouTube影片)
-教練提供`守則.jpg`(團隊使命/三大信念/十大守則完整卡片)+兩支YouTube連結(9fAWItpusJU/PT7Ue8iQgIw，教練說明分別是「海餅乾15週年慶」「海餅乾守則」)，十大守則卡片列表下方新增CSS動畫(shimmer+glow)的「完整守則」連結，點擊彈出含教練提供原文+守則卡圖片+雙YouTube embed的彈窗。commit`546269f`。
-
-### 6. 全站頁尾新增三欄快速連結，多輪迭代排版
-比照教練提供的bymyway-website頁尾截圖(快速連結/熱門課程/聯繫方式三欄)，9個頁面(含新增的時光足跡/語錄/見證頁)頁尾統一加上：近期活動(大樹小講/AI微論壇台南9-22/AI轉念台南9-22晚上/AI微論壇台中/AI微論壇台南10-7~8/高雄音樂流水席)、聯繫方式(LINE/Facebook/乾淨世界頻道/電子信箱)、快速連結(官方網站)。**教練分四輪逐步補全**：①先建初版3欄(commit`c9f801c`) ②教練發現漏放9/22台南場，查證`/ai-talk`路由確認就是這場(commit`fbdc009`) ③教練追加乾淨世界頻道+要求logo在上/FB併入聯繫方式/快速連結移最後，**第一次用regex `.*?`非貪婪比對切錯div邊界搞壞頁面(974→1013 div不平衡)，立即用`git checkout`撤回重來，改用exact字串比對成功**(commit`3911737`) ④教練追加「AI轉念」9/22晚上場連結，因本機/記憶庫查無此名稱主動回報「查不到麻煩您給連結」，教練提供`ai-fit`網址後查證標題確認吻合才採用。
-
-## ⚠️ 本場教訓/發現（已寫入記憶）
-1. **搜尋教練提供的圖片檔案，副檔名清單至少要涵蓋`jpg/jpeg/png/webp/gif`**，WebP是現行瀏覽器/社群平台常見輸出格式。試金石案例70+記憶`reference_search_image_files_include_webp_2026-09-04`。
-2. **用Python做大範圍HTML文字替換時，寧可用exact字串`.replace()`配合`.count()`驗證比對數量，不要用regex的`.*?`非貪婪跨越巢狀`<div>`結構**——非貪婪會在第一個`</div>`就停止，切斷巢狀結構造成div不平衡，本場親身踩過一次並成功用`git checkout`乾淨復原重來，沒有汙染正式站(每次push前都會先跑`open div`/`close div`計數腳本驗證平衡才push，此次也是靠這個習慣攔下)。
-3. **教練分次追加需求是常態**(語錄從4則要求擴充到22則、頁尾連結分4輪逐步補全)，每次都先確認清楚具體缺什麼(如「AI轉念」查無資料時主動說明查過哪裡、請教練給連結而非瞎猜)，比一次到位更重要的是每輪都先驗證後上線，不要求一步到位。
-
-## 📋 下一場開工先做
-1. seabiscuit20六項新功能教練驗收中，若有後續文案/版面調整直接交辦即可，本棒commit序列完整可查。
-2. 沿用v174~v177下一棒待辦：`/materials/admin`教練待自己勾選公開項目、DIY3的LINE連結待補、「大品一覽」語音誤植待確認、v177記憶體洩漏是否已排除待確認。
-3. FB粉專商家驗證後續、`/bni-credit`頁面顯示效果等更早期舊待辦本場未觸及。
-
-## 🔑 本場commit
-`seabiscuit20`(獨立repo)：`ef2d945`→`caba5e2`→`a9b4685`→`546269f`→`d53237c`→`bd1e1d6`→`c9f801c`→`fbdc009`→`3911737`，共9筆，逐筆本機測試+div平衡驗證+GitHub Pages部署確認後才推。`.claude/projects`記憶庫：試金石案例70(`0de2971d`)+本篇接力棒v178+記憶新增。
+> 📦 v178完整內容已封存：`handoff_archive/handoff_v178_archived_2026-09-04.md`（聯想Windows，海餅乾俱樂部20週年官網六項新功能：時光足跡/學員見證/語錄/完整守則/頁尾快速連結）
 
 ---
+
 
 # 軍師接力棒 · 2026-09-04 v179（Mac終端機 Sonnet 5，seabiscuit20部署四項調整+coach888作品一覽補漏+兩輪真bug修復）
 
@@ -445,3 +408,37 @@
 
 ## 🔑 本場commit
 `seabiscuit20`：`b122a7b`。`ai-fit`：`0bcba27`。`diy-studio-workshop`：`daed332`(LINE連結)。`coach888`：`752d71c`(補漏8項)、`dd8e4eb`(分類持久化)、`2cd3a31`(拖曳排序+移除編號)。`workspace`：`9fe942ef9`(seabiscuit20路由)、`963050103`+`f81e14678`(伺服器白名單)、若干心跳/健康檢查常態同步commit。記憶：`feedback_never_expose_local_preview_to_coach_2026-09-04`+`reference_coach888_sync_key_whitelist_pattern_2026-09-04`。
+
+---
+
+# 軍師接力棒 · 2026-09-04 v180（Mac終端機 Sonnet 5，seabiscuit20媒體報導補齊20篇+全面盤點報告+新增「關於創辦人」頁面）
+
+> 建立時間：2026-09-04 19:23 ~ 22:08（台灣時間）
+> 上一棒：v179（Mac終端機，seabiscuit20部署四項調整+coach888作品一覽補漏+兩輪真bug修復）
+> 本棒主軸：**教練指出seabiscuit20媒體報導篇數不對，查證找到真正官方20篇來源(bigtree/speakers-2026)並補齊；教練委託「一天沒睡前」的全面盤點報告，跨43個repo技術掃描+待辦事項清查；教練交辦新增「關於創辦人」頁面，經過iframe架構查證+3輪教練回饋(頭像被切/間距太大)才定案，全數已推正式站。**
+
+## 🎯 本場戰果
+
+### 1. seabiscuit20「媒體報導」從14篇補齊為官方完整20篇
+教練說官網有20篇(4×5排版)但seabiscuit20只有14篇。查證發現真正的官方完整清單其實是`bigtree/speakers-2026/index.html`(8/9建立，非bymyway.com WordPress首頁)，seabiscuit20原本14篇有7篇不在這份官方清單內，缺了7篇官方有的。改用官方20篇清單覆蓋，實測4欄×20張=剛好5排，commit`55876db`。
+
+### 2. 全面盤點報告（教練委託「休息前」的通盤稽核）
+背景Agent掃描43個github_repos的git狀態(uncommitted/unpushed)，加上親自查證materials系統(42份教材已上傳但`visible`全部是0，一份都還沒公開)、`true-ai-team`repo從未設遠端(有遺失風險)。報告寫入`knowledges/2026-09-04_全面盤點報告_教練休息前委託.md`，commit`3772f6783`。**過程中一個查證失誤**：curl測`zhenzuan.bymyway.com`/`zhengui.bymyway.com`顯示DNS不解析，誤判「真鑽/真貴還沒部署」，教練糾正後查launchd/cloudflared config才發現真正網址早已改成`real-diamonds.bymyway.com`/`real-wealth.bymyway.com`(命名規則對齊chapters.bymyway.com)，兩個其實都已上線，已更正待辦表(見上方第一列)。
+
+### 3. 新增「關於創辦人」頁面，三輪迭代定案
+教練要求把bymyway.com「關於教練」內容原封不動搬到seabiscuit20，附截圖(用生命熱愛教育的演說家+三個身份標籤+創業歷程)。**查證繞了一大圈**：curl查了bymyway.com根目錄/`/about/`/`/coach/`/`/ai/`/`/old/`五個頁面全部搜不到內容(含用claude-in-chrome連教練真實Chrome查證)，教練連續澄清後才想起是iframe嵌入架構——`bymyway.com/coach/`頁面本身只是WordPress殼，真正內容用`<iframe>`嵌入`coach1973.github.io/bymyway-website/`(GitHub Pages)。找到後複製「about」+「timeline」兩個section(關於大樹教練介紹+1997~2025創業歷程17個節點)到seabiscuit20新增`#founder`頁面，三個身份標籤加超連結(俱樂部創辦人→自己首頁/BNI大台南南區執行董事→`chapters.bymyway.com`/AI百人導師計畫召集人→`mentor100.bymyway.com`)，commit`e54124d`。**教練驗收兩輪回饋**：①直式大頭照被當成寬版橫幅背景導致裁切放大變形，改用金色漸層背景取代，commit`540df63`②教練覺得標題橫幅到內文間距太大，乾脆整個拿掉hero橫幅，點進去直接顯示內容，commit`e0f8e28`。三次修改都本機div平衡驗證+正式站curl確認+`open -a "Google Chrome"`開給教練看過才算完成。
+
+## ⚠️ 本場教訓/發現（已寫入記憶+試金石）
+1. **bymyway.com找不到內容時要先查`<iframe`標籤，不能只curl文字搜尋**——這個網站至少`/ai-go/`、`/coach/`兩頁是iframe嵌入GitHub Pages，父頁面原始碼裡本來就不會有內容文字。試金石案例71+記憶`feedback_check_iframe_before_text_search_2026-09-04`。教練原話：「這就是你不去查歷史資料、瞎猜的代價...把它汲取教訓，寫在那個世界史檔案裡面」。
+2. **查證「網址是否已部署」時，若curl DNS不解析，先確認是不是網址本身命名已變更（查launchd plist/cloudflared config找真實網址），不要直接下結論「還沒做」**——真鑽/真貴的真實網址跟盤點報告裡沿用的舊記錄不一致，教練親口指出「那都已經處理好了」才發現查證方法有漏洞。
+3. **教練當天稍早才讀過的記憶檔內容，動手前要主動連結回來用**——`feedback_verify_online_before_answering.md`本場稍早的盤點報告就引用過，裡面已經寫明`/coach/`嵌入`bymyway-website`，但新任務時沒有回頭連結這條線索，繞了一大圈才用翻舊對話逐字稿的方式重新找到同一個答案。
+
+## 📋 下一場開工先做
+1. **coach888「已同步」狀態指示器 vs 手動上傳按鈕**，教練仍未回覆選哪個，開工先問。（v179留下，本場未觸及）
+2. 「後台系統帳密集中」任務存放位置，教練仍未回覆。（v179留下，本場未觸及）
+3. **`true-ai-team`repo要不要補上GitHub遠端**，本場盤點報告發現的新風險項，教練尚未回覆是否還要這個專案。
+4. materials系統42份教材待教練自行去`/materials/admin`勾選公開，教練說「現在還顧不上」，非阻塞待辦。
+5. bigtree黑金改版的草稿殘留檔案，盤點報告建議清理歸檔，教練尚未回覆要不要動手。
+
+## 🔑 本場commit
+`seabiscuit20`：`55876db`(媒體報導補齊20篇)、`e54124d`(新增關於創辦人頁面)、`540df63`(修復大頭照裁切)、`e0f8e28`(拿掉hero橫幅)。`workspace`：`3772f6783`(全面盤點報告)。記憶庫(`.claude/projects`)：`24e0d84ac`(補MEMORY.md索引)、`d55f7931f`+`3818d5895`(試金石案例71+記憶新增)。記憶：`feedback_check_iframe_before_text_search_2026-09-04`。
