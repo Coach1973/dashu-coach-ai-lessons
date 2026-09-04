@@ -1,1 +1,5 @@
-{"coachLastMessage":"2026-09-04T05:11:03+08:00","coachSilentSince":"2026-09-04T05:11:03+08:00","coachSilentHours":0.0,"source":"telegram_api_via_sync_coach_last_message.sh","checkedAt":"2026-09-04T05:12:20+08:00"}
+{
+  "coachSilentSince": "2026-09-04T17:06:55+08:00",
+  "coachSilentHours": 0.1,
+  "updatedAt": "2026-09-04T17:12:00+08:00"
+}

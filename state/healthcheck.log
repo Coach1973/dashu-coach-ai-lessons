@@ -72,3 +72,6 @@ cycle=725 2026-09-02 17:13:50 status=ok silentH=0.2 (since17:02:16) cumGreen=90 
 [2026-09-03 21:13:07 +0800] cycle=755 ✅ 安靜通過 cumulativeGreen=118 silentH=1.5 cron=1/1/ok CE>=3=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=27/Repo2=22(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce
 2026-09-03T22:00:25+08:00 cycle=756 安靜通過。cumulativeGreen=119 (118→119)。教練沉默 2.3h（週四夜晚正常）。25 enabled/0 CE/TG ok/環境全綠。v4.0 三關全 fail。
 [2026-09-03T22:14:26+08:00] cycle=757 ✅ 安靜通過 cumulativeGreen=120 silentH=2.5 cron=25/22/1 CE>=3=0 timeout=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=27/Repo2=25(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce
+[2026-09-04T12:12:05+08:00] cycle=765 ✅ 安靜通過 cumulativeGreen=128 silentH=0.0 cron=1/1/ok CE>=3=0 timeout=0 auth=0 tgProbe=ok(守則#19當下實測) SOUL×3齊(皆有棄用標記) Repo1=27/Repo2=14(<50警戒線) 無鎖定檔 v4.0三關全fail→不announce | 自動修復: backup_terminal push race condition（12b023ad5+979235704 卡本機，已 pull --rebase + push 修復到 e3afce536）
+[2026-09-04 13:13:39+0800] cycle=766 ✅ coachSilent=0.0h cron=1/1ok morning_digest_CE=1_gateway_restart(transient,autoretry_tomorrow) verdict=silent_pass cumulative_green=129
+2026-09-04 14:12 cycle=767 | sync=0 | cron=25 | CE3=0 | HEARTBEAT_TODO=0 | TG=ok | quiet

@@ -1,63 +1,45 @@
 {
-  "lastChecks": {
-    "cron": 1788444866,
-    "telegramChannelProbe": 1788444866,
-    "envHealth": 1788444866,
-    "coach_silence_sync": "2026-09-03T22:14:26+08:00"
+  "cycle": 767,
+  "cumulativeGreen": 131,
+  "lastCoachMessageAt": "2026-09-04T14:12:01+08:00",
+  "coachSilentSince": "2026-09-04T14:12:01+08:00",
+  "coachSilentHours": 0.092,
+  "cron": {
+    "activeJobs": 25,
+    "healthcheckLastStatus": "ok",
+    "healthcheckConsecutiveErrors": 0,
+    "consecutiveErrorsAtLeast3": 0,
+    "timeoutRisk": 0,
+    "authErrors": 0,
+    "nonBlockingErrors": [
+      {
+        "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
+        "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
+        "status": "error",
+        "consecutiveErrors": 1,
+        "lastError": "cron: job interrupted by gateway restart",
+        "lastRunAtMs": 1788472800050
+      }
+    ]
   },
-  "lastCoachMessageAt": "2026-09-03T19:44:20+08:00",
-  "coachSilentSince": "2026-09-03T19:44:20+08:00",
-  "coachSilentHours": 2.5,
-  "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-03T22:14:26+08:00",
-  "cronState": {
-    "enabledJobs": 25,
-    "runningNow": 1,
-    "runningJob": "🦞 每小時任務健康檢查",
-    "lastRunStatus": "ok",
-    "consecutiveErrors": 0,
-    "consecutiveErrorsByJob": {
-      "46e67e2e-6332-4589-aae2-ee7e10dd7279": 0,
-      "37593697-df01-48dd-9a37-7ff239c5fa8f": 0,
-      "aa1ad73b-2a3a-4ea8-a98f-4284fe30f59e": 0,
-      "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1": 0,
-      "bbb7a348-59dc-41fd-879b-91b4d0522e18": 0,
-      "9c3fc55d-d0f4-462f-9eeb-631a3599a710": 0,
-      "7048432e-fd37-44ba-b6b7-d9d7d13ec23f": 0,
-      "b3f20f6c-e0eb-4d78-bd26-e36eb5c501e1": 0,
-      "ef88279b-bde2-41c8-b386-4c64d185bc39": 0,
-      "f487652d-0696-4b54-ac7f-7dd1a94cdb8c": 0,
-      "b73845c9-f653-4f9a-8869-0e2f2c0bd9b1": 0,
-      "001a9b16-1985-413b-8d3c-a4e885e552b6": 0,
-      "8211e054-366b-4102-b6f7-2c4b0ffc3933": 0,
-      "af137f9b-6f36-4907-94bc-d1cbf2dbc4d4": 0,
-      "28cd69d9-b911-4112-b4ca-5499cb7f5247": 0,
-      "b349ddd3-d519-45e8-b783-cfe5c956d5d3": 0,
-      "202d1f63-d4d5-4b66-a070-1e043bb0def1": 0,
-      "9ee405c0-c32f-4f29-a51e-10d252ab0665": 0,
-      "86388db7-f55d-4fde-899c-0a4e9262f7cd": 0,
-      "541f0c32-57c0-4064-a523-e4e2974ed45f": 0,
-      "ca52416d-d950-41c1-bcb9-d30f08386d6a": 0,
-      "5d7acd65-5b7d-4cc2-9733-22c47f07916e": 0,
-      "cf7a0654-0222-4181-a5db-9b3336c105ce": 0,
-      "de70413e-b344-4543-91af-8a1de95f9222": 0,
-      "56b65afe-d5d3-40a6-9d9c-52d606da206c": 0
-    }
+  "heartbeatTodos": 0,
+  "telegramProbe": {
+    "ok": true,
+    "bot": "openclaw_macbook4_bot",
+    "chat": "6124913915"
   },
-  "v4ThreeGatesResult": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false,
-    "verdict": "all_fail_silent_pass"
+  "v4": {
+    "gate1_currentFailure": false,
+    "gate2_providerOverloadPersistent": false,
+    "gate3_impact": false,
+    "announce": false
   },
-  "currentCycle": 757,
-  "cumulativeGreen": 120,
-  "updatedAt": "2026-09-03T22:14:26+08:00",
+  "updatedAt": "2026-09-04T14:17:32+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-03T19:44:20+08:00",
-    "coachSilentHours": 2.5,
-    "envHealth": "SOUL×3齊(皆有棄用標記)｜Repo1=27/Repo2=25(<50警戒線)｜無鎖定檔",
-    "cron": "25 enabled｜22 ok｜1 running｜2 idle｜0 CE>=3｜lastRunStatus=ok"
+    "coachSilentSince": "2026-09-04T17:06:55+08:00",
+    "coachSilentHours": 0.1
   },
-  "notes": "cycle=757 安靜通過。cumulativeGreen 120 = 上輪 119 +1。本輪完整 cron 檢查 25 個活躍任務，0 連錯、無 timeout、無 auth。教練最後訊息 19:44（沉默 2.5h 新鮮值，週四夜晚正常作息），TG 通道探針當下實測 ok，環境快檢全綠（SOUL.md 三份皆有棄用標記、git 27/25、無 .! 鎖定檔）。v4.0 三關全 fail，安靜不通報。"
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-04T17:12:07.209201+08:00"
+  }
 }

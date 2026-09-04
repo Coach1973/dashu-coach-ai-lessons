@@ -1,16 +1,19 @@
 {
-  "lastCheck": "2026-09-04T05:12:20+08:00",
-  "cycle": 764,
-  "cumulativeGreen": 127,
-  "cronTool": {"totalActive":1,"ceGe3":0,"lastRunStatus":"ok"},
-  "coachLastMessage": "2026-09-04T05:11:03+08:00",
-  "coachSilentHours": 0.0,
-  "telegramChannelOk": true,
-  "v4Gates": {
-    "stillBroken": false,
-    "providerOverload": false,
-    "affectsCoachWork": false
+  "cycle": 768,
+  "cumulativeGreen": 132,
+  "lastCheckAt": "2026-09-04T17:12:00+08:00",
+  "coachSilentHours": 0.1,
+  "cronState": {
+    "enabledJobs": 1,
+    "consecutiveErrors": 0,
+    "lastRunStatus": "ok"
   },
-  "skipAnnounce": true,
-  "reason": "週五凌晨 05:12 + 教練沉默 0.0h 剛對話 + 零會員功能壞 + cron 視角穩定"
+  "v4ThreeGates": {
+    "gate1_stillBroken": false,
+    "gate2_providerOverload": false,
+    "gate3_affectsWork": false,
+    "announce": false
+  },
+  "tgProbe": "ok",
+  "envCheck": "ok"
 }

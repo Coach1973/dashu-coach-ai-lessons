@@ -1260,6 +1260,7 @@ DIY_KNOT_REPO = Path("/Users/bymyway/github_repos/diy-knot-workshop")
 DIY_OUTDOOR_REPO = Path("/Users/bymyway/github_repos/diy-outdoor-workshop")
 DIY_STUDIO_REPO = Path("/Users/bymyway/github_repos/diy-studio-workshop")
 LEADERSHIP_KNOT_REPO = Path("/Users/bymyway/github_repos/leadership-knot-workshop")
+SEABISCUIT20_REPO = Path("/Users/bymyway/github_repos/seabiscuit20")
 # 2026-09-03交辦：DIY.zip「結繩工作坊3小時手作體驗」預覽頁，教練要求先掛兩個網址(/DIY/、/Leadership/)
 # 讓他看效果，兩份內容目前完全相同(zip來源本身就是同一頁匯出兩次)，之後教練若要區分文案各自獨立改。
 # 頁面本身無報名表單(教練提供的原稿寫死「請於粉專/來訊留下姓名，無虛假表單action」)，純靜態頁不需API。
@@ -1311,6 +1312,19 @@ def leadership_knot_page():
 @app.route("/Leadership/<path:filename>")
 def leadership_knot_assets(filename):
     return _serve_repo_file(LEADERSHIP_KNOT_REPO, filename)
+
+
+# 2026-09-04交辦：海餅乾俱樂部20週年官網，教練徹夜自製6頁(含近期場次/媒體報導)，純靜態頁不需API。
+
+
+@app.route("/seabiscuit20/")
+def seabiscuit20_page():
+    return _serve_repo_file(SEABISCUIT20_REPO, "index.html")
+
+
+@app.route("/seabiscuit20/<path:filename>")
+def seabiscuit20_assets(filename):
+    return _serve_repo_file(SEABISCUIT20_REPO, filename)
 
 
 COACH888_STATE_KEYS = {

@@ -342,4 +342,8 @@ Cron tool is restricted to the current cron job.
 - **Notes**: 已用 CLI 將兩個同步工作的遞送改為不遞送，並各自手動執行驗證成功。
 
 ---
-
+## 2026-09-04 — openclaw cron run timeout 參數格式錯誤
+- **情況：** 健康檢查手動驗證「每2小時增量記憶蒸餾」時，第一次使用 `--timeout 30s`。
+- **錯誤：** CLI 回報 `Invalid --timeout. Use a positive millisecond value, e.g. --timeout 30000. Received: "30s".`
+- **修正：** 改用 `--timeout 30000`；其餘參數不變。
+- **預防：** `openclaw cron run` 的 `--timeout` 單位是毫秒，未來一律傳整數毫秒，不加 `s`。
