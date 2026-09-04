@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 89e4937c-c840-4c0c-bc46-68785a6d6bbf
-  modified: 2026-09-04T14:42:33.527Z
+  modified: 2026-09-04T14:44:45.126Z
 ---
 
 每次用`gh repo create <repo> --public`建立新的對外網站repo，收工前一定要把它加進`~/github_repos/coach888/index.html`作品一覽（通常放「大樹常用」分類第一項，依既有`feedback_coach888_new_items_go_first`SOP），不能等教練發現「怎麼看不到」才補。
@@ -15,5 +15,7 @@ metadata:
 **How to apply**：已做成`scripts/stop_rules_master.py`規則L（deterministic check，非自稱）——只要這輪對話執行過`gh repo create ... --public`，Stop hook就會掃描該repo名稱是否出現在本機`coach888/index.html`裡，沒有就擋下收工（exit 2），逼自己補完才能結束對話。這條鎖只認`--public`，用`--private`建的備份/工具型repo（如`true-ai-team`）不會被誤攔。已用合成transcript測試正反兩案例（缺收錄→擋下；已收錄/私有repo→放行）驗證邏輯正確。
 
 真正給教練看的網站永遠用`--public`建repo，這樣才會被這條鎖保護到；如果之後有其他不經過`gh repo create --public`就上線的管道（例如純掛在event-signup底下的repo-served路由，沒有另外建GitHub repo），這條鎖看不到，仍要靠人工記得補coach888。
+
+**上線當天發生的假陽性（同日修復）**：規則L剛寫完，用heredoc(`cat > test.jsonl << 'EOF' ... gh repo create ... EOF`)造合成transcript測試時，這段heredoc文字本身被記進了這次真實對話的transcript，導致下一輪Stop hook把heredoc裡的假repo名字當成真的執行過的指令，誤擋收工，教練把假警報原文轉貼回來才發現。修法：command字串若含heredoc定界符(`<<`)一律跳過此規則偵測，因為那代表是「寫進檔案的內容」不是「真的要執行的指令」。**教訓**：往後任何要合成假transcript測試Stop/PreToolUse類hook的heredoc技巧，都要留意heredoc本身的文字內容可能被同一份真實transcript的其他規則掃到，最好在prompt結束後檢查有沒有引發非預期的deterministic check誤判。
 
 相關：[[feedback_coach888_new_items_go_first]]
