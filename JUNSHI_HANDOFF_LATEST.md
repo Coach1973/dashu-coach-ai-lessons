@@ -492,3 +492,34 @@
 
 ## 🔑 本場commit
 `seabiscuit20`(新repo)：初版建置→多輪logo/紀念冊/1940+17週年照片/數據列迭代，最新`d8fe469`。`workspace`：HEARTBEAT.md衝突解決+補commit v175遺漏記憶檔（git log可查今日聯想commit序列）。
+
+---
+
+# 軍師接力棒 · 2026-09-04 v177（聯想Windows Sonnet 5，記憶體98%洩漏安全排查：確診核心層驅動洩漏非中毒，Nahimic嫌疑+新裝顯示卡驅動後更快復發）
+
+> 建立時間：2026-09-04 10:09 ~ 13:49（台灣時間）
+> 上一棒：v176（聯想Windows，海餅乾俱樂部20週年官網從零建置到多輪教練親自校對）
+> 本棒主軸：**教練半夜發現這台聯想Windows開機記憶體飆到98%，懷疑中毒要求安全排查+網路流量檢查，甚至準備動用「一鍵還原」重灌。全面排查後排除中毒，確診是核心層Nonpaged Pool驅動洩漏（非病毒），重開機驗證有效但約2小時內更快復發，鎖定Nahimic音效驅動最可疑並教會教練手動移除步驟，過程順手修正教練誤判「Claude開Chrome造成」的錯誤歸因，另回答BIOS更新風險問題。**
+
+## 🎯 本場戰果
+
+### 1. 記憶體98%安全排查：確診非中毒，鎖定Nahimic驅動洩漏
+教練回報記憶體飆98%懷疑中毒，用PowerShell全面排查：Defender即時防護開啟/病毒碼最新/零威脅紀錄、前25大耗記憶體程式全是教練平常在用的Comet/LINE/Claude/Typeless/Signal、對外連線埠全是443+高位隨機埠共31個不重複IP(對應教練實際開的App數)、無Temp/Public資料夾藏匿程式，排除中毒可能。真正根因：全部process記憶體加總只有10GB，卻對不上系統回報用掉38GB，用`Get-Counter "\Memory\Pool Nonpaged Bytes"`查到核心層驅動記憶體區（正常僅幾百MB）暴增到**29GB**，落差全在這裡。鎖定嫌疑Nahimic音效驅動（NahimicBTLink.sys+Nahimic_Mirroring.sys，檔案日期2022/8/18已4年沒更新，只存在裝置管理員不在新增/移除程式清單），教會教練手動解除安裝步驟（裝置管理員→3個Nahimic裝置→解除安裝＋勾選刪除驅動程式軟體→重開機）。**重開機驗證**：記憶體從97.76%瞬間降到33.1%，Nonpaged Pool歸零，證實診斷方向正確，非病毒。
+
+### 2. 新裝驅動後2小時內更快復發，澄清教練誤判「Claude開Chrome造成」
+教練同時段新裝Intel顯示卡驅動31.0.101.4255/NVIDIA GeForce Experience 3.27.0.114/聯想電競功能修補程式後，Nonpaged Pool約1h56m內又衝到22GB，比第一次21.5小時才洩漏到29GB快了近10倍。教練當下猜測是「Claude Code開Chrome瀏覽器做網頁」造成——查證系統當時**根本沒有chrome.exe在跑**，Comet+Claude合法用量僅約4GB，跟22GB缺口完全對不上，已澄清仍是驅動層洩漏、非瀏覽器/AI工具行為造成。**尚未確認教練是否已執行Nahimic移除步驟**，此為下一場開工首要確認事項——若已移除仍快速復發，嫌疑轉移到新裝的Intel/NVIDIA/聯想電競驅動。
+
+### 3. BIOS更新風險問題（一般性回答，非本機操作）
+教練另外問「BIOS Update Utility - 11」更新風險，已說明官方聯想工具風險相對低但仍需注意（全程接電源+不可中斷+更新後部分設定會重置），此為一般性建議未實際操作。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **PowerShell核心層Nonpaged Pool診斷法可複用**：正常應僅幾百MB，超過1-2GB即視為異常驅動洩漏，比逐一排查process更快定位「記憶體帳目對不上」的元凶。記憶`project_lenovo_nonpaged_pool_leak_2026-09-04`。
+2. **這台機器用Bash工具(Git Bash)呼叫PowerShell時，`-Command`參數若用雙引號包裹，Bash會把PowerShell的`$_`管線變數當自己的參數展開吃掉**，導致語法錯誤、看起來像PowerShell壞掉其實是shell引號層級問題——本場前3次查詢指令因此全部失敗，改用單引號包外層才修復。記憶`reference_gitbash_powershell_dollar_underscore_quoting_2026-09-04`。
+
+## 📋 下一場開工先做
+1. **優先確認**：教練是否已執行Nahimic驅動移除步驟？若已移除但記憶體仍快速復發，改排查新裝的Intel顯示卡/NVIDIA/聯想電競驅動，可建議逐一解除安裝排除測試。
+2. 沿用v174/v175/v176下一棒待辦：`/materials/admin`教練待自己勾選公開項目、DIY3的LINE連結待補、「大品一覽」語音誤植待確認、seabiscuit20官網教練驗收中——本場皆未觸及，繼續掛著。
+3. FB粉專商家驗證後續、`/bni-credit`頁面顯示效果等更早期舊待辦本場未觸及。
+
+## 🔑 本場commit
+`.claude/projects`記憶庫：`project_lenovo_nonpaged_pool_leak_2026-09-04.md`+`reference_gitbash_powershell_dollar_underscore_quoting_2026-09-04.md`（新增）+MEMORY.md索引更新（含瘦身壓縮，回應hook額度提醒）。`workspace`：本篇接力棒v177新增（純診斷/衛教任務，未觸及任何程式碼repo）。
