@@ -3,7 +3,7 @@
     "healthcheck": 1756991550,
     "telegramChannel": 1788530449,
     "cron": 1788530449,
-    "coach_silence_sync": "2026-09-04T21:12:05.153716+08:00"
+    "coach_silence_sync": "2026-09-04T22:12:03.603961+08:00"
   },
   "telegramChannelOk": true,
   "telegramChannelProbe": "{\"ok\":true,\"bot\":\"openclaw_macbook4_bot\",\"chat\":\"6124913915\"}",
@@ -13,7 +13,7 @@
   "silentHours": 0.0,
   "syncedAt": "2026-09-04T22:00:49.592840+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-04T20:40:30+08:00",
-    "coachSilentHours": 1.3
+    "coachSilentSince": "2026-09-04T22:12:01+08:00",
+    "coachSilentHours": 0.0
   }
 }
