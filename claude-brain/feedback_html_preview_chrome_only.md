@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 3089ccd5-21cb-458c-92e4-eaecbd96dee9
-  modified: 2026-08-07T22:45:36.279Z
+  modified: 2026-09-05T03:20:00.000Z
 ---
 
 # 🔴🔴🔴 2026-07-13更新：聯想（Windows）改用 Comet，不再用 Chrome
@@ -161,3 +161,11 @@ event-signup抽獎轉盤功能開發時，教練連`http://127.0.0.1:5060/wheel`
 不再只靠「記得要開 Chrome」——已比照簡體字 Stop Hook 架構，建立 `scripts/rule_html_chrome_check.sh`：這一輪若 Edit/Write 改過 `.html`，且改動之後找不到 `open -a "Google Chrome"` 的紀錄，強制 exit 2 攔截，不讓「已看過」的回報送到教練眼前。已註冊進 `~/.claude/settings.json` Stop hooks，並用假 transcript 實測四種情境全部正確（詳見試金石案例46後續段落）。
 
 同場也補了另一個真漏洞：既有的 `web_preview_verify_guard.sh`（git push 前查證用）原本把無頭瀏覽器工具的截圖也算成有效證據，這正是案例46能矇混過關的破口，已拿掉，只認 `open -a "Google Chrome"` 為唯一證據。
+
+## 🔴 第十一次犯（2026-09-05）：`auto_chrome_after_html_edit.sh` PostToolUse自動觸發理論上該擋，卻沒發生作用
+
+改seabiscuit20的`index.html`（新增「看守則影片」按鈕+獨立彈窗）後，用`mcp__Claude_Browser__*`系列工具（navigate/javascript_tool/find）做了完整功能驗證（開彈窗/確認YouTube iframe真的透過`performance.getEntriesByType('resource')`載入/關閉功能），主觀上覺得已經驗證過畫面正確，直接commit+push+回報教練完成。**Stop hook（規則J）當場攔下**，教練把原文轉貼回來才發現漏了`open -a "Google Chrome"`這一步。
+
+**根因已查明**：`scripts/auto_chrome_after_html_edit.sh`本身沒有壞，它是用Python的`subprocess.Popen`在hook腳本內部直接呼叫`open -a "Google Chrome" file://<路徑>`——這個呼叫**不會出現在assistant自己的Bash tool_use紀錄裡**，因為它是hook背景執行的，不是AI下達的指令。而Stop hook規則J的查證邏輯是**只掃描transcript裡assistant的Bash tool_use命令字串**有沒有出現`open -a "Google Chrome"`，完全不知道PostToolUse hook在背景默默開過瀏覽器這件事。也就是說**Chrome視窗這次很可能真的有自動彈出過**（每次Edit碰到`.html`就會觸發一次file://本機檔案），只是Stop hook看不到這個證據，兩支hook的「證據認定範圍」沒有互通，才會一直被攔。**How to apply**：不能只看PostToolUse有沒有自動開Chrome就放心，因為Stop hook不認這個當證據——收工前仍要自己主動再下一次`open -a "Google Chrome" <正式站網址>`這個Bash指令，才會真正留在transcript裡讓Stop hook放行。
+
+**How to apply（重申）**：Claude Browser系列工具的功能驗證（確認div結構/JS函式/iframe是否真的載入）跟`open -a "Google Chrome"`是互補不是替代，改完HTML收工前一律補跑一次，不要依賴任何自動化機制"應該"會處理。
