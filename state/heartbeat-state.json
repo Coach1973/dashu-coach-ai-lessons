@@ -1,53 +1,45 @@
 {
-  "lastChecks": {
-    "cron": 1788501662883,
-    "telegramChannelProbe": 1788501662883,
-    "envHealth": 1788501662883,
-    "coach_silence_sync": "2026-09-04T13:13:39.125571+08:00"
-  },
-  "lastCoachMessageAt": "2026-09-04T13:11:16+08:00",
-  "coachSilentSince": "2026-09-04T13:11:16+08:00",
-  "coachSilentHours": 0.0,
-  "telegramChannelOk": true,
-  "telegramProbeAt": "2026-09-04T14:01:02.883467+08:00",
-  "cronState": {
-    "enabledJobs": 25,
-    "runningNow": 1,
-    "runningJob": "🦞 每小時任務健康檢查",
-    "lastRunStatus": "ok",
-    "consecutiveErrors": 0,
-    "consecutiveErrorsByJob": {
-      "46e67e2e-6332-4589-aae2-ee7e10dd7279": 0,
-      "f487652d-0696-4b54-ac7f-7dd1a94cdb8c": 1
-    },
-    "nonBlockingFailures": [
+  "cycle": 767,
+  "cumulativeGreen": 131,
+  "lastCoachMessageAt": "2026-09-04T14:12:01+08:00",
+  "coachSilentSince": "2026-09-04T14:12:01+08:00",
+  "coachSilentHours": 0.092,
+  "cron": {
+    "activeJobs": 25,
+    "healthcheckLastStatus": "ok",
+    "healthcheckConsecutiveErrors": 0,
+    "consecutiveErrorsAtLeast3": 0,
+    "timeoutRisk": 0,
+    "authErrors": 0,
+    "nonBlockingErrors": [
       {
-        "jobId": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
-        "name": "☀️ 每日 06:00 起床摘要",
+        "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
+        "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
+        "status": "error",
         "consecutiveErrors": 1,
         "lastError": "cron: job interrupted by gateway restart",
-        "lastFailureAt": "2026-09-04T06:00:05+08:00",
-        "nextRetry": "2026-09-05T06:00:00+08:00",
-        "autoRecover": true,
-        "announce": false
+        "lastRunAtMs": 1788472800050
       }
     ]
   },
-  "v4ThreeGatesResult": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false,
-    "verdict": "all_fail_silent_pass"
+  "heartbeatTodos": 0,
+  "telegramProbe": {
+    "ok": true,
+    "bot": "openclaw_macbook4_bot",
+    "chat": "6124913915"
   },
-  "currentCycle": 767,
-  "cumulativeGreen": 130,
-  "updatedAt": "2026-09-04T14:01:02.883467+08:00",
+  "v4": {
+    "gate1_currentFailure": false,
+    "gate2_providerOverloadPersistent": false,
+    "gate3_impact": false,
+    "announce": false
+  },
+  "updatedAt": "2026-09-04T14:17:32+08:00",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-04T13:11:16+08:00",
-    "coachSilentHours": 0.0,
-    "envHealth": "SOUL×3齊(皆有棄用標記)｜Repo1=27/Repo2=29(<50警戒線)｜無鎖定檔",
-    "cron": "1 enabled｜0 CE>=3｜lastRunStatus=ok｜cron tool list 回 1/1 ok"
+    "coachSilentSince": "2026-09-04T17:06:55+08:00",
+    "coachSilentHours": 0.1
   },
-  "notes": "cycle=767 安靜通過。TG 通道當下實測 ok=true,cron 24 jobs 全綠(僅 f487652d 起床摘要因 gateway 重啟中斷 1 次,已 autoRecover,下次 09-05 06:00)。教練最後訊息 13:11(沉默 0h,下午活躍時間),不主動打擾。",
-  "lastCheckTime": "2026-09-04T14:01:02.883467+08:00"
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-04T17:12:07.209201+08:00"
+  }
 }

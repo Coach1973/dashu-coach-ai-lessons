@@ -1,6 +1,5 @@
 {
-  "silentSince": "2026-09-03T19:44:20+08:00",
-  "silentHours": 2.5,
-  "updatedAt": "2026-09-03T22:14:26+08:00",
-  "note": "週四夜晚 22:14 教練沉默 2.5h 屬正常作息"
+  "coachSilentSince": "2026-09-04T14:12:01+08:00",
+  "coachSilentHours": 0.092,
+  "updatedAt": "2026-09-04T14:17:32+08:00"
 }

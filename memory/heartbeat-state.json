@@ -1,16 +1,45 @@
 {
-  "lastCheck": "2026-09-04T05:12:20+08:00",
-  "cycle": 764,
-  "cumulativeGreen": 127,
-  "cronTool": {"totalActive":1,"ceGe3":0,"lastRunStatus":"ok"},
-  "coachLastMessage": "2026-09-04T05:11:03+08:00",
-  "coachSilentHours": 0.0,
-  "telegramChannelOk": true,
-  "v4Gates": {
-    "stillBroken": false,
-    "providerOverload": false,
-    "affectsCoachWork": false
+  "cycle": 767,
+  "cumulativeGreen": 131,
+  "lastCoachMessageAt": "2026-09-04T14:12:01+08:00",
+  "coachSilentSince": "2026-09-04T14:12:01+08:00",
+  "coachSilentHours": 0.092,
+  "cron": {
+    "activeJobs": 25,
+    "healthcheckLastStatus": "ok",
+    "healthcheckConsecutiveErrors": 0,
+    "consecutiveErrorsAtLeast3": 0,
+    "timeoutRisk": 0,
+    "authErrors": 0,
+    "nonBlockingErrors": [
+      {
+        "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
+        "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
+        "status": "error",
+        "consecutiveErrors": 1,
+        "lastError": "cron: job interrupted by gateway restart",
+        "lastRunAtMs": 1788472800050
+      }
+    ]
   },
-  "skipAnnounce": true,
-  "reason": "週五凌晨 05:12 + 教練沉默 0.0h 剛對話 + 零會員功能壞 + cron 視角穩定"
+  "heartbeatTodos": 0,
+  "telegramProbe": {
+    "ok": true,
+    "bot": "openclaw_macbook4_bot",
+    "chat": "6124913915"
+  },
+  "v4": {
+    "gate1_currentFailure": false,
+    "gate2_providerOverloadPersistent": false,
+    "gate3_impact": false,
+    "announce": false
+  },
+  "updatedAt": "2026-09-04T14:17:32+08:00",
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-04T17:06:55+08:00",
+    "coachSilentHours": 0.1
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-04T17:12:07.209201+08:00"
+  }
 }
