@@ -13,5 +13,12 @@
   "cumulative_green": 138,
   "coach_silent_hours": 1.57,
   "cron_status": "ok",
-  "env_status": "ok"
+  "env_status": "ok",
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-05T01:17:05+08:00",
+    "coachSilentHours": 0.9
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-05T02:12:11.885773+08:00"
+  }
 }
