@@ -1329,7 +1329,7 @@ def seabiscuit20_assets(filename):
 
 COACH888_STATE_KEYS = {
     "coach888_layout", "coach888_titles", "coach888_badges", "coach888_names", "coach888_collapse",
-    "coach888_sections",
+    "coach888_sections", "coach888_section_order",
 }
 
 
