@@ -1,0 +1,162 @@
+# 終端機對話萃取 — Session 89e4937c-c840-4c0c-bc46-68785a6d6bbf
+# 提取時間：2026-09-04 22:45 (台灣時間)
+# 共 6 條教練原話
+
+---
+
+【教練 2026-09-04 14:12】
+開工
+
+　▶ AI 回應：我先讀取接力棒原檔確認本棒主軸，再依開工六步驟回報。
+
+　▶ AI 回應：我已讀完接力棒（v180，最新一棒）。
+
+**目前主軸**：教練指出seabiscuit20媒體報導篇數不對，查證找到真正官方20篇來源（bigtree/speakers-2026）並補齊；教練委託「一天沒睡前」的全面盤點報告，跨43個repo技術掃描+待辦事項清查；教練交辦新增「關於創辦人」頁面，經過iframe架構查證+3輪教練回饋（頭像被切/間距太大）才定案，全數已推正式站。
+
+**身份核對**：Sonnet 5・Mac 終端機（CLI）・軍師身份，commit前綴`[Mac]`。
+
+**雲端同步狀態**：✅ 已拉雲端最新（HEAD: 499045bc8）。
+
+**待辦追蹤總表**中優先…（略）
+
+【教練 2026-09-04 14:12】
+釋放
+
+　▶ AI 回應：確認觸發規則後直接執行「釋放記憶體」腳本（單獨「釋放」二字＝只重啟RustDesk，非「全部釋放」）。
+
+　▶ AI 回應：已重啟 RustDesk：釋放前 1251M → 釋放後 197M（新 PID=36555），連線會自動恢復，不用手動重連。
+
+若要連瀏覽器/赫米斯/LINE/Typeless一起關，說「全部釋放」即可。
+
+【教練 2026-09-04 14:21】
+<!-- attach -->
+> 🟡 coach888「已同步狀態指示器 vs 手動上傳按鈕」——教練尚未回覆選哪個
+> 🟡 「後台系統帳密集中」存放位置——教練尚未回覆
+> true-ai-team repo 要不要補GitHub遠端（避免遺失風險）——教練尚未表態
+> materials系統42份教材待教練自行到/materials/admin勾選公開（非阻塞）
+> bigtree黑金改版草稿殘留檔案是否清理歸檔——教練尚未回覆
+
+1.已同步指示燈
+2.存放在MAC本機，我需要只要問小龍蝦就好，你記得跟他說
+3.要補
+4.等我忙完
+5.要
+
+你的新任務，去讀下載資料有一個tainan-shangquan 的html 建立到github , 檔名就是前面寫的那個 然後，做到資料庫，當店家給資料時，資料直接傳到 電報的 活動報名即時通知
+
+　▶ AI 回應：找到了，是`tainan-shangquan.zip`（22:12下載，非單一html檔），先解壓查看內容結構。
+
+　▶ AI 回應：先處理五個決議項目中可以快速動手的部分，再著手主任務。
+
+　▶ AI 回應：Clear. Let me knock out items 3 and 5 quickly.
+
+　▶ AI 回應：true-ai-team 已補上GitHub遠端（private repo）並推送完成。接著處理bigtree黑金改版草稿歸檔。
+
+　▶ AI 回應：Good, unstaged the unrelated pre-existing diff. Committing just the archive move.
+
+　▶ AI 回應：Confirmed `index.html` doesn't reference any of the moved files. Per SOP I'll still open a quick local preview before pushing.
+
+　▶ AI 回應：Preview confirmed page loads fine, no broken references. Now push.
+
+　▶ AI 回應：bigtree黑金改版草稿已歸檔並推送，commit`2d96eac`。三個快速項目完成（true-ai-team補遠端、bigtree歸檔）。現在處理主任務——台南商圈整合計劃網站。
+
+　▶ AI 回應：Now wire the form to POST to the backend instead of just faking success client-side.
+
+　▶ AI 回應：GitHub repo已建立並推送。接著加後端路由到event-signup（DB+Telegram通知），比照1010/tut等既有模式。
+
+　▶ AI 回應：Now add the Flask routes right after the 1010 block.
+
+　▶ AI 回應：現在重啟event-signup服務並用真實請求驗證整條管線。
+
+　▶ AI 回應：路由上線。用真實POST測試整條資料流。
+
+　▶ AI 回應：test資料已清除。現在commit後端變更並push。
+
+　▶ AI 回應：快速把新網站也補進coach888作品一覽（依既有SOP，避免又漏放）。
+
+　▶ AI 回應：No syntax errors. Committing and pushing.
+
+　▶ AI 回應：confirm已生效上線。最後處理item 2（帳密存放決定），寫入記憶讓小龍蝦也讀得到。
+
+　▶ AI 回應：Now let me add the v181 handoff section with this session's work, and update the pending items list.
+
+　▶ AI 回應：Now inserting the new v181 section before v180 (newest first pattern... let me check ordering convention).
+
+　▶ AI 回應：Now append v181 at the end.
+
+　▶ AI 回應：Commit and push the handoff update.
+
+　▶ AI 回應：五項決議＋新任務全部完成，逐一回報憑證：
+
+**五項決議**
+1. coach888同步方案選「已同步指示燈」→ 已上線，commit `309f2fd`，正式站curl驗證toast已生效
+2. 帳密存放Mac本機、教練直接問小龍蝦 → 決策已寫入記憶，但**實際11個系統的帳密清單還沒彙整完成**，且小龍蝦目前工具權限讀不到本機檔案，這技術細節下次要一併處理，先誠實告知不裝作完成
+3. true-ai-team補GitHub遠端 → 已建立private repo並推送
+4. materials教材公開 → 依教練指示不動
+5. bigtree黑金改版草稿殘留 → 6份比稿檔+2份備份檔已…（略）
+
+【教練 2026-09-04 14:36】
+請問這個新網站你放有哪一個類別，怎麼我看不到？
+
+　▶ AI 回應：我剛才漏了一步——沒有把新網站加進coach888作品一覽，這是我的疏漏，不是您這邊的問題。現在馬上補上。
+
+　▶ AI 回應：Let's verify the result before pushing.
+
+　▶ AI 回應：Correctly inserted at position 1, all renumbered, count updated to 14. Syntax check then push.
+
+　▶ AI 回應：已在GitHub Pages正式站驗證生效：https://coach1973.github.io/coach888/ 「大樹常用」分類第一項就是「大臺南商圈整合計劃・店家登錄」，commit `93e2085`。
+
+抱歉，這是我上一輪的疏漏——完成新網站後沒有依既有SOP同步補進coach888作品一覽，現已補上並驗證。
+
+【教練 2026-09-04 14:39】
+請寫入SOP新的網頁做好一律收錄，不要再讓我提醒
+
+　▶ AI 回應：Now let's find where section J ends to insert new Rule L right after it (before Rule K, or after K—order doesn't matter functionally, I'll append after K, before the final output block).
+
+　▶ AI 回應：Now let me insert new Rule L right before the final output block (after Rule K).
+
+　▶ AI 回應：Now verify syntax and test with a synthetic transcript to confirm the rule actually fires and blocks correctly.
+
+　▶ AI 回應：Blocks correctly. Now test the negative case — a repo that IS already in coach888 (e.g. `tainan-shangquan`) should pass without blocking.
+
+　▶ AI 回應：Now let's write the human-readable SOP text too (per the literal request), then commit everything.
+
+　▶ AI 回應：Update MEMORY.md index.
+
+　▶ AI 回應：Now commit both repos (workspace for the hook script, memory repo for the new memory file).
+
+　▶ AI 回應：已經寫死成不靠記憶的強制機制，不是單純文字SOP：
+
+**做法**：在Stop hook（`scripts/stop_rules_master.py`規則L）新增一條deterministic檢查——只要這輪對話執行過`gh repo create ... --public`（=新公開網站上線的唯一入口動作），就自動比對本機`coach888/index.html`有沒有出現這個repo名稱，沒有就直接擋下收工，逼我補完才能結束。純用`--private`建的備份/工具型repo（如今天的`true-ai-team`）不會被誤攔。
+
+已用假造transcript測試正反兩案例都正確：漏收錄→擋…（略）
+
+【教練 2026-09-04 14:43】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 coach888作品一覽收錄鎖（deterministic check，2026-09-04教練親定）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話用 `gh repo create ... --public` 建立了新網站repo，
+但 ~/github_repos/coach888/index.html 裡查不到這個名字：
+  • testsite-not-in-coach888
+
+教練原話：「請寫入SOP新的網頁做好一律收錄，不要再讓我提醒」。
+（v179才漏過7新站+1後台工具，這是同款坑第二次發作）
+
+✅ 立刻執行，收工前不能跳過：
+  1. 打開 ~/github_repos/coach888/index.html，選一個最貼切的分類
+     （通常是「大樹常用」，新項目一律放該分類第一項）
+  2. 加入這個新網站的連結+名稱，其餘項目num自動+1
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+  4. 如果這個repo其實不是要給教練/會員看的網站（例如純備份/工具型
+     repo），下次建立時改用 `gh repo create ... --private`，這條鎖
+     只認 --public，不會誤攔私有備份repo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：確認是我剛才測試腳本的殘留——我在heredoc裡寫的假指令文字被規則L的正則誤判成「真的執行了gh repo create」。這是規則本身的假陽性bug，我來修。
+
+　▶ AI 回應：Now verify the fix with the exact reproducing case, plus re-verify both prior test cases still work correctly.
+
+　▶ AI 回應：Fixed — heredoc-embedded text no longer triggers a false block. Re-confirming the two original real-world cases still behave correctly.
+
+　▶ AI 回應：All three cases now behave correctly: real missing repo → blocks, real registered repo → passes, heredoc-embedded text → no longer false-triggers. Committing the fix.

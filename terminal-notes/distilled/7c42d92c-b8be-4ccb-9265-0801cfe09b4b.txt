@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 7c42d92c-b8be-4ccb-9265-0801cfe09b4b
-# 提取時間：2026-09-04 19:12 (台灣時間)
-# 共 8 條教練原話
+# 提取時間：2026-09-04 19:50 (台灣時間)
+# 共 9 條教練原話
 
 ---
 
@@ -263,3 +263,26 @@ https://coach1973.github.io/coach888/. 搞什麼鬼？我在裡面測試了好�
 還有一個方法可以一勞永逸、從根源解決：就是你讓我在本機這邊改，這沒問題，但改完之後，你再做一個叫做「上傳」的按鈕。這樣的話，就算我改了半天，只要一鍵上傳，以後就會直接同步到網址上面去了。
 
 你覺得這個可行嗎？如果不行的話就算了。
+
+　▶ AI 回應：技術上可行，但我會建議不要這樣做——這裡有個關鍵取捨要跟您說清楚：
+
+**現在的自動即存機制其實比手動上傳更安全**：您在正式網址上一改，半秒內就自動存到伺服器了，不用您記得按任何按鈕。如果改成「本機編輯＋手動上傳」，風險反而變大——萬一您改了老半天，卻忘記按上傳、或不小心跳出頁面、瀏覽器當掉，這些修改就直接不見了，比現在的機制更容易讓您做白工。
+
+真正該解決的問題不是「要不要多一個上傳按鈕」，而是「您怎麼確定自己現在是在正式站上」——這個我已經修好了（以後絕不留本機測試分頁）。如果您想要更保險，我可以在正式頁面加一個小提示，例如右上角顯示「✅ 已同步（剛剛）」，讓您隨時一眼確認改的東西真的存…（略）
+
+【教練 2026-09-04 11:14】
+總結
+
+　▶ AI 回應：Now let me update the memory for the recurring server-whitelist mistake pattern, then write the handoff.
+
+　▶ AI 回應：Good, clean boundary. Let me write the archive file and remove that block from the main handoff.
+
+　▶ AI 回應：Clean archive boundary. Now let's append the new v179 entry for this session at the end of the file.
+
+　▶ AI 回應：Now let's sync the CLAUDE.md mirror script (if it exists as a standalone runnable step) and commit everything.
+
+　▶ AI 回應：All routine + intended changes, nothing unexpected. Let's commit and push.
+
+　▶ AI 回應：Pushed successfully — commit `45e44c0e6`。
+
+**本場總結**：seabiscuit20（海餅乾20週年官網）部署上線 event.bymyway.com/seabiscuit20，教練交辦的四項調整（footer 分類、ai-fit 移除午半場、媒體報導頁、近期場次按鈕區塊）全部完成。教練問「作品一覽表有沒有漏放」，查證後補齊 8 個漏放項目。教練回報 coach888 分類拖曳的 bug，追查發現根因是自訂分類從未真正持久化，修復並順手補上伺服器端連帶漏掉的白名單設定；緊接著又完成「移除分類編號＋大分類拖曳排序」第二輪需求，兩輪都做了完整的模擬測試驗…（略）
