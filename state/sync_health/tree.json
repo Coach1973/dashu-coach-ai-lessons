@@ -1,6 +1,6 @@
 ﻿{
     "status_text":  "⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.",
-    "last_attempt":  "2026-09-04T13:49:44+08:00",
+    "last_attempt":  "2026-09-04T16:25:48+08:00",
     "pull_ok":  false,
     "machine":  "tree"
 }
