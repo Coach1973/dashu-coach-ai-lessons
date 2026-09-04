@@ -1329,6 +1329,7 @@ def seabiscuit20_assets(filename):
 
 COACH888_STATE_KEYS = {
     "coach888_layout", "coach888_titles", "coach888_badges", "coach888_names", "coach888_collapse",
+    "coach888_sections",
 }
 
 
@@ -1337,7 +1338,7 @@ def api_coach888_state():
     """coach888作品一覽的排版狀態集中存放(2026-09-03交辦)：教練在Mac改完排版，
     ACER開起來還是舊版——因為原本純靠每個瀏覽器自己的localStorage，裝置之間互不同步。
     這支端點讓coach888(GitHub Pages)存/取同一份狀態，取代各自為政的localStorage。
-    GET：回傳目前5組狀態(找不到的key回null)。POST：body帶哪個key就更新哪個，其餘不動。"""
+    GET：回傳目前6組狀態(找不到的key回null)。POST：body帶哪個key就更新哪個，其餘不動。"""
     resp_headers = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
