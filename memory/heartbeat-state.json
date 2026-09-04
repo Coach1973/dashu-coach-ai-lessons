@@ -1,19 +1,25 @@
 {
-  "cycle": 768,
-  "cumulativeGreen": 132,
-  "lastCheckAt": "2026-09-04T17:12:00+08:00",
-  "coachSilentHours": 0.1,
-  "cronState": {
-    "enabledJobs": 1,
-    "consecutiveErrors": 0,
-    "lastRunStatus": "ok"
+  "cycle": 770,
+  "ts": "2026-09-04T18:12:50.408378+08:00",
+  "coachLastMessageAt": "2026-09-04T17:36:55+08:00",
+  "coachSilentHours": 0.6,
+  "telegramChannelOk": true,
+  "telegramChannelSource": "telegram_channel_probe.sh --json (當下實測)",
+  "cronOpenClawJobs": 1,
+  "cronShellJobs": 8,
+  "cronListJsonSnapshotJobs": 25,
+  "consecutiveErrors": {
+    "CE_ge3": 0,
+    "timeout_danger": 0,
+    "auth_invalid": 0
   },
-  "v4ThreeGates": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false,
-    "announce": false
-  },
-  "tgProbe": "ok",
-  "envCheck": "ok"
+  "heartbeatRealTodos": 0,
+  "verdict": "三關都 fail → 🔕 不 announce",
+  "cumulativeGreen": 134,
+  "envCheck": {
+    "soul_md_three_copies": "9015/1851/22220 bytes (齊全含棄用標記)",
+    "repo1_untracked_modified": 27,
+    "repo2_untracked_modified": 20,
+    "lock_files": "無"
+  }
 }

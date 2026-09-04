@@ -9,6 +9,32 @@
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
 ⚠️ **不要讀 memory 大檔**（memory/2026-09-04.md 可能超過 50KB，讀了會造成模型空白回應）
 
+
+## 🩺 健康檢查紀錄（本輪無異常）
+- 2026-09-04 18:12（每小時任務健康檢查 cycle=770）
+  - 第零步：`sync_coach_last_message.sh` exit 0，教練最後訊息 `2026-09-04T17:36:55+08:00`，沉默 **0.6 小時**（當下 `date` 新鮮值，週五傍晚正常作息）
+  - Cron 系統：OpenClaw 視角 1/1 ok（本健康檢查本身）+ openclaw_cron_daemon.sh 心跳持續（每秒 :XX 跳動至 18:11，無 fail）+ Shell crontab 8 個排程 / cron_list.json Sep3 快照 25 個（皆無 fail/error log）
+  - CE≥3 / Timeout / Auth 失效：0 / 0 / 0
+  - HEARTBEAT.md ⬜ 真實待辦：0 項（grep 6 處 ⬜ 皆為歷史紀錄文字「0 項待辦」）
+  - TG 通道探針（守則 #19 當下實測）：`{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+  - 環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）含兩份棄用標記 ✅｜Repo1=27 / Repo2=20（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅
+  - v4.0 三關判斷：關卡一❌（cron 全綠 + 本輪執行成功）/ 關卡二❌（無錯誤，無 overload）/ 關卡三❌（週五傍晚 18:12 + 教練剛對話 + 零會員功能壞）→ 全 fail → 🔕 不 announce
+  - 累計：cumulativeGreen = **134**（133→134，連續破百後第三十五輪）
+  - 處置：安靜通過，不通知教練 ✅
+
+## 🩺 健康檢查紀錄（本輪無異常）
+- 2026-09-04 18:00（每小時任務健康檢查 cycle=769）
+  - 第零步：`sync_coach_last_message.sh` exit 0，教練最後訊息 `2026-09-04T17:36:55+08:00`，沉默 **0.4 小時**（當下 `date` 新鮮值）
+  - Cron 系統：25 個 enabled job，lastRunStatus=ok（24/25 ok + 1 transient error：「☀️ 起床摘要」cron，明天 06:00 自動 retry，CE=0）
+  - CE≥3 / Timeout / Auth 失效：0 / 0 / 0
+  - HEARTBEAT.md ⬜ 真實待辦：0 項
+  - TG 通道探針（守則 #19 當下實測）：`{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+  - 環境快檢：SOUL.md 三份齊全（9015/1851/22220 bytes）含兩份棄用標記 ✅｜Repo1=27 / Repo2=15（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅
+  - v4.0 三關判斷：關卡一❌（cron 24/25 ok + 本輪成功）/ 關卡二❌（無錯誤）/ 關卡三❌（週五傍晚 + 教練剛對話 + 起床摘要明天自動 retry）→ 全 fail → 🔕 不 announce
+  - 累計：cumulativeGreen = **133**（132→133，連續破百後第三十四輪）
+  - 處置：安靜通過，不通知教練 ✅
+
+
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
 - 名稱對等：Telegram = 小龍蝦 = 電報

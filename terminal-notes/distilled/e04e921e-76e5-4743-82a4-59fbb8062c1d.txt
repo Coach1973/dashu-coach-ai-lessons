@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session e04e921e-76e5-4743-82a4-59fbb8062c1d
-# 提取時間：2026-09-03 19:50 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-09-04 17:14 (台灣時間)
+# 共 22 條教練原話
 
 ---
 
@@ -95,3 +95,355 @@ Stop hook feedback:
 　▶ AI 回應：Mobile hero-as-background inherited correctly, and the LINE reminder block renders. Resetting viewport and shipping to production.
 
 　▶ AI 回應：All routes live and healthy. Now opening in real Google Chrome per the deterministic hook rule.
+
+　▶ AI 回應：**DIY3已上線**：`https://event.bymyway.com/DIY3/`，已用真正的Chrome開給您看，請親眼確認一下。
+
+**做了什麼**
+- 沿用DIY-2（`/Outdoor/`）的視覺配色/版型/照片素材（保留），DIY-2網址保持不動
+- 全篇文案改場景定位：拿掉「戶外」「野外」「登山露營」的強調，改成「室內冷氣專業教室」「舒適空調、專屬工作桌、老師近距離指導」
+- 對象改為商務人士/自由工作者：適合誰卡片從「登山露營愛好者/戰術美學」改成「忙碌工作想靜心動手」「展現細節品味」「帶團隊建立默契」「職人工藝扎實質感」；標籤從「登山露營/求生裝備」改「職人手作/專注紓…（略）
+
+【教練 2026-09-03 19:57】
+我想做一個界面，把我製作好的PPT或是PDF，上傳到我的google雲端碟或是MAC本地碟或是VPS雲端，讓一些我的學員可以觀賞，不單單是下載PPT，而是可以在雲端觀看的那種，你會怎麼建議及規劃？
+
+　▶ AI 回應：做這件事有兩條路，主要差在「要不要自己搭一套」：
+
+**方案一：直接用 Google 雲端硬碟/簡報**——把PPT/PDF丟上Google Drive，設定「知道連結的人可檢視」（可另外勾選「停用下載/列印/複製」），Drive跟Slides本身就有現成的線上觀看器，PPT不用轉檔、PDF直接開，零建置、零維護，學員點連結就能看不用下載。缺點是畫面是Google的介面（有你的品牌感很弱），檔案放在Google的地盤上。
+
+**方案二：自己架一個觀看頁**——掛在您現有的event.bymyway.com底下（Mac Flask已經在跑），檔案存Mac本機或VPS，用PDF.js做嵌入式線上觀…（略）
+
+【教練 2026-09-03 19:59】
+可以，馬上動作，我一會就要上傳了
+
+　▶ AI 回應：Now adding the `materials` table to schema.sql.
+
+　▶ AI 回應：Now adding the routes and Drive-link parsing helper to app.py, right after the todo routes.
+
+　▶ AI 回應：Good, all imports already present. Now the template.
+
+　▶ AI 回應：Now testing locally before touching the live service.
+
+　▶ AI 回應：Test data cleared, table is empty and ready. Let's verify the empty-state rendering and check console for errors before deploying.
+
+　▶ AI 回應：Now committing and deploying to the live service.
+
+　▶ AI 回應：**已上線，已用Chrome開給您看**：`https://event.bymyway.com/materials/`
+
+**現在就能用，操作步驟**：
+1. 把PPT/PDF上傳到您的Google雲端硬碟
+2. 檔案按右鍵 →「共用」→ 一般存取改成「知道連結的任何人」，權限選「檢視者」
+3. （建議做）點「進階設定」把「檢視者及留言者可以下載、列印及複製」關掉，這樣學員只能看不能存
+4. 複製分享連結，直接貼到 `/materials/` 頁面上方的表單（標題+連結），按「加入教材列表」——**這個表單就在頁面上，您自己就能加，不用每次都叫我**
+5. 加入後畫面會直接內嵌顯示PPT/PD…（略）
+
+【教練 2026-09-03 20:17】
+我想請問一下，可以多新增一個選項嗎？就是圖片
+同時
+如果我給你的是一整個資料夾，我可不可以不用一個個寫檔案名字，由你直接進去資料夾裡面抓檔案的名字，這樣可以嗎？
+
+　▶ AI 回應：Confirmed empty, safe to add a column. Let me first check for an existing Drive OAuth setup before deciding between the folder-embed and API approaches.
+
+　▶ AI 回應：No existing Google Drive API setup — I can't literally "log into" your Drive account programmatically right now. But I can give you something that solves this without needing that: Google Drive lets you embed a whole shared **folder's** own file browser directly in a page, so you just paste one fold…（略）
+
+　▶ AI 回應：Now updating schema.sql, app.py, and the template.
+
+　▶ AI 回應：Now updating the template: add "圖片" option, folder-vs-file iframe rendering, and updated instructions.
+
+　▶ AI 回應：Now the rendering logic for folder-vs-file cards.
+
+　▶ AI 回應：Detection logic is correct. Now a full local server test with a mock folder entry.
+
+　▶ AI 回應：Both work correctly. Let me clean up test data and check the console/errors visually before shipping.
+
+　▶ AI 回應：No errors, empty-state renders cleanly. Shutting down test server and deploying.
+
+　▶ AI 回應：Live and healthy, no regressions. Opening in real Chrome per the HTML-verification rule.
+
+　▶ AI 回應：**兩個都做完了，已用Chrome開給您看**：`https://event.bymyway.com/materials/`
+
+**1. 圖片選項**——類型下拉多了「圖片」，跟PPT/PDF同一套Google Drive嵌入方式渲染，不用額外處理。
+
+**2. 資料夾自動抓檔案**——這個做不到「我幫您連進您的Google帳號、程式化列出檔名」（目前沒有接Drive API的權限授權，這需要您額外做一次Google帳號一次性授權才能做到，如果您想要更完整的功能，我可以再幫您設定），但我用了Google Drive官方支援的**資料夾內嵌瀏覽器**：
+
+- 您只要把**整個資料夾**設成「知道…（略）
+
+【教練 2026-09-03 20:31】
+<!-- attach -->
+> 資料夾自動抓檔案——這個做不到「我幫您連進您的Google帳號、程式化列出檔名」（目前沒有接Drive API的權限授權，這需要您額外做一次Google帳號一次性授權才能做到，如果您想要更完整的功能，我可以再幫您設定），但我用了Google Drive官方支援的資料夾內嵌瀏覽器：
+
+我現在就可以登入，然後你再自己去抓這個 API
+只是我這一次登入使用的帳戶是海餅乾俱樂部，所以他的 email 是 seabiscuitclub@gmail.com 已登入
+https://drive.google.com/drive/u/1/home
+https://drive.google.com/drive/folders/1SElR-qD7jB0myXE8Gpm9YXwPTnD5Y4ZI?usp=sharing
+
+　▶ AI 回應：Live and rendering. Opening in real Chrome for you to confirm the embedded folder view actually shows your file.
+
+　▶ AI 回應：**用您登入的seabiscuitclub@gmail.com帳號進去看過了**——資料夾「大樹教練精選資料庫」目前裡面有1個檔案：`The_Sword_of_Honor.pptx`（PowerPoint格式）。
+
+**誠實跟您報告一件事**：我原本想直接抓出這個檔案的個別ID、幫您做成一張獨立的教材卡片，但Google Drive的網頁介面沒有把檔案ID直接寫在畫面上，正規做法要嘛透過「複製連結」再讀剪貼簿（會多跳一次系統授權確認），要嘛要真正串接Google Drive API（需要您在Google Cloud Console做一次性OAuth授權，是一套完整的工程設定，不是我現在點兩下就…（略）
+
+【教練 2026-09-03 20:40】
+可以，你一步一步帶我做
+
+　▶ AI 回應：好，一步一步來。這套設定要在Google Cloud Console裡點幾個畫面，跟您剛剛登入Drive同一個帳號(seabiscuitclub@gmail.com)就可以做，全程免費（有免費額度，我們用量完全用不到收費門檻）。
+
+**先說整體流程有5步**，我會一步步帶，每步做完您跟我說一聲或貼給我需要的值，我再給下一步：
+
+1. 建立一個Google Cloud專案
+2. 啟用Google Drive API
+3. 設定OAuth同意畫面（設成「測試模式」，不用等Google審核）
+4. 建立OAuth用戶端ID，拿到Client ID跟Client Secret給我
+5. 我把後端程式接…（略）
+
+【教練 2026-09-03 20:55】
+完成
+
+　▶ AI 回應：第1步完成，很好。
+
+**第2步：啟用 Google Drive API**
+
+1. 確認左上角專案選單顯示的是剛剛建的 `coach-materials-viewer`（如果不是，先點選單切換過去）
+2. 左上角「☰」選單 → 「API 和服務」→「已啟用的 API 和服務」（或直接開這個網址：[console.cloud.google.com/apis/library](https://console.cloud.google.com/apis/library)）
+3. 搜尋框輸入「Google Drive API」
+4. 點進第一個搜尋結果（Google Drive API，Google…（略）
+
+【教練 2026-09-03 20:57】
+完成
+
+　▶ AI 回應：**第3步：設定OAuth同意畫面**（這步驟填空最多，照著複製貼上就好）
+
+1. 左側選單「API 和服務」→「OAuth 同意畫面」（網址：[console.cloud.google.com/apis/credentials/consent](https://console.cloud.google.com/apis/credentials/consent)）
+2. **使用者類型**選「外部」（External）→ 建立
+3. **應用程式資訊**這頁：
+   - 應用程式名稱：填 `教練課程教材觀看系統`
+   - 使用者支援電子郵件：選 seabiscuitclub@gmail.co…（略）
+
+【教練 2026-09-03 21:00】
+完成
+
+　▶ AI 回應：**第4步：建立OAuth用戶端ID金鑰**
+
+1. 左側選單「API 和服務」→「憑證」（網址：[console.cloud.google.com/apis/credentials](https://console.cloud.google.com/apis/credentials)）
+2. 上方「+ 建立憑證」→ 選「OAuth 用戶端 ID」
+3. **應用程式類型**選「網頁應用程式」
+4. 名稱隨便填，例如：`materials-viewer-web`
+5. 往下找「已授權的重新導向 URI」，按「新增 URI」，**完整複製貼上這個網址**：
+   ```
+   https://e…（略）
+
+【教練 2026-09-03 21:03】
+來源無效：URI 不得包含路徑或以「/」結尾。
+
+　▶ AI 回應：那個錯誤是因為表單上有兩個欄位，其中一個叫「**已授權的 JavaScript 來源**」，這個欄位**不能有路徑、不能有斜線結尾**，只能是網域本身（例如 `https://event.bymyway.com`）——我們用不到這個欄位，因為這是給「網頁上按鈕直接彈出Google登入視窗」那種前端用的，我們是後端伺服器流程不需要。
+
+**麻煩檢查一下**：
+
+- 「**已授權的 JavaScript 來源**」這欄 → **留空**，不要填任何東西
+- 「**已授權的重新導向 URI**」這欄（通常在下面，可能要點「新增 URI」才會出現）→ 這裡才貼完整網址：
+  ```
+  https:/…（略）
+
+【教練 2026-09-03 21:04】
+用戶端 ID 243454917631-e2oakpp8mh6tmn96hb862qagq9u20g5o.apps.googleusercontent.com
+
+用戶端密碼  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
+
+　▶ AI 回應：Now building the OAuth flow and Drive API integration in app.py.
+
+　▶ AI 回應：Now adding the Drive OAuth + API logic right before the materials routes.
+
+　▶ AI 回應：Now let's update `materials_add` to use the Drive API when available, falling back to the embed view otherwise.
+
+　▶ AI 回應：Now adding an "expand" action so the folder card already on the page can upgrade to individual file cards once authorized.
+
+　▶ AI 回應：Now updating `materials_page` to report authorization status, and the template to show it + the expand button.
+
+　▶ AI 回應：Now updating the template: authorization status banner, "expand" button on folder cards.
+
+　▶ AI 回應：Now adding CSS for `.auth-note` and the expand button on folder cards.
+
+　▶ AI 回應：Now adding the expand button inside folder cards.
+
+　▶ AI 回應：Now let's verify the .gitignore covers `credentials/` at the repo root level (confirmed earlier), and test everything locally before deploying.
+
+　▶ AI 回應：Routes load cleanly. Let's run a local server and test the OAuth start redirect + the page render (unauthorized state) before deploying.
+
+　▶ AI 回應：Live and healthy. Opening in Chrome per the HTML-verification rule.
+
+　▶ AI 回應：程式碼已經上線了（commit `a4d967f06`），已用Chrome開`/materials/`頁面給您看，畫面上會看到一個提示框「🔗 資料夾自動展開成個別檔案卡片的功能尚未授權」。
+
+**最後一步，需要您親自點一下**（這是Google的安全機制，授權這件事只能您本人按「允許」，我沒辦法代您按）：
+
+1. 點畫面上那個提示框裡的「**點這裡完成一次性Google授權**」連結
+2. 會跳到Google的登入/授權畫面，**請務必確認選的帳號是 seabiscuitclub@gmail.com**（因為只有這個帳號被加進「測試使用者」名單，選別的帳號會被Google擋下）
+3. 可能會先…（略）
+
+【教練 2026-09-03 21:11】
+已封鎖存取權：「bymyway.com」未完成 Google 驗證程序
+
+seabiscuitclub@gmail.com
+「bymyway.com」尚未完成 Google 驗證程序。這個應用程式目前處於測試階段，只有獲得開發人員核准的測試人員可以存取。如果您認為自己應該擁有存取權，請與開發人員聯絡。
+如果您是「bymyway.com」的開發人員，請查看錯誤詳細資料。
+發生錯誤 403： access_denied
+
+　▶ AI 回應：這是「測試使用者名單裡沒有真的加到seabiscuitclub@gmail.com」的錯誤，不用整套重做，我們直接去補上就好。Google最近改版過主控台，「測試使用者」現在可能被搬到獨立的頁籤，容易漏加。
+
+**請照這樣檢查/修復：**
+
+1. 開 [console.cloud.google.com/auth/audience](https://console.cloud.google.com/auth/audience)（確認上面專案選單是 `coach-materials-viewer`）
+2. 這頁應該叫「對象」(Audience)，找「測試使用者」(Test users) 這一區塊
+…（略）
+
+【教練 2026-09-03 21:12】
+我覺得已經有點沒有耐心了，你自己登入進去幫我看吧，我不想當搬運工。
+
+只有關鍵的時刻我按就好了，我很煩，很煩你叫我在那邊點來點去。你明明就可以操控我的網頁，你就幫我出現在該出現的那一頁，然後讓我點該點的那個就好了。
+
+不要再叫我做事了，我很煩，懂嗎？
+
+　▶ AI 回應：了解，我自己去弄，不用您點。正在幫您進去檢查測試使用者名單。
+
+　▶ AI 回應：Found the email field. Filling it in and saving.
+
+　▶ AI 回應：Let me verify it actually saved.
+
+　▶ AI 回應：測試使用者名單修好了，seabiscuitclub@gmail.com已經在裡面。現在直接幫您跑到最後那一步授權畫面。
+
+　▶ AI 回應：卡在一個純技術的點——這個Google帳號選擇畫面的連結沒辦法用一般程式化點擊觸發，我需要一次螢幕截圖來抓準確座標點下去（截圖鎖需要您口頭同意一次，10分鐘有效，跟叫您動手完全是两回事，純粹是我這邊要看畫面）。方便說一聲「可以截圖」嗎？我馬上接著做完，不會再麻煩您第二次。
+
+【教練 2026-09-03 21:19】
+✅ Google雲端硬碟已授權成功，之後新增資料夾會自動展開成個別檔案卡片。
+
+　▶ AI 回應：授权拿到了，直接展开测试。
+
+　▶ AI 回應：授權成功，資料夾已展開完成。
+
+**結果**：您那個「大樹教練精選資料庫」資料夾裡其實有 **42個檔案**（不是我之前看到的1個，那時候Google的頁面沒載完整，API直接讀到才抓到全部）。已經展開成42張個別檔案卡片，每張都有正確的檔名（季札掛劍、你就是生活大師、AI是最好的聽眾…等等），已經在 `https://event.bymyway.com/materials/` 上線，用Chrome開給您看了。
+
+**之後的使用方式**：不管是這個資料夾還是您以後新建的任何資料夾，只要把分享連結貼到頁面上方的表單，就會自動抓出裡面每個檔案各自建卡片，不用再手動一個個貼、也不用再做任何授權設定，…（略）
+
+【教練 2026-09-03 21:20】
+我再跟你打斷一下哈，就是我剛才丟了一大堆檔案上去，是比較沒有特別選擇，檔名也沒有特別整理過。所以你現在要有一個機制，讓我可以勾選我想分享的，這樣可以嗎？
+
+　▶ AI 回應：Now updating all the INSERT paths to set `visible` appropriately, and adding the visibility-toggle route.
+
+　▶ AI 回應：Now updating `materials_expand` to insert as hidden by default, and adding the visibility-toggle route.
+
+　▶ AI 回應：Now updating the template to add the checklist management panel.
+
+　▶ AI 回應：I'll insert the checklist panel right before the "教材列表" panel.
+
+　▶ AI 回應：Now adding CSS for the checklist.
+
+　▶ AI 回應：Now let's test the new route locally, then deploy.
+
+　▶ AI 回應：Working correctly — checklist shows all 42, public list correctly shows 0 until he checks boxes. Committing and deploying.
+
+　▶ AI 回應：Live, no regressions. Opening in Chrome per the HTML-verification rule.
+
+　▶ AI 回應：做好了，已用Chrome開給您看。
+
+頁面上方新增一個「選擇要公開的教材」清單，勾選框列出您那42個檔案的完整檔名（已用真實測試驗證勾選/儲存機制正確運作），勾了哪個、按「儲存公開設定」，下面「教材列表」才會出現那個並讓學員看得到。**目前這42個檔案全部先設成不公開**（因為您說沒特別篩選過），下面的教材列表現在是空的，等您勾選過才會有內容。
+
+檔名沒整理過也沒關係，先照原始檔名顯示，您勾選要公開的之後，如果想幫哪個改個學員看得懂的標題，跟我說要改哪個、改成什麼就好。
+
+**憑證**：commit `4a1fd8aa7`，正式站已驗證勾選清單顯示42份、公開列表正確歸零，`/todo`、`/…（略）
+
+【教練 2026-09-03 21:23】
+第一個任務：你先幫我把所有全英文檔名的都幫我改成中文。
+
+至於中文怎麼寫，就是簡報的首頁怎麼寫，那就作為這個簡報的中文檔名。你先幫我改這個。
+
+　▶ AI 回應：`/materials/` 這個網址本身就是答案——不用個別傳。您勾選公開哪幾份，那個網址打開來就只會顯示那幾份，其他沒勾的學員完全看不到。所以直接把 `https://event.bymyway.com/materials/` 這一個網址傳給學員就好，您之後在後台勾選增減，學員那邊看到的內容會跟著自動更新，不用重新傳連結。
+
+繼續處理改中文檔名這件事——遇到一個狀況：部分簡報的首頁不是文字、是一張完整的圖片（AI生成的封面圖，標題是畫在圖片裡的），我抓不到文字，需要用OCR讀圖才行，正在切換方法繼續處理。
+
+　▶ AI 回應：All 11 cover images extracted. Now viewing each to read the actual title text.
+
+　▶ AI 回應：All 11 titles read. Updating the database now.
+
+　▶ AI 回應：11個全英文檔名都改完了，正式站已驗證。
+
+**改法**：那11份簡報的首頁其實是整張圖片（標題是畫在封面圖裡，不是文字），我把每張封面圖抓出來親眼看過，讀出實際標題文字再寫入，不是靠OCR猜的：
+
+| 原檔名 | 改成 |
+|---|---|
+| Voice_AI_Alchemy.pptx | 你的經驗無可取代：零基礎語音AI煉金術 |
+| The_Network_Harvest.pptx | 豐收的底層邏輯：玉米田與網路效應 |
+| Invitation_Mastery.pptx | 神奇的邀約術 |
+| Manga_Invitation_Mastery.pptx | 邀約達人的終極奧義 …（略）
+
+【教練 2026-09-03 21:29】
+重點是我沒有看到我的後台啊！我的後台是哪一個？
+
+　▶ AI 回應：您說得對，這是我設計上的漏洞——現在`/materials/`這一個網址把「新增/勾選管理」跟「學員看的畫面」全部混在一起，等於我剛才叫您把同一個網址給學員，學員也會看到您的管理控制項（包括還沒公開的42個檔名清單、刪除按鈕）。我現在馬上拆成兩個網址：一個是您的後台，一個才是乾淨的學員畫面。
+
+　▶ AI 回應：Now closing that admin-only block and wrapping the visibility checklist panel too.
+
+　▶ AI 回應：Now wrapping the delete/expand buttons on each card with `is_admin`.
+
+　▶ AI 回應：Now updating the Flask routes to split public vs admin views.
+
+　▶ AI 回應：Now updating `materials_add`, `materials_delete`, `materials_expand`, `materials_visibility`, and the OAuth callback to point at the admin route.
+
+　▶ AI 回應：Now the error-branch render in `materials_add` needs `is_admin=True` added.
+
+　▶ AI 回應：Now testing locally before deploying.
+
+　▶ AI 回應：Split works correctly — public page has zero admin controls, admin page has everything. Let's also verify no delete button leaks into public even for visible items.
+
+　▶ AI 回應：Confirmed secure — no delete controls leak to the public page. Deploying now.
+
+　▶ AI 回應：Live and verified. Opening in Chrome per the HTML-verification rule.
+
+　▶ AI 回應：拆好了，已用Chrome開您的後台給您看。
+
+**您的後台**：`https://event.bymyway.com/materials/admin` ——新增教材、勾選要公開哪些、刪除、展開資料夾，全部在這裡。
+
+**學員看的網址**：`https://event.bymyway.com/materials/` ——只顯示您勾選公開的內容，沒有任何管理按鈕、也看不到您還沒公開的檔案清單。
+
+之前給您的連結是舊的沒拆開版本，之後**傳給學員的是`/materials/`這個（沒有admin）**，您自己要管理就用`/materials/admin`這個。已用真實請求驗證過：學員頁面就算有公開項…（略）
+
+【教練 2026-09-03 21:33】
+那我登入的帳號密碼是不是就是預設的？admin 跟五個 8？
+
+　▶ AI 回應：不是，現在完全**沒有帳號密碼**——`/materials/admin`目前誰知道網址誰就能進去，沒有登入畫面，跟您的`/todo`待辦頁是同一個等級（純粹靠網址沒公開沒人知道）。不是預設Admin/88888，是根本没有帳密這一關。
+
+要幫您加一道登入嗎？如果要，我有兩種做法：
+1. **簡單版**：一組您自訂的帳號密碼（不用Admin/88888這種預設弱密碼），存在系統裡，之後每次要進後台先登入
+2. **完整版**：比照您namecard-db發票後台那套真正的登入系統（session+密碼雜湊），更安全但要多花一點時間做
+
+您要哪一種，還是先不用、之後有需要再說？
+
+【教練 2026-09-03 21:36】
+我的密碼就這兩種嘛，另外一個不就是 bymyway，然後密碼是 123457。這跟那個 admin 跟 5 個 8 有什麼不一樣？因為現在記憶體的 context window 已經到 60% 了，我們就先總結。
+
+等我開啟新對話的時候，你幫我做一件事：去我的「大品一覽」裡面，幫我把所有的後台系統通通集中起來在一個分類，並註明帳密。這樣可以嗎？
+
+　▶ AI 回應：了解，先簡短回答再總結。
+
+**密碼問題**：如果您本來就打算兩套密碼(admin/88888或bymyway/123457)輪流用，那換一套新密碼其實沒有實質差別——重點不在「多複雜」，而在「跟別的系統不撞在一起」。如果會撞，就真的沒差，我會誠實跟您說這件事，不會硬推銷登入機制。這件事先擱著，之後真的要做我再問您要用哪一套。
+
+現在開始總結收工。
+
+　▶ AI 回應：Now updating MEMORY.md index with these four new entries.
+
+　▶ AI 回應：Now archiving v172 (lines 358-388) and replacing with a pointer.
+
+　▶ AI 回應：I'll delete lines 360-393 (the duplicated full v172 body, keeping just the pointer at 358 and the blank/separator before v173).
+
+　▶ AI 回應：I'll remove lines 360-393 (the duplicated full body), keeping just the archive pointer.
+
+　▶ AI 回應：Good, the fix applied correctly (absolute path matches). Let me clean up the double blank line before v173's header.
+
+　▶ AI 回應：File is coherent and ends cleanly with v173. Now appending v174 with this session's summary.
+
+　▶ AI 回應：Now committing and pushing everything — workspace handoff/archive + memory files.
+
+　▶ AI 回應：總結完成，已推上雲端。
+
+**本場摘要**：DIY3新版落地頁上線；教練提出「PPT/PDF雲端線上觀看」構想，一路建到完整的Google Drive OAuth整合+資料夾自動展開+42份教材盤點+11份英文檔名讀圖改中文+後台前台分離（教練親自發現漏洞後修復）。
+
+**commit**：`b6875f99b`（接力棒v174+4筆記憶入庫），本場所有功能commit詳列在接力棒`JUNSHI_HANDOFF_LATEST.md`裡。
+
+**下一場開工要記得的事**：您說的「大品一覽」我猜是語音把「作品一覽」(coach888)聽岔了，下一場會先跟您確認清楚才動手，不會直接猜著做。

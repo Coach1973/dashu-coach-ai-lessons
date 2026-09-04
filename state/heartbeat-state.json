@@ -1,45 +1,25 @@
 {
-  "cycle": 767,
-  "cumulativeGreen": 131,
-  "lastCoachMessageAt": "2026-09-04T14:12:01+08:00",
-  "coachSilentSince": "2026-09-04T14:12:01+08:00",
-  "coachSilentHours": 0.092,
-  "cron": {
-    "activeJobs": 25,
-    "healthcheckLastStatus": "ok",
-    "healthcheckConsecutiveErrors": 0,
-    "consecutiveErrorsAtLeast3": 0,
-    "timeoutRisk": 0,
-    "authErrors": 0,
-    "nonBlockingErrors": [
-      {
-        "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
-        "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
-        "status": "error",
-        "consecutiveErrors": 1,
-        "lastError": "cron: job interrupted by gateway restart",
-        "lastRunAtMs": 1788472800050
-      }
-    ]
+  "cycle": 770,
+  "ts": "2026-09-04T18:12:50.408378+08:00",
+  "coachLastMessageAt": "2026-09-04T17:36:55+08:00",
+  "coachSilentHours": 0.6,
+  "telegramChannelOk": true,
+  "telegramChannelSource": "telegram_channel_probe.sh --json (當下實測)",
+  "cronOpenClawJobs": 1,
+  "cronShellJobs": 8,
+  "cronListJsonSnapshotJobs": 25,
+  "consecutiveErrors": {
+    "CE_ge3": 0,
+    "timeout_danger": 0,
+    "auth_invalid": 0
   },
-  "heartbeatTodos": 0,
-  "telegramProbe": {
-    "ok": true,
-    "bot": "openclaw_macbook4_bot",
-    "chat": "6124913915"
-  },
-  "v4": {
-    "gate1_currentFailure": false,
-    "gate2_providerOverloadPersistent": false,
-    "gate3_impact": false,
-    "announce": false
-  },
-  "updatedAt": "2026-09-04T14:17:32+08:00",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-04T17:06:55+08:00",
-    "coachSilentHours": 0.1
-  },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-04T17:12:07.209201+08:00"
+  "heartbeatRealTodos": 0,
+  "verdict": "三關都 fail → 🔕 不 announce",
+  "cumulativeGreen": 134,
+  "envCheck": {
+    "soul_md_three_copies": "9015/1851/22220 bytes (齊全含棄用標記)",
+    "repo1_untracked_modified": 27,
+    "repo2_untracked_modified": 20,
+    "lock_files": "無"
   }
 }
