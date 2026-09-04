@@ -1,5 +1,10 @@
 # Memory Index
 
+- [🎯🎯 海餅乾俱樂部20週年官網(seabiscuit20)六項新功能：時光足跡/見證/語錄/完整守則/頁尾連結(2026-09-04)](project_seabiscuit20_six_features_2026-09-04.md) — 教練驗收中，完整頁面結構+URL清單，新增頁面記得nav/valid陣列/輪播模式三處要對齊
+- [🔧 搜尋教練提供的圖片檔案，副檔名清單要涵蓋webp/gif不能只寫jpg(2026-09-04)](reference_search_image_files_include_webp_2026-09-04.md) — 教練貼圖搜Downloads明明在對的資料夾卻找不到，因為是.webp被篩掉，試金石案例70
+- [🎯 聯想Windows記憶體98%洩漏排查：非中毒，核心層Nonpaged Pool驅動洩漏(2026-09-04)](project_lenovo_nonpaged_pool_leak_2026-09-04.md) — Nahimic音效驅動嫌疑最大，重開機驗證有效但2小時內更快復發，待確認移除狀態
+- [🔧 Git Bash呼叫PowerShell用雙引號會吃掉$_變數，改單引號包外層(2026-09-04)](reference_gitbash_powershell_dollar_underscore_quoting_2026-09-04.md) — Bash工具组PowerShell指令用到$_一律單引號包-Command參數
+- [🔴🔴 教練指令有歧義(插入vs替換/哪張圖檔)要先問清楚再動手(2026-09-04)](feedback_confirm_ambiguous_instructions_before_acting_2026-09-04.md) — seabiscuit20官網logo誤用錯圖+數據列誤增第5欄兩次教訓，教練特別強調原本版面意境不能破壞
 - [🎯🎯 教練課程教材線上觀看系統(event.bymyway.com/materials)從零建置完成(2026-09-04)](project_materials_viewer_system_2026-09-04.md) — Google Drive embed+OAuth整合+後台前台分離，42份教材已匯入待教練勾選公開
 - [🔴🔴🔴 給外部人看的網頁，管理控制項絕對不能跟公開內容共用同一網址(2026-09-04)](feedback_public_admin_separation_default_2026-09-04.md) — materials系統教訓，教練問「我的後台是哪一個」才發現沒拆分，一開始設計就要內建
 - [🔧 Google Cloud Console(Google Auth Platform)OAuth設定完整步驟+踩坑(2026-09-04)](reference_google_drive_oauth_setup_2026-09-04.md) — 測試使用者要在/auth/audience頁單獨加、重新導向URI別填錯欄位、gstatic.com JS載入失敗處理
@@ -13,71 +18,70 @@
 - [🔴🔴🔴🔴🔴 同一死角最多試3次就要停手回報，不能悶頭硬剛燒教練時間/金錢/token(2026-09-03)](feedback_cap_retries_report_when_stuck_2026-09-03.md) — Google表單必填開關+Apps Script編輯器死磕十幾分鐘教練點名效率太慢，教練定調3次原則+主動回報再提替代方案
 - [🔴 coach888新增項目一律放分類第一項，不要放最後(2026-09-03)](feedback_coach888_new_items_go_first.md) — 教練找新項目找半天找不到，之後插入位置固定num=1
 - [🔴🔴🔴 BNI發票是兩套獨立系統(培訓費vs入會續約)+教練已提供全部資料不用再問(2026-09-03)](feedback_bni_invoice_two_independent_systems_sop.md) — 開票前直接查`/invoice-admin`兩個子頁，不問「資料你有嗎」；教練賈維斯期許再次強調
-- [🔧 多背景Agent平行共用同一Chrome分頁會互相搶navigate造成資料污染(2026-09-02)](reference_parallel_background_agents_shared_browser_contamination_2026-09-02.md) — 委派前先交代各自開專屬分頁+每筆核對編號才寫入，BNI信用証補公司欄位三批任務實戰教訓
-- [🔴🔴 CSS column-count多欄排版截圖不能用左右對齊直覺判斷DOM歸屬(2026-09-02)](feedback_column_layout_screenshot_misread_2026-09-02.md) — coach888截圖誤判教練改動內容，教練一句口述比截圖猜測更準確可靠
-- [🔧 FB粉專圖片貼文首次驗證可行+FB社團(Groups)因Meta政策全面鎖死一般App發文權限(2026-09-02)](reference_fb_page_image_post_vs_groups_limitation_2026-09-02.md) — curl multipart上傳圖片+caption，5個粉專實測permalink_url驗證上線；社團問題直接引用不用重查
-- [🔧 launchd服務用subprocess呼叫openclaw/node/homebrew工具找不到指令，PATH只有/usr/bin等四個(2026-09-02)](reference_launchd_subprocess_missing_path_2026-09-02.md) — 待辦提醒系統排一次性cron時踩到，絕對路徑仍不夠要補env PATH
-- [🔧 namecard-db全站改需登入(含瀏覽)+guest_visits記錄來賓完整分會訪問歷程(2026-09-02)](project_namecard_login_gate_and_guest_history_2026-09-02.md) — 教練推翻「僅跟進需登入」改成整站要帳號，上傳記錄uploaded_by；3222位不重複來賓
-- [🎯 教練專屬待辦提醒系統(仿Microsoft To Do)：event.bymyway.com/todo，程式碼完成待Mac部署(2026-09-02)](project_coach_todo_reminder_system_2026-09-02.md) — 三決定：獨立分頁+核心夠用版+沿用個人Telegram通道，部署步驟見接力棒v165
-- [🔧 CSS多欄流式排版(column-count)取代手動row/col配對+大幅HTML重排優先整檔重寫不用regex片段(2026-09-01)](reference_css_masonry_flow_vs_manual_row_pairing_2026-09-01.md) — coach888排版壓縮問題實戰，附div開合計數雙重驗證法
-- [🔴🔴🔴 zhenxin-guests(真鑫)repo從建立以來從未設remote,commit從未推上GitHub(2026-09-01)](feedback_zhenxin_repo_never_had_remote_2026-09-01.md) — 正式站程式碼一度零雲端備份，已補建repo+推送，往後新repo要確認remote有設定
-- [🔧 bni-chapters分會帳號誤點通用/admin會被403擋下已修復,非process crash(2026-09-01)](reference_bni_chapters_admin_403_bug_fixed_2026-09-01.md) — commit 40448f4，教練回報「當掉」實為session scope邏輯漏洞
-- [🔴🔴🔴 複製模板建新網站只查title不夠,要grep全檔確認品牌文字沒殘留(2026-09-01)](feedback_verify_template_branding_after_copy_2026-09-01.md) — 真鑽/真貴複製真鑫程式碼，h1/規則說明多處殘留「真鑫分會」教練實測才發現
-- [🔴🔴🔴 複製模板建新網站要先查既有命名規則,不能自己音譯新名字(2026-09-01)](feedback_check_existing_naming_convention_before_new_subdomain_2026-09-01.md) — 真鑽/真貴誤取名zhenzuan/zhengui，正確應為chapters.bymyway.com既有的real-diamonds/real-wealth
-- [🔧 ACER全機體檢報告(2026-08-31)：修復PS5.1 -AsHashtable+workspace重複clone兩個真bug](project_acer_health_check_2026-08-31.md) — 回覆聯想跨機四層根因信，查ACER近況先讀這份
-- [🔧 FB粉專改名字不影響已核發權杖,不用重新授權；新建粉專才要重跑/me/accounts(2026-09-01)](reference_fb_page_rename_no_reauth_needed_2026-09-01.md) — 14個粉專2026-09-01完全打通後教練提問，順手記錄
-- [🔴🔴🔴 UI改動位置要問清楚放哪一頁，不能自己假設個別頁面vs首頁(2026-09-01)](feedback_ui_change_location_must_confirm_2026-09-01.md) — bni-chapters「認識分會/核心價值」按鈕誤改到個別分會頁，教練要的是首頁，跟案例68同一類「先查證再動手」
-- [🔧 BNI Connect PALMS摘要報告跟明細報表的「來賓」數字口徑不同，PALMS才準(2026-09-01)](reference_bni_palms_vs_detail_report_discrepancy_2026-09-01.md) — 真鑽分會實測落差近3倍(106 vs 303)，之後查準確人數一律用PALMS報表
-- [🔴🔴🔴 用假資料驗證系統畫面要窮舉所有資料表,不能只看主schema(2026-09-01)](feedback_verify_all_tables_not_just_main_schema_2026-09-01.md) — 真鑫戰情儀表板guest_list表(app.py動態建立不在schema.sql)殘留真誠分會假資料到正式站,試金石案例69
-- [🔴🔴🔴🔴 教練貼具體URL要求「照抄」，第一件事是打開查看，不能憑名稱聯想瞎猜(2026-09-01)](feedback_url_given_open_it_dont_guess_2026-09-01.md) — sincere.bymyway.com跟bni-chapters是兩個系統卻聯想搞混，連中3次糾正才查，浪費教練30分鐘+試金石案例68
-- [🔴 git add -A可能繞過.gitignore誤commit含真實個資的.db.bak備份檔(2026-09-01)](feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md) — bni-chapters曾誤commit含7筆真實會員個資的舊備份，*.db規則擋不住.db.bak-xxx變體檔名
-- [🎯 Hermes聽到「開工」要主動讀JUNSHI_HANDOFF_LATEST.md，拉取模式取代軍師主動發信通知(2026-08-31)](project_hermes_pull_progress_rule_2026-08-31.md) — 教練拍板：Hermes無強制hook接收通知，改成開工當下自己去讀軍師進度
-- [🔴🔴 同一功能連問三次還不懂，別再加碼寫文字，換成具體範例+點破認知衝突點(2026-08-31)](feedback_repeated_confusion_use_example_not_more_words_2026-08-31.md) — 「一鍵發佈」功能教練卡在「進行中」跟「修改」字面矛盾，逐行示範真實畫面才真正講懂
-- [🔴🔴🔴 別把AI能自己判斷的小事丟回教練決定+選單UI要顯示底層真實數值不能只給標籤(2026-08-31)](feedback_dont_punt_decisions_show_underlying_values_2026-08-31.md) — 9/16上午下午該自己判斷卻問教練+時段選單只有標籤沒標時間，同天連中兩次同模式
-- [🔴🔴🔴 涉及教練會操作的介面(後台/開關)不能只寫規格交辦，要親自做進去讓教練能點(2026-08-31)](feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31.md) — 分工給Hermes只限教練不會操作的內容維運，教練親自操作的控制項當場做完不延後
-- [🎯🎯 教練拍板大樹小講/近期活動網站內容維運任務預設交Hermes，BNI Connect等後台仍歸軍師(2026-08-31)](project_hermes_default_owner_event_tasks_2026-08-31.md) — 教學迴圈已驗證可運作，政策寫入cross-agent/README.md+5張專案卡標owner，非一次性交辦
-- [🎯 BNI Connect等需要JS/程式化select/截圖的網頁後台操作任務交軍師，Hermes做讀寫類(2026-08-31)](project_hermes_bni_connect_task_routing_2026-08-31.md) — Hermes desktop preview pane無js/select程式化/截圖三能力，教練當場裁示分工，非降級是工具集差距
-- [🎯🎯 Hermes是Mac上真實在跑的獨立桌面AI代理(Nous Research,非Claude)，跑MiniMax不吃Claude額度，workspace與軍師共用同一份大腦(2026-08-31)](project_hermes_desktop_agent_verified_2026-08-31.md) — 查Hermes近況讀~/.hermes/workspace/H_HANDOFF_LATEST.md；交辦文件寫進~/.openclaw/workspace/即可自動同步
-- [🔴🔴🔴 mentor100百人導師申請通知改走Telegram，修復8/27靜默漏接(2026-08-30)](project_mentor100_application_notify_telegram_fix_2026-08-30.md) — 舊sme-register-fn(LINE)吞錯誤同event-signup案例62坑，全機已掃描確認無其他專案殘留
-- [🔧 event.bymyway.com前面Cloudflare會擋掉沒有瀏覽器UA的請求(403)(2026-08-30)](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md) — 任何腳本自動fetch這類bymyway子網域都要帶Mozilla/5.0樣式UA，否則被擋
-- [🎯🎯 大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，脫離Netlify部署次數限制(2026-08-30教練拍板)](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md) — 讀活repo+DB即時渲染取代手動zip部署，網址代表活動格式非地點，未來其他Netlify站台可比照
-- [🔴🔴🔴 Claude桌面版App會在原session忙碌未回應時自動生出fork分身，機制已逐行查證確認(2026-08-30)](feedback_check_git_log_for_parallel_builds_2026-08-30.md) — .jsonl比對uuid找到01:38:11精確分岔點+isMeta同步握手訊息物證，非教練或AI下的指令
-- [🔧 Jinja2樣板dict鍵名叫values會撞內建方法，資料靜默消失不報錯(2026-08-30)](reference_jinja2_dict_values_key_collision_2026-08-30.md) — entry.values.xxx存取到dict.values方法物件而非資料，總計欄位因走不同邏輯掩蓋了bug
-- [🔧 bymyway.com子網域回傳Cloudflare 530=tunnel沒連線，peipei-event缺launchd看護掛5天(2026-08-29)](reference_bymyway_subdomain_530_missing_launchd_2026-08-29.md) — 診斷法：查DNS的CNAME目標cfargotunnel.com uuid比對本機process；已補launchd plist修復
-- [🔴🔴🔴 教練陳述已說過的需求時不要重新查證，直接查技術根因解決(2026-08-28)](feedback_dont_reverify_stated_requirements_2026-08-28.md) — 花時間驗證「教練是否說過」浪費他流量跟時間，查了也只證明教練是對的
-- [🔧 BNI Connect信用証三種按鈕狀態判讀+confirm()對話框覆蓋解法(2026-08-28)](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md) — 產生信用証/信用證(已過期)/純離開(無額度)，第一次失敗值得重試1次
-- [🔧 workspace repo多機並發git衝突處理法+編輯前先重新Read確認未被改版(2026-08-28)](reference_workspace_git_concurrent_machine_race_2026-08-28.md) — push被拒先pull不要rebase abort（會清空自己剛commit的內容）；共用歷史頁/待辦表下手前先重讀最新結構
-- [🔴🔴🔴🔴🔴 第三方正式系統絕不點擊「產生/建立」類按鈕測試，誤觸產生真實BNI信用証(2026-08-28)](feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28.md) — href="#"靠JS事件觸發的按鈕=危險訊號，只能navigate+讀取文字判斷存在與否
-- [🔴🔴🔴 大量重複瀏覽器操作要委派背景Agent，教練當場肯定「早該這麼做」(2026-08-27)](feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27.md) — BNI信用証清查231人案例；驗證SOP可行後打包委派，不要自己逐輪手動跑browser_batch
-- [🎯🎯 bni-chapters新增會員自助簡介機制(真誠分會示範)，比照mentor100第一階段設計(2026-08-27)](project_bni_chapters_member_selfsubmit_2026-08-27.md) — chapter_id分流+9分會共用同一套後端，教練驗收真誠分會通過即等於全部分會同步完成
-- [🔴🔴 查證沒找到要先報告已查過什麼，不能跳步直接要教練換管道(2026-08-27)](feedback_report_offline_check_before_pivoting_2026-08-27.md) — 林仁超/林智帆發票查證案例，查了本機資料庫卻沒報告就問登入，教練誤以為沒查
-- [🔧 bigtree_publish.py一鍵發佈只認SESSION_DATES變動，改其他區塊文案會誤判「已最新」拒絕部署(2026-08-27)](reference_bigtree_publish_hash_scope_2026-08-27.md) — 遇到這狀況改走手動git archive+zip+curl流程，記得補記額度
-- [🔴🔴🔴 FB API權限卡住先查官方文件/安全中心，不要靠UI試錯偵錯(2026-08-27)](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md) — pages_manage_posts卡了大半天才發現真因是商家驗證未完成，教練點名檢討浪費時間token
-- [🔴🔴 教練準備中的素材不要用其他圖片湊數代替，等真正提供才處理(2026-08-27)](feedback_dont_substitute_placeholder_await_real_material_2026-08-27.md) — bigtree歷史紀錄8/28用群眾照湊數被撤回，教練說「不要瞎跑」
-- [🔴🔴🔴🔴 Stop hook守則#07輪詢偵測瞎眼35天，工具回音被誤判成回合邊界(2026-08-27)](reference_stop_hook_tool_result_boundary_bug_2026-08-27.md) — 修改「往回掃描transcript找回合邊界」的程式碼前必讀；已用真實對話重播驗證+重寫失效的測試套件
-- [🔴🔴🔴🔴🔴 MiniMax批次呼叫紅線：程式碼硬上限400次/5小時，越線自動中止+通知(2026-08-27)](feedback_minimax_batch_call_redline_guard_2026-08-27.md) — 教練列為僅次於硬碟被刪的第二嚴重事故後拍板；scripts/minimax_batch_guard.py已接上namecard-db三個呼叫點並實測驗證
-- [🎯 名片系統媒合永久改手動觸發：現任92人例外預先媒合，其餘按鈕才呼叫AI(2026-08-27)](project_namecard_manual_trigger_matching_design_2026-08-27.md) — 案例65額度事故後教練拍板定案，/find搜尋頁+guest媒合入口已上線
-- [🔧 BNI Connect「地區-查看來賓」報表正確路徑+職業欄位證明+SpreadsheetML(.xls)解析法(2026-08-27)](reference_bni_connect_guest_report_navigation_2026-08-27.md) — 教練糾正「來賓一定有專業別」查證屬實，含8分會完整名單(比原知5個多3個)
-- [🔴🔴 INSERT OR IGNORE不查rowcount會靜默漏寫資料，零錯誤訊息(2026-08-27)](feedback_insert_or_ignore_silent_failure_2026-08-27.md) — 4位BNI會員分類憑空消失，教練肉眼比對搜尋結果才發現
-- [🔴🔴🔴🔴🔴 金門場報名落差問三次才給完整名單，教練從金門回來才被告知，痛批嚴重失職(2026-08-26)](feedback_registration_gap_must_surface_immediately_2026-08-26.md) — 已建registration_notify_gap_check.py掛進開工hook，每次自動查空窗期報名不用教練追問
-- [🔴🔴🔴🔴🔴 「三台各自為政」完整答案：聯想跨機同步四層根因全修(2026-08-26)](project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md) — hook沒註冊+workspace指向7/23死clone+stdin中文Big5讀壞+push沒先pull；附四步驗證法，ACER/Mac也中同款坑
-- [🔧 verbatim蒸餾機制只抓CLI/Code面板不抓Desktop一般聊天(2026-08-26)](reference_verbatim_pipeline_cli_only_not_desktop_chat.md) — 查「查無對話紀錄」先問走哪個介面；跨機腳本死活判斷要連對方hook一起查
-- [🔴🔴🔴 小龍蝦自稱「已建立監控機制」實為心算編數字，非真實hook/cron(2026-08-25)](feedback_ai_claimed_mechanism_verify_before_trust.md) — 82%/3MB/4MB矛盾訊息真相；AI自稱「已建立」先查有無真程式碼支撐
-- [🔴🔴 測試腳本會打真實網路要mock，重跑test轟炸教練Telegram 8則的教訓(2026-08-25)](feedback_test_script_must_mock_side_effects.md) — session-summary-trigger測試漏了防護，跟context-overflow-guard測試同款教訓沒有互相套用
-- [🔧 VPS git備份靜默失敗35天，根因dubious ownership+host容器路徑不對等(2026-08-25)](reference_vps_git_dubious_ownership_silent_failure.md) — docker exec內先加safe.directory；host直接跑git會找不到憑證路徑
-- [🔴🔴🔴 查自動化要問「結果有沒有人看到」不只是「有沒有在跑」+送教練通知的正確寫法(2026-08-25)](feedback_automation_must_reach_a_human.md) — 體檢揪出一批跑幾個月但成果沒人看的自動化；notify_coach.sh是唯一正確出口(底線版非連字號版)
-- [🔴🔴🔴 ezPay開票SOP六步驟(教練說「開票」自動觸發)：連線裝置isLocal:true→欄位ID→含稅核對→送出→查證(2026-08-24)](feedback_ezpay_invoice_sop.md) — 教練指定「像網頁推SOP一樣」，開票前先讀這份不用重找線索
-- [🔴🔴 不要把自己發現、教練沒問的事丟出來浪費釐清時間(2026-08-24)](feedback_dont_surface_own_tangential_findings.md) — 除非能精簡到一句話且真的重要，否則自己消化
-- [🔴🔴 Mac跟聯想同時開Claude瀏覽器擴充功能會搶線，自動化連到對方機器(2026-08-17)](feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md) — 教練親自抓出根因，跟isLocal:true鐵律配套看
-- [🔧 claude-in-chrome操作密碼欄位可能被其他擴充功能浮層卡死(2026-08-08)](reference_claude_in_chrome_password_field_extension_conflict.md) — 改用Flask test_client等效驗證+誠實告知視覺驗證缺口
+- [🔧 多背景Agent平行共用同一Chrome分頁會互相搶navigate造成資料污染(2026-09-02)](reference_parallel_background_agents_shared_browser_contamination_2026-09-02.md)
+- [🔴🔴 CSS column-count多欄排版截圖不能用左右對齊直覺判斷DOM歸屬(2026-09-02)](feedback_column_layout_screenshot_misread_2026-09-02.md)
+- [🔧 FB粉專圖片貼文首次驗證可行+FB社團(Groups)因Meta政策全面鎖死一般App發文權限(2026-09-02)](reference_fb_page_image_post_vs_groups_limitation_2026-09-02.md)
+- [🔧 launchd服務用subprocess呼叫openclaw/node/homebrew工具找不到指令，PATH只有/usr/bin等四個(2026-09-02)](reference_launchd_subprocess_missing_path_2026-09-02.md)
+- [🔧 namecard-db全站改需登入(含瀏覽)+guest_visits記錄來賓完整分會訪問歷程(2026-09-02)](project_namecard_login_gate_and_guest_history_2026-09-02.md) — 3222位不重複來賓
+- [🎯 教練專屬待辦提醒系統(仿Microsoft To Do)：event.bymyway.com/todo，程式碼完成待Mac部署(2026-09-02)](project_coach_todo_reminder_system_2026-09-02.md)
+- [🔧 CSS多欄流式排版(column-count)取代手動row/col配對+大幅HTML重排優先整檔重寫不用regex片段(2026-09-01)](reference_css_masonry_flow_vs_manual_row_pairing_2026-09-01.md)
+- [🔴🔴🔴 zhenxin-guests(真鑫)repo從建立以來從未設remote,commit從未推上GitHub(2026-09-01)](feedback_zhenxin_repo_never_had_remote_2026-09-01.md)
+- [🔧 bni-chapters分會帳號誤點通用/admin會被403擋下已修復,非process crash(2026-09-01)](reference_bni_chapters_admin_403_bug_fixed_2026-09-01.md)
+- [🔴🔴🔴 複製模板建新網站只查title不夠,要grep全檔確認品牌文字沒殘留(2026-09-01)](feedback_verify_template_branding_after_copy_2026-09-01.md)
+- [🔴🔴🔴 複製模板建新網站要先查既有命名規則,不能自己音譯新名字(2026-09-01)](feedback_check_existing_naming_convention_before_new_subdomain_2026-09-01.md) — 應查chapters.bymyway.com既有命名
+- [🔧 ACER全機體檢報告(2026-08-31)：修復PS5.1 -AsHashtable+workspace重複clone兩個真bug](project_acer_health_check_2026-08-31.md)
+- [🔧 FB粉專改名字不影響已核發權杖,不用重新授權；新建粉專才要重跑/me/accounts(2026-09-01)](reference_fb_page_rename_no_reauth_needed_2026-09-01.md)
+- [🔴🔴🔴 UI改動位置要問清楚放哪一頁，不能自己假設個別頁面vs首頁(2026-09-01)](feedback_ui_change_location_must_confirm_2026-09-01.md)
+- [🔧 BNI Connect PALMS摘要報告跟明細報表的「來賓」數字口徑不同，PALMS才準(2026-09-01)](reference_bni_palms_vs_detail_report_discrepancy_2026-09-01.md)
+- [🔴🔴🔴 用假資料驗證系統畫面要窮舉所有資料表,不能只看主schema(2026-09-01)](feedback_verify_all_tables_not_just_main_schema_2026-09-01.md)
+- [🔴🔴🔴🔴 教練貼具體URL要求「照抄」，第一件事是打開查看，不能憑名稱聯想瞎猜(2026-09-01)](feedback_url_given_open_it_dont_guess_2026-09-01.md)
+- [🔴 git add -A可能繞過.gitignore誤commit含真實個資的.db.bak備份檔(2026-09-01)](feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md)
+- [🎯 Hermes聽到「開工」要主動讀JUNSHI_HANDOFF_LATEST.md，拉取模式取代軍師主動發信通知(2026-08-31)](project_hermes_pull_progress_rule_2026-08-31.md)
+- [🔴🔴 同一功能連問三次還不懂，別再加碼寫文字，換成具體範例+點破認知衝突點(2026-08-31)](feedback_repeated_confusion_use_example_not_more_words_2026-08-31.md)
+- [🔴🔴🔴 別把AI能自己判斷的小事丟回教練決定+選單UI要顯示底層真實數值不能只給標籤(2026-08-31)](feedback_dont_punt_decisions_show_underlying_values_2026-08-31.md)
+- [🔴🔴🔴 涉及教練會操作的介面(後台/開關)不能只寫規格交辦，要親自做進去讓教練能點(2026-08-31)](feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31.md)
+- [🎯🎯 教練拍板大樹小講/近期活動網站內容維運任務預設交Hermes，BNI Connect等後台仍歸軍師(2026-08-31)](project_hermes_default_owner_event_tasks_2026-08-31.md)
+- [🎯 BNI Connect等需要JS/程式化select/截圖的網頁後台操作任務交軍師，Hermes做讀寫類(2026-08-31)](project_hermes_bni_connect_task_routing_2026-08-31.md)
+- [🎯🎯 Hermes是Mac上真實在跑的獨立桌面AI代理(Nous Research,非Claude)，跑MiniMax不吃Claude額度(2026-08-31)](project_hermes_desktop_agent_verified_2026-08-31.md) — 查近況讀~/.hermes/workspace/H_HANDOFF_LATEST.md
+- [🔴🔴🔴 mentor100百人導師申請通知改走Telegram，修復8/27靜默漏接(2026-08-30)](project_mentor100_application_notify_telegram_fix_2026-08-30.md)
+- [🔧 event.bymyway.com前面Cloudflare會擋掉沒有瀏覽器UA的請求(403)(2026-08-30)](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md)
+- [🎯🎯 大樹小講/AI微論壇/紅綠燈看板/培訓行事曆改event.bymyway.com即時渲染，脫離Netlify部署次數限制(2026-08-30教練拍板)](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md)
+- [🔴🔴🔴 Claude桌面版App會在原session忙碌未回應時自動生出fork分身，機制已逐行查證確認(2026-08-30)](feedback_check_git_log_for_parallel_builds_2026-08-30.md)
+- [🔧 Jinja2樣板dict鍵名叫values會撞內建方法，資料靜默消失不報錯(2026-08-30)](reference_jinja2_dict_values_key_collision_2026-08-30.md)
+- [🔧 bymyway.com子網域回傳Cloudflare 530=tunnel沒連線，peipei-event缺launchd看護掛5天(2026-08-29)](reference_bymyway_subdomain_530_missing_launchd_2026-08-29.md)
+- [🔴🔴🔴 教練陳述已說過的需求時不要重新查證，直接查技術根因解決(2026-08-28)](feedback_dont_reverify_stated_requirements_2026-08-28.md)
+- [🔧 BNI Connect信用証三種按鈕狀態判讀+confirm()對話框覆蓋解法(2026-08-28)](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md)
+- [🔧 workspace repo多機並發git衝突處理法+編輯前先重新Read確認未被改版(2026-08-28)](reference_workspace_git_concurrent_machine_race_2026-08-28.md) — push被拒先pull不要rebase abort
+- [🔴🔴🔴🔴🔴 第三方正式系統絕不點擊「產生/建立」類按鈕測試，誤觸產生真實BNI信用証(2026-08-28)](feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28.md)
+- [🔴🔴🔴 大量重複瀏覽器操作要委派背景Agent，教練當場肯定「早該這麼做」(2026-08-27)](feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27.md)
+- [🎯🎯 bni-chapters新增會員自助簡介機制(真誠分會示範)，比照mentor100第一階段設計(2026-08-27)](project_bni_chapters_member_selfsubmit_2026-08-27.md)
+- [🔴🔴 查證沒找到要先報告已查過什麼，不能跳步直接要教練換管道(2026-08-27)](feedback_report_offline_check_before_pivoting_2026-08-27.md)
+- [🔧 bigtree_publish.py一鍵發佈只認SESSION_DATES變動，改其他區塊文案會誤判「已最新」拒絕部署(2026-08-27)](reference_bigtree_publish_hash_scope_2026-08-27.md)
+- [🔴🔴🔴 FB API權限卡住先查官方文件/安全中心，不要靠UI試錯偵錯(2026-08-27)](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md)
+- [🔴🔴 教練準備中的素材不要用其他圖片湊數代替，等真正提供才處理(2026-08-27)](feedback_dont_substitute_placeholder_await_real_material_2026-08-27.md)
+- [🔴🔴🔴🔴 Stop hook守則#07輪詢偵測瞎眼35天，工具回音被誤判成回合邊界(2026-08-27)](reference_stop_hook_tool_result_boundary_bug_2026-08-27.md)
+- [🔴🔴🔴🔴🔴 MiniMax批次呼叫紅線：程式碼硬上限400次/5小時，越線自動中止+通知(2026-08-27)](feedback_minimax_batch_call_redline_guard_2026-08-27.md)
+- [🎯 名片系統媒合永久改手動觸發：現任92人例外預先媒合，其餘按鈕才呼叫AI(2026-08-27)](project_namecard_manual_trigger_matching_design_2026-08-27.md)
+- [🔧 BNI Connect「地區-查看來賓」報表正確路徑+職業欄位證明+SpreadsheetML(.xls)解析法(2026-08-27)](reference_bni_connect_guest_report_navigation_2026-08-27.md)
+- [🔴🔴 INSERT OR IGNORE不查rowcount會靜默漏寫資料，零錯誤訊息(2026-08-27)](feedback_insert_or_ignore_silent_failure_2026-08-27.md)
+- [🔴🔴🔴🔴🔴 金門場報名落差問三次才給完整名單，教練從金門回來才被告知，痛批嚴重失職(2026-08-26)](feedback_registration_gap_must_surface_immediately_2026-08-26.md)
+- [🔴🔴🔴🔴🔴 「三台各自為政」完整答案：聯想跨機同步四層根因全修(2026-08-26)](project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26.md) — ACER/Mac也中同款坑
+- [🔧 verbatim蒸餾機制只抓CLI/Code面板不抓Desktop一般聊天(2026-08-26)](reference_verbatim_pipeline_cli_only_not_desktop_chat.md)
+- [🔴🔴🔴 小龍蝦自稱「已建立監控機制」實為心算編數字，非真實hook/cron(2026-08-25)](feedback_ai_claimed_mechanism_verify_before_trust.md)
+- [🔴🔴 測試腳本會打真實網路要mock，重跑test轟炸教練Telegram 8則的教訓(2026-08-25)](feedback_test_script_must_mock_side_effects.md)
+- [🔧 VPS git備份靜默失敗35天，根因dubious ownership+host容器路徑不對等(2026-08-25)](reference_vps_git_dubious_ownership_silent_failure.md)
+- [🔴🔴🔴 查自動化要問「結果有沒有人看到」不只是「有沒有在跑」+送教練通知的正確寫法(2026-08-25)](feedback_automation_must_reach_a_human.md)
+- [🔴🔴🔴 ezPay開票SOP六步驟(教練說「開票」自動觸發)：連線裝置isLocal:true→欄位ID→含稅核對→送出→查證(2026-08-24)](feedback_ezpay_invoice_sop.md)
+- [🔴🔴 不要把自己發現、教練沒問的事丟出來浪費釐清時間(2026-08-24)](feedback_dont_surface_own_tangential_findings.md)
+- [🔴🔴 Mac跟聯想同時開Claude瀏覽器擴充功能會搶線，自動化連到對方機器(2026-08-17)](feedback_two_machines_same_chrome_extension_conflict_2026-08-17.md)
 - [🔧 BNI入會費逐年調漲(2025:36000→2026:39800，續約26800)+分會異動備註對不上不代表資料錯誤(2026-08-24)](reference_bni_membership_fee_history_and_chapter_transfer.md) — 查ezPay舊發票查重複時金額/分會不一致先判斷調漲或轉會，不要當異常
 - [🔴🔴🔴 OpenClaw hook 光註冊不會生效，一定要有HOOK.md宣告metadata.events(2026-08-24)](reference_openclaw_hook_requires_hookmd_metadata.md) — 載入器只log.warn就靜默跳過；驗證法是比對gateway log的loaded數字
 - [🔴🔴🔴🔴 查不到就自己想辦法查，禁止把工作轉嫁教練——凌晨3點搬運工事件(2026-08-24)](feedback_exhaust_own_tools_before_asking_coach.md) — computer-use開App/讀原始碼/自己發測試訊息，窮盡自己手段前不准請教練重做
 - [🔴🔴🔴 報名通知改走Telegram群組「活動報名即時通知」，LINE已拔除(2026-08-24)](reference_telegram_registration_notify_group.md) — LINE每則主動推播扣月配額200則；含新群組requireMention靜默忽略陷阱+接通SOP
 - [🔴🔴🔴 BNI大台南南區94人Email/電話資料庫位置+同音字近似字主動確認鐵律(2026-08-19)](feedback_bni_member_db_authoritative_source.md)
-- [🔴🔴 claude-in-chrome連錯教練Windows電腦而非Mac本機，動手前沒查連線裝置(2026-08-18)](feedback_claude_in_chrome_wrong_device.md)
+- [🔴🔴 claude-in-chrome連錯裝置/密碼欄位卡死：[連錯Windows非Mac(08-18)](feedback_claude_in_chrome_wrong_device.md)｜[密碼欄位被浮層卡死(08-08)](reference_claude_in_chrome_password_field_extension_conflict.md)]
 - [🔴🔴🔴 建網站自己build+測直接deploy --prod，跳過網頁推SOP的教練確認關卡(2026-08-18)](feedback_skipped_web_push_sop_2026-08-18.md)
-- [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑/送出後必查證(2026-08-28補充computer打字失效改jQuery trigger)](reference_ezpay_invoice_issuing_procedure.md)
+- [🔧 ezPay電子發票開立SOP：自訂編號規則/品項代碼/含稅計算易踩坑(2026-08-28補充computer打字失效改jQuery trigger)](reference_ezpay_invoice_issuing_procedure.md)
 - [🔴🔴🔴 賈維斯目標=結果導向委派+記得住+自動串連，不用重複交代(2026-08-25擴充)](feedback_jarvis_outcome_delegation_style.md)
 - [🔴🔴 教練期待瀏覽器操作全由AI完成，卡住要精準定位障礙點而非整任務轉手動(2026-08-14)](feedback_browser_automation_ai_should_complete.md)
 - [🔴🔴🔴🔴🔴 三LINE帳號個人記憶標準化：main/default頻道從未真正運作過，兩層根因已修復驗證(2026-08-14)](project_line_per_user_memory_standardization_2026-08-14.md)
@@ -103,14 +107,10 @@
 - [🔴🔴🔴🔴 HTML驗證必跳Chrome(2026-08-08第10次後改PostToolUse自動化，不再靠記憶)](feedback_html_preview_chrome_only.md)
 - [🔴🔴🔴 軍師回覆滑成簡體字，第4犯(2026-07-25聯想Claude Code補Hook)](feedback_chinese_only.md)
 - [👤 教練隱私立場：公眾人物零隱瞞，優先便利性甚於資料極小化(2026-07-10)](user_privacy_risk_posture.md)
-- [🔴🔴🔴 教練糾正時先查證再回應，不要用舊印象頂撞(2026-07-10)](feedback_verify_before_correcting_coach.md)
-- [🔴🔴🔴 有能力自己驗證時絕不叫用戶當試錯手腳——Amber WebDAV血淚(2026-07-09)](feedback_self_verify_before_directing_user.md)
+- [🔴🔴🔴 查證系列鐵律合輯：[糾正教練前先查證](feedback_verify_before_correcting_coach.md)｜[不叫用戶當試錯手腳](feedback_self_verify_before_directing_user.md)｜[禁止問教練記不記得](feedback_never_ask_coach_recall_self_verify.md)｜[不轉述二手證據](feedback_verify_dont_relay_secondhand_claims.md)｜[查真實transcript非案例數](feedback_verify_via_real_transcript_not_case_count.md)]
 - [🔴🔴🔴 部署SOP準則：「有沒有公開推廣」非「有沒有講Netlify」(2026-07-09教練親定)](feedback_netlify_autodeploy_cost_awareness.md)
-- [🔴🔴🔴 禁止問教練記不記得，AI自己查——七層查證系統(2026-07-08)](feedback_never_ask_coach_recall_self_verify.md)
 - [📮 「小龍蝦專線」=cloudflared=LINE命脈，絕對不能關(2026-07-08)](reference_xiaolongxia_line_tunnel_cloudflared.md)
 - [🔴🔴 openclaw cron/jobs.json是脫節靜態快照(2026-07-06)](reference_openclaw_cron_json_stale_snapshot.md)
-- [🔴🔴 教練不接受轉述證據，要親自查證才動手(2026-07-02)](feedback_verify_dont_relay_secondhand_claims.md)
-- [🔴🔴🔴 判斷頻率要查真實對話紀錄，不能查案例庫筆數(2026-07-02)](feedback_verify_via_real_transcript_not_case_count.md)
 - [🔴🔴🔴🔴🔴 事件驅動優於輪詢——教練第5次糾正，這次是前端UI輪詢(2026-07-28)](feedback_event_driven_not_polling_pattern.md)
 - [🔴🔴🔴 軍師流量稀缺，耗token動作寫腳本丟終端機跑(2026-06-30)](feedback_junshi_token_economy_outsource.md)
 - [🔴🔴🔴 軍師=Opus最高決策層，不請示教練小決策(多次發作)](feedback_junshi_role_decide_not_ask.md)
