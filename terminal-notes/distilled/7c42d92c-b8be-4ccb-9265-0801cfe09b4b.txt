@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 7c42d92c-b8be-4ccb-9265-0801cfe09b4b
-# 提取時間：2026-09-04 17:30 (台灣時間)
-# 共 5 條教練原話
+# 提取時間：2026-09-04 19:12 (台灣時間)
+# 共 8 條教練原話
 
 ---
 
@@ -129,3 +129,137 @@ commit …（略）
 　▶ AI 回應：Let me verify both sections' HTML is valid (balanced divs) and check the counts render correctly before committing.
 
 　▶ AI 回應：Balanced HTML, counts match. Let me verify visually in a local preview before pushing (this is coach's own portfolio page, worth a quick check).
+
+　▶ AI 回應：GitHub raw content confirmed correct, and正式站也已建置完成、curl 驗證通過。
+
+query完成，教練——查了一遍才發現：**這 3 個加上今天剛上線的海餅乾，全部都沒放進作品一覽表**，已經補上去了。
+
+**查證結果**（比對正式站原始碼逐一核對）：
+
+| 網頁 | 原本有嗎 | 現在 |
+|---|---|---|
+| 海餅乾俱樂部20週年 | ❌ 沒有 | ✅ 已補進「大樹常用」第1項 |
+| 淺山綠 10/10 活動（人生四席・一日共鳴）| ❌ 沒有 | ✅ 已補進第2項 |
+| 結繩 DIY（傘繩結繩工作坊）| ❌ 沒有 | ✅ 已補進第3…（略）
+
+【教練 2026-09-04 10:26】
+https://coach1973.github.io/coach888/. 搞什麼鬼？我在裡面測試了好幾次。
+
+我新增分類「近期活動」，新增完之後，我要勾選項目過去，根本選項當中都沒有出現我新增的分類。
+
+我又測了第二次：我新增分類，然後手動在新增分類那邊先增加一個小項目，接著再開始勾選，但每個新增的分類還是沒有出現。
+
+這種低級錯誤，馬上修復！
+
+　▶ AI 回應：Now I fully understand the bug — this is a real architecture gap, not just the dropdown. Custom categories created via "➕新增分類" are **never saved anywhere** (not to localStorage's structure, not to the server) — they only exist in that live browser tab. Let me fix both the dropdown symptom and the ro…（略）
+
+　▶ AI 回應：Now let me implement the fix — adding `SECTIONS_KEY` persistence + `createSectionBlock`/`restoreCustomSections` + fixing the dropdown refresh:
+
+　▶ AI 回應：Now add `saveSections()`/`restoreCustomSections()` right after `applyTitles()`:
+
+　▶ AI 回應：Good, it already exists. Now let's refactor `addSection()` to reuse `createSectionBlock`, save sections, and refresh the bulk dropdown — this fixes the reported symptom directly:
+
+　▶ AI 回應：Now the delete handler — needs to persist removal too, so a deleted custom category doesn't reappear on reload:
+
+　▶ AI 回應：Now let's update the page init sequence to reconstruct custom sections on load and after server sync:
+
+　▶ AI 回應：Good, exactly where I intended. Now let's update the init sequence at the bottom (lines ~620-650):
+
+　▶ AI 回應：Let's validate syntax and then functionally test the actual bug scenario in a browser.
+
+　▶ AI 回應：JS syntax is valid. Now let's functionally verify the actual bug scenario in a browser.
+
+　▶ AI 回應：Persistence confirmed across reload. Let me also verify the delete path works correctly (removal should also survive reload, not resurrect):
+
+　▶ AI 回應：Let me make sure my test didn't leave any test artifacts on the real production sync server.
+
+　▶ AI 回應：Confirmed — the server has a hardcoded key whitelist that doesn't include the new `coach888_sections` key yet. Let me fix it.
+
+　▶ AI 回應：`coach888_sections` key is now accepted by the server. Let's re-run the full end-to-end test including cross-device sync now that the backend accepts the key.
+
+　▶ AI 回應：Server now correctly stores it. Let's simulate opening from a completely different "device" (fresh port, no local history) to confirm true cross-device sync works.
+
+　▶ AI 回應：Full cross-device sync confirmed. Now let me clean up the test artifact from the real production server.
+
+　▶ AI 回應：Test artifact cleaned up, server state back to production-normal. Let's close the test tabs and stop the local preview servers.
+
+　▶ AI 回應：Now let's commit both fixes (frontend + backend) and push.
+
+　▶ AI 回應：This time it auto-merged cleanly. Let's push.
+
+　▶ AI 回應：已修好，教練，而且問題比表面看到的更嚴重——不只是下拉選單的小毛病。
+
+**真正的根因**：「➕新增分類」建出來的分類，從頭到尾**沒有存進任何地方**——不是 localStorage 結構、不是伺服器、更不是網頁原始碼。它只活在您當下那個瀏覽器分頁的記憶體裡。批量搬移選單找不到新分類只是第一個被您發現的症狀，實際上這個分類本身也是隨時會消失的（重新整理、換裝置都留不住）——這才是真正該叫「低級錯誤」的地方，不是選單而已。
+
+**已修的兩處**：
+1. 新增/刪除分類時，即時同步更新批量搬移下拉選單，不用重新切換模式才刷新
+2. 新增了分類的持久化機制（存進 localStorage＋跟著跨…（略）
+
+【教練 2026-09-04 10:55】
+跟你反映兩件事，請幫忙調整一下：
+
+1. 預覽網址與變動提醒
+我剛才在你跳出來的本機頁面下改了一大堆東西，功能雖然正常，但我改的其實是暫存檔，根本沒有同步到雲端正式網址上，等於白忙一場。我已經好幾次做白工了，請你下次修復完成後，直接跳正式的網址給我看，或者在文字上提醒我如果要修改，請到正式網頁上操作。
+2. 大分類任意移動功能
+目前的分類有「1、2、3、4、5」數字排序，我想把這些數字取消，純粹顯示中文名稱就好。另外，當大分類收合起來時，要能支援手動拖曳排序，例如可以直接把第 4 項移到第 2 項、把第 2 項移到第 5 項下方，讓我能自由調整各項目的位置。
+
+　▶ AI 回應：Both are clear, valid points. Let me first look at the current section-numbering/renumbering code and the drag-and-drop mechanism for items (to reuse the same pattern for sections) before making changes.
+
+　▶ AI 回應：Now let's look at `getDragAfterElement`, `onMouseMove`, and `onMouseUp` to model the analogous section-level drag logic:
+
+　▶ AI 回應：Let me now implement both fixes. First, memory: this workflow mistake (giving coach a local-only preview) needs to be written down since it's caused repeated wasted work — I'll do that after the code fix. Let's start with removing the section numbering and adding section drag-reorder.
+
+　▶ AI 回應：Now let's update `createSectionBlock()` to drop the idx span and add a section-level drag handle to every section-title:
+
+　▶ AI 回應：Now let's add the same drag-handle to all existing static section-titles (including the recycle bin, so it can also be repositioned if coach wants — actually let me check if that makes sense, then insert consistently):
+
+　▶ AI 回應：Confirmed the duplication — let me fix it.
+
+　▶ AI 回應：Now let's wire up the actual drag mechanics. First, let's look at `wireSectionBlock` to add the mousedown handler there:
+
+　▶ AI 回應：Now let's add the section-drag global state, handlers, and persistence functions near the item-drag equivalents:
+
+　▶ AI 回應：Now add the `SECTION_ORDER_KEY` variable and wire it into sync + init flow:
+
+　▶ AI 回應：Now let's wire `applySectionOrder()` into the init sequence, right after `restoreCustomSections()` in both places:
+
+　▶ AI 回應：Let's verify the `btnCopy` function (used for the "複製排序貼給AI" workflow) doesn't break with idx removed, and do a full syntax check.
+
+　▶ AI 回應：Now let's functionally test both fixes in a browser: numbering removed + drag-reorder works + persists.
+
+　▶ AI 回應：No errors. Let's confirm the numbering is gone and check the section titles render clean:
+
+　▶ AI 回應：Let me stop and check — I need to add `coach888_section_order` to the server whitelist too, matching the same mistake pattern from before.
+
+　▶ AI 回應：Let me fix the small ordering inconsistency in `createSectionBlock`, then safely test the drag-reorder without touching production data (mocking `fetch` during the test).
+
+　▶ AI 回應：Now let's reload the local test tab and safely test the drag-reorder logic with `fetch` blocked so nothing touches production data.
+
+　▶ AI 回應：Now let's simulate coach's exact scenario: collapse sections, then drag section #2 down past #4/#5.
+
+　▶ AI 回應：Good — the Browser pane is currently hidden from the user, so this is safe. Let's continue the test now that the tab has real viewport dimensions.
+
+　▶ AI 回應：Confirmed production is untouched. Both fixes fully verified. Let's clean up local test resources.
+
+　▶ AI 回應：Let me also clean up leftover local test tabs from earlier in this session, since those are exactly the kind of thing that caused coach's confusion.
+
+　▶ AI 回應：Browser pane is now fully closed — no stray local previews left for coach to stumble into. Now let's commit and push both fixes.
+
+　▶ AI 回應：Now the backend whitelist fix:
+
+　▶ AI 回應：Let's do a final live verification against the real production URL.
+
+　▶ AI 回應：Confirmed live now — just needed a bit more build time. Both fixes fully deployed and verified.
+
+　▶ AI 回應：Both fixes are live. Here's the summary:
+
+**1. 本機預覽問題**：已修正,以後絕對不會再發生。剛才順手把 Browser pane 裡殘留的幾個本機測試分頁全部關掉了——那正是您之前誤觸的頁面來源。以後我完成修復後只會給您**正式網址**，不會讓本機測試畫面留在畫面上讓您誤觸。這條我也寫進長期記憶，往後任何場次都會遵守。
+
+**2. 兩項功能已修好並上線**：
+- 分類數字「一、二、三...」已拿掉，只剩中文標題（最近刪除的🗑圖示保留，因為那是功能圖示不是編號）
+- 每個大分類標題列新增了拖曳把手（⠿），可以直接拖曳調整整個分類的順序，收合或展開狀…（略）
+
+【教練 2026-09-04 11:11】
+還有一個方法可以一勞永逸、從根源解決：就是你讓我在本機這邊改，這沒問題，但改完之後，你再做一個叫做「上傳」的按鈕。這樣的話，就算我改了半天，只要一鍵上傳，以後就會直接同步到網址上面去了。
+
+你覺得這個可行嗎？如果不行的話就算了。

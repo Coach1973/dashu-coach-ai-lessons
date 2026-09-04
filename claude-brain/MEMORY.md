@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 coach888新增同步key要前端陣列+後端COACH888_STATE_KEYS白名單同一輪一起改(2026-09-04)](reference_coach888_sync_key_whitelist_pattern_2026-09-04.md) — 同場連踩兩次，前端不報錯只有curl查伺服器回傳才看得出漏加
+- [🔴🔴🔴🔴 Browser pane本機測試分頁絕不能留給教練看到/誤用，教練已多次白忙一場(2026-09-04)](feedback_never_expose_local_preview_to_coach_2026-09-04.md) — coach888互動編輯頁被誤當正式站操作，收工前務必tabs_close清空+只給正式網址
 - [🎯🎯 海餅乾俱樂部20週年官網(seabiscuit20)六項新功能：時光足跡/見證/語錄/完整守則/頁尾連結(2026-09-04)](project_seabiscuit20_six_features_2026-09-04.md) — 教練驗收中，完整頁面結構+URL清單，新增頁面記得nav/valid陣列/輪播模式三處要對齊
 - [🔧 搜尋教練提供的圖片檔案，副檔名清單要涵蓋webp/gif不能只寫jpg(2026-09-04)](reference_search_image_files_include_webp_2026-09-04.md) — 教練貼圖搜Downloads明明在對的資料夾卻找不到，因為是.webp被篩掉，試金石案例70
 - [🎯 聯想Windows記憶體98%洩漏排查：非中毒，核心層Nonpaged Pool驅動洩漏(2026-09-04)](project_lenovo_nonpaged_pool_leak_2026-09-04.md) — Nahimic音效驅動嫌疑最大，重開機驗證有效但2小時內更快復發，待確認移除狀態
