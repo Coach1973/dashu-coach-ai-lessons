@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-05 03:10:21**
+> **最後同步：2026-09-05 03:15:25**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **KR養生廚房官網整站搬遷上線+coach888收錄鎖(Stop hook規則L)+seabiscuit20看守則影片按鈕** | ✅2026-09-05本場完成 | 教練提供Tooo.ai示範站`demo3.tooo.ai/11883/518v3/`要求整站搬到`event.bymyway.com/KR/`，8頁面+11圖片全數搬遷，聯絡表單改推自己DB+Telegram(不再打Tooo.ai自家API)，新repo`Coach1973/KR`。教練連續第二次發現新站沒放coach888，要求「寫SOP不要再提醒」，已做成`stop_rules_master.py`規則L：偵測`gh repo create --public`後檢查coach888是否收錄，沒有就擋收工，commit`c048eaf0d`。教練問seabiscuit20兩支影片「不見了」，查證是藏在完整守則彈窗裡沒獨立入口(非真的消失)，新增「看守則影片」獨立按鈕+彈窗，commit`d4bffd7`。 |
 | ✅ | **bigtree 6場專屬活動網頁補「我要看活動網頁」按鈕+events表新增event_url欄位** | ✅2026-09-04本場完成 | 教練澄清：這顆按鈕本來要放大樹小講，誤放到seabiscuit20（教練說做得好不改動）。這次補在bigtree真正的6場：9/16高雄(ai-art)、9/22台南下午(ai-talk)、9/22台南晚上(ai-fit)、9/23-24台中x2(ai-forum)。**關鍵發現**：`event.bymyway.com/bigtree/`是DB即時渲染，靜態HTML的SESSION_DATES會被`render_session_dates()`整段覆寫，只改bigtree repo沒用——已在`events`表新增`event_url`欄位當唯一真相源，`db.py`+`bigtree_publish.py`同步更新，已用真實curl驗證正式站四個網址正確渲染。同場也把大台南策展中心(tainan-shangquan)電話改成佩佩老師0988-004-118。commit`aaedd85`(bigtree)+`cef1657`(tainan-shangquan)+`622e2ab8c`(event-signup)。 |
 | ✅ | **coach888編輯同步方案：教練選「已同步狀態指示燈」，已上線** | ✅2026-09-04本場完成 | 教練選第一案(非手動上傳按鈕)。`syncStateToServer()`成功/失敗都跳toast(「✅已同步（剛剛）」/「⚠️同步失敗，稍後會自動重試」)，commit`309f2fd`，GitHub Pages curl驗證已生效。 |
 | ✅ | **coach888「大分類拖曳排序」+移除分類數字編號，教練回報bug後兩輪修復** | ✅2026-09-04本場完成並多輪真實測試驗證 | 教練反映測試新增分類後「批量搬移下拉選單找不到剛建的分類」，查證發現根因比表面症狀嚴重：`➕新增分類`建出來的分類**從未存進任何地方**(不是localStorage結構/不是伺服器/不是原始HTML)，重新整理或換裝置就整個消失，下拉選單找不到只是最先被發現的症狀。新增`SECTIONS_KEY`持久化+跨裝置同步+`addSection()`即時刷新下拉選單，commit`dd8e4eb`。**過程中發現並修復第二個坑**：伺服器端`event-signup/app.py`的`COACH888_STATE_KEYS`是獨立維護的白名單，前端存了新key、伺服器端沒加會被靜默丟棄(前端完全不報錯)，已補上`coach888_sections`並重啟服務，commit`963050103`。教練接著追加第二輪需求：拿掉分類的「一、二、三...」數字前綴(最近刪除的🗑圖示保留不動)+讓整個大分類本身也能拖曳調整順序(收合/展開皆可用)，新增`section-drag-handle`+`SECTION_ORDER_KEY`持久化，跟item拖曳同一套手刻mousedown/mousemove/mouseup機制，commit`2cd3a31`(前端)+`f81e14678`(伺服器白名單，這次記取教訓同一輪一起補)。**已用真實模擬測試驗證**：新分類立即出現在批量搬移選單✅、重新整理後分類還在✅、跨裝置(完全不同瀏覽器origin)同步出現✅、刪除後不會死灰復燃✅、拖曳大分類重新整理後順序保留✅，測試資料已清乾淨未污染正式站。記憶`reference_coach888_sync_key_whitelist_pattern_2026-09-04`。 |
@@ -420,6 +421,43 @@
 
 ## 🔑 本場commit
 `tainan-shangquan`：`c0f5180`(初版)。`true-ai-team`：已補遠端(無新commit，純推送既有3筆歷史commit)。`bigtree`：`2d96eac`(黑金改版草稿歸檔)。`coach888`：`309f2fd`(已同步toast)。`workspace`：`d1b02db49`(tainan-shangquan後端路由)。
+
+---
+
+# 軍師接力棒 · 2026-09-05 v182（Mac終端機 Sonnet 5，KR養生廚房整站搬遷+bigtree活動網頁按鈕修正+seabiscuit20影片按鈕+coach888收錄鎖上線）
+
+> 建立時間：2026-09-04 22:35 ~ 2026-09-05 03:07（台灣時間，跨日）
+> 上一棒：v181（Mac終端機，大臺南商圈整合計劃店家登錄頁上線+五項待辦決議收尾）
+> 本棒主軸：**教練指出「我要看活動網頁」按鈕誤放seabiscuit20，補在bigtree真正6場+發現DB即時渲染會覆寫靜態HTML的關鍵架構問題；教練用Tooo.ai demo3.tooo.ai做的KR養生廚房示範站整站搬遷上線；教練回報seabiscuit20影片「不見了」，查證其實是藏在完整守則彈窗裡沒有獨立入口，新增「看守則影片」按鈕；教練要求新公開網站一律收錄coach888不要再提醒，做成Stop hook規則L強制檢查。**
+
+## 🎯 本場戰果
+
+### 1. bigtree「我要看活動網頁」按鈕補正+events表新增event_url欄位
+教練澄清這顆按鈕本來要放大樹小講，誤放到海餅乾20週年（教練說做得好不改動那邊）。補在bigtree真正6場：9/16高雄(ai-art)、9/22台南下午(ai-talk)、9/22台南晚上(ai-fit)、9/23-24台中x2(ai-forum)。**關鍵發現**：`event.bymyway.com/bigtree/`是DB即時渲染，`render_session_dates()`每次請求都會整段覆寫靜態HTML的SESSION_DATES陣列，只改bigtree repo原始碼沒有用（下次一鍵發佈也會被DB內容蓋掉）。已在`events`表新增`event_url`欄位當唯一真相源，`db.py`+`bigtree_publish.py`同步更新，已用真實curl驗證正式站四個網址正確渲染。同場也把`tainan-shangquan`電話改成佩佩老師0988-004-118。commit`aaedd85`(bigtree)+`cef1657`(tainan-shangquan)+`622e2ab8c`(event-signup)。
+
+### 2. KR養生廚房官網整站搬遷上線（新任務）
+教練提供`https://demo3.tooo.ai/11883/518v3/`（Tooo.ai AI建站工具做的示範站，即bigtree的9/5場地KR養生廚房）要求原封不動搬到`event.bymyway.com/KR/`。8個頁面(首頁/關於我們/餐點特色/藝文空間/聯絡我們/隱私權/服務條款/無障礙聲明)+11張圖片+main.js全部下載，路徑改寫成`/KR/`前綴，移除Tooo.ai自家追蹤腳本(demo-chk.js/report.js/cloudflare beacon)+浮水印。**聯絡表單原本打Tooo.ai自己的`api.tooo.ai/widgets/form-submit.js`**，改推我們自己的`/api/KR/contact`端點(DB+Telegram「活動報名即時通知」群組)，避免搬過來後訊息送到教練管不到的第三方帳號。`_serve_repo_file()`新增資料夾`/index.html`fallback支援多頁面靜態站(不影響既有單頁站行為)。已用真實瀏覽器UI送出表單+curl驗證8頁面200+DB寫入正確。新repo`Coach1973/KR`，commit`c0f5180`類似模式(KR repo初版)+`2cf7615f1`(event-signup後端)。
+
+### 3. seabiscuit20「看守則影片」獨立按鈕上線
+教練問「兩支影片怎麼不見了」，查證發現影片其實從未被刪除——9/4下午聯想新增「完整守則」彈窗時，就把影片放在彈窗裡面，只是沒有獨立入口，滑頁面看不到。已用JS狀態檢查(`openRulesModal()`+`performance.getEntriesByType('resource')`確認YouTube iframe真的載入)驗證後，在「✦完整守則✦」旁新增「▶看守則影片▶」獨立按鈕+獨立彈窗(videos-modal)，影片從rules-modal搬移過去(非複製)。commit`d4bffd7`。**本場一次Stop hook攔截**：改完HTML用Claude Browser工具驗證過畫面但沒有實際執行`open -a "Google Chrome"`，被規則J擋下收工，補跑Chrome開啟後才算完成，已寫入記憶`feedback_html_preview_chrome_only`（發現同名記憶檔已存在於MEMORY.md索引但實體檔案遺失，本場補回）。
+
+### 4. coach888收錄鎖：Stop hook規則L上線
+教練連續第二次發現新網站(tainan-shangquan、KR)沒放進coach888作品一覽，當場要求「請寫入SOP...不要再讓我提醒」。純文字SOP評估後判定不夠可靠，改成`stop_rules_master.py`新增規則L(deterministic check)：只要對話裡執行過`gh repo create ... --public`，Stop hook自動掃描該repo名稱是否出現在本機`coach888/index.html`，沒有就擋下收工。只認`--public`，不會誤攔`--private`備份repo(如`true-ai-team`)。已用合成transcript測試正反兩案例驗證邏輯正確，commit`c048eaf0d`。**上線當天發生一次假陽性**：heredoc造測試transcript的文字本身被記進真實對話，下一輪Stop hook誤把假repo名字當真的執行過，已修法排除heredoc定界符內容，教訓寫入記憶。KR/tainan-shangquan兩站已依此規則補進coach888，commit`cb30fe2`。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **event.bymyway.com/bigtree/是DB即時渲染，改bigtree repo原始碼裡的資料不會生效**——任何要改場次相關內容(含新按鈕需要的資料)都要往`events`表加欄位，不能只改靜態HTML。
+2. **改完HTML用Claude Browser系列工具做過完整功能驗證，不能取代`open -a "Google Chrome"`**——兩者是互補不是替代，收工前這一步不能省，記憶`feedback_html_preview_chrome_only`。
+3. **coach888收錄不能只靠記住，要做成deterministic hook**——同一天連續兩次疏漏後才被逼出這條鎖，早該在v179第一次疏漏後就做。
+4. **合成假transcript測試hook時，heredoc本身的文字內容會被同一份真實transcript的其他規則掃到**，導致非預期誤判，測試完要檢查有沒有引發旁支問題。
+
+## 📋 下一場開工先做
+1. 「後台系統帳密集中」實際清單仍未建置，記憶`project_backend_credentials_consolidation_pending_2026-09-04`。
+2. materials系統42份教材，教練「忙完」後主動去`/materials/admin`勾選公開。
+3. 教練今晚（凌晨1點多）已確認seabiscuit20+KR+bigtree按鈕都完成，下次開工先問還有沒有其他驗收意見。
+4. 本機`.claude/projects`記憶目錄本場連續發現3個MEMORY.md索引有列但實體檔案遺失的情況(`project_backend_credentials_consolidation_pending_2026-09-04`／`feedback_lock_must_be_hook_not_optin`／`feedback_html_preview_chrome_only`，前後兩個本場已補回，中間那個未補)，可能是某次同步/還原時漏帶檔案本體，值得找時間全面比對索引與實體檔案是否一致。
+
+## 🔑 本場commit
+`bigtree`：`aaedd85`(6場活動網頁按鈕)。`tainan-shangquan`：`cef1657`(電話修改)。`event-signup`：`622e2ab8c`(bigtree event_url欄位)+`2cf7615f1`(KR路由+聯絡表單)+`c048eaf0d`(Stop hook規則L)。`KR`：初版(GitHub repo `Coach1973/KR`)。`coach888`：`cb30fe2`(KR收錄)。`seabiscuit20`：`d4bffd7`(看守則影片按鈕)。記憶庫(`.claude/projects`)：`feedback_new_public_site_must_register_coach888_2026-09-04`+`feedback_html_preview_chrome_only`(補回)+`project_backend_credentials_consolidation_pending_2026-09-04`(補回)。
 
 
 ---
