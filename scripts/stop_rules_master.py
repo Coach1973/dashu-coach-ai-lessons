@@ -671,6 +671,13 @@ for evt in EVENTS[-300:]:
         if not isinstance(c, dict) or c.get("type") != "tool_use" or c.get("name") != "Bash":
             continue
         command = str((c.get("input") or {}).get("command", ""))
+        # 🔴 2026-09-04當場修復：command裡若含heredoc定界符(<<)，代表這段文字
+        # 是「寫進檔案的內容」而非「真的要執行的指令」——本規則上線當天就被
+        # 自己寫的測試heredoc(cat > test.jsonl << 'EOF' ... gh repo create ...)
+        # 誤判成真的建立過repo，教練直接把Stop hook的假警報轉貼回來才發現。
+        # 含heredoc的command一律跳過此規則偵測，避免同一種假陽性再犯。
+        if re.search(r"<<[-~]?\s*['\"]?\w+['\"]?", command):
+            continue
         for m in re.finditer(r"gh\s+repo\s+create\s+[\w.-]+/([\w.-]+)[^\n&|;]*--public", command):
             name = m.group(1)
             if name.lower() not in ("coach888",) and name not in NEW_PUBLIC_REPOS:
