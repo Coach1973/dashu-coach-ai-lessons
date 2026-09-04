@@ -1256,6 +1256,92 @@ def api_event_1010_join():
     )
 
 
+TAINAN_SHANGQUAN_REPO = Path("/Users/bymyway/github_repos/tainan-shangquan")
+
+
+@app.route("/tainan-shangquan/")
+def tainan_shangquan_page():
+    return _serve_repo_file(TAINAN_SHANGQUAN_REPO, "index.html")
+
+
+@app.route("/tainan-shangquan/<path:filename>")
+def tainan_shangquan_assets(filename):
+    if filename == "index.html":
+        return tainan_shangquan_page()
+    return _serve_repo_file(TAINAN_SHANGQUAN_REPO, filename)
+
+
+@app.route("/api/tainan-shangquan/join", methods=["POST", "OPTIONS"])
+def api_tainan_shangquan_join():
+    """大臺南商圈整合計劃店家登錄（2026-09-04交辦，大台南策展中心店家招募落地頁）。
+    純資料蒐集表單，非活動報名，沒有LINE加好友流程，送出即寫DB+推播Telegram通知。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    name = (payload.get("name") or "").strip()
+    shop = (payload.get("shop") or "").strip()
+    category = (payload.get("category") or "").strip()
+    contact = (payload.get("contact") or "").strip()
+    address = (payload.get("address") or "").strip()
+    social = (payload.get("social") or "").strip()
+    items = (payload.get("items") or "").strip()
+    source = (payload.get("source") or "event.bymyway.com/tainan-shangquan").strip()
+
+    if not name or not shop or not category or not contact or not address:
+        _notify_xiaolongxia(
+            "⚠️【大臺南商圈整合計劃・資料不完整，沒能存檔】\n"
+            f"姓名：{name or '（沒填）'}\n店名：{shop or '（沒填）'}\n"
+            f"類別：{category or '（沒填）'}\n聯絡方式：{contact or '（沒填）'}\n"
+            f"地址：{address or '（沒填）'}\n請人工確認這位老闆有沒有真的要登錄。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": "missing required fields"}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    try:
+        conn = db.get_conn()
+        conn.execute(
+            "INSERT INTO tainan_shangquan_signups "
+            "(name, shop, category, contact, address, social, items, source) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (name, shop, category, contact, address, social, items, source),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(
+            "⚠️【大臺南商圈整合計劃・資料庫寫入失敗】\n"
+            f"姓名：{name}\n店名：{shop}\n錯誤：{e}\n請人工補登這筆資料。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
+        return Response(
+            json.dumps({"ok": False, "error": str(e)}),
+            status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+
+    notify_text = (
+        "【大臺南商圈整合計劃・店家登錄通知】\n"
+        f"姓名：{name}\n店名：{shop}（{category}）\n"
+        f"聯絡方式：{contact}\n地址：{address}\n"
+        + (f"社群：{social}\n" if social else "")
+        + (f"招牌商品：{items}\n" if items else "")
+        + f"（來源：{source}）"
+    )
+    _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return Response(
+        json.dumps({"ok": True}),
+        status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
 DIY_KNOT_REPO = Path("/Users/bymyway/github_repos/diy-knot-workshop")
 DIY_OUTDOOR_REPO = Path("/Users/bymyway/github_repos/diy-outdoor-workshop")
 DIY_STUDIO_REPO = Path("/Users/bymyway/github_repos/diy-studio-workshop")

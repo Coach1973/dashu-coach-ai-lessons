@@ -84,6 +84,20 @@ CREATE TABLE IF NOT EXISTS event_1010_signups (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- 大臺南商圈整合計劃店家登錄（2026-09-04交辦，大台南策展中心店家招募落地頁）
+CREATE TABLE IF NOT EXISTS tainan_shangquan_signups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,       -- 填表人姓名
+    shop TEXT NOT NULL,       -- 店名
+    category TEXT NOT NULL,   -- 食/衣/住/行
+    contact TEXT NOT NULL,    -- 電話或LINE ID
+    address TEXT NOT NULL,    -- 店家地址
+    social TEXT,              -- FB/IG連結，選填
+    items TEXT,               -- 想被推薦的招牌商品，選填
+    source TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
 -- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
 -- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
 CREATE TABLE IF NOT EXISTS todos (
