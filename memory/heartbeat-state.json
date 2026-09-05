@@ -1,34 +1,22 @@
 {
-  "cycle": 785,
-  "cumulativeGreen": 146,
-  "lastCheck": "2026-09-05 10:12:56 +0800",
-  "lastStatus": "ok",
-  "gates": {
-    "gate1_now_still_broken": false,
-    "gate2_provider_overload": false,
-    "gate3_impacts_work": false,
-    "all_failed": true,
-    "announce": false
+  "cycle": 786,
+  "ts": "2026-09-05T11:12:00+08:00",
+  "coachSilentHours": 0.2,
+  "cronLastStatus": "ok",
+  "consecutiveErrors": 0,
+  "lastDurationMs": 97350,
+  "tgChannelOk": true,
+  "envCheck": {
+    "soulThreeCopiesOk": true,
+    "repo1Short": 27,
+    "repo2Short": 38,
+    "lockFiles": 0
   },
-  "checks": {
-    "sync_coach_last_message": "ok",
-    "silentHours": 0.5,
-    "tg_channel_probe": "ok",
-    "cron_last_status": "ok",
-    "cron_ce": 0,
-    "cron_duration_ms": 136424,
-    "heartbeat_todo": 0,
-    "soul_md_count": 3,
-    "repo1_untracked": 27,
-    "repo2_untracked": 40,
-    "lock_files": 0,
-    "line_jiaolian_0800_retry": "ok_恢復"
+  "v4threeGates": {
+    "gate1_currentlyBroken": false,
+    "gate2_providerOverload": false,
+    "gate3_affectsWork": false
   },
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-05T09:42:46+08:00",
-    "coachSilentHours": 0.5
-  },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-05T10:12:56.413724+08:00"
-  }
+  "action": "silent_pass",
+  "note": "週六上午 + 教練沉默 0.2h 剛對話 + 零會員功能壞 + 零錯誤 → 安靜通過"
 }
