@@ -24,6 +24,44 @@
 
 ---
 
+## 📋 cycle=803 健康檢查（2026-09-06 06:12 TPE 週日清晨）— ⚠️ 06:11 race condition 校正版
+
+> ⚠️ **race condition 校正紀錄**：06:11 有另一個 agent session 也寫了 cycle=803 entry，但當時 cron list --json 抓到的是「0 error」的過時快照（06:00 那批任務被 gateway restart 打斷的 error 殘留還沒完全寫進 state）。本輪 06:12 重新完整掃描，實際抓到 **6 個 error**（全部 CE=1、gateway restart 中斷殘留、下次排程自動補跑）。為了忠實反映真實狀態，本 entry **覆蓋** 06:11 版的內容並更新對應 state 檔。
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-06T06:11:10+08:00`（沉默 **0.02h**，剛對話約 1 分鐘前，當下 `date` 新鮮值）|
+| Cron 系統（本任務本身）| ✅ `lastRunStatus=ok`、`consecutiveErrors=0`、`lastDurationMs=62168`（62s，遠低於 timeout=600s）|
+| 完整 Cron 掃描（openclaw cron list --json）| ⚠️ 25 個任務中 **6 個 `lastStatus=error`**，但全部 `CE=1`；根因皆為 `cron: job interrupted by gateway restart`（06:00 那批任務被打斷殘留），非 provider overload、非 auth 失效、非 timeout |
+| CE≥3 / Timeout危險 / Auth 失效 / Overload | 0 / 0 / 0 / 0 |
+| 6 個 error 任務真實狀態（從 cron list --json 撈）| ① `37593697` sync-執行細則：next `2026-09-06 06:30`（18 分鐘後自動補）② `aa1ad73b` sync-特助心法：next `2026-09-06 06:30`（18 分鐘後自動補）③ `001a9b16` LINE@教練都在想什麼：next `2026-09-06 08:00`（不到 2 小時自動補）④ `每4小時主動關懷`：next `2026-09-06 10:00`（不到 4 小時自動補）⑤ `dc9bdf5c` 場景化升華：next `2026-09-06 23:00`（今晚自動補）⑥ `☀️ 每日 06:00 起床摘要`：next `2026-09-07 06:00`（明天 6 點自動補）|
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項（grep 命中 11 條全是歷史「0 項」標記，非真實待辦）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全 ✅（9015/1851/25351 bytes）｜Repo1=28 / Repo2=29（皆 < 50 警戒線，Repo1 較 cycle=802 從 27→28、Repo2 從 21→29，屬自然波動）✅｜無 `.!` 鎖定檔 ✅ |
+
+### v4.0 三關判斷（全 fail → 🔕 不 announce 教練）
+
+| 關卡 | 結果 |
+|---|---|
+| 關卡一：本輪還壞嗎？ | ❌ fail（本任務本輪執行成功；6 個 error 全 CE=1，未達≥3 累積；下次排程都會自動補跑）|
+| 關卡二：provider overload 重災嗎？ | ❌ fail（無 overload 字眼，錯誤訊息明確是 `cron: job interrupted by gateway restart`，非 AI 供應商塞車）|
+| 關卡三：影響教練/會員嗎？ | ❌ fail（週日 06:12 清晨 + 教練沉默 0.02h 剛對話 + 6 個被打斷任務都會自動補跑 + 零會員功能壞 + 起床摘要錯過今天但明天 06:00 自動恢復）|
+
+### 自動修正與落痕跡（覆蓋 06:11 版的 state/heartbeat-state/cumulative_green 等）
+- ✅ `state/healthcheck_cycle` + `memory/healthcheck_cycle` = **803**（雙檔，從 802 +1）
+- ✅ `state/cumulative_green.txt` + `memory/cumulative_green.txt` = **163**（雙檔，從 162 +1）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=0.02 新鮮值、cycle=803）
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` v4.0 三關快照、JSON valid、cronErrorJobs=6（覆蓋 06:11 版的 0）
+- ✅ `state/healthcheck.log` + `memory/healthcheck.log` 追加 cycle=803（含 6 個 error jobs 真實清單）
+
+累計 **cumulativeGreen = 163**（連續破百後第六十三輪）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**07:12 cycle=804**
+
+---
+
 ## 📋 cycle=802 健康檢查（2026-09-06 05:12 TPE 週日清晨）
 
 | 檢查項 | 結果 |
