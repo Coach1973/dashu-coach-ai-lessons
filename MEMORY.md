@@ -7,6 +7,7 @@
 - [OpenClaw polling restart loop](project_openclaw_polling_restart_loop.md) — VPS 小龍蝦 health-monitor 持續 restart loop：spool 為空 + log 每 15 分鐘 restart + getMe 現在通，docker restart container 就好（別用 openclaw gateway restart，容器內會踩 service disabled 雷）
 - [ACER post-restore TODO](project_acer_post_restore_todo.md) — 一鍵還原後開工時必須主動提醒執行還原步驟
 - [VPS 連線資訊](reference_vps_connection.md) — 小龍蝦與赫茲米 VPS 的 IP/帳密/指令，任何電腦都能直接連
+- [🔴 Hermes = Mac 桌面版，VPS 版已永久停（2026-09-05 教練澄清）](feedback_hermes_is_mac_desktop_vps_permanently_off.md) — 教練說「Hermes 沒反應」時指的是 Mac 桌面版（軍師/賈維斯負責），不是 VPS 上的；VPS Hermes (113.29.232.178) 已永久停，未來查 Hermes 別再 ping 那個 IP
 - [先問再改](feedback_ask_before_reversing_unusual_config.md) — 發現軟體設定跟預期不同，先問是不是教練故意的，別自己當錯誤修正
 - [5月還原大測試](project_may_2026_restore_test.md) — C槽退回5月+6套軟體重裝+D槽junction重接的完整SOP
 - [ACER 分割區調整後D槽清理待辦](claude-brain/project_acer_c_d_cleanup_20260708.md) — 觀察期至少到2026-07-11~15，教練確認無異常後才能刪除D槽Eassos舊備份（36.3GB）
@@ -156,19 +157,27 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-09-03)
+## Promoted From Short-Term Memory (2026-09-06)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:304:304 -->
-- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:f487652d-0696-4b54-ac7f-7dd1a94cdb8c ☀️ 每日 06:00 起床摘要（前 12 小時工作）] 你是起床摘要助理。請執行： [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:304-304]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:307:307 -->
-- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: bash /Users/bymyway/.openclaw/workspace/scripts/morning_digest.sh [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:307-307]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:310:313 -->
-- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: 腳本會輸出摘要（5-10 行），**請原封不動轉給教練**。 如果輸出是空的（沒有值得看的 commit），請回覆「✅ 起床摘要：過去 12 小時無新工作」，不要打擾教練。 Current time: Tuesday, August 25th, 2026 - 6:00 AM (Asia/Taipei) Reference UTC: 2026-08-24 22:00 UTC [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:310-313]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:315:315 -->
-- 📨 對話記錄 06:00（共約 1 條，從第 0 行起）: Use the message tool if you need to notify the user directly with an explicit target. If you do not send directly, your final plain-text reply wi [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:315-315]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:320:320 -->
-- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 👤 教練：[cron:b73845c9-f653-4f9a-8869-0e2f2c0bd9b1 ☕ 幕僚長晨報（AI員工每日彙整，07:00）] 【幕僚長晨報‧教練2026-08-09核准建立，範圍：bni_tainan+jiaolian_thoughts兩個對外服務AI員工】 [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:320-320]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:322:322 -->
-- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 你現在要做的事：整理過去24小時，這兩位AI員工（服務BNI大台南分會會員的「bni_tainan」、服務121位LINE好友的「jiaolian_thoughts」）遇到什麼「老闆該知道」的事，濃縮成一份晨報推給教練。這跟06:00起床摘要(教練自己機器的git工作記錄)、23:05三機總結(教練自己跟三台機器對話的內容)是不同範疇，不要重複那兩份的內容，只講這兩個對外服務AI員工今天做了什麼。 [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:322-322]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-25.md:324:324 -->
-- 📨 對話記錄 07:00（共約 1 條，從第 0 行起）: 步驟一：讀取今天日期的記憶檔（這兩個檔案凌晨03:04左右已自動生成，內容是前一天真實對話的蒸餾）： [score=0.859 recalls=0 avg=0.620 source=memory/2026-08-25.md:324-324]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:22:24 -->
+- 🔴 重大發現：對外版直接讀本機 repo: `event.bymyway.com/ai-art/` Flask 路由（`event-signup/app.py:1002` 的 `AI_ART_REPO`）直接讀 `/Users/bymyway/github_repos/ai-art/`; **改本機檔案 → 對外版即時生效，不需要 push**; 教練親口確認新工作流：「github 只要測試成功，推給官網，就要同步」 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:22-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:27:30 -->
+- 對外版同步：新增 9/13 截止日: 教練叫我去 GitHub（內部測試版）加「三人成行」跟「舊學員助教」截止日 9/13; 改完本機 → 對外版 Flask 自動讀取生效（不需 push）; 教練說「推」 → 才 commit `4da5905` + push GitHub Pages; 兩個網址都已上線（curl 驗證過） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:27-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:3:3 -->
+- 2026-08-31 Hermes 對話交接棒（給下一個 session）: > 這場對話很長（從 BNI 投降書 → 開工檔 → ai-art 內部測試版+對外版同步）。下一個 session 開工讀這份就接得上。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:3-3]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:36:36 -->
+- 🔴 新守則（已寫進長期 MEMORY.md）: **教練說「推」之前都停在 GitHub 階段：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:36-36]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:37:38 -->
+- 🔴 新守則（已寫進長期 MEMORY.md）: 改本機檔案 → 對外版 Flask 自動讀取生效（OK，沒問題）; commit + push GitHub Pages 留紀錄 → **要等教練親口說「推」** [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:37-38]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:41:44 -->
+- 🔴 新守則（已寫進長期 MEMORY.md）: 改 `/Users/bymyway/github_repos/ai-art/index.html`; **對外版自動生效**（Flask 讀本機）; 教練看對外版 `event.bymyway.com/ai-art/` 確認; ✅ 教練說「推」 → 才 commit + push GitHub Pages 留紀錄 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:41-44]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:50:52 -->
+- 📋 待辦（下一個 session 接手）: **確認 GitHub Pages 內部版 `coach1973.github.io/ai-art/` 內容跟上** — commit `4da5905` 已 push，理論上已同步; **等軍師回信**：我今天 16:05 寫了 `cross-agent/inbox/mac/20260831-1605_hermes-to-mac_ai-art-dynamic-site-3-arch-questions.md`，問了 3 個架構問題（不過現在知道答案了：對外版直接讀本機 repo，這個問題已經被實務回答，可以請軍師歸檔）; **軍師今天交辦**：大樹小講 / ai-talk / ai-forum / tainan-calender 系列活動預設交 Hermes（見 `cross-agent/inbox/hermes/20260831-1540_mac-to-hermes_bigtree-event-tasks-default-owner-policy.md`） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:50-52]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:58:61 -->
+- 🛠️ 工具 / 環境確認: | 項目 | 狀態 | |---|---| | 教練 BNI Connect 登入狀態 | ✅ 仍在 Hermes preview pane（吳 大樹） | | 教練 Chrome session | ✅ 仍在運作（BNI 沒踢掉） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:58-61]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:62:64 -->
+- 🛠️ 工具 / 環境確認: | Hermes preview pane | ✅ 顯示 `coach1973.github.io/ai-art/` 內部版 | | Flask `event-signup` 服務 | ✅ 24/7 跑，讀本機 repo 即時生效 | | GitHub Pages `ai-art` | ✅ 推到 commit `4da5905` | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:62-64]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:70:73 -->
+- 📝 教練偏好重點（這場學到的）: **白話中文，少用工程師術語**（「0 按鈕」「改好了嗎」就回一行）; **沒說推 = 停在 GitHub 階段**（新守則）; **GitHub = 內部測試，event.bymyway.com = 對外正式**（教練 2026-08-31 親口說）; **改變之前先動手做、做完讓教練看，再說怎麼改**（「先做出來再說，不用問那麼多」） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:70-73]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:74:74 -->
+- 📝 教練偏好重點（這場學到的）: **教練 0 按鈕鐵則**：永久連結 + LiteSpeed Purge All 是唯一例外 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:74-74]

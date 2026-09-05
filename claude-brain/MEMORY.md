@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 策展SOP兩項根因修復：slug只取品牌名+暫代頁自動偵測讓上傳網址統一取代手動七步驟(2026-09-06)](reference_curation_sop_placeholder_autodetect_and_slug_fix_2026-09-06.md) — 撤回「有能力AI要手動做」規則，SOUL.md/Hermes/SOP三處同步改為一律上傳網址
 - [🔴🔴 「等總結時/等額度寬鬆再處理」是話術陷阱，同一件事何時做耗費都一樣(2026-09-06教練點破)](feedback_deferred_task_not_actually_free_2026-09-06.md) — 除非動作依附在本來就要發生的流程上，否則別用「延後」包裝成省額度
 - [🎯🎯🎯 週配額89%緊繃，撐到下週三前盡量把工作轉Hermes/小龍蝦(2026-09-06教練拍板)](project_claude_quota_conservation_until_wednesday_2026-09-06.md) — 軍師只接真正需要的：跨repo整合/複雜git/架構判斷，其餘先問能不能讓小龍蝦/Hermes做
 - [🔴🔴🔴 小龍蝦(main agent)確實有終端機/exec能力：教練當場實測ls -la成功證實(2026-09-06)](feedback_verify_tool_permission_before_claiming_2026-09-06.md) — 別把kong/peipei的toolsBySender限制套用到main身上，斷言能力邊界前先grep該agent自己的設定區塊+能實測就別空猜

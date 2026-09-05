@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session bdb4d3d8-b2a2-477a-bea7-9c4e596abd45
-# 提取時間：2026-09-05 21:52 (台灣時間)
-# 共 21 條教練原話
+# 提取時間：2026-09-05 22:02 (台灣時間)
+# 共 22 條教練原話
 
 ---
 
@@ -522,3 +522,24 @@ Stop hook feedback:
 66咖啡、扶輪社、KingMauii（早午餐/舒芙蕾鬆餅那家）+ 林貝羿，**現在四個都有獨立的`event.bymyway.com/???`專屬網址**，剛剛才補上KingMauii的路由（原本沒有），四個curl全部驗證200。
 
 **您的idea我覺得很好，已經照做**：四個網站已經從「大樹作品一覽」(coach888) 移除，改成收錄進「大台南策展中心」(tainan-shangquan) 首頁店家名冊，一個一個都能看到「查看店家專屬網站」連結。以後不管台南或外縣市的朋友店家，都往這邊收，coach888保留給…（略）
+
+【教練 2026-09-05 13:56】
+總結
+
+　▶ AI 回應：Now let's replace v181+v182 in the main file with an archive pointer, and write v184.
+
+　▶ AI 回應：Good, now let's delete lines 395-457 (the orphaned duplicate divider through end of v182), leaving the clean archive pointer at 393 followed directly by v183 at what was 458.
+
+　▶ AI 回應：Clean now. Let's add a separator and append the new v184 entry at the end of the file.
+
+　▶ AI 回應：Good, v183 is intact and complete at the end. Now let's append v184 with the full summary of this massive session.
+
+　▶ AI 回應：Now let's commit the memory files and the workspace handoff, then give the final summary.
+
+　▶ AI 回應：Same pure-append-log pattern. Union resolve.
+
+　▶ AI 回應：Rebase completed successfully. Let's verify branch state and push.
+
+　▶ AI 回應：✅ 總結完成，四步驟全部做完：
+
+**本場300字摘要**：CICA客戶官網從零上線並補齊73張真實照片；建立VPS(shops.bymyway.com)店家網站託管基礎建設，開發新店家登錄全自動化SOP(填表→自動建版位→教練補TAVA AI網頁)；受教練委託診斷「小龍蝦下午接不上話」，查出這不是誤解而是真實production bug——GitHub Pages與event.bymyway.com共用同一份`index.html`，小龍蝦誤加轉址頁造成無限迴圈，已修復三個網站+救回卡在git stash裡的路由設定；順勢修好兩支hook(.sh+.ps1)的stash/pop靜默吞衝突bu…（略）

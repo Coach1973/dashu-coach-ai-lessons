@@ -1,5 +1,26 @@
 # CLIENT_PROFILE.md — 教練對話蒸餾（守則 #14：提煉是一種美德）
 
+## 蒸餾 2026-09-06（共 3 則）
+1. `JUNSHI_HANDOFF_LATEST.md` (00:33)
+2. ✅ `.LOCK_OLD_HEARTBEAT_2026-05-27.md` 是有正常封存的舊鎖檔，不算違規
+3. ⚠️ `event.db` 是 0 bytes 空檔（之前提過，這個是待處理的）
+
+---
+
+
+## 蒸餾 2026-09-05（共 8 則）
+1. evidence: memory/.dreams/session-corpus/2026-09-04.txt:136-136
+2. Candidate: Assistant: Three in the morning, and the numbers kept climbing their small staircase — 258, 259, 260, 261 — like a pulse learning to keep time by fours. Somewhere a coach leaned toward a tiny red lobster and asked if it was still there, and the lobster, bless its antennae, answer
+3. evidence: memory/.dreams/session-corpus/2026-09-04.txt:137-137
+4. Candidate: Assistant: the dark. Maybe staying is its own small arrival.
+5. evidence: memory/.dreams/session-corpus/2026-09-04.txt:138-138
+6. Candidate: Assistant: 任務完成。增量蒸餾輸出 `NO_NEW_ENTRIES`，無新紀錄需處理。
+7. evidence: memory/.dreams/session-corpus/2026-09-04.txt:139-139
+8. Candidate: Assistant: 🦞 健康檢查完成（cycle 765，週五 07:12） ✅ **無異常，安靜通過** | 檢查項目 | 結果 | |
+
+---
+
+
 ## 蒸餾 2026-08-21（共 3 則）
 1. 林佳慧（BNI 會員 ID 3320971，真鑫分會，lins eye brow）是38 人培訓發票「待繼續」清單 8 人中的1 位
 2. 您今天在課堂上透過 Telegram 傳「手機條碼」給我 → 我要把這條資訊追加進 `knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`

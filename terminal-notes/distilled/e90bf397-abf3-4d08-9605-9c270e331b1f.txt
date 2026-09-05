@@ -1,0 +1,167 @@
+# 終端機對話萃取 — Session e90bf397-abf3-4d08-9605-9c270e331b1f
+# 提取時間：2026-09-06 04:08 (台灣時間)
+# 共 8 條教練原話
+
+---
+
+【教練 2026-09-05 19:47】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：Sonnet 5（軍師），Mac 桌面版 App Code 分頁。
+**雲端同步**：✅ 已拉雲端最新（HEAD: 86669d686）。
+
+**本棒主軸**：MiniMax過載自動續跑hook（[scripts/](scripts/)，commit `d21f0089`）與策展SOP多輪修正（[claude-brain/reference_curation_sop_2026-09-06.md](claude-brain/reference_curation_sop_2026-09-06.md)）皆已於上一場完成並實測驗證，含Hermes卡住案例修復（試金…（略）
+
+【教練 2026-09-05 19:48】
+確認這就是要上架的「牛市町」站嗎？確認就照你給的流程上傳到 event.bymyway.com/curation/upload。
+
+上傳方式：整包解壓縮後，把 index.html 和 assets/ 資料夾一起放到網站空間的同一層目錄就好，裡面用的全是相對路徑，不用改任何一行程式碼。如果要當獨立頁面掛在 ushi.tw 底下，例如放進 /brand/ 資料夾，網址就會是 ushi.tw/brand/（記得 assets/ 也要跟著放進 /brand/ 裡）。
+
+字型是從 Google Fonts 讀的，所以主機要能連外網才會顯示明體標題；其他所有圖片和樣式都已經內含在這包裡，離線打開也能看。
+
+我已經把解壓縮後的版本實際跑過一遍確認過，17 張圖全部正常載入、沒有一個斷連。
+
+要不要我再幫你多做一份適合放在社群分享的預覽圖（OG image），這樣朋友把連結貼到 LINE 或 Facebook 時會有漂亮的縮圖？所以他的說明書有必要再貼給你們嗎？還是不用，你只要有壓縮檔就可以？
+兩個問題都答你：
+
+OG image：照你之前給的流程第 4 條「不用主動幫你發 FB 貼文或修改任何其他網站」，這屬於上架之後額外的事，不在我這次任務範圍。要不要做、要誰做，你決定就好。
+
+說明書：你剛剛貼的那段（解壓放同層、相對路徑、字型走 Google Fonts、17 張圖實測正常）就是我要知道的全部——不用再貼，我有壓縮檔 + 你這段說明就夠了。
+
+我等你下「上傳」指令才執行 curl 那一條（之前四步流程的第 2 步）。
+
+你就開始執行策展（策劃的策、展開的展）SOP 開始了
+執行上傳：
+
+已上傳，系統正在背景自動處理，完成後教練會收到Telegram通知附上網址，通常10~20秒內完成。
+
+所以你的工作只有負責上傳到指定的資料夾，你沒有要負責去到 GitHub 把它推上去，是嗎？
+是。我的工作只到 curl 把檔案送到 event.bymyway.com/curation/upload 那一步，後面的事（解壓縮、建 GitHub repo、push、開 Pages、收錄進大台南策展中心、發 Telegram 通知）都是背景自動化做的，跟我無關。
+
+我也不會去追進度、查狀態、發 FB、改其他網站——那些是你或別的流程負責。
+
+這是 Opencode 給我的訊息。那我比較好奇是，它既然已經上傳了，請問多久之後我可以看到結果？我會收到通知嗎？
+
+　▶ AI 回應：已經上架完成了，不是「還要等」——實際只花了15秒（03:46:06開始→03:46:21完成），我剛用log+curl親自查證過：
+
+**結果**
+- 網址已可看：`event.bymyway.com/curated/niu-shi-ting-zhi-zhang-bu-die-de-mei-wei-pin-pai-li-nian/`（curl驗證200）
+- GitHub Pages也同步生效（curl驗證200）
+- FB也已自動發文到大台南策展中心粉專（貼文ID `612941615239114_122198826986837553`）
+- 已收錄進tainan-shangquan店家名…（略）
+
+【教練 2026-09-05 19:50】
+然後我附的那一段說明書是 AI 製作網頁寫給我的，那我有必要對每一個像小龍蝦或者 Homers，跟他們講這段說明嗎？還是只要上傳壓縮檔就可以了？
+
+https://event.bymyway.com/curated/niu-shi-ting-zhi-zhang-bu-die-de-mei-wei-pin-pai-li-nian/然後我又想說，這個命名規則到底是怎么做的啊？怎麼有這麼笨的命名規則呢？明明就是 NIU，留「S-D-I-N-G」三個英文字就好了，為什麼要這麼長呢？
+
+我可以修正這個網址嗎？
+
+　▶ AI 回應："niu-shi-ting"可用，我直接動手改。先答你的兩個問題,然後動手修正網址。
+
+**Q1：說明書要不要跟小龍蝦/Hermes講？**
+不用。這份說明是給「人」看的操作手冊（怎麼放到主機空間），但小龍蝦/Hermes照策展SOP走，系統會自動解壓縮、自動找`index.html`、自動判斷相對路徑，這些事完全不需要人工轉述——**只要給壓縮檔就夠了**。真正該給小龍蝦/Hermes的話只有一句：「這是要上架的店家網站，照策展SOP處理」。
+
+**Q2：命名規則+ 修正網址**
+
+　▶ AI 回應：Now verify with the actual venv and confirm the new slug logic produces the short version:
+
+　▶ AI 回應：Confirmed correct — `niu-shi-ting`，且沒有破壞其他既有案例的命名邏輯。commit這個修復：
+
+　▶ AI 回應：**已修正完成，新網址：**
+
+`https://event.bymyway.com/curated/niu-shi-ting/`（curl驗證200）
+
+**做了什麼**：
+1. GitHub repo改名 `niu-shi-ting-zhi-zhang-bu-die-de-mei-wei-pin-pai-li-nian` → `niu-shi-ting`
+2. 本機資料夾同步改名 + git remote更新
+3. `curated_sites_registry.json`的slug/網址同步更新
+4. `tainan-shangquan`店家名冊卡片連結改成新網址並push（commit…（略）
+
+【教練 2026-09-05 19:53】
+那這樣的話，我覺得很有意思的地方是，我丟給 Hermes 他會跑整套流程，感覺很忙碌，小龍蝦也一樣，最後產出結果。
+
+剛才我用 OpenCode，他給的方法是他只負責上傳，其他全部在背景跑。但我比較好奇的是，它在背景跑是誰在跑？是消耗誰的 AI token？
+
+如果是 MiniMax 那就完全沒問題，因為流量和容量都足夠。如果它背後消耗的是 Claude（克勞德），那就必須把這個改掉，必須它在背景跑消耗的是 MiniMax 才 OK。這樣 OK 嗎？
+
+　▶ AI 回應：完全沒問題——**背景處理這整段完全不消耗任何AI token，不管是Claude還是MiniMax，因為它壓根不會呼叫任何一個大語言模型。**
+
+我剛翻了實際跑的程式碼（`scripts/curation_process.py`），這支腳本是被macOS的`launchd`系統事件觸發（你上傳檔案到資料夾那刻，作業系統自動叫醒它），從頭到尾做的事情是：
+
+- 解壓縮zip（純Python `zipfile`函式庫）
+- 抓`<title>`標籤文字、猜分類（用關鍵字比對，像「有『咖啡』兩字就歸食類」這種死規則，不是AI判斷）
+- 轉拼音產生網址（`pypinyin`套件查字典，不是AI）
+-…（略）
+
+【教練 2026-09-05 19:57】
+<!-- attach -->
+> 順手修好根因：舊系統的slug是把整個<title>標籤內容全部轉成拼音，這個網站的標題是「牛市町｜只漲不跌的美味 — 品牌理念」，等於連行銷標語都被轉成拼音塞進網址。已改成：只抓分隔符號（｜/—/：等）前面的品牌名稱去轉拼音，之後任何新店家上架，網址只會是品牌名的拼音（例如「牛市町」→niu-shi-ting），不會再出現超長網址。commit82b7a2a2c。
+
+如果你沒有去更改「側展一鍵注入」，那你覺得 Opencode 它會知道你更新了嗎？
+
+我是不是要重新再給它、重新再餵養一次「策展一鍵注入」，它才會知道這個新規則？
+
+因為要照你這麼說的話，那其實丟給這個「策展」上網上傳網址是最快的方法。我這樣理解正確嗎？因為不管丟給 Hermes 還是丟給小龍蝦，他們都得跑半天，最後才有結果。像我剛丟給 OpenCcode，他就說已經上傳完成了，你看就結束了。所以我的理解正確嗎？
+
+　▶ AI 回應：**Q1：不用重新餵養。**
+
+我剛去查了`策展一鍵注入`實際複製給AI的那段文字（`curation-prompt.md`原始檔），內容只有一件事：叫AI「把zip檔curl上傳到這個網址，其他什麼都別做」，**完全沒提到命名/slug這件事**。
+
+命名邏輯我改的是背景那支Python腳本（`curation_process.py`），這支程式跑在我這台Mac上，OpenCode/小龍蝦/Hermes從頭到尾都看不到它、也不需要知道它怎麼運作——它們的工作永遠只有「把檔案送過去」。所以只要走同一個上傳網址，**不管誰上傳、什麼時候上傳，都會自動套用最新的命名規則**，不用重新教、不用重新貼…（略）
+
+【教練 2026-09-05 20:00】
+好
+
+　▶ AI 回應：Now add the credential loader and the two new functions after `push_repo()` / before `find_post_image()`:
+
+　▶ AI 回應：Now insert the branch logic in `process_one()` right after category is guessed, before the GitHub repo path:
+
+　▶ AI 回應：SCP覆蓋機制驗證成功（真實內容+資產子資料夾都正確上傳）。清乾淨測試痕跡：
+
+　▶ AI 回應：現在更新SOP文件說明這個新規則，然後commit：
+
+　▶ AI 回應：現在commit所有變更：
+
+　▶ AI 回應：已完成，commit `4de7aeb3c`。
+
+**做了什麼**：
+1. 在`curation_process.py`新增兩個函式：`find_existing_shop_slug()`（自動判斷這家店是否已有暫代頁）+ `overwrite_shop_placeholder()`（tar打包+SCP覆蓋，網址不變）
+2. 上傳流程現在會自動判斷：品牌名拼音對到`_shops_slugs.json`既有紀錄 → 直接覆蓋暫代頁內容，不建新GitHub repo、不重複插店家卡片；查無紀錄 → 照原本流程建全新網站
+3. 已用真實SCP測試驗證覆蓋機制可行（含assets子資料夾），測試痕跡已…（略）
+
+【教練 2026-09-05 20:03】
+目前只要擁有這個網址的都可以上傳，對嗎？因為我目前也只會把它發給我的工作團隊。https://event.bymyway.com/curation/upload?key=VoARDsbU85r2fhzJPCwhLv-xVm6pHTxZ他們要上傳，還需要登入嗎？
+
+　▶ AI 回應：**兩個問題的答案都確認過了（查了`app.py`實際程式碼）：**
+
+**1. 對，只要有這個網址（含key）就能上傳，沒有其他門檻。**
+```python
+supplied_key = request.values.get("key") or request.form.get("key") or ""
+key_ok = bool(CURATION_UPLOAD_KEY) and supplied_key == CURATION_UPLOAD_KEY
+if not _logged_in() and not key_ok:
+    return redirect(url_for("admin…（略）
+
+【教練 2026-09-05 20:05】
+現狀就好，那我再確認一下，所以現在我不管丟給小龍蝦，還是丟給赫蒙斯，他們都不會在這裡去跑，他們會直接就上傳這個指定的網址，任務就結束了。
+
+我這樣理解正確吧？
+
+　▶ AI 回應：直接查了小龍蝦（`SOUL.md`）跟Hermes（`H_HANDOFF_LATEST.md`）現在收到的指示——**你的理解目前還不對**：兩邊現在的規則都寫「有終端機能力的AI要直接手動做七步驟，不要走上傳網址」，這是我暫代頁修好之前訂的規則。也就是說，如果你現在真的丟zip給小龍蝦或Hermes，他們會照舊自己手動建repo、跑七步驟，不會直接走上傳網址。
+
+不過既然暫代頁判斷已經自動化了，這條規則的存在理由已經消失，我現在把它改成你要的樣子：兩邊都改成直接走上傳網址。
+
+　▶ AI 回應：現在更新Hermes的接力棒（寫在最上面，因為Hermes是由上往下讀）：
+
+　▶ AI 回應：現在更新SOP文件的規則一定案，並commit所有變更：
+
+　▶ AI 回應：**第一半：對，機器完全一模一樣。**
+不管是這台Mac、聯想、還是宏碁，觸發的動作就是對外打一個網路請求（`curl`到`event.bymyway.com`這個公開網址），跟哪一台實體機器發出這個請求完全無關——就像你用手機或電腦上同一個網站，結果不會有差別。背景真正在跑處理的，永遠是這台Mac上的launchd腳本，不管請求從哪裡打來的。
+
+**第二半：這裡要糾正一下——「丟給Claude桌面版App完全不耗Token」不完全正確。**
+
+我要跟你講清楚，因為這牽涉到你真正在意的「消耗誰的額度」：
+
+- **小龍蝦、Hermes** → 底層是`MiniMax-M3`模型（我剛查了`op…（略）
