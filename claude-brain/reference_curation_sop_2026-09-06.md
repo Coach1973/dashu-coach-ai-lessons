@@ -17,14 +17,23 @@ metadata:
 **第一步｜教練生成網站**
 教練用TAVA AI、Tooo.ai、Lovart.ai、Gemini、ChatGPT等工具產出店家/夥伴的網站原始碼，請AI工具打包（zip/tar.gz，含圖片assets）。
 
-**第二步｜教練把打包檔交給任一台AI**
-教練可以傳給小龍蝦、Hermes或直接跟軍師（任一台機器的終端機/桌面版）說。
-**🔴 修正教練原本的理解**：小龍蝦（OpenClaw main agent）本身**沒有檔案系統/執行指令的工具權限**（`toolsBySender`已鎖exec/fs），收檔案沒問題，但**沒辦法親自完成「解壓縮→上傳GitHub」這個技術動作**。真正能獨立跑完這步的只有：
-- **軍師**（任何一台機器的Claude終端機/桌面版）
-- **Hermes**（Mac桌面版全功能代理，有終端機能力）
-小龍蝦收到打包檔案時，應該做的是「收到後告知教練會請軍師處理」或寫派工單通知軍師，不是自己動手上傳。
+**🔴🔴 2026-09-06當晚教練追問後大幅修正：誰該走哪條路，兩層規則**
 
-**第三步｜執行的AI完成GitHub Pages上架**
+**規則一（最優先判斷）：執行者有沒有終端機/git能力？**
+- **教練本人 + 任何有終端機能力的AI**（軍師/Hermes/OpenCode/任何機器的Claude終端機）→ **一律直接照第三步七步驟手動做**，完全不要碰`event.bymyway.com/curation/upload`那個上傳頁——那是給「沒有能力自己動手的人」準備的備援，不是標準路徑，不要把它跟手動流程當成兩個平等的選項猶豫不決
+- 🟡 **小龍蝦有沒有這個能力，2026-09-06查證後發現有矛盾，尚未定論**：查`openclaw.json`的`toolsBySender`設定，`main`（小龍蝦）完全沒有寫任何exec/fs限制規則（反而是`kong`/`peipei`才寫死限制），理論上教練跟小龍蝦講話時應該不受限。但`SOUL.md`裡明確有一套「派工單」機制（2026-08-24教練交辦），小龍蝦遇到需要動系統的任務時是寫信給軍師代勞，不是自己動手——這套機制存在的前提，就是小龍蝦事實上做不到。**兩邊證據對不上，需要教練實測一次**（直接跟小龍蝦說「幫我跑一下終端機指令」）才能定論，下次任何AI讀到這條，先確認教練有沒有測過再引用結論，不要沿用舊的「小龍蝦沒有這個能力」這句話當定論。
+- **除教練以外的其他人**（沒有終端機能力的夥伴/朋友）→ 才用`event.bymyway.com/curation/upload`網頁上傳，讓自動化腳本代勞
+
+**規則二（動手前先確認）：這個店家是不是已經走過「自助登錄」流程、已經有shops.bymyway.com暫代頁？**
+- 2026-09-06真實案例（迴頭快剪）教訓：這個店家先前透過大台南策展中心「加入我們」表單自助登錄過，系統已經自動建了`shops.bymyway.com/huitou/`暫代頁（`_provision_shop_placeholder()`那條路，見`reference_new_site_collection_policy`）。現在教練拿到TAVA AI做好的正式網站，**不是策展SOP該管的範圍**——正確做法是**直接把完整網站檔案SCP上傳到VPS覆蓋掉暫代頁**，網址完全不變還是`shops.bymyway.com/huitou/`，**不需要建新GitHub repo、不需要`event.bymyway.com/curated/`、不需要`tainan-shangquan`額外插卡片**（原本表單送出時就已經插過一次卡片了）：
+  ```bash
+  sshpass -p '<VPS密碼，見路徑大全_憑證層.md>' scp -r <解壓縮後的網站資料夾>/* root@43.245.60.200:/var/www/shops/<原有slug>/
+  ```
+  上傳後curl驗證`shops.bymyway.com/<slug>/`內容已經是正式網站、不再是暫代頁的樣子即完成。
+- **動手前判斷方法**：先curl `https://shops.bymyway.com/<可能的slug>/` 或查`tainan-shangquan/_shops_slugs.json`這份registry，命中就是這條路（VPS覆蓋暫代頁）；查無記錄才是全新的策展SOP案例（第三~六步）。
+- 這條規則被2026-09-06 Hermes實際卡住的案例挖出來——它正確發現了`shops.bymyway.com/huitou/`既有記錄，但被SOP文件誤導去研究不該套用的策展流程，才卡住猶豫。**這不是AI理解力差，是SOP文件本身沒寫這個分支**。
+
+**第三步｜執行的AI完成GitHub Pages上架（僅適用「規則二」判斷為全新案例時）**
 依照既有SOP [[reference_zip_to_github_pages_deploy_sop]] 七步驟：解壓縮 → 檢查repo名稱是否為ASCII(中文檔名要先問教練或取英文/拼音名) → 用`git credential fill`取得GitHub token → REST API建repo → push內容 → 開GitHub Pages → 驗證上線(文字+圖片都要curl驗證，不能只看HTTP狀態碼)。
 
 **第四步｜完成後通知軍師**
