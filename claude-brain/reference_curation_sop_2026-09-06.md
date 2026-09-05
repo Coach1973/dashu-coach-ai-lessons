@@ -34,7 +34,7 @@ metadata:
 - 這條規則被2026-09-06 Hermes實際卡住的案例挖出來——它正確發現了`shops.bymyway.com/huitou/`既有記錄，但被SOP文件誤導去研究不該套用的策展流程，才卡住猶豫。**這不是AI理解力差，是SOP文件本身沒寫這個分支**。
 
 **第三步｜執行的AI完成GitHub Pages上架（僅適用「規則二」判斷為全新案例時）**
-依照既有SOP [[reference_zip_to_github_pages_deploy_sop]] 七步驟：解壓縮 → 檢查repo名稱是否為ASCII(中文檔名要先問教練或取英文/拼音名) → 用`git credential fill`取得GitHub token → REST API建repo → push內容 → 開GitHub Pages → 驗證上線(文字+圖片都要curl驗證，不能只看HTTP狀態碼)。
+依照既有SOP [[reference_zip_to_github_pages_deploy_sop]] 七步驟：解壓縮 → **repo名稱直接取網站`<title>`標題轉拼音，不用再問教練選項**（2026-09-06教練親口拍板：「都跟這個網站的主標題一致就好，就不要再問了。如果要修改的話，會特別跟你說要怎麼修改」——只取品牌主名的拼音，跟`curation_process.py`的`slugify_title()`同一套邏輯，不用列A/B/C選項等教練挑） → 用`git credential fill`取得GitHub token → REST API建repo → push內容 → 開GitHub Pages → 驗證上線(文字+圖片都要curl驗證，不能只看HTTP狀態碼)。
 
 **第四步｜完成後通知軍師**
 如果是Hermes/ACER/聯想等非本場軍師執行的，寫信到`cross-agent/inbox/mac/`；如果本來就是軍師自己做的，這步跳過直接進第五步。

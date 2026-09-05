@@ -10,7 +10,7 @@ metadata:
 ## 完整步驟
 
 1. **解壓縮**：zip用`Expand-Archive`（Windows原生，這個方向沒有Compress-Archive那個反斜線bug，那個bug只發生在「打包成zip」時，「解壓縮」用Expand-Archive安全）；tar.gz用`tar -xzf`。解壓到`/tmp/`暫存，不要直接動教練Downloads資料夾原始檔。
-2. **確認repo名稱是否為ASCII**：GitHub repo名稱**不支援中文字元**，用中文檔名下`POST /user/repos`會被靜默過濾成類似`-_-`的殘缺名稱（親身踩過）。**動手前先檢查來源檔名是否含中文/非ASCII字元**，含的話要先跟教練確認英文/拼音替代名稱（或教練授權「隨便取接近的」就直接照established慣例取，比照本作品總表其他站的命名法：`jiesheng-leadership`、`bigtree`、`coach-case`這種風格），不要先建立再返工改名。
+2. **確認repo名稱是否為ASCII**：GitHub repo名稱**不支援中文字元**，用中文檔名下`POST /user/repos`會被靜默過濾成類似`-_-`的殘缺名稱（親身踩過）。**動手前先檢查來源檔名是否含中文/非ASCII字元**，含的話🔴**2026-09-06教練拍板：直接取網站`<title>`標題的拼音當repo名稱，不用再問教練選項**（只取品牌主名，例如「七口灶・黑糖農莊」→`qikouzao`，不要整段標題硬翻），跟`scripts/curation_process.py`的`slugify_title()`同一套邏輯。教練原話：「不要再問了，如果要修改的話，會特別跟你說要怎麼修改」——照拼音自動命名直接建，不要先問A/B/C選項卡住流程。
 3. **取得GitHub token**：這台機器沒裝`gh` CLI，但Windows Git Credential Manager已經快取教練GitHub帳號(Coach1973)的OAuth token，可以直接用這個指令白嫖，不用去憑證檔案翻：
    ```bash
    printf 'protocol=https\nhost=github.com\n\n' | git credential fill

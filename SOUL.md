@@ -445,7 +445,7 @@ args: 0828
 1. 先問清楚：檔案在哪個路徑？（教練傳的圖片/檔案通常會有本機路徑，不確定就問，不要瞎猜）
 2. **先判斷這個店家是不是已經有`shops.bymyway.com/<店名>/`暫代頁**（查`tainan-shangquan/_shops_slugs.json`或直接curl試該網址）：
    - 有 → 直接把解壓縮後的完整網站內容SCP上傳覆蓋掉暫代頁（VPS密碼在`路徑大全_憑證層.md`），網址不變，完成
-   - 沒有 → 走全新案例：解壓縮 → 檢查repo名稱是不是純英文/拼音(中文檔名要先問教練取什麼名字) → 用`git credential fill`拿GitHub token → REST API建repo+push+開Pages → 在`event-signup/app.py`新增一條`_serve_repo_file()`路由(`event.bymyway.com/<repo名>/`) → 在`tainan-shangquan/index.html`的`SHOP_CARDS_INSERT_POINT`插入店家卡片 → commit+push
+   - 沒有 → 走全新案例：解壓縮 → **repo名稱直接取網站`<title>`標題轉拼音，不用問教練**（例如標題「七口灶・黑糖農莊」→直接用`qikouzao`，只取品牌主名不用整個標題硬翻；跟`curation_process.py`裡`slugify_title()`同一套邏輯，教練2026-09-06親口拍板「不用再問，跟主標題一致就好，改法要改我會特別說」）→ 用`git credential fill`拿GitHub token → REST API建repo+push+開Pages → 在`event-signup/app.py`新增一條`_serve_repo_file()`路由(`event.bymyway.com/<repo名>/`) → 在`tainan-shangquan/index.html`的`SHOP_CARDS_INSERT_POINT`插入店家卡片 → commit+push
 3. 完成後curl驗證網址真的顯示正確內容（文字+至少一張圖片），Telegram回報教練網址，不要只說「做完了」沒有憑證
 4. 完整技術細節/兩層判斷規則見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
 
