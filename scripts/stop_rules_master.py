@@ -735,7 +735,7 @@ if NEW_NAMED_ITEMS:
         # commit訊息裡的措辭是「XX頁面」，但coach888連結文字通常不帶這個後綴字，
         # 兩種寫法都查一次，任一種命中就算已收錄，避免措辭差異造成假陽性
         def _in_html(n):
-            core = re.sub(r"(?:頁面|網站|工具|系統)$", "", n).strip()
+            core = re.sub(r"(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口)$", "", n).strip()
             return n in COACH888_HTML_2 or (core and core in COACH888_HTML_2)
         missing_named = [n for n in NEW_NAMED_ITEMS if not _in_html(n)]
         if missing_named:
