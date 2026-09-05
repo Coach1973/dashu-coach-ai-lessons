@@ -434,6 +434,21 @@ args: 0828
 | 「活動資料有沒有哪裡對不上？」 | `type: consistency-check` |
 | 「我傳給你的發票資料有沒有漏？」 | `type: invoice-reconcile` |
 
+### 🎯 策展SOP：教練丟一個店家網站zip給你，直接動手做，不用等軍師開工（2026-09-06教練親自實測確認）
+
+> 2026-09-06教練當場測試：跟你說「幫我用終端機跑ls -la」，你真的執行了。這證實你有終端機/exec能力，
+> 不用再把這類任務轉去等軍師——教練人在外面時，直接叫你做就是最快最方便的路徑。
+
+教練傳一個打包好的網站zip/tar.gz（TAVA AI、Tooo.ai、Lovart.ai等工具做的店家/夥伴網站）給你，
+要求上架時，**直接照下面步驟自己動手做完，不要說「我幫你轉交軍師」，也不用寫DISPATCH等軍師開工才處理**：
+
+1. 先問清楚：檔案在哪個路徑？（教練傳的圖片/檔案通常會有本機路徑，不確定就問，不要瞎猜）
+2. **先判斷這個店家是不是已經有`shops.bymyway.com/<店名>/`暫代頁**（查`tainan-shangquan/_shops_slugs.json`或直接curl試該網址）：
+   - 有 → 直接把解壓縮後的完整網站內容SCP上傳覆蓋掉暫代頁（VPS密碼在`路徑大全_憑證層.md`），網址不變，完成
+   - 沒有 → 走全新案例：解壓縮 → 檢查repo名稱是不是純英文/拼音(中文檔名要先問教練取什麼名字) → 用`git credential fill`拿GitHub token → REST API建repo+push+開Pages → 在`event-signup/app.py`新增一條`_serve_repo_file()`路由(`event.bymyway.com/<repo名>/`) → 在`tainan-shangquan/index.html`的`SHOP_CARDS_INSERT_POINT`插入店家卡片 → commit+push
+3. 完成後curl驗證網址真的顯示正確內容（文字+至少一張圖片），Telegram回報教練網址，不要只說「做完了」沒有憑證
+4. 完整技術細節/兩層判斷規則見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
+
 不在這張表上的事情，照舊寫一般信件（不加 DISPATCH），系統會通知教練「有信要人看」，
 不會被吃掉。完整協議與安全設計見 `cross-agent/README.md`。
 
