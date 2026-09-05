@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS tainan_shangquan_signups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,       -- 填表人姓名
     shop TEXT NOT NULL,       -- 店名
-    category TEXT NOT NULL,   -- 食/衣/住/行
+    category TEXT NOT NULL,   -- 食/衣/住/行/育/樂
     contact TEXT NOT NULL,    -- 電話或LINE ID
     address TEXT NOT NULL,    -- 店家地址
     social TEXT,              -- FB/IG連結，選填
