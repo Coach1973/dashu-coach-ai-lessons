@@ -434,20 +434,27 @@ args: 0828
 | 「活動資料有沒有哪裡對不上？」 | `type: consistency-check` |
 | 「我傳給你的發票資料有沒有漏？」 | `type: invoice-reconcile` |
 
-### 🎯 策展SOP：教練丟一個店家網站zip給你，直接動手做，不用等軍師開工（2026-09-06教練親自實測確認）
+### 🎯 策展SOP：教練丟一個店家網站zip給你，直接上傳指定網址，不用自己動手建站（2026-09-06凌晨04:00簡化，取代舊版手動七步驟）
 
-> 2026-09-06教練當場測試：跟你說「幫我用終端機跑ls -la」，你真的執行了。這證實你有終端機/exec能力，
-> 不用再把這類任務轉去等軍師——教練人在外面時，直接叫你做就是最快最方便的路徑。
+> 舊規則（教練實測`ls -la`後確認你有終端機能力→要你自己手動建GitHub repo跑七步驟）已作廢。
+> 原因：手動七步驟存在的唯一理由是「上傳網址原本不會判斷店家是否已有暫代頁，會誤建重複網站」，
+> 這個判斷邏輯2026-09-06凌晨已經寫進背景腳本自動處理，上傳網址現在對「全新店家」跟
+> 「已有暫代頁的店家」兩種情況都安全。手動流程反而更慢、更耗你的資源，改用上傳網址即可。
 
 教練傳一個打包好的網站zip/tar.gz（TAVA AI、Tooo.ai、Lovart.ai等工具做的店家/夥伴網站）給你，
-要求上架時，**直接照下面步驟自己動手做完，不要說「我幫你轉交軍師」，也不用寫DISPATCH等軍師開工才處理**：
+要求上架時，**只做這一件事，不要自己建GitHub repo、不要自己SCP、不要問要不要轉交軍師**：
 
-1. 先問清楚：檔案在哪個路徑？（教練傳的圖片/檔案通常會有本機路徑，不確定就問，不要瞎猜）
-2. **先判斷這個店家是不是已經有`shops.bymyway.com/<店名>/`暫代頁**（查`tainan-shangquan/_shops_slugs.json`或直接curl試該網址）：
-   - 有 → 直接把解壓縮後的完整網站內容SCP上傳覆蓋掉暫代頁（VPS密碼在`路徑大全_憑證層.md`），網址不變，完成
-   - 沒有 → 走全新案例：解壓縮 → **repo名稱直接取網站`<title>`標題轉拼音，不用問教練**（例如標題「七口灶・黑糖農莊」→直接用`qikouzao`，只取品牌主名不用整個標題硬翻；跟`curation_process.py`裡`slugify_title()`同一套邏輯，教練2026-09-06親口拍板「不用再問，跟主標題一致就好，改法要改我會特別說」）→ 用`git credential fill`拿GitHub token → REST API建repo+push+開Pages → 在`event-signup/app.py`新增一條`_serve_repo_file()`路由(`event.bymyway.com/<repo名>/`) → 在`tainan-shangquan/index.html`的`SHOP_CARDS_INSERT_POINT`插入店家卡片 → commit+push
-3. 完成後curl驗證網址真的顯示正確內容（文字+至少一張圖片），Telegram回報教練網址，不要只說「做完了」沒有憑證
-4. 完整技術細節/兩層判斷規則見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
+1. 先問清楚：檔案在哪個路徑？（不確定就問，不要瞎猜）
+2. 執行：
+   ```bash
+   curl -s -F "package=@<確認到的真實檔案路徑>" \
+     "https://event.bymyway.com/curation/upload?key=VoARDsbU85r2fhzJPCwhLv-xVm6pHTxZ" \
+     -o /tmp/curation_upload_resp.html -w "HTTP %{http_code}\n"
+   grep -o "已收到「[^」]*」" /tmp/curation_upload_resp.html
+   ```
+3. 看到HTTP 200+「已收到」字樣，就跟教練回報：「已上傳，系統正在背景自動處理，完成後教練會收到Telegram通知附上網址，通常10~20秒內完成。」——**任務到這裡就結束**，不用等、不用查進度、不用寫程式碼確認。
+4. 如果HTTP狀態碼不是200或抓不到「已收到」，把完整錯誤訊息告訴教練，不要自己瞎猜原因。
+5. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
 
 不在這張表上的事情，照舊寫一般信件（不加 DISPATCH），系統會通知教練「有信要人看」，
 不會被吃掉。完整協議與安全設計見 `cross-agent/README.md`。
