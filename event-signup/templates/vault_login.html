@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台密碼總覽｜登入</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff;
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+  }
+  .card {
+    width:100%; max-width:380px; background:var(--dark2); border:1px solid var(--line);
+    border-radius:16px; padding:40px 28px;
+  }
+  h1 { font-size:22px; font-weight:900; text-align:center; margin-bottom:28px; }
+  h1 span { color:var(--gold); }
+  label { display:block; font-size:15px; font-weight:700; color:rgba(255,255,255,.7); margin:16px 0 6px; }
+  input {
+    width:100%; padding:13px 14px; font-size:17px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:inherit;
+  }
+  button {
+    width:100%; margin-top:26px; padding:14px; font-size:18px; font-weight:900; border:none;
+    border-radius:8px; background:var(--gold); color:var(--dark); cursor:pointer;
+  }
+  .error { margin-top:16px; padding:10px 12px; background:rgba(220,80,80,.15); border:1px solid rgba(220,80,80,.4);
+    border-radius:8px; color:#ff9b9b; font-size:15px; text-align:center; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>教練專屬<span>後台密碼總覽</span></h1>
+    <form method="POST">
+      <label>帳號</label>
+      <input type="text" name="username" autocomplete="username" required autofocus>
+      <label>密碼</label>
+      <input type="password" name="password" autocomplete="current-password" required>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      <button type="submit">登入</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -90,15 +90,35 @@ def save_registry(data: dict) -> None:
     REGISTRY_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+_COMPANY_SUFFIXES = (
+    "股份有限公司", "有限公司", "企業社", "工作室", "事務所", "商行",
+    "有限合夥事業", "設計工程", "廣告設計",
+)
+
+
 def primary_title_segment(title: str) -> str:
     """<title>常是「品牌名｜行銷標語」的完整句子，只取分隔符號前的品牌名稱本身
     用來產生網址slug，避免像「牛市町｜只漲不跌的美味—品牌理念」整句轉拼音變成
     超長網址(教練2026-09-06實際踩到，已手動改名修正)。完整title仍保留給
-    registry的title欄位(卡片顯示用)，不受影響。"""
-    for sep in ("｜", "|", "—", "－", "–", " - ", "："):
-        if sep in title:
-            return title.split(sep, 1)[0].strip()
-    return title
+    registry的title欄位(卡片顯示用)，不受影響。
+
+    2026-09-06二次修復：教練當晚接連手動改短4個網址(百聖廣告設計工程有限公司/
+    楊尚儒商聚樣dma/張騰文-騰文昌/幸福導師Esther楊在真)，發現這批標題大多是
+    「沒有清楚分隔符號的完整公司全名」或用純「-」(無空格)當分隔，原本的
+    分隔符號清單漏接。已補上：①純「-」也算分隔符號 ②結果仍含常見公司/工作室
+    尾綴時，順手砍掉尾綴進一步縮短。仍會有猜不準的情況(教練需要的是「品牌核心
+    2-4字」，不是規則能完全取代人判斷)，這種情況要靠下面新增的redirect機制
+    收尾——不管日後被人工改短幾次，舊網址都會自動轉址不會死掉。"""
+    segment = title
+    for sep in ("｜", "|", "—", "－", "–", " - ", "-", "："):
+        if sep in segment:
+            segment = segment.split(sep, 1)[0].strip()
+            break
+    for suffix in _COMPANY_SUFFIXES:
+        if segment.endswith(suffix):
+            segment = segment[: -len(suffix)].strip()
+            break
+    return segment or title
 
 
 def slugify_title(title: str) -> str:

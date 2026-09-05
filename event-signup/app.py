@@ -480,6 +480,57 @@ def admin_logout():
     return redirect(url_for("admin_login"))
 
 
+# ---------- 密碼保護的憑證總覽頁(2026-09-06教練交辦，帳號密碼獨立於上面/admin) ----------
+VAULT_ADMIN_USER = os.environ.get("VAULT_ADMIN_USER", "")
+VAULT_ADMIN_PASSWORD_HASH = os.environ.get("VAULT_ADMIN_PASSWORD_HASH", "")
+
+# 內容跟路徑大全_憑證層.md的「coach888 後台系統帳密」表同步維護，
+# 系統有新增/密碼異動時，兩邊要一起改（AI查密碼讀.md，教練自己查看這個網頁）。
+VAULT_ENTRIES = [
+    {"name": "大樹小講活動後台", "url": "https://event.bymyway.com/admin", "user": "0901056777", "password": "88888"},
+    {"name": "教練課程教材線上觀看後台", "url": "https://event.bymyway.com/materials/admin", "user": "（不需要帳密）", "password": "—"},
+    {"name": "開發票專用後台", "url": "https://namecard.bymyway.com/invoice-admin", "user": "0901056777", "password": "88888"},
+    {"name": "BNI信用証追蹤系統", "url": "https://namecard.bymyway.com/bni-credit", "user": "0901056777", "password": "88888"},
+    {"name": "AI資源媒合・帳號審核", "url": "https://namecard.bymyway.com/team/login", "user": "0901056777", "password": "88888"},
+    {"name": "BNI大台南南區分會後台(總管理員)", "url": "https://chapters.bymyway.com/admin", "user": "0901056777", "password": "88888"},
+    {"name": "AI百人導師後台", "url": "https://mentor100.bymyway.com/admin", "user": "0901056777", "password": "88888"},
+    {"name": "通用分會系統(總管理員)", "url": "https://team.bymyway.com/admin", "user": "0901056777", "password": "88888"},
+    {"name": "結繩領導學戰報系統", "url": "https://rpl-workshop.bymyway.com/admin", "user": "（不需要帳密）", "password": "—"},
+    {"name": "佩佩老師活動後台(非教練個人帳號)", "url": "https://peipei-event.bymyway.com/admin", "user": "peipei", "password": "88888"},
+    {"name": "「教練都在想什麼」監控後台", "url": "https://seabiscuit.bymyway.com", "user": "（無帳號欄位）", "password": "Bymyway7"},
+]
+
+
+@app.route("/vault/login", methods=["GET", "POST"])
+def vault_login():
+    if request.method == "GET":
+        return render_template("vault_login.html", error=None)
+    username = (request.form.get("username") or "").strip()
+    password = request.form.get("password") or ""
+    if (
+        VAULT_ADMIN_USER and VAULT_ADMIN_PASSWORD_HASH
+        and username == VAULT_ADMIN_USER
+        and check_password_hash(VAULT_ADMIN_PASSWORD_HASH, password)
+    ):
+        session["vault_logged_in"] = True
+        session.permanent = True
+        return redirect(url_for("vault"))
+    return render_template("vault_login.html", error="帳號或密碼不對，請再試一次"), 401
+
+
+@app.route("/vault/logout")
+def vault_logout():
+    session.pop("vault_logged_in", None)
+    return redirect(url_for("vault_login"))
+
+
+@app.route("/vault")
+def vault():
+    if not session.get("vault_logged_in"):
+        return redirect(url_for("vault_login", next=request.path))
+    return render_template("vault.html", entries=VAULT_ENTRIES)
+
+
 def _line_push(line_user_id: str, text: str) -> bool:
     body = json.dumps({"to": line_user_id, "messages": [{"type": "text", "text": text}]}).encode("utf-8")
     req = urllib.request.Request(
@@ -1592,16 +1643,33 @@ def _curated_slugs() -> set:
     return {s["slug"] for s in _load_curated_registry().get("sites", [])}
 
 
+def _curated_redirect_target(slug: str):
+    """slug被人工改短過的網站，舊slug不會留在_curated_slugs()裡。
+    改名當下若有登記進registry的redirects表，這裡查得到就轉址過去，
+    這樣任何已經發布出去的連結(FB貼文/名片/QR code)換名字後永遠不會死。"""
+    return _load_curated_registry().get("redirects", {}).get(slug)
+
+
 @app.route("/curated/<slug>/")
 def curated_page(slug):
-    if not _CURATED_SLUG_RE.match(slug) or slug not in _curated_slugs():
+    if not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if slug not in _curated_slugs():
+        target = _curated_redirect_target(slug)
+        if target:
+            return redirect(f"/curated/{target}/", code=301)
         abort(404)
     return _serve_repo_file(CURATED_REPOS_DIR / slug, "index.html")
 
 
 @app.route("/curated/<slug>/<path:filename>")
 def curated_assets(slug, filename):
-    if not _CURATED_SLUG_RE.match(slug) or slug not in _curated_slugs():
+    if not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if slug not in _curated_slugs():
+        target = _curated_redirect_target(slug)
+        if target:
+            return redirect(f"/curated/{target}/{filename}", code=301)
         abort(404)
     if filename == "index.html":
         return curated_page(slug)
