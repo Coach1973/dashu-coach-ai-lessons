@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>策展上傳｜大樹教練活動系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); --green:#4caf7d; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff;
+    min-height:100vh; padding:40px 16px; display:flex; flex-direction:column; align-items:center;
+  }
+  .card {
+    width:100%; max-width:520px; background:var(--dark2); border:1px solid var(--line);
+    border-radius:16px; padding:32px 28px; margin-bottom:24px;
+  }
+  h1 { font-size:22px; font-weight:900; text-align:center; margin-bottom:8px; }
+  h1 span { color:var(--gold); }
+  p.sub { text-align:center; color:rgba(255,255,255,.6); font-size:14px; margin-bottom:24px; }
+  .drop {
+    border:2px dashed var(--line); border-radius:12px; padding:32px 16px; text-align:center;
+    color:rgba(255,255,255,.7); font-size:15px; margin-bottom:16px;
+  }
+  input[type=file] { width:100%; margin-top:14px; color:#fff; }
+  button {
+    width:100%; margin-top:20px; padding:14px; font-size:17px; font-weight:900; border:none;
+    border-radius:8px; background:var(--gold); color:var(--dark); cursor:pointer;
+  }
+  .error { margin-top:16px; padding:10px 12px; background:rgba(220,80,80,.15); border:1px solid rgba(220,80,80,.4);
+    border-radius:8px; color:#ff9b9b; font-size:15px; text-align:center; }
+  .success { margin-top:16px; padding:12px 14px; background:rgba(76,175,125,.15); border:1px solid rgba(76,175,125,.4);
+    border-radius:8px; color:#8fe0b8; font-size:15px; text-align:center; }
+  .hint { margin-top:14px; font-size:13px; color:rgba(255,255,255,.45); line-height:1.6; }
+  .sites { width:100%; max-width:520px; }
+  .sites h2 { font-size:16px; color:var(--gold); margin-bottom:12px; }
+  .site-row {
+    background:var(--dark2); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+    margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:12px;
+  }
+  .site-row .name { font-weight:700; font-size:15px; }
+  .site-row .meta { font-size:12px; color:rgba(255,255,255,.5); margin-top:2px; }
+  .site-row a { color:var(--gold); text-decoration:none; font-size:13px; white-space:nowrap; }
+  .status-pending { color:#f0c674; }
+  .status-live { color:var(--green); }
+  .status-failed { color:#ff9b9b; }
+  .empty { color:rgba(255,255,255,.4); font-size:14px; text-align:center; padding:20px 0; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>策展<span>上傳</span></h1>
+    <p class="sub">丟一個做好的網站zip檔案，系統會自動上架到 event.bymyway.com 並收錄進大台南策展中心</p>
+    <form method="POST" enctype="multipart/form-data">
+      {% if key %}<input type="hidden" name="key" value="{{ key }}">{% endif %}
+      <div class="drop">📦 選擇 .zip 或 .tar.gz 檔案</div>
+      <input type="file" name="package" accept=".zip,.tar.gz,.tgz" required>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      {% if uploaded %}<div class="success">✅ 已收到「{{ uploaded }}」，系統正在背景自動處理，完成後會Telegram通知教練。</div>{% endif %}
+      <button type="submit">上傳</button>
+    </form>
+    <p class="hint">上傳後不用等這個頁面——系統會自動解壓縮、建立GitHub網站、上架到event.bymyway.com、收錄進大台南策展中心店家名冊。完成後教練會收到Telegram通知附上網址。</p>
+  </div>
+
+  <div class="sites">
+    <h2>最近上架紀錄</h2>
+    {% if sites %}
+      {% for s in sites[:15] %}
+      <div class="site-row">
+        <div>
+          <div class="name">{{ s.title }}</div>
+          <div class="meta">{{ s.uploaded_at }} · <span class="status-{{ s.status }}">{{ '已上線' if s.status == 'live' else ('處理失敗' if s.status == 'failed' else '處理中') }}</span></div>
+        </div>
+        {% if s.status == 'live' %}<a href="{{ s.event_url }}" target="_blank" rel="noopener">查看 →</a>{% endif %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">還沒有上架紀錄</div>
+    {% endif %}
+  </div>
+</body>
+</html>

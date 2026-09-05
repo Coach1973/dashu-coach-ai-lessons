@@ -36,6 +36,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("EVENT_SECRET_KEY", "")
 ADMIN_USER = os.environ.get("EVENT_ADMIN_USER", "")
 ADMIN_PASSWORD_HASH = os.environ.get("EVENT_ADMIN_PASSWORD_HASH", "")
+CURATION_UPLOAD_KEY = os.environ.get("CURATION_UPLOAD_KEY", "")
 LINE_OA_ID = os.environ.get("EVENT_LINE_OA_ID", "@qaw8118h")
 LINE_CHANNEL_SECRET = os.environ.get("EVENT_LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", "")
@@ -1564,6 +1565,81 @@ def api_tainan_shangquan_join():
         json.dumps({"ok": True}),
         status=200, headers={**resp_headers, "Content-Type": "application/json"},
     )
+
+
+# ── 策展SOP自動上架（2026-09-06教練交辦）──────────────────────────────
+# 教練用外部AI工具(TAVA AI/Tooo.ai/Lovart.ai等)做好店家/夥伴網站zip後，
+# 從這個上傳頁丟檔案，`scripts/curation_process.py`(launchd WatchPaths事件觸發，
+# 非輪詢)自動解壓縮+建GitHub repo+push+開Pages+登記進下面這個白名單registry。
+# 這裡的路由永遠讀registry來決定哪些slug可以被公開服務，不是任何github_repos底下
+# 的資料夾都能被存取——避免意外曝光bni-chapters等含個資/密碼的內部repo。
+CURATED_REPOS_DIR = Path("/Users/bymyway/github_repos")
+CURATION_UPLOAD_DIR = Path(__file__).resolve().parent / "curation_uploads"
+CURATED_REGISTRY_PATH = Path(__file__).resolve().parent / "curated_sites_registry.json"
+_CURATED_SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,60}$")
+
+
+def _load_curated_registry() -> dict:
+    if not CURATED_REGISTRY_PATH.is_file():
+        return {"sites": []}
+    try:
+        return json.loads(CURATED_REGISTRY_PATH.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {"sites": []}
+
+
+def _curated_slugs() -> set:
+    return {s["slug"] for s in _load_curated_registry().get("sites", [])}
+
+
+@app.route("/curated/<slug>/")
+def curated_page(slug):
+    if not _CURATED_SLUG_RE.match(slug) or slug not in _curated_slugs():
+        abort(404)
+    return _serve_repo_file(CURATED_REPOS_DIR / slug, "index.html")
+
+
+@app.route("/curated/<slug>/<path:filename>")
+def curated_assets(slug, filename):
+    if not _CURATED_SLUG_RE.match(slug) or slug not in _curated_slugs():
+        abort(404)
+    if filename == "index.html":
+        return curated_page(slug)
+    return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
+
+
+@app.route("/curation/upload", methods=["GET", "POST"])
+def curation_upload():
+    """教練交辦(2026-09-06)：策展SOP的檔案入口。教練把AI工具做好的店家網站zip丟這裡，
+    存進incoming/後就完成這一步——後續解壓縮/建repo/上架/登記店家名冊全部由
+    launchd WatchPaths事件觸發的背景腳本自動處理，這個路由本身不做任何耗時的事，
+    只負責收檔案，教練不用等頁面轉圈圈。"""
+    # 兩種身分都能用：①教練/軍師既有的admin session ②教練發給任何AI的專屬上傳金鑰
+    # (CURATION_UPLOAD_KEY，跟後台主密碼分開，就算被複製到公開網頁上洩漏，頂多被拿去
+    # 亂上傳測試網站，不會拿到後台主密碼的權限，可隨時單獨換掉這把鑰匙不影響教練登入)
+    supplied_key = request.values.get("key") or request.form.get("key") or ""
+    key_ok = bool(CURATION_UPLOAD_KEY) and supplied_key == CURATION_UPLOAD_KEY
+    if not _logged_in() and not key_ok:
+        return redirect(url_for("admin_login", next=request.path))
+
+    incoming = CURATION_UPLOAD_DIR / "incoming"
+    incoming.mkdir(parents=True, exist_ok=True)
+
+    if request.method == "POST":
+        f = request.files.get("package")
+        if not f or not f.filename:
+            return render_template("curation_upload.html", error="請選擇一個檔案", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+        original = f.filename
+        ext = "".join(Path(original).suffixes)[-20:] or ".zip"
+        if not re.search(r"\.(zip|tar\.gz|tgz)$", original, re.IGNORECASE):
+            return render_template("curation_upload.html", error="只接受 .zip 或 .tar.gz 檔案", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+        ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+        safe_name = re.sub(r"[^\w.\-一-鿿]", "_", Path(original).stem)[:80]
+        dest = incoming / f"{ts}__{safe_name}{ext}"
+        f.save(dest)
+        return render_template("curation_upload.html", uploaded=original, key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
+
+    return render_template("curation_upload.html", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
 
 
 KR_REPO = Path("/Users/bymyway/github_repos/KR")
