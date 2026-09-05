@@ -1,6 +1,6 @@
 {
-  "cycle": 798,
-  "lastCheckAt": "2026-09-06T01:12:32.695583+08:00",
+  "cycle": 799,
+  "lastCheckAt": "2026-09-06T02:12:30+08:00",
   "cronJobCount": 25,
   "cronErrorJobs": 2,
   "cronCE3Jobs": 0,
@@ -10,28 +10,36 @@
   "tgChannelSource": "telegram_channel_probe.sh (exit 0, 當下實測)",
   "soulThreeFilesOk": true,
   "repo1UntrackedModified": 27,
-  "repo2UntrackedModified": 35,
+  "repo2UntrackedModified": 37,
   "lockFilesCount": 0,
   "v40GatesPass": false,
   "announce": false,
   "decision": "🔕 安靜通過，三關全 fail，不打擾教練",
-  "reasoning": "CE=1 < 3 門檻 + 錯誤為 gateway restart 中斷（非 provider overload）+ 凌晨無會員影響 = 三關全 fail",
+  "reasoning": "CE=1 < 3 門檻 + 錯誤為 gateway restart 中斷殘留（非 provider overload）+ 凌晨 02:12 無會員影響 = 三關全 fail",
   "errorJobsDetail": [
     {
       "id": "001a9b16-1985-413b-8d3c-a4e885e552b6",
       "name": "📊 LINE@教練都在想什麼 每日兩次使用回報",
       "CE": 1,
-      "lastRunAt": "2026-09-05T20:00+08:00",
-      "nextRunAt": "2026-09-06T20:00+08:00",
-      "diagnosis": "20:00 那場 gateway restart 中斷，下次 20:00 自動補跑"
+      "lastRunAt": "2026-09-05T20:00:00+08:00",
+      "nextRunAt": "2026-09-06T08:00:00+08:00",
+      "diagnosis": "lastStatus=error、lastDurationMs=4980（遠低於 timeout=300s）、無 diagnostics 訊息；疑 22:00 gateway restart 中斷殘留；下次 09-06 08:00 自動補跑"
     },
     {
       "id": "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1",
       "name": "🔴 場景化升華+系統健檢",
       "CE": 1,
-      "lastRunAt": "2026-09-05T23:00+08:00",
-      "nextRunAt": "2026-09-06T23:00+08:00",
-      "diagnosis": "23:00 那場 gateway restart 中斷，今晚 23:00 自動補跑"
+      "lastRunAt": "2026-09-05T23:00:00+08:00",
+      "nextRunAt": "2026-09-06T23:00:00+08:00",
+      "diagnosis": "lastStatus=error、lastDurationMs=5475、無 diagnostics 訊息；疑 22:00 gateway restart 中斷殘留；下次 09-06 23:00 自動補跑"
     }
-  ]
+  ],
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-06T02:08:27+08:00",
+    "coachSilentHours": 0.1
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-06T02:12:22.325894+08:00",
+    "thing_changed_from_cycle798": "1) 糾正 cycle=798 LINE@任務 nextRun 描述（誤寫為 2026-09-06T20:00，實為 2026-09-06T08:00）；2) Repo2 untracked/modified 從 35→37（小增 2 筆，正常）"
+  }
 }

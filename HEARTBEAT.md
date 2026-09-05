@@ -24,6 +24,40 @@
 
 ---
 
+## 📋 cycle=799 健康檢查（2026-09-06 02:12 TPE 週日深夜凌晨）
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-06T02:08:27+08:00`（沉默 **0.1h**，剛對話 4 分鐘前，當下 `date` 新鮮值）|
+| Cron 系統（本任務本身）| ✅ `lastRunStatus=ok`、`consecutiveErrors=0`、`lastDurationMs=48536`（48.5s，遠低於 timeout=600s）|
+| 其他任務掃描（exec openclaw cron list --json）| ⚠️ 25 個任務中 2 個 status=error，但**全部 CE=1**（未達≥3 門檻），與 cycle=798 同樣 2 個任務；無 overload 字眼，疑 gateway restart 中斷殘留，下次排程會自動恢復 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
+| 2 個 error 任務真實狀態（從 cron list --json 撈）| ① `001a9b16` 📊 LINE@教練都在想什麼：lastRun=`2026-09-05 20:00` error、nextRun=`2026-09-06 08:00`、CE=1 → 09-06 早上 8 點自動補 ② `dc9bdf5c` 🔴 場景化升華：lastRun=`2026-09-05 23:00` error、nextRun=`2026-09-06 23:00`、CE=1 → 明晚 23 點自動補 |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項（grep 命中 7 條全是歷史「0 項」標記，非真實待辦）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全 ✅（9015/1851/25574 bytes）｜Repo1=27 / Repo2=37（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+### v4.0 三關判斷（全 fail → 🔕 不 announce 教練）
+
+| 關卡 | 結果 |
+|---|---|
+| 關卡一：本輪還壞嗎？ | ❌ fail（2 個 error 都 CE=1，未達≥3 累積，且本任務本輪執行成功 = 已恢復；下次排程會自動補跑）|
+| 關卡二：provider overload 重災嗎？ | ❌ fail（無 overload 字眼，是 gateway restart 中斷殘留，非 AI 供應商塞車）|
+| 關卡三：影響教練/會員嗎？ | ❌ fail（週日 02:12 凌晨 + 教練沉默 0.1h 剛對話 + 無 LINE 用戶在線 + 零會員功能壞）|
+
+### 已落痕跡（state/ + memory/ 雙檔鏡像）
+- ✅ `state/healthcheck_cycle` + `memory/healthcheck_cycle` = **799**（雙檔，從 798 +1）
+- ✅ `state/cumulative_green.txt` + `memory/cumulative_green.txt` = **160**（雙檔，從 159 +1）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=0.1 新鮮值、cycle=799）
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` v4.0 三關快照、JSON valid
+- ✅ `state/healthcheck.log` + `memory/healthcheck.log` 追加 cycle=799
+
+累計 **cumulativeGreen = 160**（從 159 +1，連續破百後第六十一輪）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**03:12 cycle=800**
+
 ## 📋 cycle=798 健康檢查（2026-09-06 01:12 TPE 週日深夜凌晨）
 
 | 檢查項 | 結果 |
@@ -32,7 +66,7 @@
 | Cron 系統（本任務本身）| ✅ `lastRunStatus=ok`、`consecutiveErrors=0`、`lastDurationMs=52513`（遠低於 timeout=600s）|
 | 其他任務掃描（exec openclaw cron list --json）| ⚠️ 25 個任務中 2 個 status=error，但**全部 CE=1**（未達≥3 門檻），錯誤原因疑似 gateway restart 中斷殘留，下次排程會自動恢復 |
 | CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0 |
-| 2 個 error 任務清單 | ① `001a9b16` 📊 LINE@教練都在想什麼（08:00 已成功，20:00 那場失敗，下次 20:00 自動補）② `dc9bdf5c` 🔴 場景化升華+系統健檢（23:00 那場失敗，今晚 23:00 自動補）|
+| 2 個 error 任務清單（cycle=799 已糾正）| ① `001a9b16` 📊 LINE@教練都在想什麼（**cycle=798 描述錯誤**，實際 lastRun=`2026-09-05 20:00` error、nextRun=`2026-09-06 08:00`、CE=1 → 早上 8 點自動補）② `dc9bdf5c` 🔴 場景化升華+系統健檢（23:00 那場失敗，今晚 23:00 自動補）|
 | HEARTBEAT.md ⬜ 真實待辦 | 0 項（grep 命中 5 條全是歷史「0 項」標記，非真實待辦）|
 | TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
 | 環境快檢 | SOUL.md 三份齊全 ✅（9015/1851/25306 bytes）｜Repo1=27 / Repo2=35（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
