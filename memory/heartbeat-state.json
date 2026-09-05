@@ -73,11 +73,11 @@
     }
   ],
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-06T06:11:10+08:00",
-    "coachSilentHours": 0.02
+    "coachSilentSince": "2026-09-06T06:36:55+08:00",
+    "coachSilentHours": 0.0
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-06T06:12:03+08:00",
+    "coach_silence_sync": "2026-09-06T06:37:10.850758+08:00",
     "full_cron_scan": "2026-09-06T06:12:25+08:00",
     "previous_05_12_cycle802": "已落痕跡，本輪延續確認"
   },
