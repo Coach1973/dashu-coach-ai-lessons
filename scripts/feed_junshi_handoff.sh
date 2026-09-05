@@ -76,6 +76,7 @@ if [[ -d "$WORKSPACE/.git" ]]; then
     else
       PULL_FAILED=1
     fi
+    POP_CONFLICT=0
     if [[ "$STASHED" -eq 1 ]]; then
       if ! git stash pop --quiet 2>/dev/null; then
         # 2026-09-05修復（ACER案例同款坑）：舊版用`|| true`吞掉stash pop衝突，
@@ -87,6 +88,18 @@ if [[ -d "$WORKSPACE/.git" ]]; then
         POP_CONFLICT=1
       fi
     fi
+    # 2026-09-05補強（聯想同日實測撞到的邊界情況）：pop 回報成功(exit 0)但工作區
+    # 仍殘留衝突標記的情況也要抓，不能只信 pop 的 exit code。
+    if [[ "$POP_CONFLICT" -eq 0 ]]; then
+      if git status --porcelain 2>/dev/null | grep -qE '^(UU|AA|DD|AU|UA|UD|DU) '; then
+        CONFLICT_FILES=$(git diff --name-only --diff-filter=U 2>/dev/null | tr '\n' ' ')
+        PULL_STATUS="🔴 stash pop 衝突未解決！受影響檔案：${CONFLICT_FILES}——工作區殘留衝突標記，請手動檢查解決，不要直接commit"
+        POP_CONFLICT=1
+      fi
+    fi
+    if [[ "$POP_CONFLICT" -eq 1 ]]; then
+      PULL_FAILED=1
+    fi
   fi
   # 三關判定才通知（2026-08-05教練親口「不影響工作就別吵我」同一原則）：
   # ①現在還真的壞嗎——跟origin比對HEAD，一致就代表最終結果是好的，不管中途
@@ -97,8 +110,8 @@ if [[ -d "$WORKSPACE/.git" ]]; then
   # 一旦POP_CONFLICT成立就一定要通知，不能被下面的HEAD比對覆蓋掉。
   if [[ "$POP_CONFLICT" -eq 1 ]]; then
     "$WORKSPACE/scripts/notify_coach.sh" \
-      "Mac開工時git stash pop發生衝突，衝突標記已寫進檔案(${CONFLICT_FILES})，需要有人手動解決，不要讓後續commit把衝突標記帶上去。" \
-      3600 "mac_feed_handoff_pop_conflict" >/dev/null 2>&1
+      "開工時git stash pop發生衝突，衝突標記已寫進檔案(${CONFLICT_FILES})，需要有人手動解決，不要讓後續commit把衝突標記帶上去。" \
+      3600 "feed_handoff_pop_conflict" >/dev/null 2>&1
   elif [[ "$PULL_FAILED" -eq 1 ]]; then
     REMOTE_HASH=$(git rev-parse --short "origin/${BRANCH}" 2>/dev/null)
     LOCAL_HASH=$(git rev-parse --short HEAD 2>/dev/null)

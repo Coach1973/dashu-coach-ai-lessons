@@ -103,31 +103,51 @@ try {
             }
         }
     } else {
-        $dirty = & git -C $workspace status --porcelain 2>$null
-        $stashed = $false
-        if ($dirty) {
-            & git -C $workspace stash push -u -m "auto-pull-stash-$(Get-Date -Format yyyyMMddHHmmss)" --quiet 2>$null | Out-Null
-            if ($LASTEXITCODE -eq 0) { $stashed = $true }
+        # 2026-09-05 修復（ACER來信+本場實測皆撞到同一個坑）：原本不論工作區乾不乾淨
+        # 都跑 stash→pull --rebase→pop，比 Mac 版本更容易撞到「pop 時跟雲端剛推上來的
+        # 內容衝突」——且 pop 失敗/衝突時原本完全靜默吞掉，衝突標記會被直接寫進檔案。
+        # 改成跟 Mac 版對齊：先試 ff-only（不動工作區，最安全），失敗才退回 stash+rebase，
+        # 且 stash pop 後一定檢查有沒有殘留衝突標記，有就大聲警告不能悶著。
+        $branch = (& git -C $workspace rev-parse --abbrev-ref HEAD 2>$null).Trim()
+        & git -C $workspace fetch --quiet 2>$null | Out-Null
+        $ffOk = $false
+        if ($branch) {
+            & git -C $workspace merge --quiet --ff-only "origin/$branch" 2>$null | Out-Null
+            $ffOk = ($LASTEXITCODE -eq 0)
         }
-        $pullResult = & git -C $workspace pull --quiet --rebase 2>&1
-        $pullOk = ($LASTEXITCODE -eq 0)
-        $popConflict = $false
-        if ($stashed) {
-            & git -C $workspace stash pop --quiet 2>$null | Out-Null
-            if ($LASTEXITCODE -ne 0) { $popConflict = $true }
-        }
-        if ($popConflict) {
-            # 2026-09-05修復（ACER案例）：stash pop衝突時舊版靜默continue，
-            # 衝突標記(<<<<<<< / ======= / >>>>>>>)會被寫進檔案卻毫無警示，
-            # 只在這行報告「已拉雲端最新」誤導使用者，衝突可能直接被commit汙染共用檔案。
-            # 改成明確列出受衝突影響的檔案，並保留stash不pop，讓使用者自己決定怎麼處理。
-            $conflictFiles = (& git -C $workspace diff --name-only --diff-filter=U 2>$null) -join ', '
-            $pullStatus = "🔴 stash pop 衝突未解決！受影響檔案：$conflictFiles ——本地改動仍在stash裡(未pop)，請手動執行 git -C `"$workspace`" stash pop 並解決衝突，不要直接commit"
-        } elseif ($pullOk) {
+        if ($ffOk) {
             $headHash = (& git -C $workspace rev-parse --short HEAD 2>&1).Trim()
-            $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash$(if($stashed){'，本地改動已 stash/pop'}else{''})）"
+            $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash，ff-only未動工作區）"
         } else {
-            $pullStatus = "⚠️ Pull 警告: $pullResult"
+            $dirty = & git -C $workspace status --porcelain 2>$null
+            $stashed = $false
+            if ($dirty) {
+                & git -C $workspace stash push -u -m "auto-pull-stash-$(Get-Date -Format yyyyMMddHHmmss)" --quiet 2>$null | Out-Null
+                if ($LASTEXITCODE -eq 0) { $stashed = $true }
+            }
+            $pullResult = & git -C $workspace pull --quiet --rebase 2>&1
+            $pullOk = ($LASTEXITCODE -eq 0)
+            $popConflict = $false
+            if ($stashed) {
+                & git -C $workspace stash pop --quiet 2>$null | Out-Null
+                if ($LASTEXITCODE -ne 0) { $popConflict = $true }
+            }
+            # 2026-09-05補強（聯想同日實測撞到的邊界情況）：不論 pop 有沒有回報非零
+            # exit code，都再親自掃一次工作區有沒有殘留衝突標記（曾實際發生 pop 回報
+            # 成功但檔案裡仍留有 <<<<<<< 的案例），跟 Mac 版本一樣列出受影響檔案。
+            if (-not $popConflict) {
+                $unmerged = & git -C $workspace status --porcelain 2>$null | Where-Object { $_ -match '^(UU|AA|DD|AU|UA|UD|DU) ' }
+                if ($unmerged) { $popConflict = $true }
+            }
+            if ($popConflict) {
+                $conflictFiles = (& git -C $workspace diff --name-only --diff-filter=U 2>$null) -join ', '
+                $pullStatus = "🔴 stash pop 衝突未解決！受影響檔案：$conflictFiles ——本次不算真正同步成功，需要人工檢查 $workspace 後手動解決衝突，不要直接commit"
+            } elseif ($pullOk) {
+                $headHash = (& git -C $workspace rev-parse --short HEAD 2>&1).Trim()
+                $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash$(if($stashed){'，本地改動已 stash/pop（無衝突）'}else{''})）"
+            } else {
+                $pullStatus = "⚠️ Pull 警告: $pullResult"
+            }
         }
     }
 } catch {
