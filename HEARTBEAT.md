@@ -157,3 +157,15 @@
 ## 🚀 Session-End 雲端同步 2026-09-05 17:57（Windows）
 - ✅ pushed 669441ac
 - 同步路徑：HEARTBEAT.md
+
+## 🩺 軍師 Hook 自檢 2026-09-05 21:20（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：你再總結一下經驗，然後上傳到 GitHub。我要請軍師了解一下你的工作情況，再統
+- 雲端狀態：⚠️ Pull 警告: fatal: Cannot rebase onto multiple branches.
+- Session: 8d645567-02e2-4bf9-9ca6-d48853c6d043
+
+## 🩺 軍師 Hook 自檢 2026-09-05 21:22（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：你再總結一下經驗，然後上傳到 GitHub。我要請軍師了解一下你的工作情況，再統
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 00286fed，本地改動已 stash/pop）
+- Session: fa2cbb26-2d1b-4e0f-8cdf-aeeda8d55167
