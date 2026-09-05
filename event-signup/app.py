@@ -2214,6 +2214,51 @@ def cica_assets(filename):
     return _serve_repo_file(CICA_REPO, filename)
 
 
+LIN_BEIYI_REPO = Path("/Users/bymyway/github_repos/lin-beiyi")
+
+
+@app.route("/lin-beiyi/")
+def lin_beiyi_page():
+    return _serve_repo_file(LIN_BEIYI_REPO, "index.html")
+
+
+@app.route("/lin-beiyi/<path:filename>")
+def lin_beiyi_assets(filename):
+    if filename == "index.html":
+        return lin_beiyi_page()
+    return _serve_repo_file(LIN_BEIYI_REPO, filename)
+
+
+HARBOUR66_REPO = Path("/Users/bymyway/github_repos/66-harbour")
+
+
+@app.route("/66-harbour/")
+def harbour66_page():
+    return _serve_repo_file(HARBOUR66_REPO, "index.html")
+
+
+@app.route("/66-harbour/<path:filename>")
+def harbour66_assets(filename):
+    if filename == "index.html":
+        return harbour66_page()
+    return _serve_repo_file(HARBOUR66_REPO, filename)
+
+
+TPAR_REPO = Path("/Users/bymyway/github_repos/tainan-pickleball-art-rotary")
+
+
+@app.route("/tainan-pickleball-art-rotary/")
+def tpar_page():
+    return _serve_repo_file(TPAR_REPO, "index.html")
+
+
+@app.route("/tainan-pickleball-art-rotary/<path:filename>")
+def tpar_assets(filename):
+    if filename == "index.html":
+        return tpar_page()
+    return _serve_repo_file(TPAR_REPO, filename)
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
