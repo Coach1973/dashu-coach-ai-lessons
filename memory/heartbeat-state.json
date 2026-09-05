@@ -1,13 +1,13 @@
 {
-  "cycle": 803,
-  "lastCheckAt": "2026-09-06T06:12:25+08:00",
+  "cycle": 804,
+  "lastCheckAt": "2026-09-06T07:12:30+08:00",
   "cronJobCount": 25,
-  "cronErrorJobs": 6,
+  "cronErrorJobs": 7,
   "cronCE3Jobs": 0,
   "cronTimeoutDanger": 0,
   "cronAuthFailed": 0,
   "tgChannelOk": true,
-  "tgChannelSource": "Telegram API sync exit 0 + telegram_channel_probe.sh 輸出 ok:true",
+  "tgChannelSource": "Telegram API sync exit 0",
   "soulThreeFilesOk": true,
   "repo1UntrackedModified": 28,
   "repo2UntrackedModified": 29,
@@ -15,76 +15,14 @@
   "v40GatesPass": false,
   "announce": false,
   "decision": "🔕 安靜通過，沒有符合三關全過的嚴重問題",
-  "reasoning": "本任務本輪執行成功；6 個 error 皆 CE=1 且根因為 cron: job interrupted by gateway restart（06:00 那批任務被打斷殘留），非 provider overload、非 auth 失效、非 timeout；下次排程全部自動補跑（sync 兩個 06:30、LINE@ 08:00、每4小時 10:00、場景化升華今晚 23:00、起床摘要明天 06:00）。未達 CE≥3 門檻。",
+  "reasoning": "本任務本輪執行成功；7 個 error 皆 CE=1 且根因為 cron: job interrupted by gateway restart（昨夜 23:00 / 今晨 06:00 / 07:00 三批任務被打斷殘留），非 provider overload、非 auth 失效、非 timeout；下次排程全部自動補跑（sync 兩個 07:30、每4小時 10:00、LINE@ 08:00、場景化升華今晚 23:00、起床摘要/幕僚長晨報明天 06:00/07:00）。未達 CE≥3 門檻。",
   "errorJobsDetail": [
-    {
-      "id": "37593697-df01-48dd-9a37-7ff239c5fa8f",
-      "name": "sync-執行細則-to-claude-global",
-      "CE": 1,
-      "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-06T06:30:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-06 06:30 自動補跑"
-    },
-    {
-      "id": "aa1ad73b-2a3a-4ea8-a98f-4284fe30f59e",
-      "name": "sync-特助心法-to-claude-global",
-      "CE": 1,
-      "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-06T06:30:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-06 06:30 自動補跑"
-    },
-    {
-      "id": "001a9b16-1985-413b-8d3c-a4e885e552b6",
-      "name": "📊 LINE@教練都在想什麼 每日兩次使用回報",
-      "CE": 1,
-      "lastRunAt": "2026-09-05T20:00:00+08:00",
-      "nextRunAt": "2026-09-06T08:00:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-06 08:00 自動補跑"
-    },
-    {
-      "id": "每4小時主動關懷",
-      "name": "每4小時主動關懷",
-      "CE": 1,
-      "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-06T10:00:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-06 10:00 自動補跑"
-    },
-    {
-      "id": "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1",
-      "name": "🔴 場景化升華+系統健檢",
-      "CE": 1,
-      "lastRunAt": "2026-09-05T23:00:00+08:00",
-      "nextRunAt": "2026-09-06T23:00:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-06 23:00 自動補跑"
-    },
-    {
-      "id": "☀️ 每日 06:00 起床摘要",
-      "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
-      "CE": 1,
-      "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-07T06:00:00+08:00",
-      "lastError": "cron: job interrupted by gateway restart",
-      "diagnosis": "CE=1 < 3，非 provider overload；下次 09-07 06:00 自動補跑"
-    }
-  ],
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-06T06:36:55+08:00",
-    "coachSilentHours": 0.0
-  },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-06T06:37:10.850758+08:00",
-    "full_cron_scan": "2026-09-06T06:12:25+08:00",
-    "previous_05_12_cycle802": "已落痕跡，本輪延續確認"
-  },
-  "raceCondition": {
-    "detected": true,
-    "otherAgentCycle803At0611": "另一個 session 在 06:11 寫了 cycle=803 entry，但當時 cron list --json 抓的是 0 error 的過時快照",
-    "thisAgentAt0612": "完整掃描確認 6 個 error（全部 CE=1、gateway restart 中斷殘留）",
-    "resolution": "覆蓋 06:11 版 HEARTBEAT entry，更新對應 state/heartbeat-state.json cronErrorJobs=6"
-  }
+    {"id":"37593697-df01-48dd-9a37-7ff239c5fa8f","name":"sync-執行細則-to-claude-global","CE":1,"lastRunAt":"2026-09-06T07:00:00+08:00","nextRunAt":"2026-09-06T07:30:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；下次 09-06 07:30 自動補跑"},
+    {"id":"aa1ad73b-2a3a-4ea8-a98f-4284fe30f59e","name":"sync-特助心法-to-claude-global","CE":1,"lastRunAt":"2026-09-06T07:00:00+08:00","nextRunAt":"2026-09-06T07:30:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；下次 09-06 07:30 自動補跑"},
+    {"id":"001a9b16-1985-413b-8d3c-a4e885e552b6","name":"📊 LINE@教練都在想什麼 每日兩次使用回報","CE":1,"lastRunAt":"2026-09-05T20:00:00+08:00","nextRunAt":"2026-09-06T08:00:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；下次 09-06 08:00 自動補跑"},
+    {"id":"ef88279b-bde2-41c8-b386-4c64d185bc39","name":"每4小時主動關懷","CE":1,"lastRunAt":"2026-09-06T06:00:00+08:00","nextRunAt":"2026-09-06T10:00:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；下次 09-06 10:00 自動補跑"},
+    {"id":"dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1","name":"🔴 場景化升華+系統健檢（每日23:00）","CE":1,"lastRunAt":"2026-09-05T23:00:00+08:00","nextRunAt":"2026-09-06T23:00:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；下次今晚 09-06 23:00 自動補跑"},
+    {"id":"f487652d-0696-4b54-ac7f-7dd1a94cdb8c","name":"☀️ 每日 06:00 起床摘要","CE":1,"lastRunAt":"2026-09-06T06:00:00+08:00","nextRunAt":"2026-09-07T06:00:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；今天 06:00 漏送，下次明天 06:00 自動補"},
+    {"id":"b73845c9-f653-4f9a-8869-0e2f2c0bd9b1","name":"☕ 幕僚長晨報（AI員工每日彙整，07:00）","CE":1,"lastRunAt":"2026-09-06T07:00:00+08:00","nextRunAt":"2026-09-07T07:00:00+08:00","lastError":"cron: job interrupted by gateway restart","diagnosis":"CE=1 < 3，非 provider overload；今天 07:00 漏送，下次明天 07:00 自動補"}
+  ]
 }

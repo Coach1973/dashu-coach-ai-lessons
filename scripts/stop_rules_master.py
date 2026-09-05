@@ -693,6 +693,20 @@ for evt in EVENTS[-300:]:
 # 上面的偵測。教練當場抓到（策展一鍵注入頁面沒收錄coach888），這是同一種坑第三次發作。
 # 補一個更寬的訊號：commit message裡出現「新增...頁面/網站/工具/系統」這類措辭，
 # 代表這輪對話交付了一個「使用者看得到的新東西」，一樣要檢查有沒有進coach888。
+#
+# 🔴🔴 2026-09-06當晚第四次發作後查明：這條規則從建立那刻起就是死的。
+# 兩個獨立bug疊在一起：①上面沿用L1的heredoc排除邏輯，把含`<<'EOF'`的command整段
+# 跳過——但commit message一律用heredoc包多行文字是系統prompt明文規定的標準做法
+# （見Bash工具說明「ALWAYS pass the commit message via a HEREDOC」），等於這條
+# 規則對100%的正常commit都會跳過，從來沒有真的檢查過任何一次commit。
+# ②就算不跳過，`-m\s+["']新增`這個anchor要求「新增」緊接在-m後面的引號之後，
+# heredoc格式是`-m "$(cat <<'EOF'`，真正的文字內容在下一行，永遠對不上這個anchor。
+# 已修復：①拿掉heredoc排除(這條規則的風險跟L1不同——L1排除heredoc是怕heredoc
+# 內容本身在「寫一個含假指令文字的測試檔案」，L2只是找commit message裡的中文
+# 措辭，heredoc內的文字才是要抓的目標，不该跳過) ②拿掉`-m\s+["']`這個anchor，
+# 改成整個command字串裡找`新增`+詞尾，不要求緊接在-m後面 ③詞尾清單太窄
+# （只有頁面/網站/工具/系統4個詞），這次真實案例寫的是「新增...後台管理頁」
+# （頁面的簡寫「頁」），已補上頁/後台/平台/管理頁/入口這幾種常見簡寫。
 NEW_NAMED_ITEMS = []
 for evt in EVENTS[-300:]:
     if not isinstance(evt, dict) or evt.get("type") != "assistant":
@@ -701,9 +715,12 @@ for evt in EVENTS[-300:]:
         if not isinstance(c, dict) or c.get("type") != "tool_use" or c.get("name") != "Bash":
             continue
         command = str((c.get("input") or {}).get("command", ""))
-        if re.search(r"<<[-~]?\s*['\"]?\w+['\"]?", command):
+        if "git commit" not in command:
             continue
-        for m in re.finditer(r"git\s+commit\s+.*?-m\s+[\"']新增([^\"'：:]{1,30}(?:頁面|網站|工具|系統))", command):
+        for m in re.finditer(
+            r"新增([^\n\"'：:]{1,30}(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口))",
+            command,
+        ):
             name = m.group(1).strip()
             if name and name not in NEW_NAMED_ITEMS:
                 NEW_NAMED_ITEMS.append(name)
