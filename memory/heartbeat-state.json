@@ -35,11 +35,11 @@
     }
   ],
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-06T02:08:27+08:00",
-    "coachSilentHours": 0.1
+    "coachSilentSince": "2026-09-06T03:11:23+08:00",
+    "coachSilentHours": 0.0
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-06T02:12:22.325894+08:00",
+    "coach_silence_sync": "2026-09-06T03:12:04.280186+08:00",
     "thing_changed_from_cycle798": "1) 糾正 cycle=798 LINE@任務 nextRun 描述（誤寫為 2026-09-06T20:00，實為 2026-09-06T08:00）；2) Repo2 untracked/modified 從 35→37（小增 2 筆，正常）"
   }
 }
