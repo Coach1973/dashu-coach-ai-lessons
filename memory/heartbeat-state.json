@@ -1,8 +1,30 @@
 {
-  "cycle": 787,
-  "ts": "2026-09-05T04:12:29Z",
-  "coachSilentH": 0.1,
-  "cronErrors": 0,
-  "threeGateDecision": "all-fail-no-announce",
-  "telegramChannelOk": true
+  "ts": "2026-09-05T19:13:01+08:00",
+  "cycle": 794,
+  "silentHours": 0.0,
+  "coachSilentSince": "2026-09-05T19:06:55+08:00",
+  "tgChannelOk": true,
+  "tgChannelProbe": "ok",
+  "v4checks": {
+    "check1_currentlyBroken": false,
+    "check2_providerOverload": false,
+    "check3_affectsWork": false,
+    "verdict": "all_fail_silent_pass"
+  },
+  "cronSummary": {
+    "total": 25,
+    "ok": 25,
+    "consecutiveErrorsMax": 0,
+    "timeoutDanger": 0,
+    "authFail": 0
+  },
+  "cumulativeGreen": 155,
+  "autoFix": [],
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-05T19:36:55+08:00",
+    "coachSilentHours": 1.6
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-05T21:12:04.458821+08:00"
+  }
 }

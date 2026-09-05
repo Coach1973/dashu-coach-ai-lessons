@@ -1,7 +1,7 @@
 {
-  "cycle": 787,
-  "lastMessageAt": "2026-09-05T12:03:29+08:00",
+  "lastCoachMessageAt": "2026-09-05T18:04:16+08:00",
+  "lastCheckedAt": "2026-09-05T10:12:39.000000+08:00",
   "silentHours": 0.1,
-  "fetchedAt": "2026-09-05T04:12:29Z",
-  "source": "sync_coach_last_message.sh"
+  "cycle": 793,
+  "source": "telegram_api_real_time"
 }
