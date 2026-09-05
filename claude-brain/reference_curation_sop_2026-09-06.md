@@ -122,7 +122,17 @@ slug/策展中心卡片連結換新），**沒有任何一次留下「舊網址�
 最容易漏掉的就是redirects這一步（因為它不影響「看起來改名成功了」的當下驗收，
 只有等舊連結被外部引用後才會發現死掉，教訓成本很高）。
 
+## 🔴 2026-09-06深夜再修正：教練否決redirect補救方案，改成源頭強制輸入短網址
+
+教練看到上面的redirect機制後明確表態不喜歡：「明明就是一個錯的網址，還要把它轉址到正確的，我覺得很費勁，我比較喜歡從源頭解決」。教練提出兩件事並已落地：
+
+1. **源頭解決（已完成）**：`event.bymyway.com/curation/upload`上傳表單新增**必填**的「自訂短網址」欄位（`custom_slug`），送出前教練或夥伴自己決定短名稱，伺服器端驗證格式(小寫英文/數字/短橫線)+是否重複，沒帶這個欄位會直接400拒絕上傳。`curation_process.py`的`process_one()`優先採用這個值(`read_custom_slug()`)，不再依賴`slugify_title()`的拼音猜測(拼音邏輯保留當ai-go一鍵注入等其他呼叫端的備援，但主要上傳頁面已不會走到它)。`curation-prompt.md`(策展一鍵注入給其他AI用的指令文字)+`SOUL.md`(小龍蝦指示)+`H_HANDOFF_LATEST.md`(Hermes指示)三處同步更新，都改成「先問短網址，curl帶`-F custom_slug=`」。
+2. **既有4~5個已發布錯誤網址的清理（已完成）**：教練原意是「FB刪掉重貼」，查證後改用**編輯貼文文字**(Graph API `POST /{post_id}` 帶`message`參數可直接改文案，含連結)達成同樣效果但保留原貼文的按讚/留言/發布時間，不需要真的砍掉重發。已修正bai-sheng/yang-shang-ru/zhang-teng-wen/yang-zai-zhen/niu-shi-ting共5則FB貼文的連結，逐一用Graph API GET驗證新網址已生效。Telegram「活動報名即時通知」群組裡的舊網址訊息**沒有清除**——嘗試過Telegram Bot API沒有瀏覽群組歷史訊息的能力、桌面版App在背景操控點擊沒有反應，冒然用message_id範圍猜測有刪到別人訊息的風險，已如實告知教練這個限制，改成**這個redirect機制本身仍保留**當安全網——即使Telegram舊訊息裡的舊網址沒清掉，點下去也會自動轉址到對的地方，不是死連結。
+3. **notify()已補上message_id記錄**：`curation_process.py`的Telegram通知函式原本送出後完全不記錄回傳的`message_id`，這次想清舊訊息時才發現完全查不到——已修復，往後每則通知的message_id都會寫進`distill/curation_process.log`，之後真的要清特定訊息可以直接查log呼叫`deleteMessage`，不用再靠人眼翻聊天記錄。
+
+**redirect機制維持不動**——教練沒有要求移除，只是不想再依賴它當「主要」解法，改成source-fix為主、redirect當zero-cost安全網，兩者不衝突。
+
 ## How to apply
-下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。教練要求改短既有網址時，一律用`scripts/curated_site_rename.py`，不要手動操作。
+下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。教練要求改短既有網址時，一律用`scripts/curated_site_rename.py`，不要手動操作。上傳頁面現在會強制要求短網址欄位，不用再擔心系統猜出過長網址。
 
 Related: [[reference_zip_to_github_pages_deploy_sop]]、[[reference_new_site_collection_policy_2026-09-05]]、[[project_namecard_ocr_pipeline_reusable]]（WatchPaths事件觸發的原始先例）

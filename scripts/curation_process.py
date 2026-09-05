@@ -63,6 +63,10 @@ def log(msg: str) -> None:
 
 
 def notify(text: str) -> None:
+    """2026-09-06補：回傳的message_id一併記進log——教練事後要求「網址改短
+    之後把發錯的舊通知清掉」時，這台Mac完全查不到訊息ID(Bot API不能瀏覽
+    群組歷史)，只能靠人工翻Telegram畫面找。往後有這行記錄，需要清舊訊息
+    時可以直接呼叫deleteMessage，不用再靠人眼翻聊天記錄。"""
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             config = json.load(f)
@@ -72,7 +76,9 @@ def notify(text: str) -> None:
             f"https://api.telegram.org/bot{bot_token}/sendMessage",
             data=body, method="POST", headers={"Content-Type": "application/json"},
         )
-        urllib.request.urlopen(req, timeout=10)
+        resp = json.loads(urllib.request.urlopen(req, timeout=10).read())
+        msg_id = resp.get("result", {}).get("message_id")
+        log(f"📨 Telegram通知已送出，message_id={msg_id}")
     except Exception as e:  # noqa: BLE001
         log(f"⚠️ Telegram通知失敗: {e!r}")
 
@@ -127,6 +133,29 @@ def slugify_title(title: str) -> str:
     slug = re.sub(r"[^a-z0-9-]", "", raw.lower())
     slug = re.sub(r"-+", "-", slug).strip("-")
     return slug or "site"
+
+
+def _sidecar_slug_path(pkg_path: Path) -> Path:
+    """教練2026-09-06拍板：自動猜的短網址常常猜不準，源頭解決方式是讓上傳的人
+    (教練或夥伴)在送出檔案前就自己指定短網址，寫進上傳網頁的自訂欄位。
+    這個欄位跟zip檔一起存成同名+.slug的旁路檔案，process_one()優先採用，
+    完全不需要再靠pinyin猜測。"""
+    return pkg_path.parent / f"{pkg_path.name}.slug"
+
+
+def read_custom_slug(pkg_path: Path) -> str:
+    sidecar = _sidecar_slug_path(pkg_path)
+    if sidecar.is_file():
+        val = sidecar.read_text(encoding="utf-8").strip()
+        if re.fullmatch(r"[a-z0-9][a-z0-9-]{0,60}", val):
+            return val
+    return ""
+
+
+def cleanup_sidecar_slug(pkg_path: Path) -> None:
+    sidecar = _sidecar_slug_path(pkg_path)
+    if sidecar.is_file():
+        sidecar.unlink()
 
 
 def unique_slug(base: str, existing: set) -> str:
@@ -436,9 +465,10 @@ def process_one(pkg_path: Path) -> None:
             shutil.rmtree(tmp_extract, ignore_errors=True)
             PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
             shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
+            cleanup_sidecar_slug(pkg_path)
             return
 
-        base_slug = slugify_title(title)
+        base_slug = read_custom_slug(pkg_path) or slugify_title(title)
         slug = unique_slug(base_slug, existing_slugs)
         repo_dir = GITHUB_REPOS_DIR / slug
         shutil.copytree(tmp_extract, repo_dir)
@@ -493,6 +523,7 @@ def process_one(pkg_path: Path) -> None:
         log(f"❌ 處理失敗：{pkg_path.name}: {e!r}")
         FAILED_DIR.mkdir(parents=True, exist_ok=True)
         shutil.move(str(pkg_path), str(FAILED_DIR / pkg_path.name))
+        cleanup_sidecar_slug(pkg_path)
         notify(
             "⚠️【策展SOP・自動上架失敗】\n"
             f"檔案：{pkg_path.name}\n錯誤：{e}\n"
@@ -503,12 +534,16 @@ def process_one(pkg_path: Path) -> None:
     shutil.rmtree(tmp_extract, ignore_errors=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
+    cleanup_sidecar_slug(pkg_path)
 
 
 def main() -> None:
     INCOMING_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSING_DIR.mkdir(parents=True, exist_ok=True)
-    pending = [p for p in INCOMING_DIR.iterdir() if p.is_file() and not p.name.startswith(".")]
+    pending = [
+        p for p in INCOMING_DIR.iterdir()
+        if p.is_file() and not p.name.startswith(".") and not p.name.endswith(".slug")
+    ]
     if not pending:
         return
     for pkg in pending:
@@ -519,6 +554,10 @@ def main() -> None:
         except Exception as e:  # noqa: BLE001
             log(f"搬移到processing/失敗，跳過本輪: {pkg.name}: {e!r}")
             continue
+        # 自訂短網址旁路檔案(上傳頁面填了才會有)跟著一起搬，process_one()才找得到
+        sidecar_src = INCOMING_DIR / f"{pkg.name}.slug"
+        if sidecar_src.is_file():
+            shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
         process_one(staged)
 
 

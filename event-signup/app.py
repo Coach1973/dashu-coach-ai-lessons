@@ -1701,10 +1701,18 @@ def curation_upload():
         ext = "".join(Path(original).suffixes)[-20:] or ".zip"
         if not re.search(r"\.(zip|tar\.gz|tgz)$", original, re.IGNORECASE):
             return render_template("curation_upload.html", error="只接受 .zip 或 .tar.gz 檔案", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+        # 2026-09-06教練拍板：源頭解決網址過長問題——不再靠系統猜品牌名轉拼音，
+        # 改成上傳當下強制要求輸入自訂短網址，送出前確認好，之後不用再改名。
+        custom_slug = (request.form.get("custom_slug") or "").strip().lower()
+        if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", custom_slug):
+            return render_template("curation_upload.html", error="網址短名稱格式不對，只能用小寫英文字母/數字/短橫線，例如 niu-shi-ting", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+        if custom_slug in _curated_slugs():
+            return render_template("curation_upload.html", error=f"「{custom_slug}」這個短網址已經被其他店家用過，請換一個", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
         ts = datetime.now().strftime("%Y%m%d-%H%M%S")
         safe_name = re.sub(r"[^\w.\-一-鿿]", "_", Path(original).stem)[:80]
         dest = incoming / f"{ts}__{safe_name}{ext}"
         f.save(dest)
+        (incoming / f"{dest.name}.slug").write_text(custom_slug, encoding="utf-8")
         _notify_xiaolongxia(
             f"📦【策展SOP・收到新檔案】\n檔案：{original}\n系統正在背景自動處理，完成上架後會再通知一次。",
             chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,

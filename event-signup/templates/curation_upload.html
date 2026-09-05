@@ -24,6 +24,12 @@
     color:rgba(255,255,255,.7); font-size:15px; margin-bottom:16px;
   }
   input[type=file] { width:100%; margin-top:14px; color:#fff; }
+  label.slug-label { display:block; margin-top:16px; font-size:14px; font-weight:700; color:rgba(255,255,255,.75); }
+  input[type=text].slug-input {
+    width:100%; margin-top:8px; padding:12px 14px; font-size:16px; border-radius:8px; border:1px solid var(--line);
+    background:#0a0a0a; color:#fff; font-family:'SF Mono', Menlo, monospace;
+  }
+  .slug-hint { margin-top:6px; font-size:12px; color:rgba(255,255,255,.45); }
   button {
     width:100%; margin-top:20px; padding:14px; font-size:17px; font-weight:900; border:none;
     border-radius:8px; background:var(--gold); color:var(--dark); cursor:pointer;
@@ -64,6 +70,9 @@
       {% if key %}<input type="hidden" name="key" value="{{ key }}">{% endif %}
       <div class="drop">📦 選擇 .zip 或 .tar.gz 檔案</div>
       <input type="file" name="package" accept=".zip,.tar.gz,.tgz" required>
+      <label class="slug-label">網址要用哪個短名稱？（送出前先想好，之後就不用再改）</label>
+      <input type="text" name="custom_slug" class="slug-input" placeholder="例如：niu-shi-ting" pattern="[a-z0-9]+(-[a-z0-9]+)*" maxlength="60" required>
+      <div class="slug-hint">只能用小寫英文字母、數字、短橫線「-」。網址會是 event.bymyway.com/curated/你填的名稱/，愈短愈好，之後不用再麻煩改名。</div>
       {% if error %}<div class="error">{{ error }}</div>{% endif %}
       {% if uploaded %}<div class="success">✅ 已收到「{{ uploaded }}」，系統正在背景自動處理，通常10~20秒完成。</div>{% endif %}
       <button type="submit">上傳</button>
