@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯🎯 策展SOP定案(2026-09-06)：外部AI工具做的店家網站→GitHub Pages+event.bymyway.com+大台南策展中心三層上架](reference_curation_sop_2026-09-06.md) — 修正教練誤解：小龍蝦無法自己上傳GitHub、不是連VPS；含5店家FB貼文已發布憑證
 - [🔴🔴🔴 Hermes=Mac桌面版(軍師管)非VPS，VPS版Hermes(113.29.232.178)已永久停用(2026-09-05教練親口澄清)](feedback_hermes_is_mac_desktop_vps_permanently_off.md) — 聽到「Hermes沒反應」別再直覺ping VPS，先問是Mac版還是VPS版；VPS已停但launchd plist仍在，Mac版停用是被launchctl bootout關掉需手動bootstrap重啟
 - [🔴🔴🔴🔴🔴 event.bymyway.com跟GitHub Pages共用同一份index.html，加轉址頁會造成無限迴圈(2026-09-05真實production bug)](feedback_shared_file_dual_serve_no_redirect_2026-09-05.md) — 小龍蝦真實踩過，訪客看到的頁面自己跳回自己，驗證標準必須是打開event.bymyway.com親眼看內容不能只看GitHub Pages那端200
 - [🔴🔴🔴🔴 小龍蝦看到教練貼自己剛做的網站連結，因沒被@就連續4次NO_REPLY(2026-09-05)](feedback_no_reply_own_work_in_group_chat_2026-09-05.md) — 「接不上話」的直接證據，判斷回不回應要多查一條「內容是否涉及自己最近任務產出」
