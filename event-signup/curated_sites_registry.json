@@ -1,1 +1,24 @@
-{"sites": [{"slug": "qikouzao", "title": "七口灶 黑糖農莊 - 張家兩代製糖師的故事", "repo": "Coach1973/qikouzao", "category": "食", "address": "台南南化關山里", "added_by": "curation-sop", "description": "台南南化關山里，一鍋黑糖串起三代人的火"}]}
+{
+  "sites": [
+    {
+      "slug": "qikouzao",
+      "title": "七口灶 黑糖農莊 - 張家兩代製糖師的故事",
+      "repo": "Coach1973/qikouzao",
+      "category": "食",
+      "address": "台南南化關山里",
+      "added_by": "curation-sop",
+      "description": "台南南化關山里，一鍋黑糖串起三代人的火"
+    },
+    {
+      "slug": "niu-shi-ting",
+      "title": "牛市町｜只漲不跌的美味 — 品牌理念",
+      "description": "牛市町冷藏肉專門。深耕牛肉市場 10 年，從進口、批發到零售。150 天穀飼安格斯黑牛與日本宮崎 A5 和牛，職人精修分切，讓頂級牛肉走進日常餐桌。台南市南區西門路一段296號1樓。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/niu-shi-ting/",
+      "github_pages_url": "https://coach1973.github.io/niu-shi-ting/",
+      "uploaded_at": "2026-09-06 03:46",
+      "status": "live",
+      "source_package": "20260906-034600__ushi-brand-site.zip"
+    }
+  ]
+}

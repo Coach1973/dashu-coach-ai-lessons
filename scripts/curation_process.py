@@ -90,9 +90,20 @@ def save_registry(data: dict) -> None:
     REGISTRY_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def primary_title_segment(title: str) -> str:
+    """<title>常是「品牌名｜行銷標語」的完整句子，只取分隔符號前的品牌名稱本身
+    用來產生網址slug，避免像「牛市町｜只漲不跌的美味—品牌理念」整句轉拼音變成
+    超長網址(教練2026-09-06實際踩到，已手動改名修正)。完整title仍保留給
+    registry的title欄位(卡片顯示用)，不受影響。"""
+    for sep in ("｜", "|", "—", "－", "–", " - ", "："):
+        if sep in title:
+            return title.split(sep, 1)[0].strip()
+    return title
+
+
 def slugify_title(title: str) -> str:
     from pypinyin import lazy_pinyin
-    raw = "-".join(lazy_pinyin(title))
+    raw = "-".join(lazy_pinyin(primary_title_segment(title)))
     slug = re.sub(r"[^a-z0-9-]", "", raw.lower())
     slug = re.sub(r"-+", "-", slug).strip("-")
     return slug or "site"
