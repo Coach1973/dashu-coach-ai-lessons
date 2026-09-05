@@ -2259,6 +2259,21 @@ def tpar_assets(filename):
     return _serve_repo_file(TPAR_REPO, filename)
 
 
+KINGMAUII_REPO = Path("/Users/bymyway/github_repos/kingmauii-brand-site-github")
+
+
+@app.route("/kingmauii-brand-site-github/")
+def kingmauii_page():
+    return _serve_repo_file(KINGMAUII_REPO, "index.html")
+
+
+@app.route("/kingmauii-brand-site-github/<path:filename>")
+def kingmauii_assets(filename):
+    if filename == "index.html":
+        return kingmauii_page()
+    return _serve_repo_file(KINGMAUII_REPO, filename)
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
