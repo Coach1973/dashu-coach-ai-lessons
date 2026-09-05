@@ -8,11 +8,11 @@
 
 完整流程：解壓縮 → 判斷ASCII slug(拼音轉換) → 建GitHub repo+push+開Pages →
 登記進curated_sites_registry.json(讓event.bymyway.com/curated/<slug>/立刻可讀取，
-不需要重啟Flask服務) → 插入tainan-shangquan店家名冊卡片 → Telegram通知教練。
+不需要重啟Flask服務) → 插入tainan-shangquan店家名冊卡片 → 自動發一則大台南策展中心
+FB貼文宣布 → Telegram通知教練（2026-09-06教練追加：全自動，不用等軍師人工發文）。
 
-刻意不做的事（留給軍師下次確認時人工完成，見reference_curation_sop_2026-09-06.md）：
-- FB貼文文案（需要判斷內容品質，不適合盲目自動發布到公開粉專）
-- 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值）
+刻意不做的事（留給軍師下次確認時人工潤飾，見reference_curation_sop_2026-09-06.md）：
+- 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值，FB文案也是自動套模板）
 """
 import json
 import os
@@ -37,6 +37,8 @@ REGISTRY_PATH = EVENT_SIGNUP / "curated_sites_registry.json"
 GITHUB_REPOS_DIR = Path("/Users/bymyway/github_repos")
 TAINAN_SHANGQUAN_REPO = GITHUB_REPOS_DIR / "tainan-shangquan"
 LOG_PATH = WORKSPACE / "distill" / "curation_process.log"
+FB_PAGE_TOKENS_PATH = WORKSPACE / "fb_automation" / "page_tokens_2026-09-01.json"
+FB_PAGE_NAME = "大台南策展中心"
 
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "-5349981085"  # 「活動報名即時通知」群組(教練+佩佩老師共見)，2026-09-06教練交辦：策展上傳完成也要跟活動報名一樣即時通知這裡，不只發教練個人對話
@@ -208,6 +210,70 @@ def push_repo(repo_dir: Path, token: str, slug: str) -> None:
     )
 
 
+def find_post_image(repo_dir: Path, html_text: str) -> Path | None:
+    """挑一張代表圖：優先og:image，找不到就用頁面第一張<img>，都找不到回傳None
+    （None時貼文改用純文字動態，不勉強硬塞圖）。"""
+    for pattern in (
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+        r'<img[^>]+src=["\']([^"\']+)["\']',
+    ):
+        m = re.search(pattern, html_text, re.IGNORECASE)
+        if m:
+            candidate = (repo_dir / m.group(1).lstrip("/")).resolve()
+            try:
+                candidate.relative_to(repo_dir.resolve())
+            except ValueError:
+                continue
+            if candidate.is_file():
+                return candidate
+    return None
+
+
+def post_to_facebook(title: str, desc: str, event_url: str, image_path: Path | None) -> bool:
+    """自動發一則大台南策展中心FB貼文宣布新店家上架（2026-09-06教練交辦：全自動不用等軍師人工發文）。
+    文案套固定模板（emoji開頭+店名+簡介+連結+hashtag），非致命——失敗只記log，不擋整體上架流程。"""
+    try:
+        tokens = json.loads(FB_PAGE_TOKENS_PATH.read_text(encoding="utf-8"))
+        page = next((p for p in tokens.get("pages", []) if p.get("name") == FB_PAGE_NAME), None)
+        if not page:
+            log(f"⚠️ FB貼文跳過：找不到粉專「{FB_PAGE_NAME}」的token")
+            return False
+        page_id, access_token = page["id"], page["access_token"]
+
+        caption = (
+            f"🎯【大台南商圈上新網站】{title}正式上線！\n\n"
+            + (f"{desc}\n\n" if desc else "")
+            + f"看看這個新加入的好店家 👉 {event_url}\n\n"
+            + "更多加入大台南商圈整合計劃的好店家，都在 👉 https://event.bymyway.com/tainan-shangquan/\n\n"
+            + f"#大台南策展中心 #{re.sub(r'[^0-9A-Za-z一-鿿]', '', title)}"
+        )
+
+        if image_path:
+            cmd = [
+                "curl", "-s", f"https://graph.facebook.com/v20.0/{page_id}/photos",
+                "-F", f"source=@{image_path}",
+                "-F", f"caption={caption}",
+                "-F", f"access_token={access_token}",
+            ]
+        else:
+            cmd = [
+                "curl", "-s", f"https://graph.facebook.com/v20.0/{page_id}/feed",
+                "-F", f"message={caption}",
+                "-F", f"link={event_url}",
+                "-F", f"access_token={access_token}",
+            ]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        resp = json.loads(result.stdout or "{}")
+        if "error" in resp:
+            log(f"⚠️ FB貼文失敗：{resp['error']}")
+            return False
+        log(f"✅ FB貼文成功：{resp}")
+        return True
+    except Exception as e:  # noqa: BLE001
+        log(f"⚠️ FB貼文例外：{e!r}")
+        return False
+
+
 def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str) -> None:
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
     content = index_path.read_text(encoding="utf-8")
@@ -298,6 +364,13 @@ def process_one(pkg_path: Path) -> None:
             card_note = f"\n⚠️ 加入大台南策展中心店家名冊失敗（網站本身已上線，不影響）：{e}"
             log(f"插卡失敗: {e!r}")
 
+        fb_note = ""
+        image_path = find_post_image(repo_dir, html_text)
+        if post_to_facebook(title, desc, event_url, image_path):
+            fb_note = "\n✅ 已自動發布大台南策展中心FB貼文宣布"
+        else:
+            fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已上線）"
+
         notify(
             "🎯【策展SOP・新店家已自動上架】\n"
             f"店名：{title}\n"
@@ -305,7 +378,8 @@ def process_one(pkg_path: Path) -> None:
             f"網址：{event_url}\n"
             f"GitHub Pages：{github_pages_url}\n"
             + card_note
-            + "\n📌 待軍師下次確認：潤飾店家介紹文案 + 大台南策展中心FB粉專發一則貼文宣布。"
+            + fb_note
+            + "\n📌 待軍師下次確認：潤飾店家介紹文案。"
         )
         log(f"✅ 完成：{pkg_path.name} → {slug}")
     except Exception as e:  # noqa: BLE001
