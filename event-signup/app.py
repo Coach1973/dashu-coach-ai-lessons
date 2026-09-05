@@ -1637,6 +1637,10 @@ def curation_upload():
         safe_name = re.sub(r"[^\w.\-一-鿿]", "_", Path(original).stem)[:80]
         dest = incoming / f"{ts}__{safe_name}{ext}"
         f.save(dest)
+        _notify_xiaolongxia(
+            f"📦【策展SOP・收到新檔案】\n檔案：{original}\n系統正在背景自動處理，完成上架後會再通知一次。",
+            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
+        )
         return render_template("curation_upload.html", uploaded=original, key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
 
     return render_template("curation_upload.html", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
