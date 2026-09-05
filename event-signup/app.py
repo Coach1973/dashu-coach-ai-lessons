@@ -2354,6 +2354,21 @@ def kingmauii_assets(filename):
     return _serve_repo_file(KINGMAUII_REPO, filename)
 
 
+QIKOUZAO_REPO = Path("/Users/bymyway/github_repos/qikouzao")
+
+
+@app.route("/qikouzao/")
+def qikouzao_page():
+    return _serve_repo_file(QIKOUZAO_REPO, "index.html")
+
+
+@app.route("/qikouzao/<path:filename>")
+def qikouzao_assets(filename):
+    if filename == "index.html":
+        return qikouzao_page()
+    return _serve_repo_file(QIKOUZAO_REPO, filename)
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
