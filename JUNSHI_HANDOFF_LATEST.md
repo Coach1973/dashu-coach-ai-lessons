@@ -450,3 +450,39 @@
 
 ## 🔑 本場commit
 `bigtree`：`aaedd85`(6場活動網頁按鈕)。`tainan-shangquan`：`cef1657`(電話修改)。`event-signup`：`622e2ab8c`(bigtree event_url欄位)+`2cf7615f1`(KR路由+聯絡表單)+`c048eaf0d`(Stop hook規則L)。`KR`：初版(GitHub repo `Coach1973/KR`)。`coach888`：`cb30fe2`(KR收錄)。`seabiscuit20`：`d4bffd7`(看守則影片按鈕)。記憶庫(`.claude/projects`)：`feedback_new_public_site_must_register_coach888_2026-09-04`+`feedback_html_preview_chrome_only`(補回)+`project_backend_credentials_consolidation_pending_2026-09-04`(補回)。
+
+---
+
+# 軍師接力棒 · 2026-09-05 v183（聯想Windows Sonnet 5，一鍵還原後三項查證：對話記錄E槽真相/記憶體洩漏診斷讓步/App備份救援失敗誠實回報）
+
+> 建立時間：2026-09-04 18:32 ~ 2026-09-05 21:19（台灣時間，跨日）
+> 上一棒：v182（Mac終端機，KR養生廚房整站搬遷+bigtree按鈕修正+coach888收錄鎖）
+> 本棒主軸：**教練半夜對聯想Windows做「易數一鍵還原」到8/10備份，本棒圍繞還原後的三個疑慮逐一查證：①「對話記錄不見了」查明E槽真實逐字稿完整無缺，是桌面版App本機快取(C槽)跟真實資料(E槽)混淆②記憶體洩漏Nahimic驅動診斷被教練推翻改採觀察策略，AI誠實收手不堅持③受託備份的「倒數紀念日」App資料還原後仍是空的，查明備份當下就已經是空檔案，誠實回報自己的驗證疏失。全程無程式碼repo改動，純查證/診斷/記憶維護。**
+
+## 🎯 本場戰果
+
+### 1. 「一鍵還原後對話記錄不見了」查證：E槽資料完整，是App本機快取問題
+教練半夜對這台機器做「易數一鍵還原」到8/10備份狀態，事後質疑「對話記錄都應該在E槽，怎麼復原後就沒了」。查證確認：①`C:\Users\bymyw\.claude`是連到`E:\Claude-Data\.claude`的symlink(4/6建立)，還原不會破壞這條線②E槽`.claude/projects`底下45個jsonl逐字稿檔案，41個mtime在8/11之後，時間軸連續無斷層，包含教練半夜討論記憶體問題、海餅乾網站建置那兩場對話都直接用Grep工具在對應session檔案裡搜到關鍵字證實內容完整③真正會被C槽還原動到的是桌面版App自己另外維護的一份本機快取(`C:\Users\bymyw\AppData\Roaming\Claude\`，含`claude-code-sessions`/`IndexedDB`等)，這份快取沒有連到E槽，還原後可能讓App介面「歷史對話清單」顯示異常，但不代表底層真實資料被刪除。已寫入記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
+
+### 2. 記憶體98%洩漏Nahimic驅動診斷：教練推翻改用一鍵還原+觀察策略，AI收手不再堅持
+教練認為「用了這麼久沒事、只有昨天才出問題」判斷是瀏覽網站問題非驅動洩漏，直接用一鍵還原解決比「移除驅動又重開機又這又那」省事，還原後記憶體持續穩定在50%以下、教練要求觀察到當晚12點再視情況做新備份。AI承認手上雖有Windows事件記錄的具體證據(Windows Update會在開機時自動把已解除安裝的Nahimic驅動裝回去)，但教練明確表態「不想跟你爭論」，已記錄教練決定+停止再提驅動根因，除非症狀真的復發才重啟這個話題。記憶`project_lenovo_nonpaged_pool_leak_2026-09-04`已補充教練晚間裁示段落。
+
+### 3. 「倒數紀念日」App資料庫還原失敗：查明備份本身就是空檔案，誠實回報驗證疏失
+教練還原前請AI(較早session)備份App本機資料庫`MyData.db`到E槽，還原+重灌App後要求復原，AI複製備份檔回去MD5比對相符，但教練回報「並沒有出現」。深入查證發現：備份檔案(20480 bytes)跟全新安裝、從未寫過資料的空白資料庫**檔案大小完全相同**，用`strings`掃描整份檔案內容找不到任何可辨識文字——備份當下(下午3:43)App資料其實就已經是空的，比教練預期的「一鍵還原才會清空」還要早發生，具體原因不明(疑似跟稍早Nahimic驅動移除+重開機的Windows Update自動更新序列有關，但未進一步查證確認)。**AI主動承認**先前session宣稱「已驗證是真實資料，不是空檔案」這句話講得不夠嚴謹，只驗證了檔案格式合法，沒有真正確認內容存在。已寫入記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。此外還查明教練半夜的兩次「疑似當機重開」其實是Windows Update在06:16/06:19自動觸發的計劃性重開機(Event 1074，非Event 41意外關機)，非真正硬體/軟體崩潰。
+
+### 4. 其他零星查證（皆已回覆教練，無殘留待辦）
+①D槽Downloads資料夾+資源回收桶搜尋教練提到的「9/1 Excel檔案」，兩處都沒有找到明確吻合的檔案，教練確認「應該是被我刪了」，已請教練若想起更多線索(檔名/內容)可再查，本場未強行猜測結案。②教練詢問「雲端分享的檔案」放在作品一覽哪裡，查證是`event.bymyway.com/materials/admin`(coach888「後臺系統」分類第1項，9/4新建置的教材線上觀看系統)，已回報網址+提醒42份教材尚未勾選公開。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **備份檔案只驗證格式合法(header/副檔名)不等於內容真實存在**——回報教練「已驗證」前要想清楚自己驗證的是格式還是內容，講清楚驗證到哪一層，不要用籠統的「已驗證，放心」造成過度保證。記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。
+2. **這台機器C槽(會被一鍵還原動到)跟E槽(獨立於還原範圍外)的資料分層要分清楚跟教練解釋**——E槽真實逐字稿+symlink保護機制運作正常，但桌面版App自己在C槽另外維護一份本機快取沒有納入保護，教練問「記錄不見了」時，要先查E槽真跡，不要籠統回答。記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
+3. **教練明確表態「不想跟你爭論」時，即使手上有技術證據也要收手**——已在記憶中確認除非症狀復發，否則不再主動重提Nahimic驅動根因這個話題。
+
+## 📋 下一場開工先做
+1. 教練若確認12點觀察後記憶體仍穩定、已做新一鍵備份，可詢問備份是否成功+是否要更新舊備份相關記憶(`project_lenovo_c_drive_slimdown_2026-07-11`)。
+2. 「倒數紀念日」App資料實質遺失，教練若想找回，下一步可考慮查Windows System Restore/VSS還原點(需教練親自用GUI操作，AI這台機器沒有管理員權限查詢)，或教練自行重新輸入。
+3. 沿用v182下一棒待辦：「後台系統帳密集中」清單仍未建置(`project_backend_credentials_consolidation_pending_2026-09-04`)、materials系統42份教材待教練勾選公開。
+4. 「9/1 Excel檔案」教練若想起更多線索(檔名關鍵字/內容/收到管道)，可再次查找。
+
+## 🔑 本場commit
+`mac-openclaw-workflows`：`774d5bfc`(開工時解開HEARTBEAT.md rebase衝突)。記憶庫(`.claude/projects`)：`feedback_verify_backup_content_not_just_format_2026-09-05`(新增)+`reference_windows_claude_session_storage_layout_2026-09-05`(新增)+`project_lenovo_nonpaged_pool_leak_2026-09-04`(補充教練晚間裁示段落)。本場無任何網站/repo程式碼異動，純查證與記憶維護。
