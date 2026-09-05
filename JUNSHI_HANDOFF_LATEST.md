@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴 | **新建hook：偵測MiniMax API過載訊息當成正常回覆返回，自動觸發續跑** | ⏳待軍師動手（教練2026-09-06凌晨交辦，下一場開工先做這個） | 教練把zip丟給小龍蝦執行策展SOP時，MiniMax過載回傳「The AI service is temporarily overloaded. Please try again in a moment.」被系統當成正常回覆內容處理（不是連線層級失敗，OpenClaw 2026.6.34的resilience修復攔不到這種），小龍蝦因此看起來像「回答完畢」原地等教練下一句話，教練10分鐘沒開口就真卡住，直到教練問「不能自動繼續嗎」才接著跑。**需要新建一支hook**（監聽`message:postprocessed`類事件，比照`context-overflow-guard`的直發機制），偵測assistant回覆內容符合過載訊息樣式時，自動注入一句「請繼續」讓agent續跑，不用教練人工介入。本場只完成查證+跟教練說明原因，尚未動手建這支hook。 |
+| 🔴🔴 | **新建hook：偵測MiniMax API過載訊息當成正常回覆返回，自動觸發續跑** | ✅2026-09-06本場完成並實測 | 掛在`message:sent`事件（事件驅動非輪詢）：命中過載訊息立即補「請繼續」續跑，同session最多3次，第4次改發Telegram請教練裁示；cron session(含`:cron:`)因已有原生backoff/retry一律跳過不干擾。25項測試全過，gateway重啟兩次驗證載入(23 handlers)，用真實gateway log反查證實2026-09-05 17:31那次真實過載事件確實走這條`message:sent`路徑。commit`d21f0089`。 |
 | 🎯🎯 | **策展SOP定案+多輪修正：三方式並行(直接動手/一鍵注入/upload備援)，小龍蝦終端機能力已實測證實** | ✅2026-09-06本場完成，含Hermes實戰卡住案例修復 | 完整流程見`claude-brain/reference_curation_sop_2026-09-06.md`。**核心規則（多輪修正後定案）**：①**教練本人+有終端機能力的AI（軍師/Hermes/OpenCode/小龍蝦）→ 直接照七步驟手動做**，不要走upload頁面②**除教練以外的人（沒有能力自己動手）→ 用`event.bymyway.com/curation/upload?key=<專屬金鑰>`網頁上傳**，系統事件觸發自動處理(launchd WatchPaths監控`incoming/`)③**動手前先判斷這店家是否已有`shops.bymyway.com/<slug>/`暫代頁**（自助登錄表單那條路產生的）——有就SCP覆蓋暫代頁內容不建新站，沒有才走全新GitHub Pages案例。**教練專屬「策展一鍵注入」**：`coach1973.github.io/ai-go/curation-inject.html`，複製貼給任何AI都能觸發，已補收錄進coach888(commit`889af59`)。**小龍蝦終端機能力當場實測證實**：教練直接叫小龍蝦跑`ls -la`成功執行，SOUL.md已補上策展SOP指示(commit`59b7d6665`)，教練人在外面一樣可以叫小龍蝦或Hermes直接做，不用等軍師開工。**真實案例修復**：Hermes拿到迴頭快剪zip卡住猶豫，逐字檢視對話記錄後發現是SOP文件本身漏了兩條規則(不是Hermes理解力差)，已補上並寫進Hermes專屬`H_HANDOFF_LATEST.md`給出具體解法(SCP覆蓋`shops.bymyway.com/huitou/`暫代頁)。**Stop hook規則L補第二層**：教練發現「策展一鍵注入」頁面忘記收錄coach888，查出規則L只認`gh repo create --public`、漏抓「既有repo新增頁面」這種情況，已補規則+7個新測試案例全過(commit`adba8730e`)，試金石案例72完整記錄。commit一覽：`980e636`(ai-go頁面)+`6ca8fe152`(金鑰機制)+`07be5838e`+`ce9e49f67`+`4c6690f4e`(SOP文件三輪修正)+`889af59`(coach888補收錄)+`adba8730e`(規則L第二層)+`59b7d6665`(SOUL.md授權小龍蝦)。**迴頭快剪案例已由Hermes完成**，教練親眼確認策展中心已顯示更新。
 
 **後續加碼(同一晚，凌晨場)**：①**通知機制補完整**：upload端點新增「上傳當下」即時通知(commit`f0b9ff2a3`)，加上原有「完成上架」通知，兩個時間點都會發到「活動報名即時通知」群組(commit`274b4115a`，教練+佩佩老師共見)②**上傳成功頁新增佩佩老師LINE加好友引導**(`@701ohlly`，比照CICA案既有帳號，非新建)，讓上傳的夥伴知道網站做好會被主動通知(commit`10dcc4ed6`)③**FB全自動貼文上線**：完成上架後自動抓網站的og:image/首張圖+標題+簡介，套模板發一則貼文到大台南策展中心官方FB粉專，不用等軍師人工發文(commit`26e062827`，已用真實測試貼文驗證成功後刪除測試貼文)④**coach888又漏收錄2次**：「策展一鍵注入」頁面(commit`889af59`)+「策展上傳網址」本身(commit`5bc72a1`，教練當場點名「這是第幾次了」)——這是規則L2的盲區(只認commit訊息裡「新增OO頁面」措辭，這次的URL是早就存在、非「新增」措辭)，教訓已記錄但規則尚未進一步強化⑤**命名規則簡化**：教練實戰把zip丟給小龍蝦執行策展SOP(七口灶・黑糖農莊案例)，發現兩個問題——(a)repo命名還要問教練A/B/C選項，教練拍板「直接跟主標題拼音一致，不用再問」，已修正SOUL.md+兩份SOP文件(commit`8c0c22004`) (b)**MiniMax API過載時會把「service overloaded」文字當成正常回覆內容送回**，導致小龍蝦看起來像「已回答完畢」在原地等教練下一句話，教練10分鐘沒開口就真的卡住——**已查證這不是OpenClaw 2026.6.34號稱修好的那種連線層級失敗，是內容層級的過載訊息，現有resilience機制不會攔到**，需要新建一支hook偵測回覆內容符合「AI service...overloaded」樣式時自動補一句「請繼續」——**這是下一場的待辦，本場只完成查證，尚未動手建**。
@@ -474,3 +474,45 @@ ACER發信指出`feed_junshi_handoff.ps1`遇到`stash pop`衝突時用`2>$null`�
 
 ## 🔑 本場commit
 `cica`：`9e4d7bae5`+`2bec8ba`+`8da452c`+`53253f9`。`tainan-shangquan`：`5484ed9`(分類擴充)+`2524f81`+`76a47d3`(標記+迴頭快剪)+`9eca3f0`(4家客戶案卡片)。`lin-beiyi`：`f0fb3cd`(迴圈修復)。`66-harbour`：`d212d20`(迴圈修復)。`tainan-pickleball-art-rotary`：`de3b46d`(迴圈修復)。`coach888`：`0a0de1f`(revert客戶案項目)。`workspace(event-signup/scripts)`：`8170d6830`(店家自動化SOP)+`2bca2af32`(迴圈bug路由救回)+`b3e4e8e4f`(kingmauii路由)+`43fda4b85`(hook修復merge)+`7ccd318b6`(ACER/聯想回信)+`6b728ed69`(接力棒更新)。VPS(43.245.60.200)：nginx+自簽憑證+`/var/www/shops/`基礎建設(無git，SSH直改)。
+
+---
+
+# 軍師接力棒 · 2026-09-06 v185（Mac桌面版 Sonnet 5，MiniMax過載自動續跑hook上線+策展中心通知漏洞修復+VPS真實用途查證）
+
+> 建立時間：2026-09-06 01:59 ~ 03:36（台灣時間）
+> 上一棒：v184（Mac終端機，CICA官網+VPS店家託管基礎建設）
+> 本棒主軸：**建立MiniMax過載自動續跑hook(事件驅動，教練當場拒絕輪詢方案)；查真實gateway log/VPS SSH破除教練對VPS用途的誤解(策展中心店家其實幾乎都在Mac本機服務，只有2家暫代頁真的在VPS)；修復策展SOP手動上架完全沒接通知的漏洞(post-commit hook自動化)；CICA三語版pull+merge+驗證上線；教練拍板週配額89%吃緊，接下來到下週三盡量轉Hermes/小龍蝦；執行「全部釋放」。**
+
+## 🎯 本場戰果
+
+### 1. MiniMax過載自動續跑hook上線（事件驅動，非輪詢）
+教練明確拒絕「每隔幾分鐘檢查」方案後定案：掛`message:sent`事件，過載訊息命中立即補「請繼續」續跑，同session最多3次(每次發Telegram輕量通知)，第4次改升級通知教練裁示；額外發現cron session已有原生backoff/retry，加了`:cron:`排除規則避免打架。25項測試全過，用真實gateway log反查證實2026-09-05 17:31那次真實過載確實走這條路徑。commit`d21f0089`，gateway已重啟驗證(23 hook handlers)。過程中被Stop hook規則#07誤判(文字裡的否定句「不做輪詢」被關鍵字掃到)，已澄清是false positive非真違規。
+
+### 2. VPS真實用途查證，破除教練誤解
+教練問「VPS到底真正的作用是什麼」，SSH進VPS+讀app.py原始碼查證：策展中心9家店家連結裡，**只有ema(立馬吃一鍋)、huitou(迴頭快剪)兩家真的放在VPS**(`shops.bymyway.com`，SSH直寫`/var/www/shops/`)，其餘7家(七口灶/CICA/林貝羿/66-harbour/台南匹克藝術扶輪社/kingmauii/KR)全部是`event.bymyway.com/<repo>/`路由，由**這台Mac的Flask app即時讀本機`/Users/bymyway/github_repos/<repo>/`**服務，不是GitHub Pages也不是VPS。VPS真正的角色是服務9位教練朋友的獨立小龍蝦帳號(main+9個trial)。**教練提出停電疑慮完全成立**——目前架構下Mac斷電/斷網，這7個店家網站會全部無法連線，這是真實弱點，已如實告知，未動手搬遷(教練要先想清楚再決定)。同場也實測比較Mac vs VPS的反應速度：現況Mac約0.09s、從VPS連回來約0.24s，VPS到台灣跨海延遲約0.082s，結論**目前Mac方案反而比較快**(地理距離近)，VPS唯一優勢是防斷電。
+
+### 3. 策展中心店家上架通知漏洞修復
+教練發現「黑糖農莊」「立馬吃一鍋」上架後完全沒收到活動報名即時通知群組通知。查明根因：通知程式碼只寫在`/curation/upload`（給沒能力的人用）跟`/api/tainan-shangquan/join`（自助登錄表單）兩支自動化端點，**手動照SOP上架的流程從沒呼叫過，是SOP空白不是bug**。已補發兩則遲到通知(message_id 10413/10414)，並在`tainan-shangquan` repo裝`.git/hooks/post-commit`：commit新增`<article class="shop-row">`卡片時自動偵測店名+網址發Telegram，事件驅動掛在commit動作本身，不依賴任何人記得。用真實測試commit(加卡片→驗證通知邏輯無誤→revert)驗證正常，repo已push(`334e01b`)。SOP文件已補充說明，commit`bfc72a83b`。
+
+### 4. CICA三語版部署（讀信處理）
+聯想推送CICA三語系版本(`index-en.html`/`index-vi.html`)，pull前發現本地有未commit的品牌頁連結修正(KWEBLI錯誤舊連結→正確網址)，先commit(`ca1b43b`)再merge聯想版本，自動合併無衝突。三語版本curl+瀏覽器實測200且語言切換鈕(中/EN/VI)確認渲染正常。commit：cica repo `a4ac120`，跨機信已回覆並歸檔(`3863b505a`)。
+
+### 5. 教練拍板：週配額89%吃緊，撐到下週三盡量轉Hermes/小龍蝦
+已寫入記憶`project_claude_quota_conservation_until_wednesday_2026-09-06`。核心原則：軍師只接跨repo整合/複雜git/架構判斷這類其他角色做不到的部分，其餘先問「能不能讓小龍蝦/Hermes做」。
+
+### 6. 其他
+- 評估「網頁修改要不要也發通知記錄次數」：建議不需要，git commit本身就是完整記錄，事後可查，不用即時推播稀釋重要通知的注意力。
+- 教練問Windows context 35%跟這場對話比較，釐清「記憶索引檔案大小」≠「session context用量」是兩件事；也釐清「延後到總結時處理」不會讓維護動作變免費，不管何時做都一樣耗額度——這是教練當場點破的邏輯漏洞，已寫入記憶。
+- 執行「全部釋放」：Chrome/赫米斯/LINE/Typeless關閉+RustDesk重啟成功(1065M→29M)。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. **「等以後/等總結時再處理」的話術陷阱**：除非那個動作本來就依附在其他必要流程上，否則同一件事不管什麼時候做，消耗的額度都一樣，「延後」本身不會讓它變免費——教練當場點破，已寫入記憶`feedback_deferred_task_not_actually_free_2026-09-06`。
+2. **AI表現不合預期時，先查是不是SOP文件本身有空白，不是執行者的問題**——手動上架零通知，根因是SOP從沒寫「手動路徑最後要通知」這一步，跟昨晚Hermes卡住是同一種模式(SOP漏洞而非執行者理解力)。
+
+## 📋 下一場開工先做
+1. 沿用v184待辦：「後台系統帳密集中」清單未建置、materials系統42份教材待勾選公開。
+2. VPS是否要承接event.bymyway.com服務以防斷電——教練尚未決定，等他想清楚再說，不用主動推進。
+3. 遵守本場教練裁示：到2026-09-11(週三)前，任務先問能不能轉小龍蝦/Hermes，軍師只接真正需要的部分。
+
+## 🔑 本場commit
+`workspace`：`d21f0089`(MiniMax過載hook)、`bfc72a83b`(策展SOP補通知漏洞說明)、`3863b505a`(CICA信件歸檔)。`tainan-shangquan`：`95a3958`+`334e01b`(post-commit hook測試+revert，已push)。`cica`：`ca1b43b`(品牌頁連結修正)+`a4ac120`(merge三語版)。openclaw.json：新增`minimax-overload-autocontinue`hook註冊(隨`d21f0089`一併commit)。記憶：`project_claude_quota_conservation_until_wednesday_2026-09-06`(新增)。
