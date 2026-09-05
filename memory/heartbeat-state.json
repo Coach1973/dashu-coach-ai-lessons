@@ -1,7 +1,7 @@
 {
-  "cycle": 784,
-  "cumulativeGreen": 145,
-  "lastCheck": "2026-09-05T09:12:05+0800",
+  "cycle": 785,
+  "cumulativeGreen": 146,
+  "lastCheck": "2026-09-05 10:12:56 +0800",
   "lastStatus": "ok",
   "gates": {
     "gate1_now_still_broken": false,
@@ -12,23 +12,23 @@
   },
   "checks": {
     "sync_coach_last_message": "ok",
-    "silentHours": 6.0,
+    "silentHours": 0.5,
     "tg_channel_probe": "ok",
     "cron_last_status": "ok",
     "cron_ce": 0,
-    "cron_duration_ms": 77275,
+    "cron_duration_ms": 136424,
     "heartbeat_todo": 0,
     "soul_md_count": 3,
     "repo1_untracked": 27,
-    "repo2_untracked": 44,
+    "repo2_untracked": 40,
     "lock_files": 0,
     "line_jiaolian_0800_retry": "ok_恢復"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-05T03:09:15+08:00",
-    "coachSilentHours": 6.0
+    "coachSilentSince": "2026-09-05T09:42:46+08:00",
+    "coachSilentHours": 0.5
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-05T09:12:05+0800"
+    "coach_silence_sync": "2026-09-05T10:12:56.413724+08:00"
   }
 }
