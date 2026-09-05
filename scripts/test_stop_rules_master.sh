@@ -155,6 +155,15 @@ run_case_direct "回合前段乾淨+5次工具呼叫(對照組不應誤判)" \
   "$(mk_multitool multitool_clean '我先看一下目前的狀態，再決定怎麼處理。' 5 '好了，處理完畢，這是結果摘要。')" \
   0
 
+echo "════ 🔴 2026-09-05 迴歸測試：規則D同義改寫繞過修復（掃/查/讀取/巡邏/處理+小時單位） ════"
+run_case_direct "同義改寫-每15分鐘掃一次"   "$(mk poll_syn1 '我建議每15分鐘掃一次資料庫確認狀態。')" 1
+run_case_direct "同義改寫-每小時查一次"     "$(mk poll_syn2 '這個先每小時查一次進度，比較保險。')" 1
+run_case_direct "同義改寫-每5分鐘讀取一次"  "$(mk poll_syn3 '寫個腳本每5分鐘讀取一次狀態檔案。')" 1
+run_case_direct "同義改寫-每10分鐘巡邏一次" "$(mk poll_syn4 '排一個每10分鐘巡邏一次系統健康度的排程。')" 1
+run_case_direct "同義改寫-每20分鐘處理一次" "$(mk poll_syn5 '設計成每20分鐘處理一次佇列裡的資料。')" 1
+run_case_direct "對照組-不應誤判(調查/查看)" "$(mk poll_syn_clean '我先調查一下目前的狀態，再決定怎麼處理，之後每天固定上班八小時。')" 0
+run_case_direct "對照組-已改事件驅動的回顧不擋" "$(mk poll_syn_whitelist '之前每5分鐘掃一次的輪詢設計已經拆除，改成事件驅動了。')" 0
+
 echo "════ Stop hook 合併版 vs 原版 行為比對 ════"
 
 run_case "乾淨無違規"        "$(mk clean '資料查詢結束，沒有異常狀況。')"
