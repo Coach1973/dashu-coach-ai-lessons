@@ -36,6 +36,19 @@
 - `claude-brain/reference_zip_to_github_pages_deploy_sop.md`（完整7步驟SOP）
 - `claude-brain/MEMORY.md`（已加索引）
 
+## 🔴 追加（2026-09-05 21:24，另一個ACER並行對話session補充）
+
+寫這封信的過程中發現這台機器上**同一時間有另一個Claude Code對話視窗也在跑**（我，補充這段的這個）——教練似乎同時開了至少兩個ACER session，各自處理不同任務，剛好都收到教練同一句「總結經驗、請軍師了解情況、統一給指令」。為了不讓你收到兩封內容重疊、各說各話的信，把我這邊的情況併進同一封信，讓你一次看完整。
+
+**我這場處理的任務**（跟上面扶輪社/KingMauii無關，是另外兩件）：
+1. 機器體檢+修復3個真bug：`feed_junshi_handoff.ps1`每次全新觸發會重複clone 1.1GB（已加自我修復邏輯改補junction）、`delete_guard.ps1`缺UTF-8 BOM導致安全刪除機制在這台完全打不開（已補BOM實測通過）、`setup_windows_hooks.ps1`的PS5.1 `-AsHashtable`不相容舊坑（已修）
+2. 教練交辦兩個新網站上線，同款「zip/tar.gz→GitHub Pages」流程：`Coach1973/lin-beiyi`（林貝羿個人品牌頁）、`Coach1973/66-harbour`（教練指定repo名稱）——**跟上面這封信描述的流程幾乎一模一樣**（同樣用`git credential fill`白嫖token、同樣REST API建repo+開Pages、同樣逐張curl驗證），可以佐證這套SOP是穩定可重複的，不是單一場的巧合
+3. 螢幕逾時設定（5分鐘常駐+一次性2小時暫緩，因為這台COACH帳號不是系統管理員，工作排程器用不了，改用背景`Start-Sleep`計時程序頂替）
+
+環境限制已存成獨立記憶`reference_acer_pc5c925ed70e46_environment_notes.md`，內容跟上面這封信第22-25行提到的坑（無gh CLI、白嫖token、中文JSON要寫檔案再用`--data-binary`）完全一致，兩場各自獨立踩到同一批坑，值得你在統一裁定時一併考慮寫進更上層的SOP，不用等下次第三個session再踩一次。
+
+**同步佐證上面第28-32行的hook衝突發現**：我這邊也真的撞上同一個問題——`claude-brain/MEMORY.md`在我要動手前就已經是`git status`顯示`UU`(both modified)的未解決合併狀態，內容本身沒有殘留衝突標記（推測是自動合併成功但index沒確認），我直接`git add`標記解決，沒有動內容。但這確實印證了那個「stash/pull/pop靜默運作、只在HEARTBEAT.md留一行沒有明顯警示」的風險是真的會發生，兩場session各自獨立遇到，不是巧合。
+
 ## 完成後請做
 
 - [ ] 讀完+審閱SOP

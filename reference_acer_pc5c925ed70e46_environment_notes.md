@@ -44,4 +44,8 @@ printf "protocol=https\nhost=github.com\n\n" | git credential fill
 
 真正在用、持續同步的 repo 只有一份：`C:\Users\Administrator\Documents\mac-openclaw-workflows`。`Documents\workspace` 是 junction 指過去的（2026-09-01 修復自我修復邏輯後，就算 junction 被刪掉，`feed_junshi_handoff.ps1` 也會自動偵測既有 repo 補 junction，不會再整包重新 clone），不要誤以為那是獨立資料。
 
+## 同一台機器可能同時有多個 Claude Code session 在跑
+
+2026-09-05 21:xx 發現：教練在這台機器上同時開了至少兩個對話視窗，各自處理不同任務（一場處理林貝羿/66-harbour，另一場處理台南匹克藝術扶輪社/KingMauii），都各自獨立踩到同一批環境坑（無gh CLI、白嫖`git credential fill`、中文JSON要寫檔案），也都各自獨立撞見`feed_junshi_handoff.ps1`每則訊息觸發stash/pull/pop、遇到衝突時只在HEARTBEAT.md留一行沒有明顯警示的風險。**動手前若發現`git status`有非自己造成的未預期改動（尤其`UU`未合併狀態），先假設「這台機器現在可能不只我一個session在跑」，而不是急著當成bug**，兩邊都在寫同一批共用檔案時尤其要留意。詳見`claude-brain/reference_zip_to_github_pages_deploy_sop.md`（另一場session寫的zip→GitHub Pages SOP，跟這篇是同源坑，互補閱讀）。
+
 Related: [[試金石案例64]]（聯想同源環境相容性問題）、[[project_acer_health_check_2026-08-31]]（完整體檢報告）
