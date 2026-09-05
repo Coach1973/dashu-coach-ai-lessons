@@ -46,6 +46,14 @@
   .status-live { color:var(--green); }
   .status-failed { color:#ff9b9b; }
   .empty { color:rgba(255,255,255,.4); font-size:14px; text-align:center; padding:20px 0; }
+  .line-cta {
+    margin-top:16px; padding:16px; background:rgba(76,175,125,.08); border:1px solid rgba(76,175,125,.3);
+    border-radius:10px; text-align:center;
+  }
+  .line-cta a {
+    display:inline-block; margin-top:10px; padding:10px 22px; background:var(--green); color:#0a0a0a;
+    font-weight:900; border-radius:999px; text-decoration:none; font-size:15px;
+  }
 </style>
 </head>
 <body>
@@ -57,10 +65,16 @@
       <div class="drop">📦 選擇 .zip 或 .tar.gz 檔案</div>
       <input type="file" name="package" accept=".zip,.tar.gz,.tgz" required>
       {% if error %}<div class="error">{{ error }}</div>{% endif %}
-      {% if uploaded %}<div class="success">✅ 已收到「{{ uploaded }}」，系統正在背景自動處理，完成後會Telegram通知教練。</div>{% endif %}
+      {% if uploaded %}<div class="success">✅ 已收到「{{ uploaded }}」，系統正在背景自動處理，通常10~20秒完成。</div>{% endif %}
       <button type="submit">上傳</button>
     </form>
-    <p class="hint">上傳後不用等這個頁面——系統會自動解壓縮、建立GitHub網站、上架到event.bymyway.com、收錄進大台南策展中心店家名冊。完成後教練會收到Telegram通知附上網址。</p>
+    <p class="hint">上傳後不用等這個頁面——系統會自動解壓縮、建立GitHub網站、上架到event.bymyway.com、收錄進大台南策展中心店家名冊。</p>
+    {% if uploaded %}
+    <div class="line-cta">
+      想第一時間知道網站什麼時候做好嗎？<br>加入「佩佩活動策展諮詢顧問」LINE，做好會主動通知您！
+      <br><a href="https://line.me/R/ti/p/@701ohlly" target="_blank" rel="noopener">加入 LINE 好友 →</a>
+    </div>
+    {% endif %}
   </div>
 
   <div class="sites">
