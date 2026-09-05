@@ -221,6 +221,56 @@ def push_repo(repo_dir: Path, token: str, slug: str) -> None:
     )
 
 
+def get_shop_vps_creds() -> tuple[str | None, str | None]:
+    """讀event-signup/.env取得VPS SSH連線資訊，跟app.py的_provision_shop_placeholder()共用同一組憑證。"""
+    env_path = EVENT_SIGNUP / ".env"
+    host = password = None
+    if env_path.is_file():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            if line.startswith("SHOPS_VPS_HOST="):
+                host = line.split("=", 1)[1].strip()
+            elif line.startswith("SHOPS_VPS_SSH_PASSWORD="):
+                password = line.split("=", 1)[1].strip()
+    return host, password
+
+
+def find_existing_shop_slug(brand_name: str) -> str | None:
+    """檢查這家店是不是已經在shops.bymyway.com有暫代頁（自助登錄表單`_provision_shop_placeholder()`
+    那條路產生的），有的話回傳既有slug。2026-09-06教練拍板：策展上傳網址對這種店家要改成
+    覆蓋暫代頁內容而非另建一個新GitHub網站，避免同一家店出現兩個不同網址的重複站台。"""
+    from pypinyin import lazy_pinyin
+    registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
+    if not registry_path.is_file():
+        return None
+    try:
+        used = set(json.loads(registry_path.read_text(encoding="utf-8")))
+    except Exception:  # noqa: BLE001
+        return None
+    raw = "-".join(lazy_pinyin(brand_name))
+    candidate = re.sub(r"-+", "-", re.sub(r"[^a-z0-9-]", "", raw.lower())).strip("-") or "shop"
+    return candidate if candidate in used else None
+
+
+def overwrite_shop_placeholder(site_dir: Path, slug: str) -> None:
+    """把完整網站(index.html+assets等)整個覆蓋掉shops.bymyway.com/<slug>/既有暫代頁內容，
+    網址保持不變。用tar打包後scp+遠端解壓（不用scp -r萬用字元，避免中文檔名或特殊字元出錯）。"""
+    host, password = get_shop_vps_creds()
+    if not host or not password:
+        raise RuntimeError("找不到SHOPS_VPS_HOST/SHOPS_VPS_SSH_PASSWORD設定，無法覆蓋暫代頁")
+    tar_path = f"/tmp/shop_overwrite_{slug}.tar.gz"
+    subprocess.run(["tar", "-czf", tar_path, "-C", str(site_dir), "."], check=True, env=_ENV)
+    remote_tmp = f"/tmp/shop_overwrite_{slug}.tar.gz"
+    ssh_base = ["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", f"root@{host}"]
+    subprocess.run(ssh_base + [f"rm -rf /var/www/shops/{slug} && mkdir -p /var/www/shops/{slug}"],
+                   check=True, timeout=30, capture_output=True, env=_ENV)
+    subprocess.run(["sshpass", "-p", password, "scp", "-o", "StrictHostKeyChecking=no",
+                    tar_path, f"root@{host}:{remote_tmp}"],
+                   check=True, timeout=60, capture_output=True, env=_ENV)
+    subprocess.run(ssh_base + [f"tar -xzf {remote_tmp} -C /var/www/shops/{slug}/ && rm {remote_tmp}"],
+                   check=True, timeout=30, capture_output=True, env=_ENV)
+    os.remove(tar_path)
+
+
 def find_post_image(repo_dir: Path, html_text: str) -> Path | None:
     """挑一張代表圖：優先og:image，找不到就用頁面第一張<img>，都找不到回傳None
     （None時貼文改用純文字動態，不勉強硬塞圖）。"""
@@ -341,6 +391,32 @@ def process_one(pkg_path: Path) -> None:
         if not title:
             title = re.sub(r"^\d{8}-\d{6}__", "", pkg_path.stem)
         category = guess_category(f"{title} {desc}")
+
+        # 2026-09-06教練拍板：先查這家店是不是已經在shops.bymyway.com有暫代頁
+        # （自助登錄表單那條路產生的），有的話覆蓋暫代頁內容、網址不變，不建新GitHub網站。
+        existing_shop_slug = find_existing_shop_slug(primary_title_segment(title))
+        if existing_shop_slug:
+            overwrite_shop_placeholder(tmp_extract, existing_shop_slug)
+            event_url = f"https://shops.bymyway.com/{existing_shop_slug}/"
+
+            fb_note = ""
+            image_path = find_post_image(tmp_extract, html_text)
+            if post_to_facebook(title, desc, event_url, image_path):
+                fb_note = "\n✅ 已自動發布大台南策展中心FB貼文宣布"
+            else:
+                fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已更新）"
+
+            notify(
+                "🎯【策展SOP・既有店家頁面已更新為完整版】\n"
+                f"店名：{title}\n"
+                f"網址：{event_url}（沿用既有網址，非新建站台）"
+                + fb_note
+            )
+            log(f"✅ 完成(覆蓋既有暫代頁)：{pkg_path.name} → {existing_shop_slug}")
+            shutil.rmtree(tmp_extract, ignore_errors=True)
+            PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
+            return
 
         base_slug = slugify_title(title)
         slug = unique_slug(base_slug, existing_slugs)

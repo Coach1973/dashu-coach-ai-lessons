@@ -33,6 +33,9 @@ metadata:
 - **動手前判斷方法**：先curl `https://shops.bymyway.com/<可能的slug>/` 或查`tainan-shangquan/_shops_slugs.json`這份registry，命中就是這條路（VPS覆蓋暫代頁）；查無記錄才是全新的策展SOP案例（第三~六步）。
 - 這條規則被2026-09-06 Hermes實際卡住的案例挖出來——它正確發現了`shops.bymyway.com/huitou/`既有記錄，但被SOP文件誤導去研究不該套用的策展流程，才卡住猶豫。**這不是AI理解力差，是SOP文件本身沒寫這個分支**。
 
+**🔴 2026-09-06凌晨04:00再修正：規則二已寫進`curation_process.py`自動判斷，不用再靠人工判斷**
+教練追問「牛市町案例明明比Hermes還快，為什麼不乾脆都走上傳網址」後點破：規則一（有能力的AI要手動做）存在的唯一理由，就是自動上傳路徑原本不會判斷「這家店是不是已經有暫代頁」，會無腦建一個重複新站。**這個判斷邏輯已經內建進`curation_process.py`本身**（新增`find_existing_shop_slug()`+`overwrite_shop_placeholder()`，commit待補）：上傳的zip只要品牌名（`<title>`分隔符號前那段）轉拼音後跟`_shops_slugs.json`裡的既有slug相符，就自動改成SCP覆蓋暫代頁內容（tar打包+遠端解壓，網址不變），完全不建新GitHub repo，也不會重複插店家名冊卡片。**這代表規則二的人工判斷已經自動化，`event.bymyway.com/curation/upload`現在對「全新店家」跟「已有暫代頁的店家」兩種情況都安全**，理論上規則一（有能力的AI要手動做）可以考慮退休——但保留這條規則的一個殘餘理由：`huitou`/`kr`這兩筆最早期手動建立的暫代頁，slug是人工取的沒有跟著`_shop_slug()`演算法走，**新版自動比對用的是「品牌名轉拼音」演算法，這兩筆舊資料算不出來會比對失敗**（純算法限制，非bug），未來若有店家名稱剛好對到`huitou`/`kr`這類舊命名，還是需要人工確認一次。2026-09-06之後新建立的自助登錄暫代頁（`_provision_shop_placeholder()`那條路）都是同一套演算法自動產生，不會有這個落差。
+
 **第三步｜執行的AI完成GitHub Pages上架（僅適用「規則二」判斷為全新案例時）**
 依照既有SOP [[reference_zip_to_github_pages_deploy_sop]] 七步驟：解壓縮 → **repo名稱直接取網站`<title>`標題轉拼音，不用再問教練選項**（2026-09-06教練親口拍板：「都跟這個網站的主標題一致就好，就不要再問了。如果要修改的話，會特別跟你說要怎麼修改」——只取品牌主名的拼音，跟`curation_process.py`的`slugify_title()`同一套邏輯，不用列A/B/C選項等教練挑） → 用`git credential fill`取得GitHub token → REST API建repo → push內容 → 開GitHub Pages → 驗證上線(文字+圖片都要curl驗證，不能只看HTTP狀態碼)。
 
