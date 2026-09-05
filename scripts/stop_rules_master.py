@@ -658,6 +658,32 @@ try:
 except Exception:
     pass
 
+# 🔴🔴🔴 2026-09-06再修正：教練連續追問「為什麼一直忘記」後查明——過去這條規則
+# 只檢查「這個名字有沒有出現在coach888/index.html任何地方」，等於只要隨便塞進
+# 哪個分類都會通過檢查。教練實際只會看「大樹常用」跟「後臺系統」這兩個分類，
+# 但因為檢查標準太鬆，我一直把新項目塞進「保留（尚未推Netlify）」這種教練不會
+# 點開的分類，防呆機制覺得「有放就好」直接放行，教練卻永遠找不到——錯誤因此
+# 一直複製自己，不是記性問題，是檢查標準本身不夠嚴格。已改成：只承認出現在
+# 「大樹常用」(changyong) 或「後臺系統」(houtai) 這兩個分類裡才算真的收錄，
+# 放在其他分類一律視同沒收錄，逼自己每次都要放在教練真的會看的地方。
+_COACH888_VISIBLE_SECTIONS = ("changyong", "houtai")
+
+
+def _extract_visible_section_html(full_html):
+    """只留下「大樹常用」+「後臺系統」這兩個分類的HTML片段，其餘分類(保留/
+    不公開/BNI專用等)的內容一律不算數——這是防呆機制真正在乎的範圍，不是
+    整份檔案的任何角落。"""
+    chunks = []
+    for section_id in _COACH888_VISIBLE_SECTIONS:
+        start_marker = f'<div class="grid" data-section="{section_id}">'
+        end_marker = f'<button class="btn-add-item" data-section="{section_id}">'
+        s = full_html.find(start_marker)
+        e = full_html.find(end_marker)
+        if s != -1 and e != -1 and e > s:
+            chunks.append(full_html[s:e])
+    return "\n".join(chunks)
+
+
 # ════════════════════════════════════════════════
 # L. 新網站上線但沒收錄進coach888作品一覽（擋）—— 2026-09-04教練親定
 #    起因：tainan-shangquan網站上線後漏放coach888，教練回報「怎麼我看不到」
@@ -732,24 +758,29 @@ if NEW_NAMED_ITEMS:
     except Exception:
         COACH888_HTML_2 = None
     if COACH888_HTML_2 is not None:
+        VISIBLE_HTML_2 = _extract_visible_section_html(COACH888_HTML_2)
         # commit訊息裡的措辭是「XX頁面」，但coach888連結文字通常不帶這個後綴字，
-        # 兩種寫法都查一次，任一種命中就算已收錄，避免措辭差異造成假陽性
+        # 兩種寫法都查一次，任一種命中就算已收錄，避免措辭差異造成假陽性。
+        # 2026-09-06再修正：只在「大樹常用」「後臺系統」範圍內找，不是整份檔案
+        # 任何角落——放在「保留」等教練不會看的分類一樣視同沒收錄。
         def _in_html(n):
             core = re.sub(r"(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口)$", "", n).strip()
-            return n in COACH888_HTML_2 or (core and core in COACH888_HTML_2)
+            return n in VISIBLE_HTML_2 or (core and core in VISIBLE_HTML_2)
         missing_named = [n for n in NEW_NAMED_ITEMS if not _in_html(n)]
         if missing_named:
+            in_wrong_section = [n for n in missing_named if n in COACH888_HTML_2 or (re.sub(r"(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口)$", "", n).strip() in COACH888_HTML_2)]
             MESSAGES.append(
-                "\n🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06補強）\n" + BAR + "\n"
+                "\n🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06二次補強）\n" + BAR + "\n"
                 "這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，\n"
-                "但 ~/github_repos/coach888/index.html 裡查不到對應名稱：\n" +
-                "".join("  • %s\n" % n for n in missing_named) +
-                "\n這條規則是補上一層的漏洞——上一層只認`gh repo create --public`，\n"
-                "但這次是在既有repo裡新增頁面，沒有建新repo，完全繞過偵測。\n\n"
+                "但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：\n" +
+                "".join("  • %s%s\n" % (n, "（在檔案別處找到，但放錯分類）" if n in in_wrong_section else "") for n in missing_named) +
+                "\n這條規則只認「大樹常用」跟「後臺系統」兩個分類算真的收錄——放進\n"
+                "「保留」等其他分類，教練一樣找不到，等同沒收錄。\n\n"
                 "✅ 立刻執行，收工前不能跳過：\n"
                 "  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」\n"
                 "     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）\n"
-                "  2. 是的話，打開 ~/github_repos/coach888/index.html 補上連結\n"
+                "  2. 是的話，打開 ~/github_repos/coach888/index.html，放進「大樹常用」\n"
+                "     或「後臺系統」其中一個分類（已經放在其他分類的話，用剪的搬過去）\n"
                 "  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效\n" + BAR + "\n")
             BLOCK = True
 
@@ -760,18 +791,21 @@ if NEW_PUBLIC_REPOS:
     except Exception:
         COACH888_HTML = None
     if COACH888_HTML is not None:
-        missing_repos = [r for r in NEW_PUBLIC_REPOS if r not in COACH888_HTML]
+        VISIBLE_HTML = _extract_visible_section_html(COACH888_HTML)
+        missing_repos = [r for r in NEW_PUBLIC_REPOS if r not in VISIBLE_HTML]
         if missing_repos:
+            in_wrong_section = [r for r in missing_repos if r in COACH888_HTML]
             MESSAGES.append(
-                "\n🔴🔒 coach888作品一覽收錄鎖（deterministic check，2026-09-04教練親定）\n" + BAR + "\n"
+                "\n🔴🔒 coach888作品一覽收錄鎖（deterministic check，2026-09-06二次補強）\n" + BAR + "\n"
                 "這次對話用 `gh repo create ... --public` 建立了新網站repo，\n"
-                "但 ~/github_repos/coach888/index.html 裡查不到這個名字：\n" +
-                "".join("  • %s\n" % r for r in missing_repos) +
+                "但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：\n" +
+                "".join("  • %s%s\n" % (r, "（在檔案別處找到，但放錯分類）" if r in in_wrong_section else "") for r in missing_repos) +
                 "\n教練原話：「請寫入SOP新的網頁做好一律收錄，不要再讓我提醒」。\n"
-                "（v179才漏過7新站+1後台工具，這是同款坑第二次發作）\n\n"
+                "只認「大樹常用」跟「後臺系統」算真的收錄——放進「保留」等其他\n"
+                "分類，教練一樣找不到，等同沒收錄（這是第三次因為這樣被抓到）。\n\n"
                 "✅ 立刻執行，收工前不能跳過：\n"
-                "  1. 打開 ~/github_repos/coach888/index.html，選一個最貼切的分類\n"
-                "     （通常是「大樹常用」，新項目一律放該分類第一項）\n"
+                "  1. 打開 ~/github_repos/coach888/index.html，放進「大樹常用」\n"
+                "     （新項目一律放該分類第一項）或「後臺系統」\n"
                 "  2. 加入這個新網站的連結+名稱，其餘項目num自動+1\n"
                 "  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效\n"
                 "  4. 如果這個repo其實不是要給教練/會員看的網站（例如純備份/工具型\n"
