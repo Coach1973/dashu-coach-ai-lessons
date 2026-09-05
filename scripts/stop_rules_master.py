@@ -688,6 +688,54 @@ for evt in EVENTS[-300:]:
             if name.lower() not in ("coach888",) and name not in NEW_PUBLIC_REPOS:
                 NEW_PUBLIC_REPOS.append(name)
 
+# 🔴 2026-09-06補強：漏洞——上面只認`gh repo create --public`，但這次的真實案例是
+# 在「既有」repo(ai-go)裡新增一個頁面(curation-inject.html)，沒有建新repo，完全繞過
+# 上面的偵測。教練當場抓到（策展一鍵注入頁面沒收錄coach888），這是同一種坑第三次發作。
+# 補一個更寬的訊號：commit message裡出現「新增...頁面/網站/工具/系統」這類措辭，
+# 代表這輪對話交付了一個「使用者看得到的新東西」，一樣要檢查有沒有進coach888。
+NEW_NAMED_ITEMS = []
+for evt in EVENTS[-300:]:
+    if not isinstance(evt, dict) or evt.get("type") != "assistant":
+        continue
+    for c in _content_list(evt):
+        if not isinstance(c, dict) or c.get("type") != "tool_use" or c.get("name") != "Bash":
+            continue
+        command = str((c.get("input") or {}).get("command", ""))
+        if re.search(r"<<[-~]?\s*['\"]?\w+['\"]?", command):
+            continue
+        for m in re.finditer(r"git\s+commit\s+.*?-m\s+[\"']新增([^\"'：:]{1,30}(?:頁面|網站|工具|系統))", command):
+            name = m.group(1).strip()
+            if name and name not in NEW_NAMED_ITEMS:
+                NEW_NAMED_ITEMS.append(name)
+
+if NEW_NAMED_ITEMS:
+    try:
+        with open(os.path.join(HOME, "github_repos", "coach888", "index.html"), encoding="utf-8") as f:
+            COACH888_HTML_2 = f.read()
+    except Exception:
+        COACH888_HTML_2 = None
+    if COACH888_HTML_2 is not None:
+        # commit訊息裡的措辭是「XX頁面」，但coach888連結文字通常不帶這個後綴字，
+        # 兩種寫法都查一次，任一種命中就算已收錄，避免措辭差異造成假陽性
+        def _in_html(n):
+            core = re.sub(r"(?:頁面|網站|工具|系統)$", "", n).strip()
+            return n in COACH888_HTML_2 or (core and core in COACH888_HTML_2)
+        missing_named = [n for n in NEW_NAMED_ITEMS if not _in_html(n)]
+        if missing_named:
+            MESSAGES.append(
+                "\n🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06補強）\n" + BAR + "\n"
+                "這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，\n"
+                "但 ~/github_repos/coach888/index.html 裡查不到對應名稱：\n" +
+                "".join("  • %s\n" % n for n in missing_named) +
+                "\n這條規則是補上一層的漏洞——上一層只認`gh repo create --public`，\n"
+                "但這次是在既有repo裡新增頁面，沒有建新repo，完全繞過偵測。\n\n"
+                "✅ 立刻執行，收工前不能跳過：\n"
+                "  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」\n"
+                "     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）\n"
+                "  2. 是的話，打開 ~/github_repos/coach888/index.html 補上連結\n"
+                "  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效\n" + BAR + "\n")
+            BLOCK = True
+
 if NEW_PUBLIC_REPOS:
     try:
         with open(os.path.join(HOME, "github_repos", "coach888", "index.html"), encoding="utf-8") as f:

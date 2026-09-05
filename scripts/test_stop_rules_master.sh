@@ -164,6 +164,37 @@ run_case_direct "同義改寫-每20分鐘處理一次" "$(mk poll_syn5 '設計�
 run_case_direct "對照組-不應誤判(調查/查看)" "$(mk poll_syn_clean '我先調查一下目前的狀態，再決定怎麼處理，之後每天固定上班八小時。')" 0
 run_case_direct "對照組-已改事件驅動的回顧不擋" "$(mk poll_syn_whitelist '之前每5分鐘掃一次的輪詢設計已經拆除，改成事件驅動了。')" 0
 
+echo "════ 🔴 2026-09-06 迴歸測試：規則L第二層(既有repo新增頁面沒收錄coach888) ════"
+mk_gitcommit() {  # mk_gitcommit <檔名> <git commit指令>
+  local f="$FIXDIR/$1.jsonl"
+  python3 - "$f" "$2" <<'PY'
+import json, sys
+path, cmd = sys.argv[1], sys.argv[2]
+with open(path, 'w') as f:
+    f.write(json.dumps({'type':'user','timestamp':'2026-09-06T00:00:00.000Z',
+                        'message':{'role':'user','content':'幫我做一個頁面'}})+'\n')
+    f.write(json.dumps({'type':'assistant','timestamp':'2026-09-06T00:00:01.000Z',
+                        'message':{'content':[{'type':'tool_use','name':'Bash','input':{'command':cmd}}]}})+'\n')
+    f.write(json.dumps({'type':'assistant','timestamp':'2026-09-06T00:00:05.000Z',
+                        'message':{'content':[{'type':'text','text':'已推送，commit abc1234 完成。'}]}})+'\n')
+PY
+  echo "$f"
+}
+# 規則L/L2都讀 $HOME/github_repos/coach888/index.html，run_case_direct用TESTHOME
+# 當假HOME，真實檔案不在那底下，要自己造一份最小fixture才測得到規則本體
+mkdir -p "$TESTHOME/github_repos/coach888"
+echo '<a>策展一鍵注入</a>' > "$TESTHOME/github_repos/coach888/index.html"
+
+run_case_direct "規則L2-全新頁面未收錄應擋" \
+  "$(mk_gitcommit l2_new 'git commit -q -m "新增測試防呆用假頁面：驗證規則L第二層"')" \
+  1
+run_case_direct "規則L2-已收錄的策展一鍵注入不應擋" \
+  "$(mk_gitcommit l2_known 'git commit -q -m "新增策展一鍵注入頁面：貼給任何AI即可觸發策展SOP上架流程"')" \
+  0
+run_case_direct "規則L2-無關commit不應誤判" \
+  "$(mk_gitcommit l2_unrelated 'git commit -q -m "修好一個bug"')" \
+  0
+
 echo "════ Stop hook 合併版 vs 原版 行為比對 ════"
 
 run_case "乾淨無違規"        "$(mk clean '資料查詢結束，沒有異常狀況。')"
