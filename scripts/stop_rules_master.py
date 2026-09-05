@@ -32,7 +32,7 @@ transcript jsonl 再用 python3/jq 解析一次——同一份檔案被重複讀
 不做提早跳出，確保提醒不會因為前面有人擋下就消失。
 """
 
-import sys, json, re, os, time
+import sys, json, re, os, time, subprocess
 from datetime import datetime
 
 HOME = os.path.expanduser("~")
@@ -812,6 +812,35 @@ if NEW_PUBLIC_REPOS:
                 "     repo），下次建立時改用 `gh repo create ... --private`，這條鎖\n"
                 "     只認 --public，不會誤攔私有備份repo\n" + BAR + "\n")
             BLOCK = True
+
+# ════════════════════════════════════════════════
+# M. coach888結構性稽核（擋）—— 2026-09-06教練連續4次「找不到/有沒有收錄」後建立
+#    跟L/L2不一樣：完全不看commit訊息措辭，每一輪都無條件直接讀
+#    event-signup/app.py的真實路由 vs coach888實際內容比對，不會被
+#    「我這次剛好沒把新增兩個字寫進commit訊息」這種文字遊戲繞過去。
+#    只有超出scripts/coach888_audit_baseline.txt既定基準線的「新」缺漏
+#    才會擋收工——已知、教練已首肯保留現狀的舊項目不會每次都卡。
+# ════════════════════════════════════════════════
+try:
+    _audit_script = os.path.join(HOME, ".openclaw", "workspace", "scripts", "audit_coach888_coverage.py")
+    audit_result = subprocess.run(
+        ["python3", _audit_script, "--strict"],
+        capture_output=True, text=True, timeout=15,
+    )
+    if audit_result.returncode == 1:
+        MESSAGES.append(
+            "\n🔴🔒 coach888結構性稽核鎖（deterministic check，不看措辭，2026-09-06建立）\n" + BAR + "\n"
+            + audit_result.stdout +
+            "\n這條規則直接讀程式碼路由清單比對coach888，跟commit訊息怎麼寫無關。\n\n"
+            "✅ 立刻執行：\n"
+            "  1. 確認這是不是真的要給教練/訪客看的獨立頁面\n"
+            "  2. 是的話，補進coach888「大樹常用」「後臺系統」或「bymyway自架版」\n"
+            "  3. 如果決定暫不收錄(如純技術端點/待啟用)，把路徑加進\n"
+            "     scripts/coach888_audit_baseline.txt並寫清楚為什麼，這樣不會\n"
+            "     每次都卡在同一個已經想清楚的決定上\n" + BAR + "\n")
+        BLOCK = True
+except Exception:
+    pass  # 稽核腳本本身故障不該擋住教練收工，靜默跳過
 
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
