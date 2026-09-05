@@ -1,0 +1,22 @@
+---
+name: project-claude-quota-conservation-until-wednesday-2026-09-06
+description: 教練2026-09-06凌晨拍板：週配額已用89%，接下來到下週三盡量把工作轉給Hermes/小龍蝦，減少軍師(Claude終端機/桌面版)工作量
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: c6e1d3e9-70ca-4752-a975-f985c5354f44
+  modified: 2026-09-05T19:11:54.036Z
+---
+
+教練2026-09-06凌晨03:11口頭裁示：Claude 週配額已用89%，要撐到下週三非常吃力，之後會盡可能把動作都交給 Hermes、小龍蝦或其他能做的角色，藉此減少軍師這邊的工作量，一起撐到下週三。
+
+**Why**：Claude週配額吃緊，軍師（終端機/桌面版）是消耗這份配額的主要角色，Hermes(MiniMax，不吃Claude額度)跟小龍蝦(OpenClaw，2026-09-06已證實有終端機/exec能力)是省額度的替代執行者。
+
+**How to apply**：
+- 這一週（到2026-09-11週三）遇到任務，先判斷是否為Hermes/小龍蝦能獨立完成的（照抄SOP的重複性操作、單純檔案上傳部署、查詢類任務），能轉出去就建議教練轉給他們，不要自己先動手搶著做。
+- 軍師只在真正需要的地方出手：跨repo技術整合、GitHub Pages/複雜git操作、需要判斷力的架構決策、Hermes/小龍蝦卡住回報的疑難雜症。
+- 不要主動做「錦上添花」式的額外查證/延伸任務（教練沒明確要求的部分），維持任務範圍精簡，省下每一輪的token消耗。
+- 若教練沒有明確指定要軍師做，優先反問「這個能不能讓小龍蝦/Hermes做」，不要預設自己接手。
+- 此為2026-09-06~2026-09-11這段時間的臨時資源管理策略，非永久規則，額度重置或教練另行宣布後應重新確認是否仍適用。
+
+相關：[[feedback_minimax_batch_call_redline_guard_2026-08-27]]（Hermes/小龍蝦用MiniMax不佔Claude額度）

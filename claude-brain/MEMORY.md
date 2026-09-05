@@ -1,5 +1,9 @@
 # Memory Index
 
+- [🔴🔴 「等總結時/等額度寬鬆再處理」是話術陷阱，同一件事何時做耗費都一樣(2026-09-06教練點破)](feedback_deferred_task_not_actually_free_2026-09-06.md) — 除非動作依附在本來就要發生的流程上，否則別用「延後」包裝成省額度
+- [🎯🎯🎯 週配額89%緊繃，撐到下週三前盡量把工作轉Hermes/小龍蝦(2026-09-06教練拍板)](project_claude_quota_conservation_until_wednesday_2026-09-06.md) — 軍師只接真正需要的：跨repo整合/複雜git/架構判斷，其餘先問能不能讓小龍蝦/Hermes做
+- [🔴🔴🔴 小龍蝦(main agent)確實有終端機/exec能力：教練當場實測ls -la成功證實(2026-09-06)](feedback_verify_tool_permission_before_claiming_2026-09-06.md) — 別把kong/peipei的toolsBySender限制套用到main身上，斷言能力邊界前先grep該agent自己的設定區塊+能實測就別空猜
+
 - [🎯🎯 策展SOP定案(2026-09-06)：外部AI工具做的店家網站→GitHub Pages+event.bymyway.com+大台南策展中心三層上架](reference_curation_sop_2026-09-06.md) — 修正教練誤解：小龍蝦無法自己上傳GitHub、不是連VPS；含5店家FB貼文已發布憑證
 - [🔴🔴🔴 Hermes=Mac桌面版(軍師管)非VPS，VPS版Hermes(113.29.232.178)已永久停用(2026-09-05教練親口澄清)](feedback_hermes_is_mac_desktop_vps_permanently_off.md) — 聽到「Hermes沒反應」別再直覺ping VPS，先問是Mac版還是VPS版；VPS已停但launchd plist仍在，Mac版停用是被launchctl bootout關掉需手動bootstrap重啟
 - [🔴🔴🔴🔴🔴 event.bymyway.com跟GitHub Pages共用同一份index.html，加轉址頁會造成無限迴圈(2026-09-05真實production bug)](feedback_shared_file_dual_serve_no_redirect_2026-09-05.md) — 小龍蝦真實踩過，訪客看到的頁面自己跳回自己，驗證標準必須是打開event.bymyway.com親眼看內容不能只看GitHub Pages那端200
