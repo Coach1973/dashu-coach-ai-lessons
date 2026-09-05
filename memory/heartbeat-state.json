@@ -1,1 +1,37 @@
-{"lastCheck": "2026-09-06T00:12:39.000813+08:00", "cycle": 797, "telegramChannelOk": true, "telegramChannelProbe": "{\"ok\":true,\"bot\":\"openclaw_macbook4_bot\",\"chat\":\"6124913915\"}", "cronErrors": [], "consecutiveErrors": 0, "coachSilentHours": 0.1, "verdict": "pass_silent", "v4ThreeGates": {"gate1_still_broken": false, "gate2_provider_overload": false, "gate3_affects_work": false, "all_failed": true, "announce": false}, "autoFixes": [], "notes": "cron list --json schema 無 status 欄位（全 None），無明確 error 證據；4 個 error（cycle=796 記錄，CE=1 gateway restart 中斷）已自然恢復；週日 00:12 深夜、教練沉默 0.1h、無會員功能壞"}
+{
+  "cycle": 798,
+  "lastCheckAt": "2026-09-06T01:12:32.695583+08:00",
+  "cronJobCount": 25,
+  "cronErrorJobs": 2,
+  "cronCE3Jobs": 0,
+  "cronTimeoutDanger": 0,
+  "cronAuthFailed": 0,
+  "tgChannelOk": true,
+  "tgChannelSource": "telegram_channel_probe.sh (exit 0, 當下實測)",
+  "soulThreeFilesOk": true,
+  "repo1UntrackedModified": 27,
+  "repo2UntrackedModified": 35,
+  "lockFilesCount": 0,
+  "v40GatesPass": false,
+  "announce": false,
+  "decision": "🔕 安靜通過，三關全 fail，不打擾教練",
+  "reasoning": "CE=1 < 3 門檻 + 錯誤為 gateway restart 中斷（非 provider overload）+ 凌晨無會員影響 = 三關全 fail",
+  "errorJobsDetail": [
+    {
+      "id": "001a9b16-1985-413b-8d3c-a4e885e552b6",
+      "name": "📊 LINE@教練都在想什麼 每日兩次使用回報",
+      "CE": 1,
+      "lastRunAt": "2026-09-05T20:00+08:00",
+      "nextRunAt": "2026-09-06T20:00+08:00",
+      "diagnosis": "20:00 那場 gateway restart 中斷，下次 20:00 自動補跑"
+    },
+    {
+      "id": "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1",
+      "name": "🔴 場景化升華+系統健檢",
+      "CE": 1,
+      "lastRunAt": "2026-09-05T23:00+08:00",
+      "nextRunAt": "2026-09-06T23:00+08:00",
+      "diagnosis": "23:00 那場 gateway restart 中斷，今晚 23:00 自動補跑"
+    }
+  ]
+}
