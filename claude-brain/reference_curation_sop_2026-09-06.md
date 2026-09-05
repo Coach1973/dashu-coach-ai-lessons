@@ -70,6 +70,16 @@ metadata:
 
 **往後常態化**：策展SOP第六步「通知教練」時，同一輪順便完成這則個別FB貼文（用該店家網站的og:image或代表圖+行銷文案+連到`event.bymyway.com/<slug>/`+連到`tainan-shangquan`首頁），不用教練每次額外交辦。
 
+## 🎯 2026-09-06當場加碼：上傳網址上線 + 策展一鍵注入頁面
+
+教練當場要求把構想一（共用資料夾+事件觸發）落地成一個**真正的上傳網址**，而不只是本機Mac資料夾（因為教練常在外面用其他機器）。已完整建置並端到端實測：
+
+- **上傳網址**：`https://event.bymyway.com/curation/upload`（兩種登入方式：既有admin帳密`bymyway`/`88888`，或帶專屬金鑰`?key=<CURATION_UPLOAD_KEY>`）
+- **背景自動處理**：`scripts/curation_process.py`，由`com.coach.curation-watch.plist`（launchd WatchPaths監控`event-signup/curation_uploads/incoming/`，事件觸發非輪詢）觸發，流程：解壓縮→拼音轉slug→建GitHub repo+push+開Pages→登記`curated_sites_registry.json`（`event.bymyway.com/curated/<slug>/`路由讀這份registry當白名單，避免曝光`github_repos/`底下其他含個資的內部repo）→插入`tainan-shangquan`店家卡片→Telegram通知
+- **策展一鍵注入頁面**：`https://coach1973.github.io/ai-go/curation-inject.html`（比照既有「特助心法一鍵注入」樣式），複製`curation-prompt.md`內容貼給任何AI，AI只要問清楚檔案路徑、跑一行curl上傳即可，不需要自己動手做GitHub部署
+- **為什麼用獨立金鑰而非後台密碼**：這個一鍵注入頁面是公開網頁，任何人都可能複製到提示詞內容，如果直接放後台主密碼等於後台密碼公開外流。改用`CURATION_UPLOAD_KEY`（跟`.env`裡的`EVENT_ADMIN_PASSWORD_HASH`完全獨立），外流最多只能觸發「上傳zip建網站」這個單一動作，不能登入後台改任何既有資料，且隨時可換掉不影響教練登入
+- **已知殘留風險**：`curation-inject.html`設了`noindex`但URL本身仍是公開可存取的靜態頁面，任何拿到連結的人理論上都能看到這把鑰匙——這是「方便任何AI都能用」跟「完全保密」的必然取捨，教練已知情此設計方向
+
 ## How to apply
 下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。
 
