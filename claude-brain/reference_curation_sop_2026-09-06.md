@@ -48,7 +48,7 @@ metadata:
 **第六步｜歸類原則 + 通知教練**
 - 「教練朋友/客戶一次性網站」→ 只收錄`tainan-shangquan`店家名冊，**不收coach888**（2026-09-05教練親定，見[[reference_new_site_collection_policy_2026-09-05]]）
 - 「教練自己的作品」→ 收coach888
-- 完成後Telegram通知教練+軍師都看到剛建好的網址
+- 🔴 **2026-09-06教練發現真漏洞已修復**：「黑糖農莊」「立馬吃一鍋」兩家手動照SOP上架後完全沒收到通知——通知程式碼原本只寫在`/curation/upload`（給沒能力的人用）跟`/api/tainan-shangquan/join`（自助登錄表單）兩支自動化端點，**手動流程從沒呼叫過，不是bug是SOP空白**。已改成`tainan-shangquan` repo的`.git/hooks/post-commit`：只要commit新增了一張`<article class="shop-row">`卡片，不管是誰、用哪種方式做的，一律自動發Telegram到活動報名即時通知群組，不再依賴任何人「記得」這一步。事件驅動（掛在commit動作本身），非輪詢。**這一步現在不用手動做，寫完卡片commit下去就會自動通知。**
 
 ## 兩件教練提出的天馬行空構想，評估結果
 
