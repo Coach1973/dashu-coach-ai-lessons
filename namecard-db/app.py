@@ -66,7 +66,7 @@ def team_login_required(view):
 
 # 教練專屬頁面（如BNI信用証追蹤）：夥伴帳號(如佩君老師)登入team系統後不能看，
 # 只有教練本人的帳號能進，跟「名片系統」開放給夥伴的權限刻意分開
-OWNER_USERNAME = "bymyway"
+OWNER_USERNAME = "0901056777"
 
 
 def owner_only_required(view):
