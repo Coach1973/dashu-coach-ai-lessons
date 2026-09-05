@@ -20,7 +20,7 @@
 - [🎯🎯 教練課程教材線上觀看系統(event.bymyway.com/materials)從零建置完成(2026-09-04)](project_materials_viewer_system_2026-09-04.md) — Google Drive embed+OAuth整合+後台前台分離，42份教材已匯入待教練勾選公開
 - [🔴🔴🔴 給外部人看的網頁，管理控制項絕對不能跟公開內容共用同一網址(2026-09-04)](feedback_public_admin_separation_default_2026-09-04.md) — materials系統教訓，教練問「我的後台是哪一個」才發現沒拆分，一開始設計就要內建
 - [🔧 Google Cloud Console(Google Auth Platform)OAuth設定完整步驟+踩坑(2026-09-04)](reference_google_drive_oauth_setup_2026-09-04.md) — 測試使用者要在/auth/audience頁單獨加、重新導向URI別填錯欄位、gstatic.com JS載入失敗處理
-- [🎯 下一場開工：coach888作品一覽新增後台系統帳密分類，語音辨識詞待確認(2026-09-04)](project_backend_credentials_consolidation_pending_2026-09-04.md) — 教練說「大品一覽」疑似語音誤植，先問清楚+帳密敏感資料存放位置要先確認
+- [🔧 coach888後台系統帳密清單已建置完成(2026-09-05)：9系統帳密存路徑大全_憑證層.md](project_backend_credentials_consolidation_pending_2026-09-04.md) — 4個原本只存雜湊的系統已重設密碼88888並curl驗證登入成功，小龍蝦讀取路徑仍待接通
 - [🔧 event-signup(event.bymyway.com)正式站只跑在Mac，非Mac機器改完程式碼還要交接Mac pull+重啟才生效(2026-09-03)](reference_event_signup_deploy_only_on_mac_2026-09-03.md) — /leader報名頁在聯想寫完測完卻無法自己上線的教訓，純靜態GitHub Pages站不受此限
 - [🔧 聯想Windows這台RustDesk沒有自動重啟機制，「釋放記憶體」不能比照Mac版重啟它(2026-09-03)](reference_lenovo_rustdesk_no_autostart_2026-09-03.md) — 教練說釋放記憶體時只處理LINE/Typeless，RustDesk除非異常飆高才動它且要先告知風險
 - [🔴🔴🔴 教練手機版Hero偏好「照片當全版背景」不是卡片式，回報「照片變背景」別急著當bug改(2026-09-03)](feedback_coach_likes_mobile_hero_photo_as_background_2026-09-03.md) — 結繩工作坊/結繩領導學兩頁教訓，附深色/淺色主題遮罩數值參考
