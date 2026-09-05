@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-05 03:15:25**
+> **最後同步：2026-09-05 11:35:32**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **中華網紅協會CICA官網從零上線(客戶案，TAVA AI提供設計)+coach888收錄** | ✅2026-09-05本場完成 | 教練從下載資料夾提供`index.zip`(僅HTML無圖)，先建repo`Coach1973/cica`+接上`event.bymyway.com/cica/`路由上線(commit`9e4d7bae5`)，教練確認後補頁尾製作credit：TAVA AI(`tava-ai.com`)+音樂藝術策展佩佩老師(`coach1973.github.io/peipei-art/`)+LINE官方帳號`@701ohlly`(commit`2bec8ba`)。教練後補`cica-website-v2.zip`(9.6MB，TAVA AI提供的完整版含73張真實照片)，逐一比對referenced/actual檔名完全吻合後補上`assets/photos/`(commit`8da452c`)，並用curl逐一驗證73張圖全部200+Content-Type正確。coach888「大樹常用」第1項已收錄(commit`50ccfd0`)。**教訓**：客戶提供的zip若只有index.html沒有assets資料夾，一定要先grep圖片引用數量跟教練確認，不能默默上線一個滿版破圖的網站。 |
 | ✅ | **KR養生廚房官網整站搬遷上線+coach888收錄鎖(Stop hook規則L)+seabiscuit20看守則影片按鈕** | ✅2026-09-05本場完成 | 教練提供Tooo.ai示範站`demo3.tooo.ai/11883/518v3/`要求整站搬到`event.bymyway.com/KR/`，8頁面+11圖片全數搬遷，聯絡表單改推自己DB+Telegram(不再打Tooo.ai自家API)，新repo`Coach1973/KR`。教練連續第二次發現新站沒放coach888，要求「寫SOP不要再提醒」，已做成`stop_rules_master.py`規則L：偵測`gh repo create --public`後檢查coach888是否收錄，沒有就擋收工，commit`c048eaf0d`。教練問seabiscuit20兩支影片「不見了」，查證是藏在完整守則彈窗裡沒獨立入口(非真的消失)，新增「看守則影片」獨立按鈕+彈窗，commit`d4bffd7`。 |
 | ✅ | **bigtree 6場專屬活動網頁補「我要看活動網頁」按鈕+events表新增event_url欄位** | ✅2026-09-04本場完成 | 教練澄清：這顆按鈕本來要放大樹小講，誤放到seabiscuit20（教練說做得好不改動）。這次補在bigtree真正的6場：9/16高雄(ai-art)、9/22台南下午(ai-talk)、9/22台南晚上(ai-fit)、9/23-24台中x2(ai-forum)。**關鍵發現**：`event.bymyway.com/bigtree/`是DB即時渲染，靜態HTML的SESSION_DATES會被`render_session_dates()`整段覆寫，只改bigtree repo沒用——已在`events`表新增`event_url`欄位當唯一真相源，`db.py`+`bigtree_publish.py`同步更新，已用真實curl驗證正式站四個網址正確渲染。同場也把大台南策展中心(tainan-shangquan)電話改成佩佩老師0988-004-118。commit`aaedd85`(bigtree)+`cef1657`(tainan-shangquan)+`622e2ab8c`(event-signup)。 |
 | ✅ | **coach888編輯同步方案：教練選「已同步狀態指示燈」，已上線** | ✅2026-09-04本場完成 | 教練選第一案(非手動上傳按鈕)。`syncStateToServer()`成功/失敗都跳toast(「✅已同步（剛剛）」/「⚠️同步失敗，稍後會自動重試」)，commit`309f2fd`，GitHub Pages curl驗證已生效。 |
