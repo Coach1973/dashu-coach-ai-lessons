@@ -1,22 +1,8 @@
 {
-  "cycle": 786,
-  "ts": "2026-09-05T11:12:00+08:00",
-  "coachSilentHours": 0.2,
-  "cronLastStatus": "ok",
-  "consecutiveErrors": 0,
-  "lastDurationMs": 97350,
-  "tgChannelOk": true,
-  "envCheck": {
-    "soulThreeCopiesOk": true,
-    "repo1Short": 27,
-    "repo2Short": 38,
-    "lockFiles": 0
-  },
-  "v4threeGates": {
-    "gate1_currentlyBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false
-  },
-  "action": "silent_pass",
-  "note": "週六上午 + 教練沉默 0.2h 剛對話 + 零會員功能壞 + 零錯誤 → 安靜通過"
+  "cycle": 787,
+  "ts": "2026-09-05T04:12:29Z",
+  "coachSilentH": 0.1,
+  "cronErrors": 0,
+  "threeGateDecision": "all-fail-no-announce",
+  "telegramChannelOk": true
 }
