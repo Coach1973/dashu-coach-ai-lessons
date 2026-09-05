@@ -6,6 +6,7 @@ import base64
 import csv
 import hashlib
 import hmac
+import html
 import io
 import json
 import os
@@ -1279,6 +1280,212 @@ def tainan_shangquan_assets(filename):
     return _serve_repo_file(TAINAN_SHANGQUAN_REPO, filename)
 
 
+SHOPS_VPS_HOST = os.environ.get("SHOPS_VPS_HOST", "")
+SHOPS_VPS_SSH_PASSWORD = os.environ.get("SHOPS_VPS_SSH_PASSWORD", "")
+
+
+def _shop_slug(shop_name: str) -> str:
+    """店名轉英文/拼音短碼，當作shops.bymyway.com/<slug>/的網址。
+    2026-09-05教練裁示自動化流程用拼音，不用每家店手動問英文代碼；
+    slug若跟既有店家撞名，外層呼叫者會自動加數字尾碼。"""
+    from pypinyin import lazy_pinyin
+    raw = "-".join(lazy_pinyin(shop_name))
+    slug = re.sub(r"[^a-z0-9-]", "", raw.lower())
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug or "shop"
+
+
+def _shop_placeholder_html(name, shop, category, contact, address, social, items) -> str:
+    """比照迴頭快剪(huitou)手刻的暫代頁樣式，參數化成共用函式。
+    所有店家提供的資料都用html.escape()處理，避免表單灌入惡意HTML/script(XSS)。"""
+    e = html.escape
+    items_html = e(items).replace("\n", "<br>") if items else ""
+    social_row = (
+        f'<div class="row"><div class="k">社群</div><div class="v">'
+        f'<a href="{e(social)}" target="_blank" rel="noopener">連結</a></div></div>'
+        if social else ""
+    )
+    items_row = (
+        f'<div class="row"><div class="k">招牌商品</div><div class="v items">{items_html}</div></div>'
+        if items else ""
+    )
+    return f"""<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(shop)}｜大臺南商圈整合計劃</title>
+<meta name="description" content="{e(shop)}，{e(address)}。大臺南商圈整合計劃合作店家。">
+<style>
+  :root{{--ink:#1a1a1a;--muted:#666;--accent:#CF2030;--bg:#fafafa;--card:#fff;--line:#e5e5e5}}
+  *{{box-sizing:border-box}}
+  body{{margin:0;font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8}}
+  .wrap{{max-width:640px;margin:0 auto;padding:32px 20px 60px}}
+  .badge{{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);background:rgba(207,32,48,.08);border:1px solid rgba(207,32,48,.25);border-radius:999px;padding:6px 14px;margin-bottom:18px}}
+  h1{{font-size:32px;margin:0 0 6px;font-weight:900}}
+  .sub{{color:var(--muted);font-size:16px;margin-bottom:28px}}
+  .card{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:20px}}
+  .row{{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line)}}
+  .row:first-child{{border-top:none;padding-top:0}}
+  .row .k{{flex:0 0 88px;color:var(--muted);font-size:14px;font-weight:700}}
+  .row .v{{flex:1;font-size:16px}}
+  .row .v a{{color:var(--accent);text-decoration:none;font-weight:600}}
+  .items{{white-space:pre-line}}
+  .note{{font-size:13px;color:var(--muted);text-align:center;margin-top:32px;line-height:1.9}}
+  .note a{{color:var(--accent)}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">大臺南商圈整合計劃 · 合作店家</span>
+    <h1>{e(shop)}</h1>
+    <p class="sub">{e(category)}｜{e(address)}</p>
+
+    <div class="card">
+      <div class="row"><div class="k">分類</div><div class="v">{e(category)}</div></div>
+      <div class="row"><div class="k">地址</div><div class="v">{e(address)}</div></div>
+      <div class="row"><div class="k">聯絡方式</div><div class="v"><a href="tel:{e(contact)}">{e(contact)}</a></div></div>
+      {social_row}
+      {items_row}
+    </div>
+
+    <p class="note">本頁為店家資料暫代版，正式形象網站由 <a href="https://www.tava-ai.com/" target="_blank" rel="noopener">TAVA AI</a> 製作中，完成後將替換為完整版本。<br>大臺南商圈整合計劃｜<a href="https://event.bymyway.com/tainan-shangquan/" target="_blank" rel="noopener">了解更多／店家登錄</a></p>
+  </div>
+</body>
+</html>
+"""
+
+
+def _shop_directory_card_html(name, shop, category, contact, address, social, items, shop_url) -> str:
+    """插入tainan-shangquan首頁「店家名冊」區塊的shop-row卡片，比照迴頭快剪手刻的樣式。"""
+    e = html.escape
+    social_row = (
+        f'<li><span class="k">社群</span><span><a href="{e(social)}" target="_blank" rel="noopener">連結</a></span></li>'
+        if social else ""
+    )
+    items_row = (
+        f'<li><span class="k">招牌商品</span><span>{e(items)}</span></li>'
+        if items else ""
+    )
+    map_q = quote(f"{address} {shop}")
+    review_q = quote(f"{shop} 台南")
+    return f"""
+          <!-- 計劃夥伴店家：{e(shop)}（自動建立） -->
+          <article class="shop-row reveal">
+            <div>
+              <div class="shop-head">
+                <span class="pill">計劃夥伴店家</span>
+                <span class="tag">{e(category)}</span>
+              </div>
+              <h3>{e(shop)}</h3>
+              <p class="shop-desc">位於{e(address)}，{e(category)}類合作店家。</p>
+              <ul class="shop-facts">
+                <li><span class="k">地址</span><span>{e(address)}</span></li>
+                <li><span class="k">分類</span><span>{e(category)}</span></li>
+                {items_row}
+                <li><span class="k">聯絡方式</span><span><a href="tel:{e(contact)}">{e(contact)}</a></span></li>
+                {social_row}
+              </ul>
+              <p class="slot-note"><a href="{e(shop_url)}" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+
+              <div class="review-block">
+                <div class="review-head">
+                  <span class="label">Google 評論</span>
+                  <span class="star-row" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                  </span>
+                </div>
+                <div class="review-empty">
+                  <p>評分與評論由 Google 商家即時提供，店家資料登錄後自動串接。</p>
+                  <a href="https://www.google.com/maps/search/?api=1&amp;query={review_q}" target="_blank" rel="noopener">在 Google 地圖上查看評論 →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q={map_q}&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：{e(shop)}（{e(address)}）"></iframe>
+              </div>
+            </div>
+          </article>
+"""
+
+
+def _provision_shop_placeholder(name, shop, category, contact, address, social, items):
+    """新店家登錄後自動化流程（2026-09-05教練裁示）：
+    1. 產生shops.bymyway.com/<slug>/暫代頁並上傳VPS
+    2. 在tainan-shangquan首頁店家名冊插入一張真實卡片
+    3. git commit+push，event.bymyway.com直接讀本機repo檔案，改完立即生效不用重啟服務
+    任何一步失敗都不能擋住表單本身的DB寫入/Telegram通知，所以呼叫端要包try/except。
+    回傳(slug, shop_url)供通知訊息使用；失敗回傳(None, None)。"""
+    if not SHOPS_VPS_HOST or not SHOPS_VPS_SSH_PASSWORD:
+        return None, None
+
+    slug = _shop_slug(shop)
+    existing = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
+    used = set()
+    if existing.is_file():
+        try:
+            used = set(json.loads(existing.read_text(encoding="utf-8")))
+        except Exception:  # noqa: BLE001
+            used = set()
+    base_slug = slug
+    n = 2
+    while slug in used:
+        slug = f"{base_slug}-{n}"
+        n += 1
+    used.add(slug)
+    existing.write_text(json.dumps(sorted(used), ensure_ascii=False), encoding="utf-8")
+
+    shop_url = f"https://shops.bymyway.com/{slug}/"
+
+    # 1. 產生暫代頁並上傳VPS（sshpass比照既有VPS操作SOP，密碼存.env不進git）
+    placeholder_html = _shop_placeholder_html(name, shop, category, contact, address, social, items)
+    tmp_path = f"/tmp/shop_placeholder_{slug}.html"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        f.write(placeholder_html)
+    subprocess.run(
+        ["sshpass", "-p", SHOPS_VPS_SSH_PASSWORD, "ssh", "-o", "StrictHostKeyChecking=no",
+         f"root@{SHOPS_VPS_HOST}", f"mkdir -p /var/www/shops/{slug}"],
+        check=True, timeout=30, capture_output=True, env=_OPENCLAW_ENV,
+    )
+    subprocess.run(
+        ["sshpass", "-p", SHOPS_VPS_SSH_PASSWORD, "scp", "-o", "StrictHostKeyChecking=no",
+         tmp_path, f"root@{SHOPS_VPS_HOST}:/var/www/shops/{slug}/index.html"],
+        check=True, timeout=30, capture_output=True, env=_OPENCLAW_ENV,
+    )
+    os.remove(tmp_path)
+
+    # 2. 插入tainan-shangquan首頁店家名冊卡片
+    card_html = _shop_directory_card_html(name, shop, category, contact, address, social, items, shop_url)
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8")
+    marker = "<!-- SHOP_CARDS_INSERT_POINT：新店家自動插入這行下面，勿刪除此標記 -->"
+    if marker not in content:
+        raise RuntimeError("SHOP_CARDS_INSERT_POINT標記不存在，無法自動插入卡片")
+    content = content.replace(marker, marker + "\n" + card_html, 1)
+    index_path.write_text(content, encoding="utf-8")
+
+    # 3. git commit+push（本機repo檔案就是event.bymyway.com直接讀取的來源，改完立即生效）
+    subprocess.run(["git", "add", "index.html", "_shops_slugs.json"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV)
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com",
+         "commit", "-q", "-m", f"自動化：新店家「{shop}」已建立版位({slug})"],
+        cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV,
+    )
+    subprocess.run(["git", "push"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV)
+
+    return slug, shop_url
+
+
 @app.route("/api/tainan-shangquan/join", methods=["POST", "OPTIONS"])
 def api_tainan_shangquan_join():
     """大臺南商圈整合計劃店家登錄（2026-09-04交辦，大台南策展中心店家招募落地頁）。
@@ -1335,6 +1542,14 @@ def api_tainan_shangquan_join():
             status=200, headers={**resp_headers, "Content-Type": "application/json"},
         )
 
+    provision_note = ""
+    try:
+        slug, shop_url = _provision_shop_placeholder(name, shop, category, contact, address, social, items)
+        if shop_url:
+            provision_note = f"\n✅ 已自動建好版位：{shop_url}\n（等TAVA AI網頁做好，把HTML包給軍師直接置換即可）"
+    except Exception as e:  # noqa: BLE001
+        provision_note = f"\n⚠️ 自動建版位失敗（DB已寫入，資料沒丟）：{e}\n請軍師手動補建。"
+
     notify_text = (
         "【大臺南商圈整合計劃・店家登錄通知】\n"
         f"姓名：{name}\n店名：{shop}（{category}）\n"
@@ -1342,6 +1557,7 @@ def api_tainan_shangquan_join():
         + (f"社群：{social}\n" if social else "")
         + (f"招牌商品：{items}\n" if items else "")
         + f"（來源：{source}）"
+        + provision_note
     )
     _notify_xiaolongxia(notify_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
     return Response(
