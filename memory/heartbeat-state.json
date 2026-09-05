@@ -1,19 +1,22 @@
 {
-  "lastChecks": {
-    "healthcheck": 1788617634,
-    "telegramChannel": 1788617634,
-    "cron": 1788617634,
-    "coach_silence_sync": "2026-09-05T22:12:30+08:00"
+  "version": "v4.0",
+  "cycle": 796,
+  "lastCheck": "2026-09-05T23:13:31+08:00",
+  "results": {
+    "sync_coach_last_message": "ok",
+    "cron_status": "ok_self_running",
+    "cron_errors_count": 4,
+    "cron_errors_detail": "全部 CE=1，錯誤訊息 cron: job interrupted by gateway restart（~22:00 重啟中斷），下次自然恢復",
+    "heartbeat_todo_pending": 0,
+    "tg_channel_probe": "ok",
+    "env_quick_check": "ok"
   },
-  "telegramChannelOk": true,
-  "telegramChannelProbe": "ok:true bot=openclaw_macbook4_bot chat=6124913915",
-  "cycle": 795,
-  "cumulativeGreen": 156,
-  "v4ThreeGateResult": "all-fail-no-announce",
-  "silentHours": 0.0,
-  "syncedAt": "2026-09-05T22:12:30+08:00",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-05T22:10:09+08:00",
-    "coachSilentHours": 0.0
-  }
+  "three_gates": {
+    "gate1_still_failing": false,
+    "gate2_provider_overload": false,
+    "gate3_affects_coach_or_members": false
+  },
+  "announce_coach": false,
+  "cumulativeGreen": 157,
+  "note": "23:12 週六夜晚，教練沉默 0.4h，剛對話 26 分鐘前"
 }

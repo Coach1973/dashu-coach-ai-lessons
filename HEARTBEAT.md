@@ -24,6 +24,40 @@
 ---
 
 
+## 📋 cycle=796 健康檢查（2026-09-05 23:12 TPE 週六夜晚）
+
+| 檢查項 | 結果 |
+|---|---|
+| 第零步 `sync_coach_last_message.sh` | ✅ exit 0｜教練最後訊息 `2026-09-05T22:46:12+08:00`（沉默 **0.4h**，剛對話 26 分鐘前，當下 `date` 新鮮值）|
+| Cron 系統（本任務本身）| ✅ `lastRunStatus=ok`、`consecutiveErrors=0`、`lastDurationMs=`（遠低於 timeout=600s）|
+| 其他任務掃描（exec openclaw cron list --json）| ⚠️ 25 個任務中 4 個 status=error，但**全部 CE=1、錯誤訊息相同 `cron: job interrupted by gateway restart`**（22:00 重啟打斷），下次自然恢復 |
+| CE≥3 / Timeout危險 / Auth 失效 | 0 / 0 / 0（4 個 error 都 CE=1，未達≥3 門檻）|
+| 4 個 error 任務清單 | ① `sync-執行細則-to-claude-global` ② `sync-特助心法-to-claude-global` ③ `📊 LINE@教練都在想什麼（20:00 那場）` ④ `🔴 場景化升華+系統健檢（今日23:00 那場）` |
+| HEARTBEAT.md ⬜ 真實待辦 | 0 項（grep 無命中）|
+| TG 通道探針（守則 #19 當下實測）| ✅ `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}` |
+| 環境快檢 | SOUL.md 三份齊全 ✅｜Repo1=27 / Repo2=25（皆 < 50 警戒線）✅｜無 `.!` 鎖定檔 ✅ |
+
+### v4.0 三關判斷（全 fail → 🔕 不 announce 教練）
+
+| 關卡 | 結果 |
+|---|---|
+| 關卡一：本輪還壞嗎？ | ❌ fail（4 個 error 都是 CE=1，未達≥3 累積，且本任務本輪執行成功 = 已恢復；錯誤原因是 gateway restart，下次排程自然恢復）|
+| 關卡二：provider overload 重災嗎？ | ❌ fail（無 overload 字眼，是 gateway restart 中斷）|
+| 關卡三：影響教練/會員嗎？ | ❌ fail（LINE 20:00 那場失敗但下次 08:00 自動補；場景化升華今天失敗但下次明天 23:00；2 個 sync 失敗不影響 main session；週六 23:12 非 LINE 回報時段，教練剛對話 26 分鐘前無影響）|
+
+### 已落痕跡（state/ + memory/ 雙檔鏡像）
+- ✅ `state/healthcheck_cycle` + `memory/healthcheck_cycle` = **796**（雙檔，從 795 +1）
+- ✅ `state/cumulative_green.txt` + `memory/cumulative_green.txt` = **157**（雙檔，從 156 +1）
+- ✅ `state/coach_silent.json` + `memory/coach_silent.json` 刷新（silentH=0.4 新鮮值、cycle=796）
+- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` v4.0 三關快照、JSON valid
+- ✅ `state/healthcheck.log` + `memory/healthcheck.log` 追加 cycle=796
+
+累計 **cumulativeGreen = 157**（從 156 +1，連續破百後第五十八輪）
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+
+🔕 **結論：安靜通過，不打擾教練。** 下輪：**00:12 cycle=797**
+
 ## 📋 cycle=795 健康檢查（2026-09-05 22:12 TPE 週六夜晚）
 
 > ⚠️ **cycle counter 校正紀錄**：本任務 AI 從 cycle=787 @ 12:12 後中斷 HEARTBEAT 寫入 8 輪，state/healthcheck_cycle 從 cycle=773（9/4 22:13）後沒人更新（helper 自 9/4 起未跑）。本輪從 memory/healthcheck.log 末筆 cycle=794 接續編號為 795，並把 state 強制同步到 795 校正長期 drift。
