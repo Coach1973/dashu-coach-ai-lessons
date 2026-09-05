@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-05 21:35:14**
+> **最後同步：2026-09-05 22:00:20**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -402,67 +402,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-04 v181（Mac終端機 Sonnet 5，大臺南商圈整合計劃店家登錄頁上線+五項待辦決議收尾）
-
-> 建立時間：2026-09-04 22:12 ~ 22:35（台灣時間）
-> 上一棒：v180（Mac終端機，seabiscuit20媒體報導補齊20篇+全面盤點報告+新增「關於創辦人」頁面）
-> 本棒主軸：**教練一口氣裁示v180留下的5項待辦；新任務：把下載資料夾裡的`tainan-shangquan.zip`（大台南策展中心店家招募落地頁）建成GitHub repo+接上event-signup後端DB+Telegram通知，比照1010/tut既有模式，已用真實POST測試驗證。**
-
-## 🎯 本場戰果
-
-### 1. 大臺南商圈整合計劃店家登錄頁上線（新任務）
-教練提供`~/Downloads/tainan-shangquan.zip`（大台南策展中心委託，免費幫店家開通乾淨世界頻道+建置形象網站+AI行銷工具，店家填表登錄）。原始表單只是純前端假送出(隱藏表單+顯示感謝文字，零資料落地)。已建新repo`Coach1973/tainan-shangquan`(commit`c0f5180`)，`handleShopSubmit()`改`fetch()` POST `event.bymyway.com/api/tainan-shangquan/join`。後端比照1010/tut既有模式：`event-signup/schema.sql`新增`tainan_shangquan_signups`表(姓名/店名/類別/聯絡方式/地址/社群/招牌商品)，`app.py`新增路由(GET靜態頁+POST寫DB+推播「活動報名即時通知」Telegram群組)，commit`d1b02db49`。已用真實POST測試驗證DB寫入正確，測試資料已清除。
-
-### 2. v180五項待辦教練當場裁示，四項已落實
-①coach888編輯同步方案選「已同步狀態指示燈」(非手動上傳按鈕)：`syncStateToServer()`成功/失敗跳toast，commit`309f2fd`，GitHub Pages curl驗證已生效。②「後台系統帳密集中」存放位置定案：教練口頭裁示存Mac本機、教練直接問小龍蝦，已寫入記憶但**實際清單尚未彙整**，且小龍蝦工具權限受限的技術細節待下次確認，詳見待辦表。③`true-ai-team`repo補GitHub遠端：新建private repo`Coach1973/true-ai-team`並推送。④materials教材公開：教練說「等我忙完」，不動。⑤bigtree黑金改版草稿殘留：6份比稿檔+2份備份檔搬進`biz-gym/_archive_blackgold_draft_2026-09-04/`，commit`2d96eac`(本機Chrome預覽確認`index.html`未引用這些檔案後才推送)。
-
-## ⚠️ 本場教訓/發現
-1. **`web_preview_verify_guard.sh`會攔bigtree的push，即使改動只是搬移未被引用的草稿檔、零視覺影響**——仍照SOP開本機http.server+Chrome預覽一次留下證據再推送，沒有為了「反正沒差」跳過鎖。
-
-## 📋 下一場開工先做
-1. **「後台系統帳密集中」實際清單尚未建置**：11個系統的帳密還沒彙整成檔案，且要確認小龍蝦(main agent，無fs/exec工具)要怎麼讀到這份Mac本機清單——是放進小龍蝦讀得到的路徑，還是教練問時由軍師代答，這個技術細節待下次確認。記憶`project_backend_credentials_consolidation_pending_2026-09-04`。
-2. materials系統42份教材，教練「忙完」後主動去`/materials/admin`勾選公開，非阻塞待辦。
-3. `tainan-shangquan`頁面`og:image`欄位目前是空字串(原始檔案本來就沒填)，教練若要分享到FB/LINE，需要補一張可公開存取的預覽圖網址。
-
-## 🔑 本場commit
-`tainan-shangquan`：`c0f5180`(初版)。`true-ai-team`：已補遠端(無新commit，純推送既有3筆歷史commit)。`bigtree`：`2d96eac`(黑金改版草稿歸檔)。`coach888`：`309f2fd`(已同步toast)。`workspace`：`d1b02db49`(tainan-shangquan後端路由)。
-
----
-
-# 軍師接力棒 · 2026-09-05 v182（Mac終端機 Sonnet 5，KR養生廚房整站搬遷+bigtree活動網頁按鈕修正+seabiscuit20影片按鈕+coach888收錄鎖上線）
-
-> 建立時間：2026-09-04 22:35 ~ 2026-09-05 03:07（台灣時間，跨日）
-> 上一棒：v181（Mac終端機，大臺南商圈整合計劃店家登錄頁上線+五項待辦決議收尾）
-> 本棒主軸：**教練指出「我要看活動網頁」按鈕誤放seabiscuit20，補在bigtree真正6場+發現DB即時渲染會覆寫靜態HTML的關鍵架構問題；教練用Tooo.ai demo3.tooo.ai做的KR養生廚房示範站整站搬遷上線；教練回報seabiscuit20影片「不見了」，查證其實是藏在完整守則彈窗裡沒有獨立入口，新增「看守則影片」按鈕；教練要求新公開網站一律收錄coach888不要再提醒，做成Stop hook規則L強制檢查。**
-
-## 🎯 本場戰果
-
-### 1. bigtree「我要看活動網頁」按鈕補正+events表新增event_url欄位
-教練澄清這顆按鈕本來要放大樹小講，誤放到海餅乾20週年（教練說做得好不改動那邊）。補在bigtree真正6場：9/16高雄(ai-art)、9/22台南下午(ai-talk)、9/22台南晚上(ai-fit)、9/23-24台中x2(ai-forum)。**關鍵發現**：`event.bymyway.com/bigtree/`是DB即時渲染，`render_session_dates()`每次請求都會整段覆寫靜態HTML的SESSION_DATES陣列，只改bigtree repo原始碼沒有用（下次一鍵發佈也會被DB內容蓋掉）。已在`events`表新增`event_url`欄位當唯一真相源，`db.py`+`bigtree_publish.py`同步更新，已用真實curl驗證正式站四個網址正確渲染。同場也把`tainan-shangquan`電話改成佩佩老師0988-004-118。commit`aaedd85`(bigtree)+`cef1657`(tainan-shangquan)+`622e2ab8c`(event-signup)。
-
-### 2. KR養生廚房官網整站搬遷上線（新任務）
-教練提供`https://demo3.tooo.ai/11883/518v3/`（Tooo.ai AI建站工具做的示範站，即bigtree的9/5場地KR養生廚房）要求原封不動搬到`event.bymyway.com/KR/`。8個頁面(首頁/關於我們/餐點特色/藝文空間/聯絡我們/隱私權/服務條款/無障礙聲明)+11張圖片+main.js全部下載，路徑改寫成`/KR/`前綴，移除Tooo.ai自家追蹤腳本(demo-chk.js/report.js/cloudflare beacon)+浮水印。**聯絡表單原本打Tooo.ai自己的`api.tooo.ai/widgets/form-submit.js`**，改推我們自己的`/api/KR/contact`端點(DB+Telegram「活動報名即時通知」群組)，避免搬過來後訊息送到教練管不到的第三方帳號。`_serve_repo_file()`新增資料夾`/index.html`fallback支援多頁面靜態站(不影響既有單頁站行為)。已用真實瀏覽器UI送出表單+curl驗證8頁面200+DB寫入正確。新repo`Coach1973/KR`，commit`c0f5180`類似模式(KR repo初版)+`2cf7615f1`(event-signup後端)。
-
-### 3. seabiscuit20「看守則影片」獨立按鈕上線
-教練問「兩支影片怎麼不見了」，查證發現影片其實從未被刪除——9/4下午聯想新增「完整守則」彈窗時，就把影片放在彈窗裡面，只是沒有獨立入口，滑頁面看不到。已用JS狀態檢查(`openRulesModal()`+`performance.getEntriesByType('resource')`確認YouTube iframe真的載入)驗證後，在「✦完整守則✦」旁新增「▶看守則影片▶」獨立按鈕+獨立彈窗(videos-modal)，影片從rules-modal搬移過去(非複製)。commit`d4bffd7`。**本場一次Stop hook攔截**：改完HTML用Claude Browser工具驗證過畫面但沒有實際執行`open -a "Google Chrome"`，被規則J擋下收工，補跑Chrome開啟後才算完成，已寫入記憶`feedback_html_preview_chrome_only`（發現同名記憶檔已存在於MEMORY.md索引但實體檔案遺失，本場補回）。
-
-### 4. coach888收錄鎖：Stop hook規則L上線
-教練連續第二次發現新網站(tainan-shangquan、KR)沒放進coach888作品一覽，當場要求「請寫入SOP...不要再讓我提醒」。純文字SOP評估後判定不夠可靠，改成`stop_rules_master.py`新增規則L(deterministic check)：只要對話裡執行過`gh repo create ... --public`，Stop hook自動掃描該repo名稱是否出現在本機`coach888/index.html`，沒有就擋下收工。只認`--public`，不會誤攔`--private`備份repo(如`true-ai-team`)。已用合成transcript測試正反兩案例驗證邏輯正確，commit`c048eaf0d`。**上線當天發生一次假陽性**：heredoc造測試transcript的文字本身被記進真實對話，下一輪Stop hook誤把假repo名字當真的執行過，已修法排除heredoc定界符內容，教訓寫入記憶。KR/tainan-shangquan兩站已依此規則補進coach888，commit`cb30fe2`。
-
-## ⚠️ 本場教訓/發現（已寫入記憶）
-1. **event.bymyway.com/bigtree/是DB即時渲染，改bigtree repo原始碼裡的資料不會生效**——任何要改場次相關內容(含新按鈕需要的資料)都要往`events`表加欄位，不能只改靜態HTML。
-2. **改完HTML用Claude Browser系列工具做過完整功能驗證，不能取代`open -a "Google Chrome"`**——兩者是互補不是替代，收工前這一步不能省，記憶`feedback_html_preview_chrome_only`。
-3. **coach888收錄不能只靠記住，要做成deterministic hook**——同一天連續兩次疏漏後才被逼出這條鎖，早該在v179第一次疏漏後就做。
-4. **合成假transcript測試hook時，heredoc本身的文字內容會被同一份真實transcript的其他規則掃到**，導致非預期誤判，測試完要檢查有沒有引發旁支問題。
-
-## 📋 下一場開工先做
-1. 「後台系統帳密集中」實際清單仍未建置，記憶`project_backend_credentials_consolidation_pending_2026-09-04`。
-2. materials系統42份教材，教練「忙完」後主動去`/materials/admin`勾選公開。
-3. 教練今晚（凌晨1點多）已確認seabiscuit20+KR+bigtree按鈕都完成，下次開工先問還有沒有其他驗收意見。
-4. 本機`.claude/projects`記憶目錄本場連續發現3個MEMORY.md索引有列但實體檔案遺失的情況(`project_backend_credentials_consolidation_pending_2026-09-04`／`feedback_lock_must_be_hook_not_optin`／`feedback_html_preview_chrome_only`，前後兩個本場已補回，中間那個未補)，可能是某次同步/還原時漏帶檔案本體，值得找時間全面比對索引與實體檔案是否一致。
-
-## 🔑 本場commit
-`bigtree`：`aaedd85`(6場活動網頁按鈕)。`tainan-shangquan`：`cef1657`(電話修改)。`event-signup`：`622e2ab8c`(bigtree event_url欄位)+`2cf7615f1`(KR路由+聯絡表單)+`c048eaf0d`(Stop hook規則L)。`KR`：初版(GitHub repo `Coach1973/KR`)。`coach888`：`cb30fe2`(KR收錄)。`seabiscuit20`：`d4bffd7`(看守則影片按鈕)。記憶庫(`.claude/projects`)：`feedback_new_public_site_must_register_coach888_2026-09-04`+`feedback_html_preview_chrome_only`(補回)+`project_backend_credentials_consolidation_pending_2026-09-04`(補回)。
+> 📦 v181+v182完整內容已封存：`handoff_archive/handoff_v181_v182_archived_2026-09-05.md`（v181 大台南商圈整合計劃店家登錄頁上線／v182 KR養生廚房整站搬遷+bigtree按鈕修正+coach888收錄鎖上線）
 
 ---
 
@@ -499,6 +439,49 @@
 
 ## 🔑 本場commit
 `mac-openclaw-workflows`：`774d5bfc`(開工時解開HEARTBEAT.md rebase衝突)。記憶庫(`.claude/projects`)：`feedback_verify_backup_content_not_just_format_2026-09-05`(新增)+`reference_windows_claude_session_storage_layout_2026-09-05`(新增)+`project_lenovo_nonpaged_pool_leak_2026-09-04`(補充教練晚間裁示段落)。本場無任何網站/repo程式碼異動，純查證與記憶維護。
+
+---
+
+# 軍師接力棒 · 2026-09-05 v184（Mac終端機 Sonnet 5，CICA官網+VPS店家託管基礎建設上線+event.bymyway.com無限迴圈production bug修復）
+
+> 建立時間：2026-09-05 09:39 ~ 21:56（台灣時間，橫跨一整天多輪對話）
+> 上一棒：v183（聯想Windows，一鍵還原後三項查證）
+> 本棒主軸：**中華網紅協會CICA客戶官網從零上線；大台南策展中心新增VPS店家網站託管基礎建設(shops.bymyway.com)+新店家登錄自動化SOP；教練委託診斷「小龍蝦下午對話接不上話」，查出並修復一個正在發生的event.bymyway.com無限迴圈production bug（非誤解，是真bug）；四個客戶案網站(lin-beiyi/66-harbour/tainan-pickleball-art-rotary/kingmauii)上線+改收錄進tainan-shangquan店家名冊；修復兩支hook(.sh+.ps1)的stash/pop靜默吞衝突bug；回信ACER+通報聯想。**
+
+## 🎯 本場戰果
+
+### 1. 中華網紅協會CICA客戶官網從零上線
+教練提供TAVA AI做的`index.zip`(僅HTML無圖)，建repo`Coach1973/cica`+接上`event.bymyway.com/cica/`(commit`9e4d7bae5`)。教練確認後補頁尾製作credit：TAVA AI(`tava-ai.com`)+音樂策展佩佩老師(`peipei-art`)+LINE官方帳號`@701ohlly`(commit`2bec8ba`)。教練後補`cica-website-v2.zip`(9.6MB，含73張真實照片)，逐一比對referenced/actual檔名完全吻合後補上(commit`8da452c`)，curl逐張驗證73張圖全部200。理事長告知板橋會址已停用，改標「台北市」暫代(commit`53253f9`)。
+
+### 2. VPS店家網站託管基礎建設：shops.bymyway.com上線
+教練提出大台南策展中心夥伴店家增加(TAVA AI建站規模化)不能全塞Mac，評估Amber私有雲(NAS非公開web用途，不適合)vs VPS(已是24小時對外主機，nginx已裝好)，教練拍板用VPS。技術查證：whois確認VPS主機商Ready Server(新加坡)，計費是「整台VPS固定1點/小時=24點/天，不論裡面掛幾個網站」的吃到飽制，教練查詢餘額25,108點(可撐約2.9年)。已建：VPS自簽憑證+nginx server block(`/var/www/shops`)+Cloudflare A紀錄`shops.bymyway.com`→VPS IP(proxied)。第一家迴頭快剪(鄭絅濂)已建暫代頁`shops.bymyway.com/huitou/`。
+
+### 3. 大台南商圈整合計劃：新店家登錄自動化SOP上線
+教練裁示流程：店家填表→AI自動建版位→教練用TAVA AI做正式網頁後把HTML給AI置換。已在`/api/tainan-shangquan/join`端點內新增`_provision_shop_placeholder()`：pypinyin轉slug(自動去重)→VPS自動建`/<slug>/`暫代頁(sshpass+scp)→tainan-shangquan首頁用`SHOP_CARDS_INSERT_POINT`標記自動插入真實店家卡片+git commit/push即時生效→Telegram通知附上網址。所有使用者輸入用`html.escape()`防XSS。已用真實POST端到端測試(VPS頁面+DB+卡片+git push全部驗證)，測試資料已清除。commit`8170d6830`(後端)+`76a47d3`(前端標記)。分類也從「食衣住行」擴充為「食衣住行育樂」(commit`5484ed9`)。
+
+### 4. 🔴 診斷「小龍蝦下午接不上話」，查出並修復一個真實production bug
+教練懷疑小龍蝦下午對話理解有誤，委託查證。**根因非誤解，是真bug**：`lin-beiyi`/`66-harbour`/`tainan-pickleball-art-rotary`三個repo的`index.html`同時被GitHub Pages和event.bymyway.com(`_serve_repo_file()`)共用一份檔案，小龍蝦把它改成「跳轉到event.bymyway.com」的轉址頁，導致event.bymyway.com自己serve一個叫訪客跳回自己的頁面，**無限迴圈**(此刻仍在線上經curl+內容雙重驗證)。已修復：三個repo的`index.html`從小龍蝦自己留的`original.html.bak-20260905`還原真實內容(commit`f0fb3cd`+`d212d20`+`de3b46d`)，對應的Flask路由(卡在git stash裡因ACER並行推送衝突未commit)手動救回重新commit(workspace`2bca2af32`)，重啟服務+curl逐站驗證恢復正常。**額外發現**：教練晚上9:19-9:22在Telegram群組連貼4個網站連結，小龍蝦連續4次判斷「沒被@，當路人聊天」完全NO_REPLY，是「接不上話」最直接證據(非理解偏差，是壓根沒反應)，此規則待下一棒補寫進小龍蝦的判斷邏輯。
+
+### 5. 四個客戶案網站上線+收錄規則變更
+新增kingmauii(金茂宜咖啡)的event.bymyway.com路由(commit`b3e4e8e4f`)，四站(lin-beiyi/66-harbour/tainan-pickleball-art-rotary/kingmauii)全數curl驗證200。**教練拍板新規則**：「教練朋友/客戶一次性網站」統一收錄進`tainan-shangquan`店家名冊(南北串聯，不限台南)，不進coach888作品一覽——已把原先誤放進coach888的3項revert(commit`0a0de1f`)，改在tainan-shangquan新增4張真實店家卡片(commit`9eca3f0`)。
+
+### 6. 兩支hook(.sh+.ps1)的stash/pop靜默吞衝突bug修復
+ACER發信指出`feed_junshi_handoff.ps1`遇到`stash pop`衝突時用`2>$null`吞掉錯誤，衝突標記可能被誤commit。查證Mac的`.sh`版本(`|| true`)有同一個坑，兩邊都修好：pop失敗時明確列出受影響檔案、不再假裝成功、stash留著逼手動處理(commit`43fda4b85`)。已回信ACER(認可其3項技術判斷+告知順手修好的迴圈bug)+通報聯想，兩封信教練親口確認後發送。
+
+## ⚠️ 本場教訓/發現（部分待補記憶，見下一棒）
+1. **同一份檔案被GitHub Pages跟event.bymyway.com(`_serve_repo_file`)共用時，任何「轉址」類修改都要先想清楚兩邊會不會互相干擾**——GitHub Pages不需要轉址頁，兩邊各自顯示同一份真實內容本來就沒問題，不用畫蛇添足。
+2. **多機git stash/pop的靜默失敗是系統性風險，不是單一事件**——Mac/ACER各自獨立踩到同一個坑，`|| true`／`2>$null`這類「吞掉錯誤讓流程繼續」的寫法在stash pop這個環節特別危險，因為失敗會直接把衝突標記寫進共用檔案。
+3. **群組聊天裡的連結/內容跟自己剛做過的工作相關時，不能只用「有沒有@我」判斷要不要回應**——小龍蝦的NO_REPLY邏輯需要補一條「內容涉及自己剛執行過的任務」的例外規則，下一棒待補。
+
+## 📋 下一場開工先做
+1. **寫SOP文件**：給小龍蝦/Hermes的固定流程——收到教練的HTML/zip→存固定位置→寫信通知軍師（不做整合/部署）→軍師接手GitHub整合+驗證+上線。核心決策樹（本場口頭定案，尚未寫成文件）：①大台南商圈店家→VPS `shops.bymyway.com`②教練朋友/客戶一次性網站→純GitHub Pages或視需要加event.bymyway.com，統一收錄tainan-shangquan③需要表單/DB/後台的網站→event.bymyway.com。
+2. **補寫小龍蝦NO_REPLY規則修正**：群組訊息內容涉及自己剛做過的網站/任務時，即使沒被@也要檢查回應，不能無條件當路人聊天略過。
+3. **教練的流量分工原則要寫進SOP**：小龍蝦/Hermes做行政收發，軍師只做關鍵工程整合，節省教練Claude額度(教練本場提到週六已用80%週配額，需撐到週三下午1點)。
+4. `kingmauii-brand-site-github`的event.bymyway.com路由/tainan-shangquan卡片已補齊，若ACER後續還有其他客戶案網站，比照本場SOP辦理。
+5. 沿用舊待辦：「後台系統帳密集中」清單仍未建置(`project_backend_credentials_consolidation_pending_2026-09-04`)、materials系統42份教材待教練勾選公開。
+
+## 🔑 本場commit
+`cica`：`9e4d7bae5`+`2bec8ba`+`8da452c`+`53253f9`。`tainan-shangquan`：`5484ed9`(分類擴充)+`2524f81`+`76a47d3`(標記+迴頭快剪)+`9eca3f0`(4家客戶案卡片)。`lin-beiyi`：`f0fb3cd`(迴圈修復)。`66-harbour`：`d212d20`(迴圈修復)。`tainan-pickleball-art-rotary`：`de3b46d`(迴圈修復)。`coach888`：`0a0de1f`(revert客戶案項目)。`workspace(event-signup/scripts)`：`8170d6830`(店家自動化SOP)+`2bca2af32`(迴圈bug路由救回)+`b3e4e8e4f`(kingmauii路由)+`43fda4b85`(hook修復merge)+`7ccd318b6`(ACER/聯想回信)+`6b728ed69`(接力棒更新)。VPS(43.245.60.200)：nginx+自簽憑證+`/var/www/shops/`基礎建設(無git，SSH直改)。
 
 
 ---
