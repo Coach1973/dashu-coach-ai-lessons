@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴🔴🔴 event.bymyway.com跟GitHub Pages共用同一份index.html，加轉址頁會造成無限迴圈(2026-09-05真實production bug)](feedback_shared_file_dual_serve_no_redirect_2026-09-05.md) — 小龍蝦真實踩過，訪客看到的頁面自己跳回自己，驗證標準必須是打開event.bymyway.com親眼看內容不能只看GitHub Pages那端200
+- [🔴🔴🔴🔴 小龍蝦看到教練貼自己剛做的網站連結，因沒被@就連續4次NO_REPLY(2026-09-05)](feedback_no_reply_own_work_in_group_chat_2026-09-05.md) — 「接不上話」的直接證據，判斷回不回應要多查一條「內容是否涉及自己最近任務產出」
+- [🔧 新網站收錄規則：教練自己作品進coach888，朋友/客戶一次性網站進tainan-shangquan店家名冊(2026-09-05教練親定)](reference_new_site_collection_policy_2026-09-05.md) — 南北串聯不限台南，已revert原本誤放coach888的4個客戶案網站
 - [🔴🔴 備份檔案只驗證格式合法不等於有真實內容，回報「已驗證」要講清楚驗證到哪層(2026-09-05)](feedback_verify_backup_content_not_just_format_2026-09-05.md) — 倒數紀念日App備份只查LiteDB header就宣稱「不是空檔案」，實際備份下去那刻資料已經是空的
 - [🔧 聯想Windows對話記錄真正儲存位置：E槽jsonl(經junction連C槽)才是真跡，桌面版App另有C槽本機快取(2026-09-05)](reference_windows_claude_session_storage_layout_2026-09-05.md) — 一鍵還原後教練誤以為記錄不見，實際E槽資料完整無缺，是App介面快取問題
 - [🟢 zip/tar.gz靜態網站→GitHub Pages公開部署SOP(2026-09-05 ACER實測兩次)](reference_zip_to_github_pages_deploy_sop.md) — 解壓縮/ASCII檔名檢查/git credential fill白嫖token/REST API建repo+開Pages/文字圖片分開驗證七步驟
