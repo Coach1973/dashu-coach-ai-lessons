@@ -185,3 +185,9 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1788615057
 - 雲端同步：✅ 已推上雲端（commit 5ea471cc8）
+
+## 🩺 軍師 Hook 自檢 2026-09-05 21:57（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：⚠️ Pull 警告: error: fetching ref refs/remotes/origin/main failed: incorrect old value provided
+- Session: b34bf2f8-9adf-4f34-89b1-994c0dd5ecae
