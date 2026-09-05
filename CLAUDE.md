@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-05 12:45:03**
+> **最後同步：2026-09-05 12:55:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **大臺南商圈整合計劃：新店家登錄自動化SOP上線（事件觸發，非輪詢）** | ✅2026-09-05本場完成並真實POST端到端測試驗證 | 教練裁示流程：①店家填表送出→②AI自動在大台南策展中心後台建好版面/預留版位/基本簡介→③教練用TAVA AI做正式網頁後把HTML包給AI置換。已在`/api/tainan-shangquan/join`既有端點內（POST寫DB的同一次請求，非額外排程）新增`_provision_shop_placeholder()`：①用`pypinyin`把店名轉英文slug(自動去重，本機`_shops_slugs.json`registry)②在VPS(shops.bymyway.com)自動建`/<slug>/`暫代頁(sshpass+scp)③在tainan-shangquan首頁店家名冊用`SHOP_CARDS_INSERT_POINT`標記自動插入一張真實店家卡片(含地址/分類/聯絡方式/社群/招牌商品/連到專屬網站按鈕)+git commit/push即時生效④Telegram通知文字附上剛建好的網址，教練跟軍師同時看到。**所有使用者輸入都用`html.escape()`處理避免表單被灌惡意HTML(XSS)**。已用真實POST(`測試自動化店家`)端到端測試：VPS頁面200+DB寫入+店家卡片正確插入首頁+git push成功全部驗證通過，測試資料(DB記錄/VPS頁面/index.html卡片/slug registry)已完整清除，commit`76a47d3`(清除)+`5092c26`(測試時的中間commit，內容已被清除commit覆蓋)。**正式commit**：`event-signup`後端`8170d6830`(workspace)、`tainan-shangquan`分類擴充`5484ed9`+迴頭快剪首筆真實卡片`2524f81`+SHOP_CARDS_INSERT_POINT標記`76a47d3`。**教練同場提及另兩件事，暫不動手**：①乾淨世界頻道開通需當面用店家Email/手機驗證，教練會晚點親自處理②Tooo.ai更深層使用，之後再教店家怎麼用，非本場範圍。 |
 | ✅ | **VPS(43.245.60.200)開通店家網站託管基礎建設+shops.bymyway.com上線+第一家迴頭快剪暫代頁** | ✅2026-09-05本場完成 | 教練提出大台南策展中心夥伴店家增加(TAVA AI建站規模化)不能全塞Mac，評估Amber私有雲(NAS非公開web用途，不適合)vs VPS(已是24小時對外主機，nginx已裝好)，教練當場拍板用VPS統一管理。**技術查證**：whois確認VPS主機商是新加坡Ready Server，WebSearch查證其計費是「整台VPS固定1點/小時=24點/天，不論裡面掛幾個網站」的吃到飽制，非教練原猜測的「按網站數計費」，教練查詢官網後回報現有餘額25,108點(可撐約2.9年)，成本結論站得住腳。**基礎建設**：VPS新增自簽憑證`/etc/ssl/certs/shops.crt`(比照既有coach.bymyway.com同款做法)+nginx server block(root `/var/www/shops`)+Cloudflare API新增A紀錄`shops.bymyway.com`→`43.245.60.200`(proxied，跟coach.bymyway.com同款直連VPS IP模式，非其餘子網域慣用的cloudflared tunnel)。**命名規則**：比照event.bymyway.com既有`/<repo>/`模式，建議`shops.bymyway.com/<店家英文代碼>/`，教練確認採用。**迴頭快剪(鄭絅濂)**：目前僅有登錄表單資料(尚無TAVA AI設計網頁)，先建暫代頁`shops.bymyway.com/huitou/`顯示店名/地址/電話/IG/招牌商品，附註「正式網站由TAVA AI製作中」，等教練拿到TAVA AI網頁後直接置換內容(比照CICA案流程)。已用curl逐項驗證DNS解析+HTTPS 200+內容正確，Chrome開給教練看過。**同場也查證教練詢問的另一件事**：CICA官網理事長告知板橋會址已停用，2處「新北市板橋區瑞安街46巷1號3樓」已改標「台北市」暫代，等教練提供正式地址再補。 |
 | ✅ | **中華網紅協會CICA官網從零上線(客戶案，TAVA AI提供設計)+coach888收錄** | ✅2026-09-05本場完成 | 教練從下載資料夾提供`index.zip`(僅HTML無圖)，先建repo`Coach1973/cica`+接上`event.bymyway.com/cica/`路由上線(commit`9e4d7bae5`)，教練確認後補頁尾製作credit：TAVA AI(`tava-ai.com`)+音樂藝術策展佩佩老師(`coach1973.github.io/peipei-art/`)+LINE官方帳號`@701ohlly`(commit`2bec8ba`)。教練後補`cica-website-v2.zip`(9.6MB，TAVA AI提供的完整版含73張真實照片)，逐一比對referenced/actual檔名完全吻合後補上`assets/photos/`(commit`8da452c`)，並用curl逐一驗證73張圖全部200+Content-Type正確。coach888「大樹常用」第1項已收錄(commit`50ccfd0`)。**教訓**：客戶提供的zip若只有index.html沒有assets資料夾，一定要先grep圖片引用數量跟教練確認，不能默默上線一個滿版破圖的網站。 |
 | ✅ | **KR養生廚房官網整站搬遷上線+coach888收錄鎖(Stop hook規則L)+seabiscuit20看守則影片按鈕** | ✅2026-09-05本場完成 | 教練提供Tooo.ai示範站`demo3.tooo.ai/11883/518v3/`要求整站搬到`event.bymyway.com/KR/`，8頁面+11圖片全數搬遷，聯絡表單改推自己DB+Telegram(不再打Tooo.ai自家API)，新repo`Coach1973/KR`。教練連續第二次發現新站沒放coach888，要求「寫SOP不要再提醒」，已做成`stop_rules_master.py`規則L：偵測`gh repo create --public`後檢查coach888是否收錄，沒有就擋收工，commit`c048eaf0d`。教練問seabiscuit20兩支影片「不見了」，查證是藏在完整守則彈窗裡沒獨立入口(非真的消失)，新增「看守則影片」獨立按鈕+彈窗，commit`d4bffd7`。 |
