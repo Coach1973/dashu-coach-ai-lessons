@@ -1,0 +1,345 @@
+#!/usr/bin/env python3
+"""策展SOP自動上架處理器（2026-09-06教練交辦）。
+
+觸發方式：launchd WatchPaths 監控 event-signup/curation_uploads/incoming/
+（事件觸發，不是輪詢——比照namecard-inbound同一種機制），資料夾內容一有變化
+就跑這支腳本。腳本本身是「掃一遍incoming/，處理找到的每個檔案，處理完就搬走」
+的冪等設計，重複觸發也不會重工，因為處理中的檔案一開始就被搬出incoming/。
+
+完整流程：解壓縮 → 判斷ASCII slug(拼音轉換) → 建GitHub repo+push+開Pages →
+登記進curated_sites_registry.json(讓event.bymyway.com/curated/<slug>/立刻可讀取，
+不需要重啟Flask服務) → 插入tainan-shangquan店家名冊卡片 → Telegram通知教練。
+
+刻意不做的事（留給軍師下次確認時人工完成，見reference_curation_sop_2026-09-06.md）：
+- FB貼文文案（需要判斷內容品質，不適合盲目自動發布到公開粉專）
+- 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值）
+"""
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tarfile
+import urllib.error
+import urllib.request
+import zipfile
+from datetime import datetime
+from pathlib import Path
+
+WORKSPACE = Path("/Users/bymyway/.openclaw/workspace")
+EVENT_SIGNUP = WORKSPACE / "event-signup"
+INCOMING_DIR = EVENT_SIGNUP / "curation_uploads" / "incoming"
+PROCESSING_DIR = EVENT_SIGNUP / "curation_uploads" / "processing"
+PROCESSED_DIR = EVENT_SIGNUP / "curation_uploads" / "processed"
+FAILED_DIR = EVENT_SIGNUP / "curation_uploads" / "failed"
+REGISTRY_PATH = EVENT_SIGNUP / "curated_sites_registry.json"
+GITHUB_REPOS_DIR = Path("/Users/bymyway/github_repos")
+TAINAN_SHANGQUAN_REPO = GITHUB_REPOS_DIR / "tainan-shangquan"
+LOG_PATH = WORKSPACE / "distill" / "curation_process.log"
+
+OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
+TELEGRAM_NOTIFY_CHAT_ID = "6124913915"
+_ENV = {**os.environ, "PATH": f"/opt/homebrew/bin:/Users/bymyway/.local/bin:{os.environ.get('PATH', '')}"}
+
+CATEGORY_KEYWORDS = {
+    "食": ["咖啡", "餐", "茶", "美食", "甜點", "廚房", "飲", "料理", "小吃", "烘焙"],
+    "衣": ["服飾", "品牌", "生技", "彩妝", "穿搭", "織品", "時尚"],
+    "住": ["民宿", "旅宿", "家居", "室內設計", "裝潢"],
+    "行": ["交通", "旅遊", "運輸", "租車", "導覽"],
+    "育": ["協會", "教育", "課程", "導師", "培訓", "學會", "團體", "講座", "工作坊"],
+    "樂": ["運動", "藝術", "俱樂部", "扶輪社", "音樂", "健身", "球", "遊戲"],
+}
+
+
+def log(msg: str) -> None:
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    line = f"[{datetime.now().isoformat(timespec='seconds')}] {msg}\n"
+    with open(LOG_PATH, "a", encoding="utf-8") as f:
+        f.write(line)
+    print(line, end="")
+
+
+def notify(text: str) -> None:
+    try:
+        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
+            config = json.load(f)
+        bot_token = config["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
+        body = json.dumps({"chat_id": TELEGRAM_NOTIFY_CHAT_ID, "text": text}).encode("utf-8")
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{bot_token}/sendMessage",
+            data=body, method="POST", headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=10)
+    except Exception as e:  # noqa: BLE001
+        log(f"⚠️ Telegram通知失敗: {e!r}")
+
+
+def load_registry() -> dict:
+    if not REGISTRY_PATH.is_file():
+        return {"sites": []}
+    try:
+        return json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {"sites": []}
+
+
+def save_registry(data: dict) -> None:
+    REGISTRY_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def slugify_title(title: str) -> str:
+    from pypinyin import lazy_pinyin
+    raw = "-".join(lazy_pinyin(title))
+    slug = re.sub(r"[^a-z0-9-]", "", raw.lower())
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug or "site"
+
+
+def unique_slug(base: str, existing: set) -> str:
+    slug = base
+    n = 2
+    while slug in existing or (GITHUB_REPOS_DIR / slug).exists():
+        slug = f"{base}-{n}"
+        n += 1
+    return slug
+
+
+def extract_package(pkg_path: Path, dest: Path) -> None:
+    dest.mkdir(parents=True, exist_ok=True)
+    if pkg_path.suffix == ".zip":
+        with zipfile.ZipFile(pkg_path) as z:
+            z.extractall(dest)
+    else:
+        with tarfile.open(pkg_path) as t:
+            t.extractall(dest)
+    # 常見情況：zip裡包了一層跟zip同名的資料夾，把內容拉到dest頂層方便後續處理
+    entries = [p for p in dest.iterdir() if not p.name.startswith(".")]
+    if len(entries) == 1 and entries[0].is_dir():
+        inner = entries[0]
+        for item in inner.iterdir():
+            shutil.move(str(item), str(dest / item.name))
+        inner.rmdir()
+
+
+def find_index_html(root: Path) -> Path | None:
+    direct = root / "index.html"
+    if direct.is_file():
+        return direct
+    matches = list(root.rglob("index.html"))
+    return matches[0] if matches else None
+
+
+def extract_meta(html_text: str) -> tuple[str, str]:
+    title_m = re.search(r"<title>([^<]{1,120})</title>", html_text, re.IGNORECASE)
+    title = title_m.group(1).strip() if title_m else ""
+    desc_m = re.search(
+        r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"\']{1,200})["\']',
+        html_text, re.IGNORECASE,
+    )
+    desc = desc_m.group(1).strip() if desc_m else ""
+    return title, desc
+
+
+def guess_category(text: str) -> str:
+    for cat, kws in CATEGORY_KEYWORDS.items():
+        if any(kw in text for kw in kws):
+            return cat
+    return "樂"
+
+
+def get_github_token() -> str:
+    result = subprocess.run(
+        ["git", "credential", "fill"],
+        input="protocol=https\nhost=github.com\n\n",
+        capture_output=True, text=True, timeout=15, env=_ENV,
+    )
+    for line in result.stdout.splitlines():
+        if line.startswith("password="):
+            return line.split("=", 1)[1].strip()
+    raise RuntimeError("無法從git credential fill取得GitHub token")
+
+
+def create_github_repo(token: str, slug: str) -> None:
+    payload = json.dumps({"name": slug, "private": False, "auto_init": False}).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.github.com/user/repos", data=payload, method="POST",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+    )
+    try:
+        urllib.request.urlopen(req, timeout=20)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", "ignore")
+        if e.code == 422 and "already exists" in body:
+            return
+        raise RuntimeError(f"建repo失敗 HTTP {e.code}: {body}") from e
+
+
+def enable_github_pages(token: str, slug: str) -> None:
+    payload = json.dumps({"source": {"branch": "main", "path": "/"}}).encode("utf-8")
+    req = urllib.request.Request(
+        f"https://api.github.com/repos/Coach1973/{slug}/pages", data=payload, method="POST",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+    )
+    try:
+        urllib.request.urlopen(req, timeout=20)
+    except urllib.error.HTTPError:
+        pass  # 非致命：GitHub Pages有沒有開不影響event.bymyway.com/curated/<slug>/正常運作
+
+
+def push_repo(repo_dir: Path, token: str, slug: str) -> None:
+    subprocess.run(["git", "init", "-q"], cwd=repo_dir, check=True, env=_ENV)
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com", "add", "-A"],
+        cwd=repo_dir, check=True, env=_ENV,
+    )
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com",
+         "commit", "-q", "-m", "策展SOP自動上架"],
+        cwd=repo_dir, check=True, env=_ENV,
+    )
+    subprocess.run(["git", "branch", "-M", "main"], cwd=repo_dir, check=True, env=_ENV)
+    remote_with_token = f"https://Coach1973:{token}@github.com/Coach1973/{slug}.git"
+    subprocess.run(["git", "remote", "add", "origin", remote_with_token], cwd=repo_dir, check=True, env=_ENV)
+    subprocess.run(["git", "push", "-u", "origin", "main", "-q"], cwd=repo_dir, check=True, env=_ENV)
+    subprocess.run(
+        ["git", "remote", "set-url", "origin", f"https://github.com/Coach1973/{slug}.git"],
+        cwd=repo_dir, check=True, env=_ENV,
+    )
+
+
+def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str) -> None:
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8")
+    marker = "<!-- SHOP_CARDS_INSERT_POINT：新店家自動插入這行下面，勿刪除此標記 -->"
+    if marker not in content:
+        raise RuntimeError("SHOP_CARDS_INSERT_POINT標記不存在")
+    import html as html_mod
+    e = html_mod.escape
+    card = f"""
+          <!-- 計劃夥伴店家：{e(title)}（策展SOP自動上架，待軍師補完整介紹） -->
+          <article class="shop-row reveal">
+            <div>
+              <div class="shop-head">
+                <span class="pill">計劃夥伴店家</span>
+                <span class="tag">{e(category)}</span>
+              </div>
+              <h3>{e(title)}</h3>
+              <p class="shop-desc">{e(desc) if desc else '網站已自動上架，介紹文案待軍師補充。'}</p>
+              <ul class="shop-facts">
+                <li><span class="k">分類</span><span>{e(category)}</span></li>
+              </ul>
+              <p class="slot-note"><a href="{e(event_url)}" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+            </div>
+          </article>
+"""
+    content = content.replace(marker, marker + "\n" + card, 1)
+    index_path.write_text(content, encoding="utf-8")
+    subprocess.run(["git", "add", "index.html"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com",
+         "commit", "-q", "-m", f"策展SOP自動上架：新店家「{title}」"],
+        cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV,
+    )
+    subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
+
+
+def process_one(pkg_path: Path) -> None:
+    log(f"開始處理：{pkg_path.name}")
+    registry = load_registry()
+    existing_slugs = {s["slug"] for s in registry["sites"]}
+    tmp_extract = Path("/tmp") / f"curation_{pkg_path.stem}_{os.getpid()}"
+    try:
+        extract_package(pkg_path, tmp_extract)
+        index_file = find_index_html(tmp_extract)
+        if not index_file:
+            raise RuntimeError("解壓縮後找不到index.html，這個檔案可能不是一個完整的靜態網站")
+        # 若index.html不在頂層，把它所在的資料夾內容拉到頂層
+        if index_file.parent != tmp_extract:
+            for item in index_file.parent.iterdir():
+                shutil.move(str(item), str(tmp_extract / item.name))
+
+        html_text = index_file.read_text(encoding="utf-8", errors="ignore") if index_file.exists() else (tmp_extract / "index.html").read_text(encoding="utf-8", errors="ignore")
+        title, desc = extract_meta(html_text)
+        if not title:
+            title = re.sub(r"^\d{8}-\d{6}__", "", pkg_path.stem)
+        category = guess_category(f"{title} {desc}")
+
+        base_slug = slugify_title(title)
+        slug = unique_slug(base_slug, existing_slugs)
+        repo_dir = GITHUB_REPOS_DIR / slug
+        shutil.copytree(tmp_extract, repo_dir)
+
+        token = get_github_token()
+        create_github_repo(token, slug)
+        push_repo(repo_dir, token, slug)
+        enable_github_pages(token, slug)
+
+        event_url = f"https://event.bymyway.com/curated/{slug}/"
+        github_pages_url = f"https://coach1973.github.io/{slug}/"
+
+        registry["sites"].append({
+            "slug": slug,
+            "title": title,
+            "description": desc,
+            "category": category,
+            "event_url": event_url,
+            "github_pages_url": github_pages_url,
+            "uploaded_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "status": "live",
+            "source_package": pkg_path.name,
+        })
+        save_registry(registry)
+
+        card_note = ""
+        try:
+            insert_tainan_shangquan_card(title, desc, category, event_url)
+        except Exception as e:  # noqa: BLE001
+            card_note = f"\n⚠️ 加入大台南策展中心店家名冊失敗（網站本身已上線，不影響）：{e}"
+            log(f"插卡失敗: {e!r}")
+
+        notify(
+            "🎯【策展SOP・新店家已自動上架】\n"
+            f"店名：{title}\n"
+            f"分類：{category}（自動猜測，可能需要軍師調整）\n"
+            f"網址：{event_url}\n"
+            f"GitHub Pages：{github_pages_url}\n"
+            + card_note
+            + "\n📌 待軍師下次確認：潤飾店家介紹文案 + 大台南策展中心FB粉專發一則貼文宣布。"
+        )
+        log(f"✅ 完成：{pkg_path.name} → {slug}")
+    except Exception as e:  # noqa: BLE001
+        log(f"❌ 處理失敗：{pkg_path.name}: {e!r}")
+        FAILED_DIR.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(pkg_path), str(FAILED_DIR / pkg_path.name))
+        notify(
+            "⚠️【策展SOP・自動上架失敗】\n"
+            f"檔案：{pkg_path.name}\n錯誤：{e}\n"
+            f"檔案已保留在 curation_uploads/failed/，請軍師人工檢查。"
+        )
+        shutil.rmtree(tmp_extract, ignore_errors=True)
+        return
+    shutil.rmtree(tmp_extract, ignore_errors=True)
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
+
+
+def main() -> None:
+    INCOMING_DIR.mkdir(parents=True, exist_ok=True)
+    PROCESSING_DIR.mkdir(parents=True, exist_ok=True)
+    pending = [p for p in INCOMING_DIR.iterdir() if p.is_file() and not p.name.startswith(".")]
+    if not pending:
+        return
+    for pkg in pending:
+        # 立刻搬出incoming/，避免同一份檔案被重複觸發的WatchPaths事件重工
+        staged = PROCESSING_DIR / pkg.name
+        try:
+            shutil.move(str(pkg), str(staged))
+        except Exception as e:  # noqa: BLE001
+            log(f"搬移到processing/失敗，跳過本輪: {pkg.name}: {e!r}")
+            continue
+        process_one(staged)
+
+
+if __name__ == "__main__":
+    main()
