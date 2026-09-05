@@ -218,3 +218,11 @@
 - 觸發詞：開工
 - 雲端狀態：🔴🔴🔴 stash pop 衝突未解決！工作區可能殘留 <<<<<<< 標記，本次不算真正同步成功，需要人工檢查 E:\Claude-Data\workspace 後手動解衝突（不要直接 commit）
 - Session: test-fix-verify
+
+## 🚀 Session-End 雲端同步 2026-09-05 21:58（Windows）
+- ✅ pushed 50ccd7f5
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-05 22:04（Windows）
+- ⚠️ commit e2128b29 本機留底，pull --rebase 失敗（衝突需手動處理）（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）
+- 同步路徑：HEARTBEAT.md
