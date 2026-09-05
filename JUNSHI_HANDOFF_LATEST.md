@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🎯 | **策展SOP兩項根因修復：slug只取品牌名+暫代頁自動偵測讓上傳網址統一取代手動七步驟** | ✅2026-09-06 v186本場完成 | 牛市町案例驗收時教練追問到底，修好slug命名(只取品牌名轉拼音，commit`82b7a2a2c`)+暫代頁自動偵測(`find_existing_shop_slug()`+`overwrite_shop_placeholder()`，commit`4de7aeb3c`)，撤回「有能力AI要手動做七步驟」規則，SOUL.md+Hermes+SOP文件三處同步改成一律上傳網址(commit`3df878f1a`+hermes`3d91d8e`)。詳見v186完整戰果。 |
 | 🔴🔴 | **新建hook：偵測MiniMax API過載訊息當成正常回覆返回，自動觸發續跑** | ✅2026-09-06本場完成並實測 | 掛在`message:sent`事件（事件驅動非輪詢）：命中過載訊息立即補「請繼續」續跑，同session最多3次，第4次改發Telegram請教練裁示；cron session(含`:cron:`)因已有原生backoff/retry一律跳過不干擾。25項測試全過，gateway重啟兩次驗證載入(23 handlers)，用真實gateway log反查證實2026-09-05 17:31那次真實過載事件確實走這條`message:sent`路徑。commit`d21f0089`。 |
 | 🎯🎯 | **策展SOP定案+多輪修正：三方式並行(直接動手/一鍵注入/upload備援)，小龍蝦終端機能力已實測證實** | ✅2026-09-06本場完成，含Hermes實戰卡住案例修復 | 完整流程見`claude-brain/reference_curation_sop_2026-09-06.md`。**核心規則（多輪修正後定案）**：①**教練本人+有終端機能力的AI（軍師/Hermes/OpenCode/小龍蝦）→ 直接照七步驟手動做**，不要走upload頁面②**除教練以外的人（沒有能力自己動手）→ 用`event.bymyway.com/curation/upload?key=<專屬金鑰>`網頁上傳**，系統事件觸發自動處理(launchd WatchPaths監控`incoming/`)③**動手前先判斷這店家是否已有`shops.bymyway.com/<slug>/`暫代頁**（自助登錄表單那條路產生的）——有就SCP覆蓋暫代頁內容不建新站，沒有才走全新GitHub Pages案例。**教練專屬「策展一鍵注入」**：`coach1973.github.io/ai-go/curation-inject.html`，複製貼給任何AI都能觸發，已補收錄進coach888(commit`889af59`)。**小龍蝦終端機能力當場實測證實**：教練直接叫小龍蝦跑`ls -la`成功執行，SOUL.md已補上策展SOP指示(commit`59b7d6665`)，教練人在外面一樣可以叫小龍蝦或Hermes直接做，不用等軍師開工。**真實案例修復**：Hermes拿到迴頭快剪zip卡住猶豫，逐字檢視對話記錄後發現是SOP文件本身漏了兩條規則(不是Hermes理解力差)，已補上並寫進Hermes專屬`H_HANDOFF_LATEST.md`給出具體解法(SCP覆蓋`shops.bymyway.com/huitou/`暫代頁)。**Stop hook規則L補第二層**：教練發現「策展一鍵注入」頁面忘記收錄coach888，查出規則L只認`gh repo create --public`、漏抓「既有repo新增頁面」這種情況，已補規則+7個新測試案例全過(commit`adba8730e`)，試金石案例72完整記錄。commit一覽：`980e636`(ai-go頁面)+`6ca8fe152`(金鑰機制)+`07be5838e`+`ce9e49f67`+`4c6690f4e`(SOP文件三輪修正)+`889af59`(coach888補收錄)+`adba8730e`(規則L第二層)+`59b7d6665`(SOUL.md授權小龍蝦)。**迴頭快剪案例已由Hermes完成**，教練親眼確認策展中心已顯示更新。
 
@@ -398,39 +399,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-05 v183（聯想Windows Sonnet 5，一鍵還原後三項查證：對話記錄E槽真相/記憶體洩漏診斷讓步/App備份救援失敗誠實回報）
-
-> 建立時間：2026-09-04 18:32 ~ 2026-09-05 21:19（台灣時間，跨日）
-> 上一棒：v182（Mac終端機，KR養生廚房整站搬遷+bigtree按鈕修正+coach888收錄鎖）
-> 本棒主軸：**教練半夜對聯想Windows做「易數一鍵還原」到8/10備份，本棒圍繞還原後的三個疑慮逐一查證：①「對話記錄不見了」查明E槽真實逐字稿完整無缺，是桌面版App本機快取(C槽)跟真實資料(E槽)混淆②記憶體洩漏Nahimic驅動診斷被教練推翻改採觀察策略，AI誠實收手不堅持③受託備份的「倒數紀念日」App資料還原後仍是空的，查明備份當下就已經是空檔案，誠實回報自己的驗證疏失。全程無程式碼repo改動，純查證/診斷/記憶維護。**
-
-## 🎯 本場戰果
-
-### 1. 「一鍵還原後對話記錄不見了」查證：E槽資料完整，是App本機快取問題
-教練半夜對這台機器做「易數一鍵還原」到8/10備份狀態，事後質疑「對話記錄都應該在E槽，怎麼復原後就沒了」。查證確認：①`C:\Users\bymyw\.claude`是連到`E:\Claude-Data\.claude`的symlink(4/6建立)，還原不會破壞這條線②E槽`.claude/projects`底下45個jsonl逐字稿檔案，41個mtime在8/11之後，時間軸連續無斷層，包含教練半夜討論記憶體問題、海餅乾網站建置那兩場對話都直接用Grep工具在對應session檔案裡搜到關鍵字證實內容完整③真正會被C槽還原動到的是桌面版App自己另外維護的一份本機快取(`C:\Users\bymyw\AppData\Roaming\Claude\`，含`claude-code-sessions`/`IndexedDB`等)，這份快取沒有連到E槽，還原後可能讓App介面「歷史對話清單」顯示異常，但不代表底層真實資料被刪除。已寫入記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
-
-### 2. 記憶體98%洩漏Nahimic驅動診斷：教練推翻改用一鍵還原+觀察策略，AI收手不再堅持
-教練認為「用了這麼久沒事、只有昨天才出問題」判斷是瀏覽網站問題非驅動洩漏，直接用一鍵還原解決比「移除驅動又重開機又這又那」省事，還原後記憶體持續穩定在50%以下、教練要求觀察到當晚12點再視情況做新備份。AI承認手上雖有Windows事件記錄的具體證據(Windows Update會在開機時自動把已解除安裝的Nahimic驅動裝回去)，但教練明確表態「不想跟你爭論」，已記錄教練決定+停止再提驅動根因，除非症狀真的復發才重啟這個話題。記憶`project_lenovo_nonpaged_pool_leak_2026-09-04`已補充教練晚間裁示段落。
-
-### 3. 「倒數紀念日」App資料庫還原失敗：查明備份本身就是空檔案，誠實回報驗證疏失
-教練還原前請AI(較早session)備份App本機資料庫`MyData.db`到E槽，還原+重灌App後要求復原，AI複製備份檔回去MD5比對相符，但教練回報「並沒有出現」。深入查證發現：備份檔案(20480 bytes)跟全新安裝、從未寫過資料的空白資料庫**檔案大小完全相同**，用`strings`掃描整份檔案內容找不到任何可辨識文字——備份當下(下午3:43)App資料其實就已經是空的，比教練預期的「一鍵還原才會清空」還要早發生，具體原因不明(疑似跟稍早Nahimic驅動移除+重開機的Windows Update自動更新序列有關，但未進一步查證確認)。**AI主動承認**先前session宣稱「已驗證是真實資料，不是空檔案」這句話講得不夠嚴謹，只驗證了檔案格式合法，沒有真正確認內容存在。已寫入記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。此外還查明教練半夜的兩次「疑似當機重開」其實是Windows Update在06:16/06:19自動觸發的計劃性重開機(Event 1074，非Event 41意外關機)，非真正硬體/軟體崩潰。
-
-### 4. 其他零星查證（皆已回覆教練，無殘留待辦）
-①D槽Downloads資料夾+資源回收桶搜尋教練提到的「9/1 Excel檔案」，兩處都沒有找到明確吻合的檔案，教練確認「應該是被我刪了」，已請教練若想起更多線索(檔名/內容)可再查，本場未強行猜測結案。②教練詢問「雲端分享的檔案」放在作品一覽哪裡，查證是`event.bymyway.com/materials/admin`(coach888「後臺系統」分類第1項，9/4新建置的教材線上觀看系統)，已回報網址+提醒42份教材尚未勾選公開。
-
-## ⚠️ 本場教訓/發現（已寫入記憶）
-1. **備份檔案只驗證格式合法(header/副檔名)不等於內容真實存在**——回報教練「已驗證」前要想清楚自己驗證的是格式還是內容，講清楚驗證到哪一層，不要用籠統的「已驗證，放心」造成過度保證。記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。
-2. **這台機器C槽(會被一鍵還原動到)跟E槽(獨立於還原範圍外)的資料分層要分清楚跟教練解釋**——E槽真實逐字稿+symlink保護機制運作正常，但桌面版App自己在C槽另外維護一份本機快取沒有納入保護，教練問「記錄不見了」時，要先查E槽真跡，不要籠統回答。記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
-3. **教練明確表態「不想跟你爭論」時，即使手上有技術證據也要收手**——已在記憶中確認除非症狀復發，否則不再主動重提Nahimic驅動根因這個話題。
-
-## 📋 下一場開工先做
-1. 教練若確認12點觀察後記憶體仍穩定、已做新一鍵備份，可詢問備份是否成功+是否要更新舊備份相關記憶(`project_lenovo_c_drive_slimdown_2026-07-11`)。
-2. 「倒數紀念日」App資料實質遺失，教練若想找回，下一步可考慮查Windows System Restore/VSS還原點(需教練親自用GUI操作，AI這台機器沒有管理員權限查詢)，或教練自行重新輸入。
-3. 沿用v182下一棒待辦：「後台系統帳密集中」清單仍未建置(`project_backend_credentials_consolidation_pending_2026-09-04`)、materials系統42份教材待教練勾選公開。
-4. 「9/1 Excel檔案」教練若想起更多線索(檔名關鍵字/內容/收到管道)，可再次查找。
-
-## 🔑 本場commit
-`mac-openclaw-workflows`：`774d5bfc`(開工時解開HEARTBEAT.md rebase衝突)。記憶庫(`.claude/projects`)：`feedback_verify_backup_content_not_just_format_2026-09-05`(新增)+`reference_windows_claude_session_storage_layout_2026-09-05`(新增)+`project_lenovo_nonpaged_pool_leak_2026-09-04`(補充教練晚間裁示段落)。本場無任何網站/repo程式碼異動，純查證與記憶維護。
+> 📦 v183完整內容已封存：`handoff_archive/handoff_v183_archived_2026-09-06.md`（聯想Windows，一鍵還原後三項查證：對話記錄E槽真相/記憶體洩漏診斷讓步/App備份救援失敗誠實回報）
 
 ---
 
@@ -516,3 +485,40 @@ ACER發信指出`feed_junshi_handoff.ps1`遇到`stash pop`衝突時用`2>$null`�
 
 ## 🔑 本場commit
 `workspace`：`d21f0089`(MiniMax過載hook)、`bfc72a83b`(策展SOP補通知漏洞說明)、`3863b505a`(CICA信件歸檔)。`tainan-shangquan`：`95a3958`+`334e01b`(post-commit hook測試+revert，已push)。`cica`：`ca1b43b`(品牌頁連結修正)+`a4ac120`(merge三語版)。openclaw.json：新增`minimax-overload-autocontinue`hook註冊(隨`d21f0089`一併commit)。記憶：`project_claude_quota_conservation_until_wednesday_2026-09-06`(新增)。
+
+---
+
+# 軍師接力棒 · 2026-09-06 v186（Mac桌面版 Sonnet 5，牛市町上架驗收+策展SOP兩項根因修復：slug命名+暫代頁自動偵測讓上傳網址統一取代手動七步驟）
+
+> 建立時間：2026-09-06 03:47 ~ 04:10（台灣時間）
+> 上一棒：v185（Mac桌面版，MiniMax過載hook+策展中心通知漏洞修復+VPS真實用途查證）
+> 本棒主軸：**教練驗收「牛市町」策展上架案例時追問到底，連續推動兩項架構修正：slug命名根因(整句標題轉拼音→只取品牌名)+暫代頁自動偵測(讓curation/upload端點對所有店家都安全)，最終撤回「有能力AI要手動做七步驟」規則，SOUL.md/Hermes/SOP三處同步統一改為一律上傳網址。教練同場釐清token消耗歸屬(背景處理零token/觸發動作的執行者模型才決定耗誰的額度)，週配額到90%後裁示今日收工。**
+
+## 🎯 本場戰果
+
+### 1. 「牛市町」上架驗收+slug命名根因修復
+教練確認上傳流程可行後，指出網址`niu-shi-ting-zhi-zhang-bu-die-de-mei-wei-pin-pai-li-nian`太長。查明根因：`slugify_title()`把`<title>`標籤整句（含行銷標語）轉拼音。修法：新增`primary_title_segment()`只取分隔符號（｜/—/：等）前的品牌名稱去轉拼音。已手動改名既有案例（GitHub repo改名+本機資料夾+registry+tainan-shangquan卡片連結全部同步，新網址`event.bymyway.com/curated/niu-shi-ting/`curl驗證200），並修好`curation_process.py`原始邏輯，commit`82b7a2a2c`。
+
+### 2. 暫代頁自動偵測：讓上傳網址對所有情況都安全
+教練追問「牛市町案例比Hermes還快，為什麼不乾脆都走上傳網址」，點出舊規則（有終端機能力的AI要手動判斷有無暫代頁）的存在理由——上傳端點原本不會判斷店家是否已有`shops.bymyway.com`暫代頁，會誤建重複站。已寫進`curation_process.py`：新增`find_existing_shop_slug()`(比對品牌名拼音vs `_shops_slugs.json`既有記錄)+`overwrite_shop_placeholder()`(tar打包+SCP遠端解壓覆蓋，網址不變)，查無記錄才走全新GitHub Pages流程。**已用真實SCP測試驗證覆蓋機制(含assets子資料夾)，測試殘留已清除確認404**，commit`4de7aeb3c`。
+
+### 3. 撤回「有能力AI要手動做」規則，三處同步統一
+暫代頁判斷自動化後，手動七步驟規則的存在理由消失。已更新：①`SOUL.md`小龍蝦指示改成「一律curl上傳，不用自己建站」②`~/.hermes/workspace/H_HANDOFF_LATEST.md`寫新的最上層通知給Hermes，撤回00:33/00:50兩則舊指示③`claude-brain/reference_curation_sop_2026-09-06.md`規則一改寫定案。**查證確認`curation-prompt.md`（策展一鍵注入實際複製文字）從一開始就只寫「上傳就好」，不需要修改，此點有實際讀檔驗證非假設**。commit：workspace`3df878f1a`、hermes repo`3d91d8e`。
+
+### 4. 教練提問澄清：權限範圍、token消耗歸屬、機器無關性
+- 上傳網址權限：查證`app.py`程式碼確認`key`參數等同繞過登入，沒有IP/次數/期限限制，跟後台主密碼分開設計(外流風險有限，已跟教練說明可隨時換key)。
+- token消耗歸屬：背景處理(`curation_process.py`)全程零AI呼叫(純Python+API)，任何AI/機器觸發都一樣零消耗；但「觸發上傳」這個動作本身的token算在誰頭上，取決於執行的AI底層模型——小龍蝦/Hermes是MiniMax(不動Claude配額)，我自己(Claude桌面版/軍師)是Claude/Sonnet(會動用配額，雖然量很小)。已更新記憶`project_claude_quota_conservation_until_wednesday_2026-09-06`補充這個具體案例。
+- 機器無關性：Mac/聯想/宏碁執行curl上傳這個動作，結果完全一樣，因為只是打一個公開網址的HTTP請求，跟哪台實體機器發出無關；真正決定要用誰配額的是「哪個AI/哪個模型」在觸發，不是「哪台電腦」。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **SOP規則的生命週期可能很短**——昨晚才訂的「有能力AI要手動做」規則，今晚因為背景自動化補強，存在理由就消失了，該立刻撤回而非讓舊規則繼續誤導執行者。
+2. **判斷「AI要不要自己動手 vs 用自動化捷徑」，優先問「捷徑功能不足的地方能不能直接補進自動化本身」**，而不是預設「手動比較保險」——把判斷邏輯內建進系統一次，比每個AI各自判斷更省資源更一致。
+3. **「動作簡不簡單」不是決定要不要轉給小龍蝦/Hermes的標準，「誰在執行、燒誰的token」才是**——一行curl指令自己做看似無傷大雅，但只要是我(Claude)執行就是在燒教練的稀缺配額，這類任務應優先問「能不能讓小龍蝦/Hermes做」。
+
+## 📋 下一場開工先做
+1. **MEMORY.md索引已達20.2KB接近24.4KB讀取上限**，收到系統提示要求瘦身到17.1KB以下，本場因教練要收工未處理，下一場找時間做（合併/移除過時條目，細節搬進主題檔）。
+2. 沿用v184/v185待辦：「後台系統帳密集中」清單未建置、materials系統42份教材待勾選公開、VPS是否承接event.bymyway.com服務防斷電（教練未決定）。
+3. 遵守週配額保守策略：到2026-09-11(週三)前，任務先問能不能轉小龍蝦/Hermes。
+
+## 🔑 本場commit
+`workspace`：`82b7a2a2c`(slug命名根因修復)、`4de7aeb3c`(暫代頁自動偵測)、`3df878f1a`(SOUL.md+SOP規則一定案)。`niu-shi-ting`(GitHub repo)：改名+remote更新(無新commit，純repo/資料夾更名)。`tainan-shangquan`：卡片連結更新(隨牛市町改名commit)。`hermes workspace`：`3d91d8e`(H_HANDOFF更新)。記憶：`reference_curation_sop_placeholder_autodetect_and_slug_fix_2026-09-06`(新增)、`project_claude_quota_conservation_until_wednesday_2026-09-06`(補充token歸屬案例)。
