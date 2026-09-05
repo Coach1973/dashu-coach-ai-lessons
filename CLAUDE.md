@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-05 21:25:07**
+> **最後同步：2026-09-05 21:35:14**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **ACER本場：兩個客戶zip網站上傳GitHub Pages上線+寫成SOP+發現hook隱藏風險** | ✅2026-09-05本場完成，已發信Mac待審閱 | 教練連續交辦兩個「zip解壓縮上傳GitHub做公開網站」任務：①`台南匹克藝術扶輪社_網站.zip`→中文檔名被GitHub API靜默過濾成`-_-`，問過教練後教練授權自取英文名，改用PATCH改名成`tainan-pickleball-art-rotary`(GitHub沒給這個token delete_repo權限，改名代替刪除重建)②`kingmauii-brand-site-github.zip`→英文檔名直接照用。兩站皆已用curl驗證標題文字+至少一張圖片200且content-type正確，確認真的上線：`coach1973.github.io/tainan-pickleball-art-rotary/`、`coach1973.github.io/kingmauii-brand-site-github/`。完整7步驟SOP寫進`claude-brain/reference_zip_to_github_pages_deploy_sop.md`。**過程中意外抓到一個系統性風險**：`feed_junshi_handoff.ps1`似乎每則訊息都跑（不只開工類觸發詞），內建git stash/pull/pop自動同步，本場因為我同時在編輯`claude-brain/MEMORY.md`，pop回來時跟Mac同時間推上來的新內容衝突，**直接把git衝突標記寫進檔案、只在HEARTBEAT.md默默記一行「已拉雲端最新」沒有任何警示**，靠系統提示才發現並手動修復（已修復，衝突內容兩邊都保留）。已寫信`cross-agent/inbox/mac/20260905-2125_acer-to-mac_zip-to-github-pages-workflow-review-request.md`請Mac審閱：①這套用`git credential fill`白嫖token打REST API的做法是否認可②中文檔名撞牆時的處理原則要不要更放手③這類零散客戶站要不要正式收錄coach888或路徑大全④上述hook隱藏衝突風險是否需要收斂觸發時機或加防呆。**下一棒**：等Mac回信裁定。 |
 | ✅ | **ACER(PC5C925ED70E46)本場總結：機器體檢+修好3個真bug+螢幕逾時設定+林貝羿/66-harbour兩站上線** | ✅2026-08-31~09-05本場完成 | **①機器體檢**：確認這台跟jujube-hostname「PC5C925ED70E46」是同一台，cross-agent信箱名叫`acer`，真正在用的repo是`Documents\mac-openclaw-workflows`(非machines.json舊登記的D:\Claude-Data)。**②修好3個真bug**：(a)`feed_junshi_handoff.ps1`的`$workspace`資料夾對不上真實repo名稱，每次全新觸發都重新clone1.1GB——已加自我修復邏輯(比對remote URL找既有repo補junction，實測junction被砍掉重跑也不會再重clone) (b)`delete_guard.ps1`本身缺UTF-8 BOM，PS5.1讀取時把中文字串讀壞導致`Safe-Remove`完全無法呼叫(安全鎖自己先天失效)，已補BOM並實測完整跑過五道驗證 (c)`setup_windows_hooks.ps1`的PS5.1 `-AsHashtable`不相容(舊接力棒只記錄未回頭修)，已補相容函式並用真實settings.json驗證。已寫信給Mac+聯想回報+回覆聯想8/26跨機四層根因信的ACER段落。**③環境筆記已存檔**`reference_acer_pc5c925ed70e46_environment_notes.md`：COACH帳號非系統管理員(工作排程器不能用，N小時後自動做事要改用背景`Start-Sleep`計時程序)、Git Bash會吃掉`/`開頭參數需要`MSYS_NO_PATHCONV=1`(踩在`powercfg`上)、python3是Windows Store樁不能當pipe下游、沒裝gh CLI改用`git credential fill`拿OAuth token打GitHub REST API建repo+開Pages。**④教練交辦兩個新網站**：`Coach1973/lin-beiyi`(林貝羿個人品牌頁，先上文字版讓教練給對方看，教練確認流程只是要給對方抓修改意見；教練後補完整54張照片包，已重新上傳並逐張curl驗證) + `Coach1973/66-harbour`(教練指定repo名稱`66-harbour`，6張圖+HTML已上線並逐張驗證)，兩站皆已啟用GitHub Pages並curl確認200。**⑤螢幕逾時**：先設5分鐘關閉(教練要求)，後來教練要求「接下來兩小時不要關閉」，因工作排程器不能用改背景計時程序2小時後自動改回5分鐘(重開機/登出會讓計時器消失，需留意)。 |
 | ✅ | **大臺南商圈整合計劃：新店家登錄自動化SOP上線（事件觸發，非輪詢）** | ✅2026-09-05本場完成並真實POST端到端測試驗證 | 教練裁示流程：①店家填表送出→②AI自動在大台南策展中心後台建好版面/預留版位/基本簡介→③教練用TAVA AI做正式網頁後把HTML包給AI置換。已在`/api/tainan-shangquan/join`既有端點內（POST寫DB的同一次請求，非額外排程）新增`_provision_shop_placeholder()`：①用`pypinyin`把店名轉英文slug(自動去重，本機`_shops_slugs.json`registry)②在VPS(shops.bymyway.com)自動建`/<slug>/`暫代頁(sshpass+scp)③在tainan-shangquan首頁店家名冊用`SHOP_CARDS_INSERT_POINT`標記自動插入一張真實店家卡片(含地址/分類/聯絡方式/社群/招牌商品/連到專屬網站按鈕)+git commit/push即時生效④Telegram通知文字附上剛建好的網址，教練跟軍師同時看到。**所有使用者輸入都用`html.escape()`處理避免表單被灌惡意HTML(XSS)**。已用真實POST(`測試自動化店家`)端到端測試：VPS頁面200+DB寫入+店家卡片正確插入首頁+git push成功全部驗證通過，測試資料(DB記錄/VPS頁面/index.html卡片/slug registry)已完整清除，commit`76a47d3`(清除)+`5092c26`(測試時的中間commit，內容已被清除commit覆蓋)。**正式commit**：`event-signup`後端`8170d6830`(workspace)、`tainan-shangquan`分類擴充`5484ed9`+迴頭快剪首筆真實卡片`2524f81`+SHOP_CARDS_INSERT_POINT標記`76a47d3`。**教練同場提及另兩件事，暫不動手**：①乾淨世界頻道開通需當面用店家Email/手機驗證，教練會晚點親自處理②Tooo.ai更深層使用，之後再教店家怎麼用，非本場範圍。 |
 | ✅ | **VPS(43.245.60.200)開通店家網站託管基礎建設+shops.bymyway.com上線+第一家迴頭快剪暫代頁** | ✅2026-09-05本場完成 | 教練提出大台南策展中心夥伴店家增加(TAVA AI建站規模化)不能全塞Mac，評估Amber私有雲(NAS非公開web用途，不適合)vs VPS(已是24小時對外主機，nginx已裝好)，教練當場拍板用VPS統一管理。**技術查證**：whois確認VPS主機商是新加坡Ready Server，WebSearch查證其計費是「整台VPS固定1點/小時=24點/天，不論裡面掛幾個網站」的吃到飽制，非教練原猜測的「按網站數計費」，教練查詢官網後回報現有餘額25,108點(可撐約2.9年)，成本結論站得住腳。**基礎建設**：VPS新增自簽憑證`/etc/ssl/certs/shops.crt`(比照既有coach.bymyway.com同款做法)+nginx server block(root `/var/www/shops`)+Cloudflare API新增A紀錄`shops.bymyway.com`→`43.245.60.200`(proxied，跟coach.bymyway.com同款直連VPS IP模式，非其餘子網域慣用的cloudflared tunnel)。**命名規則**：比照event.bymyway.com既有`/<repo>/`模式，建議`shops.bymyway.com/<店家英文代碼>/`，教練確認採用。**迴頭快剪(鄭絅濂)**：目前僅有登錄表單資料(尚無TAVA AI設計網頁)，先建暫代頁`shops.bymyway.com/huitou/`顯示店名/地址/電話/IG/招牌商品，附註「正式網站由TAVA AI製作中」，等教練拿到TAVA AI網頁後直接置換內容(比照CICA案流程)。已用curl逐項驗證DNS解析+HTTPS 200+內容正確，Chrome開給教練看過。**同場也查證教練詢問的另一件事**：CICA官網理事長告知板橋會址已停用，2處「新北市板橋區瑞安街46巷1號3樓」已改標「台北市」暫代，等教練提供正式地址再補。 |
@@ -462,6 +463,42 @@
 
 ## 🔑 本場commit
 `bigtree`：`aaedd85`(6場活動網頁按鈕)。`tainan-shangquan`：`cef1657`(電話修改)。`event-signup`：`622e2ab8c`(bigtree event_url欄位)+`2cf7615f1`(KR路由+聯絡表單)+`c048eaf0d`(Stop hook規則L)。`KR`：初版(GitHub repo `Coach1973/KR`)。`coach888`：`cb30fe2`(KR收錄)。`seabiscuit20`：`d4bffd7`(看守則影片按鈕)。記憶庫(`.claude/projects`)：`feedback_new_public_site_must_register_coach888_2026-09-04`+`feedback_html_preview_chrome_only`(補回)+`project_backend_credentials_consolidation_pending_2026-09-04`(補回)。
+
+---
+
+# 軍師接力棒 · 2026-09-05 v183（聯想Windows Sonnet 5，一鍵還原後三項查證：對話記錄E槽真相/記憶體洩漏診斷讓步/App備份救援失敗誠實回報）
+
+> 建立時間：2026-09-04 18:32 ~ 2026-09-05 21:19（台灣時間，跨日）
+> 上一棒：v182（Mac終端機，KR養生廚房整站搬遷+bigtree按鈕修正+coach888收錄鎖）
+> 本棒主軸：**教練半夜對聯想Windows做「易數一鍵還原」到8/10備份，本棒圍繞還原後的三個疑慮逐一查證：①「對話記錄不見了」查明E槽真實逐字稿完整無缺，是桌面版App本機快取(C槽)跟真實資料(E槽)混淆②記憶體洩漏Nahimic驅動診斷被教練推翻改採觀察策略，AI誠實收手不堅持③受託備份的「倒數紀念日」App資料還原後仍是空的，查明備份當下就已經是空檔案，誠實回報自己的驗證疏失。全程無程式碼repo改動，純查證/診斷/記憶維護。**
+
+## 🎯 本場戰果
+
+### 1. 「一鍵還原後對話記錄不見了」查證：E槽資料完整，是App本機快取問題
+教練半夜對這台機器做「易數一鍵還原」到8/10備份狀態，事後質疑「對話記錄都應該在E槽，怎麼復原後就沒了」。查證確認：①`C:\Users\bymyw\.claude`是連到`E:\Claude-Data\.claude`的symlink(4/6建立)，還原不會破壞這條線②E槽`.claude/projects`底下45個jsonl逐字稿檔案，41個mtime在8/11之後，時間軸連續無斷層，包含教練半夜討論記憶體問題、海餅乾網站建置那兩場對話都直接用Grep工具在對應session檔案裡搜到關鍵字證實內容完整③真正會被C槽還原動到的是桌面版App自己另外維護的一份本機快取(`C:\Users\bymyw\AppData\Roaming\Claude\`，含`claude-code-sessions`/`IndexedDB`等)，這份快取沒有連到E槽，還原後可能讓App介面「歷史對話清單」顯示異常，但不代表底層真實資料被刪除。已寫入記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
+
+### 2. 記憶體98%洩漏Nahimic驅動診斷：教練推翻改用一鍵還原+觀察策略，AI收手不再堅持
+教練認為「用了這麼久沒事、只有昨天才出問題」判斷是瀏覽網站問題非驅動洩漏，直接用一鍵還原解決比「移除驅動又重開機又這又那」省事，還原後記憶體持續穩定在50%以下、教練要求觀察到當晚12點再視情況做新備份。AI承認手上雖有Windows事件記錄的具體證據(Windows Update會在開機時自動把已解除安裝的Nahimic驅動裝回去)，但教練明確表態「不想跟你爭論」，已記錄教練決定+停止再提驅動根因，除非症狀真的復發才重啟這個話題。記憶`project_lenovo_nonpaged_pool_leak_2026-09-04`已補充教練晚間裁示段落。
+
+### 3. 「倒數紀念日」App資料庫還原失敗：查明備份本身就是空檔案，誠實回報驗證疏失
+教練還原前請AI(較早session)備份App本機資料庫`MyData.db`到E槽，還原+重灌App後要求復原，AI複製備份檔回去MD5比對相符，但教練回報「並沒有出現」。深入查證發現：備份檔案(20480 bytes)跟全新安裝、從未寫過資料的空白資料庫**檔案大小完全相同**，用`strings`掃描整份檔案內容找不到任何可辨識文字——備份當下(下午3:43)App資料其實就已經是空的，比教練預期的「一鍵還原才會清空」還要早發生，具體原因不明(疑似跟稍早Nahimic驅動移除+重開機的Windows Update自動更新序列有關，但未進一步查證確認)。**AI主動承認**先前session宣稱「已驗證是真實資料，不是空檔案」這句話講得不夠嚴謹，只驗證了檔案格式合法，沒有真正確認內容存在。已寫入記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。此外還查明教練半夜的兩次「疑似當機重開」其實是Windows Update在06:16/06:19自動觸發的計劃性重開機(Event 1074，非Event 41意外關機)，非真正硬體/軟體崩潰。
+
+### 4. 其他零星查證（皆已回覆教練，無殘留待辦）
+①D槽Downloads資料夾+資源回收桶搜尋教練提到的「9/1 Excel檔案」，兩處都沒有找到明確吻合的檔案，教練確認「應該是被我刪了」，已請教練若想起更多線索(檔名/內容)可再查，本場未強行猜測結案。②教練詢問「雲端分享的檔案」放在作品一覽哪裡，查證是`event.bymyway.com/materials/admin`(coach888「後臺系統」分類第1項，9/4新建置的教材線上觀看系統)，已回報網址+提醒42份教材尚未勾選公開。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **備份檔案只驗證格式合法(header/副檔名)不等於內容真實存在**——回報教練「已驗證」前要想清楚自己驗證的是格式還是內容，講清楚驗證到哪一層，不要用籠統的「已驗證，放心」造成過度保證。記憶`feedback_verify_backup_content_not_just_format_2026-09-05`。
+2. **這台機器C槽(會被一鍵還原動到)跟E槽(獨立於還原範圍外)的資料分層要分清楚跟教練解釋**——E槽真實逐字稿+symlink保護機制運作正常，但桌面版App自己在C槽另外維護一份本機快取沒有納入保護，教練問「記錄不見了」時，要先查E槽真跡，不要籠統回答。記憶`reference_windows_claude_session_storage_layout_2026-09-05`。
+3. **教練明確表態「不想跟你爭論」時，即使手上有技術證據也要收手**——已在記憶中確認除非症狀復發，否則不再主動重提Nahimic驅動根因這個話題。
+
+## 📋 下一場開工先做
+1. 教練若確認12點觀察後記憶體仍穩定、已做新一鍵備份，可詢問備份是否成功+是否要更新舊備份相關記憶(`project_lenovo_c_drive_slimdown_2026-07-11`)。
+2. 「倒數紀念日」App資料實質遺失，教練若想找回，下一步可考慮查Windows System Restore/VSS還原點(需教練親自用GUI操作，AI這台機器沒有管理員權限查詢)，或教練自行重新輸入。
+3. 沿用v182下一棒待辦：「後台系統帳密集中」清單仍未建置(`project_backend_credentials_consolidation_pending_2026-09-04`)、materials系統42份教材待教練勾選公開。
+4. 「9/1 Excel檔案」教練若想起更多線索(檔名關鍵字/內容/收到管道)，可再次查找。
+
+## 🔑 本場commit
+`mac-openclaw-workflows`：`774d5bfc`(開工時解開HEARTBEAT.md rebase衝突)。記憶庫(`.claude/projects`)：`feedback_verify_backup_content_not_just_format_2026-09-05`(新增)+`reference_windows_claude_session_storage_layout_2026-09-05`(新增)+`project_lenovo_nonpaged_pool_leak_2026-09-04`(補充教練晚間裁示段落)。本場無任何網站/repo程式碼異動，純查證與記憶維護。
 
 
 ---
