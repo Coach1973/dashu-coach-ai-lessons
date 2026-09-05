@@ -111,10 +111,19 @@ try {
         }
         $pullResult = & git -C $workspace pull --quiet --rebase 2>&1
         $pullOk = ($LASTEXITCODE -eq 0)
+        $popConflict = $false
         if ($stashed) {
             & git -C $workspace stash pop --quiet 2>$null | Out-Null
+            if ($LASTEXITCODE -ne 0) { $popConflict = $true }
         }
-        if ($pullOk) {
+        if ($popConflict) {
+            # 2026-09-05修復（ACER案例）：stash pop衝突時舊版靜默continue，
+            # 衝突標記(<<<<<<< / ======= / >>>>>>>)會被寫進檔案卻毫無警示，
+            # 只在這行報告「已拉雲端最新」誤導使用者，衝突可能直接被commit汙染共用檔案。
+            # 改成明確列出受衝突影響的檔案，並保留stash不pop，讓使用者自己決定怎麼處理。
+            $conflictFiles = (& git -C $workspace diff --name-only --diff-filter=U 2>$null) -join ', '
+            $pullStatus = "🔴 stash pop 衝突未解決！受影響檔案：$conflictFiles ——本地改動仍在stash裡(未pop)，請手動執行 git -C `"$workspace`" stash pop 並解決衝突，不要直接commit"
+        } elseif ($pullOk) {
             $headHash = (& git -C $workspace rev-parse --short HEAD 2>&1).Trim()
             $pullStatus = "✅ 已拉雲端最新（HEAD: $headHash$(if($stashed){'，本地改動已 stash/pop'}else{''})）"
         } else {
