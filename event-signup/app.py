@@ -11,6 +11,7 @@ import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import urllib.error
 import urllib.request
@@ -495,6 +496,7 @@ VAULT_ENTRIES = [
     {"name": "BNI大台南南區分會後台(總管理員)", "url": "https://chapters.bymyway.com/admin", "user": "0901056777", "password": "88888"},
     {"name": "AI百人導師後台", "url": "https://mentor100.bymyway.com/admin", "user": "0901056777", "password": "88888"},
     {"name": "通用分會系統(總管理員)", "url": "https://team.bymyway.com/admin", "user": "0901056777", "password": "88888"},
+    {"name": "大台南商圈整合計劃(策展店家上/下架管理)", "url": "https://event.bymyway.com/curation/admin", "user": "0901056777", "password": "88888"},
     {"name": "結繩領導學戰報系統", "url": "https://rpl-workshop.bymyway.com/admin", "user": "（不需要帳密）", "password": "—"},
     {"name": "佩佩老師活動後台(非教練個人帳號)", "url": "https://peipei-event.bymyway.com/admin", "user": "peipei", "password": "88888"},
     {"name": "「教練都在想什麼」監控後台", "url": "https://seabiscuit.bymyway.com", "user": "（無帳號欄位）", "password": "Bymyway7"},
@@ -1674,6 +1676,96 @@ def curated_assets(slug, filename):
     if filename == "index.html":
         return curated_page(slug)
     return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
+
+
+def _remove_tainan_shangquan_card(event_url: str) -> bool:
+    """把已上架店家從教練這裡手動下架時，順手拔掉大台南策展中心首頁的店家卡片。
+    卡片格式固定來自curation_process.py的insert_tainan_shangquan_card()，
+    比對含這個event_url的<article>整塊(含前一行說明註解)一起移除。"""
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    if not index_path.is_file():
+        return False
+    content = index_path.read_text(encoding="utf-8")
+    pattern = re.compile(
+        r'(?:[ \t]*<!--[^\n]*-->\n)?[ \t]*<article\b[^>]*>(?:(?!</article>).)*?'
+        + re.escape(event_url) + r'(?:(?!</article>).)*?</article>\n?',
+        re.DOTALL,
+    )
+    new_content, n = pattern.subn("", content)
+    if n == 0:
+        return False
+    index_path.write_text(new_content, encoding="utf-8")
+    return True
+
+
+def delete_curated_site(slug: str) -> tuple[bool, str]:
+    """教練2026-09-06交辦：已上架的策展店家有些「有些人不喜歡」或資料有誤，
+    要能自己登入刪掉，不用每次都叫軍師動手。這裡做的是「下架」不是真的抹除
+    所有痕跡——本機資料夾搬去封存區(教練一貫原則：珍貴資料只搬不刪)，
+    GitHub repo受限於token沒有delete_repo權限只能改名+關Pages做到「不再對外」，
+    registry移除讓網址404，策展中心卡片同步拔掉。FB貼文若有發過不會自動處理，
+    量少見時軍師人工個別刪除即可。"""
+    registry = _load_curated_registry()
+    site = next((s for s in registry.get("sites", []) if s["slug"] == slug), None)
+    if not site:
+        return False, "registry裡找不到這個slug，可能已經刪過了"
+
+    registry["sites"] = [s for s in registry["sites"] if s["slug"] != slug]
+    CURATED_REGISTRY_PATH.write_text(json.dumps(registry, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    card_note = ""
+    try:
+        if _remove_tainan_shangquan_card(site.get("event_url", "")):
+            subprocess.run(["git", "add", "index.html"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=15, env=_OPENCLAW_ENV)
+            subprocess.run(
+                ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com",
+                 "commit", "-q", "-m", f"策展SOP下架：移除「{site.get('title', slug)}」"],
+                cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=15, env=_OPENCLAW_ENV,
+            )
+            subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV)
+        else:
+            card_note = "（大台南策展中心沒找到對應卡片，可能本來就沒插入過，不影響下架結果）"
+    except Exception as e:  # noqa: BLE001
+        card_note = f"（策展中心卡片移除失敗，需要軍師人工檢查：{e}）"
+
+    repo_dir = CURATED_REPOS_DIR / slug
+    if repo_dir.is_dir():
+        archive_dir = CURATED_REPOS_DIR / "_archive_curation_test_folders"
+        archive_dir.mkdir(exist_ok=True)
+        ts = datetime.now().strftime("%Y%m%d%H%M%S")
+        shutil.move(str(repo_dir), str(archive_dir / f"{slug}-deleted-{ts}"))
+
+    github_note = ""
+    try:
+        subprocess.run(["gh", "api", "-X", "DELETE", f"repos/Coach1973/{slug}/pages"],
+                        capture_output=True, timeout=15, env=_OPENCLAW_ENV)
+        subprocess.run(["gh", "repo", "rename", f"_archived_{slug}", "-R", f"Coach1973/{slug}", "--yes"],
+                        capture_output=True, timeout=15, env=_OPENCLAW_ENV)
+    except Exception as e:  # noqa: BLE001
+        github_note = f"（GitHub repo封存失敗，不影響教練這邊已看不到：{e}）"
+
+    return True, f"已下架「{site.get('title', slug)}」{card_note}{github_note}"
+
+
+@app.route("/curation/admin")
+def curation_admin():
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    return render_template("curation_admin.html", sites=_load_curated_registry().get("sites", [])[::-1])
+
+
+@app.route("/curation/admin/delete/<slug>", methods=["POST"])
+def curation_admin_delete(slug):
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    if not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    ok, message = delete_curated_site(slug)
+    return render_template(
+        "curation_admin.html",
+        sites=_load_curated_registry().get("sites", [])[::-1],
+        result_message=message, result_ok=ok,
+    )
 
 
 @app.route("/curation/upload", methods=["GET", "POST"])

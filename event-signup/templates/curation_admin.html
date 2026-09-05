@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大台南商圈整合計劃・後台管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); --green:#4caf7d; --red:#ff9b9b; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans TC', sans-serif; background:var(--dark); color:#fff; padding:28px 16px 60px; }
+  .wrap { max-width:820px; margin:0 auto; }
+  h1 { font-size:24px; font-weight:900; margin-bottom:6px; }
+  h1 span { color:var(--gold); }
+  p.sub { color:rgba(255,255,255,.55); font-size:14px; margin-bottom:20px; }
+  .msg { padding:12px 14px; border-radius:8px; margin-bottom:18px; font-size:15px; }
+  .msg.ok { background:rgba(76,175,125,.15); border:1px solid rgba(76,175,125,.4); color:#8fe0b8; }
+  .msg.fail { background:rgba(220,80,80,.15); border:1px solid rgba(220,80,80,.4); color:var(--red); }
+  .site-row {
+    background:var(--dark2); border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+    margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .site-row .name { font-weight:700; font-size:16px; }
+  .site-row .meta { font-size:12px; color:rgba(255,255,255,.5); margin-top:4px; }
+  .site-row a.view { color:var(--gold); text-decoration:none; font-size:13px; white-space:nowrap; margin-right:12px; }
+  .del-btn {
+    padding:8px 16px; font-size:14px; font-weight:700; border:1px solid rgba(220,80,80,.5);
+    border-radius:8px; background:transparent; color:var(--red); cursor:pointer; white-space:nowrap;
+  }
+  .del-btn:hover { background:rgba(220,80,80,.15); }
+  .empty { color:rgba(255,255,255,.4); font-size:14px; text-align:center; padding:30px 0; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>大台南商圈整合計劃<span>・後台管理</span></h1>
+    <p class="sub">已上架的店家網站，覺得不合適隨時可以在這裡直接下架，不用另外找軍師。下架後：網址失效、大台南策展中心卡片同步移除。</p>
+    {% if result_message %}
+      <div class="msg {{ 'ok' if result_ok else 'fail' }}">{{ result_message }}</div>
+    {% endif %}
+    {% if sites %}
+      {% for s in sites %}
+      <div class="site-row">
+        <div>
+          <div class="name">{{ s.title }}</div>
+          <div class="meta">{{ s.slug }} · {{ s.uploaded_at }} · {{ s.category }}</div>
+        </div>
+        <div style="display:flex;align-items:center;">
+          {% if s.status == 'live' %}<a class="view" href="{{ s.event_url }}" target="_blank" rel="noopener">查看 →</a>{% endif %}
+          <form method="POST" action="{{ url_for('curation_admin_delete', slug=s.slug) }}" onsubmit="return confirm('確定要下架「{{ s.title }}」嗎？');">
+            <button type="submit" class="del-btn">下架</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">目前沒有已上架的店家</div>
+    {% endif %}
+  </div>
+</body>
+</html>
