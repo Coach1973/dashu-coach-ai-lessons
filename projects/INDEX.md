@@ -11,6 +11,7 @@ mentor100|百人導師,mentor100,導師團,導師計畫,導師計劃,百人計�
 event-signup|報名系統,報名後台,簽到系統,簽到後台,event-signup,抽獎轉盤,event.bymyway,報名資料庫,簽到表|cards/event-signup.md
 bni-chapters|bni-chapters,九分會,9分會,分會網站,真誠分會,真愛分會,真AI分會,真富分會,真鑫分會,真鑽分會,大台南南區網站,chapters.bymyway|cards/bni-chapters.md
 bni-connect|BNI Connect,bniconnect,BNI官方後台,BNI後台,BNI官網|cards/bni-connect.md
+bni-guest-dashboards|戰情儀表板,來賓戰情儀表板,戰報系統,真鑫戰報,真鑽戰報,真貴戰報,zhenxin-guests,zhenzuan-guests,zhengui-guests,real-diamonds,real-wealth,咖啡會議次數|cards/bni-guest-dashboards.md
 jiesheng|結繩,jiesheng,工作坊網站,戰報系統,rpl-workshop|cards/jiesheng.md
 tainan-calender|行事曆,tainan-calender,培訓行事曆,台南行事曆|cards/tainan-calender.md
 line-accounts|龍蝦小助教,LINE小幫手,大台南小幫手,教練都在想什麼,LINE帳號,LINE三帳號,LINE系統,line帳號|cards/line-accounts.md
