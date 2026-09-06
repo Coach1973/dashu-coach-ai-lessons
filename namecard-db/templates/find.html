@@ -20,6 +20,7 @@
   .tag.active { background: #e6f6ea; color: #1e7d34; }
   .tag.former { background: #eaf2fb; color: #1f5fa8; }
   .tag.guest { background: #fdf3e7; color: #b45309; }
+  .tag.directory { background: #f1eafb; color: #6b3fa0; }
   .tag.plain { background: #eef1f6; color: #1f3a5f; }
   .row { font-size: 14px; margin: 3px 0; color: #333; }
   .visits { margin: 8px 0 0; padding: 8px 10px; background: #fdf8f0; border-radius: 8px; }
@@ -52,6 +53,8 @@
 <div class="result">
   {% if r.source == 'guest' %}
   <span class="tag guest">🧑‍🤝‍🧑 來賓</span>
+  {% elif r.source == 'directory' %}
+  <span class="tag directory">📒 通訊錄</span>
   {% elif r.bni_status == 'bni_member' and r.bni_note and '前會員' in (r.bni_note or '') %}
   <span class="tag former">🔵 前會員</span>
   {% elif r.bni_status == 'bni_member' %}
@@ -72,6 +75,7 @@
     {% endfor %}
   </div>
   {% endif %}
+  {% if r.source != 'directory' %}
   <div class="actions">
     {% if r.source == 'guest' %}
     <a class="match-btn" href="/guest/{{ r.id }}/match">🔗 媒合</a>
@@ -79,6 +83,7 @@
     <a class="match-btn" href="/card/{{ r.id }}/match">🔗 媒合</a>
     {% endif %}
   </div>
+  {% endif %}
 </div>
 {% endfor %}
 {% endif %}

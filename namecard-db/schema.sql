@@ -167,4 +167,24 @@ CREATE TABLE IF NOT EXISTS bni_credit_certificates (
 );
 
 CREATE INDEX IF NOT EXISTS idx_bcc_chapter ON bni_credit_certificates(chapter);
+
+-- 通訊錄/會員名冊(2026-09-07教練交辦)：跟cards表(單張完整名片)分開存，
+-- 因為一張照片對應多位聯絡人，不是「一張名片=一筆記錄」的結構。
+-- 來源圖片在cards表仍留一筆status='roster'的標記列(company=org_name)，
+-- 避免already_processed()重複觸發同一張圖，真正的逐人資料在這裡。
+CREATE TABLE IF NOT EXISTS directory_contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    image_filename TEXT NOT NULL,
+    org_name TEXT,      -- 例如「嘉義嘉泰獅子會」
+    org_type TEXT,      -- 獅子會/扶輪社/同濟會/校友會/公會/商會/協會/其他
+    name TEXT NOT NULL,
+    phone TEXT,
+    profession TEXT,    -- 專業類別/職業別/擔任職務
+    address TEXT,
+    created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_directory_org ON directory_contacts(org_name);
+CREATE INDEX IF NOT EXISTS idx_directory_name ON directory_contacts(name);
+CREATE INDEX IF NOT EXISTS idx_directory_image ON directory_contacts(image_filename);
 CREATE INDEX IF NOT EXISTS idx_bcc_status ON bni_credit_certificates(cert_status);

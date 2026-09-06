@@ -87,6 +87,49 @@ SYSTEM_PROMPT = f"""你是名片資料判讀助手。使用者會給你一段用
 """
 
 
+ROSTER_SYSTEM_PROMPT = """你是社團/組織通訊錄判讀助手。使用者會給你一段用OCR從一張「會員名冊/通訊錄」
+照片辨識出來的文字，這段文字包含多位會員的資訊（不是單一張名片），逐行是OCR偵測結果，
+順序可能跟排版不完全一致，也可能有少數辨識雜訊。
+
+請整理成以下JSON格式，只輸出一個JSON物件，不要有任何其他文字、不要用markdown code block包起來：
+
+{
+  "org_name": "這份通訊錄所屬的社團/組織全名，例如「嘉義嘉泰獅子會」，看不出來就填 null",
+  "org_type": "從「獅子會/扶輪社/同濟會/校友會/公會/商會/協會/其他」選一個最貼近的分類",
+  "contacts": [
+    {
+      "name": "姓名",
+      "phone": "電話號碼(手機或市話皆可，統一整理成常見格式，如0912-345-678)，沒有就填 null",
+      "profession": "專業類別/職業別/擔任職務(例如：保險業、餐飲業、理事、會長)，沒有就填 null",
+      "address": "地址，能辨識就填，看不出來就填 null"
+    }
+  ]
+}
+
+規則：
+- 每一位會員一筆，盡量把OCR文字裡看得出來的每個人都列出來，不要遺漏
+- 姓名讀不出來的人可以跳過不列，不要用「未辨識」這種佔位字串充數
+- 電話號碼不要臆測缺漏的數字，看不清楚就填 null
+- 完全看不出來的欄位一律填 null，不要瞎猜
+"""
+
+# 通訊錄/名冊偵測（2026-09-07教練交辦）：單張名片OCR文字裡最多出現1~2組電話，
+# 若同時符合「有社團關鍵字」+「電話號碼樣式出現3組以上」，判定為通訊錄而非單一名片，
+# 改走ROSTER_SYSTEM_PROMPT，逐人萃取而不是硬塞成一張名片(過去會把姓名/電話全部
+# 擠掉、只留組織名稱，教練實測踩到嘉義嘉泰獅子會名冊案例)。
+_ROSTER_ORG_KEYWORDS_RE = re.compile(
+    r"獅子會|扶輪社|同濟會|校友會|公會|商會|協會|通訊錄|會員名冊|名冊|聯誼會|同鄉會"
+)
+_PHONE_LIKE_RE = re.compile(r"09\d{2}[-\s]?\d{3}[-\s]?\d{3}|0\d{1,2}[-\s]?\d{6,8}")
+
+
+def _looks_like_roster(ocr_text: str) -> bool:
+    if not _ROSTER_ORG_KEYWORDS_RE.search(ocr_text):
+        return False
+    phone_hits = len(set(_PHONE_LIKE_RE.findall(ocr_text)))
+    return phone_hits >= 3
+
+
 def _repair_stray_backslashes(text: str) -> str:
     """名片標語常出現業主手寫的反斜線（如「農舍\\鐵皮屋」），不是合法JSON跳脫字元，
     會讓json.loads()直接炸掉。把非法的反斜線（後面不是合法跳脫字元）都跳脫成 \\\\。"""
@@ -128,37 +171,8 @@ def _run_paddleocr(image_path: str) -> list[str]:
             os.remove(readable_path)
 
 
-def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = None) -> dict:
-    """回傳擷取結果 dict。失敗時回傳 {"_error": "...", "_raw": "..."}"""
-    client = client or anthropic.Anthropic()
-
-    ocr_lines = _run_paddleocr(image_path)
-    if not ocr_lines:
-        return {"_error": "PaddleOCR沒有讀到任何文字", "_raw": ""}
-    ocr_text = "\n".join(ocr_lines)
-
-    guard_call("extract_card_fields")
-    message = client.messages.create(
-        model=MODEL,
-        max_tokens=1024,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": f"以下是OCR辨識出的名片文字，請整理成JSON：\n\n{ocr_text}",
-                    },
-                ],
-            }
-        ],
-    )
-
-    raw_text = "".join(
-        block.text for block in message.content if getattr(block, "type", None) == "text"
-    )
-
+def _parse_json_response(raw_text: str) -> dict | None:
+    """把AI回應文字盡量解析成JSON物件，抓不到合法JSON回傳None。"""
     candidates = [raw_text]
     start = raw_text.find("{")
     end = raw_text.rfind("}")
@@ -173,5 +187,56 @@ def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = No
             return json.loads(candidate)
         except json.JSONDecodeError:
             continue
+    return None
 
-    return {"_error": "JSON解析失敗", "_raw": raw_text}
+
+def _call_extraction(client: anthropic.Anthropic, system_prompt: str, ocr_text: str,
+                      guard_name: str, user_label: str, max_tokens: int) -> dict:
+    guard_call(guard_name)
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=max_tokens,
+        system=system_prompt,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": f"{user_label}\n\n{ocr_text}"},
+                ],
+            }
+        ],
+    )
+    raw_text = "".join(
+        block.text for block in message.content if getattr(block, "type", None) == "text"
+    )
+    parsed = _parse_json_response(raw_text)
+    if parsed is None:
+        return {"_error": "JSON解析失敗", "_raw": raw_text}
+    return parsed
+
+
+def extract_card_fields(image_path: str, client: anthropic.Anthropic | None = None) -> dict:
+    """回傳擷取結果 dict。失敗時回傳 {"_error": "...", "_raw": "..."}。
+    2026-09-07新增：若OCR文字判斷像社團通訊錄/會員名冊而非單一名片，改回傳
+    {"_is_roster": True, "org_name":..., "org_type":..., "contacts":[...]}，
+    呼叫端要先檢查這個旗標，不要當一般名片欄位處理。"""
+    client = client or anthropic.Anthropic()
+
+    ocr_lines = _run_paddleocr(image_path)
+    if not ocr_lines:
+        return {"_error": "PaddleOCR沒有讀到任何文字", "_raw": ""}
+    ocr_text = "\n".join(ocr_lines)
+
+    if _looks_like_roster(ocr_text):
+        result = _call_extraction(
+            client, ROSTER_SYSTEM_PROMPT, ocr_text, "extract_roster_fields",
+            "以下是OCR辨識出的通訊錄文字，請整理成JSON：", max_tokens=2048,
+        )
+        if "_error" not in result:
+            result["_is_roster"] = True
+        return result
+
+    return _call_extraction(
+        client, SYSTEM_PROMPT, ocr_text, "extract_card_fields",
+        "以下是OCR辨識出的名片文字，請整理成JSON：", max_tokens=1024,
+    )

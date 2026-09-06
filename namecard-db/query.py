@@ -19,7 +19,7 @@ def search(keyword: str) -> list[dict]:
         """SELECT 'card' AS source, name, title, company, mobile, landline, email,
                   line_id, website, status, bni_note
            FROM cards
-           WHERE status != 'failed'
+           WHERE status != 'failed' AND status != 'roster'
              AND (name LIKE ? OR company LIKE ? OR title LIKE ?
                   OR mobile LIKE ? OR email LIKE ? OR line_id LIKE ?)
            ORDER BY name""",
@@ -35,8 +35,18 @@ def search(keyword: str) -> list[dict]:
            ORDER BY name""",
         (like, like, like, like, like),
     ).fetchall()
+    # 2026-09-07新增：通訊錄/會員名冊聯絡人(獅子會/扶輪社等)，跟名片是分開的表
+    directory_rows = conn.execute(
+        """SELECT 'directory' AS source, name, profession AS title, org_name AS company,
+                  phone AS mobile, NULL AS landline, NULL AS email, NULL AS line_id,
+                  NULL AS website, NULL AS status, org_name AS bni_note
+           FROM directory_contacts
+           WHERE name LIKE ? OR org_name LIKE ? OR profession LIKE ? OR phone LIKE ?
+           ORDER BY name""",
+        (like, like, like, like),
+    ).fetchall()
     conn.close()
-    return [dict(r) for r in card_rows] + [dict(r) for r in guest_rows]
+    return [dict(r) for r in card_rows] + [dict(r) for r in guest_rows] + [dict(r) for r in directory_rows]
 
 
 def format_result(rows: list[dict]) -> str:
@@ -44,7 +54,7 @@ def format_result(rows: list[dict]) -> str:
         return "查無符合的名片資料。"
     blocks = []
     for r in rows:
-        tag = "👤" if r["source"] == "card" else "🧑‍🤝‍🧑 [來賓]"
+        tag = {"card": "👤", "guest": "🧑‍🤝‍🧑 [來賓]", "directory": "📒 [通訊錄]"}.get(r["source"], "👤")
         lines = [f"{tag} {r['name'] or '（無姓名）'}"]
         if r["title"] or r["company"]:
             lines.append(f"　{r['title'] or ''} {r['company'] or ''}".rstrip())

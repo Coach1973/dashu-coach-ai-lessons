@@ -41,6 +41,10 @@ def _extract_and_match(conn, client: anthropic.Anthropic, card_id: int, image_pa
         fields = extract_card_fields(image_path, client)
     except Exception as e:  # noqa: BLE001 — 單張失敗不能讓整批停掉
         fields = {"_error": str(e), "_raw": ""}
+    if fields.get("_is_roster"):
+        n = db.insert_directory_roster(conn, os.path.basename(image_path), fields, card_id=card_id)
+        print(f"  📇 偵測為通訊錄「{fields.get('org_name')}」，收錄 {n} 位聯絡人")
+        return True
     db.update_card_after_extraction(conn, card_id, fields)
     if "_error" in fields:
         print(f"  ⚠️ 失敗：{fields['_error']}")

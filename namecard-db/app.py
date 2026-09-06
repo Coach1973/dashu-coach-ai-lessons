@@ -94,7 +94,7 @@ def index():
         ).fetchall()
     ]
 
-    sql = "SELECT * FROM cards WHERE status != 'split'"
+    sql = "SELECT * FROM cards WHERE status != 'split' AND status != 'roster'"
     params: list[str] = []
     if query:
         # 所有欄位忽略空格差異比對，理由同/find——教練:「誰知道要空格？」使用者
@@ -267,7 +267,7 @@ def find_page():
         card_rows = conn.execute(
             """SELECT id, name, title, company, mobile, email, bni_status, bni_note
                FROM cards
-               WHERE status != 'failed'
+               WHERE status != 'failed' AND status != 'roster'
                  AND (REPLACE(name, ' ', '') LIKE ?
                       OR REPLACE(company, ' ', '') LIKE ?
                       OR REPLACE(title, ' ', '') LIKE ?
@@ -303,6 +303,25 @@ def find_page():
                 "title": d["profession"], "company": d["company"],
                 "mobile": d["mobile"], "email": d["email"], "bni_note": d["chapter"],
                 "visits": [dict(v) for v in visits],
+            })
+        # 2026-09-07新增：通訊錄/會員名冊聯絡人(獅子會/扶輪社等)，跟cards是分開的表
+        directory_rows = conn.execute(
+            """SELECT id, name, profession, org_name, org_type, phone, address
+               FROM directory_contacts
+               WHERE REPLACE(name, ' ', '') LIKE ?
+                     OR REPLACE(org_name, ' ', '') LIKE ?
+                     OR REPLACE(profession, ' ', '') LIKE ?
+                     OR REPLACE(phone, ' ', '') LIKE ?
+               ORDER BY name""",
+            (no_space_like,) * 4,
+        ).fetchall()
+        for r in directory_rows:
+            d = dict(r)
+            results.append({
+                "source": "directory", "id": d["id"], "name": d["name"],
+                "title": d["profession"], "company": d["org_name"],
+                "mobile": d["phone"], "email": None,
+                "bni_note": f"{d['org_name'] or ''}（{d['org_type'] or '通訊錄'}）",
             })
         conn.close()
     return render_template("find.html", query=query, results=results)

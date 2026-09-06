@@ -41,7 +41,7 @@ def find_frontback_pairs(client: anthropic.Anthropic) -> list[dict]:
     conn = db.get_conn()
     rows = conn.execute(
         "SELECT id, name, company, tagline, category, created_at FROM cards "
-        "WHERE status != 'failed'"
+        "WHERE status != 'failed' AND status != 'roster'"
     ).fetchall()
     conn.close()
 

@@ -70,7 +70,7 @@ def build_category_relationships(categories: list[str], client: anthropic.Anthro
 def main() -> None:
     conn = db.get_conn()
     rows = conn.execute(
-        "SELECT id, category FROM cards WHERE category IS NOT NULL AND status != 'failed'"
+        "SELECT id, category FROM cards WHERE category IS NOT NULL AND status != 'failed' AND status != 'roster'"
     ).fetchall()
 
     by_category: dict[str, list[int]] = {}

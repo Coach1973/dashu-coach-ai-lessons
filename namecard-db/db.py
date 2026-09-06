@@ -114,6 +114,55 @@ def update_card_after_extraction(conn: sqlite3.Connection, card_id: int, fields:
     conn.commit()
 
 
+def insert_directory_roster(
+    conn: sqlite3.Connection, image_filename: str, fields: dict,
+    card_id: int | None = None, uploaded_by: str | None = None,
+) -> int:
+    """2026-09-07教練交辦：一張照片是「通訊錄/會員名冊」(多人)而非單一名片時，
+    cards表留一筆status='roster'標記列(company=org_name，避免already_processed()
+    重複觸發同一張圖)，逐人資料寫進directory_contacts表。card_id有給就直接UPDATE
+    既有列(process_pending.py流程，pending列已存在)，沒給就用image_filename查/建
+    (watch_and_extract.py流程，列還不存在)。回傳實際寫入的聯絡人筆數。"""
+    org_name = fields.get("org_name")
+    org_type = fields.get("org_type")
+    contacts = fields.get("contacts") or []
+    raw_response = json.dumps(fields, ensure_ascii=False)
+
+    if card_id is None:
+        existing = conn.execute(
+            "SELECT id FROM cards WHERE image_filename = ?", (image_filename,)
+        ).fetchone()
+        card_id = existing["id"] if existing else None
+
+    if card_id is not None:
+        conn.execute(
+            """UPDATE cards SET name=NULL, title='通訊錄', company=?, status='roster',
+               raw_response=?, uploaded_by=COALESCE(?, uploaded_by) WHERE id=?""",
+            (org_name, raw_response, uploaded_by, card_id),
+        )
+    else:
+        conn.execute(
+            """INSERT INTO cards (image_filename, title, company, status, raw_response, uploaded_by)
+               VALUES (?, '通訊錄', ?, 'roster', ?, ?)""",
+            (image_filename, org_name, raw_response, uploaded_by),
+        )
+
+    conn.execute("DELETE FROM directory_contacts WHERE image_filename = ?", (image_filename,))
+    written = 0
+    for c in contacts:
+        name = (c.get("name") or "").strip()
+        if not name:
+            continue
+        conn.execute(
+            """INSERT INTO directory_contacts (image_filename, org_name, org_type, name, phone, profession, address)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (image_filename, org_name, org_type, name, c.get("phone"), c.get("profession"), c.get("address")),
+        )
+        written += 1
+    conn.commit()
+    return written
+
+
 def delete_card(conn: sqlite3.Connection, card_id: int) -> None:
     """刪除名片，連同關聯的產業鏈角色/跟進紀錄一併清掉，不留孤兒資料"""
     follow_up = conn.execute("SELECT id FROM follow_ups WHERE card_id = ?", (card_id,)).fetchone()
