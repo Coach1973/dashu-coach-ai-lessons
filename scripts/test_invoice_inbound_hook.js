@@ -59,7 +59,26 @@ async function main() {
     ok ? pass++ : fail++;
   }
 
-  console.log(`\n結果：${pass} 通過 / ${fail} 失敗（共 ${CASES.length}）`);
+  // 🔴 2026-09-06教練回報連兩則誤報後新增：心跳健檢(channel/chatId='heartbeat')
+  // 把HEARTBEAT.md全文當context灌進來，其中「timeout/INVALID_API_KEY/網路類錯誤
+  // 需自動調參」這句系統狀態說明文字，恰好符合手機發票條碼格式(斜線+7碼英數)，
+  // 之前會被誤判成真的發票資訊寫進log+發Telegram騷擾教練。
+  {
+    const countBefore = countEntries();
+    await handler({
+      type: 'message', action: 'preprocessed',
+      context: {
+        body: 'Read HEARTBEAT.md if it exists (workspace context). Follow it strictly.\n自動修復動作： 無（無 timeout/INVALID_API_KEY/網路類錯誤需自動調參）',
+        senderId: 'heartbeat', channelId: 'heartbeat',
+      },
+      sessionKey: 'agent:main:main',
+    });
+    const landed = countEntries() > countBefore;
+    console.log(`${landed ? '❌' : '✅'} case heartbeat: 落地=${landed}(期待false，心跳訊息不該被當發票)`);
+    landed ? fail++ : pass++;
+  }
+
+  console.log(`\n結果：${pass} 通過 / ${fail} 失敗（共 ${CASES.length + 1}）`);
   process.exit(fail === 0 ? 0 : 1);
 }
 
