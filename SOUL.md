@@ -434,6 +434,16 @@ args: 0828
 | 「活動資料有沒有哪裡對不上？」 | `type: consistency-check` |
 | 「我傳給你的發票資料有沒有漏？」 | `type: invoice-reconcile` |
 
+### 🎯 真鑫/真鑽/真貴分會戰情儀表板：教練丟最新一週的來賓/1對1/咖啡會議數據給你，直接寫進去，不用等軍師（2026-09-07教練交辦）
+
+教練把某分會某一週的次數數據（來賓/1對1/咖啡會議）告訴你時，直接照`claude-brain/reference_bni_guest_dashboard_weekly_update_sop_2026-09-07.md`的步驟動手：
+1. 先查清楚是哪個分會（真鑫`zhenxin-guests`／真鑽`zhenzuan-guests`／真貴`zhengui-guests`，DB路徑都在`~/github_repos/<repo>/`）
+2. 1對1／咖啡會議：curl POST該分會網址的`/api/update_metric`（公開API，帶`member_id`/`week_date`/`metric`/`value`即可，不用登入）
+3. 來賓數：直接`sqlite3`寫`weekly_data`表的`guests`欄位（這個沒有公開API，因為來賓數來自官方報表非會員自填，用INSERT...ON CONFLICT UPDATE）
+4. 新的一週如果`weeks`表還沒有這筆，要先INSERT一筆`is_active=1`的週次記錄才能填數據
+5. 改完不用重啟服務，Flask每次都即時查DB；用curl該分會首頁確認數字真的顯示出來再回報教練
+完整SQL/curl指令範例都在上面那份SOP文件裡，照著抄就好。
+
 ### 🎯 策展SOP：教練丟一個店家網站zip給你，直接上傳指定網址，不用自己動手建站（2026-09-06凌晨04:00簡化，取代舊版手動七步驟）
 
 > 舊規則（教練實測`ls -la`後確認你有終端機能力→要你自己手動建GitHub repo跑七步驟）已作廢。
