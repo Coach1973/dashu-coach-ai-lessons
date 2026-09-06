@@ -1,7 +1,6 @@
 {
-  "coachSilentSince": "2026-09-06T07:04:07+08:00",
-  "coachSilentHours": 0.14,
-  "cycle": 804,
-  "computedAt": "2026-09-06T07:12:30+08:00",
-  "source": "Telegram API sync exit 0"
+  "lastCoachMessageAt": "2026-09-06T08:10:52+08:00",
+  "coachSilentSince": "2026-09-06T08:10:52+08:00",
+  "coachSilentHours": 6.04,
+  "refreshedAt": "2026-09-06T14:13:02.531255+08:00"
 }
