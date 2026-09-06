@@ -1,39 +1,33 @@
 {
   "lastChecks": {
-    "healthcheck": "2026-09-06T20:13:05.000000+08:00",
-    "cron_scan": "2026-09-06T20:13:05.000000+08:00",
+    "healthcheck": "2026-09-07T00:12:00.000000+08:00",
+    "cron_scan": "2026-09-07T00:12:00.000000+08:00",
     "tg_channel_probe": "2026-09-06T20:13:05.000000+08:00",
     "env_quick_check": "2026-09-06T20:13:05.000000+08:00",
-    "coach_silence_sync": "2026-09-06T23:12:04.240844+08:00"
+    "coach_silence_sync": "2026-09-07T01:12:02.801126+08:00"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-06T22:55:20+08:00",
-    "coachSilentHours": 0.3,
+    "coachSilentSince": "2026-09-06T23:38:01+08:00",
+    "coachSilentHours": 1.6,
     "openclaw_reachable": true,
     "telegramChannelOk": true
   },
   "cronErrorJobs": [
     {
-      "id": "dc9bdf5c-0a3c-4b37-ad91-dc7ee02e7cc1",
-      "name": "🔴 場景化升華+系統健檢（每日23:00）",
-      "ce": 1,
-      "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-06T23:00:00+08:00",
-      "note": "今天 23:00 自動補跑後 CE 會歸零（in 3h）"
-    },
-    {
       "id": "f487652d-0696-4b54-ac7f-7dd1a94cdb8c",
       "name": "☀️ 每日 06:00 起床摘要（前 12 小時工作）",
       "ce": 1,
       "lastRunAt": "2026-09-06T06:00:00+08:00",
-      "nextRunAt": "2026-09-07T06:00:00+08:00"
+      "nextRunAt": "2026-09-07T06:00:00+08:00",
+      "note": "21:00 gateway 重啟中斷一次性，明早 06:00 會自動跑回來"
     },
     {
       "id": "b73845c9-f653-4f9a-8869-0e2f2c0bd9b1",
       "name": "☕ 幕僚長晨報（AI員工每日彙整，07:00）",
       "ce": 1,
       "lastRunAt": "2026-09-06T07:00:00+08:00",
-      "nextRunAt": "2026-09-07T07:00:00+08:00"
+      "nextRunAt": "2026-09-07T07:00:00+08:00",
+      "note": "21:00 gateway 重啟中斷一次性，明早 07:00 會自動跑回來"
     }
   ],
   "v4Checks": {
@@ -41,8 +35,8 @@
     "roundTwo_providerOverload": "fail",
     "roundThree_affectsWork": "fail",
     "verdict": "noAnnounce",
-    "reasoning": "cron 22/25 ok + 3 error 全 CE=1 穩定未變 + 今晚/明晨自動補跑 + 週日晚上教練沉默 5.3h 屬正常作息 + 零會員功能壞"
+    "reasoning": "cron 24/26 ok + 2 error 全 CE=1 仍是 21:00 gateway 重啟一次性事件 + 明早 06:00/07:00 自動補跑 CE 歸零 + 教練沉默 0.6h 屬正常作息 + 零會員功能壞"
   },
-  "lastCycle": 818,
-  "consecutiveGreen": 178
+  "lastCycle": 819,
+  "consecutiveGreen": 179
 }
