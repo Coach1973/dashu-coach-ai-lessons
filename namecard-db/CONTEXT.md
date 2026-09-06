@@ -16,6 +16,7 @@
 - **watch（監看）**＝`watch_and_extract.py`，偵測名片媒合中心資料夾有新照片就自動觸發擷取。**2026-07-13後已改成真事件觸發**（macOS launchd WatchPaths監看SMB掛載資料夾變更），不是背景輪詢——這是[[feedback_event_driven_not_polling_pattern.md]]這個坑修過的地方，改動這支腳本前先讀那份記憶檔。
 - **extract（擷取）**＝`extract.py`/`paddle_extract.py`，把照片轉成`cards`表欄位。`paddle_extract.py`是PaddleOCR備援路徑（有獨立的`paddleocr_venv`），主要路徑是直接餵給AI（Anthropic API）看圖辨識，不是傳統OCR。
 - **名片媒合中心**＝Amber私有雲（192.168.0.35）裡的一個共用資料夾，教練/孔大哥/佩佩老師上傳照片的地方，SMB掛載（不是WebDAV，細節見`reference_amber_nas.md`）。
+- **通訊錄（directory_contacts表，2026-09-07新增）**＝跟`cards`分開的表，一張照片對應多位聯絡人（獅子會/扶輪社/同濟會等社團的會員名冊），不是「一張名片=一筆」的結構。`extract.py`的`_looks_like_roster()`用「社團關鍵字+3組以上電話樣式」判斷是不是通訊錄，是的話走`ROSTER_SYSTEM_PROMPT`逐人萃取姓名/電話/專業類別/地址，`cards`表只留一筆`status='roster'`的標記列(避免重複處理，不會出現在搜尋結果)。
 
 ## 架構決策：為什麼這樣設計
 

@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 專案卡索引沒同步新系統會誤配…](reference_project_card_index_must_sync_new_systems_2026-09-07.md)
 - [🔴🔴 把paraphrase當逐字引用回頭捏造…](feedback_never_fabricate_literal_quotes_2026-09-06.md)
 - [🔴 靠commit/對話文字措辭比對…](feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06.md)
 - [🔧 改帳號登入名稱要搜尋有無獨立寫死…](reference_owner_username_hardcoded_separate_from_db_2026-09-06.md)
