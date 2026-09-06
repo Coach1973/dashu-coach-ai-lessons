@@ -4,11 +4,11 @@
     "cron_scan": "2026-09-06T20:13:05.000000+08:00",
     "tg_channel_probe": "2026-09-06T20:13:05.000000+08:00",
     "env_quick_check": "2026-09-06T20:13:05.000000+08:00",
-    "coach_silence_sync": "2026-09-06T21:12:06.391566+08:00"
+    "coach_silence_sync": "2026-09-06T22:12:04.051598+08:00"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-06T14:54:56+08:00",
-    "coachSilentHours": 6.3,
+    "coachSilentSince": "2026-09-06T21:51:59+08:00",
+    "coachSilentHours": 0.3,
     "openclaw_reachable": true,
     "telegramChannelOk": true
   },
@@ -44,5 +44,5 @@
     "reasoning": "cron 22/25 ok + 3 error 全 CE=1 穩定未變 + 今晚/明晨自動補跑 + 週日晚上教練沉默 5.3h 屬正常作息 + 零會員功能壞"
   },
   "lastCycle": 818,
-  "consecutiveGreen": 177
+  "consecutiveGreen": 178
 }
