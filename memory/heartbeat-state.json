@@ -4,11 +4,11 @@
     "cron_scan": "2026-09-07T00:12:00.000000+08:00",
     "tg_channel_probe": "2026-09-06T20:13:05.000000+08:00",
     "env_quick_check": "2026-09-06T20:13:05.000000+08:00",
-    "coach_silence_sync": "2026-09-07T02:12:06.855256+08:00"
+    "coach_silence_sync": "2026-09-07T03:12:04.802222+08:00"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-07T01:16:01+08:00",
-    "coachSilentHours": 0.9,
+    "coachSilentSince": "2026-09-07T02:50:53+08:00",
+    "coachSilentHours": 0.4,
     "openclaw_reachable": true,
     "telegramChannelOk": true
   },
