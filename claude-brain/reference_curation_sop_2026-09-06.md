@@ -132,7 +132,38 @@ slug/策展中心卡片連結換新），**沒有任何一次留下「舊網址�
 
 **redirect機制維持不動**——教練沒有要求移除，只是不想再依賴它當「主要」解法，改成source-fix為主、redirect當zero-cost安全網，兩者不衝突。
 
+## 🔴 2026-09-06下午追加：「改短網址」完整SOP，教練/軍師/Hermes/小龍蝦皆可直接執行
+
+教練當面問「這件事只是簡單的文書作業，Hermes跟小龍蝦是不是也能做」——查證屬實：這整套流程就是幾個curl打公開網址，不需要判斷力，Hermes(這台Mac上的獨立agent，workspace跟軍師symlink共用)+小龍蝦(main agent，已實測`ls -la`成功，`openclaw.json`無工具限制)都有終端機能力可以做。**下面三步都不需要教練自己登入任何後台或FB**：
+
+**第一步｜下架舊的長網址**（先取得admin session cookie，再打刪除路由）
+```bash
+curl -s -c /tmp/curation_cookie.txt -d "username=0901056777" -d "password=88888" \
+  https://event.bymyway.com/admin/login -o /dev/null
+curl -s -b /tmp/curation_cookie.txt -X POST \
+  https://event.bymyway.com/curation/admin/delete/<舊的slug> -o /tmp/curation_delete_resp.html
+grep -o "已下架「[^」]*」" /tmp/curation_delete_resp.html
+```
+（`<舊的slug>`從舊網址`event.bymyway.com/curated/<slug>/`裡取；下架不是真刪除，本機資料夾搬去封存區、GitHub repo改名關Pages，資料不會消失）
+
+**第二步｜用新短網址重新上傳**（同一份zip，走既有上傳SOP，見上面SOUL.md/curation-prompt.md已有的步驟，帶`custom_slug=<教練指定的新短網址>`）
+
+**第三步｜修正FB舊貼文文字**（若這家店之前發過FB貼文才需要這步，用編輯不用砍重發，保留讚/留言）
+```bash
+# 先查這家店對應的FB post_id：grep distill/curation_process.log找店名附近的「FB貼文成功」那行，裡面的JSON含id欄位
+grep -B2 -A2 "<店名關鍵字>" /Users/bymyway/.openclaw/workspace/distill/curation_process.log
+# 讀取粉專access_token
+cat /Users/bymyway/.openclaw/workspace/fb_automation/page_tokens_2026-09-01.json
+# 用access_token+post_id編輯貼文文字(把舊網址換成新網址)
+curl -s -X POST "https://graph.facebook.com/v20.0/<post_id>" \
+  -F "message=<修正後的完整文案，含新網址>" \
+  -F "access_token=<page的access_token>"
+```
+查不到對應post_id（沒發過FB貼文，或log裡找不到）就跳過這步，只做前兩步即可，網址本身已經是對的。
+
+**⚠️ 2026-09-06下午更正**：本文件先前(深夜段落)寫「一律用`scripts/curated_site_rename.py`不要手動操作」，教練事後追問zhang-teng-wen案例時，實際確認的正確做法是「先下架、再用新短網址重新上傳」（即本節三步驟），不是跑改名腳本——那支腳本是redirect年代的產物，教練已否決redirect當主要解法，**下面這行「How to apply」以本節為準**。
+
 ## How to apply
-下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。教練要求改短既有網址時，一律用`scripts/curated_site_rename.py`，不要手動操作。上傳頁面現在會強制要求短網址欄位，不用再擔心系統猜出過長網址。
+下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。**教練要求改短既有網址時，照上面「改短網址完整SOP」三步驟走（下架→重新上傳→視情況修FB貼文），不要用`curated_site_rename.py`**。上傳頁面現在會強制要求短網址欄位，不用再擔心系統猜出過長網址。這整套流程軍師/Hermes/小龍蝦皆可直接執行，不需要教練親自操作任何後台。
 
 Related: [[reference_zip_to_github_pages_deploy_sop]]、[[reference_new_site_collection_policy_2026-09-05]]、[[project_namecard_ocr_pipeline_reusable]]（WatchPaths事件觸發的原始先例）

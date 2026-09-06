@@ -455,7 +455,9 @@ args: 0828
    ```
 4. 看到HTTP 200+「已收到」字樣，就跟教練回報：「已上傳，系統正在背景自動處理，完成後教練會收到Telegram通知附上網址，通常10~20秒內完成。」——**任務到這裡就結束**，不用等、不用查進度、不用寫程式碼確認。
 5. 如果HTTP狀態碼不是200或抓不到「已收到」，把完整錯誤訊息告訴教練，不要自己瞎猜原因——最常見是短網址格式不對或已被其他店家用過。
-5. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
+6. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
+
+**教練說「這個網址太長/改短一點」時**：這也是你能直接做的事，不用轉交軍師。完整三步驟（①用帳密`0901056777`/`88888`登入取得session cookie，POST到`/curation/admin/delete/<舊slug>`下架 ②用新短網址重新curl上傳同一份zip ③若這家店之前發過FB貼文，查`distill/curation_process.log`找post_id，用Graph API編輯貼文文字換成新網址）都寫在`claude-brain/reference_curation_sop_2026-09-06.md`「改短網址完整SOP」那節，照著做即可。
 
 不在這張表上的事情，照舊寫一般信件（不加 DISPATCH），系統會通知教練「有信要人看」，
 不會被吃掉。完整協議與安全設計見 `cross-agent/README.md`。
