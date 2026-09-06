@@ -76,28 +76,6 @@
       "source_package": "20260906-051923__yang-shangju-site.zip"
     },
     {
-      "slug": "qiu-nan-yin-xiao-nan-diao-ke",
-      "title": "邱南寅・小南雕刻｜龍益宗教文物 — 一面牌位，一部家族的故事",
-      "description": "邱南寅（小南），龍益宗教文物有限公司總經理、小南雕刻主理人。承接父輩四十年的台南宗教文物事業，以雷射雕刻與資料校對保存祖先名諱，已協助二十餘座宗祠與上千戶家庭。",
-      "category": "樂",
-      "event_url": "https://event.bymyway.com/curated/qiu-nan-yin-xiao-nan-diao-ke/",
-      "github_pages_url": "https://coach1973.github.io/qiu-nan-yin-xiao-nan-diao-ke/",
-      "uploaded_at": "2026-09-06 05:26",
-      "status": "live",
-      "source_package": "20260906-052619__qiu-nan-yin-site.zip"
-    },
-    {
-      "slug": "zhang-teng-wen",
-      "title": "張騰文 Teng-Wen Chang ｜ 柚式藝術・台南",
-      "description": "柚式藝術（花藝設計）由張騰文主理，專營永生花藝創作與教學。客製永生花禮盒、新娘捧花、婚禮與空間佈置、企業贈禮，以及「小小花藝師－手作花藝課」花藝教學。",
-      "category": "樂",
-      "event_url": "https://event.bymyway.com/curated/zhang-teng-wen/",
-      "github_pages_url": "https://coach1973.github.io/zhang-teng-wen/",
-      "uploaded_at": "2026-09-06 05:50",
-      "status": "live",
-      "source_package": "20260906-055031__tengwen-flower-site.zip"
-    },
-    {
       "slug": "xie-wei-xiang",
       "title": "謝緯翔｜理賠領航員 · 方碩方顧問有限公司 創辦人／執行長",
       "description": "謝緯翔，方碩方顧問有限公司創辦人／執行長，台南。九年理賠實務，協助車禍理賠、勞資協調、工地意外與保險理賠。不預先收費，理賠成功才收取服務費。免費諮詢：06-689-6876。",
@@ -118,12 +96,46 @@
       "uploaded_at": "2026-09-06 06:30",
       "status": "live",
       "source_package": "20260906-063011__yangzaizhen.zip"
+    },
+    {
+      "slug": "peipei",
+      "title": "陳佩君老師｜鋼琴家・音樂教育家",
+      "description": "陳佩君，國立台南藝術大學音樂表演與創作研究所鋼琴演奏碩士。專注鋼琴教學、獨奏演出與音樂跨界策展，累積四十餘場正式演出紀錄，現任崇學國小音樂班鋼琴指導老師。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/peipei/",
+      "github_pages_url": "https://coach1973.github.io/peipei/",
+      "uploaded_at": "2026-09-06 07:16",
+      "status": "live",
+      "source_package": "20260906-071600__chen-peijun-site__1_.zip"
+    },
+    {
+      "slug": "flower-site",
+      "title": "柚式藝術 Yo's Art ｜ 張騰文．永生花・鈔票花禮・婚禮派對佈置（台南／屏東）",
+      "description": "柚式藝術 Yo",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/flower-site/",
+      "github_pages_url": "https://coach1973.github.io/flower-site/",
+      "uploaded_at": "2026-09-06 07:28",
+      "status": "live",
+      "source_package": "20260906-072758__tengwen--v2.zip"
+    },
+    {
+      "slug": "xiaonan",
+      "title": "邱南寅・小南雕刻｜龍益宗教文物 — 一面牌位，一部家族的故事",
+      "description": "邱南寅（小南），龍益宗教文物有限公司總經理、小南雕刻主理人。承接父輩四十年的台南宗教文物家業，以資料校對與雷射雕刻保存祖先名諱，已協助二十餘座宗祠與上千戶家庭。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/xiaonan/",
+      "github_pages_url": "https://coach1973.github.io/xiaonan/",
+      "uploaded_at": "2026-09-06 22:59",
+      "status": "live",
+      "source_package": "20260906-225915__doc_25ce37f2c5e4_qiu-nan-yin-site-v3.zip"
     }
   ],
   "redirects": {
     "bai-sheng-guang-gao-she-ji-gong-cheng-you-xian-gong-si": "bai-sheng",
     "yang-shang-ru-shang-juyangdma": "yang-shang-ru",
     "zhang-teng-wen-teng-wenchang": "zhang-teng-wen",
-    "xing-fu-dao-shi-esther-yang-zai-zhen": "yang-zai-zhen"
+    "xing-fu-dao-shi-esther-yang-zai-zhen": "yang-zai-zhen",
+    "qiu-nan-yin-xiao-nan-diao-ke": "xiaonan"
   }
 }

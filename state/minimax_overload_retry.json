@@ -1,0 +1,7 @@
+{
+  "cron:001a9b16-1985-413b-8d3c-a4e885e552b6:failure": {
+    "count": 2,
+    "escalated": false,
+    "lastTs": "2026-09-06T12:02:42.421Z"
+  }
+}

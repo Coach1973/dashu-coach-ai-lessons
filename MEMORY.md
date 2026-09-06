@@ -181,3 +181,53 @@
 - 📝 教練偏好重點（這場學到的）: **白話中文，少用工程師術語**（「0 按鈕」「改好了嗎」就回一行）; **沒說推 = 停在 GitHub 階段**（新守則）; **GitHub = 內部測試，event.bymyway.com = 對外正式**（教練 2026-08-31 親口說）; **改變之前先動手做、做完讓教練看，再說怎麼改**（「先做出來再說，不用問那麼多」） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:70-73]
 <!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:74:74 -->
 - 📝 教練偏好重點（這場學到的）: **教練 0 按鈕鐵則**：永久連結 + LiteSpeed Purge All 是唯一例外 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:74-74]
+
+## 2026-09-06 weekly distillation batch（cron auto-processed）
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-05.md:full -->
+- 📦 **memory/2026-09-05.md 龐大週檔處理**（2026-09-06 cron 處理 1 個檔案，31305 bytes → 22056 bytes 截短版 + 歸檔）：
+  - **內容性質**：週六整天高密度記錄，主要議題 = (1) Light Sleep / REM Sleep reflection candidates（confidence 0.58, NO_NEW_ENTRIES 級別, meta-noise）；(2) 健康檢查 cycle=778~792 audit（cron 自動 meta-noise）；(3) ⚠️ 22:30 緊急存檔 Hermes VPS 斷線調查 → 教練 22:30 澄清「Hermes = Mac 桌面版，VPS 版永久停」。
+  - **不重複晉升**：Hermes = Mac 桌面版 / VPS 永久停（已在 MEMORY.md 開頭晉升過）；Light Sleep dreaming reflection meta-noise（已在 SOP v2 段落標示不晉升）；健康檢查 cron audit（屬 v4.0 三關判斷自動流程，無新內容）。
+  - **已歸檔**到 `memory/archive/2026-09-05.md`（完整 31305 bytes），原檔截短到 22056 bytes + 加註「[已蒸餾歸檔]」。
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-06.md:300:486 -->
+- 🔗 **策展店家「短網址縮短」4 步 SOP（2026-09-06 凌晨實戰歸納）**：
+  - **觸發情境**：教練丟一個長網址 + 一個新短網址，要求縮短。9/5~9/6 連續實戰 3 次：百聖 (`bai-sheng-guang-gao...` → `bai-sheng`)、楊尚儒 (`yang-shang-ru-shang-juyangdma` → `yang-shang-ru`)、楊在珍 (`xing-fu-dao-shi-esther-yang-zai-zhen` → `yang-zai-zhen`)。
+  - **4 步流程**（每次都一次做完）：
+    1. **GitHub repo rename**（用 `gh repo rename <新名> -R <owner/舊名>`，`--yes` 取代 deprecated 的 `--confirm`）
+    2. **本機資料夾 rename** + `git remote set-url origin <新網址>` 同步
+    3. **registry 白名單換 slug**（`event_url` + `github_pages_url` 都更新）
+    4. **大台南策展中心首頁卡片按鈕連結同步換新**（commit + push GitHub）
+  - **驗證 SOP**：新網址 HTTP 200 ✅ / 舊網址 HTTP 404 ✅ / 兩個網站標題正確顯示
+  - **commit hashes 留證**：`cc3293c`（bai-sheng）、`d78f810`（yang-shang-ru）、`1e2f9b6`（yang-zai-zhen）
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-06.md:340:400 -->
+- 📝 **張騰文（柚式藝術 / 花藝設計）店家資料更新（2026-09-06 06:11 教練下單）**：
+  - **更新內容**：原品牌名「永生花藝」→「柚式藝術（花藝設計）」，補電話 `0925978176` + Email `janjan0210@gmail.com`
+  - **8 處 index.html 編輯** + registry + 策展中心卡片同步
+  - **commit hashes**：`b76b0c6`（zhang-teng-wen）、`0f9c393`（tainan-shangquan）
+  - **誠實發現並回報**：tainan-shangquan Pages 從沒開過，「大台南策展中心」其實是 Flask 服務直接讀本機檔 → 本機改完即時生效，推 GitHub 那步其實可以省（commit 留作備份）
+  - **主動小提問**：教練寫的「張 騰文」中間有空格，跟系統一直以來的無空格用法不同，已請教練確認
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-06.md:420:470 -->
+- 🛠️ **策展中心 (大台南策展中心) = Flask 讀本機 repo，不是 GitHub Pages（2026-09-06 06:11 張騰文案再次確認）**：
+  - 8/31 ai-art 案已發現 Flask 直接讀 `/Users/bymyway/github_repos/ai-art/` → 對外版即時生效
+  - 9/6 張騰文案再次確認：`event.bymyway.com/tainan-shangquan/` 也是 Flask 服務的路由，不是 GitHub Pages
+  - **新守則落地**：任何「策展中心」類的卡片更新 → 改本機檔就會即時生效，「推」GitHub 那步是 commit hash 留證用，不是必要步驟
+  - 推論：只要是 Flask 路由下的店家頁面（`event.bymyway.com/curated/<slug>/`、`event.bymyway.com/tainan-shangquan/` 等），都適用此守則
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-06.md:430:470 -->
+- 🔧 **`gh repo rename` 參數新格式（2026-09-06 06:36 楊在珍案發現）**：
+  - **新格式**：`gh repo rename <新名> -R <owner/舊名> --yes`
+  - **舊格式已 deprecated**：`--confirm` 不要再用
+  - **前提**：`gh` CLI 已登入 `Coach1973`（有 repo 權限，9/6 楊在珍案確認可執行）
+  - **GitHub 端 rename 效果**：舊 endpoint 維持「Moved Permanently (301)」自動轉址，不需要另外設 redirect
+  - **本機端配套**：rename 完 → 本機資料夾跟著改 → `git remote set-url origin` 同步新網址 → registry 同步 → 策展卡片連結同步
+
+<!-- openclaw-memory-promotion:memory:memory/2026-09-06.md:300:486 -->
+- 📦 **memory/2026-09-06.md 龐大週檔處理**（2026-09-06 cron 處理 1 個檔案，33040 bytes → 22068 bytes 截短版 + 歸檔）：
+  - **內容性質**：週日清晨高密度實戰，主要議題 = (1) Light Sleep dreaming reflection candidates（meta-noise）；(2) ⚠️ 05:36 緊急存檔 百聖 + 楊尚儒短網址縮短；(3) ⚠️ 06:11 緊急存檔 張騰文更新成柚式藝術；(4) ⚠️ 06:36 緊急存檔 Esther 楊在珍短網址縮短 + 策展中心 Flask 機制確認。
+  - **精華已晉升**：策展店家短網址縮短 4 步 SOP、張騰文柚式藝術更新、Flask 讀本機守則擴展、gh repo rename 新格式（皆見本段上方晉升條目）。
+  - **不重複晉升**：Light Sleep dreaming reflection meta-noise、健康檢查 cron audit。
+  - **已歸檔**到 `memory/archive/2026-09-06.md`（完整 33040 bytes），原檔截短到 22068 bytes + 加註「[已蒸餾歸檔]」。
+

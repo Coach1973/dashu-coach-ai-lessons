@@ -86,3 +86,46 @@ cycle=725 2026-09-02 17:13:50 status=ok silentH=0.2 (since17:02:16) cumGreen=90 
 2026-09-05T17:12:29Z
   cycle=798 cron=25 status=ok err=2 (both CE=1, gateway restart interrupt, next run auto-recovers) silentH=0.0
 [2026-09-06T02:12:30+08:00] cycle=799｜coachSilent=0.1h｜jobs=25 err=2(CE=1) ce3=0 td=0 auth=0｜TG=ok｜SOUL=9015/1851/25574｜R1=27 R2=37｜lock=0｜decision=🔕 安靜通過（三關全 fail）｜cumGreen=160
+[2026-09-06T04:12:55+08:00] cycle=801｜coachSilent=0.0h｜jobs=25 err=2(CE=1) ce3=0 td=0 auth=0｜3:12輪status=ok但未落檔、本輪完整CLI掃描｜TG探針無JSON不作推論｜SOUL×3齊｜R1=27 R2=45｜lock=0｜decision=🔕 安靜通過（三關全 fail）｜cumGreen=161
+
+[cycle=802] 2026-09-06 05:12:49 CST | cron=25/2err | CE3=0 | TG=ok | SOUL=3✓ | Repo1=27/Repo2=21 | lock=0 | gates=fail×3 → 🔕 announce=false | cumulative_green=162
+=== cycle=803 2026-09-06 06:13:09+0800 ===
+silentH=0.02 (since 2026-09-06T06:11:10+08:00)
+cron 25/6 error (CE=1 gateway restart 中斷殘留)：sync-執行細則/sync-特助心法/LINE@教練都在想什麼/每4小時主動關懷/場景化升華/每日06:00起床摘要
+v4.0 三關全 fail → 🔕 安靜通過
+
+=== cycle=804 2026-09-06 07:13:48+0800 ===
+silentH=0.14 (since 2026-09-06T07:04:07+08:00)
+cron 25/7 error (CE=1 gateway restart 中斷殘留)：sync-執行細則/sync-特助心法/LINE@教練都在想什麼/每4小時主動關懷/場景化升華/每日06:00起床摘要/幕僚長晨報
+v4.0 三關全 fail → 🔕 安靜通過
+
+
+## cycle=805 健康檢查（2026-09-06T08:12:00+08:00 TPE 週日上午）
+- 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-09-06T08:10:52+08:00（沉默 0.02h，新鮮值）
+- Cron 25/25 全 ok、0 error、CE=0、0 overload、0 auth 失效、0 timeout
+- cycle=804 的 7 個 error 已自然恢復（下次排程自動補跑成功）
+- TG 通道探針：ok
+- 環境快檢：SOUL.md 三份齊全、Repo1=28 / Repo2=44（皆 < 50 警戒線）、無 .! 鎖定檔
+- v4.0 三關：全 fail → 安靜通過，不打擾教練
+- cumulativeGreen = 165（從 164 +1，連續破百後第六十五輪）
+
+=== cycle=806 健康檢查（2026-09-06T09:13:04+08:00 TPE 週日上午）
+- 第零步 sync_coach_last_message.sh: exit 0｜教練最後訊息 2026-09-06T08:10:52+08:00（沉默 1.04h，新鮮值）
+- Cron 25/4 error（皆 CE=1、未達≥3）：ef88279b每4小時主動關懷 / dc9bdf5c場景化升華 / f487652d起床摘要 / b73845c9幕僚長晨報
+- 4 個 error 根因皆為 06:00/07:00/23:00 gateway restart 中斷殘留（cycle=804 已記錄），下次排程自動補跑
+- CE≥3 / Timeout / Auth 失效 / Overload：0 / 0 / 0 / 0
+- TG 通道探針：ok
+- 環境快檢：SOUL.md 三份齊全（9015/1851/25822 bytes）、Repo1=28 / Repo2=51（剛過 50 警戒線，自然波動，待 23:05 處理）、無 .! 鎖定檔
+- v4.0 三關：全 fail（CE=1 未達≥3 + 非 overload + 週日上午 + 教練沉默 1.04h + 4 個任務都會自動補跑 + 零會員功能壞）→ 安靜通過，不打擾教練
+- cumulativeGreen = 166（從 165 +1，連續破百後第六十六輪）
+[2026-09-06 10:00:44] cycle=807 | cron=25/25 ok | ce3+=0 | overload=0 | auth=0 | timeout=0 | silent=1.83h | repo1=28 repo2=52 | tg=ok | 三關=silent_pass_no_announce | cumulativeGreen=167
+[cycle=808] ts=2026-09-06T10:12:42+08:00 | silentH=2.03 | cron=25/25 ok CE=0 | tg=ok | env=SOUL✅ repo2=52(連續3輪警戒) lock✅ | 3gates=silent_pass | cumulativeGreen=168 | next=11:12 cycle=809
+[cycle=809] 2026-09-06 11:12 TPE 週日上午｜3 個 CE=1 error（場景化升華/起床摘要/晨報），全 CE<3、未達 announce 門檻；下輪 12:12 cycle=809+1
+[cycle=810 2026-09-06T12:12:00+08:00] coachSilent=4.0h | cron 25/22 ok 3 error (CE=1 each, gateway restart 中斷殘留) | cumulativeGreen=170 | v4.0 三關全 fail → 安靜通過
+[2026-09-06T13:12 TPE cycle=811] 健康檢查完成｜25 tasks:22ok/3err/0CE≥3｜3 error CE=1 今晚/明早自動補｜v4.0 三關全 fail → 🔕 不 announce｜cumGreen=171
+[2026-09-06 14:00:31] cycle=812 | cron 22/25 ok + 3 error(CE=1 gateway restart 殘留, 自動補) | coach_silent=5.83h | telegram=ok | env=normal | verdict=all_fail_no_announce
+813|2026-09-06T14:13:02.531255+08:00|6.04h|3err|安靜通過
+[2026-09-06 17:12:37] cycle=815 healthcheck_ok | 20ok/3err(CE=1,dc9bdf5c場景化升華/f487652d起床摘要/b73845c9幕僚長晨報,全會自動補)/2other | silent=2.28h | coach_last=2026-09-06T14:54:56 | v4三關全fail不announce
+[2026-09-06 18:12:43] cycle=816 healthcheck_ok | 20ok/3err(CE=1,dc9bdf5c場景化升華/f487652d起床摘要/b73845c9幕僚長晨報,全會自動補)/2other | silent=3.30h | coach_last=2026-09-06T14:54:56 | v4三關全fail不announce | cumGreen=176
+[2026-09-06 19:13:12 +0800] cycle=817 健康檢查完成｜22/25 ok + 3 error (CE=1 stable, 今晚/明晨自動補跑)｜教練沉默 4.30h 週日下午正常作息｜v4.0 三關全 fail → 🔕 noAnnounce｜cumGreen=176
+[2026-09-06 20:13:47] cycle=818 | 22/25 ok + 3 error (CE=1 穩定) | silentH=5.30 | TG=ok | SOUL×3✅ | Repo1=28 Repo2=58 | 🔕 noAnnounce

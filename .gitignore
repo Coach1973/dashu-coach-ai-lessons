@@ -31,3 +31,8 @@ ESUN_202606.pdf
 # 一鍵發佈用的 Netlify 金鑰等機密，禁止納入版控（2026-08-23）
 credentials/
 scripts/__pycache__/
+
+# 策展上傳處理過的店家檔案（已上架 GitHub Pages，原始檔不再需要本機備份），禁止納入版控（2026-09-06）
+event-signup/curation_uploads/processed/
+event-signup/curation_uploads/incoming/
+event-signup/.env.bak

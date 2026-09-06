@@ -46,5 +46,21 @@
     "guessedMember": null,
     "confidence": "no_directory",
     "firstSeenAt": "2026-09-05T15:54:20.484Z"
+  },
+  "u605bbc9a8da6761607827e18215d6e90": {
+    "userId": "u605bbc9a8da6761607827e18215d6e90",
+    "displayName": "白光海",
+    "statusMessage": "",
+    "guessedMember": null,
+    "confidence": "no_directory",
+    "firstSeenAt": "2026-09-05T22:55:05.014Z"
+  },
+  "ue6bf4735f12c3882d83e47df84518c16": {
+    "userId": "ue6bf4735f12c3882d83e47df84518c16",
+    "displayName": "陳秋瑩",
+    "statusMessage": "",
+    "guessedMember": null,
+    "confidence": "no_directory",
+    "firstSeenAt": "2026-09-06T01:04:46.378Z"
   }
 }

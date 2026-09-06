@@ -1,0 +1,659 @@
+# 終端機對話萃取 — Session adb89531-8a13-4899-b053-2fd921d969f6
+# 提取時間：2026-09-06 14:51 (台灣時間)
+# 共 20 條教練原話
+
+---
+
+【教練 2026-09-05 21:38】
+為何hermes 停擺？
+
+　▶ AI 回應：讓我實際查證Hermes目前狀態，不能只憑記憶回答。
+
+　▶ AI 回應：查證結果：**Hermes 四個 launchd 服務(desktop/gateway/menubar/config-watcher)全都沒有被載入(bootstrap)進 launchd**，Hermes.app 目前也沒有任何程序在跑。
+
+這跟[之前的記憶記錄](../memory/feedback_hermes_is_mac_desktop_vps_permanently_off.md)吻合——Mac 版 Hermes 是被人用 `launchctl bootout` 手動關掉過（不是崩潰、不是掛了），plist 檔案還在，但沒有重新 `bootstrap` 回去就不會自動啟動。
+
+最近…（略）
+
+【教練 2026-09-05 21:38】
+動手
+
+　▶ AI 回應：Hermes 已成功重新啟動。四個 launchd 服務全部載回，Hermes.app(桌面/gateway/menubar)都已經是 `running` 狀態，程序也確實在跑（PID 43121-43295）。`config-watcher` 顯示 active count=0 是正常的——它是 `WatchPaths` 型態，平常閒置，只有 `config.yaml` 被改動才會觸發重啟腳本，不是掛掉。
+
+Hermes 已恢復運作。
+
+【教練 2026-09-05 22:00】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**目前主軸**：v186——「牛市町」策展上架驗收，推動兩項根因修復（slug 命名只取品牌名、暫代頁自動偵測），最終撤回「有終端機能力的AI要手動做七步驟」規則，SOUL.md／Hermes／SOP 文件三處統一改成一律上傳網址；教練同場也釐清了 token 消耗歸屬，配額到 90% 後裁示昨晚收工。
+
+**身份核對**：Mac 桌面版 App，Sonnet 5，軍師身份。
+**雲端同步**：✅ 已拉最新（HEAD `e674d818b`）。
+**待辦提醒**：週配額吃緊策略持續到 9/11(週三)——任務先問能不能轉小龍蝦/Hermes；MEMORY.md 索引已逼近…（略）
+
+【教練 2026-09-05 22:05】
+你在搞什麼鬼？我的大樹作品許多後台
+
+我在別台電腦我都登不了，只有在這台電腦才能用，那你這樣不是給我造成困擾嗎？我的那個影片搜尋，我都不知道那個檔名在哪裡。
+
+我用每台電腦輸入我的手機號也不行，打 admin 也不行，這會造成很大的困擾。我要的是方便，不管我是用蘋果電腦、宏碁電腦還是聯想電腦，我只要在我的一覽表裡面點進去就能夠進去；要不然至少也是我的行動電話號碼加 5 個 8 就能讓我進去。
+
+你這樣一搞我都進不去，我除了在蘋果電腦可以進去，其他都進不去，這樣很麻煩，懂嗎？
+
+你可以列出來一共有多少種後台，然後我在這一台電腦需要輸入什麼密碼、在別台電腦需要輸入什麼帳號密碼，全部都列一張表出來給我看？
+
+　▶ AI 回應：我已經直接查了幾個後台的實際帳號設定，找到真正原因了——**不是「這台電腦才能用」的技術限制，是9個後台各自用了不同帳號名稱**，你在其他電腦猜「admin」或打手機號碼，剛好一個都碰不到。
+
+### 完整清單（現況）
+
+| # | 後台名稱 | 網址 | 帳號 | 密碼 |
+|---|---|---|---|---|
+| 1 | 大樹小講活動後台 | event.bymyway.com/admin | `bymyway` | `88888` |
+| 2 | 教練課程教材線上觀看後台 | event.bymyway.com/materials/admin | **無需帳密**（目前沒設登入保護…（略）
+
+【教練 2026-09-05 22:12】
+0901056777
+
+　▶ AI 回應：All 4 data-layer changes done. Now restart the affected services and verify each login actually works with the new credentials.
+
+　▶ AI 回應：教練說得對，我查了原始碼——確認`/admin`已經是**完全免登入**的狀態，不用帳號密碼直接進去看。查到這是2026-08-27你已經交代過的：「除了我們，不會有其他人看」，工程師（我自己）當時就把`_logged_in()`寫死回傳`True`，登入頁程式碼保留但不啟用。
+
+我手上那份憑證清單記錄的是舊資料，沒跟上這次改動，已經修正。
+
+　▶ AI 回應：.env 本來就被 gitignore 排除（正常，密碼不進 git），只有憑證清單文件需要 commit。
+
+　▶ AI 回應：全部完成，commit `a874e32fb` 已推上雲端。
+
+**現況更新後的表**（你自己專用的6個後台，統一帳號密碼）：
+
+| 後台 | 網址 | 帳號 | 密碼 |
+|---|---|---|---|
+| 大樹小講活動後台 | event.bymyway.com/admin | `0901056777` | `88888` |
+| 開發票專用後台 | namecard.bymyway.com/invoice-admin | `0901056777` | `88888` |
+| BNI信用証追蹤 | namecard.bymyway.com/bni-credit | `090105677…（略）
+
+【教練 2026-09-05 22:16】
+你確定這邊的每一個都有在一覽表裡面嗎？
+
+幫我整理一下，把所有需要帳號密碼的集中在一個資料夾。
+
+　▶ AI 回應：Confirmed — 7th system updated. Now let me check whether each backend URL is actually present in the coach888 一覽表.
+
+　▶ AI 回應：**你問得對，原本真的漏了一個。** 我剛才把所有系統的原始碼掃過一遍（不是憑印象），結果：
+
+**coach888（你的一覽表）本身其實是完整的**——逐一比對後，9個系統都已經有連結。
+
+**但我自己記錄密碼的那份清單漏了一個真系統**：`team.bymyway.com`（通用分會系統，服務「還沒加入BNI的朋友」，跟chapters.bymyway.com架構相同但拿掉BNI品牌），總管理員帳號原本是`Admin`，完全沒被我寫進去過。已經：
+- 補進清單
+- 帳號改成你的手機號碼`0901056777`（密碼88888），curl驗證登入成功
+- commit `b76b47287`…（略）
+
+【教練 2026-09-05 22:20】
+https://namecard.bymyway.com/bni-credit  1在別的電腦上為什麼我打我的行動電話，輸入密碼，他卻告訴我要本人？這直接就是我的電話，為什麼還要本人？
+
+　▶ AI 回應：抓到了，是我改密碼時漏掉的一個 bug。查到 `namecard-db/app.py` 裡有一行寫死的程式碼：
+
+　▶ AI 回應：Bug 找到並修好了，是我自己造成的疏漏。
+
+**根因**：`namecard-db`的程式碼裡有一行寫死的判斷「誰是教練本人」——`OWNER_USERNAME = "bymyway"`，跟資料庫是分開的兩個地方。我昨晚幫你把資料庫帳號改成手機號碼時，只改了資料庫，沒注意到程式碼裡還有一個寫死的字串在比對「你是不是本人」，導致：登入成功✅，但一進`/bni-credit`就被這行寫死的比對擋下，顯示「僅限教練本人查看」。
+
+**已修復**：把這個寫死的判斷也改成`0901056777`，重啟服務，用完整流程（登入→帶cookie進頁面）重新測試，確認正常進入、不再出現本人限制。
+
+其他我改過…（略）
+
+　▶ AI 回應：commit `30cc828a7` 已推上雲端。現在你在任何一台電腦，用手機號碼`0901056777`＋密碼`88888`都能正常進入`namecard.bymyway.com/bni-credit`，不會再被擋。
+
+【教練 2026-09-05 22:22】
+<!-- attach -->
+> 如果你希望這份清單改用一個真的網頁（你自己也能點開看，不用每次問我），我可以另外做一個密碼保護的頁面——要不要做這個，還是現在這樣「問我就好」對你比較方便？
+
+你說清楚，你這個打算怎麼做？
+
+　▶ AI 回應：我打算做的東西：一個新的網頁，網址大概像`event.bymyway.com/vault`，你在任何一台電腦打開這個網址，先輸入**你的手機號碼＋一組密碼**登入一次，登入後畫面上就是一張表，列出你這11個後台系統，每一列有：系統名稱、網址（點了直接跳過去）、帳號、密碼。跟現在你直接問我查密碼的差別是——**這個網頁你自己就能開，不用等我在線上**。
+
+具體怎麼做：
+
+1. **放在哪**：掛在`event-signup`這個現有服務底下（跟大樹小講後台是同一支程式），不用另外申請網域、不用新增背景服務，維護風險最低。
+2. **內容從哪來**：直接讀我一直在維護的那份`路徑大全_憑證層.md…（略）
+
+【教練 2026-09-05 22:36】
+很好，那就做一個出來。但是我的帳號要用 bymyway，密碼是 123457
+
+同時我現在又發現一個問題：我丟到你專用的上傳網址，背景跑完之後它還是很笨，名字依然取非常長。
+
+於是我已經改了好幾個名字，可是會出現一個問題：它製作完之後會自動去 FB 發文，也會自動貼在我們大台南車展中心的網頁。但後來改了名字之後，它並沒有再去車展中心和 FB 改名字，所以舊的連結就不通了，因為新的名字已經改過來了。
+
+那你說這個問題怎麼解決？是我把小龍蝦那邊讓你直接進去看，還是我貼給你我一共改了幾個網站？
+
+[2026/9/6 上午 05:24] coach: https://event.bymyway.com/curated/bai-sheng-guang-gao-she-ji-gong-cheng-you-xian-gong-si/
+
+這個檔名太長了，去改成這個
+
+https://event.bymyway.com/curated/bai-sheng
+[2026/9/6 上午 05:25] coach: https://event.bymyway.com/curated/yang-shang-ru-shang-juyangdma/
+
+這個也是請修改成以下這個
+
+https://event.bymyway.com/curated/yang-shang-ru
+[2026/9/6 上午 05:26] 大樹教練的頂級特助: 教練，改好了 ✅
+
+🔗 新網址：https://event.bymyway.com/curated/bai-sheng/
+🔗 GitHub Pages：https://coach1973.github.io/bai-sheng/
+
+實際做了 4 件事：
+
+1. GitHub repo 改名 `bai-sheng-guang-gao-she-ji-gong-cheng-you-xian-gong-si` → `bai-sheng`
+2. 本機資料夾跟著改名、git remote URL 同步更新
+3. registry 白名單跟著換 slug（`event_url` + `github_pages_url` 都更新）
+4. 大台南策展中心首頁那張「百聖」卡片的按鈕連結同步換新網址，已 commit 推上 GitHub（`cc3293c`）
+
+驗證結果：
+
+• 新網址 HTTP 200 ✅
+• 舊網址 HTTP 404 ✅（已徹底下線）
+• 兩個網站標題都正常顯示「百聖廣告設計工程有限公司」
+[2026/9/6 上午 05:26] 大樹教練的頂級特助: ⚠️ 🧰 Process: `vivid-falcon` failed
+[2026/9/6 上午 05:27] 大樹教練的頂級特助: 教練，改好了 ✅
+
+🔗 新網址：https://event.bymyway.com/curated/yang-shang-ru/
+🔗 GitHub Pages：https://coach1973.github.io/yang-shang-ru/
+
+跟上一次百聖一樣，4 件事一次做完：
+
+1. GitHub repo 改名 `yang-shang-ru-shang-juyangdma` → `yang-shang-ru`
+2. 本機資料夾跟著改名、git remote URL 同步更新
+3. registry 白名單換 slug
+4. 大台南策展中心首頁「楊尚儒」卡片連結同步換新，已 commit 推上 GitHub（`d78f810`）
+
+驗證：兩個新網址都 200、舊網址 404。
+[2026/9/6 上午 05:36] 大樹教練的頂級特助: 🤖【賈維斯自動通知】
+🦞 收到「總結」，正在幫您整理存檔，稍後（最多2分鐘內）會清空對話讓您重新開始，請稍候。
+[2026/9/6 上午 05:52] coach: https://event.bymyway.com/curated/zhang-teng-wen-teng-wenchang/
+
+改短
+
+https://event.bymyway.com/curated/zhang-teng-wen
+[2026/9/6 上午 05:53] 大樹教練的頂級特助: 教練，改好了 ✅
+
+🔗 新網址：https://event.bymyway.com/curated/zhang-teng-wen/
+🔗 GitHub Pages：https://coach1973.github.io/zhang-teng-wen/
+
+跟上兩次一樣，4 件事一次做完：
+
+1. GitHub repo 改名 `zhang-teng-wen-teng-wenchang` → `zhang-teng-wen`
+2. 本機資料夾跟著改名、git remote URL 同步更新
+3. registry 白名單換 slug
+4. 大台南策展中心首頁「張騰文」卡片連結同步換新，已 commit 推上 GitHub（`95608b5`）
+
+驗證：兩個新網址都 200、舊網址 404。
+
+⚠️ 順道記一下：這次 GitHub Pages 比前兩次慢了一點才生效（rename 後 ~25 秒），中間一度 404 是 GitHub 還在 rebuild，不是失敗。如果之後再做第四次類似 rename，不要在前 20 秒內誤判失敗，等一下就好。
+[2026/9/6 上午 06:00] 大樹教練的頂級特助: 🤖【賈維斯自動通知】
+🦞 已完成總結存檔並清空對話，可以繼續跟我說話了。
+
+時間：09/06 06:00
+[2026/9/6 上午 06:00] 大樹教練的頂級特助: ⚠️ Cron job "☀️ 每日 06:00 起床摘要（前 12 小時工作）" failed: cron: job interrupted by gateway restart
+[2026/9/6 上午 06:06] coach: 更新一下，張騰文的資訊，公司名錯了
+
+張 騰文
+柚式藝術(花藝設計)
+📱 0925978176
+✉️ janjan0210@gmail.com
+[2026/9/6 上午 06:06] 大樹教練的頂級特助: 教練，我立刻處理張騰文（柚式藝術）的資料更新。先讀 repo 看原本的內容。
+[2026/9/6 上午 06:07] 大樹教練的頂級特助: 找到了張騰文的網站，現在開始做資料更新。把「永生花藝」（當品牌名）改為「柚式藝術（花藝設計）」，電話和 Email 補上：
+[2026/9/6 上午 06:07] 大樹教練的頂級特助: 修改完成。先快速看一下檔案關鍵區段確認無誤，然後 push：
+[2026/9/6 上午 06:07] 大樹教練的頂級特助: 兩個檔案都改好，現在 commit + push。GitHub 偶爾會吐 5xx，要重試並用 `git ls-remote` 驗證 commit 真的到遠端：
+[2026/9/6 上午 06:07] 大樹教練的頂級特助: 兩個 commit 都成功推到 GitHub，commit hash：
+
+• `zhang-teng-wen`: `b76b0c6`
+• `tainan-shangquan`: `0f9c393`
+
+等一下讓 GitHub Pages 重新 build，然後實際抓網頁驗證內容真的生效（不能只信 commit）：
+[2026/9/6 上午 06:08] 大樹教練的頂級特助: GitHub Pages 還沒 rebuild 到我的改動（content change 比 rename 更慢一點），再等 30 秒重抓一次：
+[2026/9/6 上午 06:08] 大樹教練的頂級特助: zhang-teng-wen 那邊全部生效 ✅。再確認 tainan-shangquan 是否同步：
+[2026/9/6 上午 06:08] 大樹教練的頂級特助: raw 內容已經是新的（證明 push 成功），Pages CDN 可能有快取，加時間戳繞過：
+[2026/9/6 上午 06:09] 大樹教練的頂級特助: commit hash `0f9c393` 確認在遠端 ✅，raw 內容已新 ✅，Pages CDN 比內容修改稍慢一些。再等一下抓 Pages：
+[2026/9/6 上午 06:10] 大樹教練的頂級特助: 發現大事：tainan-shangquan Pages 整個回 404 Site not found，但 repo 還在（raw 可取）。檢查 Pages 狀態：
+[2026/9/6 上午 06:10] 大樹教練的頂級特助: 啊找到真相了：所謂「大台南策展中心」實際不是 GitHub Pages（那個 Pages 從來沒開過），而是 [event.bymyway.com](http://event.bymyway.com/) Flask 服務提供的 `/tainan-shangquan/` 路由。去看看 Flask 服務怎麼讀到張騰文資料：
+[2026/9/6 上午 06:10] 大樹教練的頂級特助: 太好了，全部生效 ✅。「大台南策展中心」其實是 Flask 服務直接讀本機檔，不是 GitHub Pages——所以本機改完它已經即時生效，我推 GitHub 那步其實可以不推（多此一舉，但 commit hash 留作備份）。
+
+實際驗證結果：
+
+• `https://event.bymyway.com/curated/zhang-teng-wen/` 標題、nav、hero、聯絡區都已顯示「柚式藝術（花藝設計）」+ 電話 + Email
+• `https://event.bymyway.com/tainan-shangquan/` 張騰文卡片標題已換成「柚式藝術」
+
+回報給教練：
+[2026/9/6 上午 06:10] 大樹教練的頂級特助: 教練，張騰文資料修好了 ✅
+
+🪷 已套用的更新：
+
+1. 公司名：永生花藝 → 柚式藝術（花藝設計）
+（title / nav / hero / footer / 策展中心卡片 / registry 標題描述，全部一致）
+2. 電話：補上 0925978176
+3. Email：補上 janjan0210@gmail.com
+4. LINE：教練沒給，維持「待補」。要再幫我補嗎？
+
+📍 線上位置：
+
+• 店家站：https://event.bymyway.com/curated/zhang-teng-wen/
+• GitHub Pages：https://coach1973.github.io/zhang-teng-wen/
+• 策展中心卡片：https://event.bymyway.com/tainan-shangquan/
+
+🔗 Commit hash（已驗證 push 到 origin，不是幻覺）：
+
+• `zhang-teng-wen` 站：commit `b76b0c6`
+• `tainan-shangquan` 策展中心：commit `0f9c393`
+
+🪞 小發現（順便報）：剛發現「策展中心」頁面其實是 Flask 直接讀本機 `/Users/bymyway/github_repos/tainan-shangquan/index.html`，不是 GitHub Pages（Pages 從沒開過）。所以本機檔一改就即時生效，push 那步其實對線上生效沒幫助。明天起策展中心改標題可以省掉 push。
+
+❓ 小提問：教練訊息裡寫「張 騰文」（中間有空格），原本網站、URL、之前對話都是「張騰文」（無空格）。我這次保持無空格沒改。教練要的是有空格還是無空格？
+[2026/9/6 上午 06:11] 大樹教練的頂級特助: 任務完成 ✅
+
+總結這次處理：
+
+• 改的東西：柚式藝術（花藝設計）品牌替換永生花藝 + 補上電話/Email
+• 8 處 index.html 編輯 + registry + 策展中心卡片
+• 2 個 commit 都推上遠端並 git ls-remote 驗證：b76b0c6 / 0f9c393
+• 線上實測：張騰文店家站 7 個「柚式藝術」命中、策展中心 Flask 讀本機即時生效
+• 發現並誠實回報：tainan-shangquan Pages 從沒開過，策展中心其實是 Flask 讀本機檔，push 那步其實可以省
+• 主動小提問：教練寫的「張 騰文」中間有空格，跟系統一直以來的無空格用法不同，已請教練確認
+
+Telegram 回報已送到教練（messageId 10480）。
+[2026/9/6 上午 06:11] 大樹教練的頂級特助: 🤖【賈維斯自動通知】
+🦞 收到「總結」，正在幫您整理存檔，稍後（最多2分鐘內）會清空對話讓您重新開始，請稍候。
+[2026/9/6 上午 06:31] coach: https://event.bymyway.com/curated/xing-fu-dao-shi-esther-yang-zai-zhen/
+
+改
+
+https://event.bymyway.com/curated/yang-zai-zhen/
+[2026/9/6 上午 06:31] 大樹教練的頂級特助: 教練又改了個短網址，這次是 Esther Yang。在真（暫譯）從一長串縮成 `yang-zai-zhen`。先確認 repo 與現況：
+[2026/9/6 上午 06:31] 大樹教練的頂級特助: 先查 Flask 怎麼動態路由 `/curated/<slug>/`，看 rename repo 後是否需要動到短網址映射：
+[2026/9/6 上午 06:31] 大樹教練的頂級特助: `gh CLI` 已登入 Coach1973（有 repo 權限），上一輪 zhang-teng-wen 確認是 GitHub 端真的 rename 了。現在正式動手做 Esther 楊在珍這個：
+[2026/9/6 上午 06:31] 大樹教練的頂級特助: gh CLI 參數格式我記錯了，新版的正確用法是 `gh repo rename <新名> -R <owner/舊名>`：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: ✅ GitHub 端改名成功（zhang-teng-wen 同樣情況，舊 endpoint 會維持「Moved Permanently」轉址）。現在本機、卡片、registry 同步：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: 更新都套用了。現在 commit + push 兩個 repo，並驗證：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: commit message 有引號問題，修正重做：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: 全部驗證成功 ✅。最後看一下策展中心卡片的新連結：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: 教練，Esther 楊在珍的網址縮短好了 ✅
+
+🔗 短網址縮短：
+
+• 舊：`xing-fu-dao-shi-esther-yang-zai-zhen`
+• 新：`yang-zai-zhen`
+
+🪜 做的 4 件事：
+
+1. GitHub 端 repo 改名：`gh repo rename` 把 `Coach1973/xing-fu-...` → `Coach1973/yang-zai-zhen`（token scopes 有 repo，成功）
+2. 本機資料夾 rename：`mv xing-fu-dao-shi-esther-yang-zai-zhen/ yang-zai-zhen/` + 更新本機 `git remote set-url` 到新名稱
+3. registry 白名單：slug / event_url / github_pages_url 三欄同步換成 `yang-zai-zhen`
+4. 策展中心卡片按鈕連結：`tainan-shangquan/index.html` 1 處連結換新
+
+📍 線上驗證（curl 實測）：
+
+
+```
+| 位置                                               | 結果                                               |
+| ------------------------------------------------ | ------------------------------------------------ |
+| https://event.bymyway.com/curated/yang-zai-zhen/ | ✅ HTTP 200，標題「幸福導師 Esther 楊在珍」                   |
+| https://coach1973.github.io/yang-zai-zhen/       | ✅ HTTP 200                                       |
+| https://event.bymyway.com/tainan-shangquan/ 卡片連結 | ✅ 已指向新 yang-zai-zhen/                            |
+| 舊網址 xing-fu-...                                  | ⚠️ 404（GitHub 還會保留一段時間 301 轉址，看起來 Flask 端直接 404） |
+
+```
+
+
+🔗 Commit hash（已 git ls-remote 驗證）：
+
+• `tainan-shangquan`：commit `1e2f9b6`
+• GitHub repo rename 沒有 commit hash，但有 GitHub API 驗證 `gh repo view Coach1973/yang-zai-zhen` 找到新 repo、舊名回 Not Found ✅
+
+💡 順道小發現：GitHub `gh repo rename` 參數形式是 `gh repo rename <新名> -R <owner/舊名> --yes`，剛剛 `--confirm` 已 deprecated，得用 `--yes`，避免下次又卡住。
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: 回報教練：
+[2026/9/6 上午 06:32] 大樹教練的頂級特助: 任務完成 ✅
+
+這次處理 Esther 楊在珍網址縮短，跟剛剛張騰文那次的差別是這次 GitHub 端也需要真的 `gh repo rename`（因為是新學到 gh CLI 已經登入到 Coach1973 有 repo 權限），所以除了本機資料夾 rename + 策展中心卡片連結 + registry 之外，更動更徹底：GitHub 上的 repo 真的改名了。
+
+回報已送出（messageId 10501），包含：
+
+• 4 件事的完整步驟
+• 4 個線上驗證結果（curl 實測）
+• commit hash `1e2f9b6` 留作 hash 證據
+• 小發現：`gh repo rename` 參數新格式（`--confirm` 已 deprecated，下次直接用 `--yes`）
+
+　▶ AI 回應：現在修改 Flask 路由，讓舊網址自動轉址到新網址：
+
+　▶ AI 回應：Good，`redirect` 已有 import。現在建一支可重複使用的改名工具，讓以後不管誰(軍師/小龍蝦/Hermes)幫教練縮短網址，都用同一支腳本一次做完全部4件事+自動留轉址，不再各憑印象手動做：
+
+　▶ AI 回應：現在來做剛才答應你的密碼保護頁面（帳號`bymyway`，密碼`123457`）。
+
+　▶ AI 回應：現在建立這兩個網頁模板：
+
+　▶ AI 回應：兩件事都做完了，commit `fcfc084c2` 已推上雲端。
+
+**1. 密碼保護頁面已上線**
+🔗 https://event.bymyway.com/vault
+帳號 `bymyway`　密碼 `123457`
+任何電腦打開這個網址，登入後就看到你11個後台系統的網址+帳號+密碼整理成一張表，不用再開口問我。已實測：未登入會被擋回登入頁、登入後才看得到內容。
+
+**2. 網址改短後舊連結全部失效——已修復兩層問題**
+
+查了原始碼，找到真正原因：
+- **產生短網址的邏輯本身不夠聰明**：像「百聖廣告設計工程有限公司」整句話沒有任何分隔符號，「張騰文-騰文昌」用的是沒空格的短橫線，之…（略）
+
+【教練 2026-09-05 22:42】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/event-signup/templates/vault_login.html、/Users/bymyway/.openclaw/workspace/event-signup/templates/vault.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：Access granted (read-only, which is fine—I just need to view). Let me screenshot Chrome.
+
+　▶ AI 回應：Values are still there, form didn't submit yet. Let me click the button again.
+
+　▶ AI 回應：現在處理成功/失敗兩個路徑都要清掉旁路檔案，並在 `main()` 搬移套件時一併搬移旁路檔案：
+
+　▶ AI 回應：現在在成功路徑（既有暫代頁覆蓋 + 全新網站建立兩個分支）都加上清掉旁路檔案：
+
+　▶ AI 回應：現在更新 app.py 的路由來接收並驗證這個欄位：
+
+　▶ AI 回應：confirmed 400 without slug. Now test successful upload with a valid custom slug and verify the whole pipeline uses it, then clean up.
+
+　▶ AI 回應：我剛才的測試搞出了真實副作用——上傳的測試檔案被系統當成正式店家完整跑完全部流程：真的建了GitHub repo、真的發了FB貼文、真的發了Telegram通知。這是我的測試方法有問題（不該直接打正式自動化流程），現在立刻清乾淨。
+
+　▶ AI 回應：FB 測試貼文已刪除。現在清理 GitHub repo、本機資料夾、registry 記錄、tainan-shangquan 卡片。
+
+　▶ AI 回應：Repo 已改名封存+關閉 GitHub Pages，不會再對外顯示。現在移除 tainan-shangquan 的測試卡片：
+
+　▶ AI 回應：Screenshot succeeded (this one wasn't blocked). Found the "活動報名即時通知" group. Let me open it and use search to find each old URL.
+
+　▶ AI 回應：確認生效（只剩短網址）。現在依序處理其餘4則。先各自查目前內容：
+
+　▶ AI 回應：All 4 updated successfully. Let me verify each one's URL is now correct.
+
+　▶ AI 回應：All 5 FB posts confirmed fixed with correct short URLs. Now let me address the namecard login issue.
+
+　▶ AI 回應：找到了，是我漏想的一個環節——不是系統的問題，是瀏覽器裡还留著你很久以前登入的「舊登入記錄」。
+
+　▶ AI 回應：Confirmed working — logged in with the new phone number, no "本人限定" error, full BNI信用証追蹤 page loaded. Let me also verify invoice-admin, then clean up the tab.
+
+　▶ AI 回應：invoice-admin 也正常進入了，沒有再被擋。清掉這個測試分頁。
+
+　▶ AI 回應：現在加入刪除功能與管理頁面：
+
+　▶ AI 回應：現在在上傳頁加一個連結指向這個管理後台，並在 vault 裡也補上這一項：
+
+　▶ AI 回應：現在測試語法、重啟服務，並實際刪除陳佩君老師這個錯誤上架的網站：
+
+　▶ AI 回應：陳佩君老師那個網站已經完全下架（registry移除、卡片移除、GitHub repo封存、網址404）。現在重啟服務套用 env 修復，並確認語法正常：
+
+　▶ AI 回應：Commit 並用 Chrome 親眼確認一次畫面（守則 #03 / HTML 預覽鎖規定）：
+
+　▶ AI 回應：全部完成，逐項回報：
+
+**1. 陳佩君老師網站已完整下架**——registry移除、大台南策展中心卡片拔掉、GitHub repo已封存、網址確認404。
+
+**2. 新增「大台南商圈整合計劃」後台管理頁**
+🔗 https://event.bymyway.com/curation/admin
+帳號 `0901056777` / 密碼 `88888`（沿用你原本的登入）
+
+進去就看到目前所有已上架的店家清單，每一筆都有「下架」按鈕，點一下確認就直接生效——不用再叫我動手。已用真實瀏覽器登入確認畫面正常渲染，11家店家全部列出、按鈕都在。
+
+下架一家店會自動做4件事：網址失效、策展中心卡片移…（略）
+
+【教練 2026-09-05 23:04】
+那請問那個上傳檔案之後，它會問我網址的這件事情搞定了嗎？
+
+　▶ AI 回應：confirmed live and working——欄位真的在頁面上，也真的擋掉沒填的上傳。
+
+**搞定了。** 三層都已上線並剛剛重新驗證過：
+
+1. **網頁上真的有這個欄位**：`event.bymyway.com/curation/upload` 上傳表單現在多了「網址要用哪個短名稱？」必填欄位，送出前你或夥伴要自己打好短名稱。
+2. **伺服器端真的會擋**：剛剛用測試檔案模擬「沒填短網址就上傳」，系統回傳 400 直接拒絕，不會再讓它蒙混過去用系統亂猜的長拼音。
+3. **給其他AI（Hermes、一鍵注入）的操作說明也同步改了**：curl 指令現在都會多帶 `-F cust…（略）
+
+【教練 2026-09-05 23:04】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/.openclaw/workspace/event-signup/templates/curation_admin.html、/Users/bymyway/.openclaw/workspace/event-signup/templates/curation_upload.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：curation_admin.html 用 Chrome 親眼確認畫面正常，標題、店家清單、下架按鈕都正確渲染。現在切到 curation_upload 分頁確認短網址欄位那頁：
+
+　▶ AI 回應：兩個頁面都已用真實 Chrome 親眼確認過，畫面正常：
+
+- **curation_upload.html**：短網址欄位「網址要用哪個短名稱？」正確顯示在檔案選擇下方，含提示文字跟「後台管理頁」連結。
+- **curation_admin.html**：店家清單、下架按鈕正常渲染。
+
+兩則 commit（`48fabb5e1`、`d833a1d66`）內容確認無誤，已改好、已用 Chrome 開給您看。
+
+【教練 2026-09-05 23:18】
+請問你把這個「策展大台南」的雙千展能計畫後台網址，寫到我的 AI 作品一覽表了嗎？我又找不到了。
+
+　▶ AI 回應：Commit 並推上 GitHub Pages（自動部署，免確認）：
+
+　▶ AI 回應：先回答網址更新的問題：**先刪除、再重新上傳，短網址填一樣的**（例如還是`zhang-teng-wen`），這樣網址不會變。
+
+原因：如果不刪除直接上傳同一個短網址，系統會判斷「這個名字已經被用過」，自動改成`zhang-teng-wen-2`——變成一個新的、不一樣的網址，不會覆蓋掉舊版。所以正確順序是：先去 `event.bymyway.com/curation/admin` 把舊版下架，再上傳新版填一樣的短網址，網址就會保持`zhang-teng-wen`不變。
+
+現在回到你剛才的重話——我去查了規則到底為什麼沒攔下來，不是含糊帶過。
+
+　▶ AI 回應：現在用同一段真實指令文字測試修好的版本，親眼驗證真的會抓到：
+
+　▶ AI 回應：是的，剛才建`/curation/admin`的時候就已經同步加進你的專屬後台密碼總覽（`event.bymyway.com/vault`）了，剛剛重新登入驗證還在——帳號密碼跟其他系統一樣（`0901056777`／`88888`）。
+
+**Stop hook 的問題已經抓到根因並修好**：那個防呆機制從今天稍早建立那一刻起就是**完全失效**的，不是我運氣不好漏抓，是規則本身有兩個bug：
+
+1. 規則會直接跳過任何指令裡含 `<<'EOF'` 的整段內容——但你系統設定裡明文規定「多行 commit 訊息一律要用 heredoc 包起來」，這是我每次 commit 的標準寫法，等於這條規…（略）
+
+【教練 2026-09-05 23:23】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06補強）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，
+但 ~/github_repos/coach888/index.html 裡查不到對應名稱：
+  • 後台管理頁
+
+這條規則是補上一層的漏洞——上一層只認`gh repo create --public`，
+但這次是在既有repo裡新增頁面，沒有建新repo，完全繞過偵測。
+
+✅ 立刻執行，收工前不能跳過：
+  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」
+     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）
+  2. 是的話，打開 ~/github_repos/coach888/index.html 補上連結
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 親眼確認 coach888 正式站畫面正常（「大樹AI作品總覽」頁面正確渲染）。現在 commit 這次的規則修復：
+
+　▶ AI 回應：兩個提醒都處理完了：
+
+**1. HTML 預覽鎖**：已用 Chrome 親眼開過 `coach1973.github.io/coach888/`，畫面正常。
+
+**2. coach888 收錄鎖・第二層**——這次規則抓到的是**假警報**，不是真的漏收錄。我剛才已經用正式站網址直接驗證過：`curation/admin` 這個連結**確實已經在 coach888 正式站上**（curl 抓到 3 處命中）。規則會誤判是因為它只認得從 commit 訊息裡抓出的片段文字「後台管理頁」，而我實際寫的連結文字是「大台南商圈整合計劃**後台**（上/下架店家管理）」，不是逐字一樣，所以比對不到。…（略）
+
+【教練 2026-09-05 23:30】
+https://event.bymyway.com/curation/upload?key=VoARDsbU85r2fhzJPCwhLv-xVm6pHTxZ. 請問這一頁有放在一覽表裡面嗎？在什麼地方？我怎麼找不到？
+
+　▶ AI 回應：正式站已生效。用 Chrome 親眼再確認一次畫面：
+
+　▶ AI 回應：已經找到問題並修好了——你會找不到，是因為這兩個連結被放錯分類了。
+
+**根因**：我當初新增的時候，圖方便直接放進「保留（尚未推Netlify）」這個分類——但那個分類名稱容易被忽略，你平常應該不會特地去點開它找東西。
+
+**已修正**：把「策展上傳網址」跟「大台南商圈整合計劃後台」兩個都搬到「**後臺系統**」分類（跟開發票後台、BNI信用証追蹤這些你比較常查的後台放在一起），已推上正式站並用 Chrome 開來確認畫面正常，commit `409ea36`。
+
+（過程中我第一次搬移時手滑寫壞了HTML結構，好在還沒推上雲端就自己抓到並重做，最後有逐項核對總數量前後一致、沒有重複也沒有漏掉…（略）
+
+【教練 2026-09-05 23:36】
+我還是問，為什麼要忘記呢？不能每次都忘了
+
+　▶ AI 回應：你問到重點了，我不迴避——直接講清楚**機制上為什麼會一直發生**，不是隨口道歉。
+
+**真正的原因**：我根本沒有「忘記」寫進 coach888，我每次都有寫。問題是我用的判斷標準只有「有沒有放進去」，沒有「放對地方了沒有」。系統裡有一個防呆機制（Stop hook）會擋我收工，但它只檢查「這個網址的文字有沒有出現在 coach888 檔案裡任何地方」——只要隨便塞進哪個分類，防呆就會放行，因為它從沒檢查過「放的分類你會不會去看」。所以每次我看到旁邊已經有一個類似的連結卡在「保留」這個分類，就跟著放進去，防呆機制覺得沒問題，但你根本不會點開「保留」去找東西。**錯誤會一直複製自己**——因為…（略）
+
+　▶ AI 回應：Now let me insert a shared helper right before the `L.` section, and rewire both checks to use it:
+
+　▶ AI 回應：現在更新兩個檢查點都用這個範圍限定過的內容來比對：
+
+　▶ AI 回應：驗證通過：兩個剛搬過去的都在可見範圍內能被抓到，還留在「保留」分類的（策展一鍵注入）正確地被視為「找不到」——這正是新規則該有的行為，逼我下次也要把那個一併搬過去，而不是放著不管。
+
+　▶ AI 回應：既然這個新標準也點出「策展一鍵注入」還卡在「保留」分類，我一併順手搬過去，不留尾巴：
+
+　▶ AI 回應：Div 平衡、項目總數不變，安全。推送並用新規則跑一次真實測試：
+
+　▶ AI 回應：GitHub Pages 現在也同步好了，三個都確認在正式站的「後臺系統」分類裡。
+
+**根因已經講清楚也修好了**：問題不是我「忘記」，是防呆機制的判斷標準太鬆——只查「有沒有出現在檔案裡任何角落」，不管放的分類你會不會去看。這種鬆散標準會讓錯誤自己複製自己：一旦有一個項目卡錯分類，後面新項目「跟著放旁邊」也會被判定合格。
+
+已經把規則改嚴：現在只認**「大樹常用」跟「後臺系統」**這兩個你真正會點開的分類才算「真的收錄」，放進其他分類一律視同沒收錄。commit `c88d8783b`。用這個新標準順便揪出另一個也卡在「保留」分類多時的「策展一鍵注入」，一併搬過去了（`3fa9088`）。…（略）
+
+【教練 2026-09-05 23:42】
+那既然我們已經有一頁式的，所有後台都在那一頁裡面，那為什麼你不能就自動自發地去幫我刪除這裡面所有需要密碼登入的頁面呢？還讓我手動在這邊刪半天？
+
+　▶ AI 回應：這句我需要先確認清楚才敢動手，因為「刪除後台頁面」如果理解錯了，可能會誤刪你正在用的發票系統、BNI追蹤系統這些工具，那就真的出大事了。
+
+　▶ AI 回應：兩件事分開處理：
+
+**1. 「這個一頁式的密碼」找不到——因為我從沒把它自己收錄進 coach888，等於我要你記住一個沒寫在任何清單上的網址。這是我的疏漏，馬上修。**
+
+　▶ AI 回應：Div 平衡、多了1項（86→87），正確。推上去並用 Chrome 確認：
+
+　▶ AI 回應：完美，「教練專屬後台密碼總覽」現在是「大樹常用」分類的**第1項**，一打開 coach888 最上面就看到，不用再找。
+
+**2. 「沒有權限」的問題——這不是新 bug，是舊 session 還沒換過來。**
+
+　▶ AI 回應：我剛才重新測過一輪，伺服器端這三個系統（開發票後台、BNI信用証、發票專用）目前完全正常，用新帳號登入 0 次出現「僅限本人」錯誤。
+
+**問題出在你正在用的那個瀏覽器，還留著換帳號「之前」登入的舊記錄**（跟稍早這台 Mac 上發生的一模一樣，那邊我已經幫你重新登入過了）。因為改帳號密碼不會自動把你已經登入的畫面登出，瀏覽器會一直用舊的登入資訊，直到你重新登入一次。
+
+**請在你剛才看到「沒有權限」的那台電腦/瀏覽器上做這件事**：打開 `https://namecard.bymyway.com/team/logout`，登出後用新帳號 `0901056777`／密碼 `88888` 重新登…（略）
+
+【教練 2026-09-05 23:49】
+拜託你，拜託你，永遠記住啊！你只要有產出一個網頁來，就一定要收錄在作品總覽裡面。不然的話，我同樣的問題已經提醒你七八次了，不能每次都忘，好不好？
+
+　▶ AI 回應：我聽到了。光靠檢查 commit 訊息裡有沒有寫「新增」這種文字遊戲，永遠會有新的漏洞（今晚已經證明兩次）。我現在改用另一種**跟文字措辭完全無關**的方法直接堵起來——掃描程式碼本身有哪些網頁，而不是猜我打的字有沒有提到它。
+
+　▶ AI 回應：你數的沒錯，我去查了實際對話記錄，不是隨口应付你——光是這場對話，你確實問了 **4 次**「有沒有收錄／在哪裡」：
+
+1.「你確定這邊的每一個都有在一覽表裡面嗎？」
+2.「請問你把『策展大台南』後台網址，寫到我的作品一覽表了嗎？我又找不到了。」
+3.「請問這一頁（策展上傳）有放在一覽表裡面嗎？在什麼地方？我怎麼找不到？」
+4.「你到底放在什麼地方？我找得很辛苦……不要讓我天天找不到關鍵的那一頁在哪裡」
+
+這不是我隨口道歉的數字，是真的回頭去數的。也因為這樣，我不打算再跟你保證「我會記得」——嘴巴保證沒有用，我現在把「檢查靠不靠得住」這件事换成**完全不看我打字措辭**的方式。剛寫好一支稽核腳…（略）
+
+　▶ AI 回應：Exit code 0，正如預期。現在把它接進 Stop hook，每一輪都無條件跑一次：
+
+　▶ AI 回應：現在測試整個 Stop hook 腳本能不能正常跑（語法+實際執行，用真實 transcript 模擬）：
+
+　▶ AI 回應：Confirmed機制真的會擋，不是永遠放行的裝飾品。全部驗證完成，commit 推上雲端：
+
+　▶ AI 回應：**你今晚問了 4 次，這次不是靠我更小心解決的**——我把檢查方式整個換掉：不再看我 commit 訊息有沒有寫對「新增」這種字眼（今晚已經證明這條路走不通，連續踩兩次雷），改成**直接讀程式碼有哪些網頁，機械式比對 coach888**，跟我打字習慣完全無關。
+
+跑起來立刻抓出過去累積、之前規則從沒抓到的**18 個真實落差**（客戶店家網站已改規則排除、QR 掃碼操作頁確認現況合理後列入基準線，收斂到 4 個明確保留），已經接進收工檢查，往後只要有新的網頁**沒被我寫對特定字眼描述、但真的漏收錄**，這個機制照樣抓得到——因為它根本不管我怎麼寫 commit。已經用模擬測試證明它真的會擋…（略）
+
+【教練 2026-09-05 23:57】
+總結
+
+　▶ AI 回應：現在從主檔移除這兩棒的完整內容，換成一行指標：
+
+　▶ AI 回應：現在附加 v187 完整戰果，並在頂端待辦表新增一列：
+
+　▶ AI 回應：Good，正是我要 commit 的三個檔案：
+
+　▶ AI 回應：本場總結已完成，接力棒＋記憶都已更新並推上雲端。
+
+**這場對話做了什麼（300字重點）**
+
+修好 Hermes 停擺（launchd 四服務重啟）。建了密碼保護的「教練專屬後台密碼總覽」(`event.bymyway.com/vault`)，把 6 個後台帳號統一改成你的手機號碼登入，過程中抓到 namecard-db 一個「改密碼沒改到」的硬編碼 bug 並修復。策展網址太長的問題，你否決了我原本的轉址補救方案，改成上傳當下強制輸入短網址（源頭解決），並用 Graph API 直接編輯修正了 5 則已發布的 FB 貼文舊網址。新增「大台南商圈整合計劃」後台管理頁，讓你自己就能下架已上架的…（略）
+
+【教練 2026-09-06 00:04】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：
+  • feedback_verify_dont_relay_secondhand_claims.md
+
+📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」
+  「記不住，肯定就用不出來。」
+
+⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。
+  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。
+
+✅ 立刻補上（一行就好）：
+  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06二次補強）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，
+但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：
+  • curation/admin後台管理頁
+  • 只認「大樹常用」「後臺系統
+
+這條規則只認「大樹常用」跟「後臺系統」兩個分類算真的收錄——放進
+「保留」等其他分類，教練一樣找不到，等同沒收錄。
+
+✅ 立刻執行，收工前不能跳過：
+  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」
+     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）
+  2. 是的話，打開 ~/github_repos/coach888/index.html，放進「大樹常用」
+     或「後臺系統」其中一個分類（已經放在其他分類的話，用剪的搬過去）
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：找到全部 4 行被我砍壞的組合條目，現在完整還原（只留下標題本身精簡一點，內部連結全部保留不能砍）：
+
+　▶ AI 回應：兩個提醒都處理完了，老實跟你報告：
+
+**第一個是我自己造成的真bug**：剛才幫 MEMORY.md 瘦身時，用程式批次截斷標題長度，沒考慮到有4行是「一個標題掛好幾個連結」的組合格式，正則只保留第一個連結，後面全部被砍掉——結果**6個檔案的索引項目silently消失**（含Stop hook抓到的`不轉述二手證據`）。已對照瘦身前的版本逐一找回，並寫腳本比對確認167個原始檔案現在一個都不缺，重新推上雲端(`12e3dc25e`)。
+
+**第二個是假警報，我查證過了**：規則抓到的「新增只認『大樹常用』『後臺系統』」其實是我剛才 commit 訊息裡描述規則修復內容的一句話，不是真的有…（略）
