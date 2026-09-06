@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 把paraphrase當逐字引用回頭捏造…](feedback_never_fabricate_literal_quotes_2026-09-06.md)
 - [🔴 靠commit/對話文字措辭比對…](feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06.md)
 - [🔧 改帳號登入名稱要搜尋有無獨立寫死…](reference_owner_username_hardcoded_separate_from_db_2026-09-06.md)
 - [🔧 策展SOP兩項根因修復：slug…](reference_curation_sop_placeholder_autodetect_and_slug_fix_2026-09-06.md)
