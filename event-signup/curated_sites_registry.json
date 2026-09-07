@@ -129,6 +129,17 @@
       "uploaded_at": "2026-09-06 22:59",
       "status": "live",
       "source_package": "20260906-225915__doc_25ce37f2c5e4_qiu-nan-yin-site-v3.zip"
+    },
+    {
+      "slug": "xiangjuchang",
+      "title": "水交社眷村食堂 — 相聚場｜臺南水交社文化園區・手工拉麵與慢燉牛腱",
+      "description": "相聚場 Community Canteen 位於臺南水交社文化園區的三合院眷舍內。湯頭以中藥材、蔬果與辛香料熬煮，絕不使用現成調理包；牛肉悶燉慢熟，麵條手工現拉。相聚有你，更美好。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/xiangjuchang/",
+      "github_pages_url": "https://coach1973.github.io/xiangjuchang/",
+      "uploaded_at": "2026-09-07 15:43",
+      "status": "live",
+      "source_package": "20260907-154333__doc_866aa13b0cf6_xiangjuchang-website.zip"
     }
   ],
   "redirects": {

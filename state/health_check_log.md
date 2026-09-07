@@ -441,3 +441,5 @@ HEARTBEAT.md 內容：
 
 ⚠️ 小失誤記錄（cycle=668, 2026-08-30 19:12）：本次 debug 時為驗證 TG 通道是否真壞，意外送了 1 個 "test" 訊息給教練（message_id=10115），已立刻 deleteMessage 收回，教練不會看到。但這違反守則 #12（不當資訊搬運工）+守則#04（解決問題比解釋問題更重要，debug 時不該打擾真人）。**教訓**：未來 debug TG 通道時，**先用 `bot_kong` 或其他不會打擾教練的 bot token 驗證**，或只跑 getMe/getChat 即可，**不要 sendMessage**。已記到 HEARTBEAT.md 待修清單。
 [2026-08-31 19:12:52 +0800] cycle 健康檢查 19:12 | sync=OK(silent=0.1h,since19:03:30,教練剛說話) | cron=1 enabled(本任務本身)/lastStatus=ok/0_CE | HEARTBEAT no ⬜ real todos | v4.0三關全 fail (本輪成功+無錯誤+不影響工作) → 不 announce | cumulativeGreen=53 (state 檔案同步修正自 52)
+
+[2026-09-06 23:12:33 +0800] cycle 健康檢查 23:12 | sync=OK(silent=0.3h,since22:55:20,教練剛說話) | cron=25(23 ok+2 CE=1 gateway-restart一次性)/0_CE_ge3/0_enabled_error_real | HEARTBEAT no ⬜ real todos | v4.0三關全 fail (本輪成功+gateway重啟非overload+下次執行會自動重試) → 不 announce | cumulativeGreen=175

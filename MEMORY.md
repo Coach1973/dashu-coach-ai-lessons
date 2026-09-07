@@ -157,31 +157,6 @@
   - 事故檢討：`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`（教練說 Mac 軍師也要看）
   - ⚠️ 教練 8/17 仍有兩個 pending 問題未答：(1) SOP 彈性條款要不要加「明確指令例外」？ (2) 場次對照表要不要寫到 SOUL.md 或 USER.md？
 
-## Promoted From Short-Term Memory (2026-09-06)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:22:24 -->
-- 🔴 重大發現：對外版直接讀本機 repo: `event.bymyway.com/ai-art/` Flask 路由（`event-signup/app.py:1002` 的 `AI_ART_REPO`）直接讀 `/Users/bymyway/github_repos/ai-art/`; **改本機檔案 → 對外版即時生效，不需要 push**; 教練親口確認新工作流：「github 只要測試成功，推給官網，就要同步」 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:22-24]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:27:30 -->
-- 對外版同步：新增 9/13 截止日: 教練叫我去 GitHub（內部測試版）加「三人成行」跟「舊學員助教」截止日 9/13; 改完本機 → 對外版 Flask 自動讀取生效（不需 push）; 教練說「推」 → 才 commit `4da5905` + push GitHub Pages; 兩個網址都已上線（curl 驗證過） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:27-30]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:3:3 -->
-- 2026-08-31 Hermes 對話交接棒（給下一個 session）: > 這場對話很長（從 BNI 投降書 → 開工檔 → ai-art 內部測試版+對外版同步）。下一個 session 開工讀這份就接得上。 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:3-3]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:36:36 -->
-- 🔴 新守則（已寫進長期 MEMORY.md）: **教練說「推」之前都停在 GitHub 階段：** [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:36-36]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:37:38 -->
-- 🔴 新守則（已寫進長期 MEMORY.md）: 改本機檔案 → 對外版 Flask 自動讀取生效（OK，沒問題）; commit + push GitHub Pages 留紀錄 → **要等教練親口說「推」** [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:37-38]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:41:44 -->
-- 🔴 新守則（已寫進長期 MEMORY.md）: 改 `/Users/bymyway/github_repos/ai-art/index.html`; **對外版自動生效**（Flask 讀本機）; 教練看對外版 `event.bymyway.com/ai-art/` 確認; ✅ 教練說「推」 → 才 commit + push GitHub Pages 留紀錄 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:41-44]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:50:52 -->
-- 📋 待辦（下一個 session 接手）: **確認 GitHub Pages 內部版 `coach1973.github.io/ai-art/` 內容跟上** — commit `4da5905` 已 push，理論上已同步; **等軍師回信**：我今天 16:05 寫了 `cross-agent/inbox/mac/20260831-1605_hermes-to-mac_ai-art-dynamic-site-3-arch-questions.md`，問了 3 個架構問題（不過現在知道答案了：對外版直接讀本機 repo，這個問題已經被實務回答，可以請軍師歸檔）; **軍師今天交辦**：大樹小講 / ai-talk / ai-forum / tainan-calender 系列活動預設交 Hermes（見 `cross-agent/inbox/hermes/20260831-1540_mac-to-hermes_bigtree-event-tasks-default-owner-policy.md`） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:50-52]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:58:61 -->
-- 🛠️ 工具 / 環境確認: | 項目 | 狀態 | |---|---| | 教練 BNI Connect 登入狀態 | ✅ 仍在 Hermes preview pane（吳 大樹） | | 教練 Chrome session | ✅ 仍在運作（BNI 沒踢掉） | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:58-61]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:62:64 -->
-- 🛠️ 工具 / 環境確認: | Hermes preview pane | ✅ 顯示 `coach1973.github.io/ai-art/` 內部版 | | Flask `event-signup` 服務 | ✅ 24/7 跑，讀本機 repo 即時生效 | | GitHub Pages `ai-art` | ✅ 推到 commit `4da5905` | [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:62-64]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:70:73 -->
-- 📝 教練偏好重點（這場學到的）: **白話中文，少用工程師術語**（「0 按鈕」「改好了嗎」就回一行）; **沒說推 = 停在 GitHub 階段**（新守則）; **GitHub = 內部測試，event.bymyway.com = 對外正式**（教練 2026-08-31 親口說）; **改變之前先動手做、做完讓教練看，再說怎麼改**（「先做出來再說，不用問那麼多」） [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:70-73]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:74:74 -->
-- 📝 教練偏好重點（這場學到的）: **教練 0 按鈕鐵則**：永久連結 + LiteSpeed Purge All 是唯一例外 [score=0.834 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:74-74]
-
 ## 2026-09-06 weekly distillation batch（cron auto-processed）
 
 <!-- openclaw-memory-promotion:memory:memory/2026-09-05.md:full -->
@@ -231,3 +206,32 @@
   - **不重複晉升**：Light Sleep dreaming reflection meta-noise、健康檢查 cron audit。
   - **已歸檔**到 `memory/archive/2026-09-06.md`（完整 33040 bytes），原檔截短到 22068 bytes + 加註「[已蒸餾歸檔]」。
 
+
+## Promoted From Short-Term Memory (2026-09-07)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:80:83 -->
+- 📦 相關檔案清單: | 檔案 | 用途 | |---|---| | `/Users/bymyway/github_repos/ai-art/index.html` | 內部測試版 = 對外版來源（Flask 讀這個） | | `/Users/bymyway/.openclaw/workspace/cross-agent/inbox/mac/20260831-1605_hermes-to-mac_ai-art-dynamic-site-3-arch-questions.md` | 已寫給軍師的 3 個架構問題 | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:80-83]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:84:85 -->
+- 📦 相關檔案清單: | `/Users/bymyway/.openclaw/workspace/cross-agent/inbox/mac/20260831-1535_hermes-to-mac_bni-task-surrender-report.md` | BNI 投降書 | | `/Users/bymyway/.openclaw/workspace/JUNSHI_HANDOFF_LATEST.md` | 已被軍師 v156 覆寫，含 ai-art 完成 ✅ | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:84-85]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:89:90 -->
+- 📦 相關檔案清單: — Hermes M3 2026-08-31 19:00 台灣時間 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:89-90]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:267:268 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：教練早，🦞 小龍蝦學長報告： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:267-268]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:270:270 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 對話記錄剛剛滿了，已在 **10:00 自動重啟**一次，目前 session 全新乾淨（重啟前所有內容已存進 `memory/2026-08-31.md` 推上 GitHub，零遺漏）。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:270-270]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:272:275 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 請繼續下指令，我已準備好接招。🦞 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:272-275]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:276:279 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:276-279]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:280:283 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:280-283]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:284:287 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:284-287]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:288:291 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:288-291]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:292:295 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:292-295]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:296:299 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:296-299]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:300:303 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:300-303]

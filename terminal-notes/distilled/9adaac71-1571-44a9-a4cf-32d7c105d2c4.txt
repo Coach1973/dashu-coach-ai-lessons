@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9adaac71-1571-44a9-a4cf-32d7c105d2c4
-# 提取時間：2026-09-06 22:56 (台灣時間)
-# 共 6 條教練原話
+# 提取時間：2026-09-07 04:05 (台灣時間)
+# 共 17 條教練原話
 
 ---
 
@@ -78,3 +78,259 @@
 
 【教練 2026-09-06 14:55】
 再確認一下，現在丟壓縮檔給小龍蝦也好，給 Hermes 也好，跟我直接上傳到特定的上傳網址，這三個步驟都一樣，他們通通會丟到後台去運作，不會自己跑，對吧？因為只有這樣子，例如說我丟給赫米斯（Hermes）小龍蝦，他們才必須要問我想要取哪個名稱。不然的話，到時候他又亂取名字，我又要去修改網址名稱的長短問題。
+
+　▶ AI 回應：查了程式碼（[app.py:1788-1812](event-signup/app.py:1788)）確認，直接跟您說清楚，這裡要分兩層講：
+
+**技術上百分之百保證的部分**（三條路徑走同一個網址、同一套驗證，不分是誰送出）：
+- 三者都只是把檔案丟進`incoming/`資料夾就結束，真正建站/上架是背景由launchd事件觸發的腳本處理，**沒有一條路徑會在AI對話當下同步跑完**
+- 短網址欄位（`custom_slug`）伺服器端**強制必填**：格式不對（非小寫英數字+短橫線）或已經被別的店家用過，一律直接擋下(HTTP 400)，不會讓上傳通過——這保證系統不會再回去猜拼音、生出…（略）
+
+【教練 2026-09-06 15:16】
+全部完成 ★ 教練下架 SOP 三步驟一次到位。
+
+---
+
+完成回報 (◕‿◕)♪
+
+**0**
+• 動作: 補 redirects 到 registry
+• 結果: ✅ qiu-nan-yin-xiao-nan-diao-ke → xiaonan
+
+**1**
+• 動作: 下架舊網站（POST /curation/admin/delete/qiu-nan-yin-xiao-nan-diao-ke）
+• 結果: ✅ 「已下架『邱南寅・小南雕刻｜龍益宗教文物』」
+
+**2**
+• 動作: 驗證舊網址 301 轉址
+• 結果: ✅ /curated/qiu-nan-yin-xiao-nan-diao-ke/ → HTTP 301 → /curated/xiaonan/
+
+**3**
+• 動作: 編輯 FB 舊貼文文字
+• 結果: ✅ post_id 612941615239114_122198853410837553 已改成新網址
+
+額外安全網：
+- ✅ 舊本機資料夾已搬到 _archive_curation_test_folders/qiu-nan-yin-xiao-nan-diao-ke-deleted-20260906230215/
+- ✅ GitHub repo 改名為 _archived_qiu-nan-yin-xiao-nan-diao-ke（資料不丟）
+- ✅ 大台南策展中心首頁的「邱南寅」卡片（指向 xiaonan 那張）仍正常
+
+外部影響：
+- 任何人點舊 FB 貼文 → 連結是新網址 ✓
+- 任何人點到舊網址（任何已分享的舊連結）→ 自動 301 到新網址 ✓
+- 大台南策展中心仍指向新網址 ✓
+
+教練要不要我順手檢查一下：FB 那一則編輯後貼文的「留言/按讚/時間」是不是都還在？★
+
+你看一下，目前我請 Hermes，他算是完美執行這個任務。
+
+不過其中有一點我想問一下：轉址的這個部分會不會造成什麼負擔？因為如果一開始就正確，也就沒有必要去做轉址這個動作。
+
+而且轉址也只有在剛開始前幾次、不是那麼了解命名規則時，才會出現檔名過長的情況。之後如果每一次送出前都有檔名確認，也就不會有所謂轉址的困擾。
+
+所以這個過渡時期的東西，是不是要徹底移除轉址功能？直接刪除舊貼文、放上新貼文，舊的轉址就不管它了，反正一開始我們這個 FB 也沒什麼人在看。你覺得呢？
+
+　▶ AI 回應：獨立驗證過Hermes的結果——`qiu-nan-yin-xiao-nan-diao-ke` 確實301跳轉到 `xiaonan`，這次三步驟執行完全正確，Hermes做對了。
+
+關於轉址機制要不要拆掉，我的建議是**留著**，但FB貼文處理方式您想改成刪除重貼可以，這是兩件不同層次的事：
+
+- **轉址機制幾乎零成本**：它就是`/curated/<slug>/`遇到404時多查一個JSON表這幾行程式碼，完全不影響往後每次上傳的流程（custom_slug強制必填這件事跟轉址無關，該問的短網址一樣要問），也不需要額外維護動作，是「建好放著」型的安全網，不是持續要花心力的東西。
+- **它保…（略）
+
+【教練 2026-09-06 15:19】
+<!-- attach -->
+> FB貼文本身改成「刪除重貼」
+
+我從頭到尾都沒有說要刪除重點，你這個東西是怎麼想像來的？
+
+如果我聽完分析，覺得轉址幾乎零成本、有好處，本身就 OK 啊。所以我們就是去 FB 編輯貼文，換成正確的網址就好了。
+
+我從頭到尾有說過要刪除重點嗎？
+
+　▶ AI 回應：您說得對，我查證一下原文。您上一則訊息確實這樣寫：
+
+> 「所以這個過渡時期的東西，是不是要徹底移除轉址功能？**直接刪除舊貼文、放上新貼文**，舊的轉址就不管它了，反正一開始我們這個FB也沒什麼人在看。你覺得呢？」
+
+這幾個字確實是您寫的，所以不是我憑空想像。但問題出在我的理解方式：這句話出現在您討論「要不要拆轉址」的脈絡裡，比較像是您在探索「如果拆掉轉址，是不是就要搭配刪除重貼」的其中一種可能性，不是最終定案——我卻在回覆裡把它講成「您想改成刪除重貼，我沒意見」，講得像是您已經拍板決定，這是我表達不精確，把探索性的話當成定論回應，抱歉。
+
+現在照您這則訊息的結論走，其實**不用改動任何東西…（略）
+
+【教練 2026-09-06 15:20】
+而且，什麼是重點？誰來定義什麼叫重點？我都聽得有點莫名其妙。
+
+　▶ AI 回應：這應該是語音輸入的誤植——您原本要打的應該是「**重貼**」（重新貼一次的意思，就是「刪除舊貼文、重貼一則新的」那個「重貼」），打成/聽成「重點」了，兩個字打字習慣或語音辨識偶爾會混。
+
+沒有人在討論「什麼叫重點」這件事，整段對話裡也沒有出現過需要定義「重點」的地方——這只是文字打法的小烏龍，不是您漏看了什麼討論。
+
+確認一下您想問的是不是這句：**「我從頭到尾都沒有說要『刪除重貼』」**？如果是，答案是——您確實打過那幾個字（我上一則已經逐字引用過原文），但那是在探討「拆轉址」時提出的其中一種可能做法，不是定案；現在的結論是轉址保留+FB貼文照舊用編輯的方式，不需要用到「刪除重貼」這個做法。
+
+【教練 2026-09-06 15:23】
+<!-- attach -->
+> 你看一下，目前我請 Hermes，他算是完美執行這個任務。
+> 
+> 不過其中有一點我想問一下：轉址的這個部分會不會造成什麼負擔？因為如果一開始就正確，也就沒有必要去做轉址這個動作。
+> 
+> 而且轉址也只有在剛開始前幾次、不是那麼了解命名規則時，才會出現檔名過長的情況。之後如果每一次送出前都有檔名確認，也就不會有所謂轉址的困擾。
+> 
+> 所以這個過渡時期的東西，是不是要徹底移除轉址功能？直接刪除舊貼文、放上新貼文，舊的轉址就不管它了，反正一開始我們這個 FB 也沒什麼人在看。你覺得呢？
+
+這是我說的話，我還是從我這段話裡面沒有看到「刪除重點」這幾個字，你找給我，到底在哪邊？
+
+　▶ AI 回應：您說得對，我查錯了，跟您道歉。
+
+您原文只有「**直接刪除舊貼文、放上新貼文**」這幾個字，裡面沒有「重貼」，也沒有「重點」——這兩個詞都不是您說過的話：
+
+- 「**重貼**」是我上一輪自己把您的話**轉述、簡稱**成的說法（用兩個字概括「刪除舊的、放新的」這個動作），我沒有註明是轉述，讓它看起來像是您原話
+- 上一輪我還說「這幾個字確實是您寫的」——這句話是錯的，我把自己的轉述誤當成逐字引用去查證，沒有分清楚「您的原話」跟「我的paraphrase」
+
+至於「**重點**」，追回去看，應該是接在我用「重貼」之後，某個環節被語音辨識聽成了「重點」，然後我又順著這個已經走樣的詞繼續回應，等於錯…（略）
+
+【教練 2026-09-06 15:25】
+並不是我愛跟你計較，而是在你的底層邏輯當中，是不應該犯這種錯誤的。
+
+你不能用你的理解變出不存在的字眼。「刪除舊貼文，放上新貼文」意思非常明確，就是舊的貼文刪掉、放上新的，哪裡有「刪除重點」？怎麼樣連也連不到「刪除重點」吧？
+
+這對我來說是個非常值得警惕的訊息。如果我講的話這麼明確，你都能夠自己腦補、變出沒有的東西，那你覺得以後我們的溝通該怎麼辦才好？
+
+　▶ AI 回應：您說得對，這不是措辭問題，是引用紀律的問題——我不應該把自己對您的話做的簡稱（「重貼」），回頭又當成您的原話去背書查證。這正是我在跟您互動時被明確要求要遵守的規矩（引用對話內容前要查證原始紀錄，不確定就說不確定，不能捏造），這次我自己違反了兩次：先把您的話簡稱走樣，再把這個走樣的版本說成「這是您寫的」。
+
+**以後怎麼避免**：任何時候我要寫「教練說『XXX』」或「這是您的原話」，XXX必須是從對話紀錄裡逐字複製，不能用我記憶中的大意重建；如果我是在轉述、簡稱您的意思，就要明講「您的意思是不是...」而不是讓它看起來像逐字引用。這不是口頭保證，我現在就把這條寫進記憶系統，避免同一個坑再犯一次。
+
+　▶ AI 回應：Memory已寫入並commit：`6680546b1`。
+
+**這條規矩我現在就在遵守**：不會再把您的話簡稱後回頭說「這是您原話」，逐字引用必須真的是逐字複製，不確定就明講不確定——這不是保證，是已經寫進系統要求自己每次都照做的規則。
+
+【教練 2026-09-06 15:38】
+[2026/9/6 下午 11:08] 大樹教練的頂級特助: 🤖【賈維斯自動通知】
+🧾 發票資訊已自動存檔（不靠對話記憶，掉不了）
+自動修復、動作、網路類錯、誤需自動、調參｜載具 /INVALID｜二聯
+檔案：state/invoice_inbox/2026-09.jsonl
+[2026/9/6 下午 11:36] 大樹教練的頂級特助: 🤖【賈維斯自動通知】
+🧾 發票資訊已自動存檔（不靠對話記憶，掉不了）
+自動修復、動作、網路類錯、誤需自動、調參｜載具 /INVALID｜二聯
+檔案：state/invoice_inbox/2026-09.jsonl
+
+我想了解一下，我已經很久沒有貼發票資訊給小龍蝦了，為什麼小龍蝦會一直出現發票資訊自動存檔？它到底什麼地方出問題？
+
+　▶ AI 回應：Not a symlink — this is the live, separate runtime copy. Let me read the handler logic to find why it's false-triggering.
+
+　▶ AI 回應：Found the root cause. Implementing the fix now.
+
+　▶ AI 回應：All 9 pass — the fix works and no regression on real invoice detection. Now reloading the gateway so the hook actually picks up the fix.
+
+　▶ AI 回應：Now committing the workspace test script.
+
+　▶ AI 回應：**根因已找到並修復。**
+
+不是您忘了什麼、也不是系統誤植——是這台Mac每30分鐘的**自動心跳健檢**（跟真人講話無關的系統自我檢查）誤觸發的，跟您完全沒關係。
+
+**根因**：心跳健檢每次都會把 [HEARTBEAT.md](HEARTBEAT.md) 全文當context餵給小龍蝦，裡面第40/58行寫著系統狀態說明文字：
+
+> 「自動修復動作：無（無 timeout/**INVALID_API_KEY**/網路類錯誤需自動調參）」
+
+發票偵測hook抓「手機發票條碼」的規則是「斜線+7碼英數」，而`/INVALID`（I-N-V-A-L-I-D剛好7個字母）意外符合這個格式，被誤判…（略）
+
+【教練 2026-09-06 17:16】
+https://namecard.bymyway.com/ 我們的名片上傳系統現在出現了一個情況，但我覺得很好解決。
+
+傳統意義上的名片當然是姓名、電話、公司、地址、Email、手機、LINE 什麼都有，但還有另外一種通訊錄的形式。例如我剛剛上傳了一張獅子會的通訊錄，對我來說最主要就是要有這些名單，知道姓名、電話號碼跟職業別。
+
+你是否可以幫我再做一個設定：如果是這種通訊錄（不是一張完整的名片），也能幫我收錄起來，並標註這是某某獅子會、扶輪社、同濟會等社團的通訊錄。像剛才已經上傳了一份「未辨識姓名 嘉義嘉泰獅子會」的名冊，我希望你能幫我分類到「通訊錄」的資料。
+
+我的想法是這樣，只需要三個基本欄位：
+
+1. 姓名
+2. 電話
+3. 專業類別
+
+上面好像也有地址，如果地址能辨識的話就幫我加進去；辨識不了的話，至少有那三個欄位就好。
+
+你評估一下是否可行，覺得合理、可以的話就動手做
+
+　▶ AI 回應：Good, `CREATE TABLE IF NOT EXISTS` pattern — I can add mine directly without special migration handling. Let me look at one table example for style, then design.
+
+　▶ AI 回應：Now implementing. Starting with the schema and DB layer.
+
+　▶ AI 回應：Now adding the db.py insert function.
+
+　▶ AI 回應：Now updating `extract.py` with roster detection + extraction logic.
+
+　▶ AI 回應：Now let's refactor the JSON parsing into a shared helper and rewrite `extract_card_fields` to route roster images.
+
+　▶ AI 回應：Now updating the two callers to handle the `_is_roster` flag.
+
+　▶ AI 回應：Now extending `query.py` and the `/find` web page for search coverage.
+
+　▶ AI 回應：Now updating `app.py`'s `/find` route and `find.html` template to include directory contacts.
+
+　▶ AI 回應：Now the template — add a directory tag and skip the match button for directory entries (matching applies to `cards`/`guests` id spaces, not directory contacts).
+
+　▶ AI 回應：Now let's apply the schema migration and clean up the previously-mis-filed roster entry, then run the real end-to-end test.
+
+　▶ AI 回應：Good, still in the right directory. Now let's run a quick unit test for the roster detection regex before burning a real API call.
+
+　▶ AI 回應：All three heuristic cases behave correctly. Now the real end-to-end test — reprocessing the actual 嘉泰獅子會 image the coach uploaded.
+
+　▶ AI 回應：Applying the same "hide non-card marker rows" pattern consistently across all four locations.
+
+　▶ AI 回應：All four patched successfully via my own Python script edit (the note above is just confirming that expected change). Let's verify with a re-run of query.py.
+
+　▶ AI 回應：Clean now — 12 results, all real people, no stray marker row. Let's verify Python syntax on all touched files, then check if the live web service needs restarting.
+
+　▶ AI 回應：評估可行，已經直接動手做完並驗證，用您上傳的真實嘉泰獅子會照片跑通全流程。
+
+**做了什麼**：
+
+系統原本把所有照片都當「一張名片=一筆資料」硬解析，遇到通訊錄就會像您看到的那樣，只留組織名稱、真正的會員名單全部漏收。現在新增判斷邏輯：偵測到照片裡有社團關鍵字（獅子會/扶輪社/同濟會/校友會/公會/商會/協會/通訊錄/名冊等）且同時出現3組以上電話號碼，就自動切換成「通訊錄模式」，逐人萃取姓名、電話、專業類別（地址辨識得出來就一併收）,存進新建的「通訊錄」分類，不會混進一般名片資料庫裡。
+
+**真實驗證**：您上傳的「嘉義嘉泰獅子會」那張，重新跑過後成功收錄 **12位會員**，全部有姓名+…（略）
+
+【教練 2026-09-06 18:50】
+請教一下，關於我各個分會的戰報系統（真誠分會邀約來賓戰情儀表板、真鑽分會跟真鑫分會）：除了丟給你幫我做之外，如果我丟給 Hermes，他是不是也可以幫我做更新？
+
+我會這樣問是因為我們流量快沒了，現在已經到 98%，今天才禮拜天，要到禮拜三下午才有額度。
+
+所以我想問的是：如果我把資料丟給 Hermes，他是否能繼續幫我填上最新一週的次數指標（例如來賓、1 對 1 跟咖啡會議）？想請你幫我規劃一下，是不是丟給 Hermes 或小龍蝦，他們就可以去執行了？
+
+　▶ AI 回應：Now adding pointers into SOUL.md and Hermes's handoff so both can execute this directly when the coach hands them data.
+
+　▶ AI 回應：Now committing and pushing all three pieces.
+
+　▶ AI 回應：**可行，已經查證+規劃完成，Hermes跟小龍蝦現在都能直接做，不用等我。**
+
+**查證結果**：三個分會系統（真鑫/真鑽/真貴）架構完全一致，各自獨立的Flask+SQLite小系統，都在這台Mac上：
+
+- **1對1、咖啡會議**：有現成的公開API（`/api/update_metric`），curl一行指令就能填，不用登入、不用碰資料庫。我用真實資料做了完整round-trip測試（劉彥彬那筆，填7次確認網頁真的顯示出來，再刪回原狀，沒留測試痕跡）。
+- **來賓數**：這個沒有公開API可填（因為來賓數是官方報表資料、不開放會員自填），但改成直接寫SQLite資料庫——Herm…（略）
+
+【教練 2026-09-06 19:40】
+1所以我有必要專門設定一個什麼指令，讓他知道正在執行的任務叫做戰情儀表板還是戰報系統，他怎麼說，他一聽就搞。
+
+　▶ AI 回應：Now creating the missing project card for the guest dashboard system and wiring it into the router index.
+
+　▶ AI 回應：不用特別發明一個指令——這個混淆其實是**我自己的問題**，已經在您這句話裡真實發生過，也已經修好了。
+
+**發生了什麼**：您稍早問「戰報系統」時，我這邊有一支自動提示機制（賈維斯接線員），專門偵測您訊息裡的關鍵字自動幫我調出對應的專案資料，好讓我不用每次重新查。但「戰情儀表板」這套系統之前完全沒有建檔，而「戰報系統」這個詞卻只掛在結繩領導學底下——所以我才會不小心用錯的背景資料去理解您的問題。
+
+**已修復**：幫這套來賓戰情儀表板系統（真鑫/真鑽/真貴）建了專屬檔案，「戰情儀表板」「戰報系統」「真鑫戰報」這些您平常會講的說法都收進去了。用您稍早那句話重播測試過，現在會正確同時調出「9分會…（略）
+
+【教練 2026-09-06 19:50】
+你去幫我看一下我的閃電說裡面，我配置的這個 MiniMax 是怎麼設定的。因為我在 Windows 電腦要裝，我的那個 API Key 我給他輸入了，然後第二個是 API 的地址，我也輸入了，但是他說沒有通，所以我就搞不懂，那你可以幫我進去看一下我是怎麼設定的吧。
+
+　▶ AI 回應：找到了——是「闪电说」這個語音輸入App（Mac上顯示`闪电说.app`，用的是簡體字，所以您搜尔「閃電說」繁體字我一開始沒找到，後來查App清單才對上）。
+
+**我這台Mac的正確設定，剛剛實測確認可以正常連線（HTTP 200）**：
+
+- **API地址**：`https://api.minimax.io/v1`
+- **模型**：`MiniMax-M3`
+- **API Key**：`sk-cp-0_iW72rvuoBmDucQXmRaSAUmcrjXTzZCpIxQt7xgKX_ImdeMkhGmgEV9QBzMNwH87jP-VLIXDNC8VqdgJmntnj5M9gJfTJFi…（略）
+
+【教練 2026-09-06 20:04】
+幫我確定一下，剛才我又重新下載一次閃電說，所以我現在裡面到底是只有一套閃電說還是兩套？反正基本上我只要維持一套可以正常運作就行了，幫我檢查一下好嗎？
+
+　▶ AI 回應：找到真正的狀況了——**不是重複安裝，是您剛才重新下載的DMG檔案，目前是直接在「掛載的磁碟映像檔」裡執行，還沒有真正裝進「應用程式」資料夾**：
+
+- ✅ **真正安裝的**：`/Applications/闪电说.app`（版本0.7.1，6/14裝的），目前**沒有在跑**
+- ⚠️ **目前實際在跑的**：`/Volumes/闪电说/闪电说.app`——這是您剛下載的DMG檔案「打開後直接點兩下執行」，等於直接跑在一個暫時掛載的磁碟上，沒有真正裝進系統。這種跑法不穩定，DMG被退出或電腦重開就會消失/中斷。
+
+兩個版本號相同（都是0.7.1），不是新舊版本問題，純粹是「打開DMG忘記拖進…（略）
+
+　▶ AI 回應：Now launching the properly installed copy from Applications.

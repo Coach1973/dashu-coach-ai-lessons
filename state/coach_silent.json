@@ -1,7 +1,6 @@
 {
-  "coachSilentSince": "2026-09-06T14:54:56+08:00",
-  "coachSilentHours": 4.3,
-  "lastSyncAt": "2026-09-06T19:12:57.232138+08:00",
-  "cycle": 817,
-  "source": "sync_coach_last_message.sh exit 0 + 當下 date 算 fresh value"
+  "coachSilentSince": "2026-09-07T04:07:14+08:00",
+  "silentH": 18.1,
+  "fetchedAt": "2026-09-07T22:12:11+08:00",
+  "source": "Telegram API + sync_coach_last_message.sh"
 }
