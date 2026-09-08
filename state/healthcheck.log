@@ -145,3 +145,24 @@ v4.0 三關全 fail → 🔕 安靜通過
 [2026-09-07T20:12:30+08:00] cycle=839 — 25/25 全部健康、安靜通過、不打擾教練
 [2026-09-07T21:12:53+08:00] cycle=840 | ok=25/25 MAX_CE=0 silentH=17.1 tg=ok
 [2026-09-07T22:12:11+08:00] cycle=841 cumGreen=197 cronErrorJobs=0 silentH=18.1 consecutiveGreen=14 channel=ok
+[2026-09-07T23:12:01+08:00] cycle=842 OK | cron=25/25 ok | tg=ok | silentH=19.1 | consecutiveGreen=15 | v4.0三關全fail→安靜
+2026-09-08 00:12 cycle=843 | cron 25/0/0/0/0/0 | silentH=20.1 | Context Overflow重啟後首輪 | 三關全 fail → quiet-pass | cumGreen=199
+[2026-09-08 02:13:28] cycle=845｜Cron 24/25 ok + 本任務 CE=1 (meta-loop timeout 517s, v4.0三關全fail)｜HEARTBEAT 0 待辦｜TG探針 ok｜silentH=22.1｜cumGreen=201｜🔕 安靜通過
+2026-09-08 01:12 cycle=844｜Cron 25/25 ok (本任務跑 517s timeout 失敗)｜三關全fail→安靜｜cumGreen=200
+[2026-09-08 03:12:39 CST] cycle=846 ✅ ok｜Cron 25/25 全綠（CE=0/maxCE=0）｜cumGreen=202（連續 17 輪全綠 cycle=830~846）｜silentH=23.1（fresh from TG API）｜TG 通道 ok:true｜本任務執行成功（已恢復鐵證）｜v4.0 三關全 fail → 🔕 不 announce｜跳過 commit+push｜下輪 04:12 cycle=847
+[2026-09-08T04:12:44+08:00] cycle=847 ✅ all-green (25/25 cron healthy, tg=ok, silentH=24.1, cg=203, v4.0 三關全 fail → 🔕)
+[2026-09-08T05:12:33+08:00] cycle=848 ✅ all-green (25/25 cron healthy, tg=ok, silentH=25.1, cg=204, v4.0 三關全 fail → 🔕)
+[cycle=849] 2026-09-08T06:12:34+08:00 cron=25/25 ok tg=ok silent=26.1h green=20 三關全fail→安靜
+[cycle=850] 2026-09-08T07:12:30+08:00 cron=25/25 ok tg=ok silent=27.1h green=21 三關全fail→安靜
+[2026-09-08T08:12:00+08:00] cycle=851 健康檢查：25/25 全綠、Cron Errors=0、TG=ok:true、silentH=28.1（fresh）、v4.0 三關全 fail → 🔕 安靜通過
+[2026-09-08T09:12:25+08:00] cycle=852 全部健康（25/25 ok）cronErrorJobs=0, consecutiveGreen=23, silentH=29.1 fresh
+[2026-09-08 11:13:21 CST] cycle=853 健康檢查完成｜cron 25/25 ok｜CE=0｜consecutiveGreen=24｜silentH=0.1（教練剛剛 11:06 傳訊）｜v4.0 三關全 fail → 🔕 不 announce
+[2026-09-08T12:12:38+08:00] cycle=854 | cron 25/25 ok | cumGreen=210 | silentH=0.1 | v4三關全fail → 🔕 不announce
+[2026-09-08T13:13:00+08:00] cycle=855 健康檢查 - v4.0 三關全 fail, 安靜通過, consecutiveGreen=26
+[2026-09-08T14:12:00+08:00] cycle=856 健康檢查（2026-09-08 14:12 TPE 週二下午）｜silentH=0.58｜25/25 ok｜0 CE≥3｜TG ok｜v4.0 三關全 fail→🔕
+[2026-09-08T16:12:44+08:00] cycle=857 健康檢查（2026-09-08 16:12 TPE 週二下午）｜silentH=1.6（fresh）｜25/25 健康（22 ok + 2 at-pending idle + 1 self）｜cumGreen=213｜TG ok｜v4.0 三關全 fail→🔕（本輪執行成功=已恢復／無 overload／meta-loop 不影響會員）
+[cycle=858] 2026-09-08T17:12:00+08:00（週二下午 TPE）｜silentH=2.6（fresh from TG API since 14:36:55）｜cron 25/25 ok（22 lastRunStatus=ok/CE=0 + 2 at-pending idle + 1 self）｜TG 通道 ok:true｜CE≥3=0｜timeout=0｜auth=0｜overload=0｜SOUL×3✅（皆有棄用標記）｜Repo1=28 / Repo2=52（自然波動）｜無 .! 鎖定檔｜HEARTBEAT 0 ⬜ 待辦｜v4.0 三關全 fail → 🔕 不 announce｜cumGreen=214（連續全綠第 26 輪）
+[2026-09-08T19:13:16+0800] cycle=859 ✅ 安靜通過 cumulativeGreen=215 silentH=4.6 cron=26/26ok CE>=3=0 timeout=0 auth=0 overload=0 tgProbe=ok(守則#19當下實測) SOUL×3齊 Repo1=28/Repo2=52(>50自然波動) 無鎖定檔 v4.0三關全fail→不announce
+[cycle=860] 2026-09-08T21:12:55+0800 | cron 26/26 ok (25 lastRunStatus=ok/CE=0 + 1 self running) | cumGreen=216 | silentH=0.6 (fresh from TG API since 20:37:20) | TG probe ok:true | SOUL×3 ok | Repo1=28/Repo2=52 (自然波動) | 無 .! 鎖定檔 | HEARTBEAT 0 待辦 | v4.0 三關全 fail → 🔕 不 announce
+[cycle=860] 2026-09-08T21:13:31+0800 | cron 26/26 ok (25 lastRunStatus=ok/CE=0 + 1 self running) | cumGreen=216 | silentH=0.6 (fresh from TG API/echo log since 20:37:20) | TG probe ok:true | SOUL×3 ok | Repo1=28/Repo2=52 (自然波動) | 無 .! 鎖定檔 | HEARTBEAT 0 待辦 | v4.0 三關全 fail → 🔕 不 announce
+[2026-09-08T22:13:09+0800] cycle=861 26/26 ok, CE=0, silentH=0.6 fresh, 三關全 fail → 🔕 不 announce

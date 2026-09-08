@@ -207,31 +207,31 @@
   - **已歸檔**到 `memory/archive/2026-09-06.md`（完整 33040 bytes），原檔截短到 22068 bytes + 加註「[已蒸餾歸檔]」。
 
 
-## Promoted From Short-Term Memory (2026-09-07)
+## Promoted From Short-Term Memory (2026-09-08)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:80:83 -->
-- 📦 相關檔案清單: | 檔案 | 用途 | |---|---| | `/Users/bymyway/github_repos/ai-art/index.html` | 內部測試版 = 對外版來源（Flask 讀這個） | | `/Users/bymyway/.openclaw/workspace/cross-agent/inbox/mac/20260831-1605_hermes-to-mac_ai-art-dynamic-site-3-arch-questions.md` | 已寫給軍師的 3 個架構問題 | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:80-83]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:84:85 -->
-- 📦 相關檔案清單: | `/Users/bymyway/.openclaw/workspace/cross-agent/inbox/mac/20260831-1535_hermes-to-mac_bni-task-surrender-report.md` | BNI 投降書 | | `/Users/bymyway/.openclaw/workspace/JUNSHI_HANDOFF_LATEST.md` | 已被軍師 v156 覆寫，含 ai-art 完成 ✅ | [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:84-85]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31-handoff.md:89:90 -->
-- 📦 相關檔案清單: — Hermes M3 2026-08-31 19:00 台灣時間 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31-handoff.md:89-90]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:267:268 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：教練早，🦞 小龍蝦學長報告： [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:267-268]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:270:270 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 對話記錄剛剛滿了，已在 **10:00 自動重啟**一次，目前 session 全新乾淨（重啟前所有內容已存進 `memory/2026-08-31.md` 推上 GitHub，零遺漏）。 [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:270-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:272:275 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 請繼續下指令，我已準備好接招。🦞 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:272-275]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:276:279 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:276-279]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:280:283 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:280-283]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:284:287 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:284-287]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:288:291 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:288-291]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:292:295 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:292-295]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:296:299 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:296-299]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:300:303 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.854 recalls=0 avg=0.620 source=memory/2026-08-31.md:300-303]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:304:307 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:304-307]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:308:311 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:308-311]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:312:315 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:312-315]
+<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:316:319 -->
+- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:316-319]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:267:268 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：🦞 對話記錄已滿，已自動重啟，請繼續下指令 [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:267-268]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:270:270 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 對話紀錄已完整存入 `memory/2026-09-01.md`，零遺漏。剛才環境健檢結果： [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:270-270]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:272:275 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 通道健康（probe ok=true）; 教練上次訊息 11:06，現在 12:07，靜默約 1 小時; cron 健康，三關全 fail_no; repo untracked/modified 累積 23 + 22 行，建議下次開工順手掃一眼 [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:272-275]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:278:281 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:278-281]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:282:285 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:282-285]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:286:289 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:286-289]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:290:293 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:290-293]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:294:297 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:294-297]
+<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:298:301 -->
+- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:298-301]

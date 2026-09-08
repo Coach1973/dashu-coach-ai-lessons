@@ -1,0 +1,79 @@
+# 終端機對話萃取 — Session 4a84abf4-a5fc-4064-97eb-aae7b57eeaf6
+# 提取時間：2026-09-08 10:46 (台灣時間)
+# 共 4 條教練原話
+
+---
+
+【教練 2026-09-08 02:29】
+開工
+
+　▶ AI 回應：讀完六步驟，摘要回報：
+
+**接力棒**（最新 v188，昨日 09/07 完成）：名片系統新增通訊錄辨識、三分會戰情儀表板SOP、修invoice-inbound誤報bug、修BNI專案卡誤配、教練糾正一次引用紀律問題已入記憶。
+
+**HEARTBEAT**：cycle 847，連續18輪全綠，安靜通過，教練沉默中（睡眠作息正常）。
+
+**試金石**：讀了案例70~72——WebP格式搜圖漏檢、iframe嵌入內容查證死角、SOP文件邊界情況漏寫；另有「同主題多處數字要一次grep掃齊」教訓。無新增待避開的坑。
+
+**knowledges/**：無新檔案（最新09-04已涵蓋在接力棒內）。
+…（略）
+
+【教練 2026-09-08 02:31】
+現在的問題是這樣子，就是我們的策展的 SOP 我丟了一個壓縮檔，然後全自動作業跑完之後上架，但是我現在都要手工的做一件事情。
+
+就是當夥伴的資料上去之後，其實他們都有一個 Google 的地圖，那我希望它是能自動化去運行的。不然我每次都要手工找再貼上去，覺得這樣實在是不夠聰明。
+
+可以解決這個問題嗎？https://maps.app.goo.gl/CRcCj8VfSEuHbyDD8  為何不能自己找到，非得讓我用人工找呢？
+
+　▶ AI 回應：Now updating the card generator to include the map block when an address is found:
+
+　▶ AI 回應：教練這個想法完全對——與其我在伺服器端用正則去「猜」網頁裡藏著的地址，不如從源頭要求AI建站工具就把地址寫清楚，兩邊一起做才是真正一氣呵成。我剛好正在做的伺服器端修復，跟您這個想法是互補的：
+
+　▶ AI 回應：正則抓取測試通過。現在照您的建議，把「地址要寫清楚」這件事也加進策展一鍵注入的指令文字裡，從源頭要求做網頁的AI工具就把地址標準寫好。
+
+　▶ AI 回應：Now wiring the address extraction into the actual upload pipeline:
+
+　▶ AI 回應：One refinement — the map search query used the full marketing title including the tagline; better to use just the clean brand name (matches the existing slug logic):
+
+　▶ AI 回應：Re-verifying with the fix and confirming no syntax issues:
+
+　▶ AI 回應：Good, working correctly. Committing this fix:
+
+　▶ AI 回應：地圖自動化已修好並上線（commit [065af870a](https://github.com/Coach1973/mac-openclaw-workflows/commit/065af870a)）：
+
+**做了什麼**
+- `curation_process.py`新增地址偵測：上傳的網站原始碼裡只要有「台南市南區西門路一段296號1樓」這種標準台灣地址格式，就會自動抓出來，套用跟自助登錄店家一樣的Google地圖嵌入方式（不用申請API金鑰，跟現有系統同款做法）插進大台南策展中心的店家卡片。
+- 抓不到地址就不顯示地圖（不會讓卡片壞掉），Telegram通知會清楚標示「這次有沒有抓到地…（略）
+
+【教練 2026-09-08 02:37】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06二次補強）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，
+但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：
+  • extract_address()掃網站
+
+這條規則只認「大樹常用」跟「後臺系統」兩個分類算真的收錄——放進
+「保留」等其他分類，教練一樣找不到，等同沒收錄。
+
+✅ 立刻執行，收工前不能跳過：
+  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」
+     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）
+  2. 是的話，打開 ~/github_repos/coach888/index.html，放進「大樹常用」
+     或「後臺系統」其中一個分類（已經放在其他分類的話，用剪的搬過去）
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：這是誤報，不用調整coach888。查證說明：這次commit新增的`extract_address()`是`curation_process.py`裡的一個內部函式，用來偵測地址並自動幫既有的策展中心店家卡片加地圖——**不是新的獨立頁面、網址或工具**，教練或訪客不會直接瀏覽到它，是background pipeline的邏輯強化，不需要另外收錄進coach888。
+
+規則本身也寫了「如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒」，符合這個情況。誤觸原因是commit訊息裡「掃網站原始碼」這句話裡的「網站」兩字被規則的措辭比對誤判成「新增網站」，這跟之前記錄過的[[feedba…（略）
+
+【教練 2026-09-08 02:38】
+可以看一下我的那個手機版呃，就是 Telegram 版的hermes是，為什麼沒有反應？他已經出現過幾次這樣的情況了，能有解決方案嗎？
+
+　▶ AI 回應：先立刻讓Hermes恢復回應，同時查出真正原因並做一個能長久預防的機制。
+
+　▶ AI 回應：Now the launchd plist to run this every 5 minutes:
+
+　▶ AI 回應：Now loading it and verifying it actually runs (per E09 cron-verification — must test immediately, not assume):

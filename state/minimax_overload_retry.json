@@ -5,13 +5,13 @@
     "lastTs": "2026-09-07T12:01:50.568Z"
   },
   "cron:f487652d-0696-4b54-ac7f-7dd1a94cdb8c:failure": {
-    "count": 1,
+    "count": 2,
     "escalated": false,
-    "lastTs": "2026-09-06T22:01:38.143Z"
+    "lastTs": "2026-09-07T22:01:30.597Z"
   },
   "cron:b73845c9-f653-4f9a-8869-0e2f2c0bd9b1:failure": {
-    "count": 1,
+    "count": 2,
     "escalated": false,
-    "lastTs": "2026-09-06T23:02:09.350Z"
+    "lastTs": "2026-09-07T23:02:31.101Z"
   }
 }

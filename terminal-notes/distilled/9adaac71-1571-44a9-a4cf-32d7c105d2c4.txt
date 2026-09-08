@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 9adaac71-1571-44a9-a4cf-32d7c105d2c4
-# 提取時間：2026-09-07 04:05 (台灣時間)
-# 共 17 條教練原話
+# 提取時間：2026-09-08 10:30 (台灣時間)
+# 共 18 條教練原話
 
 ---
 
@@ -334,3 +334,26 @@ https://namecard.bymyway.com/ 我們的名片上傳系統現在出現了一個�
 兩個版本號相同（都是0.7.1），不是新舊版本問題，純粹是「打開DMG忘記拖進…（略）
 
 　▶ AI 回應：Now launching the properly installed copy from Applications.
+
+　▶ AI 回應：**已處理完成，現在只有一份在正常運作：**
+
+1. 關掉了跑在暫時掛載磁碟上的那份（`/Volumes/闪电说/`），並退出了DMG掛載
+2. 從真正安裝的 `/Applications/闪电说.app` 重新啟動，已確認在跑（PID 68245，路徑正確指向`/Applications/`）
+3. 確認MiniMax設定完全沒受影響——`endpoint: https://api.minimax.io/v1`、`model: MiniMax-M3`、金鑰完整、`enabled: true`，跟稍早查到的一致
+
+**目前狀態**：`/Applications/闪电说.app` 是唯一在跑、唯…（略）
+
+【教練 2026-09-06 20:05】
+總結
+
+　▶ AI 回應：收到，這則我會列進下一棒待辦——比較「闪电说」跟Typeless的日常使用限制/額度差異，等下次開工再深入查。現在先完成總結收工的必要步驟。
+
+　▶ AI 回應：Now updating the handoff file with the session summary and new todo table entries.
+
+　▶ AI 回應：Now appending the full v188 handoff section at the end of the file.
+
+　▶ AI 回應：Now committing and pushing the handoff update.
+
+　▶ AI 回應：**總結完成，收工。**
+
+**本場重點（300字版）**：策展SOP「改短網址」三步驟確認Hermes可完整執行，並實戰驗收成功（邱南寅案例）。過程中發生一次嚴重的引用紀律糾正——把自己對教練話的簡稱誤植成教練逐字原話回頭背書，教練嚴正指出這是信任層級問題，已寫入記憶確立新規則。名片系統新增「通訊錄」功能，用真實嘉泰獅子會照片端到端驗證，12位會員自動收錄。查明並修復兩個系統性bug：invoice-inbound誤把心跳健檢內容當發票資訊、賈維斯接線員「戰報系統」誤配到不相關專案（順手補建缺漏的專案卡）。建立三分會戰情儀表板每週數據SOP，讓Hermes/小龍蝦能在Claude配額緊繃（9…（略）

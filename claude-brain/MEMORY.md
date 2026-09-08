@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 Hermes gateway卡死不crash+heartbeat…](reference_hermes_gateway_hang_watchdog_2026-09-08.md)
+- [🔧 策展SOP店家地圖自動化+源頭寫地址…](reference_curation_map_autodetect_2026-09-08.md)
 - [🔧 專案卡索引沒同步新系統會誤配…](reference_project_card_index_must_sync_new_systems_2026-09-07.md)
 - [🔴🔴 把paraphrase當逐字引用回頭捏造…](feedback_never_fabricate_literal_quotes_2026-09-06.md)
 - [🔴 靠commit/對話文字措辭比對…](feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06.md)
