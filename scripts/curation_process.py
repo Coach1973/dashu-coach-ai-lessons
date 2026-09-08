@@ -26,6 +26,7 @@ import urllib.request
 import zipfile
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 
 WORKSPACE = Path("/Users/bymyway/.openclaw/workspace")
 EVENT_SIGNUP = WORKSPACE / "event-signup"
@@ -201,6 +202,26 @@ def extract_meta(html_text: str) -> tuple[str, str]:
     )
     desc = desc_m.group(1).strip() if desc_m else ""
     return title, desc
+
+
+_TW_CITY = (
+    "(?:台北|新北|桃園|台中|臺中|台南|臺南|高雄|基隆|新竹|苗栗|彰化|"
+    "南投|雲林|嘉義|屏東|宜蘭|花蓮|台東|臺東|澎湖|金門|連江)"
+)
+ADDRESS_PATTERN = re.compile(
+    _TW_CITY + r"[市縣][一-鿿0-9]{2,20}(?:路|街|大道|巷)"
+    r"[一-鿿0-9]{0,10}號(?:[一-鿿0-9]{0,6}樓)?"
+)
+
+
+def extract_address(html_text: str) -> str:
+    """2026-09-08教練交辦：策展SOP自動上架的店家卡片沒有地址就沒有地圖，
+    教練每次都要自己開Google地圖手動找、複製連結貼上。改成從網站原始碼裡
+    直接掃台灣地址格式(市/縣+路/街+號)，抓到就用同一套app.py既有的
+    query-based地圖embed(不需要API Key，教練自助登錄流程已用同款做法穩定
+    運作)，抓不到就照舊不顯示地圖(非致命，退回原本樣式)。"""
+    m = ADDRESS_PATTERN.search(html_text)
+    return m.group(0) if m else ""
 
 
 def guess_category(text: str) -> str:
@@ -384,7 +405,7 @@ def post_to_facebook(title: str, desc: str, event_url: str, image_path: Path | N
         return False
 
 
-def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str) -> None:
+def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str, address: str = "") -> None:
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
     content = index_path.read_text(encoding="utf-8")
     marker = "<!-- SHOP_CARDS_INSERT_POINT：新店家自動插入這行下面，勿刪除此標記 -->"
@@ -392,6 +413,31 @@ def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url
         raise RuntimeError("SHOP_CARDS_INSERT_POINT標記不存在")
     import html as html_mod
     e = html_mod.escape
+
+    address_row = f'<li><span class="k">地址</span><span>{e(address)}</span></li>' if address else ""
+
+    # 2026-09-08：地址抓得到才加地圖欄位(shop-media)，跟app.py的
+    # _shop_directory_card_html()同款query-based embed，不需要API Key。
+    # 抓不到地址就退回單欄舊樣式，不強塞空地圖。
+    if address:
+        brand = primary_title_segment(title)
+        map_q = quote(f"{address} {brand}")
+        review_q = quote(f"{brand} 台南")
+        media_block = f"""
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q={map_q}&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：{e(title)}（{e(address)}）"></iframe>
+              </div>
+            </div>"""
+        review_link = f'<p class="slot-note"><a href="https://www.google.com/maps/search/?api=1&amp;query={review_q}" target="_blank" rel="noopener">在 Google 地圖上查看評論 →</a></p>'
+    else:
+        media_block = ""
+        review_link = ""
+
     card = f"""
           <!-- 計劃夥伴店家：{e(title)}（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
@@ -404,9 +450,11 @@ def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url
               <p class="shop-desc">{e(desc) if desc else '網站已自動上架，介紹文案待軍師補充。'}</p>
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>{e(category)}</span></li>
+                {address_row}
               </ul>
               <p class="slot-note"><a href="{e(event_url)}" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
-            </div>
+              {review_link}
+            </div>{media_block}
           </article>
 """
     content = content.replace(marker, marker + "\n" + card, 1)
@@ -440,6 +488,7 @@ def process_one(pkg_path: Path) -> None:
         if not title:
             title = re.sub(r"^\d{8}-\d{6}__", "", pkg_path.stem)
         category = guess_category(f"{title} {desc}")
+        address = extract_address(html_text)
 
         # 2026-09-06教練拍板：先查這家店是不是已經在shops.bymyway.com有暫代頁
         # （自助登錄表單那條路產生的），有的話覆蓋暫代頁內容、網址不變，不建新GitHub網站。
@@ -496,7 +545,7 @@ def process_one(pkg_path: Path) -> None:
 
         card_note = ""
         try:
-            insert_tainan_shangquan_card(title, desc, category, event_url)
+            insert_tainan_shangquan_card(title, desc, category, event_url, address)
         except Exception as e:  # noqa: BLE001
             card_note = f"\n⚠️ 加入大台南策展中心店家名冊失敗（網站本身已上線，不影響）：{e}"
             log(f"插卡失敗: {e!r}")
@@ -508,12 +557,14 @@ def process_one(pkg_path: Path) -> None:
         else:
             fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已上線）"
 
+        map_note = f"\n📍 已自動偵測地址並加地圖：{address}" if address else "\n⚠️ 網站內容抓不到地址，店家名冊卡片暫無地圖（可請生成網站的AI工具把地址寫清楚後重新上傳）"
         notify(
             "🎯【策展SOP・新店家已自動上架】\n"
             f"店名：{title}\n"
             f"分類：{category}（自動猜測，可能需要軍師調整）\n"
             f"網址：{event_url}\n"
-            f"GitHub Pages：{github_pages_url}\n"
+            f"GitHub Pages：{github_pages_url}"
+            + map_note
             + card_note
             + fb_note
             + "\n📌 待軍師下次確認：潤飾店家介紹文案。"
