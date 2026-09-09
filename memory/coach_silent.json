@@ -1,7 +1,7 @@
 {
-  "coachSilentSince": "2026-09-09T21:36:55+08:00",
-  "coachSilentHours": 0.6,
-  "lastSyncAt": "2026-09-09T22:12:00+08:00",
+  "coachSilentSince": "2026-09-10T00:06:55+08:00",
+  "coachSilentHours": 0.1,
+  "lastSyncAt": "2026-09-10T00:12:06+08:00",
   "source": "sync_coach_last_message.sh exit 0 (v3.0)",
-  "cycle": 888
+  "cycle": 890
 }

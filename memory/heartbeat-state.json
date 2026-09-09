@@ -1,15 +1,22 @@
 {
-  "lastCycle": 888,
-  "lastRunAt": "2026-09-09T22:12:00+08:00",
+  "lastCycle": 891,
+  "lastRunAt": "2026-09-10T01:12:13+08:00",
   "lastStatus": "ok",
   "cronTotal": 1,
   "cronOk": 1,
   "cronErrorJobs": 0,
-  "consecutiveGreen": 60,
-  "silentH": 0.6,
+  "consecutiveGreen": 63,
+  "silentH": 0.1,
   "verdict": "all_fail_no_announce",
   "telegramProbe": "ok",
   "gatewayOk": true,
   "envCheckOk": true,
-  "heartbeatTodos": 0
+  "heartbeatTodos": 0,
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-10T01:06:55+08:00",
+    "coachSilentHours": 0.1
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-10T01:12:03.172014+08:00"
+  }
 }
