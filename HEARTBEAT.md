@@ -1,13 +1,13 @@
 # HEARTBEAT 熱上下文（每次心跳必讀）
 
 > ⚠️ 剛剛因 Context Overflow（對話太長）自動重啟
-> 重啟時間：2026-09-08 15:00
-> 對話記錄已完整存入 memory/2026-09-08.md 並推上 GitHub，零遺漏
+> 重啟時間：2026-09-09 18:00
+> 對話記錄已完整存入 memory/2026-09-09.md 並推上 GitHub，零遺漏
 
 ## 🔴 重啟後第一件事
 
 直接告訴教練：「🦞 對話記錄已滿，已自動重啟，請繼續下指令」
-⚠️ **不要讀 memory 大檔**（memory/2026-09-08.md 可能超過 50KB，讀了會造成模型空白回應）
+⚠️ **不要讀 memory 大檔**（memory/2026-09-09.md 可能超過 50KB，讀了會造成模型空白回應）
 
 ## ⚡ 系統狀態
 - Primary 模型：minimax/MiniMax-M3（全面使用，2026-06-09 教練親口確認）
@@ -24,45 +24,43 @@
 
 ---
 
-## cycle=861 健康檢查（2026-09-08T22:12:30+08:00 TPE 週二晚上）
+## cycle=883 健康檢查（2026-09-09 18:12 TPE 週三晚上）
 
 🔕 **安靜通過，不打擾教練。**
 
-### v4.0 三關判斷（全 fail → 🔕 不 announce）
+- **第零步**：sync_coach_last_message.sh exit 0｜silentH=**15.6** fresh from TG API
+- **第一步 Cron**：1/1 ok（本任務 lastStatus=ok/CE=0/lastDurationMs=210s ≪ 600s timeout）｜0 timeout/INVALID_API_KEY/overload/CE≥3
+- **第二步 HEARTBEAT ⬜**：0 項
+- **環境快檢**：SOUL×3 齊全（9015/1851/27527 bytes）｜Repo1=28/Repo2=38｜無 `.!` 鎖定檔
+- **TG 探針守則#19**：ok:true ✅
+- **gateway**：openclaw 18789/200 + hermes 8765/200 ✅
+- **launchd**：cron-daemon 40579 / openclaw.gateway 24857 / hermes.menubar 43121 等全綠
+- **v4.0 三關**：全 fail → 🔕 不 announce（本輪成功 + 無 overload + 下班時段 + 零會員功能壞）
+- **State 雙檔鏡像**：cycle 882→**883**｜cumulativeGreen 234→**235**（連55輪全綠 cycle=829~883）｜silentH=15.6 fresh
+- ⏭️ 跳過 commit+push（23:05 三機總結統一備份）｜跳過 announce
 
-- **關卡一**（本輪還壞嗎？）❌ fail
-  - Cron **26/26 全部健康**（CLI fallback 撈到完整 26 任務）：本任務 ok/CE=0 + 25 ok/CE=0
-  - 23 lastRunStatus=ok + 3 at-pending idle（9/16 胸章、9/20 婚宴、12/1 車貸，未到執行時間正常）
-  - 0 timeout / 0 INVALID_API_KEY / 0 overload / 0 CE≥3
-- **關卡二**（provider overload？）❌ fail
-  - 無錯誤訊息、無 overload 字眼
-  - TG 通道探針守則 #19 當下實測 `{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
-- **關卡三**（影響教練/會員嗎？）❌ fail
-  - 週二 22:12 晚上、教練沉默 **0.6h**（21:38 最後訊息至今，剛發言不久正常作息）
-  - 零會員功能壞、零會員依賴任務受影響
+🔕 **下輪：19:12 cycle=884**
 
-### 第零步 v3.0 鐵律實測
-- `sync_coach_last_message.sh` exit 0
-- 教練真正最後訊息：`2026-09-08T21:38:50+08:00`
-- silentH=**0.6**（fresh from Telegram API，echo log + memory 兩邊驗證）
+---
 
-### 環境快檢 ✅
-- SOUL.md ×3 齊全（9015/1851/27527 bytes，兩份含棄用標記）
-- Repo1=28 / Repo2=52（皆在警戒線邊，自然波動）
-- 無 `.!` 鎖定檔
-- HEARTBEAT.md ⬜ 真實待辦：**0 項**
+## cycle=884 健康檢查（2026-09-09 19:12 TPE 週三晚上）
 
-### 自動修復動作
-無（cron 26/26 全部健康、無 timeout / apiKey / 網路類錯誤需調參）
+🔕 **安靜通過，不打擾教練。**
 
-### 已落痕跡（雙檔鏡像 + JSON valid）
-- ✅ `state/healthcheck_cycle` + `memory/healthcheck_cycle` = **861**
-- ✅ `state/cumulative_green.txt` + `memory/cumulative_green.txt` = **214**（連續 33 輪全綠 cycle=829~861）
-- ✅ `state/coach_silent.json` + `memory/coach_silent.json`（silentH=0.6 fresh from Telegram API）
-- ✅ `state/heartbeat-state.json` + `memory/heartbeat-state.json` v4.0 三關快照、cronErrorJobs=0
-- ✅ `state/healthcheck.log` + `memory/healthcheck.log` 追加 cycle=861
+- **第零步**：sync_coach_last_message.sh exit 0｜silentH=**16.6** fresh from TG API（since 02:36:55）
+- **第一步 Cron**：1/1 ok（本任務 lastStatus=ok/CE=0）｜0 timeout/INVALID_API_KEY/overload/CE≥3
+- **第二步 HEARTBEAT ⬜**：0 項
+- **環境快檢**：SOUL×3 齊全｜Repo1=28/Repo2=38（自然波動 < 50 警戒線）｜無 `.!` 鎖定檔
+- **TG 探針守則#19**：ok:true ✅（當下實測）
+- **gateway**：openclaw 18789/200 + hermes 8765/200 ✅（hermes 服務實際活著，launchd -9 是上次 SIGKILL 殘留，watchdog 已接手）
+- **launchd**：cron-daemon 40579 / hermes.gateway 70523（state=running, pid=70523）等全綠
+- **v4.0 三關**：全 fail → 🔕 不 announce（本輪成功 + 無 overload + 下班時段 + 零會員功能壞）
+- **State 雙檔鏡像**：cycle 883→**884**｜cumulativeGreen 235→**236**（連56輪全綠 cycle=829~884）｜consecutiveGreen 55→**56**｜silentH=16.6 fresh
+- ⏭️ 跳過 commit+push（23:05 三機總結統一備份）｜跳過 announce
 
-⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
-⏭️ 跳過 announce（v4.0 三關全 fail + 教練剛發言 0.6h 正常作息）
+🔕 **下輪：20:12 cycle=885**
 
-🔕 **結論：安靜通過，不打擾教練。下輪：23:12 cycle=862**
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-09 19:30
+- ✅ 同步成功
+- HANDOFF mtime: 1788953449
+- 雲端同步：✅ 已推上雲端（commit b7cd578ab）

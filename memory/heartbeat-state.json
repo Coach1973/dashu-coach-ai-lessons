@@ -1,32 +1,14 @@
 {
-  "lastChecks": {
-    "cronHealth": 1788876800,
-    "tgChannel": 1788876800,
-    "envQuickCheck": 1788876800,
-    "gitStatus": 1788876800,
-    "coach_silence_sync": "2026-09-08T22:13:20.370058+08:00"
-  },
-  "telegramChannelOk": true,
-  "telegramChannelSource": "telegram_channel_probe.sh --json (2026-09-08 22:12 TPE)",
-  "lastHealthCheckCycle": 861,
-  "lastHealthCheckStatus": "all_green",
-  "consecutiveGreen": 33,
-  "cumulativeGreen": 214,
-  "v4Gates": "all_fail_no_announce",
-  "announceTriggered": false,
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-08T21:38:50+08:00",
-    "coachSilentHours": 0.6
-  },
-  "cycle": 861,
+  "lastCycle": 884,
+  "lastCheck": "2026-09-09T19:13:24.940427+08:00",
+  "consecutiveGreen": 56,
   "cronErrorJobs": 0,
-  "tgChannelOk": true,
-  "silentH": 0.6,
-  "lastCheck": "2026-09-08T22:13:20.370058+08:00",
-  "v4_threeGates": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false,
-    "decision": "all-fail-do-not-announce"
+  "note": "本輪由 hourly cron 19:12 觸發；Cron 自身 lastStatus=ok, CE=0；無 timeout/INVALID_API_KEY/overload；TG 通道探針守則 #19 當下實測 ok:true；v4.0 三關判斷全 fail 不 announce、🔕 安靜通過；coachSilentHours 16.6 fresh (sync_coach_last_message.sh exit 0)。環境快檢：SOUL×3 齊全｜Repo1=28/Repo2=38（自然波動 < 50 警戒線）｜無 .! 鎖定檔",
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-09T02:36:55+08:00",
+    "coachSilentHours": 16.6
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-09T19:13:04.162841+08:00"
   }
 }
