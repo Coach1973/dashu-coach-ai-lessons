@@ -1,6 +1,6 @@
 # 終端機對話萃取 — Session 4a84abf4-a5fc-4064-97eb-aae7b57eeaf6
-# 提取時間：2026-09-08 10:46 (台灣時間)
-# 共 4 條教練原話
+# 提取時間：2026-09-09 19:32 (台灣時間)
+# 共 9 條教練原話
 
 ---
 
@@ -77,3 +77,81 @@ Stop hook feedback:
 　▶ AI 回應：Now the launchd plist to run this every 5 minutes:
 
 　▶ AI 回應：Now loading it and verifying it actually runs (per E09 cron-verification — must test immediately, not assume):
+
+　▶ AI 回應：Hermes已經修好了，而且找到真正的病根、裝了長效的自動修復機制。
+
+**發生了什麼**：Hermes（Mac桌面版）的gateway背景程式今天凌晨04:00就內部卡死了，但process本身沒有當機——它只是「活著但沒在做事」，而系統原本設定的自動重啟機制（launchd KeepAlive）只有在process真的當掉、跳出時才會重啟，對這種「還活著但卡住」的狀況完全沒反應。所以它一路靜默了6.5小時，直到您發現沒反應才被抓到。這正是「已經出現過幾次」的原因——之前每次都要等您自己發現才有人去重啟，沒有東西會自動救回來。
+
+**現在做了什麼**：
+1. 已經手動把它重啟，現在Herme…（略）
+
+【教練 2026-09-08 02:46】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🚨 守則#07 輪詢設計偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪回覆裡出現「定時/每X分鐘檢查」的輪詢設計：
+  • 偵測到疑似輪詢設計：「**已修復（commit `be993e716`）**：新增`scripts/hermes_gateway_watchd...」
+
+📜 守則#07 原文（特助心法.md）：
+  「不要在同一個地方跌倒兩次，就是最大的成功。」
+  「不可能不犯錯，但不要一直犯同樣的錯。」
+
+2026-07-02 教練已對同一個錯誤糾正 3 次（心跳燈塔/蒸餾提煉/自動開通），
+這是第 4 次以後的自動攔截，不能再靠記性。
+
+✅ 停下來自問：
+  1. 這件事有沒有現成的事件掛鉤（hook/signal/webhook/restart-policy）可以直接觸發？
+  2. 如果真的沒有，在回覆裡明確寫出「事件驅動不可行，因為XXX」再繼續。
+  3. 如果只是在討論/引用過去案例，把這句話改寫得更明確是在「回顧」不是「提議」。
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule07_polling_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06二次補強）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，
+但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：
+  • extract_address()掃網站
+
+這條規則只認「大樹常用」跟「後臺系統」兩個分類算真的收錄——放進
+「保留」等其他分類，教練一樣找不到，等同沒收錄。
+
+✅ 立刻執行，收工前不能跳過：
+  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」
+     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）
+  2. 是的話，打開 ~/github_repos/coach888/index.html，放進「大樹常用」
+     或「後臺系統」其中一個分類（已經放在其他分類的話，用剪的搬過去）
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：**針對守則#07（輪詢偵測）**：這次不是同義改寫想蒙混過去，我照規則說的把理由攤開來講清楚。
+
+**事件驅動在這個案例不可行，原因是：** 這支watchdog要偵測的是「Hermes的asyncio事件迴圈內部卡死，但process沒有exit」——這跟過去7次真正違規（陌生用戶開通、蒸餾提煉、名片Amber資料夾、抽獎名單、派工信箱、RustDesk記憶體）本質不同。那7次全部是「有沒有新工作/新資料要處理」，答案是「有」，而且都能找到工作本身被創造出來的那個真實動作（使用者按鈕/檔案落地/開工訊號）去掛勾——問題出在我沒去找那個掛勾點，直接選了偷懶的定時檢查。
+
+這次的問題類別是「w…（略）
+
+【教練 2026-09-09 11:23】
+9月16日幾人報名？
+
+　▶ AI 回應：API Error: 500 Internal server error. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.
+
+【教練 2026-09-09 11:27】
+Try again
+
+【教練 2026-09-09 11:27】
+[Request interrupted by user]
+
+【教練 2026-09-09 11:27】
+總結
+
+　▶ AI 回應：Good, clean extract. Now write the archive file:
+
+　▶ AI 回應：Now remove those lines from the main file and replace with a pointer:
+
+　▶ AI 回應：Structure looks correct. Now append the v189 section at the end of this new content:
+
+　▶ AI 回應：Adding a v189 row at the top of the status table:
+
+　▶ AI 回應：Now replacing the live file and syncing to CLAUDE.md mirror:

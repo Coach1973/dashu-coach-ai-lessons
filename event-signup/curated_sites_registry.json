@@ -151,6 +151,28 @@
       "uploaded_at": "2026-09-08 01:37",
       "status": "live",
       "source_package": "20260908-013729__doc_2523de0ac474_sbip.zip"
+    },
+    {
+      "slug": "nmda",
+      "title": "中華新媒體影音發展協會｜讓專業被看見，讓合作真正發生",
+      "description": "中華新媒體影音發展協會官方品牌網站：推動新媒體人才培育、產業串聯與跨界合作。2026年10月31日台中正式啟動大會。",
+      "category": "衣",
+      "event_url": "https://event.bymyway.com/curated/nmda/",
+      "github_pages_url": "https://coach1973.github.io/nmda/",
+      "uploaded_at": "2026-09-09 02:39",
+      "status": "live",
+      "source_package": "20260909-023918__association-brand-website-v2.tar.tar.gz"
+    },
+    {
+      "slug": "nmda-2",
+      "title": "中華新媒體影音發展協會｜讓專業被看見，讓合作真正發生",
+      "description": "中華新媒體影音發展協會官方品牌網站：推動新媒體人才培育、產業串聯與跨界合作。2026年10月31日台中正式啟動大會。",
+      "category": "衣",
+      "event_url": "https://event.bymyway.com/curated/nmda-2/",
+      "github_pages_url": "https://coach1973.github.io/nmda-2/",
+      "uploaded_at": "2026-09-09 02:39",
+      "status": "live",
+      "source_package": "20260909-023919__association-brand-website-v2.tar.tar.gz"
     }
   ],
   "redirects": {

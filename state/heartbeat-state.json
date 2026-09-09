@@ -1,32 +1,15 @@
 {
-  "lastChecks": {
-    "cronHealth": 1788876800,
-    "tgChannel": 1788876800,
-    "envQuickCheck": 1788876800,
-    "gitStatus": 1788876800,
-    "coach_silence_sync": "2026-09-08T22:13:20.370058+08:00"
-  },
-  "telegramChannelOk": true,
-  "telegramChannelSource": "telegram_channel_probe.sh --json (2026-09-08 22:12 TPE)",
-  "lastHealthCheckCycle": 861,
-  "lastHealthCheckStatus": "all_green",
-  "consecutiveGreen": 33,
-  "cumulativeGreen": 214,
-  "v4Gates": "all_fail_no_announce",
-  "announceTriggered": false,
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-08T21:38:50+08:00",
-    "coachSilentHours": 0.6
-  },
-  "cycle": 861,
+  "lastCycle": 888,
+  "lastRunAt": "2026-09-09T22:12:00+08:00",
+  "lastStatus": "ok",
+  "cronTotal": 1,
+  "cronOk": 1,
   "cronErrorJobs": 0,
-  "tgChannelOk": true,
+  "consecutiveGreen": 60,
   "silentH": 0.6,
-  "lastCheck": "2026-09-08T22:13:20.370058+08:00",
-  "v4_threeGates": {
-    "gate1_stillBroken": false,
-    "gate2_providerOverload": false,
-    "gate3_affectsWork": false,
-    "decision": "all-fail-do-not-announce"
-  }
+  "verdict": "all_fail_no_announce",
+  "telegramProbe": "ok",
+  "gatewayOk": true,
+  "envCheckOk": true,
+  "heartbeatTodos": 0
 }

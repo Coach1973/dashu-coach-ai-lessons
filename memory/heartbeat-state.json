@@ -1,14 +1,15 @@
 {
-  "lastCycle": 884,
-  "lastCheck": "2026-09-09T19:13:24.940427+08:00",
-  "consecutiveGreen": 56,
+  "lastCycle": 888,
+  "lastRunAt": "2026-09-09T22:12:00+08:00",
+  "lastStatus": "ok",
+  "cronTotal": 1,
+  "cronOk": 1,
   "cronErrorJobs": 0,
-  "note": "本輪由 hourly cron 19:12 觸發；Cron 自身 lastStatus=ok, CE=0；無 timeout/INVALID_API_KEY/overload；TG 通道探針守則 #19 當下實測 ok:true；v4.0 三關判斷全 fail 不 announce、🔕 安靜通過；coachSilentHours 16.6 fresh (sync_coach_last_message.sh exit 0)。環境快檢：SOUL×3 齊全｜Repo1=28/Repo2=38（自然波動 < 50 警戒線）｜無 .! 鎖定檔",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-09T02:36:55+08:00",
-    "coachSilentHours": 16.6
-  },
-  "lastChecks": {
-    "coach_silence_sync": "2026-09-09T19:13:04.162841+08:00"
-  }
+  "consecutiveGreen": 60,
+  "silentH": 0.6,
+  "verdict": "all_fail_no_announce",
+  "telegramProbe": "ok",
+  "gatewayOk": true,
+  "envCheckOk": true,
+  "heartbeatTodos": 0
 }
