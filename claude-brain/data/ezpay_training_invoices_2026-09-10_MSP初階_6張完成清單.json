@@ -1,23 +1,42 @@
 {
-  "event": "大台南南區初階MSP訓練 2026-09-07 安平北義",
+  "event_msp": "大台南南區初階MSP訓練 2026-09-07 安平北義，每人$300",
+  "event_today": "9/10另一場訓練，每人$600（與9/7重複到場者合開$900）",
   "issued_date": "2026-09-10",
-  "amount_each": 300,
+  "merchant": "344031309(大樹教育顧問有限公司)",
+  "item": "B03/BNI培訓",
   "invoices": [
-    {"custom_num": "091001", "name": "李美花", "type": "二聯-email", "invoice_number": "FT00098550", "status": "done"},
-    {"custom_num": "091002", "name": "張騰文", "chapter": "真鑽", "type": "二聯-手機條碼", "carrier": "/LKZTH3E", "invoice_number": "FT00098551", "status": "done"},
-    {"custom_num": "091003", "name": "買駿航", "type": "二聯-email", "invoice_number": "FT00098552", "status": "done"},
-    {"custom_num": "091004", "name": "蔡姵彤", "chapter": "真鑫", "type": "二聯-手機條碼", "carrier": "/Z8PJ5K2", "invoice_number": "FT00098553", "status": "done"},
-    {"custom_num": "091005", "name": "楊尚儒", "type": "二聯-email", "invoice_number": "FT00098554", "status": "done"},
-    {"custom_num": "091006", "name": "郭政輝", "chapter": "真鑽", "type": "三聯", "buyer": "展鑫精密實業社", "taxid": "99287483", "remark": "真鑽-郭政輝", "invoice_number": "FT00098555", "status": "done"}
+    {"custom_num": "091001", "name": "李美花", "type": "二聯-email", "amount": 300, "invoice_number": "FT00098550", "status": "done"},
+    {"custom_num": "091002", "name": "張騰文", "chapter": "真鑽", "type": "二聯-手機條碼", "carrier": "/LKZTH3E", "amount": 300, "note": "9/7單場", "invoice_number": "FT00098551", "status": "done"},
+    {"custom_num": "091003", "name": "買駿航", "type": "二聯-email", "amount": 300, "note": "9/7單場，見091010合併9/10", "invoice_number": "FT00098552", "status": "done"},
+    {"custom_num": "091004", "name": "蔡姵彤", "chapter": "真鑫", "type": "二聯-手機條碼", "carrier": "/Z8PJ5K2", "amount": 300, "invoice_number": "FT00098553", "status": "done"},
+    {"custom_num": "091005", "name": "楊尚儒", "type": "二聯-email", "amount": 300, "note": "9/7單場，見091005為9/7，重複到場改開091005本身即含900？見備註", "invoice_number": "FT00098554", "status": "done"},
+    {"custom_num": "091006", "name": "郭政輝", "chapter": "真鑽", "type": "三聯", "buyer": "展鑫精密實業社", "taxid": "99287483", "remark": "真鑽-郭政輝", "amount": 300, "invoice_number": "FT00098555", "status": "done"},
+    {"custom_num": "091007", "name": "林宜宏", "type": "三聯", "buyer": "明林股份有限公司", "taxid": "69291307", "remark": "真鑽-林宜宏", "amount": 300, "note": "9/7訓練，匯款已確認", "invoice_number": "FT00098556", "status": "done"},
+    {"custom_num": "091008", "name": "杜泱峻", "chapter": "真鑽", "type": "二聯-email", "amount": 900, "note": "9/7+9/10重複到場合開", "invoice_number": "FT00098557", "status": "done"},
+    {"custom_num": "091009", "name": "連皓宇", "chapter": "真鑫", "type": "二聯-手機條碼", "carrier": "/88ZMR73", "amount": 900, "note": "9/7+9/10重複到場合開", "status": "done"},
+    {"custom_num": "091010", "name": "買駿航", "type": "二聯-email", "amount": 900, "note": "9/7+9/10重複到場合開", "status": "done"},
+    {"custom_num": "091011", "name": "張敬雍", "chapter": "真鑽", "type": "三聯", "buyer": "雍証豚畜產行", "taxid": "00434234", "remark": "真鑽-張敬雍", "amount": 600, "status": "done"},
+    {"custom_num": "091012", "name": "傅恩平", "chapter": "真鑽", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091013", "name": "楊智帆", "chapter": "真鑽", "type": "三聯", "buyer": "鴻羽網路有限公司", "taxid": "54082268", "remark": "真鑽-楊智帆", "amount": 600, "status": "done"},
+    {"custom_num": "091014", "name": "黃智宏", "chapter": "真鑽", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091015", "name": "葉彤黎", "chapter": "真鑽", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091016", "name": "吳三貴", "chapter": "真鑽", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091017", "name": "李孟哲", "chapter": "真鑽", "type": "三聯", "buyer": "歐格企業社", "taxid": "40864451", "remark": "真鑽-李孟哲", "amount": 600, "status": "done"},
+    {"custom_num": "091018", "name": "楊仁豪", "chapter": "真鑽", "type": "三聯", "buyer": "聖橋商標事務所", "taxid": "69790367", "remark": "真鑽-楊仁豪", "amount": 600, "status": "done"},
+    {"custom_num": "091019", "name": "郭馨文", "chapter": "真鑽", "note": "教練確認即簽到表寫的「郭馨雯」，同音異字", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091020", "name": "林尹渰", "chapter": "真鑫", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091021", "name": "王聖凱", "chapter": "真鑫", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091022", "name": "莊政川", "chapter": "真鑫", "type": "二聯-email", "amount": 600, "status": "done"},
+    {"custom_num": "091023", "name": "吳志煒", "chapter": "真鑫", "type": "三聯", "buyer": "口天梧室內裝修設計有限公司", "taxid": "00066364", "remark": "真鑫-吳志煒", "amount": 600, "status": "done"},
+    {"custom_num": "091024", "name": "柯宗佑", "chapter": "真鑫", "type": "二聯-email", "amount": 600, "note": "教練裁示「7.柯宗佑1200(兩位)」先開一張600元，兩位/1200的意義待教練後續補充", "status": "done"},
+    {"custom_num": "091025", "name": "連皓宇", "chapter": "真鑫", "type": "二聯-手機條碼", "carrier": "/88ZMR73", "amount": 600, "note": "教練裁示「8.連晧宇1200(兩位)」先開一張600元，跟091009的$900是兩張獨立發票，兩位/1200的意義待教練後續補充", "status": "done"},
+    {"custom_num": "091026", "name": "鄭樫峯", "chapter": "真鑽", "note": "教練提供，簽到表誤寫「鄭堅峰」", "type": "三聯", "buyer": "古鎰統包工程有限公司", "taxid": "00220958", "remark": "真鑽-鄭樫峯", "amount": 600, "status": "done"}
   ],
-  "pending_confirmation": [
-    {"name": "林宜宏", "reason": "簽到表收費欄空白但旁邊有圈起來的「確」字註記，需教練確認是否已收費", "info_found": "統編69291307(明林股份有限公司)，可直接開三聯"},
-    {"name": "杜泱峻", "chapter": "真鑽", "reason": "同上，收費欄空白+「確」字註記", "info_found": "email tdmotivestudio@gmail.com/煦多餐飲整合行銷有限公司，可開二聯"},
-    {"name": "連皓宇", "chapter": "真鑫", "reason": "同上，收費欄空白(圈起來)+「確」字註記", "info_found": "手機條碼/88ZMR73(沿用08-24入會發票同一組)，可開二聯"}
-  ],
-  "no_info_found": [
-    {"name": "張育慈", "chapter": "真誠(新會員)", "note": "簽到表印刷欄位標「線上」理論上免收費，但教練特別點名要注意；資料庫完全查無此人任何統編/電話/Email/條碼，若需開票要請教練提供聯絡方式"}
+  "total_amount": 12300,
+  "total_count": 26,
+  "pending": [
+    {"name": "張育慈", "chapter": "真誠(新會員)", "note": "教練裁示要開，用她公司統編，她最近有開入會發票——但ezPay搜尋BuyerName「育慈」查無資料，可能該筆入會發票是用公司名稱而非個人名稱登記，統編仍不明，待教練提供或後續查證"}
   ],
   "exempt_no_invoice": ["陳佩君(講者)", "王彤(講者)", "恩平(講者)"],
-  "absent_no_signature": ["朝陽", "陳俊源", "吳志煒"]
+  "absent_no_signature_9_7": ["朝陽", "陳俊源", "吳志煒(9/7未簽到，9/10另一場有到)"]
 }
