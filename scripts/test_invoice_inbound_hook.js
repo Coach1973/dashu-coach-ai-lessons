@@ -11,7 +11,9 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const INBOX_DIR = path.join(os.homedir(), '.openclaw', 'workspace', 'state', 'invoice_inbox');
+// 2026-09-10：handler.js在INVOICE_HOOK_TEST=1時會把落地目錄改成invoice_inbox_test，
+// 避免每次重跑測試污染正式對帳資料，這裡跟著改讀同一個測試目錄。
+const INBOX_DIR = path.join(os.homedir(), '.openclaw', 'workspace', 'state', 'invoice_inbox_test');
 const handler = require(path.join(os.homedir(), '.openclaw', 'hooks', 'invoice-inbound', 'handler.js'));
 
 // [訊息, 應該落地嗎, 期待撈到的姓名（子集比對）]
@@ -99,6 +101,7 @@ async function main() {
   }
 
   console.log(`\n結果：${pass} 通過 / ${fail} 失敗（共 ${CASES.length + 2}）`);
+  if (fs.existsSync(INBOX_DIR)) fs.rmSync(INBOX_DIR, { recursive: true, force: true });
   process.exit(fail === 0 ? 0 : 1);
 }
 
