@@ -1,5 +1,9 @@
 # Memory Index
 
+- [🔴🔴 卡關先搜尋(OPE)再嘗試，別讓教練陪試錯…](feedback_search_before_trial_and_error_2026-09-11.md)
+- [🔧 tmutil刪網路型TimeMachine備份的CLI限制…](reference_tmutil_network_destination_delete_limitation_2026-09-11.md)
+- [🔴🔴 invoice-inbound誤報二度發作：心跳偽裝telegram channel繞過排除…](reference_invoice_inbound_heartbeat_disguise_2026-09-10.md)
+- [🔴 .openclaw外層repo遠端main/master雙分支陷阱…](reference_openclaw_repo_dual_branch_trap_2026-09-10.md)
 - [🔴 claude-in-chrome操作同一網站只用一個分頁…](feedback_single_tab_per_site_avoid_session_collision_2026-09-10.md)
 - [🎯 BNI培訓/發票/登錄完整工作流SOP…](reference_bni_training_invoice_registration_workflow_2026-09-10.md)
 - [🔴 liveness check≠輪詢違規，worker還活不…](feedback_liveness_check_not_polling_violation_2026-09-08.md)
