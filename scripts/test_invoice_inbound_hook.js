@@ -78,7 +78,27 @@ async function main() {
     landed ? fail++ : pass++;
   }
 
-  console.log(`\n結果：${pass} 通過 / ${fail} 失敗（共 ${CASES.length + 1}）`);
+  // 🔴🔴 2026-09-10第二次發作：心跳事件從9/9晚上起不再標示channel/chatId='heartbeat'，
+  // 改成偽裝成channel='telegram'/chatId=教練本人真實ID(6124913915)，讓9/6那次靠channel
+  // 字串比對的排除邏輯完全失效——連續14次(9/9 23:07~9/10 03:36)把HEARTBEAT.md內文
+  // 誤存成假發票+發靜音通知，教練半夜收到亂碼訊息才發現。修復改成直接偵測心跳prompt
+  // 文字本身的固定開頭，不依賴容易被系統版本改變格式的channel/chatId間接欄位。
+  {
+    const countBefore = countEntries();
+    await handler({
+      type: 'message', action: 'preprocessed',
+      context: {
+        body: 'Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.\n自動修復動作： 無（無 timeout/INVALID_API_KEY/網路類錯誤需自動調參）',
+        senderId: '6124913915', channelId: undefined,
+      },
+      sessionKey: 'agent:main:main',
+    });
+    const landed = countEntries() > countBefore;
+    console.log(`${landed ? '❌' : '✅'} case heartbeat-disguised-as-telegram: 落地=${landed}(期待false，即使channel偽裝成telegram+教練真實ID也不該被當發票)`);
+    landed ? fail++ : pass++;
+  }
+
+  console.log(`\n結果：${pass} 通過 / ${fail} 失敗（共 ${CASES.length + 2}）`);
   process.exit(fail === 0 ? 0 : 1);
 }
 
