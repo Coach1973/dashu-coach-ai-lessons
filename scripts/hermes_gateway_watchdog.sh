@@ -19,6 +19,16 @@ THRESHOLD_SECONDS=300
 
 mkdir -p "$(dirname "$LOG_FILE")"
 
+# 2026-09-11發現：教練喊「全部釋放」會用launchctl bootout故意關掉ai.hermes.gateway
+# （見scripts/release_all_memory.sh），但這支watchdog不知道「故意關掉」跟「卡死」的
+# 差別，heartbeat沒更新一律當成卡死，送kickstart -k想重啟——服務已被bootout卸載，
+# kickstart對不存在的job必定悄悄失敗(check=False吞掉)，於是每5分鐘重複「假裝重啟、
+# 其實什麼都没做、卻照樣發Telegram通知」的空迴圈，連續3次打擾教練才被發現。
+# 根治：重啟前先確認job是否還在launchd裡掛著，沒掛著=故意關閉的預期狀態，直接跳過。
+if ! /bin/launchctl print "gui/$(id -u)/ai.hermes.gateway" >/dev/null 2>&1; then
+    exit 0
+fi
+
 python3 - "$HEARTBEAT_FILE" "$THRESHOLD_SECONDS" <<'PYEOF' >> "$LOG_FILE" 2>&1
 import json
 import os
