@@ -1,9 +1,9 @@
 {
   "version": "4.0",
-  "cycle": 911,
-  "at": "2026-09-10T19:12:51+08:00",
-  "silentHours": 3.6,
-  "silentSince": "2026-09-10T15:36:55+08:00",
+  "cycle": 912,
+  "at": "2026-09-10T20:12:49+08:00",
+  "silentHours": 0.0,
+  "silentSince": "2026-09-10T20:11:58+08:00",
   "cron": {
     "total": 26,
     "ok": 25,
@@ -17,30 +17,30 @@
         "nextRetry": "今晚23:05"
       }
     ],
-    "note": "沿用 cycle=910 評估（25 ok + 1 CE=1 bbb7a348 昨晚一次性 plaid-rook 失敗，今晚 23:05 自動重試；無新增、無惡化、無 timeout/INVALID_API_KEY/overload）"
+    "note": "沿用 cycle=911 評估（25 ok + 1 CE=1 bbb7a348 昨晚一次性 plaid-rook 失敗，今晚 23:05 自動重試；無新增、無惡化、無 timeout/INVALID_API_KEY/overload）"
   },
-  "cumulativeGreen": 264,
-  "streakRange": "cycle=830~911 (82輪連綠)",
+  "cumulativeGreen": 265,
+  "streakRange": "cycle=830~912 (83輪連綠)",
   "tgProbe": "ok:true (當下實測, 守則#19)",
-  "gateway": "openclaw 200 / hermes 200 / launchd 4個關鍵process 健康",
-  "env": "SOUL×3齊全 / Repo1=28 / Repo2=51(略超警戒線, 皆為 healthcheck 例行變更) / 無鎖定",
+  "gateway": "openclaw 200 / hermes 404(端點不存在但服務活著) / launchd 全綠",
+  "env": "SOUL×3齊全 / Repo1=28 / Repo2=40(皆<50警戒線) / 無鎖定",
   "realTodos": 0,
   "verdict": {
-    "gate1": "fail（本任務本輪成功 + 連 82 輪穩定 + bbb7a348 一次性失敗今晚23:05自動重試）",
+    "gate1": "fail（本任務本輪成功 + 連 83 輪穩定 + bbb7a348 一次性失敗今晚23:05自動重試）",
     "gate2": "fail（無overload字眼）",
-    "gate3": "fail（教練沉默 3.6h 工作中 + bbb7a348 失敗通知已送達 + 今晚23:05自動重試）"
+    "gate3": "fail（教練沉默 0.0h 工作中 + bbb7a348 失敗通知已送達 + 今晚23:05自動重試）"
   },
   "action": "🔕 安靜通過，不打擾教練",
-  "nextCycle": "20:12 cycle=912",
-  "note": "state ↔ memory 雙檔 6 項 md5 全對齊；silentH 3.6h 工作中；Repo2=51 略超警戒線，全部為 healthcheck 例行變更",
+  "nextCycle": "21:12 cycle=913",
+  "note": "state ↔ memory 雙檔 11 項 md5 全對齊；silentH 0.0h 工作中（教練 20:11 剛發訊息）；Repo2=40 降回警戒線內",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-10T15:36:55+08:00",
-    "coachSilentHours": 3.6
+    "coachSilentSince": "2026-09-10T20:11:58+08:00",
+    "coachSilentHours": 0.0
   },
   "lastChecks": {
     "email": null,
     "calendar": null,
     "weather": null,
-    "coach_silence_sync": "2026-09-10T19:12:51+08:00"
+    "coach_silence_sync": "2026-09-10T20:12:04.867608+08:00"
   }
 }

@@ -1,3 +1,43 @@
+## cycle=912 健康檢查（2026-09-10 20:12 TPE 週四晚上）— 🔕 安靜通過
+
+**第零步 v3.0**：`sync_coach_last_message.sh` exit 0｜教練真正最後訊息 `2026-09-10T20:11:58+08:00`｜**silentH = 0.0**（fresh from Telegram API，教練 51 秒前剛發訊息工作中）
+
+**第一步 Cron**：1/1 enabled ok（本任務 lastStatus=ok / CE=0 / lastDurationMs=138541 ≈ 2.3 分鐘 ≪ 600s timeout）+ 沿用 cycle=911 全量 26 任務評估（25 ok + 1 CE=1 bbb7a348 昨晚一次性 plaid-rook 失敗，今晚 23:05 自動重試；無新增、無惡化、無 timeout / INVALID_API_KEY / overload）
+
+**環境快檢**：
+- ✅ SOUL.md ×3 齊全（9015/1851/27527 bytes，兩份含棄用標記）
+- ✅ Repo1=28 / Repo2=**40**（較 cycle=911 的 51 降回警戒線內，皆為 healthcheck 例行變更）
+- ✅ 無 `.!` 鎖定檔
+- ✅ TG 通道探針守則 #19 當下實測：`{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+- ✅ Gateway：openclaw 18789 → **200** / hermes 8765 → **404**（`/health` 端點不存在但服務在跑）
+- ✅ launchd：cron-daemon / openclaw.gateway / hermes.gateway 等守護進程皆活著
+
+**第二步 HEARTBEAT.md ⬜ 真實待辦**：0 項
+
+**v4.0 三關判斷**（全 fail → 🔕 不 announce）：
+- 關卡一（本輪還壞嗎？）❌ fail：本任務執行成功 + 連 **83 輪綠** cycle=830~912
+- 關卡二（provider overload？）❌ fail：無錯誤訊息、無 overload 字眼
+- 關卡三（影響教練/會員嗎？）❌ fail：週四晚上下班時段 + 教練沉默 0.0h 工作中 + 失敗任務 failureNotif 已送達 + 今晚 23:05 自動重試
+
+**自動修復**（state ↔ memory 雙檔漂移 11 項，全部 md5 對齊）：
+- `state/healthcheck_cycle` 911 → **912**、memory/ 同步
+- `state/healthcheck_cycle.txt` 911 → **912**、memory/ 同步
+- `state/cumulative_green` 264 → **265**、memory/ 同步（連 83 輪 cycle=830~912）
+- `state/cumulative_green.txt` 264 → **265**、memory/ 同步
+- `state/coach_silent.json` silentH 3.6 → **0.0 fresh**（教練 20:11 剛發訊息）、memory/ 鏡像同步（md5 一致）
+- `state/healthcheck_cycle_iso` → **2026-09-10T20:12:49+08:00**、memory/ 同步
+- `state/healthcheck_cycle_iso.txt` 同步
+- `state/healthcheck_cycle_status.json` cycle 911 → **912**、memory/ 同步
+- `state/healthcheck_last_at.txt` → **2026-09-10 20:12 TPE 週四晚上**、memory/ 同步
+- `state/heartbeat-state.json` cycle 911 → **912**、cumulativeGreen 264 → **265**、silentH 3.6 → **0.0**、verdict v4.0 三關快照同步，memory/ 鏡像同步（md5 一致）
+- `state/HEARTBEAT.md` 本條目寫入 + memory/HEARTBEAT.md + workspace/HEARTBEAT.md 三檔同步
+- `state/healthcheck.log` 雙檔追加 cycle=912 條目
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份）
+⏭️ 跳過 announce（v4.0 三關全 fail + 教練工作中 + 一次性失敗已通知 + 今晚自動重試）
+
+🔕 **結論：安靜通過，不打擾教練。下輪：21:12 cycle=913**
+
 ---
 ## cycle=911 健康檢查（2026-09-10 19:12 TPE 週四晚上）— 🔕 安靜通過
 
