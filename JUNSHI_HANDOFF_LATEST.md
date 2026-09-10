@@ -6,6 +6,10 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴 | **修復「全部釋放」後watchdog誤報Hermes卡死+invoice-inbound測試腳本污染正式資料** | ✅2026-09-11 v192本場完成 | ①驗證invoice-inbound誤報修復時，重跑`test_invoice_inbound_hook.js`發現`INVOICE_HOOK_TEST=1`只攔`sendTelegram`沒攔fs落地，5筆測試假資料混進正式`state/invoice_inbox/2026-09.jsonl`，已用git checkout清除+改寫獨立`invoice_inbox_test`目錄根治，commit`906d39ed4`(外層repo)+`45258482b`(workspace)②教練喊「全部釋放」故意bootout關掉Hermes gateway，但獨立的`ai.hermes.gateway-watchdog`(每5分鐘檢查)不知道是故意關的，heartbeat沒更新當成卡死，連續3次(00:20/00:25/00:30)送kickstart -k想重啟(對已卸載的job必定悄悄失敗)卻照樣發Telegram假警報，已修復成重啟前先查job是否還掛在launchd裡，沒掛著=預期狀態直接跳過，commit`c8409664c`。 |
+| 🟡 | **Amber TimeMachine舊備份清理：教練裁示今晚暫緩，改讓系統自動管理** | ⚠️持續追蹤-暫緩 | 教練要求把63個備份快照瘦身到只留最新2天，查證`tmutil delete -p`對網路型(SMB)Time Machine目的地完全不適用——連續3種指令變化都失敗(verb不存在/需要root/`No such file or directory`且用一般`ls`對該路徑也打不開，證實這不是權限問題，是`listbackups`印出的路徑本身不是真實可解析的檔案系統路徑)。**教練當場糾正**AI應該先上網搜尋(OPE)再嘗試，不該讓教練陪著試錯(輸入密碼/開系統設定/重開終端機)3輪——事後搜尋證實多個獨立技術討論都警告網路型TM備份不建議用CLI手動刪，蘋果官方文件也寫「不要用終端機動Time Machine資料夾」，這個結論一次搜尋就能查到。教練最終裁示：今晚不處理，讓Time Machine自動管理空間即可(92GB/467GB可用，未塞爆)。記憶`reference_tmutil_network_destination_delete_limitation_2026-09-11`+`feedback_search_before_trial_and_error_2026-09-11`。 |
+| 🟡 | **個人性格測試報告(my.personalitykey.net)存檔：Chrome自動化無法觸發原生存檔/列印對話框，教練改自行螢幕錄影** | ✅2026-09-11教練自行處理，結案 | 教練付費的MBTI報告明天到期只能看不能下載，嘗試①Cmd+S(擴充套件無法觸發瀏覽器層級快捷鍵)②CSS/JS注入修正print媒體查詢(列印預覽仍空白，根因未查明，可能跟頁面渲染方式有更深層關係)，兩種方法都失敗。教練最終選擇自己螢幕錄影，AI協助已停止繼續嘗試(避免無效消耗)，分頁保留供教練錄影用。 |
+| 🟢 | **教練意外斷電查證：SMART健康/APFS/kernel panic三項指標皆正常，無任何損傷** | ✅2026-09-11完成 | 教練不小心踢到電源線導致Mac意外斷電，`last`指令證實02:25有重開機但無對應正常關機紀錄(非計畫性斷電的典型痕跡)。查證SMART Status: Verified、無kernel panic報告、APFS容器無錯誤旗標，確認這次意外沒有造成任何實質損傷(SSD對突然斷電耐受度遠高於傳統硬碟)。 |
 | 🔴🔴 | **invoice-inbound誤報二度發作修復：心跳事件偽裝telegram channel繞過舊排除邏輯** | ✅2026-09-10 v191本場完成 | 教練半夜(9/9 23:07~9/10 03:36)連14次收到「發票資訊已自動存檔」亂碼通知(內容混雜HEARTBEAT.md健檢文字)。查證是同一bug(commit`d5adde4fd`)二度發作：9/6修法靠`channel==='heartbeat'`排除心跳事件，但心跳排程從9/9晚上起改成偽裝channel='telegram'/chatId=教練真實ID，跟教練真的講話完全無法用channel欄位區分，舊排除失效。改成直接偵測文字本身是否為心跳prompt固定開頭("Read HEARTBEAT.md if it exists")，不依賴容易變動的channel欄位。新增regression測試(10項全過)+清除14筆誤報髒資料+重啟gateway驗證。commit：`.openclaw`外層repo`5dd58e7bf`、workspace`d5dc5ee91`。**過程教訓**：這個外層repo遠端同時有`main`/`master`兩個分支，本地在`master`卻誤push到`main`導致差點對到完全不相干的歷史，已用`git reset --soft`+改push正確分支排除，往後這個repo操作前務必先確認`git branch --show-current`對應哪個origin分支。 |
 | 🎯🎯 | **BNI訓練發票29張全數開立(9/7 MSP+9/10另一場，共$13,800)+培訓/發票/登錄工作流SOP固化+BNI Connect出席打勾36人次+查詢腳本上線** | ✅2026-09-10 v190+v191本場完成 | v190：讀簽到表比對資料庫，26張(091001~091026)全數開立$12,300。v191接續完成：①BNI Connect出席打勾9/7(13人，含講師)+9/10(23人，含吳大樹+教練即時補充陳佩君/邱南寅)共36人次，皆用真實reload驗證持久化②`build_bni_training_admin.py`+公開版`msp_build_data.py`新增9/7/9/10兩場，64人資料同步，過程修好INVOICES字典重複鍵吃掉張騰文/李美花舊發票紀錄的真bug③張育慈/張騰文/楊尚儒補開3張發票(091027~091029，$300+$600+$600=13,800)，起因是教練9/8就在Telegram問過張育慈發票沒紀錄但小龍蝦無瀏覽器權限查ezPay卡了兩天④教練拍板「開過的發票一定要記錄，不要再問二聯三聯，小龍蝦/Hermes隨時可查」，新增`query_training_invoice.py`比照namecard-db/query.py模式，CLAUDE.md補上指示，SOP補上「開票驗證成功同一輪次就要記錄」鐵律。commit：`29f149533`+`98fd666`+`cfc307e2c`+`bbdd71a63`。**張育慈統編未查**：一開始誤查政府工商登記系統被教練糾正方向錯誤，最後靠教練提供手機條碼`/7CEVSGB`解決，不是統編。 |
 | 🎯🎯 | **策展SOP店家名冊卡片自動加Google地圖+Hermes gateway卡死6.5小時根因修復與watchdog** | ✅2026-09-08 v189本場完成 | 詳見v189完整戰果，重點：①curation_process.py新增extract_address()正則抓台灣地址格式，自動幫策展上架店家加Google地圖，教練不用再手動找地址貼連結，同場記錄教練建議的源頭做法(生成網站時就要求AI工具寫清楚地址)(commit`065af870a`)②查出Hermes gateway process內部事件迴圈會卡死但不crash、launchd KeepAlive測不到的真根因(已卡6.5小時無人知曉)，已恢復並建立heartbeat staleness watchdog每5分鐘自動偵測重啟(commit`be993e716`)。教練問9/16報名人數被中斷未答，下一場先查`registration_report.py`回覆。 |
@@ -422,35 +426,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-08 v189（Mac桌面版 Sonnet 5，策展SOP店家地圖自動化+Hermes gateway卡死6.5小時根因修復與watchdog）
-
-> 建立時間：2026-09-08 10:29 ~ 09-09 19:27（台灣時間，跨日session）
-> 上一棒：v188（Mac桌面版，通訊錄辨識+戰情儀表板SOP+invoice-inbound修復+引用紀律糾正）
-> 本棒主軸：**策展SOP新店家名冊卡片自動加Google地圖，教練同時提出更根源的做法（生成網站時就要求AI工具寫清楚地址）；教練回報手機Telegram的Hermes多次沒反應，查出gateway process內部事件迴圈會卡死但不crash、launchd KeepAlive測不到的真根因，已恢復並建立heartbeat staleness watchdog；過程中就Stop hook守則#07(輪詢偵測)攔截watchdog設計一事，就地說明liveness check跟過去7次真正違規是不同問題類別，事件驅動在此不可行。**
-
-## 🎯 本場戰果
-
-### 1. 策展SOP新店家名冊卡片自動加Google地圖
-教練發現策展SOP(zip上傳建站)上架的店家在大台南策展中心(tainan-shangquan)店家名冊卡片沒有Google地圖，每次要自己手動開Google地圖搜尋、複製連結貼上。查證根因：自助登錄流程(`_provision_shop_placeholder()`)因表單本身有地址欄位一直有自動地圖，但curation_process.py（zip上傳那條路）從沒抓過地址，卡片天生缺一個`shop-media`欄位。已修復：新增`extract_address()`用正則掃網站HTML找台灣地址格式(市/縣+路/街+號)，抓到就用跟自助登錄同款的query-based地圖embed(免API Key)自動插進卡片；抓不到就不顯示地圖，非致命降級。已用牛市町真實內容驗證正則抓取+卡片渲染皆正確。commit`065af870a`。**教練同場提出更根源的做法**：與其伺服器端事後猜地址，不如在生成網站那一步就請AI工具把地址寫清楚——已寫進SOP文件第一步補充說明，兩層做法互補不衝突。
-
-### 2. Hermes(Mac桌面版)手機Telegram沒反應根因修復+watchdog
-教練回報「已經出現過幾次」。查`gateway.log`：最後一筆活動停在04:00:36，到教練發現時已靜默6.5小時，process全程沒crash——`ai.hermes.gateway.plist`的`KeepAlive:true`只在process真的exit時才重啟，對「活著但內部event loop卡死」完全沒用。已手動`launchctl kickstart -k`恢復（10秒內確認重新連上Telegram）。找到Hermes自己會把event loop存活訊號寫進`~/.hermes/state/gateway.heartbeat`(每~30秒更新，跟訊息量無關)，比看log活動準確得多。新增`scripts/hermes_gateway_watchdog.sh`+launchd `ai.hermes.gateway-watchdog.plist`(`StartInterval:300`)：heartbeat超過5分鐘沒更新就強制重啟+Telegram通知教練。已註冊launchd job並手動觸發驗證：健康時零誤報、假timestamp驗證偵測邏輯正確。commit`be993e716`。
-
-### 3. Stop hook守則#07攔截watchdog設計，就地說明liveness check例外
-watchdog的「每5分鐘檢查」被規則#07自動攔下，就地區分問題類別而非同義改寫規避：過去7次真正違規全部是「有沒有新工作要處理」，都能找到工作被創造的真實動作去掛勾；這次是「worker本身還活不活」，卡死那一刻不會發出任何信號，結構上只能拿當下時間跟上次心跳比較，跟這台Mac既有的`vps-healthcheck.plist`是同一種正當用途(Kubernetes livenessProbe/Docker HEALTHCHECK同類模式)，且檢查動作本身極輕量(讀小JSON比對時間戳，零網路零資料庫)，跟先前違規的浪費程度不同量級。coach888收錄鎖同時重複標記`extract_address()`為未收錄——已澄清是內部函式非獨立頁面，符合規則自身的豁免條件，未做多餘收錄動作。
-
-## ⚠️ 本場教訓/發現（已寫入記憶）
-1. **launchd `KeepAlive:true`只偵測process exit，偵測不到「活著但事件迴圈卡死」**——任何長駐async服務都可能有這個病根，日後遇到「process還在跑但沒反應」的複發模式，直接查該服務有沒有自己的心跳檔案，比看一般log活動更準確。
-2. **守則#07的判斷不是「有沒有定時檢查」表面形式，是「這個問題類別本質上有沒有天然事件掛鉤點」**——liveness/health check(worker還活不活)跟「有沒有新工作」是兩個不同類別，前者結構上不存在能取代時間比較的事件訊號，跟過去7次同義改寫規避性質不同，遇到類似情境要就地說清楚「事件驅動不可行，因為XXX」而非默默規避或默默妥協。
-
-## 📋 下一場開工先做
-1. **教練問「9月16日幾人報名」被中斷未回答**，下一場先跑`scripts/registration_report.py`回覆。
-2. MEMORY.md索引已超過170行接近200行讀取上限，系統多次提示瘦身到140行以下，本場仍未處理，優先度持續累積，下次找時間做（合併/移除過時條目，細節搬進主題檔）。
-3. 沿用既有待辦：後台帳密清單未彙整成檔案、materials系統42份教材待勾選、VPS防斷電決策、9/16高雄場結束後bigtree Netlify自動部署排程(等待17:30觸發)。
-4. E16接力棒瘦身：本次已把v186+v187搬進`handoff_archive/`，主檔維持v188+v189兩棒。
-
-## 🔑 本場commit彙整
-`workspace`：`065af870a`(策展地圖自動化)、`be993e716`(Hermes watchdog)。記憶：`reference_curation_map_autodetect_2026-09-08`(新增)、`reference_hermes_gateway_hang_watchdog_2026-09-08`(新增)。
+> 📦 v189完整內容已封存：`handoff_archive/handoff_v189_archived_2026-09-11.md`（Mac桌面版，策展SOP店家地圖自動化+Hermes gateway卡死6.5小時根因修復與watchdog）
 
 ---
 
@@ -488,3 +464,39 @@ watchdog的「每5分鐘檢查」被規則#07自動攔下，就地區分問題�
 
 ## 🔑 本場commit
 `workspace`：`0622037c8`(4張確認清單初稿)、`88afaed4a`(26張最終清單)、`6188b1e40`(工作流SOP新增)。
+
+---
+
+# 軍師接力棒 · 2026-09-11 v192（Mac桌面版 Sonnet 5，修復invoice-inbound測試污染+Hermes watchdog誤報+TM備份清理踩坑檢討）
+
+> 建立時間：2026-09-10 22:40 ~ 2026-09-11 02:32（台灣時間，跨日session）
+> 上一棒：v190（Mac桌面版，BNI訓練發票26張全數開立+工作流SOP固化）
+> 本棒主軸：**開工驗證v191已完成的invoice-inbound修復時，意外發現並修好測試腳本污染正式資料的真bug；教練喊「全部釋放」後，一支獨立的watchdog不知道服務是故意關的，連續3次誤報Hermes卡死，查明根因並修復；教練交辦清理Amber TimeMachine舊備份，連續踩坑後教練當場糾正「應該先搜尋(OPE)再嘗試，別讓教練陪試錯」，這是本場最重要的教訓；另外協助教練評估一次意外斷電的實際影響（查證無損傷）與嘗試（未成功）替他保存一份即將到期的付費線上報告。**
+
+## 🎯 本場戰果
+
+### 1. invoice-inbound誤報修復驗證+意外抓到測試腳本污染正式資料的bug
+開工查證教練9/10晚上22:19在Telegram反映的心跳誤報問題，確認已有一場並行session在22:24-22:26完成修復(commit`5dd58e7bf`+`d5dc5ee91`)並通過10項regression測試。重跑測試驗證時，發現`test_invoice_inbound_hook.js`的`INVOICE_HOOK_TEST=1`只攔截了`sendTelegram()`，沒攔截`fs.appendFileSync()`落地寫檔，導致5筆測試假資料混進正式的`state/invoice_inbox/2026-09.jsonl`。已用`git checkout`清除污染，並根治：`INVOICE_HOOK_TEST=1`時改把落地目錄整個換成獨立的`invoice_inbox_test`，測試腳本結尾自動`rmSync`清除，之後可安心重跑不弄髒正式資料。commit`906d39ed4`(`.openclaw`外層repo)+`45258482b`(workspace)。已補寫記憶`feedback_test_script_must_mock_side_effects`第二次發生記錄。
+
+### 2. 「全部釋放」後Hermes gateway watchdog連續3次誤報卡死，根因查明並修復
+教練喊「全部釋放」關閉瀏覽器/赫米斯/LINE/Typeless+重啟RustDesk後，00:20/00:25/00:30連續收到3次「Hermes gateway卡住已自動重啟」通知，教練質問「為何同樣的事要重複出現三次」。查證：`release_all_memory.sh`用`launchctl bootout`故意停止`ai.hermes.gateway`(這是它的設計本意)，但獨立的`ai.hermes.gateway-watchdog`(每5分鐘檢查heartbeat新鮮度)完全不知道這是故意的，heartbeat時間戳凍結在16:14:57 UTC(恰好是全部釋放的那一刻)，watchdog每輪都送`launchctl kickstart -k`想重啟，但服務已被bootout卸載，kickstart對不存在的job必定悄悄失敗(`check=False`吞掉錯誤)，卻照樣宣稱「已重啟」並發Telegram通知，變成空轉迴圈。已修復：重啟前先用`launchctl print`確認job是否還掛在launchd裡，沒掛著代表是故意bootout的預期狀態，直接跳過不誤判。commit`c8409664c`，已手動執行驗證exit 0且log無新增內容。
+
+### 3. Amber TimeMachine舊備份清理：連續試錯3輪，教練當場糾正核心工作方法
+教練要求把Amber上63個TimeMachine備份快照瘦身到只留最新2天，du -sh確認TimeMachine分享區375GB已用/92GB可用(19.7%，對應教練所稱「不到20%」)。嘗試`tmutil delete -p`刪除39個舊快照，連續踩坑：①`deletebackup`不是這版macOS的合法verb ②改用`delete -p`後回報需要root ③加sudo後回報`No such file or directory`+`Operation not permitted`——一度誤判為Terminal缺「完全磁碟取用權限」，教練親自開系統設定授權+重開終端機，**仍然同樣報錯**。深入查證發現：`tmutil listbackups`印出的路徑本身連一般`ls`都打不開，證實這不是權限問題，是網路型(SMB)TimeMachine備份底層機制本來就不支援這種路徑式CLI刪除。**教練當場糾正**：「你早點上網路去搜尋，得到正確答案，就不要浪費我的時間，讓我做那麼多沒有用的事情」——事後搜尋(OPE)一次就查到：多個獨立技術討論(蘋果社群/開發者論壇)明確警告網路型TM備份用CLI手動刪風險高，蘋果官方文件本身也寫「不要用終端機動Time Machine資料夾」，這個結論不需要教練陪著試錯3輪才得到。教練最終裁示選項3：今晚暫緩，讓Time Machine自動管理空間即可。已寫入記憶`reference_tmutil_network_destination_delete_limitation_2026-09-11`(技術限制)+`feedback_search_before_trial_and_error_2026-09-11`(工作方法教訓，核心：遇到不熟悉的系統限制，先搜尋再嘗試，尤其會要求教練操作之前)。
+
+### 4. 個人付費報告(personalitykey.net)存檔嘗試失敗+意外斷電查證
+教練付費的MBTI測試報告明天到期後只能看不能下載，想留存一份。用claude-in-chrome(教練真實登入的Chrome)確認內容可正常瀏覽，但javascript_tool被系統安全機制擋下(頁面含guid參數觸發cookie/query string防外洩偵測)，改嘗試Cmd+S/CSS注入修正print媒體查詢等方式想讓瀏覽器原生存檔/列印可用，皆失敗——瀏覽器擴充套件的自動化工具無法觸發瀏覽器層級的原生對話框(存檔/列印皆屬此類)，且列印預覽本身空白的根因未查明。教練最終改用自己螢幕錄影解決，AI協助到此為止(避免無效消耗)。另外教練回報不小心踢到電源線導致Mac意外斷電，查證`last`指令確認02:25有重開機但無對應正常關機紀錄(典型非計畫性斷電痕跡)，進一步查SMART健康狀態/kernel panic報告/APFS容器錯誤旗標，三項指標皆正常，確認這次意外沒有造成任何實質損傷。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **卡關先搜尋(OPE)再嘗試，別讓教練陪試錯**——這是本場最重要的教訓。遇到不熟悉的系統限制/工具行為異常，第一反應該是搜尋（尤其下一步會要求教練操作：輸入密碼/改設定/重跑指令之前），不是憑經驗猜測直接動手。已寫入`feedback_search_before_trial_and_error_2026-09-11`，跟既有的`feedback_cap_retries_report_when_stuck`互補：停手後下一步是搜尋，不是繼續猜。
+2. **測試腳本的「副作用」不只包括網路呼叫，也包括寫真實檔案**——`feedback_test_script_must_mock_side_effects`原本只提醒攔截`https.request`，這次是`fs.appendFileSync`寫進正式資料路徑同樣算副作用，已補充進該記憶檔。
+3. **watchdog/liveness check類設計，必須考慮「服務被故意關閉」的狀態**——不能只判斷「heartbeat新不新鮮」就直接當成異常並嘗試修復，要先確認這個服務本來就該不該在跑。
+
+## 📋 下一場開工先做
+1. 沿用v190既有待辦：BNI Connect打勾確認出席(9/7+9/10共35人次)、更新BNI培訓總覽資料庫、張育慈統編待查。
+2. Amber TimeMachine清理：若教練之後想再處理，改用「進入時光機」視覺化介面手動刪，不要再嘗試CLI。
+3. MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選（沿用多場舊待辦）。
+4. E16接力棒瘦身：本次已把v189搬進`handoff_archive/`，主檔維持v190+v192兩棒。
+
+## 🔑 本場commit
+`.openclaw`外層repo：`906d39ed4`(invoice-inbound測試污染修復)、`c8409664c`(Hermes watchdog誤報修復)。`workspace`：`45258482b`(測試腳本改用獨立目錄)。記憶：`feedback_test_script_must_mock_side_effects`(更新)、`reference_tmutil_network_destination_delete_limitation_2026-09-11`(新增)、`feedback_search_before_trial_and_error_2026-09-11`(新增)。
