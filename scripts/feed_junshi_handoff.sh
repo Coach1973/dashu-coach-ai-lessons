@@ -239,6 +239,19 @@ INJECT_CONTENT=$(
     cat "$HANDOFF"
   fi
 
+  # ───────── 第 1.5 步：待辦表過期偵測（2026-09-11教練糾正ACER誤報後新增） ─────────
+  # 根因：🔒/⏳卡住的待辦，若在別的session被順手解決，沒人回頭改狀態，就會變成
+  # 過期事實一路被當成真相講給教練聽（ACER案例：08-26已解決，放到09-11才被戳破）。
+  # 不試圖自動判斷是否真的解決（需要語意理解做不到），改成把超過14天沒更新的
+  # 🔒/⏳項目明確標出來，逼開工時主動口頭跟教練核對現況，不可直接讀出來當事實。
+  STALENESS_SCRIPT="$WORKSPACE/scripts/handoff_staleness_check.py"
+  if [[ -f "$STALENESS_SCRIPT" ]]; then
+    echo ""
+    echo "## ⚠️ 第 1.5 步：待辦表過期覆核（超過14天未更新的🔒/⏳項目，讀出前先問教練還算不算數）"
+    echo ""
+    python3 "$STALENESS_SCRIPT" "$HANDOFF" 2>/dev/null || echo "（過期偵測腳本執行失敗，略過）"
+  fi
+
   # ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
   if [[ -f "$HEARTBEAT" ]]; then
     echo ""
