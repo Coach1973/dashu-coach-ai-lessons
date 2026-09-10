@@ -56,6 +56,12 @@ metadata:
 3. 簽到表上有出席但系統原本沒註冊的人（常見於線上/臨時加入者）＝用`appsEventsFindAddAttendee`頁面新增。
 4. 查無對應活動（教練口述的活動在BNI Connect系統上找不到）＝列出來回報教練，不要自己編一個新活動或跳過不管。
 
+## 🔴 鐵律（2026-09-10教練拍板）：開票當下就要記錄，不要事後補
+
+每張ezPay發票用`search_invoice`驗證存在成功的**同一輪次**，就要把該筆記錄寫進`build_bni_training_admin.py`的`TAX_INFO`/`PHONE`/`INVOICES`，不能拖到「之後」或跨session才補——`query_training_invoice.py "<姓名>"`是小龍蝦/Hermes/軍師共用的查詢入口，只要開票當下沒記錄，這支查詢就會顯示「查無資料」，教練再問一次同樣的人，等於同一個問題要重新查一次ezPay。
+
+**案例**：2026-09-08教練在Telegram問過小龍蝦「我還有開給張育慈不是嗎？怎麼沒有紀錄？」，但小龍蝦沒有瀏覽器權限查ezPay，這個問題該轉給軍師處理卻沒轉成，卡了兩天沒人解決，直到2026-09-10教練再次追問才被抓出來補開發票。
+
 ## 第五步｜更新BNI培訓總覽資料庫
 
 編輯`claude-brain/data/build_bni_training_admin.py`：
