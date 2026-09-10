@@ -1,8 +1,8 @@
 {
-  "lastMessageAt": "2026-09-10T20:11:58+08:00",
-  "silentSince": "2026-09-10T20:11:58+08:00",
-  "silentHours": 0.0,
-  "freshAt": "2026-09-10T20:12:49+08:00",
+  "lastMessageAt": "2026-09-10T20:59:34+08:00",
+  "silentSince": "2026-09-10T20:59:34+08:00",
+  "silentHours": 0.2,
+  "freshAt": "2026-09-10T21:12:33+08:00",
   "source": "telegram-api-real",
-  "note": "sync_coach_last_message.sh exit 0, fresh from API, cycle=912"
+  "note": "sync_coach_last_message.sh exit 0, fresh from API, cycle=913"
 }

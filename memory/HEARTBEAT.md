@@ -1,3 +1,48 @@
+## cycle=913 健康檢查（2026-09-10 21:12 TPE 週四晚上）— 🔕 安靜通過
+
+**第零步 v3.0**：`sync_coach_last_message.sh` exit 0｜教練真正最後訊息 `2026-09-10T20:59:34+08:00`｜**silentH = 0.2**（fresh from Telegram API，教練 13 分鐘前剛發訊息工作中）
+
+**第一步 Cron**：26/26（本任務 running + 20 ok + 1 CE=1 bbb7a348 昨晚一次性 + 4 idle 未啟動一次性提醒；無新增、無惡化、無 timeout / INVALID_API_KEY / overload）+ 全清單查證
+- ok：sync-執行細則 / sync-特助心法 / 每4小時主動關懷 / 每2小時增量蒸餾 / 場景化升華23:00 / BNI行事曆 / Memory Dreaming / 06:00起床摘要 / 07:00幕僚長晨報 / LINE@教練都在想什麼 / bni-credit-expiry / 結繩領導學 / 每週記憶蒸餾 / 行事曆每週同步 / 執董週會 / Netlify積分 / 每月25信貸 / Token健康體檢 / 7/24養護 / 22:20寄50封信 = 20
+- error：**bbb7a348 🦞 小龍蝦每日三機總結（每日23:05）** CE=1 / Last 22h ago（昨晚23:05一次性 plaid-rook 失敗）/ Next in 2h（今晚23:05自動重試）
+- idle（未啟動一次性）：9/16胸章提醒 / 發財樹澆水9-11月 / 秋瑩姐女兒婚宴9/20 / 8036車貸12/1
+- running：本任務自己
+- 完整清單已查 `openclaw cron list` 26 行全核對
+
+**環境快檢**：
+- ✅ SOUL.md ×3 齊全（9015/1851/27527 bytes，兩份含棄用標記）
+- ✅ Repo1=28 / Repo2=**44**（較 cycle=912 的 40 微增，皆為 healthcheck 例行變更，< 50 警戒線）
+- ✅ 無 `.!` 鎖定檔
+- ✅ TG 通道探針守則 #19 當下實測：`{"ok":true,"bot":"openclaw_macbook4_bot","chat":"6124913915"}`
+- ✅ Gateway：openclaw 18789 → **200** / hermes 8765 → **200**（本輪 hermes 從 cycle=912 的 404 回穩到 200，無端點缺失）
+- ✅ launchd：cron-daemon 40579 / openclaw.gateway / hermes.gateway 70523 / hermes.desktop 等守護進程皆活著
+
+**第二步 HEARTBEAT.md ⬜ 真實待辦**：0 項
+
+**v4.0 三關判斷**（全 fail → 🔕 不 announce）：
+- 關卡一（本輪還壞嗎？）❌ fail：本任務執行成功 + 連 **84 輪綠** cycle=830~913
+- 關卡二（provider overload？）❌ fail：無錯誤訊息、無 overload 字眼（僅一次性 plaid-rook 失敗已過去 22h）
+- 關卡三（影響教練/會員嗎？）❌ fail：週四晚上下班時段 + 教練沉默 0.2h 工作中 + 失敗任務昨晚已通知 + 今晚 23:05 自動重試
+
+**自動修復**（state ↔ memory 雙檔漂移 11 項，全部 md5 對齊）：
+- `state/healthcheck_cycle` 912 → **913**、memory/ 同步
+- `state/healthcheck_cycle.txt` 912 → **913**、memory/ 同步
+- `state/cumulative_green` 265 → **266**、memory/ 同步（連 84 輪 cycle=830~913）
+- `state/cumulative_green.txt` 265 → **266**、memory/ 同步
+- `state/coach_silent.json` silentH 0.0 → **0.2 fresh**（教練 20:59 剛發訊息）、memory/ 鏡像同步（md5 一致）
+- `state/healthcheck_cycle_iso` → **2026-09-10T21:12:33+08:00**、memory/ 同步
+- `state/healthcheck_cycle_iso.txt` 同步
+- `state/healthcheck_cycle_status.json` cycle 912 → **913**、memory/ 同步
+- `state/healthcheck_last_at.txt` → **2026-09-10 21:12 TPE 週四晚上**、memory/ 同步
+- `state/heartbeat-state.json` cycle 912 → **913**、cumulativeGreen 265 → **266**、silentH 0.0 → **0.2**、verdict v4.0 三關快照同步、完整 cron 26 任務評估（20 ok / 1 error / 1 running / 4 idle），memory/ 鏡像同步（md5 一致）
+- `state/HEARTBEAT.md` 本條目寫入 + memory/HEARTBEAT.md 同步
+
+⏭️ 跳過 commit+push（2026-07-05 教練拍板由 23:05 三機總結統一備份，今晚 23:05 自動重試）
+⏭️ 跳過 announce（v4.0 三關全 fail + 教練工作中 + 一次性失敗已通知 + 今晚自動重試）
+
+🔕 **結論：安靜通過，不打擾教練。下輪：22:12 cycle=914**
+
+---
 ## cycle=912 健康檢查（2026-09-10 20:12 TPE 週四晚上）— 🔕 安靜通過
 
 **第零步 v3.0**：`sync_coach_last_message.sh` exit 0｜教練真正最後訊息 `2026-09-10T20:11:58+08:00`｜**silentH = 0.0**（fresh from Telegram API，教練 51 秒前剛發訊息工作中）
