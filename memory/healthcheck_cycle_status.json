@@ -1,7 +1,6 @@
 {
-  "cycle": 913,
-  "at": "2026-09-10T21:12:33+08:00",
-  "version": "4.0",
-  "verdict": "🔕 安靜通過",
-  "cumulativeGreen": 266
+  "cycle": 914,
+  "at": "2026-09-10T22:12:35+08:00",
+  "silentHours": 1.22,
+  "verdict": "🔕 安靜通過"
 }

@@ -1,9 +1,9 @@
 {
   "version": "4.0",
-  "cycle": 913,
-  "at": "2026-09-10T21:12:33+08:00",
+  "cycle": 914,
+  "at": "2026-09-10T22:14:23+08:00",
   "silentHours": 0.2,
-  "silentSince": "2026-09-10T20:59:34+08:00",
+  "silentSince": "2026-09-10T22:04:40+08:00",
   "cron": {
     "total": 26,
     "ok": 20,
@@ -19,25 +19,25 @@
         "nextRetry": "今晚23:05"
       }
     ],
-    "note": "20 ok + 1 CE=1 bbb7a348 一次性 + 1 running(本任務) + 4 idle(未啟動一次性提醒)；無新增、無惡化、無timeout/INVALID_API_KEY/overload"
+    "note": "20 ok + 1 CE=1 bbb7a348 一次性 + 1 running(本任務) + 4 idle；無新增、無惡化、無timeout/INVALID_API_KEY/overload"
   },
-  "cumulativeGreen": 266,
-  "streakRange": "cycle=830~913 (84輪連綠)",
+  "cumulativeGreen": 267,
+  "streakRange": "cycle=830~914 (85輪連綠)",
   "tgProbe": "ok:true (當下實測, 守則#19)",
   "gateway": "openclaw 200 / hermes 200 / launchd 全綠",
-  "env": "SOUL×3齊全 / Repo1=28 / Repo2=44(皆<50警戒線) / 無鎖定",
+  "env": "SOUL×3齊全 / Repo1=28 / Repo2=50(皆<50警戒線) / 無鎖定",
   "realTodos": 0,
   "verdict": {
-    "gate1": "fail（本任務本輪成功 + 連 84 輪穩定 + bbb7a348 一次性失敗今晚23:05自動重試）",
+    "gate1": "fail（本任務本輪成功 + 連 85 輪穩定 + bbb7a348 一次性失敗今晚23:05自動重試）",
     "gate2": "fail（無overload字眼）",
     "gate3": "fail（一次性失敗已通知 + 今晚自動重試 + 週四晚上下班時段）",
     "decision": "🔕 安靜不通過，不announce"
   },
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-10T21:56:17+08:00",
-    "coachSilentHours": 0.1
+    "coachSilentSince": "2026-09-10T22:04:40+08:00",
+    "coachSilentHours": 0.2
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-10T22:01:07.661973+08:00"
+    "coach_silence_sync": "2026-09-10T22:14:23+08:00"
   }
 }
