@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴 claude-in-chrome操作同一網站只用一個分頁…](feedback_single_tab_per_site_avoid_session_collision_2026-09-10.md)
 - [🎯 BNI培訓/發票/登錄完整工作流SOP…](reference_bni_training_invoice_registration_workflow_2026-09-10.md)
 - [🔴 liveness check≠輪詢違規，worker還活不…](feedback_liveness_check_not_polling_violation_2026-09-08.md)
 - [🔧 Hermes gateway卡死不crash+heartbeat…](reference_hermes_gateway_hang_watchdog_2026-09-08.md)
