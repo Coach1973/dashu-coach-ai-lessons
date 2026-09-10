@@ -1,48 +1,46 @@
 {
-  "cycle": 901,
-  "lastCheckAt": "2026-09-10T10:13:45.508069+08:00",
-  "silentH": 6.6,
-  "cronStatus": "2 errors (9c3fc55d 蒸餾 09:00 + bbb7a348 三機總結 昨晚), both CE=1 持續（同 cycle=900 狀態，下輪 11:00 / 23:05 自動重試）",
-  "note": "cycle=901 狀態與 cycle=900 完全一致：兩個失敗任務皆 CE=1，皆為單次失敗待自動重試，無升級跡象；TG 通道持續 ok、gateway 健康、本任務執行成功",
-  "threeChecks": {
-    "check1_stillFailing": false,
-    "check2_providerOverload": false,
-    "check3_affectsWork": false
-  },
-  "tgChannelProbe": {
-    "ok": true
-  },
-  "gateway": {
-    "openclaw": 200,
-    "hermes": 200
-  },
-  "decision": "silent_pass_v4_three_checks_all_fail",
-  "systemSnapshot": {
-    "coachSilentSince": "2026-09-10T03:36:55+08:00",
-    "coachSilentHours": 6.6,
-    "errorTasks": [
+  "version": "4.0",
+  "cycle": 911,
+  "at": "2026-09-10T19:12:51+08:00",
+  "silentHours": 3.6,
+  "silentSince": "2026-09-10T15:36:55+08:00",
+  "cron": {
+    "total": 26,
+    "ok": 25,
+    "errors": 1,
+    "details": [
       {
-        "id": "9c3fc55d-d0f4-462f-9eeb-631a3599a710",
-        "name": "每2小時增量記憶蒸餾",
-        "lastRunStatus": "error",
-        "error": "⚠️ 🎯 Update Goal: `complete` failed",
+        "id": "bbb7a348",
+        "name": "每日23:05三機總結",
         "ce": 1,
-        "nextRunAtMs": 1789012825191,
-        "status": "single_failure_will_retry_1100"
-      },
-      {
-        "id": "bbb7a348-59dc-41fd-879b-91b4d0522e18",
-        "name": "🦞 小龍蝦每日三機總結（每日23:05）",
-        "lastRunStatus": "error",
-        "error": "⚠️ 🧰 Process: `plaid-rook` failed",
-        "failureNotificationDelivered": true,
-        "nextRunAtMs": 1789052700000,
-        "status": "single_failure_will_retry_tonight_2305"
+        "msg": "plaid-rook failed（昨晚一次性，今晚23:05自動重試）",
+        "nextRetry": "今晚23:05"
       }
-    ]
+    ],
+    "note": "沿用 cycle=910 評估（25 ok + 1 CE=1 bbb7a348 昨晚一次性 plaid-rook 失敗，今晚 23:05 自動重試；無新增、無惡化、無 timeout/INVALID_API_KEY/overload）"
+  },
+  "cumulativeGreen": 264,
+  "streakRange": "cycle=830~911 (82輪連綠)",
+  "tgProbe": "ok:true (當下實測, 守則#19)",
+  "gateway": "openclaw 200 / hermes 200 / launchd 4個關鍵process 健康",
+  "env": "SOUL×3齊全 / Repo1=28 / Repo2=51(略超警戒線, 皆為 healthcheck 例行變更) / 無鎖定",
+  "realTodos": 0,
+  "verdict": {
+    "gate1": "fail（本任務本輪成功 + 連 82 輪穩定 + bbb7a348 一次性失敗今晚23:05自動重試）",
+    "gate2": "fail（無overload字眼）",
+    "gate3": "fail（教練沉默 3.6h 工作中 + bbb7a348 失敗通知已送達 + 今晚23:05自動重試）"
+  },
+  "action": "🔕 安靜通過，不打擾教練",
+  "nextCycle": "20:12 cycle=912",
+  "note": "state ↔ memory 雙檔 6 項 md5 全對齊；silentH 3.6h 工作中；Repo2=51 略超警戒線，全部為 healthcheck 例行變更",
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-10T15:36:55+08:00",
+    "coachSilentHours": 3.6
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-10T10:13:45.508083+08:00",
-    "tg_channel_probe": "2026-09-10T10:13:45.508087+08:00"
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "coach_silence_sync": "2026-09-10T19:12:51+08:00"
   }
 }
