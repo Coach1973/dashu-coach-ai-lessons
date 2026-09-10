@@ -1,22 +1,48 @@
 {
-  "lastCycle": 891,
-  "lastRunAt": "2026-09-10T01:12:13+08:00",
-  "lastStatus": "ok",
-  "cronTotal": 1,
-  "cronOk": 1,
-  "cronErrorJobs": 0,
-  "consecutiveGreen": 63,
-  "silentH": 0.1,
-  "verdict": "all_fail_no_announce",
-  "telegramProbe": "ok",
-  "gatewayOk": true,
-  "envCheckOk": true,
-  "heartbeatTodos": 0,
+  "cycle": 901,
+  "lastCheckAt": "2026-09-10T10:13:45.508069+08:00",
+  "silentH": 6.6,
+  "cronStatus": "2 errors (9c3fc55d 蒸餾 09:00 + bbb7a348 三機總結 昨晚), both CE=1 持續（同 cycle=900 狀態，下輪 11:00 / 23:05 自動重試）",
+  "note": "cycle=901 狀態與 cycle=900 完全一致：兩個失敗任務皆 CE=1，皆為單次失敗待自動重試，無升級跡象；TG 通道持續 ok、gateway 健康、本任務執行成功",
+  "threeChecks": {
+    "check1_stillFailing": false,
+    "check2_providerOverload": false,
+    "check3_affectsWork": false
+  },
+  "tgChannelProbe": {
+    "ok": true
+  },
+  "gateway": {
+    "openclaw": 200,
+    "hermes": 200
+  },
+  "decision": "silent_pass_v4_three_checks_all_fail",
   "systemSnapshot": {
-    "coachSilentSince": "2026-09-10T01:06:55+08:00",
-    "coachSilentHours": 0.1
+    "coachSilentSince": "2026-09-10T03:36:55+08:00",
+    "coachSilentHours": 6.6,
+    "errorTasks": [
+      {
+        "id": "9c3fc55d-d0f4-462f-9eeb-631a3599a710",
+        "name": "每2小時增量記憶蒸餾",
+        "lastRunStatus": "error",
+        "error": "⚠️ 🎯 Update Goal: `complete` failed",
+        "ce": 1,
+        "nextRunAtMs": 1789012825191,
+        "status": "single_failure_will_retry_1100"
+      },
+      {
+        "id": "bbb7a348-59dc-41fd-879b-91b4d0522e18",
+        "name": "🦞 小龍蝦每日三機總結（每日23:05）",
+        "lastRunStatus": "error",
+        "error": "⚠️ 🧰 Process: `plaid-rook` failed",
+        "failureNotificationDelivered": true,
+        "nextRunAtMs": 1789052700000,
+        "status": "single_failure_will_retry_tonight_2305"
+      }
+    ]
   },
   "lastChecks": {
-    "coach_silence_sync": "2026-09-10T01:12:03.172014+08:00"
+    "coach_silence_sync": "2026-09-10T10:13:45.508083+08:00",
+    "tg_channel_probe": "2026-09-10T10:13:45.508087+08:00"
   }
 }
