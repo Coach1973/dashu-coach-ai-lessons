@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🎯 BNI培訓/發票/登錄完整工作流SOP…](reference_bni_training_invoice_registration_workflow_2026-09-10.md)
 - [🔴 liveness check≠輪詢違規，worker還活不…](feedback_liveness_check_not_polling_violation_2026-09-08.md)
 - [🔧 Hermes gateway卡死不crash+heartbeat…](reference_hermes_gateway_hang_watchdog_2026-09-08.md)
 - [🔧 策展SOP店家地圖自動化+源頭寫地址…](reference_curation_map_autodetect_2026-09-08.md)
