@@ -32,5 +32,12 @@
     "gate2": "fail（無overload字眼）",
     "gate3": "fail（一次性失敗已通知 + 今晚自動重試 + 週四晚上下班時段）",
     "decision": "🔕 安靜不通過，不announce"
+  },
+  "systemSnapshot": {
+    "coachSilentSince": "2026-09-10T21:56:17+08:00",
+    "coachSilentHours": 0.1
+  },
+  "lastChecks": {
+    "coach_silence_sync": "2026-09-10T22:01:07.661973+08:00"
   }
 }
