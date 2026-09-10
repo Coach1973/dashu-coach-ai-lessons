@@ -1,0 +1,23 @@
+{
+  "event": "大台南南區初階MSP訓練 2026-09-07 安平北義",
+  "issued_date": "2026-09-10",
+  "amount_each": 300,
+  "invoices": [
+    {"custom_num": "091001", "name": "李美花", "type": "二聯-email", "invoice_number": "FT00098550", "status": "done"},
+    {"custom_num": "091002", "name": "張騰文", "chapter": "真鑽", "type": "二聯-手機條碼", "carrier": "/LKZTH3E", "invoice_number": "FT00098551", "status": "done"},
+    {"custom_num": "091003", "name": "買駿航", "type": "二聯-email", "invoice_number": "FT00098552", "status": "done"},
+    {"custom_num": "091004", "name": "蔡姵彤", "chapter": "真鑫", "type": "二聯-手機條碼", "carrier": "/Z8PJ5K2", "invoice_number": "FT00098553", "status": "done"},
+    {"custom_num": "091005", "name": "楊尚儒", "type": "二聯-email", "invoice_number": "FT00098554", "status": "done"},
+    {"custom_num": "091006", "name": "郭政輝", "chapter": "真鑽", "type": "三聯", "buyer": "展鑫精密實業社", "taxid": "99287483", "remark": "真鑽-郭政輝", "invoice_number": "FT00098555", "status": "done"}
+  ],
+  "pending_confirmation": [
+    {"name": "林宜宏", "reason": "簽到表收費欄空白但旁邊有圈起來的「確」字註記，需教練確認是否已收費", "info_found": "統編69291307(明林股份有限公司)，可直接開三聯"},
+    {"name": "杜泱峻", "chapter": "真鑽", "reason": "同上，收費欄空白+「確」字註記", "info_found": "email tdmotivestudio@gmail.com/煦多餐飲整合行銷有限公司，可開二聯"},
+    {"name": "連皓宇", "chapter": "真鑫", "reason": "同上，收費欄空白(圈起來)+「確」字註記", "info_found": "手機條碼/88ZMR73(沿用08-24入會發票同一組)，可開二聯"}
+  ],
+  "no_info_found": [
+    {"name": "張育慈", "chapter": "真誠(新會員)", "note": "簽到表印刷欄位標「線上」理論上免收費，但教練特別點名要注意；資料庫完全查無此人任何統編/電話/Email/條碼，若需開票要請教練提供聯絡方式"}
+  ],
+  "exempt_no_invoice": ["陳佩君(講者)", "王彤(講者)", "恩平(講者)"],
+  "absent_no_signature": ["朝陽", "陳俊源", "吳志煒"]
+}
