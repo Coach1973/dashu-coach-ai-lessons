@@ -2602,6 +2602,58 @@ def api_site_update(repo_name):
                          headers={"Content-Type": "application/json"})
 
 
+# ── 隱私政策頁：Meta App Review「隱私政策網址」欄位要求 (2026-09-11) ──
+_PRIVACY_POLICY_HTML = """<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隱私政策｜大樹教練粉專發文小幫手</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif;max-width:720px;margin:40px auto;padding:0 20px;line-height:1.8;color:#222}
+h1{font-size:1.6rem;border-bottom:3px solid #CF2030;padding-bottom:10px}
+h2{font-size:1.2rem;margin-top:2em;color:#CF2030}
+footer{margin-top:3em;color:#888;font-size:0.85rem}
+</style>
+</head>
+<body>
+<h1>隱私政策</h1>
+<p>本頁說明「大樹教練粉專發文小幫手」（下稱本應用程式）如何處理資料。</p>
+
+<h2>應用程式用途</h2>
+<p>本應用程式僅供應用程式擁有者（大樹教練／吳大樹）本人使用，用於管理自己名下管理的 Facebook 粉絲專頁，
+包括發佈貼文、讀取貼文內容與粉絲專頁基本互動資料。本應用程式不對外開放第三方使用者登入或授權，
+也不會為其他企業或個人管理其 Facebook 資產。</p>
+
+<h2>資料蒐集與使用</h2>
+<p>本應用程式透過 Facebook Graph API 存取以下資料：</p>
+<ul>
+<li>應用程式擁有者本人管理的粉絲專頁清單（<code>pages_show_list</code>）</li>
+<li>發佈、編輯粉絲專頁貼文（<code>pages_manage_posts</code>）</li>
+<li>讀取粉絲專頁貼文與互動洞察報告（<code>pages_read_engagement</code>）</li>
+</ul>
+<p>上述資料僅用於應用程式擁有者本人管理自己粉絲專頁內容之用途，不會蒐集一般訪客或粉絲專頁追蹤者的個人資料，
+不會將任何資料出售、出租或提供予第三方，也不會用於廣告投放以外的商業用途。</p>
+
+<h2>資料保存與刪除</h2>
+<p>本應用程式不另行儲存 Facebook 提供的資料副本；所有資料皆即時透過 Facebook Graph API 存取，
+不留存於應用程式自有的資料庫。如需刪除授權，應用程式擁有者可隨時於
+<a href="https://www.facebook.com/settings?tab=business_tools" target="_blank" rel="noopener">Facebook 設定頁面</a>
+移除本應用程式的存取權限。</p>
+
+<h2>聯絡方式</h2>
+<p>如對本隱私政策有任何疑問，請透過 <a href="mailto:seabiscuitclub@gmail.com">seabiscuitclub@gmail.com</a> 聯絡。</p>
+
+<footer>最後更新：2026-09-11</footer>
+</body>
+</html>"""
+
+
+@app.route("/privacy-policy/fb-poster-app")
+def privacy_policy_fb_poster_app():
+    return Response(_PRIVACY_POLICY_HTML, headers={"Content-Type": "text/html; charset=utf-8"})
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
