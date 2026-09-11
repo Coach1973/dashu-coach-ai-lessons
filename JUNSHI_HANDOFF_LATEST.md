@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴 | **FB粉專發文App「大樹教練粉專發文小幫手」未過App Review，訪客看不到貼文——已查明根因+教練裁示放棄App Review改人工重貼，4篇待重貼** | ⏳待軍師/教練用真實已登入瀏覽器重貼 | 教練朋友反映分享連結「已失效」，深查證實：這個App處於Meta「可供測試」等級，透過它發的貼文只有App角色成員(教練本人)看得到，一般訪客連Page動態時報都看不到(非僅連結失效)。點進「新增到應用程式檢閱」發現要先變成不可逆的「Tech Provider」身份+商業驗證，代價過高，**教練裁示放棄App Review這條路，改用Meta Business Suite/Page首頁手動發文**。時間序列證據：9/1用`/feed`分享連結(shared_story)訪客可見，9/2起用`/photos`(added_photos)或純文字(mobile_status_update)訪客一律不可見，推測9/1~9/2間App被系統標記，確切機制未100%確認。**已確認要重貼的4篇**：9/2兩則(KR養生廚房返場+9/16高雄場舊版)、9/16高雄場(當古典音樂遇到AI科技)、9/23-24台中場(AI微論壇，含楊茗凱換講師版本)。**教練已裁示**：先重發到「大樹教練」這一個粉專即可(不用全部4個粉專)，由軍師用教練已登入的真實Chrome操作，每則送出前先給教練看內容確認。**下一棒待辦**：①開Chrome前往`大樹教練`粉專頁面或Meta Business Suite②依序貼上4篇文字+對應圖片(9/2兩則圖片在`D:\Users\Downloads\照片檔\`可能需要重新找，9/16無圖、9/23圖已生成在本機temp可能已被清除需重新產生)③每則送出前跟教練確認内容④確認發布後用**無登入的獨立瀏覽器**重新造訪Page首頁驗證訪客真的看得到(不能只信管理員token查詢)。記憶`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`+`feedback_verify_public_visibility_not_just_api_success_2026-09-11`。 |
+| 🔴🔴 | **FB App Review申請進行中：商業驗證已過+Tech Provider已確認，卡在應用程式檢閱提交表單「隱私政策網址」之後那一步** | ⏳待教練+軍師續走表單，卡在「繼續」按鈕 | 教練親自深挖後推翻「放棄App Review」的舊裁示，改為**教練親自動手申請**，軍師查證+代填輔助。**已確認的關鍵事實**（用真實browser測試逐一驗證，非猜測）：①用完全登出的瀏覽器測`大樹教練`+`海餅乾俱樂部`+`K R養生廚房`+`大台南策展中心`四個不同分類的粉專，皆看到Facebook官方「目前無法查看此內容」——證實**不是「大樹教練是商業帳戶」的問題，是整個App對所有14個粉專一視同仁被限制**，教練提出的「取消大樹教練商業帳戶」理論已證偽②大台南策展中心至少15篇策展SOP自動上架通知(康燕居/六淨山房等店家)同樣受影響，尚未問過教練要不要重貼③**商業驗證其實早就完成**（BIG TREE EDUCATION CONSULTANT INC.，2026-08-31已驗證），不需要重新跑文件審核那關④教練已親自點擊確認成為「Tech Provider」（不可逆決定，教練本人按下的）⑤已進到「應用程式檢閱提交內容」頁面(`/apps/1050871501278089/app-review/submissions/`)，7個權限(pages_manage_posts/pages_show_list/pages_manage_metadata/pages_messaging/business_management/pages_read_engagement/public_profile)已在新申請清單裡⑥隱私政策網址已補上：`https://event.bymyway.com/privacy-policy/fb-poster-app`(軍師新建，commit`ce4854802`)，教練已填入表單。**下一棒待辦**：①確認教練後續有沒有繼續往下填(App圖示/顯示名稱/其他必填設定)②最終「提交檢閱」是不可逆動作(提交後無法編輯或取消)，送出前務必再次跟教練確認內容③走完App Review後，回頭處理已知還沒公開可見的貼文——目前只有9/16高雄場正式版一篇已確認手動重貼成功並用登出瀏覽器驗證公開可見，其餘(9/23-24台中場AI微論壇教練說要自己貼、大台南策展中心15篇店家通知)都還沒處理，教練裁示「只貼有效貼文即可」(過期的KR養生廚房返場、9/16舊版兩篇不用管)。記憶`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(已補充4項深挖修正)+`feedback_verify_public_visibility_not_just_api_success_2026-09-11`。 |
 | 🟢 | **9/23-24台中場AI微論壇講師異動：曾思遠(出國)換成楊茗凱，官網已上線+FB文案圖片已同步更新** | ✅2026-09-11本場完成 | 教練提供楊茗凱資料(mentor100.bymyway.com移植：簡介/照片/FB/IG/Threads/LINE)，`ai-forum-taichung`repo三處同步更新(timeline議程/DAY1摘要/SPEAKERS陣列)，commit`5d7b28e`，已寫信Mac pull部署並確認`event.bymyway.com/ai-forum/`已顯示新講師。FB宣傳圖(1200×630 headless Chrome截圖產出)+文案同步改名，已發到4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心)——**但這4則貼文正是上面那項「App未過Review」問題的受害者，訪客實際看不到，需比照上一項待辦重貼**。 |
 | 🟢 | **下載資料夾整理腳本v4：媒體檔案拆三個獨立資料夾+新增壓縮檔/網頁檔分類，已測試部署** | ✅2026-09-11本場完成 | 教練提出5點分類構想，優化後定案：LINE截圖與一般圖片統一進「照片檔」(原本兩條路徑分開)、新增「壓縮檔」「網頁檔」獨立分類(原本完全不整理)、副檔名清單擴充(.heic/.heif、.wav/.ogg/.wma、.mkv/.wmv/.flv)。用隔離測試環境驗證13種檔案類型全部正確分流，`D:\Users\Downloads\整理下載資料夾.ps1`已更新為v4(含UTF-8 BOM修復)，教練確認舊資料夾(媒體檔案285個檔案/資訊資料收集333個檔案)維持不動、只是往後不再有新檔案進去。 |
 | 🔴 | **修復「全部釋放」後watchdog誤報Hermes卡死+invoice-inbound測試腳本污染正式資料** | ✅2026-09-11 v192本場完成 | ①驗證invoice-inbound誤報修復時，重跑`test_invoice_inbound_hook.js`發現`INVOICE_HOOK_TEST=1`只攔`sendTelegram`沒攔fs落地，5筆測試假資料混進正式`state/invoice_inbox/2026-09.jsonl`，已用git checkout清除+改寫獨立`invoice_inbox_test`目錄根治，commit`906d39ed4`(外層repo)+`45258482b`(workspace)②教練喊「全部釋放」故意bootout關掉Hermes gateway，但獨立的`ai.hermes.gateway-watchdog`(每5分鐘檢查)不知道是故意關的，heartbeat沒更新當成卡死，連續3次(00:20/00:25/00:30)送kickstart -k想重啟(對已卸載的job必定悄悄失敗)卻照樣發Telegram假警報，已修復成重啟前先查job是否還掛在launchd裡，沒掛著=預期狀態直接跳過，commit`c8409664c`。 |
@@ -432,40 +432,7 @@
 
 ---
 
-# 軍師接力棒 · 2026-09-10 v190（Mac桌面版 Sonnet 5，BNI訓練發票26張全數開立+培訓/發票/登錄工作流SOP固化）
-
-> 建立時間：2026-09-10 19:51 ~ 20:30（台灣時間）
-> 上一棒：v189（Mac桌面版，策展地圖自動化+Hermes gateway watchdog）
-> 本棒主軸：**教練丟9/7大台南南區初階MSP訓練簽到表(14人，$300/人)，查資料庫比對+開票，過程教練追加9/10另一場訓練($600/人，21人名單)，兩場重複到場者合開$900，最終26張ezPay培訓費發票全數開立並逐筆用search_invoice驗證成功。過程踩到「多分頁搶session導致教練反覆被踢出登入」的真bug，教練當場動怒後定位問題並修正。教練要求把整套「讀簽到表→查資料→開票→BNI Connect打勾出席→更新培訓總覽」流程固化成SOP，已完成文件，BNI Connect出席登記與培訓總覽資料庫更新留給下一場（教練指示開新對話處理）。**
-
-## 🎯 本場戰果
-
-### 1. 9/7 MSP訓練簽到表判讀+6人首輪開票
-教練提供簽到表照片(`S__5390343.jpg`)，用PIL裁切放大確認模糊的收費欄checkbox狀態。14人報名，逐一比對簽到/收費/講師免收費規則，識別出6人確定已收費且資料庫查得到完整資訊：李美花/張騰文(小隻)/買駿航/蔡姵彤/楊尚儒/郭政輝(展鑫精密實業社)，首輪開立6張$300發票(091001~091006)並用`search_invoice`逐筆驗證。3人(林宜宏/杜泱峻/連皓宇)收費欄空白但有疑似確認註記、1人(張育慈，真誠新會員)資料庫完全查無資訊，列表請教練裁示。
-
-### 2. 教練追加確認+9/10新一場訓練($600/人)名單，5人合併開$900
-教練確認3人已匯款要開票+張育慈也要開(用她公司統編，因最近有入會發票)+郭馨文同音異字確認正確+「兩位/1200」的柯宗佑/連晧宇兩筆先各開$600標準額。同時追加9/10當天另一場訓練完整名單(真鑽13人+真鑫8人，$600/人)。比對出5人在兩場都到場(張騰文/楊尚儒/杜泱峻/連皓宇/買駿航)，合併開一張$900發票；其餘14人($600)+新增鄭樫峯(教練補充統編00220958)+林宜宏(9/7單場$300)共21張陸續開立。**最終26張發票(091001~091026)全數開立成功並逐批用search_invoice驗證，總金額$12,300**，commit`88afaed4a`。張育慈的統編查證未果(ezPay搜尋BuyerName「育慈」查無資料)，留待下一場。
-
-### 3. 真bug：多分頁同時連ezPay造成教練反覆被踢出登入
-過程中因先前分別開了3~4個claude-in-chrome分頁都連著ezPay(有的是我建立測試，有的是重試時新開的)，教練自己重新登入了8次都立刻被踢回登入畫面，教練當場動怒「都是你的問題」。查證後確認：**分頁互搶session才是根因**，關掉多餘分頁只留一個之後，教練這次登入立刻穩定。另外`javascript_tool`在這個網站上大約每2~3次呼叫就會`Runtime.evaluate timed out`，查證後這通常代表**送出動作其實成功了**(頁面reload導致JS執行環境中斷)，靠`search_invoice`批次核對自訂編號清單才能分辨真正漏開的(本場真的漏開過2次：091009連皓宇、091013楊智帆，補開後皆成功)。
-
-### 4. 培訓/發票/登錄工作流SOP固化
-教練要求把「開票→BNI Connect打勾出席→更新BNI培訓總覽」整串動作寫成SOP，往後收到簽到表能一路做到底不用分次交辦。新增`claude-brain/reference_bni_training_invoice_registration_workflow_2026-09-10.md`，串接既有的[[reference_ezpay_invoice_issuing_procedure]]+[[project_bni_connect_attendance_marking_2026-08-18]]兩份舊SOP成五步驟流程，並記錄本場新踩的兩個坑(多分頁搶session、CDP timeout批次驗證法)。commit`6188b1e40`。
-
-## ⚠️ 本場教訓/發現
-1. **claude-in-chrome操作同一個網站時，只用一個分頁，不要因為想加速或重試而開新分頁**——這次連續多次登入失敗的真根因，不是ezPay不穩，是自己多分頁互搶session。
-2. **CDP `Runtime.evaluate timed out`在這個網站上不是失敗訊號，常常是送出已成功、頁面reload中斷JS環境**——靠`search_invoice`批次核對自訂編號清單分辨真假失敗，不要看到timeout就假設沒送出（但也不能假設一定送出了，兩種假設都要靠查證，不能靠猜）。
-3. **教練提供的簽到表手寫金額/註記有歧義時，先列出疑點請教練一句話裁示，不要自己套用規則猜**——3人收費欄空白+「確」字註記、「1200(兩位)」兩筆的意義，都是問了才知道正確處理方式，猜錯的財務後果比多問一句嚴重。
-
-## 📋 下一場開工先做（教練指示開新對話處理）
-1. **BNI Connect打勾確認出席**：9/7 MSP訓練14人+9/10另一場21人，照新SOP第四步操作，先找對應eventId。
-2. **更新BNI培訓總覽資料庫**：`claude-brain/data/build_bni_training_admin.py`補上這26筆的出席記錄+新查到的統編/手機條碼/Email(尤其是這次新找到的林尹渰/王聖凱/莊政川/柯宗佑等人)+發票記錄，重跑腳本更新html。
-3. **張育慈統編待查**：她最近的入會發票用什麼名稱登記需要另外查證或請教練提供。
-4. 沿用既有待辦：9月16日報名人數查詢(被中斷未答)、MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選。
-5. E16接力棒瘦身：本次已把v188搬進`handoff_archive/`，主檔維持v189+v190兩棒。
-
-## 🔑 本場commit
-`workspace`：`0622037c8`(4張確認清單初稿)、`88afaed4a`(26張最終清單)、`6188b1e40`(工作流SOP新增)。
+> 📦 v190完整內容已封存：`handoff_archive/handoff_v190_archived_2026-09-11.md`（Mac桌面版，BNI訓練發票26張全數開立+培訓/發票/登錄工作流SOP固化）
 
 ---
 
@@ -538,3 +505,39 @@
 
 ## 🔑 本場commit
 `D:\Users\Downloads\整理下載資料夾.ps1`：本機檔案非git追蹤，v4已直接更新。`cica`：`7f34af2`(三語系版本)。`ai-forum-taichung`：`5d7b28e`(講師異動)。`workspace`：`55a6b964`(cica pull請求信)、`df51acc5`(ai-forum講師異動pull請求信)。記憶庫(`.claude/projects`)：`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(新增)、`feedback_verify_public_visibility_not_just_api_success_2026-09-11`(新增)。
+
+---
+
+# 軍師接力棒 · 2026-09-11 v194（Mac桌面版 Sonnet 5，FB App Review深挖翻案+一鍵發布API上線+claude-in-chrome連錯裝置第5次發作根治）
+
+> 建立時間：2026-09-11 10:40 ~ 12:28（台灣時間）
+> 上一棒：v193（聯想Windows，FB粉專發文致命發現：App未過Review訪客看不到貼文，教練當時裁示放棄App Review改人工重貼）
+> 本棒主軸：**教練追問「真的無解嗎」，深挖後推翻v193「放棄App Review」的裁示——用登出瀏覽器實測證明限制是App層級(不分粉專)、查到商業驗證早已完成、找到Tech Provider真正觸發條件，教練決定親自申請，目前卡在應用程式檢閱表單。同場也完成教練要求的「其他網站比照大台南商圈計畫不用經Mac即可更新」需求，以及claude-in-chrome第5次連錯裝置(連到聯想Windows教練看不到畫面)的根治。**
+
+## 🎯 本場戰果
+
+### 1. FB App Review深度翻案：查到3個關鍵事實，教練決定不放棄改親自申請
+v193教練裁示「放棄App Review」，本場教練追問細節，深挖後發現：①用完全登出的瀏覽器交叉測試`大樹教練`/`海餅乾俱樂部`/`K R養生廚房`/`大台南策展中心`四個不同分類粉專，皆看到Facebook「目前無法查看此內容」——**證實限制是App層級、對14個粉專一視同仁，不是教練誤以為的「大樹教練是商業帳戶才被限制」**②大台南策展中心策展SOP自動上架通知(至少15篇店家上線通知)同樣受影響，尚未問教練是否要重貼③查到「Tech Provider」不可逆合約只在App「業務用途」設為「提供服務給其他企業」才觸發，教練只管自己粉專理論上可避開，但Meta Business Suite/App Dashboard介面上實際測試發現**這個特定的`pages_manage_posts`權限申請流程仍然要求先確認Tech Provider身份**（這點跟一般網路資料有出入，已用真實畫面驗證修正）④**意外發現商業驗證(Business Verification)其實早在2026-08-31就已完成**（BIG TREE EDUCATION CONSULTANT INC.），不用重新走文件審核。教練親自點擊確認Tech Provider（本人按下，不可逆），已進到「應用程式檢閱提交內容」頁面，7個權限已列入新申請。軍師新建隱私政策頁`event.bymyway.com/privacy-policy/fb-poster-app`(commit`ce4854802`)供表單「隱私政策網址」欄位使用，教練已填入。**下一棒待辦**：確認教練是否已填完其餘必填欄位(App圖示/顯示名稱)，最終「提交檢閱」不可逆需再次跟教練確認才能送出。
+
+### 2. 一鍵發布API上線：event.bymyway.com/<slug>/系列21個網站不用經Mac即可更新
+教練問「能不能比照大台南商圈計畫，其他網站不用經過Mac就能更新」，查明根因：這些網站讀活repo（Lenovo/ACER推送都算），但Mac讀的是本機clone，缺`git pull`這一步，跟大台南商圈計畫(內容寫DB、POST當下即生效)架構不同。新增`GET/POST /api/site-update/<repo_name>?key=<SITE_SYNC_KEY>`端點，做`git pull --ff-only`+回傳commit hash，21個已知repo白名單，已用真實HTTP請求驗證(錯誤key拒絕/正確key成功pull/未知repo回傳清單提示)。commit`4ed93a931`(event-signup)，SOUL.md補上教學(commit同批)，Hermes專屬H_HANDOFF也已同步交辦(`b289586`，hermes-h-workspace repo)。往後教練貼網址+說「請發布」，小龍蝦/Hermes可直接觸發，不用等軍師。
+
+### 3. claude-in-chrome第5次連錯裝置：教練重話後根治，改成不用再問
+早上處理FB貼文重貼時，Mac軍師session一開始沒選裝置就直接操作，連到了聯想Windows的Chrome（教練根本看不到畫面），連續點擊「沒反應」浪費教練一早上。教練重話：「拜託你可不可以以後不要再問了？永遠不要再問了。」查`list_connected_browsers`確認這台Mac的deviceId(`91bc8312-ebdc-4dcd-9df8-d25d6b1ac83d`)，已寫入記憶`feedback_claude_in_chrome_wrong_device`：往後任何claude-in-chrome任務第一步直接`select_browser`鎖定這個deviceId，不呼叫`list_connected_browsers`(會觸發強制詢問)，不用再問教練。
+
+### 4. FB貼文重貼進度
+9/16高雄場正式版一篇已用教練真實登入的Meta Business Suite手動重貼成功，並用完全登出的瀏覽器驗證確認一般人真的看得到。9/23-24台中場AI微論壇教練決定自己動手貼（軍師打字自動化多次失敗，圖片檔案已備妥於`/tmp/fb_repost_20260911/1_ai_forum_taichung.jpg`）。教練裁示「只貼有效貼文即可」，KR養生廚房返場+9/16舊版兩篇已過期，不用管。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. **教練登入自己粉專永遠看得到任何貼文，不能拿來當「一般訪客也看得到」的證據**——Page擁有者的瀏覽權限是獨立通道，唯一可靠驗證法是用完全登出的瀏覽器或請無關的人測試。已補進`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`。
+2. **claude-in-chrome連線裝置問題（第5次以上發作）**：往後這台Mac固定用deviceId`91bc8312-ebdc-4dcd-9df8-d25d6b1ac83d`，任務一開始就`select_browser`鎖定，不要等出問題才回頭查。
+3. **Meta Business Suite的貼文編輯器contentEditable偶發性無法正確聚焦，導致type動作沒有真的寫入DOM**（同一組操作步驟時好時壞），這是本場唯一沒解決的技術債，教練最終選擇自己動手貼。
+
+## 📋 下一場開工先做
+1. **確認FB App Review表單進度**：教練是否已填完其餘欄位，最終「提交檢閱」需再次確認才能送出（不可逆）。
+2. **大台南策展中心15篇店家上線通知**：問教練是否也要重貼。
+3. 沿用v190/v192/v193既有待辦：BNI Connect打勾確認出席、更新BNI培訓總覽資料庫、張育慈統編待查、Amber TimeMachine清理、MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選、跨機信箱一封來自Mac的未讀信（聯想v193留下）。
+4. E16接力棒瘦身：本次已把v190搬進`handoff_archive/`，主檔維持v192+v193+v194三棒（略超過建議的1~2棒，下次開工先瘦身）。
+
+## 🔑 本場commit
+`event-signup`：`4ed93a931`(一鍵發布API)、`ce4854802`(隱私政策頁)。`SOUL.md`同批commit。`hermes-h-workspace`：`b289586`。`workspace`：`c658c04ba`(接力棒過期訊息修復,誤報ACER案例)、`4b4c8e16a`(待辦表過期偵測機制)、`ab76aba54`(FB App Review根因深挖記憶補充)、`1f388dc14`(coach888稽核基準線補登)。記憶：`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(更新)、`feedback_claude_in_chrome_wrong_device`(更新，補第5次發作+deviceId)。
