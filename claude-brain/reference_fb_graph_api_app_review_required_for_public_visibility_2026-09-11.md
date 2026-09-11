@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 0a5f17e3-d7d6-4554-b945-cf61bff7d55e
-  modified: 2026-09-11T02:24:57.236Z
+  modified: 2026-09-11T08:35:15.313Z
 ---
 
 用來幫14個粉專發文的App「大樹教練粉專發文小幫手」(App ID `1050871501278089`)目前處於Meta「可供測試」等級，尚未通過App Review。實測證實：**用這個App透過Graph API發的貼文，只有App角色成員(教練本人)看得到，一般訪客連在Page動態時報裡都看不到該則貼文（不只是分享連結失效），管理員自己打開Page後台或動態牆卻完全正常**——因為Page擁有者/管理員的瀏覽權限是獨立通道，不受App Review狀態影響。
@@ -24,5 +24,11 @@ metadata:
 2. **上網查證(OPE)修正一個關鍵誤解**：「Tech Provider」不可逆合約**只有在App的「業務用途」被設定成「提供服務給其他企業」時才會觸發**，跟是否申請`pages_manage_posts`本身無關。教練這個App只管自己14個粉專（非幫別人代發文），理論上可以避開這份合約，不用被「不可逆」嚇退。App Review跟商業驗證是Meta兩條獨立審核佇列，可以只走App Review不簽Tech Provider。
 3. **但商業驗證本身仍無法迴避**——`pages_manage_posts`要在真實(非測試)Page上對一般大眾生效，一定要Advanced Access，而Advanced Access强制要求商業驗證(提交真實商業登記文件)，且2026年Meta審核排隊時間拉長到20天起跳，並非教練誤解的「一直卡著什麼都做不了」，而是「有解法但要跑完整審核流程，不是當下能解決」。
 4. **實測驗證方法論**：用真正登出狀態的瀏覽器分頁直接訪問貼文連結，看到Facebook官方訊息「目前無法查看此內容...通常是因為擁有者僅與一小群用戶分享內容」，這是比查API的`permalink_url`/`privacy`欄位更可靠的鐵證（那兩個欄位在這個情境下都顯示正常，具有誤導性）。教練親自用自己帳號重新貼過的貼文，同樣手法驗證後確認公開可見。
+
+**2026-09-11 下午 Mac軍師：App Review表單填寫進度**
+
+1. **7個申請權限精簡為4個**：`pages_manage_metadata`／`pages_messaging`／`business_management`這3個App實際完全沒用到(查`fb_automation/*.py`只用`/feed`+`/photos`)，已在「應用程式檢閱提交內容」頁面逐一按垃圾桶圖示移除，剩`pages_manage_posts`／`pages_show_list`／`pages_read_engagement`／`public_profile`。少申請沒在用的權限可避免被要求繳交錄不出來的示範影片，拖累整包審核。
+2. **權限測試等級落差，同一批6個權限裡表現不一致**：實測用Graph API測試工具直接呼叫——`pages_show_list`(`me/accounts`)跟`pages_manage_posts`(POST `me/feed`真實發文成功，拿到真實貼文ID)這兩個在App還沒過審核時**管理員自己就能正常用**；但`pages_read_engagement`(查貼文按讚/留言數)不管用「用戶權杖」還是「粉專權杖」都固定回傳「這個端點需要pages_read_engagement權限」的OAuthException——**這個權限就算是Page管理員本人，在App通過審核之前也完全打不通，不是操作錯誤**。這解釋了為什麼同一份App Review申請裡，有些權限的示範影片錄得出來、有些錄不出來：Facebook對「讀取互動數據」這類權限的Standard Access限制比「發文」「列清單」更嚴格。**下次遇到類似「示範影片卡住」，先用Graph API測試工具跑一次真實呼叫確認是操作問題還是Access Level門檻問題，不要在同一個死角反覆試錄影**。
+3. **App Review示範影片可行的分工模式**：畫面錄影只看得到滑鼠移動與頁面反應，看不出操作者是誰。教練不用自己操作Graph API測試工具，可以由AI直接控制教練已登入的真實瀏覽器做示範操作(真實帳號、真實粉專、真實API呼叫)，教練只需要負責按⌘+Shift+5開始/停止螢幕錄影，畫面呈現的就是App真正的功能在真正運作，可以直接拿去上傳，不算造假示範。示範完的測試貼文，若API的DELETE呼叫失敗(這次遇到`error_subcode 33`)，改用Facebook Page後台「切換為粉專身分」→貼文選單「移到垃圾桶」的一般UI操作刪除即可，不用執著在API本身。
 
 相關：[[feedback_verify_public_visibility_not_just_api_success]]
