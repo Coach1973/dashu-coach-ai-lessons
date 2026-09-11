@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 FB API發文一般訪客看不到，需App Review(Tech Provider不可逆)…](reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11.md)
+- [🔴 驗證FB貼文上線要用無登入瀏覽器，不能只信管理員token查API…](feedback_verify_public_visibility_not_just_api_success_2026-09-11.md)
 - [🔴🔴 卡關先搜尋(OPE)再嘗試，別讓教練陪試錯…](feedback_search_before_trial_and_error_2026-09-11.md)
 - [🔧 tmutil刪網路型TimeMachine備份的CLI限制…](reference_tmutil_network_destination_delete_limitation_2026-09-11.md)
 - [🔴🔴 invoice-inbound誤報二度發作：心跳偽裝telegram channel繞過排除…](reference_invoice_inbound_heartbeat_disguise_2026-09-10.md)
