@@ -11,3 +11,8 @@
 /slides
 /wheel
 /wheel/data
+
+# 這1個是純法遵頁面，唯一用途是填進Meta App Review表單的「隱私政策網址」欄位，
+# 給Meta審核人員/網路爬蟲看，不是教練或訪客會主動點進去用的功能頁，
+# 2026-09-11確認不收錄進coach888（放進去反而讓教練誤以為是個功能）。
+/privacy-policy/fb-poster-app
