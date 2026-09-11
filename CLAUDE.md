@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-11 12:32:40**
+> **最後同步：2026-09-11 15:53:19**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -553,6 +553,41 @@ v193教練裁示「放棄App Review」，本場教練追問細節，深挖後發
 
 ## 🔑 本場commit
 `event-signup`：`4ed93a931`(一鍵發布API)、`ce4854802`(隱私政策頁)。`SOUL.md`同批commit。`hermes-h-workspace`：`b289586`。`workspace`：`c658c04ba`(接力棒過期訊息修復,誤報ACER案例)、`4b4c8e16a`(待辦表過期偵測機制)、`ab76aba54`(FB App Review根因深挖記憶補充)、`1f388dc14`(coach888稽核基準線補登)。記憶：`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(更新)、`feedback_claude_in_chrome_wrong_device`(更新，補第5次發作+deviceId)。
+
+---
+
+# 軍師接力棒 · 2026-09-11 v195（Mac桌面版 Sonnet 5，FB App Review表單填寫：圖示透明背景修復+權限精簡建議）
+
+> 建立時間：2026-09-11 14:31 ~ 15:52（台灣時間）
+> 上一棒：v194（Mac桌面版，FB App Review深挖翻案+一鍵發布API+claude-in-chrome裝置問題根治）
+> 本棒主軸：**接續v194的App Review表單填寫，解決App圖示白底被拒問題，並發現7個申請權限裡有3個App實際沒在用，建議教練移除避免拖累整包審核。**
+
+## 🎯 本場戰果
+
+### 1. App圖示上傳卡在「偵測到白色背景」錯誤，已修復
+教練上傳`bigtree_logo_1024(1).jpg`被Meta拒絕，錯誤訊息要求透明背景。查明根因：**該檔案是JPG格式，JPG格式本身不支援透明度**，不管圖案多乾淨都一定會判定成白底。用Python PIL對原圖做flood-fill去背（只清除連通的外部白色背景，不誤傷logo內部設計），輸出透明PNG，用不同顏色背景合成驗證確認去背乾淨無白邊/鋸齒。已放在桌面`大樹教練圖示_透明背景.png`供教練自己上傳（嘗試多種自動化路徑失敗：Meta這個上傳元件用新式File System Access API，DOM裡沒有傳統`<input type=file>`可操作，且該頁面CSP擋掉跨網域fetch，data URI覆寫`showOpenFilePicker`也因payload過大+CSP雙重卡關，最終判斷教練親自點2下最快，已誠實跟教練說明技術限制非偷懶不做）。教練已成功上傳，「應用程式設定」步驟完成。
+
+### 2. 🔴重要發現：7個申請權限裡有3個App實際沒在用，建議移除
+查`fb_automation/*.py`+`curation_process.py`實際呼叫的Graph API端點，只用到`/feed`+`/photos`（純發文字/圖片貼文）。但App Review表單裡列了7個權限：`pages_manage_posts`/`pages_show_list`/`pages_manage_metadata`/`pages_messaging`/`business_management`/`pages_read_engagement`/`public_profile`——後三個裡的**`pages_manage_metadata`（粉專設定/webhook）、`pages_messaging`（Messenger）、`business_management`（企業管理平台API）App完全沒有對應功能**，這3個推測是選「管理粉絲專頁的所有內容」這個大分類時被自動打包進去的，不是刻意申請。每個權限都要求上傳「示範操作」錄影，這3個根本錄不出真實畫面。已建議教練移除，避免審核員發現「申請的權限沒在用」導致整包退回，連真正需要的`pages_manage_posts`一起卡住。**教練尚未答覆是否移除**。
+
+### 3. 已代填pages_manage_posts的使用說明文字，其餘待續
+在表單textarea裡打好`pages_manage_posts`權限的英文使用說明（誠實描述：僅供教練本人管理自己約14個粉專發文，不涉第三方，好處是省去逐一登入手動貼文的時間），已用JS驗證字數(948字元)確認真的寫入。`pages_show_list`/`pages_read_engagement`的說明文字尚未寫，是下一棒待辦。API測試呼叫這項`pages_manage_posts`已顯示「已完成」（今天查證過程中用這個App的憑證打的真實API呼叫算數）。
+
+## ⚠️ 本場教訓/發現（已寫入記憶，待補commit）
+1. **JPG格式本身不支援透明背景，不管圖案設計多乾淨，只要副檔名是.jpg一定會有實心白底**——遇到「請用透明背景」類錯誤，先檢查副檔名，不用懷疑圖片本身乾不乾淨。
+2. **Meta新版上傳元件（App圖示等）用File System Access API而非傳統`<input type=file>`，claude-in-chrome的file_upload工具無法直接操作，且該頁面CSP會擋掉自製的跨網域fetch/覆寫技巧**——這類卡點目前唯一可靠解法是請教練本人點擊，已誠實說明技術限制，不硬拗。
+3. **申請App Review權限前，應先比對App實際呼叫的Graph API端點，只申請真正用到的權限**——多餘的權限不只是浪費工，錄不出真實示範影片還會拖累整包審核被拒。
+
+## 📋 下一場開工先做
+1. **確認教練是否同意移除3個沒用到的權限**（pages_manage_metadata/pages_messaging/business_management），同意的話操作移除。
+2. 續寫`pages_show_list`+`pages_read_engagement`的使用說明文字。
+3. 教練需要自己錄製各權限的操作示範螢幕錄影並上傳（軍師無法代勞，需要真人操作畫面）。
+4. 每個權限的「我同意遵守允許的使用方式」勾選框，教練親自確認勾選。
+5. 沿用v194既有待辦：大台南策展中心15篇店家上線通知是否要重貼、BNI Connect打勾出席、更新BNI培訓總覽資料庫、Amber TimeMachine清理、MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選。
+6. E16接力棒瘦身：目前v192+v193+v194+v195四棒略多，下次開工先瘦身封存最舊的v192。
+
+## 🔑 本場commit
+本場為表單填寫+除錯過程，未產生新commit（App圖示PNG在教練本機桌面，非git追蹤範圍；未新增/修改程式碼）。
 
 
 ---
