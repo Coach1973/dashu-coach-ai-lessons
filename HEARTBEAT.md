@@ -20,3 +20,9 @@
 - 執行完通報 Telegram（Chat ID: 6124913915）
 - 預估超過 5 萬 Token 先回報教練確認
 - ⚠️ 不要讀大型 memory 檔（會造成模型空白回應）
+
+## 🩺 軍師 Hook 自檢 2026-09-11 10:34（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 9576804d，ff-only未動工作區）
+- Session: febb8b61-dd1f-4a6a-8034-0c759f28dd90
