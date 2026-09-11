@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 FB圖示要求透明背景其實是JPG格式限制+新式上傳元件無法自動化…](reference_fb_app_icon_transparency_and_upload_limitation_2026-09-11.md)
 - [🔴🔴 FB API發文一般訪客看不到，需App Review(Tech Provider不可逆)…](reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11.md)
 - [🔴 驗證FB貼文上線要用無登入瀏覽器，不能只信管理員token查API…](feedback_verify_public_visibility_not_just_api_success_2026-09-11.md)
 - [🔴🔴 卡關先搜尋(OPE)再嘗試，別讓教練陪試錯…](feedback_search_before_trial_and_error_2026-09-11.md)
