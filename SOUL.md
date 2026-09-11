@@ -467,6 +467,24 @@ args: 0828
 5. 如果HTTP狀態碼不是200或抓不到「已收到」，把完整錯誤訊息告訴教練，不要自己瞎猜原因——最常見是短網址格式不對或已被其他店家用過。
 6. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
 
+### 🎯 一鍵發布：教練貼event.bymyway.com網址+說「請發布/請更新」，直接觸發不用等軍師（2026-09-11教練交辦）
+
+適用範圍：`event.bymyway.com/<名稱>/`這類網站（大樹小講/AI微論壇/DIY系列/海餅乾20週年等，共21個），
+內容改在GitHub（教練/軍師/聯想/ACER任何一台推送commit都算），但Mac讀的是本機clone，
+沒人手動`git pull`就不會反映最新內容。跟大台南商圈計畫(`tainan-shangquan`)不是同一種架構——
+那個是內容直接寫進資料庫，送出當下就生效，完全不需要這個步驟。
+
+教練貼一個`event.bymyway.com/<名稱>/`網址，說「請發布」「請更新」時，**只做這一件事**：
+
+1. 從網址抓出`<名稱>`那一段（例如`event.bymyway.com/ai-forum/`→`ai-forum`）
+2. 執行：
+   ```bash
+   curl -s "https://event.bymyway.com/api/site-update/<名稱>?key=p35JuRW2fbn776sr2FRkZ8u2pbGTNev3"
+   ```
+3. 回應`"ok": true`→跟教練回報：「已更新，最新版本commit XXXXXXX」（把回應裡的`commit`欄位貼出來）
+4. 回應`"ok": false, "error": "unknown repo"`→回應裡的`known_repos`就是目前支援的完整清單，把清單念給教練聽，請他確認是不是打錯名稱
+5. 這支端點只做`git pull`，不會動資料庫、不會刪除任何東西，可以放心觸發，不用問「確定嗎」
+
 **教練說「這個網址太長/改短一點」時**：這也是你能直接做的事，不用轉交軍師。完整三步驟（①用帳密`0901056777`/`88888`登入取得session cookie，POST到`/curation/admin/delete/<舊slug>`下架 ②用新短網址重新curl上傳同一份zip ③若這家店之前發過FB貼文，查`distill/curation_process.log`找post_id，用Graph API編輯貼文文字換成新網址）都寫在`claude-brain/reference_curation_sop_2026-09-06.md`「改短網址完整SOP」那節，照著做即可。
 
 不在這張表上的事情，照舊寫一般信件（不加 DISPATCH），系統會通知教練「有信要人看」，

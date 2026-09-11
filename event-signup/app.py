@@ -2537,6 +2537,71 @@ def qikouzao_assets(filename):
     return _serve_repo_file(QIKOUZAO_REPO, filename)
 
 
+# ── 一鍵發布：教練貼網址說「請更新/請發布」，小龍蝦/Hermes呼叫這支API即可完成 ──
+# 2026-09-11教練交辦：ai-forum-taichung這類讀活repo的網站，內容改在GitHub（Lenovo/
+# ACER任一台推送都行），但這台Mac讀的是本機github_repos/下的clone，沒人在Mac執行
+# git pull就不會反映最新內容。跟tainan-shangquan（內容寫進資料庫，POST當下就生效，
+# 完全不需要git pull這一步）不是同一種架構，所以少了「不用經過Mac」這個特性。
+# 補一支通用端點：把「git pull」這個唯一缺的動作也變成一次HTTP呼叫，
+# 小龍蝦/Hermes只要會打curl就能觸發，不用開Mac的Claude Code對話框。
+SITE_SYNC_KEY = os.environ.get("SITE_SYNC_KEY", "")
+SITE_SYNC_REPOS = {
+    "bigtree": BIGTREE_REPO,
+    "ai-forum": AI_FORUM_REPO,
+    "ai-talk": AI_TALK_REPO,
+    "tainan-calender": TAINAN_CALENDAR_REPO,
+    "bni-traffic": BNI_TRAFFIC_REPO,
+    "tainan-shangquan": TAINAN_SHANGQUAN_REPO,
+    "tut-alumni": TUT_ALUMNI_REPO,
+    "1010": EVENT_1010_REPO,
+    "KR": KR_REPO,
+    "diy-knot-workshop": DIY_KNOT_REPO,
+    "diy-outdoor-workshop": DIY_OUTDOOR_REPO,
+    "diy-studio-workshop": DIY_STUDIO_REPO,
+    "leadership-knot-workshop": LEADERSHIP_KNOT_REPO,
+    "seabiscuit20": SEABISCUIT20_REPO,
+    "ai-art": AI_ART_REPO,
+    "cica": CICA_REPO,
+    "lin-beiyi": LIN_BEIYI_REPO,
+    "66-harbour": HARBOUR66_REPO,
+    "tainan-pickleball-art-rotary": TPAR_REPO,
+    "kingmauii-brand-site-github": KINGMAUII_REPO,
+    "qikouzao": QIKOUZAO_REPO,
+}
+
+
+@app.route("/api/site-update/<repo_name>", methods=["POST", "GET"])
+def api_site_update(repo_name):
+    supplied_key = request.values.get("key") or ""
+    if not SITE_SYNC_KEY or supplied_key != SITE_SYNC_KEY:
+        return Response(json.dumps({"ok": False, "error": "invalid key"}), status=403,
+                         headers={"Content-Type": "application/json"})
+    repo_path = SITE_SYNC_REPOS.get(repo_name)
+    if repo_path is None:
+        return Response(
+            json.dumps({"ok": False, "error": f"unknown repo: {repo_name}",
+                        "known_repos": sorted(SITE_SYNC_REPOS.keys())}, ensure_ascii=False),
+            status=404, headers={"Content-Type": "application/json"},
+        )
+    if not repo_path.exists():
+        return Response(json.dumps({"ok": False, "error": f"repo path missing on disk: {repo_path}"}),
+                         status=404, headers={"Content-Type": "application/json"})
+    try:
+        pull = subprocess.run(["git", "-C", str(repo_path), "pull", "--ff-only"],
+                               capture_output=True, text=True, timeout=30)
+        commit = subprocess.run(["git", "-C", str(repo_path), "rev-parse", "--short", "HEAD"],
+                                 capture_output=True, text=True, timeout=10).stdout.strip()
+        return Response(
+            json.dumps({"ok": pull.returncode == 0, "repo": repo_name, "commit": commit,
+                        "output": (pull.stdout + pull.stderr).strip()}, ensure_ascii=False),
+            status=200 if pull.returncode == 0 else 500,
+            headers={"Content-Type": "application/json"},
+        )
+    except Exception as exc:
+        return Response(json.dumps({"ok": False, "error": str(exc)}), status=500,
+                         headers={"Content-Type": "application/json"})
+
+
 if __name__ == "__main__":
     db.init_db()
     app.run(host="0.0.0.0", port=int(os.environ.get("EVENT_PORT", 5060)))
