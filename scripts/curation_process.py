@@ -43,6 +43,14 @@ FB_PAGE_NAME = "大台南策展中心"
 
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "-5349981085"  # 「活動報名即時通知」群組(教練+佩佩老師共見)，2026-09-06教練交辦：策展上傳完成也要跟活動報名一樣即時通知這裡，不只發教練個人對話
+
+# 2026-09-12暫停：這個App(1050871501278089)還沒通過FB App Review，實測用完全登出的
+# 瀏覽器驗證，用這組token發的貼文一般訪客完全看不到(只有App角色成員/管理員看得到)。
+# 2026-09-06~09-10已累積21則這樣的隱形貼文。App Review通過前繼續呼叫這支只會不斷
+# 產生更多看不見的貼文(白工)，先暫停自動發文，改由Telegram通知教練「有新店家上架」，
+# 教練/軍師視需要手動用Meta Business Suite補發。詳見
+# claude-brain/reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11.md
+FB_AUTO_POST_PAUSED = True
 _ENV = {**os.environ, "PATH": f"/opt/homebrew/bin:/Users/bymyway/.local/bin:{os.environ.get('PATH', '')}"}
 
 CATEGORY_KEYWORDS = {
@@ -363,6 +371,9 @@ def find_post_image(repo_dir: Path, html_text: str) -> Path | None:
 def post_to_facebook(title: str, desc: str, event_url: str, image_path: Path | None) -> bool:
     """自動發一則大台南策展中心FB貼文宣布新店家上架（2026-09-06教練交辦：全自動不用等軍師人工發文）。
     文案套固定模板（emoji開頭+店名+簡介+連結+hashtag），非致命——失敗只記log，不擋整體上架流程。"""
+    if FB_AUTO_POST_PAUSED:
+        log(f"⏸️ FB自動貼文已暫停(App Review未通過，訪客看不到)，跳過「{title}」，請人工評估是否手動補發")
+        return False
     try:
         tokens = json.loads(FB_PAGE_TOKENS_PATH.read_text(encoding="utf-8"))
         page = next((p for p in tokens.get("pages", []) if p.get("name") == FB_PAGE_NAME), None)
