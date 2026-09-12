@@ -6,7 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴🔴 | **FB App Review申請進行中：權限清單已精簡為4項，卡在示範錄影+策展SOP自動貼文已暫停** | ⏳待教練錄影(稍晚教練說要弄) | 教練親自深挖後推翻「放棄App Review」的舊裁示，改為**教練親自動手申請**，軍師查證+代填輔助+直接操作表單。**進度**：①申請權限從7個精簡為4個真正有用到的(`pages_manage_posts`/`pages_show_list`/`pages_read_engagement`/`public_profile`)，`pages_manage_metadata`/`pages_messaging`/`business_management`三個沒用到的已由軍師直接在App Dashboard移除②App圖示白底問題已修復(JPG格式先天不支援透明，PIL去背後已上傳成功)③隱私政策網址已補上：`https://event.bymyway.com/privacy-policy/fb-poster-app`④`pages_manage_posts`使用說明文字已寫好；`pages_show_list`/`pages_read_engagement`尚未寫。**示範錄影卡點**：`pages_show_list`+`pages_manage_posts`已驗證可用Graph API測試工具示範(軍師操作教練真實登入的瀏覽器，教練只需按錄製/停止)，但`pages_read_engagement`發現**App審核前即使管理員本人也完全無法呼叫**(OAuthException)，需改用文字說明取代影片。教練錄了兩次都沒錄好，錄影檔已移到垃圾桶(非永久刪除)，晚點重錄。**下一棒待辦**：①教練重新錄製`pages_show_list`+`pages_manage_posts`示範影片②補寫`pages_show_list`/`pages_read_engagement`使用說明文字③每個權限「同意遵守使用方式」勾選框待教練確認④最終「提交檢閱」不可逆，送出前務必再次確認⑤走完App Review後回頭處理已知還沒公開可見的貼文——目前只有9/16高雄場正式版一篇已確認手動重貼成功並用登出瀏覽器驗證公開可見，其餘(9/23-24台中場AI微論壇教練說要自己貼、大台南策展中心15篇店家通知)都還沒處理，教練裁示「只貼有效貼文即可」(過期的KR養生廚房返場、9/16舊版兩篇不用管)。**2026-09-12補充**：教練嚴正提出全面檢討後查證發現受影響範圍比原估計大——`curation_process.py`策展SOP自動上架通知跟14個粉專行銷貼文共用同一個未過審App，2026-09-06~09-10實際共21則(非原估15則)全數對訪客隱形，已直接加`FB_AUTO_POST_PAUSED`旗標暫停該自動發文功能(commit`28d61747c`)，避免App Review通過前繼續產生看不見的貼文。記憶`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(已多次補充深挖修正+審核前限制發現+完整檢討段落)+`feedback_verify_public_visibility_not_just_api_success_2026-09-11`。 |
+| 🔴🔴 | **FB App Review申請：四權限表單全填完+兩支示範影片上傳成功，卡在「商家資產管理組合」連結被Facebook限制** | 🔒卡住-等教練查Business Suite | 教練親自深挖後推翻「放棄App Review」的舊裁示，改為**教練親自動手申請**，軍師查證+代填輔助+直接操作表單。**2026-09-12 v198進度**：①`pages_manage_posts`/`pages_show_list`/`pages_read_engagement`/`public_profile`四個權限的使用說明文字+「同意遵守使用方式」勾選全數完成②兩支示範影片錄製並上傳成功——影片①(`pages_manage_posts`+`pages_show_list`共用，1分26秒)示範列粉專清單+發文+刪除；影片②(`pages_read_engagement`專用，44秒)示範呼叫互動數據API顯示審核前必定回傳的OAuthException權限錯誤（此權限審核前連管理員自己都無法呼叫，已證實非操作問題）③應用程式基本設定補上Website平台(`https://www.bymyway.com/`)，解除「審查人員指示」區塊卡住④資料處理問卷、審查人員指示皆已填寫完成。**真正卡關點**：「驗證」步驟要求連結一個已驗證的商家資產管理組合，教練帳號下「大樹教育行銷管理中心」(已驗證)點擊連結時跳出錯誤「Business is not allowed to share App - Your business is prohibited from advertising, including app sharing」，代表該商家帳號被Facebook整體限制廣告/分享相關功能，連結動作在伺服器端靜默失敗（畫面短暫顯示已連結，重新整理後打回原形）；另一個商家「大樹教練之『BNi』奇妙旅程」則是未驗證，不滿足此步驟要求「已驗證」的條件。兩者都卡，形成死結。**下一棒/教練親自待辦**：登入`business.facebook.com`查「大樹教育行銷管理中心」被限制的具體原因(帳號品質/政策頁面通常會列)，決定要嘛申訴解除限制，要嘛把另一個商家組合走驗證流程，要嘛建立全新商家組合驗證——三條路都需要教練本人操作，非軍師能靠介面點擊解決。桌面留存兩支示範影片(`① pages_manage_posts和pages_show_list共用_2026-09-12.mp4`、`② pages_read_engagement專用_2026-09-12.mp4`)供之後重試上傳用，勿刪除。**沿用既有待辦**：走完App Review後回頭處理策展SOP自動貼文的21則歷史隱形貼文是否補發、`FB_AUTO_POST_PAUSED`旗標記得在通過審核後改回`False`。 |
 | 🟢 | **9/23-24台中場AI微論壇講師異動：曾思遠(出國)換成楊茗凱，官網已上線+FB文案圖片已同步更新** | ✅2026-09-11本場完成 | 教練提供楊茗凱資料(mentor100.bymyway.com移植：簡介/照片/FB/IG/Threads/LINE)，`ai-forum-taichung`repo三處同步更新(timeline議程/DAY1摘要/SPEAKERS陣列)，commit`5d7b28e`，已寫信Mac pull部署並確認`event.bymyway.com/ai-forum/`已顯示新講師。FB宣傳圖(1200×630 headless Chrome截圖產出)+文案同步改名，已發到4個粉專(海餅乾俱樂部/大樹教練/跨界美.術.管/大台南策展中心)——**但這4則貼文正是上面那項「App未過Review」問題的受害者，訪客實際看不到，需比照上一項待辦重貼**。 |
 | 🟢 | **下載資料夾整理腳本v4：媒體檔案拆三個獨立資料夾+新增壓縮檔/網頁檔分類，已測試部署** | ✅2026-09-11本場完成 | 教練提出5點分類構想，優化後定案：LINE截圖與一般圖片統一進「照片檔」(原本兩條路徑分開)、新增「壓縮檔」「網頁檔」獨立分類(原本完全不整理)、副檔名清單擴充(.heic/.heif、.wav/.ogg/.wma、.mkv/.wmv/.flv)。用隔離測試環境驗證13種檔案類型全部正確分流，`D:\Users\Downloads\整理下載資料夾.ps1`已更新為v4(含UTF-8 BOM修復)，教練確認舊資料夾(媒體檔案285個檔案/資訊資料收集333個檔案)維持不動、只是往後不再有新檔案進去。 |
 | 🔴 | **修復「全部釋放」後watchdog誤報Hermes卡死+invoice-inbound測試腳本污染正式資料** | ✅2026-09-11 v192本場完成 | ①驗證invoice-inbound誤報修復時，重跑`test_invoice_inbound_hook.js`發現`INVOICE_HOOK_TEST=1`只攔`sendTelegram`沒攔fs落地，5筆測試假資料混進正式`state/invoice_inbox/2026-09.jsonl`，已用git checkout清除+改寫獨立`invoice_inbox_test`目錄根治，commit`906d39ed4`(外層repo)+`45258482b`(workspace)②教練喊「全部釋放」故意bootout關掉Hermes gateway，但獨立的`ai.hermes.gateway-watchdog`(每5分鐘檢查)不知道是故意關的，heartbeat沒更新當成卡死，連續3次(00:20/00:25/00:30)送kickstart -k想重啟(對已卸載的job必定悄悄失敗)卻照樣發Telegram假警報，已修復成重啟前先查job是否還掛在launchd裡，沒掛著=預期狀態直接跳過，commit`c8409664c`。 |
@@ -445,39 +445,7 @@
 ---
 
 
-# 軍師接力棒 · 2026-09-11 v196（Mac桌面版 Sonnet 5，FB App Review精簡權限+示範錄影兩次失敗+關鍵發現pages_read_engagement審核前完全不可用）
-
-> 建立時間：2026-09-11 15:55 ~ 16:34（台灣時間）
-> 上一棒：v195（Mac桌面版，FB App Review表單填寫：圖示透明背景修復+權限精簡建議）
-> 本棒主軸：**教練同意移除3個沒用到的權限，軍師直接操作Meta App Dashboard完成移除；教練要求軍師教他錄示範影片，過程中軍師直接控制教練已登入的真實Chrome示範`pages_show_list`(查粉專清單)+`pages_manage_posts`(真實發文+刪除測試貼文)，但意外發現`pages_read_engagement`在App通過審核前，即使是粉專管理員本人也完全無法呼叫，這解釋了「同一份申請裡有些權限錄得出示範、有些錄不出來」的根因。教練兩次錄影都沒錄好，已將失敗檔案移到垃圾桶(非永久刪除)，晚點再重錄。**
-
-## 🎯 本場戰果
-
-### 1. 移除3個未使用的App Review申請權限
-教練同意v195建議，軍師直接操作`developers.facebook.com/apps/1050871501278089/app-review/submissions/`頁面（教練口頭同意截圖後才能精準定位垃圾桶圖示），逐一移除`pages_manage_metadata`／`pages_messaging`／`business_management`，確認清單剩下`pages_manage_posts`／`pages_show_list`／`pages_read_engagement`／`public_profile`四項真正有用到的權限。
-
-### 2. 錄影示範分工模式確立：AI操作教練錄影
-教練提出「我不會錄影，要你教」，軍師說明Mac內建`⌘+Shift+5`錄影操作步驟，並提出由AI直接控制教練已登入的真實Chrome示範功能、教練只需按錄製/停止的分工——經教練確認「畫面上看不出是誰操作，用的是真實帳號真實資料，不算造假」後，教練同意採用此模式。
-
-### 3. 兩次示範錄影，中途發現關鍵技術限制
-用Graph API測試工具(`developers.facebook.com/tools/explorer`)實際示範：`pages_show_list`(呼叫`me/accounts`，成功列出教練管理的所有真實粉專)、`pages_manage_posts`(POST到「大樹教練」粉專`me/feed`，成功發布真實測試貼文並取得貼文ID)。**過程中發現`pages_read_engagement`(查詢貼文按讚/留言數)不管用「用戶權杖」或「粉專權杖」呼叫，都固定回傳OAuthException「此端點需要pages_read_engagement權限」**——這代表這個權限在App通過審核前，連粉專管理員自己都無法測試，屬於Facebook對「讀取互動數據」類權限的既定嚴格限制，不是操作錯誤，也解釋了為何同一份申請裡各權限的可示範程度不一致。示範用的測試貼文透過API的DELETE呼叫失敗(`error_subcode 33`)，改用Facebook Page後台「切換為粉專身分」→貼文選單「移到垃圾桶」的一般UI操作成功刪除。
-
-### 4. 兩次錄影皆失敗，錄影檔已移至垃圾桶
-教練回報兩次錄影「都沒錄好」，要求刪除。查明桌面兩個`.mov`檔(97MB+138MB)，依安全原則**用`mv`移到`~/.Trash/`而非`rm`永久刪除**(可復原)，已驗證桌面已清空，教練晚點會再重新錄製。
-
-## ⚠️ 本場教訓/發現（已寫入記憶）
-1. **`pages_read_engagement`等讀取互動數據類權限，在App通過審核前即使管理員本人也完全無法呼叫**——不同於`pages_manage_posts`/`pages_show_list`這類「發文/列清單」權限在Standard Access下對管理員自己開放。已補進`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`，往後遇到App Review示範影片「某個權限怎麼測都失敗」，先用Graph API測試工具跑一次真實呼叫確認是Access Level門檻問題還是操作問題，不要在同一個死角反覆嘗試。
-2. **App Review示範影片可由AI操作教練的真實登入瀏覽器完成，教練只需負責錄製/停止**——畫面錄影看不出操作者是誰，只要是真實帳號真實資料的真實功能展示，不算造假示範，此分工模式已寫入同一則記憶供未來類似任務參考。
-3. **危險指令鐵律的「刪除」原則同樣適用於教練個人檔案**——教練要求刪除失敗錄影檔，遵照系統規則不做永久刪除(`rm`)，改用`mv`到`~/.Trash/`(等同拖進垃圾桶)，保留復原可能性。
-
-## 📋 下一場開工先做
-1. **教練重新錄製App Review示範影片**：`pages_show_list`+`pages_manage_posts`用Graph API測試工具示範法已驗證可行，`pages_read_engagement`改用文字說明取代影片(教練尚未確認要不要，軍師已提議代寫)。
-2. 續寫`pages_show_list`+`pages_read_engagement`的使用說明文字（v195遺留待辦）。
-3. 大台南策展中心15篇店家上線通知是否要重貼、BNI Connect打勾出席、更新BNI培訓總覽資料庫、Amber TimeMachine清理、MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選（沿用多場舊待辦）。
-4. E16接力棒瘦身：本次已把v192+v193搬進`handoff_archive/`，主檔維持v194+v195+v196三棒。
-
-## 🔑 本場commit
-本場為Meta App Dashboard表單操作+Graph API示範+本機檔案清理，未產生git commit（App Review設定變更不在版控範圍；記憶檔更新見下）。記憶：`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(更新，補充pages_read_engagement審核前限制+錄影分工模式)。
+> 📦 v196完整內容已封存：`handoff_archive/handoff_v196_archived_2026-09-12.md`（Mac桌面版，FB App Review精簡權限+示範錄影兩次失敗+關鍵發現pages_read_engagement審核前完全不可用）
 
 ---
 
@@ -517,3 +485,42 @@
 
 ## 🔑 本場commit
 `workspace`：`05ede855d`(9項待辦結案)、`df70311eb`+`0476a065a`(黃智宏發票作廢重開)、`28d61747c`(FB自動貼文暫停旗標)。記憶：`reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11`(更新，補完整檢討段落+21則範圍確認)。
+
+---
+
+# 軍師接力棒 · 2026-09-12 v198（Mac桌面版 Sonnet 5，FB App Review示範錄影完成+四權限表單全填完+卡在商家帳號被Facebook限制分享App）
+
+> 建立時間：2026-09-12 13:07 ~ 14:51（台灣時間）
+> 上一棒：v197（Mac桌面版，9項過期待辦結案+黃智宏發票作廢重開+FB自動貼文隱形範圍擴大確認並全面暫停）
+> 本棒主軸：**教練配合完成`pages_manage_posts`+`pages_show_list`共用一支+`pages_read_engagement`專用一支，共兩支App Review示範影片錄製並上傳成功；四個權限(`pages_manage_posts`/`pages_show_list`/`pages_read_engagement`/`public_profile`)的使用說明文字+同意勾選全數完成；資料處理問卷、審查人員指示、應用程式基本設定(Website平台+隱私政策)全部走完。最後卡在「驗證」步驟：App需連結一個已驗證的商家資產管理組合，但唯一已驗證的「大樹教育行銷管理中心」被Facebook標記「禁止分享App/廣告相關功能」，連結動作在伺服器端靜默失敗，導致「提交檢閱」按鈕維持disabled狀態，尚未真正送出。**
+
+## 🎯 本場戰果
+
+### 1. 兩支App Review示範影片錄製成功並上傳
+Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一個Chrome分頁裡`⌘+Shift+5`叫不出錄影工具列**的問題，改用終端機`open -a "Screenshot"`直接喚起錄影工具列，教練手動按錄製/停止。**影片①**（`pages_manage_posts`+`pages_show_list`共用）：示範`me/accounts`列出真實粉專清單→POST發布真實測試貼文到「大樹教練」粉專→用粉專後台「刪除貼文」清除，錄了兩次（第一次因教練誤解「錄影已開始」但實際macOS錄影從未真正啟動，第二次才成功），原始2分26秒剪成1分26秒（依教練指出的精確時間戳去頭尾）。**影片②**（`pages_read_engagement`專用）：示範呼叫同一則真實貼文的`likes.summary/comments.summary/shares`欄位，畫面清楚顯示OAuthException權限錯誤，證明審核前無法使用，長度44秒。**上傳過程踩坑**：Mac端Chrome（掛著claude-in-chrome擴充功能）上傳影片反覆出現「檔案類型無效」→轉檔mp4後又出現「發生錯誤請重新整理」的通用React錯誤，換了乾淨CFR 30fps規格仍無法解決；改用**教練的Lenovo Chrome手動上傳**兩支都一次成功，證實問題出在這台Mac Chrome環境本身（懷疑是claude-in-chrome擴充功能干擾FB上傳元件），非影片檔案格式問題。
+
+### 2. 四個權限的使用說明文字+勾選全數完成
+`pages_manage_posts`/`pages_show_list`/`pages_read_engagement`三個權限的英文說明文字皆由軍師撰寫（`public_profile`免文字，系統自動授予）。過程中發生**一次文字貼錯格**烏龍：教練照軍師給的文字貼上時，貼到了`pages_show_list`的欄位（軍師原本以為教練會貼到`pages_manage_posts`），軍師發現後直接修正兩格內容+確認`pages_manage_posts`原本是空的並補上，四格最終皆顯示「編輯」（已完成）狀態。
+
+### 3. 資料處理問卷+審查人員指示+應用程式基本設定全數走完
+資料處理問卷：processor-0(是)/processor-2(大樹教育)/responsible-1(大樹教練本人，教練親自填寫)/responsible-2(台灣)/requests-3(否)/requests-4(以上皆非)。審查人員指示：軍師撰寫英文說明，解釋這是後台工具無公開登入介面、審核者可透過Graph API Explorer重現操作，`fblogin-web-1`(是否整合FB Login)答否。應用程式基本設定：新增「Website」平台(`https://www.bymyway.com/`)——**這是「驗證」步驟外的另一個隱藏必要條件**，原本完全沒有平台導致「審查人員指示」區塊顯示「你必須先指定此應用程式的平台」而卡住，補上後才解除。過程中也嘗試修正DPO(資料保護長)聯絡地址從預設「美國」改教練提供的台南歸仁區真實地址，但**這個特定表單的Save Changes在同時修改平台+地址時會靜默失敗**（分開存才成功一次，DPO地址本身仍會在頁面重新整理後消失，因其為選填欄位非必要，暫時擱置未強求修好）。
+
+### 4. 真正卡關點：驗證步驟的商家資產管理組合連結失敗
+提交檢閱按鈕`aria-disabled="true"`，逐一排查發現「驗證」區塊要求連結一個「已驗證的商家資產管理組合」。教練帳號下只有兩個商家：「大樹教練之『BNi』奇妙旅程」(Unverified)、「大樹教育行銷管理中心」(Verified)。選擇後者並點擊「連結」時，畫面短暫顯示「已連結」，但同時跳出錯誤toast：**「Business is not allowed to share App - Your business is prohibited from advertising, including app sharing.」**（該商家帳號被Facebook標記禁止廣告/分享相關功能，連結App審核這個動作被歸類在同一限制傘下）。重新整理頁面後確認連結並未真正持久化，選擇畫面重新出現。兩個商家都卡：一個驗證過但被禁、一個沒被禁但未驗證，形成死結，需要教練親自登入Meta Business Suite查明限制原因並走申訴流程，或改為驗證另一個商家帳號，這不是軍師能靠介面操作解決的問題。
+
+## ⚠️ 本場教訓/發現（待寫入記憶）
+1. **Mac端這台Chrome（掛claude-in-chrome擴充功能）上傳影片到FB App Review表單會可靠性失敗，換一台乾淨瀏覽器（教練Lenovo）一次就成功**——往後遇到FB Dashboard的檔案上傳功能卡住通用錯誤，優先懷疑是這台機器的擴充功能干擾，直接請教練用別台裝置的瀏覽器上傳，不要在同一台反覆調整檔案格式規格瞎試（本場浪費了多輪ffmpeg重新編碼嘗試，教練也因此提醒過token消耗問題）。
+2. **FB App Review提交表單的多步驟精靈(wizard)存在「導航方式影響是否真的存檔」的陷阱**：用「返回提交頁面」離開某一步驟時，該步驟部分變更（例如商家連結、DPO地址）不會真正持久化到伺服器，必須依序點擊每一步驟自己的「繼續」按鈕才會確實提交；且提交後的整體「提交檢閱」按鈕disabled狀態不會即時反映在頂層總覽的警示旗標上（各步驟旗標消失≠真的可以送出），必須實際檢查按鈕的`aria-disabled`屬性並逐步驟重新走一遍才能抓出真正卡住的環節。
+3. **一份FB App要通過App Review，可能需要滿足多個彼此獨立、事先不會全部列出的隱藏前置條件**（本場依序發現：①權限本身要文字+影片 ②應用程式要指定至少一個Platform ③要連結一個已驗證的商家資產管理組合），逐一排查時要對照「須要你檢查」旗標跟`aria-disabled`兩種訊號交叉驗證，不能只看其中一種。
+4. **商家資產管理組合(Business Manager)可能因廣告政策違規等原因被Facebook整體限制「分享」功能，這個限制會波及看似不相關的App Review商家驗證步驟**——遇到「Business is not allowed to share」類錯誤，屬於帳號層級的限制非操作錯誤，需要教練本人登入Business Suite查證+申訴，AI無法代為排除。
+
+## 📋 下一場開工先做
+1. **🔴🔴最優先**：教練登入`business.facebook.com`查「大樹教育行銷管理中心」被限制廣告/分享的具體原因（帳號品質/政策頁面），決定是走申訴、還是改驗證「大樹教練之『BNi』奇妙旅程」、或建立新商家組合。三選一都不是軍師能獨立完成的步驟。
+2. 解除商家連結卡點後，記得**依序點過所有5個步驟自己的「繼續」按鈕**（不要用「返回提交頁面」跳過），再檢查`提交檢閱`按鈕`aria-disabled`是否變成false，才能真正點下去送出。
+3. DPO聯絡地址（教練提供的台南歸仁區地址）仍未成功存檔，選填欄位不影響送審，教練若在意可日後單獨重試（不要跟平台設定一起存）。
+4. 沿用v197既有待辦：大台南策展中心店家通知重貼(21則)、BNI Connect打勾出席、更新BNI培訓總覽資料庫、Amber TimeMachine清理、MEMORY.md索引瘦身、後台帳密清單、materials系統42份教材待勾選。
+5. E16接力棒瘦身：本次已把v196搬進`handoff_archive/`，主檔維持v197+v198兩棒。
+6. 教練提醒本場對話已用掉大量5小時用量額度(82%，3小時後才重置)，下一棒開工前留意額度狀況，必要時精簡操作步驟。
+
+## 🔑 本場commit
+本場為Facebook App Dashboard表單操作+本機影片剪輯處理，未產生git commit（App Review設定變更不在版控範圍）。桌面留存兩支示範影片：`① pages_manage_posts和pages_show_list共用_2026-09-12.mp4`、`② pages_read_engagement專用_2026-09-12.mp4`，教練Lenovo端已上傳成功勿刪除Mac端備份。
