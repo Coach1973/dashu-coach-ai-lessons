@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 0a5f17e3-d7d6-4554-b945-cf61bff7d55e
-  modified: 2026-09-11T08:35:15.313Z
+  modified: 2026-09-12T05:01:14.818Z
 ---
 
 用來幫14個粉專發文的App「大樹教練粉專發文小幫手」(App ID `1050871501278089`)目前處於Meta「可供測試」等級，尚未通過App Review。實測證實：**用這個App透過Graph API發的貼文，只有App角色成員(教練本人)看得到，一般訪客連在Page動態時報裡都看不到該則貼文（不只是分享連結失效），管理員自己打開Page後台或動態牆卻完全正常**——因為Page擁有者/管理員的瀏覽權限是獨立通道，不受App Review狀態影響。
@@ -30,5 +30,15 @@ metadata:
 1. **7個申請權限精簡為4個**：`pages_manage_metadata`／`pages_messaging`／`business_management`這3個App實際完全沒用到(查`fb_automation/*.py`只用`/feed`+`/photos`)，已在「應用程式檢閱提交內容」頁面逐一按垃圾桶圖示移除，剩`pages_manage_posts`／`pages_show_list`／`pages_read_engagement`／`public_profile`。少申請沒在用的權限可避免被要求繳交錄不出來的示範影片，拖累整包審核。
 2. **權限測試等級落差，同一批6個權限裡表現不一致**：實測用Graph API測試工具直接呼叫——`pages_show_list`(`me/accounts`)跟`pages_manage_posts`(POST `me/feed`真實發文成功，拿到真實貼文ID)這兩個在App還沒過審核時**管理員自己就能正常用**；但`pages_read_engagement`(查貼文按讚/留言數)不管用「用戶權杖」還是「粉專權杖」都固定回傳「這個端點需要pages_read_engagement權限」的OAuthException——**這個權限就算是Page管理員本人，在App通過審核之前也完全打不通，不是操作錯誤**。這解釋了為什麼同一份App Review申請裡，有些權限的示範影片錄得出來、有些錄不出來：Facebook對「讀取互動數據」這類權限的Standard Access限制比「發文」「列清單」更嚴格。**下次遇到類似「示範影片卡住」，先用Graph API測試工具跑一次真實呼叫確認是操作問題還是Access Level門檻問題，不要在同一個死角反覆試錄影**。
 3. **App Review示範影片可行的分工模式**：畫面錄影只看得到滑鼠移動與頁面反應，看不出操作者是誰。教練不用自己操作Graph API測試工具，可以由AI直接控制教練已登入的真實瀏覽器做示範操作(真實帳號、真實粉專、真實API呼叫)，教練只需要負責按⌘+Shift+5開始/停止螢幕錄影，畫面呈現的就是App真正的功能在真正運作，可以直接拿去上傳，不算造假示範。示範完的測試貼文，若API的DELETE呼叫失敗(這次遇到`error_subcode 33`)，改用Facebook Page後台「切換為粉專身分」→貼文選單「移到垃圾桶」的一般UI操作刪除即可，不用執著在API本身。
+
+**2026-09-12 教練當面提出嚴正檢討＋範圍擴大確認**：
+
+教練回顧整起事件：他完全依照AI指示一步步取得token、授權、驗證，AI也回報「已驗證上線」，甚至用同一套機制幫「大台南商圈中心」策展SOP自動發了一批店家上架通知，結果最後發現全部只有發文者自己看得到，一般人完全看不到，教練形容「活在謊言當中」，直到查證才真相大白。教練要求務必吸取教訓、評估清楚後續動作，不要再讓他做白工。
+
+查`distill/curation_process.log`，`curation_process.py`的`post_to_facebook()`用的正是同一組`fb_automation/page_tokens_2026-09-01.json`(App ID`1050871501278089`)，**2026-09-06~09-10共21則「大台南商圈上新網站」自動貼文**(非原先估計的15篇)，已用完全登出的Browser pane抽測其中一則(post_id `612941615239114_122198815190837553`)，同樣看到「目前無法查看此內容」，並直接訪問「大台南策展中心」粉專公開首頁確認：公開時間軸上這21則全部不存在，唯一顯示的是教練9/11親自用Meta Business Suite重貼的9/16高雄場貼文——**證實這21則策展自動貼文跟先前已知的4則同樣受影響，範圍比原估計更大**。
+
+**已採取行動（非僅記錄教訓）**：`curation_process.py`新增`FB_AUTO_POST_PAUSED = True`旗標，`post_to_facebook()`一開始就直接return False並記log，**在App Review通過前暫停這個自動發文功能**，避免每上架一家新店家就再累積一則看不見的貼文(繼續製造白工)。commit待補。
+
+**教訓**：①驗證「一批自動化流程」是否受同一個已知bug影響時，要主動盤點「這個bug的根因(App/token)還被哪些其他自動化功能共用」，不能只盯著最初發現問題的那個功能——本案`page_tokens_2026-09-01.json`同時被14個粉專行銷貼文跟策展SOP自動通知共用，兩者是完全獨立的兩套程式碼(`fb_automation/*.py` vs `scripts/curation_process.py`)，容易漏查其中一邊。②任何已知會「靜默產生無效結果」的自動化功能，查到根因後應該立即暫停該功能本身（不是只補救已發生的結果），否則問題會在等待修復期間持續累積，這是比「修復並道歉」更優先的動作(呼應守則#04解決問題比解釋問題更重要)。
 
 相關：[[feedback_verify_public_visibility_not_just_api_success]]
