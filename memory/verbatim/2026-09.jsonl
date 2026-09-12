@@ -579,3 +579,5 @@
 {"t": "2026-09-12 17:55", "src": "終端機", "who": "教練", "text": "https://www.facebook.com/business-support-home/?source=business_help_center_support不要大驚小怪的啦，這就是 Meta 的新 AI 服務啦，不要緊張好不好？ 我的意思是說，你剛才要登入、卡住的那個地方，我已經幫你按同意了，你現在再上一次就沒問題了。"}
 {"t": "2026-09-12 17:56", "src": "終端機", "who": "教練", "text": "你自己去截一張圖啦"}
 {"t": "2026-09-12 18:10", "src": "終端機", "who": "教練", "text": "釋放"}
+{"t": "2026-09-12 19:57", "src": "終端機", "who": "教練", "text": "我看到了一個最新的消息，說小龍蝦出 2.0 版本了，有五個很棒的改動。想請問這個事情屬實嗎？我現在就可以下載了嗎？"}
+{"t": "2026-09-12 19:59", "src": "終端機", "who": "教練", "text": "好，很好，請做出評估來。反正你最了解我的需求，給我評估一個報告，OK？完整文件索引：GitHub 的 docs/ 資料夾（包含 Channels、Models、Skills、Security、CLI 參考等） * 技能市集：ClawHub（https://github.com/openclaw/clawhub） * 中文社群整理文件（非官方但實用）： * https://openclaw.zhcndoc.com * 或搜尋「OpenClaw 中文文檔」"}
