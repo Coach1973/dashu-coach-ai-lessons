@@ -1,5 +1,9 @@
 # Memory Index
 
+- [🎯 賈維斯開工三方核對SOP：小龍蝦一代讀HEARTBEAT/Hermes讀outbox/小二查本機log禁用API…](reference_jarvis_kickoff_partner_checkin_2026-09-13.md)
+- [🔴🔴 建議撤銷憑證前先查路徑大全確認共用範圍，教練當場糾正「沒查証別亂建議」…](feedback_check_shared_resource_before_recommending_revoke_2026-09-13.md)
+- [🔴 只排除verbatim/等已知風險資料夾不夠，memory每日檔案也要全文grep金鑰…](feedback_scan_full_context_not_just_known_risk_folder_2026-09-13.md)
+- [🔴 複製正式資料給新環境要grep內容找機密，不能只排除憑證檔名…](feedback_scan_content_not_just_filenames_before_sharing_with_new_env_2026-09-13.md)
 - [🔧 FB圖示要求透明背景其實是JPG格式限制+新式上傳元件無法自動化…](reference_fb_app_icon_transparency_and_upload_limitation_2026-09-11.md)
 - [🔴🔴 FB API發文一般訪客看不到，需App Review(Tech Provider不可逆)…](reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11.md)
 - [🔴 驗證FB貼文上線要用無登入瀏覽器，不能只信管理員token查API…](feedback_verify_public_visibility_not_just_api_success_2026-09-11.md)
