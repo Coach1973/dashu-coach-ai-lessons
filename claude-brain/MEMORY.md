@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 OpenClaw 2.0內建heartbeat排程bug：間歇發Message failed，修法是system heartbeat disable非cron disable…](reference_openclaw2_heartbeat_message_failed_bug_2026-09-14.md)
 - [🎯 賈維斯開工三方核對SOP：小龍蝦一代讀HEARTBEAT/Hermes讀outbox/小二查本機log禁用API…](reference_jarvis_kickoff_partner_checkin_2026-09-13.md)
 - [🔴🔴 建議撤銷憑證前先查路徑大全確認共用範圍，教練當場糾正「沒查証別亂建議」…](feedback_check_shared_resource_before_recommending_revoke_2026-09-13.md)
 - [🔴 只排除verbatim/等已知風險資料夾不夠，memory每日檔案也要全文grep金鑰…](feedback_scan_full_context_not_just_known_risk_folder_2026-09-13.md)
