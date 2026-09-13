@@ -164,6 +164,11 @@ run_case_direct "同義改寫-每20分鐘處理一次" "$(mk poll_syn5 '設計�
 run_case_direct "對照組-不應誤判(調查/查看)" "$(mk poll_syn_clean '我先調查一下目前的狀態，再決定怎麼處理，之後每天固定上班八小時。')" 0
 run_case_direct "對照組-已改事件驅動的回顧不擋" "$(mk poll_syn_whitelist '之前每5分鐘掃一次的輪詢設計已經拆除，改成事件驅動了。')" 0
 
+echo "════ 🔴 2026-09-14 迴歸測試：規則D誤判第三方既有排程/meta討論為新輪詢提議 ════"
+run_case_direct "對照組-描述第三方內建排程不應擋" "$(mk poll_third_party '這是OpenClaw 2.0內建的「Heartbeat (main)」排程，每30分鐘跑一次，看一下它實際在做什麼。')" 0
+run_case_direct "對照組-描述已關閉的既有排程不應擋" "$(mk poll_disabled '確認這個系統保護排程heartbeat每30分鐘觸發一次，已經用disable指令關閉。')" 0
+run_case_direct "對照組-meta討論誤判本身不應擋" "$(mk poll_meta '描述OpenClaw內建heartbeat每30分鐘跑一次這類診斷第三方既有排程的事實敘述，被regex誤判成軍師在提議新輪詢設計。')" 0
+
 echo "════ 🔴 2026-09-06 迴歸測試：規則L第二層(既有repo新增頁面沒收錄coach888) ════"
 mk_gitcommit() {  # mk_gitcommit <檔名> <git commit指令>
   local f="$FIXDIR/$1.jsonl"
