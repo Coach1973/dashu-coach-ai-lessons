@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-13 20:30:29**
+> **最後同步：2026-09-14 04:15:17**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴 | **小二Telegram token第三度洩漏，建議輪替第三次，等教練決定** | 🔒卡住-等教練決定 | 2026-09-14修小二「Message failed」噪音時，commit被E12敏感資料檢查攔下，發現小二Telegram token(今晚已輪替過一次的新token)又洩漏——這次源頭是`terminal-notes/raw_sessions/`原始逐字稿(243檔案全部無`.gitignore`保護)，已有2個舊檔(`11a2e6f7`10筆+`c23aa475`20筆)共30筆明文躺在先前已推上GitHub的commit歷史裡，先前兩次「緊急遮蔽」都沒查到這個資料夾。軍師建議直接輪替token第三次(BotFather revoke重發)取代改寫git歷史(risk較高，repo多機共用)，教練尚未回覆。詳見[[reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14]]。**下一場開工先確認教練是否已自行處理或仍待軍師執行。** |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
 | 🟢 | **真誠分會sincere.bymyway.com補09/03+09/10兩週來賓紀錄+新增會員黃秀麗/張玉盞** | ✅2026-09-12聯想Windows本場完成，Mac已寫入並驗證上線 | 教練口述提供09/03(5位來賓)+09/10(2位來賓)兩場真誠分會例會出席報告，聯想查證`sincere.bymyway.com`(獨立系統，repo`Coach1973/zhencheng-guests`，跟`bni-chapters`完全無關)的「來賓」欄位是網頁唯讀顯示、前端沒有可編輯輸入框，必須直接寫Mac本機SQLite資料庫，聯想無檔案存取權，整理成結構化資料(逐週每人+X人+完整名單姓名/專業別/邀約人)寫信交接`cross-agent/inbox/mac`。教練追加確認兩位新會員：黃秀麗(分到羽宙奇蹟組)、張玉盞(8/27原是來賓「有機水產火鍋」，教練確認現在也是在籍會員，分到百聖維尼組)，兩人皆09/10才加入、起算週為09/17（比照張育慈8/27加入模式）。Mac已直接寫入`zhencheng_guests.db`並用真實瀏覽器開`https://sincere.bymyway.com/`驗證09/03/09/10欄位+完整名單新區塊+新會員分組皆正確，commit`0fa05e9`(僅頁面在籍人數14→16位文字修正，資料庫本身未進git)。**過程教訓**：教練一度誤以為信沒送達，查`git log origin/main`確認push確實成功(`25beefa1`)，只是Mac當時忙著FB App Review沒有主動重新檢查信箱——**跨機信箱機制是「開工/讀信」關鍵字觸發才掃描，不是持續監看**，之後教練若懷疑對方沒收到信，直接跟該機器說一聲「讀信」即可觸發，比查git log更直接。應教練要求查詢「連續7週無來賓」名單，直接讀網頁DOM資料算出8位(王彤/鄭綉美/鄭禮昂/葉建葳/黃笛軒/盧尚政/楊在珍/陳柔璇)，皆為🟡黃色關注等級尚未到🔴8週紅色門檻。 |
 | 🔴🔴 | **FB App Review申請：四權限表單全填完+兩支示範影片上傳成功，卡在「商家資產管理組合」連結被Facebook限制** | 🔒卡住-等教練查Business Suite | 教練親自深挖後推翻「放棄App Review」的舊裁示，改為**教練親自動手申請**，軍師查證+代填輔助+直接操作表單。**2026-09-12 v198進度**：①`pages_manage_posts`/`pages_show_list`/`pages_read_engagement`/`public_profile`四個權限的使用說明文字+「同意遵守使用方式」勾選全數完成②兩支示範影片錄製並上傳成功——影片①(`pages_manage_posts`+`pages_show_list`共用，1分26秒)示範列粉專清單+發文+刪除；影片②(`pages_read_engagement`專用，44秒)示範呼叫互動數據API顯示審核前必定回傳的OAuthException權限錯誤（此權限審核前連管理員自己都無法呼叫，已證實非操作問題）③應用程式基本設定補上Website平台(`https://www.bymyway.com/`)，解除「審查人員指示」區塊卡住④資料處理問卷、審查人員指示皆已填寫完成。**真正卡關點**：「驗證」步驟要求連結一個已驗證的商家資產管理組合，教練帳號下「大樹教育行銷管理中心」(已驗證)點擊連結時跳出錯誤「Business is not allowed to share App - Your business is prohibited from advertising, including app sharing」，代表該商家帳號被Facebook整體限制廣告/分享相關功能，連結動作在伺服器端靜默失敗（畫面短暫顯示已連結，重新整理後打回原形）；另一個商家「大樹教練之『BNi』奇妙旅程」則是未驗證，不滿足此步驟要求「已驗證」的條件。兩者都卡，形成死結。**下一棒/教練親自待辦**：登入`business.facebook.com`查「大樹教育行銷管理中心」被限制的具體原因(帳號品質/政策頁面通常會列)，決定要嘛申訴解除限制，要嘛把另一個商家組合走驗證流程，要嘛建立全新商家組合驗證——三條路都需要教練本人操作，非軍師能靠介面點擊解決。桌面留存兩支示範影片(`① pages_manage_posts和pages_show_list共用_2026-09-12.mp4`、`② pages_read_engagement專用_2026-09-12.mp4`)供之後重試上傳用，勿刪除。**沿用既有待辦**：走完App Review後回頭處理策展SOP自動貼文的21則歷史隱形貼文是否補發、`FB_AUTO_POST_PAUSED`旗標記得在通過審核後改回`False`。 |
@@ -688,7 +689,43 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 3. 其餘沿用v201既有待辦（FB App Review、OpenClaw 2.0評估、策展中心重貼21則、BNI Connect打勾、MEMORY.md索引瘦身）。
 
 ## 🔑 本場commit
-`workspace`：新增`claude-brain/reference_jarvis_kickoff_partner_checkin_2026-09-13.md`+`claude-brain/MEMORY.md`索引+本接力棒更新（commit待下方統一push時產生）。
+`workspace`：`46570d2e5`(賈維斯開工三方核對SOP)。
+
+---
+
+# 軍師接力棒 · 2026-09-14 v203（Mac桌面版 Sonnet 5，ai-go公版方法論優化上線+修復小二Message failed噪音+第三度金鑰洩漏發現）
+
+> 建立時間：2026-09-14 00:20 ~ 04:11（台灣時間）
+> 上一棒：v202
+> 本棒主軸：**教練請軍師以賈維斯身分評估`coach1973.github.io/ai-go/`公版方法論頁面優化空間，逐項確認並上線三次迭代更新；教練回報小二反覆出現「Message failed」，深挖查出OpenClaw 2.0內建heartbeat排程真bug並修復；過程中commit被敏感資料檢查攔下，發現小二Telegram token第三度洩漏、且源頭是`terminal-notes/raw_sessions/`原始逐字稿完全無git保護的結構性缺口，已記錄待教練裁示是否輪替token第三次。**
+
+## 🎯 本場戰果
+
+### 1. ai-go公版方法論三輪迭代更新（commit `232cf0a`+`86bdd33`，ai-go獨立repo）
+教練請軍師評估這份「一鍵注入」頁面經過這段時間有沒有優化空間。查證發現內容停留在2026-06-23版本(E01~E10)，執行細則已演進到E17。篩選出適合公版的部分（Karpathy工程紀律三條+「開工/總結」對稱暗號設計）補進`system-prompt.md`(E10~E13)，危險指令五道閘門/記憶寫入雙鐵律等內部維運SOP判斷不適合公版未收錄；補上og:image解決LINE/FB分享無預覽圖問題。教練接著釐清「使用≠更改」「隱私內容檢查」「授權夥伴機制」三個設計邏輯，軍師逐一確認並更正教練一個過時假設（開工/總結兩個暗號其實已經寫進公版，不是「藏起來」）。教練實際用Meta AI測試時發現「心法+人設要分兩步貼」的UX缺口，軍師新增「一鍵複製完整版」按鈕一次解決。全程遵守網頁推SOP，每次push前都先用真實Chrome(`open -a "Google Chrome"`)預覽驗證過。
+
+### 2. 小二「Message failed」噪音根治：OpenClaw 2.0內建heartbeat排程bug
+教練回報Telegram連續8次收到「⚠️ Message failed」。**第一輪查證不完整**：只查了本機log發現是`NO_REPLY`被框架suppression機制攔下，誤判為「無害log雜訊，沒有真的送達」，教練親自貼出Telegram截圖證明這句話確實有送達，軍師承認查證方法有漏洞、重新深挖。真根因：OpenClaw 2.0新profile會自動內建系統保護排程`heartbeat:main`(每30分鐘觸發)，約一半機率內部產生28次`Telegram sendMessage suppressed`重試迴圈後判定`agent-tool-failure`並發送失敗通知。一般`cron disable`被系統保護擋下(`system-owned monitor jobs cannot be edited`)，改用專屬指令`openclaw --profile test2 system heartbeat disable`成功關閉。記憶`reference_openclaw2_heartbeat_message_failed_bug_2026-09-14`。
+
+### 3. 🔴🔴 意外發現：小二Telegram token第三度洩漏，源頭是原始逐字稿零git保護
+處理上述修復的commit時，被E12敏感資料檢查攔下——`distill/terminal_2026-09-13.md`自動蒸餾腳本從原始逐字稿重新產生了今晚已輪替過一次的小二token明文。就地遮蔽後追查源頭，發現`terminal-notes/raw_sessions/`(243個原始逐字稿檔案)完全沒有`.gitignore`保護，其中2個舊檔(`11a2e6f7`+`c23aa475`)已有共30筆明文躺在**先前已推上GitHub的commit歷史**裡，是先前兩次「緊急遮蔽」的漏網之魚(那兩次只查了`distill/`+`memory/verbatim/`等加工後的已知風險資料夾)。軍師建議直接輪替token第三次(风险低，token只小二專用)取代改寫git歷史(风险高，repo多機共用)，**教練尚未回覆決定，此為下一場最優先待辦**。記憶`reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14`。
+
+### 4. Stop hook守則#07輪詢偵測，本場再度出現2次同類型誤判
+描述OpenClaw內建heartbeat「每30分鐘跑一次」這類**診斷第三方既有排程的事實敘述**，被regex誤判成軍師在提議新輪詢設計(跟今晚稍早「每次教練下開工指令時」同一種「每+X」字面誤判)。已自我驗證説明不需更動剛才的判斷，但這個regex盲點本場累計出現至少4次命中，值得找時間調整`stop_rules_master.py`規則#07的判斷條件，尚未動手。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. `reference_openclaw2_heartbeat_message_failed_bug_2026-09-14`：判斷一個錯誤訊息是否要緊，要查它有沒有真的送達使用者看得到的地方，不能只看log等級或字面意思猜測；OpenClaw系統保護排程要用`system heartbeat disable`而非`cron disable`。
+2. `reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14`：查證「敏感資料有沒有清乾淨」要往上游追到「這份衍生檔案是從哪裡重新產生的」，只清蒸餾後的檔案、不清原始來源，下次自動化重跑就會把污染帶回來。
+
+## 📋 下一場開工先做
+1. **🔴🔴最優先**：確認教練對小二token第三度輪替的決定，若同意就執行BotFather revoke+重啟小二gateway。
+2. `terminal-notes/raw_sessions/`要不要整批加`.gitignore`（架構決定，待跟教練討論，非軍師能單方面決定）。
+3. `stop_rules_master.py`規則#07的「每+時間量詞」誤判regex，累計4次命中，有空可調整。
+4. 沿用v201既有待辦：FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、大台南策展中心店家通知重貼(21則)、BNI Connect打勾出席、MEMORY.md索引瘦身。
+5. E16接力棒瘦身：主檔已累積v197~v203共7棒，下次開工優先把v197~v199搬進`handoff_archive/`。
+
+## 🔑 本場commit
+`ai-go`(獨立repo)：`232cf0a`(執行細則補齊+og:image)、`86bdd33`(一鍵複製完整版按鈕)。`workspace`：`8cd389f94`(小二heartbeat修復+第三度金鑰遮蔽)，另本次總結新增`claude-brain/reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14.md`+接力棒更新（commit待下方統一push時產生）。
 
 
 
