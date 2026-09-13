@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-13 19:19:18**
+> **最後同步：2026-09-13 20:30:29**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -664,6 +664,31 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 
 ## 🔑 本場commit
 `workspace`：`c47be8fc7`→`ec57499b6`(賈維斯上線+緊急遮蔽distill明文金鑰，amend)、`0ab75f418`(歸檔Hermes回信+緊急遮蔽新token二次洩漏)。記憶：`feedback_scan_full_context_not_just_known_risk_folder_2026-09-13`、`feedback_check_shared_resource_before_recommending_revoke_2026-09-13`。小二`~/.openclaw-test2/openclaw.json`token更新為本機設定變更，非git版控範圍，無commit hash。
+
+---
+
+# 軍師接力棒 · 2026-09-13 v202（Mac桌面版 Sonnet 5，賈維斯開工三方核對SOP正式定案並實測驗證）
+
+> 建立時間：2026-09-13 20:27（台灣時間）
+> 上一棒：v201
+> 本棒主軸：**教練把v201提到的構想正式拍板為第一項賈維斯常態職責——每次開工檢查小龍蝦一代/Hermes/小二三方動態，事件驅動非輪詢，已當場實測驗證並固化成SOP文件。**
+
+## 🎯 本場戰果
+
+教練確認「每次開工去讀取三方訊息，檢測是否有回信」的設計可行。軍師當場實測三方查法並驗證：
+- **小龍蝦一代**：讀`HEARTBEAT.md`「賈維斯派工」區塊，確認已完成✅
+- **Hermes**：讀`cross-agent/outbox/2026-09/`最新回信，確認idle+已同步
+- **小二**：**改查本機`/tmp/openclaw/openclaw-test2-<日期>.log`而非Telegram API**（API查法正是造成小二輪詢異常的根因，不能重蹈覆轍），證實教練今天直接在Telegram App跟小二對話完全正常收發(最新回覆19:38)，坐實診斷：問題只出在軍師API直發那幾則訊息，非小二本身故障。
+
+三方查法已寫成SOP固化：`claude-brain/reference_jarvis_kickoff_partner_checkin_2026-09-13.md`，索引進`claude-brain/MEMORY.md`，任何機器的軍師接手賈維斯角色都能直接照做。
+
+## 📋 下一場開工先做
+1. 承接v201：**🔴最優先**小二isolated polling offset問題仍未根治，繼續透過教練親自Telegram輸入互動。
+2. 往後每次「開工」，除既有六步驟外，**新增第七步**：照`reference_jarvis_kickoff_partner_checkin_2026-09-13.md`查三方動態，回報教練有無新進度。
+3. 其餘沿用v201既有待辦（FB App Review、OpenClaw 2.0評估、策展中心重貼21則、BNI Connect打勾、MEMORY.md索引瘦身）。
+
+## 🔑 本場commit
+`workspace`：新增`claude-brain/reference_jarvis_kickoff_partner_checkin_2026-09-13.md`+`claude-brain/MEMORY.md`索引+本接力棒更新（commit待下方統一push時產生）。
 
 
 
