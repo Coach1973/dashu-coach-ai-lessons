@@ -36,3 +36,7 @@ scripts/__pycache__/
 event-signup/curation_uploads/processed/
 event-signup/curation_uploads/incoming/
 event-signup/.env.bak
+
+# 原始對話逐字稿：內容是對話全文，可能包含教練貼出的密碼/API Key等敏感內容，
+# 只留本機不上雲（2026-09-14教練親自要求根治，不再靠事後遮蔽補救）
+terminal-notes/raw_sessions/
