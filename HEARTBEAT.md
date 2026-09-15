@@ -76,3 +76,8 @@
 - **副作用**：`doctor --fix`把`HEARTBEAT.md`/`TOOLS.md`從檔案系統清掉(遷移到SQLite的副作用)，已用`git checkout HEAD --`從git歷史救回，內容零遺漏
 - **完整記錄**：試金石案例73
 - ⚠️ **下次任何人要重啟main gateway前，先確認`which openclaw`跟launchd plist裡的執行檔路徑是否一致，不一致先不要重啟**
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-16 04:15
+- ✅ 同步成功
+- HANDOFF mtime: 1789503276
+- 雲端同步：✅ 已推上雲端（commit 1f830e1b7）
