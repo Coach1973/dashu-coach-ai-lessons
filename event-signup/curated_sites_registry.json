@@ -173,6 +173,28 @@
       "uploaded_at": "2026-09-09 02:39",
       "status": "live",
       "source_package": "20260909-023919__association-brand-website-v2.tar.tar.gz"
+    },
+    {
+      "slug": "kangyenju",
+      "title": "康燕居 ｜ 一盞燕窩，四百年的講究",
+      "description": "康燕居 KANG YEN JU，中壢門市總部。燕窩的由來與故事、本草典籍中的燕窩、世界各國的採集方式，以及野生洞燕採收現場實錄。320桃園市中壢區興農路102號。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/kangyenju/",
+      "github_pages_url": "https://coach1973.github.io/kangyenju/",
+      "uploaded_at": "2026-09-16 06:48",
+      "status": "live",
+      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報網址404發現)"
+    },
+    {
+      "slug": "historic-residence",
+      "title": "六淨山房 · 知事官邸古蹟餐廳｜百年官邸 · 茶香咖啡 · 光影時光",
+      "description": "六淨山房 LiuJingShanFang，台南知事官邸古蹟餐廳。古樹茶、靜心茶會、六吋輕乳酪蛋糕與官邸包場。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/historic-residence/",
+      "github_pages_url": "https://coach1973.github.io/historic-residence/",
+      "uploaded_at": "2026-09-16 06:48",
+      "status": "live",
+      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報連結點不到發現)"
     }
   ],
   "redirects": {
