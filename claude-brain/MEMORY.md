@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴🔴 重啟main gateway前先確認終端機PATH版本跟launchd正式服務版本是否一致，不一致先不要重啟…](feedback_check_openclaw_version_before_gateway_restart_2026-09-16.md)
 - [🔴🔴🔴 驗證服務是否正常要先查本機log再考慮外部API，回報「已修好」前驗證強度要對得上真實使用情境…](feedback_verify_locally_before_external_api_2026-09-16.md)
 - [🔴🔴🔴 三個LINE帳號(小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天多，@openclaw/line外掛套件遺失+process活著≠外掛真的載入…](reference_line_plugin_extensions_missing_2026-09-16.md)
 - [🎯 BNI南區快速組隊計畫：免費建站當誘因換深聊，teamwork重砲要放深聊階段不放最前面，筆記已上線…](project_bni_teamup_free_website_funnel_2026-09-15.md)
