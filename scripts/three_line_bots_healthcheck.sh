@@ -11,13 +11,24 @@
 # 檢查項目：
 # 1. gateway process 是否存活
 # 2. gateway 最近一次啟動的 plugin 清單是否真的包含 line（不是只看config，是看實際載入結果）
-# 3. LINE webhook 公開端對端路徑是否有回應（event.bymyway.com/line/webhook，測整條Cloudflare tunnel路徑）
+# 3. LINE webhook 公開端對端路徑是否有回應（用正確簽章測真正的路徑，非隨便測一個回應碼就當過）
+#
+# 🔴 2026-09-16 教練當場抓到的血淚教訓：第一版腳本測的是 event.bymyway.com/line/webhook，
+# 這個網址其實是完全不相關的另一個LINE官方帳號「大樹教練」(event-signup報名系統專用)在用，
+# 跟這三個帳號完全無關——測到403以為「有回應=正常」，實際上教練發真訊息給「教練都在想什麼」
+# 完全沒收到回覆。真正這三個帳號共用的tunnel(小龍蝦專線,id e35d30ec-...)對應的公開網址是
+# bni/media/openclaw/rpl-workshop/seabiscuit.bymyway.com這五個(用Cloudflare API查DNS CNAME
+# 找到的)，逐一測試後確認bni/openclaw/seabiscuit三個能正確路由到gateway。
+# 改用「真的帶正確HMAC簽章」的合成webhook打openclaw.bymyway.com，收到200才代表
+# 簽章驗證通過、訊息真的能被處理，不能再只看「有沒有回應」這種弱驗證。
 #
 # 結果推送：Telegram 通知教練（不論健康與否，教練要求每天都要回報）
 
 LOG_FILE="/Users/bymyway/.openclaw/workspace/logs/line_bots_healthcheck.log"
 STATE_FILE="/Users/bymyway/.openclaw/workspace/logs/line_bots_healthcheck_state.json"
 GATEWAY_LOG="/Users/bymyway/Library/Logs/openclaw/gateway.log"
+LINE_WEBHOOK_HOST="openclaw.bymyway.com"
+LINE_SECRET_FILE="/Users/bymyway/.openclaw/credentials/line-jiaolian_thoughts-secret.txt"
 TS=$(date '+%Y-%m-%d %H:%M:%S')
 
 mkdir -p "$(dirname "$LOG_FILE")"
@@ -42,15 +53,24 @@ else
   STATUS="DOWN"
 fi
 
-# 3. LINE webhook 公開端對端路徑（測整條 DNS→Cloudflare→tunnel→gateway）
-HTTP_CODE=$(curl -s -o /dev/null -m 10 -w "%{http_code}" -X POST https://event.bymyway.com/line/webhook -H "Content-Type: application/json" -d '{}' 2>/dev/null)
-if [ "$HTTP_CODE" = "400" ] || [ "$HTTP_CODE" = "403" ]; then
-  RESULTS+=("✅ webhook 對外路徑正常（HTTP $HTTP_CODE，代表請求有到gateway並被正確拒絕，這是預期行為）")
-elif [ -z "$HTTP_CODE" ] || [ "$HTTP_CODE" = "000" ]; then
-  RESULTS+=("❌ webhook 對外路徑無回應（逾時/連不上，可能是 Cloudflare tunnel 斷線）")
-  STATUS="DOWN"
+# 3. LINE webhook 公開端對端路徑：帶正確HMAC簽章的合成webhook，測真正的 bni/openclaw/seabiscuit.bymyway.com
+if [ -f "$LINE_SECRET_FILE" ]; then
+  LINE_SECRET=$(cat "$LINE_SECRET_FILE")
+  BODY="{\"destination\":\"Uhealthcheck\",\"events\":[{\"type\":\"message\",\"message\":{\"type\":\"text\",\"id\":\"healthcheck\",\"text\":\"每日健檢-請忽略\"},\"webhookEventId\":\"healthcheck-$(date +%s)\",\"deliveryContext\":{\"isRedelivery\":false},\"timestamp\":$(date +%s000),\"source\":{\"type\":\"user\",\"userId\":\"Uhealthcheck\"},\"replyToken\":\"healthcheckreplytoken\",\"mode\":\"active\"}]}"
+  SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$LINE_SECRET" -binary | base64)
+  HTTP_CODE=$(curl -s -o /dev/null -m 10 -w "%{http_code}" -X POST "https://${LINE_WEBHOOK_HOST}/line/webhook" \
+    -H "Content-Type: application/json" -H "X-Line-Signature: $SIG" -d "$BODY" 2>/dev/null)
+  if [ "$HTTP_CODE" = "200" ]; then
+    RESULTS+=("✅ webhook 對外路徑正常（${LINE_WEBHOOK_HOST}，帶正確簽章測試，HTTP 200代表簽章驗證通過、訊息真的能被處理）")
+  elif [ -z "$HTTP_CODE" ] || [ "$HTTP_CODE" = "000" ]; then
+    RESULTS+=("❌ webhook 對外路徑無回應（${LINE_WEBHOOK_HOST} 逾時/連不上，可能是 Cloudflare tunnel 斷線）")
+    STATUS="DOWN"
+  else
+    RESULTS+=("❌ webhook 對外路徑異常（${LINE_WEBHOOK_HOST} 回應 HTTP $HTTP_CODE，正確簽章應該回200，其他都代表沒有真的處理成功）")
+    STATUS="DOWN"
+  fi
 else
-  RESULTS+=("⚠️ webhook 對外路徑回應異常 HTTP $HTTP_CODE（非預期狀態碼，需人工查證）")
+  RESULTS+=("⚠️ 找不到 $LINE_SECRET_FILE，無法做簽章測試")
   [ "$STATUS" = "OK" ] && STATUS="WARN"
 fi
 
