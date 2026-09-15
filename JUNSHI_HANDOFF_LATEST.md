@@ -6,6 +6,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **大台南策展中心21則歷史隱形貼文重貼：教練同意分批貼，第一批卡在Meta Business Suite編輯框打不進字** | 🔒卡住-待軍師下場換方法 | 教練同意分批(每天3~5則)手動重貼(API重貼一樣看不到，需走真人瀏覽器貼文才會公開可見)。第一則(牛市町)嘗試在`business.facebook.com`貼文編輯器打字，`computer type`模擬打字完全沒有寫進欄位(跟BNI Connect日期選擇器同一種「JS框架元件排斥合成鍵盤事件」現象，詳見[[reference_palms_grand_total_row_and_js_widget_typing_2026-09-15]])，已申請教練截圖權限但教練轉去處理其他任務，本場未回頭繼續。**下一場待辦**：改用一般facebook.com頁面本身的貼文框(非Business Suite)試試，或申請截圖權限debug清楚卡點後再繼續分批貼文，21則清單仍在`distill/curation_process.log`。 |
 | 🟢 | **小二Telegram token洩漏事件：教練裁示不輪替+底層架構已根治** | ✅2026-09-14完全結案 | 教練明確表態不需要逐次輪替token(風險評估可接受)，並要求根治底層架構、不要再讓他頻繁處理這類瑣事。已執行：`.gitignore`新增`terminal-notes/raw_sessions/`規則+243個已追蹤檔案`git rm --cached`退出版控(本機檔案zero data loss，僅取消git追蹤)，commit`57b4abf92`。往後任何在對話框貼出的密鑰，這條外洩路徑已徹底阻斷。詳見[[reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14]]。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
 | 🟢 | **真誠分會sincere.bymyway.com補09/03+09/10兩週來賓紀錄+新增會員黃秀麗/張玉盞** | ✅2026-09-12聯想Windows本場完成，Mac已寫入並驗證上線 | 教練口述提供09/03(5位來賓)+09/10(2位來賓)兩場真誠分會例會出席報告，聯想查證`sincere.bymyway.com`(獨立系統，repo`Coach1973/zhencheng-guests`，跟`bni-chapters`完全無關)的「來賓」欄位是網頁唯讀顯示、前端沒有可編輯輸入框，必須直接寫Mac本機SQLite資料庫，聯想無檔案存取權，整理成結構化資料(逐週每人+X人+完整名單姓名/專業別/邀約人)寫信交接`cross-agent/inbox/mac`。教練追加確認兩位新會員：黃秀麗(分到羽宙奇蹟組)、張玉盞(8/27原是來賓「有機水產火鍋」，教練確認現在也是在籍會員，分到百聖維尼組)，兩人皆09/10才加入、起算週為09/17（比照張育慈8/27加入模式）。Mac已直接寫入`zhencheng_guests.db`並用真實瀏覽器開`https://sincere.bymyway.com/`驗證09/03/09/10欄位+完整名單新區塊+新會員分組皆正確，commit`0fa05e9`(僅頁面在籍人數14→16位文字修正，資料庫本身未進git)。**過程教訓**：教練一度誤以為信沒送達，查`git log origin/main`確認push確實成功(`25beefa1`)，只是Mac當時忙著FB App Review沒有主動重新檢查信箱——**跨機信箱機制是「開工/讀信」關鍵字觸發才掃描，不是持續監看**，之後教練若懷疑對方沒收到信，直接跟該機器說一聲「讀信」即可觸發，比查git log更直接。應教練要求查詢「連續7週無來賓」名單，直接讀網頁DOM資料算出8位(王彤/鄭綉美/鄭禮昂/葉建葳/黃笛軒/盧尚政/楊在珍/陳柔璇)，皆為🟡黃色關注等級尚未到🔴8週紅色門檻。 |
@@ -715,5 +716,37 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 ## 🔑 本場commit
 `ai-go`(獨立repo)：`232cf0a`(執行細則補齊+og:image)、`86bdd33`(一鍵複製完整版按鈕)。`workspace`：`8cd389f94`(小二heartbeat修復+第三度金鑰遮蔽)、`fbb3461d1`(接力棒總結+raw_sessions結構性缺口記憶)、`e37c5173a`(Stop hook規則D誤判修復+3個新regression test)。
 
-> 📝 2026-09-14 12:11教練第二次說「總結」：距離上次總結(04:14)僅過7.9小時，期間只有自動化背景工作(終端機對話備份)。教練當場裁示小二token「不需要」三度輪替，此事結案；但`terminal-notes/raw_sessions/`無`.gitignore`保護的架構性缺口本身仍未修復，留待日後討論。
+> 📝 2026-09-14 12:11教練第二次說「總結」：距離上次總結(04:14)僅過7.9小時，期間只有自動化背景工作(終端機對話備份)。教練當場裁示小二token「不需要」三度輪替，此事結案；但`terminal-notes/raw_sessions/`無`.gitignore`保護的架構性缺口本身仍未修復，留待日後處理。
+
+---
+
+# 軍師接力棒 · 2026-09-15 v204（Mac桌面版 Sonnet 5，真鑫/真鑽兩分會資料任務+真鑽三年趨勢報告網頁上線）
+
+> 建立時間：2026-09-14 12:27 ~ 2026-09-15 17:03（台灣時間，跨夜session）
+> 上一棒：v203
+> 本棒主軸：**大台南策展中心21則歷史貼文重貼卡在Meta Business Suite編輯框打字失效(暫緩)；真鑫分會補09/03+09/10出席資料+新會員買竣淯；真鑽分會從零建置「重返榮耀」三年趨勢報告網頁並上線，含真實抓取BNI Connect歷史報表的完整流程。**
+
+## 🎯 本場戰果
+
+### 1. 大台南策展中心貼文重貼：卡在Business Suite編輯框，暫緩
+教練同意分批(每天3~5則)手動重貼21則隱形貼文。實際操作發現Meta Business Suite的貼文內容編輯框對`computer type`模擬打字完全沒反應(跟後面BNI Connect日期選擇器同一種問題)。已申請教練截圖權限debug，但教練隨即轉去處理其他任務，本場未回頭完成，詳見待辦表。
+
+### 2. 真鑫分會(zhenxin.bymyway.com)補09/03+09/10出席資料+新會員買竣淯
+教練提供兩週完整出席報告(缺席/遲到/病假/代理人/6個月累計等)，查證現有`zhenxin_guests.db`schema只有來賓/1對1/咖啡會議/早鳥四個欄位，缺席類統計無對應欄位，教練裁示「來賓+早鳥先填現有欄位，其餘先記錄起來」。已寫入`weekly_data`+`weeks`表並curl驗證正式站顯示，原始報告完整存進`knowledges/2026-09-14_真鑫分會出席報告...md`。教練澄清09/10報告裡「買竣淯」是新進會員非待歸屬來賓，已寫入`members`表(id=84，active_from 2026-09-17)。
+
+### 3. 真鑽分會(real-diamonds.bymyway.com)「重返榮耀」三年趨勢報告網頁上線
+教練要做3年(36個月)人數/來賓/引薦單/引薦金額四條曲線圖，軍師先查證現有資料庫發現完全不夠，教練隨即提供關鍵資料：①真鑽唯讀群LINE聊天記錄(209筆逐週出席報告，2020~2026，人數/來賓數來源)②親自下載一份2023/09~2024/05的PALMS報表。軍師接著取得教練授權後**直接用他已登入的Chrome操作BNI Connect官方後台**，逐一點選日曆抓了10份季度PALMS報表(2024/05~2026/09)，過程中session中途被登出重登入過一次，且日期選擇器多次因為Angular Material元件排斥合成打字/點擊drift走錯月份，靠「每點一步就用find驗證」的方式逐步校正。**解析階段抓到一個真bug**：PALMS報表最後一列是官方「總數」彙總列，第一版程式誤把它當會員列疊加，導致來賓/引薦/金額全部異常偏高(如某期來賓算成523，正確是356)，已修正為直接讀取官方總數列，記憶`reference_palms_grand_total_row_and_js_widget_typing_2026-09-15`。合併聊天記錄的人數週報均值，產出11期完整曲線資料。先在對話框用Claude Desktop的widget呈現4張圖確認方向，教練接著要求做成「網頁版可下載圖片」，已在`zhenzuan-guests`repo新增`/report`路由+`templates/report.html`(沿用既有戰情儀表板深色主題)，內含標題「真鑽分會・重返榮耀」、4個重點數字卡(現況48人/目標60人/高峰76人/還差12人)、目標達成率量表、4張Chart.js曲線圖各自可下載PNG。已用`open -a "Google Chrome"`+curl雙重驗證正式站`https://real-diamonds.bymyway.com/report`上線，並補收錄進coach888「大樹常用」分類(commit `11f4060`)。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. `reference_palms_grand_total_row_and_js_widget_typing_2026-09-15`：①PALMS報表最後一列是官方總數列，解析時要排除、不能跟會員列相加②Angular Material日期選擇器/Draft.js類複雜輸入元件排斥合成鍵盤打字，要改用點擊式操作(日曆年份/月份切換)，每一步都要用`find`重新驗證再往下走，不要連續點同一個快取ref。
+2. Stop hook兩條deterministic lock(HTML改動必用真實Chrome驗證、coach888新頁面收錄)本場都準確攔下遺漏——改完`report.html`後忘記`open -a "Google Chrome"`驗證、新增`/report`頁面後忘記收錄coach888，兩條規則都在收工前攔下並已補做，證明這兩道鎖確實有效在運作。
+
+## 📋 下一場開工先做
+1. 大台南策展中心貼文重貼：改用一般facebook.com貼文框試試(非Business Suite)，或申請截圖權限debug清楚Business Suite編輯框卡點，21則清單在`distill/curation_process.log`。
+2. 沿用v201/v203既有待辦：小二token第三度洩漏已於今日總結時教練裁示「不需要」結案；FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、BNI Connect打勾出席、MEMORY.md索引瘦身、`terminal-notes/raw_sessions/`無`.gitignore`架構決定。
+3. `stop_rules_master.py`規則#07「每+時間量詞」誤判regex仍待調整(v203延續)。
+4. E16接力棒瘦身：主檔已累積v197~v204共8棒，下次開工優先把v197~v200搬進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：`b62dc0cf8`+`4ecf1f9ff`(真鑫分會資料+知識庫)、`397ca971d`(真鑽36個月曲線資料+解析腳本，含修bug)。`zhenzuan-guests`(獨立repo)：`8e6f82d`(新增/report網頁)。`coach888`(獨立repo)：`11f4060`(補收錄/report)。
 

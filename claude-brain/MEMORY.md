@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔧 PALMS報表「總數」列不能跟會員列相加+Angular Material/Draft.js類元件打字打不進去要改點擊…](reference_palms_grand_total_row_and_js_widget_typing_2026-09-15.md)
 - [🔴🔴 terminal-notes/raw_sessions/243個原始逐字稿零.gitignore保護，是金鑰反覆外洩源頭…](reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14.md)
 - [🔧 OpenClaw 2.0內建heartbeat排程bug：間歇發Message failed，修法是system heartbeat disable非cron disable…](reference_openclaw2_heartbeat_message_failed_bug_2026-09-14.md)
 - [🎯 賈維斯開工三方核對SOP：小龍蝦一代讀HEARTBEAT/Hermes讀outbox/小二查本機log禁用API…](reference_jarvis_kickoff_partner_checkin_2026-09-13.md)
