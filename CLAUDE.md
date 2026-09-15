@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-16 02:02:30**
+> **最後同步：2026-09-16 02:07:34**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -766,13 +766,16 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 
 ---
 
-# 軍師接力棒 · 2026-09-16 v205（Mac桌面版 Sonnet 5，三個LINE帳號斷線5天多事故：根因查明+已修復+新增每日健檢）
+# 軍師接力棒 · 2026-09-16 v205（Mac桌面版 Sonnet 5，ai-talk/ai-fit拿掉席次資訊+三個LINE帳號斷線5天多事故：根因查明+已修復+新增每日健檢）
 
-> 建立時間：2026-09-16 01:51 ~ 02:05（台灣時間）
+> 建立時間：2026-09-15 21:20 ~ 2026-09-16 02:06（台灣時間）
 > 上一棒：v204
-> 本棒主軸：**教練親自測試發現大台南南區AI小幫手/教練都在想什麼/龍蝦小助教三個LINE帳號同時斷線，查證根因為2026-09-10 22:24 gateway熱重載後`@openclaw/line`外掛套件檔案遺失（`extensions/line`資料夾消失），已用`openclaw plugins install @openclaw/line`修復並驗證三帳號LINE provider成功啟動+對外webhook端對端正常。新增每日08:05健康檢查機制，教練要求以後每天都要回報。**
+> 本棒主軸：**教練親自測試發現大台南南區AI小幫手/教練都在想什麼/龍蝦小助教三個LINE帳號同時斷線，查證根因為2026-09-10 22:24 gateway熱重載後`@openclaw/line`外掛套件檔案遺失（`extensions/line`資料夾消失），已用`openclaw plugins install @openclaw/line`修復並驗證三帳號LINE provider成功啟動+對外webhook端對端正常。新增每日08:05健康檢查機制，教練要求以後每天都要回報。另外也完成9/22台南場ai-talk(下午)/ai-fit(晚上)兩頁拿掉席次上限與即時報名人數顯示。**
 
 ## 🎯 本場戰果
+
+### 0. ai-talk(下午場)/ai-fit(晚上場)拿掉限量席次+即時報名人數顯示
+教練指示9/22台南場活動人數可能較少，不要顯示「限量50席」跟「目前已報名N人」比較好。`event.bymyway.com/ai-talk/`(直讀`github_repos/ai-talk`)拿掉hero區即時計數器(連同已成孤兒的模擬遞增JS一併清除)+why-join區「避免50席額滿」+price-box「限量50席」文字，meta/og/twitter描述同步移除；`coach1973.github.io/ai-fit/`(GitHub Pages)拿掉hero meta-chip+場次卡片+行前提醒三處「座位50人」。兩站都已用真實Chrome驗證上線，7/29台南場、8/28嘉義場的歷屆回顧封存區塊維持原文保留未動。commit：ai-talk`0eb94c3`、ai-fit`e043f75`。
 
 ### 1. 根因查明：@openclaw/line外掛套件遺失，斷線5天3.5小時
 教練連續測試三個LINE帳號皆無回應，逐層查證：①`ps`/`launchctl`確認gateway process本身正常存活②翻`gateway.log`(187383行，涵蓋6/5至今)發現最後一次`[line] starting LINE provider`記錄停在**2026-09-10 22:24:48**，此後所有重啟(約10次，含今天15:00那次)載入的plugin清單都從14個掉到13個、獨缺`line`③比對9/10 22:23:35~22:24:48那70秒窗口的log，發現gateway觸發過一次SIGUSR1熱重載重啟，重啟前有兩次「config reload retry: config file not found」④用`openclaw plugins list`（而非只看config）才挖出真正錯誤訊息：`plugins.entries.line: plugin not installed: line`——**config本身完全正常**(enabled:true、plugins.allow有line)，是外掛的實體檔案`/opt/homebrew/lib/node_modules/openclaw/extensions/line`整個消失，導致`~/.openclaw/node_modules/@openclaw/line`這條symlink變成空連結。`extensions/`資料夾消失的確切原因未查到直接證據(核心套件本身mtime是8/24，跟事故時間對不上)，懷疑跟某個同時間寫入`openclaw.json`的自動化流程短暫競態有關。
@@ -796,7 +799,7 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 4. E16接力棒瘦身：主檔已累積v197~v205共9棒，下次開工優先把v197~v200搬進`handoff_archive/`。
 
 ## 🔑 本場commit
-`workspace`：`7ad352c28`(新增三個LINE小幫手每日健康檢查腳本+說明事故根因)。系統層級修復(`openclaw plugins install`+gateway重啟)非git版控範圍，無獨立commit。
+`ai-talk`(獨立repo)：`0eb94c3`(拿掉限量50席+即時人數)。`ai-fit`(獨立repo)：`e043f75`(拿掉座位50人)。`workspace`：`7ad352c28`(新增三個LINE小幫手每日健康檢查腳本+說明事故根因)、`11771ba50`(接力棒v205記錄)。系統層級修復(`openclaw plugins install`+gateway重啟)非git版控範圍，無獨立commit。
 
 
 
