@@ -1,0 +1,112 @@
+[
+  {
+    "from": "2023-09-01",
+    "to": "2024-05-01",
+    "members_in_report": 31,
+    "guests": 356,
+    "referrals": 5222,
+    "referrals_internal": 2172,
+    "referrals_external": 3050,
+    "tyfcb": 67395641.0
+  },
+  {
+    "from": "2024-05-01",
+    "to": "2024-07-31",
+    "members_in_report": 34,
+    "guests": 169,
+    "referrals": 2305,
+    "referrals_internal": 1100,
+    "referrals_external": 1205,
+    "tyfcb": 21115872.0
+  },
+  {
+    "from": "2024-08-01",
+    "to": "2024-10-31",
+    "members_in_report": 37,
+    "guests": 109,
+    "referrals": 2347,
+    "referrals_internal": 1133,
+    "referrals_external": 1214,
+    "tyfcb": 45966207.0
+  },
+  {
+    "from": "2024-11-01",
+    "to": "2025-01-31",
+    "members_in_report": 39,
+    "guests": 111,
+    "referrals": 2068,
+    "referrals_internal": 1064,
+    "referrals_external": 1004,
+    "tyfcb": 28887801.0
+  },
+  {
+    "from": "2025-02-01",
+    "to": "2025-04-30",
+    "members_in_report": 39,
+    "guests": 94,
+    "referrals": 2120,
+    "referrals_internal": 1014,
+    "referrals_external": 1106,
+    "tyfcb": 21326298.0
+  },
+  {
+    "from": "2025-05-01",
+    "to": "2025-07-31",
+    "members_in_report": 42,
+    "guests": 71,
+    "referrals": 1851,
+    "referrals_internal": 921,
+    "referrals_external": 930,
+    "tyfcb": 30506285.0
+  },
+  {
+    "from": "2025-08-01",
+    "to": "2025-10-31",
+    "members_in_report": 45,
+    "guests": 73,
+    "referrals": 1628,
+    "referrals_internal": 732,
+    "referrals_external": 896,
+    "tyfcb": 33476775.0
+  },
+  {
+    "from": "2025-11-01",
+    "to": "2026-01-31",
+    "members_in_report": 45,
+    "guests": 60,
+    "referrals": 1459,
+    "referrals_internal": 726,
+    "referrals_external": 733,
+    "tyfcb": 33060521.0
+  },
+  {
+    "from": "2026-02-01",
+    "to": "2026-04-30",
+    "members_in_report": 46,
+    "guests": 60,
+    "referrals": 1097,
+    "referrals_internal": 452,
+    "referrals_external": 645,
+    "tyfcb": 9715236.0
+  },
+  {
+    "from": "2026-05-01",
+    "to": "2026-07-31",
+    "members_in_report": 50,
+    "guests": 55,
+    "referrals": 1204,
+    "referrals_internal": 521,
+    "referrals_external": 683,
+    "tyfcb": 9346314.0
+  },
+  {
+    "from": "2026-08-01",
+    "to": "2026-09-15",
+    "members_in_report": 50,
+    "guests": 23,
+    "referrals": 577,
+    "referrals_internal": 276,
+    "referrals_external": 301,
+    "tyfcb": 9687873.0
+  }
+]
