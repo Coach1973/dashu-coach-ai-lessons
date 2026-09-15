@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴 驗證服務是否正常要先查本機log再考慮外部API，回報「已修好」前驗證強度要對得上真實使用情境…](feedback_verify_locally_before_external_api_2026-09-16.md)
+- [🔴🔴🔴 三個LINE帳號(小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天多，@openclaw/line外掛套件遺失+process活著≠外掛真的載入…](reference_line_plugin_extensions_missing_2026-09-16.md)
+- [🎯 BNI南區快速組隊計畫：免費建站當誘因換深聊，teamwork重砲要放深聊階段不放最前面，筆記已上線…](project_bni_teamup_free_website_funnel_2026-09-15.md)
 - [🔧 PALMS報表「總數」列不能跟會員列相加+Angular Material/Draft.js類元件打字打不進去要改點擊…](reference_palms_grand_total_row_and_js_widget_typing_2026-09-15.md)
 - [🔴🔴 terminal-notes/raw_sessions/243個原始逐字稿零.gitignore保護，是金鑰反覆外洩源頭…](reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14.md)
 - [🔧 OpenClaw 2.0內建heartbeat排程bug：間歇發Message failed，修法是system heartbeat disable非cron disable…](reference_openclaw2_heartbeat_message_failed_bug_2026-09-14.md)
