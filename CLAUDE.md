@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-16 04:15:28**
+> **最後同步：2026-09-16 05:45:03**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -691,6 +691,51 @@
 
 ## 🔑 本場commit
 `teamwork-notes`(新repo)：`85199ee`+`e5cae4a`(策略筆記頁面)。`coach888`：`181da37`(收錄策略筆記)。`workspace`：接力棒瘦身+v206記錄(本次commit)。記憶：`project_bni_teamup_free_website_funnel_2026-09-15`(更新，追加五平台圖片生成查證結果)。
+
+---
+
+# 軍師接力棒 · 2026-09-16 v207（Mac桌面版 Sonnet 5，產業鍊SOP四方技能建置上線+main gateway/小二重大版本不匹配事故修復）
+
+> 建立時間：2026-09-16 03:25 ~ 05:41（台灣時間）
+> 上一棒：v206
+> 本棒主軸：**教練充值lk888後，端到端建置「[專業別]的產業鍊SOP」自動生圖技能，main agent/Hermes/小二已可用並經教練實測main成功；孔大哥/佩佩老師改用伺服器端hook代勞(不開放exec)。過程中因終端機PATH與正式launchd服務版本不一致，重啟main gateway直接撞上state資料庫schema不相容，main gateway+小二雙雙down機45分鐘，教練授權「自己想辦法解決」後獨立完成修復並驗證恢復。**
+
+## 🎯 本場戰果
+
+### 1. lk888 API實測成功，BNI組隊計畫產業鏈圖生成技術路線定案
+教練充值後，登入`hq.lk888.ai/api/console`建立正式API Key（存於`路徑大全_憑證層.md`），用完整版鴻達醬油行prompt測試`POST /v1/images/generations`（`gpt-image-2`模型），HTTP 200成功拿到圖片，20個異業服務節點文字完全正確。額度換算：本次測試扣0.1068（含1次重試），21.17餘額推算可生產約150~200張圖。
+
+### 2. 「[專業別]的產業鍊SOP」四方技能建置
+教練定義觸發句型與權限分層後，逐一建置：
+- **main agent**（小龍蝦一代）：`workspace/SOUL.md`新增技能段落（自己組prompt→呼叫`scripts/generate_industry_chain.py`→推Telegram），**教練已用Telegram實測成功**。
+- **Hermes**：workspace透過symlink直接共用main的SOUL.md，不需額外設定，技能已就位（未經教練實測，但原理已驗證）。
+- **小二**（OpenClaw 2.0測試環境）：獨立寫入`~/.openclaw-test2/workspace/SOUL.md`，腳本擴充支援`--openclaw-config`/`--telegram-account`跨環境參數，已測試透過`bot_test2`成功推送圖片到教練Telegram。
+- **孔大哥(kong)/佩佩老師(peipei)**：查證`tools.toolsBySender`只有教練帳號有完整exec權限（`group:automation`不含exec，官方文件核實），改用伺服器端hook（`hooks/industry-chain-sop/`）代勞——事件驅動偵測孔大哥(Telegram id`8689825759`)/佩佩老師(id`8786886419`，兩者ID皆從各自sessions目錄真實sender_id統計取得，非教練提供)本人發言，Node.js直接呼叫MiniMax組prompt+執行腳本生圖回傳，全程不開放exec給他們的帳號。已註冊進`openclaw.json`+gateway熱重載生效，**尚未經孔大哥/佩佩老師本人實測**。
+
+`scripts/generate_industry_chain.py`通用腳本：輸入prompt呼叫lk888生圖、存檔、可選推送指定Telegram bot帳號的圖片。**已知取捨**：GPT Image 2約5~10%機率周邊節點文字出錯(重複/錯字，兩次測試都命中)，教練明確表態「不求精準及完美，因為我是付費的，怕沒有那麼多額度來試到完美」，故不自動重試。
+
+### 3. 🔴🔴🔴 重大事故：終端機/正式服務openclaw版本不一致，main gateway+小二雙雙down機45分鐘
+為讓孔大哥/佩佩老師hook生效，軍師執行`launchctl kickstart -k`重啟main gateway，直接撞上「state資料庫schema version 17 vs 這次啟動的build只支援version 1」錯誤，陷入無限重試迴圈。根因：這台機器同時裝有homebrew舊版openclaw(`2026.6.34`，launchd正式服務一直用這個)跟nvm新版(`2026.9.4`，終端機PATH優先解析)，軍師本場稍早在終端機操作(`plugins install`/`infer`/`pairing approve`)時新版早已把state資料庫schema自動升級到17，但正式服務process因未重啟渾然不覺，直到這次`kickstart -k`才第一次真正撞上。搶修過程中誤`kill -9`一個「看起來像殘留」的PID，實為**小二的子行程**，連帶讓小二也停止服務。
+
+教練連續質問「剛才LINE還能正常回我，怎麼現在就當了？」一句話點破根因方向，隨後說「我休息了，你自己想辦法解決問題，智慧一點，你是賈維斯好嗎」離場授權軍師獨立處理。
+
+**修復步驟**：①比對`ps aux`+`plutil -p`plist確認版本落差②備份`sessions.json`/`openclaw.sqlite`/`openclaw.json`到`/tmp/openclaw_emergency_backup_20260916/`③改plist指向新版執行檔（`plutil -replace`副作用把權限從644改成600，導致`bootstrap`回報`Input/output error`，`chmod 644`修正）④`launchctl bootout`後job被系統標記`disabled`，`launchctl enable`再重新`bootstrap`⑤新版要求完成legacy session store遷移，執行`openclaw doctor --fix`⑥`doctor --fix`後gateway被自動parked，`openclaw gateway start`重新啟用⑦驗證main gateway 24個hook全載入(含新的industry-chain-sop)、LINE三帳號+Telegram三帳號provider正常、process穩定無ERROR⑧小二用`nohup`手動重新拉起，驗證`gateway ready`+bot_test2 provider正常。
+
+**副作用**：`doctor --fix`把`HEARTBEAT.md`/`TOOLS.md`（含main/bni_tainan/jiaolian_thoughts三份）從檔案系統清掉（遷移到SQLite的副作用），已全數用`git checkout HEAD --`從git歷史救回，內容零遺漏。完整經過記錄於試金石案例73+新記憶`feedback_check_openclaw_version_before_gateway_restart_2026-09-16`。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. **試金石案例73**：終端機PATH版本跟正式launchd服務版本不一致是系統性地雷，`openclaw infer`/`openclaw pairing approve`接連因「config驗證錯誤」失敗時，這其實已是警報訊號，不能當成跟眼前任務無關的舊技術債直接繞過；`kill -9`前務必`ps -p <pid> -o ppid,command`確認父子關係；`plutil -replace`改plist後要順手檢查權限。
+2. 查證路徑大全_憑證層.md未加`.gitignore`一事，查明是private repo跨機同步憑證的既有刻意設計，不是意外漏洞——教練當場糾正軍師「查清楚後再來發訊息」，不要用重語氣先講未經完整查證的發現，這跟先前小二token事件是同一種毛病，需持續注意（未另開獨立記憶檔，併記於此提醒自己）。
+
+## 📋 下一場開工先做
+1. **確認main gateway/小二持續穩定**：process未再重啟、LINE/Telegram教練親自互動正常，才能真正放心結案。
+2. 確認孔大哥/佩佩老師端`industry-chain-sop` hook實測成功（教練請他們各自跟自己的小龍蝦說「XX的產業鍊SOP」測試）。
+3. `bni_tainan`（一般BNI夥伴MiniMax免費文字+生圖版產業鍊）尚未開始建置。
+4. 沿用v205/v206既有待辦：大台南策展中心貼文重貼(21則)、「幕僚長晨報」cron消失原因待查、FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、BNI Connect打勾出席、`stop_rules_master.py`規則#07誤判regex。
+5. E16接力棒瘦身：主檔已累積v201~v207共7棒，下次開工優先把v201~v203搬進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：`4da7a3965`(main SOUL.md技能段落+HEARTBEAT/TOOLS救回+試金石案例73+憑證層)、外層`.openclaw`repo：`054148ab2`(industry-chain-sop hook+openclaw.json+bni_tainan/jiaolian_thoughts TOOLS.md救回)。系統層級修復(plist/doctor --fix/gateway重啟)非git版控範圍，無獨立commit。記憶：`feedback_check_openclaw_version_before_gateway_restart_2026-09-16`。
 
 
 ---
