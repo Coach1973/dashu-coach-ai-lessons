@@ -777,15 +777,20 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 ### 4. 教練另問的「每天彙報教練在想什麼」cron，查證確認已從系統徹底消失
 教練提到「以前Telegram還會回報過去幾天教練都在想什麼、誰在用、誰在對話，後來這件事就沒了」，查證對應到2026-08-09建立的cron job(id`b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`，「☕幕僚長晨報」，統整bni_tainan+jiaolian_thoughts每日動態)。用`openclaw cron show/get`查live狀態(非只看過期的`cron/jobs.json`快照，見[[reference_openclaw_cron_json_stale_snapshot]])，確認這個job**已經不存在於live系統**(`cron job not found`)，目前`openclaw cron list`只剩3個job(記憶蒸餾+2個一次性提醒)。**這一項尚未查到消失的確切時間點與原因**，跟三個LINE帳號斷線是否同一起事故(9/10 22:24那次大規模config reload)有關聯但未證實，留待下一場深查或看教練是否要重建。
 
+### 5. 事後追蹤：外掛修復後，教練實測揭穿軍師兩次「已修好」誤判，最終查到第二個獨立問題（session卡死）
+外掛修復後軍師第一次驗證用錯網域（`event.bymyway.com`其實是另一個完全不相關的LINE帳號在用），巧合也回應403就誤判「webhook正常」回報教練「三個都修好了」，教練實測「教練都在想什麼」無回應戳破。軍師改查LINE官方API找到正確網址`openclaw.bymyway.com`並用正確HMAC簽章測試通過，**但教練當場糾正查證方法本身繞遠路**——路徑大全裡本來就有本機log位置，應該先查本機再考慮外部API。改查本機`/tmp/openclaw/openclaw-<date>.log`（比持久化的`Library/Logs/openclaw/gateway.log`更詳細），找到教練真實訊息確實有送達並排隊，但處理卡死、5分鐘後被gateway自己的「stuck session watchdog」強制中斷、從未產生回覆——**這是跟extensions資料夾遺失完全獨立的第二層問題**，根因未能100%查明（推測是外掛修復過程殘留的session狀態污染，重啟後未再重現）。軍師重啟gateway清空殘留狀態後，第二次貿然回報「應該正常了」又被教練「沒反應，連已讀都沒有」打臉；接著誤猜LINE官方帳號後台「回應設定」被改，教練截圖證實該設定完全正常，第三次繞遠路。最終改用LINE Push Message API直接推播測試訊息，教練確認收到，證實帳號本身outbound無問題；教練後續自行測試確認inbound也恢復正常，整起事故結案。**教訓**：`feedback_verify_locally_before_external_api_2026-09-16`——驗證順序應該是本機process/log優先，外部官方API是最後手段，且任何「已修好」的回報強度必須對應教練真實使用情境（真人傳真訊息+等它跑完），不能用一個curl狀態碼就下結論。
+
 ## ⚠️ 本場教訓（已寫入記憶）
-`reference_line_plugin_extensions_missing_2026-09-16`：process活著≠外掛真的載入成功的第三個變體(前兩個是cloudflared tunnel斷線13小時、Hermes gateway內部卡死)，這次連config本身都顯示一切正常，要主動跑`openclaw plugins list`才會現形，一般`pgrep`/`launchctl list`健檢完全測不出來。
+1. `reference_line_plugin_extensions_missing_2026-09-16`：process活著≠外掛真的載入成功的第三個變體(前兩個是cloudflared tunnel斷線13小時、Hermes gateway內部卡死)，這次連config本身都顯示一切正常，要主動跑`openclaw plugins list`才會現形，一般`pgrep`/`launchctl list`健檢完全測不出來。同一事故後續還發現第二層獨立問題（session lane卡死5分鐘才被watchdog強制中斷）。
+2. `feedback_verify_locally_before_external_api_2026-09-16`：驗證「服務是否正常」要先查本機process/log，其次才輪到外部官方API；回報教練「已修好」前，驗證強度必須對應教練真實使用情境，不能用容易造假通過的弱測試（單一curl狀態碼）就下結論。本場軍師連續3次「已修好」回報被教練實測戳破，這條鐵律是直接代價換來的。
 
 ## 📋 下一場開工先做
 1. **🔴查明「幕僚長晨報」cron消失的確切原因**：是否也是9/10 22:24那次config reload造成，教練若要重建這個每日彙報功能，直接參考v handoff 2026-08-09原始設計(統整bni_tainan+jiaolian_thoughts每日動態，過濾三關後才播報)重新建立。
-2. 觀察明天08:05新健檢是否正常觸發並推送Telegram。
-3. 沿用v204既有待辦：大台南策展中心貼文重貼(21則)、FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、BNI Connect打勾出席、MEMORY.md索引瘦身(已提示190行接近上限)、`stop_rules_master.py`規則#07誤判regex。
-4. E16接力棒瘦身：主檔已累積v197~v205共9棒，下次開工優先把v197~v200搬進`handoff_archive/`。
+2. 觀察明天08:05新健檢是否正常觸發並推送Telegram（腳本已修正測正確網域，見commit`0e7b4325f`）。
+3. session卡死的根因仍未查明，若再發生可比照本場方法查`/tmp/openclaw/openclaw-<date>.log`裡的`stuck session`關鍵字。
+4. 沿用v204既有待辦：大台南策展中心貼文重貼(21則)、FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、BNI Connect打勾出席、MEMORY.md索引瘦身(已提示191行接近上限，連續兩場提醒)、`stop_rules_master.py`規則#07誤判regex。
+5. E16接力棒瘦身：主檔已累積v197~v205共9棒，下次開工優先把v197~v200搬進`handoff_archive/`。
 
 ## 🔑 本場commit
-`ai-talk`(獨立repo)：`0eb94c3`(拿掉限量50席+即時人數)。`ai-fit`(獨立repo)：`e043f75`(拿掉座位50人)。`workspace`：`7ad352c28`(新增三個LINE小幫手每日健康檢查腳本+說明事故根因)、`11771ba50`(接力棒v205記錄)。系統層級修復(`openclaw plugins install`+gateway重啟)非git版控範圍，無獨立commit。
+`ai-talk`(獨立repo)：`0eb94c3`(拿掉限量50席+即時人數)。`ai-fit`(獨立repo)：`e043f75`(拿掉座位50人)。`workspace`：`7ad352c28`(新增三個LINE小幫手每日健康檢查腳本)、`0e7b4325f`(修正健檢腳本測錯網域的疏失)、`11771ba50`+`7c28ffca2`(接力棒記錄)。系統層級修復(`openclaw plugins install`+多次gateway重啟)非git版控範圍，無獨立commit。
 
