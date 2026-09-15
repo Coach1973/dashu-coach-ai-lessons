@@ -93,3 +93,11 @@
 - 雲端狀態：✅ 已拉雲端最新（HEAD: e0801506a）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: cf6176b7-e989-4969-b2bd-b9a507ab9a1c
+
+## 🟢 2026-09-16 06:48~06:51 燕窩(康燕居)/六淨山房：壞連結修復+產業鍊圖生成完成
+- **教練交辦**：教練查看`event.bymyway.com/tainan-shangquan/`發現燕窩沒有專屬網站連結+無Google地圖、六淨山房連結點不到，要求查明原因、修復、並各生成一張產業鍊服務鏈圖，教練隨即出門，全程軍師獨立完成
+- **根因**：兩家店的網站(GitHub Pages)早就上線正常，但策展SOP自動上架時漏登記進`event-signup/curated_sites_registry.json`白名單，`/curated/<slug>/`路由的安全檢查直接404
+- **修復**：補登記兩個slug(commit`03ca1126e`)，即時生效(路由每次讀檔非快取)；燕窩卡片補Google地圖iframe+地址+商家評論連結(tainan-shangquan repo commit`7a92689`)，皆已curl驗證200+瀏覽器DOM比對既有正常卡片結構一致
+- **產業鍊圖**：用`generate_industry_chain.py`呼叫lk888生成，「燕窩滋補一條龍」(康燕居)+「古蹟茶事一條龍」(六淨山房)各20個異業節點，皆已推送教練Telegram(bot_main)，各有1個節點文字重複(GPT Image 2已知瑕疵，未重生)
+- **通知**：兩則文字通知(URL修復+圖片完成)皆已透過小龍蝦一代(bot_main)推送教練Telegram
+- 存檔：`claude-brain/data/industry_chain_20260916-065033.png`(康燕居)、`industry_chain_20260916-065134.png`(六淨山房)
