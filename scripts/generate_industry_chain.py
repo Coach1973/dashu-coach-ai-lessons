@@ -28,10 +28,10 @@ def get_api_key():
     return m.group(1)
 
 
-def get_telegram_bot_token():
-    cfg_path = Path.home() / ".openclaw" / "openclaw.json"
+def get_telegram_bot_token(config_path: str = None, account: str = "bot_main"):
+    cfg_path = Path(config_path) if config_path else Path.home() / ".openclaw" / "openclaw.json"
     cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-    return cfg["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
+    return cfg["channels"]["telegram"]["accounts"][account]["botToken"]
 
 
 def generate_image(prompt: str, size: str = "1024x1024") -> bytes:
@@ -49,8 +49,8 @@ def generate_image(prompt: str, size: str = "1024x1024") -> bytes:
     return base64.b64decode(b64)
 
 
-def send_telegram_photo(chat_id: str, image_path: Path, caption: str = ""):
-    bot_token = get_telegram_bot_token()
+def send_telegram_photo(chat_id: str, image_path: Path, caption: str = "", config_path: str = None, account: str = "bot_main"):
+    bot_token = get_telegram_bot_token(config_path, account)
     url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
     boundary = "----IndustryChainBoundary"
     body = []
@@ -82,6 +82,8 @@ def main():
     parser.add_argument("--out", default=None)
     parser.add_argument("--telegram-chat-id", default=None)
     parser.add_argument("--caption", default="")
+    parser.add_argument("--openclaw-config", default=None, help="非預設環境（如小二 ~/.openclaw-test2/openclaw.json）時指定")
+    parser.add_argument("--telegram-account", default="bot_main", help="要用哪個bot帳號送出，例如 bot_test2")
     args = parser.parse_args()
 
     image_bytes = generate_image(args.prompt, args.size)
@@ -96,8 +98,8 @@ def main():
     print(f"圖片已存檔：{out_path}")
 
     if args.telegram_chat_id:
-        send_telegram_photo(args.telegram_chat_id, out_path, args.caption)
-        print(f"已推送Telegram（chat_id={args.telegram_chat_id}）")
+        send_telegram_photo(args.telegram_chat_id, out_path, args.caption, args.openclaw_config, args.telegram_account)
+        print(f"已推送Telegram（chat_id={args.telegram_chat_id}，帳號={args.telegram_account}）")
 
 
 if __name__ == "__main__":
