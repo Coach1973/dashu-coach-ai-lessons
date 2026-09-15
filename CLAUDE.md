@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-15 17:10:01**
+> **最後同步：2026-09-16 02:02:30**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,6 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **三個LINE帳號(大台南南區小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天3.5小時修復** | ✅2026-09-16 v205本場完成 | 根因是`@openclaw/line`外掛套件檔案遺失(`openclaw plugins install @openclaw/line`修復)，詳見v205完整戰果+記憶`reference_line_plugin_extensions_missing_2026-09-16`。已新增每日08:05健康檢查(`scripts/three_line_bots_healthcheck.sh`)，教練要求每天都要回報不論健康與否。 |
+| 🔴 | **「幕僚長晨報」cron(每日統整bni_tainan+jiaolian_thoughts動態播報教練)已從系統消失，原因未查明** | 🔒待下一場深查或教練裁示是否重建 | 2026-08-09建立的job(id`b73845c9-...`)查live系統已`cron job not found`，跟三個LINE帳號斷線是否同一起9/10 22:24事故有關聯但未證實，見v205第4項。 |
 | 🟡 | **大台南策展中心21則歷史隱形貼文重貼：教練同意分批貼，第一批卡在Meta Business Suite編輯框打不進字** | 🔒卡住-待軍師下場換方法 | 教練同意分批(每天3~5則)手動重貼(API重貼一樣看不到，需走真人瀏覽器貼文才會公開可見)。第一則(牛市町)嘗試在`business.facebook.com`貼文編輯器打字，`computer type`模擬打字完全沒有寫進欄位(跟BNI Connect日期選擇器同一種「JS框架元件排斥合成鍵盤事件」現象，詳見[[reference_palms_grand_total_row_and_js_widget_typing_2026-09-15]])，已申請教練截圖權限但教練轉去處理其他任務，本場未回頭繼續。**下一場待辦**：改用一般facebook.com頁面本身的貼文框(非Business Suite)試試，或申請截圖權限debug清楚卡點後再繼續分批貼文，21則清單仍在`distill/curation_process.log`。 |
 | 🟢 | **小二Telegram token洩漏事件：教練裁示不輪替+底層架構已根治** | ✅2026-09-14完全結案 | 教練明確表態不需要逐次輪替token(風險評估可接受)，並要求根治底層架構、不要再讓他頻繁處理這類瑣事。已執行：`.gitignore`新增`terminal-notes/raw_sessions/`規則+243個已追蹤檔案`git rm --cached`退出版控(本機檔案zero data loss，僅取消git追蹤)，commit`57b4abf92`。往後任何在對話框貼出的密鑰，這條外洩路徑已徹底阻斷。詳見[[reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14]]。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
@@ -761,6 +763,40 @@ Mac端`claude-in-chrome`自動化操作Graph API測試工具多次卡在**同一
 
 ## 🔑 本場commit
 `workspace`：`b62dc0cf8`+`4ecf1f9ff`(真鑫分會資料+知識庫)、`397ca971d`(真鑽36個月曲線資料+解析腳本，含修bug)。`zhenzuan-guests`(獨立repo)：`8e6f82d`(新增/report網頁)。`coach888`(獨立repo)：`11f4060`(補收錄/report)。
+
+---
+
+# 軍師接力棒 · 2026-09-16 v205（Mac桌面版 Sonnet 5，三個LINE帳號斷線5天多事故：根因查明+已修復+新增每日健檢）
+
+> 建立時間：2026-09-16 01:51 ~ 02:05（台灣時間）
+> 上一棒：v204
+> 本棒主軸：**教練親自測試發現大台南南區AI小幫手/教練都在想什麼/龍蝦小助教三個LINE帳號同時斷線，查證根因為2026-09-10 22:24 gateway熱重載後`@openclaw/line`外掛套件檔案遺失（`extensions/line`資料夾消失），已用`openclaw plugins install @openclaw/line`修復並驗證三帳號LINE provider成功啟動+對外webhook端對端正常。新增每日08:05健康檢查機制，教練要求以後每天都要回報。**
+
+## 🎯 本場戰果
+
+### 1. 根因查明：@openclaw/line外掛套件遺失，斷線5天3.5小時
+教練連續測試三個LINE帳號皆無回應，逐層查證：①`ps`/`launchctl`確認gateway process本身正常存活②翻`gateway.log`(187383行，涵蓋6/5至今)發現最後一次`[line] starting LINE provider`記錄停在**2026-09-10 22:24:48**，此後所有重啟(約10次，含今天15:00那次)載入的plugin清單都從14個掉到13個、獨缺`line`③比對9/10 22:23:35~22:24:48那70秒窗口的log，發現gateway觸發過一次SIGUSR1熱重載重啟，重啟前有兩次「config reload retry: config file not found」④用`openclaw plugins list`（而非只看config）才挖出真正錯誤訊息：`plugins.entries.line: plugin not installed: line`——**config本身完全正常**(enabled:true、plugins.allow有line)，是外掛的實體檔案`/opt/homebrew/lib/node_modules/openclaw/extensions/line`整個消失，導致`~/.openclaw/node_modules/@openclaw/line`這條symlink變成空連結。`extensions/`資料夾消失的確切原因未查到直接證據(核心套件本身mtime是8/24，跟事故時間對不上)，懷疑跟某個同時間寫入`openclaw.json`的自動化流程短暫競態有關。
+
+### 2. 修復並驗證
+先誤以為是套件版本問題，跑`npm install -g openclaw@2026.6.34`重裝核心套件，**沒有解決**(extensions資料夾依然不存在，證實line是獨立外掛不隨核心套件安裝)。改用官方指令`openclaw plugins install @openclaw/line`才正確裝回(裝進`~/.openclaw/npm/projects/openclaw-line-*/`，相容版本2026.6.34)，重啟gateway後確認：plugin清單恢復14個含line、三個帳號(`jiaolian_thoughts`/`bni_tainan`/`default`)LINE provider全部成功啟動、對外`curl https://event.bymyway.com/line/webhook`回應HTTP 403(代表DNS→Cloudflare→tunnel→gateway整條路徑正常，403是webhook簽章驗證正確拒絕未簽章請求的預期行為，非故障)。
+
+### 3. 新增每日健康檢查機制（教練要求，每天都要回報）
+新建`scripts/three_line_bots_healthcheck.sh`+launchd`ai.openclaw.line-bots-healthcheck`(每天08:05)，三層檢查：①process存活②**gateway最近一次啟動的plugin清單是否真的含line**(不只看config)③對外webhook端對端路徑回應。已實跑驗證腳本正確+launchd手動kickstart確認真的會觸發。commit`7ad352c28`。
+
+### 4. 教練另問的「每天彙報教練在想什麼」cron，查證確認已從系統徹底消失
+教練提到「以前Telegram還會回報過去幾天教練都在想什麼、誰在用、誰在對話，後來這件事就沒了」，查證對應到2026-08-09建立的cron job(id`b73845c9-f653-4f9a-8869-0e2f2c0bd9b1`，「☕幕僚長晨報」，統整bni_tainan+jiaolian_thoughts每日動態)。用`openclaw cron show/get`查live狀態(非只看過期的`cron/jobs.json`快照，見[[reference_openclaw_cron_json_stale_snapshot]])，確認這個job**已經不存在於live系統**(`cron job not found`)，目前`openclaw cron list`只剩3個job(記憶蒸餾+2個一次性提醒)。**這一項尚未查到消失的確切時間點與原因**，跟三個LINE帳號斷線是否同一起事故(9/10 22:24那次大規模config reload)有關聯但未證實，留待下一場深查或看教練是否要重建。
+
+## ⚠️ 本場教訓（已寫入記憶）
+`reference_line_plugin_extensions_missing_2026-09-16`：process活著≠外掛真的載入成功的第三個變體(前兩個是cloudflared tunnel斷線13小時、Hermes gateway內部卡死)，這次連config本身都顯示一切正常，要主動跑`openclaw plugins list`才會現形，一般`pgrep`/`launchctl list`健檢完全測不出來。
+
+## 📋 下一場開工先做
+1. **🔴查明「幕僚長晨報」cron消失的確切原因**：是否也是9/10 22:24那次config reload造成，教練若要重建這個每日彙報功能，直接參考v handoff 2026-08-09原始設計(統整bni_tainan+jiaolian_thoughts每日動態，過濾三關後才播報)重新建立。
+2. 觀察明天08:05新健檢是否正常觸發並推送Telegram。
+3. 沿用v204既有待辦：大台南策展中心貼文重貼(21則)、FB App Review(教練申訴案件排隊中)、OpenClaw 2.0後續評估、BNI Connect打勾出席、MEMORY.md索引瘦身(已提示190行接近上限)、`stop_rules_master.py`規則#07誤判regex。
+4. E16接力棒瘦身：主檔已累積v197~v205共9棒，下次開工優先把v197~v200搬進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：`7ad352c28`(新增三個LINE小幫手每日健康檢查腳本+說明事故根因)。系統層級修復(`openclaw plugins install`+gateway重啟)非git版控範圍，無獨立commit。
 
 
 
