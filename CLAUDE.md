@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-16 03:20:04**
+> **最後同步：2026-09-16 04:15:28**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -18,7 +18,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🟡 | **BNI大台南南區快速組隊計畫：免費建站漏斗流程設計+產業服務鏈圖片生成模型查證(五平台實測)** | ⏳待教練決策 | 教練提出「免費建站換深聊」組隊漏斗構想，已產出策略筆記網頁`coach1973.github.io/teamwork-notes/`(commit`e5cae4a`)+收錄進coach888(commit`181da37`)，判斷既有teamwork公開招募頁該放深聊階段而非流程最前面，四階段流程(留資料/建站交付/深聊組隊/成為夥伴)已定稿，五塊拼圖(篩選機制/揭露時機/產能規模/教育訓練串接/語言一致性)待教練挑選推進。同場另一構想「專業類別→產業服務鏈→組隊」自動化：實測五個圖片生成平台(MiniMax/Lovart/lk888/TAVA AI/TokenTable)，確認底層模型是GPT Image 2(OpenAI)、文字渲染品質是決定性指標，只有接上這顆模型的三個平台(Lovart/lk888/TAVA AI)文字準確，MiniMax跟TokenTable(用Wan/Kling/Qwen Image)大量錯字不合格。查證OpenAI官方API：費用(圖像模態每百萬token輸入$4/輸出$15)+門檻(Free tier不支援，需Tier 1，可能需組織驗證)。**下一步待教練決定**：全自動化產圖走lk888現成第三方API(需先充值解鎖)還是OpenAI官方直接申請(門檻較高但乾淨)；記憶`project_bni_teamup_free_website_funnel_2026-09-15`(已存在，內容可能需要教練確認後更新產圖查證結果)。 |
+| 🔴🔴🔴 | **2026-09-16 04:03~04:13重大事故：main gateway+小二雙雙down機45分鐘，已修復** | ✅本場完成，需觀察 | 終端機PATH解析到新版openclaw(2026.9.4)跟正式launchd服務舊版(2026.6.34)不一致，導致state資料庫schema被升級到17，軍師重啟main gateway時直接撞上版本不相容陷入錯誤循環；搶修時誤kill掉小二的子process連帶影響小二。已改plist指向新版執行檔+`openclaw doctor --fix`完成遷移+`openclaw gateway start`重新啟用，main gateway(24個hook+LINE三帳號+Telegram三帳號)與小二均已驗證恢復正常。`doctor --fix`副作用清掉了`HEARTBEAT.md`/`TOOLS.md`，已用`git checkout HEAD --`從git歷史救回零遺漏。完整記錄見試金石案例73。**下一場開工先確認**：main gateway是否持續穩定無重啟迴圈，LINE/Telegram教練親自測試過都正常再放心。 |
+| 🟢 | **BNI組隊計畫「產業鍊SOP」自動生圖技能：main/Hermes/小二三方已上線+可用，孔大哥/佩佩老師走獨立hook(伺服器端代勞，不開放exec權限)** | ✅本場完成，教練已實測main成功 | 教練決定產圖走lk888付費API(GPT Image 2)，已建`scripts/generate_industry_chain.py`通用腳本(呼叫lk888生圖+推Telegram，支援跨環境指定bot帳號)，API Key存於`路徑大全_憑證層.md`。觸發句型「[專業別]的產業鍊SOP」：①**main agent**（`workspace/SOUL.md`新增技能段落，教練已用Telegram實測成功）②**Hermes**（workspace透過symlink共用main的SOUL.md，不用額外設定，理論上已可用未經教練實測）③**小二**（`~/.openclaw-test2/workspace/SOUL.md`獨立寫入，已用跨環境呼叫測試成功送達教練Telegram）④**孔大哥(kong)/佩佩老師(peipei)**：查證`tools.toolsBySender`只有教練帳號有完整exec權限，`group:automation`不含exec(官方文件核實)，改用伺服器端hook方案——新建`hooks/industry-chain-sop/`，事件驅動偵測孔大哥(Telegram id`8689825759`)/佩佩老師(id`8786886419`，兩者ID皆從各自sessions目錄真實sender_id統計取得，非教練提供)本人發言，Node.js直接呼叫MiniMax組prompt+執行腳本生圖回傳，全程不開放exec給他們的帳號。已註冊進`openclaw.json`+gateway熱重載生效，**尚未經孔大哥/佩佩老師本人實測**。**已知取捨**：GPT Image 2約5~10%機率周邊節點文字出錯(重複/錯字)，教練已表態不追求完美、不自動重試(額度有限)。**下一場待辦**：確認孔大哥/佩佩老師端hook實測成功；bni_tainan(一般BNI夥伴MiniMax免費文字+生圖版)尚未開始建置。 |
 | 🟢 | **三個LINE帳號(大台南南區小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天3.5小時修復** | ✅2026-09-16 v205本場完成 | 根因是`@openclaw/line`外掛套件檔案遺失(`openclaw plugins install @openclaw/line`修復)，詳見v205完整戰果+記憶`reference_line_plugin_extensions_missing_2026-09-16`。已新增每日08:05健康檢查(`scripts/three_line_bots_healthcheck.sh`)，教練要求每天都要回報不論健康與否。 |
 | 🔴 | **「幕僚長晨報」cron(每日統整bni_tainan+jiaolian_thoughts動態播報教練)已從系統消失，原因未查明** | 🔒待下一場深查或教練裁示是否重建 | 2026-08-09建立的job(id`b73845c9-...`)查live系統已`cron job not found`，跟三個LINE帳號斷線是否同一起9/10 22:24事故有關聯但未證實，見v205第4項。 |
 | 🟡 | **大台南策展中心21則歷史隱形貼文重貼：教練同意分批貼，第一批卡在Meta Business Suite編輯框打不進字** | 🔒卡住-待軍師下場換方法 | 教練同意分批(每天3~5則)手動重貼(API重貼一樣看不到，需走真人瀏覽器貼文才會公開可見)。第一則(牛市町)嘗試在`business.facebook.com`貼文編輯器打字，`computer type`模擬打字完全沒有寫進欄位(跟BNI Connect日期選擇器同一種「JS框架元件排斥合成鍵盤事件」現象，詳見[[reference_palms_grand_total_row_and_js_widget_typing_2026-09-15]])，已申請教練截圖權限但教練轉去處理其他任務，本場未回頭繼續。**下一場待辦**：改用一般facebook.com頁面本身的貼文框(非Business Suite)試試，或申請截圖權限debug清楚卡點後再繼續分批貼文，21則清單仍在`distill/curation_process.log`。 |
