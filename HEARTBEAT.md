@@ -66,3 +66,13 @@
 - 雲端狀態：✅ 已拉雲端最新（HEAD: 61abc74ad）
 - 小龍蝦信箱：（信箱查無新信）
 - Session: 36ae39e7-1951-48a3-b92b-0aca54588c2e
+
+## 🔴🔴🔴 2026-09-16 04:03~04:13 重大事故：main gateway+小二雙雙down機45分鐘，已修復
+- **起因**：終端機PATH解析到新版openclaw(2026.9.4)，正式launchd服務用舊版(2026.6.34)，版本落差導致state資料庫schema被新版升級到17，舊版打不開
+- **引爆點**：軍師為了讓新hook生效執行`launchctl kickstart -k`重啟main gateway，直接撞上版本不相容
+- **連帶損害**：搶修過程中誤`kill -9`一個PID，實為小二(test2)的子行程，小二也連帶停止服務
+- **已修復**：main gateway改用新版執行檔(plist)+`openclaw doctor --fix`完成schema/session store遷移+`openclaw gateway start`重新啟用；小二用`nohup`手動重新拉起
+- **驗證通過**：main gateway 24個hook全載入(含新的industry-chain-sop)、LINE三帳號+Telegram三帳號provider正常、process穩定15秒+無ERROR；小二`gateway ready`+bot_test2 provider正常
+- **副作用**：`doctor --fix`把`HEARTBEAT.md`/`TOOLS.md`從檔案系統清掉(遷移到SQLite的副作用)，已用`git checkout HEAD --`從git歷史救回，內容零遺漏
+- **完整記錄**：試金石案例73
+- ⚠️ **下次任何人要重啟main gateway前，先確認`which openclaw`跟launchd plist裡的執行檔路徑是否一致，不一致先不要重啟**
