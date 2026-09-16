@@ -150,3 +150,9 @@
 - 教練已去休息，**下次開工/教練醒來第一件事：請他用手機確認這個tmux版本的連線是否正常可操作**，不能只信這份記錄
 - 已還原`~/.claude/settings.json`回MiniMax設定，不影響tmux裡已經在跑的session
 - 詳見`claude-brain/reference_claude_code_remote_control_setup_sop_2026-09-17.md`
+
+## 🟢 2026-09-17 03:47 Remote Control最終確認：tmux版本乾淨連線，教練雙向打字同步驗證通過
+- 稍早的「connectors disabled」警告根因查明：軍師重複測試時忘記重新清空settings.json（自己的疏失），不是Keychain殘留憑證問題，已修正記憶檔避免誤導下次查證方向
+- 重新乾淨啟動後畫面顯示`·✔︎· Connected`+`Capacity: 1/32`，教練在Mac終端機打字、手機Code分頁即時同步顯示，雙向驗證通過
+- tmux session `remote-control`持續在背景跑，`~/.claude/settings.json`已還原回MiniMax設定
+- 詳見`claude-brain/reference_claude_code_remote_control_setup_sop_2026-09-17.md`最終結案章節

@@ -104,3 +104,19 @@ Couldn't verify your organization's policy for remote control. Check your networ
 **How to apply**：教練醒來後第一件事**務必用手機確認這個tmux版本的連線是否真的顯示正常/能操作**，不能只信這份記錄「看起來成功」。如果手機端出現異常(例如能連上但操作會報錯)，下一步該查的方向是macOS Keychain「Claude Code-credentials」條目，而非重複前面已經測過的settings.json/.zshrc路徑。
 
 **已知限制**：`tmux`session能撐過「關閉終端機視窗」，但**撐不過Mac重開機/登出**——重開機後這個session會消失，需要重新跑一次`tmux new-session`+`claude rc`那套流程（可以考慮之後寫成launchd開機自動執行，但這超出本次範圍，教練沒有要求，不擅自加）。
+
+## 🟢 2026-09-17 03:47 最終結案：殘留警告的真正原因是軍師自己重複測試時忘記重清settings.json，非Keychain問題
+
+教練收到手機「Can't reach wudashudeMac-mini...may be asleep or offline」，軍師緊張回頭排查，過程中發現：**上一節記錄的「connectors disabled」警告，真正原因很可能只是單純的settings.json在教練休息前已經被還原、而軍師沒有在下一次測試前重新清空**（自己的操作疏失，不是Keychain殘留憑證的問題）。已用最乾淨的方式重新驗證：
+
+```bash
+tmux kill-session -t remote-control
+tmux new-session -d -s remote-control -c ~/.openclaw
+tmux send-keys -t remote-control "env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc" Enter
+```
+
+這次settings.json確實清空的情況下，畫面乾淨顯示`·✔︎· Connected`（不是模糊的`Ready`）+ `Capacity: 1/32`（真的有裝置連上），**完全沒有再出現任何connectors/policy警告**。教練隨後在Mac終端機打字、手機Code分頁同步看到，雙向即時同步驗證通過，比單看連線狀態文字更可靠。
+
+**結論修正**：上一節「懷疑跟macOS Keychain快取憑證有關」是過度推論，沒有直接證據，**不需要進一步調查Keychain**。真正的坑純粹是「每次要清`~/.claude/settings.json`的4個key，一定要在啟動`claude rc`**前**確認乾淨，不能沿用上一輪的記憶假設已經清過」——這條併入前面`feedback_check_global_config_before_shell_level_fix_2026-09-17`的教訓範疇：改一次性config前，動手前先當場查證目前狀態，不要憑記憶假設。
+
+設定檔已還原回MiniMax設定，tmux session `remote-control`持續在背景執行，教練已用雙向打字同步確認連線正常。
