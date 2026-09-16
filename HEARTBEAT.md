@@ -156,3 +156,10 @@
 - 重新乾淨啟動後畫面顯示`·✔︎· Connected`+`Capacity: 1/32`，教練在Mac終端機打字、手機Code分頁即時同步顯示，雙向驗證通過
 - tmux session `remote-control`持續在背景跑，`~/.claude/settings.json`已還原回MiniMax設定
 - 詳見`claude-brain/reference_claude_code_remote_control_setup_sop_2026-09-17.md`最終結案章節
+
+## 🩺 軍師 Hook 自檢 2026-09-17 04:10（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 13701fc51）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: efaba62e-3d0d-5125-9660-0d8be213060b

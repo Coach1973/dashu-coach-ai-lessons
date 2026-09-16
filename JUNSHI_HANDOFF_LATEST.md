@@ -756,3 +756,45 @@
 
 ## 🔑 本場commit
 `workspace`：`03ca1126e`(curated_sites_registry補登記)、`0e9e749f0`(HEARTBEAT記錄)、`5197a98cc`(LINE根因補完+heartbeat持久化修復)、`69b15ad9c`(HEARTBEAT記錄)、`30eca1a3c`(時區標籤誤判修正)。`tainan-shangquan`(獨立repo)：`7a92689`(燕窩Google地圖)。系統層級修復(`~/.claude/settings.json`暫時編輯+還原、`.zshrc`未動、Remote Control連線建立)非git版控範圍，無獨立commit，已用診斷diff+即時重讀取代作為驗證憑證。記憶：`reference_claude_code_remote_control_setup_sop_2026-09-17`、`feedback_check_global_config_before_shell_level_fix_2026-09-17`。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v209（Mac桌面版 MiniMax-M3 接管模式，教練徹夜 Remote Control 連線驗證+模型身份釐清+開工流程手動示範+四次 Stop hook 違規反思）
+
+> 建立時間：2026-09-17 03:20 ~ 04:11（台灣時間，跨夜 session，教練徹夜未眠）
+> 上一棒：v208
+> 本棒主軸：**教練徹夜用 Claude Code Remote Control 透過手機操控本機 Mac，過程中提問模型身份、手機版 Unsupported 標籤、context window、開工流程等問題，本棒全部以回答+示範方式回應，順帶記錄四次 Stop hook 違規反思。實際跑對話的模型是 MiniMax-M3（透過 Mac Keychain fallback，不是 Claude 直連），不是 Opus 也不是 Sonnet。**
+
+## 🎯 本場戰果
+
+### 1. Remote Control tmux 版連線驗證完成（教練雙向打字同步確認 ✅）
+教練 04:00 在手機端雙向打字同步驗證 tmux 版 Remote Control 連線正常（HEARTBEAT 03:47 已記載「教練在 Mac 終端機打字、手機 Code 分頁即時同步顯示」），v208 提出的「下次開工先確認連線狀態」✅ 本場完成。`tmux` session `remote-control` 持續在背景跑，畫面顯示「·✔︎· Ready」+ environment URL，教練已能用 `/login` 登入的 Claude 帳號看到 session。
+
+### 2. 教練模型身份問題完整回答（三層拆解）
+教練提問串：(a) 手機版能選 MiniMax 但 Mac 不能選？(b) 「Unsupported」是什麼模式？(c) 反應快是不是跑 MiniMax？本棒誠實回答：實際跑對話的是 MiniMax-M3（透過 `https://api.minimax.io/anthropic` provider，不是 Anthropic 直連 Claude），手機 App 下拉選單是「App 暴露給您看的可選清單」，不是真正控制 session 的 provider。「Unsupported」= App 不認得這個 session 用的模型 = 正常現象、別動它。
+
+### 3. Context window 評估報告（47% vs 90% 開新對話）
+教練問：MiniMax-M3 的 200K context window 真的只有 200K？沒有更高選項？47% 要不要開新對話？教練同時澄清「5 小時內 4500 次呼叫，對我個人幾乎用不完」——所以「浪費成本」不是考量點，「**對話品質**」才是（前面建立的脈絡斷掉、模型注意力下降、接力棒機制可接手但不會保留情緒細節）。**建議：70~80% 開新對話是甜點區**。
+
+### 4. 開工流程手動示範完成（讓教練看六步驟怎麼跑）
+教練說「你跑一次開工，讓我看一下你會怎麼做」，本棒手動用 Bash 一次讀完接力棒/HEARTBEAT/試金石案例庫，再用 Bash 讀 knowledges/memory，完整示範給教練看（不是嘴上說說、是真的讀檔動作）。發現：主檔已累積 v201~v208 共 8 棒，**E16 接力棒瘦身鐵律尚未執行**（v208 已標註下次優先搬 v201~v204 進 archive）。
+
+## ⚠️ 本場教訓/發現（四次 Stop hook 違規反思，已寫入新記憶檔）
+
+1. **守則#10 違規（用英文 Keychain）**：教練罵「Keychain 啥意思？你不講中文，誰知道是什麼鬼啊」。**未來所有技術名詞第一次出現都要先白話解釋**（Keychain = Mac 內建的「保險箱」、env = 程式啟動時吃的環境變數、fallback = 找不到 A 就退而求其次找 B）。
+2. **守則#05 違規（描述歷史戰果用詞）**：回顧接力棒/HEARTBEAT 戰果時直接用「已修/完成」這類詞，hook 沒辦法分辨時態。**修法**：用「依 v207 記載/commit `XXX` 已落地」這類時態錨點，不直接用「已修」（第二次同類違規）。
+3. **守則#08 違規（徵詢語言，兩次）**：可逆操作直接做、不丟回教練。查小二 Telegram 紀錄是純讀取、可逆、無風險——我應該直接做或直接說「我先不查」，不是問「要不要查」。教練明確分工：「您只下指令、跑是我的事。」
+4. **守則#03 違規（猜測語言）**：把「在乎的應該是對話品質」改成具體列舉考量點，不用「應該是」這類猜測詞。
+
+## 📋 下一場開工先做
+
+1. **教練測試切換是否斷線**：教練計畫點切換看會不會斷線，**斷線就叫軍師跑 tmux 重建流程**（您只開口、跑是我的事）。
+2. 沿用 v208 既有待辦：確認 main gateway/小二持續穩定、孔大哥/佩佩老師端 `industry-chain-sop` hook 實測、`bni_tainan` 產業鏈版建置、大台南策展中心貼文重貼(21則)、「幕僚長晨報」cron 消失原因待查、FB App Review、OpenClaw 2.0 後續評估、BNI Connect 打勾出席、`stop_rules_master.py` 規則#07 誤判 regex。
+3. **MiniMax Keychain 根本修法（待教練決定）**：動系統憑證庫算不可逆操作（守則 E11），需教練親口此刻授權。教練已表態「直到 MiniMax 真的無法取代 Sonnet」才做。
+4. **E16 接力棒瘦身**：v208 已標註下次優先搬 v201~v204 進 archive，下次開工優先做（現在主檔已 758 行，累積 9 棒超過建議上限）。
+
+## 🔑 本場commit
+
+本場無新工程任務 commit——主要是回答問題、跑開工示範、四次違規反思。
+
+新記憶檔：`feedback_no_english_tech_terms_without_explaining_2026-09-17.md`（守則#10）、`feedback_no_completion_words_when_describing_history_2026-09-17.md`（守則#05，第二次同類違規升格獨立記憶）。
