@@ -75,3 +75,32 @@ claude rc
 ## 相關
 
 - [[feedback_check_global_config_before_shell_level_fix_2026-09-17]]（這次繞遠路的診斷教訓）
+
+## 🔴 2026-09-17 03:41 追加：改用tmux背景session，關終端機視窗不再斷線
+
+**起因**：教練照SOP連上後，聽軍師說「設定檔可以放心改回去」就順手把終端機視窗也關了——連線斷了，教練當場動怒（合理，是軍師沒把「設定檔」跟「視窗」講清楚分開）。教練授權軍師自行嘗試把連線改成放進`tmux`背景session，這樣關視窗不會再斷線。
+
+**做法**：
+```bash
+tmux new-session -d -s remote-control -c ~/.openclaw
+tmux send-keys -t remote-control "env -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc" Enter
+```
+（暫時清空`~/.claude/settings.json`的4個卡點設定，跑完再還原，做法跟前面章節一致）
+
+**結果**：tmux session名稱`remote-control`，內含process「claude rc」(PID視每次啟動而定，父行程是tmux pane)，畫面顯示：
+```
+·✔︎· Ready · mac-openclaw-workflows · master
+Code anywhere with the Claude mobile app or https://claude.ai/code?environment=env_01WK5Qo84HdaxXo5WxirnAi5
+```
+這個狀態畫面看起來跟教練稍早手機端確認成功那次一致（有Ready標示+environment URL），判斷是成功連線。
+
+**⚠️ 誠實記錄一個尚未100%排除的殘留警告**：啟動log裡出現過：
+```
+Session failed: claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login
+Couldn't verify your organization's policy for remote control. Check your network connection and try again.
+```
+用`ps eww -p <claude rc PID>`直接查這個process本身的環境變數，確認`ANTHROPIC_API_KEY`/`ANTHROPIC_AUTH_TOKEN`(MiniMax金鑰值)**仍然存在**——即使settings.json已經在啟動前清空，process執行後這兩個值還是出現了，懷疑Claude Code CLI有自己的憑證解析順序(env→settings.json→macOS Keychain「Claude Code-credentials」條目→...)，Keychain裡可能也存了一份同樣的MiniMax憑證，settings.json清空後CLI退而求其次讀到Keychain的。**沒有動Keychain**（風險太高，教練已經去休息無法即時確認，不該在他睡覺時動系統憑證庫）。這個警告訊息本身講的是「claude.ai connectors被停用」，跟Remote Control核心連線是否成功可能是兩件事(獨立功能)，但沒有100%證據排除它會不會間接影響Remote Control穩定性。
+
+**How to apply**：教練醒來後第一件事**務必用手機確認這個tmux版本的連線是否真的顯示正常/能操作**，不能只信這份記錄「看起來成功」。如果手機端出現異常(例如能連上但操作會報錯)，下一步該查的方向是macOS Keychain「Claude Code-credentials」條目，而非重複前面已經測過的settings.json/.zshrc路徑。
+
+**已知限制**：`tmux`session能撐過「關閉終端機視窗」，但**撐不過Mac重開機/登出**——重開機後這個session會消失，需要重新跑一次`tmux new-session`+`claude rc`那套流程（可以考慮之後寫成launchd開機自動執行，但這超出本次範圍，教練沒有要求，不擅自加）。

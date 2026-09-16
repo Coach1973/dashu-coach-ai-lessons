@@ -138,3 +138,15 @@
 - ✅ 同步成功
 - HANDOFF mtime: 1789508568
 - 雲端同步：✅ 已推上雲端（commit f3dbd740b）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-17 03:30
+- ✅ 同步成功
+- HANDOFF mtime: 1789586864
+- 雲端同步：✅ 已推上雲端（commit 9be58315d）
+
+## 🟢 2026-09-17 03:41 Remote Control改用tmux背景session，關終端機視窗不再斷線
+- 教練授權軍師自行嘗試：`tmux new-session -d -s remote-control -c ~/.openclaw` + 背景送出`claude rc`指令，畫面顯示「·✔︎· Ready」+ environment URL，判斷連線成功
+- **⚠️ 尚未經教練手機驗證**：process本身env仍檢測到殘留`ANTHROPIC_API_KEY`(懷疑來自macOS Keychain「Claude Code-credentials」條目，非settings.json)，觸發一則「claude.ai connectors disabled」非致命警告，核心Remote Control連線本身狀態顯示正常
+- 教練已去休息，**下次開工/教練醒來第一件事：請他用手機確認這個tmux版本的連線是否正常可操作**，不能只信這份記錄
+- 已還原`~/.claude/settings.json`回MiniMax設定，不影響tmux裡已經在跑的session
+- 詳見`claude-brain/reference_claude_code_remote_control_setup_sop_2026-09-17.md`
