@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🎯 Claude Code Remote Control在Mac的完整SOP：claude rc+4道卡關(版本/登入/settings.json/…](reference_claude_code_remote_control_setup_sop_2026-09-17.md)
+- [🔴 環境變數卡關要一次查完shell rc檔+全域設定檔，不要只查一種讓教練白跑指令…](feedback_check_global_config_before_shell_level_fix_2026-09-17.md)
 - [🔴🔴🔴 重啟main gateway前先確認終端機PATH版本跟launchd正式服務版本是否一致，不一致先不要重啟…](feedback_check_openclaw_version_before_gateway_restart_2026-09-16.md)
 - [🔴🔴🔴 驗證服務是否正常要先查本機log再考慮外部API，回報「已修好」前驗證強度要對得上真實使用情境…](feedback_verify_locally_before_external_api_2026-09-16.md)
 - [🔴🔴🔴 三個LINE帳號(小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天多，@openclaw/line外掛套件遺失+process活著≠外掛真的載入…](reference_line_plugin_extensions_missing_2026-09-16.md)
