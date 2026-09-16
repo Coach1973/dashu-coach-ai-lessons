@@ -119,3 +119,17 @@
 - 正確台灣時間是22:19:08（raw UTC 14:19:08 +8），教練抱怨→軍師編輯hook檔案僅隔3分27秒，不是原本誤記的「下午提、晚上修」
 - 新教訓：蒸餾檔(`distill/`)的「（HH:MM）」時間標籤可能是原樣複製UTC數字、沒做+8轉換，因果判斷要回頭查raw_sessions原始timestamp驗證
 - 已修正`reference_line_plugin_extensions_missing_2026-09-16.md`+新增`feedback_taiwan_time_always.md`第5次違反記錄，commit`30eca1a3c`
+
+## 🩺 軍師 Hook 自檢 2026-09-17 03:20（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 9debece07）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 8aa0d172-24d4-58ae-a1eb-134bd3a007c5
+
+## 🩺 軍師 Hook 自檢 2026-09-17 03:22（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 9debece07）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 8aa0d172-24d4-58ae-a1eb-134bd3a007c5
