@@ -114,3 +114,8 @@
 - **查證結論**：兩件事**無因果關聯**(完全獨立系統：main gateway vs test2)，但教練直覺方向正確——LINE外掛遺失(9/10 22:24)確實跟教練14:19要求修復invoice-inbound惱人誤報訊息的操作有真實時間關聯(軍師22:22:35編輯hook檔案觸發熱重載，時間窗口跟已知的SIGUSR1重載視窗幾乎重疊)，補完原本「根因未完全查明」的缺口
 - **順帶修復**：小二heartbeat disable(9/14修復)不是持久化設定，今天04:11事故搶修時process重啟就失效，已改用`agents.defaults.heartbeat.target:"none"`寫進config永久修復，已驗證熱重載生效
 - 詳細時間軸+證據見`claude-brain/reference_line_plugin_extensions_missing_2026-09-16.md`+`claude-brain/reference_openclaw2_heartbeat_message_failed_bug_2026-09-14.md`，commit`5197a98cc`
+
+## 🔴 2026-09-17 Stop hook時間鎖攔下：上一則回覆把「教練（14:19）」蒸餾標籤誤當台灣時間
+- 正確台灣時間是22:19:08（raw UTC 14:19:08 +8），教練抱怨→軍師編輯hook檔案僅隔3分27秒，不是原本誤記的「下午提、晚上修」
+- 新教訓：蒸餾檔(`distill/`)的「（HH:MM）」時間標籤可能是原樣複製UTC數字、沒做+8轉換，因果判斷要回頭查raw_sessions原始timestamp驗證
+- 已修正`reference_line_plugin_extensions_missing_2026-09-16.md`+新增`feedback_taiwan_time_always.md`第5次違反記錄，commit`30eca1a3c`
