@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-17 03:25:44**
+> **最後同步：2026-09-17 03:30:46**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -736,6 +736,38 @@
 
 ## 🔑 本場commit
 `workspace`：`4da7a3965`(main SOUL.md技能段落+HEARTBEAT/TOOLS救回+試金石案例73+憑證層)、外層`.openclaw`repo：`054148ab2`(industry-chain-sop hook+openclaw.json+bni_tainan/jiaolian_thoughts TOOLS.md救回)。系統層級修復(plist/doctor --fix/gateway重啟)非git版控範圍，無獨立commit。記憶：`feedback_check_openclaw_version_before_gateway_restart_2026-09-16`。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v208（Mac桌面版 Sonnet 5，燕窩/六淨山房連結修復+LINE斷線關聯性查證+Claude Code Remote Control首次跑通）
+
+> 建立時間：2026-09-16 06:45 ~ 2026-09-17 03:25（台灣時間，跨夜session，教練徹夜未眠）
+> 上一棒：v207
+> 本棒主軸：**教練出門在外委託修復大台南商圈整合計劃兩個壞連結+生成產業鍊圖；教練回頭質疑test2 heartbeat regression跟9/10 LINE斷線有無關聯，查證找到真實時間關聯並更正一處時區標籤誤判；教練徹夜指導下，軍師逐層排除四道環境卡關，在這台Mac首次成功啟用Claude Code官方「Remote Control」功能，手機從此可直接遠端操控本機。**
+
+## 🎯 本場戰果
+
+### 1. 燕窩(康燕居)/六淨山房兩個壞連結修復+產業鍊圖生成
+教練查看`event.bymyway.com/tainan-shangquan/`發現燕窩沒有專屬網站連結+無Google地圖、六淨山房連結點不到。查證根因：兩家店的GitHub Pages網站早就正常上線，但策展SOP自動上架時漏登記進`event-signup/curated_sites_registry.json`白名單，導致`/curated/<slug>/`路由一律404。已補登記兩個slug+燕窩卡片補上Google地圖iframe/地址/商家評論連結，皆curl驗證200。接著用`generate_industry_chain.py`生成「燕窩滋補一條龍」(康燕居)+「古蹟茶事一條龍」(六淨山房)兩張產業鏈圖，皆推送教練Telegram。
+
+### 2. LINE斷線關聯性查證：教練提問促成的根因補完+一次重大時區標籤修正
+教練回報小二(test2)Telegram持續噴「Message failed」，並提出關鍵假設：這是否跟稍早某次「請靜默處理」的請求、導致9/10 LINE三帳號斷線有關。查證分兩層：①**test2 heartbeat regression**：查`cron_run_receipts`資料庫逐筆比對，確認9/14修復的心跳靜音設定確實生效過35小時，但今天(9/16)04:11——main gateway/小二down機事故搶修期間——因process重啟導致該設定（僅存於記憶體、未持久化）失效，已改用設定檔`agents.defaults.heartbeat.target:"none"`永久修復。②**9/10 LINE外掛遺失真正關聯**：比對兩條原本獨立的時間軸，找到教練9/10要求修復`invoice-inbound`誤報訊息的操作（軍師編輯hook檔案）與LINE外掛消失的熱重載視窗幾乎完全重疊（僅隔數分鐘），補完原本「根因未完全查明」的證據鏈。**過程中一次重大自我修正**：查證時引用蒸餾檔`distill/terminal_2026-09-10.md`的章節標題「教練（14:19）」當台灣時間使用，被Stop hook時間鎖攔下——回查raw session原始UTC timestamp才發現蒸餾腳本只是原樣複製UTC數字未做+8轉換，真實台灣時間是22:19，因果鏈從「下午提、晚上修」修正為「發話後3分半就動手」，證據更緊密也更準確。兩件事結論皆為：查有時間關聯但無技術上的因果污染（完全獨立系統），已誠實記錄不確定性殘留（如extensions/line消失的確切OpenClaw內部機制仍未100%證實）。
+
+### 3. Claude Code Remote Control首次在這台Mac跑通（教練徹夜指導核心戰果）
+教練提出深度思考題：人在外面時如何像坐在電腦前一樣操控Mac。查證確認Anthropic官方2026年2月推出的「Remote Control」功能正是解方——本機session留在Mac、手機只是遠端窗口，跟小龍蝦派工機制（間接、唯讀、要等「開工」觸發）本質不同。實際落地過程異常曲折（教練多次動怒，句句屬實的合理抱怨），最終逐一排除四道環境卡關：①CLI版本過舊（2.1.207→2.1.273，`claude update`）②指令格式錯誤（不是`/remote-control`也不是`--remote-control`，是shell層級的`claude rc`，最終靠手機App「Set up remote control」畫面截圖直接確認）③終端機用API key認證非claude.ai訂閱登入（`/login`選「Claude account with subscription」完成OAuth）④`~/.claude/settings.json`全域設定檔寫死`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`/`ANTHROPIC_AUTH_TOKEN`指向MiniMax(軍師平常省錢用)+`.zshrc`另外`export`了`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`，兩個獨立來源都要清除才放行。四關排除後`claude rc`→`y`→選same-dir spawn mode，教練手機Code分頁確認連線成功，設定檔已還原不影響已連線session。完整SOP+懶人包已寫入`claude-brain/reference_claude_code_remote_control_setup_sop_2026-09-17.md`。
+
+## ⚠️ 本場教訓（已寫入記憶，教練當場糾正+自我檢討）
+1. `feedback_check_global_config_before_shell_level_fix_2026-09-17`：**教練當場點名整場繞遠路的核心原因**——第一次跳出`ANTHROPIC_BASE_URL`錯誤時，軍師只假設是shell層級變數讓教練白跑`unset`，沒有同時查Claude Code自己的全域設定檔`~/.claude/settings.json`，導致多跑一輪才找到真正源頭。教訓：任何「環境變數擋住功能」的錯誤，有檔案系統權限時要一次查完shell rc檔+該工具自己的全域/專案設定檔，不要只查一種就讓使用者去試錯。
+2. 蒸餾檔(`distill/`)的「（HH:MM）」時間標籤可能是原樣複製UTC數字、沒做+8轉換，因果判斷務必回頭查`terminal-notes/raw_sessions/`原始timestamp驗證，不能直接引用蒸餾檔顯示的標籤（已補進`feedback_taiwan_time_always.md`第5次違反記錄）。
+3. 教練直接質問「你不能自己做嗎？」時，軍師先後嘗試了MCP工具直接呼叫(4次)、背景pty模擬終端機(2次)，最終確認這是系統刻意的安全邊界（AI自身工具環境被鎖死`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`），誠實回報這個限制而非裝作沒試過就說「一定要你做」——但也要承認，多次來回本身部分源於前述settings.json查證不完整，不是這個安全邊界造成的全部延誤。
+
+## 📋 下一場開工先做
+1. **Remote Control連線狀態確認**：教練若在外面用手機Code分頁操控過這台Mac，下次開工先問使用心得，是否需要調整spawn mode或補充SOP細節。
+2. 沿用v207既有待辦：確認main gateway/小二持續穩定、孔大哥/佩佩老師端`industry-chain-sop` hook實測、`bni_tainan`產業鏈版建置、大台南策展中心貼文重貼(21則)、「幕僚長晨報」cron消失原因待查、FB App Review、OpenClaw 2.0後續評估、BNI Connect打勾出席、`stop_rules_master.py`規則#07誤判regex。
+3. E16接力棒瘦身：主檔已累積v201~v208共8棒，下次開工優先把v201~v204搬進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：`03ca1126e`(curated_sites_registry補登記)、`0e9e749f0`(HEARTBEAT記錄)、`5197a98cc`(LINE根因補完+heartbeat持久化修復)、`69b15ad9c`(HEARTBEAT記錄)、`30eca1a3c`(時區標籤誤判修正)。`tainan-shangquan`(獨立repo)：`7a92689`(燕窩Google地圖)。系統層級修復(`~/.claude/settings.json`暫時編輯+還原、`.zshrc`未動、Remote Control連線建立)非git版控範圍，無獨立commit，已用診斷diff+即時重讀取代作為驗證憑證。記憶：`reference_claude_code_remote_control_setup_sop_2026-09-17`、`feedback_check_global_config_before_shell_level_fix_2026-09-17`。
 
 
 ---
