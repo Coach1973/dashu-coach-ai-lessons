@@ -101,3 +101,16 @@
 - **產業鍊圖**：用`generate_industry_chain.py`呼叫lk888生成，「燕窩滋補一條龍」(康燕居)+「古蹟茶事一條龍」(六淨山房)各20個異業節點，皆已推送教練Telegram(bot_main)，各有1個節點文字重複(GPT Image 2已知瑕疵，未重生)
 - **通知**：兩則文字通知(URL修復+圖片完成)皆已透過小龍蝦一代(bot_main)推送教練Telegram
 - 存檔：`claude-brain/data/industry_chain_20260916-065033.png`(康燕居)、`industry_chain_20260916-065134.png`(六淨山房)
+
+## 🩺 軍師 Hook 自檢 2026-09-17 02:23（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: a5ed14b44）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 28263a8b-74eb-476f-a497-6007a015cecc
+
+## 🔴🔴 2026-09-17 02:xx 教練提問「LINE版小龍蝦斷線」是否與「靜默處理」請求有關，查證完成
+- **教練提問**：小二(test2)Telegram持續噴「Message failed」，懷疑跟稍早某次「請靜默處理」的請求，導致LINE版三帳號斷線(9/10)有關聯
+- **查證結論**：兩件事**無因果關聯**(完全獨立系統：main gateway vs test2)，但教練直覺方向正確——LINE外掛遺失(9/10 22:24)確實跟教練14:19要求修復invoice-inbound惱人誤報訊息的操作有真實時間關聯(軍師22:22:35編輯hook檔案觸發熱重載，時間窗口跟已知的SIGUSR1重載視窗幾乎重疊)，補完原本「根因未完全查明」的缺口
+- **順帶修復**：小二heartbeat disable(9/14修復)不是持久化設定，今天04:11事故搶修時process重啟就失效，已改用`agents.defaults.heartbeat.target:"none"`寫進config永久修復，已驗證熱重載生效
+- 詳細時間軸+證據見`claude-brain/reference_line_plugin_extensions_missing_2026-09-16.md`+`claude-brain/reference_openclaw2_heartbeat_message_failed_bug_2026-09-14.md`，commit`5197a98cc`
