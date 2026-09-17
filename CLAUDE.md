@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-17 21:30:35**
+> **最後同步：2026-09-17 21:31:54**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -703,6 +703,38 @@
 
 ## 🔑 本場commit
 `workspace`：MEMORY.md索引+新增兩則記憶檔（本次commit）。外層`.openclaw`repo：`openclaw.json`新增`gateway.trustedProxies`(本次commit，若該repo有git追蹤)。系統層級`openclaw doctor --fix`+gateway重啟不在git版控範圍，已用curl 200驗證+log驗證取代commit hash為證。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v213（Mac桌面版 Sonnet 5，MiniMax額度徹查未竟全功+小二NO_REPLY迴圈bug發現與部分修復+連續4次先斷言後查證教訓）
+
+> 建立時間：2026-09-17 20:25 ~ 21:27（台灣時間）
+> 上一棒：v212
+> 本棒主軸：**教練徹查MiniMax「5小時4500次」額度異常打滿，軍師逐層查證Mac五agent+VPS+小二三處實際呼叫量（合計359次），跟4500缺口查不出來，誠實回報死路；過程中意外發現並部分修復小二一個真實的OpenClaw核心bug（NO_REPLY重試迴圈）；教練連續糾正軍師4次「先斷言後查證」的錯誤模式，要求口說無憑改成寫進永久記憶，已完成並commit。**
+
+## 🎯 本場戰果
+
+### 1. MiniMax額度徹查：確認查不出4500的缺口，誠實結案
+承接v212已知Mac今日72次，本場追查①VPS(43.245.60.200)：SSH進容器讀log，兩天合計0次呼叫②**漏查的第三個地方——小二(test2)是完全獨立的第三個gateway process**，今日408次，教練指定的5小時窗口內287次，遠高於前兩者。三處合計359次，跟教練說的4500相差超過4000次，這個缺口最終沒有查出來。查證MiniMax後台三個限制：consumption-detail逐時明細隔日才結算(查不到當天資料)、Plan Usage頁百分比顯示30分鐘內100%→0%→100%反覆跳動(不可靠)、完全沒有IP/來源稽核功能可排除外洩可能。已如實回報教練「查不出來」，不編造答案，剩下唯一能徹底排除外洩疑慮的手段是重置`sk-cp-`共用金鑰，教練尚未裁示。
+
+### 2. 意外發現並部分修復：小二NO_REPLY重試迴圈bug（OpenClaw 2026.9.4核心bug）
+深挖小二異常呼叫量時，查出真正的技術bug：agent判斷「這輪不用回覆」時，框架用`NO_REPLY`佔位字串送出，平台正確攔下不真的送出，但**送出工具本身(`action-runtime-BMV5lE93.mjs:537`)把這個「已正確攔下」的結果當成錯誤拋出**，導致agent無限重試，18:00~19:25燒了229次呼叫。教練明確要求「修好它，不是停掉它」。已在`~/.openclaw-test2/hooks/no-reply-loop-guard/`裝防護hook，第一版誤用`message:sending`事件（查證官方文件`docs.openclaw.ai/automation/hooks/event-types`確認核心不會emit這個事件，Telegram-only環境永遠不會觸發），修正為核心真正支援的`message:sent`事件。教練追加授權「偵測到就直接自動重啟，不用逐次確認」，已裝上detached重啟腳本，實測驗證重啟乾淨完成(gateway關閉→重啟→6/6 hooks載入→Telegram provider恢復，全程約7秒)。**這只是應用層止血，OpenClaw核心的bug本身沒有修，需等官方patch**。
+
+### 3. 教練連續糾正軍師4次「先斷言後查證」模式，已寫入永久記憶
+①誤建議停掉小二觀察(教練指出小二再瘋狂也到不了4500，停掉沒意義)②第一版hook憑印象套用未查證的事件名稱③重啟小二後看到一行不相關的內部診斷log(`agent model: openai/gpt-5.6-sol`)就誤判「小二換模型」，沒查手上已有的真實API呼叫記錄(明明白白全部是`provider=minimax`)④把教練已經講過、畫面上正顯示的「額度2小時後恢復」事實，用「發現矛盾」的語氣重新包裝成新問題。教練直接質問：「不能天天說會改進卻持續犯，這樣何時才叫成熟對話」「口說無憑，特助心法/試金石你都讀完了嗎」。已寫入`claude-brain/feedback_assert_before_verify_pattern_2026-09-17.md`，commit`f0077be1d`並推上雲端，非僅口頭承諾。完整技術+對話記錄見試金石案例74。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `feedback_assert_before_verify_pattern_2026-09-17`：連續4次「有現成證據可查卻沒查、憑印象斷言」，核心病根是讀過守則/試金石不等於下判斷前真的拿出來對照，這是2026-05-21教練「讀完卻沒照著做，比沒讀更糟」的同一個毛病第N次重演。
+2. 試金石案例74：多process共用同一組API額度時，查證異常用量必須窮舉每一個獨立gateway process（這次一開始漏查小二，因為它是同一台Mac上容易被忘記的第三個進程）；裝任何hook前必須查官方事件文件，不能憑抄別的hook的寫法。
+
+## 📋 下一場開工先做
+1. **MiniMax 4500次缺口**：若教練還想繼續查，唯一剩下的路是重置`sk-cp-`金鑰觀察後續是否還會異常打滿（教練尚未裁示是否要做，這是不可逆會影響三處設定的操作，需教練親口確認才能動手）。
+2. 觀察小二NO_REPLY迴圈是否再發作，若發作應該會收到hook自動發的Telegram通知+自動重啟，確認這個機制實際運作情況。
+3. 沿用v212既有待辦：大樹小講「歷史講座紀錄」補EDM連結、等教練喊「推」跑bigtree靜態版一鍵發佈、確認孔大哥實測industry-chain-sop新版、「幕僚長晨報」cron消失原因、FB App Review、OpenClaw 2.0後續評估、`stop_rules_master.py`規則#07誤判regex。
+4. E16接力棒瘦身：**本場已完成**，v201~v206已搬進`handoff_archive/handoff_v201_to_v206_archived_2026-09-17.md`，主檔現維持v207~v213共7棒。
+
+## 🔑 本場commit
+`workspace`：`f0077be1d`(先斷言後查證模式記憶檔+MEMORY.md索引，已推上雲端)。試金石`試金石_案例庫.md`新增案例74+`JUNSHI_HANDOFF_LATEST.md`本次接力棒更新+E16瘦身封存（隨本次總結一併commit）。`~/.openclaw-test2/hooks/no-reply-loop-guard/`（handler.js+HOOK.md+auto_restart_test2.sh）：test2非git版控目錄，無commit hash，已用`openclaw hooks list`顯示✓ready+gateway log重啟成功記錄取代commit hash為證。
 
 
 ---
