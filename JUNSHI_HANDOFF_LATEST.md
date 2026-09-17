@@ -874,3 +874,35 @@
 
 ## 🔑 本場commit
 `workspace`：`232cf0a`系列以外，本場主要commit：`8537197dd`+`457918fbf`+`539dd68a1`（報名頁上架SOP建置+修正）、`47053c840`+`20b0acf2e`（SOP+MEMORY.md索引）、`73dda92a1`（產業鍊SOP四方確認記錄）、`65a2f484a`（大樹小講10/3事故搶修）。`kong`/`peipei`的SOUL.md更新不在git版控範圍（既有狀態，非本場造成），無commit hash，已用內容比對+diff verified落地。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v212（Mac桌面版 Sonnet 5，MiniMax 5h額度誤判自我修正+bni/seabiscuit監控頁403修復）
+
+> 建立時間：2026-09-17 19:55 ~ 20:22（台灣時間）
+> 上一棒：v211
+> 本棒主軸：**教練實測揪出軍師誤判MiniMax配額類型（誤指月度Token Plan，正解是5小時滾動限額100%用滿），教練當場糾正並要求永久記入記憶；順帶查出bni.bymyway.com/seabiscuit.bymyway.com監控頁403根因是gateway.trustedProxies缺設定，跑doctor --fix修復並驗證兩網址恢復200。**
+
+## 🎯 本場戰果
+
+### 1. MiniMax配額誤判事件，教練當場糾正
+教練問"rate-limited"訊息是MiniMax還是lk888綁的，軍師查log正確判斷是MiniMax（`api.minimax.io`回429，"Token Plan usage limit reached (2056)"），但**第一次推論錯了具體原因**——只查了Plan Details頁「~1.7B tokens/month」+Usage頁「1.64B/30天≈96%」就下結論是月度額度用盡，被教練指出「我沒有月服務量到期的問題，5小時4500次寫得清清楚楚」。回頭用`read_page`（非`get_page_text`，後者只抓`<main>`漏看側邊面板）重新讀MiniMax後台「Plan Usage」頁，找到真正的「5h limit / Weekly limit」滾動視窗面板，確認**5h limit當下是100%用滿、2小時49分後重置**——教練完全正確，軍師的月度額度推論雖然數字真實存在，但不是這次卡住的真正原因。教練要求永久記入記憶「MiniMax是5小時4500次」，不要再問，已寫入`reference_minimax_quota_5h_4500_calls.md`。
+
+### 2. bni.bymyway.com / seabiscuit.bymyway.com 403修復
+教練同時質問這兩個監控頁「為什麼停掉了」，查證發現是403（非斷線）：`{"error":{"message":"Proxy client attribution is required. Configure gateway.trustedProxies narrowly..."}}`——`openclaw.json`的`gateway.trustedProxies`從未設定過，這是較新版本OpenClaw要求明確信任cloudflared本機代理位址的安全機制。已補上`"trustedProxies":["127.0.0.1","::1"]`，但發現config熱重載被「Legacy workspace setup state requires migration」卡住（跟9/16案例73同源警報，但這次版本本身一致），教練授權後備份`HEARTBEAT.md`/`TOOLS.md`/兩個agent的TOOLS.md到`/tmp/`，跑`openclaw doctor --fix`——TOOLS.md被合併進AGENTS.md並封存（非遺失），gateway自動重啟並驗證健康，兩個網址已確認恢復200。詳見[[reference_gateway_trustedproxies_and_reload_block_2026-09-17]]。
+
+### 3. 「誰用完額度」查證：本機log相對量，VPS未查
+教練追問VPS/教練都在想什麼/BNI小幫手三者誰是元凶，MiniMax後台本身不記錄「哪個內部agent」打的（全部算在同一把`coding_plan` key下），改用本機log按`sessionKey=agent:*`計數今日呼叫次數：孔大哥12、佩佩老師10、教練都在想什麼8、main 2、bni_tainan 2——孔大哥/佩佩老師活動量最大（跟本場稍早的產業鍊圖除錯任務吻合）。**VPS版小龍蝦尚未查**（不同主機，本機log看不到），已如實告知教練還沒查、需要另外SSH進VPS才能給答案，沒有假裝有數據。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `reference_minimax_quota_5h_4500_calls`：教練的MiniMax方案固定是5小時4500次，講過30次以上，以後遇429直接查5h滾動視窗面板，不要再問額度多少或該從哪個角度查證。
+2. `reference_gateway_trustedproxies_and_reload_block_2026-09-17`：`*.bymyway.com`類網址回403且內容是JSON錯誤，代表請求真的到了gateway被安全機制擋下，跟斷線/DNS問題(502/522/530)是完全不同故障模式，要先讀錯誤內容再下判斷。
+
+## 📋 下一場開工先做
+1. 若教練仍想追查VPS版小龍蝦的MiniMax用量，需SSH進VPS查其本機log。
+2. 確認孔大哥實測industry-chain-sop新版是否成功（v211延續）。
+3. 沿用既有待辦：大樹小講「歷史講座紀錄」補EDM連結、等教練喊「推」跑bigtree靜態版一鍵發佈、「大台南商圈整合計畫店家上架通知」標題依slug分流、幕僚長晨報cron消失原因、FB App Review、OpenClaw 2.0後續評估、`stop_rules_master.py`規則#07誤判regex。
+4. E16接力棒瘦身：主檔已累積v201~v212共12棒，下次開工優先搬v201~v206進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：MEMORY.md索引+新增兩則記憶檔（本次commit）。外層`.openclaw`repo：`openclaw.json`新增`gateway.trustedProxies`(本次commit，若該repo有git追蹤)。系統層級`openclaw doctor --fix`+gateway重啟不在git版控範圍，已用curl 200驗證+log驗證取代commit hash為證。

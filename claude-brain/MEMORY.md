@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔧 bni/seabiscuit.bymyway.com 403是gateway.trustedProxies缺設定，非斷線(2026-09-17)](reference_gateway_trustedproxies_and_reload_block_2026-09-17.md)
+- [🔴🔴🔴 教練MiniMax方案=5小時4500次呼叫(講過30次以上)，遇到429不要再問額度多少](reference_minimax_quota_5h_4500_calls.md)
 - [🔴🔴 kong/peipei/小二各自獨立SOUL.md不同步，main改規則不會自動傳到位(2026-09-17)](feedback_agent_soul_files_not_synced_2026-09-17.md)
 - [🔴 curation刪除功能是整套退役非軟性隱藏，會讓已公告網址404(2026-09-17)](feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md)
 - [🔧 報名頁上架SOP(2026-09-17)：一頁式報名網頁上event.bymyway.com，跟策展SOP同屬「上架SOP」口令的另一分支](reference_event_registration_page_sop_2026-09-17.md)
