@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴 .gitignore漏排除kong/peipei獨立repo+schema遷移新命名，115行未commit根因(2026-09-18)](feedback_gitignore_stale_after_schema_migration_2026-09-18.md)
+- [🔴 hook鎖senderId而非groupId導致孔大哥產業鍊hook從未真正觸發過(2026-09-18)](feedback_hook_sender_id_vs_group_id_gating_2026-09-18.md)
 - [🔧 bni/seabiscuit.bymyway.com 403是gateway.trustedProxies缺設定，非斷線(2026-09-17)](reference_gateway_trustedproxies_and_reload_block_2026-09-17.md)
 - [🔴🔴🔴 教練MiniMax方案=5小時4500次呼叫(講過30次以上)，遇到429不要再問額度多少](reference_minimax_quota_5h_4500_calls.md)
 - [🔴🔴 kong/peipei/小二各自獨立SOUL.md不同步，main改規則不會自動傳到位(2026-09-17)](feedback_agent_soul_files_not_synced_2026-09-17.md)
