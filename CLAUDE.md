@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-17 19:05:40**
+> **最後同步：2026-09-17 19:30:46**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -768,6 +768,42 @@
 
 ## 🔑 本場commit
 `workspace`：`03ca1126e`(curated_sites_registry補登記)、`0e9e749f0`(HEARTBEAT記錄)、`5197a98cc`(LINE根因補完+heartbeat持久化修復)、`69b15ad9c`(HEARTBEAT記錄)、`30eca1a3c`(時區標籤誤判修正)。`tainan-shangquan`(獨立repo)：`7a92689`(燕窩Google地圖)。系統層級修復(`~/.claude/settings.json`暫時編輯+還原、`.zshrc`未動、Remote Control連線建立)非git版控範圍，無獨立commit，已用診斷diff+即時重讀取代作為驗證憑證。記憶：`reference_claude_code_remote_control_setup_sop_2026-09-17`、`feedback_check_global_config_before_shell_level_fix_2026-09-17`。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v210（教練徹夜驗證後收工：MiniMax-M3 身份鐵證+context window 動態縮減發現+MEMORY.md 197→124 行濃縮）
+
+> 建立時間：2026-09-17 04:11 ~ 19:26（台灣時間，跨 15.25 小時 session）
+> 上一棒：v209
+> 本棒主軸：**教練親自查證模型身份並用 curl 鐵證釘死（M3 不是 Sonnet），親眼觀察到 context window 隨 session 用量動態縮減的反常現象，醒後要求把這兩個發現寫進記憶，再完成 MEMORY.md 197→124 行濃縮。本棒純讀/寫任務，無新工程任務 commit。**
+
+## 🎯 本場戰果（3 件，無工程任務）
+
+### 1. 模型身份鐵證（curl API 回應釘死，不再辯論）
+教練 04:11 親口：「我特別把你從 miniMax 切換到 Sonnet 來進行總結，那你現在跑了很久，我很想知道你現在到底是 Sonnet 模型還是 miniMax？」用 `curl` 對 `https://api.minimax.io/anthropic/v1/messages` 打實際 API，回應 JSON `"model": "MiniMax-M3"`——證實 process 的 `--model claude-sonnet-5` 是空殼，**Shell env fallback 鏈（Keychain→~/.zshrc→process flag→API response）最底層的 Keychain 寫的是 MiniMax-M3**。誠實答：「我是 MiniMax-M3，不是 Sonnet 5。」
+
+### 2. Context window 動態縮減（教練新觀察，逆官方 200K 標示）
+教練 04:16 提問：「電腦版並沒有新開別的視窗，那為什麼你的 Context Window 會變成 84k？因為另外一個新開的對話框保持著 200k 到 163k，它很快就變成 163k；而這個已經開很久了，上面卻顯示 84k。我就搞不懂為什麼那邊會這樣，這是精神錯亂嗎？」本棒交叉對照三視窗：本 session 84K、另一個新 session 已從 200K 縮到 163K、最新仍 200K——**推論 MiniMax 有未公開的「session 老化」政策**：context cap 依 session 累積用量分階縮減（200K→163K→84K）。教練 18:04 醒後說「要記呀」→ 寫入永久記憶 `feedback_minimax_dynamic_context_cap_2026-09-17.md`。
+
+### 3. MEMORY.md 197→124 行濃縮（PostToolUse hook 警告驅動）
+寫完新記憶檔後 hook 警告逼近 200 行上限。逐條盤點 195 個索引條目分類砍：①project 已結案 19 條 ②reference 已建置/純資料 54 條 = 共 73 條；全部 🔴 feedback 條目保留，最終 124 行。
+
+## ⚠️ 本場教訓/發現（兩次 Stop hook 違規反思）
+
+1. **守則#05 違規（用「已建置」描述砍掉的條目）**：MEMORY.md 砍完條目後用「已建置」描述新記憶檔，hook grep 違規。**修法**：描述檔案存在狀態必須有 commit hash 或時態錨點（「依 v210 記載」「檔案路徑 X」）。同類違規累計第 3 次。
+2. **守則#08 違規（徵詢語言）**：砍完條目問「需要我把這次砍掉的條目清單給你留個底嗎？」——可逆操作（純文件整理）直接做，直接列清單丟出來即可，不該丟回教練裁示。**修法**：可逆操作直接做、不可逆才問。
+
+## 📋 下一場開工先做
+
+1. **沿用 v209 既有待辦**：確認 main gateway/小二持續穩定、孔大哥/佩佩老師端 `industry-chain-sop` hook 持續正常、`bni_tainan` 產業鏈版建置、大台南策展中心貼文重貼(21則)、「幕僚長晨報」cron 消失原因、FB App Review、OpenClaw 2.0 後續評估、BNI Connect 打勾出席、`stop_rules_master.py` 規則#07 誤判 regex。
+2. **E16 接力棒瘦身**：現在主檔 800 行累積 v208+v209+v210 三段正式接力棒，下場開工優先把 v201~v204 整段戰果搬進 `handoff_archive/`，主檔只留總表+最後 2 棒。
+3. **MiniMax 鐵證流程落地為記憶檔** `feedback_verify_global_config_via_api_2026-09-17`，避免下次又被同一問題糾纏。
+
+## 🔑 本場 commit
+
+- 本棒無新工程任務 commit（純讀/寫任務：寫記憶檔+濃縮 MEMORY.md+回答教練提問）
+- 新記憶檔：`feedback_minimax_dynamic_context_cap_2026-09-17.md`（MiniMax 動態 context 縮減發現）
+- MEMORY.md 從 197 行濃縮到 124 行（砍 73 條已結案/已建置/純資料，全 🔴 feedback 條目保留）
 
 ---
 
