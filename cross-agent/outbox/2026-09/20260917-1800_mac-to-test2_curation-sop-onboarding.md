@@ -158,7 +158,7 @@ curl -s https://event.bymyway.com/tainan-shangquan/ | grep -E "<slug>|新店"
 2. 回信到小二自己指定的位置 `~/.openclaw/workspace/inbox/回信_策展SOP_20260917.md`，告知檔案路徑+重點+這次巧合
 3. 這封本體信（20260917-1800）不用再走 A/B/C 任何一個送達方案，已經走另一條更直接的路收斂完畢
 
-commit：`7b0a76bb0`（main workspace，含 knowledges 對照無變動，本次 test2 端寫入不在 main workspace git 版控範圍內）
+commit：`38a5197bc`（main workspace，本次 test2 端寫入不在 main workspace git 版控範圍內）
 
 ---
 
