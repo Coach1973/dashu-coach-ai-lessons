@@ -493,6 +493,7 @@ args: 0828
    curl -s -b /tmp/cookie.txt -X POST https://event.bymyway.com/admin/sessions/save \
      -d "slug=<場次代碼>" -d "name=<活動名稱>" -d "event_date=YYYY-MM-DD" -d "status=active"
    ```
+   **🔴如果這場活動屬於大樹小講(bigtree)系列**，這步要多帶一個欄位：`-d "event_url=https://coach1973.github.io/<slug>/"`——`bigtree_publish.py`會自動讀這欄，官網對應場次卡片就會出現「我要看活動網頁」按鈕連過去，不用另外改bigtree原始碼。非bigtree的一次性活動不需要這步。
 5. 送一筆真實測試報名，確認Telegram「活動報名即時通知」群組有收到+`event.db`的`signups`表有新紀錄，驗證完清掉測試資料。**不用另外通知教練**，Telegram已經自動發了。
 
 完整技術細節+特別注意事項見`claude-brain/reference_event_registration_page_sop_2026-09-17.md`（跟軍師共用同一份workspace repo，讀得到）

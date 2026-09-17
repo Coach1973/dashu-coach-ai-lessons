@@ -62,6 +62,8 @@ curl -s -b /tmp/cookie.txt -X POST https://event.bymyway.com/admin/sessions/save
 ```
 `events` 表欄位：`slug/name/event_date/start_time/site/slot_key/location/venue/address/transport/status/show_live_count/event_url`，不是每欄都要填，至少要有 `slug/name/event_date/status=active`。
 
+**🔴 2026-09-17教練補充：如果這場活動屬於「大樹小講」(bigtree)系列，這步要多做一件事**——把第二步建好的報名頁 GitHub Pages 網址（`https://coach1973.github.io/<slug>/`）一併填進這筆 `events` 記錄的 `event_url` 欄位（用上面 `admin/sessions/save` 的 curl 指令時多帶一個 `-d "event_url=https://coach1973.github.io/<slug>/"`）。原因：`bigtree_publish.py` 本身已經有讀取 `event_url` 欄位的邏輯（不是新機制，這是既有的「我要看活動網頁」按鈕功能），只要這欄有值，大樹小講官網對應場次卡片就會自動出現連到這個報名頁的按鈕，不用另外手動改 bigtree 的原始碼或請教練確認。**這個關聯規則只適用於大樹小講系列**，其他非 bigtree 的一次性活動（如各校友會、企業內訓）不需要這步。
+
 **第五步｜驗證**
 ```bash
 curl -sI https://coach1973.github.io/<slug>/ | head -1     # GitHub Pages 應 200
