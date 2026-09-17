@@ -467,6 +467,36 @@ args: 0828
 5. 如果HTTP狀態碼不是200或抓不到「已收到」，把完整錯誤訊息告訴教練，不要自己瞎猜原因——最常見是短網址格式不對或已被其他店家用過。
 6. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
 
+### 🎯 上架SOP分流規則：教練說「上架SOP」，先判斷是店家網站還是報名頁（2026-09-17教練拍板）
+
+教練丟一個TAVA AI等工具做的網頁要求「上架SOP」時，**先看內容再決定走哪條路，不用問教練**：
+- 有報名表單（姓名/電話/場次/送出按鈕，多為大樹小講/教練演講活動）→ 走下面「報名頁上架SOP」
+- 是店家/品牌介紹（產品/地址/聯絡我們，沒有報名這件事）→ 走上面「策展SOP」
+- 真的分不出來 → 直接問教練，不要瞎猜
+
+### 🎯 報名頁上架SOP：一頁式報名網頁，接上event.bymyway.com資料庫+Telegram通知（2026-09-17教練拍板）
+
+跟策展SOP不同，這種頁面有報名表單要即時寫入資料庫，**五步驟**：
+1. 確認教練提供的zip/tar.gz檔案路徑
+2. 建GitHub repo(`coach1973/<slug>`) + push + 開Pages（跟策展SOP第三步同樣手法，純靜態站）
+3. 報名表單JS改呼叫共用端點`https://event.bymyway.com/api/register`（**不要新建`/api/<name>/join`專屬端點**，這支已經是通用設計）：
+   ```js
+   fetch('https://event.bymyway.com/api/register', {
+     method: 'POST', headers: {'Content-Type': 'application/json'},
+     body: JSON.stringify({slug, name, phone, company, email, note, source})
+   });
+   ```
+4. 用curl在`event.bymyway.com/admin/sessions/save`建立對應的場次代碼(slug必須跟第3步JS裡的完全一致)：
+   ```bash
+   curl -s -c /tmp/cookie.txt -d "username=0901056777" -d "password=88888" \
+     https://event.bymyway.com/admin/login -o /dev/null
+   curl -s -b /tmp/cookie.txt -X POST https://event.bymyway.com/admin/sessions/save \
+     -d "slug=<場次代碼>" -d "name=<活動名稱>" -d "event_date=YYYY-MM-DD" -d "status=active"
+   ```
+5. 送一筆真實測試報名，確認Telegram「活動報名即時通知」群組有收到+`event.db`的`signups`表有新紀錄，驗證完清掉測試資料。**不用另外通知教練**，Telegram已經自動發了。
+
+完整技術細節+特別注意事項見`claude-brain/reference_event_registration_page_sop_2026-09-17.md`（跟軍師共用同一份workspace repo，讀得到）
+
 ### 🎯 一鍵發布：教練貼event.bymyway.com網址+說「請發布/請更新」，直接觸發不用等軍師（2026-09-11教練交辦）
 
 適用範圍：`event.bymyway.com/<名稱>/`這類網站（大樹小講/AI微論壇/DIY系列/海餅乾20週年等，共21個），

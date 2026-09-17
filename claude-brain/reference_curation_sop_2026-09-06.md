@@ -7,10 +7,11 @@ metadata:
 
 # 🎯 策展SOP（2026-09-06 教練口述，軍師修正定稿）
 
-> 跟另外兩套既有SOP的關係（三者目標站不同，不可混用）：
+> 跟另外三套既有SOP的關係（四者目標站不同，不可混用）：
 > - **網頁推SOP**（[[feedback_web_push_sop]]）：推送到GitHub測試站 或 Netlify正式站，教練說「網頁推/推」才會觸發
 > - **自動站**（[[feedback_coach_deploy_vocabulary]]）：部署到bymyway.com（WP iframe抓GitHub repo新版）
-> - **策展SOP**（本篇，NEW）：教練用外部AI工具做好的店家/夥伴網站，經GitHub Pages + event.bymyway.com + 大台南策展中心店家名冊三層上架，目的是讓夥伴店家有專屬網址並被策展中心收錄
+> - **策展SOP**（本篇）：教練用外部AI工具做好的店家/夥伴網站，經GitHub Pages + event.bymyway.com + 大台南策展中心店家名冊三層上架，目的是讓夥伴店家有專屬網址並被策展中心收錄
+> - **報名頁上架SOP**（[[reference_event_registration_page_sop_2026-09-17]]，2026-09-17 NEW）：一頁式報名網頁（多為大樹小講/教練演講活動），涉及event.db寫入+即時Telegram通知，跟本篇同屬「上架SOP」觸發詞下的另一條分支——教練說「上架SOP」時，AI依內容是「店家介紹」還是「報名表單」自動判斷走哪一篇
 
 ## 完整流程（六步）
 
