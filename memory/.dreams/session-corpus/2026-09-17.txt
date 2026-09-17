@@ -1,0 +1,3 @@
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L125] User: FB社群小編的產業鍊SOP
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L126] Assistant: 收到，馬上生成 FB 社群小編的產業鍊圖。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L129] Assistant: 已生成，圖已推到您 Telegram 囉！caption 是「FB 社群小編的產業鍊圖」，18 個周邊節點一次畫完。 按 SOP 規則，一次生成就好（GPT Image 2 偶爾周邊節點文字會生錯但額度有限），要調整再跟我說。
