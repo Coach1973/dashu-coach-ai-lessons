@@ -195,6 +195,18 @@
       "uploaded_at": "2026-09-16 06:48",
       "status": "live",
       "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報連結點不到發現)"
+    },
+    {
+      "slug": "bigtree-1003",
+      "title": "用手機就能玩 AI ｜ 10/3（六）KR養生廚房．大樹教練",
+      "description": "零基礎學AI第四場，這次主題「用手機就能玩AI」。10/3（六）14:00–16:30，台南KR養生廚房，免費入場。現場做網頁、用SUNO做音樂、玩NotebookLM、AI出圖，全程只用你手上那支手機。",
+      "category": "大樹小講活動",
+      "event_url": "https://event.bymyway.com/curated/bigtree-1003/",
+      "github_pages_url": "https://coach1973.github.io/bigtree-1003/",
+      "uploaded_at": "2026-09-17 19:07",
+      "status": "live",
+      "source_package": "20260917-190737__input-bigtree-1003-site---143d6404-9b57-4bd9-ad93-260c7b9129e8.zip",
+      "no_shop_card": true
     }
   ],
   "redirects": {
