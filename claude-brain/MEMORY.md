@@ -128,3 +128,4 @@
 - [🔴 禁止用FORK+創作類先讀已上線版本](feedback_no_fork_without_permission.md)
 - [🔴 網頁推SOP(教練說「網頁推」觸發)](feedback_web_push_sop.md)
 - [🔴 時間顯示鐵律：一律換算台灣時間](feedback_taiwan_time_always.md)
+- [🔴🔴 先斷言後查證模式：教練連續6次糾正同一組毛病](feedback_assert_before_verify_pattern_2026-09-17.md)
