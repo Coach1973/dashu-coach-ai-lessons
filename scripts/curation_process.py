@@ -349,6 +349,83 @@ def overwrite_shop_placeholder(site_dir: Path, slug: str) -> None:
     os.remove(tar_path)
 
 
+def ensure_og_tags_absolute(repo_dir: Path, slug: str) -> None:
+    """2026-09-18軍師交辦：策展SOP上架後自動確保og:標籤使用絕對路徑，
+    否則FB preview card抓不到縮圖（og:image規範要求絕對URL）。
+    - 既有og:image若為相對路徑→改寫成絕對URL
+    - 缺og:title/og:description/og:image→用<title>/<meta name=description>/第一張<img>補
+    - 確保og:description不跟og:title完全一樣（教練2026-09-18抱怨重複）
+    """
+    base_url = "https://event.bymyway.com/curated"
+    index_file = find_index_html(repo_dir)
+    if not index_file:
+        return
+    content = index_file.read_text(encoding="utf-8", errors="ignore")
+    original = content
+
+    # 1. 既有 og:image 相對路徑 → 絕對
+    og_img_pat = re.compile(
+        r'(<meta\s+property="og:image"\s+content=")([^"]+)(")',
+        re.IGNORECASE,
+    )
+    m = og_img_pat.search(content)
+    if m and not m.group(2).startswith(("http://", "https://")):
+        rel = m.group(2).lstrip("./")
+        new_url = f"{base_url}/{slug}/{rel}"
+        content = og_img_pat.sub(lambda mm: f"{mm.group(1)}{new_url}{mm.group(3)}", content, count=1)
+
+    # 2. 缺 og:title → 補一組完整 og: 標籤
+    if 'property="og:title"' not in content:
+        title, desc = extract_meta(content)
+
+        def _normalize(s: str) -> str:
+            return re.sub(r"[\s\-|\/・—_,，。;;:\"'《》「」()（）]+", "", s).lower()
+        if title and desc and _normalize(title) == _normalize(desc):
+            desc = f"{desc} 完整內容請看官網介紹"
+
+        img_url = ""
+        for pat in (
+            r'<meta\s+property="og:image"\s+content="([^"]+)"',
+            r'<img[^>]+src="([^"]+)"',
+        ):
+            im = re.search(pat, content, re.IGNORECASE)
+            if im:
+                src = im.group(1)
+                if not src.startswith(("http://", "https://")):
+                    src = f"{base_url}/{slug}/{src.lstrip('./')}"
+                img_url = src
+                break
+
+        og_lines = [
+            f'    <meta property="og:type" content="website">',
+            f'    <meta property="og:title" content="{title}">',
+        ]
+        if desc:
+            og_lines.append(f'    <meta property="og:description" content="{desc}">')
+        if img_url:
+            og_lines.append(f'    <meta property="og:image" content="{img_url}">')
+        og_block = "\n".join(og_lines)
+
+        new_content, n = re.subn(
+            r"(<title>[^<]+</title>)",
+            r"\1\n" + og_block,
+            content,
+            count=1,
+        )
+        if n:
+            content = new_content
+        else:
+            content = re.sub(
+                r"(<head[^>]*>)",
+                r"\1\n" + og_block,
+                content,
+                count=1,
+            )
+
+    if content != original:
+        index_file.write_text(content, encoding="utf-8")
+
+
 def find_post_image(repo_dir: Path, html_text: str) -> Path | None:
     """挑一張代表圖：優先og:image，找不到就用頁面第一張<img>，都找不到回傳None
     （None時貼文改用純文字動態，不勉強硬塞圖）。"""
@@ -532,6 +609,7 @@ def process_one(pkg_path: Path) -> None:
         slug = unique_slug(base_slug, existing_slugs)
         repo_dir = GITHUB_REPOS_DIR / slug
         shutil.copytree(tmp_extract, repo_dir)
+        ensure_og_tags_absolute(repo_dir, slug)
 
         token = get_github_token()
         create_github_repo(token, slug)
