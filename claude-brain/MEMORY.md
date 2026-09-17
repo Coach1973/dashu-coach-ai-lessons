@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴 peipei-ai-backup(private)舊commit含明文MiniMax/Google金鑰，現況已清空(2026-09-18)](reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)
 - [🔴 .gitignore漏排除kong/peipei獨立repo+schema遷移新命名，115行未commit根因(2026-09-18)](feedback_gitignore_stale_after_schema_migration_2026-09-18.md)
 - [🔴 hook鎖senderId而非groupId導致孔大哥產業鍊hook從未真正觸發過(2026-09-18)](feedback_hook_sender_id_vs_group_id_gating_2026-09-18.md)
 - [🔧 bni/seabiscuit.bymyway.com 403是gateway.trustedProxies缺設定，非斷線(2026-09-17)](reference_gateway_trustedproxies_and_reload_block_2026-09-17.md)
