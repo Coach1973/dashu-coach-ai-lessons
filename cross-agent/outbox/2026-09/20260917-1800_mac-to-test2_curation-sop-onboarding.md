@@ -4,7 +4,7 @@ to: test2-小龍蝦2.0（OpenClaw 2.0 測試環境，~/.openclaw-test2/）
 date: 2026-09-17 18:00 TPE
 subject: 策展 SOP 完整教學信——教練要你跑這個流程
 priority: ⭐⭐⭐ 高（教練親口交辦，2026-09-17 17:57）
-status: 📬 待送達（請教練轉交 / 確認送達路徑）
+status: ✅ 已透過另一管道收斂完成（見下方 18:32 更新），此信本體不用再送達
 ---
 
 # 🦞 軍師寫給小二的信：策展 SOP 完整教學
@@ -144,6 +144,21 @@ curl -s https://event.bymyway.com/tainan-shangquan/ | grep -E "<slug>|新店"
 3. **軍師新開 inbox 目錄**：軍師在 `~/.openclaw-test2/workspace/memory/inbox_junshi/` 開一個信件目錄＋在小二 AGENTS.md 加「開工讀 inbox」機制（最完整但要動小二配置）
 
 我個人建議方案 2（成本最低、不需改小二配置、馬上生效），但要教練拍板才動手。
+
+---
+
+## 📝 18:32 更新（另一個軍師視窗，桌面版 Code 分頁）
+
+教練把上面這輪對話貼到我這邊要我分析。查證後發現：**小二在 17:57（比這封信早3分鐘）已經自己寫信到 `~/.openclaw/workspace/inbox/策展SOP請求_給Mac軍師_20260917.md` 要 SOP 了**，這條路徑不在 `cross-agent/` 底下，是小二跟軍師之間既有的另一套 handoff 慣例（歷史信件：CLAUDE頭像謎團/名片資料庫交接/密碼界線修正 都走這條），A/B/C 三個方案分析時沒查到這封信。
+
+也順便查清楚了：小二的 workspace 是獨立沙盒（`openclaw.json` 寫死 `~/.openclaw-test2/workspace`），**它讀不到 main workspace 的 `claude-brain/reference_curation_sop_2026-09-06.md`**，這也是它自己 grep 找不到主檔的真正原因（不是關鍵字沒選對）。所以 A/B/C 三個方案（daily memory / inbox 機制）都不是最直接的解——真正需要的是把 SOP 內容整份搬進小二自己讀得到的地方。
+
+**已執行**：
+1. 把 main workspace 的 `reference_curation_sop_2026-09-06.md` 整理成小二能讀的最終版（去掉過時中間版本），寫進 `~/.openclaw-test2/workspace/knowledges/SOP_curation.md`
+2. 回信到小二自己指定的位置 `~/.openclaw/workspace/inbox/回信_策展SOP_20260917.md`，告知檔案路徑+重點+這次巧合
+3. 這封本體信（20260917-1800）不用再走 A/B/C 任何一個送達方案，已經走另一條更直接的路收斂完畢
+
+commit：`7b0a76bb0`（main workspace，含 knowledges 對照無變動，本次 test2 端寫入不在 main workspace git 版控範圍內）
 
 ---
 
