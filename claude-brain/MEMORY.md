@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴 FB內容資料庫UI把每則貼文列兩段，slug URL count 2~4是假象不是真重複(2026-09-18)](feedback_fb_content_library_ui_duplicates_2026-09-18.md)
+- [🔴「錯的=0 則」必須誠實回報沒事可做，不為回應催促而硬做不可逆操作(2026-09-18)](feedback_no_wrong_posts_no_action_2026-09-18.md)
+- [🔴「修N個錯」動手前先最簡掃描確認N=幾，N=0 就停手講事實(2026-09-18)](feedback_simply_scan_size_first_2026-09-18.md)
 - [🔴 FB API發文訪客看不到時用Playwright接管Chrome重貼SOP(2026-09-18)](reference_fb_real_browser_repost_sop_2026-09-18.md)
 - [🔴 peipei-ai-backup(private)舊commit含明文MiniMax/Google金鑰，現況已清空(2026-09-18)](reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)
 - [🔴 .gitignore漏排除kong/peipei獨立repo+schema遷移新命名，115行未commit根因(2026-09-18)](feedback_gitignore_stale_after_schema_migration_2026-09-18.md)
