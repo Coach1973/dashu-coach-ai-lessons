@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴🔴 kong/peipei/小二各自獨立SOUL.md不同步，main改規則不會自動傳到位(2026-09-17)](feedback_agent_soul_files_not_synced_2026-09-17.md)
+- [🔴 curation刪除功能是整套退役非軟性隱藏，會讓已公告網址404(2026-09-17)](feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md)
 - [🔧 報名頁上架SOP(2026-09-17)：一頁式報名網頁上event.bymyway.com，跟策展SOP同屬「上架SOP」口令的另一分支](reference_event_registration_page_sop_2026-09-17.md)
 - [🔧 策展SOP(2026-09-06)：店家/品牌介紹網站上大台南策展中心，用上傳網址一條龍完成](reference_curation_sop_2026-09-06.md)
 - [🔴 MiniMax-M3 context window 動態縮減（200K→163K→84K），以前以為固定200K是錯的+API回應model欄位才是模型身分最權威證據](feedback_minimax_dynamic_context_cap_2026-09-17.md)

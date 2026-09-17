@@ -6,6 +6,9 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **大樹小講「歷史講座紀錄」補EDM單獨連結（10/3 KR場，佩佩老師已做好edm.jpg/edm.html）** | 🔒待軍師下場補 | 教練確認：報名頁本身已含EDM不用重做，但「歷史講座紀錄」宮格牆那頁要能直接點EDM看，不用點進報名頁才看得到。素材已存在`~/github_repos/bigtree-1003/edm.jpg`+`edm.html`，下一場找到歷史講座紀錄頁面結構後補上連結。 |
+| 🟢 | **大樹小講(bigtree-tw Netlify靜態版)10/3場次尚未跑一鍵發佈** | 🔒待教練喊「發布/推」 | event.db+動態版event.bymyway.com/bigtree/已即時反映10/3(用手機就能玩AI/KR養生廚房)正確資訊，只差靜態Netlify版沒同步。教練確認Netlify額度充足(且已續約享兩個月半價$4.5)，喊「推」隨時可發。 |
+| 🟢 | **孔大哥/佩佩老師SOUL.md已補齊策展SOP+報名頁上架SOP+分流規則** | ✅本場完成 | 查證發現兩人workspace各自獨立(`agents/kong/SOUL.md`／`agents/peipei/SOUL.md`，未被git追蹤，main workspace的SOUL.md新規則不會自動同步過去)，這正是佩佩老師這次把大樹小講活動誤上架成店家的根因。已補齊兩份SOUL.md，往後同類任務應可正確分流，詳見[[feedback_agent_soul_files_not_synced_2026-09-17]]。 |
 | 🔴🔴🔴 | **2026-09-16 04:03~04:13重大事故：main gateway+小二雙雙down機45分鐘，已修復** | ✅本場完成，需觀察 | 終端機PATH解析到新版openclaw(2026.9.4)跟正式launchd服務舊版(2026.6.34)不一致，導致state資料庫schema被升級到17，軍師重啟main gateway時直接撞上版本不相容陷入錯誤循環；搶修時誤kill掉小二的子process連帶影響小二。已改plist指向新版執行檔+`openclaw doctor --fix`完成遷移+`openclaw gateway start`重新啟用，main gateway(24個hook+LINE三帳號+Telegram三帳號)與小二均已驗證恢復正常。`doctor --fix`副作用清掉了`HEARTBEAT.md`/`TOOLS.md`，已用`git checkout HEAD --`從git歷史救回零遺漏。完整記錄見試金石案例73。**下一場開工先確認**：main gateway是否持續穩定無重啟迴圈，LINE/Telegram教練親自測試過都正常再放心。 |
 | 🟢 | **BNI組隊計畫「產業鍊SOP」自動生圖技能：main/Hermes/小二三方已上線+可用，孔大哥/佩佩老師走獨立hook(伺服器端代勞，不開放exec權限)** | ✅本場完成，教練已實測main成功 | 教練決定產圖走lk888付費API(GPT Image 2)，已建`scripts/generate_industry_chain.py`通用腳本(呼叫lk888生圖+推Telegram，支援跨環境指定bot帳號)，API Key存於`路徑大全_憑證層.md`。觸發句型「[專業別]的產業鍊SOP」：①**main agent**（`workspace/SOUL.md`新增技能段落，教練已用Telegram實測成功）②**Hermes**（workspace透過symlink共用main的SOUL.md，不用額外設定，理論上已可用未經教練實測）③**小二**（`~/.openclaw-test2/workspace/SOUL.md`獨立寫入，已用跨環境呼叫測試成功送達教練Telegram）④**孔大哥(kong)/佩佩老師(peipei)**：查證`tools.toolsBySender`只有教練帳號有完整exec權限，`group:automation`不含exec(官方文件核實)，改用伺服器端hook方案——新建`hooks/industry-chain-sop/`，事件驅動偵測孔大哥(Telegram id`8689825759`)/佩佩老師(id`8786886419`，兩者ID皆從各自sessions目錄真實sender_id統計取得，非教練提供)本人發言，Node.js直接呼叫MiniMax組prompt+執行腳本生圖回傳，全程不開放exec給他們的帳號。已註冊進`openclaw.json`+gateway熱重載生效，**2026-09-17 19:00教練回報孔大哥/佩佩老師本人已實測正常**。**已知取捨**：GPT Image 2約5~10%機率周邊節點文字出錯(重複/錯字)，教練已表態不追求完美、不自動重試(額度有限)。**下一場待辦**：bni_tainan(一般BNI夥伴MiniMax免費文字+生圖版)尚未開始建置。 |
 | 🟢 | **三個LINE帳號(大台南南區小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天3.5小時修復** | ✅2026-09-16 v205本場完成 | 根因是`@openclaw/line`外掛套件檔案遺失(`openclaw plugins install @openclaw/line`修復)，詳見v205完整戰果+記憶`reference_line_plugin_extensions_missing_2026-09-16`。已新增每日08:05健康檢查(`scripts/three_line_bots_healthcheck.sh`)，教練要求每天都要回報不論健康與否。 |
@@ -834,3 +837,40 @@
 本場無新工程任務 commit——主要是回答問題、跑開工示範、四次違規反思。
 
 新記憶檔：`feedback_no_english_tech_terms_without_explaining_2026-09-17.md`（守則#10）、`feedback_no_completion_words_when_describing_history_2026-09-17.md`（守則#05，第二次同類違規升格獨立記憶）。
+
+---
+
+# 軍師接力棒 · 2026-09-17 v211（Mac桌面版 Sonnet 5，Remote Control同源確認+報名頁上架SOP從零建置+大樹小講10/3事故搶修+kong/peipei SOP補齊）
+
+> 建立時間：2026-09-17 18:05 ~ 19:42（台灣時間）
+> 上一棒：v210（教練徹夜驗證MiniMax身份+MEMORY.md濃縮，另一視窗完成）
+> 本棒主軸：**確認手機Remote Control與Mac終端機是同一份session（非兩個大腦）；教練提出「策展SOP之外還需要一套報名頁上架SOP」新需求，從零建置並嘗試同步五個agent（main/Hermes/小二/kong/peipei）；教練實測揭發industry-chain-sop觸發規則太死板的真bug並已修復；佩佩老師因缺SOP誤把大樹小講10/3活動上架成店家，軍師搶修過程中自己也踩了一次「下架=整套退役」的坑，兩者都已修復並記入教訓。**
+
+## 🎯 本場戰果
+
+### 1. Remote Control架構釐清
+教練確認多視窗多工是常態使用方式，只要求「讀同一份」的定義清楚。已查證：手機Remote Control連的是特定tmux session（`cf6176b7...`），跟Mac終端機打開該session是完全同一份對話（已用transcript jsonl `510筆assistant訊息全為claude-sonnet-5`實證，非MiniMax）；但跟本桌面版Code分頁（另一個獨立session）不是同一份——這是所有終端機工具的通例，不是bug。
+
+### 2. 報名頁上架SOP從零建置＋五方同步（歷經三輪修正）
+教練指出TAVA AI做的網頁分兩種：店家介紹(既有策展SOP)vs一頁式報名頁(新需求，需接event.db+Telegram通知)。建置`claude-brain/reference_event_registration_page_sop_2026-09-17.md`，核心：報名表單統一呼叫共用端點`/api/register`（不再新建`/api/<name>/join`專屬端點）、场次代碼在`admin/sessions/save`建立、大樹小講系列要多設`event_url`欄位串上既有「我要看活動網頁」按鈕。**同步五方時發現的坑**：①`event_url`不在`admin/sessions/save`表單白名單裡，curl帶這個欄位會被靜默忽略(親身踩過一次才發現，已修正SOP改用直接寫DB)②main/Hermes/小二三方本場稍早已同步，但**漏了kong/peipei**——他們各自有獨立、從未被git追蹤的`SOUL.md`，main改的規則不會自動傳過去，這正是後面第4項事故的根因，事後已補齊，詳見[[feedback_agent_soul_files_not_synced_2026-09-17]]。
+
+### 3. industry-chain-sop觸發規則真bug修復
+教練實測「請執行產業服務鏈SOP對象是企業教練」完全觸發失敗（孔大哥的AI搜錯地方、查無此SOP）。查`hooks/industry-chain-sop/handler.js`發現舊regex `/(.{1,20}?)的產業[鍊鏈]SOP/`只認死板句型，教練的自然講法（用詞不同+主題位置不同）完全對不上。改成寬鬆觸發判斷(`/產業(?:服務)?[鍊鏈]\s*SOP/`)+把主題判斷交給MiniMax從整句話理解（不再用regex死板抓字），已用教練的真實失敗語句實測驗證MiniMax正確判斷主題「企業教練」並生出正確格式prompt。用`openclaw hooks disable/enable`（非整台重啟，鑑於9/16版本不match重啟慘案記取教訓）讓孔大哥端重新載入，過程中出現一則「legacy migration」警告（跟9/16事故同一家族），選擇不深究、只確認主服務未受影響，建議教練請孔大哥真實再測一次做最終驗證。
+
+### 4. 🔴🔴 大樹小講10/3(KR養生廚房)活動事故：連環兩次疏漏，已修復
+教練發現大樹小講10/3場次沒同步更新，追查發現佩佩老師（缺報名頁上架SOP，見上第2點）把這場活動誤走策展SOP上架，變成大台南策展中心一張「食」類店家卡片。軍師接手處理：①event.db補齊正確資訊(主題/地點KR養生廚房/地址/時段14:00-16:30/event_url)，動態版`event.bymyway.com/bigtree/`已即時反映②**自己也踩坑**：想拿掉錯誤的店家卡片，用了`/curation/admin/delete/`，結果這個函式是整套退役(GitHub repo改名+關Pages+registry移除)，連帶讓教練已經公告出去的`event.bymyway.com/curated/bigtree-1003/`直接404。發現後完整復原：repo改名復原+重開Pages+本機資料夾搬回+registry補回(分類改標「大樹小講活動」非店家)，已用curl驗證公開網址200且大台南商圈首頁確認不再誤顯示店家卡片，詳見[[feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17]]。教練確認：靜態Netlify版一鍵發佈可以隨時推(額度充足+已續約半價)，EDM素材(`edm.jpg`/`edm.html`)已存在於repo，「歷史講座紀錄」頁面待補單獨連結。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `feedback_agent_soul_files_not_synced_2026-09-17`：main/Hermes/小二/kong/peipei五個agent workspace互相獨立無自動同步，任何新規則要教全員知道必須逐一手動複製，不能只改一份。
+2. `feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17`：「拿掉名冊卡片」跟「整站退役」是同一個函式的不同影響範圍，動手前要讀實際邏輯不能只看函式名稱猜效果，尤其牽涉已公開網址時。
+
+## 📋 下一場開工先做
+1. 大樹小講「歷史講座紀錄」補10/3 EDM單獨連結。
+2. 等教練喊「推」跑bigtree-tw靜態版一鍵發佈。
+3. 確認孔大哥實測industry-chain-sop新版是否成功。
+4. 「大台南商圈整合計畫店家上架通知」標題邏輯待優化：依slug是否bigtree開頭決定顯示「活動網頁上架通知」還是「店家上架通知」（教練本場提出，未動手）。
+5. 沿用既有待辦：「幕僚長晨報」cron消失原因待查（39天未覆核）、FB App Review、OpenClaw 2.0後續評估、大台南策展中心21則貼文重貼、`stop_rules_master.py`規則#07誤判regex。
+6. E16接力棒瘦身：主檔已累積v201~v211共11棒（另有教練徹夜獨立完成的v210插隊），下次開工優先搬v201~v205進`handoff_archive/`。
+
+## 🔑 本場commit
+`workspace`：`232cf0a`系列以外，本場主要commit：`8537197dd`+`457918fbf`+`539dd68a1`（報名頁上架SOP建置+修正）、`47053c840`+`20b0acf2e`（SOP+MEMORY.md索引）、`73dda92a1`（產業鍊SOP四方確認記錄）、`65a2f484a`（大樹小講10/3事故搶修）。`kong`/`peipei`的SOUL.md更新不在git版控範圍（既有狀態，非本場造成），無commit hash，已用內容比對+diff verified落地。
