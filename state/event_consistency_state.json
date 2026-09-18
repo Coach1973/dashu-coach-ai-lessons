@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-09-09T08:20:03.164411+08:00",
-  "future_sessions": 15,
+  "checked_at": "2026-09-18T08:20:01.798041+08:00",
+  "future_sessions": 8,
   "problems": [
-    "資料庫有「當古典音樂遇到AI - 映月（ai-art-0916／2026-09-16）」但官網沒列出——是不是忘了按一鍵發佈？"
+    "個別活動頁「從從容容用AI聊健康 台南場」(ai-fit) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道"
   ],
   "satellites": {
     "ai-talk": {
@@ -24,9 +24,9 @@
       ],
       "exists": true,
       "has_api": false,
-      "has_deeplink": true,
-      "notified": true,
-      "how": "深連結回官網報名"
+      "has_deeplink": false,
+      "notified": false,
+      "how": "❌ 沒有任何通知管線"
     },
     "ai-forum-taichung": {
       "desc": "AI微論壇 台中場",

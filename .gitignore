@@ -40,3 +40,35 @@ event-signup/.env.bak
 # 原始對話逐字稿：內容是對話全文，可能包含教練貼出的密碼/API Key等敏感內容，
 # 只留本機不上雲（2026-09-14教練親自要求根治，不再靠事後遮蔽補救）
 terminal-notes/raw_sessions/
+
+# gateway重啟/doctor --fix觸發的schema遷移會把workspace-state.json改名成
+# xxx.migrated.<hash>.<uuid>再重寫新檔，這些改名後的舊版是一次性遷移副產物，
+# 不是真實工作內容，每次遷移都會產生新的隨機檔名，禁止納入版控（2026-09-18案例73同型再發）
+*.migrated.*
+
+# Python bytecode cache，任何目錄下都不納入版控（原規則只擋scripts/底下那份，2026-09-18擴大）
+__pycache__/
+
+# 產業鍊SOP功能產生的生圖成品+prompt草稿，已各自透過Telegram送達教練/孔大哥/佩佩老師，
+# 檔案本身從未進過版控，屬一次性生成產物不是需要保留的知識，禁止納入版控（2026-09-18）
+claude-brain/data/industry_chain_*.png
+claude-brain/data/industry_chain_prompt_*.txt
+
+# FB貼文刪除/重貼調查(v217案例，結論是0則要刪)留下的暫存log+除錯截圖，
+# 調查已結案，內容不具永久參考價值，禁止納入版控（2026-09-18）
+distill/curation_repost_log_*.txt
+distill/fb_delete_v*_log_*.txt
+distill/fb_wrong_posts_to_delete_*.txt
+distill/repost_fail_*.png
+
+# 本機暫存輸出目錄，命名已標明是tmp（2026-09-18）
+event-signup/static_tmp/
+
+# 各session「這張專案卡有沒有注入過」的一次性dedup標記，純本機bookkeeping，
+# 每個session每個專案就會多一個空檔案，禁止納入版控（2026-09-18）
+state/project_card_injected/
+state/project_card_injected_openclaw/
+
+# 危險指令五道閘門(E11)的一次性10分鐘通行證，性質上不該被版控固化，
+# 過期後應視為不存在，禁止納入版控（2026-09-18）
+state/DELETE_APPROVED
