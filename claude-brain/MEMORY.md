@@ -1,5 +1,7 @@
 # Memory Index
 
+- [🔴 開工hook寫死「軍師Opus」導致手機MiniMax誤認身份，改查BASE_URL/API_KEY(2026-09-18)](feedback_hook_hardcoded_identity_assumption_2026-09-18.md)
+- [🔧 AI團隊品質稽核機制：既有13條Stop hook規則+新彙整器agent_team_qa_digest.py(2026-09-18)](reference_agent_team_qa_digest_mechanism_2026-09-18.md)
 - [🔴 FB內容資料庫UI把每則貼文列兩段，slug URL count 2~4是假象不是真重複(2026-09-18)](feedback_fb_content_library_ui_duplicates_2026-09-18.md)
 - [🔴「錯的=0 則」必須誠實回報沒事可做，不為回應催促而硬做不可逆操作(2026-09-18)](feedback_no_wrong_posts_no_action_2026-09-18.md)
 - [🔴「修N個錯」動手前先最簡掃描確認N=幾，N=0 就停手講事實(2026-09-18)](feedback_simply_scan_size_first_2026-09-18.md)
@@ -7,6 +9,10 @@
 - [🔴 peipei-ai-backup(private)舊commit含明文MiniMax/Google金鑰，現況已清空(2026-09-18)](reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)
 - [🔴 .gitignore漏排除kong/peipei獨立repo+schema遷移新命名，115行未commit根因(2026-09-18)](feedback_gitignore_stale_after_schema_migration_2026-09-18.md)
 - [🔴 hook鎖senderId而非groupId導致孔大哥產業鍊hook從未真正觸發過(2026-09-18)](feedback_hook_sender_id_vs_group_id_gating_2026-09-18.md)
+- [🔴 hook目錄從working tree消失但git tree還在時的標準恢復SOP(2026-09-18)](feedback_hook_files_disappeared_from_working_tree_2026-09-18.md)
+- [🔧 cron job從active store消失的三路併查SOP(2026-09-18)](reference_cron_job_disappear_root_cause_sop_2026-09-18.md)
+- [🔴 rule#07 polling白名單盲點：討論/計畫/回顧事故脈絡會誤擋(2026-09-18)](feedback_rule07_polling_whitelist_blindspot_2026-09-18.md)
+- [🔴 Netlify zip deploy API 不接受中文檔名/中文目錄(2026-09-18)](reference_netlify_zip_deploy_chinese_filename_2026-09-18.md)
 - [🔧 bni/seabiscuit.bymyway.com 403是gateway.trustedProxies缺設定，非斷線(2026-09-17)](reference_gateway_trustedproxies_and_reload_block_2026-09-17.md)
 - [🔴🔴🔴 教練MiniMax方案=5小時4500次呼叫(講過30次以上)，遇到429不要再問額度多少](reference_minimax_quota_5h_4500_calls.md)
 - [🔴🔴 kong/peipei/小二各自獨立SOUL.md不同步，main改規則不會自動傳到位(2026-09-17)](feedback_agent_soul_files_not_synced_2026-09-17.md)
