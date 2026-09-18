@@ -758,8 +758,23 @@ for evt in EVENTS[-300:]:
             command,
         ):
             name = m.group(1).strip()
-            if name and name not in NEW_NAMED_ITEMS:
-                NEW_NAMED_ITEMS.append(name)
+            if not name or name in NEW_NAMED_ITEMS:
+                continue
+            # 🔴 2026-09-19發現：自由文字commit訊息裡的完整子句（例如「新增「海餅乾
+            # 俱樂部」卡片，連到該案例網站」）會被這個regex從「新增」抓到最近的
+            # 後綴詞為止，把中間整段逗號子句都當成候選名稱——這種字串永遠不會
+            # 出現在coach888的連結文字裡，等於每次都是假陽性，而且因為上面
+            # EVENTS[-300:]每次Stop都重新掃描歷史commit，同一個假陽性會在同一場
+            # session裡無限重複跳出，不會隨著已經澄清/已經處理過而消失。
+            # 真正的「新增OO頁面」宣告用語是乾淨的短名詞（通常<=16字、不含逗號/
+            # 句號/頓號），這裡加一層過濾，超長或含這些標點的視為抓錯範圍（多半
+            # 是中文散文夾帶的子句），不當成候選名稱。注意：不能拿「「」」引號當
+            # 過濾條件——中文專有名詞常用「」包起來，這樣會把真正該抓到的合法
+            # 案例也一起濾掉（實測「「大台南策展中心」後台管理頁」這個文件裡
+            # 記載的真實案例，含「」但不含逗號/句號，必須留著才抓得到）。
+            if len(name) > 16 or re.search(r"[，。、]", name):
+                continue
+            NEW_NAMED_ITEMS.append(name)
 
 if NEW_NAMED_ITEMS:
     try:
