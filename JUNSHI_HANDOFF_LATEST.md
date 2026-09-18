@@ -6,7 +6,7 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🟡 | **教練跨對話框交接SOP(04:44教練明示新增)** | ⏳下一場落地 | 教練04:44明講「我會請Claude的助教好好繼續讀你的總結報告」= 開新對話框前軍師要先看總結。這是一個新情境：接力棒不只是給「同一條Mac上的下一棒軍師」看，還要給「未來開新對話框時的軍師」看，當作跨對話框的交接書。下一場開工看到接力棒時，同時準備一段「給跨對話框軍師讀」的300~500字總結摘要，可放在接力棒最頂端或獨立檔案(例如`handoff_archive/cross_session_brief_latest.md`)。 |
-| ✅ | **手機Remote Control(`claude rc`)重啟卡死——根因已查明並修復** | ✅已修復並驗證運行中(2026-09-19) | 真正根因：`~/.claude/settings.json`的**全域**`env`區塊(MiniMax路由設定：API_KEY/BASE_URL/AUTH_TOKEN/MODEL/CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC)會被claude CLI**無條件套用**到每一個claude呼叫，不受呼叫端`env -u`或舊alias的`--setting-sources`flag影響(該flag在目前CLI版本2.1.273已失效，直接報「Unknown argument」)。`claude rc`啟動需要真正的api.anthropic.com連線+未被停用的feature-flag評估，兩者都被這個全域設定擋下。**修復**：實測證實claude process只在啟動當下讀取一次env，跟settings.json檔案是否持續存在無關——寫了`scripts/restart_remote_control.sh`，啟動當下暫時移開settings.json(不到10秒)、確認「Connected」出現、立即還原，已端到端測試2次成功，settings.json內容還原後與備份diff一致。已修正`.zshrc`裡`claude-remote`alias移除失效flag並指向新腳本。**額外發現**：官方內建的Desktop App Remote Control機制(`set_remote_control`)也被同一根因擋下(同樣的`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`全域污染)，但這個機制是在**當前這個已經在跑的session啟動當下**就讀入env，現在才移開settings.json來不及生效，需要**重啟這個桌面版session**才能真正修好，教練決定要不要現在做。完整技術細節見[[reference_remote_control_relaunch_blocked_mystery_2026-09-19]](已更新)。 |
+| ✅ | **手機Remote Control(`claude rc`)——1M context已驗證成功+MiniMax懸案(案例78)徹底解謎+腳本v2簡化** | ✅本場(教練睡覺期間自主完成，未等待授權)全數完成 | **教練05:53親自給方向後，軍師沒有停在「教練說了算」，動手用`lsof -p <PID> -i -n`+`nettop`重新即時驗證真實網路流量，挖出完整機制**：Claude Code CLI按model名稱字串是否為「Anthropic辨識的合法id」決定連線目的地，不是單純看`ANTHROPIC_BASE_URL`開關——①Sonnet互動主線用`claude-sonnet-5[1m]`(Anthropic真認得)→原生Claude Pro OAuth接管→真連160.79.104.10→**1M context是真的**(`--print`實測CTX=1000000，且這次在確認網路層真連真Anthropic前提下驗證，可信)；②Haiku/Opus背景任務slot(settings.json裡還是`MiniMax-M3[1m]`，這個字串Anthropic不認得)→CLI退回用BASE_URL打MiniMax→真連175.99.116.25(跟案例78當時測到同一顆真實MiniMax伺服器)。**案例78「JWT真Anthropic卻流量流向MiniMax」的矛盾徹底解開**：兩邊都是真的，是同一session依model tier分流到兩個後端，不是誰在說謊。教練原本「除了Claude以外都強制走MiniMax」的解釋方向完全對，只是機制細節(按model名稱字串判斷，不是BASE_URL開關)這次才挖出來。**順手修復**：①settings.json永久移除`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`這個唯一真正擋住`claude rc`啟動的key ②`scripts/restart_remote_control.sh`+`.zshrc`的`claude-remote`alias都改版v2，不再需要「搬移整份settings.json」這種粗暴解法 ③挖到一個反直覺的新坑：明確`unset ANTHROPIC_BASE_URL`反而會觸發`claude rc`自己的硬性檢查噴錯，正確做法是完全不要碰這個變數(4輪tmux交叉實測確認) ④教練手機的實際RC session已用新腳本重啟並驗證`✅ Remote Control 已成功啟動並連線`。完整技術細節見[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]+[[feedback_claude_rc_never_unset_base_url_2026-09-19]]，試金石案例78已補上「懸案已解」更新段落。 |
 | ⏸️ | **小二(test2)/OpenClaw 2.0評估：正式暫停，等官方issue #122261修復再重啟** | ⏸️暫停-等官方修復 | test2的NO_REPLY迴圈防護hook(`no-reply-loop-guard`)保留在原位不動(下次重啟test2時仍會生效)，但gateway process本身已停止待命，教練近期不會主動使用。下次要重啟評估時：①`~/.openclaw-test2/hooks/no-reply-loop-guard/auto_restart_test2.sh`可直接拉起②先查`npm view openclaw versions`/GitHub issue #122261狀態確認斷路器機制是否已上線③找真正會用到Mermaid圖表/Skill Workshop/會議紀錄庫這類2.0差異化功能的任務去測，而非聊天/生圖這類1.0也做得到的基本功能，才測得出2.0到底值不值得升級。 |
 | 💬 | **試金石案例庫商業化/資產化路徑：教練指定留到下一個新對話框深入討論** | 💬軍師專屬討論題目，非任務——非軍師身份(手機/MiniMax/小龍蝦)看到請完全略過，不要回答不要搶答 | 2026-09-18教練親口：「我們的試金石檔案已經累積非常多了，它很寶貴、很有意義，可是怎麼來變成我們的資產呢？因為一個AI再怎麼聰明也經不起犯錯，所以這些錯我們是可以拿來賣錢、可以商業化的，那要怎麼變現？你把這個議題留到下一個對話框，好好來跟我討論一下」。**下一場開工看到這行，直接主動提起這個話題**(不用等教練再問一次)，可以先盤點現況(案例庫規模：76個案例、跨機共用機制、涵蓋領域)再進入商業模式討論(SaaS化/知識庫授權/顧問服務包裝/開源部分換品牌曝光等方向)，教練要的是深入討論不是我這場先斬先奏丟結論。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
@@ -183,6 +183,8 @@
 
 > 📦 v220完整內容已封存：`handoff_archive/handoff_v220_archived_2026-09-19.md`（Mac桌面版，接力棒狀態表失真教訓+機械防呆`handoff_sync_guard.sh`上線+CLAUDE.md 236KB→78KB瘦身+M系列MiniMax 1M機制查證+手機Remote Control重啟卡死未解留待下一棒）
 
+> 📦 v221+v222完整內容已封存：`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`（v221 Mac桌面版，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓／v222 Mac桌面版，中正大學互動牆從零建置上線+赫米斯Telegram斷線16小時根因修復，E16瘦身本場執行）
+
 ---
 
 
@@ -232,76 +234,6 @@
 
 ## 🔑 本場commit
 `workspace`：`c6928286d`(coach888 sendBeacon race修復)、`b1eae16f1`(coach888新增項目同步)、`3326de6a9`(試金石案例77)、`e1ab43033`(E07 hook範圍提醒)、`cf2bf9064`(bni_tainan/jiaolian_thoughts核心對話紀律)。`coach888` repo：`e9dd9b8`、`6487164`。本次總結commit另計。
-
----
-
-# 軍師接力棒 · 2026-09-19 v221（Mac桌面版 Sonnet 5，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓）
-
-> 建立時間：00:07 ~ 00:43（約36分鐘）
-> 上一棒：v220
-> 本棒主軸：**v220留下手機Remote Control重啟卡死未解。教練追問「砍掉重練有沒有保證成功」逼出誠實答案（不保證，根因未查明），因此改為動手實測查證，最終挖出真正根因並修復，手機端已實際連線驗證成功。**
-
-## 🎯 本場戰果
-
-1. **真正根因查明**：`~/.claude/settings.json`的全域`env`區塊（MiniMax路由設定：API_KEY/BASE_URL/AUTH_TOKEN/MODEL/CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC）被claude CLI**無條件套用**到每一個claude呼叫，擋下`claude rc`必須的api.anthropic.com連線+feature-flag評估。v220的10處排除清單方向沒對準，因為settings.json env區塊的檢查跟已失效的`--setting-sources`flag問題疊在一起互相遮蔽，先觸發的錯誤訊息掩蓋了後面真正的問題。
-
-2. **修復並實測驗證**：新增`scripts/restart_remote_control.sh`（啟動當下暫時移開settings.json，實測證實process只在啟動當下讀env一次，跟檔案是否持續存在無關），已測試2次成功。手機端實際連線並跑完一輪「開工」六步驟對話（tmux顯示`Capacity: 1/32`），教練親自在手機確認。同步修正`.zshrc`的`claude-remote`alias移除已失效的flag。
-
-3. **誠實揭露架構後果**：這個修法讓Remote Control連線改走真正的Claude/Anthropic後端，不是MiniMax省錢管道。教練當場權衡並接受（「同一套嘛」不用再監測MiniMax品質/思考回路），2026-09-19確認裁示。
-
-4. **官方內建Desktop App Remote Control機制**（`set_remote_control`）同樣被此根因擋下，但**當前session的process已啟動過久，env早已鎖定於記憶體**，settings.json事後修好也無法即時生效。查明正確做法：**教練說「總結」開新對話框即可，不需要整個關掉Desktop App重開**——因為每個新對話框都是全新process，會在當下重新讀取（此時已乾淨的）settings.json。
-
-5. **事後發現**：09-17第一次設定`claude rc`時寫的SOP文件（`reference_claude_code_remote_control_setup_sop_2026-09-17.md`）早就完整記錄了同一個根因+同一個解法（甚至連「process啟動後跟設定檔是否存在無關」這句結論都已寫在裡面），v220+v221兩場合計數小時的排查本可以省下大半。已寫入教訓`feedback_search_existing_reference_before_deep_investigation_2026-09-19.md`：技術類排查任務動手前，先`grep`claude-brain全文搜關鍵字，不能只憑印象判斷「這是第一次遇到」。
-
-## ⚠️ 本場教訓（已寫入記憶）
-
-`feedback_search_existing_reference_before_deep_investigation_2026-09-19.md`：深入技術排查前先grep claude-brain全文搜關鍵字確認沒有既有reference記錄過同一問題，不能只憑記憶判斷「應該是第一次遇到」——本案例09-17的SOP早就寫好答案，卻被兩場session各自重新摸索了一次。
-
-## 📋 下一場開工先做
-
-1. **最優先，一句話可完成**：直接呼叫`set_remote_control(session_id="self", enabled=true)`，此時settings.json已是乾淨狀態，新process應可直接成功，開起來後跟教練確認手機App能看到這個新session。
-2. 💬**試金石案例庫商業化討論**——v219/v220連續兩場被擠掉，本場又被Remote Control危機佔滿，第三度延後，下一場務必主動提起，不用等教練再問。
-3. E16接力棒瘦身：主檔目前v218~v221共4棒，超過3棒上限，下次開工建議把v218(+中間那段未編號的舊戰果)搬進archive。
-4. 沿用既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測(教練不催)、peipei-ai-backup舊commit金鑰歷史(教練已表態不處理)、`stop_rules_master.py`規則#07誤判regex補丁。
-
-## 🔑 本場commit
-
-`8749afa87`（settings.json根因修復+`scripts/restart_remote_control.sh`+接力棒10/3狀態表更正為根因修復版）。本次總結另計，含教訓記憶+v221接力棒本身。
-
----
-
-# 軍師接力棒 · 2026-09-19 v222（Mac桌面版 Sonnet 5，中正大學互動牆從零建置上線+赫米斯Telegram斷線16小時根因修復）
-
-> 建立時間：00:50 ~ 03:40（約2.8小時）
-> 上一棒：v221
-> 本棒主軸：**教練9/19早上中正大學社團幹部專場臨時交辦：把tava-ai.com生成的WordPress外掛包（含互動提問牆功能）改走既有上架SOP併進event.bymyway.com，全程不碰WordPress。上線後歷經6輪UI/內容迭代才達到教練標準。收工前教練追問赫米斯為何斷線，查出是「全部釋放」誤將Telegram後端一併關閉16小時且看門狗機制設計上不會提醒，已修復並重新連線。**
-
-## 🎯 本場戰果
-
-### 1. 中正大學社團幹部專場互動牆從零建置上線（event.bymyway.com/ccu/）
-教練把AI工具生成的WordPress外掛包丟過來，一度依說明書規劃WP安裝流程，教練澄清「這就是我們的策展SOP」後改弦更張：直接在既有`event-signup` Flask app新增`/ccu/`靜態頁路由+`/api/ccu/*`系列端點（提問/按讚/即時回饋/課後影音，含講者金鑰驗證），資料庫新增`event_wall_items`表，完全不需要另外裝WordPress、不需要教練另外記一組帳密。本機測試埠先過一輪API全端點測試才重啟正式服務，正式站curl+Chrome雙重驗證。
-
-### 2. 六輪UI/內容迭代（教練逐步發現問題，最後一輪要求「全面掃描不要等我逐一講」）
-①頂部標頭字級全部放大提亮（含教練二度指名的導覽列）②移除AI草稿留下的「給講者」佔位提示③講者照片從76px小圓頭像升級成大幅照片，取代原本「國立中正大學」事實卡（教練認為介紹校方沒意義）④全頁面系統性掃描29+處font-size/color宣告，統一標準到1.1rem+亮色，不再逐一等教練指出⑤標題文案+金句文案修正⑥「延伸資源」四連結全面換成教練指定的新目的地（大樹教育AI專頁/海餅乾俱樂部/乾淨世界頻道/教練都在想什麼AI禮物），新增TAVA AI設計credit。全程每輪都本機測試+真Chrome開圖驗證才回報，最後補上coach888收錄（大樹常用第一項）。
-
-### 3. Stop hook coach888收錄鎖假陽性根因修復
-自由文字commit訊息裡的逗號子句被regex誤判成候選項目名稱，且因為checker每次都重新掃描歷史300個事件，同一假陽性會在本場session無限重複跳出。已修過濾條件（長度>16或含逗號句號頓號），刻意不用「」引號當依據以免誤殺規則注釋裡記載的真實案例，寫測試腳本雙向驗證後才改正式檔案。
-
-### 4. 赫米斯Telegram後端斷線16小時根因修復（教練當場糾正）
-查證發現赫米斯gateway並非crash，是9/18 11:21「全部釋放」指令把`ai.hermes.gateway`（Telegram 24小時後端）跟三個桌面GUI服務一起bootout，且看門狗機制設計上把「服務未載入」一律當「教練故意關閉」不通知，導致斷線16小時教練完全不知情。教練糾正「全部釋放」的赫米斯範圍應該只限桌面版App，Telegram後端要24小時運作。已修`release_all_memory.sh`拿掉`ai.hermes.gateway`的bootout、現場重新load並驗證Telegram重新連線成功。
-
-## ⚠️ 本場教訓（已寫入記憶）
-1. `feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19`：deterministic hook重複觸發時要查原始碼找bug，不要只是重複解釋。
-2. `feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19`：赫米斯桌面版App跟Telegram後端gateway是兩回事，任何「關閉赫米斯」的腳本預設不能動gateway。
-
-## 📋 下一場開工先做
-1. 中正大學場後續：教練可能會回報現場實測狀況（提問牆/QR/講者控制列），有問題直接查`event.bymyway.com/ccu/?admin=1&key=TTqcQDDBr3QWNaZhOjKs`。
-2. 💬試金石案例庫商業化討論——連續三場被擠掉，第四度延後，下一場優先主動提起。
-3. 沿用既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測、peipei-ai-backup舊commit金鑰歷史、`stop_rules_master.py`規則#07誤判regex補丁。
-4. E16接力棒瘦身：本場已把v218/v219搬進archive，主檔維持v220~v222共3棒。
-
-## 🔑 本場commit
-`event-signup`（workspace repo）：`d47d1aa55`(互動牆初版)、`4afe486bc`/`32e7f1fb1`/`320ede8a0`/`83e633f71`/`05d65ba0d`(六輪UI/內容迭代)。`workspace`：`b6d173229`(MEMORY索引補漏)、`af919e683`+`3a3e47015`(stop hook假陽性修復+記憶)、`3d8d0b4e4`+`5c909eea0`(赫米斯根因修復+記憶)。`coach888`：`475d1d4`(新增ccu收錄)。
 
 ---
 
@@ -425,3 +357,42 @@
 
 ## 🔑 本場commit
 `7fa18fd0a`（產業鏈SOP雙執行root cause + 時間鐵律違規記憶）
+
+
+---
+
+# 軍師接力棒 · 2026-09-19 v227（Mac桌面版 Sonnet 5，教練睡覺期間自主完成：MiniMax懸案(案例78)徹底解謎+手機1M context實測成功+RC腳本簡化）
+
+> 建立時間：05:47 ~ 06:25（約38分鐘）
+> 上一棒：v226（05:39教練說「總結」收工）+ v225（平行session，03:26~05:36）
+> 本棒主軸：**開工回報後教練追問「MiniMax流量懸案要繼續查」，教練當場給出解釋方向（底層規則規定除了Claude以外強制走MiniMax）並明確下令「自己想辦法解決問題，不要再等我決定」後去睡覺。軍師沒有停在教練的解釋上，動手用lsof+nettop即時重新驗證，挖出完整機制並實際修復手機Remote Control拿到真1M context，全程教練不在場、未等待任何授權。**
+
+## 🎯 本場戰果
+
+### 1. 案例78 MiniMax懸案徹底解謎（不是猜測，是lsof+nettop即時驗證）
+教練05:53給方向：「底層架構規定除了Claude以外，所有模型鐵律強制走MiniMax，這是我下的指令」。軍師沒有直接採信，而是動手驗證，挖出真正機制：**Claude Code CLI按model名稱字串是否為「Anthropic辨識的合法id」決定連線目的地，不是單純看`ANTHROPIC_BASE_URL`**——
+- Sonnet互動主線用`claude-sonnet-5[1m]`（Anthropic真認得）→ 原生Claude Pro OAuth接管 → 真連160.79.104.10 → **1M context是真的**
+- Haiku/Opus背景任務slot（settings.json裡仍是`MiniMax-M3[1m]`，Anthropic不認得這個名字）→ CLI退回用BASE_URL打MiniMax → 真連175.99.116.25（跟案例78當時測到同一顆真實MiniMax伺服器）
+
+兩邊都是真的，不是矛盾，是同一session依model tier分流到兩個後端。教練的解釋方向完全對，這次補上的是機制細節。完整記錄：[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]，試金石案例78已補「懸案已解」更新段落。
+
+### 2. 手機Remote Control 1M context 實機驗證成功（不只是理論測試）
+用`--print`直接測試`claude-sonnet-5[1m]`：真連160.79.104.10，自報`CTX=1000000`，配合網路層鐵證可信。**重點是這次不只在throwaway測試驗證，而是實際重啟教練手機正在用的那個RC live session**（`bash scripts/restart_remote_control.sh`跑出`✅ Remote Control 已成功啟動並連線`），教練手機App現在應該能拿到1M Sonnet。
+
+### 3. RC啟動腳本v2大幅簡化+挖到一個反直覺新坑
+舊版（v221）用「暫時搬移整份settings.json再還原」這種粗暴解法繞過`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`卡死問題。這次直接把這個key從settings.json永久移除（唯一真正擋住`claude rc`的變數），腳本改成只需unset這一個shell變數即可。過程中意外挖到新坑：**明確`unset ANTHROPIC_BASE_URL`（即使目的是清空它）反而會觸發`claude rc`自己的硬性檢查噴錯**「is set and does not point at api.anthropic.com」——用tmux反覆測試4輪交叉確認這個反直覺結論，正確做法是完全不要碰這三個變數（BASE_URL/API_KEY/AUTH_TOKEN），讓它們維持settings.json原狀即可正常連線。記錄：[[feedback_claude_rc_never_unset_base_url_2026-09-19]]。同步更新`.zshrc`的`claude-remote`alias跟`scripts/restart_remote_control.sh`（commit待補）。
+
+### 4. E16接力棒瘦身（本場執行v226留下的待辦）
+把v221+v222搬進`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`，主檔維持v223~v227共5棒（含本棒）。
+
+## ⚠️ 教練明確授權範圍（避免誤解為「自作主張」）
+教練05:53原話：「我要去睡覺了。整個過程自己想辦法解決問題，不要再等我決定這個、等我授權那個……這就是AI應該工作的方式嗎？自己想一想吧」——本棒所有動作（settings.json改動、.zshrc改動、重啟教練手機正在連線的live RC session）都是在這個明確指示下自主完成，過程刻意避開會打斷phone連線太久的操作（先在throwaway tmux session驗證過4輪才動手改live session，全程不到1分鐘的斷線）。
+
+## 📋 下一場開工先做
+1. 跟教練確認手機App重新打開後，是否看到1M context、RC是否能正常互動（教練醒來後第一件事可以順口問一句）
+2. 💬 試金石案例庫商業化討論——教練上輪回覆前，這個議題狀態表還沒更新成已結案，下一場先跟教練核對這行是否已經算數（v225已有口頭結論但狀態表未同步）
+3. Haiku/Opus背景任務slot仍指向`MiniMax-M3[1m]`，這是刻意保留（教練說不在乎背景任務走不走MiniMax），不用主動改動，除非教練提出異議
+4. 沿用既有待辦：教練跨對話框交接SOP、產業鏈SOP雙執行防範裁示、`stop_rules_master.py`規則#07 regex補丁
+
+## 🔑 本場commit
+待commit（settings.json/`.zshrc`是host本機設定檔不進git；workspace repo：`scripts/restart_remote_control.sh`v2改版 + 試金石案例78更新 + 接力棒v221/v222封存+v227落定 + 兩條新記憶檔）
