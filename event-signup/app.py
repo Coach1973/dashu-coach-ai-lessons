@@ -2173,9 +2173,14 @@ def api_coach888_state():
     """coach888作品一覽的排版狀態集中存放(2026-09-03交辦)：教練在Mac改完排版，
     ACER開起來還是舊版——因為原本純靠每個瀏覽器自己的localStorage，裝置之間互不同步。
     這支端點讓coach888(GitHub Pages)存/取同一份狀態，取代各自為政的localStorage。
-    GET：回傳目前6組狀態(找不到的key回null)。POST：body帶哪個key就更新哪個，其餘不動。"""
+    GET：回傳目前6組狀態(找不到的key回null)。POST：body帶哪個key就更新哪個，其餘不動。
+    2026-09-19：離開頁面前(beforeunload/pagehide)前端改用sendBeacon立即補送一次最新狀態，
+    避免400ms防手震debounce來不及送出就被reload取消，導致最後一兩個動作被伺服器舊值蓋回去。
+    sendBeacon的請求會帶credentials:'include'，CORS規範禁止搭配萬用字元'*'，
+    所以這裡跟/api/coach888/click一樣回傳實際Origin+Allow-Credentials:true。"""
     resp_headers = {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+        "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
     }
