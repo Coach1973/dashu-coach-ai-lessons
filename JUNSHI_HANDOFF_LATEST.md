@@ -414,3 +414,38 @@ f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後�
 
 ## 🔑 本場commit
 `workspace`：`425e87794`(接力棒10/3狀態表更正+教訓記憶)、`552232f24`(接力棒瘦身236KB→78KB+handoff_sync_guard.sh新建)。本次收工commit另計，含v220接力棒本身+Remote Control排除清單記憶檔。
+
+---
+
+# 軍師接力棒 · 2026-09-19 v221（Mac桌面版 Sonnet 5，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓）
+
+> 建立時間：00:07 ~ 00:43（約36分鐘）
+> 上一棒：v220
+> 本棒主軸：**v220留下手機Remote Control重啟卡死未解。教練追問「砍掉重練有沒有保證成功」逼出誠實答案（不保證，根因未查明），因此改為動手實測查證，最終挖出真正根因並修復，手機端已實際連線驗證成功。**
+
+## 🎯 本場戰果
+
+1. **真正根因查明**：`~/.claude/settings.json`的全域`env`區塊（MiniMax路由設定：API_KEY/BASE_URL/AUTH_TOKEN/MODEL/CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC）被claude CLI**無條件套用**到每一個claude呼叫，擋下`claude rc`必須的api.anthropic.com連線+feature-flag評估。v220的10處排除清單方向沒對準，因為settings.json env區塊的檢查跟已失效的`--setting-sources`flag問題疊在一起互相遮蔽，先觸發的錯誤訊息掩蓋了後面真正的問題。
+
+2. **修復並實測驗證**：新增`scripts/restart_remote_control.sh`（啟動當下暫時移開settings.json，實測證實process只在啟動當下讀env一次，跟檔案是否持續存在無關），已測試2次成功。手機端實際連線並跑完一輪「開工」六步驟對話（tmux顯示`Capacity: 1/32`），教練親自在手機確認。同步修正`.zshrc`的`claude-remote`alias移除已失效的flag。
+
+3. **誠實揭露架構後果**：這個修法讓Remote Control連線改走真正的Claude/Anthropic後端，不是MiniMax省錢管道。教練當場權衡並接受（「同一套嘛」不用再監測MiniMax品質/思考回路），2026-09-19確認裁示。
+
+4. **官方內建Desktop App Remote Control機制**（`set_remote_control`）同樣被此根因擋下，但**當前session的process已啟動過久，env早已鎖定於記憶體**，settings.json事後修好也無法即時生效。查明正確做法：**教練說「總結」開新對話框即可，不需要整個關掉Desktop App重開**——因為每個新對話框都是全新process，會在當下重新讀取（此時已乾淨的）settings.json。
+
+5. **事後發現**：09-17第一次設定`claude rc`時寫的SOP文件（`reference_claude_code_remote_control_setup_sop_2026-09-17.md`）早就完整記錄了同一個根因+同一個解法（甚至連「process啟動後跟設定檔是否存在無關」這句結論都已寫在裡面），v220+v221兩場合計數小時的排查本可以省下大半。已寫入教訓`feedback_search_existing_reference_before_deep_investigation_2026-09-19.md`：技術類排查任務動手前，先`grep`claude-brain全文搜關鍵字，不能只憑印象判斷「這是第一次遇到」。
+
+## ⚠️ 本場教訓（已寫入記憶）
+
+`feedback_search_existing_reference_before_deep_investigation_2026-09-19.md`：深入技術排查前先grep claude-brain全文搜關鍵字確認沒有既有reference記錄過同一問題，不能只憑記憶判斷「應該是第一次遇到」——本案例09-17的SOP早就寫好答案，卻被兩場session各自重新摸索了一次。
+
+## 📋 下一場開工先做
+
+1. **最優先，一句話可完成**：直接呼叫`set_remote_control(session_id="self", enabled=true)`，此時settings.json已是乾淨狀態，新process應可直接成功，開起來後跟教練確認手機App能看到這個新session。
+2. 💬**試金石案例庫商業化討論**——v219/v220連續兩場被擠掉，本場又被Remote Control危機佔滿，第三度延後，下一場務必主動提起，不用等教練再問。
+3. E16接力棒瘦身：主檔目前v218~v221共4棒，超過3棒上限，下次開工建議把v218(+中間那段未編號的舊戰果)搬進archive。
+4. 沿用既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測(教練不催)、peipei-ai-backup舊commit金鑰歷史(教練已表態不處理)、`stop_rules_master.py`規則#07誤判regex補丁。
+
+## 🔑 本場commit
+
+`8749afa87`（settings.json根因修復+`scripts/restart_remote_control.sh`+接力棒10/3狀態表更正為根因修復版）。本次總結另計，含教訓記憶+v221接力棒本身。

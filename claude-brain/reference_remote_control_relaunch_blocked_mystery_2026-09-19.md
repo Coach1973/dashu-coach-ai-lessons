@@ -49,9 +49,24 @@ shell層級的env，清不掉claude CLI自己內部重新讀settings.json這件�
 呼叫後回報「Remote Control initialization failed」——跟`claude rc`是同一個
 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`全域污染問題，但**這個session自己的process
 早在很久以前就啟動完成，env早就讀進去了**，現在才移開settings.json時間點已經來不及，
-必須**重啟這個桌面版session本身**，讓它在一個沒有污染的settings.json狀態下重新啟動，
-才能真正修好。這是2026-09-19教練「兩套同時做」的裁示還沒完成的部分，需要教練決定
-要不要現在重啟這個對話框。
+必須**開一個新的Claude Code對話框（新process）**才能真正修好，**不需要整個關掉重開
+Desktop App**——因為settings.json是每個新啟動的claude process各自讀取一次，不是
+Desktop App整個共用一份快取，新開一個對話框(新的Code分頁)就會產生一個全新的
+claude process，只要那個當下settings.json是乾淨的，新分頁就能直接用。**教練已裁示
+接受**：新連線之後走真正的Claude/Anthropic後端(不是MiniMax)，用掉的是教練真正的
+Claude訂閱額度，不是MiniMax那組省錢方案，教練確認「同一套嘛」不用再另外監測MiniMax
+品質，2026-09-19當場接受此權衡。**下一場開工的第一件事**：直接呼叫
+`mcp__ccd_session_mgmt__set_remote_control(session_id="self", enabled=true)`即可
+（新process此時settings.json已經是乾淨狀態，見下方commit）。
+
+## 相關參考
+
+**重要**：這個問題2026-09-17第一次設定`claude rc`時就已經完整踩過同一個坑並記錄
+解法，[[reference_claude_code_remote_control_setup_sop_2026-09-17]]文件裡「四道
+卡關」的第三關就是同一個settings.json env區塊問題，連「process啟動後跟設定檔是否
+存在無關」這個結論都已經寫在「收工後的設定檔復原」章節——v220/v221兩場session
+花數小時重新查證，本可以省下大半時間，教訓見
+[[feedback_search_existing_reference_before_deep_investigation_2026-09-19]]。
 
 ## 尚待評估的架構性問題（未動手，僅記錄）
 
