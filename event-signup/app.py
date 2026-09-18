@@ -11,6 +11,7 @@ import io
 import json
 import os
 import re
+import secrets
 import shutil
 import subprocess
 import urllib.error
@@ -1888,6 +1889,206 @@ def api_kr_contact():
         json.dumps({"ok": True}),
         status=200, headers={**resp_headers, "Content-Type": "application/json"},
     )
+
+
+CCU_SITE_DIR = Path(__file__).parent / "ccu_site"
+CCU_WALL_EVENT_DEFAULT = "ccu-club-leadership"
+# 2026-09-19交辦：中正大學社團幹部專場(9/19早上)互動牆。教練把教練用tava-ai.com生成的
+# 整包WordPress外掛+靜態頁丟過來，裁示「走我們的策展/上架SOP，直接掛event.bymyway.com」，
+# 不用另外裝WordPress管一組新帳密——後端邏輯照抄WP外掛的資料結構跟API形狀，改用
+# event-signup既有的Flask+event.db實作，前端index.html只改了API_BASE這一行指到/api/ccu。
+
+
+@app.route("/ccu/")
+def ccu_page():
+    return send_from_directory(CCU_SITE_DIR, "index.html")
+
+
+@app.route("/ccu/<path:filename>")
+def ccu_assets(filename):
+    return send_from_directory(CCU_SITE_DIR, filename)
+
+
+def _wall_clean(raw, max_len):
+    s = re.sub(r"<[^>]*>", "", str(raw or ""))
+    s = re.sub(r"[\u200b-\u200f\u202a-\u202e]", "", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s[:max_len]
+
+
+def _wall_event(source):
+    return _wall_clean(source.get("event"), 64) or CCU_WALL_EVENT_DEFAULT
+
+
+def _wall_ip_hash():
+    ip = (request.headers.get("X-Forwarded-For", request.remote_addr) or "").split(",")[0].strip()
+    return hashlib.sha256((ip + "|event-wall-salt").encode()).hexdigest()
+
+
+def _wall_admin_key(event):
+    conn = db.get_conn()
+    setting_key = f"event_wall_key_{event}"
+    row = conn.execute("SELECT value FROM app_settings WHERE key = ?", (setting_key,)).fetchone()
+    if row:
+        conn.close()
+        return row["value"]
+    key = secrets.token_urlsafe(15)
+    conn.execute("INSERT INTO app_settings (key, value) VALUES (?, ?)", (setting_key, key))
+    conn.commit()
+    conn.close()
+    return key
+
+
+def _wall_is_admin(event):
+    supplied = request.headers.get("X-Tava-Key") or request.args.get("key") or ""
+    return bool(supplied) and hmac.compare_digest(supplied, _wall_admin_key(event))
+
+
+def _wall_question_shape(row):
+    return {
+        "id": row["uid"], "event": row["event"], "topic": row["topic"], "body": row["body"],
+        "name": row["name"], "votes": row["votes"], "answered": bool(row["answered"]), "ts": row["ts"],
+    }
+
+
+@app.route("/api/ccu/questions", methods=["GET", "POST"])
+def api_ccu_questions():
+    if request.method == "GET":
+        event = _wall_event(request.args)
+        conn = db.get_conn()
+        rows = conn.execute(
+            "SELECT * FROM event_wall_items WHERE event = ? AND kind = 'question' ORDER BY ts ASC LIMIT 2000",
+            (event,),
+        ).fetchall()
+        conn.close()
+        return Response(json.dumps([_wall_question_shape(r) for r in rows]), mimetype="application/json")
+
+    payload = request.get_json(force=True, silent=True) or {}
+    event = _wall_event(payload)
+    body = _wall_clean(payload.get("body"), 500)
+    if len(body) < 2:
+        return Response(json.dumps({"error": "問題內容太短了"}), status=400, mimetype="application/json")
+    uid = _wall_clean(payload.get("id"), 40) or secrets.token_hex(12)
+    ts = int(payload.get("ts") or 0) or int(datetime.now().timestamp() * 1000)
+    topic = _wall_clean(payload.get("topic"), 64)
+    name = _wall_clean(payload.get("name"), 40)
+    conn = db.get_conn()
+    conn.execute(
+        "INSERT OR IGNORE INTO event_wall_items (uid,event,kind,topic,body,name,votes,answered,ts,ip_hash) "
+        "VALUES (?,?,?,?,?,?,0,0,?,?)",
+        (uid, event, "question", topic, body, name, ts, _wall_ip_hash()),
+    )
+    conn.commit()
+    conn.close()
+    return Response(
+        json.dumps({"id": uid, "event": event, "topic": topic, "body": body,
+                     "name": name, "votes": 0, "answered": False, "ts": ts}),
+        mimetype="application/json",
+    )
+
+
+@app.route("/api/ccu/questions/<qid>", methods=["PATCH"])
+def api_ccu_patch_question(qid):
+    payload = request.get_json(force=True, silent=True) or {}
+    event = _wall_event(payload)
+    if not _wall_is_admin(event):
+        return Response(json.dumps({"error": "需要講者金鑰"}), status=403, mimetype="application/json")
+    if "answered" not in payload:
+        return Response(json.dumps({"error": "沒有可更新的欄位"}), status=400, mimetype="application/json")
+    conn = db.get_conn()
+    conn.execute(
+        "UPDATE event_wall_items SET answered = ? WHERE uid = ? AND kind = 'question'",
+        (1 if payload.get("answered") else 0, qid),
+    )
+    conn.commit()
+    conn.close()
+    return Response(json.dumps({"ok": True}), mimetype="application/json")
+
+
+@app.route("/api/ccu/questions/<qid>/vote", methods=["POST"])
+def api_ccu_vote(qid):
+    payload = request.get_json(force=True, silent=True) or {}
+    delta = 1 if int(payload.get("delta") or 1) >= 0 else -1
+    conn = db.get_conn()
+    conn.execute(
+        "UPDATE event_wall_items SET votes = MAX(0, votes + ?) WHERE uid = ? AND kind = 'question'",
+        (delta, qid),
+    )
+    conn.commit()
+    row = conn.execute("SELECT votes FROM event_wall_items WHERE uid = ?", (qid,)).fetchone()
+    conn.close()
+    return Response(json.dumps({"ok": True, "votes": row["votes"] if row else 0}), mimetype="application/json")
+
+
+@app.route("/api/ccu/echoes", methods=["GET", "POST"])
+def api_ccu_echoes():
+    if request.method == "GET":
+        event = _wall_event(request.args)
+        conn = db.get_conn()
+        rows = conn.execute(
+            "SELECT * FROM event_wall_items WHERE event = ? AND kind = 'echo' ORDER BY ts ASC LIMIT 2000",
+            (event,),
+        ).fetchall()
+        conn.close()
+        return Response(
+            json.dumps([{"id": r["uid"], "body": r["body"], "ts": r["ts"]} for r in rows]),
+            mimetype="application/json",
+        )
+
+    payload = request.get_json(force=True, silent=True) or {}
+    event = _wall_event(payload)
+    body = _wall_clean(payload.get("body"), 200)
+    if len(body) < 2:
+        return Response(json.dumps({"error": "內容太短了"}), status=400, mimetype="application/json")
+    uid = _wall_clean(payload.get("id"), 40) or secrets.token_hex(12)
+    ts = int(payload.get("ts") or 0) or int(datetime.now().timestamp() * 1000)
+    conn = db.get_conn()
+    conn.execute(
+        "INSERT OR IGNORE INTO event_wall_items (uid,event,kind,body,ts,ip_hash) VALUES (?,?,?,?,?,?)",
+        (uid, event, "echo", body, ts, _wall_ip_hash()),
+    )
+    conn.commit()
+    conn.close()
+    return Response(json.dumps({"id": uid, "body": body, "ts": ts}), mimetype="application/json")
+
+
+@app.route("/api/ccu/media", methods=["GET", "PUT"])
+def api_ccu_media():
+    if request.method == "GET":
+        event = _wall_event(request.args)
+        conn = db.get_conn()
+        row = conn.execute(
+            "SELECT value FROM app_settings WHERE key = ?", (f"event_wall_media_{event}",)
+        ).fetchone()
+        conn.close()
+        return Response(row["value"] if row else "[]", mimetype="application/json")
+
+    payload = request.get_json(force=True, silent=True) or {}
+    event = _wall_event(payload)
+    if not _wall_is_admin(event):
+        return Response(json.dumps({"error": "需要講者金鑰"}), status=403, mimetype="application/json")
+    items = payload.get("items")
+    clean = []
+    for it in (items if isinstance(items, list) else [])[:50]:
+        if not isinstance(it, dict) or not it.get("src"):
+            continue
+        clean.append({
+            "kind": "audio" if it.get("kind") == "audio" else "video",
+            "title": _wall_clean(it.get("title"), 120),
+            "desc": _wall_clean(it.get("desc"), 300),
+            "src": _wall_clean(it.get("src"), 500),
+            "poster": _wall_clean(it.get("poster"), 500),
+        })
+    conn = db.get_conn()
+    setting_key = f"event_wall_media_{event}"
+    conn.execute(
+        "INSERT INTO app_settings (key, value) VALUES (?, ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (setting_key, json.dumps(clean, ensure_ascii=False)),
+    )
+    conn.commit()
+    conn.close()
+    return Response(json.dumps(clean), mimetype="application/json")
 
 
 DIY_KNOT_REPO = Path("/Users/bymyway/github_repos/diy-knot-workshop")

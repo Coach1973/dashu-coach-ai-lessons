@@ -158,3 +158,25 @@ CREATE TABLE IF NOT EXISTS materials (
     visible INTEGER NOT NULL DEFAULT 1,  -- 1=學員看得到 / 0=僅在管理清單勾選區看得到，還沒公開
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
+
+-- 講座互動牆（2026-09-19交辦，中正大學社團幹部專場9/19早上場，原始需求是教練用tava-ai.com
+-- 生成的獨立WordPress外掛包，改直接併入我們自己的event-signup，不用另外裝WordPress/管另一組帳密）：
+-- 提問+按讚+即時回饋+課後影音共用一張表(kind區分)，event欄位對應前端EVENT_ID，
+-- 換一個EVENT_ID就能給下一場活動重複使用同一套後端。
+CREATE TABLE IF NOT EXISTS event_wall_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uid TEXT NOT NULL UNIQUE,            -- 前端產生的uuid，做寫入去重
+    event TEXT NOT NULL,                 -- 對應前端EVENT_ID，例如ccu-club-leadership
+    kind TEXT NOT NULL,                  -- question / echo
+    topic TEXT NOT NULL DEFAULT '',
+    body TEXT NOT NULL,
+    name TEXT NOT NULL DEFAULT '',
+    votes INTEGER NOT NULL DEFAULT 0,
+    answered INTEGER NOT NULL DEFAULT 0,
+    ts INTEGER NOT NULL DEFAULT 0,       -- 前端用毫秒時間戳排序
+    ip_hash TEXT NOT NULL DEFAULT ''     -- 只存雜湊，不留原始IP
+);
+CREATE INDEX IF NOT EXISTS idx_event_wall_items_event_kind ON event_wall_items(event, kind);
+
+-- 課後影音清單用app_settings存(key格式 event_wall_media_<event>，value是JSON陣列)，
+-- 跟講者金鑰(key格式 event_wall_key_<event>)共用同一張既有key/value表，不必新增資料表。
