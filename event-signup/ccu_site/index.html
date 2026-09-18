@@ -90,7 +90,7 @@ a{color:inherit}
 .topnav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .topnav::-webkit-scrollbar{display:none}
 .topnav a{
-  text-decoration:none;color:var(--muted);font-size:.83rem;padding:8px 13px;border-radius:999px;white-space:nowrap;
+  text-decoration:none;color:var(--fg);font-size:1.1rem;padding:8px 13px;border-radius:999px;white-space:nowrap;
   transition:color .18s var(--ease),background .18s var(--ease);
 }
 .topnav a:hover{color:var(--fg);background:rgba(242,236,224,.06)}
@@ -118,7 +118,7 @@ a{color:inherit}
 .hero-in{position:relative;z-index:1;width:100%;padding-block:clamp(48px,11vh,110px)}
 .hero-kicker{
   display:inline-flex;align-items:center;gap:10px;font-size:1.15rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--fg-dim);border:1px solid var(--border-strong);border-radius:999px;padding:7px 16px;margin-bottom:30px;
+  color:var(--fg);border:1px solid var(--border-strong);border-radius:999px;padding:7px 16px;margin-bottom:30px;
   background:rgba(9,11,17,.42);backdrop-filter:blur(7px);
 }
 .hero h1,.hero-sub{text-shadow:0 2px 28px rgba(6,8,13,.65)}
@@ -140,7 +140,7 @@ a{color:inherit}
 }
 .hero-sub b{font-weight:400;color:var(--accent)}
 @media(max-width:760px){.hero-sub{letter-spacing:.04em;line-height:1.72;padding-left:15px}}
-.hero-meta{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:38px;font-size:1.15rem;color:var(--fg-dim)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:38px;font-size:1.15rem;color:var(--fg)}
 .hero-meta b{font-weight:500;color:var(--fg)}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 
@@ -164,7 +164,7 @@ a{color:inherit}
 .pulse-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 .pulse-cell{padding:26px var(--pad);border-inline-start:var(--rule)}
 .pulse-cell:first-child{border-inline-start:0}
-.pulse-cell dt{font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:9px}
+.pulse-cell dt{font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);margin-bottom:9px}
 .pulse-cell dd{margin:0;font-family:var(--font-cjk-display);font-weight:600;font-size:1.28rem;letter-spacing:-.01em}
 .pulse-cell dd .tnum{font-family:var(--font-display);font-size:2rem;font-style:italic;font-weight:400;font-variant-numeric:tabular-nums;color:var(--accent);margin-inline-end:4px}
 
@@ -197,11 +197,6 @@ section{position:relative}
 .speaker-body p:first-of-type{font-size:1.1rem;color:var(--fg)}
 .creds{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;padding:0;list-style:none}
 .creds li{border:1px solid var(--border);border-radius:999px;padding:7px 15px;font-size:.82rem;color:var(--fg-dim)}
-.editable-note{
-  margin-top:26px;border-left:2px solid var(--accent-deep);padding:12px 0 12px 18px;
-  font-size:.82rem;color:var(--faint);line-height:1.7;
-}
-.editable-note code{font-family:ui-monospace,monospace;color:var(--fg-dim);background:rgba(242,236,224,.06);padding:1px 6px}
 
 /* ---------- forms ---------- */
 .field{margin-bottom:18px}
@@ -489,9 +484,6 @@ body.has-admin{padding-bottom:78px}
       <li>大樹小講 主辦</li>
       <li>AI 微論壇 推動者</li>
      </ul>
-     <p class="editable-note">
-      <strong style="color:var(--fg-dim)">給講者：</strong>這段是依你提供的資訊先寫的暫定版本。把你完整的簡介貼給我，我直接換掉；或自行編輯 <code>index.html</code> 中 <code>data-editable="bio"</code> 這個區塊即可。
-     </p>
     </div>
    </article>
   </div>
