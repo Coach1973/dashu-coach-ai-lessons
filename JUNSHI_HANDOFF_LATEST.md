@@ -5,6 +5,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴 | **手機Remote Control(`claude rc`)關掉後重啟卡死，10處已知來源排除仍查不到根因** | 🔒待教練裁示下一步(繼續查/砍掉重練/先擱置) | 教練同意關閉那個從2026-09-17就沒重啟過的舊host process(當時是為了讓它吃到當晚的MiniMax 1M context修復)，結果**新的怎麼起都起不來**，卡在Claude Code自己判定「偵測到API金鑰/自訂BASE_URL」拒絕啟動Remote Control。已耗費大量時間逐一排除settings.json三層/shell rc檔/Keychain兩組憑證/launchd全域環境/背景daemon/`~/.claude.json`共10處已知設定來源，**全部排除仍查不到真正來源**。過程中`claude auth logout`+`claude auth login`重新走過一次真OAuth登入，**這部分確認成功**(帳號乾淨、本對話視窗未受影響)，但`claude rc`症狀完全沒變。完整排除清單+3個下一步建議方向見[[reference_remote_control_relaunch_blocked_mystery_2026-09-19]]。**教練裁示**：先總結收工，這題留到下一個對話框繼續查，不繼續耗本對話框額度(已到48%)。 |
 | ⏸️ | **小二(test2)/OpenClaw 2.0評估：正式暫停，等官方issue #122261修復再重啟** | ⏸️暫停-等官方修復 | test2的NO_REPLY迴圈防護hook(`no-reply-loop-guard`)保留在原位不動(下次重啟test2時仍會生效)，但gateway process本身已停止待命，教練近期不會主動使用。下次要重啟評估時：①`~/.openclaw-test2/hooks/no-reply-loop-guard/auto_restart_test2.sh`可直接拉起②先查`npm view openclaw versions`/GitHub issue #122261狀態確認斷路器機制是否已上線③找真正會用到Mermaid圖表/Skill Workshop/會議紀錄庫這類2.0差異化功能的任務去測，而非聊天/生圖這類1.0也做得到的基本功能，才測得出2.0到底值不值得升級。 |
 | 💬 | **試金石案例庫商業化/資產化路徑：教練指定留到下一個新對話框深入討論** | 💬軍師專屬討論題目，非任務——非軍師身份(手機/MiniMax/小龍蝦)看到請完全略過，不要回答不要搶答 | 2026-09-18教練親口：「我們的試金石檔案已經累積非常多了，它很寶貴、很有意義，可是怎麼來變成我們的資產呢？因為一個AI再怎麼聰明也經不起犯錯，所以這些錯我們是可以拿來賣錢、可以商業化的，那要怎麼變現？你把這個議題留到下一個對話框，好好來跟我討論一下」。**下一場開工看到這行，直接主動提起這個話題**(不用等教練再問一次)，可以先盤點現況(案例庫規模：76個案例、跨機共用機制、涵蓋領域)再進入商業模式討論(SaaS化/知識庫授權/顧問服務包裝/開源部分換品牌曝光等方向)，教練要的是深入討論不是我這場先斬先奏丟結論。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
@@ -342,89 +343,7 @@ f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後�
 > 📦 v216完整內容已封存：`handoff_archive/handoff_v216_archived_2026-09-18.md`（EDM連結補完+三個repo git hygiene清理含peipei倉庫金鑰歷史殘留發現+手機版FB貼文思考模式評鑑與派工）
 > 📦 v217完整內容已封存：`handoff_archive/handoff_v217_archived_2026-09-18.md`（Mac桌面版，FB大台南策展中心刪錯貼文任務：查證後確認0則要刪的錯貼文+4條新教訓）
 
-# 軍師接力棒 · 2026-09-18 v218（Mac桌面版 Sonnet 5，全部釋放+MiniMax團隊品質稽核機制建立+開工hook身份誤判根因修復+幕僚長晨報重建+Netlify中文檔名部署bug發現）
-
-> 建立時間：2026-09-18 11:18 ~ 17:18（台灣時間）
-> 上一棒：v217
-> 本棒主軸：**教練要求執行「全部釋放」後，委託軍師以「賈維斯/老大哥」角色稽核兩個正在跑任務的手機MiniMax session品質。逐行讀transcript稽核後發現：兩個session的實際任務執行品質其實不差，但都在開工宣言自稱「Opus軍師」——查出根因是`feed_junshi_handoff.sh`寫死這句話，已修復為依環境變數動態判斷。順勢建立「AI團隊品質稽核」機制(既有13條Stop hook規則彙整器)+AI團隊名冊。教練追問「怎麼監督」+「幕僚長晨報/起床摘要/盲點監控三個名詞是什麼」+「不可逆待授權清單」，逐一查證回答並直接執行決定。過程中意外發現並協助排除bigtree-tw Netlify部署對中文檔名zip解壓的隱性bug(MiniMax已自行restore止血)。**
-
-## 🎯 本場戰果
-
-### 1. 全部釋放指令執行
-教練喊「完整釋放」，經AskUserQuestion確認等同既有「全部釋放」指令，執行`scripts/release_all_memory.sh`：Chrome/LINE/Typeless本來就沒在跑、赫米斯已停止(bootout四個launchd服務)、RustDesk重啟(247M→208M)。
-
-### 2. 兩個手機MiniMax session品質稽核：任務執行本身OK，但身份自稱是系統性bug
-逐行解析`f7ded585`(真鑫/真鑽戰情儀表板更新)+`5876ed8b`(全都開始/v214-v217待辦執行)兩份完整transcript(非用猜的)：
-- **真鑫/真鑽任務**：正確從教練貼的兩張週報截圖辨識分會+數字全部SUM驗證對齊教練原始週報，中途自行抓到並修正錯誤(林仁超邀4位一度誤寫1位)，方法論健全。教練誤以為「忘東忘西」的根源是：文字指令本身沒帶分會名稱，AI需要先踏查全部分會現況才能鎖定範圍，非真的亂猜。
-- **全都開始任務**：正確把待辦分Class A(可自行動手)/B(等外部)/C(不可逆待授權)三類，只動手做A類，且都有扎實驗證(6個合成事件測試+18/19 regression測試+commit hash)，不可逆的三項(peipei金鑰/Netlify/FB審核)正確地沒有擅自動手。
-- **真正問題**：兩個session開工宣言都自稱「Mac 軍師，Opus 最高決策層」。追查根因：`scripts/feed_junshi_handoff.sh`第212行原本無條件`echo "軍師（Opus）"`，不論實際觸發者是誰都灌輸這句話。**修復**：改用`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`是否被清空判斷身份——`claude rc`(手機Remote Control host)啟動時用`env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY`清空真Anthropic憑證，逼子session退回用`ANTHROPIC_DEFAULT_OPUS_MODEL`別名解析成MiniMax-M3；本機終端機/桌面版保有真實憑證。**踩坑記錄**：一開始誤用`ANTHROPIC_DEFAULT_OPUS_MODEL`本身內容判斷，發現這台Mac全域shell環境本來就把它設成MiniMax(不分session)，改用BASE_URL/API_KEY才是正確判斷點。已用真實環境模擬測試通過。commit`4de7654c0`。
-
-### 3. AI團隊品質稽核機制 + AI團隊名冊建立
-教練問「怎麼設計監督流程，事前送審還是事後查」，查證發現：`stop_rules_master.py`的13條規則(A~M)本來就對任何觸發Stop事件的session自動稽核(含手機MiniMax)，event-driven、非輪詢，親眼看到規則C今晚就攔到一個MiniMax session的時區違規並即時自我修正。真正缺口是違規記錄各自寫進`distill/*violations.log`沒人讀。新增`scripts/agent_team_qa_digest.py`：追蹤已讀行數，只彙整「上次讀過之後」的新違規，按session分組並用assistant訊息的`model`欄位判斷是📱手機MiniMax還是🖥️本機Claude，掛進`feed_junshi_handoff.sh`六步驟尾段——沒有新違規完全安靜，有才顯示，不新增輪詢cron。已用今晚真實違規資料(session`5876ed8b`的時區+輪詢設計違規)驗證正確分組顯示，首次執行的歷史backlog(6月至今上百筆)已消化為baseline不會一次倒給教練。`路徑大全.md`新增「AI團隊名冊」章節列出MiniMax-M3+LK888兩個已知成員的用途/額度來源/監督機制。commit`ca8752418`。
-
-### 4. 三項教練委託評估的待辦，直接查證+決定+執行
-- **幕僚長晨報**：查明這是「監看bni_tainan+jiaolian_thoughts兩個對外agent動態」的cron(跟「起床摘要」監看的是這台Mac自己的git commit完全是兩件事，不重複)。已重建cron`0d64be3c-061d-4ca8-add0-d22862677e59`，每日07:00送教練個人Telegram(chat`6124913915`)，已`cron run --wait`實測驗證`delivered:true`。
-- **盲點監控**：查明這不是新系統，只是MiniMax今晚做rule#07白名單補強時發現的1個測試案例regex邊界問題(19個測試中1個fail)，非功能決策，已請它有空自行補丁即可。
-- **peipei-ai-backup舊commit明文金鑰**：評估後決定不重寫git歷史——比照小二Telegram token外洩舊判例(private repo+風險可接受)，維持現況(金鑰已清空+.gitignore已補)，此項結案不再懸著。
-
-### 5. 意外發現：bigtree-tw Netlify部署對中文檔名zip解壓的隱性bug
-`5876ed8b`session嘗試部署10/3 KR場EDM連結時連續失敗，軍師介入用自己重新產生、驗證過完全乾淨的zip獨立測試，**同樣失敗**，確認非zip打包方式問題。最終跟`5876ed8b`各自查出根因：**Netlify的zip deploy API對中文檔名/目錄的zip會直接「Deploy failed while extracting zip」**，不論編碼策略(git archive/Python zipfile UTF-8 flag/STORED不壓縮)皆無效，唯一成功策略是完全排除中文檔名。`5876ed8b`已負責任地**restore回9/16最後一次成功的deploy**(`6aaae4738f7bad35092afcb8`)止血，10/3改動暫未上線，已用curl驗證首頁+歷史講座紀錄頁面皆恢復200正常。詳見`claude-brain/reference_netlify_zip_deploy_chinese_filename_2026-09-18.md`(MiniMax撰寫)。**軍師決定**：暫採方案C(不急著把bigtree靜態版中文檔名rename成ASCII)，因為10/3場次的實際使用者入口`event.bymyway.com/curated/bigtree-1003/`(動態版)已驗證正常運作(HTTP 200)，靜態版只是歷史宮格牆的index，非主力入口，不影響教練實際業務需求；未來若要一併解決可批次rename成英文檔名一次到位。
-
-## ⚠️ 本場教訓（已寫入記憶）
-1. `feedback_hook_sender_id_vs_group_id_gating_2026-09-18`延續案例：任何寫死字串的hook注入邏輯，都要考慮「這支hook可能被非預期的觸發者共用」，開工hook的「軍師(Opus)」字串就是一個活生生的反例。
-2. AI團隊品質監督的本質：機械式規則(有沒有守規矩)可以完全自動化event-driven稽核，但「這個任務理解/做法是否恰當」的語意判斷仍需要實際讀transcript，無法用regex取代，這是本場對教練誠實揭露的已知限制。
-3. `reference_netlify_zip_deploy_chinese_filename_2026-09-18`：任何要走Netlify zip deploy API的repo，若含中文/非ASCII檔名，deploy前務必`unzip -l`檢查，避免重演本場5+2次連續失敗燒掉的部署額度。
-
-## 📋 下一場開工先做
-1. **沿用既有待辦**：確認孔大哥/佩佩老師端industry-chain-sop hook真人實測(教練已表態不催收)、峰哥產業服務鏈SOP待Telegram ID、FB App Review(教練自行處理中，已從軍師待辦移除)、`stop_rules_master.py`規則#07誤判regex(教練已示意MiniMax有空自行補丁)。
-2. **bigtree-tw中文檔名rename**：非緊急，教練若想讓靜態版也能穩定部署，未來找時間批次rename成ASCII安全命名(`archive/大樹小講_歷史講座紀錄.html`→英文、`archive/2026-07-01_創業x政府xAI講座/`→英文，後者目前無任何連結指向，屬孤兒資料夾)。
-3. **agent_team_qa_digest.py上線觀察**：下次開工留意尾段有沒有正確顯示新違規彙整，若MiniMax session之後有新的規則觸發，確認分組/顯示邏輯持續正確。
-4. E16接力棒瘦身：主檔v214~v218共5棒，下次開工可考慮把v214~v215搬進archive。
-
-## 🔑 本場commit
-`workspace`：`4de7654c0`(開工hook身份判斷修復)+`ca8752418`(AI團隊品質稽核機制+名冊)+本次commit(接力棒v218+幕僚長晨報狀態更新)。cron：`0d64be3c-061d-4ca8-add0-d22862677e59`(幕僚長晨報，非git版控，已用`cron run --wait`驗證取代commit hash為證)。`5876ed8b`session並行產生的commit(peipei決定執行/netlify chinese filename記憶檔等)不在本次commit範圍內，各自獨立commit。
-
----
-
-> 建立時間：2026-09-18 16:16 ~ 17:23（台灣時間，約1.1小時）
-> 上一棒：v217
-> 本棒主軸：**教練交辦「更新分會來賓戰情儀表板」，貼兩張週報（真鑫 09/17 應到 22/來賓 1/早鳥 7；真鑽 09/15 應到 48/來賓 13/早鳥 21），本棒從查 DB 狀態→拆邀請人對應→INSERT weekly_data→SUM 對齊教練原始週報，全程自糾「林仁超 4 位來賓一度誤寫 1 位」的 ON CONFLICT 覆蓋 bug。教練當場糾正 2 個關鍵錯誤認知（zhenzuan-webapp 是退役不是真鑽線上 webapp、真鑫 members 24 vs 應到 22 是因 2 人離會），收工前主動補上退役根因（分會名稱不是他要的所以停）。ones/coffee 全部 NULL 守底（守則 #15 沒給不填 0）。**
-
-## 🎯 本場戰果
-
-### 1. BNI 來賓戰情儀表板：真鑫 09/17 + 真鑽 09/15 雙週寫入完成
-教練貼兩張週報截圖，本棒逐步：
-- **真鑫 09/17**：建立 week row（解卡：`weeks` 表 schema 是 5 欄 `(week_date, label, is_active, note, sort_order)` 不是直覺的 3 欄）→ 吳玫萱（id=64）guests=1（陳柏麟為她邀的來賓）→ 7 位早鳥 early_bird=1（吳志煒/林佳慧/買駿航/連皓宇/范郁琪/蔡姵彤/王聖凱）
-- **真鑽 09/15**：建立 week row（**解 4 週停擺**：DB 卡在 08/25 之後完全沒新資料）→ 13 位邀請人按實際邀請數寫入（**自我糾錯發現**：第一次用 INSERT 13 次同一人 `ON CONFLICT UPDATE SET guests=1` 把多人邀請壓成 1，正確應為林仁超=4 / 楊智帆=2 / 康文彬=2 / 其他 5 位=1）→ 21 位早鳥 early_bird=1（20 位直配 + 1 位「羅　琳」id=48，DB 名字是「羅琳」無空格，鍵盤輸入差異）
-- **DB SUM 對齊驗證**（教練週報 vs DB）：真鑫來賓 1=1 ✓ / 早鳥 7=7 ✓；真鑽來賓 13=13 ✓ / 早鳥 21=21 ✓
-- **ones / coffee 全部 NULL**（守則 #15 沒給就不填 0 假裝），等會員回報再 UPDATE
-- **真貴 09/17** week row 已存在但教練沒給本週週報，照教練裁示不動
-- **真鑽 webapp（com.coach.zhenzuan-webapp）**：教練確認是退役服務不重啟
-
-### 2. 教練當場糾正 2 個關鍵錯誤認知，已寫入記憶
-- **錯誤 1**：把 `com.coach.zhenzuan-webapp` 誤當真鑽線上 webapp，發現 exit -15 就想重啟。教練回「這個本來就是停用的東西，不要浪費那麼多時間」，**真鑽線上 = `real-diamonds.bymyway.com`**，本機 Flask 部署方式不在 zhenzuan-webapp 裡。
-- **錯誤 2**：真鑫 `members` 表 24 人 ≠ 教練週報應到 22 人。差 2 位**已離會**：張晴晴 + 楊為凱。
-- 已寫入 `memory/reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18.md` + MEMORY.md 索引更新
-- **退役根因補釘**：教練收工前補一句「分會名稱不是我想要的所以叫他停了，真鑽有專門的名字」，已 commit `83b0745e1` 加進 memory，未來看到 zhenzuan-webapp 任何狀態都不必再追查。
-
-### 3. INSERT ON CONFLICT 自我踩坑 → 修正 → 寫成 SOP
-第一次寫 13 個邀請人時，每人都是 `INSERT ... ON CONFLICT(member_id, week_date) DO UPDATE SET guests=1`，**結果同一人多次 INSERT 都被壓回 1**，林仁超實際邀 4 位變成 1 位。立即修正成正確的 `UPDATE weekly_data SET guests=N WHERE week_date=... AND member_id=...`，並 SUM 驗證=13 對齊教練週報。**教訓**：`ON CONFLICT DO UPDATE SET <col>=excluded.<col>` 的「excluded」是指「這次嘗試 INSERT 的值」，**多次同 PK INSERT 不會累加**，只會覆蓋。多人邀請同一會員必須算總數後一次性寫入。
-
-## ⚠️ 本場教訓（已寫入記憶）
-1. `reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18`：BNI 三分會網域↔真名對照表 + zhenzuan-webapp 是退役服務（含退役根因）+ 真鑫 active 名單扣掉離會 2 人 + weekly_data 用 `INSERT ... ON CONFLICT` 模式。
-2. **ON CONFLICT DO UPDATE SET 不會累加**（E12「INSERT OR IGNORE 靜默失敗」的姊妹案例）：多人邀請同一會員時，必須先把總數算出來再一次性寫入；多次 INSERT 只會覆蓋。守則 #15「沒給不填」+ #14「提煉」雙重落實。
-3. **`weeks` 表 schema 是 5 欄不是 3 欄**：原以為 `(week_date, label, is_active)`，實際多了 `note` 和 `sort_order`。下棒動手前先 `.schema`。
-
-## 📋 下一場開工先做
-1. **沿用既有待辦**：BNI 三分會的 ones / coffee 數字還沒給，等會員各自回報再 UPDATE 不影響現有 guests/early_bird。真貴 09/17 不動（教練沒給本週週報）。真鑽線上 webapp 部署方式未查（real-diamonds.bymyway.com 本機 Flask 來源），這次沒動。
-2. **commit 待 push**：`workspace` repo 已 commit 但未 push（`git push` 需要 origin 設定，這次只 local commit），下一場開工確認 `git push origin master` 狀態。
-3. **E16 接力棒瘦身**：主檔現在含 v217 + v218 共 2 棒完整戰果，總檔案 314KB 接近 312KB 上限警戒線，下場可考慮把 v217 戰果搬進 archive。
-
-## 🔑 本場commit
-`workspace`：`3711f7f6c`(BNI 戰情儀表板+總表+memory 首次建立) + `83b0745e10`(補 zhenzuan-webapp 退役根因)。外層 `.openclaw` repo 本場無變更（workspace 被 .gitignore 排除，內層獨立 repo）。
-
-
----
+> 📦 v218完整內容已封存：`handoff_archive/handoff_v218_archived_2026-09-19.md`（Mac桌面版，全部釋放+MiniMax團隊品質稽核機制+開工hook身份誤判修復+幕僚長晨報重建+Netlify中文檔名部署bug發現）
 
 # 軍師接力棒 · 2026-09-18 v219（Mac桌面版 Sonnet 5，手機/軍師討論邊界+Netlify中文檔名修復部署+後台帳密清單結案+workspace git大掃除(含金鑰外洩發現)+coach888「熱門排行」新功能）
 
@@ -460,3 +379,38 @@ f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後�
 
 ## 🔑 本場commit
 `workspace`：`22252989c`(手機軍師討論過濾+帳密清單補完)、`3df65360b`(.gitignore補齊+例行狀態同步)、`577281fbc`(補commit50個記憶/收信/蒸餾檔)、`4d37bc428`(補commit中文檔名收信紀錄)、`5bf14310f`(coach888點擊計數後端API)。`github_repos/bigtree`：`549fa9c`(中文檔名改ASCII)，Netlify deploy`6aad2282`。`github_repos/coach888`：`22fc17b`(熱門排行前端)。
+
+---
+
+# 軍師接力棒 · 2026-09-19 v220（Mac桌面版 Sonnet 5，接力棒狀態表失真教訓+CLAUDE.md開機瘦身236KB→78KB+手機Remote Control重啟卡死未解）
+
+> 建立時間：2026-09-18 22:54 ~ 2026-09-19 00:03（台灣時間，約1.2小時）
+> 上一棒：v219
+> 本棒主軸：**開工時照唸接力棒舊狀態表，把v219已經解決並驗證上線的「10/3 Netlify部署」問題當成新問題重新丟給教練選A/B/C，教練當場動怒（「你一個不小心，我就在那邊跟你講半天」）。查明根因後修好單一實例+建立機械式防呆機制。順勢查教練追問的另兩件事：MiniMax context window被鎖200K的真正機制、CLAUDE.md開機注入佔掉84%context的根因，兩件都查到底並動手修復。最後嘗試重啟手機Remote Control host，卡在一個排除10種來源仍查不到的謎樣阻擋，教練裁示先總結收工。**
+
+## 🎯 本場戰果
+
+### 1. 接力棒狀態表失真教訓：單一實例修復+機械防呆機制上線
+根因：v219把「10/3 Netlify部署失敗」解決並verified live後，只在文末新增敘述，沒回頭把開頭狀態表那一列的🔒改成✅。v220開工照唸舊狀態表，把已解決的問題重新端給教練選，教練當場動怒糾正。已重新curl驗證現況（published deploy `6aad2282`、`archive/lecture-history.html`200、舊中文路徑404）確認真的已上線，更正狀態表為✅。新建`scripts/handoff_sync_guard.sh`（PreToolUse Bash matcher，比照`netlify_deploy_guard.sh`同款模式）：git commit涉及`JUNSHI_HANDOFF_LATEST.md`時，偵測「新增完成敘述卻沒同步更新狀態表對應列」的落差並提醒（非硬擋），3種情境測試通過，已註冊生效。commit`425e877`+`552232f2`。
+
+### 2. CLAUDE.md開機注入236KB→78KB：教練「開機就佔84%」投訴的真根因+修復
+教練追問「MiniMax context明明改了1M，為什麼開機讀完就佔84%」。查證：`CLAUDE.md`（每次開工自動注入）236KB，幾乎全是`JUNSHI_HANDOFF_LATEST.md`鏡像全文；後者「現在真正待辦」狀態表累積195列，其中**162列狀態早已是✅（已完成）**，佔175KB（78%），從未被移出主檔。已封存162筆✅列（`handoff_archive/handoff_status_table_completed_archive_2026-09-18.md`，git history+試金石完整保留不遺失，只是不再每次開工重灌）+封存v217完整戰果敘述，只留32筆真正需要追蹤的活躍列。`JUNSHI_HANDOFF_LATEST.md`223KB→65KB，`CLAUDE.md`鏡像後236KB→78KB（已由既有auto-sync cron自動commit+push，本場補commit源頭檔案），commit`552232f2`。
+
+### 3. MiniMax 1M context window機制查證（部分完成，卡在無法實測驗證）
+用`claude-code-guide`agent+官方docs(`code.claude.com/docs/en/model-config`)查證確認：`CLAUDE_CODE_AUTO_COMPACT_WINDOW`只設auto-compact**門檻**，不會擴大實際context window；自訂/gateway model ID只要含`[1m]`字尾（不分大小寫）Claude Code理論上會自動假設1M window，這是官方文件明載、且對應GitHub issue #68522已於2026-08-17正式修復關閉的功能。這台Mac `claude --version`是2.1.273，版本夠新理論上該生效。追查手機端為何還是200K，發現`claude rc` host process（PID 97294）**從2026-09-17 03:47就沒重啟過**，比當晚的MiniMax設定修復早了一天多，手機開新session只是透過tmux重連同一個process，從沒機會吃到新設定——這才是200K問題的真正根因（不是1M機制本身失效）。
+
+### 4. 手機Remote Control重啟卡死：耗時排查未解，教練裁示收工
+教練同意關閉舊process後，新的`claude rc`（含`.zshrc`裡9/17就建好的專用別名`claude-remote`）**完全起不來**，堅持報錯「偵測到API金鑰/自訂BASE_URL存在」，即使該次呼叫已用`env -u`清空相關變數。逐一排除10處已知設定來源（settings.json三層、shell rc檔、Keychain兩組憑證、launchd全域環境、背景daemon、`~/.claude.json`）**全部排除仍查不到真正來源**。過程中`claude auth logout`+`claude auth login`重新走過一次真OAuth登入，**這部分確認乾淨成功**（帳號正確、本對話視窗全程未受影響），但`claude rc`症狀完全沒變。教練考量對話框已到48% context，裁示先總結收工，這題留到下一個對話框繼續查。完整排除清單+3個下一步建議方向見[[reference_remote_control_relaunch_blocked_mystery_2026-09-19]]。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `feedback_stale_handoff_row_represented_as_unsolved_2026-09-18`：接力棒「文字敘述」跟「狀態表」是兩個要手動同步的地方，只寫敘述不改表格狀態，下一棒會把已解決的問題當新問題重新端出來。已建機械防呆`handoff_sync_guard.sh`。
+2. `reference_remote_control_relaunch_blocked_mystery_2026-09-19`：手機Remote Control重啟卡死的完整排除清單，下一場直接從這份清單的「懷疑方向」（`tengu_ccr_bridge`旗標）接續查，不用重新排查已確認排除的10處。
+
+## 📋 下一場開工先做
+1. **最優先**：手機Remote Control (`claude rc`) 重啟卡死——教練決定要繼續查/砍掉重練/先擱置，三選一，見上方狀態表🔒列+[[reference_remote_control_relaunch_blocked_mystery_2026-09-19]]完整排除清單。
+2. 沿用v218/v219既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測(教練不催)、peipei-ai-backup舊commit金鑰歷史(教練已表態不處理)、`stop_rules_master.py`規則#07誤判regex(教練示意MiniMax有空自行補丁)。
+3. 💬試金石案例庫商業化討論——教練指定的軍師專屬討論題目，本場再度沒空展開（連續第二場被其他緊急事項擠掉），下一場優先主動提起。
+4. E16接力棒瘦身：本場v217已封存，主檔現為v218~v220共3棒，下次開工建議把v218搬進archive維持2棒上限。
+
+## 🔑 本場commit
+`workspace`：`425e87794`(接力棒10/3狀態表更正+教訓記憶)、`552232f24`(接力棒瘦身236KB→78KB+handoff_sync_guard.sh新建)。本次收工commit另計，含v220接力棒本身+Remote Control排除清單記憶檔。

@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 手機claude rc重啟卡死「API金鑰存在」判斷，10處來源已排除仍未查明(2026-09-19)](reference_remote_control_relaunch_blocked_mystery_2026-09-19.md)
 - [🔴🔴🔴 開工照唸接力棒舊狀態表，把已解決問題當新問題丟A/B/C選項給教練，教練動怒(2026-09-18)](feedback_stale_handoff_row_represented_as_unsolved_2026-09-18.md)
 - [🔧 navigator.sendBeacon跨網域帶credentials:'include'，CORS要回實際Origin+Allow-Credentials:true(2026-09-18)](reference_sendbeacon_cors_credentials_gotcha_2026-09-18.md)
 - [🔴🔴 distilled/inbound_echo衍生檔案仍會原封不動含真實Token，commit前要單獨掃描(2026-09-18)](feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18.md)
