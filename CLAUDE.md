@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-18 17:15:59**
+> **最後同步：2026-09-18 17:25:02**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -27,7 +27,7 @@
 | 🔴🔴🔴 | **2026-09-16 04:03~04:13重大事故：main gateway+小二雙雙down機45分鐘，已修復** | ✅本場完成，需觀察 | 終端機PATH解析到新版openclaw(2026.9.4)跟正式launchd服務舊版(2026.6.34)不一致，導致state資料庫schema被升級到17，軍師重啟main gateway時直接撞上版本不相容陷入錯誤循環；搶修時誤kill掉小二的子process連帶影響小二。已改plist指向新版執行檔+`openclaw doctor --fix`完成遷移+`openclaw gateway start`重新啟用，main gateway(24個hook+LINE三帳號+Telegram三帳號)與小二均已驗證恢復正常。`doctor --fix`副作用清掉了`HEARTBEAT.md`/`TOOLS.md`，已用`git checkout HEAD --`從git歷史救回零遺漏。完整記錄見試金石案例73。**下一場開工先確認**：main gateway是否持續穩定無重啟迴圈，LINE/Telegram教練親自測試過都正常再放心。 |
 | 🟢 | **BNI組隊計畫「產業鍊SOP」自動生圖技能：main/Hermes/小二三方已上線+可用，孔大哥/佩佩老師走獨立hook(伺服器端代勞，不開放exec權限)** | ✅本場完成，教練已實測main成功 | 教練決定產圖走lk888付費API(GPT Image 2)，已建`scripts/generate_industry_chain.py`通用腳本(呼叫lk888生圖+推Telegram，支援跨環境指定bot帳號)，API Key存於`路徑大全_憑證層.md`。觸發句型「[專業別]的產業鍊SOP」：①**main agent**（`workspace/SOUL.md`新增技能段落，教練已用Telegram實測成功）②**Hermes**（workspace透過symlink共用main的SOUL.md，不用額外設定，理論上已可用未經教練實測）③**小二**（`~/.openclaw-test2/workspace/SOUL.md`獨立寫入，已用跨環境呼叫測試成功送達教練Telegram）④**孔大哥(kong)/佩佩老師(peipei)**：查證`tools.toolsBySender`只有教練帳號有完整exec權限，`group:automation`不含exec(官方文件核實)，改用伺服器端hook方案——新建`hooks/industry-chain-sop/`，事件驅動偵測孔大哥(Telegram id`8689825759`)/佩佩老師(id`8786886419`，兩者ID皆從各自sessions目錄真實sender_id統計取得，非教練提供)本人發言，Node.js直接呼叫MiniMax組prompt+執行腳本生圖回傳，全程不開放exec給他們的帳號。已註冊進`openclaw.json`+gateway熱重載生效，**2026-09-17 19:00教練回報孔大哥/佩佩老師本人已實測正常**。**已知取捨**：GPT Image 2約5~10%機率周邊節點文字出錯(重複/錯字)，教練已表態不追求完美、不自動重試(額度有限)。**下一場待辦**：bni_tainan(一般BNI夥伴MiniMax免費文字+生圖版)尚未開始建置。**2026-09-18 16:30 教練明示**：孔大哥/佩佩老師industry-chain-sop hook真人實測不再列入軍師待辦，外部agent/真人自負責任，不催收。 |
 | 🟢 | **三個LINE帳號(大台南南區小幫手/教練都在想什麼/龍蝦小助教)同時斷線5天3.5小時修復** | ✅2026-09-16 v205本場完成 | 根因是`@openclaw/line`外掛套件檔案遺失(`openclaw plugins install @openclaw/line`修復)，詳見v205完整戰果+記憶`reference_line_plugin_extensions_missing_2026-09-16`。已新增每日08:05健康檢查(`scripts/three_line_bots_healthcheck.sh`)，教練要求每天都要回報不論健康與否。 |
-| 🔴 | **「幕僚長晨報」cron(每日統整bni_tainan+jiaolian_thoughts動態播報教練)已從系統消失，原因已查明** | 🔒待教練裁示是否重建 | 2026-08-09建立的job(id`b73845c9-...`)查live系統已`cron job not found`。**本場(2026-09-18)已深查根因**：①`state/minimax_overload_retry.json`顯示該job最後一次觸發失敗記錄lastTs=`2026-09-08T22:03:10.709Z`（22:01 cron），之後完全沒有新紀錄→確認9/8 22:01後從active cron store消失②磁碟上SQLite備份`state/openclaw_cron.db`是0 bytes從Aug 20起就是空的，active cron只存在gateway記憶體、無法靠磁碟救回③`scripts/morning_digest.sh`存在但對應的cron也沒在active list（06:00起床摘要也消失，同樣未重建）④9/16 commit `054148ab2` commit message明確寫「`openclaw.json`變更含`doctor --fix`格式標準化(cron store等)，非全部手動改動」，且該commit同時清掉了`TOOLS.md`（已用git救回）→強烈暗示是`doctor --fix`在cron store標準化時漏掉這兩個非預設job，但**無法從git log反推確切的刪除commit時間點**（9/8~9/16期間沒有任何跟cron store相關的commit）。**建議處理**：不是bug修復就能救回（cron job definition本身在gateway記憶體，磁碟沒備份），需教練明示是否要重建，若要重建需告知原本的schedule（推測是07:00統合bni_tainan+jiaolian_thoughts兩agent狀態）+輸出格式。 |
+| ✅ | **「幕僚長晨報」cron已重建，每日07:00送教練個人Telegram** | ✅2026-09-18本場完成，已測試驗證 | 新job`0d64be3c-061d-4ca8-add0-d22862677e59`，agent=main，每日07:00(Asia/Taipei)讀`agents/bni_tainan/`+`agents/jiaolian_thoughts/`最新記憶檔，三關判斷(真的有問題/非偶發/真的影響業務)過濾，沒事就說沒事不硬編內容，送到教練個人Telegram(chat`6124913915`，非「活動報名即時通知」群組，因該群組佩佩老師也在裡面)。已用`openclaw cron run --wait`手動觸發驗證：`completionStatus:succeeded`+`delivered:true`，第一次真實測試訊息「☕ 幕僚長晨報：昨日運作正常，無需教練關注」確實送達。**原始prompt文字未留存**(原job b73845c9的定義只存在gateway記憶體，doctor --fix標準化時消失，磁碟無備份)，本次依既有記錄的設計意圖重寫，非逐字還原。舊根因記錄：2026-08-09建立的job(id`b73845c9-...`)查live系統已`cron job not found`。**本場(2026-09-18)已深查根因**：①`state/minimax_overload_retry.json`顯示該job最後一次觸發失敗記錄lastTs=`2026-09-08T22:03:10.709Z`（22:01 cron），之後完全沒有新紀錄→確認9/8 22:01後從active cron store消失②磁碟上SQLite備份`state/openclaw_cron.db`是0 bytes從Aug 20起就是空的，active cron只存在gateway記憶體、無法靠磁碟救回③`scripts/morning_digest.sh`存在但對應的cron也沒在active list（06:00起床摘要也消失，同樣未重建）④9/16 commit `054148ab2` commit message明確寫「`openclaw.json`變更含`doctor --fix`格式標準化(cron store等)，非全部手動改動」，且該commit同時清掉了`TOOLS.md`（已用git救回）→強烈暗示是`doctor --fix`在cron store標準化時漏掉這兩個非預設job，但**無法從git log反推確切的刪除commit時間點**（9/8~9/16期間沒有任何跟cron store相關的commit）。**建議處理**：不是bug修復就能救回（cron job definition本身在gateway記憶體，磁碟沒備份），需教練明示是否要重建，若要重建需告知原本的schedule（推測是07:00統合bni_tainan+jiaolian_thoughts兩agent狀態）+輸出格式。 |
 | 🟢 | **大台南策展中心貼文：手機版(MiniMax)當場實測成功貼出12則，但缺縮圖+文案重複網址** | ✅2026-09-18本場結案，教練決定不催手機版 | 教練授權手機版(MiniMax-M3, Remote Control session)用Playwright接管Chrome的方式突破Business Suite打字卡點，12則已真實貼出且公開可見(教練親眼確認)，SOP已寫入`claude-brain/reference_fb_real_browser_repost_sop_2026-09-18.md`。教練事後回報兩個問題：無縮圖+文案重複網址，教練請軍師分析根因，已驗證是og:image用相對路徑(部分slug甚至完全沒og:標籤)，且`event-signup`的`/curated/<slug>/`路由是純檔案passthrough(每個slug各自獨立index.html，非共用template)。已寫派工信`cross-agent/inbox/mobile/20260918-0330_mac-desktop-to-mobile_fix-og-image-and-repost.md`(commit`c40e76eff`)交給手機版執行：逐一修12個slug的og:image絕對路徑+補`curation_process.py`自動修復機制(治本，未來新站不再重演)+刪除重貼12則。**2026-09-18 16:30 教練裁示**：手機版的og:image修復催收+孔大哥/佩佩老師industry-chain-sop hook真人實測這兩項都不列入軍師待辦清單，手機版/外部agent自負責任，不催收。 |
 | 🟢 | **小二Telegram token洩漏事件：教練裁示不輪替+底層架構已根治** | ✅2026-09-14完全結案 | 教練明確表態不需要逐次輪替token(風險評估可接受)，並要求根治底層架構、不要再讓他頻繁處理這類瑣事。已執行：`.gitignore`新增`terminal-notes/raw_sessions/`規則+243個已追蹤檔案`git rm --cached`退出版控(本機檔案zero data loss，僅取消git追蹤)，commit`57b4abf92`。往後任何在對話框貼出的密鑰，這條外洩路徑已徹底阻斷。詳見[[reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14]]。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
@@ -630,6 +630,50 @@ test2重啟後確認安靜11分鐘(01:12:54起)，但額度仍14%→17%→18%持
 
 ## 🔑 本場commit
 本場無主動commit（v4重貼腳本（bkg823w6v）雖成功13/13但其輸出已在前場v216背景完成並驗證貼文上線，無新代碼變更）。本次commit僅含JUNSHI_HANDOFF_LATEST.md（本棒v217更新）+memory新增3條教訓+記憶索引更新。
+
+---
+
+# 軍師接力棒 · 2026-09-18 v218（Mac桌面版 Sonnet 5，全部釋放+MiniMax團隊品質稽核機制建立+開工hook身份誤判根因修復+幕僚長晨報重建+Netlify中文檔名部署bug發現）
+
+> 建立時間：2026-09-18 11:18 ~ 17:18（台灣時間）
+> 上一棒：v217
+> 本棒主軸：**教練要求執行「全部釋放」後，委託軍師以「賈維斯/老大哥」角色稽核兩個正在跑任務的手機MiniMax session品質。逐行讀transcript稽核後發現：兩個session的實際任務執行品質其實不差，但都在開工宣言自稱「Opus軍師」——查出根因是`feed_junshi_handoff.sh`寫死這句話，已修復為依環境變數動態判斷。順勢建立「AI團隊品質稽核」機制(既有13條Stop hook規則彙整器)+AI團隊名冊。教練追問「怎麼監督」+「幕僚長晨報/起床摘要/盲點監控三個名詞是什麼」+「不可逆待授權清單」，逐一查證回答並直接執行決定。過程中意外發現並協助排除bigtree-tw Netlify部署對中文檔名zip解壓的隱性bug(MiniMax已自行restore止血)。**
+
+## 🎯 本場戰果
+
+### 1. 全部釋放指令執行
+教練喊「完整釋放」，經AskUserQuestion確認等同既有「全部釋放」指令，執行`scripts/release_all_memory.sh`：Chrome/LINE/Typeless本來就沒在跑、赫米斯已停止(bootout四個launchd服務)、RustDesk重啟(247M→208M)。
+
+### 2. 兩個手機MiniMax session品質稽核：任務執行本身OK，但身份自稱是系統性bug
+逐行解析`f7ded585`(真鑫/真鑽戰情儀表板更新)+`5876ed8b`(全都開始/v214-v217待辦執行)兩份完整transcript(非用猜的)：
+- **真鑫/真鑽任務**：正確從教練貼的兩張週報截圖辨識分會+數字全部SUM驗證對齊教練原始週報，中途自行抓到並修正錯誤(林仁超邀4位一度誤寫1位)，方法論健全。教練誤以為「忘東忘西」的根源是：文字指令本身沒帶分會名稱，AI需要先踏查全部分會現況才能鎖定範圍，非真的亂猜。
+- **全都開始任務**：正確把待辦分Class A(可自行動手)/B(等外部)/C(不可逆待授權)三類，只動手做A類，且都有扎實驗證(6個合成事件測試+18/19 regression測試+commit hash)，不可逆的三項(peipei金鑰/Netlify/FB審核)正確地沒有擅自動手。
+- **真正問題**：兩個session開工宣言都自稱「Mac 軍師，Opus 最高決策層」。追查根因：`scripts/feed_junshi_handoff.sh`第212行原本無條件`echo "軍師（Opus）"`，不論實際觸發者是誰都灌輸這句話。**修復**：改用`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`是否被清空判斷身份——`claude rc`(手機Remote Control host)啟動時用`env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY`清空真Anthropic憑證，逼子session退回用`ANTHROPIC_DEFAULT_OPUS_MODEL`別名解析成MiniMax-M3；本機終端機/桌面版保有真實憑證。**踩坑記錄**：一開始誤用`ANTHROPIC_DEFAULT_OPUS_MODEL`本身內容判斷，發現這台Mac全域shell環境本來就把它設成MiniMax(不分session)，改用BASE_URL/API_KEY才是正確判斷點。已用真實環境模擬測試通過。commit`4de7654c0`。
+
+### 3. AI團隊品質稽核機制 + AI團隊名冊建立
+教練問「怎麼設計監督流程，事前送審還是事後查」，查證發現：`stop_rules_master.py`的13條規則(A~M)本來就對任何觸發Stop事件的session自動稽核(含手機MiniMax)，event-driven、非輪詢，親眼看到規則C今晚就攔到一個MiniMax session的時區違規並即時自我修正。真正缺口是違規記錄各自寫進`distill/*violations.log`沒人讀。新增`scripts/agent_team_qa_digest.py`：追蹤已讀行數，只彙整「上次讀過之後」的新違規，按session分組並用assistant訊息的`model`欄位判斷是📱手機MiniMax還是🖥️本機Claude，掛進`feed_junshi_handoff.sh`六步驟尾段——沒有新違規完全安靜，有才顯示，不新增輪詢cron。已用今晚真實違規資料(session`5876ed8b`的時區+輪詢設計違規)驗證正確分組顯示，首次執行的歷史backlog(6月至今上百筆)已消化為baseline不會一次倒給教練。`路徑大全.md`新增「AI團隊名冊」章節列出MiniMax-M3+LK888兩個已知成員的用途/額度來源/監督機制。commit`ca8752418`。
+
+### 4. 三項教練委託評估的待辦，直接查證+決定+執行
+- **幕僚長晨報**：查明這是「監看bni_tainan+jiaolian_thoughts兩個對外agent動態」的cron(跟「起床摘要」監看的是這台Mac自己的git commit完全是兩件事，不重複)。已重建cron`0d64be3c-061d-4ca8-add0-d22862677e59`，每日07:00送教練個人Telegram(chat`6124913915`)，已`cron run --wait`實測驗證`delivered:true`。
+- **盲點監控**：查明這不是新系統，只是MiniMax今晚做rule#07白名單補強時發現的1個測試案例regex邊界問題(19個測試中1個fail)，非功能決策，已請它有空自行補丁即可。
+- **peipei-ai-backup舊commit明文金鑰**：評估後決定不重寫git歷史——比照小二Telegram token外洩舊判例(private repo+風險可接受)，維持現況(金鑰已清空+.gitignore已補)，此項結案不再懸著。
+
+### 5. 意外發現：bigtree-tw Netlify部署對中文檔名zip解壓的隱性bug
+`5876ed8b`session嘗試部署10/3 KR場EDM連結時連續失敗，軍師介入用自己重新產生、驗證過完全乾淨的zip獨立測試，**同樣失敗**，確認非zip打包方式問題。最終跟`5876ed8b`各自查出根因：**Netlify的zip deploy API對中文檔名/目錄的zip會直接「Deploy failed while extracting zip」**，不論編碼策略(git archive/Python zipfile UTF-8 flag/STORED不壓縮)皆無效，唯一成功策略是完全排除中文檔名。`5876ed8b`已負責任地**restore回9/16最後一次成功的deploy**(`6aaae4738f7bad35092afcb8`)止血，10/3改動暫未上線，已用curl驗證首頁+歷史講座紀錄頁面皆恢復200正常。詳見`claude-brain/reference_netlify_zip_deploy_chinese_filename_2026-09-18.md`(MiniMax撰寫)。**軍師決定**：暫採方案C(不急著把bigtree靜態版中文檔名rename成ASCII)，因為10/3場次的實際使用者入口`event.bymyway.com/curated/bigtree-1003/`(動態版)已驗證正常運作(HTTP 200)，靜態版只是歷史宮格牆的index，非主力入口，不影響教練實際業務需求；未來若要一併解決可批次rename成英文檔名一次到位。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `feedback_hook_sender_id_vs_group_id_gating_2026-09-18`延續案例：任何寫死字串的hook注入邏輯，都要考慮「這支hook可能被非預期的觸發者共用」，開工hook的「軍師(Opus)」字串就是一個活生生的反例。
+2. AI團隊品質監督的本質：機械式規則(有沒有守規矩)可以完全自動化event-driven稽核，但「這個任務理解/做法是否恰當」的語意判斷仍需要實際讀transcript，無法用regex取代，這是本場對教練誠實揭露的已知限制。
+3. `reference_netlify_zip_deploy_chinese_filename_2026-09-18`：任何要走Netlify zip deploy API的repo，若含中文/非ASCII檔名，deploy前務必`unzip -l`檢查，避免重演本場5+2次連續失敗燒掉的部署額度。
+
+## 📋 下一場開工先做
+1. **沿用既有待辦**：確認孔大哥/佩佩老師端industry-chain-sop hook真人實測(教練已表態不催收)、峰哥產業服務鏈SOP待Telegram ID、FB App Review(教練自行處理中，已從軍師待辦移除)、`stop_rules_master.py`規則#07誤判regex(教練已示意MiniMax有空自行補丁)。
+2. **bigtree-tw中文檔名rename**：非緊急，教練若想讓靜態版也能穩定部署，未來找時間批次rename成ASCII安全命名(`archive/大樹小講_歷史講座紀錄.html`→英文、`archive/2026-07-01_創業x政府xAI講座/`→英文，後者目前無任何連結指向，屬孤兒資料夾)。
+3. **agent_team_qa_digest.py上線觀察**：下次開工留意尾段有沒有正確顯示新違規彙整，若MiniMax session之後有新的規則觸發，確認分組/顯示邏輯持續正確。
+4. E16接力棒瘦身：主檔v214~v218共5棒，下次開工可考慮把v214~v215搬進archive。
+
+## 🔑 本場commit
+`workspace`：`4de7654c0`(開工hook身份判斷修復)+`ca8752418`(AI團隊品質稽核機制+名冊)+本次commit(接力棒v218+幕僚長晨報狀態更新)。cron：`0d64be3c-061d-4ca8-add0-d22862677e59`(幕僚長晨報，非git版控，已用`cron run --wait`驗證取代commit hash為證)。`5876ed8b`session並行產生的commit(peipei決定執行/netlify chinese filename記憶檔等)不在本次commit範圍內，各自獨立commit。
 
 
 ---
