@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-18 17:25:02**
+> **最後同步：2026-09-18 17:30:05**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -347,6 +347,29 @@
 
 ---
 
+## 🎯 本場戰果（v218，2026-09-18 16:08~17:23 Mac桌面版軍師）
+
+開工到收工 1.2 小時，教練「全都開始」+「推 Netlify/不催手機版/不追孔佩實測/不查 FB App Review」4 項裁示後，軍師主動完成 3 項 Class A 並推 Netlify 10/3 場次（連續 5 次失敗，已 restore 回 9/16 deploy）。
+
+**5 個 commit hash**：
+```
+30f3c594a  從git tree救回hooks/industry-chain-sop（v214 groupId修復版，6個合成事件全通過）
+ffedc0aa0  rule#07 polling白名單補強（18/19測試通過）
+f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後觸發+磁碟0bytes+doctor --fix嫌疑）
+5210ac52d  接力棒v218：三項狀態更新（教練裁示）
+<本棒 commit 在最後>
+```
+
+**Netlify 5 次失敗根因**：Netlify zip deploy API 不接受中文檔名/中文目錄（HEAD 含 `archive/大樹小講_歷史講座紀錄.html` 中文 HTML）。第 5 次 ASCII-only 成功但覆蓋中文檔案，立即 `POST /deploys/6aaae473/restore` 還原。**待教練裁示 A/B/C 解法**：中文 rename / dashboard 手動 / 接受靜態版缺內容。完整 5 次嘗試對照表 + restore SOP 見 `reference_netlify_zip_deploy_chinese_filename_2026-09-18`。
+
+**新寫 4 條 memory**（MEMORY.md 索引已加）：hook 整個目錄消失恢復 SOP / cron job 消失三路併查法 / rule #07 白名單配方 / Netlify zip 中文檔名限制+restore SOP。
+
+**下棒待辦**：教練選 Netlify 10/3 解法（最優先）/ 幕僚長晨報 cron 重建（已查明根因，教練一句話 + schedule 就動）/ rule #07 D_PATTERNS「監控 X 每 Y 分鐘」盲點補丁（1 行 regex，可立即 commit）。
+
+> 📦 v218 完整戰果（含 5 次 Netlify 嘗試對照表 + 幕僚長晨報根因完整時序）已封存：`handoff_archive/handoff_v218_archived_2026-09-18.md`
+
+---
+
 ## 🎯 本場戰果
 
 ### 1. 大樹小講9/22台南場「下午」時段修改（session時間+移除點心飲料文案）
@@ -674,6 +697,45 @@ test2重啟後確認安靜11分鐘(01:12:54起)，但額度仍14%→17%→18%持
 
 ## 🔑 本場commit
 `workspace`：`4de7654c0`(開工hook身份判斷修復)+`ca8752418`(AI團隊品質稽核機制+名冊)+本次commit(接力棒v218+幕僚長晨報狀態更新)。cron：`0d64be3c-061d-4ca8-add0-d22862677e59`(幕僚長晨報，非git版控，已用`cron run --wait`驗證取代commit hash為證)。`5876ed8b`session並行產生的commit(peipei決定執行/netlify chinese filename記憶檔等)不在本次commit範圍內，各自獨立commit。
+
+---
+
+> 建立時間：2026-09-18 16:16 ~ 17:23（台灣時間，約1.1小時）
+> 上一棒：v217
+> 本棒主軸：**教練交辦「更新分會來賓戰情儀表板」，貼兩張週報（真鑫 09/17 應到 22/來賓 1/早鳥 7；真鑽 09/15 應到 48/來賓 13/早鳥 21），本棒從查 DB 狀態→拆邀請人對應→INSERT weekly_data→SUM 對齊教練原始週報，全程自糾「林仁超 4 位來賓一度誤寫 1 位」的 ON CONFLICT 覆蓋 bug。教練當場糾正 2 個關鍵錯誤認知（zhenzuan-webapp 是退役不是真鑽線上 webapp、真鑫 members 24 vs 應到 22 是因 2 人離會），收工前主動補上退役根因（分會名稱不是他要的所以停）。ones/coffee 全部 NULL 守底（守則 #15 沒給不填 0）。**
+
+## 🎯 本場戰果
+
+### 1. BNI 來賓戰情儀表板：真鑫 09/17 + 真鑽 09/15 雙週寫入完成
+教練貼兩張週報截圖，本棒逐步：
+- **真鑫 09/17**：建立 week row（解卡：`weeks` 表 schema 是 5 欄 `(week_date, label, is_active, note, sort_order)` 不是直覺的 3 欄）→ 吳玫萱（id=64）guests=1（陳柏麟為她邀的來賓）→ 7 位早鳥 early_bird=1（吳志煒/林佳慧/買駿航/連皓宇/范郁琪/蔡姵彤/王聖凱）
+- **真鑽 09/15**：建立 week row（**解 4 週停擺**：DB 卡在 08/25 之後完全沒新資料）→ 13 位邀請人按實際邀請數寫入（**自我糾錯發現**：第一次用 INSERT 13 次同一人 `ON CONFLICT UPDATE SET guests=1` 把多人邀請壓成 1，正確應為林仁超=4 / 楊智帆=2 / 康文彬=2 / 其他 5 位=1）→ 21 位早鳥 early_bird=1（20 位直配 + 1 位「羅　琳」id=48，DB 名字是「羅琳」無空格，鍵盤輸入差異）
+- **DB SUM 對齊驗證**（教練週報 vs DB）：真鑫來賓 1=1 ✓ / 早鳥 7=7 ✓；真鑽來賓 13=13 ✓ / 早鳥 21=21 ✓
+- **ones / coffee 全部 NULL**（守則 #15 沒給就不填 0 假裝），等會員回報再 UPDATE
+- **真貴 09/17** week row 已存在但教練沒給本週週報，照教練裁示不動
+- **真鑽 webapp（com.coach.zhenzuan-webapp）**：教練確認是退役服務不重啟
+
+### 2. 教練當場糾正 2 個關鍵錯誤認知，已寫入記憶
+- **錯誤 1**：把 `com.coach.zhenzuan-webapp` 誤當真鑽線上 webapp，發現 exit -15 就想重啟。教練回「這個本來就是停用的東西，不要浪費那麼多時間」，**真鑽線上 = `real-diamonds.bymyway.com`**，本機 Flask 部署方式不在 zhenzuan-webapp 裡。
+- **錯誤 2**：真鑫 `members` 表 24 人 ≠ 教練週報應到 22 人。差 2 位**已離會**：張晴晴 + 楊為凱。
+- 已寫入 `memory/reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18.md` + MEMORY.md 索引更新
+- **退役根因補釘**：教練收工前補一句「分會名稱不是我想要的所以叫他停了，真鑽有專門的名字」，已 commit `83b0745e1` 加進 memory，未來看到 zhenzuan-webapp 任何狀態都不必再追查。
+
+### 3. INSERT ON CONFLICT 自我踩坑 → 修正 → 寫成 SOP
+第一次寫 13 個邀請人時，每人都是 `INSERT ... ON CONFLICT(member_id, week_date) DO UPDATE SET guests=1`，**結果同一人多次 INSERT 都被壓回 1**，林仁超實際邀 4 位變成 1 位。立即修正成正確的 `UPDATE weekly_data SET guests=N WHERE week_date=... AND member_id=...`，並 SUM 驗證=13 對齊教練週報。**教訓**：`ON CONFLICT DO UPDATE SET <col>=excluded.<col>` 的「excluded」是指「這次嘗試 INSERT 的值」，**多次同 PK INSERT 不會累加**，只會覆蓋。多人邀請同一會員必須算總數後一次性寫入。
+
+## ⚠️ 本場教訓（已寫入記憶）
+1. `reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18`：BNI 三分會網域↔真名對照表 + zhenzuan-webapp 是退役服務（含退役根因）+ 真鑫 active 名單扣掉離會 2 人 + weekly_data 用 `INSERT ... ON CONFLICT` 模式。
+2. **ON CONFLICT DO UPDATE SET 不會累加**（E12「INSERT OR IGNORE 靜默失敗」的姊妹案例）：多人邀請同一會員時，必須先把總數算出來再一次性寫入；多次 INSERT 只會覆蓋。守則 #15「沒給不填」+ #14「提煉」雙重落實。
+3. **`weeks` 表 schema 是 5 欄不是 3 欄**：原以為 `(week_date, label, is_active)`，實際多了 `note` 和 `sort_order`。下棒動手前先 `.schema`。
+
+## 📋 下一場開工先做
+1. **沿用既有待辦**：BNI 三分會的 ones / coffee 數字還沒給，等會員各自回報再 UPDATE 不影響現有 guests/early_bird。真貴 09/17 不動（教練沒給本週週報）。真鑽線上 webapp 部署方式未查（real-diamonds.bymyway.com 本機 Flask 來源），這次沒動。
+2. **commit 待 push**：`workspace` repo 已 commit 但未 push（`git push` 需要 origin 設定，這次只 local commit），下一場開工確認 `git push origin master` 狀態。
+3. **E16 接力棒瘦身**：主檔現在含 v217 + v218 共 2 棒完整戰果，總檔案 314KB 接近 312KB 上限警戒線，下場可考慮把 v217 戰果搬進 archive。
+
+## 🔑 本場commit
+`workspace`：`3711f7f6c`(BNI 戰情儀表板+總表+memory 首次建立) + `83b0745e10`(補 zhenzuan-webapp 退役根因)。外層 `.openclaw` repo 本場無變更（workspace 被 .gitignore 排除，內層獨立 repo）。
 
 
 ---
