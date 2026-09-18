@@ -751,7 +751,16 @@ for evt in EVENTS[-300:]:
         if not isinstance(c, dict) or c.get("type") != "tool_use" or c.get("name") != "Bash":
             continue
         command = str((c.get("input") or {}).get("command", ""))
-        if "git commit" not in command:
+        # 🔴 2026-09-19第二次發現：`"git commit" not in command`只看子字串存在，
+        # 抓不出「這段文字是不是真的在呼叫git commit」——本場修這條規則本身時，
+        # 寫了一支python heredoc測試腳本，裡面用字串變數存了一行範例文字
+        # `commit_msg_legit = 'git commit -m "新增「大台南策展中心」後台管理頁..."'`
+        # 純粹是測試資料，這個Bash command從頭到尾沒有真的執行過一次git commit，
+        # 但因為子字串比對命中，一樣被當成「這輪真的commit了」去抓「新增OO」
+        # 措辭，變成同一個假陽性用不同commit又跳出來一次。改用位置感知的
+        # regex：只有「git commit」前面是字串開頭/換行/`;`/`&&`/`||`/`|`（也就是
+        # 真的在shell命令的位置上，不是被包在引號裡當一段文字）才算數。
+        if not re.search(r"(^|\n|;|&&|\|\||\|)\s*git\s+commit\b", command):
             continue
         for m in re.finditer(
             r"新增([^\n\"'：:]{1,30}(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口))",
