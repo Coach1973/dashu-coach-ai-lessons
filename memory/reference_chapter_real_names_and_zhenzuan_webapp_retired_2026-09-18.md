@@ -17,8 +17,9 @@ metadata:
 | `real-diamonds.bymyway.com` | 真鑽 | `~/github_repos/zhenzuan-guests/zhenzuan_guests.db` | （**無對應 launchd 服務**） |
 | `real-wealth.bymyway.com` | 真貴 | `~/github_repos/zhengui-guests/zhengui_guests.db` | `com.coach.zhengui-webapp` |
 
-**為什麼教練會不爽**：我之前誤把 `com.coach.zhenzuan-webapp` 當成真鑽的線上 webapp，發現它 exit -15 就想重啟。教練說「這個本來就是停用的東西，不要浪費那麼多時間」。
-**怎麼應用**：看到 `zhenzuan-webapp` 不在 launchd 服務名單、或 EXITED 都正常，不要動它。真鑽線上 webapp 走的是別的部署方式（待查，目前 curl `real-diamonds.bymyway.com` 仍 HTTP 200，但本機 Flask 不在 zhenzuan-webapp 裡跑）。
+**為什麼教練會不爽**：我之前誤把 `com.coach.zhenzuan-webapp` 當成真鑽的線上 webapp，發現它 exit -15 就想重啟。教練說「這個本來就是停用的東西，不要浪費那麼多時間」+ 之後補一句根因「分會的名稱不是我要的我就叫他停了，真鑽有專門的名字」。
+**為什麼退役**：分會 repo 用「zhenzuan」(中文拼音) 不是教練要的名字，所以教練叫停了。真鑽的專門名字 = `real-diamonds`，線上走 `real-diamonds.bymyway.com`，本機 Flask 部署方式待查（不是 `com.coach.zhenzuan-webapp`）。
+**怎麼應用**：看到 `zhenzuan-webapp` 不在 launchd 服務名單、或 EXITED 都正常，不要動它、不要花時間查它為什麼死。
 
 ## 2. 真鑫 members 表 ≠ 應到會員數
 
