@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-19 06:05:10**
+> **最後同步：2026-09-19 06:10:13**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -195,6 +195,8 @@
 
 > 📦 v220完整內容已封存：`handoff_archive/handoff_v220_archived_2026-09-19.md`（Mac桌面版，接力棒狀態表失真教訓+機械防呆`handoff_sync_guard.sh`上線+CLAUDE.md 236KB→78KB瘦身+M系列MiniMax 1M機制查證+手機Remote Control重啟卡死未解留待下一棒）
 
+> 📦 v221+v222完整內容已封存：`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`（v221 Mac桌面版，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓／v222 Mac桌面版，中正大學互動牆從零建置上線+赫米斯Telegram斷線16小時根因修復，E16瘦身本場執行）
+
 ---
 
 
@@ -367,6 +369,45 @@
 
 ## 🔑 本場commit
 `7fa18fd0a`（產業鏈SOP雙執行root cause + 時間鐵律違規記憶）
+
+
+---
+
+# 軍師接力棒 · 2026-09-19 v227（Mac桌面版 Sonnet 5，教練睡覺期間自主完成：MiniMax懸案(案例78)徹底解謎+手機1M context實測成功+RC腳本簡化）
+
+> 建立時間：05:47 ~ 06:25（約38分鐘）
+> 上一棒：v226（05:39教練說「總結」收工）+ v225（平行session，03:26~05:36）
+> 本棒主軸：**開工回報後教練追問「MiniMax流量懸案要繼續查」，教練當場給出解釋方向（底層規則規定除了Claude以外強制走MiniMax）並明確下令「自己想辦法解決問題，不要再等我決定」後去睡覺。軍師沒有停在教練的解釋上，動手用lsof+nettop即時重新驗證，挖出完整機制並實際修復手機Remote Control拿到真1M context，全程教練不在場、未等待任何授權。**
+
+## 🎯 本場戰果
+
+### 1. 案例78 MiniMax懸案徹底解謎（不是猜測，是lsof+nettop即時驗證）
+教練05:53給方向：「底層架構規定除了Claude以外，所有模型鐵律強制走MiniMax，這是我下的指令」。軍師沒有直接採信，而是動手驗證，挖出真正機制：**Claude Code CLI按model名稱字串是否為「Anthropic辨識的合法id」決定連線目的地，不是單純看`ANTHROPIC_BASE_URL`**——
+- Sonnet互動主線用`claude-sonnet-5[1m]`（Anthropic真認得）→ 原生Claude Pro OAuth接管 → 真連160.79.104.10 → **1M context是真的**
+- Haiku/Opus背景任務slot（settings.json裡仍是`MiniMax-M3[1m]`，Anthropic不認得這個名字）→ CLI退回用BASE_URL打MiniMax → 真連175.99.116.25（跟案例78當時測到同一顆真實MiniMax伺服器）
+
+兩邊都是真的，不是矛盾，是同一session依model tier分流到兩個後端。教練的解釋方向完全對，這次補上的是機制細節。完整記錄：[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]，試金石案例78已補「懸案已解」更新段落。
+
+### 2. 手機Remote Control 1M context 實機驗證成功（不只是理論測試）
+用`--print`直接測試`claude-sonnet-5[1m]`：真連160.79.104.10，自報`CTX=1000000`，配合網路層鐵證可信。**重點是這次不只在throwaway測試驗證，而是實際重啟教練手機正在用的那個RC live session**（`bash scripts/restart_remote_control.sh`跑出`✅ Remote Control 已成功啟動並連線`），教練手機App現在應該能拿到1M Sonnet。
+
+### 3. RC啟動腳本v2大幅簡化+挖到一個反直覺新坑
+舊版（v221）用「暫時搬移整份settings.json再還原」這種粗暴解法繞過`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`卡死問題。這次直接把這個key從settings.json永久移除（唯一真正擋住`claude rc`的變數），腳本改成只需unset這一個shell變數即可。過程中意外挖到新坑：**明確`unset ANTHROPIC_BASE_URL`（即使目的是清空它）反而會觸發`claude rc`自己的硬性檢查噴錯**「is set and does not point at api.anthropic.com」——用tmux反覆測試4輪交叉確認這個反直覺結論，正確做法是完全不要碰這三個變數（BASE_URL/API_KEY/AUTH_TOKEN），讓它們維持settings.json原狀即可正常連線。記錄：[[feedback_claude_rc_never_unset_base_url_2026-09-19]]。同步更新`.zshrc`的`claude-remote`alias跟`scripts/restart_remote_control.sh`（commit待補）。
+
+### 4. E16接力棒瘦身（本場執行v226留下的待辦）
+把v221+v222搬進`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`，主檔維持v223~v227共5棒（含本棒）。
+
+## ⚠️ 教練明確授權範圍（避免誤解為「自作主張」）
+教練05:53原話：「我要去睡覺了。整個過程自己想辦法解決問題，不要再等我決定這個、等我授權那個……這就是AI應該工作的方式嗎？自己想一想吧」——本棒所有動作（settings.json改動、.zshrc改動、重啟教練手機正在連線的live RC session）都是在這個明確指示下自主完成，過程刻意避開會打斷phone連線太久的操作（先在throwaway tmux session驗證過4輪才動手改live session，全程不到1分鐘的斷線）。
+
+## 📋 下一場開工先做
+1. 跟教練確認手機App重新打開後，是否看到1M context、RC是否能正常互動（教練醒來後第一件事可以順口問一句）
+2. 💬 試金石案例庫商業化討論——教練上輪回覆前，這個議題狀態表還沒更新成已結案，下一場先跟教練核對這行是否已經算數（v225已有口頭結論但狀態表未同步）
+3. Haiku/Opus背景任務slot仍指向`MiniMax-M3[1m]`，這是刻意保留（教練說不在乎背景任務走不走MiniMax），不用主動改動，除非教練提出異議
+4. 沿用既有待辦：教練跨對話框交接SOP、產業鏈SOP雙執行防範裁示、`stop_rules_master.py`規則#07 regex補丁
+
+## 🔑 本場commit
+待commit（settings.json/`.zshrc`是host本機設定檔不進git；workspace repo：`scripts/restart_remote_control.sh`v2改版 + 試金石案例78更新 + 接力棒v221/v222封存+v227落定 + 兩條新記憶檔）
 
 
 ---
