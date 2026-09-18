@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-19 06:45:29**
+> **最後同步：2026-09-19 06:50:32**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -17,6 +17,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴🔴🔴 | **⚠️全機必讀：這個repo的git歷史已被改寫，其他機器的本機clone跟遠端分岔** | ⚠️任何機器下次動這個repo前必看 | 2026-09-19 06:45教練親自裁示後，軍師用`git-filter-repo`把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json(.bak)`4個含明文金鑰的檔案從全部16000+ commit歷史徹底清除+強制推送到GitHub(已用全新clone獨立驗證確認乾淨)。**任何其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟GitHub遠端分岔了**——下次要push前必須先`git fetch origin && git reset --hard origin/main`(或直接砍掉重新clone)，絕對不能在沒同步的狀態下直接push，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。教練同時裁示：外洩的金鑰(MiniMax/Gemini)**不rotate**，「已經曝光不代表會被濫用，換的話動一髮牽全身」。完整過程見[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]。 |
 | 🟡 | **教練跨對話框交接SOP(04:44教練明示新增)** | ⏳下一場落地 | 教練04:44明講「我會請Claude的助教好好繼續讀你的總結報告」= 開新對話框前軍師要先看總結。這是一個新情境：接力棒不只是給「同一條Mac上的下一棒軍師」看，還要給「未來開新對話框時的軍師」看，當作跨對話框的交接書。下一場開工看到接力棒時，同時準備一段「給跨對話框軍師讀」的300~500字總結摘要，可放在接力棒最頂端或獨立檔案(例如`handoff_archive/cross_session_brief_latest.md`)。 |
 | ✅ | **手機Remote Control(`claude rc`)——1M context已驗證成功+MiniMax懸案(案例78)徹底解謎+腳本v2簡化** | ✅本場(教練睡覺期間自主完成，未等待授權)全數完成 | **教練05:53親自給方向後，軍師沒有停在「教練說了算」，動手用`lsof -p <PID> -i -n`+`nettop`重新即時驗證真實網路流量，挖出完整機制**：Claude Code CLI按model名稱字串是否為「Anthropic辨識的合法id」決定連線目的地，不是單純看`ANTHROPIC_BASE_URL`開關——①Sonnet互動主線用`claude-sonnet-5[1m]`(Anthropic真認得)→原生Claude Pro OAuth接管→真連160.79.104.10→**1M context是真的**(`--print`實測CTX=1000000，且這次在確認網路層真連真Anthropic前提下驗證，可信)；②Haiku/Opus背景任務slot(settings.json裡還是`MiniMax-M3[1m]`，這個字串Anthropic不認得)→CLI退回用BASE_URL打MiniMax→真連175.99.116.25(跟案例78當時測到同一顆真實MiniMax伺服器)。**案例78「JWT真Anthropic卻流量流向MiniMax」的矛盾徹底解開**：兩邊都是真的，是同一session依model tier分流到兩個後端，不是誰在說謊。教練原本「除了Claude以外都強制走MiniMax」的解釋方向完全對，只是機制細節(按model名稱字串判斷，不是BASE_URL開關)這次才挖出來。**順手修復**：①settings.json永久移除`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`這個唯一真正擋住`claude rc`啟動的key ②`scripts/restart_remote_control.sh`+`.zshrc`的`claude-remote`alias都改版v2，不再需要「搬移整份settings.json」這種粗暴解法 ③挖到一個反直覺的新坑：明確`unset ANTHROPIC_BASE_URL`反而會觸發`claude rc`自己的硬性檢查噴錯，正確做法是完全不要碰這個變數(4輪tmux交叉實測確認) ④教練手機的實際RC session已用新腳本重啟並驗證`✅ Remote Control 已成功啟動並連線`。完整技術細節見[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]+[[feedback_claude_rc_never_unset_base_url_2026-09-19]]，試金石案例78已補上「懸案已解」更新段落。 |
 | ⏸️ | **小二(test2)/OpenClaw 2.0評估：正式暫停，等官方issue #122261修復再重啟** | ⏸️暫停-等官方修復 | test2的NO_REPLY迴圈防護hook(`no-reply-loop-guard`)保留在原位不動(下次重啟test2時仍會生效)，但gateway process本身已停止待命，教練近期不會主動使用。下次要重啟評估時：①`~/.openclaw-test2/hooks/no-reply-loop-guard/auto_restart_test2.sh`可直接拉起②先查`npm view openclaw versions`/GitHub issue #122261狀態確認斷路器機制是否已上線③找真正會用到Mermaid圖表/Skill Workshop/會議紀錄庫這類2.0差異化功能的任務去測，而非聊天/生圖這類1.0也做得到的基本功能，才測得出2.0到底值不值得升級。 |
@@ -441,6 +442,47 @@
 
 ## 🔑 本場commit
 `96601045c`（憑證層檔案+agent登入設定停止git追蹤）。本次接力棒v228落定+新記憶檔另計。
+
+
+---
+
+# 軍師接力棒 · 2026-09-19 v229（Mac桌面版 Sonnet 5，憑證外洩史清除執行完畢+金鑰不rotate裁定+本場最終收工）
+
+> 建立時間：06:20 ~ 06:50（約30分鐘）
+> 上一棒：v228
+> 本棒主軸：**教練針對v228發現的憑證層檔案git追蹤問題給出明確裁示——「讓AI直接執行」+「金鑰不用換」，軍師當場完成git-filter-repo改寫全部歷史+強制推送+獨立驗證，這是本場凌晨馬拉松(v221~v229)的最後一棒。**
+
+## 🎯 本場戰果
+
+### 1. 教練裁示兩件事，執行完畢
+- 「你可以寫完指令之後，讓 MiniMax 去執行不就好了嗎？」→ 用`AskUserQuestion`確認是口語講法，教練要的是軍師(這個對話框)直接執行，不是真的要交給小龍蝦
+- 「已經曝光不代表就會有人濫用⋯你換的話動一髮牽全身，不需要換」→ **MiniMax/Gemini金鑰維持現狀，不rotate**，正式結案
+
+### 2. git-filter-repo完整執行，GitHub遠端獨立驗證乾淨
+- 執行前先做6.7GB完整本機備份(`/Users/bymyway/workspace_backup_before_history_purge_20260919_063333`)
+- 把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json`+`agent/models.json.bak`從16000+ commit歷史整份移除(不是只清特定字串，因為憑證層檔案這幾個月來裝過的密碼遠不只已知那3把)
+- 過程中意外發現`scripts/fb_session_data/`(瀏覽器自動化cache，2026-05-23已gitignore但舊commit還在)裡有504MB等4個超過GitHub 100MB上限的大檔案擋住push，一併清除，`.git`從1.9GB瘦身到614MB(GitHub重新clone驗證後387MB)
+- `git push origin --force --all`：main/master/claude分支/backup分支全數成功
+- **用全新`git clone`到`/tmp`獨立驗證**：GitHub遠端本身(不只本機)已完全查不到這4個檔案的任何歷史版本、查不到已知金鑰字串
+
+### 3. ⚠️重大跨機後續：已寫進狀態表最上面第一列
+其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟改寫後的GitHub遠端分岔了。任何機器下次要push這個repo前，必須先`git fetch origin && git reset --hard origin/main`，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。**這條已經放在狀態表第一列，優先權最高，任何身份開工看到都要先確認自己有沒有踩到**。
+
+## ⚠️ 給後續機器的重要提醒
+- 本場所有舊commit hash(`96601045c`、`391ad0a27`等)都因為歷史改寫而失效，不要再拿這些hash去對照查證，用`git log`查當下最新即可
+- 本機備份`workspace_backup_before_history_purge_20260919_063333`(6.7GB)先保留，觀察一段時間確認一切正常後可以請教練決定要不要清掉
+
+## 📋 下一場開工先做
+1. 確認自己這台機器的repo有沒有跟遠端分岔(狀態表第一列)，有分岔先處理
+2. 沿用既有待辦：教練跨對話框交接SOP、💬試金石案例庫商業化討論狀態表核對、產業鏈SOP雙執行防範裁示、`sk-ant-api03-jMLa...`來源不明金鑰(教練若記得可直接說明)
+3. E16接力棒瘦身：本場v221~v229共9棒(含v225平行session)，超過3棒上限很多，下次開工優先處理封存
+
+## 🔑 本場commit
+歷史改寫後舊hash全數失效，最新HEAD請用`git log -1`查詢。本次總結commit含這份接力棒v229+記憶更新。
+
+---
+
+教練今晚（2026-09-19 凌晨03:26~06:50，約3.5小時）親自帶著軍師走完一整條馬拉松：MiniMax流量懸案(案例78)→手機1M實測成功→系統安全健檢→挖出憑證層檔案外洩→git歷史清除。過程中教練多次明確裁示「不要等我，自己想辦法解決」，這是這場對話最重要的一句話，也是這幾棒能夠一路做完不中斷的原因。晚安，教練。
 
 
 ---
