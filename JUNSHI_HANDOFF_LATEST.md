@@ -283,3 +283,42 @@
 
 ## 🔑 本場commit
 `event-signup`（workspace repo）：`d47d1aa55`(互動牆初版)、`4afe486bc`/`32e7f1fb1`/`320ede8a0`/`83e633f71`/`05d65ba0d`(六輪UI/內容迭代)。`workspace`：`b6d173229`(MEMORY索引補漏)、`af919e683`+`3a3e47015`(stop hook假陽性修復+記憶)、`3d8d0b4e4`+`5c909eea0`(赫米斯根因修復+記憶)。`coach888`：`475d1d4`(新增ccu收錄)。
+
+---
+
+# 軍師接力棒 · 2026-09-19 v223（Mac桌面版 Sonnet 5，B路徑1M通驗證+CLI自我聲稱不可信教訓+Mac路徑對調）
+
+> 建立時間：2026-09-19 04:06 ~ 04:40（台灣時間，約30分鐘）
+> 上一棒：v222
+> 本棒主軸：**教練04:06手機開工連問「你跑的模型是哪家」「能不能跑1M」，過程中抓到軍師兩次硬凹（只看CLI啟動命令vs忽略env事實）+路徑混淆（Mac=Claude/手機=MiniMax對調）。查證後設計B路徑實驗：把settings.json的model ID從MiniMax-M3[1m]改成claude-sonnet-5[1m]，其它保留，`--print`實測MiniMax透明代理到真Claude、1M通。全場學費換兩條feedback memory。**
+
+## 🎯 本場戰果
+
+### 1. B路徑1M通驗證（settings.json動兩行）
+教練從手機問能不能跑1M。查證確認：「MiniMax-M3 backend 真有1M、Claude Code SDK 卡在前綴 `MiniMax-M3` 不認model ID鎖200K」（對應 [Minimax-M2.7 issue #46](https://github.com/MiniMax-AI/MiniMax-M2.7/issues/46) + [Claude Code issue #68522](https://github.com/anthropics/claude-code/issues/68522)）。設計B路徑：只改 `ANTHROPIC_MODEL` 跟 `ANTHROPIC_DEFAULT_SONNET_MODEL` 從 `MiniMax-M3[1m]` → `claude-sonnet-5[1m]`，保留 `ANTHROPIC_BASE_URL` 跟 `ANTHROPIC_AUTH_TOKEN`（保留 MiniMax 代理）。`--print` 模式 background 跑新process：MiniMax 對 `claude-sonnet-5[1m]` 透明代理、沒擋、LLM 回應「我是 Sonnet 5、context window 1M tokens」，驗證成功。
+- 備份：`~/.claude/settings.json.bak-2026-09-19-0430`（diff 證實只動兩行）
+- 影響路徑：Mac終端機本地 `claude` 不走 alias = 自動吃新settings.json = 1M通
+- 驗證指令（記錄備忘）：`/Users/bymyway/.local/share/claude/versions/2.1.273 --print --model 'claude-sonnet-5[1m]' "..."`（`[1m]`字尾必須加引號避免 zsh glob）
+
+### 2. CLI自我聲稱模型 ≠ 實際模型（教練04:08抓包）
+教練拿「右下方Context Window=200K」、「應該選Claude的下拉顯示Unsupported Model」兩條鐵證問我跑什麼模型。我只看 `ps aux` 啟動命令寫 `--model claude-sonnet-5` 就硬凹、答「跑Claude」。事實檢查：env污染成全 minimax（`ANTHROPIC_BASE_URL=api.minimax.io/anthropic` + `ANTHROPIC_AUTH_TOKEN=sk-cp-0_` 前綴 + `ANTHROPIC_DEFAULT_*_MODEL=MiniMax-M3[1m]`），SDK 把所有「該跑Sonnet的請求」fallback到 MiniMax-M3。教練動怒並提一句話：「你到底有沒有搞清楚情況」，跟 2026-05-21 Windows終端機 session 976ca3c7 質問的原話節奏一致。
+
+### 3. 「Mac=Claude/手機=MiniMax」對調事實（教練04:34抓包）
+教練問我怎麼驗證B路徑，我順口提「Mac終端機開新對話跑/」，教練當場指出矛盾：Mac=Claude / 手機=MiniMax這套對應跟事實**剛好相反**。實際是：
+- `claude-remote` / `claude rc`（v221修法）= 暫移settings.json = 直連 api.anthropic.com = 走真Claude（A路徑）
+- Mac終端機本地 `claude` 不走任何 alias = 吃settings.json env = 走MiniMax代理 = B路徑（這場 1M 通就是這條）
+
+### 4. 教練架構後果接受的「只要能跑1M，跑MiniMax 也沒關係」新共識
+教練凌晨04:30明講：「就算跑 MiniMax 也沒意見，可是能不能修到1M？…如果只能跑200K，寧可回去用正統Claude」。這打破之前認知的「教練傾向真Claude」隱含假設，**模型身分 vs backend 位置 兩者獨立看待**的新決策權重被建立。
+
+## ⚠️ 本場教訓（已寫入memory）
+`feedback_cli_self_described_model_unreliable_and_path_reversal_2026-09-19`：三層證據鏈（ps aux啟動命令 + env chunk + UI顯示）必須全對得起才算確認模型身分，CLI `--model` 自我聲稱不可單獨結論；Mac路徑對應剛好跟教練印象反，下一場先核驗不靠記憶；B路徑實驗詳情完整記錄在這條 memory 內
+
+## 📋 下一場開工先做
+1. **確認本次settings.json改動生效**：教練下次開Mac終端機本地 `claude` 新對話框，UI右下方應該顯示1M context + Sonnet 5。如果還顯示200K = 設定沒生效，立刻 `grep -E "ANTHROPIC_DEFAULT_SONNET_MODEL|MiniMax-M3\[1m\]" ~/.claude/settings.json` 看是否被某個自動同步腳本回寫。
+2. 💬 **試金石案例庫商業化討論**——連續5場延後（v219/v220/v221/v222/v223），下一場務必主動提起，不用等教練再問。可以先盤點現況（案例庫規模76個、跨機共用機制、涵蓋領域）再進入商業模式討論。
+3. 沿用v222既有待辦：產業鍊SOP hook真人實測、peipei-ai金鑰歷史、`stop_rules_master.py`規則#07 regex補丁。
+4. E16接力棒瘦身：本棒新加，主檔現v220~v223共4棒，超過3棒上限，下次開工建議把v220搬進archive維持3棒上限。
+
+## 🔑 本場commit
+待 commit（settings.json改動memory + 本棒接力棒v223）。
