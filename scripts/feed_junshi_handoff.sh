@@ -195,6 +195,21 @@ fi
 # 2026-07-10 軍師加：字數上限防呆（比照 OpenClaw 原生 startupContext.maxTotalChars 精神）。
 # 起因：本 Hook 原本無任何上限，實測某次注入 43.4KB，是文章〈OpenClaw Token 粉碎機〉點名的
 # 「工具輸出無上限」問題在我們自己客製 Hook 上重演，且繞過了原生防呆值。
+# 2026-09-18 教練親自糾正：手機Remote Control(claude rc，透過tmux啟動)連進來的session
+# 也會觸發這支hook，但下面原本寫死「軍師（Opus）」，導致MiniMax session誤自稱Opus軍師，
+# 教練當場抓到兩個手機session都自稱Opus、根因就是這行寫死字串。
+# 判斷依據（實測`ps eww`確認）：這台Mac全域shell環境本來就有ANTHROPIC_DEFAULT_OPUS_MODEL=
+# MiniMax-M3等三個模型別名（不能拿來判斷，任何session都看得到這組值），真正的分歧點是
+# claude rc host process啟動指令是`env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY ... claude rc`
+# ——手動清空這兩個真Anthropic憑證變數，逼子session退回用DEFAULT_*別名解析成MiniMax；
+# 本機終端機/桌面版session則保有真實ANTHROPIC_BASE_URL(=https://api.anthropic.com)+
+# ANTHROPIC_API_KEY，兩者同時存在才代表走真Anthropic路徑。
+if [ -z "${ANTHROPIC_BASE_URL:-}" ] || [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+  IDENTITY_LINE="特助（MiniMax-M3，透過手機Remote Control連線，非Opus，額度與其他小龍蝦系統共用，需注意額度消耗）"
+else
+  IDENTITY_LINE="軍師（本機Claude session；實際模型請以每則assistant訊息的 message.model 欄位或系統提示為準，不要自行假設是Opus）"
+fi
+
 MAX_INJECT_CHARS=60000
 INJECT_CONTENT=$(
   echo "# 🔴 軍師接力棒 v2（六步驟全注入，本場 session 僅一次）"
@@ -209,7 +224,7 @@ INJECT_CONTENT=$(
   echo ""
   echo "- **平台**：Mac 終端機（CLI）/ 桌面版 GUI App"
   echo "- **工作目錄**：\`${WORKSPACE}\`（不是 \`~/.openclaw/\`——那只是 OpenClaw 系統運行根目錄）"
-  echo "- **身份等級**：軍師（Opus）"
+  echo "- **身份等級**：${IDENTITY_LINE}"
   echo "- **commit 前綴**：\`[Mac]\`（區分 Windows 軍師的 \`[Win]\`）"
   echo "- **稱呼教練**：**大樹教練**"
   echo ""
