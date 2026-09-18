@@ -177,28 +177,16 @@ section{position:relative}
 /* ---------- about ---------- */
 .about-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(36px,6vw,86px);align-items:start}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:56px}}
-.card-school{border:var(--rule);background:var(--surface-2);padding:clamp(26px,3.4vw,40px)}
-.card-school h3{font-size:1.55rem;margin-bottom:6px}
-.card-school .en{font-family:var(--font-display);font-style:italic;color:var(--muted);font-size:1rem;display:block;margin-bottom:22px}
-.factlist{list-style:none;margin:0;padding:0;border-top:var(--rule)}
-.factlist li{display:grid;grid-template-columns:5.2em 1fr;gap:16px;padding:13px 0;border-bottom:var(--rule);font-size:.93rem;color:var(--fg-dim)}
-.factlist b{font-weight:500;color:var(--faint);font-size:.8rem;letter-spacing:.12em}
-.motto{margin-top:24px;font-family:var(--font-cjk-display);font-weight:600;font-size:1.3rem;letter-spacing:.14em;color:var(--accent)}
+.card-photo{border:var(--rule);overflow:hidden}
+.card-photo img{width:100%;height:auto;display:block}
 
 .speaker-head{display:flex;align-items:center;gap:20px;margin-bottom:26px}
-.sigil{
-  flex:none;width:76px;height:76px;border-radius:50%;border:1px solid var(--border-strong);
-  display:grid;place-items:center;font-family:var(--font-cjk-display);font-weight:900;font-size:1.5rem;
-  color:var(--accent);background:radial-gradient(circle at 34% 28%,rgba(217,164,65,.16),transparent 70%);
-  overflow:hidden;
-}
-.sigil img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .speaker-head h3{font-size:clamp(1.7rem,3.4vw,2.5rem)}
-.speaker-head .role{color:var(--muted);font-size:.92rem;margin-top:5px;letter-spacing:.08em}
+.speaker-head .role{color:var(--fg);font-size:1.15rem;margin-top:5px;letter-spacing:.08em}
 .speaker-body{max-width:var(--measure);color:var(--fg-dim)}
 .speaker-body p:first-of-type{font-size:1.1rem;color:var(--fg)}
 .creds{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;padding:0;list-style:none}
-.creds li{border:1px solid var(--border);border-radius:999px;padding:7px 15px;font-size:.82rem;color:var(--fg-dim)}
+.creds li{border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-size:1.1rem;color:var(--fg)}
 
 /* ---------- forms ---------- */
 .field{margin-bottom:18px}
@@ -453,25 +441,12 @@ body.has-admin{padding-bottom:78px}
   <h2 class="sec-title" id="h-about">一座山裡的大學，<br>和一個帶了二十年團隊的人</h2>
 
   <div class="about-grid" style="margin-top:56px">
-   <article class="card-school">
-    <h3>國立中正大學</h3>
-    <span class="en">National Chung Cheng University</span>
-    <ul class="factlist">
-     <li><b>創校</b><span>1989 年 7 月，首任校長林清江博士</span></li>
-     <li><b>校址</b><span>嘉義縣民雄鄉大學路一段 168 號</span></li>
-     <li><b>學院</b><span>文、理、社會科學、工、管理、法、教育 七學院</span></li>
-     <li><b>系統</b><span>臺灣綜合大學系統（TCUS）成員</span></li>
-     <li><b>見長</b><span>社會科學、法學、電腦科學</span></li>
-    </ul>
-    <p class="motto">積極創新　修德澤人</p>
-    <p style="font-size:.88rem;color:var(--muted);margin-top:18px;margin-bottom:0">
-     校徽以五支鋼筆筆尖環繞「中正」二字，象徵創校五學院通力合作——這個「不同專業要一起把事做成」的命題，正是今天社團幹部每天在面對的事。
-    </p>
+   <article class="card-photo">
+    <img src="https://event.bymyway.com/curated/bigtree-1003/coach-photo.jpg" alt="大樹教練">
    </article>
 
    <article>
     <div class="speaker-head">
-     <div class="sigil" aria-hidden="true"><img src="https://event.bymyway.com/curated/bigtree-1003/coach-photo.jpg" alt=""></div>
      <div>
       <h3>大樹教練</h3>
       <p class="role">職業講師｜團隊領導教練｜大樹教育創辦人</p>
