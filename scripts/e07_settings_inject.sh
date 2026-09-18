@@ -131,6 +131,11 @@ printf '⚙️  設定檔原文注入（E07 自動驗證，openclaw.json 摘要�
 printf '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
 printf '⚠️  教練在 prompt 提到「%s」相關詞，以下是 openclaw.json 實際設定。\n' "$HIT"
 printf '   回答時以這份設定為準，不靠記憶（守則 E07 + #15）。\n\n'
+printf '🔴 範圍提醒（2026-09-19案例補丁）：這份openclaw.json只管OpenClaw閘道(小龍蝦/Telegram/LINE\n'
+printf '   agent)的模型路由，跟「這個Claude Code session本身在跑什麼模型」是兩回事——尤其`claude rc`\n'
+printf '   啟動的Remote Control session，啟動前會unset掉ANTHROPIC_BASE_URL/API_KEY等變數，不吃這份設定，\n'
+printf '   直連api.anthropic.com。若教練問的是「這個對話框/手機這個session」本身的模型，不要只回這份摘要，\n'
+printf '   先查session啟動指令的--sdk-url/--model參數(ps aux)或systemreminder裡的model欄位才是準的。\n\n'
 
 printf '📋 **當前主要模型（primary）**：%s\n\n' "$(printf '%s' "$SUMMARY" | /usr/bin/jq -r '.primary_model')"
 
