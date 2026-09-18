@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-19 06:10:13**
+> **最後同步：2026-09-19 06:20:16**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -408,6 +408,39 @@
 
 ## 🔑 本場commit
 待commit（settings.json/`.zshrc`是host本機設定檔不進git；workspace repo：`scripts/restart_remote_control.sh`v2改版 + 試金石案例78更新 + 接力棒v221/v222封存+v227落定 + 兩條新記憶檔）
+
+
+---
+
+# 軍師接力棒 · 2026-09-19 v228（Mac桌面版 Sonnet 5，教練睡前交辦全系統安全健檢：挖出憑證層檔案被git追蹤2個月的重大設計違背並修復）
+
+> 建立時間：06:10 ~ 06:45（約35分鐘）
+> 上一棒：v227
+> 本棒主軸：**教練確認手機1M生效後說「休息前再幫我檢查系統還有沒有漏洞，你慢慢找，我去睡」。軍師展開自主安全稽核，挖出本場最大發現：`路徑大全_憑證層.md`（2026-07-10特意拆出用來隔離真實密碼的檔案）自建立起就一直被git追蹤推上GitHub，完全違背設計初衷，已修復但舊history仍留有內容，需要教練裁示是否要rotate金鑰+改寫歷史。**
+
+## 🎯 本場戰果
+
+### 1. 🔴🔴🔴 最重大發現：憑證層檔案被git追蹤2個月+agent登入設定被追蹤5個月
+- `路徑大全_憑證層.md`：2026-07-10建立（設計目的：把真實密碼/API金鑰跟一般參考資料分開，AI只在真的要操作時才打開），**建立那天起就一直被git追蹤**，最近一次更新是昨天(2026-09-18)。
+- `agent/auth-profiles.json`/`agent/models.json`/`agent/models.json.bak`：自2026-04-26起明文含MiniMax真實API key被追蹤，且`council_orchestrator.sh`實際在讀取這個檔案。
+- **已修復**（可逆、零服務中斷）：4個檔案補進`.gitignore`+`git rm --cached`移除追蹤，檔案本體完整保留在本機磁碟，commit`96601045c`已推上雲端。
+- **未處理，待教練裁示**：舊commit歷史裡這些內容依然存在，要徹底清除需要`git-filter-repo`改寫歷史+強制push(高影響力操作，會影響其他機器clone這個repo的歷史)；是否要rotate已外洩的金鑰(MiniMax key、Gemini key，還有一把來源不明、路徑大全查無記錄的`sk-ant-api03-jMLa...`)同樣是重大決策，沒有教練同意不擅自做。
+- 好消息：repo是PRIVATE，`gh api collaborators`確認從未加過外部協作者；交叉掃描本機另外72個github_repos確認同一組金鑰沒有重複外洩到別處。
+- 完整記錄：[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]
+
+### 2. 其他稽核項目：均正常，無新發現
+- 磁碟空間52GB可用(24%使用)，健康
+- 所有gateway/webapp/tunnel process(`launchctl list`+`ps -p`交叉驗證)全數存活，`-15`狀態欄位是歷史正常重啟訊號非當前crash
+- cron排程(`crontab -l`+多個launchd plist)文件記錄完整，過去被教練/軍師陸續清理整併過，無明顯異常
+- BNI-Training/bni-dna/bni-traffic/team-bymyway/coach888/bymyway-website等公開repo：個資(統編/電話/email)正確依設計留在私有claude-brain，公開版只有姓名/分會等非敏感欄位；admin頁面都有`@login_required`正確保護，無裸露漏洞
+
+## 📋 下一場開工先做
+1. **請教練決定**：路徑大全_憑證層.md舊history是否要用git-filter-repo清除+是否要rotate MiniMax/Gemini金鑰？如果教練說「不用管，反正是private」，這條可以直接結案不用再提
+2. 沿用v227待辦：教練跨對話框交接SOP、💬試金石案例庫商業化討論狀態表核對、產業鏈SOP雙執行防範裁示
+3. `sk-ant-api03-jMLa...`這把來源不明的Anthropic key，教練若記得是誰的/還在不在用，可以直接說明，軍師目前查不出來源
+
+## 🔑 本場commit
+`96601045c`（憑證層檔案+agent登入設定停止git追蹤）。本次接力棒v228落定+新記憶檔另計。
 
 
 ---
