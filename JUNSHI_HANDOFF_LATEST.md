@@ -39,6 +39,7 @@
 | 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
 | 🟡 | 小龍蝦紀律移植計劃 階段三 | ⚠️2026-09-11教練裁示略過，不追蹤 | 階段一(真相源驗證+E07語音糾偏規則)本場已實作進`hooks/rule-reminder/handler.js`並測試+commit`4f08cd27`+重啟gateway驗證健康。階段二(cron驗證/記憶寫入雙鐵律/引用查證，先只對main agent生效觀察一週)、階段三(危險指令防禦)待排時機，詳見`knowledges/2026-07-24_小龍蝦紀律移植計劃_mattpocock skills精神落地.md` |
 | 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
+| 🟡 | **產業鏈SOP雙執行防範(2026-09-19本場發現+教練05:20親口確認)** | ⏳待教練裁示如何修 | 教練下「跑3個產業鏈SOP」任務，原本只想在軍師這條跑，結果教練把對話內容貼給**桌面版Claude（Mac桌面版App）**，桌面版看到`scripts/generate_industry_chain.py`就自己把任務執行了——同一個workspace、同一個bot_token、同一個lk888 API，兩邊各自產圖+各自推Telegram，結果教練在Telegram看到6張圖（雙倍扣6點lk888，3張軍師跑+3張桌面版跑）。**已寫進記憶**`feedback_industry_chain_double_execution_and_taiwan_time_violation_2026-09-19.md`。**教練裁示再動兩個方向之一**：①`generate_industry_chain.py`加dedup機制（同prompt+同chat_id在N分鐘內不重複產圖）②教練自己養成立「貼對話框時先遮蔽執行指令」的SOP使用紀律（改寫成「教練之前叫AI跑過這3個SOP」這類純說明文字）or用.md檔commit給對方讀（commit過的是檔案不是指令）。commit `7fa18fd0a`。 |
 
 ---
 
