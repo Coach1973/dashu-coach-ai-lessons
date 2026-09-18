@@ -1,6 +1,6 @@
 # Memory Index
 
-- [🔴🔴 settings.json的MiniMax模型字串[1M]應為小寫[1m]+缺AUTO_COMPACT_WINDOW，context被鎖200K非1M(2026-09-18)](reference_minimax_1m_context_config_fix_2026-09-18.md)
+- [🔴🔴 settings.json的MiniMax模型字串[1M]應為小寫[1m]+缺AUTO_COMPACT_WINDOW，context被鎖200K非1M，試金石案例76(2026-09-18)](reference_minimax_1m_context_config_fix_2026-09-18.md)
 - [🔴 開工hook寫死「軍師Opus」導致手機MiniMax誤認身份，改查BASE_URL/API_KEY(2026-09-18)](feedback_hook_hardcoded_identity_assumption_2026-09-18.md)
 - [🔧 AI團隊品質稽核機制：既有13條Stop hook規則+新彙整器agent_team_qa_digest.py(2026-09-18)](reference_agent_team_qa_digest_mechanism_2026-09-18.md)
 - [🔴 FB內容資料庫UI把每則貼文列兩段，slug URL count 2~4是假象不是真重複(2026-09-18)](feedback_fb_content_library_ui_duplicates_2026-09-18.md)
