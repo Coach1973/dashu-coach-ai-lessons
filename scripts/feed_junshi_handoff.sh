@@ -351,6 +351,18 @@ INJECT_CONTENT=$(
     fi
   fi
 
+  # ───────── AI團隊品質稽核彙整（2026-09-18 教練要求監督MiniMax小老弟品質後新增）─────────
+  # stop_rules_master.py 的 13 條規則本來就對任何觸發Stop事件的session(含手機MiniMax
+  # Remote Control)自動稽核，但違規記錄只是各自寫進 distill/*violations.log 沒人讀。
+  # 這裡安靜地跑一次彙整：沒有新違規完全不輸出，有才印出來，不需教練或軍師手動去查。
+  QA_DIGEST=$(python3 "$WORKSPACE/scripts/agent_team_qa_digest.py" 2>/dev/null)
+  if [[ -n "$QA_DIGEST" ]]; then
+    echo ""
+    echo "---"
+    echo ""
+    printf '%s\n' "$QA_DIGEST"
+  fi
+
   # ───────── 第 6 步：上線回應要求 ─────────
   echo ""
   echo "---"
