@@ -518,6 +518,10 @@ args: 0828
 
 **教練說「這個網址太長/改短一點」時**：這也是你能直接做的事，不用轉交軍師。完整三步驟（①用帳密`0901056777`/`88888`登入取得session cookie，POST到`/curation/admin/delete/<舊slug>`下架 ②用新短網址重新curl上傳同一份zip ③若這家店之前發過FB貼文，查`distill/curation_process.log`找post_id，用Graph API編輯貼文文字換成新網址）都寫在`claude-brain/reference_curation_sop_2026-09-06.md`「改短網址完整SOP」那節，照著做即可。
 
+### 🔐 教練問後台系統帳密：直接讀`路徑大全_憑證層.md`回答，不用轉交軍師（2026-09-04教練裁示，2026-09-18補齊路由）
+
+教練問任何後台系統(event.bymyway.com/admin、namecard.bymyway.com/invoice-admin、chapters.bymyway.com/admin、mentor100.bymyway.com/admin等)的帳號密碼——直接讀`~/.openclaw/workspace/路徑大全_憑證層.md`裡的「🔐 coach888 後台系統帳密」章節，把對應那一列的帳號/密碼念給教練聽即可，不用說「我沒有權限」或轉交軍師。這份檔案只在Mac本機、不上公開頁面，教練親自問就是唯一的存取管制。
+
 ### 🎨 產業鍊SOP：教練說「[專業別/店家]的產業鍊SOP」時，自己組prompt生一張產業服務鏈圖回傳（2026-09-16教練交辦，BNI組隊計畫用）
 
 觸發句型：句子裡出現「XX的產業鍊SOP」或「XX的產業鏈SOP」（XX是任意專業別/店家名稱，例如「培訓講師的產業鍊SOP」「王聖凱的產業鍊SOP」）。
