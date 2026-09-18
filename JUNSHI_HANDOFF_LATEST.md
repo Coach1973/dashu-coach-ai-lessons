@@ -384,3 +384,44 @@
 
 ## 🔑 本場commit
 待 commit（settings.json改動memory + 本棒接力棒v223）。
+
+---
+
+# 軍師接力棒 · 2026-09-19 v226（Mac桌面版 Sonnet 5 軍師session，教練「總結」收工暗號觸發E17+產業鏈SOP雙執行root cause收尾）
+
+> 建立時間：2026-09-19 05:01 ~ 05:39（台灣時間，約38分鐘）
+> 上一棒：v225（另一個 session 寫的 coach888 + MiniMax 流量懸案，03:26~05:36；本場跟它平行存在）
+> 本棒主軸：**教練05:01下三任務（Q1 Context Window不解 / Q2 跑產業鏈SOP確認 / Q3 MiniMax後台10%→20%測試），實際跑3張圖+推Telegram成功，但額外3張圖的root cause直到05:20才由教練親口確認=把對話原文貼給桌面版Claude，桌面版自己把任務執行了。同步補上Stop hook抓包的時間鐵律違規（OpenClaw gateway UTC ISO時間未+8轉台灣時間就報教練）。教練05:39說「總結」→ E17 收工暗號觸發。**
+
+## 🎯 本場戰果
+
+### 1. 教練3任務完成（Q1+Q2+Q3）
+- **Q1 Context Window 200K只顯示10.05K不解**：解釋是CLI process啟動時鎖env（PID 51719 04:06啟動，settings.json當時還是 `claude-sonnet-5` 沒 [1m] 後綴），process不重新讀檔所以保持200K
+- **Q2 產業鏈SOP確認能跑**：3個prompt檔寫好 + `generate_industry_chain.py` 跑出3張PNG（050516/050640/050824）+ Telegram bot API 直推6124913915成功
+- **Q3 MiniMax後台測試**：教練當晚親自查證（這場我沒辦法自己查後台）
+
+### 2. 額外3張圖root cause查明（教練05:20親口）
+- 050718「知識創業一條龍」、050818「補助貸款一把罩」、050922「粉專經營一條龍」= 桌面版 Claude（Mac桌面版App）自己把對話當指令執行
+- 桌面版跟軍師同一個workspace、同一個bot_token、同一個lk888 API → 兩邊各自扣點
+- 原本我排除 OpenClaw gateway / hook.log 都沒事件，但漏想「桌面版Claude」這個actor → **教訓：下次查類似事故要把所有軍師身份（CLI/桌面版App/手機RC/Telegram bot）都列入嫌疑名單**
+
+### 3. 時間鐵律違規自首（Stop hook抓包）
+- OpenClaw gateway log是 UTC ISO 格式（Z結尾），我前面把 `2026-09-18T19:03:52Z` 直接報成台灣時間，沒 +8 換算
+- 實際正確：UTC + 8 = 台灣時間，例 `2026-09-18T19:03:52Z` UTC = `2026-09-19 03:03:52` 台灣
+- 已寫進記憶 `feedback_industry_chain_double_execution_and_taiwan_time_violation_2026-09-19.md`
+
+### 4. 守則#08違規（教練05:06當場糾正）
+- 第一次產圖完沒直接推 Telegram，等「要確認chat_id」才推 → 教練動怒：「我不是叫你把圖片發到 Telegram 嗎？你不發到 Telegram，我怎麼轉發給別人？」
+- 已用 `python3 -c` 直接呼叫 `send_telegram_photo()` 把前兩張補推，第三張用 `--telegram-chat-id 6124913915 --caption "產業鏈 #3：FB 社群小編"` 一次到位
+
+## ⚠️ 本場教訓（已寫進memory）
+1. `feedback_industry_chain_double_execution_and_taiwan_time_violation_2026-09-19.md`：雙入口風險（CLI + 桌面版App都會自動執行指令）+ UTC→台灣時間鐵律
+
+## 📋 下一場開工先做
+1. 教練05:21還沒回應「要不要先休息」，可能繼續下一場。下一場開工先確認本場三任務結果（教練有無查到MiniMax後台10%→20%跳動）
+2. 沿用v225待辦：案例78 MiniMax流量懸案、孔大哥/佩佩老師industry-chain-sop hook真人實測、`stop_rules_master.py`規則#07 regex補丁
+3. **新待辦**：產業鏈SOP雙執行防範（見待辦表新列）——教練裁示要 (a)給 `generate_industry_chain.py` 加 dedup機制 或 (b)養成立「貼對話框先遮蔽執行指令」SOP使用紀律 之一
+4. E16接力棒瘦身：本棒新加，主檔目前v221~v226共6棒，下次開工建議把v221+v222搬進archive
+
+## 🔑 本場commit
+`7fa18fd0a`（產業鏈SOP雙執行root cause + 時間鐵律違規記憶）
