@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 赫米斯桌面版App(可關)vs Telegram後端gateway(要24小時運作)兩回事，全部釋放曾誤斷線16小時(2026-09-19)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
 - [🔴 Stop hook regex假陽性在同一session無限重複跳出，修過濾條件別用「」引號當依據(2026-09-19)](feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19.md)
 - [🔴 深入技術排查前先grep claude-brain全文搜關鍵字，不能只靠記憶判斷「第一次遇到」(2026-09-19)](feedback_search_existing_reference_before_deep_investigation_2026-09-19.md)
 - [🔴🔴 手機claude rc重啟卡死「API金鑰存在」判斷，10處來源已排除仍未查明(2026-09-19)](reference_remote_control_relaunch_blocked_mystery_2026-09-19.md)
