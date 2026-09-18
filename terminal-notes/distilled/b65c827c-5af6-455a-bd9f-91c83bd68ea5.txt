@@ -1,0 +1,152 @@
+# 終端機對話萃取 — Session b65c827c-5af6-455a-bd9f-91c83bd68ea5
+# 提取時間：2026-09-18 11:19 (台灣時間)
+# 共 6 條教練原話
+
+---
+
+【教練 2026-09-17 18:16】
+開
+
+　▶ AI 回應：我已讀完接力棒（v215，2026-09-18 00:44~02:09），也讀過 HEARTBEAT、試金石案例74/75、knowledges/新檔、memory最新日。
+
+**身份核對**：Sonnet 5（Mac 桌面版 Claude Code, Code 分頁）→ 軍師身份，非小龍蝦。
+**雲端同步**：✅ 已拉雲端最新（HEAD: c02a35792）。
+
+**當下主軸**：MiniMax「5小時4500次」額度懸案已結案——真兇是小二(test2)兩種無限重試bug(NO_REPLY迴圈488次+寫記憶檔oldText不符迴圈)，查到官方GitHub已知issue #122261佐…（略）
+
+【教練 2026-09-17 18:21】
+全部都開始
+然後 EDM，你覺得我需要給你連結嗎？應該是給你圖片檔吧。圖片檔已經在下載資料夾了，如果要連結也可以，就在這個網址上面就有圖片的連結。https://event.bymyway.com/curated/bigtree-1003/#live
+
+　▶ AI 回應：Committed successfully. Now pushing to GitHub.
+
+　▶ AI 回應：**EDM 不用給我東西**——素材我已經找到了：`~/github_repos/bigtree-1003/edm.jpg`（佩佩老師包好的10/3 KR養生廚房場EDM，內容確認正確：第4場・返場加開、10/3(六)14:00–16:30、地址電話都對），你貼的 `event.bymyway.com/curated/bigtree-1003/` 也已確認是這場的正式上線報名頁(curl驗證200)。
+
+已完成：
+- 圖片複製進大樹小講主站的`archive/edm/`資料夾
+- 「歷史講座紀錄」宮格牆新增第24張卡片，點開直接看EDM原圖，「查看原始網頁」按鈕連去你貼的那個報名網址
+- 用真…（略）
+
+【教練 2026-09-17 18:29】
+最後一項那個大台南策展提案，我已經讓手機版去執行了，你做其他的吧
+
+　▶ AI 回應：Clean now — from 33 messy lines down to exactly the legitimate stuff. Committing this batch.
+
+　▶ AI 回應：Committing only the memory files I added, leaving the repo's other in-flight churn (handled by its own automated sync hooks) untouched.
+
+　▶ AI 回應：**workspace那115行異常查完了，根因跟表面看到的不一樣**：
+
+不是資料損毀，是兩件事疊加：①`agents/kong`跟`agents/peipei`各自其實是獨立的GitHub備份repo(`kong-ai-backup`/`peipei-ai-backup`)，跟workspace同性質，但外層`.gitignore`一直沒排除它們——`git add`會把整個獨立repo當成普通目錄吃進來；②案例73那次系統升級新增的目錄命名(`session-sqlite-import-archive`、`sessions_archive`等)，8/25版`.gitignore`沒涵蓋到…（略）
+
+【教練 2026-09-17 18:43】
+對，一起處理掉。不處理掉要放著幹嘛？放著是要生香菇喔？放著是要怎樣，是可以保值喔？萬一出問題了怎麼辦？
+
+　▶ AI 回應：Clean staging. Committing.
+
+　▶ AI 回應：Kong done. Now peipei's repo (129 lines, 10 weeks stale).
+
+　▶ AI 回應：This looks clean. Committing.
+
+　▶ AI 回應：All three repos clean now. Let me write down the API key exposure finding since it's worth remembering.
+
+　▶ AI 回應：All three repos are clean and pushed:
+
+- **kong-ai-backup**: [3861d382e](https://github.com/Coach1973/kong-ai-backup/commit/3861d382e) — 3週積壓的人設異動+22天memory日記全部補進去
+- **peipei-ai-backup**: [d4034d4](https://github.com/Coach1973/peipei-ai-backup/commit/d4034d4) — 10週(其實回溯到5月，將近4個月)的memory日記首次進版控
+
+**一個…（略）
+
+【教練 2026-09-17 19:16】
+我讓手機版正在跑「去大台南策展中心」的貼文。
+
+因為它那邊跑的 API Key 是 MiniMax，不知道是不是我對它有偏見還是怎麼樣，總覺得它做事情欠缺考慮。
+
+我把我跟它的對話貼給你看，你再來回我它這樣的思考模式對不對？
+
+我已經幫你手動切換到正確的位置了，再試試吧
+
+教練，謝謝您手動切。先讓我看腳本目前狀態（您說的位置是不是 modal 卡住的地方），然後續跑。
+
+
+Ran 2 commands
+教練，腳本其實沒卡住——您說手動切換時它正在跑第 9 則，現在已經跑到第 10 則：
+
+只有一個 Chrome 跑著（我那個 /tmp profile 的），port 9222 還在 listening，腳本進程沒死。預估剩 3-4 分鐘全部跑完。
+
+您「手動切換」可能是看到 Chrome 視窗還開著（之前 debug 留的 modal）以為卡住了，但實際腳本一直在背景順利跑。
+
+跑完 13/13 我立刻通知您可以重新打開 Chrome。
+
+好，我目前在網頁上都有看到，確實都有貼出來。
+
+那麼美中不足的地方，就是它沒有產生縮圖，比較可惜。其實要產生縮圖也很容易，只要你的格式要對，就能產生縮圖，知道這意思吧？
+
+我不知道這個問題你怎麼解決。反正我只要進去，單獨讓它讀取到網址，它就會產生縮圖。所以你想想看，能不能解決這個問題？另外一個問題就是，你不覺得重複了嗎？
+
+你前面先一段話，帶進線上網址，後面又放一個完整介紹，但是兩個網址都是一樣的，那你不覺得很奇怪嗎？一個網址就夠了，不是嗎？
+
+唉，做事情怎麼都感覺欠缺考慮呢？
+
+教練，兩個都是我沒考慮到。讓我說清楚根因 + 給修法選項。
+
+🐛 根因：og:image 是相對路徑，FB 不抓
+剛剛驗證了 event.bymyway.com/curated/<slug>/ 的 HTML：
+
+8 則的 og:image 是 img/hero.jpg、assets/og-card.jpg 這種相對路徑
+FB 的 og:image 規範必須是絕對 URL（https://...），相對路徑 FB crawler 直接跳過不抓
+結果：FB 抓不到圖，就不顯示縮圖
+我貼文時預期 FB 會「自動抓 og metadata」展開 preview card，但實測沒圖——這個我該先 curl 驗證 og:image 絕對路徑才貼。
+
+🤔 您說「格式對就有縮圖」的意思
+應該是：貼文文案裡直接放絕對圖片 URL（像 https://event.bymyway.com/curated/<slug>/img/hero.jpg），FB 偵測到 URL 就會展開為縮圖——不需要靠 og:image。
+
+🛠 三個修法（請您選一個）
+修法 A：改 event-signup template（永久解，一次性）
+
+把 template 裡 og:image 改成絕對路徑（用 Flask 的 url_for 產生完整 URL）
+改完之後，以後任何 FB 貼文到 /curated/<slug>/ 自動有縮圖
+缺點：要動 event-signup 程式碼、要重啟 Flask
+修法 B：刪掉 12 則 + 用正確格式重貼（您說的單獨 URL 格式）
+
+新文案格式：
+只放一個 URL 單獨一行（去除「👉 完整介紹」這行，您說得對重複了）
+縮圖靠 FB 抓 og:image — 但 og:image 是相對路徑還是沒圖
+所以還要加圖片 URL：
+缺點：12 則要重貼（FB 允許刪除自己的貼文）
+修法 C：A + B 都做
+
+先改 template（永久解）
+再刪除 12 則 + 用「單一 URL 行 + hashtags」格式重貼（FB 自動抓 og:image 就有縮圖，不用塞圖片 URL）
+最乾淨但花時間最多
+我推薦 C——一勞永逸，但需要您允許我動 event-signup code。
+
+您要哪個？
+
+　▶ AI 回應：我把它跟你的完整對話記錄調出來看過了（session `1de66f96`，全程用MiniMax-M3跑），也自己動手curl驗證了它講的技術判斷，直接給你結論：
+
+## 這次的思考模式：一半對、一半是真的欠考慮，但不是「MiniMax比較笨」
+
+**它做對的部分**：og:image這個根因診斷，我自己curl了5個網站驗證——`flower-site`、`historic-residence`、`sbip`確實都是相對路徑(`img/hero.jpg`這種寫法，FB爬蟲抓不到)，跟它講的一致。而且它是「先curl驗證、再回答」，不是憑印象亂猜，這個方法論是對的。
+
+**但它漏了一個細節**…（略）
+
+【教練 2026-09-17 19:25】
+當然，讓你來做品質最好，就讓你來做，完全沒問題。但是呢，缺點就是你這邊的流量是非常珍貴的。
+
+所以如果你確定他能夠執行你的任務，你就直接寫信跟他說，好不好？你可以寫信給他嗎？
+
+然後我跟他說，請你去讀取「軍師」給你寫的信，或者是請你去讀取「桌面版」給你寫的信，然後就執行。這樣就會用 MiniMax 的 token，這不就完美解決了嗎？
+
+另外我比較想要了解的是，他既然都能讀取我們所有的資料庫，那他怎麼會把網址貼成 GitHub，而不是我們的 event.bymyway？
+
+難道我們在所有的資料當中，都沒有跟他講說在 FB 貼文要貼這個對外公開的網址嗎？
+
+　▶ AI 回應：Now let me commit the handoff update and archive, and do a quick health check per the 總結 protocol.
+
+　▶ AI 回應：## 回答你的網址問題
+
+不是完全沒教過，但確實有漏洞。`reference_curation_sop_2026-09-06.md`裡有解釋過為什麼`event.bymyway.com/curated/<slug>/`這條路由存在（避免曝光內部repo結構），但**從來沒有白紙黑字寫「所以貼FB/行銷要用這個網址，不要用GitHub Pages」**——這條規則一直是「懂的人自己會意會」，沒有寫死。手機版今晚踩了這個坑之後，自己把這條補進了新寫的SOP，等於這個缺口現在才第一次被明確記下來。所以你的直覺是對的：資料庫裡確實沒講清楚，不是它憑空亂猜。
+
+## 派工信已寫好並推上雲端
+
+commi…（略）

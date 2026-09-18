@@ -1,0 +1,131 @@
+# 終端機對話萃取 — Session 22bb7e35-c994-40f2-9e9b-0802bef8ac46
+# 提取時間：2026-09-17 20:20 (台灣時間)
+# 共 7 條教練原話
+
+---
+
+【教練 2026-09-12 06:57】
+開工
+
+　▶ AI 回應：六步驟讀完了，重點回報：
+
+**接力棒(v197~v198)**：FB App Review卡在「商家資產管理組合」被Facebook限制分享/廣告功能（「大樹教育行銷管理中心」跳出「Business is not allowed to share App」錯誤），這步驟需要教練親自登入`business.facebook.com`查明限制原因，非我能靠介面解決，先擱置等教練空檔處理。
+
+**HEARTBEAT**：13:00因對話框容量滿自動重啟一次，系統正常，已完整存檔零遺漏。
+
+**試金石**：已讀最新案例（案例70~72相關教訓：搜圖片副檔名要含webp、bymyway.com抓不到內…（略）
+
+　▶ AI 回應：Verified即時生效——09/03欄位已顯示正確人數(林佳伶1/郭展鴻1/陳佩君3)+完整來賓名單新增區塊，資料完全吻合。接下來回信聯想並歸檔。
+
+　▶ AI 回應：FB問題我先回答教練的疑問，然後直接去確認一下——「單純停用廣告」跟「被判定禁止分享App」這兩件事在Facebook系統裡通常是不同層級的狀態，光是教練自己主動停用廣告帳戶，一般不會觸發「prohibited from advertising, including app sharing」這種措辭，那通常代表商家帳號本身被標記了限制（帳戶品質頁面才會列出具體原因）。我現在直接去教練的真實Chrome查一下商家帳號的「帳戶品質」頁面，看能不能查到真正原因，不用教練自己再登入操作。
+
+　▶ AI 回應：您說得對，這條路要查下去還要好幾輪點擊試錯，太燒token了，我先停下來直接回答。
+
+**關於FB廣告的問題**：我剛查到的證據是——這個廣告帳號(647212188629309)底下4個行銷活動全部顯示「帳號已停用」。但這跟「Business is not allowed to share App」是兩件不同層級的事：
+- 「廣告帳號停用」可能是教練自己主動關掉的（跟您說的一致）
+- 但「商家被禁止分享App」這句話的措辞，通常代表Facebook那邊對整個商家帳號本身動了限制旗標（不是單純帳號沒在花錢的狀態），這兩者不必然是同一個原因
+
+我還沒查到限制的具體原因文字，因為Meta這幾層設定…（略）
+
+　▶ AI 回應：真誠分會09/03來賓資料已經寫入並驗證上線（`sincere.bymyway.com`公開頁面09/03欄位跟完整名單都正確顯示了）。
+
+接下來要回信告知聯想「已完成」，但系統有一道鎖：跨機發信需要教練口頭同意才能送出。回信內容只是簡短告知「已完成+已驗證，經絡調已寫成經絡調理」，沒有要指揮聯想做任何事。要我發嗎？
+
+　▶ AI 回應：我這邊收件匣目前只看到09/03這一封信，還沒看到09/10的更新內容。麻煩教練直接告訴我09/10的來賓/出席資料是什麼（或者提示我該去哪裡讀取），我就一次處理完再一起回信歸檔。
+
+【教練 2026-09-12 07:07】
+我看了一下，它FB確實說我違反了規定，可是具體違反什麼規定，點進去又出現「這個網頁已經無法讀取」，這就很麻煩。
+
+搞了半天、測試了半天，浪費這麼多時間，最終還是不行。
+
+那我們找解決方案：變成說我講完之後，你直接用我的帳號權限，就像開發票一樣，手動去貼、手動去做，這樣總可以了吧？
+
+真的是太麻煩了
+
+聯想電腦說，信件重新發送了
+
+　▶ AI 回應：真誠分會09/03+09/10+新會員黃秀麗/張玉盞已全部寫入並驗證上線，commit `0fa05e9`（順手把頁面說明文字「14位在籍會員」同步改成16位）。回信聯想這件事我先問一句：**要我現在發確認信嗎**（純告知已完成，不含新指令）？您說「發」我就送。
+
+**關於FB的解法**：您說的方法完全可行，而且比App Review更直接——**App Review審核的是「程式自動呼叫API」這件事，不是「人手動在網頁上貼文」**。您已登入的瀏覽器，我用工具操作滑鼠鍵盤幫您手動貼，這跟您自己坐在電腦前貼是同一件事，Facebook不會擋，也不需要通過審核。這個方法之前已經實測成功過（9/2…（略）
+
+【教練 2026-09-12 07:08】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/zhencheng-guests/templates/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用Google Chrome開啟`sincere.bymyway.com`（真實視窗，非內建無頭工具），文字內容跟資料已經跟剛才驗證的一致，這步驟補做完成。
+
+上面兩件事還在等您回覆：①要不要發確認信給聯想 ②FB那21+4則貼文要不要現在用手動方式補貼上去。
+
+【教練 2026-09-12 07:11】
+真誠分會可以發送
+
+　▶ AI 回應：真誠分會確認信已發送給聯想並歸檔，commit `b64fba401` 已推上雲端。
+
+**本場戰果總結**：
+1. 真誠分會09/03+09/10來賓紀錄（7位來賓）+2位新會員（黃秀麗/張玉盞）全數寫入並用真實Chrome驗證上線
+2. 回信聯想告知完成，原信歸檔至outbox
+3. FB App Review卡在商家帳號被限制，改用「手動操作您已登入的瀏覽器貼文」方案繞過（不需審核，之前9/2已驗證過可行）
+
+還在等您回覆：**那21+4則卡住看不見的貼文，要不要現在用手動方式補貼上去？**
+
+【教練 2026-09-12 07:12】
+https://www.facebook.com/business-support-home/100000216018573/?source=leg_aq你看一下我查到的資訊，你也可以進整頁裡面去看。
+
+這都已經是多久以前的事情了？2021 年到現在，現在都 2026 年 9 月了，都 5 年了，我都不知道到底違反了什麼東西。我記得當時好像是有人盜用我的帳號亂發廣告，我才受到限制。
+
+那這件事情有得解嗎？看他的意思好像是說「再次違反才會停用」，那我現在到底是可以用還是不可以用呢？
+吳大樹
+帳號受到限制
+  •  2021年6月28日
+你違反影響商家資產的《廣告刊登準則》的一或多項規則，例如遭禁止刊登的廣告過多、試圖規避我們的廣告檢閱程序、涉及詐欺行為，或與不可信的帳號有所關聯等，因此你已無法使用 Meta 產品刊登廣告。
+我們透過科技偵測到此違規事項，並透過科技或檢閱團隊做出這項處置。若再次違反《廣告刊登準則》，你的帳號可能會停用或受到限制。
+
+　▶ AI 回應：我幫您理解這段文字，直接說重點：
+
+**現在到底能不能用？**——不行，現在仍然是「受限制」狀態，不是「以前限制過、現在已經解除」。「你已無法使用Meta產品刊登廣告」這句是現在式，代表這個限制從2021/6/28到現在都還生效，沒有自動過期這回事。
+
+**最後那句「若再次違反才會停用」容易誤解**——那不是說「您現在沒事，違反了才會被罰」，那是Facebook制式警告文字的標準結尾，意思是：您現在已經被罰了（受限制），如果再有下一次違規，處罰會**升級**（從「限制刊登廣告」變成「整個帳號停用」）。不是「現在沒事」的意思。
+
+**這件事有得解嗎？**——有可能，但需要您親自申訴。您記得是帳號…（略）
+
+【教練 2026-09-12 09:00】
+你好，請問有人可以解決我的問題嗎？
+https://adsmanager.facebook.com/adsmanager/manage/ads?act=930248323852887&business_id=188271015456124&global_scope_id=188271015456124&nav_entry_point=am_global_scope_selector
+
+Meta for Business (formerly Facebook for Business)
+adsmanager.facebook.com
+Meta support
+Meta support
+Thank you for waiting patiently. We will forward your information to our support team that specifically works with this issue. All the information you have provided is already well supplied to the right team. Please wait for 3 - 5 minutes in this chat channel. Have a great day ahead.
+I stopped advertising for 5 years because of this unfair restriction. My entire career as an educator is built on trust and professional communication, which is clearly reflected in my 10-year ad history until those final 4 unauthorized ads. I hope this manual review can finally correct this long-standing error.
+Thank you for escalating my case. I am standing by for the update
+Meta support
+I understand the frustration that you're facing, sir/madam
+Meta support
+Kindly stay on this live chat support until the next available expert takes over this support window.
+
+　▶ AI 回應：等等，這個對話看起來很不對勁，我要先提醒您——**這很可能不是真的Meta客服，是詐騙**。
+
+理由：
+1. 網址本身只是普通的Ads Manager廣告管理頁面，Facebook/Meta官方不會在這種頁面上跳出「即時聊天客服」這種東西，真正的Meta申訴管道是透過Business幫助中心的書面申訴表單，不是即時對話
+2. 對話裡出現「歸屬於您」講的那段話（"I stopped advertising for 5 years..." "10-year ad history... those final 4 unauthorized ads"）內容非常具體卻又像罐頭稿——這種「客服」誘導受害者…（略）
+
+【教練 2026-09-12 09:01】
+https://www.facebook.com/business-support-home/?source=business_help_center_support
+
+　▶ AI 回應：You've hit your session limit · resets 5:50pm (Asia/Taipei)

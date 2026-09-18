@@ -1,0 +1,667 @@
+# 終端機對話萃取 — Session 15d922e6-ffbc-4ca3-8067-06519df7cc30
+# 提取時間：2026-09-17 20:20 (台灣時間)
+# 共 14 條教練原話
+
+---
+
+【教練 2026-09-14 04:27】
+開
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：Sonnet 5（Opus未啟用時對應「軍師」角色），Mac桌面版 Code分頁，稱呼您大樹教練。
+**雲端同步狀態**：✅ 已拉雲端最新（HEAD: 398e381ce）
+
+**當下主軸**：小二Telegram token洩漏事件已於今早12:11您裁示「不需要」三度輪替，正式結案；底層架構已根治（`.gitignore`排除`terminal-notes/raw_sessions/`+243個檔案退出版控，commit`57b4abf92`）。目前檯面上唯一還卡著的紅色待辦是**小二Telegram輪詢異常**（API直發訊息收不到，🔒待本場診斷）。…（略）
+
+【教練 2026-09-14 04:28】
+這樣子，策展中心 21 則貼文，你覺得是一次性全部重貼，還是每天重貼一則？反正現在你隨時隨地都能登入 FB 去做這件事，不是嗎？
+
+　▶ AI 回應：先點出一個關鍵前提：這21則是靠`curation_process.py`透過API自動發的，用的是那組還卡在「可供測試」等級的App憑證——**用同一套API機制重貼一次，結果會一樣，訪客照樣看不到**（跟原本問題完全同根同源）。真正能讓貼文公開可見的方法，是我用您已登入的真實瀏覽器手動貼（不透過那組受限的API/App），教練9/11那次手動重貼能被看到就是因為走的是這條路。
+
+我的建議：**分批貼，不要一次性全部貼**——21則同一天灌爆時間軸容易被FB演算法判成洗版/看起來像機器人，而且這些是分散在9/6~9/10各家店家「上新」的公告，內容都已經隔了幾天到一週多，一次全貼出來時效性也…（略）
+
+【教練 2026-09-14 04:30】
+OK
+
+　▶ AI 回應：All four URLs are live. Now I'll open Facebook and post the first batch to 大台南策展中心粉專.
+
+　▶ AI 回應：遇到一個技術卡點，需要跟您確認一下再繼續，不要浪費時間亂試。
+
+我在Meta Business Suite的貼文編輯框試了3次文字輸入（用鍵盤模拟打字），但每次確認畫面上的文字內容，都顯示輸入框仍是空的——這個編輯器可能是比較特殊的富文本元件，純文字模擬打字沒有真的寫進去。純用文字讀取工具（不截圖）已經連續3次卡在同一個地方，我想申請一次性截圖權限來看清楚實際畫面狀況，才能判斷問題出在哪、換個方式繼續。
+
+可以嗎？（如果同意，我會用最少張數截圖排除問題，不會濫用）
+
+【教練 2026-09-14 15:39】
+https://zhenxin.bymyway.com/  更新
+
+2026/09/3
+
+本週會議出席報告
+------------------------
+應到會員：22位
+------------------------
+🟢(P)準時出席：18位
+🔴(A)缺席：3位
+🟡(L)遲到：1位
+🔵(M)病假：0位
+🟣(S)代理：0位
+------------------------
+ 實到會員：19位
+------------------------
+缺席：3位
+🔴共同基金/陳俊源
+🔴智能門鎖/杜亞洛
+🔴營造清運/楊凱為
+ ------------------------
+來賓：1位
+🟠余晨立/買駿航
+—————————————
+遲到：1位
+🟡醬油製造/王聖凱
+—————————————
+代理人：0位
+
+—————————————
+參訪：0位
+
+本次與會人數共：20位
+
+早鳥名單：
+吳志煒
+林尹渰
+林佳慧
+買駿航
+黃鑫豊
+連皓宇
+吳亞平
+徐偉倫
+范郁琪
+蔡姵彤
+
+早鳥人數：10人   
+早鳥率：45%
+
+------------------------
+統計期間
+(2026/04/1～2026/09/30）
+
+6個月使用代理人累計
+杜亞洛 2次
+林尹渰1次
+黃鑫豊3次
+薛如媛1次
+---------------------------
+6 個月內缺席累計
+王聖凱 2+1次（遲到轉換1次）
+柯宗佑 2+1次（遲到轉換）
+謝盛峯2次
+徐偉倫1+1次（遲到轉換）
+楊博丞1次
+范郁琪2次
+劉彥彬1次
+楊凱為4次
+吳玫萱1次
+柯炫任1次（遲到轉換1次）
+莊政川1次（遲到轉換1次）
+陳俊源1次
+杜亞洛1次
+———————————————
+6 個月內遲到/早退累計
+徐偉倫4次（轉換一次缺席）
+莊政川3次（轉換一次缺席）
+柯炫任4次（轉換一次缺席）
+吳志煒1次
+林尹渰1次
+柯宗佑3次（轉換一次缺席）
+王聖凱4次（轉換一次缺席）
+楊博丞1次
+
+2026/09/10
+
+本週會議出席報告
+------------------------
+應到會員：21位
+------------------------
+🟢(P)準時出席：18位
+🔴(A)缺席：2位
+🟡(L)遲到：1位
+🔵(M)病假：0位
+🟣(S)代理：2位
+------------------------
+ 實到會員：17位
+------------------------
+缺席：2位
+🔴共同基金/陳俊源
+🔴商用油漆/謝盛峯
+ ------------------------
+來賓：2位
+🟠李雅嵐/王聖凱
+🟠莊舜吉/王聖凱
+🟠買竣淯
+—————————————
+遲到：1位
+🟡智能門鎖/杜亞洛
+—————————————
+代理人：2位
+
+—————————————
+參訪：0位
+
+本次與會人數共：23位
+
+早鳥名單：
+吳志煒
+林尹渰
+買駿航
+黃鑫豊
+連皓宇
+吳亞平
+徐偉倫
+范郁琪
+蔡姵彤
+王聖凱
+莊政川
+
+早鳥人數：11人
+早鳥率：52%
+
+------------------------
+統計期間
+(2026/04/1～2026/09/30）
+
+6個月使用代理人累計
+杜亞洛 2次
+林尹渰1次
+黃鑫豊3次
+薛如媛1次
+吳玫萱 1次
+林佳慧 1次
+---------------------------
+6 個月內缺席累計
+王聖凱 2+1次（遲到轉換1次）
+柯宗佑 2+1次（遲到轉換）
+謝盛峯3次
+徐偉倫1+1次（遲到轉換）
+楊博丞1次
+范郁琪2次
+劉彥彬1次
+楊凱為4次
+吳玫萱1次
+柯炫任1次（遲到轉換1次）
+莊政川1次（遲到轉換1次）
+陳俊源2次
+杜亞洛1次
+———————————————
+6 個月內遲到/早退累計
+徐偉倫4次（轉換一次缺席）
+莊政川3次（轉換一次缺席）
+柯炫任4次（轉換一次缺席）
+吳志煒1次
+林尹渰1次
+柯宗佑3次（轉換一次缺席）
+王聖凱4次（轉換一次缺席）
+楊博丞1次
+杜亞洛1次
+
+　▶ AI 回應：我查了一下，發現一個落差，需要跟您確認方向：`zhenxin.bymyway.com`現有的資料庫**只設計了「來賓數／1對1／咖啡會議／早鳥」四個欄位**，是「戰情儀表板」（追蹤引薦活動用），跟您現在給的這份**完整例會出席報告**（逐位缺席/遲到/病假/代理人姓名＋6個月累計統計）完全是兩回事——現有網頁根本沒有地方能放「缺席名單」「代理人名單」「6個月累計缺席次數」這些欄位。
+
+　▶ AI 回應：Data written correctly. Now verifying it shows up live on the public site.
+
+　▶ AI 回應：已完成，向您回報：
+
+**✅ 已寫入`zhenxin.bymyway.com`並驗證上線**
+- 09/03、09/10兩個週次已建立，來賓數＋早鳥旗標已按名單填入(45%/52%早鳥率跟報告數字對得上，驗證過)
+- 09/03來賓1位歸屬買駿航；09/10來賓歸屬王聖凱2位
+
+**⚠️需要您確認一個小落差**：09/10報告寫「來賓：2位」，但列了3行——
+🟠李雅嵐/王聖凱、🟠莊舜吉/王聖凱、🟠**買竣淯**（這行沒寫邀請人）
+我先把李雅嵐+莊舜吉2位算給王聖凱寫進去了，**買竣淯這位因為不知道是誰邀的，先沒寫入**。是漏打邀請人，還是這行其實重複/多餘？
+
+**缺席/遲到/病假/代理人+6…（略）
+
+【教練 2026-09-14 15:51】
+買竣淯  這是新隊圓
+
+　▶ AI 回應：Verified live on the site, then committing the raw-data note update.
+
+　▶ AI 回應：已把買竣淯加進`zhenxin.bymyway.com`會員名單（id=84，起算週09/17），網頁已curl驗證顯示。commit hash：`4ecf1f9ff`（已推上雲端）。
+
+真鑫分會這兩週的資料到此全部處理完畢。還有其他事要做嗎？
+
+【教練 2026-09-15 04:12】
+來任務，之前我們有做 BNI 會員的整個數據，例如培訓的數據、來賓的數據。因為我們提供的原始檔案當中有很多各項指標，所以我想請問，如果我們要做出一個曲線圖，以真鑽分會為主，做出 36 個月（3 年）內的 4 個曲線圖：
+
+1. 人數曲線圖
+2. 來賓數量曲線圖
+3. 引薦單數量曲線圖
+4. 引薦金額數量曲線圖
+
+那你先去看一下我們的原始資料庫，是不是足夠提供你做曲線圖？如果不足的話，請告訴我還缺什麼資料，我再去下載，再把資料庫提供給你。
+
+　▶ AI 回應：查完了，結論是：**現有資料完全不夠畫這4張圖**，情況分兩種：
+
+| 指標 | 現況 | 缺口 |
+|---|---|---|
+| ①人數曲線 | 完全沒有歷史紀錄，只有「現在」的48人名單，沒有任何一筆歷史入會/離會日期 | 需要 |
+| ②來賓數曲線 | 只有真鑽自己網站2026年2月~8月約6個月的週資料，另外舊系統有19個時間點的「累積總數」快照（不是逐月數字），兩邊都湊不出36個月 | 需要 |
+| ③引薦單數曲線 | 完全沒有任何一筆引薦單原始記錄 | 需要 |
+| ④引薦金額(TYFCB)曲線 | 完全沒有任何一筆成交金額記錄 | 需要 |
+
+**好消息**：②③④這三項其實都…（略）
+
+【教練 2026-09-15 04:24】
+首先，你去下載資料夾，有一個「唯讀群」的聊天紀錄，這裡面記錄了真鑽分會歷年來每月每週的來賓人數以及會員人數。
+
+所以你可以從這份資料表，找到來賓跟會員人數的曲線。
+
+那引薦單的部分，我再進去裡面找資料給你。OK，你先進去看一下。
+
+　▶ AI 回應：看過了，結果分兩種：
+
+**①人數曲線 — 資料很夠，甚至超過3年**
+逐週出席報告裡的「人數/應到會員」欄位，從2020/07一路到2026/09（209筆週報，橫跨6年多），更早2019年也有零星記錄但格式不同。3年份完全沒問題。
+
+**②來賓數曲線 — 只夠約27個月，缺2023/09~2024/05這段(~9個月)**
+逐週報告裡「來賓」這個欄位是**2024/06才開始固定填寫**的（我在聊天記錄裡看到2021/05曾有主席提過一次要開始追蹤，但沒有持續），2024/06之前的週報只有人數，沒有來賓數字。如果要湊滿36個月，中間會空一段。
+
+**③④引薦單數量／引薦金額 — 這份聊天…（略）
+
+【教練 2026-09-15 04:31】
+好，去下載資料夾看一下，我已經找到了 2023 年 9 月到 2024 年 5 月的數據，那你看還缺什麼？
+
+　▶ AI 回應：下載資料夾裡的檔案我看到了——是一份**PALMS摘要報告**（`__-palms-___14-09-2026_9-30_PM.xls`），涵蓋「真鑽分會」2023-09-01~2024-05-01整整8個月，32位會員的完整數字：來賓167人、提供內部引薦1001筆+外部引薦1842筆（共2843筆）、交易價值(TYFCB)共$43,365,553。
+
+這份**剛好把之前查到的來賓數字缺口(2023/09~2024/05)補上了**，而且引薦單/引薦金額這兩項也第一次有了真實數字。
+
+但要提醒您一個關鍵限制：**這份報表是「整段8個月」的總和，不是逐月拆開的**。也就是說引薦單/引薦金額這兩…（略）
+
+【教練 2026-09-15 04:36】
+如果你進 BNI Connect 進去幫我抓，會不會很消耗 Token？如果不會的話，你就去抓，這樣就可以省下我大量的時間。然後就像你之前說，你會寫個程式在裡面跑，我不知道這件事情可不可以這麼做？
+
+　▶ AI 回應：直接抓可以，量抓36份的話操作次數比較多，我建議先抓**逐季**（12份，2023/09~2026/09），這樣工作量降到三分之一，曲線還是看得出季度起伏，如果之後您想要更細再補逐月也不遲。整理成程式那部分完全沒問題，我下載完會自己寫Python把12份報表解析、算出每季差值、畫成曲線圖，這是我平常就會做的事。
+
+現在就進去您的BNI Connect抓資料。
+
+　▶ AI 回應：BNI Connect這個頁面（主要會員入口，跟編輯分會網站的CMS是不同系統）目前沒有登入狀態，需要您親自輸入帳密（我不能替您打密碼）。麻煩您在瀏覽器分頁裡登入一下，登入後跟我說一聲，我就接手抓報表。
+
+【教練 2026-09-15 04:39】
+好了
+
+　▶ AI 回應：Logged in. Now navigating to the reports section to find the PALMS Summary Report generator.
+
+　▶ AI 回應：A "分會" (chapter) reports link. Let's navigate directly there.
+
+　▶ AI 回應：May 2024 showing. Click day "1".
+
+　▶ AI 回應：Start date set. Now the end date picker for 31/07/2024.
+
+　▶ AI 回應：Confirmed August 2024. Need July — one "Previous month" click, then verify, then click day 31.
+
+　▶ AI 回應：July 2024 confirmed. Now find and click day "31".
+
+　▶ AI 回應：Both dates confirmed: May 1, 2024 → Jul 31, 2024. Now select EXCEL format and submit.
+
+　▶ AI 回應："Downloading Report" showing. Let's wait and check the Downloads folder for the new file.
+
+　▶ AI 回應：進度回報：第一份(2024/05~07)已經抓到並存好了。但抓第二份的時候，BNI Connect把我登出了（可能是連續操作觸發保護機制），麻煩您再登入一次。
+
+另外老實跟您說一下實際狀況：這個日期選擇器是月曆點擊介面（不能直接打字輸入日期），每抓一份報表大概要點15~20次月曆navigation，抓完10份大概需要150~200次操作左右——不算爆炸性消耗，但也不是幾秒鐘的事，抓完整個流程可能要花一些時間。您要不要先登入，我抓完這一份，看實際順不順再决定要不要繼續抓完剩下的？
+
+【教練 2026-09-15 06:01】
+你再試試
+
+　▶ AI 回應：Logged in. Navigating back to the report generator for Q2 (2024/08~2024/10).
+
+　▶ AI 回應：Good, single-step increments work reliably. Continuing to August (4 more clicks).
+
+　▶ AI 回應：Start date set. Now the end date: October 31, 2024.
+
+　▶ AI 回應：Now verify both dates, select EXCEL, and submit.
+
+　▶ AI 回應：Confirmed Aug 1 → Oct 31, 2024. Selecting EXCEL and submitting.
+
+　▶ AI 回應：Got it. Renaming and continuing to Q3 (2024/11 ~ 2025/01).
+
+　▶ AI 回應：Currently Aug 2024, need Nov 2024 = 3 clicks forward.
+
+　▶ AI 回應：November 2024 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Jan 31, 2025.
+
+　▶ AI 回應：Currently Oct 2024, need Jan 2025 = 3 clicks forward.
+
+　▶ AI 回應：January 2025 confirmed. Click day 31.
+
+　▶ AI 回應：Verify, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Nov 1, 2024 → Jan 31, 2025.
+
+　▶ AI 回應：Currently Nov 2024, need Feb 2025 = 3 clicks forward.
+
+　▶ AI 回應：Feb 2025 confirmed (transition artifact ignorable). Click day 1.
+
+　▶ AI 回應：Now end date: Apr 30, 2025.
+
+　▶ AI 回應：Currently Jan 2025, need Apr 2025 = 3 clicks forward.
+
+　▶ AI 回應：April 2025 confirmed. Click day 30.
+
+　▶ AI 回應：Verify, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Feb 1 → Apr 30, 2025.
+
+　▶ AI 回應：Currently Feb 2025, need May 2025 = 3 clicks forward.
+
+　▶ AI 回應：May 2025 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Jul 31, 2025.
+
+　▶ AI 回應：Currently Apr 2025, need Jul 2025 = 3 clicks forward.
+
+　▶ AI 回應：July 2025 confirmed. Click day 31.
+
+　▶ AI 回應：Verify, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed May 1 → Jul 31, 2025.
+
+　▶ AI 回應：Currently May 2025, need Aug 2025 = 3 clicks forward.
+
+　▶ AI 回應：August 2025 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Oct 31, 2025.
+
+　▶ AI 回應：Currently Jul 2025, need Oct 2025 = 3 clicks forward.
+
+　▶ AI 回應：October 2025 confirmed. Click day 31.
+
+　▶ AI 回應：Verify, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Aug 1 → Oct 31, 2025.
+
+　▶ AI 回應：Currently Aug 2025, need Nov 2025 = 3 clicks forward.
+
+　▶ AI 回應：November 2025 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Jan 31, 2026.
+
+　▶ AI 回應：Currently Oct 2025, need Jan 2026 = 3 clicks forward.
+
+　▶ AI 回應：January 2026 confirmed. Click day 31.
+
+　▶ AI 回應：Verify, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Nov 1, 2025 → Jan 31, 2026.
+
+　▶ AI 回應：March 2025, need Nov 2025 = 8 clicks forward.
+
+　▶ AI 回應：8 clicks worked reliably. November 2025 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Jan 31, 2026.
+
+　▶ AI 回應：January 2026 confirmed. Click day 31.
+
+　▶ AI 回應：Verify both dates before submitting this time (this is the one that failed last time).
+
+　▶ AI 回應：Confirmed Nov 1, 2025 → Jan 31, 2026. Now select EXCEL and verify the submit button context before clicking.
+
+　▶ AI 回應："Downloading Report" confirmed this time. Checking Downloads.
+
+　▶ AI 回應：Currently Nov 2025, need Feb 2026 = 3 clicks forward.
+
+　▶ AI 回應：February 2026 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Apr 30, 2026.
+
+　▶ AI 回應：Currently Jan 2026, need Apr 2026 = 3 clicks forward.
+
+　▶ AI 回應：April 2026 confirmed. Click day 30.
+
+　▶ AI 回應：Verify both dates, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Feb 1 → Apr 30, 2026.
+
+　▶ AI 回應："Downloading Report" confirmed.
+
+　▶ AI 回應：Currently Feb 2026, need May 2026 = 3 clicks forward.
+
+　▶ AI 回應：May 2026 confirmed. Click day 1.
+
+　▶ AI 回應：Now end date: Jul 31, 2026.
+
+　▶ AI 回應：Currently Apr 2026, need Jul 2026 = 3 clicks forward.
+
+　▶ AI 回應：July 2026 confirmed. Click day 31.
+
+　▶ AI 回應：Verify both dates, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed May 1 → Jul 31, 2026.
+
+　▶ AI 回應："Downloading Report" confirmed.
+
+　▶ AI 回應：Last one: Q10 (2026/08 ~ today).
+
+　▶ AI 回應：Currently May 2026, need Aug 2026 = 3 clicks forward.
+
+　▶ AI 回應：August 2026 confirmed. Click day 1.
+
+　▶ AI 回應：Currently Jul 2026, need Sep 2026 = 2 clicks forward.
+
+　▶ AI 回應：September 2026 confirmed. Click day 15 (today).
+
+　▶ AI 回應：Verify both dates, select EXCEL, submit.
+
+　▶ AI 回應：Confirmed Aug 1, 2026 → Sep 15, 2026 (today).
+
+　▶ AI 回應："Downloading Report" confirmed — final one done.
+
+　▶ AI 回應：All 10 quarterly PALMS reports downloaded and verified (2024/05~2026/09). Combined with your original file (2023/09~2024/05), that's full 3-year coverage. Moving them into the project's data folder now.
+
+　▶ AI 回應：PALMS data all parses cleanly. Now let's build the weekly member/guest time series from the chat log to complete the picture.
+
+【教練 2026-09-15 06:19】
+Base directory for this skill: /private/tmp/claude-501/bundled-skills/2.1.270/262840b45a92a459f82b5daa908af359/dataviz
+
+# Data Visualization
+
+A chart is **read by people and executed by you**. This skill turns "make it look
+good" into a procedure with checks, so the result is right by construction rather
+than by taste.
+
+**The method here is design-system-agnostic.** Nothing in the procedure, the form
+heuristic, the six checks, or the mark specs is specific to one product. A design
+system supplies a small set of *parameters* (its ramps, a categorical order, a
+diverging pair, a status palette, a texture, its surfaces, its filter components);
+the method consumes them unchanged. A **validated default palette** is the
+reference instance, fully specified in `references/palette.md`. To target your
+brand, read that file's structure and substitute its values - touch nothing else.
+
+> The single most important habit: **the color part is computable, so compute it.**
+> Never eyeball whether a palette is colorblind-safe - run `scripts/validate_palette.js`.
+
+## The procedure - do these in order
+
+Color comes LAST. Most bad charts pick colors first.
+
+1. **Pick the form.** What is the data's job - magnitude, identity, polarity, a
+   single headline, change-over-time? The job picks the chart type, and sometimes
+   the answer is *not a chart* (a stat tile or hero number). -> `references/choosing-a-form.md`
+2. **Assign color by the job it does.** Categorical (identity), sequential
+   (magnitude), diverging (polarity), or status (state) - each has one rule.
+   Assign categorical hues in fixed order, never cycled. -> `references/color-formula.md`
+3. **VALIDATE the palette - run the script, don't reason about Delta E.**
+   `node scripts/validate_palette.js "<hex,hex,...>" --mode light` (relative to
+   this skill's base directory - or load it as `<script type="module">` in the
+   chart's own page, where it reads
+   `data-palette` off `<body>` and logs a `console.table` report). It returns
+   pass/fail on the lightness band, chroma floor, adjacent-pair CVD separation,
+   the normal-vision floor, and contrast. Fix anything that FAILs before continuing. Re-run for
+   `--mode dark` with that mode's surface.
+4. **Apply mark specs & spacers.** Thin marks, 4px rounded data-ends anchored to
+   the baseline, 2px lines, >=8px markers, a 2px surface gap between fills (stacked
+   segments and adjacent bars alike) and a 2px surface ring on overlapping marks,
+   selective direct labels. -> `references/marks-and-anatomy.md`
+5. **Add the hover layer - by default.** An HTML/SVG chart *is* interactive; ship
+   a crosshair+tooltip on line/area and a per-mark hover tooltip on bar/dot/cell.
+   The only form that skips it is a bare stat tile with no plot. Hit targets bigger
+   than the mark; filters in one row above the charts. -> `references/interaction.md`
+6. **Final accessibility pass.** For >= 2 series a legend is always present and <= 4
+   are also direct-labeled (a single series needs no legend box - the title names
+   it), so identity is never color-alone; a table view exists; dark mode is **selected** - its own
+   steps from the same ramps, validated against the dark surface, not an automatic
+   flip; texture is available for the CVD/print/forced-colors case.
+7. **Render it and look at it.** The validator checks color, not layout - open or
+   screenshot the output and eyeball it for label collisions, geometry, and overflow
+   before calling it done.
+
+Then check the result against **`references/anti-patterns.md`** - it is the catalog
+of what goes wrong. If your chart matches an entry, it's wrong.
+
+## Non-negotiables (true in every design system)
+
+- **Assign categorical hues in fixed order, never cycled.** A 9th series is never a
+  generated hue - it folds into "Other," small multiples, or composite encoding.
+- **One axis.** Never a dual-axis chart (two y-scales). Two measures of different
+  scale -> two charts, small multiples, or indexed to a common base. *(This is the
+  #1 chart mistake - see anti-patterns.)*
+- **Color follows the entity, never its rank.** A filter that changes the series
+  count must not repaint the survivors.
+- **Sequential = one hue, light->dark. Diverging = two hues + a neutral gray
+  midpoint.** Never a rainbow; never a hue at the diverging midpoint.
+- **Run the validator before shipping any categorical palette.** CVD Delta E >= 8 is the
+  target (OKLab ×100); 6-8 is a floor that is legal ONLY with secondary encoding. A
+  normal-vision floor below 15 is a hard FAIL - full-color readers can't tell the
+  pair apart; re-step it on the adjacent pairlist (secondary encoding does not excuse
+  this one); under `--pairs all` cut series or facet instead - see check 4. A contrast WARN
+  obligates visible labels or a table view - it is not dismissable.
+- **Thin marks; a legend always present for >= 2 series (none for one), with
+  selective direct labels (never a number on every point); recessive grid/axes.**
+- **Text wears text tokens, never the series color** - values, labels, and legends
+  stay in primary/secondary/muted ink; a colored mark beside them carries identity.
+- **Status colors are reserved** (good/warning/serious/critical) and never reused
+  for "series 4"; they ship with an icon + label, never color alone.
+
+## Plugging in a design system
+
+The method is invariant; only these parameters change per system. The reference
+instance - every value filled in - is `references/palette.md`.
+
+| Parameter | What the system provides |
+|---|---|
+| **Ramps** | the hue scales (named steps) the palette draws from |
+| **Categorical theme** | the fixed hue order (a named theme); default + alternates |
+| **Sequential hue** | the default single hue for magnitude |
+| **Diverging pair** | two warm/cool poles + a neutral midpoint |
+| **Status palette** | good / warning / serious / critical - steps distinct from categorical |
+| **Texture fill** | one directional hand-drawn fill, used at 45° / 135° |
+| **Surfaces** | light & dark chart-surface colors (the validator needs these) |
+| **Filter controls** | date-range & dimension controls (behavioral spec in `interaction.md`) |
+
+To onboard a new system: fill those rows, feed its ramps to the validator, and let
+it snap each slot to the nearest passing step. Structure and rules stay as written.
+
+## Reference files
+
+| File | What it answers |
+|------|-----------------|
+| `references/choosing-a-form.md` | Which chart type / is it even a chart? |
+| `references/color-formula.md` | The four jobs, the six checks, snap-to-passing |
+| `references/marks-and-anatomy.md` | Mark specs, spacers, labels, figures, hero number |
+| `references/interaction.md` | Tooltips & hover, filters & time ranges |
+| `references/components.md` | The pieces a chart is made of - build each in plain HTML |
+| `references/anti-patterns.md` | **What goes wrong - check every chart against this** |
+| `references/palette.md` | **The reference palette instance** - every parameter, filled in; swap for your brand's |
+| `scripts/validate_palette.js` | Runnable six-checks validator (run it; don't eyeball) |
+
+　▶ AI 回應：Found a bug — the parser was double-counting because PALMS reports include an official "總數" (grand total) row that I was summing on top of the individual members. Fixing this now.
+
+　▶ AI 回應：四張圖都畫好了（上方widget）。跟您報告一下過程：
+
+**資料來源**：您提供的1份(2023/09~2024/05)+我從BNI Connect抓的10份季度PALMS報告(2024/05~2026/09)，湊出完整11期涵蓋3年整；「人數」則額外用真鑽唯讀群聊天記錄的209筆逐週出席報告算出各期均值，比PALMS本身的名單更精準。
+
+**過程抓到一個計算bug**：PALMS報表最後一列其實是官方「總數」彙總列，我第一版程式不小心把它當一般會員疊加進總和，導致來賓/引薦/金額全部異常偏高（比如第一期來賓一度算成523，改完後正確是356）。已修正並確認每份報表都對得上官方總數列。
+
+*…（略）
+
+【教練 2026-09-15 08:57】
+那你幫我做成網頁版，然後這些圖片可以下載。為了重返榮耀，我們需要認真面對過去的數據，並且展望未來目標就是要達到最少人數，分會規模要到 60 人左右
+
+反正你大概知道，就是有點類似網頁版的，呈現都會近三年的數據吧。弄一個標題，你可以自由發揮，總之就是不要是冷冰冰的圖片，大概可以看出來目前這個分會的情況。
+
+　▶ AI 回應：Now adding the Flask route to serve this page.
+
+　▶ AI 回應：Renders correctly locally. Now restarting the live service and verifying on the real domain.
+
+　▶ AI 回應：Both local and the public domain return 200. Let's verify the actual content and check the download button works correctly via a quick browser check.
+
+　▶ AI 回應：Content confirmed live. Let's do a real browser check of rendering and the download function.
+
+　▶ AI 回應：Content renders correctly. Now testing the download button actually works.
+
+　▶ AI 回應：Restarting the service and re-testing the download.
+
+　▶ AI 回應：網頁做好了，公開網址：
+
+**https://real-diamonds.bymyway.com/report**
+
+已用真實瀏覽器＋公開網域雙重驗證確認可以打開，內容包括：
+- 標題「真鑽分會・重返榮耀」＋一段誠實面對數據的開場文字
+- 4個重點數字卡：目前48人／目標60人／三年前高峰76人／還差12人
+- 目標達成率量表（80%）
+- 4張趨勢圖（人數／來賓／引薦單／引薦金額），每張圖下方都有「下載圖片」按鈕，點了會直接存成PNG
+
+**提醒一件事**：下載按鈕的機制我已經在程式碼層驗證過沒問題（圖片能正常產生），但因為瀏覽器的「另存新檔」原生視窗不在我能操作的範圍內，如果您點下載時Ch…（略）
+
+【教練 2026-09-15 09:02】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/zhenzuan-guests/templates/report.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🔴🔒 coach888作品一覽收錄鎖・第二層（deterministic check，2026-09-06二次補強）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這次對話的commit訊息裡出現「新增OO頁面/網站/工具/系統」這類措辭，
+但在「大樹常用」／「後臺系統」這兩個教練實際會看的分類裡查不到：
+  • /report網頁
+
+這條規則只認「大樹常用」跟「後臺系統」兩個分類算真的收錄——放進
+「保留」等其他分類，教練一樣找不到，等同沒收錄。
+
+✅ 立刻執行，收工前不能跳過：
+  1. 確認這個新東西是不是「教練或訪客會用到的獨立頁面/工具」
+     （如果只是內部程式檔案、不是給人看的頁面，可以忽略這條提醒）
+  2. 是的話，打開 ~/github_repos/coach888/index.html，放進「大樹常用」
+     或「後臺系統」其中一個分類（已經放在其他分類的話，用剪的搬過去）
+  3. commit + push，curl驗證coach1973.github.io/coach888/正式站已生效
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：Pushed. Now verifying with real Chrome and curl per the deterministic checks.
+
+　▶ AI 回應：Confirmed live on the public site (16項, new entry present). Now finishing the "總結" wrap-up: updating the handoff file and checking memory triggers.
+
+　▶ AI 回應：Now let's add the v204 handoff narrative entry at the end of the file (before the final identity/protocol section).
+
+　▶ AI 回應：Now committing the handoff + memory updates.
+
+　▶ AI 回應：**總結完成。**
+
+本場（開工~總結）重點：
+1. 大台南策展中心貼文重貼——卡在Meta Business Suite編輯框打字失效，已申請截圖權限但您轉去忙別的，本場暫緩，21則清單還在，下次換方法試。
+2. 真鑫分會補了09/03+09/10出席資料，新會員買竣淯已寫入。
+3. 真鑽分會「重返榮耀」三年趨勢報告網頁上線：`https://real-diamonds.bymyway.com/report`，已收錄進coach888「大樹常用」。過程抓到一個真bug（PALMS報表官方總數列被誤加總）並修正，已寫入記憶。
+
+commit hash：`b2de19609`（workspace…（略）
