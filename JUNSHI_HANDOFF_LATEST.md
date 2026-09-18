@@ -185,6 +185,55 @@
 ---
 
 
+# 軍師接力棒 · 2026-09-19 v225（Mac桌面版 Sonnet 5，🔴🔴🔴身份驗證Anthropic的session流量卻大量流向MiniMax未解懸案+coach888兩輪真實同步漏洞修復+bni_tainan/jiaolian_thoughts補燒核心對話紀律）
+
+> 建立時間：03:26 ~ 05:36（約2.2小時）
+> 上一棒：v224（教練04:44「總結上傳」後開的新對話框，這是接續那個交接的下一場）
+> 本棒主軸：**coach888作品一覽教練實測揪出兩輪真實同步漏洞並修復＋手機Remote Control「到底是不是MiniMax」延燒一整晚的辯論，最終用網路層鐵證（TLS憑證+nettop流量）找到一個目前解釋不通的矛盾現象，誠實記錄不硬掰＋補燒兩個對外agent的核心對話紀律。**
+
+## 🎯 本場戰果
+
+### 1. coach888作品一覽跨裝置同步：教練實測揪出兩輪真實漏洞，都已修復並在正式站驗證
+- **第一輪**：教練在聯想改排版「重新整理後全部恢復原樣」。查server log證實伺服器其實有收到教練當晚的編輯，真正漏洞是400ms防手震debounce——操作完立刻reload，pending的fetch被導覽砍斷，從未送達，下次載入被伺服器舊值蓋回。修法：新增`beforeunload`/`pagehide`監聽，用`navigator.sendBeacon`立即補送。commit`c6928286d`(workspace)+`e9dd9b8`(coach888)。
+- **第二輪**：教練親自實測「+新增項目」新增「掃描檔案下載」，其他裝置看不到，當場質問「到底改了什麼」。查證這是完全不同的洞——新增項目建立的是全新data-url，其他裝置原始HTML裡根本沒有這個元素，只同步排序陣列裡的url字串沒用。新增`coach888_items`同步鍵值記錄項目本體(name+badge)，`materializeMissingItems()`在其他裝置動態生出完整DOM。過程中自己又抓到一個漏改`pullStateFromServer()`舊key清單的bug，靠清空localStorage模擬全新裝置的嚴格測試抓到。commit`b1eae16f1`(workspace)+`6487164`(coach888)。
+- **教練當場檢討**：「每次都要你抓到問題你才改進，為什麼不能一開始就做對」——已寫入試金石案例77：修同步bug要列出所有寫入路徑逐一核對，不能只修教練點名的那個症狀；上線前必須清空localStorage模擬全新裝置在正式站重新驗證。
+
+### 2. 手機Remote Control「是不是MiniMax」大辯論：找到真正矛盾，誠實記錄未解
+教練整晚堅持手機端Claude Code Remote Control(`claude rc`)實際走MiniMax，軍師起初用JWT簽章(`sk-ant-si-`開頭、`aud:anthropic-api`、綁教練真實帳號email)證明身份驗證是真Anthropic，教練不接受，雙方拉鋸數輪(推論邏輯辯論、context window不增長之謎、MiniMax後台4%→8%→16%三次連續實測)。
+
+**最終查到的鐵證**：用`nettop -p <mobile session PID>`直接量測某個手機session(4:06AM那個，session id尾碼`Crf`)的實際網路流量——連到Anthropic(160.79.104.10)僅12.94MB，但連到MiniMax真實伺服器(175.99.116.25，用`curl -v --resolve`驗證TLS憑證`CN=www.minimax.io`確認非CDN共用節點誤判)高達**32.35MB流出**，是Anthropic流量的2.5倍以上。
+
+**目前誠實的結論是矛盾，不是定論**：這個session的登入身份(JWT)是真Anthropic簽發沒錯，但同一個process確實對MiniMax真實伺服器有巨量真實流量。兩件事目前無法用同一套理論解釋，沒有勉強收斂成單一答案。**下一棒優先查證方向**：
+1. 這條MiniMax連線是否為session自己過去做「模型身份查證」時主動發起的診斷呼叫（自我測試credential是否有效），而非常態聊天流量本身——需要查該session自己的transcript/bash歷史，確認它是否手動curl過`api.minimax.io`
+2. 是否有MCP server或某個工具鏈background config把部分請求導去MiniMax，而登入身份/主要inference走Anthropic
+3. 不要再用「身份驗證=實際流量來源」這個等式，這是本場最大教訓——**驗證了auth token是真的，不等於驗證了全部流量都走那條路**，過去只查`ANTHROPIC_BASE_URL`+JWT就下結論是不完整的查證
+
+已寫入試金石案例78：技術懸案未解不硬湊答案，`守則#15`誠實記錄矛盾現象比勉強給一個自圓其說的結論更負責任。
+
+### 3. 手機版CORS/身份誤導hook修復
+`claude rc`啟動時的unset清單漏掉`ANTHROPIC_DEFAULT_SONNET_MODEL_NAME`等`_NAME`後綴變數，導致手機新spawn的session環境殘留MiniMax標籤，UI顯示異常(200K context/Unsupported Model)。另外`e07_settings_inject.sh`（教練提到「模型」就注入openclaw.json摘要的hook）在`claude rc`情境下會誤導身份判斷（該設定只管OpenClaw閘道，不代表Claude Code session本身），已補範圍提醒。commit`e1ab43033`。
+
+### 4. bni_tainan/jiaolian_thoughts補燒核心對話紀律（非整份特助心法）
+教練健康檢查（來自手機端MiniMax自己跑的盤點）發現這兩個對外agent的SOUL.md是OpenClaw預設英文template，完全無客製化。教練三問（放的好處/不放缺點/該不該放）後裁示：**不整份照抄kong/peipei版本**（那份含大量教練/特助內部管理語言，這兩個agent服務對象是BNI會員/教練粉絲等外部使用者，照搬會洩漏內部術語、造成角色混淆）。改燒精簡萃取版：三大信念+守則#10/#15/#18，各自針對服務對象客製化措辭。commit`cf2bf9064`。
+
+### 5. 教練提出試金石案例庫商業化，已給出評估（口頭回答，未寫成正式文件）
+核心結論：原始案例文字直接賣市場價值低（過度綁定特定技術棧）；真正值錢的是背後的方法論+工具（記憶觸發清單/自動比對hook/案例結構/distill流程），可脫離教練技術棧複用；具體變現路徑建議走顧問服務/課程教材（搭配教練既有百人導師/AI課程通路），不是單獨賣文件本身。**這個議題教練當場問完就結束，不是正式待辦，下次不用主動重提**（跟v219~v222連續4場「主動提起」的待辦性質不同，這次教練問完得到答案就結案了）。
+
+## ⚠️ 本場教訓（已寫入試金石）
+- **案例77**：修同步bug只堵教練點名的那個症狀，沒列出所有寫入路徑逐一核對，教練親測抓到第二個洞。同步類修復上線前必須清空localStorage模擬全新裝置在正式站重新驗證。
+- **案例78**：「身份驗證是真的」不等於「全部流量都走那條路」——查證session背後走哪個模型，必須同時查auth token**跟**實際網路流量目的地(IP+TLS憑證)兩件事，只查其中一項會被推翻。
+
+## 📋 下一場開工先做
+1. **最優先**：案例78的MiniMax流量懸案——查那個手機session（4:06AM，session id尾碼Crf/PID可能已變動需重新用`ps aux | grep claude`定位）自己的transcript，確認32MB流向MiniMax的連線是不是它自己做身份查證時主動發起的診斷呼叫。
+2. 手機Remote Control `_NAME`後綴env殘留問題：目前只加了hook範圍提醒，沒有從根本解決新spawn session會撿到殘留標籤的問題，待有更完整方案。
+3. 沿用既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測(教練不催)、`stop_rules_master.py`規則#07誤判regex。
+4. E16接力棒瘦身：本棒起維持3棒上限，下次開工建議把v222搬進archive。
+
+## 🔑 本場commit
+`workspace`：`c6928286d`(coach888 sendBeacon race修復)、`b1eae16f1`(coach888新增項目同步)、`3326de6a9`(試金石案例77)、`e1ab43033`(E07 hook範圍提醒)、`cf2bf9064`(bni_tainan/jiaolian_thoughts核心對話紀律)。`coach888` repo：`e9dd9b8`、`6487164`。本次總結commit另計。
+
+---
+
 # 軍師接力棒 · 2026-09-19 v221（Mac桌面版 Sonnet 5，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓）
 
 > 建立時間：00:07 ~ 00:43（約36分鐘）
