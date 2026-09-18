@@ -504,45 +504,7 @@ f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後�
 
 ---
 
-# 軍師接力棒 · 2026-09-18 v216（Mac桌面版 Sonnet 5，EDM連結補完+三個repo git hygiene清理(含peipei倉庫金鑰歷史殘留發現)+手機版FB貼文思考模式評鑑與派工）
-
-> 建立時間：2026-09-18 02:16 ~ 03:30（台灣時間）
-> 上一棒：v215
-> 本棒主軸：**補完大樹小講10/3 KR場EDM連結；查明並清理外層`.openclaw`repo長期積壓的115行未commit異常，順手一併清乾淨kong/peipei兩人各自獨立備份repo的3週/10週(實為4個月)積壓，過程中發現peipei倉庫舊commit含明文MiniMax/Google金鑰；教練委託分析手機版(MiniMax-M3)執行FB貼文任務的思考模式是否合理，讀取完整session transcript+獨立curl驗證後給出評估，並把後續修復工作寫成派工信交給手機版執行(省教練Sonnet流量)。**
-
-## 🎯 本場戰果
-
-### 1. 大樹小講「歷史講座紀錄」補10/3 EDM連結
-確認素材已存在`~/github_repos/bigtree-1003/edm.jpg`(佩佩老師包好的第4場返場EDM)，複製進主站`archive/edm/`，「歷史講座紀錄」宮格牆新增第24張卡片，連結指向已上線的`event.bymyway.com/curated/bigtree-1003/`。用真實Chrome開過+node解析JS陣列驗證資料格式正確+圖片本身用image工具看過確認文字無誤。commit`fdfaff0`(bigtree repo)已推GitHub，Netlify正式站尚未部署(curl驗證過)，等教練喊「推」。
-
-### 2. 外層`.openclaw`repo 115行未commit異常根因查明+清理，順手清乾淨kong/peipei兩人的獨立備份repo
-根因是兩件事疊加：①`agents/kong`、`agents/peipei`各自是獨立GitHub備份repo(`kong-ai-backup`/`peipei-ai-backup`)，跟`workspace/`同性質，但外層`.gitignore`一直沒排除它們②案例73 schema v17升級新增的目錄命名(`session-sqlite-import-archive`、`sessions_archive`等)，8/25版`.gitignore`沒涵蓋到。TOOLS.md顯示「刪除」是doctor --fix把內容合併進AGENTS.md的正常行為，不是bug，之前手動救回其實是在打一場打不贏的仗。已補齊`.gitignore`規則+確認無金鑰洩漏後commit，115行歸零，commit`4d2f68cdc`已推上GitHub。
-
-教練追問「不處理掉要放著幹嘛，萬一出問題怎麼辦」後，一併清理kong-ai-backup(3週積壓，commit`3861d382e`)+peipei-ai-backup(10週未commit，實際回溯發現是4個月memory日記從未進版控，commit`d4034d4`)。**清peipei倉庫時的重大發現**：`agent/models.json`跟`agent/auth-profiles.json`過去的git commit裡含明文的全系統共用MiniMax金鑰+一組Google API Key，現況兩檔已被清空/刪除(不確定何時、誰清的)，已commit現況+把兩檔加進`.gitignore`防止未來再犯。金鑰本體仍留在較舊的git歷史裡，repo已確認是private(`gh repo view`驗證)，風險比照先前terminal-notes token洩漏案例判斷可接受，是否要改寫歷史清除舊commit待教練裁示(不可逆操作)。詳見`claude-brain/reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md`。
-
-### 3. 手機版(MiniMax)FB貼文任務思考模式評鑑
-教練今晚讓手機版(Claude Code Remote Control連進這台Mac，實際跑MiniMax-M3)執行大台南策展中心12則貼文重貼任務，貼出後回報「沒縮圖+文案重複網址」，質疑MiniMax「做事情欠缺考慮」，把對話貼給軍師要求通盤分析思考模式對不對。軍師直接讀取該session完整transcript(`~/.claude/projects/.../1de66f96-....jsonl`)，逐項評鑑後給出結論：**核心root cause診斷(og:image用相對路徑，FB爬蟲抓不到)本身是對的，而且有先curl驗證才回答，這部分方法論健全**；但整個過程有幾個真實(非偏見)的問題——①一開始搞不清楚自己是跑在雲端還是教練Mac本機，來回猜測浪費好幾輪②第一個念頭是複製教練整顆953MB Chrome profile(等於複製所有網站密碼)，靠系統自動安全機制擋下才沒發生③教練明確說「聽不懂行話」後才發現一直在講remote debugging port這類專有名詞，違反守則#10④用錯网址(GitHub Pages舊網址而非`event.bymyway.com`)，是教練自己發現糾正回來的。**核心問題**：12則一次貼完才發現沒縮圖，沒有先貼1則驗證格式再批次執行——這正是「先斷言後查證」，軍師自己當晚稍早也連續犯了4次同類錯誤(`feedback_assert_before_verify_pattern_2026-09-17`)，不是MiniMax特有的毛病，是這套系統裡AI普遍會犯的模式。
-
-教練追問「為何用GitHub網址而非event.bymyway.com，是不是資料庫裡完全沒教過」，查證屬實：`reference_curation_sop_2026-09-06.md`裡雖然說明了`event.bymyway.com/curated/<slug>/`路由存在的機制(避免曝光內部repo結構)，但從未明確寫下「所以對外貼文/行銷要用這個網址，不要用GitHub Pages」這條規則——這是真實的文件缺口，直到手機版今晚自己寫的新SOP才第一次把這條規則明確記下來。
-
-已把後續修復工作(逐一修12個slug的og:image絕對路徑+`curation_process.py`加自動修復機制治本+刪除重貼12則)寫成完整派工信`cross-agent/inbox/mobile/20260918-0330_mac-desktop-to-mobile_fix-og-image-and-repost.md`(commit`c40e76eff`)，交給手機版用它自己的MiniMax額度執行，不消耗教練的Sonnet流量。
-
-## ⚠️ 本場教訓（已寫入記憶）
-1. `feedback_gitignore_stale_after_schema_migration_2026-09-18`：git status突然冒出一大批新untracked目錄時，先查是否有獨立`.git`(embedded repo需排除非直接add)、是否為版本升級產物(查commit log有沒有"救回"字樣的舊嘗試代表在打敗仗)、diff是純新增還是有東西不見。
-2. `reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18`：清理任何agent的獨立備份repo積壓前，應順手grep一次`models.json`/`auth-profiles.json`這類含embedded apiKey欄位的設定檔。
-
-## 📋 下一場開工先做
-1. **等手機版回報**：og:image修復+12則刪除重貼結果如何，讀`cross-agent/inbox/mobile/`那封信有沒有被執行。
-2. **等教練喊「推」**：bigtree-tw Netlify靜態版一鍵發佈(EDM連結已就位)。
-3. peipei-ai-backup舊commit金鑰歷史是否要改寫清除，待教練裁示(不可逆，需親口確認)。
-4. 沿用既有待辦：確認孔大哥/佩佩老師端industry-chain-sop hook真人實測、峰哥的產業服務鏈SOP待Telegram ID、幕僚長晨報cron消失原因(40+天未覆核)、FB App Review(商家資產管理組合卡住)、`stop_rules_master.py`規則#07誤判regex。
-5. E16接力棒瘦身：**本場已完成**，v207~v213已搬進`handoff_archive/handoff_v207_to_v213_archived_2026-09-18.md`，主檔現維持v214~v216共3棒。
-
-## 🔑 本場commit
-`bigtree`(github_repos)：`fdfaff0`(EDM連結)。外層`.openclaw`repo：`4d2f68cdc`(.gitignore修復+115行清理)。`kong-ai-backup`：`3861d382e`。`peipei-ai-backup`：`d4034d4`。`workspace`：`f409b192a`+`873450ca9`(記憶檔)+`c40e76eff`(派工信)+本次commit(接力棒+E16瘦身封存)。
-
----
-
+> 📦 v216完整內容已封存：`handoff_archive/handoff_v216_archived_2026-09-18.md`（EDM連結補完+三個repo git hygiene清理含peipei倉庫金鑰歷史殘留發現+手機版FB貼文思考模式評鑑與派工）
 # 軍師接力棒 · 2026-09-18 v217（Mac桌面版 Sonnet 5，FB大台南策展中心刪錯貼文任務：0 則要刪的錯貼文 + 4 條新教訓）
 
 > 建立時間：2026-09-18 02:19 ~ 04:00（台灣時間）
@@ -664,3 +626,41 @@ f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後�
 
 ## 🔑 本場commit
 `workspace`：`3711f7f6c`(BNI 戰情儀表板+總表+memory 首次建立) + `83b0745e10`(補 zhenzuan-webapp 退役根因)。外層 `.openclaw` repo 本場無變更（workspace 被 .gitignore 排除，內層獨立 repo）。
+
+
+---
+
+# 軍師接力棒 · 2026-09-18 v219（Mac桌面版 Sonnet 5，手機/軍師討論邊界+Netlify中文檔名修復部署+後台帳密清單結案+workspace git大掃除(含金鑰外洩發現)+coach888「熱門排行」新功能）
+
+> 建立時間：2026-09-18 19:25 ~ 22:48（台灣時間，約3.4小時）
+> 上一棒：v218
+> 本棒主軸：**教練發現手機(MiniMax)跟桌面版同時開新對話框讀到同一份接力棒，會把留給軍師的討論題目搶答掉，要求做出區隔；同時針對v218留下的3項待辦明確裁示「不要再問，直接做」。逐項執行完畢後，教練委託新任務：coach888作品一覽依點擊次數做即時熱門排行。**
+
+## 🎯 本場戰果
+
+### 1. 手機(MiniMax)不再搶答軍師專屬討論題目
+接力棒待辦表新增「💬」狀態代碼；`feed_junshi_handoff.sh`偵測到`IS_MOBILE=1`時，額外注入明確指令：看到💬項目完全略過，不搶答不主動提，只做🔒/⏳/✅/⚠️這幾類任務。已模擬手機/桌面兩種身份(靠`ANTHROPIC_BASE_URL`/`ANTHROPIC_API_KEY`是否清空判斷)測試通過，確認新指令只出現在手機分支。
+
+### 2. 大樹小講10/3場Netlify部署（v218遺留待辦，教練裁示「去改不要問」）
+根因：`archive/大樹小講_歷史講座紀錄.html`+一個孤兒資料夾`archive/2026-07-01_創業x政府xAI講座/`共5個中文檔名，Netlify zip deploy API不接受非ASCII檔名。已`git mv`改成`archive/lecture-history.html`等英文命名，3個html檔案的連結同步修正，本機http.server+真實Chrome驗證後推GitHub、部署Netlify。正式站已curl驗證10/3內容、EDM圖片、`/archive/lecture-history`clean URL全部200。
+
+### 3. 後台系統帳密集中清單（v218遺留待辦，教練裁示「彙整就是了」）
+查證發現其實09/05~06就已彙整進`路徑大全_憑證層.md`(13組系統)，是一筆沒被關掉的過期待辦。補上真缺口(`event.bymyway.com/vault`漏收錄)、確認教練本人問小龍蝦時`toolsBySender`無限制、`SOUL.md`補上明確讀取路由指引(原本完全沒告訴小龍蝦要去哪查)。
+
+### 4. workspace repo git狀態大掃除（v218遺留待辦，教練裁示「清理就是了」）
+救回被doctor --fix/schema遷移又清空一次的`TOOLS.md`+兩個`workspace-state.json`(內容與HEAD一致)；`.gitignore`補齊`*.migrated.*`/全域`__pycache__`/產業鍊SOP生圖產物/FB調查暫存log+截圖/`event-signup/static_tmp/`/`project_card_injected`dedup標記/危險指令通行證`state/DELETE_APPROVED`共7類規則；補commit過去10天累積但從未落地的50+個檔案(記憶檔/跨機收信/對話蒸餾檔)。**意外發現**：3個檔案(`state/inbound_echo/2026-09-12.jsonl`+2份對話蒸餾檔)原封不動含一組Telegram bot token跟**當晚才剛用來部署bigtree的Netlify token**，已故意不commit這3個檔案+寫入記憶`feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18`回報教練，**教練裁示「不用管」，接受風險維持現狀**（比照小二token外洩舊判例）。
+
+### 5. coach888新增「🔥熱門排行」：依點擊次數即時排名
+教練需求：作品一覽項目愈來愈多，想依實際點擊次數自動排出常用項目，不用每次在分類裡找來找去。實作：`event-signup`新增`coach888_clicks`表+兩支端點(`POST /api/coach888/click`累加、`GET /api/coach888/click-counts`回傳全部計數)，coach888前端用`navigator.sendBeacon`在每次點項目連結時記一次，頁面最上方新增獨立區塊即時渲染前10名。**架構刻意跟既有15個分類的排版/拖曳/存檔機制完全隔離**——新區塊用`.hot-item`/`.hot-grid`全新class名稱，不進`saveLayout()`的`.grid`/`.item`掃描範圍，不會污染`coach888_layout`狀態、不會被拖曳/刪除功能誤綁定，原本手動整理的分類完全不受影響。**過程修一個真bug**：`navigator.sendBeacon`的請求帶`credentials:'include'`，CORS規範禁止搭配萬用字元`Access-Control-Allow-Origin: *`、且必須明確回`Allow-Credentials: true`，兩個條件都補上後才真正送得出去(本機用真實Chrome點擊+production API驗證兩輪才抓全，過程詳見新增記憶`reference_sendbeacon_cors_credentials_gotcha_2026-09-18`)。已端到端測試：點擊→POST寫入→重新整理→熱門排行正確顯示排名+次數，測試資料已清除，正式站GitHub Pages已curl驗證部署生效。
+
+## ⚠️ 本場教訓/發現（已寫入記憶）
+1. `feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18`：`terminal-notes/distilled/`跟`state/inbound_echo/`這類「已加工過」的衍生檔案，仍可能原封不動含真實API Key/Token，commit前要單獨掃描，不能假設蒸餾過程會自動遮蔽。
+2. `reference_sendbeacon_cors_credentials_gotcha_2026-09-18`：`navigator.sendBeacon`跨網域請求會帶`credentials:'include'`，伺服器CORS設定若用萬用字元`*`或漏掉`Allow-Credentials:true`，請求會被瀏覽器整個擋下且不易察覺(beacon是fire-and-forget，不會有明顯的失敗提示，只能查console或直接驗證後端有沒有收到)。
+
+## 📋 下一場開工先做
+1. **💬軍師專屬討論題目仍未處理**：試金石案例庫商業化/資產化路徑，本場教練把時間都用在裁示執行任務+coach888新功能，這個話題還沒真的展開討論，下一場看到接力棒待辦表的💬項目應主動提起。
+2. 沿用v218既有待辦：孔大哥/佩佩老師industry-chain-sop hook真人實測(教練不催)、peipei-ai-backup舊commit金鑰歷史(教練已表態不處理)、`stop_rules_master.py`規則#07誤判regex(教練示意MiniMax有空自行補丁)。
+3. E16接力棒瘦身：本場已完成，v216已搬進`handoff_archive/handoff_v216_archived_2026-09-18.md`，主檔現維持v217~v219共3棒。
+
+## 🔑 本場commit
+`workspace`：`22252989c`(手機軍師討論過濾+帳密清單補完)、`3df65360b`(.gitignore補齊+例行狀態同步)、`577281fbc`(補commit50個記憶/收信/蒸餾檔)、`4d37bc428`(補commit中文檔名收信紀錄)、`5bf14310f`(coach888點擊計數後端API)。`github_repos/bigtree`：`549fa9c`(中文檔名改ASCII)，Netlify deploy`6aad2282`。`github_repos/coach888`：`22fc17b`(熱門排行前端)。
