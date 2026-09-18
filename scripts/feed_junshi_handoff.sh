@@ -206,9 +206,16 @@ fi
 # ANTHROPIC_API_KEY，兩者同時存在才代表走真Anthropic路徑。
 if [ -z "${ANTHROPIC_BASE_URL:-}" ] || [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   IDENTITY_LINE="特助（MiniMax-M3，透過手機Remote Control連線，非Opus，額度與其他小龍蝦系統共用，需注意額度消耗）"
+  IS_MOBILE=1
 else
   IDENTITY_LINE="軍師（本機Claude session；實際模型請以每則assistant訊息的 message.model 欄位或系統提示為準，不要自行假設是Opus）"
+  IS_MOBILE=0
 fi
+# 2026-09-18 教練問「要不要另設『手機開工』暗號區分」，軍師判斷：既然身份已能自動
+# 偵測（IS_MOBILE），不需要教練多記一組指令，直接用同一個「開工」依偵測結果調整
+# 注入份量——手機MiniMax的context window會隨session動態縮水(200K→163K→84K，見
+# feedback_minimax_dynamic_context_cap_2026-09-17)，灌全套試金石全文+7天knowledges
+# 清單+6000字memory對它負擔過重，改成精簡版：只給最關鍵的待辦+心跳狀態。
 
 MAX_INJECT_CHARS=60000
 INJECT_CONTENT=$(
@@ -289,23 +296,29 @@ INJECT_CONTENT=$(
     echo "（完整版含涉及案例編號/自動化防護狀態，見 distill/top10_errors_index.md）"
   fi
 
-  # 3b：最新2案例全文
+  # 3b：最新2案例全文（手機MiniMax context會動態縮水，跳過，只給案例標題清單）
   if [[ -f "$STONE" ]]; then
     echo ""
     echo "---"
     echo ""
-    echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
-    echo ""
-    LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -2 | head -1 | cut -d: -f1)
-    if [[ -n "$LAST_3_START" ]]; then
-      tail -n +"$LAST_3_START" "$STONE"
+    if [[ "$IS_MOBILE" -eq 1 ]]; then
+      echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例標題（手機精簡版，需要細節時自行 Read 試金石/試金石_案例庫.md）"
+      echo ""
+      grep -nE "^## 案例" "$STONE" | tail -2 | sed 's/^[0-9]*://'
     else
-      echo "（無法定位案例段落，請手動查閱 試金石/試金石_案例庫.md）"
+      echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
+      echo ""
+      LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -2 | head -1 | cut -d: -f1)
+      if [[ -n "$LAST_3_START" ]]; then
+        tail -n +"$LAST_3_START" "$STONE"
+      else
+        echo "（無法定位案例段落，請手動查閱 試金石/試金石_案例庫.md）"
+      fi
     fi
   fi
 
-  # ───────── 第 4 步：knowledges 最近 7 天新檔清單 ─────────
-  if [[ -d "$KNOWLEDGES_DIR" ]]; then
+  # ───────── 第 4 步：knowledges 最近 7 天新檔清單（手機精簡版跳過，非急需）─────────
+  if [[ "$IS_MOBILE" -eq 0 && -d "$KNOWLEDGES_DIR" ]]; then
     echo ""
     echo "---"
     echo ""
@@ -327,9 +340,16 @@ INJECT_CONTENT=$(
   # ───────── 第 5 步：memory 最新日（已濾除 Dreaming 雜訊區塊，2026-07-10 軍師查證後修）─────────
   # 原因：memory/*.md 裡的 openclaw:dreaming:light/rem 區塊是系統自動生成的低信度「反思的反思」，
   # 非教練真實對話，過去整段 cat 進來會佔掉大半篇幅（實測 2026-07-10.md 17KB 裡八成是這塊雜訊）。
+  # 手機精簡版只取尾端800字(而非本機的6000字)，context越用越少要省著用。
   if [[ -d "$MEMORY_DIR" ]]; then
     LATEST_MEMORY=$(ls -1 "$MEMORY_DIR"/20[2-9][0-9]-[0-9][0-9]-[0-9][0-9].md 2>/dev/null | sort | tail -1)
     if [[ -n "$LATEST_MEMORY" && -f "$LATEST_MEMORY" ]]; then
+      MEM_TAIL_CHARS=6000
+      MEM_LABEL="6000字"
+      if [[ "$IS_MOBILE" -eq 1 ]]; then
+        MEM_TAIL_CHARS=800
+        MEM_LABEL="800字（手機精簡版）"
+      fi
       echo ""
       echo "---"
       echo ""
@@ -341,10 +361,10 @@ INJECT_CONTENT=$(
           -e '/<!-- openclaw:dreaming:rem:start -->/,/<!-- openclaw:dreaming:rem:end -->/d' \
           "$LATEST_MEMORY")
       FM_LEN=${#FILTERED_MEMORY}
-      if [[ $FM_LEN -gt 6000 ]]; then
-        echo "（僅顯示今日最近約6000字，完整內容見 \`memory/$(basename "$LATEST_MEMORY")\`）"
+      if [[ $FM_LEN -gt $MEM_TAIL_CHARS ]]; then
+        echo "（僅顯示今日最近約${MEM_LABEL}，完整內容見 \`memory/$(basename "$LATEST_MEMORY")\`）"
         echo ""
-        printf '%s' "${FILTERED_MEMORY: -6000}"
+        printf '%s' "${FILTERED_MEMORY: -$MEM_TAIL_CHARS}"
       else
         printf '%s' "$FILTERED_MEMORY"
       fi
