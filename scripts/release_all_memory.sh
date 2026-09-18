@@ -36,15 +36,22 @@ quit_app() {
 # 1. 關掉瀏覽器（Chrome）
 quit_app "Google Chrome" "瀏覽器(Chrome)"
 
-# 2. 關掉赫米斯（launchd管理，KeepAlive會自動重啟，需bootout才會真正停止）
-HERMES_WAS_RUNNING=$(pgrep -f "hermes_cli.main gateway" | head -1)
-for label in ai.hermes.gateway ai.hermes.menubar ai.hermes.desktop ai.hermes.config-watcher; do
+# 2. 關掉赫米斯「桌面版App」（menubar/desktop/config-watcher三個GUI相關服務）
+#    🔴 2026-09-19教練親口糾正：ai.hermes.gateway是Telegram 24小時運作的後端
+#    (python -m hermes_cli.main gateway，跟教練在Telegram上聊天的就是這個
+#    process)，跟「桌面版App」是兩回事——教練說「全部釋放」指的是關掉佔記憶體
+#    的桌面GUI程式，從來不包含要把Telegram也斷線。舊版本把gateway一起bootout，
+#    導致教練在Telegram上完全聯絡不到赫米斯長達16小時、且看門狗機制把這個
+#    狀態當成「故意關閉」不會提醒，教練完全不知情才發現。已改成只關三個GUI
+#    服務，gateway永遠不動，維持24小時運作。
+HERMES_DESKTOP_WAS_RUNNING=$(pgrep -f "Hermes.app|hermes-menubar-v2.py" | head -1)
+for label in ai.hermes.menubar ai.hermes.desktop ai.hermes.config-watcher; do
   launchctl bootout "gui/${UID_NUM}/${label}" >/dev/null 2>&1
 done
-if [ -n "$HERMES_WAS_RUNNING" ]; then
-  RESULTS+=("赫米斯：已停止(bootout四個launchd服務)")
+if [ -n "$HERMES_DESKTOP_WAS_RUNNING" ]; then
+  RESULTS+=("赫米斯桌面版App：已關閉(gateway後端維持24小時運作，未受影響)")
 else
-  RESULTS+=("赫米斯：本來就沒在跑")
+  RESULTS+=("赫米斯桌面版App：本來就沒在跑(gateway後端維持24小時運作，未受影響)")
 fi
 
 # 3. 關掉LINE
