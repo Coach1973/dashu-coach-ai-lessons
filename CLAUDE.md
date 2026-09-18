@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-18 16:25:36**
+> **最後同步：2026-09-18 16:35:46**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -20,6 +20,7 @@
 |---|---|---|---|
 | ✅ | **MiniMax額度異常查證：真兇找到(小二兩種無限重試bug)，額度懸案結案，2.0評估決定「先停用，等官方修復」** | ✅本場結案 | 承接案例74的359次死路，本場抓到決定性證據：小二(test2)9/17全天488次「suppressed before delivery」失敗(每次觸發重打MiniMax，幾乎等於教練回報的~500次跳動)，從16:21第一次生圖指令就開始發作；01:06又活逮**第二種**變體(寫`memory/USER.md`時oldText跟檔案內容對不上，48秒內連打7次)，當場kill+重啟test2止血。**關鍵驗證實驗**：教練洗澡20分鐘完全不跟任何機器人互動，額度穩定停在18%沒再跳，坐實稍早14%→17%→18%那段是顯示器延遲追上舊帳、非新漏洞，懸案正式結案。查官方GitHub確認：這正是**issue #122261「Tool retry loops can saturate gateway event loop — propose per-tool circuit breaker」**這個尚未關閉的已知洞，OpenClaw 2026.9.4(小二現版)所在版本線12天內連發6版、290+貢獻者/1558PR規模，工程量龐大但這塊尚未補齊。**教練最終裁示**：測試至今用的都是1.0/2.0表現無差異的基本功能(聊天/生圖)，2.0真正差異化功能(Mermaid圖表/Skill Workshop/會議紀錄庫/多裝置session)完全沒測到，非沙盒限制、純粹任務類型沒對到；既然如此就**不建議浪費時間寫自製斷路器補丁**，改為直接停用test2 gateway(PID 38338已停止監聽53141)，半成品`watcher.js`已刪除不留孤兒，等官方issue #122261真正修復、教練想測2.0差異化功能時再重啟評估。**下次額度異常查證SOP更新**：不要先套理論(累加桶/背景漏洞)，第一步先問「教練最近跟哪個機器人講過話」，直接拉該機器人最近5~10分鐘原始log找同一traceId密集重複的爆發訊號，比繞去算歷史累加快得多。 |
 | ⏸️ | **小二(test2)/OpenClaw 2.0評估：正式暫停，等官方issue #122261修復再重啟** | ⏸️暫停-等官方修復 | test2的NO_REPLY迴圈防護hook(`no-reply-loop-guard`)保留在原位不動(下次重啟test2時仍會生效)，但gateway process本身已停止待命，教練近期不會主動使用。下次要重啟評估時：①`~/.openclaw-test2/hooks/no-reply-loop-guard/auto_restart_test2.sh`可直接拉起②先查`npm view openclaw versions`/GitHub issue #122261狀態確認斷路器機制是否已上線③找真正會用到Mermaid圖表/Skill Workshop/會議紀錄庫這類2.0差異化功能的任務去測，而非聊天/生圖這類1.0也做得到的基本功能，才測得出2.0到底值不值得升級。 |
+| 🟢 | **BNI三分會(真鑫09/17/真鑽09/15)來賓戰情儀表板更新+解真鑽DB 4週停擺** | ✅2026-09-18本場完成 | 真鑫 members 24 = 應到 22 + 已離會 張晴晴/楊為凱；真鑫09/17 來賓 1 位(吳玫萱邀陳柏麟)+早鳥 7 位；真鑽09/15 來賓 13 位(林仁超=4/楊智帆=2/康文彬=2/其他5位=1)+早鳥 21 位；ones/coffee 全部 NULL(守則#15沒給就不填)。DB SUM 與教練週報數字完全對齊。教練當場糾正 2 個關鍵錯誤認知：① `real-diamonds.bymyway.com` 才是真鑽，`com.coach.zhenzuan-webapp` 是退役服務不要碰；② 真鑫 members 24 vs 應到 22 是因為張晴晴/楊為凱已離會。已寫入memory `reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18.md`。真貴09/17 week row 已建但教練沒給本週週報、不動。 |
 | 🟢 | **大樹小講「歷史講座紀錄」補EDM單獨連結（10/3 KR場）** | ✅2026-09-18本場完成，等教練喊「推」 | 已複製`~/github_repos/bigtree-1003/edm.jpg`進主站`archive/edm/`，「歷史講座紀錄」宮格牆新增第24張卡片，連結指向`event.bymyway.com/curated/bigtree-1003/`，用真實Chrome+node解析JS陣列驗證過，commit`fdfaff0`(bigtree repo)已推GitHub，Netlify正式站尚未部署(curl驗證確認)，等教練喊「推」。 |
 | 🟢 | **大樹小講(bigtree-tw Netlify靜態版)10/3場次尚未跑一鍵發佈** | 🔒待教練喊「發布/推」 | event.db+動態版event.bymyway.com/bigtree/已即時反映10/3(用手機就能玩AI/KR養生廚房)正確資訊，只差靜態Netlify版沒同步。教練確認Netlify額度充足(且已續約享兩個月半價$4.5)，喊「推」隨時可發。 |
 | 🟢 | **孔大哥/佩佩老師SOUL.md已補齊策展SOP+報名頁上架SOP+分流規則** | ✅本場完成 | 查證發現兩人workspace各自獨立(`agents/kong/SOUL.md`／`agents/peipei/SOUL.md`，未被git追蹤，main workspace的SOUL.md新規則不會自動同步過去)，這正是佩佩老師這次把大樹小講活動誤上架成店家的根因。已補齊兩份SOUL.md，往後同類任務應可正確分流，詳見[[feedback_agent_soul_files_not_synced_2026-09-17]]。 |
