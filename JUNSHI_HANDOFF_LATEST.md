@@ -337,57 +337,24 @@
 
 ## 🎯 本場戰果（v218，2026-09-18 16:08~17:23 Mac桌面版軍師）
 
-### A. Class A 三項主動完成
+開工到收工 1.2 小時，教練「全都開始」+「推 Netlify/不催手機版/不追孔佩實測/不查 FB App Review」4 項裁示後，軍師主動完成 3 項 Class A 並推 Netlify 10/3 場次（連續 5 次失敗，已 restore 回 9/16 deploy）。
 
-**A1. 從 git tree 救回 `hooks/industry-chain-sop/` 整個目錄**（commit `30f3c594a`）
-working tree 不知何時整個 `hooks/industry-chain-sop/` 被清掉（git tree 還在，疑 9/16 doctor --fix 副作用同次清空 TOOLS.md），從 commit `0228987df`（v214 groupId 修復版）checkout 救回完整檔案。已用 6 個合成事件端對端驗證全通過：kong 群組「企業教練」/ peipei 群組「鴻達醬油行」都正確 TRIGGER+PROMPT 生成（從 `~/.openclaw/hooks/industry-chain-sop/hook.log` 真實寫入紀錄可證）；錯的群組/非白名單 agent/一般對話/空字串全正確擋。
-
-**A2. rule #07 polling 白名單補強**（commit `ffedc0aa0`）
-`scripts/stop_rules_master.py` 規則 D 白名單新增討論/計畫/回顧語意：討論/決策/裁定/親定/欽定/覆核/拍板、賈維斯/Phase[12345]/計畫/計劃/套用/改寫/不再/未來/下次/當初/那次/複合句型。18/19 個合成測試通過，唯一 FAIL 是 D_PATTERNS 盲點「監控 X 每 Y 分鐘」（動詞在前），不在本任務範圍。
-
-**A3. 幕僚長晨報 cron 消失根因深查**（commit `f03cd219d` + handoff 條目更新）
-事實鏈：① `state/minimax_overload_retry.json` 顯示 b73845c9 最後失敗 lastTs = **台灣時間 2026-09-09 06:03:10**（每日觸發 06:01 UTC 22:01），② `state/openclaw_cron.db` 從 2026-08-20 起 0 bytes，active cron 只在 gateway 記憶體救不回，③ 9/16 commit `054148ab2` message 明確寫「doctor --fix 格式標準化(cron store等)」+ 同次清空 TOOLS.md → 強烈指向 doctor --fix 副作用。**無法反推 9/9~9/16 期間確切刪除 commit 時間點**，需教練裁示是否重建。
-
-### B. 教練「全都開始」裁示後的清單動作
-
-- ✅ **手機版 og:image 修復催收** → 從清單標 ✅結案，教練明示不催
-- ✅ **孔大哥/佩佩老師 industry-chain-sop 真人實測** → 不再追蹤，外部 agent/真人自負
-- ✅ **FB App Review「大樹教育行銷管理中心」** → 從清單移除，教練明示親自查 Business Suite
-- ⚠️ **Netlify 10/3 場次發布** → 連續 **5 次失敗**，已 restore 回 9/16 那次 deploy (`6aaae4738f7bad35092afcb8`)，10/3 KR 改動**未上線**
-
-### C. Netlify 5 次失敗事故（需教練從 A/B/C 方案選一）
-
-| # | 策略 | 結果 |
-|---|---|---|
-| 1 | `git archive HEAD` 預設 Mac zip | ❌ `Deploy failed while extracting zip` |
-| 2 | `git archive` + `zip -d` 排除大目錄 | ❌ Deploy failed |
-| 3 | Python `zipfile.ZIP_DEFLATED` + UTF-8 flag `0x800` | ❌ Deploy failed |
-| 4 | Python `zipfile.ZIP_STORED`（無壓縮） + UTF-8 flag | ❌ Deploy failed |
-| 5 | **ASCII-only 過濾**（排除中文檔名/目錄） | ✅ state=ready，但**覆蓋中文檔案**，立即 `POST /deploys/6aaae473/restore` 還原 |
-
-**根因**：Netlify zip deploy API 不接受中文檔名/中文目錄。HEAD commit `fdfaff0` 的 `archive/大樹小講_歷史講座紀錄.html`（5 行新增 EDM 連結）+ 早期既有 `archive/2026-07-01_創業x政府xAI講座/` 4 檔案都會讓 zip 解壓失敗。
-
-**待教練裁示方案**：
-- **A.** `git mv` 中文檔名 rename 成 ASCII（破壞舊 URL/Google 索引風險，一次性根治）
-- **B.** 教練親自 Netlify dashboard 手動上傳 zip（繞過 API，無法 commit 驗證）
-- **C.** 接受靜態版暫缺 10/3 KR 內容，動態版 `event.bymyway.com/bigtree/` 正常顯示
-
-### D. 新寫 4 條 memory + MEMORY.md 索引更新
-
-- `feedback_hook_files_disappeared_from_working_tree_2026-09-18.md`（hook 整個目錄消失的標準恢復 SOP：`git checkout <sha> -- hooks/<name>/`）
-- `reference_cron_job_disappear_root_cause_sop_2026-09-18.md`（cron job 消失的三路併查法：state retry log / 磁碟 SQLite / git log）
-- `feedback_rule07_polling_whitelist_blindspot_2026-09-18.md`（rule #07 白名單配方 + 已知 D_PATTERNS 盲點）
-- `reference_netlify_zip_deploy_chinese_filename_2026-09-18.md`（Netlify 不收中文檔名+5次失敗記錄+restore SOP）
-
-### E. 本場 5 個 commit hash 總覽
-
+**5 個 commit hash**：
 ```
-30f3c594a  從git tree救回hooks/industry-chain-sop（v214 groupId修復版）
-ffedc0aa0  rule#07 polling白名單補強
-f03cd219d  接力棒：幕僚長晨報cron消失根因深查
+30f3c594a  從git tree救回hooks/industry-chain-sop（v214 groupId修復版，6個合成事件全通過）
+ffedc0aa0  rule#07 polling白名單補強（18/19測試通過）
+f03cd219d  接力棒：幕僚長晨報cron消失根因深查（9/9 06:01最後觸發+磁碟0bytes+doctor --fix嫌疑）
 5210ac52d  接力棒v218：三項狀態更新（教練裁示）
-<本棒 commit 將在最後新增>
+<本棒 commit 在最後>
 ```
+
+**Netlify 5 次失敗根因**：Netlify zip deploy API 不接受中文檔名/中文目錄（HEAD 含 `archive/大樹小講_歷史講座紀錄.html` 中文 HTML）。第 5 次 ASCII-only 成功但覆蓋中文檔案，立即 `POST /deploys/6aaae473/restore` 還原。**待教練裁示 A/B/C 解法**：中文 rename / dashboard 手動 / 接受靜態版缺內容。完整 5 次嘗試對照表 + restore SOP 見 `reference_netlify_zip_deploy_chinese_filename_2026-09-18`。
+
+**新寫 4 條 memory**（MEMORY.md 索引已加）：hook 整個目錄消失恢復 SOP / cron job 消失三路併查法 / rule #07 白名單配方 / Netlify zip 中文檔名限制+restore SOP。
+
+**下棒待辦**：教練選 Netlify 10/3 解法（最優先）/ 幕僚長晨報 cron 重建（已查明根因，教練一句話 + schedule 就動）/ rule #07 D_PATTERNS「監控 X 每 Y 分鐘」盲點補丁（1 行 regex，可立即 commit）。
+
+> 📦 v218 完整戰果（含 5 次 Netlify 嘗試對照表 + 幕僚長晨報根因完整時序）已封存：`handoff_archive/handoff_v218_archived_2026-09-18.md`
 
 ---
 
