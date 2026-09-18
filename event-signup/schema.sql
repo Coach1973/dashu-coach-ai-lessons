@@ -135,6 +135,15 @@ CREATE TABLE IF NOT EXISTS coach888_state (
     updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- coach888作品一覽「熱門排行」點擊次數(2026-09-18教練交辦)：教練想依實際點擊次數
+-- 自動排出常用項目，不用每次在一堆手動整理的分類裡找。每個url累計次數，前端獨立
+-- 顯示成「🔥熱門排行」區塊，完全不影響教練手動拖曳整理的原始分類/順序。
+CREATE TABLE IF NOT EXISTS coach888_clicks (
+    url TEXT PRIMARY KEY,
+    click_count INTEGER NOT NULL DEFAULT 0,
+    last_clicked_at TEXT
+);
+
 -- 教練課程教材線上觀看區(2026-09-04交辦，同日追加link_type支援整個資料夾)：
 -- 教練把PPT/PDF/圖片上傳Google雲端硬碟(檢視者權限)，這裡只存Drive檔案或資料夾ID，
 -- 實際渲染交給Google Drive自己的embed viewer(單檔iframe /preview，整個資料夾用

@@ -2012,6 +2012,61 @@ def api_coach888_state():
     )
 
 
+@app.route("/api/coach888/click", methods=["POST", "OPTIONS"])
+def api_coach888_click():
+    """coach888「熱門排行」點擊計數(2026-09-18交辦)：教練點某個項目的連結就+1，
+    純累加不覆蓋，多裝置點同一個url次數會加總，前端用navigator.sendBeacon呼叫。
+    注意：sendBeacon的請求會帶credentials:'include'，CORS規範禁止credentialed
+    請求搭配萬用字元'*'，且必須同時明確回傳Allow-Credentials:true，否則瀏覽器
+    會擋下整個請求(本場實測navigate到本機8936埠點擊連結，兩個條件各自觸發過
+    一次CORS錯誤才抓全)。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+
+    payload = request.get_json(force=True, silent=True) or {}
+    url = (payload.get("url") or "").strip()
+    if not url or len(url) > 500:
+        return Response(
+            json.dumps({"ok": False, "error": "invalid url"}),
+            status=400, headers={**resp_headers, "Content-Type": "application/json"},
+        )
+    conn = db.get_conn()
+    conn.execute(
+        "INSERT INTO coach888_clicks (url, click_count, last_clicked_at) VALUES (?, 1, datetime('now', 'localtime')) "
+        "ON CONFLICT(url) DO UPDATE SET click_count = click_count + 1, last_clicked_at = excluded.last_clicked_at",
+        (url,),
+    )
+    conn.commit()
+    conn.close()
+    return Response(
+        json.dumps({"ok": True}), status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
+@app.route("/api/coach888/click-counts", methods=["GET", "OPTIONS"])
+def api_coach888_click_counts():
+    """回傳所有url的累計點擊次數({url: count})，前端自己排序取前N名顯示熱門排行。"""
+    resp_headers = {
+        "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+        "Access-Control-Allow-Credentials": "true",
+    }
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=resp_headers)
+    conn = db.get_conn()
+    rows = conn.execute("SELECT url, click_count FROM coach888_clicks").fetchall()
+    conn.close()
+    counts = {r["url"]: r["click_count"] for r in rows}
+    return Response(
+        json.dumps(counts), status=200, headers={**resp_headers, "Content-Type": "application/json"},
+    )
+
+
 AI_ART_REPO = Path("/Users/bymyway/github_repos/ai-art")
 
 
