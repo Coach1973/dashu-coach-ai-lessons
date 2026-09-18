@@ -1,4 +1,13 @@
 
+# 🔴🔴🔴 真實密碼/API金鑰憑證層+agent登入設定，2026-09-19全機健檢發現這兩份「本該保密」
+# 的檔案自2026-07-10/2026-04-26起就一直被git追蹤並推上GitHub（雖然是private repo，但完全違背
+# 當初拆出憑證層檔案的設計初衷），已用git rm --cached移除追蹤（保留本機檔案，服務不受影響），
+# 舊commit歷史裡仍留有這些內容，是否要rotate金鑰+改寫歷史，留待教練醒來裁示，不擅自動手
+路徑大全_憑證層.md
+agent/auth-profiles.json
+agent/models.json
+agent/models.json.bak
+
 # 瀏覽器自動化設定檔/快取，禁止納入版控（2026-05-23）
 scripts/fb_session_data/
 
