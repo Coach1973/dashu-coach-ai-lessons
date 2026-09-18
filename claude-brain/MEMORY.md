@@ -1,5 +1,8 @@
 # Memory Index
 
+- [🔴🔴🔴 開工照唸接力棒舊狀態表，把已解決問題當新問題丟A/B/C選項給教練，教練動怒(2026-09-18)](feedback_stale_handoff_row_represented_as_unsolved_2026-09-18.md)
+- [🔧 navigator.sendBeacon跨網域帶credentials:'include'，CORS要回實際Origin+Allow-Credentials:true(2026-09-18)](reference_sendbeacon_cors_credentials_gotcha_2026-09-18.md)
+- [🔴🔴 distilled/inbound_echo衍生檔案仍會原封不動含真實Token，commit前要單獨掃描(2026-09-18)](feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18.md)
 - [🔴🔴 settings.json的MiniMax模型字串[1M]應為小寫[1m]+缺AUTO_COMPACT_WINDOW，context被鎖200K非1M，試金石案例76(2026-09-18)](reference_minimax_1m_context_config_fix_2026-09-18.md)
 - [🔴 開工hook寫死「軍師Opus」導致手機MiniMax誤認身份，改查BASE_URL/API_KEY(2026-09-18)](feedback_hook_hardcoded_identity_assumption_2026-09-18.md)
 - [🔧 AI團隊品質稽核機制：既有13條Stop hook規則+新彙整器agent_team_qa_digest.py(2026-09-18)](reference_agent_team_qa_digest_mechanism_2026-09-18.md)
