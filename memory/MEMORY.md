@@ -78,3 +78,4 @@
 5. **眠月線（阿里山）** — 台鐵至阿里山站，最美廢墟鐵道森林隧道
 
 **資料來源：** 2026-04-26 頂級特助分工群對話紀錄
+- [🔧 BNI 三分會網域真名對照 + zhenzuan-webapp 退役 + 真鑫 active 名單扣掉離會 2 人(2026-09-18)](reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18.md)
