@@ -23,6 +23,18 @@ MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-ac 5
 ```
 2026-09-02 首次踩到（`powercfg /change` 一直報錯，`powercfg /?` 卻正常，才發現是參數轉換問題，不是指令本身有問題）。
 
+## 螢幕/睡眠逾時設定歷史
+
+- 2026-08-31~09-05：教練要求先設5分鐘關閉，後改「接下來兩小時不要關閉」，因工作排程器不能用改背景`Start-Sleep`計時程序2小時後自動改回5分鐘（重開機/登出計時器會消失）。
+- 2026-09-19：教練要求「永遠保持開啟」，改為永久設定（非計時器），AC+DC 四項全設為 0（永不）：
+```bash
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-ac 0
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-dc 0
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-ac 0
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-dc 0
+```
+用`powercfg /query SCHEME_CURRENT SUB_VIDEO VIDEOIDLE`及`SUB_SLEEP STANDBYIDLE`驗證目前AC/DC設定值皆為`0x00000000`。這次是永久生效（寫入電源方案），不是計時器，重開機/登出不會失效，要改回來需再次手動`powercfg /change`。
+
 ## python3 是 Windows Store 樁，不是真安裝
 
 `which python3` 找得到（`AppData\Local\Microsoft\WindowsApps\python3`），但執行 `python3 --version` 沒有任何輸出，不能拿來跑腳本或當 pipe 的下游（`curl ... | python3 -c "..."` 會整條靜默失敗，exit code 常是 49）。跟聯想機器同款環境限制（見試金石案例64），但這台從一開始用的是 PowerShell 原生腳本，沒受影響；**這次新踩到的坑是拿它處理 curl 回應的 JSON**，改用 PowerShell 的 `ConvertFrom-Json` 或直接 `grep`/字串比對即可繞過。
