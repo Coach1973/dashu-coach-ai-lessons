@@ -1893,6 +1893,10 @@ def api_kr_contact():
 
 CCU_SITE_DIR = Path(__file__).parent / "ccu_site"
 CCU_WALL_EVENT_DEFAULT = "ccu-club-leadership"
+# 2026-09-19 22:16教練交辦：活動已結束，現場能寫的心得/提問都寫了，之後路人若誤入頁面
+# 亂留言的風險大於好處，關閉觀眾寫入功能（提問/按讚/心得），只留GET讓既有內容繼續顯示。
+# 課後影音(/api/ccu/media PUT)不受影響，教練接下來還要上傳影音資料。
+CCU_WALL_CLOSED = True
 # 2026-09-19交辦：中正大學社團幹部專場(9/19早上)互動牆。教練把教練用tava-ai.com生成的
 # 整包WordPress外掛+靜態頁丟過來，裁示「走我們的策展/上架SOP，直接掛event.bymyway.com」，
 # 不用另外裝WordPress管一組新帳密——後端邏輯照抄WP外掛的資料結構跟API形狀，改用
@@ -1963,6 +1967,9 @@ def api_ccu_questions():
         conn.close()
         return Response(json.dumps([_wall_question_shape(r) for r in rows]), mimetype="application/json")
 
+    if CCU_WALL_CLOSED:
+        return Response(json.dumps({"error": "活動已結束，提問牆已關閉留言"}), status=410, mimetype="application/json")
+
     payload = request.get_json(force=True, silent=True) or {}
     event = _wall_event(payload)
     body = _wall_clean(payload.get("body"), 500)
@@ -2007,6 +2014,8 @@ def api_ccu_patch_question(qid):
 
 @app.route("/api/ccu/questions/<qid>/vote", methods=["POST"])
 def api_ccu_vote(qid):
+    if CCU_WALL_CLOSED:
+        return Response(json.dumps({"error": "活動已結束，提問牆已關閉留言"}), status=410, mimetype="application/json")
     payload = request.get_json(force=True, silent=True) or {}
     delta = 1 if int(payload.get("delta") or 1) >= 0 else -1
     conn = db.get_conn()
@@ -2034,6 +2043,9 @@ def api_ccu_echoes():
             json.dumps([{"id": r["uid"], "body": r["body"], "ts": r["ts"]} for r in rows]),
             mimetype="application/json",
         )
+
+    if CCU_WALL_CLOSED:
+        return Response(json.dumps({"error": "活動已結束，心得牆已關閉留言"}), status=410, mimetype="application/json")
 
     payload = request.get_json(force=True, silent=True) or {}
     event = _wall_event(payload)

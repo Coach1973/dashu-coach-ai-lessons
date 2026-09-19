@@ -717,6 +717,8 @@ body.has-admin{padding-bottom:78px}
    ===================================================================== */
 const API_BASE = '/api/ccu';
 const EVENT_ID = 'ccu-club-leadership';
+// 2026-09-19 22:16教練交辦：活動已結束，關閉觀眾寫入(提問/投票/心得)，牆面內容繼續唯讀顯示
+const WALL_CLOSED = true;
 const POLL_MS  = 5000;
 
 /* 講者金鑰：從網址讀 ?key=xxxx，只用在「標記已回答 / 上架影音」這兩件事 */
@@ -968,7 +970,12 @@ async function loadMedia(){
 
 /* =====================  表單  ===================== */
 function wireQuestionForm(){
-  const form = $('#qform'), body = $('#q-body'), cnt = $('#q-count');
+  const form = $('#qform');
+  if (WALL_CLOSED){
+    form.innerHTML = '<h3>活動已結束</h3><p>感謝參與，提問牆已關閉留言，你留下的提問還留在右邊牆上。</p>';
+    return;
+  }
+  const body = $('#q-body'), cnt = $('#q-count');
   body.addEventListener('input', () => {
     cnt.textContent = body.value.length;
     cnt.parentElement.classList.toggle('warn', body.value.length > 260);
@@ -1000,7 +1007,12 @@ function wireQuestionForm(){
 }
 
 function wireEchoForm(){
-  const form = $('#eform'), inp = $('#e-body');
+  const form = $('#eform');
+  if (WALL_CLOSED){
+    form.innerHTML = '<p style="grid-column:1/-1">活動已結束，心得牆已關閉留言，感謝你留下的那句話。</p>';
+    return;
+  }
+  const inp = $('#e-body');
   inp.addEventListener('input', () => { if (inp.value.trim().length >= 4) $('#f-echo').classList.remove('invalid') });
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -1019,6 +1031,7 @@ function wireWall(){
   $('#q-list').addEventListener('click', async e => {
     const v = e.target.closest('[data-vote]');
     if (v){
+      if (WALL_CLOSED){ toast('活動已結束，投票已關閉'); return; }
       const id = v.dataset.vote, on = voted.has(id);
       on ? voted.delete(id) : voted.add(id);
       LS.set('voted', Array.from(voted));
