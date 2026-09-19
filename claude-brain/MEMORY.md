@@ -1,5 +1,11 @@
 # Memory Index
 
+- [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常，已接進OpenCode(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
+- [🔴🔴🔴 憑證層檔案+agent登入設定被git追蹤2個月，git-filter-repo徹底清除全歷史(2026-09-19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)
+- [🔴 修跨裝置同步bug只堵住眼前症狀就回報完成，教練親測抓到第二個洞(2026-09-19)](feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19.md)
+- [🔴 claude rc啟動時明確unset ANTHROPIC_BASE_URL等變數反而觸發硬性檢查噴錯(2026-09-19)](feedback_claude_rc_never_unset_base_url_2026-09-19.md)
+- [🔧 手機RC「JWT真Anthropic卻流量流向MiniMax」懸案根因：SDK按model名稱字串決定路由非BASE_URL(2026-09-19)](reference_minimax_mystery_resolved_model_name_routing_2026-09-19.md)
+- [🔧 手機RC session實測nettop流量矛盾記錄(已被上面那則解謎取代，保留當過程記錄)(2026-09-19)](reference_mobile_session_minimax_traffic_unresolved_mystery_2026-09-19.md)
 - [🔴🔴 赫米斯桌面版App(可關)vs Telegram後端gateway(要24小時運作)兩回事，全部釋放曾誤斷線16小時(2026-09-19)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
 - [🔴 Stop hook regex假陽性在同一session無限重複跳出，修過濾條件別用「」引號當依據(2026-09-19)](feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19.md)
 - [🔴 深入技術排查前先grep claude-brain全文搜關鍵字，不能只靠記憶判斷「第一次遇到」(2026-09-19)](feedback_search_existing_reference_before_deep_investigation_2026-09-19.md)
