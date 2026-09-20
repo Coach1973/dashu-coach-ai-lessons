@@ -951,8 +951,10 @@ async function loadEchoes(){
 }
 
 /* =====================  課後複習  ===================== */
-/* YouTube連結(youtu.be/xxx、youtube.com/watch?v=xxx、/shorts/xxx)不能直接塞進<video src>，
-   瀏覽器拿到的是網頁不是影音檔，播放鍵按了完全沒反應。偵測到就改用<iframe>embed播放器。 */
+/* YouTube連結(youtu.be/xxx、youtube.com/watch?v=xxx、/shorts/xxx)、Google Drive分享連結
+   (drive.google.com/file/d/xxx/view)都不能直接塞進<video src>/<audio src>——這兩種連結
+   打開的都是「網頁」(YouTube播放頁／Drive檢視頁)，不是原始影音檔案，瀏覽器拿到網頁內容
+   當然播不出來，按下去完全沒反應也不會跳錯誤。偵測到就改用各自的官方<iframe>embed播放器。 */
 function youtubeEmbedId(src){
   try {
     const u = new URL(src);
@@ -965,14 +967,27 @@ function youtubeEmbedId(src){
   } catch(e){}
   return null;
 }
+function driveEmbedId(src){
+  try {
+    const u = new URL(src);
+    if (u.hostname.replace(/^www\./,'') !== 'drive.google.com') return null;
+    const m = u.pathname.match(/^\/file\/d\/([^/]+)/);
+    if (m) return m[1];
+    if (u.pathname === '/open') return u.searchParams.get('id');
+  } catch(e){}
+  return null;
+}
 function renderMedia(items){
   $('#r-empty').hidden = items.length > 0;
   $('#r-list').innerHTML = items.map(m => {
-    const yt = m.kind === 'audio' ? null : youtubeEmbedId(m.src);
-    const media = m.kind === 'audio'
-      ? `<audio controls preload="none" src="${esc(m.src)}"></audio>`
-      : yt
+    const yt = youtubeEmbedId(m.src);
+    const drive = yt ? null : driveEmbedId(m.src);
+    const media = yt
       ? `<iframe src="https://www.youtube.com/embed/${esc(yt)}" title="${esc(m.title||'複習影片')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`
+      : drive
+      ? `<iframe src="https://drive.google.com/file/d/${esc(drive)}/preview" title="${esc(m.title||'複習內容')}" allow="autoplay" allowfullscreen loading="lazy"></iframe>`
+      : m.kind === 'audio'
+      ? `<audio controls preload="none" src="${esc(m.src)}"></audio>`
       : `<video controls preload="none" playsinline${m.poster?` poster="${esc(m.poster)}"`:''} src="${esc(m.src)}"></video>`;
     return `<article class="media-card">${media}
       <div class="mc-body">
