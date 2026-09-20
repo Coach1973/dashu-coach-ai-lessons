@@ -29,7 +29,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 💬 | **TokenTable Claude工具呼叫bug要不要回報給客服？** | ⏳待教練回覆 | 已驗證claude-opus-4-8/sonnet-5/fable-5在TokenTable上一用function tools就502，GPT系列正常，[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。回報＝代教練對外發訊息，系統規則要求教練明確同意才能送出，軍師尚未動作。 |
+| ✅ | **TokenTable Claude工具呼叫bug要不要回報給客服？** | ✅2026-09-21教練裁示收工-不用了 | 教練09/21親口「不用記了，我不用他了」，TokenTable這條線整個不再延續，客服回報一事不用做。技術查證記錄仍保留於[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]備查。 |
 | 🟡 | **Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」未給方向** | ⏳下一場先問 | 五格漫畫已用OpenCode+TokenTable原生圖片API生成完成並交付(存於`knowledges/episode11_manga/panel1~5.png`)，教練後續是否要做短影片腳本/廣播對談稿尚未確認，不要自己先斬先奏。 |
 | 🔴🔴🔴 | **⚠️全機必讀：這個repo的git歷史已被改寫，其他機器的本機clone跟遠端分岔** | ⚠️任何機器下次動這個repo前必看 | 2026-09-19 06:45教練親自裁示後，軍師用`git-filter-repo`把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json(.bak)`4個含明文金鑰的檔案從全部16000+ commit歷史徹底清除+強制推送到GitHub(已用全新clone獨立驗證確認乾淨)。**任何其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟GitHub遠端分岔了**——下次要push前必須先`git fetch origin && git reset --hard origin/main`(或直接砍掉重新clone)，絕對不能在沒同步的狀態下直接push，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。教練同時裁示：外洩的金鑰(MiniMax/Gemini)**不rotate**，「已經曝光不代表會被濫用，換的話動一髮牽全身」。完整過程見[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]。 |
 | 🟡 | **教練跨對話框交接SOP(04:44教練明示新增)** | ⏳下一場落地 | 教練04:44明講「我會請Claude的助教好好繼續讀你的總結報告」= 開新對話框前軍師要先看總結。這是一個新情境：接力棒不只是給「同一條Mac上的下一棒軍師」看，還要給「未來開新對話框時的軍師」看，當作跨對話框的交接書。下一場開工看到接力棒時，同時準備一段「給跨對話框軍師讀」的300~500字總結摘要，可放在接力棒最頂端或獨立檔案(例如`handoff_archive/cross_session_brief_latest.md`)。 |
