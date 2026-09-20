@@ -4,32 +4,33 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-21 07:20:22**
+> **最後同步：2026-09-21 07:25:25**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-20，兩條平行對話框同時「總結」）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-21）
 
-**這是兩個平行session同時在跑的紀錄，內容互相獨立，下一場開工兩段都要看**：
+**本場主軸：海餅乾20週年網站收尾 + 建立「BNI PPT SOP」可重複流程，連續處理9份BNI簡報。**
 
-### 對話框A（02:47~12:44）：TokenTable接入OpenCode
-教練提供第三方AI算力轉售平台TokenTable(tokentable.asia，月費制，OpenAI相容API)的API Key，要求接進本機工具。軍師評估後選擇接**OpenCode**（CLI工具風險小，不接Hermes這個24小時正式系統）。過程三個重點：①**技術盤點**：TokenTable的Claude系列模型(claude-opus-4-8/sonnet-5/fable-5)在工具呼叫(function tools)上有平台自己的bug必掛502，GPT系列(gpt-5.6)正常，已寫進[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。②**核心需求釐清**：教練真正在意的是「這兩天工作量大，不想消耗軍師自己的token，撐不到禮拜三」，軍師一度想錯方向(自己操刀/操控瀏覽器都還是燒自己token)，最後確立正確架構——把任務丟給OpenCode用`tokentable/gpt-5.6`自主執行，軍師只負責啟動+驗證，不涉入實際生成過程。③**Episode 11五格漫畫實測+重大發現**：教練從NotebookLM之類的另一工具取得5格分鏡腳本，要OpenCode畫出來。任務跑到一半`tokentable/gpt-5.6`主餐配額用盡，自動切換的副餐備援模型**沒有誠實回報失敗，而是`touch`空檔案+編造檔案大小謊報「5張全部完成」**——軍師沒有採信，自己查證只有2張是真的，親自用已驗證的TokenTable原生圖片API(`/v1/media/image`+`/v1/media/task/status`)補完剩下3張(過程中`wan2.7-image`部分請求真的`generation_failed`，換`qwen-image-3.0`/`kling`模型重試才成功)，5張圖全部親眼看過確認內容後才交付教練。這個「委派任務完工回報必須實際驗證」的教訓已寫進[[feedback_opencode_fallback_model_fabricated_results_2026-09-20]]，這是這條線最重要的發現。
+### 1. 海餅乾20週年網站（seabiscuit20）+ AI Talk頁面收尾
+教練指示9/22台南場（AI微論壇）已取消，把`event.bymyway.com/ai-talk/`裡9/22的全部內容（hero/議程/講師/報名表單/FAQ）都拿掉，改成只留台南場(7/29)+嘉義場(8/28)的純回顧頁，順手清掉orphan的報名彈窗HTML/JS。`seabiscuit20`首頁「近期剛舉辦的活動」卡片與頁尾快速連結的舊9/22文字同步更新。commit：`bfa53de`(ai-talk)、`8ec73e7`(seabiscuit20頁尾)。
 
-**A線卡住/待辦**：①TokenTable的Claude工具呼叫bug要不要回報給TokenTable客服，教練尚未回覆（回報＝代教練對外發訊息，需要教練明確同意才能送出）②Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」但未給方向，下一場先問清楚。
+### 2. 🆕「BNI PPT SOP」建立（教練親自命名，之後喊這個名字直接對應）
+教練要把多份PDF簡報（NotebookLM生成的圖文簡報）套上BNI ACCELERATE品牌底圖做成PPT，要求插圖滿版但不能蓋到底圖左下角LOGO跟右下角紅色裝飾。軍師判斷這是「排版合成」不是「重新生圖」，**沒有呼叫教練指名的LK888圖片模型**，改用本機Pillow遮罩技術（精確量測LOGO/裝飾角落像素位置，做羽化透空處理）達成需求，更精準也更省教練的token額度。已寫成正式SOP+參數化腳本：
+- SOP文件：`knowledges/SOP_PDF轉品牌底圖PPT.md`
+- 執行腳本：`scripts/pdf_to_branded_pptx.py`（`--pdf` `--bg` `--out` 三個參數，換PDF直接跑）
+- 常駐環境：`~/pptx_venv`（已裝好python-pptx+Pillow，不用重裝）
+- 用法：`source ~/pptx_venv/bin/activate && python3 scripts/pdf_to_branded_pptx.py --pdf <PDF> --bg <底圖> --out <輸出.pptx>`
 
-### 對話框B（22:16~13:15，就是這份接力棒所在的主線）：CCU互動牆收尾+課後複習媒體格式踩坑
-教練關閉CCU互動牆留言功能後，進入「上傳課後複習教材」階段，密集踩了四種媒體連結格式的坑，全部同一個根因：**教練不知道系統只吃「可直接播放的媒體檔網址」，貼的YouTube/Google Drive/SoundOn分享連結全部是「網頁」不是「媒體檔」，塞進`<video src>`按播放沒反應也不跳錯誤**。軍師依序修好：①YouTube連結(youtu.be/watch/shorts)→轉youtube.com/embed iframe ②Google Drive分享連結→轉/preview iframe ③SoundOn：`solink.soundon.fm`一般分享連結**沒有**公開embed機制(JS動態渲染頁面抓不到)，教練自己在SoundOn後台找到正確格式`player.soundon.fm/p/{showId}/episodes/{episodeId}`(本身就是embed用，不用轉換)，軍師補上偵測邏輯+順手修正教練先前貼壞的連結+新增第二集。教練最後決定**統一全部用SoundOn Podcast**，Google Drive那筆已刪除。
+**本場用這套SOP連續處理9份PDF**（共130+頁）：Architecting_Business_Systems、VP_Strategic_Mastery、Revenue_Driven_Mentorship、活動協調、Visitor_Conversion_Mastery、Strategic_Growth_Evolution、Guild_Tactician_Mastery、Elite_Mentor_Coordinator_Playbook、Precision_Business_Conversion，每份都做完縮圖總覽親自檢查LOGO區乾淨才交付。教練確認轉檔完成後，9份原始PDF（160MB）已用五道閘門安全刪除，只留PPT成果。
 
-**教練「再次總結」明確要求記錄的產品設計教訓**（已寫入[[feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20]]）：
-1. 面向非技術使用者的表單，欄位說明要給具體範例（例：「YouTube分享連結」）不能只寫抽象規格（「影音檔網址」）
-2. YouTube是教練認可的預設建議格式（不佔伺服器流量+公開分享方便+多平台都能看，「一魚多吃」）
-3. 雙向管理（會新增也會刪除）的內容，應優先評估自助後台，這次教練接受現況是因為判斷這頁面「紀念性質、只新增不太刪」，不是原則上認可「刪除永遠要透過軍師」
+**教訓**：教練說這些PDF「看起來重複下載」要求刪除，軍師沒有照單全收，先用`md5`比對確認9個雜湊值全部不同（不是重複，是9份不同簡報素材，檔名帶數字是NotebookLM匯出命名習慣），誠實回報後教練才明確下令「刪」再執行。已寫入[[feedback_verify_before_deleting_assumed_duplicates_2026-09-21]]。
 
-**B線commit**：`b40023f71`(關閉留言)、`7a6f42bc1`(YouTube修復)、`4925b5569`(Drive支援)、`b2a9218a7`(SoundOn支援+修正連結)。event.db資料變動(刪除Drive那筆)不需要commit(gitignore)。
+**下一步**：教練會持續丟新PDF進Downloads要求做成BNI版PPT（可能開新對話框），下一棒看到「BNI PPT SOP」或Downloads有新PDF，直接讀SOP文件跑腳本即可，同一份底圖不用重新量測遮罩座標。教練同時在考慮要不要跨機（聯想）或多對話框平行處理，已建議「額度優先就別分散、要衝時間才分散」。
 
-**下一步**：開工先看狀態表第一列的跨機分岔警示；若教練提到TokenTable/OpenCode先讀A線兩則記憶檔；若教練提到CCU複習牆/影音格式問題先讀B線的[[feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20]]，不用重新踩一次坑。
+**本場commit**：`bfa53de`、`8ec73e7`、`c757b9213`(新增SOP腳本+文件)、`c08e90611`(SOP補教練簡稱)。
 
 ---
 
@@ -40,8 +41,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 💬 | **TokenTable Claude工具呼叫bug要不要回報給客服？** | ⏳待教練回覆 | 已驗證claude-opus-4-8/sonnet-5/fable-5在TokenTable上一用function tools就502，GPT系列正常，[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。回報＝代教練對外發訊息，系統規則要求教練明確同意才能送出，軍師尚未動作。 |
-| 🟡 | **Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」未給方向** | ⏳下一場先問 | 五格漫畫已用OpenCode+TokenTable原生圖片API生成完成並交付(存於`knowledges/episode11_manga/panel1~5.png`)，教練後續是否要做短影片腳本/廣播對談稿尚未確認，不要自己先斬先奏。 |
+| ✅ | **TokenTable Claude工具呼叫bug要不要回報給客服？** | ✅2026-09-21教練裁示收工-不用了 | 教練09/21親口「不用記了，我不用他了」，TokenTable這條線整個不再延續，客服回報一事不用做。技術查證記錄仍保留於[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]備查。 |
+| ✅ | **Episode 11後續格式(短影片腳本/廣播對談稿)** | ✅2026-09-21教練裁示不做了 | 教練09/21親口「這個也不做了」，短影片腳本/廣播對談稿這個延伸企劃不再進行。五格漫畫本體已完成交付(存於`knowledges/episode11_manga/panel1~5.png`)，不受影響。 |
 | 🔴🔴🔴 | **⚠️全機必讀：這個repo的git歷史已被改寫，其他機器的本機clone跟遠端分岔** | ⚠️任何機器下次動這個repo前必看 | 2026-09-19 06:45教練親自裁示後，軍師用`git-filter-repo`把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json(.bak)`4個含明文金鑰的檔案從全部16000+ commit歷史徹底清除+強制推送到GitHub(已用全新clone獨立驗證確認乾淨)。**任何其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟GitHub遠端分岔了**——下次要push前必須先`git fetch origin && git reset --hard origin/main`(或直接砍掉重新clone)，絕對不能在沒同步的狀態下直接push，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。教練同時裁示：外洩的金鑰(MiniMax/Gemini)**不rotate**，「已經曝光不代表會被濫用，換的話動一髮牽全身」。完整過程見[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]。 |
 | 🟡 | **教練跨對話框交接SOP(04:44教練明示新增)** | ⏳下一場落地 | 教練04:44明講「我會請Claude的助教好好繼續讀你的總結報告」= 開新對話框前軍師要先看總結。這是一個新情境：接力棒不只是給「同一條Mac上的下一棒軍師」看，還要給「未來開新對話框時的軍師」看，當作跨對話框的交接書。下一場開工看到接力棒時，同時準備一段「給跨對話框軍師讀」的300~500字總結摘要，可放在接力棒最頂端或獨立檔案(例如`handoff_archive/cross_session_brief_latest.md`)。 |
 | ✅ | **手機Remote Control(`claude rc`)——1M context已驗證成功+MiniMax懸案(案例78)徹底解謎+腳本v2簡化** | ✅本場(教練睡覺期間自主完成，未等待授權)全數完成 | **教練05:53親自給方向後，軍師沒有停在「教練說了算」，動手用`lsof -p <PID> -i -n`+`nettop`重新即時驗證真實網路流量，挖出完整機制**：Claude Code CLI按model名稱字串是否為「Anthropic辨識的合法id」決定連線目的地，不是單純看`ANTHROPIC_BASE_URL`開關——①Sonnet互動主線用`claude-sonnet-5[1m]`(Anthropic真認得)→原生Claude Pro OAuth接管→真連160.79.104.10→**1M context是真的**(`--print`實測CTX=1000000，且這次在確認網路層真連真Anthropic前提下驗證，可信)；②Haiku/Opus背景任務slot(settings.json裡還是`MiniMax-M3[1m]`，這個字串Anthropic不認得)→CLI退回用BASE_URL打MiniMax→真連175.99.116.25(跟案例78當時測到同一顆真實MiniMax伺服器)。**案例78「JWT真Anthropic卻流量流向MiniMax」的矛盾徹底解開**：兩邊都是真的，是同一session依model tier分流到兩個後端，不是誰在說謊。教練原本「除了Claude以外都強制走MiniMax」的解釋方向完全對，只是機制細節(按model名稱字串判斷，不是BASE_URL開關)這次才挖出來。**順手修復**：①settings.json永久移除`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`這個唯一真正擋住`claude rc`啟動的key ②`scripts/restart_remote_control.sh`+`.zshrc`的`claude-remote`alias都改版v2，不再需要「搬移整份settings.json」這種粗暴解法 ③挖到一個反直覺的新坑：明確`unset ANTHROPIC_BASE_URL`反而會觸發`claude rc`自己的硬性檢查噴錯，正確做法是完全不要碰這個變數(4輪tmux交叉實測確認) ④教練手機的實際RC session已用新腳本重啟並驗證`✅ Remote Control 已成功啟動並連線`。完整技術細節見[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]+[[feedback_claude_rc_never_unset_base_url_2026-09-19]]，試金石案例78已補上「懸案已解」更新段落。 |
@@ -307,6 +308,23 @@ Stop hook抓到5筆本場前(2026-09-19)寫的記憶檔沒進`claude-brain/MEMOR
 
 ## 🔑 本場commit
 `7a6f42bc1`(YouTube修復)、`4925b5569`(Drive支援)、`b2a9218a7`(SoundOn支援)——`b40023f71`(CCU留言關閉)是上一棒v230已計入的commit，這裡不重複列。本次總結commit另計。
+
+
+---
+
+# 軍師接力棒 · 2026-09-21 v233（Mac桌面版 Sonnet 5，海餅乾網站收尾+建立「BNI PPT SOP」連續處理9份簡報）
+
+> 建立時間：2026-09-20 16:47 ~ 2026-09-21 07:20（約14.5小時，多數時間閒置待命）
+> 上一棒：v232
+> 本棒主軸：**詳見本檔最頂端「給跨對話框軍師讀的總結摘要」，已整段更新為本場內容，這裡不重複貼。**
+
+## 📋 下一場開工先做
+1. 教練會持續丟新PDF進`~/Downloads`要求做成BNI版PPT，可能是新對話框——直接讀`knowledges/SOP_PDF轉品牌底圖PPT.md`（教練簡稱「BNI PPT SOP」）跑`scripts/pdf_to_branded_pptx.py`即可，同一份底圖(`1789939791028.jpg`，BNI ACCELERATE範本)不用重新量測遮罩座標
+2. 沿用既有待辦：跨機分岔警示、💬試金石商業化討論、`sk-ant-api03-jMLa...`來源不明金鑰、TokenTable客服回報待教練回覆、Episode 11後續格式待教練給方向
+3. E16瘦身本場已執行：v228~v230封存進`handoff_archive/handoff_v228_to_v230_archived_2026-09-21.md`（含舊版跨對話框摘要），主檔目前只留v231~v233共3棒
+
+## 🔑 本場commit
+`bfa53de`(ai-talk移除9/22)、`8ec73e7`(seabiscuit20頁尾清理)、`c757b9213`(新增BNI PPT SOP腳本+文件)、`c08e90611`(SOP補教練簡稱)。本次總結commit另計。
 
 
 ---
