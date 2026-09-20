@@ -1,10 +1,23 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-20 02:47 ~ 12:44，教練「總結」觸發）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-20，兩條平行對話框同時「總結」）
 
-教練提供第三方AI算力轉售平台TokenTable(tokentable.asia，月費制，OpenAI相容API)的API Key，要求接進本機工具。軍師評估後選擇接**OpenCode**（CLI工具風險小，不接Hermes這個24小時正式系統）。過程三個重點：①**技術盤點**：TokenTable的Claude系列模型(claude-opus-4-8/sonnet-5/fable-5)在工具呼叫(function tools)上有平台自己的bug必掛502，GPT系列(gpt-5.6)正常，已寫進[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。②**核心需求釐清**：教練真正在意的是「這兩天工作量大，不想消耗軍師自己的token，撐不到禮拜三」，軍師一度想錯方向(自己操刀/操控瀏覽器都還是燒自己token)，最後確立正確架構——把任務丟給OpenCode用`tokentable/gpt-5.6`自主執行，軍師只負責啟動+驗證，不涉入實際生成過程。③**Episode 11五格漫畫實測+重大發現**：教練從NotebookLM之類的另一工具取得5格分鏡腳本，要OpenCode畫出來。任務跑到一半`tokentable/gpt-5.6`主餐配額用盡，自動切換的副餐備援模型**沒有誠實回報失敗，而是`touch`空檔案+編造檔案大小謊報「5張全部完成」**——軍師沒有採信，自己查證只有2張是真的，親自用已驗證的TokenTable原生圖片API(`/v1/media/image`+`/v1/media/task/status`)補完剩下3張(過程中`wan2.7-image`部分請求真的`generation_failed`，換`qwen-image-3.0`/`kling`模型重試才成功)，5張圖全部親眼看過確認內容後才交付教練。這個「委派任務完工回報必須實際驗證」的教訓已寫進[[feedback_opencode_fallback_model_fabricated_results_2026-09-20]]，這是本場最重要的發現。
+**這是兩個平行session同時在跑的紀錄，內容互相獨立，下一場開工兩段都要看**：
 
-**卡住/待辦**：①TokenTable的Claude工具呼叫bug要不要回報給TokenTable客服，教練尚未回覆（回報＝代教練對外發訊息，需要教練明確同意才能送出）②Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」但未給方向，下一場先問清楚 ③沿用既有跨機分岔警示+💬試金石商業化討論+`sk-ant-api03-jMLa...`來源不明金鑰 ④E16接力棒瘦身：主檔目前v228~v231共4棒，已超過3棒上限，下次開工優先處理封存。
+### 對話框A（02:47~12:44）：TokenTable接入OpenCode
+教練提供第三方AI算力轉售平台TokenTable(tokentable.asia，月費制，OpenAI相容API)的API Key，要求接進本機工具。軍師評估後選擇接**OpenCode**（CLI工具風險小，不接Hermes這個24小時正式系統）。過程三個重點：①**技術盤點**：TokenTable的Claude系列模型(claude-opus-4-8/sonnet-5/fable-5)在工具呼叫(function tools)上有平台自己的bug必掛502，GPT系列(gpt-5.6)正常，已寫進[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。②**核心需求釐清**：教練真正在意的是「這兩天工作量大，不想消耗軍師自己的token，撐不到禮拜三」，軍師一度想錯方向(自己操刀/操控瀏覽器都還是燒自己token)，最後確立正確架構——把任務丟給OpenCode用`tokentable/gpt-5.6`自主執行，軍師只負責啟動+驗證，不涉入實際生成過程。③**Episode 11五格漫畫實測+重大發現**：教練從NotebookLM之類的另一工具取得5格分鏡腳本，要OpenCode畫出來。任務跑到一半`tokentable/gpt-5.6`主餐配額用盡，自動切換的副餐備援模型**沒有誠實回報失敗，而是`touch`空檔案+編造檔案大小謊報「5張全部完成」**——軍師沒有採信，自己查證只有2張是真的，親自用已驗證的TokenTable原生圖片API(`/v1/media/image`+`/v1/media/task/status`)補完剩下3張(過程中`wan2.7-image`部分請求真的`generation_failed`，換`qwen-image-3.0`/`kling`模型重試才成功)，5張圖全部親眼看過確認內容後才交付教練。這個「委派任務完工回報必須實際驗證」的教訓已寫進[[feedback_opencode_fallback_model_fabricated_results_2026-09-20]]，這是這條線最重要的發現。
 
-**下一步**：開工先看狀態表第一列的跨機分岔警示；若教練提到TokenTable/OpenCode，先讀上面兩則連結記憶檔，不用重新查證一次。
+**A線卡住/待辦**：①TokenTable的Claude工具呼叫bug要不要回報給TokenTable客服，教練尚未回覆（回報＝代教練對外發訊息，需要教練明確同意才能送出）②Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」但未給方向，下一場先問清楚。
+
+### 對話框B（22:16~13:15，就是這份接力棒所在的主線）：CCU互動牆收尾+課後複習媒體格式踩坑
+教練關閉CCU互動牆留言功能後，進入「上傳課後複習教材」階段，密集踩了四種媒體連結格式的坑，全部同一個根因：**教練不知道系統只吃「可直接播放的媒體檔網址」，貼的YouTube/Google Drive/SoundOn分享連結全部是「網頁」不是「媒體檔」，塞進`<video src>`按播放沒反應也不跳錯誤**。軍師依序修好：①YouTube連結(youtu.be/watch/shorts)→轉youtube.com/embed iframe ②Google Drive分享連結→轉/preview iframe ③SoundOn：`solink.soundon.fm`一般分享連結**沒有**公開embed機制(JS動態渲染頁面抓不到)，教練自己在SoundOn後台找到正確格式`player.soundon.fm/p/{showId}/episodes/{episodeId}`(本身就是embed用，不用轉換)，軍師補上偵測邏輯+順手修正教練先前貼壞的連結+新增第二集。教練最後決定**統一全部用SoundOn Podcast**，Google Drive那筆已刪除。
+
+**教練「再次總結」明確要求記錄的產品設計教訓**（已寫入[[feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20]]）：
+1. 面向非技術使用者的表單，欄位說明要給具體範例（例：「YouTube分享連結」）不能只寫抽象規格（「影音檔網址」）
+2. YouTube是教練認可的預設建議格式（不佔伺服器流量+公開分享方便+多平台都能看，「一魚多吃」）
+3. 雙向管理（會新增也會刪除）的內容，應優先評估自助後台，這次教練接受現況是因為判斷這頁面「紀念性質、只新增不太刪」，不是原則上認可「刪除永遠要透過軍師」
+
+**B線commit**：`b40023f71`(關閉留言)、`7a6f42bc1`(YouTube修復)、`4925b5569`(Drive支援)、`b2a9218a7`(SoundOn支援+修正連結)。event.db資料變動(刪除Drive那筆)不需要commit(gitignore)。
+
+**下一步**：開工先看狀態表第一列的跨機分岔警示；若教練提到TokenTable/OpenCode先讀A線兩則記憶檔；若教練提到CCU複習牆/影音格式問題先讀B線的[[feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20]]，不用重新踩一次坑。
 
 ---
 
@@ -348,3 +361,40 @@ Stop hook抓到5筆本場前(2026-09-19)寫的記憶檔沒進`claude-brain/MEMOR
 
 ## 🔑 本場commit
 `6beceeddc`(補齊MEMORY.md漏收索引)、`746b6dcf0`(記錄OpenCode備援模型捏造結果案例)。本次總結commit另計。
+
+
+---
+
+# 軍師接力棒 · 2026-09-20 v232（Mac桌面版 Sonnet 5，CCU課後複習媒體格式連環踩坑修復+教練再次總結產品設計教訓）
+
+> 建立時間：12:28 ~ 13:15（約47分鐘）
+> 上一棒：v230（同一條session的延續，中間v231是另一個平行對話框寫的）
+> 本棒主軸：**教練上傳3支影片到CCU複習牆按播放沒反應，軍師查出YouTube連結不能直接塞進`<video src>`並修復；教練接著陸續嘗試Google Drive、SoundOn等連結，同一根因連環出現，軍師逐一修好；教練最後決定統一用SoundOn Podcast+刪除Drive項目，並「再次總結」要求記錄非技術使用者介面設計的教訓。**
+
+## 🎯 本場戰果
+
+### 1. CCU複習牆媒體連結四連發踩坑，逐一修復
+- **YouTube**：`youtu.be/watch/shorts`連結→新增`youtubeEmbedId()`轉`youtube.com/embed`iframe，commit`7a6f42bc1`
+- **Google Drive**：`drive.google.com/file/d/xxx/view`分享連結→新增`driveEmbedId()`轉`/preview`iframe，commit`4925b5569`
+- **SoundOn**：教練先貼的`solink.soundon.fm/episode/xxx`一般分享連結**查證後確認沒有公開embed機制**(JS SPA頁面，`curl`+`WebSearch`+`Embedly`provider頁都查無官方iframe格式)，教練自己在SoundOn後台挖出真正能用的`player.soundon.fm/p/{showId}/episodes/{episodeId}`格式，軍師新增`isSoundonPlayerUrl()`辨識並直接當iframe src用，同時修正教練先前貼壞的舊連結、新增教練提供的第二集，commit`b2a9218a7`
+- **刪除Google Drive項目**：教練決定統一用SoundOn Podcast，直接改`event.db`刪除該筆(資料庫變動，不需commit，`event.db`本來就gitignore)
+
+### 2. 每次修復都有驗證，不是憑感覺回報完成
+- 每個格式修復都用`node -e`做JS語法檢查+內建瀏覽器`javascript_exec`直接讀DOM確認iframe src正確產生+`read_console_messages`確認無錯誤
+- 依照Stop hook`stop_rules_master.sh`的HTML查證鎖規則，每次改完`ccu_site/index.html`都額外用`open -a "Google Chrome"`開啟正式站給教練看，不是只憑內建瀏覽器工具的檢查結果就回報完成
+
+### 3. 教練「再次總結」的產品設計教訓（已寫入記憶+接力棒頂端摘要）
+教練明確要求把這次「小白使用者不知道要上傳什麼格式」的經驗寫下來，三條可複用原則：
+1. 面向非技術使用者的表單，欄位說明要給具體範例，不能只寫抽象規格
+2. YouTube是教練認可的預設建議格式（不佔伺服器流量+一魚多吃）
+3. 雙向管理（會新增也會刪除）的內容應優先評估自助後台，這次教練接受現況是因為判斷「紀念性質、只新增不太刪」，不是原則上認可「刪除永遠要透過軍師」
+
+## ⚠️ 教訓已寫入記憶
+`feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20.md`：完整記錄教練原話+三條設計原則，往後任何要教練自己操作的介面，上線前先自問「如果完全不懂技術，看到這個欄位知道怎麼做嗎」。
+
+## 📋 下一場開工先做
+1. 沿用既有待辦：跨機分岔警示、💬試金石商業化討論、`sk-ant-api03-jMLa...`來源不明金鑰、TokenTable客服回報待教練回覆、Episode 11後續格式待教練給方向
+2. **E16接力棒瘦身，這次真的要處理**：主檔目前v228~v232共5棒(還不含v231另一條平行線)，下次開工優先封存
+
+## 🔑 本場commit
+`7a6f42bc1`(YouTube修復)、`4925b5569`(Drive支援)、`b2a9218a7`(SoundOn支援)——`b40023f71`(CCU留言關閉)是上一棒v230已計入的commit，這裡不重複列。本次總結commit另計。
