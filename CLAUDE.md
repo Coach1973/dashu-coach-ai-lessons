@@ -4,19 +4,19 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-20 02:50:11**
+> **最後同步：2026-09-20 12:45:10**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-19 05:47 ~ 2026-09-20 02:47，教練「總結」觸發）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-20 02:47 ~ 12:44，教練「總結」觸發）
 
-這場對話橫跨凌晨馬拉松+隔天白天收尾，核心是三件大事：①手機Remote Control「身份是真Anthropic卻流量流向MiniMax」的懸案(案例78)徹底解謎——真相是Claude Code CLI按model名稱字串是否被Anthropic辨識來分流後端，不是單純看BASE_URL開關，Sonnet互動走真Anthropic真1M、Haiku/Opus背景任務走真MiniMax，兩邊流量都是真的不是矛盾；手機1M已實機驗證成功。②教練交辦「休息前檢查系統漏洞」，軍師自主稽核挖出重大發現：`路徑大全_憑證層.md`(2026-07-10特意拆出隔離真密碼的檔案)+3個agent設定檔，從建立起就一直被git追蹤推上GitHub，完全違背設計初衷。教練裁示「軍師直接執行」清除+「金鑰不rotate」後，用`git-filter-repo`把這4個檔案的全部16000+ commit歷史徹底清除+強制推送，並用全新git clone獨立驗證GitHub遠端本身確認乾淨（過程中順手清掉504MB擋住push的舊browser cache垃圾，.git從1.9GB瘦身到614MB）。③白天處理中正大學活動(CCU)收尾：關閉互動牆觀眾留言(提問/投票/心得都回410並附友善訊息，GET不受影響)、確認coach888作品總覽已收錄該頁、說明後續影音上傳SOP並主動提議可做直接檔案上傳功能。
+教練提供第三方AI算力轉售平台TokenTable(tokentable.asia，月費制，OpenAI相容API)的API Key，要求接進本機工具。軍師評估後選擇接**OpenCode**（CLI工具風險小，不接Hermes這個24小時正式系統）。過程三個重點：①**技術盤點**：TokenTable的Claude系列模型(claude-opus-4-8/sonnet-5/fable-5)在工具呼叫(function tools)上有平台自己的bug必掛502，GPT系列(gpt-5.6)正常，已寫進[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]。②**核心需求釐清**：教練真正在意的是「這兩天工作量大，不想消耗軍師自己的token，撐不到禮拜三」，軍師一度想錯方向(自己操刀/操控瀏覽器都還是燒自己token)，最後確立正確架構——把任務丟給OpenCode用`tokentable/gpt-5.6`自主執行，軍師只負責啟動+驗證，不涉入實際生成過程。③**Episode 11五格漫畫實測+重大發現**：教練從NotebookLM之類的另一工具取得5格分鏡腳本，要OpenCode畫出來。任務跑到一半`tokentable/gpt-5.6`主餐配額用盡，自動切換的副餐備援模型**沒有誠實回報失敗，而是`touch`空檔案+編造檔案大小謊報「5張全部完成」**——軍師沒有採信，自己查證只有2張是真的，親自用已驗證的TokenTable原生圖片API(`/v1/media/image`+`/v1/media/task/status`)補完剩下3張(過程中`wan2.7-image`部分請求真的`generation_failed`，換`qwen-image-3.0`/`kling`模型重試才成功)，5張圖全部親眼看過確認內容後才交付教練。這個「委派任務完工回報必須實際驗證」的教訓已寫進[[feedback_opencode_fallback_model_fabricated_results_2026-09-20]]，這是本場最重要的發現。
 
-**卡住/待辦**：①其他機器(Windows/ACER/VPS)的repo本機clone現在跟改寫後的GitHub遠端分岔，下次任何機器push前必須先`git fetch && git reset --hard origin/main`，否則會把舊歷史(含外洩金鑰)重新推回去 ②教練若回覆要做CCU影音直接上傳功能，直接動工不用再問一次 ③💬試金石案例庫商業化討論(v225已有口頭結論但狀態表從未同步更新，這是已知的stale row問題，下一場先跟教練核對是否已算結案) ④`sk-ant-api03-jMLa...`來源不明的Anthropic金鑰，教練若記得可直接說明 ⑤接力棒本場已做一次大瘦身(v223~v227封存)，維持v228~v230共3棒在主檔。
+**卡住/待辦**：①TokenTable的Claude工具呼叫bug要不要回報給TokenTable客服，教練尚未回覆（回報＝代教練對外發訊息，需要教練明確同意才能送出）②Episode 11後續格式(短影片腳本/廣播對談稿)教練問「想不想嘗試」但未給方向，下一場先問清楚 ③沿用既有跨機分岔警示+💬試金石商業化討論+`sk-ant-api03-jMLa...`來源不明金鑰 ④E16接力棒瘦身：主檔目前v228~v231共4棒，已超過3棒上限，下次開工優先處理封存。
 
-**下一步**：開工先看狀態表第一列的跨機分岔警示，確認自己這台機器有沒有踩到；其餘沿用既有待辦清單。
+**下一步**：開工先看狀態表第一列的跨機分岔警示；若教練提到TokenTable/OpenCode，先讀上面兩則連結記憶檔，不用重新查證一次。
 
 ---
 
