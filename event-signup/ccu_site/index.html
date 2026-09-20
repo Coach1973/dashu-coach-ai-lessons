@@ -310,8 +310,9 @@ details[open] .caret{transform:rotate(180deg)}
 /* ---------- replay ---------- */
 .replay-list{display:grid;gap:26px;margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
 .media-card{border:var(--rule);background:var(--surface-2);display:flex;flex-direction:column;overflow:hidden}
-.media-card video,.media-card audio{width:100%;display:block;background:#000}
+.media-card video,.media-card audio,.media-card iframe{width:100%;display:block;background:#000;border:0}
 .media-card video{aspect-ratio:16/9;object-fit:cover}
+.media-card iframe{aspect-ratio:16/9}
 .media-card audio{padding:16px;background:var(--surface-3)}
 .media-card .mc-body{padding:20px 22px 24px}
 .media-card h4{font-size:1.08rem;margin-bottom:8px}
@@ -950,11 +951,28 @@ async function loadEchoes(){
 }
 
 /* =====================  課後複習  ===================== */
+/* YouTube連結(youtu.be/xxx、youtube.com/watch?v=xxx、/shorts/xxx)不能直接塞進<video src>，
+   瀏覽器拿到的是網頁不是影音檔，播放鍵按了完全沒反應。偵測到就改用<iframe>embed播放器。 */
+function youtubeEmbedId(src){
+  try {
+    const u = new URL(src);
+    if (u.hostname === 'youtu.be') return u.pathname.slice(1).split('/')[0] || null;
+    if (u.hostname.replace(/^www\./,'') === 'youtube.com'){
+      if (u.pathname === '/watch') return u.searchParams.get('v');
+      const m = u.pathname.match(/^\/(embed|shorts)\/([^/?]+)/);
+      if (m) return m[2];
+    }
+  } catch(e){}
+  return null;
+}
 function renderMedia(items){
   $('#r-empty').hidden = items.length > 0;
   $('#r-list').innerHTML = items.map(m => {
+    const yt = m.kind === 'audio' ? null : youtubeEmbedId(m.src);
     const media = m.kind === 'audio'
       ? `<audio controls preload="none" src="${esc(m.src)}"></audio>`
+      : yt
+      ? `<iframe src="https://www.youtube.com/embed/${esc(yt)}" title="${esc(m.title||'複習影片')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`
       : `<video controls preload="none" playsinline${m.poster?` poster="${esc(m.poster)}"`:''} src="${esc(m.src)}"></video>`;
     return `<article class="media-card">${media}
       <div class="mc-body">
