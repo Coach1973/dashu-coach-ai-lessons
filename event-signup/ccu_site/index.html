@@ -977,15 +977,30 @@ function driveEmbedId(src){
   } catch(e){}
   return null;
 }
+/* SoundOn沒有像YouTube/Drive那種「貼分享連結、程式自動轉embed」的公開機制，
+   solink.soundon.fm/episode/xxx這種一般分享連結是JS動態渲染的網頁，抓不到直接播放
+   的音檔網址。真正可嵌入的是player.soundon.fm/p/{showId}/episodes/{episodeId}這個
+   官方播放器網址(通常要登入SoundOn後台的節目管理頁才找得到)，這個網址本身就是embed
+   用的，不用再轉換，直接當iframe src即可。 */
+function isSoundonPlayerUrl(src){
+  try {
+    const u = new URL(src);
+    return u.hostname === 'player.soundon.fm' && /^\/p\/[^/]+\/episodes\/[^/]+/.test(u.pathname);
+  } catch(e){}
+  return false;
+}
 function renderMedia(items){
   $('#r-empty').hidden = items.length > 0;
   $('#r-list').innerHTML = items.map(m => {
     const yt = youtubeEmbedId(m.src);
     const drive = yt ? null : driveEmbedId(m.src);
+    const soundon = (yt || drive) ? false : isSoundonPlayerUrl(m.src);
     const media = yt
       ? `<iframe src="https://www.youtube.com/embed/${esc(yt)}" title="${esc(m.title||'複習影片')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`
       : drive
       ? `<iframe src="https://drive.google.com/file/d/${esc(drive)}/preview" title="${esc(m.title||'複習內容')}" allow="autoplay" allowfullscreen loading="lazy"></iframe>`
+      : soundon
+      ? `<iframe src="${esc(m.src)}" title="${esc(m.title||'複習內容')}" allow="autoplay; encrypted-media" loading="lazy"></iframe>`
       : m.kind === 'audio'
       ? `<audio controls preload="none" src="${esc(m.src)}"></audio>`
       : `<video controls preload="none" playsinline${m.poster?` poster="${esc(m.poster)}"`:''} src="${esc(m.src)}"></video>`;
