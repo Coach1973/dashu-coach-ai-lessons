@@ -1,4 +1,9 @@
 - [🔴 git add -A誤commit含真實個資的.db.bak檔(2026-09-01)](claude-brain/feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md) — .gitignore的*.db規則擋不住.db.bak-xxx變體檔名，commit前先git status肉眼掃一眼
+- [💾 易數一鍵還原備份工具結構](project_backup_tool.md) — D槽根目錄，.pmf是基底、.ptp是時間戳記完整備份非增量，每次執行同資料夾新增.ptp不建新資料夾
+- [📂 Downloads位置與整理結構](project_downloads_location.md) — 實際位置D:\Users\Downloads（非C槽預設），既有分類資料夾規則
+- [⚠️ 清理腳本不能放%TEMP%](feedback_no_scripts_in_temp.md) — 腳本清理%TEMP%時會把自己也刪掉導致中斷
+- [⚠️ PowerShell中文編碼要加UTF-8 BOM](feedback_powershell_utf8_bom.md) — .ps1含中文字面值沒BOM會被系統codepage讀壞
+- [👤 使用者背景：BNI教練](user_bni_coach.md) — 大樹教練，BNI商會分會經營，常見紅綠燈/palms/分會業務檔案
 - [🎯 Hermes開工要主動讀軍師接力棒（拉取取代推送）(2026-08-31)](claude-brain/project_hermes_pull_progress_rule_2026-08-31.md) — ai-art任務3.5小時零回報後教練拍板，已寫進H_AGENTS.md熱啟動4件套
 - [🔧 ACER 2026-08-31全機體檢：修復PS5.1 -AsHashtable+workspace路徑重複clone兩個真bug](claude-brain/project_acer_health_check_2026-08-31.md) — ACER再開機健檢報告，含沉默原因誠實查證
 - [Browser no full junction](feedback_browser_no_full_junction.md) — 瀏覽器絕不整個 junction，只搬書籤等增量檔案

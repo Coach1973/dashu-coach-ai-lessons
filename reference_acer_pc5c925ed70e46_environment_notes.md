@@ -12,6 +12,7 @@ metadata:
 **實測受影響的功能**：
 - `schtasks /Create` 直接「拒絕存取」，連建立最陽春的測試任務都不行——**這台機器不能用 Windows工作排程器**，任何「N 小時後自動做某件事」的需求要改用背景計時程序（`Start-Process powershell -WindowStyle Hidden` 跑 `Start-Sleep` 後執行動作），缺點是機器重開機/登出會讓計時器消失
 - `powercfg /change` 這類使用者層級電源設定**不需要管理員權限，正常可用**
+- 刪除 `C:\Program Files\` 底下的檔案/資料夾**沒有管理員權限會被拒絕**——症狀不一定是明確的「存取被拒」，PowerShell `Remove-Item -Recurse -Force` 有時會丟出誤導性的 `ArgumentException`「找不到符合指定準則的路徑」，看起來像路徑問題，改用 `cmd /c rd /s /q` 才會看到真正的「存取被拒」訊息。**解法**：`Start-Process -FilePath cmd.exe -ArgumentList '/c rd /s /q "絕對路徑"' -Verb RunAs -Wait` 觸發 UAC 提權視窗，教練在畫面上點「是」即可完成，不需要教練另外開系統管理員終端機。2026-09-21 用這招清掉 MiniTool Partition Wizard 更新到一半留下的空殼資料夾（無執行檔/無登錄檔安裝紀錄/無服務，純垃圾）驗證成功。
 
 ## Git Bash 會吃掉 `/` 開頭的參數
 
@@ -34,6 +35,25 @@ MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-ac 0
 MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-dc 0
 ```
 用`powercfg /query SCHEME_CURRENT SUB_VIDEO VIDEOIDLE`及`SUB_SLEEP STANDBYIDLE`驗證目前AC/DC設定值皆為`0x00000000`。這次是永久生效（寫入電源方案），不是計時器，重開機/登出不會失效，要改回來需再次手動`powercfg /change`。
+- 2026-09-21：教練釐清真實需求——**只有外出教學才需要長時間保持開啟，平常在家要能正常自動關閉**，不該一直維持永久開啟。改為「在家模式／外出教學模式」兩套設定，靠教練口頭交代切換（非排程自動切換）：
+
+**在家模式（家用預設）**：螢幕關閉5分鐘、電腦睡眠15分鐘（教練2026-09-21拍板，睡眠時間比螢幕關閉長一點避免旁邊工作時突然斷線）
+```bash
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-ac 5
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-dc 5
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-ac 15
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-dc 15
+```
+
+**外出教學模式（永不關閉）**：教練說「要出門教學」之類的話就切換
+```bash
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-ac 0
+MSYS_NO_PATHCONV=1 powercfg /change monitor-timeout-dc 0
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-ac 0
+MSYS_NO_PATHCONV=1 powercfg /change standby-timeout-dc 0
+```
+
+⚠️ **睡眠與跨機軍師自動化的取捨**：這台機器上跑著每30分鐘健康檢查/cron同步等背景自動化，電腦真的進入睡眠會中斷這些工作。教練2026-09-21已知情並選擇「在家模式電腦也比照自動睡眠」，接受這個取捨——**不要自作主張把在家模式的睡眠時間又改回永不**，除非教練再次明確交代。
 
 ## python3 是 Windows Store 樁，不是真安裝
 

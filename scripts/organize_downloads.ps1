@@ -120,7 +120,18 @@ if ($bigFiles) {
 }
 
 # ===== 執行 =====
-if ($Execute) {
+# 雙擊/右鍵「使用 PowerShell 執行」時 $Execute 不會被設定，改用互動詢問；
+# 命令列已明確加 -Execute 的情況（例如排程或其他腳本呼叫）就不再重複詢問。
+$doExecute = $Execute
+if (-not $doExecute -and $plan.Count -gt 0) {
+    Write-Host "`n💡 這是預覽模式，尚未搬動任何檔案。" -ForegroundColor Cyan
+    $answer = Read-Host "要照上面的計劃實際搬移嗎？輸入 Y 執行，其他任意鍵取消"
+    if ($answer -match '^[Yy]$') {
+        $doExecute = $true
+    }
+}
+
+if ($doExecute) {
     Write-Host "`n🚀 開始移動..." -ForegroundColor Green
     $moved = 0
     $failed = 0
@@ -147,5 +158,11 @@ if ($Execute) {
     }
     Write-Host "`n✅ 完成！移動 $moved 個檔案，失敗 $failed 個" -ForegroundColor Green
 } else {
-    Write-Host "`n💡 這是預覽模式。要實際移動，請加上 -Execute 參數" -ForegroundColor Cyan
+    Write-Host "`n💡 已取消，沒有搬動任何檔案。" -ForegroundColor Cyan
+}
+
+# 雙擊/右鍵執行時視窗跑完會直接關掉，加暫停讓結果看得到
+if ($Host.Name -eq 'ConsoleHost') {
+    Write-Host ""
+    Read-Host "按 Enter 鍵結束"
 }

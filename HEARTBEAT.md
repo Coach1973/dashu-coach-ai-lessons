@@ -618,3 +618,10 @@ v207/v208 遺留待辦（孔大哥id`8689825759`/佩佩老師id`8786886419`的�
 - ✅ 同步成功
 - HANDOFF mtime: 1789946716
 - 雲端同步：✅ 已推上雲端（commit 732fd12a7）
+
+## 🩺 軍師 Hook 自檢 2026-09-21 21:30（Windows，本場修復6天卡住的rebase）
+- ⚠️ 開工時發現：本機git自09/15 16:11起卡在interactive rebase「editing a commit」狀態整整6天，期間09/16、09/19的session-end自動同步commit都疊在這條異常鏈上，且本機main與origin/main因09/19的`git-filter-repo`金鑰清除已完全無共同祖先(各自9617/10046 commit)
+- ✅ 已依[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]規定做法處理：安全網齊備(tag`safety-backup-20260921-2119`+branch`backup-detached-rebase-20260921`)後執行`git reset --hard origin/main`，本機main現與origin/main完全同步
+- ✅ 抽查確認本機舊有獨有內容(如真鑽分會資料commit)已存在於origin/main(內容相同、新hash)，非遺失，是預期中的filter-repo重寫結果
+- 雲端狀態：✅ 已與origin/main同步，HEAD `b2ea80b2c`
+- Session: 6b72f753-9867-4140-bb70-667351cad624
