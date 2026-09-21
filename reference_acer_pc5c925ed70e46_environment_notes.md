@@ -12,6 +12,7 @@ metadata:
 **實測受影響的功能**：
 - `schtasks /Create` 直接「拒絕存取」，連建立最陽春的測試任務都不行——**這台機器不能用 Windows工作排程器**，任何「N 小時後自動做某件事」的需求要改用背景計時程序（`Start-Process powershell -WindowStyle Hidden` 跑 `Start-Sleep` 後執行動作），缺點是機器重開機/登出會讓計時器消失
 - `powercfg /change` 這類使用者層級電源設定**不需要管理員權限，正常可用**
+- 刪除 `C:\Program Files\` 底下的檔案/資料夾**沒有管理員權限會被拒絕**——症狀不一定是明確的「存取被拒」，PowerShell `Remove-Item -Recurse -Force` 有時會丟出誤導性的 `ArgumentException`「找不到符合指定準則的路徑」，看起來像路徑問題，改用 `cmd /c rd /s /q` 才會看到真正的「存取被拒」訊息。**解法**：`Start-Process -FilePath cmd.exe -ArgumentList '/c rd /s /q "絕對路徑"' -Verb RunAs -Wait` 觸發 UAC 提權視窗，教練在畫面上點「是」即可完成，不需要教練另外開系統管理員終端機。2026-09-21 用這招清掉 MiniTool Partition Wizard 更新到一半留下的空殼資料夾（無執行檔/無登錄檔安裝紀錄/無服務，純垃圾）驗證成功。
 
 ## Git Bash 會吃掉 `/` 開頭的參數
 
