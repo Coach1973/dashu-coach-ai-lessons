@@ -1,6 +1,6 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-21）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-21，聯想Windows）
 
-**本場主軸：海餅乾20週年網站收尾 + 建立「BNI PPT SOP」可重複流程，連續處理9份BNI簡報。**
+**本場主軸：bni-dna/bigtree兩個網站維護+聯想記憶體洩漏復發追蹤+意外發現並修復卡住6天的git rebase異常。詳見下方v234完整記錄，Mac桌面版v233(海餅乾+BNI PPT SOP)內容仍完整保留在下方版本歷史區。**
 
 ### 1. 海餅乾20週年網站（seabiscuit20）+ AI Talk頁面收尾
 教練指示9/22台南場（AI微論壇）已取消，把`event.bymyway.com/ai-talk/`裡9/22的全部內容（hero/議程/講師/報名表單/FAQ）都拿掉，改成只留台南場(7/29)+嘉義場(8/28)的純回顧頁，順手清掉orphan的報名彈窗HTML/JS。`seabiscuit20`首頁「近期剛舉辦的活動」卡片與頁尾快速連結的舊9/22文字同步更新。commit：`bfa53de`(ai-talk)、`8ec73e7`(seabiscuit20頁尾)。
@@ -38,7 +38,7 @@
 | 💬 | **試金石案例庫商業化/資產化路徑：教練指定留到下一個新對話框深入討論** | 💬軍師專屬討論題目，非任務——非軍師身份(手機/MiniMax/小龍蝦)看到請完全略過，不要回答不要搶答 | 2026-09-18教練親口：「我們的試金石檔案已經累積非常多了，它很寶貴、很有意義，可是怎麼來變成我們的資產呢？因為一個AI再怎麼聰明也經不起犯錯，所以這些錯我們是可以拿來賣錢、可以商業化的，那要怎麼變現？你把這個議題留到下一個對話框，好好來跟我討論一下」。**下一場開工看到這行，直接主動提起這個話題**(不用等教練再問一次)，可以先盤點現況(案例庫規模：76個案例、跨機共用機制、涵蓋領域)再進入商業模式討論(SaaS化/知識庫授權/顧問服務包裝/開源部分換品牌曝光等方向)，教練要的是深入討論不是我這場先斬先奏丟結論。 |
 | 🔴 | **小二(OpenClaw 2.0測試環境)Telegram輪詢異常：用API直發訊息無法被gateway收到** | 🔒待軍師下一場診斷 | 教練換發`@hermes_coach1973_bot`新token後(BotFather revoke重生成，因舊token明文洩漏進git歷史)，軍師用Telegram Bot API直接呼叫`sendMessage`發送訓練指令給小二，API回應皆為`ok:true`且給出message_id(1264/1265/1267)，但逐行核對`~/.openclaw-test2`的gateway原始log(`/tmp/openclaw/openclaw-test2-2026-09-13.log`)，這幾則訊息**完全沒有出現在`Inbound message`記錄裡**，gateway process(PID 35932)本身確認存活且心跳正常(19:07仍在跑)，只是這幾則API直發的訊息始終沒被輪詢接收。**懷疑根因**：軍師稍早為了排查`getMe`/`getUpdates`診斷問題時，曾呼叫過一次`getUpdates?offset=-5`，Telegram的getUpdates是「一旦被讀取就視為已投遞」語義，很可能把這幾則訊息的offset位置搶先消費掉，導致gateway自己的長輪詢（`isolated polling ingress`機制）永久跳過這批update。**教訓**：以後要驗證「訊息是否送達」，不能只看Telegram API的`ok:true`回應，必須額外核對目標gateway的inbound log才算數（這正是這場對話已經踩過一次的坑，[[feedback_check_shared_resource_before_recommending_revoke]]同類型「口頭完成≠真正完成」問題）。**下一場待辦**：①診斷isolated polling offset是否卡住，考慮重啟gateway或重置polling offset游標 ②往後任何要跟小二互動的訊息，一律透過教練親自在Telegram App裡輸入或轉發文字(不要用API直發)，直到這個輪詢問題根治為止 ③這也連動教練當場提出的「三個AI夥伴自動化收信/回信」需求，小二這個管道目前不可靠，暫不能算數。 |
 | 🟡 | **Amber TimeMachine舊備份清理：教練裁示今晚暫緩，改讓系統自動管理** | ⚠️持續追蹤-暫緩 | 教練要求把63個備份快照瘦身到只留最新2天，查證`tmutil delete -p`對網路型(SMB)Time Machine目的地完全不適用——連續3種指令變化都失敗(verb不存在/需要root/`No such file or directory`且用一般`ls`對該路徑也打不開，證實這不是權限問題，是`listbackups`印出的路徑本身不是真實可解析的檔案系統路徑)。**教練當場糾正**AI應該先上網搜尋(OPE)再嘗試，不該讓教練陪著試錯(輸入密碼/開系統設定/重開終端機)3輪——事後搜尋證實多個獨立技術討論都警告網路型TM備份不建議用CLI手動刪，蘋果官方文件也寫「不要用終端機動Time Machine資料夾」，這個結論一次搜尋就能查到。教練最終裁示：今晚不處理，讓Time Machine自動管理空間即可(92GB/467GB可用，未塞爆)。記憶`reference_tmutil_network_destination_delete_limitation_2026-09-11`+`feedback_search_before_trial_and_error_2026-09-11`。 |
-| 🟡 | **9/16「當古典音樂遇到AI科技」高雄場活動結束後，把大樹小講(bigtree)自動部署到Netlify正式站** | ⏳排程等待9/16 17:30觸發 | 教練2026-08-28口諭「先不用，活動結束時，再自動移過去」——目前已推GitHub+GitHub Pages上線(coach1973.github.io/bigtree)，唯獨bigtree-tw.netlify.app(手動zip部署型)保留沒推，等活動結束才推。已寫好部署腳本`scripts/deploy_bigtree_after_0916_event.sh`(git pull+git archive打包+呼叫Netlify Deploy API，site_id`40e580f0-1def-4777-adb8-587ef023ed36`)，並在聯想Windows本機用Claude Code CronCreate排了一次性durable任務(job`ee5beb77`，2026-09-16 17:30觸發)。**風險**：這個排程只存在聯想這台機器的`.claude/scheduled_tasks.json`，只有教練那天有開這台機器的Claude Code才會觸發（或事後補跑會被catch-up機制偵測到）。**任何機器的軍師若在9/16當天或之後開工，看到這行待辦，直接跑`bash scripts/deploy_bigtree_after_0916_event.sh`即可完成部署**，不用等聯想觸發，完成後把這行狀態改成✅並刪除。同場相關：`ai-art`新repo已建立(https://coach1973.github.io/ai-art/)承載這場活動的獨立網頁，`archive/大樹小講_歷史講座紀錄.html`宮格牆已加9/16卡片連結該頁。 |
+| ✅ | ~~9/16高雄場活動結束後，把大樹小講(bigtree)自動部署到Netlify正式站~~ | ✅2026-09-21查證已生效，結案 | 2026-09-16排程觸發時腳本一度被系統權限分類器擋下(Production Deploy分類)，教練說「推」後由使用者端批准執行；2026-09-21聯想軍師收工時curl`bigtree-tw.netlify.app`確認9/23、9/24台中場(9/21已在GitHub端取消)已同步生效無殘留，證實當時確實有成功重新執行完成，此項結案。 |
 | 🟡 | **BNI培訓紀錄總資料庫：私有開票後台要不要做成真正網址+登入** | ⚠️2026-09-11教練裁示略過，不追蹤 | 2026-08-17聯想本場從零建置。目前後台(`claude-brain/data/bni_training_admin.html`)只是本機檔案，含統編/電話/email等會員個資，教練問過要不要部署成網址+寫進coach888(帳密Admin/88888)，AI主動指出風險(coach888是公開repo，寫進去等於帳密全公開；且Admin/88888是已知弱密碼)，**教練裁示「先不要動」**。下次教練若想清楚要怎麼保護(不公開URL/真伺服器登入/接受風險)，直接照裁示做，不用重新提risk。詳見[[project_bni_training_records_db_2026-08-17]] |
 | 🔴 | **ezPay培訓費發票：3張(蔡珮彤081907/吳亞平081922/楊凱為081924)Email欄位空白待補發通知** | ⚠️2026-09-11教練裁示略過，不追蹤 | **0818批**(v120)：18張(081701~081718)。**0819批**(v121)：24張(081901~081924)。42張皆用XHR攔截器讀真實回應+`search_invoice`複查confirmed存在，完成清單見`claude-brain/data/ezpay_training_invoices_2026-08-1{8,9}_*完成清單.json`。**其中3張開票時Email查無登記留空**，教練糾正後查證確認是比對疏漏非真的沒有：蔡珮彤=CSV「蔡姵彤」(同音異字)、吳亞平純漏看、楊凱為=CSV「楊為凱」(姓名顛倒，教練已確認同一人)，3人正確Email已找到並補進`knowledges/2026-08-18_38人培訓發票二聯三聯資訊蒐集中.md`，**下次ezPay登入後用「查看/補發」功能補上這3張的Email重發通知**。剩8人(杜亞洛/劉彥彬/莊政川/林佳慧/陳新典/吳玫萱/謝盛峰/柯炫任)待補資料，到齊後自訂編號從081925接續不用等全部到齊。技術SOP(MerchantID假成功陷阱/`jQuery trigger`送出法/手機條碼斜線前綴/同音字比對鐵律)已固化於`reference_ezpay_invoice_issuing_procedure.md`+`路徑大全.md`第四(續)節 |
 | 🟡 | **AI微論壇台中場(9/23-24)網頁概念稿：彭晉澄申請已處理，等他自填資料** | ⚠️2026-09-11教練裁示略過，不追蹤（注意：台中場已於v194改上線楊茗凱新講師，此項可能已過時） | 新repo`ai-forum-taichung`，GitHub Pages：https://coach1973.github.io/ai-forum-taichung/ 。多輪迭代：兩天套票2988元(單日1800)、大樹教練固定排每天下午第一堂並各有專屬分享主題(只出一張嘴叫AI做事/如何將AI導入LINE成為你的生活小幫手)、場地沃茲新創空間忠明館(台中市南屯區忠明南路478號B1)、報名費含午餐+下午茶、藍新金流付款連結已接上。講師資料從mentor100撈取：JC老師、Lavi(全站已統一英文名，含2026-08-16修復時間軸殘留)、廖韋評皆已補齊簡介/照片/連結。王俊甫查證發現mentor100照片其實是FB預設空白大頭貼截圖、簡介只有姓名重複，已請教練協調補件，同步在mentor100後台改為草稿不對外顯示。**彭晉澄2026-08-16已送出mentor100申請，已建草稿+編輯連結交給教練轉發**，等他自己填完+教練後台預覽確認才算補齊。Lavi主題2026-08-16改為「AI× Canva：把專業轉譯成「看得懂、記得住、願意買」的品牌圖文」。下次開工先問教練彭晉澄填完了嗎、GitHub Pages概念稿整體看過沒問題了嗎，沒問題才能推正式站 |
@@ -313,3 +313,27 @@ Stop hook抓到5筆本場前(2026-09-19)寫的記憶檔沒進`claude-brain/MEMOR
 
 ## 🔑 本場commit
 `bfa53de`(ai-talk移除9/22)、`8ec73e7`(seabiscuit20頁尾清理)、`c757b9213`(新增BNI PPT SOP腳本+文件)、`c08e90611`(SOP補教練簡稱)。本次總結commit另計。
+
+---
+
+# 軍師接力棒 · 2026-09-21 v234（聯想Windows Sonnet 5，bni-dna/bigtree兩站維護+記憶體洩漏復發追蹤+意外修復卡6天的repo異常）
+
+> 建立時間：2026-09-14 21:47 ~ 2026-09-21 21:19（跨多日，多數時間閒置待命）
+> 上一棒：v233（Mac桌面版）
+> 本棒主軸：**兩個網站小幅維護任務+聯想機器本身的記憶體洩漏復發診斷+收工時意外撞見一個卡了6天的git異常，查明其實是Mac 9/19 filter-repo歷史清除的已知後續，已依接力棒既有SOP修復。**
+
+## 🎯 本場戰果
+1. **bni-dna出席表**（`Coach1973/bni-dna`）：教練口頭指示「8月起遲到30分鐘算缺席」，比對9月遲到分鐘數找出4位(傅恩平39分/楊仁豪80分/顏淳峯34分/張敬雍74分)超過30分鐘，格式定案為「遲到XX分(缺席)」保留原始遲到時間；9月季例會是實體非線上，7位正常出席者的「定點開鏡頭」用詞改回「出席」；淘汰規則「5週內累計缺席2次」改「5次月例會內累計缺席2次」。三輪皆已curl驗證正式站生效。
+2. **bigtree-tw**（`Coach1973/bigtree`）：取消9/23、9/24台中場AI微論壇兩場（教練口頭指示直接刪除），GitHub端+GitHub Pages鏡像已生效；**9/16高雄場結束後要部署Netlify正式站這個既定排程腳本(`scripts/deploy_bigtree_after_0916_event.sh`)執行時被系統權限分類器擋下(歸類Production Deploy)，教練說「推」後尚未確認是否真的重新執行成功**，下一棒需先查`bigtree-tw.netlify.app`是否已無9/23、9/24殘留、必要時重新跑該腳本。
+3. **聯想記憶體洩漏復發**：9/15傍晚又一次未正常關機，查證Nahimic驅動仍在運行(9/4一鍵還原未真除根)，但這兩天無新可疑安裝。教練裁示「觀察優先，復發就繼續一鍵還原」，不採根治，已寫入`project_lenovo_nonpaged_pool_leak_2026-09-04.md`，往後同類症狀只給`Get-Counter`自查指令，不再推銷gpedit方案。
+4. **HiNotes查證**：確認是Chrome PWA非本機軟體，錄音存於雲端(hinotes.hidock.com)非C槽，一鍵還原不影響。
+5. **移除「閃電說」開機自動啟動**：Registry Run值層級移除，軟體本身保留。
+6. **🔴意外發現並修復**：總結時`git pull`卡進一個從9/15中斷6天的interactive rebase，一度誤判為未知的雙歷史問題並寫錯一則記憶（已刪除更正），後來才在系統鏡像的CLAUDE.md裡看到Mac已在9/19用`git-filter-repo`清除金鑰歷史並強制推送，接力棒早已警示「其他機器clone會分岔，需`git fetch+reset --hard origin/main`」。已確認本地9/15~9/19僅有的獨有內容只是心跳雜訊(記憶更新本體已存在本機memory資料夾不受影響)，安全reset對齊origin/main，未造成任何遺失。教訓見`feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md`：git異常先讀本機接力棒/HEARTBEAT.md再診斷。
+
+## 📋 下一場開工先做
+1. bigtree-tw Netlify已於本棒結尾curl驗證確認成功，待辦表已改✅結案，不用再處理
+2. 沿用Mac v233既有待辦：跨機分岔警示已處理、💬試金石商業化討論、`sk-ant-api03-jMLa...`來源不明金鑰、TokenTable客服回報、Episode 11後續格式
+3. 聯想這台機器若再出現「傍晚時段整機當機/記憶體暴增」，直接查Nonpaged Pool即可，不用重新診斷Nahimic
+
+## 🔑 本場commit
+`bni-dna`：`8201db4`+`47ae08e`+`0366d37`。`bigtree`：`18bf066`(取消2場，含rebase解衝突)。`workspace`：`cdc17228b`(rebase異常修復)+本次總結commit另計。記憶：新增`feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21`，更正刪除一則錯誤記憶。
