@@ -1,3 +1,31 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-23 03:25，Mac桌面版，新的一棒 v237）
+
+**本場主軸：手機Remote Control的MiniMax問題這次真正、徹底解決（雙根因：settings.json殘留金鑰+bridge-pointer.json殭屍session），並產出完整血淚記錄交付教練——試金石案例80(改寫成橫跨09-19~09-23四天復發的完整時間線)+公開時間線網頁(cool-case.github.io)+4萬字完整逐字稿md檔，三份都已推上GitHub。**
+
+### 1. 🔴🔴🔴 手機Remote Control MiniMax問題雙根因，這次真正拔除
+教練用「Claude帳單88%不動+MiniMax呼叫0%→4%」雙帳單交叉比對，當場證明手機端仍在用MiniMax（延續v236的未完成任務）。查出`~/.claude/settings.json`的`API_KEY`/`AUTH_TOKEN`/`BASE_URL`/`DEFAULT_HAIKU_MODEL`/`DEFAULT_OPUS_MODEL`全部還是MiniMax真實值，跟接力棒記載「22:34已清空」完全對不上，永久移除（不再「用完復原」）。**清乾淨後連線卻完全卡死超過一小時，教練連開4次新對話零回應**——過程中軍師自己先用`env -i`清過頭，連macOS正常運作需要的`__CFBundleIdentifier`/`TMPDIR`等都清掉反而弄壞連線（這是自己製造的新bug，不是查出來的），改回精準`env -u`。**真正卡死元凶**：`~/.claude/projects/-Users-bymyway--openclaw/bridge-pointer.json`讓每次「開新對話」都reuse同一個從23:47就`state:queued`、從未真正start的殭屍session，教練不管開幾次都被導回同一個死掉的對話——用`claude rc --debug-file -v`（一個從頭到尾就在`--help`裡卻一個多小時沒被想到要用的旗標）5分鐘內查到，刪除該指標檔強迫重新註冊，教練當場測試成功收到回應。`scripts/restart_remote_control.sh`升級v4，加入bridge-pointer自動防呆。
+
+### 2. 🔴 試金石案例80：教練要求「生動慘痛」，後來親自指出範圍抓錯，改寫成四天復發時間線
+案例80初版只框「今晚一個半小時」，教練戳破：「你要不要從9月19號我們開始做這件事到現在，那是整整四天」。查證自己的案例庫確認教練是對的——案例78(09-19整晚)、v235(09-22傍晚)、本場，是同一個問題至少三次獨立復發，前兩次軍師都曾對教練宣布「解決了」卻沒真正解決。案例80改寫：新增跨四天時間軸表格、保留初版錯誤框架當反面教材、新增「跨session信任層級失誤比單場查證方法錯更嚴重」的教訓。
+
+### 3. 教練要求把整段過程公開發布，兩份文件都已上線
+教練進一步要求：①寫成公開時間線網頁（明確指定不要Netlify，只放GitHub）②把09-17起點開始的完整對話變成txt/md逐字稿，「可能破1萬字都沒關係，因為這非常經典」。軍師用session匯出工具找回09-17首次連線+09-18/19整晚MiniMax辯論的**原始逐字稿**（非重建），加上兩段查無逐字稿的橋接段落（誠實標記為摘要重建，不冒充逐字稿），組成約4萬字文件。**過程中GitHub push protection擋下一次真實外洩GitHub token**（09-18原始逐字稿裡意外帶出的舊金鑰討論內容），已遮蔽後重新推送，沒有真的外洩到公開repo。
+- 網頁：https://coach1973.github.io/cool-case/
+- 完整逐字稿：https://github.com/Coach1973/cool-case/blob/main/完整逐字記錄_09-17到09-23.md
+
+### 📋 下一場開工先做
+1. 手機Remote Control channel已確認乾淨走Claude（settings.json+bridge-pointer雙根因都已拔除），持續觀察即可，不用再懷疑
+2. 試金石商業化計畫書仍等教練回覆三個決策點，本場新產出的案例80/cool-case網頁可以當作新的具體展示素材，下次討論時可以提
+3. 沿用既有待辦：跨機分岔警示、`sk-ant-api03-jMLa...`來源不明金鑰
+4. E16接力棒瘦身：本場已執行（把v236移入下方封存區）
+
+### 🔑 本場commit
+`33cacbdbf`(settings.json移除Haiku/Opus MiniMax預設)、`1495405de`(env -i乾淨環境+settings.json永久移除金鑰)、`bbbf4bb23`(找到bridge-pointer.json真正根因)、`cde20349d`(試金石案例80初版)、`63412b8f1`(案例80改寫跨4天時間線)。`cool-case`repo：`40b34fe`(公開時間線網頁)、`40e76c5`(4萬字完整逐字稿，含金鑰遮蔽修正)。本次總結commit另計。
+
+---
+
+## v236之前內容（上一份總結摘要，保留備查）
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-22 23:05，Mac桌面版，新的一棒）
 
 **本場主軸：🔴🔴 LINE三帳號全掛+手機Remote Control身分/流量懸案再起。查出LINE卡住真因是外掛版本落後gateway核心(line 2026.6.34 vs 2026.9.4)導致provider卡在lifecycle=starting，已修復+補進system_patrol.sh第5項深度健檢(查lifecycle不是只看HTTP 200)自動防呆。手機版Claude Code Remote Control走MiniMax還是Claude這個問題反覆查證一整晚，最終結論：不是單一固定答案，是每個對話框各自獨立、會變——已建identity_model_verify.sh hook用實際網路流量位元組數(非argv宣告值)做deterministic判定。教練22:47確認手機端仍走MiniMax，**下一棒要接手直接解決「讓手機版真的走Claude」這個未完成任務**，不要再花時間重新辯論機制本身。上一份總結摘要(2026-09-22 21:00，小龍蝦3天無回應案例79等)完整保留在下方「v235之前內容」區塊。**
