@@ -24,6 +24,33 @@ say() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG"; }
 
 say "───── 巡檢開始 ─────"
 
+# ── 0. 小龍蝦本尊：ai.openclaw.gateway process 本身是否還活著 ──
+#    起因（2026-09-22 教練「這麼嚴重的錯誤，我三天才知道，怎麼樣防呆？」）：
+#    gateway 在 2026-09-21 07:36 因為 workspace 需要跑 migration 而重啟失敗，
+#    被 launchd「停放」(unloaded and disabled)，process 完全沒在跑，
+#    但它自己没辦法通知任何人「我掛了」——教練連續 3 天都收不到任何回覆，
+#    直到手動試探才發現。這是比「process 活著但卡住」更根本的一層：
+#    process 有沒有在跑本身。既有的 auto-fix-session-lock.sh(下面第1項)
+#    處理的是「活著但卡住」，不處理「根本沒在跑」，兩者互補不重複。
+#    走 notify_coach.sh 通知（直接打 Telegram API，不依賴 gateway 本身，
+#    gateway 掛了也送得出去，不會自己把自己的警報悶住）。
+UID_NUM=$(id -u)
+GW_STATE=$(/bin/launchctl print "gui/${UID_NUM}/ai.openclaw.gateway" 2>&1 | awk -F'= ' '/state = /{print $2; exit}')
+if [ "$GW_STATE" != "running" ]; then
+    say "⚠️ 小龍蝦本尊(ai.openclaw.gateway)狀態異常：state=${GW_STATE:-找不到service}，嘗試自動修復"
+    /Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw doctor --fix >/dev/null 2>&1
+    /Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw gateway start >/dev/null 2>&1
+    sleep 5
+    GW_STATE2=$(/bin/launchctl print "gui/${UID_NUM}/ai.openclaw.gateway" 2>&1 | awk -F'= ' '/state = /{print $2; exit}')
+    if [ "$GW_STATE2" = "running" ]; then
+        say "✅ 自動修復成功，state=${GW_STATE2}"
+        "$WS/scripts/notify_coach.sh" "🔧 小龍蝦本尊(ai.openclaw.gateway)剛才沒在跑，已自動偵測並修復重啟成功。如果稍早有交辦事情沒回應，麻煩再說一次。" 3600 openclaw_gateway_autofix
+    else
+        say "❌ 自動修復失敗，state=${GW_STATE2:-找不到service}"
+        "$WS/scripts/notify_coach.sh" "🔴 小龍蝦本尊(ai.openclaw.gateway)沒在跑，已嘗試自動修復但失敗(state=${GW_STATE2:-找不到service})，需要人工檢查。這則通知走獨立管道，不依賴小龍蝦本身。" 3600 openclaw_gateway_autofix_failed
+    fi
+fi
+
 # ── 1. 小龍蝦端：對話檔爆滿 / session 卡住 / gateway 與 RustDesk 記憶體洩漏 ──
 #    ⚠️ 這監控的是 OpenClaw 小龍蝦（Telegram/LINE），
 #    不是教練在 Claude 桌面版右下角看到的那個百分比——兩套系統各自獨立。
