@@ -1,5 +1,9 @@
 # Memory Index
 
+- [🔴🔴🔴 教練口中「小龍蝦」vs「Hermes」是這台Mac兩套獨立Telegram bot系統，故障診斷前先確認是哪個對話框(2026-09-22)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)
+- [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認是否真的重複，不能信檔名帶數字(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
+- [🔴 git pull失敗/歷史異常時先讀本機HEARTBEAT/接力棒，不靠git底層診斷(2026-09-21)](feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md)
+- [🔧 BNI PPT SOP簡稱對應knowledges/SOP_PDF轉品牌底圖PPT.md+scripts/pdf_to_branded_pptx.py(2026-09-21)](reference_bni_ppt_sop_alias_2026-09-21.md)
 - [🔴🔴 教練親口規則：「手機開工」= minimax 模型 = 特助身份，教練判斷優先於system reminder(2026-09-22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [🔴🔴 OpenCode配額用盡後自動切換的備援模型會捏造完工結果(touch+編檔案大小)，完工回報一律要實際驗證(2026-09-20)](feedback_opencode_fallback_model_fabricated_results_2026-09-20.md)
 - [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常，已接進OpenCode(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
