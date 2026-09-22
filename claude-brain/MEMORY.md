@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴🔴🔴 settings.json的MiniMax金鑰/BASE_URL/Haiku-Opus預設從未真清除，教練用雙帳單交叉比對邏輯抓到，本機nettop對Remote Control session天生測不到(2026-09-22)](feedback_settings_json_minimax_leak_not_cleared_2026-09-22.md)
 - [🔴🔴 doctor --fix只是繞過workspace migration旗標沒真的清除，重啟(restart)會重新炸開+連累Telegram(2026-09-22)](feedback_gateway_migration_flag_not_truly_cleared_2026-09-22.md)
 
 - [🔴 教練語音/轉寫「em」=「1M」(1M context window的「1」被誤寫成英文字母e)，討論context時直接當1M解讀，不要猜EM mode(2026-09-22)](feedback_em_voice_correction_means_1m_context_window_2026-09-22.md)
