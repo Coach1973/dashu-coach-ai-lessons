@@ -46,3 +46,33 @@ workspace migration**，這個「legacy」旗標持續潛伏，只要gateway做�
 ## 相關
 
 - 案例79（[[feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22]]附近的接力棒記錄）
+
+---
+
+## 🟢 22:53 更新：真正卡住LINE的根因找到了，是外掛版本落後，不是draining本身
+
+上面記錄的「workspace migration旗標沒清乾淨」只解決了gateway整個掉線的問題（Telegram+LINE
+一起斷），但gateway重新啟動後，**LINE三個帳號仍然卡在教練回報的「Sorry, I encountered an
+error」**，Telegram正常。
+
+用`openclaw gateway call health`直接查每個channel的lifecycle狀態，抓到真正病灶：
+LINE三個帳號（default/bni_tainan/jiaolian_thoughts）全部卡在`"lifecycle": "starting"`，
+永遠沒有變成`"ready"`（Telegram三個帳號都是`"ready"`）——外層看起來像「gateway is draining」
+的錯誤訊息，其實是message-handler把「channel未就緒」跟「gateway真的在restart drain」共用
+同一個`GatewayDrainingError`類別，訊息文字容易誤導人。
+
+**真正根因**：`openclaw gateway status --deep`發現`line`外掛版本落後gateway核心三個小版本
+（line: 2026.6.34 vs gateway核心2026.9.4），版本落差導致LINE provider初始化卡住，永遠
+不會完成啟動。跟教練這邊完全無關，是gateway核心自動更新過但line外掛沒跟著更新造成的
+純技術債。
+
+**修復**：`openclaw plugins update line`（更新到2026.9.4，跟gateway對齊）→
+`openclaw gateway restart` → 用health call複查確認三個LINE帳號lifecycle全部變成`ready`
+→ 用簽章健檢腳本複測OK。
+
+## How to apply（更新版）
+
+診斷「某個channel收不到訊息但process活著」這類問題，不要只看process存活或HTTP回應碼，
+**用`openclaw gateway call health`查該channel每個帳號的`lifecycle`欄位**，卡在`starting`
+就是初始化沒完成，這時候第一個該查的是`openclaw gateway status --deep`看有沒有plugin
+version drift，而不是急著重啟process（重啟版本沒對齊的外掛，只會卡在同樣的地方）。
