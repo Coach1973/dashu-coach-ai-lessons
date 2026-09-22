@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴 教練語音/轉寫「em」=「1M」(1M context window的「1」被誤寫成英文字母e)，討論context時直接當1M解讀，不要猜EM mode(2026-09-22)](feedback_em_voice_correction_means_1m_context_window_2026-09-22.md)
 - [🔴🔴🔴 教練口中「小龍蝦」vs「Hermes」是這台Mac兩套獨立Telegram bot系統，故障診斷前先確認是哪個對話框(2026-09-22)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)
 - [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認是否真的重複，不能信檔名帶數字(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
 - [🔴 git pull失敗/歷史異常時先讀本機HEARTBEAT/接力棒，不靠git底層診斷(2026-09-21)](feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md)
