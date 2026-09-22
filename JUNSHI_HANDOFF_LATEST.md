@@ -1,6 +1,27 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-22，Mac桌面版）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-22 23:05，Mac桌面版，新的一棒）
 
-**本場主軸：🔴🔴🔴重大事故——小龍蝦本尊(OpenClaw main gateway)因workspace migration卡住被launchd停放，process完全沒在跑，教練連續3天收不到任何回應才發現，已修復+建立防呆(試金石案例79)。另處理試金石商業化計畫書網頁化、開機自啟動設定、BNI DNA出席政策更新、AI微論壇兩場活動(嘉義/台中)網站維護連動問題。上一棒(聯想Windows v234，bni-dna/bigtree維護+git rebase異常修復)內容保留在下方版本歷史區。**
+**本場主軸：🔴🔴 LINE三帳號全掛+手機Remote Control身分/流量懸案再起。查出LINE卡住真因是外掛版本落後gateway核心(line 2026.6.34 vs 2026.9.4)導致provider卡在lifecycle=starting，已修復+補進system_patrol.sh第5項深度健檢(查lifecycle不是只看HTTP 200)自動防呆。手機版Claude Code Remote Control走MiniMax還是Claude這個問題反覆查證一整晚，最終結論：不是單一固定答案，是每個對話框各自獨立、會變——已建identity_model_verify.sh hook用實際網路流量位元組數(非argv宣告值)做deterministic判定。教練22:47確認手機端仍走MiniMax，**下一棒要接手直接解決「讓手機版真的走Claude」這個未完成任務**，不要再花時間重新辯論機制本身。上一份總結摘要(2026-09-22 21:00，小龍蝦3天無回應案例79等)完整保留在下方「v235之前內容」區塊。**
+
+### 1. 🔴🔴 LINE三帳號全掛，真因是外掛版本落後gateway核心（本場最重要）
+教練回報「電報正常、LINE掛點」，一路查證撞到兩層問題：①`openclaw gateway restart`時踩到case79同一個「Legacy workspace setup state requires migration」舊坑(旗標從未真正清除，只是09/21早上的doctor --fix繞過讓process跑起來)，重啟會重新命中，已知教訓寫進`feedback_gateway_migration_flag_not_truly_cleared_2026-09-22.md`；②真正卡住LINE收發的病因是`line`外掛版本(2026.6.34)落後gateway核心(2026.9.4)三個小版本，導致LINE provider永遠卡在`lifecycle=starting`變不成`ready`，但webhook層級簽章驗證回應HTTP 200完全正常(既有健檢因此誤報OK，這是抓到的真實盲點)。已用`openclaw plugins update line`+`gateway restart`修復，三帳號lifecycle確認變`ready`。**已補防呆**：`system_patrol.sh`新增第5項，每小時查各LINE帳號lifecycle，卡住就自動查版本落差、自動`plugins update`+`restart`修復，成功/失敗都用`notify_coach.sh`(獨立管道)通知，教練確認頻率成本可接受(單次5.6秒/19%CPU瞬時，不耗token)。
+
+### 2. 🔴 手機Remote Control身分/流量懸案——本場結論：沒有單一答案，是每個對話框各自獨立
+教練一路拿09/19原始對話逐字稿挑戰，逼出重新查證：**手機/Mac開的每一個Claude Code Remote Control對話框，各自的`--model`參數跟實際網路流量目的地(MiniMax真實IP 175.99.116.x vs Anthropic真實IP 160.79.104.x)彼此獨立，會不一樣**，不是「手機=MiniMax、電腦=Claude」這種裝置層級的固定二分法。過程中也抓到自己一個真bug：nettop對MiniMax網段(175.99.116.x)做反解析顯示成連字號hostname格式(`175-99-116-25.static.tfn.net.tw`)，原本的IP比對regex只認句點格式，導致一度誤判「查無MiniMax流量」，已修正。**教練明確裁示**：手機Remote Control這一條通道要全部走Claude(小龍蝦/Telegram/LINE/VPS維持MiniMax不動，範圍界線教練親口劃清楚)。嘗試過改`~/.claude/settings.json`全域清空MiniMax設定，但發現settings.json只是「新process注入」機制，已存在的shell繼承的舊匯出變數不會被清除，需要在啟動`claude rc`的shell指令裡明確`unset`才有效；且改動全域settings.json範圍太大會波及終端機/桌面版(教練也不要，已復原)。**本場已建立但尚未完全解決**：`scripts/identity_model_verify.sh`(UserPromptSubmit hook，教練問身分時自動查argv宣告值+nettop真實流量位元組數，用實測數字取代自稱，commit `477f438e8`已修正nettop bug)。**教練22:47確認手機端仍在走MiniMax，尚未真正解決**。
+
+### 3. 🔧 身分自查hook的教訓：查證方法必須跟教練當年用的同一套標準，不能自己土砲降規格
+教練直接點破：「我一直在當你的偵查員」——本場好幾次因為用比09/19當晚更弱的查證方法(只看lsof連線存在、只看webhook HTTP回應碼)得出錯誤結論，被教練用逐字稿打臉。教訓：任何「查證某個東西是否正常/是誰」的場合，優先用『上一次教練已經驗證有效』的方法(nettop位元組數、`gateway call health`查lifecycle)，不要圖方便用更弱的替代檢查。
+
+### 📋 下一場開工先做
+1. **🔴🔴最優先：解決手機Remote Control真正走Claude**——教練明確要求，本場只做到「建立正確查證工具」，還沒真正讓手機端穩定顯示走Claude，教練22:47確認仍是MiniMax，下一棒直接動手解決，不要重新討論機制本身
+2. system_patrol.sh第5項LINE深度健檢+第0項gateway健檢已上線運作，持續觀察即可
+3. 沿用既有待辦：跨機分岔警示、試金石商業化計畫書等教練回覆三個決策點、`sk-ant-api03-jMLa...`來源不明金鑰、E16接力棒瘦身(本場又沒執行，主檔累積更多棒了，優先處理)
+
+### 🔑 本場commit
+`114dce1d1`(新增identity_model_verify.sh)、`01d5f2e7e`(session-end自動同步含nettop修正前版本)、`477f438e8`(修正nettop反解析bug)、`a15a40cb7`(記錄gateway migration旗標教訓)、`2c1e8c2eb`(補充LINE外掛版本落後真因)、`3badf2993`(system_patrol.sh新增LINE深度健檢第5項)。本次總結commit另計。
+
+---
+
+## v235之前內容（上一份總結摘要，保留備查）
 
 ### 1. 🔴🔴🔴 小龍蝦3天無回應重大事故（試金石案例79，本場最重要）
 教練問「小龍蝦為何沒反應」，軍師一度查錯對象（誤把「Hermes」第三方系統當成「小龍蝦」診斷重啟），教練點破「小龍蝦沒反應，Hermes那邊可以」才重新定位。**真正根因**：`ai.openclaw.gateway`(服務`bot_main`)2026-09-21 07:36因workspace需要migration重啟失敗，被launchd「停放」(unloaded and disabled)，process完全沒在跑，且自己沒辦法通知任何人「我掛了」。已執行`openclaw doctor --fix`+`openclaw gateway start`修復，process重啟後立即處理積壓26小時的訊息。**防呆**（教練明確要求不要新建輪詢）：搭載在教練8/25已核准的`system_patrol.sh`每小時巡檢新增第0項檢查，異常自動修復+用不依賴gateway本身的`notify_coach.sh`通知。完整教訓見試金石案例79。
