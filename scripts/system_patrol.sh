@@ -104,5 +104,62 @@ if [ -n "$NEWEST" ] && [ -f "$NEWEST" ]; then
     fi
 fi
 
+# ── 5. LINE 三個帳號：channel lifecycle 深度健檢（不只看HTTP 200） ──
+#    起因（2026-09-22教練親口：「要怎麼樣才不會再讓我事後才發現它已經掛點一天了」）：
+#    既有的 three_line_bots_healthcheck.sh 只測「webhook HTTP回應碼」，這次踩到一個
+#    真實盲點——LINE外掛版本落後gateway核心(2026.6.34 vs 2026.9.4)，導致provider
+#    卡在lifecycle="starting"永遠變不成"ready"，但webhook端點的簽章驗證+HTTP 200
+#    完全正常（因為那一層跟channel lifecycle是兩回事），教練實際傳訊息卻收到
+#    "Sorry, I encountered an error"，既有健檢當時回報"OK"是假警報。
+#    這裡補上真正會抓到這類問題的檢查層級：直接查每個LINE帳號的lifecycle欄位。
+OPENCLAW_BIN="/Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw"
+LINE_HEALTH=$("$OPENCLAW_BIN" gateway call health 2>/dev/null)
+if [ -n "$LINE_HEALTH" ]; then
+    STUCK_ACCOUNTS=$(printf '%s' "$LINE_HEALTH" | python3 -c "
+import sys, json
+try:
+    text = sys.stdin.read()
+    start = text.find('{')
+    d = json.loads(text[start:])
+    line = d.get('channels', {}).get('line', {})
+    stuck = [acc for acc, info in line.get('accounts', {}).items() if info.get('lifecycle') != 'ready']
+    print(','.join(stuck))
+except Exception:
+    print('')
+" 2>/dev/null)
+    if [ -n "$STUCK_ACCOUNTS" ]; then
+        say "⚠️ LINE帳號未就緒：${STUCK_ACCOUNTS}，檢查是否為外掛版本落後並嘗試自動修復"
+        DRIFT=$("$OPENCLAW_BIN" gateway status --deep 2>&1 | grep -A1 "^- line:" | head -1)
+        if [ -n "$DRIFT" ]; then
+            say "偵測到line外掛版本落後：$DRIFT，執行自動更新"
+            "$OPENCLAW_BIN" plugins update line >/dev/null 2>&1
+            "$OPENCLAW_BIN" gateway restart >/dev/null 2>&1
+            sleep 10
+        fi
+        LINE_HEALTH2=$("$OPENCLAW_BIN" gateway call health 2>/dev/null)
+        STUCK_ACCOUNTS2=$(printf '%s' "$LINE_HEALTH2" | python3 -c "
+import sys, json
+try:
+    text = sys.stdin.read()
+    start = text.find('{')
+    d = json.loads(text[start:])
+    line = d.get('channels', {}).get('line', {})
+    stuck = [acc for acc, info in line.get('accounts', {}).items() if info.get('lifecycle') != 'ready']
+    print(','.join(stuck))
+except Exception:
+    print('')
+" 2>/dev/null)
+        if [ -z "$STUCK_ACCOUNTS2" ]; then
+            say "✅ LINE自動修復成功，全部帳號已ready"
+            "$WS/scripts/notify_coach.sh" "🔧 LINE小幫手剛才有帳號卡住沒回應（${STUCK_ACCOUNTS}），已自動偵測並修復成功，現在應該正常了。如果稍早傳過訊息沒收到回覆，麻煩再傳一次。" 3600 line_lifecycle_autofix
+        else
+            say "❌ LINE自動修復失敗，仍卡住：${STUCK_ACCOUNTS2}"
+            "$WS/scripts/notify_coach.sh" "🔴 LINE小幫手有帳號卡住沒回應（${STUCK_ACCOUNTS2}），已嘗試自動修復但失敗，需要人工檢查。這則通知走獨立管道，不依賴LINE本身。" 3600 line_lifecycle_autofix_failed
+        fi
+    else
+        say "LINE三帳號lifecycle正常"
+    fi
+fi
+
 say "───── 巡檢結束 ─────"
 exit 0
