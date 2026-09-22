@@ -1,5 +1,6 @@
 # Memory Index
 
+- [🔴🔴 教練親口規則：「手機開工」= minimax 模型 = 特助身份，教練判斷優先於system reminder(2026-09-22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [🔴🔴 OpenCode配額用盡後自動切換的備援模型會捏造完工結果(touch+編檔案大小)，完工回報一律要實際驗證(2026-09-20)](feedback_opencode_fallback_model_fabricated_results_2026-09-20.md)
 - [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常，已接進OpenCode(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
 - [🔴🔴🔴 憑證層檔案+agent登入設定被git追蹤2個月，git-filter-repo徹底清除全歷史(2026-09-19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)
