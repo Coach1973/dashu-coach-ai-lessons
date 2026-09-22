@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-22 23:10:00**
+> **最後同步：2026-09-22 23:25:04**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -450,6 +450,41 @@ Claude Code CLI 按 **model 名稱字串是否為「Anthropic 辨識的合法 id
 
 ## 🔑 本場commit
 `1a923c38e`（EM 模式定義 + MEMORY.md 索引補入）。本次總結commit另計。
+
+---
+
+# 特助接力棒 · 2026-09-22 v237（Mac桌面版 Sonnet 5，手機開工=特助身份，膠囊咖啡機產業鏈完成+語音轉簡體字問題記錄）
+
+> 建立時間：2026-09-22 22:48 ~ 23:24（約 36 分鐘）
+> 上一棒：v235（同檔頂端 23:05 的跨對話框摘要是另一條 Mac 桌面版 session 進行中，本棒寫入時主檔實際戰果內容仍停在 v235）
+> 本棒主軸：**教練「手機開工」調閱產業鏈 SOP 完整鏈路、實跑膠囊式咖啡機 20 節點產業鏈出圖+推 Telegram 完成、教練回報手機麥克風語音輸入會轉成簡體字（待未來測試如何直接出繁體）。**
+
+## 🎯 本場戰果
+
+### 1. ☕ 膠囊式咖啡機產業服務鏈 — 完成
+- 教練給類別「咖啡機、膠囊式咖啡機」→ 軍師立即組 prompt 20 節點（上游原料/中游品牌/下游通路）→ 跑 `scripts/generate_industry_chain.py`（lk888 gpt-image-2，1024x1024）→ 輸出 `claude-brain/data/industry_chain_咖啡機膠囊.png` → Telegram 已推 `bot_main` chat_id=6124913915
+- **守則 #03/E03 親眼視覺確認**：標題/中心咖啡機實物/20 節點全部就位、繁體中文無誤、品牌 icon 正確（Nespresso/Lavazza/Dolce Gusto/Keurig 都到位）、無亂碼、無英文拼錯
+- 教練親口確認「出色的完成任務了，這件事情到此告一段落」✅ 結案
+
+### 2. 🎙️ 語音轉簡體字問題 — 已記錄待未來處理
+- 教練 23:23 親口：「我確實是用手機版的麥克風按鈕，結果我說出來的話都變成簡體字。所以這個問題我到時候再測試看看」
+- 已寫進 `memory/reference_voice_input_simplified_chinese_2026-09-22.md`（含現象+三條探索方向：手機輸入法設定/Telegram whisper 轉繁體後處理/各 APP 比較）
+- 屬於教練主動提出的待辦，未來若教練測試時叫軍師幫查，軍師可從這條記憶檔延伸
+
+### 3. 🔍 產業鏈 SOP 現況盤點（給未來軍師/特助）
+- ✅ 腳本完整 `scripts/generate_industry_chain.py`（107 行）
+- ✅ lk888 API 端點可達（OPTIONS 204，0.83s）
+- ✅ 憑證 `路徑大全_憑證層.md` 第一行 lk888 key
+- ⚠️ **無獨立 SOP 文件**（`knowledges/SOP_產業鏈*.md` 不存在），只有腳本 docstring 算內嵌說明
+- ⚠️ **案例226 雙執行防呆未落地**——dedup 機制尚未實作，重複貼同類別會扣兩次 lk888 credit
+
+## 📋 下一場開工先做
+1. 沿用 v235 既有待辦：手機 RC 真正走 Claude、💬試金石商業化三決策點、`sk-ant-api03-jMLa...` 來源不明金鑰、TokenTable 客服回報、Episode 11 後續格式
+2. 語音轉簡體字問題：等教練未來主動測試再跟進，不主動
+3. 產業鏈 SOP 正式文件補建（knowledges/SOP_產業鏈.md）+ 案例226 dedup 機制——等教練裁示
+
+## 🔑 本場commit
+本次總結commit另計（包含 `memory/reference_voice_input_simplified_chinese_2026-09-22.md` 新建）。
 
 
 
