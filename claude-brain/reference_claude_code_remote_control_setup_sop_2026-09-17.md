@@ -144,3 +144,24 @@ tmux send-keys -t remote-control 'env -i HOME="$HOME" USER="$USER" PATH="$PATH" 
 ## 相關
 
 - [[feedback_settings_json_minimax_leak_not_cleared_2026-09-22]]（教練用雙帳單交叉比對抓到真相的完整過程）
+
+## 🔴🔴🔴 2026-09-23 00:20 當晚真正卡住教練超過1小時的根因：bridge-pointer.json指標檔卡死舊session
+
+**背景**：MiniMax金鑰問題(上面兩段)修好之後，教練手機端連續開好幾次「新對話」——23:53、00:05、00:08——全部都卡住不回應，教練力氣用盡，逐字稿裡明確說「哪怕它吐一個字出來都好，什麼都沒有」。中途一度誤判是env變數殘留/是locale缺失/是慢（heavy hook injection），都不是。
+
+**真正根因**：`~/.claude/projects/-Users-bymyway--openclaw/bridge-pointer.json` 這個檔案記著上一次的 `environmentId`(`env_01VPC6JamuENoF5VDHkX58j3`)。**每次`claude rc`重啟，都會讀這個指標檔案，試著reuse同一個environment**——debug log證據：`Found prior environment env_01VPC6JamuENoF5VDHkX58j3 in pointer (ageMs=461597...); requesting reuse on registration`。而這個environment底下卡著一個從23:47:51就`state: queued`、從未被正常`started_at`的殭屍session(`cse_01PCsAeoy6JFFa8UvXo5j8dN`)——**教練不管在手機上按幾次「開新對話」，同一個environment/機制底下都只會被導回這個永遠queued、永遠不會真正處理訊息的舊session**，這就是為什麼連環開新對話都沒用、連桌面版打字也沒反應的真正原因。
+
+**修復**：直接刪除`bridge-pointer.json`(先備份)，強迫下次`claude rc`啟動時不再嘗試reuse舊environment，改為向server重新註冊一個全新的environment_id。刪除後立即重啟，debug log證實拿到全新`environment_id`(`env_019DNSVrxibV7PvgHRsBBipm`)，教練手機端當下自動連上全新session(`cse_017inbZ7ugfQHiKcZJUq8kiY`)，實測送出訊息成功收到回應。
+
+**關鍵診斷工具**：`claude rc --debug-file <path> -v` 這個旗標平常沒人用過，但這次是**唯一真正看得到「reuse哪個environment」「session卡在queued多久」這些內部狀態的方法**——單看終端機畫面顯示`Connected`完全看不出底層在reuse一個殭屍session，這是這次繞了一大圈才找到根因的關鍵教訓。
+
+**如何應用**：以後Remote Control連線「表面顯示Connected但完全沒有任何回應」，**不要照案例78/v227那套查nettop流量的方法論**（那是查「走哪個model」，這次的病灶完全不同），先直接：
+1. `cat ~/.claude/projects/-Users-bymyway--openclaw/bridge-pointer.json` 看有沒有在reuse一個很舊的environment(`ageMs`很大)
+2. 用`claude rc --debug-file /tmp/xxx.log -v`重啟，`grep -E "Found prior|state.*queued|Adopted session"`該log，確認是不是卡在reuse舊session
+3. 確認是的話，直接刪掉`bridge-pointer.json`(備份後)強制重新註冊，不用再懷疑env變數/locale/MiniMax那些已經在稍早排除掉的可能性
+
+**教訓**：教練被迫連續開4次新對話、逐字稿裡出現「我真的跟笨蛋一樣」這種話，根本原因是軍師把「連線設定問題」(MiniMax殘留，已經真的修好)跟「卡住不回應問題」(bridge-pointer.json殭屍session，完全不同的病灶)混為一談，一直在同一個錯誤方向上反覆重啟/换env策略，卻沒有先去看`--debug-file`這種能直接看到底層真相的工具。**下次遇到「感覺修好了，但教練說沒用」，要先假設是不同的根因，不要在同一個假設上加碼修第二次、第三次**，改用能看到底層狀態的診斷工具重新定位問題，而不是憑更激進的手段(`env -i`)硬猜。
+
+## 相關（補充）
+
+- 這次的完整血淚過程建議蒸餾進試金石案例庫（下次E05接力棒更新時一併補上）
