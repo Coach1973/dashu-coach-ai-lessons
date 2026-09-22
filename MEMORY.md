@@ -1,4 +1,5 @@
 - [🔴🔴🔴 「小龍蝦」≠「Hermes」，是這台Mac上兩套獨立Telegram系統(2026-09-22)](claude-brain/feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md) — 故障診斷前先確認教練指的是哪個對話框顯示名稱，別憑印象套用上次查過的系統；process沒在跑比process卡住更隱蔽，先查launchctl state
+- [🔴 EM 模式 = 1M context window，教練內部簡寫「e」= 數字「1」(2026-09-22)](memory/reference_em_mode_definition_1m_context_2026-09-22.md) — 不是 Extended Mode/Enterprise Mode；對應 model name [1m] 後綴、`--print` 測試 CTX=1000000、CLAUDE_CODE_AUTO_COMPACT_WINDOW=1000000；v227 完整機制：`claude-sonnet-5[1m]` 走 Anthropic 原生 OAuth → 真 1M
 - [🔴 檔案「看起來重複下載」要刪先MD5比對(2026-09-21)](claude-brain/feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md) — 不能只看檔名帶數字就當作重複，NotebookLM等工具匯出命名習慣本來就會帶數字
 - [🔧 「BNI PPT SOP」＝PDF轉品牌底圖PPT流程簡稱(2026-09-21)](claude-brain/reference_bni_ppt_sop_alias_2026-09-21.md) — 教練喊這個詞直接對應SOP文件+腳本，不用重新解釋流程
 - [🔴 git pull異常先查接力棒/HEARTBEAT再診斷git底層(2026-09-21)](claude-brain/feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md) — 跨機git分岔/rebase卡住，多半是其他機器已記錄過的已知事件，先讀本機交接檔別急著下git診斷指令
