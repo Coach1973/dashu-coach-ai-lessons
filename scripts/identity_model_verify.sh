@@ -68,7 +68,7 @@ if [[ -n "$NETWORK_PID" ]]; then
   DECLARED_BASE_URL=$(ps eww "$NETWORK_PID" 2>/dev/null | tr ' ' '\n' | grep '^ANTHROPIC_BASE_URL=' | cut -d= -f2-)
 fi
 
-# === 第二關：這個 process 實際的網路連線目的地（最終裁判） ===
+# === 第二關：這個 process 實際的網路連線目的地（連線層級，會漏掉已關閉的連線） ===
 REAL_IPS=""
 if [[ -n "$NETWORK_PID" ]]; then
   REAL_IPS=$(lsof -p "$NETWORK_PID" -a -i TCP -n 2>/dev/null | grep ESTABLISHED | awk '{print $9}' | sed -E 's/.*->//' | sed -E 's/:[0-9]+$//' | sort -u)
@@ -87,6 +87,33 @@ done <<< "$REAL_IPS"
 
 [[ -z "$REAL_IP_ANNOTATED" ]] && REAL_IP_ANNOTATED="  （查無ESTABLISHED連線，可能這輪還沒發過API請求，或lsof權限不足）\n"
 
+# === 第二關之二：實際流量位元組數（2026-09-19教練用的方法，比單純看連線存在更硬） ===
+# lsof只看「現在有沒有連線」，連線開了又關會漏掉；nettop給每條連線累計傳輸位元組數，
+# 教練09-19就是靠這個數字（MiniMax 32.35MB > Anthropic 12.94MB）才拍板定案，
+# 這關若沒做，等於自己承認的查證方法比教練當時還弱。
+NETTOP_BYTES=""
+if [[ -n "$NETWORK_PID" ]]; then
+  NETTOP_RAW=$(nettop -p "$NETWORK_PID" -l 1 -x 2>/dev/null | grep -E '160\.79\.104\.|175\.99\.116\.')
+  if [[ -n "$NETTOP_RAW" ]]; then
+    # nettop -x 固定欄位順序：$3=連線(IP:port<->IP:port) $6=bytes_in $7=bytes_out（field 13/14是socket buffer大小，不是流量，不能用）
+    NETTOP_BYTES=""
+    MINI_IN=0; MINI_OUT=0; ANTH_IN=0; ANTH_OUT=0
+    while IFS= read -r line; do
+      IP_SEG=$(printf '%s' "$line" | grep -oE '(160\.79\.104|175\.99\.116)\.[0-9]+')
+      BIN=$(printf '%s' "$line" | awk '{print $6}')
+      BOUT=$(printf '%s' "$line" | awk '{print $7}')
+      [[ -z "$IP_SEG" || -z "$BIN" || -z "$BOUT" ]] && continue
+      case "$IP_SEG" in
+        175.99.116.*) LABEL="MiniMax"; MINI_IN=$((MINI_IN+BIN)); MINI_OUT=$((MINI_OUT+BOUT)) ;;
+        160.79.104.*) LABEL="Anthropic"; ANTH_IN=$((ANTH_IN+BIN)); ANTH_OUT=$((ANTH_OUT+BOUT)) ;;
+        *) LABEL="?" ;;
+      esac
+    done <<< "$NETTOP_RAW"
+    NETTOP_BYTES="  MiniMax(175.99.116.x)累計：in=${MINI_IN} bytes / out=${MINI_OUT} bytes\n  Anthropic(160.79.104.x)累計：in=${ANTH_IN} bytes / out=${ANTH_OUT} bytes\n"
+  fi
+fi
+[[ -z "$NETTOP_BYTES" ]] && NETTOP_BYTES="  （目前沒有連線到已知的Anthropic/MiniMax網段，或nettop權限不足）\n"
+
 # === 第三關：注入 context ===
 
 printf '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
@@ -98,9 +125,13 @@ printf '   不是這個session自己「以為」的，回答前必須引用這�
 printf '📋 **宣告值**（argv --model 參數）：%s\n' "${DECLARED_MODEL:-（查無，可能hook執行環境跟主process脫鉤）}"
 printf '📋 **宣告值**（ANTHROPIC_BASE_URL 環境變數）：%s\n\n' "${DECLARED_BASE_URL:-（未設定或查無）}"
 
-printf '🎯 **實際連線目的地（最終裁判，優先於上面兩個宣告值）**：\n'
+printf '🎯 **實際連線目的地（連線層級）**：\n'
 printf '%b' "$REAL_IP_ANNOTATED"
 printf '\n'
+
+printf '🎯🎯 **實際流量位元組數（最終裁判，2026-09-19教練用的同一種方法）**：\n'
+printf '%b' "$NETTOP_BYTES"
+printf '   → 哪邊bytes明顯大很多，這個session實際的資料就是在跟哪邊交換，不是看有沒有連線而已。\n\n'
 
 printf '📖 **背景**：2026-09-19教練跟軍師花一整晚才查出，argv/env宣告值有時候會跟實際連線目的地對不上\n'
 printf '   （例如argv寫MiniMax字串但實際走真Anthropic OAuth，或反過來）。所以判斷「這個session到底是誰」，\n'
