@@ -1,3 +1,4 @@
+- [🔴 git pull異常先查接力棒/HEARTBEAT再診斷git底層(2026-09-21)](claude-brain/feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md) — 跨機git分岔/rebase卡住，多半是其他機器已記錄過的已知事件，先讀本機交接檔別急著下git診斷指令
 - [🔴 git add -A誤commit含真實個資的.db.bak檔(2026-09-01)](claude-brain/feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md) — .gitignore的*.db規則擋不住.db.bak-xxx變體檔名，commit前先git status肉眼掃一眼
 - [💾 易數一鍵還原備份工具結構](project_backup_tool.md) — D槽根目錄，.pmf是基底、.ptp是時間戳記完整備份非增量，每次執行同資料夾新增.ptp不建新資料夾
 - [📂 Downloads位置與整理結構](project_downloads_location.md) — 實際位置D:\Users\Downloads（非C槽預設），既有分類資料夾規則
