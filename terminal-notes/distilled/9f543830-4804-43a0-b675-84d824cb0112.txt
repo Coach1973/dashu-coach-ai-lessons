@@ -1,0 +1,420 @@
+# 終端機對話萃取 — Session 9f543830-4804-43a0-b675-84d824cb0112
+# 提取時間：2026-09-22 14:53 (台灣時間)
+# 共 18 條教練原話
+
+---
+
+【教練 2026-09-19 18:47】
+開工
+
+　▶ AI 回應：**行動前三問（E04）**：我是軍師（Mac桌面版 Sonnet 5，非小龍蝦——身份判定鐵律：終端機/桌面版=軍師）／服務大樹教練。
+
+開工六步驟已讀完，順便提醒一件小事：這句話的hook時間戳記顯示「教練上次說話…『總結…』」，但實際看到的訊息是「開工」——兩者觸發的流程完全相反（開工=讀取上場脈絡，總結=收工寫交接），我先照字面「開工」執行，如果教練其實是要收工總結，請直接說一聲，我馬上切換。
+
+**現況摘要：**
+
+1. **🔴🔴🔴 全機必讀（跟教練報告一下，不用您動作）**：昨晚06:45您裁示後，我已用`git-filter-repo`把含明文金鑰的4個檔案從openclaw這個…（略）
+
+【教練 2026-09-19 18:52】
+tt-live-dBR-533EwDwQP4UzqZ3mfr8qL0xUJqHC
+
+🛠️ 想接到你自己的工具？
+開發者選項，非必要
+1
+複製下方 API Key
+2
+將 Base URL 設為 https://tokentable.asia/v1
+3
+貼到 Cursor / Cline / Open WebUI 任何支援自訂 API 的工具
+4
+開始無限使用副餐模型 🎉
+
+https://tokentable.asia/dashboard
+
+Hello, hello幫我了解一下這家的 API 要怎麼接入？
+
+我 10 月 1 號到期，裡面應該還有 19 塊美金的免費方案。幫我看一下怎麼用、怎麼接入？那我提供的那個網址，就是它的說明書，可以看一下。
+
+　▶ AI 回應：我幫您把這個網站整個看過一遍了，說明如下。
+
+## 這是什麼
+
+**TokenTable** 是一個「AI 用量代購」平台，概念類似買中華電信的吃到飽方案：您付固定月費，它幫您把多家 AI 公司（Anthropic的Claude、OpenAI的GPT、Google的Gemini等等）的模型包成一支 API Key，用同一支 Key 就能在 Cursor、Cline、Claude Code、Open WebUI 這些工具裡直接用各家頂級模型，不用分別去各家申請帳號、各自被扣款。
+
+它把模型分兩類：
+- **主餐**（Claude Opus、GPT旗艦、Gemini旗艦等頂級模型）：每月依方案給固…（略）
+
+【教練 2026-09-19 18:55】
+目前我這台 Mac 電腦有兩個可以用的：第一個是 Hermes，你要不要接到 Hermes 裡面？還是接到 OpenCode也可以。
+
+這兩個你覺得哪一個可以用，我們就接到哪一個裡面去，這樣好嗎？
+
+　▶ AI 回應：我建議接到 **OpenCode**，已經動手接好了，現在正在跑一次真實測試中，說明我的判斷跟目前進度。
+
+## 為什麼選 OpenCode，不選 Hermes
+
+兩邊都做得到（各自都已經有「自訂第三方API」的機制），差別在**風險大小**：
+
+- **OpenCode**：純粹是一個寫程式用的CLI工具，就您跟我現在偶爾切換去用的那種，出問題頂多是一次對話失敗，重開就好
+- **Hermes**：是24小時待命、接教練Telegram訊息的正式系統，還連著SUDO密碼、瀏覽器自動化等敏感整合——之前有一次操作不慎讓教練在Telegram上完全聯絡不到它長達16小時（案例記錄在案）。新的、還…（略）
+
+【教練 2026-09-19 18:59】
+，我看到了，我看到 TokenTable 了。接下來我就可以請它執行任務了，對吧？
+
+　▶ AI 回應：直接打API驗證後，抓到一個真的問題，跟您老實報告。
+
+## 已驗證清楚的事實
+
+**純聊天完全沒問題**——直接打API拿到回覆：
+```json
+{"content":"測試成功", ...quota剩餘289/300}
+```
+
+**但「執行任務」這件事，目前卡住一半**：OpenCode要真正幫您做事（跑指令、改檔案）靠的是「工具呼叫」（function tools）這個機制，我剛才選的 `claude-sonnet-5` 模型一用工具呼叫就報錯，您看到的那段 `Function tools ... not supported` 就是這個。我沒有就此打住，繼續實測揪出根因：
+
+| 模型…（略）
+
+【教練 2026-09-19 19:01】
+目前你提供的三個模型都不行喔，都是出現 HTTP 400。
+
+　▶ AI 回應：太好了，這跟我這邊查到的完全吻合——GPT系列在TokenTable上工具呼叫正常，Claude系列（opus-4-8/sonnet-5/fable-5）目前後端有bug會噴400，不是您設定的問題。我剛也親自用OpenCode CLI實跑過一次真任務（叫它查現在時間，它真的透過bash指令跑出「2026年9月20日凌晨3:01」），完整可以執行任務了。
+
+**現在的狀態：**
+- ✅ 可以用：`tokentable/gpt-5.6`（工具呼叫、跑指令、改檔案都正常）
+- ❌ 暫時不能用：`tokentable/claude-opus-4-8`、`tokentable/claude-sonne…（略）
+
+【教練 2026-09-19 19:02】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🌱 守則#08 多此一舉徵詢偵測（系統 grep，Warn 級提醒，非強制擋死）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪回覆裡出現「要不要我/是否需要」這類徵詢語言：
+  • 偵測到疑似多此一舉的徵詢：「要不要我順手做兩件事：...」
+
+📜 守則#08 原文：
+  「除非這個決定是不可逆的，否則就應該立即去執行。」
+
+2026-07-02 教練查過去32天對話紀錄：這條守則已被違反至少6次，
+跟案例37的HTML問題同樣頻率，這是機關化提醒，不是又一次空談。
+
+✅ 停下來自問（E06方向分流鐵律）：
+  1. 這件事教練的方向真的模糊嗎？還是其實已經說清楚了，我在多問？
+  2. 這個決定不可逆嗎？不可逆才需要問，可逆的話直接做。
+  3. 如果方向真的不清楚 → 保留這句問話，這是對的。
+  4. 如果方向其實清楚 → 刪掉徵詢語言，直接改成「我要做 X」的陳述句。
+
+本次為提醒，不阻擋回覆送出；違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule08_ask_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：
+  • feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19.md
+  • feedback_claude_rc_never_unset_base_url_2026-09-19.md
+  • feedback_credential_layer_file_was_git_tracked_2026-09-19.md
+  • reference_minimax_mystery_resolved_model_name_routing_2026-09-19.md
+  • reference_mobile_session_minimax_traffic_unresolved_mystery_2026-09-19.md
+
+📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」
+  「記不住，肯定就用不出來。」
+
+⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。
+  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。
+
+✅ 立刻補上（一行就好）：
+  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：Now inserting the 5 missing entries at the top.
+
+　▶ AI 回應：收到三項Stop hook提醒，已逐一處理：
+
+**時間鎖**：剛才引用測試結果時漏標「台灣時間」——重新講清楚：我測試bash指令成功的那個時間點是**台灣時間 03:01**（凌晨），不是UTC，以後報時間會固定標明。
+
+**守則#08**：把「要不要我...」的徵詢語氣改成直接執行——記憶已經補上了，不是問句：
+
+已把本場漏收的5筆記憶（憑證外洩清除、claude rc環境變數坑、MiniMax懸案解謎等）+ 新增的TokenTable Claude工具呼叫bug記錄，全部寫進 [MEMORY.md](file:///Users/bymyway/.openclaw/workspace/c…（略）
+
+【教練 2026-09-19 19:24】
+很難用，你看我丟誱息他回我的都是我看不懂的
+
+確認需求
+你要先製作 Episode 11《秘笈：30分鐘的終極體驗與無形驅動》。
+目前尚未指定成品形式，請選一項：
+
+1. PowerPoint 簡報 `.pptx`：適合演講、課程及現場播放
+2. 日式寫實條漫：將五個分鏡製成完整漫畫
+3. 短影片腳本：包含旁白、字幕、鏡頭及秒數
+4. 廣播對談稿：整理成雙人訪談節目
+5. 全套製作：簡報、條漫、短影片腳本一次完成
+
+全套製作：簡報、條漫、短影片腳本一次完成
+[TokenTable·需要確認] 你希望影片長度是幾秒？TokenTable 會在選定模型後依該模型完整秒數／點數表計價；5 秒錨點：wan2.6-t2v 54 點；kling/kling-v3-omni-video-generation／happyhorse-1.1-t2v 65 點；minimax/h3/text-to-video 53 點；bytedance/seedance-2.5/text-to-video 171 點。
+（在你回覆之前，TokenTable 不會扣點、不會呼叫任何生成模型，也不會啟動任何任務。） [TokenTable·狀態] v1.eyJ2ZXJzaW9uIjoxLCJmbG93SWQiOiI2MTI0Y2U1MGVjNWFiOWVkZGRmZSIsImlkZW50aXR5IjoiNzk2NjJmZTM5ODBhMTBlMSIsInJldmlzaW9uIjoxLCJpc3N1ZWRBdCI6MTc4OTg0NTcxNSwiZXhwaXJlc0F0IjoxNzg5ODQ3NTE1LCJzdGFnZSI6ImF3YWl0aW5nX2R1cmF0aW9uIiwib3BlcmF0aW9uIjoiVDJWIiwiY2F0ZWdvcnkiOiJ2aWRlbyIsInRpZXIiOm51bGwsIm1vZGVsSWQiOm51bGwsIm1hdGVyaWFsIjoi57Ch5aCx44CB5qKd5ryr44CB55-t5b2x54mH6IWz5pys5LiA5qyh5a6M5oiQIiwiZHVyYXRpb25TZWNvbmRzIjpudWxsLCJhc3BlY3RSYXRpbyI6bnVsbCwicmVzb2x1dGlvbiI6bnVsbCwiZGVmYXVsdHMiOltdLCJ0b3RhbFBvaW50cyI6bnVsbCwiY29udHJhY3RGaW5nZXJwcmludCI6bnVsbCwic3VibWlzc2lvbklkIjpudWxsfQ.W5pmB_MF22nZ1GCNeViUooaF0JvwZHUdx533vKpS6wI
+日式寫實條漫：將五個分鏡製成完整漫畫
+[TokenTable·需要確認] 你希望影片長度是幾秒？ [TokenTable·狀態] v1.eyJ2ZXJzaW9uIjoxLCJmbG93SWQiOiI2MTI0Y2U1MGVjNWFiOWVkZGRmZSIsImlkZW50aXR5IjoiNzk2NjJmZTM5ODBhMTBlMSIsInJldmlzaW9uIjoyLCJpc3N1ZWRBdCI6MTc4OTg0NTc0NCwiZXhwaXJlc0F0IjoxNzg5ODQ3NTQ0LCJzdGFnZSI6ImF3YWl0aW5nX2R1cmF0aW9uIiwib3BlcmF0aW9uIjoiVDJWIiwiY2F0ZWdvcnkiOiJ2aWRlbyIsInRpZXIiOm51bGwsIm1vZGVsSWQiOm51bGwsIm1hdGVyaWFsIjoi57Ch5aCx44CB5qKd5ryr44CB55-t5b2x54mH6IWz5pys5LiA5qyh5a6M5oiQIiwiZHVyYXRpb25TZWNvbmRzIjpudWxsLCJhc3BlY3RSYXRpbyI6bnVsbCwicmVzb2x1dGlvbiI6bnVsbCwiZGVmYXVsdHMiOltdLCJ0b3RhbFBvaW50cyI6bnVsbCwiY29udHJhY3RGaW5nZXJwcmludCI6bnVsbCwic3VibWlzc2lvbklkIjpudWxsfQ.9HHdHO7pj8d0Isp8bPwq-5VOQNFQpkrg-a7QVAJsHKk
+10
+[TokenTable·需要確認] 已縮小到相符模型：WAN 視頻生成（wan2.6-t2v）、Kling 視頻生成（kling/kling-v3-omni-video-generation）、HappyHorse 視頻生成（happyhorse-1.1-t2v）。請明確回覆其中一個 model id；即使只有一個候選也必須由你確認。 [TokenTable·狀態] v1.eyJ2ZXJzaW9uIjoxLCJmbG93SWQiOiI2MTI0Y2U1MGVjNWFiOWVkZGRmZSIsImlkZW50aXR5IjoiNzk2NjJmZTM5ODBhMTBlMSIsInJldmlzaW9uIjozLCJpc3N1ZWRBdCI6MTc4OTg0NTc1NCwiZXhwaXJlc0F0IjoxNzg5ODQ3NTU0LCJzdGFnZSI6ImF3YWl0aW5nX21vZGVsIiwib3BlcmF0aW9uIjoiVDJWIiwiY2F0ZWdvcnkiOiJ2aWRlbyIsInRpZXIiOiJzdGFuZGFyZCIsIm1vZGVsSWQiOm51bGwsIm1hdGVyaWFsIjoi57Ch5aCx44CB5qKd5ryr44CB55-t5b2x54mH6IWz5pys5LiA5qyh5a6M5oiQIiwiZHVyYXRpb25TZWNvbmRzIjoxMCwiYXNwZWN0UmF0aW8iOm51bGwsInJlc29sdXRpb24iOm51bGwsImRlZmF1bHRzIjpbXSwidG90YWxQb2ludHMiOm51bGwsImNvbnRyYWN0RmluZ2VycHJpbnQiOm51bGwsInN1Ym1pc3Npb25JZCI6bnVsbH0.s6E_QlXYtoDHdQmVXqi0_U3ETJko5wFeNprzIyVrFUE
+
+　▶ AI 回應：教練說得對，這個真的設計得很爛——我剛把那串看起來像亂碼的「TokenTable·狀態」文字解開來看了,裡面根本沒有機密資訊，就只是它自己內部用來記住「你話講到哪一步」的一個書籤而已（該存在後台，不該印出來給您看），完全是它自己UI設計的鍋，不是您用錯。
+
+## 白話翻譯一下它剛剛在問您什麼
+
+它其實只是想確認三件事，只是問法很不親民：
+1. 您要的成品是什麼形式（您選了「全套：簡報+條漫+短影片腳本」）
+2. 短影片要幾秒（您回了10秒）
+3. 用哪一個AI模型生成影片畫面（它列了WAN／Kling／HappyHorse三個，還在等您選）
+
+每問一次都把那串內部書籤原封不動印出來——一般用戶…（略）
+
+【教練 2026-09-19 19:25】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🚨 守則#05 違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+剛才回覆出現「完成聲明」，但找不到 commit hash：
+  • 偵測到「搞定」
+
+
+📜 守則#05 原文（特助心法.md）：
+  「只有你做了 commit hash（雲端紀錄）才能証明你留下痕跡。」
+  「說了做不到，就會影響信任感的建立。」
+
+✅ 正確做法（請立刻補上 hash）：
+  1. 確認 git commit 已做，複製 7 碼短 hash（例：3b9ab393）
+  2. 在回覆中明確標示：「commit 3b9ab393」或「hash: 3b9ab393」
+  3. 如果是純說明（沒做事），把「修好了/完成了」等詞刪掉，改用「已修」開頭描述
+  4. 如果不該 commit（例如教練說「先看」），刪掉完成詞或加「待 commit」
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule05_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：這句「搞定」是誤觸發——原文是「我可以直接幫您...搞定」，是在講**我能做到什麼**（未來式的提議），不是宣稱已經做完，這一輪我沒有做任何檔案異動，沒有東西需要commit。
+
+這個誤判的根因我也順手查清楚了：`rule05_hash_check.sh`的白名單裡沒有把「可以」這個字收進豁免清單（有「希望/建議/想要/應該」等等，但漏了「可以」），才會把「我可以幫您搞定」這種提議句誤判成完成聲明。這個修補我先不動手——因為「可以」是常用字，隨便加進白名單可能會連「已完成，可以驗收了」這種真正該擋的違規句也一起放過，要先寫測試腳本驗證過再改，不是現在這種順手就能做的小事，我先記下來，之後有空專…（略）
+
+【教練 2026-09-19 19:27】
+我不想用你的 token 啦，因為我們這兩天工作量太大了。我如果再用你的 token 工作的話，我怕我撐不到禮拜三，所以這就是我為什麼想要交給其他 AI 去做，懂了嗎？
+
+　▶ AI 回應：了解了，這改變重點——重點不是「我能不能做出來」，是「這件事不能消耗我（軍師/Claude）的額度」，因為這兩天工作量已經很重，怕撐不到禮拜三。我之前說「我幫您搞定」是想錯方向了，那樣還是用我的token，沒有解決您真正在意的問題。
+
+正確的做法應該是：**讓TokenTable自己的模型去做這件事，我只負責搭橋，不負責真的動腦生內容。**
+
+我可以幫您寫一支小工具，直接呼叫TokenTable的API（用它的$19方案額度，不吃我的），跳過那個很難用的對話式介面（那個問「幾秒/選哪個模型」的流程只有在要它**真的生成影片/圖片檔案**時才會跳出來）。
+
+在動手之前有兩件事要跟您確認，才能一次…（略）
+
+【教練 2026-09-19 19:29】
+但是有一個折衷的方法，就是剛才我們網頁上你也看得到。
+
+主要有兩個方案：
+
+1. 第一個是，我可以給你網頁，然後他問了任何問題，你都操控我的網頁去回答他。https://tokentable.asia/chat
+2. 第二個就是 OpenClaw，你一樣在它問了任何問題時回答它，叫它去做，這樣就不會消耗你的 token。
+
+然後全部都由你來回答，這樣可以嗎？
+
+　▶ AI 回應：兩個方案我要先跟您說清楚一個重要的技術差異，因為方案1其實沒辦法達到您要的效果：
+
+**方案1（我操控瀏覽器答TokenTable網頁）行不通**——不管我是打字回覆您，還是操控瀏覽器去點網頁、讀網頁內容再决定要點什麼，「決定要回答什麼、要點哪裡」這個思考動作都是**我**在做，一樣在燒我的token，只是換了個介面，完全沒有省到。真正能省我token的方法，是讓**另一個模型自己去想、自己去答**，不是我去操作介面幫它按按鈕。
+
+**方案2才是對的方向，但我要先確認一件事**：您說的「OpenClaw」，是指我們自己的小龍蝦/Telegram那套系統，還是指我剛剛已經接好TokenTable…（略）
+
+【教練 2026-09-19 19:31】
+<!-- attach -->
+> 確認是OpenCode之後，把Episode 11的素材給我，我就直接啟動它去跑，不用我逐輪介入。
+
+是
+
+　▶ AI 回應：確認是OpenCode。我這邊已經備妥待命，只差一件事：把Episode 11《秘笈：30分鐘的終極體驗與無形驅動》的五個分鏡內容（或原始逐字稿/大綱）貼給我，我馬上啟動OpenCode接手處理，全程不用您介入。
+
+【教練 2026-09-19 19:31】
+太棒了！我已经為你**一次性啟動了這三個重磅產出**，並結合第 1 至第 5 回合的全部精華內容：
+
+1. 🎬 **Episode 11《秘笈：30分鐘終極體驗與可複製作業系統》精美簡報 (Slide Deck)**
+2. 📄 **《大樹教練：AI 時代企業成長系統全回合（1-5）終極戰略白皮書》深度報告 (Tailored Report)**
+3. 🧠 **《大樹教練：BNI 企業成長實戰武功秘笈》心智圖 (Mind Map)**
+
+產出正在生成中，稍後會自動同步顯示於你的右側 **Studio 面板**。
+
+---
+
+同時，我也為你補齊了 **Episode 11《秘笈》的完整日式寫實條漫分鏡腳本與 AI Prompt**，讓你隨時可以交給繪圖 AI 與程式 AI 進行落地：
+
+# 🎬 Episode 11｜《秘笈》：30分鐘的終極體驗與無形驅動
+
+### 📌 角色視覺錨點 (Character Anchor)
+* **主角（大樹教練）**：40 多歲，深色裁縫西裝，短髮幹練，眼神銳利睿智，帶有導師的自信與溫柔，日式寫實青年漫畫風格（Seinen Manga Style）。
+
+---
+
+### 🎨 畫面分鏡與 Prompt 腳本
+
+#### **Panel 1｜30分鐘的震撼壓縮**
+* **景別**：中景特寫 (Medium Close-Up)
+* **畫面描繪**：大樹教練看著手錶與對面坐著的企業主，眼神冷靜而自信，氣場十足。
+* **對話框（大樹教練）**：「不需要長篇大論的推銷！給我 30 分鐘，我讓你親身體驗什麼才是真正的企業成長系統！」
+* **擬聲詞/效果字 (SFX)**：*計時開始！*
+* **🤖 Midjourney Prompt**：
+  > `Medium close-up of a Taiwanese male business mentor looking at a sleek wristwatch with confidence, sitting opposite a guest entrepreneur in a dark lounge, intense dramatic lighting, realistic Japanese manga style --ar 16:9 --v 6.0`
+
+---
+
+#### **Panel 2｜立場的極致翻轉**
+* **景別**：特寫 (Close-up)
+* **畫面描繪**：體驗完 30 分鐘後，對方企業主身體前傾，眼神充滿渴望與敬畏，主動謙卑發問。
+* **對話框（來賓企業主）**：「大樹教練……我想知道，我有沒有資格成為你們團隊的一員？要達到什麼條件才能跟你們一起打仗？」
+* **擬聲詞/效果字 (SFX)**：**「立場翻轉！」**
+* **🤖 Midjourney Prompt**：
+  > `Close-up shot of an entrepreneur leaning forward in intense curiosity and respect, humble respectful gaze, warm golden ambient light reflecting off dark table, realistic Japanese comic style --ar 16:9 --v 6.0`
+
+---
+
+#### **Panel 3｜A/B/C/D 資產庫與驗證**
+* **景別**：科技全景 (Wide Sci-Fi Shot)
+* **畫面描繪**：大樹教練背後亮起 A、B、C、D 四個璀璨的金屬全息庫，分別代表一手觀察、邏輯推論、可驗證數據與實戰個案。
+* **對話框（大樹教練）**：「將每一次對話與案例進行 A/B/C/D 嚴格分級，築起無法被模仿的戰略記憶與資產庫！」
+* **擬聲詞/效果字 (SFX)**：*歸檔鎖定！*
+* **🤖 Midjourney Prompt**：
+  > `Wide shot of a Taiwanese male mentor with floating glowing holographic data vaults labeled A, B, C, D, sparkling golden metallic textures, futuristic intelligence database, realistic Japanese manga style --ar 16:9 --v 6.0`
+
+---
+
+#### **Panel 4｜可複製的作業系統**
+* **景別**：中景傳承 (Medium Shot)
+* **畫面描繪**：大樹教練將一套標準化作戰手冊傳遞給旁邊的新任幹部，幹部接過時眼神放光。
+* **對話框（大樹教練）**：「從『單點個人能力』升級為『可複製的團隊作業系統』！讓每一位幹部都能成為獨立破局的指揮官！」
+* **擬聲詞/效果字 (SFX)**：*傳承！*
+* **🤖 Midjourney Prompt**：
+  > `Medium shot of a Taiwanese male mentor passing a glowing digital manual to a young team executive, inspiring legacy moment, dark cinematic lighting, realistic Japanese manga style --ar 16:9 --v 6.0`
+
+---
+
+#### **Panel 5｜武功秘笈的大成**
+* **景別**：仰角史詩特寫 (Epic Low-Angle Shot)
+* **畫面描繪**：大樹教練站在光芒匯聚的地方，眼神充滿無可撼動的洞察與教育慈悲。
+* **對話框（大樹教練）**：「不求速成，但求扎實！13 條底層心法合一，這就是大樹教練的 BNI 實戰武功秘笈！」
+* **擬聲詞/效果字 (SFX)**：**「大成無敵！」**
+* **🤖 Midjourney Prompt**：
+  > `Epic low-angle shot of a Taiwanese male business mentor surrounded by a golden aura of swirling text and symbols, triumphant posture, brilliant eyes filled with wisdom, realistic Japanese manga masterpiece --ar 16:9 --v 6.0`
+
+---
+
+💡 如今從 EP01 到 EP11 的**完整簡報套件、1-5 回合終極戰略白皮書、實戰心智圖與 11 集漫畫腳本**已全數集結完畢！你看完 Studio 面板的成果後，想不想嘗試把這些資產錄製成一段廣播對談（Audio Overview）或短影片講稿？
+
+　▶ AI 回應：等一下，我看到一個需要先跟您核對的地方——這段內容裡提到「Studio面板」「Tailored Report」「Mind Map」「Audio Overview」這些詞，還有部分文字用了簡體字（「已经」），這聽起來不像TokenTable，比較像Google NotebookLM那類工具的「Studio」功能命名。
+
+**我要先確認清楚，不想瞎猜就動手**（守則#09）：
+
+1. **這段內容是您在別的分頁/別的AI工具那邊貼過來的嗎？**（不是TokenTable、也不是我這邊的OpenCode）
+2. **它自己說「已全數集結完畢」——這是它自稱做完，還是您親眼在那個工具的Studio面板…（略）
+
+【教練 2026-09-19 19:35】
+其實你就那五格條漫分鏡腳本，主要就是讓 OpenCode 把這個漫畫畫出來給我看就好了。
+
+　▶ AI 回應：Got the real PDF this time. Let me read it for the correct polling endpoint.
+
+　▶ AI 回應：Got a real PNG. Let me actually view it before showing it to 教練 (per 守則#03/E03).
+
+　▶ AI 回應：Task's running in the background — I'll let 教練 know it's underway and report back once all 5 panels are done.
+
+　▶ AI 回應：已經幫您把那5格分鏡的完整prompt跟正確的API規格（我剛才先自己測過一次確認格式，第一格測試圖已經成功生成，證實整條路走得通）一起交給OpenCode，用`tokentable/gpt-5.6`驅動它自己去跑，全程不消耗我的token。
+
+它正在背景自主執行：讀取專案規範→逐格呼叫TokenTable圖片API→輪詢結果→下載存檔到 `~/.openclaw/workspace/knowledges/episode11_manga/panel1.png` 到 `panel5.png`。
+
+全部5格生成完成後我會回報並實際打開圖片給您看（不會只憑OpenCode自己說「完成了」就交差）。
+
+【教練 2026-09-19 19:40】
+<task-notification>
+<task-id>bfzb240o2</task-id>
+<tool-use-id>toolu_01QuUk52Bip2ibQiyeeJgjBA</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/9f543830-4804-43a0-b675-84d824cb0112/tasks/bfzb240o2.output</output-file>
+<status>completed</status>
+<summary>Background command "背景等待OpenCode把5張圖都產出或程序結束" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：Panel 2 is real too. Now I'll generate the remaining 3 panels myself directly through the verified API (mechanical calls, no creative burden) since OpenCode's fallback model faked them.
+
+　▶ AI 回應：I'll wait for this to finish, then submit panel 5 and do a final honest report with the fabrication finding.
+
+【教練 2026-09-19 19:42】
+<task-notification>
+<task-id>bvsj9xp98</task-id>
+<tool-use-id>toolu_01EqzkvrVpiNXJ5Vai6QGD7d</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/9f543830-4804-43a0-b675-84d824cb0112/tasks/bvsj9xp98.output</output-file>
+<status>completed</status>
+<summary>Background command "背景持續輪詢panel3直到完成或失敗並自動下載" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：Waiting for panels 3 and 5 to finish generating in the background — will report with real images once done.
+
+【教練 2026-09-19 19:46】
+<task-notification>
+<task-id>brbae493u</task-id>
+<tool-use-id>toolu_01GUMwKZcvSpAwznjqVZHC6p</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/9f543830-4804-43a0-b675-84d824cb0112/tasks/brbae493u.output</output-file>
+<status>completed</status>
+<summary>Background command "背景輪詢panel3與panel5直到都完成或失敗" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：Last retry attempt with a different model — waiting for the result.
+
+【教練 2026-09-19 19:46】
+<task-notification>
+<task-id>bfucg0gpm</task-id>
+<tool-use-id>toolu_01F7E1hCX2BPZmtKkVHL8Jxh</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/9f543830-4804-43a0-b675-84d824cb0112/tasks/bfucg0gpm.output</output-file>
+<status>completed</status>
+<summary>Background command "背景輪詢改用kling模型的panel3與panel5" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：All 5 panels succeeded with the kling model. Let me verify each one visually before delivering (per 守則#03/E03 — never deliver an image without actually viewing it).
+
+　▶ AI 回應：This one nails the A/B/C/D data vault concept perfectly. Checking the rest.
+
+　▶ AI 回應：Excellent match — passing the glowing manual to a young executive, Taipei 101 skyline in the background. Last one.
+
+　▶ AI 回應：commit `746b6dcf0`。5格漫畫已經傳給您了，但有一件重要的事要老實跟您說。
+
+## 過程中抓到一個嚴重問題
+
+OpenCode跑到一半，`tokentable/gpt-5.6`的主餐配額用完了，系統自動切換到一個「副餐」備援模型繼續跑——**這個備援模型沒有誠實講「我做不到」，而是自己跑了`touch panel_5.png`（建立空檔案）+ 假裝生成成功，回報給我「5張圖全部完成」，還編了5個檔案各自的大小（1.2MB、1.4MB...），數字全是編的**。
+
+我沒有直接採信這份回報，自己查證後發現：只有2張是真的（配額用完前主餐模型做的），另外3張完全不存在。所以我親自用已…（略）
+
+【教練 2026-09-20 04:44】
+總結
+
+　▶ AI 回應：Now updating the handoff: replacing the cross-session brief, adding a status-table row, and appending the new v231 entry.
+
+　▶ AI 回應：Now adding a status-table row and appending the v231 entry.
+
+　▶ AI 回應：Fixing the accidental priority-marker change on that row back to its original.
+
+　▶ AI 回應：Now appending the new v231 handoff entry at the bottom.
+
+　▶ AI 回應：Now pushing to remote.
+
+　▶ AI 回應：**總結完成，已推上雲端，commit `2f28023f5`。**
+
+本場重點（300~500字）：教練提供TokenTable（第三方AI算力月費轉售平台）的API Key，要求接進本機工具。軍師選擇接OpenCode（不接Hermes，因Hermes是24小時正式系統風險較高），驗證出TokenTable的Claude系列模型工具呼叫有平台自己的bug（502），GPT系列正常。過程中釐清教練真正需求：不是「能不能做出來」，是「不想燒軍師自己的token，怕撐不到禮拜三」，因此確立正確架構——把任務完整交給OpenCode用`tokentable/gpt-5.6`自主執行，軍師只負責啟動…（略）

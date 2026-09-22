@@ -1,0 +1,365 @@
+# 終端機對話萃取 — Session cbe89eb3-02dc-46d9-97d1-bfe0bb26221e
+# 提取時間：2026-09-22 14:53 (台灣時間)
+# 共 16 條教練原話
+
+---
+
+【教練 2026-09-20 08:47】
+開
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**：我是 Sonnet 5，執行於 Mac 桌面版 App（Code 分頁）——依鐵律稱呼為「軍師」。
+**雲端同步狀態**：✅ 已拉雲端最新（HEAD: `2e16bfb0c`）。
+
+**當下主軸**：兩條平行對話框都已在稍早「總結」收尾——
+
+- **對話框A（TokenTable接OpenCode）**：架構已定案（任務丟給 OpenCode 用 `tokentable/gpt-5.6` 自主執行，軍師只負責啟動+驗證），Episode 11 五格漫畫已補完並交付。**卡住待辦**：① TokenTable 的 Claude 工具呼叫 502 bug 要…（略）
+
+【教練 2026-09-20 09:06】
+對話框 A 不要用了，那個不好用。然後對話框 B 互動牆任務已經完成了。
+
+我們現在的情況是：今天是禮拜天，要到禮拜三下午 1 點才有流量重置。我現在已經用了 67%，所以很多東西要省點用。
+
+有任務我再 call 你，你先待命。
+
+　▶ AI 回應：Right — workspace is its own repo. Committing there.
+
+　▶ AI 回應：已記錄並推上雲端，commit `1c4bb9e4e`。
+
+收到，兩線都收工——A線（TokenTable/OpenCode）不用了，B線（CCU互動牆）確認完成。我先待命，這幾天額度省著用，不會主動發起任務，等您 call 我再動作。
+
+【教練 2026-09-20 13:42】
+https://event.bymyway.com/seabiscuit20/#home
+
+幫我修改一下「近期場次即將登場」的活動。
+
+由於這邊會有一些時效性，我想說放 4 場比較具代表性的，這樣可以長期放著。標題也不要寫「即將登場」了，改成「近期剛舉辦的活動」。
+
+活動就放這 4 場：
+
+1. AI 微論壇嘉義場
+2. 當古典音樂遇到 AI
+3. 中正大學領導力培訓
+4. 10 月 3 號的「用手機就能玩 AI」
+
+放這 4 場比較具代表性的就可以了。
+
+　▶ AI 回應：Live already, since Flask serves directly from the repo file. Now let me open it in real Chrome to visually confirm per the HTML-verification rule.
+
+　▶ AI 回應：All 4 cards render correctly with the new title, dates, and single "查看活動內容" buttons. Let me verify the links actually point to the right URLs.
+
+　▶ AI 回應：All 4 links confirmed correct and live. Now let me commit this change to the seabiscuit20 repo.
+
+　▶ AI 回應：Committed and pushed，commit `503d5bc`。網站已即時生效並驗證通過（正式站 event.bymyway.com/seabiscuit20/ 直接讀取本機檔案，改完就上線，已用 curl 逐一確認 4 個連結正確）。
+
+**改動內容：**
+- 標題「即將登場的活動」→「近期剛舉辦的活動」
+- 移除舊的到期自動隱藏機制（`data-expire`），這 4 張卡片可長期放著不會被自動下架
+- 4 場代表性活動，每張卡片改成單一「查看活動內容」按鈕（原本的「我要報名這場」按鈕在活動結束後已失效/會導向錯的場次，一併移除，避免誤導）：
+
+| 日期 | 活動 | 連結 …（略）
+
+【教練 2026-09-20 14:20】
+https://ai-talk-tw.netlify.app/  幫我把這場，改成event.bymyway.com/ai-talk 這樣統一這四場活動都是一樣的網址
+
+　▶ AI 回應：Confirmed live. Committing.
+
+　▶ AI 回應：已完成，commit `a078e4c`，已即時生效並用 curl 驗證。
+
+**做了一個必要調整，跟您說明一下**：沒有直接改成 `event.bymyway.com/ai-talk`（無錨點），而是改成 `event.bymyway.com/ai-talk/#jy-top`。原因是我查證發現 `/ai-talk/` 這個網址是「重複使用」的（之前嘉義場用過這個網址，後來又拿去給9/22台南場用），現在首頁顯示的其實是「9/22台南場已取消」的公告，不是嘉義場內容。加上 `#jy-top` 這個錨點才會直接跳到頁面裡永久保留的嘉義場封存內容，這樣網域統一了，但點進去看到的還是正確的嘉義場資訊…（略）
+
+【教練 2026-09-20 14:20】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/seabiscuit20/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：已用 Chrome 開給您看，網址是 `event.bymyway.com/seabiscuit20/#upcoming-sessions`（近期活動那個區塊），可以直接檢查 4 張卡片跟嘉義場的新連結。
+
+【教練 2026-09-20 14:23】
+因為我們最新的 9 月 22 號那場取消了，所以你在 AI Talk 那個地方，就直接把 9 月 22 號的資訊拿掉。
+
+我們剛好辦了四場活動，一場在台南、一場在嘉義、一場在高雄。標題後面就不用再加「嘉義」了，直接寫「AI Talk」就好。
+
+點進去看的話，裡面留台南場跟嘉義場（或是嘉義場跟台南場）這兩場作為代表，這樣就可以了，你了解我的意思嗎？
+
+　▶ AI 回應：Now the banner and navbar.
+
+　▶ AI 回應：Now remove the 9/22-specific hero/agenda/speakers/highlight/why-join block.
+
+　▶ AI 回應：I'll delete this whole block (lines 301–451, the back-to-top button through the end of why-join).
+
+　▶ AI 回應：Good, clean transition. Now let's check the tn-signup section, which had a stray reference — let's view it.
+
+　▶ AI 回應：Let's view and remove lines 1111–1179 (the dead FAQ+signup for 9/22).
+
+　▶ AI 回應：Now the sticky bar and the dead registration modals.
+
+　▶ AI 回應：Now clean up the orphaned JS for the removed registration flow.
+
+　▶ AI 回應：Let's view the top of the script block (lines 1137–1157) to remove the whole registration flow cleanly.
+
+　▶ AI 回應：Now let's remove the entire dead registration JS block (lines 1139–1229), keeping the `<script>` tag and everything from `initNavbar` onward.
+
+　▶ AI 回應：Now let's find and remove the leftover hash-based auto-register listener at the bottom, and the Escape-key handlers referencing removed modals.
+
+　▶ AI 回應：Now let's check for any remaining dangling references (`registerForm`, `#agenda`, `#speakers`, `#why-join`, `#faq`, `#signup`, `#sponsor` internal anchors) that might still exist elsewhere in tn/jy content pointing to the removed top-level sections.
+
+　▶ AI 回應：All clean. Now let's check `#top` reference behavior and the "#history" internal card link on tn-signup section, plus verify overall structure integrity.
+
+　▶ AI 回應：Structure is clean and valid. Let's do a syntax sanity check and verify the live page renders.
+
+　▶ AI 回應：Balanced tags. Now let's verify live via curl and check console errors in the browser.
+
+　▶ AI 回應：Confirmed live and correct. Now let's check via the browser pane for JS console errors.
+
+　▶ AI 回應：No JS errors. Let's confirm page text shows both events with no 9/22 leftovers.
+
+　▶ AI 回應：Let's verify both sites live.
+
+　▶ AI 回應：Now let's commit both repos.
+
+　▶ AI 回應：已完成，都用 Chrome 開給您看過了。
+
+**做了什麼：**
+1. **AI Talk 頁面**（`event.bymyway.com/ai-talk/`，commit `bfa53de`）：整個 9/22 台南場的資訊全部拿掉——首頁 hero、活動議程、講師、報名表單、FAQ 全部移除，導覽列也改成只剩「歷屆回顧／台南場／嘉義場」。現在打開這個網址，直接看到的就是台南場（7/29）跟嘉義場（8/28）這兩場的完整回顧內容，順手把已經失效的報名彈窗程式碼一起清掉（原本按「立即報名」只會跳出「已取消」的提示，是死掉的功能）。
+2. **海餅乾20週年頁面**卡片（commit `a3692…（略）
+
+【教練 2026-09-20 21:59】
+可以清掉，同時，有個任務，我想請您調用LK888的圖片模型，幫我幫PDF製作成PPT，但要用我指定的底圖
+
+我要的標準就是不要蓋到底圖下面有LOGO的部份，左邊及右邊，這都是BNI的視覺，你要想辦法把圖片滿版但不要盍到LOGO
+
+檔案及圖都在下載區，你看看怎麼做
+
+　▶ AI 回應：Now let's read the PDF content.
+
+　▶ AI 回應：Now let's extract all 15 pages as high-resolution PNGs.
+
+　▶ AI 回應：Let me look at a couple of results to verify the mask quality before building the full PPT.
+
+　▶ AI 回應：15 slides confirmed, each with a single full-bleed picture, correct 16:9 dimensions. Let me open it in a viewer to do a final visual check before delivering.
+
+　▶ AI 回應：**完成，PPT 已經送到您那邊，也存在下載區同一個檔名。**
+
+**做了什麼**：把 PDF《Architecting_Business_Systems_(2).pdf》15 頁全部轉成投影片，套上您指定的 BNI ACCELERATE 底圖，並用逐張比對過的遮罩技術把左下角 LOGO 跟右下角紅色裝飾區域保護起來，其餘部分維持滿版不縮小。我用 Python 圖片工具（Pillow）先量出底圖上 LOGO 跟紅色裝飾的精確像素位置，再對每張插圖做羽化透空處理，讓插圖邊緣自然融入底圖，不是生硬切一刀。15 張全部合成完，我自己逐張看過縮圖總覽確認每張都沒蓋到 LOGO 才交件（附上的縮圖總覽已…（略）
+
+【教練 2026-09-20 22:11】
+做的好，那這樣消耗了多少tokens
+
+　▶ AI 回應：查了實際數字，不是用猜的：
+
+**這個對話框本身（從開工到現在）**
+用掉 **388,861 tokens**，占這個對話框可用上限（100萬）的 **39%**。細分：
+- 對話內容本身（我們的往來訊息）：306,125（佔大宗）
+- 系統工具運作：33,992
+- 外部工具（MCP）：21,787
+- 系統提示詞：12,003
+- 記憶檔案：9,622
+- 技能載入：5,332
+
+**帳號整體額度**
+- 5小時額度：用了 9%，4小時38分後重置
+- **本週額度：用了 70%**，重置時間 2026-09-23（週三）下午1點——跟您昨天說的「禮拜三下午1點重置」完全對得上
+
+所以真…（略）
+
+【教練 2026-09-20 22:12】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：
+  • feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20.md
+
+📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」
+  「記不住，肯定就用不出來。」
+
+⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。
+  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。
+
+✅ 立刻補上（一行就好）：
+  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：補正時間標示（剛才漏標「台灣時間」字樣，系統抓到了）：
+
+- **5小時額度重置**：UTC 2026-09-21T02:50:00Z → **台灣時間 2026-09-21（一）上午10:50**（約4小時38分後）
+- **本週額度重置**：UTC 2026-09-23T05:00:00Z → **台灣時間 2026-09-23（三）下午1:00**（跟您說的一致）
+
+另外剛才系統也抓到一個記憶索引漏收：`feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20.md`（CCU複習牆設計教訓那則）沒被收進 `MEM…（略）
+
+【教練 2026-09-20 22:13】
+那我還有好幾份簡報要做，所以也沒有辦法外包給其他的 AI，不然的話我怕我撐不到禮拜三你可以把你剛才整個完成的步驟寫成一個 SOP 嗎？反正底板都是一樣，模式也都是一樣，就是 PPT 內容不一樣，這樣可以嗎？
+
+　▶ AI 回應：Let's test the reusable script end-to-end to make sure it reproduces the same verified result.
+
+　▶ AI 回應：Works cleanly. Let's spot-check one slide to confirm the ratio-based mask still matches pixel-perfect.
+
+　▶ AI 回應：Confirmed pixel-identical (rounding noise only). Let's clean up the test run and commit the script.
+
+　▶ AI 回應：Let me set up the persistent venv at the path documented in the SOP so it's ready for next use.
+
+　▶ AI 回應：Now let's commit the script and SOP.
+
+　▶ AI 回應：已完成，commit `c757b9213`，已推上雲端。
+
+**做了什麼：**
+
+1. **把腳本整理成可重複使用的工具**（`scripts/pdf_to_branded_pptx.py`）——不再是寫死路徑的臨時腳本，改成吃參數：`--pdf`（來源PDF）、`--bg`（底圖）、`--out`（輸出檔名）。**底板不變時，您以後只要換 `--pdf` 換成新簡報的PDF，其他都不用改**，遮罩座標（LOGO/裝飾角落的位置）已經內建成預設值，因為底板都一樣，量一次就夠了。已經重新跑一次驗證，跟今天交付的PPT逐像素比對過，結果完全一致（只有JPEG存檔的極微小誤差，肉眼看不出來）。
+
+…（略）
+
+【教練 2026-09-20 22:32】
+我要開新的對話，還是繼續？ 目前41% 我們把這個SOP叫 BNI PPT SOP 可以嗎？
+
+　▶ AI 回應：**「BNI PPT SOP」這個名字沒問題，已經寫進 SOP 文件跟記憶檔了**（commit `c08e90611`），以後您說這個名字，我直接對應到這套流程，不用重新解釋。
+
+**要不要開新對話框**：41% 還算寬鬆（距離 97% 自動壓縮還有一大段），這個對話框繼續用完全沒問題。但因為整套流程已經完整寫進 SOP + 腳本 + 記憶檔（不是只存在這個對話框的記憶裡），**就算開新對話框，新的我讀 SOP 檔案也能立刻接手，不會漏東西**。所以兩種都可以：
+
+- **繼續用這個對話框**：省事，不用重新暖機
+- **每份簡報開一個新對話框**：對話框乾淨、額度分散，新對話框開頭只要說「…（略）
+
+【教練 2026-09-20 22:34】
+再跑一份，我再開新對話，資料在下載資料
+
+　▶ AI 回應：Found it — `VP_Strategic_Mastery.pdf`, no new background image, so I'll reuse the same BNI ACCELERATE template. Running the SOP now.
+
+　▶ AI 回應：交付了，這份也是 12 張投影片，同一套 BNI PPT SOP，縮圖看過確認 OK。
+
+關於您問的三個問題：
+
+**聯想電腦能跑嗎？** 能，腳本已經推上雲端（`mac-openclaw-workflows` repo），聯想那邊 `git pull` 就拿得到 `scripts/pdf_to_branded_pptx.py` 跟 SOP 文件。但聯想是第一次用，需要先做一次性環境設定（裝 Windows 版的 poppler、裝 Python 套件），跟這台 Mac 剛才做的事一樣，只是換一台機器要重來一次那個「裝工具」的步驟。
+
+**同時多台機器/多個對話框一起跑，會不會互相打架？** …（略）
+
+【教練 2026-09-20 22:41】
+又下載了幾個，你看看
+
+　▶ AI 回應：找到 5 份新的 PDF，全部用同一套 BNI PPT SOP 依序處理。
+
+　▶ AI 回應：64 pages total across 5 decks. Running them now.
+
+　▶ AI 回應：Running in the background since 64 pages takes a while. I'll check progress and report back once it's done.
+
+　▶ AI 回應：Good progress — 2 of 5 done, 3rd underway. I'll wait for it to finish in the background.
+
+　▶ AI 回應：Batch is running (5 PDFs, 64 pages total) — I'll wait for the completion notification and then verify + deliver all files.
+
+【教練 2026-09-20 22:49】
+<task-notification>
+<task-id>bhbh47y0m</task-id>
+<tool-use-id>toolu_01GFaaYKxrVVz6YvwrrRge5U</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-bymyway--openclaw/cbe89eb3-02dc-46d9-97d1-bfe0bb26221e/tasks/bhbh47y0m.output</output-file>
+<status>completed</status>
+<summary>Background command "Batch-run BNI PPT SOP on all 5 new PDFs" completed (exit code 0)</summary>
+</task-notification>
+
+　▶ AI 回應：All 5 new files present. Now let's visually verify each before delivering (per E03 — must actually look, not just trust the tool's success message).
+
+　▶ AI 回應：Clean. Checking the rest.
+
+　▶ AI 回應：Clean. Last two batches.
+
+　▶ AI 回應：全部 5 份都看過縮圖，LOGO 跟裝飾角落每張都乾淨。現在去抓您說的「最後一個」檔案。
+
+　▶ AI 回應：Found `Elite_Mentor_Coordinator_Playbook.pdf`. Running it now.
+
+　▶ AI 回應：全部乾淨，交件。
+
+　▶ AI 回應：6 份全部完成，都在下載區（檔名都是「原檔名_BNI版.pptx」）：
+
+| PDF | 張數 |
+|---|---|
+| Revenue_Driven_Mentorship | 12 |
+| 活動協調 | 15 |
+| Visitor_Conversion_Mastery | 14 |
+| Strategic_Growth_Evolution | 14 |
+| Guild_Tactician_Mastery | 9 |
+| Elite_Mentor_Coordinator_Playbook | 11 |
+
+共 75 張投影片，每一張我都親自看過縮圖確認 LOGO 跟右下角紅色裝飾沒被蓋到。加…（略）
+
+【教練 2026-09-20 23:11】
+還有一份
+
+　▶ AI 回應：Found `Precision_Business_Conversion.pdf`. Running it now.
+
+　▶ AI 回應：看起來沒問題，那個紅色 X 是插圖本身的視覺（生死期限的比喻），位置在保護區之上，跟 BNI LOGO 之間留了乾淨的白色空隙，沒有真的疊到。放大確認過，可以交件。
+
+　▶ AI 回應：完成，這是今天第 7 份。目前累計：8 份簡報（含最早那份《建構高效商務系統的建築師》）、共 90 張投影片，全部用同一套 BNI PPT SOP 跑完，每份都親自看過縮圖確認。
+
+【教練 2026-09-20 23:15】
+我看有些好像重複下載，因為檔案後面有寫2或1，可否都刪除，只留你製作的版本
+
+　▶ AI 回應：查了一下，跟您想的不太一樣，先跟您說清楚：
+
+　▶ AI 回應：先跟您確認一下：**這 8 份 PDF 我查過了，不是重複下載**——我用雜湊值（MD5）逐一比對，9 個檔案的雜湊值全部不同，代表每一份都是內容不同、獨立的簡報素材。檔名後面帶的「(2)」（例如 `活動協調_(2).pdf`）是來源系統（應該是 NotebookLM）匯出時自己取的名字，不是瀏覽器重複下載造成的副本——如果是真的重複下載，Mac 會產生「同檔名 (1)」「同檔名 (2)」這種**成對**的檔案，但這裡沒有任何一組是成對的，每個名字都只出現一次。
+
+所以目前 Downloads 裡沒有真正需要清的「重複檔案」。這 8 份原始 PDF（共 160MB）我都已經做成 BNI 版 P…（略）
+
+　▶ AI 回應：Deleting these 9 files (絕對路徑, 已用MD5確認皆已轉檔完成)：
+
+　▶ AI 回應：9 份原始 PDF 已刪除（共 160MB），11 份 BNI 版 PPT 全部保留完好。
+
+---
+
+現在繼續「總結」收工流程。
+
+## 本場對話重點總結
+
+**主軸**：延續前一場「海餅乾20週年網站」收尾（AI Talk頁面移除已取消的9/22台南場、統一四場活動網域），下半場教練交辦全新任務——把BNI相關PDF簡報套上BNI ACCELERATE品牌底圖轉成PPT。
+
+**做了什麼**：
+1. 網站收尾：`event.bymyway.com/ai-talk/` 移除9/22取消場次全部內容改為台南+嘉義純回顧頁，`seabiscuit20`頁面卡片與頁尾連結同步更新（3個commit…（略）
+
+　▶ AI 回應：Now let's update the main handoff file: remove the archived section, replace the top cross-session summary, and append the new v233 entry.
+
+　▶ AI 回應：Now let's replace the top cross-session summary (lines 1-21) with a fresh one reflecting this session, and append the new v233 entry at the end.
+
+　▶ AI 回應：Now replace the top summary in the main file with today's cross-session brief.
+
+　▶ AI 回應：Now let's add a new v233 entry at the end of the file (after v232).
+
+　▶ AI 回應：Good, the file reflects my edits correctly. Now let's commit and push everything.
+
+　▶ AI 回應：**總結完成，commit `b0e41ce13`，已推上雲端。**
+
+**這場做了什麼**：
+1. 海餅乾20週年網站收尾（AI Talk頁面移除9/22取消場次、seabiscuit20卡片與頁尾同步更新）
+2. 建立「BNI PPT SOP」——教練親自命名，往後喊這個名字就對應到這套流程，已寫成正式文件+可重複腳本+常駐環境
+3. 用這套 SOP 連續處理 **9 份 BNI 簡報**（130+頁），每份都親自看過縮圖確認 LOGO 沒被蓋到才交付
+4. 教練確認轉檔完成後，原始 PDF（160MB）用五道閘門安全刪除；過程中查證發現教練「重複下載」的判斷有誤（MD5比對9個檔案全不同…（略）

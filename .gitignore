@@ -81,3 +81,9 @@ state/project_card_injected_openclaw/
 # 危險指令五道閘門(E11)的一次性10分鐘通行證，性質上不該被版控固化，
 # 過期後應視為不存在，禁止納入版控（2026-09-18）
 state/DELETE_APPROVED
+
+# AI團隊品質稽核彙整檔，每次重跑就覆寫，非永久紀錄，禁止納入版控（2026-09-22）
+distill/agent_team_qa_digest_latest.md
+
+# 本機相簿暫存，非程式碼/文件資產，不該進repo（2026-09-22）
+photos/
