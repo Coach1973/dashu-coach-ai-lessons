@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-22 10:30:14**
+> **最後同步：2026-09-22 21:00:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -372,6 +372,54 @@ Stop hook抓到5筆本場前(2026-09-19)寫的記憶檔沒進`claude-brain/MEMOR
 
 ## 🔑 本場commit
 `bni-dna`：`8201db4`+`47ae08e`+`0366d37`。`bigtree`：`18bf066`(取消2場，含rebase解衝突)。`workspace`：`cdc17228b`(rebase異常修復)+本次總結commit另計。記憶：新增`feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21`，更正刪除一則錯誤記憶。
+
+---
+
+# 軍師接力棒 · 2026-09-22 v235（Mac桌面版 Sonnet 5，手機版流量來源完整查證鏈+EM模式精確定義+當前session流量判定）
+
+> 建立時間：2026-09-22 20:50 ~ 21:00（台灣時間）
+> 上一棒：v234（聯想Windows）
+> 本棒主軸：**教練問「這個對話框的流量到底走 MiniMax 還是 Claude」+「EM 模式是什麼」，依教練指示去翻桌面版軍師之前的辯論紀錄，最終挖出 v225 + v227 完整證據鏈，再回頭查證當前 session（PID 39314）的流量分佈。**
+
+## 🎯 本場戰果
+
+### 1. EM 模式精確定義（教練 2026-09-22 20:52 台灣時間親口定義）
+**EM = 1M context window 的內部簡寫，「e」= 數字「1」**（教練原話：「em 它是『1234567』的『1』，所以是 1m 結果他寫成英文字母的『e』」）。不是 Extended Mode / Enterprise Mode / Extended Model——之前搜尋方向完全錯誤，已寫進記憶 `reference_em_mode_definition_1m_context_2026-09-22.md` + MEMORY.md 索引。
+
+### 2. v225 硬證據複習（MiniMax 32.35MB > Anthropic 12.94MB）
+教練 9/19 凌晨 3:26~5:36 跟桌面版軍師辯論 10+ 輪，最終用 `nettop -p <mobile session PID> -l 1 -x` 量測手機 session（PID 51719，session id 尾碼 `Crf`）：
+- MiniMax (175.99.116.25)：流出 **32.35MB** / 流入 2.11MB
+- Anthropic (160.79.104.10)：流出 **12.94MB** / 流入 1.25MB
+- **MiniMax 是 Anthropic 的 2.5 倍**——這就是「手機版走 MiniMax」的硬證據
+- TLS 憑證驗證：`curl --resolve api.minimax.io:443:175.99.116.25` 確認 `CN=www.minimax.io`、SAN 含 `api.minimax.io`（排除 CDN 共用節點誤判）
+
+### 3. v227 完整機制（教練 9/19 5:53~6:25 給方向後桌面版軍師挖出）
+Claude Code CLI 按 **model 名稱字串是否為「Anthropic 辨識的合法 id」**決定連線目的地，**不是看 `ANTHROPIC_BASE_URL`**：
+
+| Model 字串 | Anthropic 是否認得 | 路由 | Context |
+|---|---|---|---|
+| `claude-sonnet-5[1m]` | ✅ | 原生 Claude Pro OAuth → 160.79.104.10 | **1M（EM 模式）** |
+| `MiniMax-M3[1m]` | ❌ | 退回 BASE_URL → 175.99.116.25 | 200K（MiniMax 預設）|
+
+推測：MiniMax 金鑰 `sk-cp-0_` 開頭不符合 Anthropic API key 格式驗證 → CLI 自動 fallback 回原生 OAuth → `ANTHROPIC_BASE_URL`/`API_KEY`/`AUTH_TOKEN` 形同虛設。
+
+### 4. 當前 session（PID 39314）流量判定
+- 啟動參數：`--model claude-sonnet-5 --effort high --sdk-url https://api.anthropic.com/...`
+- lsof 結果：7 條 Anthropic (160.79.104.10) + 1 條 Google BC (165.66.149.34) + 2 條 Akamai (a23-217-11-59) + **0 條 MiniMax (175.99.116.25)**
+- **判定**：model 字串 `claude-sonnet-5` 是 Anthropic 真認得 → 走原生 OAuth 直連 Anthropic → 當下主要流量走 Claude
+- **盲點**：當下 lsof 是快照，過去 4.8 小時累積流量無法驗證（`sudo nettop -p 39314 -l 1 -x` 需要密碼，未取得授權）
+
+### 5. 教練 2026-09-22 14:51 新規複習
+「手機開工 = minimax 模型 = 特助身份」——這個是「**身份判定**」層次（教練宣告）；跟「**實際跑什麼 model**」是 v227 機制決定的（model 字串）。兩個判定是不同維度。當前 session model = `claude-sonnet-5`（不是 `MiniMax-M3`），即使「手機開工」，實際仍走 Anthropic。
+
+## 📋 下一場開工先做
+1. **如果教練要 sudo 驗證過去累積流量**（v225 同方法）：等教練裁示是否給 sudo 密碼跑 `sudo nettop -p 39314 -l 1 -x`，量化這個 session 過去 4.8 小時的真實流量分佈
+2. 沿用既有待辦：跨機分岔警示、💬試金石商業化討論、`sk-ant-api03-jMLa...`來源不明金鑰、TokenTable 客服回報待教練回覆、Episode 11 後續格式
+3. E16 接力棒瘦身待執行（主檔目前 v231~v235 共 5 棒）
+
+## 🔑 本場commit
+`1a923c38e`（EM 模式定義 + MEMORY.md 索引補入）。本次總結commit另計。
+
 
 
 ---
