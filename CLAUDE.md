@@ -4,15 +4,36 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-22 09:55:00**
+> **最後同步：2026-09-22 10:30:14**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-21，聯想Windows）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-22，Mac桌面版）
 
-**本場主軸：bni-dna/bigtree兩個網站維護+聯想記憶體洩漏復發追蹤+意外發現並修復卡住6天的git rebase異常。詳見下方v234完整記錄，Mac桌面版v233(海餅乾+BNI PPT SOP)內容仍完整保留在下方版本歷史區。**
+**本場主軸：🔴🔴🔴重大事故——小龍蝦本尊(OpenClaw main gateway)因workspace migration卡住被launchd停放，process完全沒在跑，教練連續3天收不到任何回應才發現，已修復+建立防呆(試金石案例79)。另處理試金石商業化計畫書網頁化、開機自啟動設定、BNI DNA出席政策更新、AI微論壇兩場活動(嘉義/台中)網站維護連動問題。上一棒(聯想Windows v234，bni-dna/bigtree維護+git rebase異常修復)內容保留在下方版本歷史區。**
+
+### 1. 🔴🔴🔴 小龍蝦3天無回應重大事故（試金石案例79，本場最重要）
+教練問「小龍蝦為何沒反應」，軍師一度查錯對象（誤把「Hermes」第三方系統當成「小龍蝦」診斷重啟），教練點破「小龍蝦沒反應，Hermes那邊可以」才重新定位。**真正根因**：`ai.openclaw.gateway`(服務`bot_main`)2026-09-21 07:36因workspace需要migration重啟失敗，被launchd「停放」(unloaded and disabled)，process完全沒在跑，且自己沒辦法通知任何人「我掛了」。已執行`openclaw doctor --fix`+`openclaw gateway start`修復，process重啟後立即處理積壓26小時的訊息。**防呆**（教練明確要求不要新建輪詢）：搭載在教練8/25已核准的`system_patrol.sh`每小時巡檢新增第0項檢查，異常自動修復+用不依賴gateway本身的`notify_coach.sh`通知。完整教訓見試金石案例79。
+
+### 2. AI微論壇兩場活動網站維護連動問題
+教練發現嘉義場(ai-talk)Netlify從未同步9/22台南場取消的內容(只有event.bymyway.com同步了)，已補上Netlify部署(deploy`6ab14b535af6940d62a50cfe`)。台中場(9/23-24)更嚴重：`bigtree`系統9/15已取消，但獨立站`ai-forum-taichung`完全沒連動關閉，開放報名一週才被發現有人報名，已緊急止血擋報名+改成「因報名人數不足延後舉辦」公告頁(commit`2302c13`)，`event.db`殘留也已清理。
+
+### 3. 試金石案例庫商業化計畫書（教練指定的深入討論題目）
+產出完整網頁版計畫書，發布為Artifact+部署GitHub Pages(`touchstone-plan`repo)，盤點現況(60案例/332KB/143天記憶)+四條變現路徑(建議優先做A內容化課程)+執行時程+風險清單，等教練後續裁示。
+
+### 4. 其他收尾
+TokenTable/Episode 11兩項待辦教練裁示不用做了；開機/登入設定不啟動OpenCode跟Hermes桌面版GUI(Telegram後端未受影響)；BNI DNA出席政策網頁新增9/15共識決議+9/21最終裁決權公告(commit`1e28a0e`)。
+
+### 📋 下一場開工先做
+1. **試金石案例79是本場最重要教訓，下一棒務必讀**——尤其「教練口中同一稱呼可能對應不同系統」這條，診斷故障前先確認具體是哪個Telegram對話框
+2. 確認小龍蝦(`ai.openclaw.gateway`)持續穩定運作，system_patrol.sh的新防呆邏輯下次巡檢(整點)會自動驗證
+3. 試金石商業化計畫書等教練回覆三個決策點(路徑A優先/掛哪個品牌/去識別化流程)
+4. 沿用既有待辦：跨機分岔警示、`sk-ant-api03-jMLa...`來源不明金鑰、E16接力棒瘦身(本場未執行，主檔已累積多棒)
+
+### 🔑 本場commit
+`2ff05e717`(TokenTable收工)、`d50c2efdd`(Episode11收工)、`WkWxv1s7XgcU62epzesbbA`(試金石計畫書Artifact，非commit hash)、`touchstone-plan`repo首發、`1e28a0e`(BNI DNA 9/15決議)、`d50c2efdd`、`2fe09f05d`(ai-talk netlify額度記錄)、`ai-talk`repo`b230e4e`、netlify deploy`6ab14b535af6940d62a50cfe`、`ai-forum-taichung`repo`1c5de2c`+`2302c13`、`c83234e46`(system_patrol防呆機制)。本次總結commit另計。
 
 ### 1. 海餅乾20週年網站（seabiscuit20）+ AI Talk頁面收尾
 教練指示9/22台南場（AI微論壇）已取消，把`event.bymyway.com/ai-talk/`裡9/22的全部內容（hero/議程/講師/報名表單/FAQ）都拿掉，改成只留台南場(7/29)+嘉義場(8/28)的純回顧頁，順手清掉orphan的報名彈窗HTML/JS。`seabiscuit20`首頁「近期剛舉辦的活動」卡片與頁尾快速連結的舊9/22文字同步更新。commit：`bfa53de`(ai-talk)、`8ec73e7`(seabiscuit20頁尾)。
@@ -41,6 +62,9 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| ✅ | **🔴🔴🔴 小龍蝦本尊(ai.openclaw.gateway)3天無回應重大事故** | ✅2026-09-22已修復+建立防呆 | 根因：workspace需要migration導致gateway重啟失敗被launchd停放，process完全沒在跑，教練連續3天收不到回應。已`openclaw doctor --fix`+`openclaw gateway start`修復，並在`system_patrol.sh`(教練8/25核准的每小時巡檢)新增第0項健康檢查，異常自動修復+用不依賴gateway本身的`notify_coach.sh`通知。完整記錄見試金石案例79+[[feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22]]。下一棒持續觀察穩定性即可，機制已自動運作不需人工介入。 |
+| ✅ | **AI微論壇嘉義場(ai-talk)/台中場(ai-forum-taichung)網站與活動狀態不同步** | ✅2026-09-22已修復 | 嘉義場Netlify從未同步9/22台南場取消內容，已補部署(deploy`6ab14b535af6940d62a50cfe`)。台中場更嚴重：`bigtree`系統9/15已取消但獨立站完全沒連動關閉，開放報名一週才被發現有人報名，已擋報名+改為「因報名人數不足延後舉辦」公告頁(commit`1c5de2c`+`2302c13`)，`event.db`殘留(`bigtree-0923`/`0924`)已清理標記。教訓：同一活動存在多個獨立呈現位置時，取消一處不會自動連動另一處，下次取消活動要先列清單逐一確認。 |
+| 💬 | **試金石案例庫商業化計畫書已產出，等教練裁示** | ⏳待教練回覆三個決策點 | 網頁版：https://claude.ai/artifact/WkWxv1s7XgcU62epzesbbA (Artifact，私人連結)+ https://coach1973.github.io/touchstone-plan/ （公開網址，教練要求要GitHub版）。盤點60案例/332KB/143天記憶，提四條變現路徑(建議優先A內容化課程，沿用既有AI微論壇/大樹小講招生通路)。三個決策點：①是否同意先做A ②課程掛哪個品牌 ③去識別化案例要不要教練逐一過目。 |
 | ✅ | **TokenTable Claude工具呼叫bug要不要回報給客服？** | ✅2026-09-21教練裁示收工-不用了 | 教練09/21親口「不用記了，我不用他了」，TokenTable這條線整個不再延續，客服回報一事不用做。技術查證記錄仍保留於[[reference_tokentable_claude_tool_calling_bug_2026-09-20]]備查。 |
 | ✅ | **Episode 11後續格式(短影片腳本/廣播對談稿)** | ✅2026-09-21教練裁示不做了 | 教練09/21親口「這個也不做了」，短影片腳本/廣播對談稿這個延伸企劃不再進行。五格漫畫本體已完成交付(存於`knowledges/episode11_manga/panel1~5.png`)，不受影響。 |
 | 🔴🔴🔴 | **⚠️全機必讀：這個repo的git歷史已被改寫，其他機器的本機clone跟遠端分岔** | ⚠️任何機器下次動這個repo前必看 | 2026-09-19 06:45教練親自裁示後，軍師用`git-filter-repo`把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json(.bak)`4個含明文金鑰的檔案從全部16000+ commit歷史徹底清除+強制推送到GitHub(已用全新clone獨立驗證確認乾淨)。**任何其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟GitHub遠端分岔了**——下次要push前必須先`git fetch origin && git reset --hard origin/main`(或直接砍掉重新clone)，絕對不能在沒同步的狀態下直接push，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。教練同時裁示：外洩的金鑰(MiniMax/Gemini)**不rotate**，「已經曝光不代表會被濫用，換的話動一髮牽全身」。完整過程見[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]。 |
