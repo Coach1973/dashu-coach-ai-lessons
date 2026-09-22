@@ -120,3 +120,27 @@ tmux send-keys -t remote-control "env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY
 **結論修正**：上一節「懷疑跟macOS Keychain快取憑證有關」是過度推論，沒有直接證據，**不需要進一步調查Keychain**。真正的坑純粹是「每次要清`~/.claude/settings.json`的4個key，一定要在啟動`claude rc`**前**確認乾淨，不能沿用上一輪的記憶假設已經清過」——這條併入前面`feedback_check_global_config_before_shell_level_fix_2026-09-17`的教訓範疇：改一次性config前，動手前先當場查證目前狀態，不要憑記憶假設。
 
 設定檔已還原回MiniMax設定，tmux session `remote-control`持續在背景執行，教練已用雙向打字同步確認連線正常。
+
+## 🔴 2026-09-22 23:50 永久定案：不再「用完復原」，改成手機這條線永久拔除MiniMax
+
+**背景**：09-17當初「用完把設定檔改回MiniMax」是為了保留桌面版/終端機的MiniMax省錢路徑，但這個「暫時清空、之後復原」的模式導致MiniMax金鑰在`~/.claude/settings.json`反覆復活，教練最終在09-22深夜用「Claude帳單88%不動+MiniMax呼叫0%→4%」的雙帳單交叉比對，當場抓到手機Remote Control真的在算MiniMax的錢（詳見[[feedback_settings_json_minimax_leak_not_cleared_2026-09-22]]）。教練明確裁示：**手機這條線永久只准走Claude，不要再「暫時清、之後復原」這種會反覆漏回去的模式**。
+
+**新發現的關鍵坑（09-17沒抓到）**：`~/.claude/settings.json`編輯後，**已經在跑的process/shell不會自動吃到新內容**——包括從「桌面版/終端機這個Claude Code session自己的Bash工具」開的shell，也帶著這個session啟動當下就注入好的舊環境變數（`ANTHROPIC_API_KEY`/`ANTHROPIC_DEFAULT_HAIKU_MODEL`等），**就算改完settings.json，用這個shell開的新tmux session還是會繼承到舊值**，跟settings.json當下寫什麼無關。`env -u`單獨清單一變數在這個繼承鏈下也不夠乾淨。
+
+**真正有效的做法**：改用 `env -i`（完全清空環境變數表，不繼承任何東西）只留最基本的`HOME`/`USER`/`PATH`/`TERM`/`SHELL`+明確`ANTHROPIC_MODEL="claude-sonnet-5[1m]"`/`ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-5[1m]"`兩個必要值來啟動`claude rc`：
+
+```bash
+tmux kill-session -t remote-control 2>/dev/null || true
+tmux new-session -d -s remote-control -c ~/.openclaw -x 200 -y 50
+tmux send-keys -t remote-control 'env -i HOME="$HOME" USER="$USER" PATH="$PATH" TERM="$TERM" SHELL="$SHELL" ANTHROPIC_MODEL="claude-sonnet-5[1m]" ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-5[1m]" claude rc' C-m
+```
+
+用`ps eww -p <claude rc PID>`驗證，這次環境變數表裡**完全沒有**`ANTHROPIC_API_KEY`/`ANTHROPIC_AUTH_TOKEN`/`ANTHROPIC_BASE_URL`/`ANTHROPIC_DEFAULT_HAIKU_MODEL`/`ANTHROPIC_DEFAULT_OPUS_MODEL`任何一個，只有明確設定的兩個Sonnet相關key——這代表**就算未來手機端又生出一個要求`MiniMax-M3`的對話串，這個process樹裡也沒有任何MiniMax金鑰/URL可以讓它成功連線**，物理上斷了退路，不是靠「祈禱不要選到」。
+
+**同步永久移除**`~/.claude/settings.json`的`ANTHROPIC_API_KEY`/`ANTHROPIC_AUTH_TOKEN`/`ANTHROPIC_BASE_URL`（連同稍早已移除的`DEFAULT_HAIKU_MODEL`/`DEFAULT_OPUS_MODEL`），**這次不再復原**——因為終端機/桌面版的session本來就一路都用`claude-sonnet-5`原生model走OAuth，從未依賴這幾個fallback變數，拔掉對它們沒有實質影響（[[reference_minimax_mystery_resolved_model_name_routing_2026-09-19]]已驗證：原生model id會走OAuth，完全繞過BASE_URL/API_KEY，只有non-native字串才會退回用這幾個變數當fallback）。OpenClaw閘道(Telegram/LINE/VPS)走的是`~/.openclaw/openclaw.json`完全獨立的設定，不受這次異動影響。
+
+**下次要重啟這個RC bridge**，直接用上面`env -i`版指令，不要再用單純`unset`或依賴settings.json「應該已經清乾淨」的假設——env繼承鏈這個坑（不是settings.json本身，是已存在process的繼承環境）才是這次真正卡了教練一整晚的根因。
+
+## 相關
+
+- [[feedback_settings_json_minimax_leak_not_cleared_2026-09-22]]（教練用雙帳單交叉比對抓到真相的完整過程）

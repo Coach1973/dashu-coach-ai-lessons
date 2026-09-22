@@ -1,35 +1,29 @@
 #!/bin/bash
 # 手機Remote Control (claude rc) 安全重啟腳本
-# v2（2026-09-19 簡化版，取代舊版「搬移settings.json」做法）
+# v3（2026-09-22 永久拔除MiniMax版，取代v2的unset做法）
 #
-# 舊版根因（2026-09-19 00:xx查明）：真正擋住 claude rc 啟動的只有
-# CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1（會阻擋 Remote Control 必須的
-# feature-flag評估），這個key原本同時存在於 ~/.zshrc 的 export 跟
-# ~/.claude/settings.json 的全域 env 區塊，且 settings.json 的版本會被 claude CLI
-# 無條件套用、不受呼叫端 `env -u` 影響，導致舊版只能靠「暫時搬移整份settings.json」硬解。
+# 根因演進：
+# v1（2026-09-17）：靠「暫時清空settings.json、用完復原」——會反覆漏回去。
+# v2（2026-09-19）：改用shell層`unset CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`+
+#   export ANTHROPIC_MODEL，settings.json的API_KEY/AUTH_TOKEN/BASE_URL留著不動
+#   （怕unset觸發claude rc硬性檢查噴錯）。
+# v3根因（2026-09-22教練用雙帳單交叉比對抓到）：v2讓settings.json的MiniMax金鑰/
+#   BASE_URL/DEFAULT_HAIKU_MODEL/DEFAULT_OPUS_MODEL長期活著，手機端某些對話串
+#   （非這支腳本啟動的主線，是手機app自己spawn的子session）拿這組殘留憑證真的打
+#   MiniMax、真的被計費。更關鍵的坑：**已經在跑的shell（包括這個Claude Code session
+#   自己的Bash工具shell）啟動當下就注入好舊的ANTHROPIC_*環境變數，事後改settings.json
+#   不會讓這些已存在的shell/process重新讀取**——用這種shell開新tmux session，子行程
+#   還是會繼承到舊值，跟settings.json當下內容無關。
 #
-# v2改動（2026-09-19 05:xx）：已把 CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 從
-# settings.json 的 env 區塊永久移除（不再需要整份搬移還原這麼粗暴的做法），
-# 現在只要在啟動 claude rc 的那個shell裡 unset 掉 .zshrc 匯出的同名shell變數即可。
+# v3修法：①`~/.claude/settings.json`永久移除ANTHROPIC_API_KEY/AUTH_TOKEN/BASE_URL/
+#   DEFAULT_HAIKU_MODEL/DEFAULT_OPUS_MODEL（不再「用完復原」，因為終端機/桌面版本來
+#   就用claude-sonnet-5原生model走OAuth，從未依賴這幾個fallback變數，拔掉無影響）
+#   ②啟動claude rc改用`env -i`完全清空環境變數表（不繼承任何父shell的舊值），只留
+#   HOME/USER/PATH/TERM/SHELL+明確帶入的ANTHROPIC_MODEL/DEFAULT_SONNET_MODEL，
+#   物理上讓這個process樹裡不存在任何MiniMax金鑰/URL可用。
 #
-# ⚠️反直覺的坑（反覆實測4次同一結論，2026-09-19）：**絕對不要主動
-# unset ANTHROPIC_BASE_URL / ANTHROPIC_API_KEY / ANTHROPIC_AUTH_TOKEN**——
-# 明確unset這三個反而會觸發 claude rc 自己的硬性檢查噴錯
-# 「ANTHROPIC_BASE_URL is set and does not point at api.anthropic.com」，
-# 即使unset後的值理當是空的。只unset CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
-# 這一個變數才會成功連線，其餘三個變數留給settings.json自然套用（不會造成問題，
-# 見下方nettop驗證）。
-#
-# 🔍 順便實測澄清（nettop+lsof驗證，2026-09-19）：這台Mac的Claude Code CLI在有效
-# Claude Pro OAuth登入狀態下，ANTHROPIC_BASE_URL/API_KEY/AUTH_TOKEN實際上不影響
-# 真正連線目的地（推測是MiniMax金鑰格式sk-cp-0_開頭不被CLI辨識為合法Anthropic key，
-# 自動fallback回原生OAuth）——用ps aux揪出的既有RC session(PID 4439)全程只連到
-# 160.79.104.10（真Anthropic），從沒連過MiniMax真實IP(175.99.116.25，TLS憑證
-# www.minimax.io)。
-#
-# ANTHROPIC_MODEL / ANTHROPIC_DEFAULT_SONNET_MODEL 明確帶入 claude-sonnet-5[1m]，
-# 讓手機這條連線拿到1M context（已用 --print 直接測試過，真Anthropic backend
-# 認得這個model id，回應 CTX=1000000）。
+# 完整脈絡：[[reference_claude_code_remote_control_setup_sop_2026-09-17]]
+#          [[feedback_settings_json_minimax_leak_not_cleared_2026-09-22]]
 #
 # 用法：bash scripts/restart_remote_control.sh
 
@@ -39,10 +33,10 @@ SESSION="remote-control"
 
 tmux kill-session -t "$SESSION" 2>/dev/null || true
 
-tmux new-session -d -s "$SESSION" -x 200 -y 50
-tmux send-keys -t "$SESSION" 'unset CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC; export ANTHROPIC_MODEL="claude-sonnet-5[1m]" ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-5[1m]"; claude rc' C-m
+tmux new-session -d -s "$SESSION" -c ~/.openclaw -x 200 -y 50
+tmux send-keys -t "$SESSION" 'env -i HOME="$HOME" USER="$USER" PATH="$PATH" TERM="$TERM" SHELL="$SHELL" ANTHROPIC_MODEL="claude-sonnet-5[1m]" ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-5[1m]" claude rc' C-m
 
-echo "⏳ 啟動 claude rc..."
+echo "⏳ 啟動 claude rc（env -i 乾淨環境，物理排除MiniMax殘留憑證）..."
 
 # 有些情況會先跳「spawn mode」選單（same-dir/worktree），偵測到就直接選預設值[1]
 SUCCESS=0
@@ -61,6 +55,11 @@ done
 if [ "$SUCCESS" = "1" ]; then
   echo "✅ Remote Control 已成功啟動並連線"
   tmux capture-pane -t "$SESSION" -p | grep -A3 "Connected"
+  echo ""
+  echo "🔍 驗證環境變數乾淨度（不應出現任何 API_KEY/AUTH_TOKEN/BASE_URL/DEFAULT_HAIKU/DEFAULT_OPUS）："
+  PANE_PID=$(tmux list-panes -t "$SESSION" -F "#{pane_pid}")
+  CHILD=$(pgrep -P "$PANE_PID" | head -1)
+  ps eww -p "$CHILD" 2>/dev/null | tr ' ' '\n' | grep -iE "ANTHROPIC" || echo "（無殘留，乾淨）"
   exit 0
 else
   echo "❌ 15秒內未看到「Connected」，目前畫面："

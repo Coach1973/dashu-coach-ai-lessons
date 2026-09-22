@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴🔴🔴 手機Remote Control永久拔除MiniMax定案：env -i乾淨環境+settings.json永久移除金鑰，不再「用完復原」(2026-09-22)](reference_claude_code_remote_control_setup_sop_2026-09-17.md)
 - [🔴🔴🔴 settings.json的MiniMax金鑰/BASE_URL/Haiku-Opus預設從未真清除，教練用雙帳單交叉比對邏輯抓到，本機nettop對Remote Control session天生測不到(2026-09-22)](feedback_settings_json_minimax_leak_not_cleared_2026-09-22.md)
 - [🔴🔴 doctor --fix只是繞過workspace migration旗標沒真的清除，重啟(restart)會重新炸開+連累Telegram(2026-09-22)](feedback_gateway_migration_flag_not_truly_cleared_2026-09-22.md)
 
