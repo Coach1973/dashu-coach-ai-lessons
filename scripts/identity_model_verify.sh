@@ -93,21 +93,25 @@ done <<< "$REAL_IPS"
 # 這關若沒做，等於自己承認的查證方法比教練當時還弱。
 NETTOP_BYTES=""
 if [[ -n "$NETWORK_PID" ]]; then
-  NETTOP_RAW=$(nettop -p "$NETWORK_PID" -l 1 -x 2>/dev/null | grep -E '160\.79\.104\.|175\.99\.116\.')
+  NETTOP_RAW=$(nettop -p "$NETWORK_PID" -l 1 -x 2>/dev/null | grep -E '160\.79\.104\.|175[.-]99[.-]116')
   if [[ -n "$NETTOP_RAW" ]]; then
     # nettop -x 固定欄位順序：$3=連線(IP:port<->IP:port) $6=bytes_in $7=bytes_out（field 13/14是socket buffer大小，不是流量，不能用）
     NETTOP_BYTES=""
     MINI_IN=0; MINI_OUT=0; ANTH_IN=0; ANTH_OUT=0
     while IFS= read -r line; do
-      IP_SEG=$(printf '%s' "$line" | grep -oE '(160\.79\.104|175\.99\.116)\.[0-9]+')
+      # 🔴 2026-09-22 22:26修正：nettop對175.99.116.x這個網段會做反解析，顯示成
+      # 「175-99-116-25.static.tfn.net.tw」(連字號、有hostname)而不是原始dotted IP，
+      # 舊版regex只認句點格式，會把全部MiniMax連線漏判成「查無」。160.79.104.x沒有PTR記錄
+      # 所以還是顯示dotted IP，兩種網段的顯示格式不一致，必須分開比對。
+      CONN_FIELD=$(printf '%s' "$line" | awk '{print $3}')
       BIN=$(printf '%s' "$line" | awk '{print $6}')
       BOUT=$(printf '%s' "$line" | awk '{print $7}')
-      [[ -z "$IP_SEG" || -z "$BIN" || -z "$BOUT" ]] && continue
-      case "$IP_SEG" in
-        175.99.116.*) LABEL="MiniMax"; MINI_IN=$((MINI_IN+BIN)); MINI_OUT=$((MINI_OUT+BOUT)) ;;
-        160.79.104.*) LABEL="Anthropic"; ANTH_IN=$((ANTH_IN+BIN)); ANTH_OUT=$((ANTH_OUT+BOUT)) ;;
-        *) LABEL="?" ;;
-      esac
+      [[ -z "$BIN" || -z "$BOUT" ]] && continue
+      if printf '%s' "$CONN_FIELD" | grep -qE '175[.-]99[.-]116'; then
+        LABEL="MiniMax"; MINI_IN=$((MINI_IN+BIN)); MINI_OUT=$((MINI_OUT+BOUT))
+      elif printf '%s' "$CONN_FIELD" | grep -qE '160\.79\.104'; then
+        LABEL="Anthropic"; ANTH_IN=$((ANTH_IN+BIN)); ANTH_OUT=$((ANTH_OUT+BOUT))
+      fi
     done <<< "$NETTOP_RAW"
     NETTOP_BYTES="  MiniMax(175.99.116.x)累計：in=${MINI_IN} bytes / out=${MINI_OUT} bytes\n  Anthropic(160.79.104.x)累計：in=${ANTH_IN} bytes / out=${ANTH_OUT} bytes\n"
   fi
