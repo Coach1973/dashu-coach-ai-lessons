@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-24 01:25:16**
+> **最後同步：2026-09-24 01:36:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -103,7 +103,7 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🟡 | **namecard-db前會員「推薦人」補查：367人待續查** | ⏳下一場可直接接續 | 2026-09-23教練問前會員能否顯示離會時間+推薦人，離會時間已用本地既有信用証清查資料補上(330/338人)，推薦人本地真的沒有，已進BNI Connect會員頁(tabs-6)驗證「推薦人」欄位真實存在並手動查了10人份(4人有填/6人未登記屬正常)。剩367人存於`namecard-db/bni_connect_import/sponsor_lookup_queue_2026-09-23.txt`，查詢方法+一次5人browser_batch節奏見`knowledges/2026-09-23_BNI前會員推薦人補查進度與續作方法.md`，直接接續即可不用重新設計流程。 |
-| 🔒 | **柯朝陽聚寶盆入會續約發票待補開** | 🔒卡住-等教練提供正確資料 | 2026-09-23教練回報柯朝陽原發票(FS99860257/自訂編號092308/仁心茶茶有限公司/96847552)開錯，已作廢(`II_Invoice_Status`確認變2)，但教練未說明錯在哪、也未給正確統編或公司名稱就結束對話。下一棒開工先問教練正確資料，補開時自訂編號延續用092314，流程比照同場楊在珍作廢重開案例（[[feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23]]附近的ezPay SOP已補上作廢流程）。 |
+| 🟡 | **柯朝陽聚寶盆入會續約發票延後開立（休息一年再歸隊）** | ⏳長期擱置-約一年後再開 | 2026-09-23原發票(FS99860257/自訂編號092308/仁心茶茶有限公司/96847552)開錯已作廢(`II_Invoice_Status`確認變2)。2026-09-24教練親口補充：**柯朝陽已經先交錢了，但發票要等之後才開，因為他要休息一年再歸隊**——不是卡在缺資料，是刻意延後開票時程。下次真的要開票時（約一年後教練提起時），仍需要正確統編/公司名稱（原錯誤資料是仁心茶茶有限公司/96847552，教練未說明錯在哪），自訂編號延續用092314，流程比照同場楊在珍作廢重開案例（[[feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23]]附近的ezPay SOP已補上作廢流程）。近期不用主動追問。 |
 | 🟡 | **coach888「AI作品一覽」登記deterministic檢查（task_40a366c5）** | ⏳待認領獨立session | 2026-09-23教練當場質問「為什麼老是忘記」coach888登記——規則早就寫在`reference_curation_sop_2026-09-06.md`(教練自己的作品→收coach888)，但只是文字提醒沒有hook強制，這次又漏做一次才補上。已用spawn_task分派成獨立任務(task_40a366c5)，內容：掃`curated_sites_registry.json`裡`category`為「教練個人創作」且近7天新增的項目，比對`coach888/index.html`有沒有對應連結，沒有就攔下提醒。詳見[[feedback_coach888_registration_repeatedly_skipped_2026-09-23]]+試金石案例81。 |
 | ✅ | **「大樹創作SOP」口語別名缺失+coach888插入HTML破壞既有項目** | ✅2026-09-24已修復+驗證 | 教練深夜連兩次說「走大樹創作SOP」小龍蝦仍跑店家策展SOP，查明SOP檔案沒寫教練口語別名，已補上+同步kong/peipei/回信赫米斯（commit`08c796b60`）。赫米斯後續成功執行大檔案上架，但coach888新增項目時切壞既有項目HTML結構（教練回報「看不到最新作品」），已修復+補強SOP插入步驟（commit`31739ac`+`86e8fa472`）。另依教練指示新建coach888「最新作品」分類（伺服器狀態+靜態HTML雙更新，coach888 commit`71ab9f7`）+熱門排行新增刪除功能（`e3cbcd4f3`+`c4bf5df`）。下一棒無待辦，純記錄備查。 |
 | ✅ | **🔴🔴🔴 小龍蝦本尊(ai.openclaw.gateway)3天無回應重大事故** | ✅2026-09-22已修復+建立防呆 | 根因：workspace需要migration導致gateway重啟失敗被launchd停放，process完全沒在跑，教練連續3天收不到回應。已`openclaw doctor --fix`+`openclaw gateway start`修復，並在`system_patrol.sh`(教練8/25核准的每小時巡檢)新增第0項健康檢查，異常自動修復+用不依賴gateway本身的`notify_coach.sh`通知。完整記錄見試金石案例79+[[feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22]]。下一棒持續觀察穩定性即可，機制已自動運作不需人工介入。 |
