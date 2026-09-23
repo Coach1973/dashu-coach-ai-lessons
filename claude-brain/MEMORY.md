@@ -1,4 +1,6 @@
 # Memory Index
+- [🔧 ezPay電子發票開立完整SOP：兩商店代號區分/查詢區間alert陷阱/JS直接送出法](reference_ezpay_invoice_issuing_procedure.md)
+- [🔴🔴 查BNI會員統編/手機條碼要同時查聚寶盆+培訓費兩系統，同場對話同教訓連犯兩次(2026-09-23)](feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23.md)
 - [🔴🔴 coach888登記規則早就寫在策展SOP裡卻一犯再犯，軟性記憶提醒失敗，需升級hook層級檢查(2026-09-23)](feedback_coach888_registration_repeatedly_skipped_2026-09-23.md)
 - [🔧 OpenClaw本機語意記憶搜尋失效10+小時修復SOP：configure精靈選Managed local server(2026-09-23)](reference_llamacpp_managed_local_server_setup_2026-09-23.md)
 - [🔴🔴🔴 教練親口：「全面改」範圍預設是這個Claude，不是跨MiniMax系統，動手前先確認範圍(2026-09-23)](feedback_quanmian_scope_must_clarify_2026-09-23.md)
