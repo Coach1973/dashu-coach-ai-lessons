@@ -63,6 +63,7 @@ find ~/.openclaw/workspace -maxdepth 2 -name ".!*" 2>/dev/null
 | 任務開始前 | `distill/top10_dynamic.md`（Top 10 最常犯錯場景）|
 | 需要知道教練偏好 | `USER.md`（教練偏好與習慣）|
 | 需要找路徑/密碼 | `路徑大全.md`（所有路徑、密碼、API Key）|
+| 教練說「大樹創作SOP」「大樹作品」「大樹作品上傳」| 🔴`knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`——**不是**店家策展SOP，禁止用策展金鑰插大台南商圈卡片（2026-09-23深夜連續兩次做錯，教練親自刪除）|
 | 需要知道團隊結構 | `shared-relay/對話分工表.md` |
 | 需要知道超級群組 | `shared-relay/SUPERGROUP-MAP.md` |
 | 需要知道最新共識 | `shared-relay/CONSENSUS.md` |
