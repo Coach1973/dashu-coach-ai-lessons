@@ -11,10 +11,10 @@
 - [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認是否真的重複，不能信檔名帶數字(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
 - [🔴 git pull失敗/歷史異常時先讀本機HEARTBEAT/接力棒，不靠git底層診斷(2026-09-21)](feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md)
 - [🔧 BNI PPT SOP簡稱對應knowledges/SOP_PDF轉品牌底圖PPT.md+scripts/pdf_to_branded_pptx.py(2026-09-21)](reference_bni_ppt_sop_alias_2026-09-21.md)
-- [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；懸案根因是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
+- [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；懸案根因是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)（機制細節見 [MiniMax mystery resolved](reference_minimax_mystery_resolved_model_name_routing_2026-09-19.md)）
 - [🔴🔴 OpenCode配額用盡後自動切換的備援模型會捏造完工結果(touch+編檔案大小)，完工回報一律要實際驗證(2026-09-20)](feedback_opencode_fallback_model_fabricated_results_2026-09-20.md)
 - [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常，已接進OpenCode(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
-- [🔴🔴🔴 機密外洩清除案例合輯：憑證層檔案/agent登入設定(git-filter-repo徹底清除)＋distilled/echo衍生檔案＋peipei-ai-backup舊commit，同類問題commit前都要單獨掃描(2026-09-18~19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)（明細：[distilled/echo衍生檔](feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18.md)／[peipei-ai-backup](feedback_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)）
+- [🔴🔴🔴 機密外洩清除案例合輯：憑證層檔案/agent登入設定(git-filter-repo徹底清除)＋distilled/echo衍生檔案＋peipei-ai-backup舊commit，同類問題commit前都要單獨掃描(2026-09-18~19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)（明細：[distilled/echo衍生檔](feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18.md)／[peipei-ai-backup](reference_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)）
 - [🔴 修跨裝置同步bug只堵住眼前症狀就回報完成，教練親測抓到第二個洞(2026-09-19)](feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19.md)
 - [🔴 claude rc啟動時明確unset ANTHROPIC_BASE_URL等變數反而觸發硬性檢查噴錯(2026-09-19)](feedback_claude_rc_never_unset_base_url_2026-09-19.md)
 - [🔴🔴 赫米斯桌面版App(可關)vs Telegram後端gateway(要24小時運作)兩回事，全部釋放曾誤斷線16小時(2026-09-19)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
