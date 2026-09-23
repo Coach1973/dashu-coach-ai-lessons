@@ -4,11 +4,40 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-23 03:25:33**
+> **最後同步：2026-09-23 14:05:53**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-23 14:00，Mac桌面版，新的一棒 v238）
+
+**本場主軸：教練交辦「全面體檢」，抓到3個真實系統問題並全部修復——bigtree三站資料分岔、兩個子agent人設檔曾整批從git歷史消失(已救回)、本機語意記憶搜尋失效10+小時(教練親自跑configure精靈修好)。另處理7個月前外洩的Anthropic金鑰+教練當場糾正兩條規則。**
+
+### 1. 🔴 bigtree活動資料在三個站台分岔，真正根因是event.db沒同步
+赫米斯(VPS)手改`Coach1973/bigtree`repo的HTML刪掉10/7、10/8兩場TBD活動，但只對`coach1973.github.io/bigtree`(純GitHub Pages)有效。查證發現`event.bymyway.com/bigtree/`跟`bigtree-tw.netlify.app`都是即時/發佈時直接讀`event-signup/event.db`的`events`表產生內容，資料庫裡這兩筆還是`status='active'`。已改成`cancelled`(照既有慣例不刪除)+對`bigtree-tw`跑一鍵發佈(教練已鬆綁Netlify不用每次先問，commit deploy `6ab3606f`)，三站確認一致。已回信赫米斯說明真正根因+提醒往後改場次要改DB為主，見`cross-agent/outbox/2026-09/`。
+
+### 2. 🔴🔴🔴 agents/bni_tainan+jiaolian_thoughts人設檔曾整批從git歷史消失，已救回
+`openclaw doctor`回報「bni_tainan記憶系統找不到」，查證確認這兩個子agent的AGENTS.md+DREAMS.md完全不在HEAD跟origin/main裡，磁碟也沒有。高度疑似09-19金鑰git-filter-repo改寫歷史時跟並行commit(`3361e3078`)分岔，導致該commit變懸空。用`git show <hash>:<path>`從懸空commit救回4個檔案(尚未被gc回收，內容完整836~901行)，commit `fff330028`已推上雲端。教練點出這類事故的根源是「全面改」指令範圍沒問清楚(見下)。
+
+### 3. 🔴 本機語意記憶搜尋失效10+小時，教練親自跑configure修好
+`llama-cpp`外掛版本落後gateway核心(2026.6.33 vs 2026.9.4)，更新+重啟後仍失敗。真正卡點是`openclaw configure --section model`裡「Local llama.cpp auth method」要選「**Managed local server**」(不是預設反白的「Existing llama-server」)。這個互動精靈完全無法用expect自動化(打字/方向鍵都測試無效)，教練親自在終端機跑完，軍師逐步截圖引導。驗證：embedding直接測試回傳768維真實向量、`openclaw memory index`五個agent共1871個檔案全部成功索引。完整SOP見`reference_llamacpp_managed_local_server_setup_2026-09-23`。
+
+### 4. 其他：舊金鑰遮蔽+兩條規則教訓
+7個月前教練申請Anthropic API時貼進對話的金鑰(`sk-ant-api03-jMLa...`)仍是活的但餘額僅$0.01+無自動儲值，教練裁示不撤銷、只遮蔽明文(commit `c5121d298`)。教練當場糾正：①「全面改」範圍預設是這個Claude能碰到的範圍，不是跨MiniMax系統，動手前先問清楚 ②低風險/不緊急發現不要多輪追問升級，一次講完+已處理即可。兩條都已寫入記憶。
+
+### 📋 下一場開工先做
+1. **MEMORY.md索引已超過170行，多次被hook提醒要壓到140行以下，本場沒空處理，下一棒優先**——需要逐條讀topic檔判斷去留，適合用consolidate-memory技能專門跑一次，不要順手做
+2. 試金石商業化計畫書仍等教練回覆三個決策點
+3. 沿用既有待辦：跨機分岔警示(本場agents/消失事件可能就是這個警示的具體案例，值得回頭看是不是同一根因)
+4. E16接力棒瘦身：本場已執行(v235移入下方封存區)
+
+### 🔑 本場commit
+`c5121d298`(遮蔽外洩金鑰)、`fff330028`(救回agents/bni_tainan+jiaolian_thoughts)。本次總結commit另計。
+
+---
+
+## v237之前內容（上一份總結摘要，保留備查）
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-23 03:25，Mac桌面版，新的一棒 v237）
 
