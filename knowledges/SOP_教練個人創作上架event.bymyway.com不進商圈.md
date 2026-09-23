@@ -47,7 +47,8 @@
 5. **驗證**：`curl -sI https://event.bymyway.com/curated/<slug>/` 確認 200，再抓一段內容文字比對確認真的是原始版本（不是被哪個環節動過手腳）。
 6. **🔴 登記進 coach888「AI作品一覽」，跟上架動作同一輪完成，不要等教練問才補**——這條規則其實[[reference_curation_sop_2026-09-06]]第56~57行早就寫了（「教練自己的作品→收coach888」，2026-09-05教練親定），2026-09-23第一次做這個SOP時漏做，教練事後問「為什麼老是忘記」才發現。做法：
    - `cd /Users/bymyway/github_repos/coach888 && git pull`
-   - 在 `index.html` 找 `data-section="gongkai"`（對外公開分類）的 `<div class="grid" ...>`，把新項目插在**第一個** `<div class="item" ...>` 之前（既有規則：coach888新增項目一律放分類第一筆），其餘項目的 `<div class="num">` 依序遞增，`<span class="count">N項</span>` 的 N 一併更新
+   - 在 `index.html` 找 `data-section="gongkai"`（對外公開分類）的 `<div class="grid" data-section="gongkai">` 這個**開頭標籤本身**，新項目直接插在這個開頭標籤**後面**（不是插在「第一個看到的 `<div class="item"` 之前」——這個 grid 裡混雜兩種項目模板：舊版`<div class="item" data-cat="gongkai"><a...><div class="thumb">...</div><div class="meta">...</div></a></div>`跟新版單行`<div class="item" data-url="...">...</div>`，用字串比對找「第一個`<div class="item"`」很可能真的落在舊版項目的`<a>`標籤內部、切在`<div class="thumb">`跟`<div class="meta">`中間，2026-09-24《造林》上架時Hermes就是這樣切壞了「AI人才檢索提案」項目的結構，教練回報「看不到最新作品」，commit `31739ac`修復），其餘項目的 `<div class="num">` 依序遞增（含所有`.item`不管新舊模板都要遞增，避免重複），`<span class="count">N項</span>` 的 N 一併更新
+   - **插入後務必檢查HTML標籤配對**：`<div class="grid" data-section="gongkai">`到對應`</div>`之間，`<div`計數要等於`</div>`計數、`<a `計數要等於`</a>`計數，不平衡代表插入位置切壞了既有項目，要重新定位
    - `git add index.html && git commit ... && git push origin master`（**注意這個 repo 預設分支是 `master` 不是 `main`**）
    - 驗證：GitHub Pages 部署有延遲（實測約15秒），`curl https://coach1973.github.io/coach888/` 確認新項目字樣出現才算完成，不要 push 完就回報完成
 7. **🔴 發 Telegram 通知到「活動報名即時通知」群組，跟店家策展SOP待遇一致**——2026-09-24教練親自問「即便是大樹個人作品的上架，也一樣要在活動報到通知那邊給我發通知，讓我找得到網址吧？」才發現這條SOP從頭到尾沒有這一步，教練只能自己翻聊天記錄找URL。**這是合理要求，往後每次上架完成都要做**，直接重用店家策展SOP同一套`notify()`（同一個群組、同一個bot_token，只是文案不同，不要另外寫新的Telegram呼叫）：
