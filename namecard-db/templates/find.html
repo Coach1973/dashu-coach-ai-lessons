@@ -71,8 +71,23 @@
   <div class="visits">
     <div class="vh">🗓 訪問紀錄（共 {{ r.visits|length }} 次）</div>
     {% for v in r.visits %}
-    <div class="vrow">{{ v.chapter or '（分會不明）' }}分會・{{ v.visit_date or '（日期不明）' }}</div>
+    <div class="vrow">{{ v.chapter or '（分會不明）' }}分會・{{ v.visit_date or '（日期不明）' }}{% if v.invited_by %}・邀請人：{{ v.invited_by }}{% endif %}</div>
     {% endfor %}
+  </div>
+  {% endif %}
+  {% if r.source == 'card' and r.past_guest_visits %}
+  <div class="visits">
+    <div class="vh">🗓 曾以來賓身份到訪（共 {{ r.past_guest_visits|length }} 次{% if r.past_guest_ambiguous %}・同名可能不只一人，僅供參考{% endif %}）</div>
+    {% for v in r.past_guest_visits %}
+    <div class="vrow">{{ v.chapter or '（分會不明）' }}分會・{{ v.visit_date or '（日期不明）' }}{% if v.invited_by %}・邀請人：{{ v.invited_by }}{% endif %}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if r.source == 'card' and (r.former_member_end_date or r.former_member_sponsor) %}
+  <div class="visits">
+    <div class="vh">🔵 前會員資料</div>
+    {% if r.former_member_end_date %}<div class="vrow">離會時間：{{ r.former_member_end_date }}{% if not r.former_member_end_date_is_exact %}（約，會期到期日代替）{% endif %}</div>{% endif %}
+    {% if r.former_member_sponsor %}<div class="vrow">當初推薦人：{{ r.former_member_sponsor }}</div>{% endif %}
   </div>
   {% endif %}
   {% if r.source != 'directory' %}

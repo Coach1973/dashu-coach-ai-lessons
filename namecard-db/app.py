@@ -290,11 +290,44 @@ def find_page():
             (no_space_like,) * 5,
         ).fetchall()
         for r in card_rows:
-            results.append({"source": "card", **dict(r)})
+            d = dict(r)
+            # 前會員/來賓身份補充：用姓名去空格比對來賓拜訪紀錄+信用証表的離會日期，
+            # 教練2026-09-23要求——不重新爬資料，先用本機已有的guest_visits(3621筆
+            # 皆有邀請人)+bni_credit_certificates(scheduled_end_date)兩張表補顯示。
+            norm_name = (d["name"] or "").replace(" ", "")
+            if norm_name:
+                guest_matches = conn.execute(
+                    """SELECT id, name FROM guests WHERE REPLACE(name, ' ', '') = ?""",
+                    (norm_name,),
+                ).fetchall()
+                past_visits = []
+                for gm in guest_matches:
+                    past_visits += conn.execute(
+                        """SELECT chapter, visit_date, invited_by FROM guest_visits
+                           WHERE guest_id = ? ORDER BY visit_date DESC""",
+                        (gm["id"],),
+                    ).fetchall()
+                if past_visits:
+                    d["past_guest_visits"] = [dict(v) for v in past_visits]
+                    d["past_guest_ambiguous"] = len(guest_matches) > 1
+                if d.get("bni_note") and "前會員" in d["bni_note"]:
+                    cert = conn.execute(
+                        """SELECT scheduled_end_date, actual_termination_date, chapter, sponsor_name
+                           FROM bni_credit_certificates WHERE REPLACE(name, ' ', '') = ?
+                           ORDER BY checked_at DESC LIMIT 1""",
+                        (norm_name,),
+                    ).fetchone()
+                    if cert:
+                        d["former_member_end_date"] = (
+                            cert["actual_termination_date"] or cert["scheduled_end_date"]
+                        )
+                        d["former_member_end_date_is_exact"] = bool(cert["actual_termination_date"])
+                        d["former_member_sponsor"] = cert["sponsor_name"]
+            results.append({"source": "card", **d})
         for r in guest_rows:
             d = dict(r)
             visits = conn.execute(
-                """SELECT chapter, visit_date FROM guest_visits
+                """SELECT chapter, visit_date, invited_by FROM guest_visits
                    WHERE guest_id = ? ORDER BY visit_date DESC""",
                 (d["id"],),
             ).fetchall()

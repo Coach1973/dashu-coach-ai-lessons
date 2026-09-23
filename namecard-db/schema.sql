@@ -163,7 +163,8 @@ CREATE TABLE IF NOT EXISTS bni_credit_certificates (
     transfer_date TEXT,
     credit_months INTEGER,         -- 證書面額(信用額度個月數)，只回填status='active'的記錄
     checked_at TEXT DEFAULT (datetime('now')),
-    notes TEXT
+    notes TEXT,
+    sponsor_name TEXT              -- 推薦人(BNI Connect會員資格詳細資料tabs-6的「推薦人」欄位，2026-09-23新增)
 );
 
 CREATE INDEX IF NOT EXISTS idx_bcc_chapter ON bni_credit_certificates(chapter);
