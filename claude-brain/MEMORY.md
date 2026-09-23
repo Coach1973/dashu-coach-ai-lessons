@@ -1,6 +1,6 @@
 # Memory Index
 - [🔴 誤報700+類BNI分類資料庫不存在，其實漏查namecard-db目錄，教練親定「AI推理vs BNI真實案例」可信度原則(2026-09-23)](feedback_search_namecard_db_before_claiming_taxonomy_missing_2026-09-23.md)
-- [🔧 cloudflared版本過舊(2026.3.0)QUIC間歇性斷線→已升級2026.9.1+重啟11支tunnel驗證穩定，root daemon尾巴待教練手動sudo(2026-09-23)](reference_cloudflared_outdated_version_quic_intermittent_failures_2026-09-23.md)
+- [🔧 cloudflared全部程序(11支tunnel+root daemon)已升級2026.9.1並驗證穩定，教練親自完成sudo重啟收尾(2026-09-23)](reference_cloudflared_outdated_version_quic_intermittent_failures_2026-09-23.md)
 - [🔧 ezPay電子發票開立完整SOP：兩商店代號區分/查詢區間alert陷阱/JS直接送出法](reference_ezpay_invoice_issuing_procedure.md)
 - [🔴🔴 查BNI會員統編/手機條碼要同時查聚寶盆+培訓費兩系統，同場對話同教訓連犯兩次(2026-09-23)](feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23.md)
 - [🔴🔴 coach888登記規則早就寫在策展SOP裡卻一犯再犯，軟性記憶提醒失敗，需升級hook層級檢查(2026-09-23)](feedback_coach888_registration_repeatedly_skipped_2026-09-23.md)
