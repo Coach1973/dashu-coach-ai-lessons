@@ -97,4 +97,11 @@ function setVal(id, val){
 
 **🔴 2026-09-23發現：Claude Code自己的auto-mode權限分類器偶爾會攔截JS送出動作**（跟ezPay系統本身無關），報錯「Permission for this action was denied by the Claude Code auto mode classifier」，屬於短暫性攔截，重新執行同一段送出腳本通常就正常，不用改寫法或找替代方案。
 
+**🔧 2026-09-23新增：作廢發票(`Invoice_invalid/create_invalid`)完整流程**——教練事後發現公司統編/名稱資料舊了或開錯，要求「作廢重開」時適用：
+1. 查詢欄位：`input[name="InvoiceNumber"]`填發票號碼(不是自訂編號)，送出用`jQuery('#search_btn').trigger('click')`（跟開立頁同樣道理，`.click()`不可靠）；也可以直接呼叫`invalid_info.send_search_invalid_invoice()`。真實查詢API是`Invoice_invalid_ajax/get_invoice_by_db`，回應`status:"SUCCESS"`+完整發票明細(`II_User_Name`/`II_User_UBN`等)才代表真的查到，拿來核對是不是要作廢的那張。
+2. **作廢原因`input[name="InvalidReason"]`限中文6字或英文20字**，超過會被`Invoice_invalid_ajax/create_invalid_by_db`拒絕(`INV10002`)，簡短填「資料錯誤」「統編異動」這類4字詞即可。
+3. 確定作廢鈕沒有id，要用文字比對抓：`Array.from(document.querySelectorAll('#only_invalid button')).find(b=>b.textContent.trim()==='確定作廢')`，一樣用`jQuery(btn).trigger('click')`送出。
+4. 送出後常見`Inspected target navigated or closed`（跟開立頁一樣是頁面reload中斷JS評估，不是失敗訊號），回`search_invoice`頁查該發票號碼，`II_Invoice_Status`從`1`(已開立)變`2`(已作廢)才算真的作廢成功。
+5. 作廢後若要重開，走正常開立流程，**自訂編號接續原本序號往後排一號**（例如舊的是092312作廢，新的用092313），不要沿用舊自訂編號。
+
 參見 [[project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16]]。
