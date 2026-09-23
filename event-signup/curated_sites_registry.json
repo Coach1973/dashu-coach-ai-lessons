@@ -207,6 +207,18 @@
       "status": "live",
       "source_package": "20260917-190737__input-bigtree-1003-site---143d6404-9b57-4bd9-ad93-260c7b9129e8.zip",
       "no_shop_card": true
+    },
+    {
+      "slug": "ai-story",
+      "title": "大副與軍師：32MB 封包攻防戰｜AI 漫畫全集",
+      "description": "教練親自創作的AI漫畫連載，記錄與軍師之間一場真實的手機遠端連線除錯攻防戰。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/ai-story/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-23 16:21",
+      "status": "live",
+      "source_package": "20260923-153245__ai-story.zip（原檔案verbatim重新部署，繞過店家上架流程）",
+      "no_shop_card": true
     }
   ],
   "redirects": {
