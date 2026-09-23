@@ -2267,15 +2267,36 @@ def api_coach888_click():
     )
 
 
-@app.route("/api/coach888/click-counts", methods=["GET", "OPTIONS"])
+@app.route("/api/coach888/click-counts", methods=["GET", "DELETE", "OPTIONS"])
 def api_coach888_click_counts():
-    """回傳所有url的累計點擊次數({url: count})，前端自己排序取前N名顯示熱門排行。"""
+    """回傳所有url的累計點擊次數({url: count})，前端自己排序取前N名顯示熱門排行。
+    DELETE(2026-09-24教練交辦)：熱門排行榜原本沒有刪除機制(獨立於layout/section外運作，
+    見上方loadHotRanking()註解)，教練點進去發現活動早就結束了卻退不了榜，删不掉。
+    刪法：直接把該url從coach888_clicks表移除，點擊次數歸零，下次排行重算自然不會再進榜；
+    若教練之後又點擊該連結，會重新累計，這是預期行為（不是永久封鎖某網址上榜）。"""
     resp_headers = {
         "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
         "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
     }
     if request.method == "OPTIONS":
         return Response(status=204, headers=resp_headers)
+    if request.method == "DELETE":
+        payload = request.get_json(force=True, silent=True) or {}
+        url = (payload.get("url") or request.args.get("url") or "").strip()
+        if not url:
+            return Response(
+                json.dumps({"ok": False, "error": "missing url"}),
+                status=400, headers={**resp_headers, "Content-Type": "application/json"},
+            )
+        conn = db.get_conn()
+        conn.execute("DELETE FROM coach888_clicks WHERE url = ?", (url,))
+        conn.commit()
+        conn.close()
+        return Response(
+            json.dumps({"ok": True}), status=200, headers={**resp_headers, "Content-Type": "application/json"},
+        )
     conn = db.get_conn()
     rows = conn.execute("SELECT url, click_count FROM coach888_clicks").fetchall()
     conn.close()
