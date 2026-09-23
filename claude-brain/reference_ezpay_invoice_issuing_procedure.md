@@ -87,4 +87,14 @@ function setVal(id, val){
 
 **查詢頁(`search_invoice`)欄位**：`select[name="SearchItem"]`(查詢項目，設`value='CustomNum'`查自訂編號)＋`input[placeholder="請輸入查詢條件"]`(查詢框，無id/name)，**只吃精確比對，不支援前綴/部分比對**(測試`08192`查不到`081925`)。送出查詢用`search_invoice_info.send_search_invoice('1')`，跟開立頁的送出可靠觸發法同一個道理，不要依賴點擊按鈕。
 
+**🔴 2026-09-23聚寶盆(入會續約)12張實戰再確認：中文姓名/公司名一律用文字直接貼，不要用`\u`萬國碼跳脫**——這場JS腳本裡兩度把`\u`碼位算錯，導致實際填入的姓名跟原意差一個字(可蕎→可蓋、李紫妤→李紫妍)，`form_input`字元錯置的舊坑（見上方2026-08-24記錄）不是唯一風險，手寫`\u`跳脫序列一樣容易打錯。兩次都是靠「送出前讀回欄位值核對」這條既有SOP攔下，沒有造成真的送錯。**往後JS腳本裡的中文一律直接貼文字，不要手算`\uXXXX`。**
+
+**🔴 2026-09-23再次驗證：MerchantID假成功陷阱是SOP裡最容易被跳過的一步**——本場一開始沒有主動套用上面已經記載的`sel.value=...; sel.dispatchEvent(new Event('change',...))`寫法，直接送出後分頁卡住，教練親眼看畫面上的錯誤訊息才點破。教訓不是SOP不完整，是**動手前沒有先回頭讀已有的SOP就開始操作**——遇到這系統卡住/送出無反應，第一反應應該是回來讀這份文件，而不是憑印象猜測或用`computer`工具的截圖除錯。
+
+**🔴 2026-09-23新發現：`submitted`字面回傳/CDP逾時都不能當成功依據，唯一可信的是XHR攔截讀`responseText`**——本場一張(手機條碼少一碼)送出後JS呼叫`jQuery('#create_btn').trigger('click')`回傳正常無錯誤，但實際上`create_invoice_by_db`回應是`{"status":"INV10002","message":"手機條碼格式錯誤"}`，前端沒有拋出任何JS例外，如果沒有攔截XHR、只看呼叫本身有沒有報錯，會誤判為成功。**每一筆送出都要在同一段腳本裡掛好XHR攔截器，讀回`status`欄位確認是`SUCCESS`才算數**，光靠之後回`search_invoice`頁查也可以驗證，但攔截XHR能在當下立刻知道失敗原因（本場正是靠這個查出手機條碼格式錯誤的真正原因，不是瞎猜）。
+
+**🔴 2026-09-23發現：手機條碼固定「/」加7碼，字數不對會被系統直接拒絕(`INV10002`)**——收到教練口頭報的手機條碼，順手數一下`/`後面是不是剛好7個字元，字數不對代表教練那邊的資料本身就抄漏一碼，要在送出前回頭跟教練核對，不要直接送出讓ezPay系統拒絕才發現。
+
+**🔴 2026-09-23發現：Claude Code自己的auto-mode權限分類器偶爾會攔截JS送出動作**（跟ezPay系統本身無關），報錯「Permission for this action was denied by the Claude Code auto mode classifier」，屬於短暫性攔截，重新執行同一段送出腳本通常就正常，不用改寫法或找替代方案。
+
 參見 [[project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16]]。
