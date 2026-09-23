@@ -31,6 +31,12 @@
   .bni-badge.bni-active { background: #e6f6ea; color: #1e7d34; }
   .bni-badge.bni-former { background: #eaf2fb; color: #1f5fa8; }
   .bni-badge.not-bni { background: #fdecea; color: #b3261e; }
+  .bni-badge.guest-badge { background: #fdf3e7; color: #b45309; }
+  .visits { margin: 8px 0 0; padding: 8px 10px; background: #fdf8f0; border-radius: 8px; }
+  .visits .vh { font-size: 12px; color: #b45309; font-weight: 700; margin-bottom: 4px; }
+  .visits .vrow { font-size: 13px; color: #444; }
+  .bni-filter-link { font-size: 13px; padding: 6px 12px; border-radius: 8px; background: #eef1f6; color: #1f3a5f; text-decoration: none; }
+  .bni-filter-link.active { background: #1f3a5f; color: white; font-weight: 700; }
   .bni-controls { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
   .bni-controls button { padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; }
   .bni-controls button.active { border-color: currentColor; font-weight: 700; }
@@ -49,7 +55,14 @@
 {% if is_owner %}
 <a class="chains-cta" href="/admin/team">🔐 帳號審核（跟進權限申請）</a>
 {% endif %}
+<div class="bni-filter-row" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+  <a href="?bni_filter=" class="bni-filter-link{{ ' active' if not bni_filter else '' }}">全部</a>
+  <a href="?bni_filter=active" class="bni-filter-link{{ ' active' if bni_filter=='active' else '' }}">🟢 現任會員</a>
+  <a href="?bni_filter=former" class="bni-filter-link{{ ' active' if bni_filter=='former' else '' }}">🔵 前會員</a>
+  <a href="?bni_filter=guest" class="bni-filter-link{{ ' active' if bni_filter=='guest' else '' }}">🧑‍🤝‍🧑 來賓</a>
+</div>
 <form method="get">
+  <input type="hidden" name="bni_filter" value="{{ bni_filter }}">
   <input type="text" name="q" placeholder="搜姓名／公司／地區／產品服務關鍵字" value="{{ query }}">
   <select name="category">
     <option value="">全部類別</option>
@@ -68,9 +81,13 @@
 {% for c in cards %}
 <div class="card">
   <div class="thumb">
+    {% if c.image_filename %}
     <a href="/image/{{ c.image_filename }}" target="_blank">
       <img src="/image/{{ c.image_filename }}" alt="{{ c.name or '名片照片' }}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'no-thumb',textContent:'📇'}))">
     </a>
+    {% else %}
+    <div class="no-thumb">🧑‍🤝‍🧑</div>
+    {% endif %}
   </div>
   <div class="body">
   {% if c.status in ['pending', 'processing'] %}
@@ -95,14 +112,31 @@
   {% if c.status != 'failed' %}
     {% set bni = c.bni_status or 'unknown' %}
     {% set is_former = bni == 'bni_member' and c.bni_note and '前會員' in c.bni_note %}
-    {% if bni == 'bni_member' and is_former %}
+    {% if bni == 'guest' %}
+    <div class="bni-badge guest-badge">🧑‍🤝‍🧑 來賓{% if c.bni_note %}・{{ c.bni_note }}{% endif %}</div>
+    {% elif bni == 'bni_member' and is_former %}
     <div class="bni-badge bni-former">🔵 前會員{% if c.bni_note %}・{{ c.bni_note.replace('前會員・', '').replace('前會員', '') }}{% endif %}</div>
     {% elif bni == 'bni_member' %}
     <div class="bni-badge bni-active">🟢 現任會員{% if c.bni_note %}・{{ c.bni_note.replace('現任會員', '') }}{% endif %}</div>
     {% elif bni == 'not_bni' %}
     <div class="bni-badge not-bni">🔴 非會員</div>
     {% endif %}
-    {% if logged_in %}
+    {% if c.past_guest_visits %}
+    <div class="visits">
+      <div class="vh">🗓 曾以來賓身份到訪（共 {{ c.past_guest_visits|length }} 次{% if c.past_guest_ambiguous %}・同名可能不只一人，僅供參考{% endif %}）</div>
+      {% for v in c.past_guest_visits %}
+      <div class="vrow">{{ v.chapter or '（分會不明）' }}分會・{{ v.visit_date or '（日期不明）' }}{% if v.invited_by %}・邀請人：{{ v.invited_by }}{% endif %}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if c.former_member_end_date or c.former_member_sponsor %}
+    <div class="visits">
+      <div class="vh">🔵 前會員資料</div>
+      {% if c.former_member_end_date %}<div class="vrow">離會時間：{{ c.former_member_end_date }}{% if not c.former_member_end_date_is_exact %}（約，會期到期日代替）{% endif %}</div>{% endif %}
+      {% if c.former_member_sponsor %}<div class="vrow">當初推薦人：{{ c.former_member_sponsor }}</div>{% endif %}
+    </div>
+    {% endif %}
+    {% if logged_in and not c.is_guest_row %}
     <div class="bni-controls">
       <form method="POST" action="/card/{{ c.id }}/bni_status">
         <input type="hidden" name="bni_status" value="bni_member">
@@ -122,13 +156,17 @@
     {% endif %}
   {% endif %}
   <div class="actions-row">
+    {% if c.is_guest_row %}
+    <a href="/guest/{{ c.id }}/match">🔗 加入名片庫管理</a>
+    {% else %}
     <a href="/card/{{ c.id }}/match">🔗 媒合</a>
     <a href="/card/{{ c.id }}/follow">📋 跟進紀錄</a>
     <a href="/card/{{ c.id }}/edit">✏️ 編輯</a>
-    {% if c.status == 'failed' %}
-    <form method="POST" action="/card/{{ c.id }}/delete" onsubmit="return confirm('確定刪除這筆未辨識的名片？');" style="display:inline;">
+    {% if is_owner %}
+    <form method="POST" action="/card/{{ c.id }}/delete" onsubmit="return confirm('確定刪除這筆名片？此動作僅限教練本人執行。');" style="display:inline;">
       <button type="submit" style="all:unset;cursor:pointer;color:#b3261e;font-size:13px;">🗑 刪除</button>
     </form>
+    {% endif %}
     {% endif %}
   </div>
   {% endif %}

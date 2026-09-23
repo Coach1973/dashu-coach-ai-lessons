@@ -80,11 +80,50 @@ def owner_only_required(view):
     return wrapped
 
 
+def attach_bni_history(conn, d):
+    """幫一張card補上「曾以來賓身份到訪」+「前會員離會時間/推薦人」，
+    用姓名去空格比對guest_visits/bni_credit_certificates兩張本地既有的表，
+    不重新爬資料。index()跟/find共用同一份邏輯，教練2026-09-23要求。"""
+    norm_name = (d.get("name") or "").replace(" ", "")
+    if not norm_name:
+        return d
+    guest_matches = conn.execute(
+        """SELECT id, name FROM guests WHERE REPLACE(name, ' ', '') = ?""",
+        (norm_name,),
+    ).fetchall()
+    past_visits = []
+    for gm in guest_matches:
+        past_visits += conn.execute(
+            """SELECT chapter, visit_date, invited_by FROM guest_visits
+               WHERE guest_id = ? ORDER BY visit_date DESC""",
+            (gm["id"],),
+        ).fetchall()
+    if past_visits:
+        d["past_guest_visits"] = [dict(v) for v in past_visits]
+        d["past_guest_ambiguous"] = len(guest_matches) > 1
+    if d.get("bni_note") and "前會員" in d["bni_note"]:
+        cert = conn.execute(
+            """SELECT scheduled_end_date, actual_termination_date, chapter, sponsor_name
+               FROM bni_credit_certificates WHERE REPLACE(name, ' ', '') = ?
+               ORDER BY checked_at DESC LIMIT 1""",
+            (norm_name,),
+        ).fetchone()
+        if cert:
+            d["former_member_end_date"] = (
+                cert["actual_termination_date"] or cert["scheduled_end_date"]
+            )
+            d["former_member_end_date_is_exact"] = bool(cert["actual_termination_date"])
+            d["former_member_sponsor"] = cert["sponsor_name"]
+    return d
+
+
 @app.route("/")
 @team_login_required
 def index():
     query = request.args.get("q", "").strip()
     category = request.args.get("category", "").strip()
+    # 教練2026-09-23要求：首頁要有篩選「前會員」的選項（語音「全會員」是「前會員」誤聽）。
+    bni_filter = request.args.get("bni_filter", "").strip()
 
     conn = db.get_conn()
     categories = [
@@ -94,41 +133,79 @@ def index():
         ).fetchall()
     ]
 
-    sql = "SELECT * FROM cards WHERE status != 'split' AND status != 'roster'"
-    params: list[str] = []
-    if query:
-        # 所有欄位忽略空格差異比對，理由同/find——教練:「誰知道要空格？」使用者
-        # 不會知道資料庫存的格式，字對了就該找到，不該被空格擋下。
-        no_space_like = f"%{query.replace(' ', '')}%"
-        sql += """ AND (REPLACE(name, ' ', '') LIKE ?
-                        OR REPLACE(company, ' ', '') LIKE ?
-                        OR REPLACE(address, ' ', '') LIKE ?
-                        OR REPLACE(tagline, ' ', '') LIKE ?
-                        OR REPLACE(keywords, ' ', '') LIKE ?
-                        OR REPLACE(category, ' ', '') LIKE ?)"""
-        params += [no_space_like] * 6
-    if category:
-        sql += " AND category = ?"
-        params.append(category)
-    sql += " ORDER BY created_at DESC"
-    if not query and not category:
-        # 只有瀏覽首頁(無搜尋條件)才限制200筆當預覽，避免一次載入全部名片圖片；
-        # 有輸入關鍵字搜尋時結果集本來就小，不應該再被這個上限誤傷截斷。
-        sql += " LIMIT 200"
-
-    rows = conn.execute(sql, params).fetchall()
     cards = []
-    for r in rows:
-        card = dict(r)
-        try:
-            card["keywords"] = json.loads(card["keywords"] or "[]")
-        except json.JSONDecodeError:
-            card["keywords"] = []
-        cards.append(card)
+    no_space_like = f"%{query.replace(' ', '')}%" if query else None
+
+    if bni_filter != "guest":
+        sql = "SELECT * FROM cards WHERE status != 'split' AND status != 'roster'"
+        params: list[str] = []
+        if query:
+            # 所有欄位忽略空格差異比對，理由同/find——教練:「誰知道要空格？」使用者
+            # 不會知道資料庫存的格式，字對了就該找到，不該被空格擋下。
+            sql += """ AND (REPLACE(name, ' ', '') LIKE ?
+                            OR REPLACE(company, ' ', '') LIKE ?
+                            OR REPLACE(address, ' ', '') LIKE ?
+                            OR REPLACE(tagline, ' ', '') LIKE ?
+                            OR REPLACE(keywords, ' ', '') LIKE ?
+                            OR REPLACE(category, ' ', '') LIKE ?)"""
+            params += [no_space_like] * 6
+        if category:
+            sql += " AND category = ?"
+            params.append(category)
+        if bni_filter == "former":
+            sql += " AND bni_status = 'bni_member' AND bni_note LIKE '前會員%'"
+        elif bni_filter == "active":
+            sql += " AND bni_status = 'bni_member' AND (bni_note IS NULL OR bni_note NOT LIKE '前會員%')"
+        sql += " ORDER BY created_at DESC"
+        if not query and not category and not bni_filter:
+            # 只有瀏覽首頁(無搜尋/篩選條件)才限制200筆當預覽，避免一次載入全部名片圖片；
+            # 有輸入關鍵字搜尋或篩選時結果集本來就是教練刻意要看的全部，不應該被這個上限誤傷截斷。
+            sql += " LIMIT 200"
+
+        rows = conn.execute(sql, params).fetchall()
+        for r in rows:
+            card = dict(r)
+            try:
+                card["keywords"] = json.loads(card["keywords"] or "[]")
+            except json.JSONDecodeError:
+                card["keywords"] = []
+            attach_bni_history(conn, card)
+            cards.append(card)
+
+    # 教練2026-09-23要求：來賓資料也要能在這個頁面看到，標註「來賓」——
+    # guests表3222筆大多沒有對應card(只有主動「媒合」過的才會變成card)，
+    # 預設瀏覽(無query/filter)不塞進來(量太大)，但「來賓」篩選或有搜尋字時要顯示。
+    if bni_filter == "guest" or (query and bni_filter == ""):
+        gsql = "SELECT * FROM guests WHERE 1=1"
+        gparams: list[str] = []
+        if query:
+            gsql += """ AND (REPLACE(name, ' ', '') LIKE ?
+                             OR REPLACE(company, ' ', '') LIKE ?
+                             OR REPLACE(profession, ' ', '') LIKE ?)"""
+            gparams += [no_space_like] * 3
+        gsql += " ORDER BY id DESC"
+        if not query:
+            gsql += " LIMIT 200"
+        for gr in conn.execute(gsql, gparams).fetchall():
+            g = dict(gr)
+            visits = conn.execute(
+                """SELECT chapter, visit_date, invited_by FROM guest_visits
+                   WHERE guest_id = ? ORDER BY visit_date DESC""",
+                (g["id"],),
+            ).fetchall()
+            cards.append({
+                "id": g["id"], "is_guest_row": True, "status": "ok",
+                "name": g["name"], "title": g["profession"], "company": g["company"],
+                "mobile": g["mobile"], "email": g["email"], "keywords": [],
+                "bni_status": "guest", "bni_note": f"{g['chapter']}分會來賓" if g["chapter"] else "來賓",
+                "past_guest_visits": [dict(v) for v in visits],
+                "image_filename": None,
+            })
     conn.close()
 
     return render_template(
         "index.html", cards=cards, categories=categories, query=query, selected_category=category,
+        bni_filter=bni_filter,
         logged_in=bool(session.get("team_username")),
         is_owner=session.get("team_username") == OWNER_USERNAME,
     )
@@ -290,39 +367,7 @@ def find_page():
             (no_space_like,) * 5,
         ).fetchall()
         for r in card_rows:
-            d = dict(r)
-            # 前會員/來賓身份補充：用姓名去空格比對來賓拜訪紀錄+信用証表的離會日期，
-            # 教練2026-09-23要求——不重新爬資料，先用本機已有的guest_visits(3621筆
-            # 皆有邀請人)+bni_credit_certificates(scheduled_end_date)兩張表補顯示。
-            norm_name = (d["name"] or "").replace(" ", "")
-            if norm_name:
-                guest_matches = conn.execute(
-                    """SELECT id, name FROM guests WHERE REPLACE(name, ' ', '') = ?""",
-                    (norm_name,),
-                ).fetchall()
-                past_visits = []
-                for gm in guest_matches:
-                    past_visits += conn.execute(
-                        """SELECT chapter, visit_date, invited_by FROM guest_visits
-                           WHERE guest_id = ? ORDER BY visit_date DESC""",
-                        (gm["id"],),
-                    ).fetchall()
-                if past_visits:
-                    d["past_guest_visits"] = [dict(v) for v in past_visits]
-                    d["past_guest_ambiguous"] = len(guest_matches) > 1
-                if d.get("bni_note") and "前會員" in d["bni_note"]:
-                    cert = conn.execute(
-                        """SELECT scheduled_end_date, actual_termination_date, chapter, sponsor_name
-                           FROM bni_credit_certificates WHERE REPLACE(name, ' ', '') = ?
-                           ORDER BY checked_at DESC LIMIT 1""",
-                        (norm_name,),
-                    ).fetchone()
-                    if cert:
-                        d["former_member_end_date"] = (
-                            cert["actual_termination_date"] or cert["scheduled_end_date"]
-                        )
-                        d["former_member_end_date_is_exact"] = bool(cert["actual_termination_date"])
-                        d["former_member_sponsor"] = cert["sponsor_name"]
+            d = attach_bni_history(conn, dict(r))
             results.append({"source": "card", **d})
         for r in guest_rows:
             d = dict(r)
@@ -411,7 +456,7 @@ def card_bni_status(card_id):
 
 
 @app.route("/card/<int:card_id>/delete", methods=["POST"])
-@team_login_required
+@owner_only_required
 def card_delete(card_id):
     conn = db.get_conn()
     db.delete_card(conn, card_id)
