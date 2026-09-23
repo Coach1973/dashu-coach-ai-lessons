@@ -13,6 +13,8 @@ metadata:
 
 **教訓**：`curl`走的路徑可能跟真實瀏覽器(走公開DNS/Cloudflare edge/QUIC)不完全一致，`curl`測通不代表教練實際用瀏覽器打得開——這正是[[feedback_html_preview_chrome_only]]鐵律要求「必須用Chrome親眼驗證」的另一層意義，這次意外撞見了活生生的案例。
 
-**現況**：已試過重啟單一`com.coach.namecard-tunnel`(launchctl kickstart)，有改善但沒有根治(重啟後8次仍有3次失敗)，判斷根因是cloudflared版本過舊的QUIC bug，不是單一tunnel設定問題。**尚未執行版本升級**——這會動到`/Library/LaunchDaemons/com.cloudflare.cloudflared.plist`這支root層級daemon，影響所有bymyway.com子網域(namecard/bni-chapters/mentor100/event/team/zhenzuan/zhengui/zhenxin/sincere/peipei-event等)，屬於較大範圍的基礎設施變動，留給教練裁示是否要動手升級，不擅自執行。
+**2026-09-23教練當場裁示「必然一定要升級」，已執行並驗證**：`brew upgrade cloudflared`（2026.3.0→2026.9.1）+ 重啟全部11支使用者層級named tunnel（`launchctl kickstart -k gui/$UID/com.coach.<name>-tunnel`，不需sudo，涵蓋namecard/bni-chapters/mentor100/event/team/team01/zhengui/zhenzuan/zhenxin/sincere/peipei-event）。升級前連續測試namecard 8次有3次失敗，**升級後namecard+bni-chapters+mentor100各10次連續全部成功**，另用真實Chrome複查namecard.bymyway.com畫面正常。
 
-**How to apply**：往後任何bymyway.com子網域回報「打不開/顯示錯誤」，先查這份cloudflared log有沒有QUIC dial timeout/Application error 0x0，不要只憑curl測試判斷「服務正常」；若教練同意升級，指令是`brew upgrade cloudflared`後重啟`/Library/LaunchDaemons/com.cloudflare.cloudflared.plist`(需要sudo)。
+**唯一未處理的尾巴**：root層級`/Library/LaunchDaemons/com.cloudflare.cloudflared.plist`（PID未變，token式tunnel，跑什麼服務未查證）仍是舊binary在記憶體中執行，`sudo launchctl kickstart -k system/com.cloudflare.cloudflared`需要教練本人密碼才能重啟（`sudo -n`測試過確認會卡密碼提示，AI不能代打）。因為所有實測的bymyway.com子網域都是走使用者層級tunnel且已驗證穩定，這支root daemon暫不確定是否服務公開流量，優先度較低，教練有空可自己在終端機跑一次上面那行指令讓它也吃到新版。
+
+**How to apply**：往後任何bymyway.com子網域回報「打不開/顯示錯誤」，先查這份cloudflared log有沒有QUIC dial timeout/Application error 0x0，不要只憑curl測試判斷「服務正常」。
