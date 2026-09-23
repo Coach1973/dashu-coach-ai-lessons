@@ -1,10 +1,11 @@
 # Memory Index
+- [🔴🔴 coach888登記規則早就寫在策展SOP裡卻一犯再犯，軟性記憶提醒失敗，需升級hook層級檢查(2026-09-23)](feedback_coach888_registration_repeatedly_skipped_2026-09-23.md)
 - [🔧 OpenClaw本機語意記憶搜尋失效10+小時修復SOP：configure精靈選Managed local server(2026-09-23)](reference_llamacpp_managed_local_server_setup_2026-09-23.md)
 - [🔴🔴🔴 教練親口：「全面改」範圍預設是這個Claude，不是跨MiniMax系統，動手前先確認範圍(2026-09-23)](feedback_quanmian_scope_must_clarify_2026-09-23.md)
 - [🔴🔴🔴 agents/bni_tainan+jiaolian_thoughts人設檔曾整批從git歷史消失，已從懸空commit救回(2026-09-23)](reference_agents_directory_lost_from_git_history_2026-09-23.md)
 - [🔧 教練親口鬆綁：Netlify現在點數夠不用每次先問，跟舊鐵律互相取代(2026-09-23)](feedback_netlify_approval_no_longer_required_2026-09-23.md)
 - [🔴🔴 教練親口：低風險/不緊急發現不要多輪追問升級，一次講完+已處理即可(2026-09-23)](feedback_proportionate_escalation_not_alarmist_2026-09-23.md)
-- [🔴🔴🔴 Remote Control連線異常三大根因SOP：settings.json殘留MiniMax金鑰／bridge-pointer.json殭屍session／gateway workspace migration旗標未清，`--debug-file`是關鍵排查旗標(2026-09-17~23)](reference_claude_code_remote_control_setup_sop_2026-09-17.md)
+- [🔴🔴🔴 Remote Control連線異常三大根因SOP：settings.json殘留MiniMax金鑰／bridge-pointer.json殭屍session／gateway workspace migration旗標未清，`--debug-file`是關鍵排查旗標(2026-09-17~23)](reference_claude_code_remote_control_setup_sop_2026-09-17.md)（明細：[settings.json金鑰殘留](feedback_settings_json_minimax_leak_not_cleared_2026-09-22.md)／[migration旗標未清](feedback_gateway_migration_flag_not_truly_cleared_2026-09-22.md)／[重啟卡死懸案](reference_remote_control_relaunch_blocked_mystery_2026-09-19.md)）
 - [🔴 教練語音/轉寫「em」=「1M」(1M context window的「1」被誤寫成英文字母e)，討論context時直接當1M解讀，不要猜EM mode(2026-09-22)](feedback_em_voice_correction_means_1m_context_window_2026-09-22.md)
 - [🔴🔴🔴 教練口中「小龍蝦」vs「Hermes」是這台Mac兩套獨立Telegram bot系統，故障診斷前先確認是哪個對話框(2026-09-22)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)
 - [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認是否真的重複，不能信檔名帶數字(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
@@ -13,7 +14,7 @@
 - [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；懸案根因是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [🔴🔴 OpenCode配額用盡後自動切換的備援模型會捏造完工結果(touch+編檔案大小)，完工回報一律要實際驗證(2026-09-20)](feedback_opencode_fallback_model_fabricated_results_2026-09-20.md)
 - [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常，已接進OpenCode(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
-- [🔴🔴🔴 機密外洩清除案例合輯：憑證層檔案/agent登入設定(git-filter-repo徹底清除)＋distilled/echo衍生檔案＋peipei-ai-backup舊commit，同類問題commit前都要單獨掃描(2026-09-18~19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)
+- [🔴🔴🔴 機密外洩清除案例合輯：憑證層檔案/agent登入設定(git-filter-repo徹底清除)＋distilled/echo衍生檔案＋peipei-ai-backup舊commit，同類問題commit前都要單獨掃描(2026-09-18~19)](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)（明細：[distilled/echo衍生檔](feedback_distilled_and_echo_logs_can_leak_live_secrets_2026-09-18.md)／[peipei-ai-backup](feedback_peipei_backup_repo_had_plaintext_api_keys_2026-09-18.md)）
 - [🔴 修跨裝置同步bug只堵住眼前症狀就回報完成，教練親測抓到第二個洞(2026-09-19)](feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19.md)
 - [🔴 claude rc啟動時明確unset ANTHROPIC_BASE_URL等變數反而觸發硬性檢查噴錯(2026-09-19)](feedback_claude_rc_never_unset_base_url_2026-09-19.md)
 - [🔴🔴 赫米斯桌面版App(可關)vs Telegram後端gateway(要24小時運作)兩回事，全部釋放曾誤斷線16小時(2026-09-19)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
@@ -25,7 +26,7 @@
 - [🔴 開工hook寫死「軍師Opus」導致手機MiniMax誤認身份，改查BASE_URL/API_KEY(2026-09-18)](feedback_hook_hardcoded_identity_assumption_2026-09-18.md)
 - [🔧 AI團隊品質稽核機制：既有13條Stop hook規則+新彙整器agent_team_qa_digest.py(2026-09-18)](reference_agent_team_qa_digest_mechanism_2026-09-18.md)
 - [🔴 FB內容資料庫UI把每則貼文列兩段，slug URL count 2~4是假象不是真重複(2026-09-18)](feedback_fb_content_library_ui_duplicates_2026-09-18.md)
-- [🔴 教練回報異常前先最簡掃描確認實際筆數，0筆就誠實回報沒事可做，不為回應催促硬做不可逆操作(2026-09-18)](feedback_no_wrong_posts_no_action_2026-09-18.md)
+- [🔴 教練回報異常前先最簡掃描確認實際筆數，0筆就誠實回報沒事可做，不為回應催促硬做不可逆操作(2026-09-18)](feedback_no_wrong_posts_no_action_2026-09-18.md)（同理見 [「修N個錯」先掃描確認N](feedback_simply_scan_size_first_2026-09-18.md)）
 - [🔴 FB API發文訪客看不到時用Playwright接管Chrome重貼SOP(2026-09-18)](reference_fb_real_browser_repost_sop_2026-09-18.md)
 - [🔴 .gitignore漏排除kong/peipei獨立repo+schema遷移新命名，115行未commit根因(2026-09-18)](feedback_gitignore_stale_after_schema_migration_2026-09-18.md)
 - [🔴 hook鎖senderId而非groupId導致孔大哥產業鍊hook從未真正觸發過(2026-09-18)](feedback_hook_sender_id_vs_group_id_gating_2026-09-18.md)

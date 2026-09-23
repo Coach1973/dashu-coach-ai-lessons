@@ -41,6 +41,11 @@
    `no_shop_card: true`這個欄位是延用 2026-09-17 bigtree-1003 事故修復時就有的既有慣例（見接力棒 v220 前後），意思是「這筆有效但不是店家，不進名冊」。
 4. **不用重啟 Flask**——`app.py` 的 `_load_curated_registry()` 每次請求都重讀 JSON，寫檔案存檔當下就生效。
 5. **驗證**：`curl -sI https://event.bymyway.com/curated/<slug>/` 確認 200，再抓一段內容文字比對確認真的是原始版本（不是被哪個環節動過手腳）。
+6. **🔴 登記進 coach888「AI作品一覽」，跟上架動作同一輪完成，不要等教練問才補**——這條規則其實[[reference_curation_sop_2026-09-06]]第56~57行早就寫了（「教練自己的作品→收coach888」，2026-09-05教練親定），2026-09-23第一次做這個SOP時漏做，教練事後問「為什麼老是忘記」才發現。做法：
+   - `cd /Users/bymyway/github_repos/coach888 && git pull`
+   - 在 `index.html` 找 `data-section="gongkai"`（對外公開分類）的 `<div class="grid" ...>`，把新項目插在**第一個** `<div class="item" ...>` 之前（既有規則：coach888新增項目一律放分類第一筆），其餘項目的 `<div class="num">` 依序遞增，`<span class="count">N項</span>` 的 N 一併更新
+   - `git add index.html && git commit ... && git push origin master`（**注意這個 repo 預設分支是 `master` 不是 `main`**）
+   - 驗證：GitHub Pages 部署有延遲（實測約15秒），`curl https://coach1973.github.io/coach888/` 確認新項目字樣出現才算完成，不要 push 完就回報完成
 
 ## 明確不要做的事
 - 不要跑 `python3 scripts/curation_process.py`（會觸發店家三步驟）
