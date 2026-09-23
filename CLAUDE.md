@@ -4,11 +4,36 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-23 23:15:25**
+> **最後同步：2026-09-23 23:20:28**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-23 23:18，Mac桌面版，新的一棒 v243）
+
+**本場主軸：MEMORY.md索引欠款清零(159筆)+名片系統前會員/來賓資料顯示與刪除權限改造+意外發現並解決cloudflared版本過舊導致的QUIC間歇斷線問題，三件事都做到教練親自驗收「完成了」。**
+
+### 1. 🔴 MEMORY.md索引欠款159筆一次清零
+開工時回報「~80筆超過30天未索引」，教練說「趕快處理」，實查是159筆。逐一讀取frontmatter描述，依主題分15組（教練字典/OpenClaw hook技術坑/查證守則/BNI系統/mentor100+AI微論壇/報名通知系統/網站部署/Telegram LINE路徑/AI供應商技術坑/檔案安全鐵律/UI開發技巧/密碼邊界/特助心法歷史定義/業務系統參考/VPS已退役)全部補上markdown連結，orphan-check腳本驗證歸零，MEMORY.md從164行增到181行未超過200行注入上限。
+
+### 2. 🔴 namecard-db（名片系統）三項功能改造，教練驗收通過
+教練問前會員能否顯示離會時間+推薦人、來賓能否顯示到訪時間+邀請人：查證發現guest_visits表本來就有100%完整邀請人資料(3621筆)只是沒顯示，離會時間本地也有330/338人可比對(信用証清查專案留下的資料)，唯獨推薦人真的沒有，進BNI Connect驗證欄位真實存在後手動查了10人份(367人待續，隊列檔案已備妥)。教練接著追加：首頁(不只/find)也要能篩選前會員/來賓+來賓標badge、刪除鍵改成只有教練本人能用(原本任何登入者都能刪、且只在AI辨識失敗的卡片才顯示)。全部完成，本機用Flask test_client逐項驗證(owner看到200個刪除鍵/非owner看到0個且後端403擋下)才上線，並用真實Chrome開站確認畫面正確才回報。
+
+### 3. 🔴🔴 意外發現cloudflared版本過舊，教練裁示「必然要升級」，已完整解決
+做HTML Chrome驗證鎖檢查時，真實Chrome開namecard.bymyway.com出現「525 SSL handshake failed」但curl測試卻正常——查log確認cloudflared 2026.3.0版本有QUIC協定bug，且bni-chapters同樣受影響，非本場改動造成。教練當場裁示升級，已`brew upgrade`(→2026.9.1)+重啟全部11支使用者層級tunnel(驗證10/10穩定)，root層級daemon需要教練本人sudo密碼，教練親自執行完成，全部12支cloudflared程序確認在新版本上，任務乾淨收尾。**教訓**：curl測通不代表教練用真實瀏覽器打得開，這正是[[feedback_html_preview_chrome_only]]鐵律的活案例。
+
+## 📋 下一場開工先做
+1. **367位前會員推薦人待續查**：見上方狀態追蹤總表新增列，隊列檔案+方法都已備妥
+2. 沿用v242既有待辦：柯朝陽發票、技術文件數字保留與否待教練回覆
+3. MEMORY.md索引已清零本次欠款，但仍有3筆既有壞連結(指向不存在的檔案)待下次順手清
+
+## 🔑 本場commit
+`2b1dadd6e`(MEMORY.md 159筆回補)、`3b9b81e1b`(來賓/前會員資訊顯示上線)、`ecfc3de48`(首頁篩選+刪除鍵權限)、`70ea00201`+`f60be6511`+`5eaf12801`+`463623d1a`(記憶索引補齊+cloudflared升級全程記錄)。本次總結commit另計。
+
+---
+
+> ⬆️ v243新增於此。以下維持v242原文，保留備查。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-23 23:11，Mac桌面版，新的一棒 v242）
 
@@ -137,6 +162,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **namecard-db前會員「推薦人」補查：367人待續查** | ⏳下一場可直接接續 | 2026-09-23教練問前會員能否顯示離會時間+推薦人，離會時間已用本地既有信用証清查資料補上(330/338人)，推薦人本地真的沒有，已進BNI Connect會員頁(tabs-6)驗證「推薦人」欄位真實存在並手動查了10人份(4人有填/6人未登記屬正常)。剩367人存於`namecard-db/bni_connect_import/sponsor_lookup_queue_2026-09-23.txt`，查詢方法+一次5人browser_batch節奏見`knowledges/2026-09-23_BNI前會員推薦人補查進度與續作方法.md`，直接接續即可不用重新設計流程。 |
 | 🔒 | **柯朝陽聚寶盆入會續約發票待補開** | 🔒卡住-等教練提供正確資料 | 2026-09-23教練回報柯朝陽原發票(FS99860257/自訂編號092308/仁心茶茶有限公司/96847552)開錯，已作廢(`II_Invoice_Status`確認變2)，但教練未說明錯在哪、也未給正確統編或公司名稱就結束對話。下一棒開工先問教練正確資料，補開時自訂編號延續用092314，流程比照同場楊在珍作廢重開案例（[[feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23]]附近的ezPay SOP已補上作廢流程）。 |
 | 🟡 | **coach888「AI作品一覽」登記deterministic檢查（task_40a366c5）** | ⏳待認領獨立session | 2026-09-23教練當場質問「為什麼老是忘記」coach888登記——規則早就寫在`reference_curation_sop_2026-09-06.md`(教練自己的作品→收coach888)，但只是文字提醒沒有hook強制，這次又漏做一次才補上。已用spawn_task分派成獨立任務(task_40a366c5)，內容：掃`curated_sites_registry.json`裡`category`為「教練個人創作」且近7天新增的項目，比對`coach888/index.html`有沒有對應連結，沒有就攔下提醒。詳見[[feedback_coach888_registration_repeatedly_skipped_2026-09-23]]+試金石案例81。 |
 | ✅ | **🔴🔴🔴 小龍蝦本尊(ai.openclaw.gateway)3天無回應重大事故** | ✅2026-09-22已修復+建立防呆 | 根因：workspace需要migration導致gateway重啟失敗被launchd停放，process完全沒在跑，教練連續3天收不到回應。已`openclaw doctor --fix`+`openclaw gateway start`修復，並在`system_patrol.sh`(教練8/25核准的每小時巡檢)新增第0項健康檢查，異常自動修復+用不依賴gateway本身的`notify_coach.sh`通知。完整記錄見試金石案例79+[[feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22]]。下一棒持續觀察穩定性即可，機制已自動運作不需人工介入。 |
