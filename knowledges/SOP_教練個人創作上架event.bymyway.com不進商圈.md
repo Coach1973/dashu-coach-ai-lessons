@@ -50,6 +50,19 @@
    - 在 `index.html` 找 `data-section="gongkai"`（對外公開分類）的 `<div class="grid" ...>`，把新項目插在**第一個** `<div class="item" ...>` 之前（既有規則：coach888新增項目一律放分類第一筆），其餘項目的 `<div class="num">` 依序遞增，`<span class="count">N項</span>` 的 N 一併更新
    - `git add index.html && git commit ... && git push origin master`（**注意這個 repo 預設分支是 `master` 不是 `main`**）
    - 驗證：GitHub Pages 部署有延遲（實測約15秒），`curl https://coach1973.github.io/coach888/` 確認新項目字樣出現才算完成，不要 push 完就回報完成
+7. **🔴 發 Telegram 通知到「活動報名即時通知」群組，跟店家策展SOP待遇一致**——2026-09-24教練親自問「即便是大樹個人作品的上架，也一樣要在活動報到通知那邊給我發通知，讓我找得到網址吧？」才發現這條SOP從頭到尾沒有這一步，教練只能自己翻聊天記錄找URL。**這是合理要求，往後每次上架完成都要做**，直接重用店家策展SOP同一套`notify()`（同一個群組、同一個bot_token，只是文案不同，不要另外寫新的Telegram呼叫）：
+   ```bash
+   cd /Users/bymyway/.openclaw/workspace/event-signup && PYTHONPATH=/Users/bymyway/.openclaw/workspace/scripts python3 -c "
+   from curation_process import notify
+   notify(
+       '🎨【大樹創作・個人作品已上架】\n'
+       '標題：<標題>\n'
+       '網址：https://event.bymyway.com/curated/<slug>/\n'
+       '📌 教練個人創作，不進大台南商圈整合中心店家名冊'
+   )
+   "
+   ```
+   已於2026-09-24 00:18實測發送成功（`message_id=11316`），確認`notify()`匯入與呼叫都正常，往後可直接照抄。
 
 ## 明確不要做的事
 - 不要跑 `python3 scripts/curation_process.py`（會觸發店家三步驟）
