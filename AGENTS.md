@@ -41,7 +41,7 @@ find ~/.openclaw/workspace -maxdepth 2 -name ".!*" 2>/dev/null
 **判斷標準：**
 - 三份 SOUL.md 都應該存在，且 `~/.openclaw/SOUL.md` 跟 `~/.openclaw/agents/main/agent/SOUL.md` 開頭必須有「⚠️ 本檔已棄用」標記（指向 `workspace/SOUL.md`）。如果沒有，就是有人誤改，必須立刻補上棄用標記
 - Repo1 + Repo2 的 `git status --short` 總行數不該暴增。如果突然超過 50 行，看是不是有大量 untracked 檔案（可能是 agent 新增但沒 commit）
-- 不該有任何 `.!` 開頭的檔案。有就是編輯器遺留鎖定檔，必須 `mv` 改名加 `.LOCK_OLD_` 前綴（不要直接刪除，E11 不可逆鐵律）
+- 不該有任何 `.!` 開頭的檔案。有就是編輯器遺留鎖定檔，必須 `mv` 改名加 `.LOCK_OLD_` 前綴（不要直接刪除，N6 不可逆鐵律）
 
 **異常處置（不在熱啟動前處理，會進入待辦）：**
 - SOUL.md 沒棄用標記 → 加上去，commit
@@ -67,7 +67,7 @@ find ~/.openclaw/workspace -maxdepth 2 -name ".!*" 2>/dev/null
 | 需要知道團隊結構 | `shared-relay/對話分工表.md` |
 | 需要知道超級群組 | `shared-relay/SUPERGROUP-MAP.md` |
 | 需要知道最新共識 | `shared-relay/CONSENSUS.md` |
-| 需要知道執行細則 | `執行細則.md`（9條）|
+| 需要知道執行細則 | `執行細則.md`（N1~N9，2026-09-24 v2；要拿事情去問教練前，先看 N2 三關）|
 | 需要長期脈絡 | `memory/YYYY-MM-DD.md`（今天，>30KB 不讀）|
 | 需要完整記憶（主 session 限定）| `MEMORY.md`（長期記憶，勿在群組中載入）|
 | 需要近期摘要 | `DAILY_DIGEST.md`（近期任務摘要）|
