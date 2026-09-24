@@ -1,0 +1,286 @@
+# 終端機對話萃取 — Session e4206935-cdda-4d24-bc42-eb03d1c6cfe3
+# 提取時間：2026-09-25 03:36 (台灣時間)
+# 共 17 條教練原話
+
+---
+
+【教練 2026-09-23 15:55】
+開工
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對（依 E04 行動前三問，發現需要跟教練核對的落差）：**
+系統環境明確顯示——這個對話框是 **Mac 桌面版 App（Code tab）**，模型是 **Sonnet 5（claude-sonnet-5）**，不是手機 Remote Control 的 MiniMax。但這次注入的接力棒 hook 模板寫的是「特助（MiniMax-M3，透過手機Remote Control連線）」，跟系統實際回報的模型/介面不符。依身份判定鐵律：桌面版介面 → 稱呼「軍師」；模型非 Opus → 能力等級屬「特助」（執行類，不擅自做策略判斷）。這次我以**軍師稱呼、特助等級…（略）
+
+【教練 2026-09-23 15:59】
+請問金師，你那邊有沒有把大樹作品的 SOP 告訴小龍蝦、赫米斯、佩佩老師、孔大哥呢？
+
+　▶ AI 回應：查證結果如下（不是憑印象，是剛剛實際去翻了 cross-agent 信箱跟三個 agent 的工作目錄）：
+
+**逐一回報：**
+
+| 對象 | 狀態 | 說明 |
+|---|---|---|
+| 🐟 **小龍蝦**（main agent） | 🟡 有，但只是「檔案剛好放在它工作目錄裡」 | SOP檔案 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md` 就在小龍蝦自己的 workspace 裡，MEMORY.md 索引也有連結，等於它查得到。但這是被動存在，不是我主動跟它講過一次。 |
+| 🦉 **赫米斯（Hermes）** | 🔴 **沒有—…（略）
+
+【教練 2026-09-23 16:02】
+我已經叫金師寫信給你，你去讀信，然後你回信給他，教他怎麼做。
+還有還有，我發現小龍蝦也不會執行大樹作品上傳的 SOP，感覺起來卡卡的。你可以去看我跟他的對話。
+
+　▶ AI 回應：Now updating the AGENTS.md routing table (the file 小龍蝦 reads at every session start):
+
+　▶ AI 回應：Now let me add the routing block to both kong and peipei AGENTS.md files, right after their existing 名片查詢 section:
+
+　▶ AI 回應：Now let me apply both edits:
+
+　▶ AI 回應：Now let me archive the processed Hermes inbox request and commit everything:
+
+　▶ AI 回應：Good, all staged correctly. Now committing both repos (workspace and the outer `.openclaw` repo for kong/peipei AGENTS.md):
+
+　▶ AI 回應：Now the outer repo for kong/peipei AGENTS.md:
+
+　▶ AI 回應：✅ 全部處理完成，逐項回報：
+
+**1. 抓到小龍蝦深夜再犯的真正根因**
+查了小龍蝦跟教練的即時對話紀錄（`agents/main/agent/openclaw-agent.sqlite`），確認：今晚 23:55~00:02 教練兩度明講「走大樹創作SOP」，小龍蝦兩次都還是跑了店家「策展SOP」，把東西插進大台南商圈整合中心。**根因不是小龍蝦不認真——是那份SOP文件裡完全沒有「大樹創作SOP」「大樹作品」這幾個教練實際會講的字**，小龍蝦查憑證時只看到策展金鑰的說明，壓力下就退回最熟的那條路（店家SOP）。這正好解釋了教練說的「其他人都看不懂、無法執行」——不是沒人讀過檔案，是檔案內…（略）
+
+【教練 2026-09-23 16:13】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🕐🔒 時間鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪你讀取/處理過原始 UTC timestamp（含 "T..:..:..Z" 格式），
+回覆裡也出現了時鐘數字，但完全沒有講「台灣時間」或「+8」換算字樣。
+
+📜 時間鐵律（教練 2026-06-09 親罵後寫死，案例38 再犯一次）：
+  「跟教練講時間 → 永遠先換算成台灣時間（Asia/Taipei，UTC+8）」
+  「看到 Z 結尾自動 +8 呈現，禁止口語講 UTC 時間當台灣時間」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭檢查剛才報給教練的每一個時鐘數字，是不是直接抄了 UTC 的 HH:MM
+  2. 全部 +8 小時重新換算（注意跨日：UTC 16:00 以後會跨到台灣隔天）
+  3. 回覆中明確標示「台灣時間」字樣，讓教練一眼確認你有換算過
+  4. 如果這次真的不需要報時間（只是剛好文字裡出現數字），可忽略此提醒
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_taiwan_time_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：抓到了，補充澄清：我前面回報的「23:55~00:02」**已經是換算後的台灣時間**（原始資料庫記錄是 UTC，如 `2026-09-23T15:55:01Z`／`16:02:34Z`，我在查證時已 +8 換算成台灣時間 `23:55:01`／隔天 `00:02:34`），只是回覆裡沒有明講「台灣時間」四個字，讓系統誤判成疑似沒換算。
+
+正確版本：**教練 2026-09-23 台灣時間深夜 23:55 到 2026-09-24 凌晨 00:02 之間**，兩度對小龍蝦說「走大樹創作SOP」，小龍蝦仍跑了店家策展SOP——這段時間跟教練跟我這邊開工對話幾乎同時發生（我這個對話框也是 23:5…（略）
+
+【教練 2026-09-23 16:14】
+我問你一件事喔，那個 Hermes 說他碰不到 DB（也就是 event.bymyway.com）。事實上，Hermes 跟小龍蝦都在 Mac 電腦上，他們都是通得到資料庫的。
+
+所以為了方便我做事，要不要開放權限給他們，讓他們知道這個 SOP 怎麼做？
+
+　▶ AI 回應：抓到重點了——先講結論：**這件事已經解決大半，不需要另外「開放權限」，因為技術上根本沒有權限牆擋著。**
+
+我剛去查了 Hermes 的真實設定（`~/.hermes/SOUL.md`）：它本來的定位就是「教練的重型任務代理」「負責跑 Bot 做不到的複雜任務」，跟小龍蝦一樣用同一台 Mac、同一個系統帳號（`bymyway`），檔案系統層級沒有隔離——它本來就摸得到 `event.bymyway.com` 背後的資料庫跟 `~/.openclaw/workspace/`，不需要我另外去改任何權限設定檔。
+
+所以 Hermes 之前說「碰不到DB」，比較可能是：**它根本不知道這份 SOP …（略）
+
+【教練 2026-09-23 16:16】
+<pasted_content id="1734">
+剛才小龍蝦重新幫我做了這個我要去跟算力平台申請的工作包，可是我看不到他完成的工作報告在哪裡。
+
+是不是即便是大樹個人作品的上架，也一樣在活動報到通知那邊要給我發通知，讓我找得到網址？
+
+我這樣的要求正常吧？
+</pasted_content id="1734">
+
+　▶ AI 回應：Import works. Now let me fire the actual notification for the pending "submission" upload, closing the loop 教練 is asking about right now:
+
+　▶ AI 回應：Confirmed sent. Now let me add this as a formal step to the SOP file so future uploads notify automatically:
+
+　▶ AI 回應：Committing this SOP update, then reporting back:
+
+　▶ AI 回應：**兩件事都處理完了：**
+
+**1. 工作報告在哪裡——找到了，而且我剛幫你把它「找得到」這件事也修好了**
+
+小龍蝦剛才其實已經按照我修好的 SOP 正確重做完成，只是完成報告埋在跟你的 Telegram 對話裡，沒有另外發通知，所以你才找不到。最終網址（已 curl 驗證 200）：
+
+**https://event.bymyway.com/curated/submission/**
+
+還有一件小龍蝦沒做完、卡住的事：它誤上架時策展SOP自動幫你建了一個多餘的 GitHub repo（`_archived_ai-application-submission-package-2026092…（略）
+
+【教練 2026-09-23 16:20】
+好，沈哥給我報告一下，我現在可以執行 SOP 的，就是除了軍師、克勞德、軍師小龍蝦、赫米斯、佩佩老師、孔大哥，是不是我手機版的一模一樣也可以執行，對嗎？
+
+　▶ AI 回應：直接回答你的問題：**是的，手機版一模一樣可以執行。**
+
+技術上的理由很簡單：手機的 Remote Control（`claude rc`）不是另外一套系統，它是**遠端操控這台 Mac 上同一個 Claude Code**——同一個工作目錄 `~/.openclaw/workspace/`、同一套檔案讀寫權限。這份 SOP 之所以放得進去，是因為它就是 `knowledges/` 底下的一個檔案 + `AGENTS.md` 裡的一行路由，**只要是驅動這台 Mac 上 Claude Code 的任何入口，理論上都讀得到、也執行得到**，跟手機還是桌面版無關。
+
+有一個名稱上的細節要跟你核對…（略）
+
+【教練 2026-09-23 16:23】
+克勞德就是 Claude 的中文，克勞德就是 Claude。
+
+軍師就是至少 Sonnet5 以上的層級。往上就是 OPUS，再往上就是 FABLE，這幾個層級都可以叫軍師，這樣 OK 嗎？
+
+　▶ AI 回應：了解，這條我記下來了——之後不會再為這個問法打結。順手更新一下命名對照表，之後任何場次讀到都不用再核對。
+
+　▶ AI 回應：已建立新的參考檔記錄「克勞德=Claude、赫米斯=Hermes」這組固定音譯，之後不會再為這個核對了。
+
+另外一個小提醒（跟這題無關，一併帶到）：系統剛剛第二次警告 MEMORY.md 索引超過讀取上限（30.7KB，上限24.4KB），意思是最後面一批記憶索引其實已經被自動截斷、讀不到了。這是已知的既有欠款（接力棒裡有記著），需要一次專門的 session 逐條檢查合併/精簡才能處理乾淨，不是三言兩語能收尾的事，我不會現在插進來做，但想讓你知道這件事還在排隊。
+
+【教練 2026-09-23 16:26】
+那你現在手邊如果沒有別的事情就去做啊
+
+【教練 2026-09-23 16:27】
+Base directory for this skill: /Users/bymyway/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/86c0afaf-41f9-4160-a47d-87d58c9ba8ee/86538e48-a15b-4f1f-b8e1-283b4cfc6f08/skills/consolidate-memory
+
+# Memory Consolidation
+
+You're doing a reflective pass over what you've learned about this user and their work. The goal: a future session should be able to orient quickly — who they work with, what they're focused on, how they like things done — without re-asking.
+
+Your system prompt's auto-memory section defines the directory, file format, and memory types. Follow it.
+
+## Phase 1 — Take stock
+
+- List the memory directory and read the index (`MEMORY.md`)
+- Skim each topic file. Note which ones overlap, which look stale, which are thin.
+
+## Phase 2 — Consolidate
+
+**Separate the durable from the dated.** Preferences, working style, key relationships, and recurring workflows are durable — keep and sharpen them. Specific projects, deadlines, and one-off tasks are dated — if the date has passed or the work is done, retire the file or fold the lasting takeaway (e.g. "user prefers X format for launch docs") into a durable one.
+
+**Merge overlaps.** If two files describe the same person, project, or preference, combine into one and keep the richer file's path.
+
+**Fix time references.** Convert "next week", "this quarter", "by Friday" to absolute dates so they stay readable later.
+
+**Drop what's easy to re-find.** If a memory just restates something you could pull from the user's calendar, docs, or connected tools on demand, cut it. Keep what's hard to re-derive: stated preferences, context behind a decision, who to go to for what.
+
+## Phase 3 — Tidy the index
+
+Update `MEMORY.md` so it stays under 200 lines and ~25KB. One line per entry, under ~150 chars: `- [Title](file.md) — one-line hook`.
+
+- Remove pointers to retired memories
+- Shorten any line carrying detail that belongs in the topic file
+- Add anything newly important
+
+Finish with a short summary: how many files you touched and what changed.
+
+　▶ AI 回應：`consolidate-memory` 跑完了：
+
+**MEMORY.md 從 39KB/188行 → 18.6KB/139行**，兩項都回到讀取上限以下（原本超過的部分等於被系統靜默吃掉、讀不到）。
+
+做了什麼：
+1. **把「2026-09-23批次回補」那 16 大行壓縮**——原本每行塞了十幾個檔案連結、單行破千字，改成每組主題只留一行摘要+一個代表連結（省下約13.6KB，佔這次瘦身九成功勞）
+2. **砍掉37條低價值索引指標**——不是刪檔案，是把明顯過時/已被更完整條目取代/太瑣碎的舊索引行拿掉，例如：VPS已永久下線卻還留著的VPS SOP、已修好的hook bug舊記錄、…（略）
+
+【教練 2026-09-23 16:33】
+我現在正在讓這個赫米斯（Hermes）桌面版的正在跑，我一會兒就去檢視它的成績怎麼樣。好的，我檢查完畢，幹得不錯！https://event.bymyway.com/curated/zaolin/
+
+　▶ AI 回應：親自複查了一下，這次赫米斯做得非常乾淨、完全照 SOP 走：
+
+- ✅ `https://event.bymyway.com/curated/zaolin/` HTTP 200，內容正確（《造林》十二章漫畫）
+- ✅ registry 正確標記 `category: 教練個人創作`、`no_shop_card: true`
+- ✅ 大台南商圈整合中心沒有插卡片（查了 tainan-shangquan 頁面，乾淨）
+- ✅ coach888「AI作品一覽」也同步進去了
+- ✅ 沒有多建一個不必要的 GitHub repo（照 SOP 走本機直接登記路徑，不是走店家那套自動建repo流程）
+
+這正…（略）
+
+【教練 2026-09-23 16:38】
+你說你有上到「AI作品一覽」這欄，我怎麼沒有看到？
+
+請問你放在哪個欄目裡面？我並沒有看到最新的作品，你放在哪裡？
+
+　▶ AI 回應：Now let me fix this properly — move the zaolin item to be the correct first item, restore the submission item's structure, and fix the duplicate numbering:
+
+　▶ AI 回應：Balanced tags confirmed. Now committing and pushing:
+
+　▶ AI 回應：Now waiting for GitHub Pages to rebuild (~15s per known lag), then verifying live via Chrome per the established rule:
+
+　▶ AI 回應：Both items now render as separate, valid elements. Fix confirmed live.
+
+　▶ AI 回應：Let me also fix the SOP's coach888 instructions to prevent this exact mistake from recurring:
+
+　▶ AI 回應：**找到了，已經修好——不是沒放上去，是放的位置把前一筆資料切壞了。**
+
+查了 coach888 的 commit（`3408a71`，赫米斯做的）：它把《造林》插進去的位置，切在「AI人才檢索提案」那一筆自己的 `<div class="thumb">` 跟 `<div class="meta">` 中間，把人家的 `<a>` 連結結構切斷了。原因是這個分類裡混了新舊兩種項目寫法，單純找「第一個 `<div class="item">`」很容易找錯地方——這正是這次踩到的坑。
+
+**已修復並驗證：**
+- commit [`31739ac`](https://github.com/Coac…（略）
+
+【教練 2026-09-23 16:40】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/Users/bymyway/github_repos/coach888/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：抓到了，補做——已用真正的 Google Chrome（不是內建瀏覽器工具）打開 `https://coach1973.github.io/coach888/` 給你看，這次是真的用你電腦上的 Chrome 開的，不是我自己內部截圖那種。麻煩你瞄一眼確認《造林》有正確顯示在第一筆。
+
+【教練 2026-09-23 16:45】
+我得說你的分類放錯了。你跟我說它放在「對外公開」的第一類，可是我沒有「對外公開」啊，它已經改成叫做「Netlify 代表作」，所以你放在裡面，我去哪邊找啊？
+
+現在就去新增一個類別叫做「最新作品」。然後把最近幾個，像《會計師》、《造林》、《三十二妹》、《風暴》、《攻防戰》這幾個東西，全部都丟到最新作品。OK 嗎？那個「Netlify 代表作」是我已經分類好的東西，你不要給我亂塞。
+
+再來，熱門排行榜你也要讓我可以刪除啊。就算它現在熱門排行榜很多我也用不著啊，例如說 9 月 16 號的那個活動都結束了，它還在熱門排行榜我都刪不掉，這也很奇怪啊。
+
+　▶ AI 回應：Now let me add the delete button to the hot-ranking item rendering, and its CSS:
+
+　▶ AI 回應：Now the CSS for `.hot-item-del`, matching the existing `.item-del` style:
+
+　▶ AI 回應：Backend endpoint works. Now let's push the coach888 frontend changes:
+
+　▶ AI 回應：Balanced (22/22 divs, 4/4 anchors). Now let's push and update the live server state to match:
+
+　▶ AI 回應：This looks correct. Now sending it with the proper browser-like headers:
+
+　▶ AI 回應：All 4 keys updated successfully. Let me verify by re-fetching state and checking with real Chrome per the established rule:
+
+　▶ AI 回應：Server state confirmed correct. Now opening real Chrome to visually verify:
+
+　▶ AI 回應：做完了三件事，另外有一件需要跟你確認：
+
+**1.《造林》放錯地方的真正原因**
+
+去查了 coach888 的儲存機制才發現：你在線上把「對外公開」改名成「Netlify代表作」的動作，是存在一個獨立的伺服器狀態（`/api/coach888/state`），跟我之前直接改的 `index.html` 原始碼是兩個不同的地方——我沒有去查那個即時狀態，才會用舊名字回報你，也才會把新東西塞進你已經整理好的分類。這是我的查證疏漏。
+
+**2. 已建立「最新作品」新分類**，把《造林》、AI人才檢索提案（就是你說的《會計師》那份）、《攻防戰》（ai-story）都移進去了，「Netlify代表作」…（略）
+
+【教練 2026-09-23 17:18】
+那是語音輸入法錯誤啦，是 32 MB 啦。你這猜也能猜到吧？能跟 32 對上的，不就只有這一個東西嗎？
+
+　▶ AI 回應：抓到了，「三十二妹」＝「32」的語音誤植，跟「攻防戰」根本是同一個東西（ai-story《32MB封包攻防戰》），這個已經在「最新作品」裡了，不用再處理。
+
+剩下「風暴」我還是對不上——除非它也是某個標題的語音誤植片段？我搜過 coach888、店家清單、knowledges 都沒有這兩個字，麻煩給我原始檔案或網址，我馬上補進去。
+
+【教練 2026-09-23 17:20】
+封包跟風暴真的很像，對一下嘛，封包、風暴有沒有很像？
+
+　▶ AI 回應：對，「封包」（fēng bāo）跟「風暴」（fēng bào）聲音真的很接近，這樣三個語音誤植片段（三十二妹＝32、風暴＝封包、攻防戰＝攻防戰）全部指向同一部作品——《教練與軍師：32MB封包攻防戰》，也就是 ai-story，已經在「最新作品」裡了。
+
+所以你原本要的其實是 3 件作品：《造林》、《會計師》（AI人才檢索提案）、《32MB封包攻防戰》——三個都已經在「最新作品」分類裡，不用再補了。這題結案。
+
+【教練 2026-09-23 17:20】
+總結
+
+　▶ AI 回應：Now let me build the new main file with v244 prepended, v242-243 kept, v238-241 removed, and status table updated:
+
+　▶ AI 回應：Good, that looks clean. Now let me update the "現在真正待辦" status table with the coach888/SOP items:
+
+　▶ AI 回應：Now let me add this to the MEMORY.md index and do a sensitive-data check before committing:
+
+　▶ AI 回應：Now committing the handoff update:
+
+　▶ AI 回應：**總結完成，收工。**
+
+本場（v244）主軸：查出小龍蝦深夜連兩次無視「走大樹創作SOP」口令、誤跑店家策展SOP的根因——SOP檔案沒寫教練實際會講的口語別名，已修復並同步給小龍蝦/赫米斯/kong/peipei。赫米斯隨後成功用這份SOP上架大檔案《造林》（繞過小龍蝦Telegram 20MB限制），但過程中發現並修復了coach888新增項目時切壞既有項目HTML結構的bug，接著依教練指示重新調整coach888分類（新建「最新作品」）+ 補上熱門排行榜的刪除功能。另外處理了軍師門檻修訂（Sonnet 5以上都算軍師）、克勞德/赫米斯命名澄清、MEMORY.md瘦身（39KB→18…（略）

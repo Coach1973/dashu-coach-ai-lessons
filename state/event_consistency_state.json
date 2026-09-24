@@ -1,7 +1,11 @@
 {
-  "checked_at": "2026-09-22T09:30:00+08:00",
-  "future_sessions": 7,
-  "problems": [],
+  "checked_at": "2026-09-24T08:20:02.308777+08:00",
+  "future_sessions": 5,
+  "problems": [
+    "個別活動頁「AI微論壇 嘉義場」(ai-talk) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道",
+    "個別活動頁「從從容容用AI聊健康 台南場」(ai-fit) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道",
+    "個別活動頁「AI微論壇 台中場」(ai-forum-taichung) 的報名不會發任何通知——有人報名教練跟佩佩老師都不會知道"
+  ],
   "satellites": {
     "ai-talk": {
       "desc": "AI微論壇 嘉義場",
@@ -11,8 +15,8 @@
       "exists": true,
       "has_api": false,
       "has_deeplink": false,
-      "notified": true,
-      "how": "報名 → 活動報名即時通知群組（教練 2026-09-22 親口確認）"
+      "notified": false,
+      "how": "❌ 沒有任何通知管線"
     },
     "ai-fit": {
       "desc": "從從容容用AI聊健康 台南場",
@@ -23,8 +27,8 @@
       "exists": true,
       "has_api": false,
       "has_deeplink": false,
-      "notified": true,
-      "how": "報名 → 活動報名即時通知群組（教練 2026-09-22 親口確認）"
+      "notified": false,
+      "how": "❌ 沒有任何通知管線"
     },
     "ai-forum-taichung": {
       "desc": "AI微論壇 台中場",
@@ -33,17 +37,10 @@
         "bigtree-0924"
       ],
       "exists": true,
-      "has_api": true,
+      "has_api": false,
       "has_deeplink": false,
-      "notified": true,
-      "how": "自己打 /api/register"
+      "notified": false,
+      "how": "❌ 沒有任何通知管線"
     }
-  },
-  "corrections_log": [
-    {
-      "ts": "2026-09-22T09:28+08:00",
-      "by": "教練",
-      "what": "ai-talk / ai-fit 報名通知原本誤判為『❌ 沒有任何通知管線』，實際會發到『活動報名即時通知』Telegram 群組，教練在那個群組就看得到。problems 已清空。"
-    }
-  ]
+  }
 }

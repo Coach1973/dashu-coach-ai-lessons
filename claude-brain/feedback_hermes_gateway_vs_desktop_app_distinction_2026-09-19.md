@@ -1,8 +1,11 @@
 ---
 name: feedback-hermes-gateway-vs-desktop-app-distinction-2026-09-19
-description: "教練說「赫米斯」在不同語境指不同東西——「全部釋放」指令要關的是佔記憶體的桌面版GUI App，Telegram上24小時運作的是ai.hermes.gateway後端process，兩者絕不能混為一談，release_all_memory.sh曾經把兩者一起bootout導致教練Telegram斷線16小時完全不知情"
+description: 【09-25教練定義】教練說「赫米斯」預設＝Mac桌面版Hermes.app(類似Claude的CLI UI，可接各家模型)，Telegram那條線不碰也不拿來當選項問；登入自動跳出已修(desktop.plist的SuccessfulExit隱含RunAtLoad)。原始事件：教練說「赫米斯」在不同語境指不同東西——「全部釋放」指令要關的是佔記憶體的桌面版GUI App，Telegram上24小時運作的是ai.hermes.gateway後端process，兩者絕不能混為一談，release_all_memory.sh曾經把兩者一起bootout導致教練Telegram斷線16小時完全不知情
 metadata:
+  node_type: memory
   type: feedback
+  originSessionId: 7dfd3491-32da-49ec-be24-a2c0d54e850c
+  modified: 2026-09-24T19:46:31.805Z
 ---
 
 # 赫米斯有兩個不同的東西：桌面版GUI App（可以關）跟Telegram後端gateway（要24小時運作，絕對不能關）
@@ -49,6 +52,16 @@ Telegram上面的那一個應該要24小時運作，你關它幹什麼？」—�
 - 看門狗（`hermes_gateway_watchdog.sh`）目前的「找不到服務=故意關閉=
   不通知」邏輯本身沒有錯，錯的是「不該被關掉的服務被錯誤地歸類成可以
   被故意關掉」——根治重點在來源（哪個服務會被bootout），不是看門狗本身。
+
+## 2026-09-25 第三次搞混（教練原話定義，以此為準）
+
+教練：「Hermes 在 Mac 電腦裡面是一套跟 Claude 一樣的 CLI UI 程式……背後可以接 Claude、Minimax、OpenAI」「誰叫你關小龍蝦了？」
+- **教練說「赫米斯」預設＝Mac 桌面版 `/Applications/Hermes.app`**。Telegram 那條線在教練心中歸「小龍蝦/Telegram 系統」（有 20MB 上限），除非教練明講，**不碰、也不拿來當選項問**。
+- 這次我問「只關視窗 vs 連 Telegram 一起關」＝又把 Telegram 線端上桌，教練當場動怒。
+
+**登入自動跳出的真正原因（已修）**：`~/Library/LaunchAgents/ai.hermes.desktop.plist` 寫 `RunAtLoad=false`，但 `KeepAlive` 裡有 `SuccessfulExit` —— launchd 規定這個鍵「隱含 RunAtLoad=true」，所以每次登入照樣執行 `open Hermes.app`（`launchctl print` 顯示 runs=1）。已改 `KeepAlive=false`，重新載入後 runs=0、App 不再自動開，原檔備份 `~/.hermes/ai.hermes.desktop.plist.bak-2026-09-25`。
+- 我先前「macOS 登出記住視窗」的推論是錯的（TAL 清單根本沒有 Hermes）。教練一句「LINE、OpenCode、Telegram 都不會，為什麼 Hermes 會？」就推翻了——**只有單一 App 有怪行為時，先找那個 App 自己的啟動設定，不要推給全系統行為。**
+- 看 launchd 有沒有在登入時跑某個 job：`launchctl print gui/$(id -u)/<label>` 看 `runs =`，比讀 plist 的 RunAtLoad 可靠。
 
 ## 相關
 

@@ -1,0 +1,169 @@
+{
+ "checkedAt": "2026-09-24 14:41:54",
+ "dist_tags": {
+  "beta": "2026.9.6",
+  "extended-stable": "2026.7.35",
+  "latest": "2026.9.6"
+ },
+ "mac": "2026.9.4",
+ "vps": "2026.5.27",
+ "p0_issues": [
+  {
+   "number": 157077,
+   "title": "Windows update 2026.9.5 to 2026.9.6 strands schema 18 state and requires manual repair"
+  },
+  {
+   "number": 157066,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 157056,
+   "title": "Update failure: managed-service-preflight (2026.9.5)"
+  },
+  {
+   "number": 157011,
+   "title": "[Bug]: Managed update 2026.9.5 → 2026.9.6 always rolls back — RangeError \"Maximum call stack size exceeded\" in update-history reconciliation (survives doctor --fix)"
+  },
+  {
+   "number": 156992,
+   "title": "Update failure: finalize-plugins (2026.9.6)"
+  },
+  {
+   "number": 156986,
+   "title": "openclaw update hangs in update-candidate-state phase: runaway worker output (233MB+) with respawn loop (9.5)"
+  },
+  {
+   "number": 156961,
+   "title": "Update failure: requested (2026.9.5)"
+  },
+  {
+   "number": 156955,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 156943,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 156917,
+   "title": "State-lifecycle lease has no holder heartbeat or forced takeover: one hung client blocks gateway startup for 31 minutes (crash-restart loop)"
+  },
+  {
+   "number": 156910,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 156893,
+   "title": "[Bug]: git update exits 79 as already-current when dist was built from another commit"
+  },
+  {
+   "number": 156880,
+   "title": "Update failure: managed-service-preflight (2026.9.4)"
+  },
+  {
+   "number": 156849,
+   "title": "Update failure: post-update-plugins (2026.9.5)"
+  },
+  {
+   "number": 156826,
+   "title": "Update failure: post-update-plugins (2026.9.5)"
+  },
+  {
+   "number": 156785,
+   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+  },
+  {
+   "number": 156753,
+   "title": "Update failure: requested (2026.9.5)"
+  },
+  {
+   "number": 156711,
+   "title": "Update failure: finalize:doctor (2026.9.5)"
+  },
+  {
+   "number": 156675,
+   "title": "Update failure: global-install-failed (2026.9.3)"
+  },
+  {
+   "number": 156664,
+   "title": "Update failure: [redacted-command] (2026.9.5)"
+  },
+  {
+   "number": 156641,
+   "title": "Update failure: restart-unhealthy (2026.9.5)"
+  },
+  {
+   "number": 156609,
+   "title": "Update failure: doctor-failed (2026.9.5)"
+  },
+  {
+   "number": 156567,
+   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+  },
+  {
+   "number": 156505,
+   "title": "Update failure: unexpected-error (2026.9.4)"
+  },
+  {
+   "number": 156497,
+   "title": "Update failure: post-update-plugins (2026.9.4)"
+  },
+  {
+   "number": 156392,
+   "title": "[Bug] Mac Mini M5 Pro macOS: Gateway becomes unresponsive at 100% CPU; recurring heartbeat disabled"
+  },
+  {
+   "number": 156374,
+   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+  },
+  {
+   "number": 156364,
+   "title": "Update failure: doctor-failed (2026.9.4)"
+  },
+  {
+   "number": 156333,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 156292,
+   "title": "Update failure: repairing (2026.9.3)"
+  },
+  {
+   "number": 156280,
+   "title": "Update failure: runtime-verification-failed (2026.9.3) Saved sanitized report: C:\\Users\\basit\\.openclaw\\update-reports\\301f8642001dce92801c0ffa15624f84850e1a9805a3bd4f51e86eb5c4cee374.3d79f77f3e53405034a47a6619be87e490e5079ae0ff6edbf3959fd558000580.md"
+  },
+  {
+   "number": 156271,
+   "title": "Update failure: global-install-failed (2026.9.4)"
+  },
+  {
+   "number": 156259,
+   "title": "[Bug] App Update button fails with plugin-target-unavailable when custom plugins have npm overrides"
+  },
+  {
+   "number": 156194,
+   "title": "Update failure: doctor-failed (2026.9.4)"
+  },
+  {
+   "number": 156118,
+   "title": "Update failure: unexpected-error (2026.9.4)"
+  },
+  {
+   "number": 156112,
+   "title": "openclaw update fails at \"global install swap\" while a direct npm install -g of the same version succeeds (npm global, 2026.9.4 → 2026.9.5)"
+  },
+  {
+   "number": 156091,
+   "title": "Update failure: doctor-failed (2026.9.4)"
+  },
+  {
+   "number": 156088,
+   "title": "Update failure: finalize:plugins (2026.9.5)"
+  },
+  {
+   "number": 156069,
+   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+  }
+ ],
+ "blocker_open": true
+}

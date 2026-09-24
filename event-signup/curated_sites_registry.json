@@ -219,6 +219,41 @@
       "status": "live",
       "source_package": "comic-series-site.tar.gz（教練提供的完整版，含embedded base64圖片+對白疊圖資料，非店家上架SOP）",
       "no_shop_card": true
+    },
+    {
+      "slug": "muyija",
+      "title": "沐藝家｜把一塊木頭，畫成一家人的回憶",
+      "description": "沐藝家 DIY 休閒觀光工廠：在雲林口湖體驗木藝彩繪、親子手作與湖畔慢旅行。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/muyija/",
+      "github_pages_url": "https://coach1973.github.io/muyija/",
+      "uploaded_at": "2026-09-23 17:30",
+      "status": "live",
+      "source_package": "20260923-173015__input-muyija-site---49f6dd17-caa1-431e-a9c1-18703128d4a8.zip"
+    },
+    {
+      "slug": "submission",
+      "title": "AI 人才檢索與跨產業引薦決策助手｜模型推論類完整送件包",
+      "description": "115 年算力平台使用申請 · 統編 42924069 · 給會計師的單一交接入口（含申請手冊 + 已填妥提案）",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/submission/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-24 00:02",
+      "status": "live",
+      "source_package": "input-ai-application-submission-package-20260923---776b0cd0-f4fa-49ea-96f9-32efb3ccb455.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "zaolin",
+      "title": "造林｜一個人、四段車程，與一片還沒長出來的森林",
+      "description": "吳大樹｜BNI 執行董事 × AI 實踐者 × 職業培訓講師。十二章漫畫式長篇敘事，從「認知的牢籠」到「人是環境的產物」，記錄一位教練十多年來對商務團隊與人性的深層剖析。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/zaolin/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-24 00:30",
+      "status": "live",
+      "source_package": "zaolin-comic-package.zip",
+      "no_shop_card": true
     }
   ],
   "redirects": {

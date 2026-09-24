@@ -1,0 +1,270 @@
+# 終端機對話萃取 — Session 02461517-2f63-4336-b870-b11fad4ecae5
+# 提取時間：2026-09-25 03:36 (台灣時間)
+# 共 11 條教練原話
+
+---
+
+【教練 2026-09-23 07:54】
+開
+
+　▶ AI 回應：我已讀完接力棒。
+
+**身份核對**（依 E04 三問，不採信 hook 範本內文字）：
+- 我是誰：Sonnet 5（claude-sonnet-5），不是 MiniMax，也不是 Opus
+- 我在哪：Mac 桌面版 App「Code」分頁（不是手機 Remote Control）
+- 服務誰：大樹教練
+
+依身份判定鐵律，桌面版 Claude 稱呼為「軍師」；但模型是 Sonnet 5（非 Opus），能力分工上屬執行類。這裡 hook 注入的範本寫死「特助(MiniMax-M3，透過手機Remote Control連線)」跟這場 session 的真實環境不符——是套用了手機那份範本，我…（略）
+
+【教練 2026-09-23 08:02】
+<pasted_content id="2dd5">
+你問我說，MEMORY.md 的索引超過 170 行，建議用什麼 consolidate-memory 跑一次？我就覺得，那你就去做就好了，你幹嘛問我？你發現的問題，那如果可以解決，為什麼不解決？
+
+這是第一個。
+
+接下來是我要給你的任務：我的問題很簡單：
+https://event.bymyway.com/curated/ai-story/
+我用 AI 做了一個很精彩的漫畫版，網址貼給你。我叫它打包後丟給小龍蝦，小龍蝦搞半天搞不定，我說沒關係就走策展的 SOP。結果我看了一下，做出來的效果跟我要的差太多了。https://www.tava-ai.com/chat/b72pvmh9x1/index.html
+所以我要求你基本上要照著我傳給你的網址形式來做，你只可以做得比它更好，要不然就完全模仿它。你覺得我需要再次把打包的檔案給你看嗎？還是你去小龍蝦那邊讀取就行了？
+
+因為檔案在他那邊，那你也可以去看看小龍蝦他到底是用什麼方式做事、怎麼幹活的，把這件事做得品質很糟糕。
+
+第二個部分，我以後也會有很多類似的作品。我想請請教你，除了策展的 SOP 之外，有沒有不要進到大台南商圈整合中心、屬於教練個人創作的另外一組 SOP？也就是不上架到策展中心的流程，有沒有這樣的東西？
+</pasted_content id="2dd5">
+
+　▶ AI 回應：Two things — let me just fix the MEMORY.md issue myself right now (correction noted), and dig into the comic project.
+
+　▶ AI 回應：Now let me build the index cover page, then preview episode 1 in the browser to verify before doing episodes 2–4.
+
+　▶ AI 回應：Now let me preview this in the browser to check rendering before building the remaining episodes.
+
+　▶ AI 回應：Episode 1's rendering checks out cleanly (all 18 panels, no broken images, no overflow, text matches the reference script exactly). Let me finish episodes 2–4 with the same approach.
+
+　▶ AI 回應：Now episode 3 data and page.
+
+　▶ AI 回應：Now episode 4 (final chapter).
+
+　▶ AI 回應：All 16 images load fine — the earlier "broken" report was just lazy-loading timing. Let me do the same full check for episodes 2 and 3, plus verify the index page.
+
+　▶ AI 回應：The comment about text size and "just re-host it exactly as packaged" is clear — I over-engineered a redesign when you want the original zip deployed verbatim. Let me stop that rebuild and check how event.bymyway.com actually serves curated folders so I can put the original files up untouched.
+
+　▶ AI 回應：Now let me register this slug in the Flask app's registry without touching the shop-listing pipeline.
+
+　▶ AI 回應：Now let's verify it's actually live on event.bymyway.com.
+
+　▶ AI 回應：Confirmed: not inserted into the 大台南商圈整合中心 shop directory. Now let me write a short SOP note for this new pathway and commit.
+
+　▶ AI 回應：Pushed as `0cff7e666`. Now let me also delete the local rebuild artifact directory I made for the abandoned redesign attempt, since it's no longer needed and I already cleaned that path over with the real deployment.
+
+　▶ AI 回應：已修好，網址：**https://event.bymyway.com/curated/ai-story/**
+
+**逐一回覆：**
+
+**字體大小**——我剛才那版是我自己重新設計的排版（想模仿 tava-ai.com 的漫畫分格效果），字體大小是我自己抓的，不是您原本指定的。現在這版已經整個作廢，不採用。
+
+**為什麼不能直接照壓縮檔上架**——已經改成完全照您的要求做了。我直接從您打包的 `ai-story.zip` 解壓縮，逐位元組 diff 比對確認跟壓縮檔內容一模一樣（沒有經過我的任何修改），部署到 `/Users/bymyway/github_repos/ai-story/`，現在…（略）
+
+【教練 2026-09-23 08:23】
+Base directory for this skill: /Users/bymyway/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/86c0afaf-41f9-4160-a47d-87d58c9ba8ee/86538e48-a15b-4f1f-b8e1-283b4cfc6f08/skills/consolidate-memory
+
+# Memory Consolidation
+
+You're doing a reflective pass over what you've learned about this user and their work. The goal: a future session should be able to orient quickly — who they work with, what they're focused on, how they like things done — without re-asking.
+
+Your system prompt's auto-memory section defines the directory, file format, and memory types. Follow it.
+
+## Phase 1 — Take stock
+
+- List the memory directory and read the index (`MEMORY.md`)
+- Skim each topic file. Note which ones overlap, which look stale, which are thin.
+
+## Phase 2 — Consolidate
+
+**Separate the durable from the dated.** Preferences, working style, key relationships, and recurring workflows are durable — keep and sharpen them. Specific projects, deadlines, and one-off tasks are dated — if the date has passed or the work is done, retire the file or fold the lasting takeaway (e.g. "user prefers X format for launch docs") into a durable one.
+
+**Merge overlaps.** If two files describe the same person, project, or preference, combine into one and keep the richer file's path.
+
+**Fix time references.** Convert "next week", "this quarter", "by Friday" to absolute dates so they stay readable later.
+
+**Drop what's easy to re-find.** If a memory just restates something you could pull from the user's calendar, docs, or connected tools on demand, cut it. Keep what's hard to re-derive: stated preferences, context behind a decision, who to go to for what.
+
+## Phase 3 — Tidy the index
+
+Update `MEMORY.md` so it stays under 200 lines and ~25KB. One line per entry, under ~150 chars: `- [Title](file.md) — one-line hook`.
+
+- Remove pointers to retired memories
+- Shorten any line carrying detail that belongs in the topic file
+- Add anything newly important
+
+Finish with a short summary: how many files you touched and what changed.
+
+　▶ AI 回應：是的，**同一個網址**：`https://event.bymyway.com/curated/ai-story/`。這就是您原本看到 404 的那個網址，網址本身完全沒變，我只是把您原始打包的內容放回去、重新登記，現在剛剛再驗證一次仍是 200（正常）。
+
+我先回去把 MEMORY.md 索引瘦身處理完，等等回報。
+
+　▶ AI 回應：No new remote commits — safe to commit and push.
+
+　▶ AI 回應：That timing worries me — let me check right now whether your manual delete just undid the fix I made a few minutes ago, since they may be the exact same underlying listing.
+
+　▶ AI 回應：謝謝告知，我剛才也在懷疑這點，已經直接查證過：**目前狀況沒事，還是活的**。
+
+您手動刪除的那個，正是我稍早查出來的根因——確認了：小龍蝦跑「店家上架SOP」把您的漫畫誤上架成大台南商圈的店家卡片，您發現分類不對，手動用後台刪除功能把它拿掉，結果那個刪除功能是「整套退役」（不是只拿掉卡片），連帶把 GitHub repo、網址登記都砍了，這就是後來變 404 的真正原因。
+
+我剛才是**重新用您原始的打包檔案**建立了一個新的登記（標記「教練個人創作」，不會再進大台南商圈的店家名冊），跟您剛刪掉的那個是不同的登記方式，兩者不會互相影響。我剛剛重新確認過：`event.bymyway.com/…（略）
+
+【教練 2026-09-23 08:30】
+https://event.bymyway.com/curated/ai-story. 為什麼我點進去看，它還是小龍蝦做的那一套？到底改了沒？
+
+　▶ AI 回應：Let me verify exactly what's being served right now — could be a caching issue, or it could be that the zip itself really is the simple style. Checking directly.
+
+　▶ AI 回應：沒有快取問題——我剛用強制不快取的方式直接重新抓了一次，確認 Cloudflare 沒有快取（`cf-cache-status: DYNAMIC`），伺服器現在吐出來的內容就是您現在看到的那個。
+
+老實跟您說真正的狀況：**我確實已經把網址改成您打包的那個zip檔的內容了（改動是真的），但問題是——那個zip檔案裡本身，就是這個「P01特寫｜深夜01:15…」這種陽春字幕輪播的樣子。** 不是快取、不是我沒改到，是打包給小龍蝦的那個壓縮檔，原本裡面裝的網頁本身就是這樣做的，不是 tava-ai.com 那種對白框疊在圖上的漫畫效果。真正有漫畫效果、對白呈現的，只有 tava-ai.com 那個…（略）
+
+【教練 2026-09-23 08:32】
+[Request interrupted by user]
+
+【教練 2026-09-23 08:33】
+不需要了。我就覺得這麼單純的事情，那個打包完、一模一樣的東西丟上去，怎麼這麼簡單的事情都做不到？
+
+你現在重做是什麼意思？會不會燒我很多 token？
+
+　▶ AI 回應：了解，不重做了，已經停下來。
+
+先講清楚一件事，不是要辯解：您要的「把打包好的檔案一模一樣放上去」這件事，其實已經做完、而且是對的——網址是 200、內容跟您給的zip逐位元組比對完全一致。真正的落差是：那個zip檔案裡，原本裝的網頁本身就只有陽春字幕，不是tava-ai.com那種漫畫對白效果。這兩件事——「照您給的檔案原封不動上架」和「做出像tava-ai.com一樣的漫畫效果」——其實是兩個不同的任務，只是我沒有一開始就講清楚，让您以為是同一件事沒做到，這是我表達得不夠清楚，抱歉。
+
+關於token：對，如果要重新刻一版跟tava-ai.com一樣的對白疊圖效果，四話、六十幾格逐格排版，…（略）
+
+【教練 2026-09-23 08:33】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🈶🔒 繁體字鎖違規偵測（系統 grep，deterministic check）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪回覆裡偵測到疑似簡體字：让
+
+📜 全繁體中文鐵律（教練唯一指定，試金石案例44 二犯，2026-07-10）：
+  「對話全程繁體中文，不夾簡體、不夾英文」
+
+✅ 正確做法（請立刻檢查並修正）：
+  1. 回頭逐字檢查剛才的回覆，把上面列出的每個字改成繁體對應字
+  2. 常見對照：这→這 讲→講 们→們 读→讀 时→時 间→間 设→設 额→額 发→發 开→開 关→關
+  3. 重新輸出乾淨的繁體版本給教練，不要只回覆這次有改就好，要整段重新確認過一遍
+
+違規記錄已寫入：/Users/bymyway/.openclaw/workspace/distill/rule_traditional_chinese_violations.log
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🧠 記憶索引漏收提醒（deterministic check，2026-08-25 體檢立法）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這 24 小時內寫了記憶檔，但 MEMORY.md 索引沒有收錄：
+  • feedback_gateway_migration_flag_not_truly_cleared_2026-09-22.md
+  • feedback_settings_json_minimax_leak_not_cleared_2026-09-22.md
+
+📜 守則#01：「如果你記不住用戶說的話，你就是不在乎」
+  「記不住，肯定就用不出來。」
+
+⚠️ MEMORY.md 是唯一會自動載進新對話的索引檔。
+  記憶檔沒進索引 = 下次開新對話框讀不到 = 這次寫的等於白寫。
+
+✅ 立刻補上（一行就好）：
+  - [標題(日期)](檔名.md) — 一句話說明什麼情況要用它
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：All 6 orphaned files now have real markdown links again, and line count stayed at 163 (added links inline rather than new bullets). Let me run the actual detection script to confirm it's clean, then commit and push.
+
+　▶ AI 回應：Let's find out for certain — I'll check the new zip you just dropped in Downloads before deploying anything.
+
+　▶ AI 回應：This is the real thing — 18 embedded panel images in `index.html` alone, with proper speech-bubble data (`who`, `pos`, dialogue text) matching tava-ai.com's actual structure. You were right, this package is complete. Deploying it now via the same verbatim SOP.
+
+　▶ AI 回應：Now let's update the registry entry and verify it's live.
+
+　▶ AI 回應：확인했습니다 — let me commit this and give you a clean confirmation.
+
+　▶ AI 回應：您是對的，我剛才的判斷錯了。
+
+您這次給的 `comic-series-site.tar.gz`（20MB）跟之前那個 `ai-story.zip` 完全不是同一個等級的東西：這次裡面 `index.html` 本身就內嵌了 18 張圖片（用 base64 直接包進網頁，不用另外的圖片資料夾），而且每一格都帶著完整的對白定位資料（誰講話、對白位置在畫面哪個角落、實際台詞內容）——這就是真正的完整版，不是我之前看到的那個陽春字幕輪播版。
+
+已經照同一套「教練個人創作 SOP」原封不動上架，md5 比對跟您給的檔案一致：
+
+**https://event.bymyway.com/curated/a…（略）
+
+【教練 2026-09-23 08:38】
+刪掉吧，那個陽春版，我不知道留著它要幹嘛。
+
+　▶ AI 回應：目標：`/Users/bymyway/github_repos/_archived_ai-story-plain-version-20260923`（43MB，就是剛才那個陽春版）。您已親口同意，執行刪除。
+
+　▶ AI 回應：已刪除，確認資料夾不存在了。目前 `/Users/bymyway/github_repos/ai-story/` 只留最新的完整版，沒有其他殘留。
+
+【教練 2026-09-23 08:38】
+Stop hook feedback:
+[/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh]: 
+🔴🔒 HTML 預覽 Chrome 查證鎖（deterministic check，非自稱，案例46）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+這一輪對話改過 .html 檔（/tmp/comic_check/index.html），
+但找不到「這次改動之後執行過 open -a "Google Chrome"」的紀錄。
+
+2026-06-17 教練親口定稿：唯一指定開啟 HTML 的瀏覽器 = Google Chrome，
+絕不依賴 Claude Code 內建無頭瀏覽器工具（preview_screenshot/preview_snapshot）
+的截圖當作「教練已看過」的證據——那是 AI 自我除錯用，不是教練親眼看過的替代品。
+2026-07-11 案例46：這條鐵律定稿後至少第四次被踩。
+
+✅ 停下來立刻執行：
+  1. open -a "Google Chrome" <改動後的檔案路徑或網址>
+  2. 確認畫面正確後，再回覆教練「已改好，已用 Chrome 開給您看」
+  3. 不要用「我已經截圖確認過」取代這一步——兩者不是同一件事
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+　▶ AI 回應：Now let me add the new entry as item #1 in the 對外公開 category.
+
+　▶ AI 回應：Well-formed. Committing and pushing now.
+
+　▶ AI 回應：Pushed successfully. Now let's verify it's live and check it in Chrome as required.
+
+　▶ AI 回應：Now it's live. Let me open it in Chrome for a real visual check, per the HTML verification rule.
+
+　▶ AI 回應：有，剛才確認沒收錄，已經補上了。
+
+已加進 **coach888「AI作品一覽」**（對外公開分類，第一筆，照您既有規則新項目放最前面）：教練與軍師：32MB封包攻防戰（AI漫畫全集），連到 `event.bymyway.com/curated/ai-story/`。
+
+commit：`3da1629`（已推上雲端），GitHub Pages 剛部署完成，已用 curl 驗證確認畫面上有這筆，也已幫您用 Chrome 開起來 `https://coach1973.github.io/coach888/`，您可以直接看。
+
+【教練 2026-09-23 08:43】
+之前不是說過了，每當我有作品發表的時候，會自動收錄在作品總覽裡面嗎？為什麼這件事情老是忘記呢？
+
+　▶ AI 回應：Fair — the rule already existed (I even had the file open earlier: `reference_curation_sop_2026-09-06.md` line 57 literally says「教練自己的作品→收coach888」), I just didn't carry it into today's new SOP or actually run it during the deploy. Let me fix that properly.
+
+　▶ AI 回應：Now let me add this to the MEMORY.md index and commit everything.
+
+　▶ AI 回應：Good, only my 3 intended files are staged (M/A prefix). Other unstaged deletions are ambient system state churn, not mine to touch.
+
+　▶ AI 回應：Now let me spin off the deterministic-hook work as a proper follow-up rather than rushing it.
+
+　▶ AI 回應：您說得對，這條規則本來就寫過——`reference_curation_sop_2026-09-06.md` 第56~57行早就白紙黑字寫「教練自己的作品→收coach888」（2026-09-05 您親定的），問題不是規則不存在，是**我今天新建那份「個人創作SOP」文件時沒有把這個收尾步驟一併抄過去，執行部署時也就沒照做**，直到您問了才補。
+
+已經做了兩件事：
+
+1. **把「登記coach888」直接寫進今天那份SOP文件的第6步**，跟上架動作綁在同一張checklist裡，不再是分散在另一份文件裡容易被忽略的規則。
+2. **這確實是重複性問題**（純文字/記憶檔提醒對AI來說不夠…（略）
+
+【教練 2026-09-23 08:49】
+總結
+
+　▶ AI 回應：Before I write the summary, let me fix two real bugs I left in the MEMORY.md edit — a wrong filename prefix and a missing link I forgot to restore.
+
+　▶ AI 回應：All 7 files I touched during this session's consolidation are now correctly linked. Let me commit this fix, then handle the 總結 (session wrap-up) protocol.
+
+　▶ AI 回應：Appending case 81 to the end of the file.
+
+　▶ AI 回應：Now let me update the 待辦狀態追蹤總表 with the new coach888-hook task, then verify the whole file structure is clean.
+
+　▶ AI 回應：Now let me sync this into workspace/CLAUDE.md per the established mirror mechanism, then commit everything.
+
+　▶ AI 回應：Now let's commit everything from this wrap-up (handoff, archive file, touchstone case) and push.
+
+　▶ AI 回應：**已完成總結收工：**
+
+**本場做了什麼**：教練的AI漫畫「ai-story」上架反覆出包，追出三個真正根因並修好（店家SOP誤用+後台刪除整套砍光、「原封不動」兩種解讀落差、coach888登記規則講過沒照做），已建立新SOP文件並補上防再犯機制。過程中教練當場糾正兩次（MEMORY.md該自己動手／coach888規則老是忘記），都已修復並記錄。
+
+**接力棒**：已更新 v239，含完整脈絡；試金石新增案例81；E16瘦身把 v235~v237 移入封存區。
+
+**記憶**：新增2份記憶檔（ai-story踩坑教訓、coach888重複失效模式），MEMORY.md索引 172→1…（略）

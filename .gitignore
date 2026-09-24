@@ -87,3 +87,6 @@ distill/agent_team_qa_digest_latest.md
 
 # 本機相簿暫存，非程式碼/文件資產，不該進repo（2026-09-22）
 photos/
+
+# 2026-09-25：漫畫來源素材533MB，已完成上架(案例81)，只是本機暫存，不進git
+claude-brain/data/comic_source_20260923/
