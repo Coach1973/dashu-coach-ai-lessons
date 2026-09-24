@@ -1,11 +1,11 @@
 ---
 name: feedback-model-tier-advisor-opus-vs-sonnet-2026-09-25
-description: 教練親定模型分工默契：重大決策/找根因/設計機制用Opus，庶務用Sonnet；Sonnet碰到Opus級任務要先一句話提醒切換、先不動手，Opus碰到庶務做完提醒可切回；已由UserPromptSubmit hook自動評估
+description: 【v2最終版】教練要求「不然我不知道你的提醒什麼時候才會出現」→改成每則交辦回覆第一行都標🟢Sonnet/🟣Opus，看得見不用猜；Sonnet碰🟣先建議切換不動手，Sonnet卡關主動建議切Opus，Opus碰🟢做完提醒切回；注入+Stop hook雙機制
 metadata:
   node_type: memory
   type: feedback
   originSessionId: 7dfd3491-32da-49ec-be24-a2c0d54e850c
-  modified: 2026-09-24T20:22:02.141Z
+  modified: 2026-09-24T20:42:30.648Z
 ---
 
 教練：「重大決策時我會請 Opus 出來，平常一般的庶務類雜事我還是讓 Sonnet 解決……如果你覺得需要調動 Opus 出來，就主動提醒我……如果是 Sonnet 就能解決的，就不用提醒我。該用 Opus 就用，該省就省。」

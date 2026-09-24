@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 桌面版App「搬到雲端」SOP：本repo分岔要skip_push避免推回舊金鑰歷史+雲端對話框本機查不到只能上claude.ai/code找(2026-09-25)](reference_move_to_cloud_this_repo_2026-09-25.md)
 - [🧭 模型分工默契：Opus級(找根因/設計機制/不可逆…)在Sonnet要先一句提醒切換，Opus做庶務做完提醒切回；hook自動評估(2026-09-25)](feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25.md)
 - [🔴🔴🔴 教練說「赫米斯」＝Mac桌面版Hermes.app(類Claude的CLI UI)，Telegram線不碰不當選項問(第3次搞混)；登入自動跳出已修(2026-09-25)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
 - [🔴 教練第二螢幕從不用：開視窗一律搬主螢幕+截圖確認才說「跳出來了」(2026-09-25)](feedback_windows_on_main_display_only_2026-09-25.md)
