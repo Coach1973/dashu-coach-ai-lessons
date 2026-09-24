@@ -3,7 +3,7 @@ name: commit-on-promise
 description: Use immediately whenever you tell 教練 "我來做"/"我會處理"/"我幫你弄好" or report a task as complete. Enforces same-turn commit + push + hash — never "等一下" or batching commits later.
 ---
 
-# 承諾當場 commit（執行細則 E01）
+# 承諾當場 commit（執行細則 N1）
 
 對應守則 #05（凡走過必留痕跡）、#04（解決問題比解釋問題更重要）。
 

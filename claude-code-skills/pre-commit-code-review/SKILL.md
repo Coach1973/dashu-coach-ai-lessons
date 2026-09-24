@@ -10,7 +10,7 @@ description: Use before committing non-trivial code changes (new features, bug f
 ## 軸一：規範（Standards）
 
 - 這次改動有沒有照這個專案既有的風格（縮排、命名、既有的CSS/JS慣例）？
-- 有沒有動到沒被要求的地方（違反 E11「只碰必要的」）？
+- 有沒有動到沒被要求的地方（違反 N7「只碰必要的」）？
 - 有沒有留下自己這次改動造成的孤兒（無用import/變數/函式/CSS class）？
 - 有沒有引入不必要的新依賴/新框架，來解決一個原本簡單就能解決的問題？
 

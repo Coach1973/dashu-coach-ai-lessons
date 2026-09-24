@@ -127,10 +127,10 @@ SUMMARY=$(/usr/bin/jq -c '{
 # === 第三關：注入 context ===
 
 printf '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
-printf '⚙️  設定檔原文注入（E07 自動驗證，openclaw.json 摘要）\n'
+printf '⚙️  設定檔原文注入（N3 查證鐵律自動驗證，openclaw.json 摘要）\n'
 printf '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
 printf '⚠️  教練在 prompt 提到「%s」相關詞，以下是 openclaw.json 實際設定。\n' "$HIT"
-printf '   回答時以這份設定為準，不靠記憶（守則 E07 + #15）。\n\n'
+printf '   回答時以這份設定為準，不靠記憶（執行細則 N3 + 守則#15）。\n\n'
 printf '🔴 範圍提醒（2026-09-19案例補丁）：這份openclaw.json只管OpenClaw閘道(小龍蝦/Telegram/LINE\n'
 printf '   agent)的模型路由，跟「這個Claude Code session本身在跑什麼模型」是兩回事——尤其`claude rc`\n'
 printf '   啟動的Remote Control session，啟動前會unset掉ANTHROPIC_BASE_URL/API_KEY等變數，不吃這份設定，\n'

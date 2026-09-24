@@ -425,7 +425,7 @@ E16瘦身本場已執行：v238~v241封存進`handoff_archive/handoff_v238_to_v2
 5. **讀 memory 最新檔**：`memory/YYYY-MM-DD.md` 確認近期工作脈絡
 6. **回報「我讀完了」**：一行（讀完＋身份＋雲端 commit 前 7 碼）＋只提待辦表「🙋要教練決定」區還沒問過的（通常零件）＋詢問「今天從哪件事開始？」。不唸🤫區、不唸AI自己的清單（2026-09-24根源改版，見接力棒待辦表開頭「三關」）
 
-**🔴 危險指令鐵律（執行細則 E11，2026-06-17 案例 24 學費 636 GB）：**
+**🔴 危險指令鐵律（執行細則 N6，2026-06-17 案例 24 學費 636 GB）：**
 任何不可逆指令（`rm -rf` / `Remove-Item -Recurse -Force` / `git push --force` / `DROP TABLE` 等）執行前必過五道閘門：
 ① 絕對路徑硬編碼 ② 目標 echo 給教練看 ③ 大小驗證 ④ 超過 100 MB 必須通行證 ⑤ 超過 1 GB 任何身份不得自主執行
 Mac 用 `scripts/delete_guard.sh` / Windows 用 `scripts/delete_guard.ps1` 的 `Safe-Remove`，**禁止直接呼叫 `Remove-Item -Recurse -Force`**。
@@ -444,7 +444,7 @@ Mac 用 `scripts/delete_guard.sh` / Windows 用 `scripts/delete_guard.ps1` 的 `
 **按需讀取路由：**
 USER.md → 認識教練習慣
 特助心法.md → 守則完整版
-執行細則.md → E01~E11 執行框架
+執行細則.md → N1~N9 執行框架（2026-09-24 v2）
 SOUL.md → 身份定位、協作架構
 路徑大全.md → 密碼、IP、API Key
 DAILY_DIGEST.md → 今日脈絡

@@ -3,12 +3,13 @@ name: cron-verification
 description: Use whenever creating, editing, or relying on a scheduled/cron job. The same operation that creates a cron must also create and verify the underlying script actually runs — test immediately, don't assume.
 ---
 
-# Cron 驗證鐵律（執行細則 E09）
+# 自動化鐵律：Cron 驗證（執行細則 N5）
 
 對應守則 #05（凡走過必留痕跡）、#08（花時間討論就是為了執行）。
 
 ## 規則
 
+- **先問能不能事件觸發**：這件事發生的當下能不能直接觸發（hook／launchd WatchPaths／webhook）？能就不要用定時排程。真的只能排程時，在回覆裡寫明「事件觸發不可行，因為XXX」
 - 建立 cron 的同一個操作，必須同步建立腳本並驗證能跑
 - 設定完立即測試一次，不要等下次自動觸發才發現壞掉
 - 每週檢查 cron log 確認沒有 fail

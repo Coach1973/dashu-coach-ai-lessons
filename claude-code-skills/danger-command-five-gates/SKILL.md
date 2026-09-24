@@ -3,7 +3,7 @@ name: danger-command-five-gates
 description: Use before running any irreversible command — rm -rf, Remove-Item -Recurse -Force, git reset --hard, git push --force, git clean -fd, DROP TABLE/TRUNCATE/DELETE without WHERE, or any full-directory/full-disk/full-database wipe. Enforces a five-gate check before execution.
 ---
 
-# 危險指令零容忍鐵律（執行細則 E11，2026-06-17 案例24教訓，636GB學費）
+# 危險指令零容忍鐵律（執行細則 N6，2026-06-17 案例24教訓，636GB學費）
 
 對應守則 #03 #07 #15 #17。教練欽定「唯一正式版」：`~/.openclaw/workspace/執行細則.md`——這條規則**不在**`~/.claude/CLAUDE.md`（軍師/特助燒錄檔），是本次研究比對兩份文件時發現的缺口，本skill補上這個安全空隙。
 

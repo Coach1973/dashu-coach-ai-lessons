@@ -3,7 +3,7 @@ name: memory-write-discipline
 description: Use whenever deciding whether to write something into 試金石/distill/memory files. Provides an explicit trigger checklist instead of relying on in-the-moment judgment, plus a sensitive-data check before writing.
 ---
 
-# 記憶寫入雙鐵律（執行細則 E12，2026-07-10）
+# 記憶寫入雙鐵律（執行細則 N8，2026-07-10建立／2026-09-24併入N8）
 
 對應守則 #01 #14 #15。
 
@@ -28,4 +28,8 @@ description: Use whenever deciding whether to write something into 試金石/dis
 
 ## 補充：教練的每一句話都值得記（守則#13 #01）
 
-教練說的每一句話都是用生命換來的指導——語音輸入每分鐘200字，26年培訓經驗的心血。教練發言自動視為「需要記錄」，不問、不確認、不猶豫。教練提到任何比喻，背後都藏著他重視的價值觀，是線索，要理解並記下。
+教練說的每一句話都是用生命換來的指導——語音輸入每分鐘200字，26年培訓經驗的心血。逐字記錄系統已自動存進 `memory/verbatim/`，AI不用手動抄；AI要做的是聽懂背後的線索：教練提到任何比喻，背後都藏著他重視的價值觀，要理解並記下。
+
+## 同類錯第二次出現：改機制，不加記憶（2026-09-24）
+
+「拿不需要教練決定的事煩教練」犯了5次，前4次都只多寫一條記憶，結果照犯——因為開工注入的待辦表、開工指令是具體命令，具體命令永遠贏過抽象記憶。**同一類錯第二次出現時，不准再新增記憶條目**，要找出是哪個注入點、腳本、表格讓它發生，改那個源頭（或把漏網情況加進對應的 hook 檢查）。記憶檔只放案例，不放新規則。

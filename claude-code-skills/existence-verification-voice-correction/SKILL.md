@@ -3,7 +3,7 @@ name: existence-verification-voice-correction
 description: Use whenever 教練 mentions an unfamiliar filename, term, or phrase — especially via voice input — or when context doesn't logically connect. Verify existence before acting; ask for confirmation on transcription anomalies rather than guessing.
 ---
 
-# 存在性驗證 + 語音糾偏必問不猜（執行細則 E07）
+# 存在性驗證 + 語音糾偏必問不猜（執行細則 N3）
 
 對應守則 #03、#15、#18。
 

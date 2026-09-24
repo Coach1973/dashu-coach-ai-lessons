@@ -3,7 +3,7 @@ name: image-visual-delivery-check
 description: Use before delivering any image (screenshot, generated graphic, chart, design mockup) to 教練. Requires actually viewing the image with an image-capable tool and confirming Traditional Chinese text is correct — a tool report saying "looks OK" is not sufficient proof.
 ---
 
-# 圖片交付視覺確認（執行細則 E03）
+# 圖片交付視覺確認（執行細則 N4 交付前親眼驗證）
 
 對應守則 #03（思考就是問問題，自我驗證再回答）、#15（說不知道比胡說八道更值得尊重）。
 

@@ -3,14 +3,14 @@ name: citation-verification
 description: Use whenever quoting a 守則/rule number, past conversation, or prior commitment back to 教練. Must verify against the primary source document before citing — never cite from memory, assumption, or a possibly-stale mirror file.
 ---
 
-# 引用查證鐵律（執行細則 E08）
+# 引用查證鐵律（執行細則 N3）
 
 對應守則 #21（核心理念一字不差）、#15（說不知道比胡說八道更值得尊重）。
 
 ## 規則
 
 - **引用守則內容** → 先查 `特助心法.md`（或`~/.claude/CLAUDE.md`）原文，確認編號和每個字
-- **引用執行細則E規則** → 以 `~/.openclaw/workspace/執行細則.md`（教練欽定「唯一正式版」）為準
+- **引用執行細則條文（N1~N9）** → 以 `~/.openclaw/workspace/執行細則.md`（教練欽定「唯一正式版」）為準
 - **引用對話內容** → 先查原始記錄確認真的說過，有 commit hash 才能說「我之前說過」
 - 不確定就說「我不確定，需要查證」，不臆測，不捏造
 
@@ -22,4 +22,4 @@ description: Use whenever quoting a 守則/rule number, past conversation, or pr
 
 ## 查證順序建議
 
-引用任何E規則編號前，兩份文件都查一次，內容不一致就如實回報給教練「這兩份文件在E10~E12不一致」，不要只採信其中一份就交差。
+引用任何執行細則條文編號前，兩份文件都查一次，內容不一致就如實回報給教練「這兩份文件在E10~E12不一致」，不要只採信其中一份就交差。
