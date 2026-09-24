@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-24 14:15:52**
+> **最後同步：2026-09-24 14:29:15**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -103,7 +103,7 @@
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
 | 🟡 | **團隊協作全面體檢（2026-09-24 Opus 5.5）：五項修法教練13:37說「執行」，已落地** | ⚠️持續追蹤-首次真實使用待觀察 | 完整報告`knowledges/2026-09-24_團隊協作全面體檢報告.md`。①每日08:10全隊點名`scripts/daily_team_rollcall.py`+launchd`ai.openclaw.daily-rollcall`(13:41實跑送達)；VPS/LINE健檢改為只在異常時通知②VPS看守Mac：VPS`/root/watch_mac.sh`每30分，Mac連續兩次連不上才通知(測試訊息message_id 3860送達)③上傳頁`kind`必填，`creation`全自動進coach888最新作品(離線+Flask測試全過，**尚未有真實大樹作品走過一次**，下次教練上傳時看`distill/curation_process.log`)④產業鏈同主題同對話10分鐘防重複⑤VPS健檢拿掉1小時無活動誤報；赫米斯記憶檔金鑰是教練指示保留的寫法，不搬。commit`b076a80fc`+`777c9c7c4`。**VPS升級另見下一列**。VPS健檢缺天原因仍未查明，改由每日點名檢查「今天有沒有跑」。 |
-| 🟡 | **小龍蝦「2.0」升級評估：Mac維持2026.9.4、VPS暫緩** | ⏳VPS待教練決定走不走長期穩定版 | 評估全文見體檢報告第六節。Mac正式小龍蝦**已是2.0**（2026.9.4，9/16案例73事故時被動換上），實測穩定，建議不退回舊版（資料庫格式17單向）、也先不升9.6（9/23發布、9/24多個P0升級災情，官方警告macOS別更新）。自動升級預設關閉未開啟。VPS實際仍是**2026.5.27**（舊SOP的`openclaw update`從沒升到正式服務，記憶檔`feedback_vps_update_sop_trigger.md`已改正）；已另存`openclaw-rollback:2026.5.27`＋備份`/root/openclaw/backup/data-pre-upgrade-20260924`(4.5G)，正式服務未動。若教練說升，建議走官方LTS`ghcr.io/openclaw/openclaw:2026.7.35`（不經2.0遷移）。 |
+| 🟡 | **小龍蝦「2.0」升級評估：Mac維持2026.9.4、VPS暫緩** | ⏳VPS待教練決定走不走長期穩定版 | 評估全文見體檢報告第六節。Mac正式小龍蝦**已是2.0**（2026.9.4，9/16案例73事故時被動換上），實測穩定，建議不退回舊版（資料庫格式17單向）、也先不升9.6（9/23發布、9/24多個P0升級災情，官方警告macOS別更新）。自動升級預設關閉未開啟。VPS實際仍是**2026.5.27**（舊SOP的`openclaw update`從沒升到正式服務，記憶檔`feedback_vps_update_sop_trigger.md`已改正）；已另存`openclaw-rollback:2026.5.27`＋備份`/root/openclaw/backup/data-pre-upgrade-20260924`(4.5G)，正式服務未動。若教練說升，建議走官方LTS`ghcr.io/openclaw/openclaw:2026.7.35`（不經2.0遷移）。**14:30教練追問後補上版本管理**：①`~/.openclaw/hooks/version-change-notify`(gateway:startup事件，版本變了立刻通知；已登記進`openclaw.json`並`hooks info`顯示Ready，改前備份`openclaw.json.bak-before-version-hook-20260924-142445`；openclaw.json本場開始前就有他人未提交修改，故未提交)②每日點名加版本行＋「程式檔已換但未重啟」「VPS版本變了」黃燈③每週日09:30`scripts/openclaw_upgrade_watch.py`(launchd`ai.openclaw.upgrade-watch`)升級評估週報，14:27首份已送達。**VPS建議9/28(週日)週報亮綠燈後升LTS 2026.7.35**，同時把compose的`18789:18789`改`127.0.0.1:18789:18789`(外界可直連主程式，coach.bymyway.com走nginx內部轉接不受影響)。待教練點頭。 |
 | 🟡 | **namecard-db前會員「推薦人」補查：367人待續查** | ⏳下一場可直接接續 | 2026-09-23教練問前會員能否顯示離會時間+推薦人，離會時間已用本地既有信用証清查資料補上(330/338人)，推薦人本地真的沒有，已進BNI Connect會員頁(tabs-6)驗證「推薦人」欄位真實存在並手動查了10人份(4人有填/6人未登記屬正常)。剩367人存於`namecard-db/bni_connect_import/sponsor_lookup_queue_2026-09-23.txt`，查詢方法+一次5人browser_batch節奏見`knowledges/2026-09-23_BNI前會員推薦人補查進度與續作方法.md`，直接接續即可不用重新設計流程。 |
 | 🟡 | **柯朝陽聚寶盆入會續約發票延後開立（休息一年再歸隊）** | ⏳長期擱置-約一年後再開 | 2026-09-23原發票(FS99860257/自訂編號092308/仁心茶茶有限公司/96847552)開錯已作廢(`II_Invoice_Status`確認變2)。2026-09-24教練親口補充：**柯朝陽已經先交錢了，但發票要等之後才開，因為他要休息一年再歸隊**——不是卡在缺資料，是刻意延後開票時程。下次真的要開票時（約一年後教練提起時），仍需要正確統編/公司名稱（原錯誤資料是仁心茶茶有限公司/96847552，教練未說明錯在哪），自訂編號延續用092314，流程比照同場楊在珍作廢重開案例（[[feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23]]附近的ezPay SOP已補上作廢流程）。近期不用主動追問。 |
 | 🟡 | **coach888「AI作品一覽」登記deterministic檢查（task_40a366c5）** | ⏳待認領獨立session | 2026-09-23教練當場質問「為什麼老是忘記」coach888登記——規則早就寫在`reference_curation_sop_2026-09-06.md`(教練自己的作品→收coach888)，但只是文字提醒沒有hook強制，這次又漏做一次才補上。已用spawn_task分派成獨立任務(task_40a366c5)，內容：掃`curated_sites_registry.json`裡`category`為「教練個人創作」且近7天新增的項目，比對`coach888/index.html`有沒有對應連結，沒有就攔下提醒。詳見[[feedback_coach888_registration_repeatedly_skipped_2026-09-23]]+試金石案例81。 |
