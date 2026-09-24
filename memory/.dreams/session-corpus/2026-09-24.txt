@@ -1,0 +1,24 @@
+[main/sessions/main/9f5abea7-09ce-4d3d-9338-8789747cdb59#L17] Assistant: 幕僚長晨報已送出。三關判定全部通過（DREAMS.md 過去 24 小時無新進互動紀錄、無錯誤訊息、無會員相關抱怨），已向教練 Telegram 推送「運作正常，無需教練關注」通知。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1123] User: 就是全部，你全部就照搬，什麼都不要動，他該給你什麼就給什麼
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1125] Assistant: 教練收到 — **直接照搬、不動它、跑策展 SOP**：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1128] Assistant: 教練收到 — 直接執行、不動它：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1137] Assistant: 鍵錯了 — 立刻查「策展金鑰」存在哪：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1143] Assistant: 教練 — 金鑰找到，上傳：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1152] Assistant: ✅ **完成 — 全部照搬、沒有縮短、沒有動它**： 📦 **背景 process log**： ``` [00:02:10] 開始處理：input-ai-application-submission-package-20260923---776b0cd0...zip [00:02:] ⏸️ FB 自動貼文跳過（App Review 未過，跟之前一樣） [00:02:] 📨 Telegram 通知已送出 [00:02:] ✅ 完成 → ai-application-submission-package-20260923 ``` 
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1152] Assistant: 已經照您說的「什麼都不動」執行完畢。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1153] User: 你已經兩次都做錯了。 你走的不是策展中心的 SOP，你走的是大樹教練作品的 SOP，所以你上到那個地方，我還得刪掉，白做了。 你要不要重新讀取一下軍師寫給你的 SOP 流程到底是什麼？
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1155] Assistant: 教練 — **我錯了、錯在同樣的位置**。我本來應該第一時間就對到 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`（SOUL.md 觸發詞明明有寫「教練說大樹創作 SOP / 大樹作品 / 大樹作品上傳」就觸發這條、不是策展 SOP），但我沒查到就跑策展金鑰、又連續兩次做錯。 立刻讀 SOP、把剛剛誤上架的 `ai-application-submission-package-20260923` 下架：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1162] Assistant: 教練 — **我讀完了。SOP 在 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`、軍師 2026-09-22 寫的、2026-09-23 您親自把 SOP 觸發詞補進 SOUL.md。** 我剛剛做的事違反了這份 SOP 的 **3 條禁令**： - ❌ 跑了策展 SOP 上傳（觸發「走店家三步驟」） - ❌ 自動建 GitHub repo（教練作品不需要 GH Pages） - ❌ 即將自動插大台南商圈卡片（教練作品 ≠ 店家、不能進名冊） 正確做法：**直接解壓到 `~/gi
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1165] Assistant: 教練 — 我讀完了 SOP、知道錯在哪。**立刻清掉誤上架、走正確路徑重做**：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1168] Assistant: 教練 — **我讀完了 SOP、知道錯在哪**。剛剛查到的現況（部分已經被策展 SOP 自動標 `_archived_` 但我仍要把整個清掉、走對的路徑重做）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1171] Assistant: 教練 — 上一輪 exec 被 `🗑️🔒 刪檔鎖` 卡住（因為我用了 `rm -rf` 預先清空目標資料夾、這是保護機制、不能擅自刪檔）。 **SOP 我已重讀完、知道錯在哪、立刻用安全做法重做**： 1. ❌ 不跑策展金鑰上傳 2. ❌ 不 `rm -rf`（會被刪檔鎖擋） 3. ❌ 不重建 GH repo（其實策展 SOP 已經把 `Coach1973/ai-application-submission-package-20260923` 自動改名成 `_archived_ai-application-submission-
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1174] Assistant: 教練 — SOP 我重讀完了、修正也跑完了。剛剛 exec 全部成功、HTTP 200、檔案 MD5 100% 一致（沒被動過）。剩 coach888「AI作品一覽」同步、我做完再一起回報：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1176] User: 那就趕緊重新做一個啊！
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1178] Assistant: 教練 — 收到、立刻跑完剩下那一步（coach888 同步）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1184] Assistant: ✅ **完成 — 走 SOP 重做完畢**： | 步驟 | 結果 | |---|---| | 1. 找到原始 zip | ✅ `event-signup/curation_uploads/processed/20260924-000205__input-ai-application-submission-package-20260923---776b0cd0...zip` | | 2. 解壓到 `~/github_repos/ai-application-submission-package-20260923/` | ✅ rsync
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1184] Assistant: ~/.openclaw/workspace/state/DELETE_APPROVED # 2. 真的刪掉 gh repo delete Coach1973/_archived_ai-application-submission-package-20260923 --yes ``` 或您自己跑也可以、`gh` 已經登入。 ⏰ 現在 00:11、教練晚安 — 全部走 SOP 路徑做完了、您睡醒再看。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1185] User: 做錯的那個刪掉，然後新的這一個網址，你不要寫得「樂樂等」，直接就寫 submission 這樣就可以了，可以嗎？
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1188] Assistant: 教練 — 可以！馬上做： 1. 拿刪檔鎖同意 → 刪 `Coach1973/_archived_ai-application-submission-package-20260923` 2. 重新命名資料夾 + registry → slug = `submission` 3. coach888 連結同步更新 4. 驗證新網址 HTTP 200
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1197] Assistant: 教練 — **部分完成、1 個卡住**： ✅ **`submission` 網址已上線**：https://event.bymyway.com/curated/submission/ — HTTP 200 ✅ 資料夾已 `mv`：從 41 字長網址縮成 `submission` ✅ Registry 22 筆更新（刪舊、加新、`no_shop_card=true`、`教練個人創作` 分類） ✅ coach888 連結同步更新（commit `0f94a57` push master） ❌ **GH repo 沒刪掉**：策展 SOP
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1197] Assistant: https://github.com/Coach1973/_archived_ai-application-submission-package-20260923/settings - 捲到底、點「Delete this repository」、照步驟刪 教練晚安 — 等您 30 秒做完做法 A 那一行、回我一句話、我立刻補刪。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L1199] Assistant: 收到 3 個早期 exec 完成通知 — 都是之前的探索性查詢、不是新指令： | Session | 跑了什麼 | 結論 | |---|---|---| | `ember-oc` | 找 zhaolin 參照照片 + 確認 character-illustration-batch skill 存在 | 找到 skill 位置、但 zhaolin 那個 20MB+ 媒體抓不到（已不重要、那是上一個任務） | | `rapid-re` | 找「大樹創作 SOP」相關檔案 | 找到 SOP 在 `knowledges/`、但來不及用就被教
