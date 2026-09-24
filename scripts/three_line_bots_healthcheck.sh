@@ -99,9 +99,9 @@ for r in "${RESULTS[@]}"; do
   SUMMARY+="$r"$'\n'
 done
 
-curl -sS -X POST "http://127.0.0.1:18789/api/v1/messages/send" \
-  -H "Content-Type: application/json" \
-  -d "{\"channel\":\"telegram\",\"to\":\"6124913915\",\"text\":$(printf '%s' "$SUMMARY" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')}" \
-  > /dev/null 2>&1 || echo "[$TS] curl 推 Telegram 失敗（log 已存於 $LOG_FILE）" >> "$LOG_FILE"
+# 原本打 127.0.0.1:18789/api/v1/messages/send，2026-09-24 查證該端點回 404 不存在，
+# curl 沒加 -f 所以 404 也算成功，自 09-16 上線起每天的回報全部無聲消失。
+/Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SUMMARY" \
+  || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
 
 exit 0

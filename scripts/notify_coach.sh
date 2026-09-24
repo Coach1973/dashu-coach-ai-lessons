@@ -72,16 +72,44 @@ fi
 LABELED_MSG="🤖【賈維斯自動通知】
 ${MSG}"
 
-OUT=$(curl -s --max-time 20 \
-    -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-    -d "chat_id=${COACH_CHAT_ID}" \
-    --data-urlencode "text=${LABELED_MSG}" 2>&1)
-
-if echo "$OUT" | grep -q '"ok":true'; then
-    RC=0
-else
-    RC=1
-fi
+# Telegram 單則上限 4096 字，超過整則退回（2026-09-20 管家週報就這樣沒送到），按行切成多則送
+RC=0
+SENT=0
+OUT=""
+while IFS= read -r -d '' PART; do
+    OUT=$(curl -s --max-time 20 \
+        -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+        -d "chat_id=${COACH_CHAT_ID}" \
+        --data-urlencode "text=${PART}" 2>&1)
+    if echo "$OUT" | grep -q '"ok":true'; then
+        SENT=$((SENT + 1))
+    else
+        RC=1
+        break
+    fi
+done < <(printf '%s' "$LABELED_MSG" | python3 -c '
+import sys
+text, limit = sys.stdin.read(), 3500
+parts, cur = [], ""
+for line in text.split("\n"):
+    while len(line) > limit:
+        if cur:
+            parts.append(cur)
+            cur = ""
+        parts.append(line[:limit])
+        line = line[limit:]
+    if cur and len(cur) + len(line) + 1 > limit:
+        parts.append(cur)
+        cur = line
+    else:
+        cur = line if not cur else cur + "\n" + line
+if cur:
+    parts.append(cur)
+n = len(parts)
+for i, p in enumerate(parts, 1):
+    sys.stdout.write((f"({i}/{n})\n" if n > 1 else "") + p + "\0")
+')
+(( SENT == 0 )) && RC=1
 
 if (( RC == 0 )); then
     echo "[$(ts)] ✅ 已送達教練：$(echo "$MSG" | head -1)" >> "$LOG"

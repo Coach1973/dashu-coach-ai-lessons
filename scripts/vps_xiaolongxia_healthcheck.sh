@@ -92,8 +92,6 @@ cat > "$STATE_FILE" <<JSONEOF
 }
 JSONEOF
 
-# 推 Telegram（透過小龍蝦自家 send 機制；fallback 是寫 inbound 訊息）
-# 健康時靜默；只在 WARN/DOWN 時才打擾教練
 SUMMARY="🩺 VPS 小龍蝦健康檢查 [$STATUS] $TS"$'\n\n'
 for r in "${RESULTS[@]}"; do
   SUMMARY+="$r"$'\n'
@@ -106,12 +104,9 @@ else
   SHORT_MSG="$SUMMARY"
 fi
 
-# 透過 Mac 本機 OpenClaw send 推給教練
-# Mac OpenClaw gateway port 18789
-# 若推送失敗，至少 log 已存
-curl -sS -X POST "http://127.0.0.1:18789/api/v1/messages/send" \
-  -H "Content-Type: application/json" \
-  -d "{\"channel\":\"telegram\",\"to\":\"6124913915\",\"text\":$(printf '%s' "$SHORT_MSG" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')}" \
-  > /dev/null 2>&1 || echo "[$TS] curl 推 Telegram 失敗（log 已存於 $LOG_FILE）" >> "$LOG_FILE"
+# 原本打 127.0.0.1:18789/api/v1/messages/send，2026-09-24 查證該端點回 404 不存在，
+# curl 沒加 -f 所以 404 也算成功、失敗紀錄從沒寫出來，每天的回報全部無聲消失。
+/Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SHORT_MSG" \
+  || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
 
 exit 0
