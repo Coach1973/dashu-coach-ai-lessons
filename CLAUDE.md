@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-25 04:20:01**
+> **最後同步：2026-09-25 04:25:04**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -27,7 +27,7 @@ kong/peipei四月舊版獨立gateway（已改由主gateway bindings服務）＋g
 ①`pre_task_hook.sh`加「🩺故障診斷法」：教練描述故障就注入「先找對照組→推論先用指令推翻→自己修完才報→3~5行」②`stop_rules_master.py`加A2「叫教練自己動手」擋下（今天三句原話實測全擋；「只有您能」＋密碼/連結等正當情況放行）。
 
 ### 5. 🧭 模型分工默契（教練親定）
-重大決策、找根因、設計機制用 Opus；庶務用 Sonnet。規則在`knowledges/模型分工規則_Opus與Sonnet.md`，由`scripts/model_tier_advisor.sh`（UserPromptSubmit）自動評估：在 Sonnet 碰到 Opus 級，先一句話提醒切換、先不動手；在 Opus 碰到庶務，做完提醒可切回。同一對話框只提醒一次。7 種情況實測通過。教練：本期流量（週三13:00重算）到週五04:13已用50%。
+重大決策、找根因、設計機制用 Opus；庶務用 Sonnet。規則在`knowledges/模型分工規則_Opus與Sonnet.md`，由`scripts/model_tier_advisor.sh`（UserPromptSubmit）自動評估：**v2（教練要求看得見）：每則交辦回覆第一行都標「🟢 Sonnet 就能做／🟣 Opus 等級」**；Sonnet 標🟣先建議切換不動手，Sonnet 卡關停下建議切 Opus；Stop hook A3 沒標示就擋。8 種情況實測通過。教練：本期流量（週三13:00重算）到週五04:13已用50%。
 
 ### 📋 下一場開工先做
 沒有要問教練的事。`sfltool dumpbtm`要管理員密碼會跳視窗，**不要再跑**。
