@@ -1,0 +1,12 @@
+{
+ "version": "2026.9.4",
+ "root": "/Users/bymyway/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw",
+ "since": "2026/9/16（試金石案例73事故時被動換上；2026-09-24軍師補記基準）",
+ "history": [
+  {
+   "version": "2026.9.4",
+   "detectedAt": "2026/9/24 14:25:00",
+   "previous": "2026.6.x（確切版本未記錄）"
+  }
+ ]
+}

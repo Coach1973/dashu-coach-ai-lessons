@@ -168,6 +168,31 @@ def check_cron_jobs():
         ok("小龍蝦排程任務")
 
 
+VERSION_SEEN = WS / "state" / "openclaw_version_seen.json"
+
+
+def check_versions(vps_state, prev_state):
+    """2026-09-24教練：系統升級了我卻今天才知道。Mac的版本變動由 version-change-notify hook 在
+    主程式啟動當下通知；這裡補兩種hook抓不到的：程式檔已被換掉但主程式還沒重啟（下次重啟就變版），
+    以及VPS版本跟前一天不同。"""
+    parts, vps_version = [], vps_state.get("app_version") or ""
+    try:
+        seen = json.loads(VERSION_SEEN.read_text())
+        on_disk = json.loads((Path(seen["root"]) / "package.json").read_text())["version"]
+        parts.append(f"Mac小龍蝦 {seen['version']}")
+        if on_disk != seen["version"]:
+            bad("小龍蝦版本", f"程式檔已被換成 {on_disk}，但主程式還在跑 {seen['version']}，下次重啟就會變新版", "🟡")
+    except Exception as e:
+        parts.append("Mac小龍蝦 讀不到")
+        bad("小龍蝦版本", f"讀不到版本紀錄（{type(e).__name__}）", "🟡")
+    if vps_version:
+        parts.append(f"VPS小龍蝦 {vps_version}")
+        prev = prev_state.get("vps_version")
+        if prev and prev != vps_version:
+            bad("VPS小龍蝦版本", f"版本變了：{prev} → {vps_version}，如果不是教練安排的升級請叫軍師查", "🟡")
+    return "🔖 版本：" + "｜".join(parts), vps_version
+
+
 def line_usage(agent):
     db = sqlite3.connect(f"file:{HOME}/.openclaw/agents/{agent}/agent/openclaw-agent.sqlite?mode=ro", uri=True)
     rows = db.execute(
@@ -206,6 +231,11 @@ def main():
     check_state_file(LINE_STATE, "LINE三個小幫手")
     vps = check_state_file(VPS_STATE, "VPS小龍蝦")
     try:
+        prev_state = json.loads(STATE_OUT.read_text())
+    except Exception:
+        prev_state = {}
+    version_line, vps_version = check_versions(vps, prev_state)
+    try:
         check_public_urls()
         check_cron_jobs()
     except Exception as e:
@@ -229,14 +259,14 @@ def main():
     if problems:
         lines.append("")
     lines.append("✅ " + "、".join(oks))
-    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "",
+    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, "",
               "（每天08:10送出；08:30前沒收到這則＝系統出事，直接叫軍師）"]
     msg = "\n".join(lines)
 
     STATE_OUT.write_text(json.dumps({
         "lastRunAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "problems": [{"level": l, "name": n, "why": w} for l, n, w in problems],
-        "oks": oks, "usage": usage,
+        "oks": oks, "usage": usage, "vps_version": vps_version,
     }, ensure_ascii=False, indent=1))
 
     if dry:

@@ -62,6 +62,8 @@ if [ "$STATUS" = "OK" ]; then
   USERS_24H=$(printf '%s\n' "$SENDERS_24H" | grep . | sort -u | grep -c .)
   USERS_7D=$(printf '%s\n' "$SENDERS_7D" | grep . | sort -u | grep -c .)
   RESULTS+=("ℹ️ 使用量：近24小時${USERS_24H}人（${MSGS_24H}則），近7天${USERS_7D}人")
+  # 正式服務跑的是映像檔內 /app 這份（容器裡另有一份 openclaw CLI 版本號不同，不能拿來當準）
+  APP_VERSION=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker exec openclaw sh -c 'grep -m1 \"\\\"version\\\"\" /app/package.json'" 2>/dev/null | grep -oE '[0-9]{4}\.[0-9]+\.[0-9]+[^"]*' | head -1)
 
   # 5. 確認模型載入成功（找 'agent model: minimax')
   MODEL_OK=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 24h 2>&1 | grep 'agent model: minimax' | tail -1" 2>&1)
@@ -91,6 +93,7 @@ cat > "$STATE_FILE" <<JSONEOF
   "users_24h": ${USERS_24H:-0},
   "msgs_24h": ${MSGS_24H:-0},
   "users_7d": ${USERS_7D:-0},
+  "app_version": "${APP_VERSION:-}",
   "results": [$(printf '"%s",' "${RESULTS[@]}" | sed 's/,$//')]
 }
 JSONEOF
