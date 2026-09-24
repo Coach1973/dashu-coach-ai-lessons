@@ -63,7 +63,7 @@ def main():
         return
 
     flagged.sort(reverse=True)
-    print("⚠️ 以下🔒/🔴待辦項目超過{}天未覆核，開工時應主動向教練口頭確認現況是否仍成立，不可直接當成當下事實回報：".format(STALE_DAYS))
+    print("⚠️ 以下🔒/🔴待辦項目超過{}天未覆核：AI自己查證現況（git log／log檔／實際狀態），不准拿去問教練；查不出來就移到「🤫等教練自己提起」區：".format(STALE_DAYS))
     for age_days, newest, task_name in flagged:
         print(f"  - （最後提及 {newest}，{age_days} 天前）{task_name}")
 

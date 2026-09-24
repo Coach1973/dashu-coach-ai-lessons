@@ -17,12 +17,13 @@ trap 'rm -f "$TMP_ROWS"' EXIT
 mkdir -p "$WS/state"
 [ -f "$STATE_FILE" ] || echo '{}' > "$STATE_FILE"
 
-# 只取「現在真正待辦」表格區塊：從表頭列開始，到下一個 ## 標題為止
+# 只取「🙋要教練決定」區的表格列（2026-09-24根源改版）：AI自己的工作清單跟🤫等教練提起區不推給教練
 awk '
-  /^\| 優先/ { intable=1; next }
-  /^\|---/ { next }
-  intable && /^#/ { exit }
-  intable && /^\|/ { print }
+  /^### 🙋/ { insec=1; next }
+  insec && /^#/ { exit }
+  insec && /^\| 優先/ { next }
+  insec && /^\|---/ { next }
+  insec && /^\|/ { print }
 ' "$HANDOFF" > "$TMP_ROWS"
 
 python3 "$WS/scripts/todo_staleness_check.py" "$TMP_ROWS" "$STATE_FILE"
