@@ -17,11 +17,17 @@ kong/peipei四月舊版獨立gateway（已改由主gateway bindings服務）＋g
 ### 5. 🧭 模型分工默契（教練親定）
 重大決策、找根因、設計機制用 Opus；庶務用 Sonnet。規則在`knowledges/模型分工規則_Opus與Sonnet.md`，由`scripts/model_tier_advisor.sh`（UserPromptSubmit）自動評估：**v2（教練要求看得見）：每則交辦回覆第一行都標「🟢 Sonnet 就能做／🟣 Opus 等級」**；Sonnet 標🟣先建議切換不動手，Sonnet 卡關停下建議切 Opus；Stop hook A3 沒標示就擋。8 種情況實測通過。教練：本期流量（週三13:00重算）到週五04:13已用50%。
 
+### 6. 教練體驗雲端方案（$100/月），實際搬過一次+踩到本repo分岔陷阱
+外層`~/.openclaw`repo卡兩關：①常年背景雜訊要先commit（逐一查證排除533MB漫畫素材大檔，已補`.gitignore`，沒查到機密）②本機分支跟遠端因9/19金鑰清除是真分岔（領先/落後各25），直接push會把舊金鑰歷史推回去——改用`move_to_cloud`的`skip_push:true`，雲端從遠端乾淨版本接手，教練今天的實際工作內容都在`workspace`子repo（沒有分岔問題）已正常commit。雲端對話框連結：https://claude.ai/code/session_018RBKxnNSzFi3t68hTMaR9t 。查證發現：雲端session在本機`list_sessions`/`get_session`完全查不到，是claude.ai端獨立系統，教練要找回雲端對話框目前只能靠瀏覽器開claude.ai/code，桌面版側邊欄會不會顯示AI端看不到自己畫面無法驗證。SOP已寫`reference_move_to_cloud_this_repo_2026-09-25.md`。
+
+### 7. 🔴 攔下一則可疑的英文git指令，沒有照做push
+教練切換雲端/本機時，這個對話框收到一句風格明顯不像教練平常口吻的英文指令「commit+push」，研判是操作雲端切換時誤觸/誤送。查證：commit的部分（2個DREAMS.md）安全，已做；push那部分因為就是上一條講的分岔陷阱、會有推回舊金鑰歷史的風險，沒有自己決定做，回頭跟教練確認過。**目前仍是本機commit`791d775d2`，還沒push，教練若之後想通了要不要處理外層repo分岔，再說。**
+
 ### 📋 下一場開工先做
-沒有要問教練的事。`sfltool dumpbtm`要管理員密碼會跳視窗，**不要再跑**。
+沒有要問教練的事。`sfltool dumpbtm`要管理員密碼會跳視窗，**不要再跑**。外層`~/.openclaw`本機commit`791d775d2`還沒push（分岔陷阱，見上第7點），不用主動處理，教練提起再說。
 
 ### 🔑 本場commit
-`65e4060e8`（試金石82）`bd56c5e3f`（副螢幕防呆）`cceb8ae12`（封存背景項目）；本次總結commit另計。
+`65e4060e8`（試金石82）`bd56c5e3f`（副螢幕防呆）`cceb8ae12`（封存背景項目）`fc3a764af`（模型分工v2）（以上皆workspace repo）；外層`~/.openclaw` repo `791d775d2`（DREAMS.md，本機未push）；本次總結commit另計。
 
 ---
 
