@@ -5,7 +5,7 @@ description: Discipline for multi-step engineering/coding tasks — state assump
 
 # 工程驗證紀律
 
-來源：研究 mattpocock/skills（`diagnosing-bugs`/`tdd`/`code-review` 的核心精神）＋執行細則 E10/E11/E12（Karpathy 原則）＋試金石案例51/52/53與coach888拖拉排序bug的共同根因。
+來源：研究 mattpocock/skills（`diagnosing-bugs`/`tdd`/`code-review` 的核心精神）＋執行細則 N2/N4/N7（原E13~E15，Karpathy 原則）＋試金石案例51/52/53與coach888拖拉排序bug的共同根因。
 
 四個案例根因完全相同：**用簡化/間接的驗證方法就自信回報完成，沒有走到真實使用者路徑或真相源。** 這個skill就是為了堵住這個洞。
 

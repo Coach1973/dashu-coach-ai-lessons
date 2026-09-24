@@ -132,4 +132,4 @@ function Safe-Remove {
 }
 
 Write-Host "🗑️🔒 delete_guard.ps1 載入完成。所有刪除請改用 Safe-Remove。" -ForegroundColor Green
-Write-Host "    禁止直接呼叫 Remove-Item -Recurse -Force（軍師鐵律 E11）。" -ForegroundColor Yellow
+Write-Host "    禁止直接呼叫 Remove-Item -Recurse -Force（執行細則 N6）。" -ForegroundColor Yellow
