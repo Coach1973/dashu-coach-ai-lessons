@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""小龍蝦升級評估週報（2026-09-24 教練交辦）。
+"""小龍蝦升級評估月報（2026-09-24 教練交辦）。
 
 教練：「升級肯定都會有些bug，是不是要定義每隔多少時間去偵測版本、評估有沒有必要升級？
 充足收集資訊、確認有沒有災情。」
 
 官方發新版不會推播給我們（npm/GitHub 對別人的套件都沒有可訂閱的事件），只能定期查；
-一週一次（週日09:30，launchd ai.openclaw.upgrade-watch）。只收集事實＋套固定規則給建議，
+每月一次（每月1日09:30，launchd ai.openclaw.upgrade-watch；原訂每週，教練當天改為每月：穩定優先不追新版）。
+只收集事實＋套固定規則給建議，
 不自動升級——升不升由教練決定。
 
 規則（任一成立就「繼續觀望」）：新版發布未滿7天／發布說明自己警告先別更新／
@@ -93,20 +94,20 @@ def main():
         issues = p0_update_issues()
         blocker = blocker_open()
     except Exception as e:  # noqa: BLE001
-        msg = f"🔖 小龍蝦升級評估週報：這週查不到官方資料（{type(e).__name__}），下週再查"
+        msg = f"🔖 小龍蝦升級評估月報：這次查不到官方資料（{type(e).__name__}），請叫軍師手動查一次"
         print(msg) if dry else subprocess.run([str(NOTIFY), msg])
         return
     mac = json.loads(SEEN.read_text()).get("version") if SEEN.exists() else None
     vps = json.loads(VPS_STATE.read_text()).get("app_version") if VPS_STATE.exists() else None
     lines = [
-        f"🔖 小龍蝦升級評估週報 {datetime.now():%m/%d}（台灣時間）",
+        f"🔖 小龍蝦升級評估月報 {datetime.now():%m/%d}（台灣時間）",
         "",
         assess(mac, tags.get("latest"), "Mac小龍蝦（最新版這條線）", issues, blocker),
         assess(vps, tags.get("extended-stable"), "VPS小龍蝦（長期穩定版這條線）", issues, False, lts=True),
     ]
     if issues:
         lines += ["", "近7天P0升級/當機回報（官方GitHub）："] + [f"・#{i['number']} {i['title'][:60]}" for i in issues[:5]]
-    lines += ["", "（每週日09:30自動評估，不會自動升級；要升請跟軍師說）"]
+    lines += ["", "（每月1日09:30自動評估，不會自動升級；要升請跟軍師說）"]
     msg = "\n".join(lines)
     OUT.write_text(json.dumps({
         "checkedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "dist_tags": tags,
