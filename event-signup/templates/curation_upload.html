@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>策展上傳｜大樹教練活動系統</title>
+<title>作品上傳｜大樹教練活動系統</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root { --gold:#c8a96e; --dark:#0a0a0a; --dark2:#141414; --line:rgba(200,169,110,.3); --green:#4caf7d; }
@@ -30,6 +30,12 @@
     background:#0a0a0a; color:#fff; font-family:'SF Mono', Menlo, monospace;
   }
   .slug-hint { margin-top:6px; font-size:12px; color:rgba(255,255,255,.45); }
+  .kinds { display:flex; flex-direction:column; gap:8px; margin:8px 0 16px; }
+  label.kind { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:1px solid var(--line);
+    border-radius:10px; background:#0a0a0a; cursor:pointer; font-size:15px; line-height:1.5; }
+  label.kind input { margin-top:5px; }
+  label.kind small { color:rgba(255,255,255,.5); font-size:12px; }
+  label.kind:has(input:checked) { border-color:var(--gold); }
   button {
     width:100%; margin-top:20px; padding:14px; font-size:17px; font-weight:900; border:none;
     border-radius:8px; background:var(--gold); color:var(--dark); cursor:pointer;
@@ -64,10 +70,17 @@
 </head>
 <body>
   <div class="card">
-    <h1>策展<span>上傳</span></h1>
-    <p class="sub">丟一個做好的網站zip檔案，系統會自動上架到 event.bymyway.com 並收錄進大台南策展中心</p>
+    <h1>作品<span>上傳</span></h1>
+    <p class="sub">丟一個做好的網站zip檔案，系統會自動上架到 event.bymyway.com</p>
     <form method="POST" enctype="multipart/form-data">
       {% if key %}<input type="hidden" name="key" value="{{ key }}">{% endif %}
+      <label class="slug-label">這是哪一種？（必選）</label>
+      <div class="kinds">
+        <label class="kind"><input type="radio" name="kind" value="shop" required {% if kind == 'shop' %}checked{% endif %}>
+          <span><b>🏪 店家／合作夥伴網站</b><br><small>收錄進大台南策展中心店家名冊</small></span></label>
+        <label class="kind"><input type="radio" name="kind" value="creation" {% if kind == 'creation' %}checked{% endif %}>
+          <span><b>🎨 大樹教練個人作品</b><br><small>放進大樹作品一覽「最新作品」，不進商圈</small></span></label>
+      </div>
       <div class="drop">📦 選擇 .zip 或 .tar.gz 檔案</div>
       <input type="file" name="package" accept=".zip,.tar.gz,.tgz" required>
       <label class="slug-label">網址要用哪個短名稱？（送出前先想好，之後就不用再改）</label>
@@ -77,7 +90,7 @@
       {% if uploaded %}<div class="success">✅ 已收到「{{ uploaded }}」，系統正在背景自動處理，通常10~20秒完成。</div>{% endif %}
       <button type="submit">上傳</button>
     </form>
-    <p class="hint">上傳後不用等這個頁面——系統會自動解壓縮、建立GitHub網站、上架到event.bymyway.com、收錄進大台南策展中心店家名冊。想下架已上架的店家，請到<a href="/curation/admin" style="color:var(--gold)">後台管理頁</a>。</p>
+    <p class="hint">上傳後不用等這個頁面——系統會自動解壓縮、上架到event.bymyway.com。店家網站會收錄進大台南策展中心店家名冊；大樹作品會原封不動上架並放進大樹作品一覽。完成後「活動報名即時通知」群組會收到網址。想下架已上架的網站，請到<a href="/curation/admin" style="color:var(--gold)">後台管理頁</a>。</p>
     {% if uploaded %}
     <div class="line-cta">
       想第一時間知道網站什麼時候做好嗎？<br>加入「佩佩活動策展諮詢顧問」LINE，做好會主動通知您！

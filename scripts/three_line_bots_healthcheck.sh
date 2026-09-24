@@ -92,7 +92,8 @@ cat > "$STATE_FILE" <<JSONEOF
 }
 JSONEOF
 
-# 教練2026-09-16親令：每天都要回報，不論健康與否（跟VPS健檢的「OK靜默」不同，這是新規則）
+# 教練2026-09-16親令：每天都要回報，不論健康與否。2026-09-24起平安的每日回報併入
+# daily_team_rollcall.py（08:10全隊點名，含這支的結果），這裡只在異常時立刻通知，避免早上連收三則。
 SUMMARY="🩺 三個LINE小幫手健康檢查 [$STATUS] $TS"$'\n'
 SUMMARY+="（大台南南區小幫手／教練都在想什麼／龍蝦小助教）"$'\n\n'
 for r in "${RESULTS[@]}"; do
@@ -101,7 +102,9 @@ done
 
 # 原本打 127.0.0.1:18789/api/v1/messages/send，2026-09-24 查證該端點回 404 不存在，
 # curl 沒加 -f 所以 404 也算成功，自 09-16 上線起每天的回報全部無聲消失。
-/Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SUMMARY" \
-  || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
+if [ "$STATUS" != "OK" ]; then
+  /Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SUMMARY" \
+    || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
+fi
 
 exit 0

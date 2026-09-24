@@ -7,6 +7,8 @@ metadata:
 
 # 🎯 策展SOP（2026-09-06 教練口述，軍師修正定稿）
 
+> 🔴 **2026-09-24 起上傳網址 `kind` 必填**：`kind=shop`＝本篇店家流程；`kind=creation`＝大樹作品（原封不動上架＋自動進coach888「最新作品」第一筆＋通知群組，不建repo、不插商圈卡）。沒填或亂填直接HTTP 400，系統不猜。詳見 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md` 開頭段、[[project_team_publish_and_daily_report_goal_2026-09-24]]。
+
 > 跟另外三套既有SOP的關係（四者目標站不同，不可混用）：
 > - **網頁推SOP**（[[feedback_web_push_sop]]）：推送到GitHub測試站 或 Netlify正式站，教練說「網頁推/推」才會觸發
 > - **自動站**（[[feedback_coach_deploy_vocabulary]]）：部署到bymyway.com（WP iframe抓GitHub repo新版）

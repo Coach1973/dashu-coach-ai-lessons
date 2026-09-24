@@ -14,6 +14,7 @@ FB貼文宣布 → Telegram通知教練（2026-09-06教練追加：全自動，�
 刻意不做的事（留給軍師下次確認時人工潤飾，見reference_curation_sop_2026-09-06.md）：
 - 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值，FB文案也是自動套模板）
 """
+import html
 import json
 import os
 import re
@@ -40,6 +41,13 @@ TAINAN_SHANGQUAN_REPO = GITHUB_REPOS_DIR / "tainan-shangquan"
 LOG_PATH = WORKSPACE / "distill" / "curation_process.log"
 FB_PAGE_TOKENS_PATH = WORKSPACE / "fb_automation" / "page_tokens_2026-09-01.json"
 FB_PAGE_NAME = "大台南策展中心"
+
+COACH888_REPO = GITHUB_REPOS_DIR / "coach888"
+COACH888_STATE_API = "https://event.bymyway.com/api/coach888/state"
+COACH888_SECTION = "zuixinzuopin"  # 「最新作品」分類，2026-09-24教練新建，專放教練個人創作
+# Cloudflare會擋Python預設UA(回403)；Origin比照coach888頁面本身
+COACH888_HEADERS = {"User-Agent": "Mozilla/5.0 (curation-bot)", "Origin": "https://coach1973.github.io",
+                    "Content-Type": "application/json"}
 
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "-5349981085"  # 「活動報名即時通知」群組(教練+佩佩老師共見)，2026-09-06教練交辦：策展上傳完成也要跟活動報名一樣即時通知這裡，不只發教練個人對話
@@ -161,10 +169,16 @@ def read_custom_slug(pkg_path: Path) -> str:
     return ""
 
 
+def read_kind(pkg_path: Path) -> str:
+    """shop=店家策展、creation=大樹作品。2026-09-24起上傳頁強制選類型，沒有.kind就不猜。"""
+    sidecar = pkg_path.parent / f"{pkg_path.name}.kind"
+    return sidecar.read_text(encoding="utf-8").strip() if sidecar.is_file() else ""
+
+
 def cleanup_sidecar_slug(pkg_path: Path) -> None:
-    sidecar = _sidecar_slug_path(pkg_path)
-    if sidecar.is_file():
-        sidecar.unlink()
+    for sidecar in (_sidecar_slug_path(pkg_path), pkg_path.parent / f"{pkg_path.name}.kind"):
+        if sidecar.is_file():
+            sidecar.unlink()
 
 
 def unique_slug(base: str, existing: set) -> str:
@@ -556,12 +570,133 @@ def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url
     subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
 
 
+def insert_coach888_static_item(html_text: str, url: str, title: str) -> str:
+    """把新項目插在「最新作品」grid開頭標籤正後方，並重編序號/項目數。
+
+    錨點用 grid 開頭標籤本身，不用「第一個 item」——這個 repo 混用新舊兩種 item 模板，
+    09-24赫米斯用「第一個item」定位，插進舊模板項目的<a>裡把結構切壞。"""
+    if f'data-url="{url}"' in html_text:
+        return html_text
+    anchor = f'<div class="grid" data-section="{COACH888_SECTION}">'
+    start = html_text.index(anchor)
+    depth, end = 0, None
+    for m in re.finditer(r"<div\b|</div>", html_text[start:]):
+        depth += 1 if m.group() == "<div" else -1
+        if depth == 0:
+            end = start + m.end()
+            break
+    if end is None:
+        raise RuntimeError("coach888 最新作品分類的<div>沒有正確結尾，不敢動")
+    e = html.escape
+    item = (f'<div class="item" data-url="{e(url)}"><span class="drag-handle">⠿</span><div class="num">0</div>'
+            f'<a class="name" href="{e(url)}" target="_blank">{e(title)}</a>'
+            f'<div class="url">{e(url.split("://", 1)[-1].rstrip("/"))}</div>'
+            '<div class="badge public" contenteditable="true" spellcheck="false">公開</div>'
+            '<span class="item-del" title="刪除這個項目">✕</span></div>')
+    grid = anchor + item + html_text[start + len(anchor):end]
+    counter = iter(range(1, 100000))
+    grid = re.sub(r'<div class="num">\d+</div>', lambda _: f'<div class="num">{next(counter)}</div>', grid)
+    for open_tag, close_tag in (("<div", "</div>"), ("<a ", "</a>")):
+        if grid.count(open_tag) != grid.count(close_tag):
+            raise RuntimeError(f"插入後 {open_tag}/{close_tag} 數量不平衡，已中止避免切壞coach888")
+    out = html_text[:start] + grid + html_text[end:]
+    n_items = grid.count('<div class="item"')
+    return re.sub(
+        rf'(<div class="section-title" data-section="{COACH888_SECTION}">[^\n]*?<span class="count">)\d+(項</span>)',
+        rf"\g<1>{n_items}\g<2>", out, count=1,
+    )
+
+
+def register_coach888(url: str, title: str) -> str:
+    """登記進coach888「最新作品」第一筆。伺服器同步狀態是教練實際看到的內容(必成功)，
+    git靜態HTML只是沒JS時的備援(失敗不影響，回報註記即可)。"""
+    def get_state() -> dict:
+        req = urllib.request.Request(COACH888_STATE_API, headers=COACH888_HEADERS)
+        return json.loads(urllib.request.urlopen(req, timeout=15).read())
+
+    state = get_state()
+    layout = json.loads(state.get("coach888_layout") or "{}")
+    items = json.loads(state.get("coach888_items") or "{}")
+    for urls in layout.values():
+        if url in urls:
+            urls.remove(url)
+    layout.setdefault(COACH888_SECTION, []).insert(0, url)
+    items[url] = {"name": title, "badge": "公開"}
+    body = json.dumps({
+        "coach888_layout": json.dumps(layout, ensure_ascii=False),
+        "coach888_items": json.dumps(items, ensure_ascii=False),
+    }).encode("utf-8")
+    urllib.request.urlopen(
+        urllib.request.Request(COACH888_STATE_API, data=body, method="POST", headers=COACH888_HEADERS), timeout=15,
+    )
+    if json.loads(get_state()["coach888_layout"]).get(COACH888_SECTION, [None])[0] != url:
+        raise RuntimeError("coach888伺服器狀態寫入後核對不符")
+
+    try:
+        token = get_github_token()
+        remote = f"https://Coach1973:{token}@github.com/Coach1973/coach888.git"
+        git = ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com", "-C", str(COACH888_REPO)]
+        subprocess.run(git + ["pull", "-q", "--rebase", remote, "master"], check=True, env=_ENV, timeout=60)
+        index = COACH888_REPO / "index.html"
+        index.write_text(insert_coach888_static_item(index.read_text(encoding="utf-8"), url, title), encoding="utf-8")
+        subprocess.run(git + ["add", "index.html"], check=True, env=_ENV)
+        subprocess.run(git + ["commit", "-q", "-m", f"feat: 大樹作品自動上架登記《{title}》"], check=True, env=_ENV)
+        subprocess.run(git + ["push", "-q", remote, "HEAD:master"], check=True, env=_ENV, timeout=60)
+        return ""
+    except Exception as e:  # noqa: BLE001
+        log(f"coach888靜態HTML備援更新失敗(伺服器狀態已登記，教練看得到): {e!r}")
+        return "（靜態備援版更新失敗，不影響教練看到的內容）"
+
+
+def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set) -> None:
+    """大樹作品：原封不動上架event.bymyway.com，不建GitHub repo、不插商圈卡、不發FB，
+    登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
+    slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
+    shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
+    event_url = f"https://event.bymyway.com/curated/{slug}/"
+    registry["sites"].append({
+        "slug": slug,
+        "title": title,
+        "description": desc,
+        "category": "教練個人創作",
+        "event_url": event_url,
+        "github_pages_url": "",
+        "uploaded_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "status": "live",
+        "source_package": pkg_path.name,
+        "no_shop_card": True,
+    })
+    save_registry(registry)
+
+    try:
+        req = urllib.request.Request(event_url, headers={"User-Agent": "Mozilla/5.0 (curation-bot)"})
+        live_note = "已確認打得開" if urllib.request.urlopen(req, timeout=15).status == 200 else "⚠️網址回應異常"
+    except Exception as e:  # noqa: BLE001
+        live_note = f"⚠️網址暫時打不開：{e}"
+    try:
+        c888_note = "已放進大樹作品一覽「最新作品」第一筆" + register_coach888(event_url, title)
+    except Exception as e:  # noqa: BLE001
+        log(f"coach888登記失敗: {e!r}")
+        c888_note = f"⚠️大樹作品一覽登記失敗，請軍師補登：{e}"
+    notify(
+        "🎨【大樹作品・已自動上架】\n"
+        f"標題：{title}\n"
+        f"網址：{event_url}（{live_note}）\n"
+        f"{c888_note}\n"
+        "📌 教練個人創作，不進大台南商圈店家名冊"
+    )
+    log(f"✅ 大樹作品完成：{pkg_path.name} → {slug}")
+
+
 def process_one(pkg_path: Path) -> None:
     log(f"開始處理：{pkg_path.name}")
     registry = load_registry()
     existing_slugs = {s["slug"] for s in registry["sites"]}
     tmp_extract = Path("/tmp") / f"curation_{pkg_path.stem}_{os.getpid()}"
+    kind = read_kind(pkg_path)
     try:
+        if kind not in ("shop", "creation"):
+            raise RuntimeError("沒有標明是店家網站還是大樹作品，系統不猜，請到上傳頁重新上傳並選擇類型")
         extract_package(pkg_path, tmp_extract)
         index_file = find_index_html(tmp_extract)
         if not index_file:
@@ -575,6 +710,15 @@ def process_one(pkg_path: Path) -> None:
         title, desc = extract_meta(html_text)
         if not title:
             title = re.sub(r"^\d{8}-\d{6}__", "", pkg_path.stem)
+
+        if kind == "creation":
+            publish_creation(pkg_path, tmp_extract, title, desc, registry, existing_slugs)
+            shutil.rmtree(tmp_extract, ignore_errors=True)
+            PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
+            cleanup_sidecar_slug(pkg_path)
+            return
+
         category = guess_category(f"{title} {desc}")
         address = extract_address(html_text)
 
@@ -682,7 +826,7 @@ def main() -> None:
     PROCESSING_DIR.mkdir(parents=True, exist_ok=True)
     pending = [
         p for p in INCOMING_DIR.iterdir()
-        if p.is_file() and not p.name.startswith(".") and not p.name.endswith(".slug")
+        if p.is_file() and not p.name.startswith(".") and not p.name.endswith((".slug", ".kind"))
     ]
     if not pending:
         return
@@ -695,9 +839,10 @@ def main() -> None:
             log(f"搬移到processing/失敗，跳過本輪: {pkg.name}: {e!r}")
             continue
         # 自訂短網址旁路檔案(上傳頁面填了才會有)跟著一起搬，process_one()才找得到
-        sidecar_src = INCOMING_DIR / f"{pkg.name}.slug"
-        if sidecar_src.is_file():
-            shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
+        for ext in (".slug", ".kind"):
+            sidecar_src = INCOMING_DIR / f"{pkg.name}{ext}"
+            if sidecar_src.is_file():
+                shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
         process_one(staged)
 
 

@@ -1629,6 +1629,7 @@ def api_tainan_shangquan_join():
 # 的資料夾都能被存取——避免意外曝光bni-chapters等含個資/密碼的內部repo。
 CURATED_REPOS_DIR = Path("/Users/bymyway/github_repos")
 CURATION_UPLOAD_DIR = Path(__file__).resolve().parent / "curation_uploads"
+CURATION_KINDS = {"shop": "店家策展", "creation": "大樹作品"}
 CURATED_REGISTRY_PATH = Path(__file__).resolve().parent / "curated_sites_registry.json"
 _CURATED_SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,60}$")
 
@@ -1787,9 +1788,14 @@ def curation_upload():
     incoming.mkdir(parents=True, exist_ok=True)
 
     if request.method == "POST":
+        # 2026-09-24團隊體檢：類型必須明講，不再預設走店家流程——09-23~24小龍蝦/赫米斯
+        # 連兩次把大樹作品當店家上架，根因就是「沒講就走最熟的那條路」。
+        kind = (request.values.get("kind") or "").strip()
+        if kind not in CURATION_KINDS:
+            return render_template("curation_upload.html", error="請先選擇類型：店家／合作夥伴網站，還是大樹教練個人作品（API呼叫請帶 kind=shop 或 kind=creation）", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
         f = request.files.get("package")
         if not f or not f.filename:
-            return render_template("curation_upload.html", error="請選擇一個檔案", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return render_template("curation_upload.html", error="請選擇一個檔案", key=supplied_key, kind=kind, sites=_load_curated_registry().get("sites", [])[::-1]), 400
         original = f.filename
         ext = "".join(Path(original).suffixes)[-20:] or ".zip"
         if not re.search(r"\.(zip|tar\.gz|tgz)$", original, re.IGNORECASE):
@@ -1804,13 +1810,15 @@ def curation_upload():
         ts = datetime.now().strftime("%Y%m%d-%H%M%S")
         safe_name = re.sub(r"[^\w.\-一-鿿]", "_", Path(original).stem)[:80]
         dest = incoming / f"{ts}__{safe_name}{ext}"
-        f.save(dest)
+        # .slug/.kind 旁路檔要在壓縮檔本體之前寫好：WatchPaths一看到壓縮檔就會觸發處理
         (incoming / f"{dest.name}.slug").write_text(custom_slug, encoding="utf-8")
+        (incoming / f"{dest.name}.kind").write_text(kind, encoding="utf-8")
+        f.save(dest)
         _notify_xiaolongxia(
-            f"📦【策展SOP・收到新檔案】\n檔案：{original}\n系統正在背景自動處理，完成上架後會再通知一次。",
+            f"📦【{CURATION_KINDS[kind]}・收到新檔案】\n檔案：{original}\n系統正在背景自動處理，完成上架後會再通知一次。",
             chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID,
         )
-        return render_template("curation_upload.html", uploaded=original, key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
+        return render_template("curation_upload.html", uploaded=original, kind=kind, key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
 
     return render_template("curation_upload.html", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1])
 

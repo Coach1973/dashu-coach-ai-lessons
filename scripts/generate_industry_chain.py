@@ -8,9 +8,12 @@
 """
 import argparse
 import base64
+import hashlib
 import json
+import os
 import re
 import sys
+import time
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -18,6 +21,28 @@ from pathlib import Path
 WORKSPACE = Path(__file__).resolve().parent.parent
 CRED_FILE = WORKSPACE / "路徑大全_憑證層.md"
 LK888_API_URL = "https://api.lk888.ai/v1/images/generations"
+# 2026-09-19兩個AI各自跑同一個產業鏈SOP，教練收到6張圖、雙倍扣lk888點數。
+# 同一主題送同一個對話，10分鐘內只做一次。
+DEDUP_DIR = Path("/tmp/industry_chain_dedup")
+DEDUP_SECONDS = 600
+
+
+def dedup_claim(args):
+    """回傳 (lock路徑, None) 表示可以做；(None, (主題, 幾秒前)) 表示重複要跳過。"""
+    topic = (args.topic or re.sub(r"(的)?產業(服務)?[鏈鍊]圖?$", "", (args.caption or "").strip()).strip() or args.prompt)
+    raw = f"{args.telegram_chat_id or '-'}|{re.sub(r'\s+', '', topic)}"
+    lock = DEDUP_DIR / f"{hashlib.sha1(raw.encode('utf-8')).hexdigest()[:16]}.lock"
+    DEDUP_DIR.mkdir(parents=True, exist_ok=True)
+    if lock.exists():
+        age = time.time() - lock.stat().st_mtime
+        if age < DEDUP_SECONDS:
+            return None, (topic, age)
+        lock.unlink(missing_ok=True)
+    try:
+        os.close(os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY))
+    except FileExistsError:
+        return None, (topic, 0)
+    return lock, None
 
 
 def get_api_key():
@@ -84,9 +109,22 @@ def main():
     parser.add_argument("--caption", default="")
     parser.add_argument("--openclaw-config", default=None, help="非預設環境（如小二 ~/.openclaw-test2/openclaw.json）時指定")
     parser.add_argument("--telegram-account", default="bot_main", help="要用哪個bot帳號送出，例如 bot_test2")
+    parser.add_argument("--topic", default=None, help="防重複用的主題；沒給就從--caption推")
+    parser.add_argument("--force", action="store_true", help="略過10分鐘防重複")
     args = parser.parse_args()
 
-    image_bytes = generate_image(args.prompt, args.size)
+    lock = None
+    if not args.force:
+        lock, dup = dedup_claim(args)
+        if dup:
+            print(f"⏭️ 「{dup[0]}」{int(dup[1])}秒前才生成過同一張，10分鐘內不重複扣點，這次跳過（真的要重做請加 --force）")
+            return
+    try:
+        image_bytes = generate_image(args.prompt, args.size)
+    except Exception:
+        if lock:
+            lock.unlink(missing_ok=True)  # 生圖失敗要讓下一次能重試，不能被鎖10分鐘
+        raise
 
     if args.out:
         out_path = Path(args.out)

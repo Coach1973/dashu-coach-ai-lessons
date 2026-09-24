@@ -6,6 +6,21 @@
 >
 > ⚠️ **2026-09-23 23:55~00:02（台灣時間）復發記錄**：教練當晚兩度明講「走大樹創作SOP」（送 zhaolin 人像照＋送 ai-application-submission-package zip），小龍蝦仍然跑了店家策展SOP、插了大台南商圈卡片，教練事後手動刪除。根因是這份SOP檔名跟教練嘴巴講的詞完全對不上、也沒有任何路由表指到這裡，AI 在壓力下預設用「最熟的那條路」（已用過很多次的店家策展SOP）。修復：已在 `路徑大全_憑證層.md` 的策展金鑰前+`AGENTS.md`按需讀取路由都補上別名警告，並在本檔加上這段別名清單。
 
+## ✅ 2026-09-24 起的做法：一步到位，全自動（下方手動7步驟改為備援／歷史參考）
+
+教練以Opus 5.5做團隊體檢後拍板執行：大樹作品跟店家策展共用同一個上傳網址，**只差 `kind` 一個欄位**，系統自己完成全部步驟，不再讓AI手動改coach888網頁。
+
+```bash
+curl -s -F "kind=creation" -F "package=@<檔案路徑>" -F "custom_slug=<教練確認的短網址>" \
+  "https://event.bymyway.com/curation/upload?key=<見路徑大全_憑證層.md策展金鑰>" \
+  -o /tmp/curation_upload_resp.html -w "HTTP %{http_code}\n"
+```
+- 教練自己用手機：打開coach888「大樹常用」裡的作品上傳頁，選「🎨 大樹教練個人作品」→選檔→填短網址→上傳。沒有Telegram的20MB限制。
+- 系統自動做：原封不動解壓上架 `event.bymyway.com/curated/<slug>/` → 登記 `curated_sites_registry.json`（category=教練個人創作、no_shop_card）→ 放進coach888「最新作品」第一筆（伺服器同步狀態＋靜態HTML備援，錨點用grid開頭標籤並檢查標籤配對）→ 通知「活動報名即時通知」群組附網址。
+- 不做：建GitHub repo、插大台南商圈卡、發FB。
+- `kind` 沒填或亂填 → 上傳直接被擋下（HTTP 400），系統不猜。
+- 程式：`event-signup/app.py` `curation_upload()` ＋ `scripts/curation_process.py` `publish_creation()`。
+
 ## 適用情境
 教練自己用外部 AI 工具（TAVA AI／Lovart／ChatGPT 等）做的個人創作（漫畫、故事、作品集……），只想放上 `event.bymyway.com` 有個網址可以分享，**不是店家/夥伴介紹網站**，不該出現在大台南商圈整合中心的店家名冊。
 

@@ -54,14 +54,14 @@ if [ "$STATUS" = "OK" ]; then
     [ "$STATUS" = "OK" ] && STATUS="WARN"
   fi
 
-  # 4. Gateway 是否回應（找最近一條 telegram inbound 或 ready）
-  RECENT=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 1h 2>&1 | grep -E 'telegram|ready|heartbeat' | tail -1" 2>&1)
-  if [ -n "$RECENT" ]; then
-    RESULTS+=("✅ Gateway 活躍（過去 1 小時有事件）")
-  else
-    RESULTS+=("⚠️ Gateway 過去 1 小時無活動跡象")
-    [ "$STATUS" = "OK" ] && STATUS="WARN"
-  fi
+  # 4. 使用量（排除教練本人）。原本「過去1小時沒活動就WARN」已拿掉：沒人用不等於故障，
+  #    2026-09-24體檢發現它天天誤報。改成純記錄人數，由每日全隊點名彙報。
+  SENDERS_24H=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 24h 2>&1 | grep -a -i 'inbound message' | grep -a -o 'telegram:[0-9-]*' | grep -v 'telegram:6124913915'" 2>/dev/null)
+  SENDERS_7D=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 168h 2>&1 | grep -a -i 'inbound message' | grep -a -o 'telegram:[0-9-]*' | grep -v 'telegram:6124913915'" 2>/dev/null)
+  MSGS_24H=$(printf '%s\n' "$SENDERS_24H" | grep -c .)
+  USERS_24H=$(printf '%s\n' "$SENDERS_24H" | grep . | sort -u | grep -c .)
+  USERS_7D=$(printf '%s\n' "$SENDERS_7D" | grep . | sort -u | grep -c .)
+  RESULTS+=("ℹ️ 使用量：近24小時${USERS_24H}人（${MSGS_24H}則），近7天${USERS_7D}人")
 
   # 5. 確認模型載入成功（找 'agent model: minimax')
   MODEL_OK=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 24h 2>&1 | grep 'agent model: minimax' | tail -1" 2>&1)
@@ -88,6 +88,9 @@ cat > "$STATE_FILE" <<JSONEOF
 {
   "lastCheckAt": "$TS",
   "status": "$STATUS",
+  "users_24h": ${USERS_24H:-0},
+  "msgs_24h": ${MSGS_24H:-0},
+  "users_7d": ${USERS_7D:-0},
   "results": [$(printf '"%s",' "${RESULTS[@]}" | sed 's/,$//')]
 }
 JSONEOF
@@ -97,16 +100,12 @@ for r in "${RESULTS[@]}"; do
   SUMMARY+="$r"$'\n'
 done
 
-# 教練要求：每天回報。所以 OK 也報，但用最簡短訊息
-if [ "$STATUS" = "OK" ]; then
-  SHORT_MSG="🩺 VPS 小龍蝦 $TS [✅ 健康]"
-else
-  SHORT_MSG="$SUMMARY"
-fi
-
+# 平安的每日回報改由 daily_team_rollcall.py（08:10）統一彙報，這裡只在異常時立刻通知。
 # 原本打 127.0.0.1:18789/api/v1/messages/send，2026-09-24 查證該端點回 404 不存在，
 # curl 沒加 -f 所以 404 也算成功、失敗紀錄從沒寫出來，每天的回報全部無聲消失。
-/Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SHORT_MSG" \
-  || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
+if [ "$STATUS" != "OK" ]; then
+  /Users/bymyway/.openclaw/workspace/scripts/notify_coach.sh "$SUMMARY" \
+    || echo "[$TS] 推 Telegram 失敗（詳見 notify_coach.log）" >> "$LOG_FILE"
+fi
 
 exit 0
