@@ -318,6 +318,43 @@ if LAST_TEXT:
         BLOCK = True
 
 # ════════════════════════════════════════════════
+# A2. 叫教練自己動手操作（擋）—— 2026-09-25 新增
+#   起因：Hermes 登入自動跳出，原因在 AI 自己管得到的設定檔，AI 卻先開系統設定
+#   叫教練「您在裡面找、關掉開關、麻煩您看一下」，連帶把視窗開到副螢幕。
+#   放行：同一行明講「只有您/教練能」（逼 AI 先確認真的只有教練能做並說出原因）。
+# ════════════════════════════════════════════════
+A2_PATTERNS = [
+    r"您(在裡面|在畫面上|在清單裡)?(找|點|按|勾|取消|關掉|打開|拖|切換|輸入)",
+    r"(請|麻煩)您(看一下|確認一下|到|去|進入|打開|點|按|關|找|試)",
+    r"您自己(去|來|改|關|開|點|按|操作|設定|處理|動手)",
+]
+A2_ALLOW = re.compile(r"只有您|只有教練|您本人|密碼|簡訊|驗證碼|連結|網址|不用|不需要|不必|免")
+
+if LAST_TEXT:
+    hits2 = []
+    for line in LAST_LINES:
+        if A_WHITELIST.search(line) or A2_ALLOW.search(line):
+            continue
+        clean = strip_quotes(line)
+        for p in A2_PATTERNS:
+            m = re.search(p, clean)
+            if m:
+                hits2.append("  • 「%s」← %s" % (m.group(0), clean.strip()[:60]))
+    if hits2:
+        body = "\n".join(sorted(set(hits2))) + "\n\n"
+        path = log_violation("rule12_handback_violations.log", body)
+        MESSAGES.append(
+            "\n🚨 守則#12 叫教練自己動手偵測（系統檢查）\n" + BAR + "\n"
+            "剛才回覆叫教練自己操作電腦：\n" + body +
+            "✅ 請立刻重做：\n"
+            "  1. 這件事 AI 自己做得到嗎？設定檔、腳本、launchd、視窗位置、檔案——都是 AI 自己改\n"
+            "  2. 做完、親眼驗證完，再回報結果\n"
+            "  3. 真的只有教練能做（密碼、簡訊碼、系統安全開關），同一句要寫明\n"
+            "     「我已經做了X，只剩這步只有您能做，因為Y」\n\n"
+            "違規記錄已寫入：%s\n" % path + BAR + "\n")
+        BLOCK = True
+
+# ════════════════════════════════════════════════
 # B. 守則#05 完成聲明缺 commit hash（擋）—— 原 rule05_hash_check.sh
 # ════════════════════════════════════════════════
 B_PATTERNS = [
