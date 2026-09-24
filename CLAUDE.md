@@ -4,9 +4,33 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-25 01:26:00**
+> **最後同步：2026-09-25 04:15:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-25 04:15，Mac桌面版，新的一棒 v247）
+
+**本場主軸：教練登出再登入後，赫米斯桌面版自己跳出來，要求「登入時不要啟動」。軍師繞了一大圈（先查Telegram連線、推給macOS重開視窗、開系統設定叫教練自己關、連帶把視窗開到擴充塢副螢幕），教練點出「LINE/Telegram都不會，只有Hermes會」才找到真因。教練收尾痛批：同樣的錯什麼時候才不再犯——已從機制修根源。**
+
+### 1. 赫米斯登入自動跳出：已修
+真因`~/Library/LaunchAgents/ai.hermes.desktop.plist`寫`RunAtLoad=false`，但`KeepAlive.SuccessfulExit`在launchd規則裡隱含RunAtLoad，每次登入照跑`open Hermes.app`（`launchctl print`顯示runs=1）。改`KeepAlive=false`，重新載入模擬登入runs=0。原檔備份`~/.hermes/ai.hermes.desktop.plist.bak-2026-09-25`。Telegram線`ai.hermes.gateway`沒動。教練定義：**「赫米斯」＝Mac桌面版Hermes.app**，Telegram線不碰、不當選項問（第3次混淆，已放MEMORY.md索引最上方）。試金石案例82。
+
+### 2. 副螢幕：是軍師造成的，已裝防呆
+Wokyis擴充塢附的1280×720螢幕（接953GB SSD和連接埠，**不能叫教練拔**），用Time Machine快照比對，設定自9/21起沒變過；今天是軍師`open`系統設定落在那台。新增`scripts/main_display_guard_hook.sh`（PostToolUse：開App/視窗/改html後自動把副螢幕視窗搬回主螢幕）+`scripts/move_windows_to_main_display.sh`，實測通過。
+
+### 3. 背景項目54項盤點，封存3項沒用的
+kong/peipei四月舊版獨立gateway（已改由主gateway bindings服務）＋gateway舊bak，含金鑰，搬到`~/Library/LaunchAgents_archive_2026-09-25/`不進git，說明`_archive/launchagents_retired_20260925/README.md`。其餘52項都在用，教練：「有用就留，沒用的不要留」。
+
+### 4. 根源修法（不加記憶，改機制）
+①`pre_task_hook.sh`加「🩺故障診斷法」：教練描述故障就注入「先找對照組→推論先用指令推翻→自己修完才報→3~5行」②`stop_rules_master.py`加A2「叫教練自己動手」擋下（今天三句原話實測全擋；「只有您能」＋密碼/連結等正當情況放行）。
+
+### 📋 下一場開工先做
+沒有要問教練的事。`sfltool dumpbtm`要管理員密碼會跳視窗，**不要再跑**。
+
+### 🔑 本場commit
+`65e4060e8`（試金石82）`bd56c5e3f`（副螢幕防呆）`cceb8ae12`（封存背景項目）；本次總結commit另計。
 
 ---
 
@@ -34,29 +58,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-24 14:52，Mac桌面版，新的一棒 v245）
-
-**本場主軸：教練以Opus 5.5交辦團隊協作全面體檢，查出VPS/LINE每日健檢的推播網址其實是404死路、從未真正送達，修復後依教練指示落地五項修法（每日全隊點名/VPS看守Mac/大樹作品全自動上架/產業鏈防重複/VPS健檢誤報修正），接著評估小龍蝦「2.0」升級，發現Mac早已是2.0（案例73事故被動換上）、VPS仍是5.27舊版，並依教練追問建立版本變動事件通知機制+每月升級評估報告。**
-
-### 1. 🔴🔴 VPS/LINE每日健檢推播端點404，從未送達
-兩支健檢腳本打`127.0.0.1:18789/api/v1/messages/send`，實測回404，curl沒加`-f`所以404也算成功，失敗紀錄從未寫出——LINE健檢自09-16上線起每天的回報全部無聲消失。改走`notify_coach.sh`直連Telegram API，13:21實跑送達。同時修`notify_coach.sh`超長訊息(如09-20管家週報)自動分則。commit`b076a80fc`。
-
-### 2. 🔴 教練「執行」後五項修法落地
-①`scripts/daily_team_rollcall.py`+launchd每日08:10全隊點名，各AI綠紅燈+真實使用人數(直接數資料庫排除教練/測試帳號) ②`scripts/vps_watch_mac.sh`部署於VPS，每30分看Mac對外網址，連續兩次連不上才通知 ③上傳頁`kind`必填(shop/creation)，`creation`走`publish_creation()`原封不動上架+自動登記coach888「最新作品」+群組通知，不再靠AI手動改網頁 ④`generate_industry_chain.py`同主題同對話10分鐘防重複 ⑤VPS健檢拿掉「1小時無活動」誤報。commit`777c9c7c4`。
-
-### 3. 🔴 「小龍蝦2.0」升級評估+版本管理機制建立
-查明Mac正式小龍蝦早已是2.0(2026.9.4，案例73事故時被動升級，教練事後才知情)，實測穩定建議維持不升9.6(當天多個P0升級災情)不退版；VPS實際仍2026.5.27(舊SOP更新錯對象，已改正)，評估後暫緩直接升9.6，改建議升官方LTS 2026.7.35。教練指出「升級了卻不知道」是漏洞，已建`~/.openclaw/hooks/version-change-notify`(事件觸發，主程式啟動時比對版本變動立即通知)+`scripts/openclaw_upgrade_watch.py`升級評估報告(教練嫌每週太頻繁，改為每月1日09:30)。commit`a1702f013`、`86b7c3fbc`、`ae578fea9`；hook另於外層repo commit`c07544815`。
-
-### 4. 外層`~/.openclaw`本機git紀錄跟GitHub版本編號對不齊（純書面整理，非安全問題）
-9/19清除金鑰歷史改寫後這台本機的git紀錄沒跟著更新編號，已用獨立worktree cherry-pick安全推送本場hook變更，未動本機檔案。**教練2026-09-24當場裁示：這不是外洩風險、沒有公開查詢風險，是純本機書面瑣事，AI不准再主動提，自己找時間處理即可**（詳見下方待辦表）。
-
-### 📋 下一場開工先做
-**沒有任何事要問教練。** 開工只回報「讀完了」＋身份＋同步狀態，然後問「今天從哪件事開始？」。VPS升級、柯朝陽發票、推薦人補查、試金石商業化、技術文件數字，教練09-24都已裁示不用管或等他提起（見待辦表🤫區），不准再唸。E16瘦身本場已執行：v231~v237、v242~v243封存進`handoff_archive/`。
-
-### 🔑 本場commit
-`0f2083c2d`、`b076a80fc`、`777c9c7c4`、`a1702f013`、`86b7c3fbc`、`ae578fea9`、`628853d07`（workspace repo）；`c07544815`（外層`~/.openclaw` repo，hooks/version-change-notify）。本次總結commit另計。
-
----
+> 📦 v245完整內容已封存：`handoff_archive/handoff_v245_archived_2026-09-25.md`（v245：VPS/LINE健檢推播404修復+五項修法落地+小龍蝦2.0評估+版本變動通知）
 
 > 📦 v244完整內容已封存：`handoff_archive/handoff_v244_archived_2026-09-25.md`（v244：大樹創作SOP口語別名缺失修復+coach888插入bug修復+coach888分類重組+MEMORY.md清理）
 
@@ -99,6 +101,7 @@
 - BNI小幫手實戰體驗（等教練親測）
 - Coze舊機器人何時停用（等教練裁示）
 - ACER 36.3GB備份刪除（需教練在ACER親自開對話）
+- 赫米斯Telegram線登出登入時斷約2分鐘（綁使用者登入，要改成開機常駐系統服務才能根治；09-25已告知一次，教練沒要求處理）
 
 ### 🔧 AI自己的工作清單（AI自行處理，做完不用跟教練報告細節）
 
