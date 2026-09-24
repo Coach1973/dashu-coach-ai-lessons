@@ -355,6 +355,46 @@ if LAST_TEXT:
         BLOCK = True
 
 # ════════════════════════════════════════════════
+# A3. 模型分工標示（擋）—— 2026-09-25 教練親定
+#   教練每丟一則 ≥15 字的話，這一輪回覆裡要有「🟢」或「🟣」標示等級，
+#   讓教練不用猜提醒什麼時候出現。注入端：model_tier_advisor.sh。
+# ════════════════════════════════════════════════
+_SKIP_PREFIX = ("<local-command", "<command-", "[SYSTEM NOTIFICATION", "<task-notification", "Caveat:")
+
+
+def _prompt_text(evt):
+    c = (evt.get("message") or {}).get("content")
+    if isinstance(c, str):
+        return c
+    return "\n".join(x.get("text", "") for x in c if isinstance(x, dict) and x.get("type") == "text")
+
+
+_last_idx, _last_prompt = None, ""
+for i in range(len(EVENTS) - 1, -1, -1):
+    ev = EVENTS[i]
+    if isinstance(ev, dict) and ev.get("type") == "user" and _is_real_user_prompt(ev):
+        t = _prompt_text(ev).strip()
+        if t and not t.startswith(_SKIP_PREFIX):
+            _last_idx, _last_prompt = i, t
+            break
+
+if _last_idx is not None and len(_last_prompt) >= 15:
+    _texts = []
+    for ev in EVENTS[_last_idx + 1:]:
+        if isinstance(ev, dict) and ev.get("type") == "assistant":
+            _texts += [c.get("text", "") for c in _content_list(ev)
+                       if isinstance(c, dict) and c.get("type") == "text"]
+    if _texts and not any(("🟢" in t or "🟣" in t) for t in _texts):
+        path = log_violation("model_tier_label_missing.log", "  • 教練：%s\n\n" % _last_prompt[:60])
+        MESSAGES.append(
+            "\n🚨 模型分工標示缺漏（教練 2026-09-25 親定）\n" + BAR + "\n"
+            "這一輪回覆沒有標示等級。請補一則回覆，第一行寫：\n"
+            "  「🟢 這件 Sonnet 就能做」或「🟣 這件是 Opus 等級（理由：…）」\n"
+            "規則：knowledges/模型分工規則_Opus與Sonnet.md\n"
+            "違規記錄已寫入：%s\n" % path + BAR + "\n")
+        BLOCK = True
+
+# ════════════════════════════════════════════════
 # B. 守則#05 完成聲明缺 commit hash（擋）—— 原 rule05_hash_check.sh
 # ════════════════════════════════════════════════
 B_PATTERNS = [
