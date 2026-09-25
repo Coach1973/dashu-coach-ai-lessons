@@ -54,3 +54,10 @@ metadata:
 
 - [[feedback_dont_guess_coach_data_from_web]] — 為什麼網路抓的教練資料不能信
 - [[project_coach_speakers_2026_landing]] — 講座行銷頁專案（v2 需依本檔修正）
+
+## 補充：這份記憶本身沒被動手時查到過（2026-09-25）
+
+2026-09-14 建立 `github_repos/ai-go`（一鍵注入公開網站）時，沒有對照這份 2026-06-26 就存在的記憶，
+把「1.5 萬位老闆」錯誤數字寫進 README/system-prompt/index.html/coach-persona.md，教練 2026-09-25
+在公開頁上線後才親自抓出來訂正。**How to apply**：往後任何要寫教練品牌數據（培訓年資/場次/受眾/職務/
+媒體）的對外頁面（EDM、行銷頁、公開網站、一鍵注入頁），動手前先讀這份記憶，不要憑印象寫。
