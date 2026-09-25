@@ -699,6 +699,19 @@ def process_one(pkg_path: Path) -> None:
             raise RuntimeError("沒有標明是店家網站還是大樹作品，系統不猜，請到上傳頁重新上傳並選擇類型")
         extract_package(pkg_path, tmp_extract)
         index_file = find_index_html(tmp_extract)
+        if not index_file and kind == "creation":
+            # 2026-09-25發現：大樹個人創作常常是AI工具直接輸出「單一html+圖片」，
+            # 沒有店家網站匯出才有的index.html慣例檔名（案例：證明給機器看_完整插圖
+            # 20px閱讀版.tar.gz，14張jpg+一個用標題命名的html，完全沒有index.html，
+            # Hermes照SOP上傳兩次都因此被背景程式默默判定失敗，教練以為是AI不懂SOP，
+            # 其實是這個判斷式對個人創作太嚴格）。只在剛好找到一個.html檔時才採用，
+            # 用複製（不是改名/搬移）新增一份index.html，原始檔名保留，不動原始內容。
+            html_files = [p for p in tmp_extract.rglob("*.html") if not p.name.startswith(".")]
+            if len(html_files) == 1:
+                adopted = html_files[0]
+                index_file = adopted.parent / "index.html"
+                shutil.copy2(adopted, index_file)
+                log(f"⚙️ 個人創作沒有index.html，採用唯一的html檔「{adopted.name}」複製一份當作index.html")
         if not index_file:
             raise RuntimeError("解壓縮後找不到index.html，這個檔案可能不是一個完整的靜態網站")
         # 若index.html不在頂層，把它所在的資料夾內容拉到頂層
