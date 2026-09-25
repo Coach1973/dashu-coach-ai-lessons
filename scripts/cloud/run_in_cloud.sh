@@ -3,8 +3,10 @@
 # Mac 本機同一批檢查已由 ~/.claude/settings.json 負責，這裡直接略過，避免跑兩次。
 [ "$CLAUDE_CODE_REMOTE" = "true" ] || exit 0
 
-P="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
-mkdir -p "$HOME/.openclaw"
-[ -e "$HOME/.openclaw/workspace" ] || ln -s "$P" "$HOME/.openclaw/workspace"
+WS="$HOME/.openclaw/workspace"
+if [ ! -e "$WS" ]; then
+  mkdir -p "$HOME/.openclaw"
+  ln -s "$(cd "$(dirname "$0")/../.." && pwd)" "$WS"
+fi
 
-exec bash "$P/scripts/$1"
+exec bash "$WS/scripts/$1"
