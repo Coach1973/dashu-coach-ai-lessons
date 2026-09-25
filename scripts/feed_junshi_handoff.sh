@@ -201,10 +201,12 @@ fi
 # 判斷依據（實測`ps eww`確認）：這台Mac全域shell環境本來就有ANTHROPIC_DEFAULT_OPUS_MODEL=
 # MiniMax-M3等三個模型別名（不能拿來判斷，任何session都看得到這組值），真正的分歧點是
 # claude rc host process啟動指令是`env -u ANTHROPIC_BASE_URL -u ANTHROPIC_API_KEY ... claude rc`
-# ——手動清空這兩個真Anthropic憑證變數，逼子session退回用DEFAULT_*別名解析成MiniMax；
-# 本機終端機/桌面版session則保有真實ANTHROPIC_BASE_URL(=https://api.anthropic.com)+
-# ANTHROPIC_API_KEY，兩者同時存在才代表走真Anthropic路徑。
-if [ -z "${ANTHROPIC_BASE_URL:-}" ] || [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+# ——手動清空這兩個真Anthropic憑證變數，逼子session退回用DEFAULT_*別名解析成MiniMax。
+# 2026-09-25教練親自抓到：桌面版App(Code分頁)走OAuth登入，本來就不會設ANTHROPIC_API_KEY，
+# 只有ANTHROPIC_BASE_URL(=https://api.anthropic.com)存在，原本「兩個缺一個就算手機」的
+# 判斷把這種正常桌面版session也誤判成手機，導致第4步(knowledges)被跳過、身份也報錯。
+# 手機host process的真實特徵是「兩個變數都被清空」，改用AND才符合實際情況。
+if [ -z "${ANTHROPIC_BASE_URL:-}" ] && [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   IDENTITY_LINE="特助（MiniMax-M3，透過手機Remote Control連線，非Opus，額度與其他小龍蝦系統共用，需注意額度消耗）"
   IS_MOBILE=1
 else
