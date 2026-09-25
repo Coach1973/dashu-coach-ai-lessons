@@ -68,3 +68,17 @@ v207/v208 遺留待辦（孔大哥id`8689825759`/佩佩老師id`8786886419`的�
 - top10_dynamic.md 已 20 天未更新
 - 候選池：特助場景庫_自動增量.md 累積 50 個自動場景
 - 動作：教練動嘴「策展試金石」→ 軍師讀候選池挑出值得收錄的，升級成 top10_dynamic.md 條目
+
+---
+
+## 🔒 鎖臉 SOP 提醒（2026-09-25 教練親定永久 SOP）
+
+下次生成任何涉及教練形象的圖（comic / storyboard / 分鏡 / illustration）：
+- ✅ 走 `/v1/images/edits`（用 `scripts/generate_comic_panel.py`）
+- ✅ 帶 `coach_face_reference.jpg`（254 KB 去背版）
+- ✅ prompt 開頭加 IDENTITY LOCK 段落
+- ✅ 生成後用 view_image 自檢
+- ❌ 不准用 `/v1/images/generations` 純文字生圖
+- ❌ 不准自己另寫生圖腳本
+
+詳見 `SOUL.md` 鐵律七 + `character-illustration-batch/SKILL.md` 鎖臉 SOP 段落。
