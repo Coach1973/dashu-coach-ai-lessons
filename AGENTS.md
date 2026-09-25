@@ -63,7 +63,7 @@ find ~/.openclaw/workspace -maxdepth 2 -name ".!*" 2>/dev/null
 | 任務開始前 | `distill/top10_dynamic.md`（Top 10 最常犯錯場景）|
 | 需要知道教練偏好 | `USER.md`（教練偏好與習慣）|
 | 需要找路徑/密碼 | `路徑大全.md`（所有路徑、密碼、API Key）|
-| 教練說「大樹創作SOP」「大樹作品」「大樹作品上傳」| 🔴2026-09-24起全自動：用策展上傳網址但帶`kind=creation`（見SOUL.md策展SOP段），系統自己原封不動上架+放進大樹作品一覽+通知群組。細節見`knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`。**不是**`kind=shop`店家流程（2026-09-23深夜連續兩次做錯，教練親自刪除）|
+| 🔴教練提到「大樹」+「作品／創作」+「上架／上傳／SOP」這幾個概念的任意組合（不是死背固定句子，例如「大樹創作SOP」「大樹作品」「大樹作品上傳」「大樹作品上架SOP」「幫我把作品放上去」都算）| 全自動：用策展上傳網址但帶`kind=creation`（見SOUL.md策展SOP段），系統自己原封不動上架+放進大樹作品一覽+通知群組。細節見`knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`。**不是**`kind=shop`店家流程（2026-09-23深夜連續兩次做錯，教練親自刪除）。**判斷依據是概念不是字串比對**：教練丟的是他自己的創作（不是店家/品牌介紹）就走這條|
 | 需要知道團隊結構 | `shared-relay/對話分工表.md` |
 | 需要知道超級群組 | `shared-relay/SUPERGROUP-MAP.md` |
 | 需要知道最新共識 | `shared-relay/CONSENSUS.md` |
