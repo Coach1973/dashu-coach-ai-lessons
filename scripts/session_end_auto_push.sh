@@ -26,6 +26,9 @@ touch "$LOCK"
 
 cd "$WS" 2>/dev/null || exit 0
 
+# ~/.claude/ 的全域規則與技能不在 git 裡，雲端工作頁讀不到；每次回覆結束複製一份進 cloud_sync/
+bash "$WS/scripts/cloud/mirror_to_cloud_sync.sh" 2>/dev/null
+
 # 只追蹤同步相關檔（避免 push noise，例如 node_modules、log）
 SYNC_PATHS=(
   "JUNSHI_HANDOFF_LATEST.md"
@@ -35,6 +38,8 @@ SYNC_PATHS=(
   "knowledges/"
   "試金石/"
   "scripts/"
+  "cloud_sync/"
+  ".claude/settings.json"
 )
 
 # 過濾出真的有變動的路徑

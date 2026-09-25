@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/cloud_session_start.sh\"" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" inject_time_context.sh" },
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" pre_task_hook.sh" },
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" auto_goal_hook.sh" },
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" quote_xinfa_hook.sh" },
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" model_tier_advisor.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" delete_guard.sh" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/cloud/run_in_cloud.sh\" stop_rules_master.sh" }
+        ]
+      }
+    ]
+  }
+}
