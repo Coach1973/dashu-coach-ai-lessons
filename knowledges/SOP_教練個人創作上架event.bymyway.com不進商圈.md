@@ -32,7 +32,9 @@ curl -s -F "kind=creation" -F "package=@<檔案路徑>" -F "custom_slug=<教練�
 
 **教訓案例**：2026-09-23 教練把「ai-story」漫畫包丟給小龍蝦，小龍蝦直接照策展SOP整套跑，被誤判成店家上架，後續處理（很可能是用 `/curation/admin/delete` 下架）連帶把 GitHub repo、Pages、registry 全部砍掉，導致 `event.bymyway.com/curated/ai-story/` 變 404、`log` 卻仍顯示「✅完成」——log 只代表當初上架流程本身沒有丟例外，不代表後來沒被整組刪除，兩者是不同時間點的事，查證時不能只看 log 就下結論。
 
-## 正確做法（不需要教練重新上傳，本機直接可查到原始包）
+## ⚠️ 備援：只有上面的一鍵上傳失敗、而且軍師確認要手動補救時才用（平常不要照這段做）
+
+> 2026-09-25：赫米斯看到上面寫「一鍵curl」、這裡又寫「正確做法：手動7步驟」，以為是兩套互相矛盾的SOP。平常一律走上面的 `kind=creation` 一鍵上傳，這段只是歷史備援。
 1. **找到原始包**：教練說「打包給小龍蝦」，通常會落在
    `event-signup/curation_uploads/processed/<時間戳>__<檔名>.zip`（已處理過）或
    `event-signup/curation_uploads/incoming/`（還沒處理）。教練若同時貼過對話記錄或截圖，也可以在 `claude-brain/data/` 底下找到對應日期的資料夾。

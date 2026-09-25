@@ -399,8 +399,9 @@ Write-Output "**每件事最多問一次**：問過沒回應＝教練現在不�
 Write-Output "過不了三關的事：AI自己做完（不用報告細節，最多一行帶過），或安靜寫進🤫區。"
 Write-Output ""
 
-# 寫 self-test 到 HEARTBEAT（如果存在）
-if (Test-Path $heartbeatPath) {
+# 寫 self-test 到本機log，不寫HEARTBEAT.md（小龍蝦開機必讀檔，且會跨機同步；2026-09-25查到軍師日誌佔它78%）
+$automationLog = Join-Path $workspace "state\junshi_automation.log"
+if (Test-Path (Split-Path $automationLog)) {
     $ts = Get-Date -Format "yyyy-MM-dd HH:mm"
     $triggerPreview = if ($prompt.Length -gt 40) { $prompt.Substring(0, 40) } else { $prompt }
     $selfTest = @"
@@ -411,7 +412,7 @@ if (Test-Path $heartbeatPath) {
 - 雲端狀態：$pullStatus
 - Session: $sessionId
 "@
-    try { Add-Content -Path $heartbeatPath -Value $selfTest -Encoding UTF8 } catch {}
+    try { Add-Content -Path $automationLog -Value $selfTest -Encoding UTF8 } catch {}
 }
 
 if ($sessionId) { New-Item -ItemType File -Path $marker -Force | Out-Null }

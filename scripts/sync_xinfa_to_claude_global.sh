@@ -18,7 +18,8 @@ SOURCE="$WS/特助心法.md"
 TARGET="/Users/bymyway/.claude/CLAUDE.md"
 MARKER_DIR="$WS/.sync_markers"
 SYNC_MARKER="$MARKER_DIR/xinfa_last_sync"
-LOG="$WS/HEARTBEAT.md"
+# 不寫HEARTBEAT.md（小龍蝦開機必讀檔，2026-09-25查到被軍師日誌撐破2萬字上限）
+LOG="$WS/state/junshi_automation.log"
 
 START_MARK="<!-- XINFA_AUTOINJECT_START -->"
 END_MARK="<!-- XINFA_AUTOINJECT_END -->"

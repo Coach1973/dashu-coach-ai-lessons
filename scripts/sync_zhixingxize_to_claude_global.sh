@@ -15,7 +15,8 @@ SOURCE="$WS/執行細則.md"
 TARGET="/Users/bymyway/.claude/CLAUDE.md"
 MARKER_DIR="$WS/.sync_markers"
 SYNC_MARKER="$MARKER_DIR/zhixingxize_last_sync"
-LOG="$WS/HEARTBEAT.md"
+# 不寫HEARTBEAT.md（小龍蝦開機必讀檔，2026-09-25查到被軍師日誌撐破2萬字上限）
+LOG="$WS/state/junshi_automation.log"
 
 START_MARK="<!-- ZHIXINGXIZE_AUTOINJECT_START -->"
 END_MARK="<!-- ZHIXINGXIZE_AUTOINJECT_END -->"

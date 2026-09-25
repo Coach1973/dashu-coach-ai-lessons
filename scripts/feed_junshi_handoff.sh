@@ -178,18 +178,17 @@ if [[ -f "$DISPATCH_SCRIPT" ]]; then
   fi
 fi
 
-# Self-test 寫入 HEARTBEAT（防假回報）
-if [[ -f "$HEARTBEAT" ]]; then
-  {
-    echo ""
-    echo "## 🩺 軍師 Hook 自檢 $(date '+%Y-%m-%d %H:%M')（Mac v2 六步驟注入）"
-    echo "- ✅ Hook 觸發 + 六步驟內容注入完成"
-    echo "- 觸發詞：$(printf '%s' "$PROMPT" | head -c 40)"
-    echo "- 雲端狀態：${PULL_STATUS}"
-    echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
-    echo "- Session: ${SESSION_ID:-unknown}"
-  } >> "$HEARTBEAT" 2>/dev/null || true
-fi
+# Self-test 寫入本機log（防假回報）。不寫HEARTBEAT.md：那是小龍蝦開機必讀檔，2026-09-25查到
+# 軍師日誌佔它78%、撐破2萬字上限；原本的head -c 40照位元組切還把中文字切成亂碼寫進去。
+{
+  echo ""
+  echo "## 🩺 軍師 Hook 自檢 $(date '+%Y-%m-%d %H:%M')（Mac v2 六步驟注入）"
+  echo "- ✅ Hook 觸發 + 六步驟內容注入完成"
+  echo "- 觸發詞：$(printf '%s' "$PROMPT" | python3 -c 'import sys; print(sys.stdin.read()[:40])')"
+  echo "- 雲端狀態：${PULL_STATUS}"
+  echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
+  echo "- Session: ${SESSION_ID:-unknown}"
+} >> "$WORKSPACE/state/junshi_automation.log" 2>/dev/null || true
 
 # ───────── 注入內容開始 ─────────
 # 2026-07-10 軍師加：字數上限防呆（比照 OpenClaw 原生 startupContext.maxTotalChars 精神）。

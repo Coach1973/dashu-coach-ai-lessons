@@ -113,9 +113,9 @@ try {
         $pushResult = "ℹ️ 沒實質變動"
     }
 
-    # 寫心跳留證
-    $hb = Join-Path $workspace "HEARTBEAT.md"
-    if (Test-Path $hb) {
+    # 留證寫本機log，不寫HEARTBEAT.md（Mac版07-08就改了，Windows版漏改；小龍蝦開機必讀檔且會跨機同步）
+    $hb = Join-Path $workspace "state\junshi_automation.log"
+    if (Test-Path (Split-Path $hb)) {
         $entry = @"
 
 ## 🚀 Session-End 雲端同步 $stamp（Windows）

@@ -11,7 +11,9 @@ CLAUDE_MD="$WS/CLAUDE.md"
 HANDOFF="$WS/JUNSHI_HANDOFF_LATEST.md"
 MARKER_DIR="$WS/.sync_markers"
 SYNC_MARKER="$MARKER_DIR/handoff_last_sync"
-LOG="$WS/HEARTBEAT.md"
+# 不能寫進HEARTBEAT.md：那是小龍蝦每次開機必讀的檔，2026-09-25查到軍師日誌佔它78%、
+# 撐破OpenClaw每檔2萬字上限（後段被截斷）。日誌改寫本機log，*.log已被gitignore不會跨機同步。
+LOG="$WS/state/junshi_automation.log"
 
 START_MARK="<!-- HANDOFF_AUTOINJECT_START -->"
 END_MARK="<!-- HANDOFF_AUTOINJECT_END -->"
