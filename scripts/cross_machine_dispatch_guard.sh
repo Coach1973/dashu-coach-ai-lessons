@@ -37,7 +37,24 @@ if tool not in ("Write", "Edit"):
 path = ti.get("file_path", "") or ""
 
 import re
-if not re.search(r"cross-agent/inbox/(acer|lenovo|hermes)/", path):
+m = re.search(r"cross-agent/inbox/(acer|lenovo|hermes)/", path)
+if not m:
+    sys.exit(0)
+
+# 2026-09-25教練親自糾正：這道鎖原本不分「軍師主動發號施令」跟「回覆對方主動
+# 來信求助、信裡自己寫『回覆要求：需要回覆』」——後者本來就該做，教練原話：
+# 「你本來就應該回信給赫米斯，幹嘛還要問過我？」。07-02原始案例是軍師自己
+# 決定要建機制、要求ACER/聯想照辦（沒人先問），跟「對方來信、我方回覆」是
+# 完全不同方向的動作，鎖只該擋前者。
+target_agent = m.group(1)
+inbox_mac = os.path.expanduser("~/.openclaw/workspace/cross-agent/inbox/mac")
+is_reply_to_pending_request = False
+if os.path.isdir(inbox_mac):
+    for fname in os.listdir(inbox_mac):
+        if re.match(rf"^\d{{8}}-\d{{4}}_{re.escape(target_agent)}-to-mac_.*\.md$", fname):
+            is_reply_to_pending_request = True
+            break
+if is_reply_to_pending_request:
     sys.exit(0)
 
 token = os.path.expanduser("~/.openclaw/workspace/state/CROSS_MACHINE_APPROVED")
