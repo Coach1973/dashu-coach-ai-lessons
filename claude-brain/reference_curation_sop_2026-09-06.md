@@ -9,6 +9,12 @@ metadata:
 
 > 🔴 **2026-09-24 起上傳網址 `kind` 必填**：`kind=shop`＝本篇店家流程；`kind=creation`＝大樹作品（原封不動上架＋自動進coach888「最新作品」第一筆＋通知群組，不建repo、不插商圈卡）。沒填或亂填直接HTTP 400，系統不猜。詳見 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md` 開頭段、[[project_team_publish_and_daily_report_goal_2026-09-24]]。
 
+> 🔴🔴 **2026-09-26教練根因質問後新增鐵律：上傳後禁止用「等N秒＋猜網址」驗證，一律跑狀態查詢工具**——curl回200只代表「檔案收到排進佇列」，不代表處理完成，也不保證最終網址等於`custom_slug`（命中既有`shops.bymyway.com`暫代頁時網址會被改掉，見下面規則二）。過去Hermes兩次上傳後都靠猜（一次真的失敗、一次成功但猜錯網址），兩次都得寫信給軍師人工查log才知道真相——**這不是AI理解力問題，是SOP從沒提供機器可查的真相來源，只給了人看的Telegram通知**。往後上傳後（不管等多久）一律執行：
+> ```bash
+> python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
+> ```
+> 回傳JSON會直接告訴你：處理完了沒(`pending`/`success_shop_new`/`overwritten_existing`/`success_creation`/`failed`)、真正的最終網址(`actual_url`)、這個網址現在活著沒(`live_check_http_status`)。看到`overwritten_existing`代表命中既有暫代頁、`custom_slug`被略過，網址是`shops.bymyway.com/...`不是`event.bymyway.com/curated/...`，這是正常設計不是錯誤，不用再寫信確認。查不到才需要考慮寫信求助。
+
 > 跟另外三套既有SOP的關係（四者目標站不同，不可混用）：
 > - **網頁推SOP**（[[feedback_web_push_sop]]）：推送到GitHub測試站 或 Netlify正式站，教練說「網頁推/推」才會觸發
 > - **自動站**（[[feedback_coach_deploy_vocabulary]]）：部署到bymyway.com（WP iframe抓GitHub repo新版）

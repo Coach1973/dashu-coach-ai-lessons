@@ -23,6 +23,12 @@ curl -s -F "kind=creation" -F "package=@<檔案路徑>" -F "custom_slug=<教練�
 - `kind` 沒填或亂填 → 上傳直接被擋下（HTTP 400），系統不猜。
 - 程式：`event-signup/app.py` `curation_upload()` ＋ `scripts/curation_process.py` `publish_creation()`。
 
+🔴🔴 **2026-09-26新增鐵律：上傳後禁止用「等N秒＋猜/curated/<slug>/」驗證，一律跑狀態查詢工具**——curl回200只代表排進背景佇列，不代表處理完成。2026-09-25赫米斯上傳「證明給機器看」系列連續2次因為包裡沒有剛好叫`index.html`的檔案而背景默默失敗（現已修復：只剩一個html檔會自動採用），赫米斯兩次都是等了一段時間猜網址404才發現不對、寫信給軍師才查出真相。往後上傳後執行：
+```bash
+python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
+```
+回傳JSON直接告訴你成功/失敗/還在處理中、真正的最終網址、網址現在活著沒。查不到才需要考慮寫信求助，不要自己猜或等。
+
 ## 適用情境
 教練自己用外部 AI 工具（TAVA AI／Lovart／ChatGPT 等）做的個人創作（漫畫、故事、作品集……），只想放上 `event.bymyway.com` 有個網址可以分享，**不是店家/夥伴介紹網站**，不該出現在大台南商圈整合中心的店家名冊。
 
