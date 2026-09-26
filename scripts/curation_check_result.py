@@ -41,8 +41,7 @@ LINE_PATTERNS = [
 
 
 def url_for(status: str, slug: str) -> str:
-    if status == "overwritten_existing":
-        return f"https://shops.bymyway.com/{slug}/"
+    # 2026-09-27教練拍板全站統一：不管新店家或覆蓋既有暫代頁，網址一律 event.bymyway.com/curated/<slug>/
     return f"https://event.bymyway.com/curated/{slug}/"
 
 
@@ -114,7 +113,7 @@ def main() -> None:
     http_status = live_check(url)
     note = ""
     if status == "overwritten_existing":
-        note = "⚠️這家店命中既有shops.bymyway.com暫代頁，custom_slug被略過(2026-09-06教練拍板設計)，實際網址是上面這個，不是event.bymyway.com/curated/"
+        note = "這家店原本有自助登錄的暫代頁，已覆蓋成完整網站；網址以上面actual_url為準"
     print(json.dumps({
         "found": True, "status": status, "package": groups.get("pkg"),
         "actual_slug": slug, "actual_url": url, "live_check_http_status": http_status,

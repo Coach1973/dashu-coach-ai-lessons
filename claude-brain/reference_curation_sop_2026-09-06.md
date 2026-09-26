@@ -183,3 +183,9 @@ curl -s -X POST "https://graph.facebook.com/v20.0/<post_id>" \
 下次教練說「策展SOP」或描述類似「AI工具做的店家網站要上架大台南策展中心」的任務，直接照上面六步走。構想一的資料夾監控機制，教練若說「做吧」可直接動手，架構已經想清楚不用重新評估。**教練要求改短既有網址時，照上面「改短網址完整SOP」三步驟走（下架→重新上傳→視情況修FB貼文），不要用`curated_site_rename.py`**。上傳頁面現在會強制要求短網址欄位，不用再擔心系統猜出過長網址。這整套流程軍師/Hermes/小龍蝦皆可直接執行，不需要教練親自操作任何後台。
 
 Related: [[reference_zip_to_github_pages_deploy_sop]]、[[reference_new_site_collection_policy_2026-09-05]]、[[project_namecard_ocr_pipeline_reusable]]（WatchPaths事件觸發的原始先例）
+
+
+## 🔴 2026-09-27 教練拍板：全站店家網址統一 event.bymyway.com/curated/<slug>/
+- shops.bymyway.com 只剩舊連結永久轉址（301），本身不供應任何檔案；kr 轉到 event.bymyway.com/KR/。
+- 自助登錄表單的暫代頁也直接建在 /curated/<slug>/ 並登記進 curated_sites_registry.json；覆蓋成完整網站時同步更新名單、改名時舊 slug 寫進 redirects。
+- 原因：兩種開頭訪客分不出差別，且 09-26 的三個事故（custom_slug 被蓋、卡片漏換照片、github_repos 外洩）全出在 shops 這條少用的路。

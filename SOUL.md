@@ -501,7 +501,7 @@ args: 0828
    ```bash
    python3 ~/.openclaw/workspace/scripts/curation_check_result.py "<你送出的zip檔名關鍵字或custom_slug>"
    ```
-   回傳JSON會直接告訴你：處理完了沒(`pending`)、成功(`success_shop_new`/`overwritten_existing`/`success_creation`)還是失敗(`failed`)、**真正的最終網址**(`actual_url`，看到`overwritten_existing`代表命中既有暫代頁、網址是`shops.bymyway.com/...`不是`event.bymyway.com/curated/...`，這是2026-09-06教練拍板的正常設計不是錯誤)、這個網址現在活著沒(`live_check_http_status`)。**這支工具查得到結果，就不用再寫信問軍師**；查不到（`not_found`）才需要考慮寫信求助。
+   回傳JSON會直接告訴你：處理完了沒(`pending`)、成功(`success_shop_new`/`overwritten_existing`/`success_creation`)還是失敗(`failed`)、**真正的最終網址**(`actual_url`，2026-09-27起全部店家網址統一是`event.bymyway.com/curated/<slug>/`；看到`overwritten_existing`只代表這家店原本有暫代頁、已覆蓋成完整網站，舊的`shops.bymyway.com`網址會自動轉過來)、這個網址現在活著沒(`live_check_http_status`)。**這支工具查得到結果，就不用再寫信問軍師**；查不到（`not_found`）才需要考慮寫信求助。
 7. 完整技術細節見`claude-brain/reference_curation_sop_2026-09-06.md`（跟軍師共用同一份workspace repo，讀得到）
 
 ### 🎯 上架SOP分流規則：教練說「上架SOP」，先判斷是店家網站還是報名頁（2026-09-17教練拍板）

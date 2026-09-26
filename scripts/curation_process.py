@@ -363,7 +363,8 @@ def rename_shop_slug(old_slug: str, new_slug: str) -> None:
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
     content = index_path.read_text(encoding="utf-8")
     index_path.write_text(
-        content.replace(f"https://shops.bymyway.com/{old_slug}/", f"https://shops.bymyway.com/{new_slug}/"),
+        content.replace(f"https://shops.bymyway.com/{old_slug}/", f"https://event.bymyway.com/curated/{new_slug}/")
+               .replace(f"https://event.bymyway.com/curated/{old_slug}/", f"https://event.bymyway.com/curated/{new_slug}/"),
         encoding="utf-8",
     )
     subprocess.run(["git", "add", "_shops_slugs.json", "index.html"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
@@ -840,7 +841,7 @@ def process_one(pkg_path: Path) -> None:
         category = guess_category(f"{title} {desc}")
         address = extract_address(html_text)
 
-        # 2026-09-06教練拍板：先查這家店是不是已經在shops.bymyway.com有暫代頁
+        # 2026-09-06教練拍板：先查這家店是不是已經有自助登錄產生的暫代頁（2026-09-27起網址統一event.bymyway.com/curated/）
         # （自助登錄表單那條路產生的），有的話覆蓋暫代頁內容、網址不變，不建新GitHub網站。
         existing_shop_slug = find_existing_shop_slug(primary_title_segment(title))
         rename_note = ""
@@ -859,7 +860,17 @@ def process_one(pkg_path: Path) -> None:
                     log(f"⚠️ 改名為「{custom_slug}」失敗，沿用既有slug「{old_slug}」: {e!r}")
                     rename_note = f"\n⚠️ 教練指定的短網址「{custom_slug}」改名失敗，暫時沿用既有網址「{old_slug}」，請軍師人工檢查"
             overwrite_shop_placeholder(tmp_extract, existing_shop_slug)
-            event_url = f"https://shops.bymyway.com/{existing_shop_slug}/"
+            event_url = f"https://event.bymyway.com/curated/{existing_shop_slug}/"
+            # 2026-09-27全站統一event網址：正式名單要有這家店（/curated/才會開放），改過名的舊slug轉址到新的
+            if rename_note.startswith("（教練指定短網址"):
+                registry["sites"] = [x for x in registry["sites"] if x["slug"] != old_slug]
+                registry.setdefault("redirects", {})[old_slug] = existing_shop_slug
+            entry = next((x for x in registry["sites"] if x["slug"] == existing_shop_slug), None)
+            if entry is None:
+                entry = {"slug": existing_shop_slug, "added_by": "curation-sop"}
+                registry["sites"].append(entry)
+            entry.update({"title": title, "category": category, "address": address, "description": desc})
+            save_registry(registry)
 
             try:
                 if update_directory_card_photo(existing_shop_slug, event_url, tmp_extract, html_text):

@@ -1480,9 +1480,8 @@ def _provision_shop_placeholder(name, shop, category, contact, address, social, 
     本身就已經是本機Mac在跑（透過Cloudflare Tunnel），Mac沒開機的話上傳流程本身也一樣會停，
     VPS並沒有真的多提供獨立於Mac之外的可用性，純粹多一層SSH管理成本。
     2026-09-05~26實際只用到3個真實店家(huitou/ema/鑫瀚昌)，遷移成本很低）：
-    1. 產生shops.bymyway.com/<slug>/暫代頁，直接寫本機`CURATED_REPOS_DIR/<slug>/`
-       （跟`/curated/<slug>/`共用同一套目錄+`_serve_repo_file()`，只是serve規則認host是
-       shops.bymyway.com時不需要在curated_sites_registry.json登記，見shops_local_page()）
+    1. 產生event.bymyway.com/curated/<slug>/暫代頁，直接寫本機`CURATED_REPOS_DIR/<slug>/`
+       並登記進curated_sites_registry.json（2026-09-27全站統一event網址，不再用shops.bymyway.com）
     2. 在tainan-shangquan首頁店家名冊插入一張真實卡片
     3. git commit+push，event.bymyway.com直接讀本機repo檔案，改完立即生效不用重啟服務
     任何一步失敗都不能擋住表單本身的DB寫入/Telegram通知，所以呼叫端要包try/except。
@@ -1502,20 +1501,28 @@ def _provision_shop_placeholder(name, shop, category, contact, address, social, 
     key = slug
     base_slug = slug
     n = 2
-    taken = set(reg.values())
-    while slug in taken:
+    # 2026-09-27起暫代頁跟策展網站共用 /curated/<slug>/，slug 不能撞到任何既有網站或資料夾
+    taken = set(reg.values()) | _curated_slugs()
+    while slug in taken or (CURATED_REPOS_DIR / slug).exists():
         slug = f"{base_slug}-{n}"
         n += 1
     reg[key] = slug
     registry_path.write_text(json.dumps(reg, ensure_ascii=False, sort_keys=True), encoding="utf-8")
 
-    shop_url = f"https://shops.bymyway.com/{slug}/"
+    shop_url = f"https://event.bymyway.com/curated/{slug}/"
 
     # 1. 產生暫代頁，直接寫本機（2026-09-26起不再SSH到VPS）
     placeholder_html = _shop_placeholder_html(name, shop, category, contact, address, social, items)
     shop_dir = CURATED_REPOS_DIR / slug
     shop_dir.mkdir(parents=True, exist_ok=True)
     (shop_dir / "index.html").write_text(placeholder_html, encoding="utf-8")
+    # 登記進正式名單，/curated/<slug>/ 才會開放（2026-09-27全站統一event網址）
+    cur = _load_curated_registry()
+    cur.setdefault("sites", []).append({
+        "slug": slug, "title": shop, "category": category, "address": address,
+        "added_by": "shop-join-form", "description": "",
+    })
+    CURATED_REGISTRY_PATH.write_text(json.dumps(cur, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # 2. 插入tainan-shangquan首頁店家名冊卡片
     card_html = _shop_directory_card_html(name, shop, category, contact, address, social, items, shop_url)
@@ -1678,42 +1685,20 @@ def curated_assets(slug, filename):
     return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
 
 
-# 2026-09-26教練拍板：shops.bymyway.com不再繞VPS，改成跟/curated/<slug>/共用同一套
-# CURATED_REPOS_DIR本機目錄+_serve_repo_file()。用request.host分流（不是全站
-# host_matching，避免動到其他既有路由），只認shops.bymyway.com這個host名稱；
-# 認不出host或目錄不存在都404，不影響event.bymyway.com本身其他路由的行為。
-def _shops_slugs() -> set:
-    """shops.bymyway.com只開放_shops_slugs.json登記過的店家。2026-09-26審查抓到：
-    原本只檢查目錄存在，github_repos底下任何資料夾(含來賓名單.db/log)都能被外人下載。"""
-    try:
-        data = json.loads((TAINAN_SHANGQUAN_REPO / "_shops_slugs.json").read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return set()
-    return set(data.values()) if isinstance(data, dict) else set(data)
+# 2026-09-27教練拍板：全站店家網址統一用 event.bymyway.com/curated/<slug>/。
+# shops.bymyway.com 只剩「舊連結永久轉址」一個用途（名片/QR code/FB貼文上印過的舊網址點了照樣打得開），
+# 本身不再供應任何檔案——之前這條路曾經把整個github_repos公開(試金石案例86)，現在整段拿掉。
+_SHOPS_LEGACY_TARGETS = {"kr": "https://event.bymyway.com/KR/"}
 
 
 @app.route("/<slug>/")
-def shops_local_page(slug):
-    if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
-        abort(404)
-    if slug not in _shops_slugs():
-        abort(404)
-    if not (CURATED_REPOS_DIR / slug).is_dir():
-        abort(404)
-    return _serve_repo_file(CURATED_REPOS_DIR / slug, "index.html")
-
-
 @app.route("/<slug>/<path:filename>")
-def shops_local_assets(slug, filename):
+def shops_legacy_redirect(slug, filename=""):
     if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
         abort(404)
-    if slug not in _shops_slugs():
-        abort(404)
-    if not (CURATED_REPOS_DIR / slug).is_dir():
-        abort(404)
-    if filename == "index.html":
-        return shops_local_page(slug)
-    return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
+    if slug in _SHOPS_LEGACY_TARGETS:
+        return redirect(_SHOPS_LEGACY_TARGETS[slug] + filename, code=301)
+    return redirect(f"https://event.bymyway.com/curated/{slug}/{filename}", code=301)
 
 
 def _remove_tainan_shangquan_card(event_url: str) -> bool:

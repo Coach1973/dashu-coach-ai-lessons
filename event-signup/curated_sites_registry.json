@@ -315,6 +315,42 @@
       "status": "live",
       "source_package": "20260925-225444__doc_2c21d5d4b7bf_teamwork-illustrated-site.tar.tar.gz",
       "no_shop_card": true
+    },
+    {
+      "slug": "bni-workshop",
+      "title": "學會邀約，你永遠不缺客戶｜BNI 五倍成長工作坊・2026.10.02 線上",
+      "description": "2026 年 10 月 2 日 09:00–17:00，Zoom 線上。BNI 全球培訓師 YP Lai 帶你把邀約練成本能，並在分會裡組出為你帶來 67% 引薦的 Power Team。全日中文翻譯：真鑽分會 傅恩平。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/bni-workshop/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-26 18:19",
+      "status": "live",
+      "source_package": "20260926-181905__doc_906fdf01d9cd_bni-workshop-20261002.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "ema",
+      "title": "立馬吃一鍋 E.Ma Hot Pot · 台南安平店",
+      "category": "食",
+      "address": "台南市安平區文平路 247 號（國平里）",
+      "added_by": "shops-unify-2026-09-27",
+      "description": ""
+    },
+    {
+      "slug": "huitou",
+      "title": "迴頭快剪",
+      "category": "衣",
+      "address": "台南市永康區中山南路578號",
+      "added_by": "shops-unify-2026-09-27",
+      "description": ""
+    },
+    {
+      "slug": "hsinhan",
+      "title": "鑫瀚昌旅行社",
+      "category": "行",
+      "address": "台南市安南區北安路三段396巷50弄81號",
+      "added_by": "shops-unify-2026-09-27",
+      "description": ""
     }
   ],
   "redirects": {
