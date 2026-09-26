@@ -47,35 +47,57 @@ def build_v5_prompt(scene_desc: str, idx: int = 0) -> str:
 
     return f"""A wide cinematic composition, MODERN JAPANESE ANIME KEY-VISUAL STYLE — clean confident line art, saturated cinematic colors, dramatic lighting, anime aesthetics. MATURE ADULT ANIME (think Japanese business drama like 課長島耕作, NOT high school romance, NOT slice-of-life cute, NOT kawaii).
 
-[CRITICAL: TEAM OF 8 DIVERSE MATURE TAIWANESE/CHINESE ADULTS — NOT 20-SOMETHINGS, NOT KOREAN, NOT JAPANESE]
-EXACTLY 8 characters, no more no less, arranged as a cohesive team in the scene. ALL 8 characters are 40 to 50 years old TAIWANESE/CHINESE (台灣人 / 華人) mature adults in anime style. To force mature anime characters AND lock the Taiwanese/Chinese ethnicity (AVOID Korean and Japanese features):
-- TAIWANESE/CHINESE facial features: oval-to-square face shape (NOT Korean V-line, NOT Japanese round face), almond-shaped eyes with single eyelid or inner double eyelid (NOT Korean large double eyelid, NOT Japanese round anime eyes), warmer yellow skin tone (NOT Korean porcelain white, NOT Japanese pale white), defined mature jawline
-- Visible thin mature smile lines at outer eye corners (1-2 subtle lines, NOT smooth porcelain)
-- Mature solid face structure (NOT pointy childish chin)
-- Short natural black hair, simple adult hairstyle (NOT spiky anime protagonist hair, NOT flowing hair, NOT bangs, NOT Korean permed hair, NOT Japanese dyed hair)
-- Calm composed steady gaze (NOT sparkling cute anime eyes)
-- Solid mature body build, broader shoulders (NOT slender youth body)
+[CRITICAL: TEAM OF 8 TOTAL — DIVERSE MATURE TAIWANESE/CHINESE — NOT 20s, NOT KOREAN, NOT JAPANESE]
+EXACTLY 8 characters TOTAL in the ENTIRE scene. If 1 man alone appears, the team has 7 (1+7=8). If just a team, team has 8. ALL 40-50 years old mature TAIWANESE/CHINESE (台灣人/華人).
 
-[8 DIVERSE OCCUPATIONS — 百工百業 TEAM OF 8]
-The 8 characters represent diverse occupations from the Hundred Trades (百工百業). Pick 8 from this list, each one visually distinct and clearly identifiable by their work attire:
-1. 廚師 — chef in whites with tall white chef hat
-2. 醫師 — doctor in white coat with stethoscope around neck
-3. 工程師 — engineer with yellow hard hat and blueprints
-4. 律師/商人 — businessman in tailored navy suit with blue tie
-5. 農夫 — farmer with straw hat and rolled sleeves
-6. 建築師 — architect with rolled blueprints and glasses
-7. 護理師 — nurse in scrubs with cap
-8. 消防員 — firefighter with red helmet
-9. 廚師助手 — sous-chef in whites
-10. 音樂家 — musician with instrument (violin/piano)
-11. 教師 — teacher/educator with glasses and formal attire
-12. 技工 — mechanic in overalls with wrench
-13. 警察 — police officer in uniform with cap
-14. 設計師 — designer with stylish creative attire
-15. 會計師 — accountant in formal suit with ledger
-16. 攝影師 — photographer with camera
+[TAIWANESE/CHINESE FACIAL FEATURES — 100% FORBIDDEN ELSE]
+100% FORBIDDEN: Korean V-line face, Korean permed hair, Korean porcelain white skin, Korean large double eyelid, Korean idol-style features
+100% FORBIDDEN: Japanese round face, Japanese pale white skin, Japanese dyed hair, Japanese round anime eyes, Japanese kawaii features
+MUST HAVE: oval-to-square face shape, almond-shaped eyes (single eyelid or inner double eyelid), warmer yellow skin tone, defined mature jawline
 
-Each of the 8 characters must have visibly different profession attire — NO two characters wear the same uniform. The composition must clearly show all 8 distinct professionals.
+[MATURE CHARACTER DETAILS]
+Visible thin smile lines at outer eye corners (1-2 subtle lines)
+Mature solid face structure (NOT pointy childish chin)
+Short natural black hair, simple adult hairstyle (NOT spiky, NOT flowing, NOT permed, NOT dyed)
+Calm composed steady gaze (NOT sparkling cute anime eyes)
+Solid mature body build, broader shoulders
+
+[8 OCCUPATIONS — 百工百業 100+ DYNAMIC, MUST MATCH SCENE, NEVER REPEAT]
+Pick 8 occupations from this 100+ pool. The occupations MUST match [SCENE] content. NEVER use the same 8-occupation combination across panels.
+
+SCENE-MATCH RULES (HIGHEST PRIORITY):
+- If [SCENE] mentions water/electricity/plumbing → MUST include 水電工 (plumber/electrician with tool belt + wrench)
+- If [SCENE] mentions music/instruments/sound → MUST include 音樂家 (musician with violin/piano/guitar)
+- If [SCENE] mentions cars/auto/vehicle → MUST include 汽車銷售 (car salesperson with showroom/car)
+- If [SCENE] mentions houses/property/real estate → MUST include 房地產銷售 (real estate agent with property photos)
+- If [SCENE] mentions food/cooking/restaurant → MUST include chef
+- If [SCENE] mentions hair/salon/barber → MUST include 髮型設計師 (hair designer with scissors + cape)
+- If [SCENE] mentions clothing/fashion/apparel → MUST include 服裝設計師 (fashion designer)
+- If [SCENE] mentions interior/home decoration → MUST include 室內設計師 (interior designer)
+- At least 3-5 of the 8 occupations MUST match the [SCENE] content.
+
+OCCUPATION POOL (100+, pick 8 that match [SCENE]):
+餐飲: chef (whites + tall chef hat), sous chef, baker, bartender, barista, waiter, sommelier
+醫療: doctor (white coat + stethoscope), nurse (scrubs + cap), pharmacist, dentist, veterinarian, paramedic, midwife
+工程/營造: civil engineer (hard hat + blueprints), mechanical engineer, electrical engineer, architect (rolled blueprints + glasses), construction worker, plumber/electrician 水電工 (tool belt + wrench), carpenter, painter, welder, HVAC technician, crane operator
+設計: interior designer 室內設計師 (fabric swatches + mood board), graphic designer, fashion designer 服裝設計師 (sketch + fabric), industrial designer, UI/UX designer, hair designer 髮型設計師 (scissors + cape), makeup artist
+銷售/商業: businessman (navy suit + tie), businesswoman (blazer), real estate agent 房地產銷售 (property photos), car salesperson 汽車銷售 (showroom), insurance agent, retail salesperson, marketing manager
+法律/金融: lawyer (briefcase + law book), accountant (ledger), financial advisor, banker, tax consultant
+教育: university professor, high school teacher, elementary teacher, music teacher
+農業: farmer (straw hat + rolled sleeves), fisherman (net), rancher, gardener, beekeeper, florist
+科技: software engineer (laptop), data scientist, AI researcher, cybersecurity specialist
+藝術/媒體: photographer (camera), video editor, journalist (notepad), filmmaker (clapperboard), musician 音樂家 (violin/piano/guitar), DJ (headphones), dancer, painter (palette)
+公共服務: police officer (uniform + cap), firefighter (red helmet), military officer, postal worker, customs officer
+服務業: hairdresser (scissors + cape), beautician, manicurist, tour guide, hotel concierge, fitness trainer, yoga instructor, driving instructor
+物流/交通: delivery driver, warehouse worker, taxi driver (yellow sign), truck driver, ship captain, airline pilot, air traffic controller
+水電木工 (trades — MUST show tools): 水電工 plumber/electrician (tool belt + wrench), 木工 carpenter (hammer + wood), 油漆工 painter (paint roller), 防水師傅 (sealant gun), 抓漏師傅 (detection equipment)
+
+CRITICAL RULES:
+1. SCENE MATCH (HIGHEST PRIORITY): At least 3-5 of 8 occupations MUST match [SCENE] content.
+2. MIX: At least 2 white-collar + 2 blue-collar/trades + 1 creative + 1 service. NO all-suits panel.
+3. VARIED: NEVER use the same 8-occupation combination as previous panels.
+4. VISUAL CLARITY: Each occupation has CLEAR VISUAL ATTIRE (chef hat, hard hat, scissors, tool belt, camera, instrument, stethoscope). NO two characters wear the same uniform.
+5. COMPOSITION: All 8 distinct professionals visible with tools/attire.
 
 [SCENE]
 {scene_desc}
