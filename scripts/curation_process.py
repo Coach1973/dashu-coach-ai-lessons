@@ -389,6 +389,59 @@ def find_existing_shop_slug(brand_name: str) -> str | None:
     return reg.get(candidate)
 
 
+def update_directory_card_photo(slug: str, shop_url: str, repo_dir: Path, html_text: str) -> bool:
+    """2026-09-26教練拍板：店家名冊卡片不要內嵌Google地圖，改放這家店網站裡的代表照
+    （og:image優先，找不到用第一張<img>），地圖/評論維持既有按鈕形式不變（教練原話：
+    「這兩個按鈕本來就已經有了，所以保持不變」）。
+    起因：09-26早上手動把25張既有卡片的地圖換成照片(commit 9613870)，但這兩個插卡函式
+    （這支＋app.py的_shop_directory_card_html）沒有一起改，導致「暫代頁→真實網站」這個
+    既有流程繼續產生地圖卡（鑫瀚昌旅行社是實例）。這裡補齊：既有店家覆蓋真實網站內容時
+    （overwrite_shop_placeholder路徑），順手把卡片媒體區換成照片。
+    回傳True代表已換成照片；False代表找不到可用照片或找不到這家店的卡片，卡片維持原樣
+    （不擋主流程，呼叫端只需記log）。"""
+    image_path = find_post_image(repo_dir, html_text)
+    if image_path is None:
+        return False
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8")
+
+    # 找到這家店的卡片：以shop_url為錨點抓出整個<article>區塊（非貪婪，含最近的</article>）
+    anchor = re.escape(shop_url)
+    article_re = re.compile(r'<article class="shop-row reveal">(?:(?!</article>).)*?' + anchor
+                             + r'(?:(?!</article>).)*?</article>', re.DOTALL)
+    m = article_re.search(content)
+    if not m:
+        return False
+    block = m.group(0)
+
+    dest = TAINAN_SHANGQUAN_REPO / "images" / f"{slug}{image_path.suffix.lower()}"
+    shutil.copy2(image_path, dest)
+    img_html = f'<img src="images/{dest.name}" alt="{slug}實景照片" loading="lazy">'
+
+    media_re = re.compile(r'<div class="shop-media">\s*<div class="map-frame">.*?</div>\s*</div>', re.DOTALL)
+    photo_media = (
+        '<div class="shop-media">\n'
+        '              <div class="map-frame">\n'
+        f'                {img_html}\n'
+        '              </div>\n'
+        '            </div>'
+    )
+    if media_re.search(block):
+        new_block = media_re.sub(lambda _m: photo_media, block, count=1)
+    else:
+        # 這張卡片原本沒有media區塊（自助登記暫代頁沒地址時的舊樣式），插在<article>開頭
+        new_block = block.replace(
+            '<article class="shop-row reveal">',
+            '<article class="shop-row reveal">\n            ' + photo_media,
+            1,
+        )
+
+    content = content[: m.start()] + new_block + content[m.end() :]
+    index_path.write_text(content, encoding="utf-8")
+    subprocess.run(["git", "add", "index.html", f"images/{dest.name}"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
+    return True
+
+
 def overwrite_shop_placeholder(site_dir: Path, slug: str) -> None:
     """把完整網站(index.html+assets等)整個覆蓋掉shops.bymyway.com/<slug>/既有暫代頁內容，
     網址保持不變。2026-09-26起本機`GITHUB_REPOS_DIR/<slug>/`直接覆蓋，不再SSH到VPS
@@ -543,7 +596,8 @@ def post_to_facebook(title: str, desc: str, event_url: str, image_path: Path | N
         return False
 
 
-def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str, address: str = "") -> None:
+def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str, address: str = "",
+                                  image_path: Path | None = None, slug: str = "") -> None:
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
     content = index_path.read_text(encoding="utf-8")
     marker = "<!-- SHOP_CARDS_INSERT_POINT：新店家自動插入這行下面，勿刪除此標記 -->"
@@ -554,13 +608,28 @@ def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url
 
     address_row = f'<li><span class="k">地址</span><span>{e(address)}</span></li>' if address else ""
 
-    # 2026-09-08：地址抓得到才加地圖欄位(shop-media)，跟app.py的
-    # _shop_directory_card_html()同款query-based embed，不需要API Key。
-    # 抓不到地址就退回單欄舊樣式，不強塞空地圖。
-    if address:
-        brand = primary_title_segment(title)
+    # 2026-09-26教練拍板：媒體區優先放這家店網站的代表照（image_path，find_post_image()挑的），
+    # 地圖/評論一律退回按鈕形式，不再內嵌iframe（試金石案例86：舊版一律內嵌地圖，鑫瀚昌旅行社
+    # 因此被漏掉，教練發現後補上這個分支）。傳入image_path時完全不畫地圖，只保留店家專屬網站
+    # 連結；仍抓得到地址就再加一顆「看Google商家評論」按鈕，跟現有其他店家卡片一致。
+    brand = primary_title_segment(title)
+    review_q = quote(f"{brand} 台南")
+    review_btn = ""
+    if image_path is not None:
+        # 換成照片走「按鈕形式」（教練09-26原話），地圖評論從內嵌區塊改成slot-note裡的按鈕。
+        review_btn = f'<a href="https://www.google.com/maps/search/?api=1&amp;query={review_q}" target="_blank" rel="noopener">看 Google 商家評論</a> · ' if address else ""
+        dest = TAINAN_SHANGQUAN_REPO / "images" / f"{slug or brand}{image_path.suffix.lower()}"
+        shutil.copy2(image_path, dest)
+        media_block = f"""
+            <div class="shop-media">
+              <div class="map-frame">
+                <img src="images/{dest.name}" alt="{e(title)}實景照片" loading="lazy">
+              </div>
+            </div>"""
+        review_link = ""
+    elif address:
+        # 找不到照片才退回舊版地圖內嵌（沒有更好的東西可放，維持可用）。
         map_q = quote(f"{address} {brand}")
-        review_q = quote(f"{brand} 台南")
         media_block = f"""
             <div class="shop-media">
               <div class="map-frame">
@@ -590,7 +659,7 @@ def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url
                 <li><span class="k">分類</span><span>{e(category)}</span></li>
                 {address_row}
               </ul>
-              <p class="slot-note"><a href="{e(event_url)}" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note">{review_btn}<a href="{e(event_url)}" target="_blank" rel="noopener">查看店家專屬網站</a></p>
               {review_link}
             </div>{media_block}
           </article>
@@ -792,6 +861,14 @@ def process_one(pkg_path: Path) -> None:
             overwrite_shop_placeholder(tmp_extract, existing_shop_slug)
             event_url = f"https://shops.bymyway.com/{existing_shop_slug}/"
 
+            try:
+                if update_directory_card_photo(existing_shop_slug, event_url, tmp_extract, html_text):
+                    log(f"🖼️ 店家名冊卡片媒體區已換成代表照：{existing_shop_slug}")
+                else:
+                    log(f"⚠️ 店家名冊卡片找不到可用代表照，維持原樣（可能仍是地圖）：{existing_shop_slug}")
+            except Exception as e:  # noqa: BLE001
+                log(f"⚠️ 換卡片代表照失敗（網站本身已更新，不影響）：{e!r}")
+
             fb_note = ""
             image_path = find_post_image(tmp_extract, html_text)
             if post_to_facebook(title, desc, event_url, image_path):
@@ -840,14 +917,16 @@ def process_one(pkg_path: Path) -> None:
         save_registry(registry)
 
         card_note = ""
+        card_image_path = find_post_image(repo_dir, html_text)
         try:
-            insert_tainan_shangquan_card(title, desc, category, event_url, address)
+            insert_tainan_shangquan_card(title, desc, category, event_url, address,
+                                          image_path=card_image_path, slug=slug)
         except Exception as e:  # noqa: BLE001
             card_note = f"\n⚠️ 加入大台南策展中心店家名冊失敗（網站本身已上線，不影響）：{e}"
             log(f"插卡失敗: {e!r}")
 
         fb_note = ""
-        image_path = find_post_image(repo_dir, html_text)
+        image_path = card_image_path
         if post_to_facebook(title, desc, event_url, image_path):
             fb_note = "\n✅ 已自動發布大台南策展中心FB貼文宣布"
         else:
