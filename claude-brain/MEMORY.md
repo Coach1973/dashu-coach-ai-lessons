@@ -1,5 +1,6 @@
 # Memory Index
 - [💸🔴 LK888出圖一律走lk888_guard收費閘門，兩端都有繞過鎖；測付費API先封網(sitecustomize撞名會讓mock失效)(2026-09-26 案例85)](reference_lk888_spend_guard_2026-09-26.md)
+- [🔧 git rebase --continue報「還有衝突」卻index全乾淨，真因是其他modified檔案未staged(2026-09-26)](reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md)
 - [🔴🔴 OpenClaw bootstrap檔(AGENTS/SOUL/HEARTBEAT/MEMORY.md)有2萬字硬上限，超過會切出UTF-8亂碼；自動化日誌改寫state/*.log不要寫這些檔(2026-09-25)](reference_openclaw_bootstrap_20k_char_limit_2026-09-25.md)
 - [🔴 修好相容性問題只治入口，沒查同頁引用出去的其他資源是不是同一個病，教練追問才抓到(2026-09-25)](feedback_check_downstream_references_when_fixing_compat_2026-09-25.md)
 - [🔧 GitHub Pages對.md回傳text/markdown導致多數AI「讀不到」，公開給AI讀的頁一律要有.html版本(2026-09-25)](reference_github_pages_md_content_type_ai_compat_2026-09-25.md)
