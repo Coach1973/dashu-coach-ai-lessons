@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-26 16:00:27**
+> **最後同步：2026-09-26 18:55:40**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -26,17 +26,17 @@
 ### 4. 🔴 自己測試時抓到自己种下的bug：改名機制讓系統「忘記」店家已存在
 真實重傳測試發現：改名後`_shops_slugs.json`的拼音key跟着slug一起被換掉，導致下次同店家上傳被誤判成全新店家，重複建了`hsinhan-2`。查出根因（品牌識別key不該跟著網址一起變）、改成`{品牌拼音key: 目前生效slug}`字典格式，清乾淨重複產出（本機目錄搬進`.trash`、tainan-shangquan重複卡片、registry重複條目；GitHub孤兒repo`hsinhan-2`因token無`delete_repo`權限留著但無害無連結），重新測試確認正確。
 
-### 5. 插播：小龍蝦LK888額度浪費事故（28張需求出96張），審查其自建防呆機制
-小龍蝦(Mac mini/OpenClaw/MiniMax)寫信通報，已自己在`generate_teamwork_manga_v5_anime_mature.py`加上mtime鎖+執行歷史記錄。審查確認擋點在付費API呼叫之前、邏輯正確，回覆其三個問題（軍師端hook做不到跨進程攔截、腳本內建防呆才是對architecture、p14~28要不要繼續是教練的決定不是AI該選），寫進試金石同一案例＋cross-agent信件。
+### 5. 插播：小龍蝦LK888額度浪費事故（28張需求出96張）——我的初步審查不夠嚴謹，被平行的軍師session用真實紀錄糾正
+小龍蝦(Mac mini/OpenClaw/MiniMax)寫信通報，自己在`generate_teamwork_manga_v5_anime_mature.py`加了mtime鎖，我審查後只確認「擋點在付費API呼叫前、邏輯正確」就回報可信任——**但沒有拿真實時間間隔資料驗證**。教練同時段人在外用手機（Sonnet）先行處理，查小龍蝦對話資料庫發現：實際重跑次數是21次/15次（不是小龍蝦自報的17/13），而且重跑間隔常常超過60秒（例如84秒），我核可的那道60秒鎖根本擋不住。手機那邊做出真正完整的解法：`scripts/lk888_guard.py`收費閘門（24小時同圖只付一次+5分鐘內不准連續+一天上限+一小時煞車，8支出圖腳本全接上）＋小龍蝦端跟軍師端各一道安全鎖（含防止小龍蝦再次整份覆寫試金石檔案）。過程中小龍蝦自己還把試金石案例庫從3906行寫壞成109行(案例1~84全消失)，已用git`5edab188e`救回。**教訓寫進試金石案例85第2點：「AI的自我檢討要用原始紀錄驗證後才能採信，包括另一個軍師的結論」——這條也是在說我。**
 
-### 6. 教練指名寫信給Opus，交接VPS遷移完整決策過程
-放進`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`，含教練給的三條判斷框架、查證過程、技術細節、自己抓到的bug，下次Opus開工六步驟第4步會自動讀到。
+### 6. 教練指名寫信給Opus，交接VPS遷移完整決策過程——Opus審議抓到我留下的一個真實安全漏洞
+放進`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`。Opus 5.5審議後回覆（同一份檔案第八節）：**我新增的`shops_local_page()`/`shops_local_assets()`只檢查「資料夾存在」，等於把`/Users/bymyway/github_repos/`底下80多個資料夾全部掛在shops.bymyway.com公開，實測連來賓名單資料庫(`zhenxin_guests.db`)、schema、log都能被外部下載200**——我當時只測「該通的路徑通不通」，沒測「不該通的路徑會不會被誤放行」。已修：白名單只開放`_shops_slugs.json`登記店家＋`_serve_repo_file()`對敏感副檔名(.db/.log/.sql/.env等)一律404，兩層防禦。另外Opus也糾正我信裡一個事實錯誤：我說「kr這個slug已經死了」——其實Mac檔案系統不分大小寫，`github_repos/KR/`(另一家真實店KR養生廚房)讓`shops.bymyway.com/kr/`一直是活的，我沒注意到大小寫問題。commit`56da56292`。
 
 ### 📋 下一場開工先做
-沒有教練待決定的事。VPS上舊檔案沒刪(當備援)、孤兒GitHub repo `hsinhan-2`無害擱置，都列進AI自己的工作清單，不用主動提。小龍蝦LK888事故的p14~28續跑與否，教練會直接跟小龍蝦說，軍師這邊不用追問。
+沒有教練待決定的事。VPS上舊檔案沒刪(當備援)、孤兒GitHub repo `hsinhan-2`無害擱置，都列進AI自己的工作清單，不用主動提。小龍蝦LK888事故的p14~28續跑與否，教練會直接跟小龍蝦說，軍師這邊不用追問。**本場最大的教訓：兩件事我都做完「看起來對」的驗證就回報過關，實際上一件缺了真實資料比對、一件缺了負向測試（測不該看到的東西），都是被別的session事後抓到——下次交付前要主動想「我漏測了哪個方向」，不能只驗證自己預設的那條路徑。**
 
 ### 🔑 本場commit
-workspace：`3e83a3ee1` `62b4206b4` `5edab188e` `67418df3f` `611139f75` `b4d5d1684` `2934338bd` `4e734672c`；tainan-shangquan：3筆改名/清理commit。本次總結commit另計。
+workspace：`3e83a3ee1` `62b4206b4` `5edab188e` `67418df3f` `611139f75` `b4d5d1684` `2934338bd` `4e734672c` `118daf9d7` `b1677dc05` `d65e25aa6` `53d3e50da` `56da56292`；外層`~/.openclaw`：`2a8594141`；tainan-shangquan：3筆改名/清理commit。本次總結commit另計。
 
 ---
 
@@ -169,7 +169,7 @@ workspace：`445210e92` `8f953cd14` `5ea38190d` `9543c6ec6` `614db2def`；ai-go�
 | ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩50次(2026-08-05，jiesheng-leadership git-auto-deploy推送後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🔴🔴🔴 | **Netlify站分兩型，動手前必查是哪型(2026-08-05二度誤推)** | ⚠️永久提醒 | `feedback_netlify_deploy_zip_api.md`早就記載`jiesheng-leadership`是GitHub自動部署型(2026-06-09第一次血淚)，本場(2026-08-05)Sonnet 5仍然只想著「教練說先推GitHub」沒有觸發查證動作，導致同一個錯犯第二次。已補進記憶+更新MEMORY.md索引標題直接寫「動手前必查是哪型」。**新鐵律**：聽到「推GitHub」這類指令，只要牽涉Netlify網站，一律先查是不是自動部署型，不能拆開處理成「先推一半」 |
 | 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
-| 🟡 | **shops.bymyway.com已拆除VPS依賴（2026-09-26），VPS上舊檔案+GitHub孤兒repo收尾** | ⏳待處理-低優先 | 3家店(huitou/ema/hsinhan)已遷移到Mac本機+DNS切換完成，VPS(43.245.60.200)上`/var/www/shops/`原始檔案故意沒刪，當一段時間的rollback安全網，穩定觀察期(建議至少2週無異常)過了可以安全刪除。另外測試時意外建立的GitHub孤兒repo`coach1973/hsinhan-2`因手上token沒有`delete_repo`權限刪不掉，已無任何連結指向它、無害，之後若拿到有delete權限的token可順手清掉。詳見`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`。 |
+| 🟡 | **shops.bymyway.com已拆除VPS依賴（2026-09-26），VPS上舊檔案+GitHub孤兒repo收尾** | ⏳待處理-低優先 | 3家店(huitou/ema/hsinhan)已遷移到Mac本機+DNS切換完成，VPS(43.245.60.200)上`/var/www/shops/`原始檔案故意沒刪，當一段時間的rollback安全網，穩定觀察期(建議至少2週無異常)過了可以安全刪除。另外測試時意外建立的GitHub孤兒repo`coach1973/hsinhan-2`因手上token沒有`delete_repo`權限刪不掉，已無任何連結指向它、無害，之後若拿到有delete權限的token可順手清掉。詳見`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`。**09-26 Opus審議**：遷移時shops路由沒比照/curated/的白名單，整個github_repos(含來賓名單.db)可被外人下載，已修(白名單+敏感副檔名防線，實測)，詳見信第八節。 |
 | 🟡 | MEMORY.md超過OpenClaw 2萬字bootstrap上限(20,717字)且有1處UTF-8亂碼，跟HEARTBEAT.md同一類問題(2026-09-25查到，只查不動，優先度低於HEARTBEAT.md因為不影響小龍蝦即時反應) | ⏳待處理 | 用跟HEARTBEAT.md同樣手法瘦身：找出佔比最大的段落搬去handoff_archive或distill、備份原檔、確認新檔UTF-8正常。不用問教練，AI自己找時間做完即可 |
 | 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
 
