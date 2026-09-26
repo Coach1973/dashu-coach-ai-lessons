@@ -326,6 +326,41 @@ def get_shop_vps_creds() -> tuple[str | None, str | None]:
     return host, password
 
 
+def rename_shop_slug(old_slug: str, new_slug: str) -> None:
+    """把VPS上既有店家暫代頁從舊slug改名到新slug，同步更新_shops_slugs.json跟
+    tainan-shangquan店家名冊卡片連結。2026-09-26教練拍板（鑫瀚昌旅行社事故）：
+    教練上傳時親口指定的custom_slug必須贏過系統比對出的既有暫代頁slug——原本的
+    設計是「命中既有暫代頁就覆蓋內容、slug不變」，這對「防止同一家店出現兩個
+    網址」這個目標是對的，但完全沒考慮到教練當下明確選了一個短網址、卻被系統
+    默默換掉，教練事後才發現對不上，只能人工事後改名收拾。"""
+    host, password = get_shop_vps_creds()
+    if not host or not password:
+        raise RuntimeError("找不到SHOPS_VPS_HOST/SHOPS_VPS_SSH_PASSWORD設定，無法改名")
+    ssh_base = ["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", f"root@{host}"]
+    subprocess.run(
+        ssh_base + [f"test -d /var/www/shops/{new_slug} && exit 1 || mv /var/www/shops/{old_slug} /var/www/shops/{new_slug}"],
+        check=True, timeout=30, capture_output=True, env=_ENV,
+    )
+    registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
+    slugs = json.loads(registry_path.read_text(encoding="utf-8"))
+    registry_path.write_text(
+        json.dumps([new_slug if s == old_slug else s for s in slugs], ensure_ascii=False), encoding="utf-8",
+    )
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8")
+    index_path.write_text(
+        content.replace(f"https://shops.bymyway.com/{old_slug}/", f"https://shops.bymyway.com/{new_slug}/"),
+        encoding="utf-8",
+    )
+    subprocess.run(["git", "add", "_shops_slugs.json", "index.html"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com",
+         "commit", "-q", "-m", f"策展SOP：{old_slug} 改名為 {new_slug}（教練指定短網址優先）"],
+        cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV,
+    )
+    subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, env=_ENV)
+
+
 def find_existing_shop_slug(brand_name: str) -> str | None:
     """檢查這家店是不是已經在shops.bymyway.com有暫代頁（自助登錄表單`_provision_shop_placeholder()`
     那條路產生的），有的話回傳既有slug。2026-09-06教練拍板：策展上傳網址對這種店家要改成
@@ -738,7 +773,21 @@ def process_one(pkg_path: Path) -> None:
         # 2026-09-06教練拍板：先查這家店是不是已經在shops.bymyway.com有暫代頁
         # （自助登錄表單那條路產生的），有的話覆蓋暫代頁內容、網址不變，不建新GitHub網站。
         existing_shop_slug = find_existing_shop_slug(primary_title_segment(title))
+        rename_note = ""
         if existing_shop_slug:
+            # 2026-09-26鑫瀚昌旅行社事故修復：教練當下明確指定的custom_slug必須贏過
+            # 系統比對出的既有暫代頁slug，不能默默沿用舊的、讓教練事後才發現對不上。
+            custom_slug = read_custom_slug(pkg_path)
+            if custom_slug and custom_slug != existing_shop_slug:
+                old_slug = existing_shop_slug
+                try:
+                    rename_shop_slug(old_slug, custom_slug)
+                    log(f"🔄 教練指定短網址優先，暫代頁從「{old_slug}」改名為「{custom_slug}」")
+                    existing_shop_slug = custom_slug
+                    rename_note = f"（教練指定短網址，原網址「{old_slug}」已改名，只留這一個網址）"
+                except Exception as e:  # noqa: BLE001
+                    log(f"⚠️ 改名為「{custom_slug}」失敗，沿用既有slug「{old_slug}」: {e!r}")
+                    rename_note = f"\n⚠️ 教練指定的短網址「{custom_slug}」改名失敗，暫時沿用既有網址「{old_slug}」，請軍師人工檢查"
             overwrite_shop_placeholder(tmp_extract, existing_shop_slug)
             event_url = f"https://shops.bymyway.com/{existing_shop_slug}/"
 
@@ -752,7 +801,7 @@ def process_one(pkg_path: Path) -> None:
             notify(
                 "🎯【策展SOP・既有店家頁面已更新為完整版】\n"
                 f"店名：{title}\n"
-                f"網址：{event_url}（沿用既有網址，非新建站台）"
+                f"網址：{event_url}{rename_note}"
                 + fb_note
             )
             log(f"✅ 完成(覆蓋既有暫代頁)：{pkg_path.name} → {existing_shop_slug}")
