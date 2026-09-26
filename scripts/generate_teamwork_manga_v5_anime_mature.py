@@ -26,23 +26,33 @@ from generate_teamwork_manga_narrative import call_lk88_generation, png_to_jpeg
 DATA_DIR = Path('claude-brain/data/comic_source_20260926_teamwork_manga')
 
 
-def build_v5_prompt(scene_desc: str) -> str:
+def build_v5_prompt(scene_desc: str, idx: int = 0) -> str:
     """v5 模板 — 只換 [SCENE] 區塊，其他區塊一字不變
 
     Args:
         scene_desc: 場景描述（從 prompts.json 抓出來的 scene_desc 區塊）
+        idx: panel 編號（p28 例外：保留 Coach 引用 + 帶 reference 圖鎖臉）
 
     Returns:
         完整 prompt 字串
     """
+    # p28 是邀請你加入團隊 — 保留 Coach 引用 + 鎖臉
+    # 其他 27 張 — 自動清洗 Coach / 教練 引用，避免教練本人出現
+    if idx != 28:
+        scene_desc_clean = scene_desc
+        scene_desc_clean = scene_desc_clean.replace("the Coach", "a mature Taiwanese professional")
+        scene_desc_clean = scene_desc_clean.replace("Coach", "a mature Taiwanese professional")
+        scene_desc_clean = scene_desc_clean.replace("教練", "一位成熟台灣專業人士")
+        scene_desc = scene_desc_clean
+
     return f"""A wide cinematic composition, MODERN JAPANESE ANIME KEY-VISUAL STYLE — clean confident line art, saturated cinematic colors, dramatic lighting, anime aesthetics. MATURE ADULT ANIME (think Japanese business drama like 課長島耕作, NOT high school romance, NOT slice-of-life cute, NOT kawaii).
 
-[CRITICAL: TEAM OF 8 DIVERSE MATURE EAST ASIAN ADULTS — NOT 20-SOMETHINGS]
-EXACTLY 8 characters, no more no less, arranged as a cohesive team in the scene. ALL 8 characters are 40 to 50 years old East Asian (Chinese/Taiwanese/Japanese/Korean) mature adults in anime style. To force mature anime characters:
-- Longer angular face structure (NOT round kawaii face, NOT pointy childish chin)
+[CRITICAL: TEAM OF 8 DIVERSE MATURE TAIWANESE/CHINESE ADULTS — NOT 20-SOMETHINGS, NOT KOREAN, NOT JAPANESE]
+EXACTLY 8 characters, no more no less, arranged as a cohesive team in the scene. ALL 8 characters are 40 to 50 years old TAIWANESE/CHINESE (台灣人 / 華人) mature adults in anime style. To force mature anime characters AND lock the Taiwanese/Chinese ethnicity (AVOID Korean and Japanese features):
+- TAIWANESE/CHINESE facial features: oval-to-square face shape (NOT Korean V-line, NOT Japanese round face), almond-shaped eyes with single eyelid or inner double eyelid (NOT Korean large double eyelid, NOT Japanese round anime eyes), warmer yellow skin tone (NOT Korean porcelain white, NOT Japanese pale white), defined mature jawline
 - Visible thin mature smile lines at outer eye corners (1-2 subtle lines, NOT smooth porcelain)
-- Visible mature jawline, broader facial structure
-- Short natural black hair, simple adult hairstyle (NOT spiky anime protagonist hair, NOT flowing hair, NOT bangs)
+- Mature solid face structure (NOT pointy childish chin)
+- Short natural black hair, simple adult hairstyle (NOT spiky anime protagonist hair, NOT flowing hair, NOT bangs, NOT Korean permed hair, NOT Japanese dyed hair)
 - Calm composed steady gaze (NOT sparkling cute anime eyes)
 - Solid mature body build, broader shoulders (NOT slender youth body)
 
@@ -74,7 +84,7 @@ Each of the 8 characters must have visibly different profession attire — NO tw
 Modern Japanese anime key-visual — clean line art, saturated cinematic colors, dramatic composition, cinematic lighting. Mature anime adults. 3:2 landscape aspect ratio (1536x1024).
 
 [SAFETY]
-NO text, letters, numbers, logos, watermarks, chibi style, baby-face anime youth, schoolboy features, Caucasian/Western faces.
+NO text, letters, numbers, logos, watermarks, chibi style, baby-face anime youth, schoolboy features, Caucasian/Western faces, Korean faces (NOT Korean V-line, NOT Korean permed hair, NOT Korean porcelain skin, NOT Korean large double eyelid), Japanese faces (NOT Japanese round face, NOT Japanese pale skin, NOT Japanese dyed hair, NOT Japanese round anime eyes). ONLY Taiwanese/Chinese adults.
 """
 
 
@@ -93,7 +103,7 @@ def generate_panel(idx: int, scene_desc: str, output_filename: str = None) -> di
         output_filename = f'p{idx:02d}_narrative_v5.jpg'
 
     out_jpg = DATA_DIR / output_filename
-    prompt = build_v5_prompt(scene_desc)
+    prompt = build_v5_prompt(scene_desc, idx)
 
     print(f'[p{idx:02d}] prompt len: {len(prompt)} chars', flush=True)
     t0 = time.time()
