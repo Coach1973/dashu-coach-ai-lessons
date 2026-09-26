@@ -1,3 +1,33 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-26 15:55，Mac終端機 Sonnet 5，新的一棒 v250）
+
+**本場主軸：赫米斯鑫瀚昌旅行社上架卡住的表面bug，一路被教練追問揪出系統性根因，最後演變成拆除shops.bymyway.com的VPS依賴、全面遷移到Mac本機處理；過程中自己抓到自己種下的bug並修好；另外插一段小龍蝦LK888額度浪費事故的技術審查。**
+
+### 1. 鑫瀚昌旅行社上架卡關→查證後發現是設計已知行為（custom_slug被既有暫代頁覆蓋規則略過）
+赫米斯curl上傳200後猜`/curated/hsinhan/`猜4次都404，其實6秒就處理完成，只是命中`shops.bymyway.com`既有暫代頁、custom_slug被2026-09-06舊規則略過，真正網址是拼音自動轉的`shops.bymyway.com/xin-han-chang-lv-xing-she/`。回信說明+驗證後，教練追問「為什麼保證『分得清楚』卻連續出包」，逼出根因：**執行的AI完全沒有機器可查的真相來源，只能靠猜網址自我驗證**。新增`scripts/curation_check_result.py`（一行查真相：成功/失敗/處理中+真實網址+存活狀態），改寫`SOUL.md`/赫米斯`AGENTS.md`/兩份SOP文件禁止再猜。
+
+### 2. 教練要求「教練指定的網址必須生效」，新增custom_slug覆蓋既有slug的改名機制
+新增`rename_shop_slug()`：custom_slug跟既有slug不同時，自動改VPS目錄名+`_shops_slugs.json`+策展中心卡片連結，手動把鑫瀚昌修正到`shops.bymyway.com/hsinhan/`（實測200），寫入試金石案例84。
+
+### 3. 🔴 教練追問「為什麼扯上VPS」，查出shops.bymyway.com實體架在跟「VPS小龍蝦」同一台主機（43.245.60.200）
+教練評估後給三條判斷框架（改動成本/不改代價/改了好處），額度不夠切Opus、授權直接在Sonnet上做完整件事：查證VPS沒有真的提供獨立於Mac之外的可用性（`event.bymyway.com`本身就跑在Mac的Cloudflare Tunnel上）→3家真實店家(huitou/ema/鑫瀚昌)全部遷移到本機`github_repos/<slug>/`，複用`/curated/`同一套serving機制，`app.py`新增host分流路由，Cloudflare DNS從A記錄改CNAME指向同一個tunnel，`curation_process.py`/`app.py`移除所有sshpass/VPS程式碼，端到端curl測試通過（含圖片Content-Type）。
+
+### 4. 🔴 自己測試時抓到自己种下的bug：改名機制讓系統「忘記」店家已存在
+真實重傳測試發現：改名後`_shops_slugs.json`的拼音key跟着slug一起被換掉，導致下次同店家上傳被誤判成全新店家，重複建了`hsinhan-2`。查出根因（品牌識別key不該跟著網址一起變）、改成`{品牌拼音key: 目前生效slug}`字典格式，清乾淨重複產出（本機目錄搬進`.trash`、tainan-shangquan重複卡片、registry重複條目；GitHub孤兒repo`hsinhan-2`因token無`delete_repo`權限留著但無害無連結），重新測試確認正確。
+
+### 5. 插播：小龍蝦LK888額度浪費事故（28張需求出96張），審查其自建防呆機制
+小龍蝦(Mac mini/OpenClaw/MiniMax)寫信通報，已自己在`generate_teamwork_manga_v5_anime_mature.py`加上mtime鎖+執行歷史記錄。審查確認擋點在付費API呼叫之前、邏輯正確，回覆其三個問題（軍師端hook做不到跨進程攔截、腳本內建防呆才是對architecture、p14~28要不要繼續是教練的決定不是AI該選），寫進試金石同一案例＋cross-agent信件。
+
+### 6. 教練指名寫信給Opus，交接VPS遷移完整決策過程
+放進`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`，含教練給的三條判斷框架、查證過程、技術細節、自己抓到的bug，下次Opus開工六步驟第4步會自動讀到。
+
+### 📋 下一場開工先做
+沒有教練待決定的事。VPS上舊檔案沒刪(當備援)、孤兒GitHub repo `hsinhan-2`無害擱置，都列進AI自己的工作清單，不用主動提。小龍蝦LK888事故的p14~28續跑與否，教練會直接跟小龍蝦說，軍師這邊不用追問。
+
+### 🔑 本場commit
+workspace：`3e83a3ee1` `62b4206b4` `5edab188e` `67418df3f` `611139f75` `b4d5d1684` `2934338bd` `4e734672c`；tainan-shangquan：3筆改名/清理commit。本次總結commit另計。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-26 00:23，Mac桌面版，新的一棒 v249）
 
 **本場主軸：教練發現「軍師調整完之後，小龍蝦說好卻不動、赫米斯上架失敗」，追查發現是軍師自己的自動化在拖垮小龍蝦；後續教練連續兩次查證測試（別名清單漏字、要我交代原話出處），逼出「死背字串」這個方法論本身的錯誤，改成概念判斷。**
@@ -127,6 +157,7 @@ workspace：`445210e92` `8f953cd14` `5ea38190d` `9543c6ec6` `614db2def`；ai-go�
 | ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩50次(2026-08-05，jiesheng-leadership git-auto-deploy推送後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
 | 🔴🔴🔴 | **Netlify站分兩型，動手前必查是哪型(2026-08-05二度誤推)** | ⚠️永久提醒 | `feedback_netlify_deploy_zip_api.md`早就記載`jiesheng-leadership`是GitHub自動部署型(2026-06-09第一次血淚)，本場(2026-08-05)Sonnet 5仍然只想著「教練說先推GitHub」沒有觸發查證動作，導致同一個錯犯第二次。已補進記憶+更新MEMORY.md索引標題直接寫「動手前必查是哪型」。**新鐵律**：聽到「推GitHub」這類指令，只要牽涉Netlify網站，一律先查是不是自動部署型，不能拆開處理成「先推一半」 |
 | 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
+| 🟡 | **shops.bymyway.com已拆除VPS依賴（2026-09-26），VPS上舊檔案+GitHub孤兒repo收尾** | ⏳待處理-低優先 | 3家店(huitou/ema/hsinhan)已遷移到Mac本機+DNS切換完成，VPS(43.245.60.200)上`/var/www/shops/`原始檔案故意沒刪，當一段時間的rollback安全網，穩定觀察期(建議至少2週無異常)過了可以安全刪除。另外測試時意外建立的GitHub孤兒repo`coach1973/hsinhan-2`因手上token沒有`delete_repo`權限刪不掉，已無任何連結指向它、無害，之後若拿到有delete權限的token可順手清掉。詳見`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`。 |
 | 🟡 | MEMORY.md超過OpenClaw 2萬字bootstrap上限(20,717字)且有1處UTF-8亂碼，跟HEARTBEAT.md同一類問題(2026-09-25查到，只查不動，優先度低於HEARTBEAT.md因為不影響小龍蝦即時反應) | ⏳待處理 | 用跟HEARTBEAT.md同樣手法瘦身：找出佔比最大的段落搬去handoff_archive或distill、備份原檔、確認新檔UTF-8正常。不用問教練，AI自己找時間做完即可 |
 | 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
 
