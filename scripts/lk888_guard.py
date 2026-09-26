@@ -18,6 +18,10 @@
   4. 超過上限要繼續，必須教練同意後 touch state/LK888_APPROVED（10 分鐘有效）。
   5. 兩個程式同時要畫同一張，第二個排隊等第一個畫完，直接拿結果。
 
+  6. 多組金鑰備援（2026-09-26教練開第二個帳戶）：路徑大全_憑證層.md 的 lk888 段落可放多行
+     「API Key：sk-...」，第一行是主要的；某組回報額度/餘額不足時，同一次請求自動改用下一組，
+     不重跑、不多扣（額度不足的請求沒有出圖，本來就不扣點）。
+
 查帳：python3 scripts/lk888_guard.py report [--hours 24]
 """
 
@@ -52,6 +56,8 @@ MAX_PAID_PER_HOUR = 40
 APPROVAL_TTL = 10 * 60
 LOCK_WAIT_SECONDS = 300
 TPE = timezone(timedelta(hours=8))
+CRED_FILE = WORKSPACE / "路徑大全_憑證層.md"
+QUOTA_HINTS = ("quota", "insufficient", "balance", "额度", "額度", "余额", "餘額", "exhausted", "用尽", "用盡")
 
 
 class LK888Blocked(RuntimeError):
@@ -246,8 +252,7 @@ def urlopen(req, timeout=None, **kwargs):
 
         _record("attempt", fp, url_path, redo)
         try:
-            with urllib.request.urlopen(req, timeout=timeout, **kwargs) as r:
-                raw = r.read()
+            raw = _send_with_key_failover(req, fp, url_path, redo, timeout, kwargs)
         except Exception as e:
             _record("fail", fp, url_path, redo, f"{type(e).__name__}: {str(e)[:200]}")
             raise
@@ -255,6 +260,48 @@ def urlopen(req, timeout=None, **kwargs):
         (CACHE_DIR / f"{fp}.json").write_bytes(_normalize_for_cache(raw))
         _prune_cache()
         return _Resp(raw)
+
+
+def _all_keys():
+    """路徑大全_憑證層.md 的 lk888 段落裡所有「API Key：sk-...」，照出現順序（第一行＝主要）。"""
+    try:
+        text = CRED_FILE.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    keys, in_lk = [], False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            in_lk = "lk888" in line.lower()
+        elif in_lk and line.startswith("API Key：sk-"):
+            keys.append(line.split("：", 1)[1].strip())
+    return keys
+
+
+def _is_quota_error(e):
+    if not isinstance(e, urllib.error.HTTPError) or e.code not in (401, 402, 403, 429):
+        return False
+    try:
+        body = e.read().decode("utf-8", "replace").lower()
+    except Exception:
+        body = ""
+    return any(h in body for h in QUOTA_HINTS)
+
+
+def _send_with_key_failover(req, fp, url_path, redo, timeout, kwargs):
+    used = (req.get_header("Authorization") or "").replace("Bearer ", "").strip()
+    backups = [k for k in _all_keys() if k != used]
+    while True:
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, **kwargs) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if not backups or not _is_quota_error(e):
+                raise
+            nxt = backups.pop(0)
+            _record("key_failover", fp, url_path, redo, f"HTTP {e.code} 額度不足，改用備援金鑰 …{nxt[-4:]}")
+            print(f"🔁 LK888：金鑰 …{used[-4:]} 額度不足，自動改用備援金鑰 …{nxt[-4:]}（同一張，不重跑）", file=sys.stderr)
+            req.add_header("Authorization", f"Bearer {nxt}")
+            used = nxt
 
 
 def report(hours=24):
