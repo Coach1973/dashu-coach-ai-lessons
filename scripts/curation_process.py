@@ -313,6 +313,32 @@ def push_repo(repo_dir: Path, token: str, slug: str) -> None:
     )
 
 
+SHOPS_REGISTRY_PATH = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
+
+
+def _load_shops_registry() -> dict:
+    """{品牌拼音key: 目前生效的slug}。key在店家第一次登記時算出、永遠不變，
+    value是目前實際生效的網址slug（可能被改名過）。2026-09-26鑫瀚昌旅行社
+    事故發現：舊格式只存一份扁平slug清單，改名後舊的比對key就永遠對不上，
+    導致同一家店下次上傳會被誤判成「全新店家」重複建站。舊格式(list)相容
+    讀取：key=value自我對映（huitou/kr/ema這幾筆沒有原始品牌拼音key可還原，
+    維持舊有的「查得到現有slug就不能再判斷改名前後是不是同一家」限制，跟
+    reference_curation_sop_2026-09-06.md記載的既有限制一致，不是新問題）。"""
+    if not SHOPS_REGISTRY_PATH.is_file():
+        return {}
+    try:
+        data = json.loads(SHOPS_REGISTRY_PATH.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {}
+    if isinstance(data, list):
+        return {s: s for s in data}
+    return data
+
+
+def _save_shops_registry(reg: dict) -> None:
+    SHOPS_REGISTRY_PATH.write_text(json.dumps(reg, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+
+
 def rename_shop_slug(old_slug: str, new_slug: str) -> None:
     """把既有店家暫代頁從舊slug改名到新slug，同步更新_shops_slugs.json跟
     tainan-shangquan店家名冊卡片連結。2026-09-26教練拍板（鑫瀚昌旅行社事故）：
@@ -330,11 +356,10 @@ def rename_shop_slug(old_slug: str, new_slug: str) -> None:
     if not old_dir.is_dir():
         raise RuntimeError(f"找不到既有店家目錄「{old_slug}」，無法改名")
     old_dir.rename(new_dir)
-    registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
-    slugs = json.loads(registry_path.read_text(encoding="utf-8"))
-    registry_path.write_text(
-        json.dumps([new_slug if s == old_slug else s for s in slugs], ensure_ascii=False), encoding="utf-8",
-    )
+    reg = _load_shops_registry()
+    key = next((k for k, v in reg.items() if v == old_slug), old_slug)
+    reg[key] = new_slug
+    _save_shops_registry(reg)
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
     content = index_path.read_text(encoding="utf-8")
     index_path.write_text(
@@ -352,19 +377,16 @@ def rename_shop_slug(old_slug: str, new_slug: str) -> None:
 
 def find_existing_shop_slug(brand_name: str) -> str | None:
     """檢查這家店是不是已經在shops.bymyway.com有暫代頁（自助登錄表單`_provision_shop_placeholder()`
-    那條路產生的），有的話回傳既有slug。2026-09-06教練拍板：策展上傳網址對這種店家要改成
-    覆蓋暫代頁內容而非另建一個新GitHub網站，避免同一家店出現兩個不同網址的重複站台。"""
+    那條路產生的），有的話回傳目前生效的slug（可能跟原始拼音不同，見rename_shop_slug()）。
+    2026-09-06教練拍板：策展上傳網址對這種店家要改成覆蓋暫代頁內容而非另建一個新GitHub網站，
+    避免同一家店出現兩個不同網址的重複站台。"""
     from pypinyin import lazy_pinyin
-    registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
-    if not registry_path.is_file():
-        return None
-    try:
-        used = set(json.loads(registry_path.read_text(encoding="utf-8")))
-    except Exception:  # noqa: BLE001
+    reg = _load_shops_registry()
+    if not reg:
         return None
     raw = "-".join(lazy_pinyin(brand_name))
     candidate = re.sub(r"-+", "-", re.sub(r"[^a-z0-9-]", "", raw.lower())).strip("-") or "shop"
-    return candidate if candidate in used else None
+    return reg.get(candidate)
 
 
 def overwrite_shop_placeholder(site_dir: Path, slug: str) -> None:

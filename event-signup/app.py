@@ -1485,20 +1485,26 @@ def _provision_shop_placeholder(name, shop, category, contact, address, social, 
     任何一步失敗都不能擋住表單本身的DB寫入/Telegram通知，所以呼叫端要包try/except。
     回傳(slug, shop_url)供通知訊息使用；失敗回傳(None, None)。"""
     slug = _shop_slug(shop)
-    existing = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
-    used = set()
-    if existing.is_file():
+    registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
+    reg = {}
+    if registry_path.is_file():
         try:
-            used = set(json.loads(existing.read_text(encoding="utf-8")))
+            raw_data = json.loads(registry_path.read_text(encoding="utf-8"))
+            reg = {s: s for s in raw_data} if isinstance(raw_data, list) else raw_data
         except Exception:  # noqa: BLE001
-            used = set()
+            reg = {}
+    # 2026-09-26鑫瀚昌旅行社事故修復：格式改成{品牌拼音key: 目前生效slug}，
+    # key在這裡（第一次登記）算出後永遠不變，就算之後curation_process.py的
+    # rename_shop_slug()把value改掉，下次同一家店上傳還是查得到（見該函式註解）。
+    key = slug
     base_slug = slug
     n = 2
-    while slug in used:
+    taken = set(reg.values())
+    while slug in taken:
         slug = f"{base_slug}-{n}"
         n += 1
-    used.add(slug)
-    existing.write_text(json.dumps(sorted(used), ensure_ascii=False), encoding="utf-8")
+    reg[key] = slug
+    registry_path.write_text(json.dumps(reg, ensure_ascii=False, sort_keys=True), encoding="utf-8")
 
     shop_url = f"https://shops.bymyway.com/{slug}/"
 

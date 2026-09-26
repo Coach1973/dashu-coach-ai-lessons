@@ -164,17 +164,6 @@
       "source_package": "20260909-023918__association-brand-website-v2.tar.tar.gz"
     },
     {
-      "slug": "nmda-2",
-      "title": "中華新媒體影音發展協會｜讓專業被看見，讓合作真正發生",
-      "description": "中華新媒體影音發展協會官方品牌網站：推動新媒體人才培育、產業串聯與跨界合作。2026年10月31日台中正式啟動大會。",
-      "category": "衣",
-      "event_url": "https://event.bymyway.com/curated/nmda-2/",
-      "github_pages_url": "https://coach1973.github.io/nmda-2/",
-      "uploaded_at": "2026-09-09 02:39",
-      "status": "live",
-      "source_package": "20260909-023919__association-brand-website-v2.tar.tar.gz"
-    },
-    {
       "slug": "kangyenju",
       "title": "康燕居 ｜ 一盞燕窩，四百年的講究",
       "description": "康燕居 KANG YEN JU，中壢門市總部。燕窩的由來與故事、本草典籍中的燕窩、世界各國的採集方式，以及野生洞燕採收現場實錄。320桃園市中壢區興農路102號。",
@@ -253,6 +242,78 @@
       "uploaded_at": "2026-09-24 00:30",
       "status": "live",
       "source_package": "zaolin-comic-package.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "c-challenge",
+      "title": "證明給機器看——大樹教練與軍師的四夜長談",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/c-challenge/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 20:14",
+      "status": "live",
+      "source_package": "20260925-200718__doc_99def7fc367a_證明給機器看_完整插圖20px閱讀版_下載包.tar.tar.gz",
+      "no_shop_card": true
+    },
+    {
+      "slug": "answer",
+      "title": "大樹的答案 ── 漫畫版 ｜ 一個人，一萬公里，和他想建的那支隊伍",
+      "description": "吳大樹教練的思想漫畫（日系漫畫版）。關於 AI、關於 BNI、關於為什麼要換一個戰場，以及一支別人抄不走的團隊，是怎麼長出來的。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/answer/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 20:27",
+      "status": "live",
+      "source_package": "20260925-202721__answer.tar.tar.gz",
+      "no_shop_card": true
+    },
+    {
+      "slug": "answer-tree",
+      "title": "大樹的答案 ── 一個人，一萬公里，和他想建的那支隊伍",
+      "description": "吳大樹教練的思想漫畫。關於 AI、關於 BNI、關於為什麼要換一個戰場，以及一支別人抄不走的團隊，是怎麼長出來的。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/answer-tree/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 20:27",
+      "status": "live",
+      "source_package": "20260925-202732__doc_875b54c1addd_大樹的答案_寫實版_完整離線包.tar.tar.gz",
+      "no_shop_card": true
+    },
+    {
+      "slug": "answer2",
+      "title": "大樹教練｜企業成長條漫 · EP01–EP05 全五話",
+      "description": "日式寫實青年漫畫風格條漫。EP01 覺醒／EP02 密約／EP03 靈魂／EP04 真相／EP05 分水嶺，共 24 格完整分鏡、對白、擬聲詞與生產級繪圖提示詞。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/answer2/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 21:33",
+      "status": "live",
+      "source_package": "20260925-213343__doc_6b2f3424aef5_大樹教練_企業成長條漫_EP01-EP05_離線完整包.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "yousure",
+      "title": "你非常確定嗎？｜AI 漫劇第一版",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/yousure/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 21:37",
+      "status": "live",
+      "source_package": "20260925-213722__doc_80d30d794b4f_你非常確定嗎_AI漫劇第一版_離線完整包.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "bestteam",
+      "title": "全世界最優秀的團隊計畫｜大樹教練",
+      "description": "全世界最優秀的團隊計畫：告別單打獨鬥，迎向主動組隊的黃金年代。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/bestteam/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-25 22:54",
+      "status": "live",
+      "source_package": "20260925-225444__doc_2c21d5d4b7bf_teamwork-illustrated-site.tar.tar.gz",
       "no_shop_card": true
     }
   ],
