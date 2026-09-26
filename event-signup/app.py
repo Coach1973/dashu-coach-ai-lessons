@@ -1679,9 +1679,21 @@ def curated_assets(slug, filename):
 # CURATED_REPOS_DIR本機目錄+_serve_repo_file()。用request.host分流（不是全站
 # host_matching，避免動到其他既有路由），只認shops.bymyway.com這個host名稱；
 # 認不出host或目錄不存在都404，不影響event.bymyway.com本身其他路由的行為。
+def _shops_slugs() -> set:
+    """shops.bymyway.com只開放_shops_slugs.json登記過的店家。2026-09-26審查抓到：
+    原本只檢查目錄存在，github_repos底下任何資料夾(含來賓名單.db/log)都能被外人下載。"""
+    try:
+        data = json.loads((TAINAN_SHANGQUAN_REPO / "_shops_slugs.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    return set(data.values()) if isinstance(data, dict) else set(data)
+
+
 @app.route("/<slug>/")
 def shops_local_page(slug):
     if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if slug not in _shops_slugs():
         abort(404)
     if not (CURATED_REPOS_DIR / slug).is_dir():
         abort(404)
@@ -1691,6 +1703,8 @@ def shops_local_page(slug):
 @app.route("/<slug>/<path:filename>")
 def shops_local_assets(slug, filename):
     if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if slug not in _shops_slugs():
         abort(404)
     if not (CURATED_REPOS_DIR / slug).is_dir():
         abort(404)

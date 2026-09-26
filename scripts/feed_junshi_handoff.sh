@@ -222,6 +222,18 @@ MAX_INJECT_CHARS=60000
 INJECT_CONTENT=$(
   echo "# 🔴 軍師接力棒 v2（六步驟全注入，本場 session 僅一次）"
   echo ""
+  # 2026-09-26教練抓到：Sonnet寫給Opus的信(knowledges/LETTER_*)只在第4步清單裡佔一行，
+  # 而本注入常超過10KB，Claude Code只給模型看前2KB預覽、其餘存成檔案，第2~6步實際上看不到，
+  # 軍師開工沒讀信、教練要自己點名才看到。信件一律放最前面(預覽範圍內)並要求當場讀完。
+  LETTERS=$(find "$WORKSPACE/knowledges" -maxdepth 1 -name 'LETTER_*.md' -mtime -3 2>/dev/null | sort)
+  if [ -n "$LETTERS" ]; then
+    echo "## 📬 有寫給軍師的信（開工必須先用 Read 讀完全文，回報時一行交代讀後結論）"
+    echo ""
+    printf '%s\n' "$LETTERS" | while read -r L; do echo "- \`$L\`"; done
+    echo ""
+  fi
+  echo "> ⚠️ 本注入若顯示「Output too large … Preview」，代表第2~6步只露出開頭，**必須用 Read 讀完那個完整檔案**才算做完開工六步。"
+  echo ""
   echo "## 🌐 雲端同步狀態"
   echo ""
   echo "- ${PULL_STATUS}"
