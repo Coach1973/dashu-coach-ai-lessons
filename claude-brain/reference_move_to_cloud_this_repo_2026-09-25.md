@@ -1,32 +1,34 @@
 ---
 name: reference-move-to-cloud-this-repo-2026-09-25
-description: 教練體驗Claude Code雲端方案時，這個對話框綁定的~/.openclaw外層repo跟遠端已知分岔(9/19金鑰清除留下的)，直接move_to_cloud會被拒絕(uncommitted changes)，正確做法是先安全commit(排除大檔/機密)、再用skip_push:true避免把分岔前舊歷史推回去；雲端對話框在本機list_sessions/get_session完全查不到，要找雲端對話框只能到瀏覽器claude.ai/code
+description: 雲端工作頁(claude.ai/code)怎麼吃到教練全套規則(cloud_sync+專案.claude/settings.json，main/master兩條都通，已實測)；外層~/.openclaw master分岔09-25已查證安全合併；AI可用claude --cloud開測試頁、claude -p --cloud傳話給既有雲端頁
 metadata:
   node_type: memory
   type: reference
   originSessionId: 7dfd3491-32da-49ec-be24-a2c0d54e850c
-  modified: 2026-09-24T20:42:52.346Z
+  modified: 2026-09-25T02:39:31.968Z
 ---
 
-# 這個repo要「搬到雲端」的正確做法
+# 雲端工作頁與這個 repo
 
-教練用桌面版App測試「在雲端繼續」（Open in → Cloud / move_to_cloud工具），這個對話框的cwd是`~/.openclaw`外層repo，卡在兩件事：
+## 1. 雲端怎麼吃到教練的規則（2026-09-25 建立，兩條路都實測通過）
+官方規則：雲端只讀 GitHub 專案裡的東西（專案 CLAUDE.md、專案 `.claude/settings.json` 的 hooks、`.claude/skills`），**讀不到 Mac 的 `~/.claude/`**（全域 CLAUDE.md、30 支 hook 的註冊、11 個自訂技能全在那裡）。所以 09-25 以前雲端說「模型分工規則我不知道」。
 
-## 1. move_to_cloud 要求本機乾淨，但這個repo常年有背景雜訊
-`~/.openclaw`是小龍蝦系統的即時狀態庫，被各種hook持續寫入（DREAMS.md、terminal-notes蒸餾、state/等），move_to_cloud報「uncommitted changes」很正常。**逐一檢查再commit，不要`git add -A`盲推**（呼應[[feedback_git_add_a_risk_with_db_backup_files_2026-09-01]]）——2026-09-25當場抓到一個533MB的漫畫素材資料夾差點被一起commit，已補進`.gitignore`。
+現在的機制：
+- `workspace/cloud_sync/`：`~/.claude/CLAUDE.md` 與自訂技能的副本。`session_end_auto_push.sh`（每則回覆結束）先跑 `scripts/cloud/mirror_to_cloud_sync.sh` 再 commit+push，Mac 改規則雲端自動跟上。
+- `workspace/.claude/settings.json`（main 分支）：雲端開場注入全套規則＋模型分工規則，並照跑時間/守則提醒/執行合約/守則原文/模型分工/刪檔鎖/結束檢查 7 支。全部經 `scripts/cloud/run_in_cloud.sh`，只在 `CLAUDE_CODE_REMOTE=true` 時執行，Mac 本機直接略過（避免跟 `~/.claude/settings.json` 重跑）。
+- 外層 `~/.openclaw/.claude/settings.json` + `cloud_bootstrap.sh`（master 分支，桌面版「Continue in cloud」會落在這條）：開場先把 main 的規則/接力棒/試金石/memory 稀疏下載到雲端 `~/.openclaw/workspace`（約 48MB），再交給同一支開場程式。
+- 雲端一律把 workspace 放在 `~/.openclaw/workspace`，規則裡所有 `~/.openclaw/workspace/...` 路徑在雲端直接有效。
+- 要新增雲端也要跑的 hook：兩個 settings.json 都要加，且腳本不能用 Mac 專屬指令（stat -f、osascript、/opt/homebrew…）。
 
-## 2. 這個repo本機分支跟遠端已知分岔，不能直接push
-`~/.openclaw`（外層）從9/19 git-filter-repo清除金鑰歷史後，本機分支長年「領先N筆、落後N筆」（真分岔，不是單純落後）——這是[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]留下的已知狀態，教練裁示過不用管、不准主動提。move_to_cloud預設會嘗試push，這裡千萬不能讓它強推，會把已清除的舊金鑰歷史重新送回GitHub。
+## 2. AI 自己就能操作雲端（不用叫教練轉話）
+- `claude --cloud "任務"`：開新雲端頁（以目前資料夾的 GitHub 分支為準，要先 push）。需要真終端機，Bash 工具裡用 `script -q <log> claude --cloud "..." < /dev/null`，session id 從 log grep。
+- `claude -p "訊息" --cloud <session_id>`：傳話給**已存在**的雲端頁（09-25 軍師一度誤說「沒有管道傳話」，是錯的）。
+- 驗收技巧：叫雲端頁把結果寫成檔案 commit+push，本機 `git ls-remote origin 'refs/heads/claude/*'` 抓分支讀檔；測完刪測試分支。
+- 雲端頁本機 `list_sessions`/`get_session` 查不到，教練要看只能開 claude.ai/code。
 
-**正確做法**：`move_to_cloud`傳 `skip_push: true`——雲端從遠端現有的乾淨版本接手，本機分岔的舊commit不會被帶過去（那些本來就是分岔前的舊東西，不影響教練當場的工作內容，因為當場的實際工作永遠是在`workspace`子repo，那個沒有分岔問題，正常commit+push即可）。
-
-## 3. 雲端對話框在本機完全查不到
-`list_sessions`（limit 50）、`get_session(session_id)`對剛建立的雲端session一律查不到、報「not found」——雲端session是claude.ai端獨立的資源，這個桌面版App的MCP session管理工具完全連不到它，`ccd_sidebar__set_pinned`這類工具也用不上。
-
-**教練要找回雲端對話框**：目前唯一確定可靠的方法是瀏覽器開 **claude.ai/code**，登入帳號，裡面會列出所有雲端對話框。桌面版側邊欄會不會也顯示、要不要靠「Open in → Cloud」才看得到——AI端看不到自己App的畫面，無法驗證，不要對教練打包票。
-
-## Why 這條很重要
-教練對雲端方案（$100/月）很有興趣、也願意花錢，但桌面版UI在哪切換完全找不到、全英文介面。這條記錄省下下次同樣卡關時重新試錯的時間，也記下這個repo專屬的分岔陷阱，避免哪天有人（AI或教練自己）在push時選錯選項把金鑰洩漏歷史推回去。
+## 3. 外層 `~/.openclaw` repo 的分岔真相（09-25 查證）
+09-25 前本機 master「領先26/落後25」，一直被當成「9/19 金鑰清除留下的分岔、push 會把舊金鑰推回去」。用 `git merge-base --is-ancestor` 查證：**舊金鑰 commit（如 f193a4eba）不在 master 上**，只在本機的 `main` 與 `claude/hungry-jackson-a81b31` 兩條舊分支；master 的分岔只是各機器平行 commit。已正常合併推送（f517ec524），master 與遠端同步。**危險的是外層 repo 本機那兩條舊分支——永遠不要 push 它們。**
+move_to_cloud 若遇 uncommitted changes：逐一檢查再 commit，不要 `git add -A`（09-25 曾抓到 533MB 漫畫素材差點被 commit）。
 
 ## 相關
-[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]、[[feedback_git_add_a_risk_with_db_backup_files_2026-09-01]]
+[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]、[[feedback_git_add_a_risk_with_db_backup_files_2026-09-01]]、[[feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25]]

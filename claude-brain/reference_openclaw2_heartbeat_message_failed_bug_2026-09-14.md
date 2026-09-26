@@ -1,6 +1,6 @@
 ---
 name: openclaw2-heartbeat-message-failed-bug
-description: OpenClaw 2.0內建heartbeat:main排程約半數機率失敗並發「Message failed」到Telegram，修法是system heartbeat disable非cron disable
+description: OpenClaw 2.0內建heartbeat每30分鐘插進教練Telegram主對話，永久關法是openclaw.json設heartbeat.every=0m（system heartbeat disable重開就失效，09-25已改）
 metadata:
   type: reference
 ---
@@ -42,3 +42,9 @@ OpenClaw 2.0建立新profile時會**自動內建**一個系統保護排程`heart
 ## 相關
 - [[reference_jarvis_kickoff_partner_checkin_2026-09-13]]（小二本機log查法的既有SOP，本案例是同一套查法的延伸發現）
 - [[reference_line_plugin_extensions_missing_2026-09-16]]（教練9/17提問促成的回頭查證，發現這次心跳regression跟LINE外掛遺失是兩個完全獨立的系統/事件，沒有因果關係，但都指向「gateway重啟/熱重載本身有風險」同一個主題）
+
+## ✅ 2026-09-25 永久修法（取代上面的 `system heartbeat disable`）
+
+上面 9/17 記下「重開就失效」卻沒改成永久設定，9/22 23:20 gateway 重開後心跳復活，每 30 分鐘插進教練的 Telegram 主對話（一天 70~110 次），帶著「不要接續舊任務、回 NO_REPLY」指令，小龍蝦因此嘴上說好卻不動（試金石案例83）。
+
+**正確做法**：`openclaw config set agents.defaults.heartbeat.every 0m`（寫進 openclaw.json，官方文件 `docs/gateway/config-agents/heartbeat-compaction-and-streaming.md`：`0m disables recurring cadence`，不用重開 gateway）。驗證：`openclaw cron list --json` 裡 declarationKey 以 `heartbeat` 開頭的排程應為 0 筆。背景 exec 完成的事件喚醒仍會運作。若將來要恢復心跳，改用 `isolatedSession: true`（每次在獨立對話跑，不碰教練的對話）＋`target: "none"`，不要用預設值。

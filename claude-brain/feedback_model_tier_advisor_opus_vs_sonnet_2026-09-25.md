@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 7dfd3491-32da-49ec-be24-a2c0d54e850c
-  modified: 2026-09-24T20:42:30.648Z
+  modified: 2026-09-26T07:42:48.258Z
 ---
 
 教練：「重大決策時我會請 Opus 出來，平常一般的庶務類雜事我還是讓 Sonnet 解決……如果你覺得需要調動 Opus 出來，就主動提醒我……如果是 Sonnet 就能解決的，就不用提醒我。該用 Opus 就用，該省就省。」
@@ -19,4 +19,5 @@ metadata:
 - 在 Sonnet 標🟣：一句建議切 Opus，先不動手；教練回「直接做」就照做
 - 在 Sonnet 卡關（兩種方法都沒解決／教練說還是不行）：停下說「我卡關了，建議切換到 Opus 5.5 接手」
 - 在 Opus 標🟢：照常做完，第一行提醒下一件可切回 Sonnet
+- **手機版切不到 Opus（教練2026-09-26親口）**：在手機碰到🟣事件，只做止血（叫停、安撫、不替教練做決定），根因與機制的結論先標「待電腦版Opus查證」，不要寫成定論——9/26 LK888事故手機版Sonnet先回信下了兩個錯結論（「軍師端擋不了」「60秒鎖可信」），教練回電腦後由Opus查原始紀錄更正（案例85）
 - 相關：[[feedback_junshi_threshold_sonnet5_and_above_2026-09-24]]、[[feedback_model_choice_quality_first]]

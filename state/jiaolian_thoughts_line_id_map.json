@@ -70,5 +70,21 @@
     "guessedMember": null,
     "confidence": "no_directory",
     "firstSeenAt": "2026-09-06T15:58:04.304Z"
+  },
+  "u691ec03ab58ca20a4de2612b6d652daa": {
+    "userId": "u691ec03ab58ca20a4de2612b6d652daa",
+    "displayName": "黃鈴凌",
+    "statusMessage": "",
+    "guessedMember": null,
+    "confidence": "no_directory",
+    "firstSeenAt": "2026-09-25T02:10:30.657Z"
+  },
+  "u2eba7b404adc98c691395b1a3bacebdb": {
+    "userId": "u2eba7b404adc98c691395b1a3bacebdb",
+    "displayName": "承鴻",
+    "statusMessage": "你的心放在哪裏裡，你的成就就在哪裏！專注力+堅持=成功。",
+    "guessedMember": null,
+    "confidence": "no_directory",
+    "firstSeenAt": "2026-09-25T02:16:00.521Z"
   }
 }
