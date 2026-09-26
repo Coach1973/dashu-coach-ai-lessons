@@ -118,6 +118,8 @@ def main() -> int:
 
     sessions = db_sessions()
     future = {s: v for s, v in sessions.items() if v["is_future"] and v.get("status") != "cancelled"}
+    # 其他獨立站（例如 ai-art）的場次本來就不會列在大樹官網，不拿來比
+    future_bigtree = {s: v for s, v in future.items() if (v.get("site") or "bigtree") == "bigtree"}
     live = live_site_slugs()
     sats = satellite_status()
 
@@ -130,12 +132,12 @@ def main() -> int:
     if live is None:
         print("   ⏭️  正式站抓不到，跳過")
     else:
-        only_db = set(future) - live
+        only_db = set(future_bigtree) - live
         only_live = live - set(sessions)
         if not only_db and not only_live:
             print(f"   ✅ 一致（正式站列出 {len(live)} 場）")
         for s in sorted(only_db):
-            msg = f"資料庫有「{future[s]['name']}（{s}／{future[s]['event_date']}）」但官網沒列出——是不是忘了按一鍵發佈？"
+            msg = f"資料庫有「{future_bigtree[s]['name']}（{s}／{future_bigtree[s]['event_date']}）」但官網沒列出——是不是忘了按一鍵發佈？"
             print(f"   🔴 {msg}")
             problems.append(msg)
         for s in sorted(only_live):
@@ -160,6 +162,10 @@ def main() -> int:
             msg = f"個別活動頁 {repo} 找不到 index.html"
             print(f"   ⚠️  {msg}")
             problems.append(msg)
+            continue
+        # 活動已辦完或取消，頁面會改成回顧／取消公告、拿掉報名鈕，沒有通知管線是正常的
+        if not any(slug in future for slug in st["slugs"]):
+            print(f"   ⏭️  {repo}（{st['desc']}）→ 場次已結束或取消，不再收報名，不檢查")
             continue
         icon = "✅" if st["notified"] else "🔴"
         print(f"   {icon} {repo}（{st['desc']}）→ {st['how']}")
