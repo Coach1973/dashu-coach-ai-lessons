@@ -210,11 +210,9 @@ def main() -> int:
             job = parse_dispatch(content)
 
             if job is None:
-                msg = (f"📬 小龍蝦寄了一封信到軍師信箱，但沒有標派工類型，需要人看一下：\n{fname}\n"
-                       f"（在信裡加 <!-- DISPATCH type: xxx --> 我就能自動做完）")
-                print(msg)
-                if not dry:
-                    notify(msg)
+                # 2026-09-26：一般信件改由開工注入直接列給軍師讀（feed_junshi_handoff.sh），
+                # 不再發Telegram叫教練「找人看一下」——那等於要教練當搬運工。
+                print(f"📬 一般信件（開工注入會列給軍師）：{fname}")
                 continue
 
             if job.get("unknown"):

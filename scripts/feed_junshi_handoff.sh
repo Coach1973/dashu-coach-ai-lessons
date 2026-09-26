@@ -225,7 +225,11 @@ INJECT_CONTENT=$(
   # 2026-09-26教練抓到：Sonnet寫給Opus的信(knowledges/LETTER_*)只在第4步清單裡佔一行，
   # 而本注入常超過10KB，Claude Code只給模型看前2KB預覽、其餘存成檔案，第2~6步實際上看不到，
   # 軍師開工沒讀信、教練要自己點名才看到。信件一律放最前面(預覽範圍內)並要求當場讀完。
-  LETTERS=$(find "$WORKSPACE/knowledges" -maxdepth 1 -name 'LETTER_*.md' -mtime -3 2>/dev/null | sort)
+  # 2026-09-26二度補：赫米斯/聯想寫給Mac的信放在cross-agent/inbox/mac/，原本只有派工程式讀，
+  # 沒標DISPATCH的一般信件只會發Telegram叫教練「找人看一下」，從沒進到這份注入，
+  # 教練得自己轉告軍師（搬運工）。現在信箱裡還沒歸檔的信一律列在這裡。
+  LETTERS=$( { find "$WORKSPACE/knowledges" -maxdepth 1 -name 'LETTER_*.md' -mtime -3; \
+               find "$WORKSPACE/cross-agent/inbox/mac" -maxdepth 1 -name '*.md'; } 2>/dev/null | sort)
   if [ -n "$LETTERS" ]; then
     echo "## 📬 有寫給軍師的信（開工必須先用 Read 讀完全文，回報時一行交代讀後結論）"
     echo ""
