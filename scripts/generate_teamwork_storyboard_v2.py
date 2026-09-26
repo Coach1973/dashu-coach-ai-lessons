@@ -15,6 +15,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+import lk888_guard
 from pathlib import Path
 
 try:
@@ -102,7 +103,7 @@ def generate_image_with_reference(prompt: str, reference_path: Path, api_key: st
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=180) as resp:
+    with lk888_guard.urlopen(req, timeout=180) as resp:
         result = json.loads(resp.read().decode("utf-8"))
     b64 = result["data"][0]["b64_json"]
     return base64.b64decode(b64)

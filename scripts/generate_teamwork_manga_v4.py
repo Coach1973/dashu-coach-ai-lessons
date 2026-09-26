@@ -10,6 +10,7 @@ import json
 import re
 import time
 import urllib.request
+import lk888_guard
 from datetime import datetime
 from pathlib import Path
 
@@ -178,7 +179,7 @@ def call_lk88_edit_multi(prompt: str, reference_paths: list, size: str = SIZE, q
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=300) as resp:
+    with lk888_guard.urlopen(req, timeout=300) as resp:
         result = json.loads(resp.read())
     if "data" in result and result["data"]:
         item = result["data"][0]

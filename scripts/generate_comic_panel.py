@@ -17,6 +17,7 @@ import json
 import re
 import sys
 import urllib.request
+import lk888_guard
 from datetime import datetime
 from pathlib import Path
 
@@ -84,7 +85,7 @@ def generate_image_with_reference(prompt: str, reference_image_path: Path, size:
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=180) as resp:
+    with lk888_guard.urlopen(req, timeout=180) as resp:
         result = json.loads(resp.read().decode("utf-8"))
     b64 = result["data"][0]["b64_json"]
     return base64.b64decode(b64)

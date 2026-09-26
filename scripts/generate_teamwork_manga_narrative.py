@@ -16,6 +16,7 @@ import re
 import sys
 import time
 import urllib.request
+import lk888_guard
 from pathlib import Path
 from datetime import datetime
 
@@ -115,7 +116,7 @@ def call_lk88_generation(prompt: str, size: str = SIZE) -> bytes:
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=180) as resp:
+    with lk888_guard.urlopen(req, timeout=180) as resp:
         result = json.loads(resp.read())
     if "data" in result and result["data"]:
         item = result["data"][0]

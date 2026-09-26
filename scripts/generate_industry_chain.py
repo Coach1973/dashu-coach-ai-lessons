@@ -15,6 +15,7 @@ import re
 import sys
 import time
 import urllib.request
+import lk888_guard
 from datetime import datetime
 from pathlib import Path
 
@@ -68,7 +69,7 @@ def generate_image(prompt: str, size: str = "1024x1024") -> bytes:
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=120) as resp:
+    with lk888_guard.urlopen(req, timeout=120) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     b64 = data["data"][0]["b64_json"]
     return base64.b64decode(b64)

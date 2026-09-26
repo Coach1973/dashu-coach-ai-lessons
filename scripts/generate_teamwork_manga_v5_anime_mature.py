@@ -310,6 +310,9 @@ if __name__ == '__main__':
 
     if force_retry:
         print('⚠️ --force-retry 模式：允許 60 秒內重跑（教練明確 retry 才用）', flush=True)
+        # 付費重畫由 lk888_guard 把關（同一張5分鐘內不准連續重畫、一天最多3次）
+        import os
+        os.environ['LK888_REDO'] = '1'
 
     data = json.load(open(DATA_DIR / 'prompts.json'))
     p = next(p for p in data if p['idx'] == idx)

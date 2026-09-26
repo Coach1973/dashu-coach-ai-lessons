@@ -90,3 +90,9 @@ photos/
 
 # 2026-09-25：漫畫來源素材533MB，已完成上架(案例81)，只是本機暫存，不進git
 claude-brain/data/comic_source_20260923/
+
+# LK888 收費閘門（案例85）：快取是付費出圖的原始回應（每張約3MB），鎖檔與通行證是暫時狀態，不進版控；帳本 lk888_ledger.jsonl 要留
+state/lk888_cache/
+state/lk888_locks/
+state/LK888_APPROVED
+state/lk888_breaker_alerted
