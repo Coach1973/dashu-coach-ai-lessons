@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 git rebase --continue報「還有衝突」卻index全乾淨，真因是其他modified檔案未staged(2026-09-26)](reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md)
 - [🔧 桌面版App「搬到雲端」SOP：本repo分岔要skip_push避免推回舊金鑰歷史+雲端對話框本機查不到只能上claude.ai/code找(2026-09-25)](reference_move_to_cloud_this_repo_2026-09-25.md)
 - [🧭 模型分工默契：Opus級(找根因/設計機制/不可逆…)在Sonnet要先一句提醒切換，Opus做庶務做完提醒切回；hook自動評估(2026-09-25)](feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25.md)
 - [🔴🔴🔴 教練說「赫米斯」＝Mac桌面版Hermes.app(類Claude的CLI UI)，Telegram線不碰不當選項問(第3次搞混)；登入自動跳出已修(2026-09-25)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
