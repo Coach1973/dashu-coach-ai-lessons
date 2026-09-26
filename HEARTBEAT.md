@@ -82,3 +82,131 @@ v207/v208 遺留待辦（孔大哥id`8689825759`/佩佩老師id`8786886419`的�
 - ❌ 不准自己另寫生圖腳本
 
 詳見 `SOUL.md` 鐵律七 + `character-illustration-batch/SKILL.md` 鎖臉 SOP 段落。
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-21 07:25
+- ✅ 同步成功
+- HANDOFF mtime: 1789946716
+- 雲端同步：✅ 已推上雲端（commit 732fd12a7）
+
+## 🩺 軍師 Hook 自檢 2026-09-21 21:30（Windows，本場修復6天卡住的rebase）
+- ⚠️ 開工時發現：本機git自09/15 16:11起卡在interactive rebase「editing a commit」狀態整整6天，期間09/16、09/19的session-end自動同步commit都疊在這條異常鏈上，且本機main與origin/main因09/19的`git-filter-repo`金鑰清除已完全無共同祖先(各自9617/10046 commit)
+- ✅ 已依[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]規定做法處理：安全網齊備(tag`safety-backup-20260921-2119`+branch`backup-detached-rebase-20260921`)後執行`git reset --hard origin/main`，本機main現與origin/main完全同步
+- ✅ 抽查確認本機舊有獨有內容(如真鑽分會資料commit)已存在於origin/main(內容相同、新hash)，非遺失，是預期中的filter-repo重寫結果
+- 雲端狀態：✅ 已與origin/main同步，HEAD `b2ea80b2c`
+- Session: 6b72f753-9867-4140-bb70-667351cad624
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-21 23:25
+- ✅ 同步成功
+- HANDOFF mtime: 1790004083
+- 雲端同步：✅ 已推上雲端（commit dbc32064a）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 09:55
+- ✅ 同步成功
+- HANDOFF mtime: 1790004083
+- 雲端同步：✅ 已推上雲端（commit 864c519f4）
+
+## 🩺 軍師 Hook 自檢 2026-09-22 09:58（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：手機版，你不能自稱軍師，因�
+- 雲端狀態：✅ 已拉雲端最新（HEAD: b51809d5c）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: e9835c79-e3e7-59d6-a1a8-526e276f3d06
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 10:30
+- ✅ 同步成功
+- HANDOFF mtime: 1790043979
+- 雲端同步：✅ 已推上雲端（commit a57817c59）
+
+## 🩺 軍師 Hook 自檢 2026-09-22 14:53（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 6e8d032c7）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 80ba5dbb-5aa9-4f3d-828c-5d6d092d1a77
+
+## 🩺 軍師 Hook 自檢 2026-09-22 15:18（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 0d8f1816e）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 940c0124-1191-51f4-a12d-cfa9fe3a5d2e
+
+## 🩺 軍師 Hook 自檢 2026-09-22 20:50（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：你不要問我，你去問桌面版的�
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 5dc342b05）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: b00b00af-3239-5192-831d-0dc42754469b
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 21:00
+- ✅ 同步成功
+- HANDOFF mtime: 1790081928
+- 雲端同步：✅ 已推上雲端（commit 69c530253）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 23:05
+- ✅ 同步成功
+- HANDOFF mtime: 1790089392
+- 雲端同步：✅ 已推上雲端（commit 78057c36a）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 23:10
+- ✅ 同步成功
+- HANDOFF mtime: 1790089776
+- 雲端同步：✅ 已推上雲端（commit 53895926c）
+
+## 🩺 軍師 Hook 自檢 2026-09-22 23:10（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開
+- 雲端狀態：✅ 已拉雲端最新（HEAD: 53895926c）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: a697c049-5c6a-44d9-8c82-94fd5e9cb5d9
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-22 23:25
+- ✅ 同步成功
+- HANDOFF mtime: 1790090693
+- 雲端同步：✅ 已推上雲端（commit 9439c2916）
+
+## 🔄 接力棒→CLAUDE.md 自動同步 2026-09-23 03:25
+- ✅ 同步成功
+- HANDOFF mtime: 1790104886
+- 雲端同步：✅ 已推上雲端（commit e716b2978）
+
+## 🩺 軍師 Hook 自檢 2026-09-23 10:34（Mac v2 六步驟注入）
+- ✅ Hook 觸發 + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: e716b2978）
+- 小龍蝦信箱：（信箱查無新信）
+- Session: 055522b8-9175-4e6b-8d08-d83e98515a06
+
+## 🩺 軍師 Hook 自檢 2026-09-23 13:26（Windows v3 六步驟注入）
+- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+- 觸發詞：開工
+- 雲端狀態：✅ 已拉雲端最新（HEAD: d4e8b876c，ff-only未動工作區）
+- Session: 6b72f753-9867-4140-bb70-667351cad624
+
+## 🚀 Session-End 雲端同步 2026-09-23 13:26（Windows）
+- ✅ pushed e9d87658a
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-23 13:45（Windows）
+- ⚠️ commit 31da25a09 本機留底，pull --rebase 失敗（衝突需手動處理）
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-23 13:47（Windows）
+- ✅ pushed c4620a74e
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-23 13:48（Windows）
+- ✅ pushed 4f96da41b
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-23 13:58（Windows）
+- ✅ pushed cf24b6845
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-23 14:00（Windows）
+- ✅ pushed 9bfc2364e
+- 同步路徑：HEARTBEAT.md
+
+## 🚀 Session-End 雲端同步 2026-09-26 17:00（Windows）
+- ⚠️ commit 067566841 本機留底，pull --rebase 失敗（衝突需手動處理）（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）
+- 同步路徑：HEARTBEAT.md
