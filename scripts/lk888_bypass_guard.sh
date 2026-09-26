@@ -31,8 +31,11 @@ HOST = re.compile(r"api\.lk888\.ai", re.I)
 GUARD = re.compile(r"\blk888_guard\b")
 SCRIPT = re.compile(r"""(?:^|[\s;&|'"(=])((?:~/|/|\.{1,2}/)?[^\s;&|'"()<>]+\.(?:py|mjs|cjs|js|sh))(?=$|[\s;&|'")])""")
 
+NET_CLIENT = re.compile(r"\b(curl|wget|https?ie|http)\b[^|;&\n]*api\.lk888\.ai", re.I)
+INLINE_CODE = re.compile(r"\b(python3?|node|ruby|perl)\b\s+(-[ce]\b|-\s*<<|<<)")
+
 def bypass():
-    if HOST.search(cmd) and not GUARD.search(cmd):
+    if HOST.search(cmd) and not GUARD.search(cmd) and (NET_CLIENT.search(cmd) or INLINE_CODE.search(cmd)):
         return "指令本身直接呼叫 api.lk888.ai"
     m = re.search(r"""\bcd\s+("([^"]+)"|'([^']+)'|(\S+))\s*(&&|;)""", cmd)
     base = (m.group(2) or m.group(3) or m.group(4)) if m else (data.get("cwd") or WORKSPACE)
