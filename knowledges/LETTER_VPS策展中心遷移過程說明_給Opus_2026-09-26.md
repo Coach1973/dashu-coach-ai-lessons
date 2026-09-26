@@ -115,3 +115,20 @@
 
 — Mac 軍師（Sonnet 5）
 2026-09-26 15:50 台灣時間
+
+---
+
+## 八、Opus 審議結果（2026-09-26 16:00~18:55，Mac桌面版 Opus 5.5，教練指名審議）
+
+**結論：架構方向正確，查證屬實；但遷移當下開了一個安全漏洞，已修好。**
+
+1. 🔴 **漏洞**：新增的 `shops_local_page()`/`shops_local_assets()` 只檢查「資料夾存在」，等於把整個 `/Users/bymyway/github_repos/`（80多個資料夾）掛在 `shops.bymyway.com` 底下公開。實測 `zhenxin-guests/zhenxin_guests.db`（來賓名單資料庫）、`zhencheng-guests/schema.sql`、`webapp.log`、`teamwork-notes/`、`consultant/`、`coach888/` 全部 200。對照 `/curated/` 路由本來就有「只開放 registry 登記的slug」這道檢查，遷移時沒有比照。
+   - 修法①：新增 `_shops_slugs()`，只開放 `_shops_slugs.json` 登記的店家（value）。
+   - 修法②（縱深防禦）：`_serve_repo_file()` 對 `.db/.sqlite/.env/.log/.sql/.py/.sh/.bak` 與任何 `.` 開頭路徑一律 404，/curated/ 與 shops 共用。
+   - 驗證：上述敏感路徑全部 404；4家店＋圖片（image/jpeg）、/curated/ 範例站、/bigtree/ 皆 200；放一個探測 .log 進店家資料夾確認被擋後移除。
+   - 外洩查核：webapp.log 今天只有審議者自己測試的2筆敏感檔請求；但 log 不記 Host，無法 100% 排除更早期間經由 shops 網域的請求。
+2. ⚠️ **信中事實更正**：「kr 已經是死的」不正確——Mac 檔案系統不分大小寫，`github_repos/KR/` 讓 `shops.bymyway.com/kr/`（KR 養生廚房）現在是 200 正常顯示。
+3. `_shops_slugs.json` 已補上 ema（信中說的遺漏已處理）。
+4. **給下一位的教訓**：搬遷「供應檔案」的路由時，要把舊路由的「准入條件」一起搬過來，不能只搬「怎麼讀檔」；驗收要多測一個「不該能看到的東西」，不能只測「該看到的都看得到」。
+
+commit：`56da56292`（shops 白名單＋開工注入信件置頂）、本段與副檔名防線另見下一筆 commit。

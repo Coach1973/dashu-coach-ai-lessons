@@ -988,11 +988,14 @@ AI_TALK_REPO = Path("/Users/bymyway/github_repos/ai-talk")
 TAINAN_CALENDAR_REPO = Path("/Users/bymyway/github_repos/tainan-calender")  # 沿用既有repo/Netlify站台既有拼法，不擅自改成calendar
 BNI_TRAFFIC_REPO = Path("/Users/bymyway/github_repos/bni-traffic")  # 紅綠燈看板，原repo已在GitHub上archived但內容仍可讀取服務
 _REPO_BLOCKED_TOP_DIRS = {".git", "biz-gym"}
+# 2026-09-26審查補：資料庫/紀錄檔/程式原始碼一律不對外，就算日後有人把它們放進已上架網站的資料夾也擋住。
+_REPO_BLOCKED_SUFFIXES = (".db", ".sqlite", ".sqlite3", ".env", ".log", ".sql", ".py", ".pyc", ".sh", ".bak")
 
 
 def _serve_repo_file(repo: Path, filename: str):
     top = filename.split("/", 1)[0]
-    if top in _REPO_BLOCKED_TOP_DIRS or filename.startswith("."):
+    if top in _REPO_BLOCKED_TOP_DIRS or filename.startswith(".") or "/." in filename \
+            or filename.lower().endswith(_REPO_BLOCKED_SUFFIXES):
         abort(404)
     # 2026-09-04交辦(KR養生廚房)：多頁面靜態站的子頁面用「<slug>/index.html」資料夾結構，
     # 請求路徑本身沒有副檔名時，退而找同名資料夾底下的index.html（nginx try_files的靜態站慣例）。
