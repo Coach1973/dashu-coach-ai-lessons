@@ -19,6 +19,7 @@ KNOWLEDGES_DIR="$WORKSPACE/knowledges"
 INPUT=$(cat)
 SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""')
 PROMPT=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.prompt // ""')
+HOOK_CWD=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.cwd // ""')
 
 MARKER="/tmp/junshi_fed_${SESSION_ID}"
 
@@ -222,6 +223,17 @@ MAX_INJECT_CHARS=60000
 INJECT_CONTENT=$(
   echo "# 🔴 軍師接力棒 v2（六步驟全注入，本場 session 僅一次）"
   echo ""
+  # 2026-09-27教練抓到（FB申訴漏接）：上一棒「📋 下一場開工先做」寫了教練交辦，但①第1步
+  # 以為workspace/CLAUDE.md會載入接力棒而不貼，實際對話框開在~/.openclaw時根本不會載入；
+  # ②第6步只叫回報「🙋要教練決定」區，交辦事項不在那區。改成：最新一棒的交辦一律置頂注入，
+  # 第6步第一件就報它。
+  NEXT_TASK=$(awk '/^### 📋 下一場開工先做/{f=1;next} f&&/^(###|---)/{exit} f' "$HANDOFF" | sed '/^[[:space:]]*$/d')
+  if [ -n "$NEXT_TASK" ]; then
+    echo "## 🎯 教練上一場交辦：這一場第一件要做的事（開工回報第一行就要講，講完直接開始做）"
+    echo ""
+    printf '%s\n' "$NEXT_TASK"
+    echo ""
+  fi
   # 2026-09-26教練抓到：Sonnet寫給Opus的信(knowledges/LETTER_*)只在第4步清單裡佔一行，
   # 而本注入常超過10KB，Claude Code只給模型看前2KB預覽、其餘存成檔案，第2~6步實際上看不到，
   # 軍師開工沒讀信、教練要自己點名才看到。信件一律放最前面(預覽範圍內)並要求當場讀完。
@@ -279,7 +291,8 @@ INJECT_CONTENT=$(
   SYNC_MARKER="$WORKSPACE/.sync_markers/handoff_last_sync"
   LAST_SYNC=0
   [[ -f "$SYNC_MARKER" ]] && LAST_SYNC=$(cat "$SYNC_MARKER" 2>/dev/null || echo 0)
-  if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" ]]; then
+  # 2026-09-27：workspace/CLAUDE.md只有對話框開在workspace底下才會被載入，開在~/.openclaw就看不到，一律完整貼上
+  if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" && "$HOOK_CWD" == "$WORKSPACE"* ]]; then
     echo "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 \`JUNSHI_HANDOFF_LATEST.md\` 原檔。）"
   else
     echo "⚠️（CLAUDE.md 鏡像非最新，改為完整貼上，確保接力棒不漏接）"
@@ -416,6 +429,7 @@ INJECT_CONTENT=$(
   echo "## ✅ 第 6 步：上線回應要求（2026-09-24根源改版：開工不唸待辦）"
   echo "讀完本段後，回應**不超過5行**，只包含："
   echo "- 「我已讀完接力棒」＋身份核對（模型版本 + 平台）＋雲端同步狀態（${PULL_STATUS}），一行講完"
+  echo "- 若最上方有「🎯 教練上一場交辦」：第二行就講這件事，並說「現在開始做」，回報完直接動手，不問「今天從哪件事開始」"
   echo "- 待辦表「🙋要教練決定」區裡**還沒問過**的項目（通常是零件；零件就完全不提待辦）"
   echo "- 詢問教練「今天從哪件事開始？」"
   echo "**禁止**：唸「🤫等教練自己提起」區、唸「🔧AI自己的工作清單」、列舉上一棒戰果、自己發現的系統異常。這些是AI自己的事，自己處理。"
