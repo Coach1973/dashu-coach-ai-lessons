@@ -1,3 +1,24 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-26 22:47，聯想Windows Sonnet 5，新的一棒 v251）
+
+**本場主軸：跨天長session，主要處理教練交辦的兩個Netlify網站文案修改+部署，另外兩度撞見並修復這台機器git session-end自動同步卡住的問題（一次是6天沒人發現的中斷rebase，一次是這次收工時撞到的HEARTBEAT.md合併衝突）。**
+
+### 1. workshop-invite.netlify.app：結繩領導學工作坊邀請頁改期為11/25-26台北劍潭青年活動中心
+這是手動zip部署型網站（非GitHub自動部署），本機找不到原始檔案，改用curl直接抓正式站HTML當來源編輯。日期/地點/邀請函文字全部照教練逐字指示修改。**過程中一度誤判**：把原本頁面上已存在的「我要出席台北場」按鈕連結當成未知資訊去問教練，教練指正「這個台北場連結本來就是11/25-26的報名連結」——查證用的是既有資料裡本來就寫明的答案，不該當成缺失資訊反問。改完後本機Chrome預覽給教練看過確認才用`.NET ZipArchive`打包+Netlify Deploy API上線，curl驗證正式站內容正確。
+
+### 2. jiesheng-leadership.netlify.app：主站拿掉台南場，只留台北場
+這是GitHub自動部署型（git push即觸發Netlify），改法跟上面不同。教練說「現在唯一的一廠就是台北廠」，把hero區與訂價區的台南場文案跟按鈕全部移除，只留台北場（11/25-26）跟單顆報名按鈕，本機預覽確認後git push，curl驗證正式站無殘留「台南」字樣。
+
+### 3. 🔴 兩度修復這台機器session-end自動同步卡住的git異常
+①**09-21**：發現repo從09-15起卡在一個沒人注意到的interactive rebase整整6天，疊加多個異常commit；查證後確認是09-19教練裁示的`git-filter-repo`金鑰清除事件後續（本機clone跟改寫後的origin/main完全無共同祖先），依既有SOP建立安全網(tag+branch)後`git reset --hard origin/main`對齊解決。②**09-26收工時**：`git status`顯示HEARTBEAT.md又進入合併衝突（UU），這次是本機與Mac同時間點各自的session-end同步互撞。解決衝突時發現一個新技術坑：**`git rebase --continue`在這個git版本(2.53.0)即使index裡沒有任何unmerged條目，只要還有「已修改但未staged」的其他追蹤檔案（如`state/sync_health/tree.json`），仍會報「You must edit all merge conflicts」拒絕繼續**——必須把所有modified檔案（不只衝突檔）一起`git add`才會放行，這點跟一般認知的「只需resolve衝突檔」不同，已記進記憶備查。修復後`pull --rebase`把Mac累積的13個新commit拉下來，push成功。
+
+### 📋 下一場開工先做
+兩個Netlify網站修改已交付教練確認完成，沒有懸而未決的事。git同步異常這類問題如果第三次出現，優先懷疑是不是又有未清乾淨的舊金鑰歷史殘留或多機同時寫入HEARTBEAT.md衝突，不用重新從頭排查。
+
+### 🔑 本場commit
+`daf2f1984`(HEARTBEAT.md合併衝突修復)、聯想此前已推送的handoff更正commit（09-21 session）。workshop-invite/jiesheng-leadership為Netlify/GitHub上的獨立repo部署，非本repo commit。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-26 15:55，Mac終端機 Sonnet 5，新的一棒 v250）
 
 **本場主軸：赫米斯鑫瀚昌旅行社上架卡住的表面bug，一路被教練追問揪出系統性根因，最後演變成拆除shops.bymyway.com的VPS依賴、全面遷移到Mac本機處理；過程中自己抓到自己種下的bug並修好；另外插一段小龍蝦LK888額度浪費事故的技術審查。**
