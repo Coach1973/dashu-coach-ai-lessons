@@ -1335,9 +1335,6 @@ def tainan_shangquan_assets(filename):
     return _serve_repo_file(TAINAN_SHANGQUAN_REPO, filename)
 
 
-SHOPS_VPS_HOST = os.environ.get("SHOPS_VPS_HOST", "")
-SHOPS_VPS_SSH_PASSWORD = os.environ.get("SHOPS_VPS_SSH_PASSWORD", "")
-
 
 def _shop_slug(shop_name: str) -> str:
     """店名轉英文/拼音短碼，當作shops.bymyway.com/<slug>/的網址。
@@ -1475,15 +1472,18 @@ def _shop_directory_card_html(name, shop, category, contact, address, social, it
 
 
 def _provision_shop_placeholder(name, shop, category, contact, address, social, items):
-    """新店家登錄後自動化流程（2026-09-05教練裁示）：
-    1. 產生shops.bymyway.com/<slug>/暫代頁並上傳VPS
+    """新店家登錄後自動化流程（2026-09-05教練裁示；2026-09-26教練拍板改成本機處理，
+    不再繞到VPS——原本用VPS是為了「24小時不間斷、隨時能接收新店家」，但event.bymyway.com
+    本身就已經是本機Mac在跑（透過Cloudflare Tunnel），Mac沒開機的話上傳流程本身也一樣會停，
+    VPS並沒有真的多提供獨立於Mac之外的可用性，純粹多一層SSH管理成本。
+    2026-09-05~26實際只用到3個真實店家(huitou/ema/鑫瀚昌)，遷移成本很低）：
+    1. 產生shops.bymyway.com/<slug>/暫代頁，直接寫本機`CURATED_REPOS_DIR/<slug>/`
+       （跟`/curated/<slug>/`共用同一套目錄+`_serve_repo_file()`，只是serve規則認host是
+       shops.bymyway.com時不需要在curated_sites_registry.json登記，見shops_local_page()）
     2. 在tainan-shangquan首頁店家名冊插入一張真實卡片
     3. git commit+push，event.bymyway.com直接讀本機repo檔案，改完立即生效不用重啟服務
     任何一步失敗都不能擋住表單本身的DB寫入/Telegram通知，所以呼叫端要包try/except。
     回傳(slug, shop_url)供通知訊息使用；失敗回傳(None, None)。"""
-    if not SHOPS_VPS_HOST or not SHOPS_VPS_SSH_PASSWORD:
-        return None, None
-
     slug = _shop_slug(shop)
     existing = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
     used = set()
@@ -1502,22 +1502,11 @@ def _provision_shop_placeholder(name, shop, category, contact, address, social, 
 
     shop_url = f"https://shops.bymyway.com/{slug}/"
 
-    # 1. 產生暫代頁並上傳VPS（sshpass比照既有VPS操作SOP，密碼存.env不進git）
+    # 1. 產生暫代頁，直接寫本機（2026-09-26起不再SSH到VPS）
     placeholder_html = _shop_placeholder_html(name, shop, category, contact, address, social, items)
-    tmp_path = f"/tmp/shop_placeholder_{slug}.html"
-    with open(tmp_path, "w", encoding="utf-8") as f:
-        f.write(placeholder_html)
-    subprocess.run(
-        ["sshpass", "-p", SHOPS_VPS_SSH_PASSWORD, "ssh", "-o", "StrictHostKeyChecking=no",
-         f"root@{SHOPS_VPS_HOST}", f"mkdir -p /var/www/shops/{slug}"],
-        check=True, timeout=30, capture_output=True, env=_OPENCLAW_ENV,
-    )
-    subprocess.run(
-        ["sshpass", "-p", SHOPS_VPS_SSH_PASSWORD, "scp", "-o", "StrictHostKeyChecking=no",
-         tmp_path, f"root@{SHOPS_VPS_HOST}:/var/www/shops/{slug}/index.html"],
-        check=True, timeout=30, capture_output=True, env=_OPENCLAW_ENV,
-    )
-    os.remove(tmp_path)
+    shop_dir = CURATED_REPOS_DIR / slug
+    shop_dir.mkdir(parents=True, exist_ok=True)
+    (shop_dir / "index.html").write_text(placeholder_html, encoding="utf-8")
 
     # 2. 插入tainan-shangquan首頁店家名冊卡片
     card_html = _shop_directory_card_html(name, shop, category, contact, address, social, items, shop_url)
@@ -1677,6 +1666,30 @@ def curated_assets(slug, filename):
         abort(404)
     if filename == "index.html":
         return curated_page(slug)
+    return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
+
+
+# 2026-09-26教練拍板：shops.bymyway.com不再繞VPS，改成跟/curated/<slug>/共用同一套
+# CURATED_REPOS_DIR本機目錄+_serve_repo_file()。用request.host分流（不是全站
+# host_matching，避免動到其他既有路由），只認shops.bymyway.com這個host名稱；
+# 認不出host或目錄不存在都404，不影響event.bymyway.com本身其他路由的行為。
+@app.route("/<slug>/")
+def shops_local_page(slug):
+    if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if not (CURATED_REPOS_DIR / slug).is_dir():
+        abort(404)
+    return _serve_repo_file(CURATED_REPOS_DIR / slug, "index.html")
+
+
+@app.route("/<slug>/<path:filename>")
+def shops_local_assets(slug, filename):
+    if request.host.split(":")[0] != "shops.bymyway.com" or not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    if not (CURATED_REPOS_DIR / slug).is_dir():
+        abort(404)
+    if filename == "index.html":
+        return shops_local_page(slug)
     return _serve_repo_file(CURATED_REPOS_DIR / slug, filename)
 
 

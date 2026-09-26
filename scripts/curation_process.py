@@ -313,34 +313,23 @@ def push_repo(repo_dir: Path, token: str, slug: str) -> None:
     )
 
 
-def get_shop_vps_creds() -> tuple[str | None, str | None]:
-    """讀event-signup/.env取得VPS SSH連線資訊，跟app.py的_provision_shop_placeholder()共用同一組憑證。"""
-    env_path = EVENT_SIGNUP / ".env"
-    host = password = None
-    if env_path.is_file():
-        for line in env_path.read_text(encoding="utf-8").splitlines():
-            if line.startswith("SHOPS_VPS_HOST="):
-                host = line.split("=", 1)[1].strip()
-            elif line.startswith("SHOPS_VPS_SSH_PASSWORD="):
-                password = line.split("=", 1)[1].strip()
-    return host, password
-
-
 def rename_shop_slug(old_slug: str, new_slug: str) -> None:
-    """把VPS上既有店家暫代頁從舊slug改名到新slug，同步更新_shops_slugs.json跟
+    """把既有店家暫代頁從舊slug改名到新slug，同步更新_shops_slugs.json跟
     tainan-shangquan店家名冊卡片連結。2026-09-26教練拍板（鑫瀚昌旅行社事故）：
     教練上傳時親口指定的custom_slug必須贏過系統比對出的既有暫代頁slug——原本的
     設計是「命中既有暫代頁就覆蓋內容、slug不變」，這對「防止同一家店出現兩個
     網址」這個目標是對的，但完全沒考慮到教練當下明確選了一個短網址、卻被系統
-    默默換掉，教練事後才發現對不上，只能人工事後改名收拾。"""
-    host, password = get_shop_vps_creds()
-    if not host or not password:
-        raise RuntimeError("找不到SHOPS_VPS_HOST/SHOPS_VPS_SSH_PASSWORD設定，無法改名")
-    ssh_base = ["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", f"root@{host}"]
-    subprocess.run(
-        ssh_base + [f"test -d /var/www/shops/{new_slug} && exit 1 || mv /var/www/shops/{old_slug} /var/www/shops/{new_slug}"],
-        check=True, timeout=30, capture_output=True, env=_ENV,
-    )
+    默默換掉，教練事後才發現對不上，只能人工事後改名收拾。
+    2026-09-26同場再拍板：shops.bymyway.com不再繞VPS(43.245.60.200)，本機
+    `GITHUB_REPOS_DIR/<slug>/`直接改資料夾名稱即可，跟`/curated/<slug>/`共用
+    同一套serving機制（見event-signup/app.py的shops_local_page()）。"""
+    old_dir = GITHUB_REPOS_DIR / old_slug
+    new_dir = GITHUB_REPOS_DIR / new_slug
+    if new_dir.exists():
+        raise RuntimeError(f"目標目錄「{new_slug}」已存在，無法改名，避免覆蓋別的店家")
+    if not old_dir.is_dir():
+        raise RuntimeError(f"找不到既有店家目錄「{old_slug}」，無法改名")
+    old_dir.rename(new_dir)
     registry_path = TAINAN_SHANGQUAN_REPO / "_shops_slugs.json"
     slugs = json.loads(registry_path.read_text(encoding="utf-8"))
     registry_path.write_text(
@@ -380,22 +369,12 @@ def find_existing_shop_slug(brand_name: str) -> str | None:
 
 def overwrite_shop_placeholder(site_dir: Path, slug: str) -> None:
     """把完整網站(index.html+assets等)整個覆蓋掉shops.bymyway.com/<slug>/既有暫代頁內容，
-    網址保持不變。用tar打包後scp+遠端解壓（不用scp -r萬用字元，避免中文檔名或特殊字元出錯）。"""
-    host, password = get_shop_vps_creds()
-    if not host or not password:
-        raise RuntimeError("找不到SHOPS_VPS_HOST/SHOPS_VPS_SSH_PASSWORD設定，無法覆蓋暫代頁")
-    tar_path = f"/tmp/shop_overwrite_{slug}.tar.gz"
-    subprocess.run(["tar", "-czf", tar_path, "-C", str(site_dir), "."], check=True, env=_ENV)
-    remote_tmp = f"/tmp/shop_overwrite_{slug}.tar.gz"
-    ssh_base = ["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", f"root@{host}"]
-    subprocess.run(ssh_base + [f"rm -rf /var/www/shops/{slug} && mkdir -p /var/www/shops/{slug}"],
-                   check=True, timeout=30, capture_output=True, env=_ENV)
-    subprocess.run(["sshpass", "-p", password, "scp", "-o", "StrictHostKeyChecking=no",
-                    tar_path, f"root@{host}:{remote_tmp}"],
-                   check=True, timeout=60, capture_output=True, env=_ENV)
-    subprocess.run(ssh_base + [f"tar -xzf {remote_tmp} -C /var/www/shops/{slug}/ && rm {remote_tmp}"],
-                   check=True, timeout=30, capture_output=True, env=_ENV)
-    os.remove(tar_path)
+    網址保持不變。2026-09-26起本機`GITHUB_REPOS_DIR/<slug>/`直接覆蓋，不再SSH到VPS
+    （原本VPS用tar打包+scp+遠端解壓，是因為內容在遠端主機；現在同一台Mac直接檔案操作）。"""
+    target_dir = GITHUB_REPOS_DIR / slug
+    if target_dir.exists():
+        shutil.rmtree(target_dir)
+    shutil.copytree(site_dir, target_dir)
 
 
 def ensure_og_tags_absolute(repo_dir: Path, slug: str) -> None:
