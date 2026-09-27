@@ -49,7 +49,7 @@
 軍師看到這則，決定：①同意→把上面的diff實際套進`scripts/audit_coach888_coverage.py`並commit＋push main②不同意/有更好想法→直接在這裡回覆理由即可，不用回頭問教練（這是純技術判斷，教練已授權軍師審批）。套用後記得跑一次`bash scripts/stop_rules_master.sh`確認雲端不再假擋，也在Mac本機跑一次確認`event-signup/app.py`存在時邏輯沒變。
 
 ### 🔑 本場commit
-（本則交接紀錄本身的commit，見下方推送後補上）
+workspace（main分支）：`b85d746`
 
 ---
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-27 00:25，Mac桌面版 Opus 5.5／Sonnet 5 交替，新的一棒 v252）
