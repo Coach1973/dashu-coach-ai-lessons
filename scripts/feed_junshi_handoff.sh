@@ -53,6 +53,12 @@ fi
 # commits沒有動到本機正在變動的那幾個檔案就能成功，才是真正對應這個
 # workspace「本機一直有背景寫入」這個常態的做法。ff-only失敗（真正分岔，
 # 非僅髒污）才退回舊的 stash+rebase 流程搶救。
+# 2026-09-27：KAIGONG_SELFTEST=1 時只產生注入內容給 test_kaigong_injection.sh 檢查，
+# 不拉雲端、不發通知、不處理信箱、不寫log、不設marker（開工漏接三次都是注入內容的洞，要能反覆實測）
+SELFTEST="${KAIGONG_SELFTEST:-0}"
+PULL_STATUS="（自我測試，略過 pull）"
+DISPATCH_STATUS="（自我測試，略過信箱）"
+if [[ "$SELFTEST" != 1 ]]; then
 PULL_STATUS="（本機非 git repo，略過 pull）"
 if [[ -d "$WORKSPACE/.git" ]]; then
   cd "$WORKSPACE" || exit 0
@@ -190,6 +196,7 @@ fi
   echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
   echo "- Session: ${SESSION_ID:-unknown}"
 } >> "$WORKSPACE/state/junshi_automation.log" 2>/dev/null || true
+fi  # SELFTEST 結束
 
 # ───────── 注入內容開始 ─────────
 # 2026-07-10 軍師加：字數上限防呆（比照 OpenClaw 原生 startupContext.maxTotalChars 精神）。
@@ -414,7 +421,8 @@ INJECT_CONTENT=$(
   # stop_rules_master.py 的 13 條規則本來就對任何觸發Stop事件的session(含手機MiniMax
   # Remote Control)自動稽核，但違規記錄只是各自寫進 distill/*violations.log 沒人讀。
   # 這裡安靜地跑一次彙整：沒有新違規完全不輸出，有才印出來，不需教練或軍師手動去查。
-  QA_DIGEST=$(python3 "$WORKSPACE/scripts/agent_team_qa_digest.py" 2>/dev/null)
+  QA_DIGEST=""
+  [[ "$SELFTEST" != 1 ]] && QA_DIGEST=$(python3 "$WORKSPACE/scripts/agent_team_qa_digest.py" 2>/dev/null)
   if [[ -n "$QA_DIGEST" ]]; then
     echo ""
     echo "---"
@@ -454,7 +462,7 @@ else
 fi
 
 # 設 marker，本 session 不再注入
-if [[ -n "$SESSION_ID" ]]; then
+if [[ -n "$SESSION_ID" && "$SELFTEST" != 1 ]]; then
   touch "$MARKER"
 fi
 

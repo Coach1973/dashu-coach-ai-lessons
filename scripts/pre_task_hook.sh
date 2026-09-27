@@ -132,6 +132,19 @@ if printf '%s' "$PROMPT" | grep -qE "太複雜|搞不懂|不要那麼麻煩|簡�
   add_hit "• 守則#16（複雜的解法不一定正確）：先問「您想要什麼結果？」用最簡單的路徑。"
 fi
 
+# ---- 教練口令字典（2026-09-27：「釋放」被當成「全部釋放」等口令誤判，定義散在400多篇記憶裡找不到）----
+CMD_DICT="$(dirname "$0")/../knowledges/教練口令字典.md"
+if [[ -f "$CMD_DICT" ]]; then
+  TRIMMED=$(printf '%s' "$PROMPT" | tr -d '[:space:]，。！？,.!?')
+  while IFS='|' read -r _ mode word meaning src _; do
+    mode=$(echo "$mode" | xargs); word=$(echo "$word" | xargs)
+    [[ "$mode" == "整句" || "$mode" == "包含" ]] || continue
+    if [[ "$mode" == "整句" && "$TRIMMED" == "$word" ]] || { [[ "$mode" == "包含" ]] && [[ "$TRIMMED" == *"$word"* ]]; }; then
+      add_hit "• 📖 口令字典「${word}」＝$(echo "$meaning" | xargs)（出處：$(echo "$src" | xargs)）"
+    fi
+  done < <(grep -E '^\| (整句|包含) \|' "$CMD_DICT")
+fi
+
 # === 輸出 ===
 if [[ -n "$HITS" ]]; then
   echo "🌱 守則提醒（系統自動對照 trigger_index）："
