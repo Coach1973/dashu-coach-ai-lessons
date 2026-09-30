@@ -13,6 +13,7 @@
   team_tool.py 週 <第三週 | 2026-09-24 | 9/24 | 本週>
   team_tool.py 出席 <姓名> <週> <實體|線上|缺席|清除>
   team_tool.py 新增 <姓名>                   把名字填進第一分會統計表的第一個空位
+  team_tool.py 刪除 <姓名>                   離會／不再參加：從第一分會統計表移除（也可說「移除」）
 """
 from __future__ import annotations
 
@@ -232,6 +233,16 @@ def cmd_add(c, name):
     print(f"✅ 已把「{name}」加進第一分會名單" if res.get("ok") else f"❌ 沒有加成功：{res.get('error', '原因不明')}")
 
 
+def cmd_remove(c, name):
+    name = name.strip()
+    row = c.execute("SELECT id FROM members WHERE name = ?", (name,)).fetchone()
+    if not row:
+        print(f"名單上找不到「{name}」")
+        return
+    res = post("/api/clear_member", {"member_id": row["id"]})
+    print(f"✅ 已把「{name}」從第一分會名單移除（他的每週紀錄一併清空）" if res.get("ok") else f"❌ 沒有移除成功：{res.get('error', '原因不明')}")
+
+
 def main():
     a = sys.argv[1:]
     c = conn()
@@ -247,6 +258,8 @@ def main():
         cmd_week(c, a[1])
     elif a[:1] == ["出席"] and len(a) == 4:
         cmd_attend(c, a[1], a[2], a[3])
+    elif a[:1] in (["刪除"], ["移除"]) and len(a) == 2:
+        cmd_remove(conn(), a[1])
     elif a[:1] == ["新增"] and len(a) == 2:
         cmd_add(c, a[1])
     else:
