@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴 額度緊繃時，臨場發現的額外修復工作要先問教練再花token，不能自己判斷該修就動手(2026-09-30)](feedback_flag_unscoped_token_cost_before_fixing_2026-09-30.md)
 - [💸🔴 LK888出圖一律走lk888_guard收費閘門，兩端都有繞過鎖；測付費API先封網(sitecustomize撞名會讓mock失效)(2026-09-26 案例85)](reference_lk888_spend_guard_2026-09-26.md)
 - [🔧 git rebase --continue報「還有衝突」卻index全乾淨，真因是其他modified檔案未staged(2026-09-26)](reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md)
 - [🔴🔴 OpenClaw bootstrap檔(AGENTS/SOUL/HEARTBEAT/MEMORY.md)有2萬字硬上限，超過會切出UTF-8亂碼；自動化日誌改寫state/*.log不要寫這些檔(2026-09-25)](reference_openclaw_bootstrap_20k_char_limit_2026-09-25.md)
