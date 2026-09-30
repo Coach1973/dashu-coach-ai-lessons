@@ -46,6 +46,15 @@ claude_content  = claude_md.read_text(encoding="utf-8")
 handoff_content = handoff.read_text(encoding="utf-8")
 stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+# 2026-09-30 案例91：09-28小龍蝦直接整份覆蓋JUNSHI_HANDOFF_LATEST.md（沒有v-number開頭、
+# 沒有「給跨對話框軍師讀的總結摘要」標題），這支腳本照樣忠實鏡像進CLAUDE.md並commit+push，
+# 讓每一台開這個repo的機器連續近40小時讀到的都是壞掉的接力棒，直到09-30教練說「總結」
+# 手動git pull撞見衝突才發現。以後鏡像前先驗證格式，不像才擋下、不寫CLAUDE.md、留log給人查。
+if "給跨對話框軍師讀的總結摘要" not in handoff_content[:500] or not re.search(r"新的一棒 v\d+", handoff_content[:500]):
+    print(f"❌ 拒絕鏡像：{handoff_path} 開頭不像正常接力棒格式（沒有「給跨對話框軍師讀的總結摘要」或「新的一棒 vN」），"
+          f"疑似被整份覆蓋，不寫入CLAUDE.md（案例91）。請人工檢查 {handoff_path} 是不是被誰直接蓋掉了。")
+    sys.exit(1)
+
 new_section = f"""{start_mark}
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 

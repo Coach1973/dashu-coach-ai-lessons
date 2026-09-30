@@ -20,7 +20,7 @@ import re
 import sys
 from pathlib import Path
 
-WORKSPACE = Path("/Users/bymyway/.openclaw/workspace")
+WORKSPACE = Path.home() / ".openclaw" / "workspace"
 APP_PY = WORKSPACE / "event-signup" / "app.py"
 COACH888_HTML = Path.home() / "github_repos" / "coach888" / "index.html"
 BASELINE_PATH = WORKSPACE / "scripts" / "coach888_audit_baseline.txt"
@@ -65,6 +65,15 @@ def extract_visible_section_html(full_html: str) -> str:
 
 
 def main():
+    if not APP_PY.is_file() or not COACH888_HTML.is_file():
+        # 雲端工作頁只sparse-checkout main分支的scripts/knowledges/cloud_sync等目錄，
+        # 不含event-signup、也沒有~/github_repos/coach888(見.claude/cloud_bootstrap.sh)，
+        # 這裡讀不到來源檔是環境限制，不代表教練真的漏收錄了什麼——照
+        # stop_rules_master.py呼叫端的既有原則「稽核腳本本身故障不該擋住教練收工」，
+        # 安靜跳過，不當成新缺漏擋Stop。2026-09-27雲端v253診斷，09-30軍師審批套用。
+        missing = APP_PY if not APP_PY.is_file() else COACH888_HTML
+        print(f"⚠️ 找不到 {missing}（本環境無此checkout，跳過此稽核，不代表有漏收錄）")
+        return
     app_text = APP_PY.read_text(encoding="utf-8")
     coach888_text = COACH888_HTML.read_text(encoding="utf-8")
     visible = extract_visible_section_html(coach888_text)
