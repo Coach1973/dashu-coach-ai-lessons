@@ -4,9 +4,44 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-30 21:10:34**
+> **最後同步：2026-10-01 01:35:18**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 01:30，Mac桌面版 Opus 5.5／Sonnet 5 交替，新的一棒 v256）
+
+**本場主軸：怡靜AI群從「完全沒反應」到「專屬分身＋查詢工具＋安全鎖」上線；第一分會表加出缺席；jacky-brand修版＋GitHub化；策展網站全面GitHub化備妥但未完成。**
+
+### 1. 怡靜AI群（chat -5480670608）
+- 根因：群裡原本是 VPS 機器人 @coach_bymyway_bot，VPS 沒准許任何群組，每則訊息記成 not-allowed 略過。教練要 Mac 版，已把學長 @openclaw_macbook4_bot（顯示名「頂級特助」）拉進群，是管理員。
+- 建獨立分身 `yijing`（比照學弟/學妹）：`~/.openclaw/agents/yijing`，GitHub 備份 `Coach1973/yijing-ai-backup`（最新 `88ad26c`）。openclaw.json 綁定「bot_main＋該群→yijing」，requireMention=false（外層 `0e1e12c62`、`87874f12e`）。分身已在群裡發自我介紹（messageId 11847）。
+- 規矩：怡靜是 AI 新手→不講術語、不反問技術問題、不秀指令、只講結果；「本人帳號已開通」跟「AI 有沒有工具」分開講（教練糾正過兩次）。
+- 工具 `scripts/team_tool.py`（`23612152f`）：五分會總覽/單一分會/查人/查週/改第一分會出席/新增名單，讀唯讀、寫走網站自己的API。
+- 安全鎖 `extensions/safety-locks` 加 yijing 白名單：只准 team_tool / 產業鏈兩支、只能寫自己資料夾；20 種測試（含雙引號 $() 偷渡）全擋對，main 不受影響。群組 toolsBySender 改成全開、改由白名單管。
+- **還沒實測**：怡靜/教練在群裡真的問一句，看回話是否白話正確；怡靜 Telegram 編號還沒抓到。
+
+### 2. 第一分會 team01.bymyway.com 加「出席」欄（實體/線上/缺席）＋缺席次數（team01-guests `367b247`），正式網址實測、已用 Chrome 開給教練。第二～五分會沒有每週統計表。
+
+### 3. jacky-brand：修「為什麼回到台灣」卡片白底白字（`.band .card{color:var(--ink)}`），git 化 `Coach1973/jacky-brand`（`25174ab`）。
+
+### 4. 策展網站全面 GitHub 化（教練要：上架時順手建 GitHub，聯想/宏碁貼 event 網址就能改，推上去自動更新）
+- 工具 `scripts/curated_git.py` 已備妥（`26b7935af`）；35 站中 24 站有 GitHub。其餘 11 站補建、接進 curation_process.py 三條上架路、GitHub 通知 Mac 的 webhook 入口、聯想/宏碁 feed_junshi_handoff.ps1 網址觸發，當時被自動模式擋下。**教練已切 bypass，下一場直接做完**，ema/huitou origin 網址夾帶的 GitHub 金鑰一起清。
+
+### 5. 教訓（教練：漏洞百出、每次都是用了才發現）
+- 被自動模式擋第二次就要講「切 bypass 一個按鈕」，不准逐件叫教練回「上」（記憶已寫）。
+- 做給夥伴用的東西，要站在夥伴位置實測一次（講法、術語、權限說明）才交付；本場怡靜分身兩次講錯話都是教練先發現（試金石案例94）。
+
+### 📋 下一場開工先做
+1. **開工回報第一行：逐步說明開工六步驟有沒有照做**（教練點名要求，不准只說「讀完了」）。
+2. **設計「怡靜學姐」**：教練會建立；以後「怡靜學姐／怡靜董顧／怡靜區董」都叫得到——「怡靜」是關鍵詞、後面是不同場合的稱呼。
+3. **怡靜的協會報名**：用現成報名系統（event.bymyway.com），有人報名→怡靜AI群＋活動報名即時通知群都收到。
+4. 策展網站全面 GitHub 化收尾（上面第 4 點）。
+5. 在群裡實測 team_tool 回話；抓怡靜 Telegram 編號補進 yijing/IDENTITY.md。
+
+### 🔑 本場commit
+workspace `d9e66f81a` `26b7935af` `1d30f7869` `23612152f`；外層 `0e1e12c62` `87874f12e`；yijing `d8a117e` `14f8c1d` `88ad26c`；team01-guests `367b247`；jacky-brand `25174ab`；本次總結另計。
 
 ---
 
@@ -82,7 +117,7 @@ Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）�
 > 教練裁示「不用管／不做／略過」的列，當場搬去封存檔，不准留在這裡。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
-- **策展網站全面GitHub化（09-30教練交辦）**｜Claude Code自動安全檢查擋下兩個動作，只有教練能授權：①替其餘11站建GitHub＋每次上架自動建（被判「Remote Repoint」）②GitHub通知Mac自動換新網站的入口（event-signup新增`/hooks/github-curated`）｜卡住聯想/宏碁「改完推上去網站自動更新」｜問過：2026-09-30 21:1x。教練回「上」後：`scripts/curated_git.py`已備妥（jacky-brand、submission兩站實測OK），接回`curation_process.py`三條上架路（大樹作品/全新店家/暫代頁覆蓋，上一版改法見本場對話）、跑`ensure-all`、加webhook路由+每個repo掛通知、聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→自動指路GitHub」、Mac `projects/INDEX.md`加策展卡、模擬聯想push端到端驗證線上版換新。ema/huitou的origin網址夾帶GitHub登入金鑰明文，也等這次授權一起清。
+（目前沒有）
 
 
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
@@ -114,6 +149,7 @@ Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）�
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴 | **策展網站全面GitHub化收尾（09-30教練交辦，10-01教練已切bypass＝授權）** | ⏳下一場直接做 | 工具`scripts/curated_git.py`已備妥：跑`ensure-all`補11站→接回`curation_process.py`三條上架路（github_note，大樹作品/全新店家/暫代頁覆蓋）→event-signup加`/hooks/github-curated`(HMAC)＋每repo掛webhook→聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→指路GitHub」＋Mac `projects/INDEX.md`策展卡→模擬聯想push驗證線上換新；順手清ema/huitou origin夾帶的GitHub金鑰。 |
 | 🟡 | **團隊協作全面體檢（2026-09-24 Opus 5.5）：五項修法教練13:37說「執行」，已落地** | ⚠️持續追蹤-首次真實使用待觀察 | 完整報告`knowledges/2026-09-24_團隊協作全面體檢報告.md`。①每日08:10全隊點名`scripts/daily_team_rollcall.py`+launchd`ai.openclaw.daily-rollcall`(13:41實跑送達)；VPS/LINE健檢改為只在異常時通知②VPS看守Mac：VPS`/root/watch_mac.sh`每30分，Mac連續兩次連不上才通知(測試訊息message_id 3860送達)③上傳頁`kind`必填，`creation`全自動進coach888最新作品——**09-25首次真實作品實測，發現index.html判斷bug已修復**（個人創作常沒有index.html慣例檔名，改成剩一個html檔就自動採用，見v249），真實上架成功④產業鏈同主題同對話10分鐘防重複⑤VPS健檢拿掉1小時無活動誤報；赫米斯記憶檔金鑰是教練指示保留的寫法，不搬。commit`b076a80fc`+`777c9c7c4`。**VPS升級另見下一列**。VPS健檢缺天原因仍未查明，改由每日點名檢查「今天有沒有跑」。 |
 | 🟡 | **雲端工作頁規則同步（2026-09-25 Opus 5.5，教練原則：同一套規則本機雲端一體適用，只有動到Mac本機的事例外）** | ✅已上線，兩條路實測通過 | 機制與SOP見記憶`reference_move_to_cloud_this_repo_2026-09-25.md`：`cloud_sync/`(全域規則+11技能副本，每則回覆結束自動更新)+`workspace/.claude/settings.json`(main)+外層`.claude/settings.json`+`cloud_bootstrap.sh`(master)。commit`1e0bea3ab`+`2db3d1330`(workspace)、`a0975a949`(外層)。**待修小bug**：`model_tier_advisor.sh`剛用/model切換後的第一則仍顯示舊模型(09-25切Opus後仍報sonnet-5)，雲端第一則顯示「未知模型」。外層master分岔已查證安全並合併推送`f517ec524`，v247「791d775d2未push」一句已過時。 |
 | 🟡 | **公開交接棒「隨身軍師・一鍵接手」上線（2026-09-25，教練說「推」，後續修好AI相容性問題）** | ✅已上線，每次「總結」自動更新 | **主要網址（貼給任何AI）：`https://coach1973.github.io/ai-go/status.html`**；純文字備用：`status.md`。目的：教練Claude每週額度不夠，思考型問題分流到其他網頁版Opus，貼一個網址對方就知道規則＋目前工作狀態。🔴**真因查證（curl實測，不是猜的）**：一開始只做.md版，教練回報「其他AI說讀不到、被屏蔽」——查證GitHub Pages對.md副檔名回傳`content-type: text/markdown`，index.html回傳`text/html`；人爬蟲UA(GPTBot等)全部200無阻擋，不是robots/WAF——是多數AI內建讀網頁工具只認text/html。已建`scripts/render_public_status_html.py`(python-markdown轉換+bare URL自動連結)，`status.md`仍是唯一手改來源，`scripts/publish_public_status.sh`每次發布自動轉出`status.html`不會分岔。更新流程：`summary_upload_trigger.sh`第5步改寫`~/github_repos/ai-go/status.md`→跑`publish_public_status.sh`(機密掃描→轉HTML→再掃描→commit兩檔→push→確認網站換新版，等5分鐘)。只寫教練自己的事，不寫帳密/主機位址/路徑/他人個資。已收進coach888「工具類」第一項並改指向.html（伺服器狀態+靜態HTML都改，舊狀態備份`state/coach888_state_backup_20260925_110956.json`）。同場順便修正教練品牌數據「1.5萬位老闆」→「6,000+場演講、10萬人受眾」（教練親口訂正，5個檔案）。🔴**教練追問揪出遺漏**：status.html內文引用的另外兩份`coach-persona.md`/`system-prompt.md`本身也是同一個content-type問題，沒有一起修——已比照建`coach-persona.html`/`system-prompt.html`，三份都納入`publish_public_status.sh`自動轉出，`index.html`的「查看全文」連結也改指向.html（JS一鍵複製到剪貼簿的fetch()維持指向.md不變，複製出來才是純文字不是HTML標籤）。順便修好`publish_public_status.sh`驗證上線的迴圈：GitHub Pages CDN偶爾超過5分鐘才生效，push本身成功卻被誤判成失敗跳exit 1（已實際發生2次），改成push成功就算數，CDN慢只如實回報不當失敗。commit：workspace`445210e92`+`8f953cd14`+`5ea38190d`、ai-go`39b84c7`+`22bbe94`+`5114dc3`+`3f4273e`、coach888`79a7d81`+`03021cb`。 |
@@ -285,88 +321,7 @@ Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）�
 
 ---
 
-# 接力棒補充 — 2026-09-30 sincere.bymyway.com 戰情儀表板任務（已派給軍師）
-
-## 教練交辦
-
-教練要小龍蝦「讀網頁後直接更新」，但小龍蝦發現：
-- sincere.bymyway.com 是**後端網站**（不是 turnforyou 那種本機直讀）
-- 有 3 個 POST API：`/api/update_metric`、`/api/update_testimony`、`/api/update_training`
-- **沒有登入驗證、沒有 cookie session、沒有 token**
-
-## 小龍蝦已派給軍師的任務（task ID: 20260930-194932）
-
-寫在 `/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE`
-
-請軍師：
-1. 判斷 sincere.bymyway.com 是誰管的（軍師 / 其他人 / 教練自己）
-2. 寫 SOP：「小龍蝦怎麼協助更新 sincere.bymyway.com 的每週戰情資料」
-3. SOP 內容包含：讀資料方式、更新 payload、權限邊界、會員自填 vs 教練提供怎麼分、失敗處置
-4. 完成後寫進 JUNSHI_HANDOFF_LATEST.md 或 cross-agent/outbox/
-
-## 小龍蝦已抓好的技術細節（給軍師用）
-
-### 3 個 API payload 格式
-
-```
-POST /api/update_metric
-{ member_id: int, week_date: "YYYY-MM-DD", metric: "guests"|"ones"|"coffee", value: int }
-
-POST /api/update_testimony
-{ member_id: int, event_date: "YYYY-MM-DD", attended: 0|1|null }
-
-POST /api/update_training
-{ member_id: int, session_id: int, attended: 0|1|null }
-```
-
-### 三項指標對應
-
-- **來賓**（guests）= 教練/軍師提供更新
-- **121**（ones）= 會員自填
-- **咖啡會議**（coffee）= 會員自填
-
-### 統計期間
-
-- 從 2026/07/23 起，**每週四聚會**
-- 8/20 當週改為內訓不列入計算
-- 連續無紀錄 4 週 = 🟡 黃色關注，8 週 = 🔴 紅色警告
-
-### 三個助理大使（分組）
-
-- 王者飛翔：謝緯翔（王彤、鄭綉美、林佳伶、郭展鴻、張育慈）
-- 百聖維尼：許朝峻（陳佩君、鄭禮昂、葉建葳、黃笛軒、盧尚政、張玉盞）
-- 羽宙奇蹟：張敬雍（張羽家、楊在珍、李美花、陳柔璇、黃秀麗）
-
-## 守則
-
-小龍蝦**不會自己 POST 進去寫資料庫**，等軍師 SOP 回來再說。
-
-## ✅ 軍師已完成（2026-09-30 19:XX，Sonnet 5）
-
-**對象更正**：上面「小龍蝦已派給軍師的任務」歸屬有誤——查證原始對話後確認，
-19:49教練是在**Hermes桌面版**跟Hermes說「你寫一封信給軍師」，小龍蝦Telegram
-收到的是教練自己貼過去的同一段文字，不是小龍蝦主動發起。教練當場糾正，已寫入
-記憶`feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md`（第三次
-小龍蝦/Hermes身份混淆）。**下面SOP是寫給Hermes的，教練請幫忙轉給Hermes。**
-
-SOP全文：`knowledges/SOP_Hermes協助更新sincere戰情儀表板.md`。摘要：
-
-1. **sincere.bymyway.com歸屬**：軍師（Mac本機）自己管——`~/github_repos/zhencheng-guests/`
-   （Flask+SQLite，launchd `com.coach.sincere-webapp`+cloudflared tunnel `com.coach.sincere-tunnel`），
-   DB未版控，純檢視型無登入驗證（教練已接受這個風險）。
-2. **會員自填**（121/咖啡會議/全國見證分享會出席/培訓出席）：既有4個API就夠，
-   會員自己在網頁上點，Hermes/軍師不用管。
-3. **🔴教練口述提供**（來賓人數+名單、早鳥、新會員）：**沒有API**，只能直接寫SQL——
-   詳細指令在SOP第3.3節。**`seed.py`已過期（只到08/27，14人，缺黃秀麗/張玉盞），
-   絕對不能重跑，會把09/03之後60+筆來賓名單刪光（DELETE無WHERE等級的危險操作）**。
-4. 分工：Hermes把教練口述內容整理成SOP第3.3節的格式，寫進本檔或
-   `cross-agent/outbox/`，軍師收到後執行SQL、開瀏覽器核對、回報完成。
-5. 教練09-30 19:53貼給小龍蝦的「2026/09/17+09/24真誠例會出席報告」裡的
-   (P)/(A)/(L)/(M)/(S)出席狀態碼、參訪人員、6個月累計——**這套系統目前沒有
-   對應欄位**，只算guests/ones/coffee/early_bird四項，屬於新功能，不是本次
-   SOP範圍，教練若要上儀表板要另外評估。
-
-commit：`1b5b37696`（SOP檔）+ `992524f1a`（本節+記憶更新，自動同步已推送origin/main）
+> 📦 sincere戰情儀表板SOP補充段已結案封存：`handoff_archive/handoff_sincere_supplement_archived_2026-10-01.md`
 
 
 ---
