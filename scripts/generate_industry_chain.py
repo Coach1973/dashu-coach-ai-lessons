@@ -26,6 +26,10 @@ LK888_API_URL = "https://api.lk888.ai/v1/images/generations"
 # 同一主題送同一個對話，10分鐘內只做一次。
 DEDUP_DIR = Path("/tmp/industry_chain_dedup")
 DEDUP_SECONDS = 600
+# LINE只收公開HTTPS網址的圖（2026-09-30 LINE小龍蝦出完圖送不出去：「LINE outbound media currently requires a public HTTPS URL」），
+# 所以放進event.bymyway.com的/chain-img/公開資料夾，檔名帶亂數外人猜不到。
+PUBLIC_IMG_DIR = WORKSPACE / "event-signup" / "chain_images"
+PUBLIC_IMG_BASE = "https://event.bymyway.com/chain-img/"
 
 
 def dedup_claim(args):
@@ -114,6 +118,7 @@ def main():
     parser.add_argument("--telegram-account", default="bot_main", help="要用哪個bot帳號送出，例如 bot_test2")
     parser.add_argument("--topic", default=None, help="防重複用的主題；沒給就從--caption推")
     parser.add_argument("--force", action="store_true", help="略過10分鐘防重複")
+    parser.add_argument("--publish", action="store_true", help="另存一份到公開網址（LINE送圖要用）")
     args = parser.parse_args()
 
     lock = None
@@ -137,6 +142,12 @@ def main():
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(image_bytes)
     print(f"圖片已存檔：{out_path}")
+
+    if args.publish:
+        PUBLIC_IMG_DIR.mkdir(parents=True, exist_ok=True)
+        public_name = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{os.urandom(6).hex()}.png"
+        (PUBLIC_IMG_DIR / public_name).write_bytes(image_bytes)
+        print(f"公開網址（LINE送圖用）：{PUBLIC_IMG_BASE}{public_name}")
 
     if args.telegram_chat_id:
         send_telegram_photo(args.telegram_chat_id, out_path, args.caption, args.openclaw_config, args.telegram_account)
