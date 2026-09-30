@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-30 19:00:26**
+> **最後同步：2026-09-30 19:15:37**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -36,6 +36,8 @@
 Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）、讀憑證資料夾、把授權寫成常駐規則。教練親定：被擋時整理好問一句，教練回「上」＝當下授權；不准丟指令叫教練去終端機跑（記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30）。
 
 ### 📋 下一場開工先做
+**（09-30 19:20 已完成：第1席凌榆舜、第5席邱裕榮換上＋Act04標題改「你的想法，就是你的作品。／你想用什麼形式來展現，是你的自由。」＋觀眾席移除重複的凌榆舜(剩27位)；備份 index.html.bak18、data.json.bak-20260930。邱裕榮照片放 `img/mentors/qiu-yurong.jpg` 就會自動顯示，現在顯示空椅設計。下一場接著做教練「邊做邊改」的其他段落。）**
+
 **「真AI線上團隊」作品 turnforyou 調整**（正式站 https://event.bymyway.com/curated/turnforyou/ ＝直接讀本機 `~/github_repos/turnforyou/`，沒有git，改前照慣例備份成 index.html.bak18）：
 1. **8位顧問師席位換兩位真人**（目前8席全是示範假資料，資料在 `data.json` 的 `seats`，照片 `img/mentors/01~08.jpg`）：
    - 第1席「AI落地與企業轉型」→ **凌榆舜**（AiGeo／iSmart AI 南區，教育科技、AI主動推薦GEO、AI開店系統，資料：https://aibusiness.ismartomo.com.tw/index.php?route=product/product&product_id=3912 ；AI商學院：information_id=4）。照片可用觀眾席已有的 `img/audience/03-linyushun.jpg`。他升上席位後，觀眾席#4那筆刪掉避免重複。
