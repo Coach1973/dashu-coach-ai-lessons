@@ -70,7 +70,7 @@ Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）�
 > 教練裁示「不用管／不做／略過」的列，當場搬去封存檔，不准留在這裡。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
-（目前沒有）
+- **策展網站全面GitHub化（09-30教練交辦）**｜Claude Code自動安全檢查擋下兩個動作，只有教練能授權：①替其餘11站建GitHub＋每次上架自動建（被判「Remote Repoint」）②GitHub通知Mac自動換新網站的入口（event-signup新增`/hooks/github-curated`）｜卡住聯想/宏碁「改完推上去網站自動更新」｜問過：2026-09-30 21:1x。教練回「上」後：`scripts/curated_git.py`已備妥（jacky-brand、submission兩站實測OK），接回`curation_process.py`三條上架路（大樹作品/全新店家/暫代頁覆蓋，上一版改法見本場對話）、跑`ensure-all`、加webhook路由+每個repo掛通知、聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→自動指路GitHub」、Mac `projects/INDEX.md`加策展卡、模擬聯想push端到端驗證線上版換新。ema/huitou的origin網址夾帶GitHub登入金鑰明文，也等這次授權一起清。
 
 
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
