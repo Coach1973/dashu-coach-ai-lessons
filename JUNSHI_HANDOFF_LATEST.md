@@ -1,3 +1,44 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-30 19:00，Mac桌面版 Opus 5.5，新的一棒 v255）
+
+**本場主軸：產業鏈SOP兩個AI同時出包的總檢討與機制修復；怡靜群組／帳號開通前置；LINE小龍蝦可出LK888圖；讀赫米斯週日~週二紀錄，準備 turnforyou 下一步。**
+
+### 1. 產業鏈SOP出包總檢討（試金石案例93）
+根因三個都是軍師的機制洞：①生圖腳本f-string寫法只在Python3.14測過，Hermes(3.11)一跑就崩→已改，三版本實測；②SOP寫「要比對905項BNI詞庫」但小龍蝦實際讀的技能檔沒寫→已補（`agents/main/agent/workshop-skills/industry-chain-prompt/SKILL.md`，此資料夾不進版控）；③開工六步看不到其他AI當天做的事→新增第5.5步`scripts/today_other_agents_digest.py`直讀小龍蝦inbound_echo＋Hermes state.db。另把接力棒v251~v252封存，開工注入不再被截斷。commit `8873d57d1` `13582eea5`。
+
+### 2. 怡靜（陳怡靜，跨境電商）群組與帳號
+- 「宜靜 AI 群」連結 https://t.me/+l7q1xK04SFE0MTRl ：龍蝦特助 @openclaw_macbook4_bot **要先被加進群**，機器人無法自己用連結入群；至今gateway log沒有任何該群訊息。等她在群裡@它講一句 → 從 `state/inbound_echo` 抓群ID＋她的Telegram ID → 在 openclaw.json bot_main.groups 加該群（requireMention視需要）＋toolsBySender。**權限原則：只開她要更新的指定資料庫（做成專用小工具），不開整台Mac。** 教練會再貼要開放哪些資料庫。
+- 帳號：`namecard-db/venv/bin/python3 scripts/grant_partner_accounts.py --phone 09xxxxxxxx --name 陳怡靜` 一次開好 team.bymyway.com 總管理（涵蓋第一~第五分會）＋namecard.bymyway.com 已批准帳號，密碼皆88888。已在資料庫複本測過。**等教練給她手機號碼。**
+- 出席紀錄：team01.bymyway.com（`~/github_repos/team01-guests`，port 5091）是第一分會邀約來賓儀錶板，有 guest_list 表但**沒有登入後台**；第二分會版本不存在。等教練的資料庫清單再做。
+- VPS pairing碼QJJKXVY8查她ID被安全檢查擋（憑證資料夾），不用再試，等群裡講話即可。
+
+### 3. 內外部資源＋觀眾席構想（軍師建議，待教練拍板）
+- 內部＝大台南區現役BNI會員（權威來源：大台南南區94人資料）；外部＝非會員（mentor100講師、策展店家、前會員、來賓）。
+- 建議做一份「人才庫」單一資料來源，觀眾席從它長出來，上面加「全部／內部／外部」切換（就是教練09-29提過的「內外專家選單」），不再把28人寫死在HTML裡。
+- 專業欄位用905項BNI詞庫的名稱，同一份人才庫就能直接餵產業鏈圖（節點＝真的人）。
+- 公開頁只放各人已公開的資料（照片、公司、專業），不放電話。94人以上要分組／可收合／可搜尋，不然頁面太長。
+
+### 4. LINE小龍蝦出LK888圖（教練要求，只限教練本人帳號）
+根因：LINE只收公開HTTPS網址的圖。已加 `event.bymyway.com/chain-img/`（檔名帶亂數）＋`generate_industry_chain.py --publish`；大台南小幫手新技能 `industry-chain-image`、main技能加 Branch D。第一次真實使用時要確認LINE上看得到圖。commit `676e96224`。
+
+### 5. 權限與「上」
+Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）、讀憑證資料夾、把授權寫成常駐規則。教練親定：被擋時整理好問一句，教練回「上」＝當下授權；不准丟指令叫教練去終端機跑（記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30）。
+
+### 📋 下一場開工先做
+**「真AI線上團隊」作品 turnforyou 調整**（正式站 https://event.bymyway.com/curated/turnforyou/ ＝直接讀本機 `~/github_repos/turnforyou/`，沒有git，改前照慣例備份成 index.html.bak18）：
+1. **8位顧問師席位換兩位真人**（目前8席全是示範假資料，資料在 `data.json` 的 `seats`，照片 `img/mentors/01~08.jpg`）：
+   - 第1席「AI落地與企業轉型」→ **凌榆舜**（AiGeo／iSmart AI 南區，教育科技、AI主動推薦GEO、AI開店系統，資料：https://aibusiness.ismartomo.com.tw/index.php?route=product/product&product_id=3912 ；AI商學院：information_id=4）。照片可用觀眾席已有的 `img/audience/03-linyushun.jpg`。他升上席位後，觀眾席#4那筆刪掉避免重複。
+   - 第5席「媒體曝光與公關資源」→ **邱裕榮**（才榮數位總經理、AI傳道學院創辦人、AI媒體聯盟總編輯；工商時報／管理雜誌／東森BossClub主持人20+年；農業跨界白皮書。資料：https://www.tava-ai.com/chat/i6bncu8hxu/index.html ，頁面裡沒有人像照，只有 img/hero-green.jpg 等場景圖——照片要跟教練要或從他其他頁面找）。
+   - 戰績（feats）從上面兩頁的事實摘，不捏造。
+2. 「有些字和資料需要調整」——**教練還沒說是哪些字**，等他講。
+3. 第三位顧問師：教練正在做他的個人品牌網頁，做完會貼文字，到時換進剩下的示範席位之一。
+4. 改完：本機 curl 驗證 data.json 與頁面 → Chrome 開正式網址親眼看 → 給教練看。
+
+**教練新構想「內外部資源＋觀眾席」（軍師已給初步建議，見下方v255第3點，等教練拍板再動手）**
+
+### 🔑 本場commit
+`2a38af044` `8873d57d1` `13582eea5` `676e96224`，本次總結commit另計。
+
+---
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-09-30 14:52，雲端/桌面版 Sonnet 5，新的一棒 v254）
 
 **本場主軸：教練問「線上版碰不碰得到Mac資料庫」的邏輯題（已回覆），總結時git pull撞見接力棒檔案衝突——09-28小龍蝦做turnforyou觀眾席時直接整份覆蓋JUNSHI_HANDOFF_LATEST.md、沒commit，近40小時鏡像進CLAUDE.md的都是壞掉的接力棒。已救回turnforyou內容+修復接力棒+補機器防呆+套用v253的coach888稽核修法。**
@@ -20,60 +61,8 @@
 待補（本次總結commit）。修法涉及：`scripts/sync_handoff_to_claudemd.sh`、`scripts/audit_coach888_coverage.py`、`JUNSHI_HANDOFF_LATEST.md`、`handoff_archive/handoff_turnforyou_recovered_from_stash_2026-09-30.md`、試金石案例92。
 
 ---
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-27 19:37，雲端 Sonnet 5，新的一棒 v253）
+> 📦 v253完整內容已封存：`handoff_archive/handoff_v253_archived_2026-09-30.md`（v253雲端coach888稽核假警報診斷，v254已套用修法）
 
-**本場主軸：雲端session一開場Stop hook就被「coach888結構性稽核鎖」擋收工，查出是稽核腳本本身在雲端環境會崩潰的bug（假警報），不是真的漏收錄。已完整診斷+驗證修法，但教練裁示「commit診斷、不代表要套用」，留給軍師審批值不值得修，本場故意不改動正式腳本。**
-
-### 1. 🔴 coach888結構性稽核腳本雲端會假崩潰擋Stop（只留診斷+建議修法，未套用，待軍師審批）
-**現象**：雲端session連query/git status都還沒做完，Stop hook就跳出「🔴🔒 coach888結構性稽核鎖」擋收工，訊息措辭是「有新頁面沒收錄」。
-
-**查證過程（非猜測，逐步用指令推翻）**：
-- 直接手動跑`python3 scripts/audit_coach888_coverage.py --strict`→`FileNotFoundError`，exit code 1
-- 原因①：`audit_coach888_coverage.py`第23行寫死Mac專屬路徑`Path("/Users/bymyway/.openclaw/workspace")`，雲端主機沒有這個路徑
-- 原因②：就算改成`Path.home()`，雲端工作頁本來就只`sparse-checkout` main分支的`scripts/knowledges/cloud_sync`等目錄（見`.claude/cloud_bootstrap.sh`），不含`event-signup/`，也沒有`~/github_repos/coach888/`——這兩個來源檔在雲端環境本來就不存在，不是「沒下載到」而是設計上就不打算下載
-- 呼叫端`stop_rules_master.py`把「腳本崩潰」跟「腳本正常跑完、真的找到新缺漏」都當成returncode 1一視同仁去擋Stop，等於**雲端每次收工都會被這個假警報擋下，跟這場對話有沒有交付新頁面完全無關**（本場只跑了`git log/status/diff`唯讀指令，沒碰event-signup、沒`gh repo create`）
-
-**已驗證的建議修法（未commit進正式腳本，只是診斷紀錄）**：
-```diff
---- a/scripts/audit_coach888_coverage.py
-+++ b/scripts/audit_coach888_coverage.py
-@@ -20,7 +20,7 @@ import re
- import sys
- from pathlib import Path
-
--WORKSPACE = Path("/Users/bymyway/.openclaw/workspace")
-+WORKSPACE = Path.home() / ".openclaw" / "workspace"
- APP_PY = WORKSPACE / "event-signup" / "app.py"
- COACH888_HTML = Path.home() / "github_repos" / "coach888" / "index.html"
- BASELINE_PATH = WORKSPACE / "scripts" / "coach888_audit_baseline.txt"
-@@ -65,6 +65,15 @@ def extract_visible_section_html(full_html: str) -> str:
-
-
- def main():
-+    if not APP_PY.is_file() or not COACH888_HTML.is_file():
-+        # 雲端工作頁只sparse-checkout main分支的scripts/knowledges/cloud_sync等目錄，
-+        # 不含event-signup、也沒有~/github_repos/coach888(見.claude/cloud_bootstrap.sh)，
-+        # 這裡讀不到來源檔是環境限制，不代表教練真的漏收錄了什麼——照
-+        # stop_rules_master.py呼叫端的既有原則「稽核腳本本身故障不該擋住教練收工」，
-+        # 安靜跳過，不當成新缺漏擋Stop。
-+        missing = APP_PY if not APP_PY.is_file() else COACH888_HTML
-+        print(f"⚠️ 找不到 {missing}（本環境無此checkout，跳過此稽核，不代表有漏收錄）")
-+        return
-     app_text = APP_PY.read_text(encoding="utf-8")
-     coach888_text = COACH888_HTML.read_text(encoding="utf-8")
-     visible = extract_visible_section_html(coach888_text)
-```
-本地驗證：套用後`python3 audit_coach888_coverage.py --strict`從崩潰(exit 1)變成正常印警告+`exit 0`；`bash stop_rules_master.sh`整支也回`exit 0`。Mac本機因為`event-signup/app.py`跟`~/github_repos/coach888/index.html`真的存在，這個if判斷不會觸發，稽核邏輯完全不變——**這個修法只影響雲端假警報，不影響Mac正式稽核**。
-
-**教練裁示（09-27 19:36親口）**：commit診斷結果，不代表要執行修復；留給桌面版軍師有額度時審批這個判斷值不值得做，不要在雲端這場對話直接跑指令試修（避免白耗額度）。
-
-### 📋 下一場開工先做
-軍師看到這則，決定：①同意→把上面的diff實際套進`scripts/audit_coach888_coverage.py`並commit＋push main②不同意/有更好想法→直接在這裡回覆理由即可，不用回頭問教練（這是純技術判斷，教練已授權軍師審批）。套用後記得跑一次`bash scripts/stop_rules_master.sh`確認雲端不再假擋，也在Mac本機跑一次確認`event-signup/app.py`存在時邏輯沒變。
-
-### 🔑 本場commit
-workspace（main分支）：`b85d746`
-
----
 > 📦 v251~v252完整內容已封存：`handoff_archive/handoff_v251_to_v252_archived_2026-09-30.md`（v251聯想Netlify兩站改期+git同步卡住修復／v252 VPS遷移信審議+開工沒讀到信根因+LK888第二帳戶備援+全站網址統一event）
 
 > 📦 v248~v250完整內容已封存：`handoff_archive/handoff_v248_to_v250_archived_2026-09-27.md`（v248公開交接棒上線／v249開工hook與赫米斯上架bug／v250 VPS遷移與鑫瀚昌）
