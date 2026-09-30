@@ -1,4 +1,6 @@
 # Memory Index
+- [🔴 教練團隊重心在台灣、不傾向與中國大陸合作；夥伴介紹不可讓人誤以為重心在大陸，圖片裡的簡體字也要處理(2026-09-30)](feedback_taiwan_focus_no_china_emphasis_2026-09-30.md)
+- [🔴🔴 答案必然是「要」的事不准問(上傳雲端/放行權限)；被安全檢查擋下不准丟指令叫教練跑(2026-09-30)](feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md)
 - [🔴 額度緊繃時，臨場發現的額外修復工作要先問教練再花token，不能自己判斷該修就動手(2026-09-30)](feedback_flag_unscoped_token_cost_before_fixing_2026-09-30.md)
 - [💸🔴 LK888出圖一律走lk888_guard收費閘門，兩端都有繞過鎖；測付費API先封網(sitecustomize撞名會讓mock失效)(2026-09-26 案例85)](reference_lk888_spend_guard_2026-09-26.md)
 - [🔧 git rebase --continue報「還有衝突」卻index全乾淨，真因是其他modified檔案未staged(2026-09-26)](reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md)
@@ -28,7 +30,7 @@
 - [🔧 教練親口鬆綁：Netlify現在點數夠不用每次先問(2026-09-23)](feedback_netlify_approval_no_longer_required_2026-09-23.md)
 - [🔴🔴🔴 Remote Control連線異常三大根因SOP：settings.json殘留MiniMax金鑰／bridge-pointer殭屍session／migration旗標未清(2026-09-17~23)](reference_claude_code_remote_control_setup_sop_2026-09-17.md)
 - [🔴 教練語音「em」=「1M」(1M context的「1」被誤寫成e)，不要猜EM mode(2026-09-22)](feedback_em_voice_correction_means_1m_context_window_2026-09-22.md)
-- [🔴🔴🔴 「小龍蝦」vs「Hermes」是這台Mac兩套獨立Telegram bot系統，故障診斷前先確認對話框(2026-09-19~22)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)（Hermes桌面版App vs Telegram後端gateway區分見[[feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19]]）
+- [🔴🔴🔴 「小龍蝦」vs「Hermes」身份混淆三部曲，第3次是接力棒轉述任務來源搞錯，衝突時原始digest優先於paraphrase(2026-09-19~30)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)（Hermes桌面版App vs Telegram後端gateway區分見[[feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19]]）
 - [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；機制是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
 - [🔴 git pull失敗/歷史異常時先讀本機HEARTBEAT/接力棒，不靠git底層診斷(2026-09-21)](feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md)
