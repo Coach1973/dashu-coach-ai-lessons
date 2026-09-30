@@ -56,3 +56,22 @@
 同一個prompt+同一個chat_id在短時間內重複貼會扣兩次lk888 credit，dedup機制還沒做，教練裁示前這次仍未處理，下次有空再排。
 
 Related: [[reference_ezpay_invoice_issuing_procedure]]（同樣是「先讀已有SOP再動手」這條紀律的另一個案例）
+
+## ⭐ 一鍵正式流程（2026-10-01 教練：好品質要寫成死流程，不要再花點數測品質）
+
+**所有 AI（小龍蝦、LINE、怡靜分身、赫米斯、軍師）出產業鏈圖，一律這樣做，不自己寫圖片描述：**
+
+```
+python3 ~/.openclaw/workspace/scripts/generate_industry_chain.py \
+  --topic "主題" --nodes "節點1,…,節點20" --center "中心人物外觀" --held "手持物件" --audience "目標客群" \
+  [--telegram-chat-id 群組或聊天ID --caption "主題 產業服務鏈" --background] [--publish（LINE用）]
+```
+
+- 圖片描述由腳本用**教練核准的固定範本**組成（手繪可愛風、人類角色、全繁體、禁英文禁亂碼），AI 只提供主題＋20 個節點＋人物外觀。
+- `--nodes` 必須剛好 20 個、每個都是 BNI 詞庫（taxonomy.json）真實類別，**不合格腳本在花 LK888 點數之前就擋下**並列出最接近的真名（結束碼 2，不扣點）。
+- 「🟡 相似」只有意思真的一樣才換（會計師→會計服務可以；化妝品→化妝師不行，意思不同就丟掉重想）。
+- `--background`：馬上回覆「已開始製作」，圖做好後腳本自己送進 `--telegram-chat-id`，失敗會在群組說一聲。呼叫端不必等、不必查進度（出圖要 1~2 分鐘）。
+- 防重複：同主題同對話 10 分鐘只做一次；LK888 閘門 24 小時內相同要求免費回傳舊圖。
+- 為什麼要寫死：2026-10-01 怡靜分身自己亂寫圖片描述，出現英文、語意不合的類別，還只有 15 個節點，且每次試都扣教練點數。
+- 怡靜群的實測路徑：`openclaw gateway call agent`（sessionKey 用群組的）＋先 `openclaw sessions delete --yes` 重建對話，才會讀到新規則。**測付費功能先只測到「組出描述／被擋下」，不要真的出圖。**
+

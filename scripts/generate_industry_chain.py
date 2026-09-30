@@ -117,9 +117,46 @@ def notify_failure(args, err):
         pass
 
 
+NODE_COUNT = 20
+PROMPT_TEMPLATE = (
+    "我需要做一張產業服務鏈，要用手繪可愛風格做出來。中心是「{topic}」的人類角色插畫{center}"
+    "（男性或女性皆可，禁止使用動物、擬人化動物或卡通動物造型），手持{held}。"
+    "標題：{topic} 夥伴圖。為{audience}，提供從{first}到{last}的完整夥伴支援。"
+    "周邊環繞以下 {n} 個專業類別節點，每個節點配精緻手繪 icon：{nodes}。"
+    "所有文字必須完全正確、清晰可讀，每個文字都必須是繁體中文（台灣正體字），"
+    "禁止使用簡體字、簡體字形、簡體偏旁、簡體異體字、或任何簡體中文變體，"
+    "禁止出現任何英文或拼音，絕對不能出現無法顯示的亂碼字、缺漏字或方框字。"
+)
+
+
+def build_prompt_from_nodes(args):
+    """正式流程（2026-10-01 教練：以前品質好的做法寫成死流程，不要再花點數試品質）：
+    節點必須剛好20個、全部是BNI真實類別，才用核准範本組成圖片描述；不合格直接結束，不呼叫LK888。"""
+    import check_industry_chain_names as chk
+    names = chk.load_names()
+    nodes = [n.strip() for n in re.split(r"[,，、]", args.nodes) if n.strip()]
+    bad = []
+    for n in nodes:
+        kind, close = chk.check_one(n, names)
+        if kind != "exact":
+            bad.append(f"「{n}」" + (f"→ 最接近的真實類別：{'、'.join(close)}（意思一樣才能換）" if close else "→ BNI詞庫查無，請換掉"))
+    if len(nodes) != NODE_COUNT or len(set(nodes)) != len(nodes):
+        bad.append(f"節點要剛好 {NODE_COUNT} 個且不重複，目前 {len(nodes)} 個")
+    if bad:
+        print("❌ 節點不合格，沒有出圖也沒有扣點。請改好這些再下一次指令：\n  " + "\n  ".join(bad))
+        sys.exit(2)
+    center = f"，外觀：{args.center.strip()}" if args.center.strip() else ""
+    return PROMPT_TEMPLATE.format(topic=args.topic, center=center, held=args.held, audience=args.audience,
+                                  first=nodes[0], last=nodes[-1], n=len(nodes), nodes="、".join(nodes))
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--prompt", required=True)
+    parser.add_argument("--prompt", default=None, help="完整圖片描述；正式流程改用 --nodes 由範本自動組成")
+    parser.add_argument("--nodes", default=None, help="20個BNI真實類別，用逗號分隔；不是全部命中BNI詞庫會在花錢前直接擋下")
+    parser.add_argument("--center", default="", help="中心人物外觀，例如「戴眼鏡、長頭髮的女生」")
+    parser.add_argument("--held", default="代表性物品", help="中心人物手持的物件")
+    parser.add_argument("--audience", default="該產業的老闆與客戶", help="目標客群")
     parser.add_argument("--size", default="1024x1024")
     parser.add_argument("--out", default=None)
     parser.add_argument("--telegram-chat-id", default=None)
@@ -132,6 +169,14 @@ def main():
     parser.add_argument("--_lock", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--publish", action="store_true", help="另存一份到公開網址（LINE送圖要用）")
     args = parser.parse_args()
+    if args.nodes:
+        if not args.topic:
+            print("❌ 用 --nodes 時一定要給 --topic（主題）")
+            sys.exit(2)
+        args.prompt = build_prompt_from_nodes(args)
+    elif not args.prompt:
+        print("❌ 要給 --nodes（正式流程）或 --prompt")
+        sys.exit(2)
 
     lock = None
     if not args.force:
