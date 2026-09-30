@@ -230,7 +230,8 @@
       "uploaded_at": "2026-09-24 00:02",
       "status": "live",
       "source_package": "input-ai-application-submission-package-20260923---776b0cd0-f4fa-49ea-96f9-32efb3ccb455.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/submission"
     },
     {
       "slug": "zaolin",
@@ -374,6 +375,19 @@
       "uploaded_at": "2026-09-29 20:50",
       "status": "live",
       "source_package": "20260929-205034__doc_17dc4bfbc9ec_diart-venue-rental.zip"
+    },
+    {
+      "slug": "jacky-brand",
+      "title": "顧瀚鈞 Jacky｜商業模式架構師",
+      "description": "顧瀚鈞 Jacky｜商業模式架構師。宏富科技投資顧問創辦人，曾任亞洲資產高級合夥人（香港）、東莞證券與國融證券董事總經理（上海）。以資本的視角陪企業主重新搭建商業模式。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/jacky-brand/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-30 19:31",
+      "status": "live",
+      "source_package": "20260930-193120__doc_e407cf2ccec9_jacky-brand-site.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/jacky-brand"
     }
   ],
   "redirects": {
