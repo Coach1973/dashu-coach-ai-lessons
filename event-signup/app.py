@@ -116,6 +116,17 @@ def qr_file(filename):
     return send_from_directory(QR_DIR, filename)
 
 
+# 產業鏈圖公開網址（LINE只收公開HTTPS網址的圖），由scripts/generate_industry_chain.py --publish 寫入
+CHAIN_IMG_DIR = os.path.join(os.path.dirname(__file__), "chain_images")
+
+
+@app.route("/chain-img/<name>")
+def chain_img(name):
+    if not re.fullmatch(r"[0-9]{14}_[0-9a-f]{12}\.png", name):
+        abort(404)
+    return send_from_directory(CHAIN_IMG_DIR, name, mimetype="image/png")
+
+
 @app.route("/checkin", methods=["GET"])
 def checkin():
     """固定不變的報到入口，QR立牌永久印這個網址。後台切哪場是「目前活動」，
