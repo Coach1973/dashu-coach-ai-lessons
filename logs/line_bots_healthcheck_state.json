@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-09-26 08:05:01",
+  "lastCheckAt": "2026-09-30 08:05:03",
   "status": "OK",
   "results": ["✅ Gateway process 存活","✅ line 外掛已成功載入（最近一次啟動記錄有 line）","✅ webhook 對外路徑正常（openclaw.bymyway.com，帶正確簽章測試，HTTP 200代表簽章驗證通過、訊息真的能被處理）"]
 }

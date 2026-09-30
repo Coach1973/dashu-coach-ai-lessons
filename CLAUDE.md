@@ -4,140 +4,89 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-30 14:40:45**
+> **最後同步：2026-09-30 14:44:09**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-# 接力棒 — turnforyou 觀眾席最終建置（2026-09-28 深夜完成）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-30 14:52，雲端/桌面版 Sonnet 5，新的一棒 v254）
 
-## 教練這輪交辦
+**本場主軸：教練問「線上版碰不碰得到Mac資料庫」的邏輯題（已回覆），總結時git pull撞見接力棒檔案衝突——09-28小龍蝦做turnforyou觀眾席時直接整份覆蓋JUNSHI_HANDOFF_LATEST.md、沒commit，近40小時鏡像進CLAUDE.md的都是壞掉的接力棒。已救回turnforyou內容+修復接力棒+補機器防呆+套用v253的coach888稽核修法。**
 
-把 mentor100 + 真誠分會 + 8 個 curated店家 + 大樹教練本人，共 **28 位夥伴** 列在 turnforyou 站內的「外圍團隊觀眾席」（Act 06.5），每位要有圖、頭銜、專業描述、來源連結。
+### 1. 🔴 接力棒被整份覆蓋近40小時未發現（試金石案例91，新增機器防呆）
+09-28 23:10小龍蝦（MiniMax）完成turnforyou觀眾席建置，寫接力棒時**沒有先讀既有內容**，直接整份覆蓋`JUNSHI_HANDOFF_LATEST.md`且從未commit——本機工作區一直停在這個壞狀態。更嚴重的是：`sync_handoff_to_claudemd.sh`鏡像腳本照樣忠實把這份壞內容鏡像進`CLAUDE.md`並**commit+push上雲**（`82a22e39c`），代表任何一台pull這個repo的機器，09-28 23:10到09-30總結前開工讀CLAUDE.md看到的接力棒都是turnforyou內容，v252/v253整條鏈完全消失，沒有人發現。
 
----
+本場總結時`git pull --rebase`因為兩邊都改了同一個檔案而衝突，才第一次浮現。**修法**：①turnforyou原始內容完整搬進`handoff_archive/handoff_turnforyou_recovered_from_stash_2026-09-30.md`，沒有遺失任何資訊；②`JUNSHI_HANDOFF_LATEST.md`用git upstream版本（v253鏈）復原；③`sync_handoff_to_claudemd.sh`新增格式檢查——鏡像前確認開頭有「給跨對話框軍師讀的總結摘要」+「新的一棒 vN」，不像就拒絕鏡像、不commit、印log，不再照單全收。
 
-## 最終線上狀態（2026-09-28 23:10 已上線）
+### 2. 套用v253留下的coach888稽核修法（教練授權軍師審批）
+雲端session的`audit_coach888_coverage.py`會因為讀不到Mac專屬路徑而崩潰假擋Stop hook。實測驗證後直接套用：`WORKSPACE`改用`Path.home()`＋`main()`開頭補存在性檢查，讀不到來源檔就印警告安靜return，不當漏收錄。Mac本機`--strict`跑完仍是原本5個已知舊帳，行為未變；`stop_rules_master.sh`整支exit 0。
 
-| 編號 | 姓名 | 角色 | 圖檔 | 來源 |
-|---|---|---|---|---|
-| 1 | 吳大樹 | 大樹教練 | `15-dashu.jpg` | BNI 真誠分會 |
-| 2 | 林佳伶 Lavi | LAVison Image | `01-lavi.jpg` | BNI 真誠分會 |
-| 3 | 蘇秦 | AI 創意教學專家 | `02-suqin.jpg` | Mentor 100 |
-| 4 | 凌榆舜 (iSmart) | 智匯商機 | `03-linyushun.jpg` | Mentor 100 |
-| 5 | 余尚恩 | 屏東科大 | `04-yushangen.jpg` | Mentor 100 |
-| 6 | 陳佩君 (佩佩老師) | 鋼琴家 | `05-chenpeijun.jpg` | BNI 真誠分會 |
-| 7 | 楊在珍 | 信望愛創意 | `06-yangzaizhen.jpg` | BNI 真誠分會 |
-| 8 | 鄒昆廷 | 朋昶數位 | `07-zoukunting.jpg` | Mentor 100 |
-| 9 | 李中閔 | 宸霖智權 | `08-lizhongmin.jpg` | Mentor 100 |
-| 10 | 陳宜璟 | 薩加瑪奇克 | `09-chenyijing.jpg` | Mentor 100 |
-| 11 | 王夏儷 | EZ Player | `10-wangxiali.jpg` | Mentor 100 |
-| 12 | 葉建葳 | 理理創意 | `11-yejianwei.jpg` | BNI 真誠分會 |
-| 13 | 季哥 Eric Chi | 凱基人壽 | `12-jige.jpg` | Mentor 100 |
-| 14 | 王彤 | 雲智永續 | `13-wangtong.jpg` | BNI 真誠分會 |
-| 15 | 林孟寬 | 青山永續 | `14-linmengkuan.jpg` | Mentor 100 |
-| 16 | 林信翰 (阿翰) | 鑫瀚昌旅行社 | 無圖 | event.bymyway.com/hsinhan |
-| 17 | 宋美伶 | 鑫瀚昌旅行社 | 無圖 | event.bymyway.com/hsinhan |
-| 18 | 許朝竣 (維尼) | 百聖廣告 | `17-xuchaojun.jpg` | event.bymyway.com/bai-sheng |
-| 19 | 柯朝陽 | 牛市町 Bull Market | `19-kecy.png` | event.bymyway.com/niu-shi-ting |
-| **20** | **黃秀麗** | 全國古典音樂推廣版主 | `20-huangxiuli.jpg` | **tava-ai.com（教練新給的）** |
-| **21** | **傅恩平** | 榮益齋有限公司 | `21-new.jpg`（**教練新給的）** | event.bymyway.com/fu-en-ping |
-| 22 | 楊尚儒 D.M.A. | 小提琴・中提琴 | `16-yangshangru.png` | event.bymyway.com/yang-shang-ru |
-| 23 | 張育慈 (慕斯) | 順業肥料 | `18-zhangyuci.jpg` | event.bymyway.com/zhang-yu-ci |
-| **24** | **張玉盞** | 立馬集團 | `24-zhangyuzhan.jpg` | **event.bymyway.com/ema（頂替 Abby）** |
-| 25 | 鄭禮昂 | 禮享家企業社 | `19-zhenglianang.jpg` | BNI 真誠分會 |
-| 26 | 李美花 | 美麗樂生技 | `21-limeihua.jpg` | BNI 真誠分會 |
-| 27 | 鄭綉美 | 方碩方有限公司 | `22-zhengxiumei.jpg` | BNI 真誠分會 |
-| 28 | 郭展鴻 | 大紀元時報 | `23-guozhanhong.jpg` | BNI 真誠分會 |
+### 3. 回答教練「線上版能不能碰Mac資料庫」的邏輯題
+分三類回答：已進版控的檔案／資料庫線上版能讀但只是快照非即時；故意排除版控的資料（名片庫、真實密碼）線上版完全碰不到；Mac上實際在跑的服務（RustDesk/LINE/瀏覽器/launchd）線上版完全碰不到。確認教練「雲端沙盤推演、落地回桌面版執行」的工作法可行，補充：雲端做完的東西回桌面版要重新核對一次「這台Mac即時狀態」，不能直接當作已驗證。
+
+### 📋 下一場開工先做
+（目前沒有懸而未決的事）turnforyou觀眾席（28人名冊）已於09-28正式上線，內容完整保存在`handoff_archive/handoff_turnforyou_recovered_from_stash_2026-09-30.md`；後續待辦（觀眾席版面微調/案例牆100個案例/報名表單）留在該封存檔內，教練提起再查。
+
+### 🔑 本場commit
+待補（本次總結commit）。修法涉及：`scripts/sync_handoff_to_claudemd.sh`、`scripts/audit_coach888_coverage.py`、`JUNSHI_HANDOFF_LATEST.md`、`handoff_archive/handoff_turnforyou_recovered_from_stash_2026-09-30.md`、試金石案例91。
 
 ---
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-27 19:37，雲端 Sonnet 5，新的一棒 v253）
 
-## 檔案位置
+**本場主軸：雲端session一開場Stop hook就被「coach888結構性稽核鎖」擋收工，查出是稽核腳本本身在雲端環境會崩潰的bug（假警報），不是真的漏收錄。已完整診斷+驗證修法，但教練裁示「commit診斷、不代表要套用」，留給軍師審批值不值得修，本場故意不改動正式腳本。**
 
-- **`/Users/bymyway/github_repos/turnforyou/index.html`**（441558 bytes / 已備份 .bak1 ~ .bak17）
-- **`/Users/bymyway/github_repos/turnforyou/img/audience/`** — 共 24 張圖檔（25 個檔名但 19-kecy.png 是給柯朝陽新換的）
-- 直接讀本機檔（無 .git，server 直接 serve 本機）
+### 1. 🔴 coach888結構性稽核腳本雲端會假崩潰擋Stop（只留診斷+建議修法，未套用，待軍師審批）
+**現象**：雲端session連query/git status都還沒做完，Stop hook就跳出「🔴🔒 coach888結構性稽核鎖」擋收工，訊息措辭是「有新頁面沒收錄」。
 
----
+**查證過程（非猜測，逐步用指令推翻）**：
+- 直接手動跑`python3 scripts/audit_coach888_coverage.py --strict`→`FileNotFoundError`，exit code 1
+- 原因①：`audit_coach888_coverage.py`第23行寫死Mac專屬路徑`Path("/Users/bymyway/.openclaw/workspace")`，雲端主機沒有這個路徑
+- 原因②：就算改成`Path.home()`，雲端工作頁本來就只`sparse-checkout` main分支的`scripts/knowledges/cloud_sync`等目錄（見`.claude/cloud_bootstrap.sh`），不含`event-signup/`，也沒有`~/github_repos/coach888/`——這兩個來源檔在雲端環境本來就不存在，不是「沒下載到」而是設計上就不打算下載
+- 呼叫端`stop_rules_master.py`把「腳本崩潰」跟「腳本正常跑完、真的找到新缺漏」都當成returncode 1一視同仁去擋Stop，等於**雲端每次收工都會被這個假警報擋下，跟這場對話有沒有交付新頁面完全無關**（本場只跑了`git log/status/diff`唯讀指令，沒碰event-signup、沒`gh repo create`）
 
-## 這輪修了哪些 bug / 做了哪些事
+**已驗證的建議修法（未commit進正式腳本，只是診斷紀錄）**：
+```diff
+--- a/scripts/audit_coach888_coverage.py
++++ b/scripts/audit_coach888_coverage.py
+@@ -20,7 +20,7 @@ import re
+ import sys
+ from pathlib import Path
 
-### 1. 「下面內容看不到」慘案（修兩次）
-- 9/28 第一次修，加了 `.no-js .reveal` CSS fallback + 1.5 秒 setTimeout
-- 這輪**徹底改用 opt-in 機制**：把 `.reveal{opacity:0}` 改成 `.reveal.armed{opacity:0}`，JS 啟動時才加 `.armed` 標記。JS 出問題時元素保持可見。
+-WORKSPACE = Path("/Users/bymyway/.openclaw/workspace")
++WORKSPACE = Path.home() / ".openclaw" / "workspace"
+ APP_PY = WORKSPACE / "event-signup" / "app.py"
+ COACH888_HTML = Path.home() / "github_repos" / "coach888" / "index.html"
+ BASELINE_PATH = WORKSPACE / "scripts" / "coach888_audit_baseline.txt"
+@@ -65,6 +65,15 @@ def extract_visible_section_html(full_html: str) -> str:
 
-### 2. SyntaxError：重複宣告 const fd
-- 9/28 改單時在 form submit handler 內 `const fd = new FormData(form)` 寫了**兩次**，導致 main script 整個中斷
-- `renderAudience()` 在 main script 裡 → 永遠沒被呼叫 → audienceGrid 永遠空
-- 修法：刪掉重複那行
 
-### 3. fetch+boot 流程的 DATA 被覆蓋
-- `data.json` 是頁面真正使用的資料源（353KB），不含 audience 欄位
-- `Object.assign({}, DATA, __C.data)` + fetch 後 `DATA = data.json` → FALLBACK 的 audience 被蓋掉
-- 修法：獨立 `<script id="audience-data">` 把 29 位觀眾席放進 `window.__AUDIENCE__`，`renderAudience()` 優先讀它
+ def main():
++    if not APP_PY.is_file() or not COACH888_HTML.is_file():
++        # 雲端工作頁只sparse-checkout main分支的scripts/knowledges/cloud_sync等目錄，
++        # 不含event-signup、也沒有~/github_repos/coach888(見.claude/cloud_bootstrap.sh)，
++        # 這裡讀不到來源檔是環境限制，不代表教練真的漏收錄了什麼——照
++        # stop_rules_master.py呼叫端的既有原則「稽核腳本本身故障不該擋住教練收工」，
++        # 安靜跳過，不當成新缺漏擋Stop。
++        missing = APP_PY if not APP_PY.is_file() else COACH888_HTML
++        print(f"⚠️ 找不到 {missing}（本環境無此checkout，跳過此稽核，不代表有漏收錄）")
++        return
+     app_text = APP_PY.read_text(encoding="utf-8")
+     coach888_text = COACH888_HTML.read_text(encoding="utf-8")
+     visible = extract_visible_section_html(coach888_text)
+```
+本地驗證：套用後`python3 audit_coach888_coverage.py --strict`從崩潰(exit 1)變成正常印警告+`exit 0`；`bash stop_rules_master.sh`整支也回`exit 0`。Mac本機因為`event-signup/app.py`跟`~/github_repos/coach888/index.html`真的存在，這個if判斷不會觸發，稽核邏輯完全不變——**這個修法只影響雲端假警報，不影響Mac正式稽核**。
 
-### 4. inline render script 位置錯誤
-- 第一次把 script 插在 `<meta charset>` 前面，破壞 HTML parser（會把後面當 script 內容吃掉）
-- 修法：移到 `<body>` 開頭之後
+**教練裁示（09-27 19:36親口）**：commit診斷結果，不代表要執行修復；留給桌面版軍師有額度時審批這個判斷值不值得做，不要在雲端這場對話直接跑指令試修（避免白耗額度）。
 
-### 5. 圖檔沒實際抓
-- 教練第一輪問「為什麼沒有頭像」，我才發現前幾輪只說「補 photo 欄位」但根本沒去抓
-- 抓了 **18 張**：15 張 mentor100 + 3 張 curated
-- 第二輪教練說「真誠分會 12 位你只抓 6 位」，再補抓 **6 張** → 共 24 張
+### 📋 下一場開工先做
+軍師看到這則，決定：①同意→把上面的diff實際套進`scripts/audit_coach888_coverage.py`並commit＋push main②不同意/有更好想法→直接在這裡回覆理由即可，不用回頭問教練（這是純技術判斷，教練已授權軍師審批）。套用後記得跑一次`bash scripts/stop_rules_master.sh`確認雲端不再假擋，也在Mac本機跑一次確認`event-signup/app.py`存在時邏輯沒變。
 
-### 6. 編號搞錯（教練糾正）
-- 教練說「編號 20 換成黃秀麗」我誤以為是張羽家那筆（其實張羽家在 #8）
-- 教練糾正後整個 audience-data 區段重組，最終正確順序：
-  - #20 黃秀麗（取代李佩玲）
-  - #21 傅恩平（換新照片 21-new.jpg）
-  - #24 張玉盞（取代 Abby，有機水產火鍋頂替）
-  - Abby 整筆刪除
-
----
-
-## 重要教訓（給未來的軍師 / 小龍蝦）
-
-### 🔴 「編號」不要自己腦補
-教練說「編號 20」，**不要**用圖片檔名（20-huangxiuli.jpg）、**不要**用陣列中的「原編號」（圖檔順序），要看**實際渲染後的編號**（也就是 audience 陣列的索引，從 1 開始）。下一次接到「換編號 X」指令時，**第一件事**：用 curl 拉線上 `/tmp/turnforyou.html`，parse audience-data，列出當前 `[編號] 姓名 → 圖檔`，再決定要改誰。
-
-### 🔴 改東西前先看實際渲染結果
-我第一輪說「補 photo 欄位就好」但沒去抓圖 → 教練看不到任何圖 → 來回三輪才搞定。教訓：**有「補資料」動作時，不要只更新 metadata，要實際驗證 URL 是 200、檔案有圖、非 placeholder**。
-
-### 🔴 inline script 別插在 head 開頭
-HTML parser 規則：`<script>` 後面如果不是 `</script>` 結尾，會把後續 `<meta>`、`<link>` 等都當 script 內容處理。**所有 inline script 都該放在 `<body>` 開頭之後、或 `</body>` 之前**。
-
-### 🔴 `const fd` 之類變數別重複宣告
-9/28 改單時複製貼上沒看仔細，連續貼了兩次 `const fd = new FormData(form)`，瀏覽器直接 SyntaxError 中斷整個 main script。**改單時一律先 grep 確認要改的位置唯一，再 patch**。
-
-### 🔴 主動抓圖時先確認 image type
-`file 圖檔.jpg` 可以立刻驗證是否有人像尺寸（200x300 以上）。vision_analyze 確認是否真人是「門檻動作」不是「多餘動作」。
+### 🔑 本場commit
+workspace（main分支）：`b85d746`
 
 ---
-
-## 觀眾席沒圖的 4 位（教練日後可補）
-
-- #16 林信翰 (阿翰) — curated/hsinhan 沒個人肖像（hero 是風景照）
-- #17 宋美伶 — 同上
-- #19 柯朝陽 — 9/28 已用教練新照片替換
-- （如果還要補，告訴我從哪個網址抓）
-
----
-
-## 接力棒後續待辦（給軍師接手）
-
-1. 觀眾席版面可能微調（教練曾說「內外專家選單」要做，目前留白）
-2. 案例牆（Act 06）教練說「可能要做 100 個案例」，需要時間蒐集
-3. 報名表單（form submit → Telegram 通知）9/28 接通的，當初因 const fd 雙重宣告壞掉一陣子，本輪修好
-4. reveal bug 已徹底修，未來若再有「下面看不到」慘案，先看 `.armed` 是否被 JS 正確加上
-
----
-
-> 立檔人：小龍蝦（minimax/MiniMax-M3）  
-> 完成時間：2026-09-28 23:10（台灣時間）  
-> 線上檔大小：441558 bytes  
-> 已備份鏈：`.bak1` (424791) → `.bak17` (441558)  
-> 已知衝突：本棒沒有 commit hash（turnforyou 是直接讀本機檔，沒 git）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-09-27 00:25，Mac桌面版 Opus 5.5／Sonnet 5 交替，新的一棒 v252）
 
 ---
 

@@ -351,6 +351,29 @@
       "address": "台南市安南區北安路三段396巷50弄81號",
       "added_by": "shops-unify-2026-09-27",
       "description": ""
+    },
+    {
+      "slug": "turnforyou",
+      "title": "為你轉身 — 真 AI 線上團隊．商業導師席",
+      "description": "八位商業顧問師，姓名、經歷、戰績完全公開。提交你的事業現況，讓導師為你轉身，再由你決定跟誰談那三十分鐘。真 AI 線上團隊 2026 招募計畫。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/turnforyou/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-09-28 20:56",
+      "status": "live",
+      "source_package": "turnforyou_site.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "diart",
+      "title": "場地租借｜Di-Art 滴藝術咖啡・台中北屯包場場地（B1–4F 四層空間）",
+      "description": "Di-Art 滴藝術咖啡場地租借：台中北屯綏遠路，B1 親子遊憩空間、1F 多功能空間、2F 藝文空間（平台鋼琴）、4F 北歐風團體空間，10–70 人皆可包場。含投影音響設備與專屬免費停車場，歡迎 LINE 或電話洽詢檔期。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/diart/",
+      "github_pages_url": "https://coach1973.github.io/diart/",
+      "uploaded_at": "2026-09-29 20:50",
+      "status": "live",
+      "source_package": "20260929-205034__doc_17dc4bfbc9ec_diart-venue-rental.zip"
     }
   ],
   "redirects": {
