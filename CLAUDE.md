@@ -4,9 +4,53 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-01 01:35:18**
+> **最後同步：2026-10-01 06:00:52**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 05:58 台灣時間，Mac桌面版 Sonnet 5.5，新的一棒 v257；教練出門改用手機版接手）
+
+**本場主軸：教練逐件稽核「禮拜三13:00後交辦的事」，揪出怡靜分身一連串「測過卻一用就壞」——根因是『舊對話沿用舊規則』＋『分身自己亂寫出圖描述』；另查 RustDesk 連不上。**
+
+### 1. 怡靜AI群分身（chat -5480670608，agent yijing）現況
+- **根因**：分身的對話（session）會把舊規則帶著走，改了 AGENTS.md 它不會重讀。之前我「封存」沒有真的重開。**正確重建法**：`openclaw sessions delete --agent yijing --yes "agent:yijing:telegram:group:-5480670608"`（下一則群訊息就用新規則）。記憶：`reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md`。
+- **真實群組路徑測試法（不必教練發話）**：`openclaw gateway call agent --params '{"agentId":"yijing","sessionKey":"agent:yijing:telegram:group:-5480670608","message":"[Telegram 怡靜AI群 id:-5480670608] 大樹教練 (6124913915): ...","idempotencyKey":"唯一值","deliver":false}'`。用 `--session-id` 測走的是另一套權限，測不到真實情況，別用。
+- **第一分會名單**：已加12位新名字；`team_tool.py` 新增「刪除／移除」口令；team01.bymyway.com 每位會員旁加「移除」按鈕（移除＝清姓名＋清每週紀錄；DB備份 `team01_guests.db.bak-20261001-before-remove`）。測試殘留「張三」已移除。第二～五分會後台本來就有成員刪除。
+- **產業鏈出圖（教練：別再用我的點數測品質）**：`generate_industry_chain.py` 新增 `--nodes`（20個）`--center` `--held` `--audience` `--background`。圖片描述由腳本用核准範本組成；節點不是剛好20個、或任一個不在BNI詞庫，**在呼叫LK888（扣點）之前就擋下**（結束碼2）；`--background` 馬上回覆、做完自己送進群組、失敗會通知群組。分身被安全鎖擋 `2>&1`，SOP已明寫禁加。已寫死進 `knowledges/SOP_產業鏈.md`「一鍵正式流程」與小龍蝦技能檔。**測付費功能只測到「組出描述／被擋下」，別真的出圖。**
+- 教練02:18要的艾多美圖已補送進群（msg 11868）；本場花了教練約1點測試（02:31那張）。
+- LINE送圖通道實測：用已付費圖送到教練LINE成功（msg 634115160696946757）。**LINE小龍蝦自己聽到「做一張產業鏈」會不會下新指令，未實測**（需真出圖，等教練在LINE講一次）。
+
+### 2. RustDesk連不上（教練三台都顯示「尚未就緒」）
+- Mac本機網路正常、RustDesk三個程序在跑；日誌顯示教練遠端操作到02:35才結束，02:36系統無任何變更。
+- 官方中轉埠 rs-ny.rustdesk.com:21117 從日本/香港/美國/德國四個節點都「被拒絕」；UDP報到封包對官方報到伺服器無回應（無對照組，只算可疑）。**研判是RustDesk官方公用伺服器故障，非Mac問題，但未確鑿。**
+- 每天05:00 `ai.openclaw.rustdesk-guard` 在RustDesk超過800MB時強制重啟（今天2087MB被重啟）；RustDesk長連線會吃2GB記憶體，是它本身的問題，非主因。
+- 我建議裝Tailscale取代對RustDesk公用伺服器的依賴。Mac端我可裝；聯想端要教練本人登入一次。**教練尚未回覆要不要做。**
+
+### 3. 赫米斯（電報版一問三不知）
+`~/.hermes/CURRENT_TASK.md` 是4月舊任務（還含明文金鑰）→ 已換成指標檔，舊檔備份 `.bak.20261001_stale_april`；`SOUL.md` 加「每次對話開始先讀接力棒／today_other_agents_digest／對應SOP」（備份 `.bak.20261001_before_context_pointer`）。**尚未實測它真的會讀。**
+
+### 4. 稽核清單（教練點名：不准讓他當測試員，做完自己在真實路徑測過才報）
+| 項目 | 狀態 |
+|---|---|
+| 怡靜群回話白話／名單／刪除／工作回報 | ✅已測 |
+| 怡靜總管理帳號＋名片系統 | 帳號存在、名片已批准；密碼未重新登入驗證 |
+| jacky-brand 繁體／台灣重心／封面比例 | ✅已查（FB封面照沒找到單人照，未完成） |
+| 第三位顧問（tava-ai資本代表）資料 | ❓沒找到完成紀錄，未確認 |
+| 怡靜遇問題「自動寫信到Mac」 | ❌未做：分身寫不了信（安全鎖），且Mac是開新對話才讀信，需先跟教練確認要到什麼程度 |
+| 怡靜學姐稱呼／協會報名通知 | ❌未開始 |
+| 策展網站全面GitHub化收尾 | ❌未做（上一棒待辦） |
+
+### 🔑 本場commit
+workspace：`1d2337f25`（產業鏈一鍵流程SOP＋腳本）`8593a7135`（team_tool刪除口令）；yijing：`262d77a` `7d4942c` `f7b3333` `f5ef421` `8cf58ae`；team01-guests：`8a71c34`。本次總結commit另計。
+
+### 📋 下一場（手機版）先做
+1. 回答教練：要不要裝Tailscale。
+2. LINE小龍蝦實測（教練在LINE講「產業鏈」，看會不會用新指令）。
+3. 怡靜：「怡靜學姐」稱呼設計、協會報名通知、抓怡靜Telegram編號補進 yijing/IDENTITY.md。
+4. 策展網站全面GitHub化收尾、第三位顧問資料確認、分身寫信到Mac的機制（先問程度）。
+5. 🔴 **做法鐵律**：做完先自己在真實路徑測，過了才回報；付費功能不真測；手機版不能截圖。
 
 ---
 
@@ -45,43 +89,9 @@ workspace `d9e66f81a` `26b7935af` `1d30f7869` `23612152f`；外層 `0e1e12c62` `
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-09-30 19:00，Mac桌面版 Opus 5.5，新的一棒 v255）
-
-**本場主軸：產業鏈SOP兩個AI同時出包的總檢討與機制修復；怡靜群組／帳號開通前置；LINE小龍蝦可出LK888圖；讀赫米斯週日~週二紀錄，準備 turnforyou 下一步。**
-
-### 1. 產業鏈SOP出包總檢討（試金石案例93）
-根因三個都是軍師的機制洞：①生圖腳本f-string寫法只在Python3.14測過，Hermes(3.11)一跑就崩→已改，三版本實測；②SOP寫「要比對905項BNI詞庫」但小龍蝦實際讀的技能檔沒寫→已補（`agents/main/agent/workshop-skills/industry-chain-prompt/SKILL.md`，此資料夾不進版控）；③開工六步看不到其他AI當天做的事→新增第5.5步`scripts/today_other_agents_digest.py`直讀小龍蝦inbound_echo＋Hermes state.db。另把接力棒v251~v252封存，開工注入不再被截斷。commit `8873d57d1` `13582eea5`。
-
-### 2. 怡靜（陳怡靜，跨境電商）群組與帳號
-- 「宜靜 AI 群」連結 https://t.me/+l7q1xK04SFE0MTRl ：龍蝦特助 @openclaw_macbook4_bot **要先被加進群**，機器人無法自己用連結入群；至今gateway log沒有任何該群訊息。等她在群裡@它講一句 → 從 `state/inbound_echo` 抓群ID＋她的Telegram ID → 在 openclaw.json bot_main.groups 加該群（requireMention視需要）＋toolsBySender。**權限原則：只開她要更新的指定資料庫（做成專用小工具），不開整台Mac。** 教練會再貼要開放哪些資料庫。
-- 帳號：`namecard-db/venv/bin/python3 scripts/grant_partner_accounts.py --phone 09xxxxxxxx --name 陳怡靜` 一次開好 team.bymyway.com 總管理（涵蓋第一~第五分會）＋namecard.bymyway.com 已批准帳號，密碼皆88888。已在資料庫複本測過。**等教練給她手機號碼。**
-- 出席紀錄：team01.bymyway.com（`~/github_repos/team01-guests`，port 5091）是第一分會邀約來賓儀錶板，有 guest_list 表但**沒有登入後台**；第二分會版本不存在。等教練的資料庫清單再做。
-- VPS pairing碼QJJKXVY8查她ID被安全檢查擋（憑證資料夾），不用再試，等群裡講話即可。
-
-### 3. 內外部資源＋觀眾席構想（軍師建議，待教練拍板）
-- 內部＝大台南區現役BNI會員（權威來源：大台南南區94人資料）；外部＝非會員（mentor100講師、策展店家、前會員、來賓）。
-- 建議做一份「人才庫」單一資料來源，觀眾席從它長出來，上面加「全部／內部／外部」切換（就是教練09-29提過的「內外專家選單」），不再把28人寫死在HTML裡。
-- 專業欄位用905項BNI詞庫的名稱，同一份人才庫就能直接餵產業鏈圖（節點＝真的人）。
-- 公開頁只放各人已公開的資料（照片、公司、專業），不放電話。94人以上要分組／可收合／可搜尋，不然頁面太長。
-
-### 4. LINE小龍蝦出LK888圖（教練要求，只限教練本人帳號）
-根因：LINE只收公開HTTPS網址的圖。已加 `event.bymyway.com/chain-img/`（檔名帶亂數）＋`generate_industry_chain.py --publish`；大台南小幫手新技能 `industry-chain-image`、main技能加 Branch D。第一次真實使用時要確認LINE上看得到圖。commit `676e96224`。
-
-### 5. 權限與「上」
-Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）、讀憑證資料夾、把授權寫成常駐規則。教練親定：被擋時整理好問一句，教練回「上」＝當下授權；不准丟指令叫教練去終端機跑（記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30）。
-
-### 📋 下一場開工先做
-（目前沒有懸而未決的事）09-30 晚上教練交辦的都已上線，教練會接著「邊做邊改」。等教練提起時的現況：
-- **turnforyou**（event.bymyway.com/curated/turnforyou/ ＝本機 `~/github_repos/turnforyou/`，無git，備份 index.html.bak18/.bak19、data.json.bak-20260930）：8席中第1凌榆舜、第5邱裕榮、第7顧瀚鈞 Jacky 已是真人；第2/3/4/6/8席仍是示範假資料。邱裕榮沒照片（放 `img/mentors/qiu-yurong.jpg` 就自動顯示，現為空椅設計）。Act04標題已改「你的想法，就是你的作品。／你想用什麼形式來展現，是你的自由。」。觀眾席27位（凌榆舜升上導師席已移除）。教練說「有些字要改」尚未指明。改席位要同時改 data.json 和 index.html 內嵌 `window.__C__` 的 seats（網頁先用內嵌、再被 data.json 覆蓋），空照片會自動退回 img/mentors/0N.jpg 示範照。
-- **jacky-brand**（event.bymyway.com/curated/jacky-brand/ ＝ `~/github_repos/jacky-brand`，無git，備份 index.html.bak-20260930）：已改以台灣為重心。教練說 FB 有一張適合當封面的照片，AI 沒找到單人照，等教練指出。
-- **教練新方向（09-30）**：團隊重心在台灣、不傾向與中國大陸合作、一律繁體（圖片裡的字也算）→記憶 feedback_taiwan_focus_no_china_emphasis_2026-09-30。
-- **陳怡靜**：team.bymyway.com 總管理帳號已開（0919013658／88888，實測登入看得到五分會）；名片系統教練已開。「宜靜 AI 群」龍蝦特助要先入群、她在群裡@講一句才抓得到群ID與她的ID；要開放哪些資料庫等教練給清單（只開指定資料庫的專用小工具，不開整台Mac）。
-- **內外部資源＋觀眾席構想**：見上方第3點建議，等教練拍板。
-
-### 🔑 本場commit
-`2a38af044` `8873d57d1` `13582eea5` `676e96224` `39bebb91b` `15effa746` `e562a67ec` `8937f050e` `539652c7c` `0fdab1741`，本次總結commit另計。
-
 ---
+> 📦 v255完整內容已封存：`handoff_archive/handoff_v255_archived_2026-10-01.md`（v255產業鏈SOP出包總檢討+怡靜群組與帳號前置+LINE小龍蝦出LK888圖）
+
 > 📦 v254完整內容已封存：`handoff_archive/handoff_v254_archived_2026-09-30.md`（v254接力棒被整份覆蓋修復+coach888稽核雲端修法套用）
 
 > 📦 v253完整內容已封存：`handoff_archive/handoff_v253_archived_2026-09-30.md`（v253雲端coach888稽核假警報診斷，v254已套用修法）
