@@ -354,4 +354,4 @@ SOP全文：`knowledges/SOP_Hermes協助更新sincere戰情儀表板.md`。摘�
    對應欄位**，只算guests/ones/coffee/early_bird四項，屬於新功能，不是本次
    SOP範圍，教練若要上儀表板要另外評估。
 
-commit：`<待補>`
+commit：`1b5b37696`（SOP檔）+ `992524f1a`（本節+記憶更新，自動同步已推送origin/main）
