@@ -417,6 +417,17 @@ INJECT_CONTENT=$(
     fi
   fi
 
+  # ───────── 第 5.5 步：最近24小時教練跟其他AI說了什麼（2026-09-30 教練：「你知道其他的人都交接些什麼了嗎？」）─────────
+  # 小龍蝦/Hermes常常做完不寫memory也不交接棒，只看交接檔會漏掉當天別的AI出包的事，所以直接讀原始對話記錄。
+  echo ""
+  echo "---"
+  echo ""
+  echo "## 🤝 第 5.5 步：最近24小時教練跟其他AI說了什麼（小龍蝦各頻道＋Hermes桌面版，原始對話記錄）"
+  echo ""
+  python3 "$HOME/.openclaw/workspace/scripts/today_other_agents_digest.py" 2>&1 | head -20
+  echo ""
+  echo "👉 有看到任務出包/教練不滿的跡象，開工回報第一行就要提，不要等教練自己講。"
+
   # ───────── AI團隊品質稽核彙整（2026-09-18 教練要求監督MiniMax小老弟品質後新增）─────────
   # stop_rules_master.py 的 13 條規則本來就對任何觸發Stop事件的session(含手機MiniMax
   # Remote Control)自動稽核，但違規記錄只是各自寫進 distill/*violations.log 沒人讀。

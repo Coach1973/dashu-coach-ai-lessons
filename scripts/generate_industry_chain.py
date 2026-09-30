@@ -31,7 +31,9 @@ DEDUP_SECONDS = 600
 def dedup_claim(args):
     """回傳 (lock路徑, None) 表示可以做；(None, (主題, 幾秒前)) 表示重複要跳過。"""
     topic = (args.topic or re.sub(r"(的)?產業(服務)?[鏈鍊]圖?$", "", (args.caption or "").strip()).strip() or args.prompt)
-    raw = f"{args.telegram_chat_id or '-'}|{re.sub(r'\s+', '', topic)}"
+    # 正規式不能放進f-string運算式（Python 3.12前語法錯誤，Hermes用3.11會整支崩潰）
+    topic_key = re.sub(r"\s+", "", topic)
+    raw = f"{args.telegram_chat_id or '-'}|{topic_key}"
     lock = DEDUP_DIR / f"{hashlib.sha1(raw.encode('utf-8')).hexdigest()[:16]}.lock"
     DEDUP_DIR.mkdir(parents=True, exist_ok=True)
     if lock.exists():

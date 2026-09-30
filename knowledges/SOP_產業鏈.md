@@ -2,6 +2,7 @@
 
 > 教練簡稱「產業鏈SOP」，之後喊這個名字直接對應本文件。
 > 本文件補上v237接力棒早就發現缺失的正式SOP，並修正2026-09-23對話中一度誤判「查無700+類別資料庫」的錯誤。
+> 🔴 **改這份SOP時，要同步改真正執行的那份**（2026-09-30案例93）：小龍蝦觸發產業鏈時讀的是`~/.openclaw/agents/main/agent/workshop-skills/industry-chain-prompt/SKILL.md`，不是這份；生圖腳本要用Hermes的Python 3.11（`~/.hermes/hermes-agent/venv/bin/python3`）跟系統`/usr/bin/python3`(3.9)都測過。
 
 ## 教練的核心構想（2026-09-23教練原話整理）
 
