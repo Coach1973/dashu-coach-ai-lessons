@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-09-30 19:45:52**
+> **最後同步：2026-09-30 19:50:55**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -36,21 +36,15 @@
 Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）、讀憑證資料夾、把授權寫成常駐規則。教練親定：被擋時整理好問一句，教練回「上」＝當下授權；不准丟指令叫教練去終端機跑（記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30）。
 
 ### 📋 下一場開工先做
-**（09-30 19:20 已完成：第1席凌榆舜、第5席邱裕榮換上＋Act04標題改「你的想法，就是你的作品。／你想用什麼形式來展現，是你的自由。」＋觀眾席移除重複的凌榆舜(剩27位)；備份 index.html.bak18、data.json.bak-20260930。邱裕榮照片放 `img/mentors/qiu-yurong.jpg` 就會自動顯示，現在顯示空椅設計。下一場接著做教練「邊做邊改」的其他段落。19:35 第7席「資本、財務與募資」換成顧瀚鈞 Jacky（照片 img/mentors/gu-hanjun.jpg，從會議照裁切、避開簡體名牌），備份 index.html.bak19。陳怡靜(手機0919013658)已開 team.bymyway.com 總管理帳號(密碼88888)，實際登入看得到五個分會；名片系統教練已先開通(名字保留教練輸入的「陳宜靜」)。第2、3、4、6、8席共5席仍是示範假資料19:55 教練定方向：**所有團隊不傾向與中國大陸合作、一律繁體**。jacky-brand（event.bymyway.com/curated/jacky-brand/，`~/github_repos/jacky-brand`，無git，備份 index.html.bak-20260930）改成以台灣為重心：新增「為什麼回到台灣」區、介紹小抄三段改寫、拿掉「中國商業筆記」整區＋品牌QR與連結、封面改用會議照裁切(assets/hero_portrait.jpg)並縮到340px、關於區照片裁掉簡體桌牌(assets/meeting_wide.jpg)；經歷時間軸保留。turnforyou第7席同步拿掉「兩岸市場」。教練說FB上有張適合當封面的照片，AI在FB最近照片只找到多人合照，**等教練指出是哪一張**。）**
-
-**「真AI線上團隊」作品 turnforyou 調整**（正式站 https://event.bymyway.com/curated/turnforyou/ ＝直接讀本機 `~/github_repos/turnforyou/`，沒有git，改前照慣例備份成 index.html.bak18）：
-1. **8位顧問師席位換兩位真人**（目前8席全是示範假資料，資料在 `data.json` 的 `seats`，照片 `img/mentors/01~08.jpg`）：
-   - 第1席「AI落地與企業轉型」→ **凌榆舜**（AiGeo／iSmart AI 南區，教育科技、AI主動推薦GEO、AI開店系統，資料：https://aibusiness.ismartomo.com.tw/index.php?route=product/product&product_id=3912 ；AI商學院：information_id=4）。照片可用觀眾席已有的 `img/audience/03-linyushun.jpg`。他升上席位後，觀眾席#4那筆刪掉避免重複。
-   - 第5席「媒體曝光與公關資源」→ **邱裕榮**（才榮數位總經理、AI傳道學院創辦人、AI媒體聯盟總編輯；工商時報／管理雜誌／東森BossClub主持人20+年；農業跨界白皮書。資料：https://www.tava-ai.com/chat/i6bncu8hxu/index.html ，頁面裡沒有人像照，只有 img/hero-green.jpg 等場景圖——照片要跟教練要或從他其他頁面找）。
-   - 戰績（feats）從上面兩頁的事實摘，不捏造。
-2. 「有些字和資料需要調整」——**教練還沒說是哪些字**，等他講。
-3. 第三位顧問師：教練正在做他的個人品牌網頁，做完會貼文字，到時換進剩下的示範席位之一。
-4. 改完：本機 curl 驗證 data.json 與頁面 → Chrome 開正式網址親眼看 → 給教練看。
-
-**教練新構想「內外部資源＋觀眾席」（軍師已給初步建議，見下方v255第3點，等教練拍板再動手）**
+（目前沒有懸而未決的事）09-30 晚上教練交辦的都已上線，教練會接著「邊做邊改」。等教練提起時的現況：
+- **turnforyou**（event.bymyway.com/curated/turnforyou/ ＝本機 `~/github_repos/turnforyou/`，無git，備份 index.html.bak18/.bak19、data.json.bak-20260930）：8席中第1凌榆舜、第5邱裕榮、第7顧瀚鈞 Jacky 已是真人；第2/3/4/6/8席仍是示範假資料。邱裕榮沒照片（放 `img/mentors/qiu-yurong.jpg` 就自動顯示，現為空椅設計）。Act04標題已改「你的想法，就是你的作品。／你想用什麼形式來展現，是你的自由。」。觀眾席27位（凌榆舜升上導師席已移除）。教練說「有些字要改」尚未指明。改席位要同時改 data.json 和 index.html 內嵌 `window.__C__` 的 seats（網頁先用內嵌、再被 data.json 覆蓋），空照片會自動退回 img/mentors/0N.jpg 示範照。
+- **jacky-brand**（event.bymyway.com/curated/jacky-brand/ ＝ `~/github_repos/jacky-brand`，無git，備份 index.html.bak-20260930）：已改以台灣為重心。教練說 FB 有一張適合當封面的照片，AI 沒找到單人照，等教練指出。
+- **教練新方向（09-30）**：團隊重心在台灣、不傾向與中國大陸合作、一律繁體（圖片裡的字也算）→記憶 feedback_taiwan_focus_no_china_emphasis_2026-09-30。
+- **陳怡靜**：team.bymyway.com 總管理帳號已開（0919013658／88888，實測登入看得到五分會）；名片系統教練已開。「宜靜 AI 群」龍蝦特助要先入群、她在群裡@講一句才抓得到群ID與她的ID；要開放哪些資料庫等教練給清單（只開指定資料庫的專用小工具，不開整台Mac）。
+- **內外部資源＋觀眾席構想**：見上方第3點建議，等教練拍板。
 
 ### 🔑 本場commit
-`2a38af044` `8873d57d1` `13582eea5` `676e96224`，本次總結commit另計。
+`2a38af044` `8873d57d1` `13582eea5` `676e96224` `39bebb91b` `15effa746` `e562a67ec` `8937f050e` `539652c7c` `0fdab1741`，本次總結commit另計。
 
 ---
 > 📦 v254完整內容已封存：`handoff_archive/handoff_v254_archived_2026-09-30.md`（v254接力棒被整份覆蓋修復+coach888稽核雲端修法套用）
@@ -287,6 +281,65 @@ Claude Code 自動安全檢查會擋：AI自己改權限（Self-Modification）�
 ---
 
 > 📦 v231~v237完整內容已封存：`handoff_archive/handoff_v231_to_v237_archived_2026-09-24.md`（v231 TokenTable接OpenCode+Episode11漫畫+agent捏造完工案例／v232 CCU媒體格式連環修復／v233海餅乾網站+BNI PPT SOP建立／v234聯想bni-dna/bigtree維護+記憶體洩漏追蹤／v235手機流量查證鏈+EM模式定義／v237膠囊咖啡機產業鏈+語音轉簡體字記錄，E16瘦身2026-09-24執行）
+
+
+---
+
+# 接力棒補充 — 2026-09-30 sincere.bymyway.com 戰情儀表板任務（已派給軍師）
+
+## 教練交辦
+
+教練要小龍蝦「讀網頁後直接更新」，但小龍蝦發現：
+- sincere.bymyway.com 是**後端網站**（不是 turnforyou 那種本機直讀）
+- 有 3 個 POST API：`/api/update_metric`、`/api/update_testimony`、`/api/update_training`
+- **沒有登入驗證、沒有 cookie session、沒有 token**
+
+## 小龍蝦已派給軍師的任務（task ID: 20260930-194932）
+
+寫在 `/Users/bymyway/.openclaw/workspace/state/JUNSHI_TASK_QUEUE`
+
+請軍師：
+1. 判斷 sincere.bymyway.com 是誰管的（軍師 / 其他人 / 教練自己）
+2. 寫 SOP：「小龍蝦怎麼協助更新 sincere.bymyway.com 的每週戰情資料」
+3. SOP 內容包含：讀資料方式、更新 payload、權限邊界、會員自填 vs 教練提供怎麼分、失敗處置
+4. 完成後寫進 JUNSHI_HANDOFF_LATEST.md 或 cross-agent/outbox/
+
+## 小龍蝦已抓好的技術細節（給軍師用）
+
+### 3 個 API payload 格式
+
+```
+POST /api/update_metric
+{ member_id: int, week_date: "YYYY-MM-DD", metric: "guests"|"ones"|"coffee", value: int }
+
+POST /api/update_testimony
+{ member_id: int, event_date: "YYYY-MM-DD", attended: 0|1|null }
+
+POST /api/update_training
+{ member_id: int, session_id: int, attended: 0|1|null }
+```
+
+### 三項指標對應
+
+- **來賓**（guests）= 教練/軍師提供更新
+- **121**（ones）= 會員自填
+- **咖啡會議**（coffee）= 會員自填
+
+### 統計期間
+
+- 從 2026/07/23 起，**每週四聚會**
+- 8/20 當週改為內訓不列入計算
+- 連續無紀錄 4 週 = 🟡 黃色關注，8 週 = 🔴 紅色警告
+
+### 三個助理大使（分組）
+
+- 王者飛翔：謝緯翔（王彤、鄭綉美、林佳伶、郭展鴻、張育慈）
+- 百聖維尼：許朝峻（陳佩君、鄭禮昂、葉建葳、黃笛軒、盧尚政、張玉盞）
+- 羽宙奇蹟：張敬雍（張羽家、楊在珍、李美花、陳柔璇、黃秀麗）
+
+## 守則
+
+小龍蝦**不會自己 POST 進去寫資料庫**，等軍師 SOP 回來再說。
 
 
 ---
