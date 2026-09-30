@@ -107,6 +107,16 @@ def send_telegram_photo(chat_id: str, image_path: Path, caption: str = "", confi
     return result
 
 
+def notify_failure(args, err):
+    """背景出圖失敗時要讓群組知道，不能靜悄悄。"""
+    try:
+        token = get_telegram_bot_token(args.openclaw_config, args.telegram_account)
+        data = json.dumps({"chat_id": args.telegram_chat_id, "text": "這張圖這次沒做成功（已自動放棄，沒有重複扣點），請稍後再說一次，或請教練協助。"}).encode()
+        urllib.request.urlopen(urllib.request.Request(f"https://api.telegram.org/bot{token}/sendMessage", data=data, headers={"Content-Type": "application/json"}), timeout=20)
+    except Exception:
+        pass
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", required=True)
@@ -118,6 +128,8 @@ def main():
     parser.add_argument("--telegram-account", default="bot_main", help="要用哪個bot帳號送出，例如 bot_test2")
     parser.add_argument("--topic", default=None, help="防重複用的主題；沒給就從--caption推")
     parser.add_argument("--force", action="store_true", help="略過10分鐘防重複")
+    parser.add_argument("--background", action="store_true", help="馬上回覆「已開始」，圖在背景做完後自己送進--telegram-chat-id（出圖要1~2分鐘，呼叫端不必等）")
+    parser.add_argument("--_lock", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--publish", action="store_true", help="另存一份到公開網址（LINE送圖要用）")
     args = parser.parse_args()
 
@@ -127,11 +139,25 @@ def main():
         if dup:
             print(f"⏭️ 「{dup[0]}」{int(dup[1])}秒前才生成過同一張，10分鐘內不重複扣點，這次跳過（真的要重做請加 --force）")
             return
+    if args.background and args.telegram_chat_id:
+        # 家長程序只負責「接單」：鎖已搶到，交給脫離終端機的子程序做完並送出，自己立刻回覆
+        import subprocess
+        child_argv = [a for a in sys.argv[1:] if a != "--background"] + ["--force"]
+        if lock:
+            child_argv += ["--_lock", str(lock)]
+        log = open(WORKSPACE / "state" / "industry_chain_background.log", "a")
+        subprocess.Popen([sys.executable, str(Path(__file__).resolve())] + child_argv,
+                         stdout=log, stderr=log, stdin=subprocess.DEVNULL, start_new_session=True)
+        print("✅ 已開始製作，約 1~2 分鐘後圖會自動傳到群組，不用重複下指令。")
+        return
+    lock = Path(args._lock) if args._lock else lock
     try:
         image_bytes = generate_image(args.prompt, args.size)
-    except Exception:
+    except Exception as e:
         if lock:
             lock.unlink(missing_ok=True)  # 生圖失敗要讓下一次能重試，不能被鎖10分鐘
+        if args.telegram_chat_id and args._lock:
+            notify_failure(args, e)
         raise
 
     if args.out:
