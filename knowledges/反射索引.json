@@ -1143,6 +1143,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-CRON-AGENT-ANNOUNCE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "openclaw\\s+cron\\s+add(?=[^\\n]*--agent)(?=[^\\n]*--announce)",
+      "say": "替分身（yang、yijing…）代排提醒：①--at 不能配 --exact ②message 要寫成「最終回覆＝提醒本文、不准呼叫 message 工具」，否則群組會多一則「已送出」③先建一個 --to 教練 DM 的同設定測試工作，cron run 實跑、讀分身最後一輪確認，再刪掉；不拿夥伴的群組測試。",
+      "level": "remind",
+      "situation": "要用 openclaw cron add 替分身排提醒時",
+      "source": "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02.md",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1274,6 +1287,7 @@
     "reference_namecard_ocr_pipeline_reusable": "參考資料",
     "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
     "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION",
-    "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手"
+    "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手",
+    "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）"
   }
 }

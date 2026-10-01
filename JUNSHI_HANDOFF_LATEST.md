@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 07:10 台灣時間，Mac 桌面版 Opus 5.5→Sonnet 5.5，v269）
+
+**主軸：賈維斯成長計畫第四步③④完成——四位夥伴分身有了「三種標準」，記憶 127 條全部轉進反射系統（未處理 0）。**
+
+### 做了什麼
+1. **四位夥伴分身（peipei／kong／yijing／yang）SOUL.md 最前面加「🧭 三種標準（夥伴版）」**：先看紀錄與記憶、能推斷不問、說「做不到」前先看工具清單、語音錯字照最合理意思做、不答應做不到的事（例：不能主動傳訊息就別說「到時候提醒您」）；教練的公開活動直接查單場頁 `https://event.bymyway.com/curated/bigtree-月日/`（首頁「近期場次」是 JS 畫的，抓網頁看不到，別用首頁判斷）；yang 稱呼一律「Simona」。四群 session 已封存，gateway 真實路徑四位都逐字貼出第 3 點。**行為前後對照**（楊老師 10/1 真實語音句「大肅執動拜六那場AI課是幾點」）：改前叫「楊老師」並反問「您手邊有資料嗎」；改後叫 Simona、自己開 bigtree-1003，答出 14:00–16:30、13:40 入場、KR 養生廚房、免費（與網頁一致）。commit：peipei `cf586c1`、kong `9ff7bb119`、yijing `c9346f4`（三個獨立 repo，peipei／kong 含 09-24 未提交的「大樹作品 kind 分流」段一起存）、外層 `e6f5f4993`（yang）。測試對話 7 個已刪並 `memory forget`。
+2. **記憶 127 條 → 反射系統**：新反射 13 條（git rebase 卡住、git 分岔先讀接力棒、改 coach888、寫 SOP 要寫口語別名、「全面X」範圍、BNI PPT SOP、claude rc 不 unset、sendBeacon CORS、策展刪除＝退役、git add -A 個資、MiniMax guard、大樹小講場次連動 event.db、台灣重心），每條都用歷史資料回測並收窄（coach888 408→135 次；台灣重心改抓 09-30 真實刺激「上海／廈門／中國商業」，命中正好是寫錯那一刻）；其餘 111 條登記 `memory_ledger`（併入哪條／參考資料／判斷類／已有程式／已退役）。`scripts/reflex_coverage.py` 新增記憶檢查：171 條未處理 0、索引斷鏈 0；補建從未寫入的 `feedback_no_wrong_posts_no_action_2026-09-18.md`、補收 `reference_openclaw_hook_inject_format`（標⛔過時）。`reflex_router.py` post_tool 自我排除也看指令（回測輸出曾誤觸）。commit `dfe39d869`、`bc0c25a79`、`e036177f6`，本次總結另計。
+
+### 卡在哪／發現
+- **楊老師（Simona）週六 AI 課提醒（07:08 教練原話：「要嘛讓小龍蝦能主動提醒，要嘛你幫忙提醒，對他來說只要有提醒就好」＝同意）**：yang 分身沒排程工具（安全鎖禁 exec），改由 Mac 端 `openclaw cron add` 代排兩個一次性工作，delivery 走 bot_main 投到她的群組 -5405039910：`08f1`→已換成 `4c706494-…`（10/2 12:00 台灣時間）、`e5fac0d4-…`（10/3 12:00 最後一次）。實測踩到 2 個坑：`--exact` 不能配 `--at`；分身若自己呼叫 message 工具發訊息，系統還會把它最後那句「已送出」再轉送一次（群組會多一則怪訊息）→指示改成「最終回覆就是提醒本文、不准用 message 工具」。已用只送教練的測試工作跑兩次，第二次確認最終回覆＝提醒本文、狀態 delivered，測試工作已刪。**12:00 後要確認**：`openclaw cron list --json` 看 `4c706494` 是否已消失/lastDelivered=true；教練說過「她說我知道了就停」，分身會先讀 MEMORY.md 判斷，她回「我知道了」時分身要把這句寫進 MEMORY.md。
+- `state/member_context.log` 仍只有 03:34 兩筆測試，沒有真實 LINE 流量（龍蝦小助教認人未驗證）；聯想／宏碁沒回信（`cross-agent/inbox/mac/` 資料夾不存在）。
+- 發現 kong 的 SOUL.md 寫「唯一指定模型 MiniMax M2.7」，但 `openclaw.json` kong 是 `minimax/MiniMax-M3`（peipei 的 SOUL 06-03 已升 M3），兩處矛盾；沒動（模型鎖需教練授權日期），記在 🔧 清單。
+
+### 📋 下一場開工先做
+賈維斯成長計畫第四步剩兩項，都在等外面（10-02 07:10 查過仍無動靜）：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/` 有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）。兩項都沒動靜就問教練今天從哪件事開始，不要空轉。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:46 台灣時間，Mac 桌面版 Opus 5.5，v268）
 
 **主軸：賈維斯成長計畫第三步四項全部做完並走真實路徑驗證。**
@@ -12,53 +30,8 @@
 - `openclaw message send` 不經過 message_sending，測送出前外掛要走 `gateway call agent` 加 `deliver:true`＋假收件人（已寫進記憶 `feedback_openclaw_hook_fire_and_forget.md`）。
 
 ### 📋 下一場開工先做
-賈維斯成長計畫第四步剩兩項（都在等外部，10-02 04:30 查過：LINE 只有上一場兩筆測試、聯想宏碁信還沒被讀）：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/`（資料夾還不存在＝沒回信）有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）。
-（③四位夥伴 SOUL.md「三種標準」夥伴版 10-02 04:20 完成：peipei `cf586c1`／kong `9ff7bb119`／yijing `c9346f4`／yang 外層 `e6f5f4993`，群組 session 已封存、gateway 真實路徑測過；④記憶 127 條全部有去向＋13 條新反射，workspace `dfe39d869`，`python3 scripts/reflex_coverage.py` 未處理 0。）
+（已由上方 v269 取代：③④已完成，只剩等真實 LINE 流量與聯想／宏碁回信。）
 
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:28 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v267）
-
-**主軸：賈維斯成長計畫第二步——15 支「注入沒送到模型」的舊 hook 逐支分類，重要的搬進兩個新外掛，全部走真實路徑請模型逐字貼出驗證。**
-
-### 做了什麼
-1. **會員端外掛 `extensions/member-context/`**：LINE 每位朋友的過去對話（寫入仍由 line-user-memory hook）、jiaolian_thoughts 知識庫檢索、bni_tainan 行事曆（問到日期且檔案超過 4 小時先跑 `sync_calendar.py`）。舊 hook `knowledge-search-inject`、`bni-calendar-inject` 已關。
-2. **教練端外掛 `extensions/coach-context/`**：教練說「釋放」由外掛跑腳本、真實結果交給模型照實轉述；提到專案別名附專案卡。只認教練本人。舊 hook `rustdesk-free-memory-trigger`、`project-card-router` 已關。
-3. **反射索引**新欄位 `agents`（只給指定分身；軍師端 `reflex_router.py` 跳過）＋ `R-BNI-OFFICIAL-TEXT`（bni_tainan／jiaolian_thoughts，會員版不提教練）＋ `R-VOICE-CHECK`（語音轉文字先確認）＋ `R-ZSH-VAR-COLON`（試金石案例99）。
-4. 驗證：member-context 15 項、coach-context 11 項、reflex-prompt 24 項；gateway 真實路徑假會員與 main（測試模式旗標 `state/RELEASE_DRYRUN`，已移除），模型逐字貼出📓記憶、📅行事曆、⚡會員版官方條文、📚知識庫、🖥️釋放結果、🗂專案卡。測試對話、假會員檔、測試紀錄都已清掉。
-5. 分類表寫在記憶 `feedback_openclaw_hook_fire_and_forget.md`（group-activity-memory 不搬：群 8/24 後沒訊息；usage-query／bot-relay 資料 7/8 起就停；client-memory 不搬）。
-
-### 卡在哪／發現
-- **行事曆停在 8/30**（9/10 拿掉 exec 後沒人同步）：10/12 進階MSP 已改 ZOOM 線上、舊檔還寫安平路。已手動同步，之後外掛自動同步。bni_tainan `AGENTS.md` 第 101 行還叫它用 exec 同步，改人設時順手刪。
-- **漏洞已補**：舊釋放 hook 只看 agentId=main，龍蝦小助教的 LINE 會員說「釋放」也會重啟 Mac 的 RustDesk。
-- **未驗證**：龍蝦小助教（main）認人只能靠 senderId，要等真實 LINE 會員訊息；看 `state/member_context.log` 第 3 欄 `line`、第 4 欄 `sender:u…`。
-- gateway 完整重啟兩次（03:14、03:22），每次約 15 秒；版本已先核對一致。設定備份 `openclaw.json.bak-20261002-before-member-context`／`-before-coach-context`（gitignore）。
-
-### 📋 下一場開工先做
-（第三步已完成，見上方 v268 的「下一場開工先做」。）
-
-<!-- 原文：賈維斯成長計畫第三步：①先看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認得出人才算數）；②對外帳號「禮遇版」人設寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限見 R-BOOTSTRAP-20K），順手刪 bni_tainan AGENTS.md 第 101 行 exec 同步那句，改完刪 session、走真實路徑測；③聯想／宏碁 `feed_junshi_handoff.ps1` 開工注入讀反射索引（舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 改寫再發，教練 02:30 已說三台都要）；④`line-url-typo-guard` 改用外掛 `message_sending`。 -->
-
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:05 台灣時間，Mac 桌面版 Sonnet 5.5 ⇄ Opus 5.5，v266）
-
-**主軸：賈維斯成長計畫第一級上線——查出小龍蝦 15 支 hook 的「注入給模型」從沒生效，改用外掛 reflex-prompt 接手。**
-
-### 做了什麼
-1. 開工後動手前先查證接點：`rule-reminder` 用的 `event.context.inject` 根本沒人讀（2026.9.4 原始碼：`message:preprocessed` 發了不等、`agent:bootstrap` 只讀回 `bootstrapFiles`，整個 dist 沒有任何地方讀 inject）。上一棒「小龍蝦已有 rule-reminder 在注入」的前提是錯的。
-2. 新外掛 `extensions/reflex-prompt/`（`before_prompt_build`→`prependContext`，真的進模型）：讀反射索引 prompt 時刻、依發話者三級分流（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public，非教練看 `say_other`、不附出處）、同場同條 30 分鐘冷卻、心跳／排程不出聲。`openclaw.json` 加了 allow＋`allowConversationAccess`；新外掛要**完整重啟 gateway** 才掛上（熱重載只套設定、不掛外掛），已重啟一次。
-3. 索引新增 `audience`／`say_other`；新反射 `R-OC-HOOK-INJECT-DEAD`；記憶 `feedback_openclaw_hook_fire_and_forget` 補全並進索引、`reference_openclaw_hook_inject_format` 標過時；試金石案例98。
-4. 驗證：4092 句教練原話 JS／Python 21 條完全一致；分流測試 18 項（`node extensions/reflex-prompt/test.mjs`）；gateway 真實路徑 main 一字不差貼出 R-HERMES、yijing 只拿到客氣版且無教練專用條。commit workspace `c556570c0`、外層 `76fa20aee`，本次總結另計。
-
-### 卡在哪／發現
-- **死注入 hook 清單**（只有「注入給模型」那段無效，記錄與直接發訊息照常）：auto-goal、bni-calendar-inject、bni-reminder-schedule、bot-relay-inbound、context-overflow-guard、group-activity-memory、knowledge-search-inject、line-user-memory、project-card-router、round-table-orchestrator、rustdesk-free-memory-trigger、session-summary-trigger、usage-query、rule-reminder、client-memory。**只驗證了機制，沒逐支驗證哪支的注入真的重要**，下一場逐支分類。
-- `line-url-typo-guard` 訂的 `message:sending` 事件在 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發。
-- LINE 會員級還沒有真人流量驗證：看 `state/reflex_hits.log` 第 5 欄有沒有 `oc:main:public`；LINE senderId 沒帶到會被當教練級。
-- 備份 `openclaw.json.bak-20261002-before-reflex-prompt`（被 gitignore，不進 git）；兩場測試對話已刪、記憶已 forget。
-
-### 📋 下一場開工先做
-（第二步已完成，見上方 v267 的「下一場開工先做」。）
 
 ---
 
@@ -70,38 +43,18 @@
 
 ---
 
-## 🎯 教練交辦：下一場第一件事＝「賈維斯成長計畫」（簡稱「反射條件」）植入所有 AI（2026-10-02 02:35 Mac Opus 5.5；教練 02:30 原話定案）
+## 🎯 「賈維斯成長計畫」（簡稱「反射條件」）進度（2026-10-02 07:10 瘦身版；詳細交辦段與第 1~3 步經過已封存 `handoff_archive/handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`）
 
-**教練要的結果**：今天做出來的整套條件反射，要讓教練訓練出來的每一個 AI 都有。三種標準：**有智慧的反應、聽懂人話的反應、準確做事情的反應**；對外服務再加：**讓人備受禮遇、被尊重，惦記用戶說的話，不把問題丟回給用戶**。教練已全權授權，**不准再拿細項問教練**。
+教練 02:30 原話：教練訓練出來的每個 AI 都要有條件反射；三種標準＝有智慧的反應、聽懂人話的反應、準確做事情的反應；對外服務再加「讓人備受禮遇、被尊重，惦記用戶說的話，不把問題丟回給用戶」。已全權授權，**不准再拿細項問教練**。
 
-| 對象 | 誰在跟它說話 | 要放什麼 |
-|---|---|---|
-| ① 教練自己的 AI：Telegram「頂級特助」(main)、LINE 龍蝦小助教(main)、Mac／聯想／宏碁軍師、雲端工作頁 | 教練 | 全套反射，照教練的標準 |
-| ② 四位夥伴分身：佩佩老師(peipei)、孔大哥(kong)、怡靜(yijing)、楊尚儒(yang) | 夥伴 | 三種標準＋他們能力範圍內用得到的反射；不必照教練全部標準 |
-| ③ LINE 對外帳號：教練都在想什麼(jiaolian_thoughts)、BNI 大台南小幫手(bni_tainan)、龍蝦小助教 | 教練說話＝①；一般會員＝禮遇版 | 會員不能動系統設定，但要感受到頂級特助（21 條的客製服務感） |
+| 對象 | 狀態 |
+|---|---|
+| ① 教練自己的 AI | 小龍蝦端外掛 reflex-prompt／member-context／coach-context 上線；Mac 軍師 hook 85 條反射；**聯想／宏碁已寫信（10-02 03:38）待回信驗收** |
+| ② 四位夥伴分身 | ✅ 10-02 04:20 SOUL.md「三種標準（夥伴版）」＋群組 session 封存＋真實路徑測過（見 v269） |
+| ③ LINE 對外帳號（禮遇版） | ✅ 人設上線（v268）；**真實 LINE 會員流量還沒驗證**（看 `state/member_context.log` 第 4 欄 `sender:u…`） |
+| 試金石 97 案／記憶 171 條 | ✅ 全部有去向，`python3 scripts/reflex_coverage.py` 未處理 0、斷鏈 0 |
 
-**✅ 第一級「小龍蝦端教練說話時」已上線（2026-10-02 02:49，Mac 桌面版 Sonnet 5.5→Opus 5.5）**：
-- 🔴 原計畫的接點是錯的：`rule-reminder` 的 `event.context.inject` **從來沒送到模型**（2026.9.4 原始碼：message:preprocessed 發了不等、context 用完就丟，整包沒人讀 inject）。同病的還有 12 個 hook（清單見記憶 `feedback_openclaw_hook_fire_and_forget.md`），它們的記錄／直接發訊息照常，只有「注入給模型」那段是死的。
-- 改做外掛 `~/.openclaw/extensions/reflex-prompt/`（before_prompt_build → prependContext，有人等、真的進模型）：直接讀 `knowledges/反射索引.json` 的 prompt 時刻，依發話者分三級（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public），非教練看 `say_other`、不附出處；同場同條 30 分鐘冷卻；心跳／排程不出聲。索引新增欄位 `audience`、`say_other`（目前 R-PLAIN-TALK／R-SEARCH-HISTORY-FIRST 開到三級，R-SHOW-NOT-DO／R-COPY-EXACT 開到夥伴）。
-- 驗證：4092 句教練原話 JS／Python 命中 21 條全一致；分流測試 18 項全過（`node extensions/reflex-prompt/test.mjs`）；gateway 重啟後走 `openclaw gateway call agent` 真實路徑，main 一字不差貼出 R-HERMES、yijing 只拿到「聽不懂」客氣版且沒有教練專用的那條。命中紀錄 `state/reflex_hits.log` 第 5 欄 `oc:<agent>:<級別>`。
-- 防再犯：新反射 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒，回測 18/39091 全命中正確情境）；舊記憶 `reference_openclaw_hook_inject_format.md` 標過時。
-- **下一步**（10-02 03:25 ①②已完成：外掛 member-context／coach-context＋反射 R-BNI-OFFICIAL-TEXT，見 v267；03:46 ④也完成：外掛 url-typo-guard，見 v268；③等真實 LINE 流量）：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
-- 原計畫（保留脈絡）：讓 rule-reminder 讀反射索引＋加適用對象欄，依 agentId＋發話者分流。
-- 對外「禮遇版」是人設不是反射：寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限，見 R-BOOTSTRAP-20K）。
-- 聯想／宏碁：`feed_junshi_handoff.ps1` 開工注入加讀反射索引＋Windows 版路由；舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 要改寫成這件再發（教練 02:30 已明說三台都要＝跨機鎖解除）。
-- 雲端工作頁：確認 `cloud_sync/` 有帶上反射索引與路由。
-- 每個分身改完：刪該群 session 重開、走真實群組路徑測過才算（R-AGENT-RULES-SESSION）；付費功能不真測。
-
-**第 3 步進度（本場）**：
-- ✅ 試金石 95 個案例標題全部有去向：新增反射 13 條＋判斷 4 條＋已有程式擋住登記 2 條，案例去向表 15 筆；全用歷史資料回測、真實輸入端到端測過（commit `3bd71c9ef` `f58598c12` `ce8608c85`）。新工具：`scripts/reflex_add.py`（併入）、`scripts/reflex_coverage.py`（覆蓋率，未處理＝0）。
-- ⏳ 記憶 165 條：40 條已被反射引用、125 條未處理（前 30 條已初判）；吸收 `trigger_index.md` 還沒做。
-- 發現：Mac 的反射 hook 只接 Bash／Edit／Write（送檔工具接不到）；`model_tier_advisor.sh` 切 Opus 後第一則仍報 sonnet（舊 bug 重現）。
-
-**之前第 1、2 步**：四個時刻＋雲端都接上（`2ce76cad1` `04978969b`，外層 `d5470c305`）；Top 30 報告 `knowledges/2026-10-02_Top30條件反射報告.html`，回測 `scripts/reflex_backtest.py`（原話庫與快取含密碼，不進 git）。
-- 量尺：教練訊息「重講」比例 5月19%／6月13%／7月14%／8月12%／9月16%；重跑 `python3 scripts/render_top30_report.py` 看 10 月有沒有降。
-- 跨機（跨機鎖，教練沒提就不問）：聯想／宏碁還沒接上反射；Windows 開工沒有「置頂教練交辦」。信已寫好草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md`，教練說「發」才搬進 inbox。
-- 之後：開工改成「心＋最新一棒摘要」；Stop hook 只留行為檢查、拿掉字眼檢查。
-- 待查：`handoff_sync_guard.sh` 判斷1 用 PreToolUse＋stderr＋exit 0 提醒，AI 可能看不到（所有對話紀錄沒出現過）。
+之後：開工改成「心＋最新一棒摘要」；Stop hook 只留行為檢查、拿掉字眼檢查。待查：`handoff_sync_guard.sh` 判斷1 用 PreToolUse＋stderr＋exit 0 提醒，AI 可能看不到。量尺：教練訊息「重講」比例 5月19%／6月13%／7月14%／8月12%／9月16%，重跑 `python3 scripts/render_top30_report.py` 看 10 月有沒有降。
 
 > 📦 v264（Mac 10-01 22:20，小龍蝦卡核准修好、第一分會雙週＋口頭填數據、Tailscale 三台＋手機入網）完整內容已封存：`handoff_archive/handoff_v264_archived_2026-10-02.md`
 
@@ -157,7 +110,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🔴 | **賈維斯成長計畫第二步：15 支死注入 hook 逐支分類＋重要的搬到外掛（v266）** | ✅兩批都已上線 | **10-02 03:25 第二批完成**：外掛 `extensions/coach-context/`（教練說「釋放」由外掛跑腳本、真實結果交給模型；提到專案別名附專案卡；只認教練本人——舊 hook 連龍蝦小助教的 LINE 會員說「釋放」都會重啟 Mac 的 RustDesk），`rustdesk-free-memory-trigger`、`project-card-router` 兩支 hook 已關；測試 `node extensions/coach-context/test.mjs`（11項）＋真實路徑（測試模式旗標 `state/RELEASE_DRYRUN`，測完已移除）。group-activity-memory 不搬（群 8/24 後沒訊息）。剩 auto-goal／round-table 再評。**10-02 03:20 第一批完成**：分類表寫在記憶 `feedback_openclaw_hook_fire_and_forget.md`。新外掛 `extensions/member-context/`（每位朋友記憶／知識庫／BNI行事曆，行事曆超過4小時先同步），`knowledge-search-inject`、`bni-calendar-inject` 兩支 hook 已關；反射索引加 `agents` 欄（軍師端 `reflex_router.py` 跳過）＋`R-BNI-OFFICIAL-TEXT`＋`R-VOICE-CHECK`。測試 `node extensions/member-context/test.mjs`（15項）、`node extensions/reflex-prompt/test.mjs`（24項）；gateway 真實路徑假會員四段都收到。**待真實流量確認**：`state/member_context.log` 出現 LINE 那幾列時，看第3欄是 `line`、第4欄是 `sender:u…`（龍蝦小助教 main 只能靠 senderId 找人）。bni_tainan `AGENTS.md` 第101行還叫它用 exec 跑同步（exec 早被拿掉），行事曆現在系統會自動附上，不影響回答，改人設時順手刪。 |
+| 🔴 | **賈維斯成長計畫（反射條件）總進度（v265~v269）** | ✅第 1~4 步完成，剩 2 項等外部 | 第 1 級反射 hook＋小龍蝦外掛 reflex-prompt／member-context／coach-context／url-typo-guard；禮遇版人設；四位夥伴三種標準；試金石 97 案＋記憶 171 條全有去向。**剩**：①真實 LINE 流量驗證 `state/member_context.log` 第 4 欄 `sender:u…` ②聯想／宏碁回信驗收。測試法：外掛類走 `openclaw gateway call agent`（記憶 `feedback_openclaw_hook_fire_and_forget.md`），分身類封存群組 session 後用真實語音句前後對照。詳細見 `handoff_archive/handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`。 |
+| 🟡 | kong 的 `agents/kong/SOUL.md` 第 3 行寫「唯一指定模型 MiniMax M2.7」，但 `openclaw.json` 的 kong 實際是 `minimax/MiniMax-M3`（peipei 的 SOUL 06-03 已升 M3）（10-02 v269 發現） | ⏳待處理-低優先 | 設定檔與人設矛盾，無害但別讓 kong 以為自己被鎖在 M2.7。查 kong 升 M3 的授權日期（git log／記憶）後補一行更新紀錄，比照 peipei SOUL.md 第 6~8 行寫法；找不到授權紀錄就維持現狀不動。kong 是獨立 repo（`agents/kong`），改完在該 repo commit+push。 |
 | 🟡 | **BNI簡報3份（藍圖／生態圈／商戰制勝密碼）底部字幕開頭被左下LOGO保護區蓋掉**（10-01聯想，v262） | ⏳等教練選（已問過1次，不追問） | 檔案在`D:\Users\Downloads\BNI版簡報\`。教練選「內縮排版」才改`scripts/pdf_to_branded_pptx.py`重跑；選「照現狀」就結案。poppler在聯想不在PATH（見v262）。 |
 | 🟡 | **Tailscale雙機互連（聯想tree 100.95.122.29／Mac 100.91.228.91）＋RustDesk官方中繼21117故障** | ✅聯想→蘋果已通；⏳等RustDesk官方修復 | 聯想桌面捷徑「連蘋果電腦」＝TigerVNC。蘋果→聯想教練不需要（RDP已開、Windows密碼教練不記得，教練要用才自己設）。RustDesk不卸載。 |
 | 🔴 | **策展網站全面GitHub化收尾（09-30教練交辦，10-01教練已切bypass＝授權）** | ⏳下一場直接做 | 工具`scripts/curated_git.py`已備妥：跑`ensure-all`補11站→接回`curation_process.py`三條上架路（github_note，大樹作品/全新店家/暫代頁覆蓋）→event-signup加`/hooks/github-curated`(HMAC)＋每repo掛webhook→聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→指路GitHub」＋Mac `projects/INDEX.md`策展卡→模擬聯想push驗證線上換新；順手清ema/huitou origin夾帶的GitHub金鑰。 |
@@ -176,4 +130,4 @@
 
 ---
 
-> 📦 v112～v266 各棒的封存檔名一覽已搬到 `handoff_archive/INDEX_舊棒封存指標_v112-v266.md`（2026-10-02，主檔只留最新兩棒＋待辦表）
+> 📦 v112～v267 各棒的封存檔名一覽已搬到 `handoff_archive/INDEX_舊棒封存指標_v112-v266.md`（v266~v267 另見 `handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`）（2026-10-02，主檔只留最新兩棒＋待辦表）

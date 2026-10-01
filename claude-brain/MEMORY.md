@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 夥伴分身沒排程工具時，Mac端 openclaw cron add 代排一次性提醒：3個坑（--exact不能配--at／分身自己用message工具會重複送／規則字句被誤判已回覆）＋教練DM測試法(2026-10-02)](reference_partner_agent_reminder_via_openclaw_cron_2026-10-02.md)
 - [🦾 「賈維斯成長計畫」＝「反射條件」整套機制，三級植入：教練自己的AI／四位夥伴分身／LINE對外帳號(會員禮遇版)(2026-10-02教練命名)](project_jarvis_growth_plan_2026-10-02.md)
 - [🔴🔴 小龍蝦hook的context.inject沒人讀，15支逐支分類表在檔內；會員記憶/知識庫/BNI行事曆已搬到外掛member-context，要讓模型看到只能用外掛before_prompt_build(範本extensions/reflex-prompt，2026-10-02)](feedback_openclaw_hook_fire_and_forget.md)
 - [⛔ 已過時：「inject 改成物件就生效」是錯的，10-02 查原始碼確認不管什麼格式都到不了模型，一律看上一行](reference_openclaw_hook_inject_format.md)
