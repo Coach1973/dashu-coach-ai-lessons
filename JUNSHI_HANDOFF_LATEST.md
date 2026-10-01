@@ -52,8 +52,13 @@
 | ② 四位夥伴分身：佩佩老師(peipei)、孔大哥(kong)、怡靜(yijing)、楊尚儒(yang) | 夥伴 | 三種標準＋他們能力範圍內用得到的反射；不必照教練全部標準 |
 | ③ LINE 對外帳號：教練都在想什麼(jiaolian_thoughts)、BNI 大台南小幫手(bni_tainan)、龍蝦小助教 | 教練說話＝①；一般會員＝禮遇版 | 會員不能動系統設定，但要感受到頂級特助（21 條的客製服務感） |
 
-**做法（接點已查證）**：
-- 小龍蝦已有 `~/.openclaw/hooks/rule-reminder/handler.js`（message:preprocessed，每則訊息依關鍵字注入提醒，**已支援依分身 scope 分流**），就是 OpenClaw 版的「教練說話時」。第一步：讓它直接讀 `knowledges/反射索引.json`（不另存一份），索引每筆加「適用對象」欄（coach／partner／public），依 agentId＋發話者是不是教練 ID 分流。
+**✅ 第一級「小龍蝦端教練說話時」已上線（2026-10-02 02:49，Mac 桌面版 Sonnet 5.5→Opus 5.5）**：
+- 🔴 原計畫的接點是錯的：`rule-reminder` 的 `event.context.inject` **從來沒送到模型**（2026.9.4 原始碼：message:preprocessed 發了不等、context 用完就丟，整包沒人讀 inject）。同病的還有 12 個 hook（清單見記憶 `feedback_openclaw_hook_fire_and_forget.md`），它們的記錄／直接發訊息照常，只有「注入給模型」那段是死的。
+- 改做外掛 `~/.openclaw/extensions/reflex-prompt/`（before_prompt_build → prependContext，有人等、真的進模型）：直接讀 `knowledges/反射索引.json` 的 prompt 時刻，依發話者分三級（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public），非教練看 `say_other`、不附出處；同場同條 30 分鐘冷卻；心跳／排程不出聲。索引新增欄位 `audience`、`say_other`（目前 R-PLAIN-TALK／R-SEARCH-HISTORY-FIRST 開到三級，R-SHOW-NOT-DO／R-COPY-EXACT 開到夥伴）。
+- 驗證：4092 句教練原話 JS／Python 命中 21 條全一致；分流測試 18 項全過（`node extensions/reflex-prompt/test.mjs`）；gateway 重啟後走 `openclaw gateway call agent` 真實路徑，main 一字不差貼出 R-HERMES、yijing 只拿到「聽不懂」客氣版且沒有教練專用的那條。命中紀錄 `state/reflex_hits.log` 第 5 欄 `oc:<agent>:<級別>`。
+- 防再犯：新反射 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒，回測 18/39091 全命中正確情境）；舊記憶 `reference_openclaw_hook_inject_format.md` 標過時。
+- **下一步**：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
+- 原計畫（保留脈絡）：讓 rule-reminder 讀反射索引＋加適用對象欄，依 agentId＋發話者分流。
 - 對外「禮遇版」是人設不是反射：寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限，見 R-BOOTSTRAP-20K）。
 - 聯想／宏碁：`feed_junshi_handoff.ps1` 開工注入加讀反射索引＋Windows 版路由；舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 要改寫成這件再發（教練 02:30 已明說三台都要＝跨機鎖解除）。
 - 雲端工作頁：確認 `cloud_sync/` 有帶上反射索引與路由。
