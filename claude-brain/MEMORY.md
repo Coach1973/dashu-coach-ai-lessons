@@ -1,6 +1,7 @@
 # Memory Index
 - [🦾 「賈維斯成長計畫」＝「反射條件」整套機制，三級植入：教練自己的AI／四位夥伴分身／LINE對外帳號(會員禮遇版)(2026-10-02教練命名)](project_jarvis_growth_plan_2026-10-02.md)
 - [🔴🔴 小龍蝦hook的context.inject沒人讀，15支逐支分類表在檔內；會員記憶/知識庫/BNI行事曆已搬到外掛member-context，要讓模型看到只能用外掛before_prompt_build(範本extensions/reflex-prompt，2026-10-02)](feedback_openclaw_hook_fire_and_forget.md)
+- [⛔ 已過時：「inject 改成物件就生效」是錯的，10-02 查原始碼確認不管什麼格式都到不了模型，一律看上一行](reference_openclaw_hook_inject_format.md)
 - [🔧 「線上報名SOP／網路報名SOP」＝活動頁加立即報名表→event.db＋報名通知群，照knowledges/SOP_線上報名.md(2026-10-02教練命名)](reference_online_signup_sop_alias_2026-10-02.md)
 - [🔴 送Telegram/LINE的網址必須獨立一行，緊貼「（已確認打得開）」害教練點不開十幾二十次(2026-10-02)](feedback_telegram_url_must_stand_alone_2026-10-02.md)
 - [🔧 RustDesk官方中繼站21117壞→Tailscale三台+iPhone入網，輸入100.x直連；在家同網路ID仍通，「就緒」≠中繼站正常(2026-10-01)](reference_tailscale_rustdesk_direct_network_2026-10-01.md)

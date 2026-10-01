@@ -1273,6 +1273,7 @@
     "project_team_structure": "參考資料（部分已過時：VPS 下線）",
     "reference_namecard_ocr_pipeline_reusable": "參考資料",
     "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
-    "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION"
+    "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION",
+    "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手"
   }
 }
