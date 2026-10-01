@@ -23,13 +23,14 @@
 
 ---
 
-## 🎯 教練交辦：下一場第一件事（2026-10-02 00:15 教練親口「當然要全面清查，這是一定要做的」）
+## 🎯 教練交辦：下一場第一件事＝記憶系統改版「第二階段」（2026-10-02 00:50 Mac Opus 5.5 更新）
 
-**全面清查「開工」與「總結」兩個口令的每一步，逐條標成本、誰在用，交給教練決定留或改。**（起因：試金石案例96，公開頁每次總結自動更新 7 天 18 次沒人用）
-- 範圍：`~/.claude/settings.json` 註冊的所有 hook（UserPromptSubmit／Stop／SessionStart 等，含 feed_junshi_handoff.sh、pre_task_hook.sh、stop_rules_master.sh、守則全文每10輪重載、時間戳、跨機動態、身分自查、執行合約注入…）＋ `scripts/summary_upload_trigger.sh` 總結各步＋ `~/.claude/CLAUDE.md` 開工六步驟。
-- 每一條列：做什麼／每次觸發頻率／每次成本（注入多少字、要 AI 多做幾次工具呼叫）／誰真的在用或讀／近7天有沒有產生價值的證據（git log、log 檔）／建議（保留・改按需・合併・刪）。
-- 交付：一張白話表給教練裁示；教練裁示前不動任何 hook（除了明顯壞掉的）。
-- 注意：用文字查（讀檔、grep、wc），不截圖；先量化再建議。
+**教練要的結果**：記住他說的話、不重複犯錯、他動嘴就好、落實特助心法 21 條。教練：「1~6 怎麼寫我都同意，重點是解決問題。」＝**已全權授權，不准再拿細項問教練**。
+- 設計全文（先讀）：`knowledges/2026-10-02_記憶系統根本改版_從抽屜到工作站.md`；成本清查：`knowledges/2026-10-02_開工總結全面清查_每一步成本與用途.md`
+- **已做（第一階段）**：`scripts/lesson_conversion_hook.sh`（寫試金石/記憶/蒸餾時自動跳轉換三問，已註冊 PostToolUse，settings 備份 `~/.claude/settings.json.bak-20261002-lesson-hook`）；`knowledges/情境目錄.md` 第一版 11 個時刻；workspace/CLAUDE.md「讀試金石全部案例」矛盾已統一。
+- **第二階段（直接做）**：81 個試金石案例＋165 條記憶索引逐一分三類：①已被程式解決→標🔒/歸檔 ②能改程式還沒改→改 ③只能提醒→補進情境目錄（每時刻≤3行、總量≤1萬字）。做完把開工改成「心＋情境目錄＋最新一棒摘要」，拿掉 workspace/CLAUDE.md 整份接力棒鏡像（`sync_handoff_to_claudemd.sh`，由 `openclaw_cron_daemon.sh` 呼叫）與守則重複注入。
+- 第三階段：Stop hook 只留行為檢查、拿掉字眼檢查（輪詢偵測誤判最多）；執行合約/設定檔摘要改按需；MEMORY.md 瘦身。第四階段：每週「教練重複糾正次數」量尺（用每日 MiniMax 蒸餾）。
+- 待查：`handoff_sync_guard.sh` 判斷1 用 PreToolUse＋stderr＋exit 0「提醒不擋」，依 Claude Code 規則 AI 可能根本看不到；所有對話紀錄裡沒出現過一次。第三階段一併確認。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 22:20 台灣時間，Mac Sonnet 5.5，v264，教練先手機後電腦 Bypass）
 
