@@ -479,7 +479,7 @@
       "enforced_by": "scripts/stop_rules_master.py I",
       "say": "回話出現簡體字會被擋。",
       "situation": "跟教練講時間時",
-      "source": "feedback_chinese_only.md"
+      "source": "試金石案例44／feedback_chinese_only.md"
     },
     {
       "id": "G-COACH888",
@@ -520,6 +520,75 @@
       "say": "說「開工」自動注入接力棒；最上方「教練上一場交辦」第一件講、講完直接做。",
       "situation": "開工時",
       "source": "N9／教練 2026-09-27 原話（開工漏接 FB 申訴）"
+    },
+    {
+      "id": "R-WIN-APP-MOVE",
+      "moment": "pre_tool",
+      "tool": "Bash|PowerShell",
+      "match": "(?i)\\bmklink\\s+/J\\b|New-Item\\b[^\\n]*-ItemType\\s+Junction|robocopy\\b[^\\n]*\\s/(E|MIR)\\b",
+      "say": "搬 App 資料夾（junction）前：①先確認原程式在原位置開得起來（壞的搬了還是壞的）②先查來源裡有沒有巢狀 Junction，robocopy 加 /XJ 才跟 Get-ChildItem 的數字一致 ③搬完原夾改 .bak 留 7 天不刪，再重建捷徑（有好的捷徑就複製它，不要自己造）。",
+      "level": "remind",
+      "situation": "要搬 App 資料夾、建 junction 時（Windows）",
+      "source": "試金石案例27／28／41／knowledges/SOP_line_migrate_to_e_drive.md"
+    },
+    {
+      "id": "R-WIN-BAK-CLEAN",
+      "moment": "pre_tool",
+      "tool": "Bash|PowerShell",
+      "match": "(?i)(Remove-Item|\\brm\\s+-\\w*r|\\brd\\b|rmdir|Safe-Remove)[^\\n]*\\.bak[.-]\\d{6,8}",
+      "say": "清搬家留下的 .bak 前：先確認對應的 Junction 指向的資料是活的（目標裡有今天或最近的寫入），再走五道閘門；全機掃一遍，別只處理教練點名的那一個。",
+      "level": "remind",
+      "situation": "要清搬家後的 .bak 備份時",
+      "source": "試金石案例39"
+    },
+    {
+      "id": "R-MAC-HEADLESS-DOWN",
+      "moment": "prompt",
+      "match": "(?is)^(?!.*(記[憶億]體|釋放|赫米斯|hermes)).*?(mac|蘋果|macmini)[^\\n，。,.？?！!、；;（）()]{0,6}(停工|掛了|當機|沒動作|沒有動靜|自己重啟|自動重啟|被重啟|重開機)",
+      "say": "Mac 停工／自己重開：先跑 pmset -g sched、pmset -g custom、uptime 找隱藏排程重啟；headless 的 Mac 必須開自動登入＋斷電自動重啟，否則重開＝全部服務死掉。教練一級鐵律：除非停電停網，不准再發生；自己掛不會自己告警，要靠外部監控。",
+      "level": "remind",
+      "situation": "教練說 Mac 停工、掛了、自己重啟時",
+      "source": "試金石案例31"
+    },
+    {
+      "id": "J-NECESSARY",
+      "moment": "judgment",
+      "say": "問題根治後不要再疊「保險」：交付前問三個字「必要嗎？」。根因消滅就沒有風險；一行指令能解的，不蓋四層監控。被教練挑戰兩次才想通＝第一次就該自己想到底。",
+      "situation": "解決問題後想多加監控、保險、複雜機制時",
+      "source": "試金石案例32／守則#03、#16"
+    },
+    {
+      "id": "R-CLOUDFLARED-KEEP",
+      "moment": "prompt",
+      "match": "(?i)cloudflared|LINE\\s*專線|小龍蝦的專線|未辨識開發者|背景活動",
+      "say": "不認識的背景程式要關／要刪之前，先查三件套：~/.zsh_history 安裝紀錄、安裝時間戳、sfltool dumpbtm。cloudflared＝小龍蝦 LINE 專線，教練 LINE 用很頻繁，不能關（路徑大全第十三節）。「查無紀錄」不等於「來路不明」。",
+      "level": "remind",
+      "situation": "教練問背景程式、cloudflared、LINE 專線時",
+      "source": "試金石案例40／路徑大全第十三節"
+    },
+    {
+      "id": "R-CLOUDFLARED-STOP",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(launchctl\\s+(bootout|unload|remove|disable)|systemctl\\s+(stop|disable)|brew\\s+services\\s+stop|pkill|killall|\\bkill\\b)[^\\n]*cloudflared|cloudflared\\s+service\\s+uninstall|\\brm\\b[^\\n]*(cloudflared|com\\.cloudflare)",
+      "say": "你正要停掉／刪掉 cloudflared＝小龍蝦 LINE 專線，停了教練的 LINE 小龍蝦就斷線。教練沒親口說要關就不動。",
+      "level": "remind",
+      "situation": "要停掉或移除 cloudflared 時",
+      "source": "試金石案例40／路徑大全第十三節"
+    },
+    {
+      "id": "R-BALANCE-PROVIDER",
+      "moment": "post_tool",
+      "match": "(?im)^[^`「\\n]*(insufficient[_ ]balance|insufficient[_ ]quota|credit balance is too low|餘額不足|余额不足)[^`」\\n]*$",
+      "say": "看到額度／餘額不足：先查是哪一個 provider 回的（實際 providerID／endpoint），不要從訊息文字猜服務歸屬就叫教練充值。opencode 設定用的是教練自己的 MiniMax key；opencode-go（小寫 m3）是另一條轉售線。",
+      "level": "remind",
+      "situation": "工具回傳額度不足類錯誤時",
+      "source": "試金石案例57"
     }
-  ]
+  ],
+  "case_ledger": {
+    "案例28": "併入 R-WIN-APP-MOVE；「教練給了好的參照物就先抄、同法失敗兩次換路」屬判斷類（守則#13、#07）",
+    "案例33": "VPS 部分已退役（VPS 永久下線）；多用戶隔離驗證三件套併入 R-FRIEND-AGENT／R-AGENT-RULES-SESSION／R-OPENCLAW-CONFIG",
+    "案例44": "已由 G-TRAD-CHINESE（Stop hook）擋住"
+  }
 }
