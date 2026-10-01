@@ -1,3 +1,24 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:05 台灣時間，Mac 桌面版 Sonnet 5.5 ⇄ Opus 5.5，v266）
+
+**主軸：賈維斯成長計畫第一級上線——查出小龍蝦 15 支 hook 的「注入給模型」從沒生效，改用外掛 reflex-prompt 接手。**
+
+### 做了什麼
+1. 開工後動手前先查證接點：`rule-reminder` 用的 `event.context.inject` 根本沒人讀（2026.9.4 原始碼：`message:preprocessed` 發了不等、`agent:bootstrap` 只讀回 `bootstrapFiles`，整個 dist 沒有任何地方讀 inject）。上一棒「小龍蝦已有 rule-reminder 在注入」的前提是錯的。
+2. 新外掛 `extensions/reflex-prompt/`（`before_prompt_build`→`prependContext`，真的進模型）：讀反射索引 prompt 時刻、依發話者三級分流（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public，非教練看 `say_other`、不附出處）、同場同條 30 分鐘冷卻、心跳／排程不出聲。`openclaw.json` 加了 allow＋`allowConversationAccess`；新外掛要**完整重啟 gateway** 才掛上（熱重載只套設定、不掛外掛），已重啟一次。
+3. 索引新增 `audience`／`say_other`；新反射 `R-OC-HOOK-INJECT-DEAD`；記憶 `feedback_openclaw_hook_fire_and_forget` 補全並進索引、`reference_openclaw_hook_inject_format` 標過時；試金石案例98。
+4. 驗證：4092 句教練原話 JS／Python 21 條完全一致；分流測試 18 項（`node extensions/reflex-prompt/test.mjs`）；gateway 真實路徑 main 一字不差貼出 R-HERMES、yijing 只拿到客氣版且無教練專用條。commit workspace `c556570c0`、外層 `76fa20aee`，本次總結另計。
+
+### 卡在哪／發現
+- **死注入 hook 清單**（只有「注入給模型」那段無效，記錄與直接發訊息照常）：auto-goal、bni-calendar-inject、bni-reminder-schedule、bot-relay-inbound、context-overflow-guard、group-activity-memory、knowledge-search-inject、line-user-memory、project-card-router、round-table-orchestrator、rustdesk-free-memory-trigger、session-summary-trigger、usage-query、rule-reminder、client-memory。**只驗證了機制，沒逐支驗證哪支的注入真的重要**，下一場逐支分類。
+- `line-url-typo-guard` 訂的 `message:sending` 事件在 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發。
+- LINE 會員級還沒有真人流量驗證：看 `state/reflex_hits.log` 第 5 欄有沒有 `oc:main:public`；LINE senderId 沒帶到會被當教練級。
+- 備份 `openclaw.json.bak-20261002-before-reflex-prompt`（被 gitignore，不進 git）；兩場測試對話已刪、記憶已 forget。
+
+### 📋 下一場開工先做
+賈維斯成長計畫第二步：把死掉的注入逐支分類、重要的搬到外掛——先做會員感受最大的（line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、bni_tainan／jiaolian_thoughts 的「官方條文一字不差」），搬完走 `openclaw gateway call agent` 真實路徑實測；再做禮遇版人設（SOUL.md 2 萬字上限）、聯想／宏碁路由、雲端工作頁確認。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 02:40 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v265）
 
 **主軸：條件反射第 3 步——試金石 95 案全部轉完；教練定名「賈維斯成長計畫」並交辦植入所有 AI。**
@@ -13,32 +34,11 @@
 - Mac 反射 hook 只接 Bash／Edit／Write（送檔工具接不到）；`model_tier_advisor.sh` 切 Opus 後第一則仍報 sonnet（舊 bug）。
 
 ### 📋 下一場開工先做
-看置頂「🎯 教練交辦」：賈維斯成長計畫從第一級做起（rule-reminder 讀反射索引＋每筆加「適用對象」欄）。
+（本棒的第一級已完成，見上方 v266 的「下一場開工先做」。）
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 00:25 台灣時間，聯想 Windows 桌面版 Sonnet 5.5，v263，教練在聯想前）
-
-**主軸：①RustDesk 改走「Tailscale IP 直連」繞過官方壞掉的中繼；②教練單檔 HTML 作品放到 event.bymyway.com/curated/ema1017/，並教會赫米斯做法。**
-
-### 1. RustDesk 直連（取代官方中繼 21117 故障）
-- 官方 21117 仍不通（21:40 與 00:10 重測皆 False），21116 通所以顯示「已就緒」是假象。
-- 做法：被連方 RustDesk 開「啟用 IP 直接存取」（埠 21118，需解鎖/系統管理員，AI 無法代做），連線方在遠端 ID 欄輸入對方 Tailscale IP。Mac=100.91.228.91（聯想→Mac 教練實測連上）；聯想=100.95.122.29（教練已手動開）；ACER=100.78.106.14（21:45 已開、防火牆只放 Tailscale 網段）。固定密碼教練早已設好，不要再提「缺密碼」。
-- 聯想→ACER 與 ACER→Mac 教練尚未回報實測；00:10 從聯想測 ACER 21118 為 False（ACER 當時可能睡眠/離線，Tailscale 顯示離線）。
-- 5 封來信（Mac/ACER）已歸檔；Mac 22:10 那封已被 21:12 取消信作廢。
-- 教訓：給 ACER 的信第一次誤放 outbox（應放 inbox/acer/），ACER 讀不到，教練回報才發現。
-
-### 2. 單檔 HTML 作品（教練說「大樹作品SOP」）
-- 教練丟 `design (1).html`（中華網紅協會零基礎學AI課 10/17），赫米斯說只收 zip。已完成：網名由教練指定 **ema1017**，https://event.bymyway.com/curated/ema1017/ （首頁與 4 張圖都 200；Telegram 通知教練已收到）。
-- 做法與坑已寫進 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`（2026-10-02 新增段）：自己打包 zip、外連圖片必須下載（Lovart 4張約13.8MB）、圖片比首頁晚 1~2 分鐘才可讀、短網址撞名要先下架自己舊版。
-- 已下架我自己傳錯的 `ai-class-1017`（教練同意）與第一版 ema1017。
-- 已寫信給赫米斯：`cross-agent/inbox/hermes/20261002-0020_...`（含可複製的 Python 腳本）。
-- 殘留：`E:\Claude-Data\` 有 ai-class-1017.zip／ema1017.zip／pk2／zpk／cookie.tmp（刪檔鎖擋，待教練同意清理）。
-
-### 📋 下一場先做
-1. 教練回報 聯想→ACER、ACER→Mac 實測結果；ACER 離線就等它醒來再測 `Test-NetConnection 100.78.106.14 -Port 21118`。
-2. 簡報 BNI版 三份：底部字幕被左下 LOGO 蓋住，教練還沒決定「照現狀」或「有字幕頁內縮排版」（v262 遺留）。
-3. 官方 RustDesk 中繼 21117 修好後再驗證。
+> 📦 v263 聯想棒（RustDesk 改 Tailscale IP 直連＋大樹作品單檔 HTML ema1017）完整內容已封存：`handoff_archive/handoff_v263_lenovo_archived_2026-10-02.md`；未結事項已移入下方「🤫等教練自己提起」與「🔧AI自己的工作清單」
 
 ---
 
@@ -98,6 +98,8 @@
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
 > 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
 - 手機出門用行動網路輸入 Tailscale 100.x 位址連 RustDesk 實測（v264，教練要出門用時再測）
+- RustDesk 直連實測：聯想→ACER（ACER 100.78.106.14:21118，ACER 離線就等醒來）、ACER→Mac 教練還沒回報（v263，教練要用時再測）；官方中繼 21117 修好後再驗證
+- 聯想 `E:\Claude-Data\` 殘留 ai-class-1017.zip／ema1017.zip／pk2／zpk／cookie.tmp（刪檔鎖擋，需教練同意才清，v263）
 - 怡靜群若回「沒有填121功能」→封存該群 session 重來（v264，教練或怡靜反映時處理）
 - 小龍蝦一次處理多張名片照片：程式讀過用 card_splitter 切圖但沒實跑（v264，教練要時找一張多卡照片實跑）
 - 大台南商圈示範版位林百貨/神農街換成建築/街景照（要從網路下載照片，09-26已問過一次，教練沒回）
@@ -127,6 +129,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🔴 | **賈維斯成長計畫第二步：15 支死注入 hook 逐支分類＋重要的搬到 reflex-prompt 外掛（v266）** | ⏳下一場直接做 | 清單與做法見最上面 v266「卡在哪／發現」與「下一場開工先做」。範本 `extensions/reflex-prompt/`，驗證法與坑見記憶 `feedback_openclaw_hook_fire_and_forget.md`。 |
 | 🟡 | **BNI簡報3份（藍圖／生態圈／商戰制勝密碼）底部字幕開頭被左下LOGO保護區蓋掉**（10-01聯想，v262） | ⏳等教練選（已問過1次，不追問） | 檔案在`D:\Users\Downloads\BNI版簡報\`。教練選「內縮排版」才改`scripts/pdf_to_branded_pptx.py`重跑；選「照現狀」就結案。poppler在聯想不在PATH（見v262）。 |
 | 🟡 | **Tailscale雙機互連（聯想tree 100.95.122.29／Mac 100.91.228.91）＋RustDesk官方中繼21117故障** | ✅聯想→蘋果已通；⏳等RustDesk官方修復 | 聯想桌面捷徑「連蘋果電腦」＝TigerVNC。蘋果→聯想教練不需要（RDP已開、Windows密碼教練不記得，教練要用才自己設）。RustDesk不卸載。 |
 | 🔴 | **策展網站全面GitHub化收尾（09-30教練交辦，10-01教練已切bypass＝授權）** | ⏳下一場直接做 | 工具`scripts/curated_git.py`已備妥：跑`ensure-all`補11站→接回`curation_process.py`三條上架路（github_note，大樹作品/全新店家/暫代頁覆蓋）→event-signup加`/hooks/github-curated`(HMAC)＋每repo掛webhook→聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→指路GitHub」＋Mac `projects/INDEX.md`策展卡→模擬聯想push驗證線上換新；順手清ema/huitou origin夾帶的GitHub金鑰。 |

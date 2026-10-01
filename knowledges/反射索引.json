@@ -945,6 +945,7 @@
     "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）",
     "案例K": "已由 G-TRAD-CHINESE／G-TAIWAN-TIME 擋住（簡體字、日期台灣時間）",
     "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
-    "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）"
+    "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
+    "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）"
   }
 }
