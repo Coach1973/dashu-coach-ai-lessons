@@ -23,12 +23,29 @@
 
 ---
 
-## 🎯 教練交辦：下一場第一件事＝條件反射第 3 步（2026-10-02 01:30 Mac Opus 5.5；第 1、2 步已完成）
+## 🎯 教練交辦：下一場第一件事＝「賈維斯成長計畫」（簡稱「反射條件」）植入所有 AI（2026-10-02 02:35 Mac Opus 5.5；教練 02:30 原話定案）
 
-**教練要的結果**：記住他說的話、不重複犯錯、他動嘴就好、落實特助心法 21 條。教練已全權授權，**不准再拿細項問教練**。
-- ✅ **第 1 步**：四個時刻＋雲端工作頁都實測接上（commit `2ce76cad1` `04978969b`，外層 `d5470c305`）。
-- ✅ **第 2 步 Top 30**：報告 `knowledges/2026-10-02_Top30條件反射報告.html`（已用 Chrome 開給教練；md 同名）。反射索引 48 條（新 23、修 7、登記既有程式 10）；回測工具 `scripts/reflex_backtest.py`；證據 `state/top30_evidence_ids.json`；教練原話庫 `scripts/build_coach_corpus.py`（原話庫與回測快取含密碼，不進 git）。commit `23e73b2dd` 起。
-- **第 3 步（這一場做）**：Top 30 以外的試金石案例與記憶，逐案補成反射（每批 10 案；寫入前先 `python3 scripts/reflex_backtest.py run <id>` 回測、看抽樣，回話前那種只放零誤判的）；吸收 `knowledges/01_knowledge_base/trigger_index.md`，拿掉重複提醒。
+**教練要的結果**：今天做出來的整套條件反射，要讓教練訓練出來的每一個 AI 都有。三種標準：**有智慧的反應、聽懂人話的反應、準確做事情的反應**；對外服務再加：**讓人備受禮遇、被尊重，惦記用戶說的話，不把問題丟回給用戶**。教練已全權授權，**不准再拿細項問教練**。
+
+| 對象 | 誰在跟它說話 | 要放什麼 |
+|---|---|---|
+| ① 教練自己的 AI：Telegram「頂級特助」(main)、LINE 龍蝦小助教(main)、Mac／聯想／宏碁軍師、雲端工作頁 | 教練 | 全套反射，照教練的標準 |
+| ② 四位夥伴分身：佩佩老師(peipei)、孔大哥(kong)、怡靜(yijing)、楊尚儒(yang) | 夥伴 | 三種標準＋他們能力範圍內用得到的反射；不必照教練全部標準 |
+| ③ LINE 對外帳號：教練都在想什麼(jiaolian_thoughts)、BNI 大台南小幫手(bni_tainan)、龍蝦小助教 | 教練說話＝①；一般會員＝禮遇版 | 會員不能動系統設定，但要感受到頂級特助（21 條的客製服務感） |
+
+**做法（接點已查證）**：
+- 小龍蝦已有 `~/.openclaw/hooks/rule-reminder/handler.js`（message:preprocessed，每則訊息依關鍵字注入提醒，**已支援依分身 scope 分流**），就是 OpenClaw 版的「教練說話時」。第一步：讓它直接讀 `knowledges/反射索引.json`（不另存一份），索引每筆加「適用對象」欄（coach／partner／public），依 agentId＋發話者是不是教練 ID 分流。
+- 對外「禮遇版」是人設不是反射：寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限，見 R-BOOTSTRAP-20K）。
+- 聯想／宏碁：`feed_junshi_handoff.ps1` 開工注入加讀反射索引＋Windows 版路由；舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 要改寫成這件再發（教練 02:30 已明說三台都要＝跨機鎖解除）。
+- 雲端工作頁：確認 `cloud_sync/` 有帶上反射索引與路由。
+- 每個分身改完：刪該群 session 重開、走真實群組路徑測過才算（R-AGENT-RULES-SESSION）；付費功能不真測。
+
+**第 3 步進度（本場）**：
+- ✅ 試金石 95 個案例標題全部有去向：新增反射 13 條＋判斷 4 條＋已有程式擋住登記 2 條，案例去向表 15 筆；全用歷史資料回測、真實輸入端到端測過（commit `3bd71c9ef` `f58598c12` `ce8608c85`）。新工具：`scripts/reflex_add.py`（併入）、`scripts/reflex_coverage.py`（覆蓋率，未處理＝0）。
+- ⏳ 記憶 165 條：40 條已被反射引用、125 條未處理（前 30 條已初判）；吸收 `trigger_index.md` 還沒做。
+- 發現：Mac 的反射 hook 只接 Bash／Edit／Write（送檔工具接不到）；`model_tier_advisor.sh` 切 Opus 後第一則仍報 sonnet（舊 bug 重現）。
+
+**之前第 1、2 步**：四個時刻＋雲端都接上（`2ce76cad1` `04978969b`，外層 `d5470c305`）；Top 30 報告 `knowledges/2026-10-02_Top30條件反射報告.html`，回測 `scripts/reflex_backtest.py`（原話庫與快取含密碼，不進 git）。
 - 量尺：教練訊息「重講」比例 5月19%／6月13%／7月14%／8月12%／9月16%；重跑 `python3 scripts/render_top30_report.py` 看 10 月有沒有降。
 - 跨機（跨機鎖，教練沒提就不問）：聯想／宏碁還沒接上反射；Windows 開工沒有「置頂教練交辦」。信已寫好草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md`，教練說「發」才搬進 inbox。
 - 之後：開工改成「心＋最新一棒摘要」；Stop hook 只留行為檢查、拿掉字眼檢查。

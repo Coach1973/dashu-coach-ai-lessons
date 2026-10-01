@@ -689,6 +689,15 @@
       "say": "圖片交給教練前：自己用 Read 親眼看過這張圖，確認繁體中文無誤、比例與裁切對，才送；工具說「分析正確」不算看過。（hook 目前只接 Bash／Edit／Write，送檔工具接不到，所以靠 image-visual-delivery-check 技能＋執行細則 N4。）",
       "situation": "要把圖片（生成圖、截圖、設計稿）交給教練前",
       "source": "試金石案例F／38／執行細則N4"
+    },
+    {
+      "id": "R-JARVIS-PLAN",
+      "moment": "prompt",
+      "match": "賈維斯成長計畫|反射條件",
+      "say": "「賈維斯成長計畫」＝「反射條件」＝整套條件反射（反射索引＋四個時刻）。要植入三級：①教練自己的 AI（全套）②四位夥伴分身 peipei／kong／yijing／yang（三種標準）③LINE 對外帳號（會員＝禮遇版）。進度看接力棒置頂「🎯 教練交辦」。",
+      "level": "remind",
+      "situation": "教練提到賈維斯成長計畫、反射條件時",
+      "source": "project_jarvis_growth_plan_2026-10-02.md"
     }
   ],
   "case_ledger": {
