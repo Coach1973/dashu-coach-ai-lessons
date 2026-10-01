@@ -17,7 +17,7 @@ import re
 import sys
 import time
 
-WS = "/Users/bymyway/.openclaw/workspace"
+WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 本機與雲端工作頁都適用
 INDEX = os.path.join(WS, "knowledges/反射索引.json")
 HITS = os.environ.get("REFLEX_HITS_LOG") or os.path.join(WS, "state/reflex_hits.log")  # 測試時指到別處，別汙染真實統計
 SEEN_DIR = os.path.join(os.environ.get("TMPDIR", "/tmp"), "reflex_seen")

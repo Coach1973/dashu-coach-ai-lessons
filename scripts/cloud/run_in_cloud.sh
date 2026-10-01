@@ -9,4 +9,8 @@ if [ ! -e "$WS" ]; then
   ln -s "$(cd "$(dirname "$0")/../.." && pwd)" "$WS"
 fi
 
-exec bash "$WS/scripts/$1"
+SCRIPT="$1"; shift
+case "$SCRIPT" in
+  *.py) exec python3 "$WS/scripts/$SCRIPT" "$@" ;;  # 條件反射路由是 Python、要帶時刻參數
+  *)    exec bash "$WS/scripts/$SCRIPT" "$@" ;;
+esac
