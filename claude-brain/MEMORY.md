@@ -161,3 +161,4 @@
 - [🔴 特助心法／團隊架構／核心定義歷史彙整(18篇，部分定義已被後續版本取代，保留脈絡)](project_team_structure.md)
 - [🔧 業務系統零散技術參考彙整(14篇：ezPay／名片OCR／Amber NAS／行銷企劃)](reference_namecard_ocr_pipeline_reusable.md)
 - [⚠️ VPS系統已永久下線技術記錄(9篇，純歷史查考，見[[feedback_hermes_is_mac_desktop_vps_permanently_off]])](project_vps_client_isolation_fix_2026-07-01.md)
+- [遠端連線替教練做完不講術語](feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01.md) — RustDesk 用 --connect IP 捷徑、管理員指令放剪貼簿、不提密碼
