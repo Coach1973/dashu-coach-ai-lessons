@@ -95,3 +95,15 @@ python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
 - 不要呼叫 `insert_tainan_shangquan_card()`
 - 不要呼叫 `post_to_facebook()`
 - 不要自己重新設計版面/改字型大小/加自己的詮釋——教練要「一模一樣」就是像素級不動，有意見用視覺重新設計時，先問清楚教練是要「完全模仿」還是「做得更好」，不要自己預設立場硬改
+
+## 🔴 2026-10-02 新增：教練只給「單一 HTML 檔」（沒有 zip）時怎麼辦——自己下載圖片、打包 zip 再上傳
+
+> 起因：教練丟 `design (1).html` 給赫米斯，赫米斯回「HTML 我不會，一定要壓縮檔」，教練裁示：**單檔網頁你也一樣做得到，不准叫教練去壓縮**。聯想軍師照下列流程完成：https://event.bymyway.com/curated/ema1017/
+1. 上傳端點只收 `.zip`／`.tar.gz`（送 .html 會 HTTP 400「只接受 zip」）→ **自己打包**。
+2. **外連圖片一律下載**（教練明講「不下載怎麼行」）：抓出 HTML 內所有外連圖（`<img src>`、CSS `url()`、srcset；這次是 a.lovart.ai 共 4 張約 13.8MB）→ 下載到 `images/` → HTML 內網址改成相對路徑 → 主檔命名 `index.html` → zip（路徑用正斜線）。打包後確認不再有外連圖網址（Google Fonts 可保留）。
+3. `curl -F kind=creation -F package=@x.zip -F custom_slug=<教練指定>`（網名由教練指定，沒指定才提議）。
+4. **驗證**：首頁 200＋每張圖片網址都 curl 200。🔴 首頁會先換新、**圖片約 1~2 分鐘後才陸續可讀**，剛傳完圖片 404 是正常，等 2 分鐘再驗，不要誤判重傳。
+5. `curation_check_result.py` 只能在 Mac 跑（讀 Mac 本機 log），聯想/宏碁驗證請用上面 curl。
+6. 短網址被自己先前的上傳佔用（HTTP 400「已被其他店家用過」）：用 `/curation/admin/delete/<slug>` 下架**自己剛傳的舊版**再重傳（登入步驟見策展SOP「改短網址」段）。別動別人的站。
+7. 完整可複製的 Python 打包腳本見信 `cross-agent/inbox/hermes/20261002-0020_lenovo-to-hermes_html-file-you-can-do-it-download-images-and-zip.md`。
+8. 用詞：個人作品不叫「上架到名冊」，也不進店家名冊；教練聽到「上架」會困惑，講「放到網址上」。
