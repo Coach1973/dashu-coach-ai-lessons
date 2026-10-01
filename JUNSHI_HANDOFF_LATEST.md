@@ -29,8 +29,8 @@
 **先讀**：`knowledges/2026-10-02_試金石變反射條件_觸發機制設計.md`（第八節＝這一場的做法）；背景：`knowledges/2026-10-02_記憶系統根本改版_從抽屜到工作站.md`。
 - **已建好**：`knowledges/反射索引.json`（唯一真相源，15 條）＋`scripts/reflex_router.py`（接在教練說話時／AI動手前／看到結果時／回話前 4 個時刻，已註冊 settings.json，備份 `~/.claude/settings.json.bak-20261002-reflex`）＋`scripts/render_situation_directory.py`（產生 `knowledges/情境目錄.md`，不手改）＋`scripts/lesson_conversion_hook.sh`（寫教訓時要求寫成一筆反射）。全部用真實輸入單獨測過。
 - **第 1 步：實測四個時刻都接上**（上一場已實際看到「看到結果時」觸發一次——是誤判，已修成只比對結果，commit 3586ba7a6；另外三個時刻還沒實戰看過）：說一句含「RustDesk」的話、改一下 agents/ 下的測試檔或跑一個含 429 的假輸出……確認 AI 真的看到「⚡ 條件反射」。沒接上就先修。命中紀錄：`state/reflex_hits.log`。
-- **第 2 步**：試金石 81 案一次 10 案轉成反射（讀原文→找刺激與時刻→寫索引→真實樣本測觸發/不觸發→每批 commit）。
-- **第 3 步**：165 條記憶索引同樣轉換；吸收 `trigger_index.md`（pre_task_hook 的舊通用提醒）。
+- **第 2 步（教練 01:00 加碼交辦，額度花大沒關係）**：照 `knowledges/2026-10-02_Top30條件反射萃取計畫.md` 做「Top 30 條件反射」——從教練原話逐字紀錄（最直接的頻率證據）＋試金石 81 案＋448 份記憶，找出教練最常重講的 30 件事，分「需求型／防錯型」，每件寫成看得到的刺激＋反射，**用幾千則歷史訊息回測抓到率／誤抓率**，寫進反射索引，交付白話報告。
+- **第 3 步**：Top 30 以外的試金石案例與記憶，再逐案補成反射；吸收 `trigger_index.md`（pre_task_hook 的舊通用提醒）。
 - 之後：開工改成「心＋最新一棒摘要」；Stop hook 只留行為檢查、拿掉字眼檢查；每週「教練重複糾正次數」量尺。
 - 待查：`handoff_sync_guard.sh` 判斷1 用 PreToolUse＋stderr＋exit 0 提醒，AI 可能看不到（所有對話紀錄沒出現過）。
 
