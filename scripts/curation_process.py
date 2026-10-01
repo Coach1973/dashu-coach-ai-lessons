@@ -776,7 +776,7 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
 
     try:
         req = urllib.request.Request(event_url, headers={"User-Agent": "Mozilla/5.0 (curation-bot)"})
-        live_note = "已確認打得開" if urllib.request.urlopen(req, timeout=15).status == 200 else "⚠️網址回應異常"
+        live_note = "✅ 網址已確認打得開" if urllib.request.urlopen(req, timeout=15).status == 200 else "⚠️網址回應異常"
     except Exception as e:  # noqa: BLE001
         live_note = f"⚠️網址暫時打不開：{e}"
     try:
@@ -787,7 +787,9 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
     notify(
         "🎨【大樹作品・已自動上架】\n"
         f"標題：{title}\n"
-        f"網址：{event_url}（{live_note}）\n"
+        # 網址必須獨立一行、後面不接任何字：Telegram會把緊貼的全形括號吃進連結，點了打不開（2026-10-02教練糾正）
+        f"網址：\n{event_url}\n"
+        f"{live_note}\n"
         f"{c888_note}\n"
         "📌 教練個人創作，不進大台南商圈店家名冊"
     )
@@ -855,7 +857,7 @@ def process_one(pkg_path: Path) -> None:
                     rename_shop_slug(old_slug, custom_slug)
                     log(f"🔄 教練指定短網址優先，暫代頁從「{old_slug}」改名為「{custom_slug}」")
                     existing_shop_slug = custom_slug
-                    rename_note = f"（教練指定短網址，原網址「{old_slug}」已改名，只留這一個網址）"
+                    rename_note = f"\n教練指定短網址，原網址「{old_slug}」已改名，只留這一個網址"
                 except Exception as e:  # noqa: BLE001
                     log(f"⚠️ 改名為「{custom_slug}」失敗，沿用既有slug「{old_slug}」: {e!r}")
                     rename_note = f"\n⚠️ 教練指定的短網址「{custom_slug}」改名失敗，暫時沿用既有網址「{old_slug}」，請軍師人工檢查"
