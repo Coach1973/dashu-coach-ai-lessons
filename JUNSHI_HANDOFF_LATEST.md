@@ -1,3 +1,25 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:28 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v267）
+
+**主軸：賈維斯成長計畫第二步——15 支「注入沒送到模型」的舊 hook 逐支分類，重要的搬進兩個新外掛，全部走真實路徑請模型逐字貼出驗證。**
+
+### 做了什麼
+1. **會員端外掛 `extensions/member-context/`**：LINE 每位朋友的過去對話（寫入仍由 line-user-memory hook）、jiaolian_thoughts 知識庫檢索、bni_tainan 行事曆（問到日期且檔案超過 4 小時先跑 `sync_calendar.py`）。舊 hook `knowledge-search-inject`、`bni-calendar-inject` 已關。
+2. **教練端外掛 `extensions/coach-context/`**：教練說「釋放」由外掛跑腳本、真實結果交給模型照實轉述；提到專案別名附專案卡。只認教練本人。舊 hook `rustdesk-free-memory-trigger`、`project-card-router` 已關。
+3. **反射索引**新欄位 `agents`（只給指定分身；軍師端 `reflex_router.py` 跳過）＋ `R-BNI-OFFICIAL-TEXT`（bni_tainan／jiaolian_thoughts，會員版不提教練）＋ `R-VOICE-CHECK`（語音轉文字先確認）＋ `R-ZSH-VAR-COLON`（試金石案例99）。
+4. 驗證：member-context 15 項、coach-context 11 項、reflex-prompt 24 項；gateway 真實路徑假會員與 main（測試模式旗標 `state/RELEASE_DRYRUN`，已移除），模型逐字貼出📓記憶、📅行事曆、⚡會員版官方條文、📚知識庫、🖥️釋放結果、🗂專案卡。測試對話、假會員檔、測試紀錄都已清掉。
+5. 分類表寫在記憶 `feedback_openclaw_hook_fire_and_forget.md`（group-activity-memory 不搬：群 8/24 後沒訊息；usage-query／bot-relay 資料 7/8 起就停；client-memory 不搬）。
+
+### 卡在哪／發現
+- **行事曆停在 8/30**（9/10 拿掉 exec 後沒人同步）：10/12 進階MSP 已改 ZOOM 線上、舊檔還寫安平路。已手動同步，之後外掛自動同步。bni_tainan `AGENTS.md` 第 101 行還叫它用 exec 同步，改人設時順手刪。
+- **漏洞已補**：舊釋放 hook 只看 agentId=main，龍蝦小助教的 LINE 會員說「釋放」也會重啟 Mac 的 RustDesk。
+- **未驗證**：龍蝦小助教（main）認人只能靠 senderId，要等真實 LINE 會員訊息；看 `state/member_context.log` 第 3 欄 `line`、第 4 欄 `sender:u…`。
+- gateway 完整重啟兩次（03:14、03:22），每次約 15 秒；版本已先核對一致。設定備份 `openclaw.json.bak-20261002-before-member-context`／`-before-coach-context`（gitignore）。
+
+### 📋 下一場開工先做
+賈維斯成長計畫第三步：①先看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認得出人才算數）；②對外帳號「禮遇版」人設寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限見 R-BOOTSTRAP-20K），順手刪 bni_tainan AGENTS.md 第 101 行 exec 同步那句，改完刪 session、走真實路徑測；③聯想／宏碁 `feed_junshi_handoff.ps1` 開工注入讀反射索引（舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 改寫再發，教練 02:30 已說三台都要）；④`line-url-typo-guard` 改用外掛 `message_sending`。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:05 台灣時間，Mac 桌面版 Sonnet 5.5 ⇄ Opus 5.5，v266）
 
 **主軸：賈維斯成長計畫第一級上線——查出小龍蝦 15 支 hook 的「注入給模型」從沒生效，改用外掛 reflex-prompt 接手。**
@@ -15,26 +37,11 @@
 - 備份 `openclaw.json.bak-20261002-before-reflex-prompt`（被 gitignore，不進 git）；兩場測試對話已刪、記憶已 forget。
 
 ### 📋 下一場開工先做
-賈維斯成長計畫第二步：把死掉的注入逐支分類、重要的搬到外掛——先做會員感受最大的（line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、bni_tainan／jiaolian_thoughts 的「官方條文一字不差」），搬完走 `openclaw gateway call agent` 真實路徑實測；再做禮遇版人設（SOUL.md 2 萬字上限）、聯想／宏碁路由、雲端工作頁確認。
+（第二步已完成，見上方 v267 的「下一場開工先做」。）
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 02:40 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v265）
-
-**主軸：條件反射第 3 步——試金石 95 案全部轉完；教練定名「賈維斯成長計畫」並交辦植入所有 AI。**
-
-### 做了什麼
-1. **試金石 95 個案例標題全部有去向（未處理＝0）**：新增反射 13 條（Windows 搬家／清 .bak、Mac 停工、cloudflared 兩條、餘額不足、seed 假資料、官網「關於教練」、小龍蝦沒反應、每次開工總結的步驟成本、啟動檔 2 萬字、改偵測規則、建排程）＋判斷 4 條＋已有程式擋住登記 2 條＋案例去向表 15 筆。每條先用 4 個月歷史資料回測，誤報的當場收緊（清 .bak、Mac 停工、餘額不足），再用真實 hook 輸入端到端測（應跳／不該跳共 23 筆全對）。commit `3bd71c9ef` `f58598c12` `ce8608c85`。
-2. 新工具：`scripts/reflex_add.py`（一批反射＋案例去向併入索引）、`scripts/reflex_coverage.py`（試金石覆蓋率）。
-3. 教練 02:30 定名「賈維斯成長計畫」＝「反射條件」，三級植入對象寫進置頂交辦＋記憶 `project_jarvis_growth_plan_2026-10-02.md`＋反射 R-JARVIS-PLAN（`1bfdef07e`）。
-
-### 卡在哪／發現
-- 記憶 165 條：40 條已被反射引用，125 條未處理；前 30 條已初判，回測過的候選刺激：改安全鎖 `safety-locks/index.js`（41 次）、改夥伴分身 AGENTS/SOUL（54 次）、git rebase「You must edit all merge conflicts」、改 coach888（122 次）、改 `knowledges/SOP_*.md`（19 次，提醒寫口語別名）、「全面改」範圍（7 次）。
-- 第一次實戰：回測時讀到含「Insufficient balance」的舊文件，post_tool 反射真的跳出來＝接線有效；已收緊成不吃引號／反引號裡的字。
-- Mac 反射 hook 只接 Bash／Edit／Write（送檔工具接不到）；`model_tier_advisor.sh` 切 Opus 後第一則仍報 sonnet（舊 bug）。
-
-### 📋 下一場開工先做
-（本棒的第一級已完成，見上方 v266 的「下一場開工先做」。）
+> 📦 v265（Mac 10-02 02:40，試金石 95 案全部轉成反射＋教練定名「賈維斯成長計畫」）完整內容已封存：`handoff_archive/handoff_v265_archived_2026-10-02.md`
 
 ---
 
@@ -57,7 +64,7 @@
 - 改做外掛 `~/.openclaw/extensions/reflex-prompt/`（before_prompt_build → prependContext，有人等、真的進模型）：直接讀 `knowledges/反射索引.json` 的 prompt 時刻，依發話者分三級（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public），非教練看 `say_other`、不附出處；同場同條 30 分鐘冷卻；心跳／排程不出聲。索引新增欄位 `audience`、`say_other`（目前 R-PLAIN-TALK／R-SEARCH-HISTORY-FIRST 開到三級，R-SHOW-NOT-DO／R-COPY-EXACT 開到夥伴）。
 - 驗證：4092 句教練原話 JS／Python 命中 21 條全一致；分流測試 18 項全過（`node extensions/reflex-prompt/test.mjs`）；gateway 重啟後走 `openclaw gateway call agent` 真實路徑，main 一字不差貼出 R-HERMES、yijing 只拿到「聽不懂」客氣版且沒有教練專用的那條。命中紀錄 `state/reflex_hits.log` 第 5 欄 `oc:<agent>:<級別>`。
 - 防再犯：新反射 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒，回測 18/39091 全命中正確情境）；舊記憶 `reference_openclaw_hook_inject_format.md` 標過時。
-- **下一步**：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
+- **下一步**（10-02 03:25 ①②已完成：外掛 member-context／coach-context＋反射 R-BNI-OFFICIAL-TEXT，見 v267；③④未做）：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
 - 原計畫（保留脈絡）：讓 rule-reminder 讀反射索引＋加適用對象欄，依 agentId＋發話者分流。
 - 對外「禮遇版」是人設不是反射：寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限，見 R-BOOTSTRAP-20K）。
 - 聯想／宏碁：`feed_junshi_handoff.ps1` 開工注入加讀反射索引＋Windows 版路由；舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 要改寫成這件再發（教練 02:30 已明說三台都要＝跨機鎖解除）。
@@ -148,160 +155,4 @@
 
 ---
 
-> 📦 v114完整內容已封存：`handoff_archive/handoff_v114_archived_2026-08-18.md`（Mac桌面版，Chrome搶線根因+ezPay 238筆+coach888連結）
-
----
-
-> 📦 v115完整內容已封存：`handoff_archive/handoff_v115_archived_2026-08-18.md`（聯想Windows，BNI-Training雙軌系統從零建置+753筆官方報表整合）
-
----
-
-> 📦 v116完整內容已封存：`handoff_archive/handoff_v116_archived_2026-08-18.md`（聯想Windows，BNI培訓紀錄精準度修正+MSP投票新網站+SOP違規教訓）
-
----
-
-> 📦 v117完整內容已封存：`handoff_archive/handoff_v117_archived_2026-08-18.md`（聯想Windows，4-8月簽到表開票總清冊交叉比對修正MSP名單）
-
----
-
-> 📦 v118完整內容已封存：`handoff_archive/handoff_v118_archived_2026-08-18.md`（Mac桌面版，五項任務逐一執行+ezPay 108統編備註查詢完成+find -maxdepth查證失誤自我更正）
-
----
-
-> 📦 v119完整內容已封存：`handoff_archive/handoff_v119_archived_2026-08-19.md`（Mac桌面版，BNI Connect活動出席勾選任務首次上線，8場活動101人次標記完成）
-
----
-
-> 📦 v120完整內容已封存：`handoff_archive/handoff_v120_archived_2026-08-19.md`（Mac桌面版，讀跨機信箱接手ezPay培訓費發票，16張全部開立完成，MerchantID假成功陷阱首次發現）
-
----
-
-> 📦 v121完整內容已封存：`handoff_archive/handoff_v121_archived_2026-08-23.md`（Mac桌面版，教練推翻「34人收齊才開票」規則，24張ezPay培訓費發票先開立）
-
----
-
-> 📦 v122完整內容已封存：`handoff_archive/handoff_v122_archived_2026-08-24.md`（Mac桌面版，教練糾正「查無Email」誤判＋BNI 94人資料庫永久指引）
-
----
-
-> 📦 v123完整內容已封存：`handoff_archive/handoff_v123_archived_2026-08-24.md`（Mac桌面版，大樹小講事件密集場：救回雙寫程式碼+場次管理後台+修好2次部署bug）
-
----
-
-> 📦 v124完整內容已封存：`handoff_archive/handoff_v124_archived_2026-08-24.md`（Mac桌面版，AI助理資料包+8/28攤位頁+報名通知失聯真根因，搬運工失誤試金石案例62）
-
----
-
----
-
-> 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v116_archived_2026-08-18.md`（v116）+ `handoff_archive/handoff_v115_archived_2026-08-18.md`（v115）+ `handoff_archive/handoff_v114_archived_2026-08-18.md`（v114）+ `handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
-> 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
-
----
-
-
-> 📦 v125+v126完整內容已封存：`handoff_archive/handoff_v125_to_v126_archived_2026-08-25.md`（Mac桌面版，凌晨全系統稽核+教練覆核追加任務）
-
----
-
-
-> 📦 v127+v128+v129完整內容已封存：`handoff_archive/handoff_v127_v128_v129_archived_2026-08-25.md`（Mac桌面版，ezPay發票+台中場上線+賈維斯全系統體檢兩場+頻率覆核）
-
----
-
-> 📦 v130完整內容已封存：`handoff_archive/handoff_v130_archived_2026-08-25.md`（Mac桌面版，賈維斯體檢延續：頻率覆核+解決通知從沒送達的根因，留下Q1待辦）
-
----
-
-> 📦 v131完整內容已封存：`handoff_archive/handoff_v131_archived_2026-08-26.md`（Mac桌面版，AI微論壇台中場RWD真根因修復+Netlify額度重新校正）
-
----
-
-
-> 📦 v132+v133完整內容已封存：（Mac桌面版，Q1總結功能+context-overflow-guard改版+名片系統CRM擴建）
-
----
-
-> 📦 v134完整內容已封存：`handoff_archive/handoff_v134_archived_2026-08-26.md`（聯想Windows，Windows當機根因+ezPay記憶更正+跨機Stop hook查證+總結hook缺jq修復）
-
----
-
-> 📦 v135完整內容已封存：`handoff_archive/handoff_v135_archived_2026-08-27.md`（Mac桌面版，BNI Connect 430人匯入+MiniMax額度事故案例65+路徑大全憑證稽核）
-
----
-
-
-> 📦 v136完整內容已封存：`handoff_archive/handoff_v136_archived_2026-08-26.md`（Mac桌面版，BNI Connect前會員電話/Email補齊+來賓資料庫3712筆完整收集）
-
-> 📦 v137~v139完整內容已封存：`handoff_archive/handoff_v137_to_v139_archived_2026-08-27.md`（v137 Mac桌面版媒合手動觸發定案／v138聯想Windows跨機同步四層根因／v139 Mac桌面版RustDesk修復+MiniMax紅線+bigtree密集迭代）
-
-> 📦 v140完整內容已封存：`handoff_archive/handoff_v140_archived_2026-08-27.md`（聯想Windows，FB粉專發文API從零建置，卡在商家驗證+教練當場檢討試錯效率）
-
----
-
-> 📦 v141完整內容已封存：`handoff_archive/handoff_v141_archived_2026-08-27.md`（Mac終端機，bigtree 8/28 EDM上線+報名頁LINE誘因文案定案+/slides多簡報支援+ezPay發票查證）
-
----
-
-> 📦 v142完整內容已封存：`handoff_archive/handoff_v142_archived_2026-08-27.md`（Mac終端機，修復Stop hook守則#07輪詢偵測瞎眼35天的根因，commit`01a28f2fb`）
-
----
-
-> 📦 v143完整內容已封存：`handoff_archive/handoff_v143_archived_2026-08-28.md`（Mac終端機，BNI信用証清查4分會171人完成，真鑽231人查了10人中途總結）
-
----
-
-> 📦 v144+v145完整內容已封存：`handoff_archive/handoff_v144_to_v145_archived_2026-08-28.md`（Mac終端機v144離會會員信用証清查全數完結／聯想Windows v145 AI微論壇+ai-art獨立站建置）
-
----
-
-> 📦 v146完整內容已封存：`handoff_archive/handoff_v146_archived_2026-08-30.md`（Mac終端機，BNI信用証清查後續建網頁+複查+權限隔離+誤觸事故）
-
----
-
-> 📦 v147完整內容已封存：`handoff_archive/handoff_v147_archived_2026-08-30.md`（Mac終端機，/bni-credit三項待改+34筆信用証補開+搜尋空格bug修復）
-
----
-
-> 📦 v148完整內容已封存：`handoff_archive/handoff_v148_archived_2026-08-30.md`（Mac終端機，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
-
----
-
-> 📦 v149+v151完整內容已封存：`handoff_archive/handoff_v149_v151_archived_2026-08-30.md`（Mac終端機，真誠分會邀約來賓系統從零建置+bni-chapters重複實作/fork根因鑑識，v149與v151是同一起fork事件的兩條分支，內容已在v150結案）
-
----
-
-> 📦 v150完整內容已封存：`handoff_archive/handoff_v150_archived_2026-08-31.md`（Mac終端機，真誠分會邀約來賓重複建置根因查明+移除+5位會員專屬編輯網址交付）
-
----
-
-> 📦 v152完整內容已封存：`handoff_archive/handoff_v152_archived_2026-08-31.md`（Mac終端機，逐步脫離Netlify：4個新路由+3處連動+作品總覽更新）
-
----
-
-> 📦 v218完整內容已封存：`handoff_archive/handoff_v218_archived_2026-09-19.md`（Mac桌面版，全部釋放+MiniMax團隊品質稽核機制+開工hook身份誤判修復+幕僚長晨報重建+Netlify中文檔名部署bug發現）
-
----
-
-> 📦 v219完整內容已封存：`handoff_archive/handoff_v219_archived_2026-09-19.md`（Mac桌面版，手機/軍師討論邊界+Netlify中文檔名修復部署+後台帳密清單結案+workspace git大掃除含金鑰外洩發現+coach888熱門排行新功能）
-
-> 📦 v220完整內容已封存：`handoff_archive/handoff_v220_archived_2026-09-19.md`（Mac桌面版，接力棒狀態表失真教訓+機械防呆`handoff_sync_guard.sh`上線+CLAUDE.md 236KB→78KB瘦身+M系列MiniMax 1M機制查證+手機Remote Control重啟卡死未解留待下一棒）
-
-> 📦 v221+v222完整內容已封存：`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`（v221 Mac桌面版，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓／v222 Mac桌面版，中正大學互動牆從零建置上線+赫米斯Telegram斷線16小時根因修復，E16瘦身本場執行）
-
-> 📦 v223~v227完整內容已封存：`handoff_archive/handoff_v223_to_v227_archived_2026-09-20.md`（v223 B路徑1M通驗證／v224跨對話框交接SOP／v225 MiniMax懸案初步調查+coach888同步修復(平行session)／v226產業鏈SOP雙執行root cause／v227 MiniMax懸案徹底解謎+手機1M實測成功，E16瘦身2026-09-20執行）
-
----
-
-
-> 📦 v228~v230完整內容已封存：`handoff_archive/handoff_v228_to_v230_archived_2026-09-21.md`（v228憑證層git追蹤問題發現／v229 git-filter-repo歷史清除執行完畢／v230 CCU留言關閉+coach888收錄查證，E16瘦身2026-09-21執行）
-
----
-
-> 📦 v231~v237完整內容已封存：`handoff_archive/handoff_v231_to_v237_archived_2026-09-24.md`（v231 TokenTable接OpenCode+Episode11漫畫+agent捏造完工案例／v232 CCU媒體格式連環修復／v233海餅乾網站+BNI PPT SOP建立／v234聯想bni-dna/bigtree維護+記憶體洩漏追蹤／v235手機流量查證鏈+EM模式定義／v237膠囊咖啡機產業鏈+語音轉簡體字記錄，E16瘦身2026-09-24執行）
-
-
----
-
-> 📦 sincere戰情儀表板SOP補充段已結案封存：`handoff_archive/handoff_sincere_supplement_archived_2026-10-01.md`
+> 📦 v112～v266 各棒的封存檔名一覽已搬到 `handoff_archive/INDEX_舊棒封存指標_v112-v266.md`（2026-10-02，主檔只留最新兩棒＋待辦表）

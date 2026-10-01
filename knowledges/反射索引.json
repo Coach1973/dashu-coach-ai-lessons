@@ -963,6 +963,19 @@
         "partner",
         "public"
       ]
+    },
+    {
+      "id": "R-ZSH-VAR-COLON",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "\\$(?!env:)[A-Za-z_][A-Za-z0-9_]*:[A-Za-z]",
+      "say": "zsh 會把「$變數:字母」當成修飾語：\"agent:$a:line\" 會變成 a 轉小寫＋ine、$a:test 變成取尾段，指令不報錯卻打錯對象（刪不到、改錯人）。改寫成 ${a}:line。",
+      "level": "remind",
+      "situation": "Bash 指令裡變數後面直接接冒號＋字母",
+      "source": "試金石案例99（回測歷史 Bash 指令 5/21344，全是真錯）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
