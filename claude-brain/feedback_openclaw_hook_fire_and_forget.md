@@ -22,9 +22,9 @@ OpenClaw 的 hook（`~/.openclaw/hooks/*/handler.js`）寫進 `event.context.inj
 | knowledge-search-inject | 知識庫段落（jiaolian_thoughts） | ✅ 搬到 `member-context`，hook 已關 |
 | bni-calendar-inject | 大台南行事曆（bni_tainan） | ✅ 搬到 `member-context`，超過 4 小時先跑同步；hook 已關（9/10 拿掉 exec 後行事曆停在 8/30，10/12 進階MSP 地點已改線上） |
 | rule-reminder | 守則提醒 | ✅ 反射索引接手；BNI 官方條文＝`R-BNI-OFFICIAL-TEXT`（`agents` 限 bni_tainan／jiaolian_thoughts）、語音糾偏＝`R-VOICE-CHECK`；hook 只剩 probe log |
-| rustdesk-free-memory-trigger | 釋放記憶體的真實結果 | ⏳ 第二批：模型看不到結果，可能自己編數字 |
-| group-activity-memory | 「活動討論群」彙整時的完整群紀錄 | ⏳ 第二批 |
-| project-card-router | 專案卡 | ⏳ 第二批 |
+| rustdesk-free-memory-trigger | 釋放記憶體的真實結果 | ✅ 外掛 `coach-context` 接手（改由外掛跑腳本、結果交給模型照實轉述），hook 已關；舊 hook 只看 agentId=main，龍蝦小助教的 LINE 會員說「釋放」也會重啟 Mac 的 RustDesk，新版只認教練本人。真實路徑要測就先 `touch state/RELEASE_DRYRUN`（測試模式，不真的跑），測完移除 |
+| group-activity-memory | 「活動討論群」彙整時的完整群紀錄 | ❌ 不搬：群組 8/24 後沒有新訊息（gateway 日誌查無），寫入照常保留；群組復活再搬 |
+| project-card-router | 專案卡 | ✅ 外掛 `coach-context` 接手（只認教練本人，同場同卡 30 分鐘不重複），hook 已關 |
 | auto-goal | 「執行合約」 | 暫不搬，跟反射重疊，第二批再評 |
 | client-memory（agent:bootstrap） | HEARTBEAT／守則／CLIENT_PROFILE／交接／LINE 媒體網址規則 | ❌ 不搬：HEARTBEAT 本來就是啟動檔；全分身注入會把內部狀態塞給會員 |
 | usage-query | 「流量」快取 | ❌ 不搬：快取 7/8 起沒更新 |
@@ -33,7 +33,7 @@ OpenClaw 的 hook（`~/.openclaw/hooks/*/handler.js`）寫進 `event.context.inj
 | context-overflow-guard、session-summary-trigger | — | 不用搬，早就改成直接發訊息 |
 | bni-reminder-schedule | — | 不在受影響名單：它直接排程，只有註解提到 inject（10-02 更正） |
 
-驗證：真實路徑 `openclaw gateway call agent` 假會員（bni_tainan／jiaolian_thoughts）請模型逐字貼出，📓記憶、📅行事曆、⚡會員版官方條文、📚知識庫都收到。真實 LINE 流量的 ID 格式看 `state/member_context.log`（第 3 欄頻道、第 4 欄 `sender:` 或 `session:`）。
+驗證：真實路徑 `openclaw gateway call agent` 假會員（bni_tainan／jiaolian_thoughts）請模型逐字貼出，📓記憶、📅行事曆、⚡會員版官方條文、📚知識庫都收到；main（測試模式）🖥️釋放結果、🗂專案卡都收到。真實 LINE 流量的 ID 格式看 `state/member_context.log`（第 3 欄頻道、第 4 欄 `sender:` 或 `session:`）。
 
 **How to apply：**
 - 要讓模型看到：寫外掛，`api.on("before_prompt_build", (event, ctx) => ({ prependContext }))`，`openclaw.json` 的 `plugins.allow` 加 id、`plugins.entries.<id>` 設 `enabled:true` 與 `hooks.allowConversationAccess:true`；新外掛要完整重啟 gateway 才掛上（熱重載不會）。範本：`~/.openclaw/extensions/reflex-prompt/`（ctx 有 agentId、senderId、sessionKey、trigger）。
