@@ -18,9 +18,9 @@ head = out[:2000]  # Claude Code 注入過長時只給模型看約 2KB 預覽
 errs = []
 if not out.strip():
     errs.append("注入內容是空的")
-# 最新一棒有「下一場開工先做」→ 必須出現在預覽範圍內
-m = re.search(r"^### 📋 下一場開工先做\n(.*?)(?=^###|^---)", handoff, re.S | re.M)
-if m and m.group(1).strip() and "🎯 教練上一場交辦" not in head:
+# 接力棒有教練交辦（各機寫法：「### 📋 下一場(開工)先做」「## 🎯 教練交辦」）→ 必須出現在預覽範圍內
+m = re.search(r"^(### 📋 下一場(開工)?(先做|第一件)|## 🎯)", handoff, re.M)
+if m and "🎯 教練上一場交辦" not in head:
     errs.append("教練交辦沒有出現在前2000字（開工會漏接）")
 if "📬 有寫給軍師的信" in out and "📬 有寫給軍師的信" not in head:
     errs.append("寫給軍師的信沒有出現在前2000字")

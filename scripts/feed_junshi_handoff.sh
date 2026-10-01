@@ -234,7 +234,26 @@ INJECT_CONTENT=$(
   # 以為workspace/CLAUDE.md會載入接力棒而不貼，實際對話框開在~/.openclaw時根本不會載入；
   # ②第6步只叫回報「🙋要教練決定」區，交辦事項不在那區。改成：最新一棒的交辦一律置頂注入，
   # 第6步第一件就報它。
-  NEXT_TASK=$(awk '/^### 📋 下一場開工先做/{f=1;next} f&&/^(###|---)/{exit} f' "$HANDOFF" | sed '/^[[:space:]]*$/d')
+  # 2026-10-02三補：各機寫法不一（「### 📋 下一場先做」「## 🎯 教練交辦…」），原本只認一種標題、
+  # 又只抓檔案裡第一個，結果注入的是前一晚的舊交辦、最新的反而埋在下面。改成每種標題都認，挑時間最新的一段。
+  NEXT_TASK=$(python3 - "$HANDOFF" <<'PY'
+import re, sys
+lines = open(sys.argv[1], encoding="utf-8").read().split("\n")
+cands, ts = [], ""
+for i, l in enumerate(lines):
+    if l.startswith("## "):
+        m = re.search(r"(20\d\d-\d\d-\d\d)\s*(\d\d:\d\d)", l)
+        ts = f"{m.group(1)} {m.group(2)}" if m else ""
+        if l.startswith("## 🎯"):
+            end = next((j for j in range(i + 1, len(lines)) if lines[j].startswith("## ")), len(lines))
+            cands.append((ts, -i, lines[i:end]))
+    elif re.match(r"^### 📋 下一場(開工)?(先做|第一件)", l):
+        end = next((j for j in range(i + 1, len(lines)) if re.match(r"^(##|---)", lines[j])), len(lines))
+        cands.append((ts, -i, lines[i + 1:end]))
+if cands:
+    print("\n".join(l for l in max(cands)[2] if l.strip()))
+PY
+)
   if [ -n "$NEXT_TASK" ]; then
     echo "## 🎯 教練上一場交辦：這一場第一件要做的事（開工回報第一行就要講，講完直接開始做）"
     echo ""
