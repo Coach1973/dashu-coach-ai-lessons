@@ -73,7 +73,7 @@
       "level": "remind",
       "situation": "看到 MiniMax 額度錯誤時",
       "source": "reference_minimax_quota_5h_4500_calls.md／試金石案例65",
-      "top30": 14,
+      "top30": 13,
       "kind": "防錯型"
     },
     {
@@ -113,7 +113,7 @@
       "say": "先分清 GitHub 自動部署型還是手動 zip 型；圖片另查 Content-Type 不能只看 200。",
       "situation": "要部署網站時",
       "source": "feedback_netlify_deploy_zip_api.md／試金石案例54",
-      "top30": 5,
+      "top30": 7,
       "kind": "需求型"
     },
     {
@@ -123,7 +123,7 @@
       "say": "N6 五道閘門；看起來重複的檔先比對內容再刪。",
       "situation": "要刪檔、清資料、強制推送時",
       "source": "試金石案例24／feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md",
-      "top30": 26,
+      "top30": 21,
       "kind": "防錯型"
     },
     {
@@ -141,7 +141,7 @@
       "say": "先用文字方式驗證（curl、讀網頁文字），教練流量有限。",
       "situation": "要截圖時",
       "source": "feedback_avoid_screenshots_token_limited_2026-10-01.md",
-      "top30": 21,
+      "top30": 24,
       "kind": "防錯型"
     },
     {
@@ -164,7 +164,7 @@
     {
       "id": "R-DEPLOY-WORDS",
       "moment": "prompt",
-      "top30": 5,
+      "top30": 7,
       "kind": "需求型",
       "match": "(?i)網頁推|自動站|行動站|(^|[\\s，,。！!、；])推(上去|出去|到正式站|到\\s*netlify|吧|啊|了|囉|喔)*\\s*([\\s，,。！!、；]|$)",
       "say": "部署口令：「推」＝推 Netlify 正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type，回報剩幾次）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。",
@@ -186,7 +186,7 @@
     {
       "id": "R-INVOICE",
       "moment": "prompt",
-      "top30": 8,
+      "top30": 6,
       "kind": "需求型",
       "match": "發票|開票|二聯|三聯|統編|統一編號|載具|手機條碼",
       "say": "發票：先跑 claude-brain/data/query_training_invoice.py 查；兩套系統都要查（培訓費＝大樹教育、入會續約＝聚寶盆）；開過的不問二聯三聯；開完當場寫進記錄。",
@@ -197,7 +197,7 @@
     {
       "id": "R-MEMBER-DB",
       "moment": "prompt",
-      "top30": 8,
+      "top30": 6,
       "kind": "需求型",
       "match": "(會員|前會員|離會|來賓|名片)(的)?(名單|資料|電話|Email|email|信箱|資料庫|媒合)|名片(系統|搜尋|查詢)|查.{0,6}(電話|Email|email|信箱)",
       "say": "會員／前會員／來賓／名片資料都在 namecard-db（python3 namecard-db/query.py 關鍵字）與 BNI 94 人資料庫；先查再答，不要叫教練提供名單。",
@@ -208,7 +208,7 @@
     {
       "id": "R-CROSS-LETTER",
       "moment": "prompt",
-      "top30": 9,
+      "top30": 11,
       "kind": "需求型",
       "match": "(?<!不用)寫(一)?封?信|寄信|去讀信|^\\s*讀(一下)?信|讀(一下)?信[，,。！!]|自己去讀|寫指令讓(他|它|她|他們)|(讓|叫)我(去)?(貼|轉貼|傳話)|(聯想|宏碁|ACER|Acer|acer|Windows|windows|赫米斯|Hermes|hermes|小龍蝦|手機版|終端機).{0,15}(跟他(說|講)|告訴他|叫他|讓他|給他|通知他|傳給)|(聯想|宏碁|ACER|Mac|MAC|蘋果)(給|交辦|交代)的?(什麼)?任務",
       "say": "教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀）。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/<收信人>/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。",
@@ -241,7 +241,7 @@
     {
       "id": "R-SEARCH-HISTORY-FIRST",
       "moment": "prompt",
-      "top30": 11,
+      "top30": 8,
       "kind": "防錯型",
       "match": "(之前|以前|上次|當初|早就|曾經|很早以前|上一輪|昨天|前幾天).{0,4}(說過|講過|設定過?|做過|交[代待]過|討論過|提過|寫過|跟你說|跟你講|叫你|問過)|當初(是)?怎麼|還?記不記得|你忘了嗎|(怎麼)?又忘|都忘(記|了)|(查|找|搜|讀|看)(一下)?.{0,6}(歷史|過去的)(對話|紀錄|記錄|資料)|找不到(記錄|紀錄)|去查.{0,8}對話|特別交[代待](你|過)",
       "say": "教練說「之前講過」：先自己搜原始紀錄（state/recall_index.jsonl、memory/verbatim、對話紀錄），找到就照做；不要叫教練回想、重講或貼給你。",
@@ -252,7 +252,7 @@
     {
       "id": "R-COPY-EXACT",
       "moment": "prompt",
-      "top30": 19,
+      "top30": 18,
       "kind": "防錯型",
       "match": "(?s)^(?!.*(⏺|\\*\\*|##)).*(照抄|照著?貼|聽(得)?懂(的話)?(再|就)(來)?(做|幹活|乾活|回覆)|聽不懂(就|再)(問|發問)|(網址|名字|名稱|文字|這段|這句|標題)[^\\n]{0,8}(一字不差|原封不動|不要改)|連字都.{0,6}打出來)",
       "say": "照教練給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。",
@@ -263,7 +263,7 @@
     {
       "id": "R-DOWNLOADS",
       "moment": "prompt",
-      "top30": 20,
+      "top30": 19,
       "kind": "需求型",
       "match": "下載(資料夾|區|夾)|[Dd]ownloads|(剛|才|又|已經|有)(剛|才)?下載|下載了|截(了|好)?(圖|幾張)[^\\n]{0,10}(下載|給你|資料夾)",
       "say": "去 ~/Downloads 用 ls -t 找最新檔，對時間和檔名；教練說幾張就要找到幾張，找不到先列出最新 10 個，不要說沒有。",
@@ -285,7 +285,7 @@
     {
       "id": "R-PLAIN-TALK",
       "moment": "prompt",
-      "top30": 10,
+      "top30": 12,
       "kind": "防錯型",
       "match": "(聽|看|搞|還是)不懂(?!(就|再)(問|發問))|講白話|大白話|說白話|白話文|講人話|(是)?什麼意思|專業術語|行話|(是|都是)(些)?什麼(東西|來著)",
       "say": "重講一次：不用英文和術語，先講結論，再講教練要不要做什麼（多半什麼都不用做）。",
@@ -296,7 +296,7 @@
     {
       "id": "R-FB-POST",
       "moment": "prompt",
-      "top30": 23,
+      "top30": 25,
       "kind": "需求型",
       "match": "(FB|fb|臉書|粉專|Facebook|facebook)[^\\n]{0,20}(發文|貼文|發佈|發布|PO文|po文|貼上去|發上去|分享|違反|限制|申訴)|(發|貼|PO|po)(到|在|上)?\\s*(FB|fb|臉書|粉專)|貼文|幫我發文",
       "say": "FB 貼文：放 event.bymyway.com 公開網址（不是 GitHub），一則一個網址、要有縮圖；用沒登入的瀏覽器確認別人看得到才算發成功。",
@@ -320,7 +320,7 @@
       "id": "R-POLLING-CODE",
       "moment": "pre_tool",
       "tool": "Bash|Edit|Write",
-      "top30": 7,
+      "top30": 5,
       "kind": "防錯型",
       "match": "(?s)^(?!.*(輪詢|事件觸發|polling)).*?(?m:<key>StartInterval</key>|^\\s*\\*/\\d+\\s+\\*|setInterval\\(\\s*(async\\s*)?\\(?\\s*\\)?\\s*(=>)?\\s*\\{?[^)]{0,80}(fetch|load|check|poll|refresh|reload|sync)|setInterval\\(\\s*(load|fetch|check|poll|refresh|reload|sync)\\w*|schedule\\.every\\(|openclaw\\s+cron\\s+add[^\\n]*--every\\s+[1-9]|[\"']?every[\"']?\\s*[:=]\\s*[\"']?[1-9]\\d*\\s*(s|m|min|sec)\\b|while\\s+(true|:)\\s*;?\\s*do[\\s\\S]{0,300}?sleep\\s+\\d)",
       "say": "你正在寫「每隔 N 分鐘檢查一次」：先問這件事發生當下能不能直接觸發（教練說一句、檔案一改、訊息一到）。能就用事件觸發；真的要定時，跟教練講清楚一天跑幾次、為什麼。",
@@ -332,7 +332,7 @@
       "id": "R-OPENCLAW-CONFIG",
       "moment": "pre_tool",
       "tool": "Bash|Edit|Write",
-      "top30": 12,
+      "top30": 10,
       "kind": "防錯型",
       "match": "(?m)^/Users/[^\\n]*\\.openclaw[^\\n]*/(openclaw\\.json|cron/jobs\\.json|models\\.json)$|(^|[;&|]\\s*)(\\S*/)?openclaw\\s+(config\\s+set|models\\s+set|cron\\s+(add|edit|rm|remove|update|disable|enable))\\b|open\\([^)\\n]*openclaw\\.json[^)\\n]*[\"']w",
       "say": "改小龍蝦設定前：模型寫死 MiniMax-M3，教練沒親口說不准換；教練定的週期（每天 23:00 總結等）不要改回；改完重啟並查實際生效，不是寫進去就算。",
@@ -357,7 +357,7 @@
       "id": "R-CHROME-WHICH-MACHINE",
       "moment": "pre_tool",
       "tool": "mcp__claude-in-chrome__.*",
-      "top30": 25,
+      "top30": 23,
       "kind": "防錯型",
       "match": "",
       "say": "操作 Chrome 前先確認連到的是 Mac 本機、教練看得到的那個 Chrome（不是聯想那台）；同一個網站只開一個分頁。",
@@ -381,7 +381,7 @@
       "id": "R-LETTER-INBOX",
       "moment": "pre_tool",
       "tool": "Write",
-      "top30": 9,
+      "top30": 11,
       "kind": "防錯型",
       "match": "(?m)^/Users/[^\\n]*cross-agent/outbox/[^\\n]*$",
       "say": "新信要放 cross-agent/inbox/<收信人>/；outbox 是已讀歸檔，放錯對方讀不到（v263 給 ACER 的信就是這樣）。",
@@ -392,7 +392,7 @@
     {
       "id": "R-ASK-CREDENTIAL",
       "moment": "reply",
-      "top30": 13,
+      "top30": 14,
       "kind": "防錯型",
       "match": "(請|麻煩)(您|教練|你)?(提供|給我|告訴我|輸入|貼上|貼給我|傳給我)[^\\n]{0,12}(密碼|帳密|帳號密碼|金鑰|API\\s*[Kk]ey|[Tt]oken|權杖|憑證)|(記得|知道)[^\\n]{0,10}(密碼|帳密|金鑰|[Tt]oken)[^\\n]{0,15}(跟我說|跟我講|告訴我|給我)",
       "say": "不要跟教練要帳密／金鑰：先查 路徑大全.md、路徑大全_憑證層.md、歷史紀錄。真的查過都沒有（例如簡訊驗證碼），照實說查了哪幾個地方再請教練。",
@@ -403,7 +403,7 @@
     {
       "id": "R-PROMISE-MONITOR",
       "moment": "reply",
-      "top30": 7,
+      "top30": 5,
       "kind": "防錯型",
       "match": "(我會|我將|我這邊會|會由我)(持續|主動|定時|定期|每隔?\\s*\\d+\\s*(秒|分鐘?|小時))[^\\n]{0,8}(監測|監控|盯|巡|檢查|追蹤|關注)",
       "say": "你沒有背景常駐，做不到「主動持續監測」，這種話教練聽過太多次。改成說：教練下次說話時我先查，或做一個事件觸發的機制。",
@@ -445,7 +445,7 @@
     {
       "id": "G-HTML-CHROME",
       "moment": "guard",
-      "top30": 6,
+      "top30": 9,
       "kind": "需求型",
       "enforced_by": "scripts/auto_chrome_after_html_edit.sh＋stop_rules_master.py J",
       "say": "改了 HTML 會自動用 Chrome 開給教練看；沒開就回話會被擋。localhost 網址要自己打開，不叫教練輸入。",
@@ -455,7 +455,7 @@
     {
       "id": "G-POLLING-REPLY",
       "moment": "guard",
-      "top30": 7,
+      "top30": 5,
       "kind": "防錯型",
       "enforced_by": "scripts/stop_rules_master.py D",
       "say": "回話提議「每 N 分鐘檢查」會被擋。",
@@ -465,7 +465,7 @@
     {
       "id": "G-TAIWAN-TIME",
       "moment": "guard",
-      "top30": 24,
+      "top30": 26,
       "kind": "防錯型",
       "enforced_by": "scripts/inject_time_context.sh＋stop_rules_master.py C",
       "say": "每句話自動附台灣時間；看過 UTC 時間卻沒換算就回話會被擋。",
@@ -484,7 +484,7 @@
     {
       "id": "G-COACH888",
       "moment": "guard",
-      "top30": 18,
+      "top30": 20,
       "kind": "需求型",
       "enforced_by": "scripts/stop_rules_master.py L／M",
       "say": "新網站上線沒收錄進作品總覽（coach888，新項目放分類第一筆）會被擋。",

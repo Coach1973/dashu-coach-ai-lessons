@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Top 30 條件反射</title>
+<style>
+:root{--bg:#f7f5f0;--card:#fff;--ink:#1f2328;--muted:#5d6470;--line:#e4e0d8;--accent:#b4532a;--need:#2f6f4f;--guard:#8a4b9a;--fill:#b4532a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16181c;--card:#1f2228;--ink:#e8e6e1;--muted:#a3a8b1;--line:#30343b;--accent:#e08a5f;--need:#6fbf95;--guard:#c49ad1;--fill:#e08a5f}}
+:root[data-theme="dark"]{--bg:#16181c;--card:#1f2228;--ink:#e8e6e1;--muted:#a3a8b1;--line:#30343b;--accent:#e08a5f;--need:#6fbf95;--guard:#c49ad1;--fill:#e08a5f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 -apple-system,"PingFang TC","Noto Sans TC",sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:28px;line-height:1.3;margin:0 0 6px}.sub{color:var(--muted);margin:0 0 22px;font-size:15px}
+h2{font-size:20px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.box ul,.box ol{margin:0;padding-left:20px}.box li{margin:6px 0}
+.bar{display:grid;grid-template-columns:44px 1fr 46px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.track{height:12px;background:var(--line);border-radius:6px;overflow:hidden}.fill{display:block;height:100%;background:var(--fill)}
+.v{text-align:right;font-variant-numeric:tabular-nums}.m{color:var(--muted)}
+.card{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+.rank{flex:0 0 38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.body{min-width:0;flex:1}.card h3{font-size:18px;margin:4px 0 6px;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.chip{font-size:13px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.chip.need{color:var(--need);border-color:var(--need)}.chip.guard{color:var(--guard);border-color:var(--guard)}
+.say{margin:6px 0;font-size:16px}.nums{display:flex;gap:16px;flex-wrap:wrap;font-size:15px;color:var(--muted)}.nums b{color:var(--ink)}
+.note{margin:6px 0 0;font-size:14px;color:var(--muted)}
+</style></head><body><main>
+<h1>Top 30 條件反射</h1>
+<p class="sub">教練最常重講的 30 件事：看到什麼就自動提醒、做什麼　｜　2026-10-02　Mac 桌面版 Opus 5.5</p>
+<h2>一句話</h2><div class="box"><ul><li>讀了什麼：教練 4～10 月的原話 4,092 則。其中帶「又、講過、第 N 次、老是…」的重講訊息 587 則，我一則一則讀完、歸類；另外對照試金石 76 案標題、記憶索引。</li><li>結果：最常重講的 30 件事，就佔了全部重講訊息的一半（294／587）。</li><li>做了什麼：新增 23 條反射、修準 7 條舊的，全部拿 7～10 月的真實紀錄回測（AI 動手 39,091 次、回話 2,461 輪、教練原話 4,092 則），誤跳的地方都修過。另有 10 件事本來就有程式在擋，登記進來一起管。</li></ul></div>
+<h2>會早一步擋下的真實例子</h2><div class="box"><ol><li>7/16 寫進「大樹小講」網頁的「9/15（六）」其實是星期二。教練 7/24 才自己抓到；現在寫進去的那一刻，系統就會說「應該是星期二」。</li><li>案例 97 通知網址黏著括號，教練點了十幾二十次打不開。9/24、9/30 寫那段程式的那一刻，現在就會跳出提醒。</li><li>AI 回話時網址後面黏中文標點，7～10 月真的犯過 21 次。現在回話前就擋下，網址單獨一行。</li></ol></div>
+<h2>量尺：教練訊息裡「重講」的比例</h2><div class="box"><div class="bar"><span class="m">05 月</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="v">19%</span></div><div class="bar"><span class="m">06 月</span><span class="track"><span class="fill" style="width:65%"></span></span><span class="v">13%</span></div><div class="bar"><span class="m">07 月</span><span class="track"><span class="fill" style="width:75%"></span></span><span class="v">14%</span></div><div class="bar"><span class="m">08 月</span><span class="track"><span class="fill" style="width:64%"></span></span><span class="v">12%</span></div><div class="bar"><span class="m">09 月</span><span class="track"><span class="fill" style="width:82%"></span></span><span class="v">16%</span></div><p class="note">之後每週看這條線有沒有往下降。10 月只有 2 天，先不列。</p></div>
+<h2>Top 30</h2>
+<article class="card">
+  <div class="rank">1</div>
+  <div class="body">
+    <h3>改網頁：以線上版為準、同級一次改完、改好不能再壞</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 27 次</span><span class="chip">AI 動手前、已有程式擋</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">改網頁四件事：①以線上最新版為準（先 git pull），不蓋掉教練剛改的 ②同一級的元素一次改完（字級、表頭、按鈕），不要說到哪改到哪 ③手機寬度也要看 ④改完自己開 Chrome 看過再交。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    <p class="note">改網頁的那一刻就跳，86 場對話用得上</p>
+  </div>
+</article><article class="card">
+  <div class="rank">2</div>
+  <div class="body">
+    <h3>AI 做得到的事叫教練做（搬運工、測試員）</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 21 次</span><span class="chip">已有程式擋、AI 回話前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">回話裡有「請您貼／您自己去點」這類叫教練動手的句子會被擋下重寫。</p>
+    <div class="nums"><span>準確度 <b>1/1</b></span></div>
+    <p class="note">抓到 9/16 叫教練自己去終端機貼指令那次</p>
+  </div>
+</article><article class="card">
+  <div class="rank">3</div>
+  <div class="body">
+    <h3>對的事直接做，不要問教練</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 20 次</span><span class="chip">已有程式擋、判斷類</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">方向清楚還徵詢教練會被提醒；答案必然是「要」的事直接做。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">4</div>
+  <div class="body">
+    <h3>搞錯身分：桌面版≠終端機、手機版走 MiniMax、赫米斯是桌面 App</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 19 次</span><span class="chip">已有程式擋、教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">教練問「你是誰／走哪個模型」時自動查實際連線當鐵證：桌面版 App 不是 CLI；手機版走 MiniMax＝執行者。</p>
+    <div class="nums"><span>準確度 <b>7/8</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">5</div>
+  <div class="body">
+    <h3>別用定時輪詢、別承諾主動監測</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 13 次</span><span class="chip">AI 動手前、已有程式擋、AI 回話前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">你正在寫「每隔 N 分鐘檢查一次」：先問這件事發生當下能不能直接觸發（教練說一句、檔案一改、訊息一到）。能就用事件觸發；真的要定時，跟教練講清楚一天跑幾次、為什麼。</p>
+    <div class="nums"><span>準確度 <b>4/5</b></span></div>
+    <p class="note">真的在設定時排程時跳</p>
+  </div>
+</article><article class="card">
+  <div class="rank">6</div>
+  <div class="body">
+    <h3>發票、會員、名片資料都在資料庫，不要問教練</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 13 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">發票：先跑 claude-brain/data/query_training_invoice.py 查；兩套系統都要查（培訓費＝大樹教育、入會續約＝聚寶盆）；開過的不問二聯三聯；開完當場寫進記錄。</p>
+    <div class="nums"><span>準確度 <b>7/8</b></span><span>抓到率 <b>12/13</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">7</div>
+  <div class="body">
+    <h3>推送口令：推＝Netlify、先 GitHub、先給看、算剩幾次</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 13 次</span><span class="chip">教練說話時、已有程式擋</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">部署口令：「推」＝推 Netlify 正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type，回報剩幾次）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    <p class="note">教練說「推」115 次，每次都跳</p>
+  </div>
+</article><article class="card">
+  <div class="rank">8</div>
+  <div class="body">
+    <h3>教練說「之前講過」：自己翻紀錄</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 11 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">教練說「之前講過」：先自己搜原始紀錄（state/recall_index.jsonl、memory/verbatim、對話紀錄），找到就照做；不要叫教練回想、重講或貼給你。</p>
+    <div class="nums"><span>準確度 <b>9/10</b></span><span>抓到率 <b>10/11</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">9</div>
+  <div class="body">
+    <h3>做好了直接開 Chrome 給教練看</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 11 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">改了 HTML 會自動用 Chrome 開給教練看；沒開就回話會被擋。localhost 網址要自己打開，不叫教練輸入。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">10</div>
+  <div class="body">
+    <h3>小龍蝦設定、模型不准被改掉</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 11 次</span><span class="chip">AI 動手前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">改小龍蝦設定前：模型寫死 MiniMax-M3，教練沒親口說不准換；教練定的週期（每天 23:00 總結等）不要改回；改完重啟並查實際生效，不是寫進去就算。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">11</div>
+  <div class="body">
+    <h3>跨機傳話：寫信讓對方自己讀，教練不傳話</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 11 次</span><span class="chip">教練說話時、AI 動手前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀）。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/&lt;收信人&gt;/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。</p>
+    <div class="nums"><span>準確度 <b>8/10</b></span><span>抓到率 <b>11/11</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">12</div>
+  <div class="body">
+    <h3>講白話，不用術語</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 10 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">重講一次：不用英文和術語，先講結論，再講教練要不要做什麼（多半什麼都不用做）。</p>
+    <div class="nums"><span>準確度 <b>8/10</b></span><span>抓到率 <b>10/10</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">13</div>
+  <div class="body">
+    <h3>MiniMax 額度：5 小時 4500 次，不要問</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 9 次</span><span class="chip">AI 看到結果時</span><span class="chip st">🔧 已修準</span></div>
+    <p class="say">MiniMax 回 429：教練方案是 5 小時 4500 次，不要去問教練額度；先查是不是短時間批次呼叫太密。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    <p class="note">修正前連「讀文件提到 429」也跳</p>
+  </div>
+</article><article class="card">
+  <div class="rank">14</div>
+  <div class="body">
+    <h3>帳密金鑰在路徑大全，不要跟教練要</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 9 次</span><span class="chip">AI 回話前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">不要跟教練要帳密／金鑰：先查 路徑大全.md、路徑大全_憑證層.md、歷史紀錄。真的查過都沒有（例如簡訊驗證碼），照實說查了哪幾個地方再請教練。</p>
+    <div class="nums"><span>準確度 <b>1/1</b></span></div>
+    <p class="note">修正前 4 次只有 1 次是真的在要密碼，已收緊</p>
+  </div>
+</article><article class="card">
+  <div class="rank">15</div>
+  <div class="body">
+    <h3>朋友的 AI：獨立記憶、顯示名字、改完重開測過</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 8 次</span><span class="chip">教練說話時、AI 看到結果時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">朋友的 AI：每人獨立記憶、後台顯示中文名；改規則後刪該群 session 重開；用真實群組路徑測過才回報；權限照教練劃的範圍開，不要層層設限。</p>
+    <div class="nums"><span>準確度 <b>9/10</b></span><span>抓到率 <b>8/8</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">16</div>
+  <div class="body">
+    <h3>策展 SOP（店家網站上架）</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 8 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">策展 SOP：一律走上傳網址（kind=shop），完成用 curation_check_result.py 查真結果；網址短（教練取或跟主標題一致）、縮圖用網頁截圖不用地圖、改名要連動 FB／商圈頁／作品總覽；地圖自己找。</p>
+    <div class="nums"><span>準確度 <b>7/8</b></span><span>抓到率 <b>7/8</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">17</div>
+  <div class="body">
+    <h3>說做好了其實沒好：走教練真正用的路測過</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 7 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">宣稱完成卻沒有憑證會被擋；要走教練真正用的那條路測過（Telegram 點連結、群組裡真的問一句）才算好。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">18</div>
+  <div class="body">
+    <h3>照抄、聽懂再做</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 7 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">照教練給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。</p>
+    <div class="nums"><span>準確度 <b>10/10</b></span><span>抓到率 <b>4/7</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">19</div>
+  <div class="body">
+    <h3>下載資料夾裡的檔案自己找</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 7 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">去 ~/Downloads 用 ls -t 找最新檔，對時間和檔名；教練說幾張就要找到幾張，找不到先列出最新 10 個，不要說沒有。</p>
+    <div class="nums"><span>準確度 <b>9/10</b></span><span>抓到率 <b>6/7</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">20</div>
+  <div class="body">
+    <h3>新網站一律收錄作品總覽</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 7 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">新網站上線沒收錄進作品總覽（coach888，新項目放分類第一筆）會被擋。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">21</div>
+  <div class="body">
+    <h3>刪資料前五道閘門</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 6 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">N6 五道閘門；看起來重複的檔先比對內容再刪。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">22</div>
+  <div class="body">
+    <h3>系統告警別吵教練、同一件事不重複發</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 6 次</span><span class="chip">AI 動手前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">這段程式會發訊息給教練：錯誤先自己處理，只有要教練動手才發；同一件事不重複發（合併或冷卻）；網址單獨一行。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">23</div>
+  <div class="body">
+    <h3>操作 Chrome 先確認是 Mac 本機那台</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 6 次</span><span class="chip">AI 動手前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">操作 Chrome 前先確認連到的是 Mac 本機、教練看得到的那個 Chrome（不是聯想那台）；同一個網站只開一個分頁。</p>
+    <div class="nums"><span>準確度 <b>8/8</b></span></div>
+    <p class="note">操作 Chrome 的那一刻就跳</p>
+  </div>
+</article><article class="card">
+  <div class="rank">24</div>
+  <div class="body">
+    <h3>截圖省著用，先用文字驗證</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 6 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">先用文字方式驗證（curl、讀網頁文字），教練流量有限。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">25</div>
+  <div class="body">
+    <h3>FB 貼文：公開網址、有縮圖、別人看得到</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 6 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">FB 貼文：放 event.bymyway.com 公開網址（不是 GitHub），一則一個網址、要有縮圖；用沒登入的瀏覽器確認別人看得到才算發成功。</p>
+    <div class="nums"><span>準確度 <b>9/10</b></span><span>抓到率 <b>4/6</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">26</div>
+  <div class="body">
+    <h3>一律台灣時間</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 6 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">每句話自動附台灣時間；看過 UTC 時間卻沒換算就回話會被擋。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">27</div>
+  <div class="body">
+    <h3>開工別漏接上一場交辦</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 5 次</span><span class="chip">已有程式擋</span><span class="chip st">🔒 既有程式在擋</span></div>
+    <p class="say">說「開工」自動注入接力棒；最上方「教練上一場交辦」第一件講、講完直接做。</p>
+    <div class="nums"><span>準確度 <b>—</b></span></div>
+    
+  </div>
+</article><article class="card">
+  <div class="rank">28</div>
+  <div class="body">
+    <h3>遠端連線：先確認誰連誰、替教練做完</h3>
+    <div class="chips"><span class="chip need">需求型</span><span class="chip">重講 4 次</span><span class="chip">教練說話時</span><span class="chip st">🔧 已修準</span></div>
+    <p class="say">遠端連線：先確認「誰連誰」方向再動手（已犯兩次）；替教練做完、建捷徑，不教他找欄位、不提密碼。</p>
+    <div class="nums"><span>準確度 <b>8/10</b></span><span>抓到率 <b>3/4</b></span></div>
+    <p class="note">修正前 RustDesk 記憶體的話題也跳</p>
+  </div>
+</article><article class="card">
+  <div class="rank">29</div>
+  <div class="body">
+    <h3>日期和星期要對得上、照時間排序</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 4 次</span><span class="chip">AI 動手前</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">日期和星期對不起來：</p>
+    <div class="nums"><span>準確度 <b>3/3</b></span></div>
+    <p class="note">7/16 寫進大樹小講的「9/15（六）」其實是星期二，教練 7/24 才抓到</p>
+  </div>
+</article><article class="card">
+  <div class="rank">30</div>
+  <div class="body">
+    <h3>教練只是給你看，不是叫你執行</h3>
+    <div class="chips"><span class="chip guard">防錯型</span><span class="chip">重講 3 次</span><span class="chip">教練說話時</span><span class="chip st">🆕 新反射</span></div>
+    <p class="say">教練是「給你看／讓你知道」，不是叫你執行：不要動手（尤其會花錢、會對外的），照他問的回答。</p>
+    <div class="nums"><span>準確度 <b>4/5</b></span><span>抓到率 <b>1/3</b></span></div>
+    
+  </div>
+</article>
+<h2>說真話（限制）</h2><div class="box"><ul><li>準確度是每條抽 8～10 次、我逐筆判斷，不是全部；「無資料」代表歷史上沒發生過，暫時驗不了。</li><li>抓到率只算「教練說話時」那種：拿教練重講的原話去試。推送、身分這類主題，教練抱怨時不會講到那些字，所以不算抓到率。</li><li>AI 回話前只能「擋下重寫」，不能只提醒；所以「不要問我」「講白話」這種要判斷的事，主要靠原本的回話檢查＋教練說話時的提醒。</li><li>教練貼 AI 的長文進來時，裡面的字也會被當成教練說的，少數會誤跳（常見格式已排除）。</li><li>目前只在 Mac（桌面版、終端機）和雲端工作頁生效；聯想、宏碁還沒接上。</li></ul></div>
+<h2>下一步</h2><div class="box"><ul><li>第 3 步：Top 30 以外的試金石案例和記憶，逐案補成反射；把舊的通用提醒（trigger_index）收進來，拿掉重複的。</li><li>量尺：教練訊息裡「重講」的比例，每週看一次有沒有往下降。</li><li>聯想、宏碁接上反射和開工置頂交辦：要寫信過去（跨機鎖要教練同意），信已寫好草稿。</li></ul></div>
+</main></body></html>
