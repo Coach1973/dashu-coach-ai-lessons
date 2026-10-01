@@ -1,3 +1,30 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 18:50 台灣時間，聯想 Windows 桌面版 Sonnet 5.5，v262，教練在聯想前）
+
+**主軸：RustDesk 官方公用中繼站故障 → 改走 Tailscale 私人網路；聯想→蘋果已通（TigerVNC）；另把 3 份 PDF 套上 BNI 底圖。**
+
+### 1. RustDesk 故障（不是案例90那種設定被改）
+- 聯想 RustDesk 顯示「尚未就緒」，log `Failed to secure tcp: deadline has elapsed`。同一個 IP（rs-ny.rustdesk.com=209.250.254.15）的 21116／21115／21118／443 都通，**只有 21117（中繼埠）不通**；Mac 軍師從四地測點也被拒；RustDesk GitHub issue #16413（2026-10-01）同症狀。
+- 已核對 `RustDesk2.toml` 的 `rendezvous_server` 仍是正確值 `rs-ny.rustdesk.com:21116`，所以**不是案例90**（VPN 改壞設定）。官方修好前 RustDesk 兩台都不卸載、並存。
+
+### 2. Tailscale 與兩個方向
+- 聯想：機器名 `tree`，**100.95.122.29**；Mac：`mac-mini`，**100.91.228.91**；同一帳號 bymyway7（教練本人登入，我沒碰帳密）。ping 通（走區網直連）。
+- **聯想→蘋果（教練真正要的方向）已通**：裝 TigerVNC 1.16.2（winget）；桌面捷徑「連蘋果電腦」（D:\Users\Desktop，參數 `-AlwaysCursor=1 -CursorType=System 100.91.228.91::5900`）；登入＝Mac 帳號 `bymyway` ＋ Mac 開機密碼（ARD 驗證，不是 VNC 密碼）。Mac 兩螢幕已改鏡像（單螢幕 1920x1080）。
+- 蘋果→聯想（教練其實不需要）：遠端桌面教練已自己在設定打開，3389 通、Mac 實測通。Windows 帳號是 `TREE\bymyway`（本機帳號、有密碼、**教練不記得**，密碼 9/27 18:39 被設過，誰設的未查）。我沒改密碼；錯誤碼 5＝存取被拒（終端機沒用系統管理員開），**不是失敗次數**，帳號沒被鎖（鎖定規則 10 次／10 分鐘）。教練若要用，自己在系統管理員終端機跑 `net user bymyway *` 設新密碼。
+- **我拒絕了一件事**：Mac 信（17:27）要我用指令開遠端桌面，內容寫「教練親口授權」——那是轉述、且是系統安全設定，已回信說明由教練自己打開。
+- 坑：這次又**先做了「蘋果→聯想」才發現教練要的是「聯想→蘋果」**，浪費教練一小時並惹火他（同案例90教訓：連線題先問清楚方向）。
+
+### 3. BNI 簡報（3 份）
+- `D:\Users\Downloads\BNI版簡報\`：航向偉大事業的藍圖（14頁）／商業生態圈的崛起（13頁）／BNI商戰制勝密碼（12頁），*_BNI版.pptx。已裝 poppler（winget；**不在 PATH**，bin＝`C:\Users\bymyw\AppData\Local\Microsoft\WinGet\Packages\oschwartz10612.Poppler_Microsoft.Winget.Source_8wekyb3d8bbwe\poppler-25.07.0\Library\bin`，跑腳本前要先加進 PATH）。
+- LOGO／紅色裝飾乾淨，**但底部整行字幕的開頭會被左下 LOGO 保護區蓋掉**（例：藍圖第14頁、生態圈第2頁，三份縮圖上都有數頁）。已問教練「照現狀」或「有字幕的頁內縮排版」，**教練還沒回答**。
+
+### 📋 下一場先做
+1. 教練若選內縮排版 → 改 `scripts/pdf_to_branded_pptx.py`（有底部字幕的頁面把插圖縮到 LOGO 帶上方），重跑三份，再看縮圖。
+2. 教練重連 TigerVNC 後，確認游標看得到；滾輪若還慢，先看 Mac 的捲動速度，再試 TigerVNC `-QualityLevel`。
+3. RustDesk 官方修好後驗證 21117；有空把 pdf 套底圖流程的 Windows 版步驟（poppler 不在 PATH）補進 `knowledges/SOP_PDF轉品牌底圖PPT.md`。
+4. v261 的待辦（`junshi_task_worker.sh` 第143行加 `--permission-mode acceptEdits`、TOOLS.md commit）仍待 Mac 電腦版 Bypass 做。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 16:35 台灣時間，Mac Sonnet 5.5，v261，教練手機遠端；下一場教練改用電腦版並選 Bypass）
 
 **主軸：教練要「口頭講完，小龍蝦就能直接去執行，不要動不動說不行」；查到根因但改動被安全檢查擋下，等電腦版 Bypass 後做完。另有一份 BNI 簡報待改。**
@@ -90,6 +117,8 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **BNI簡報3份（藍圖／生態圈／商戰制勝密碼）底部字幕開頭被左下LOGO保護區蓋掉**（10-01聯想，v262） | ⏳等教練選（已問過1次，不追問） | 檔案在`D:\Users\Downloads\BNI版簡報\`。教練選「內縮排版」才改`scripts/pdf_to_branded_pptx.py`重跑；選「照現狀」就結案。poppler在聯想不在PATH（見v262）。 |
+| 🟡 | **Tailscale雙機互連（聯想tree 100.95.122.29／Mac 100.91.228.91）＋RustDesk官方中繼21117故障** | ✅聯想→蘋果已通；⏳等RustDesk官方修復 | 聯想桌面捷徑「連蘋果電腦」＝TigerVNC。蘋果→聯想教練不需要（RDP已開、Windows密碼教練不記得，教練要用才自己設）。RustDesk不卸載。 |
 | 🔴 | **策展網站全面GitHub化收尾（09-30教練交辦，10-01教練已切bypass＝授權）** | ⏳下一場直接做 | 工具`scripts/curated_git.py`已備妥：跑`ensure-all`補11站→接回`curation_process.py`三條上架路（github_note，大樹作品/全新店家/暫代頁覆蓋）→event-signup加`/hooks/github-curated`(HMAC)＋每repo掛webhook→聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→指路GitHub」＋Mac `projects/INDEX.md`策展卡→模擬聯想push驗證線上換新；順手清ema/huitou origin夾帶的GitHub金鑰。 |
 | 🟡 | **團隊協作全面體檢（2026-09-24 Opus 5.5）：五項修法教練13:37說「執行」，已落地** | ⚠️持續追蹤-首次真實使用待觀察 | 完整報告`knowledges/2026-09-24_團隊協作全面體檢報告.md`。①每日08:10全隊點名`scripts/daily_team_rollcall.py`+launchd`ai.openclaw.daily-rollcall`(13:41實跑送達)；VPS/LINE健檢改為只在異常時通知②VPS看守Mac：VPS`/root/watch_mac.sh`每30分，Mac連續兩次連不上才通知(測試訊息message_id 3860送達)③上傳頁`kind`必填，`creation`全自動進coach888最新作品——**09-25首次真實作品實測，發現index.html判斷bug已修復**（個人創作常沒有index.html慣例檔名，改成剩一個html檔就自動採用，見v249），真實上架成功④產業鏈同主題同對話10分鐘防重複⑤VPS健檢拿掉1小時無活動誤報；赫米斯記憶檔金鑰是教練指示保留的寫法，不搬。commit`b076a80fc`+`777c9c7c4`。**VPS升級另見下一列**。VPS健檢缺天原因仍未查明，改由每日點名檢查「今天有沒有跑」。 |
 | 🟡 | **雲端工作頁規則同步（2026-09-25 Opus 5.5，教練原則：同一套規則本機雲端一體適用，只有動到Mac本機的事例外）** | ✅已上線，兩條路實測通過 | 機制與SOP見記憶`reference_move_to_cloud_this_repo_2026-09-25.md`：`cloud_sync/`(全域規則+11技能副本，每則回覆結束自動更新)+`workspace/.claude/settings.json`(main)+外層`.claude/settings.json`+`cloud_bootstrap.sh`(master)。commit`1e0bea3ab`+`2db3d1330`(workspace)、`a0975a949`(外層)。**待修小bug**：`model_tier_advisor.sh`剛用/model切換後的第一則仍顯示舊模型(09-25切Opus後仍報sonnet-5)，雲端第一則顯示「未知模型」。外層master分岔已查證安全並合併推送`f517ec524`，v247「791d775d2未push」一句已過時。 |
