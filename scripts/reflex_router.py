@@ -11,6 +11,7 @@
 命中紀錄寫 state/reflex_hits.log——用來看哪條反射有在動、哪條從沒觸發（觸發條件寫錯或已過時）。
 任何錯誤一律安靜放行，不能因為反射系統壞掉而卡住工作。
 """
+import datetime
 import json
 import os
 import re
@@ -22,6 +23,7 @@ INDEX = os.path.join(WS, "knowledges/反射索引.json")
 HITS = os.environ.get("REFLEX_HITS_LOG") or os.path.join(WS, "state/reflex_hits.log")  # 測試時指到別處，別汙染真實統計
 SEEN_DIR = os.path.join(os.environ.get("TMPDIR", "/tmp"), "reflex_seen")
 MAX_PER_FIRE = 3
+SELF = re.compile(r"反射索引|reflex_(router|backtest)|render_situation_directory")
 
 
 def load_reflexes(moment):
@@ -98,6 +100,27 @@ def seen_before(session, rid):
     return False
 
 
+WEEKDAY = "一二三四五六日"
+DATE_RE = re.compile(r"(?:(20\d\d)\s*[/年-]\s*)?(\d{1,2})\s*[/月]\s*(\d{1,2})\s*日?\s*[（(]\s*(?:週|星期|禮拜)?([一二三四五六日天])\s*[）)]")
+
+
+def check_weekday(text):
+    """「9/16（二）」這種日期，星期對不起來就回傳說明。沒寫年份時，今年或明年對得上就算對（跨年活動）。"""
+    this_year = int(time.strftime("%Y"))
+    bad = []
+    for m in DATE_RE.finditer(text):
+        y, mo, da, wd = m.groups()
+        wd = "日" if wd == "天" else wd
+        years = [int(y)] if y else [this_year, this_year + 1]
+        try:
+            right = [WEEKDAY[datetime.date(yy, int(mo), int(da)).weekday()] for yy in years]
+        except ValueError:
+            continue
+        if wd not in right:
+            bad.append(f"{m.group(0).strip()} 應該是星期{right[0]}")
+    return "；".join(dict.fromkeys(bad))[:300]
+
+
 def log_hit(moment, rid, level):
     try:
         with open(HITS, "a", encoding="utf-8") as f:
@@ -113,21 +136,29 @@ def main():
         return  # 已經因為擋下在重答，不再擋第二次，避免無限循環
     tool = evt.get("tool_name") or ""
     session = evt.get("session_id") or "nosession"
-    text = text_for(moment, evt)
+    text = text_for(moment, evt) or ""  # 空字串也要比：有的反射只看工具名稱（例如操作 Chrome 前）
     if moment == "reply":
         text = strip_code(text)
-    if not text:
-        return
+    elif moment in ("pre_tool", "post_tool") and SELF.search(text):
+        return  # 正在改反射系統本身：指令裡本來就寫滿各種刺激字，跳出來全是誤判
 
     reminds, blocks = [], []
     for r in load_reflexes(moment):
-        if r.get("tool") and not re.fullmatch(r["tool"], tool):
-            continue
-        if not re.search(r["match"], text):
-            continue
+        try:
+            if r.get("tool") and not re.fullmatch(r["tool"], tool):
+                continue
+            if not re.search(r["match"], text):
+                continue
+        except re.error:
+            continue  # 一條寫壞只跳過那一條，不能讓同時刻的其他反射一起失效
+        if r.get("check") == "weekday":
+            detail = check_weekday(text)
+            if not detail:
+                continue
+            r = {**r, "say": r["say"] + detail + "。請改好；拿不準就問教練。"}
         if r.get("level") == "block":
             blocks.append(r)
-        elif not seen_before(session, r["id"]):
+        elif r.get("check") or not seen_before(session, r["id"]):  # 核對類每次錯都要講，不只講一次
             reminds.append(r)
     hits = (blocks + reminds)[:MAX_PER_FIRE]
     if not hits:

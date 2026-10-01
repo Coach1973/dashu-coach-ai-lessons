@@ -99,3 +99,7 @@ state/lk888_breaker_alerted
 
 # 產業鏈圖公開網址暫存（2026-09-30）
 event-signup/chain_images/
+
+# 條件反射回測快取（含歷史指令原文，可能有金鑰，不進 git；隨時可用 reflex_backtest.py extract 重建）
+state/reflex_backtest/
+state/coach_corpus.jsonl
