@@ -682,6 +682,13 @@
       "say": "引用守則先查特助心法.md 原文；引用對話先查原始記錄、有 commit hash 才能說「我之前說過」；教練問「你確定嗎」立即承認不確定、去查。",
       "situation": "要引用守則編號或過去對話時",
       "source": "試金石案例D／執行細則N3"
+    },
+    {
+      "id": "J-IMAGE-LOOK-FIRST",
+      "moment": "judgment",
+      "say": "圖片交給教練前：自己用 Read 親眼看過這張圖，確認繁體中文無誤、比例與裁切對，才送；工具說「分析正確」不算看過。（hook 目前只接 Bash／Edit／Write，送檔工具接不到，所以靠 image-visual-delivery-check 技能＋執行細則 N4。）",
+      "situation": "要把圖片（生成圖、截圖、設計稿）交給教練前",
+      "source": "試金石案例F／38／執行細則N4"
     }
   ],
   "case_ledger": {
@@ -696,6 +703,9 @@
     "案例I": "併入案例45 的 context-overflow-guard（程式擋住）；HEARTBEAT 機制 6 月後已改版",
     "案例N": "近 4 個月歷史資料零次 .github/workflows 編輯，暫不建反射；再發生再補（驗證法：gh api repos/OWNER/REPO --jq .default_branch）",
     "案例G-2026-06-09": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（未經教練說「推」不推）",
-    "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）"
+    "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）",
+    "案例K": "已由 G-TRAD-CHINESE／G-TAIWAN-TIME 擋住（簡體字、日期台灣時間）",
+    "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
+    "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）"
   }
 }
