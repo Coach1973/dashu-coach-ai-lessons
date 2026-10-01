@@ -16,12 +16,13 @@ import json
 import os
 import re
 import sys
+import tempfile
 import time
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 本機與雲端工作頁都適用
 INDEX = os.path.join(WS, "knowledges/反射索引.json")
 HITS = os.environ.get("REFLEX_HITS_LOG") or os.path.join(WS, "state/reflex_hits.log")  # 測試時指到別處，別汙染真實統計
-SEEN_DIR = os.path.join(os.environ.get("TMPDIR", "/tmp"), "reflex_seen")
+SEEN_DIR = os.path.join(tempfile.gettempdir(), "reflex_seen")  # Windows 沒有 /tmp
 MAX_PER_FIRE = 3
 SELF = re.compile(r"反射索引|reflex_(router|backtest)|render_situation_directory")
 
@@ -132,7 +133,8 @@ def log_hit(moment, rid, level):
 
 def main():
     moment = sys.argv[1] if len(sys.argv) > 1 else ""
-    evt = json.load(sys.stdin)
+    # Windows 預設用 cp950 讀 stdin，中文全變亂碼、反射一條都比不到（2026-10-02 模擬實測），一律照 UTF-8 讀
+    evt = json.loads(sys.stdin.buffer.read().decode("utf-8", errors="replace"))
     if moment == "reply" and evt.get("stop_hook_active"):
         return  # 已經因為擋下在重答，不再擋第二次，避免無限循環
     tool = evt.get("tool_name") or ""
@@ -173,14 +175,14 @@ def main():
 
     if moment == "reply":
         if blocks:
-            print(json.dumps({"decision": "block", "reason": msg + "\n請改好再回覆教練。"}, ensure_ascii=False))
+            print(json.dumps({"decision": "block", "reason": msg + "\n請改好再回覆教練。"}))  # 純 ASCII：Windows cp950 印不出 ⚡ 會被安靜吞掉
         return
     event_name = {"prompt": "UserPromptSubmit", "pre_tool": "PreToolUse", "post_tool": "PostToolUse"}[moment]
     out = {"hookSpecificOutput": {"hookEventName": event_name, "additionalContext": msg}}
     if moment == "pre_tool" and blocks:
         out["hookSpecificOutput"]["permissionDecision"] = "deny"
         out["hookSpecificOutput"]["permissionDecisionReason"] = msg
-    print(json.dumps(out, ensure_ascii=False))
+    print(json.dumps(out))  # 純 ASCII，理由同上
 
 
 if __name__ == "__main__":
