@@ -1,12 +1,12 @@
 {
-  "ts": "2026-09-30T06:00:06Z",
+  "ts": "2026-10-01T10:00:06Z",
   "status": "ok",
   "alert": false,
   "reason": "",
   "spool_count": 0,
   "spool_processing": 0,
-  "last_inbound": "{\"0\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"1\":\"Inbound message telegram:6124913915 -> @coach_bymyway_bot (direct, 3 chars)\",\"_meta\":{\"runtime\":\"node\",\"runtimeVersion\":\"24.14.0\",\"hostname\":\"72cd9942693c\",\"name\":\"{\\\"subsystem\\\":\\\"gateway/channels/telegram/inbound\\\"}\",\"parentNames\":[",
-  "last_inbound_age_minutes": 215,
+  "last_inbound": "",
+  "last_inbound_age_minutes": 0,
   "last_restart_age_minutes": 16666,
   "container_uptime": "2026-09-24T16:25:23.301872605Z"
 }

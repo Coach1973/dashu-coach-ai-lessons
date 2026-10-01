@@ -1,168 +1,128 @@
 {
- "checkedAt": "2026-09-24 14:41:54",
+ "checkedAt": "2026-10-01 09:30:05",
  "dist_tags": {
-  "beta": "2026.9.6",
-  "extended-stable": "2026.7.35",
-  "latest": "2026.9.6"
+  "beta": "2026.9.7",
+  "extended-stable": "2026.8.33",
+  "latest": "2026.9.7"
  },
  "mac": "2026.9.4",
  "vps": "2026.5.27",
  "p0_issues": [
   {
-   "number": 157077,
-   "title": "Windows update 2026.9.5 to 2026.9.6 strands schema 18 state and requires manual repair"
+   "number": 162221,
+   "title": "Update failure: unexpected-error (2026.9.4)"
   },
   {
-   "number": 157066,
-   "title": "Update failure: global-install-failed (2026.9.4)"
+   "number": 162209,
+   "title": "Update failure: candidate-state-snapshot (2026.9.6)"
   },
   {
-   "number": 157056,
-   "title": "Update failure: managed-service-preflight (2026.9.5)"
+   "number": 162194,
+   "title": "Gateway shutdown hangs on plugin-runtime children (PluginRuntimeCloseRetainedError) — blocks Mac app updates"
   },
   {
-   "number": 157011,
-   "title": "[Bug]: Managed update 2026.9.5 → 2026.9.6 always rolls back — RangeError \"Maximum call stack size exceeded\" in update-history reconciliation (survives doctor --fix)"
+   "number": 162182,
+   "title": "[Bug]: invalid config crashes the Gateway with exit 78 on any hook delivery — failure reporter re-reads the config that just failed"
   },
   {
-   "number": 156992,
-   "title": "Update failure: finalize-plugins (2026.9.6)"
+   "number": 162131,
+   "title": "2026.9.7 update: candidate Gateway startup fails; real error hidden behind first canary progress line (likely inherited owner lease)"
   },
   {
-   "number": 156986,
-   "title": "openclaw update hangs in update-candidate-state phase: runaway worker output (233MB+) with respawn loop (9.5)"
+   "number": 162130,
+   "title": "[Bug]: 9.6 to 9.7 Windows update rolls back at Doctor; numeric/bigint lease-directory identities disagree"
   },
   {
-   "number": 156961,
-   "title": "Update failure: requested (2026.9.5)"
+   "number": 162063,
+   "title": "openclaw update aborts at \"global install swap\": \"Package rollback verification failed: retained package tree changed\" (npm global install, Linux)"
   },
   {
-   "number": 156955,
-   "title": "Update failure: global-install-failed (2026.9.4)"
+   "number": 162055,
+   "title": "[Bug]:  2026.9.7 update/repair stalls in Doctor with high CPU; state migrated, Gateway down"
   },
   {
-   "number": 156943,
-   "title": "Update failure: global-install-failed (2026.9.4)"
+   "number": 162047,
+   "title": "[Bug]: Windows 2026.9.7 upgrade spends over 35 minutes in Doctor with repeated hardlink namespace validation"
   },
   {
-   "number": 156917,
-   "title": "State-lifecycle lease has no holder heartbeat or forced takeover: one hung client blocks gateway startup for 31 minutes (crash-restart loop)"
+   "number": 162044,
+   "title": "Update failure: doctor-failed (2026.9.4)"
   },
   {
-   "number": 156910,
-   "title": "Update failure: global-install-failed (2026.9.4)"
+   "number": 162031,
+   "title": "[Bug]: 2026.9.7 gateway crash-loops with 'Unhandled promise rejection: undefined' during runtime tool assembly (repro: doctor --only core/doctor/runtime-tool-schemas, all plugins disabled)"
   },
   {
-   "number": 156893,
-   "title": "[Bug]: git update exits 79 as already-current when dist was built from another commit"
-  },
-  {
-   "number": 156880,
-   "title": "Update failure: managed-service-preflight (2026.9.4)"
-  },
-  {
-   "number": 156849,
-   "title": "Update failure: post-update-plugins (2026.9.5)"
-  },
-  {
-   "number": 156826,
-   "title": "Update failure: post-update-plugins (2026.9.5)"
-  },
-  {
-   "number": 156785,
+   "number": 162029,
    "title": "Update failure: runtime-verification-failed (2026.9.4)"
   },
   {
-   "number": 156753,
-   "title": "Update failure: requested (2026.9.5)"
+   "number": 162027,
+   "title": "Windows 2026.9.6 → 2026.9.7: managed update exits 13 during validation (unsettled top-level await), even with Gateway stopped"
   },
   {
-   "number": 156711,
-   "title": "Update failure: finalize:doctor (2026.9.5)"
+   "number": 162017,
+   "title": "2026.9.7 update: candidate state snapshot fails with \"Cannot use 'import.meta' outside a module\" (regression of #155371 class)"
   },
   {
-   "number": 156675,
+   "number": 162005,
+   "title": "Update failure: unexpected-error (2026.9.4)"
+  },
+  {
+   "number": 161979,
+   "title": "2026.9.7: session-repair overflows the stack (RangeError) on large-but-healthy agent DBs during update activation"
+  },
+  {
+   "number": 161934,
+   "title": "Update failure: validating (2026.9.6)"
+  },
+  {
+   "number": 161930,
    "title": "Update failure: global-install-failed (2026.9.3)"
   },
   {
-   "number": 156664,
-   "title": "Update failure: [redacted-command] (2026.9.5)"
+   "number": 161922,
+   "title": "[Bug]: Retained package-backup symlink blocks npm updates during runtime inventory"
   },
   {
-   "number": 156641,
-   "title": "Update failure: restart-unhealthy (2026.9.5)"
+   "number": 161921,
+   "title": "[Bug]: after state-migrated-no-rollback, doctor --fix and plugins update each require the other (plugins stuck on previous release)"
   },
   {
-   "number": 156609,
-   "title": "Update failure: doctor-failed (2026.9.5)"
+   "number": 161906,
+   "title": "Update failure: runtime-verification-failed (2026.9.3)"
   },
   {
-   "number": 156567,
-   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+   "number": 161888,
+   "title": "[Bug]: doctor --fix stops at \"agent database schema migration pending; verifying integrity first\" on 2026.9.7 (from 2026.9.5); Ctrl+C and SIGTERM ignored"
   },
   {
-   "number": 156505,
-   "title": "Update failure: unexpected-error (2026.9.4)"
-  },
-  {
-   "number": 156497,
-   "title": "Update failure: post-update-plugins (2026.9.4)"
-  },
-  {
-   "number": 156392,
-   "title": "[Bug] Mac Mini M5 Pro macOS: Gateway becomes unresponsive at 100% CPU; recurring heartbeat disabled"
-  },
-  {
-   "number": 156374,
-   "title": "Update failure: runtime-verification-failed (2026.9.4)"
-  },
-  {
-   "number": 156364,
-   "title": "Update failure: doctor-failed (2026.9.4)"
-  },
-  {
-   "number": 156333,
+   "number": 161887,
    "title": "Update failure: global-install-failed (2026.9.4)"
   },
   {
-   "number": 156292,
-   "title": "Update failure: repairing (2026.9.3)"
+   "number": 161865,
+   "title": "[Bug]: pnpm self-update launches SQLite worker from removed old generation after stopping Gateway"
   },
   {
-   "number": 156280,
-   "title": "Update failure: runtime-verification-failed (2026.9.3) Saved sanitized report: C:\\Users\\basit\\.openclaw\\update-reports\\301f8642001dce92801c0ffa15624f84850e1a9805a3bd4f51e86eb5c4cee374.3d79f77f3e53405034a47a6619be87e490e5079ae0ff6edbf3959fd558000580.md"
+   "number": 161757,
+   "title": "Update failure: runtime-verification-failed (2026.9.4)"
   },
   {
-   "number": 156271,
-   "title": "Update failure: global-install-failed (2026.9.4)"
-  },
-  {
-   "number": 156259,
-   "title": "[Bug] App Update button fails with plugin-target-unavailable when custom plugins have npm overrides"
-  },
-  {
-   "number": 156194,
-   "title": "Update failure: doctor-failed (2026.9.4)"
-  },
-  {
-   "number": 156118,
+   "number": 161622,
    "title": "Update failure: unexpected-error (2026.9.4)"
   },
   {
-   "number": 156112,
-   "title": "openclaw update fails at \"global install swap\" while a direct npm install -g of the same version succeeds (npm global, 2026.9.4 → 2026.9.5)"
+   "number": 161593,
+   "title": "update.run reports success but spawns helper inside gateway process tree, making update impossible"
   },
   {
-   "number": 156091,
-   "title": "Update failure: doctor-failed (2026.9.4)"
+   "number": 161590,
+   "title": "Update failure: global-install-failed (2026.9.3)"
   },
   {
-   "number": 156088,
-   "title": "Update failure: finalize:plugins (2026.9.5)"
-  },
-  {
-   "number": 156069,
-   "title": "Update failure: runtime-verification-failed (2026.9.4)"
+   "number": 161458,
+   "title": "Update failure: global-install-failed (2026.9.3)"
   }
  ],
  "blocker_open": true
