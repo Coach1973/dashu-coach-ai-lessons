@@ -1,0 +1,102 @@
+<!-- 線上報名 SOP 範本片段（取自 ema1017，2026-10-02）。用法見 knowledges/SOP_線上報名.md -->
+<!-- ① CSS：貼進 </style> 前 -->
+<style>
+/* ---------- 線上報名 SOP：表單＋成功視窗（比照 bigtree-1003） ---------- */
+.form-card{max-width:520px;margin:26px auto 0;background:#fff;color:var(--ink);border-radius:22px;padding:28px 24px;text-align:left;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.form-card .field{margin-bottom:16px}
+.form-card label{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
+.form-card .req{color:var(--brand);margin-left:3px}
+.form-card input,.form-card select{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid #e6d9cc;border-radius:12px;background:var(--cream);color:var(--ink)}
+.form-card input:focus,.form-card select:focus{outline:none;border-color:var(--brand);background:#fff}
+.form-card .err{display:none;color:#c0392b;font-size:13px;margin:6px 0 0}
+.form-card .err.show{display:block}
+.form-card .btn{width:100%;justify-content:center;margin-top:6px}
+.form-card .form-foot{text-align:center;font-size:13.5px;color:#7a6a63;margin:12px 0 0}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(40,28,24,.6);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal-in{background:#fff;color:var(--ink);border-radius:24px;max-width:440px;width:100%;padding:32px 26px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.modal-in .tick{width:58px;height:58px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.modal-in h3{font-size:24px;margin:14px 0 8px}
+.modal-in p{color:#6b5b55;font-size:15px;margin:0 0 18px}
+.modal-in .btn{width:100%;justify-content:center;margin-bottom:10px}
+.btn-line{background:#06C755;color:#fff}
+.btn-line:hover{background:#049e46}
+.btn-outline{background:transparent;border:1.5px solid var(--brand);color:var(--brand)}
+.modal-close{background:none;border:0;color:#7a6a63;text-decoration:underline;cursor:pointer;font-size:14px;font-family:inherit}
+</style>
+
+<!-- ② 表單：貼進 id="signup" 的區塊 -->
+<form class="form-card" id="regForm" novalidate>
+      <div class="field">
+        <label for="regName">姓名<span class="req">*</span></label>
+        <input type="text" id="regName" name="name" autocomplete="name" required placeholder="請填寫真實姓名，方便現場核對">
+        <p class="err" id="errName">請填寫您的姓名</p>
+      </div>
+      <div class="field">
+        <label for="regPhone">聯絡電話<span class="req">*</span></label>
+        <input type="tel" id="regPhone" name="phone" autocomplete="tel" inputmode="tel" required placeholder="09xx-xxx-xxx">
+        <p class="err" id="errPhone">請填寫可聯絡到您的電話</p>
+      </div>
+      <div class="field">
+        <label for="regCount">出席人數</label>
+        <select id="regCount" name="count">
+          <option value="1人">1 人（我自己）</option>
+          <option value="2人">2 人</option>
+          <option value="3人">3 人</option>
+          <option value="4人以上">4 人以上</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">送出報名資料</button>
+      <p class="form-foot">送出後請加入官方 LINE 完成確認，<br>活動前會收到提醒通知。</p>
+    </form>
+
+<!-- ③ 成功視窗＋程式：貼在 </body> 前，改 SLUG / SESSION -->
+<!-- SUCCESS MODAL（線上報名 SOP） -->
+<div class="modal" id="okModal" role="dialog" aria-modal="true" aria-labelledby="okTitle">
+  <div class="modal-in">
+    <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h3 id="okTitle">報名資料已送出！</h3>
+    <p>最後一步：加入官方 LINE，把報名訊息傳給我們，席次確認更快。</p>
+    <a href="https://lin.ee/o5pODV8" target="_blank" rel="noopener" class="btn btn-line" onclick="copyLineMsg()">加入 LINE 並傳送報名資料</a>
+    <button type="button" class="btn btn-outline" onclick="copyLineMsg(true)">或複製訊息手動傳送</button>
+    <button type="button" class="modal-close" onclick="closeModal()">關閉視窗</button>
+  </div>
+</div>
+<script>
+const SLUG='ema1017';
+const SESSION='10/17（六）15:00 零基礎學AI課 · 立馬吃一鍋 仁愛店（台北）';
+const API='https://event.bymyway.com/api/register';
+let last=null;
+document.getElementById('regForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const count=document.getElementById('regCount').value;
+  let ok=true;
+  document.getElementById('errName').classList.toggle('show',!name); if(!name)ok=false;
+  document.getElementById('errPhone').classList.toggle('show',!phone); if(!phone)ok=false;
+  if(!ok){ (name?document.getElementById('regPhone'):document.getElementById('regName')).focus(); return; }
+  last={name,phone,count};
+  const btn=document.getElementById('submitBtn');
+  const t=btn.innerHTML; btn.disabled=true; btn.innerHTML='處理中…';
+  fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({slug:SLUG,name,phone,company:count,source:'event.bymyway.com/curated/ema1017'})}).catch(()=>{});
+  setTimeout(()=>{
+    btn.disabled=false; btn.innerHTML=t;
+    document.getElementById('regForm').reset();
+    document.getElementById('okModal').classList.add('on');
+  },700);
+});
+function lineMsg(){
+  if(!last) return '您好，我想報名【零基礎學AI課】10/17（六）台北場，請協助確認席次，謝謝！';
+  return '您好，我想報名【零基礎學AI課】\n場次：'+SESSION+'\n姓名：'+last.name+'\n電話：'+last.phone+'\n人數：'+last.count+'\n請協助確認席次，謝謝！';
+}
+function copyLineMsg(alertIt){
+  const m=lineMsg();
+  navigator.clipboard.writeText(m).then(()=>{ if(alertIt) alert('已複製報名訊息，請貼到 LINE 對話框送出。'); })
+   .catch(()=>{ if(alertIt) prompt('請複製以下訊息傳送給大樹教育 LINE：',m); });
+}
+function closeModal(){ document.getElementById('okModal').classList.remove('on'); }
+document.getElementById('okModal').addEventListener('click',e=>{ if(e.target.id==='okModal') closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+</script>

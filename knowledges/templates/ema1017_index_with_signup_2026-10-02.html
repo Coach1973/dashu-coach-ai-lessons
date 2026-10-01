@@ -1,0 +1,917 @@
+<!DOCTYPE html><html lang="zh-Hant" data-lvt-canonical="1"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中華網紅協會零基礎學 AI 課｜10/17 台北・下午玩 AI，課後吃最頂級海鮮鍋</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Inter:wght@400;600;700&amp;family=Barlow:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FFF9F2;
+  --peach:#FDEEE3;
+  --mint:#E9F4EE;
+  --brand:#F2762E;
+  --brand-deep:#D95F1E;   /* chosen: hover 深橘 */
+  --ink:#33272A;
+  --sub:#7A6258;
+  --gold:#E0A92E;
+  --teal:#2FA39A;
+  --card:#FFFFFF;
+  --hairline:rgba(51,39,42,.10); /* chosen */
+  --radius:20px;
+  --shadow:0 10px 30px rgba(242,118,46,.08);
+  --shadow-lift:0 16px 40px rgba(242,118,46,.16);
+  --cn:"Inter","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --num:"Barlow","Inter","Noto Sans TC",sans-serif;
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--cn);
+  color:var(--ink);
+  background:var(--cream);
+  font-size:17px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+section{scroll-margin-top:84px;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+/* ---------- 通用 ---------- */
+.sec{padding:88px 0;}
+.sec-head{text-align:center;max-width:760px;margin:0 auto 52px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:700;letter-spacing:.14em;
+  padding:8px 18px;border-radius:999px;margin-bottom:18px;
+}
+.eyebrow.teal{color:var(--teal);background:rgba(47,163,154,.12);}
+.eyebrow.brand{color:var(--brand);background:rgba(242,118,46,.12);}
+.eyebrow.gold{color:#A9791A;background:rgba(224,169,46,.16);}
+h2{font-size:clamp(28px,3.4vw,38px);font-weight:900;line-height:1.35;letter-spacing:.01em;}
+h2 .hl-brand{color:var(--brand);}
+h2 .hl-teal{color:var(--teal);}
+.sec-head p{color:var(--sub);margin-top:14px;font-size:17px;}
+.hl-brand{color:var(--brand);}
+.hl-teal{color:var(--teal);}
+.hl-gold{color:#A9791A;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--cn);font-weight:700;font-size:17px;letter-spacing:.04em;
+  border-radius:999px;padding:15px 34px;cursor:pointer;border:2px solid transparent;
+  transition:transform .25s ease,background .25s ease,box-shadow .25s ease,color .25s ease;
+}
+.btn:hover{transform:scale(1.05);}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 22px rgba(242,118,46,.35);}
+.btn-primary:hover{background:var(--brand-deep);}
+.btn-ghost{border-color:#fff;color:#fff;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);}
+.btn-ghost:hover{background:rgba(255,255,255,.28);}
+.btn-ghost-dark{border-color:var(--brand);color:var(--brand);background:transparent;}
+.btn-ghost-dark:hover{background:rgba(242,118,46,.10);}
+.btn-lg{font-size:19px;padding:19px 52px;}
+
+/* 進場淡入上移 */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal.d1{transition-delay:.10s;}
+.reveal.d2{transition-delay:.20s;}
+.reveal.d3{transition-delay:.30s;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;transition:none;}
+  .btn{transition:none;}
+  .btn:hover{transform:none;}
+  .steam span,.hero-glow{animation:none !important;}
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+}
+
+/* ---------- 1. 頂部導覽列 ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,249,242,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hairline);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 24px;
+  height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:16px;letter-spacing:.02em;white-space:nowrap;}
+.nav-logo{
+  width:34px;height:34px;border-radius:10px;flex:none;
+  background:linear-gradient(135deg,var(--brand),#F9A25C);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:900;
+}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:15px;font-weight:700;color:var(--sub);}
+.nav-links a{transition:color .2s ease;}
+.nav-links a:hover{color:var(--brand);}
+.nav .btn{padding:10px 24px;font-size:15px;}
+
+/* ---------- 2. Hero ---------- */
+.hero{
+  position:relative;min-height:760px;
+  display:flex;align-items:center;
+  padding:140px 0 72px;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(105deg,rgba(51,39,42,.88) 0%,rgba(51,39,42,.74) 40%,rgba(51,39,42,.34) 68%,rgba(51,39,42,.16) 100%),
+    linear-gradient(to top,rgba(51,39,42,.62) 0%,rgba(51,39,42,0) 36%);
+}
+.hero-glow{
+  position:absolute;width:560px;height:560px;border-radius:50%;
+  background:radial-gradient(circle,rgba(242,118,46,.35),rgba(242,118,46,0) 65%);
+  right:-120px;top:-140px;pointer-events:none;
+  animation:glowPulse 7s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.12);opacity:1;}}
+.hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.92);color:var(--brand);
+  font-weight:700;font-size:15px;letter-spacing:.08em;
+  padding:9px 20px;border-radius:999px;margin-bottom:26px;
+  box-shadow:0 6px 20px rgba(51,39,42,.18);
+}
+.hero-eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:none;}
+.hero h1{
+  color:#fff;font-size:clamp(36px,4.6vw,60px);font-weight:900;line-height:1.32;
+  letter-spacing:.01em;max-width:720px;
+  text-shadow:0 4px 24px rgba(51,39,42,.35);
+}
+.hero h1 .hl-teal-u{color:#7FE3D8;}
+.hero h1 .hl-gold-u{color:#FFD37A;}
+.hero-sub{
+  color:rgba(255,255,255,.94);font-size:18px;line-height:1.8;
+  max-width:600px;margin:22px 0 34px;text-shadow:0 2px 12px rgba(51,39,42,.4);
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:44px;}
+.hero-facts{display:flex;flex-wrap:wrap;gap:14px;}
+.fact{
+  background:rgba(255,255,255,.94);border-radius:16px;
+  padding:14px 22px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 10px 26px rgba(51,39,42,.22);min-width:180px;
+}
+.fact-ico{
+  width:42px;height:42px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.fact-ico svg{width:22px;height:22px;}
+.fact-ico.brand{background:rgba(242,118,46,.14);color:var(--brand);}
+.fact-ico.teal{background:rgba(47,163,154,.14);color:var(--teal);}
+.fact-ico.gold{background:rgba(224,169,46,.18);color:#A9791A;}
+.fact-label{font-size:12.5px;font-weight:700;letter-spacing:.12em;color:var(--sub);line-height:1.4;}
+.fact-value{font-size:16.5px;font-weight:700;line-height:1.4;white-space:nowrap;}
+.fact-value .num{font-family:var(--num);font-weight:800;}
+
+/* ---------- 3. 雙主軸 ---------- */
+.duo{background:var(--cream);}
+.duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.duo-card{
+  border-radius:26px;overflow:hidden;position:relative;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.duo-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift);}
+.duo-card.ai{background:var(--mint);}
+.duo-card.pot{background:var(--peach);}
+.duo-media{position:relative;overflow:hidden;}
+.duo-card.ai .duo-media{aspect-ratio:16/10;}
+.duo-card.pot .duo-media{aspect-ratio:16/10;}
+.duo-media img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;}
+.duo-card:hover .duo-media img{transform:scale(1.04);}
+.duo-tag{
+  position:absolute;top:16px;left:16px;z-index:2;
+  font-size:13px;font-weight:700;letter-spacing:.1em;color:#fff;
+  padding:7px 16px;border-radius:999px;
+}
+.duo-card.ai .duo-tag{background:var(--teal);}
+.duo-card.pot .duo-tag{background:var(--brand);}
+.duo-body{padding:28px 30px 32px;flex:1;}
+.duo-step{
+  font-family:var(--num);font-weight:800;font-size:14px;letter-spacing:.16em;
+  margin-bottom:8px;display:block;
+}
+.duo-card.ai .duo-step{color:var(--teal);}
+.duo-card.pot .duo-step{color:var(--brand);}
+.duo-body h3{font-size:25px;font-weight:900;line-height:1.45;margin-bottom:12px;}
+.duo-body p{color:var(--sub);font-size:16px;margin-bottom:20px;}
+.duo-chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border-radius:999px;padding:9px 16px;
+  font-size:14.5px;font-weight:700;box-shadow:0 4px 12px rgba(51,39,42,.06);
+}
+.chip svg{width:17px;height:17px;flex:none;}
+.duo-card.ai .chip{color:var(--teal);}
+.duo-card.pot .chip{color:var(--brand);}
+.plus-badge{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;
+  width:56px;height:56px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--num);font-size:30px;font-weight:800;color:var(--brand);
+  box-shadow:0 8px 24px rgba(51,39,42,.18);
+}
+.duo-grid{position:relative;}
+
+/* ---------- 4. AI 課程 ---------- */
+.course{background:var(--mint);}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.course-card{
+  background:var(--card);border-radius:var(--radius);padding:34px 28px 30px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.course-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift);}
+.course-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--teal),#7FE3D8);
+}
+.course-ico{
+  width:60px;height:60px;border-radius:18px;margin-bottom:20px;
+  background:rgba(47,163,154,.12);color:var(--teal);
+  display:flex;align-items:center;justify-content:center;
+}
+.course-ico svg{width:30px;height:30px;}
+.course-card h3{font-size:22px;font-weight:900;margin-bottom:10px;}
+.course-card p{color:var(--sub);font-size:16px;}
+.no-need{
+  margin-top:40px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+  background:#fff;border-radius:999px;padding:16px 28px;
+  box-shadow:var(--shadow);max-width:720px;margin-left:auto;margin-right:auto;
+  align-items:center;
+}
+.no-need .lead{font-weight:900;font-size:16px;color:var(--ink);margin-right:4px;}
+.no-need .pill{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--teal);font-weight:700;font-size:15.5px;
+  background:rgba(47,163,154,.10);padding:7px 16px;border-radius:999px;
+}
+.no-need .pill svg{width:16px;height:16px;}
+
+/* ---------- 5. 時程 ---------- */
+.schedule{background:var(--cream);}
+.timeline{max-width:780px;margin:0 auto;position:relative;padding-left:0;}
+.timeline::before{
+  content:"";position:absolute;left:96px;top:14px;bottom:14px;width:3px;
+  border-radius:2px;background:linear-gradient(to bottom,var(--teal),var(--brand) 55%,var(--gold));
+  opacity:.35;
+}
+.tl-item{position:relative;display:flex;gap:0;padding:13px 0;align-items:flex-start;}
+.tl-time{
+  width:96px;flex:none;text-align:right;padding-right:26px;position:relative;
+  font-family:var(--num);font-weight:800;font-size:26px;color:var(--ink);
+  line-height:1.3;letter-spacing:.01em;
+}
+.tl-time::after{
+  content:"";position:absolute;right:-7.5px;top:12px;width:12px;height:12px;border-radius:50%;
+  background:#fff;border:3.5px solid var(--brand);
+}
+.tl-item.gold .tl-time::after{border-color:var(--gold);}
+.tl-item.teal .tl-time::after{border-color:var(--teal);}
+.tl-body{
+  flex:1;background:#fff;border-radius:16px;box-shadow:var(--shadow);
+  padding:13px 22px;margin-left:26px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  transition:transform .25s ease;
+}
+.tl-body:hover{transform:translateX(4px);}
+.tl-body .txt{font-size:17.5px;font-weight:700;}
+.tl-tag{
+  font-size:12.5px;font-weight:700;letter-spacing:.1em;color:#fff;
+  background:var(--gold);padding:5px 13px;border-radius:999px;flex:none;
+}
+.tl-note{color:var(--sub);font-size:15px;font-weight:400;}
+.schedule-cta{text-align:center;margin-top:44px;}
+
+/* ---------- 6. 海鮮鍋亮點 ---------- */
+.feast{background:var(--peach);}
+.feast-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center;}
+.feast-media{
+  border-radius:26px;overflow:hidden;aspect-ratio:4/3;
+  box-shadow:0 20px 50px rgba(242,118,46,.20);position:relative;
+}
+.feast-media img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.steam{
+  position:absolute;left:24px;bottom:20px;z-index:2;display:flex;gap:10px;align-items:flex-end;
+}
+.steam span{
+  display:block;width:7px;height:34px;border-radius:999px;
+  background:rgba(255,255,255,.75);
+  animation:steamRise 2.6s ease-in-out infinite;
+}
+.steam span:nth-child(2){height:44px;animation-delay:.5s;}
+.steam span:nth-child(3){height:28px;animation-delay:1s;}
+@keyframes steamRise{
+  0%{transform:translateY(6px) scaleY(.85);opacity:0;}
+  35%{opacity:.9;}
+  100%{transform:translateY(-16px) scaleY(1.05);opacity:0;}
+}
+.feast-copy h2{text-align:left;}
+.feast-points{margin-top:26px;display:grid;gap:14px;}
+.fp{
+  display:flex;gap:14px;align-items:flex-start;
+  background:#fff;border-radius:16px;padding:16px 20px;box-shadow:var(--shadow);
+}
+.fp-ico{
+  width:42px;height:42px;border-radius:12px;flex:none;
+  background:rgba(224,169,46,.16);color:#A9791A;
+  display:flex;align-items:center;justify-content:center;
+}
+.fp-ico svg{width:21px;height:21px;}
+.fp h4{font-size:17px;font-weight:900;line-height:1.5;}
+.fp p{font-size:15px;color:var(--sub);line-height:1.7;}
+.broth{
+  margin-top:18px;background:#fff;border-radius:16px;padding:18px 22px;box-shadow:var(--shadow);
+}
+.broth .bt{font-size:15px;font-weight:900;color:var(--brand);letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.broth-steps{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.bstep{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--peach);border-radius:999px;padding:8px 16px;
+  font-size:15px;font-weight:700;color:var(--ink);
+}
+.bstep .n{font-family:var(--num);font-weight:800;color:var(--brand);}
+.barrow{color:var(--gold);font-weight:900;}
+
+/* ---------- 7. 費用與抽獎 ---------- */
+.fee{background:var(--cream);}
+.fee-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:860px;margin:0 auto;}
+.fee-card{
+  background:#fff;border-radius:var(--radius);padding:34px 32px;
+  box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden;
+  transition:transform .3s ease;
+}
+.fee-card:hover{transform:translateY(-5px);}
+.fee-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;}
+.fee-card.course-fee::before{background:linear-gradient(90deg,var(--teal),#7FE3D8);}
+.fee-card.dinner-fee::before{background:linear-gradient(90deg,var(--gold),#F2CE73);}
+.fee-ico{
+  width:56px;height:56px;border-radius:16px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.fee-card.course-fee .fee-ico{background:rgba(47,163,154,.12);color:var(--teal);}
+.fee-card.dinner-fee .fee-ico{background:rgba(224,169,46,.15);color:#A9791A;}
+.fee-ico svg{width:27px;height:27px;}
+.fee-card h3{font-size:19px;font-weight:900;margin-bottom:8px;}
+.fee-price{font-family:var(--num);font-weight:800;font-size:46px;line-height:1.2;margin-bottom:6px;}
+.fee-card.course-fee .fee-price{color:var(--teal);}
+.fee-card.course-fee .fee-price small{font-size:20px;font-weight:700;margin-right:4px;}
+.fee-card.dinner-fee .fee-price{font-family:var(--cn);font-size:30px;font-weight:900;color:#A9791A;}
+.fee-card.dinner-fee .fee-price small{font-size:18px;font-weight:700;margin-right:6px;}
+.fee-card p{color:var(--sub);font-size:15.5px;}
+.lucky-banner{
+  max-width:860px;margin:28px auto 0;
+  background:linear-gradient(100deg,var(--brand) 0%,#F9A25C 60%,var(--gold) 100%);
+  border-radius:var(--radius);padding:26px 34px;
+  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+  box-shadow:0 14px 34px rgba(242,118,46,.32);color:#fff;text-align:center;
+}
+.lucky-banner .gift{
+  width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.22);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.lucky-banner .gift svg{width:27px;height:27px;}
+.lucky-banner strong{font-size:22px;font-weight:900;letter-spacing:.02em;line-height:1.5;}
+.lucky-banner span.sub{font-size:15px;opacity:.92;width:100%;}
+
+/* ---------- 8. 地點 ---------- */
+.location{background:var(--mint);}
+.loc-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:stretch;}
+.loc-info{display:flex;flex-direction:column;gap:14px;}
+.loc-row{
+  background:#fff;border-radius:16px;padding:18px 22px;box-shadow:var(--shadow);
+  display:flex;gap:16px;align-items:flex-start;
+}
+.loc-ico{
+  width:44px;height:44px;border-radius:13px;flex:none;
+  background:rgba(242,118,46,.12);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;
+}
+.loc-ico svg{width:22px;height:22px;}
+.loc-row h4{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:.1em;margin-bottom:3px;}
+.loc-row .v{font-size:17px;font-weight:700;line-height:1.6;}
+.loc-row .v a{color:var(--brand);border-bottom:2px solid rgba(242,118,46,.35);}
+.loc-row .note{font-size:15px;color:var(--sub);font-weight:400;line-height:1.7;}
+.map-ph{
+  border-radius:26px;background:#fff;box-shadow:var(--shadow);
+  border:2px dashed rgba(242,118,46,.4);
+  min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;color:var(--sub);text-align:center;padding:32px;position:relative;overflow:hidden;
+}
+.map-ph::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(242,118,46,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(242,118,46,.06) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.map-ph>*{position:relative;z-index:1;}
+.map-pin{
+  width:74px;height:74px;border-radius:50%;background:rgba(242,118,46,.12);
+  display:flex;align-items:center;justify-content:center;color:var(--brand);
+}
+.map-pin svg{width:36px;height:36px;}
+.map-ph strong{font-size:19px;font-weight:900;color:var(--ink);}
+.map-ph span{font-size:14.5px;}
+.host-bar{
+  margin-top:36px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px 32px;display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:center;text-align:center;
+}
+.host-bar .h{font-size:16px;}
+.host-bar .h b{font-weight:900;}
+.host-bar .h span{color:var(--sub);}
+
+/* ---------- 9. CTA + 頁尾 ---------- */
+.cta{
+  background:
+    radial-gradient(circle at 18% 22%,rgba(255,255,255,.20),transparent 42%),
+    radial-gradient(circle at 84% 78%,rgba(224,169,46,.45),transparent 46%),
+    linear-gradient(120deg,var(--brand) 0%,#F08A3C 55%,#EFA14A 100%);
+  color:#fff;text-align:center;padding:96px 0;position:relative;overflow:hidden;
+}
+.cta .kicker{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);
+  font-size:14.5px;font-weight:700;letter-spacing:.1em;padding:8px 20px;border-radius:999px;margin-bottom:24px;
+}
+.cta h2{color:#fff;font-size:clamp(30px,4vw,46px);}
+.cta p{margin:20px auto 0;max-width:620px;font-size:17.5px;opacity:.95;}
+.cta .btn-white{
+  margin-top:36px;background:#fff;color:var(--brand);
+  box-shadow:0 14px 34px rgba(51,39,42,.28);font-size:20px;padding:20px 62px;
+}
+.cta .btn-white:hover{background:#FFF3E9;}
+.cta .channels{margin-top:20px;font-size:15px;opacity:.9;letter-spacing:.04em;}
+footer{background:var(--ink);color:rgba(255,249,242,.78);padding:44px 0;text-align:center;}
+footer .f-brand{font-weight:900;color:#fff;font-size:17px;margin-bottom:10px;letter-spacing:.04em;}
+footer .f-line{font-size:14.5px;line-height:1.9;}
+footer .f-legal{margin-top:14px;font-size:12.5px;color:rgba(255,249,242,.5);line-height:1.8;}
+
+/* ---------- RWD ---------- */
+@media (max-width:960px){
+  .duo-grid{grid-template-columns:1fr;}
+  .plus-badge{display:none;}
+  .course-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto;}
+  .feast-grid{grid-template-columns:1fr;}
+  .loc-grid{grid-template-columns:1fr;}
+  .map-ph{min-height:300px;}
+  .hero{min-height:680px;}
+}
+@media (max-width:760px){
+  .hero-bg img{object-position:62% center;}
+  .hero-bg::after{
+    background:
+      linear-gradient(to top,rgba(51,39,42,.88) 0%,rgba(51,39,42,.62) 46%,rgba(51,39,42,.34) 100%);
+  }
+  .nav-links{display:none;}
+  .nav-brand{font-size:14px;}
+  .nav-brand .x-part{display:none;}
+  .sec{padding:64px 0;}
+  .hero{padding:120px 0 56px;min-height:640px;}
+  .hero-sub{font-size:16.5px;}
+  .hero-actions .btn{width:100%;}
+  .hero-facts{gap:10px;}
+  .fact{min-width:0;flex:1 1 100%;padding:12px 16px;}
+  .fact-value{white-space:normal;}
+  .timeline::before{left:14px;}
+  .tl-item{flex-direction:column;gap:6px;padding:10px 0;}
+  .tl-time{width:auto;text-align:left;padding:0 0 0 40px;font-size:24px;}
+  .tl-time::after{left:8px;right:auto;top:8px;}
+  .tl-body{margin-left:40px;}
+  .fee-grid{grid-template-columns:1fr;}
+  .lucky-banner{padding:24px 22px;}
+  .host-bar{flex-direction:column;gap:10px;}
+  .no-need{border-radius:20px;flex-direction:column;gap:10px;}
+}
+
+/* ---------- 線上報名 SOP：表單＋成功視窗（比照 bigtree-1003） ---------- */
+.form-card{max-width:520px;margin:26px auto 0;background:#fff;color:var(--ink);border-radius:22px;padding:28px 24px;text-align:left;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.form-card .field{margin-bottom:16px}
+.form-card label{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
+.form-card .req{color:var(--brand);margin-left:3px}
+.form-card input,.form-card select{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid #e6d9cc;border-radius:12px;background:var(--cream);color:var(--ink)}
+.form-card input:focus,.form-card select:focus{outline:none;border-color:var(--brand);background:#fff}
+.form-card .err{display:none;color:#c0392b;font-size:13px;margin:6px 0 0}
+.form-card .err.show{display:block}
+.form-card .btn{width:100%;justify-content:center;margin-top:6px}
+.form-card .form-foot{text-align:center;font-size:13.5px;color:#7a6a63;margin:12px 0 0}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(40,28,24,.6);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal-in{background:#fff;color:var(--ink);border-radius:24px;max-width:440px;width:100%;padding:32px 26px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.modal-in .tick{width:58px;height:58px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.modal-in h3{font-size:24px;margin:14px 0 8px}
+.modal-in p{color:#6b5b55;font-size:15px;margin:0 0 18px}
+.modal-in .btn{width:100%;justify-content:center;margin-bottom:10px}
+.btn-line{background:#06C755;color:#fff}
+.btn-line:hover{background:#049e46}
+.btn-outline{background:transparent;border:1.5px solid var(--brand);color:var(--brand)}
+.modal-close{background:none;border:0;color:#7a6a63;text-decoration:underline;cursor:pointer;font-size:14px;font-family:inherit}
+</style>
+</head>
+<body>
+
+<!-- ===== 1. 頂部導覽列 ===== -->
+<header class="nav" data-lvt-eid="c2b5899a1e">
+  <div class="nav-inner" data-lvt-eid="6b311bd294">
+    <a class="nav-brand" href="#top" data-lvt-eid="77c36b181c">
+      <span class="nav-logo" data-lvt-eid="3a76c85754">AI</span>
+      <span data-lvt-eid="94cca88406">中華網紅協會<span class="x-part" data-lvt-eid="0479940f0d">&nbsp;×&nbsp;大樹教育</span></span>
+    </a>
+    <nav class="nav-links" data-lvt-eid="93adece505">
+      <a href="#duo" data-lvt-eid="577be71162">活動內容</a>
+      <a href="#schedule" data-lvt-eid="2b700ee6f7">時程</a>
+      <a href="#feast" data-lvt-eid="7ead4cba71">海鮮鍋</a>
+      <a href="#location" data-lvt-eid="4f52f60f1f">地點</a>
+    </nav>
+    <a class="btn btn-primary" href="#signup" data-lvt-eid="27998d3d6d">立即報名</a>
+  </div>
+</header>
+
+<!-- ===== 2. Hero ===== -->
+<section class="hero" id="top" data-lvt-eid="1b16c87bec">
+  <div class="hero-bg" data-lvt-eid="925a8b8d62">
+    <img src="images/img4.png" alt="中華網紅協會零基礎學 AI 課主視覺" data-lvt-eid="334e4af5f6">
+    <div class="hero-glow" data-lvt-eid="6d7c0997ac"></div>
+  </div>
+  <div class="hero-inner" data-lvt-eid="7c10ad07de">
+    <span class="hero-eyebrow reveal" data-lvt-eid="0603ebd6fb"><span class="dot" data-lvt-eid="0631dc6251"></span>中華網紅協會．零基礎學 AI 課</span>
+    <h1 class="reveal d1" data-lvt-eid="af656e58ea">下午一起玩 <span class="hl-teal-u" data-lvt-eid="6cd0904423">AI</span>，<br data-lvt-eid="484e5c6834">課後吃<span class="hl-gold-u" data-lvt-eid="eb202ebe00">最頂級海鮮鍋</span></h1>
+    <p class="hero-sub reveal d2" data-lvt-eid="c4655d2354">一支手機就能玩音樂、做圖片、做網站；課程結束後，一起享受全台灣最頂級的有機海鮮鍋。10/17（六）下午，台北見！</p>
+    <div class="hero-actions reveal d2" data-lvt-eid="f86327613b">
+      <a class="btn btn-primary btn-lg" href="#signup" data-lvt-eid="ac7569981c">立即報名</a>
+      <a class="btn btn-ghost btn-lg" href="#schedule" data-lvt-eid="a8fae8ea0d">查看時程</a>
+    </div>
+    <div class="hero-facts reveal d3" data-lvt-eid="04e03afdc0">
+      <div class="fact" data-lvt-eid="3799258aa0">
+        <span class="fact-ico brand" data-lvt-eid="9a5505b1fa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-lvt-eid="c9e07cba58"><rect x="3" y="5" width="18" height="16" rx="3" data-lvt-eid="d7ad5e70dd"></rect><path d="M8 3v4M16 3v4M3 10h18" data-lvt-eid="bd40ca457e"></path></svg></span>
+        <span data-lvt-eid="edb30934de"><span class="fact-label" data-lvt-eid="513ff1c31a">日期</span><br data-lvt-eid="05207e9ea0"><span class="fact-value" data-lvt-eid="465da994c1"><span class="num" data-lvt-eid="62b868c95a">10/17</span>（六）</span></span>
+      </div>
+      <div class="fact" data-lvt-eid="fbd4c560bd">
+        <span class="fact-ico teal" data-lvt-eid="07d23c0001"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="94d28b7a57"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" data-lvt-eid="24ec250848"></path><circle cx="12" cy="10" r="2.6" data-lvt-eid="9bb8cb5b98"></circle></svg></span>
+        <span data-lvt-eid="c398beafd8"><span class="fact-label" data-lvt-eid="1073559be2">地點</span><br data-lvt-eid="b2b8f24d24"><span class="fact-value" data-lvt-eid="6b58011947">立馬吃一鍋 仁愛店</span></span>
+      </div>
+      <div class="fact" data-lvt-eid="7a45463b68">
+        <span class="fact-ico gold" data-lvt-eid="e16ae07bb1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="093be8b2f1"><circle cx="9" cy="8" r="3.4" data-lvt-eid="0766ed47d3"></circle><path d="M2.5 20c.8-3.2 3.4-5 6.5-5s5.7 1.8 6.5 5" data-lvt-eid="ed44aa3130"></path><circle cx="17.5" cy="9" r="2.6" data-lvt-eid="1c70ab6704"></circle><path d="M16 15.2c2.6.3 4.6 1.9 5.3 4.3" data-lvt-eid="024a14adcc"></path></svg></span>
+        <span data-lvt-eid="ea11c9e721"><span class="fact-label" data-lvt-eid="ed5b986cae">限額</span><br data-lvt-eid="c16204acdc"><span class="fact-value" data-lvt-eid="523244bd87"><span class="num" data-lvt-eid="1686875712">70</span> 位・額滿為止</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. 雙主軸 ===== -->
+<section class="sec duo" id="duo" data-lvt-eid="4e3afc9c08">
+  <div class="wrap" data-lvt-eid="5991990d14">
+    <div class="sec-head reveal" data-lvt-eid="d668d86561">
+      <span class="eyebrow brand" data-lvt-eid="b4b3981930">一天的兩大主軸</span>
+      <h2 data-lvt-eid="0e515b4a67">白天收穫作品，晚上收穫<span class="hl-gold" data-lvt-eid="79067c1f71">一鍋頂級</span></h2>
+    </div>
+    <div class="duo-grid" data-lvt-eid="68eb0a553b">
+      <div class="plus-badge" data-lvt-eid="41c165984a">＋</div>
+      <div class="duo-card ai reveal" data-lvt-eid="46fd60d46c">
+        <div class="duo-media" data-lvt-eid="9e2e02bfa4">
+          <span class="duo-tag" data-lvt-eid="4c7906e602">下午 15:00–17:20</span>
+          <img src="images/img3.png" alt="手機 AI 創作課程意象" data-lvt-eid="2cc41fc41b">
+        </div>
+        <div class="duo-body" data-lvt-eid="47b5c7886a">
+          <span class="duo-step" data-lvt-eid="d236d4559f">PART 01</span>
+          <h3 data-lvt-eid="37f57e85d3">下午一起上 <span class="hl-teal" data-lvt-eid="e6d70ed61a">AI 課</span></h3>
+          <p data-lvt-eid="025bd13c16">零基礎也沒問題，帶一支手機，現場就能做出屬於自己的 AI 作品。</p>
+          <div class="duo-chips" data-lvt-eid="3fedd6bbdd">
+            <span class="chip" data-lvt-eid="d3e3d41694"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="c21d870a1d"><path d="M9 18V6l10-2v12" data-lvt-eid="66e210bd47"></path><circle cx="6.5" cy="18" r="2.5" data-lvt-eid="4f7c8ddc43"></circle><circle cx="16.5" cy="16" r="2.5" data-lvt-eid="747bf67d48"></circle></svg>玩音樂</span>
+            <span class="chip" data-lvt-eid="3f1b7bcc0a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="1421fe9b5c"><rect x="3" y="4" width="18" height="16" rx="3" data-lvt-eid="0cfc420557"></rect><circle cx="9" cy="10" r="2" data-lvt-eid="45ce4ebbf7"></circle><path d="M4 18l5-4 4 3 3-2 4 3" data-lvt-eid="73f479e2a2"></path></svg>做圖片</span>
+            <span class="chip" data-lvt-eid="688b69e2b1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="48604f907d"><rect x="3" y="4" width="18" height="16" rx="3" data-lvt-eid="3e44aa7f5b"></rect><path d="M3 9h18M7 6.5h.01M10 6.5h.01" data-lvt-eid="a39e7747ba"></path></svg>做網站</span>
+          </div>
+        </div>
+      </div>
+      <div class="duo-card pot reveal d1" data-lvt-eid="346ba2ab3d">
+        <div class="duo-media" data-lvt-eid="b1fdb19feb">
+          <span class="duo-tag" data-lvt-eid="0d3ee25543">晚上 18:00 開動</span>
+          <img src="images/img1.png" alt="有機黑鑽蜆海鮮鍋" data-lvt-eid="29c726220b">
+        </div>
+        <div class="duo-body" data-lvt-eid="c0695d4e1f">
+          <span class="duo-step" data-lvt-eid="79b663c829">PART 02</span>
+          <h3 data-lvt-eid="6bcc81c66c">課後一起吃全台灣<br data-lvt-eid="8582b74ec0"><span class="hl-brand" data-lvt-eid="cb7d1981c9">最頂級的有機海鮮鍋</span></h3>
+          <p data-lvt-eid="f5418407fc">有機黑鑽蜆搭海鮮盛盤，湯頭鮮甜回甘，為這一天畫下最飽滿的句點。</p>
+          <div class="duo-chips" data-lvt-eid="ab0ceac17d">
+            <span class="chip" data-lvt-eid="6ba49219fa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="1d4ddb6f59"><path d="M4 11h16a8 8 0 0 1-16 0z" data-lvt-eid="2fd694dc7e"></path><path d="M2 11h20M8 7c0-1.5 1-2 1-3M12 7c0-1.5 1-2 1-3M16 7c0-1.5 1-2 1-3" data-lvt-eid="18a805b8ae"></path></svg>有機黑鑽蜆</span>
+            <span class="chip" data-lvt-eid="33fa74b00c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="3e6a30b205"><path d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 8.7l5.4-.8z" data-lvt-eid="6637b8a80c"></path></svg>海鮮盛盤</span>
+            <span class="chip" data-lvt-eid="a9ca0be4a9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="3f80a6c02b"><path d="M12 21c4.4 0 8-3.1 8-7H4c0 3.9 3.6 7 8 7z" data-lvt-eid="ab84895a7f"></path><path d="M9 10c-1-2 .5-3 0-5M15 10c-1-2 .5-3 0-5" data-lvt-eid="dc8b335717"></path></svg>鮮甜湯頭</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. AI 課程內容 ===== -->
+<section class="sec course" id="course" data-lvt-eid="0e3338541c">
+  <div class="wrap" data-lvt-eid="795223c457">
+    <div class="sec-head reveal" data-lvt-eid="3546e7f894">
+      <span class="eyebrow teal" data-lvt-eid="7e91078156">AI 課程內容</span>
+      <h2 data-lvt-eid="181ea3e315">零基礎，帶一支手機<br data-lvt-eid="9132be0fa5">就能做出<span class="hl-teal" data-lvt-eid="abc2e9c237">作品</span></h2>
+    </div>
+    <div class="course-grid" data-lvt-eid="087fba929c">
+      <div class="course-card reveal" data-lvt-eid="1757eb2d01">
+        <span class="course-ico" data-lvt-eid="e5bb00e808"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="47e4e985a6"><path d="M9 18V6l10-2v12" data-lvt-eid="b7f6fc3e76"></path><circle cx="6.5" cy="18" r="2.5" data-lvt-eid="c0fa9e12b2"></circle><circle cx="16.5" cy="16" r="2.5" data-lvt-eid="c3fefaf25c"></circle></svg></span>
+        <h3 data-lvt-eid="3c478b4bb3">玩音樂</h3>
+        <p data-lvt-eid="cd658b2a9c">用 SUNO 現場做一首音樂，從一句想法到一首完整的歌，當場聽得到。</p>
+      </div>
+      <div class="course-card reveal d1" data-lvt-eid="031852db13">
+        <span class="course-ico" data-lvt-eid="d340f0e066"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="3525d90ad9"><rect x="3" y="4" width="18" height="16" rx="3" data-lvt-eid="5f4a96a92f"></rect><circle cx="9" cy="10" r="2" data-lvt-eid="b73b1ed9f8"></circle><path d="M4 18l5-4 4 3 3-2 4 3" data-lvt-eid="b8028d2ce7"></path></svg></span>
+        <h3 data-lvt-eid="28a957331e">做圖片</h3>
+        <p data-lvt-eid="2e2c67f1db">AI 出圖，想得到就做得出來，讓想像力直接變成畫面。</p>
+      </div>
+      <div class="course-card reveal d2" data-lvt-eid="2b693843b1">
+        <span class="course-ico" data-lvt-eid="a56c8fa454"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="93692e7d4b"><rect x="3" y="4" width="18" height="16" rx="3" data-lvt-eid="2035170a1a"></rect><path d="M3 9h18M7 6.5h.01M10 6.5h.01" data-lvt-eid="6d514070ef"></path><path d="M8 13l-2 2 2 2M16 13l2 2-2 2" data-lvt-eid="36886d503f"></path></svg></span>
+        <h3 data-lvt-eid="3f0cd5ddc2">現場做網站</h3>
+        <p data-lvt-eid="c9f3fb8a6d">當場做出一個網頁，親眼見證從零到上線的全過程。</p>
+      </div>
+    </div>
+    <div class="no-need reveal" data-lvt-eid="905c2682bf">
+      <span class="lead" data-lvt-eid="13b31104d3">上課三免：</span>
+      <span class="pill" data-lvt-eid="4d8d519932"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-lvt-eid="195ec27d8d"><path d="M5 12l5 5L19 7" data-lvt-eid="e4a701a48e"></path></svg>免電腦</span>
+      <span class="pill" data-lvt-eid="7268d2c32a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-lvt-eid="fb8320d530"><path d="M5 12l5 5L19 7" data-lvt-eid="33f0093f58"></path></svg>免寫程式</span>
+      <span class="pill" data-lvt-eid="5603654359"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-lvt-eid="a7a1de83ce"><path d="M5 12l5 5L19 7" data-lvt-eid="442fad3496"></path></svg>免技術背景</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. 當天時程 ===== -->
+<section class="sec schedule" id="schedule" data-lvt-eid="3c70132685">
+  <div class="wrap" data-lvt-eid="cbe46a3202">
+    <div class="sec-head reveal" data-lvt-eid="0fc593902d">
+      <span class="eyebrow brand" data-lvt-eid="6b0df588ac">當天時程</span>
+      <h2 data-lvt-eid="8fe8520c3c"><span class="num" style="font-family:var(--num)" data-lvt-eid="00bcf67e89">10/17</span>（六）一整天的安排</h2>
+      <p data-lvt-eid="473e916da9">15:00 報到開始，一路到 20:00 會後交流，學習與美味都不錯過。</p>
+    </div>
+    <div class="timeline" data-lvt-eid="02c64faef5">
+      <div class="tl-item teal reveal" data-lvt-eid="0335e7ac67">
+        <div class="tl-time" data-lvt-eid="a3c9a843e9">15:00</div>
+        <div class="tl-body" data-lvt-eid="0fb638d37c"><span class="txt" data-lvt-eid="80a04d8382">來賓報到</span></div>
+      </div>
+      <div class="tl-item teal reveal" data-lvt-eid="9bbe4fb723">
+        <div class="tl-time" data-lvt-eid="a161f5d118">15:30</div>
+        <div class="tl-body" data-lvt-eid="5e78e24a0e"><span class="txt" data-lvt-eid="e46f053f6d">小提琴 吳尚謙 開場</span></div>
+      </div>
+      <div class="tl-item reveal" data-lvt-eid="f7a7723da1">
+        <div class="tl-time" data-lvt-eid="4aba3913e9">15:35</div>
+        <div class="tl-body" data-lvt-eid="f1007a598d"><span class="txt" data-lvt-eid="a93910bbe7">大樹教練 開場</span></div>
+      </div>
+      <div class="tl-item reveal" data-lvt-eid="517fb2c5e9">
+        <div class="tl-time" data-lvt-eid="1cbee453b8">15:45</div>
+        <div class="tl-body" data-lvt-eid="1a77b0898e"><span class="txt" data-lvt-eid="773e4f3bcc">中華網紅協會理事長致詞演講</span></div>
+      </div>
+      <div class="tl-item teal reveal" data-lvt-eid="54195c288c">
+        <div class="tl-time" data-lvt-eid="2cadfda16d">16:00</div>
+        <div class="tl-body" data-lvt-eid="a488eea9e1"><span class="txt" data-lvt-eid="a471f10085">零基礎學 AI 起步比較快</span><span class="tl-note" data-lvt-eid="fec5342d22">玩音樂・做圖片・做網站</span></div>
+      </div>
+      <div class="tl-item gold reveal" data-lvt-eid="b9fd1b8f53">
+        <div class="tl-time" data-lvt-eid="1af31c51bb">17:20</div>
+        <div class="tl-body" data-lvt-eid="2e4a4ce29f"><span class="txt" data-lvt-eid="cc4381b8b8">介紹有機水產火鍋的亮點和緣由</span><span class="tl-tag" data-lvt-eid="ade88c582d">換場</span></div>
+      </div>
+      <div class="tl-item gold reveal" data-lvt-eid="a504303bcd">
+        <div class="tl-time" data-lvt-eid="a0cd3e2104">18:00</div>
+        <div class="tl-body" data-lvt-eid="5b8d412b18"><span class="txt" data-lvt-eid="66e011e568">用餐</span><span class="tl-tag" data-lvt-eid="561137b340">頂級海鮮鍋開動</span></div>
+      </div>
+      <div class="tl-item reveal" data-lvt-eid="9befac0e30">
+        <div class="tl-time" data-lvt-eid="e1c7c992da">20:00</div>
+        <div class="tl-body" data-lvt-eid="a973086640"><span class="txt" data-lvt-eid="034606f860">會後交流</span></div>
+      </div>
+    </div>
+    <div class="schedule-cta reveal" data-lvt-eid="f76005c146">
+      <a class="btn btn-primary" href="#signup" data-lvt-eid="45efc20598">立即報名</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. 海鮮鍋亮點 ===== -->
+<section class="sec feast" id="feast" data-lvt-eid="c90a2f7160">
+  <div class="wrap" data-lvt-eid="14f2de23f3">
+    <div class="feast-grid" data-lvt-eid="f31c295171">
+      <div class="feast-media reveal" data-lvt-eid="faa06cbdf4">
+        <img src="images/img2.png" alt="豐盛有機海鮮鍋聚餐" data-lvt-eid="ac2b3516c1">
+        <div class="steam" data-lvt-eid="1867a56391"><span data-lvt-eid="9803f0214a"></span><span data-lvt-eid="fc9bb76b49"></span><span data-lvt-eid="6b9c0539a9"></span></div>
+      </div>
+      <div class="feast-copy" data-lvt-eid="87eb6e3daa">
+        <span class="eyebrow gold reveal" data-lvt-eid="226fdab407">課後的頂級饗宴</span>
+        <h2 class="reveal" data-lvt-eid="66de8b87c7">有機黑鑽蜆，<br data-lvt-eid="a14f6fe9d4">一顆蜆煮出<span class="hl-gold" data-lvt-eid="30aed6cc72">一鍋鮮</span></h2>
+        <div class="feast-points" data-lvt-eid="9b891f3013">
+          <div class="fp reveal d1" data-lvt-eid="21288d08db">
+            <span class="fp-ico" data-lvt-eid="835bf95219"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="95fff06310"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" data-lvt-eid="ac86fd2852"></path><path d="M9 12l2 2 4-4" data-lvt-eid="0cfb118c43"></path></svg></span>
+            <span data-lvt-eid="e57ebce903"><h4 data-lvt-eid="4ded3e2f07">有機認證</h4><p data-lvt-eid="35d07f431b">通過有機認證的黑鑽蜆，吃得安心、鮮得純粹。</p></span>
+          </div>
+          <div class="fp reveal d1" data-lvt-eid="f037075650">
+            <span class="fp-ico" data-lvt-eid="eb6e692f22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="3ea44ab673"><circle cx="12" cy="12" r="9" data-lvt-eid="27ccfabaf2"></circle><path d="M6 6l12 12" data-lvt-eid="6702a848be"></path></svg></span>
+            <span data-lvt-eid="bb6578167b"><h4 data-lvt-eid="b26717504a">零用藥</h4><p data-lvt-eid="950b819fde">養殖過程零用藥，只靠好水與時間養出飽滿蜆肉。</p></span>
+          </div>
+          <div class="fp reveal d2" data-lvt-eid="e3d3cd683d">
+            <span class="fp-ico" data-lvt-eid="34095bab2c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="46776dd322"><path d="M3 17l6-6 4 4 8-8" data-lvt-eid="24350ffe2e"></path><path d="M14 7h7v7" data-lvt-eid="69c204bfef"></path></svg></span>
+            <span data-lvt-eid="f89ff38c89"><h4 data-lvt-eid="0d9a97461b">產地直送</h4><p data-lvt-eid="2e7a1abcc4">從產地直送店家，縮短旅程，保留最即時的鮮甜。</p></span>
+          </div>
+        </div>
+        <div class="broth reveal d2" data-lvt-eid="af5055b9c1">
+          <div class="bt" data-lvt-eid="1a95d3d762"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="95b834c24e"><path d="M4 11h16a8 8 0 0 1-16 0z" data-lvt-eid="9a35870699"></path><path d="M2 11h20" data-lvt-eid="710683cdc3"></path></svg>招牌湯頭・三道程序</div>
+          <div class="broth-steps" data-lvt-eid="84cf3a3d8f">
+            <span class="bstep" data-lvt-eid="687d192613"><span class="n" data-lvt-eid="28d0050733">1</span>開殼</span>
+            <span class="barrow" data-lvt-eid="b514647f68">›</span>
+            <span class="bstep" data-lvt-eid="6ad3b3c1a7"><span class="n" data-lvt-eid="981e50e548">2</span>加米酒</span>
+            <span class="barrow" data-lvt-eid="54dff1e32a">›</span>
+            <span class="bstep" data-lvt-eid="6ab60e04a4"><span class="n" data-lvt-eid="5dd369b1f9">3</span>加蒜末</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. 費用與抽獎 ===== -->
+<section class="sec fee" id="fee" data-lvt-eid="ddd7e7da05">
+  <div class="wrap" data-lvt-eid="e0effe9345">
+    <div class="sec-head reveal" data-lvt-eid="855cfdb4aa">
+      <span class="eyebrow brand" data-lvt-eid="97680ac7d5">費用資訊</span>
+      <h2 data-lvt-eid="1325bd4fac">一堂課的錢，換一天作品＋一鍋頂級</h2>
+    </div>
+    <div class="fee-grid" data-lvt-eid="3aa03d38ec">
+      <div class="fee-card course-fee reveal" data-lvt-eid="a8b2ae5857">
+        <span class="fee-ico" data-lvt-eid="77b6a7b4fe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="a92b40344f"><path d="M12 4L2 9l10 5 10-5z" data-lvt-eid="79c03bb49c"></path><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5" data-lvt-eid="275f4f0ee4"></path></svg></span>
+        <h3 data-lvt-eid="9bb6682d11">課程費用</h3>
+        <div class="fee-price" data-lvt-eid="b2446633b0"><small data-lvt-eid="514add8c04">NT$</small>300</div>
+        <p data-lvt-eid="447d07589a">下午零基礎學 AI 課全場內容</p>
+      </div>
+      <div class="fee-card dinner-fee reveal d1" data-lvt-eid="c5159102b4">
+        <span class="fee-ico" data-lvt-eid="202ca6326a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="62abe7506f"><path d="M4 11h16a8 8 0 0 1-16 0z" data-lvt-eid="8cebbbed9a"></path><path d="M2 11h20M8 7c0-1.5 1-2 1-3M15 7c0-1.5 1-2 1-3" data-lvt-eid="3081083a31"></path></svg></span>
+        <!-- 本次唯一改動：晚餐費用卡片文案更新為「晚餐費用自付，一鍋大約 NT$400–500」；「自己付自己的」保留為小字補充 -->
+        <h3 data-lvt-eid="1ea610db3b">晚餐費用自付</h3>
+        <div class="fee-price" data-lvt-eid="17dea6d5d1"><small>一鍋大約</small>NT$400–500</div>
+        <p data-lvt-eid="92d5c805ea">自己付自己的，享用在店消費</p>
+      </div>
+    </div>
+    <div class="lucky-banner reveal" data-lvt-eid="7893e8e73c">
+      <span class="gift" data-lvt-eid="6a6d133e03"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="cab8fcc88f"><rect x="3" y="8" width="18" height="4" rx="1" data-lvt-eid="0d27f570ea"></rect><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13" data-lvt-eid="41c1916b70"></path><path d="M12 8S10.5 3 8 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4-5a2.5 2.5 0 0 1 0 5" data-lvt-eid="e4b74f5a49"></path></svg></span>
+      <strong data-lvt-eid="0494166376">現場還有抽獎活動，驚喜好禮等你拿</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. 地點與交通 ===== -->
+<section class="sec location" id="location" data-lvt-eid="4eefd749ae">
+  <div class="wrap" data-lvt-eid="e8d084ae54">
+    <div class="sec-head reveal" data-lvt-eid="78ee07a2c0">
+      <span class="eyebrow teal" data-lvt-eid="04a3c38b78">地點與交通</span>
+      <h2 data-lvt-eid="7287e919aa">立馬吃一鍋 仁愛店</h2>
+      <p data-lvt-eid="40804d4e23">捷運忠孝復興站旁，下課不用奔波，換場就是開動。</p>
+    </div>
+    <div class="loc-grid" data-lvt-eid="898156c588">
+      <div class="loc-info" data-lvt-eid="e6a6883e0f">
+        <div class="loc-row reveal" data-lvt-eid="7b3a6b3b47">
+          <span class="loc-ico" data-lvt-eid="4fe112902a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="8a8e8f8161"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" data-lvt-eid="3b8ee99273"></path><circle cx="12" cy="10" r="2.6" data-lvt-eid="4c8a0f6f14"></circle></svg></span>
+          <span data-lvt-eid="cf5b6212b6"><h4 data-lvt-eid="673bef1d78">地址</h4><span class="v" data-lvt-eid="7f30e22a0d">台北市仁愛路四段 27 巷 9 號 B1</span></span>
+        </div>
+        <div class="loc-row reveal" data-lvt-eid="3877f726bb">
+          <span class="loc-ico" data-lvt-eid="45b9ab13d8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="8914debace"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" data-lvt-eid="d42c29cf2a"></path></svg></span>
+          <span data-lvt-eid="865a2516fa"><h4 data-lvt-eid="0d8a436ecc">電話</h4><span class="v" data-lvt-eid="0b87391dbe"><a href="tel:02-27417668" data-lvt-eid="00281883ad">02-27417668</a></span></span>
+        </div>
+        <div class="loc-row reveal d1" data-lvt-eid="f075ace050">
+          <span class="loc-ico" data-lvt-eid="46fd9a5f74"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="ff104c4cb2"><rect x="5" y="3" width="14" height="14" rx="3" data-lvt-eid="0e4f660443"></rect><path d="M5 10h14M9 17v3M15 17v3M8 6.5h.01M16 6.5h.01" data-lvt-eid="d44e991cda"></path></svg></span>
+          <span data-lvt-eid="9a45fdb448"><h4 data-lvt-eid="4d462ca306">捷運</h4><span class="v" data-lvt-eid="30b0c86452">忠孝復興站 3 號出口右轉直走 3 分鐘，左邊可達。</span></span>
+        </div>
+        <div class="loc-row reveal d1" data-lvt-eid="f6adae9e5d">
+          <span class="loc-ico" data-lvt-eid="678e46b318"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="8c812ee42b"><rect x="4" y="4" width="16" height="16" rx="3" data-lvt-eid="3f697d0033"></rect><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3" data-lvt-eid="cf4b57a1f7"></path></svg></span>
+          <span data-lvt-eid="c6079afeb8"><h4 data-lvt-eid="fc6e0a9b01">停車</h4><span class="v" data-lvt-eid="60a67af9b7">附近有收費停車場。</span><br data-lvt-eid="f2b8ce1555"><span class="note" data-lvt-eid="5ee8afd670">附近停車不便，請盡量搭乘捷運。</span></span>
+        </div>
+      </div>
+      <div class="map-ph reveal d1" data-lvt-eid="6779756f30">
+        <span class="map-pin" data-lvt-eid="9757b38873"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lvt-eid="57c821b70f"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" data-lvt-eid="b0c8d8ea96"></path><circle cx="12" cy="10" r="2.6" data-lvt-eid="065858c4c4"></circle></svg></span>
+        <strong data-lvt-eid="24d7dc6de6">立馬吃一鍋 仁愛店</strong>
+        <span data-lvt-eid="3646057879">台北市仁愛路四段 27 巷 9 號 B1</span>
+        <span style="color:var(--brand);font-weight:700;" data-lvt-eid="dea5b21cf2">地圖連結待補</span>
+      </div>
+    </div>
+    <div class="host-bar reveal" data-lvt-eid="ec2b727a00">
+      <span class="h" data-lvt-eid="0c16a5504f"><span data-lvt-eid="bd3ddcfbca">主辦｜</span><b data-lvt-eid="6d244544a0">中華網紅協會／大樹教育顧問有限公司</b></span>
+      <span class="h" data-lvt-eid="ec1be96479"><span data-lvt-eid="fc765bb79c">協辦｜</span><b data-lvt-eid="59d6e30853">立馬樂福團隊</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9. 最終 CTA + 頁尾 ===== -->
+<section class="cta" id="signup" data-lvt-eid="e4fb9ad08c">
+  <div class="wrap" data-lvt-eid="241568bdf7">
+    <span class="kicker reveal" data-lvt-eid="1ccba06543">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-lvt-eid="8db1ce2a4c"><circle cx="12" cy="12" r="9" data-lvt-eid="b1b3e93d30"></circle><path d="M12 7v5l3 3" data-lvt-eid="e0926248e9"></path></svg>
+      名額有限・先私訊先保留
+    </span>
+    <h2 class="reveal d1" data-lvt-eid="5068e2815f"><span class="num" style="font-family:var(--num)" data-lvt-eid="8315d1c0cf">10/17</span> 台北，70 個名額額滿為止</h2>
+    <p class="reveal d1">填好下面三格就完成報名，送出後加入官方 LINE，活動前會收到提醒。</p>
+    <form class="form-card" id="regForm" novalidate>
+      <div class="field">
+        <label for="regName">姓名<span class="req">*</span></label>
+        <input type="text" id="regName" name="name" autocomplete="name" required placeholder="請填寫真實姓名，方便現場核對">
+        <p class="err" id="errName">請填寫您的姓名</p>
+      </div>
+      <div class="field">
+        <label for="regPhone">聯絡電話<span class="req">*</span></label>
+        <input type="tel" id="regPhone" name="phone" autocomplete="tel" inputmode="tel" required placeholder="09xx-xxx-xxx">
+        <p class="err" id="errPhone">請填寫可聯絡到您的電話</p>
+      </div>
+      <div class="field">
+        <label for="regCount">出席人數</label>
+        <select id="regCount" name="count">
+          <option value="1人">1 人（我自己）</option>
+          <option value="2人">2 人</option>
+          <option value="3人">3 人</option>
+          <option value="4人以上">4 人以上</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">送出報名資料</button>
+      <p class="form-foot">送出後請加入官方 LINE 完成確認，<br>活動前會收到提醒通知。</p>
+    </form>
+  </div>
+</section>
+
+<footer data-lvt-eid="d62bca1692">
+  <div class="wrap" data-lvt-eid="74d20a84d0">
+    <div class="f-brand" data-lvt-eid="ad557957a8">中華網紅協會 × 大樹教育顧問有限公司</div>
+    <div class="f-line" data-lvt-eid="41b5f272d4">主辦：中華網紅協會／大樹教育顧問有限公司　・　協辦：立馬樂福團隊</div>
+    <div class="f-line" data-lvt-eid="5a48e39dd4">© 2026 中華網紅協會零基礎學 AI 課・保留一切權利</div>
+    <div class="f-legal" data-lvt-eid="99323a3e13">本頁資訊以主辦單位公告為準；活動內容、時程與費用如有異動，將另行公告通知。</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  items.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+
+<!-- SUCCESS MODAL（線上報名 SOP） -->
+<div class="modal" id="okModal" role="dialog" aria-modal="true" aria-labelledby="okTitle">
+  <div class="modal-in">
+    <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h3 id="okTitle">報名資料已送出！</h3>
+    <p>最後一步：加入官方 LINE，把報名訊息傳給我們，席次確認更快。</p>
+    <a href="https://lin.ee/o5pODV8" target="_blank" rel="noopener" class="btn btn-line" onclick="copyLineMsg()">加入 LINE 並傳送報名資料</a>
+    <button type="button" class="btn btn-outline" onclick="copyLineMsg(true)">或複製訊息手動傳送</button>
+    <button type="button" class="modal-close" onclick="closeModal()">關閉視窗</button>
+  </div>
+</div>
+<script>
+const SLUG='ema1017';
+const SESSION='10/17（六）15:00 零基礎學AI課 · 立馬吃一鍋 仁愛店（台北）';
+const API='https://event.bymyway.com/api/register';
+let last=null;
+document.getElementById('regForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const count=document.getElementById('regCount').value;
+  let ok=true;
+  document.getElementById('errName').classList.toggle('show',!name); if(!name)ok=false;
+  document.getElementById('errPhone').classList.toggle('show',!phone); if(!phone)ok=false;
+  if(!ok){ (name?document.getElementById('regPhone'):document.getElementById('regName')).focus(); return; }
+  last={name,phone,count};
+  const btn=document.getElementById('submitBtn');
+  const t=btn.innerHTML; btn.disabled=true; btn.innerHTML='處理中…';
+  fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({slug:SLUG,name,phone,company:count,source:'event.bymyway.com/curated/ema1017'})}).catch(()=>{});
+  setTimeout(()=>{
+    btn.disabled=false; btn.innerHTML=t;
+    document.getElementById('regForm').reset();
+    document.getElementById('okModal').classList.add('on');
+  },700);
+});
+function lineMsg(){
+  if(!last) return '您好，我想報名【零基礎學AI課】10/17（六）台北場，請協助確認席次，謝謝！';
+  return '您好，我想報名【零基礎學AI課】\n場次：'+SESSION+'\n姓名：'+last.name+'\n電話：'+last.phone+'\n人數：'+last.count+'\n請協助確認席次，謝謝！';
+}
+function copyLineMsg(alertIt){
+  const m=lineMsg();
+  navigator.clipboard.writeText(m).then(()=>{ if(alertIt) alert('已複製報名訊息，請貼到 LINE 對話框送出。'); })
+   .catch(()=>{ if(alertIt) prompt('請複製以下訊息傳送給大樹教育 LINE：',m); });
+}
+function closeModal(){ document.getElementById('okModal').classList.remove('on'); }
+document.getElementById('okModal').addEventListener('click',e=>{ if(e.target.id==='okModal') closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+</script>
+</body></html>
