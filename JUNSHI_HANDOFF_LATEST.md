@@ -12,7 +12,8 @@
 - `openclaw message send` 不經過 message_sending，測送出前外掛要走 `gateway call agent` 加 `deliver:true`＋假收件人（已寫進記憶 `feedback_openclaw_hook_fire_and_forget.md`）。
 
 ### 📋 下一場開工先做
-賈維斯成長計畫第四步：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/` 有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）；③四位夥伴分身（peipei／kong／yijing／yang）SOUL.md 寫「三種標準」夥伴版（有智慧／聽懂人話／準確做事；peipei／kong／yijing 是獨立 repo），改完封存該群 session、走真實群組路徑測；④記憶 125 條未處理的轉反射。
+賈維斯成長計畫第四步剩兩項（都在等外部，10-02 04:30 查過：LINE 只有上一場兩筆測試、聯想宏碁信還沒被讀）：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/`（資料夾還不存在＝沒回信）有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）。
+（③四位夥伴 SOUL.md「三種標準」夥伴版 10-02 04:20 完成：peipei `cf586c1`／kong `9ff7bb119`／yijing `c9346f4`／yang 外層 `e6f5f4993`，群組 session 已封存、gateway 真實路徑測過；④記憶 127 條全部有去向＋13 條新反射，workspace `dfe39d869`，`python3 scripts/reflex_coverage.py` 未處理 0。）
 
 ---
 
