@@ -19,7 +19,7 @@ import time
 
 WS = "/Users/bymyway/.openclaw/workspace"
 INDEX = os.path.join(WS, "knowledges/反射索引.json")
-HITS = os.path.join(WS, "state/reflex_hits.log")
+HITS = os.environ.get("REFLEX_HITS_LOG") or os.path.join(WS, "state/reflex_hits.log")  # 測試時指到別處，別汙染真實統計
 SEEN_DIR = os.path.join(os.environ.get("TMPDIR", "/tmp"), "reflex_seen")
 MAX_PER_FIRE = 3
 
@@ -33,14 +33,16 @@ def text_for(moment, evt):
     """各時刻要比對的文字。"""
     if moment == "prompt":
         return evt.get("prompt") or ""
-    ti = evt.get("tool_input") or {}
-    parts = [str(ti.get(k) or "") for k in ("command", "file_path", "path", "url", "content", "new_string")]
-    if moment == "post_tool":
-        resp = evt.get("tool_response")
-        parts.append(resp if isinstance(resp, str) else json.dumps(resp, ensure_ascii=False)[:20000])
     if moment == "reply":
         return last_assistant_text(evt)
-    return "\n".join(parts)
+    ti = evt.get("tool_input") or {}
+    if moment == "post_tool":
+        # 只看「改了哪個檔」＋「工具回傳了什麼」，不看指令內容：
+        # 2026-10-02 首次實戰誤判——指令裡只是寫文件提到 429/MiniMax，就被當成真的收到 429。
+        resp = evt.get("tool_response")
+        resp = resp if isinstance(resp, str) else json.dumps(resp, ensure_ascii=False)[:20000]
+        return "\n".join([str(ti.get("file_path") or ti.get("path") or ""), resp])
+    return "\n".join(str(ti.get(k) or "") for k in ("command", "file_path", "path", "url", "content", "new_string"))
 
 
 def last_assistant_text(evt):
