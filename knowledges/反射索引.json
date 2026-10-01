@@ -63,7 +63,7 @@
       "id": "R-MINIMAX-429",
       "moment": "post_tool",
       "tool": "Bash",
-      "match": "(?is)(minimax.*\\b429\\b|\\b429\\b.*minimax)",
+      "match": "(?im)^(?=.*minimax).*(rawError=429|HTTP/[0-9.]+ 429|status(_code)?[\"':= ]{1,3}429|\\b429 Too Many|reason=rate_limit|Cause: rate_limit|rate.?limit (reached|exceeded))",
       "say": "MiniMax 回 429：教練方案是 5 小時 4500 次，不要去問教練額度；先查是不是短時間批次呼叫太密。",
       "level": "remind",
       "situation": "看到 MiniMax 額度錯誤時",

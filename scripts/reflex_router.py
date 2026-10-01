@@ -39,10 +39,23 @@ def text_for(moment, evt):
     if moment == "post_tool":
         # 只看「改了哪個檔」＋「工具回傳了什麼」，不看指令內容：
         # 2026-10-02 首次實戰誤判——指令裡只是寫文件提到 429/MiniMax，就被當成真的收到 429。
-        resp = evt.get("tool_response")
-        resp = resp if isinstance(resp, str) else json.dumps(resp, ensure_ascii=False)[:20000]
+        resp = response_text(evt.get("tool_response"))
+        if len(resp) > 20000:
+            resp = resp[:10000] + "\n" + resp[-10000:]  # 錯誤常在最後，頭尾都留
         return "\n".join([str(ti.get("file_path") or ti.get("path") or ""), resp])
     return "\n".join(str(ti.get(k) or "") for k in ("command", "file_path", "path", "url", "content", "new_string"))
+
+
+def response_text(resp):
+    """工具回傳的原文。Bash 回傳 {stdout, stderr…}：取原文保留換行（json.dumps 會壓成一行，逐行比對失效）；
+    originalFile 是改檔前的整份內容、不是結果，不比對。"""
+    if isinstance(resp, str):
+        return resp
+    if isinstance(resp, dict):
+        parts = [v for k, v in resp.items() if isinstance(v, str) and k != "originalFile"]
+        if parts:
+            return "\n".join(parts)
+    return json.dumps(resp, ensure_ascii=False)
 
 
 def last_assistant_text(evt):
