@@ -140,7 +140,7 @@ case "$TASK_TYPE" in
     notify_telegram "⏳ *軍師開始執行任務*\n📋 ${PROMPT:0:100}..."
 
     TASK_STDERR=$(mktemp)
-    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" --output-format text 2>"$TASK_STDERR" | tail -c 3000) || true
+    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" --permission-mode acceptEdits --output-format text 2>"$TASK_STDERR" | tail -c 3000) || true
     if [ -s "$TASK_STDERR" ]; then
       log "claude stderr: $(head -c 500 "$TASK_STDERR")"
     fi
