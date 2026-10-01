@@ -202,6 +202,26 @@ if (Test-Path $sessionDump) {
 # ───────── 輸出注入內容 ─────────
 Write-Output "# 🔴 軍師接力棒 v3（六步驟全注入，本場 session 僅一次）"
 Write-Output ""
+
+# 2026-10-02 Mac軍師交辦（教練授權）：最新一棒的「教練上一場交辦」置頂注入，挑時間最新的一段（同Mac feed_junshi_handoff.sh）
+$nextTask = ""
+try {
+    $pyExe = $null
+    foreach ($c in @("python", "py")) { if (Get-Command $c -ErrorAction SilentlyContinue) { $pyExe = $c; break } }
+    if ($pyExe -and (Test-Path $handoff)) {
+        $tmpPy = Join-Path $PSScriptRoot "pick_next_task.py"
+        $prevEnc = [Console]::OutputEncoding
+        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+        $nextTask = ((& $pyExe $tmpPy $handoff) -join "`n").Trim()
+        [Console]::OutputEncoding = $prevEnc
+    }
+} catch { $nextTask = "" }
+if ($nextTask) {
+    Write-Output "## 🎯 教練上一場交辦：這一場第一件要做的事（開工回報第一行就要講，講完直接開始做）"
+    Write-Output ""
+    Write-Output $nextTask
+    Write-Output ""
+}
 Write-Output "## 🌐 雲端同步狀態（v3 設計：每次「開工」自動 git pull）"
 Write-Output ""
 Write-Output "- $pullStatus"
@@ -388,6 +408,7 @@ Write-Output "讀完本段後，回應**不超過5行**，只包含："
 Write-Output "- 「我已讀完接力棒」＋身份核對（模型版本 + Windows 桌面版 GUI）＋雲端同步 HEAD hash 前 7 碼，一行講完"
 Write-Output "- 待辦表「🙋要教練決定」區裡**還沒問過**的項目（通常是零件；零件就完全不提待辦）"
 Write-Output "- 詢問教練「今天從哪件事開始？」"
+Write-Output "- 若最上方有「🎯 教練上一場交辦」：第二行就講這件事，並說「現在開始做」，回報完直接動手，不問「今天從哪件事開始」"
 Write-Output "**禁止**：唸「🤫等教練自己提起」區、唸「🔧AI自己的工作清單」、列舉上一棒戰果、自己發現的系統異常。這些是AI自己的事，自己處理。"
 Write-Output ""
 Write-Output "## 🚦 本場全程適用：問教練之前的三關（2026-09-24教練：「同一類事情不要再重複來煩我了」）"

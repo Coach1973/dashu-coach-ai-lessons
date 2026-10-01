@@ -7,6 +7,8 @@
 - [🔴 送Telegram/LINE的網址必須獨立一行，緊貼「（已確認打得開）」害教練點不開十幾二十次(2026-10-02)](feedback_telegram_url_must_stand_alone_2026-10-02.md)
 - [🔧 RustDesk官方中繼站21117壞→Tailscale三台+iPhone入網，輸入100.x直連；在家同網路ID仍通，「就緒」≠中繼站正常(2026-10-01)](reference_tailscale_rustdesk_direct_network_2026-10-01.md)
 - [🔧 第一分會戰情表改雙週(8/9~11/11)＋team_tool填121/填咖啡/填來賓，怡靜群口頭更正(2026-10-01)](reference_team01_biweekly_and_team_tool_fill_2026-10-01.md)
+- [🔴 單檔HTML作品：自己下載外連圖+打包zip走大樹創作SOP，不叫教練壓縮(2026-10-02)](feedback_single_html_work_download_images_and_zip_myself_2026-10-02.md)
+- [🔧 RustDesk官方中繼壞時：聯想輸入Mac的Tailscale IP 100.91.228.91直連(21118)成功(2026-10-01)](reference_rustdesk_direct_ip_over_tailscale_2026-10-01.md)
 - [🔧 聯想連蘋果現行方式：RustDesk官方中繼21117壞→Tailscale+TigerVNC，桌面捷徑「連蘋果電腦」，Mac帳號bymyway+Mac開機密碼(2026-10-01)](reference_lenovo_to_mac_tigervnc_tailscale_2026-10-01.md)
 - [🔴 遠端連線題先確認「誰連誰」：10-01又做錯方向(蘋果→聯想，教練要聯想→蘋果)，同案例90教訓第二次(2026-10-01)](feedback_remote_connection_confirm_direction_first_2026-10-01.md)
 - [🦞 楊尚儒老師分身yang已綁新群組-5405039910，無資料庫/LK888、鎖死不能跑指令；楊老師ID=6376666419(2026-10-01)](project_yang_agent_telegram_group_2026-10-01.md)
