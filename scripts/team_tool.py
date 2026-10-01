@@ -14,7 +14,7 @@
   team_tool.py 查 <姓名>                     在五個分會和第一分會統計表裡找這個人
   team_tool.py 週 <第三週 | 2026-09-24 | 9/24 | 本週>
   team_tool.py 出席 <姓名> <週> <出席|實體|線上|遲到|缺席|清除>  （後面可加「代理」＝有派代理人）
-  team_tool.py 填121 <姓名> <週> <次數>      代填某人那週的一對一次數（填咖啡用法相同）
+  team_tool.py 填121 <姓名> <週> <次數>      代填某人那週的一對一次數（填咖啡、填來賓用法相同）
   team_tool.py 排序 <姓名1> <姓名2> ...       名單照這個順序排
   team_tool.py 新增 <姓名>                   把名字填進第一分會統計表的第一個空位
   team_tool.py 刪除 <姓名>                   離會／不再參加：從第一分會統計表移除（也可說「移除」）
@@ -236,7 +236,7 @@ def cmd_attend(c, name, wtext, status):
         print(f"❌ 沒有更新成功：{res.get('error', '原因不明')}")
 
 
-METRIC = {"填121": ("ones", "121"), "填咖啡": ("coffee", "咖啡")}
+METRIC = {"填121": ("ones", "121"), "填咖啡": ("coffee", "咖啡"), "填來賓": ("guests", "來賓")}
 
 
 def cmd_metric(c, cmd, name, wtext, num):
@@ -252,7 +252,16 @@ def cmd_metric(c, cmd, name, wtext, num):
     if err:
         print(err)
         return
-    res = post("/api/update_metric", {"member_id": m["id"], "week_date": w["week_date"], "metric": key, "value": int(num)})
+    if key == "guests":  # 網站不開放會員自填來賓數，這裡由特助直接寫入（供更正用）
+        wc = sqlite3.connect(str(DB))
+        wc.execute("INSERT INTO weekly_data (member_id, week_date, guests) VALUES (?, ?, ?) "
+                   "ON CONFLICT(member_id, week_date) DO UPDATE SET guests = excluded.guests",
+                   (m["id"], w["week_date"], int(num)))
+        wc.commit()
+        wc.close()
+        res = {"ok": True}
+    else:
+        res = post("/api/update_metric", {"member_id": m["id"], "week_date": w["week_date"], "metric": key, "value": int(num)})
     if res.get("ok"):
         print(f"✅ 已更新：{m['name']} {w['label']}（{w['week_date'][5:].replace('-', '/')}）{label} → {num}")
     else:
