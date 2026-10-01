@@ -14,6 +14,7 @@
   team_tool.py 查 <姓名>                     在五個分會和第一分會統計表裡找這個人
   team_tool.py 週 <第三週 | 2026-09-24 | 9/24 | 本週>
   team_tool.py 出席 <姓名> <週> <出席|實體|線上|遲到|缺席|清除>  （後面可加「代理」＝有派代理人）
+  team_tool.py 填121 <姓名> <週> <次數>      代填某人那週的一對一次數（填咖啡用法相同）
   team_tool.py 排序 <姓名1> <姓名2> ...       名單照這個順序排
   team_tool.py 新增 <姓名>                   把名字填進第一分會統計表的第一個空位
   team_tool.py 刪除 <姓名>                   離會／不再參加：從第一分會統計表移除（也可說「移除」）
@@ -235,6 +236,29 @@ def cmd_attend(c, name, wtext, status):
         print(f"❌ 沒有更新成功：{res.get('error', '原因不明')}")
 
 
+METRIC = {"填121": ("ones", "121"), "填咖啡": ("coffee", "咖啡")}
+
+
+def cmd_metric(c, cmd, name, wtext, num):
+    key, label = METRIC[cmd]
+    if not re.fullmatch(r"\d{1,2}", num):
+        print("次數要填數字，例如 2")
+        return
+    m, err = find_member(c, name)
+    if err:
+        print(err)
+        return
+    w, err = find_week(c, wtext)
+    if err:
+        print(err)
+        return
+    res = post("/api/update_metric", {"member_id": m["id"], "week_date": w["week_date"], "metric": key, "value": int(num)})
+    if res.get("ok"):
+        print(f"✅ 已更新：{m['name']} {w['label']}（{w['week_date'][5:].replace('-', '/')}）{label} → {num}")
+    else:
+        print(f"❌ 沒有更新成功：{res.get('error', '原因不明')}")
+
+
 def cmd_add(c, name):
     name = name.strip()
     if not name:
@@ -299,6 +323,8 @@ def main():
         cmd_week(c, a[1])
     elif a[:1] == ["出席"] and len(a) in (4, 5):
         cmd_attend(c, a[1], a[2], a[3] + (a[4] if len(a) == 5 else ""))
+    elif a[0] in METRIC and len(a) == 4:
+        cmd_metric(c, a[0], a[1], a[2], a[3])
     elif a[:1] in (["刪除"], ["移除"]) and len(a) == 2:
         cmd_remove(c, a[1])
     elif a[:1] == ["新增"] and len(a) == 2:
