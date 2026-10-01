@@ -30,7 +30,7 @@
 - ✅ **第 2 步 Top 30**：報告 `knowledges/2026-10-02_Top30條件反射報告.html`（已用 Chrome 開給教練；md 同名）。反射索引 48 條（新 23、修 7、登記既有程式 10）；回測工具 `scripts/reflex_backtest.py`；證據 `state/top30_evidence_ids.json`；教練原話庫 `scripts/build_coach_corpus.py`（原話庫與回測快取含密碼，不進 git）。commit `23e73b2dd` 起。
 - **第 3 步（這一場做）**：Top 30 以外的試金石案例與記憶，逐案補成反射（每批 10 案；寫入前先 `python3 scripts/reflex_backtest.py run <id>` 回測、看抽樣，回話前那種只放零誤判的）；吸收 `knowledges/01_knowledge_base/trigger_index.md`，拿掉重複提醒。
 - 量尺：教練訊息「重講」比例 5月19%／6月13%／7月14%／8月12%／9月16%；重跑 `python3 scripts/render_top30_report.py` 看 10 月有沒有降。
-- 跨機（跨機鎖，教練沒提就不問）：聯想／宏碁還沒接上反射；Windows 開工沒有「置頂教練交辦」。信已寫好草稿 `cross-agent/drafts/20261002-0215_mac-to-lenovo_kaigong-top-task-port.md`，教練說「發」才搬進 inbox。
+- 跨機（跨機鎖，教練沒提就不問）：聯想／宏碁還沒接上反射；Windows 開工沒有「置頂教練交辦」。信已寫好草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md`，教練說「發」才搬進 inbox。
 - 之後：開工改成「心＋最新一棒摘要」；Stop hook 只留行為檢查、拿掉字眼檢查。
 - 待查：`handoff_sync_guard.sh` 判斷1 用 PreToolUse＋stderr＋exit 0 提醒，AI 可能看不到（所有對話紀錄沒出現過）。
 
