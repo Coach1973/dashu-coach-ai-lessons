@@ -1,4 +1,6 @@
 # Memory Index
+- [🔧 聯想連蘋果現行方式：RustDesk官方中繼21117壞→Tailscale+TigerVNC，桌面捷徑「連蘋果電腦」，Mac帳號bymyway+Mac開機密碼(2026-10-01)](reference_lenovo_to_mac_tigervnc_tailscale_2026-10-01.md)
+- [🔴 遠端連線題先確認「誰連誰」：10-01又做錯方向(蘋果→聯想，教練要聯想→蘋果)，同案例90教訓第二次(2026-10-01)](feedback_remote_connection_confirm_direction_first_2026-10-01.md)
 - [🔴 教練團隊重心在台灣、不傾向與中國大陸合作；夥伴介紹不可讓人誤以為重心在大陸，圖片裡的簡體字也要處理(2026-09-30)](feedback_taiwan_focus_no_china_emphasis_2026-09-30.md)
 - [🔴🔴 答案必然是「要」的事不准問(上傳雲端/放行權限)；被安全檢查擋下不准丟指令叫教練跑(2026-09-30)](feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md)
 - [🔴 額度緊繃時，臨場發現的額外修復工作要先問教練再花token，不能自己判斷該修就動手(2026-09-30)](feedback_flag_unscoped_token_cost_before_fixing_2026-09-30.md)
