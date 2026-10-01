@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:46 台灣時間，Mac 桌面版 Opus 5.5，v268）
+
+**主軸：賈維斯成長計畫第三步四項全部做完並走真實路徑驗證。**
+
+### 做了什麼
+1. **對外帳號禮遇版人設**：bni_tainan／jiaolian_thoughts 的 SOUL.md 加「🤝 禮遇版服務標準」四條（惦記對方說過的話／不把問題丟回給對方／聽懂人話／準確做事）；小龍蝦 SOUL.md 加「場景三 LINE 龍蝦小助教、群組朋友」（19,092 字，未超 2 萬）。bni_tainan AGENTS.md 第 101 行改成「系統自動附上📅行事曆」，不再叫它用 exec。三帳號 39 個 LINE 舊對話已封存（可還原）。假會員實測：記得「小美」並一次給齊 10/12 進階MSP 日期＋時間＋ZOOM＋報名連結；記得「阿明第一次上台」直接接上；main 逐字貼出場景三。commit 外層 `626a42590`、workspace `c4882f831`。
+2. **聯想／宏碁接反射**：`scripts/reflex_router.py` 修 Windows 兩個地雷（cp950 讀中文變亂碼→反射全比不到且不報錯；印 ⚡ 被吞掉），`PYTHONIOENCODING=cp950` 模擬提醒、擋下都正常。信已寄 `cross-agent/inbox/lenovo/20261002-0338_…`（接線＋開工置頂🎯，只有聯想改 ps1）、`inbox/acer/20261002-0338_…`（只接線）。跨機鎖依教練 02:30 原話「聯想電腦、宏碁電腦…也要被注入」開。舊草稿移到 outbox。commit `f9708d4c0`。
+3. **網址手滑校正**：新外掛 `extensions/url-typo-guard/`（`message_sending`，LINE 三帳號送出前把 `tainan-calendar`／`tainancalender` 等改回 `event.bymyway.com/tainan-calender/`，實測錯的都 404）；每 3 次寫信到 `cross-agent/inbox/mac/`，不發 Telegram 吵教練。舊 hook 已關。測試 12/12＋真實路徑（bni_tainan 回覆經 deliver 送假 LINE 收件人，外掛抓到並改正）。gateway 完整重啟兩次（03:42、03:44），版本先核對一致。commit `bc9b414bb`。
+
+### 卡在哪／發現
+- `state/member_context.log` 到 03:46 仍是空的（凌晨沒有真實 LINE 會員訊息），龍蝦小助教認人還沒驗證。
+- `openclaw message send` 不經過 message_sending，測送出前外掛要走 `gateway call agent` 加 `deliver:true`＋假收件人（已寫進記憶 `feedback_openclaw_hook_fire_and_forget.md`）。
+
+### 📋 下一場開工先做
+賈維斯成長計畫第四步：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/` 有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）；③四位夥伴分身（peipei／kong／yijing／yang）SOUL.md 寫「三種標準」夥伴版（有智慧／聽懂人話／準確做事；peipei／kong／yijing 是獨立 repo），改完封存該群 session、走真實群組路徑測；④記憶 125 條未處理的轉反射。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:28 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v267）
 
 **主軸：賈維斯成長計畫第二步——15 支「注入沒送到模型」的舊 hook 逐支分類，重要的搬進兩個新外掛，全部走真實路徑請模型逐字貼出驗證。**
@@ -16,7 +34,9 @@
 - gateway 完整重啟兩次（03:14、03:22），每次約 15 秒；版本已先核對一致。設定備份 `openclaw.json.bak-20261002-before-member-context`／`-before-coach-context`（gitignore）。
 
 ### 📋 下一場開工先做
-賈維斯成長計畫第三步：①先看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認得出人才算數）；②對外帳號「禮遇版」人設寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限見 R-BOOTSTRAP-20K），順手刪 bni_tainan AGENTS.md 第 101 行 exec 同步那句，改完刪 session、走真實路徑測；③聯想／宏碁 `feed_junshi_handoff.ps1` 開工注入讀反射索引（舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 改寫再發，教練 02:30 已說三台都要）；④`line-url-typo-guard` 改用外掛 `message_sending`。
+（第三步已完成，見上方 v268 的「下一場開工先做」。）
+
+<!-- 原文：賈維斯成長計畫第三步：①先看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認得出人才算數）；②對外帳號「禮遇版」人設寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限見 R-BOOTSTRAP-20K），順手刪 bni_tainan AGENTS.md 第 101 行 exec 同步那句，改完刪 session、走真實路徑測；③聯想／宏碁 `feed_junshi_handoff.ps1` 開工注入讀反射索引（舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 改寫再發，教練 02:30 已說三台都要）；④`line-url-typo-guard` 改用外掛 `message_sending`。 -->
 
 ---
 
@@ -64,7 +84,7 @@
 - 改做外掛 `~/.openclaw/extensions/reflex-prompt/`（before_prompt_build → prependContext，有人等、真的進模型）：直接讀 `knowledges/反射索引.json` 的 prompt 時刻，依發話者分三級（教練 ID→coach；peipei／kong／yijing／yang→partner；其他→public），非教練看 `say_other`、不附出處；同場同條 30 分鐘冷卻；心跳／排程不出聲。索引新增欄位 `audience`、`say_other`（目前 R-PLAIN-TALK／R-SEARCH-HISTORY-FIRST 開到三級，R-SHOW-NOT-DO／R-COPY-EXACT 開到夥伴）。
 - 驗證：4092 句教練原話 JS／Python 命中 21 條全一致；分流測試 18 項全過（`node extensions/reflex-prompt/test.mjs`）；gateway 重啟後走 `openclaw gateway call agent` 真實路徑，main 一字不差貼出 R-HERMES、yijing 只拿到「聽不懂」客氣版且沒有教練專用的那條。命中紀錄 `state/reflex_hits.log` 第 5 欄 `oc:<agent>:<級別>`。
 - 防再犯：新反射 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒，回測 18/39091 全命中正確情境）；舊記憶 `reference_openclaw_hook_inject_format.md` 標過時。
-- **下一步**（10-02 03:25 ①②已完成：外掛 member-context／coach-context＋反射 R-BNI-OFFICIAL-TEXT，見 v267；③④未做）：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
+- **下一步**（10-02 03:25 ①②已完成：外掛 member-context／coach-context＋反射 R-BNI-OFFICIAL-TEXT，見 v267；03:46 ④也完成：外掛 url-typo-guard，見 v268；③等真實 LINE 流量）：①把死掉的注入搬到外掛（價值高先做：line-user-memory 每位朋友記憶、knowledge-search-inject、bni-calendar-inject、client-memory 守則）；②bni_tainan／jiaolian_thoughts 的「官方條文一字不差」提醒（rule-reminder 那條教練 08-05 親口裁示的，一直沒生效）搬進索引 public 級；③真實 LINE 會員流量出現後，看 hits log 有沒有 `oc:main:public`，確認 LINE senderId 有帶到（沒帶到會被當成教練級）；④`line-url-typo-guard` 訂的 `message:sending` 事件 2026.9.4 已不存在（gateway 日誌警告），bni_tainan 網址手滑校正從沒觸發，改用外掛 `message_sending`。
 - 原計畫（保留脈絡）：讓 rule-reminder 讀反射索引＋加適用對象欄，依 agentId＋發話者分流。
 - 對外「禮遇版」是人設不是反射：寫進 jiaolian_thoughts／bni_tainan／main 的 SOUL.md（2 萬字上限，見 R-BOOTSTRAP-20K）。
 - 聯想／宏碁：`feed_junshi_handoff.ps1` 開工注入加讀反射索引＋Windows 版路由；舊信草稿 `cross-agent/drafts/20261002-0125_mac-to-lenovo_kaigong-top-task-port.md` 要改寫成這件再發（教練 02:30 已明說三台都要＝跨機鎖解除）。

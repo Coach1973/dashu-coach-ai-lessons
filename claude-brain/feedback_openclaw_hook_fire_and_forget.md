@@ -32,12 +32,14 @@ OpenClaw 的 hook（`~/.openclaw/hooks/*/handler.js`）寫進 `event.context.inj
 | round-table-orchestrator | 分工群圓桌會議 | 暫不搬，未查分工群是否還在用 |
 | context-overflow-guard、session-summary-trigger | — | 不用搬，早就改成直接發訊息 |
 | bni-reminder-schedule | — | 不在受影響名單：它直接排程，只有註解提到 inject（10-02 更正） |
+| line-url-typo-guard | （不是 inject，是送出前改寫網址） | ✅ 外掛 `url-typo-guard` 接手（10-02 03:50）：舊 hook 訂的 `message:sending` 在 2026.9.4 已不存在，07-24 上線後從沒觸發；改守現行網址 `event.bymyway.com/tainan-calender/`，hook 已關 |
 
 驗證：真實路徑 `openclaw gateway call agent` 假會員（bni_tainan／jiaolian_thoughts）請模型逐字貼出，📓記憶、📅行事曆、⚡會員版官方條文、📚知識庫都收到；main（測試模式）🖥️釋放結果、🗂專案卡都收到。真實 LINE 流量的 ID 格式看 `state/member_context.log`（第 3 欄頻道、第 4 欄 `sender:` 或 `session:`）。
 
 **How to apply：**
 - 要讓模型看到：寫外掛，`api.on("before_prompt_build", (event, ctx) => ({ prependContext }))`，`openclaw.json` 的 `plugins.allow` 加 id、`plugins.entries.<id>` 設 `enabled:true` 與 `hooks.allowConversationAccess:true`；新外掛要完整重啟 gateway 才掛上（熱重載不會）。範本：`~/.openclaw/extensions/reflex-prompt/`（ctx 有 agentId、senderId、sessionKey、trigger）。
 - 驗證：走 `openclaw gateway call agent`（獨立測試 sessionKey、`deliver:false`），請模型逐字貼出注入段；對話存在 `agents/<id>/agent/openclaw-agent.sqlite` 的 `transcript_events`，不在 sessions/*.jsonl。
+- 要在送出前改寫訊息：外掛 `api.on("message_sending", (event, ctx) => ({ content }))`，`ctx` 有 `channelId`／`accountId`／`sessionKey`。驗證走 `openclaw gateway call agent` 加 `deliver:true, channel:"line", accountId, to:"U000…0"`（假收件人，LINE 拒收、沒人收到）；`openclaw message send` 這條路**不經過** message_sending，測不出來。
 - 機制防呆：反射 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時自動提醒）。
 
 相關：[[reference_openclaw_hook_inject_format]]（已過時）
