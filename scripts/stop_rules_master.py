@@ -482,7 +482,9 @@ D_WHITELIST = re.compile(
     r"|應該是.*因為|因為.{0,30}(已經|改用|改成)|討論.{0,30}(改成|改用|廢除|退役)"
     # 2026-09-18 教練親自觸發第2起：介紹/列舉stop_rules_master自身13條規則時
     # 會提到「輪詢設計(D)」這種規則代稱，是在講規則叫什麼名字，不是在提議
-    r"|13條規則|規則\(?[A-M]\)?|stop_rules_master|Stop hook規則|rule0[0-9]|品質稽核機制|AI團隊")
+    r"|13條規則|規則\(?[A-M]\)?|stop_rules_master|Stop hook規則|rule0[0-9]|品質稽核機制|AI團隊"
+    # 2026-10-02：寫反射索引（knowledges/反射索引.json）時，「防止輪詢」的規則原文本身含定時字眼，是規則定義不是提議
+    r'|"(match|say|situation|level|rank|title)"\s*:|\bS:"|條件反射|反射索引')
 
 if TURN_TEXT:
     hits = []
