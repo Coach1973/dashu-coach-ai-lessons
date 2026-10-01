@@ -8,10 +8,13 @@
 用法（口令都是中文）：
   team_tool.py 分會                         五個分會總覽
   team_tool.py 分會 <1~5 或 第三分會>        單一分會的介紹、成員、公告、參訪報名
+  （下面這些指令前面都可以加分會名：第一分會／真貴／真誠／真鑫／真鑽，不加＝第一分會）
+  team_tool.py 真鑫 名單                     例：真鑫分會名單
   team_tool.py 名單                          第一分會每週統計表上的名單
   team_tool.py 查 <姓名>                     在五個分會和第一分會統計表裡找這個人
   team_tool.py 週 <第三週 | 2026-09-24 | 9/24 | 本週>
-  team_tool.py 出席 <姓名> <週> <實體|線上|缺席|清除>
+  team_tool.py 出席 <姓名> <週> <出席|實體|線上|遲到|缺席|清除>  （後面可加「代理」＝有派代理人）
+  team_tool.py 排序 <姓名1> <姓名2> ...       名單照這個順序排
   team_tool.py 新增 <姓名>                   把名字填進第一分會統計表的第一個空位
   team_tool.py 刪除 <姓名>                   離會／不再參加：從第一分會統計表移除（也可說「移除」）
 """
@@ -25,12 +28,22 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
-DB = Path.home() / "github_repos" / "team01-guests" / "team01_guests.db"
-TEAM_DB = Path.home() / "github_repos" / "team-bymyway" / "team.db"
+REPOS = Path.home() / "github_repos"
+CHAPTERS = {  # 分會名 -> (資料夾, 資料庫檔, 網站埠, 是不是固定名額格子型)
+    "第一分會": ("team01-guests", "team01_guests.db", 5091, True),
+    "真貴": ("zhengui-guests", "zhengui_guests.db", 5094, True),
+    "真誠": ("zhencheng-guests", "zhencheng_guests.db", 5090, False),
+    "真鑫": ("zhenxin-guests", "zhenxin_guests.db", 5092, False),
+    "真鑽": ("zhenzuan-guests", "zhenzuan_guests.db", 5093, False),
+}
+CHAPTER = "第一分會"
+DB = REPOS / "team01-guests" / "team01_guests.db"
+TEAM_DB = REPOS / "team-bymyway" / "team.db"
 API = "http://127.0.0.1:5091"
+SLOT_STYLE = True
 STATUS_LABEL = {"active": "正式運作", "forming": "籌備中"}
-ATT = {"實體": "onsite", "線上": "online", "缺席": "absent", "清除": None}
-ATT_LABEL = {"onsite": "實體", "online": "線上", "absent": "缺席", None: "未填"}
+ATT = {"出席": "present", "實體": "onsite", "線上": "online", "遲到": "late", "缺席": "absent", "清除": None}
+ATT_LABEL = {"present": "出席", "onsite": "實體", "online": "線上", "late": "遲到", "absent": "缺席", None: "未填"}
 CN_NUM = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}
 
 
@@ -102,7 +115,7 @@ def post(path: str, payload: dict) -> dict:
         body = e.read()
         return json.loads(body) if body else {"ok": False, "error": "網站沒有回應"}
     except urllib.error.URLError:
-        return {"ok": False, "error": "第一分會網站目前連不上"}
+        return {"ok": False, "error": f"{CHAPTER}網站目前連不上"}
 
 
 def find_member(c, name: str):
@@ -147,8 +160,9 @@ def cmd_list(c):
     names = [r["name"] for r in c.execute(
         "SELECT name FROM members WHERE left_chapter = 0 AND name != '' ORDER BY sort_order, id")]
     blanks = c.execute("SELECT count(*) FROM members WHERE left_chapter = 0 AND name = ''").fetchone()[0]
-    print(f"第一分會名單（{len(names)} 位）：{'、'.join(names) or '還沒有人'}")
-    print(f"還有 {blanks} 個空位可以新增。")
+    print(f"{CHAPTER}名單（{len(names)} 位）：{'、'.join(names) or '還沒有人'}")
+    if SLOT_STYLE:
+        print(f"還有 {blanks} 個空位可以新增。")
 
 
 def cmd_query(c, name):
@@ -167,7 +181,7 @@ def cmd_query(c, name):
                       (today, m["active_from"])).fetchall()
     data = {r["week_date"]: r for r in c.execute("SELECT * FROM weekly_data WHERE member_id = ?", (m["id"],))}
     totals = {"guests": 0, "ones": 0, "coffee": 0}
-    att_count = {"onsite": 0, "online": 0, "absent": 0}
+    att_count = {"present": 0, "onsite": 0, "online": 0, "late": 0, "absent": 0}
     print(f"【{m['name']}】第一分會紀錄")
     for w in weeks:
         r = data.get(w["week_date"])
@@ -178,7 +192,7 @@ def cmd_query(c, name):
         if a in att_count:
             att_count[a] += 1
         print(f"・{w['label']}（{w['week_date'][5:].replace('-', '/')}）出席：{ATT_LABEL.get(a, a)}｜來賓 {g or 0} 人｜121 {o or 0} 次｜咖啡 {cf or 0} 場")
-    print(f"合計：實體 {att_count['onsite']} 次、線上 {att_count['online']} 次、缺席 {att_count['absent']} 次；"
+    print(f"合計：出席 {att_count['present'] + att_count['onsite'] + att_count['online']} 次、遲到 {att_count['late']} 次、缺席 {att_count['absent']} 次；"
           f"來賓 {totals['guests']} 人、121 {totals['ones']} 次、咖啡 {totals['coffee']} 場")
 
 
@@ -190,17 +204,20 @@ def cmd_week(c, wtext):
     rows = c.execute(
         "SELECT m.name, d.attendance FROM members m LEFT JOIN weekly_data d ON d.member_id = m.id AND d.week_date = ? "
         "WHERE m.left_chapter = 0 AND m.name != '' ORDER BY m.sort_order, m.id", (w["week_date"],)).fetchall()
-    groups = {"實體": [], "線上": [], "缺席": [], "未填": []}
+    groups = {"出席": [], "遲到": [], "缺席": [], "未填": []}
     for r in rows:
-        groups[ATT_LABEL.get(r["attendance"], "未填")].append(r["name"])
+        lab = ATT_LABEL.get(r["attendance"], "未填")
+        groups["出席" if lab in ("實體", "線上") else lab].append(r["name"])
     print(f"【{w['label']}（{w['week_date'][5:].replace('-', '/')}）出席狀況】")
     for k, v in groups.items():
         print(f"・{k} {len(v)} 位：{'、'.join(v) if v else '—'}")
 
 
 def cmd_attend(c, name, wtext, status):
+    proxy = status.endswith("代理")
+    status = status[:-2] if proxy else status
     if status not in ATT:
-        print(f"出席狀態只能是：實體、線上、缺席、清除（收到的是「{status}」）")
+        print(f"出席狀態只能是：出席、實體、線上、遲到、缺席、清除（收到的是「{status}」）")
         return
     m, err = find_member(c, name)
     if err:
@@ -210,7 +227,7 @@ def cmd_attend(c, name, wtext, status):
     if err:
         print(err)
         return
-    res = post("/api/update_attendance", {"member_id": m["id"], "week_date": w["week_date"], "value": ATT[status]})
+    res = post("/api/update_attendance", {"member_id": m["id"], "week_date": w["week_date"], "value": ATT[status], "proxy": proxy})
     if res.get("ok"):
         print(f"✅ 已更新：{m['name']} {w['label']}（{w['week_date'][5:].replace('-', '/')}）→ {status if status != '清除' else '未填'}")
     else:
@@ -222,29 +239,52 @@ def cmd_add(c, name):
     if not name:
         print("請給一個名字")
         return
-    if c.execute("SELECT 1 FROM members WHERE name = ?", (name,)).fetchone():
+    if c.execute("SELECT 1 FROM members WHERE name = ? AND left_chapter = 0", (name,)).fetchone():
         print(f"「{name}」已經在名單裡了")
         return
-    slot = c.execute("SELECT id FROM members WHERE left_chapter = 0 AND name = '' ORDER BY sort_order, id LIMIT 1").fetchone()
-    if not slot:
-        print("名單已經沒有空位了，請教練處理")
-        return
-    res = post("/api/update_member_name", {"member_id": slot["id"], "name": name})
-    print(f"✅ 已把「{name}」加進第一分會名單" if res.get("ok") else f"❌ 沒有加成功：{res.get('error', '原因不明')}")
+    if SLOT_STYLE:
+        slot = c.execute("SELECT id FROM members WHERE left_chapter = 0 AND name = '' ORDER BY sort_order, id LIMIT 1").fetchone()
+        if not slot:
+            print("名單已經沒有空位了，請教練處理")
+            return
+        res = post("/api/update_member_name", {"member_id": slot["id"], "name": name})
+    else:
+        res = post("/api/add_member", {"name": name})
+    print(f"✅ 已把「{name}」加進{CHAPTER}名單" if res.get("ok") else f"❌ 沒有加成功：{res.get('error', '原因不明')}")
 
 
 def cmd_remove(c, name):
     name = name.strip()
-    row = c.execute("SELECT id FROM members WHERE name = ?", (name,)).fetchone()
+    row = c.execute("SELECT id FROM members WHERE name = ? AND left_chapter = 0", (name,)).fetchone()
     if not row:
         print(f"名單上找不到「{name}」")
         return
-    res = post("/api/clear_member", {"member_id": row["id"]})
-    print(f"✅ 已把「{name}」從第一分會名單移除（他的每週紀錄一併清空）" if res.get("ok") else f"❌ 沒有移除成功：{res.get('error', '原因不明')}")
+    if SLOT_STYLE:
+        res = post("/api/clear_member", {"member_id": row["id"]})
+    else:
+        res = post("/api/remove_member", {"name": name})
+    print(f"✅ 已把「{name}」從{CHAPTER}名單移除" if res.get("ok") else f"❌ 沒有移除成功：{res.get('error', '原因不明')}")
+
+
+def cmd_reorder(c, names):
+    have = {r["name"] for r in c.execute("SELECT name FROM members WHERE left_chapter = 0 AND name != ''")}
+    missing = [n for n in names if n not in have]
+    if missing:
+        print(f"名單上找不到：{'、'.join(missing)}，沒有調整")
+        return
+    rest = [r["name"] for r in c.execute("SELECT name FROM members WHERE left_chapter = 0 AND name != '' ORDER BY sort_order, id") if r["name"] not in names]
+    res = post("/api/reorder_members", {"names": list(names) + rest})
+    print(f"✅ {CHAPTER}名單順序已調整" + (f"（沒提到的 {len(rest)} 位排在後面）" if rest else "") if res.get("ok") else f"❌ 沒調整成功：{res.get('error', '原因不明')}")
 
 
 def main():
+    global CHAPTER, DB, API, SLOT_STYLE
     a = sys.argv[1:]
+    if a and a[0].replace("分會", "") in [k.replace("分會", "") for k in CHAPTERS] and a[0] not in ("分會",):
+        key = next(k for k in CHAPTERS if k.replace("分會", "") == a[0].replace("分會", ""))
+        folder, dbfile, port, slot = CHAPTERS[key]
+        CHAPTER, DB, API, SLOT_STYLE = key, REPOS / folder / dbfile, f"http://127.0.0.1:{port}", slot
+        a = a[1:]
     c = conn()
     if a[:1] == ["分會"] and len(a) == 1:
         cmd_chapters(conn(TEAM_DB))
@@ -256,12 +296,14 @@ def main():
         cmd_query(c, a[1])
     elif a[:1] == ["週"] and len(a) == 2:
         cmd_week(c, a[1])
-    elif a[:1] == ["出席"] and len(a) == 4:
-        cmd_attend(c, a[1], a[2], a[3])
+    elif a[:1] == ["出席"] and len(a) in (4, 5):
+        cmd_attend(c, a[1], a[2], a[3] + (a[4] if len(a) == 5 else ""))
     elif a[:1] in (["刪除"], ["移除"]) and len(a) == 2:
-        cmd_remove(conn(), a[1])
+        cmd_remove(c, a[1])
     elif a[:1] == ["新增"] and len(a) == 2:
         cmd_add(c, a[1])
+    elif a[:1] == ["排序"] and len(a) >= 2:
+        cmd_reorder(c, a[1:])
     else:
         print(__doc__)
         sys.exit(1)
