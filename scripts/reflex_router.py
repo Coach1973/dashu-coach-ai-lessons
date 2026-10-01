@@ -28,7 +28,8 @@ SELF = re.compile(r"反射索引|reflex_(router|backtest)|render_situation_direc
 
 def load_reflexes(moment):
     with open(INDEX, encoding="utf-8") as f:
-        return [r for r in json.load(f)["reflexes"] if r.get("moment") == moment]
+        # 有寫 agents 的只給小龍蝦指定分身用（例如 BNI 官方條文），軍師這邊不比
+        return [r for r in json.load(f)["reflexes"] if r.get("moment") == moment and not r.get("agents")]
 
 
 def text_for(moment, evt):

@@ -10,7 +10,8 @@
     "source": "出處（試金石案例編號或記憶檔名）",
     "enforced_by": "guard 類：負責擋的程式",
     "audience": "適用對象＝誰在跟 AI 說話：coach=教練本人（教練自己的所有 AI：軍師、小龍蝦…）｜partner=四位夥伴分身（peipei／kong／yijing／yang）的夥伴｜public=LINE 對外帳號的一般會員。教練說話一律走 coach；沒寫 audience 視同 [\"coach\"]。目前只有 prompt 時刻會依對象分流（小龍蝦端外掛 reflex-prompt）。",
-    "say_other": "非教練對象（partner／public）看到的版本，不能提「教練」。prompt 時刻才用；audience 含 partner／public 卻沒寫 say_other＝不對他們出聲。"
+    "say_other": "非教練對象（partner／public）看到的版本，不能提「教練」。prompt 時刻才用；audience 含 partner／public 卻沒寫 say_other＝不對他們出聲。",
+    "agents": "只給小龍蝦哪幾個分身用（agentId 清單，例如 BNI 官方條文只給 bni_tainan／jiaolian_thoughts）。有寫 agents 的反射，軍師（Claude Code）那邊不比對；沒寫＝不限分身。"
   },
   "reflexes": [
     {
@@ -927,6 +928,40 @@
       "kind": "防錯型",
       "audience": [
         "coach"
+      ]
+    },
+    {
+      "id": "R-BNI-OFFICIAL-TEXT",
+      "moment": "prompt",
+      "match": "出席|缺席|請假|代理人|政策|規定|條文|道德規範|會議流程|議程|合約|職責|使命|願景|價值觀|總政策|會員資格|淘汰|規則|引薦單|一對一|訪客|遲到",
+      "say": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就誠實說「這部分我不確定」，引導問大樹教練本人或 BNI Connect 官方管道。絕對不要憑印象組一個聽起來合理的答案。",
+      "say_other": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就照 AGENTS.md 的誠實鐵律說「這部分我不確定」並引導對方查官方管道。絕對不要憑印象組一個聽起來合理的答案。",
+      "level": "remind",
+      "situation": "BNI 分身被問到官方條文（出席、政策、規則…）",
+      "source": "教練 2026-08-05 裁示（原 rule-reminder 那條，inject 從未生效；試金石案例98）",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
+      ],
+      "agents": [
+        "bni_tainan",
+        "jiaolian_thoughts"
+      ]
+    },
+    {
+      "id": "R-VOICE-CHECK",
+      "moment": "prompt",
+      "match": "\\[\\d{2}:\\d{2}[.:]\\d{2,3}\\s*-->\\s*\\d{2}:\\d{2}",
+      "say": "這則是語音轉文字，常有諧音錯字（例：「大肅執動」其實是「大樹執董」）。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
+      "say_other": "這則是語音轉文字，常有諧音錯字。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先客氣地問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
+      "level": "remind",
+      "situation": "小龍蝦收到語音訊息（轉成文字）時",
+      "source": "守則#18／執行細則N3（原 rule-reminder 語音糾偏，inject 從未生效；試金石案例98）",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
       ]
     }
   ],
