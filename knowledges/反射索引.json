@@ -584,11 +584,118 @@
       "level": "remind",
       "situation": "工具回傳額度不足類錯誤時",
       "source": "試金石案例57"
+    },
+    {
+      "id": "R-SEED-FAKE-DATA",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(^|[;&|]\\s*)(\\S*python3?\\s+)?(\\./)?seed\\w*\\.py\\b",
+      "say": "跑 seed／假資料驗證前：先列出這個系統「所有」資料表（含 app.py 裡 CREATE TABLE IF NOT EXISTS 動態建的，不只看 schema.sql）；測完逐表確認會被正式資料覆蓋或清掉；交付前對正式站 grep 一次別分會／假資料的人名。",
+      "level": "remind",
+      "situation": "要跑 seed 腳本、用假資料驗證網站時",
+      "source": "試金石案例69"
+    },
+    {
+      "id": "R-ABOUT-COACH-SITE",
+      "moment": "prompt",
+      "match": "關於教練|bymyway\\.com/coach|官網[^\\n]{0,8}(搬|複製|抄)",
+      "say": "官網 www.bymyway.com（WordPress）的內容很多是 iframe 嵌進來的：curl／grep 抓不到就先看原始碼有沒有 <iframe>／<embed>，真正來源在 ~/github_repos/bymyway-website/（coach1973.github.io/bymyway-website/）。先查建置史、把教練描述的架構當查證起點，不要一直加大文字搜尋。",
+      "level": "remind",
+      "situation": "教練提到官網「關於教練」頁、要搬官網內容時",
+      "source": "試金石案例71／守則#02"
+    },
+    {
+      "id": "R-OPENCLAW-NO-REPLY",
+      "moment": "prompt",
+      "match": "小龍蝦[^\\n，。]{0,6}(沒反應|沒有反應|沒回|不回|沒動靜|沒有動靜|聯絡不上|掛了|當機|斷線|不理我)",
+      "say": "「小龍蝦沒反應」：小龍蝦＝ai.openclaw.gateway（bot_main），不是赫米斯（ai.hermes.gateway，兩個獨立 bot）。先查 launchctl print gui/$(id -u)/ai.openclaw.gateway、gateway log、openclaw doctor（出現 Legacy workspace setup state requires migration 會被 launchd 停放）。防呆掛在既有的 system_patrol，不要新建輪詢。",
+      "level": "remind",
+      "situation": "教練說小龍蝦沒反應、當機時",
+      "source": "試金石案例79"
+    },
+    {
+      "id": "G-RELEASE-WORD",
+      "moment": "guard",
+      "enforced_by": "scripts/pre_task_hook.sh＋knowledges/教練口令字典.md",
+      "say": "光講「釋放」＝只重啟 RustDesk（rustdesk_free_memory.sh）；「全部釋放」才關 Chrome／赫米斯桌面版／LINE／Typeless（release_all_memory.sh）。口令以教練親口定義為準，查證要先找他下的定義、不是過去的執行紀錄。",
+      "situation": "教練說「釋放」時",
+      "source": "試金石案例88"
+    },
+    {
+      "id": "R-EVERY-RUN-COST",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^[^\\n]*/(summary_upload_trigger|feed_junshi_handoff)\\.(sh|ps1|py)$",
+      "say": "你在改「每次開工／每次總結」都會跑的步驟：新增任何每次都自動做的事，要當場向教練講清楚每次成本（額度）、誰會用、多久檢討，教練知情才加；平常用不到的改成「教練說要才做」。",
+      "level": "remind",
+      "situation": "要新增每次開工／總結自動執行的步驟時",
+      "source": "試金石案例96"
+    },
+    {
+      "id": "R-BOOTSTRAP-20K",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "(?m)^/Users/bymyway/\\.openclaw/(workspace|agents/[^/\\n]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY|TOOLS|USER|IDENTITY)\\.md$|(?:>>|tee\\s+-a)\\s*\\S*\\.openclaw/(workspace|agents/[^/\\s]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY)\\.md",
+      "say": "OpenClaw 啟動檔（AGENTS／SOUL／HEARTBEAT／MEMORY／USER／TOOLS／IDENTITY.md）有 2 萬字硬上限，超過會被截斷、切出 UTF-8 亂碼：改完用 wc -m 確認；自動化日誌寫 state/*.log，不要追加進這些檔；單檔超過 80KB 要先分割歸檔。",
+      "level": "remind",
+      "situation": "要改或追加小龍蝦啟動檔時",
+      "source": "試金石案例J／L／reference_openclaw_bootstrap_20k_char_limit_2026-09-25.md"
+    },
+    {
+      "id": "R-DETECTOR-RULE-EDIT",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^[^\\n]*/scripts/(stop_[^/\\n]+|[^/\\n]*_guard|[^/\\n]*_hook)\\.(py|sh)$",
+      "say": "寫／改偵測規則（Stop hook、guard）：①只比對這一輪最新內容，不讀整段歷史 ②排除引號內、程式碼區塊、解釋性句型 ③寫完用歷史真實對話回測誤判幾次，不是憑空編測試案例；同一規則誤判第二次就改設計，不補白名單。",
+      "level": "remind",
+      "situation": "要新增或修改偵測規則、hook、守衛程式時",
+      "source": "試金石案例F-2026-06-07／66／feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19.md"
+    },
+    {
+      "id": "R-LAUNCHD-VERIFY",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(^|[;&|]\\s*)(sudo\\s+)?launchctl\\s+(bootstrap|load)\\b|(^|[;&|]\\s*)crontab\\s+-[^l\\s]",
+      "say": "建排程／常駐服務：同一個操作裡確認腳本真的存在（ls），建好當下用真實資料實跑一次看輸出；設了排程不等於會跑（案例C：腳本 7 天根本不存在）。新建設定／文件後，觸發它的排程也要同步指到新檔。能事件觸發就不要定時輪詢。",
+      "level": "remind",
+      "situation": "要建排程、載入常駐服務時",
+      "source": "試金石案例C／H／執行細則N5"
+    },
+    {
+      "id": "J-FIX-STUCK",
+      "moment": "judgment",
+      "say": "同一個問題改第 3 次還沒效：停手，重新理解教練到底要改什麼（「太寬」是外框還是文字？），先讀結構再下手；教練說「你不用做」就立刻停手，不再 Edit／curl／commit。",
+      "situation": "改同一處改了三次沒效、教練叫你停手時",
+      "source": "試金石案例R／S／feedback_cap_retries_report_when_stuck_2026-09-03.md"
+    },
+    {
+      "id": "J-CLOUD-DIAGNOSE-ONLY",
+      "moment": "judgment",
+      "say": "雲端工作頁查出 bug、但修法會動到 Mac 軍師也在用的共用腳本或設定：不要就地套用，也不要什麼都不做——commit 診斷＋「建議怎麼改」寫進接力棒，留給 Mac 軍師審批。",
+      "situation": "雲端查出 bug 且修法會動共用腳本時",
+      "source": "試金石案例91"
+    },
+    {
+      "id": "G-CITATION",
+      "moment": "guard",
+      "enforced_by": "Stop hook 查證不足偵測（scripts/stop_rules_master.py）＋citation-verification 技能",
+      "say": "引用守則先查特助心法.md 原文；引用對話先查原始記錄、有 commit hash 才能說「我之前說過」；教練問「你確定嗎」立即承認不確定、去查。",
+      "situation": "要引用守則編號或過去對話時",
+      "source": "試金石案例D／執行細則N3"
     }
   ],
   "case_ledger": {
     "案例28": "併入 R-WIN-APP-MOVE；「教練給了好的參照物就先抄、同法失敗兩次換路」屬判斷類（守則#13、#07）",
     "案例33": "VPS 部分已退役（VPS 永久下線）；多用戶隔離驗證三件套併入 R-FRIEND-AGENT／R-AGENT-RULES-SESSION／R-OPENCLAW-CONFIG",
-    "案例44": "已由 G-TRAD-CHINESE（Stop hook）擋住"
+    "案例44": "已由 G-TRAD-CHINESE（Stop hook）擋住",
+    "案例A": "已由 G-PORTER／R-COMMAND-FOR-COACH 覆蓋（不叫教練當搬運工）",
+    "案例B": "已由開工注入「稱呼教練：大樹教練」＋G-IDENTITY 覆蓋（稱呼跟對話框綁定，不用固化稱呼）",
+    "案例E": "已由 J-ASK-COACH／G-ASK-WHEN-CLEAR 覆蓋（方向清楚直接做）",
+    "案例G": "已由 J-ASK-COACH／R-DEPLOY-WORDS 覆蓋（教練說「你覺得呢」＝做；等教練說「推」才推）",
+    "案例H": "併入 R-LAUNCHD-VERIFY（新建文件後觸發它的排程也要同步指到新檔）",
+    "案例I": "併入案例45 的 context-overflow-guard（程式擋住）；HEARTBEAT 機制 6 月後已改版",
+    "案例N": "近 4 個月歷史資料零次 .github/workflows 編輯，暫不建反射；再發生再補（驗證法：gh api repos/OWNER/REPO --jq .default_branch）",
+    "案例G-2026-06-09": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（未經教練說「推」不推）",
+    "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）"
   }
 }
