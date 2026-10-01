@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 「線上報名SOP／網路報名SOP」＝活動頁加立即報名表→event.db＋報名通知群，照knowledges/SOP_線上報名.md(2026-10-02教練命名)](reference_online_signup_sop_alias_2026-10-02.md)
 - [🔴 送Telegram/LINE的網址必須獨立一行，緊貼「（已確認打得開）」害教練點不開十幾二十次(2026-10-02)](feedback_telegram_url_must_stand_alone_2026-10-02.md)
 - [🔧 RustDesk官方中繼站21117壞→Tailscale三台+iPhone入網，輸入100.x直連；在家同網路ID仍通，「就緒」≠中繼站正常(2026-10-01)](reference_tailscale_rustdesk_direct_network_2026-10-01.md)
 - [🔧 第一分會戰情表改雙週(8/9~11/11)＋team_tool填121/填咖啡/填來賓，怡靜群口頭更正(2026-10-01)](reference_team01_biweekly_and_team_tool_fill_2026-10-01.md)
