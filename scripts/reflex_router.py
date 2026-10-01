@@ -142,8 +142,8 @@ def main():
     text = text_for(moment, evt) or ""  # 空字串也要比：有的反射只看工具名稱（例如操作 Chrome 前）
     if moment == "reply":
         text = strip_code(text)
-    elif moment in ("pre_tool", "post_tool") and SELF.search(text):
-        return  # 正在改反射系統本身：指令裡本來就寫滿各種刺激字，跳出來全是誤判
+    elif moment in ("pre_tool", "post_tool") and SELF.search(text + "\n" + str((evt.get("tool_input") or {}).get("command") or "")):
+        return  # 正在改反射系統本身：指令裡本來就寫滿各種刺激字，跳出來全是誤判（post_tool 的 text 不含指令，回測輸出的歷史範例會誤觸，所以另外看指令）
 
     reminds, blocks = [], []
     for r in load_reflexes(moment):

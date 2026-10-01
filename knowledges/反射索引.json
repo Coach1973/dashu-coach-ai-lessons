@@ -976,6 +976,173 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-GIT-REBASE-CONTINUE",
+      "moment": "post_tool",
+      "tool": "Bash",
+      "match": "You must edit all merge conflicts",
+      "say": "git rebase --continue 說還有衝突：先 git ls-files -u，空的就是還有「已修改沒 add」的其他檔——git status 把非 ?? 的全部 git add 再 continue，不要繼續找衝突。",
+      "level": "remind",
+      "situation": "git rebase 卡在「還有衝突」時",
+      "source": "reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GIT-ANOMALY-HANDOFF",
+      "moment": "post_tool",
+      "tool": "Bash",
+      "match": "(refusing to merge unrelated histories|have diverged,|interactive rebase in progress)",
+      "say": "git 推不上去／歷史分岔：先讀本機接力棒和 HEARTBEAT.md（別台可能已記下同一件事和做法），再決定下一個 git 指令；這個 repo 改寫過歷史，不要 force push 舊歷史回去。",
+      "level": "remind",
+      "situation": "git 推送被拒、分岔時",
+      "source": "feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-COACH888-EDIT",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "github_repos/coach888/",
+      "say": "改 coach888：①以線上伺服器狀態 /api/coach888/state 為準（教練可能剛在網頁上改過），不是 git 的 index.html ②新項目放該分類第一筆 ③不清瀏覽器 localStorage，要清先備份 ④本機預覽分頁用完關掉，別讓教練在暫存頁上改。",
+      "level": "remind",
+      "situation": "要改 coach888（大樹AI作品一覽）時",
+      "source": "reference_coach888_server_synced_state_architecture_2026-09-24.md／feedback_coach888_new_items_go_first.md／feedback_never_clear_user_storage_without_backup_2026-09-03.md／feedback_never_expose_local_preview_to_coach_2026-09-04.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SOP-ALIAS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^/Users/bymyway/\\.openclaw/workspace/knowledges/SOP_[^\\n]*\\.md$",
+      "say": "寫／改 SOP：檔頭第一段寫教練實際會講的口語叫法（例：「大樹作品」「網路報名」），沒寫等於沒寫；舊 SOP 的收尾步驟（登記 coach888、通知群組）要一起繼承。",
+      "level": "remind",
+      "situation": "要寫或改 SOP 文件時",
+      "source": "feedback_sop_must_alias_spoken_trigger_phrase_2026-09-24.md／feedback_coach888_registration_repeatedly_skipped_2026-09-23.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-QUANMIAN-SCOPE",
+      "moment": "prompt",
+      "match": "全面(改|體檢|檢查|清查|優化|盤點|處理|更新|升級)",
+      "say": "教練說「全面／全部」：範圍預設是這個對話框負責的系統（這台 Claude 碰得到的檔案、repo、服務），不自動擴到小龍蝦、聯想、宏碁；要跨系統教練會點名。",
+      "level": "remind",
+      "situation": "教練說「全面改／全面體檢」",
+      "source": "feedback_quanmian_scope_must_clarify_2026-09-23.md／執行細則N7",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BNI-PPT-SOP",
+      "moment": "prompt",
+      "match": "(?i)BNI\\s*(版)?\\s*PPT|PDF\\s*轉\\s*(BNI|品牌)|品牌底圖",
+      "say": "「BNI PPT SOP」＝ knowledges/SOP_PDF轉品牌底圖PPT.md，照檔案做，不用重問流程或工具。",
+      "level": "remind",
+      "situation": "教練說「BNI PPT／PDF 轉品牌底圖」",
+      "source": "reference_bni_ppt_sop_alias_2026-09-21.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CLAUDE-RC-UNSET",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?s)(unset|env\\s+-u)\\s+ANTHROPIC_(BASE_URL|API_KEY|AUTH_TOKEN).*claude\\s+(rc|remote-control)|claude\\s+(rc|remote-control).*(unset|env\\s+-u)\\s+ANTHROPIC_",
+      "say": "啟動 claude rc 不要 unset ANTHROPIC_* 變數（會觸發硬性檢查噴錯）；完全不動它們，路由問題去 ~/.claude/settings.json 的 env 區塊修。",
+      "level": "remind",
+      "situation": "要啟動 Remote Control（claude rc）時",
+      "source": "feedback_claude_rc_never_unset_base_url_2026-09-19.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SENDBEACON-CORS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "sendBeacon",
+      "say": "sendBeacon 打跨網域 API：伺服器要回實際 Origin（不能 *）＋ Access-Control-Allow-Credentials: true，否則瀏覽器整個擋掉、beacon 也不報錯；驗證要看伺服器真的收到。",
+      "level": "remind",
+      "situation": "程式裡用到 sendBeacon 時",
+      "source": "reference_sendbeacon_cors_credentials_gotcha_2026-09-18.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CURATION-DELETE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "curation/admin/delete",
+      "say": "這支刪除是整套退役（GitHub repo 改名、關 Pages、名冊移除），已公告的網址會 404；只是要從名冊隱藏就不要用它。",
+      "level": "remind",
+      "situation": "要下架策展網站時",
+      "source": "feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GIT-ADD-ALL-PII",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?s)(bni-chapters|team-bymyway|team01|namecard-db|event-signup).*git\\s+(-C\\s+\\S+\\s+)?add\\s+(-A|--all|\\.)(?=\\s|$|;|&)",
+      "say": "這個 repo 有真實會員個資：git add -A／. 可能把 .db.bak 備份一起加進去。先 git status --short 看清單，有 .bak／.db／.sqlite 就排除再加。",
+      "level": "remind",
+      "situation": "在有會員個資的 repo 用 git add -A 時",
+      "source": "feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-MINIMAX-BATCH-GUARD",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?s)^(?!.*minimax_batch_guard)(?=.*\\.py\\n).*(api\\.minimax\\.(io|chat)|minimaxi\\.(com|chat))",
+      "say": "會呼叫 MiniMax 的程式：先 from minimax_batch_guard import guard_call（scripts/），批次呼叫越線自動硬停——教練畫的永久紅線。",
+      "level": "remind",
+      "situation": "寫會呼叫 MiniMax 的程式時",
+      "source": "feedback_minimax_batch_call_redline_guard_2026-08-27.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BIGTREE-EVENTDB-SYNC",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?s)/Users/bymyway/github_repos/bigtree/index\\.html.*\\{\\s*date:\\s*'20\\d\\d-",
+      "say": "改大樹小講場次（SESSION_DATES）：同一輪寫進 event-signup/event.db 的 events 表（slug／name／event_date／event_url），報名頁和後台才會一致。",
+      "level": "remind",
+      "situation": "要改大樹小講場次時",
+      "source": "project_bigtree_eventsignup_sync_rule.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-TAIWAN-FOCUS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "(?s)^(?=.*(\\.html|<h[1-6]|<section|<div))(?=.*(上海|廈門|深圳|北京|廣州|中國商業|兩岸|大陸市場|中國市場)).*",
+      "say": "教練團隊重心在台灣：介紹夥伴、做網頁時，大陸／兩岸經歷可留在「經歷」，現在的重心、服務對象、標籤一律寫台灣；圖片裡的字也要繁體。",
+      "level": "remind",
+      "situation": "網頁內容提到兩岸、中國大陸時",
+      "source": "feedback_taiwan_focus_no_china_emphasis_2026-09-30.md",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -995,5 +1162,117 @@
     "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
     "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
     "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）"
+  },
+  "memory_ledger": {
+    "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
+    "reference_tailscale_rustdesk_direct_network_2026-10-01": "併入 R-REMOTE-DIRECTION；位址細節是參考資料",
+    "reference_team01_biweekly_and_team_tool_fill_2026-10-01": "參考資料（怡靜分身 team_tool 口令）；改分身規則走 R-AGENT-RULES-SESSION",
+    "reference_lenovo_to_mac_tigervnc_tailscale_2026-10-01": "併入 R-REMOTE-DIRECTION；連線方式是參考資料",
+    "project_yang_agent_telegram_group_2026-10-01": "參考資料（yang 分身設定）；R-FRIEND-AGENT",
+    "reference_yijing_lock_chain_and_default_arg_bug_2026-10-01": "併入 R-AGENT-RULES-SESSION；team_tool 預設參數坑是參考資料",
+    "feedback_dont_conflate_account_access_with_ai_tool_access_2026-09-30": "併入 R-FRIEND-AGENT（寫夥伴權限段落時分兩層）",
+    "project_yijing_agent_telegram_group_2026-09-30": "參考資料（yijing 分身架構）；R-FRIEND-AGENT",
+    "project_curated_sites_github_cross_machine_edit_2026-09-30": "參考資料（策展站 GitHub 化）；R-CURATION-SOP",
+    "feedback_flag_unscoped_token_cost_before_fixing_2026-09-30": "判斷類（N2 三關）；併入 J-NECESSARY",
+    "reference_lk888_spend_guard_2026-09-26": "已有程式擋住：G-LK888（lk888_guard.py）／R-PAID-API-TEST",
+    "feedback_check_downstream_references_when_fixing_compat_2026-09-25": "判斷類；併入 G-DELIVERY（回報前查同頁引用的同類資源）",
+    "reference_github_pages_md_content_type_ai_compat_2026-09-25": "參考資料（GitHub Pages .md 的 content-type）",
+    "reference_move_to_cloud_this_repo_2026-09-25": "參考資料（雲端工作頁吃規則的機制）",
+    "feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25": "已有程式：model_tier_advisor.sh",
+    "feedback_windows_on_main_display_only_2026-09-25": "判斷類；G-SCREENSHOT／G-DELIVERY（視窗要親眼確認在主螢幕）",
+    "feedback_dont_surface_own_tangential_findings": "併入 J-ASK-COACH／G-ASK-WHEN-CLEAR（09-24 根源改版已吸收）",
+    "feedback_stale_handoff_row_represented_as_unsolved_2026-09-18": "併入 J-ASK-COACH／G-KAIGONG（開工不唸待辦）",
+    "feedback_proportionate_escalation_not_alarmist_2026-09-23": "併入 J-ASK-COACH",
+    "feedback_vps_update_sop_trigger": "已退役：VPS 更新 SOP 作廢（VPS 永久下線）",
+    "project_team_publish_and_daily_report_goal_2026-09-24": "參考資料（團隊目標）",
+    "reference_ai_assistant_chinese_names": "併入 R-HERMES（克勞德＝Claude、赫米斯＝Hermes）",
+    "feedback_junshi_threshold_sonnet5_and_above_2026-09-24": "併入 G-IDENTITY",
+    "reference_cloudflared_outdated_version_quic_intermittent_failures_2026-09-23": "併入 R-CLOUDFLARED-KEEP；版本細節是參考資料",
+    "reference_ezpay_invoice_issuing_procedure": "併入 R-INVOICE",
+    "reference_llamacpp_managed_local_server_setup_2026-09-23": "參考資料（本機語意搜尋修復）",
+    "reference_agents_directory_lost_from_git_history_2026-09-23": "參考資料（agents 目錄救回經過）",
+    "feedback_netlify_approval_no_longer_required_2026-09-23": "併入 G-NETLIFY（09-23 起不用逐次問）",
+    "reference_claude_code_remote_control_setup_sop_2026-09-17": "參考資料（Remote Control SOP）",
+    "feedback_em_voice_correction_means_1m_context_window_2026-09-22": "參考資料（教練口語「em」＝1M）",
+    "feedback_opencode_fallback_model_fabricated_results_2026-09-20": "判斷類；併入 G-DELIVERY（外包結果要親自驗）",
+    "reference_tokentable_claude_tool_calling_bug_2026-09-20": "參考資料（TokenTable）",
+    "feedback_credential_layer_file_was_git_tracked_2026-09-19": "已結案（教練 09-24 裁示永久結案，不再提）",
+    "feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19": "判斷類；併入 G-DELIVERY",
+    "feedback_search_existing_reference_before_deep_investigation_2026-09-19": "判斷類；併入 J-FIX-STUCK（深挖前先 grep claude-brain）",
+    "reference_minimax_1m_context_config_fix_2026-09-18": "參考資料",
+    "reference_agent_team_qa_digest_mechanism_2026-09-18": "已有程式：stop_rules_master.py＋agent_team_qa_digest.py",
+    "feedback_no_wrong_posts_no_action_2026-09-18": "索引斷鏈已補檔（10-02）；判斷類，併入 J-NECESSARY",
+    "feedback_gitignore_stale_after_schema_migration_2026-09-18": "參考資料（git status 冒出大批新目錄先分類）",
+    "feedback_hook_files_disappeared_from_working_tree_2026-09-18": "參考資料（hook 目錄消失恢復 SOP）",
+    "reference_cron_job_disappear_root_cause_sop_2026-09-18": "參考資料（cron 消失調查 SOP）",
+    "reference_netlify_zip_deploy_chinese_filename_2026-09-18": "併入 G-NETLIFY（zip 不接受中文檔名）",
+    "reference_gateway_trustedproxies_and_reload_block_2026-09-17": "參考資料",
+    "feedback_agent_soul_files_not_synced_2026-09-17": "併入 R-AGENT-RULES-SESSION／R-FRIEND-AGENT（各分身 SOUL 要逐一改）",
+    "reference_event_registration_page_sop_2026-09-17": "併入 R-ONLINE-SIGNUP-SOP／R-CURATION-SOP",
+    "feedback_minimax_dynamic_context_cap_2026-09-17": "參考資料",
+    "feedback_no_completion_words_when_describing_history_2026-09-17": "已有程式：Stop hook 完成詞偵測",
+    "feedback_verify_locally_before_external_api_2026-09-16": "判斷類；併入 G-DELIVERY",
+    "reference_line_plugin_extensions_missing_2026-09-16": "併入 R-OPENCLAW-NO-REPLY；參考資料",
+    "reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14": "參考資料（已加 .gitignore）",
+    "reference_openclaw2_heartbeat_message_failed_bug_2026-09-14": "參考資料；R-OPENCLAW-CONFIG",
+    "feedback_check_shared_resource_before_recommending_revoke_2026-09-13": "判斷類（建議撤銷憑證前先查路徑大全）",
+    "feedback_scan_full_context_not_just_known_risk_folder_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
+    "feedback_scan_content_not_just_filenames_before_sharing_with_new_env_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
+    "reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11": "併入 R-FB-POST",
+    "feedback_search_before_trial_and_error_2026-09-11": "併入 J-FIX-STUCK",
+    "feedback_never_fabricate_literal_quotes_2026-09-06": "併入 G-CITATION",
+    "feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06": "併入 R-DETECTOR-RULE-EDIT",
+    "feedback_deferred_task_not_actually_free_2026-09-06": "判斷類；併入 J-NECESSARY",
+    "feedback_no_reply_own_work_in_group_chat_2026-09-05": "小龍蝦端群組判斷（人設），不是軍師反射；參考資料",
+    "feedback_confirm_ambiguous_instructions_before_acting_2026-09-04": "併入 J-ASK-COACH",
+    "feedback_public_admin_separation_default_2026-09-04": "判斷類（對外網頁不放管理控制項）",
+    "feedback_verify_template_branding_after_copy_2026-09-01": "判斷類；併入 G-DELIVERY（複製模板 grep 舊品牌字）",
+    "feedback_dont_punt_decisions_show_underlying_values_2026-08-31": "併入 J-ASK-COACH",
+    "feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31": "併入 G-DELIVERY／G-PORTER",
+    "feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28": "判斷類（第三方正式系統只讀不點）",
+    "feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27": "判斷類（大量重複瀏覽器操作委派背景）",
+    "reference_stop_hook_tool_result_boundary_bug_2026-08-27": "併入 R-DETECTOR-RULE-EDIT",
+    "project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26": "參考資料",
+    "feedback_jarvis_outcome_delegation_style": "判斷類（賈維斯式結果導向）；R-JARVIS-PLAN",
+    "feedback_browser_automation_ai_should_complete": "併入 G-PORTER",
+    "reference_claude_code_long_session_rule_decay": "已有程式：定期重載守則 hook",
+    "reference_openclaw_plugins_allow_strict_whitelist": "併入 R-OPENCLAW-CONFIG",
+    "feedback_use_chrome_control_for_oauth_flows": "併入 G-PORTER",
+    "feedback_verify_activity_via_git_log_not_relay_file": "判斷類",
+    "user_privacy_risk_posture": "參考資料（教練隱私立場）",
+    "feedback_verify_before_correcting_coach": "併入 G-CITATION（查證系列）",
+    "feedback_netlify_autodeploy_cost_awareness": "併入 G-NETLIFY",
+    "feedback_junshi_token_economy_outsource": "判斷類",
+    "feedback_junshi_role_decide_not_ask": "併入 J-ASK-COACH",
+    "reference_brain_naming_convention": "併入 G-LESSON",
+    "feedback_lock_must_be_hook_not_optin": "併入 R-DETECTOR-RULE-EDIT",
+    "feedback_self_position_elite_expert": "判斷類",
+    "feedback_coach_words_equal_authorization": "併入 J-ASK-COACH",
+    "feedback_model_choice_quality_first": "判斷類",
+    "feedback_subagent_instruction_path_first": "併入 R-CROSS-LETTER／R-LETTER-INBOX",
+    "feedback_negative_anchor_pollution": "判斷類（寫給 AI 的文件只列正確做法）",
+    "feedback_no_paste_terminal_results": "併入 G-PORTER",
+    "feedback_no_silent_waiting": "判斷類",
+    "feedback_archive_not_delete": "併入 G-DELETE",
+    "feedback_coach_chinese_file_mapping": "參考資料（教練詞彙對照表）",
+    "feedback_screenshot_rules_consolidated": "併入 G-SCREENSHOT",
+    "feedback_netlify_headers_content_type": "併入 G-NETLIFY",
+    "feedback_no_fork_without_permission": "判斷類",
+    "feedback_assert_before_verify_pattern_2026-09-17": "併入 G-CITATION",
+    "feedback_cc_means_cc_switch": "參考資料（CC＝CC Switch）",
+    "reference_openclaw_cron_json_stale_snapshot": "併入 R-OPENCLAW-CONFIG",
+    "project_bni_chapters_public_launch_2026-08-03": "參考資料",
+    "project_mentor100_edit_link_selfservice_2026-08-02": "參考資料",
+    "project_advance_registrations_backfill_purpose_2026-08-14": "G-DELETE 擋刪資料；參考資料（49 筆簽到表資料不能刪）",
+    "reference_line_share_preview_cache_bust": "參考資料",
+    "reference_all_conversation_paths": "參考資料",
+    "feedback_minimax_auth_format": "已退役：VPS 永久下線",
+    "feedback_data_move_du_sh_verify": "併入 G-DELETE",
+    "feedback_modal_selector_remove_pitfall": "參考資料（前端坑）",
+    "feedback_password_boundary_vs_courier_resolution": "併入 R-ASK-CREDENTIAL",
+    "project_team_structure": "參考資料（部分已過時：VPS 下線）",
+    "reference_namecard_ocr_pipeline_reusable": "參考資料",
+    "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
+    "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION"
   }
 }

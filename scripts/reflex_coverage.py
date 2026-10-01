@@ -5,7 +5,10 @@
   ① 反射索引任一筆的 source 提到它（案例27、案例C、案例F-2026-06-07 …）
   ② 或出現在索引的 case_ledger（沒產生反射的案例去向：已退役／併入／已有程式擋住）
   ③ 或 Top30 證據檔把它掛在某個主題的 cases
-用法：python3 scripts/reflex_coverage.py        # 印未處理清單
+記憶（2026-10-02 第四步加）：MEMORY.md 索引連到的每個記憶檔，算「已處理」的條件：
+  ① 反射索引任一筆的 source 提到它的檔名
+  ② 或出現在索引的 memory_ledger（併入哪條／參考資料／判斷類／已有程式擋住／已退役）
+用法：python3 scripts/reflex_coverage.py        # 印未處理清單（案例＋記憶）
 """
 import json
 import os
@@ -42,3 +45,19 @@ for line in open(os.path.join(WS, "試金石/試金石_案例庫.md"), encoding=
 print(f"案例標題 {len(seen)} 個；已處理 {len(seen) - len(todo)}；未處理 {len(todo)}")
 for t in todo:
     print("  ", t)
+
+MEM = os.path.realpath(os.path.expanduser("~/.claude/projects/-Users-bymyway--openclaw/memory"))  # 這是連到 workspace/claude-brain 的捷徑，先解開，../knowledges 這類相對連結才算得對
+if os.path.exists(os.path.join(MEM, "MEMORY.md")):
+    sources = " ".join(r.get("source", "") for r in idx["reflexes"])
+    ledger = idx.get("memory_ledger", {})
+    links = {}
+    for line in open(os.path.join(MEM, "MEMORY.md"), encoding="utf-8"):
+        if line.startswith("- ["):
+            for f in re.findall(r"\]\(([^)]+\.md)\)", line):
+                links.setdefault(os.path.basename(f)[:-3], f)
+    files = list(links)
+    mtodo = [f for f in files if f not in sources and f not in ledger]
+    missing = [f for f, rel in links.items() if not os.path.exists(os.path.normpath(os.path.join(MEM, rel)))]
+    print(f"記憶索引 {len(files)} 個；已處理 {len(files) - len(mtodo)}；未處理 {len(mtodo)}；索引斷鏈 {len(missing)}")
+    for f in mtodo + [f"（斷鏈）{m}" for m in missing]:
+        print("  ", f)

@@ -5,6 +5,7 @@
 BATCH.json = {"reflexes": [ {...}, ... ], "case_ledger": {"案例33": "說明", ...}}
   - reflexes：同 id 就取代、沒有就接在最後（維持索引檔原格式）
   - case_ledger：沒有產生反射的案例去向（已退役／併入某條／已有程式擋住），讓「哪些案例處理過了」有單一真相源
+  - memory_ledger：同上，給記憶檔（key＝檔名不含 .md），2026-10-02 第四步加
 """
 import json
 import os
@@ -24,6 +25,8 @@ for r in batch.get("reflexes", []):
         d["reflexes"].append(r)
 if batch.get("case_ledger"):
     d.setdefault("case_ledger", {}).update(batch["case_ledger"])
+if batch.get("memory_ledger"):
+    d.setdefault("memory_ledger", {}).update(batch["memory_ledger"])
 with open(INDEX, "w", encoding="utf-8") as f:
     f.write(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
-print(f"反射 {len(d['reflexes'])} 條；案例去向 {len(d.get('case_ledger', {}))} 筆")
+print(f"反射 {len(d['reflexes'])} 條；案例去向 {len(d.get('case_ledger', {}))} 筆；記憶去向 {len(d.get('memory_ledger', {}))} 筆")
