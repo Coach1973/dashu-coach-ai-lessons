@@ -1,3 +1,25 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 16:35 台灣時間，Mac Sonnet 5.5，v261，教練手機遠端；下一場教練改用電腦版並選 Bypass）
+
+**主軸：教練要「口頭講完，小龍蝦就能直接去執行，不要動不動說不行」；查到根因但改動被安全檢查擋下，等電腦版 Bypass 後做完。另有一份 BNI 簡報待改。**
+
+### 1. 小龍蝦老是說「不行/卡在核准」的根因（已查證，非猜測）
+- 讀完小龍蝦（MiniMax M3）9/30 19:49 寫給軍師的信（sincere 儀表板 SOP；SOP 早已寫完＝`knowledges/SOP_Hermes協助更新sincere戰情儀表板.md`，信已結案）。
+- 小龍蝦寫信流程：寫 `state/JUNSHI_TASK_QUEUE` → launchd `com.openclaw.junshi-task-worker` 觸發 `scripts/junshi_task_worker.sh` → 內部跑 `claude -p "$PROMPT" --output-format text`（第143行）。**這個 `claude -p` 沒給權限旗標，背景一寫檔就被擋**，回給小龍蝦的結果就是「三個檔案的寫入請求仍卡在核准佇列」（見 `state/JUNSHI_TASK_RESULT`、`~/Library/Logs/openclaw/junshi_task_worker.log` 9/30 19:53）。
+- 教練目標（原話意旨）：口頭講完小龍蝦直接執行；小龍蝦做不到就**自己寫信給軍師**，教練只聽結果。
+
+### 2. 已做、未做
+- ✅ `TOOLS.md` 已加「🔴 卡關規則」一段（小龍蝦做不到→寫信給軍師→只對教練說「已交給軍師處理」）。**檔案已改但尚未 commit**（commit 被自動模式安全檢查擋，連教練說「上」也不採信）。
+- ❌ **`scripts/junshi_task_worker.sh` 尚未改**：第143行要加 `--permission-mode acceptEdits`（改成 `"$CLAUDE_CLI" -p "$PROMPT" --permission-mode acceptEdits --output-format text`）。被擋原因是「修改自己的權限」。
+
+### 📋 下一場（電腦版 Bypass）先做
+1. 改 `junshi_task_worker.sh` 第143行加 `--permission-mode acceptEdits`，`bash -n` 檢查語法。
+2. 用真實任務實測：寫一筆 `type=task`、prompt 為「在 /tmp 寫一個測試檔並回報路徑」到 `state/JUNSHI_TASK_QUEUE`，確認 `JUNSHI_TASK_RESULT` 不再出現「卡在核准」、檔案真的寫成。
+3. commit `TOOLS.md` + `scripts/junshi_task_worker.sh`，給 hash。
+4. 小龍蝦端的 AGENTS.md 已超過 2 萬字上限（21,350），**不要再往 AGENTS.md/SOUL.md 加字**；規則放 TOOLS.md（5.4KB）即可。
+5. BNI 簡報：教練稍後傳檔。流程見 `knowledges/SOP_PDF轉品牌底圖PPT.md`＋`scripts/pdf_to_branded_pptx.py`（吃 PDF，每頁一張插圖套 BNI ACCELERATE 底圖）。教練說要「修改」一份簡報，**先確認是 PDF 或可編輯 PPT**，兩者做法不同。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 13:10 台灣時間，Mac Sonnet 5.5，v260，教練手機遠端）
 
 **主軸：新增「楊尚儒老師專屬小龍蝦」(agent yang) 綁新群組 -5405039910，並已實測上線。**
