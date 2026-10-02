@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hook：UserPromptSubmit（Mac 終端機版 v2 · 六步驟全注入）
+# Hook：UserPromptSubmit（Mac 終端機版 v3 · 心法＋最新一棒，2026-10-02）
 # 用途：教練喊「開工」時，自動把六步驟內容（接力棒+HEARTBEAT+試金石+memory+knowledges）餵進 context。
 # 設計：對應 Windows feed_junshi_handoff.ps1，雙邊邏輯對等。
 #       v2 改動（2026-06-23 教練親口「對長期有好處的事不問直接做」）：
@@ -228,7 +228,7 @@ fi
 
 MAX_INJECT_CHARS=60000
 INJECT_CONTENT=$(
-  echo "# 🔴 軍師接力棒 v2（六步驟全注入，本場 session 僅一次）"
+  echo "# 🔴 軍師接力棒 v3（心法＋最新一棒；心法已在全域 CLAUDE.md 常駐，本場 session 僅一次）"
   echo ""
   # 2026-09-27教練抓到（FB申訴漏接）：上一棒「📋 下一場開工先做」寫了教練交辦，但①第1步
   # 以為workspace/CLAUDE.md會載入接力棒而不貼，實際對話框開在~/.openclaw時根本不會載入；
@@ -356,102 +356,9 @@ PY
     python3 "$STALENESS_SCRIPT" "$HANDOFF" 2>/dev/null || echo "（過期偵測腳本執行失敗，略過）"
   fi
 
-  # ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
-  if [[ -f "$HEARTBEAT" ]]; then
-    echo ""
-    echo "---"
-    echo ""
-    echo "## 🩺 第 2 步：HEARTBEAT.md（最近 50 行熱上下文）"
-    echo ""
-    tail -50 "$HEARTBEAT"
-  fi
-
-  # ───────── 第 3 步：血淚試金石 ─────────
-  # 3a：Top10高頻模式一句話摘要（2026-08-31新增，避免只看「最新2案例」漏接3個月前但還沒解決的舊模式）
-  if [[ -f "$TOP10_INDEX" ]]; then
-    echo ""
-    echo "---"
-    echo ""
-    echo "## 🔴 第 3 步 (3a)：Top10 高頻失敗模式一句話比對（開工當下先掃過，命中就照做法走）"
-    echo ""
-    awk '/^## 🔴 模式/{h=$0} /^\*\*觸發詞\*\*/{print h; print $0; print ""}' "$TOP10_INDEX"
-    echo "（完整版含涉及案例編號/自動化防護狀態，見 distill/top10_errors_index.md）"
-  fi
-
-  # 3b：最新2案例全文（手機MiniMax context會動態縮水，跳過，只給案例標題清單）
-  if [[ -f "$STONE" ]]; then
-    echo ""
-    echo "---"
-    echo ""
-    if [[ "$IS_MOBILE" -eq 1 ]]; then
-      echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例標題（手機精簡版，需要細節時自行 Read 試金石/試金石_案例庫.md）"
-      echo ""
-      grep -nE "^## 案例" "$STONE" | tail -2 | sed 's/^[0-9]*://'
-    else
-      echo "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
-      echo ""
-      LAST_3_START=$(grep -nE "^## 案例" "$STONE" | tail -2 | head -1 | cut -d: -f1)
-      if [[ -n "$LAST_3_START" ]]; then
-        tail -n +"$LAST_3_START" "$STONE"
-      else
-        echo "（無法定位案例段落，請手動查閱 試金石/試金石_案例庫.md）"
-      fi
-    fi
-  fi
-
-  # ───────── 第 4 步：knowledges 最近 7 天新檔清單（手機精簡版跳過，非急需）─────────
-  if [[ "$IS_MOBILE" -eq 0 && -d "$KNOWLEDGES_DIR" ]]; then
-    echo ""
-    echo "---"
-    echo ""
-    echo "## 📚 第 4 步：knowledges/ 最近 7 天新建/修改檔案清單"
-    echo ""
-    FOUND_KNOWLEDGES=0
-    while IFS= read -r f; do
-      if [[ -n "$f" ]]; then
-        FIRST_LINE=$(head -1 "$f" 2>/dev/null | sed 's/^# //')
-        echo "- \`$(basename "$f")\`：${FIRST_LINE}"
-        FOUND_KNOWLEDGES=1
-      fi
-    done < <(find "$KNOWLEDGES_DIR" -maxdepth 1 -type f -name "*.md" -mtime -7 2>/dev/null | sort)
-    if [[ "$FOUND_KNOWLEDGES" -eq 0 ]]; then
-      echo "（過去 7 天無新檔）"
-    fi
-  fi
-
-  # ───────── 第 5 步：memory 最新日（已濾除 Dreaming 雜訊區塊，2026-07-10 軍師查證後修）─────────
-  # 原因：memory/*.md 裡的 openclaw:dreaming:light/rem 區塊是系統自動生成的低信度「反思的反思」，
-  # 非教練真實對話，過去整段 cat 進來會佔掉大半篇幅（實測 2026-07-10.md 17KB 裡八成是這塊雜訊）。
-  # 手機精簡版只取尾端800字(而非本機的6000字)，context越用越少要省著用。
-  if [[ -d "$MEMORY_DIR" ]]; then
-    LATEST_MEMORY=$(ls -1 "$MEMORY_DIR"/20[2-9][0-9]-[0-9][0-9]-[0-9][0-9].md 2>/dev/null | sort | tail -1)
-    if [[ -n "$LATEST_MEMORY" && -f "$LATEST_MEMORY" ]]; then
-      MEM_TAIL_CHARS=6000
-      MEM_LABEL="6000字"
-      if [[ "$IS_MOBILE" -eq 1 ]]; then
-        MEM_TAIL_CHARS=800
-        MEM_LABEL="800字（手機精簡版）"
-      fi
-      echo ""
-      echo "---"
-      echo ""
-      echo "## 🧠 第 5 步：memory 最新日（$(basename "$LATEST_MEMORY")，已濾除 Dreaming 雜訊區塊，僅取最近段落）"
-      echo ""
-      # 2026-07-26 軍師加：改取尾端約6000字（今天最近做的事），不整天全文貼上；
-      # 更早的今日記錄仍完整存在原檔，需要時直接讀 memory/YYYY-MM-DD.md
-      FILTERED_MEMORY=$(sed -e '/<!-- openclaw:dreaming:light:start -->/,/<!-- openclaw:dreaming:light:end -->/d' \
-          -e '/<!-- openclaw:dreaming:rem:start -->/,/<!-- openclaw:dreaming:rem:end -->/d' \
-          "$LATEST_MEMORY")
-      FM_LEN=${#FILTERED_MEMORY}
-      if [[ $FM_LEN -gt $MEM_TAIL_CHARS ]]; then
-        echo "（僅顯示今日最近約${MEM_LABEL}，完整內容見 \`memory/$(basename "$LATEST_MEMORY")\`）"
-        echo ""
-        printf '%s' "${FILTERED_MEMORY: -$MEM_TAIL_CHARS}"
-      else
-        printf '%s' "$FILTERED_MEMORY"
-      fi
-    fi
-  fi
+  # 2026-10-02 開工改「心法＋最新一棒」（教練拍板方向）：拿掉第2~5步——實測當天
+  # HEARTBEAT 尾50行全是09-23~09-27舊自檢紀錄、memory最新日只剩空標題、Top10與試金石2案例已由反射在對的時刻調出、
+  # knowledges清單只是檔名。需要時各檔原地 Read：HEARTBEAT.md／試金石/試金石_案例庫.md／knowledges/／memory/。
 
   # ───────── 第 5.5 步：最近24小時教練跟其他AI說了什麼（2026-09-30 教練：「你知道其他的人都交接些什麼了嗎？」）─────────
   # 小龍蝦/Hermes常常做完不寫memory也不交接棒，只看交接檔會漏掉當天別的AI出包的事，所以直接讀原始對話記錄。
@@ -489,13 +396,7 @@ PY
   echo "- 詢問教練「今天從哪件事開始？」"
   echo "**禁止**：唸「🤫等教練自己提起」區、唸「🔧AI自己的工作清單」、列舉上一棒戰果、自己發現的系統異常。這些是AI自己的事，自己處理。"
   echo ""
-  echo "## 🚦 本場全程適用：問教練之前的三關（2026-09-24教練：「同一類事情不要再重複來煩我了」）"
-  echo "任何時候（開工、健檢、全都釋放、總結、任務中途）要拿一件事去問教練或請教練決定，必須三關全過，少一關就不准問："
-  echo "① **只有教練能做**：花錢、代表教練對外發言、不可逆操作、教練自己的內容與喜好、需要教練本人親自登入（例如要手機簡訊驗證碼、教練個人銀行等系統從未存過帳密的帳號）。路徑大全／既有腳本裡已存好帳密的主機與服務（VPS、GitHub、Netlify、ezPay等），AI 自己用，不算這一關。AI查得到、做得到、判斷得了的，自己處理。"
-  echo "② **教練沒答過**：先查待辦表、封存檔、記憶檔。教練裁示過的（含「不用管」「略過」「到此為止」「保留就好」），換任何說法都不准再問。"
-  echo "③ **現在不問會卡住**：教練正在等結果，或幾天內有期限。不急的寫進「🤫等教練自己提起」區，不主動提。"
-  echo "**每件事最多問一次**：問過沒回應＝教練現在不想處理，移到🤫區，不追問。"
-  echo "過不了三關的事：AI自己做完（不用報告細節，最多一行帶過），或安靜寫進🤫區。"
+  echo "（問教練之前的三關＝執行細則 N2，全域 CLAUDE.md 每場都已載入，這裡不重貼。）"
 )
 
 CONTENT_LEN=${#INJECT_CONTENT}
