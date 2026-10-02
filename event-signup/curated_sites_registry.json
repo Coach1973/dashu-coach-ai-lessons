@@ -356,7 +356,7 @@
     {
       "slug": "turnforyou",
       "title": "為你轉身 — 真 AI 線上團隊．商業導師席",
-      "description": "八位商業顧問師，姓名、經歷、戰績完全公開。提交你的事業現況，讓導師為你轉身，再由你決定跟誰談那三十分鐘。真 AI 線上團隊 2026 招募計畫。",
+      "description": "九位商業顧問師，姓名、經歷、戰績完全公開。提交你的事業現況，讓導師為你轉身，再由你決定跟誰談那三十分鐘。真 AI 線上團隊 2026 招募計畫。",
       "category": "教練個人創作",
       "event_url": "https://event.bymyway.com/curated/turnforyou/",
       "github_pages_url": "",
@@ -388,6 +388,30 @@
       "source_package": "20260930-193120__doc_e407cf2ccec9_jacky-brand-site.zip",
       "no_shop_card": true,
       "repo": "Coach1973/jacky-brand"
+    },
+    {
+      "slug": "ema1017",
+      "title": "中華網紅協會零基礎學 AI 課｜10/17 台北・下午玩 AI，課後吃最頂級海鮮鍋",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/ema1017/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-02 00:13",
+      "status": "live",
+      "source_package": "20261002-001328__ema1017.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "tut-memory",
+      "title": "南應大校友互動記憶牆 ｜ TUT Alumni Memory Wall",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/tut-memory/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-02 09:53",
+      "status": "live",
+      "source_package": "20261002-095301__nanying-tut-memory.zip",
+      "no_shop_card": true
     }
   ],
   "redirects": {
