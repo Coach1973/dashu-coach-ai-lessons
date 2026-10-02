@@ -162,6 +162,9 @@ def check_cron_jobs():
     failing = []
     for name, js in db.execute("select name, state_json from cron_jobs where enabled=1"):
         st = json.loads(js or "{}")
+        # 鎖死不能跑指令的分身(yang/yijing)，系統自帶的每週技能整理一定被擋，屬預期，不報
+        if name.startswith("skill-collection-review-") and "Exec blocked" in str(st.get("lastError", "")):
+            continue
         if st.get("consecutiveErrors", 0) > 0 or st.get("lastDeliveryStatus") == "failed":
             failing.append(name)
     if failing:
@@ -291,6 +294,16 @@ def main():
     if "users_24h" in vps:
         usage.append(f"VPS小龍蝦：{vps['users_24h']}人（{vps.get('msgs_24h', 0)}則）｜近7天{vps.get('users_7d', '?')}人")
 
+    # 夥伴分身私有備份庫每日推一次（2026-10-02 體檢：原本只靠手動，曾積 15 天沒上雲）
+    if dry:
+        partner_line = "☁️ 夥伴分身備份：測試模式不執行"
+    else:
+        r = subprocess.run(["/bin/bash", str(WS / "scripts" / "backup_partner_agents.sh")],
+                           capture_output=True, text=True, timeout=180)
+        partner_line = f"☁️ 夥伴分身備份：{r.stdout.strip() or '無輸出'}"
+        if r.returncode != 0:
+            bad("夥伴分身備份", r.stdout.strip()[:120] or "執行失敗", "🟡")
+
     backup_line = backup_when_healthy(dry)
 
     weekday = "一二三四五六日"[datetime.now().weekday()]
@@ -301,7 +314,7 @@ def main():
     if problems:
         lines.append("")
     lines.append("✅ " + "、".join(oks))
-    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, backup_line, "",
+    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, backup_line, partner_line, "",
               "（每天08:10送出；08:30前沒收到這則＝系統出事，直接叫軍師）"]
     msg = "\n".join(lines)
 
