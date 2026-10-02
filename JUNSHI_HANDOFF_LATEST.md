@@ -10,11 +10,9 @@
 5. **誤判機制修正**：Stop hook #05 否定句（`0edb5ad2a`）、反射 `R-ASK-CREDENTIAL` 排除「Mac 開機密碼／密碼視窗」。
 
 ### 卡在哪／發現
-- 更新卡在「磁碟擁有者驗證」，`macos_update.sh` 是新寫的、尚未實跑成功過。
-- 重開機會中斷對話；更新能不能裝成功，以重開後 `sw_vers` 為準。
+- ✅ **macOS 26.7.1 已裝成功**：10/03 01:35 教練在跳出的視窗輸入密碼，`macos_update.sh` 實跑通過；01:41 左右自動重開機，01:43 `sw_vers`＝26.7.1（25G241）。重開後驗證：小龍蝦 gateway(18789) 回 200、赫米斯 gateway 在跑並已連 Telegram、RustDesk／cloudflared 全部起來、Tailscale 本機在線、外接 SSD 已掛載且 Downloads／vm_bundles／fb_session_data 捷徑讀得到資料。重開當下剩餘空間 61.7GB（快照到期後才會再升）。macOS 27.0.1 大改版不裝。
 
 ### 📋 下一場開工先做
-⓪ **macOS 26.7.1 更新（教練 10/03 01:28 已說「更新」，不要再問）**：先 `sw_vers`。是 26.7.1＝裝成功，驗小龍蝦／赫米斯／RustDesk／外接SSD／Claude Cowork 能開，沒問題一行回報教練、刪掉本條。還是 26.5.1＝沒裝成功，備份在 6 小時內就直接 `bash ~/.openclaw/workspace/scripts/macos_update.sh "macOS Tahoe 26.7.1-25G241"`（跳視窗請教練輸密碼，不要按取消；失敗看 `state/macos_update_20261003.log`）。27.0.1 大改版不裝。
 ① 10/03 量剩餘空間（`diskutil info / | grep "Container Free"`；快照到期後預期上升到約 90GB）；08:10 點名要有「💾 備份…已自動備份一次」。
 ② 驗收新版開工注入：開工回報應不被截斷、約 10KB；有問題改回 `feed_junshi_handoff.sh` 第 2~5 步。
 ③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。
