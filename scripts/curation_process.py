@@ -754,7 +754,7 @@ def register_coach888(url: str, title: str) -> str:
         return "（靜態備援版更新失敗，不影響教練看到的內容）"
 
 
-def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set) -> None:
+def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set, opt_note: str = "") -> None:
     """大樹作品：原封不動上架event.bymyway.com，不建GitHub repo、不插商圈卡、不發FB，
     登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
@@ -791,6 +791,7 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
         f"網址：\n{event_url}\n"
         f"{live_note}\n"
         f"{c888_note}\n"
+        f"{opt_note}"
         "📌 教練個人創作，不進大台南商圈店家名冊"
     )
     log(f"✅ 大樹作品完成：{pkg_path.name} → {slug}")
@@ -833,7 +834,15 @@ def process_one(pkg_path: Path) -> None:
             title = re.sub(r"^\d{8}-\d{6}__", "", pkg_path.stem)
 
         if kind == "creation":
-            publish_creation(pkg_path, tmp_extract, title, desc, registry, existing_slugs)
+            # 2026-10-02教練裁示：個人作品無論檔案大小，網頁上看得清楚就一律壓成較小格式（失敗不擋上架，照原檔）
+            opt_note = ""
+            try:
+                from optimize_site_assets import optimize_dir, summarize
+                opt_note = summarize(optimize_dir(tmp_extract)) + "\n"
+                log(opt_note.strip())
+            except Exception as e:  # noqa: BLE001
+                log(f"⚠️ 自動壓縮失敗，照原檔上架：{e!r}")
+            publish_creation(pkg_path, tmp_extract, title, desc, registry, existing_slugs, opt_note)
             shutil.rmtree(tmp_extract, ignore_errors=True)
             PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
             shutil.move(str(pkg_path), str(PROCESSED_DIR / pkg_path.name))
