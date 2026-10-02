@@ -1199,6 +1199,20 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-TURNFORYOU-SEATS-EDIT",
+   "moment": "pre_tool",
+   "tool": "Edit|Write|Bash",
+   "match": "github_repos/turnforyou/(?:index\\.html|data\\.json)",
+   "say": "改〈為你轉身〉導師席：畫面讀的是 index.html 裡 inline-data（data.json 要同步但不是它）；席次 id 綁 SEAT 編號與 PAIN 路徑推薦；觀眾席 audience-data 獨立（同一人別兩邊都在）；「八位／八張椅子」文案散十多處；改前先 cp .bak。細節：記憶 reference_turnforyou_site_structure_2026-10-03.md",
+   "level": "remind",
+   "situation": "要改為你轉身網站的導師名單、席次、文案時",
+   "source": "2026-10-03 一場把導師席虛擬人物換成八位真人，來回改七次才摸清三處資料與路徑綁定",
+   "kind": "需求型",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
