@@ -321,9 +321,26 @@ PY
   if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" && "$HOOK_CWD" == "$WORKSPACE"* ]]; then
     echo "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 \`JUNSHI_HANDOFF_LATEST.md\` 原檔。）"
   else
-    echo "⚠️（CLAUDE.md 鏡像非最新，改為完整貼上，確保接力棒不漏接）"
+    # 2026-10-02 瘦身（教練「心＋最新一棒摘要」）：不再整份 30KB 全貼，只貼最新一棒＋「🙋要教練決定」區；
+    # 前一棒、賈維斯進度表、🤫/🔧 區是 AI 自己的工作筆記，需要時 Read 原檔。
+    echo "（精簡注入：只貼最新一棒摘要＋🙋區。前一棒／🤫／🔧區／封存索引請讀 \`JUNSHI_HANDOFF_LATEST.md\` 原檔，需要才讀。）"
     echo ""
-    cat "$HANDOFF"
+    python3 - "$HANDOFF" <<'PY'
+import sys, re
+lines = open(sys.argv[1], encoding="utf-8").read().split("\n")
+hdr = [i for i, l in enumerate(lines) if l.startswith("## 🔴 給跨對話框軍師讀的總結摘要")]
+end = hdr[1] if len(hdr) > 1 else None
+if not hdr or end is None:
+    # 找不到標記就整份貼上，安全優先
+    print("\n".join(lines)); sys.exit(0)
+print("\n".join(lines[hdr[0]:end]).rstrip())
+ask = [i for i, l in enumerate(lines) if l.startswith("### 🙋")]
+if ask:
+    j = ask[0] + 1
+    while j < len(lines) and not lines[j].startswith("### "):
+        j += 1
+    print("\n" + "\n".join(lines[ask[0]:j]).rstrip())
+PY
   fi
 
   # ───────── 第 1.5 步：待辦表過期偵測（2026-09-11教練糾正ACER誤報後新增） ─────────
