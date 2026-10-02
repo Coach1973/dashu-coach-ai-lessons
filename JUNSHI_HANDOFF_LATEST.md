@@ -15,10 +15,10 @@
 - 名字用字：連**啓**佑（mentor100 本人登記）、施正**益**（Threads 顯示「施正義」，海報／LinkedIn／教練都是益）。
 
 ### 📋 下一場開工先做
-⓪ **10/03 00:30 教練要裝 macOS 26.7.1 小更新**（cron「教練-系統更新提醒-10-03凌晨」會 Telegram 提醒）：教練回「更新」→ 先 `tmutil startbackup` 確認備份完成 → `softwareupdate -i "macOS Tahoe 26.7.1-25G241" -R`（要密碼走 `scripts/coach_password_dialog.sh`）→ 重開後驗小龍蝦／赫米斯／Tailscale（教練手動關著，別動）／RustDesk／外接 SSD。27.0.1 大改版不裝。
+⓪ **10/03 macOS 26.7.1 更新進行中**（教練同意；更新前先用時光機備份）。重開機後新對話框第一件：`sw_vers` 要是 26.7.1（還是 26.5.1＝沒裝成功，查 `softwareupdate --history`）＋確認小龍蝦／赫米斯／RustDesk／外接SSD 正常、Claude 的 Cowork 能開（vm_bundles 已改成指向 SSD 的捷徑）；沒問題就**刪掉這一行**並一行回報教練。
 ① 10/03 早上量剩餘空間（`diskutil info / | grep "Container Free"`，00:00 為 45.9GB，快照到期後應多約 20GB）；08:10 點名要有「💾 備份…已自動備份一次」。
 ② 驗收新版開工注入：開工回報應不被截斷、約 10KB；有問題改回 `feed_junshi_handoff.sh` 第 2~5 步。
-③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身（先看實際大小再決定）；10/09 後刪 `~/Downloads.bak.20261002`、`Chrome.bak.20261002`。
+③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身（先看實際大小再決定）；10/09 後可刪搬家留下的舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G（共約 18GB）。搬家用 `scripts/move_to_ssd.sh <絕對路徑>`。赫米斯 `~/.hermes` 4.4GB 沒搬（3.1GB 是程式本體，搬了開機時 SSD 沒掛上赫米斯起不來；增量資料只約 0.6GB），教練堅持再搬。
 ④ 回憶牆第一則真實投稿進來時確認群組收到；四場線上講座主題教練說改時會通知，不主動問。
 
 ---
@@ -55,8 +55,7 @@
 ### 做了什麼
 1. **本機瘦身**（記憶 `reference_mac_downloads_on_external_ssd_2026-10-02.md`）：刪舊 Claude-3p 10GB、ByeType 4.6GB、whisper large/medium＋uv/puppeteer/opencode 快取約 7GB、9/19 工作資料夾舊備份 6.7GB（皆先比對 SSD 副本差異 0）。`~/Downloads` 與 `~/Library/Application Support/Google/Chrome` 改成捷徑指向 `/Volumes/953-SSD/下載`、`/Volumes/953-SSD/Mac應用資料/Chrome`；舊夾改名保留到 **10/09**。**不能刪**：`~/.cache/whisper/base.pt`（小龍蝦語音）、`~/.cache/huggingface`（名片 OCR／記憶搜尋），已加反射 `R-KEEP-VOICE-OCR-MODELS`。每日點名加「外接SSD」檢查。
 2. **全隊體檢**：①小龍蝦 `character-illustration-batch` 技能檔頭被 9/28 塞壞、4 天被略過→已修；②kong/peipei/yijing 夥伴備份庫改每天點名時自動推（`scripts/backup_partner_agents.sh`）；③鎖死分身（yang/yijing）的每週技能整理被擋不再報黃燈。yijing 加進外層 .gitignore。
-3. **系統更新提醒**：cron「教練-系統更新提醒-10-03凌晨」10/3 00:30 Telegram 私訊教練（已演練送達）。
-4. **南應校友回憶牆**（event.bymyway.com/curated/tut-memory/）：投稿＋照片存伺服器 `event-signup/memwall_uploads/`＋表 `memwall_notes`；審核通知送「活動報名即時通知」群（-5349981085，佩佩老師可審），簽章連結 `/memwall/review/<id>?t=` 按通過才公開；時光走廊 5 張校史圖可點放大；與召集令（/tut/）互相連結；「立即加入校友會」改開召集令真報名表。commit：event-signup `d9ca95060`、`825b9871a`；tut-alumni `085d738`；回憶牆原檔備份 `~/github_repos/_backups/`（tut-memory 資料夾不是 git）。
+3. **南應校友回憶牆**（event.bymyway.com/curated/tut-memory/）：投稿＋照片存伺服器 `event-signup/memwall_uploads/`＋表 `memwall_notes`；審核通知送「活動報名即時通知」群（-5349981085，佩佩老師可審），簽章連結 `/memwall/review/<id>?t=` 按通過才公開；時光走廊 5 張校史圖可點放大；與召集令（/tut/）互相連結；「立即加入校友會」改開召集令真報名表。commit：event-signup `d9ca95060`、`825b9871a`；tut-alumni `085d738`；回憶牆原檔備份 `~/github_repos/_backups/`（tut-memory 資料夾不是 git）。
 
 ### 卡在哪／發現
 - 審核通知改送群組後，**群組那一步還沒真實走過**（怕測試訊息吵到佩佩老師，只驗了 bot 是群管理員、sendPhoto 本機成功）。第一則真實投稿時確認群組收到。
@@ -64,7 +63,6 @@
 - 本機剩餘空間：刪完顯示仍約 43GB，因時光機本機快照未到期，約一天後會多出約 20GB。
 
 ### 📋 下一場開工先做
-⓪ **10/03 00:30 教練要裝 macOS 26.7.1 小更新**（見下方那一棒 v270 的 ⓪ 條：回「更新」→ 先 `tmutil startbackup` 確認備份→ `softwareupdate -i "macOS Tahoe 26.7.1-25G241" -R`→ 重開後驗小龍蝦／赫米斯／Tailscale／RustDesk／SSD）。27.0.1 大改版不裝。
 ① 10/03 早上量本機剩餘空間（`diskutil info / | grep "Container Free"`）。
 ② 回憶牆第一則真實投稿進來時，確認「活動報名即時通知」群有收到照片＋審核連結。
 ③ 10/09 後刪 `~/Downloads.bak.20261002`、`~/Library/Application Support/Google/Chrome.bak.20261002`（先確認 Chrome／下載正常）。
@@ -89,7 +87,6 @@
 - 自動壓縮只測過函式＋ema1017 正式資料夾，還沒經真實上傳流程跑過一次。
 
 ### 📋 下一場開工先做
-⓪ **10/03 00:30 教練要裝 macOS 26.7.1 小更新**（cron「教練-系統更新提醒-10-03凌晨」會 Telegram 提醒他）。教練回「更新」→ 先 `tmutil startbackup` 備份並確認完成 → `softwareupdate -i "macOS Tahoe 26.7.1-25G241" -R`（要密碼走 coach_password_dialog.sh）→ 重開後驗小龍蝦／赫米斯／Tailscale／RustDesk／外接SSD(Chrome、下載是捷徑)。27.0.1 大改版不裝，等一兩週。教練回「改天」就記下。另：10/09 後刪 `~/Downloads.bak.20261002`、`~/Library/Application Support/Google/Chrome.bak.20261002`；10/03 早上量本機剩餘空間(時光機快照到期後應多約 20GB)。
 ① 查 12:00 楊老師（Simona）課程提醒：`openclaw cron list --json` 看 `4c706494` 是否 delivered；② 10/03 08:10 點名訊息要有「💾 備份：全員正常，已自動備份一次」，且 `tmutil listbackups | wc -l` 多一份；③ 下次有大樹作品上傳，看通知有沒有「🗜 壓縮」一行、圖片是 webp。三項都正常就問教練今天從哪件事開始。
 
 ---
