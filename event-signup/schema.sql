@@ -67,6 +67,13 @@ CREATE TABLE IF NOT EXISTS tut_alumni_signups (
 );
 
 -- 「領導人溝通的藝術」9/10培訓報名（2026-09-03交辦，design(4).html邀請函+報名表單）
+-- 校友回憶牆投稿（2026-10-02），實際由 app.py _memwall_conn() 自動建表：pending→教練Telegram審核→approved才公開
+CREATE TABLE IF NOT EXISTS memwall_notes (
+    id TEXT PRIMARY KEY, slug TEXT NOT NULL, name TEXT, year TEXT, color TEXT,
+    txt TEXT NOT NULL, photo_file TEXT, status TEXT NOT NULL DEFAULT 'pending',
+    ip TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')), reviewed_at TEXT
+);
+
 CREATE TABLE IF NOT EXISTS leader_workshop_signups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,

@@ -7,3 +7,4 @@ webapp.log
 webapp.error.log
 slides/*
 !slides/.gitkeep
+memwall_uploads/

@@ -1172,6 +1172,181 @@ def api_tut_join():
     )
 
 
+# ---------- 校友回憶牆：留言＋照片送審，教練通過才公開（2026-10-02 教練交辦） ----------
+# 原本 tut-memory 頁的照片只存在訪客自己瀏覽器，別人看不到。改成：送出→存伺服器(pending)
+# →Telegram 傳照片給教練，附一個審核連結→教練按「通過」才出現在所有人的牆上。
+MEMWALL_SLUGS = {"tut-memory"}
+MEMWALL_DIR = Path(__file__).resolve().parent / "memwall_uploads"
+MEMWALL_MAX_PHOTO = 1_600_000
+MEMWALL_RECENT: dict = {}  # ip -> [時間戳]，簡單防灌爆：每個IP一小時最多10則
+MEMWALL_CORS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+}
+
+
+def _memwall_conn():
+    conn = db.get_conn()
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS memwall_notes ("
+        " id TEXT PRIMARY KEY, slug TEXT NOT NULL, name TEXT, year TEXT, color TEXT,"
+        " txt TEXT NOT NULL, photo_file TEXT, status TEXT NOT NULL DEFAULT 'pending',"
+        " ip TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')), reviewed_at TEXT)"
+    )
+    return conn
+
+
+def _memwall_sig(note_id: str) -> str:
+    return hmac.new(app.secret_key.encode(), f"memwall:{note_id}".encode(), hashlib.sha256).hexdigest()[:24]
+
+
+def _memwall_json(obj, status=200):
+    return Response(json.dumps(obj, ensure_ascii=False), status=status,
+                    headers={**MEMWALL_CORS, "Content-Type": "application/json"})
+
+
+def _memwall_send_photo_to_coach(photo_path: Path, caption: str) -> bool:
+    """有照片就用 sendPhoto 讓教練在 Telegram 直接看到照片；失敗退回文字通知。"""
+    try:
+        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
+            bot_token = json.load(f)["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
+        boundary = "memwall" + secrets.token_hex(8)
+        parts = []
+        for k, v in (("chat_id", TELEGRAM_NOTIFY_CHAT_ID), ("caption", caption)):
+            parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode())
+        parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"p.jpg\"\r\n"
+                     f"Content-Type: image/jpeg\r\n\r\n".encode() + photo_path.read_bytes() + b"\r\n")
+        parts.append(f"--{boundary}--\r\n".encode())
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{bot_token}/sendPhoto", data=b"".join(parts), method="POST",
+            headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            if json.loads(resp.read().decode()).get("ok"):
+                return True
+    except Exception as e:  # noqa: BLE001
+        _log_notify_failure(TELEGRAM_NOTIFY_CHAT_ID, f"memwall sendPhoto失敗: {e!r}", caption)
+    return _notify_xiaolongxia(caption)
+
+
+@app.route("/api/memwall/<slug>/notes", methods=["GET", "POST", "OPTIONS"])
+def api_memwall_notes(slug):
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=MEMWALL_CORS)
+    if slug not in MEMWALL_SLUGS:
+        return _memwall_json({"ok": False, "error": "unknown wall"}, 404)
+
+    if request.method == "GET":
+        conn = _memwall_conn()
+        rows = conn.execute(
+            "SELECT id, name, year, color, txt, photo_file, created_at FROM memwall_notes "
+            "WHERE slug=? AND status='approved' ORDER BY created_at DESC LIMIT 500", (slug,)).fetchall()
+        conn.close()
+        notes = [{"id": r["id"], "name": r["name"], "year": r["year"], "color": r["color"], "txt": r["txt"],
+                  "photo": f"/memwall/photo/{r['id']}.jpg" if r["photo_file"] else None,
+                  "created_at": r["created_at"]} for r in rows]
+        return _memwall_json({"ok": True, "notes": notes})
+
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "?"
+    now = datetime.now().timestamp()
+    recent = [t for t in MEMWALL_RECENT.get(ip, []) if now - t < 3600]
+    if len(recent) >= 10:
+        return _memwall_json({"ok": False, "error": "too many"}, 429)
+
+    p = request.get_json(force=True, silent=True) or {}
+    txt = (p.get("txt") or "").strip()[:200]
+    name = (p.get("name") or "").strip()[:30]
+    year = (p.get("year") or "").strip()[:20]
+    color = p.get("color") if p.get("color") in ("yellow", "pink", "mint") else "yellow"
+    if not txt:
+        return _memwall_json({"ok": False, "error": "empty"}, 400)
+
+    note_id = "m" + secrets.token_hex(6)
+    photo_file = None
+    photo = p.get("photo") or ""
+    if photo:
+        m = re.match(r"^data:image/(jpeg|jpg|png|webp);base64,(.+)$", photo, re.S)
+        if not m:
+            return _memwall_json({"ok": False, "error": "bad photo"}, 400)
+        raw = base64.b64decode(m.group(2), validate=False)
+        if len(raw) > MEMWALL_MAX_PHOTO or raw[:3] not in (b"\xff\xd8\xff",) and raw[:8] != b"\x89PNG\r\n\x1a\n" and raw[8:12] != b"WEBP":
+            return _memwall_json({"ok": False, "error": "bad photo"}, 400)
+        MEMWALL_DIR.mkdir(exist_ok=True)
+        photo_file = f"{note_id}.jpg"
+        (MEMWALL_DIR / photo_file).write_bytes(raw)
+
+    conn = _memwall_conn()
+    conn.execute("INSERT INTO memwall_notes (id, slug, name, year, color, txt, photo_file, ip) VALUES (?,?,?,?,?,?,?,?)",
+                 (note_id, slug, name, year, color, txt, photo_file, ip))
+    conn.commit()
+    conn.close()
+    MEMWALL_RECENT[ip] = recent + [now]
+
+    review_url = f"https://event.bymyway.com/memwall/review/{note_id}?t={_memwall_sig(note_id)}"
+    caption = (f"📮【南應校友回憶牆・新投稿待審核】\n— {name or '匿名校友'} · {year}\n「{txt}」\n\n"
+               f"審核（點開按通過或不通過）：\n{review_url}")
+    if photo_file:
+        _memwall_send_photo_to_coach(MEMWALL_DIR / photo_file, caption[:1000])
+    else:
+        _notify_xiaolongxia(caption)
+    return _memwall_json({"ok": True, "id": note_id, "status": "pending"})
+
+
+@app.route("/memwall/photo/<note_id>.jpg")
+def memwall_photo(note_id):
+    if not re.fullmatch(r"m[0-9a-f]{12}", note_id):
+        abort(404)
+    conn = _memwall_conn()
+    r = conn.execute("SELECT status, photo_file FROM memwall_notes WHERE id=?", (note_id,)).fetchone()
+    conn.close()
+    signed = hmac.compare_digest(request.args.get("t", ""), _memwall_sig(note_id))
+    if not r or not r["photo_file"] or (r["status"] != "approved" and not signed):
+        # Cloudflare 會把 .jpg 的 404 快取 4 小時，審核通過後照片還是破圖，所以 404 一律不准快取
+        return Response("", status=404, headers={"Cache-Control": "no-store"})
+    resp = send_from_directory(MEMWALL_DIR, r["photo_file"], mimetype="image/jpeg")
+    if signed and r["status"] != "approved":
+        resp.headers["Cache-Control"] = "no-store"
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
+
+
+@app.route("/memwall/review/<note_id>", methods=["GET", "POST"])
+def memwall_review(note_id):
+    """教練從 Telegram 連結點進來審核；連結帶簽章，不用登入。GET 只顯示，POST 才改狀態。"""
+    t = request.args.get("t", "")
+    if not re.fullmatch(r"m[0-9a-f]{12}", note_id) or not hmac.compare_digest(t, _memwall_sig(note_id)):
+        abort(404)
+    conn = _memwall_conn()
+    if request.method == "POST":
+        action = request.form.get("action")
+        if action in ("approved", "rejected"):
+            conn.execute("UPDATE memwall_notes SET status=?, reviewed_at=datetime('now','localtime') WHERE id=?",
+                         (action, note_id))
+            conn.commit()
+    r = conn.execute("SELECT * FROM memwall_notes WHERE id=?", (note_id,)).fetchone()
+    conn.close()
+    if not r:
+        abort(404)
+    e = html.escape
+    status_txt = {"pending": "⏳ 待審核", "approved": "✅ 已通過，所有人都看得到", "rejected": "🚫 不通過，不會公開"}[r["status"]]
+    photo = f'<img src="/memwall/photo/{note_id}.jpg?t={t}" style="max-width:100%;border-radius:8px">' if r["photo_file"] else ""
+    page = f"""<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>回憶牆投稿審核</title>
+<style>body{{font-family:-apple-system,"PingFang TC",sans-serif;max-width:520px;margin:0 auto;padding:16px;background:#f7f3ea;color:#2b2b2b}}
+.card{{background:#fff;padding:16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}}
+button{{font-size:18px;padding:12px 0;width:48%;border:0;border-radius:10px;color:#fff;margin-top:12px}}
+.ok{{background:#2e7d4f}}.no{{background:#b23b3b}}.st{{font-size:18px;font-weight:700;margin:12px 0}}</style></head><body>
+<h2>南應校友回憶牆・投稿審核</h2><div class="card">{photo}
+<p style="font-size:18px">「{e(r['txt'])}」</p><p>— {e(r['name'] or '匿名校友')} · {e(r['year'] or '')}</p>
+<p style="color:#888;font-size:13px">投稿時間：{e(r['created_at'])}</p></div>
+<div class="st">目前狀態：{status_txt}</div>
+<form method="post" style="display:flex;justify-content:space-between">
+<button class="ok" name="action" value="approved">通過</button>
+<button class="no" name="action" value="rejected">不通過</button></form>
+<p><a href="https://event.bymyway.com/curated/{e(r['slug'])}/#wall">看回憶牆</a></p></body></html>"""
+    return Response(page, mimetype="text/html")
+
+
 LEADER_EVENT_NAME = "領導人溝通的藝術"
 
 
