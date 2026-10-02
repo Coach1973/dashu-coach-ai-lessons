@@ -278,6 +278,11 @@ def main():
     except Exception:
         prev_state = {}
     version_line, vps_version = check_versions(vps, prev_state)
+    # 2026-10-02 起「下載」資料夾放外接SSD(~/Downloads 是捷徑)，SSD沒接上＝下載會失敗
+    if Path("/Volumes/953-SSD/下載").is_dir():
+        ok("外接SSD")
+    else:
+        bad("外接SSD", "953-SSD 沒有接上，「下載」資料夾打不開")
     try:
         check_public_urls()
         check_cron_jobs()
