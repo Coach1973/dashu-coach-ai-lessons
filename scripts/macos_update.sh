@@ -17,7 +17,7 @@ LOG="/Users/bymyway/.openclaw/workspace/state/macos_update_$(date +%Y%m%d).log"
 ME="$(id -un)"
 
 PW="$(COACH_PW_MSG="要安裝 $LABEL。請輸入 Mac 開機密碼後按「確定」（不要按取消）；約 15~30 分鐘後電腦會自動重開機。" "$DIALOG")" \
-  || { echo "❌ 密碼視窗被取消，沒有做任何事"; exit 1; }
+  || { echo "❌ 密碼視窗被取消或逾時（15 分鐘內沒輸入），沒有做任何事"; exit 1; }
 [ -n "$PW" ] || { echo "❌ 沒有輸入密碼，沒有做任何事"; exit 1; }
 
 echo "[$(date '+%H:%M:%S')] 開始安裝 $LABEL（帳號 $ME）" | tee -a "$LOG"
