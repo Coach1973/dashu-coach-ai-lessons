@@ -1,3 +1,24 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 11:45 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v270）
+
+**主軸：大樹作品 SOP 加三條新規則；Mac 備份從「每小時」改成「好的時候才備份」四條；教練兩次糾正「叫我自己找畫面」「密碼欄看不到」，都改成機制。**
+
+### 做了什麼
+1. 開工驗收：聯想（`bee1a7653`）、宏碁（09:15）條件反射回信都驗過並歸檔（`80f31b5b0`、`ddf32614f`）；真實 LINE 流量仍無。
+2. ema1017 頁（教練交辦）：大標去逗號、70→50 人、加「席次有限，美味無限」＋台灣日期倒數（10/02 顯示 15 天）；圖片 13.2MB→1.1MB（webp，PSNR 45~48dB）。這資料夾不是 git，原檔備份在 scratchpad（會清掉）。
+3. 大樹作品 SOP 三條（`fae7d44e4`，寫在 SOP 第 11 行起）：①上傳自動壓縮 `scripts/optimize_site_assets.py` 已接進 `curation_process.py` kind=creation（失敗照原檔上架，通知多一行🗜）②短網址：教練指定就用；沒指定提三個 10 字內＋第四「自己指定」③教練是講師＋有報名→`events.site` 改 `bigtree` 就列入大樹小講（讀碼確認 read_sessions 只看 site）；沒名字先不列，教練說一聲再改。
+4. Amber 剩 8% 警告→Time Machine 改四條（`8831c072c`、`ab09e7892`）：教練自己改成手動；①08:10 點名無🔴才 `tmutil startbackup`（`daily_team_rollcall.py backup_when_healthy`，launchd 環境實測 exit 0）②反射 `R-BACKUP-BEFORE-UPGRADE`：升級前 6 小時內沒備份就擋（14 例全對，回測 11/39091 全是真升級）③QuotaGB=150 ④排除 `.cache/.npm/.rustup` 約 13GB（`.nvm` 刻意保留）。刪 3 天前 12 份：35→23，映像內 142→119GiB。
+5. 機制修正：`stop_rules_master.py` A2b（回覆出現「設定→A→B」兩段箭頭又沒寫「已幫您打開」就擋，回測 6/2461 全真）；要密碼一律用 `scripts/coach_password_dialog.sh`（`sudo -A`，跳畫面最前面，教練實測看得到）＋反射 `R-SUDO-SHOW-TERMINAL`；`~/.claude/settings.json` PreToolUse 反射加接 run_in_terminal（備份 `.bak_20261002_terminal_reflex`）。記憶 2 筆。
+
+### 卡在哪／發現
+- App 終端機面板（run_in_terminal＋show_pane）教練兩次都看不到；osascript「管理員權限」視窗會失去完整磁碟取用，tmutil 看不到備份。兩個螢幕本來就是鏡像，不是螢幕問題。
+- 備份只佔 Amber 約三分之一（其他約 270GB 是影片照片，用 09:14「剩 8%」推算）；Amber 本身空間有沒有回升還沒確認。
+- 自動壓縮只測過函式＋ema1017 正式資料夾，還沒經真實上傳流程跑過一次。
+
+### 📋 下一場開工先做
+① 查 12:00 楊老師（Simona）課程提醒：`openclaw cron list --json` 看 `4c706494` 是否 delivered；② 10/03 08:10 點名訊息要有「💾 備份：全員正常，已自動備份一次」，且 `tmutil listbackups | wc -l` 多一份；③ 下次有大樹作品上傳，看通知有沒有「🗜 壓縮」一行、圖片是 webp。三項都正常就問教練今天從哪件事開始。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 07:10 台灣時間，Mac 桌面版 Opus 5.5→Sonnet 5.5，v269）
 
 **主軸：賈維斯成長計畫第四步③④完成——四位夥伴分身有了「三種標準」，記憶 127 條全部轉進反射系統（未處理 0）。**
@@ -16,22 +37,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 03:46 台灣時間，Mac 桌面版 Opus 5.5，v268）
-
-**主軸：賈維斯成長計畫第三步四項全部做完並走真實路徑驗證。**
-
-### 做了什麼
-1. **對外帳號禮遇版人設**：bni_tainan／jiaolian_thoughts 的 SOUL.md 加「🤝 禮遇版服務標準」四條（惦記對方說過的話／不把問題丟回給對方／聽懂人話／準確做事）；小龍蝦 SOUL.md 加「場景三 LINE 龍蝦小助教、群組朋友」（19,092 字，未超 2 萬）。bni_tainan AGENTS.md 第 101 行改成「系統自動附上📅行事曆」，不再叫它用 exec。三帳號 39 個 LINE 舊對話已封存（可還原）。假會員實測：記得「小美」並一次給齊 10/12 進階MSP 日期＋時間＋ZOOM＋報名連結；記得「阿明第一次上台」直接接上；main 逐字貼出場景三。commit 外層 `626a42590`、workspace `c4882f831`。
-2. **聯想／宏碁接反射**：`scripts/reflex_router.py` 修 Windows 兩個地雷（cp950 讀中文變亂碼→反射全比不到且不報錯；印 ⚡ 被吞掉），`PYTHONIOENCODING=cp950` 模擬提醒、擋下都正常。信已寄 `cross-agent/inbox/lenovo/20261002-0338_…`（接線＋開工置頂🎯，只有聯想改 ps1）、`inbox/acer/20261002-0338_…`（只接線）。跨機鎖依教練 02:30 原話「聯想電腦、宏碁電腦…也要被注入」開。舊草稿移到 outbox。commit `f9708d4c0`。
-3. **網址手滑校正**：新外掛 `extensions/url-typo-guard/`（`message_sending`，LINE 三帳號送出前把 `tainan-calendar`／`tainancalender` 等改回 `event.bymyway.com/tainan-calender/`，實測錯的都 404）；每 3 次寫信到 `cross-agent/inbox/mac/`，不發 Telegram 吵教練。舊 hook 已關。測試 12/12＋真實路徑（bni_tainan 回覆經 deliver 送假 LINE 收件人，外掛抓到並改正）。gateway 完整重啟兩次（03:42、03:44），版本先核對一致。commit `bc9b414bb`。
-
-### 卡在哪／發現
-- `state/member_context.log` 到 03:46 仍是空的（凌晨沒有真實 LINE 會員訊息），龍蝦小助教認人還沒驗證。
-- `openclaw message send` 不經過 message_sending，測送出前外掛要走 `gateway call agent` 加 `deliver:true`＋假收件人（已寫進記憶 `feedback_openclaw_hook_fire_and_forget.md`）。
-
-### 📋 下一場開工先做
-（已由上方 v269 取代：③④已完成，只剩等真實 LINE 流量與聯想／宏碁回信。）
-
+> 📦 v268（Mac 10-02 03:46，賈維斯成長計畫第三步：禮遇版人設、聯想／宏碁接反射、網址手滑校正外掛）完整內容已封存：`handoff_archive/handoff_v268_archived_2026-10-02.md`
 
 ---
 
