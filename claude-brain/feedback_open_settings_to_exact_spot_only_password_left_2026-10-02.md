@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 9df2876c-7681-432c-88e0-2fa87d0e2702
-  modified: 2026-10-02T03:18:47.423Z
+  modified: 2026-10-02T03:29:01.768Z
 ---
 
 教練 2026-10-02 11:12 原話：「每次看到這個就麻煩，我希望的是直接幫我開到備份頻率，甚至選好手動，只留我輸密碼，這才叫真的省事，不然我光是找你講的這些步驟，就花不少時間。」
@@ -16,7 +16,7 @@ metadata:
 
 **How to apply:**
 - 系統設定：`open 'x-apple.systempreferences:<面板代號>'` 直接打開（時光機＝`com.apple.Time-Machine-Settings.extension`；代號查 `/System/Library/ExtensionKit/Extensions/*.appex` 的 CFBundleIdentifier）。
-- 要管理員權限的指令：用 App 終端機分頁（run_in_terminal）跑 `sudo -p '說明: ' …`，畫面停在輸入密碼；多件事合成一支腳本，只輸入一次密碼。系統授權視窗那條路（osascript administrator）拿不到完整磁碟取用，tmutil 會看不到備份。
+- 要管理員權限的指令：用 App 終端機分頁（run_in_terminal）跑 `sudo -p '說明: ' …`，畫面停在輸入密碼，**接著一定要 `show_pane terminal` 把那個分頁秀到教練眼前**（10/02 11:28 只開分頁沒秀出來，教練回「沒看到跳出輸密碼的選項」）；多件事合成一支腳本，只輸入一次密碼。系統授權視窗那條路（osascript administrator）拿不到完整磁碟取用，tmutil 會看不到備份。
 - 回覆寫「我已經打開到 X，只剩輸入密碼」，不列路徑。
 - 機制：`scripts/stop_rules_master.py` A2b（回覆有「設定 → A → B」兩段箭頭、卻沒寫「已幫您打開」就擋；回測 2461 則歷史回覆命中 6 則，全是真的）。
 
