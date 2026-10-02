@@ -14,3 +14,5 @@ metadata:
 - 刪完空間不會馬上變多：時光機本機快照(約27份)還留著，約一天內到期才釋放。
 
 待做：Chrome 資料搬 SSD（要關 Chrome）、26.7.1 系統更新（教練定時段）。相關：[[project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02]]
+
+**13:37 追加：Chrome 資料也搬了**：`~/Library/Application Support/Google/Chrome` → 捷徑指向 `/Volumes/953-SSD/Mac應用資料/Chrome`（8671 檔、內容差異 0，重開 Chrome 後新寫入的檔案出現在 SSD 那份）。舊夾 `Chrome.bak.20261002`（5.2GB）保留到 **10/09** 後刪。SSD 沒接上 Chrome 會打不開。
