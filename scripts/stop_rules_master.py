@@ -447,7 +447,8 @@ if LAST_TEXT:
         if B_WHITELIST.search(line):
             continue
         for p in B_PATTERNS:
-            if p in line:
+            # 同一小句內「不是／沒有／未…修好了」是否定句，不是完成聲明
+            if p in line and not re.search(r"(不是|並非|沒有|沒能|未能)[^，。；！？,.;!?\n]{0,8}" + re.escape(p), line):
                 hits.append("  • 偵測到「%s」" % p)
                 break
     if hits and not re.search(r"\b[0-9a-f]{7,40}\b", LAST_TEXT, re.IGNORECASE):
