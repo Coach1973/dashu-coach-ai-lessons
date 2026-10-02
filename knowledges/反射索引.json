@@ -1175,13 +1175,13 @@
     {
       "id": "R-SUDO-SHOW-TERMINAL",
       "moment": "pre_tool",
-      "tool": "mcp__terminal__run_in_terminal",
+      "tool": "Bash|mcp__terminal__run_in_terminal",
       "kind": "防錯型",
-      "match": "\\bsudo\\b",
-      "say": "這個指令會停在輸入密碼：送出後立刻用 show_pane（pane=terminal、tab_id=這個分頁）把終端機秀到教練眼前，回覆寫「終端機已經開在對話旁邊，停在輸入密碼」。",
+      "match": "(?m)(?:^|[;&|]\\s*)sudo\\s+(?!-A\\b)(?!-n\\b)(?!-v\\b)(?!-l\\b)",
+      "say": "要教練輸入密碼：別放終端機面板（教練看不到）。改用跳到畫面最前面的密碼視窗：SUDO_ASKPASS=~/.openclaw/workspace/scripts/coach_password_dialog.sh COACH_PW_MSG='這次要做什麼' sudo -A <指令>（從 Bash 工具跑，放背景）。回覆寫「密碼視窗已跳在畫面中間」。",
       "level": "remind",
-      "situation": "在 App 終端機分頁跑要密碼的 sudo 指令時",
-      "source": "教練 2026-10-02 11:28 原話「沒看到跳出輸密碼的選項」／feedback_open_settings_to_exact_spot_only_password_left_2026-10-02.md",
+      "situation": "要用 sudo（需要教練打密碼）時",
+      "source": "教練 2026-10-02 11:28／11:33 原話「沒看到跳出輸密碼的選項」「之前你講的，我都看不到」；System Events 密碼視窗實測教練看得到並輸入成功",
       "audience": [
         "coach"
       ]
