@@ -123,6 +123,32 @@ def check_weekday(text):
     return "；".join(dict.fromkeys(bad))[:300]
 
 
+TM_PLIST = "/Library/Preferences/com.apple.TimeMachine.plist"
+BACKUP_FRESH_HOURS = 6
+
+
+def backup_needed(text):
+    """升級指令前（2026-10-02 教練定的備份規則二：系統升級前一定備份）。
+    Mac 上 6 小時內沒有 Time Machine 備份就回傳說明；指令自己先備份、遠端（ssh）、非 Mac 都不擋。"""
+    if sys.platform != "darwin" or re.search(r"\bssh\b", text) or re.search(r"tmutil\s+startbackup\b[^\n]*(-b\b|--block)", text):
+        return ""
+    try:
+        import plistlib
+        with open(TM_PLIST, "rb") as f:
+            dates = [d for dest in plistlib.load(f).get("Destinations", []) for d in dest.get("SnapshotDates", [])]
+    except Exception:
+        dates = []
+    last = "讀不到"
+    if dates:
+        newest = max(dates)  # UTC
+        hours = (datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None) - newest).total_seconds() / 3600
+        if hours < BACKUP_FRESH_HOURS:
+            return ""
+        last = (newest + datetime.timedelta(hours=8)).strftime("%m/%d %H:%M")
+    return (f"上一份備份是 {last}（台灣時間），已超過 {BACKUP_FRESH_HOURS} 小時。"
+            "請把指令改成先備份再升級：tmutil startbackup --block && <原本的升級指令>（等備份跑完才會升級）。")
+
+
 def log_hit(moment, rid, level):
     try:
         with open(HITS, "a", encoding="utf-8") as f:
@@ -159,6 +185,11 @@ def main():
             if not detail:
                 continue
             r = {**r, "say": r["say"] + detail + "。請改好；拿不準就問教練。"}
+        elif r.get("check") == "backup_recent":
+            detail = backup_needed(text)
+            if not detail:
+                continue
+            r = {**r, "say": r["say"] + detail}
         if r.get("level") == "block":
             blocks.append(r)
         elif r.get("check") or not seen_before(session, r["id"]):  # 核對類每次錯都要講，不只講一次

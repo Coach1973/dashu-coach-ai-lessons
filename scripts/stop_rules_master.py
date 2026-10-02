@@ -355,6 +355,39 @@ if LAST_TEXT:
         BLOCK = True
 
 # ════════════════════════════════════════════════
+# A2b. 給教練「選單路徑步驟」卻沒先幫他打開（擋）—— 2026-10-02 新增
+#   起因：A2 看到「只有您能做＋密碼」就放行，AI 就寫「到系統設定 → 時光機 → 選項，把備份頻率改成手動」，
+#   教練光找這些步驟就花不少時間。教練 10/02 原話：「直接幫我開到備份頻率，甚至選好手動，只留我輸密碼，這才叫真的省事」。
+#   放行：同一則回覆寫明 AI 已經把畫面打開到那一步（已幫您打開／已開到…）。
+# ════════════════════════════════════════════════
+# 至少兩段箭頭才算選單路徑（回測 2461 則歷史回覆：一段箭頭的「A→B」多半是「對應到」，誤判一半；兩段命中 6 則全是真的叫教練照路徑找）
+A2B_PATH = re.compile(r"(系統設定|偏好設定|設定|控制台|選單|後台)[^\n→；;。，,]{0,12}→[^\n→；;。，,]{1,15}→")
+A2B_DONE = re.compile(r"已(經)?(幫您)?(打開|開到|開好|跳到|切到|叫出)")
+
+if LAST_TEXT and not A2B_DONE.search(LAST_TEXT):
+    hits2b = []
+    for line in LAST_LINES:
+        if A_WHITELIST.search(line):
+            continue
+        clean = strip_quotes(line)
+        m = A2B_PATH.search(clean)
+        if m:
+            hits2b.append("  • 「%s」← %s" % (m.group(0), clean.strip()[:60]))
+    if hits2b:
+        body = "\n".join(sorted(set(hits2b))) + "\n\n"
+        path = log_violation("rule12_handback_violations.log", body)
+        MESSAGES.append(
+            "\n🚨 守則#12 給教練選單步驟偵測（系統檢查）\n" + BAR + "\n"
+            "剛才回覆要教練自己照「設定 → … → …」找畫面：\n" + body +
+            "✅ 請立刻重做：\n"
+            "  1. 先替教練打開到那一步：系統設定用 open 'x-apple.systempreferences:<面板代號>'\n"
+            "     （時光機＝com.apple.Time-Machine-Settings.extension；代號查 /System/Library/ExtensionKit/Extensions/*.appex）\n"
+            "  2. 要密碼的指令放進 App 終端機分頁跑 sudo，畫面停在輸入密碼，教練只要打密碼\n"
+            "  3. 回覆寫「我已經打開到X，只剩輸入密碼」，不列路徑叫教練找\n\n"
+            "違規記錄已寫入：%s\n" % path + BAR + "\n")
+        BLOCK = True
+
+# ════════════════════════════════════════════════
 # A3. 模型分工標示（擋）—— 2026-09-25 教練親定
 #   教練每丟一則 ≥15 字的話，這一輪回覆裡要有「🟢」或「🟣」標示等級，
 #   讓教練不用猜提醒什麼時候出現。注入端：model_tier_advisor.sh。

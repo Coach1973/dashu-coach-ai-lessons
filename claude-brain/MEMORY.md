@@ -1,4 +1,6 @@
 # Memory Index
+- [🔴 只有教練能做的步驟也不准列「設定→A→B」叫他找：先打開到那一格、sudo 放終端機分頁停在輸入密碼，只留密碼給教練；stop_rules A2b 擋(2026-10-02)](feedback_open_settings_to_exact_spot_only_password_left_2026-10-02.md)
+- [💾 Mac 時光機改四條：點名正常才備份／升級前必備份(反射擋)／Amber上限150GB／快取不備份，取代每小時(2026-10-02教練定)](project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02.md)
 - [🔧 夥伴分身沒排程工具時，Mac端 openclaw cron add 代排一次性提醒：3個坑（--exact不能配--at／分身自己用message工具會重複送／規則字句被誤判已回覆）＋教練DM測試法(2026-10-02)](reference_partner_agent_reminder_via_openclaw_cron_2026-10-02.md)
 - [🦾 「賈維斯成長計畫」＝「反射條件」整套機制，三級植入：教練自己的AI／四位夥伴分身／LINE對外帳號(會員禮遇版)(2026-10-02教練命名)](project_jarvis_growth_plan_2026-10-02.md)
 - [🔴🔴 小龍蝦hook的context.inject沒人讀，15支逐支分類表在檔內；會員記憶/知識庫/BNI行事曆已搬到外掛member-context，要讓模型看到只能用外掛before_prompt_build(範本extensions/reflex-prompt，2026-10-02)](feedback_openclaw_hook_fire_and_forget.md)

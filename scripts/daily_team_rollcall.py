@@ -21,7 +21,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 HOME = Path.home()
@@ -34,6 +34,8 @@ VPS_STATE = WS / "logs" / "vps_healthcheck_state.json"
 CRON_DB = HOME / ".openclaw" / "state" / "openclaw.sqlite"
 STATE_OUT = WS / "logs" / "daily_rollcall_state.json"
 NOTIFY = WS / "scripts" / "notify_coach.sh"
+TM_PLIST = Path("/Library/Preferences/com.apple.TimeMachine.plist")  # 一般權限就讀得到，不用完整磁碟取用
+BACKUP_STALE_DAYS = 3
 
 COACH_LINE_IDS = {"u895a0ad8e49d75f8303dc3d067282dc0", "u168903487f0ba2b666ddc62b854de351"}
 TEST_ID_MARKERS = ("test", "diag", "health", "xxxx")
@@ -221,6 +223,44 @@ def line_usage(agent):
     return len(users24), msgs24, len(users7)
 
 
+def last_backup():
+    """回傳 (最後一次備份的台灣時間, 距今幾天)；讀 Time Machine 設定檔裡的備份日期（UTC）。"""
+    import plistlib
+    p = plistlib.loads(TM_PLIST.read_bytes())
+    dates = [d for dest in p.get("Destinations", []) for d in dest.get("SnapshotDates", [])]
+    if not dates:
+        return None, None
+    last = max(dates)
+    age = (datetime.now(timezone.utc).replace(tzinfo=None) - last).total_seconds() / 86400
+    return last + timedelta(hours=8), age
+
+
+def backup_when_healthy(dry):
+    """2026-10-02 教練交辦（取代每小時自動備份）：好的時候才備份。
+    點名沒有紅燈 → 備份一次；有紅燈 → 不備份，保住上一份健康的。連續 3 天沒備到 → 點名提醒。"""
+    try:
+        last_tw, age = last_backup()
+    except Exception as e:
+        last_tw, age = None, None
+        bad("Mac備份", f"讀不到備份紀錄（{type(e).__name__}）", "🟡")
+    last_txt = f"{last_tw:%m/%d %H:%M}" if last_tw else "無"
+    reds = [n for level, n, _ in problems if level == "🔴"]
+    if reds:
+        line = f"💾 備份：有紅燈，今天不備份（保住 {last_txt} 那份健康的）"
+    elif dry:
+        line = f"💾 備份：全員正常，會備份一次（測試模式不執行）｜上一份 {last_txt}"
+    else:
+        r = subprocess.run(["/usr/bin/tmutil", "startbackup"], capture_output=True, text=True)
+        if r.returncode == 0:
+            line = f"💾 備份：全員正常，已自動備份一次｜上一份 {last_txt}"
+        else:
+            line = f"💾 備份：啟動失敗｜上一份 {last_txt}"
+            bad("自動備份", f"啟動失敗：{(r.stderr or r.stdout).strip()[:120]}", "🟡")
+    if age is not None and age >= BACKUP_STALE_DAYS:
+        bad("Mac備份", f"已經 {int(age)} 天沒有備份（上一份 {last_txt}）", "🟡")
+    return line
+
+
 def main():
     dry = "--dry-run" in sys.argv
     for fn in (check_xiaolongxia, check_telegram_bots, check_hermes_process):
@@ -251,6 +291,8 @@ def main():
     if "users_24h" in vps:
         usage.append(f"VPS小龍蝦：{vps['users_24h']}人（{vps.get('msgs_24h', 0)}則）｜近7天{vps.get('users_7d', '?')}人")
 
+    backup_line = backup_when_healthy(dry)
+
     weekday = "一二三四五六日"[datetime.now().weekday()]
     head = "✅ 全員正常" if not problems else f"⚠️ {len(problems)}項需要注意"
     lines = [f"🩺 每日全隊點名 {datetime.now():%m/%d}（{weekday}）{datetime.now():%H:%M} 台灣時間", head, ""]
@@ -259,7 +301,7 @@ def main():
     if problems:
         lines.append("")
     lines.append("✅ " + "、".join(oks))
-    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, "",
+    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, backup_line, "",
               "（每天08:10送出；08:30前沒收到這則＝系統出事，直接叫軍師）"]
     msg = "\n".join(lines)
 

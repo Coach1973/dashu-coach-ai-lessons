@@ -1156,6 +1156,21 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-BACKUP-BEFORE-UPGRADE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "kind": "防錯型",
+      "check": "backup_recent",
+      "match": "(?m)(?:(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*(?:\\s-g\\b|--global)[^\\n;&|]*openclaw|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*openclaw[^\\n;&|]*(?:\\s-g\\b|--global)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?openclaw\\s+(?:update|upgrade)\\b(?!\\s+status)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?brew\\s+upgrade\\b|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?softwareupdate\\s+(?:-i|-ia|--install)\\b)(?![^\\n]*(?:--dry-run|--help))",
+      "say": "升級前先備份（教練 2026-10-02 定的備份規則二）：",
+      "level": "block",
+      "situation": "要升級小龍蝦／Homebrew／Mac 系統時",
+      "source": "教練 2026-10-02 原話（像聯想一鍵備份：電腦運行良好時備份、系統升級前備份，其他時間沒必要時時備份）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1288,6 +1303,8 @@
     "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
     "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION",
     "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手",
-    "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）"
+    "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）",
+    "feedback_open_settings_to_exact_spot_only_password_left_2026-10-02": "已有程式：scripts/stop_rules_master.py A2b（選單路徑兩段箭頭又沒寫已幫您打開→擋）",
+    "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE"
   }
 }
