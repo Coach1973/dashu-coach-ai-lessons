@@ -9,8 +9,8 @@ metadata:
 - `~/Downloads` → 捷徑指向 `/Volumes/953-SSD/下載`（APFS、USB、disksleep=0）。搬前 658 檔、內容差異 0。要先 `chmod -a "group:everyone deny delete" ~/Downloads` 才能改名（macOS 預設鎖）。
 - 舊資料夾 `~/Downloads.bak.20261002`（1.1GB）保留 7 天，**10/09 後**確認無異狀再刪（比照 LINE 搬家鐵律）。
 - SSD 沒接上＝下載失敗；每日點名已加「外接SSD」檢查（daily_team_rollcall.py）。
-- 已刪（教練當場同意）：Claude-3p 舊資料 10GB（SSD 有份 `Mac本機搬移_20261002/`）、ByeType 4.6GB、whisper large/medium 3GB、uv/puppeteer/opencode 快取 4GB。
+- 已刪（教練當場同意）：Claude-3p 舊資料 10GB（SSD 有份 `Mac本機搬移_20261002/`）、ByeType 4.6GB、whisper large/medium 3GB、uv/puppeteer/opencode 快取 4GB、9/19 工作資料夾舊備份 6.7GB（SSD 有份）。
 - **不能刪**：`~/.cache/whisper/base.pt`（小龍蝦 Telegram 語音轉文字 `openclaw.json tools.media` 用 base）、`~/.cache/huggingface`（名片 OCR PaddleOCR＋記憶搜尋 bge-m3）。
 - 刪完空間不會馬上變多：時光機本機快照(約27份)還留著，約一天內到期才釋放。
 
-待做：Chrome 資料搬 SSD（要關 Chrome）、26.7.1 系統更新（教練定時段）、9/19 工作資料夾舊備份 6.7GB（SSD 已有份，待教練說刪）。相關：[[project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02]]
+待做：Chrome 資料搬 SSD（要關 Chrome）、26.7.1 系統更新（教練定時段）。相關：[[project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02]]
