@@ -1171,6 +1171,20 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-SUDO-SHOW-TERMINAL",
+      "moment": "pre_tool",
+      "tool": "mcp__terminal__run_in_terminal",
+      "kind": "防錯型",
+      "match": "\\bsudo\\b",
+      "say": "這個指令會停在輸入密碼：送出後立刻用 show_pane（pane=terminal、tab_id=這個分頁）把終端機秀到教練眼前，回覆寫「終端機已經開在對話旁邊，停在輸入密碼」。",
+      "level": "remind",
+      "situation": "在 App 終端機分頁跑要密碼的 sudo 指令時",
+      "source": "教練 2026-10-02 11:28 原話「沒看到跳出輸密碼的選項」／feedback_open_settings_to_exact_spot_only_password_left_2026-10-02.md",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
