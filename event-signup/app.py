@@ -1176,6 +1176,8 @@ def api_tut_join():
 # 原本 tut-memory 頁的照片只存在訪客自己瀏覽器，別人看不到。改成：送出→存伺服器(pending)
 # →Telegram 傳照片給教練，附一個審核連結→教練按「通過」才出現在所有人的牆上。
 MEMWALL_SLUGS = {"tut-memory"}
+# 投稿審核通知送「活動報名即時通知」群（教練+佩佩老師+bot），佩佩老師可幫忙審核（教練2026-10-02交辦）
+MEMWALL_REVIEW_CHAT_ID = TELEGRAM_REGISTRATION_GROUP_CHAT_ID
 MEMWALL_DIR = Path(__file__).resolve().parent / "memwall_uploads"
 MEMWALL_MAX_PHOTO = 1_600_000
 MEMWALL_RECENT: dict = {}  # ip -> [時間戳]，簡單防灌爆：每個IP一小時最多10則
@@ -1206,14 +1208,15 @@ def _memwall_json(obj, status=200):
                     headers={**MEMWALL_CORS, "Content-Type": "application/json"})
 
 
-def _memwall_send_photo_to_coach(photo_path: Path, caption: str) -> bool:
+def _memwall_send_photo_to_coach(photo_path: Path, caption: str, chat_id: str = None) -> bool:
     """有照片就用 sendPhoto 讓教練在 Telegram 直接看到照片；失敗退回文字通知。"""
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             bot_token = json.load(f)["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
         boundary = "memwall" + secrets.token_hex(8)
         parts = []
-        for k, v in (("chat_id", TELEGRAM_NOTIFY_CHAT_ID), ("caption", caption)):
+        chat_id = chat_id or MEMWALL_REVIEW_CHAT_ID
+        for k, v in (("chat_id", chat_id), ("caption", caption)):
             parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode())
         parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"p.jpg\"\r\n"
                      f"Content-Type: image/jpeg\r\n\r\n".encode() + photo_path.read_bytes() + b"\r\n")
@@ -1225,8 +1228,8 @@ def _memwall_send_photo_to_coach(photo_path: Path, caption: str) -> bool:
             if json.loads(resp.read().decode()).get("ok"):
                 return True
     except Exception as e:  # noqa: BLE001
-        _log_notify_failure(TELEGRAM_NOTIFY_CHAT_ID, f"memwall sendPhoto失敗: {e!r}", caption)
-    return _notify_xiaolongxia(caption)
+        _log_notify_failure(chat_id or MEMWALL_REVIEW_CHAT_ID, f"memwall sendPhoto失敗: {e!r}", caption)
+    return _notify_xiaolongxia(caption, chat_id=chat_id or MEMWALL_REVIEW_CHAT_ID)
 
 
 @app.route("/api/memwall/<slug>/notes", methods=["GET", "POST", "OPTIONS"])
@@ -1284,11 +1287,11 @@ def api_memwall_notes(slug):
 
     review_url = f"https://event.bymyway.com/memwall/review/{note_id}?t={_memwall_sig(note_id)}"
     caption = (f"📮【南應校友回憶牆・新投稿待審核】\n— {name or '匿名校友'} · {year}\n「{txt}」\n\n"
-               f"審核（點開按通過或不通過）：\n{review_url}")
+               f"審核（群裡任何人點開都可以按通過或不通過）：\n{review_url}")
     if photo_file:
         _memwall_send_photo_to_coach(MEMWALL_DIR / photo_file, caption[:1000])
     else:
-        _notify_xiaolongxia(caption)
+        _notify_xiaolongxia(caption, chat_id=MEMWALL_REVIEW_CHAT_ID)
     return _memwall_json({"ok": True, "id": note_id, "status": "pending"})
 
 
