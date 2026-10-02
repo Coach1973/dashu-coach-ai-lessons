@@ -15,6 +15,7 @@
 - 自動壓縮只測過函式＋ema1017 正式資料夾，還沒經真實上傳流程跑過一次。
 
 ### 📋 下一場開工先做
+⓪ **10/03 00:30 教練要裝 macOS 26.7.1 小更新**（cron「教練-系統更新提醒-10-03凌晨」會 Telegram 提醒他）。教練回「更新」→ 先 `tmutil startbackup` 備份並確認完成 → `softwareupdate -i "macOS Tahoe 26.7.1-25G241" -R`（要密碼走 coach_password_dialog.sh）→ 重開後驗小龍蝦／赫米斯／Tailscale／RustDesk／外接SSD(Chrome、下載是捷徑)。27.0.1 大改版不裝，等一兩週。教練回「改天」就記下。另：10/09 後刪 `~/Downloads.bak.20261002`、`~/Library/Application Support/Google/Chrome.bak.20261002`；10/03 早上量本機剩餘空間(時光機快照到期後應多約 20GB)。
 ① 查 12:00 楊老師（Simona）課程提醒：`openclaw cron list --json` 看 `4c706494` 是否 delivered；② 10/03 08:10 點名訊息要有「💾 備份：全員正常，已自動備份一次」，且 `tmutil listbackups | wc -l` 多一份；③ 下次有大樹作品上傳，看通知有沒有「🗜 壓縮」一行、圖片是 webp。三項都正常就問教練今天從哪件事開始。
 
 ---
