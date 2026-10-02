@@ -1,3 +1,27 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 14:03 台灣時間，Mac 桌面版 Opus 5.5↔Sonnet 5.5，v271）
+
+**主軸：Mac 本機瘦身（刪約 28GB、下載與 Chrome 資料改放外接 SSD）；全隊體檢修 3 件；南應校友回憶牆改成「投稿→群組審核→公開」。**
+
+### 做了什麼
+1. **本機瘦身**（記憶 `reference_mac_downloads_on_external_ssd_2026-10-02.md`）：刪舊 Claude-3p 10GB、ByeType 4.6GB、whisper large/medium＋uv/puppeteer/opencode 快取約 7GB、9/19 工作資料夾舊備份 6.7GB（皆先比對 SSD 副本差異 0）。`~/Downloads` 與 `~/Library/Application Support/Google/Chrome` 改成捷徑指向 `/Volumes/953-SSD/下載`、`/Volumes/953-SSD/Mac應用資料/Chrome`；舊夾改名保留到 **10/09**。**不能刪**：`~/.cache/whisper/base.pt`（小龍蝦語音）、`~/.cache/huggingface`（名片 OCR／記憶搜尋），已加反射 `R-KEEP-VOICE-OCR-MODELS`。每日點名加「外接SSD」檢查。
+2. **全隊體檢**：①小龍蝦 `character-illustration-batch` 技能檔頭被 9/28 塞壞、4 天被略過→已修；②kong/peipei/yijing 夥伴備份庫改每天點名時自動推（`scripts/backup_partner_agents.sh`）；③鎖死分身（yang/yijing）的每週技能整理被擋不再報黃燈。yijing 加進外層 .gitignore。
+3. **系統更新提醒**：cron「教練-系統更新提醒-10-03凌晨」10/3 00:30 Telegram 私訊教練（已演練送達）。
+4. **南應校友回憶牆**（event.bymyway.com/curated/tut-memory/）：投稿＋照片存伺服器 `event-signup/memwall_uploads/`＋表 `memwall_notes`；審核通知送「活動報名即時通知」群（-5349981085，佩佩老師可審），簽章連結 `/memwall/review/<id>?t=` 按通過才公開；時光走廊 5 張校史圖可點放大；與召集令（/tut/）互相連結；「立即加入校友會」改開召集令真報名表。commit：event-signup `d9ca95060`、`825b9871a`；tut-alumni `085d738`；回憶牆原檔備份 `~/github_repos/_backups/`（tut-memory 資料夾不是 git）。
+
+### 卡在哪／發現
+- 審核通知改送群組後，**群組那一步還沒真實走過**（怕測試訊息吵到佩佩老師，只驗了 bot 是群管理員、sendPhoto 本機成功）。第一則真實投稿時確認群組收到。
+- 回憶牆「四場線上講座」報名仍是假的（只存瀏覽器）。教練 14:01 說四場主題可能會改，**改時他會通知**，屆時再接活動報名系統，不要主動問。
+- 本機剩餘空間：刪完顯示仍約 43GB，因時光機本機快照未到期，約一天後會多出約 20GB。
+
+### 📋 下一場開工先做
+⓪ **10/03 00:30 教練要裝 macOS 26.7.1 小更新**（見下方那一棒 v270 的 ⓪ 條：回「更新」→ 先 `tmutil startbackup` 確認備份→ `softwareupdate -i "macOS Tahoe 26.7.1-25G241" -R`→ 重開後驗小龍蝦／赫米斯／Tailscale／RustDesk／SSD）。27.0.1 大改版不裝。
+① 10/03 早上量本機剩餘空間（`diskutil info / | grep "Container Free"`）。
+② 回憶牆第一則真實投稿進來時，確認「活動報名即時通知」群有收到照片＋審核連結。
+③ 10/09 後刪 `~/Downloads.bak.20261002`、`~/Library/Application Support/Google/Chrome.bak.20261002`（先確認 Chrome／下載正常）。
+④ v270 原有三項仍有效：楊老師 12:00 提醒（已 delivered ✅）、10/03 08:10 點名要有「💾 備份…已自動備份一次」、下次大樹作品上傳看「🗜 壓縮」。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 11:45 台灣時間，Mac 桌面版 Sonnet 5.5→Opus 5.5，v270）
 
 **主軸：大樹作品 SOP 加三條新規則；Mac 備份從「每小時」改成「好的時候才備份」四條；教練兩次糾正「叫我自己找畫面」「密碼欄看不到」，都改成機制。**
@@ -20,23 +44,6 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-02 07:10 台灣時間，Mac 桌面版 Opus 5.5→Sonnet 5.5，v269）
-
-**主軸：賈維斯成長計畫第四步③④完成——四位夥伴分身有了「三種標準」，記憶 127 條全部轉進反射系統（未處理 0）。**
-
-### 做了什麼
-1. **四位夥伴分身（peipei／kong／yijing／yang）SOUL.md 最前面加「🧭 三種標準（夥伴版）」**：先看紀錄與記憶、能推斷不問、說「做不到」前先看工具清單、語音錯字照最合理意思做、不答應做不到的事（例：不能主動傳訊息就別說「到時候提醒您」）；教練的公開活動直接查單場頁 `https://event.bymyway.com/curated/bigtree-月日/`（首頁「近期場次」是 JS 畫的，抓網頁看不到，別用首頁判斷）；yang 稱呼一律「Simona」。四群 session 已封存，gateway 真實路徑四位都逐字貼出第 3 點。**行為前後對照**（楊老師 10/1 真實語音句「大肅執動拜六那場AI課是幾點」）：改前叫「楊老師」並反問「您手邊有資料嗎」；改後叫 Simona、自己開 bigtree-1003，答出 14:00–16:30、13:40 入場、KR 養生廚房、免費（與網頁一致）。commit：peipei `cf586c1`、kong `9ff7bb119`、yijing `c9346f4`（三個獨立 repo，peipei／kong 含 09-24 未提交的「大樹作品 kind 分流」段一起存）、外層 `e6f5f4993`（yang）。測試對話 7 個已刪並 `memory forget`。
-2. **記憶 127 條 → 反射系統**：新反射 13 條（git rebase 卡住、git 分岔先讀接力棒、改 coach888、寫 SOP 要寫口語別名、「全面X」範圍、BNI PPT SOP、claude rc 不 unset、sendBeacon CORS、策展刪除＝退役、git add -A 個資、MiniMax guard、大樹小講場次連動 event.db、台灣重心），每條都用歷史資料回測並收窄（coach888 408→135 次；台灣重心改抓 09-30 真實刺激「上海／廈門／中國商業」，命中正好是寫錯那一刻）；其餘 111 條登記 `memory_ledger`（併入哪條／參考資料／判斷類／已有程式／已退役）。`scripts/reflex_coverage.py` 新增記憶檢查：171 條未處理 0、索引斷鏈 0；補建從未寫入的 `feedback_no_wrong_posts_no_action_2026-09-18.md`、補收 `reference_openclaw_hook_inject_format`（標⛔過時）。`reflex_router.py` post_tool 自我排除也看指令（回測輸出曾誤觸）。commit `dfe39d869`、`bc0c25a79`、`e036177f6`，本次總結另計。
-
-### 卡在哪／發現
-- **楊老師（Simona）週六 AI 課提醒（07:08 教練原話：「要嘛讓小龍蝦能主動提醒，要嘛你幫忙提醒，對他來說只要有提醒就好」＝同意）**：yang 分身沒排程工具（安全鎖禁 exec），改由 Mac 端 `openclaw cron add` 代排兩個一次性工作，delivery 走 bot_main 投到她的群組 -5405039910：`08f1`→已換成 `4c706494-…`（10/2 12:00 台灣時間）、`e5fac0d4-…`（10/3 12:00 最後一次）。實測踩到 2 個坑：`--exact` 不能配 `--at`；分身若自己呼叫 message 工具發訊息，系統還會把它最後那句「已送出」再轉送一次（群組會多一則怪訊息）→指示改成「最終回覆就是提醒本文、不准用 message 工具」。已用只送教練的測試工作跑兩次，第二次確認最終回覆＝提醒本文、狀態 delivered，測試工作已刪。**12:00 後要確認**：`openclaw cron list --json` 看 `4c706494` 是否已消失/lastDelivered=true；教練說過「她說我知道了就停」，分身會先讀 MEMORY.md 判斷，她回「我知道了」時分身要把這句寫進 MEMORY.md。
-- `state/member_context.log` 仍只有 03:34 兩筆測試，沒有真實 LINE 流量（龍蝦小助教認人未驗證）；聯想／宏碁沒回信（`cross-agent/inbox/mac/` 資料夾不存在）。
-- 發現 kong 的 SOUL.md 寫「唯一指定模型 MiniMax M2.7」，但 `openclaw.json` kong 是 `minimax/MiniMax-M3`（peipei 的 SOUL 06-03 已升 M3），兩處矛盾；沒動（模型鎖需教練授權日期），記在 🔧 清單。
-
-### 📋 下一場開工先做
-賈維斯成長計畫第四步剩兩項，都在等外面（10-02 07:10 查過仍無動靜）：①看 `state/member_context.log` 有沒有真實 LINE 流量、第 4 欄是不是 `sender:u…`（龍蝦小助教認人）；②`cross-agent/inbox/mac/` 有聯想／宏碁回信就驗收（反射畫面原文＋開工🎯＋commit）。兩項都沒動靜就問教練今天從哪件事開始，不要空轉。
-
----
 
 > 📦 v268（Mac 10-02 03:46，賈維斯成長計畫第三步：禮遇版人設、聯想／宏碁接反射、網址手滑校正外掛）完整內容已封存：`handoff_archive/handoff_v268_archived_2026-10-02.md`
 

@@ -1,4 +1,5 @@
 # Memory Index
+- [🧱 南應校友回憶牆：投稿＋照片存伺服器、群組簽章連結審核才公開；Cloudflare會快取.jpg的404要no-store(2026-10-02)](reference_tut_memory_wall_moderation_2026-10-02.md)
 - [💽 Mac「下載」改放外接SSD(~/Downloads捷徑)，舊夾留到10/09；whisper base與huggingface不能刪(小龍蝦語音/名片OCR)；Chrome搬家待做(2026-10-02)](reference_mac_downloads_on_external_ssd_2026-10-02.md)
 - [🔧 手機遙控(claude rc)舊對話子程序隨時可關，只留主程序；教練要用自己開新對話(2026-10-02)](feedback_phone_rc_sessions_close_anytime_2026-10-02.md)
 - [🔴 只有教練能做的步驟也不准列「設定→A→B」叫他找：先打開到那一格、sudo 放終端機分頁停在輸入密碼，只留密碼給教練；stop_rules A2b 擋(2026-10-02)](feedback_open_settings_to_exact_spot_only_password_left_2026-10-02.md)
