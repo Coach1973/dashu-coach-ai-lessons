@@ -1,5 +1,8 @@
 # Memory Index
 - [💽 聯想整機還原備份：E槽兩份(9/19、10/02)，空間不夠時9/19可刪(教練10-03親口)；D槽80GB已清掉(2026-10-03)](reference_lenovo_system_image_backups_2026-10-03.md)
+- [🔧 蘋果晶片 Mac 安裝 macOS 更新要 softwareupdate --user --stdinpass，只 sudo 會 Failed to authenticate；用 scripts/macos_update.sh(2026-10-03)](reference_macos_update_cli_apple_silicon_needs_user_stdinpass_2026-10-03.md)
+- [🔧 Claude 的 10GB vm_bundles＝Cowork 虛擬機，最後用 9/21，已搬 SSD 改捷徑，不要刪(2026-10-03)](reference_claude_cowork_vm_bundle_10gb_2026-10-03.md)
+- [🔴 Mac 的 Preboot 磁碟區(約18GB)不是已下載的系統更新，更新完不會省空間；前一場貼錯標籤，教練 10/03 追問才發現(2026-10-03)](feedback_mac_preboot_volume_not_pending_update_2026-10-03.md)
 - [🔧 為你轉身(turnforyou)改導師席：畫面讀inline-data非data.json、席次id綁路徑推薦、觀眾席獨立、非git要自己備份；已掛反射R-TURNFORYOU-SEATS-EDIT(2026-10-03)](reference_turnforyou_site_structure_2026-10-03.md)
 - [📝 115年算力平台申請(模型推論類)：教練10-02已網路送出；須知原文查證(禁中資模型/工具範圍、入選後義務、結案30天、推論類可申接名單)；聯想D槽整理(2026-10-02)](project_compute_platform_application_2026-10-02.md)
 - [🔧 Comet開Google「遭到封鎖」但無痕正常＝擴充功能Enhancer 4 Google作怪，移除即好(2026-10-02)](feedback_comet_google_blocked_extension_enhancer_2026-10-02.md)
