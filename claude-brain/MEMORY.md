@@ -1,5 +1,7 @@
 # Memory Index
+- [💽 聯想整機還原備份：E槽兩份(9/19、10/02)，空間不夠時9/19可刪(教練10-03親口)；D槽80GB已清掉(2026-10-03)](reference_lenovo_system_image_backups_2026-10-03.md)
 - [🔧 為你轉身(turnforyou)改導師席：畫面讀inline-data非data.json、席次id綁路徑推薦、觀眾席獨立、非git要自己備份；已掛反射R-TURNFORYOU-SEATS-EDIT(2026-10-03)](reference_turnforyou_site_structure_2026-10-03.md)
+- [📝 115年算力平台申請(模型推論類)：教練10-02已網路送出；須知原文查證(禁中資模型/工具範圍、入選後義務、結案30天、推論類可申接名單)；聯想D槽整理(2026-10-02)](project_compute_platform_application_2026-10-02.md)
 - [🔧 Comet開Google「遭到封鎖」但無痕正常＝擴充功能Enhancer 4 Google作怪，移除即好(2026-10-02)](feedback_comet_google_blocked_extension_enhancer_2026-10-02.md)
 - [🧱 南應校友回憶牆：投稿＋照片存伺服器、群組簽章連結審核才公開；Cloudflare會快取.jpg的404要no-store(2026-10-02)](reference_tut_memory_wall_moderation_2026-10-02.md)
 - [💽 Mac「下載」改放外接SSD(~/Downloads捷徑)，舊夾留到10/09；whisper base與huggingface不能刪(小龍蝦語音/名片OCR)；Chrome搬家待做(2026-10-02)](reference_mac_downloads_on_external_ssd_2026-10-02.md)
