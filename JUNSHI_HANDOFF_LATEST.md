@@ -11,6 +11,7 @@
 
 ### 卡在哪／發現
 - ✅ **macOS 26.7.1 已裝成功**：10/03 01:35 教練在跳出的視窗輸入密碼，`macos_update.sh` 實跑通過；01:41 左右自動重開機，01:43 `sw_vers`＝26.7.1（25G241）。重開後驗證：小龍蝦 gateway(18789) 回 200、赫米斯 gateway 在跑並已連 Telegram、RustDesk／cloudflared 全部起來、Tailscale 本機在線、外接 SSD 已掛載且 Downloads／vm_bundles／fb_session_data 捷徑讀得到資料。重開當下剩餘空間 61.7GB（快照到期後才會再升）。macOS 27.0.1 大改版不裝。
+- ✅ **手機遙控（claude rc）重開機後已重啟**：10/03 10:30 教練回報手機連不上（重開機殺掉 tmux 內的 claude rc）。照記憶 SOP 用 `env -i` 版在 tmux `remote-control` 重啟，舊 bridge-pointer.json 備份後刪（`~/.claude/projects/-Users-bymyway--openclaw/bridge-pointer.json.bak.20261003`），新連線 env_01QHLw1…，10:39 教練手機確認「搞定了」。**下次重開機後手機又連不上＝同樣重跑這套，不用再查**。
 
 ### 📋 下一場開工先做
 ① 10/03 量剩餘空間（`diskutil info / | grep "Container Free"`；快照到期後預期上升到約 90GB）；08:10 點名要有「💾 備份…已自動備份一次」。
@@ -100,6 +101,7 @@
 - Coze舊機器人何時停用（等教練裁示）
 - ACER 36.3GB備份刪除（需教練在ACER親自開對話）
 - 赫米斯Telegram線登出登入時斷約2分鐘（綁使用者登入，要改成開機常駐系統服務才能根治；09-25已告知一次，教練沒要求處理）
+- 手機遙控開機自動啟動（現在重開機就消失、要 AI 手動重跑；10/03 問過一次，教練只回「搞定了」沒回這題）
 
 ### 🔧 AI自己的工作清單（AI自行處理，做完不用跟教練報告細節）
 
