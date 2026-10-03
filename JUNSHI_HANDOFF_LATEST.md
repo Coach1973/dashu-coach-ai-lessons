@@ -18,6 +18,7 @@
 ② 驗收新版開工注入：開工回報應不被截斷、約 10KB；有問題改回 `feed_junshi_handoff.sh` 第 2~5 步。
 ③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。
 ④ 回憶牆第一則真實投稿進來時確認群組收到；教練給薛如媛／范郁琪信用證資料時照 `knowledges/2026-08-27_…` 補登。
+⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`（`[Win]` 10/03 10:50）。
 
 ---
 
