@@ -1375,6 +1375,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-BNI-GUEST-COUNT-SOURCE",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "match": "guest_visits|invited_by|帶來賓人數|來賓數",
+      "say": "BNI 會員「帶來賓人數」一律用官方 PALMS 摘要報告「來賓」欄：github_repos/BNI-Training/guests_data.json（同 chapters.bymyway.com/guests，教練 09-01 定）。名片庫 guest_visits 的 invited_by 是手打的，漏很多（郭政輝 97 vs 官方 303），只能查「某位來賓是誰帶的」，不能拿來算人數。培訓場數用 BNI-Training/data.json（同 /training）＋data_msp.json 新場次。",
+      "level": "remind",
+      "situation": "要算會員帶來賓人數、培訓場數時",
+      "source": "試金石案例105（2026-10-05 探測器第一版誤用名片庫，教練抓到）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1393,7 +1406,8 @@
     "案例K": "已由 G-TRAD-CHINESE／G-TAIWAN-TIME 擋住（簡體字、日期台灣時間）",
     "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
     "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
-    "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）"
+    "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）",
+    "案例105": "R-BNI-GUEST-COUNT-SOURCE（算帶來賓／培訓前提醒用 PALMS 與 /training 同一份）；源頭探測器方案檔第一節已改"
   },
   "memory_ledger": {
     "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
