@@ -48,6 +48,7 @@
   ①`event.bymyway.com/curated/bigtree-1107/`＝原樣複製 bigtree-1003，換日期（11/7）、網址、改**第五場／前四場（4 場已辦）**；海報區**兩張並列**：直式＝原 10/3 版型 `edm.html` 改 11/7＋第 5 場＋**新 QR（指向 bigtree-1107 頁，已解碼驗證）** 重新輸出成 `edm-1107.jpg`；橫式＝教練新給的 EDM `edm-wide.jpg`。檔名帶 1107 是因為圖片快取 4 小時，舊檔名會卡舊圖。registry＋`events` 表 bigtree-1107 已補齊，出現在 `/bigtree/` 清單。GitHub `Coach1973/bigtree-1107`（`866848d`）。
   ②10/17 ema1017＝列入大樹小講（`events.site` curated→bigtree）＋時段「午後」15:00–17:30（SLOTS 與 SLOT_TIMES 兩邊）＋「頂級海鮮鍋／本店也有提供素食鍋」＋**「晚上吃火鍋自由參加，報名課程不一定要參加用餐」五處提醒**（首屏、PART 02、時程 17:30 標籤、費用卡、報名表前）。GitHub `Coach1973/ema1017`（`f57a1fa`）。
   ③歷史頁漏中正大學 9/19＝補進（25 場）＋`scripts/bigtree_history_sync.py`＋launchd `ai.openclaw.bigtree-history-sync` 每天 00:20 自動補登＋SOP 規則四。commit：workspace `2e4b01368`、bigtree `feb61de`＋`b4c6b55`。
+- ✅ **10/04 下午 kr1003（10/3 當天網頁）補內容（教練 15:46 交辦）**：`event.bymyway.com/curated/kr1003/` 加「05 當天作品」（影片 `works-video.mp4`＋圖解 `works-image.webp`，PNG 6.3MB→0.3MB）、「06 講義與簡報」（PDF《語音鍊金術：用「說話」駕馭 AI 的最強武器》13 頁；簡報《情緒與緣分的底層邏輯》14 張，用 Downloads 最新的 `_(2).pptx` 15:44 版，另有較舊 pptx 與 .key 沒用）、兩首 Suno 播放器（`uWDgTH5bIoLqCcJf`＝台式搖滾×慢搖→放「03 主題曲」；`5Zd2V1idOU3pi5m0`＝非洲鼓×曼丁→放「04-A」；兩首在 Suno 都叫〈開心的午後〉，是用 Suno 頁面的風格標籤分辨的）、頁尾「本網頁由 TAVAAI 現場製作」＋TAVA AI／大台南策展中心(`/tainan-shangquan/`)／大樹小講／海餅乾20週年慶(`/seabiscuit20/`)／官方 LINE／FB 粉專「大樹教練」(id 252699914868764)。GitHub `Coach1973/kr1003`（`c8766cf`）。同一份影片＋圖解也放進 bigtree-1107「上一場的成果」區並連到 kr1003（`70c897d`）。**沒找到「大樹教育」獨立官方帳號**（目前官方帳號只放 LINE＋FB 大樹教練），教練若有網址再補；Suno 內嵌播放器 iframe 內容無法從 DOM 驗證，有「在 Suno 開啟收聽」連結當備援。
 - ⚠️ 發現：**原 10/3 EDM（edm.jpg）上的 QR Code 掃出來是 AI 工具的臨時預覽網址**（`app-aws-…video-maker.work/agent/workspace/…`），不是 event.bymyway.com 正式頁。10/3 已辦完；11/7 新版已修。歷史頁／其他地方若還在用 10/3 舊海報要知道這點。
 - ⚠️ 11/7 頁面時間沿用 10/3 的 14:00–16:30；教練新橫式 EDM 寫下午 2:00–5:00、/bigtree/ 清單顯示 14:00–17:00，內部不一致。10/04 14:00 已問過一次（教練回覆時沒回這題）→ 不再追問，放🤫區。另外頁面 SUNO「本場新增／前面三場都沒有」的字句沿用 10/3，對第五場不精確，教練未交辦、未動。
 
@@ -84,7 +85,7 @@
 ① 10/03 量剩餘空間（`diskutil info / | grep "Container Free"`；快照到期後預期上升到約 90GB）；08:10 點名要有「💾 備份…已自動備份一次」。
 ② 驗收新版開工注入：開工回報應不被截斷、約 10KB；有問題改回 `feed_junshi_handoff.sh` 第 2~5 步。
 ③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。
-⑤ **bigtree-1107 放影片**：教練說待會會給「10/3 當天的網頁」（內有做好的影片），拿到網址後把影片放進 bigtree-1107（影片壓縮走 SOP 規則一）。教練 13:57 口誤更正：「做好的影片」不是下載資料夾裡的檔案。
+⑤ ~~bigtree-1107 放影片~~ ✅ 10/04 15:50 已放（見上）。
 ④ 回憶牆第一則真實投稿進來時確認群組收到；教練給薛如媛／范郁琪信用證資料時照 `knowledges/2026-08-27_…` 補登。
 ⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`（`[Win]` 10/03 10:50）。
 
