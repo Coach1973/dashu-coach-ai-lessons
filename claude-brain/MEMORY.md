@@ -1,4 +1,7 @@
 # Memory Index
+- [🔴🔴 教練用手機時「已在Mac的Chrome開過」＝沒交付：三處腳本文字教我這樣講已改源頭＋新反射R-OPENED-ON-MAC-NOT-DELIVERY擋下；交付=獨立一行https網址+curl驗證，已上架game-1004(2026-10-04)](feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04.md)
+- [📜 教練要整場原話逐字報告書：從jsonl的queue-operation enqueue抽(user條目會合併)+逐字比對+軍師註分色；已掛反射R-SESSION-VERBATIM-REPORT(2026-10-04)](reference_session_verbatim_report_from_jsonl_2026-10-04.md)
+- [🎮 商務遊戲(商業俱樂部)已裁示原則：贏＝信任、數據一律公開不可隱藏(高調低調只管慶祝)、培訓月上限10分防刷、BNI外也能玩；題庫在knowledges(2026-10-03)](project_business_club_game_design_principles_2026-10-03.md)
 - [💽 聯想整機還原備份：E槽兩份(9/19、10/02)，空間不夠時9/19可刪(教練10-03親口)；D槽80GB已清掉(2026-10-03)](reference_lenovo_system_image_backups_2026-10-03.md)
 - [🔧 蘋果晶片 Mac 安裝 macOS 更新要 softwareupdate --user --stdinpass，只 sudo 會 Failed to authenticate；用 scripts/macos_update.sh(2026-10-03)](reference_macos_update_cli_apple_silicon_needs_user_stdinpass_2026-10-03.md)
 - [🔧 Claude 的 10GB vm_bundles＝Cowork 虛擬機，最後用 9/21，已搬 SSD 改捷徑，不要刪(2026-10-03)](reference_claude_cowork_vm_bundle_10gb_2026-10-03.md)
