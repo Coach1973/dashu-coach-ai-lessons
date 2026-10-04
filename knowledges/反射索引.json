@@ -1450,6 +1450,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-BNI-OFFICIAL-CHAPTER-PAGE-DATA",
+      "moment": "prompt",
+      "match": "bnitainan\\.com\\.tw|官方(分會)?(頁|網站|網頁).{0,12}(照片|名單|領導|職務|會員)|(照片|名單|領導幹部).{0,12}官方(分會)?(頁|網站|網頁)",
+      "say": "BNI 官方分會頁的領導名單、職稱、大頭照不用登入也不用截圖：用 bni-chapters/sync_official_photos_2026-10-05.py（POST chapterdetail/display）取，分會代號與做法見記憶 reference_bni_official_chapter_page_leaders_photos_api_2026-10-05；本人自己上傳的照片不覆蓋。職稱以國家辦公室名稱為準（官網翻譯不精準）。",
+      "level": "remind",
+      "situation": "教練提到 BNI 官方分會頁、要官方的名單或照片時",
+      "source": "教練 2026-10-05 05:31「領導幹部加委員會的照片，可不可以移植過去」（reference_bni_official_chapter_page_leaders_photos_api_2026-10-05.md）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
