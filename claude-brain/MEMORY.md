@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 BNI官方分會頁(bnitainan.com.tw)領導幹部名單＋大頭照可不登入用POST chapterdetail/display取得，同步腳本sync_official_photos(本人上傳的不覆蓋、換屆或換照片時重跑)；真鑫/真鑽分會代號在檔內(2026-10-05)](reference_bni_official_chapter_page_leaders_photos_api_2026-10-05.md)
 - [🔧 來賓總覽更新流程＝PALMS報表(到8/31)＋之後由三個戰情表每週來賓名單補上；地區PALMS一份含全部分會；18個月=2025-03-01、36個月=2023-09-01，結束日2026-08-31(2026-10-05)](reference_guests_overview_update_flow_palms_plus_dashboards_2026-10-05.md)
 - [🔴 BNI會員帶來賓人數一律用PALMS(BNI-Training/guests_data.json，同/guests)，名片庫guest_visits邀請人手打漏很多不能算人數；培訓用/training的data.json＋data_msp.json(教練10-05抓到，試金石105)](reference_bni_guest_count_use_palms_not_guest_visits_2026-10-05.md)
 - [🔧 PDF/PPT 抽人像要照投影片顯示比例(bbox)重縮放＋頭頂位置一致，原圖比例可差37%，真誠4張被教練抓變形(2026-10-05)](reference_pdf_portrait_extract_use_displayed_aspect_2026-10-05.md)
