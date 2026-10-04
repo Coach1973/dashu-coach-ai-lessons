@@ -1363,6 +1363,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-PDF-PORTRAIT-ASPECT",
+      "moment": "prompt",
+      "match": "(PDF|PPT|簡報|投影片).{0,12}(照片|頭像|形象照)|(照片|頭像|形象照).{0,12}(PDF|PPT|簡報|投影片)",
+      "say": "從 PDF/PPT 抽人像：原圖寬高比常跟投影片顯示的不同（可差 37%），要照 page.get_image_info() 的 bbox 比例重縮放，再統一頭頂位置；交付前做「原本／修正後／投影片上」並排圖自己看過（試金石案例104）。",
+      "level": "remind",
+      "situation": "從 PDF 或 PPT 抽照片給網頁用時",
+      "source": "試金石案例104",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
