@@ -3,6 +3,7 @@ const puppeteer = require('/Users/bymyway/.openclaw/node_modules/puppeteer');
 (async () => {
   const browser = await puppeteer.launch({
     headless: "new",
+    executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     userDataDir: "/Users/bymyway/.openclaw/workspace/scripts/fb_session_data"
   });
   
