@@ -1355,8 +1355,8 @@
     {
       "id": "R-VOICE-DAFU-YUANHUA",
       "moment": "prompt",
-      "match": "大富作品|原畫組織|原畫.{0,4}報告書",
-      "say": "語音誤聽（教練 10-04 自己更正）：「大富作品總覽」＝大樹作品總覽（coach888）；「教練原畫組織報告書」＝教練原話報告書（形態同 game-1004）。「全世界最優秀團隊系列」是 coach888 的自訂分類，新作品放第一項，要改伺服器狀態 coach888_layout（先 GET 再 POST，別覆蓋教練剛排的）。",
+      "match": "大富作品|原畫組織|原畫.{0,4}報告書|倭[軍郡君]|網會|Windows ?(count|content)",
+      "say": "語音誤聽（教練 10-04 自己更正）：「大富作品總覽」＝大樹作品總覽（coach888）；「教練原畫組織報告書」＝教練原話報告書（形態同 game-1004）。「全世界最優秀團隊系列」是 coach888 的自訂分類，新作品放第一項，要改伺服器狀態 coach888_layout（先 GET 再 POST，別覆蓋教練剛排的）。 另外（教練 10-04 確認）：「倭軍／倭郡健身房」＝World Gym；「網會」＝網頁；「Windows count／Content」＝context window。",
       "level": "remind",
       "situation": "教練提到大富作品總覽、原畫報告書時",
       "source": "memory feedback_coach_chinese_file_mapping 2026-10-04",
