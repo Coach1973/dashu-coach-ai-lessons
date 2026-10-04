@@ -1294,7 +1294,7 @@
     {
       "id": "R-CLONE-EVENT-PAGE-NEW-DATE",
       "moment": "prompt",
-      "match": "(複製|一模一樣).{0,24}(活動|場次|網頁|頁面).{0,40}(網址|slug|改成|換成)|留歷史(頁面|紀錄).{0,20}(新的日期|新日期)",
+      "match": "複製.{0,30}一模一樣|一模一樣.{0,30}(網址|slug|新的日期)|網址(的)?名稱改成|留歷史(頁面|紀錄)",
       "say": "教練要複製舊活動頁做新場次（留歷史頁）＝照記憶 reference_clone_event_page_and_keynote_export_2026-10-04：①複製檔案後用 Python 取代日期／slug／第N場，grep 確認無殘留 ②events 表（含 event_url）＋registry＋curated_git ensure ③海報用 edm.html 改日期重出圖，QR 必須重做並用 opencv 解碼驗證（10/3 舊 EDM 的 QR 指向臨時預覽網址）④換圖一定換檔名（圖片快取 4 小時）⑤辦完歷史頁由 bigtree_history_sync 每天 00:20 自動補，不用手動加。",
       "level": "remind",
       "situation": "教練說「複製某場內容一模一樣、網址名稱改成…、要留歷史頁面」時",
