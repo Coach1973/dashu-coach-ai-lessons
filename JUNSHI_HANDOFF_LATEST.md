@@ -4,7 +4,7 @@
 
 ### 做了什麼
 1. **macOS 26.7.1**：10/03 01:35 教練輸密碼後 `macos_update.sh` 實跑成功，重開機後 `sw_vers`＝26.7.1，小龍蝦／赫米斯／RustDesk／外接 SSD／Tailscale 全驗過正常。**手機遙控（claude rc）**重開機後被殺，照記憶 SOP 用 `env -i` 版在 tmux `remote-control` 重啟，教練手機確認「搞定了」。
-2. **bigtree-1107**（`event.bymyway.com/curated/bigtree-1107/`）：原樣複製 bigtree-1003 → 換日期 11/7、slug、**第五場／前四場（4 場已辦）**；海報兩張並列：直式＝10/3 版型 `edm.html` 改 11/7＋第 5 場＋**新 QR（segno 產生、opencv 解碼驗證指向 bigtree-1107）**，用 headless Chrome 輸出 `edm-1107.jpg`；橫式＝教練新 EDM `edm-wide.jpg`；另有「上一場的成果」區（10/3 影片＋圖解＋連到 kr1003）。registry＋`events` 表已補齊，出現在 `/bigtree/` 清單。
+2. **bigtree-1107**（`event.bymyway.com/curated/bigtree-1107/`）：原樣複製 bigtree-1003 → 換日期 11/7、slug、**第五場／前四場（4 場已辦）**；海報兩張並列：直式＝10/3 版型 `edm.html` 改 11/7＋第 5 場＋**新 QR（segno 產生、opencv 解碼驗證指向 bigtree-1107）**，用 headless Chrome 輸出（目前版本 `edm-1107-v2.jpg`，14:00–17:00）；橫式＝教練新 EDM `edm-wide.jpg`；另有「上一場的成果」區（10/3 影片＋圖解＋連到 kr1003）。registry＋`events` 表已補齊，出現在 `/bigtree/` 清單。
 3. **10/17 ema1017**：`events.site` curated→bigtree（列入大樹小講），新增時段「午後」15:00–17:30（SLOTS 與 SLOT_TIMES 兩邊同步）；頁面加「頂級海鮮鍋／本店也有提供素食鍋」與**「晚上吃火鍋自由參加，報名課程不一定要參加用餐」五處提醒**。
 4. **歷史頁**：教練發現漏了中正大學 9/19 → 補進（25 場）；寫 `scripts/bigtree_history_sync.py`＋launchd `ai.openclaw.bigtree-history-sync`（每天 00:20 自動補登，海報抓活動頁 og:image、沒有就產文字卡、只 push GitHub 不碰 Netlify）＋SOP 規則四（`SOP_教練個人創作上架…md`）。
 5. **kr1003**（10/3 當天網頁）：加「05 當天作品」「06 講義與簡報」、兩首 Suno 播放器（**第一首＝非洲鼓版 `5Zd2V1idOU3pi5m0` 放 04-A；第二首＝慢搖版 `uWDgTH5bIoLqCcJf` 放 04-B**，兩首在 Suno 都叫〈開心的午後〉，用風格標籤分辨）、頁尾「本網頁由 TAVAAI 現場製作」＋各連結。簡報以教練的 Keynote `情緒與緣分的底層邏輯.key`（13 張）為主，用 Keynote 15.4 AppleScript 匯出 PowerPoint 版（13 張）＋附 `.key` 下載；教練指定的兩份舊 `.pptx` 已 `trash` 移垃圾桶（可還原）。
@@ -13,14 +13,14 @@
 
 ### 卡在哪／發現
 - ⚠️ **原 10/3 EDM（`bigtree-1003/edm.jpg`）上的 QR 掃出來是 AI 工具的臨時預覽網址**（`app-aws-…video-maker.work/agent/workspace/…`），不是正式頁。10/3 已辦完；11/7 新版已修。以後複製舊活動頁做新場次，QR 必須重做。
-- ⚠️ bigtree-1107 時間仍寫 14:00–16:30（沿用 10/3），但教練新橫式 EDM 寫下午 2:00–5:00、`/bigtree/` 清單顯示 14:00–17:00 → 內部不一致；10/04 問過一次教練沒回，**已放🤫區，不再追問**。頁面 SUNO「本場新增／前面三場都沒有」字句沿用 10/3，對第五場不精確，教練未交辦、未動。
+- ✅ 11/7 時間已統一為 14:00–17:00（教練 10/04 16:21 裁示：同樣的活動，海報寫 2 點到 5 點就照海報）；SUNO「本場新增／前面三場都沒有」字句教練確認照舊（11 月也有 SUNO）；兩首歌播放器教練實聽「都能播放」。頁面／直式海報（`edm-1107-v2.jpg`，換檔名避快取）／registry 已改，GitHub bigtree-1107 `ea45b70`。
 - 大樹教育除官網外沒有別的官方帳號可放（頁尾目前：官網＋官方 LINE＋FB 粉專「大樹教練」）。
 - Suno 內嵌播放器 iframe 內容無法從 DOM 驗證能否播放（有「在 Suno 開啟收聽」連結當備援）；教練尚未回報實聽結果。
 - commit hook 提示 `claude-brain/project_netlify_deploy_quota_2026-07.md` 檔名不合規（舊檔，非本場造成）→ 見🔧清單。
 
 ### 📋 下一場開工先做
 ① **確認排程真的跑過**：10/05 00:20 之後看 `distill/bigtree_history_sync.log` 有新一行「無需補登」（launchd `ai.openclaw.bigtree-history-sync` 第一次排程執行；kickstart 手動測過但排程本身還沒實跑）。
-② 教練若回覆要統一 11/7 時間 → 改 `~/github_repos/bigtree-1107/index.html`（頁面 14:00–16:30 出現多處、`edm.html` 要重新輸出 `edm-1107.jpg` 並換新檔名避開快取）＋`events` 表 start_time／slot_key。
+② ~~統一 11/7 時間~~ ✅ 10/04 16:22 已改 14:00–17:00（見上）。
 ③ 教練有大樹教育其他官方帳號網址再補進 kr1003 頁尾。
 ④ 沿用 v273 未完成：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。回憶牆第一則真實投稿進來時確認群組收到；教練給薛如媛／范郁琪信用證資料時照 `knowledges/2026-08-27_…` 補登。（剩餘空間 10/04 16:13 實測 110GB，快照已過期，此項結案；開工注入約 10KB 未被截斷，結案。）
 ⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`。
@@ -124,7 +124,6 @@
 - ACER 36.3GB備份刪除（需教練在ACER親自開對話）
 - 赫米斯Telegram線登出登入時斷約2分鐘（綁使用者登入，要改成開機常駐系統服務才能根治；09-25已告知一次，教練沒要求處理）
 - 手機遙控開機自動啟動（現在重開機就消失、要 AI 手動重跑；10/03 問過一次，教練只回「搞定了」沒回這題）
-- bigtree-1107 頁面時間（14:00–16:30 vs 新海報 2:00–5:00）要不要統一；頁面 SUNO「本場新增」字句對第五場是否要改（10/04 問過一次，教練沒回）
 
 ### 🔧 AI自己的工作清單（AI自行處理，做完不用跟教練報告細節）
 
