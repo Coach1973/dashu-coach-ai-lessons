@@ -1,3 +1,31 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-04 23:15 台灣時間，Mac 桌面版 Opus 5.5→Sonnet 5.5，v277，教練說「總結」收工）
+
+**主軸：信任遊戲從「積分表」走到「真的有觀眾席」——真鑽分會 47 席已上線、「信任裝備探測器」方案 v2 定案（教練逐項拍板）。另外順手三件網頁修補。**
+
+### 做了什麼
+1. **教練拍板積分表 v1 第十節三件事「3個都OK」**：排行榜只算近三年（歷史足跡永久看得到）、戰果「越大越難加」、名稱用「信任遊戲」。已寫進積分表檔與線上版。
+2. **第一步「認座位」草圖**（手機可點，30 秒三個畫面：是我沒錯→座位亮燈＋10 分→觀眾席）：https://event.bymyway.com/curated/game-1004/seat-v1.html ；設計檔 `knowledges/2026-10-04_信任遊戲_第一步認座位_設計v1.md`。
+3. **真鑽分會 47 席上線**：https://chapters.bymyway.com/real-diamonds （bni-chapters repo，`b233086`→改版 `e32ed10`）。依教練《菁英表1151004.pdf》建座位（姓名／公司／專業類別／希望合作對象），7 位（謝緯翔、邱南寅、楊仁豪、許朝竣、張騰文、楊尚儒、傅恩平）接上大台南策展中心網址。**教練 20:31 糾正後改版**：「我要建立我的簡介」＝選名字就進座位，不再要手機；菁英表欄位唯讀，本人只補大頭照＋連結；每次儲存前舊資料進 `member_edit_log`（誠信原則、可還原）；前台不能刪座位；名單上沒有的新夥伴仍走原本新建表單。9 個分會參訪須知「20秒」改「15～30秒自我精彩簡介」。建座位腳本 `bni-chapters/seed_zhenzuan_seats_2026-10-04.py`（重跑略過同名）；DB 備份 `chapters.db.bak-before-*-20261004`。
+4. **年資＝BNI Connect「會員資格會期報告」的「最近會齡」**（教練 21:03 定，累計會齡只當歷史、籌備期不算）：報告存 `claude-brain/data/bni_membership_tenure_report_2026-10-04.csv`（＋`_原始.xls`），大台南南區 84 位（真鑽47／真誠17／真鑫17／真富2／真愛1），真鑽 47 位與菁英表完全一致（已離會的柯朝陽、蘇志揚不算）。
+5. **「信任裝備探測器」方案 v2**（名稱教練 21:11 定案；主問句「請評估你目前可以取得的信任裝備有哪些？」）：https://event.bymyway.com/curated/game-1004/detector-plan.html ；檔 `knowledges/2026-10-04_信任遊戲_信任裝備探測器_可行方案v1.md`。教練定案：最近會齡不能改；**帶來賓／培訓場數是系統預填、有證明可向大樹反應更正**；哪一屆＋職務本人自填（夥伴可幫填）；職務四級權重（主席／副主席／秘書財務 → 導師、活動、成長、教育協調人、來賓接待組長、網站管理員 → 副主席底下委員會 → 各組組員）；**金質獎章＝推薦滿 6 人一金、12 人雙金…，累加制加分 一金30／二金50／三金100／四金200／五金300／六金400，之後每金多 100（台灣最高十三金＝累計 6,680）**；綠燈 7 級稱號沿用教練燈號表 https://event.bymyway.com/bni-traffic/ ：70 綠燈／75 太棒了／80 優秀／85 傑出／90 典範／95 卓越／100 完美。
+6. **順手三件**：①〈為你轉身〉邱裕榮照片換新（`img/mentors/qiu-yurong-v2.jpg`）。②`event.bymyway.com/curated/yousure/` 36 張圖 404：html 被上架程式從 `production/` 拉到頂層但「../assets/」沒跟著改→已改正，**並修 `scripts/curation_process.py`（`1a4dbd6ff`）：以後子資料夾 html 拉上來會自動改「../」**；其他網站掃過沒有同樣問題。③`curated/shihmin/` 第一張形象照換成清楚版（shihmin repo `64a98cc`，`assets/portrait-v2.jpg`）。
+7. **commit**：workspace `87961f124`、`baa0a839e`、`14956f5a3`、`b2eda2799`、`0af1d82cd`、`965b09e86`、`a7c29fb18`、`0680cb522`、`2f8450e26`、`1a4dbd6ff`；bni-chapters `b233086`、`e32ed10`；shihmin `64a98cc`；本次總結另計。
+
+### 卡在哪／發現
+- **犯錯兩次（試金石案例103）**：①認座位原本要會員輸入手機核對、編輯頁還能改專業（教練：菁英表已有，以菁英表為主）；②把金質獎章寫成「次數」（實際是推薦人數換算幾金）。已改程式，並加反射 `R-ELITE-LIST-NO-REENTRY`、`R-GOLD-MEDAL-RULE`、`R-BNI-JOIN-DATE-SOURCE`（年資看最近會齡）。
+- ⚠️ **職務第二級每屆從我 v1 草案的 +20 調成 +15 是軍師自己改的，教練沒說過**（目的：雙金 80 > 連當 5 屆第二級 75，呼應教練「兩個金質不輸連當 5 屆幹部」）。教練 21:15 之後沒有反對，沿用；若教練要 +20 就改探測器方案第三節。
+- 「連續完美」（連續幾週／幾個月 100 分的稱號）名稱是暫定。
+- Stop hook「HTML Chrome 查證鎖」本場觸發兩次（改完 html 要 `open -a "Google Chrome"`），已照做；網址一律獨立一行給教練。
+
+### 📋 下一場開工先做（🎯 教練交辦＝做探測器第一版、先上真鑽）
+① 教練手上還在收**其他分會菁英表**（真富、真愛、真誠、真鑫）與**籌備會名單**：收到一份就照真鑽做法建座位（菁英表為主、人數對會期報告）。教練說資料他慢慢補。
+② **做「信任裝備探測器」第一版**（先真鑽）：系統自動亮最近會齡、帶來賓、培訓（`namecard-db/namecards.db` guest_visits、`claude-brain/data/bni_region_training_raw.json`）；本人自填職務（哪一屆＋什麼職務）、綠燈分數、推薦入會人數（系統換算幾金）；每筆標「誰填的、何時」；「數字不對？向大樹反應」＋「回報管理員」通知教練。
+③ 積分表 **v2**：把職務、金質（累加制）、綠燈 7 級併進積分表，並列出新增資料欄位（遲到、早鳥、培訓分值表、見證與雙方確認按鈕）。
+④ 沿用 v275 未完成：**10/05 00:20 之後確認** `distill/bigtree_history_sync.log` 有新一行「無需補登」（launchd `ai.openclaw.bigtree-history-sync` 首次排程）；10/09 後可刪搬家舊夾（`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G；先確認捷徑指向的資料是活的、走五道閘門）；教練有大樹教育其他官方帳號網址再補 kr1003 頁尾；聯想／宏碁 ps1 開工腳本瘦身。
+⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-04 19:50 台灣時間，Mac 桌面版 Opus 5.5，v276，教練說「總結」收工）
 
 **主軸：商務遊戲（教練定調：遊戲名稱與畫面不出現 BNI，對外就是一場「信任的遊戲」）——第二～四批問答全部問完，已交《積分表設計 v1》。**
@@ -20,66 +48,11 @@ https://event.bymyway.com/curated/game-1004/score-v1.html
 ① 請教練看積分表 v1 線上版（上面的網址），只問第十節的三件事：永久累積要不要加重近三年、成交金額「越大越難加」的算法 OK 嗎、遊戲正式名稱。
 ② 教練拍板後出 v2：照教練意見改數字，然後列出 v1 要新增的資料欄位（遲到、早鳥、培訓分值表、見證與雙方確認按鈕），開工做第一分會試算。
 ③ 架構方案何時交給做網頁的 AI，由教練決定（不追問）。
-④ Mac 桌面版其他待辦（大樹小講）見下方 v275「下一場開工先做」。
+④ Mac 桌面版其他待辦（大樹小講）已併進上方 v277「下一場開工先做」④⑤。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-04 16:15 台灣時間，Mac 桌面版 Sonnet 5.5，v275）
-
-**主軸：大樹小講 10/04 一整串——bigtree-1107 新頁（複製 10/3＋雙海報＋第五場）、10/17 ema1017 列入大樹小講＋火鍋自由參加提醒、歷史頁漏中正大學→補進並做成每天自動補登、kr1003（10/3 當天網頁）補影片／圖解／講義／簡報／兩首 Suno／頁尾連結。前段另有 macOS 26.7.1 更新成功與手機遙控重啟。教練肯定「主動提醒」做得好，這場無被退件。**
-
-### 做了什麼
-1. **macOS 26.7.1**：10/03 01:35 教練輸密碼後 `macos_update.sh` 實跑成功，重開機後 `sw_vers`＝26.7.1，小龍蝦／赫米斯／RustDesk／外接 SSD／Tailscale 全驗過正常。**手機遙控（claude rc）**重開機後被殺，照記憶 SOP 用 `env -i` 版在 tmux `remote-control` 重啟，教練手機確認「搞定了」。
-2. **bigtree-1107**（`event.bymyway.com/curated/bigtree-1107/`）：原樣複製 bigtree-1003 → 換日期 11/7、slug、**第五場／前四場（4 場已辦）**；海報兩張並列：直式＝10/3 版型 `edm.html` 改 11/7＋第 5 場＋**新 QR（segno 產生、opencv 解碼驗證指向 bigtree-1107）**，用 headless Chrome 輸出（目前版本 `edm-1107-v2.jpg`，14:00–17:00）；橫式＝教練新 EDM `edm-wide.jpg`；另有「上一場的成果」區（10/3 影片＋圖解＋連到 kr1003）。registry＋`events` 表已補齊，出現在 `/bigtree/` 清單。
-3. **10/17 ema1017**：`events.site` curated→bigtree（列入大樹小講），新增時段「午後」15:00–17:30（SLOTS 與 SLOT_TIMES 兩邊同步）；頁面加「頂級海鮮鍋／本店也有提供素食鍋」與**「晚上吃火鍋自由參加，報名課程不一定要參加用餐」五處提醒**。
-4. **歷史頁**：教練發現漏了中正大學 9/19 → 補進（25 場）；寫 `scripts/bigtree_history_sync.py`＋launchd `ai.openclaw.bigtree-history-sync`（每天 00:20 自動補登，海報抓活動頁 og:image、沒有就產文字卡、只 push GitHub 不碰 Netlify）＋SOP 規則四（`SOP_教練個人創作上架…md`）。
-5. **kr1003**（10/3 當天網頁）：加「05 當天作品」「06 講義與簡報」、兩首 Suno 播放器（**第一首＝非洲鼓版 `5Zd2V1idOU3pi5m0` 放 04-A；第二首＝慢搖版 `uWDgTH5bIoLqCcJf` 放 04-B**，兩首在 Suno 都叫〈開心的午後〉，用風格標籤分辨）、頁尾「本網頁由 TAVAAI 現場製作」＋各連結。簡報以教練的 Keynote `情緒與緣分的底層邏輯.key`（13 張）為主，用 Keynote 15.4 AppleScript 匯出 PowerPoint 版（13 張）＋附 `.key` 下載；教練指定的兩份舊 `.pptx` 已 `trash` 移垃圾桶（可還原）。
-6. **大樹教育官方網站 = https://www.bymyway.com/**（教練 10/04 親口永久指定）→ USER.md／記憶 `reference_bigtree_education_official_site_bymyway_com_2026-10-04`／反射 `R-BIGTREE-EDU-OFFICIAL-SITE`／kr1003 頁尾。
-7. **commit**：workspace `2e4b01368`（1107＋ema1017＋歷史頁自動補登＋SOP）、`e8a6c9e18`、`5021abbba`、`1a2766d7e`；bigtree `b4c6b55`（補登中正）＋`feb61de`（午後時段）；bigtree-1107 `70c897d`；ema1017 `f57a1fa`；kr1003 `aaaeca1`；本次總結另計。
-
-### 卡在哪／發現
-- ⚠️ **原 10/3 EDM（`bigtree-1003/edm.jpg`）上的 QR 掃出來是 AI 工具的臨時預覽網址**（`app-aws-…video-maker.work/agent/workspace/…`），不是正式頁。10/3 已辦完；11/7 新版已修。以後複製舊活動頁做新場次，QR 必須重做。
-- ✅ 11/7 時間已統一為 14:00–17:00（教練 10/04 16:21 裁示：同樣的活動，海報寫 2 點到 5 點就照海報）；SUNO「本場新增／前面三場都沒有」字句教練確認照舊（11 月也有 SUNO）；兩首歌播放器教練實聽「都能播放」。頁面／直式海報（`edm-1107-v2.jpg`，換檔名避快取）／registry 已改，GitHub bigtree-1107 `ea45b70`。
-- 大樹教育除官網外沒有別的官方帳號可放（頁尾目前：官網＋官方 LINE＋FB 粉專「大樹教練」）。
-- Suno 內嵌播放器 iframe 內容無法從 DOM 驗證能否播放（有「在 Suno 開啟收聽」連結當備援）；教練尚未回報實聽結果。
-- commit hook 提示 `claude-brain/project_netlify_deploy_quota_2026-07.md` 檔名不合規（舊檔，非本場造成）→ 見🔧清單。
-
-### 📋 下一場開工先做
-① **確認排程真的跑過**：10/05 00:20 之後看 `distill/bigtree_history_sync.log` 有新一行「無需補登」（launchd `ai.openclaw.bigtree-history-sync` 第一次排程執行；kickstart 手動測過但排程本身還沒實跑）。
-② ~~統一 11/7 時間~~ ✅ 10/04 16:22 已改 14:00–17:00（見上）。
-③ 教練有大樹教育其他官方帳號網址再補進 kr1003 頁尾。
-④ 沿用 v273 未完成：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。回憶牆第一則真實投稿進來時確認群組收到；教練給薛如媛／范郁琪信用證資料時照 `knowledges/2026-08-27_…` 補登。（剩餘空間 10/04 16:13 實測 110GB，快照已過期，此項結案；開工注入約 10KB 未被截斷，結案。）
-⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`。
-
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-04 14:20 台灣時間，手機版 Sonnet 5.5，v274）
-
-**主軸：教練兩個新構想——①「AI 百人導師」（跨分會人才庫，架構文件已交付）②「商務遊戲／商業俱樂部」（用周郁凱八角框架把 BNI 做成遊戲，靠一問一答把規則問出來）。八大動力已全數有方向性答案，但積分表還沒設計。**
-
-### 做了什麼
-1. **構想一**：寫《AI百人導師_跨分會人才庫架構方案》，要交給做網頁的 AI（需求 #7：數據一律公開，慶祝才要當事人同意）。
-2. **構想二**：建題庫檔《百人同行_遊戲化設計_八角框架對談題庫》（一～七節）。教練回答了 A1～A3 與八大動力逐項（13:21），都已寫入。已裁示原則（記憶 `project_business_club_game_design_principles_2026-10-03`）：贏＝信任；BNI 外也能玩；防刷分沿用 BNI（月上限＋領導團隊審核）；數據一律公開（高調低調只管慶祝）；稱號是一個家族（向導／人脈大師／連結大師第N級）；稀缺＝一類一席、金質獎章、年資顯示在名牌；怕失去＝BNI 真實規則（6 個月內第 4 次缺席出局、3 次遲到＝1 次缺席、代理人 3 次、年度續約訪談）；不做人造隨機。
-3. **13:11 教練裁示順序**：先問完所有問題 → 八大動力自問自答全部有具體答案 → 最後才設計積分表（切 Opus）。
-4. **教練要求「所有原話一字不漏的網頁報告書」**：16 則／6,141 字（含 14:00 退件、14:03 授權），已用程式逐字比對原始對話記錄，零差異。檔案 `knowledges/2026-10-03_百人同行_遊戲化設計_教練原話逐字報告書.html`；**線上版（教練手機可開）**：
-   https://event.bymyway.com/curated/game-1004/
-   （走大樹創作 SOP 上架、noindex；curl 驗證 200＋`text/html; charset=utf-8`＋16 張卡片）。
-5. **14:00 教練退件「不合格，請給完整網址」（試金石案例101）**：我回「已在 Mac 的 Chrome 開過」沒給網址，教練用手機根本看不到。根因＝三處腳本文字教我這樣講（`stop_rules_master.py` 規則 J 第 2 步、`auto_chrome_after_html_edit.sh` 輸出、反射 `G-HTML-CHROME`）。已全改；新增反射 `R-OPENED-ON-MAC-NOT-DELIVERY`（reply、level block：回覆說「在 Mac 開過／跳出來」又沒有 https 網址就擋下，正負例各 5 句實測＋路由端到端通過）；記憶 `feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04`。**交付＝獨立一行的 https 網址＋curl 驗證。**
-6. **順帶修好**：自動上架排程 launchd `com.coach.curation-watch` 壞了（結束碼 78、plist 檔不見，上傳停在 pending）。已照 `launchctl print` 的設定重建 `~/Library/LaunchAgents/com.coach.curation-watch.plist` 並重載；實測丟一個隱藏檔進 incoming，runs 0→1、結束碼 0（不再需要手動跑 `curation_process.py`）。
-7. commit：題庫與架構 `154fbc816`、`32f2e65ac`、`30124d30f`、`a96793380`、`6c6908a2a`、`bc28cdefa`、`4675f17fd`、`04cdda95f`；原話報告書 `2a25dcf44`；本次總結 commit 另計。
-
-### 卡在哪／發現
-- 手機版 context 上限 200K，教練 10/04 13:48 回報已 167.7K → 這場收工，開新對話框接著聊。
-- 資料現實：`team01_guests.db` 的 weekly_data 只有 10 列／40 人且沒有遲到欄位；培訓只有簽到與費用、沒有 1～5 分欄位；引薦單與 TYFCB 只存在 BNI Connect（積分 v2 的前提）；來賓邀請在 `namecards.db` 的 guest_visits.invited_by（3,621 列）。v1 積分只能先用能自動算的項目。
-
-### 📋 下一場開工先做（手機版這條：🎯 教練交辦＝繼續商務遊戲對談）
-① 先完整讀《教練原話逐字報告書》（16 則；線上版 https://event.bymyway.com/curated/game-1004/ ），再讀題庫檔第七節。
-② 問第二批 5 題：F1＋E3（向導／人脈大師／連結大師是三條並行還是一條階梯？外部玩家的上限）、B3／B6（「裝備」指什麼）、B4（年資只是徽章還是進積分）、E2（引薦積分）、E4（外部玩家沒有稀缺與損失、那正是加入俱樂部的理由——推論待確認）。
-③ 然後第三批（⑤社會影響細節：B7、B8、B13、B14、B16(2)(3)）、第四批（創始與旅程：B9、D1、D2、D3、C1、C2、B2、B12、B15）。
-④ 全部問完才設計積分表，屆時提醒教練切 Opus（教練手機最高只能切到 Opus 5）。
-⑤ 待教練確認的小事：「大台」是否指大台南；team01 與真AI分會的對應；等級是否只放後台。
-⑥ 架構方案何時交給做網頁的 AI，由教練決定。
-⑦ 其餘待辦（Mac 桌面版）見上方 v275「下一場開工先做」。
+> 📦 v274＋v275完整內容已封存：`handoff_archive/handoff_v274_to_v275_archived_2026-10-04.md`（v274 手機版：AI 百人導師架構＋商務遊戲題庫＋原話報告書＋curation-watch 修復／v275 大樹小講 bigtree-1107＋ema1017＋歷史頁自動補登＋kr1003＋macOS 26.7.1；10/04 收工整理時搬出，仍未完成的項目已併進 v277「下一場開工先做」④⑤）
 
 ---
 
@@ -157,6 +130,8 @@ https://event.bymyway.com/curated/game-1004/score-v1.html
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **信任遊戲／分會座位（10-04 軍師）後續** | ⏳下一場做探測器第一版 | 見 v277「下一場開工先做」①②③。技術備忘：bni-chapters 的 `chapter_members.claim_phones`（不是 NULL＝依菁英表建的座位；內容是菁英表手機，只留存不顯示、DB 不進 git、repo 私有）、`claimed_at`＝第一次補資料時間、`member_edit_log` 存舊資料可還原；前台不能刪座位，要下架請直接改 DB。柯朝陽、蘇志揚已離會，不在名單。 |
+| 🟢 | 〈林士民〉shihmin 頁手機上形象照框偏窄（`img` 的 `height="552"` 屬性蓋過 CSS `aspect-ratio`，舊照片也是這樣） | ⏳低優先-沒要求不動 | 要改只需在 `.portrait img` 加 `height:auto`；教練只要求換照片，N7 不順手改。 |
 | 🟢 | 記憶檔名不合規：`claude-brain/project_netlify_deploy_quota_2026-07.md`（commit hook 每次提示，應改 `<type>_<snake_case>.md`，描述用底線） | ⏳低優先-AI自己改 | 10/04 commit 時發現，舊檔非本場造成；改名時同步改 MEMORY.md 索引連結，不用問教練。 |
 | 🔴 | **賈維斯成長計畫（反射條件）總進度（v265~v269）** | ✅第 1~4 步完成，剩 2 項等外部 | 第 1 級反射 hook＋小龍蝦外掛 reflex-prompt／member-context／coach-context／url-typo-guard；禮遇版人設；四位夥伴三種標準；試金石 97 案＋記憶 171 條全有去向。**剩**：①真實 LINE 流量驗證 `state/member_context.log` 第 4 欄 `sender:u…` ②聯想／宏碁回信驗收。測試法：外掛類走 `openclaw gateway call agent`（記憶 `feedback_openclaw_hook_fire_and_forget.md`），分身類封存群組 session 後用真實語音句前後對照。詳細見 `handoff_archive/handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`。 |
 | 🟡 | **Mac 備份改四條（10-02 教練定，取代每小時）＋Amber 空間** | ✅四條都上線；⏳明早 08:10 首次點名備份待看 | 【10-02 11:40 完成】上限 QuotaGB=150 已生效；刪 3 天前 12 份（35→23，留 09-29 23:40 起），備份映像內用量 142→119GiB。密碼改用 `scripts/coach_password_dialog.sh`（sudo -A，教練看得到）。Amber 本身空間有沒有回升，下次看 Amber 通知（AI 分類 >15% 才恢復）。以下為原規劃：①點名正常才備份 `daily_team_rollcall.py backup_when_healthy`（launchd 環境實測 startbackup exit=0）②升級前必備份 反射 `R-BACKUP-BEFORE-UPGRADE`（14 例全對、回測 11/39091 全是真升級）③上限 150GB＋刪 3 天前 12 份：App 終端機分頁「備份設定：只差輸入密碼」跑 `scratchpad/tm_setup.sh`，教練輸入密碼後看 `tmutil listbackups|wc -l`（應 34→22 左右）與 `defaults read /Library/Preferences/com.apple.TimeMachine` 有無 Quota；scratchpad 會清掉，腳本要留就搬進 scripts/ ④排除 `.cache/.npm/.rustup`（約13GB，`.nvm` 刻意保留）。**明早 08:10 首次點名要看到「💾 備份：全員正常，已自動備份一次」**。教練頻率已自己改手動（AutoBackup=0）。記憶 `project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02.md`。 |
