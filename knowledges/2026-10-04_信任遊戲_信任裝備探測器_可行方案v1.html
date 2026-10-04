@@ -211,6 +211,7 @@ blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;paddin
 </table>
 <ul>
 <li>70 分以下：50～69 黃燈、30～49 紅燈、30 以下灰燈（燈號表原邏輯）。最近綠燈分數只亮稱號、不加分。</li>
+<li><strong>燈號分數改為系統自動帶入（2026-10-05 教練：每月都會下載地區報表算近 6 個月燈號）</strong>：BNI Connect「會員紅綠燈」xlsx（官方得分，優先）或近 6 個月 PALMS 報表（照 event.bymyway.com/bni-traffic/ 算法換算，已用 2026-09 真鑽官方報表 47 人逐一比對，得分完全一致）→ 每月一筆存 <code>member_light_scores</code>；連續綠燈／連續完美月數由每月紀錄自動算。每月流程：教練下載檔案到 ~/Downloads → <code>cd ~/github_repos/bni-chapters &amp;&amp; python3 import_light_scores_2026-10-05.py</code>。</li>
 <li><strong>連續綠燈</strong>、<strong>連續完美</strong>（連續 100 分）：<strong>一律算月</strong>（教練 10/05：「我們連續 100 分都是算月的，連續綠燈也都算月」）。加分軍師暫定：連續綠燈每月 ＋5、連續完美每月 ＋10。</li>
 </ul>
 <h2>五之一、DnA 團隊（教練 10/05 定，堆疊制）</h2>

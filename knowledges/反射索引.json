@@ -1400,6 +1400,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-LIGHT-SCORE-MONTHLY-IMPORT",
+      "moment": "prompt",
+      "match": "紅綠燈|燈號|會員紅綠燈|地區報表|地區PALMS|每個月.*下載",
+      "say": "教練每月下載的地區 PALMS（近 6 個月）或 BNI Connect「會員紅綠燈」xlsx 在 ~/Downloads：跑 cd ~/github_repos/bni-chapters && python3 import_light_scores_2026-10-05.py 一次匯入（官方 xlsx 優先，PALMS 照 github_repos/bni-traffic/index.html 算法換算，已與真鑽 2026-09 官方 47 人比對一致）。探測器的最近燈號、連續綠燈／連續完美月數自動更新。不要叫會員自填燈號分數，也不要自己進 Connect 抓。",
+      "level": "remind",
+      "situation": "教練提到燈號、紅綠燈、每月下載地區報表時",
+      "source": "教練 2026-10-05 01:50 說明每月下載地區報表算燈號並給官方紅綠燈檔",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
