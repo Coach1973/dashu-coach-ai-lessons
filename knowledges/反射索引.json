@@ -1320,7 +1320,7 @@
       "id": "R-BNI-JOIN-DATE-SOURCE",
       "moment": "prompt",
       "match": "入會日|入會多久|入會時間|年資|會齡",
-      "say": "BNI 年資一律看 BNI Connect「會員資格會期報告」的「最近會齡」（教練 10-04 定）：claude-brain/data/bni_membership_tenure_report_2026-10-04.csv。累計會齡含離會前與其他分會時間，只當歷史足跡；籌備期不算。不要用培訓報表的 induction_date 算年資。",
+      "say": "BNI 年資一律看 BNI Connect「會員資格會期報告」的「最近會齡」（教練 10-04 定）：claude-brain/data/bni_membership_tenure_report_2026-10-04.csv。累計會齡含離會前與其他分會時間，只當歷史足跡；籌備期不算。不要用培訓報表的 induction_date 算年資。 注意：會期報告會留已離會的人（10/04 真誠的郭素玲、盧尚政已離會），分會現任名單以教練給的菁英表／夥伴 PPT PDF 為準。",
       "level": "remind",
       "situation": "教練提到會員年資、入會日期時",
       "source": "memory reference_bni_induction_dates_in_training_raw_2026-10-04",
