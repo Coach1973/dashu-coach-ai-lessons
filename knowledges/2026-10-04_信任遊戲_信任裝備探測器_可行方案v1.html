@@ -56,9 +56,9 @@ blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;paddin
 </tr>
 <tr>
 <td>② <strong>系統紀錄</strong>（自動算，本人不用填）</td>
-<td>入會日→年資、帶來賓人數、培訓場數</td>
+<td>最近會齡＝年資、帶來賓人數、培訓場數</td>
 <td>AI 從 BNI Connect 匯出的資料算</td>
-<td>✅ 47 位都有入會日；帶來賓 8 年 2,910 筆、培訓 8 年 879 筆（2018-08 起，正好 96 個月）</td>
+<td>✅ 會期報告 47 位全有（與菁英表一致）；帶來賓 8 年 2,910 筆、培訓 8 年 879 筆（2018-08 起，正好 96 個月）</td>
 </tr>
 <tr>
 <td>③ <strong>自己填＋夥伴幫填</strong>（維基百科式、誠信原則）</td>
@@ -70,13 +70,13 @@ blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;paddin
 </table>
 <ul>
 <li>①②已經不用再麻煩會員；<strong>教練說的「不用再填專業和電話，以菁英表為主」已落實</strong>：座位頁的姓名、公司、專業、希望合作對象改成唯讀（bni-chapters <code>e32ed10</code>）。</li>
-<li>入會日來源：<code>claude-brain/data/bni_region_training_raw.json</code> 的 <code>induction_date</code>（2026-08-18 從 BNI Connect 培訓報表匯出）。5 個正式分會現任 94 位都有（真鑽49／真鑫23／真誠15／真愛5／真富2）。</li>
+<li>年資來源：BNI Connect「會員資格會期報告」的<strong>最近會齡</strong>（2026-10-04 匯出，大台南南區 84 位：真鑽47／真誠17／真鑫17／真富2／真愛1）。</li>
 </ul>
 <h2>三、探測器畫面（三步）</h2>
 <ol>
 <li><strong>選名字</strong>：跟「認座位」同一個入口（分會頁「我要建立我的簡介」）。</li>
 <li><strong>「請評估你目前可以取得的信任裝備有哪些？」</strong></li>
-<li>🔒 <strong>系統已確認</strong>（不能改）：入會日／年資、帶來賓幾位、上過幾場培訓</li>
+<li>🔒 <strong>系統已確認</strong>（不能改）：最近會齡（年資）、帶來賓幾位、上過幾場培訓</li>
 <li>✍️ <strong>你可以補上的</strong>：職務（選屆別＋職務）、是否綠燈會員、最近綠燈分數、連續 100 分紀錄、金質獎章次數、DnA 團隊</li>
 <li><strong>按「開始探測」</strong> → 結果：信任階段與等級＋稱號（多條並行）＋可分享到 LINE 的結果卡。</li>
 </ol>
@@ -121,11 +121,16 @@ blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;paddin
 <li><strong>滿分綠燈</strong>（新稱號）：連續幾週、或連續幾個月維持 100 分，非常加分。</li>
 <li><strong>金質獎章</strong>：次數（積分表 v1：每次 ＋30）。</li>
 </ul>
-<h2>六、年資怎麼算</h2>
+<h2>六、年資怎麼算（教練 10/04 21:03 定：一律看「最近會齡」）</h2>
 <ul>
-<li><strong>以 BNI Connect 入會日為準</strong>：官方紀錄，大家沒爭議。</li>
-<li>真鑽有 8 位的帶來賓或培訓紀錄比入會日還早。這些人在探測器上標「回鍋」，之前的年資可以自己補（誠信原則）。</li>
-<li>真鑽年資分布（入會年）：2018 年 1、2019 年 4、2020 年 3、2021 年 3、2022 年 5、2023 年 12、2024 年 6、2025 年 8、2026 年 5。</li>
+<li><strong>唯一依據：BNI Connect「會員資格會期報告」的「最近會齡」</strong>（教練 10/04 下載，存 <code>claude-brain/data/bni_membership_tenure_report_2026-10-04.csv</code>，原始檔同名 <code>_原始.xls</code>）。</li>
+<li>報告有兩種會齡：</li>
+<li><strong>累計會齡</strong>：所有 BNI 時間加總（含離會前、在別的分會的時間）。</li>
+<li><strong>最近會齡</strong>：這一次入會、在這個分會連續到現在。<strong>探測器的年資用這個。</strong></li>
+<li>籌備會期間不算：會期從正式例會開始算。</li>
+<li>離會再回來，最近會齡重新算：真鑽有 9 位累計≠最近。這些人探測器上可標「回鍋」，累計會齡當作歷史足跡顯示，不進年資分。</li>
+<li>真鑽最近會齡分布：5 年以上 9 位、3～5 年 16 位、1～3 年 17 位、未滿 1 年 5 位。</li>
+<li>（取代先前用培訓報表 <code>induction_date</code> 推算的做法；兩份日期會差幾天到一個月，以會期報告為準。）</li>
 </ul>
 <h2>七、探測結果會亮的稱號（第一版先做資料齊的）</h2>
 <table>
@@ -187,12 +192,12 @@ blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;paddin
 <tr>
 <td>正式分會（真富、真愛、真誠、真鑫）</td>
 <td><strong>最新菁英表 PDF</strong>（跟真鑽一樣）</td>
-<td>入會日、帶來賓、培訓都已經有</td>
+<td>會齡（會期報告已涵蓋全區）、帶來賓、培訓都已經有</td>
 </tr>
 <tr>
 <td>籌備會（真AI、真功夫、真樂齡、真貴）</td>
 <td>名單：姓名＋專業＋電話（任何格式：照片、截圖、LINE 都可以）</td>
-<td>籌備會夥伴還不是會員，沒有入會日；探測器先亮「開拓者」等籌備期稱號</td>
+<td>籌備會夥伴還不是會員，沒有會齡；探測器先亮「開拓者」等籌備期稱號</td>
 </tr>
 </tbody>
 </table>
