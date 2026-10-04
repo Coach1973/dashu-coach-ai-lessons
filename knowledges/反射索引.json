@@ -1,1406 +1,1418 @@
 {
- "_說明": "試金石／記憶 → 條件反射。每筆＝『看到什麼刺激』→『立刻做什麼』。唯一真相源；knowledges/情境目錄.md 由 scripts/render_situation_directory.py 從本檔產生，不要手改。設計：knowledges/2026-10-02_試金石變反射條件_觸發機制設計.md",
- "_欄位": {
-  "moment": "prompt=教練說話時｜pre_tool=AI要動手前｜post_tool=AI看到結果時｜reply=AI要回話時｜guard=已由專門程式擋住（路由不處理，只列在情境目錄）｜judgment=判斷類，靠21條，暫無可靠刺激",
-  "tool": "pre_tool/post_tool 才用：工具名稱的正規式（Bash、Edit、Write…）",
-  "match": "正規式。prompt比對教練原話；pre_tool比對指令或檔案路徑＋寫入內容；post_tool比對檔案路徑＋指令＋工具輸出；reply比對AI這一輪的回覆",
-  "say": "反射動作，一兩行，講要做什麼",
-  "level": "remind=提醒不擋｜block=擋下要求改（只給零誤判的精準規則）",
-  "situation": "給人看的情境名稱",
-  "source": "出處（試金石案例編號或記憶檔名）",
-  "enforced_by": "guard 類：負責擋的程式",
-  "audience": "適用對象＝誰在跟 AI 說話：coach=教練本人（教練自己的所有 AI：軍師、小龍蝦…）｜partner=四位夥伴分身（peipei／kong／yijing／yang）的夥伴｜public=LINE 對外帳號的一般會員。教練說話一律走 coach；沒寫 audience 視同 [\"coach\"]。目前只有 prompt 時刻會依對象分流（小龍蝦端外掛 reflex-prompt）。",
-  "say_other": "非教練對象（partner／public）看到的版本，不能提「教練」。prompt 時刻才用；audience 含 partner／public 卻沒寫 say_other＝不對他們出聲。",
-  "agents": "只給小龍蝦哪幾個分身用（agentId 清單，例如 BNI 官方條文只給 bni_tainan／jiaolian_thoughts）。有寫 agents 的反射，軍師（Claude Code）那邊不比對；沒寫＝不限分身。"
- },
- "reflexes": [
-  {
-   "id": "R-URL-REPLY",
-   "moment": "reply",
-   "match": "https?://[A-Za-z0-9._~:/?#@!$&+,;=%\\-]+[（）「」【】，。、！？：；]",
-   "say": "回覆裡有網址後面直接黏著中文標點／括號，教練點了會打不開。網址自己一行，後面換行再寫說明。",
-   "level": "block",
-   "situation": "寫通知／回覆裡放網址時",
-   "source": "試金石案例97",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-URL-NOTIFY-CODE",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "\\{[A-Za-z_]*(url|URL|link)[A-Za-z_]*\\}[（(「]",
-   "say": "你正在寫的程式把網址和括號／中文黏在一起，送到 Telegram/LINE 會點不開。網址獨立一行，說明另起一行。",
-   "level": "remind",
-   "situation": "寫通知／回覆裡放網址時",
-   "source": "試金石案例97",
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-REMOTE-DIRECTION",
-   "moment": "prompt",
-   "match": "(?is)^(?!.*(記[憶億]|釋放|清理|清除|\\d\\s*[GM]B|/tmp/|耳機|活動監視器)).*(rustdesk|\\bvnc\\b|tigervnc|tailscale|遠端(桌面|連線|控制|操作)|遠端\\s*ID|遙控|連(不上|不進|線到|到|進)(蘋果|聯想|宏碁|mac|acer|windows|電腦)|(蘋果|聯想|宏碁|mac|acer)(電腦)?(連|連線到|連到)(蘋果|聯想|宏碁|mac|acer)|無法連線|連線軟體)",
-   "say": "遠端連線：先確認「誰連誰」方向再動手（已犯兩次）；替教練做完、建捷徑，不教他找欄位、不提密碼。",
-   "level": "remind",
-   "situation": "教練提到遠端連線",
-   "source": "feedback_remote_connection_confirm_direction_first_2026-10-01.md",
-   "top30": 28,
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-AGENT-RULES-SESSION",
-   "moment": "post_tool",
-   "tool": "Edit|Write",
-   "match": "agents/[^/]+/(AGENTS|SOUL|TOOLS|IDENTITY)\\.md",
-   "say": "你剛改了分身規則。舊對話會沿用舊規則：要 openclaw sessions delete 該群 session，再用真實群組路徑實測，過了才能跟教練說好了。",
-   "level": "remind",
-   "situation": "改了分身（怡靜、yang…）的規則之後",
-   "source": "reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md／試金石案例95",
-   "top30": 15,
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-GATEWAY-RESTART-VERSION",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "openclaw\\s+gateway\\s+(restart|start|stop)|launchctl\\s+(kickstart|bootout|bootstrap|load|unload)[^\\n]*ai\\.openclaw\\.gateway",
-   "say": "重啟小龍蝦主程式前：先確認終端機的 openclaw 版本跟正式服務用的版本一致，不一致會把舊版換成新版。",
-   "level": "remind",
-   "situation": "要重啟小龍蝦主程式（gateway）時",
-   "source": "試金石案例73／feedback_check_openclaw_version_before_gateway_restart_2026-09-16.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-MINIMAX-429",
-   "moment": "post_tool",
-   "tool": "Bash",
-   "match": "(?im)^(?=.*minimax).*(rawError=429|HTTP/[0-9.]+ 429|status(_code)?[\"':= ]{1,3}429|\\b429 Too Many|reason=rate_limit|Cause: rate_limit|rate.?limit (reached|exceeded))",
-   "say": "MiniMax 回 429：教練方案是 5 小時 4500 次，不要去問教練額度；先查是不是短時間批次呼叫太密。",
-   "level": "remind",
-   "situation": "看到 MiniMax 額度錯誤時",
-   "source": "reference_minimax_quota_5h_4500_calls.md／試金石案例65",
-   "top30": 13,
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CREATION-NOT-SHOP",
-   "moment": "prompt",
-   "match": "大樹作品(?!\\s*(一覽|總覽|一欄|一覧|總表|清單|列表|(許多|的)?後台))|大樹創作|個人創作|@\"?[^\"\\s]*\\.html\\b",
-   "say": "大樹作品＝教練個人創作：走個人創作 SOP、不進店家名冊、不說「上架」；外連圖片一定下載打包；短網址由教練指定。",
-   "level": "remind",
-   "situation": "教練丟網頁檔、說「大樹作品／大樹創作」",
-   "source": "試金石案例84／SOP_教練個人創作上架event.bymyway.com不進商圈.md",
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-ONLINE-SIGNUP-SOP",
-   "moment": "prompt",
-   "match": "線上報名|網路報名|報名(表單|SOP|流程)|加(上|個|一個)?(立即)?報名(按鈕|表單|功能)",
-   "say": "照 knowledges/SOP_線上報名.md：先在 event.db 建同名場次；範本 knowledges/templates/線上報名_範本片段.html；測試不准讓報名群收到假資料。",
-   "level": "remind",
-   "situation": "教練說「線上報名／網路報名／加立即報名」",
-   "source": "reference_online_signup_sop_alias_2026-10-02.md",
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-PAID-API-TEST",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?<![\\w/.\\-'\"`])python3?\\s+[^\\s;&|'\"]*generate_industry_chain\\.py(?![\\w.])|curl\\b[^\\n]*api\\.lk888\\.ai",
-   "say": "這會花教練的點數：測試只測到「組出描述／被擋下」，不真出圖；真出圖要教練親口要。",
-   "level": "remind",
-   "situation": "要花錢的 API（LK888 出圖等）",
-   "source": "試金石案例85／案例95",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-NETLIFY",
-   "moment": "guard",
-   "enforced_by": "scripts/netlify_deploy_guard.sh",
-   "say": "先分清 GitHub 自動部署型還是手動 zip 型；圖片另查 Content-Type 不能只看 200。",
-   "situation": "要部署網站時",
-   "source": "feedback_netlify_deploy_zip_api.md／試金石案例54",
-   "top30": 7,
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-DELETE",
-   "moment": "guard",
-   "enforced_by": "scripts/delete_guard.sh",
-   "say": "N6 五道閘門；看起來重複的檔先比對內容再刪。",
-   "situation": "要刪檔、清資料、強制推送時",
-   "source": "試金石案例24／feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md",
-   "top30": 21,
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-LK888",
-   "moment": "guard",
-   "enforced_by": "lk888_guard.py＋scripts/lk888_bypass_guard.sh",
-   "say": "收費閘門擋住繞道呼叫。",
-   "situation": "要花錢的 API（LK888 出圖等）",
-   "source": "試金石案例85",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-SCREENSHOT",
-   "moment": "guard",
-   "enforced_by": "scripts/screenshot_lock.sh",
-   "say": "先用文字方式驗證（curl、讀網頁文字），教練流量有限。",
-   "situation": "要截圖時",
-   "source": "feedback_avoid_screenshots_token_limited_2026-10-01.md",
-   "top30": 24,
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-LESSON",
-   "moment": "guard",
-   "enforced_by": "scripts/lesson_conversion_hook.sh",
-   "say": "寫教訓時自動跳轉換三問：能改程式就改 → 不能就補一筆反射 → 都不是才回到21條判斷。",
-   "situation": "寫下教訓／記憶的那一刻",
-   "source": "2026-10-02 記憶系統改版",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "J-ASK-COACH",
-   "moment": "judgment",
-   "say": "N2 三關：只有教練能做＋教練沒答過＋現在不問會卡住；答案必然是「要」的不問。",
-   "situation": "要拿事情去問教練之前",
-   "source": "feedback_ask_coach_three_gates_root_fix_2026-09-24.md／feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md",
-   "top30": 3,
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-DEPLOY-WORDS",
-   "moment": "prompt",
-   "top30": 7,
-   "kind": "需求型",
-   "match": "(?i)網頁推|自動站|行動站|(^|[\\s，,。！!、；])推(上去|出去|到正式站|到\\s*netlify|吧|啊|了|囉|喔)*\\s*([\\s，,。！!、；]|$)",
-   "say": "部署口令：「推」＝推 Netlify 正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type，回報剩幾次）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。",
-   "level": "remind",
-   "situation": "教練說「推／網頁推／自動站」",
-   "source": "feedback_coach_deploy_vocabulary.md／feedback_web_push_sop.md／試金石案例54",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CURATION-SOP",
-   "moment": "prompt",
-   "top30": 16,
-   "kind": "需求型",
-   "match": "(?is)^(?!.*(大樹作品|大樹創作|個人創作|作品(一覽|一欄|總覽))).*(策展\\s*(SOP|中心|上架|上傳|一鍵)|商圈|大台南(會展|車展|策展)中心|壓縮檔|\\.zip\\b|zip\\s*(檔|包))",
-   "say": "策展 SOP：一律走上傳網址（kind=shop），完成用 curation_check_result.py 查真結果；網址短（教練取或跟主標題一致）、縮圖用網頁截圖不用地圖、改名要連動 FB／商圈頁／作品總覽；地圖自己找。",
-   "level": "remind",
-   "situation": "教練丟店家網站壓縮檔／說策展、商圈",
-   "source": "reference_curation_sop_2026-09-06.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-INVOICE",
-   "moment": "prompt",
-   "top30": 6,
-   "kind": "需求型",
-   "match": "發票|開票|二聯|三聯|統編|統一編號|載具|手機條碼",
-   "say": "發票：先跑 claude-brain/data/query_training_invoice.py 查；兩套系統都要查（培訓費＝大樹教育、入會續約＝聚寶盆）；開過的不問二聯三聯；開完當場寫進記錄。",
-   "level": "remind",
-   "situation": "教練說開發票、查統編／載具",
-   "source": "feedback_bni_invoice_two_independent_systems_sop.md／feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-MEMBER-DB",
-   "moment": "prompt",
-   "top30": 6,
-   "kind": "需求型",
-   "match": "(會員|前會員|離會|來賓|名片)(的)?(名單|資料|電話|Email|email|信箱|資料庫|媒合)|名片(系統|搜尋|查詢)|查.{0,6}(電話|Email|email|信箱)",
-   "say": "會員／前會員／來賓／名片資料都在 namecard-db（python3 namecard-db/query.py 關鍵字）與 BNI 94 人資料庫；先查再答，不要叫教練提供名單。",
-   "level": "remind",
-   "situation": "教練問會員、來賓、名片資料",
-   "source": "feedback_bni_member_db_authoritative_source.md／feedback_search_namecard_db_before_claiming_taxonomy_missing_2026-09-23.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CROSS-LETTER",
-   "moment": "prompt",
-   "top30": 11,
-   "kind": "需求型",
-   "match": "(?<!不用)寫(一)?封?信|寄信|去讀信|^\\s*讀(一下)?信|讀(一下)?信[，,。！!]|自己去讀|寫指令讓(他|它|她|他們)|(讓|叫)我(去)?(貼|轉貼|傳話)|(聯想|宏碁|ACER|Acer|acer|Windows|windows|赫米斯|Hermes|hermes|小龍蝦|手機版|終端機).{0,15}(跟他(說|講)|告訴他|叫他|讓他|給他|通知他|傳給)|(聯想|宏碁|ACER|Mac|MAC|蘋果)(給|交辦|交代)的?(什麼)?任務",
-   "say": "教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀）。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/<收信人>/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。",
-   "level": "remind",
-   "situation": "要叫別台電腦／別的 AI 做事",
-   "source": "cross-agent/README.md／接力棒 v263（給 ACER 的信誤放 outbox）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-HERMES",
-   "moment": "prompt",
-   "top30": 4,
-   "kind": "防錯型",
-   "match": "赫米斯|赫敏斯|[Hh]ermes|HERMES|[Hh]omers",
-   "say": "教練說赫米斯，沒特別講 Telegram，就是 Mac 桌面版 Hermes.app（Telegram 那條不碰、不當選項問）；小龍蝦和赫米斯是兩套系統；給它的信放 cross-agent/inbox/hermes/。",
-   "level": "remind",
-   "situation": "教練提到赫米斯（Hermes）",
-   "source": "feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md／feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-FRIEND-AGENT",
-   "moment": "prompt",
-   "top30": 15,
-   "kind": "需求型",
-   "match": "(?<!生活)小幫手|分身|教練都在想什麼|龍蝦小助教|怡靜|楊(尚儒)?老師|佩佩老師的(助理|AI|小龍蝦)|孔大哥的(助理|AI|小龍蝦)|每(個|一個)(用戶|人)都(是)?獨立|(單獨|獨立)的?(記憶|對話)",
-   "say": "朋友的 AI：每人獨立記憶、後台顯示中文名；改規則後刪該群 session 重開；用真實群組路徑測過才回報；權限照教練劃的範圍開，不要層層設限。",
-   "level": "remind",
-   "situation": "教練提到小幫手、分身（怡靜、楊老師…）",
-   "source": "reference_per_user_memory_three_systems_2026-09-25.md／reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SEARCH-HISTORY-FIRST",
-   "moment": "prompt",
-   "top30": 8,
-   "kind": "防錯型",
-   "match": "(之前|以前|上次|當初|早就|曾經|很早以前|上一輪|昨天|前幾天).{0,4}(說過|講過|設定過?|做過|交[代待]過|討論過|提過|寫過|跟你說|跟你講|叫你|問過)|當初(是)?怎麼|還?記不記得|你忘了嗎|(怎麼)?又忘|都忘(記|了)|(查|找|搜|讀|看)(一下)?.{0,6}(歷史|過去的)(對話|紀錄|記錄|資料)|找不到(記錄|紀錄)|去查.{0,8}對話|特別交[代待](你|過)",
-   "say": "教練說「之前講過」：先自己搜原始紀錄（state/recall_index.jsonl、memory/verbatim、對話紀錄），找到就照做；不要叫教練回想、重講或貼給你。",
-   "level": "remind",
-   "situation": "教練說「之前講過／早就說過」",
-   "source": "feedback_never_ask_coach_recall_self_verify.md／feedback_exhaust_own_tools_before_asking_coach.md",
-   "audience": [
-    "coach",
-    "partner",
-    "public"
-   ],
-   "say_other": "對方說「之前講過」：先自己查這位朋友的對話記憶，找到就照做；不要叫對方回想、重講或貼給你。真的找不到，誠實說「我沒找到，請您再簡單說一次重點」。"
-  },
-  {
-   "id": "R-COPY-EXACT",
-   "moment": "prompt",
-   "top30": 18,
-   "kind": "防錯型",
-   "match": "(?s)^(?!.*(⏺|\\*\\*|##)).*(照抄|照著?貼|聽(得)?懂(的話)?(再|就)(來)?(做|幹活|乾活|回覆)|聽不懂(就|再)(問|發問)|(網址|名字|名稱|文字|這段|這句|標題)[^\\n]{0,8}(一字不差|原封不動|不要改)|連字都.{0,6}打出來)",
-   "say": "照教練給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。",
-   "level": "remind",
-   "situation": "教練說照抄、一字不差",
-   "source": "feedback_url_given_open_it_dont_guess_2026-09-01.md",
-   "audience": [
-    "coach",
-    "partner"
-   ],
-   "say_other": "照對方給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。"
-  },
-  {
-   "id": "R-DOWNLOADS",
-   "moment": "prompt",
-   "top30": 19,
-   "kind": "需求型",
-   "match": "下載(資料夾|區|夾)|[Dd]ownloads|(剛|才|又|已經|有)(剛|才)?下載|下載了|截(了|好)?(圖|幾張)[^\\n]{0,10}(下載|給你|資料夾)",
-   "say": "去 ~/Downloads 用 ls -t 找最新檔，對時間和檔名；教練說幾張就要找到幾張，找不到先列出最新 10 個，不要說沒有。",
-   "level": "remind",
-   "situation": "教練說檔案／截圖放在下載資料夾",
-   "source": "教練原話庫（6~9 月 7 次）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SHOW-NOT-DO",
-   "moment": "prompt",
-   "top30": 30,
-   "kind": "防錯型",
-   "match": "(以下|下面|底下)是我(給|跟|對|問|發給|丟給|貼給).{0,15}(的|說)|我只是(讓你|給你|跟你說|想讓你)(看|知道)|給你看(一下)?(而已|就好)|只是(讓你)?參考|你不用(做|執行|回答|動)",
-   "say": "教練是「給你看／讓你知道」，不是叫你執行：不要動手（尤其會花錢、會對外的），照他問的回答。",
-   "level": "remind",
-   "situation": "教練貼別人的對話／指令給你看",
-   "source": "教練 2026-09-19 原話（只叫一張圖卻出六張）",
-   "audience": [
-    "coach",
-    "partner"
-   ],
-   "say_other": "對方是「給你看／讓你知道」，不是叫你執行：不要動手（尤其會花錢、會對外的），照對方問的回答。"
-  },
-  {
-   "id": "R-PLAIN-TALK",
-   "moment": "prompt",
-   "top30": 12,
-   "kind": "防錯型",
-   "match": "(聽|看|搞|還是)不懂(?!(就|再)(問|發問))|講白話|大白話|說白話|白話文|講人話|(是)?什麼意思|專業術語|行話|(是|都是)(些)?什麼(東西|來著)",
-   "say": "重講一次：不用英文和術語，先講結論，再講教練要不要做什麼（多半什麼都不用做）。",
-   "level": "remind",
-   "situation": "教練說聽不懂、要白話",
-   "source": "守則#10／feedback_no_english_tech_terms_without_explaining_2026-09-17.md",
-   "audience": [
-    "coach",
-    "partner",
-    "public"
-   ],
-   "say_other": "對方說聽不懂：重講一次，不用英文和術語，先講結論，再講對方要不要做什麼（多半什麼都不用做）。語氣客氣，不讓對方覺得是他的問題。"
-  },
-  {
-   "id": "R-FB-POST",
-   "moment": "prompt",
-   "top30": 25,
-   "kind": "需求型",
-   "match": "(FB|fb|臉書|粉專|Facebook|facebook)[^\\n]{0,20}(發文|貼文|發佈|發布|PO文|po文|貼上去|發上去|分享|違反|限制|申訴)|(發|貼|PO|po)(到|在|上)?\\s*(FB|fb|臉書|粉專)|貼文|幫我發文",
-   "say": "FB 貼文：放 event.bymyway.com 公開網址（不是 GitHub），一則一個網址、要有縮圖；用沒登入的瀏覽器確認別人看得到才算發成功。",
-   "level": "remind",
-   "situation": "教練要發 FB 貼文",
-   "source": "feedback_verify_public_visibility_not_just_api_success_2026-09-11.md／reference_fb_real_browser_repost_sop_2026-09-18.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-WEB-EDIT-BASELINE",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "top30": 1,
-   "kind": "防錯型",
-   "match": "(?m)^/Users/[^\\n]*(github_repos/[^/\\n]+/|event-signup/(templates|static)/|/curated/|bymyway-website/|coach888/)[^\\n]*\\.(html|css)$",
-   "say": "改網頁四件事：①以線上最新版為準（先 git pull），不蓋掉教練剛改的 ②同一級的元素一次改完（字級、表頭、按鈕），不要說到哪改到哪 ③手機寬度也要看 ④改完自己開 Chrome 看過再交。",
-   "level": "remind",
-   "situation": "要改網頁時",
-   "source": "教練原話庫（改了又壞、說到哪改到哪 28 次）／試金石案例54",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-POLLING-CODE",
-   "moment": "pre_tool",
-   "tool": "Bash|Edit|Write",
-   "top30": 5,
-   "kind": "防錯型",
-   "match": "(?s)^(?!.*(輪詢|事件觸發|polling)).*?(?m:<key>StartInterval</key>|^\\s*\\*/\\d+\\s+\\*|setInterval\\(\\s*(async\\s*)?\\(?\\s*\\)?\\s*(=>)?\\s*\\{?[^)]{0,80}(fetch|load|check|poll|refresh|reload|sync)|setInterval\\(\\s*(load|fetch|check|poll|refresh|reload|sync)\\w*|schedule\\.every\\(|openclaw\\s+cron\\s+add[^\\n]*--every\\s+[1-9]|[\"']?every[\"']?\\s*[:=]\\s*[\"']?[1-9]\\d*\\s*(s|m|min|sec)\\b|while\\s+(true|:)\\s*;?\\s*do[\\s\\S]{0,300}?sleep\\s+\\d)",
-   "say": "你正在寫「每隔 N 分鐘檢查一次」：先問這件事發生當下能不能直接觸發（教練說一句、檔案一改、訊息一到）。能就用事件觸發；真的要定時，跟教練講清楚一天跑幾次、為什麼。",
-   "level": "remind",
-   "situation": "要設排程／定時檢查時",
-   "source": "feedback_event_driven_not_polling_pattern.md／Top10 模式#1",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-OPENCLAW-CONFIG",
-   "moment": "pre_tool",
-   "tool": "Bash|Edit|Write",
-   "top30": 10,
-   "kind": "防錯型",
-   "match": "(?m)^/Users/[^\\n]*\\.openclaw[^\\n]*/(openclaw\\.json|cron/jobs\\.json|models\\.json)$|(^|[;&|]\\s*)(\\S*/)?openclaw\\s+(config\\s+set|models\\s+set|cron\\s+(add|edit|rm|remove|update|disable|enable))\\b|open\\([^)\\n]*openclaw\\.json[^)\\n]*[\"']w",
-   "say": "改小龍蝦設定前：模型寫死 MiniMax-M3，教練沒親口說不准換；教練定的週期（每天 23:00 總結等）不要改回；改完重啟並查實際生效，不是寫進去就算。",
-   "level": "remind",
-   "situation": "要改小龍蝦（OpenClaw）設定、排程時",
-   "source": "feedback_openclaw_model_switch_permanent.md／教練原話庫（設定跑掉 11 次）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-DATE-WEEKDAY",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "top30": 29,
-   "kind": "防錯型",
-   "check": "weekday",
-   "match": "\\d{1,2}\\s*[/月]\\s*\\d{1,2}\\s*日?\\s*[（(]\\s*(週|星期|禮拜)?[一二三四五六日天]\\s*[）)]",
-   "say": "日期和星期對不起來：",
-   "level": "remind",
-   "situation": "寫活動日期時",
-   "source": "教練 2026-07-24 原話（日期跟星期對不起來要主動告知）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CHROME-WHICH-MACHINE",
-   "moment": "pre_tool",
-   "tool": "mcp__claude-in-chrome__.*",
-   "top30": 23,
-   "kind": "防錯型",
-   "match": "",
-   "say": "操作 Chrome 前先確認連到的是 Mac 本機、教練看得到的那個 Chrome（不是聯想那台）；同一個網站只開一個分頁。",
-   "level": "remind",
-   "situation": "要操作教練的 Chrome 時",
-   "source": "教練原話庫（瀏覽器開錯台 6 次）／feedback_single_tab_per_site_avoid_session_collision_2026-09-10.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-NOTIFY-COACH-NOISE",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "top30": 22,
-   "kind": "防錯型",
-   "match": "(?ms)^/Users/[^\\n]*\\.(py|sh|js|ts|mjs)$.*?(6124913915|openclaw\\s+message\\s+send|notify_coach|send_telegram|api\\.telegram\\.org/bot)",
-   "say": "這段程式會發訊息給教練：錯誤先自己處理，只有要教練動手才發；同一件事不重複發（合併或冷卻）；網址單獨一行。",
-   "level": "remind",
-   "situation": "寫會通知教練的程式時",
-   "source": "教練原話庫（告警吵、同樣訊息出現三次 7 次）／試金石案例97",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-LETTER-INBOX",
-   "moment": "pre_tool",
-   "tool": "Write",
-   "top30": 11,
-   "kind": "防錯型",
-   "match": "(?m)^/Users/[^\\n]*cross-agent/outbox/[^\\n]*$",
-   "say": "新信要放 cross-agent/inbox/<收信人>/；outbox 是已讀歸檔，放錯對方讀不到（v263 給 ACER 的信就是這樣）。",
-   "level": "remind",
-   "situation": "要叫別台電腦／別的 AI 做事",
-   "source": "接力棒 v263",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-ASK-CREDENTIAL",
-   "moment": "reply",
-   "top30": 14,
-   "kind": "防錯型",
-   "match": "(?s)^(?!.*(?:密碼視窗|開機密碼|登入密碼|Mac\\s?密碼)).*?(?:(請|麻煩)(您|教練|你)?(提供|給我|告訴我|輸入|貼上|貼給我|傳給我)[^\\n]{0,12}(密碼|帳密|帳號密碼|金鑰|API\\s*[Kk]ey|[Tt]oken|權杖|憑證)|(記得|知道)[^\\n]{0,10}(密碼|帳密|金鑰|[Tt]oken)[^\\n]{0,15}(跟我說|跟我講|告訴我|給我))",
-   "say": "不要跟教練要帳密／金鑰：先查 路徑大全.md、路徑大全_憑證層.md、歷史紀錄。真的查過都沒有（例如簡訊驗證碼），照實說查了哪幾個地方再請教練。",
-   "level": "block",
-   "situation": "要跟教練要密碼、金鑰時",
-   "source": "教練 2026-08-26 原話／feedback_exhaust_own_tools_before_asking_coach.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-PROMISE-MONITOR",
-   "moment": "reply",
-   "top30": 5,
-   "kind": "防錯型",
-   "match": "(我會|我將|我這邊會|會由我)(持續|主動|定時|定期|每隔?\\s*\\d+\\s*(秒|分鐘?|小時))[^\\n]{0,8}(監測|監控|盯|巡|檢查|追蹤|關注)",
-   "say": "你沒有背景常駐，做不到「主動持續監測」，這種話教練聽過太多次。改成說：教練下次說話時我先查，或做一個事件觸發的機制。",
-   "level": "block",
-   "situation": "要設排程／定時檢查時",
-   "source": "feedback_no_background_polling_lies.md／教練 2026-06-09 原話",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-COMMAND-FOR-COACH",
-   "moment": "reply",
-   "top30": 2,
-   "kind": "防錯型",
-   "match": "(?s)^(?!.*(密碼|登入|授權|系統管理員|管理員身分|sudo|驗證碼)).*((請|麻煩)(您|教練)?(在|到|打開|開啟)?(終端機|Terminal|terminal|命令列|PowerShell|powershell)[^\\n]{0,10}(輸入|執行|貼上|跑|打)|(複製|貼)[^\\n]{0,6}(到|進)(終端機|Terminal|PowerShell))",
-   "say": "不要丟指令叫教練跑：自己跑。被安全檢查擋就一次講清楚「切 bypass 一個按鈕」；只有要密碼／系統管理員權限時，才把指令放進剪貼簿，說明為什麼只有教練能做。",
-   "level": "block",
-   "situation": "想叫教練動手時",
-   "source": "feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md／feedback_permission_mode_tell_coach_once_2026-09-30.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-PORTER",
-   "moment": "guard",
-   "top30": 2,
-   "kind": "防錯型",
-   "enforced_by": "scripts/stop_rules_master.py A／A2",
-   "say": "回話裡有「請您貼／您自己去點」這類叫教練動手的句子會被擋下重寫。",
-   "situation": "想叫教練動手時",
-   "source": "守則#12",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-ASK-WHEN-CLEAR",
-   "moment": "guard",
-   "top30": 3,
-   "kind": "防錯型",
-   "enforced_by": "scripts/stop_rules_master.py F（提醒）",
-   "say": "方向清楚還徵詢教練會被提醒；答案必然是「要」的事直接做。",
-   "situation": "要拿事情去問教練之前",
-   "source": "N2／feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-HTML-CHROME",
-   "moment": "guard",
-   "top30": 9,
-   "kind": "需求型",
-   "enforced_by": "scripts/auto_chrome_after_html_edit.sh＋stop_rules_master.py J",
-   "say": "改了 HTML 會自動用 Chrome 開在 Mac 螢幕上，只有人坐在 Mac 前才看得到；教練用手機或遠端時這不算交付，要給 https 網址（獨立一行）並用 curl 驗證。localhost 網址要自己打開，不叫教練輸入。",
-   "situation": "要改網頁時",
-   "source": "feedback_html_preview_chrome_only.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-POLLING-REPLY",
-   "moment": "guard",
-   "top30": 5,
-   "kind": "防錯型",
-   "enforced_by": "scripts/stop_rules_master.py D",
-   "say": "回話提議「每 N 分鐘檢查」會被擋。",
-   "situation": "要設排程／定時檢查時",
-   "source": "Top10 模式#1",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-TAIWAN-TIME",
-   "moment": "guard",
-   "top30": 26,
-   "kind": "防錯型",
-   "enforced_by": "scripts/inject_time_context.sh＋stop_rules_master.py C",
-   "say": "每句話自動附台灣時間；看過 UTC 時間卻沒換算就回話會被擋。",
-   "situation": "跟教練講時間時",
-   "source": "feedback_taiwan_time_always.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-TRAD-CHINESE",
-   "moment": "guard",
-   "kind": "防錯型",
-   "enforced_by": "scripts/stop_rules_master.py I",
-   "say": "回話出現簡體字會被擋。",
-   "situation": "跟教練講時間時",
-   "source": "試金石案例44／feedback_chinese_only.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-COACH888",
-   "moment": "guard",
-   "top30": 20,
-   "kind": "需求型",
-   "enforced_by": "scripts/stop_rules_master.py L／M",
-   "say": "新網站上線沒收錄進作品總覽（coach888，新項目放分類第一筆）會被擋。",
-   "situation": "新網站上線時",
-   "source": "feedback_new_public_site_must_register_coach888_2026-09-04.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-DELIVERY",
-   "moment": "guard",
-   "top30": 17,
-   "kind": "防錯型",
-   "enforced_by": "scripts/stop_rules_master.py H／E",
-   "say": "宣稱完成卻沒有憑證會被擋；要走教練真正用的那條路測過（Telegram 點連結、群組裡真的問一句）才算好。",
-   "situation": "回報完成之前",
-   "source": "試金石案例97／feedback_verify_backup_content_not_just_format_2026-09-05.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-IDENTITY",
-   "moment": "guard",
-   "top30": 4,
-   "kind": "防錯型",
-   "enforced_by": "scripts/identity_model_verify.sh",
-   "say": "教練問「你是誰／走哪個模型」時自動查實際連線當鐵證：桌面版 App 不是 CLI；手機版走 MiniMax＝執行者。",
-   "situation": "教練問身分、模型時",
-   "source": "feedback_phone_kai_gong_means_minimax_model_2026-09-22.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-KAIGONG",
-   "moment": "guard",
-   "top30": 27,
-   "kind": "防錯型",
-   "enforced_by": "scripts/feed_junshi_handoff.sh",
-   "say": "說「開工」自動注入接力棒；最上方「教練上一場交辦」第一件講、講完直接做。",
-   "situation": "開工時",
-   "source": "N9／教練 2026-09-27 原話（開工漏接 FB 申訴）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-WIN-APP-MOVE",
-   "moment": "pre_tool",
-   "tool": "Bash|PowerShell",
-   "match": "(?i)\\bmklink\\s+/J\\b|New-Item\\b[^\\n]*-ItemType\\s+Junction|robocopy\\b[^\\n]*\\s/(E|MIR)\\b",
-   "say": "搬 App 資料夾（junction）前：①先確認原程式在原位置開得起來（壞的搬了還是壞的）②先查來源裡有沒有巢狀 Junction，robocopy 加 /XJ 才跟 Get-ChildItem 的數字一致 ③搬完原夾改 .bak 留 7 天不刪，再重建捷徑（有好的捷徑就複製它，不要自己造）。",
-   "level": "remind",
-   "situation": "要搬 App 資料夾、建 junction 時（Windows）",
-   "source": "試金石案例27／28／41／knowledges/SOP_line_migrate_to_e_drive.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-WIN-BAK-CLEAN",
-   "moment": "pre_tool",
-   "tool": "Bash|PowerShell",
-   "match": "(?i)(Remove-Item|\\brm\\s+-\\w*r|\\brd\\b|rmdir|Safe-Remove)[^\\n]*\\.bak[.-]\\d{6,8}",
-   "say": "清搬家留下的 .bak 前：先確認對應的 Junction 指向的資料是活的（目標裡有今天或最近的寫入），再走五道閘門；全機掃一遍，別只處理教練點名的那一個。",
-   "level": "remind",
-   "situation": "要清搬家後的 .bak 備份時",
-   "source": "試金石案例39",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-MAC-HEADLESS-DOWN",
-   "moment": "prompt",
-   "match": "(?is)^(?!.*(記[憶億]體|釋放|赫米斯|hermes)).*?(mac|蘋果|macmini)[^\\n，。,.？?！!、；;（）()]{0,6}(停工|掛了|當機|沒動作|沒有動靜|自己重啟|自動重啟|被重啟|重開機)",
-   "say": "Mac 停工／自己重開：先跑 pmset -g sched、pmset -g custom、uptime 找隱藏排程重啟；headless 的 Mac 必須開自動登入＋斷電自動重啟，否則重開＝全部服務死掉。教練一級鐵律：除非停電停網，不准再發生；自己掛不會自己告警，要靠外部監控。",
-   "level": "remind",
-   "situation": "教練說 Mac 停工、掛了、自己重啟時",
-   "source": "試金石案例31",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "J-NECESSARY",
-   "moment": "judgment",
-   "say": "問題根治後不要再疊「保險」：交付前問三個字「必要嗎？」。根因消滅就沒有風險；一行指令能解的，不蓋四層監控。被教練挑戰兩次才想通＝第一次就該自己想到底。",
-   "situation": "解決問題後想多加監控、保險、複雜機制時",
-   "source": "試金石案例32／守則#03、#16",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CLOUDFLARED-KEEP",
-   "moment": "prompt",
-   "match": "(?i)cloudflared|LINE\\s*專線|小龍蝦的專線|未辨識開發者|背景活動",
-   "say": "不認識的背景程式要關／要刪之前，先查三件套：~/.zsh_history 安裝紀錄、安裝時間戳、sfltool dumpbtm。cloudflared＝小龍蝦 LINE 專線，教練 LINE 用很頻繁，不能關（路徑大全第十三節）。「查無紀錄」不等於「來路不明」。",
-   "level": "remind",
-   "situation": "教練問背景程式、cloudflared、LINE 專線時",
-   "source": "試金石案例40／路徑大全第十三節",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CLOUDFLARED-STOP",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?i)(launchctl\\s+(bootout|unload|remove|disable)|systemctl\\s+(stop|disable)|brew\\s+services\\s+stop|pkill|killall|\\bkill\\b)[^\\n]*cloudflared|cloudflared\\s+service\\s+uninstall|\\brm\\b[^\\n]*(cloudflared|com\\.cloudflare)",
-   "say": "你正要停掉／刪掉 cloudflared＝小龍蝦 LINE 專線，停了教練的 LINE 小龍蝦就斷線。教練沒親口說要關就不動。",
-   "level": "remind",
-   "situation": "要停掉或移除 cloudflared 時",
-   "source": "試金石案例40／路徑大全第十三節",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BALANCE-PROVIDER",
-   "moment": "post_tool",
-   "match": "(?im)^[^`「\\n]*(insufficient[_ ]balance|insufficient[_ ]quota|credit balance is too low|餘額不足|余额不足)[^`」\\n]*$",
-   "say": "看到額度／餘額不足：先查是哪一個 provider 回的（實際 providerID／endpoint），不要從訊息文字猜服務歸屬就叫教練充值。opencode 設定用的是教練自己的 MiniMax key；opencode-go（小寫 m3）是另一條轉售線。",
-   "level": "remind",
-   "situation": "工具回傳額度不足類錯誤時",
-   "source": "試金石案例57",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SEED-FAKE-DATA",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?i)(^|[;&|]\\s*)(\\S*python3?\\s+)?(\\./)?seed\\w*\\.py\\b",
-   "say": "跑 seed／假資料驗證前：先列出這個系統「所有」資料表（含 app.py 裡 CREATE TABLE IF NOT EXISTS 動態建的，不只看 schema.sql）；測完逐表確認會被正式資料覆蓋或清掉；交付前對正式站 grep 一次別分會／假資料的人名。",
-   "level": "remind",
-   "situation": "要跑 seed 腳本、用假資料驗證網站時",
-   "source": "試金石案例69",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-ABOUT-COACH-SITE",
-   "moment": "prompt",
-   "match": "關於教練|bymyway\\.com/coach|官網[^\\n]{0,8}(搬|複製|抄)",
-   "say": "官網 www.bymyway.com（WordPress）的內容很多是 iframe 嵌進來的：curl／grep 抓不到就先看原始碼有沒有 <iframe>／<embed>，真正來源在 ~/github_repos/bymyway-website/（coach1973.github.io/bymyway-website/）。先查建置史、把教練描述的架構當查證起點，不要一直加大文字搜尋。",
-   "level": "remind",
-   "situation": "教練提到官網「關於教練」頁、要搬官網內容時",
-   "source": "試金石案例71／守則#02",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-OPENCLAW-NO-REPLY",
-   "moment": "prompt",
-   "match": "小龍蝦[^\\n，。]{0,6}(沒反應|沒有反應|沒回|不回|沒動靜|沒有動靜|聯絡不上|掛了|當機|斷線|不理我)",
-   "say": "「小龍蝦沒反應」：小龍蝦＝ai.openclaw.gateway（bot_main），不是赫米斯（ai.hermes.gateway，兩個獨立 bot）。先查 launchctl print gui/$(id -u)/ai.openclaw.gateway、gateway log、openclaw doctor（出現 Legacy workspace setup state requires migration 會被 launchd 停放）。防呆掛在既有的 system_patrol，不要新建輪詢。",
-   "level": "remind",
-   "situation": "教練說小龍蝦沒反應、當機時",
-   "source": "試金石案例79",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-RELEASE-WORD",
-   "moment": "guard",
-   "enforced_by": "scripts/pre_task_hook.sh＋knowledges/教練口令字典.md",
-   "say": "光講「釋放」＝只重啟 RustDesk（rustdesk_free_memory.sh）；「全部釋放」才關 Chrome／赫米斯桌面版／LINE／Typeless（release_all_memory.sh）。口令以教練親口定義為準，查證要先找他下的定義、不是過去的執行紀錄。",
-   "situation": "教練說「釋放」時",
-   "source": "試金石案例88",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-EVERY-RUN-COST",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "(?m)^[^\\n]*/(summary_upload_trigger|feed_junshi_handoff)\\.(sh|ps1|py)$",
-   "say": "你在改「每次開工／每次總結」都會跑的步驟：新增任何每次都自動做的事，要當場向教練講清楚每次成本（額度）、誰會用、多久檢討，教練知情才加；平常用不到的改成「教練說要才做」。",
-   "level": "remind",
-   "situation": "要新增每次開工／總結自動執行的步驟時",
-   "source": "試金石案例96",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BOOTSTRAP-20K",
-   "moment": "pre_tool",
-   "tool": "Edit|Write|Bash",
-   "match": "(?m)^/Users/bymyway/\\.openclaw/(workspace|agents/[^/\\n]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY|TOOLS|USER|IDENTITY)\\.md$|(?:>>|tee\\s+-a)\\s*\\S*\\.openclaw/(workspace|agents/[^/\\s]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY)\\.md",
-   "say": "OpenClaw 啟動檔（AGENTS／SOUL／HEARTBEAT／MEMORY／USER／TOOLS／IDENTITY.md）有 2 萬字硬上限，超過會被截斷、切出 UTF-8 亂碼：改完用 wc -m 確認；自動化日誌寫 state/*.log，不要追加進這些檔；單檔超過 80KB 要先分割歸檔。",
-   "level": "remind",
-   "situation": "要改或追加小龍蝦啟動檔時",
-   "source": "試金石案例J／L／reference_openclaw_bootstrap_20k_char_limit_2026-09-25.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-DETECTOR-RULE-EDIT",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "(?m)^[^\\n]*/scripts/(stop_[^/\\n]+|[^/\\n]*_guard|[^/\\n]*_hook)\\.(py|sh)$",
-   "say": "寫／改偵測規則（Stop hook、guard）：①只比對這一輪最新內容，不讀整段歷史 ②排除引號內、程式碼區塊、解釋性句型 ③寫完用歷史真實對話回測誤判幾次，不是憑空編測試案例；同一規則誤判第二次就改設計，不補白名單。",
-   "level": "remind",
-   "situation": "要新增或修改偵測規則、hook、守衛程式時",
-   "source": "試金石案例F-2026-06-07／66／feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-LAUNCHD-VERIFY",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?i)(^|[;&|]\\s*)(sudo\\s+)?launchctl\\s+(bootstrap|load)\\b|(^|[;&|]\\s*)crontab\\s+-[^l\\s]",
-   "say": "建排程／常駐服務：同一個操作裡確認腳本真的存在（ls），建好當下用真實資料實跑一次看輸出；設了排程不等於會跑（案例C：腳本 7 天根本不存在）。新建設定／文件後，觸發它的排程也要同步指到新檔。能事件觸發就不要定時輪詢。",
-   "level": "remind",
-   "situation": "要建排程、載入常駐服務時",
-   "source": "試金石案例C／H／執行細則N5",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "J-FIX-STUCK",
-   "moment": "judgment",
-   "say": "同一個問題改第 3 次還沒效：停手，重新理解教練到底要改什麼（「太寬」是外框還是文字？），先讀結構再下手；教練說「你不用做」就立刻停手，不再 Edit／curl／commit。",
-   "situation": "改同一處改了三次沒效、教練叫你停手時",
-   "source": "試金石案例R／S／feedback_cap_retries_report_when_stuck_2026-09-03.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "J-CLOUD-DIAGNOSE-ONLY",
-   "moment": "judgment",
-   "say": "雲端工作頁查出 bug、但修法會動到 Mac 軍師也在用的共用腳本或設定：不要就地套用，也不要什麼都不做——commit 診斷＋「建議怎麼改」寫進接力棒，留給 Mac 軍師審批。",
-   "situation": "雲端查出 bug 且修法會動共用腳本時",
-   "source": "試金石案例91",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "G-CITATION",
-   "moment": "guard",
-   "enforced_by": "Stop hook 查證不足偵測（scripts/stop_rules_master.py）＋citation-verification 技能",
-   "say": "引用守則先查特助心法.md 原文；引用對話先查原始記錄、有 commit hash 才能說「我之前說過」；教練問「你確定嗎」立即承認不確定、去查。",
-   "situation": "要引用守則編號或過去對話時",
-   "source": "試金石案例D／執行細則N3",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "J-IMAGE-LOOK-FIRST",
-   "moment": "judgment",
-   "say": "圖片交給教練前：自己用 Read 親眼看過這張圖，確認繁體中文無誤、比例與裁切對，才送；工具說「分析正確」不算看過。（hook 目前只接 Bash／Edit／Write，送檔工具接不到，所以靠 image-visual-delivery-check 技能＋執行細則 N4。）",
-   "situation": "要把圖片（生成圖、截圖、設計稿）交給教練前",
-   "source": "試金石案例F／38／執行細則N4",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-JARVIS-PLAN",
-   "moment": "prompt",
-   "match": "賈維斯成長計畫|反射條件",
-   "say": "「賈維斯成長計畫」＝「反射條件」＝整套條件反射（反射索引＋四個時刻）。要植入三級：①教練自己的 AI（全套）②四位夥伴分身 peipei／kong／yijing／yang（三種標準）③LINE 對外帳號（會員＝禮遇版）。進度看接力棒置頂「🎯 教練交辦」。",
-   "level": "remind",
-   "situation": "教練提到賈維斯成長計畫、反射條件時",
-   "source": "project_jarvis_growth_plan_2026-10-02.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-OC-HOOK-INJECT-DEAD",
-   "moment": "pre_tool",
-   "tool": "Bash|Edit|Write|MultiEdit",
-   "match": "(?s)hooks/[^/\\s]+/handler\\.js.*(context\\.inject|\\binject\\.(push|unshift))",
-   "say": "小龍蝦 hook 的 event.context.inject 沒有人讀（message:preprocessed 發了不等、agent:bootstrap 只認 bootstrapFiles；2026.9.4 原始碼查證），寫了模型也看不到。要讓模型看到，改用外掛 before_prompt_build 回傳 prependContext（範本 ~/.openclaw/extensions/reflex-prompt/）；hook 只適合記錄、直接發訊息這類不需要模型看到的事。",
-   "level": "remind",
-   "situation": "改小龍蝦 hook、想注入提示給模型時",
-   "source": "feedback_openclaw_hook_fire_and_forget.md／2026-10-02 查證：rule-reminder 等 13 個 hook 的注入從未送到模型",
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BNI-OFFICIAL-TEXT",
-   "moment": "prompt",
-   "match": "出席|缺席|請假|代理人|政策|規定|條文|道德規範|會議流程|議程|合約|職責|使命|願景|價值觀|總政策|會員資格|淘汰|規則|引薦單|一對一|訪客|遲到",
-   "say": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就誠實說「這部分我不確定」，引導問大樹教練本人或 BNI Connect 官方管道。絕對不要憑印象組一個聽起來合理的答案。",
-   "say_other": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就照 AGENTS.md 的誠實鐵律說「這部分我不確定」並引導對方查官方管道。絕對不要憑印象組一個聽起來合理的答案。",
-   "level": "remind",
-   "situation": "BNI 分身被問到官方條文（出席、政策、規則…）",
-   "source": "教練 2026-08-05 裁示（原 rule-reminder 那條，inject 從未生效；試金石案例98）",
-   "audience": [
-    "coach",
-    "partner",
-    "public"
-   ],
-   "agents": [
-    "bni_tainan",
-    "jiaolian_thoughts"
-   ]
-  },
-  {
-   "id": "R-VOICE-CHECK",
-   "moment": "prompt",
-   "match": "\\[\\d{2}:\\d{2}[.:]\\d{2,3}\\s*-->\\s*\\d{2}:\\d{2}",
-   "say": "這則是語音轉文字，常有諧音錯字（例：「大肅執動」其實是「大樹執董」）。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
-   "say_other": "這則是語音轉文字，常有諧音錯字。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先客氣地問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
-   "level": "remind",
-   "situation": "小龍蝦收到語音訊息（轉成文字）時",
-   "source": "守則#18／執行細則N3（原 rule-reminder 語音糾偏，inject 從未生效；試金石案例98）",
-   "audience": [
-    "coach",
-    "partner",
-    "public"
-   ]
-  },
-  {
-   "id": "R-ZSH-VAR-COLON",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "\\$(?!env:)[A-Za-z_][A-Za-z0-9_]*:[A-Za-z]",
-   "say": "zsh 會把「$變數:字母」當成修飾語：\"agent:$a:line\" 會變成 a 轉小寫＋ine、$a:test 變成取尾段，指令不報錯卻打錯對象（刪不到、改錯人）。改寫成 ${a}:line。",
-   "level": "remind",
-   "situation": "Bash 指令裡變數後面直接接冒號＋字母",
-   "source": "試金石案例99（回測歷史 Bash 指令 5/21344，全是真錯）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-GIT-REBASE-CONTINUE",
-   "moment": "post_tool",
-   "tool": "Bash",
-   "match": "You must edit all merge conflicts",
-   "say": "git rebase --continue 說還有衝突：先 git ls-files -u，空的就是還有「已修改沒 add」的其他檔——git status 把非 ?? 的全部 git add 再 continue，不要繼續找衝突。",
-   "level": "remind",
-   "situation": "git rebase 卡在「還有衝突」時",
-   "source": "reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-GIT-ANOMALY-HANDOFF",
-   "moment": "post_tool",
-   "tool": "Bash",
-   "match": "(refusing to merge unrelated histories|have diverged,|interactive rebase in progress)",
-   "say": "git 推不上去／歷史分岔：先讀本機接力棒和 HEARTBEAT.md（別台可能已記下同一件事和做法），再決定下一個 git 指令；這個 repo 改寫過歷史，不要 force push 舊歷史回去。",
-   "level": "remind",
-   "situation": "git 推送被拒、分岔時",
-   "source": "feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-COACH888-EDIT",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "github_repos/coach888/",
-   "say": "改 coach888：①以線上伺服器狀態 /api/coach888/state 為準（教練可能剛在網頁上改過），不是 git 的 index.html ②新項目放該分類第一筆 ③不清瀏覽器 localStorage，要清先備份 ④本機預覽分頁用完關掉，別讓教練在暫存頁上改。",
-   "level": "remind",
-   "situation": "要改 coach888（大樹AI作品一覽）時",
-   "source": "reference_coach888_server_synced_state_architecture_2026-09-24.md／feedback_coach888_new_items_go_first.md／feedback_never_clear_user_storage_without_backup_2026-09-03.md／feedback_never_expose_local_preview_to_coach_2026-09-04.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SOP-ALIAS",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "(?m)^/Users/bymyway/\\.openclaw/workspace/knowledges/SOP_[^\\n]*\\.md$",
-   "say": "寫／改 SOP：檔頭第一段寫教練實際會講的口語叫法（例：「大樹作品」「網路報名」），沒寫等於沒寫；舊 SOP 的收尾步驟（登記 coach888、通知群組）要一起繼承。",
-   "level": "remind",
-   "situation": "要寫或改 SOP 文件時",
-   "source": "feedback_sop_must_alias_spoken_trigger_phrase_2026-09-24.md／feedback_coach888_registration_repeatedly_skipped_2026-09-23.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-QUANMIAN-SCOPE",
-   "moment": "prompt",
-   "match": "全面(改|體檢|檢查|清查|優化|盤點|處理|更新|升級)",
-   "say": "教練說「全面／全部」：範圍預設是這個對話框負責的系統（這台 Claude 碰得到的檔案、repo、服務），不自動擴到小龍蝦、聯想、宏碁；要跨系統教練會點名。",
-   "level": "remind",
-   "situation": "教練說「全面改／全面體檢」",
-   "source": "feedback_quanmian_scope_must_clarify_2026-09-23.md／執行細則N7",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BNI-PPT-SOP",
-   "moment": "prompt",
-   "match": "(?i)BNI\\s*(版)?\\s*PPT|PDF\\s*轉\\s*(BNI|品牌)|品牌底圖",
-   "say": "「BNI PPT SOP」＝ knowledges/SOP_PDF轉品牌底圖PPT.md，照檔案做，不用重問流程或工具。",
-   "level": "remind",
-   "situation": "教練說「BNI PPT／PDF 轉品牌底圖」",
-   "source": "reference_bni_ppt_sop_alias_2026-09-21.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CLAUDE-RC-UNSET",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?s)(unset|env\\s+-u)\\s+ANTHROPIC_(BASE_URL|API_KEY|AUTH_TOKEN).*claude\\s+(rc|remote-control)|claude\\s+(rc|remote-control).*(unset|env\\s+-u)\\s+ANTHROPIC_",
-   "say": "啟動 claude rc 不要 unset ANTHROPIC_* 變數（會觸發硬性檢查噴錯）；完全不動它們，路由問題去 ~/.claude/settings.json 的 env 區塊修。",
-   "level": "remind",
-   "situation": "要啟動 Remote Control（claude rc）時",
-   "source": "feedback_claude_rc_never_unset_base_url_2026-09-19.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SENDBEACON-CORS",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "sendBeacon",
-   "say": "sendBeacon 打跨網域 API：伺服器要回實際 Origin（不能 *）＋ Access-Control-Allow-Credentials: true，否則瀏覽器整個擋掉、beacon 也不報錯；驗證要看伺服器真的收到。",
-   "level": "remind",
-   "situation": "程式裡用到 sendBeacon 時",
-   "source": "reference_sendbeacon_cors_credentials_gotcha_2026-09-18.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CURATION-DELETE",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "curation/admin/delete",
-   "say": "這支刪除是整套退役（GitHub repo 改名、關 Pages、名冊移除），已公告的網址會 404；只是要從名冊隱藏就不要用它。",
-   "level": "remind",
-   "situation": "要下架策展網站時",
-   "source": "feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-GIT-ADD-ALL-PII",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?s)(bni-chapters|team-bymyway|team01|namecard-db|event-signup).*git\\s+(-C\\s+\\S+\\s+)?add\\s+(-A|--all|\\.)(?=\\s|$|;|&)",
-   "say": "這個 repo 有真實會員個資：git add -A／. 可能把 .db.bak 備份一起加進去。先 git status --short 看清單，有 .bak／.db／.sqlite 就排除再加。",
-   "level": "remind",
-   "situation": "在有會員個資的 repo 用 git add -A 時",
-   "source": "feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-MINIMAX-BATCH-GUARD",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "(?s)^(?!.*minimax_batch_guard)(?=.*\\.py\\n).*(api\\.minimax\\.(io|chat)|minimaxi\\.(com|chat))",
-   "say": "會呼叫 MiniMax 的程式：先 from minimax_batch_guard import guard_call（scripts/），批次呼叫越線自動硬停——教練畫的永久紅線。",
-   "level": "remind",
-   "situation": "寫會呼叫 MiniMax 的程式時",
-   "source": "feedback_minimax_batch_call_redline_guard_2026-08-27.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BIGTREE-EVENTDB-SYNC",
-   "moment": "pre_tool",
-   "tool": "Edit|Write",
-   "match": "(?s)/Users/bymyway/github_repos/bigtree/index\\.html.*\\{\\s*date:\\s*'20\\d\\d-",
-   "say": "改大樹小講場次（SESSION_DATES）：同一輪寫進 event-signup/event.db 的 events 表（slug／name／event_date／event_url），報名頁和後台才會一致。",
-   "level": "remind",
-   "situation": "要改大樹小講場次時",
-   "source": "project_bigtree_eventsignup_sync_rule.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-TAIWAN-FOCUS",
-   "moment": "pre_tool",
-   "tool": "Edit|Write|Bash",
-   "match": "(?s)^(?=.*(\\.html|<h[1-6]|<section|<div))(?=.*(上海|廈門|深圳|北京|廣州|中國商業|兩岸|大陸市場|中國市場)).*",
-   "say": "教練團隊重心在台灣：介紹夥伴、做網頁時，大陸／兩岸經歷可留在「經歷」，現在的重心、服務對象、標籤一律寫台灣；圖片裡的字也要繁體。",
-   "level": "remind",
-   "situation": "網頁內容提到兩岸、中國大陸時",
-   "source": "feedback_taiwan_focus_no_china_emphasis_2026-09-30.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-CRON-AGENT-ANNOUNCE",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "openclaw\\s+cron\\s+add(?=[^\\n]*--agent)(?=[^\\n]*--announce)",
-   "say": "替分身（yang、yijing…）代排提醒：①--at 不能配 --exact ②message 要寫成「最終回覆＝提醒本文、不准呼叫 message 工具」，否則群組會多一則「已送出」③先建一個 --to 教練 DM 的同設定測試工作，cron run 實跑、讀分身最後一輪確認，再刪掉；不拿夥伴的群組測試。",
-   "level": "remind",
-   "situation": "要用 openclaw cron add 替分身排提醒時",
-   "source": "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-BACKUP-BEFORE-UPGRADE",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "kind": "防錯型",
-   "check": "backup_recent",
-   "match": "(?m)(?:(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*(?:\\s-g\\b|--global)[^\\n;&|]*openclaw|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*openclaw[^\\n;&|]*(?:\\s-g\\b|--global)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?openclaw\\s+(?:update|upgrade)\\b(?!\\s+status)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?brew\\s+upgrade\\b|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?softwareupdate\\s+(?:-i|-ia|--install)\\b)(?![^\\n]*(?:--dry-run|--help))",
-   "say": "升級前先備份（教練 2026-10-02 定的備份規則二）：",
-   "level": "block",
-   "situation": "要升級小龍蝦／Homebrew／Mac 系統時",
-   "source": "教練 2026-10-02 原話（像聯想一鍵備份：電腦運行良好時備份、系統升級前備份，其他時間沒必要時時備份）",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SUDO-SHOW-TERMINAL",
-   "moment": "pre_tool",
-   "tool": "Bash|mcp__terminal__run_in_terminal",
-   "kind": "防錯型",
-   "match": "(?m)(?:^|[;&|]\\s*)sudo\\s+(?!-A\\b)(?!-n\\b)(?!-v\\b)(?!-l\\b)",
-   "say": "要教練輸入密碼：別放終端機面板（教練看不到）。改用跳到畫面最前面的密碼視窗：SUDO_ASKPASS=~/.openclaw/workspace/scripts/coach_password_dialog.sh COACH_PW_MSG='這次要做什麼' sudo -A <指令>（從 Bash 工具跑，放背景）。回覆寫「密碼視窗已跳在畫面中間」。",
-   "level": "remind",
-   "situation": "要用 sudo（需要教練打密碼）時",
-   "source": "教練 2026-10-02 11:28／11:33 原話「沒看到跳出輸密碼的選項」「之前你講的，我都看不到」；System Events 密碼視窗實測教練看得到並輸入成功",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-KEEP-VOICE-OCR-MODELS",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "kind": "防錯型",
-   "match": "(?:rm|trash|mv)\\s[^\\n]*\\.cache/(?:whisper|huggingface)(?:/base\\.pt|/?\\s|/?$|/hub)",
-   "say": "~/.cache/whisper/base.pt 是小龍蝦 Telegram 語音轉文字在用的模型（openclaw.json tools.media --model base）；~/.cache/huggingface 有名片 OCR(PaddleOCR) 和記憶搜尋(bge-m3) 模型。這兩個不能刪不能搬，其他大模型(large/medium)才可以。",
-   "level": "remind",
-   "situation": "清本機空間、要刪或搬 ~/.cache 的模型時",
-   "source": "2026-10-02 本機瘦身：軍師把整個 ~/.cache 標成「語音辨識模型和工具暫存」請教練同意刪，刪前查才發現裡面有小龍蝦語音與名片OCR在用的模型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-TURNFORYOU-SEATS-EDIT",
-   "moment": "pre_tool",
-   "tool": "Edit|Write|Bash",
-   "match": "github_repos/turnforyou/(?:index\\.html|data\\.json)",
-   "say": "改〈為你轉身〉導師席：畫面讀的是 index.html 裡 inline-data（data.json 要同步但不是它）；席次 id 綁 SEAT 編號與 PAIN 路徑推薦；觀眾席 audience-data 獨立（同一人別兩邊都在）；「八位／八張椅子」文案散十多處；改前先 cp .bak。細節：記憶 reference_turnforyou_site_structure_2026-10-03.md",
-   "level": "remind",
-   "situation": "要改為你轉身網站的導師名單、席次、文案時",
-   "source": "2026-10-03 一場把導師席虛擬人物換成八位真人，來回改七次才摸清三處資料與路徑綁定",
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-DISK-LABEL-VERIFY",
-   "moment": "prompt",
-   "match": "(?is)(硬碟|磁碟|儲存空間|本機空間|剩餘空間|空間).*(系統更新|更新檔|下載好|還沒安裝|系統佔|系統資料|佔多少)|(系統更新|更新檔|還沒安裝).*(\\d+\\s*GB?|空間|硬碟)|(更新檔|下載暫存|暫存檔|下載好).{0,20}\\d+\\s*[Gg]",
-   "say": "回答電腦空間時，每一大項的名稱要有實測依據，不憑大小貼標籤：Mac 的 Preboot 磁碟區（約18GB）是開機用檔案，不是「已下載、還沒安裝的系統更新」；真正的更新下載檔看 /Library/Updates 與 /System/Library/AssetsV2/com_apple_MobileAsset_MacSoftwareUpdate。沒量過就說「不確定」，不要說「更新完會省出空間」。",
-   "level": "remind",
-   "situation": "教練問電腦空間被什麼佔、系統更新佔多少、更新完能省多少",
-   "source": "2026-10-03 教練追問「18G 下載暫存檔」：前一場把 Preboot 磁碟區 17.9GB 說成已下載的更新，其實本機沒有任何已下載好的 macOS 更新（案例100）",
-   "kind": "防錯型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-SESSION-VERBATIM-REPORT",
-   "moment": "prompt",
-   "match": "(?is)(一字不漏|逐字|原話|所有.{0,6}說過的話|說過的每一句).{0,40}(報告書|網頁|做成|保留|紀錄|記錄|下一[份個場]?對話)|(完整保留|保留).{0,12}(我|教練).{0,8}(說過|說的).{0,6}(話|每一句)",
-   "say": "教練要把整場原話逐字留給下一個對話框：不憑記憶重寫。從對話記錄 jsonl 的 queue-operation enqueue 抽原話（不是 user 條目，會被合併），做成 knowledges 下的 html，逐字比對後 commit。做法與驗證見記憶 reference_session_verbatim_report_from_jsonl_2026-10-04；成品範例 knowledges/2026-10-03_百人同行_遊戲化設計_教練原話逐字報告書.html。",
-   "level": "remind",
-   "situation": "教練要求把整場對話的原話逐字保留給下一個對話框",
-   "source": "2026-10-04 教練要求整場原話一字不漏做成網頁報告書（手機版 context 200K 快滿）；記憶 reference_session_verbatim_report_from_jsonl_2026-10-04",
-   "kind": "需求型",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-OPENED-ON-MAC-NOT-DELIVERY",
-   "moment": "reply",
-   "top30": 9,
-   "kind": "防錯型",
-   "match": "(?s)^(?!.*https?://).*(?:(?:在|於|用)[^\\n]{0,4}(?:Mac|MAC|蘋果|本機)[^\\n]{0,12}(?:Chrome|瀏覽器|視窗|網頁|HTML|html|頁面|報告)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了|開好)|(?:Chrome|瀏覽器)[^\\n]{0,6}(?:在|於)[^\\n]{0,2}(?:Mac|MAC|蘋果|本機)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了)|(?:Mac|MAC|蘋果|本機)[^\\n]{0,4}(?:開過了?|跳出來了?)|(?:已|有)(?:經)?跳出來)",
-   "say": "回覆說「已在 Mac 開過／跳出來了」但沒給網址：教練用手機或遠端時，Mac 螢幕上的視窗他根本看不到，這不算交付（10/04 教練親口抓到，試金石案例101）。要交付就把網頁放到他打得開的 https 網址（獨立一行），用 curl 驗證狀態 200＋內容再給；真的只是自己查證，就別寫成開給教練看。",
-   "level": "block",
-   "situation": "要跟教練回報網頁／HTML 已經開好、跳出來時",
-   "source": "教練 2026-10-04 原話「說我已經在 Mac 開過了，哪裡？我根本都沒看到」／試金石案例101／守則#17",
-   "enforced_by": "scripts/reflex_router.py reply＋stop_rules_master.py J 改字",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
-   "id": "R-A11Y-KEYBOARD",
-   "moment": "prompt",
-   "match": "輔助(使用)?鍵盤",
-   "say": "教練說「輔助鍵盤」＝直接跑 /Users/bymyway/.openclaw/workspace/scripts/show_accessibility_keyboard.sh 把螢幕虛擬鍵盤叫出來（教練習慣縮到最小、按叉才消失），一行回報；不問、不叫教練去系統設定找。密碼不代輸入。",
-   "level": "remind",
-   "situation": "教練說「輔助鍵盤」時",
-   "source": "reference_accessibility_keyboard_trigger_2026-10-04",
-   "audience": [
-    "coach"
-   ]
+  "_說明": "試金石／記憶 → 條件反射。每筆＝『看到什麼刺激』→『立刻做什麼』。唯一真相源；knowledges/情境目錄.md 由 scripts/render_situation_directory.py 從本檔產生，不要手改。設計：knowledges/2026-10-02_試金石變反射條件_觸發機制設計.md",
+  "_欄位": {
+    "moment": "prompt=教練說話時｜pre_tool=AI要動手前｜post_tool=AI看到結果時｜reply=AI要回話時｜guard=已由專門程式擋住（路由不處理，只列在情境目錄）｜judgment=判斷類，靠21條，暫無可靠刺激",
+    "tool": "pre_tool/post_tool 才用：工具名稱的正規式（Bash、Edit、Write…）",
+    "match": "正規式。prompt比對教練原話；pre_tool比對指令或檔案路徑＋寫入內容；post_tool比對檔案路徑＋指令＋工具輸出；reply比對AI這一輪的回覆",
+    "say": "反射動作，一兩行，講要做什麼",
+    "level": "remind=提醒不擋｜block=擋下要求改（只給零誤判的精準規則）",
+    "situation": "給人看的情境名稱",
+    "source": "出處（試金石案例編號或記憶檔名）",
+    "enforced_by": "guard 類：負責擋的程式",
+    "audience": "適用對象＝誰在跟 AI 說話：coach=教練本人（教練自己的所有 AI：軍師、小龍蝦…）｜partner=四位夥伴分身（peipei／kong／yijing／yang）的夥伴｜public=LINE 對外帳號的一般會員。教練說話一律走 coach；沒寫 audience 視同 [\"coach\"]。目前只有 prompt 時刻會依對象分流（小龍蝦端外掛 reflex-prompt）。",
+    "say_other": "非教練對象（partner／public）看到的版本，不能提「教練」。prompt 時刻才用；audience 含 partner／public 卻沒寫 say_other＝不對他們出聲。",
+    "agents": "只給小龍蝦哪幾個分身用（agentId 清單，例如 BNI 官方條文只給 bni_tainan／jiaolian_thoughts）。有寫 agents 的反射，軍師（Claude Code）那邊不比對；沒寫＝不限分身。"
+  },
+  "reflexes": [
+    {
+      "id": "R-URL-REPLY",
+      "moment": "reply",
+      "match": "https?://[A-Za-z0-9._~:/?#@!$&+,;=%\\-]+[（）「」【】，。、！？：；]",
+      "say": "回覆裡有網址後面直接黏著中文標點／括號，教練點了會打不開。網址自己一行，後面換行再寫說明。",
+      "level": "block",
+      "situation": "寫通知／回覆裡放網址時",
+      "source": "試金石案例97",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-URL-NOTIFY-CODE",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "\\{[A-Za-z_]*(url|URL|link)[A-Za-z_]*\\}[（(「]",
+      "say": "你正在寫的程式把網址和括號／中文黏在一起，送到 Telegram/LINE 會點不開。網址獨立一行，說明另起一行。",
+      "level": "remind",
+      "situation": "寫通知／回覆裡放網址時",
+      "source": "試金石案例97",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-REMOTE-DIRECTION",
+      "moment": "prompt",
+      "match": "(?is)^(?!.*(記[憶億]|釋放|清理|清除|\\d\\s*[GM]B|/tmp/|耳機|活動監視器)).*(rustdesk|\\bvnc\\b|tigervnc|tailscale|遠端(桌面|連線|控制|操作)|遠端\\s*ID|遙控|連(不上|不進|線到|到|進)(蘋果|聯想|宏碁|mac|acer|windows|電腦)|(蘋果|聯想|宏碁|mac|acer)(電腦)?(連|連線到|連到)(蘋果|聯想|宏碁|mac|acer)|無法連線|連線軟體)",
+      "say": "遠端連線：先確認「誰連誰」方向再動手（已犯兩次）；替教練做完、建捷徑，不教他找欄位、不提密碼。",
+      "level": "remind",
+      "situation": "教練提到遠端連線",
+      "source": "feedback_remote_connection_confirm_direction_first_2026-10-01.md",
+      "top30": 28,
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-AGENT-RULES-SESSION",
+      "moment": "post_tool",
+      "tool": "Edit|Write",
+      "match": "agents/[^/]+/(AGENTS|SOUL|TOOLS|IDENTITY)\\.md",
+      "say": "你剛改了分身規則。舊對話會沿用舊規則：要 openclaw sessions delete 該群 session，再用真實群組路徑實測，過了才能跟教練說好了。",
+      "level": "remind",
+      "situation": "改了分身（怡靜、yang…）的規則之後",
+      "source": "reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md／試金石案例95",
+      "top30": 15,
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GATEWAY-RESTART-VERSION",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "openclaw\\s+gateway\\s+(restart|start|stop)|launchctl\\s+(kickstart|bootout|bootstrap|load|unload)[^\\n]*ai\\.openclaw\\.gateway",
+      "say": "重啟小龍蝦主程式前：先確認終端機的 openclaw 版本跟正式服務用的版本一致，不一致會把舊版換成新版。",
+      "level": "remind",
+      "situation": "要重啟小龍蝦主程式（gateway）時",
+      "source": "試金石案例73／feedback_check_openclaw_version_before_gateway_restart_2026-09-16.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-MINIMAX-429",
+      "moment": "post_tool",
+      "tool": "Bash",
+      "match": "(?im)^(?=.*minimax).*(rawError=429|HTTP/[0-9.]+ 429|status(_code)?[\"':= ]{1,3}429|\\b429 Too Many|reason=rate_limit|Cause: rate_limit|rate.?limit (reached|exceeded))",
+      "say": "MiniMax 回 429：教練方案是 5 小時 4500 次，不要去問教練額度；先查是不是短時間批次呼叫太密。",
+      "level": "remind",
+      "situation": "看到 MiniMax 額度錯誤時",
+      "source": "reference_minimax_quota_5h_4500_calls.md／試金石案例65",
+      "top30": 13,
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CREATION-NOT-SHOP",
+      "moment": "prompt",
+      "match": "大樹作品(?!\\s*(一覽|總覽|一欄|一覧|總表|清單|列表|(許多|的)?後台))|大樹創作|個人創作|@\"?[^\"\\s]*\\.html\\b",
+      "say": "大樹作品＝教練個人創作：走個人創作 SOP、不進店家名冊、不說「上架」；外連圖片一定下載打包；短網址由教練指定。",
+      "level": "remind",
+      "situation": "教練丟網頁檔、說「大樹作品／大樹創作」",
+      "source": "試金石案例84／SOP_教練個人創作上架event.bymyway.com不進商圈.md",
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-ONLINE-SIGNUP-SOP",
+      "moment": "prompt",
+      "match": "線上報名|網路報名|報名(表單|SOP|流程)|加(上|個|一個)?(立即)?報名(按鈕|表單|功能)",
+      "say": "照 knowledges/SOP_線上報名.md：先在 event.db 建同名場次；範本 knowledges/templates/線上報名_範本片段.html；測試不准讓報名群收到假資料。",
+      "level": "remind",
+      "situation": "教練說「線上報名／網路報名／加立即報名」",
+      "source": "reference_online_signup_sop_alias_2026-10-02.md",
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-PAID-API-TEST",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?<![\\w/.\\-'\"`])python3?\\s+[^\\s;&|'\"]*generate_industry_chain\\.py(?![\\w.])|curl\\b[^\\n]*api\\.lk888\\.ai",
+      "say": "這會花教練的點數：測試只測到「組出描述／被擋下」，不真出圖；真出圖要教練親口要。",
+      "level": "remind",
+      "situation": "要花錢的 API（LK888 出圖等）",
+      "source": "試金石案例85／案例95",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-NETLIFY",
+      "moment": "guard",
+      "enforced_by": "scripts/netlify_deploy_guard.sh",
+      "say": "先分清 GitHub 自動部署型還是手動 zip 型；圖片另查 Content-Type 不能只看 200。",
+      "situation": "要部署網站時",
+      "source": "feedback_netlify_deploy_zip_api.md／試金石案例54",
+      "top30": 7,
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-DELETE",
+      "moment": "guard",
+      "enforced_by": "scripts/delete_guard.sh",
+      "say": "N6 五道閘門；看起來重複的檔先比對內容再刪。",
+      "situation": "要刪檔、清資料、強制推送時",
+      "source": "試金石案例24／feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md",
+      "top30": 21,
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-LK888",
+      "moment": "guard",
+      "enforced_by": "lk888_guard.py＋scripts/lk888_bypass_guard.sh",
+      "say": "收費閘門擋住繞道呼叫。",
+      "situation": "要花錢的 API（LK888 出圖等）",
+      "source": "試金石案例85",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-SCREENSHOT",
+      "moment": "guard",
+      "enforced_by": "scripts/screenshot_lock.sh",
+      "say": "先用文字方式驗證（curl、讀網頁文字），教練流量有限。",
+      "situation": "要截圖時",
+      "source": "feedback_avoid_screenshots_token_limited_2026-10-01.md",
+      "top30": 24,
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-LESSON",
+      "moment": "guard",
+      "enforced_by": "scripts/lesson_conversion_hook.sh",
+      "say": "寫教訓時自動跳轉換三問：能改程式就改 → 不能就補一筆反射 → 都不是才回到21條判斷。",
+      "situation": "寫下教訓／記憶的那一刻",
+      "source": "2026-10-02 記憶系統改版",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "J-ASK-COACH",
+      "moment": "judgment",
+      "say": "N2 三關：只有教練能做＋教練沒答過＋現在不問會卡住；答案必然是「要」的不問。",
+      "situation": "要拿事情去問教練之前",
+      "source": "feedback_ask_coach_three_gates_root_fix_2026-09-24.md／feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md",
+      "top30": 3,
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-DEPLOY-WORDS",
+      "moment": "prompt",
+      "top30": 7,
+      "kind": "需求型",
+      "match": "(?i)網頁推|自動站|行動站|(^|[\\s，,。！!、；])推(上去|出去|到正式站|到\\s*netlify|吧|啊|了|囉|喔)*\\s*([\\s，,。！!、；]|$)",
+      "say": "部署口令：「推」＝推 Netlify 正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type，回報剩幾次）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。",
+      "level": "remind",
+      "situation": "教練說「推／網頁推／自動站」",
+      "source": "feedback_coach_deploy_vocabulary.md／feedback_web_push_sop.md／試金石案例54",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CURATION-SOP",
+      "moment": "prompt",
+      "top30": 16,
+      "kind": "需求型",
+      "match": "(?is)^(?!.*(大樹作品|大樹創作|個人創作|作品(一覽|一欄|總覽))).*(策展\\s*(SOP|中心|上架|上傳|一鍵)|商圈|大台南(會展|車展|策展)中心|壓縮檔|\\.zip\\b|zip\\s*(檔|包))",
+      "say": "策展 SOP：一律走上傳網址（kind=shop），完成用 curation_check_result.py 查真結果；網址短（教練取或跟主標題一致）、縮圖用網頁截圖不用地圖、改名要連動 FB／商圈頁／作品總覽；地圖自己找。",
+      "level": "remind",
+      "situation": "教練丟店家網站壓縮檔／說策展、商圈",
+      "source": "reference_curation_sop_2026-09-06.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-INVOICE",
+      "moment": "prompt",
+      "top30": 6,
+      "kind": "需求型",
+      "match": "發票|開票|二聯|三聯|統編|統一編號|載具|手機條碼",
+      "say": "發票：先跑 claude-brain/data/query_training_invoice.py 查；兩套系統都要查（培訓費＝大樹教育、入會續約＝聚寶盆）；開過的不問二聯三聯；開完當場寫進記錄。",
+      "level": "remind",
+      "situation": "教練說開發票、查統編／載具",
+      "source": "feedback_bni_invoice_two_independent_systems_sop.md／feedback_cross_check_both_ezpay_systems_before_reporting_missing_2026-09-23.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-MEMBER-DB",
+      "moment": "prompt",
+      "top30": 6,
+      "kind": "需求型",
+      "match": "(會員|前會員|離會|來賓|名片)(的)?(名單|資料|電話|Email|email|信箱|資料庫|媒合)|名片(系統|搜尋|查詢)|查.{0,6}(電話|Email|email|信箱)",
+      "say": "會員／前會員／來賓／名片資料都在 namecard-db（python3 namecard-db/query.py 關鍵字）與 BNI 94 人資料庫；先查再答，不要叫教練提供名單。",
+      "level": "remind",
+      "situation": "教練問會員、來賓、名片資料",
+      "source": "feedback_bni_member_db_authoritative_source.md／feedback_search_namecard_db_before_claiming_taxonomy_missing_2026-09-23.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CROSS-LETTER",
+      "moment": "prompt",
+      "top30": 11,
+      "kind": "需求型",
+      "match": "(?<!不用)寫(一)?封?信|寄信|去讀信|^\\s*讀(一下)?信|讀(一下)?信[，,。！!]|自己去讀|寫指令讓(他|它|她|他們)|(讓|叫)我(去)?(貼|轉貼|傳話)|(聯想|宏碁|ACER|Acer|acer|Windows|windows|赫米斯|Hermes|hermes|小龍蝦|手機版|終端機).{0,15}(跟他(說|講)|告訴他|叫他|讓他|給他|通知他|傳給)|(聯想|宏碁|ACER|Mac|MAC|蘋果)(給|交辦|交代)的?(什麼)?任務",
+      "say": "教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀）。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/<收信人>/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。",
+      "level": "remind",
+      "situation": "要叫別台電腦／別的 AI 做事",
+      "source": "cross-agent/README.md／接力棒 v263（給 ACER 的信誤放 outbox）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-HERMES",
+      "moment": "prompt",
+      "top30": 4,
+      "kind": "防錯型",
+      "match": "赫米斯|赫敏斯|[Hh]ermes|HERMES|[Hh]omers",
+      "say": "教練說赫米斯，沒特別講 Telegram，就是 Mac 桌面版 Hermes.app（Telegram 那條不碰、不當選項問）；小龍蝦和赫米斯是兩套系統；給它的信放 cross-agent/inbox/hermes/。",
+      "level": "remind",
+      "situation": "教練提到赫米斯（Hermes）",
+      "source": "feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md／feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-FRIEND-AGENT",
+      "moment": "prompt",
+      "top30": 15,
+      "kind": "需求型",
+      "match": "(?<!生活)小幫手|分身|教練都在想什麼|龍蝦小助教|怡靜|楊(尚儒)?老師|佩佩老師的(助理|AI|小龍蝦)|孔大哥的(助理|AI|小龍蝦)|每(個|一個)(用戶|人)都(是)?獨立|(單獨|獨立)的?(記憶|對話)",
+      "say": "朋友的 AI：每人獨立記憶、後台顯示中文名；改規則後刪該群 session 重開；用真實群組路徑測過才回報；權限照教練劃的範圍開，不要層層設限。",
+      "level": "remind",
+      "situation": "教練提到小幫手、分身（怡靜、楊老師…）",
+      "source": "reference_per_user_memory_three_systems_2026-09-25.md／reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SEARCH-HISTORY-FIRST",
+      "moment": "prompt",
+      "top30": 8,
+      "kind": "防錯型",
+      "match": "(之前|以前|上次|當初|早就|曾經|很早以前|上一輪|昨天|前幾天).{0,4}(說過|講過|設定過?|做過|交[代待]過|討論過|提過|寫過|跟你說|跟你講|叫你|問過)|當初(是)?怎麼|還?記不記得|你忘了嗎|(怎麼)?又忘|都忘(記|了)|(查|找|搜|讀|看)(一下)?.{0,6}(歷史|過去的)(對話|紀錄|記錄|資料)|找不到(記錄|紀錄)|去查.{0,8}對話|特別交[代待](你|過)",
+      "say": "教練說「之前講過」：先自己搜原始紀錄（state/recall_index.jsonl、memory/verbatim、對話紀錄），找到就照做；不要叫教練回想、重講或貼給你。",
+      "level": "remind",
+      "situation": "教練說「之前講過／早就說過」",
+      "source": "feedback_never_ask_coach_recall_self_verify.md／feedback_exhaust_own_tools_before_asking_coach.md",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
+      ],
+      "say_other": "對方說「之前講過」：先自己查這位朋友的對話記憶，找到就照做；不要叫對方回想、重講或貼給你。真的找不到，誠實說「我沒找到，請您再簡單說一次重點」。"
+    },
+    {
+      "id": "R-COPY-EXACT",
+      "moment": "prompt",
+      "top30": 18,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*(⏺|\\*\\*|##)).*(照抄|照著?貼|聽(得)?懂(的話)?(再|就)(來)?(做|幹活|乾活|回覆)|聽不懂(就|再)(問|發問)|(網址|名字|名稱|文字|這段|這句|標題)[^\\n]{0,8}(一字不差|原封不動|不要改)|連字都.{0,6}打出來)",
+      "say": "照教練給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。",
+      "level": "remind",
+      "situation": "教練說照抄、一字不差",
+      "source": "feedback_url_given_open_it_dont_guess_2026-09-01.md",
+      "audience": [
+        "coach",
+        "partner"
+      ],
+      "say_other": "照對方給的原文、網址、名字用，不加字、不改寫；不確定是哪一頁哪一段，先問一句再做。"
+    },
+    {
+      "id": "R-DOWNLOADS",
+      "moment": "prompt",
+      "top30": 19,
+      "kind": "需求型",
+      "match": "下載(資料夾|區|夾)|[Dd]ownloads|(剛|才|又|已經|有)(剛|才)?下載|下載了|截(了|好)?(圖|幾張)[^\\n]{0,10}(下載|給你|資料夾)",
+      "say": "去 ~/Downloads 用 ls -t 找最新檔，對時間和檔名；教練說幾張就要找到幾張，找不到先列出最新 10 個，不要說沒有。",
+      "level": "remind",
+      "situation": "教練說檔案／截圖放在下載資料夾",
+      "source": "教練原話庫（6~9 月 7 次）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SHOW-NOT-DO",
+      "moment": "prompt",
+      "top30": 30,
+      "kind": "防錯型",
+      "match": "(以下|下面|底下)是我(給|跟|對|問|發給|丟給|貼給).{0,15}(的|說)|我只是(讓你|給你|跟你說|想讓你)(看|知道)|給你看(一下)?(而已|就好)|只是(讓你)?參考|你不用(做|執行|回答|動)",
+      "say": "教練是「給你看／讓你知道」，不是叫你執行：不要動手（尤其會花錢、會對外的），照他問的回答。",
+      "level": "remind",
+      "situation": "教練貼別人的對話／指令給你看",
+      "source": "教練 2026-09-19 原話（只叫一張圖卻出六張）",
+      "audience": [
+        "coach",
+        "partner"
+      ],
+      "say_other": "對方是「給你看／讓你知道」，不是叫你執行：不要動手（尤其會花錢、會對外的），照對方問的回答。"
+    },
+    {
+      "id": "R-PLAIN-TALK",
+      "moment": "prompt",
+      "top30": 12,
+      "kind": "防錯型",
+      "match": "(聽|看|搞|還是)不懂(?!(就|再)(問|發問))|講白話|大白話|說白話|白話文|講人話|(是)?什麼意思|專業術語|行話|(是|都是)(些)?什麼(東西|來著)",
+      "say": "重講一次：不用英文和術語，先講結論，再講教練要不要做什麼（多半什麼都不用做）。",
+      "level": "remind",
+      "situation": "教練說聽不懂、要白話",
+      "source": "守則#10／feedback_no_english_tech_terms_without_explaining_2026-09-17.md",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
+      ],
+      "say_other": "對方說聽不懂：重講一次，不用英文和術語，先講結論，再講對方要不要做什麼（多半什麼都不用做）。語氣客氣，不讓對方覺得是他的問題。"
+    },
+    {
+      "id": "R-FB-POST",
+      "moment": "prompt",
+      "top30": 25,
+      "kind": "需求型",
+      "match": "(FB|fb|臉書|粉專|Facebook|facebook)[^\\n]{0,20}(發文|貼文|發佈|發布|PO文|po文|貼上去|發上去|分享|違反|限制|申訴)|(發|貼|PO|po)(到|在|上)?\\s*(FB|fb|臉書|粉專)|貼文|幫我發文",
+      "say": "FB 貼文：放 event.bymyway.com 公開網址（不是 GitHub），一則一個網址、要有縮圖；用沒登入的瀏覽器確認別人看得到才算發成功。",
+      "level": "remind",
+      "situation": "教練要發 FB 貼文",
+      "source": "feedback_verify_public_visibility_not_just_api_success_2026-09-11.md／reference_fb_real_browser_repost_sop_2026-09-18.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-WEB-EDIT-BASELINE",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "top30": 1,
+      "kind": "防錯型",
+      "match": "(?m)^/Users/[^\\n]*(github_repos/[^/\\n]+/|event-signup/(templates|static)/|/curated/|bymyway-website/|coach888/)[^\\n]*\\.(html|css)$",
+      "say": "改網頁四件事：①以線上最新版為準（先 git pull），不蓋掉教練剛改的 ②同一級的元素一次改完（字級、表頭、按鈕），不要說到哪改到哪 ③手機寬度也要看 ④改完自己開 Chrome 看過再交。",
+      "level": "remind",
+      "situation": "要改網頁時",
+      "source": "教練原話庫（改了又壞、說到哪改到哪 28 次）／試金石案例54",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-POLLING-CODE",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "top30": 5,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*(輪詢|事件觸發|polling)).*?(?m:<key>StartInterval</key>|^\\s*\\*/\\d+\\s+\\*|setInterval\\(\\s*(async\\s*)?\\(?\\s*\\)?\\s*(=>)?\\s*\\{?[^)]{0,80}(fetch|load|check|poll|refresh|reload|sync)|setInterval\\(\\s*(load|fetch|check|poll|refresh|reload|sync)\\w*|schedule\\.every\\(|openclaw\\s+cron\\s+add[^\\n]*--every\\s+[1-9]|[\"']?every[\"']?\\s*[:=]\\s*[\"']?[1-9]\\d*\\s*(s|m|min|sec)\\b|while\\s+(true|:)\\s*;?\\s*do[\\s\\S]{0,300}?sleep\\s+\\d)",
+      "say": "你正在寫「每隔 N 分鐘檢查一次」：先問這件事發生當下能不能直接觸發（教練說一句、檔案一改、訊息一到）。能就用事件觸發；真的要定時，跟教練講清楚一天跑幾次、為什麼。",
+      "level": "remind",
+      "situation": "要設排程／定時檢查時",
+      "source": "feedback_event_driven_not_polling_pattern.md／Top10 模式#1",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-OPENCLAW-CONFIG",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "top30": 10,
+      "kind": "防錯型",
+      "match": "(?m)^/Users/[^\\n]*\\.openclaw[^\\n]*/(openclaw\\.json|cron/jobs\\.json|models\\.json)$|(^|[;&|]\\s*)(\\S*/)?openclaw\\s+(config\\s+set|models\\s+set|cron\\s+(add|edit|rm|remove|update|disable|enable))\\b|open\\([^)\\n]*openclaw\\.json[^)\\n]*[\"']w",
+      "say": "改小龍蝦設定前：模型寫死 MiniMax-M3，教練沒親口說不准換；教練定的週期（每天 23:00 總結等）不要改回；改完重啟並查實際生效，不是寫進去就算。",
+      "level": "remind",
+      "situation": "要改小龍蝦（OpenClaw）設定、排程時",
+      "source": "feedback_openclaw_model_switch_permanent.md／教練原話庫（設定跑掉 11 次）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-DATE-WEEKDAY",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "top30": 29,
+      "kind": "防錯型",
+      "check": "weekday",
+      "match": "\\d{1,2}\\s*[/月]\\s*\\d{1,2}\\s*日?\\s*[（(]\\s*(週|星期|禮拜)?[一二三四五六日天]\\s*[）)]",
+      "say": "日期和星期對不起來：",
+      "level": "remind",
+      "situation": "寫活動日期時",
+      "source": "教練 2026-07-24 原話（日期跟星期對不起來要主動告知）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CHROME-WHICH-MACHINE",
+      "moment": "pre_tool",
+      "tool": "mcp__claude-in-chrome__.*",
+      "top30": 23,
+      "kind": "防錯型",
+      "match": "",
+      "say": "操作 Chrome 前先確認連到的是 Mac 本機、教練看得到的那個 Chrome（不是聯想那台）；同一個網站只開一個分頁。",
+      "level": "remind",
+      "situation": "要操作教練的 Chrome 時",
+      "source": "教練原話庫（瀏覽器開錯台 6 次）／feedback_single_tab_per_site_avoid_session_collision_2026-09-10.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-NOTIFY-COACH-NOISE",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "top30": 22,
+      "kind": "防錯型",
+      "match": "(?ms)^/Users/[^\\n]*\\.(py|sh|js|ts|mjs)$.*?(6124913915|openclaw\\s+message\\s+send|notify_coach|send_telegram|api\\.telegram\\.org/bot)",
+      "say": "這段程式會發訊息給教練：錯誤先自己處理，只有要教練動手才發；同一件事不重複發（合併或冷卻）；網址單獨一行。",
+      "level": "remind",
+      "situation": "寫會通知教練的程式時",
+      "source": "教練原話庫（告警吵、同樣訊息出現三次 7 次）／試金石案例97",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-LETTER-INBOX",
+      "moment": "pre_tool",
+      "tool": "Write",
+      "top30": 11,
+      "kind": "防錯型",
+      "match": "(?m)^/Users/[^\\n]*cross-agent/outbox/[^\\n]*$",
+      "say": "新信要放 cross-agent/inbox/<收信人>/；outbox 是已讀歸檔，放錯對方讀不到（v263 給 ACER 的信就是這樣）。",
+      "level": "remind",
+      "situation": "要叫別台電腦／別的 AI 做事",
+      "source": "接力棒 v263",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-ASK-CREDENTIAL",
+      "moment": "reply",
+      "top30": 14,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*(?:密碼視窗|開機密碼|登入密碼|Mac\\s?密碼)).*?(?:(請|麻煩)(您|教練|你)?(提供|給我|告訴我|輸入|貼上|貼給我|傳給我)[^\\n]{0,12}(密碼|帳密|帳號密碼|金鑰|API\\s*[Kk]ey|[Tt]oken|權杖|憑證)|(記得|知道)[^\\n]{0,10}(密碼|帳密|金鑰|[Tt]oken)[^\\n]{0,15}(跟我說|跟我講|告訴我|給我))",
+      "say": "不要跟教練要帳密／金鑰：先查 路徑大全.md、路徑大全_憑證層.md、歷史紀錄。真的查過都沒有（例如簡訊驗證碼），照實說查了哪幾個地方再請教練。",
+      "level": "block",
+      "situation": "要跟教練要密碼、金鑰時",
+      "source": "教練 2026-08-26 原話／feedback_exhaust_own_tools_before_asking_coach.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-PROMISE-MONITOR",
+      "moment": "reply",
+      "top30": 5,
+      "kind": "防錯型",
+      "match": "(我會|我將|我這邊會|會由我)(持續|主動|定時|定期|每隔?\\s*\\d+\\s*(秒|分鐘?|小時))[^\\n]{0,8}(監測|監控|盯|巡|檢查|追蹤|關注)",
+      "say": "你沒有背景常駐，做不到「主動持續監測」，這種話教練聽過太多次。改成說：教練下次說話時我先查，或做一個事件觸發的機制。",
+      "level": "block",
+      "situation": "要設排程／定時檢查時",
+      "source": "feedback_no_background_polling_lies.md／教練 2026-06-09 原話",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-COMMAND-FOR-COACH",
+      "moment": "reply",
+      "top30": 2,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*(密碼|登入|授權|系統管理員|管理員身分|sudo|驗證碼)).*((請|麻煩)(您|教練)?(在|到|打開|開啟)?(終端機|Terminal|terminal|命令列|PowerShell|powershell)[^\\n]{0,10}(輸入|執行|貼上|跑|打)|(複製|貼)[^\\n]{0,6}(到|進)(終端機|Terminal|PowerShell))",
+      "say": "不要丟指令叫教練跑：自己跑。被安全檢查擋就一次講清楚「切 bypass 一個按鈕」；只有要密碼／系統管理員權限時，才把指令放進剪貼簿，說明為什麼只有教練能做。",
+      "level": "block",
+      "situation": "想叫教練動手時",
+      "source": "feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md／feedback_permission_mode_tell_coach_once_2026-09-30.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-PORTER",
+      "moment": "guard",
+      "top30": 2,
+      "kind": "防錯型",
+      "enforced_by": "scripts/stop_rules_master.py A／A2",
+      "say": "回話裡有「請您貼／您自己去點」這類叫教練動手的句子會被擋下重寫。",
+      "situation": "想叫教練動手時",
+      "source": "守則#12",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-ASK-WHEN-CLEAR",
+      "moment": "guard",
+      "top30": 3,
+      "kind": "防錯型",
+      "enforced_by": "scripts/stop_rules_master.py F（提醒）",
+      "say": "方向清楚還徵詢教練會被提醒；答案必然是「要」的事直接做。",
+      "situation": "要拿事情去問教練之前",
+      "source": "N2／feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-HTML-CHROME",
+      "moment": "guard",
+      "top30": 9,
+      "kind": "需求型",
+      "enforced_by": "scripts/auto_chrome_after_html_edit.sh＋stop_rules_master.py J",
+      "say": "改了 HTML 會自動用 Chrome 開在 Mac 螢幕上，只有人坐在 Mac 前才看得到；教練用手機或遠端時這不算交付，要給 https 網址（獨立一行）並用 curl 驗證。localhost 網址要自己打開，不叫教練輸入。",
+      "situation": "要改網頁時",
+      "source": "feedback_html_preview_chrome_only.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-POLLING-REPLY",
+      "moment": "guard",
+      "top30": 5,
+      "kind": "防錯型",
+      "enforced_by": "scripts/stop_rules_master.py D",
+      "say": "回話提議「每 N 分鐘檢查」會被擋。",
+      "situation": "要設排程／定時檢查時",
+      "source": "Top10 模式#1",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-TAIWAN-TIME",
+      "moment": "guard",
+      "top30": 26,
+      "kind": "防錯型",
+      "enforced_by": "scripts/inject_time_context.sh＋stop_rules_master.py C",
+      "say": "每句話自動附台灣時間；看過 UTC 時間卻沒換算就回話會被擋。",
+      "situation": "跟教練講時間時",
+      "source": "feedback_taiwan_time_always.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-TRAD-CHINESE",
+      "moment": "guard",
+      "kind": "防錯型",
+      "enforced_by": "scripts/stop_rules_master.py I",
+      "say": "回話出現簡體字會被擋。",
+      "situation": "跟教練講時間時",
+      "source": "試金石案例44／feedback_chinese_only.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-COACH888",
+      "moment": "guard",
+      "top30": 20,
+      "kind": "需求型",
+      "enforced_by": "scripts/stop_rules_master.py L／M",
+      "say": "新網站上線沒收錄進作品總覽（coach888，新項目放分類第一筆）會被擋。",
+      "situation": "新網站上線時",
+      "source": "feedback_new_public_site_must_register_coach888_2026-09-04.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-DELIVERY",
+      "moment": "guard",
+      "top30": 17,
+      "kind": "防錯型",
+      "enforced_by": "scripts/stop_rules_master.py H／E",
+      "say": "宣稱完成卻沒有憑證會被擋；要走教練真正用的那條路測過（Telegram 點連結、群組裡真的問一句）才算好。",
+      "situation": "回報完成之前",
+      "source": "試金石案例97／feedback_verify_backup_content_not_just_format_2026-09-05.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-IDENTITY",
+      "moment": "guard",
+      "top30": 4,
+      "kind": "防錯型",
+      "enforced_by": "scripts/identity_model_verify.sh",
+      "say": "教練問「你是誰／走哪個模型」時自動查實際連線當鐵證：桌面版 App 不是 CLI；手機版走 MiniMax＝執行者。",
+      "situation": "教練問身分、模型時",
+      "source": "feedback_phone_kai_gong_means_minimax_model_2026-09-22.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-KAIGONG",
+      "moment": "guard",
+      "top30": 27,
+      "kind": "防錯型",
+      "enforced_by": "scripts/feed_junshi_handoff.sh",
+      "say": "說「開工」自動注入接力棒；最上方「教練上一場交辦」第一件講、講完直接做。",
+      "situation": "開工時",
+      "source": "N9／教練 2026-09-27 原話（開工漏接 FB 申訴）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-WIN-APP-MOVE",
+      "moment": "pre_tool",
+      "tool": "Bash|PowerShell",
+      "match": "(?i)\\bmklink\\s+/J\\b|New-Item\\b[^\\n]*-ItemType\\s+Junction|robocopy\\b[^\\n]*\\s/(E|MIR)\\b",
+      "say": "搬 App 資料夾（junction）前：①先確認原程式在原位置開得起來（壞的搬了還是壞的）②先查來源裡有沒有巢狀 Junction，robocopy 加 /XJ 才跟 Get-ChildItem 的數字一致 ③搬完原夾改 .bak 留 7 天不刪，再重建捷徑（有好的捷徑就複製它，不要自己造）。",
+      "level": "remind",
+      "situation": "要搬 App 資料夾、建 junction 時（Windows）",
+      "source": "試金石案例27／28／41／knowledges/SOP_line_migrate_to_e_drive.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-WIN-BAK-CLEAN",
+      "moment": "pre_tool",
+      "tool": "Bash|PowerShell",
+      "match": "(?i)(Remove-Item|\\brm\\s+-\\w*r|\\brd\\b|rmdir|Safe-Remove)[^\\n]*\\.bak[.-]\\d{6,8}",
+      "say": "清搬家留下的 .bak 前：先確認對應的 Junction 指向的資料是活的（目標裡有今天或最近的寫入），再走五道閘門；全機掃一遍，別只處理教練點名的那一個。",
+      "level": "remind",
+      "situation": "要清搬家後的 .bak 備份時",
+      "source": "試金石案例39",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-MAC-HEADLESS-DOWN",
+      "moment": "prompt",
+      "match": "(?is)^(?!.*(記[憶億]體|釋放|赫米斯|hermes)).*?(mac|蘋果|macmini)[^\\n，。,.？?！!、；;（）()]{0,6}(停工|掛了|當機|沒動作|沒有動靜|自己重啟|自動重啟|被重啟|重開機)",
+      "say": "Mac 停工／自己重開：先跑 pmset -g sched、pmset -g custom、uptime 找隱藏排程重啟；headless 的 Mac 必須開自動登入＋斷電自動重啟，否則重開＝全部服務死掉。教練一級鐵律：除非停電停網，不准再發生；自己掛不會自己告警，要靠外部監控。",
+      "level": "remind",
+      "situation": "教練說 Mac 停工、掛了、自己重啟時",
+      "source": "試金石案例31",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "J-NECESSARY",
+      "moment": "judgment",
+      "say": "問題根治後不要再疊「保險」：交付前問三個字「必要嗎？」。根因消滅就沒有風險；一行指令能解的，不蓋四層監控。被教練挑戰兩次才想通＝第一次就該自己想到底。",
+      "situation": "解決問題後想多加監控、保險、複雜機制時",
+      "source": "試金石案例32／守則#03、#16",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CLOUDFLARED-KEEP",
+      "moment": "prompt",
+      "match": "(?i)cloudflared|LINE\\s*專線|小龍蝦的專線|未辨識開發者|背景活動",
+      "say": "不認識的背景程式要關／要刪之前，先查三件套：~/.zsh_history 安裝紀錄、安裝時間戳、sfltool dumpbtm。cloudflared＝小龍蝦 LINE 專線，教練 LINE 用很頻繁，不能關（路徑大全第十三節）。「查無紀錄」不等於「來路不明」。",
+      "level": "remind",
+      "situation": "教練問背景程式、cloudflared、LINE 專線時",
+      "source": "試金石案例40／路徑大全第十三節",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CLOUDFLARED-STOP",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(launchctl\\s+(bootout|unload|remove|disable)|systemctl\\s+(stop|disable)|brew\\s+services\\s+stop|pkill|killall|\\bkill\\b)[^\\n]*cloudflared|cloudflared\\s+service\\s+uninstall|\\brm\\b[^\\n]*(cloudflared|com\\.cloudflare)",
+      "say": "你正要停掉／刪掉 cloudflared＝小龍蝦 LINE 專線，停了教練的 LINE 小龍蝦就斷線。教練沒親口說要關就不動。",
+      "level": "remind",
+      "situation": "要停掉或移除 cloudflared 時",
+      "source": "試金石案例40／路徑大全第十三節",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BALANCE-PROVIDER",
+      "moment": "post_tool",
+      "match": "(?im)^[^`「\\n]*(insufficient[_ ]balance|insufficient[_ ]quota|credit balance is too low|餘額不足|余额不足)[^`」\\n]*$",
+      "say": "看到額度／餘額不足：先查是哪一個 provider 回的（實際 providerID／endpoint），不要從訊息文字猜服務歸屬就叫教練充值。opencode 設定用的是教練自己的 MiniMax key；opencode-go（小寫 m3）是另一條轉售線。",
+      "level": "remind",
+      "situation": "工具回傳額度不足類錯誤時",
+      "source": "試金石案例57",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SEED-FAKE-DATA",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(^|[;&|]\\s*)(\\S*python3?\\s+)?(\\./)?seed\\w*\\.py\\b",
+      "say": "跑 seed／假資料驗證前：先列出這個系統「所有」資料表（含 app.py 裡 CREATE TABLE IF NOT EXISTS 動態建的，不只看 schema.sql）；測完逐表確認會被正式資料覆蓋或清掉；交付前對正式站 grep 一次別分會／假資料的人名。",
+      "level": "remind",
+      "situation": "要跑 seed 腳本、用假資料驗證網站時",
+      "source": "試金石案例69",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-ABOUT-COACH-SITE",
+      "moment": "prompt",
+      "match": "關於教練|bymyway\\.com/coach|官網[^\\n]{0,8}(搬|複製|抄)",
+      "say": "官網 www.bymyway.com（WordPress）的內容很多是 iframe 嵌進來的：curl／grep 抓不到就先看原始碼有沒有 <iframe>／<embed>，真正來源在 ~/github_repos/bymyway-website/（coach1973.github.io/bymyway-website/）。先查建置史、把教練描述的架構當查證起點，不要一直加大文字搜尋。",
+      "level": "remind",
+      "situation": "教練提到官網「關於教練」頁、要搬官網內容時",
+      "source": "試金石案例71／守則#02",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-OPENCLAW-NO-REPLY",
+      "moment": "prompt",
+      "match": "小龍蝦[^\\n，。]{0,6}(沒反應|沒有反應|沒回|不回|沒動靜|沒有動靜|聯絡不上|掛了|當機|斷線|不理我)",
+      "say": "「小龍蝦沒反應」：小龍蝦＝ai.openclaw.gateway（bot_main），不是赫米斯（ai.hermes.gateway，兩個獨立 bot）。先查 launchctl print gui/$(id -u)/ai.openclaw.gateway、gateway log、openclaw doctor（出現 Legacy workspace setup state requires migration 會被 launchd 停放）。防呆掛在既有的 system_patrol，不要新建輪詢。",
+      "level": "remind",
+      "situation": "教練說小龍蝦沒反應、當機時",
+      "source": "試金石案例79",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-RELEASE-WORD",
+      "moment": "guard",
+      "enforced_by": "scripts/pre_task_hook.sh＋knowledges/教練口令字典.md",
+      "say": "光講「釋放」＝只重啟 RustDesk（rustdesk_free_memory.sh）；「全部釋放」才關 Chrome／赫米斯桌面版／LINE／Typeless（release_all_memory.sh）。口令以教練親口定義為準，查證要先找他下的定義、不是過去的執行紀錄。",
+      "situation": "教練說「釋放」時",
+      "source": "試金石案例88",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-EVERY-RUN-COST",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^[^\\n]*/(summary_upload_trigger|feed_junshi_handoff)\\.(sh|ps1|py)$",
+      "say": "你在改「每次開工／每次總結」都會跑的步驟：新增任何每次都自動做的事，要當場向教練講清楚每次成本（額度）、誰會用、多久檢討，教練知情才加；平常用不到的改成「教練說要才做」。",
+      "level": "remind",
+      "situation": "要新增每次開工／總結自動執行的步驟時",
+      "source": "試金石案例96",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BOOTSTRAP-20K",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "(?m)^/Users/bymyway/\\.openclaw/(workspace|agents/[^/\\n]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY|TOOLS|USER|IDENTITY)\\.md$|(?:>>|tee\\s+-a)\\s*\\S*\\.openclaw/(workspace|agents/[^/\\s]+)/(AGENTS|SOUL|HEARTBEAT|MEMORY)\\.md",
+      "say": "OpenClaw 啟動檔（AGENTS／SOUL／HEARTBEAT／MEMORY／USER／TOOLS／IDENTITY.md）有 2 萬字硬上限，超過會被截斷、切出 UTF-8 亂碼：改完用 wc -m 確認；自動化日誌寫 state/*.log，不要追加進這些檔；單檔超過 80KB 要先分割歸檔。",
+      "level": "remind",
+      "situation": "要改或追加小龍蝦啟動檔時",
+      "source": "試金石案例J／L／reference_openclaw_bootstrap_20k_char_limit_2026-09-25.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-DETECTOR-RULE-EDIT",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^[^\\n]*/scripts/(stop_[^/\\n]+|[^/\\n]*_guard|[^/\\n]*_hook)\\.(py|sh)$",
+      "say": "寫／改偵測規則（Stop hook、guard）：①只比對這一輪最新內容，不讀整段歷史 ②排除引號內、程式碼區塊、解釋性句型 ③寫完用歷史真實對話回測誤判幾次，不是憑空編測試案例；同一規則誤判第二次就改設計，不補白名單。",
+      "level": "remind",
+      "situation": "要新增或修改偵測規則、hook、守衛程式時",
+      "source": "試金石案例F-2026-06-07／66／feedback_stop_hook_regex_false_positive_repeats_across_session_2026-09-19.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-LAUNCHD-VERIFY",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?i)(^|[;&|]\\s*)(sudo\\s+)?launchctl\\s+(bootstrap|load)\\b|(^|[;&|]\\s*)crontab\\s+-[^l\\s]",
+      "say": "建排程／常駐服務：同一個操作裡確認腳本真的存在（ls），建好當下用真實資料實跑一次看輸出；設了排程不等於會跑（案例C：腳本 7 天根本不存在）。新建設定／文件後，觸發它的排程也要同步指到新檔。能事件觸發就不要定時輪詢。",
+      "level": "remind",
+      "situation": "要建排程、載入常駐服務時",
+      "source": "試金石案例C／H／執行細則N5",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "J-FIX-STUCK",
+      "moment": "judgment",
+      "say": "同一個問題改第 3 次還沒效：停手，重新理解教練到底要改什麼（「太寬」是外框還是文字？），先讀結構再下手；教練說「你不用做」就立刻停手，不再 Edit／curl／commit。",
+      "situation": "改同一處改了三次沒效、教練叫你停手時",
+      "source": "試金石案例R／S／feedback_cap_retries_report_when_stuck_2026-09-03.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "J-CLOUD-DIAGNOSE-ONLY",
+      "moment": "judgment",
+      "say": "雲端工作頁查出 bug、但修法會動到 Mac 軍師也在用的共用腳本或設定：不要就地套用，也不要什麼都不做——commit 診斷＋「建議怎麼改」寫進接力棒，留給 Mac 軍師審批。",
+      "situation": "雲端查出 bug 且修法會動共用腳本時",
+      "source": "試金石案例91",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "G-CITATION",
+      "moment": "guard",
+      "enforced_by": "Stop hook 查證不足偵測（scripts/stop_rules_master.py）＋citation-verification 技能",
+      "say": "引用守則先查特助心法.md 原文；引用對話先查原始記錄、有 commit hash 才能說「我之前說過」；教練問「你確定嗎」立即承認不確定、去查。",
+      "situation": "要引用守則編號或過去對話時",
+      "source": "試金石案例D／執行細則N3",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "J-IMAGE-LOOK-FIRST",
+      "moment": "judgment",
+      "say": "圖片交給教練前：自己用 Read 親眼看過這張圖，確認繁體中文無誤、比例與裁切對，才送；工具說「分析正確」不算看過。（hook 目前只接 Bash／Edit／Write，送檔工具接不到，所以靠 image-visual-delivery-check 技能＋執行細則 N4。）",
+      "situation": "要把圖片（生成圖、截圖、設計稿）交給教練前",
+      "source": "試金石案例F／38／執行細則N4",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-JARVIS-PLAN",
+      "moment": "prompt",
+      "match": "賈維斯成長計畫|反射條件",
+      "say": "「賈維斯成長計畫」＝「反射條件」＝整套條件反射（反射索引＋四個時刻）。要植入三級：①教練自己的 AI（全套）②四位夥伴分身 peipei／kong／yijing／yang（三種標準）③LINE 對外帳號（會員＝禮遇版）。進度看接力棒置頂「🎯 教練交辦」。",
+      "level": "remind",
+      "situation": "教練提到賈維斯成長計畫、反射條件時",
+      "source": "project_jarvis_growth_plan_2026-10-02.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-OC-HOOK-INJECT-DEAD",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write|MultiEdit",
+      "match": "(?s)hooks/[^/\\s]+/handler\\.js.*(context\\.inject|\\binject\\.(push|unshift))",
+      "say": "小龍蝦 hook 的 event.context.inject 沒有人讀（message:preprocessed 發了不等、agent:bootstrap 只認 bootstrapFiles；2026.9.4 原始碼查證），寫了模型也看不到。要讓模型看到，改用外掛 before_prompt_build 回傳 prependContext（範本 ~/.openclaw/extensions/reflex-prompt/）；hook 只適合記錄、直接發訊息這類不需要模型看到的事。",
+      "level": "remind",
+      "situation": "改小龍蝦 hook、想注入提示給模型時",
+      "source": "feedback_openclaw_hook_fire_and_forget.md／2026-10-02 查證：rule-reminder 等 13 個 hook 的注入從未送到模型",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BNI-OFFICIAL-TEXT",
+      "moment": "prompt",
+      "match": "出席|缺席|請假|代理人|政策|規定|條文|道德規範|會議流程|議程|合約|職責|使命|願景|價值觀|總政策|會員資格|淘汰|規則|引薦單|一對一|訪客|遲到",
+      "say": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就誠實說「這部分我不確定」，引導問大樹教練本人或 BNI Connect 官方管道。絕對不要憑印象組一個聽起來合理的答案。",
+      "say_other": "這題可能涉及 BNI 官方條文：先查 AGENTS.md／knowledge 底下的原文，找到就一字不差輸出（不簡化、不改寫、不節錄）；原文裡沒有就照 AGENTS.md 的誠實鐵律說「這部分我不確定」並引導對方查官方管道。絕對不要憑印象組一個聽起來合理的答案。",
+      "level": "remind",
+      "situation": "BNI 分身被問到官方條文（出席、政策、規則…）",
+      "source": "教練 2026-08-05 裁示（原 rule-reminder 那條，inject 從未生效；試金石案例98）",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
+      ],
+      "agents": [
+        "bni_tainan",
+        "jiaolian_thoughts"
+      ]
+    },
+    {
+      "id": "R-VOICE-CHECK",
+      "moment": "prompt",
+      "match": "\\[\\d{2}:\\d{2}[.:]\\d{2,3}\\s*-->\\s*\\d{2}:\\d{2}",
+      "say": "這則是語音轉文字，常有諧音錯字（例：「大肅執動」其實是「大樹執董」）。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
+      "say_other": "這則是語音轉文字，常有諧音錯字。上下文接不上、詞不達意、詞彙陌生、邏輯反常，任一出現就先客氣地問「您說的是『XXXX』嗎？」確認再做，不照字面瞎猜。",
+      "level": "remind",
+      "situation": "小龍蝦收到語音訊息（轉成文字）時",
+      "source": "守則#18／執行細則N3（原 rule-reminder 語音糾偏，inject 從未生效；試金石案例98）",
+      "audience": [
+        "coach",
+        "partner",
+        "public"
+      ]
+    },
+    {
+      "id": "R-ZSH-VAR-COLON",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "\\$(?!env:)[A-Za-z_][A-Za-z0-9_]*:[A-Za-z]",
+      "say": "zsh 會把「$變數:字母」當成修飾語：\"agent:$a:line\" 會變成 a 轉小寫＋ine、$a:test 變成取尾段，指令不報錯卻打錯對象（刪不到、改錯人）。改寫成 ${a}:line。",
+      "level": "remind",
+      "situation": "Bash 指令裡變數後面直接接冒號＋字母",
+      "source": "試金石案例99（回測歷史 Bash 指令 5/21344，全是真錯）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GIT-REBASE-CONTINUE",
+      "moment": "post_tool",
+      "tool": "Bash",
+      "match": "You must edit all merge conflicts",
+      "say": "git rebase --continue 說還有衝突：先 git ls-files -u，空的就是還有「已修改沒 add」的其他檔——git status 把非 ?? 的全部 git add 再 continue，不要繼續找衝突。",
+      "level": "remind",
+      "situation": "git rebase 卡在「還有衝突」時",
+      "source": "reference_git_rebase_continue_requires_all_modified_staged_2026-09-26.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GIT-ANOMALY-HANDOFF",
+      "moment": "post_tool",
+      "tool": "Bash",
+      "match": "(refusing to merge unrelated histories|have diverged,|interactive rebase in progress)",
+      "say": "git 推不上去／歷史分岔：先讀本機接力棒和 HEARTBEAT.md（別台可能已記下同一件事和做法），再決定下一個 git 指令；這個 repo 改寫過歷史，不要 force push 舊歷史回去。",
+      "level": "remind",
+      "situation": "git 推送被拒、分岔時",
+      "source": "feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-COACH888-EDIT",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "github_repos/coach888/",
+      "say": "改 coach888：①以線上伺服器狀態 /api/coach888/state 為準（教練可能剛在網頁上改過），不是 git 的 index.html ②新項目放該分類第一筆 ③不清瀏覽器 localStorage，要清先備份 ④本機預覽分頁用完關掉，別讓教練在暫存頁上改。",
+      "level": "remind",
+      "situation": "要改 coach888（大樹AI作品一覽）時",
+      "source": "reference_coach888_server_synced_state_architecture_2026-09-24.md／feedback_coach888_new_items_go_first.md／feedback_never_clear_user_storage_without_backup_2026-09-03.md／feedback_never_expose_local_preview_to_coach_2026-09-04.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SOP-ALIAS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?m)^/Users/bymyway/\\.openclaw/workspace/knowledges/SOP_[^\\n]*\\.md$",
+      "say": "寫／改 SOP：檔頭第一段寫教練實際會講的口語叫法（例：「大樹作品」「網路報名」），沒寫等於沒寫；舊 SOP 的收尾步驟（登記 coach888、通知群組）要一起繼承。",
+      "level": "remind",
+      "situation": "要寫或改 SOP 文件時",
+      "source": "feedback_sop_must_alias_spoken_trigger_phrase_2026-09-24.md／feedback_coach888_registration_repeatedly_skipped_2026-09-23.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-QUANMIAN-SCOPE",
+      "moment": "prompt",
+      "match": "全面(改|體檢|檢查|清查|優化|盤點|處理|更新|升級)",
+      "say": "教練說「全面／全部」：範圍預設是這個對話框負責的系統（這台 Claude 碰得到的檔案、repo、服務），不自動擴到小龍蝦、聯想、宏碁；要跨系統教練會點名。",
+      "level": "remind",
+      "situation": "教練說「全面改／全面體檢」",
+      "source": "feedback_quanmian_scope_must_clarify_2026-09-23.md／執行細則N7",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BNI-PPT-SOP",
+      "moment": "prompt",
+      "match": "(?i)BNI\\s*(版)?\\s*PPT|PDF\\s*轉\\s*(BNI|品牌)|品牌底圖",
+      "say": "「BNI PPT SOP」＝ knowledges/SOP_PDF轉品牌底圖PPT.md，照檔案做，不用重問流程或工具。",
+      "level": "remind",
+      "situation": "教練說「BNI PPT／PDF 轉品牌底圖」",
+      "source": "reference_bni_ppt_sop_alias_2026-09-21.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CLAUDE-RC-UNSET",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?s)(unset|env\\s+-u)\\s+ANTHROPIC_(BASE_URL|API_KEY|AUTH_TOKEN).*claude\\s+(rc|remote-control)|claude\\s+(rc|remote-control).*(unset|env\\s+-u)\\s+ANTHROPIC_",
+      "say": "啟動 claude rc 不要 unset ANTHROPIC_* 變數（會觸發硬性檢查噴錯）；完全不動它們，路由問題去 ~/.claude/settings.json 的 env 區塊修。",
+      "level": "remind",
+      "situation": "要啟動 Remote Control（claude rc）時",
+      "source": "feedback_claude_rc_never_unset_base_url_2026-09-19.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SENDBEACON-CORS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "sendBeacon",
+      "say": "sendBeacon 打跨網域 API：伺服器要回實際 Origin（不能 *）＋ Access-Control-Allow-Credentials: true，否則瀏覽器整個擋掉、beacon 也不報錯；驗證要看伺服器真的收到。",
+      "level": "remind",
+      "situation": "程式裡用到 sendBeacon 時",
+      "source": "reference_sendbeacon_cors_credentials_gotcha_2026-09-18.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CURATION-DELETE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "curation/admin/delete",
+      "say": "這支刪除是整套退役（GitHub repo 改名、關 Pages、名冊移除），已公告的網址會 404；只是要從名冊隱藏就不要用它。",
+      "level": "remind",
+      "situation": "要下架策展網站時",
+      "source": "feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GIT-ADD-ALL-PII",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?s)(bni-chapters|team-bymyway|team01|namecard-db|event-signup).*git\\s+(-C\\s+\\S+\\s+)?add\\s+(-A|--all|\\.)(?=\\s|$|;|&)",
+      "say": "這個 repo 有真實會員個資：git add -A／. 可能把 .db.bak 備份一起加進去。先 git status --short 看清單，有 .bak／.db／.sqlite 就排除再加。",
+      "level": "remind",
+      "situation": "在有會員個資的 repo 用 git add -A 時",
+      "source": "feedback_git_add_a_risk_with_db_backup_files_2026-09-01.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-MINIMAX-BATCH-GUARD",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?s)^(?!.*minimax_batch_guard)(?=.*\\.py\\n).*(api\\.minimax\\.(io|chat)|minimaxi\\.(com|chat))",
+      "say": "會呼叫 MiniMax 的程式：先 from minimax_batch_guard import guard_call（scripts/），批次呼叫越線自動硬停——教練畫的永久紅線。",
+      "level": "remind",
+      "situation": "寫會呼叫 MiniMax 的程式時",
+      "source": "feedback_minimax_batch_call_redline_guard_2026-08-27.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BIGTREE-EVENTDB-SYNC",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "(?s)/Users/bymyway/github_repos/bigtree/index\\.html.*\\{\\s*date:\\s*'20\\d\\d-",
+      "say": "改大樹小講場次（SESSION_DATES）：同一輪寫進 event-signup/event.db 的 events 表（slug／name／event_date／event_url），報名頁和後台才會一致。",
+      "level": "remind",
+      "situation": "要改大樹小講場次時",
+      "source": "project_bigtree_eventsignup_sync_rule.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-TAIWAN-FOCUS",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "(?s)^(?=.*(\\.html|<h[1-6]|<section|<div))(?=.*(上海|廈門|深圳|北京|廣州|中國商業|兩岸|大陸市場|中國市場)).*",
+      "say": "教練團隊重心在台灣：介紹夥伴、做網頁時，大陸／兩岸經歷可留在「經歷」，現在的重心、服務對象、標籤一律寫台灣；圖片裡的字也要繁體。",
+      "level": "remind",
+      "situation": "網頁內容提到兩岸、中國大陸時",
+      "source": "feedback_taiwan_focus_no_china_emphasis_2026-09-30.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-CRON-AGENT-ANNOUNCE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "openclaw\\s+cron\\s+add(?=[^\\n]*--agent)(?=[^\\n]*--announce)",
+      "say": "替分身（yang、yijing…）代排提醒：①--at 不能配 --exact ②message 要寫成「最終回覆＝提醒本文、不准呼叫 message 工具」，否則群組會多一則「已送出」③先建一個 --to 教練 DM 的同設定測試工作，cron run 實跑、讀分身最後一輪確認，再刪掉；不拿夥伴的群組測試。",
+      "level": "remind",
+      "situation": "要用 openclaw cron add 替分身排提醒時",
+      "source": "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02.md",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BACKUP-BEFORE-UPGRADE",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "kind": "防錯型",
+      "check": "backup_recent",
+      "match": "(?m)(?:(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*(?:\\s-g\\b|--global)[^\\n;&|]*openclaw|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?npm\\s+(?:i|install|update|up|upgrade)\\b[^\\n;&|]*openclaw[^\\n;&|]*(?:\\s-g\\b|--global)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?openclaw\\s+(?:update|upgrade)\\b(?!\\s+status)|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?brew\\s+upgrade\\b|(?:^|(?<!\\\\)[;&|(]\\s*|\\b(?:then|do|sudo|exec|time)\\s+)(?:\\S*/)?softwareupdate\\s+(?:-i|-ia|--install)\\b)(?![^\\n]*(?:--dry-run|--help))",
+      "say": "升級前先備份（教練 2026-10-02 定的備份規則二）：",
+      "level": "block",
+      "situation": "要升級小龍蝦／Homebrew／Mac 系統時",
+      "source": "教練 2026-10-02 原話（像聯想一鍵備份：電腦運行良好時備份、系統升級前備份，其他時間沒必要時時備份）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SUDO-SHOW-TERMINAL",
+      "moment": "pre_tool",
+      "tool": "Bash|mcp__terminal__run_in_terminal",
+      "kind": "防錯型",
+      "match": "(?m)(?:^|[;&|]\\s*)sudo\\s+(?!-A\\b)(?!-n\\b)(?!-v\\b)(?!-l\\b)",
+      "say": "要教練輸入密碼：別放終端機面板（教練看不到）。改用跳到畫面最前面的密碼視窗：SUDO_ASKPASS=~/.openclaw/workspace/scripts/coach_password_dialog.sh COACH_PW_MSG='這次要做什麼' sudo -A <指令>（從 Bash 工具跑，放背景）。回覆寫「密碼視窗已跳在畫面中間」。",
+      "level": "remind",
+      "situation": "要用 sudo（需要教練打密碼）時",
+      "source": "教練 2026-10-02 11:28／11:33 原話「沒看到跳出輸密碼的選項」「之前你講的，我都看不到」；System Events 密碼視窗實測教練看得到並輸入成功",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-KEEP-VOICE-OCR-MODELS",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "kind": "防錯型",
+      "match": "(?:rm|trash|mv)\\s[^\\n]*\\.cache/(?:whisper|huggingface)(?:/base\\.pt|/?\\s|/?$|/hub)",
+      "say": "~/.cache/whisper/base.pt 是小龍蝦 Telegram 語音轉文字在用的模型（openclaw.json tools.media --model base）；~/.cache/huggingface 有名片 OCR(PaddleOCR) 和記憶搜尋(bge-m3) 模型。這兩個不能刪不能搬，其他大模型(large/medium)才可以。",
+      "level": "remind",
+      "situation": "清本機空間、要刪或搬 ~/.cache 的模型時",
+      "source": "2026-10-02 本機瘦身：軍師把整個 ~/.cache 標成「語音辨識模型和工具暫存」請教練同意刪，刪前查才發現裡面有小龍蝦語音與名片OCR在用的模型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-TURNFORYOU-SEATS-EDIT",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "github_repos/turnforyou/(?:index\\.html|data\\.json)",
+      "say": "改〈為你轉身〉導師席：畫面讀的是 index.html 裡 inline-data（data.json 要同步但不是它）；席次 id 綁 SEAT 編號與 PAIN 路徑推薦；觀眾席 audience-data 獨立（同一人別兩邊都在）；「八位／八張椅子」文案散十多處；改前先 cp .bak。細節：記憶 reference_turnforyou_site_structure_2026-10-03.md",
+      "level": "remind",
+      "situation": "要改為你轉身網站的導師名單、席次、文案時",
+      "source": "2026-10-03 一場把導師席虛擬人物換成八位真人，來回改七次才摸清三處資料與路徑綁定",
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-DISK-LABEL-VERIFY",
+      "moment": "prompt",
+      "match": "(?is)(硬碟|磁碟|儲存空間|本機空間|剩餘空間|空間).*(系統更新|更新檔|下載好|還沒安裝|系統佔|系統資料|佔多少)|(系統更新|更新檔|還沒安裝).*(\\d+\\s*GB?|空間|硬碟)|(更新檔|下載暫存|暫存檔|下載好).{0,20}\\d+\\s*[Gg]",
+      "say": "回答電腦空間時，每一大項的名稱要有實測依據，不憑大小貼標籤：Mac 的 Preboot 磁碟區（約18GB）是開機用檔案，不是「已下載、還沒安裝的系統更新」；真正的更新下載檔看 /Library/Updates 與 /System/Library/AssetsV2/com_apple_MobileAsset_MacSoftwareUpdate。沒量過就說「不確定」，不要說「更新完會省出空間」。",
+      "level": "remind",
+      "situation": "教練問電腦空間被什麼佔、系統更新佔多少、更新完能省多少",
+      "source": "2026-10-03 教練追問「18G 下載暫存檔」：前一場把 Preboot 磁碟區 17.9GB 說成已下載的更新，其實本機沒有任何已下載好的 macOS 更新（案例100）",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-SESSION-VERBATIM-REPORT",
+      "moment": "prompt",
+      "match": "(?is)(一字不漏|逐字|原話|所有.{0,6}說過的話|說過的每一句).{0,40}(報告書|網頁|做成|保留|紀錄|記錄|下一[份個場]?對話)|(完整保留|保留).{0,12}(我|教練).{0,8}(說過|說的).{0,6}(話|每一句)",
+      "say": "教練要把整場原話逐字留給下一個對話框：不憑記憶重寫。從對話記錄 jsonl 的 queue-operation enqueue 抽原話（不是 user 條目，會被合併），做成 knowledges 下的 html，逐字比對後 commit。做法與驗證見記憶 reference_session_verbatim_report_from_jsonl_2026-10-04；成品範例 knowledges/2026-10-03_百人同行_遊戲化設計_教練原話逐字報告書.html。",
+      "level": "remind",
+      "situation": "教練要求把整場對話的原話逐字保留給下一個對話框",
+      "source": "2026-10-04 教練要求整場原話一字不漏做成網頁報告書（手機版 context 200K 快滿）；記憶 reference_session_verbatim_report_from_jsonl_2026-10-04",
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-OPENED-ON-MAC-NOT-DELIVERY",
+      "moment": "reply",
+      "top30": 9,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*https?://).*(?:(?:在|於|用)[^\\n]{0,4}(?:Mac|MAC|蘋果|本機)[^\\n]{0,12}(?:Chrome|瀏覽器|視窗|網頁|HTML|html|頁面|報告)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了|開好)|(?:Chrome|瀏覽器)[^\\n]{0,6}(?:在|於)[^\\n]{0,2}(?:Mac|MAC|蘋果|本機)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了)|(?:Mac|MAC|蘋果|本機)[^\\n]{0,4}(?:開過了?|跳出來了?)|(?:已|有)(?:經)?跳出來)",
+      "say": "回覆說「已在 Mac 開過／跳出來了」但沒給網址：教練用手機或遠端時，Mac 螢幕上的視窗他根本看不到，這不算交付（10/04 教練親口抓到，試金石案例101）。要交付就把網頁放到他打得開的 https 網址（獨立一行），用 curl 驗證狀態 200＋內容再給；真的只是自己查證，就別寫成開給教練看。",
+      "level": "block",
+      "situation": "要跟教練回報網頁／HTML 已經開好、跳出來時",
+      "source": "教練 2026-10-04 原話「說我已經在 Mac 開過了，哪裡？我根本都沒看到」／試金石案例101／守則#17",
+      "enforced_by": "scripts/reflex_router.py reply＋stop_rules_master.py J 改字",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-A11Y-KEYBOARD",
+      "moment": "prompt",
+      "match": "輔助(使用)?鍵盤",
+      "say": "教練說「輔助鍵盤」＝直接跑 /Users/bymyway/.openclaw/workspace/scripts/show_accessibility_keyboard.sh 把螢幕虛擬鍵盤叫出來（教練習慣縮到最小、按叉才消失），一行回報；不問、不叫教練去系統設定找。密碼不代輸入。",
+      "level": "remind",
+      "situation": "教練說「輔助鍵盤」時",
+      "source": "reference_accessibility_keyboard_trigger_2026-10-04",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-BIGTREE-EDU-OFFICIAL-SITE",
+      "moment": "prompt",
+      "match": "大樹教育.{0,6}(官方|官網|網站)|官方(網站|網址|帳號).{0,10}大樹教育",
+      "say": "「大樹教育」的官方網站＝https://www.bymyway.com/（教練2026-10-04永久指定），頁尾／署名／官方連結一律用這個，不用再問、不說找不到。同場官方連結：官方LINE https://lin.ee/o5pODV8 ｜FB粉專「大樹教練」https://www.facebook.com/252699914868764 ｜大樹小講 https://event.bymyway.com/bigtree/ ｜大台南策展中心 https://event.bymyway.com/tainan-shangquan/ ｜海餅乾20週年慶 https://event.bymyway.com/seabiscuit20/",
+      "level": "remind",
+      "situation": "教練或AI提到「大樹教育官方網站／官網／官方帳號」，要在頁尾放官方連結時",
+      "source": "reference_bigtree_education_official_site_bymyway_com_2026-10-04",
+      "audience": [
+        "coach"
+      ]
+    }
+  ],
+  "case_ledger": {
+    "案例28": "併入 R-WIN-APP-MOVE；「教練給了好的參照物就先抄、同法失敗兩次換路」屬判斷類（守則#13、#07）",
+    "案例33": "VPS 部分已退役（VPS 永久下線）；多用戶隔離驗證三件套併入 R-FRIEND-AGENT／R-AGENT-RULES-SESSION／R-OPENCLAW-CONFIG",
+    "案例44": "已由 G-TRAD-CHINESE（Stop hook）擋住",
+    "案例A": "已由 G-PORTER／R-COMMAND-FOR-COACH 覆蓋（不叫教練當搬運工）",
+    "案例B": "已由開工注入「稱呼教練：大樹教練」＋G-IDENTITY 覆蓋（稱呼跟對話框綁定，不用固化稱呼）",
+    "案例E": "已由 J-ASK-COACH／G-ASK-WHEN-CLEAR 覆蓋（方向清楚直接做）",
+    "案例G": "已由 J-ASK-COACH／R-DEPLOY-WORDS 覆蓋（教練說「你覺得呢」＝做；等教練說「推」才推）",
+    "案例H": "併入 R-LAUNCHD-VERIFY（新建文件後觸發它的排程也要同步指到新檔）",
+    "案例I": "併入案例45 的 context-overflow-guard（程式擋住）；HEARTBEAT 機制 6 月後已改版",
+    "案例N": "近 4 個月歷史資料零次 .github/workflows 編輯，暫不建反射；再發生再補（驗證法：gh api repos/OWNER/REPO --jq .default_branch）",
+    "案例G-2026-06-09": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（未經教練說「推」不推）",
+    "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）",
+    "案例K": "已由 G-TRAD-CHINESE／G-TAIWAN-TIME 擋住（簡體字、日期台灣時間）",
+    "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
+    "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
+    "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）"
+  },
+  "memory_ledger": {
+    "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
+    "reference_tailscale_rustdesk_direct_network_2026-10-01": "併入 R-REMOTE-DIRECTION；位址細節是參考資料",
+    "reference_team01_biweekly_and_team_tool_fill_2026-10-01": "參考資料（怡靜分身 team_tool 口令）；改分身規則走 R-AGENT-RULES-SESSION",
+    "reference_lenovo_to_mac_tigervnc_tailscale_2026-10-01": "併入 R-REMOTE-DIRECTION；連線方式是參考資料",
+    "project_yang_agent_telegram_group_2026-10-01": "參考資料（yang 分身設定）；R-FRIEND-AGENT",
+    "reference_yijing_lock_chain_and_default_arg_bug_2026-10-01": "併入 R-AGENT-RULES-SESSION；team_tool 預設參數坑是參考資料",
+    "feedback_dont_conflate_account_access_with_ai_tool_access_2026-09-30": "併入 R-FRIEND-AGENT（寫夥伴權限段落時分兩層）",
+    "project_yijing_agent_telegram_group_2026-09-30": "參考資料（yijing 分身架構）；R-FRIEND-AGENT",
+    "project_curated_sites_github_cross_machine_edit_2026-09-30": "參考資料（策展站 GitHub 化）；R-CURATION-SOP",
+    "feedback_flag_unscoped_token_cost_before_fixing_2026-09-30": "判斷類（N2 三關）；併入 J-NECESSARY",
+    "reference_lk888_spend_guard_2026-09-26": "已有程式擋住：G-LK888（lk888_guard.py）／R-PAID-API-TEST",
+    "feedback_check_downstream_references_when_fixing_compat_2026-09-25": "判斷類；併入 G-DELIVERY（回報前查同頁引用的同類資源）",
+    "reference_github_pages_md_content_type_ai_compat_2026-09-25": "參考資料（GitHub Pages .md 的 content-type）",
+    "reference_move_to_cloud_this_repo_2026-09-25": "參考資料（雲端工作頁吃規則的機制）",
+    "feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25": "已有程式：model_tier_advisor.sh",
+    "feedback_windows_on_main_display_only_2026-09-25": "判斷類；G-SCREENSHOT／G-DELIVERY（視窗要親眼確認在主螢幕）",
+    "feedback_dont_surface_own_tangential_findings": "併入 J-ASK-COACH／G-ASK-WHEN-CLEAR（09-24 根源改版已吸收）",
+    "feedback_stale_handoff_row_represented_as_unsolved_2026-09-18": "併入 J-ASK-COACH／G-KAIGONG（開工不唸待辦）",
+    "feedback_proportionate_escalation_not_alarmist_2026-09-23": "併入 J-ASK-COACH",
+    "feedback_vps_update_sop_trigger": "已退役：VPS 更新 SOP 作廢（VPS 永久下線）",
+    "project_team_publish_and_daily_report_goal_2026-09-24": "參考資料（團隊目標）",
+    "reference_ai_assistant_chinese_names": "併入 R-HERMES（克勞德＝Claude、赫米斯＝Hermes）",
+    "feedback_junshi_threshold_sonnet5_and_above_2026-09-24": "併入 G-IDENTITY",
+    "reference_cloudflared_outdated_version_quic_intermittent_failures_2026-09-23": "併入 R-CLOUDFLARED-KEEP；版本細節是參考資料",
+    "reference_ezpay_invoice_issuing_procedure": "併入 R-INVOICE",
+    "reference_llamacpp_managed_local_server_setup_2026-09-23": "參考資料（本機語意搜尋修復）",
+    "reference_agents_directory_lost_from_git_history_2026-09-23": "參考資料（agents 目錄救回經過）",
+    "feedback_netlify_approval_no_longer_required_2026-09-23": "併入 G-NETLIFY（09-23 起不用逐次問）",
+    "reference_claude_code_remote_control_setup_sop_2026-09-17": "參考資料（Remote Control SOP）",
+    "feedback_em_voice_correction_means_1m_context_window_2026-09-22": "參考資料（教練口語「em」＝1M）",
+    "feedback_opencode_fallback_model_fabricated_results_2026-09-20": "判斷類；併入 G-DELIVERY（外包結果要親自驗）",
+    "reference_tokentable_claude_tool_calling_bug_2026-09-20": "參考資料（TokenTable）",
+    "feedback_credential_layer_file_was_git_tracked_2026-09-19": "已結案（教練 09-24 裁示永久結案，不再提）",
+    "feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19": "判斷類；併入 G-DELIVERY",
+    "feedback_search_existing_reference_before_deep_investigation_2026-09-19": "判斷類；併入 J-FIX-STUCK（深挖前先 grep claude-brain）",
+    "reference_minimax_1m_context_config_fix_2026-09-18": "參考資料",
+    "reference_agent_team_qa_digest_mechanism_2026-09-18": "已有程式：stop_rules_master.py＋agent_team_qa_digest.py",
+    "feedback_no_wrong_posts_no_action_2026-09-18": "索引斷鏈已補檔（10-02）；判斷類，併入 J-NECESSARY",
+    "feedback_gitignore_stale_after_schema_migration_2026-09-18": "參考資料（git status 冒出大批新目錄先分類）",
+    "feedback_hook_files_disappeared_from_working_tree_2026-09-18": "參考資料（hook 目錄消失恢復 SOP）",
+    "reference_cron_job_disappear_root_cause_sop_2026-09-18": "參考資料（cron 消失調查 SOP）",
+    "reference_netlify_zip_deploy_chinese_filename_2026-09-18": "併入 G-NETLIFY（zip 不接受中文檔名）",
+    "reference_gateway_trustedproxies_and_reload_block_2026-09-17": "參考資料",
+    "feedback_agent_soul_files_not_synced_2026-09-17": "併入 R-AGENT-RULES-SESSION／R-FRIEND-AGENT（各分身 SOUL 要逐一改）",
+    "reference_event_registration_page_sop_2026-09-17": "併入 R-ONLINE-SIGNUP-SOP／R-CURATION-SOP",
+    "feedback_minimax_dynamic_context_cap_2026-09-17": "參考資料",
+    "feedback_no_completion_words_when_describing_history_2026-09-17": "已有程式：Stop hook 完成詞偵測",
+    "feedback_verify_locally_before_external_api_2026-09-16": "判斷類；併入 G-DELIVERY",
+    "reference_line_plugin_extensions_missing_2026-09-16": "併入 R-OPENCLAW-NO-REPLY；參考資料",
+    "reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14": "參考資料（已加 .gitignore）",
+    "reference_openclaw2_heartbeat_message_failed_bug_2026-09-14": "參考資料；R-OPENCLAW-CONFIG",
+    "feedback_check_shared_resource_before_recommending_revoke_2026-09-13": "判斷類（建議撤銷憑證前先查路徑大全）",
+    "feedback_scan_full_context_not_just_known_risk_folder_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
+    "feedback_scan_content_not_just_filenames_before_sharing_with_new_env_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
+    "reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11": "併入 R-FB-POST",
+    "feedback_search_before_trial_and_error_2026-09-11": "併入 J-FIX-STUCK",
+    "feedback_never_fabricate_literal_quotes_2026-09-06": "併入 G-CITATION",
+    "feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06": "併入 R-DETECTOR-RULE-EDIT",
+    "feedback_deferred_task_not_actually_free_2026-09-06": "判斷類；併入 J-NECESSARY",
+    "feedback_no_reply_own_work_in_group_chat_2026-09-05": "小龍蝦端群組判斷（人設），不是軍師反射；參考資料",
+    "feedback_confirm_ambiguous_instructions_before_acting_2026-09-04": "併入 J-ASK-COACH",
+    "feedback_public_admin_separation_default_2026-09-04": "判斷類（對外網頁不放管理控制項）",
+    "feedback_verify_template_branding_after_copy_2026-09-01": "判斷類；併入 G-DELIVERY（複製模板 grep 舊品牌字）",
+    "feedback_dont_punt_decisions_show_underlying_values_2026-08-31": "併入 J-ASK-COACH",
+    "feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31": "併入 G-DELIVERY／G-PORTER",
+    "feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28": "判斷類（第三方正式系統只讀不點）",
+    "feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27": "判斷類（大量重複瀏覽器操作委派背景）",
+    "reference_stop_hook_tool_result_boundary_bug_2026-08-27": "併入 R-DETECTOR-RULE-EDIT",
+    "project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26": "參考資料",
+    "feedback_jarvis_outcome_delegation_style": "判斷類（賈維斯式結果導向）；R-JARVIS-PLAN",
+    "feedback_browser_automation_ai_should_complete": "併入 G-PORTER",
+    "reference_claude_code_long_session_rule_decay": "已有程式：定期重載守則 hook",
+    "reference_openclaw_plugins_allow_strict_whitelist": "併入 R-OPENCLAW-CONFIG",
+    "feedback_use_chrome_control_for_oauth_flows": "併入 G-PORTER",
+    "feedback_verify_activity_via_git_log_not_relay_file": "判斷類",
+    "user_privacy_risk_posture": "參考資料（教練隱私立場）",
+    "feedback_verify_before_correcting_coach": "併入 G-CITATION（查證系列）",
+    "feedback_netlify_autodeploy_cost_awareness": "併入 G-NETLIFY",
+    "feedback_junshi_token_economy_outsource": "判斷類",
+    "feedback_junshi_role_decide_not_ask": "併入 J-ASK-COACH",
+    "reference_brain_naming_convention": "併入 G-LESSON",
+    "feedback_lock_must_be_hook_not_optin": "併入 R-DETECTOR-RULE-EDIT",
+    "feedback_self_position_elite_expert": "判斷類",
+    "feedback_coach_words_equal_authorization": "併入 J-ASK-COACH",
+    "feedback_model_choice_quality_first": "判斷類",
+    "feedback_subagent_instruction_path_first": "併入 R-CROSS-LETTER／R-LETTER-INBOX",
+    "feedback_negative_anchor_pollution": "判斷類（寫給 AI 的文件只列正確做法）",
+    "feedback_no_paste_terminal_results": "併入 G-PORTER",
+    "feedback_no_silent_waiting": "判斷類",
+    "feedback_archive_not_delete": "併入 G-DELETE",
+    "feedback_coach_chinese_file_mapping": "參考資料（教練詞彙對照表）",
+    "feedback_screenshot_rules_consolidated": "併入 G-SCREENSHOT",
+    "feedback_netlify_headers_content_type": "併入 G-NETLIFY",
+    "feedback_no_fork_without_permission": "判斷類",
+    "feedback_assert_before_verify_pattern_2026-09-17": "併入 G-CITATION",
+    "feedback_cc_means_cc_switch": "參考資料（CC＝CC Switch）",
+    "reference_openclaw_cron_json_stale_snapshot": "併入 R-OPENCLAW-CONFIG",
+    "project_bni_chapters_public_launch_2026-08-03": "參考資料",
+    "project_mentor100_edit_link_selfservice_2026-08-02": "參考資料",
+    "project_advance_registrations_backfill_purpose_2026-08-14": "G-DELETE 擋刪資料；參考資料（49 筆簽到表資料不能刪）",
+    "reference_line_share_preview_cache_bust": "參考資料",
+    "reference_all_conversation_paths": "參考資料",
+    "feedback_minimax_auth_format": "已退役：VPS 永久下線",
+    "feedback_data_move_du_sh_verify": "併入 G-DELETE",
+    "feedback_modal_selector_remove_pitfall": "參考資料（前端坑）",
+    "feedback_password_boundary_vs_courier_resolution": "併入 R-ASK-CREDENTIAL",
+    "project_team_structure": "參考資料（部分已過時：VPS 下線）",
+    "reference_namecard_ocr_pipeline_reusable": "參考資料",
+    "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
+    "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION",
+    "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手",
+    "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）",
+    "feedback_open_settings_to_exact_spot_only_password_left_2026-10-02": "已有程式：scripts/stop_rules_master.py A2b（選單路徑兩段箭頭又沒寫已幫您打開→擋）",
+    "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE",
+    "reference_session_verbatim_report_from_jsonl_2026-10-04": "併入 R-SESSION-VERBATIM-REPORT"
   }
- ],
- "case_ledger": {
-  "案例28": "併入 R-WIN-APP-MOVE；「教練給了好的參照物就先抄、同法失敗兩次換路」屬判斷類（守則#13、#07）",
-  "案例33": "VPS 部分已退役（VPS 永久下線）；多用戶隔離驗證三件套併入 R-FRIEND-AGENT／R-AGENT-RULES-SESSION／R-OPENCLAW-CONFIG",
-  "案例44": "已由 G-TRAD-CHINESE（Stop hook）擋住",
-  "案例A": "已由 G-PORTER／R-COMMAND-FOR-COACH 覆蓋（不叫教練當搬運工）",
-  "案例B": "已由開工注入「稱呼教練：大樹教練」＋G-IDENTITY 覆蓋（稱呼跟對話框綁定，不用固化稱呼）",
-  "案例E": "已由 J-ASK-COACH／G-ASK-WHEN-CLEAR 覆蓋（方向清楚直接做）",
-  "案例G": "已由 J-ASK-COACH／R-DEPLOY-WORDS 覆蓋（教練說「你覺得呢」＝做；等教練說「推」才推）",
-  "案例H": "併入 R-LAUNCHD-VERIFY（新建文件後觸發它的排程也要同步指到新檔）",
-  "案例I": "併入案例45 的 context-overflow-guard（程式擋住）；HEARTBEAT 機制 6 月後已改版",
-  "案例N": "近 4 個月歷史資料零次 .github/workflows 編輯，暫不建反射；再發生再補（驗證法：gh api repos/OWNER/REPO --jq .default_branch）",
-  "案例G-2026-06-09": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（未經教練說「推」不推）",
-  "案例H-2026-06-11": "已由 R-DEPLOY-WORDS／G-NETLIFY 覆蓋（全部改完→一次確認→一次推，不分批）",
-  "案例K": "已由 G-TRAD-CHINESE／G-TAIWAN-TIME 擋住（簡體字、日期台灣時間）",
-  "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
-  "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
-  "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）"
- },
- "memory_ledger": {
-  "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
-  "reference_tailscale_rustdesk_direct_network_2026-10-01": "併入 R-REMOTE-DIRECTION；位址細節是參考資料",
-  "reference_team01_biweekly_and_team_tool_fill_2026-10-01": "參考資料（怡靜分身 team_tool 口令）；改分身規則走 R-AGENT-RULES-SESSION",
-  "reference_lenovo_to_mac_tigervnc_tailscale_2026-10-01": "併入 R-REMOTE-DIRECTION；連線方式是參考資料",
-  "project_yang_agent_telegram_group_2026-10-01": "參考資料（yang 分身設定）；R-FRIEND-AGENT",
-  "reference_yijing_lock_chain_and_default_arg_bug_2026-10-01": "併入 R-AGENT-RULES-SESSION；team_tool 預設參數坑是參考資料",
-  "feedback_dont_conflate_account_access_with_ai_tool_access_2026-09-30": "併入 R-FRIEND-AGENT（寫夥伴權限段落時分兩層）",
-  "project_yijing_agent_telegram_group_2026-09-30": "參考資料（yijing 分身架構）；R-FRIEND-AGENT",
-  "project_curated_sites_github_cross_machine_edit_2026-09-30": "參考資料（策展站 GitHub 化）；R-CURATION-SOP",
-  "feedback_flag_unscoped_token_cost_before_fixing_2026-09-30": "判斷類（N2 三關）；併入 J-NECESSARY",
-  "reference_lk888_spend_guard_2026-09-26": "已有程式擋住：G-LK888（lk888_guard.py）／R-PAID-API-TEST",
-  "feedback_check_downstream_references_when_fixing_compat_2026-09-25": "判斷類；併入 G-DELIVERY（回報前查同頁引用的同類資源）",
-  "reference_github_pages_md_content_type_ai_compat_2026-09-25": "參考資料（GitHub Pages .md 的 content-type）",
-  "reference_move_to_cloud_this_repo_2026-09-25": "參考資料（雲端工作頁吃規則的機制）",
-  "feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25": "已有程式：model_tier_advisor.sh",
-  "feedback_windows_on_main_display_only_2026-09-25": "判斷類；G-SCREENSHOT／G-DELIVERY（視窗要親眼確認在主螢幕）",
-  "feedback_dont_surface_own_tangential_findings": "併入 J-ASK-COACH／G-ASK-WHEN-CLEAR（09-24 根源改版已吸收）",
-  "feedback_stale_handoff_row_represented_as_unsolved_2026-09-18": "併入 J-ASK-COACH／G-KAIGONG（開工不唸待辦）",
-  "feedback_proportionate_escalation_not_alarmist_2026-09-23": "併入 J-ASK-COACH",
-  "feedback_vps_update_sop_trigger": "已退役：VPS 更新 SOP 作廢（VPS 永久下線）",
-  "project_team_publish_and_daily_report_goal_2026-09-24": "參考資料（團隊目標）",
-  "reference_ai_assistant_chinese_names": "併入 R-HERMES（克勞德＝Claude、赫米斯＝Hermes）",
-  "feedback_junshi_threshold_sonnet5_and_above_2026-09-24": "併入 G-IDENTITY",
-  "reference_cloudflared_outdated_version_quic_intermittent_failures_2026-09-23": "併入 R-CLOUDFLARED-KEEP；版本細節是參考資料",
-  "reference_ezpay_invoice_issuing_procedure": "併入 R-INVOICE",
-  "reference_llamacpp_managed_local_server_setup_2026-09-23": "參考資料（本機語意搜尋修復）",
-  "reference_agents_directory_lost_from_git_history_2026-09-23": "參考資料（agents 目錄救回經過）",
-  "feedback_netlify_approval_no_longer_required_2026-09-23": "併入 G-NETLIFY（09-23 起不用逐次問）",
-  "reference_claude_code_remote_control_setup_sop_2026-09-17": "參考資料（Remote Control SOP）",
-  "feedback_em_voice_correction_means_1m_context_window_2026-09-22": "參考資料（教練口語「em」＝1M）",
-  "feedback_opencode_fallback_model_fabricated_results_2026-09-20": "判斷類；併入 G-DELIVERY（外包結果要親自驗）",
-  "reference_tokentable_claude_tool_calling_bug_2026-09-20": "參考資料（TokenTable）",
-  "feedback_credential_layer_file_was_git_tracked_2026-09-19": "已結案（教練 09-24 裁示永久結案，不再提）",
-  "feedback_audit_all_write_paths_before_declaring_sync_fixed_2026-09-19": "判斷類；併入 G-DELIVERY",
-  "feedback_search_existing_reference_before_deep_investigation_2026-09-19": "判斷類；併入 J-FIX-STUCK（深挖前先 grep claude-brain）",
-  "reference_minimax_1m_context_config_fix_2026-09-18": "參考資料",
-  "reference_agent_team_qa_digest_mechanism_2026-09-18": "已有程式：stop_rules_master.py＋agent_team_qa_digest.py",
-  "feedback_no_wrong_posts_no_action_2026-09-18": "索引斷鏈已補檔（10-02）；判斷類，併入 J-NECESSARY",
-  "feedback_gitignore_stale_after_schema_migration_2026-09-18": "參考資料（git status 冒出大批新目錄先分類）",
-  "feedback_hook_files_disappeared_from_working_tree_2026-09-18": "參考資料（hook 目錄消失恢復 SOP）",
-  "reference_cron_job_disappear_root_cause_sop_2026-09-18": "參考資料（cron 消失調查 SOP）",
-  "reference_netlify_zip_deploy_chinese_filename_2026-09-18": "併入 G-NETLIFY（zip 不接受中文檔名）",
-  "reference_gateway_trustedproxies_and_reload_block_2026-09-17": "參考資料",
-  "feedback_agent_soul_files_not_synced_2026-09-17": "併入 R-AGENT-RULES-SESSION／R-FRIEND-AGENT（各分身 SOUL 要逐一改）",
-  "reference_event_registration_page_sop_2026-09-17": "併入 R-ONLINE-SIGNUP-SOP／R-CURATION-SOP",
-  "feedback_minimax_dynamic_context_cap_2026-09-17": "參考資料",
-  "feedback_no_completion_words_when_describing_history_2026-09-17": "已有程式：Stop hook 完成詞偵測",
-  "feedback_verify_locally_before_external_api_2026-09-16": "判斷類；併入 G-DELIVERY",
-  "reference_line_plugin_extensions_missing_2026-09-16": "併入 R-OPENCLAW-NO-REPLY；參考資料",
-  "reference_terminal_notes_raw_sessions_no_gitignore_2026-09-14": "參考資料（已加 .gitignore）",
-  "reference_openclaw2_heartbeat_message_failed_bug_2026-09-14": "參考資料；R-OPENCLAW-CONFIG",
-  "feedback_check_shared_resource_before_recommending_revoke_2026-09-13": "判斷類（建議撤銷憑證前先查路徑大全）",
-  "feedback_scan_full_context_not_just_known_risk_folder_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
-  "feedback_scan_content_not_just_filenames_before_sharing_with_new_env_2026-09-13": "判斷類；git_secret_guard.sh 部分擋住",
-  "reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11": "併入 R-FB-POST",
-  "feedback_search_before_trial_and_error_2026-09-11": "併入 J-FIX-STUCK",
-  "feedback_never_fabricate_literal_quotes_2026-09-06": "併入 G-CITATION",
-  "feedback_wording_based_guardrail_unreliable_use_structural_check_2026-09-06": "併入 R-DETECTOR-RULE-EDIT",
-  "feedback_deferred_task_not_actually_free_2026-09-06": "判斷類；併入 J-NECESSARY",
-  "feedback_no_reply_own_work_in_group_chat_2026-09-05": "小龍蝦端群組判斷（人設），不是軍師反射；參考資料",
-  "feedback_confirm_ambiguous_instructions_before_acting_2026-09-04": "併入 J-ASK-COACH",
-  "feedback_public_admin_separation_default_2026-09-04": "判斷類（對外網頁不放管理控制項）",
-  "feedback_verify_template_branding_after_copy_2026-09-01": "判斷類；併入 G-DELIVERY（複製模板 grep 舊品牌字）",
-  "feedback_dont_punt_decisions_show_underlying_values_2026-08-31": "併入 J-ASK-COACH",
-  "feedback_build_not_just_spec_for_coach_facing_controls_2026-08-31": "併入 G-DELIVERY／G-PORTER",
-  "feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28": "判斷類（第三方正式系統只讀不點）",
-  "feedback_delegate_bulk_browser_ops_to_background_agent_2026-08-27": "判斷類（大量重複瀏覽器操作委派背景）",
-  "reference_stop_hook_tool_result_boundary_bug_2026-08-27": "併入 R-DETECTOR-RULE-EDIT",
-  "project_lenovo_cross_machine_sync_4layer_rootcause_2026-08-26": "參考資料",
-  "feedback_jarvis_outcome_delegation_style": "判斷類（賈維斯式結果導向）；R-JARVIS-PLAN",
-  "feedback_browser_automation_ai_should_complete": "併入 G-PORTER",
-  "reference_claude_code_long_session_rule_decay": "已有程式：定期重載守則 hook",
-  "reference_openclaw_plugins_allow_strict_whitelist": "併入 R-OPENCLAW-CONFIG",
-  "feedback_use_chrome_control_for_oauth_flows": "併入 G-PORTER",
-  "feedback_verify_activity_via_git_log_not_relay_file": "判斷類",
-  "user_privacy_risk_posture": "參考資料（教練隱私立場）",
-  "feedback_verify_before_correcting_coach": "併入 G-CITATION（查證系列）",
-  "feedback_netlify_autodeploy_cost_awareness": "併入 G-NETLIFY",
-  "feedback_junshi_token_economy_outsource": "判斷類",
-  "feedback_junshi_role_decide_not_ask": "併入 J-ASK-COACH",
-  "reference_brain_naming_convention": "併入 G-LESSON",
-  "feedback_lock_must_be_hook_not_optin": "併入 R-DETECTOR-RULE-EDIT",
-  "feedback_self_position_elite_expert": "判斷類",
-  "feedback_coach_words_equal_authorization": "併入 J-ASK-COACH",
-  "feedback_model_choice_quality_first": "判斷類",
-  "feedback_subagent_instruction_path_first": "併入 R-CROSS-LETTER／R-LETTER-INBOX",
-  "feedback_negative_anchor_pollution": "判斷類（寫給 AI 的文件只列正確做法）",
-  "feedback_no_paste_terminal_results": "併入 G-PORTER",
-  "feedback_no_silent_waiting": "判斷類",
-  "feedback_archive_not_delete": "併入 G-DELETE",
-  "feedback_coach_chinese_file_mapping": "參考資料（教練詞彙對照表）",
-  "feedback_screenshot_rules_consolidated": "併入 G-SCREENSHOT",
-  "feedback_netlify_headers_content_type": "併入 G-NETLIFY",
-  "feedback_no_fork_without_permission": "判斷類",
-  "feedback_assert_before_verify_pattern_2026-09-17": "併入 G-CITATION",
-  "feedback_cc_means_cc_switch": "參考資料（CC＝CC Switch）",
-  "reference_openclaw_cron_json_stale_snapshot": "併入 R-OPENCLAW-CONFIG",
-  "project_bni_chapters_public_launch_2026-08-03": "參考資料",
-  "project_mentor100_edit_link_selfservice_2026-08-02": "參考資料",
-  "project_advance_registrations_backfill_purpose_2026-08-14": "G-DELETE 擋刪資料；參考資料（49 筆簽到表資料不能刪）",
-  "reference_line_share_preview_cache_bust": "參考資料",
-  "reference_all_conversation_paths": "參考資料",
-  "feedback_minimax_auth_format": "已退役：VPS 永久下線",
-  "feedback_data_move_du_sh_verify": "併入 G-DELETE",
-  "feedback_modal_selector_remove_pitfall": "參考資料（前端坑）",
-  "feedback_password_boundary_vs_courier_resolution": "併入 R-ASK-CREDENTIAL",
-  "project_team_structure": "參考資料（部分已過時：VPS 下線）",
-  "reference_namecard_ocr_pipeline_reusable": "參考資料",
-  "project_vps_client_isolation_fix_2026-07-01": "已退役：VPS 永久下線",
-  "feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01": "併入 R-REMOTE-DIRECTION",
-  "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手",
-  "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）",
-  "feedback_open_settings_to_exact_spot_only_password_left_2026-10-02": "已有程式：scripts/stop_rules_master.py A2b（選單路徑兩段箭頭又沒寫已幫您打開→擋）",
-  "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE",
-  "reference_session_verbatim_report_from_jsonl_2026-10-04": "併入 R-SESSION-VERBATIM-REPORT"
- }
 }

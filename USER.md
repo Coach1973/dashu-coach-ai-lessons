@@ -32,6 +32,10 @@
 > 🔴 **LINE 對話 session 啟動守則（2026-08-14 教訓，測試2 補上）**：OpenClaw 注入給 LINE 對話 session 的 startupContext 是「session 啟動那一秒」的 USER.md 快照，**不會自動 reload**。如果教練在 session 啟動後立刻修 USER.md，本 session 仍繼續用舊版直到重啟。
 > **正確做法**：LINE 對話 session 第一次回應前，必須先 `read` 一次真實 USER.md，跟 startupContext 注入的版本比對一次；若發現不一致（特別是 LINE ID 欄位、識別註記、記憶體驗註記），立刻把差異補進當下 context，不能用過期 startupContext 當唯一依據。
 
+## 大樹教育官方網站（2026-10-04 教練親口：永久記住）
+- **大樹教育官方網站：https://www.bymyway.com/**　（頁尾／署名／官方連結一律用這個，不用再問）
+- 官方 LINE：https://lin.ee/o5pODV8　｜　Facebook 粉專「大樹教練」：https://www.facebook.com/252699914868764
+
 ## 教練的訂閱服務帳號（2026-10-02 教練親口交代要記住）
 
 | 服務 | 帳號 | 方案 | 續約日 |

@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 大樹教育官方網站＝https://www.bymyway.com/（教練10-04親口永久指定），頁尾官方連結用；官方LINE/FB粉專同檔；已掛反射R-BIGTREE-EDU-OFFICIAL-SITE(2026-10-04)](reference_bigtree_education_official_site_bymyway_com_2026-10-04.md)
 - [🔴🔴 教練用手機時「已在Mac的Chrome開過」＝沒交付：三處腳本文字教我這樣講已改源頭＋新反射R-OPENED-ON-MAC-NOT-DELIVERY擋下；交付=獨立一行https網址+curl驗證，已上架game-1004(2026-10-04)](feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04.md)
 - [📜 教練要整場原話逐字報告書：從jsonl的queue-operation enqueue抽(user條目會合併)+逐字比對+軍師註分色；已掛反射R-SESSION-VERBATIM-REPORT(2026-10-04)](reference_session_verbatim_report_from_jsonl_2026-10-04.md)
 - [🎮 商務遊戲(商業俱樂部)已裁示原則：贏＝信任、數據一律公開不可隱藏(高調低調只管慶祝)、培訓月上限10分防刷、BNI外也能玩、稱號多條並行、裝備＝見證、年資要加分(10-04糾正)；題庫在knowledges(2026-10-03)](project_business_club_game_design_principles_2026-10-03.md)
