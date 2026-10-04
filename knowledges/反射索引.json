@@ -1424,6 +1424,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-DNA-LABEL-OUTSIDE-CHAPTER-COPY-ONLY",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "match": "(?is)(?=.*(member_roles|chapter_members|seed_leadership|role_label))(?=.*(分會大使|分會助理大使|分會董事顧問|啟動董顧|助理大使|DnA))",
+      "say": "DnA（助理大使／大使／董事顧問）是多重身份：母會卡片不寫標籤；在擔任的那個分會放「複製卡片」再打標籤（例：邱南寅是真鑽會員，真鑫放副本寫「真鑫分會大使」）。教練說的「離開」是指有多重身份，不是離會。",
+      "level": "remind",
+      "situation": "要在會員卡片寫大使／董顧標籤、或匯入 DnA 職務時",
+      "source": "教練 2026-10-05 04:13 糾正「不要在真鑽的卡片寫上真鑫分會大使…離開不是指離會」（project_business_club_game_design_principles_2026-10-03.md）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
