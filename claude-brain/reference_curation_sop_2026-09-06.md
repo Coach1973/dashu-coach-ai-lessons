@@ -7,6 +7,8 @@ metadata:
 
 # 🎯 策展SOP（2026-09-06 教練口述，軍師修正定稿）
 
+> 🔴 **2026-10-04 教練更正：BNI 夥伴的個人品牌頁（不是店家）也走本篇 `kind=shop`**，不是大樹創作。判斷看「誰的網站」：教練自己的作品→創作；夥伴／朋友／客戶的→策展。教練也說：所有上架的網站都要有一份 GitHub（`kind=shop` 流程本來就會建 repo，要確認並回報）；靜態、不碰資料庫的修改，聯想／宏碁都能做，只有程式或資料庫才交 Mac 軍師。聯想沒有策展上傳金鑰，新上架要寫信給小龍蝦（`cross-agent/inbox/xiaolongxia/`，範例 `20261004-1419_lenovo-to-xiaolongxia_hsiuli-curation-shop-upload.md`）。
+
 > 🔴🔴 **2026-09-26教練拍板：`shops.bymyway.com`不再架在VPS(43.245.60.200)上，全部改本機Mac處理**——當初用VPS是為了「24小時不間斷、隨時能接收新店家」，但實測發現`event.bymyway.com`（含上傳網址本身）本來就跑在這台Mac上（透過Cloudflare Tunnel），Mac沒開機的話整條上傳流程一樣會停，VPS並沒有真的多提供獨立於Mac之外的可用性，純粹多一層SSH管理成本、多一種故障模式（09-26鑫瀚昌旅行社事故的custom_slug被覆蓋、SSH寫入偶爾被沙盒攔下等，本質都是這層VPS依賴造成的額外複雜度）。且實際只用到3個真實店家(huitou/ema/鑫瀚昌`hsinhan`)，遷移成本很低。
 > **技術細節**：`shops.bymyway.com`的3個既有店家已從VPS下載搬進本機`/Users/bymyway/github_repos/<slug>/`（跟`/curated/<slug>/`共用同一套目錄+`_serve_repo_file()`），`event-signup/app.py`新增`shops_local_page()`/`shops_local_assets()`兩支路由用`request.host`分流只認`shops.bymyway.com`；Cloudflare DNS紀錄從A(43.245.60.200)改CNAME指到跟`event.bymyway.com`同一個tunnel(`739a34e4-9088-42f9-8819-ae1d2667e50e.cfargotunnel.com`)，`~/.cloudflared/event-config.yml`新增一行ingress。`app.py`的`_provision_shop_placeholder()`、`curation_process.py`的`overwrite_shop_placeholder()`/`rename_shop_slug()`全部改成本機檔案操作，不再有任何`sshpass`/`SHOPS_VPS_*`程式碼。VPS上的原始檔案**暫時保留沒刪**（`/var/www/shops/`），當作一段時間的備援，非立即需要不用管它。
 > 下面文件裡所有提到「VPS」「SSH」「43.245.60.200」的段落都是**歷史記錄**，保留是為了理解「為什麼會有`_shops_slugs.json`這個既有暫代頁比對機制」的脈絡，**不是現在的實際做法**。
