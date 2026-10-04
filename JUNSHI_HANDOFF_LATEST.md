@@ -39,10 +39,14 @@
 - ✅ **macOS 26.7.1 已裝成功**：10/03 01:35 教練在跳出的視窗輸入密碼，`macos_update.sh` 實跑通過；01:41 左右自動重開機，01:43 `sw_vers`＝26.7.1（25G241）。重開後驗證：小龍蝦 gateway(18789) 回 200、赫米斯 gateway 在跑並已連 Telegram、RustDesk／cloudflared 全部起來、Tailscale 本機在線、外接 SSD 已掛載且 Downloads／vm_bundles／fb_session_data 捷徑讀得到資料。重開當下剩餘空間 61.7GB（快照到期後才會再升）。macOS 27.0.1 大改版不裝。
 - ✅ **手機遙控（claude rc）重開機後已重啟**：10/03 10:30 教練回報手機連不上（重開機殺掉 tmux 內的 claude rc）。照記憶 SOP 用 `env -i` 版在 tmux `remote-control` 重啟，舊 bridge-pointer.json 備份後刪（`~/.claude/projects/-Users-bymyway--openclaw/bridge-pointer.json.bak.20261003`），新連線 env_01QHLw1…，10:39 教練手機確認「搞定了」。**下次重開機後手機又連不上＝同樣重跑這套，不用再查**。
 
+- ✅ **10/04 大樹小講三件事（教練 13:55 交辦）**：①`event.bymyway.com/curated/bigtree-1107/`＝原樣複製 bigtree-1003，只換日期（10/3→11/7）、網址 slug、海報（換成教練下載資料夾新 EDM，橫式 16:9，海報區改單欄）；已登記 registry＋`events` 表 bigtree-1107 補齊（名稱/地點/event_url），GitHub `Coach1973/bigtree-1107`；出現在 `/bigtree/` 清單。②10/17 ema1017＝列入大樹小講（`events.site` curated→bigtree，slug 不變）＋新增時段「午後」15:00–17:30（SLOTS 與 SLOT_TIMES 兩邊）＋頁面加「頂級海鮮鍋／本店也有提供素食鍋」（晚餐費用卡＋PART 02 晶片列）；GitHub `Coach1973/ema1017`（`1fe0490`）。③歷史頁漏中正大學 9/19＝補進（25 場）＋新程式 `scripts/bigtree_history_sync.py` ＋ launchd `ai.openclaw.bigtree-history-sync` 每天 00:20 自動補登＋SOP 規則四。commit：workspace `2e4b01368`、bigtree `feb61de`＋`b4c6b55`。
+- ⚠️ 11/7 頁面沿用 10/3 文字：時間寫 14:00–16:30、「第 4 場／前三場」未改；但新海報寫 2:00–5:00，/bigtree/ 清單（時段「午」）顯示 14:00–17:00 → 內部不一致，已回報教練等他裁示。
+
 ### 📋 下一場開工先做
 ① 10/03 量剩餘空間（`diskutil info / | grep "Container Free"`；快照到期後預期上升到約 90GB）；08:10 點名要有「💾 備份…已自動備份一次」。
 ② 驗收新版開工注入：開工回報應不被截斷、約 10KB；有問題改回 `feed_junshi_handoff.sh` 第 2~5 步。
 ③ 🔧 AI 自己做：聯想／宏碁 ps1 開工腳本比照瘦身；10/09 後可刪搬家舊夾（先確認各捷徑指向的資料是活的，再走五道閘門）：`~/Downloads.bak.20261002` 1.1G、`~/Library/Application Support/Google/Chrome.bak.20261002` 5.2G、`scripts/fb_session_data.bak.20261003` 2.1G、`~/Library/Application Support/Claude/vm_bundles.bak.20261003` 10G。
+⑤ **bigtree-1107 放影片**：教練說待會會給「10/3 當天的網頁」（內有做好的影片），拿到網址後把影片放進 bigtree-1107（影片壓縮走 SOP 規則一）。教練 13:57 口誤更正：「做好的影片」不是下載資料夾裡的檔案。
 ④ 回憶牆第一則真實投稿進來時確認群組收到；教練給薛如媛／范郁琪信用證資料時照 `knowledges/2026-08-27_…` 補登。
 ⑤ 【聯想】教練 10/03 交辦的提醒（聯想下次開工回報時講一次，講完刪掉這行）：聯想現在有兩份整機還原備份，都在 E 槽——10/02 新的（要留）和 9/19 的（`E:\SystemImage_20260919_fromD`）。教練說容量不夠時 9/19 那份可以刪，刪要由教練自己動手。詳見記憶 `reference_lenovo_system_image_backups_2026-10-03.md`（`[Win]` 10/03 10:50）。
 
