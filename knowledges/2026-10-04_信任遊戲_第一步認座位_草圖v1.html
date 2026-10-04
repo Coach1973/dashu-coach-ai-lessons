@@ -1,0 +1,106 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>信任遊戲 認座位草圖</title>
+<style>
+:root{--g:#2f6b4f;--g2:#e8f1ec;--gold:#d9a521;--bg:#f6f4ef;--ink:#222;--mute:#777}
+body{font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);margin:0;line-height:1.7}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:22px;color:var(--g);margin:8px 0}h2{font-size:19px;color:var(--g);border-bottom:2px solid #cfe0d6;padding-bottom:4px;margin-top:32px}
+.note{background:#fff8e6;border-left:4px solid #e0b84d;padding:8px 12px;font-size:14px}
+.phone{max-width:360px;margin:20px auto;background:#fff;border-radius:28px;box-shadow:0 6px 24px rgba(0,0,0,.12);padding:22px 18px 26px;min-height:520px;position:relative}
+.top{font-size:13px;color:var(--mute);text-align:center;letter-spacing:2px}
+.screen{display:none;text-align:center}.screen.on{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.hello{font-size:20px;font-weight:700;margin:14px 0 4px}
+.card{border:2px solid var(--g2);border-radius:18px;padding:16px;margin:14px 0;text-align:left;display:flex;gap:14px;align-items:center}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--g);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;flex:none}
+.card b{font-size:18px}.card small{color:var(--mute);display:block}
+.oneliner{background:var(--g2);border-radius:10px;padding:6px 10px;margin-top:6px;font-size:14px}
+.btn{display:block;width:100%;border:0;border-radius:14px;background:var(--g);color:#fff;font-size:18px;font-weight:700;padding:14px;margin-top:14px;cursor:pointer}
+.link{background:none;border:0;color:var(--mute);text-decoration:underline;font-size:14px;margin-top:10px;cursor:pointer}
+.seatbig{width:120px;height:120px;border-radius:50%;margin:20px auto 8px;background:var(--gold);box-shadow:0 0 0 0 rgba(217,165,33,.6);animation:glow 1.6s infinite;display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff}
+@keyframes glow{70%{box-shadow:0 0 0 22px rgba(217,165,33,0)}100%{box-shadow:0 0 0 0 rgba(217,165,33,0)}}
+.plus{font-size:26px;font-weight:800;color:var(--g)}
+.bar{height:12px;background:#eee;border-radius:8px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--g);width:0;transition:width 1.2s}
+.small{font-size:13px;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin:14px 0}
+.s{aspect-ratio:1;border-radius:50%;border:2px solid #ccc;background:#f2f2f2}
+.s.lit{background:var(--g);border-color:var(--g)}.s.me{background:var(--gold);border-color:var(--gold);position:relative}
+.s.me:after{content:"你";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.next{background:var(--g2);border-radius:12px;padding:10px;text-align:left;font-size:14px;margin-top:8px}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:16px}.dots span{width:8px;height:8px;border-radius:50%;background:#ddd}.dots span.on{background:var(--g)}
+ol li,ul li{margin:4px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;background:#fff}th,td{border:1px solid #ddd;padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--g2)}
+</style></head><body><main>
+<h1>信任遊戲｜第一步「認座位」草圖 v1</h1>
+<p class="note">2026-10-04 台灣時間 20:10，軍師（Opus 5.5）。這是<strong>可以點的草圖</strong>，人名是示範用的假資料。下面手機畫面請直接點按鈕走一遍，大約 30 秒。</p>
+
+<div class="phone">
+ <div class="top">信 任 遊 戲</div>
+
+ <section class="screen on" id="s1">
+  <div class="hello">林示範，你的座位準備好了 🎟</div>
+  <div class="small">夥伴已經先幫你把資料填好了</div>
+  <div class="card"><div class="avatar">林</div>
+   <div><b>林示範</b><small>示範烘焙坊・第一俱樂部</small>
+   <div class="oneliner">我幫公司行號做有溫度的客製伴手禮</div></div></div>
+  <button class="btn" onclick="go(2)">是我，沒錯 ✓</button>
+  <button class="link" onclick="alert('（草圖）這裡會讓他改錯字、換照片，改完一樣按「是我」')">有地方要改</button>
+ </section>
+
+ <section class="screen" id="s2">
+  <div class="seatbig">✓</div>
+  <div class="hello">座位亮燈了！</div>
+  <div class="plus">＋10 信任分</div>
+  <div style="margin-top:10px">你現在是 <b>「被看見」第 2 級</b></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="small">10 / 25 分，再 15 分升到第 3 級</div>
+  <div class="next">你是第一俱樂部<b>第 13 位</b>亮燈的人</div>
+  <button class="btn" onclick="go(3)">去看觀眾席 →</button>
+ </section>
+
+ <section class="screen" id="s3">
+  <div class="hello">第一俱樂部觀眾席</div>
+  <div><b style="color:var(--g)">13</b> / 40 席已亮燈</div>
+  <div class="grid" id="grid"></div>
+  <div class="small">● 綠色＝已亮燈　○ 灰色＝還沒來認座位</div>
+  <div class="next">📅 <b>下一步只有一件事：</b>下次開會簽到，座位再亮一格（＋2）</div>
+  <button class="btn" onclick="alert('（草圖）這裡會跳出 LINE 分享，把專屬連結傳給還沒亮燈的夥伴')">叫還沒亮燈的夥伴來坐 💬</button>
+  <button class="link" onclick="go(1)">↺ 從頭再看一次</button>
+ </section>
+
+ <div class="dots"><span class="on"></span><span></span><span></span></div>
+</div>
+
+<h2>一、為什麼第一步是「認座位」，不是「填資料」</h2>
+<ol>
+<li><strong>不要讓玩家填表。</strong>每多一個欄位，就少一批人。資料由教練與夥伴先填好，玩家打開連結只要按一個鈕「是我，沒錯」。</li>
+<li><strong>一進場就不是零分。</strong>座位一亮就 ＋10，直接升到第 2 級。研究發現：集點卡先送兩格，比從零開始的人更多人集滿（洗車集點卡實驗）。</li>
+<li><strong>空場是遊戲的大忌。</strong>第三個畫面讓他看到觀眾席有人亮燈、也有人還是灰的，自然會想把朋友叫來坐。觀眾席越滿，越多人想進來。</li>
+<li><strong>先只露一個數字。</strong>17 個稱號、導師席、裝備，第一天全部先藏起來，一次只教一件事：下次開會簽到，再亮一格。</li>
+<li><strong>不用帳號密碼。</strong>每人一條專屬連結（像為你轉身的導師編輯連結），點開就是自己的座位。</li>
+</ol>
+
+<h2>二、教練收集資料：每人只要這幾樣</h2>
+<table>
+<tr><th>欄位</th><th>會員</th><th>友好夥伴</th></tr>
+<tr><td>姓名</td><td>✅ 已有（94 位）</td><td>要收</td></tr>
+<tr><td>公司／品牌</td><td>✅ 已有（89 位）</td><td>要收</td></tr>
+<tr><td>屬於哪個俱樂部／單位</td><td>✅ 已有</td><td>要收</td></tr>
+<tr><td>手機或 LINE（傳專屬連結用，<strong>不公開</strong>）</td><td>✅ 已有</td><td>要收</td></tr>
+<tr><td><strong>大頭照</strong></td><td>要收</td><td>要收</td></tr>
+<tr><td><strong>一句話：我能幫誰解決什麼</strong></td><td>要收（名片庫有些可先套）</td><td>要收</td></tr>
+<tr><td>入會年月（年資加分用）</td><td>要收</td><td>不用</td></tr>
+</table>
+<p>收的時候<strong>不用整理格式</strong>：名片照片、LINE 自我介紹、截圖，直接丟給 AI，由 AI 整理進玩家資料。友好夥伴的座位，一樣要他本人按「是我」才亮燈，等於本人同意公開。</p>
+
+<h2>三、這一版先不做的</h2>
+<ul><li>積分細項、稱號、排行榜：等觀眾席亮燈過半再打開。</li><li>見證、一對一雙方確認按鈕：第二步再做。</li></ul>
+</main>
+<script>
+function go(n){document.querySelectorAll('.screen').forEach((e,i)=>e.classList.toggle('on',i===n-1));
+ document.querySelectorAll('.dots span').forEach((e,i)=>e.classList.toggle('on',i===n-1));
+ if(n===2){var b=document.getElementById('bar');b.style.width='0';setTimeout(function(){b.style.width='40%'},80)}}
+(function(){var g=document.getElementById('grid'),lit=[0,2,3,5,9,11,14,17,20,22,27,31],h='';
+ for(var i=0;i<40;i++){h+='<div class="s'+(i===12?' me':lit.indexOf(i)>-1?' lit':'')+'"></div>'}g.innerHTML=h})();
+</script>
+</body></html>
