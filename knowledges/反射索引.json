@@ -1388,6 +1388,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-GUESTS-UPDATE-DASHBOARDS-FIRST",
+      "moment": "prompt",
+      "match": "來賓總覽|來賓總表|更新來賓|來賓數字|PALMS|邀約排行",
+      "say": "更新來賓數字先看三個分會戰情表有沒有資料（zhenzuan-guests／zhenxin-guests／zhencheng-guests 的 guest_list），不要一上來就進 BNI Connect。流程：BNI-Training 跑 guests_build_data.py → guests_build_html.py（官方 PALMS 到 8/31＋戰情表補 9/1 以後）。只有要新月數節點才請教練匯 PALMS（地區報表一份含全部分會）。記憶 reference_guests_overview_update_flow_palms_plus_dashboards_2026-10-05。",
+      "level": "remind",
+      "situation": "教練提到來賓總覽／來賓數字更新時",
+      "source": "教練 2026-10-05 01:3x 糾正（準備進 Connect 抓 40 份報表，被問 tokens）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
