@@ -39,6 +39,17 @@
 - 不成立（教練不是講師，或沒有報名機制）→ 不列入。大樹小講是教練自己的品牌清單，掛錯別人的場次等於替教練背書。
 - 注意：只改 `event.db`＋（教練要同步時）GitHub Pages；**Netlify 正式站（bigtree-tw）要教練說「推」才部署**（`netlify_deploy_guard.sh` 會擋）。`event.bymyway.com/bigtree/` 是即時從資料庫渲染，改完就看得到。
 
+### 規則四（2026-10-04 追加）：列入「大樹小講」的活動，結束後一定自動進「過往講座歷史紀錄」
+> 教練口語別名：「歷史頁面」「歷史紀錄」「過往講座」「辦過的活動要留歷史」。
+> 教練原話（2026-10-04）：「任何我們在『大樹小講』上架的活動，結束之後一定要自動納入歷史頁面。」
+> 起因：9/19 中正大學社團幹部專場辦完，沒有進歷史頁（歷史頁是手動維護的清單，沒人補），教練 10/04 發現。
+- **機制（不靠記得）**：`scripts/bigtree_history_sync.py`，launchd `ai.openclaw.bigtree-history-sync` 每天 00:20 自動跑（日期一過就是「結束之後」）。它掃 `event.db` 裡 `site='bigtree'`、`status='active'`、日期已過的場次，歷史頁（`github_repos/bigtree/archive/lecture-history.html` 的 `EVENTS`）還沒有那一天的就自動補一張卡片，commit + push 到 GitHub；`event.bymyway.com/bigtree/archive/lecture-history.html` 直接讀本機檔案，補完立刻看得到。
+- **海報**：優先抓該場 `event_url` 活動網頁的 `og:image`（沒有就找 `edm.jpg`）；抓不到就自動產生一張文字卡（日期＋活動名稱＋地點），不會因為缺圖就漏掉。
+- **AI 上架時要做的只有兩件事**：① 該場 `events` 列 `site='bigtree'`、`status='active'`；② `event_url` 填活動網頁網址（海報才抓得到）。**不用手動加歷史**；取消的場次要把 `status` 改成 `cancelled`（才不會被補進歷史）；名稱含「待定」的佔位場次不會被補。
+- **驗證**：`python3 scripts/bigtree_history_sync.py --dry-run` 會列出「還沒進歷史、將被補登」的場次；空的就是都涵蓋了。紀錄檔 `distill/bigtree_history_sync.log`。
+- **不碰 Netlify**：只改 GitHub 與本機檔案；Netlify 的 bigtree-tw 版要教練說「推」才更新（`netlify_deploy_guard.sh` 規定）。
+- 首次實跑（2026-10-04）：補進 9/19 中正大學（歷史頁 24→25 場），其餘場次本來就都在。
+
 ## ✅ 2026-09-24 起的做法：一步到位，全自動（下方手動7步驟改為備援／歷史參考）
 
 教練以Opus 5.5做團隊體檢後拍板執行：大樹作品跟店家策展共用同一個上傳網址，**只差 `kind` 一個欄位**，系統自己完成全部步驟，不再讓AI手動改coach888網頁。

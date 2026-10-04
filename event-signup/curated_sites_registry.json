@@ -412,6 +412,19 @@
       "status": "live",
       "source_package": "20261002-095301__nanying-tut-memory.zip",
       "no_shop_card": true
+    },
+    {
+      "slug": "bigtree-1107",
+      "title": "用手機就能玩 AI ｜ 11/7（六）KR養生廚房．大樹教練",
+      "description": "零基礎學AI第四場，這次主題「用手機就能玩AI」。11/7（六）14:00–16:30，台南KR養生廚房，免費入場。現場做網頁、用SUNO做音樂、玩NotebookLM、AI出圖，全程只用你手上那支手機。",
+      "category": "大樹小講活動",
+      "event_url": "https://event.bymyway.com/curated/bigtree-1107/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-04 14:00",
+      "status": "live",
+      "source_package": "複製自 bigtree-1003（教練 2026-10-04 指示，留歷史頁面）",
+      "no_shop_card": true,
+      "repo": "Coach1973/bigtree-1107"
     }
   ],
   "redirects": {
