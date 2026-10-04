@@ -1,0 +1,203 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>信任裝備探測器方案</title>
+<style>body{font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:#f6f4ef;color:#222;margin:0;line-height:1.7}
+main{max-width:900px;margin:0 auto;padding:16px}h1{font-size:24px;color:#2f6b4f}h2{font-size:20px;color:#2f6b4f;border-bottom:2px solid #cfe0d6;padding-bottom:4px;margin-top:32px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:#fff;display:block;overflow-x:auto}th,td{border:1px solid #ddd;padding:6px 8px;text-align:left;vertical-align:top}th{background:#e8f1ec}
+blockquote{background:#fff8e6;border-left:4px solid #e0b84d;margin:12px 0;padding:8px 12px}code{background:#eee;padding:1px 4px;border-radius:4px}</style></head>
+<body><main><h1>信任遊戲｜信任裝備探測器・可行方案 v1</h1>
+<blockquote>
+<p>2026-10-04 台灣時間 20:55，軍師（Opus 5.5）依教練 20:31 口述整理。
+教練比喻：像玄幻武俠小說的「天靈根探測器」。我們常講「打裝備」，裝備＝贏得別人的信任。
+畫面主問句（教練原話）：「<strong>請評估你目前可以取得的信任裝備有哪些？</strong>」</p>
+</blockquote>
+<hr />
+<h2>〇、一句話</h2>
+<p>選名字 → 系統先把「算得出來的裝備」亮好 → 本人勾選「自己記得的裝備」→ 按「開始探測」→ 得到等級和稱號。</p>
+<h2>一、名稱（教練要「讓大家覺得舒服」）</h2>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>味道</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信任裝備探測器</strong>（軍師推薦）</td>
+<td>跟「天靈根探測器」同一個味道；「探測」是發現你本來就有的，不是考試</td>
+</tr>
+<tr>
+<td>信任裝備鑑定所</td>
+<td>遊戲裡拿裝備去鑑定的感覺</td>
+</tr>
+<tr>
+<td>我的信任寶庫</td>
+<td>最溫和、最不像測驗</td>
+</tr>
+</tbody>
+</table>
+<p>按鈕文字：「開始探測」。</p>
+<h2>二、整理教練的思緒：資料只有三種來源</h2>
+<table>
+<thead>
+<tr>
+<th>來源</th>
+<th>內容</th>
+<th>誰來做</th>
+<th>真鑽現況</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① <strong>菁英表</strong></td>
+<td>姓名、專業類別、電話、希望合作對象</td>
+<td>教練給 PDF，AI 建座位</td>
+<td>✅ 47 位座位已上線（2026-10-04）</td>
+</tr>
+<tr>
+<td>② <strong>系統紀錄</strong>（自動算，本人不用填）</td>
+<td>入會日→年資、帶來賓人數、培訓場數</td>
+<td>AI 從 BNI Connect 匯出的資料算</td>
+<td>✅ 47 位都有入會日；帶來賓 8 年 2,910 筆、培訓 8 年 879 筆（2018-08 起，正好 96 個月）</td>
+</tr>
+<tr>
+<td>③ <strong>自己填＋夥伴幫填</strong>（維基百科式、誠信原則）</td>
+<td>每一屆職務、綠燈、綠燈分數、連續 100 分、金質獎章、DnA</td>
+<td>本人＋夥伴</td>
+<td>待開放</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>①②已經不用再麻煩會員；<strong>教練說的「不用再填專業和電話，以菁英表為主」已落實</strong>：座位頁的姓名、公司、專業、希望合作對象改成唯讀（bni-chapters <code>e32ed10</code>）。</li>
+<li>入會日來源：<code>claude-brain/data/bni_region_training_raw.json</code> 的 <code>induction_date</code>（2026-08-18 從 BNI Connect 培訓報表匯出）。5 個正式分會現任 94 位都有（真鑽49／真鑫23／真誠15／真愛5／真富2）。</li>
+</ul>
+<h2>三、探測器畫面（三步）</h2>
+<ol>
+<li><strong>選名字</strong>：跟「認座位」同一個入口（分會頁「我要建立我的簡介」）。</li>
+<li><strong>「請評估你目前可以取得的信任裝備有哪些？」</strong></li>
+<li>🔒 <strong>系統已確認</strong>（不能改）：入會日／年資、帶來賓幾位、上過幾場培訓</li>
+<li>✍️ <strong>你可以補上的</strong>：職務（選屆別＋職務）、是否綠燈會員、最近綠燈分數、連續 100 分紀錄、金質獎章次數、DnA 團隊</li>
+<li><strong>按「開始探測」</strong> → 結果：信任階段與等級＋稱號（多條並行）＋可分享到 LINE 的結果卡。</li>
+</ol>
+<p><strong>誠信機制</strong>：每一筆自填資料旁邊寫「誰填的、什麼時候填」；任何人覺得不對可按「回報管理員」→ 通知教練 → 教練跟當事人核對、請他補充。每屆職務是公開的，胡說會被看出來。</p>
+<h2>四、職務權重（教練 10/04 定）→ 每屆加分（數字草案）</h2>
+<table>
+<thead>
+<tr>
+<th>權重</th>
+<th>職務</th>
+<th>每屆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一（最高）</td>
+<td>主席、副主席（會員協調人）、秘書財務</td>
+<td>＋30</td>
+</tr>
+<tr>
+<td>第二</td>
+<td>導師協調人、活動協調人、成長協調人、教育協調人、來賓接待組組長、網站管理員</td>
+<td>＋20</td>
+</tr>
+<tr>
+<td>第三</td>
+<td>委員會（副主席底下帶的委員會）</td>
+<td>＋10</td>
+</tr>
+<tr>
+<td>第四</td>
+<td>各組組員（來賓接待組、諮詢組、回訪組、產業小組等）</td>
+<td>＋5</td>
+</tr>
+</tbody>
+</table>
+<p>取代積分表 v1 的「幹部 ＋10、領導團隊 ＋20」。稱號「連續職務」照舊（連續 2／3／4…屆）。</p>
+<h2>五、綠燈與獎章（教練 10/04 定）</h2>
+<ul>
+<li><strong>綠燈會員</strong>：是／否。</li>
+<li><strong>綠燈分數</strong>：70 分起，每 5 分一級（70／75／80／85／90／95／100，共 7 級）；85 分以上＝健康，100 分＝非常投入。</li>
+<li><strong>滿分綠燈</strong>（新稱號）：連續幾週、或連續幾個月維持 100 分，非常加分。</li>
+<li><strong>金質獎章</strong>：次數（積分表 v1：每次 ＋30）。</li>
+</ul>
+<h2>六、年資怎麼算</h2>
+<ul>
+<li><strong>以 BNI Connect 入會日為準</strong>：官方紀錄，大家沒爭議。</li>
+<li>真鑽有 8 位的帶來賓或培訓紀錄比入會日還早。這些人在探測器上標「回鍋」，之前的年資可以自己補（誠信原則）。</li>
+<li>真鑽年資分布（入會年）：2018 年 1、2019 年 4、2020 年 3、2021 年 3、2022 年 5、2023 年 12、2024 年 6、2025 年 8、2026 年 5。</li>
+</ul>
+<h2>七、探測結果會亮的稱號（第一版先做資料齊的）</h2>
+<table>
+<thead>
+<tr>
+<th>稱號（積分表 v1）</th>
+<th>第一版資料</th>
+<th>現況</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>嚮導（帶來賓人數）</td>
+<td>系統紀錄</td>
+<td>✅ 可算</td>
+</tr>
+<tr>
+<td>修煉大師（培訓）</td>
+<td>系統紀錄（場數；分值表建好再換成分數）</td>
+<td>✅ 可算</td>
+</tr>
+<tr>
+<td>連續職務／職務</td>
+<td>自填＋夥伴幫填</td>
+<td>第一版開放</td>
+</tr>
+<tr>
+<td>滿分綠燈（新）</td>
+<td>自填</td>
+<td>第一版開放</td>
+</tr>
+<tr>
+<td>金質獎章</td>
+<td>自填</td>
+<td>第一版開放</td>
+</tr>
+<tr>
+<td>伯樂（帶進會員）</td>
+<td>來賓名單比對</td>
+<td>⏳ 目前只對到 1 組，先不放</td>
+</tr>
+<tr>
+<td>其他（一對一、引薦、見證…）</td>
+<td>要新按鈕</td>
+<td>第二步</td>
+</tr>
+</tbody>
+</table>
+<h2>八、教練接下來收什麼（越少越好）</h2>
+<table>
+<thead>
+<tr>
+<th>對象</th>
+<th>只要給</th>
+<th>其他 AI 自己來</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正式分會（真富、真愛、真誠、真鑫）</td>
+<td><strong>最新菁英表 PDF</strong>（跟真鑽一樣）</td>
+<td>入會日、帶來賓、培訓都已經有</td>
+</tr>
+<tr>
+<td>籌備會（真AI、真功夫、真樂齡、真貴）</td>
+<td>名單：姓名＋專業＋電話（任何格式：照片、截圖、LINE 都可以）</td>
+<td>籌備會夥伴還不是會員，沒有入會日；探測器先亮「開拓者」等籌備期稱號</td>
+</tr>
+</tbody>
+</table>
+<h2>九、下一步（軍師）</h2>
+<ol>
+<li>教練選定名稱後，做探測器第一版：先上真鑽，系統紀錄自動亮、職務／綠燈／金質獎章開放自填＋幫填＋回報管理員。</li>
+<li>教練每給一份菁英表，就建好該分會座位。</li>
+</ol></main></body></html>
