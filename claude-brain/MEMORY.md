@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 複製舊活動頁做新場次(留歷史頁)：QR必須重做並解碼驗證(舊10/3 EDM的QR指向臨時網址)、換圖要換檔名(快取4小時)、events/registry/歷史自動補登；＋Keynote .key轉pptx的AppleScript；已掛反射R-CLONE-EVENT-PAGE-NEW-DATE(2026-10-04)](reference_clone_event_page_and_keynote_export_2026-10-04.md)
 - [🔧 大樹教育官方網站＝https://www.bymyway.com/（教練10-04親口永久指定），頁尾官方連結用；官方LINE/FB粉專同檔；已掛反射R-BIGTREE-EDU-OFFICIAL-SITE(2026-10-04)](reference_bigtree_education_official_site_bymyway_com_2026-10-04.md)
 - [🔴🔴 教練用手機時「已在Mac的Chrome開過」＝沒交付：三處腳本文字教我這樣講已改源頭＋新反射R-OPENED-ON-MAC-NOT-DELIVERY擋下；交付=獨立一行https網址+curl驗證，已上架game-1004(2026-10-04)](feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04.md)
 - [📜 教練要整場原話逐字報告書：從jsonl的queue-operation enqueue抽(user條目會合併)+逐字比對+軍師註分色；已掛反射R-SESSION-VERBATIM-REPORT(2026-10-04)](reference_session_verbatim_report_from_jsonl_2026-10-04.md)
