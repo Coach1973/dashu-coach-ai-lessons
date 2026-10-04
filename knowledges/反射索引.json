@@ -1437,6 +1437,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-COMMITTEE-NAME-UNMARKED-IS-HUI-YUAN-WEI-YUAN-HUI",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "match": "(?is)(?=.*(member_roles|role_label|seed_leadership|sub\\())(?=.*(委員會|專員))",
+      "say": "會員委員會命名：所有委員會成員都叫「委員」，裡面才分四大專員（品保專員、營造專員、關係專員、輔導專員，國家辦公室名稱）。教練沒特別標註專員的一律寫「會員委員會」，標了才寫「會員委員會 - ○○專員」；不自己推測誰是哪一種專員，不用官網的舊譯名（品質保證、社區建設者、會員關係、會員參與）。",
+      "level": "remind",
+      "situation": "要寫或改會員卡片的委員會標籤時",
+      "source": "教練 2026-10-05 04:19～04:20 提供國家辦公室專員名稱並強調命名規則（project_business_club_game_design_principles_2026-10-03.md）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
