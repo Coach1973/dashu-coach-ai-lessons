@@ -3,6 +3,7 @@
 - [📜 教練要整場原話逐字報告書：從jsonl的queue-operation enqueue抽(user條目會合併)+逐字比對+軍師註分色；已掛反射R-SESSION-VERBATIM-REPORT(2026-10-04)](reference_session_verbatim_report_from_jsonl_2026-10-04.md)
 - [🎮 商務遊戲(商業俱樂部)已裁示原則：贏＝信任、數據一律公開不可隱藏(高調低調只管慶祝)、培訓月上限10分防刷、BNI外也能玩、稱號多條並行、裝備＝見證、年資要加分(10-04糾正)；題庫在knowledges(2026-10-03)](project_business_club_game_design_principles_2026-10-03.md)
 - [💽 聯想整機還原備份：E槽兩份(9/19、10/02)，空間不夠時9/19可刪(教練10-03親口)；D槽80GB已清掉(2026-10-03)](reference_lenovo_system_image_backups_2026-10-03.md)
+- [⌨️ 教練說「輔助鍵盤」＝跑 scripts/show_accessibility_keyboard.sh 叫出螢幕虛擬鍵盤；教練習慣縮到最小、按叉才消失(2026-10-04)](reference_accessibility_keyboard_trigger_2026-10-04.md)
 - [🔧 蘋果晶片 Mac 安裝 macOS 更新要 softwareupdate --user --stdinpass，只 sudo 會 Failed to authenticate；用 scripts/macos_update.sh(2026-10-03)](reference_macos_update_cli_apple_silicon_needs_user_stdinpass_2026-10-03.md)
 - [🔧 Claude 的 10GB vm_bundles＝Cowork 虛擬機，最後用 9/21，已搬 SSD 改捷徑，不要刪(2026-10-03)](reference_claude_cowork_vm_bundle_10gb_2026-10-03.md)
 - [🔴 Mac 的 Preboot 磁碟區(約18GB)不是已下載的系統更新，更新完不會省空間；前一場貼錯標籤，教練 10/03 追問才發現(2026-10-03)](feedback_mac_preboot_volume_not_pending_update_2026-10-03.md)
