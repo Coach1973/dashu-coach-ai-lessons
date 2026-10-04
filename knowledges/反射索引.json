@@ -581,7 +581,7 @@
       "top30": 9,
       "kind": "需求型",
       "enforced_by": "scripts/auto_chrome_after_html_edit.sh＋stop_rules_master.py J",
-      "say": "改了 HTML 會自動用 Chrome 開給教練看；沒開就回話會被擋。localhost 網址要自己打開，不叫教練輸入。",
+      "say": "改了 HTML 會自動用 Chrome 開在 Mac 螢幕上，只有人坐在 Mac 前才看得到；教練用手機或遠端時這不算交付，要給 https 網址（獨立一行）並用 curl 驗證。localhost 網址要自己打開，不叫教練輸入。",
       "situation": "要改網頁時",
       "source": "feedback_html_preview_chrome_only.md",
       "audience": [
@@ -1236,6 +1236,21 @@
       "situation": "教練要求把整場對話的原話逐字保留給下一個對話框",
       "source": "2026-10-04 教練要求整場原話一字不漏做成網頁報告書（手機版 context 200K 快滿）；記憶 reference_session_verbatim_report_from_jsonl_2026-10-04",
       "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-OPENED-ON-MAC-NOT-DELIVERY",
+      "moment": "reply",
+      "top30": 9,
+      "kind": "防錯型",
+      "match": "(?s)^(?!.*https?://).*(?:(?:在|於|用)[^\\n]{0,4}(?:Mac|MAC|蘋果|本機)[^\\n]{0,12}(?:Chrome|瀏覽器|視窗|網頁|HTML|html|頁面|報告)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了|開好)|(?:Chrome|瀏覽器)[^\\n]{0,6}(?:在|於)[^\\n]{0,2}(?:Mac|MAC|蘋果|本機)[^\\n]{0,6}(?:開過|開啟|打開|開了|跳出|跳了)|(?:Mac|MAC|蘋果|本機)[^\\n]{0,4}(?:開過了?|跳出來了?)|(?:已|有)(?:經)?跳出來)",
+      "say": "回覆說「已在 Mac 開過／跳出來了」但沒給網址：教練用手機或遠端時，Mac 螢幕上的視窗他根本看不到，這不算交付（10/04 教練親口抓到，試金石案例101）。要交付就把網頁放到他打得開的 https 網址（獨立一行），用 curl 驗證狀態 200＋內容再給；真的只是自己查證，就別寫成開給教練看。",
+      "level": "block",
+      "situation": "要跟教練回報網頁／HTML 已經開好、跳出來時",
+      "source": "教練 2026-10-04 原話「說我已經在 Mac 開過了，哪裡？我根本都沒看到」／試金石案例101／守則#17",
+      "enforced_by": "scripts/reflex_router.py reply＋stop_rules_master.py J 改字",
       "audience": [
         "coach"
       ]

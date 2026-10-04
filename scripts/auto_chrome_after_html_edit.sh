@@ -46,7 +46,7 @@ try:
         ["open", "-a", "Google Chrome", f"file://{file_path}"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
     )
-    print(f"🔴 自動跳Chrome：{file_path} 已改動，已自動開啟本機檔案給教練看。", file=sys.stderr)
+    print(f"🔴 已在 Mac 螢幕開啟 Chrome：{file_path}（只有坐在 Mac 前才看得到；教練用手機或遠端時這不算交付，要給 https 網址並用 curl 驗證）。", file=sys.stderr)
     print("若這是樣板檔(Jinja/後端渲染)，畫面可能不完整，記得額外開真正的server網址驗證。", file=sys.stderr)
 except Exception as e:
     print(f"⚠️ 自動跳Chrome失敗：{e}", file=sys.stderr)
