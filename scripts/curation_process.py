@@ -825,7 +825,18 @@ def process_one(pkg_path: Path) -> None:
             raise RuntimeError("解壓縮後找不到index.html，這個檔案可能不是一個完整的靜態網站")
         # 若index.html不在頂層，把它所在的資料夾內容拉到頂層
         if index_file.parent != tmp_extract:
+            # 2026-10-04 yousure 事故：html 在 production/ 裡用「../assets/」引用同層外的圖片，
+            # 拉到頂層後「../」變成指向網站外面，36 張圖全部 404。拉上來的 html 要把「../」
+            # 改成原本上一層資料夾相對於頂層的路徑。
+            up_rel = index_file.parent.parent.relative_to(tmp_extract).as_posix()
+            up_prefix = "" if up_rel == "." else up_rel + "/"
             for item in index_file.parent.iterdir():
+                if item.suffix.lower() in (".html", ".htm") and item.is_file():
+                    text = item.read_text(encoding="utf-8", errors="ignore")
+                    fixed = re.sub(r'''((?:src|href)=["']|url\(["']?)\.\./''', lambda m: m.group(1) + up_prefix, text)
+                    if fixed != text:
+                        item.write_text(fixed, encoding="utf-8")
+                        log(f"⚙️ {item.name} 從子資料夾拉到頂層，已把「../」路徑改成「{up_prefix or './'}」")
                 shutil.move(str(item), str(tmp_extract / item.name))
 
         html_text = index_file.read_text(encoding="utf-8", errors="ignore") if index_file.exists() else (tmp_extract / "index.html").read_text(encoding="utf-8", errors="ignore")
