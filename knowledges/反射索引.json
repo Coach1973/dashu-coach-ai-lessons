@@ -1226,6 +1226,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-SESSION-VERBATIM-REPORT",
+      "moment": "prompt",
+      "match": "(?is)(一字不漏|逐字|原話|所有.{0,6}說過的話|說過的每一句).{0,40}(報告書|網頁|做成|保留|紀錄|記錄|下一[份個場]?對話)|(完整保留|保留).{0,12}(我|教練).{0,8}(說過|說的).{0,6}(話|每一句)",
+      "say": "教練要把整場原話逐字留給下一個對話框：不憑記憶重寫。從對話記錄 jsonl 的 queue-operation enqueue 抽原話（不是 user 條目，會被合併），做成 knowledges 下的 html，逐字比對後 commit。做法與驗證見記憶 reference_session_verbatim_report_from_jsonl_2026-10-04；成品範例 knowledges/2026-10-03_百人同行_遊戲化設計_教練原話逐字報告書.html。",
+      "level": "remind",
+      "situation": "教練要求把整場對話的原話逐字保留給下一個對話框",
+      "source": "2026-10-04 教練要求整場原話一字不漏做成網頁報告書（手機版 context 200K 快滿）；記憶 reference_session_verbatim_report_from_jsonl_2026-10-04",
+      "kind": "需求型",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1360,6 +1373,7 @@
     "reference_openclaw_hook_inject_format": "已過時（10-02 查原始碼更正）；防再犯已由 R-OC-HOOK-INJECT-DEAD 接手",
     "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）",
     "feedback_open_settings_to_exact_spot_only_password_left_2026-10-02": "已有程式：scripts/stop_rules_master.py A2b（選單路徑兩段箭頭又沒寫已幫您打開→擋）",
-    "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE"
+    "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE",
+    "reference_session_verbatim_report_from_jsonl_2026-10-04": "併入 R-SESSION-VERBATIM-REPORT"
   }
 }
