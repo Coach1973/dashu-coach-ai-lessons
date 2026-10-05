@@ -35,3 +35,9 @@ move_to_cloud 若遇 uncommitted changes：逐一檢查再 commit，不要 `git 
 
 ## 4. 2026-10-05 20:55 補：claude --cloud 在「沒信任過的資料夾」會卡住
 在 `~/github_repos/bni-chapters` 執行 `script -q log claude --cloud "..."`，啟動器停在「Is this a project you trust? Yes, I trust this folder」等 Enter，不是掛掉；按信任＝改使用者的信任設定，要教練同意才按（或教練在 claude.ai/code 選 repo 自己開）。已用 `pkill -9 -f "claude --cloud"` 收掉，沒開出雲端頁、沒花雲端額度。bni-chapters repo＝`Coach1973/bni-chapters`（預設分支 master，61 個檔、2.6MB，資料庫／.env／uploads 都在 .gitignore），雲端拿得到程式、拿不到正式資料庫與 .env，要測試得用假資料庫。教練週額度 10/05 20:54 已 76%（週三 13:00 台灣時間重置）；本場對話框已 38 萬 token，每輪都要重讀，開新對話框是最直接的省法。
+
+## 5. 2026-10-06 補：開雲端對話要用「終端機分頁」，不要用 Bash 背景 script
+- 10/05 23:19 用 `mcp__terminal__run_in_terminal`（真終端機分頁）跑 `cd ~/github_repos/bni-chapters && claude --cloud "..."`：雲端頁頂端掛著 bni-chapters 倉庫與分支，推得上去。
+- 10/06 02:12 改用 Bash 工具 `( script -q log claude --cloud "..." < /dev/null & )`：session 建立了（`Created cloud session`），但**沒掛倉庫**（頁面只有 Environment: Default；雲端說沒有 origin、`GitHub access to this repository is not enabled for this session`），做完 4 個 commit 推不出去。觀察到的差異只有開法；確切原因沒查證，但以後一律走終端機分頁。
+- 開完要驗：雲端頁（claude.ai/code/session_...）頂端要看得到倉庫名與分支；沒有就是開壞了，別讓它開工。
+- 補救：教練在網頁版自己把倉庫接上既有對話即可（10/06 02:43 教練做了），雲端不用重做。誤請雲端「貼出 diff」會白耗教練額度，發現開壞時第一動作是停手回報。
