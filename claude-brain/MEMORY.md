@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴 教練畫面看不到我存的 .md 提案：重點直接寫回覆、檔案只當存檔、不重要不用給他看(2026-10-05 20:12)](feedback_coach_cannot_see_md_plans_put_key_points_in_reply_2026-10-05.md)
 - [🔧 team.bymyway.com 第一分會(team-01)夥伴座位＋認座位功能：名單=戰情表姓名扣陳佩君陳宜璟，以戰情表姓名為主；與team01.bymyway.com戰情表是兩個站(2026-10-05)](reference_team_bymyway_team01_seats_claim_2026-10-05.md)
 - [🔧 分會頁「分會之光」後台新增卻看不到＝有「分會精神」就不顯示(if/elif)；金質獎章區獨立資料表，改名單跑seed_gold_medals(2026-10-05)](reference_chapter_page_glory_hidden_by_spirit_and_gold_medal_section_2026-10-05.md)
 - [🔧 BNI官方分會頁(bnitainan.com.tw)領導幹部名單＋大頭照可不登入用POST chapterdetail/display取得，同步腳本sync_official_photos(本人上傳的不覆蓋、換屆或換照片時重跑)；真鑫/真鑽分會代號在檔內(2026-10-05)](reference_bni_official_chapter_page_leaders_photos_api_2026-10-05.md)
