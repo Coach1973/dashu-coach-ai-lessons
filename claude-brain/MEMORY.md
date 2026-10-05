@@ -1,4 +1,5 @@
 # Memory Index
+- [🏛️ 年底新分會理想三個/務實兩個(最有把握真AI)，候選真AI/真功夫/真樂齡全寫進座位；四分會四大象限主軸、座位版選A最薄一層(教練10/06 02:11)](project_new_chapters_seat_plan_decisions_2026-10-06.md)
 - [📼 「100 個案例」＝教練三四年的 BNI 見證影片，在他的 YouTube 非公開連結、Mac 沒有；先做簡短文字版，有興趣申請才限時開放；文字版不放影片連結與可辨識個資(2026-10-06)](project_100_cases_youtube_unlisted_text_first_2026-10-06.md)
 - [🔧 「產業服務鏈」＝BNI 專用術語(大家共同服務特定族群)；語音聽成「產業服務列／產業伏變」都是它，對應產業鏈SOP、905項清單(教練10/06糾正)](reference_industry_service_chain_term_2026-10-06.md)
 - [🔧 大台南小幫手(bni_tainan)資料庫優先於網路＋位階順序檔(bni_rank_ladder.md)；改人設要封存舊對話並新對話實測(教練10/05 04:08糾正)](reference_bni_tainan_db_first_and_rank_ladder_2026-10-05.md)
