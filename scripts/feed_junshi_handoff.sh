@@ -25,7 +25,7 @@ MARKER="/tmp/junshi_fed_${SESSION_ID}"
 
 # 「開工」整句 = 強制重餵口令（/clear 後仍可重觸發）
 FORCE_REFEED=0
-if printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*開工[[:space:]]*$|開工了|開工。|開工！|開工幹活"; then
+if printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*開工[0-9０-９:：[:space:]]*$|開工了|開工。|開工！|開工幹活"; then
   FORCE_REFEED=1
 fi
 
@@ -35,7 +35,7 @@ if [[ "$FORCE_REFEED" -eq 0 && -n "$SESSION_ID" && -f "$MARKER" ]]; then
 fi
 
 # 觸發詞檢測：整句僅「開」「開工」「工作」「幹活」單一動詞 → 觸發；含「軍師」字眼也觸發
-if ! printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*(開|開工|工作|幹活|開始工作)[[:space:]。！!]*$|軍師|接續指揮所|JunShi|junshi"; then
+if ! printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*(開|開工|工作|幹活|開始工作)[0-9０-９:：[:space:]。！!]*$|軍師|接續指揮所|JunShi|junshi"; then
   exit 0
 fi
 
