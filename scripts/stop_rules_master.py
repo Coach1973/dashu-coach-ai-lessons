@@ -229,8 +229,14 @@ def _html_written_by_bash(command, window_start):
         out.append(m.group(1))
     # 範圍照舊規則：只看以 ~ . / 開頭、沒有變數的具體路徑（相對路徑的 `cp index.html index.html.bak` 備份指令舊規則就不算，維持）
     concrete = lambda p: "$" not in p and "*" not in p and re.match(r"[~./]", p) is not None
-    for seg in re.finditer(r"\b(?:cp|mv|rsync)\s+([^&;|\n)]*)", command):
-        args = [a.strip("'\"") for a in seg.group(1).split() if not a.startswith("-")]
+    # 只認「指令位置」的 cp/mv/rsync（開頭、換行、; & | ( 之後，或 do／then 之後）；被引號包住的文字（測試腳本、commit 訊息）不算
+    for seg in re.finditer(r"(?:^|[\n;&|(]|\bdo\b|\bthen\b)[ \t]*(?:sudo[ \t]+)?(?:cp|mv|rsync)\s+([^&;|\n)]*)", command):
+        args = []
+        for tok in seg.group(1).split():
+            if not re.fullmatch(r"[\w./~$*{}\"'@%+=:,-]+", tok):
+                break  # 遇到不像檔名的字（中文標點等）＝這是文字敘述不是指令參數（commit 訊息裡寫到 rsync 會被誤抓）
+            if not tok.startswith("-"):
+                args.append(tok.strip("'\""))
         if len(args) < 2:
             continue
         srcs, dest = args[:-1], args[-1]
