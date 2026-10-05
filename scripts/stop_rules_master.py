@@ -207,6 +207,46 @@ TOUCHED_UTC = bool(re.search(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z",
                              "\n".join(_content_texts)))
 
 # 4) HTML 改動 vs Chrome 開啟證據（rule_html_chrome 用，只看最近 100 筆事件）
+def _event_epoch(evt):
+    """事件信封上的時間（ISO、結尾 Z）轉成秒數；讀不到回傳 None。"""
+    from datetime import datetime, timezone
+    try:
+        return datetime.strptime(str((evt or {}).get("timestamp", ""))[:19], "%Y-%m-%dT%H:%M:%S") \
+            .replace(tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return None
+
+
+def _html_written_by_bash(command, window_start):
+    """Bash 指令寫出（或 git add）的 .html 路徑。
+    cp／mv／rsync 看「目的地」（最後一個參數），不是來源：2026-10-06 把舊頁面複製出去備份，
+    抓到的是來源，被誤判成「改過」，之後約 100 個動作每輪都重複跳出（記憶 feedback_stop_hook_regex_false_positive）。
+    目的地是資料夾或帶 $變數／萬用字元，指不出目的地檔案時，改指來源頁面（沒有具體檔名的就略過）；
+    來源 .html 全都是存在、而且在這段事件之前就沒再動過＝原樣複製舊頁面，沒有新內容要查證，略過。"""
+    out = []
+    m = re.search(r"\bgit\s+add\s+(?:[\w.-]+\s+)*([~./][\w./~-]*\.html)\b", command)
+    if m:
+        out.append(m.group(1))
+    # 範圍照舊規則：只看以 ~ . / 開頭、沒有變數的具體路徑（相對路徑的 `cp index.html index.html.bak` 備份指令舊規則就不算，維持）
+    concrete = lambda p: "$" not in p and "*" not in p and re.match(r"[~./]", p) is not None
+    for seg in re.finditer(r"\b(?:cp|mv|rsync)\s+([^&;|\n)]*)", command):
+        args = [a.strip("'\"") for a in seg.group(1).split() if not a.startswith("-")]
+        if len(args) < 2:
+            continue
+        srcs, dest = args[:-1], args[-1]
+        html_srcs = [s for s in srcs if s.lower().endswith(".html") and concrete(s)]
+        named = [dest] if dest.lower().endswith(".html") and concrete(dest) else html_srcs
+        if not named:
+            continue
+        if window_start is not None and html_srcs and all(
+                os.path.isfile(os.path.expanduser(s)) and os.path.getmtime(os.path.expanduser(s)) < window_start
+                for s in html_srcs):
+            continue
+        out.extend(named)
+    return out
+
+
+_HTML_WINDOW_START = next((t for t in (_event_epoch(e) for e in EVENTS[-100:]) if t is not None), None)
 HTML_EDIT_IDX = -1
 HTML_FILES = []
 CHROME_EVIDENCE_IDX = -1
@@ -228,13 +268,10 @@ for i, evt in enumerate(EVENTS[-100:]):
             command = str(tin.get("command", ""))
             if re.search(r"open\s+-a\s+\"?Google Chrome\"?", command, re.IGNORECASE):
                 CHROME_EVIDENCE_IDX = i
-            m = re.search(
-                r"\b(?:cp|mv|rsync|git\s+add)\s+(?:[\w.-]+\s+)*([~./][\w./~-]*\.html)\b",
-                command)
-            if m:
+            for _written in _html_written_by_bash(command, _HTML_WINDOW_START):
                 HTML_EDIT_IDX = i
-                if m.group(1) not in HTML_FILES:
-                    HTML_FILES.append(m.group(1))
+                if _written not in HTML_FILES:
+                    HTML_FILES.append(_written)
 
 # 5) 這輪有沒有查過記憶檔/SOP（rule03 肯定式誤判的免責證據，只看最近 40 筆）
 HAS_MEMORY_CHECK = False
