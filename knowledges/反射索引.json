@@ -1462,6 +1462,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-CHAPTER-PAGE-GLORY-HIDDEN-BY-SPIRIT",
+      "moment": "prompt",
+      "match": "(後台|新增).{0,16}(顯示|看|出現).{0,6}(不出來|不到|沒有)|分會之光|分會精神|數據卡|(主頁|分會頁).{0,10}(沒|不).{0,4}(顯示|出現)",
+      "say": "bni-chapters 分會頁後台新增的「分會之光」數據卡不是壞掉：模板是 `{% if spirit %}分會精神{% elif stats %}分會之光`，9 個分會都有分會精神，所以分會之光永遠被擋。要顯示得改模板規則，會連動真誠、真AI等分會被隱藏的舊數據卡一起冒出來，先給教練決定。金質獎章區是獨立資料表（member_gold_medals），改名單跑 seed_gold_medals_2026-10-05.py。詳見記憶 reference_chapter_page_glory_hidden_by_spirit_and_gold_medal_section_2026-10-05。",
+      "level": "remind",
+      "situation": "教練說後台新增的東西主頁/分會頁顯示不出來，或提到分會之光、分會精神、數據卡時",
+      "source": "教練 2026-10-05 14:25「為什麼我在後台新增的東西，它的主頁顯示不出來」",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
