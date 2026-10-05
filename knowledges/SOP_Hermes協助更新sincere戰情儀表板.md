@@ -1,5 +1,11 @@
 # SOP：Hermes怎麼協助更新 sincere.bymyway.com 每週戰情資料
 
+> 🗣️ **教練口語叫法**：「更新真誠數據」「更新真誠戰情」「真誠例會出席報告」「真誠這週的資料」
+> ＝教練貼了真誠分會例會出席報告（應到/準時/缺席/早鳥/來賓名單）→ 照第5節總表，
+> 用 `scripts/sincere_weekly_update_20261001.py` 複製改名單寫入（Mac本機才連得到資料庫；
+> 聯想/宏碁收到這句話，把報告整理成信寄到Mac信箱 `cross-agent/inbox/mac/`），
+> 寫完用網頁核對（不截圖，文字比對）。
+
 > 2026-09-30建立（Mac桌面版軍師 Sonnet 5）。
 > **對象更正**：原始接力棒寫「小龍蝦已派給軍師的任務」是轉述錯誤——19:49教練是在
 > **Hermes桌面版**跟Hermes說「你寫一封信給軍師」，小龍蝦Telegram收到的是教練自己
@@ -23,15 +29,16 @@
 
 ## 2. 讀資料方式
 
-- **看目前畫面**：直接瀏覽`https://sincere.bymyway.com/`，首頁會列出3組、16位會員、
-  每週來賓/121/咖啡會議/早鳥統計、來賓完整名單、全國見證分享會出席、培訓出席。
+- **看目前畫面**：直接瀏覽`https://sincere.bymyway.com/`，首頁會列出3組、在籍15位會員
+  （資料庫16筆，其中1位`left_chapter=1`已離會、不列入）、每週來賓/121/咖啡會議/早鳥/
+  出席統計、來賓完整名單、全國見證分享會出席、培訓出席。
 - **查資料庫現況**（比看網頁更準，尤其要核對member_id時）：
   ```bash
   sqlite3 ~/github_repos/zhencheng-guests/zhencheng_guests.db \
     "SELECT id, name, team FROM members ORDER BY sort_order;"
   ```
-  常用表：`members`（16人）、`weeks`（週次+是否列入計算）、`weekly_data`
-  （每人每週guests/ones/coffee/early_bird）、`guest_list`（來賓姓名/專業/邀約人，
+  常用表：`members`（16筆、在籍15人）、`weeks`（週次+是否列入計算）、`weekly_data`
+  （每人每週guests/ones/coffee/early_bird/attendance/proxy）、`guest_list`（來賓姓名/專業/邀約人，
   跟`weekly_data.guests`是分開兩份資料，見下方3.3）、`testimony_sessions`+
   `testimony_attendance`（全國見證分享會）、`training_sessions`+`training_attendance`
   （培訓出席）。
@@ -138,11 +145,22 @@ N6「危險指令零容忍」裡「DELETE FROM...(無WHERE)」的等級。
 | 來賓名單(姓名/專業/邀約人) | `guest_list` | 教練口述→軍師寫入 | 直接SQL INSERT（3.3②） |
 | 早鳥 | `weekly_data.early_bird` | 教練口述→軍師寫入 | 直接SQL UPSERT（3.3③） |
 | 新會員加入 | `members` | 教練確認→軍師寫入 | 直接SQL INSERT（3.3④） |
+| 例會出席狀態 | `weekly_data.attendance`（`present`/`late`/`absent`）＋`proxy`（代理人，只有出席時才算） | 教練口述報告→軍師寫入 | 該週`weeks`已建立→`POST /api/update_attendance`（`{member_id,week_date,value,proxy}`）；`weeks`還沒有該週就回「此週次不開放填寫」，要先建週次（見下） |
 
-**目前系統沒有的欄位**：教練09-30貼的「真誠例會出席報告」裡的(P)準時/(A)缺席/
-(L)遲到/(M)病假/(S)代理逐人狀態、參訪人員、6個月累計代理/缺席/遲到——這套系統
-目前只算guests/ones/coffee/early_bird四項，沒有出席狀態碼欄位。若教練要這些也上
-儀表板，屬於新功能（要加表格+畫面），不是本SOP範圍，遇到時另外跟教練確認要不要做。
+**出席欄位（2026-10-01 起已有，舊版寫「系統沒有出席欄位」已過時）**：儀表板的出席統計
+是從`07/23`起逐週算的，教練貼的「真誠例會出席報告」(P)準時/(A)缺席/(L)遲到/(M)病假/
+(S)代理要拆成每人每週的`attendance`。**每週新增例會要先在`weeks`表建一筆**
+（`week_date`/`label`/`is_active=1`/`sort_order`＝目前最大值+1），之後才寫得進去。
+
+**每週例會一次寫入範本**：`scripts/sincere_weekly_update_20261001.py`
+（2026-10-05 寫入10/01那週，聯想軍師寫、Mac軍師跑）——一支腳本做完建週次＋全員出席＋
+早鳥＋來賓人數＋來賓名單，`--dry-run`先看、正式跑會先備份資料庫、重跑不會重複也不會洗掉
+會員自填的121/咖啡、在籍人數不對或找不到會員名就中止不寫。下週複製一份改`WEEK`/
+`EARLY_BIRD`/`GUESTS`/出席例外名單即可，**不要碰`seed.py`**。
+
+**仍然沒有的**：參訪人員（例如教練本人「大樹執董」不是來賓，不寫）、6個月累計
+代理/缺席/遲到（累計沒有發生日期，對不上哪一週，系統沒有地方放）。教練若要這些上
+儀表板屬新功能，另外跟教練確認。
 
 ## 6. 失敗處置
 
