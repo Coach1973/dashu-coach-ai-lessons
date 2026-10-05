@@ -48,3 +48,5 @@ GET/POST https://event.bymyway.com/api/coach888/state
 
 ## 相關
 - [[feedback_sop_must_alias_spoken_trigger_phrase_2026-09-24]]（這次架構誤解導致的實際事故案例）
+
+**2026-10-05 16:45 教練要「同一個作品重複放在最新作品」**：coach888 頁面同一個網址只會顯示在一個分類——伺服器 layout 寫兩個分類都有，畫面只留最後讀到的那個（團隊系列從 11 項掉成 10 項），頁面一存檔還會把另一邊洗掉。**要重複放，第二個必須是不同的網址字串**：信任遊戲＝團隊系列放 `https://trust.bymyway.com/game/`、最新作品放 `https://trust.bymyway.com/`（首頁 302 轉到 /game/，打開是同一頁）；items 兩個網址各一筆。寫入只 POST `coach888_layout`＋`coach888_items` 兩個 key，其餘不動；寫完用真瀏覽器開 coach1973.github.io/coach888/ 數兩區項數核對。`curation_process.register_coach888` 是「搬」（會先從其他分類移除），不能拿來做重複放。
