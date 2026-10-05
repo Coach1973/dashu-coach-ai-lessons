@@ -1499,6 +1499,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-COACH888-DUPLICATE-ENTRY-NEEDS-DIFFERENT-URL",
+      "moment": "prompt",
+      "match": "(最新作品|最近作品|大樹作品集|coach888|作品總覽).{0,30}(重複|同時|兩個地方|也放|都放|另外放)|(重複|同時|兩個地方|也放|都放|另外放).{0,30}(最新作品|最近作品|大樹作品集|coach888|作品總覽)",
+      "say": "coach888 同一個網址只會顯示在一個分類，直接寫兩個分類都有，畫面只留一個、頁面一存檔還會洗掉另一邊。要「重複放」＝第二個必須用不同網址字串（例：/game/ 與首頁 /，首頁轉址到同一頁），layout＋items 各登記；寫完用真瀏覽器開 coach1973.github.io/coach888/ 數兩區項數。curation_process.register_coach888 是搬不是複製，別用。詳見記憶 reference_coach888_server_synced_state_architecture_2026-09-24。",
+      "level": "remind",
+      "situation": "教練要把作品同時放在 coach888 兩個分類（例如最新作品＋某系列）",
+      "source": "教練 2026-10-05 16:45「那你就重複放在最近作品裡面」；第一次直接寫兩邊，畫面上變成搬過去、系列掉一項",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
