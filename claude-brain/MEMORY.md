@@ -1,4 +1,6 @@
 # Memory Index
+- [📼 「100 個案例」＝教練三四年的 BNI 見證影片，在他的 YouTube 非公開連結、Mac 沒有；先做簡短文字版，有興趣申請才限時開放；文字版不放影片連結與可辨識個資(2026-10-06)](project_100_cases_youtube_unlisted_text_first_2026-10-06.md)
+- [🔧 「產業服務鏈」＝BNI 專用術語(大家共同服務特定族群)；語音聽成「產業服務列／產業伏變」都是它，對應產業鏈SOP、905項清單(教練10/06糾正)](reference_industry_service_chain_term_2026-10-06.md)
 - [🔧 大台南小幫手(bni_tainan)資料庫優先於網路＋位階順序檔(bni_rank_ladder.md)；改人設要封存舊對話並新對話實測(教練10/05 04:08糾正)](reference_bni_tainan_db_first_and_rank_ladder_2026-10-05.md)
 - [🔴 教練畫面看不到我存的 .md 提案：重點直接寫回覆、檔案只當存檔、不重要不用給他看(2026-10-05 20:12)](feedback_coach_cannot_see_md_plans_put_key_points_in_reply_2026-10-05.md)
 - [🔧 team.bymyway.com 第一分會(team-01)夥伴座位＋認座位功能：名單=戰情表姓名扣陳佩君陳宜璟，以戰情表姓名為主；與team01.bymyway.com戰情表是兩個站(2026-10-05)](reference_team_bymyway_team01_seats_claim_2026-10-05.md)
