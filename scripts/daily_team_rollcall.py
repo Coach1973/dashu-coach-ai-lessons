@@ -34,7 +34,8 @@ VPS_STATE = WS / "logs" / "vps_healthcheck_state.json"
 CRON_DB = HOME / ".openclaw" / "state" / "openclaw.sqlite"
 STATE_OUT = WS / "logs" / "daily_rollcall_state.json"
 NOTIFY = WS / "scripts" / "notify_coach.sh"
-TM_PLIST = Path("/Library/Preferences/com.apple.TimeMachine.plist")  # 一般權限就讀得到，不用完整磁碟取用
+TM_PLIST = Path("/Library/Preferences/com.apple.TimeMachine.plist")  # 終端機讀得到；排程(launchd)沒有完整磁碟取用會 PermissionError（2026-10-05 實測，tmutil 查詢也被擋）
+BACKUP_MARK = WS / "logs" / "tm_last_started.json"  # 排程讀不到上面那份時，退而讀本腳本自己 startbackup 成功時留的時間（UTC）
 BACKUP_STALE_DAYS = 3
 
 COACH_LINE_IDS = {"u895a0ad8e49d75f8303dc3d067282dc0", "u168903487f0ba2b666ddc62b854de351"}
@@ -229,8 +230,11 @@ def line_usage(agent):
 def last_backup():
     """回傳 (最後一次備份的台灣時間, 距今幾天)；讀 Time Machine 設定檔裡的備份日期（UTC）。"""
     import plistlib
-    p = plistlib.loads(TM_PLIST.read_bytes())
-    dates = [d for dest in p.get("Destinations", []) for d in dest.get("SnapshotDates", [])]
+    try:
+        p = plistlib.loads(TM_PLIST.read_bytes())
+        dates = [d for dest in p.get("Destinations", []) for d in dest.get("SnapshotDates", [])]
+    except PermissionError:
+        dates = [datetime.fromisoformat(json.loads(BACKUP_MARK.read_text())["startedAtUTC"])]
     if not dates:
         return None, None
     last = max(dates)
@@ -255,6 +259,7 @@ def backup_when_healthy(dry):
     else:
         r = subprocess.run(["/usr/bin/tmutil", "startbackup"], capture_output=True, text=True)
         if r.returncode == 0:
+            BACKUP_MARK.write_text(json.dumps({"startedAtUTC": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()}))
             line = f"💾 備份：全員正常，已自動備份一次｜上一份 {last_txt}"
         else:
             line = f"💾 備份：啟動失敗｜上一份 {last_txt}"

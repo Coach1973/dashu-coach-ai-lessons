@@ -45,8 +45,13 @@ else
 fi
 
 # 2. 最近一次啟動的 plugin 清單是否真的包含 line
-LAST_PLUGIN_LINE=$(grep "http server listening" "$GATEWAY_LOG" 2>/dev/null | tail -1)
-if echo "$LAST_PLUGIN_LINE" | grep -q ", line,"; then
+LAST_PLUGIN_LINE=$(grep -a "http server listening" "$GATEWAY_LOG" 2>/dev/null | tail -1)
+if [ -z "$LAST_PLUGIN_LINE" ]; then
+  # 2026-10-05 誤報：gateway.log 在 10/04 21:00 被人刪掉（gateway 還握著已刪的檔繼續寫），
+  # 啟動記錄憑空消失，被誤判成「line 外掛沒載入」，連帶讓點名判紅燈、當天不備份。
+  # 看不到日誌≠外掛沒載入；這項改由下面第3項「帶簽章 webhook 回 200」判定（外掛真沒載入時那裡會直接失敗）。
+  RESULTS+=("⚠️ 看不到 gateway 啟動日誌（檔案被清掉或輪替），這項改由第3項帶簽章 webhook 測試判定")
+elif echo "$LAST_PLUGIN_LINE" | grep -q ", line,"; then
   RESULTS+=("✅ line 外掛已成功載入（最近一次啟動記錄有 line）")
 else
   RESULTS+=("❌ line 外掛沒有載入！最近啟動記錄：$(echo "$LAST_PLUGIN_LINE" | grep -oE '\([0-9]+ plugins:.*\)')")
