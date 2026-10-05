@@ -32,3 +32,6 @@ move_to_cloud 若遇 uncommitted changes：逐一檢查再 commit，不要 `git 
 
 ## 相關
 [[feedback_credential_layer_file_was_git_tracked_2026-09-19]]、[[feedback_git_add_a_risk_with_db_backup_files_2026-09-01]]、[[feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25]]
+
+## 4. 2026-10-05 20:55 補：claude --cloud 在「沒信任過的資料夾」會卡住
+在 `~/github_repos/bni-chapters` 執行 `script -q log claude --cloud "..."`，啟動器停在「Is this a project you trust? Yes, I trust this folder」等 Enter，不是掛掉；按信任＝改使用者的信任設定，要教練同意才按（或教練在 claude.ai/code 選 repo 自己開）。已用 `pkill -9 -f "claude --cloud"` 收掉，沒開出雲端頁、沒花雲端額度。bni-chapters repo＝`Coach1973/bni-chapters`（預設分支 master，61 個檔、2.6MB，資料庫／.env／uploads 都在 .gitignore），雲端拿得到程式、拿不到正式資料庫與 .env，要測試得用假資料庫。教練週額度 10/05 20:54 已 76%（週三 13:00 台灣時間重置）；本場對話框已 38 萬 token，每輪都要重讀，開新對話框是最直接的省法。
