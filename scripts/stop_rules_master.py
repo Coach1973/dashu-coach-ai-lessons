@@ -879,11 +879,16 @@ for evt in EVENTS[-300:]:
         # 措辭，變成同一個假陽性用不同commit又跳出來一次。改用位置感知的
         # regex：只有「git commit」前面是字串開頭/換行/`;`/`&&`/`||`/`|`（也就是
         # 真的在shell命令的位置上，不是被包在引號裡當一段文字）才算數。
-        if not re.search(r"(^|\n|;|&&|\|\||\|)\s*git\s+commit\b", command):
+        _commit = re.search(r"(^|\n|;|&&|\|\||\|)\s*git\s+commit\b", command)
+        if not _commit:
             continue
+        # 🔴 2026-10-05 第三次假陽性（設計修正，不再補白名單）：同一個 Bash 指令裡，commit 前面常有
+        # 測試／回測用的 python 範例句（"新增了金質獎章頁面"），而且 commit 訊息自己會用「新增…」當範例引用。
+        # 所以：①只掃 git commit 之後的文字（真正的 commit 訊息在這之後）；②跳過緊接在「『（【[ 之後的「新增」
+        # ——那是被引用的範例句，不是宣告（真宣告 `-m "新增XX頁面"` 前面是 ASCII 引號，仍抓得到）。
         for m in re.finditer(
-            r"新增([^\n\"'：:]{1,30}(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口))",
-            command,
+            r"(?<![「『（(【\[])新增([^\n\"'：:]{1,30}(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口))",
+            command[_commit.end():],
         ):
             name = m.group(1).strip()
             if not name or name in NEW_NAMED_ITEMS:
