@@ -1511,6 +1511,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-GAME-CLUB-ONLY-BEHIND-GATE",
+      "moment": "pre_tool",
+      "tool": "Edit|Write",
+      "match": "bni-chapters/templates/game/(landing|player|result|seats)\\.html",
+      "say": "信任遊戲頁面：俱樂部（現任或曾經 BNI 會員）才有的規則、項目、計分說明，預設包在 {% if club_viewer %} 後面（沒確認身份的訪客看關卡 m.club_gate），不要攤在首頁、成果頁。友善夥伴看得到的是友善夥伴自己的玩法。排行榜、年輪、稱號是公開的，不用藏。改完用沒有 Cookie 的請求核對規則字樣沒外露。",
+      "level": "remind",
+      "situation": "改信任遊戲首頁、玩家頁、成果頁、座位頁時",
+      "source": "教練 2026-10-05 16:43「信任裝備的遊戲規則要等確定是現任或曾經的 BNI 會員才看得到，排行榜無所謂」；project_business_club_game_design_principles_2026-10-03",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
