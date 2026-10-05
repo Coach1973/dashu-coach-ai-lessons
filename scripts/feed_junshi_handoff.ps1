@@ -1,6 +1,12 @@
-﻿# Hook: UserPromptSubmit (Windows PowerShell 版 · v3 六步驟全注入)
+﻿# Hook: UserPromptSubmit (Windows PowerShell 版 · v4 心法＋最新一棒)
 # 用途: 教練在 Windows 桌面版 Claude Code 喊「開」「開工」等暗號時，
 #       自動 git pull 拉雲端最新接力棒 → 注入六步驟全部內容到 context。
+#
+# v4 改動 (2026-10-05，對齊 Mac feed_junshi_handoff.sh v3 的瘦身，注入 42KB→約 10KB)：
+#   - 只注入：🎯教練交辦、雲端同步、身份、最新一棒摘要＋🙋區、第6步回報要求＋三關
+#   - 拿掉：接力棒全文、JUNSHI_RULES 全文、HEARTBEAT 尾50行、試金石2案例、knowledges 清單、memory 最新日、
+#           舊 session 總結（實測當天內容多半是舊自檢紀錄／空標題／7月舊檔，試金石已變反射）。
+#   - 需要時各檔原地 Read；KAIGONG_SELFTEST=1 可只產生內容、不拉雲端不寫紀錄不設 marker（反覆實測用）。
 #
 # v3 改動 (2026-06-23 教練親口「對長期有好處的事不問直接做」):
 #   - 不只注入接力棒，連同 HEARTBEAT / 試金石最新 3 案 / memory 最新日 / knowledges 近 7 天清單全部一次注入
@@ -10,6 +16,7 @@
 # 對應 Mac 版: feed_junshi_handoff.sh
 
 $ErrorActionPreference = 'Continue'
+$selfTest = ($env:KAIGONG_SELFTEST -eq '1')
 
 # ───────── stdin 編碼鐵律（2026-08-26 聯想查出，跟案例 64 同源）─────────
 # PS 5.1 在 -File 模式下 [Console]::InputEncoding 預設是系統 codepage（Big5），
@@ -69,7 +76,9 @@ if ((-not $forceRefeed) -and $sessionId -and (Test-Path $marker)) { exit 0 }
 # ───────── 🌐 雲端優先：先確保 workspace 是最新版 ─────────
 $pullStatus = ""
 try {
-    if (-not (Test-Path $workspace)) {
+    if ($selfTest) {
+        $pullStatus = "（自我測試，略過 pull）"
+    } elseif (-not (Test-Path $workspace)) {
         # 2026-09-01 修復：先找有沒有同一份 repo 已經存在別的資料夾名稱（例如
         # mac-openclaw-workflows），有就補 junction 過去，不要盲目重新 clone
         # 整包 1GB+ 資料。這支腳本以前每次遇到 $workspace 對不上真正的 repo
@@ -160,6 +169,7 @@ try {
 # 所有機器這份紀錄，超過72小時沒更新就會主動用Telegram通知教練。
 # 教練若想確認這台機器的識別名稱是否正確，可直接看下面 machineKey 的值。
 try {
+    if ($selfTest) { throw "selftest" }
     $machineKey = ($env:COMPUTERNAME).ToLower()
     if (-not $machineKey) { $machineKey = "windows-unknown" }
     $syncHealthDir = Join-Path $workspace "state\sync_health"
@@ -192,15 +202,8 @@ if (-not (Test-Path $handoff)) {
     exit 0
 }
 
-# ───────── 找最新 SESSION 總結 ─────────
-$latestSession = $null
-if (Test-Path $sessionDump) {
-    $latestSession = Get-ChildItem -Path $sessionDump -Filter "SESSION_*.md" -ErrorAction SilentlyContinue |
-                     Sort-Object Name | Select-Object -Last 1
-}
-
-# ───────── 輸出注入內容 ─────────
-Write-Output "# 🔴 軍師接力棒 v3（六步驟全注入，本場 session 僅一次）"
+# ───────── 輸出注入內容（v4：心法＋最新一棒）─────────
+Write-Output "# 🔴 軍師接力棒 v4（心法＋最新一棒；本場 session 僅一次）"
 Write-Output ""
 
 # 2026-10-02 Mac軍師交辦（教練授權）：最新一棒的「教練上一場交辦」置頂注入，挑時間最新的一段（同Mac feed_junshi_handoff.sh）
@@ -222,182 +225,45 @@ if ($nextTask) {
     Write-Output $nextTask
     Write-Output ""
 }
-Write-Output "## 🌐 雲端同步狀態（v3 設計：每次「開工」自動 git pull）"
+Write-Output "## 🌐 雲端同步狀態"
 Write-Output ""
 Write-Output "- $pullStatus"
-Write-Output "- 來源：$REPO_URL"
 Write-Output "- 本機 cache：$workspace"
 Write-Output ""
 Write-Output "## 🪪 身份硬性告知（教練 2026-06-17 親口定稿）"
 Write-Output ""
-Write-Output "- **平台**：Windows 桌面版（GUI App，非終端機 CLI）"
-Write-Output "- **軟體**：Claude Code Desktop App for Windows"
-Write-Output "- **工具能力**：✅ 跟 Mac CLI / 終端機 **完全同等**——Bash、Read、Edit、Write、TaskCreate、Agent、Skill 全部都有"
-Write-Output "- **底層 shell**：Bash 工具在 Windows 跑 PowerShell（不是 macOS bash），語法要對應"
-Write-Output "- **工作目錄**：``$workspace`` (**不是 C 槽 .openclaw**)"
-Write-Output "- **身份等級**：軍師（Opus），跟 Mac 軍師同等發言權"
-Write-Output "- **稱呼教練**：**大樹教練**"
-Write-Output "- **commit 前綴**：``[Win]``（區分 Mac 軍師的 ``[Mac]``）"
-Write-Output ""
-Write-Output "🔴 **三件最容易搞錯的事**："
-Write-Output "1. **「我是桌面版，沒有 shell」← 錯**。你有完整 Bash/Read/Edit/Write 工具，能力同 CLI。"
-Write-Output "2. **「我是 Mac 環境」← 錯**。路徑 ``/tmp/`` → ``\`$env:TEMP``；指令 ``open -a Chrome`` → ``Start-Process chrome.exe``。"
-Write-Output "3. **跨 shell 跳脫災難（案例 24，636 GB 學費）**——危險指令一律走 ``scripts\delete_guard.ps1`` 的 ``Safe-Remove``，**禁止直接寫 ``Remove-Item -Recurse -Force``**。"
-Write-Output ""
-Write-Output "📖 **完整身份卡 + 網頁推 SOP Mac↔Windows 對照表**：``knowledges\IDENTITY_windows_desktop.md`` ——本場必讀。"
+Write-Output "- **平台**：Windows 桌面版（GUI App，非終端機 CLI）；工具能力跟 Mac CLI 完全同等（Bash、Read、Edit、Write、Agent、Skill 全都有）"
+Write-Output "- **工作目錄**：``$workspace``（**不是 C 槽 .openclaw**）｜**稱呼教練**：**大樹教練**｜**commit 前綴**：``[Win]``（Mac 軍師是 ``[Mac]``）"
+Write-Output "- 🔴 **三件最容易搞錯的事**：①「我是桌面版，沒有 shell」← 錯，你有完整工具。②「我是 Mac 環境」← 錯，路徑 ``/tmp/`` → ``\`$env:TEMP``、``open -a Chrome`` → ``Start-Process chrome.exe``。③ 危險指令一律走 ``scripts\delete_guard.ps1`` 的 ``Safe-Remove``，**禁止直接寫 ``Remove-Item -Recurse -Force``**（案例 24，636 GB 學費）。"
+Write-Output "- 完整身份卡＋網頁推 SOP Mac↔Windows 對照表：``knowledges\IDENTITY_windows_desktop.md``（需要才讀）"
 Write-Output ""
 Write-Output "---"
 Write-Output ""
-Write-Output "教練說「開工/開/工作/幹活」=暗號觸發。讀完本段即可無縫接續。"
 
-# ───────── 第 1 步：接力棒 ─────────
-# 2026-08-26 聯想補（對齊 Mac 版 feed_junshi_handoff.sh 第 192~210 行的既有設計）：
-# workspace/CLAUDE.md 已由 scripts/sync_handoff_to_claudemd.sh 自動鏡像接力棒全文，
-# 桌面版讀 CLAUDE.md 時本來就會看到。鏡像若是最新的（sync marker >= HANDOFF mtime）
-# 就不重複貼一次全文，省下約 114KB；鏡像不是最新（sync 掛掉/沒跑過）才照舊完整貼上，安全優先。
+# ───────── 第 1 步：最新一棒摘要＋🙋區（對齊 Mac v3；前一棒／🤫／🔧區／封存索引需要才讀原檔）─────────
+Write-Output "## 📜 第 1 步：接力棒（精簡注入：只貼最新一棒摘要＋🙋區；前一棒／🤫／🔧區／封存索引請讀 ``JUNSHI_HANDOFF_LATEST.md`` 原檔，需要才讀）"
 Write-Output ""
-Write-Output "## 📜 第 1 步：接力棒"
+$hLines = @(Get-Content -Path $handoff -Encoding UTF8)
+$hdrIdx = @()
+for ($i = 0; $i -lt $hLines.Count; $i++) {
+    if ($hLines[$i].StartsWith('## 🔴 給跨對話框軍師讀的總結摘要')) { $hdrIdx += $i }
+}
+if ($hdrIdx.Count -ge 2) {
+    # 找不到第二個標記就整份貼上（安全優先）；找得到就只貼最新一棒
+    $hLines[$hdrIdx[0]..($hdrIdx[1] - 1)] | ForEach-Object { Write-Output $_ }
+    $askIdx = -1
+    for ($i = 0; $i -lt $hLines.Count; $i++) { if ($hLines[$i].StartsWith('### 🙋')) { $askIdx = $i; break } }
+    if ($askIdx -ge 0) {
+        $j = $askIdx + 1
+        while ($j -lt $hLines.Count -and -not $hLines[$j].StartsWith('### ')) { $j++ }
+        Write-Output ""
+        $hLines[$askIdx..($j - 1)] | ForEach-Object { Write-Output $_ }
+    }
+} else {
+    $hLines | ForEach-Object { Write-Output $_ }
+}
 Write-Output ""
-# 判斷方式刻意跟 Mac 版不同：Mac 比對 .sync_markers 時間戳，但 git pull 會把檔案 mtime
-# 改成 pull 當下時間，在聯想/ACER 上永遠比 Mac 寫的 marker 新 → 瘦身永遠不會生效。
-# 改成直接比對內容指紋（接力棒尾端 300 字是否出現在 CLAUDE.md 鏡像裡），跨機通用且更準。
-$mirrorFresh = $false
-$claudeMdPath = Join-Path $workspace "CLAUDE.md"
-if ((Test-Path $claudeMdPath) -and (Test-Path $handoff)) {
-    try {
-        $handoffRaw = Get-Content $handoff -Raw -Encoding UTF8
-        if ($handoffRaw.Length -gt 400) {
-            $probe = $handoffRaw.Substring($handoffRaw.Length - 300).Trim()
-            $claudeMdRaw = Get-Content $claudeMdPath -Raw -Encoding UTF8
-            if ($probe -and $claudeMdRaw.Contains($probe)) { $mirrorFresh = $true }
-        }
-    } catch { $mirrorFresh = $false }
-}
-if ($mirrorFresh) {
-    Write-Output "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 ``JUNSHI_HANDOFF_LATEST.md`` 原檔。）"
-} else {
-    Write-Output "⚠️（CLAUDE.md 鏡像非最新，改為完整貼上，確保接力棒不漏接）"
-    Write-Output ""
-    Get-Content -Path $handoff -Encoding UTF8 | ForEach-Object { Write-Output $_ }
-}
-
-# ───────── 注入 JUNSHI_RULES.md（三機共讀軍師鐵律正典）─────────
-$junshiRules = if ($env:JUNSHI_HOOK_ROOT) {
-    Join-Path $env:JUNSHI_HOOK_ROOT "mac-openclaw-workflows\JUNSHI_RULES.md"
-} else {
-    Join-Path (Split-Path $workspace -Parent) "mac-openclaw-workflows\JUNSHI_RULES.md"
-}
-if (Test-Path $junshiRules) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 🔴 軍師鐵律正典（雲端三機共讀，本場開工注入）"
-    Write-Output ""
-    Get-Content $junshiRules -Raw -Encoding UTF8
-}
-
-# ───────── 第 2 步：HEARTBEAT 熱上下文 ─────────
-if (Test-Path $heartbeatPath) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 🩺 第 2 步：HEARTBEAT.md（最近 50 行熱上下文）"
-    Write-Output ""
-    Get-Content -Path $heartbeatPath -Encoding UTF8 -Tail 50 | ForEach-Object { Write-Output $_ }
-}
-
-# ───────── 第 3 步：血淚試金石 ─────────
-# 3a：Top10高頻模式一句話摘要（2026-08-31新增，避免只看「最新案例」漏接3個月前但還沒解決的舊模式，跟Mac版對等）
-if (Test-Path $top10IndexPath) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 🔴 第 3 步 (3a)：Top10 高頻失敗模式一句話比對（開工當下先掃過，命中就照做法走）"
-    Write-Output ""
-    $top10Lines = Get-Content -Path $top10IndexPath -Encoding UTF8
-    $header = ""
-    foreach ($line in $top10Lines) {
-        if ($line -match '^## 🔴 模式') { $header = $line }
-        if ($line -match '^\*\*觸發詞\*\*' -and $header -ne "") {
-            Write-Output $header
-            Write-Output $line
-            Write-Output ""
-        }
-    }
-    Write-Output "（完整版含涉及案例編號/自動化防護狀態，見 distill/top10_errors_index.md）"
-}
-
-# 3b：最新2案例全文
-if (Test-Path $stonePath) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 🔴 第 3 步 (3b)：血淚試金石最新 2 案例全文（守則 #07 同處跌倒鐵律）"
-    Write-Output ""
-    $stoneLines = Get-Content -Path $stonePath -Encoding UTF8
-    $caseIdx = @()
-    for ($i = 0; $i -lt $stoneLines.Count; $i++) {
-        if ($stoneLines[$i] -match '^## 案例') { $caseIdx += $i }
-    }
-    if ($caseIdx.Count -ge 3) {
-        $startLine = $caseIdx[$caseIdx.Count - 3]
-        $stoneLines[$startLine..($stoneLines.Count - 1)] | ForEach-Object { Write-Output $_ }
-    } elseif ($caseIdx.Count -gt 0) {
-        $startLine = $caseIdx[0]
-        $stoneLines[$startLine..($stoneLines.Count - 1)] | ForEach-Object { Write-Output $_ }
-    } else {
-        Write-Output "（無法定位案例段落，請手動查閱 試金石\試金石_案例庫.md）"
-    }
-}
-
-# ───────── 第 4 步：knowledges 近 7 天新檔清單 ─────────
-if (Test-Path $knowledgesDir) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 📚 第 4 步：knowledges/ 最近 7 天新建/修改檔案清單"
-    Write-Output ""
-    $weekAgo = (Get-Date).AddDays(-7)
-    $recentFiles = Get-ChildItem -Path $knowledgesDir -Filter "*.md" -File -ErrorAction SilentlyContinue |
-                   Where-Object { $_.LastWriteTime -gt $weekAgo } |
-                   Sort-Object Name
-    if ($recentFiles.Count -gt 0) {
-        foreach ($f in $recentFiles) {
-            $firstLine = ""
-            try {
-                $firstLine = (Get-Content -Path $f.FullName -Encoding UTF8 -TotalCount 1) -replace '^# ', ''
-            } catch {}
-            Write-Output "- ``$($f.Name)``：$firstLine"
-        }
-    } else {
-        Write-Output "（過去 7 天無新檔）"
-    }
-}
-
-# ───────── 第 5 步：memory 最新日 ─────────
-if (Test-Path $memoryDir) {
-    $latestMemory = Get-ChildItem -Path $memoryDir -Filter "20*.md" -File -ErrorAction SilentlyContinue |
-                    Where-Object { $_.Name -match '^\d{4}-\d{2}-\d{2}\.md$' } |
-                    Sort-Object Name | Select-Object -Last 1
-    if ($latestMemory) {
-        Write-Output ""
-        Write-Output "---"
-        Write-Output ""
-        Write-Output "## 🧠 第 5 步：memory 最新日（$($latestMemory.Name)）"
-        Write-Output ""
-        Get-Content -Path $latestMemory.FullName -Encoding UTF8 | ForEach-Object { Write-Output $_ }
-    }
-}
-
-# ───────── 最新一場 SESSION 總結（保留原行為）─────────
-if ($latestSession) {
-    Write-Output ""
-    Write-Output "---"
-    Write-Output ""
-    Write-Output "## 📂 最新一場 session 總結（$($latestSession.Name)）"
-    Write-Output ""
-    Get-Content -Path $latestSession.FullName -Encoding UTF8 | ForEach-Object { Write-Output $_ }
-}
+Write-Output "> 需要才讀（原地 Read）：``HEARTBEAT.md``、``試金石\試金石_案例庫.md``（已變反射，會在對的時刻自己跳出來）、``knowledges\``、``memory\``、``JUNSHI_RULES.md``（軍師鐵律正典）。"
 
 # ───────── 第 6 步：上線回應要求 ─────────
 Write-Output ""
@@ -422,13 +288,13 @@ Write-Output ""
 
 # 寫 self-test 到本機log，不寫HEARTBEAT.md（小龍蝦開機必讀檔，且會跨機同步；2026-09-25查到軍師日誌佔它78%）
 $automationLog = Join-Path $workspace "state\junshi_automation.log"
-if (Test-Path (Split-Path $automationLog)) {
+if ((-not $selfTest) -and (Test-Path (Split-Path $automationLog))) {
     $ts = Get-Date -Format "yyyy-MM-dd HH:mm"
     $triggerPreview = if ($prompt.Length -gt 40) { $prompt.Substring(0, 40) } else { $prompt }
     $selfTest = @"
 
-## 🩺 軍師 Hook 自檢 $ts（Windows v3 六步驟注入）
-- ✅ Hook 觸發 + git pull + 六步驟內容注入完成
+## 🩺 軍師 Hook 自檢 $ts（Windows v4 心法＋最新一棒注入）
+- ✅ Hook 觸發 + git pull + 注入完成
 - 觸發詞：$triggerPreview
 - 雲端狀態：$pullStatus
 - Session: $sessionId
@@ -436,5 +302,5 @@ if (Test-Path (Split-Path $automationLog)) {
     try { Add-Content -Path $automationLog -Value $selfTest -Encoding UTF8 } catch {}
 }
 
-if ($sessionId) { New-Item -ItemType File -Path $marker -Force | Out-Null }
+if ($sessionId -and -not $selfTest) { New-Item -ItemType File -Path $marker -Force | Out-Null }
 exit 0
