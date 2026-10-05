@@ -1,4 +1,6 @@
 # Memory Index
+- [🔧 team.bymyway.com 第一分會(team-01)夥伴座位＋認座位功能：名單=戰情表姓名扣陳佩君陳宜璟，以戰情表姓名為主；與team01.bymyway.com戰情表是兩個站(2026-10-05)](reference_team_bymyway_team01_seats_claim_2026-10-05.md)
+- [🔧 分會頁「分會之光」後台新增卻看不到＝有「分會精神」就不顯示(if/elif)；金質獎章區獨立資料表，改名單跑seed_gold_medals(2026-10-05)](reference_chapter_page_glory_hidden_by_spirit_and_gold_medal_section_2026-10-05.md)
 - [🔧 BNI官方分會頁(bnitainan.com.tw)領導幹部名單＋大頭照可不登入用POST chapterdetail/display取得，同步腳本sync_official_photos(本人上傳的不覆蓋、換屆或換照片時重跑)；真鑫/真鑽分會代號在檔內(2026-10-05)](reference_bni_official_chapter_page_leaders_photos_api_2026-10-05.md)
 - [🔧 來賓總覽更新流程＝PALMS報表(到8/31)＋之後由三個戰情表每週來賓名單補上；地區PALMS一份含全部分會；18個月=2025-03-01、36個月=2023-09-01，結束日2026-08-31(2026-10-05)](reference_guests_overview_update_flow_palms_plus_dashboards_2026-10-05.md)
 - [🔴 BNI會員帶來賓人數一律用PALMS(BNI-Training/guests_data.json，同/guests)，名片庫guest_visits邀請人手打漏很多不能算人數；培訓用/training的data.json＋data_msp.json(教練10-05抓到，試金石105)](reference_bni_guest_count_use_palms_not_guest_visits_2026-10-05.md)
@@ -9,7 +11,7 @@
 - [🔧 大樹教育官方網站＝https://www.bymyway.com/（教練10-04親口永久指定），頁尾官方連結用；官方LINE/FB粉專同檔；已掛反射R-BIGTREE-EDU-OFFICIAL-SITE(2026-10-04)](reference_bigtree_education_official_site_bymyway_com_2026-10-04.md)
 - [🔴🔴 教練用手機時「已在Mac的Chrome開過」＝沒交付：三處腳本文字教我這樣講已改源頭＋新反射R-OPENED-ON-MAC-NOT-DELIVERY擋下；交付=獨立一行https網址+curl驗證，已上架game-1004(2026-10-04)](feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04.md)
 - [📜 教練要整場原話逐字報告書：從jsonl的queue-operation enqueue抽(user條目會合併)+逐字比對+軍師註分色；已掛反射R-SESSION-VERBATIM-REPORT(2026-10-04)](reference_session_verbatim_report_from_jsonl_2026-10-04.md)
-- [🎮 商務遊戲(商業俱樂部)已裁示原則：贏＝信任、數據一律公開不可隱藏(高調低調只管慶祝)、培訓月上限10分防刷、BNI外也能玩、稱號多條並行、裝備＝見證、年資要加分(10-04糾正)；題庫在knowledges(2026-10-03)；10-05 信任遊戲測試版上線 trust.bymyway.com（自由填寫、外部玩家可入座、seed_game_players.py 排座位）；＋探測器擴真鑫/籌備會、本屆領導標籤、🔴DnA＝多重身份非離會(母會卡不寫、複製到他分會打標籤，10-05 04:13糾正)、教練說的檔名在Downloads要ls -t找到(1791130445680)](project_business_club_game_design_principles_2026-10-03.md)
+- [🎮 商務遊戲(商業俱樂部)已裁示原則：贏＝信任、數據一律公開不可隱藏(高調低調只管慶祝)、培訓月上限10分防刷、BNI外也能玩、稱號多條並行、裝備＝見證、年資要加分(10-04糾正)；題庫在knowledges(2026-10-03)；10-05 信任遊戲測試版上線 trust.bymyway.com（自由填寫、外部玩家可入座、seed_game_players.py 排座位）；🔴10-05 15:54身份七選一、只有現任/曾經會員算俱樂部成員、對外一律「友善夥伴」不說外部玩家、友善夥伴玩法提案v1(−1建議不做，待教練回)；＋探測器擴真鑫/籌備會、本屆領導標籤、🔴DnA＝多重身份非離會(母會卡不寫、複製到他分會打標籤，10-05 04:13糾正)、教練說的檔名在Downloads要ls -t找到(1791130445680)](project_business_club_game_design_principles_2026-10-03.md)
 - [💽 聯想整機還原備份：E槽兩份(9/19、10/02)，空間不夠時9/19可刪(教練10-03親口)；D槽80GB已清掉(2026-10-03)](reference_lenovo_system_image_backups_2026-10-03.md)
 - [⌨️ 教練說「輔助鍵盤」＝跑 scripts/show_accessibility_keyboard.sh 叫出螢幕虛擬鍵盤；教練習慣縮到最小、按叉才消失(2026-10-04)](reference_accessibility_keyboard_trigger_2026-10-04.md)
 - [🔧 蘋果晶片 Mac 安裝 macOS 更新要 softwareupdate --user --stdinpass，只 sudo 會 Failed to authenticate；用 scripts/macos_update.sh(2026-10-03)](reference_macos_update_cli_apple_silicon_needs_user_stdinpass_2026-10-03.md)

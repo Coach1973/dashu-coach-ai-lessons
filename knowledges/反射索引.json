@@ -1283,10 +1283,23 @@
       "id": "R-GAME-NO-OUTSIDER-WORD",
       "moment": "reply",
       "match": "(外部|內部)玩家",
-      "say": "商務遊戲不說「內部／外部玩家」（教練 10/04：像劃一條鴻溝）。改用俱樂部成員；BNI 以外的人叫友好單位、支持單位、BNI 粉絲、BNI 支持者、贊助者、顧問團（總稱友好夥伴）。",
+      "say": "信任遊戲不說「內部／外部玩家」（教練 10/04：像劃一條鴻溝；10/05 15:54 再強調：對大眾一律友好單位／友善夥伴）。非會員個人叫「友善夥伴」、公司組織叫「友好單位」；會員叫俱樂部成員。commit 訊息、接力棒、程式註解也照這個寫。",
       "level": "remind",
       "situation": "談商務遊戲、寫遊戲文件時",
-      "source": "project_business_club_game_design_principles_2026-10-03",
+      "source": "project_business_club_game_design_principles_2026-10-03（10/04、10/05 15:54 兩次）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-GAME-NO-OUTSIDER-WORD-WRITE",
+      "moment": "pre_tool",
+      "tool": "Bash|Edit|Write",
+      "match": "(外部|內部)玩家",
+      "say": "信任遊戲不說「內部／外部玩家」（教練 10/04：像劃一條鴻溝；10/05 15:54 再強調：對大眾一律友好單位／友善夥伴）。非會員個人叫「友善夥伴」、公司組織叫「友好單位」；會員叫俱樂部成員。commit 訊息、接力棒、程式註解也照這個寫。",
+      "level": "remind",
+      "situation": "寫 commit 訊息、接力棒、遊戲程式或文件時用到「外部／內部玩家」",
+      "source": "教練 2026-10-05 15:54「大眾溝通時一律稱作友好單位或友善夥伴，不要用外部玩家這種內部術語」；10/05 上一場 commit 56502fc 與接力棒仍寫外部玩家（原反射只比對回覆，漏了寫入）",
       "audience": [
         "coach"
       ]
