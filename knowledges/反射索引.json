@@ -1474,6 +1474,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-TEAM-BYMYWAY-TEAM01-SEATS",
+      "moment": "prompt",
+      "match": "team\\.bymyway\\.com|team-0[1-5]|第[一二三四五]分會.{0,10}(夥伴|名單|座位|成員)|(夥伴|名單|座位).{0,10}第[一二三四五]分會",
+      "say": "第一分會～第五分會的分會頁在 team.bymyway.com（repo ~/github_repos/team-bymyway，team.db），不是 chapters.bymyway.com（bni-chapters）；戰情表 team01.bymyway.com 是第三個網站（repo team01-guests）。建座位用 team-bymyway/seed_team01_members_2026-10-05.py（名單＝戰情表姓名，第一分會扣陳佩君、陳宜璟，以戰情表姓名為主；對得上教練名單才填專業類別）；本人認座位流程已搬到該站。詳見記憶 reference_team_bymyway_team01_seats_claim_2026-10-05。",
+      "level": "remind",
+      "situation": "教練提到 team.bymyway.com、第一分會（到第五）的夥伴、名單、座位時",
+      "source": "教練 2026-10-05 14:52「請幫忙把第一分會的夥伴資料製作進到系統」（兩個 team 站容易搞混，我花了一段時間才確定改的是 team-bymyway）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
