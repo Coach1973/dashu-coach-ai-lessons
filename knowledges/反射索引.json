@@ -1537,6 +1537,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-CLOUD-LAUNCH-VIA-TERMINAL-TAB",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "claude\\s+--cloud",
+      "say": "開雲端對話不要用 Bash（背景 script／stdin 接 /dev/null）：10/06 這樣開出來的對話沒掛倉庫、做完推不上 GitHub。改用 mcp__terminal__run_in_terminal 在真終端機分頁跑 `cd ~/github_repos/<倉庫> && claude --cloud \"...\"`；開完到 claude.ai/code/session_... 頁頂確認看得到倉庫名與分支，沒有就是開壞了、先別讓它開工。只是傳話給既有雲端頁（`claude -p ... --cloud <session_id>`）不受此限。",
+      "level": "remind",
+      "situation": "要開新的雲端對話（claude --cloud）時",
+      "source": "教練 2026-10-06 02:38「那你要幫我開一個新的雲端對話框嗎？」（看到新對話沒接上倉庫）；reference_move_to_cloud_this_repo_2026-09-25 第 5 節",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
