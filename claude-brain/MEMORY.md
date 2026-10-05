@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 大台南小幫手(bni_tainan)資料庫優先於網路＋位階順序檔(bni_rank_ladder.md)；改人設要封存舊對話並新對話實測(教練10/05 04:08糾正)](reference_bni_tainan_db_first_and_rank_ladder_2026-10-05.md)
 - [🔴 教練畫面看不到我存的 .md 提案：重點直接寫回覆、檔案只當存檔、不重要不用給他看(2026-10-05 20:12)](feedback_coach_cannot_see_md_plans_put_key_points_in_reply_2026-10-05.md)
 - [🔧 team.bymyway.com 第一分會(team-01)夥伴座位＋認座位功能：名單=戰情表姓名扣陳佩君陳宜璟，以戰情表姓名為主；與team01.bymyway.com戰情表是兩個站(2026-10-05)](reference_team_bymyway_team01_seats_claim_2026-10-05.md)
 - [🔧 分會頁「分會之光」後台新增卻看不到＝有「分會精神」就不顯示(if/elif)；金質獎章區獨立資料表，改名單跑seed_gold_medals(2026-10-05)](reference_chapter_page_glory_hidden_by_spirit_and_gold_medal_section_2026-10-05.md)
