@@ -1524,6 +1524,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-PROPOSAL-MD-NOT-VISIBLE-TO-COACH",
+      "moment": "pre_tool",
+      "tool": "Write",
+      "match": "knowledges/.*(提案|計畫|方案|報告).*\\.md$",
+      "say": "教練的畫面看不到 .md（只看到檔案，沒有跳出計畫書）。提案的重點與要他決定的事直接寫在回覆裡，這個檔只當自己的存檔，不要叫他去打開；不重要、方向已清楚的就不必另寫文件，直接做。真要給他仔細看的長文件，才發布成 Artifact／網頁連結。",
+      "level": "remind",
+      "situation": "要寫提案、計畫、方案的 .md 檔時",
+      "source": "教練 2026-10-05 20:12「我目前沒有看到計畫書，只有看到 .md 檔…不重要、你自己清楚要做什麼，那也不一定要給我看」；feedback_coach_cannot_see_md_plans_put_key_points_in_reply_2026-10-05",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
