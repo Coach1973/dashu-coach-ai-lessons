@@ -187,8 +187,9 @@ PY
 }
 # 規則L/L2都讀 $HOME/github_repos/coach888/index.html，run_case_direct用TESTHOME
 # 當假HOME，真實檔案不在那底下，要自己造一份最小fixture才測得到規則本體
+# （規則只認「大樹常用」區塊內的內容，所以 fixture 要包成真實頁面的 changyong 區塊結構）
 mkdir -p "$TESTHOME/github_repos/coach888"
-echo '<a>策展一鍵注入</a>' > "$TESTHOME/github_repos/coach888/index.html"
+echo '<div class="grid" data-section="changyong"><a>策展一鍵注入</a></div><button class="btn-add-item" data-section="changyong">' > "$TESTHOME/github_repos/coach888/index.html"
 
 run_case_direct "規則L2-全新頁面未收錄應擋" \
   "$(mk_gitcommit l2_new 'git commit -q -m "新增測試防呆用假頁面：驗證規則L第二層"')" \

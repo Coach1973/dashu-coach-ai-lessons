@@ -17,7 +17,7 @@
 
 ### 📋 下一場開工先做
 ① ✅ **座位第 1～3 步已驗收合併**（10/06 17:40 v288，Mac 軍師 Sonnet 5.5）：bni-chapters master `28e6e63`（已推）；56 項測試全綠、正式庫複本跑遷移通過、重啟後 `trust.bymyway.com/game/seat-map` 三分頁各 30 座位實測 200；快照 `trust_game.db.bak-before-seats-step123-20261006`；紀錄寫進 `knowledges/2026-10-05_信任遊戲_測試紀錄與回退點.md`（workspace `b2ecc711a`）。**座位第 4～6 步現在可以開工**，但要先有教練定案的價格／新分會等事項（見🙋區），雲端對話要先 pull master 才看得到第 1～3 步。
-② ✅ **守則#07 偵測器已補洞**（workspace `a4f9087de`）：`_D_EVERY` 數字改成可省略，回測 81 則歷史違規＋迴歸測試 `scripts/test_stop_rules_master.sh` 14/15（「每小時查一次」補回，舊判有新判沒有的 3 筆全是誤判）；唯一不過的是規則 L2「已收錄的策展一鍵注入不應擋」，改動前就有，已列 AI 自己的清單。
+② ✅ **守則#07 偵測器已補洞**（workspace `a4f9087de`）：`_D_EVERY` 數字改成可省略，回測 81 則歷史違規＋迴歸測試 `scripts/test_stop_rules_master.sh` → 補 L2 測試 fixture 後 15/15 全過（「每小時查一次」補回，舊判有新判沒有的 3 筆全是誤判；L2 那項是測試 fixture 缺 changyong 區塊結構，不是規則壞）。
 ③ 沿用 v285 ③④（原文已封存於 `handoff_archive/handoff_v284_to_v285_archived_2026-10-06.md`）：教練實際操作信任遊戲後的回饋（「提醒他」按鈕、見面紀錄「對方確認」、放鴿子逾期、非會員見證分量）＋第三步 5 項預設值（④的詮釋、留言可否撤回、好友動態上不上公共頁、90 天門檻、60 字上限）；第三～五分會、真富／真愛／真鑫菁英表、籌備會名單、買竣淯簡報、每月流程、10/09 後搬家舊夾、宏碁注入確認。
 ④ 雲端信裡「教練定案的文字」寫在座位第 4～6 步一律照用：標題「你缺的客戶、人才、天使投資人，每週都坐在同一個房間」；C 行「池塘裡多的是魚，重點是你不能期待魚跳進你的籠子裡。」；用「預約初次見面」「洽談中」；**不說「保留」「專屬給你」「你的座位」**。
 
@@ -139,7 +139,6 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
-| 🟡 | **Stop hook 規則 L2（coach888 收錄鎖）迴歸測試不過（10/06 v288 發現）** | ⏳AI 自己處理 | `bash scripts/test_stop_rules_master.sh` 的「規則L2-已收錄的策展一鍵注入不應擋」預期擋下=0、實際=1；改 `stop_rules_master.py` 前後都一樣，不是 #07 補洞造成。可能是 10/06 coach888 鎖改設計（`2fe7f9a68`）後測試案例沒跟著更新，或鎖真有假陽性；先看測試案例造的 commit 內容再判斷是改測試還是改規則。不用問教練。 |
 | 🔴 | **守則#07 輪詢偵測器半成品（10-06）** | ⏸被安全檢查擋下，已問教練一次沒回，不追問 | `scripts/stop_rules_master.py` `_D_EVERY` 數字誤設必填，線上版（`d63575338`）會放過「每小時查一次」；補法與回測方式見 v287 ②。 |
 | 🟡 | **雲端寫給軍師的信（10-06）** | ✅Mac 端＋雲端規則已上線 | 雲端信放分支 `docs/to_junshi/`，Mac 端 `scripts/cloud_letters.sh list｜cat｜mark`，開工 hook 與「讀信」反射會叫；已開著的舊雲端對話要先 pull master 才會用新路徑。記憶 `reference_cloud_letters_to_junshi_path_2026-10-06`。 |
 | 🟡 | **bni-chapters 雲端協作（10-06）** | 第三步已合併(`3a9ba09`)、座位評估已做(`518b731`)；座位第 1～3 步（分支 `claude/seats-step123`）待驗收 | 步驟見 v287 ①。基礎建設：`tests/`（假資料庫、`conftest.py` 擋掉通知教練）、環境變數 `BNI_CHAPTERS_DB`／`TRUST_GAME_DB`、雲端用 `CLAUDE.md` 規則；雲端只看得到專案，要給它資料請放 `docs/source/`（README 為索引）；`claude -p "訊息" --cloud session_01PpSC8vJP5FQUtK1M7grBuU` 可代傳訊息給雲端任務（要教練先同意）。 |
