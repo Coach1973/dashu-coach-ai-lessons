@@ -18,6 +18,7 @@
 ### 📋 下一場開工先做
 ① ✅ **座位第 1～3 步已驗收合併**（10/06 17:40 v288，Mac 軍師 Sonnet 5.5）：bni-chapters master `28e6e63`（已推）；56 項測試全綠、正式庫複本跑遷移通過、重啟後 `trust.bymyway.com/game/seat-map` 三分頁各 30 座位實測 200；快照 `trust_game.db.bak-before-seats-step123-20261006`；紀錄寫進 `knowledges/2026-10-05_信任遊戲_測試紀錄與回退點.md`（workspace `b2ecc711a`）。**座位第 4～6 步現在可以開工**，但要先有教練定案的價格／新分會等事項（見🙋區），雲端對話要先 pull master 才看得到第 1～3 步。
 ①b ✅ **雲端工作全面整合進本機**（10/06 19:30 v288）：bni-chapters 三個雲端分支都已進 master——座位 `28e6e63`、三缺文件 8 份 `eddaf5c`、雲端總交接信 `69d0b03`、改名接力棒＋雲端新規則 `01d96e7`（已推）；其餘 75 個倉庫沒有雲端分支；workspace 的 `claude/kaigong-6fijra`（8/17 舊接力棒覆寫版）**不要併**。雲端經驗規則已寫進 `bni-chapters/CLAUDE.md`；記憶 `reference_cloud_work_map_and_where_lessons_live_2026-10-06`；`scripts/cloud_letters.sh` 修好真的會 fetch（Mac 沒有 timeout 指令，原本從沒抓過）。**缺口**：教練在雲端網頁對話說的原話本機看不到。
+①c ⏳ **座位第 4～6 步：教練 10/06 19:32 決定開新雲端對話做**。已備好：`docs/task_seats_456.md`＋`docs/next_task.md`＋bni-chapters/CLAUDE.md「教練說開工＝讀 next_task.md 直接做」（master `b9d461c`，用全新 clone 驗證新對話看得到、56 項測試綠）。**教練只要開新雲端對話說「開工」**。做完雲端會在 `docs/to_junshi/` 寫信，開工 hook 會列出來，驗收照第 1～3 步流程（丟棄式 worktree rebase → 跑測試 → 讀 diff → 合併 → 重啟 → 對正式站實測 → 記進測試紀錄）。注意：第 6 步後台連結要 Mac 上用 `BNI_CHAPTERS_SECRET_KEY`（launchd 環境變數）產生給教練。
 ② ✅ **守則#07 偵測器已補洞**（workspace `a4f9087de`）：`_D_EVERY` 數字改成可省略，回測 81 則歷史違規＋迴歸測試 `scripts/test_stop_rules_master.sh` → 補 L2 測試 fixture 後 15/15 全過（「每小時查一次」補回，舊判有新判沒有的 3 筆全是誤判；L2 那項是測試 fixture 缺 changyong 區塊結構，不是規則壞）。
 ③ 沿用 v285 ③④（原文已封存於 `handoff_archive/handoff_v284_to_v285_archived_2026-10-06.md`）：教練實際操作信任遊戲後的回饋（「提醒他」按鈕、見面紀錄「對方確認」、放鴿子逾期、非會員見證分量）＋第三步 5 項預設值（④的詮釋、留言可否撤回、好友動態上不上公共頁、90 天門檻、60 字上限）；第三～五分會、真富／真愛／真鑫菁英表、籌備會名單、買竣淯簡報、每月流程、10/09 後搬家舊夾、宏碁注入確認。
 ④ 雲端信裡「教練定案的文字」寫在座位第 4～6 步一律照用：標題「你缺的客戶、人才、天使投資人，每週都坐在同一個房間」；C 行「池塘裡多的是魚，重點是你不能期待魚跳進你的籠子裡。」；用「預約初次見面」「洽談中」；**不說「保留」「專屬給你」「你的座位」**。
@@ -98,11 +99,13 @@
 > 教練裁示「不用管／不做／略過」的列，當場搬去封存檔，不准留在這裡。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
-- 座位第 4～6 步前要定的事｜教練自己的內容與喜好（價格、哪些新分會成立）｜後續步驟會卡住｜問過：未問（清單在雲端信：座位 4 項、real-age 象限、real-kungfu 第 4 象限、年底成立哪幾個新分會、「三缺」4 項＝價格／資料來源／影片通知／網址；雲端信在 `origin/claude/optimistic-tesla-mi1zag:docs/letter_to_junshi_2026-10-06.md`）
+（目前沒有。10/06 教練糾正：轉述雲端／其他 AI 寫的「待決定」前，每項各自過 N2 三關，不准整段搬進來——案例106）
 
 
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
 > 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
+- **三缺行銷頁**：教練自己獨立製作，做好會自己告訴我（10/06 19:32 親口）。**不問價格／公開／數據來源／影片／網址／申請觀看通知**；文件 8 份已併進 bni-chapters master 備查。
+- 座位清單內容待教練哪天提起再換：`real-age` 主軸、`real-kungfu` 第 4 象限、年底成立哪幾個（只是換 `data/seat_lists/*.json`，不卡任何程式）。
 - 手機出門用行動網路輸入 Tailscale 100.x 位址連 RustDesk 實測（v264，教練要出門用時再測）
 - RustDesk 直連實測：聯想→ACER（ACER 100.78.106.14:21118，ACER 離線就等醒來）、ACER→Mac 教練還沒回報（v263，教練要用時再測）；官方中繼 21117 修好後再驗證
 - 聯想 `E:\Claude-Data\` 殘留 ai-class-1017.zip／ema1017.zip／pk2／zpk／cookie.tmp（刪檔鎖擋，需教練同意才清，v263）
