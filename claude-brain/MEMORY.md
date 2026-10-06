@@ -1,4 +1,5 @@
 # Memory Index
+- [☁️ 雲端工作全貌：只有 bni-chapters 有雲端分支（掃過76個倉庫）；10/06 19:30 已全併進 master（座位1~3、三缺8份文件、總交接信），雲端學到的規則寫進該倉庫 CLAUDE.md；缺口＝教練對雲端AI說的原話本機看不到；cloud_letters.sh 原本因 Mac 無 timeout 從沒真的 fetch，已修(2026-10-06)](reference_cloud_work_map_and_where_lessons_live_2026-10-06.md)
 - [🔴 雲端對話(bni-chapters)寫給軍師的信固定放分支 docs/to_junshi/，Mac 開工＋讀信用 scripts/cloud_letters.sh 自動掃；雲端碰不到 inbox/mac，之前信放別處軍師收不到(教練10/06 14:28)](reference_cloud_letters_to_junshi_path_2026-10-06.md)
 - [🔴 教練中文詞彙→檔案對照表(路徑大全/接力棒/試金石/輸入法)＋語音諧音對映(教練原話報告書/大樹作品總覽/World Gym/網頁/context window)；聽到這些詞直接對應不問(10/04~10/05更新)](feedback_coach_chinese_file_mapping.md)
 - [🔧 Windows 掃檔回 0 筆卻不報錯的坑：-LiteralPath 配 -Include 失效、bash 寫 ps1 反斜線被吞、無 BOM 中文讀壞、find 掃 C:\Users 逾時；下「沒有」結論前先用已知檔驗證掃描(2026-10-06)](reference_windows_file_scan_silent_zero_traps_2026-10-06.md)
