@@ -9,7 +9,11 @@ touch "$STATE"
 scan() {
   for repo in $REPOS; do
     [ -d "$repo/.git" ] || continue
-    [ "${CLOUD_LETTERS_NOFETCH:-0}" = 1 ] || timeout 20 git -C "$repo" fetch -q origin 2>/dev/null
+    # Mac 沒有 timeout 指令（10/06 查證：原本寫 timeout 20 git fetch，指令不存在被 2>/dev/null 吞掉，從來沒真的 fetch 過）
+    if [ "${CLOUD_LETTERS_NOFETCH:-0}" != 1 ]; then
+      if command -v timeout >/dev/null 2>&1; then timeout 20 git -C "$repo" fetch -q origin 2>/dev/null
+      else git -C "$repo" -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15 fetch -q origin 2>/dev/null; fi
+    fi
     name=$(basename "$repo")
     git -C "$repo" for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v '^origin/HEAD$' | while read -r ref; do
       git -C "$repo" ls-tree -r "$ref" -- "$DIR/" 2>/dev/null | while IFS=$'\t' read -r meta path; do
