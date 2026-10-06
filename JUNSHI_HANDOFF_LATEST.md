@@ -139,6 +139,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟡 | **`workspace/CLAUDE.md` 的接力棒鏡像停在 10/01，吃額度又過期（10/06 v288 查證）** | ⏳AI 自己處理（額度緊繃時動手前先跟教練說一聲） | 查證：`ai.openclaw.cron-daemon` 每 5 分鐘都有跑 `sync_handoff_to_claudemd.sh`，是腳本 9/30 加的格式防呆（開頭 500 字必須有「新的一棒 vN」）自 10/01 起每次拒絕，`/tmp/sync_handoff.log` 已累積 1,050 次拒絕；現在接力棒標題沒有「新的一棒」字樣。鏡像段約 2.2 萬字、占 CLAUDE.md 一半以上，在 workspace 內工作時會載入。**建議做法**：10/02 開工改 v3 的本意就是只注入最新一棒，所以比較對的是拿掉鏡像（CLAUDE.md 換成一行指標、cron-daemon 停掉這一步），不是修防呆；改前要確認 `feed_junshi_handoff.sh` 第 317 行那段說明沒有仰賴它。 |
 | 🔴 | **守則#07 輪詢偵測器半成品（10-06）** | ⏸被安全檢查擋下，已問教練一次沒回，不追問 | `scripts/stop_rules_master.py` `_D_EVERY` 數字誤設必填，線上版（`d63575338`）會放過「每小時查一次」；補法與回測方式見 v287 ②。 |
 | 🟡 | **雲端寫給軍師的信（10-06）** | ✅Mac 端＋雲端規則已上線 | 雲端信放分支 `docs/to_junshi/`，Mac 端 `scripts/cloud_letters.sh list｜cat｜mark`，開工 hook 與「讀信」反射會叫；已開著的舊雲端對話要先 pull master 才會用新路徑。記憶 `reference_cloud_letters_to_junshi_path_2026-10-06`。 |
 | 🟡 | **bni-chapters 雲端協作（10-06）** | 第三步已合併(`3a9ba09`)、座位評估已做(`518b731`)；座位第 1～3 步（分支 `claude/seats-step123`）待驗收 | 步驟見 v287 ①。基礎建設：`tests/`（假資料庫、`conftest.py` 擋掉通知教練）、環境變數 `BNI_CHAPTERS_DB`／`TRUST_GAME_DB`、雲端用 `CLAUDE.md` 規則；雲端只看得到專案，要給它資料請放 `docs/source/`（README 為索引）；`claude -p "訊息" --cloud session_01PpSC8vJP5FQUtK1M7grBuU` 可代傳訊息給雲端任務（要教練先同意）。 |
