@@ -271,7 +271,7 @@
       "top30": 11,
       "kind": "需求型",
       "match": "(?<!不用)寫(一)?封?信|寄信|去讀信|^\\s*讀(一下)?信|讀(一下)?信[，,。！!]|自己去讀|寫指令讓(他|它|她|他們)|(讓|叫)我(去)?(貼|轉貼|傳話)|(聯想|宏碁|ACER|Acer|acer|Windows|windows|赫米斯|Hermes|hermes|小龍蝦|手機版|終端機).{0,15}(跟他(說|講)|告訴他|叫他|讓他|給他|通知他|傳給)|(聯想|宏碁|ACER|Mac|MAC|蘋果)(給|交辦|交代)的?(什麼)?任務",
-      "say": "教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀）。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/<收信人>/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。",
+      "say": "教練說「讀信」：把 cross-agent/inbox/mac/ 全部讀完（信裡指到的檔也讀），再跑 bash scripts/cloud_letters.sh cat 讀雲端對話（bni-chapters 分支 docs/to_junshi/）寫來的信，讀完跑 mark。雲端對話碰不到 inbox/mac，它的信只會在自己分支的 docs/to_junshi/。要叫別台／別的 AI 做事：寫信放 cross-agent/inbox/<收信人>/（不是 outbox），信要讓對方自己就能照做；跟教練只說一句「請叫 X 去讀信」。教練不傳話、不貼。",
       "level": "remind",
       "situation": "要叫別台電腦／別的 AI 做事",
       "source": "cross-agent/README.md／接力棒 v263（給 ACER 的信誤放 outbox）",

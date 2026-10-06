@@ -274,6 +274,14 @@ PY
     printf '%s\n' "$LETTERS" | while read -r L; do echo "- \`$L\`"; done
     echo ""
   fi
+  # 2026-10-06：雲端對話(bni-chapters)碰不到cross-agent/inbox，信放自己分支的docs/to_junshi/，這裡掃出來
+  CLOUD_LETTERS=$(CLOUD_LETTERS_NOFETCH=$([ "$SELFTEST" = 1 ] && echo 1 || echo 0) bash "$WORKSPACE/scripts/cloud_letters.sh" list 2>/dev/null)
+  if [ -n "$CLOUD_LETTERS" ]; then
+    echo "## ☁️ 雲端對話寫給軍師的信（開工必須先跑 \`bash scripts/cloud_letters.sh cat\` 讀完全文，讀完跑 \`mark\`）"
+    echo ""
+    printf '%s\n' "$CLOUD_LETTERS" | while read -r L; do echo "- $L"; done
+    echo ""
+  fi
   echo "> ⚠️ 本注入若顯示「Output too large … Preview」，代表第2~6步只露出開頭，**必須用 Read 讀完那個完整檔案**才算做完開工六步。"
   echo ""
   echo "## 🌐 雲端同步狀態"

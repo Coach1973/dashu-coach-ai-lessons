@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴 雲端對話(bni-chapters)寫給軍師的信固定放分支 docs/to_junshi/，Mac 開工＋讀信用 scripts/cloud_letters.sh 自動掃；雲端碰不到 inbox/mac，之前信放別處軍師收不到(教練10/06 14:28)](reference_cloud_letters_to_junshi_path_2026-10-06.md)
 - [🔴 教練中文詞彙→檔案對照表(路徑大全/接力棒/試金石/輸入法)＋語音諧音對映(教練原話報告書/大樹作品總覽/World Gym/網頁/context window)；聽到這些詞直接對應不問(10/04~10/05更新)](feedback_coach_chinese_file_mapping.md)
 - [🔧 Windows 掃檔回 0 筆卻不報錯的坑：-LiteralPath 配 -Include 失效、bash 寫 ps1 反斜線被吞、無 BOM 中文讀壞、find 掃 C:\Users 逾時；下「沒有」結論前先用已知檔驗證掃描(2026-10-06)](reference_windows_file_scan_silent_zero_traps_2026-10-06.md)
 - [🔧 聯想 Zoom 錄影：原路徑是 junction→D:\Zoom(10/06 搬完逐檔驗證)，舊夾已由教練10/06刪除、D槽內容查證完好(2026-10-06)](reference_lenovo_zoom_recordings_junction_to_d_2026-10-06.md)
