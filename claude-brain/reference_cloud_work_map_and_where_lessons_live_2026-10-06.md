@@ -19,3 +19,5 @@ metadata:
 **雲端寫信給軍師**：固定放分支 `docs/to_junshi/`，見 [[reference_cloud_letters_to_junshi_path_2026-10-06]]。**Why:** 10/06 查出 `scripts/cloud_letters.sh` 寫了 `timeout 20 git fetch`，Mac 沒有 `timeout` 指令，被 `2>/dev/null` 吞掉，從沒真的去抓過雲端；已改成沒有 timeout 就直接 fetch，並用 FETCH_HEAD 時間驗證。**How to apply:** 寫 Mac 腳本別用 `timeout`／`gtimeout`；錯誤不要整個丟到 /dev/null，至少要驗證動作真的發生。
 
 機制背景見 [[reference_move_to_cloud_this_repo_2026-09-25]]。
+
+**雲端「開工」口令（10/06 19:40 起）**：bni-chapters/CLAUDE.md 第一段＝教練說「開工」→ 讀 `docs/next_task.md`（固定檔名，軍師管它指向哪份任務書）→ 3 行回報 → 直接做 → 完成後寫信到 `docs/to_junshi/`。切換雲端任務只改 `next_task.md`，不用改 CLAUDE.md。**教練實際是在既有雲端對話（分支 `claude/optimistic-tesla-mi1zag`）說開工，不是開新對話**；雲端對話還會繼續在自己分支上追加 commit，所以「雲端是否全部收回」要重查：`git fetch && git log master..origin/claude/optimistic-tesla-mi1zag`。10/06 夜該分支領先 master 12 個 commit（座位第 4～6 步＋清單重挑），驗收併入前不算收回。
