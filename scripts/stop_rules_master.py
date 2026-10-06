@@ -138,6 +138,7 @@ LAST_LINES = LAST_TEXT.split("\n") if LAST_TEXT else []
 #       呼叫超過一次工具，掃描就會被最近一次工具回音提早打斷，抓不到
 #       更早之前（同一輪）講的違規內容。改用 _is_real_user_prompt()
 #       只在遇到「真人真的講話」的 user 事件才停止，工具回音直接跳過。
+_DETECTOR_WORK = re.compile(r"rule07_polling_violations|stop_rules_master|_D_EVERY|D_PATTERNS|D_WHITELIST")
 _segments = []
 for evt in reversed(EVENTS):
     if not isinstance(evt, dict):
@@ -156,11 +157,17 @@ for evt in reversed(EVENTS):
         elif ctype == "tool_use":
             name = c.get("name", "")
             inp = c.get("input") or {}
+            # 🔴 2026-10-06 改設計（同日第 2 次誤判）：維護偵測器本身時，工具輸入裡的規則原始碼、回測腳本、
+            # 測試字串（每小時查一次…）一定會命中規則D，那是在修偵測器、不是提議輪詢。工具輸入只要提到偵測器自己
+            # （規則D的違規紀錄／stop_rules_master／D_PATTERNS／迴歸測試腳本）整段不掃；助手講的話（text）照掃。
+            _tool_texts = []
             if name in ("Write", "Edit"):
-                _segments.append(inp.get("content", "") or "")
-                _segments.append(inp.get("new_string", "") or "")
+                _tool_texts = [inp.get("content", "") or "", inp.get("new_string", "") or ""]
             elif name == "Bash":
-                _segments.append(inp.get("command", "") or "")
+                _tool_texts = [inp.get("command", "") or ""]
+            if any(_DETECTOR_WORK.search(t) for t in _tool_texts):
+                continue
+            _segments.extend(_tool_texts)
 TURN_TEXT = "\n".join(reversed(_segments))
 TURN_LINES = TURN_TEXT.split("\n") if TURN_TEXT else []
 

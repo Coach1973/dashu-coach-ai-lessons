@@ -201,6 +201,17 @@ run_case_direct "規則L2-無關commit不應誤判" \
   "$(mk_gitcommit l2_unrelated 'git commit -q -m "修好一個bug"')" \
   0
 
+echo "════ 🔴 2026-10-06 迴歸測試：規則D不掃「維護偵測器本身」的工具輸入（回測腳本／規則原始碼） ════"
+run_case_direct "規則D-維護偵測器的回測腳本不應擋" \
+  "$(mk_gitcommit d_selfwork 'cat > backtest.py <<EOF
+OLD = [r"每.*分鐘.*檢查"]  # 讀 distill/rule07_polling_violations.log 回測
+for s in ["每小時查一次", "我建議每分鐘檢查一次"]: pass
+EOF')" \
+  0
+run_case_direct "規則D-一般工具輸入寫輪詢設計照擋（對照組）" \
+  "$(mk_gitcommit d_toolinput_real 'echo "我建議設一個每5分鐘檢查一次的機制" > plan.md')" \
+  1
+
 echo "════ Stop hook 合併版 vs 原版 行為比對 ════"
 
 run_case "乾淨無違規"        "$(mk clean '資料查詢結束，沒有異常狀況。')"
