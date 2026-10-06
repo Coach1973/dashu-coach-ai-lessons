@@ -1,3 +1,36 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-06 23:45 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5，v288，教練說「總結」收工）
+
+> ⚠️ **教練 Claude 額度已用到約 89%，週三 10/07 13:00 重置，他打算那時才請軍師開工。下一場請省著用：照下面「下一場開工先做」的省額度順序，不要整批讀 docs、不要 cat 三封信全文（摘要都在這裡）。**
+
+**主軸：座位第 1～3 步驗收上線；雲端成果全部收回本機；第 4～6 步教練已在既有雲端對話做完（還沒驗收、沒上線）；Stop hook 連修多次誤判。**
+
+### 做了什麼（台灣時間）
+1. **17:14 驗收座位第 1～3 步**：丟棄式 worktree rebase → 1 項過期測試改用空資料夾、同名接力棒改名、網址統一 `/game/seat-map` → 56 項全綠 → 正式庫複本跑遷移（90 座位、111 玩家不變）→ 合併 master（bni-chapters `28e6e63`）→ 重啟 → 對 `trust.bymyway.com` curl 實測（三分頁各 30 座位、無禁用字）。快照 `trust_game.db.bak-before-seats-step123-20261006`；紀錄寫進測試紀錄檔（workspace `b2ecc711a`）。
+2. **守則 hook 連修（都有迴歸測試 `bash scripts/test_stop_rules_master.sh` 24/24）**：#07 偵測器補洞（`a4f9087de`）、L2 測試資料補齊（`7eab6fc69`）、工具輸入若在維護偵測器本身不掃（`8d4d9b7bf`）、「指定時間」的「定時」不再誤判（`1b0563269`）；#12 把慣用語「點頭」當叫教練點擊的誤判（`85849e222`）。
+3. **pxpipe（把上下文轉圖片省 token）**：查證存在（teamchong/pxpipe），但中文只「保守可用」、精確字串（hash／路徑／ID／人名）會安靜讀錯、桌面版與手機遙控接法對不上 → **教練 10/06 親口：不裝，結案，不再提。**
+4. **雲端成果全收回本機**：掃 76 個倉庫，只有 bni-chapters 有雲端分支；三缺文件 8 份併進 master（`eddaf5c`）、總交接信（`69d0b03`）、雲端新規則（`01d96e7`）；`scripts/cloud_letters.sh` 原本因 Mac 沒有 `timeout` 指令從沒真的 fetch，已修並驗證（`442d7a62d`）；記憶 `reference_cloud_work_map_and_where_lessons_live_2026-10-06`。
+5. **教練糾正（19:32）**：三缺頁是他獨立做，做好自己會說，不准拿價格／公開／網址問他 → 試金石案例106、🙋區清空、整條移🤫（`48bb9ce97`）。
+6. **寫好座位第 4～6 步任務書**（`docs/task_seats_456.md`、`docs/next_task.md`、bni-chapters/CLAUDE.md「教練說開工＝讀 next_task.md 直接做」，master `b9d461c`）。教練在**既有雲端對話**（分支 `claude/optimistic-tesla-mi1zag`）說開工，雲端 19:52 做完，之後又重挑兩個分會清單。
+
+### 🔴 雲端現況（三封信摘要；信在 `claude/optimistic-tesla-mi1zag` 的 `docs/to_junshi/`，**我沒標已讀**，開工 hook 會列出，驗收完才 `mark`）
+- 分支領先 master **12 個 commit，可快轉合併（`git merge-base --is-ancestor` 已驗）**，雲端回報 **110 項測試全綠**（`master` 是 56 項）。
+- **第 4～6 步**：`a79f7a2`（預約初次見面，新路由 `/game/seat-map/reserve`、`/reserve-cancel`）、`3579419`（到期釋出，頁面載入時檢查）、`29b511f`（後台 `/game/seat-admin/<簽章>`、`make_seat_admin_link.py`）。沒新增欄位、沒通知、沒排程；`git revert` 要由新到舊。
+- **雲端動到已驗收的舊程式（請特別看）**：①`trust_game.py` `seat_map()` 補一行顯示 `notice／error`（第 3 步原本座位地圖頁看不到「已記錄」那句）；②`6bfccda` 換清單時移除「不在新清單、仍是空位、從沒人想坐過」的舊座位（改 `game_db.py`、`seat_lists.py`；有紀錄的座位一律保留，因為刪座位會連 `seat_claims` 一起 CASCADE 刪）；③`274a6b3` 真功夫換 5 項、真樂齡換 4 項（只改兩個 json）。
+- 雲端另提三件事，**我已查證**：(a) `judge()` 沒金鑰會用備用金鑰 `"x"` → **正式站程序有設 `BNI_CHAPTERS_SECRET_KEY`（長度 48，10/06 23:40 實查），風險不存在**；(b) 座位地圖每載入寫 90 次資料庫（我本機實測 19 ms，雲端 132 ms；人多才可能卡，**低優先**，建議只在清單真的變了才寫）；(c) 座位標「已入會」後沒有畫面能改回空位（只能改資料庫，低優先）。
+- 雲端提議可清理（**要教練同意才刪**）：遠端分支 `claude/seats-step123`（內容已進 master）、`claude/task-step3-implementation-kwdkui`（已完全併入）、`claude/optimistic-tesla-mi1zag`（驗收併入後）；教練雲端帳號的私有頁「給軍師的交接信」已過期。
+- 教練在雲端確認：真功夫、真樂齡「服務對象方向正確」「真樂齡四象限方向正確」；**三個分會座位可以跨分會重複**（雲端曾自加互不重複，教練糾正已拿掉）。**30 項逐項看過、真功夫第四象限排序：還沒確認。**
+
+### 📋 下一場開工先做（省額度順序；≥ 週三 13:00）
+① **驗收座位第 4～6 步＋清單改動**（只讀這三處的 diff，**不要讀 tests、不要 cat 三封信**）：`trust_game.py`（`seat_map` 的 notice 補丁、`seat_reserve`／`seat_admin`／`_seat_admin_ok`）、`game_db.py`（`start_seat_talk` 條件式更新搶座位、到期釋出、換清單移除舊座位）、`seat_lists.py`。流程：先 `cp trust_game.db trust_game.db.bak-before-seats-step456-<日期>` → 建暫時 venv（`python3 -m venv /tmp/tv && /tmp/tv/bin/pip install -q -r requirements-dev.txt`，上一場的在 scratchpad 已失效）在 bni-chapters 跑 `pytest tests -q`，預期 **110 passed** → `git merge --ff-only origin/claude/optimistic-tesla-mi1zag` → `launchctl kickstart -k gui/$(id -u)/com.coach.bni-chapters-webapp` → curl `/game/seat-map?chapter=real-ai|real-kungfu|real-age`（各要 30 個座位、無「保留／專屬給／你的座位／BNI」）→ 查 `sqlite3 trust_game.db "select chapter,count(*) from seat_slots group by 1; select count(*) from seat_claims;"`（換清單後每分會 30、確認沒有舊座位殘留）→ push master。
+② **產生教練的後台連結**：金鑰從執行中的程序取、不要印出來：`KEY=$(ps eww -p $(launchctl list | awk '/bni-chapters-webapp/{print $1}') | tr ' ' '\n' | sed -n 's/^BNI_CHAPTERS_SECRET_KEY=//p'); BNI_CHAPTERS_SECRET_KEY="$KEY" python make_seat_admin_link.py` → 印出的 `/game/seat-admin/<簽章>` 接 `https://trust.bymyway.com` 給教練（連結不會過期，換網站金鑰才失效，且會連放鴿子判定頁已發的連結一起失效）。
+③ 收尾：`docs/next_task.md` 改成「目前沒有任務」（雲端沒動它）；`bash scripts/cloud_letters.sh mark`；在 `knowledges/2026-10-05_信任遊戲_測試紀錄與回退點.md` 加一行（含取消方式：`git revert` 由新到舊 `29b511f 3579419 a79f7a2`，清單改動 `274a6b3 6bfccda` 可各自退；整庫還原用上述快照）。
+④ AI 自己的事（不問教練）：見 🔧 清單新增三項（座位地圖每次寫 90 次、已入會不能改回、CLAUDE.md 鏡像停擺；額度緊繃時動手前先跟教練說一聲）。
+⑤ 沿用 v285 ③（原文在 `handoff_archive/handoff_v284_to_v285_archived_2026-10-06.md`）：教練實際操作信任遊戲後的回饋、第三步 5 項預設值、第三～五分會等。教練說自己的線（三缺頁）不追。
+
+**commit**：bni-chapters `28e6e63` `eddaf5c` `69d0b03` `01d96e7` `b9d461c` `5691bf0`；workspace `b2ecc711a` `a4f9087de` `7eab6fc69` `8d4d9b7bf` `1b0563269` `85849e222` `442d7a62d` `48bb9ce97`；本次總結另計。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-06 17:20 台灣時間，Mac 手機遙控 Remote Control，Sonnet 5.5，v287，教練說「總結」收工）
 
 **主軸：手機 13:11 開工後，查出「雲端對話寫的信軍師收不到」的根因，兩頭補上固定路徑；讀完雲端的交接信（座位第 1～3 步在雲端分支）；守則#07 輪詢偵測器誤判，改設計做到一半被安全檢查擋下。座位第 1～3 步的驗收這場沒開始。**
@@ -16,58 +49,14 @@
 - 守則#07 偵測器缺口：已問過教練一次（10/06 17:00 左右），沒回覆，**依 N2 不追問**。
 
 ### 📋 下一場開工先做
-① ✅ **座位第 1～3 步已驗收合併**（10/06 17:40 v288，Mac 軍師 Sonnet 5.5）：bni-chapters master `28e6e63`（已推）；56 項測試全綠、正式庫複本跑遷移通過、重啟後 `trust.bymyway.com/game/seat-map` 三分頁各 30 座位實測 200；快照 `trust_game.db.bak-before-seats-step123-20261006`；紀錄寫進 `knowledges/2026-10-05_信任遊戲_測試紀錄與回退點.md`（workspace `b2ecc711a`）。**座位第 4～6 步現在可以開工**，但要先有教練定案的價格／新分會等事項（見🙋區），雲端對話要先 pull master 才看得到第 1～3 步。
-①b ✅ **雲端工作全面整合進本機**（10/06 19:30 v288）：bni-chapters 三個雲端分支都已進 master——座位 `28e6e63`、三缺文件 8 份 `eddaf5c`、雲端總交接信 `69d0b03`、改名接力棒＋雲端新規則 `01d96e7`（已推）；其餘 75 個倉庫沒有雲端分支；workspace 的 `claude/kaigong-6fijra`（8/17 舊接力棒覆寫版）**不要併**。雲端經驗規則已寫進 `bni-chapters/CLAUDE.md`；記憶 `reference_cloud_work_map_and_where_lessons_live_2026-10-06`；`scripts/cloud_letters.sh` 修好真的會 fetch（Mac 沒有 timeout 指令，原本從沒抓過）。**缺口**：教練在雲端網頁對話說的原話本機看不到。
-①c ⏳ **座位第 4～6 步：教練 10/06 19:32 決定開新雲端對話做**。已備好：`docs/task_seats_456.md`＋`docs/next_task.md`＋bni-chapters/CLAUDE.md「教練說開工＝讀 next_task.md 直接做」（master `b9d461c`，用全新 clone 驗證新對話看得到、56 項測試綠）。**教練只要開新雲端對話說「開工」**。做完雲端會在 `docs/to_junshi/` 寫信，開工 hook 會列出來，驗收照第 1～3 步流程（丟棄式 worktree rebase → 跑測試 → 讀 diff → 合併 → 重啟 → 對正式站實測 → 記進測試紀錄）。注意：第 6 步後台連結要 Mac 上用 `BNI_CHAPTERS_SECRET_KEY`（launchd 環境變數）產生給教練。
-② ✅ **守則#07 偵測器已補洞**（workspace `a4f9087de`）：`_D_EVERY` 數字改成可省略，回測 81 則歷史違規＋迴歸測試 `scripts/test_stop_rules_master.sh` → 補 L2 測試 fixture 後 15/15 全過（「每小時查一次」補回，舊判有新判沒有的 3 筆全是誤判；L2 那項是測試 fixture 缺 changyong 區塊結構，不是規則壞）。
-③ 沿用 v285 ③④（原文已封存於 `handoff_archive/handoff_v284_to_v285_archived_2026-10-06.md`）：教練實際操作信任遊戲後的回饋（「提醒他」按鈕、見面紀錄「對方確認」、放鴿子逾期、非會員見證分量）＋第三步 5 項預設值（④的詮釋、留言可否撤回、好友動態上不上公共頁、90 天門檻、60 字上限）；第三～五分會、真富／真愛／真鑫菁英表、籌備會名單、買竣淯簡報、每月流程、10/09 後搬家舊夾、宏碁注入確認。
-④ 雲端信裡「教練定案的文字」寫在座位第 4～6 步一律照用：標題「你缺的客戶、人才、天使投資人，每週都坐在同一個房間」；C 行「池塘裡多的是魚，重點是你不能期待魚跳進你的籠子裡。」；用「預約初次見面」「洽談中」；**不說「保留」「專屬給你」「你的座位」**。
+（v287 當時的四項：①②已完成、③④併進 v288 下一場開工先做。）
 
 **commit**：workspace `fdad9ca8d`、`b6c124674`、`d63575338`（含偵測器半成品）；bni-chapters `afa34c4`；本次總結另計。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-06 03:00 台灣時間，聯想 Windows 桌面版 Sonnet 5.5，v286，教練說「總結」收工）
 
-**主軸：真誠 10/01 數據更新（聯想寫腳本＋信、Mac 寫入、聯想從網頁驗證）；聯想／宏碁開工 ps1 瘦身 42KB→9KB；Zoom 錄影搬到 D 槽；記憶索引拆檔。**
-
-### 做了什麼（台灣時間）
-1. **21:57 真誠 10/01 數據**：聯想連不到 Mac 資料庫（Mac 22 埠關著），實測網站 `/api/update_attendance` 回「此週次不開放填寫」（10/01 週還沒建，無副作用）→ 寫 `scripts/sincere_weekly_update_20261001.py`（建週次＋15 位出席＋早鳥 10＋來賓 7＋名單 7 筆；先備份、可重跑、在籍數不是 15 或找不到會員就中止；用模擬庫驗證過 121／咖啡自填值不被洗掉）＋信 `cross-agent/inbox/mac/20261005-2205_…`，commit `af55d5728`。Mac 22:22 寫入（見 v285 ①）；**03:00 聯想從公開網頁自己驗證**：10/01 出席 15、名單 7 位、累計來賓 陳佩君 34／楊在珍 4／林佳伶 2，一致。發現儀表板其實已有出席欄位與代理人（`/api/update_attendance`），07/23～09/24 各週出席仍全是「未填」。
-2. **開工 ps1 瘦身 v4**（`5b077ac22`）：`scripts/feed_junshi_handoff.ps1` 對齊 Mac v3，只注入🎯交辦＋雲端同步＋身份＋最新一棒摘要＋🙋區＋第 6 步與三關（42KB→約 9KB）；拿掉接力棒全文／JUNSHI_RULES／HEARTBEAT／試金石／knowledges 清單／memory 最新日／舊 session 總結；新增 `KAIGONG_SELFTEST=1`（只產生內容，不拉雲端不寫紀錄不設 marker）；測試模式與正式路徑各跑過一次。**宏碁共用同一支檔，下次開工拉到就瘦身，宏碁實測未做。** E 槽備份提醒已講，兩條都從接力棒移除。
-3. **Zoom 錄影搬 D 槽**（教練 02:25 要求）：`C:\Users\bymyw\OneDrive\Documents\Zoom`（36 夾／71 檔／3.9 GB）robocopy 到 `D:\Zoom`，逐檔 SHA-256 全一致，原路徑改成 junction 指向 `D:\Zoom`（Zoom 設定不用改，以後錄影自動落 D 槽，寫測試檔驗證）；舊夾 `Zoom.bak.20261006` 由教練自己刪了（>1 GB 我不能刪），刪後查證 D 槽完好、C 槽剩 206 GB。C 槽其他位置無別的 Zoom 錄影、無 ≥50 MB 影音。現行 OneDrive 根目錄在 `D:\Users\Downloads\OneDrive`，C 槽那包從沒被同步。記憶 `reference_lenovo_zoom_recordings_junction_to_d_2026-10-06`。
-4. **記憶索引**：`MEMORY.md` 超過 200 行（會被截斷），把較早 87 條單篇索引行搬到 `MEMORY_ARCHIVE_INDEX.md`（記憶檔本身沒動），現約 120 行；新增記憶 `reference_windows_file_scan_silent_zero_traps_2026-10-06`。
-
-### 卡在哪／發現
-- 掃檔「回 0 筆不報錯」連踩三個坑（-LiteralPath 配 -Include、bash 寫 ps1 反斜線被吞、無 BOM 中文）才靠「已知檔驗證掃描」避開，已寫記憶。
-- 聯想沒有全域 `~/.claude/CLAUDE.md`，所以開工注入保留了三關文字；聯想專案 `E:\Claude-Data\.claude\projects\E--Claude-Data\CLAUDE.md` 還寫舊的六步驟，與 v4 不一致（AI 自己的小事，方便時改成「心法＋最新一棒」）。
-- Zoom 沒真的再錄一場驗證；下次錄完看 `D:\Zoom` 有沒有新資料夾。
-
-### 📋 下一場開工先做
-（v285 已封存；①②經 v287 查證早已完成、③④已併進 v287，以下為 v286 當時寫法）：①驗收雲端第三步（bni-chapters 分支 `claude/task-step3-implementation-kwdkui`，35 項測試、複本遷移、讀 diff 再合併，不要直接改正式站 master）；②評估雲端「專屬座位」企劃（版本 A 植入現有遊戲或 B 獨立輕量版；建議切 Opus 5.5）；③教練實際操作信任遊戲後的回饋與第三步 5 項預設值；④第三～五分會、真富／真愛／真鑫菁英表、籌備會名單、每月流程、10/09 後搬家舊夾、宏碁注入確認（約 9KB）。聯想側無新增待辦。
-
-**commit**：workspace `af55d5728`、`5b077ac22`；本次總結另計。
-
----
-
-
-> 📦 v284～v285完整內容已封存：`handoff_archive/handoff_v284_to_v285_archived_2026-10-06.md`（好友機制第一二步＋第三步雲端接入＋真誠 10/01 寫入；①②已完成、③④併進 v287）
-
-> 📦 v282完整內容已封存：`handoff_archive/handoff_v282_archived_2026-10-05.md`（信任遊戲三分會連結＋第一、二分會夥伴＋金質獎章區＋真鑫／真鑽一頁式簡報＋官方照片同步；原「下一場開工先做」已併進 v284 ④）
-
-
-> 📦 v283完整內容已封存：`handoff_archive/handoff_v283_archived_2026-10-06.md`（信任遊戲友善夥伴玩法第二步＋規則關卡；原「下一場開工先做」已併進 v284 ④、v285 ④）
-
-> 📦 v281完整內容已封存：`handoff_archive/handoff_v281_archived_2026-10-05.md`（信任遊戲測試版上線 trust.bymyway.com、94 位入座、DnA 名單；原「下一場開工先做」已併進 v282）
-> 📦 v280完整內容已封存：`handoff_archive/handoff_v280_archived_2026-10-05.md`（積分表 v2＋探測器擴真鑫／籌備會＋本屆領導團隊標籤＋DnA 多重身份＋官方照片同步；「下一場開工先做」①②③已搬進 v282）
-> 📦 v279完整內容已封存：`handoff_archive/handoff_v279_archived_2026-10-05.md`（探測器第一版上線＋帶來賓改用官方 PALMS＋來賓總覽／真鑽戰情表／燈號自動帶入；未做完的項目已併進 v280、v281「下一場開工先做」）
-> 📦 v278完整內容已封存：`handoff_archive/handoff_v278_archived_2026-10-05.md`（《AI企業團隊戰略》原話報告書＋真誠正式照與一頁式簡報＋真鑽空座位按鈕與教練卡片；未做完的項目已併進 v280「下一場開工先做」）
-> 📦 v277完整內容已封存：`handoff_archive/handoff_v277_archived_2026-10-05.md`（真鑽 47 席上線＋信任裝備探測器方案 v2 定案＋積分表 v1 拍板；仍未做完的項目已併進 v279「下一場開工先做」）
-> 📦 v276完整內容已封存：`handoff_archive/handoff_v276_archived_2026-10-05.md`（商務遊戲第二～四批問答＋積分表 v1＋Keynote／輔助鍵盤插話）
-> 📦 v274＋v275完整內容已封存：`handoff_archive/handoff_v274_to_v275_archived_2026-10-04.md`（v274 手機版：AI 百人導師架構＋商務遊戲題庫＋原話報告書＋curation-watch 修復／v275 大樹小講 bigtree-1107＋ema1017＋歷史頁自動補登＋kr1003＋macOS 26.7.1；10/04 收工整理時搬出，仍未完成的項目已併進 v277「下一場開工先做」④⑤）
-> 📦 v273完整內容已封存：`handoff_archive/handoff_v273_archived_2026-10-04.md`（v273 macOS 26.7.1 更新＋BNI 信用證補登＋空間盤點＋10/03～04 大樹小講零碎記錄；10/04 整理接力棒時整段搬出）
-> 📦 v272完整內容已封存：`handoff_archive/handoff_v272_archived_2026-10-04.md`（開工注入瘦身v3＋〈為你轉身〉導師席換八位＋ema1017流程＋team01戰情表「未來週次不開放填寫」）
-
----
+> 📦 v286完整內容已封存：`handoff_archive/handoff_v286_archived_2026-10-06.md`（聯想 Windows：真誠 10/01 驗證、開工 ps1 瘦身、Zoom 錄影搬 D 槽）；原「下一場開工先做」已併進 v287／v288。
 
 ## 🎯 「賈維斯成長計畫」（簡稱「反射條件」）進度（2026-10-02 07:10 瘦身版；詳細交辦段與第 1~3 步經過已封存 `handoff_archive/handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`）
 
@@ -104,6 +93,8 @@
 
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
 > 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
+- **座位第 4～6 步的三個小決定**（教練已在雲端對話看過，不卡上線，不主動問）：後台「已入會／釋出」要不要確認視窗、取消預約後「想坐」要不要自動回來、洽談中見證被撤回洽談要不要中斷；另真功夫、真樂齡換掉的 9 項專業還沒被教練逐項確認、真功夫第四象限排序。
+- **pxpipe**：教練 10/06 親口不裝，結案，換任何說法都不再提。
 - **三缺行銷頁**：教練自己獨立製作，做好會自己告訴我（10/06 19:32 親口）。**不問價格／公開／數據來源／影片／網址／申請觀看通知**；文件 8 份已併進 bni-chapters master 備查。
 - 座位清單內容待教練哪天提起再換：`real-age` 主軸、`real-kungfu` 第 4 象限、年底成立哪幾個（只是換 `data/seat_lists/*.json`，不卡任何程式）。
 - 手機出門用行動網路輸入 Tailscale 100.x 位址連 RustDesk 實測（v264，教練要出門用時再測）
@@ -143,6 +134,7 @@
 
 | 優先 | 任務 | 狀態 | 說明 |
 |---|---|---|---|
+| 🟢 | **座位功能三個低優先小改（雲端 10/06 夜查到，我已查證）** | ⏳驗收併入後 AI 自己處理 | ①座位地圖每載入就寫 90 次資料庫（`seat_map()` 內逐一 `sync_chapter`）→ 只在清單檔內容真的變了才寫（比對檔案 mtime／雜湊）；②座位標「已入會」後無畫面可改回空位（後台加「改回空位」，需確認視窗）；③後台「已入會／釋出」沒有確認視窗。都不卡上線，不問教練。 |
 | 🟡 | **`workspace/CLAUDE.md` 的接力棒鏡像停在 10/01，吃額度又過期（10/06 v288 查證）** | ⏳AI 自己處理（額度緊繃時動手前先跟教練說一聲） | 查證：`ai.openclaw.cron-daemon` 每 5 分鐘都有跑 `sync_handoff_to_claudemd.sh`，是腳本 9/30 加的格式防呆（開頭 500 字必須有「新的一棒 vN」）自 10/01 起每次拒絕，`/tmp/sync_handoff.log` 已累積 1,050 次拒絕；現在接力棒標題沒有「新的一棒」字樣。鏡像段約 2.2 萬字、占 CLAUDE.md 一半以上，在 workspace 內工作時會載入。**建議做法**：10/02 開工改 v3 的本意就是只注入最新一棒，所以比較對的是拿掉鏡像（CLAUDE.md 換成一行指標、cron-daemon 停掉這一步），不是修防呆；改前要確認 `feed_junshi_handoff.sh` 第 317 行那段說明沒有仰賴它。 |
 | 🔴 | **守則#07 輪詢偵測器半成品（10-06）** | ⏸被安全檢查擋下，已問教練一次沒回，不追問 | `scripts/stop_rules_master.py` `_D_EVERY` 數字誤設必填，線上版（`d63575338`）會放過「每小時查一次」；補法與回測方式見 v287 ②。 |
 | 🟡 | **雲端寫給軍師的信（10-06）** | ✅Mac 端＋雲端規則已上線 | 雲端信放分支 `docs/to_junshi/`，Mac 端 `scripts/cloud_letters.sh list｜cat｜mark`，開工 hook 與「讀信」反射會叫；已開著的舊雲端對話要先 pull master 才會用新路徑。記憶 `reference_cloud_letters_to_junshi_path_2026-10-06`。 |
