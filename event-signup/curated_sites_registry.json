@@ -451,6 +451,83 @@
       "source_package": "20261004-144011__doc_8888ee529187_kr1003-website-v2.zip",
       "no_shop_card": true,
       "repo": "Coach1973/kr1003"
+    },
+    {
+      "slug": "ai-team-strategy",
+      "title": "教練原話報告書｜AI 企業團隊戰略（BNI × AI × 教育訓練，Round 01～04）",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/ai-team-strategy/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-04 23:45",
+      "status": "live",
+      "source_package": "20261004-234507__ai-team-strategy.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "three-lacks",
+      "title": "全世界最優秀的團隊計畫｜客戶、人才、伯樂",
+      "description": "你缺的客戶、人才、伯樂，每週都坐在同一個房間。池塘裡多的是魚，重點是你不能期待魚跳進你的籠子裡。先坐下來看看。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/three-lacks/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-06 19:28",
+      "status": "live",
+      "source_package": "20261006-192839__three-lacks-packaged.zip",
+      "no_shop_card": true
+    },
+    {
+      "slug": "qiu-yurong",
+      "title": "當 AI 遇上農業｜從媒體到使命的跨界行者 · 邱裕榮",
+      "description": "二十餘年財經媒體人邱裕榮，將採訪與 AI 技術帶回土地。四大跨界支柱、三階段落地路徑，以及一個關於價值觀、呼召與生命抉擇的計畫。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/qiu-yurong/",
+      "github_pages_url": "https://coach1973.github.io/qiu-yurong/",
+      "uploaded_at": "2026-10-06 23:56",
+      "status": "live",
+      "source_package": "20261006-235622__qiu-yurong.zip"
+    },
+    {
+      "slug": "shihmin",
+      "title": "林士民｜文化科技轉譯者・臺南文創協會理事長",
+      "description": "林士民：臺南市政府青年委員、臺南市文創協會理事長、115年臺南市社會優秀青年。橫跨數位轉型、文化科技、策展與公共參與的跨域整合者。",
+      "category": "育",
+      "uploaded_at": "2026-10-04 22:59",
+      "event_url": "https://event.bymyway.com/curated/shihmin/",
+      "github_pages_url": "https://coach1973.github.io/shihmin/",
+      "source_package": "",
+      "status": "live",
+      "listed": false,
+      "card_html": "          <!-- 計劃夥伴店家：林士民｜文化科技轉譯者・臺南文創協會理事長（策展SOP自動上架，待軍師補完整介紹） -->\n          <article class=\"shop-row reveal\">\n            <div>\n              <div class=\"shop-head\">\n                <span class=\"pill\">計劃夥伴店家</span>\n                <span class=\"tag\">育</span>\n              </div>\n              <h3>林士民｜文化科技轉譯者・臺南文創協會理事長</h3>\n              <p class=\"shop-desc\">林士民：臺南市政府青年委員、臺南市文創協會理事長、115年臺南市社會優秀青年。橫跨數位轉型、文化科技、策展與公共參與的跨域整合者。</p>\n              <ul class=\"shop-facts\">\n                <li><span class=\"k\">分類</span><span>育</span></li>\n                \n              </ul>\n              <p class=\"slot-note\"><a href=\"https://event.bymyway.com/curated/shihmin/\" target=\"_blank\" rel=\"noopener\">查看店家專屬網站</a></p>\n              \n            </div>\n            <div class=\"shop-media\">\n              <div class=\"map-frame\">\n                <img src=\"images/shihmin.jpg\" alt=\"林士民｜文化科技轉譯者・臺南文創協會理事長實景照片\" loading=\"lazy\">\n              </div>\n            </div>\n          </article>\n",
+      "unlisted_at": "2026-10-07 00:19"
+    },
+    {
+      "slug": "zhang-teng-wen",
+      "title": "張騰文 Teng-Wen Chang ｜ 柚式藝術・台南",
+      "description": "柚式藝術（花藝設計）由張騰文主理，專營永生花藝創作與教學。客製永生花禮盒、新娘捧花、婚禮與空間佈置、企業贈禮，以及「小小花藝師－手作花藝課」花藝教學。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/zhang-teng-wen/",
+      "github_pages_url": "https://coach1973.github.io/zhang-teng-wen/",
+      "uploaded_at": "2026-09-06 05:50",
+      "status": "live",
+      "source_package": "20260906-055031__tengwen-flower-site.zip",
+      "listed": false,
+      "card_html": "          <!-- 計劃夥伴店家：張騰文 Teng-Wen Chang ｜ 柚式藝術・台南（策展SOP自動上架，待軍師補完整介紹） -->\n          <article class=\"shop-row reveal\">\n            <div>\n              <div class=\"shop-head\">\n                <span class=\"pill\">計劃夥伴店家</span>\n                <span class=\"tag\">樂</span>\n              </div>\n              <h3>張騰文 Teng-Wen Chang ｜ 柚式藝術・台南</h3>\n              <p class=\"shop-desc\">柚式藝術（花藝設計）由張騰文主理，專營永生花藝創作與教學。客製永生花禮盒、新娘捧花、婚禮與空間佈置、企業贈禮，以及「小小花藝師－手作花藝課」花藝教學。</p>\n              <ul class=\"shop-facts\">\n                <li><span class=\"k\">分類</span><span>樂</span></li>\n              </ul>\n              <p class=\"slot-note\"><a href=\"https://event.bymyway.com/curated/zhang-teng-wen/\" target=\"_blank\" rel=\"noopener\">查看店家專屬網站 →</a></p>\n            </div>\n          </article>\n",
+      "unlisted_at": "2026-10-07 00:19"
+    },
+    {
+      "slug": "ai-application-submission-package-20260923",
+      "title": "模型推論類申請完整送件包｜統編 42924069",
+      "description": "",
+      "category": "樂",
+      "uploaded_at": "2026-09-24 00:02",
+      "event_url": "https://event.bymyway.com/curated/ai-application-submission-package-20260923/",
+      "github_pages_url": "https://coach1973.github.io/ai-application-submission-package-20260923/",
+      "source_package": "",
+      "status": "live",
+      "listed": false,
+      "card_html": "          <!-- 計劃夥伴店家：模型推論類申請完整送件包｜統編 42924069（策展SOP自動上架，待軍師補完整介紹） -->\n          <article class=\"shop-row reveal\">\n            <div>\n              <div class=\"shop-head\">\n                <span class=\"pill\">計劃夥伴店家</span>\n                <span class=\"tag\">樂</span>\n              </div>\n              <h3>模型推論類申請完整送件包｜統編 42924069</h3>\n              <p class=\"shop-desc\">網站已自動上架，介紹文案待軍師補充。</p>\n              <ul class=\"shop-facts\">\n                <li><span class=\"k\">分類</span><span>樂</span></li>\n                \n              </ul>\n              <p class=\"slot-note\"><a href=\"https://event.bymyway.com/curated/ai-application-submission-package-20260923/\" target=\"_blank\" rel=\"noopener\">查看店家專屬網站 →</a></p>\n              \n            </div>\n          </article>\n",
+      "unlisted_at": "2026-10-07 00:19"
     }
   ],
   "redirects": {

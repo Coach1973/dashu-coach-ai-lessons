@@ -1890,6 +1890,24 @@ def shops_legacy_redirect(slug, filename=""):
     return redirect(f"https://event.bymyway.com/curated/{slug}/{filename}", code=301)
 
 
+def _shangquan_card_pattern(event_url):
+    """含這個網址的店家卡片整塊(含前一行說明註解)。刪除、下架、重新上架共用同一個比對規則。
+    event_url 可以是一個字串，或一串網址（任何一個出現在卡片裡都算）。"""
+    urls = [event_url] if isinstance(event_url, str) else list(event_url)
+    return re.compile(
+        r'(?:[ \t]*<!--[^\n]*-->\n)?[ \t]*<article\b[^>]*>(?:(?!</article>).)*?'
+        + "(?:" + "|".join(re.escape(u) for u in urls) + ")" + r'(?:(?!</article>).)*?</article>\n?',
+        re.DOTALL,
+    )
+
+
+def _site_card_urls(site: dict) -> list:
+    """這個網站的卡片可能出現的網址寫法：正式網址、GitHub Pages 網址、/<slug>/。
+    早期上架的卡片用的是舊網址格式，只認 event_url 會漏掉它們（鑫瀚昌、迴頭快剪等）。"""
+    urls = [site.get("event_url") or "", site.get("github_pages_url") or "", f"/{site['slug']}/"]
+    return [u for u in urls if u]
+
+
 def _remove_tainan_shangquan_card(event_url: str) -> bool:
     """把已上架店家從教練這裡手動下架時，順手拔掉大台南策展中心首頁的店家卡片。
     卡片格式固定來自curation_process.py的insert_tainan_shangquan_card()，
@@ -1898,12 +1916,7 @@ def _remove_tainan_shangquan_card(event_url: str) -> bool:
     if not index_path.is_file():
         return False
     content = index_path.read_text(encoding="utf-8")
-    pattern = re.compile(
-        r'(?:[ \t]*<!--[^\n]*-->\n)?[ \t]*<article\b[^>]*>(?:(?!</article>).)*?'
-        + re.escape(event_url) + r'(?:(?!</article>).)*?</article>\n?',
-        re.DOTALL,
-    )
-    new_content, n = pattern.subn("", content)
+    new_content, n = _shangquan_card_pattern(event_url).subn("", content)
     if n == 0:
         return False
     index_path.write_text(new_content, encoding="utf-8")
@@ -1959,11 +1972,123 @@ def delete_curated_site(slug: str) -> tuple[bool, str]:
     return True, f"已下架「{site.get('title', slug)}」{card_note}{github_note}"
 
 
+def _publish_shangquan_index(message: str) -> None:
+    """把大台南策展中心首頁(index.html)的改動 commit + push（失敗會丟例外，由呼叫端決定怎麼說）。"""
+    subprocess.run(["git", "add", "index.html"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=15, env=_OPENCLAW_ENV)
+    subprocess.run(
+        ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com", "commit", "-q", "-m", message],
+        cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=15, env=_OPENCLAW_ENV,
+    )
+    subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV)
+
+
+def _save_curated_registry(registry: dict) -> None:
+    CURATED_REGISTRY_PATH.write_text(json.dumps(registry, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def unlist_curated_site(slug: str) -> tuple[bool, str]:
+    """教練2026-10-07交辦：「下架」只能讓網站不出現在大台南策展中心，不能讓網站不見。
+    這裡只做一件事：把策展中心首頁的卡片收起來，卡片原文存進名冊（重新上架時原樣放回）。
+    網址、本機資料夾、GitHub repo、名冊條目全部不動，所以教練點進去還看得到、後台清單也還在。
+    真的要讓網站消失（重複、上錯）才用 delete_curated_site()。"""
+    registry = _load_curated_registry()
+    site = next((s for s in registry.get("sites", []) if s["slug"] == slug), None)
+    if not site:
+        return False, "名冊裡找不到這個網站"
+    title = site.get("title", slug)
+    if site.get("listed") is False:
+        return False, f"「{title}」已經是下架狀態，網站本身一直都在"
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8") if index_path.is_file() else ""
+    m = None if site.get("no_shop_card") else _shangquan_card_pattern(_site_card_urls(site)).search(content)
+    if not m:
+        return False, f"「{title}」本來就沒有展示在大台南策展中心，不需要下架，網站照常保留"
+    site["listed"] = False
+    site["card_html"] = m.group(0)
+    site["unlisted_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+    _save_curated_registry(registry)  # 先把卡片原文存進名冊，再動首頁：中途出事也不會弄丟卡片
+    index_path.write_text(content[:m.start()] + content[m.end():], encoding="utf-8")
+    note = ""
+    try:
+        _publish_shangquan_index(f"策展SOP下架（只收起卡片，網站保留）：「{title}」")
+    except Exception as e:  # noqa: BLE001
+        note = f"（卡片已收起，但同步到 GitHub 失敗，需要軍師檢查：{e}）"
+    return True, f"已下架「{title}」：不再出現在大台南策展中心，網站和資料都還在，隨時可以重新上架{note}"
+
+
+def relist_curated_site(slug: str) -> tuple[bool, str]:
+    """把下架的網站卡片原樣放回大台南策展中心首頁（插入點：SHOP_CARDS_INSERT_POINT 那行下面）。"""
+    registry = _load_curated_registry()
+    site = next((s for s in registry.get("sites", []) if s["slug"] == slug), None)
+    if not site:
+        return False, "名冊裡找不到這個網站"
+    title = site.get("title", slug)
+    if site.get("listed") is not False:
+        return False, f"「{title}」現在就是展示狀態"
+    card = site.get("card_html") or ""
+    if not card:
+        return False, f"名冊裡沒有保存「{title}」的卡片內容，需要軍師補卡片（網站本身沒問題）"
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8")
+    if _shangquan_card_pattern(_site_card_urls(site)).search(content):
+        pass  # 卡片已經在首頁了，只需要把狀態改回來
+    else:
+        marker = content.find("SHOP_CARDS_INSERT_POINT")
+        if marker < 0:
+            return False, "找不到策展中心首頁的卡片插入點，需要軍師檢查"
+        insert_at = content.index("\n", marker) + 1
+        if content[insert_at:insert_at + 1] == "\n":
+            insert_at += 1  # 插入點後面本來就有一個空行，卡片放在空行後面，跟原本一模一樣
+        if not card.endswith("\n"):
+            card += "\n"
+        index_path.write_text(content[:insert_at] + card + content[insert_at:], encoding="utf-8")
+    for k in ("listed", "card_html", "unlisted_at"):
+        site.pop(k, None)
+    _save_curated_registry(registry)
+    note = ""
+    try:
+        _publish_shangquan_index(f"策展SOP重新上架：「{title}」")
+    except Exception as e:  # noqa: BLE001
+        note = f"（卡片已放回，但同步到 GitHub 失敗，需要軍師檢查：{e}）"
+    return True, f"已重新上架「{title}」，大台南策展中心首頁又看得到了{note}"
+
+
+def _curation_admin_context() -> dict:
+    """後台清單要的資料：全部網站（新的在前）＋目前真的有卡片展示在策展中心首頁的 slug。"""
+    index_path = TAINAN_SHANGQUAN_REPO / "index.html"
+    content = index_path.read_text(encoding="utf-8") if index_path.is_file() else ""
+    sites = _load_curated_registry().get("sites", [])[::-1]
+    carded = {s["slug"] for s in sites
+              if s.get("listed") is not False and not s.get("no_shop_card")
+              and _shangquan_card_pattern(_site_card_urls(s)).search(content)}
+    return {"sites": sites, "carded": carded}
+
+
 @app.route("/curation/admin")
 def curation_admin():
     if not _logged_in():
         return redirect(url_for("admin_login", next=request.path))
-    return render_template("curation_admin.html", sites=_load_curated_registry().get("sites", [])[::-1])
+    return render_template("curation_admin.html", **_curation_admin_context())
+
+
+@app.route("/curation/admin/unlist/<slug>", methods=["POST"])
+def curation_admin_unlist(slug):
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    if not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    ok, message = unlist_curated_site(slug)
+    return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
+
+
+@app.route("/curation/admin/relist/<slug>", methods=["POST"])
+def curation_admin_relist(slug):
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    if not _CURATED_SLUG_RE.match(slug):
+        abort(404)
+    ok, message = relist_curated_site(slug)
+    return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
 @app.route("/curation/admin/delete/<slug>", methods=["POST"])
@@ -1973,11 +2098,7 @@ def curation_admin_delete(slug):
     if not _CURATED_SLUG_RE.match(slug):
         abort(404)
     ok, message = delete_curated_site(slug)
-    return render_template(
-        "curation_admin.html",
-        sites=_load_curated_registry().get("sites", [])[::-1],
-        result_message=message, result_ok=ok,
-    )
+    return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
 @app.route("/curation/upload", methods=["GET", "POST"])

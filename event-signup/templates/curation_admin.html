@@ -28,33 +28,58 @@
     border-radius:8px; background:transparent; color:var(--red); cursor:pointer; white-space:nowrap;
   }
   .del-btn:hover { background:rgba(220,80,80,.15); }
+  .act-btn {
+    padding:8px 16px; font-size:14px; font-weight:700; border:1px solid var(--line);
+    border-radius:8px; background:transparent; color:var(--gold); cursor:pointer; white-space:nowrap;
+  }
+  .act-btn:hover { background:rgba(200,169,110,.15); }
+  .pill { display:inline-block; font-size:12px; font-weight:700; padding:2px 9px; border-radius:99px; margin-left:8px; vertical-align:middle; }
+  .pill.on { background:rgba(76,175,125,.15); color:#8fe0b8; border:1px solid rgba(76,175,125,.4); }
+  .pill.off { background:rgba(200,169,110,.15); color:var(--gold); border:1px solid var(--line); }
+  .pill.none { background:rgba(255,255,255,.06); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.15); }
+  .site-row .btns { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  @media (max-width:560px) { .site-row { flex-direction:column; align-items:flex-start; } .site-row .btns { justify-content:flex-start; } }
   .empty { color:rgba(255,255,255,.4); font-size:14px; text-align:center; padding:30px 0; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <h1>大台南商圈整合計劃<span>・後台管理</span></h1>
-    <p class="sub">已上架的店家網站，覺得不合適隨時可以在這裡直接下架，不用另外找軍師。下架後：網址失效、大台南策展中心卡片同步移除。</p>
+    <p class="sub"><b>下架</b>＝只把大台南策展中心首頁的卡片收起來，網站、網址、資料都還在，隨時可以<b>重新上架</b>。<b>刪除</b>＝網址失效，只有「重複」或「上錯」才用。</p>
     {% if result_message %}
       <div class="msg {{ 'ok' if result_ok else 'fail' }}">{{ result_message }}</div>
     {% endif %}
     {% if sites %}
       {% for s in sites %}
+      {% set unlisted = s.listed is defined and not s.listed %}
       <div class="site-row">
         <div>
-          <div class="name">{{ s.title }}</div>
-          <div class="meta">{{ s.slug }} · {{ s.uploaded_at }} · {{ s.category }}</div>
+          <div class="name">{{ s.title }}
+            {% if unlisted %}<span class="pill off">已下架・網站還在</span>
+            {% elif s.slug in carded %}<span class="pill on">展示中</span>
+            {% else %}<span class="pill none">未在策展中心展示</span>{% endif %}
+          </div>
+          <div class="meta">{{ s.slug }} · {{ s.uploaded_at }} · {{ s.category }}{% if unlisted and s.unlisted_at %} · 下架於 {{ s.unlisted_at }}{% endif %}</div>
         </div>
-        <div style="display:flex;align-items:center;">
-          {% if s.status == 'live' %}<a class="view" href="{{ s.event_url }}" target="_blank" rel="noopener">查看 →</a>{% endif %}
-          <form method="POST" action="{{ url_for('curation_admin_delete', slug=s.slug) }}" onsubmit="return confirm('確定要下架「{{ s.title }}」嗎？');">
-            <button type="submit" class="del-btn">下架</button>
+        <div class="btns">
+          {% if s.status == 'live' or unlisted %}<a class="view" href="{{ s.event_url }}" target="_blank" rel="noopener">查看 →</a>{% endif %}
+          {% if unlisted %}
+          <form method="POST" action="{{ url_for('curation_admin_relist', slug=s.slug) }}">
+            <button type="submit" class="act-btn">重新上架</button>
+          </form>
+          {% elif s.slug in carded %}
+          <form method="POST" action="{{ url_for('curation_admin_unlist', slug=s.slug) }}" onsubmit="return confirm('下架「{{ s.title }}」？\n只是從大台南策展中心收起卡片，網站和資料都保留，隨時可以重新上架。');">
+            <button type="submit" class="act-btn">下架</button>
+          </form>
+          {% endif %}
+          <form method="POST" action="{{ url_for('curation_admin_delete', slug=s.slug) }}" onsubmit="return confirm('⚠️ 刪除「{{ s.title }}」？\n\n刪除會讓網址失效（已經發出去的連結會打不開）。\n只有「重複」或「上錯」才需要刪除；只是暫時不想展示請按「下架」。\n\n確定要刪除嗎？');">
+            <button type="submit" class="del-btn">刪除</button>
           </form>
         </div>
       </div>
       {% endfor %}
     {% else %}
-      <div class="empty">目前沒有已上架的店家</div>
+      <div class="empty">目前沒有任何網站</div>
     {% endif %}
   </div>
 </body>

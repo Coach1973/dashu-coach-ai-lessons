@@ -1084,10 +1084,10 @@
       "moment": "pre_tool",
       "tool": "Bash",
       "match": "curation/admin/delete",
-      "say": "這支刪除是整套退役（GitHub repo 改名、關 Pages、名冊移除），已公告的網址會 404；只是要從名冊隱藏就不要用它。",
+      "say": "這支是「刪除」：網址 404、GitHub repo 改名關 Pages、本機資料夾搬走。教練 10/07 定：只是不想展示在策展中心＝用後台「下架」（/curation/admin/unlist/<slug>，只收起卡片、網站保留、可重新上架）；刪除只有「重複」或「上錯」才用。",
       "level": "remind",
       "situation": "要下架策展網站時",
-      "source": "feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md",
+      "source": "feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md＋試金石案例107",
       "audience": [
         "coach"
       ]
