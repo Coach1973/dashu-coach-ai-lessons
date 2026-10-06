@@ -82,7 +82,6 @@
 - [🔴 教練親定默契：終端機任務完成不用貼](feedback_no_paste_terminal_results.md)
 - [🔴 軍師絕不可沉默卡住等用戶提醒](feedback_no_silent_waiting.md)
 - [🔴 資料處置原則：預設「歷史存檔」](feedback_archive_not_delete.md)
-- [教練中文詞彙→檔案對照表(含輸入法)](feedback_coach_chinese_file_mapping.md)
 - [🔴🔴 截圖鐵律統合版](feedback_screenshot_rules_consolidated.md)
 - [🔴 openclaw模型切換必改設定檔](feedback_openclaw_model_switch_permanent.md)
 - [🔴 Netlify圖片部署SOP，每站必查](feedback_netlify_headers_content_type.md)
