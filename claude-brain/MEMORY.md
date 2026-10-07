@@ -1,4 +1,6 @@
 # Memory Index
+- [🔧 改桌面版 Hermes 的規則＝改 ~/.hermes/SOUL.md（不在git，先備份），用 hermes -z 開新對話實測才算交付；舊對話沿用舊規則(2026-10-07，試金石案例108)](reference_hermes_z_oneshot_test_after_soul_change_2026-10-07.md)
+- [🔧 大樹小講新增場次上 Netlify：event.db唯一真相源→diff_summary預覽→publish；guard要求NETLIFY_DEPLOY_CONFIRMED=1在指令最開頭、用event-signup的venv python(2026-10-07)](reference_bigtree_publish_flow_netlify_guard_2026-10-07.md)
 - [🔴 策展後台「下架」只能收起卡片、網站與資料全留；舊版 delete 是整套退役會讓網址404，已改成下架／重新上架／刪除三動作，教練10/07糾正(試金石案例107，原案2026-09-17)](feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md)
 - [🔧 策展SOP(2026-09-06，10/07更新下架三動作)：店家/品牌介紹網站上大台南策展中心，用上傳網址一條龍完成；跟「網頁推SOP」「自動站」是三套不同SOP](reference_curation_sop_2026-09-06.md)
 - [☁️ 雲端工作全貌：只有 bni-chapters 有雲端分支（掃過76個倉庫）；10/06 19:30 已全併進 master（座位1~3、三缺8份文件、總交接信），雲端學到的規則寫進該倉庫 CLAUDE.md；缺口＝教練對雲端AI說的原話本機看不到；cloud_letters.sh 原本因 Mac 無 timeout 從沒真的 fetch，已修(2026-10-06)](reference_cloud_work_map_and_where_lessons_live_2026-10-06.md)
