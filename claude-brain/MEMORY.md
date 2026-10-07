@@ -1,4 +1,6 @@
 # Memory Index
+- [🔴 策展後台「下架」只能收起卡片、網站與資料全留；舊版 delete 是整套退役會讓網址404，已改成下架／重新上架／刪除三動作，教練10/07糾正(試金石案例107，原案2026-09-17)](feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md)
+- [🔧 策展SOP(2026-09-06，10/07更新下架三動作)：店家/品牌介紹網站上大台南策展中心，用上傳網址一條龍完成；跟「網頁推SOP」「自動站」是三套不同SOP](reference_curation_sop_2026-09-06.md)
 - [☁️ 雲端工作全貌：只有 bni-chapters 有雲端分支（掃過76個倉庫）；10/06 19:30 已全併進 master（座位1~3、三缺8份文件、總交接信），雲端學到的規則寫進該倉庫 CLAUDE.md；缺口＝教練對雲端AI說的原話本機看不到；cloud_letters.sh 原本因 Mac 無 timeout 從沒真的 fetch，已修(2026-10-06)](reference_cloud_work_map_and_where_lessons_live_2026-10-06.md)
 - [🔴 雲端對話(bni-chapters)寫給軍師的信固定放分支 docs/to_junshi/，Mac 開工＋讀信用 scripts/cloud_letters.sh 自動掃；雲端碰不到 inbox/mac，之前信放別處軍師收不到(教練10/06 14:28)](reference_cloud_letters_to_junshi_path_2026-10-06.md)
 - [🔴 教練中文詞彙→檔案對照表(路徑大全/接力棒/試金石/輸入法)＋語音諧音對映(教練原話報告書/大樹作品總覽/World Gym/網頁/context window)；聽到這些詞直接對應不問(10/04~10/05更新)](feedback_coach_chinese_file_mapping.md)
