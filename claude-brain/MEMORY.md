@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 Pillow 用黑體-繁(STHeiti Medium.ttc index0)寫中文，「・」會變方框要換「‧」；信任成績卡踩過，出圖交付前親眼看標點(2026-10-07)](reference_heiti_tc_no_katakana_dot_2026-10-07.md)
 - [🔧 改桌面版 Hermes 的規則＝改 ~/.hermes/SOUL.md（不在git，先備份），用 hermes -z 開新對話實測才算交付；舊對話沿用舊規則(2026-10-07，試金石案例108)](reference_hermes_z_oneshot_test_after_soul_change_2026-10-07.md)
 - [🔧 大樹小講新增場次上 Netlify：event.db唯一真相源→diff_summary預覽→publish；guard要求NETLIFY_DEPLOY_CONFIRMED=1在指令最開頭、用event-signup的venv python(2026-10-07)](reference_bigtree_publish_flow_netlify_guard_2026-10-07.md)
 - [🔴 策展後台「下架」只能收起卡片、網站與資料全留；舊版 delete 是整套退役會讓網址404，已改成下架／重新上架／刪除三動作，教練10/07糾正(試金石案例107，原案2026-09-17)](feedback_curation_delete_takes_down_live_url_not_soft_hide_2026-09-17.md)
