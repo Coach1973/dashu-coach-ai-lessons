@@ -12,7 +12,10 @@ metadata:
 
 **Why:** 擋下來的是 Claude Code 內建檢查，不是教練的系統；解法是權限模式，一次到位。一件一件要授權＝把教練當按鈕（守則#12、#08）。
 **How to apply:**
-- 同一場對話第二次被自動模式擋下，就一次講清楚：「這是 Claude Code 自動模式的檢查；您在對話框把權限模式切成 bypass（一個按鈕）就不會再擋」，之後不再逐件要「上」。
+- 🔴 **被擋下的第一動作：先查實際模式**（`mcp__ccd_session_mgmt__get_session` 的 `self`，看 `permissionMode`），不准憑印象叫教練切。2026-10-08 教練早就是 `bypassPermissions`，我卻叫他去切，他只好自己手動按連接器，罵我「你沒有試」（試金石案例109）。
+  - 模式**不是** bypass（auto／default）→ 一次講清楚：「這是 Claude Code 自動模式的檢查；把權限模式切成 bypass（一個按鈕）就不會再擋」，之後不再逐件要「上」。
+  - 模式**已是** bypass，卻仍被「fast classifier」擋（例：把 Plaud 連接器接到教練的 claude.ai 帳號＝新增整合／授權）→ 切模式沒用。直接講「模式已是 bypass，這一下被安全檢查擋（接帳號／對外動作），只有您能點；我已做到＿＿，停在＿＿」，不叫他切、不繞過同一動作。
+  - 兩種情況都不准把擋下的動作換個工具再試一次。
 - 教練已表態偏好 bypass；在 bypass 下仍要自己守 N6 危險指令五道閘門與紅線，因為已經沒有外層檢查幫忙擋。
 
 相關：[[feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30]]
