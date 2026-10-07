@@ -1,4 +1,5 @@
 # Memory Index
+- [🔧 NotebookLM 自動化 nlm 已裝(SSD)並登入；錄音→簡報→套底圖整條實測通過(生成約7分鐘)；NotebookLM簡報套BNI底圖要用 --mode safe 不然底部字被LOGO吃掉(2026-10-08)](reference_notebooklm_cli_pipeline_2026-10-08.md)
 - [🔧 Plaud 錄音 175 筆已全備份到 SSD(`/Volumes/953-SSD/Plaud錄音備份/`)＋本機 mlx-whisper 轉繁中(跑 9~10 小時，可續跑)；Plaud MCP 只讀不能刪、讀取不扣額度；刪雲端前驗證清單(2026-10-08)](reference_plaud_backup_and_local_transcribe_2026-10-08.md)
 - [🔧 Pillow 用黑體-繁(STHeiti Medium.ttc index0)寫中文，「・」會變方框要換「‧」；信任成績卡踩過，出圖交付前親眼看標點(2026-10-07)](reference_heiti_tc_no_katakana_dot_2026-10-07.md)
 - [🔧 改桌面版 Hermes 的規則＝改 ~/.hermes/SOUL.md（不在git，先備份），用 hermes -z 開新對話實測才算交付；舊對話沿用舊規則(2026-10-07，試金石案例108)](reference_hermes_z_oneshot_test_after_soul_change_2026-10-07.md)
