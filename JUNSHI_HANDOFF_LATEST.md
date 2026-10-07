@@ -27,7 +27,7 @@ v288（23:34 寫完推送）與另一場「開工」（23:34 起、sessionId `2d
 - **Hermes 桌面版**：`~/.hermes/SOUL.md`（不在 git，備份 `SOUL.md.bak.20261007_before_sop_table`）加「教練口令對照」表與「搜尋完才准說沒有」；用 `hermes -z` 實測新對話：大樹作品上架 SOP→對到個人創作 SOP、官網→www.bymyway.com。**已開著的舊對話仍沿用舊規則，教練要開新對話。**
 - **失敗通知**：`curation_process.py` 大樹作品失敗改寫「大樹作品上架・自動上架失敗」；`curation_check_result.py`／`curation_process.py` 補 `from __future__ import annotations`（系統 Python 3.9 的 `int | None` 會報錯）。
 - **小龍蝦**：已取消的 10/7、10/8（DB `status=cancelled`）提醒濾掉（明天 10/08 實測不提醒）；巡檢改稱「大樹小講網站」、同一份問題一週只通知一次；專案卡 `projects/cards/bigtree.md` 補詞彙（官網＝www.bymyway.com；大樹小講網站＝bigtree-tw.netlify.app；報名系統＝event.bymyway.com）。
-- **沒動**：`ema1017`（中華網紅協會零基礎學AI課 10/17）DB 記 `site=bigtree` 但沒列在大樹小講網站，要不要列是教練的內容決定，教練沒說就不動，巡檢一週最多提一次。
+- **ema1017（10/17 零基礎學AI課）**：教練 11:32 同意公開列在大樹小講 → 11:40 已發佈（bigtree repo `96edb89`、Netlify 部署 `6ac5bdd4`、剩餘額度 55 次）；順帶 10/3 已過自動下架、11/7 與資料庫一致（`event.bymyway.com/bigtree/` 本來就是這樣）；巡檢重跑 ✅ 一致。bigtree repo 另有未提交的 `biz-gym/index.html` 與一個 .bak，不是我的，沒碰。
 
 ### 📋 下一場開工先做
 **目前沒有教練交辦未完成。** 開工回報照常 5 行內，問教練「今天要從哪件事開始？」。

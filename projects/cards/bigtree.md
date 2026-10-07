@@ -1,7 +1,7 @@
 # 專案卡：大樹小講（bigtree-tw）
 
 - **🔴 詞彙（教練 2026-10-06 糾正、10/07 校對）**：「**官網**」＝大樹教育官方網站 **https://www.bymyway.com/**（repo `bymyway-website`，頁尾／署名用它）。**大樹小講網站**＝https://bigtree-tw.netlify.app（場次列表站，官網的「查看完整活動列表」連到它）——**不叫官網**。**活動報名系統**＝event.bymyway.com。三個是不同東西，對教練講話時不准混用。
-- **場次狀態（10/07 查證）**：10/7、10/8 兩場（`bigtree-1007`／`bigtree-1008`）已取消（event.db `status=cancelled`），提醒與巡檢程式都已改成不理取消場次。`ema1017`（中華網紅協會零基礎學AI課 10/17 台北，獨立活動頁 event.bymyway.com/curated/ema1017/）在 event.db 登記為 `site=bigtree`，但**沒列在大樹小講網站**；是否要列上去是教練的內容決定，教練沒說就不動，巡檢每週只提一次。
+- **場次狀態（10/07 查證）**：10/7、10/8 兩場（`bigtree-1007`／`bigtree-1008`）已取消（event.db `status=cancelled`），提醒與巡檢程式都已改成不理取消場次。`ema1017`（中華網紅協會零基礎學AI課 10/17 台北，獨立活動頁 event.bymyway.com/curated/ema1017/）**教練 10/07 同意公開列在大樹小講**，已發佈到大樹小講網站（bigtree-repo `96edb89`，Netlify 部署 `6ac5bdd4`），巡檢轉為一致。
 
 - **🎯 owner：Hermes**（2026-08-31教練拍板，網站內容維運類任務預設交Hermes，完整操作手冊見`knowledges/2026-08-31_大樹小講四場活動維運SOP_備援指令給Hermes.md`；軍師只接需要JS/程式化select/截圖的BNI Connect等第三方後台任務）
 - **repo**：`/Users/bymyway/github_repos/bigtree`（分支 main）
