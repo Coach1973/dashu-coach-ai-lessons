@@ -1,3 +1,8 @@
+## 📌 補記（2026-10-07 19:50 台灣時間，開工後第一件）：發明家頁（inventor）表單接上活動報名即時通知
+- `~/github_repos/inventor/index.html`（非 git）「我想加入／我想支持」表單改成：手機必填＋Email 選填，送出 POST `event.bymyway.com/api/register`（slug `inventor`、source `inventor`），入庫並通知「活動報名即時通知」群；`event.db` 新增場次 id 32（快照 `event.db.bak-before-inventor-20261007`）。
+- 驗證：Flask test client 假通知→ok:True、文字正確、測試資料已清；瀏覽器假 fetch：空白擋下、成功/失敗訊息、payload 正確、手機 375 無橫向捲動。**沒真的打到群組**。
+- 🤫 原頁 `CONTACT_EMAIL` 寄信路徑已拿掉；PDF／其他連結沒動。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-07 18:05 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5，v289，教練說「總結」收工）
 
 **主軸：10/07 開工時發現 v288 的「待驗收」昨晚已被平行對話做完（座位第 4～6 步上線、後台連結已交教練）；今天交辦的 6 件事全部做完上線：真貴籌備會夥伴入座、探測器遊戲按鈕、新手說明書、Hermes／小龍蝦修復、10/17 零基礎學AI課列上大樹小講。**
