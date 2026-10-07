@@ -23,6 +23,12 @@ v288（23:34 寫完推送）與另一場「開工」（23:34 起、sessionId `2d
 3. **新手說明書與攻略** `https://trust.bymyway.com/game/guide`：入座三分鐘、加分表、第 1 天→一個月攻略、分會名額、FAQ、邀請朋友複製文字；數字全取自 `trust_game.py` 規則常數（規則改了頁面自己跟上）。首頁加按鈕、導覽加「新手」（手機版收起「規則」，不然 375 寬被擠出畫面）。`431ff6c`。
 - 教練「要讓更多友善夥伴來玩」：推廣建議已寫在回覆（現場帶玩、夥伴各邀 3 位、教練拍板才做），**沒做的是**實際發送／海報／QR，等教練說。
 
+### 10/07 11:20 教練貼 Hermes／小龍蝦對話三件抱怨，已修（試金石案例108，workspace `1557fccc2`）
+- **Hermes 桌面版**：`~/.hermes/SOUL.md`（不在 git，備份 `SOUL.md.bak.20261007_before_sop_table`）加「教練口令對照」表與「搜尋完才准說沒有」；用 `hermes -z` 實測新對話：大樹作品上架 SOP→對到個人創作 SOP、官網→www.bymyway.com。**已開著的舊對話仍沿用舊規則，教練要開新對話。**
+- **失敗通知**：`curation_process.py` 大樹作品失敗改寫「大樹作品上架・自動上架失敗」；`curation_check_result.py`／`curation_process.py` 補 `from __future__ import annotations`（系統 Python 3.9 的 `int | None` 會報錯）。
+- **小龍蝦**：已取消的 10/7、10/8（DB `status=cancelled`）提醒濾掉（明天 10/08 實測不提醒）；巡檢改稱「大樹小講網站」、同一份問題一週只通知一次；專案卡 `projects/cards/bigtree.md` 補詞彙（官網＝www.bymyway.com；大樹小講網站＝bigtree-tw.netlify.app；報名系統＝event.bymyway.com）。
+- **沒動**：`ema1017`（中華網紅協會零基礎學AI課 10/17）DB 記 `site=bigtree` 但沒列在大樹小講網站，要不要列是教練的內容決定，教練沒說就不動，巡檢一週最多提一次。
+
 ### 📋 下一場開工先做
 **目前沒有教練交辦未完成。** 開工回報照常 5 行內，問教練「今天要從哪件事開始？」。
 AI 自己的事（不問、額度緊繃時先講一聲；v288 23:36 已跟教練講過，教練沒回「做」，視為等他自己提起）：座位地圖每次載入寫 90 次、「已入會」不能改回空位、CLAUDE.md 鏡像停擺（見 🔧 清單）。
