@@ -32,6 +32,8 @@ EVENT_DB = os.path.join(WORKSPACE, "event-signup", "event.db")
 REPOS = os.path.expanduser("~/github_repos")
 OPENCLAW_CONFIG = os.path.expanduser("~/.openclaw/openclaw.json")
 COACH_CHAT_ID = "6124913915"
+# 詞彙（教練 2026-10-06/07 糾正）：「官網」＝大樹教育官方網站 https://www.bymyway.com/；
+# 這裡比對的是「大樹小講網站」bigtree-tw.netlify.app（場次列表站），訊息裡不准再叫它官網
 LIVE_SITE = "https://bigtree-tw.netlify.app/"
 STATE_FILE = os.path.join(WORKSPACE, "state", "event_consistency_state.json")
 TPE = timezone(timedelta(hours=8))
@@ -127,8 +129,8 @@ def main() -> int:
     print(f"時間：{datetime.now(TPE).strftime('%Y-%m-%d %H:%M:%S')}（台灣時間）")
     print(f"資料庫場次：共 {len(sessions)} 場，其中未來場次 {len(future)} 場\n")
 
-    # ① 官網 vs 資料庫
-    print("① 官網 vs 資料庫")
+    # ① 大樹小講網站 vs 資料庫
+    print("① 大樹小講網站 vs 資料庫")
     if live is None:
         print("   ⏭️  正式站抓不到，跳過")
     else:
@@ -137,11 +139,11 @@ def main() -> int:
         if not only_db and not only_live:
             print(f"   ✅ 一致（正式站列出 {len(live)} 場）")
         for s in sorted(only_db):
-            msg = f"資料庫有「{future_bigtree[s]['name']}（{s}／{future_bigtree[s]['event_date']}）」但官網沒列出——是不是忘了按一鍵發佈？"
+            msg = f"資料庫有「{future_bigtree[s]['name']}（{s}／{future_bigtree[s]['event_date']}）」但大樹小講網站（bigtree-tw.netlify.app）沒列出——是不是忘了按一鍵發佈？"
             print(f"   🔴 {msg}")
             problems.append(msg)
         for s in sorted(only_live):
-            msg = f"官網列出的場次「{s}」在資料庫查無——報名會寫不進去"
+            msg = f"大樹小講網站列出的場次「{s}」在資料庫查無——報名會寫不進去"
             print(f"   🔴 {msg}")
             problems.append(msg)
 
@@ -189,17 +191,33 @@ def main() -> int:
         for i, p in enumerate(problems, 1):
             print(f"  {i}. {p}")
 
+    # 同一份問題一週內只通知一次（每件事最多問一次；10/06、10/07 連兩天同一則打擾教練）
+    prev = {}
+    try:
+        with open(STATE_FILE, encoding="utf-8") as f:
+            prev = json.load(f)
+    except Exception:
+        pass
+    same = sorted(prev.get("problems") or []) == sorted(problems)
+    last = prev.get("notified_at")
+    recent = bool(last) and (datetime.now(TPE) - datetime.fromisoformat(last)).days < 7
+    skip_notify = bool(problems) and same and recent
+    notified_at = last if skip_notify else (datetime.now(TPE).isoformat() if (do_notify and problems) else last)
+    if skip_notify:
+        print("（同一份問題一週內已通知過，這次不重複打擾）")
+
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
     with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump({
             "checked_at": datetime.now(TPE).isoformat(),
+            "notified_at": notified_at,
             "future_sessions": len(future),
             "problems": problems,
             "satellites": sats,
         }, f, ensure_ascii=False, indent=2)
 
-    if do_notify and problems:
-        notify("🔎 活動場次巡檢發現 " + str(len(problems)) + " 項問題：\n"
+    if do_notify and problems and not skip_notify:
+        notify("🔎 活動場次巡檢（大樹小講網站）發現 " + str(len(problems)) + " 項問題：\n"
                + "\n".join(f"· {p}" for p in problems[:8])
                + "\n\n完整報告：state/event_consistency_state.json")
 

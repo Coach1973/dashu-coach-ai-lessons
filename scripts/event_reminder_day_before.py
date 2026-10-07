@@ -39,7 +39,9 @@ def tomorrow_str() -> str:
 
 def fetch_tomorrow_events(c):
     d = tomorrow_str()
-    return [e for e in rr.fetch_events(c, include_past=True) if e["event_date"] == d]
+    # 2026-10-07教練抓到：10/7、10/8已取消（status=cancelled）卻照樣每天提醒，取消的場次不提醒
+    return [e for e in rr.fetch_events(c, include_past=True)
+            if e["event_date"] == d and e.get("status") != "cancelled"]
 
 
 def build_message(c, events) -> str:

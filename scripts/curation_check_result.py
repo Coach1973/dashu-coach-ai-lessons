@@ -18,6 +18,8 @@ shops.bymyway.com/<其他slug>/，custom_slug被略過——這是2026-09-06教�
 輸出：JSON，欄位：found / status(success|overwritten_existing|failed|pending|not_found)
      / actual_url / live_check(HTTP狀態碼) / note
 """
+from __future__ import annotations
+
 import json
 import re
 import sys

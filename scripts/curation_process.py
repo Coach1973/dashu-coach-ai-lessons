@@ -14,6 +14,8 @@ FB貼文宣布 → Telegram通知教練（2026-09-06教練追加：全自動，�
 刻意不做的事（留給軍師下次確認時人工潤飾，見reference_curation_sop_2026-09-06.md）：
 - 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值，FB文案也是自動套模板）
 """
+from __future__ import annotations
+
 import html
 import json
 import os
@@ -808,6 +810,7 @@ def process_one(pkg_path: Path) -> None:
             raise RuntimeError("沒有標明是店家網站還是大樹作品，系統不猜，請到上傳頁重新上傳並選擇類型")
         extract_package(pkg_path, tmp_extract)
         index_file = find_index_html(tmp_extract)
+        html_files = []
         if not index_file and kind == "creation":
             # 2026-09-25發現：大樹個人創作常常是AI工具直接輸出「單一html+圖片」，
             # 沒有店家網站匯出才有的index.html慣例檔名（案例：證明給機器看_完整插圖
@@ -822,6 +825,9 @@ def process_one(pkg_path: Path) -> None:
                 shutil.copy2(adopted, index_file)
                 log(f"⚙️ 個人創作沒有index.html，採用唯一的html檔「{adopted.name}」複製一份當作index.html")
         if not index_file:
+            if len(html_files) > 1:
+                names = "、".join(sorted(p.name for p in html_files)[:6])
+                raise RuntimeError(f"包裡有 {len(html_files)} 個 html（{names}），系統不猜哪個是主頁。請把主頁命名為 index.html 再上傳，或只留主頁一個 html")
             raise RuntimeError("解壓縮後找不到index.html，這個檔案可能不是一個完整的靜態網站")
         # 若index.html不在頂層，把它所在的資料夾內容拉到頂層
         if index_file.parent != tmp_extract:
@@ -984,9 +990,9 @@ def process_one(pkg_path: Path) -> None:
         shutil.move(str(pkg_path), str(FAILED_DIR / pkg_path.name))
         cleanup_sidecar_slug(pkg_path)
         notify(
-            "⚠️【策展SOP・自動上架失敗】\n"
-            f"檔案：{pkg_path.name}\n錯誤：{e}\n"
-            f"檔案已保留在 curation_uploads/failed/，請軍師人工檢查。"
+            ("⚠️【大樹作品上架・自動上架失敗】\n" if kind == "creation" else "⚠️【策展SOP・自動上架失敗】\n")
+            + f"檔案：{pkg_path.name}\n錯誤：{e}\n"
+            + "檔案已保留在 curation_uploads/failed/，請軍師人工檢查。"
         )
         shutil.rmtree(tmp_extract, ignore_errors=True)
         return
