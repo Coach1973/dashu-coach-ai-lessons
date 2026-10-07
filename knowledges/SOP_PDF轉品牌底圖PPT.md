@@ -2,6 +2,8 @@
 
 > 🏷️ **教練簡稱：「BNI PPT SOP」**——教練說這句話，就是指這份SOP+`scripts/pdf_to_branded_pptx.py`這一整套流程，不用重新解釋。
 
+> 🔗 **通用版（任何底圖、自動偵測、可貼給任何AI）**：`knowledges/SKILL_簡報套底圖_通用版.md`；一鍵注入頁 https://coach1973.github.io/ai-go/ppt-inject.html。本檔是 BNI 底圖專用的舊版（手量遮罩座標），仍可用。
+
 ## 適用情境
 
 手上有一份 PDF（例如 NotebookLM 生成的圖文簡報），每頁都是一張完整插圖。
