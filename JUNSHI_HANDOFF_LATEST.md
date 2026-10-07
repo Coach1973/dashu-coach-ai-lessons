@@ -1,3 +1,8 @@
+## 📌 補記（2026-10-07 21:20 台灣時間，Opus 5.5）：信任遊戲「友善夥伴小上癮機制」七項一起上線
+- 教練 20:43 要「讓新人不知不覺開始玩」的機制→軍師上網找（Duolingo／LinkedIn／Strava／Wordle 等），方案 `knowledges/2026-10-07_信任遊戲_友善夥伴小上癮機制_可行方案v1.md`（workspace `b129d2c0c`）；教練 21:02「為何不一起都做」＋E 累計以天、連續以週＋成績卡用 LK888。
+- 已上線 bni-chapters `50b221f`：A 首頁先點認識的人、B N 位說認識他、C 每週人脈賓果、D 本月新星、E 簽到、F 成績卡（LK888 背景＋程式寫中文，一人一週一張、全站每天 20 張）、G 本週幾位看過你。129 項測試過；快照 `~/github_repos/_backups/trust_game_before_habits_20261007.db`；測試紀錄檔已加一行。
+- 🔧 第一張真成績卡還沒出過（等玩家按），出了要親眼看一次畫面與費用帳本 `python3 scripts/lk888_guard.py report`。
+
 ## 📌 補記（2026-10-07 19:50 台灣時間，開工後第一件）：發明家頁（inventor）表單接上活動報名即時通知
 - `~/github_repos/inventor/index.html`（非 git）「我想加入／我想支持」表單改成：手機必填＋Email 選填，送出 POST `event.bymyway.com/api/register`（slug `inventor`、source `inventor`），入庫並通知「活動報名即時通知」群；`event.db` 新增場次 id 32（快照 `event.db.bak-before-inventor-20261007`）。
 - 驗證：Flask test client 假通知→ok:True、文字正確、測試資料已清；瀏覽器假 fetch：空白擋下、成功/失敗訊息、payload 正確、手機 375 無橫向捲動。**沒真的打到群組**。
