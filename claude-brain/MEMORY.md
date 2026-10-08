@@ -1,5 +1,5 @@
 # Memory Index
-- [🔧 NotebookLM 自動化 nlm 已裝(SSD)並登入；錄音→簡報→套底圖整條實測通過(生成約7分鐘)；NotebookLM簡報套BNI底圖要用 --mode safe 不然底部字被LOGO吃掉(2026-10-08)](reference_notebooklm_cli_pipeline_2026-10-08.md)
+- [🔧 NotebookLM 自動化 nlm 已裝(SSD)並登入；錄音→簡報→套底圖整條實測通過(生成約7分鐘)；NotebookLM簡報套BNI底圖＝走BNI PPT SOP滿版，不可自行縮小/改safe(2026-10-08教練火大糾正)](reference_notebooklm_cli_pipeline_2026-10-08.md)
 - [🔧 Plaud 錄音 175 筆已全備份到 SSD(`/Volumes/953-SSD/Plaud錄音備份/`)＋本機 mlx-whisper 轉繁中(跑 9~10 小時，可續跑)；Plaud MCP 只讀不能刪、讀取不扣額度；刪雲端前驗證清單(2026-10-08)](reference_plaud_backup_and_local_transcribe_2026-10-08.md)
 - [🔧 Pillow 用黑體-繁(STHeiti Medium.ttc index0)寫中文，「・」會變方框要換「‧」；信任成績卡踩過，出圖交付前親眼看標點(2026-10-07)](reference_heiti_tc_no_katakana_dot_2026-10-07.md)
 - [🔧 改桌面版 Hermes 的規則＝改 ~/.hermes/SOUL.md（不在git，先備份），用 hermes -z 開新對話實測才算交付；舊對話沿用舊規則(2026-10-07，試金石案例108)](reference_hermes_z_oneshot_test_after_soul_change_2026-10-07.md)
@@ -97,7 +97,7 @@
 - [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；機制是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [🔴 教練說檔案「看起來重複下載」要刪除，先MD5比對確認(2026-09-21)](feedback_verify_before_deleting_assumed_duplicates_2026-09-21.md)
 - [🔴 git pull失敗/歷史異常時先讀本機HEARTBEAT/接力棒，不靠git底層診斷(2026-09-21)](feedback_check_handoff_before_diagnosing_git_anomaly_2026-09-21.md)
-- [🔧 BNI PPT SOP簡稱對應knowledges/SOP_PDF轉品牌底圖PPT.md(2026-09-21)](reference_bni_ppt_sop_alias_2026-09-21.md)
+- [🔴 BNI PPT SOP簡稱對應knowledges/SOP_PDF轉品牌底圖PPT.md；教練要「全部覆蓋」滿版、不准縮小，做之前先看舊成品、主檔不加後綴(2026-09-21，10/08糾正)](reference_bni_ppt_sop_alias_2026-09-21.md)
 - [🔴🔴 OpenCode配額用盡後備援模型會捏造完工結果，完工回報一律要實際驗證(2026-09-20)](feedback_opencode_fallback_model_fabricated_results_2026-09-20.md)
 - [🔧 TokenTable轉售平台：Claude系列工具呼叫502故障，GPT系列正常(2026-09-20)](reference_tokentable_claude_tool_calling_bug_2026-09-20.md)
 - [✅已結案-禁止再提 機密外洩清除案例(2026-09-18~19)，2026-09-24教練裁示：後續git分岔等衍生話題永久不准再拿出來問](feedback_credential_layer_file_was_git_tracked_2026-09-19.md)

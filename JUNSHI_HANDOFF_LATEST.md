@@ -1,3 +1,37 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-08 17:12 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5（中途教練手動切 Haiku 5.5 約 1 小時再切回），v292，教練說「總結」收工；對話 10/08 13:33～17:08）
+
+**主軸：教練當天丟了五件事——Run for Future 頁改數字＋報名通知、百人導師申請通知加群、找「全世界最優秀團隊計畫」逐字稿（做成網頁登記作品一覽）、PDF 簡報套 BNI 底圖；最後一件我做錯被教練火大糾正（案例110）。**
+
+### 1. Run for Future 2027 頁（https://event.bymyway.com/curated/runforfuture/）
+- 席次 40→**88/100**（圖示、進度條、剩餘 12、FAQ「約 88 個」全同步）。**教練裁示**：刻意營造快滿額氛圍；FAQ 那句「100 家額滿即截止」**不改**（「只有限額，報名才會踴躍」）——不再提。
+- 預約席次表單原本只是 mailto，改成送 `/api/register` → 入庫＋推「活動報名即時通知」群（`event.db` events 新增 id 33、slug `runforfuture`、site `curated`）。前端攔截送出內容＋後端用假通知測過，**沒有真的送一筆吵群**。測試時誤用了教練舊測試手機 0912345678（attendee 182）被我覆蓋，已從備份 `event.db.bak-before-runforfuture-20261008` 還原。
+- commit：網站 repo `runforfuture` `aa7138c`；workspace `3f05cba92`。
+
+### 2. 百人導師申請通知（mentor100）
+- 原本只發教練私訊（chat 6124913915），現在**私訊＋活動報名即時通知群（-5349981085）兩邊都發**，任一邊失敗仍會寫 `notify_failures.log`。假通知測過、網站已重啟；**沒有真送**。commit `mentor100` `e588fb1`。
+
+### 3. 三缺經典對話 → 網頁＋作品一覽（**未完成**）
+- 教練找的「全世界最優秀團隊計畫｜客戶、人才、伯樂」＝作品 `three-lacks`（作品一覽已有，但只是行銷網頁，沒逐字稿）；逐字稿原稿＝雲端對話的 `bni-chapters/docs/classic_dialogue_three_lacks_2026-10-06.md`（私有倉庫，雲端 AI 整理，內容為「缺客戶／人才／資金」，10/06 糾正為「天使投資人」，池塘與魚比喻）。**「伯樂」一詞不在這份對話裡**；NotebookLM「真實AI團隊計劃」另有 47 份投影片（教練說那是口誤，不管）。
+- 已把這份做成 game-1004 同格式網頁，26 段教練原話與原檔逐字比對 0 缺漏、375px 無溢出；檔案存 `knowledges/三缺經典對話_網頁待上架/`（index.html、zip、build_dialogue.py）。**卡在短網址**：已問一次（10/08 16:42，給三個候選 `three-lacks-dialogue`／`three-lacks-1006`／`classic-three-lacks`），教練尚未回。
+
+### 4. 《96小時引爆億級商業宇宙》PDF 套 BNI 底圖（教練火大，案例110）
+- 我先用通用技能＋手動 `--mode safe` 縮小成 94%×89% → 被罵偷工減料。教練要的是「**全部覆蓋**」滿版（跟 9/21 驗收通過的《建構高效商務系統的建築師》BNI 版同做法）。已用 BNI PPT SOP 腳本重做，**主檔**：`/Volumes/953-SSD/下載/96小時引爆億級商業宇宙_BNI版.pptx`（15 張，1450×817）；其他版本（縮小版、滿版v2、文字完整）在 `96小時_其他版本備份/`。底部有字被 LOGO／弧形蓋住（第4、13、15張最明顯），已告知。**沒在 PowerPoint／Keynote 實際開過（截圖被鎖）**。
+- **源頭已修**：`reference_notebooklm_cli_pipeline` 的錯誤建議（用 safe）、`reference_bni_ppt_sop_alias` 補標準、MEMORY 索引、新反射 `R-BNI-PPT-FULLBLEED-NO-SHRINK`、試金石案例110。
+- 順手：技能腳本存 `~/tools/brand_pptx.py`＋獨立 venv `~/tools/brandpptx-venv/`。
+
+### 5. 其他
+- 給教練一段貼給小龍蝦的指令（列出 Plaud 175 筆主題整理），教練說這種簡單的事交給小龍蝦跑省 token；我誤說「讀不到我來整理」被糾正，已收回——**Plaud 主題整理由小龍蝦做，AI 不代做**；若小龍蝦讀不到 SSD，我只負責把 `local_text`（16 MB）複製到它讀得到的位置。
+- 「釋放」＝跑 `scripts/rustdesk_free_memory.sh`（782M→133M）。
+- Stop hook「叫教練自己動手」對描述性的「您打開」誤判一次，已向教練澄清。
+
+### 📋 下一場開工先做
+**🎯 教練交辦未完成：三缺經典對話網頁上架＋登記大樹作品一覽**。教練一給短網址（或說「你選」→ 用推薦的 `three-lacks-dialogue`），就照 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`：`curl -F kind=creation -F package=@knowledges/三缺經典對話_網頁待上架/three-lacks-dialogue.zip -F custom_slug=<短網址>` → `python3 scripts/curation_check_result.py <slug>` 查結果 → 確認 coach888「全世界最優秀團隊系列」登記成功 → 真瀏覽器開網址查。上架後數字（777、800多、60~80%、39,800、300~500萬）是教練口述未查證，頁尾已註明。金鑰見 `路徑大全_憑證層.md`，不印出。
+🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖時，先看舊成品，走 `pdf_to_branded_pptx.py` 預設，不縮小（反射已掛）；②有人提 PowerPoint／Keynote 驗證要截圖時，才請教練同意截圖。
+🤫等教練自己提起：Run for Future 與百人導師的**真送一筆測試**（會吵群、佩佩老師會看到，教練說可以才做）；Plaud 主題對照表與刪雲端（見上一棒）。
+**commit**：runforfuture `aa7138c`；event-signup/workspace `3f05cba92`；mentor100 `e588fb1`；本棒總結另計（見開工注入）。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-08 12:46 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5，v291，教練說「總結」收工；對話 10/07 21:05～10/08 02:38，與 v290 平行）
 
 **主軸：教練買了 Plaud 錄音筆。本場把 Plaud 接進 Claude（Mac 本機＋claude.ai 連接器）、175 筆錄音全備份到 SSD 並本機轉成繁體中文；同時做出三個「貼給任何 AI 就會」的技能（生圖／簡報套底圖）並上大樹作品；最後把 NotebookLM 自動化（nlm）裝好登入，教練說「只是要測能不能進入」。**
@@ -27,34 +61,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-08 02:35 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5 → Opus 5.5，v290，教練說「總結」收工）
-
-**主軸：①發明家頁（inventor）「我想加入／我想支持」表單接上活動報名即時通知；②信任遊戲「友善夥伴小上癮機制」上網找做法→教練說「為何不一起都做」→七項全部上線。**
-
-### 1. 發明家頁表單（19:35～19:50，Sonnet）
-- `~/github_repos/inventor/index.html`（非 git）表單改成手機必填＋Email 選填，送出 POST `event.bymyway.com/api/register`（slug `inventor`），入庫並通知「活動報名即時通知」群；`event.db` 新增場次 id 32（快照 `event-signup/event.db.bak-before-inventor-20261007`）。
-- 驗證：Flask 假通知 ok:True、測試資料已清；瀏覽器假 fetch：空白擋下、成功／失敗訊息、手機 375 無橫捲。**沒真的打到群組**（問過教練要不要真送一筆，沒回＝不追問）。
-
-### 2. 信任遊戲小上癮機制（20:43～21:20，Opus）
-- 教練要「讓非 BNI 新夥伴不知不覺開始玩」→上網找 Duolingo／LinkedIn／Strava／Foursquare／Wordle 等，方案 `knowledges/2026-10-07_信任遊戲_友善夥伴小上癮機制_可行方案v1.md`（`b129d2c0c`）。
-- 教練 21:02：「為何不一起都做？E 要累計簽到及連續簽到，累計以天計算，連續以週計算。成績卡可以調用 LK888 來出圖」。
-- bni-chapters `50b221f` 上線：A 首頁先點認識的人（入座／認座位自動送出「我認識他」）、B 座位牌「N 位說認識他」＋複製邀請、C 每週人脈賓果（全體同卡、週一換、中間＝本週簽到、連線得印章→人脈收藏家）、D 本月新星（近 30 天）＋各分會新星、E 簽到、F 信任成績卡（LK888 背景經收費閘門、中文字程式寫、一人一週一張、全站每天 20 張、本人才能按）、G 本週幾位看過你（只給人數）。新檔 `game_habits.py`、`trust_card.py`、`.image-style.md`、`tests/test_habits.py`；129 項測試過；快照 `~/github_repos/_backups/trust_game_before_habits_20261007.db`；測試紀錄檔已加一行（`03d80e64a`）。
-- 軍師自己定的三件（已一行交代教練，教練沒反對）：簽到／賓果只給稱號不加信任分；「產業小榜」改「分會新星」（資料庫沒產業欄）；成績卡每天上限 20 張。
-- 踩坑：黑體-繁沒有「・」，畫在卡上變方框→已改「‧」（`trust_card._safe`），記憶 `reference_heiti_tc_no_katakana_dot_2026-10-07.md`。
-- 教訓：中途工作說明寫了英文，Stop hook 擋下，重寫全中文回覆。
-
-### 📋 下一場開工先做
-**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：第一張真成績卡出來後（有人按「做本週的成績卡」）親眼看圖＋查帳 `python3 scripts/lk888_guard.py report`；「複製邀請」按鈕找機會真手機驗。
-🤫等教練自己提起：發明家頁要不要真送一筆測試到群組；簽到要不要加分／產業小榜／成績卡上限要不要改；友善夥伴推廣；邱裕榮白皮書 PDF。
-**commit**：bni-chapters `50b221f`；workspace `345b7d5f6` `b129d2c0c` `03d80e64a`；本棒另計。
-
----
-
-> 📦 v289完整內容已封存：`handoff_archive/handoff_v289_archived_2026-10-08.md`（真貴籌備會入座、探測器遊戲按鈕、新手說明書、Hermes／小龍蝦三件修復、10/17 零基礎學AI課上大樹小講；全部做完）
-
-
-> 📦 v288完整內容已封存：`handoff_archive/handoff_v288_archived_2026-10-08.md`（v288座位第4~6步待驗收、雲端三封信摘要；已由v289確認做完）
+> 📦 v290完整內容（發明家頁表單、信任遊戲小上癮機制；含 v288 指標）已封存：`handoff_archive/handoff_v290_archived_2026-10-08.md`
 
 ## 🎯 「賈維斯成長計畫」（簡稱「反射條件」）進度（2026-10-02 07:10 瘦身版；詳細交辦段與第 1~3 步經過已封存 `handoff_archive/handoff_v266_to_v267_and_goal_section_archived_2026-10-02.md`）
 
@@ -90,6 +97,7 @@
 
 
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
+- **Run for Future／百人導師通知的真送測試**：會吵「活動報名即時通知」群，教練說可以才做（10/08）。FAQ「100 家額滿即截止」教練已裁示不改，不再提。
 > 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
 - **座位第 4～6 步的三個小決定**（教練已在雲端對話看過，不卡上線，不主動問）：後台「已入會／釋出」要不要確認視窗、取消預約後「想坐」要不要自動回來、洽談中見證被撤回洽談要不要中斷；另真功夫、真樂齡換掉的 9 項專業還沒被教練逐項確認、真功夫第四象限排序。
 - **pxpipe**：教練 10/06 親口不裝，結案，換任何說法都不再提。

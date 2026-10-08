@@ -1563,6 +1563,19 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-BNI-PPT-FULLBLEED-NO-SHRINK",
+   "moment": "prompt",
+   "match": "(?i)(BNI\\s*PPT|套.{0,4}底圖|BNI.{0,4}(底圖|版簡報|版\\.?pptx)|簡報.{0,10}(底圖|重新輸出)|ppt-inject|pptx-brand-background)",
+   "say": "套 BNI 底圖：教練要的是「全部覆蓋」滿版（插圖整張鋪滿、LOGO與右下弧形疊在最上面）。先拆一份舊成品（Downloads.bak.20261002 或 SSD 下載夾的 *_BNI版.pptx）看樣子；用 BNI PPT SOP 的 scripts/pdf_to_branded_pptx.py 預設遮罩＋workspace/assets/BNI_ACCELERATE_底圖.jpg；不准自行縮小或改 safe。主檔名不加後綴，其他版本放備份資料夾。角落字被蓋是舊成品也有的樣子，交付後一句話告知即可。",
+   "level": "remind",
+   "situation": "教練要把簡報套 BNI 底圖／重新輸出簡報",
+   "source": "試金石案例110（教練 2026-10-08 火大：我要的是全部覆蓋）；reference_bni_ppt_sop_alias_2026-09-21",
+   "kind": "需求型",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
