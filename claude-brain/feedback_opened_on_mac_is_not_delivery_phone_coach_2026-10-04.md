@@ -16,3 +16,8 @@ metadata:
 - 附帶：launchd `com.coach.curation-watch` 壞了（結束碼78、plist 不見），上傳會停在 pending，要手動跑 `event-signup/venv/bin/python scripts/curation_process.py`。
 
 相關：[[reference-session-verbatim-report-from-jsonl-2026-10-04]]（報告書已上架 `https://event.bymyway.com/curated/game-1004/`）。
+
+**🔴 2026-10-08 同類第二次（案例111），範圍擴大到「任何交付檔案」**：教練 17:15 說「做好的東西，不要用預覽的方式顯示給我看，就直接跳出 PPT 或直接跳出網址。永遠就這樣，直接跳出來讓我看！」起因：《96小時》簡報我做對了兩個版本，但沒跳出來，教練在檔案預覽小框裡點到的剛好是做錯的（縮小版、文字完整版），氣了一整個下午。他自己也說「做對了卻看不到」。
+- **機制（不靠記得）**：`scripts/deliver_open.sh <檔案或網址>`——PPT/Keynote 開 Keynote、網址/HTML 開 Chrome；先關掉「沒改過」的舊 Keynote 視窗（同名多視窗是這次的混亂來源之一），開檔後等匯入警告消失，印出最前面的程式、視窗數、位置（x≥1920＝跑到第二螢幕）、張數當證據。回覆裡說「做好了某某.pptx」時會跳反射 `R-DELIVER-POP-OPEN` 提醒。
+- **三條**：①交付＝跑 deliver_open 直接跳出，不給路徑、不叫教練去資料夾找 ②多版本只留一個主檔（不加後綴），其他搬備份資料夾 ③驗證證據用它的輸出，不用截圖（截圖被教練鎖住，未同意不可截）。
+- 相關：[[feedback_windows_on_main_display_only_2026-09-25]]（視窗一律主螢幕）。

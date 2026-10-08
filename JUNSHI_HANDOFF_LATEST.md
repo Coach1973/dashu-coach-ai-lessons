@@ -26,7 +26,7 @@
 
 ### 📋 下一場開工先做
 **🎯 教練交辦未完成：三缺經典對話網頁上架＋登記大樹作品一覽**。教練一給短網址（或說「你選」→ 用推薦的 `three-lacks-dialogue`），就照 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`：`curl -F kind=creation -F package=@knowledges/三缺經典對話_網頁待上架/three-lacks-dialogue.zip -F custom_slug=<短網址>` → `python3 scripts/curation_check_result.py <slug>` 查結果 → 確認 coach888「全世界最優秀團隊系列」登記成功 → 真瀏覽器開網址查。上架後數字（777、800多、60~80%、39,800、300~500萬）是教練口述未查證，頁尾已註明。金鑰見 `路徑大全_憑證層.md`，不印出。
-🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖時，先看舊成品，走 `pdf_to_branded_pptx.py` 預設，不縮小（反射已掛）；②有人提 PowerPoint／Keynote 驗證要截圖時，才請教練同意截圖。
+🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖時，先看舊成品，走 `pdf_to_branded_pptx.py` 預設，不縮小（反射已掛）；②有人提 PowerPoint／Keynote 驗證要截圖時，才請教練同意截圖。③🔴 **交付任何檔案／網址，最後一步一律跑 `scripts/deliver_open.sh <主檔或網址>` 直接跳出**（教練 10/08 17:15 令；案例111；多版本只留一個主檔）。
 🤫等教練自己提起：Run for Future 與百人導師的**真送一筆測試**（會吵群、佩佩老師會看到，教練說可以才做）；Plaud 主題對照表與刪雲端（見上一棒）。
 **commit**：runforfuture `aa7138c`；event-signup/workspace `3f05cba92`；mentor100 `e588fb1`；本棒總結另計（見開工注入）。
 
