@@ -91,11 +91,18 @@ python3 brand_pptx.py --src 簡報.pdf --bg 底圖.jpg --out 成品.pptx
 ## 範例：BNI ACCELERATE 底圖
 
 BNI 底圖左下是 LOGO、右下是紅色弧形裝飾，屬於「小面積品牌元素在角落」，
-自動選 `mask`：內容滿版鋪滿、兩個角落完整保留。不需要任何額外參數：
+**一律用 `--mode mask`（滿版）**：內容鋪滿整頁，只避開左下 LOGO 與右下紅色弧形。
 
 ```bash
-python3 brand_pptx.py --src 簡報.pdf --bg BNI_ACCELERATE_底圖.jpg --out 簡報_BNI版.pptx
+python3 brand_pptx.py --src 簡報.pdf --bg BNI_ACCELERATE_底圖.jpg --out 簡報_BNI版.pptx --mode mask
 ```
+
+🔴 **BNI 底圖的硬規定（2026-10-08 教練糾正，聯想那台跑成縮小過）**：
+- **必須加 `--mode mask`**，不准用預設的 `auto`（底圖一旦被判成 `safe` 就會縮小）。
+- **禁止 `--mode safe`**、禁止 `--fill contain`。`safe` 會把內容縮成中間一塊、四周留白，不是 BNI PPT SOP 要的滿版。
+- 滿版判斷：每張投影片的插圖要貼齊四邊、沒有白邊；左下 BNI ACCELERATE LOGO 與右下紅色弧形都還在。
+- 只要看到白邊或內容縮小，代表用錯模式，重跑加上 `--mode mask`，不要自己手動調 `--safe-box`。
+- 交付前必須親眼看過縮圖（SOP：`image-visual-delivery-check`），不能只看腳本印出「完成」。
 
 ---
 
