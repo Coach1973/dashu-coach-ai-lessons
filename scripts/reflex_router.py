@@ -86,6 +86,29 @@ def last_assistant_text(evt):
     return "\n".join(reversed(texts))
 
 
+def ran_in_turn(evt, needle):
+    """這一輪（從教練最後一句話之後）AI 有沒有跑過含 needle 的 Bash 指令。"""
+    path = evt.get("transcript_path") or ""
+    if not os.path.exists(path):
+        return False
+    with open(path, encoding="utf-8", errors="ignore") as f:
+        lines = f.readlines()[-400:]
+    for line in reversed(lines):
+        try:
+            d = json.loads(line)
+        except Exception:
+            continue
+        if d.get("type") == "user" and not d.get("isMeta"):
+            c = d.get("message", {}).get("content")
+            if isinstance(c, str) or (isinstance(c, list) and any(isinstance(x, dict) and x.get("type") == "text" for x in c)):
+                break
+        if d.get("type") == "assistant":
+            for c in d.get("message", {}).get("content", []):
+                if isinstance(c, dict) and c.get("type") == "tool_use" and needle in str((c.get("input") or {}).get("command") or ""):
+                    return True
+    return False
+
+
 def strip_code(s):
     """回覆裡的程式碼區塊與行內程式碼不比對（那是在展示，不是給教練點的網址）。"""
     s = re.sub(r"```.*?```", "", s, flags=re.S)
@@ -185,6 +208,9 @@ def main():
             if not detail:
                 continue
             r = {**r, "say": r["say"] + detail + "。請改好；拿不準就問教練。"}
+        elif r.get("check") == "deliver_opened":
+            if ran_in_turn(evt, "deliver_open"):
+                continue  # 這一輪已經用 deliver_open.sh 跳出來了，放行
         elif r.get("check") == "backup_recent":
             detail = backup_needed(text)
             if not detail:
