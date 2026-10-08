@@ -10,9 +10,9 @@
 ### 2. 百人導師申請通知（mentor100）
 - 原本只發教練私訊（chat 6124913915），現在**私訊＋活動報名即時通知群（-5349981085）兩邊都發**，任一邊失敗仍會寫 `notify_failures.log`。假通知測過、網站已重啟；**沒有真送**。commit `mentor100` `e588fb1`。
 
-### 3. 三缺經典對話 → 網頁＋作品一覽（**未完成**）
+### 3. 三缺經典對話 → 網頁＋作品一覽（✅ 10/08 17:21 已上架，教練說「你選就好，趕快結案」）
 - 教練找的「全世界最優秀團隊計畫｜客戶、人才、伯樂」＝作品 `three-lacks`（作品一覽已有，但只是行銷網頁，沒逐字稿）；逐字稿原稿＝雲端對話的 `bni-chapters/docs/classic_dialogue_three_lacks_2026-10-06.md`（私有倉庫，雲端 AI 整理，內容為「缺客戶／人才／資金」，10/06 糾正為「天使投資人」，池塘與魚比喻）。**「伯樂」一詞不在這份對話裡**；NotebookLM「真實AI團隊計劃」另有 47 份投影片（教練說那是口誤，不管）。
-- 已把這份做成 game-1004 同格式網頁，26 段教練原話與原檔逐字比對 0 缺漏、375px 無溢出；檔案存 `knowledges/三缺經典對話_網頁待上架/`（index.html、zip、build_dialogue.py）。**卡在短網址**：已問一次（10/08 16:42，給三個候選 `three-lacks-dialogue`／`three-lacks-1006`／`classic-three-lacks`），教練尚未回。
+- 已把這份做成 game-1004 同格式網頁，26 段教練原話與原檔逐字比對 0 缺漏、375px 無溢出；檔案存 `knowledges/三缺經典對話_網頁待上架/`（index.html、zip、build_dialogue.py）。**上架結果**：短網址我選 `lacks-1006`（沿用 `ema1017` 日期式命名；原三個候選都超過 SOP 規定的 10 字，所以改選 10 字內的），網址 https://event.bymyway.com/curated/lacks-1006/ ；`kind=creation` 上傳 → `curation_check_result.py` 回 success_creation、線上 200；線上網頁原話與原檔比對 26 段缺漏 0；已自動登記 coach888「最新作品」第一筆（教練個人創作）；已用 `deliver_open.sh` 在 Chrome 跳出。**未移進「全世界最優秀團隊系列」分類**（教練只說登記作品一覽；要移他說一聲，改伺服器狀態 coach888_layout 先 GET 再 POST）。
 
 ### 4. 《96小時引爆億級商業宇宙》PDF 套 BNI 底圖（教練火大，案例110）
 - 我先用通用技能＋手動 `--mode safe` 縮小成 94%×89% → 被罵偷工減料。教練要的是「**全部覆蓋**」滿版（跟 9/21 驗收通過的《建構高效商務系統的建築師》BNI 版同做法）。已用 BNI PPT SOP 腳本重做，**主檔**：`/Volumes/953-SSD/下載/96小時引爆億級商業宇宙_BNI版.pptx`（15 張，1450×817）；其他版本（縮小版、滿版v2、文字完整）在 `96小時_其他版本備份/`。底部有字被 LOGO／弧形蓋住（第4、13、15張最明顯），已告知。**沒在 PowerPoint／Keynote 實際開過（截圖被鎖）**。
@@ -25,7 +25,7 @@
 - Stop hook「叫教練自己動手」對描述性的「您打開」誤判一次，已向教練澄清。
 
 ### 📋 下一場開工先做
-**🎯 教練交辦未完成：三缺經典對話網頁上架＋登記大樹作品一覽**。教練一給短網址（或說「你選」→ 用推薦的 `three-lacks-dialogue`），就照 `knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`：`curl -F kind=creation -F package=@knowledges/三缺經典對話_網頁待上架/three-lacks-dialogue.zip -F custom_slug=<短網址>` → `python3 scripts/curation_check_result.py <slug>` 查結果 → 確認 coach888「全世界最優秀團隊系列」登記成功 → 真瀏覽器開網址查。上架後數字（777、800多、60~80%、39,800、300~500萬）是教練口述未查證，頁尾已註明。金鑰見 `路徑大全_憑證層.md`，不印出。
+**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。（三缺經典對話已於 10/08 17:21 上架完成。）
 🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖時，先看舊成品，走 `pdf_to_branded_pptx.py` 預設，不縮小（反射已掛）；②有人提 PowerPoint／Keynote 驗證要截圖時，才請教練同意截圖。③🔴 **交付任何檔案／網址，最後一步一律跑 `scripts/deliver_open.sh <主檔或網址>` 直接跳出**（教練 10/08 17:15 令；案例111；多版本只留一個主檔）。
 🤫等教練自己提起：Run for Future 與百人導師的**真送一筆測試**（會吵群、佩佩老師會看到，教練說可以才做）；Plaud 主題對照表與刪雲端（見上一棒）。
 **commit**：runforfuture `aa7138c`；event-signup/workspace `3f05cba92`；mentor100 `e588fb1`；本棒總結另計（見開工注入）。
