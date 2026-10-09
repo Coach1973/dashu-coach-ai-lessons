@@ -4,11 +4,16 @@
 #       2026-10-04 同類（說「已在 Mac 開過」他沒看到）。教練原話：「做好的東西不要用預覽的方式顯示，
 #       直接跳出 PPT 或直接跳出網址，永遠這樣。」
 # 用法：
-#   scripts/deliver_open.sh <檔案路徑>        # .pptx/.key 開 Keynote；.html 開 Chrome；其他用預設程式
+#   scripts/deliver_open.sh <檔案路徑>        # .pptx/.key 打開所在資料夾並選取該檔（不開檔案）；.html 開 Chrome；其他用預設程式
+#   scripts/deliver_open.sh --open <pptx/key>  # 教練明說要開簡報時才用：開 Keynote
 #   scripts/deliver_open.sh <https://網址>     # 開 Chrome
-# 做的事：①（Keynote）先關掉「沒改過」的舊視窗，避免同名多視窗讓教練點錯；有未存變更的不動
+# 2026-10-09 改：教練 10/08 17:34 看到簡報被直接打開後說「打開資料夾，不要打開檔案」，
+#   所以 PPT／Keynote 預設改成開資料夾；網頁與網址維持直接跳出。
+# 做的事：①（--open 開 Keynote 時）先關掉「沒改過」的舊視窗，避免同名多視窗讓教練點錯；有未存變更的不動
 #         ②開啟 ③印出最前面的程式、視窗清單與位置（x≥1920 表示跑到第二螢幕）當作證據
 set -u
+OPEN_PPT=0
+if [ "${1:-}" = "--open" ]; then OPEN_PPT=1; shift; fi
 T="${1:-}"
 [ -z "$T" ] && { echo "用法：deliver_open.sh <檔案或網址>"; exit 1; }
 
@@ -19,18 +24,23 @@ case "$T" in
     [ -e "$T" ] || { echo "❌ 找不到：$T"; exit 1; }
     case "$T" in
       *.pptx|*.ppt|*.key)
-        APP="Keynote"
-        osascript -e 'tell application "Keynote"
-          if it is running then
-            repeat with i from (count of documents) to 1 by -1
-              try
-                if (modified of document i) is false then close document i saving no
-              end try
-            end repeat
-          end if
-        end tell' >/dev/null 2>&1
-        sleep 1
-        open "$T" ;;
+        if [ "$OPEN_PPT" = "1" ]; then
+          APP="Keynote"
+          osascript -e 'tell application "Keynote"
+            if it is running then
+              repeat with i from (count of documents) to 1 by -1
+                try
+                  if (modified of document i) is false then close document i saving no
+                end try
+              end repeat
+            end if
+          end tell' >/dev/null 2>&1
+          sleep 1
+          open "$T"
+        else
+          APP="Finder"
+          open -R "$T"
+        fi ;;
       *.html|*.htm)
         APP="Google Chrome"; open -a "Google Chrome" "$T" ;;
       *)

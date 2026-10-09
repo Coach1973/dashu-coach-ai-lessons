@@ -1,3 +1,35 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-09 12:40 台灣時間，Mac 桌面版 Code 分頁，Haiku 5.5→Opus 5.5→Sonnet 5.5（教練 10/09 用 /model 切換），v293，教練說「總結」收工；對話 10/08 17:23～10/09 12:30）
+
+**主軸：四件事——BNI 套版《商戰破局的終極外掛》滿版並讓聯想也做對；替換 inventor（像瘋子的發明家）網站內容；模型分工改三燈號；教練稱讚語音糾錯。另有一次被糾正（案例112）。**
+
+### 1. 《商戰破局的終極外掛》PDF 套 BNI 底圖（滿版）
+- 主檔 `/Volumes/953-SSD/下載/商戰破局的終極外掛_BNI版.pptx`（14 張，1450×817），走 BNI PPT SOP `pdf_to_branded_pptx.py` 預設遮罩，不縮小；縮圖總覽親眼看過。第 2、9、13、14 張底部字幕最左幾字被左下 LOGO 遮罩蓋到（舊成品也有）。暫存試過遮罩右界 0.296→0.252：第 9 張修好、第 13 張「這」仍有點被蓋，**沒套用到主檔**（會動 SOP 固定座標），已告知教練，教練沒回。
+- 教練說「打開資料夾，不要打開檔案」→ 已開資料夾；`scripts/deliver_open.sh` 簡報預設改成開資料夾並選取檔案（`--open` 才開 Keynote），反射 `R-DELIVER-POP-OPEN` 同步。
+
+### 2. 聯想跑出來不是滿版 → 更新指令
+- 查證：我這台用通用工具 auto 模式在 BNI 底圖上選的是 mask（滿版），**看不到聯想的畫面，無法確認它為什麼縮小**，最可能是沒指定模式或用了 safe。處理＝把指令寫死 `--mode mask`、禁止 safe／`--fill contain`、加驗收步驟。
+- 改了：`knowledges/SKILL_簡報套底圖_通用版.md` BNI 段、新檔 `knowledges/給聯想_BNI滿版指令.md`（commit `a67830a90`）；大樹作品一鍵套版入口 `ai-go` 的 `ppt-prompt.md`＋`ppt-inject.html`（commit `189fbf8`，線上已換新，手機寬度 375px 無溢出）。
+
+### 3. inventor（像瘋子的發明家）網站內容替換（10/09 01:49）
+- 教練給 `huang-kuo-chang-site(1).zip`（只有 index.html＋2 張圖，公開專利局資料版），要取代原頁、網址不變、舊檔留歷史。網址 `https://event.bymyway.com/curated/inventor/` 不變；舊資料夾整個搬到 `~/github_repos/_archive_inventor_v1`（含 plan.html 商業計劃書，**沒有公開網址**），新內容逐檔比對一致；線上 plan.html 已 404、圖片 200 image/jpeg、375px 無溢出。`inventor` 不是 git repo，無 hash。
+- ⚠️ 名字：教練訊息寫「黃國璋」，檔案／登記表／專利連結都是「黃國彰」；照檔案發布，**沒改名**，已告知，教練沒回。registry 的 `source_package` 還是舊 zip 名（沒動）。
+
+### 4. 模型分工改三燈號（教練親定，commit `b4dbe3e1a`）
+- 🔵 Haiku＝已有 SOP 的固定動作（戰報／儀表板、簡報套版、策展與大樹作品上架、新增籌備會／例會名單、查行事曆、開發票）、🟢 Sonnet、🟣 Opus。改了 `knowledges/模型分工規則_Opus與Sonnet.md`、`scripts/model_tier_advisor.sh`、`stop_rules_master.py` A3（認 🔵），補教練不滿關鍵字（不滿意／偷工減料／不是我要的／問那麼多）。
+- 發現：教練送出前剛 `/model` 切換，hook 讀對話檔會看到舊模型（切換紀錄寫入比 hook 晚）→ 提示改成「以系統提示的模型為準」。
+- 教練稱讚語音糾錯（「Haiku 3.5」＝5.5、「檔期作品」＝大樹作品），已加進 `feedback_coach_chinese_file_mapping`。
+
+### 5. 教練糾正與源頭修復（案例112）
+- 教練問「要修改…指令嗎？」我查完答「要改」卻回問「要我現在改嗎？」→「我叫你改，就是要改，怎麼問那麼多」。同類 09-30 已有記憶，依 N8 不再加記憶，改源頭：新反射 `R-COACH-YN-QUESTION-IS-ORDER`（prompt 時刻；2042 句教練真實發言回測只命中那 1 句，寬鬆版會誤抓 2 句）。試金石案例 112。
+
+### 📋 下一場開工先做
+**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
+🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖：走 `pdf_to_branded_pptx.py` 預設、不縮小；交付簡報用 `deliver_open.sh <檔>`（預設開資料夾）；②教練的短問句「要不要改 X 嗎」＝交辦，查完直接做；③每則交辦第一行亮燈 🔵／🟢／🟣；④聯想那邊是否真的修好沒看到結果，有人貼聯想回報再查。
+🤫等教練自己提起：inventor 名字「璋」vs「彰」、舊版是否要有公開網址；套版底部字幕被 LOGO 蓋到的 0.252 版本（沒套用）；Run for Future／百人導師真送測試與 Plaud 主題對照（見前棒）。
+**commit**：workspace `b4dbe3e1a`（三燈號）、`a67830a90`（聯想指令）；ai-go `189fbf8`；本棒總結另計（見回報）。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-08 17:12 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5（中途教練手動切 Haiku 5.5 約 1 小時再切回），v292，教練說「總結」收工；對話 10/08 13:33～17:08）
 
 **主軸：教練當天丟了五件事——Run for Future 頁改數字＋報名通知、百人導師申請通知加群、找「全世界最優秀團隊計畫」逐字稿（做成網頁登記作品一覽）、PDF 簡報套 BNI 底圖；最後一件我做錯被教練火大糾正（案例110）。**
@@ -32,34 +64,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-08 12:46 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5，v291，教練說「總結」收工；對話 10/07 21:05～10/08 02:38，與 v290 平行）
-
-**主軸：教練買了 Plaud 錄音筆。本場把 Plaud 接進 Claude（Mac 本機＋claude.ai 連接器）、175 筆錄音全備份到 SSD 並本機轉成繁體中文；同時做出三個「貼給任何 AI 就會」的技能（生圖／簡報套底圖）並上大樹作品；最後把 NotebookLM 自動化（nlm）裝好登入，教練說「只是要測能不能進入」。**
-
-### 1. 兩個可貼給任何 AI 的技能（皆已進 coach888「大樹常用」第一、二項）
-- **生圖一鍵注入**（用 LK888 出與當下專案畫風一致的圖，先做風格卡、先試一張、一張只付一次錢）：`https://coach1973.github.io/ai-go/lk888-inject.html`；技能 `~/.claude/skills/lk888-project-style-images/`。**沒有真的呼叫 LK888 出圖測過**（要扣點），金鑰不放頁面。
-- **簡報套底圖一鍵注入**（任何底圖，自動判斷 mask／safe／overlay，不用手量座標）：`…/ai-go/ppt-inject.html`；技能 `~/.claude/skills/pptx-brand-background/`、備份 `knowledges/SKILL_簡報套底圖_通用版.md`。實測 BNI 真底圖＋5 種假底圖。**NotebookLM 簡報底部有說明文字，BNI 底圖要用 `--mode safe`，預設 mask 會被 LOGO 吃掉字。**
-- commit：ai-go `0a5c7c4` `818d14a`；coach888 `ecf0241` `6de66c2` `fe16c70`；workspace `f536c66f3` `11a55a9fe` `7b7948dcc`。
-
-### 2. Plaud（全部在 SSD `/Volumes/953-SSD/Plaud錄音備份/`，不占本機）
-- MCP 已裝（Claude Code／桌面版／Codex 都被設定；安裝程式順手覆蓋了剪貼簿）；claude.ai 連接器教練自己點連接（我被 classifier 擋下，**教練早就是 bypass，我沒查就叫他去切＝試金石案例109**，commit `82a640283`，已改源頭記憶＋反射 R-CLASSIFIER-DENIED-CHECK-REAL-MODE）。
-- 175 筆音檔 1.8 GB 下載完，ffprobe 驗 174 通過（1 筆是 Plaud 教學範例差 7 秒）；Plaud 自己的逐字稿＋AI 筆記 101 筆已一併存。本機 mlx-whisper large-v3-turbo 轉繁中 **10/08 05:45 全部完成 175/175，平均 18.5x，共 308 分鐘**；預覽頁 `預覽.html`（有搜尋）；轉完會 Telegram 通知教練（監看程式已結束，應已送出，**我沒確認教練收到**）。
-- Plaud MCP **沒有刪除功能**；刪雲端只有教練能做。7 筆不到 1 分鐘（5 筆可刪；「會議記錄：錄音功能的運作與應用示範」46 秒、「國立台北科技大學億光大樓」55 秒有正式名稱，刪前要教練確認）。教練回覆「全部下載、轉錄後刪雲端」我答：可行，但刪前先備第二份、聯想拿錄音靠 Plaud 雲端（刪了聯想拿不到）。
-- 讀取 Plaud 不扣 300 分鐘額度（實測對未轉寫的錄音只回空）。Muse.app＝Meta AI App，無可呼叫的語音模型，且不建議送 BNI 對話給 Meta。
-
-### 3. NotebookLM（`/Volumes/953-SSD/NotebookLM工具/`）
-- `notebooklm-mcp-cli` 0.15.4（非官方、用未公開介面、有條款風險）裝好；教練 Google 登入 bymyway7@gmail.com（PRO 方案，149 個筆記本）。**實測整條通**：建筆記本→放文字→`nlm slides create --format detailed_deck --language zh-TW`（生成約 7 分鐘）→下載 PDF／PPTX（10 頁，每頁是一張圖）→套 BNI 底圖。試做成品在 `NotebookLM工具/試做/`；教練帳號留了測試筆記本「【試做】BNI會員心得分享（Plaud錄音）」（要不要刪是教練的事）。
-- 🔴 **教練糾正：「只是要測是否能進入 NotebookLM，你跑得有點太快」**——測試類只做到能回答「能／不能」，下一步一句話講（記入 `reference_notebooklm_cli_pipeline_2026-10-08.md`）。
-- 聯想：寫信 `cross-agent/inbox/lenovo/20261008-0240_mac-to-lenovo_install-notebooklm-cli-test-login.md`（commit `72909e315`），**只叫它安裝＋登入＋`nlm login --check` 後停**；教練只要對聯想的 Claude 說「去讀信」。尚無回信。
-- **ACER**：教練收工時補一句「ACER 也要寫信、聯想有的技能也複製過去」→ 寫信 `cross-agent/inbox/acer/20261008-1250_mac-to-acer_install-skills-and-notebooklm-test.md`：裝兩個技能（生圖、簡報套底圖，檔在 `knowledges/SKILL_*.md`）＋同樣的 NotebookLM 登入測試。**我看不到聯想實際裝了什麼**，信裡請 ACER 回報有沒有更多技能要補。
-
-### 📋 下一場開工先做
-**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：①教練提「Plaud 對照表」時，讀 `local_text/` 175 份逐字稿（先濾重複幻覺，預覽頁已有 collapse 範例 `tools/make_preview.py`）→出「時間＋建議標題＋長度」表，優先 77 筆沒有名稱的；②聯想、ACER 回信後讀 `inbox/mac/`（目前這個資料夾還不存在，對方回信時會建）；③查 Telegram 通知有沒有真的送達（`logs/notify.log` 是空的）。
-🤫等教練自己提起：刪 Plaud 雲端（前提：對照表驗證完＋備份第二份）；NotebookLM 一鍵注入頁（待聯想測通再做）；LK888 生圖技能真跑一次。
-**commit**：workspace `f536c66f3` `7b7948dcc` `82a640283` `72909e315` `11a55a9fe`；ai-go `0a5c7c4` `818d14a`；coach888 `ecf0241` `6de66c2` `fe16c70`；本棒另計。
-
----
+> 📦 v291完整內容已封存：`handoff_archive/handoff_v291_archived_2026-10-09.md`（兩個一鍵注入技能頁＋Plaud 175 筆備份轉繁中＋NotebookLM 自動化 nlm）
 
 > 📦 v290完整內容（發明家頁表單、信任遊戲小上癮機制；含 v288 指標）已封存：`handoff_archive/handoff_v290_archived_2026-10-08.md`
 
@@ -99,6 +104,8 @@
 ### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
 - **Run for Future／百人導師通知的真送測試**：會吵「活動報名即時通知」群，教練說可以才做（10/08）。FAQ「100 家額滿即截止」教練已裁示不改，不再提。
 > 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
+- **inventor 網站**：教練訊息寫「黃國璋」、檔案內是「黃國彰」（10/09 已告知，教練沒回）；舊版（含商業計劃書）目前只存本機 `~/github_repos/_archive_inventor_v1`，沒有公開網址，教練要才登記新網址。
+- **套版底部字幕被 LOGO 蓋到**：0.252 遮罩版（第 9 張修好、第 13 張仍有一點）沒套用，教練決定才改（10/09 已告知，沒回）。
 - **座位第 4～6 步的三個小決定**（教練已在雲端對話看過，不卡上線，不主動問）：後台「已入會／釋出」要不要確認視窗、取消預約後「想坐」要不要自動回來、洽談中見證被撤回洽談要不要中斷；另真功夫、真樂齡換掉的 9 項專業還沒被教練逐項確認、真功夫第四象限排序。
 - **pxpipe**：教練 10/06 親口不裝，結案，換任何說法都不再提。
 - **三缺行銷頁**：教練自己獨立製作，做好會自己告訴我（10/06 19:32 親口）。**不問價格／公開／數據來源／影片／網址／申請觀看通知**；文件 8 份已併進 bni-chapters master 備查。
