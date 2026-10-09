@@ -8,6 +8,9 @@
   curated_git.py ensure <slug>   建／補 GitHub repo；本機有未存檔的修改就 commit＋push
   curated_git.py ensure-all      registry 裡每個站各跑一次 ensure
   curated_git.py sync <slug>     把 GitHub 最新版（例如聯想剛推上去的）拉到本機，網站跟著換新
+  curated_git.py hook <slug>     替這個站的 GitHub 掛推送通知（推上去就自動 sync，2026-10-10）
+  curated_git.py hook-all        registry 每個站都掛；SITE_SYNC 舊站用 hook-repo <GitHub repo 名>
+  curated_git.py hook-repo <名>  替任意一個 Coach1973/<名> 掛推送通知
 """
 from __future__ import annotations
 
@@ -24,6 +27,8 @@ GITHUB_REPOS_DIR = Path("/Users/bymyway/github_repos")
 REGISTRY_PATH = WORKSPACE / "event-signup" / "curated_sites_registry.json"
 LOG_PATH = WORKSPACE / "distill" / "curated_git.log"
 OWNER = "Coach1973"
+WEBHOOK_URL = "https://event.bymyway.com/hooks/github-site"
+ENV_PATH = WORKSPACE / "event-signup" / ".env"
 GIT = ["git", "-c", "user.name=CoachWU", "-c", "user.email=bymyway7@gmail.com"]
 _ENV = {**os.environ, "PATH": f"/opt/homebrew/bin:/Users/bymyway/.local/bin:{os.environ.get('PATH', '')}"}
 
@@ -121,6 +126,37 @@ def save_local_changes(d: Path, message: str) -> None:
         log(f"💾 {d.name}：本機有未存檔的修改，已存檔")
 
 
+def webhook_secret() -> str:
+    for line in ENV_PATH.read_text(encoding="utf-8").splitlines():
+        if line.startswith("GITHUB_WEBHOOK_SECRET="):
+            return line.split("=", 1)[1].strip()
+    raise RuntimeError("event-signup/.env 沒有 GITHUB_WEBHOOK_SECRET")
+
+
+def ensure_hook(repo_name: str) -> str:
+    """GitHub 推送 → event.bymyway.com/hooks/github-site → Mac 自動 sync。已掛過就不重掛（只更新暗號）。"""
+    r = run(["gh", "api", f"repos/{OWNER}/{repo_name}/hooks", "-q", f'.[] | select(.config.url=="{WEBHOOK_URL}") | .id'],
+            WORKSPACE, check=False)
+    if r.returncode != 0:
+        raise RuntimeError(f"讀不到 {repo_name} 的通知設定：{r.stderr.strip()[-200:]}")
+    config = ["-f", f"config[url]={WEBHOOK_URL}", "-f", "config[content_type]=json",
+              "-f", f"config[secret]={webhook_secret()}", "-f", "config[insecure_ssl]=0"]
+    hook_id = r.stdout.strip().splitlines()[0] if r.stdout.strip() else ""
+    # check=False＋自己丟錯：失敗訊息不能帶出指令全文（裡面有暗號），以免寫進會上傳的記錄檔
+    if hook_id:
+        r = run(["gh", "api", "-X", "PATCH", f"repos/{OWNER}/{repo_name}/hooks/{hook_id}", *config, "-F", "active=true"],
+                WORKSPACE, check=False)
+        if r.returncode != 0:
+            raise RuntimeError(f"{repo_name} 通知更新失敗：{r.stderr.strip()[-200:]}")
+        return "已掛過"
+    r = run(["gh", "api", "-X", "POST", f"repos/{OWNER}/{repo_name}/hooks", "-f", "name=web", "-f", "events[]=push",
+             "-F", "active=true", *config], WORKSPACE, check=False)
+    if r.returncode != 0:
+        raise RuntimeError(f"{repo_name} 掛通知失敗：{r.stderr.strip()[-200:]}")
+    log(f"🔔 {repo_name}：已掛 GitHub 推送通知")
+    return "新掛上"
+
+
 def ensure_repo(slug: str) -> str:
     d = site_dir(slug)
     if not (d / ".git").is_dir():
@@ -146,6 +182,7 @@ def ensure_repo(slug: str) -> str:
         save_local_changes(d, "Mac本機修改自動存檔")
         pull_and_push(d)
     record_repo(slug, f"{OWNER}/{name}")
+    ensure_hook(name)
     return f"https://github.com/{OWNER}/{name}"
 
 
@@ -176,6 +213,28 @@ def main() -> None:
                 log(f"❌ {s['slug']}：{e}")
         print(f"完成，失敗 {len(failed)} 個：{failed}")
         sys.exit(1 if failed else 0)
+    if cmd == "hook-all":
+        failed = []
+        for s in load_registry().get("sites", []):
+            name = (s.get("repo") or f"{OWNER}/{s['slug']}").split("/")[-1]
+            d = GITHUB_REPOS_DIR / s["slug"]
+            if not (d / ".git").is_dir() or origin_repo_name(d) is None:
+                continue  # GitHub 上還沒建 repo 的站，ensure 建好時會自己掛
+            try:
+                print(f"{s['slug']}: {ensure_hook(name)}")
+            except Exception as e:  # noqa: BLE001
+                failed.append(s["slug"])
+                log(f"❌ hook {s['slug']}：{e}")
+        print(f"完成，失敗 {len(failed)} 個：{failed}")
+        sys.exit(1 if failed else 0)
+    if len(sys.argv) == 3 and cmd in ("hook-repo", "hook"):
+        try:
+            name = sys.argv[2] if cmd == "hook-repo" else (origin_repo_name(site_dir(sys.argv[2])) or sys.argv[2])
+            print(ensure_hook(name))
+        except Exception as e:  # noqa: BLE001
+            log(f"❌ {cmd} {sys.argv[2]}：{e}")
+            sys.exit(1)
+        return
     if len(sys.argv) != 3 or cmd not in ("ensure", "sync"):
         print(__doc__)
         sys.exit(1)

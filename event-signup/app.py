@@ -14,6 +14,8 @@ import re
 import secrets
 import shutil
 import subprocess
+import sys
+import threading
 import urllib.error
 import urllib.request
 from datetime import date, datetime
@@ -3294,6 +3296,82 @@ def api_site_update(repo_name):
     except Exception as exc:
         return Response(json.dumps({"ok": False, "error": str(exc)}), status=500,
                          headers={"Content-Type": "application/json"})
+
+
+# ── GitHub 推送自動換新（2026-10-10 教練交辦，原 09-30 命令）──
+# 教練要：event.bymyway.com 的靜態網站背後都有 GitHub，他在聯想／宏碁／小龍蝦改 GitHub，
+# 網站就跟著換新，不用回 Mac。每個 repo 掛一個 GitHub webhook 打到這裡（push 事件），
+# 用 HMAC 驗證是 GitHub 送來的，只認得登記過的網站，然後在背景把最新版拉回本機。
+# 策展站走 curated_git.py sync（會先存 Mac 本機修改再合併）；SITE_SYNC_REPOS 的舊站照舊 git pull --ff-only。
+GITHUB_WEBHOOK_SECRET = os.environ.get("GITHUB_WEBHOOK_SECRET", "")
+CURATED_GIT_SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "curated_git.py"
+_GH_REPO_NAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,100}$")
+
+
+def _github_signature_ok(body: bytes, signature: str) -> bool:
+    if not GITHUB_WEBHOOK_SECRET or not signature.startswith("sha256="):
+        return False
+    expected = "sha256=" + hmac.new(GITHUB_WEBHOOK_SECRET.encode(), body, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(expected, signature)
+
+
+def _origin_repo_name(path: Path) -> str:
+    r = subprocess.run(["git", "-C", str(path), "remote", "get-url", "origin"], capture_output=True, text=True, timeout=10)
+    return r.stdout.strip().rstrip("/").split("/")[-1].removesuffix(".git") if r.returncode == 0 else ""
+
+
+def _resolve_github_repo(repo_name: str):
+    """GitHub repo 名稱 → (種類, 代號)。策展站看 registry 的 repo 欄位（沒有就用 slug），舊站看本機 clone 的 origin。"""
+    for s in _load_curated_registry().get("sites", []):
+        if (s.get("repo") or f"Coach1973/{s['slug']}").split("/")[-1] == repo_name:
+            return "curated", s["slug"]
+    for key, path in SITE_SYNC_REPOS.items():
+        if path.exists() and _origin_repo_name(path) == repo_name:
+            return "site", key
+    return None, None
+
+
+def _github_sync_worker(kind: str, key: str, pushed_sha: str) -> None:
+    try:
+        if kind == "curated":
+            r = subprocess.run([sys.executable, str(CURATED_GIT_SCRIPT), "sync", key], capture_output=True, text=True,
+                               timeout=300, env=_OPENCLAW_ENV)
+        else:
+            r = subprocess.run(["git", "-C", str(SITE_SYNC_REPOS[key]), "pull", "--ff-only"], capture_output=True,
+                               text=True, timeout=120, env=_OPENCLAW_ENV)
+        app.logger.info("github-sync %s %s %s rc=%s %s", kind, key, pushed_sha[:7], r.returncode, (r.stdout + r.stderr)[-300:])
+        if r.returncode != 0:
+            _notify_xiaolongxia(f"⚠️ GitHub 有新版本，但網站沒能自動換新：{key}\n"
+                                f"原因：{(r.stdout + r.stderr).strip()[-200:]}\n需要 Mac 軍師處理")
+    except Exception as exc:  # noqa: BLE001
+        app.logger.exception("github-sync %s %s failed", kind, key)
+        _notify_xiaolongxia(f"⚠️ GitHub 有新版本，但網站沒能自動換新：{key}\n原因：{exc}")
+
+
+@app.route("/hooks/github-site", methods=["POST"])
+def github_site_webhook():
+    body = request.get_data()
+    if not _github_signature_ok(body, request.headers.get("X-Hub-Signature-256", "")):
+        abort(403)
+    event = request.headers.get("X-GitHub-Event", "")
+    if event == "ping":
+        return {"ok": True, "pong": True}
+    if event != "push":
+        return {"ok": True, "ignored": event}
+    payload = request.get_json(silent=True) or {}
+    repo = payload.get("repository") or {}
+    repo_name = str(repo.get("name", ""))
+    default_ref = f"refs/heads/{repo.get('default_branch') or 'main'}"
+    if not _GH_REPO_NAME_RE.fullmatch(repo_name):
+        abort(400)
+    if payload.get("ref") != default_ref:
+        return {"ok": True, "ignored": "not default branch"}
+    kind, key = _resolve_github_repo(repo_name)
+    if kind is None:
+        return {"ok": False, "error": "unknown repo"}, 404
+    sha = str(payload.get("after", ""))
+    threading.Thread(target=_github_sync_worker, args=(kind, key, sha), daemon=True).start()
+    return {"ok": True, "kind": kind, "site": key, "commit": sha[:7]}, 202
 
 
 # ── 隱私政策頁：Meta App Review「隱私政策網址」欄位要求 (2026-09-11) ──
