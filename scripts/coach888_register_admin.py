@@ -7,6 +7,7 @@
 用法：
   python3 scripts/coach888_register_admin.py <網址> <顯示名稱> [--section baoliu] [--badge 後臺]
   python3 scripts/coach888_register_admin.py --list          看「活動後台」現有項目
+  （預設同時登記進 event.bymyway.com/vault 憑證總覽頁；有帳密的後台加 --no-vault，帳密自己補進 /vault 的表）
 預設放進「活動後台」(baoliu)、標籤「後臺」。同一個網址重複登記只會更新名稱與位置，不會重複。
 寫入前先備份整份狀態到 state/，寫完重新讀回核對。
 """
@@ -29,6 +30,21 @@ def _post(layout: dict, items: dict) -> None:
     body = json.dumps({"coach888_layout": json.dumps(layout, ensure_ascii=False),
                        "coach888_items": json.dumps(items, ensure_ascii=False)}).encode("utf-8")
     urllib.request.urlopen(urllib.request.Request(API, data=body, method="POST", headers=HEADERS), timeout=15)
+
+
+VAULT_EXTRA = Path(__file__).resolve().parent.parent / "event-signup" / "vault_extra.json"
+
+
+def register_vault(url: str, name: str, user: str = "（不需要帳密，網址本身就是通行證）", password: str = "—") -> str:
+    """同時登記進 event.bymyway.com/vault（憑證總覽頁，教練另一個找後台的地方）。同網址重複登記只更新。
+    event-signup 的 /vault 每次開頁都會讀這個檔，不用重啟。"""
+    try:
+        rows = json.loads(VAULT_EXTRA.read_text(encoding="utf-8")) if VAULT_EXTRA.exists() else []
+    except ValueError:
+        rows = []
+    rows = [r for r in rows if r.get("url") != url] + [{"name": name, "url": url, "user": user, "password": password}]
+    VAULT_EXTRA.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return f"；已同步到 /vault（共 {len(rows)} 筆額外項目）"
 
 
 def register(url: str, name: str, section: str = "baoliu", badge: str = "後臺") -> str:
@@ -75,7 +91,10 @@ def main(argv):
     if len(pos[0]) > 60:   # 教練 2026-10-10：「只要是這種長網址的一律都變短址」。先做短網址再登記；這裡只提醒不擋。
         print(f"⚠️ 這個網址有 {len(pos[0])} 個字，太長了。教練要求後台／管理網址一律做成短網址"
               "（參考信任遊戲後台 /game/a/<12字>、策展上傳 /u/<10字>：用金鑰算固定短代碼，舊長連結照樣有效）。")
-    print(register(pos[0], pos[1], opt.get("--section", "baoliu"), opt.get("--badge", "後臺")))
+    msg = register(pos[0], pos[1], opt.get("--section", "baoliu"), opt.get("--badge", "後臺"))
+    if "--no-vault" not in argv:   # 預設也登記進 /vault（憑證總覽頁）；密碼型後台請加 --no-vault 自己手動補帳密
+        msg += register_vault(pos[0], pos[1])
+    print(msg)
     return 0
 
 

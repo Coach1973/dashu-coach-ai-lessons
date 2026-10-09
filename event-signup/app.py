@@ -540,11 +540,28 @@ def vault_logout():
     return redirect(url_for("vault_login"))
 
 
+VAULT_EXTRA_PATH = Path(__file__).resolve().parent / "vault_extra.json"
+
+
+def _vault_entries():
+    """上面寫死的帳密表 ＋ vault_extra.json（scripts/coach888_register_admin.py 登記新後台時自動追加，
+    2026-10-10：信任遊戲後台做好沒進 /vault，教練才發現）。檔案壞掉不影響原本的表。"""
+    entries = list(VAULT_ENTRIES)
+    try:
+        for e in json.loads(VAULT_EXTRA_PATH.read_text(encoding="utf-8")):
+            if e.get("url") and all(e["url"] != x["url"] for x in entries):
+                entries.append({"name": e.get("name", ""), "url": e["url"], "user": e.get("user", "（不需要帳密）"),
+                                "password": e.get("password", "—")})
+    except (OSError, ValueError, AttributeError):
+        pass
+    return entries
+
+
 @app.route("/vault")
 def vault():
     if not session.get("vault_logged_in"):
         return redirect(url_for("vault_login", next=request.path))
-    return render_template("vault.html", entries=VAULT_ENTRIES)
+    return render_template("vault.html", entries=_vault_entries())
 
 
 def _line_push(line_user_id: str, text: str) -> bool:
