@@ -20,3 +20,5 @@ metadata:
 **Why:** 座位企劃（雲端寫的 `plan_seat_v1.md`）要攤開三個新分會的座位；軍師評估結論見 `bni-chapters/docs/junshi_seat_review_reply.md`（選版本 A 最薄一層、預約座位改「預約初次見面」、清單每分會只列約 30 個）。
 
 **How to apply:** 座位清單檔 `data/seat_lists/<分會slug>.json`（slug：real-ai / real-kungfu / real-age）。真愛、真誠是現有分會，主軸另存，用於分會頁或避開重複，不在座位三個新分會內。
+
+**2026-10-09 更新（座位地圖已擴成九個分會）**：教練語音要求加真貴（行銷）、真富（VIP高端定制）、真愛（職人升級）、真鴻運、真傳藝、真開心，各 30+ 座位、頁面可收合；已上線（bni-chapters commit `1b024f3`，清單檔 `data/seat_lists/` 共 9 份）。真鴻運／真傳藝／真開心主軸是 AI 自選。同日新增「我要創分會」`/game/found`（commit `9684bbb`，教練 10/09 要的創公會式表單，通知教練）。上面「只列三個新分會」已過時，以九個為準。
