@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴🔴 新做的後台／管理／編輯／刪除網址當場收進大樹作品集(coach888)，教練記不住網址；一行 scripts/coach888_register_admin.py；執行細則 N10＋反射 R-NEW-ADMIN-URL-REGISTER-COACH888(2026-10-10)](feedback_new_admin_urls_auto_register_coach888_2026-10-10.md)
 - [🔧 信任遊戲 10/10 教練拍板：畫面一律叫「團隊」、身份只有全新玩家／俱樂部玩家、籌備會會員＝俱樂部玩家、玩家階級8階、鼓勵不限次數只有讚美、信任邀請函 /game/invite；友善夥伴／俱樂部成員舊稱作廢(2026-10-10)](project_trust_game_teams_ranks_cheers_invite_2026-10-10.md)
 - [🔴 教練要圖時我自己用 LK888 出（lk888_guard 程式內取金鑰），不要只給提示詞叫他教別的 AI；已掛反射R-GENERATE-IMAGES-MYSELF-LK888(2026-10-10 教練糾正)](feedback_generate_images_myself_via_lk888_guard_2026-10-10.md)
 - [🔴🔴 event.bymyway.com 每個靜態網站背後都要有 GitHub（09-30令被忘10天、20站沒repo）；根因＝只寫接力棒、SOP還寫「不建GitHub」；已接進 publish_creation＋每晚00:40補建；教練命令要改SOP＋程式不能只放記憶(2026-10-10)](feedback_event_sites_must_have_github_wired_into_pipeline_2026-10-10.md)

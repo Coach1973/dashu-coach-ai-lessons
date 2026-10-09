@@ -45,11 +45,11 @@
 ### 4. 信任遊戲 bni-chapters（`7c2f5cb`、`793b480`、`a415cbf`、`bbd628f`，測試184項）
 座位地圖加真公益；無清單團隊「我要入座」、有清單「我要新座位」；已成立（active）團隊連到團隊頁；玩家可用專用修改連結自刪名片；座位後台加「玩家管理」；`game_delete_player.py`（手機版 Claude 刪人，只標記可還原）；新手說明書「邀請朋友一起玩」改接信任邀請函。另一個對話窗也在改這個專案（已改名「團隊」「珍貴席次」），只動需要的檔。備份 `trust_game.db.bak-before-sit-delete-20261010`。
 
-### 5. 教練最後交代：**新做的後台系統要自己登記進「我的大樹作品」(coach888)**，他不記。已把「信任遊戲座位後台」放進 coach888「活動後台」第 7 項（伺服器狀態，備份 `state/coach888_state_backup_20261010_before_trust_admin.json`）；規則寫進 SOP＋反射 `R-NEW-BACKEND-REGISTER-COACH888`。
+### 5. 教練最後交代：**新做的後台系統要自己登記進「我的大樹作品」(coach888)**，他不記。已把「信任遊戲座位後台」放進 coach888「活動後台」第 7 項（伺服器狀態，備份 `state/coach888_state_backup_20261010_before_trust_admin.json`）；教練再說「做了後台沒自動收錄是 bug」→ 已做 `scripts/coach888_register_admin.py`（一行登記、可重複、先備份）＋**執行細則 N10**（已同步全域 CLAUDE.md）＋反射 `R-NEW-ADMIN-URL-REGISTER-COACH888`＋SOP／bni-chapters CLAUDE.md；試金石案例114。
 
 ### 📋 下一場開工先做
 **目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：①聯想／宏碁開工腳本加「貼 event 網址→指路對應 GitHub」（`feed_junshi_handoff.ps1`，未做）；②**新做任何後台／管理頁，當場登記進 coach888 活動後台**；③教練丟簡報套 BNI 底圖走 `pdf_to_branded_pptx.py`、交付檔案用 `deliver_open.sh`；④教練短問句「要不要改 X」＝交辦。
+🔧AI 自己的（不問）：①聯想／宏碁開工腳本加「貼 event 網址→指路對應 GitHub」（`feed_junshi_handoff.ps1`，未做）；②**新做任何後台／管理／編輯／刪除網址，當場跑 `coach888_register_admin.py`（N10）**；③教練丟簡報套 BNI 底圖走 `pdf_to_branded_pptx.py`、交付檔案用 `deliver_open.sh`；④教練短問句「要不要改 X」＝交辦。
 🤫等教練自己提起：tut-memory 第 1 個講座《記憶開箱：南應十景票選 LIVE》題目提到已拿掉的十景票選；首頁「1,268 位校友／842 則回憶」是寫死的預設數字；教練哪天填一筆 hnv-cc 表單測通知後要清 `works_contact_leads` 測試筆。
 **commit**：workspace `d1b5f147b`、`051a59aba`；bni-chapters `bbd628f`；tut-memory `fa1ff54`；111-wei GitHub 已建。
 

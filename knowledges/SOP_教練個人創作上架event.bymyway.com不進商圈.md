@@ -86,6 +86,8 @@ python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
 
 🔴 **作品頁要「票選／收集願望」（2026-10-10 南應大記憶牆）**：票數要所有人共用，不能只存瀏覽器。用通用接口 `GET /api/works/poll/<site>`（讀票數）、`POST /api/works/poll/<site>/vote`（`{option, voter}`，同一人同一選項只算一票）、`POST /api/works/poll/<site>/suggest`（建議，不公開、通知「活動報名即時通知」群）。選項要先登記進 `event-signup/app.py` 的 `WORKS_POLL_OPTIONS`。範例：`github_repos/tut-memory/index.html`「講座票選」。測試 `event-signup/test_works_poll.py`。
 
+🔴 **新做的後台／管理／編輯／刪除網址，當場收進「大樹作品集」(coach888)（2026-10-10 教練欽定，執行細則 N10）**：教練記不住那些網址，大樹作品集是他唯一找得到的地方。一行搞定：`python3 scripts/coach888_register_admin.py <完整網址> <顯示名稱>`（預設放「活動後台」，可重複執行，先備份、寫完核對）；回報時要講「已收進大樹作品集」。作品頁自己的後台（例如票選建議的檢視頁、玩家管理）同樣適用。
+
 ## 適用情境
 教練自己用外部 AI 工具（TAVA AI／Lovart／ChatGPT 等）做的個人創作（漫畫、故事、作品集……），只想放上 `event.bymyway.com` 有個網址可以分享，**不是店家/夥伴介紹網站**，不該出現在大台南商圈整合中心的店家名冊。
 
