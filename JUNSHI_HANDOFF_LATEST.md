@@ -1,8 +1,34 @@
-## 🟢 v298 補記（2026-10-10 05:05，Mac 桌面版，Sonnet 5.5，教練尚未說總結）
-- **tut-memory 商務團隊名單**（github_repos/tut-memory，`70b2774`）：林士民第一、林志和最後、拿掉「i大台南策展中心」的 i、鄭儷絲/陳彥玲/謝志賓/林丁禾補超連結。名字「謝志斌」教練語音說法與頁面「謝志賓」不同，沒動名字，等教練提。
-- **art-lab 已代聯想上傳**（kind=creation，https://event.bymyway.com/curated/art-lab/ ，表單走 /api/works/contact 進活動報名即時通知群）；信已歸檔、已回信聯想。
-- **信任遊戲後台（Opus 5.5，05:30）**（bni-chapters `a154929`、`be0224b`、`adedc4a`）：座位後台改名「信任遊戲後台」，最上面新增「新增玩家」（教練先幫朋友建座位，source=coach，不發通知）；本人按「這台手機是我」後座位頁有「✏️ 修改我的名片」（沒有修改連結的舊座位當場補）；有人自己加入（/join、邀請函）改成教練個人＋活動報名即時通知群都送；座位地圖「我想坐這個」頭像排在座位上，可多人，超過 5 位收進「…還有 N 位」。後台已收進大樹作品集。測試曾漏攔群組通知送出 11 則假訊息，已刪並加防線（試金石案例115）。
-- **信任遊戲**（bni-chapters `d12dab3`、`c24e35b`）：「電話和 LINE 不會放網頁」改成「聯絡方式由本人自己決定」（guide 兩處、player 一處）；新增導覽「支援」→`/game/support`「遊戲管理員」表單（遊戲管理員＝大樹教練），送出寫入 `support_messages` 表並用 `_notify_group` 進活動報名即時通知群（失敗寫 notify_group_failures.log 並改傳教練個人）；「有疑問請跟領導團隊反映」兩處改「遊戲管理員」。已實測一筆（已刪測試列），群收得到。
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 06:45 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5，v298，教練說「總結」收工；對話 10/10 04:43～06:41）
+
+**主軸：信任遊戲後台＋通知＋座位頭像大改，另處理大樹作品／策展／短網址三條規則。** 教練這場的口氣平和，沒有不滿；只有兩次小抓錯（後台新增玩家看不到結果、公益路跑找不到大樹作品）。
+
+### 1. tut-memory 校友名單（github_repos/tut-memory `70b2774`）
+林士民改第一、林志和最後、「i大台南策展中心」的 i 拿掉、鄭儷絲／陳彥玲／謝志賓／林丁禾補超連結。「謝志斌」（教練口述）與頁面「謝志賓」不同，沒動名字，等教練提。
+
+### 2. 代聯想上傳 art-lab（林丁禾）
+kind=creation，https://event.bymyway.com/curated/art-lab/ ，表單走 /api/works/contact 進活動報名即時通知群；信件歸檔、已回信聯想。
+
+### 3. 信任遊戲（bni-chapters，trust.bymyway.com）`d12dab3` `c24e35b` `a154929` `be0224b` `adedc4a` `439f750` `1a7a8b1` `9d40372`
+- 文案：「電話和 LINE 不會放網頁」→ 聯絡方式由本人決定；新增導覽「支援」→`/game/support`「遊戲管理員（＝大樹教練）」表單，進活動報名即時通知群並存 `support_messages`；「有疑問請跟領導團隊反映」兩處改「遊戲管理員」。
+- 後台（短網址 **`/game/a/<12字>`**，長連結照樣有效，已收進大樹作品集）：最上面「新增玩家」（source=coach；選團隊就把頭像放進去：無座位清單的團隊直接入座，有清單用專業開新座位；邀請教練朋友用）；成功／失敗訊息改放表單旁（之前在頁首看不到＝教練以為沒反應）；新增與自己加入都通知教練＋活動報名群。本人按「這台手機是我」後座位頁有「修改我的名片」。
+- 座位地圖「我想坐這個」：頭像排在座位上，多人可按，>5 位收進「…還有 N 位」。
+- 離會會員（薛如媛、范郁琪）教練按「還原」＝回遊戲當俱樂部玩家，**不回分會**（記憶已寫）。
+- 邱裕榮、黃國彰、陳智博已放進真公益團隊，專業別＝公司。
+
+### 4. 大樹作品／策展（workspace `e2e672648` `1c89949b7`、ai-go `166a59d`）
+- 教練問「公益路跑沒有大樹作品欄」：runforfuture 當時走店家路線，沒登記；另 art-lab、big-plan 登記後被「舊版 coach888 頁面存排版」蓋掉。已補回三個，並在 `/api/coach888/state` POST 加「新作品保護」（72 小時內的大樹作品或 in_works，新排版缺了就補回最新作品；移到別分類或進「最近刪除」不受影響）。
+- 教練要求「說上架策展時要問是否同時上架作品集」→ 做成源頭必填：`/curation/upload` kind=shop 沒帶 `also_works`（1/0）回 400，網頁版有選項；為 1 時 `curation_process.py` 的 `works_note_for_shop()` 登記最新作品並標 `in_works`。SOP、SOUL.md、反射 R-CURATION-SOP、ai-go curation-prompt 同步。**真實店家上傳尚未跑過這條路**，下次教練上架店家會是第一次。
+- 短網址：策展上傳頁 `https://event.bymyway.com/u/xntrmdhgsu`（舊 `?key=` 仍有效），coach888 登記腳本網址 >60 字會提醒（`f0813cfac`、`0acfe0f6b`）。
+
+### 5. 教訓（試金石案例115）
+新加「群組通知」後跑測試，11 則假的「新玩家加入」真的送進活動報名即時通知群，已用機器人刪除；`tests/conftest.py` 加 autouse 防線。**新增任何會真送出的通知管道，第一件事先讓測試碰不到它。**
+
+### 📋 下一場開工先做
+**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」
+🔧AI 自己的（不問）：①bni-chapters 的 trust_game.db 有幾份 `.bak-before-*`（support／seat-charity），累積多可整理（N6 不自己刪）；②`ai-go/index.html` 有他人未提交的 .md→.html 連結改動，不是這場的，沒動；③全域 CLAUDE.md 規則：說「上架策展」要問 also_works，已由伺服器擋。
+🤫等教練自己提起：「謝志斌」vs「謝志賓」；公益路跑同時在店家名冊與大樹作品兩邊（要不要從店家名冊拿掉）；ai-application-submission-package-20260923 網址 77 字（已對外送出，不改）；階級門檻太鬆或太緊再調。
+
+> 📦 v296 已封存：`handoff_archive/handoff_v296_archived_2026-10-10.md`
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 04:50 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5（教練用 /model 切換），v297，教練說「總結」收工；對話 10/10 03:29～04:45；**同一時段另有一個對話窗寫了 v296（見下一段），兩段都有效**）
 
@@ -31,33 +57,6 @@
 **commit**：bni-chapters `3e733dd`、`9c2934c`、`1fbdc2a`、`50df0ce`、`2a0d200`、`69ebcb0`、`72020ae`、`0627214`。
 
 > 📦 v294、v295 完整內容已封存：`handoff_archive/handoff_v294_archived_2026-10-10.md`、`handoff_v295_archived_2026-10-10.md`
-
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 04:45 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5（教練用 /model 切換），v296，教練說「總結」收工；對話 10/10 02:36～04:45）
-
-**主軸：教練追問「為什麼忘記 GitHub」→ 查原話、根因修復、51 站全補；南應大記憶牆大改；信任遊戲加入座／新座位／刪除玩家／邀請朋友。**
-
-### 1. 策展站 GitHub 化（教練 09-30 原話：上架大樹作品SOP／策展SOP時同時建一份 GitHub；10-10 教練說「是我們的問題，光明正大承認」）
-- **根因**：09-30 命令只落成工具 `curated_git.py`＋接力棒🔧一列；大樹作品 SOP 與 `publish_creation()` 還寫「不做：建GitHub」，AI 照 SOP 做＝違令；開工不唸🔧區，擱 10 天，51 站有 20 站沒 repo。SOP 與教練的話衝突時**以教練的話為準，且要當場提出**。
-- **修法**：`publish_creation()` 上架自動 `ensure`（建私有 repo＋掛通知）、SOP 改字、每晚 00:40 launchd `ai.openclaw.curated-github-ensure`、**GitHub 推送自動換新**＝event-signup `/hooks/github-site`（HMAC，`GITHUB_WEBHOOK_SECRET` 在 .env，只服務策展名單）；模擬聯想推送 4 秒換新。**51/51 站有 GitHub＋通知**（10 站被 GitHub 限速，03:43 第 3 次重試補完）。commit `b213b9a79`、`25fae3865`、`f5fea0159`、`d1b5f147b`；試金石案例113 `3c700c604`；記憶 `feedback_event_sites_must_have_github_wired_into_pipeline_2026-10-10`。
-- **範圍被教練糾正**：只管大樹作品＋策展 SOP，**不碰 bni-traffic、bigtree 等早期舊站**；我誤掛的 19 個舊站通知已拆掉。
-
-### 2. 111-wei（蔡筱薇競選頁）：頁尾「本網頁由 TAVA AI 製作，由南應校友陳佩君贈送給學姊蔡筱薇」＋佩君 LINE@（`@701ohlly`）按鈕；集氣區加「聯絡召集人陳佩君」。GitHub `Coach1973/111-wei`。
-
-### 3. 南應大記憶牆 tut-memory（網址不變，GitHub `fa1ff54`）
-拿掉十景投票；講座改「票選最想聽的主題」（不壓日期、可送建議）；專屬商務團隊資源點開 17 位夥伴（`BIZ_TEAM` 陣列）；外部產業資源點開 6 個連結（`EXT_LINKS`）；終身校友網絡連召集令；「支持陳佩君競選理事長」按讚（不記 IP、不限次數）；候選人橫幅（34px＋邊框燈泡＋字幕跑馬燈，文字「…陳佩君競選理念」）。後端新接口 `/api/works/poll/<site>`（票選＋建議，建議通知進活動報名群）、`/api/works/counter/<site>/<key>`，workspace `601906dbb`、`3a571abed`。
-
-### 4. 信任遊戲 bni-chapters（`7c2f5cb`、`793b480`、`a415cbf`、`bbd628f`，測試184項）
-座位地圖加真公益；無清單團隊「我要入座」、有清單「我要新座位」；已成立（active）團隊連到團隊頁；玩家可用專用修改連結自刪名片；座位後台加「玩家管理」；`game_delete_player.py`（手機版 Claude 刪人，只標記可還原）；新手說明書「邀請朋友一起玩」改接信任邀請函。另一個對話窗也在改這個專案（已改名「團隊」「珍貴席次」），只動需要的檔。備份 `trust_game.db.bak-before-sit-delete-20261010`。
-
-### 5. 教練最後交代：**新做的後台系統要自己登記進「我的大樹作品」(coach888)**，他不記。已把「信任遊戲座位後台」放進 coach888「活動後台」第 7 項（伺服器狀態，備份 `state/coach888_state_backup_20261010_before_trust_admin.json`）；教練再說「做了後台沒自動收錄是 bug」→ 已做 `scripts/coach888_register_admin.py`（一行登記、可重複、先備份）＋**執行細則 N10**（已同步全域 CLAUDE.md）＋反射 `R-NEW-ADMIN-URL-REGISTER-COACH888`＋SOP／bni-chapters CLAUDE.md；試金石案例114。
-
-### 📋 下一場開工先做
-**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：①聯想／宏碁開工腳本加「貼 event 網址→指路對應 GitHub」（`feed_junshi_handoff.ps1`，未做）；②**新做任何後台／管理／編輯／刪除網址，當場跑 `coach888_register_admin.py`（N10）**；③教練丟簡報套 BNI 底圖走 `pdf_to_branded_pptx.py`、交付檔案用 `deliver_open.sh`；④教練短問句「要不要改 X」＝交辦。
-🤫等教練自己提起：tut-memory 第 1 個講座《記憶開箱：南應十景票選 LIVE》題目提到已拿掉的十景票選；首頁「1,268 位校友／842 則回憶」是寫死的預設數字；教練哪天填一筆 hnv-cc 表單測通知後要清 `works_contact_leads` 測試筆。
-**commit**：workspace `d1b5f147b`、`051a59aba`；bni-chapters `bbd628f`；tut-memory `fa1ff54`；111-wei GitHub 已建。
 
 ---
 
