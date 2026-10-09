@@ -1,5 +1,5 @@
 ---
-name: project-trust-game-2026-10-10-teams-ranks-cheers-invite
+name: project-trust-game-teams-ranks-cheers-invite
 description: 信任遊戲 10/10 教練拍板的一批規則：團隊命名、身份只有兩種、籌備會會員算俱樂部玩家、玩家階級 8 階、鼓勵不限次數、信任邀請函
 metadata:
   node_type: memory

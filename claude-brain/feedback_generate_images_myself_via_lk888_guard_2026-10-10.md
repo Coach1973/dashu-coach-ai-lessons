@@ -18,4 +18,4 @@ metadata:
 - 1024x1024 出圖後，要 4:3／16:9 就在構圖時叫模型「主體放中間橫帶、上下留白」，再用 PIL 裁；它有時會自己畫出上下白邊，裁掉即可。
 - 圖裡不要有文字（`No text, no letters…`），中文字另用網頁疊。
 - 出完用 `python3 scripts/lk888_guard.py report --hours 1` 查帳。
-- 相關：[[reference_lk888_spend_guard_2026-09-26]]、[[project_trust_game_2026-10-10_teams_ranks_cheers_invite]]
+- 相關：[[reference_lk888_spend_guard_2026-09-26]]、[[project_trust_game_teams_ranks_cheers_invite_2026-10-10]]
