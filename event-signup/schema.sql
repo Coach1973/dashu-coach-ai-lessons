@@ -131,6 +131,25 @@ CREATE TABLE IF NOT EXISTS works_contact_leads (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選）。選項由 app.py 的 WORKS_POLL_OPTIONS 規定；
+-- 一個人（voter，瀏覽器產生的代號）對同一選項只算一票。建議不公開顯示，直接通知「活動報名即時通知」群。
+CREATE TABLE IF NOT EXISTS works_poll_votes (
+    site TEXT NOT NULL,
+    option_id TEXT NOT NULL,
+    voter TEXT NOT NULL,
+    ip TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    PRIMARY KEY (site, option_id, voter)
+);
+CREATE TABLE IF NOT EXISTS works_poll_suggestions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    site TEXT NOT NULL,
+    name TEXT,
+    suggestion TEXT NOT NULL,
+    ip TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
 -- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
 -- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
 CREATE TABLE IF NOT EXISTS todos (

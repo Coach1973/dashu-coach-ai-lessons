@@ -2232,6 +2232,92 @@ def api_works_contact():
     return reply(True)
 
 
+# ---------- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選） ----------
+# 票數所有人共用；選項只認這份名單（網站代號 → 選項代號），不在名單裡的一律擋下。
+WORKS_POLL_OPTIONS = {"tut-memory": {"t1", "t2", "t3", "t4"}}
+_WORKS_POLL_HITS = {}   # (用途, ip) -> [時間戳]
+
+
+def _works_poll_rate_ok(kind: str, ip: str, limit: int) -> bool:
+    import time
+    now = time.time()
+    hits = [t for t in _WORKS_POLL_HITS.get((kind, ip), []) if now - t < 3600]
+    ok = len(hits) < limit
+    if ok:
+        hits.append(now)
+    _WORKS_POLL_HITS[(kind, ip)] = hits
+    return ok
+
+
+def _works_poll_json(obj, status=200):
+    return Response(json.dumps(obj, ensure_ascii=False), status=status, content_type="application/json",
+                    headers={"Cache-Control": "no-store"})
+
+
+def _works_poll_counts(site: str) -> dict:
+    conn = db.get_conn()
+    rows = conn.execute("SELECT option_id, COUNT(*) AS n FROM works_poll_votes WHERE site=? GROUP BY option_id", (site,)).fetchall()
+    conn.close()
+    counts = {o: 0 for o in WORKS_POLL_OPTIONS[site]}
+    counts.update({r["option_id"]: r["n"] for r in rows if r["option_id"] in counts})
+    return counts
+
+
+@app.route("/api/works/poll/<site>", methods=["GET"])
+def api_works_poll_counts(site):
+    if site not in WORKS_POLL_OPTIONS:
+        return _works_poll_json({"ok": False, "error": "找不到這個票選"}, 404)
+    return _works_poll_json({"ok": True, "counts": _works_poll_counts(site)})
+
+
+@app.route("/api/works/poll/<site>/vote", methods=["POST"])
+def api_works_poll_vote(site):
+    if site not in WORKS_POLL_OPTIONS:
+        return _works_poll_json({"ok": False, "error": "找不到這個票選"}, 404)
+    payload = request.get_json(force=True, silent=True) or {}
+    option = str(payload.get("option") or "")
+    voter = str(payload.get("voter") or "")
+    if option not in WORKS_POLL_OPTIONS[site] or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", voter):
+        return _works_poll_json({"ok": False, "error": "票選資料不正確"}, 400)
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _works_poll_rate_ok("vote", ip, 30):
+        return _works_poll_json({"ok": False, "error": "投票次數太多，請稍後再試"}, 429)
+    conn = db.get_conn()
+    conn.execute("INSERT OR IGNORE INTO works_poll_votes (site, option_id, voter, ip) VALUES (?, ?, ?, ?)", (site, option, voter, ip))
+    conn.commit()
+    conn.close()
+    return _works_poll_json({"ok": True, "counts": _works_poll_counts(site)})
+
+
+@app.route("/api/works/poll/<site>/suggest", methods=["POST"])
+def api_works_poll_suggest(site):
+    if site not in WORKS_POLL_OPTIONS:
+        return _works_poll_json({"ok": False, "error": "找不到這個票選"}, 404)
+    payload = request.get_json(force=True, silent=True) or {}
+    if (payload.get("website") or "").strip():          # 防機器人隱藏欄位：假裝成功、不通知
+        return _works_poll_json({"ok": True})
+    clean = lambda k, n: re.sub(r"\s+", " ", (payload.get(k) or "").strip())[:n]
+    name, text = clean("name", 30), clean("suggestion", 200)
+    if len(text) < 2:
+        return _works_poll_json({"ok": False, "error": "請寫下您想聽的主題"}, 400)
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _works_poll_rate_ok("suggest", ip, 5):
+        return _works_poll_json({"ok": False, "error": "送出次數太多，請稍後再試"}, 429)
+    title = next((s.get("title") for s in _load_curated_registry().get("sites", []) if s["slug"] == site), site) or site
+    try:
+        conn = db.get_conn()
+        conn.execute("INSERT INTO works_poll_suggestions (site, name, suggestion, ip) VALUES (?, ?, ?, ?)", (site, name, text, ip))
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001
+        _notify_xiaolongxia(f"⚠️【{title}・講座建議寫入失敗】\n建議：{text}\n暱稱：{name or '未填'}\n錯誤：{e}\n請人工補登。",
+                            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+        return _works_poll_json({"ok": False, "error": "系統忙碌，請稍後再試"}, 500)
+    _notify_xiaolongxia(f"💡【{title}】有人建議想聽的講座\n建議：{text}\n暱稱：{name or '未填'}\n（來源：event.bymyway.com/curated/{site}/）",
+                        chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return _works_poll_json({"ok": True})
+
+
 @app.route("/api/KR/contact", methods=["POST", "OPTIONS"])
 def api_kr_contact():
     """KR養生廚房聯絡表單（2026-09-04交辦，教練用Tooo.ai做的示範站原封不動搬過來）。

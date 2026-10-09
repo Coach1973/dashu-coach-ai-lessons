@@ -84,6 +84,8 @@ python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
 ```
 回傳JSON直接告訴你成功/失敗/還在處理中、真正的最終網址、網址現在活著沒。查不到才需要考慮寫信求助，不要自己猜或等。
 
+🔴 **作品頁要「票選／收集願望」（2026-10-10 南應大記憶牆）**：票數要所有人共用，不能只存瀏覽器。用通用接口 `GET /api/works/poll/<site>`（讀票數）、`POST /api/works/poll/<site>/vote`（`{option, voter}`，同一人同一選項只算一票）、`POST /api/works/poll/<site>/suggest`（建議，不公開、通知「活動報名即時通知」群）。選項要先登記進 `event-signup/app.py` 的 `WORKS_POLL_OPTIONS`。範例：`github_repos/tut-memory/index.html`「講座票選」。測試 `event-signup/test_works_poll.py`。
+
 ## 適用情境
 教練自己用外部 AI 工具（TAVA AI／Lovart／ChatGPT 等）做的個人創作（漫畫、故事、作品集……），只想放上 `event.bymyway.com` 有個網址可以分享，**不是店家/夥伴介紹網站**，不該出現在大台南商圈整合中心的店家名冊。
 
