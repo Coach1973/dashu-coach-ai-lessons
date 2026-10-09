@@ -229,10 +229,10 @@
       "top30": 16,
       "kind": "需求型",
       "match": "(?is)^(?!.*(大樹作品|大樹創作|個人創作|作品(一覽|一欄|總覽))).*(策展\\s*(SOP|中心|上架|上傳|一鍵)|商圈|大台南(會展|車展|策展)中心|壓縮檔|\\.zip\\b|zip\\s*(檔|包))",
-      "say": "策展 SOP：一律走上傳網址（kind=shop），完成用 curation_check_result.py 查真結果；網址短（教練取或跟主標題一致）、縮圖用網頁截圖不用地圖、改名要連動 FB／商圈頁／作品總覽；地圖自己找。",
+      "say": "策展 SOP：一律走上傳網址（kind=shop），完成用 curation_check_result.py 查真結果；網址短（教練取或跟主標題一致）、縮圖用網頁截圖不用地圖、改名要連動 FB／商圈頁／作品總覽；地圖自己找。　🔴上傳前除了問短網址，還要問教練「要不要同時放進大樹作品（最新作品）？」→ curl 帶 -F also_works=1 或 0（kind=shop 沒帶會 400）。",
       "level": "remind",
       "situation": "教練丟店家網站壓縮檔／說策展、商圈",
-      "source": "reference_curation_sop_2026-09-06.md",
+      "source": "reference_curation_sop_2026-09-06.md；2026-10-10 公益路跑沒進大樹作品",
       "audience": [
         "coach"
       ]

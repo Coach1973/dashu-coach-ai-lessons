@@ -81,6 +81,22 @@
         <label class="kind"><input type="radio" name="kind" value="creation" {% if kind == 'creation' %}checked{% endif %}>
           <span><b>🎨 大樹教練個人作品</b><br><small>放進大樹作品一覽「最新作品」，不進商圈</small></span></label>
       </div>
+      <div id="works-box" hidden>
+        <label class="slug-label">這個店家網站，要不要同時放進「大樹作品」（最新作品）？（選了店家就必選）</label>
+        <div class="kinds">
+          <label class="kind"><input type="radio" name="also_works" value="1"><span><b>要，同時放進大樹作品</b><br><small>店家名冊照樣收錄，另外在大樹作品一覽「最新作品」也找得到</small></span></label>
+          <label class="kind"><input type="radio" name="also_works" value="0"><span><b>不用，只放店家名冊</b></span></label>
+        </div>
+      </div>
+      <script>
+        (function(){
+          var box=document.getElementById('works-box'), radios=document.querySelectorAll('input[name=also_works]');
+          function sync(){var shop=document.querySelector('input[name=kind][value=shop]').checked;
+            box.hidden=!shop; radios.forEach(function(r){r.required=shop;});}
+          document.querySelectorAll('input[name=kind]').forEach(function(r){r.addEventListener('change',sync);});
+          sync();
+        })();
+      </script>
       <div class="drop">📦 選擇 .zip 或 .tar.gz 檔案</div>
       <input type="file" name="package" accept=".zip,.tar.gz,.tgz" required>
       <label class="slug-label">網址要用哪個短名稱？（送出前先想好，之後就不用再改）</label>

@@ -2126,6 +2126,11 @@ def curation_upload():
         kind = (request.values.get("kind") or "").strip()
         if kind not in CURATION_KINDS:
             return render_template("curation_upload.html", error="請先選擇類型：店家／合作夥伴網站，還是大樹教練個人作品（API呼叫請帶 kind=shop 或 kind=creation）", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+        # 2026-10-10教練定：上架店家網站時，一定要問教練「要不要同時放進大樹作品」。
+        # 比照短網址：靠SOP文字會被忘（公益路跑就這樣沒進大樹作品），改成源頭必填，沒帶就擋下並教AI去問。
+        also_works = (request.values.get("also_works") or "").strip()
+        if kind == "shop" and also_works not in ("0", "1"):
+            return render_template("curation_upload.html", error="上架店家網站前，請先問教練：「要不要同時放進大樹作品（最新作品）？」教練說要 → 帶 also_works=1；說不用 → 帶 also_works=0（網頁請選下面的選項；API 請加 -F also_works=1 或 0）", key=supplied_key, kind=kind, sites=_load_curated_registry().get("sites", [])[::-1]), 400
         f = request.files.get("package")
         if not f or not f.filename:
             return render_template("curation_upload.html", error="請選擇一個檔案", key=supplied_key, kind=kind, sites=_load_curated_registry().get("sites", [])[::-1]), 400
@@ -2146,6 +2151,8 @@ def curation_upload():
         # .slug/.kind 旁路檔要在壓縮檔本體之前寫好：WatchPaths一看到壓縮檔就會觸發處理
         (incoming / f"{dest.name}.slug").write_text(custom_slug, encoding="utf-8")
         (incoming / f"{dest.name}.kind").write_text(kind, encoding="utf-8")
+        if kind == "shop" and also_works == "1":   # 教練說要同時放進大樹作品（最新作品）
+            (incoming / f"{dest.name}.works").write_text("1", encoding="utf-8")
         f.save(dest)
         _notify_xiaolongxia(
             f"📦【{CURATION_KINDS[kind]}・收到新檔案】\n檔案：{original}\n系統正在背景自動處理，完成上架後會再通知一次。",
@@ -2695,7 +2702,8 @@ COACH888_STATE_KEYS = {
 
 def _coach888_keep_new_works(conn, payload):
     """2026-10-10：開著舊版 coach888 頁面的瀏覽器一存排版，會把整份 layout 蓋回舊的，剛自動登記的新作品就不見了
-    （art-lab 04:59 登記、05:01 被蓋掉；big-plan 同樣）。保護：近 72 小時上架的「大樹作品」(no_shop_card)，
+    （art-lab 04:59 登記、05:01 被蓋掉；big-plan 同樣）。保護：近 72 小時上架的「大樹作品」(no_shop_card，
+    或店家上架時教練要求同時放進大樹作品的 in_works)，
     如果新的 layout 在所有分類（含「最近刪除」）都找不到它，就把它補回「最新作品」最前面。
     教練真的刪除作品會落在「最近刪除」，所以不會被擋；超過 72 小時的不管。"""
     raw = payload.get("coach888_layout")
@@ -2708,7 +2716,7 @@ def _coach888_keep_new_works(conn, payload):
     cutoff = datetime.now() - timedelta(hours=72)
     missing = []
     for site in _load_curated_registry().get("sites", []):
-        if not site.get("no_shop_card") or site.get("event_url") in present:
+        if not (site.get("no_shop_card") or site.get("in_works")) or site.get("event_url") in present:
             continue
         try:
             if datetime.strptime(site["uploaded_at"], "%Y-%m-%d %H:%M") < cutoff:

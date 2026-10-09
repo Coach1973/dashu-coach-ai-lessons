@@ -177,8 +177,32 @@ def read_kind(pkg_path: Path) -> str:
     return sidecar.read_text(encoding="utf-8").strip() if sidecar.is_file() else ""
 
 
+def read_also_works(pkg_path: Path) -> bool:
+    """店家網站上架時，教練說「要同時放進大樹作品」（上傳帶 also_works=1，旁路檔 .works）。2026-10-10 起。"""
+    sidecar = pkg_path.parent / f"{pkg_path.name}.works"
+    return sidecar.is_file() and sidecar.read_text(encoding="utf-8").strip() == "1"
+
+
+def works_note_for_shop(pkg_path: Path, registry: dict, slug: str, event_url: str, title: str) -> str:
+    """教練要求同時放進大樹作品：登記進 coach888「最新作品」，並在名冊標 in_works（伺服器的新作品保護會照顧它）。
+    店家名冊卡片與策展網站照舊，不受影響。回傳要放進通知的一行。"""
+    if not read_also_works(pkg_path):
+        return ""
+    try:
+        note = register_coach888(event_url, title)
+        for x in registry["sites"]:
+            if x["slug"] == slug:
+                x["in_works"] = True
+        save_registry(registry)
+        return "\n🎨 已同時放進大樹作品一覽「最新作品」第一筆" + note
+    except Exception as e:  # noqa: BLE001
+        log(f"店家同時放大樹作品失敗 {slug}: {e!r}")
+        return f"\n⚠️ 要同時放進大樹作品，但登記失敗，請軍師補登：{e}"
+
+
 def cleanup_sidecar_slug(pkg_path: Path) -> None:
-    for sidecar in (_sidecar_slug_path(pkg_path), pkg_path.parent / f"{pkg_path.name}.kind"):
+    for sidecar in (_sidecar_slug_path(pkg_path), pkg_path.parent / f"{pkg_path.name}.kind",
+                    pkg_path.parent / f"{pkg_path.name}.works"):
         if sidecar.is_file():
             sidecar.unlink()
 
@@ -934,11 +958,12 @@ def process_one(pkg_path: Path) -> None:
             else:
                 fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已更新）"
 
+            works_note = works_note_for_shop(pkg_path, registry, existing_shop_slug, event_url, title)
             notify(
                 "🎯【策展SOP・既有店家頁面已更新為完整版】\n"
                 f"店名：{title}\n"
                 f"網址：{event_url}{rename_note}"
-                + fb_note
+                + fb_note + works_note
             )
             log(f"✅ 完成(覆蓋既有暫代頁)：{pkg_path.name} → {existing_shop_slug}")
             shutil.rmtree(tmp_extract, ignore_errors=True)
@@ -990,6 +1015,7 @@ def process_one(pkg_path: Path) -> None:
         else:
             fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已上線）"
 
+        works_note = works_note_for_shop(pkg_path, registry, slug, event_url, title)
         map_note = f"\n📍 已自動偵測地址並加地圖：{address}" if address else "\n⚠️ 網站內容抓不到地址，店家名冊卡片暫無地圖（可請生成網站的AI工具把地址寫清楚後重新上傳）"
         notify(
             "🎯【策展SOP・新店家已自動上架】\n"
@@ -1000,6 +1026,7 @@ def process_one(pkg_path: Path) -> None:
             + map_note
             + card_note
             + fb_note
+            + works_note
             + "\n📌 待軍師下次確認：潤飾店家介紹文案。"
         )
         log(f"✅ 完成：{pkg_path.name} → {slug}")
@@ -1026,7 +1053,7 @@ def main() -> None:
     PROCESSING_DIR.mkdir(parents=True, exist_ok=True)
     pending = [
         p for p in INCOMING_DIR.iterdir()
-        if p.is_file() and not p.name.startswith(".") and not p.name.endswith((".slug", ".kind"))
+        if p.is_file() and not p.name.startswith(".") and not p.name.endswith((".slug", ".kind", ".works"))
     ]
     if not pending:
         return
@@ -1039,7 +1066,7 @@ def main() -> None:
             log(f"搬移到processing/失敗，跳過本輪: {pkg.name}: {e!r}")
             continue
         # 自訂短網址旁路檔案(上傳頁面填了才會有)跟著一起搬，process_one()才找得到
-        for ext in (".slug", ".kind"):
+        for ext in (".slug", ".kind", ".works"):
             sidecar_src = INCOMING_DIR / f"{pkg.name}{ext}"
             if sidecar_src.is_file():
                 shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))

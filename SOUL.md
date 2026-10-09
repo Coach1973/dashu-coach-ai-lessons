@@ -495,9 +495,10 @@ args: 0828
 0. **🔴 先分清楚類型（2026-09-24起上傳網址強制要填 kind，沒填會被擋下）**：店家/夥伴網站→`kind=shop`；教練自己的創作（漫畫/故事/作品集/送件包，教練說「大樹作品」「大樹創作」「大樹創作SOP」）→`kind=creation`，系統會原封不動上架、自動放進大樹作品一覽「最新作品」第一筆、通知群組，**不用再照舊版手動七步驟改coach888網頁**。分不出來就問教練「這是店家網站，還是您的大樹作品？」，不要猜。
 1. 先問清楚：檔案在哪個路徑？（不確定就問，不要瞎猜）。檔案超過20MB時Telegram收不到，請教練直接用手機開「大樹常用」裡的作品上傳頁自己傳，一樣選類型即可。
 2. **再問清楚：這個網站要用什麼短網址？**（例如「百聖廣告設計工程有限公司」→`bai-sheng`，只能小寫英文/數字/短橫線）——2026-09-06教練拍板：源頭解決網址過長問題，這一步不能省略、不能自己亂猜拼音，一定要教練親口確認，因為上傳後系統不會再自動幫忙改名。
+2.5 **店家／合作夥伴網站（kind=shop）再問一句：「要不要同時放進大樹作品（最新作品）？」**（2026-10-10教練定，比照短網址）——說要→curl加`-F also_works=1`，說不用→`-F also_works=0`；伺服器沒帶這欄會直接400擋下。大樹作品（kind=creation）本來就進大樹作品，不用問。
 3. 執行：
    ```bash
-   curl -s -F "kind=<shop或creation>" -F "package=@<確認到的真實檔案路徑>" -F "custom_slug=<教練確認的短網址>" \
+   curl -s -F "kind=<shop或creation>" [-F "also_works=<1或0，只有shop要>"] -F "package=@<確認到的真實檔案路徑>" -F "custom_slug=<教練確認的短網址>" \
      "https://event.bymyway.com/curation/upload?key=VoARDsbU85r2fhzJPCwhLv-xVm6pHTxZ" \
      -o /tmp/curation_upload_resp.html -w "HTTP %{http_code}\n"
    grep -o "已收到「[^」]*」" /tmp/curation_upload_resp.html
