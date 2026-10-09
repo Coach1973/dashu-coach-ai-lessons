@@ -439,7 +439,7 @@ if LAST_TEXT and not A2B_DONE.search(LAST_TEXT):
 
 # ════════════════════════════════════════════════
 # A3. 模型分工標示（擋）—— 2026-09-25 教練親定
-#   教練每丟一則 ≥15 字的話，這一輪回覆裡要有「🟢」或「🟣」標示等級，
+#   教練每丟一則 ≥15 字的話，這一輪回覆裡要有「🔵」「🟢」或「🟣」亮燈（2026-10-09 加 🔵 Haiku），
 #   讓教練不用猜提醒什麼時候出現。注入端：model_tier_advisor.sh。
 # ════════════════════════════════════════════════
 _SKIP_PREFIX = ("<local-command", "<command-", "[SYSTEM NOTIFICATION", "<task-notification", "Caveat:")
@@ -467,12 +467,12 @@ if _last_idx is not None and len(_last_prompt) >= 15:
         if isinstance(ev, dict) and ev.get("type") == "assistant":
             _texts += [c.get("text", "") for c in _content_list(ev)
                        if isinstance(c, dict) and c.get("type") == "text"]
-    if _texts and not any(("🟢" in t or "🟣" in t) for t in _texts):
+    if _texts and not any(("🔵" in t or "🟢" in t or "🟣" in t) for t in _texts):
         path = log_violation("model_tier_label_missing.log", "  • 教練：%s\n\n" % _last_prompt[:60])
         MESSAGES.append(
-            "\n🚨 模型分工標示缺漏（教練 2026-09-25 親定）\n" + BAR + "\n"
-            "這一輪回覆沒有標示等級。請補一則回覆，第一行寫：\n"
-            "  「🟢 這件 Sonnet 就能做」或「🟣 這件是 Opus 等級（理由：…）」\n"
+            "\n🚨 模型分工亮燈缺漏（教練 2026-09-25 親定，2026-10-09 改三燈號）\n" + BAR + "\n"
+            "這一輪回覆沒有亮燈。請補一則回覆，第一行寫：\n"
+            "  「🔵 這件 Haiku 就能做」「🟢 這件 Sonnet 就能做」或「🟣 這件是 Opus 等級（理由：…）」\n"
             "規則：knowledges/模型分工規則_Opus與Sonnet.md\n"
             "違規記錄已寫入：%s\n" % path + BAR + "\n")
         BLOCK = True
