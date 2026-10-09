@@ -756,8 +756,24 @@ def register_coach888(url: str, title: str) -> str:
         return "（靜態備援版更新失敗，不影響教練看到的內容）"
 
 
+def ensure_curated_github(slug: str) -> str:
+    """上架後立刻替網站建私有 GitHub repo（curated_git.py ensure）。失敗不擋上架，但要在通知裡講清楚，
+    每天夜裡 launchd 的 ensure-all 會再補一次（2026-10-10 根因修復：09-30 教練交辦只寫進接力棒、沒接進上架流程，之後新站全沒建）。"""
+    try:
+        r = subprocess.run([sys.executable, str(WORKSPACE / "scripts" / "curated_git.py"), "ensure", slug],
+                           capture_output=True, text=True, timeout=300)
+        if r.returncode == 0:
+            return f"🐙 GitHub：https://github.com/Coach1973/{slug}（私有）"
+        log(f"GitHub建立失敗 {slug}: {r.stdout[-300:]} {r.stderr[-300:]}")
+        return "⚠️ GitHub 還沒建好，今晚會自動補建"
+    except Exception as e:  # noqa: BLE001
+        log(f"GitHub建立例外 {slug}: {e!r}")
+        return "⚠️ GitHub 還沒建好，今晚會自動補建"
+
+
 def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set, opt_note: str = "") -> None:
-    """大樹作品：原封不動上架event.bymyway.com，不建GitHub repo、不插商圈卡、不發FB，
+    """大樹作品：原封不動上架event.bymyway.com，建私有GitHub repo（2026-09-30教練定：event網址背後都要有GitHub，
+    靜態內容在聯想／宏碁／小龍蝦改GitHub就好）、不插商圈卡、不發FB，
     登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
     shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
@@ -776,6 +792,8 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
     })
     save_registry(registry)
 
+    gh_note = ensure_curated_github(slug)
+
     try:
         req = urllib.request.Request(event_url, headers={"User-Agent": "Mozilla/5.0 (curation-bot)"})
         live_note = "✅ 網址已確認打得開" if urllib.request.urlopen(req, timeout=15).status == 200 else "⚠️網址回應異常"
@@ -793,6 +811,7 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
         f"網址：\n{event_url}\n"
         f"{live_note}\n"
         f"{c888_note}\n"
+        f"{gh_note}\n"
         f"{opt_note}"
         "📌 教練個人創作，不進大台南商圈店家名冊"
     )

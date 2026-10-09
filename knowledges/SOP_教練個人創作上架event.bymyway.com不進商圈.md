@@ -73,7 +73,8 @@ curl -s -F "kind=creation" -F "package=@<檔案路徑>" -F "custom_slug=<教練�
 ```
 - 教練自己用手機：打開coach888「大樹常用」裡的作品上傳頁，選「🎨 大樹教練個人作品」→選檔→填短網址→上傳。沒有Telegram的20MB限制。
 - 系統自動做：原封不動解壓上架 `event.bymyway.com/curated/<slug>/` → 登記 `curated_sites_registry.json`（category=教練個人創作、no_shop_card）→ 放進coach888「最新作品」第一筆（伺服器同步狀態＋靜態HTML備援，錨點用grid開頭標籤並檢查標籤配對）→ 通知「活動報名即時通知」群組附網址。
-- 不做：建GitHub repo、插大台南商圈卡、發FB。
+- 🔴 **一定要做：建私有GitHub repo**（2026-09-30教練定、10-10教練再次提醒：event.bymyway.com 的靜態網站背後都必須有 GitHub，這樣他在小龍蝦／聯想／宏碁改 GitHub 就好，只有涉及資料庫／程式才回 Mac）。上架程式 `publish_creation()` 已自動呼叫 `scripts/curated_git.py ensure <slug>`；每天 00:40 launchd 會再補一次 `ensure-all`。
+- 不做：插大台南商圈卡、發FB。
 - `kind` 沒填或亂填 → 上傳直接被擋下（HTTP 400），系統不猜。
 - 程式：`event-signup/app.py` `curation_upload()` ＋ `scripts/curation_process.py` `publish_creation()`。
 
@@ -90,7 +91,7 @@ python3 scripts/curation_check_result.py "<zip檔名關鍵字或custom_slug>"
 既有 [[reference_curation_sop_2026-09-06]] 是為店家設計的，會自動做三件事，這三件事對個人創作都是不必要甚至錯誤的：
 1. 抓地址、猜分類，插入大台南商圈整合中心店家名冊卡片
 2. 自動發大台南商圈整合中心 FB 貼文宣布
-3. 建立獨立 GitHub repo + 開 GitHub Pages（教練這次沒要求，只要 event.bymyway.com 一個網址）
+3. 開 GitHub Pages（個人創作不用；但**私有 GitHub repo 一定要建**，見上方 2026-09-30 規則，建 repo ≠ 開 Pages）
 
 **教訓案例**：2026-09-23 教練把「ai-story」漫畫包丟給小龍蝦，小龍蝦直接照策展SOP整套跑，被誤判成店家上架，後續處理（很可能是用 `/curation/admin/delete` 下架）連帶把 GitHub repo、Pages、registry 全部砍掉，導致 `event.bymyway.com/curated/ai-story/` 變 404、`log` 卻仍顯示「✅完成」——log 只代表當初上架流程本身沒有丟例外，不代表後來沒被整組刪除，兩者是不同時間點的事，查證時不能只看 log 就下結論。
 
