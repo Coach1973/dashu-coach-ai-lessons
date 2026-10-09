@@ -1,6 +1,6 @@
 ---
 name: feedback-opened-on-mac-is-not-delivery-phone-coach-2026-10-04
-description: 教練用手機遠端時，「已在 Mac 的 Chrome 開過／跳出來了」對他等於沒發生；交付一律是獨立一行的 https 網址＋curl 驗證。根因是三處腳本文字教我這樣講，已改源頭＋新增擋下反射
+description: 教練用手機遠端時，「已在 Mac 的 Chrome 開過／跳出來了」或「開在 E 槽某資料夾」對他等於沒發生；交付一律是獨立一行的 https 網址＋curl 驗證。PPT／PDF 也一樣，不准只給本機路徑。根因是三處腳本文字教我這樣講，已改源頭＋新增擋下反射
 metadata:
   node_type: memory
   type: feedback
@@ -15,6 +15,8 @@ metadata:
 **How to apply:**
 - 交付網頁／HTML＝給教練打得開的 https 網址，**獨立一行**，並先 curl 驗證狀態 200＋Content-Type＋內文關鍵字。
 - 在 Mac 用 Chrome 開只是自己查證（N4），不要寫成「開給您看」。
+- **（已被下方 2026-10-09「打開所在資料夾並選取」取代，Windows 用 `explorer /select,檔案`）PPT／PDF 同樣規則（教練 2026-10-08 16:55 親口，被抓到兩次）**：產出簡報或 PDF 後，回覆要給「一個可點的 https 網址」，不能只說路徑、不能說「已在電腦上開好」、不能叫教練去 E 槽找。本機路徑只能當附註。教練說「畫面太小、看不到」＝不要用小框預覽當交付。
+- 上傳到公開網站前要先問一次「要／不要」（公開＝任何人有網址都看得到，內容含他人底圖或 NotebookLM 產出）；教練回「要」才上傳。2026-10-08 那次教練沒回「要」就沒上傳，只回了「給我網址」，後來被抓到不能拿本機路徑充數。
 - 教練明說可公開（10/04「不擔心公開我的想法，放大樹作品都沒問題」）時，走大樹創作 SOP 一條龍上架（`knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md`），不要手工註冊 registry（會被安全檢查擋）。
 - 附帶：launchd `com.coach.curation-watch` 壞了（結束碼78、plist 不見），上傳會停在 pending，要手動跑 `event-signup/venv/bin/python scripts/curation_process.py`。
 

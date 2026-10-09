@@ -1,5 +1,7 @@
 # Memory Index
+- [🔧 聯想本機轉錄 Plaud 錄音：D槽 Plaud轉錄工具（GPU，92分鐘約7分鐘）；教練要我自己轉不扣點；Plaud 原始 .opus 無檔頭要先包 ogg；先去雲端 cloud_sync/skills/plaud-* 找軍師做法(2026-10-09)](reference_lenovo_plaud_local_transcribe_gpu_2026-10-09.md)
 - [🔧 NotebookLM 自動化 nlm 已裝(SSD)並登入；錄音→簡報→套底圖整條實測通過(生成約7分鐘)；NotebookLM簡報套BNI底圖＝走BNI PPT SOP滿版，不可自行縮小/改safe(2026-10-08教練火大糾正)](reference_notebooklm_cli_pipeline_2026-10-08.md)
+- [🔧 聯想 10/08 當機＝虛擬記憶體用完(分頁檔被固定4GB)；登入後閃視窗＝約20個開機自動程式，非病毒；吃記憶體元兇未留紀錄(2026-10-08)](reference_lenovo_freeze_virtual_memory_exhausted_2026-10-08.md)
 - [🔧 Plaud 錄音 175 筆已全備份到 SSD(`/Volumes/953-SSD/Plaud錄音備份/`)＋本機 mlx-whisper 轉繁中(跑 9~10 小時，可續跑)；Plaud MCP 只讀不能刪、讀取不扣額度；刪雲端前驗證清單(2026-10-08)](reference_plaud_backup_and_local_transcribe_2026-10-08.md)
 - [🔧 Pillow 用黑體-繁(STHeiti Medium.ttc index0)寫中文，「・」會變方框要換「‧」；信任成績卡踩過，出圖交付前親眼看標點(2026-10-07)](reference_heiti_tc_no_katakana_dot_2026-10-07.md)
 - [🔧 改桌面版 Hermes 的規則＝改 ~/.hermes/SOUL.md（不在git，先備份），用 hermes -z 開新對話實測才算交付；舊對話沿用舊規則(2026-10-07，試金石案例108)](reference_hermes_z_oneshot_test_after_soul_change_2026-10-07.md)
