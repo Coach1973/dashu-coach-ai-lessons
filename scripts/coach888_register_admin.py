@@ -72,6 +72,9 @@ def main(argv):
     if len(pos) != 2:
         print(__doc__)
         return 2
+    if len(pos[0]) > 60:   # 教練 2026-10-10：「只要是這種長網址的一律都變短址」。先做短網址再登記；這裡只提醒不擋。
+        print(f"⚠️ 這個網址有 {len(pos[0])} 個字，太長了。教練要求後台／管理網址一律做成短網址"
+              "（參考信任遊戲後台 /game/a/<12字>、策展上傳 /u/<10字>：用金鑰算固定短代碼，舊長連結照樣有效）。")
     print(register(pos[0], pos[1], opt.get("--section", "baoliu"), opt.get("--badge", "後臺")))
     return 0
 
