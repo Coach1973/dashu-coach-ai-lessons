@@ -3302,7 +3302,7 @@ def api_site_update(repo_name):
 # 教練要：event.bymyway.com 的靜態網站背後都有 GitHub，他在聯想／宏碁／小龍蝦改 GitHub，
 # 網站就跟著換新，不用回 Mac。每個 repo 掛一個 GitHub webhook 打到這裡（push 事件），
 # 用 HMAC 驗證是 GitHub 送來的，只認得登記過的網站，然後在背景把最新版拉回本機。
-# 策展站走 curated_git.py sync（會先存 Mac 本機修改再合併）；SITE_SYNC_REPOS 的舊站照舊 git pull --ff-only。
+# 只服務策展名單（大樹作品＋策展SOP）的網站，走 curated_git.py sync（會先存 Mac 本機修改再合併）。
 GITHUB_WEBHOOK_SECRET = os.environ.get("GITHUB_WEBHOOK_SECRET", "")
 CURATED_GIT_SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "curated_git.py"
 _GH_REPO_NAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,100}$")
@@ -3321,24 +3321,18 @@ def _origin_repo_name(path: Path) -> str:
 
 
 def _resolve_github_repo(repo_name: str):
-    """GitHub repo 名稱 → (種類, 代號)。策展站看 registry 的 repo 欄位（沒有就用 slug），舊站看本機 clone 的 origin。"""
+    """GitHub repo 名稱 → 策展名單（大樹作品＋策展SOP）裡的網站代號。只服務這份名單，
+    其他舊站（SITE_SYNC_REPOS）教練沒要求，不碰（2026-10-10 教練糾正）。"""
     for s in _load_curated_registry().get("sites", []):
         if (s.get("repo") or f"Coach1973/{s['slug']}").split("/")[-1] == repo_name:
             return "curated", s["slug"]
-    for key, path in SITE_SYNC_REPOS.items():
-        if path.exists() and _origin_repo_name(path) == repo_name:
-            return "site", key
     return None, None
 
 
 def _github_sync_worker(kind: str, key: str, pushed_sha: str) -> None:
     try:
-        if kind == "curated":
-            r = subprocess.run([sys.executable, str(CURATED_GIT_SCRIPT), "sync", key], capture_output=True, text=True,
-                               timeout=300, env=_OPENCLAW_ENV)
-        else:
-            r = subprocess.run(["git", "-C", str(SITE_SYNC_REPOS[key]), "pull", "--ff-only"], capture_output=True,
-                               text=True, timeout=120, env=_OPENCLAW_ENV)
+        r = subprocess.run([sys.executable, str(CURATED_GIT_SCRIPT), "sync", key], capture_output=True, text=True,
+                           timeout=300, env=_OPENCLAW_ENV)
         app.logger.info("github-sync %s %s %s rc=%s %s", kind, key, pushed_sha[:7], r.returncode, (r.stdout + r.stderr)[-300:])
         if r.returncode != 0:
             _notify_xiaolongxia(f"⚠️ GitHub 有新版本，但網站沒能自動換新：{key}\n"
