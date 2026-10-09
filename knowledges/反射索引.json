@@ -1581,7 +1581,7 @@
    "id": "R-DELIVER-POP-OPEN",
    "moment": "reply",
    "match": "(?is)^(?!.*(?:總結|接力棒|commit|git log)).*((?:做好了?|已完成|完成了|已產出|已輸出|輸出完成|成品|主檔)[^\\n]{0,40}\\.(?:pptx|key|pdf|docx|xlsx)|\\.(?:pptx|key|pdf|docx|xlsx)[^\\n]{0,40}(?:做好了?|已完成|完成了|已產出|已輸出|輸出完成|成品|主檔))",
-   "say": "交付檔案：這一輪還沒用 scripts/deliver_open.sh 把它交到教練眼前。不要只給路徑讓教練去資料夾／預覽框找（他點到的常是舊的錯版）。請先跑 scripts/deliver_open.sh <主檔>：網頁／網址直接開 Chrome；簡報（pptx／key）預設打開所在資料夾並選取該檔、不開檔案（教練 10/08 17:34「打開資料夾，不要打開檔案」；教練明說要開簡報才加 --open 開 Keynote）。它會印出視窗證據；只留一個主檔。跑完再回覆。",
+   "say": "交付檔案：這一輪還沒用 scripts/deliver_open.sh 把它交到教練眼前。不要只給路徑讓教練去資料夾／預覽框找（他點到的常是舊的錯版）。請先跑 scripts/deliver_open.sh <主檔>：網頁／網址直接開 Chrome；其他檔案（簡報、PDF、Word、Excel、圖片、zip…）一律打開所在資料夾並選取該檔、不開檔案——原因（教練 10/09）：直接開檔案他看得到內容卻沒有路徑，沒辦法傳到 LINE；開資料夾他要看就點、要傳就直接拉進 LINE。教練明說要開啟內容才加 --open。它會印出視窗證據；只留一個主檔。跑完再回覆。",
    "level": "block",
    "situation": "回報做好的簡報／檔案成品時",
    "source": "試金石案例111（教練 2026-10-08：做對的版本沒跳出來，他在預覽框看到的剛好是做錯的）；同類 10/04 feedback_opened_on_mac_is_not_delivery_phone_coach；2026-10-09 簡報改開資料夾（教練 10/08 17:34 原話）",

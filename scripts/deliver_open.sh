@@ -4,11 +4,12 @@
 #       2026-10-04 同類（說「已在 Mac 開過」他沒看到）。教練原話：「做好的東西不要用預覽的方式顯示，
 #       直接跳出 PPT 或直接跳出網址，永遠這樣。」
 # 用法：
-#   scripts/deliver_open.sh <檔案路徑>        # .pptx/.key 打開所在資料夾並選取該檔（不開檔案）；.html 開 Chrome；其他用預設程式
-#   scripts/deliver_open.sh --open <pptx/key>  # 教練明說要開簡報時才用：開 Keynote
+#   scripts/deliver_open.sh <檔案路徑>        # 一般檔案（pptx/key/pdf/docx/xlsx/圖片/zip…）打開所在資料夾並選取該檔（不開檔案）；.html 開 Chrome
+#   scripts/deliver_open.sh --open <檔案>      # 教練明說要「開啟」檔案內容時才用（簡報開 Keynote，其他用預設程式）
 #   scripts/deliver_open.sh <https://網址>     # 開 Chrome
-# 2026-10-09 改：教練 10/08 17:34 看到簡報被直接打開後說「打開資料夾，不要打開檔案」，
-#   所以 PPT／Keynote 預設改成開資料夾；網頁與網址維持直接跳出。
+# 2026-10-09 改：教練 10/08 17:34 說「打開資料夾，不要打開檔案」，10/09 12:27 說明原因：
+#   「直接打開檔案，我只看得到內容，不知道路徑，沒辦法把檔案傳到 LINE；打開資料夾，我要看就點進去，
+#    要傳就直接拉到 LINE。這是教練習慣的方式。」→ 所有會被轉傳的檔案預設開資料夾；網頁與網址維持直接跳出。
 # 做的事：①（--open 開 Keynote 時）先關掉「沒改過」的舊視窗，避免同名多視窗讓教練點錯；有未存變更的不動
 #         ②開啟 ③印出最前面的程式、視窗清單與位置（x≥1920 表示跑到第二螢幕）當作證據
 set -u
@@ -39,12 +40,12 @@ case "$T" in
           open "$T"
         else
           APP="Finder"
-          open -R "$T"
+          open -R "$T"; sleep 1; osascript -e 'tell application "Finder" to activate' >/dev/null 2>&1
         fi ;;
       *.html|*.htm)
         APP="Google Chrome"; open -a "Google Chrome" "$T" ;;
       *)
-        APP=""; open "$T" ;;
+        if [ "$OPEN_PPT" = "1" ]; then APP=""; open "$T"; else APP="Finder"; open -R "$T"; sleep 1; osascript -e 'tell application "Finder" to activate' >/dev/null 2>&1; fi ;;
     esac ;;
 esac
 
