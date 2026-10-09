@@ -1,4 +1,5 @@
 # Memory Index
+- [🔴🔴 event.bymyway.com 每個靜態網站背後都要有 GitHub（09-30令被忘10天、20站沒repo）；根因＝只寫接力棒、SOP還寫「不建GitHub」；已接進 publish_creation＋每晚00:40補建；教練命令要改SOP＋程式不能只放記憶(2026-10-10)](feedback_event_sites_must_have_github_wired_into_pipeline_2026-10-10.md)
 - [🔴 大樹作品頁的聯絡／送出表單一律打 /api/works/contact → 通知進「活動報名即時通知」群，不另開通知管道；hnv-cc 已示範(2026-10-10)](feedback_works_forms_go_to_event_signup_group_2026-10-10.md)
 - [🔧 聯想本機轉錄 Plaud 錄音：D槽 Plaud轉錄工具（GPU，92分鐘約7分鐘）；教練要我自己轉不扣點；Plaud 原始 .opus 無檔頭要先包 ogg；先去雲端 cloud_sync/skills/plaud-* 找軍師做法(2026-10-09)](reference_lenovo_plaud_local_transcribe_gpu_2026-10-09.md)
 - [🔧 NotebookLM 自動化 nlm 已裝(SSD)並登入；錄音→簡報→套底圖整條實測通過(生成約7分鐘)；NotebookLM簡報套BNI底圖＝走BNI PPT SOP滿版，不可自行縮小/改safe(2026-10-08教練火大糾正)](reference_notebooklm_cli_pipeline_2026-10-08.md)
