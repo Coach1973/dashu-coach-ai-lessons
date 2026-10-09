@@ -33,3 +33,5 @@ metadata:
 **2026-10-04 23:51 教練確認的語音諧音**：「倭軍／倭郡健身房」＝**World Gym**；「網會」＝**網頁**；「Windows count／Windows Content」＝**context window**。
 
 **2026-10-07 教練對照**：①「真貴分會」＝**真貴籌備會**（chapters.slug `real-wealth`，status forming；教練當場糾正「真貴籌備會」）②分會名單上的「吳大樹」＝**教練本人**，遊戲裡已是「大樹教練」#1，不要入第二個座位（`seed_game_players.py` 的 `NAME_ALIASES` 已處理）③「官網」＝**www.bymyway.com**；大樹小講網站＝bigtree-tw.netlify.app，不叫官網（試金石案例108）。
+
+**2026-10-09 教練確認的語音誤聽（他稱讚我聽得出來，不用再核對）**：「Haiku 3.5」＝**Haiku 5.5**（5 被聽成 3）；「檔期作品」＝**大樹作品**（交辦「上架策展 SOP、檔期作品 SOP」）。
