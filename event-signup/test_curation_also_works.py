@@ -48,5 +48,10 @@ check("大樹作品不需要問（本來就進大樹作品）", r.status_code ==
 page = client.get(f"/curation/upload?key={KEY}").get_data(as_text=True)
 check("上傳頁有「要不要同時放進大樹作品」選項", 'name="also_works"' in page)
 
+code = appmod.curation_upload_short_code()
+r = client.get(f"/u/{code}")
+check("短網址 /u/<10字> 打開就是上傳頁，帶著金鑰", r.status_code == 200 and KEY in r.get_data(as_text=True) and len(code) == 10)
+check("短代碼不對 → 404", client.get("/u/aaaaaaaaaa").status_code == 404)
+
 print("\n全部通過" if not fails else f"\n失敗 {len(fails)} 項：{fails}")
 raise SystemExit(1 if fails else 0)

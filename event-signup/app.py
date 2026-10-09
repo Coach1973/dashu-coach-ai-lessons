@@ -2103,6 +2103,25 @@ def curation_admin_delete(slug):
     return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
+def curation_upload_short_code() -> str:
+    """策展上傳網址的短代碼（教練 2026-10-10 嫌帶 key 的網址太長）：用上傳金鑰算出來的固定 10 個字，換金鑰就跟著失效。"""
+    import base64
+    import hashlib
+    import hmac
+    digest = hmac.new(CURATION_UPLOAD_KEY.encode("utf-8"), b"curation-upload-short", hashlib.sha256).digest()
+    return base64.b32encode(digest).decode("ascii").lower().rstrip("=")[:10]
+
+
+@app.route("/u/<code>")
+def curation_upload_short(code):
+    """短網址：打開就是上傳頁（金鑰已內建在頁面裡，跟原本帶 ?key= 的效果一樣）。代碼不對一律 404。"""
+    import hmac
+    if not CURATION_UPLOAD_KEY or not hmac.compare_digest(code, curation_upload_short_code()):
+        abort(404)
+    return render_template("curation_upload.html", key=CURATION_UPLOAD_KEY,
+                           sites=_load_curated_registry().get("sites", [])[::-1])
+
+
 @app.route("/curation/upload", methods=["GET", "POST"])
 def curation_upload():
     """教練交辦(2026-09-06)：策展SOP的檔案入口。教練把AI工具做好的店家網站zip丟這裡，
