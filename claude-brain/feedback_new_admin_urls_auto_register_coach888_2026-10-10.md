@@ -12,3 +12,5 @@ metadata:
 
 **短網址（教練 10/10 06:38 追加）**：管理／編輯／上傳入口的網址「一律做成短網址」再登記。做法＝用金鑰算一個固定短代碼（信任遊戲後台 `/game/a/<12字>`、策展上傳 `/u/<10字>`），舊長連結照樣有效；`coach888_register_admin.py` 網址超過 60 字會提醒。每位玩家個人的修改連結（`/game/invite/edit/<22字>`）是一人一把、只發給本人，沒動。
 
+**同時要進 /vault（教練 10/10 06:44 抓到）**：教練找後台有兩個地方——大樹作品集（coach888）和 `event.bymyway.com/vault`（憑證總覽，要登入）。`coach888_register_admin.py` 現在預設兩邊一起登記（`/vault` 讀 `event-signup/vault_extra.json`，不用重啟）；有帳密的後台加 `--no-vault`，帳密自己補進 `app.py` 的 VAULT_ENTRIES 與 `路徑大全_憑證層.md`。
+
