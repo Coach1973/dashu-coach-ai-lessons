@@ -52,6 +52,16 @@
 - **不碰 Netlify**：只改 GitHub 與本機檔案；Netlify 的 bigtree-tw 版要教練說「推」才更新（`netlify_deploy_guard.sh` 規定）。
 - 首次實跑（2026-10-04）：補進 9/19 中正大學（歷史頁 24→25 場），其餘場次本來就都在。
 
+## 🔴 2026-10-10 教練裁示：大樹作品頁的「聯絡／索取資料／送出」一律進「活動報名即時通知」群
+
+> 教練原話：「我們以後任何大樹作品的頁面，只要有送出通知，只要有這種聯絡或送出通知的介面，一律都發到『活動報名即時通知』。」起因：楊博士頁面（hnv-cc）的「了解訂閱／索取加盟說明／洽詢代工」只留電話，教練要改成線上表單，資料進通知群，邏輯跟活動報名一模一樣。
+
+- **不要為單一作品另開通知管道、不要用 mailto／Tooo.ai／第三方表單**。一律打通用接口 `POST /api/works/contact`（程式在 `event-signup/app.py` 的 `api_works_contact`，資料表 `works_contact_leads`，通知發到 `TELEGRAM_REGISTRATION_GROUP_CHAT_ID`＝「活動報名即時通知」群）。
+- 前端做法（同源，頁面在 event.bymyway.com 底下就直接打相對路徑）：`fetch('/api/works/contact', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({site:'<作品網址代號>', name, phone, item, email, message, website})})`；`website` 是隱藏的防機器人欄位，要留著不給人看到。`site` 必須是已在 `curated_sites_registry.json` 登記的 slug。範例：`github_repos/hnv-cc/index.html` 的 `#lead` 表單與最後那段 script。
+- 後端已有：姓名／電話驗證（電話至少 8 位數字）、每個 IP 每小時最多 10 次、輸入截斷、資料庫寫入失敗也會通知人工補登。測試：`cd event-signup && python3 test_works_contact.py`（用暫時資料庫＋假通知，不會真的發 Telegram）。
+- **測試鐵律**：打真實網址送出＝真的通知教練與佩佩老師，半夜別打；驗證用假通知的測試，或只打會被擋下的請求（缺姓名→400）。
+- 接力：已有的非作品頁表單（`/api/KR/contact` 等）是策展店家用的，維持原狀不動。
+
 ## ✅ 2026-09-24 起的做法：一步到位，全自動（下方手動7步驟改為備援／歷史參考）
 
 教練以Opus 5.5做團隊體檢後拍板執行：大樹作品跟店家策展共用同一個上傳網址，**只差 `kind` 一個欄位**，系統自己完成全部步驟，不再讓AI手動改coach888網頁。

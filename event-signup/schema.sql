@@ -117,6 +117,20 @@ CREATE TABLE IF NOT EXISTS kr_contact_messages (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- 大樹作品通用「留資料」表單（2026-10-10教練裁示：大樹作品頁只要有聯絡／送出介面，一律走這張表＋「活動報名即時通知」群）
+CREATE TABLE IF NOT EXISTS works_contact_leads (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    site TEXT NOT NULL,       -- 作品網址代號，例如 hnv-cc
+    site_title TEXT,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    item TEXT,                -- 想了解的項目
+    email TEXT,
+    message TEXT,
+    ip TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
 -- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
 -- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
 CREATE TABLE IF NOT EXISTS todos (

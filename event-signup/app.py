@@ -2169,6 +2169,67 @@ def kr_assets(filename):
     return _serve_repo_file(KR_REPO, filename)
 
 
+# ---------- 大樹作品通用「留資料」表單（2026-10-10教練裁示） ----------
+# 大樹作品頁只要有「聯絡／索取資料／送出」的介面，一律打這支，資料存 works_contact_leads，
+# 同時通知「活動報名即時通知」群（TELEGRAM_REGISTRATION_GROUP_CHAT_ID）。不要為單一作品另開通知管道。
+_WORKS_CONTACT_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多 10 次，防機器人
+
+
+def _works_contact_rate_ok(ip: str, limit: int = 10) -> bool:
+    import time
+    now = time.time()
+    hits = [t for t in _WORKS_CONTACT_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= limit:
+        _WORKS_CONTACT_HITS[ip] = hits
+        return False
+    hits.append(now)
+    _WORKS_CONTACT_HITS[ip] = hits
+    return True
+
+
+@app.route("/api/works/contact", methods=["POST"])
+def api_works_contact():
+    def reply(ok, error=None, status=200):
+        body = {"ok": ok}
+        if error:
+            body["error"] = error
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json")
+
+    payload = request.get_json(force=True, silent=True) or {}
+    if (payload.get("website") or "").strip():          # 防機器人的隱藏欄位：假裝成功、不通知
+        return reply(True)
+    site = (payload.get("site") or "").strip()
+    if not _CURATED_SLUG_RE.match(site) or site not in _curated_slugs():
+        return reply(False, "找不到這個作品頁", 404)
+    clean = lambda k, n: re.sub(r"\s+", " ", (payload.get(k) or "").strip())[:n]
+    name, phone = clean("name", 30), clean("phone", 30)
+    item, email, message = clean("item", 40), clean("email", 80), (payload.get("message") or "").strip()[:500]
+    if not name:
+        return reply(False, "請填寫姓名", 400)
+    if len(re.sub(r"\D", "", phone)) < 8:
+        return reply(False, "請填寫正確的電話", 400)
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _works_contact_rate_ok(ip):
+        return reply(False, "送出次數太多，請稍後再試", 429)
+    title = next((s.get("title") for s in _load_curated_registry().get("sites", []) if s["slug"] == site), site) or site
+    try:
+        conn = db.get_conn()
+        conn.execute("INSERT INTO works_contact_leads (site, site_title, name, phone, item, email, message, ip) "
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (site, title, name, phone, item, email, message, ip))
+        conn.commit()
+        conn.close()
+    except Exception as e:  # noqa: BLE001  資料庫寫入失敗也一定要通知，人工補登
+        _notify_xiaolongxia(f"⚠️【{title}・留資料寫入失敗】\n姓名：{name}\n電話：{phone}\n項目：{item or '未選'}\n錯誤：{e}\n請人工補登。",
+                            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+        return reply(False, "系統忙碌，請稍後再試", 500)
+    _notify_xiaolongxia(
+        f"📩【{title}】有人留資料\n姓名：{name}\n電話：{phone}\n想了解：{item or '未選'}\n"
+        + (f"Email：{email}\n" if email else "") + (f"留言：{message}\n" if message else "")
+        + f"（來源：event.bymyway.com/curated/{site}/）",
+        chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return reply(True)
+
+
 @app.route("/api/KR/contact", methods=["POST", "OPTIONS"])
 def api_kr_contact():
     """KR養生廚房聯絡表單（2026-09-04交辦，教練用Tooo.ai做的示範站原封不動搬過來）。
