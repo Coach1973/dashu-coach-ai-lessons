@@ -18,7 +18,7 @@ import sys
 import threading
 import urllib.error
 import urllib.request
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote, urlencode
 
@@ -2693,6 +2693,46 @@ COACH888_STATE_KEYS = {
 }
 
 
+def _coach888_keep_new_works(conn, payload):
+    """2026-10-10：開著舊版 coach888 頁面的瀏覽器一存排版，會把整份 layout 蓋回舊的，剛自動登記的新作品就不見了
+    （art-lab 04:59 登記、05:01 被蓋掉；big-plan 同樣）。保護：近 72 小時上架的「大樹作品」(no_shop_card)，
+    如果新的 layout 在所有分類（含「最近刪除」）都找不到它，就把它補回「最新作品」最前面。
+    教練真的刪除作品會落在「最近刪除」，所以不會被擋；超過 72 小時的不管。"""
+    raw = payload.get("coach888_layout")
+    if raw is None:
+        return
+    layout = json.loads(raw) if isinstance(raw, str) else raw
+    if not isinstance(layout, dict):
+        return
+    present = {u for urls in layout.values() if isinstance(urls, list) for u in urls}
+    cutoff = datetime.now() - timedelta(hours=72)
+    missing = []
+    for site in _load_curated_registry().get("sites", []):
+        if not site.get("no_shop_card") or site.get("event_url") in present:
+            continue
+        try:
+            if datetime.strptime(site["uploaded_at"], "%Y-%m-%d %H:%M") < cutoff:
+                continue
+        except (KeyError, ValueError):
+            continue
+        missing.append(site)
+    if not missing:
+        return
+    row = conn.execute("SELECT value FROM coach888_state WHERE key = 'coach888_items'").fetchone()
+    server_items = json.loads(row["value"]) if row and row["value"] else {}
+    new_items = payload.get("coach888_items")
+    new_items = json.loads(new_items) if isinstance(new_items, str) else (new_items if isinstance(new_items, dict) else None)
+    for site in sorted(missing, key=lambda x: x["uploaded_at"]):   # 舊的先補，新的排最前
+        url = site["event_url"]
+        layout.setdefault("zuixinzuopin", []).insert(0, url)
+        if new_items is not None and url not in new_items:
+            new_items[url] = server_items.get(url) or {"name": site["title"], "badge": "公開"}
+        app.logger.warning("coach888 保護：補回被舊頁面蓋掉的新作品 %s", url)
+    payload["coach888_layout"] = json.dumps(layout, ensure_ascii=False)
+    if new_items is not None:
+        payload["coach888_items"] = json.dumps(new_items, ensure_ascii=False)
+
+
 @app.route("/api/coach888/state", methods=["GET", "POST", "OPTIONS"])
 def api_coach888_state():
     """coach888作品一覽的排版狀態集中存放(2026-09-03交辦)：教練在Mac改完排版，
@@ -2725,6 +2765,10 @@ def api_coach888_state():
         )
 
     payload = request.get_json(force=True, silent=True) or {}
+    try:
+        _coach888_keep_new_works(conn, payload)
+    except Exception as e:  # noqa: BLE001  保護失敗不能擋住教練存排版
+        app.logger.warning("coach888 新作品保護失敗: %r", e)
     updated = []
     for key, value in payload.items():
         if key not in COACH888_STATE_KEYS or value is None:
