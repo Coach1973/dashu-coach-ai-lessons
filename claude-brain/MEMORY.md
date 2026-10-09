@@ -71,7 +71,7 @@
 - [🔴 修好相容性問題只治入口，沒查同頁引用出去的其他資源是不是同一個病，教練追問才抓到(2026-09-25)](feedback_check_downstream_references_when_fixing_compat_2026-09-25.md)
 - [🔧 GitHub Pages對.md回傳text/markdown導致多數AI「讀不到」，公開給AI讀的頁一律要有.html版本(2026-09-25)](reference_github_pages_md_content_type_ai_compat_2026-09-25.md)
 - [☁️ 雲端工作頁吃到全套規則的機制(cloud_sync+專案settings，main/master都實測通過)+AI可自己開/傳話雲端頁+外層master分岔已查證安全合併(2026-09-25)](reference_move_to_cloud_this_repo_2026-09-25.md)
-- [🧭 模型分工默契：Opus級(找根因/設計機制/不可逆…)在Sonnet要先一句提醒切換，Opus做庶務做完提醒切回；hook自動評估(2026-09-25)](feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25.md)
+- [🧭 模型分工三燈號(10/09 v3)：🔵Haiku＝已有SOP的固定動作(戰報/套版/上架/名單/行事曆/發票)、🟢Sonnet、🟣Opus(找根因/設計機制/不可逆…)；模型不夠先建議切換、高模型做低級任務提醒切下；目前模型以系統提示為準；hook+A3自動(2026-09-25起)](feedback_model_tier_advisor_opus_vs_sonnet_2026-09-25.md)
 - [🔴🔴🔴 教練說「赫米斯」＝Mac桌面版Hermes.app(類Claude的CLI UI)，Telegram線不碰不當選項問(第3次搞混)；登入自動跳出已修(2026-09-25)](feedback_hermes_gateway_vs_desktop_app_distinction_2026-09-19.md)
 - [🔴 教練第二螢幕從不用：開視窗一律搬主螢幕+截圖確認才說「跳出來了」(2026-09-25)](feedback_windows_on_main_display_only_2026-09-25.md)
 - [🔧 每位朋友對話單獨記憶：LINE三帳號(hook逐則記錄)／VPS(獨立agent+內建記憶)怎麼實作怎麼驗證，09-25修好巡檢灌爆+上限停寫(2026-09-25)](reference_per_user_memory_three_systems_2026-09-25.md)
