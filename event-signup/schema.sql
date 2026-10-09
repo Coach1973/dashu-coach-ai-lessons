@@ -150,6 +150,15 @@ CREATE TABLE IF NOT EXISTS works_poll_suggestions (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- 大樹作品通用「按讚計數」（2026-10-10：南應大記憶牆「支持陳佩君」）。教練裁示：不記 IP、不限次數，按一下加一。
+-- 只存總數，沒有任何人的資料。
+CREATE TABLE IF NOT EXISTS works_counters (
+    site TEXT NOT NULL,
+    counter_key TEXT NOT NULL,
+    n INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (site, counter_key)
+);
+
 -- 教練個人待辦事項（2026-09-02交辦，仿Microsoft To Do核心功能），reminder_sent由
 -- scripts/todo_reminder_check.py這支獨立cron檢查remind_at並發Telegram，避免跟網頁請求耦合
 CREATE TABLE IF NOT EXISTS todos (

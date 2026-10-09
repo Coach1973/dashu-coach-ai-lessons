@@ -52,5 +52,15 @@ check("機器人隱藏欄位有填 → 假裝成功、不存不通知",
 appmod._WORKS_POLL_HITS.clear()
 codes = [client.post("/api/works/poll/tut-memory/suggest", json={"suggestion": f"第{i}個主題想聽"}).status_code for i in range(7)]
 check("同一 IP 一小時最多 5 則建議（第 6 則起 429）", codes[:5] == [200] * 5 and codes[5] == 429)
+r = client.get("/api/works/counter/tut-memory/support-peijun")
+check("按讚一開始是 0", r.get_json() == {"ok": True, "n": 0})
+for _ in range(5):
+    last = client.post("/api/works/counter/tut-memory/support-peijun").get_json()
+check("同一個人連按 5 下 → 5 個讚（不限次數）", last["n"] == 5)
+check("重新讀取還是 5", client.get("/api/works/counter/tut-memory/support-peijun").get_json()["n"] == 5)
+check("沒登記的計數 → 404", client.post("/api/works/counter/tut-memory/other").status_code == 404 and client.post("/api/works/counter/hnv-cc/support-peijun").status_code == 404)
+conn = db.get_conn()
+check("資料表只有總數、沒有 IP 欄位", [c["name"] for c in conn.execute("PRAGMA table_info(works_counters)")] == ["site", "counter_key", "n"])
+conn.close()
 print(f"\n{'全部通過' if not fails else '失敗 ' + str(len(fails)) + ' 項'}")
 raise SystemExit(1 if fails else 0)

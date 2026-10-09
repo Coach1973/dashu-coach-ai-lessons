@@ -2318,6 +2318,31 @@ def api_works_poll_suggest(site):
     return _works_poll_json({"ok": True})
 
 
+# ---------- 大樹作品通用「按讚計數」（2026-10-10：南應大記憶牆「支持陳佩君」） ----------
+# 教練裁示：不記 IP、不限次數，按一下加一，營造支持的氛圍。只存總數；計數器要先登記在這裡。
+WORKS_COUNTERS = {"tut-memory": {"support-peijun"}}
+
+
+def _works_counter_value(site: str, key: str) -> int:
+    conn = db.get_conn()
+    row = conn.execute("SELECT n FROM works_counters WHERE site=? AND counter_key=?", (site, key)).fetchone()
+    conn.close()
+    return row["n"] if row else 0
+
+
+@app.route("/api/works/counter/<site>/<key>", methods=["GET", "POST"])
+def api_works_counter(site, key):
+    if key not in WORKS_COUNTERS.get(site, set()):
+        return _works_poll_json({"ok": False, "error": "找不到這個計數"}, 404)
+    if request.method == "POST":
+        conn = db.get_conn()
+        conn.execute("INSERT INTO works_counters (site, counter_key, n) VALUES (?, ?, 1) "
+                     "ON CONFLICT(site, counter_key) DO UPDATE SET n = n + 1", (site, key))
+        conn.commit()
+        conn.close()
+    return _works_poll_json({"ok": True, "n": _works_counter_value(site, key)})
+
+
 @app.route("/api/KR/contact", methods=["POST", "OPTIONS"])
 def api_kr_contact():
     """KR養生廚房聯絡表單（2026-09-04交辦，教練用Tooo.ai做的示範站原封不動搬過來）。
