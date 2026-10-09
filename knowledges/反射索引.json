@@ -1603,6 +1603,18 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-WORKS-FORM-TO-EVENT-GROUP",
+   "moment": "prompt",
+   "match": "(大樹作品|作品頁|楊博士|hnv).{0,25}(表單|留資料|留言|聯絡|洽詢|索取|訂閱|送出|通知)|(表單|留資料|聯絡表單).{0,15}(大樹作品|作品頁)",
+   "say": "大樹作品頁的聯絡／索取資料／送出介面，一律打通用接口 POST /api/works/contact（存 works_contact_leads，通知進「活動報名即時通知」群，教練2026-10-10裁示），不另開通知管道、不用 mailto／第三方表單。範例 github_repos/hnv-cc/index.html 的 #lead 表單；細節 knowledges/SOP_教練個人創作上架event.bymyway.com不進商圈.md 2026-10-10 段；測試用 event-signup/test_works_contact.py，別對真實網址送出（會真的通知教練與佩佩老師）。",
+   "level": "remind",
+   "situation": "教練或AI要在大樹作品頁加聯絡／索取資料／訂閱／送出表單或通知時",
+   "source": "feedback_works_forms_go_to_event_signup_group_2026-10-10",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
