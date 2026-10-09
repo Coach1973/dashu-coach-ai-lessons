@@ -1627,6 +1627,31 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-GENERATE-IMAGES-MYSELF-LK888",
+      "moment": "reply",
+      "match": "配圖提示詞|生圖提示詞|圖片提示詞|出圖提示詞|(給|交給)(您|教練|別的 ?AI).{0,12}(去|拿去).{0,6}(生|出|做)圖",
+      "say": "頁面或文件需要配圖，這台 Mac 的軍師自己就能用 LK888 出（教練 10/10：你自己就可以調用，不用教別的 AI）。別只丟提示詞：scripts/lk888_guard.py（金鑰用 lk888_guard._all_keys() 在程式裡取，不印出）→先試一張看過→每張只出一次→裁切轉 webp 放進專案。做法見記憶 feedback_generate_images_myself_via_lk888_guard_2026-10-10。教練明說「只要提示詞」才只給提示詞。",
+      "level": "remind",
+      "situation": "AI要把『配圖提示詞』丟給教練去做圖時",
+      "source": "記憶 feedback_generate_images_myself_via_lk888_guard_2026-10-10（教練 2026-10-10 04:11 糾正）",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-NEW-ADMIN-URL-REGISTER-COACH888",
+      "moment": "pre_tool",
+      "tool": "Edit|Write|Bash",
+      "match": "@(?:app|bp|blueprint|api)\\.route\\(\\s*[\"'][^\"']*(?:admin|/edit|/delete|manage|後台)|def\\s+\\w*(?:admin|manage)\\w*\\(",
+      "say": "你正在寫新的後台／管理／編輯／刪除網址：同一輪要收進教練的「大樹作品集」(coach888)——python3 scripts/coach888_register_admin.py <完整網址> <顯示名稱>（預設放「活動後台」，可重複執行）；收完用 --list 讀回確認，回報要講「已收進大樹作品集」。教練記不住網址，那裡是他唯一找得到的地方（執行細則 N10）。若只是改既有後台、網址早就登記過，略過。",
+      "level": "remind",
+      "situation": "AI 寫程式新增後台、管理頁、編輯連結或刪除入口時",
+      "source": "執行細則 N10／feedback_new_admin_urls_auto_register_coach888_2026-10-10",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {

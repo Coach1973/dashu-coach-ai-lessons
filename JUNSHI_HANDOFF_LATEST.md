@@ -1,64 +1,57 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 02:20 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5→Opus 5.5→Sonnet 5.5（教練用 /model 切換），v295，教練說「總結」收工；對話 10/09 13:09～10/10 02:15）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 04:50 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5（教練用 /model 切換），v297，教練說「總結」收工；對話 10/10 03:29～04:45；**同一時段另有一個對話窗寫了 v296（見下一段），兩段都有效**）
 
-**主軸：信任遊戲加兩個功能（座位地圖擴九個分會、「我要創分會」）＋楊博士頁（hnv-cc）三件事（瓶子去背、學經歷、線上留資料表單）＋訂下「大樹作品表單一律進活動報名即時通知群」。**
+**主軸：信任遊戲（bni-chapters，trust.bymyway.com）一晚大改版——邀請函、團隊命名、身份二分、玩家階級、鼓勵。教練 10/10 04:39 親口：「友善夥伴」全部改「全新玩家」。**
 
-### 1. 座位地圖擴成九個分會（bni-chapters，commit `1b024f3`）
-- 教練語音要求：真貴（行銷＋生活必需）、真富（VIP 高端定制：西裝、酒會、超跑）、真愛（職人升級轉型）、真鴻運、真傳藝、真開心，各 30 個以上專業，每個分會可收合、讓大家對號入座。
-- 做法：`data/seat_lists/` 新增 6 份清單（33／35／32／32／32／33 個座位，名稱全部對過 904 項專業資料），原三份加「focus」主軸一行；`seat_lists.CHAPTER_SLUGS` 擴成九個；頁面改成可收合區塊（`<details>`，`?chapter=` 展開指定分會）；新分會資料庫沒有時用清單檔名稱。測試 129→134 項全綠，已重啟並驗證 9 個區塊。
-- ⚠️「熱門」是我憑常見度挑的（名片庫無可用統計）；**真鴻運／真傳藝／真開心的主軸是我自選**，教練沒給方向。「西服訂製」同時在真功夫、真富（教練明說西裝放真富）。
+### 1. 分會列表與座位地圖對齊成同樣 13 個（`3e733dd`）
+- chapters.bymyway.com 補真鴻運、真傳藝、真開心、真公益四個籌備會（正式庫用 `python seed.py --add-missing`，**不要跑 `main()`，會清空分會表**）；座位地圖補真鑽、真誠、真鑫（只放一句邀請）；「真公益分會」改「真公益籌備會」。
 
-### 2. 「我要創分會」（commit `9684bbb`、`483e4be`）
-- 分會名額頁最上方放標題「遲早你都會創造一個屬於自己的團隊，最佳時機點就是現在！」＋按鈕。`/game/found` 第一步（分會名字、方向、大名、聯絡方式）送出即通知教練；第二步 `/game/found/<專屬連結>/more` 七個進階問句（為什麼、一年後、架構、裝備、第一批夥伴、需要的幫助、出發時間），回答後再通知一次。新表 `chapter_proposals`（只加表）。測試 134→142 項全綠。**正式站沒送真資料**（會通知教練）。目前只有 Telegram 通知、沒有提案清單頁。
+### 2. 信任邀請函 `/game/invite`（`9c2934c`、配圖 `1fbdc2a`）
+- 兩種畫面：自己點進來（可選團隊）／收到邀請 `/game/invite/<邀請人座位>/<分會代號>`（信紙顯示誰邀請、坐進哪個團隊）。填名片（專業、簡介、照片、身份、8 個連結）入座→專用修改連結 `/game/invite/edit/<token>`；受邀者座位歸邀請人選的團隊；已入座者頁尾可選團隊（含自己提的「我要創團隊」）產生專屬連結、LINE 傳。
+- 文案：教練核心概念＋信任像一張紙＋四根支柱＋古今說法（論語、季布一諾、徙木立信、柯維；海明威標「相傳」，巴菲特名言有爭議沒放）＋祝福。
+- **配圖是我自己用 LK888 出的**（教練 10/10 糾正「你自己就可以調用，不用教別的 AI」）：3 張寫實攝影放 `static/game/invite/`，風格卡補在 bni-chapters `.image-style.md`；做法見記憶 `feedback_generate_images_myself_via_lk888_guard_2026-10-10`。
 
-### 3. 楊博士頁（`github_repos/hnv-cc`，**不是 git repo，無 hash**；改前備份在暫存區）
-- 瓶子照片：用 numpy＋PIL 自己去背（無 OpenCV），瓶子左右對稱補回被切的左邊、白底置中、柔和接地陰影，新檔 `img/hnv-bottle-white.webp`（換檔名避快取）；圖片區塊底色改白。截圖被截圖鎖擋下，沒看網頁實際排版，只看過圖本身。來源只有 600px 寬，大螢幕稍軟。
-- 學經歷：「學歷待補」改成「博士，專長生物科技・環境科學・綠能農業」；補兼任（ESG 永續發展協會綠能農業委員會主委）、曾任（四季洋圃總經理／研發顧問）、國際足跡（日本 SolarUp 2022、新加坡 MEOD／林厝港 6 公頃、台灣＋矽谷論壇 2025/3/22）與資料來源連結。**逐項對原文查證**：教練貼的「在矽谷發表」原文是高雄舉辦的論壇、新加坡是「公司」簽約非「他主導」，都照原文寫；**學校名稱五份來源都沒有，沒寫**。
-- 線上留資料表單：頁面「了解訂閱／索取加盟說明／洽詢代工」按鈕帶到 `#lead` 表單（姓名、電話、項目、Email、留言）。後端 `event-signup/app.py` 新通用接口 `POST /api/works/contact`（存 `works_contact_leads`、通知「活動報名即時通知」群，每 IP 每小時 10 次、驗證、防機器人），測試 `event-signup/test_works_contact.py` 12 項全過。commit `cd4c9393c`。正式站只打會被擋下的請求驗證，**沒真送一筆**。
+### 3. 命名與身份簡化（`50df0ce`、`69ebcb0`、`72020ae`、`0627214`）
+- 身份只剩「全新玩家」「俱樂部玩家（現任或曾經是 BNI 會員，籌備中的團隊也算）」；舊七選一代號仍讀得懂；**籌備會會員＝俱樂部玩家**（籌備期間就會列名單、一對一、推薦人，教練 04:34 定；正式庫 2 筆已轉：大樹教練、林尚玉）。
+- 導覽列：信任邀請函｜珍貴席次（原「座位」）｜選擇公會（原「分會名額」）｜排行榜｜規則｜新手。畫面上所有分會、籌備會一律叫「團隊」（只在顯示層轉，資料庫與 chapters 網站不動）；「友善夥伴」→「全新玩家」、「俱樂部成員」→「俱樂部玩家」（程式註解、檔名不動）。
 
-### 4. 教練裁示與機制（commit `c67c29501`、`c6a2d719f`）
-- **大樹作品頁的任何聯絡／索取資料／送出介面，一律走 `/api/works/contact`、通知進「活動報名即時通知」群**，不另開管道。已寫進大樹作品 SOP（2026-10-10 段）、記憶 `feedback_works_forms_go_to_event_signup_group_2026-10-10`、反射 `R-WORKS-FORM-TO-EVENT-GROUP`。
+### 4. 玩家階級 8 階＋鼓勵（`2a0d200`）
+- 只給全新玩家：全新→新手→玩家→進階→職業→資深→大師級→宗師級；看資料完善（6 項）、互加好友、收到見證、送出鼓勵（只算給別人的），每階全部達到才升，門檻在 `trust_game.PLAYER_RANKS`；個人頁有進度條、說明書 `#ranks` 有完整表。
+- 鼓勵：讚／愛心／笑臉／握手，不限次數可灌水，只有讚美；連按停手才送出；新榜「人氣王」「鼓勵大使」；不加信任分、不通知。新表 `cheers`。
 
-### 📋 下一場開工先做
+### 📋 下一場開工先做（v296 段的🔧🤫也有效）
 **目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖走 `pdf_to_branded_pptx.py` 預設不縮小、交付檔案用 `deliver_open.sh`；②教練短問句「要不要改 X」＝交辦；③每則交辦第一行亮 🔵🟢🟣；④新作品要收訪客資料一律接 `/api/works/contact`。
-🤫等教練自己提起：教練哪天自己填一筆 hnv-cc 表單測通知，之後要清 `works_contact_leads` 的測試筆；創會提案清單頁（要不要有私密後台）；鴻運／傳藝／開心主軸是否換；瓶子高解析原圖；hnv-cc 目前不在 git。
-**commit**：bni-chapters `1b024f3`、`9684bbb`、`483e4be`；workspace `cd4c9393c`、`c67c29501`、`c6a2d719f`。
+🔧AI 自己的（不問）：①bni-chapters 常有別的對話同時在改 → 提交前先 `git status`，只提交自己的段落（`git apply --cached --unidiff-zero` 用過可行）；②測試環境不在專案裡：`python3 -m venv <暫存區>/tvenv && pip install -r requirements-dev.txt`；③刪暫存資料夾會被 delete_guard 擋，換新資料夾名就好，不要硬刪。
+🤫等教練自己提起：階級門檻是我依目前 110 位玩家（互相確認的好友只有 1 對）估的，覺得太鬆或太緊再調；邀請函正式站沒有真送過一筆；`.bak` 資料庫備份（trust_game.db.bak-before-*）累積多，要整理再說（N6 不自己刪）。
+**commit**：bni-chapters `3e733dd`、`9c2934c`、`1fbdc2a`、`50df0ce`、`2a0d200`、`69ebcb0`、`72020ae`、`0627214`。
 
-> 📦 v292、v293 完整內容已封存：`handoff_archive/handoff_v292_v293_archived_2026-10-10.md`
-
+> 📦 v294、v295 完整內容已封存：`handoff_archive/handoff_v294_archived_2026-10-10.md`、`handoff_v295_archived_2026-10-10.md`
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 00:30 台灣時間，聯想 Windows 桌面版 Code 分頁，Sonnet 5.5→Haiku 5.5→Opus 5.5→Haiku→Sonnet 5.5（教練用 /model 切換），v294，教練說「總結」收工；對話 10/08 00:35～10/10 00:25）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-10 04:45 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5（教練用 /model 切換），v296，教練說「總結」收工；對話 10/10 02:36～04:45）
 
-**主軸：聯想端五件事——Plaud 連線測試；讀 Mac 的信裝好 NotebookLM 命令列工具並登入；三份 PDF 套 BNI 底圖輸出 PPT；10/08 當機調查；Plaud 最新兩筆錄音在聯想用顯示卡自己轉成逐字稿。另有一次被糾正（轉錄是我的任務，軍師早寫好 Plaud 做法，我沒先去雲端找）。**
+**主軸：教練追問「為什麼忘記 GitHub」→ 查原話、根因修復、51 站全補；南應大記憶牆大改；信任遊戲加入座／新座位／刪除玩家／邀請朋友。**
 
-### 1. Plaud 與 NotebookLM（Mac 來信 20261008-0240）
-- Plaud 連線在聯想可用（只讀：list_files／get_file／get_note／get_transcript，沒有觸發轉錄）。
-- 照信裝好 `notebooklm-mcp-cli` 0.15.4：`D:\NotebookLM工具\venv`；聯想本來就有 `default` 設定檔（plain 存放），`--storage protected` 被拒，改跑 `nlm login`，教練在主螢幕自己登入 bymyway7@gmail.com，`nlm login --check` 通過、150 本筆記本。**只做到第 4 步就停**（不建筆記本、不做簡報）。回信 `cross-agent/inbox/mac/20261008-1252_lenovo-to-mac_nlm-installed-login-ok.md`，來信已歸檔 `outbox/2026-10/`。
+### 1. 策展站 GitHub 化（教練 09-30 原話：上架大樹作品SOP／策展SOP時同時建一份 GitHub；10-10 教練說「是我們的問題，光明正大承認」）
+- **根因**：09-30 命令只落成工具 `curated_git.py`＋接力棒🔧一列；大樹作品 SOP 與 `publish_creation()` 還寫「不做：建GitHub」，AI 照 SOP 做＝違令；開工不唸🔧區，擱 10 天，51 站有 20 站沒 repo。SOP 與教練的話衝突時**以教練的話為準，且要當場提出**。
+- **修法**：`publish_creation()` 上架自動 `ensure`（建私有 repo＋掛通知）、SOP 改字、每晚 00:40 launchd `ai.openclaw.curated-github-ensure`、**GitHub 推送自動換新**＝event-signup `/hooks/github-site`（HMAC，`GITHUB_WEBHOOK_SECRET` 在 .env，只服務策展名單）；模擬聯想推送 4 秒換新。**51/51 站有 GitHub＋通知**（10 站被 GitHub 限速，03:43 第 3 次重試補完）。commit `b213b9a79`、`25fae3865`、`f5fea0159`、`d1b5f147b`；試金石案例113 `3c700c604`；記憶 `feedback_event_sites_must_have_github_wired_into_pipeline_2026-10-10`。
+- **範圍被教練糾正**：只管大樹作品＋策展 SOP，**不碰 bni-traffic、bigtree 等早期舊站**；我誤掛的 19 個舊站通知已拆掉。
 
-### 2. 三份 PDF 套 BNI ACCELERATE 底圖 → PPT（`E:\Claude-Data\簡報套底圖輸出\`）
-- 《領袖加速器策略藍圖》12 頁（另有 PDF 版）、《96小時引爆億級商業宇宙》15 頁、《商戰破局的終極外掛》14 頁。用 `ai-go/ppt-prompt.md` 的 `brand_pptx.py`，底圖先放大 2 倍。
-- **教練明講的規則：BNI LOGO 不能被內容蓋到（LOGO 可以蓋內容，內容不能蓋 LOGO）** → 聯想端改用 `--mode safe`（內容縮進 LOGO 上方乾淨區）；先前 mask 版第 4、15 頁底部字條壓到 LOGO／紅弧。
-- ⚠️ **與 Mac v293 有出入**：Mac 10/09 的規則是「走 pdf_to_branded_pptx.py 預設 mask 滿版、不縮小」，聯想這邊因教練 10/08 17:04 的 LOGO 規則用了 safe（會縮小、四周留白）。兩邊是否統一，教練沒再說；先放 🤫。
-- 教練 10/08 16:55 要求「PPT／PDF 一律給可點的 https 網址」；我問「要不要上傳公開」教練沒回「要」→ **沒有上傳**。後來 Mac 10/09 12:27 教練改說「打開所在資料夾並選取、不開內容」（要拖進 LINE），聯想對應做法＝`explorer /select,檔案`。
+### 2. 111-wei（蔡筱薇競選頁）：頁尾「本網頁由 TAVA AI 製作，由南應校友陳佩君贈送給學姊蔡筱薇」＋佩君 LINE@（`@701ohlly`）按鈕；集氣區加「聯絡召集人陳佩君」。GitHub `Coach1973/111-wei`。
 
-### 3. 10/08 22:45 聯想當機調查
-- 事件記錄：22:45「虛擬記憶體用完」→ Chrome 0xc000012d 打不開、dwm 重啟、Lenovo Vantage／LogiOverlay 崩潰；22:52 教練登出再登入恢復。分頁檔被固定 4096MB、自動管理關閉（可用上限約 43.7GB，後來一度只剩 7GB，Comet／Chrome／Firefox／甘井各吃數 GB）。元兇程式查不到（沒留不足偵測紀錄）。登入後閃的視窗＝約 20 個開機自動程式，非病毒。建議分頁檔改系統管理——系統設定，AI 不代改，教練未回。記憶 `reference_lenovo_freeze_virtual_memory_exhausted_2026-10-08`。
+### 3. 南應大記憶牆 tut-memory（網址不變，GitHub `fa1ff54`）
+拿掉十景投票；講座改「票選最想聽的主題」（不壓日期、可送建議）；專屬商務團隊資源點開 17 位夥伴（`BIZ_TEAM` 陣列）；外部產業資源點開 6 個連結（`EXT_LINKS`）；終身校友網絡連召集令；「支持陳佩君競選理事長」按讚（不記 IP、不限次數）；候選人橫幅（34px＋邊框燈泡＋字幕跑馬燈，文字「…陳佩君競選理念」）。後端新接口 `/api/works/poll/<site>`（票選＋建議，建議通知進活動報名群）、`/api/works/counter/<site>/<key>`，workspace `601906dbb`、`3a571abed`。
 
-### 4. Plaud 最新兩筆逐字稿（10/09 21:05、01:01）本機轉錄（教練 10/09 23:00 糾正）
-- 教練：「逐字稿是你的任務，因為讓它轉是要扣點數的」「軍師有寫 plaud 技能，去雲端找」。我一開始只回「Plaud 還沒轉」，是失職；軍師做法在 `cloud_sync/skills/plaud-*` 與 `claude-brain/reference_plaud_backup_and_local_transcribe_2026-10-08.md`。
-- 聯想做法（實測 92 分鐘 402 秒）：`D:\Plaud轉錄工具\`（faster-whisper large-v3-turbo＋RTX 3050 Ti，繁體用 OpenCC s2twp，「B&I」→BNI）。成品 `E:\Claude-Data\Plaud逐字稿\Plaud逐字稿_2026-10-09 21-05-40.txt`（92 分、1818 段）與 `…01-01-06.txt`（20 分、396 段），已用 explorer 開資料夾並選取。
-- 三個坑：av 要 `<17`；Plaud 原始 `.opus` 無檔頭＝固定 80 位元組封包（`raw_opus_to_ogg.py` 包 ogg）；整段轉會因記憶體上限失敗，改 10 分鐘一段。記憶 `reference_lenovo_plaud_local_transcribe_gpu_2026-10-09`。
+### 4. 信任遊戲 bni-chapters（`7c2f5cb`、`793b480`、`a415cbf`、`bbd628f`，測試184項）
+座位地圖加真公益；無清單團隊「我要入座」、有清單「我要新座位」；已成立（active）團隊連到團隊頁；玩家可用專用修改連結自刪名片；座位後台加「玩家管理」；`game_delete_player.py`（手機版 Claude 刪人，只標記可還原）；新手說明書「邀請朋友一起玩」改接信任邀請函。另一個對話窗也在改這個專案（已改名「團隊」「珍貴席次」），只動需要的檔。備份 `trust_game.db.bak-before-sit-delete-20261010`。
 
-### 5. 收工整理
-- 記憶庫自動同步留下的 stash pop 衝突（`claude-brain/MEMORY.md`、`feedback_opened_on_mac…`）已手動解：NotebookLM 與交付規則兩行取 Mac 較新版本，聯想的當機紀錄保留；我 10/08 寫的「PPT／PDF 給 https 網址」已標註被 10/09 規則取代。`stash@{0} auto-pull-stash-20261009225950` 未 drop（內容已並入）。
+### 5. 教練最後交代：**新做的後台系統要自己登記進「我的大樹作品」(coach888)**，他不記。已把「信任遊戲座位後台」放進 coach888「活動後台」第 7 項（伺服器狀態，備份 `state/coach888_state_backup_20261010_before_trust_admin.json`）；規則寫進 SOP＋反射 `R-NEW-BACKEND-REGISTER-COACH888`。
 
 ### 📋 下一場開工先做
 **目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」。
-🔧AI 自己的（不問）：①教練丟簡報套 BNI 底圖：Mac 走 mask 滿版；聯想教練 10/08 說 LOGO 不能蓋，聯想用 safe——兩邊規則待教練哪天一句話統一；②D 槽 `D:\Plaud轉錄工具\audio` 與 `chunks_2105` 是工作檔（約 200MB），教練說可刪再清；③轉錄聯想已通，新錄音直接照記憶做。
-🤫等教練自己提起：是否要把簡報上傳成公開網址；分頁檔改系統自動管理；`_new_repos/` 未追蹤資料夾不是我的，沒碰。
-**commit**：mac-openclaw-workflows `057f664f8`（雲端合併 `b0fc688d1`，[Win] 聯想收工 v294）；工作檔在 E槽 Claude-Data/Plaud逐字稿（逐字稿成品）與 D槽 Plaud轉錄工具（轉錄工具），不在 git。
+🔧AI 自己的（不問）：①聯想／宏碁開工腳本加「貼 event 網址→指路對應 GitHub」（`feed_junshi_handoff.ps1`，未做）；②**新做任何後台／管理頁，當場登記進 coach888 活動後台**；③教練丟簡報套 BNI 底圖走 `pdf_to_branded_pptx.py`、交付檔案用 `deliver_open.sh`；④教練短問句「要不要改 X」＝交辦。
+🤫等教練自己提起：tut-memory 第 1 個講座《記憶開箱：南應十景票選 LIVE》題目提到已拿掉的十景票選；首頁「1,268 位校友／842 則回憶」是寫死的預設數字；教練哪天填一筆 hnv-cc 表單測通知後要清 `works_contact_leads` 測試筆。
+**commit**：workspace `d1b5f147b`、`051a59aba`；bni-chapters `bbd628f`；tut-memory `fa1ff54`；111-wei GitHub 已建。
 
 ---
 
