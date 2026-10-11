@@ -9,3 +9,4 @@
 [main/sessions/main/593f2058-fb67-4bbc-91f1-1b1991f35b4b#L12] User: [Image] Description: This image shows a business card with a red and white color scheme. It belongs to 吳進成 (Wu Jin-cheng), whose name appears prominently in white on a red background. The card lists his affiliations and positions: - 金門縣兩岸經貿文化觀光發展協會 常務理事 (Standing Director o
 [main/sessions/main/593f2058-fb67-4bbc-91f1-1b1991f35b4b#L13] Assistant: 佩佩老師在「金門AI講座」群組裡貼了一張吳進成先生的名片，但沒附文字說明想做什麼。我先看一下名片完整內容。
 [main/sessions/main/593f2058-fb67-4bbc-91f1-1b1991f35b4b#L16] Assistant: 佩佩老師早！名片收到——吳進成先生（金門金牌國際一條根跟金永康商貿的老闆，也是金門縣兩岸經貿文化觀光發展協會的常務理事、台商協會監事）。請問您想讓教練團隊這邊幫忙做什麼呢？例如幫忙策展上架店家、活動合作、或單純介紹給教練認識？
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3137] Assistant: ☕ 幕僚長晨報：昨日bni_tainan+jiaolian_thoughts運作正常，無需教練關注
