@@ -2156,31 +2156,43 @@ def curation_upload():
     incoming = CURATION_UPLOAD_DIR / "incoming"
     incoming.mkdir(parents=True, exist_ok=True)
 
+    def _fail(msg: str, **ctx):
+        # 2026-10-12 赫米斯用 curl 上傳只看到「HTTP 400」，原因藏在整頁 HTML 裡沒讀到，就自己改成 kind=creation
+        # 硬傳，店家計畫書被放進大樹作品集。API 呼叫（不收 HTML）改回純文字原因，並寫明不准換類型繞過。
+        if "text/html" not in (request.headers.get("Accept") or ""):
+            return Response(
+                f"上架被擋下（400）：{msg}\n"
+                "⚠️ 不准改 kind 繞過：kind=creation 只給大樹教練自己的作品，會被放進大樹作品集；"
+                "店家／夥伴／客戶的網站一律 kind=shop。照上面原因補齊再送，或回去問教練。\n",
+                status=400, mimetype="text/plain")
+        return render_template("curation_upload.html", error=msg, key=supplied_key,
+                               sites=_load_curated_registry().get("sites", [])[::-1], **ctx), 400
+
     if request.method == "POST":
         # 2026-09-24團隊體檢：類型必須明講，不再預設走店家流程——09-23~24小龍蝦/赫米斯
         # 連兩次把大樹作品當店家上架，根因就是「沒講就走最熟的那條路」。
         kind = (request.values.get("kind") or "").strip()
         if kind not in CURATION_KINDS:
-            return render_template("curation_upload.html", error="請先選擇類型：店家／合作夥伴網站，還是大樹教練個人作品（API呼叫請帶 kind=shop 或 kind=creation）", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail("請先選擇類型：店家／合作夥伴網站，還是大樹教練個人作品（API呼叫請帶 kind=shop 或 kind=creation）")
         # 2026-10-10教練定：上架店家網站時，一定要問教練「要不要同時放進大樹作品」。
         # 比照短網址：靠SOP文字會被忘（公益路跑就這樣沒進大樹作品），改成源頭必填，沒帶就擋下並教AI去問。
         also_works = (request.values.get("also_works") or "").strip()
         if kind == "shop" and also_works not in ("0", "1"):
-            return render_template("curation_upload.html", error="上架店家網站前，請先問教練：「要不要同時放進大樹作品（最新作品）？」教練說要 → 帶 also_works=1；說不用 → 帶 also_works=0（網頁請選下面的選項；API 請加 -F also_works=1 或 0）", key=supplied_key, kind=kind, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail("上架店家網站前，請先問教練：「要不要同時放進大樹作品（最新作品）？」教練說要 → 帶 also_works=1；說不用 → 帶 also_works=0（網頁請選下面的選項；API 請加 -F also_works=1 或 0）")
         f = request.files.get("package")
         if not f or not f.filename:
-            return render_template("curation_upload.html", error="請選擇一個檔案", key=supplied_key, kind=kind, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail("請選擇一個檔案")
         original = f.filename
         ext = "".join(Path(original).suffixes)[-20:] or ".zip"
         if not re.search(r"\.(zip|tar\.gz|tgz)$", original, re.IGNORECASE):
-            return render_template("curation_upload.html", error="只接受 .zip 或 .tar.gz 檔案", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail("只接受 .zip 或 .tar.gz 檔案")
         # 2026-09-06教練拍板：源頭解決網址過長問題——不再靠系統猜品牌名轉拼音，
         # 改成上傳當下強制要求輸入自訂短網址，送出前確認好，之後不用再改名。
         custom_slug = (request.form.get("custom_slug") or "").strip().lower()
         if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", custom_slug):
-            return render_template("curation_upload.html", error="網址短名稱格式不對，只能用小寫英文字母/數字/短橫線，例如 niu-shi-ting", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail("網址短名稱格式不對，只能用小寫英文字母/數字/短橫線，例如 niu-shi-ting")
         if custom_slug in _curated_slugs():
-            return render_template("curation_upload.html", error=f"「{custom_slug}」這個短網址已經被其他店家用過，請換一個", key=supplied_key, sites=_load_curated_registry().get("sites", [])[::-1]), 400
+            return _fail(f"「{custom_slug}」這個短網址已經被其他店家用過，請換一個")
         ts = datetime.now().strftime("%Y%m%d-%H%M%S")
         safe_name = re.sub(r"[^\w.\-一-鿿]", "_", Path(original).stem)[:80]
         dest = incoming / f"{ts}__{safe_name}{ext}"

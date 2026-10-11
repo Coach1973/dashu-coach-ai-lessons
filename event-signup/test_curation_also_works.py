@@ -30,6 +30,10 @@ def up(kind, slug, **extra):
 
 r = up("shop", "tmp-test-aa")
 check("店家沒帶 also_works → 400，並教 AI 去問教練", r.status_code == 400 and "要不要同時放進大樹作品" in r.get_data(as_text=True))
+check("API 呼叫（curl）被擋時回純文字原因＋不准換 kind 繞過", r.mimetype == "text/plain" and "不准改 kind 繞過" in r.get_data(as_text=True))
+r = client.post(f"/curation/upload?key={KEY}", data={"kind": "shop", "custom_slug": "tmp-test-ab", "package": (io.BytesIO(b"PK"), "x.zip")},
+                content_type="multipart/form-data", headers={"Accept": "text/html"})
+check("瀏覽器被擋時照舊顯示上傳頁＋原因", r.status_code == 400 and r.mimetype == "text/html" and "要不要同時放進大樹作品" in r.get_data(as_text=True))
 check("被擋的那次不留任何檔案", not list((TMP / "incoming").glob("*")))
 r = up("shop", "tmp-test-bb", also_works="maybe")
 check("also_works 亂填 → 400", r.status_code == 400)
