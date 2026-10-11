@@ -45,7 +45,8 @@ def root():
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
     if request.method == "GET":
-        return render_template("login.html", error=None)
+        # 2026-10-11 教練再次確認免登入（工作人員三人專用、不對外）：舊登入頁不再顯示，直接進戰報。
+        return redirect(url_for("admin"))
 
     username = (request.form.get("username") or "").strip()
     password = request.form.get("password") or ""
@@ -63,7 +64,7 @@ def admin_login():
 @app.route("/admin/logout")
 def admin_logout():
     session.clear()
-    return redirect(url_for("admin_login"))
+    return redirect(url_for("admin"))
 
 
 @app.route("/admin")
