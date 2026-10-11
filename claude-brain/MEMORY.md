@@ -139,3 +139,4 @@
 - [🔧 業務系統零散技術參考彙整(14篇：ezPay／名片OCR／Amber NAS／行銷企劃)](reference_namecard_ocr_pipeline_reusable.md)
 - [⚠️ VPS系統已永久下線技術記錄(9篇，純歷史查考，見[[feedback_hermes_is_mac_desktop_vps_permanently_off]])](project_vps_client_isolation_fix_2026-07-01.md)
 - [遠端連線替教練做完不講術語](feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01.md) — RustDesk 用 --connect IP 捷徑、管理員指令放剪貼簿、不提密碼
+- [🔧 品牌名「榮樹下」正確寫法（教練10/12確認，不是榕／龍）](reference_brand_name_rong_shu_xia_2026-10-12.md)
