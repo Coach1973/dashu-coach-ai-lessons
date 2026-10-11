@@ -18,7 +18,8 @@
       "github_pages_url": "https://coach1973.github.io/niu-shi-ting/",
       "uploaded_at": "2026-09-06 03:46",
       "status": "live",
-      "source_package": "20260906-034600__ushi-brand-site.zip"
+      "source_package": "20260906-034600__ushi-brand-site.zip",
+      "repo": "Coach1973/niu-shi-ting"
     },
     {
       "slug": "everydaycaf-tai-nan-san-dian",
@@ -29,7 +30,8 @@
       "github_pages_url": "https://coach1973.github.io/everydaycaf-tai-nan-san-dian/",
       "uploaded_at": "2026-09-06 04:14",
       "status": "live",
-      "source_package": "20260906-041445__everydaycafe-tainan.zip"
+      "source_package": "20260906-041445__everydaycafe-tainan.zip",
+      "repo": "Coach1973/everydaycaf-tai-nan-san-dian"
     },
     {
       "slug": "bai-sheng",
@@ -40,7 +42,8 @@
       "github_pages_url": "https://coach1973.github.io/bai-sheng/",
       "uploaded_at": "2026-09-06 05:06",
       "status": "live",
-      "source_package": "20260906-050601__baisheng-site.zip"
+      "source_package": "20260906-050601__baisheng-site.zip",
+      "repo": "Coach1973/bai-sheng"
     },
     {
       "slug": "zhang-yu-ci",
@@ -51,7 +54,8 @@
       "github_pages_url": "https://coach1973.github.io/zhang-yu-ci/",
       "uploaded_at": "2026-09-06 05:06",
       "status": "live",
-      "source_package": "20260906-050641__shunyeh-yuci-website.zip"
+      "source_package": "20260906-050641__shunyeh-yuci-website.zip",
+      "repo": "Coach1973/zhang-yu-ci"
     },
     {
       "slug": "fu-en-ping",
@@ -62,7 +66,8 @@
       "github_pages_url": "https://coach1973.github.io/fu-en-ping/",
       "uploaded_at": "2026-09-06 05:17",
       "status": "live",
-      "source_package": "20260906-051651__fu-enping-site.zip"
+      "source_package": "20260906-051651__fu-enping-site.zip",
+      "repo": "Coach1973/fu-en-ping"
     },
     {
       "slug": "yang-shang-ru",
@@ -73,7 +78,8 @@
       "github_pages_url": "https://coach1973.github.io/yang-shang-ru/",
       "uploaded_at": "2026-09-06 05:19",
       "status": "live",
-      "source_package": "20260906-051923__yang-shangju-site.zip"
+      "source_package": "20260906-051923__yang-shangju-site.zip",
+      "repo": "Coach1973/yang-shang-ru"
     },
     {
       "slug": "xie-wei-xiang",
@@ -84,7 +90,8 @@
       "github_pages_url": "https://coach1973.github.io/xie-wei-xiang/",
       "uploaded_at": "2026-09-06 05:51",
       "status": "live",
-      "source_package": "20260906-055108__hsieh-weihsiang-site.zip"
+      "source_package": "20260906-055108__hsieh-weihsiang-site.zip",
+      "repo": "Coach1973/xie-wei-xiang"
     },
     {
       "slug": "yang-zai-zhen",
@@ -95,7 +102,8 @@
       "github_pages_url": "https://coach1973.github.io/yang-zai-zhen/",
       "uploaded_at": "2026-09-06 06:30",
       "status": "live",
-      "source_package": "20260906-063011__yangzaizhen.zip"
+      "source_package": "20260906-063011__yangzaizhen.zip",
+      "repo": "Coach1973/yang-zai-zhen"
     },
     {
       "slug": "peipei",
@@ -106,7 +114,8 @@
       "github_pages_url": "https://coach1973.github.io/peipei/",
       "uploaded_at": "2026-09-06 07:16",
       "status": "live",
-      "source_package": "20260906-071600__chen-peijun-site__1_.zip"
+      "source_package": "20260906-071600__chen-peijun-site__1_.zip",
+      "repo": "Coach1973/peipei"
     },
     {
       "slug": "flower-site",
@@ -117,7 +126,8 @@
       "github_pages_url": "https://coach1973.github.io/flower-site/",
       "uploaded_at": "2026-09-06 07:28",
       "status": "live",
-      "source_package": "20260906-072758__tengwen--v2.zip"
+      "source_package": "20260906-072758__tengwen--v2.zip",
+      "repo": "Coach1973/flower-site"
     },
     {
       "slug": "xiaonan",
@@ -128,7 +138,8 @@
       "github_pages_url": "https://coach1973.github.io/xiaonan/",
       "uploaded_at": "2026-09-06 22:59",
       "status": "live",
-      "source_package": "20260906-225915__doc_25ce37f2c5e4_qiu-nan-yin-site-v3.zip"
+      "source_package": "20260906-225915__doc_25ce37f2c5e4_qiu-nan-yin-site-v3.zip",
+      "repo": "Coach1973/xiaonan"
     },
     {
       "slug": "xiangjuchang",
@@ -139,7 +150,8 @@
       "github_pages_url": "https://coach1973.github.io/xiangjuchang/",
       "uploaded_at": "2026-09-07 15:43",
       "status": "live",
-      "source_package": "20260907-154333__doc_866aa13b0cf6_xiangjuchang-website.zip"
+      "source_package": "20260907-154333__doc_866aa13b0cf6_xiangjuchang-website.zip",
+      "repo": "Coach1973/xiangjuchang"
     },
     {
       "slug": "sbip",
@@ -150,7 +162,8 @@
       "github_pages_url": "https://coach1973.github.io/sbip/",
       "uploaded_at": "2026-09-08 01:37",
       "status": "live",
-      "source_package": "20260908-013729__doc_2523de0ac474_sbip.zip"
+      "source_package": "20260908-013729__doc_2523de0ac474_sbip.zip",
+      "repo": "Coach1973/sbip"
     },
     {
       "slug": "nmda",
@@ -161,7 +174,8 @@
       "github_pages_url": "https://coach1973.github.io/nmda/",
       "uploaded_at": "2026-09-09 02:39",
       "status": "live",
-      "source_package": "20260909-023918__association-brand-website-v2.tar.tar.gz"
+      "source_package": "20260909-023918__association-brand-website-v2.tar.tar.gz",
+      "repo": "Coach1973/nmda"
     },
     {
       "slug": "kangyenju",
@@ -172,7 +186,8 @@
       "github_pages_url": "https://coach1973.github.io/kangyenju/",
       "uploaded_at": "2026-09-16 06:48",
       "status": "live",
-      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報網址404發現)"
+      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報網址404發現)",
+      "repo": "Coach1973/kangyenju"
     },
     {
       "slug": "historic-residence",
@@ -183,7 +198,8 @@
       "github_pages_url": "https://coach1973.github.io/historic-residence/",
       "uploaded_at": "2026-09-16 06:48",
       "status": "live",
-      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報連結點不到發現)"
+      "source_package": "策展SOP自動上架時漏登記，軍師2026-09-16補登記(教練回報連結點不到發現)",
+      "repo": "Coach1973/historic-residence"
     },
     {
       "slug": "bigtree-1003",
@@ -195,7 +211,8 @@
       "uploaded_at": "2026-09-17 19:07",
       "status": "live",
       "source_package": "20260917-190737__input-bigtree-1003-site---143d6404-9b57-4bd9-ad93-260c7b9129e8.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/bigtree-1003"
     },
     {
       "slug": "ai-story",
@@ -207,7 +224,8 @@
       "uploaded_at": "2026-09-23 16:36",
       "status": "live",
       "source_package": "comic-series-site.tar.gz（教練提供的完整版，含embedded base64圖片+對白疊圖資料，非店家上架SOP）",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/ai-story"
     },
     {
       "slug": "muyija",
@@ -218,7 +236,8 @@
       "github_pages_url": "https://coach1973.github.io/muyija/",
       "uploaded_at": "2026-09-23 17:30",
       "status": "live",
-      "source_package": "20260923-173015__input-muyija-site---49f6dd17-caa1-431e-a9c1-18703128d4a8.zip"
+      "source_package": "20260923-173015__input-muyija-site---49f6dd17-caa1-431e-a9c1-18703128d4a8.zip",
+      "repo": "Coach1973/muyija"
     },
     {
       "slug": "submission",
@@ -243,7 +262,8 @@
       "uploaded_at": "2026-09-24 00:30",
       "status": "live",
       "source_package": "zaolin-comic-package.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/zaolin"
     },
     {
       "slug": "c-challenge",
@@ -255,7 +275,8 @@
       "uploaded_at": "2026-09-25 20:14",
       "status": "live",
       "source_package": "20260925-200718__doc_99def7fc367a_證明給機器看_完整插圖20px閱讀版_下載包.tar.tar.gz",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/c-challenge"
     },
     {
       "slug": "answer",
@@ -267,7 +288,8 @@
       "uploaded_at": "2026-09-25 20:27",
       "status": "live",
       "source_package": "20260925-202721__answer.tar.tar.gz",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/answer"
     },
     {
       "slug": "answer-tree",
@@ -279,7 +301,8 @@
       "uploaded_at": "2026-09-25 20:27",
       "status": "live",
       "source_package": "20260925-202732__doc_875b54c1addd_大樹的答案_寫實版_完整離線包.tar.tar.gz",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/answer-tree"
     },
     {
       "slug": "answer2",
@@ -291,7 +314,8 @@
       "uploaded_at": "2026-09-25 21:33",
       "status": "live",
       "source_package": "20260925-213343__doc_6b2f3424aef5_大樹教練_企業成長條漫_EP01-EP05_離線完整包.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/answer2"
     },
     {
       "slug": "yousure",
@@ -303,7 +327,8 @@
       "uploaded_at": "2026-09-25 21:37",
       "status": "live",
       "source_package": "20260925-213722__doc_80d30d794b4f_你非常確定嗎_AI漫劇第一版_離線完整包.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/yousure"
     },
     {
       "slug": "bestteam",
@@ -315,7 +340,8 @@
       "uploaded_at": "2026-09-25 22:54",
       "status": "live",
       "source_package": "20260925-225444__doc_2c21d5d4b7bf_teamwork-illustrated-site.tar.tar.gz",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/bestteam"
     },
     {
       "slug": "bni-workshop",
@@ -327,7 +353,8 @@
       "uploaded_at": "2026-09-26 18:19",
       "status": "live",
       "source_package": "20260926-181905__doc_906fdf01d9cd_bni-workshop-20261002.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/bni-workshop"
     },
     {
       "slug": "ema",
@@ -335,7 +362,8 @@
       "category": "食",
       "address": "台南市安平區文平路 247 號（國平里）",
       "added_by": "shops-unify-2026-09-27",
-      "description": ""
+      "description": "",
+      "repo": "Coach1973/ema"
     },
     {
       "slug": "huitou",
@@ -343,7 +371,8 @@
       "category": "衣",
       "address": "台南市永康區中山南路578號",
       "added_by": "shops-unify-2026-09-27",
-      "description": ""
+      "description": "",
+      "repo": "Coach1973/huitou"
     },
     {
       "slug": "hsinhan",
@@ -351,7 +380,8 @@
       "category": "行",
       "address": "台南市安南區北安路三段396巷50弄81號",
       "added_by": "shops-unify-2026-09-27",
-      "description": ""
+      "description": "",
+      "repo": "Coach1973/hsinhan"
     },
     {
       "slug": "turnforyou",
@@ -363,7 +393,8 @@
       "uploaded_at": "2026-09-28 20:56",
       "status": "live",
       "source_package": "turnforyou_site.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/turnforyou"
     },
     {
       "slug": "diart",
@@ -374,7 +405,8 @@
       "github_pages_url": "https://coach1973.github.io/diart/",
       "uploaded_at": "2026-09-29 20:50",
       "status": "live",
-      "source_package": "20260929-205034__doc_17dc4bfbc9ec_diart-venue-rental.zip"
+      "source_package": "20260929-205034__doc_17dc4bfbc9ec_diart-venue-rental.zip",
+      "repo": "Coach1973/diart"
     },
     {
       "slug": "jacky-brand",
@@ -412,7 +444,8 @@
       "uploaded_at": "2026-10-02 09:53",
       "status": "live",
       "source_package": "20261002-095301__nanying-tut-memory.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/tut-memory"
     },
     {
       "slug": "bigtree-1107",
@@ -437,7 +470,8 @@
       "uploaded_at": "2026-10-04 14:07",
       "status": "live",
       "source_package": "20261004-140502__game-1004.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/game-1004"
     },
     {
       "slug": "kr1003",
@@ -462,7 +496,8 @@
       "uploaded_at": "2026-10-04 23:45",
       "status": "live",
       "source_package": "20261004-234507__ai-team-strategy.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/ai-team-strategy"
     },
     {
       "slug": "three-lacks",
@@ -474,7 +509,8 @@
       "uploaded_at": "2026-10-06 19:28",
       "status": "live",
       "source_package": "20261006-192839__three-lacks-packaged.zip",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/three-lacks"
     },
     {
       "slug": "qiu-yurong",
@@ -485,7 +521,8 @@
       "github_pages_url": "https://coach1973.github.io/qiu-yurong/",
       "uploaded_at": "2026-10-06 23:56",
       "status": "live",
-      "source_package": "20261006-235622__qiu-yurong.zip"
+      "source_package": "20261006-235622__qiu-yurong.zip",
+      "repo": "Coach1973/qiu-yurong"
     },
     {
       "slug": "shihmin",
@@ -499,7 +536,8 @@
       "status": "live",
       "listed": false,
       "card_html": "          <!-- 計劃夥伴店家：林士民｜文化科技轉譯者・臺南文創協會理事長（策展SOP自動上架，待軍師補完整介紹） -->\n          <article class=\"shop-row reveal\">\n            <div>\n              <div class=\"shop-head\">\n                <span class=\"pill\">計劃夥伴店家</span>\n                <span class=\"tag\">育</span>\n              </div>\n              <h3>林士民｜文化科技轉譯者・臺南文創協會理事長</h3>\n              <p class=\"shop-desc\">林士民：臺南市政府青年委員、臺南市文創協會理事長、115年臺南市社會優秀青年。橫跨數位轉型、文化科技、策展與公共參與的跨域整合者。</p>\n              <ul class=\"shop-facts\">\n                <li><span class=\"k\">分類</span><span>育</span></li>\n                \n              </ul>\n              <p class=\"slot-note\"><a href=\"https://event.bymyway.com/curated/shihmin/\" target=\"_blank\" rel=\"noopener\">查看店家專屬網站</a></p>\n              \n            </div>\n            <div class=\"shop-media\">\n              <div class=\"map-frame\">\n                <img src=\"images/shihmin.jpg\" alt=\"林士民｜文化科技轉譯者・臺南文創協會理事長實景照片\" loading=\"lazy\">\n              </div>\n            </div>\n          </article>\n",
-      "unlisted_at": "2026-10-07 00:19"
+      "unlisted_at": "2026-10-07 00:19",
+      "repo": "Coach1973/shihmin"
     },
     {
       "slug": "ai-application-submission-package-20260923",
@@ -511,7 +549,111 @@
       "github_pages_url": "https://coach1973.github.io/ai-application-submission-package-20260923/",
       "source_package": "",
       "status": "live",
-      "no_shop_card": true
+      "no_shop_card": true,
+      "repo": "Coach1973/ai-application-submission-package-20260923"
+    },
+    {
+      "slug": "inventor",
+      "title": "像瘋子的發明家｜黃國彰",
+      "description": "黃國彰，台南歸仁的發明人。十多年來在台灣、中國、美國、日本、德國、加拿大、菲律賓布局能源專利，把風、水、浪、洋流變成電。這是一個需要隊友的傳奇。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/inventor/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-07 19:33",
+      "status": "live",
+      "source_package": "20261007-193256__doc_13a34d121b37_huang-kuo-chang-site.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/inventor"
+    },
+    {
+      "slug": "big-plan",
+      "title": "生命農業｜讓土地重新值錢的億級計劃",
+      "description": "一份白話版商業計劃書：用生物發酵技術、約瑟布綠建築、常溫生物提純與 AI 區塊鏈治理，把台灣農業從加護病房帶回成長軌道。主理人：陳智博。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/big-plan/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-07 23:45",
+      "status": "live",
+      "source_package": "20261007-234517__big-plan.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/big-plan"
+    },
+    {
+      "slug": "runforfuture",
+      "title": "Run for Future 2027｜成為 100 家共同發起人之一",
+      "description": "2027.04.18 第五屆順發×港都公益路跑。聯合公益・運動幸福——一家公司可以做公益，100 家公司可以改變世界。誠邀企業、社團、協會成為 100 家共同發起人。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/runforfuture/",
+      "github_pages_url": "https://coach1973.github.io/runforfuture/",
+      "uploaded_at": "2026-10-08 12:09",
+      "status": "live",
+      "source_package": "20261008-120907__doc_d7a1bdd3b238_RunForFuture_web.zip",
+      "repo": "Coach1973/runforfuture"
+    },
+    {
+      "slug": "lacks-1006",
+      "title": "大樹教練與雲端克勞德軍師｜經典對話：商務市場最缺三件事",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/lacks-1006/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-08 17:21",
+      "status": "live",
+      "source_package": "20261008-172132__three-lacks-dialogue.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/lacks-1006"
+    },
+    {
+      "slug": "hnv-cc",
+      "title": "楊博士｜一滴水裡的細胞能量學",
+      "description": "楊博士與漢諾威研發團隊：常溫石墨烯物理降氘技術，讓低氘水走進一般家庭。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/hnv-cc/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-09 23:21",
+      "status": "live",
+      "source_package": "20261009-232123__doc_9c89ab61998a_hnv-dr-yang-site.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/hnv-cc"
+    },
+    {
+      "slug": "111-wei",
+      "title": "有薇力，新東區｜蔡筱薇競選總部成立大會 11/1（日）09:00",
+      "description": "台南市東區市議員候選人蔡筱薇競選總部成立大會：2026 年 11 月 1 日（星期日）上午 9 點，中華東路關帝殿停車場。南應大校友與全台灣的朋友，一起來相挺！",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/111-wei/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-10 02:24",
+      "status": "live",
+      "source_package": "20261010-022354__doc_a8ae3035017e_tsai-hsiaowei-campaign-site.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/111-wei"
+    },
+    {
+      "slug": "art-lab",
+      "title": "林丁禾 Lin Ding-He｜藝術孵化實驗室 創辦人",
+      "description": "",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/art-lab/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-10 04:59",
+      "status": "live",
+      "source_package": "20261010-045914__20261010-0455_lenovo-to-mac_art-lab-package.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/art-lab"
+    },
+    {
+      "slug": "joseph-cloth",
+      "title": "約瑟布｜生命農業與永續商業計畫",
+      "description": "從功能型布材到城市綠化、生命農業與長期租賃服務，探索約瑟布的完整商業計畫、實景案例與策略合作。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/joseph-cloth/",
+      "github_pages_url": "https://coach1973.github.io/joseph-cloth/",
+      "uploaded_at": "2026-10-12 04:04",
+      "status": "live",
+      "source_package": "20261012-040358__doc_1662294385ff_joseph-cloth-v10-download.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/joseph-cloth-download"
     }
   ],
   "redirects": {
