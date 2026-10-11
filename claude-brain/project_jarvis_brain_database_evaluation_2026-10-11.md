@@ -21,6 +21,7 @@ metadata:
 **建議方案**：一個「大樹大腦」純文字資料夾（Mac SSD，備份私有 GitHub＋Google 雲端硬碟）＋關鍵字＋語意搜尋 → 小龍蝦、Claude 手機遠端、Claude App 連接器三個入口共用。先做試點：搬出全部來源，用教練 10 個真實問題驗收。
 
 **進度（10/11 13:20）**：兩帳號全量搬完——bymyway7 1,203＋seabiscuitclub 954（nlm profile 名 `seabiscuit`，教練已登入）＝2,157 份來源、約 3,170 萬字。去重（只在大腦裡，不動 NotebookLM）：完全相同合併 278 份→1,871 份，跨帳號重複佔 204/233 組；很像或被包含 161 組只列報告（reports/near_dups.csv）；8 份 YouTube 空內容跳過。位置：正本 `/Volumes/953-SSD/大樹大腦/`（raw／clean／reports／manifest.jsonl／tools），Mac 副本 `~/大樹大腦/clean/`，工具已 commit 在 workspace/scripts/dashu_brain/。
-**下一步**：①私有 GitHub 異地備份（教練還沒同意，不放 Plaud 客戶洽談逐字稿）②搜尋索引（關鍵字＋語意）③三個手機入口 ④每天半夜＋提問前自動對帳新資料。
+**備份已完成（10/11 14:30，教練同意）**：①外接硬碟正本 ②Mac `~/大樹大腦/clean` ③Amber 私有雲 `smb://amber-Coach/home/大樹大腦備份/`（逐檔比對一致，檔名有日文會 NFC/NFD 差異但內容相同；SMB 小檔寫入慢，約 15 分鐘）④GitHub 私有倉庫 `Coach1973/dashu-brain-backup`（AES-256 加密 brain_20261011.tar.gz.enc 18MB，未登入打是 404，已驗解密與原檔一致；不放 Plaud 客戶洽談逐字稿）。解密密碼三處：Mac 路徑大全_憑證層「大樹大腦備份加密密碼」、VPS `/root/.dashu_brain_key`、Gmail 草稿（標題「大樹大腦備份解密密碼」，是草稿未寄出）。教練說「私有雲」＝Amber；「Azure」是語音誤聽。
+**下一步**：①（已完成，見上）②搜尋索引（關鍵字＋語意）③三個手機入口 ④每天半夜＋提問前自動對帳新資料。
 
 相關：[[reference-notebooklm-cli-pipeline-2026-10-08]]、[[reference-plaud-backup-and-local-transcribe-2026-10-08]]、[[project_jarvis_growth_plan_2026-10-02]]
