@@ -44,7 +44,7 @@ def root():
 
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
-    if request.method == "GET":
+    if request.method in ("GET", "HEAD"):
         # 2026-10-11 教練再次確認免登入（工作人員三人專用、不對外）：舊登入頁不再顯示，直接進戰報。
         return redirect(url_for("admin"))
 
