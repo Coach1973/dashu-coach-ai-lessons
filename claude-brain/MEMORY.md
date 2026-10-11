@@ -1,4 +1,6 @@
 # Memory Index
+- [🔧 小龍蝦10/12凌晨重複迴圈根因＋safety-locks v1.3重複防呆鎖＋怎麼查(日誌/SQLite/帳本)；不是當機、沒扣點(2026-10-12)](reference_openclaw_agent_repeat_loop_and_guard_2026-10-12.md)
+- [🔴 教練說網頁「跟作品一覽不一樣」→先查作品一覽(coach888狀態)放的網址是否404，不只比對網頁(2026-10-12)](feedback_check_what_url_the_overview_holds_first_2026-10-12.md)
 - [🧠 賈維斯大腦評估(10/11)：NotebookLM 實際153本／1,203份來源、nlm source content 可抽原文；建議自建「大樹大腦」文字庫＋三入口，Foresight只能Mac本機不適合；等教練決定開工(2026-10-11)](project_jarvis_brain_database_evaluation_2026-10-11.md)
 - [🔴🔴 新做的後台／管理／編輯／刪除網址當場收進大樹作品集(coach888)，教練記不住網址；一行 scripts/coach888_register_admin.py；執行細則 N10＋反射 R-NEW-ADMIN-URL-REGISTER-COACH888(2026-10-10)](feedback_new_admin_urls_auto_register_coach888_2026-10-10.md)
 - [🔧 信任遊戲 10/10 教練拍板：畫面一律叫「團隊」、身份只有全新玩家／俱樂部玩家、籌備會會員＝俱樂部玩家、玩家階級8階、鼓勵不限次數只有讚美、信任邀請函 /game/invite；友善夥伴／俱樂部成員舊稱作廢(2026-10-10)](project_trust_game_teams_ranks_cheers_invite_2026-10-10.md)
