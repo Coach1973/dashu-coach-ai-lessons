@@ -11,4 +11,8 @@ metadata:
 **止血**：`openclaw sessions archive` 擋不住進行中的迴圈；要 `launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway`（重啟前先確認 `openclaw --version` 與服務同版，案例73）。
 **根治**：`extensions/safety-locks/index.js` v1.3（commit `a94d7a842`）：相同訊息（≥20字）同一對象 3 分鐘內不重發、相同長指令（timeoutSeconds≥120）10 分鐘內不重跑；記憶體內，重啟清空。**Why:** 靠模型自己別重複不可靠，機械式擋才有效。**How to apply:** 新增會真送出的工具管道時，同時想「模型重複呼叫」怎麼擋。
 
+**10/12 03:00 第二次（v1.4）**：模型每輪改幾個字重跑，v1.3 擋不到 → 加「相似指令鎖」（200 字以上、行重疊八成、5 分鐘）。
+**止血更新**：主對話 `agent:main:main` 不能 archive；只 kickstart 會被 main-session-restart-recovery 自動接回繼續跑。正解：`openclaw gateway call sessions.abort --params '{"key":"agent:main:main"}'` 再 `sessions.reset`（node 要用 ~/.nvm/versions/node/v24.21.0）。
+**誤判陷阱**：私有 GitHub 倉庫用沒登入的 curl 一律 404、API size 會延遲顯示 0；驗證要用 gh 帶登入下載回檔案。
+
 相關：[[reference-lk888-spend-guard-2026-09-26]]

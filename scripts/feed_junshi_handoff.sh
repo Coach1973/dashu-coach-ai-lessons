@@ -378,6 +378,8 @@ PY
   python3 "$HOME/.openclaw/workspace/scripts/today_other_agents_digest.py" 2>&1 | head -20
   echo ""
   echo "👉 有看到任務出包/教練不滿的跡象，開工回報第一行就要提，不要等教練自己講。"
+  # 2026-10-12 教練罵「你自己都讀得到，為什麼還要來問我？我是你的傳聲筒嗎」：軍師看到「404」不知道指什麼就去問教練，沒讀小龍蝦的回覆
+  echo "👉 看不懂教練這句在講什麼（例如只打「404」）→ 不准問教練，先自己讀小龍蝦前後文：~/.openclaw/agents/main/agent/openclaw-agent.sqlite 的 transcript_events（mode=ro，最新 session_id 依 created_at 排序；時間是 UTC 要 +8），再看 /tmp/openclaw/openclaw-今天.log。查清楚再回報＋直接修。"
 
   # ───────── AI團隊品質稽核彙整（2026-09-18 教練要求監督MiniMax小老弟品質後新增）─────────
   # stop_rules_master.py 的 13 條規則本來就對任何觸發Stop事件的session(含手機MiniMax
