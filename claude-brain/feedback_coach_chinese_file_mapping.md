@@ -35,3 +35,5 @@ metadata:
 **2026-10-07 教練對照**：①「真貴分會」＝**真貴籌備會**（chapters.slug `real-wealth`，status forming；教練當場糾正「真貴籌備會」）②分會名單上的「吳大樹」＝**教練本人**，遊戲裡已是「大樹教練」#1，不要入第二個座位（`seed_game_players.py` 的 `NAME_ALIASES` 已處理）③「官網」＝**www.bymyway.com**；大樹小講網站＝bigtree-tw.netlify.app，不叫官網（試金石案例108）。
 
 **2026-10-09 教練確認的語音誤聽（他稱讚我聽得出來，不用再核對）**：「Haiku 3.5」＝**Haiku 5.5**（5 被聽成 3）；「檔期作品」＝**大樹作品**（交辦「上架策展 SOP、檔期作品 SOP」）。
+
+**2026-10-11 教練確認的語音誤聽**：「Azure」＝**Amber**（微軟 Azure 不是教練要的）；教練說「私有雲」一律＝**Amber 酷存私有雲**（192.168.0.35，主機名 amber-Coach，SMB，見 [[reference-amber-nas]]），不用再問是哪一個。
