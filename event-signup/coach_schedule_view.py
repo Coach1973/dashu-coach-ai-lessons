@@ -131,7 +131,7 @@ def render(token: str = "") -> str:
         btns = ""
         label = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）"
         if any((s, e) == (0, 1440) for s, e, _ in busy):
-            status = '<span class="no">整天不方便</span>'
+            status = '<span class="no">本日行程已滿</span>'
             free = ""
             cls = "off"
         else:
