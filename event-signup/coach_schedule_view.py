@@ -121,41 +121,42 @@ def book(date_s, start_s, name, contact, topic):
 
 def render(token: str = "") -> str:
     data = json.loads(DATA.read_text(encoding="utf-8"))
-    win = data.get("interview_window", {"start": "19:00", "end": "22:00"})
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
     ws, we = _hm(win["start"]), _hm(win["end"])
+    es, ee = _hm(eve["start"]), _hm(eve["end"])
     today = dt.datetime.now(TZ).date()
     rows = []
+
+    def buttons(d, label, starts, cls):
+        return "".join(
+            f'<button type="button" class="slot {cls}" data-d="{d.isoformat()}" data-t="{_fmt(t)}" '
+            f'data-l="{escape(label)} {_fmt(t)}–{_fmt(t + 60)}">{_fmt(t)}</button>'
+            for t in starts
+        )
+
     for i in range(DAYS):
         d = today + dt.timedelta(days=i)
         busy = _busy(d, data)
-        btns = ""
         label = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）"
-        if any((s, e) == (0, 1440) for s, e, _ in busy):
-            status = '<span class="no">本日行程已滿</span>'
-            free = ""
-            cls = "off"
+        eve_starts = _starts(_free(busy, es, ee)) if not any((s_, e_) == (0, 1440) for s_, e_, _ in busy) else []
+        day_starts = _starts(_free(busy, ws, es)) if not any((s_, e_) == (0, 1440) for s_, e_, _ in busy) else []
+        tentative = any(ev.get("tentative") for _, _, ev in busy)
+        if eve_starts:
+            status, cls = '<span class="ok">晚上可預約</span>', "on"
+        elif day_starts:
+            status, cls = '<span class="no">晚上已滿</span>', "off"
         else:
-            slots = _free(busy, ws, we)
-            tentative = any(ev.get("tentative") for _, _, ev in busy)
-            if slots:
-                btns = "".join(
-                    f'<button type="button" class="slot" data-d="{d.isoformat()}" data-t="{_fmt(t)}" '
-                    f'data-l="{escape(label)} {_fmt(t)}–{_fmt(t + 60)}">{_fmt(t)}</button>'
-                    for t in _starts(slots)
-                )
-                free = "__BTNS__"
-                status = '<span class="ok">可預約</span>'
-                cls = "on"
-            else:
-                free, status, cls = "", '<span class="no">本日行程已滿</span>', "off"
-            if tentative and slots:
-                status += ' <span class="tn">部分待確認</span>'
+            status, cls = '<span class="no">本日行程已滿</span>', "off"
+        if tentative and (eve_starts or day_starts):
+            status += ' <span class="tn">部分待確認</span>'
+        cell = buttons(d, label, eve_starts, "eve") + buttons(d, label, day_starts, "day")
         busy_txt = "、".join(
-            ("整天" if (s, e) == (0, 1440) else f"{_fmt(s)}–{_fmt(e)}") for s, e, _ in busy
+            ("整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}") for s_, e_, _ in busy
         ) or "—"
         rows.append(
             f'<tr class="{cls}"><td class="d">{escape(label)}</td><td>{status}</td>'
-            f'<td class="f">{(btns if free == "__BTNS__" else "—")}</td><td class="b">{escape(busy_txt)}</td></tr>'
+            f'<td class="f">{cell or "—"}</td><td class="b">{escape(busy_txt)}</td></tr>'
         )
     updated = escape(str(data.get("updated_at", "")))
     return f"""<!doctype html>
@@ -178,6 +179,8 @@ tr.off td.d{{color:var(--mut)}}
 @media (max-width:560px){{th:nth-child(4),td.b{{display:none}}}}
 .n{{color:var(--mut);font-size:.85rem;margin-top:14px}}
 .slot{{font:inherit;padding:6px 12px;margin:2px 6px 2px 0;border:1px solid var(--ok);color:var(--ok);background:transparent;border-radius:999px;cursor:pointer}}
+.slot.day{{display:none}}body.showday .slot.day{{display:inline-block}}
+.daybtn{{font:inherit;margin:0 0 14px;padding:9px 16px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
 .slot:hover,.slot.sel{{background:var(--ok);color:var(--bg)}}
 #f{{display:none;margin-top:16px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:12px}}
 #f h2{{font-size:1.05rem;margin:0 0 10px}}#f label{{display:block;font-size:.88rem;color:var(--mut);margin-top:10px}}
@@ -186,7 +189,8 @@ tr.off td.d{{color:var(--mut)}}
 #msg{{margin-top:10px}}.hp{{position:absolute;left:-9999px}}
 </style></head><body><main>
 <h1>大樹教練｜訪談可約時間</h1>
-<p class="s">未來 {DAYS} 天。可預約時段 {escape(win['start'])}–{escape(win['end'])}（教練訪談以晚上居多），一場約 1 小時。</p>
+<p class="s">未來 {DAYS} 天。教練的訪談以晚上為主，請優先選擇晚上 {escape(eve['start'])}–{escape(eve['end'])}，一場約 1 小時。</p>
+<button type="button" id="daybtn" class="daybtn">晚上真的不方便？看看白天可以嗎</button>
 <div class="box"><table>
 <tr><th>日期</th><th>狀態</th><th>點選時間預約</th><th>已有安排</th></tr>
 {''.join(rows)}
@@ -203,6 +207,9 @@ tr.off td.d{{color:var(--mut)}}
 </main>
 <script>
 var cur=null,f=document.getElementById('f'),msg=document.getElementById('msg');
+var db=document.getElementById('daybtn');
+db.onclick=function(){{var on=document.body.classList.toggle('showday');
+ db.textContent=on?'收起白天時段，只看晚上':'晚上真的不方便？看看白天可以嗎';}};
 document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
  document.querySelectorAll('.slot.sel').forEach(function(x){{x.classList.remove('sel')}});
  b.classList.add('sel');cur={{d:b.dataset.d,t:b.dataset.t}};

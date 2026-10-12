@@ -905,5 +905,9 @@
   }
  ],
  "updated_at": "2026-10-12 15:46",
- "tainan_synced_at": "2026-10-12 09:01"
+ "tainan_synced_at": "2026-10-12 09:01",
+ "evening_window": {
+  "start": "19:00",
+  "end": "22:00"
+ }
 }
