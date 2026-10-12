@@ -104,3 +104,4 @@ event-signup/chain_images/
 # 條件反射回測快取（含歷史指令原文，可能有金鑰，不進 git；隨時可用 reflex_backtest.py extract 重建）
 state/reflex_backtest/
 state/coach_corpus.jsonl
+state/coach_schedule_token.txt
