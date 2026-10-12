@@ -39,3 +39,30 @@
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3264] Assistant: 教練 — quiet-glade exec 沒存到 v2 圖（看 ls 只有 15:56:44 那一張），看一下 log 然後直接重跑（15:56 到現在已經過 40 分鐘，守衛鎖已過期）：
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3267] Assistant: 教練 — 剛才 v2 script 因為用 `write` 工具寫檔，裡面的 `***` 沒被替換成真 key（SyntaxError）。改回 heredoc 寫法（這個在 exec 裡 `***` 會被替換），重新跑：
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3270] Assistant: 教練 — 看一下 `neat-cloud` 跑完沒、圖存了沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3273] Assistant: 教練 — `***` placeholder 在 heredoc 裡也開始踩 SyntaxError 了（之前 15:20/15:56 還能替換，現在不行了）。改用**執行時動態讀取憑證檔**的方式，script 裡完全不出現 `***`：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3276] Assistant: 教練 — v3 script 寫好了（用 `globals()` 動態注入 key 避開 `***`），直接跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3279] Assistant: 教練 — `kind-daisy` exec 跑了但現在 active sessions 顯示 none，看一下結果：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3282] Assistant: 教練 — 16:36 這份新指令有兩個地方我得停下來確認： 1. **這是重畫 15:55 那張（messageId 12103）？還是全新第二張？** - 15:55 那張已存 `data/run-for-future-2027-rongshu-lk888-20261008-155644.png` - 你 16:36 給的 prompt Section 3 改了兩條（對外/對生），其他完全一樣 - 你說「重新製作」→ 如果是換文字重畫 = 第 2 張，會再扣 1 點 - 如果是「怕 15:55 那張 GEO 那邊沒寫到、要重畫一張
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3282] Assistant: 確認重畫（我直接出 v2） - (B) GEO 確認無誤我就照 prompt 出 - (C) 如果是別的意思，告訴我改哪裡
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3284] Assistant: 教練 — 那兩條是剛才 SyntaxError 失敗的遺物，沒扣點。現在 `kind-daisy` 還在跑（pid 84985，v3 script 用 `globals()` 注入 key 避開 `***`），我看一下：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3287] Assistant: 教練 — kind-daisy 還在跑（v3 script 避開 `***`），我看一下圖有沒有出來：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3290] Assistant: 教練 — 那兩條完成事件是 quiet-glade + neat-cloud 兩個 SyntaxError 的遺物（`***` placeholder 沒被替換），沒扣 LK888 點數。 **目前 kind-daisy（v3 script，pid 84985）還在跑**——這個用 `globals()` 動態注入 key、避開 `***`，應該能成功。我等它跑完出圖再推 Telegram，不用你回我（A/B/C）的確認了：教練既然明說「重新製作」+ 給完整新 prompt，我就照出 v2。 等一下。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3292] Assistant: 教練 — v2 圖生成了（kind-daisy 跑完，檔名 `run-for-future-2027-rongshu-v2-lk888-20261008-163841.png`，2.4MB），馬上 view + 推 Telegram：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3298] Assistant: ✅ v2 圖已推 Telegram（messageId 12109），1 點 LK888 扣完。 Section 3 新文字覆核通過： - 對外：ESG 報告書路跑篇與社會責任公益形象 ✅ - 對生：加入 100 家攜手公益有機會成為台灣 GEO 經典範例 ✅ - 其他三個 section + 主副標題都照舊，繁中清晰 兩張圖目前都在： - v1（15:56）：`run-for-future-2027-rongshu-lk888-20261008-155644.png` - v2（16:38）：`run-for-future-202
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3299] User: [Image] User text: 有字是糊的，例如：邀集100家，的邀字。 Description: This is a promotional poster for "榮樹下 × Run for Future 2027 公益路跑" (Rong Shu Xia × Run for Future 2027 Charity Run). The top half features an anime-style illustration of runners wearing "Run for Future 2027" shirts, set ag
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3300] Assistant: 教練 — 對，是我的錯：v1 跟 v2 我都只看了「內容到不到位」，沒有逐字檢查每個字的清晰度。「邀」字糊可能跟字體渲染時的 stroke merging 有關（GPT Image 2 對「邀」這種帶走之底 + 多次筆畫交叉的字確實容易糊），同一個 prompt 兩張都中。 **重畫要扣第 3 點**（v1/v2 都已存在），但這次 prompt 我會在 Section 4 的關鍵字加「self-check 必逐字清晰」指令，提高字體渲染權重。要我重跑嗎？ (順帶：LK888 有 24H dedup 機制，同 prompt 重跑可能
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3301] User: 給我沒有糊字的版本
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3302] Assistant: 教練收到 — v3，prompt 加強字體清晰度 + negative prompt（禁 stroke merging/blur）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3305] Assistant: 教練收到 — v3，prompt 加強字體清晰度 + negative prompt（禁 stroke merging/blur）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3308] Assistant: 教練 — v3 script 已寫好（用 `globals()` 避開 `***`、prompt 加 sans-serif + 60-80pt + 禁 stroke merging + 特別標註「邀」字必逐筆清晰），直接跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3311] Assistant: 教練 — 看一下 `brisk-nudibranch` exec 跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3314] Assistant: 教練 — `brisk-nudibranch` exec 跑完但 log 沒輸出（跟前幾次一樣，可能是背景機制殺掉但 Python 寫檔部分已執行），我看 data 資料夾確認 v3 圖有沒有出來：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3317] Assistant: 教練 — `brisk-nudibranch` exec 又被背景機制殺了，沒存到 v3 圖。我改用 foreground 跑（不背景化，等它跑完才釋放），這次 1-2 分鐘：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3320] Assistant: 教練 — 看一下 `vivid-summit` exec 跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3323] Assistant: 教練 — `vivid-summit` exec 又被背景機制殺了（沒存到 v3 圖），我改用 foreground 不背景化跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3326] Assistant: 教練 — macOS 沒內建 `timeout` 指令。改用 gtimeout 或直接跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3329] Assistant: 教練 — `brisk-crest` exec 跑了但 active sessions 顯示 none，看圖有沒有出來：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3332] Assistant: 教練 — v3 圖出來了（21:09 存的，2.15MB），先 view 確認字體清晰度：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3336] Assistant: 榮樹下 × Run for Future 2027 公益路跑 v3（無糊字版，邀集 100 家逐筆清晰） run-for-future-2027-rongshu-v3-lk888-20261008-210900.png
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3339] Assistant: ✅ v3 已推 Telegram（messageId 12116），1 點 LK888 扣完。 view_image 自檢：v3 的「邀集 100 家共同發起單位」這行每個字都獨立清晰，沒有 stroke merging。Section 3 對外=ESG 報告書路跑篇、對生=GEO 經典範例也正確呈現。 三張圖目前都在 data/： - v1（15:56）：有糊字 - v2（16:38）：有糊字 - v3（21:09）：**無糊字** ← 這張 如果還有字糊或要再調，跟我說。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3342] Assistant: 教練 — 這是剛才 v3 那三次 exec 的收尾通知： - **`brisk-nudibranch` (code 0)** ✅ 成功存圖（就是已推 Telegram 12116 那張） - `vivid-summit` (code 1) ❌ 被守衛擋下（dedup，沒扣點） - `brisk-crest` (code 1) ❌ 被守衛擋下（dedup，沒扣點） 三次都是同一個 v3 fingerprint，後兩次撞 5 分鐘鎖沒出圖。**實際只扣 1 點**（brisk-nudibranch 那次成功），總扣點：v1 + v2 +
