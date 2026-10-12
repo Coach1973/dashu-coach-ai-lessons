@@ -254,6 +254,8 @@ def main():
     l = sub.add_parser("list")
     l.add_argument("--days", type=int, default=60)
     l.add_argument("--private", action="store_true")
+    cf = sub.add_parser("confirm")
+    cf.add_argument("--id", required=True)
     sub.add_parser("sync-tainan")
     args = p.parse_args()
 
@@ -303,6 +305,15 @@ def main():
             raise SystemExit(f"找不到 id={args.id}")
         save(data)
         print(f"✅ 已刪除 id={args.id}")
+    elif args.cmd == "confirm":
+        hit = [e for e in data["events"] if e["id"] == args.id]
+        if not hit:
+            raise SystemExit(f"找不到 id={args.id}")
+        hit[0].pop("tentative", None)
+        hit[0]["title"] = hit[0]["title"].replace("（待確認）", "（已確認）")
+        save(data)
+        print(f"✅ 已確認 id={args.id}：{hit[0]['date']} {hit[0].get('start','')} {hit[0]['title']}")
+        print(hit[0].get("note", ""))
     elif args.cmd == "check":
         start = hm(args.start) if args.start else None
         print(check(data, dt.date.fromisoformat(args.date), start, args.minutes, args.private))

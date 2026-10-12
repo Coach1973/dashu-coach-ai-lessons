@@ -2287,6 +2287,56 @@ def api_works_contact():
     return reply(True)
 
 
+# ---------- 教練行程預約頁（2026-10-12）：只有拿到含隨機代碼的網址才進得來 ----------
+# 資料＝workspace/knowledges/教練行程總表.json（scripts/coach_schedule.py）。預約會先寫成「待確認」占位，
+# 並通知「活動報名即時通知」群；教練確認：coach_schedule.py confirm --id，不要：remove --id。
+import coach_schedule_view as _csv
+
+_SCHEDULE_BOOK_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多 6 次
+
+
+@app.route("/schedule/<token>/")
+def coach_schedule_page(token):
+    if not _csv.token_ok(token):
+        abort(404)
+    return Response(_csv.render(token), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
+@app.route("/schedule/<token>/book", methods=["POST"])
+def coach_schedule_book(token):
+    def reply(ok, error=None, status=200, **extra):
+        body = {"ok": ok, **extra}
+        if error:
+            body["error"] = error
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json",
+                        headers={"Cache-Control": "no-store"})
+
+    if not _csv.token_ok(token):
+        abort(404)
+    p = request.get_json(force=True, silent=True) or {}
+    if (p.get("website") or "").strip():          # 防機器人隱藏欄位：假裝成功
+        return reply(True, label="")
+    import time
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _SCHEDULE_BOOK_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 6:
+        return reply(False, "送出次數太多，請稍後再試", 429)
+    hits.append(now)
+    _SCHEDULE_BOOK_HITS[ip] = hits
+    ok, res = _csv.book(p.get("date"), p.get("start"), p.get("name"), p.get("contact"), p.get("topic"))
+    if not ok:
+        return reply(False, res, 400)
+    d = datetime.strptime(res["date"], "%Y-%m-%d")
+    label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
+    _notify_xiaolongxia(
+        f"📅【訪談預約・待您確認】\n時間：{label}\n{res['note'].replace('｜', chr(10))}\n"
+        f"（已先占位，其他人不能再約這個時段）\n確認：跟小龍蝦說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」",
+        chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    return reply(True, label=label)
+
+
 # ---------- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選） ----------
 # 票數所有人共用；選項只認這份名單（網站代號 → 選項代號），不在名單裡的一律擋下。
 WORKS_POLL_OPTIONS = {"tut-memory": {"t1", "t2", "t3", "t4"}}
