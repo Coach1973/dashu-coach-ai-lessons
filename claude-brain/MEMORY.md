@@ -1,4 +1,5 @@
 # Memory Index
+- [📅 榮樹下群組排訪談：「龍馥夏」＝榮樹下；分身rongshuxia＋教練行程總表json(coach_schedule.py)＋schedule-context外掛，巴哈助理共用同一份；大台南只算ZOOM線上場(2026-10-12)](project_rongshuxia_group_interview_scheduler_2026-10-12.md)
 - [🔧 小龍蝦10/12凌晨重複迴圈根因＋safety-locks v1.3重複防呆鎖＋怎麼查(日誌/SQLite/帳本)；不是當機、沒扣點(2026-10-12)](reference_openclaw_agent_repeat_loop_and_guard_2026-10-12.md)
 - [🔴 教練說網頁「跟作品一覽不一樣」→先查作品一覽(coach888狀態)放的網址是否404，不只比對網頁(2026-10-12)](feedback_check_what_url_the_overview_holds_first_2026-10-12.md)
 - [🧠 賈維斯大腦評估(10/11)：NotebookLM 實際153本／1,203份來源、nlm source content 可抽原文；建議自建「大樹大腦」文字庫＋三入口，Foresight只能Mac本機不適合；等教練決定開工(2026-10-11)](project_jarvis_brain_database_evaluation_2026-10-11.md)
