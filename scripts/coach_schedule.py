@@ -167,6 +167,16 @@ def notify_baha(ev):
 
 
 # ---------- 大台南行事曆 ----------
+def simplify_tainan_title(title):
+    """教練 10/13 要求行事曆名稱簡短明確：同步進來的名稱去掉括號備註、MSP／LTRT 只留代碼。"""
+    t = re.sub(r"\s*[\(（]適逢[^\)）]*[\)）]", "", title).strip()
+    if "MSP" in t:
+        return "MSP"
+    if t.startswith("LTRT"):
+        return "LTRT"
+    return t
+
+
 def parse_tainan(html_text):
     t = re.sub(r"<script.*?</script>|<style.*?</style>", "", html_text, flags=re.S)
     t = unescape(re.sub(r"<[^>]+>", "\n", t))
@@ -198,7 +208,7 @@ def parse_tainan(html_text):
             "date": start_d.isoformat(),
             "start": f"{int(s.split(':')[0]):02d}:{s.split(':')[1]}",
             "end": f"{int(e.split(':')[0]):02d}:{e.split(':')[1]}",
-            "title": title,
+            "title": simplify_tainan_title(title),
             "where": "ZOOM線上",
             "source": "大台南行事曆",
         }
