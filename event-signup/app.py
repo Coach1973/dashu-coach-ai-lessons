@@ -2299,8 +2299,28 @@ _SCHEDULE_BOOK_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多 6 次
 def coach_schedule_page(token):
     if not _csv.token_ok(token):
         abort(404)
-    return Response(_csv.render(token), content_type="text/html; charset=utf-8",
+    # 教練專用檢視：網址加 ?me=專屬代碼（或之前開過、瀏覽器記得 cookie）→ 顯示每個時段的行程名稱；別人只看到時段
+    me = request.args.get("me", "")
+    coach = _csv.coach_ok(me) or _csv.coach_ok(request.cookies.get("coach_view", ""))
+    resp = Response(_csv.render(token, coach=coach), content_type="text/html; charset=utf-8",
                     headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+    if me and _csv.coach_ok(me):
+        resp.set_cookie("coach_view", me, max_age=365 * 86400, secure=True, httponly=True,
+                        samesite="Lax", path="/schedule/")
+    return resp
+
+
+@app.route("/sc/<key>")
+def coach_schedule_coach_short(key):
+    """教練專用短網址（執行細則 N10 要求後台網址要短）：顯示行程名稱，並記住這個瀏覽器。"""
+    if not _csv.coach_ok(key):
+        abort(404)
+    token = _csv.TOKEN_FILE.read_text().strip()
+    resp = Response(_csv.render(token, coach=True), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+    resp.set_cookie("coach_view", key, max_age=365 * 86400, secure=True, httponly=True,
+                    samesite="Lax", path="/schedule/")
+    return resp
 
 
 @app.route("/schedule/<token>/book", methods=["POST"])

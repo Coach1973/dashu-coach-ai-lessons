@@ -2,7 +2,9 @@
 
 資料來源＝workspace/knowledges/教練行程總表.json（scripts/coach_schedule.py 維護），每次開頁即時讀，行程一改頁面就跟著變。
 對外只顯示「哪些時段已有安排／可約的晚上時段」，不顯示行程內容與地點（隱私）。
+教練本人（2026-10-13）用另一段專屬代碼開：網址後面加 ?me=<代碼>，同一個瀏覽器之後開原網址也看得到每個時段的行程名稱。
 代碼放在 workspace/state/coach_schedule_token.txt；要換網址就改這個檔（舊網址立即失效）。
+教練專屬代碼放 workspace/state/coach_schedule_coach_key.txt。
 """
 import datetime as dt
 import fcntl
@@ -17,6 +19,7 @@ from pathlib import Path
 WS = Path(__file__).resolve().parent.parent
 DATA = WS / "knowledges" / "教練行程總表.json"
 TOKEN_FILE = WS / "state" / "coach_schedule_token.txt"
+COACH_KEY_FILE = WS / "state" / "coach_schedule_coach_key.txt"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
 DAYS = 28
@@ -28,6 +31,14 @@ def token_ok(token: str) -> bool:
     except OSError:
         return False
     return bool(real) and hmac.compare_digest(real, token or "")
+
+
+def coach_ok(key: str) -> bool:
+    try:
+        real = COACH_KEY_FILE.read_text().strip()
+    except OSError:
+        return False
+    return bool(real) and hmac.compare_digest(real, key or "")
 
 
 def _hm(s):
@@ -119,7 +130,7 @@ def book(date_s, start_s, name, contact, topic):
         lockf.close()
 
 
-def render(token: str = "") -> str:
+def render(token: str = "", coach: bool = False) -> str:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
@@ -151,12 +162,19 @@ def render(token: str = "") -> str:
         if tentative and (eve_starts or day_starts):
             status += ' <span class="tn">部分待確認</span>'
         cell = buttons(d, label, eve_starts, "eve") + buttons(d, label, day_starts, "day")
-        busy_txt = "、".join(
-            ("整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}") for s_, e_, _ in busy
-        ) or "—"
+        if coach:
+            busy_html = "".join(
+                f'<div>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"} '
+                f'<b>{escape(ev.get("title", ""))}</b>{"（待確認）" if ev.get("tentative") else ""}</div>'
+                for s_, e_, ev in busy
+            ) or "—"
+        else:
+            busy_html = escape("、".join(
+                ("整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}") for s_, e_, _ in busy
+            ) or "—")
         rows.append(
             f'<tr class="{cls}"><td class="d">{escape(label)}</td><td>{status}</td>'
-            f'<td class="f">{cell or "—"}</td><td class="b">{escape(busy_txt)}</td></tr>'
+            f'<td class="f">{cell or "—"}</td><td class="b">{busy_html}</td></tr>'
         )
     updated = escape(str(data.get("updated_at", "")))
     return f"""<!doctype html>
@@ -177,6 +195,9 @@ td.d{{white-space:nowrap;font-weight:600}}td.b{{color:var(--mut);font-size:.88re
 .ok{{color:var(--ok);font-weight:600}}.no{{color:var(--no)}}.tn{{color:var(--tn);font-size:.8rem}}
 tr.off td.d{{color:var(--mut)}}
 @media (max-width:560px){{th:nth-child(4),td.b{{display:none}}}}
+body.coach td.b{{color:var(--fg);font-size:.92rem}}body.coach td.b b{{font-weight:600}}
+@media (max-width:560px){{body.coach td.b{{display:block}}body.coach table,body.coach tbody,body.coach tr,body.coach td{{display:block}}
+body.coach tr:first-child{{display:none}}body.coach tr{{padding:8px 0;border-bottom:1px solid var(--line)}}body.coach td{{border:0;padding:3px 12px}}}}
 .n{{color:var(--mut);font-size:.85rem;margin-top:14px}}
 .slot{{font:inherit;padding:6px 12px;margin:2px 6px 2px 0;border:1px solid var(--ok);color:var(--ok);background:transparent;border-radius:999px;cursor:pointer}}
 .slot.day{{display:none}}body.showday .slot.day{{display:inline-block}}
@@ -187,8 +208,9 @@ tr.off td.d{{color:var(--mut)}}
 #f input,#f textarea{{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}}
 #f button.go{{margin-top:14px;width:100%;font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--ok);color:var(--bg);cursor:pointer}}
 #msg{{margin-top:10px}}.hp{{position:absolute;left:-9999px}}
-</style></head><body><main>
+</style></head><body class="{'coach' if coach else ''}"><main>
 <h1>大樹教練｜訪談可約時間</h1>
+{'<p class="s" style="color:var(--tn)">教練專用檢視：每個時段旁邊顯示行程名稱（別人看不到）</p>' if coach else ''}
 <p class="s">未來 {DAYS} 天。教練的訪談以晚上為主，請優先選擇晚上 {escape(eve['start'])}–{escape(eve['end'])}，一場約 1 小時。</p>
 <button type="button" id="daybtn" class="daybtn">晚上真的不方便？看看白天可以嗎</button>
 <div class="box"><table>

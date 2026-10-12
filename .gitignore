@@ -105,3 +105,4 @@ event-signup/chain_images/
 state/reflex_backtest/
 state/coach_corpus.jsonl
 state/coach_schedule_token.txt
+state/coach_schedule_coach_key.txt
