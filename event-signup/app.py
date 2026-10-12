@@ -2303,6 +2303,15 @@ def coach_schedule_page(token):
                     headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
 
 
+@app.route("/sc/<key>")
+def coach_schedule_named(key):
+    """教練自己看的版本：每個時段顯示行程名稱（對外網址仍只顯示時段）。教練 2026-10-13，名稱整理完會合併成一個。"""
+    if not _csv.coach_ok(key):
+        abort(404)
+    return Response(_csv.render(_csv.TOKEN_FILE.read_text().strip(), named=True), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
 @app.route("/schedule/<token>/book", methods=["POST"])
 def coach_schedule_book(token):
     def reply(ok, error=None, status=200, **extra):

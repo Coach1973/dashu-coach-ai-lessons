@@ -1,8 +1,9 @@
 """教練行程頁（2026-10-12）：只有拿到網址（含一段隨機代碼）的人看得到。
 
 資料來源＝workspace/knowledges/教練行程總表.json（scripts/coach_schedule.py 維護），每次開頁即時讀，行程一改頁面就跟著變。
-每個時段顯示行程名稱（教練 2026-10-13：行程本來就公開，只要一個頁面，不分教練版、訪客版），不顯示地點與備註。
-別人預約進來的「待確認」只顯示「訪談預約（待確認）」，不顯示預約者姓名。
+兩個頁面（教練 2026-10-13 暫時這樣，行程名稱整理完再合成一個）：
+  對外 /schedule/<代碼>/ ：只顯示哪些時段有空、哪些時段已有安排，不顯示行程名稱。
+  教練自己 /sc/<專屬代碼> ：每個時段旁邊顯示行程名稱（不含地點與備註；別人預約的「待確認」不秀姓名）。專屬代碼放 workspace/state/coach_schedule_coach_key.txt。
 代碼放在 workspace/state/coach_schedule_token.txt；要換網址就改這個檔（舊網址立即失效）。
 """
 import datetime as dt
@@ -18,6 +19,7 @@ from pathlib import Path
 WS = Path(__file__).resolve().parent.parent
 DATA = WS / "knowledges" / "教練行程總表.json"
 TOKEN_FILE = WS / "state" / "coach_schedule_token.txt"
+COACH_KEY_FILE = WS / "state" / "coach_schedule_coach_key.txt"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
 DAYS = 28
@@ -29,6 +31,14 @@ def token_ok(token: str) -> bool:
     except OSError:
         return False
     return bool(real) and hmac.compare_digest(real, token or "")
+
+
+def coach_ok(key: str) -> bool:
+    try:
+        real = COACH_KEY_FILE.read_text().strip()
+    except OSError:
+        return False
+    return bool(real) and hmac.compare_digest(real, key or "")
 
 
 def _show_title(ev):
@@ -126,7 +136,7 @@ def book(date_s, start_s, name, contact, topic):
         lockf.close()
 
 
-def render(token: str = "") -> str:
+def render(token: str = "", named: bool = False) -> str:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
@@ -158,11 +168,16 @@ def render(token: str = "") -> str:
         if tentative and (eve_starts or day_starts):
             status += ' <span class="tn">部分待確認</span>'
         cell = buttons(d, label, eve_starts, "eve") + buttons(d, label, day_starts, "day")
-        busy_html = "".join(
-            f'<div>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"} '
-            f'<b>{escape(_show_title(ev))}</b>{"（待確認）" if ev.get("tentative") and "待確認" not in ev.get("title", "") else ""}</div>'
-            for s_, e_, ev in busy
-        ) or "—"
+        if named:
+            busy_html = "".join(
+                f'<div>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"} '
+                f'<b>{escape(_show_title(ev))}</b>{"（待確認）" if ev.get("tentative") and "待確認" not in ev.get("title", "") else ""}</div>'
+                for s_, e_, ev in busy
+            ) or "—"
+        else:
+            busy_html = escape("、".join(
+                ("整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}") for s_, e_, _ in busy
+            ) or "—")
         rows.append(
             f'<tr class="{cls}"><td class="d">{escape(label)}</td><td>{status}</td>'
             f'<td class="f">{cell or "—"}</td><td class="b">{busy_html}</td></tr>'
@@ -199,8 +214,9 @@ body.coach tr:first-child{{display:none}}body.coach tr{{padding:8px 0;border-bot
 #f input,#f textarea{{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}}
 #f button.go{{margin-top:14px;width:100%;font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--ok);color:var(--bg);cursor:pointer}}
 #msg{{margin-top:10px}}.hp{{position:absolute;left:-9999px}}
-</style></head><body class="coach"><main>
+</style></head><body class="{'coach' if named else ''}"><main>
 <h1>大樹教練｜訪談可約時間</h1>
+{'<p class="s" style="color:var(--tn)">這是教練自己看的版本（有行程名稱），給別人的是另一個網址</p>' if named else ''}
 <p class="s">未來 {DAYS} 天。教練的訪談以晚上為主，請優先選擇晚上 {escape(eve['start'])}–{escape(eve['end'])}，一場約 1 小時。</p>
 <button type="button" id="daybtn" class="daybtn">晚上真的不方便？看看白天可以嗎</button>
 <div class="box"><table>
