@@ -2266,8 +2266,9 @@ def api_works_contact():
     item, email, message = clean("item", 40), clean("email", 80), (payload.get("message") or "").strip()[:500]
     if not name:
         return reply(False, "請填寫姓名", 400)
-    if len(re.sub(r"\D", "", phone)) < 8:
-        return reply(False, "請填寫正確的電話", 400)
+    # 2026-10-13 榮樹下（rongtree）表單是「電話或 Email」擇一，只留 Email 也收
+    if len(re.sub(r"\D", "", phone)) < 8 and not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", email):
+        return reply(False, "請填寫正確的電話或 Email", 400)
     ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
     if not _works_contact_rate_ok(ip):
         return reply(False, "送出次數太多，請稍後再試", 429)
@@ -2283,7 +2284,7 @@ def api_works_contact():
                             chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
         return reply(False, "系統忙碌，請稍後再試", 500)
     _notify_xiaolongxia(
-        f"📩【{title}】有人留資料\n姓名：{name}\n電話：{phone}\n想了解：{item or '未選'}\n"
+        f"📩【{title}】有人留資料\n姓名：{name}\n電話：{phone or '（沒留，請看 Email）'}\n想了解：{item or '未選'}\n"
         + (f"Email：{email}\n" if email else "") + (f"留言：{message}\n" if message else "")
         + f"（來源：event.bymyway.com/curated/{site}/）",
         chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)

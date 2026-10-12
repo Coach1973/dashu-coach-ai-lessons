@@ -42,12 +42,15 @@ check("資料有存進資料庫", row and row["site"] == "hnv-cc" and row["name"
 n = len(SENT)
 check("沒填姓名被擋", post(name=" ").status_code == 400)
 check("電話太短被擋", post(phone="123").status_code == 400)
+check("沒電話但有 Email 也收（榮樹下表單）", post(phone="", email="test@example.com").status_code == 200)
+check("電話跟 Email 都沒有被擋", post(phone="", email="not-an-email").status_code == 400)
 check("不存在的作品頁被擋", post(site="no-such-site").status_code == 404)
 check("亂填 site 格式被擋", post(site="../etc").status_code == 404)
-check("以上被擋的都沒有通知", len(SENT) == n)
+check("以上被擋的都沒有通知（Email 那筆正常通知 1 則）", len(SENT) == n + 1)
+n = len(SENT)
 r = post(website="http://spam")
 check("機器人隱藏欄位：假裝成功但不通知不存檔", r.get_json()["ok"] is True and len(SENT) == n
-      and conn.execute("SELECT COUNT(*) FROM works_contact_leads").fetchone()[0] == 1)
+      and conn.execute("SELECT COUNT(*) FROM works_contact_leads").fetchone()[0] == 2)
 check("超長輸入被截斷", (post(name="字" * 200) and conn.execute("SELECT length(name) FROM works_contact_leads ORDER BY id DESC LIMIT 1").fetchone()[0] == 30))
 appmod._WORKS_CONTACT_HITS.clear()
 for _ in range(10):
