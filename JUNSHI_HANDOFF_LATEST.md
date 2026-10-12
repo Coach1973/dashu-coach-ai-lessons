@@ -10,49 +10,23 @@
 
 **15:41 收工補充：** 已寫信給 Mac 軍師（`cross-agent/inbox/mac/20261012-1540_lenovo-to-mac_cal-com-google-schedule-status.md`，commit `d93e726`），請它核對兩個 404 網址並回報。巴哈要的行程文字版已整理在對話裡（10/12–12/31，合併後 358 筆）；聯想不交日曆網址或私密 iCal 網址，授權由教練自己在巴哈那邊決定。Cal.com 活動發布後網址不能改，改網址只能重建。
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-12 04:37 台灣時間，Mac 桌面版 Code 分頁，Haiku 5.5 收尾，教練說「總結」收工；對話 10/12 02:53～04:37，約 1.7 小時）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-13 02:17 台灣時間，Mac 桌面版 Code 分頁，Haiku→Opus→Sonnet 5.5 交替，教練說「總結」收工；對話 10/12 08:52～18:40，約 10 小時）
 
-**主軸：①小龍蝦凌晨迴圈止血＋防護外掛 v1.4 ②約瑟布網站（joseph-cloth）做到可交付：網址改名、影片可播、洽詢表單接活動報名即時通知、品牌名統一「榮樹下」、Podcast＋官方LINE@按鈕 ③策展上架擋下 AI 繞過（案例117）。**
+**主軸：①LINE 小龍蝦在「榮樹下談公益 Run for Future」群組（C2f85a1e…，17 人）排訪談 ②教練行程總表＋預約網址 ③小龍蝦記憶搜尋 llama-server 記憶體 2.1GB→約 0.66GB。**（教練語音「龍馥夏」＝榮樹下）
 
-- 小龍蝦：02:52 起對「404」反覆道歉、改字重傳、重建倉庫，900 多張重複圖已刪（留 42 張），閘道與主對話已重置。v1.4 加「相似指令鎖」，用真實動作重播擋下 10 支。
-- 網站：`joseph-cloth-download` 改名 `joseph-cloth`，舊網址直接下架（不轉址，教練指定）；大樹作品集同步換網址。影片改封面＋點擊播放。表單接 `/api/works/contact`（我沒真送出測試，避免通知人）。
-- 策展上傳：AI 被擋時改回純文字原因＋「不准改 kind 繞過」。
+- **行程總表**：`workspace/knowledges/教練行程總表.json`（唯一真相源，用 `scripts/coach_schedule.py` add／add-weekly／remove／confirm／check／list／sync-tainan 增刪，不手改）。巴哈助理（peipei）與 LINE 小龍蝦共用。大台南行事曆只收 ZOOM 線上場（36 筆，實體北科大 M1/M2 不是教練的行程）；巴哈行程＋教練口述（10/17 台北演講、10/18 整天台北、11/25-26 台北開課）；倒垃圾每週一二四六 17:00-18:00 標「例行事項」（soft，重要會議優先）。`commit db76e33a5`。
+- **群組專屬分身**：`agents/rongshuxia`＋外掛 `extensions/schedule-context`（有人丟時間→先算好行不行，外人只看到「已有安排」；教練 LINE 編號才能叫它動電腦）。`c29829db0`、`63c769ac6`、`8da9fcc30`。
+- **預約頁**：`https://event.bymyway.com/schedule/<隨機代碼>/`（代碼在 `workspace/state/coach_schedule_token.txt`，已 gitignore，要換網址改這個檔）。預設只顯示晚上 19-22，按「看看白天可以嗎」才展開 10-19；整天已滿顯示「本日行程已滿」；預約先占位成「待確認」並通知「活動報名即時通知」群，教練說「確認預約 id」／「取消預約 id」→ confirm／remove。程式 `event-signup/coach_schedule_view.py`＋app.py 兩條路由。`5ffadf2ab`→`c8cb108d2`。**「按送出後通知群真的收到」這一步沒實測（不吵教練），第一位真實預約者才算驗證。**
+- **llama-server 瘦身**：外掛 `@openclaw/llama-cpp-provider` 把 ubatch-size 寫死 2048 且每次啟動改回；改用包裝腳本 `tools/llama.cpp/llama-server-lite.sh` 啟動前壓成 1024（`openclaw.json` 的 localService.command 已指向它）。實測 1024＝0.66GB、最長記憶塊 758 tokens 夠用。釋放兩支腳本沒碰小龍蝦。`9db64ee0b`。記憶檔 `reference_llama_server_memory_ubatch_wrapper_2026-10-12.md`。
+- **聯想信**（Cal.com 預約頁＋Google 日曆）已讀、回信、歸檔 `98f7d3129`；新建兩筆活動網址實測仍 404，已請聯想去後台查。
 
 🙋 要教練決定：目前沒有。
-🤫 等教練自己提起：GitHub 上還有兩個私有重複倉庫 `joseph-cloth-v2-archive`、`joseph-cloth-archive-2026`（我沒有刪除權限）；`joseph-cloth-v10.html` 仍寫舊品牌字，保留作存檔。
-🔧 AI 自己的：小龍蝦對出圖清單的新格式（`workshop-skills/tava-ai-batch`）不在 git，只存在本機。
+🤫 等教練自己提起：行程總表裡 RPL 週日 20:00（8 月舊紀錄）、10/22 與 11/19 主持搭檔場（時間未定）都標「待確認」；巴哈要讀 Google 日曆需教練自己給私人 iCal 網址（已解釋做法，教練還沒給）；Cal.com 重複的戰報會議／諮詢會議由教練自己刪。
+🔧 AI 自己的：總表裡約 12 筆因兩次匯入造成的同時段重複（無害，名稱略不同）可再清；外掛升級後要重查 llama-server 是否又長回 2GB。
 
 ### 📋 下一場開工先做
-目前沒有教練交辦未完成。開工回報 5 行內，問「今天要從哪件事開始？」
-
-## 💬 之前的一棒（2026-10-12 02:50）：大樹大腦、信任遊戲、作品一覽、小龍蝦首次迴圈止血，詳見 handoff_archive/。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-12 02:50 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5⇄Opus 5.5，v299，教練說「總結」收工；對話 10/11 11:06～10/12 02:50，約 15.7 小時）
-
-**主軸：①「大樹大腦」賈維斯資料庫建好（搬資料、去重、四份備份）②信任遊戲玩家資料與連結自訂名稱 ③作品一覽壞網址 ④小龍蝦重複迴圈根因修復。** 教練全程語氣平和；兩次小糾正（我沒先查作品一覽放的是哪個網址；Azure 是「Amber」語音誤聽）。
-
-### 1. 大樹大腦（教練問「NotebookLM／Google 筆記／GitHub 哪個適合當賈維斯大腦」）
-- 結論：Google AI Edge Foresight 只能 Mac 本機、實驗版，不適合；NotebookLM 官方沒有跨筆記本搜尋，留作簡報工作室；自建純文字資料夾＋搜尋＋三入口（小龍蝦／Claude 手機遙控／Claude App）。
-- 已做：兩個 NotebookLM 帳號（bymyway7 1,203＋seabiscuitclub 954，nlm 第二組 profile 叫 `seabiscuit`，教練已登入）共 2,157 份、約 3,170 萬字全搬出；去重後 **1,871 份（57MB）**，完全相同合併 278 份（204 組是跨帳號重複），很像／被包含 161 組只列報告（`reports/near_dups.csv`），空的 8 份 YouTube 跳過。
-- 位置：正本 `/Volumes/953-SSD/大樹大腦/`（raw／clean／reports／manifest.jsonl／tools）；Mac `~/大樹大腦/clean/`；**Amber** `smb://amber-Coach/home/大樹大腦備份/`（逐檔比對一致）；**GitHub 私有** `Coach1973/dashu-brain-backup`（AES-256 加密 18MB，未登入 404，解密已驗）。解密密碼存三處：Mac 路徑大全_憑證層、VPS `/root/.dashu_brain_key`、Gmail 收件匣（教練說「寄給自己」）。工具 commit `3a55f05b4`（workspace/scripts/dashu_brain/）。
-- 教練說「私有雲」＝Amber 酷存；「Azure」＝Amber 的語音誤聽（已寫進詞彙對照表）。
-
-### 2. 信任遊戲（bni-chapters，trust.bymyway.com）`77f12b1`
-- 王俊甫(id 32)、大樹教練(id 1) 的專業／一句話介紹／簡介／連結，從 mentor100 導師名單補進來（王俊甫維持俱樂部玩家，教練裁示）。
-- 連結按鈕文字可自訂（跟導師團一致）、新增「乾淨世界」第 9 種連結；199 測試全過；大樹教練連結名稱（AI微型論壇／AI 學習歷程／大樹小講）已照導師團搬過去。
-
-### 3. 作品一覽壞網址 `3a5879c81`
-「近期活動」放的 `ai-class-1017`（404）換成 `ema1017`；順便掃 123 個網址，另有 3 個 404（企業健身房預留、BNI 轉盤、BNI 口袋圖書館兩個舊 Netlify），教練沒決定，沒動。
-
-### 4. 小龍蝦約瑟布圖迴圈（02:16～02:32 台灣時間）`a94d7a842`
-不是當機：exec 立刻回「still running」，模型每 14 秒重發同訊息＋重跑同腳本 65 次以上，對話已 323k tokens（上限 185k）。LK888 帳本 214 筆全 cache_hit，**沒扣點**。已重啟閘道並在 safety-locks 加 v1.3「重複防呆鎖」（相同訊息 3 分鐘、相同長指令 10 分鐘不重複）。34 張圖後來全數送到 Telegram。教練 Telegram 收到約 110 則重複訊息，無法收回。
-
-### 📋 下一場開工先做
-**目前沒有教練交辦未完成。** 開工回報 5 行內，問「今天要從哪件事開始？」
-🔧AI 自己的（不問）：①大樹大腦**搜尋索引（關鍵字＋語意）＋三個手機入口＋每天半夜／提問前自動對帳新資料**（教練原話目標：Telegram／小龍蝦／Claude 手機隨口問就答）；做之前先拿教練真實的 10 個問題驗收。②很像 161 組報告整理成教練看得懂的清單。③MEMORY.md 索引約 20KB 超過建議上限，找時間壓縮。④約瑟布迴圈：觀察 v1.3 重複鎖有沒有誤擋正常操作。
-🤫等教練自己提起：作品一覽 3 個舊／預留網址要不要拿掉；導師名單裡其他 6 位在遊戲裡身份都設 member，要不要改全新玩家（教練只認可王俊甫）；大樹教練導師團三個連結已搬，遊戲內只有 9 種固定連結類型。
-
-### 🙋 要教練決定
-（目前沒有）
+1. **讀 `cross-agent/inbox/mac/20261013-0005_xiaolongxia-to-mac_bni-credit-3-records-zhenxin.md`**：小龍蝦轉交教練的 3 筆真鑫 BNI 信用額度配發（編號 1358984 起，會員資格結束 10/8、發行 10/12、發行人吳大樹），依既有 BNI 信用額度配發流程處理，處理完歸檔到 outbox/2026-10。
+2. 其餘沒有教練交辦未完成；開工回報 5 行內，問「今天要從哪件事開始？」
 
 
+> 📦 10/12 02:50 與 04:37 兩棒已封存：`handoff_archive/handoff_v299_to_v300_archived_2026-10-13.md`
