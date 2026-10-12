@@ -1,7 +1,7 @@
 {
  "說明": "教練行程總表（唯一真相源）。巴哈助理、LINE 小龍蝦（榮樹下群組）共用；用 scripts/coach_schedule.py 增刪，不要手改。大台南行事曆只收 ZOOM 線上場次（教練 10/12 親定）。",
  "interview_window": {
-  "start": "19:00",
+  "start": "10:00",
   "end": "22:00"
  },
  "events": [

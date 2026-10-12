@@ -144,10 +144,10 @@ def render(token: str = "") -> str:
                     for t in _starts(slots)
                 )
                 free = "__BTNS__"
-                status = '<span class="ok">晚上可約</span>'
+                status = '<span class="ok">可預約</span>'
                 cls = "on"
             else:
-                free, status, cls = "", '<span class="no">晚上已滿</span>', "off"
+                free, status, cls = "", '<span class="no">本日行程已滿</span>', "off"
             if tentative and slots:
                 status += ' <span class="tn">部分待確認</span>'
         busy_txt = "、".join(
@@ -186,7 +186,7 @@ tr.off td.d{{color:var(--mut)}}
 #msg{{margin-top:10px}}.hp{{position:absolute;left:-9999px}}
 </style></head><body><main>
 <h1>大樹教練｜訪談可約時間</h1>
-<p class="s">未來 {DAYS} 天。訪談預設在晚上 {escape(win['start'])}–{escape(win['end'])}，一場約 1 小時。</p>
+<p class="s">未來 {DAYS} 天。可預約時段 {escape(win['start'])}–{escape(win['end'])}（教練訪談以晚上居多），一場約 1 小時。</p>
 <div class="box"><table>
 <tr><th>日期</th><th>狀態</th><th>點選時間預約</th><th>已有安排</th></tr>
 {''.join(rows)}

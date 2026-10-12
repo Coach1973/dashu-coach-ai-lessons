@@ -129,7 +129,7 @@ def check(data, d, start=None, minutes=60, private=False):
         lines.append("  當天行程：沒有")
     slots = free_slots(d, data, ws, we, minutes)
     lines.append(
-        f"  晚上 {win['start']}-{win['end']} 可訪談空檔："
+        f"  {win['start']}-{win['end']} 可訪談空檔："
         + ("、".join(f"{fmt(a)}-{fmt(b)}" for a, b in slots) if slots else "沒有")
     )
     return "\n".join(lines)
