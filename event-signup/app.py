@@ -2163,7 +2163,7 @@ def curation_upload():
             return Response(
                 f"上架被擋下（400）：{msg}\n"
                 "⚠️ 不准改 kind 繞過：kind=creation 只給大樹教練自己的作品，會被放進大樹作品集；"
-                "店家／夥伴／客戶的網站一律 kind=shop。照上面原因補齊再送，或回去問教練。\n",
+                "店家／夥伴／客戶的網站一律 kind=shop。照上面原因自己補齊再送，不要拿去問教練。\n",
                 status=400, mimetype="text/plain")
         return render_template("curation_upload.html", error=msg, key=supplied_key,
                                sites=_load_curated_registry().get("sites", [])[::-1], **ctx), 400
@@ -2174,11 +2174,14 @@ def curation_upload():
         kind = (request.values.get("kind") or "").strip()
         if kind not in CURATION_KINDS:
             return _fail("請先選擇類型：店家／合作夥伴網站，還是大樹教練個人作品（API呼叫請帶 kind=shop 或 kind=creation）")
-        # 2026-10-10教練定：上架店家網站時，一定要問教練「要不要同時放進大樹作品」。
-        # 比照短網址：靠SOP文字會被忘（公益路跑就這樣沒進大樹作品），改成源頭必填，沒帶就擋下並教AI去問。
+        # 2026-10-10教練定：店家網站要有「同時放進大樹作品」的出口（公益路跑就因為沒進大樹作品，教練找不到）。
+        # 2026-10-13教練罵「上架就上架，別再問來問去」：原本沒帶就擋下並叫AI去問教練，赫米斯因此每次都停下來問。
+        # 改成沒帶＝預設「要」（寧可多放一份，也不能讓教練找不到）；教練明講不用才帶 also_works=0。亂填仍擋下。
         also_works = (request.values.get("also_works") or "").strip()
+        if kind == "shop" and also_works == "":
+            also_works = "1"
         if kind == "shop" and also_works not in ("0", "1"):
-            return _fail("上架店家網站前，請先問教練：「要不要同時放進大樹作品（最新作品）？」教練說要 → 帶 also_works=1；說不用 → 帶 also_works=0（網頁請選下面的選項；API 請加 -F also_works=1 或 0）")
+            return _fail("also_works 只能填 1（同時放進大樹作品，預設）或 0（教練明講不用才填）。不要問教練，直接改成 1 再送。")
         f = request.files.get("package")
         if not f or not f.filename:
             return _fail("請選擇一個檔案")

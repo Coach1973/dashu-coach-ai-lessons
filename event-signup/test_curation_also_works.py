@@ -29,14 +29,13 @@ def up(kind, slug, **extra):
 
 
 r = up("shop", "tmp-test-aa")
-check("店家沒帶 also_works → 400，並教 AI 去問教練", r.status_code == 400 and "要不要同時放進大樹作品" in r.get_data(as_text=True))
-check("API 呼叫（curl）被擋時回純文字原因＋不准換 kind 繞過", r.mimetype == "text/plain" and "不准改 kind 繞過" in r.get_data(as_text=True))
-r = client.post(f"/curation/upload?key={KEY}", data={"kind": "shop", "custom_slug": "tmp-test-ab", "package": (io.BytesIO(b"PK"), "x.zip")},
-                content_type="multipart/form-data", headers={"Accept": "text/html"})
-check("瀏覽器被擋時照舊顯示上傳頁＋原因", r.status_code == 400 and r.mimetype == "text/html" and "要不要同時放進大樹作品" in r.get_data(as_text=True))
-check("被擋的那次不留任何檔案", not list((TMP / "incoming").glob("*")))
+files = sorted(p.name.rsplit(".", 1)[-1] for p in (TMP / "incoming").glob("*"))
+check("店家沒帶 also_works → 不擋、不問，預設當作「要」（旁路檔有 .works）", r.status_code == 200 and "works" in files)
+for p in (TMP / "incoming").glob("*"):
+    p.unlink()
 r = up("shop", "tmp-test-bb", also_works="maybe")
-check("also_works 亂填 → 400", r.status_code == 400)
+check("also_works 亂填 → 400，純文字原因叫AI自己改1、不准拿去問教練", r.status_code == 400 and r.mimetype == "text/plain" and "不要問教練" in r.get_data(as_text=True) and "不要拿去問教練" in r.get_data(as_text=True))
+check("被擋的那次不留任何檔案", not list((TMP / "incoming").glob("*")))
 r = up("shop", "tmp-test-cc", also_works="1")
 files = sorted(p.name.rsplit(".", 1)[-1] for p in (TMP / "incoming").glob("*"))
 check("店家 also_works=1 → 收件，旁路檔有 .works", r.status_code == 200 and "works" in files)
