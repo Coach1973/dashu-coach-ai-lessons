@@ -167,9 +167,14 @@ def notify_baha(ev):
 
 
 # ---------- 大台南行事曆 ----------
+def clean_title(title):
+    """教練 10/13：線上一定是 Zoom 線上，名稱後面不用再括號寫「Zoom 線上」「網路會議」。"""
+    return re.sub(r"\s*[\(（]\s*(Zoom\s*線上|ZOOM線上|網路會議|線上)\s*[\)）]", "", title or "", flags=re.I).strip()
+
+
 def simplify_tainan_title(title):
     """教練 10/13 要求行事曆名稱簡短明確：同步進來的名稱去掉括號備註、MSP／LTRT 只留代碼。"""
-    t = re.sub(r"\s*[\(（]適逢[^\)）]*[\)）]", "", title).strip()
+    t = clean_title(re.sub(r"\s*[\(（]適逢[^\)）]*[\)）]", "", title))
     if "MSP" in t:
         return "MSP"
     if t.startswith("LTRT"):
@@ -225,6 +230,11 @@ def sync_tainan(data):
     new = parse_tainan(html_text)
     if not new:
         raise SystemExit("大台南行事曆抓不到任何線上場次，可能網站改版，保留舊資料不覆蓋")
+    # 教練改過時間的同步場次（例如 LTRT 與 RPL 撞期時 LTRT 改 20:00-21:00）：每次同步後重新套用，不會被來源蓋回去
+    for o in data.get("tainan_overrides", []):
+        for ev in new:
+            if ev["date"] == o["date"] and ev["title"] == o["title"]:
+                ev["start"], ev["end"] = o["start"], o["end"]
     keep = [e for e in data["events"] if e.get("source") != "大台南行事曆"]
     data["events"] = keep + new
     data["tainan_synced_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
@@ -274,7 +284,7 @@ def main():
     data = load()
     if args.cmd == "add":
         dt.date.fromisoformat(args.date)
-        ev = {"id": uuid.uuid4().hex[:8], "date": args.date, "title": args.title, "source": args.source}
+        ev = {"id": uuid.uuid4().hex[:8], "date": args.date, "title": clean_title(args.title), "source": args.source}
         if args.end_date:
             dt.date.fromisoformat(args.end_date)
             ev["end_date"] = args.end_date
@@ -300,7 +310,7 @@ def main():
             notify_baha(ev)
     elif args.cmd == "add-weekly":
         rv = {"id": uuid.uuid4().hex[:8], "weekday": args.weekday, "start": args.start, "end": args.end,
-              "title": args.title, "source": args.source}
+              "title": clean_title(args.title), "source": args.source}
         for k in ("since", "until"):
             if getattr(args, k):
                 rv[k] = getattr(args, k)
