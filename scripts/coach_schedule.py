@@ -119,7 +119,9 @@ def check(data, d, start=None, minutes=60, private=False):
     if start is not None:
         s, e = start, start + minutes
         hit = [b for b in blocks if b[0] < e and b[1] > s]
-        if hit:
+        if hit and all(b[2].get("soft") for b in hit):
+            lines.append(f"  {fmt(s)}-{fmt(e)} ⚠️ 只撞到例行事項（教練說遇到重要會議可以調整，要請教練確認）：" + "；".join(describe(b, private) for b in hit))
+        elif hit:
             lines.append(f"  {fmt(s)}-{fmt(e)} ❌ 不行，撞到：" + "；".join(describe(b, private) for b in hit))
         else:
             lines.append(f"  {fmt(s)}-{fmt(e)} ✅ 可以（教練這段沒有行程）")
