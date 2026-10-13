@@ -423,10 +423,10 @@
       "top30": 5,
       "kind": "防錯型",
       "match": "(?s)^(?!.*(輪詢|事件觸發|polling)).*?(?m:<key>StartInterval</key>|^\\s*\\*/\\d+\\s+\\*|setInterval\\(\\s*(async\\s*)?\\(?\\s*\\)?\\s*(=>)?\\s*\\{?[^)]{0,80}(fetch|load|check|poll|refresh|reload|sync)|setInterval\\(\\s*(load|fetch|check|poll|refresh|reload|sync)\\w*|schedule\\.every\\(|openclaw\\s+cron\\s+add[^\\n]*--every\\s+[1-9]|[\"']?every[\"']?\\s*[:=]\\s*[\"']?[1-9]\\d*\\s*(s|m|min|sec)\\b|while\\s+(true|:)\\s*;?\\s*do[\\s\\S]{0,300}?sleep\\s+\\d)",
-      "say": "你正在寫「每隔 N 分鐘檢查一次」：先問這件事發生當下能不能直接觸發（教練說一句、檔案一改、訊息一到）。能就用事件觸發；真的要定時，跟教練講清楚一天跑幾次、為什麼。",
+      "say": "你正在寫定時排程。照順序想，前面能做就不要往後走：①用的人要用的那一刻當下去拿（用到才現看＋一分鐘快取，例：預約頁一打開才讀 Google 日曆）②我們自己系統裡的事一發生就觸發（教練說一句、檔案一改、訊息一到）③對方系統主動通知我（先實測會不會漏、會不會過期要續約，Google 日曆通知就漏刪除＋7天要換）④定時是最後手段，跟教練講清一天跑幾次、為什麼。接手別人做好的定時排程也要先走一遍這四步。",
       "level": "remind",
       "situation": "要設排程／定時檢查時",
-      "source": "feedback_event_driven_not_polling_pattern.md／Top10 模式#1",
+      "source": "feedback_event_driven_not_polling_pattern.md／Top10 模式#1／試金石案例120",
       "audience": [
         "coach"
       ]
@@ -1652,6 +1652,46 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-ACCOUNT-CHANGE-VERIFY-FIRST",
+      "moment": "reply",
+      "kind": "防錯型",
+      "match": "((建|開|申請|新增|做)[^。\\n]{0,8}(機器人帳號|服務帳號|Cloud\\s*專案|Google\\s*Cloud)|帳單帳戶|啟用[^。\\n]{0,8}API|API[^。\\n]{0,6}(沒|未)啟用)",
+      "say": "要提議在教練的 Google／雲端帳號建東西、開開關、掛帳單之前，先用現成授權真的跑一次讀＋寫（gog -a bymyway7@gmail.com …、桌面版連接器）。能用就不用建。10/13 機器人帳號、帳單帳戶、「缺 API 開關」三次判斷全錯，害教練白等。",
+      "level": "remind",
+      "situation": "想在教練帳號建東西／開開關／掛帳單時",
+      "source": "試金石案例120",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-ACCOUNT-CHANGE-VERIFY-FIRST-TOOL",
+      "moment": "pre_tool",
+      "tool": "mcp__claude-in-chrome__.*|mcp__Claude_Browser__.*|Bash",
+      "kind": "防錯型",
+      "match": "(console\\.cloud\\.google\\.com|console\\.developers\\.google\\.com|projectcreate|gcloud\\s+(projects|services|iam|billing))",
+      "say": "你要去 Google Cloud 後台建專案／開 API／掛帳單：先停，用現成授權（gog -a bymyway7@gmail.com …）真的跑一次你要做的讀＋寫，通了就不用進後台（10/13 試金石案例120）。",
+      "level": "remind",
+      "situation": "想在教練帳號建東西／開開關／掛帳單時",
+      "source": "試金石案例120",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-REPLY-INTERNAL-JARGON",
+      "moment": "reply",
+      "kind": "防錯型",
+      "match": "(三關|執行細則\\s*N\\d|covered_by_google|gskip|ensure_fresh|events\\.watch|webhook|iCal|反射索引|stop hook)",
+      "say": "回覆裡有內部規則名稱或程式名詞（三關、cron、webhook…），教練看不懂、會更疑惑。改成白話：先講結論，再講他要不要做什麼；內部規則自己照做就好，不用講給教練聽。",
+      "level": "remind",
+      "situation": "要回話給教練時",
+      "source": "試金石案例120／守則#10",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1671,7 +1711,8 @@
     "案例M": "已由 G-TRAD-CHINESE 擋住（輸出一律繁體，不論輸入是繁是簡）",
     "案例O": "併入 R-OPENCLAW-CONFIG（改模型要改 openclaw.json、改完查實際生效）",
     "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）",
-    "案例105": "R-BNI-GUEST-COUNT-SOURCE（算帶來賓／培訓前提醒用 PALMS 與 /training 同一份）；源頭探測器方案檔第一節已改"
+    "案例105": "R-BNI-GUEST-COUNT-SOURCE（算帶來賓／培訓前提醒用 PALMS 與 /training 同一份）；源頭探測器方案檔第一節已改",
+    "案例120": "→ R-POLLING-CODE 改寫（用到才現看列第一）＋R-ACCOUNT-CHANGE-VERIFY-FIRST(-TOOL)＋R-REPLY-INTERNAL-JARGON＋stop_rules_master D 段文字＋handoff_sync_guard 漏洞修正"
   },
   "memory_ledger": {
     "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",

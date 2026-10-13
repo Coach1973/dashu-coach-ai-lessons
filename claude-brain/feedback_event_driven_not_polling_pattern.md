@@ -134,3 +134,5 @@ Related: [[project_vps_multiagent_rollout_2026-07-02]]、[[feedback_lock_must_be
 regex加得再寬，如果餵給它的TURN_TEXT內容本身就抓漏了，還是攔不到。之後懷疑機關失效時，
 除了檢查regex，也要親自印出/debug機關實際收到的文字內容，確認它真的看到了完整的
 這一輪對話，而不是只看到片段。
+
+**2026-10-13 補（試金石案例120，已改進系統）**：事件觸發的第一選項是「用的人要用的那一刻當下去拿」（用到才現看＋一分鐘快取），其次才是自己系統內的事件、對方主動通知（要實測會不會漏、要不要續約）、最後才定時。這個順序已寫進反射 R-POLLING-CODE 與 stop_rules_master 的輪詢攔截文字。細節見 [[feedback_prefer_event_trigger_google_push_misses_deletes_2026-10-13]]。

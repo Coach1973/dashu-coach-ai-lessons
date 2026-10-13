@@ -15,14 +15,29 @@ CMD=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.tool_input.command // ""' 2>/dev/n
 [[ "$TOOL_NAME" != "Bash" ]] && exit 0
 echo "$CMD" | grep -qE "git commit" || exit 0
 
-WS="/Users/bymyway/.openclaw/workspace"
+WS="${HANDOFF_GUARD_WS:-/Users/bymyway/.openclaw/workspace}"  # 測試可指到假資料夾
 HANDOFF="JUNSHI_HANDOFF_LATEST.md"
 cd "$WS" 2>/dev/null || exit 0
 
-# 只在 JUNSHI_HANDOFF_LATEST.md 有被 staged 修改時才檢查
-git diff --cached --name-only 2>/dev/null | grep -qx "$HANDOFF" || exit 0
+# 只在這次 commit 會帶到 JUNSHI_HANDOFF_LATEST.md 時才檢查。
+# 2026-10-13 修漏洞（試金石案例120）：hook 在整行指令跑之前執行，「git add 接力棒 && git commit」這種一行寫法，
+# 檢查當下檔案還沒 staged → 以前直接放行；10/13 02:17 三關規則區被弄丟，之後十幾次 commit 全都這樣溜過。
+# 現在：已 staged → 看暫存區內容；指令裡自己會 add（點名接力棒／-A／--all／.）或 commit -a／commit -- 接力棒 → 看工作區檔案。
+MODE=""
+if git diff --cached --name-only 2>/dev/null | grep -qx "$HANDOFF"; then
+  MODE="index"
+fi
+if [[ -n "$(git diff HEAD --name-only -- "$HANDOFF" 2>/dev/null)" ]] && \
+   printf '%s' "$CMD" | grep -qE "git add[^;&|]*(JUNSHI_HANDOFF_LATEST\.md|[[:space:]]-A([[:space:]]|$)|--all|[[:space:]]\.([[:space:]]|$))|git commit[^;&|]*[[:space:]]-[a-zA-Z]*a[a-zA-Z]*([[:space:]]|$)|git commit[^;&|]*--[[:space:]][^;&|]*JUNSHI_HANDOFF_LATEST\.md"; then
+  MODE="worktree"
+fi
+[[ -z "$MODE" ]] && exit 0
 
-DIFF=$(git diff --cached -- "$HANDOFF" 2>/dev/null)
+if [[ "$MODE" == "worktree" ]]; then
+  DIFF=$(git diff HEAD -- "$HANDOFF" 2>/dev/null)
+else
+  DIFF=$(git diff --cached -- "$HANDOFF" 2>/dev/null)
+fi
 [[ -z "$DIFF" ]] && exit 0
 
 # 判斷1：新增內容裡有沒有強完成訊號（新增行=以+開頭，排除+++檔頭行）
@@ -59,7 +74,8 @@ fi
 # 判斷3（2026-09-24根源改版，會擋下）：「🙋要教練決定」區只能放三關全過的事。
 # 教練：「同一類事情不要再重複來煩我了」。過去5次同類錯都只寫記憶，記憶打不過待辦表的具體內容，
 # 所以改成提交當下由程式檢查：每件要寫明「只有教練能做」的原因＋「問過」日期，最多3件，三關規則不准被刪。
-ASK_ERR=$(git show ":$HANDOFF" 2>/dev/null | /opt/homebrew/bin/python3 -c '
+if [[ "$MODE" == "worktree" ]]; then HANDOFF_TEXT=$(cat "$HANDOFF" 2>/dev/null); else HANDOFF_TEXT=$(git show ":$HANDOFF" 2>/dev/null); fi
+ASK_ERR=$(printf '%s' "$HANDOFF_TEXT" | /opt/homebrew/bin/python3 -c '
 import sys
 text = sys.stdin.read()
 errs = []
