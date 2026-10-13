@@ -2561,6 +2561,33 @@ def rongtree_guest_photo(token):
     return resp
 
 
+@app.route("/rongtree/guest/<token>/card/public", methods=["POST"])
+def rongtree_guest_card_public(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not _rg_card_ok(token):
+        abort(404)
+    _rg.set_public(token, request.form.get("public") == "1")
+    return redirect(f"/rongtree/guest/{token}/card?k={request.args.get('k', '')}")
+
+
+@app.route("/api/rongtree/prep")
+def api_rongtree_prep():
+    """榮樹下網頁「訪談嘉賓前置作業」區：接下來的訪談（含資料表網址）＋已交資料的來賓（只給公開欄位）"""
+    resp = _rg_json(_rg.public_prep())
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
+
+
+@app.route("/rongtree/face/<token>.jpg")
+def rongtree_guest_face(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not r["photo_file"] or not r["public"]:
+        return Response("", status=404, headers={"Cache-Control": "no-store"})
+    resp = send_from_directory(_rg.UPLOAD_DIR, r["photo_file"], mimetype="image/jpeg")
+    resp.headers["Cache-Control"] = "no-store"   # 來賓換照片或被隱藏要立刻生效
+    return resp
+
+
 @app.route("/rongtree/cards")
 @app.route("/rongtree/a/<code>")
 def rongtree_guest_cards(code=""):

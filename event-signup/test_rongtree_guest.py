@@ -99,5 +99,29 @@ check("後台列表打得開、列出來賓", r.status_code == 200 and "測試�
 check("後台列表沒簽章或短代碼錯 404", client.get("/rongtree/cards").status_code == 404 and client.get("/rongtree/a/wrongcode123").status_code == 404)
 check("舊的長連結照樣有效", client.get(f"/rongtree/cards?k={rg.list_sig(SECRET)}").status_code == 200)
 
+# ---- 公開名單（榮樹下網頁「訪談嘉賓前置作業」）----
+rg._ensure_forms = lambda: None      # 不去改正式行程表
+import datetime as _dt
+fut = (_dt.date.today() + _dt.timedelta(days=3)).isoformat()
+sched.write_text(json.dumps({"events": [
+    {"id": "abcd1234", "date": fut, "start": "19:00", "end": "20:00", "title": "榮樹下訪談：測試來賓", "guest": "測試來賓", "form_token": TOKEN},
+    {"id": "eeee5555", "date": fut, "start": "20:00", "end": "21:00", "title": "榮樹下訪談", "form_token": "OtherToken456"},
+    {"id": "ffff6666", "date": fut, "start": "08:00", "end": "09:00", "title": "BNI 例會"}]}, ensure_ascii=False), encoding="utf-8")
+r = client.get("/api/rongtree/prep"); j = r.get_json(); raw = r.get_data(as_text=True)
+check("前置作業只列榮樹下訪談、附資料表網址、標出誰已交", r.status_code == 200 and len(j["upcoming"]) == 2
+      and j["upcoming"][0]["submitted"] and not j["upcoming"][1]["submitted"] and j["upcoming"][1]["form"] == "/rongtree/guest/OtherToken456")
+check("已交來賓公開姓名、職稱、一句話介紹、照片", j["guests"] and j["guests"][0]["name"] == "測試來賓"
+      and j["guests"][0]["title"] == "測試公司 董事長" and j["guests"][0]["line"] == "重做成功" and j["guests"][0]["photo"])
+check("公開資料不含電話、不談的話題、AI 訪綱", all(x not in raw for x in ("0912-345-678", "家人", "核心問題")))
+check("公開照片不用簽章就看得到", client.get(f"/rongtree/face/{TOKEN}.jpg").status_code == 200)
+client.post(f"/rongtree/guest/{TOKEN}/card/public?k={k}", data={"public": "0"})
+j = client.get("/api/rongtree/prep").get_json()
+check("按「從公開名單隱藏」後公開名單看不到、照片也關掉", not j["guests"] and j["upcoming"][0]["guest"] == "測試來賓"
+      and client.get(f"/rongtree/face/{TOKEN}.jpg").status_code == 404)
+check("隱藏開關沒簽章 404", client.post(f"/rongtree/guest/{TOKEN}/card/public", data={"public": "1"}).status_code == 404)
+client.post(f"/rongtree/guest/{TOKEN}/card/public?k={k}", data={"public": "1"})
+check("恢復公開", client.get("/api/rongtree/prep").get_json()["guests"][0]["name"] == "測試來賓")
+check("填表頁寫明哪些資料會公開", "姓名、公司職稱、照片與一句話介紹" in client.get(f"/rongtree/guest/{TOKEN}").get_data(as_text=True))
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)

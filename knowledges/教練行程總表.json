@@ -239,7 +239,8 @@
    "end": "20:00",
    "note": "Podcast 訪談",
    "kind": "interview",
-   "reminder_job": "9e2bcf59-a7e2-41c0-b4bd-3659130c64a5"
+   "reminder_job": "9e2bcf59-a7e2-41c0-b4bd-3659130c64a5",
+   "form_token": "mmLIhyXPfHBM"
   },
   {
    "id": "0fdf8b42",
@@ -250,7 +251,8 @@
    "end": "22:00",
    "note": "Podcast 訪談",
    "kind": "interview",
-   "reminder_job": "f9b4906e-53b1-4e71-a826-4e148cf4e0f1"
+   "reminder_job": "f9b4906e-53b1-4e71-a826-4e148cf4e0f1",
+   "form_token": "AQGsXEnm8GKe"
   },
   {
    "id": "70a85050",
@@ -261,7 +263,8 @@
    "source": "預約頁",
    "kind": "interview",
    "tentative": true,
-   "note": "聯絡：0988202178｜主題：生命農業系列報導"
+   "note": "聯絡：0988202178｜主題：生命農業系列報導",
+   "form_token": "VqYnHVbEUd9u"
   },
   {
    "id": "7155a70f",
@@ -272,7 +275,8 @@
    "source": "預約頁",
    "kind": "interview",
    "tentative": true,
-   "note": "聯絡：0988202178｜主題：格蘭西服陳和平總監與順發電腦吳錦昌董事長的公益對談。榮樹下談公益"
+   "note": "聯絡：0988202178｜主題：格蘭西服陳和平總監與順發電腦吳錦昌董事長的公益對談。榮樹下談公益",
+   "form_token": "jsjMtHHEVAp5"
   },
   {
    "id": "09ef1d3a",
@@ -644,7 +648,8 @@
    "start": "18:00",
    "end": "19:00",
    "kind": "interview",
-   "reminder_job": "cc50e786-7e7e-49c0-b05c-3b6d5c7d5f0a"
+   "reminder_job": "cc50e786-7e7e-49c0-b05c-3b6d5c7d5f0a",
+   "form_token": "1gJ61pbcCYAZ"
   },
   {
    "id": "b1b2451a",
@@ -654,7 +659,8 @@
    "start": "20:00",
    "end": "21:00",
    "kind": "interview",
-   "reminder_job": "6a0e586a-5577-4a3d-b1e1-6102b1b2cf03"
+   "reminder_job": "6a0e586a-5577-4a3d-b1e1-6102b1b2cf03",
+   "form_token": "cygLF3ZZsqKt"
   },
   {
    "id": "11a4ef97",
@@ -664,7 +670,8 @@
    "start": "19:00",
    "end": "20:00",
    "kind": "interview",
-   "reminder_job": "bdaf07b0-7714-425a-b6e0-02176814ebea"
+   "reminder_job": "bdaf07b0-7714-425a-b6e0-02176814ebea",
+   "form_token": "rdqI9be31qlk"
   },
   {
    "id": "4f7dbed3",
@@ -674,7 +681,8 @@
    "start": "21:00",
    "end": "22:00",
    "kind": "interview",
-   "reminder_job": "96d7597b-4a6b-49c5-bfb5-ac502dffd877"
+   "reminder_job": "96d7597b-4a6b-49c5-bfb5-ac502dffd877",
+   "form_token": "4kEYvmRlNGsg"
   },
   {
    "id": "d2553599",
@@ -684,7 +692,8 @@
    "start": "18:00",
    "end": "19:00",
    "kind": "interview",
-   "reminder_job": "5b0a86c6-8cb7-4936-81b3-3c1780b599ea"
+   "reminder_job": "5b0a86c6-8cb7-4936-81b3-3c1780b599ea",
+   "form_token": "nlkbExYAopsw"
   },
   {
    "id": "ece9ea4c",
@@ -694,7 +703,8 @@
    "start": "19:00",
    "end": "20:00",
    "kind": "interview",
-   "reminder_job": "56f4e0df-5475-4851-bc78-427fc9740875"
+   "reminder_job": "56f4e0df-5475-4851-bc78-427fc9740875",
+   "form_token": "3ZFc8wM7wqb4"
   },
   {
    "id": "2246ca3e",
@@ -704,7 +714,8 @@
    "start": "20:00",
    "end": "21:00",
    "kind": "interview",
-   "reminder_job": "3b1ad03e-9898-4d07-84e0-6b593a20eaa7"
+   "reminder_job": "3b1ad03e-9898-4d07-84e0-6b593a20eaa7",
+   "form_token": "23xixnRdL_YX"
   },
   {
    "id": "9d8e90be",
@@ -714,7 +725,8 @@
    "start": "19:00",
    "end": "20:00",
    "kind": "interview",
-   "reminder_job": "ec9eaffa-a65d-4e63-832f-7af0b8a98cb4"
+   "reminder_job": "ec9eaffa-a65d-4e63-832f-7af0b8a98cb4",
+   "form_token": "qkSWenL5Mt34"
   },
   {
    "id": "68dd81f2",
@@ -738,7 +750,8 @@
    "tentative": true,
    "booking_type": "榮樹下訪談",
    "booked_by": "邱裕榮",
-   "note": "預約人：邱裕榮（預約頁點選）"
+   "note": "預約人：邱裕榮（預約頁點選）",
+   "form_token": "CKXuWLyoJvVQ"
   },
   {
    "id": "9c078b50",
@@ -3919,7 +3932,7 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-14 03:24",
+ "updated_at": "2026-10-14 03:46",
  "tainan_synced_at": "2026-10-13 03:37",
  "evening_window": {
   "start": "19:00",

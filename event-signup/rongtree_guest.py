@@ -94,6 +94,9 @@ def _conn():
         " ip TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),"
         " updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime')))"
     )
+    if "public" not in [c[1] for c in conn.execute("PRAGMA table_info(rongtree_guest_forms)")]:
+        # 2026-10-14 教練：交了資料的來賓公開列在榮樹下網頁；有人亂填可在來賓卡頁按「從公開名單隱藏」
+        conn.execute("ALTER TABLE rongtree_guest_forms ADD COLUMN public INTEGER NOT NULL DEFAULT 1")
     return conn
 
 
@@ -110,6 +113,87 @@ def all_forms():
                         "ORDER BY date DESC, start DESC").fetchall()
     conn.close()
     return rows
+
+
+# ---------- 公開名單（榮樹下網頁「訪談嘉賓前置作業」區，2026-10-14 教練：誰交了資料公開一目了然）----------
+# 只公開：姓名、公司職稱、照片、一句話介紹、訪談時間。聯絡方式、不談的話題、AI 提醒與訪綱只在簽章來賓卡裡。
+SCRIPT = WS / "scripts" / "coach_schedule.py"
+_forms_at = {"t": 0.0}
+
+
+def _ensure_forms():
+    """每 5 分鐘最多一次：叫 coach_schedule.py 幫接下來每場訪談配好資料表網址（行程表只由那支腳本寫）。"""
+    import time
+    if time.time() - _forms_at["t"] < 300:
+        return
+    _forms_at["t"] = time.time()
+    try:
+        subprocess.run(["/usr/bin/python3", "-I", str(SCRIPT), "ensure-forms"], capture_output=True, timeout=60)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _upcoming(days=60):
+    import datetime as dt
+    tz = dt.timezone(dt.timedelta(hours=8))
+    now = dt.datetime.now(tz)
+    try:
+        data = json.loads(SCHEDULE.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return []
+    out = []
+    for e in data.get("events", []):
+        t = e.get("title", "")
+        if e.get("allday") or not (e.get("booking_type") == "榮樹下訪談" or t.startswith("榮樹下訪談") or t.startswith("訪談預約（待確認）")):
+            continue
+        try:
+            start = dt.datetime.fromisoformat(f"{e['date']}T{e['start']}:00+08:00")
+        except (KeyError, ValueError):
+            continue
+        if now - dt.timedelta(hours=2) <= start <= now + dt.timedelta(days=days):
+            out.append(e)
+    return sorted(out, key=lambda e: (e["date"], e["start"]))
+
+
+def one_liner(r):
+    if r["card_status"] == "done" and r["card"]:
+        m = re.search(r"##\s*一句話介紹\s*\n+\s*(?:[-*]\s*)?(.+)", r["card"])
+        if m:
+            return m.group(1).strip()[:90]
+    d = json.loads(r["data"])
+    return (d.get("intro") or "")[:60]
+
+
+def public_prep():
+    _ensure_forms()
+    conn = _conn()
+    rows = conn.execute("SELECT * FROM rongtree_guest_forms ORDER BY date DESC, start DESC").fetchall()
+    conn.close()
+    by_token = {r["token"]: r for r in rows}
+    upcoming = []
+    for e in _upcoming():
+        tok = e.get("form_token")
+        r = by_token.get(tok) if tok else None
+        upcoming.append({"date": e["date"], "start": e["start"], "end": e.get("end", ""),
+                         "tentative": bool(e.get("tentative")),
+                         "guest": (json.loads(r["data"])["name"] if r and r["public"] else e.get("guest") or ""),
+                         "form": f"/rongtree/guest/{tok}" if tok else "", "submitted": bool(r)})
+    guests = []
+    for r in rows:
+        if not r["public"]:
+            continue
+        d = json.loads(r["data"])
+        guests.append({"name": d.get("name", ""), "title": d.get("title", ""), "line": one_liner(r),
+                       "date": r["date"], "start": r["start"],
+                       "photo": f"/rongtree/face/{r['token']}.jpg" if r["photo_file"] else ""})
+    return {"ok": True, "upcoming": upcoming, "guests": guests}
+
+
+def set_public(token, public: bool):
+    conn = _conn()
+    conn.execute("UPDATE rongtree_guest_forms SET public=? WHERE token=?", (1 if public else 0, token))
+    conn.commit()
+    conn.close()
 
 
 def save(token, ev, payload, ip):
@@ -295,6 +379,7 @@ textarea{{min-height:110px;resize:vertical}}input:focus,textarea:focus{{outline:
 .photo small{{color:var(--mute)}}
 button{{font:500 19px/1 inherit;min-height:56px;padding:0 32px;border:0;border-radius:999px;background:var(--amber);color:#1a1206;cursor:pointer}}
 button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}}.again{{color:var(--amber-hi)}}
+.consent{{color:var(--mute);font-size:16px;margin:4px 0 16px}}.consent b{{color:var(--on-ink)}}
 .done{{display:none;text-align:center;padding:40px 0}}.done h2{{font-size:30px;margin-bottom:12px}}
 </style></head><body><div class="wrap">
 <p class="eyebrow">榮樹下 Podcast</p>
@@ -306,6 +391,7 @@ button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}
 {''.join(rows)}
 <div class="field photo"><label for="photo">個人照片 <span class="opt">選填</span></label>
 <input type="file" id="photo" accept="image/*"><small>{photo_note}</small></div>
+<p class="consent">送出即同意在榮樹下網站公開您的<b>姓名、公司職稱、照片與一句話介紹</b>；聯絡方式與其他內容只給主持人看。</p>
 <button type="submit">送出資料</button><p class="msg" id="msg" role="alert"></p>
 </form>
 <div class="done" id="done" role="status"><h2>已收到，謝謝您！</h2><p class="lead">主持人會在訪談前讀過您的資料。想修改，再打開這個網址重新送出即可。</p></div>
@@ -390,11 +476,12 @@ dt{{font-weight:700;margin-top:12px}}dd{{margin:2px 0 0;white-space:pre-wrap}}
 @media print{{.tools,details summary{{display:none}}details{{display:block}}}}
 </style></head><body><div class="wrap">
 <div class="top">{photo}<div><p class="eyebrow">榮樹下來賓卡</p><h1>{E(d.get('name', ''))}</h1>
-<p class="sub">{E(d.get('title', ''))}｜訪談 {E(r['date'] or '')} {E(r['start'] or '')}</p></div></div>
+<p class="sub">{E(d.get('title', ''))}｜訪談 {E(r['date'] or '')} {E(r['start'] or '')}｜{'榮樹下網頁公開中' if r['public'] else '已從公開名單隱藏'}</p></div></div>
 {card_html}
 <details><summary>來賓填寫的原始資料</summary><dl>{raw}</dl></details>
 <div class="tools">
 <form method="post" action="/rongtree/guest/{token}/card/regen?k={k}"><button>重新產生來賓卡</button></form>
+<form method="post" action="/rongtree/guest/{token}/card/public?k={k}"><input type="hidden" name="public" value="{0 if r['public'] else 1}"><button>{'從公開名單隱藏' if r['public'] else '恢復公開'}</button></form>
 <a href="/rongtree/guest/{token}" target="_blank" rel="noopener">來賓填表頁</a>
 <button onclick="print()">列印</button></div>
 <p class="sub" style="margin-top:24px;font-size:15px">AI 依來賓自填資料整理，訪談前請自行確認內容。最後更新：{E(r['updated_at'])}</p>

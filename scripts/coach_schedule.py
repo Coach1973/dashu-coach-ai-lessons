@@ -720,6 +720,8 @@ def main():
     sg.add_argument("--by", default="")
     gf = sub.add_parser("guest-form")
     gf.add_argument("--id", required=True)
+    ef = sub.add_parser("ensure-forms")
+    ef.add_argument("--days", type=int, default=60)
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
     sub.add_parser("sync-reminders")
@@ -861,6 +863,15 @@ def main():
         url = guest_form_url(hit[0])
         save(data)
         print(url)
+    elif args.cmd == "ensure-forms":
+        # 榮樹下網頁「訪談嘉賓前置作業」區（2026-10-14 教練）：接下來每場訪談都要有來賓資料表網址
+        evs = rongshuxia_upcoming(data, args.days)
+        new = [e for e in evs if not e.get("form_token")]
+        for e in new:
+            guest_form_url(e)
+        if new:
+            save(data)
+        print(f"接下來 {len(evs)} 場榮樹下訪談，新配 {len(new)} 個來賓資料表網址")
     elif args.cmd == "remind":
         hit = [e for e in data["events"] if e["id"] == args.id]
         if not hit:
