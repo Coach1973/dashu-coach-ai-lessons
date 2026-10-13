@@ -680,17 +680,17 @@
       "in_works": true
     },
     {
-      "slug": "zhen-gongyi-v2",
+      "slug": "social-good",
       "title": "真公益｜公益，是有足跡的",
       "description": "真公益企業家俱樂部：不靠口號，憑足跡。發起人大樹教練的公益足跡、媒體報導與照片，以及首批 100 席的加入方式。",
       "category": "教練個人創作",
-      "event_url": "https://event.bymyway.com/curated/zhen-gongyi-v2/",
-      "github_pages_url": "",
+      "event_url": "https://event.bymyway.com/curated/social-good/",
+      "github_pages_url": "https://coach1973.github.io/social-good/",
       "uploaded_at": "2026-10-13 21:32",
       "status": "live",
       "source_package": "20261013-213200__zhen-gongyi-v2-slim.zip",
       "no_shop_card": true,
-      "repo": "Coach1973/zhen-gongyi-v2"
+      "repo": "Coach1973/social-good"
     }
   ],
   "redirects": {
@@ -698,6 +698,8 @@
     "yang-shang-ru-shang-juyangdma": "yang-shang-ru",
     "zhang-teng-wen-teng-wenchang": "flower-site",
     "xing-fu-dao-shi-esther-yang-zai-zhen": "yang-zai-zhen",
-    "qiu-nan-yin-xiao-nan-diao-ke": "xiaonan"
+    "qiu-nan-yin-xiao-nan-diao-ke": "xiaonan",
+    "zhen-gongyi-v2": "social-good",
+    "Social-good": "social-good"
   }
 }
