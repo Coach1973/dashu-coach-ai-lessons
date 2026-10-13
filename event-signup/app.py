@@ -2364,6 +2364,48 @@ def coach_schedule_book(token):
     return reply(True, label=label, type=res["booking_type"])
 
 
+@app.route("/schedule/<token>/cancel", methods=["POST"])
+def coach_schedule_cancel(token):
+    """預約頁的「取消」鈕（教練 2026-10-13）：拿到網址的人可取消總表自己的行程（預約頁／巴哈／榮樹下訪談／每週固定的單一天）；
+    Google 日曆或官方來源的不給取消。取消後通知巴哈群組，讓大家看得到誰的行程被取消了。"""
+    def reply(ok, error=None, status=200, **extra):
+        body = {"ok": ok, **extra}
+        if error:
+            body["error"] = error
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json",
+                        headers={"Cache-Control": "no-store"})
+
+    if not _csv.token_ok(token):
+        abort(404)
+    import time
+    p = request.get_json(force=True, silent=True) or {}
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _SCHEDULE_BOOK_HITS.get("cx:" + ip, []) if now - t < 3600]
+    if len(hits) >= 20:
+        return reply(False, "操作太頻繁，請稍後再試", 429)
+    hits.append(now)
+    _SCHEDULE_BOOK_HITS["cx:" + ip] = hits
+    ok, res = _csv.cancel(str(p.get("id") or ""), str(p.get("date") or ""))
+    if not ok:
+        return reply(False, res, 400)
+
+    def _send_baha(t=f"🗑【行程已取消】{res}\n（預約頁按「取消」；教練 Google 日曆那筆已一起刪除）"):
+        import subprocess
+        try:
+            r = subprocess.run(["/Users/bymyway/.nvm/versions/node/v24.21.0/bin/node",
+                                "/Users/bymyway/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw/openclaw.mjs", "message", "send", "--channel", "telegram",
+                                "--account", "bot_peipei", "--target", "-5115910257", "-m", t],
+                               capture_output=True, text=True, timeout=90)
+            ok2 = r.returncode == 0
+        except Exception:  # noqa: BLE001
+            ok2 = False
+        if not ok2:
+            _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    threading.Thread(target=_send_baha, daemon=True).start()
+    return reply(True, label=res)
+
+
 # ---------- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選） ----------
 # 票數所有人共用；選項只認這份名單（網站代號 → 選項代號），不在名單裡的一律擋下。
 WORKS_POLL_OPTIONS = {"tut-memory": {"t1", "t2", "t3", "t4"}}

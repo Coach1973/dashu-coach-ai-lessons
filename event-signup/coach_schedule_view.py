@@ -22,6 +22,7 @@ TOKEN_FILE = WS / "state" / "coach_schedule_token.txt"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
 DAYS = 28
+CANCELLABLE = ("預約頁", "巴哈", "coach", "教練")  # 跟 coach_schedule.py 的同名常數一致：只有總表自己的行程可取消
 
 
 def token_ok(token: str) -> bool:
@@ -153,6 +154,19 @@ def book(date_s, start_s, booking_type):
         lockf.close()
 
 
+def cancel(item_id, date_s):
+    """預約頁的取消鈕。實際取消交給 coach_schedule.py cancel（同一套：刪行程、清提醒、刪 Google 那筆）。回傳 (ok, 訊息)"""
+    import subprocess
+    if not item_id or len(item_id) > 64:
+        return False, "找不到這筆行程"
+    r = subprocess.run(["/usr/bin/python3", "-I", str(WS / "scripts" / "coach_schedule.py"), "cancel", "--id", item_id, "--date", date_s or ""],
+                       capture_output=True, text=True, timeout=120)
+    out = (r.stdout or "").strip().splitlines()
+    if r.returncode != 0:
+        return False, (out[-1] if out else "取消失敗")
+    return True, out[-1].replace("✅ 已取消：", "") if out else ""
+
+
 def render(token: str = "") -> str:
     """2026-10-13 教練：重新設計得好看一點；點空檔直接出四個類型按鈕，不填姓名電話。"""
     _refresh_google()
@@ -193,9 +207,16 @@ def render(token: str = "") -> str:
             chip = '<span class="chip dt">白天可約</span>'
         else:
             chip = '<span class="chip full">已排滿</span>'
+        def cancel_btn(ev, d=d):
+            if ev.get("source") not in CANCELLABLE and "weekday" not in ev:
+                return ""
+            lab = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）{_show_title(ev)}"
+            return (f'<button type="button" class="cx" data-id="{escape(ev["id"])}" data-d="{d.isoformat()}" '
+                    f'data-l="{escape(lab)}{"（每週固定，只取消這一次）" if "weekday" in ev else ""}">取消</button>')
+
         busy_html = "".join(
             f'<li class="{"tn" if ev.get("tentative") else ""}"><time>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"}</time>'
-            f'<span>{escape(_show_title(ev))}{"<em>待確認</em>" if ev.get("tentative") else ""}</span></li>'
+            f'<span>{escape(_show_title(ev))}{"<em>待確認</em>" if ev.get("tentative") else ""}</span>{cancel_btn(ev)}</li>'
             for s_, e_, ev in busy
         )
         slots = slot_btns(d, eve_starts, "eve") + slot_btns(d, day_starts, "dayt")
@@ -264,6 +285,9 @@ summary::-webkit-details-marker{{display:none}}summary::before{{content:"＋ "}}
 .busy{{list-style:none;margin:8px 0 0;padding:0}}
 .busy li{{display:flex;gap:12px;padding:6px 0;border-top:1px dashed var(--line)}}
 .busy time{{flex:none;width:96px;color:var(--mut);font-variant-numeric:tabular-nums}}
+.busy li span{{flex:1;min-width:0}}
+.cx{{flex:none;font:inherit;font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--red);cursor:pointer}}
+.cx:hover{{border-color:var(--red)}}.cx:disabled{{opacity:.5;cursor:wait}}
 .busy em{{font-style:normal;font-size:.75rem;color:var(--amber);margin-left:6px}}
 .foot{{color:var(--mut);font-size:.82rem;margin-top:28px;text-align:center}}
 dialog{{border:0;border-radius:20px;padding:0;width:min(440px,calc(100% - 32px));background:var(--paper);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.25)}}
@@ -309,6 +333,12 @@ document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
  cur={{d:b.dataset.d,t:b.dataset.t,l:b.dataset.l}};sheet.innerHTML=orig;bind();
  document.getElementById('pick').textContent=b.dataset.l;
  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}}}});
+document.querySelectorAll('.cx').forEach(function(b){{b.onclick=function(){{
+ if(!confirm('確定要取消這筆行程嗎？\n\n'+b.dataset.l+'\n\n取消後教練的 Google 日曆也會一起刪掉。'))return;
+ b.disabled=true;b.textContent='取消中…';
+ fetch('/schedule/{token}/cancel',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{id:b.dataset.id,date:b.dataset.d}})}})
+ .then(function(r){{return r.json()}}).then(function(j){{if(j.ok)location.reload();else{{alert(j.error||'取消失敗，請稍後再試');b.disabled=false;b.textContent='取消'}}}})
+ .catch(function(){{alert('網路異常，請稍後再試');b.disabled=false;b.textContent='取消'}});}}}});
 dlg.addEventListener('click',function(e){{if(e.target===dlg)dlg.close()}});
 dlg.addEventListener('close',function(){{if(sheet.dataset.ok)location.reload()}});
 function book(type){{

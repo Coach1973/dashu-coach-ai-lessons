@@ -518,6 +518,50 @@ def push_google(data):
     return added, updated, removed, errs
 
 
+CANCELLABLE = ("預約頁", "巴哈", "coach", "教練")
+
+
+def cancel_item(data, item_id, date_s):
+    """預約頁「取消」按鈕用。單次行程＝整筆刪；每週固定行程＝只取消 date_s 那一天（加進 skip）。
+    連同 Google 日曆裡我們寫過的那一筆、前 1 小時提醒一起清掉。只動總表自己的行程，來自 Google 日曆或大台南官方的不動。
+    回傳 (訊息, 錯誤)。"""
+    ev = next((e for e in data["events"] if e["id"] == item_id), None)
+    if ev is not None:
+        if ev.get("source") not in CANCELLABLE:
+            return None, "這筆行程來自 Google 日曆或官方行事曆，請到來源那邊取消"
+        cancel_reminder(ev)
+        data["events"] = [e for e in data["events"] if e["id"] != item_id]
+        label = f"{ev['date']} {ev.get('start', '整天')} {google_summary(ev)}"
+        gid_key = item_id
+    else:
+        r = next((x for x in data.get("recurring", []) if x["id"] == item_id), None)
+        if r is None:
+            return None, "找不到這筆行程（可能剛被取消了）"
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_s or ""):
+            return None, "日期格式不正確"
+        r.setdefault("skip", [])
+        if date_s not in r["skip"]:
+            r["skip"].append(date_s)
+        label = f"{date_s} {r['start']} {r['title']}（只取消這一次）"
+        gid_key = None
+    try:  # 之前寫進教練 Google 日曆的那一筆（含第一批補寫的）也刪掉
+        with open(GCAL_MAP, encoding="utf-8") as f:
+            m = json.load(f)
+        gid = m.get("map", {}).get(gid_key) if gid_key else None
+        if gid:
+            rc, out, err = _gog("calendar", "delete", GCAL_ACCOUNT, gid, "-y")
+            if rc != 0:
+                label += "（Google 日曆那筆沒刪成功，請手動刪）"
+            else:
+                m["map"].pop(gid_key, None)
+                m.get("snap", {}).pop(gid_key, None)
+                with open(GCAL_MAP, "w", encoding="utf-8") as f:
+                    json.dump(m, f, ensure_ascii=False, indent=1)
+    except OSError:
+        pass
+    return label, None
+
+
 def ensure_fresh(max_age=60):
     """用到行程資料的當下才去看一次 Google 日曆（超過 max_age 秒沒看才看）。教練 10/13：不輪詢、不通知通道，
     有人打開預約頁／預約／巴哈報行程／查空檔的那一刻，當下現看，永遠是最新的，連「刪除」也不會漏。
@@ -655,6 +699,9 @@ def main():
     sub.add_parser("sync-tainan")
     sub.add_parser("sync-google")
     sub.add_parser("push-google")
+    cx = sub.add_parser("cancel")
+    cx.add_argument("--id", required=True)
+    cx.add_argument("--date", default="")
     sub.add_parser("ensure-fresh")
     rs = sub.add_parser("rongshuxia")
     rs.add_argument("--days", type=int, default=60)
@@ -728,6 +775,17 @@ def main():
             raise SystemExit(f"找不到 id={args.id}")
         save(data)
         print(f"✅ 已刪除 id={args.id}")
+    elif args.cmd == "cancel":
+        import fcntl
+        with open(DATA + ".lock", "w") as lockf:
+            fcntl.flock(lockf, fcntl.LOCK_EX)
+            data = load()
+            msg, err = cancel_item(data, args.id, args.date)
+            if err:
+                print(err)
+                raise SystemExit(1)
+            save(data)
+        print(f"✅ 已取消：{msg}")
     elif args.cmd == "confirm":
         hit = [e for e in data["events"] if e["id"] == args.id]
         if not hit:
