@@ -16,3 +16,7 @@
 # 給Meta審核人員/網路爬蟲看，不是教練或訪客會主動點進去用的功能頁，
 # 2026-09-11確認不收錄進coach888（放進去反而讓教練誤以為是個功能）。
 /privacy-policy/fb-poster-app
+
+# 2026-10-14 榮樹下來賓卡後台的「舊長連結」（/rongtree/cards?k=簽章）。coach888 已收錄短網址版
+# https://event.bymyway.com/rongtree/a/<12字>（活動後台），兩者是同一頁；長連結只為相容保留，不重複收錄。
+/rongtree/cards
