@@ -518,6 +518,28 @@ def push_google(data):
     return added, updated, removed, errs
 
 
+def ensure_fresh(max_age=60):
+    """用到行程資料的當下才去看一次 Google 日曆（超過 max_age 秒沒看才看）。教練 10/13：不輪詢、不通知通道，
+    有人打開預約頁／預約／巴哈報行程／查空檔的那一刻，當下現看，永遠是最新的，連「刪除」也不會漏。
+    Google 讀不到就用現有資料，不影響原本動作。"""
+    import fcntl
+    import time
+    if not DATA.endswith("教練行程總表.json"):
+        return
+    try:
+        if time.time() - load().get("google_synced_epoch", 0) < max_age:
+            return
+        with open(DATA + ".lock", "w") as lockf:
+            fcntl.flock(lockf, fcntl.LOCK_EX)
+            d = load()
+            if time.time() - d.get("google_synced_epoch", 0) < max_age:   # 等鎖的時候別人剛看過
+                return
+            sync_google(d)
+            save(d)
+    except (Exception, SystemExit) as ex:  # noqa: BLE001
+        print(f"（Google 日曆這次沒讀到，先用現有行程：{ex}）", file=sys.stderr)
+
+
 def sync_google(data, days=120):
     """讀教練 Google 日曆（非公開 iCal，唯讀）進總表，來源標「Google日曆」。Google 是教練親手維護的，同時段以它為準，
     總表裡跟它重複的手動／大台南項目標 covered_by_google，不再雙列。"""
@@ -589,6 +611,7 @@ def sync_google(data, days=120):
                       if (d0 + dt.timedelta(days=i)).weekday() == r["weekday"]
                       and in_google((d0 + dt.timedelta(days=i)).isoformat(), r["start"], r["end"], r["title"])]
     data["google_synced_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
+    data["google_synced_epoch"] = int(__import__("time").time())
     return len(new), cov
 
 
@@ -632,6 +655,7 @@ def main():
     sub.add_parser("sync-tainan")
     sub.add_parser("sync-google")
     sub.add_parser("push-google")
+    sub.add_parser("ensure-fresh")
     rs = sub.add_parser("rongshuxia")
     rs.add_argument("--days", type=int, default=60)
     sg = sub.add_parser("set-guest")
@@ -649,6 +673,9 @@ def main():
     dr.add_argument("--send", action="store_true")
     args = p.parse_args()
 
+    if args.cmd in ("add", "remove", "confirm", "set-guest", "check", "list", "soon", "rongshuxia", "daily-report",
+                    "ensure-fresh") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        ensure_fresh()
     data = load()
     if args.cmd == "add":
         dt.date.fromisoformat(args.date)
@@ -824,6 +851,8 @@ def main():
                 fcntl.flock(lockf, fcntl.LOCK_EX)
                 a_, u_, r_, errs = push_google(load())
             print(f"📤 寫回 Google：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))
+    elif args.cmd == "ensure-fresh":
+        pass  # 上面已經 ensure_fresh 過了
     elif args.cmd == "push-google":
         a_, u_, r_, errs = push_google(load())
         print(f"📤 寫回 Google：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))

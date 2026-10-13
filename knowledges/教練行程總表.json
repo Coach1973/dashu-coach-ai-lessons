@@ -3168,7 +3168,7 @@
   {
    "id": "gcal-2027-01-28-302",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3176,7 +3176,7 @@
   {
    "id": "gcal-2027-01-28-303",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3982,7 +3982,7 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-13 21:43",
+ "updated_at": "2026-10-13 21:49",
  "tainan_synced_at": "2026-10-13 03:37",
  "evening_window": {
   "start": "19:00",
@@ -4026,5 +4026,6 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-13 21:43"
+ "google_synced_at": "2026-10-13 21:49",
+ "google_synced_epoch": 1791899347
 }
