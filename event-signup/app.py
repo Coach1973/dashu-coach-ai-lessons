@@ -1845,7 +1845,7 @@ CURATED_REPOS_DIR = Path("/Users/bymyway/github_repos")
 CURATION_UPLOAD_DIR = Path(__file__).resolve().parent / "curation_uploads"
 CURATION_KINDS = {"shop": "店家策展", "creation": "大樹作品"}
 CURATED_REGISTRY_PATH = Path(__file__).resolve().parent / "curated_sites_registry.json"
-_CURATED_SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,60}$")
+_CURATED_SLUG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]{0,60}$")
 
 
 def _load_curated_registry() -> dict:
