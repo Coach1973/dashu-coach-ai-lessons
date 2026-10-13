@@ -16,3 +16,33 @@
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3344] User: 1｜首屏主視覺**（2400×1350，最重要的一張） > 極深的海洋藍背景，中央懸浮一片發光的石墨烯六角晶格薄膜，晶格透出冰藍色微光；無數半透明青藍色水分子自畫面上方如細雨落下、穿過晶格；極少數金色粒子被晶格攔住、停在膜上微微發亮。左側三分之一刻意留暗、留空，供文字疊加。電影級側逆光、體積光、淺景深、超寫實科學攝影、4K。 **圖 2｜氫與氘的對比**（正方形） > 純黑背景中兩顆球體粒子並列：左邊是輕盈的白色氫粒子，高速旋轉、拖著明亮青藍光尾；右邊是沉緩的金色氘粒子，拖著模糊金色殘影。中間有隱約的分子通道輪廓。極簡科學視覺化、高對比、乾淨
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3344] User: 清晨陽光下的公園步道，白髮長者與家人並肩散步、笑容自在，逆光剪影、溫暖金色晨光、綠意、淺景深、真實紀錄片風格。 **圖 8｜人物形象照**（3:4） > 一位五十多歲東亞男性，身穿深海藍高領衫或白袍，側身望向遠處，神情沉穩自信，背景是模糊的實驗室與水波光紋，側面柔光、冷色調、專業人物形象照。 > ⚠️ **圖 8 只當備用概念圖**。楊博士的形象照一定要實拍 —— AI 生的人臉放上個人品牌頁，被認出來是假的，信任一次就沒了。 **三個技術提醒** 1. **瓶身標籤一律指定「無文字」**。AI 生圖上的字一定是亂碼，標籤文字我用網頁疊上去，
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3344] User: 筆 **我同時做** → 把 v2 骨架搭起來（粒子首屏、數據動畫、預留八個圖片插槽、預留專利時間軸） **圖和資料到齊** → 直接嵌進去定版 你說一聲「開始做 v2」我就動工。另外那五項人物資料（全名、學歷、現職、照片、聯絡方式）還是最優先，那是整頁唯一的空洞。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3345] Assistant: 教練 — 聽懂了，8 張開跑（LK888 一次連跑，預估 5-8 分鐘，不中斷詢問）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3348] Assistant: 教練 — batch script 已寫到 `/tmp/batch8_yang_lab.py`（8 張統一色票 + 負面詞、LK888 gpt-image-2、間隔 5s）。直接 background 跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3351] Assistant: 教練 — 看一下 8 張 batch 跑了幾張、存了哪些：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3354] Assistant: 教練 — tender-wharf batch 跑了但 1 分鐘內被殺、沒產出任何圖。我看一下 log 找出原因，然後改用更安全的方式重跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3357] Assistant: 教練 — 8 張 batch 被背景機制殺在第 1 張就中斷了（log 顯示「[1/8] img01_hero」後就沒了）。改用更可靠的方式：分 4 批跑（每批 2 張，1-2 分鐘），這樣不會撞到長 process 被殺的上限：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3360] Assistant: 教練 — 聽懂了，8 張開跑。分 4 批（每批 2 張，1-2 分鐘）避免背景機制殺 process。先跑第 1 批（圖 1 hero + 圖 2 氫氘對比）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3363] Assistant: 教練 — 看一下第 1 批（圖 1+2）跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3366] Assistant: 教練 — 圖 1 已存（cache_hit 免費回傳），圖 2 在 sleep 期間被殺沒存到。我繼續跑剩下的（圖 2-8，分 4 批）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3369] Assistant: 教練 — 聽懂了，繼續跑剩 7 張（第 1 張已 cache_hit 免費拿到）。分批跑避免背景機制殺 process：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3372] Assistant: 教練 — 看一下 dawn-ember 第 2 批（圖 2+3）跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3375] Assistant: 教練 — 我繼續跑剩 7 張。檢查目前 data 狀態：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3378] Assistant: 教練 — 圖 1+2 已存（圖 2 有兩個 timestamp 但是同一張，cache 機制回傳兩次），繼續跑圖 3+4：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3381] Assistant: 教練 — 看一下 quiet-claw 第 3 批（圖 3+4）跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3384] Assistant: 教練 — 看一下 quiet-claw 第 3 批（圖 3+4）跑到哪了：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3387] Assistant: 教練 — 圖 1+2 已存，quiet-claw 跑圖 3 時被殺。繼續跑圖 3+4：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3390] Assistant: 教練 — 看一下 vivid-slug 第 3 批重跑（圖 3+4）有沒有出圖：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3393] Assistant: 教練 — 圖 1+2+3 已存（cache 重複各多一份，沒多扣點），繼續跑圖 4+5：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3396] Assistant: 教練 — 看一下 calm-dune 第 4 批（圖 4+5）跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3399] Assistant: 教練 — 看一下 calm-dune 第 4 批（圖 4+5）跑到哪了：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3402] Assistant: 教練 — 看一下 data 跟 log：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3405] Assistant: 教練 — 圖 4 被殺沒存到，重跑圖 4+5：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3408] Assistant: 教練 — 看一下 tender-crest 第 4 批（圖 4+5）跑到哪了：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3411] Assistant: 教練 — 圖 1-4 已存（cache 重複多份都沒扣點），繼續跑圖 5+6：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3414] Assistant: 教練 — 看一下 tidy-crustacean 第 5 批（圖 5+6）跑到哪了：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3417] Assistant: 教練 — 聽懂了，繼續跑剩 4 張。圖 1-4 已存（cache 重複都沒扣點），接著跑圖 5+6：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3420] Assistant: 教練 — 聽懂了，繼續跑剩 4 張。圖 1-4 已存（cache 重複多份都沒扣點），接著跑圖 5+6：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3423] Assistant: 教練 — 看一下 nova-bloom 第 5 批（圖 5+6）跑完沒：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3426] Assistant: 教練 — 圖 1-4 已存（cache 重複多份都沒扣點），剩圖 5-8 繼續跑。先跑圖 5+6：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3429] Assistant: 教練 — marine-sable 第 5 批（圖 5+6）跑起來了，等它出圖：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3432] Assistant: 教練 — 圖 1-5 已存（cache 重複多份都沒扣點），剩圖 6+7+8 繼續跑。先跑圖 6+7：
