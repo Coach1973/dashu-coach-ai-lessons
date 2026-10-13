@@ -43,24 +43,6 @@
    "where": "台中"
   },
   {
-   "id": "59c30fa3",
-   "date": "2026-10-22",
-   "title": "活動助理（林鴻昌主持）",
-   "source": "巴哈",
-   "allday": true,
-   "note": "時間地點未定",
-   "tentative": true
-  },
-  {
-   "id": "5785e750",
-   "date": "2026-11-19",
-   "title": "活動主持（林昔霞助理）",
-   "source": "巴哈",
-   "allday": true,
-   "note": "時間地點未定",
-   "tentative": true
-  },
-  {
    "id": "94bcf875",
    "date": "2026-10-13",
    "title": "藍天屏（線上教練一起）",
@@ -704,6 +686,19 @@
    "start": "21:00",
    "end": "22:00",
    "kind": "interview"
+  },
+  {
+   "id": "5515f0f6",
+   "date": "2026-10-15",
+   "start": "19:00",
+   "end": "20:00",
+   "title": "榮樹下訪談（待確認）",
+   "source": "預約頁",
+   "kind": "interview",
+   "tentative": true,
+   "booking_type": "榮樹下訪談",
+   "booked_by": "邱裕榮",
+   "note": "預約人：邱裕榮（預約頁點選）"
   }
  ],
  "recurring": [
@@ -862,16 +857,6 @@
    "until": "2026-12-26"
   },
   {
-   "id": "8c99d99d",
-   "weekday": 6,
-   "start": "19:30",
-   "end": "20:30",
-   "title": "學法",
-   "source": "巴哈",
-   "since": "2026-10-18",
-   "until": "2026-12-27"
-  },
-  {
    "id": "22bf8fd0",
    "weekday": 6,
    "start": "21:00",
@@ -958,7 +943,7 @@
    "soft": true
   }
  ],
- "updated_at": "2026-10-13 08:21",
+ "updated_at": "2026-10-13 10:29",
  "tainan_synced_at": "2026-10-13 03:37",
  "evening_window": {
   "start": "19:00",
