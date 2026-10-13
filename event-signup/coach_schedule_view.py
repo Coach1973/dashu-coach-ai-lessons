@@ -63,6 +63,8 @@ def _busy(d, data):
     iso = d.isoformat()
     out = []
     for e in data.get("events", []):
+        if e.get("covered_by_google"):  # 2026-10-13：同一件 Google 日曆已有，不重複列（同 coach_schedule.blocks_on）
+            continue
         if e["date"] <= iso <= e.get("end_date", e["date"]):
             out.append((0, 1440, e) if e.get("allday") else (_hm(e["start"]), _hm(e["end"]), e))
     for r in data.get("recurring", []):
@@ -72,7 +74,7 @@ def _busy(d, data):
             continue
         if r.get("until") and iso > r["until"]:
             continue
-        if iso in r.get("skip", []):
+        if iso in r.get("skip", []) or iso in r.get("gskip", []):
             continue
         out.append((_hm(r["start"]), _hm(r["end"]), r))
     return sorted(out, key=lambda x: x[0])

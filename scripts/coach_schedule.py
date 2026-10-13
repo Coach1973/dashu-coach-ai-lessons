@@ -403,6 +403,28 @@ def sync_tainan(data):
     return len(new)
 
 
+def google_title(title, d, start):
+    """Google 行程照教練 10/13 定的名稱規則改名（見 simplify_tainan_title）；回傳 None＝教練說不是行程，不列入。
+    只改總表裡的顯示名稱，不動教練的 Google 日曆。"""
+    t = simplify_tainan_title(title)
+    if t.startswith("公告") or "歸仁學法點" in t or "倒垃圾" in t:
+        return None  # 教練 10/13：公告主持人提醒、歸仁學法點不是行程；倒垃圾回收＝總表固定的「家務時間」
+    wd = d.weekday()
+    if wd == 0 and start == "20:00" and "諮詢會議" in t:
+        return None  # 教練 10/13：週一 20:00-21:00 的諮詢會議刪除（教練的是 21:00-22:00）
+    if t == "學法":
+        return "線上學習"
+    if t in ("BNI全台交流", "線上學習-成功見証分享會") or (wd in (0, 3) and start == "17:30" and "分享會" in t):
+        return "分享會"
+    if 1 <= wd <= 4 and start and start < "10:00" and ("例會" in t or t == "真鑽會議"):
+        return "BNI 例會"
+    if wd == 1 and start == "21:30" and "真誠分會固定上線" in t:
+        return "團隊會議"
+    if wd == 2 and "方碩方" in t:
+        return "團隊週會"
+    return t
+
+
 def sync_google(data, days=120):
     """讀教練 Google 日曆（非公開 iCal，唯讀）進總表，來源標「Google日曆」。Google 是教練親手維護的，同時段以它為準，
     總表裡跟它重複的手動／大台南項目標 covered_by_google，不再雙列。"""
@@ -412,9 +434,14 @@ def sync_google(data, days=120):
     got = gcal_ical.events_between(gcal_ical.fetch(), d0, d0 + dt.timedelta(days=days))
     if len(got) < 5:
         raise SystemExit("Google 日曆只讀到 %d 筆，可能網址失效，保留舊資料不覆蓋" % len(got))
-    seen, new = set(), []
+    seen, new, merged_starts = set(), [], {}
     for g in sorted(got, key=lambda g: (g["date"], g["start"] or "")):
-        title = "線上學習" if g["title"] == "學法" else g["title"]  # 教練 10/13：行程名稱「學法」一律「線上學習」
+        title = google_title(g["title"], dt.date.fromisoformat(g["date"]), g["start"])
+        if title is None:
+            continue
+        for o in data.get("tainan_overrides", []):  # 教練改過時間的（LTRT／RPL 撞期）Google 讀進來一樣照改
+            if not g["allday"] and o["date"] == g["date"] and o["title"] == title:
+                g = {**g, "start": o["start"], "end": o["end"]}
         key = (g["date"], g["start"], g["end"], title)
         if key in seen:
             continue  # Google 裡 Cal.com 同步造成的重複只在這裡合併，不動教練日曆
@@ -426,19 +453,34 @@ def sync_google(data, days=120):
                 ev["end_date"] = g["end_date"]
         else:
             ev["start"], ev["end"] = g["start"], g["end"]
+        last = new[-1] if new else None
+        if (last and not ev.get("allday") and not last.get("allday") and last["date"] == ev["date"]
+                and last["title"] == ev["title"] and ev["start"] < last["end"]):
+            last["end"] = max(last["end"], ev["end"])  # 改名後同名又重疊（例：真鑽會議 06:00＋真鑽分會週例會 06:30）合成一筆
+            merged_starts.setdefault(ev["date"], set()).add(ev["start"])  # 被合併那筆的開始時間也要拿去比對總表
+            continue
         new.append(ev)
     data["events"] = [e for e in data["events"] if e.get("source") != "Google日曆"] + new
-    gstart = {}  # 日期 → 該日 Google 行程的開始時間集合
+    gstart = {k: set(v) for k, v in merged_starts.items()}  # 日期 → 該日 Google 行程的開始時間集合
     gallday = set()
     for e in new:
         if e.get("allday"):
             gallday.add(e["date"])
         else:
             gstart.setdefault(e["date"], set()).add(e["start"])
+    gtitled = {}  # 日期 → [(開始, 結束, 名稱)]：同名又重疊也算同一件（例：Google 06:00 BNI 例會 vs 總表固定 06:30）
+    for e in new:
+        if not e.get("allday"):
+            gtitled.setdefault(e["date"], []).append((e["start"], e["end"], e["title"]))
+
+    def in_google(date, start, end, title):
+        return start in gstart.get(date, ()) or any(t == title and s < end and start < x
+                                                     for s, x, t in gtitled.get(date, ()))
+
     cov = 0
     for e in data["events"]:
         if e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest"):
-            hit = (e["date"] in gallday) if e.get("allday") else (e.get("start") in gstart.get(e["date"], ()))
+            hit = (e["date"] in gallday) if e.get("allday") else in_google(e["date"], e["start"], e["end"], e["title"])
             e["covered_by_google"] = bool(hit)
             cov += bool(hit)
             if not hit:
@@ -446,7 +488,7 @@ def sync_google(data, days=120):
     for r in data.get("recurring", []):
         r["gskip"] = [(d0 + dt.timedelta(days=i)).isoformat() for i in range(days + 1)
                       if (d0 + dt.timedelta(days=i)).weekday() == r["weekday"]
-                      and r["start"] in gstart.get((d0 + dt.timedelta(days=i)).isoformat(), ())]
+                      and in_google((d0 + dt.timedelta(days=i)).isoformat(), r["start"], r["end"], r["title"])]
     data["google_synced_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
     return len(new), cov
 
