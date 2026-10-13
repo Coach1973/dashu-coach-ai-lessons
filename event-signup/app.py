@@ -2351,6 +2351,15 @@ def coach_schedule_book(token):
         if not ok:
             _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
     threading.Thread(target=_send_baha, daemon=True).start()
+
+    def _push_google():  # 預約一成功就寫進教練 Google 日曆；失敗沒關係，每 15 分鐘的同步會補
+        import subprocess
+        try:
+            subprocess.run(["/usr/bin/python3", "-I", str(_csv.WS / "scripts" / "coach_schedule.py"), "push-google"],
+                           capture_output=True, text=True, timeout=120)
+        except Exception:  # noqa: BLE001
+            pass
+    threading.Thread(target=_push_google, daemon=True).start()
     return reply(True, label=label, type=res["booking_type"])
 
 

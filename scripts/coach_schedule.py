@@ -425,6 +425,99 @@ def google_title(title, d, start):
     return t
 
 
+GCAL_ACCOUNT = "bymyway7@gmail.com"
+GCAL_MAP = os.path.expanduser("~/.openclaw/workspace/state/gcal_sync_map.json")
+GCAL_PUSH_SOURCES = ("預約頁", "巴哈", "coach", "教練")  # 大台南行事曆是官方來源，不往教練日曆寫
+
+
+def _gog(*args, timeout=60):
+    import subprocess
+    r = subprocess.run(["/opt/homebrew/bin/gog", "-a", GCAL_ACCOUNT, "--no-input", *args],
+                       capture_output=True, text=True, timeout=timeout)
+    return r.returncode, (r.stdout or ""), (r.stderr or "")
+
+
+def google_summary(ev):
+    """寫進教練 Google 日曆的名稱：跟預約頁／報告顯示的一樣；預約者姓名電話不寫。"""
+    if ev.get("guest"):
+        t = f"榮樹下訪談：{guest_text(ev)}"
+    elif ev.get("source") == "預約頁":
+        t = ev.get("booking_type") or "榮樹下訪談"
+    else:
+        t = ev["title"]
+    t = t.replace("（待確認）", "").replace("（已確認）", "")
+    return t + ("（待確認）" if ev.get("tentative") else "")
+
+
+def _gcal_times(ev):
+    if ev.get("allday"):
+        last = dt.date.fromisoformat(ev.get("end_date", ev["date"]))
+        return ev["date"], (last + dt.timedelta(days=1)).isoformat(), True   # 整天行程結束日不含
+    return f"{ev['date']}T{ev['start']}:00+08:00", f"{ev['date']}T{ev['end']}:00+08:00", False
+
+
+def push_google(data):
+    """把總表裡「Google 還沒有」的行程寫進教練 Google 日曆（用 gog，教練已授權的帳號）。
+    - 新增：預約頁／巴哈／榮樹下訪談等行程，Google 同時段已有就不寫（covered_by_google）。
+    - 更新：之前由這支程式寫過的行程，名稱或時間改了（待確認→確認、改時間）就同步更新。
+    - 刪除：之前由這支程式寫過、現在總表已移除的預約（取消預約）才刪；第一批由連接器手動補寫的 16 筆不自動刪。
+    編號對照存 state/gcal_sync_map.json（總表 id → Google 行程編號；snap＝寫進去時的內容）。回傳 (新增, 更新, 刪除, 失敗訊息)"""
+    try:
+        with open(GCAL_MAP, encoding="utf-8") as f:
+            m = json.load(f)
+    except OSError:
+        m = {"說明": "行程總表id→Google日曆event id", "map": {}}
+    gmap, snap = m.setdefault("map", {}), m.setdefault("snap", {})
+    today_s, added, updated, removed, errs = today().isoformat(), 0, 0, 0, []
+    live = {e["id"]: e for e in data["events"]}
+    for e in data["events"]:
+        if e.get("source") not in GCAL_PUSH_SOURCES:
+            continue
+        if e.get("end_date", e["date"]) < today_s:
+            continue
+        frm, to, allday = _gcal_times(e)
+        summ = google_summary(e)
+        sig = f"{summ}|{frm}|{to}|{e.get('where', '')}"
+        gid = gmap.get(e["id"])
+        if gid is None:
+            if e.get("covered_by_google"):
+                continue
+            args = ["calendar", "create", GCAL_ACCOUNT, "--summary", summ, "--from", frm, "--to", to, "--json", "--results-only"]
+            if allday:
+                args.append("--all-day")
+            if e.get("where"):
+                args += ["--location", e["where"]]
+            rc, out, err = _gog(*args)
+            mm = re.search(r'"id"\s*:\s*"([^"]+)"', out)
+            if rc != 0 or not mm:
+                errs.append(f"新增失敗 {e['date']} {summ}：{(err or out)[-160:]}")
+                continue
+            gmap[e["id"]], snap[e["id"]] = mm.group(1), sig
+            added += 1
+        elif e["id"] in snap and snap[e["id"]] != sig:
+            args = ["calendar", "update", GCAL_ACCOUNT, gid, "--summary", summ, "--from", frm, "--to", to]
+            if e.get("where"):
+                args += ["--location", e["where"]]
+            rc, out, err = _gog(*args)
+            if rc != 0:
+                errs.append(f"更新失敗 {e['date']} {summ}：{(err or out)[-160:]}")
+                continue
+            snap[e["id"]] = sig
+            updated += 1
+    for sid in [k for k in list(snap) if k not in live]:   # 只處理本程式寫過的；預約被取消＝總表已移除
+        rc, out, err = _gog("calendar", "delete", GCAL_ACCOUNT, gmap[sid], "-y")
+        if rc == 0:
+            gmap.pop(sid, None), snap.pop(sid, None)
+            removed += 1
+        else:
+            errs.append(f"刪除失敗 {sid}：{(err or out)[-160:]}")
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(GCAL_MAP), suffix=".tmp")
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        json.dump(m, f, ensure_ascii=False, indent=1)
+    os.replace(tmp, GCAL_MAP)
+    return added, updated, removed, errs
+
+
 def sync_google(data, days=120):
     """讀教練 Google 日曆（非公開 iCal，唯讀）進總表，來源標「Google日曆」。Google 是教練親手維護的，同時段以它為準，
     總表裡跟它重複的手動／大台南項目標 covered_by_google，不再雙列。"""
@@ -477,10 +570,16 @@ def sync_google(data, days=120):
         return start in gstart.get(date, ()) or any(t == title and s < end and start < x
                                                      for s, x, t in gtitled.get(date, ()))
 
+    try:
+        with open(GCAL_MAP, encoding="utf-8") as f:
+            pushed = set(json.load(f).get("map", {}))   # 已寫進 Google 的總表行程：以 Google 那筆為準，名稱不同也不雙列
+    except OSError:
+        pushed = set()
     cov = 0
     for e in data["events"]:
-        if e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest"):
-            hit = (e["date"] in gallday) if e.get("allday") else in_google(e["date"], e["start"], e["end"], e["title"])
+        if (e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest")) or (e["id"] in pushed and e.get("source") != "Google日曆"):
+            hit = (e["date"] in gallday) if e.get("allday") else (
+                e["start"] in gstart.get(e["date"], ()) if e["id"] in pushed else in_google(e["date"], e["start"], e["end"], e["title"]))
             e["covered_by_google"] = bool(hit)
             cov += bool(hit)
             if not hit:
@@ -532,6 +631,7 @@ def main():
     cf.add_argument("--id", required=True)
     sub.add_parser("sync-tainan")
     sub.add_parser("sync-google")
+    sub.add_parser("push-google")
     rs = sub.add_parser("rongshuxia")
     rs.add_argument("--days", type=int, default=60)
     sg = sub.add_parser("set-guest")
@@ -719,7 +819,31 @@ def main():
             n, cov = sync_google(data)
             save(data)
         print(f"✅ Google 日曆已同步 {n} 筆（總表原有 {cov} 筆因 Google 已有而不重複計）")
+        if not os.environ.get("COACH_SCHEDULE_NO_PUSH"):
+            with open(DATA + ".lock", "w") as lockf:
+                fcntl.flock(lockf, fcntl.LOCK_EX)
+                a_, u_, r_, errs = push_google(load())
+            print(f"📤 寫回 Google：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))
+    elif args.cmd == "push-google":
+        a_, u_, r_, errs = push_google(load())
+        print(f"📤 寫回 Google：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))
+
+
+def main_then_push():
+    """巴哈助理／LINE 小龍蝦用 add／remove／confirm／set-guest 改了總表，當下就寫回教練 Google 日曆（失敗不影響原本動作，15 分鐘的同步會補）。"""
+    main()
+    if len(sys.argv) > 1 and sys.argv[1] in ("add", "remove", "confirm", "set-guest") and not os.environ.get("COACH_SCHEDULE_DRYRUN") \
+            and not os.environ.get("COACH_SCHEDULE_NO_PUSH") and DATA.endswith("教練行程總表.json"):
+        try:
+            import fcntl
+            with open(DATA + ".lock", "w") as lockf:
+                fcntl.flock(lockf, fcntl.LOCK_EX)
+                a_, u_, r_, errs = push_google(load())
+            if a_ or u_ or r_ or errs:
+                print(f"📤 已寫回 Google 日曆：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))
+        except Exception as ex:  # noqa: BLE001
+            print(f"⚠️ 寫回 Google 日曆沒成功（15 分鐘後的同步會補）：{ex}")
 
 
 if __name__ == "__main__":
-    main()
+    main_then_push()
