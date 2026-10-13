@@ -29,3 +29,4 @@ metadata:
 - 預約頁不填姓名電話：點空檔→四個按鈕，「榮樹下訪談」＝邱裕榮；「咖啡會議／電話回訪／入會訪談」＝陳佩君老師（BNI）。其他類型（諮詢會議、分享會、線上學習、戰報）不開放。教練語音「錄會訪談」＝入會訪談（BNI 12 項實戰學能之一）。類型表在 `event-signup/coach_schedule_view.py` 的 `BOOKING_TYPES`。
 - **登記訪談對象（10/13）**：邱裕榮先定時間、對象之後才定。群組小龍蝦列「🎙️ 榮樹下已預約」；邱裕榮／教練說「哪場訪問誰」→ 模型在回覆尾巴寫 `⟦登記對象⟧ id｜對象｜類別`，外掛 message_sending 送出前真的跑 `coach_schedule.py set-guest`（通知巴哈群組＋排開始前 1 小時 openclaw cron 提醒，cron 要 `--no-deliver`），暗號換成登記結果；外人說的不登記。LINE 不支援快速回覆按鈕（OpenClaw 沒有），選時間靠預約頁。
 - **巴哈群組（10/13）**：每天 07:00 `daily-report --send`（cron id ed6ef8a3）；預約頁通知改送巴哈群組（bot_peipei），失敗才退回活動報名群；佩佩老師（8786886419）問行程也注入今日報告。網站服務／cron 呼叫 openclaw 要直接用 node＋openclaw.mjs（PATH 沒 node）。
+- **前 1 小時提醒（10/13 教練）**：榮樹下訪談只要「已確定」（add／confirm／set-guest 任一）就排 openclaw cron 一次性提醒，到點 `coach_schedule.py remind` 同時發 LINE 榮樹下群組＋巴哈群組「一個小時之後即將有 Podcast 訪談，請提早做好準備，上線做準備」；待確認的不排；行程改時間則作廢（remind 時重算）；`sync-reminders` 補漏，每日 07:00 報告時順手補。LINE 群組每則推播要算人數×則數的額度（群約 17 人），訪談多時留意 LINE 官方帳號額度。10/22 是分享會助理 17:30–19:00（不是整天），11/19 教練已調班不用寫。
