@@ -209,12 +209,16 @@
   {
    "id": "2ac5c915",
    "date": "2026-10-13",
-   "title": "榮樹下訪談",
+   "title": "榮樹下訪談：張麗蝶總經理",
    "source": "巴哈",
    "start": "19:00",
    "end": "20:00",
    "note": "Podcast 訪談",
-   "kind": "interview"
+   "kind": "interview",
+   "guest": "張麗蝶總經理",
+   "guest_field": "照明產業",
+   "guest_by": "邱裕榮",
+   "reminder_job": "499547df-90a0-4a5f-9616-6a262b5eea17"
   },
   {
    "id": "cfe88924",
@@ -224,7 +228,8 @@
    "start": "19:00",
    "end": "20:00",
    "note": "Podcast 訪談",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "9e2bcf59-a7e2-41c0-b4bd-3659130c64a5"
   },
   {
    "id": "0fdf8b42",
@@ -234,7 +239,8 @@
    "start": "21:00",
    "end": "22:00",
    "note": "Podcast 訪談",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "f9b4906e-53b1-4e71-a826-4e148cf4e0f1"
   },
   {
    "id": "70a85050",
@@ -613,7 +619,8 @@
    "source": "coach",
    "start": "18:00",
    "end": "19:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "cc50e786-7e7e-49c0-b05c-3b6d5c7d5f0a"
   },
   {
    "id": "b1b2451a",
@@ -622,7 +629,8 @@
    "source": "coach",
    "start": "20:00",
    "end": "21:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "6a0e586a-5577-4a3d-b1e1-6102b1b2cf03"
   },
   {
    "id": "11a4ef97",
@@ -631,7 +639,8 @@
    "source": "coach",
    "start": "19:00",
    "end": "20:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "bdaf07b0-7714-425a-b6e0-02176814ebea"
   },
   {
    "id": "4f7dbed3",
@@ -640,7 +649,8 @@
    "source": "coach",
    "start": "21:00",
    "end": "22:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "96d7597b-4a6b-49c5-bfb5-ac502dffd877"
   },
   {
    "id": "d2553599",
@@ -649,7 +659,8 @@
    "source": "coach",
    "start": "18:00",
    "end": "19:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "5b0a86c6-8cb7-4936-81b3-3c1780b599ea"
   },
   {
    "id": "ece9ea4c",
@@ -658,7 +669,8 @@
    "source": "coach",
    "start": "19:00",
    "end": "20:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "56f4e0df-5475-4851-bc78-427fc9740875"
   },
   {
    "id": "2246ca3e",
@@ -667,7 +679,8 @@
    "source": "coach",
    "start": "20:00",
    "end": "21:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "3b1ad03e-9898-4d07-84e0-6b593a20eaa7"
   },
   {
    "id": "9d8e90be",
@@ -676,7 +689,8 @@
    "source": "coach",
    "start": "19:00",
    "end": "20:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "ec9eaffa-a65d-4e63-832f-7af0b8a98cb4"
   },
   {
    "id": "68dd81f2",
@@ -685,7 +699,8 @@
    "source": "coach",
    "start": "21:00",
    "end": "22:00",
-   "kind": "interview"
+   "kind": "interview",
+   "reminder_job": "5a858626-04d3-4010-9751-823483a5e754"
   },
   {
    "id": "5515f0f6",
@@ -699,6 +714,14 @@
    "booking_type": "榮樹下訪談",
    "booked_by": "邱裕榮",
    "note": "預約人：邱裕榮（預約頁點選）"
+  },
+  {
+   "id": "9c078b50",
+   "date": "2026-10-22",
+   "title": "分享會（助理，林鴻昌主持）",
+   "source": "教練",
+   "start": "17:30",
+   "end": "19:00"
   }
  ],
  "recurring": [
@@ -943,7 +966,7 @@
    "soft": true
   }
  ],
- "updated_at": "2026-10-13 10:29",
+ "updated_at": "2026-10-13 10:47",
  "tainan_synced_at": "2026-10-13 03:37",
  "evening_window": {
   "start": "19:00",

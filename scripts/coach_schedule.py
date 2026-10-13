@@ -17,12 +17,15 @@
   coach_schedule.py sync-tainan
   coach_schedule.py rongshuxia [--days 60]            # 未來的榮樹下訪談（含 id 與訪談對象）
   coach_schedule.py set-guest --id <id> --guest 王小明 [--field 綠能] [--by 邱裕榮]   # 登記對象＋通知巴哈＋排開始前 1 小時提醒
-  coach_schedule.py remind --id <id>                   # 提醒排程到點時呼叫，送提醒到巴哈群組
+  coach_schedule.py remind --id <id>                   # 提醒排程到點時呼叫，同時送 LINE 榮樹下群組＋巴哈群組
+  coach_schedule.py sync-reminders                     # 幫所有「已確定」的未來榮樹下訪談補排前 1 小時提醒（漏的才補）
   coach_schedule.py daily-report [--date YYYY-MM-DD] [--send]   # 每日行程報告（今天行程＋可約空檔＋預約頁），--send 貼到巴哈群組
 
 2026-10-13 教練：榮樹下的時間由邱裕榮先定、對象之後才定。邱裕榮在 LINE 群組講「哪一場訪問誰」
 → 群組小龍蝦（schedule-context 外掛）呼叫 set-guest → 巴哈助理群組收到「教練，幾月幾號榕樹下要跟某某訪談」，
 並排一個開始前 1 小時的提醒（openclaw cron 一次性工作，id 記在事件的 reminder_job；改對象就換新、刪行程就一起刪）。
+2026-10-13 教練再要求：不管有沒有填對象，只要榮樹下訪談「確定」了（add／confirm／set-guest），就排前 1 小時提醒，
+到點同時發 LINE 榮樹下群組和巴哈群組：「一個小時之後即將有 Podcast 訪談，請提早做好準備，上線做準備」。待確認的不排。
 """
 import argparse
 import datetime as dt
@@ -229,6 +232,27 @@ def cancel_reminder(ev):
         subprocess.run([*_oc(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
 
 
+LINE_GROUP = "C2f85a1e6010c4be676b93c5386da3d66"  # LINE「榮樹下談公益」群組
+
+
+def send_line_group(msg):
+    import subprocess
+    cmd = [*_oc(), "message", "send", "--channel", "line", "--account", "default", "--target", LINE_GROUP, "-m", msg]
+    if os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        cmd.append("--dry-run")
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    return r.returncode == 0, (r.stderr or r.stdout)[-300:]
+
+
+def ensure_reminder(ev, force=False):
+    """已確定的未來榮樹下訪談 → 排前 1 小時提醒；待確認、已排過（沒要求重排）、已過期都不動。回傳說明文字或 None"""
+    if ev.get("allday") or ev.get("tentative") or not is_rongshuxia(ev):
+        return None
+    if ev.get("reminder_job") and not force:
+        return None
+    return schedule_reminder(ev)
+
+
 def schedule_reminder(ev):
     """開始前 1 小時提醒（已過就不排）。到點跑 remind --id，當下再讀總表，對象改過或行程刪了都以最新為準。"""
     import subprocess
@@ -417,6 +441,7 @@ def main():
     sg.add_argument("--by", default="")
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
+    sub.add_parser("sync-reminders")
     dr = sub.add_parser("daily-report")
     dr.add_argument("--date")
     dr.add_argument("--send", action="store_true")
@@ -444,8 +469,11 @@ def main():
         if args.tentative:
             ev["tentative"] = True
         data["events"].append(ev)
+        rem = ensure_reminder(ev)
         save(data)
         print(f"✅ 已寫入行程總表 id={ev['id']}")
+        if rem:
+            print(f"⏰ {rem}")
         print(check(data, dt.date.fromisoformat(args.date)))
         if args.notify_baha:
             notify_baha(ev)
@@ -479,9 +507,12 @@ def main():
         # 預約頁新格式（有 booking_type）確認後就是乾淨的類型名稱，例：榮樹下訪談
         hit[0]["title"] = (f"榮樹下訪談：{hit[0]['guest']}" if hit[0].get("guest") else
                            hit[0].get("booking_type") or hit[0]["title"].replace("（待確認）", "（已確認）"))
+        rem = ensure_reminder(hit[0])
         save(data)
         print(f"✅ 已確認 id={args.id}：{hit[0]['date']} {hit[0].get('start','')} {hit[0]['title']}")
         print(hit[0].get("note", ""))
+        if rem:
+            print(f"⏰ {rem}")
     elif args.cmd == "check":
         start = hm(args.start) if args.start else None
         print(check(data, dt.date.fromisoformat(args.date), start, args.minutes, args.private))
@@ -513,7 +544,7 @@ def main():
             ev["guest_by"] = args.by[:20]
         if not ev.get("tentative"):
             ev["title"] = f"榮樹下訪談：{guest}"
-        rem = schedule_reminder(ev)
+        rem = ensure_reminder(ev, force=True) or "（這個時段還在待確認，教練確認後才會排提醒）"
         save(data)
         d = dt.date.fromisoformat(ev["date"])
         when = f"{day_label(d)} {ev['start']}-{ev['end']}"
@@ -529,13 +560,36 @@ def main():
             print("行程已刪除，不提醒")
             return
         ev = hit[0]
+        if ev.get("tentative"):
+            print("這場又變回待確認，不提醒")
+            return
+        mins = (dt.datetime.fromisoformat(f"{ev['date']}T{ev['start']}:00+08:00") - dt.datetime.now(TZ)).total_seconds() / 60
+        if not (-5 <= mins <= 90) and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+            print(f"行程時間已改（現在離開始還有 {int(mins)} 分鐘），這個提醒作廢")
+            return
         g = guest_text(ev)
-        ok, err = send_baha(f"⏰ 教練，1 小時後（{ev['start']}）榮樹下訪談" + (f"：{g}" if g else "（訪談對象還沒填）"))
-        print("✅ 已提醒" if ok else f"⚠️ 提醒送出失敗：{err}")
+        text = f"⏰ 一個小時之後（{ev['start']}）即將有 Podcast 訪談" + (f"（訪談對象：{g}）" if g else "") + "，請提早做好準備，上線做準備。"
+        ok1, err1 = send_line_group(text)
+        ok2, err2 = send_baha(text)
+        print(f"LINE 榮樹下群組：{'✅' if ok1 else '⚠️ 失敗 ' + err1}｜巴哈群組：{'✅' if ok2 else '⚠️ 失敗 ' + err2}")
+        if not (ok1 or ok2):
+            raise SystemExit(1)
+    elif args.cmd == "sync-reminders":
+        n = 0
+        for e in rongshuxia_upcoming(data, 60):
+            r = ensure_reminder(e)
+            if r:
+                n += 1
+                print(f"{e['date']} {e['start']}：{r}")
+        save(data)
+        print(f"✅ 補排了 {n} 個提醒")
     elif args.cmd == "daily-report":
         d = dt.date.fromisoformat(args.date) if args.date else today()
         msg = daily_report(data, d)
         if args.send:
+            for e in rongshuxia_upcoming(data, 14):   # 順手補排漏掉的提醒
+                ensure_reminder(e)
+            save(data)
             ok, err = send_baha(msg)
             print("✅ 已貼到巴哈助理群組" if ok else f"⚠️ 貼到巴哈助理群組失敗：{err}")
         else:
