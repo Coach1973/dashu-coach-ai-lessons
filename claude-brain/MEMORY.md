@@ -1,6 +1,6 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
-- [📅 教練Google日曆非公開iCal網址已存憑證層(機器人不登入就能讀，340筆實測通)；日曆早分享給「陳佩貞amber840214」有編輯權(是否佩佩老師待確認)；Google與行程總表是兩本帳(2026-10-13)](reference_google_calendar_private_ical_for_bots_2026-10-13.md)
+- [📅 教練Google日曆非公開iCal網址已存憑證層(機器人不登入就能讀，340筆實測通)；陳佩貞／a39521102 已由教練自己移除、陳佩貞不是佩佩老師；Google與行程總表是兩本帳(2026-10-13)](reference_google_calendar_private_ical_for_bots_2026-10-13.md)
 - [🔴 離會的人不留在培訓總覽／來賓總覽：以三戰情表在籍為準，補信用證時同輪處理；BNI-Training/departed.py＋同人不同寫法要放ALIASES防誤刪(2026-10-13)](feedback_departed_members_removed_from_training_guests_overview_2026-10-13.md)
 - [📅 教練行程總表名稱簡化規則（分享會／BNI 例會／MSP／LTRT只留代碼等），sync-tainan 內建(2026-10-13)](reference_coach_schedule_title_rules_2026-10-13.md)
 - [🔧 小龍蝦記憶搜尋 llama-server 2.1GB→0.66GB：外掛把 ubatch-size 寫死2048，改用包裝腳本 llama-server-lite.sh 壓成1024；外掛更新後要重查；釋放不碰小龍蝦(2026-10-12)](reference_llama_server_memory_ubatch_wrapper_2026-10-12.md)

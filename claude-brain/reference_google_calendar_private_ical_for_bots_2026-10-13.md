@@ -1,6 +1,6 @@
 ---
 name: reference_google_calendar_private_ical_for_bots_2026-10-13
-description: 教練 Google 日曆(bymyway7@gmail.com)的非公開 iCal 網址已存 Mac 憑證層，機器人可不登入每天讀；日曆早就分享給「陳佩貞 amber840214」有編輯權
+description: 教練 Google 日曆(bymyway7@gmail.com)的非公開 iCal 網址已存 Mac 憑證層，機器人可不登入每天讀；原分享名單的陳佩貞／a39521102 教練 10/13 已自己移除，現在只有教練本人
 metadata:
   node_type: memory
   type: reference
@@ -12,7 +12,7 @@ metadata:
 
 - **讀取通道已通**：非公開 iCal 網址存 `~/.openclaw/credentials/google_calendar_private_ical_url.txt`（權限 600，在 git 忽略範圍外的憑證層，不進任何 commit）。實測 HTTP 200、340 筆活動。排程／機器人用 curl 讀即可，不用教練登入。網址外洩要到 Google 日曆設定→整合日曆按「重設」。
 - **Google 日曆設定頁**：`calendar.google.com/calendar/u/0/r/settings/calendar/YnlteXdheTdAZ21haWwuY29t`（教練 Chrome 已登入，用 claude-in-chrome 可讀，捲動用 get_page_text 比截圖省）。
-- **共用名單**：a39521102@gmail.com（查看活動詳細資料）、「陳佩貞」amber840214@gmail.com（進行變更並管理共用設定＝可編輯）。陳佩貞是不是佩佩老師（陳佩君）**尚未確認**。
+- **共用名單（2026-10-13 20:29 教練確認）**：原有 a39521102@gmail.com（只能看）、「陳佩貞」amber840214@gmail.com（可編輯），陳佩貞**不是**佩佩老師(陳佩君)；兩個都是教練自己移除的，現在只剩教練本人。佩佩老師要自己加行程，需要教練給她的 Gmail 再共用(可編輯)——**尚未做、不要自己猜她的帳號**。我用 claude-in-chrome 點叉叉時按了三次都沒反應，之後教練自己移除；改共用設定時按完要重新載入頁面讀回名單再下結論。
 - **Google 日曆跟本機「行程總表」(knowledges/教練行程總表.json) 是兩本帳**：Google 有歸仁學法點學法、依倫等；總表有榮樹下訪談、預約頁預約。Google 因 Cal.com 同步有重複項（真誠分會固定上線、戰報會議等各兩筆）。
 - 桌面版 Claude 的 Google Calendar 連接器(list_events)能讀寫，但只在桌面版對話內可用，排程機器人用不到。
 
