@@ -16,9 +16,10 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 import urllib.error
 import urllib.request
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote, urlencode
 
@@ -2429,6 +2430,60 @@ def _works_poll_counts(site: str) -> dict:
     counts = {o: 0 for o in WORKS_POLL_OPTIONS[site]}
     counts.update({r["option_id"]: r["n"] for r in rows if r["option_id"] in counts})
     return counts
+
+
+# ---- 榮樹下節目單：SoundOn 上架新集數，網頁開啟時自己讀 RSS 補上（教練 2026-10-13，不用手動補）----
+ROUNG_FEED = "https://feeds.soundon.fm/podcasts/01bac58b-741f-4cbc-8fa6-58dd45f24923.xml"
+_rong_cache = {"at": 0.0, "items": []}
+
+
+def _rong_parse_feed(xml_text: str) -> list:
+    import xml.etree.ElementTree as ET
+    ns = {"itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd"}
+    out = []
+    for it in ET.fromstring(xml_text).iter("item"):
+        title = (it.findtext("title") or "").strip()
+        link = (it.findtext("link") or "").strip()
+        guid = (it.findtext("guid") or "").strip()
+        if not title or not guid:
+            continue
+        ver = "live" if "實況" in title else "highlight"
+        guest = re.sub(r"^【[^】]*】\s*", "", title)
+        guest = re.sub(r"^第\s*\d+\s*集\s*[:：]\s*", "", guest)
+        guest = re.sub(r"\s*[\(（][^\)）]*版[\)）]\s*$", "", guest).strip()
+        desc = re.sub(r"\s+", " ", (it.findtext("description") or "")).strip()
+        try:
+            sec = int(it.findtext("itunes:duration", default="0", namespaces=ns))
+        except ValueError:
+            sec = 0
+        dur = f"{sec // 3600}:{sec % 3600 // 60:02d}:{sec % 60:02d}" if sec >= 3600 else f"{sec // 60}:{sec % 60:02d}"
+        try:
+            from email.utils import parsedate_to_datetime
+            day = parsedate_to_datetime(it.findtext("pubDate")).astimezone(timezone(timedelta(hours=8))).strftime("%Y.%m.%d")
+        except Exception:
+            day = ""
+        out.append({"id": guid, "url": link, "title": guest, "version": ver, "desc": desc[:140], "dur": dur, "date": day})
+    return out[::-1]  # 舊→新
+
+
+@app.route("/api/rongtree/episodes", methods=["GET"])
+def api_rongtree_episodes():
+    """同源給 /curated/rongtree/ 的 JS 用；5 分鐘快取，SoundOn 暫時連不上就給上一份（網頁還是有靜態名單當底）"""
+    now = time.time()
+    if now - _rong_cache["at"] > 300:
+        try:
+            req = urllib.request.Request(ROUNG_FEED, headers={"User-Agent": "rongtree-site/1.0"})
+            with urllib.request.urlopen(req, timeout=10) as r:
+                items = _rong_parse_feed(r.read().decode("utf-8", "replace"))
+            if items:
+                _rong_cache.update(at=now, items=items)
+        except Exception as exc:
+            print(f"[rongtree-episodes] 讀 SoundOn 失敗，沿用上一份：{exc}", flush=True)
+            _rong_cache["at"] = now - 240  # 1 分鐘後再試，不要每個訪客都重打
+    resp = Response(json.dumps({"ok": True, "episodes": _rong_cache["items"]}, ensure_ascii=False), mimetype="application/json")
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Cache-Control"] = "public, max-age=120"
+    return resp
 
 
 @app.route("/api/works/poll/<site>", methods=["GET"])
