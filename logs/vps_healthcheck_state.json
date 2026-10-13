@@ -1,9 +1,9 @@
 {
-  "lastCheckAt": "2026-10-03 08:00:02",
+  "lastCheckAt": "2026-10-13 08:00:05",
   "status": "OK",
   "users_24h": 0,
   "msgs_24h": 0,
-  "users_7d": 0,
+  "users_7d": 2,
   "app_version": "2026.5.27",
-  "results": ["✅ SSH 連通","✅ Docker 容器: Up 8 days (healthy)","✅ Gateway 24h 錯誤數: 1（< 50 容忍值）","ℹ️ 使用量：近24小時0人（0則），近7天0人","ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）"]
+  "results": ["✅ SSH 連通","✅ Docker 容器: Up 2 weeks (healthy)","✅ Gateway 24h 錯誤數: 3（< 50 容忍值）","ℹ️ 使用量：近24小時0人（0則），近7天2人","ℹ️ 24h 內未見模型載入訊息（可能容器穩定運行 > 24h）"]
 }

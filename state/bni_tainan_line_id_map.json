@@ -54,5 +54,13 @@
     "guessedMember": null,
     "confidence": "unmatched",
     "firstSeenAt": "2026-09-22T14:56:13.702Z"
+  },
+  "ub649e83a4f10d87aa55b0fff6a541f1b": {
+    "userId": "ub649e83a4f10d87aa55b0fff6a541f1b",
+    "displayName": "許朝竣［維尼］",
+    "statusMessage": "百聖廣告設計工程有限公司",
+    "guessedMember": "許朝竣（大圖輸出）",
+    "confidence": "high_name_match",
+    "firstSeenAt": "2026-10-12T01:11:57.213Z"
   }
 }

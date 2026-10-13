@@ -1,11 +1,11 @@
 ---
 name: feedback_prefer_event_trigger_google_push_misses_deletes_2026-10-13
-description: 教練討厭每15分鐘輪詢；Google日曆改用 events.watch 即時通知(新增<10秒)，但實測刪除不會通知，所以留每3小時保險＋每天續約
+description: 教練討厭輪詢；Google 日曆最後採「用到才現看」(ensure_fresh 60 秒)，不用通知通道；通知通道實測不通知刪除、壽命 7 天要換；接手別人輪詢先退一步問最簡單做法
 metadata:
   type: feedback
 ---
 
-教練 10/13 21:15：「我很不喜歡這種每15分鐘就輪詢的機制，你確定要這麼做嗎？」→ 輪詢的理由(「Google 沒程式介面無法即時通知」)其實不成立，是接手時沿用沒重新檢討。
+教練 10/13 21:15「我很不喜歡這種每15分鐘就輪詢的機制」→ 我先改成 Google events.watch 通知通道＋保險＋續約（越做越複雜，教練問「每個人同步行事曆都這麼麻煩嗎？」「為什麼到現在才想到？浪費我非常多的時間」）→ 最後改成「用到才現看」。
 
-**Why:** 執行細則 N5：事件觸發優先，能觸發就別輪詢。
-**How to apply:** 接手別人的輪詢排程先問「這件事發生當下能不能直接觸發」。Google Calendar：`scripts/gcal_watch.py`(start/renew/status/stop)＋`event-signup` 的 `/hooks/gcal-push`；不需先驗證網域；通道最長 7 天要續。**實測新增行程 <10 秒到、刪除行程 3 分鐘以上沒通知**——所以仍留一個每 3 小時的保險核對(cron b2a3dd9b)，並向教練講清楚「一天跑 8 次、只是防漏」。相關：[[reference_google_calendar_private_ical_for_bots_2026-10-13]]
+**Why:** 執行細則 N5 事件觸發優先；但「事件」不一定要對方通知我——**使用者要用資料的那一刻**就是最好的事件（預約頁開啟／預約／巴哈報行程）。新增行程通知 <10 秒到，但刪除行程 Google 不通知（3 分鐘以上沒來）、通道只活 7 天要換，維護成本大於好處。
+**How to apply:** 接手別人做好的輪詢，先退一步問「用的人需要最新資料的那一刻，我能不能當下去拿」，不要先想外部通知／webhook。實作：`coach_schedule.py ensure_fresh(60)`，`google_synced_epoch` 判斷；Google 讀不到用現有資料。教訓：我在原設計上層層疊加(通知通道→保險→續約)，教練連問三次才退一步，應該在第一次聽到「不喜歡輪詢」時就問最簡單做法。相關：[[reference_google_calendar_private_ical_for_bots_2026-10-13]]

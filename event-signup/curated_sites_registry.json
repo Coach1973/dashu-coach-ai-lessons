@@ -654,6 +654,43 @@
       "source_package": "20261012-040358__doc_1662294385ff_joseph-cloth-v10-download.zip",
       "no_shop_card": true,
       "repo": "Coach1973/joseph-cloth"
+    },
+    {
+      "slug": "rongtree",
+      "title": "榮樹下｜邱裕榮與吳大樹談古論今聊家常",
+      "description": "榮樹下 Podcast——邱裕榮與吳大樹在榕樹下專訪企業家與發明家。做對的事，自然把事做對；商業即公益，利他即商業。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/rongtree/",
+      "github_pages_url": "https://coach1973.github.io/rongtree/",
+      "uploaded_at": "2026-10-13 03:43",
+      "status": "live",
+      "source_package": "20261013-034314__doc_c5df80cac43e_rongshuxia-site.zip",
+      "in_works": true
+    },
+    {
+      "slug": "scott-dr",
+      "title": "曾志雄博士 Dr. Scott｜成大資工博士・傑飛特科技董事長・AI 實作者",
+      "description": "曾志雄博士（Dr. Scott），國立成功大學資訊工程博士、傑飛特科技股份有限公司董事長、中國文化大學財務金融學系兼任助理教授。從大學時期開計程車籌學費，到帶領團隊把 AI 帶進餐飲、零售與校園。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/scott-dr/",
+      "github_pages_url": "https://coach1973.github.io/scott-dr/",
+      "uploaded_at": "2026-10-13 11:43",
+      "status": "live",
+      "source_package": "20261013-114246__doc_933569f72d26_scott-dr-site-v2.zip",
+      "in_works": true
+    },
+    {
+      "slug": "zhen-gongyi-v2",
+      "title": "真公益｜公益，是有足跡的",
+      "description": "真公益企業家俱樂部：不靠口號，憑足跡。發起人大樹教練的公益足跡、媒體報導與照片，以及首批 100 席的加入方式。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/zhen-gongyi-v2/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-13 21:32",
+      "status": "live",
+      "source_package": "20261013-213200__zhen-gongyi-v2-slim.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/zhen-gongyi-v2"
     }
   ],
   "redirects": {
