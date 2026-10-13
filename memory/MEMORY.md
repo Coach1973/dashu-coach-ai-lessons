@@ -80,3 +80,4 @@
 **資料來源：** 2026-04-26 頂級特助分工群對話紀錄
 - [🔧 BNI 三分會網域真名對照 + zhenzuan-webapp 退役 + 真鑫 active 名單扣掉離會 2 人(2026-09-18)](reference_chapter_real_names_and_zhenzuan_webapp_retired_2026-09-18.md)
 - [🔴 輪詢vs事件觸發第5次：前端 setInterval 定時刷新也是輪詢，要掛在使用者動作上才查(2026-07-28)](feedback_event_driven_not_polling_pattern.md)
+- [📝 網頁佔位字（待確認）先查原始報導補齊，不丟給教練；標題排版先想再改(2026-10-14教練糾正)](feedback_check_source_before_leaving_placeholder_2026-10-14.md)
