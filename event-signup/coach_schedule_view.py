@@ -104,9 +104,20 @@ def _starts(slots):
     return out
 
 
+def _refresh_google():
+    """打開預約頁、預約的當下才去看 Google 日曆（一分鐘內看過就不再看）；讀不到就用現有資料。"""
+    import subprocess
+    try:
+        subprocess.run(["/usr/bin/python3", "-I", str(WS / "scripts" / "coach_schedule.py"), "ensure-fresh"],
+                       capture_output=True, text=True, timeout=25)
+    except Exception:  # noqa: BLE001
+        pass
+
+
 def book(date_s, start_s, booking_type):
     """預約一個 1 小時時段：寫成「待確認」的行程（先占位，教練確認或取消）。
     回傳 (ok, 訊息或事件)。伺服器端重新檢查，不信任網頁送來的時段與類型。"""
+    _refresh_google()
     booking_type = (booking_type or "").strip()
     if booking_type not in BOOKING_TYPES:
         return False, "請選擇預約類型"
@@ -144,6 +155,7 @@ def book(date_s, start_s, booking_type):
 
 def render(token: str = "") -> str:
     """2026-10-13 教練：重新設計得好看一點；點空檔直接出四個類型按鈕，不填姓名電話。"""
+    _refresh_google()
     data = json.loads(DATA.read_text(encoding="utf-8"))
     win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})

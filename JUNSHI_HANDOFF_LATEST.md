@@ -1,9 +1,9 @@
-## 🔴 補充（2026-10-13 21:30，教練不喜歡每 15 分鐘輪詢→改 Google 即時通知）
+## 🔴 最終版（2026-10-13 21:55，教練「討厭輪詢、為何這麼麻煩」→ 改成「用到才現看 Google」，推翻前面所有通知通道／輪詢做法）
 
-- **Google→總表 改成事件觸發**：`scripts/gcal_watch.py` 向 Google 申請 `events.watch` 通知通道（教練日曆一變動，Google 敲 `https://event.bymyway.com/hooks/gcal-push`，暗號 `state/gcal_watch_token.txt`，入口在 `event-signup/app.py`，等 3 秒合併連發後跑 `sync-google`）。**不需要先驗證網域**（Google 直接接受）。授權沿用 `gog`（匯出暫存檔→換短時效 token→立刻刪）。通道狀態 `state/gcal_watch.json`，壽命 7 天。
-- **實測**：Google 新增行程 → 不到 10 秒總表自動同步（輪詢還有 8 分鐘才跑，不是輪詢的功勞）。**但 Google 刪除行程後 3 分鐘以上都沒送通知**（日誌 `event-signup/webapp.error.log` 只有 21:21:13 sync、21:21:27 新增兩筆 200）→ 只靠通知會漏刪除。
-- **處理**：舊輪詢 cron `b2a3dd9b` 沒拿掉，降成**每 3 小時的保險核對**（原每 15 分鐘）；新增續約排程 `5256e16a` 每天檢查一次，通道剩不到 2 天才換（`gcal_watch.py renew`，已用 `/usr/bin/python3 -I` 實跑）。教練如果連保險都不要：`openclaw cron rm b2a3dd9b`，代價是漏刪除時預約頁會留著舊行程直到下次通知。
-- 測試殘留已清（Google 11/30 測試行程已刪、總表同步後 0 筆）。
+- **Google→總表 = 用到才現看**：`coach_schedule.py` 新增 `ensure_fresh(60)`：總表記 `google_synced_epoch`，任何人要用行程時（預約頁 `render()`／`book()` 經 `coach_schedule_view._refresh_google()`、巴哈 `add／remove／confirm／set-guest／check／list／soon／rongshuxia／daily-report`）若超過 60 秒沒看就先讀一次 Google（iCal，約 0.8 秒）；60 秒內略過（0.05 秒）。Google 讀不到就用現有資料。**實測：Google 新增→立刻查得到、Google 刪除→立刻查不到**（通知通道做不到刪除）。
+- **已拆除（不要再做）**：Google 通知通道（events.watch）、`/hooks/gcal-push` 入口、`gcal_watch.py`、cron `b2a3dd9b`（15 分→3 小時保險）、cron `5256e16a`（續約）。現在 **沒有任何 Google 相關定時工作**。Google 通知通道實測不通知刪除、壽命 7 天要換，不值得（見記憶）。
+- **寫（Mac→Google）**仍是事件觸發：`push-google`（`gog`），預約成功當下、`add／remove／confirm／set-guest` 當下立刻寫；`state/gcal_sync_map.json` 對照。
+- 今晚走彎路的教訓：接手別人的輪詢先問「最簡單怎麼讓用的人看到最新」，不要在原設計上層層加；「事件觸發」＝有人要用的那一刻，不一定是「對方通知我」。
 
 ---
 
@@ -12,7 +12,7 @@
 **主軸：行程總表 ⇄ 教練 Google 日曆「兩本合一」完成，讀＋寫都通。**
 
 - **讀（另一對話框 21:00 做好，cron `b2a3dd9b` 每 15 分鐘）**：`coach_schedule.py sync-google`。本棒補上：Google 讀進來也套教練 10/13 的名稱規則（新增 `google_title()`：公告主持人提醒／歸仁學法點／倒垃圾／週一 20:00 諮詢會議不列、BNI全台交流→分享會、早上例會→BNI 例會、方碩方→團隊週會、週二 21:30→團隊會議、學法→線上學習）、`tainan_overrides` 也套到 Google（LTRT 20-21、RPL 21-22）、同名重疊合一、預約頁 `_busy` 也跳過 `covered_by_google`／`gskip`。commit `41487f804`。
-- **寫（本棒新做）**：`coach_schedule.py push-google`（用 `gog`，教練 bymyway7 的 OAuth 早就在，Calendar API 其實是開的，不用建機器人帳號／帳單帳戶——先前判斷「缺 API 開關」不成立，讀寫都實測通）。總表有、Google 沒有的行程（來源預約頁／巴哈／coach／教練）自動新增；名稱／時間改了（待確認→確認）自動更新；預約被取消（總表移除）自動刪；**第一批連接器手動補寫的 16 筆不自動刪**。對照表 `state/gcal_sync_map.json`（`map`＝總表 id→Google id，`snap`＝本程式寫入時的內容）。觸發：①每 15 分鐘 sync-google 後接著 push ②`add／remove／confirm／set-guest` 當下 ③預約頁預約成功當下（`event-signup/app.py` 背景呼叫 push-google）。
+- **寫（本棒新做）**：`coach_schedule.py push-google`（用 `gog`，教練 bymyway7 的 OAuth 早就在，Calendar API 其實是開的，不用建機器人帳號／帳單帳戶——先前判斷「缺 API 開關」不成立，讀寫都實測通）。總表有、Google 沒有的行程（來源預約頁／巴哈／coach／教練）自動新增；名稱／時間改了（待確認→確認）自動更新；預約被取消（總表移除）自動刪；**第一批連接器手動補寫的 16 筆不自動刪**。對照表 `state/gcal_sync_map.json`（`map`＝總表 id→Google id，`snap`＝本程式寫入時的內容）。觸發：①（已改）sync-google 時順便 push ②`add／remove／confirm／set-guest` 當下 ③預約頁預約成功當下（`event-signup/app.py` 背景呼叫 push-google）。
 - **實測（真 Google 日曆讀回）**：新增 4 筆（11/25-26 台北開課整天、10/13 咖啡會議／榮樹下訪談張麗蝶／全球健康發展協會大會）時間名稱都對；重跑 0 筆（不重複寫）；測試預約 新增→確認→取消 = 新增→更新→刪除，測完清乾淨，11/30 無殘留。**預約頁那條路沒有真的點預約測**（會真的通知巴哈群組），程式碼走的是同一支 push-google，15 分鐘同步兜底。
 - 沒動的：Google 裡本來就撞期的（10/13 14:00 依倫／和李瑞惠、週一 22:00 戰報會議／啟動分會DnA週報）是教練日曆本身的，不是同步造成。
 - 教練說明：Cal.com 不用管；佩佩老師不用 Google，一切透過巴哈助理（巴哈 add 當下就會寫進 Google）。
@@ -103,3 +103,18 @@
 **15:41 收工補充：** 已寫信給 Mac 軍師（`cross-agent/inbox/mac/20261012-1540_lenovo-to-mac_cal-com-google-schedule-status.md`，commit `d93e726`），請它核對兩個 404 網址並回報。巴哈要的行程文字版已整理在對話裡（10/12–12/31，合併後 358 筆）；聯想不交日曆網址或私密 iCal 網址，授權由教練自己在巴哈那邊決定。Cal.com 活動發布後網址不能改，改網址只能重建。
 
 > 📦 2026-10-13 02:17 那棒（llama-server 瘦身／榮樹下群組小龍蝦建置／聯想信）已封存：`handoff_archive/handoff_2026-10-13_0217_llama與榮樹下群組小龍蝦_archived_2026-10-13.md`
+
+---
+
+## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
+
+> 🔴 **2026-09-24根源改版（教練：「同一類事情不要再重複來煩我了」）**：這張表是**AI自己的工作筆記，不是要唸給教練聽的清單**。任何事要拿去問教練，必須同時過三關，少一關就不准問：
+> ① **只有教練能做**：花錢、代表教練對外發言、不可逆操作、教練自己的內容與喜好、需要教練本人親自登入（例如要手機簡訊驗證碼、教練個人銀行等系統從未存過帳密的帳號）。路徑大全／既有腳本裡已存好帳密的主機與服務（VPS、GitHub、Netlify、ezPay等），AI 自己用，不算這一關。AI自己查得到、做得到、判斷得了的，一律自己處理。
+> ② **教練沒答過**：先查本表、封存檔、記憶檔。教練裁示過的（含「不用管」「略過」「到此為止」「保留就好」），換任何說法都不准再問。
+> ③ **現在不問會卡住**：教練正在等結果，或幾天內有期限。不急的放「等教練自己提起」，不主動提。
+> **每件事最多問一次**：問過沒回應＝教練現在不想處理，移到「等教練自己提起」，不准追問、不准開工重唸。
+> **開工回報不唸待辦**：只講「🙋要教練決定」裡還沒問過的（通常是零件），然後問「今天從哪件事開始？」
+> 教練裁示「不用管／不做／略過」的列，當場搬去封存檔，不准留在這裡。
+
+### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
+（目前沒有）

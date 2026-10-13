@@ -2364,43 +2364,6 @@ def coach_schedule_book(token):
     return reply(True, label=label, type=res["booking_type"])
 
 
-# ---------- Google 日曆有變動 → Google 主動通知這裡（2026-10-13，取代每 15 分鐘輪詢） ----------
-# scripts/gcal_watch.py 向 Google 申請「教練日曆一有變動就通知這個網址」；暗號放在 state/gcal_watch_token.txt。
-# 收到通知先等 3 秒（一次編輯常連發好幾則），再跑一次 coach_schedule.py sync-google（Google→總表，順便把總表新行程寫回 Google）。
-_GCAL_PUSH_LOCK = threading.Lock()
-_GCAL_PUSH_PENDING = {"on": False}
-
-
-def _gcal_push_run():
-    import subprocess
-    import time as _t
-    _t.sleep(3)
-    with _GCAL_PUSH_LOCK:
-        _GCAL_PUSH_PENDING["on"] = False
-    try:
-        subprocess.run(["/usr/bin/python3", "-I", str(Path(__file__).resolve().parent.parent / "scripts" / "coach_schedule.py"), "sync-google"],
-                       capture_output=True, text=True, timeout=180)
-    except Exception:  # noqa: BLE001
-        pass
-
-
-@app.route("/hooks/gcal-push", methods=["POST"])
-def gcal_push_hook():
-    try:
-        real = (Path(__file__).resolve().parent.parent / "state" / "gcal_watch_token.txt").read_text().strip()
-    except OSError:
-        abort(404)
-    if not real or not hmac.compare_digest(real, request.headers.get("X-Goog-Channel-Token", "")):
-        abort(404)
-    if request.headers.get("X-Goog-Resource-State") != "sync":     # sync＝剛申請成功的打招呼，不用處理
-        with _GCAL_PUSH_LOCK:
-            start = not _GCAL_PUSH_PENDING["on"]
-            _GCAL_PUSH_PENDING["on"] = True
-        if start:
-            threading.Thread(target=_gcal_push_run, daemon=True).start()
-    return Response("ok", status=200)
-
-
 # ---------- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選） ----------
 # 票數所有人共用；選項只認這份名單（網站代號 → 選項代號），不在名單裡的一律擋下。
 WORKS_POLL_OPTIONS = {"tut-memory": {"t1", "t2", "t3", "t4"}}
