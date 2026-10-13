@@ -235,7 +235,14 @@ def cancel_reminder(ev):
 LINE_GROUP = "C2f85a1e6010c4be676b93c5386da3d66"  # LINE「榮樹下談公益」群組
 
 
+LINE_PUSH_FLAG = os.path.expanduser("~/.openclaw/workspace/state/LINE_REMINDER_PUSH_ENABLED")
+
+
 def send_line_group(msg):
+    """LINE 主動推播（沒人說話、到點自己發）要扣官方帳號額度（目前每月 200 則、群組每則按人數算），教練 2026-10-13 要求不要用。
+    預設關閉；要開就建立 state/LINE_REMINDER_PUSH_ENABLED。群組內「有人說話時的回覆」不扣額度，改由群組小龍蝦在回覆時順便提醒（見 soon 指令）。"""
+    if not os.path.exists(LINE_PUSH_FLAG):
+        return None, "LINE 推播已關閉（省額度）"
     import subprocess
     cmd = [*_oc(), "message", "send", "--channel", "line", "--account", "default", "--target", LINE_GROUP, "-m", msg]
     if os.environ.get("COACH_SCHEDULE_DRYRUN"):
@@ -442,6 +449,8 @@ def main():
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
     sub.add_parser("sync-reminders")
+    so = sub.add_parser("soon")
+    so.add_argument("--minutes", type=int, default=120)
     dr = sub.add_parser("daily-report")
     dr.add_argument("--date")
     dr.add_argument("--send", action="store_true")
@@ -571,9 +580,20 @@ def main():
         text = f"⏰ 一個小時之後（{ev['start']}）即將有 Podcast 訪談" + (f"（訪談對象：{g}）" if g else "") + "，請提早做好準備，上線做準備。"
         ok1, err1 = send_line_group(text)
         ok2, err2 = send_baha(text)
-        print(f"LINE 榮樹下群組：{'✅' if ok1 else '⚠️ 失敗 ' + err1}｜巴哈群組：{'✅' if ok2 else '⚠️ 失敗 ' + err2}")
+        l1 = "不推播（省額度）" if ok1 is None else ("✅" if ok1 else "⚠️ 失敗 " + err1)
+        print(f"LINE 榮樹下群組：{l1}｜巴哈群組：{'✅' if ok2 else '⚠️ 失敗 ' + err2}")
         if not (ok1 or ok2):
             raise SystemExit(1)
+    elif args.cmd == "soon":
+        now = dt.datetime.now(TZ)
+        for e in rongshuxia_upcoming(data, 1):
+            if e.get("tentative"):
+                continue
+            start = dt.datetime.fromisoformat(f"{e['date']}T{e['start']}:00+08:00")
+            m = int((start - now).total_seconds() // 60)
+            if 0 <= m <= args.minutes:
+                g = guest_text(e)
+                print(f"{e['start']} 開始（還有 {m} 分鐘）" + (f"，訪談對象：{g}" if g else ""))
     elif args.cmd == "sync-reminders":
         n = 0
         for e in rongshuxia_upcoming(data, 60):
