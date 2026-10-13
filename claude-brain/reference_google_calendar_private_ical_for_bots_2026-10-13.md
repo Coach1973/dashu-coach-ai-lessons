@@ -16,5 +16,7 @@ metadata:
 - **Google 日曆跟本機「行程總表」(knowledges/教練行程總表.json) 是兩本帳**：Google 有歸仁學法點學法、依倫等；總表有榮樹下訪談、預約頁預約。Google 因 Cal.com 同步有重複項（真誠分會固定上線、戰報會議等各兩筆）。
 - 桌面版 Claude 的 Google Calendar 連接器(list_events)能讀寫，但只在桌面版對話內可用，排程機器人用不到。
 
+**兩本帳實證(10/13 20:50)**：今晚19:00榮樹下訪談、20:00全球健康發展協會大會只在總表、Google 沒有；預約頁空檔只看總表；預約與巴哈加的行程不會進 Google。教練原以為「網頁改了手機就跟著改」，指的是 Google 日曆網頁版／手機版(同一本)，與我們的預約網頁無關。下一場做 sync-google，見接力棒 4edbee1b7。
+
 **Why:** 教練只維護 Google 日曆，機器人讀總表就會漏／錯。
 **How to apply:** 做每日報告／空檔／預約頁時，讀取來源改成「Google iCal ＋ 總表獨有項目(榮樹下訪談、預約頁)」合併、重複項去重。相關：[[project_rongshuxia_group_interview_scheduler_2026-10-12]]
