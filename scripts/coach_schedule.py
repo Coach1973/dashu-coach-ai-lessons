@@ -79,6 +79,8 @@ def blocks_on(d, data):
     out = []
     iso = d.isoformat()
     for e in data["events"]:
+        if e.get("covered_by_google"):
+            continue
         if e["date"] <= iso <= e.get("end_date", e["date"]):
             if e.get("allday"):
                 out.append((0, 1440, e))
@@ -91,7 +93,7 @@ def blocks_on(d, data):
             continue
         if r.get("until") and iso > r["until"]:
             continue
-        if iso in r.get("skip", []):
+        if iso in r.get("skip", []) or iso in r.get("gskip", []):
             continue
         out.append((hm(r["start"]), hm(r["end"]), r))
     return sorted(out, key=lambda x: x[0])
@@ -401,6 +403,54 @@ def sync_tainan(data):
     return len(new)
 
 
+def sync_google(data, days=120):
+    """讀教練 Google 日曆（非公開 iCal，唯讀）進總表，來源標「Google日曆」。Google 是教練親手維護的，同時段以它為準，
+    總表裡跟它重複的手動／大台南項目標 covered_by_google，不再雙列。"""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import gcal_ical
+    d0 = today()
+    got = gcal_ical.events_between(gcal_ical.fetch(), d0, d0 + dt.timedelta(days=days))
+    if len(got) < 5:
+        raise SystemExit("Google 日曆只讀到 %d 筆，可能網址失效，保留舊資料不覆蓋" % len(got))
+    seen, new = set(), []
+    for g in sorted(got, key=lambda g: (g["date"], g["start"] or "")):
+        title = "線上學習" if g["title"] == "學法" else g["title"]  # 教練 10/13：行程名稱「學法」一律「線上學習」
+        key = (g["date"], g["start"], g["end"], title)
+        if key in seen:
+            continue  # Google 裡 Cal.com 同步造成的重複只在這裡合併，不動教練日曆
+        seen.add(key)
+        ev = {"id": "gcal-%s-%d" % (g["date"], len(new)), "date": g["date"], "title": title, "source": "Google日曆"}
+        if g["allday"]:
+            ev["allday"] = True
+            if g.get("end_date") and g["end_date"] != g["date"]:
+                ev["end_date"] = g["end_date"]
+        else:
+            ev["start"], ev["end"] = g["start"], g["end"]
+        new.append(ev)
+    data["events"] = [e for e in data["events"] if e.get("source") != "Google日曆"] + new
+    gstart = {}  # 日期 → 該日 Google 行程的開始時間集合
+    gallday = set()
+    for e in new:
+        if e.get("allday"):
+            gallday.add(e["date"])
+        else:
+            gstart.setdefault(e["date"], set()).add(e["start"])
+    cov = 0
+    for e in data["events"]:
+        if e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest"):
+            hit = (e["date"] in gallday) if e.get("allday") else (e.get("start") in gstart.get(e["date"], ()))
+            e["covered_by_google"] = bool(hit)
+            cov += bool(hit)
+            if not hit:
+                e.pop("covered_by_google", None)
+    for r in data.get("recurring", []):
+        r["gskip"] = [(d0 + dt.timedelta(days=i)).isoformat() for i in range(days + 1)
+                      if (d0 + dt.timedelta(days=i)).weekday() == r["weekday"]
+                      and r["start"] in gstart.get((d0 + dt.timedelta(days=i)).isoformat(), ())]
+    data["google_synced_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
+    return len(new), cov
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -439,6 +489,7 @@ def main():
     cf = sub.add_parser("confirm")
     cf.add_argument("--id", required=True)
     sub.add_parser("sync-tainan")
+    sub.add_parser("sync-google")
     rs = sub.add_parser("rongshuxia")
     rs.add_argument("--days", type=int, default=60)
     sg = sub.add_parser("set-guest")
@@ -618,6 +669,14 @@ def main():
         n = sync_tainan(data)
         save(data)
         print(f"✅ 大台南行事曆線上場次已同步 {n} 筆")
+    elif args.cmd == "sync-google":
+        import fcntl  # 跟預約頁 book() 用同一把鎖，避免同步剛好蓋掉一筆新預約
+        with open(DATA + ".lock", "w") as lockf:
+            fcntl.flock(lockf, fcntl.LOCK_EX)
+            data = load()
+            n, cov = sync_google(data)
+            save(data)
+        print(f"✅ Google 日曆已同步 {n} 筆（總表原有 {cov} 筆因 Google 已有而不重複計）")
 
 
 if __name__ == "__main__":
