@@ -90,7 +90,11 @@ def describe(b, private=False):
     s, e, ev = b
     when = "整天" if (s, e) == (0, 1440) else f"{fmt(s)}-{fmt(e)}"
     if private:
-        what = "外地行程" if (s, e) == (0, 1440) else "已有安排"
+        # 教練 2026-10-13：行程已公開，外人也看得到行程名稱（不給地點、備註）；預約頁的預約只顯示類型，不秀預約者
+        if ev.get("source") == "預約頁":
+            what = ev.get("booking_type") or "榮樹下訪談"
+        else:
+            what = ev["title"].replace("（待確認）", "").replace("（已確認）", "")
     else:
         what = ev["title"] + (f"（{ev['where']}）" if ev.get("where") else "")
     flag = "（待確認）" if ev.get("tentative") else ""
@@ -332,7 +336,8 @@ def main():
         if not hit:
             raise SystemExit(f"找不到 id={args.id}")
         hit[0].pop("tentative", None)
-        hit[0]["title"] = hit[0]["title"].replace("（待確認）", "（已確認）")
+        # 預約頁新格式（有 booking_type）確認後就是乾淨的類型名稱，例：榮樹下訪談
+        hit[0]["title"] = hit[0].get("booking_type") or hit[0]["title"].replace("（待確認）", "（已確認）")
         save(data)
         print(f"✅ 已確認 id={args.id}：{hit[0]['date']} {hit[0].get('start','')} {hit[0]['title']}")
         print(hit[0].get("note", ""))

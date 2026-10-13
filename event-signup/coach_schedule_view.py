@@ -2,7 +2,8 @@
 
 資料來源＝workspace/knowledges/教練行程總表.json（scripts/coach_schedule.py 維護），每次開頁即時讀，行程一改頁面就跟著變。
 每個時段顯示行程名稱（教練 2026-10-13：行程本來就公開，只要一個頁面，不分教練版、訪客版），不顯示地點與備註。
-別人預約進來的「待確認」只顯示「訪談預約（待確認）」，不顯示預約者姓名。
+預約不填姓名電話（教練 2026-10-13：會約的只有兩個人）：點空檔→選類型。選「榮樹下訪談」＝邱裕榮；
+「咖啡會議／電話回訪／入會訪談」＝陳佩君老師（BNI）。其他行程類型（諮詢會議、分享會、線上學習、戰報…）不開放預約。
 代碼放在 workspace/state/coach_schedule_token.txt；要換網址就改這個檔（舊網址立即失效）。
 """
 import datetime as dt
@@ -31,9 +32,20 @@ def token_ok(token: str) -> bool:
     return bool(real) and hmac.compare_digest(real, token or "")
 
 
+# 預約頁可選的類型 → 誰會約（教練 2026-10-13 指定，只開放這四種）
+BOOKING_TYPES = {
+    "榮樹下訪談": "邱裕榮",
+    "咖啡會議": "陳佩君老師",
+    "電話回訪": "陳佩君老師",
+    "入會訪談": "陳佩君老師",
+}
+
+
 def _show_title(ev):
-    """預約頁進來的預約一律顯示「榮樹下訪談」（教練 2026-10-13），不把預約者姓名秀給其他訪客；還沒確認的後面會加「（待確認）」"""
-    return "榮樹下訪談" if ev.get("source") == "預約頁" else ev.get("title", "")
+    """預約頁進來的預約只顯示類型（舊資料沒有類型＝榮樹下訪談），不秀預約者姓名；還沒確認的後面會加「（待確認）」"""
+    if ev.get("source") == "預約頁":
+        return ev.get("booking_type") or "榮樹下訪談"
+    return ev.get("title", "")
 
 
 def _hm(s):
@@ -88,12 +100,13 @@ def _starts(slots):
     return out
 
 
-def book(date_s, start_s, name, contact, topic):
-    """預約一個 1 小時時段：寫成「待確認」的訪談行程（先占位，教練確認或取消）。
-    回傳 (ok, 訊息或事件)。伺服器端重新檢查，不信任網頁送來的時段。"""
-    name, contact, topic = (name or "").strip()[:40], (contact or "").strip()[:80], (topic or "").strip()[:200]
-    if not name or not contact:
-        return False, "請填寫姓名與聯絡方式"
+def book(date_s, start_s, booking_type):
+    """預約一個 1 小時時段：寫成「待確認」的行程（先占位，教練確認或取消）。
+    回傳 (ok, 訊息或事件)。伺服器端重新檢查，不信任網頁送來的時段與類型。"""
+    booking_type = (booking_type or "").strip()
+    if booking_type not in BOOKING_TYPES:
+        return False, "請選擇預約類型"
+    who = BOOKING_TYPES[booking_type]
     try:
         d = dt.date.fromisoformat(date_s)
         st = _hm(start_s)
@@ -111,8 +124,8 @@ def book(date_s, start_s, name, contact, topic):
         if st not in _starts(_free(busy, _hm(win["start"]), _hm(win["end"]))):
             return False, "這個時段剛剛被預約走了，請選別的時間"
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
-              "title": f"訪談預約（待確認）：{name}", "source": "預約頁", "kind": "interview", "tentative": True,
-              "note": f"聯絡：{contact}" + (f"｜主題：{topic}" if topic else "")}
+              "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
+              "booking_type": booking_type, "booked_by": who, "note": f"預約人：{who}（預約頁點選）"}
         data["events"].append(ev)
         data["updated_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
         fd, tmp = tempfile.mkstemp(dir=str(DATA.parent), suffix=".tmp")
@@ -126,112 +139,170 @@ def book(date_s, start_s, name, contact, topic):
 
 
 def render(token: str = "") -> str:
+    """2026-10-13 教練：重新設計得好看一點；點空檔直接出四個類型按鈕，不填姓名電話。"""
     data = json.loads(DATA.read_text(encoding="utf-8"))
     win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
     ws, we = _hm(win["start"]), _hm(win["end"])
     es, ee = _hm(eve["start"]), _hm(eve["end"])
     today = dt.datetime.now(TZ).date()
-    rows = []
+    cards, n_open = [], 0
 
-    def buttons(d, label, starts, cls):
+    def slot_btns(d, starts, cls):
+        lab = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）"
         return "".join(
             f'<button type="button" class="slot {cls}" data-d="{d.isoformat()}" data-t="{_fmt(t)}" '
-            f'data-l="{escape(label)} {_fmt(t)}–{_fmt(t + 60)}">{_fmt(t)}</button>'
+            f'data-l="{escape(lab)} {_fmt(t)}–{_fmt(t + 60)}">{_fmt(t)}</button>'
             for t in starts
         )
 
+    week_of = None
+    now_chip = '<span class="chip now">今天</span>'
     for i in range(DAYS):
         d = today + dt.timedelta(days=i)
+        monday = d - dt.timedelta(days=d.weekday())
+        if monday != week_of:
+            week_of = monday
+            sunday = monday + dt.timedelta(days=6)
+            name = "本週" if i == 0 or monday <= today else ("下週" if monday - today <= dt.timedelta(days=7) else "")
+            cards.append(f'<h2 class="wk"><span>{name}</span>{monday.month}/{monday.day} – {sunday.month}/{sunday.day}</h2>')
         busy = _busy(d, data)
-        label = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）"
-        eve_starts = _starts(_free(busy, es, ee)) if not any((s_, e_) == (0, 1440) for s_, e_, _ in busy) else []
-        day_starts = _starts(_free(busy, ws, es)) if not any((s_, e_) == (0, 1440) for s_, e_, _ in busy) else []
-        tentative = any(ev.get("tentative") for _, _, ev in busy)
+        allday = any((s_, e_) == (0, 1440) for s_, e_, _ in busy)
+        eve_starts = [] if allday else _starts(_free(busy, es, ee))
+        day_starts = [] if allday else _starts(_free(busy, ws, es))
+        n_open += bool(eve_starts)
         if eve_starts:
-            status, cls = '<span class="ok">晚上可預約</span>', "on"
+            chip = '<span class="chip ok">晚上可約</span>'
         elif day_starts:
-            status, cls = '<span class="no">晚上已滿</span>', "off"
+            chip = '<span class="chip dt">白天可約</span>'
         else:
-            status, cls = '<span class="no">本日行程已滿</span>', "off"
-        if tentative and (eve_starts or day_starts):
-            status += ' <span class="tn">部分待確認</span>'
-        cell = buttons(d, label, eve_starts, "eve") + buttons(d, label, day_starts, "day")
+            chip = '<span class="chip full">已排滿</span>'
         busy_html = "".join(
-            f'<div>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"} '
-            f'<b>{escape(_show_title(ev))}</b>{"（待確認）" if ev.get("tentative") and (ev.get("source") == "預約頁" or "待確認" not in ev.get("title", "")) else ""}</div>'
+            f'<li class="{"tn" if ev.get("tentative") else ""}"><time>{"整天" if (s_, e_) == (0, 1440) else f"{_fmt(s_)}–{_fmt(e_)}"}</time>'
+            f'<span>{escape(_show_title(ev))}{"<em>待確認</em>" if ev.get("tentative") else ""}</span></li>'
             for s_, e_, ev in busy
-        ) or "—"
-        rows.append(
-            f'<tr class="{cls}"><td class="d">{escape(label)}</td><td>{status}</td>'
-            f'<td class="f">{cell or "—"}</td><td class="b">{busy_html}</td></tr>'
+        )
+        slots = slot_btns(d, eve_starts, "eve") + slot_btns(d, day_starts, "dayt")
+        state = "open" if eve_starts else ("dayonly" if day_starts else "full")
+        cards.append(
+            f'<article class="day {state}{" today" if i == 0 else ""}">'
+            f'<div class="date"><b>{d.day}</b><span>週{WEEK[d.weekday()]}</span></div>'
+            f'<div class="body"><div class="top">{chip}{now_chip if i == 0 else ""}</div>'
+            f'{f"<div class=slots>{slots}</div>" if slots else ""}'
+            f'{f"<details><summary>已有安排 {len(busy)} 項</summary><ul class=busy>{busy_html}</ul></details>" if busy else ""}'
+            f'</div></article>'
         )
     updated = escape(str(data.get("updated_at", "")))
+    types_html = "".join(
+        f'<button type="button" class="type{" main" if t == "榮樹下訪談" else ""}" data-type="{escape(t)}">'
+        f'<b>{escape(t)}</b><small>{escape(sub)}</small></button>'
+        for t, sub in (("榮樹下訪談", "Podcast 錄音 ‧ 邱裕榮"), ("咖啡會議", "BNI ‧ 陳佩君老師"),
+                       ("電話回訪", "BNI ‧ 陳佩君老師"), ("入會訪談", "BNI ‧ 陳佩君老師"))
+    )
     return f"""<!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>大樹教練｜可約時間</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{{--bg:#faf8f4;--fg:#222;--mut:#777;--card:#fff;--line:#e6e1d8;--ok:#1a7f4b;--no:#b3261e;--tn:#9a6b00}}
-@media (prefers-color-scheme:dark){{:root{{--bg:#141414;--fg:#eee;--mut:#999;--card:#1e1e1e;--line:#333;--ok:#5fd08f;--no:#ff8a80;--tn:#ffcc66}}}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif}}
-main{{max-width:760px;margin:0 auto;padding:24px 16px 48px}}
-h1{{font-size:1.4rem;margin:0 0 4px}}p.s{{color:var(--mut);margin:0 0 18px;font-size:.92rem}}
-.box{{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}}
-table{{width:100%;border-collapse:collapse}}th,td{{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}}
-th{{font-size:.8rem;color:var(--mut);font-weight:600}}tr:last-child td{{border-bottom:0}}
-td.d{{white-space:nowrap;font-weight:600}}td.b{{color:var(--mut);font-size:.88rem}}
-.ok{{color:var(--ok);font-weight:600}}.no{{color:var(--no)}}.tn{{color:var(--tn);font-size:.8rem}}
-tr.off td.d{{color:var(--mut)}}
-@media (max-width:560px){{th:nth-child(4),td.b{{display:none}}}}
-body.coach td.b{{color:var(--fg);font-size:.92rem}}body.coach td.b b{{font-weight:600}}
-@media (max-width:560px){{body.coach td.b{{display:block}}body.coach table,body.coach tbody,body.coach tr,body.coach td{{display:block}}
-body.coach tr:first-child{{display:none}}body.coach tr{{padding:8px 0;border-bottom:1px solid var(--line)}}body.coach td{{border:0;padding:3px 12px}}}}
-.n{{color:var(--mut);font-size:.85rem;margin-top:14px}}
-.slot{{font:inherit;padding:6px 12px;margin:2px 6px 2px 0;border:1px solid var(--ok);color:var(--ok);background:transparent;border-radius:999px;cursor:pointer}}
-.slot.day{{display:none}}body.showday .slot.day{{display:inline-block}}
-.daybtn{{font:inherit;margin:0 0 14px;padding:9px 16px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
-.slot:hover,.slot.sel{{background:var(--ok);color:var(--bg)}}
-#f{{display:none;margin-top:16px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:12px}}
-#f h2{{font-size:1.05rem;margin:0 0 10px}}#f label{{display:block;font-size:.88rem;color:var(--mut);margin-top:10px}}
-#f input,#f textarea{{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}}
-#f button.go{{margin-top:14px;width:100%;font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--ok);color:var(--bg);cursor:pointer}}
-#msg{{margin-top:10px}}.hp{{position:absolute;left:-9999px}}
-</style></head><body class="coach"><main>
-<h1>大樹教練｜訪談可約時間</h1>
-<p class="s">未來 {DAYS} 天。教練的訪談以晚上為主，請優先選擇晚上 {escape(eve['start'])}–{escape(eve['end'])}，一場約 1 小時。</p>
-<button type="button" id="daybtn" class="daybtn">晚上真的不方便？看看白天可以嗎</button>
-<div class="box"><table>
-<tr><th>日期</th><th>狀態</th><th>點選時間預約</th><th>已有安排</th></tr>
-{''.join(rows)}
-</table></div>
-<form id="f" autocomplete="off">
-<h2>預約：<span id="pick"></span></h2>
-<label>您的姓名<input name="name" required maxlength="40"></label>
-<label>聯絡方式（電話、LINE 或 Email）<input name="contact" required maxlength="80"></label>
-<label>訪談主題（選填）<textarea name="topic" rows="2" maxlength="200"></textarea></label>
-<input class="hp" name="website" tabindex="-1" aria-hidden="true">
-<button class="go" type="submit">送出預約</button><div id="msg"></div>
-</form>
-<p class="n">點上面的時間按鈕即可預約，送出後教練會收到通知；教練確認後才算排定，我們會再與您聯繫。本頁隨教練行程即時更新（行程更新：{updated}）。</p>
+:root{{--bg:#f6f1e7;--paper:#fffdf8;--ink:#2b2418;--mut:#7d7262;--line:#e7dccb;--green:#2f6b4f;--green-soft:#e3efe7;
+--amber:#b9822f;--amber-soft:#f6ead3;--red:#a8432f;--shadow:0 1px 2px rgba(60,40,10,.06),0 6px 20px rgba(60,40,10,.06)}}
+@media (prefers-color-scheme:dark){{:root:not([data-theme="light"]){{--bg:#16130f;--paper:#201b15;--ink:#f1e9dc;--mut:#a89c8a;--line:#3a3127;
+--green:#7cc49d;--green-soft:#1f3329;--amber:#e0b06a;--amber-soft:#3a2d18;--red:#ec8b77;--shadow:none}}}}
+*{{box-sizing:border-box}}
+body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;-webkit-font-smoothing:antialiased}}
+main{{max-width:720px;margin:0 auto;padding:36px 16px 72px}}
+header .eyebrow{{font-size:.78rem;letter-spacing:.24em;color:var(--amber);font-weight:700;margin:0 0 6px}}
+h1{{font:900 clamp(1.7rem,6vw,2.3rem)/1.25 "Noto Serif TC",serif;margin:0 0 10px}}
+.lede{{color:var(--mut);margin:0 0 18px}}
+.legend{{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:.85rem;color:var(--mut);margin-bottom:12px}}
+.legend i{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:0}}
+.toggle{{font:inherit;font-size:.9rem;padding:8px 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;cursor:pointer}}
+.toggle[aria-pressed=true]{{border-color:var(--amber);color:var(--amber)}}
+h2.wk{{font-weight:700;font-size:.85rem;line-height:1;color:var(--mut);letter-spacing:.06em;margin:30px 0 10px;display:flex;gap:10px;align-items:center}}
+h2.wk span:not(:empty){{color:var(--ink);font-weight:800}}
+h2.wk::after{{content:"";flex:1;height:1px;background:var(--line)}}
+.day{{display:flex;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 10px;box-shadow:var(--shadow)}}
+.day.full{{background:transparent;box-shadow:none;opacity:.72}}
+.day.today{{border-color:var(--amber)}}
+.date{{flex:none;width:58px;text-align:center;padding-top:2px}}
+.date b{{display:block;font:900 1.9rem/1 "Noto Serif TC",serif}}
+.date span{{display:block;font-size:.72rem;color:var(--mut);margin-top:6px;white-space:nowrap}}
+.body{{flex:1;min-width:0}}
+.top{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}}
+.chip{{display:inline-block;line-height:1.5;font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.04em}}
+.chip.ok{{background:var(--green-soft);color:var(--green)}}.chip.dt{{background:var(--amber-soft);color:var(--amber)}}
+.chip.full{{background:transparent;color:var(--mut);border:1px solid var(--line)}}.chip.now{{background:var(--ink);color:var(--paper)}}
+.slots{{display:flex;flex-wrap:wrap;gap:8px}}
+.slot{{font-family:inherit;font-weight:700;font-size:.98rem;line-height:1;font-variant-numeric:tabular-nums;padding:11px 16px;min-width:76px;border-radius:12px;border:1.5px solid var(--green);
+background:var(--paper);color:var(--green);cursor:pointer;transition:transform .12s,background .12s}}
+.slot:hover{{background:var(--green-soft)}}.slot:active{{transform:scale(.96)}}
+.slot.dayt{{display:none;border-color:var(--amber);color:var(--amber)}}.slot.dayt:hover{{background:var(--amber-soft)}}
+body.showday .slot.dayt{{display:inline-block}}
+.day.dayonly .slots{{display:none}}body.showday .day.dayonly .slots{{display:flex}}
+details{{margin-top:10px;font-size:.88rem}}summary{{cursor:pointer;color:var(--mut);list-style:none}}
+summary::-webkit-details-marker{{display:none}}summary::before{{content:"＋ "}}details[open] summary::before{{content:"－ "}}
+.day.full details summary{{color:var(--ink)}}
+.busy{{list-style:none;margin:8px 0 0;padding:0}}
+.busy li{{display:flex;gap:12px;padding:6px 0;border-top:1px dashed var(--line)}}
+.busy time{{flex:none;width:96px;color:var(--mut);font-variant-numeric:tabular-nums}}
+.busy em{{font-style:normal;font-size:.75rem;color:var(--amber);margin-left:6px}}
+.foot{{color:var(--mut);font-size:.82rem;margin-top:28px;text-align:center}}
+dialog{{border:0;border-radius:20px;padding:0;width:min(440px,calc(100% - 32px));background:var(--paper);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.25)}}
+dialog::backdrop{{background:rgba(30,20,10,.45);backdrop-filter:blur(2px)}}
+.sheet{{padding:22px 20px 20px}}
+.sheet .when{{font-size:.8rem;letter-spacing:.18em;color:var(--amber);font-weight:700;margin:0}}
+.sheet h3{{font:900 1.5rem/1.3 "Noto Serif TC",serif;margin:4px 0 4px}}
+.sheet p.hint{{color:var(--mut);font-size:.88rem;margin:0 0 16px}}
+.types{{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
+.type{{font:inherit;text-align:left;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;transition:border-color .12s,transform .12s}}
+.type:hover{{border-color:var(--green)}}.type:active{{transform:scale(.97)}}
+.type b{{display:block;font-size:1.05rem}}.type small{{display:block;color:var(--mut);font-size:.78rem;margin-top:3px}}
+.type.main{{grid-column:1/-1;background:var(--green);border-color:var(--green);color:#fff}}
+.type.main small{{color:rgba(255,255,255,.82)}}.type.main:hover{{filter:brightness(1.08)}}
+.type:disabled{{opacity:.5;cursor:wait}}
+.close{{margin-top:14px;width:100%;font:inherit;padding:10px;border:0;background:transparent;color:var(--mut);cursor:pointer}}
+.done{{text-align:center;padding:8px 0 4px}}.done .ic{{font-size:2.4rem}}
+#err{{color:var(--red);font-size:.88rem;min-height:1.2em;margin:10px 0 0}}
+@media (max-width:420px){{.day{{gap:12px;padding:12px}}.date{{width:46px}}.date b{{font-size:1.6rem}}.slot{{min-width:68px;padding:10px 12px}}}}
+</style></head><body><main>
+<header>
+<p class="eyebrow">大樹教練 ‧ 可約時間</p>
+<h1>挑一個時段，<br>按一下就預約。</h1>
+<p class="lede">未來 {DAYS} 天，晚上 {escape(eve['start'])}–{escape(eve['end'])} 優先，一場 1 小時。點綠色時間，選類型即送出，教練確認後就排定。</p>
+<div class="legend"><span><i style="background:var(--green)"></i>晚上可約（{n_open} 天）</span><span><i style="background:var(--amber)"></i>白天時段</span><span><i style="background:var(--line)"></i>已排滿</span></div>
+<button type="button" class="toggle" id="dt" aria-pressed="false">也看白天時段</button>
+</header>
+{''.join(cards)}
+<p class="foot">本頁隨教練行程即時更新 ‧ 行程更新：{updated}</p>
 </main>
+<dialog id="dlg" aria-labelledby="pick"><div class="sheet" id="sheet">
+<p class="when">預約時段</p><h3 id="pick"></h3><p class="hint">選一個類型，按下就送出。</p>
+<div class="types">{types_html}</div><p id="err" role="alert"></p>
+<button type="button" class="close" id="x">取消</button></div></dialog>
 <script>
-var cur=null,f=document.getElementById('f'),msg=document.getElementById('msg');
-var db=document.getElementById('daybtn');
-db.onclick=function(){{var on=document.body.classList.toggle('showday');
- db.textContent=on?'收起白天時段，只看晚上':'晚上真的不方便？看看白天可以嗎';}};
+var cur=null,dlg=document.getElementById('dlg'),sheet=document.getElementById('sheet'),orig=sheet.innerHTML,dt=document.getElementById('dt');
+dt.onclick=function(){{var on=document.body.classList.toggle('showday');dt.setAttribute('aria-pressed',on);dt.textContent=on?'只看晚上':'也看白天時段';}};
+function bind(){{
+ document.getElementById('x').onclick=function(){{dlg.close()}};
+ sheet.querySelectorAll('.type').forEach(function(b){{b.onclick=function(){{book(b.dataset.type)}}}});
+}}
 document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
- document.querySelectorAll('.slot.sel').forEach(function(x){{x.classList.remove('sel')}});
- b.classList.add('sel');cur={{d:b.dataset.d,t:b.dataset.t}};
- document.getElementById('pick').textContent=b.dataset.l;f.style.display='block';msg.textContent='';
- f.scrollIntoView({{behavior:'smooth',block:'center'}});}}}});
-f.onsubmit=function(e){{e.preventDefault();if(!cur)return;
- var fd=new FormData(f),btn=f.querySelector('.go');btn.disabled=true;msg.textContent='送出中…';
- fetch('/schedule/{token}/book',{{method:'POST',headers:{{'Content-Type':'application/json'}},
-  body:JSON.stringify({{date:cur.d,start:cur.t,name:fd.get('name'),contact:fd.get('contact'),topic:fd.get('topic'),website:fd.get('website')}})}})
+ cur={{d:b.dataset.d,t:b.dataset.t,l:b.dataset.l}};sheet.innerHTML=orig;bind();
+ document.getElementById('pick').textContent=b.dataset.l;
+ if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}}}});
+dlg.addEventListener('click',function(e){{if(e.target===dlg)dlg.close()}});
+dlg.addEventListener('close',function(){{if(sheet.dataset.ok)location.reload()}});
+function book(type){{
+ var err=document.getElementById('err');sheet.querySelectorAll('.type').forEach(function(x){{x.disabled=true}});err.textContent='送出中…';
+ fetch('/schedule/{token}/book',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{date:cur.d,start:cur.t,type:type}})}})
  .then(function(r){{return r.json()}}).then(function(j){{
-  if(j.ok){{f.innerHTML='<h2>✅ 已收到預約</h2><p>'+j.label+'<br>教練確認後會與您聯繫，謝謝！</p>'}}
-  else{{msg.textContent=j.error||'送出失敗，請稍後再試';btn.disabled=false}}}})
- .catch(function(){{msg.textContent='網路異常，請稍後再試';btn.disabled=false}})}};
+  if(j.ok){{sheet.dataset.ok='1';sheet.innerHTML='<div class="done"><div class="ic">✅</div><p class="when">已送出</p><h3></h3><p class="hint"></p></div><button type="button" class="close" id="x">完成</button>';
+   sheet.querySelector('h3').textContent=type;sheet.querySelector('.hint').textContent=cur.l+'　等教練確認後就排定。';
+   document.getElementById('x').onclick=function(){{dlg.close()}};}}
+  else{{err.textContent=j.error||'送出失敗，請稍後再試';sheet.querySelectorAll('.type').forEach(function(x){{x.disabled=false}})}}}})
+ .catch(function(){{err.textContent='網路異常，請稍後再試';sheet.querySelectorAll('.type').forEach(function(x){{x.disabled=false}})}});
+}}
 </script></body></html>"""

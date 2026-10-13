@@ -2329,16 +2329,16 @@ def coach_schedule_book(token):
         return reply(False, "送出次數太多，請稍後再試", 429)
     hits.append(now)
     _SCHEDULE_BOOK_HITS[ip] = hits
-    ok, res = _csv.book(p.get("date"), p.get("start"), p.get("name"), p.get("contact"), p.get("topic"))
+    ok, res = _csv.book(p.get("date"), p.get("start"), p.get("type"))
     if not ok:
         return reply(False, res, 400)
     d = datetime.strptime(res["date"], "%Y-%m-%d")
     label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
     _notify_xiaolongxia(
-        f"📅【訪談預約・待您確認】\n時間：{label}\n{res['note'].replace('｜', chr(10))}\n"
+        f"📅【{res['booking_type']}・待您確認】\n時間：{label}\n預約人：{res['booked_by']}（預約頁點選）\n"
         f"（已先占位，其他人不能再約這個時段）\n確認：跟小龍蝦說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」",
         chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
-    return reply(True, label=label)
+    return reply(True, label=label, type=res["booking_type"])
 
 
 # ---------- 大樹作品通用「票選＋收集建議」（2026-10-10：南應大記憶牆講座主題票選） ----------
