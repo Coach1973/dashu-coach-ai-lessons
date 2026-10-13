@@ -1,3 +1,4 @@
+- [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
 - [🔴 離會的人不留在培訓總覽／來賓總覽：以三戰情表在籍為準，補信用證時同輪處理；BNI-Training/departed.py＋同人不同寫法要放ALIASES防誤刪(2026-10-13)](feedback_departed_members_removed_from_training_guests_overview_2026-10-13.md)
 - [📅 教練行程總表名稱簡化規則（分享會／BNI 例會／MSP／LTRT只留代碼等），sync-tainan 內建(2026-10-13)](reference_coach_schedule_title_rules_2026-10-13.md)
