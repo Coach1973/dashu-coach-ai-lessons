@@ -2334,10 +2334,23 @@ def coach_schedule_book(token):
         return reply(False, res, 400)
     d = datetime.strptime(res["date"], "%Y-%m-%d")
     label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
-    _notify_xiaolongxia(
-        f"📅【{res['booking_type']}・待您確認】\n時間：{label}\n預約人：{res['booked_by']}（預約頁點選）\n"
-        f"（已先占位，其他人不能再約這個時段）\n確認：跟小龍蝦說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」",
-        chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    # 2026-10-13 教練：行程都在「佩佩老師的巴哈助理」群組處理（佩佩老師手寫筆記本數位化），預約通知改送那裡；送不出去才退回活動報名群
+    text = (f"📅【{res['booking_type']}・待教練確認】\n時間：{label}\n預約人：{res['booked_by']}（預約頁點選）\n"
+            f"（已先占位，其他人不能再約這個時段）\n確認：跟巴哈助理說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」")
+
+    def _send_baha(t=text):
+        import subprocess
+        try:
+            r = subprocess.run(["/Users/bymyway/.nvm/versions/node/v24.21.0/bin/node",  # 網站服務的 PATH 沒有 node，直接指定
+                                "/Users/bymyway/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw/openclaw.mjs", "message", "send", "--channel", "telegram",
+                                "--account", "bot_peipei", "--target", "-5115910257", "-m", t],
+                               capture_output=True, text=True, timeout=90)
+            ok = r.returncode == 0
+        except Exception:  # noqa: BLE001
+            ok = False
+        if not ok:
+            _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    threading.Thread(target=_send_baha, daemon=True).start()
     return reply(True, label=label, type=res["booking_type"])
 
 

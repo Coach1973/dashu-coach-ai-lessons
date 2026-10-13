@@ -18,6 +18,7 @@
   coach_schedule.py rongshuxia [--days 60]            # 未來的榮樹下訪談（含 id 與訪談對象）
   coach_schedule.py set-guest --id <id> --guest 王小明 [--field 綠能] [--by 邱裕榮]   # 登記對象＋通知巴哈＋排開始前 1 小時提醒
   coach_schedule.py remind --id <id>                   # 提醒排程到點時呼叫，送提醒到巴哈群組
+  coach_schedule.py daily-report [--date YYYY-MM-DD] [--send]   # 每日行程報告（今天行程＋可約空檔＋預約頁），--send 貼到巴哈群組
 
 2026-10-13 教練：榮樹下的時間由邱裕榮先定、對象之後才定。邱裕榮在 LINE 群組講「哪一場訪問誰」
 → 群組小龍蝦（schedule-context 外掛）呼叫 set-guest → 巴哈助理群組收到「教練，幾月幾號榕樹下要跟某某訪談」，
@@ -171,7 +172,7 @@ def notify_baha(ev):
     when = "整天" if ev.get("allday") else f"{ev['start']}-{ev['end']}"
     msg = (f"📅 新行程（{ev.get('source', '')}，已寫進教練行程總表）\n"
            f"{day_label(d)} {when} {ev['title']}" + (f"（{ev['where']}）" if ev.get("where") else ""))
-    cmd = ["openclaw", "message", "send", "--channel", "telegram", "--account", "bot_peipei",
+    cmd = [*_oc(), "message", "send", "--channel", "telegram", "--account", "bot_peipei",
            "--target", BAHA_GROUP, "-m", msg]
     if os.environ.get("COACH_SCHEDULE_DRYRUN"):
         cmd.append("--dry-run")  # 測試用：印出要送的內容，不真的送
@@ -202,14 +203,19 @@ def rongshuxia_upcoming(data, days=60):
     return sorted(out, key=lambda e: (e["date"], e["start"]))
 
 
-def _openclaw():
+def _oc():
+    """直接用 node 跑 openclaw：網站服務、排程的 PATH 不一定有 node"""
+    node = os.path.expanduser("~/.nvm/versions/node/v24.21.0/bin/node")
+    mjs = os.path.expanduser("~/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw/openclaw.mjs")
+    if os.path.exists(node) and os.path.exists(mjs):
+        return [node, mjs]
     import shutil
-    return shutil.which("openclaw") or os.path.expanduser("~/.nvm/versions/node/v24.21.0/bin/openclaw")
+    return [shutil.which("openclaw") or "openclaw"]
 
 
 def send_baha(msg):
     import subprocess
-    cmd = [_openclaw(), "message", "send", "--channel", "telegram", "--account", "bot_peipei", "--target", BAHA_GROUP, "-m", msg]
+    cmd = [*_oc(), "message", "send", "--channel", "telegram", "--account", "bot_peipei", "--target", BAHA_GROUP, "-m", msg]
     if os.environ.get("COACH_SCHEDULE_DRYRUN"):
         cmd.append("--dry-run")
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
@@ -220,7 +226,7 @@ def cancel_reminder(ev):
     import subprocess
     job = ev.pop("reminder_job", None)
     if job and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
-        subprocess.run([_openclaw(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
+        subprocess.run([*_oc(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
 
 
 def schedule_reminder(ev):
@@ -232,7 +238,7 @@ def schedule_reminder(ev):
     if at <= dt.datetime.now(TZ) + dt.timedelta(minutes=2):
         return "（開始前 1 小時已經過了，不排提醒）"
     argv = ["/usr/bin/python3", "-I", os.path.abspath(__file__), "remind", "--id", ev["id"]]
-    cmd = [_openclaw(), "cron", "add", "--name", f"榮樹下訪談提醒 {ev['date']} {ev['start']}",
+    cmd = [*_oc(), "cron", "add", "--name", f"榮樹下訪談提醒 {ev['date']} {ev['start']}",
            "--at", at.isoformat(timespec="seconds"), "--tz", "Asia/Taipei",
            "--command-argv", json.dumps(argv), "--no-deliver", "--delete-after-run", "--json"]
     if os.environ.get("COACH_SCHEDULE_DRYRUN"):
@@ -243,6 +249,50 @@ def schedule_reminder(ev):
         return f"⚠️ 提醒沒排成功：{(r.stderr or r.stdout)[-200:]}"
     ev["reminder_job"] = m.group(1)
     return f"已排好 {at.strftime('%m/%d %H:%M')} 提醒（開始前 1 小時）"
+
+
+def booking_url():
+    try:
+        t = open(os.path.expanduser("~/.openclaw/workspace/state/coach_schedule_token.txt")).read().strip()
+        return f"https://event.bymyway.com/schedule/{t}/" if t else ""
+    except OSError:
+        return ""
+
+
+def daily_report(data, d):
+    """2026-10-13 教練：佩佩老師用手寫筆記本記行程，巴哈助理群組每天一則報告，一看就知道今天行程與可約空檔。"""
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    ws, we = hm(win["start"]), hm(win["end"])
+    lines = [f"☀️ {day_label(d)} 教練今日行程"]
+    bs = blocks_on(d, data)
+    for s_, e_, ev in bs:
+        when = "整天" if (s_, e_) == (0, 1440) else f"{fmt(s_)}–{fmt(e_)}"
+        title = ev["title"].replace("（待確認）", "")
+        lines.append(f"・{when} {title}" + (f"（{ev['where']}）" if ev.get("where") else "") + ("（待確認）" if ev.get("tentative") else ""))
+    if not bs:
+        lines.append("・今天沒有排行程")
+    allday = any((s_, e_) == (0, 1440) for s_, e_, _ in bs)
+    if d == today():
+        now = dt.datetime.now(TZ)
+        ws = max(ws, ((now.hour * 60 + now.minute + 59) // 60) * 60)
+    free = [] if allday else free_slots(d, data, ws, we)
+    lines.append("")
+    lines.append("🟢 今天還可以約：" + ("、".join(f"{fmt(a)}–{fmt(b)}" for a, b in free) if free else "今天已經排滿了"))
+    nxt = []
+    for i in range(1, 8):
+        dd = d + dt.timedelta(days=i)
+        if any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(dd, data)):
+            nxt.append(f"{day_label(dd)} 整天有行程")
+            continue
+        fs = free_slots(dd, data, hm(win["start"]), hm(win["end"]))
+        nxt.append(f"{day_label(dd)} " + ("、".join(f"{fmt(a)}–{fmt(b)}" for a, b in fs) if fs else "已排滿"))
+    lines.append("📆 接下來 7 天可約（10:00–22:00 內）：\n" + "\n".join(f"・{x}" for x in nxt))
+    url = booking_url()
+    if url:
+        lines.append("")
+        lines.append("👉 要約教練：開預約頁，點時間，再選「咖啡會議／電話回訪／入會訪談」就送出（不用填資料）：")
+        lines.append(url)
+    return "\n".join(lines)
 
 
 # ---------- 大台南行事曆 ----------
@@ -367,6 +417,9 @@ def main():
     sg.add_argument("--by", default="")
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
+    dr = sub.add_parser("daily-report")
+    dr.add_argument("--date")
+    dr.add_argument("--send", action="store_true")
     args = p.parse_args()
 
     data = load()
@@ -479,6 +532,14 @@ def main():
         g = guest_text(ev)
         ok, err = send_baha(f"⏰ 教練，1 小時後（{ev['start']}）榮樹下訪談" + (f"：{g}" if g else "（訪談對象還沒填）"))
         print("✅ 已提醒" if ok else f"⚠️ 提醒送出失敗：{err}")
+    elif args.cmd == "daily-report":
+        d = dt.date.fromisoformat(args.date) if args.date else today()
+        msg = daily_report(data, d)
+        if args.send:
+            ok, err = send_baha(msg)
+            print("✅ 已貼到巴哈助理群組" if ok else f"⚠️ 貼到巴哈助理群組失敗：{err}")
+        else:
+            print(msg)
     elif args.cmd == "sync-tainan":
         n = sync_tainan(data)
         save(data)
