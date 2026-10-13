@@ -43,6 +43,8 @@ BOOKING_TYPES = {
 
 def _show_title(ev):
     """預約頁進來的預約只顯示類型（舊資料沒有類型＝榮樹下訪談），不秀預約者姓名；還沒確認的後面會加「（待確認）」"""
+    if ev.get("guest"):
+        return f"榮樹下訪談：{ev['guest']}" + (f"（{ev['guest_field']}）" if ev.get("guest_field") else "")
     if ev.get("source") == "預約頁":
         return ev.get("booking_type") or "榮樹下訪談"
     return ev.get("title", "")

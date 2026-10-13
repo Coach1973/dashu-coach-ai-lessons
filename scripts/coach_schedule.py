@@ -15,6 +15,13 @@
   coach_schedule.py check --date 2026-10-20 [--start 19:30 --minutes 60]
   coach_schedule.py list [--days 60]
   coach_schedule.py sync-tainan
+  coach_schedule.py rongshuxia [--days 60]            # 未來的榮樹下訪談（含 id 與訪談對象）
+  coach_schedule.py set-guest --id <id> --guest 王小明 [--field 綠能] [--by 邱裕榮]   # 登記對象＋通知巴哈＋排開始前 1 小時提醒
+  coach_schedule.py remind --id <id>                   # 提醒排程到點時呼叫，送提醒到巴哈群組
+
+2026-10-13 教練：榮樹下的時間由邱裕榮先定、對象之後才定。邱裕榮在 LINE 群組講「哪一場訪問誰」
+→ 群組小龍蝦（schedule-context 外掛）呼叫 set-guest → 巴哈助理群組收到「教練，幾月幾號榕樹下要跟某某訪談」，
+並排一個開始前 1 小時的提醒（openclaw cron 一次性工作，id 記在事件的 reminder_job；改對象就換新、刪行程就一起刪）。
 """
 import argparse
 import datetime as dt
@@ -27,7 +34,7 @@ import urllib.request
 import uuid
 from html import unescape
 
-DATA = os.path.expanduser("~/.openclaw/workspace/knowledges/教練行程總表.json")
+DATA = os.environ.get("COACH_SCHEDULE_DATA") or os.path.expanduser("~/.openclaw/workspace/knowledges/教練行程總表.json")  # 測試可指到複本
 TAINAN_URL = "https://tainan-calender.netlify.app/"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
@@ -91,7 +98,9 @@ def describe(b, private=False):
     when = "整天" if (s, e) == (0, 1440) else f"{fmt(s)}-{fmt(e)}"
     if private:
         # 教練 2026-10-13：行程已公開，外人也看得到行程名稱（不給地點、備註）；預約頁的預約只顯示類型，不秀預約者
-        if ev.get("source") == "預約頁":
+        if ev.get("guest"):
+            what = f"榮樹下訪談：{guest_text(ev)}"
+        elif ev.get("source") == "預約頁":
             what = ev.get("booking_type") or "榮樹下訪談"
         else:
             what = ev["title"].replace("（待確認）", "").replace("（已確認）", "")
@@ -168,6 +177,72 @@ def notify_baha(ev):
         cmd.append("--dry-run")  # 測試用：印出要送的內容，不真的送
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
     print("✅ 已通知巴哈助理群組" if r.returncode == 0 else f"⚠️ 通知巴哈助理群組失敗：{(r.stderr or r.stdout)[-300:]}")
+
+
+def is_rongshuxia(ev):
+    t = ev.get("title", "")
+    return ev.get("booking_type") == "榮樹下訪談" or t.startswith("榮樹下訪談") or t.startswith("訪談預約（待確認）")
+
+
+def guest_text(ev):
+    if not ev.get("guest"):
+        return ""
+    return ev["guest"] + (f"（{ev['guest_field']}）" if ev.get("guest_field") else "")
+
+
+def rongshuxia_upcoming(data, days=60):
+    now = dt.datetime.now(TZ)
+    out = []
+    for e in data.get("events", []):
+        if not is_rongshuxia(e) or e.get("allday"):
+            continue
+        start = dt.datetime.fromisoformat(f"{e['date']}T{e['start']}:00+08:00")
+        if now <= start <= now + dt.timedelta(days=days):
+            out.append(e)
+    return sorted(out, key=lambda e: (e["date"], e["start"]))
+
+
+def _openclaw():
+    import shutil
+    return shutil.which("openclaw") or os.path.expanduser("~/.nvm/versions/node/v24.21.0/bin/openclaw")
+
+
+def send_baha(msg):
+    import subprocess
+    cmd = [_openclaw(), "message", "send", "--channel", "telegram", "--account", "bot_peipei", "--target", BAHA_GROUP, "-m", msg]
+    if os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        cmd.append("--dry-run")
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    return r.returncode == 0, (r.stderr or r.stdout)[-300:]
+
+
+def cancel_reminder(ev):
+    import subprocess
+    job = ev.pop("reminder_job", None)
+    if job and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        subprocess.run([_openclaw(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
+
+
+def schedule_reminder(ev):
+    """開始前 1 小時提醒（已過就不排）。到點跑 remind --id，當下再讀總表，對象改過或行程刪了都以最新為準。"""
+    import subprocess
+    cancel_reminder(ev)
+    start = dt.datetime.fromisoformat(f"{ev['date']}T{ev['start']}:00+08:00")
+    at = start - dt.timedelta(hours=1)
+    if at <= dt.datetime.now(TZ) + dt.timedelta(minutes=2):
+        return "（開始前 1 小時已經過了，不排提醒）"
+    argv = ["/usr/bin/python3", "-I", os.path.abspath(__file__), "remind", "--id", ev["id"]]
+    cmd = [_openclaw(), "cron", "add", "--name", f"榮樹下訪談提醒 {ev['date']} {ev['start']}",
+           "--at", at.isoformat(timespec="seconds"), "--tz", "Asia/Taipei",
+           "--command-argv", json.dumps(argv), "--delete-after-run", "--json"]
+    if os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        return f"（測試：會在 {at.strftime('%m/%d %H:%M')} 提醒）"
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    m = re.search(r'"id"\s*:\s*"([^"]+)"', r.stdout or "")
+    if r.returncode != 0 or not m:
+        return f"⚠️ 提醒沒排成功：{(r.stderr or r.stdout)[-200:]}"
+    ev["reminder_job"] = m.group(1)
+    return f"已排好 {at.strftime('%m/%d %H:%M')} 提醒（開始前 1 小時）"
 
 
 # ---------- 大台南行事曆 ----------
@@ -283,6 +358,15 @@ def main():
     cf = sub.add_parser("confirm")
     cf.add_argument("--id", required=True)
     sub.add_parser("sync-tainan")
+    rs = sub.add_parser("rongshuxia")
+    rs.add_argument("--days", type=int, default=60)
+    sg = sub.add_parser("set-guest")
+    sg.add_argument("--id", required=True)
+    sg.add_argument("--guest", required=True)
+    sg.add_argument("--field", default="")
+    sg.add_argument("--by", default="")
+    rm_ = sub.add_parser("remind")
+    rm_.add_argument("--id", required=True)
     args = p.parse_args()
 
     data = load()
@@ -324,6 +408,9 @@ def main():
         save(data)
         print(f"✅ 已寫入每週固定行程 id={rv['id']}：每週{WEEK[args.weekday]} {args.start}-{args.end} {args.title}")
     elif args.cmd == "remove":
+        for e in data["events"]:
+            if e["id"] == args.id:
+                cancel_reminder(e)
         n0 = len(data["events"]) + len(data.get("recurring", []))
         data["events"] = [e for e in data["events"] if e["id"] != args.id]
         data["recurring"] = [e for e in data.get("recurring", []) if e["id"] != args.id]
@@ -337,7 +424,8 @@ def main():
             raise SystemExit(f"找不到 id={args.id}")
         hit[0].pop("tentative", None)
         # 預約頁新格式（有 booking_type）確認後就是乾淨的類型名稱，例：榮樹下訪談
-        hit[0]["title"] = hit[0].get("booking_type") or hit[0]["title"].replace("（待確認）", "（已確認）")
+        hit[0]["title"] = (f"榮樹下訪談：{hit[0]['guest']}" if hit[0].get("guest") else
+                           hit[0].get("booking_type") or hit[0]["title"].replace("（待確認）", "（已確認）"))
         save(data)
         print(f"✅ 已確認 id={args.id}：{hit[0]['date']} {hit[0].get('start','')} {hit[0]['title']}")
         print(hit[0].get("note", ""))
@@ -346,6 +434,51 @@ def main():
         print(check(data, dt.date.fromisoformat(args.date), start, args.minutes, args.private))
     elif args.cmd == "list":
         print(listing(data, args.days, args.private) or "接下來沒有行程")
+    elif args.cmd == "rongshuxia":
+        evs = rongshuxia_upcoming(data, args.days)
+        for e in evs:
+            d = dt.date.fromisoformat(e["date"])
+            flag = "（待教練確認）" if e.get("tentative") else ""
+            print(f"id={e['id']}｜{day_label(d)} {e['start']}-{e['end']}{flag}｜對象：{guest_text(e) or '還沒填'}")
+        if not evs:
+            print("接下來沒有榮樹下訪談")
+    elif args.cmd == "set-guest":
+        hit = [e for e in rongshuxia_upcoming(data, 365) if e["id"] == args.id]
+        if not hit:
+            raise SystemExit(f"找不到這場榮樹下訪談 id={args.id}（只能登記未來的榮樹下訪談）")
+        ev = hit[0]
+        guest = re.sub(r"\s+", " ", args.guest).strip()[:40]
+        field = re.sub(r"\s+", " ", args.field).strip().strip("-－—").strip()[:30]
+        if not guest:
+            raise SystemExit("訪談對象不能空白")
+        ev["guest"] = guest
+        if field:
+            ev["guest_field"] = field
+        else:
+            ev.pop("guest_field", None)
+        if args.by:
+            ev["guest_by"] = args.by[:20]
+        if not ev.get("tentative"):
+            ev["title"] = f"榮樹下訪談：{guest}"
+        rem = schedule_reminder(ev)
+        save(data)
+        d = dt.date.fromisoformat(ev["date"])
+        when = f"{day_label(d)} {ev['start']}-{ev['end']}"
+        tent = "（這個時段還在等教練確認）" if ev.get("tentative") else ""
+        ok, err = send_baha(f"📅 教練，{when} 榮樹下我們要訪談 {guest_text(ev)}{tent}\n"
+                            f"{('（' + args.by + '在 LINE 榮樹下群組登記的）') if args.by else ''}\n{rem}")
+        print(f"✅ 已登記：{when} 榮樹下訪談，對象 {guest_text(ev)}{tent}")
+        print("✅ 已通知巴哈助理群組" if ok else f"⚠️ 通知巴哈助理群組失敗：{err}")
+        print(rem)
+    elif args.cmd == "remind":
+        hit = [e for e in data["events"] if e["id"] == args.id]
+        if not hit:
+            print("行程已刪除，不提醒")
+            return
+        ev = hit[0]
+        g = guest_text(ev)
+        ok, err = send_baha(f"⏰ 教練，1 小時後（{ev['start']}）榮樹下訪談" + (f"：{g}" if g else "（訪談對象還沒填）"))
+        print("✅ 已提醒" if ok else f"⚠️ 提醒送出失敗：{err}")
     elif args.cmd == "sync-tainan":
         n = sync_tainan(data)
         save(data)
