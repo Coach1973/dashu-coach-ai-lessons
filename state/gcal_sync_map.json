@@ -1,0 +1,21 @@
+{
+ "說明": "行程總表id→Google日曆event id（2026-10-13 一次性同步，桌面版連接器寫入）；全自動同步尚缺 Calendar API 開關",
+ "map": {
+  "cfe88924": "dnu0hgh4hbuafforfnm4k8ntq0",
+  "0fdf8b42": "5sacca2u9ab6mrrcuo60is62fg",
+  "5515f0f6": "i8d0hlv2bvkdgqj1j3895tgo48",
+  "70a85050": "iulvu52fehlo9ou4dtmelnqoco",
+  "2be4d519": "e5mq9lfejtptq1cfujr1321ehs",
+  "1c22e2c7": "2qq4a7mh28nctlmmekchfv8rkk",
+  "7155a70f": "jfs4a0mjkqfu41i2e2f7t0rblo",
+  "b1b2451a": "pmii92hoj7c465o09bs8o8ui4o",
+  "11a4ef97": "bbep7r9qdbrj5dgtsudhnlhems",
+  "4f7dbed3": "8ofl1ol0j73ql4kb6mskh2u7a4",
+  "9c078b50": "cn6tq512l05mb2faqd69ld59fs",
+  "d2553599": "dsf05co62rhrk2odfamvvd9bs4",
+  "ece9ea4c": "infrj0q3qe63fl0am16re3e19s",
+  "2246ca3e": "mb5nrktph334j9vsp66782ldrg",
+  "9d8e90be": "vdkr3j4gttqauh2fjkr0vdqrao",
+  "68dd81f2": "hfq0odpq45h8p5fu7avq8hosf8"
+ }
+}
