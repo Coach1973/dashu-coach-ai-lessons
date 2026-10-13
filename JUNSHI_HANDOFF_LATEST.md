@@ -1,3 +1,12 @@
+## 🔴 補充（2026-10-13 21:30，教練不喜歡每 15 分鐘輪詢→改 Google 即時通知）
+
+- **Google→總表 改成事件觸發**：`scripts/gcal_watch.py` 向 Google 申請 `events.watch` 通知通道（教練日曆一變動，Google 敲 `https://event.bymyway.com/hooks/gcal-push`，暗號 `state/gcal_watch_token.txt`，入口在 `event-signup/app.py`，等 3 秒合併連發後跑 `sync-google`）。**不需要先驗證網域**（Google 直接接受）。授權沿用 `gog`（匯出暫存檔→換短時效 token→立刻刪）。通道狀態 `state/gcal_watch.json`，壽命 7 天。
+- **實測**：Google 新增行程 → 不到 10 秒總表自動同步（輪詢還有 8 分鐘才跑，不是輪詢的功勞）。**但 Google 刪除行程後 3 分鐘以上都沒送通知**（日誌 `event-signup/webapp.error.log` 只有 21:21:13 sync、21:21:27 新增兩筆 200）→ 只靠通知會漏刪除。
+- **處理**：舊輪詢 cron `b2a3dd9b` 沒拿掉，降成**每 3 小時的保險核對**（原每 15 分鐘）；新增續約排程 `5256e16a` 每天檢查一次，通道剩不到 2 天才換（`gcal_watch.py renew`，已用 `/usr/bin/python3 -I` 實跑）。教練如果連保險都不要：`openclaw cron rm b2a3dd9b`，代價是漏刪除時預約頁會留著舊行程直到下次通知。
+- 測試殘留已清（Google 11/30 測試行程已刪、總表同步後 0 筆）。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-13 21:45 台灣時間，Mac 桌面版 Code 分頁，Opus 5.5／Sonnet 5.5，教練「做」；接 21:02 另一對話框的同步）
 
 **主軸：行程總表 ⇄ 教練 Google 日曆「兩本合一」完成，讀＋寫都通。**
