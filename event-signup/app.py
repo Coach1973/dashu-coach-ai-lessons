@@ -2390,7 +2390,7 @@ def coach_schedule_cancel(token):
     if not ok:
         return reply(False, res, 400)
 
-    def _send_baha(t=f"🗑【行程已取消】{res}\n（預約頁按「取消」；教練 Google 日曆那筆已一起刪除）"):
+    def _send_baha(t=f"🗑【行程已取消】{res}\n（預約頁按「取消」；教練 Google 日曆若有同一筆，已一起刪除）"):
         import subprocess
         try:
             r = subprocess.run(["/Users/bymyway/.nvm/versions/node/v24.21.0/bin/node",

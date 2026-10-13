@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>有薇力，新東區｜蔡筱薇競選總部成立大會 11/1（日）09:00</title>
+<meta name="description" content="台南市東區市議員候選人蔡筱薇競選總部成立大會：2026 年 11 月 1 日（星期日）上午 9 點，中華東路關帝殿停車場。南應大校友與全台灣的朋友，一起來相挺！">
+<meta property="og:title" content="蔡筱薇競選總部成立大會｜11/1（日）上午 9:00">
+<meta property="og:description" content="中華東路關帝殿停車場見！有薇力，新東區。">
+<meta property="og:image" content="assets/poster.webp">
+<meta name="theme-color" content="#2e0d38">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2e0d38;          /* 深梅紫：主文字與深色區塊 */
+  --ink-2:#4a1f57;
+  --paper:#fff5ea;        /* 暖奶油紙 */
+  --paper-2:#fbe7d4;
+  --sun:#ff7a1a;          /* 夕陽橘 */
+  --rose:#e8227a;         /* 洋紅 */
+  --gold:#ffc65c;
+  --muted:#6e5373;
+  --line:rgba(46,13,56,.16);
+  --sunset:linear-gradient(135deg,#ff8a1f 0%,#ff5a3c 38%,#e8227a 78%,#b8186e 100%);
+  --serif:"Noto Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --num:"Anton","Noto Sans TC",sans-serif;
+  --wrap:min(1180px,calc(100% - 40px));
+  --r:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.75;letter-spacing:.02em}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:var(--wrap);margin-inline:auto}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;z-index:99}
+.skip:focus{left:8px}
+
+/* risograph grain */
+.grain{position:relative;isolation:isolate}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2 0 0 0 0 .05 0 0 0 0 .25 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .25s,box-shadow .25s}
+.nav.solid{background:rgba(46,13,56,.92);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;gap:22px;height:66px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:900;letter-spacing:.08em}
+.brand i{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--rose);display:grid;place-items:center;font-style:normal;font-family:var(--serif);font-size:19px}
+.nav ul{display:flex;gap:4px;margin:0 0 0 auto;padding:0;list-style:none}
+.nav ul a{color:#fff;text-decoration:none;font-size:15px;font-weight:500;padding:8px 11px;border-radius:999px;opacity:.9}
+.nav ul a:hover{background:rgba(255,255,255,.14);opacity:1}
+.nav .cta{background:#fff;color:var(--ink);text-decoration:none;font-weight:900;padding:9px 18px;border-radius:999px;font-size:15px;white-space:nowrap}
+@media (max-width:980px){.nav ul{display:none}.nav .cta{margin-left:auto}}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--sunset);color:#fff;overflow:hidden;min-height:100svh;display:flex;align-items:flex-end}
+.hero::before{content:"";position:absolute;inset:-40%;z-index:0;
+  background:repeating-conic-gradient(from 0deg at 18% 8%,rgba(255,255,255,.13) 0deg 4deg,transparent 4deg 13deg);
+  animation:spin 120s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;align-items:end;gap:10px;padding-top:96px}
+.hero-copy{padding-bottom:72px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.24em;font-size:15px;background:rgba(46,13,56,.28);padding:6px 16px 6px 6px;border-radius:999px}
+.kicker b{background:#fff;color:var(--rose);border-radius:999px;padding:2px 12px;letter-spacing:.1em}
+.name{font-family:var(--serif);font-weight:900;font-size:clamp(84px,13.5vw,196px);line-height:.95;margin:22px 0 6px;letter-spacing:.02em;
+  text-shadow:6px 6px 0 var(--ink)}
+.event-title{font-family:var(--serif);font-weight:900;font-size:clamp(28px,3.6vw,50px);margin:6px 0 0;color:var(--ink);letter-spacing:.08em;line-height:1.2}
+.slogan{margin:18px 0 0;font-size:clamp(18px,1.6vw,22px);font-weight:700;max-width:30em}
+.slogan span{background:var(--ink);padding:2px 10px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.datebig{display:flex;align-items:flex-end;gap:18px;margin-top:26px}
+.datebig .d{font-family:var(--num);font-size:clamp(96px,12vw,170px);line-height:.82;letter-spacing:-.01em}
+.datebig .meta{background:var(--ink);padding:12px 18px;border-radius:10px;font-weight:700;line-height:1.5;font-size:17px}
+.datebig .meta small{display:block;font-weight:500;opacity:.8;font-size:14px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:900;font-size:16px;text-decoration:none;border:0;cursor:pointer;font-family:inherit;letter-spacing:.06em;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn-ink{background:var(--ink);color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.75)}
+.btn svg{width:20px;height:20px;flex:none}
+.hero-photo{margin:0;position:relative;align-self:end;justify-self:center;width:min(100%,560px)}
+.hero-photo img{width:100%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent);mask-image:linear-gradient(to bottom,#000 82%,transparent);filter:drop-shadow(0 30px 40px rgba(46,13,56,.35))}
+.hero-photo .badge{position:absolute;left:-6%;top:22%;width:132px;height:132px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;text-align:center;font-weight:900;line-height:1.25;font-size:17px;transform:rotate(-10deg);box-shadow:0 0 0 6px rgba(255,255,255,.25)}
+.hero-photo .badge em{display:block;font-style:normal;font-family:var(--num);font-size:40px;color:var(--gold);line-height:1}
+@media (max-width:900px){
+  .hero{min-height:auto}
+  .hero .wrap{grid-template-columns:1fr;padding-top:84px}
+  .hero-photo{order:-1;width:min(78%,380px);margin-bottom:-40px}
+  .hero-photo .badge{width:104px;height:104px;font-size:14px;left:-14%}
+  .hero-photo .badge em{font-size:30px}
+  .hero-copy{padding-bottom:48px}
+  .name{text-shadow:4px 4px 0 var(--ink)}
+}
+
+/* countdown ribbon */
+.ribbon{background:var(--ink);color:#fff}
+.ribbon .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 30px;padding:22px 0}
+.cd{display:flex;gap:8px}
+.cd div{min-width:78px;text-align:center;background:rgba(255,255,255,.07);border-radius:12px;padding:8px 6px 6px}
+.cd b{display:block;font-family:var(--num);font-size:40px;line-height:1;font-weight:400;font-variant-numeric:tabular-nums;color:var(--gold)}
+.cd span{font-size:13px;opacity:.75;letter-spacing:.2em}
+.ribbon p{margin:0;font-weight:700;font-size:18px}
+.ribbon p small{display:block;font-weight:400;opacity:.7;font-size:14px}
+
+/* ---------- SECTIONS ---------- */
+section{position:relative}
+.sec{padding:120px 0}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--num);font-size:15px;letter-spacing:.24em;color:var(--rose);text-transform:uppercase}
+.eyebrow::before{content:"";width:34px;height:3px;background:var(--rose)}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(36px,5vw,64px);line-height:1.15;margin:14px 0 22px;letter-spacing:.04em}
+h3{font-family:var(--serif);font-weight:900;letter-spacing:.04em;line-height:1.3}
+.lead{font-size:19px;max-width:38em;color:var(--muted)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* event ticket */
+.ticket{margin-top:-1px;background:var(--paper-2)}
+.ticket-card{display:grid;grid-template-columns:repeat(3,1fr) auto;background:#fff;border-radius:var(--r);box-shadow:0 20px 50px -20px rgba(46,13,56,.35);overflow:hidden;margin-top:40px}
+.ticket-card>div{padding:28px 30px;border-right:2px dashed var(--line)}
+.ticket-card .lbl{font-size:13px;letter-spacing:.28em;color:var(--rose);font-weight:900}
+.ticket-card .val{font-family:var(--serif);font-weight:900;font-size:26px;line-height:1.35;margin-top:4px}
+.ticket-card .sub{font-size:14px;color:var(--muted)}
+.ticket-card .go{display:flex;align-items:center;justify-content:center;background:var(--sunset);border:0;padding:20px 34px}
+.ticket-card .go a{color:#fff;font-weight:900;text-decoration:none;text-align:center;line-height:1.4}
+.ticket-card .go a span{display:block;font-family:var(--num);font-size:34px;font-weight:400}
+.ticket-note{margin-top:40px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;padding-bottom:80px;max-width:860px}
+.ticket-note .seal{width:62px;height:62px;border-radius:50%;background:var(--ink);color:var(--gold);display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:26px}
+.ticket-note p{margin:0;font-size:18px}
+@media (max-width:860px){.ticket-card{grid-template-columns:1fr}.ticket-card>div{border-right:0;border-bottom:2px dashed var(--line)}}
+
+/* story timeline */
+.story{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+.story-side{position:sticky;top:100px;align-self:start}
+.quote{margin:36px 0 0;padding:28px 30px;background:var(--ink);color:#fff;border-radius:var(--r)}
+.quote q{font-family:var(--serif);font-size:28px;font-weight:900;line-height:1.45;quotes:"「" "」"}
+.quote q b{color:var(--gold)}
+.quote figcaption{margin-top:12px;font-size:14px;opacity:.75}
+.tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--ink)}
+.tl li{position:relative;padding:0 0 44px 34px}
+.tl li::before{content:"";position:absolute;left:-11px;top:8px;width:19px;height:19px;border-radius:50%;background:var(--paper);border:4px solid var(--rose)}
+.tl li.hot::before{background:var(--rose)}
+.tl .yr{font-family:var(--num);font-size:30px;line-height:1;color:var(--rose)}
+.tl h3{font-size:24px;margin:8px 0 6px}
+.tl p{margin:0;color:var(--muted)}
+.tl .tag{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;background:var(--ink);color:#fff;padding:3px 12px;border-radius:999px}
+@media (max-width:900px){.story{grid-template-columns:1fr;gap:40px}.story-side{position:static}}
+
+/* manifesto */
+.manifesto{background:var(--ink);color:#fff;overflow:hidden}
+.manifesto .big{font-family:var(--serif);font-weight:900;font-size:clamp(46px,8.6vw,128px);line-height:1.08;margin:18px 0 0;letter-spacing:.03em}
+.manifesto .big em{font-style:normal;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.manifesto .eyebrow{color:var(--gold)}.manifesto .eyebrow::before{background:var(--gold)}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.14);margin-top:70px;border-radius:var(--r);overflow:hidden}
+.vals div{background:var(--ink);padding:34px 30px}
+.vals b{font-family:var(--serif);font-size:40px;font-weight:900;color:var(--gold);display:block;line-height:1.2}
+.vals p{margin:10px 0 0;opacity:.85}
+.belief{margin-top:56px;font-size:20px;max-width:46em;opacity:.92}
+.belief strong{color:var(--gold)}
+@media (max-width:760px){.vals{grid-template-columns:1fr}}
+
+/* policy */
+.policy-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.blue{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:40px}
+.zone{position:relative;background:#fff;border-radius:var(--r);padding:34px 34px 30px;box-shadow:0 1px 0 var(--line),0 18px 40px -28px rgba(46,13,56,.45);overflow:hidden}
+.zone .no{position:absolute;right:18px;top:-6px;font-family:var(--num);font-size:120px;line-height:1;color:var(--paper-2);z-index:0}
+.zone>*{position:relative;z-index:1}
+.zone .area{font-size:13px;font-weight:900;letter-spacing:.2em;color:var(--rose)}
+.zone h3{font-size:34px;margin:6px 0 4px}
+.zone .sub{font-weight:700;margin:0 0 14px}
+.zone ul{margin:0;padding-left:1.2em;color:var(--muted);font-size:16px}
+.zone li{margin:4px 0}
+.welfare{margin-top:70px;background:var(--sunset);color:#fff;border-radius:calc(var(--r) + 6px);padding:46px 44px}
+.welfare h3{font-size:32px;margin:0 0 6px}
+.welfare>p{margin:0 0 30px;opacity:.92}
+.wf{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.wf div{background:rgba(46,13,56,.82);border-radius:14px;padding:22px 20px}
+.wf .who{font-size:13px;font-weight:900;letter-spacing:.2em;color:var(--gold)}
+.wf b{display:block;font-family:var(--serif);font-size:21px;line-height:1.45;margin-top:8px}
+@media (max-width:980px){.wf{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.blue{grid-template-columns:1fr}.wf{grid-template-columns:1fr}.welfare{padding:34px 22px}}
+
+/* footprints (horizontal) */
+.steps-sec{background:var(--paper-2)}
+.steps{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 20px 30px max(20px,calc((100% - 1180px)/2));scrollbar-width:thin}
+.step{flex:0 0 300px;scroll-snap-align:start;background:#fff;border-radius:var(--r);padding:26px 24px;border-top:6px solid var(--ink);display:flex;flex-direction:column}
+.step time{font-family:var(--num);font-size:26px;color:var(--rose);line-height:1}
+.step h3{font-size:21px;margin:10px 0 8px}
+.step p{margin:0;font-size:15px;color:var(--muted)}
+.step.now{background:var(--ink);color:#fff;border-top-color:var(--gold)}
+.step.now p{color:rgba(255,255,255,.8)}
+.step.now time{color:var(--gold)}
+.step.now .pin{margin-top:auto;padding-top:14px;font-weight:900;color:var(--gold)}
+.hint{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* charity */
+.charity{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin-top:40px}
+.big-card{background:var(--ink);color:#fff;border-radius:var(--r);padding:40px;display:flex;flex-direction:column;justify-content:space-between;min-height:420px}
+.big-card .n{font-family:var(--num);font-size:clamp(90px,11vw,150px);line-height:.9;color:var(--gold)}
+.big-card .n small{font-family:var(--serif);font-size:34px;color:#fff;margin-left:6px}
+.big-card h3{font-size:30px;margin:14px 0 8px}
+.big-card p{opacity:.85;margin:0}
+.c-list{display:grid;gap:16px}
+.c-item{background:#fff;border-radius:var(--r);padding:22px 26px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;box-shadow:0 1px 0 var(--line)}
+.c-item .n{font-family:var(--num);font-size:46px;line-height:1;color:var(--rose);min-width:2.2ch;text-align:right}
+.c-item .n small{font-family:var(--sans);font-size:15px;font-weight:900;color:var(--ink)}
+.c-item h3{font-size:19px;margin:0}
+.c-item p{margin:2px 0 0;font-size:15px;color:var(--muted)}
+.partners{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+.partners span{border:1.5px solid var(--ink);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:700}
+@media (max-width:900px){.charity{grid-template-columns:1fr}.big-card{min-height:0}}
+
+/* service */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border-top:2px solid var(--ink)}
+.svc article{padding:28px 26px 30px 0;border-bottom:1px solid var(--line)}
+.svc article:not(:nth-child(3n)){border-right:1px solid var(--line)}
+.svc article:not(:nth-child(3n+1)){padding-left:26px}
+.svc .cat{font-size:13px;font-weight:900;letter-spacing:.2em;color:var(--rose)}
+.svc h3{font-size:22px;margin:6px 0 8px}
+.svc p{margin:0;font-size:15.5px;color:var(--muted)}
+.office{margin-top:60px;display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center;background:#fff;border-radius:var(--r);padding:30px 34px;box-shadow:0 18px 40px -30px rgba(46,13,56,.6)}
+.office .ic{width:70px;height:70px;border-radius:18px;background:var(--sunset);display:grid;place-items:center;color:#fff}
+.office h3{margin:0;font-size:24px}
+.office p{margin:2px 0 0;color:var(--muted)}
+.award{display:inline-block;margin-bottom:6px;font-size:13px;font-weight:900;background:var(--gold);padding:3px 12px;border-radius:999px}
+@media (max-width:900px){.svc{grid-template-columns:1fr}.svc article{border-right:0!important;padding-left:0!important}.office{grid-template-columns:1fr}}
+
+/* alumni */
+.alumni{background:#2e0d38;color:#fff;overflow:hidden}
+.alumni::before{content:"";position:absolute;right:-20%;top:-30%;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(232,34,122,.35),transparent 65%);z-index:0}
+.alumni .wrap{position:relative;z-index:2}
+.al-top{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.alumni .eyebrow{color:var(--gold)}.alumni .eyebrow::before{background:var(--gold)}
+.alumni h2 em{font-style:normal;color:var(--gold)}
+.alumni .lead{color:rgba(255,255,255,.82)}
+.gift{position:relative;margin:0}
+.gift img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:24px}
+.gift .q{position:absolute;left:-14px;bottom:-14px;white-space:nowrap;background:var(--gold);color:var(--ink);font-weight:900;padding:10px 18px;border-radius:12px;transform:rotate(-4deg);font-size:17px}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:60px}
+.path{border-radius:22px;padding:36px 34px;display:flex;flex-direction:column;gap:14px}
+.path.east{background:var(--sunset)}
+.path.far{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
+.path .who{font-size:14px;font-weight:900;letter-spacing:.2em}
+.path h3{font-size:32px;margin:0}
+.path p{margin:0;opacity:.92}
+.path ol{margin:0;padding-left:1.3em;opacity:.95}
+.path ol li{margin:4px 0}
+.path .btns{margin-top:auto;padding-top:10px}
+.cheer-out{min-height:1.6em;font-weight:700;color:var(--gold)}
+.al-links{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.al-link{display:flex;align-items:center;justify-content:space-between;gap:20px;text-decoration:none;color:#fff;background:rgba(255,255,255,.05);border-radius:18px;padding:24px 28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);transition:background .2s}
+.al-link:hover{background:rgba(255,255,255,.11)}
+.al-link small{display:block;color:var(--gold);font-weight:900;letter-spacing:.18em;font-size:12px}
+.al-link b{font-size:21px;font-family:var(--serif)}
+.al-link span.t{display:block;font-size:14px;opacity:.75}
+.al-link svg{width:30px;height:30px;flex:none}
+@media (max-width:900px){.al-top,.paths,.al-links{grid-template-columns:1fr}.gift{max-width:420px}}
+
+/* final */
+.final{background:var(--sunset);color:#fff;text-align:center;overflow:hidden}
+.final::before{content:"";position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg at 50% 100%,rgba(255,255,255,.12) 0deg 5deg,transparent 5deg 14deg);z-index:0}
+.final .wrap{position:relative;z-index:2}
+.final .d{font-family:var(--num);font-size:clamp(120px,22vw,300px);line-height:.85;text-shadow:8px 8px 0 var(--ink)}
+.final h2{color:#fff;margin-top:20px}
+.final p{font-size:20px;font-weight:700}
+.final .btns{justify-content:center}
+
+footer{background:#1d0724;color:rgba(255,255,255,.75);padding:56px 0 40px;font-size:15px}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:30px}
+footer h4{color:#fff;font-family:var(--serif);font-size:22px;margin:0 0 6px}
+footer nav{display:flex;flex-wrap:wrap;gap:10px;align-content:start;justify-content:flex-end}
+footer nav a{text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;font-size:14px}
+footer nav a:hover{background:rgba(255,255,255,.1)}
+footer .fine{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;font-size:13px;opacity:.7}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr}footer nav{justify-content:flex-start}}
+
+/* sticky mobile bar */
+.mbar{display:none}
+@media (max-width:760px){
+  .sec{padding:84px 0}
+  .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;gap:8px;background:var(--ink);border-radius:999px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .mbar a{flex:1;text-align:center;color:#fff;text-decoration:none;font-weight:900;font-size:15px;padding:12px 6px;border-radius:999px}
+  .mbar a.p{background:var(--sunset)}
+  footer{padding-bottom:100px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="回到頁首"><i>薇</i>蔡筱薇</a>
+    <ul>
+      <li><a href="#story">成長經歷</a></li>
+      <li><a href="#belief">理念</a></li>
+      <li><a href="#policy">政見</a></li>
+      <li><a href="#trail">競選足跡</a></li>
+      <li><a href="#charity">公益</a></li>
+      <li><a href="#service">社區服務</a></li>
+      <li><a href="#alumni">南應校友</a></li>
+    </ul>
+    <a class="cta" href="#event">11/1 來相挺</a>
+  </div>
+</header>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero grain" id="top" aria-label="競選總部成立大會">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="kicker"><b>第十選區</b>台南市東區市議員候選人</span>
+      <h1 class="name">蔡筱薇</h1>
+      <p class="event-title">競選總部成立大會</p>
+      <p class="slogan"><span>有薇力，新東區</span>　拚第三屆，堅定向前為您拚！</p>
+      <div class="datebig">
+        <div class="d" aria-label="11月1日">11/1</div>
+        <div class="meta">星期日 上午 09:00<small>中華東路關帝殿停車場</small></div>
+      </div>
+      <div class="btns">
+        <button class="btn btn-ink" type="button" id="ics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          加入行事曆
+        </button>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8D%97%E5%B8%82%E6%9D%B1%E5%8D%80%20%E9%97%9C%E5%B8%9D%E6%AE%BF%20%E4%B8%AD%E8%8F%AF%E6%9D%B1%E8%B7%AF" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          導航到會場
+        </a>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <img src="assets/candidate.webp" width="640" height="868" alt="東區市議員候選人蔡筱薇，短髮、黑色西裝外套配白襯衫，自信微笑">
+      <div class="badge" aria-hidden="true"><span><em>3</em>連霸<br>拚起來</span></div>
+    </figure>
+  </div>
+</section>
+
+<div class="ribbon" role="timer" aria-live="off">
+  <div class="wrap">
+    <p>距離成立大會還有<small>2026.11.01（日）09:00 · 早點到，一起熱鬧開場</small></p>
+    <div class="cd" id="cd">
+      <div><b data-k="d">--</b><span>天</span></div>
+      <div><b data-k="h">--</b><span>時</span></div>
+      <div><b data-k="m">--</b><span>分</span></div>
+      <div><b data-k="s">--</b><span>秒</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT TICKET -->
+<section class="ticket" id="event" aria-labelledby="event-h">
+  <div class="wrap">
+    <h2 id="event-h" class="skip" style="position:absolute;left:-999px">活動資訊</h2>
+    <div class="ticket-card">
+      <div><div class="lbl">日期 DATE</div><div class="val">2026 年 11 月 1 日</div><div class="sub">星期日</div></div>
+      <div><div class="lbl">時間 TIME</div><div class="val">上午 9:00</div><div class="sub">建議提早 15 分鐘入場</div></div>
+      <div><div class="lbl">地點 VENUE</div><div class="val">中華東路<br>關帝殿停車場</div><div class="sub">台南市東區</div></div>
+      <div class="go"><a href="#alumni">南應校友<span>看這裡 →</span></a></div>
+    </div>
+    <div class="ticket-note reveal">
+      <div class="seal" aria-hidden="true">殿</div>
+      <p><strong>為什麼在關帝殿？</strong>從第一屆議員任期開始，筱薇每年春節前都和東區關帝殿、秋香孝德慈善會一起「寒冬送暖」，今年已是連續第七年、送到 558 戶東區低收入家庭手上。這裡是東區的信仰中心，也是凝聚人情味的地方——競總，就從這裡出發。</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="sec" id="story" aria-labelledby="story-h">
+  <div class="wrap story">
+    <div class="story-side reveal">
+      <div class="eyebrow">01 · Growing up</div>
+      <h2 id="story-h">從府城女孩<br>到東區的議員</h2>
+      <p class="lead">在反抗威權、追求民主的家庭中長大；南應大藝術系畢業後，在立委服務處磨了十年，再走進議會。每一步，都踩在東區的土地上。</p>
+      <figure class="quote">
+        <q>走政治路的人，要有<b>熱情、責任感、洞察力</b>。</q>
+        <figcaption>— 筱薇常用德國社會學家韋伯這句話勉勵自己</figcaption>
+      </figure>
+    </div>
+    <ol class="tl">
+      <li class="reveal"><div class="yr">1983</div><h3>出生於台南</h3><p>7 月 12 日在府城出生，從小在重視民主與台灣主體意識的家庭成長。</p></li>
+      <li class="reveal hot"><div class="yr">2006</div><h3>台南女子技術學院 藝術學學士</h3><p>母校就是今天的<strong>台南應用科技大學</strong>——全台唯一擁有完整藝術學院的科技大學。藝術訓練給了她看見城市美感與細節的眼睛。</p><span class="tag">南應人學姊</span></li>
+      <li class="reveal"><div class="yr">2006–2018</div><h3>十年幕僚：從服務處到立委辦公室主任</h3><p>畢業即進入林俊憲服務處，一路做到立法委員辦公室主任。期間協助爭取虎尾寮設置配水池降低停水影響、竹溪整治經費納入前瞻計畫、修正動保法提高棄養罰則。</p></li>
+      <li class="reveal"><div class="yr">2016</div><h3>成功大學政治經濟研究所</h3><p>一邊做服務、一邊進修，取得成大政經所碩士，把基層經驗與政策研究接在一起。</p></li>
+      <li class="reveal hot"><div class="yr">2018</div><h3>首次參選即當選</h3><p>34 歲臨危代打，第一次參選就拿下 11,408 票（13.07%），進入台南市議會。</p></li>
+      <li class="reveal"><div class="yr">2022</div><h3>連任成功</h3><p>以 10,211 票連任，並成為東區唯一的民進黨籍議員。</p></li>
+      <li class="reveal"><div class="yr">2023</div><h3>出任議會民進黨團幹事長</h3><p>也曾擔任賴清德台南競選總部執行總幹事，多次獲議會監督聯盟評鑑為優質議員。</p></li>
+      <li class="reveal hot"><div class="yr">2026</div><h3>拚三連霸：有薇力，新東區</h3><p>3 月黨內初選出線、9 月 2 日完成登記。10 年幕僚 + 8 年議員，要把經驗變成東區升級的具體方案。</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="sec manifesto grain" id="belief" aria-labelledby="belief-h">
+  <div class="wrap">
+    <div class="eyebrow reveal">02 · Belief</div>
+    <h2 id="belief-h" class="big reveal">從<em>重大建設</em><br>走向<em>生活升級</em>。</h2>
+    <p class="belief reveal">鐵路地下化、綠園道、捷運藍線同時交會在東區——長年被鐵道切開的城市，即將重新縫合。筱薇相信，城市建設與社會福利不是兩件事，核心都是<strong>「讓市政真正進入市民的生活」</strong>。她以「堅持台灣國家主權意識、守護台南文化傳統價值」為信念，也主張議會議事透明、定期向市民報告問政成果。</p>
+    <div class="vals reveal">
+      <div><b>熱情</b><p>每週三晚上 7 點到 9 點，服務處的門都開著。從清寒獎學金到一面反光鏡，小事也當大事辦。</p></div>
+      <div><b>責任感</b><p>建設不能等完工才開始想。交通、產業、公設與生活機能，現在就要一起規劃。</p></div>
+      <div><b>洞察力</b><p>從市民生活發現問題，再透過議會監督、政策規劃與跨局處協調把它解決。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- POLICY -->
+<section class="sec" id="policy" aria-labelledby="policy-h">
+  <div class="wrap">
+    <div class="policy-head">
+      <div>
+        <div class="eyebrow reveal">03 · Policy</div>
+        <h2 id="policy-h" class="reveal">四大區域藍圖<br>＋ 四大社福政見</h2>
+      </div>
+      <p class="lead reveal" style="max-width:30em">東區各生活圈條件不同，不能再用單點、零散的方式做建設。筱薇在 2026 年 8 月市政總質詢提出「八大政策」，為都市縫合後的新東區做準備。</p>
+    </div>
+    <div class="blue">
+      <article class="zone reveal"><span class="no" aria-hidden="true">01</span><div class="area">南台南副都心</div><h3>竹篙厝 2.0</h3><p class="sub">好市多、小巨蛋進駐，生活機能要跟上</p>
+        <ul><li>爭取托嬰中心空間、特色公園、圖書館等公共設施</li><li>打通崇賢五路、崇賢七路、崇興路接大同路等東西向道路</li><li>監督副都心車站專用區、市立醫院 BOT 等重大招商案</li></ul></article>
+      <article class="zone reveal"><span class="no" aria-hidden="true">02</span><div class="area">平實營區 · 虎尾寮</div><h3>虎耀平實</h3><p class="sub">都市綠意與商業量能共融的新典範</p>
+        <ul><li>爭取平實路銜接國道 1 號側車道</li><li>國 1 仁德交流道增設南下匝道，接文山路直通虎尾寮</li><li>關注平實轉運站與捷運藍線，改善周邊公設與休閒空間</li></ul></article>
+      <article class="zone reveal"><span class="no" aria-hidden="true">03</span><div class="area">林森路一帶</div><h3>林森新市政</h3><p class="sub">公設多元的行政新核心</p>
+        <ul><li>「機 35」重劃結合停 28 立體多目標停車場</li><li>整合東區公所、戶政、里活動中心、東區國民運動中心</li><li>原公所與戶政空間留給崇學里、崇信里作活動中心</li></ul></article>
+      <article class="zone reveal"><span class="no" aria-hidden="true">04</span><div class="area">火車站 · 成功大學</div><h3>成大特區</h3><p class="sub">學術能量與文化創新的輸出平台</p>
+        <ul><li>縫合衛民街、府東街、樹林街等鐵路交會區</li><li>串聯馬雅各青年公園、知事官邸，打造通往中西區的文創散步廊道</li><li>結合成大資源，促進產學交流與青年創業</li></ul></article>
+    </div>
+    <div class="welfare grain reveal">
+      <h3>四大社福政見：照顧每一個世代</h3>
+      <p>建設讓城市升級，社福讓每個家庭感受得到。</p>
+      <div class="wf">
+        <div><span class="who">孩童</span><b>營養午餐<br>全面補助</b></div>
+        <div><span class="who">長者</span><b>皮蛇疫苗、RSV 疫苗、敬老計程車全面補助</b></div>
+        <div><span class="who">孕婦</span><b>孕婦 RSV 疫苗、好孕計程車全面補助</b></div>
+        <div><span class="who">全市民</span><b>YouBike<br>前 30 分鐘免費</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAIL -->
+<section class="sec steps-sec" id="trail" aria-labelledby="trail-h">
+  <div class="wrap">
+    <div class="eyebrow reveal">04 · On the road</div>
+    <h2 id="trail-h" class="reveal">競選足跡</h2>
+    <p class="hint">← 左右滑動看完整路線 →</p>
+  </div>
+  <div class="steps" tabindex="0" aria-label="競選足跡時間軸，可左右捲動">
+    <article class="step"><time>2025.11.05</time><h3>巴克禮公園宣布連任</h3><p>公布「東區 PLUS+」四大區域願景，東區過半里長到場力挺；宣布騎 YouBike 深入東區走訪基層。</p></article>
+    <article class="step"><time>2025.12.30</time><h3>爭取 YouBike 前 30 分鐘免費</h3><p>與成大學生、成大里、圍下里、大學里里長一起開記者會，要學生、鄰里、市府三贏。</p></article>
+    <article class="step"><time>2026.03.01</time><h3>立委南下相挺</h3><p>陳培瑜、賴惠員兩位立委到東區力挺，籲鄉親留住最優秀的議員。</p></article>
+    <article class="step"><time>2026.03.10</time><h3>黨內初選出線</h3><p>東區「4 搶 2」初選，現任蔡筱薇順利過關。</p></article>
+    <article class="step"><time>2026.04.30</time><h3>為台南泳將發聲</h3><p>全中運台南游泳 8 金 7 銀 4 銅，卻沒有國際標準泳池——持續爭取興建。</p></article>
+    <article class="step"><time>2026.08.28</time><h3>總質詢提出八大政策</h3><p>四大區域藍圖 + 四大社福政策，布局東區下一個十年。</p></article>
+    <article class="step"><time>2026.09.02</time><h3>完成登記，拚三連霸</h3><p>立委林俊憲與多位議員陪同，以「有薇力，新東區」為競選主軸。</p></article>
+    <article class="step now"><time>2026.11.01</time><h3>競選總部成立大會</h3><p>上午 9 點，中華東路關帝殿停車場。下一個足跡，要和你一起踏出去。</p><span class="pin">● 你在這裡</span></article>
+  </div>
+</section>
+
+<!-- CHARITY -->
+<section class="sec" id="charity" aria-labelledby="charity-h">
+  <div class="wrap">
+    <div class="eyebrow reveal">05 · Giving back</div>
+    <h2 id="charity-h" class="reveal">熱心公益，<br>是每一年的習慣</h2>
+    <p class="lead reveal">筱薇最擅長的，是把民間善意「媒合」到最需要的地方——不是一次性的活動，而是年年持續的陪伴。</p>
+    <div class="charity">
+      <div class="big-card grain reveal">
+        <div><div class="n">700<small>+ 位</small></div>
+          <h3>東區清寒學童獎助學金</h3>
+          <p>攜手康黃金慈善愛心協會，2022 年起年年舉辦、串聯東區各校，今年邁入第 5 年，累計幫助超過 700 名弱勢學童。2024 年主持頒發時，她在議會哽咽落淚——因為她知道，這筆錢對一個孩子有多重要。</p></div>
+      </div>
+      <div class="c-list">
+        <div class="c-item reveal"><div class="n">7<small>年</small></div><div><h3>寒冬送暖物資捐贈</h3><p>每年春節前舉辦，2026 年與秋香孝德慈善會、東區關帝殿送暖 558 戶低收入家庭。</p></div></div>
+        <div class="c-item reveal"><div class="n">200<small>名</small></div><div><h3>「薇力盃小鐵人」</h3><p>媒合薇笑公益推廣協會在崇明國中舉辦游泳、自行車、路跑三項賽，近 200 名國小學童放下 3C 動起來。</p></div></div>
+        <div class="c-item reveal"><div class="n">♥</div><div><h3>鮮乳、白米、濕紙巾送到需要的家</h3><p>媒合玉衡文教藝術協會捐鮮乳給弱勢學童、後甲開基真武殿白米贈弱勢、藥局捐濕紙巾給嬰幼兒托育協會。</p></div></div>
+        <div class="c-item reveal"><div class="n">+</div><div><h3>熱血健康日</h3><p>在東區關帝廳結合醫療與企業舉辦捐血活動，呼籲鄉親捐血做公益。</p></div></div>
+      </div>
+    </div>
+    <div class="partners reveal" aria-label="攜手的公益夥伴">
+      <span>康黃金慈善愛心協會</span><span>秋香孝德慈善會</span><span>東區關帝殿</span><span>薇笑公益推廣協會</span><span>後甲開基真武殿</span><span>玉衡文教藝術協會</span><span>天靈慈善會</span><span>成功青商會</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="sec" id="service" aria-labelledby="service-h" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="eyebrow reveal">06 · For the neighborhood</div>
+    <h2 id="service-h" class="reveal">為社區做的服務</h2>
+    <p class="lead reveal">大到國道匝道，小到巷口一面反光鏡——這些都是筱薇在議會與鄰里間一件一件追的事。</p>
+    <div class="svc">
+      <article class="reveal"><div class="cat">交通</div><h3>打通東區任督二脈</h3><p>爭取平實路拓寬延伸接國道、東西向道路串聯；捷運藍線動工前，要求市府做好施工配套減少衝擊。</p></article>
+      <article class="reveal"><div class="cat">綠色移動</div><h3>YouBike 前 30 分鐘免費</h3><p>長期爭取的政策，並提議讓里長免費騎 YouBike 洽公，當最佳代言人。</p></article>
+      <article class="reveal"><div class="cat">親子</div><h3>東區親子館搬進林森圖書館</h3><p>爭取遷址擴大空間，提升服務品質，讓年輕爸媽有更好的去處。</p></article>
+      <article class="reveal"><div class="cat">治安</div><h3>爆閃燈與巡守裝備</h3><p>媒合民間企業捐贈東區爆閃燈與巡守裝備，守護鄰里夜間安全；並與成功青商、大智里發起反光鏡清潔行動。</p></article>
+      <article class="reveal"><div class="cat">商圈</div><h3>搶救北門路商圈</h3><p>新光三越中山店熄燈後，提案要求市府整合火車站北門路商圈振興與轉型計畫。</p></article>
+      <article class="reveal"><div class="cat">體育</div><h3>爭取國際標準泳池</h3><p>台南選手在不足的條件下拚出全中運佳績，要讓下一代有 50 公尺、10 水道的訓練基地。</p></article>
+      <article class="reveal"><div class="cat">平權</div><h3>告別式手語翻譯</h3><p>與朱正軒議員要求殯葬管理所改善手譯服務，讓聽障朋友也能完整參與告別式。</p></article>
+      <article class="reveal"><div class="cat">消保</div><h3>揭開美容消費黑洞</h3><p>「免費體驗」變高額負債？要求市府啟動跨局處專案查處，保護消費者。</p></article>
+      <article class="reveal"><div class="cat">居住</div><h3>青年居住與勞權</h3><p>促市府調高婚育社宅配額；也關注爛尾樓爭議，要市府介入，別讓民眾求助無門。</p></article>
+    </div>
+    <div class="office reveal">
+      <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div>
+      <div><span class="award">多次獲評優質議員</span><h3>有事，來服務處找筱薇</h3><p>台南市東區凱旋路 225 號 · 每週三 19:00–21:00 筱薇親自服務 · 電話 06-209-1120</p></div>
+      <a class="btn btn-ink" href="https://lin.ee/V4skCmO" target="_blank" rel="noopener">加入 LINE 好友</a>
+    </div>
+  </div>
+</section>
+
+<!-- ALUMNI -->
+<section class="sec alumni grain" id="alumni" aria-labelledby="alumni-h">
+  <div class="wrap">
+    <div class="al-top">
+      <div>
+        <div class="eyebrow reveal">07 · TUT Alumni</div>
+        <h2 id="alumni-h" class="reveal">南應人，<br>我們的<em>學姊</em>要選了！</h2>
+        <p class="lead reveal">筱薇 2006 年畢業於台南女子技術學院——也就是今天的台南應用科技大學。從家專、女院到南應大，一甲子的校友散在全台各地；這一次，邀請每一位南應人回來，替學姊加油。</p>
+      </div>
+      <figure class="gift reveal">
+        <img src="assets/gift.jpg" width="720" height="720" alt="一個打開的神秘禮物盒，問號形狀的緞帶與金色光芒">
+        <span class="q">東區校友限定・驚喜現場揭曉</span>
+      </figure>
+    </div>
+
+    <div class="paths">
+      <article class="path east reveal">
+        <span class="who">住在東區的校友</span>
+        <h3>到場，領一份神秘禮物</h3>
+        <p>11/1（日）上午 9 點來關帝殿停車場，我們為東區的南應人準備了驚喜與神秘禮物，內容當天揭曉。</p>
+        <ol><li>先到「校友會召集令」留下姓名與電話（30 秒）</li><li>當天到現場，向服務台說「我是南應人」</li><li>領取專屬驚喜，和學姊合照！</li></ol>
+        <div class="btns"><a class="btn btn-ink" href="https://event.bymyway.com/tut/" target="_blank" rel="noopener">先到校友會報到 →</a></div>
+      </article>
+      <article class="path far reveal">
+        <span class="who">不住東區、在全台各地的校友</span>
+        <h3>在網路上，幫學姊集氣</h3>
+        <p>不在台南也能出力！特別感謝每一位願意在網路上為筱薇集氣加油的南應人——按讚、分享、留言，都是最大的力量。</p>
+        <ol><li>把這個頁面分享到 LINE 群組或臉書</li><li>到筱薇粉專、IG 留一句「南應人挺你」</li><li>加入校友會，跟散在各地的同學重新連上</li></ol>
+        <div class="btns">
+          <button class="btn btn-white" type="button" id="cheer">分享，幫學姊集氣</button>
+          <a class="btn btn-ghost" href="https://www.facebook.com/Hsiaoweitasi/" target="_blank" rel="noopener">到粉專留言</a>
+        </div>
+        <p class="cheer-out" id="cheerOut" aria-live="polite"></p>
+      </article>
+    </div>
+
+    <div class="al-links">
+      <a class="al-link reveal" href="https://event.bymyway.com/tut/" target="_blank" rel="noopener">
+        <span><small>TUT ALUMNI</small><b>台南應用科技大學校友會 召集令</b><span class="t">姓名＋電話 30 秒加入，找回老同學</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+      <a class="al-link reveal" href="https://event.bymyway.com/curated/tut-memory/" target="_blank" rel="noopener">
+        <span><small>MEMORY WALL</small><b>南應大校友互動記憶牆</b><span class="t">時光走廊、南應十景投票、把老照片貼回牆上</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="sec final grain" aria-labelledby="final-h">
+  <div class="wrap">
+    <div class="d reveal" aria-hidden="true">11/1</div>
+    <h2 id="final-h" class="reveal">全台灣的朋友，東區見！</h2>
+    <p class="reveal">星期日上午 9:00 · 中華東路關帝殿停車場</p>
+    <div class="btns reveal">
+      <button class="btn btn-ink" type="button" id="ics2">加入行事曆</button>
+      <a class="btn btn-white" href="#alumni">南應校友專區</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>蔡筱薇｜台南市東區市議員候選人</h4>
+      <p>有薇力，新東區。<br>服務處：台南市東區凱旋路 225 號 · 06-209-1120</p>
+    </div>
+    <nav aria-label="社群與參考連結">
+      <a href="https://www.facebook.com/Hsiaoweitasi/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/nice_tn_wei/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://lin.ee/V4skCmO" target="_blank" rel="noopener">LINE</a>
+      <a href="https://www.tncc.gov.tw/councilorpage.asp?mainid=47FECB54-537A-413C-934B-9B9744DF9D0F" target="_blank" rel="noopener">議會個人頁</a>
+      <a href="https://zh.wikipedia.org/zh-tw/%E8%94%A1%E7%AD%B1%E8%96%87" target="_blank" rel="noopener">維基百科</a>
+      <a href="https://event.bymyway.com/tut/" target="_blank" rel="noopener">南應大校友會</a>
+    </nav>
+    <p class="fine">本頁資料整理自台南市議會、維基百科、蔡筱薇公開社群及各大媒體公開報導。活動資訊以競選總部正式公告為準。</p>
+  </div>
+</footer>
+
+<nav class="mbar" aria-label="快速動作">
+  <a href="#event">活動資訊</a>
+  <a class="p" href="#alumni">南應校友專區</a>
+</nav>
+
+<script>
+(()=>{
+  const T=new Date("2026-11-01T09:00:00+08:00").getTime();
+  const box=document.getElementById("cd"); const q=k=>box.querySelector(`[data-k="${k}"]`);
+  const pad=n=>String(n).padStart(2,"0");
+  function tick(){
+    let s=Math.max(0,Math.floor((T-Date.now())/1000));
+    q("d").textContent=Math.floor(s/86400); s%=86400;
+    q("h").textContent=pad(Math.floor(s/3600)); s%=3600;
+    q("m").textContent=pad(Math.floor(s/60)); q("s").textContent=pad(s%60);
+  }
+  tick(); setInterval(tick,1000);
+
+  function ics(){
+    const body=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//tsai-hsiaowei//rally//ZH","BEGIN:VEVENT",
+      "UID:tsai-hsiaowei-hq-20261101@rally","DTSTAMP:20261001T000000Z",
+      "DTSTART:20261101T010000Z","DTEND:20261101T030000Z",
+      "SUMMARY:蔡筱薇競選總部成立大會","LOCATION:台南市東區 中華東路關帝殿停車場",
+      "DESCRIPTION:有薇力，新東區！上午9點準時開始，南應大東區校友現場有神秘禮物。",
+      "BEGIN:VALARM","TRIGGER:-PT2H","ACTION:DISPLAY","DESCRIPTION:蔡筱薇競總成立大會","END:VALARM",
+      "END:VEVENT","END:VCALENDAR"].join("\r\n");
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([body],{type:"text/calendar;charset=utf-8"}));
+    a.download="蔡筱薇競總成立大會-1101.ics"; document.body.appendChild(a); a.click(); a.remove();
+  }
+  document.getElementById("ics").addEventListener("click",ics);
+  document.getElementById("ics2").addEventListener("click",ics);
+
+  const out=document.getElementById("cheerOut");
+  document.getElementById("cheer").addEventListener("click",async()=>{
+    const data={title:"蔡筱薇競選總部成立大會",text:"南應人一起幫學姊蔡筱薇集氣！11/1（日）上午9點，台南中華東路關帝殿停車場",url:location.href};
+    try{
+      if(navigator.share){await navigator.share(data);out.textContent="謝謝你的集氣！學姊收到了！";}
+      else{await navigator.clipboard.writeText(data.text+" "+data.url);out.textContent="連結已複製，貼到 LINE 群組幫學姊集氣吧！";}
+    }catch(e){ if(e&&e.name!=="AbortError") out.textContent="分享沒有成功，請直接複製網址分享，謝謝你！"; }
+  });
+
+  const nav=document.getElementById("nav");
+  const onScroll=()=>nav.classList.toggle("solid",scrollY>40);
+  onScroll(); addEventListener("scroll",onScroll,{passive:true});
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

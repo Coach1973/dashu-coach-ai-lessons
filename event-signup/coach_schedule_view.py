@@ -334,7 +334,7 @@ document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
  document.getElementById('pick').textContent=b.dataset.l;
  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}}}});
 document.querySelectorAll('.cx').forEach(function(b){{b.onclick=function(){{
- if(!confirm('確定要取消這筆行程嗎？\n\n'+b.dataset.l+'\n\n取消後教練的 Google 日曆也會一起刪掉。'))return;
+ if(!confirm('確定要取消這筆行程嗎？\n\n'+b.dataset.l+'\n\n取消後教練 Google 日曆裡我們寫過的那一筆也會一起刪掉。'))return;
  b.disabled=true;b.textContent='取消中…';
  fetch('/schedule/{token}/cancel',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{id:b.dataset.id,date:b.dataset.d}})}})
  .then(function(r){{return r.json()}}).then(function(j){{if(j.ok)location.reload();else{{alert(j.error||'取消失敗，請稍後再試');b.disabled=false;b.textContent='取消'}}}})

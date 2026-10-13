@@ -1,0 +1,1171 @@
+<!DOCTYPE html><html lang="zh-Hant" data-lvt-canonical="1"><head>
+<!--
+Canvas: RWD 單頁（桌機以 1440px 設計，手機 390px 可用），全長滾動
+Design given: 「成熟復古相簿 × 手帳博物館」——紙張顆粒、斂飾拼貼（旋轉≤±1.5deg）、柔和多層復古陰影、郵戳/燙金小標/細虛線細節；時光走廊與十景全面接入統一風格插畫；留言牆升級為可上傳照片的回憶相簿（拍立得相片卡＋♡共鳴＋lightbox＋排序）
+Asset map: [hero] images_web/ViA8Pwl1IA9VWz2H.jpg -> Hero 滿版背景 cover（沿用）；[時光走廊 5 張 2048×1536] DGvCTiSKiN2UisWG/WmCYgFAVUPExRLyu/8Jb8JtP9SDKK5j9S/p15ZYpP8u74cCzc7/sk1gVDLMWCEFZehU -> 各節點左側 4:3 白邊相框 slot，cover，淡入＋hover scale1.03；[十景 10 張 2048×1536] wHjLMX9j11EsU9oW/mRx90WLTHRHOtlm5/FaCoffJTd02Uw8zi/iMMN5nrLUON4T95X/Dln5Ux7foyG4p26X/DPt2h40Y1cGC76SR/jfrrzE8jiYAzqldF/HNBHyjx7pFIy8nVL/2bZimchZet1V7qgR/VoR0FV0oBl2JcTio -> 拍立得卡圖片區 4:3 cover，中性色占位防閃爍，點擊開 lightbox（投他！按鈕事件分離）；[用戶上傳] canvas 壓縮（最長邊1000px、JPEG 0.75）轉 dataURL 存 localStorage，壓縮後>1.2MB toast 擋下
+Palette: #F6EFE3 -> --bg、#FFFDF7 -> --paper、#C9563A -> --accent、#E8A87C -> --accent-soft、#2F4A3C -> --ink-green、#23304A -> --fg、#F4D35E -> --note-yellow、#F2B5A0 -> --note-pink、#9BC4A8 -> --note-mint、#6E6256 -> --muted（全部 given）；素色紙卡低飽和色 --card-yellow/pink/mint、燙金 --gold/--gold-lite（chosen，brief 要求降飽和與燙金小標但未給色值）
+Typography: 區塊標題 Noto Serif TC 900＋手繪底線（given）；內文 Noto Sans TC；Caveat 僅限小標註（hero kicker/簽名/計數/提示）（given）；年份/票數/排名改 Serif（brief：Caveat 不再用於大區塊）
+Content map: 原有 pinned 文案全數保留（校名、1965/1997/2006/2010、十景名稱與描述、四場講座 2026/11/11・11/18・11/25・12/2 19:30–21:00、免責註記、6 則預設留言含 3 則逐字）；留言牆標題改 brief 指定「回憶相簿：把你的南應，貼回這面牆」；十景卡 emoji 主視覺移除
+Assumptions: 時光走廊由橫向滑動改縱向圖文手風琴（大圖放不進 200px 橫卡，「← 左右滑動 →」提示隨之移除）；種子留言給 14–42 固定基礎共鳴數、用戶新留言從 0 起算（brief：新留言初始 0）；lightbox 同時服務十景與回憶照片；舊版純文字留言以無 photo/id 欄位相容讀取，首次載入補發 id 遷移
+QA risks: localStorage 容量（含照片）-> lsSetSafe try/catch＋專用 toast 不崩頁；lightbox 390px 可用性；舊資料相容；投票/報名/入會/數字遞增回歸
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南應大校友互動記憶牆 ｜ TUT Alumni Memory Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&amp;family=Noto+Sans+TC:wght@400;500;700&amp;family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6EFE3;
+  --paper:#FFFDF7;
+  --accent:#C9563A;
+  --accent-soft:#E8A87C;
+  --ink-green:#2F4A3C;
+  --fg:#23304A;
+  --note-yellow:#F4D35E;
+  --note-pink:#F2B5A0;
+  --note-mint:#9BC4A8;
+  --muted:#6E6256;
+  --serif:'Noto Serif TC', serif;
+  --sans:'Noto Sans TC', sans-serif;
+  --hand:'Caveat', cursive;
+  --gold:#B8860B;
+  --gold-lite:#E3C468;
+  --card-yellow:#F2E3B6;
+  --card-yellow-2:#E9D79E;
+  --card-pink:#EFD2C4;
+  --card-pink-2:#E5C0AD;
+  --card-mint:#CADCD0;
+  --card-mint-2:#B7CDBD;
+  --shadow:0 1px 2px rgba(35,48,74,.07), 0 6px 14px rgba(35,48,74,.10), 0 18px 36px rgba(35,48,74,.07);
+  --shadow-lift:0 2px 4px rgba(35,48,74,.08), 0 12px 24px rgba(35,48,74,.14), 0 26px 48px rgba(35,48,74,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--sans);
+  color:var(--fg);
+  background-color:var(--bg);
+  /* 紙張顆粒噪點感 */
+  background-image:
+    radial-gradient(rgba(110,98,86,.05) 1px, transparent 1.4px),
+    radial-gradient(rgba(110,98,86,.035) 1px, transparent 1.4px);
+  background-size:22px 22px, 13px 13px;
+  background-position:0 0, 7px 9px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--accent-soft);color:var(--fg);}
+
+/* ============ 通用 ============ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+.section{padding:96px 0;}
+.sec-head{text-align:center;margin-bottom:56px;position:relative;}
+.sec-head .eyebrow{font-family:var(--serif);font-weight:700;font-size:13px;letter-spacing:.3em;text-transform:uppercase;
+  background:linear-gradient(100deg,var(--gold) 10%,var(--gold-lite) 45%,var(--gold) 80%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold);
+  display:inline-block;margin-bottom:12px;}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:36px;line-height:1.4;color:var(--fg);position:relative;display:inline-block;padding-bottom:14px;}
+/* 手繪底線裝飾 */
+.sec-head h2::after{content:"";position:absolute;left:1%;right:1%;bottom:2px;height:7px;background:var(--accent-soft);opacity:.75;
+  border-radius:52% 48% 46% 54%/75% 68% 32% 25%;transform:rotate(-.35deg);}
+.sec-head .sub{color:var(--muted);font-size:15px;margin-top:14px;}
+/* 郵戳裝飾 */
+.postmark{position:absolute;top:-58px;right:1%;width:72px;height:72px;border:2px dashed rgba(201,86,58,.42);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--serif);font-weight:700;font-size:9px;
+  letter-spacing:.14em;color:rgba(201,86,58,.55);transform:rotate(-12deg);pointer-events:none;line-height:1.5;}
+.postmark i{font-style:normal;display:block;border-top:1px solid rgba(201,86,58,.4);border-bottom:1px solid rgba(201,86,58,.4);padding:2px 0;margin:2px 0;}
+/* 紅色手繪圈記 */
+.circle-mark{position:relative;display:inline-block;}
+.circle-mark::after{
+  content:"";position:absolute;left:-14px;right:-14px;top:-10px;bottom:-10px;
+  border:3px solid var(--accent);border-radius:52% 48% 55% 45% / 60% 55% 45% 40%;
+  opacity:.75;pointer-events:none;transform:rotate(-1.5deg);
+}
+/* 紙膠帶 */
+.tape{position:absolute;width:110px;height:30px;background:rgba(232,168,124,.55);
+  box-shadow:0 2px 4px rgba(35,48,74,.12);pointer-events:none;z-index:3;}
+.tape::before,.tape::after{content:"";position:absolute;top:0;bottom:0;width:6px;
+  background:repeating-linear-gradient(90deg,transparent 0 2px,rgba(255,253,247,.5) 2px 4px);}
+.tape::before{left:0;} .tape::after{right:0;}
+.tape-green{background:rgba(155,196,168,.55);}
+.tape-yellow{background:rgba(244,211,94,.6);}
+
+/* 按鈕兩款 */
+.btn{display:inline-block;border-radius:4px;font-weight:700;font-size:16px;
+  padding:14px 30px;border:2px solid var(--ink-green);transition:transform .18s ease, box-shadow .18s ease, background .18s;
+  text-align:center;}
+.btn:focus-visible{outline:3px solid var(--fg);outline-offset:3px;}
+.btn-primary{background:var(--accent);color:#FFFDF7;border-color:var(--accent);box-shadow:0 2px 4px rgba(35,48,74,.14), 0 8px 18px rgba(201,86,58,.22);}
+.btn-primary:hover,.btn-primary:focus-visible{transform:translateY(-2px);box-shadow:0 4px 8px rgba(35,48,74,.16), 0 14px 28px rgba(201,86,58,.28);}
+.btn-primary:active{transform:translateY(1px);box-shadow:0 1px 3px rgba(35,48,74,.16);}
+.btn-outline{background:var(--paper);color:var(--ink-green);box-shadow:0 2px 4px rgba(35,48,74,.1), 0 8px 16px rgba(35,48,74,.1);}
+.btn-outline:hover,.btn-outline:focus-visible{transform:translateY(-2px);box-shadow:0 4px 8px rgba(35,48,74,.12), 0 14px 26px rgba(35,48,74,.14);background:#fff;}
+.btn[disabled]{opacity:.65;cursor:default;transform:none !important;box-shadow:0 2px 4px rgba(35,48,74,.1) !important;}
+
+/* 捲動淡入 */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ============ 導覽列 ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(246,239,227,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1.5px dashed rgba(110,98,86,.4);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.nav-logo{font-family:var(--serif);font-weight:900;font-size:19px;color:var(--ink-green);white-space:nowrap;}
+.nav-logo small{font-family:var(--hand);font-size:16px;color:var(--accent);font-weight:700;margin-left:6px;}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--fg);padding:8px 12px;border-radius:4px;transition:background .15s,color .15s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a:focus-visible{background:var(--accent);color:#FFFDF7;outline:none;}
+.nav-burger{display:none;background:none;border:2px solid var(--ink-green);border-radius:4px;padding:6px 10px;font-size:18px;color:var(--ink-green);}
+
+/* ============ Hero ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  background:
+    linear-gradient(180deg, rgba(20,26,38,.62) 0%, rgba(35,48,74,.5) 45%, rgba(20,26,38,.78) 100%),
+    url('images_web/ViA8Pwl1IA9VWz2H.jpg') center/cover no-repeat;
+  background-color:#23304A;
+  color:#FFFDF7;padding:120px 0 0;}
+.hero-inner{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2;}
+.hero-kicker{font-family:var(--hand);font-size:26px;color:var(--note-yellow);letter-spacing:.08em;margin-bottom:18px;}
+.hero h1{font-family:var(--serif);font-weight:900;font-size:56px;line-height:1.25;letter-spacing:.02em;
+  text-shadow:0 3px 18px rgba(0,0,0,.45);margin-bottom:20px;}
+.hero-sub{font-size:18px;color:rgba(255,253,247,.92);max-width:640px;margin-bottom:36px;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+.hero-cta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:64px;}
+.hero .btn-outline{background:transparent;color:#FFFDF7;border-color:#FFFDF7;box-shadow:0 2px 6px rgba(0,0,0,.2), 0 10px 22px rgba(0,0,0,.18);}
+.hero .btn-outline:hover,.hero .btn-outline:focus-visible{background:rgba(255,253,247,.14);box-shadow:0 4px 10px rgba(0,0,0,.24), 0 16px 30px rgba(0,0,0,.22);}
+.hero-stats{display:flex;gap:0;flex-wrap:wrap;border-top:1.5px dashed rgba(255,253,247,.45);padding-top:26px;margin-bottom:40px;}
+.stat{flex:1;min-width:180px;padding:0 24px;border-left:1.5px dashed rgba(255,253,247,.35);}
+.stat:first-child{border-left:none;padding-left:0;}
+.stat .num{font-family:var(--serif);font-weight:700;font-size:44px;color:var(--note-yellow);line-height:1.15;letter-spacing:.02em;}
+.stat .num::after{content:"";font-size:.5em;}
+.stat .lbl{font-size:14.5px;color:rgba(255,253,247,.85);margin-top:4px;}
+.hero-scroll{position:absolute;right:32px;bottom:28px;z-index:3;font-family:var(--hand);font-size:22px;color:#FFFDF7;
+  animation:bob 2.2s ease-in-out infinite;text-shadow:0 2px 6px rgba(0,0,0,.5);}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(10px);}}
+
+/* ============ Section 2 時光走廊 ============ */
+.tl-rail{position:relative;max-width:1000px;margin:0 auto;}
+.tl-rail::before{content:"";position:absolute;left:27px;top:22px;bottom:14px;width:2px;
+  background:repeating-linear-gradient(180deg,var(--accent) 0 10px, transparent 10px 18px);opacity:.55;}
+.tl-node{position:relative;padding-left:76px;margin-bottom:26px;}
+.tl-node:last-child{margin-bottom:0;}
+.tl-dot{position:absolute;left:15px;top:30px;width:26px;height:26px;border-radius:50%;background:var(--paper);
+  border:4px solid var(--accent);box-shadow:0 0 0 5px var(--bg), 0 2px 6px rgba(35,48,74,.18);z-index:2;}
+.tl-node.open .tl-dot{background:var(--accent);}
+.tl-card{background:var(--paper);border:1.5px solid rgba(110,98,86,.4);border-radius:8px;
+  box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .28s ease, box-shadow .28s ease, border-color .28s;}
+.tl-card:hover,.tl-card:focus-visible{transform:translateY(-3px);box-shadow:var(--shadow-lift);outline:none;border-color:rgba(201,86,58,.45);}
+.tl-row{display:grid;grid-template-columns:minmax(240px,38%) 1fr;gap:0;}
+.tl-media{position:relative;overflow:hidden;background:#E9DFC8;margin:14px;border-radius:4px;padding:7px;
+  box-shadow:0 1px 3px rgba(35,48,74,.12), 0 6px 14px rgba(35,48,74,.10);}
+.tl-media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px;display:block;
+  opacity:0;transition:opacity .7s ease, transform .5s ease;filter:sepia(.08) saturate(.97);}
+.tl-media img.loaded{opacity:1;}
+.tl-media img{cursor:zoom-in;}
+.tl-zoom{position:absolute;right:14px;bottom:14px;z-index:2;background:rgba(20,24,32,.6);color:#fff;font-size:12px;padding:3px 8px;border-radius:999px;pointer-events:none;}
+.ncard-pending{display:inline-block;font-size:12px;color:#8a5a00;background:#fff3cd;border-radius:999px;padding:2px 8px;margin-bottom:6px;}
+.join-real-note{margin-top:12px;font-size:14px;opacity:.85;}
+.tl-card:hover .tl-media img{transform:scale(1.03);}
+.tl-body{padding:26px 28px 24px;display:flex;flex-direction:column;justify-content:center;}
+.tl-body .yr{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--accent);line-height:1;letter-spacing:.01em;}
+.tl-body h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:8px 0 4px;color:var(--ink-green);}
+.tl-body .peek{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.tl-body .peek::after{content:"▾";font-size:12px;transition:transform .3s;}
+.tl-node.open .tl-body .peek::after{transform:rotate(180deg);}
+.tl-story{font-size:15px;color:var(--fg);max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .45s ease, opacity .45s ease, margin-top .3s, padding-top .3s, border-top-width .1s;
+  border-top:0 dashed rgba(110,98,86,.4);margin-top:0;padding-top:0;}
+.tl-node.open .tl-story{max-height:260px;opacity:1;margin-top:12px;padding-top:12px;border-top-width:1.5px;}
+
+/* ============ Section 3 十景投票 ============ */
+.vote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 28px;}
+.polaroid{background:var(--paper);padding:13px 13px 16px;border-radius:4px;box-shadow:var(--shadow);
+  border:1px solid rgba(110,98,86,.22);position:relative;transition:transform .3s ease, box-shadow .3s ease;}
+.polaroid:nth-child(3n+1){transform:rotate(-1.4deg);}
+.polaroid:nth-child(3n+2){transform:rotate(1.1deg);}
+.polaroid:nth-child(3n){transform:rotate(-.5deg);}
+.polaroid:hover{transform:rotate(0deg) translateY(-6px);box-shadow:var(--shadow-lift);z-index:2;}
+.polaroid .tape{top:-13px;left:50%;margin-left:-52px;transform:rotate(-1.5deg);}
+.scene{aspect-ratio:4/3;border-radius:2px;position:relative;overflow:hidden;background:#E5DCC7;cursor:zoom-in;box-shadow:inset 0 0 0 1px rgba(110,98,86,.18);}
+.scene img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease, transform .4s ease;}
+.scene img.loaded{opacity:1;}
+.polaroid:hover .scene img{transform:scale(1.03);}
+.polaroid .cap{text-align:center;padding:13px 6px 2px;}
+.polaroid .cap .idx{font-family:var(--serif);font-weight:700;font-size:13px;color:#8A6A16;letter-spacing:.18em;}
+.polaroid .cap h3{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--fg);margin:4px 0 4px;}
+.polaroid .cap p{font-size:13.5px;color:var(--muted);min-height:2.6em;}
+.vote-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 6px 0;border-top:1.5px dashed rgba(110,98,86,.35);margin-top:10px;}
+.vote-count{font-family:var(--serif);font-size:15px;color:var(--ink-green);font-weight:500;white-space:nowrap;}
+.vote-count b{font-size:26px;font-weight:900;color:var(--accent);}
+.btn-vote{background:var(--accent);color:#FFFDF7;border:1.5px solid var(--accent);border-radius:4px;
+  font-weight:700;font-size:14px;padding:9px 18px;box-shadow:0 2px 4px rgba(35,48,74,.14), 0 6px 14px rgba(201,86,58,.22);
+  transition:transform .18s, box-shadow .18s, background .18s;white-space:nowrap;}
+.btn-vote:hover:not([disabled]),.btn-vote:focus-visible:not([disabled]){transform:translateY(-2px);box-shadow:0 4px 8px rgba(35,48,74,.16), 0 10px 20px rgba(201,86,58,.28);}
+.btn-vote[disabled]{background:var(--ink-green);border-color:var(--ink-green);color:#DDE8DF;box-shadow:none;}
+.polaroid.pop{animation:pop .45s ease;}
+@keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.05) rotate(0deg);}100%{transform:scale(1);}}
+/* 排行列 */
+.rank-bar{margin-top:56px;background:var(--paper);border:1.5px solid rgba(110,98,86,.4);border-radius:10px;
+  box-shadow:var(--shadow);padding:26px 28px;position:relative;}
+.rank-bar h3{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--ink-green);text-align:center;margin-bottom:18px;}
+.rank-list{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.rank-item{flex:1;min-width:200px;max-width:300px;background:var(--bg);border-radius:8px;padding:14px 16px;text-align:center;
+  border:1.5px dashed rgba(110,98,86,.5);transition:transform .3s;}
+.rank-item .place{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--accent);letter-spacing:.04em;}
+.rank-item.r1 .place{color:var(--gold);} .rank-item.r1{background:rgba(244,211,94,.16);border-color:rgba(184,134,11,.4);}
+.rank-item .nm{font-family:var(--serif);font-weight:700;font-size:16px;margin:2px 0;}
+.rank-item .vt{font-size:13px;color:var(--muted);}
+
+/* ============ Section 4 回憶相簿牆 ============ */
+.wall-layout{display:grid;grid-template-columns:380px 1fr;gap:44px;align-items:start;}
+.form-card{background:var(--paper);border:1.5px solid rgba(110,98,86,.4);border-radius:10px;padding:28px 26px;
+  box-shadow:var(--shadow);position:sticky;top:88px;}
+.form-card .tape{top:-13px;left:50%;margin-left:-52px;transform:rotate(1.2deg);}
+.form-card h3{font-family:var(--serif);font-weight:900;font-size:22px;color:var(--ink-green);margin-bottom:18px;text-align:center;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:14px;font-weight:700;color:var(--fg);margin-bottom:6px;}
+.field input[type=text],.field select,.field textarea,.field input[type=email],.field input[type=tel]{
+  width:100%;border:2px solid rgba(110,98,86,.45);border-radius:5px;padding:10px 12px;font-size:15px;
+  font-family:inherit;background:#fff;color:var(--fg);transition:border-color .15s, box-shadow .15s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,86,58,.18);}
+.field textarea{resize:vertical;min-height:110px;}
+.counter{font-size:12.5px;color:var(--muted);text-align:right;margin-top:4px;font-family:var(--hand);font-size:17px;}
+.color-pick{display:flex;gap:12px;}
+.color-pick input{position:absolute;opacity:0;pointer-events:none;}
+.color-pick label{width:42px;height:42px;border-radius:50%;border:3px solid transparent;cursor:pointer;
+  transition:transform .15s, border-color .15s;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6), 0 2px 5px rgba(35,48,74,.2);margin:0;}
+.color-pick label:hover{transform:scale(1.1);}
+.color-pick input:checked + label{border-color:var(--ink-green);transform:scale(1.12);}
+.color-pick input:focus-visible + label{outline:3px solid var(--fg);outline-offset:2px;}
+.cy{background:var(--card-yellow);} .cp{background:var(--card-pink);} .cm{background:var(--card-mint);}
+.form-note{font-size:12.5px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.6;}
+.btn-submit{width:100%;margin-top:6px;}
+/* 照片上傳欄位 */
+.field-file{margin-top:16px;}
+.file-drop{display:flex;align-items:center;gap:12px;padding:10px;border:1.5px dashed rgba(110,98,86,.5);
+  border-radius:6px;cursor:pointer;transition:border-color .15s, background .15s;}
+.file-drop:hover{border-color:var(--accent);background:rgba(201,86,58,.05);}
+.file-drop .fd-icon{font-size:24px;}
+.file-drop .fd-txt{font-size:13.5px;color:var(--muted);line-height:1.5;}
+.file-preview{display:none;align-items:center;gap:12px;margin-top:10px;}
+.file-preview.show{display:flex;}
+.file-preview img{width:88px;height:66px;object-fit:cover;border-radius:4px;border:1px solid rgba(110,98,86,.4);
+  box-shadow:0 2px 6px rgba(35,48,74,.15);}
+.file-preview .fp-meta{flex:1;font-size:12.5px;color:var(--muted);}
+.file-preview .fp-remove{background:none;border:1.5px solid rgba(110,98,86,.5);border-radius:50%;width:30px;height:30px;
+  font-size:13px;color:var(--muted);flex-shrink:0;transition:border-color .15s,color .15s;}
+.file-preview .fp-remove:hover,.file-preview .fp-remove:focus-visible{border-color:var(--accent);color:var(--accent);}
+/* 排序切換 */
+.wall-toolbar{display:flex;justify-content:flex-end;margin-bottom:16px;}
+.sort-toggle{display:flex;border:1.5px solid rgba(110,98,86,.45);border-radius:6px;overflow:hidden;background:var(--paper);}
+.sort-toggle button{padding:8px 16px;font-size:13.5px;font-weight:500;color:var(--muted);background:none;border:none;
+  border-left:1.5px solid rgba(110,98,86,.3);transition:background .15s,color .15s;}
+.sort-toggle button:first-child{border-left:none;}
+.sort-toggle button.on{background:var(--ink-green);color:#FFFDF7;font-weight:700;}
+.sort-toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+/* 相簿牆：拍立得相片卡 + 素色紙卡 */
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.ncard{background:var(--paper);border-radius:4px;box-shadow:var(--shadow);border:1px solid rgba(110,98,86,.2);
+  position:relative;display:flex;flex-direction:column;padding:12px 12px 10px;transition:transform .3s ease, box-shadow .3s ease;}
+.ncard:nth-child(3n+1){transform:rotate(-1.3deg);}
+.ncard:nth-child(3n+2){transform:rotate(1deg);}
+.ncard:nth-child(3n){transform:rotate(-.5deg);}
+.ncard:hover{transform:rotate(0) translateY(-5px);box-shadow:var(--shadow-lift);z-index:2;}
+.ncard-photo{aspect-ratio:4/3;border-radius:2px;overflow:hidden;background:#E5DCC7;cursor:zoom-in;
+  box-shadow:inset 0 0 0 1px rgba(110,98,86,.18);position:relative;}
+.ncard-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.ncard:hover .ncard-photo img{transform:scale(1.03);}
+.ncard-txt{font-size:14.5px;color:#3a3128;flex:1;line-height:1.75;padding:12px 4px 0;font-family:var(--hand);font-size:19px;}
+.ncard-sig{font-family:var(--hand);font-size:18px;color:rgba(35,48,74,.75);text-align:right;font-weight:700;padding:6px 4px 0;}
+.ncard-foot{display:flex;justify-content:flex-end;padding-top:8px;border-top:1px dashed rgba(110,98,86,.35);margin-top:8px;}
+.btn-echo{background:none;border:1.5px solid rgba(201,86,58,.5);border-radius:99px;padding:5px 14px;font-size:13px;
+  color:var(--accent);font-weight:700;transition:background .18s,color .18s,transform .18s;display:flex;align-items:center;gap:5px;}
+.btn-echo:hover{background:rgba(201,86,58,.1);}
+.btn-echo:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.btn-echo.on{background:var(--accent);border-color:var(--accent);color:#FFFDF7;}
+.btn-echo.on:hover{transform:scale(1.05);}
+/* 無照片素色紙卡（美術紙卡，低飽和） */
+.ncard.plain{padding:22px 20px 12px;border-radius:3px;}
+.ncard.plain .ncard-txt{padding-top:0;font-family:var(--sans);font-size:14.5px;}
+.ncard.plain.note-yellow{background:linear-gradient(165deg,var(--card-yellow),var(--card-yellow-2));}
+.ncard.plain.note-pink{background:linear-gradient(165deg,var(--card-pink),var(--card-pink-2));}
+.ncard.plain.note-mint{background:linear-gradient(165deg,var(--card-mint),var(--card-mint-2));}
+.ncard.plain::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.55);border-radius:2px;pointer-events:none;}
+.ncard.plain::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:76px;height:22px;
+  background:rgba(255,253,247,.5);box-shadow:0 1px 3px rgba(35,48,74,.12);border-left:1px dashed rgba(110,98,86,.25);
+  border-right:1px dashed rgba(110,98,86,.25);}
+.ncard.new{animation:noteIn .55s cubic-bezier(.34,1.56,.64,1);}
+@keyframes noteIn{0%{transform:scale(.4) rotate(-5deg);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+/* ============ Section 5 講座 ============ */
+.talks{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.talk{background:var(--paper);border:1.5px solid rgba(110,98,86,.4);border-radius:10px;padding:24px 20px;
+  box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;
+  transition:transform .25s ease, box-shadow .25s;}
+.talk:nth-child(odd){transform:rotate(-.6deg);}
+.talk:nth-child(even){transform:rotate(.6deg);}
+.talk:hover{transform:rotate(0) translateY(-6px);box-shadow:var(--shadow-lift);z-index:2;}
+.talk .no{font-family:var(--serif);font-weight:900;font-size:24px;color:#8A6A16;line-height:1;letter-spacing:.06em;}
+.talk h3{font-family:var(--serif);font-weight:900;font-size:18px;line-height:1.5;color:var(--fg);margin:10px 0 8px;}
+.talk .desc{font-size:14px;color:var(--muted);margin-bottom:12px;}
+.talk .when{font-size:14px;font-weight:700;color:var(--ink-green);background:rgba(155,196,168,.18);
+  border-radius:5px;padding:9px 11px;margin-bottom:12px;border:1.5px dashed rgba(47,74,60,.4);}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.tag{font-size:12.5px;font-weight:700;color:var(--accent);background:rgba(232,168,124,.16);
+  border:1.5px solid var(--accent-soft);border-radius:99px;padding:4px 12px;}
+.talk .btn{margin-top:auto;padding:11px 16px;font-size:15px;}
+.talks-note{text-align:center;color:var(--muted);font-size:13px;margin-top:28px;}
+/*  stamp 郵票齒輪裝飾 */
+.stamp{position:absolute;top:-13px;right:14px;width:52px;height:60px;background:var(--accent);
+  -webkit-mask:radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px;
+  mask:radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px;
+  display:flex;align-items:center;justify-content:center;color:#FFFDF7;font-family:var(--serif);
+  font-weight:900;font-size:16px;transform:rotate(3deg);box-shadow:0 3px 6px rgba(35,48,74,.2);}
+.stamp span{background:var(--accent);width:calc(100% - 10px);height:calc(100% - 10px);display:flex;align-items:center;justify-content:center;border:1.5px dashed rgba(255,253,247,.7);}
+
+.talk .want-count{font-size:14px;color:var(--ink-green);margin:auto 0 12px;min-height:1.6em;}
+.talk .want-count b{font-size:22px;font-weight:900;color:var(--accent);}
+.talk .btn{margin-top:0;}
+.wish{max-width:640px;margin:40px auto 0;background:var(--paper);border:1.5px dashed rgba(110,98,86,.5);border-radius:10px;padding:26px 24px;box-shadow:var(--shadow);position:relative;}
+.wish h3{font-family:var(--serif);font-weight:900;font-size:20px;margin:0 0 6px;color:var(--fg);}
+.wish-sub{font-size:14px;color:var(--muted);margin:0 0 14px;}
+.wish textarea,.wish input[type=text]{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 12px;margin-bottom:12px;border:1.5px solid rgba(110,98,86,.4);border-radius:6px;background:#FFFDF7;color:var(--fg);}
+.wish textarea{resize:vertical;min-height:84px;}
+.wish .btn{width:100%;}
+.wish-out{min-height:1.6em;margin:12px 0 0;font-size:14px;color:var(--ink-green);text-align:center;}
+/* ============ Modal ============ */
+.modal-mask{position:fixed;inset:0;background:rgba(20,26,38,.55);z-index:200;display:none;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+.modal-mask.show{display:flex;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.modal{background:var(--paper);border:1.5px solid rgba(110,98,86,.5);border-radius:12px;max-width:520px;width:100%;
+  max-height:88vh;overflow-y:auto;padding:30px 28px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.35);
+  animation:modalIn .35s cubic-bezier(.34,1.4,.64,1);}
+@keyframes modalIn{from{transform:scale(.85) translateY(24px);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal .tape{top:-13px;left:50%;margin-left:-52px;transform:rotate(-1.5deg);}
+.modal h3{font-family:var(--serif);font-weight:900;font-size:24px;color:var(--ink-green);margin-bottom:4px;text-align:center;}
+.modal .m-sub{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:20px;}
+.modal-close{position:absolute;top:12px;right:12px;background:none;border:1.5px solid var(--ink-green);border-radius:50%;
+  width:36px;height:36px;font-size:17px;color:var(--ink-green);line-height:1;transition:background .15s,color .15s;}
+.modal-close:hover,.modal-close:focus-visible{background:var(--accent);border-color:var(--accent);color:#fff;}
+.check-group{display:grid;gap:10px;margin-top:6px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;background:var(--bg);border-radius:5px;padding:10px 12px;cursor:pointer;border:1.5px solid transparent;transition:border-color .15s;}
+.check-item:hover{border-color:var(--accent-soft);}
+.check-item input{margin-top:4px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+.modal-success{text-align:center;padding:24px 0;}
+.modal-success .big{font-size:56px;margin-bottom:10px;}
+.modal-success h4{font-family:var(--serif);font-weight:900;font-size:22px;color:var(--ink-green);margin-bottom:8px;}
+.modal-success p{color:var(--muted);font-size:14.5px;}
+
+/* ============ Section 6 加入校友會 ============ */
+.join{background:var(--ink-green);color:#FFFDF7;position:relative;overflow:hidden;
+  background-image:radial-gradient(rgba(255,253,247,.05) 1px, transparent 1.4px);background-size:20px 20px;}
+.join .sec-head h2{color:#FFFDF7;}
+.join .sec-head .sub{color:rgba(255,253,247,.75);}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-bottom:52px;}
+.res-card{background:rgba(255,253,247,.07);border:1.5px dashed rgba(255,253,247,.45);border-radius:10px;
+  padding:30px 26px;text-align:center;transition:transform .22s, background .22s;}
+.res-card:hover{transform:translateY(-6px);background:rgba(255,253,247,.12);}
+.res-card .ic{font-size:46px;margin-bottom:14px;display:block;}
+.res-card h3{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--note-yellow);margin-bottom:8px;}
+.res-card p{font-size:14.5px;color:rgba(255,253,247,.85);}
+.join-cta-wrap{text-align:center;}
+.btn-join{font-size:20px;padding:18px 52px;background:var(--accent);color:#FFFDF7;border:2px solid var(--note-yellow);
+  box-shadow:0 3px 8px rgba(0,0,0,.25), 0 14px 32px rgba(201,86,58,.35);border-radius:8px;font-weight:700;transition:transform .18s, box-shadow .18s;}
+.btn-join:hover:not([disabled]),.btn-join:focus-visible:not([disabled]){transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,.3), 0 20px 40px rgba(201,86,58,.4);}
+.btn-join[disabled]{background:rgba(255,253,247,.16);border-color:rgba(255,253,247,.5);color:var(--note-yellow);box-shadow:none;cursor:default;}
+.join-form{max-width:640px;margin:36px auto 0;background:rgba(255,253,247,.08);border:1.5px dashed rgba(255,253,247,.5);
+  border-radius:10px;padding:28px;display:none;}
+.join-form.show{display:block;animation:fadeIn .35s ease;}
+.join-form .field label{color:#FFFDF7;}
+.join-form .field input,.join-form .field select{background:rgba(255,253,247,.95);border-color:rgba(255,253,247,.6);color:var(--fg);}
+.join-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;}
+.join-grid .full{grid-column:1 / -1;}
+/* ============ 頁尾 ============ */
+.footer{background:#232B3D;color:rgba(255,253,247,.7);text-align:center;padding:34px 24px;font-size:13.5px;line-height:2;}
+.footer a{color:var(--note-yellow);font-weight:500;border-bottom:1px dashed rgba(244,211,94,.5);}
+.footer a:hover{color:#fff;}
+
+/* ============ Toast ============ */
+.toast{position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(120px);z-index:300;
+  background:var(--ink-green);color:#FFFDF7;padding:14px 28px;border-radius:99px;font-size:15px;font-weight:500;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);border:1.5px solid var(--note-yellow);opacity:0;
+  transition:transform .45s cubic-bezier(.34,1.5,.64,1), opacity .3s;max-width:calc(100vw - 40px);text-align:center;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ============ Lightbox ============ */
+.lightbox{position:fixed;inset:0;background:rgba(12,15,22,.9);z-index:250;display:none;
+  align-items:center;justify-content:center;padding:24px;}
+.lightbox.show{display:flex;animation:fadeIn .25s ease;}
+.lb-frame{position:relative;max-width:90vw;max-height:88vh;background:var(--paper);padding:14px 14px 18px;border-radius:4px;
+  box-shadow:0 24px 70px rgba(0,0,0,.55);}
+.lb-frame img{max-width:calc(90vw - 28px);max-height:calc(88vh - 90px);width:auto;height:auto;object-fit:contain;display:block;border-radius:2px;}
+.lb-caption{text-align:center;padding:12px 10px 0;}
+.lb-caption h4{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--fg);margin-bottom:2px;}
+.lb-caption p{font-size:13.5px;color:var(--muted);}
+.lb-close{position:absolute;top:-16px;right:-16px;width:40px;height:40px;border-radius:50%;background:var(--paper);
+  border:1.5px solid rgba(110,98,86,.5);color:var(--fg);font-size:17px;line-height:1;box-shadow:0 4px 10px rgba(0,0,0,.35);
+  transition:background .15s,color .15s;}
+.lb-close:hover,.lb-close:focus-visible{background:var(--accent);border-color:var(--accent);color:#fff;}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+  background:rgba(255,253,247,.92);border:none;font-size:20px;color:var(--fg);box-shadow:0 4px 12px rgba(0,0,0,.4);
+  transition:background .15s,transform .15s;}
+.lb-nav:hover,.lb-nav:focus-visible{background:var(--note-yellow);transform:translateY(-50%) scale(1.06);}
+.lb-prev{left:-60px;} .lb-next{right:-60px;}
+@media (max-width:820px){
+  .lightbox{padding:16px;}
+  .lb-frame{max-width:94vw;padding:10px 10px 12px;}
+  .lb-frame img{max-width:calc(94vw - 20px);max-height:calc(84vh - 80px);}
+  .lb-nav{width:40px;height:40px;font-size:17px;}
+  .lb-prev{left:6px;} .lb-next{right:6px;background:rgba(255,253,247,.94);}
+  .lb-close{top:-12px;right:-8px;width:36px;height:36px;}
+}
+
+/* ============ RWD ============ */
+@media (max-width:1024px){
+  .vote-grid{grid-template-columns:repeat(2,1fr);}
+  .talks{grid-template-columns:repeat(2,1fr);}
+  .wall-layout{grid-template-columns:1fr;}
+  .form-card{position:static;}
+  .notes-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:720px){
+  .section{padding:64px 0;}
+  .sec-head h2{font-size:27px;}
+  .postmark{width:58px;height:58px;font-size:7.5px;top:-44px;right:0;}
+  .hero h1{font-size:34px;}
+  .hero-sub{font-size:16px;}
+  .stat{min-width:100%;border-left:none;padding:10px 0;border-top:1.5px dashed rgba(255,253,247,.3);}
+  .stat:first-child{border-top:none;}
+  .stat .num{font-size:36px;}
+  .hero-scroll{right:16px;font-size:19px;}
+  .nav-links{position:fixed;top:64px;left:0;right:0;background:rgba(246,239,227,.97);backdrop-filter:blur(10px);
+    flex-direction:column;align-items:stretch;gap:0;padding:10px 16px 18px;border-bottom:1.5px dashed rgba(110,98,86,.4);
+    display:none;box-shadow:0 12px 24px rgba(35,48,74,.15);}
+  .nav-links.open{display:flex;}
+  .nav-links a{padding:13px 12px;font-size:16px;border-bottom:1px dashed rgba(110,98,86,.25);}
+  .nav-burger{display:block;}
+  .vote-grid,.talks,.notes-grid,.res-grid{grid-template-columns:1fr;}
+  .join-grid{grid-template-columns:1fr;}
+  .rank-list{flex-direction:column;align-items:stretch;}
+  .rank-item{max-width:none;}
+  /* 時光走廊手機：圖上文下 */
+  .tl-rail::before{left:17px;}
+  .tl-node{padding-left:52px;}
+  .tl-dot{left:6px;top:22px;width:22px;height:22px;}
+  .tl-row{grid-template-columns:1fr;}
+  .tl-media{margin:12px;}
+  .tl-body{padding:6px 18px 20px;}
+  .tl-body .yr{font-size:32px;}
+  .wall-toolbar{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 導覽列 ===== -->
+<nav class="nav" aria-label="主導覽" data-lvt-eid="78c974900e">
+  <div class="nav-inner" data-lvt-eid="ca7d9de7ad">
+    <a class="nav-logo" href="#top" data-lvt-eid="5b9d9fea67">南應大記憶牆<small data-lvt-eid="650c6ff060">TUT since 1965</small></a>
+    <button class="nav-burger" id="burger" aria-label="開啟選單" aria-expanded="false" data-lvt-eid="5d59bca237">☰</button>
+    <div class="nav-links" id="navLinks" data-lvt-eid="6d90ceab99">
+      <a href="#wall" data-lvt-eid="dd2c07ca13">記憶牆</a>
+      <a href="#timeline" data-lvt-eid="b51e2175d5">時光走廊</a>
+      <a href="#talks" data-lvt-eid="34a123afd3">講座票選</a>
+      <a href="https://event.bymyway.com/tut/" target="_blank" rel="noopener">校友會召集令</a>
+      <a href="#join" data-lvt-eid="c231940292">加入校友會</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Section 1 Hero ===== -->
+<header class="hero" id="top" data-lvt-eid="f0cd33c564">
+  <div class="hero-inner" data-lvt-eid="0bb26a28a4">
+    <p class="hero-kicker" data-lvt-eid="0c1520c2d3">TUT ALUMNI · since 1965</p>
+    <h1 data-lvt-eid="9c906408c1">南應大校友互動記憶牆</h1>
+    <p class="hero-sub" data-lvt-eid="37783d2f73">那些年在南應之心、鳳凰樹與紅樓宿舍的日子——你，還記得嗎？</p>
+    <div class="hero-cta" data-lvt-eid="768418a8e1">
+      <a href="#wall" class="btn btn-primary" data-lvt-eid="0363e323e5">貼上我的回憶</a>
+      <a href="#talks" class="btn btn-outline" data-lvt-eid="96cb8dd8d0">票選講座主題</a>
+    </div>
+    <div class="hero-stats" id="heroStats" data-lvt-eid="8a58dc0ecd">
+      <div class="stat" data-lvt-eid="2527996ca8"><div class="num" data-count="1268" data-lvt-eid="4416d15867">0</div><div class="lbl" data-lvt-eid="e2be52a046">位校友已上線</div></div>
+      <div class="stat" data-lvt-eid="a7c16bd427"><div class="num" data-count="842" data-lvt-eid="47246d4af4">0</div><div class="lbl" data-lvt-eid="b8a5e0f470">則累積回憶</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll" data-lvt-eid="123b1dc8f3">滑動展開回憶 ↓</div>
+</header>
+
+<main data-lvt-eid="f4f95f1d49">
+<!-- ===== Section 2 時光走廊 ===== -->
+<section class="section" id="timeline" data-lvt-eid="67564b3c5c">
+  <div class="wrap" data-lvt-eid="f08c38fb90">
+    <div class="sec-head reveal" data-lvt-eid="21664d41f7">
+      <span class="postmark" aria-hidden="true">TUT<i>since</i>1965</span>
+      <span class="eyebrow" data-lvt-eid="904089b4b0">#Time Corridor</span>
+      <h2 data-lvt-eid="2e60951f32"><span class="circle-mark" data-lvt-eid="4ceca7d56d">從家專少女到南應人</span>：一條走過一甲子的時光走廊</h2>
+      <p class="sub" data-lvt-eid="27186cfe41">點擊任一年代節點，展開那段故事</p>
+    </div>
+    <div class="tl-rail reveal" id="tl" data-lvt-eid="5c32a2c744">
+        <div class="tl-node open" data-lvt-eid="5e97f5a0df">
+          <div class="tl-dot" aria-hidden="true" data-lvt-eid="ced609d22a"></div>
+          <div class="tl-card" tabindex="0" role="button" aria-expanded="true" aria-label="1965 台南家政專科學校創校，點我看故事" data-lvt-eid="fbef47bfb6">
+            <div class="tl-row">
+              <div class="tl-media"><span class="tl-zoom" aria-hidden="true">🔍 點圖放大</span><img data-fade src="images_web/DGvCTiSKiN2UisWG.jpg" alt="1965 年台南家政專科學校創校時期插畫" loading="lazy"></div>
+              <div class="tl-body">
+                <div class="yr" data-lvt-eid="8f713192ef">1965</div>
+                <h3 data-lvt-eid="35bd88fd18">台南家政專科學校創校</h3>
+                <div class="peek" data-lvt-eid="8498edfa2f">點我看故事</div>
+                <div class="tl-story" data-lvt-eid="3695bdfef9">全女校時代，美姿美儀是每日必修</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-node" data-lvt-eid="dce9766ea9">
+          <div class="tl-dot" aria-hidden="true" data-lvt-eid="a54a7dee0d"></div>
+          <div class="tl-card" tabindex="0" role="button" aria-expanded="false" aria-label="1997 台南女子技術學院，點我看故事" data-lvt-eid="790bef47af">
+            <div class="tl-row">
+              <div class="tl-media"><span class="tl-zoom" aria-hidden="true">🔍 點圖放大</span><img data-fade src="images_web/WmCYgFAVUPExRLyu.jpg" alt="1997 年改制台南女子技術學院時期插畫" loading="lazy"></div>
+              <div class="tl-body">
+                <div class="yr" data-lvt-eid="9c5bf41f3e">1997</div>
+                <h3 data-lvt-eid="1673745346">台南女子技術學院</h3>
+                <div class="peek" data-lvt-eid="197a00644b">點我看故事</div>
+                <div class="tl-story" data-lvt-eid="d6acbce1b5">巧藝並修，創意的搖籃開始發光</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-node" data-lvt-eid="f4e28341bb">
+          <div class="tl-dot" aria-hidden="true" data-lvt-eid="acd7c4538a"></div>
+          <div class="tl-card" tabindex="0" role="button" aria-expanded="false" aria-label="2006 開始招收男生，點我看故事" data-lvt-eid="d48997e220">
+            <div class="tl-row">
+              <div class="tl-media"><span class="tl-zoom" aria-hidden="true">🔍 點圖放大</span><img data-fade src="images_web/8Jb8JtP9SDKK5j9S.jpg" alt="2006 年開始招收男生的校園插畫" loading="lazy"></div>
+              <div class="tl-body">
+                <div class="yr" data-lvt-eid="cb35ef9f5e">2006</div>
+                <h3 data-lvt-eid="d12dadf7bd">開始招收男生</h3>
+                <div class="peek" data-lvt-eid="0a3daa35c2">點我看故事</div>
+                <div class="tl-story" data-lvt-eid="8953f40b37">校園裡第一次出現了男同學</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-node" data-lvt-eid="8eb561ac9b">
+          <div class="tl-dot" aria-hidden="true" data-lvt-eid="5118b4e8da"></div>
+          <div class="tl-card" tabindex="0" role="button" aria-expanded="false" aria-label="2010 定名台南應用科技大學，點我看故事" data-lvt-eid="dbea6dffca">
+            <div class="tl-row">
+              <div class="tl-media"><span class="tl-zoom" aria-hidden="true">🔍 點圖放大</span><img data-fade src="images_web/p15ZYpP8u74cCzc7.jpg" alt="2010 年定名台南應用科技大學插畫" loading="lazy"></div>
+              <div class="tl-body">
+                <div class="yr" data-lvt-eid="b777d4915e">2010</div>
+                <h3 data-lvt-eid="3d02c170ea">定名台南應用科技大學</h3>
+                <div class="peek" data-lvt-eid="81f719fec6">點我看故事</div>
+                <div class="tl-story" data-lvt-eid="7b4f693897">我們的名字，叫南應大</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-node" data-lvt-eid="734e40cdce">
+          <div class="tl-dot" aria-hidden="true" data-lvt-eid="34b4270ac3"></div>
+          <div class="tl-card" tabindex="0" role="button" aria-expanded="false" aria-label="現在四大學群，點我看故事" data-lvt-eid="025b26b8f1">
+            <div class="tl-row">
+              <div class="tl-media"><span class="tl-zoom" aria-hidden="true">🔍 點圖放大</span><img data-fade src="images_web/sk1gVDLMWCEFZehU.jpg" alt="當代南應大四大學群校園插畫" loading="lazy"></div>
+              <div class="tl-body">
+                <div class="yr" data-lvt-eid="4ac12c1026">現在</div>
+                <h3 data-lvt-eid="a0db1d492f">四大學群</h3>
+                <div class="peek" data-lvt-eid="571271c1bb">點我看故事</div>
+                <div class="tl-story" data-lvt-eid="b1e660b502">生活科技／管理／設計／藝術——唯一旗袍課、最完整家政學程還在這裡</div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 4 回憶相簿牆 ===== -->
+<section class="section" id="wall" data-lvt-eid="a82b80719c">
+  <div class="wrap" data-lvt-eid="c3974efc71">
+    <div class="sec-head reveal" data-lvt-eid="1e02ffb410">
+      <span class="postmark" aria-hidden="true">MEMORY<i>TUT</i>ALBUM</span>
+      <span class="eyebrow" data-lvt-eid="d426c27e4a">#Memory Wall</span>
+      <h2 data-lvt-eid="38f2fec780">回憶相簿：<span class="circle-mark" data-lvt-eid="5fd77d98aa">把你的南應，貼回這面牆</span></h2>
+      <p class="sub" data-lvt-eid="5fccb9aaba">一張照片、一段文字，就是一頁回不去的時光</p>
+    </div>
+    <div class="wall-layout" data-lvt-eid="25b7391dce">
+      <form class="form-card reveal" id="noteForm" novalidate="" data-lvt-eid="e838fcaafe">
+        <span class="tape tape-yellow" data-lvt-eid="9a6f35228d"></span>
+        <h3 data-lvt-eid="cd071677b0">寫下你的回憶</h3>
+        <div class="field" data-lvt-eid="eaef0ed21d">
+          <label for="fName" data-lvt-eid="da895344a1">姓名／暱稱</label>
+          <input type="text" id="fName" placeholder="例如：家政科小美" autocomplete="name" data-lvt-eid="de5f541407">
+        </div>
+        <div class="field" data-lvt-eid="7084d61c85">
+          <label for="fYear" data-lvt-eid="15333596d5">畢業年度</label>
+          <select id="fYear" data-lvt-eid="88c44e12b9">
+            <option value="1960s" data-lvt-eid="37c4c391a0">1960s</option>
+            <option value="1970s" data-lvt-eid="18418cc534">1970s</option>
+            <option value="1980s" data-lvt-eid="60db05d472">1980s</option>
+            <option value="1990s" data-lvt-eid="f11fb9f8ba">1990s</option>
+            <option value="2000s" selected="" data-lvt-eid="98d4c1863f">2000s</option>
+            <option value="2010s" data-lvt-eid="b6f325310b">2010s</option>
+            <option value="2020s" data-lvt-eid="bc06073826">2020s</option>
+            <option value="在校生" data-lvt-eid="003f305ce2">在校生</option>
+          </select>
+        </div>
+        <div class="field" data-lvt-eid="65c9958456">
+          <label id="colorLbl" data-lvt-eid="6dce04eb74">選擇卡片顏色（無照片時使用）</label>
+          <div class="color-pick" role="radiogroup" aria-labelledby="colorLbl" data-lvt-eid="968002760c">
+            <input type="radio" name="noteColor" id="cYellow" value="yellow" checked="" data-lvt-eid="21d7edbad0">
+            <label for="cYellow" class="cy" title="鵝黃" data-lvt-eid="aa591677ed"></label>
+            <input type="radio" name="noteColor" id="cPink" value="pink" data-lvt-eid="69c66dff80">
+            <label for="cPink" class="cp" title="粉底" data-lvt-eid="d163ad09cb"></label>
+            <input type="radio" name="noteColor" id="cMint" value="mint" data-lvt-eid="790af871fd">
+            <label for="cMint" class="cm" title="薄荷" data-lvt-eid="1bdc071a97"></label>
+          </div>
+        </div>
+        <div class="field" data-lvt-eid="d417eaf2e3">
+          <label for="fText" data-lvt-eid="85d1327070">回憶內容</label>
+          <textarea id="fText" maxlength="120" placeholder="那年在南應，最難忘的是⋯⋯" data-lvt-eid="aaab6b0a95"></textarea>
+          <div class="counter" data-lvt-eid="73d2dcd5cd"><span id="charCount" data-lvt-eid="a1ad5fceec">0</span> / 120</div>
+        </div>
+        <div class="field field-file">
+          <label for="fPhoto">上傳一張照片（選填）</label>
+          <input type="file" id="fPhoto" accept="image/*" hidden>
+          <div class="file-drop" id="fileDrop" role="button" tabindex="0" aria-label="選擇照片上傳">
+            <span class="fd-icon" aria-hidden="true">🖼️</span>
+            <span class="fd-txt">點這裡選擇照片<br><small>會自動壓縮成小圖，審核通過後所有校友都看得到</small></span>
+          </div>
+          <div class="file-preview" id="filePreview">
+            <img id="fpImg" alt="照片預覽">
+            <span class="fp-meta" id="fpMeta"></span>
+            <button type="button" class="fp-remove" id="fpRemove" aria-label="移除照片">✕</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit" data-lvt-eid="94b697a526">貼進回憶相簿</button>
+        <p class="form-note" data-lvt-eid="a821fbc144">送出後經校友會審核，通過就會出現在這面牆上，所有校友都看得到；也有機會出現在之後線上講座的直播回憶牆單元</p>
+      </form>
+      <div>
+        <div class="wall-toolbar">
+          <div class="sort-toggle" role="group" aria-label="留言排序方式">
+            <button type="button" id="sortNew" class="on" aria-pressed="true">最新優先</button>
+            <button type="button" id="sortHot" aria-pressed="false">最有感</button>
+          </div>
+        </div>
+        <div class="notes-grid reveal" id="notesGrid" data-lvt-eid="ea28c529ba"><!-- JS 產生回憶卡 --></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 5 講座票選 ===== -->
+<section class="section" id="talks" style="background:linear-gradient(180deg, transparent, rgba(155,196,168,.14), transparent);" data-lvt-eid="01b6afc860">
+  <div class="wrap" data-lvt-eid="6919c54ce0">
+    <div class="sec-head reveal" data-lvt-eid="a4da5befa6">
+      <span class="postmark" aria-hidden="true">ONLINE<i>TUT</i>TALKS</span>
+      <span class="eyebrow" data-lvt-eid="d37d0b8c9e">#Online Talks</span>
+      <h2 data-lvt-eid="7c30584522">你最想聽<span class="circle-mark" data-lvt-eid="da7f8d5e11">哪個主題</span>的線上講座？</h2>
+      <p class="sub" data-lvt-eid="953fd158c0">主題由大家決定——投給你最想聽的，也可以告訴我們你想聽什麼</p>
+    </div>
+    <div class="talks reveal" id="talkCards" data-lvt-eid="ac72a28c17"><!-- JS 產生 4 張講座主題卡 --></div>
+    <form class="wish reveal" id="wishForm" novalidate>
+      <h3>沒有你想聽的？告訴我們</h3>
+      <p class="wish-sub">想聽什麼、想要什麼樣的講座，都可以寫在這裡，校友會會參考大家的願望來安排。</p>
+      <textarea id="wishText" rows="3" maxlength="200" placeholder="例如：想聽家專時期的老故事、想聽校友創業分享⋯⋯" aria-label="想聽的講座主題"></textarea>
+      <input type="text" id="wishName" maxlength="30" placeholder="怎麼稱呼您（選填）" aria-label="怎麼稱呼您（選填）" autocomplete="name">
+      <input type="text" name="website" id="wishWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
+      <button type="submit" class="btn btn-primary" id="wishBtn">送出我的願望</button>
+      <p class="wish-out" id="wishOut" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== Section 6 加入校友會 ===== -->
+<section class="section join" id="join" data-lvt-eid="d79983bb3c">
+  <div class="wrap" data-lvt-eid="14b04a9c50">
+    <div class="sec-head reveal" data-lvt-eid="c7219a304b">
+      <span class="eyebrow" style="color:var(--note-yellow);" data-lvt-eid="6a52c6a4f8">#Join TUT Alumni</span>
+      <h2 data-lvt-eid="c71e7df155">加入南應校友會，把校園的溫暖帶進職場</h2>
+      <p class="sub" data-lvt-eid="61a0d1ea0a">校友會擁有豐富的外部資源與商務團隊資源，等你回來一起用</p>
+    </div>
+    <div class="res-grid reveal" data-lvt-eid="505f55d285">
+      <div class="res-card" data-lvt-eid="63cc78929e">
+        <span class="ic" data-lvt-eid="536f30e9f2">🌐</span>
+        <h3 data-lvt-eid="2773666856">外部產業資源鏈結</h3>
+        <p data-lvt-eid="fbe599eac3">產業論壇、企業參訪、會員專屬優惠，把校園人脈延伸成職涯籌碼。</p>
+      </div>
+      <div class="res-card" data-lvt-eid="6916f61b90">
+        <span class="ic" data-lvt-eid="94de9597f7">🤝</span>
+        <h3 data-lvt-eid="04aacfd6c0">專屬商務團隊資源</h3>
+        <p data-lvt-eid="1a43f46531">商務媒合、經營諮詢、合作案對接，校友的生意，優先找校友。</p>
+      </div>
+      <div class="res-card" data-lvt-eid="6692c39665">
+        <span class="ic" data-lvt-eid="d4863b4ff6">💛</span>
+        <h3 data-lvt-eid="d4937158d7">終身校友網絡</h3>
+        <p data-lvt-eid="555e2d8a79">海內外分會、歷屆同學聯絡網，一入會，就是一輩子的南應人。</p>
+      </div>
+    </div>
+    <div class="join-cta-wrap reveal" data-lvt-eid="58d58098f7">
+      <button class="btn-join" id="joinBtn" data-lvt-eid="dfbbddbcaf">立即加入校友會</button>
+      <p class="join-real-note">點按鈕會開啟「校友會召集令」報名頁，填姓名與電話只要 30 秒</p>
+      <form class="join-form" id="joinForm" novalidate="" data-lvt-eid="4c985b85ba">
+        <div class="join-grid" data-lvt-eid="ef23ae7e7c">
+          <div class="field" data-lvt-eid="e803ab5d36"><label for="jName" data-lvt-eid="d6fcde0927">姓名</label><input type="text" id="jName" placeholder="你的大名" autocomplete="name" data-lvt-eid="74c230db8e"></div>
+          <div class="field" data-lvt-eid="4dac87760c"><label for="jDept" data-lvt-eid="966af372d6">系級</label><input type="text" id="jDept" placeholder="例如：家政科 78 級" data-lvt-eid="3bb1731362"></div>
+          <div class="field" data-lvt-eid="87ea1714fe"><label for="jYear" data-lvt-eid="ffb9099656">畢業年</label><input type="text" id="jYear" placeholder="例如：1999" data-lvt-eid="b421c03158"></div>
+          <div class="field" data-lvt-eid="71ed03bef4"><label for="jEmail" data-lvt-eid="565ba77dc1">Email</label><input type="email" id="jEmail" placeholder="you@example.com" autocomplete="email" data-lvt-eid="b4eab0fb4d"></div>
+          <div class="field full" data-lvt-eid="fdf07ca05c"><label for="jIndustry" data-lvt-eid="249a359e3d">現職產業</label><input type="text" id="jIndustry" placeholder="例如：設計、餐飲、教育、科技⋯⋯" data-lvt-eid="50f39817c0"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;" data-lvt-eid="25dd9a739f">送出申請 🎓</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== 頁尾 ===== -->
+<footer class="footer" data-lvt-eid="dc68394a3c">
+  <p data-lvt-eid="8fcf2ef193">© 2026 台南應用科技大學校友會　本頁為活動示範網頁，場次與資訊以正式公告為準</p>
+  <p><a href="https://event.bymyway.com/tut/" target="_blank" rel="noopener">📣 台南應用科技大學校友會 召集令</a></p>
+  <p data-lvt-eid="6f6be142f7"><a href="#top" data-lvt-eid="dc8196b8e2">↑ 返回記憶牆頂端</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" data-lvt-eid="a4f47eb7bf"></div>
+
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片大圖檢視">
+  <div class="lb-frame">
+    <button class="lb-close" id="lbClose" aria-label="關閉大圖">✕</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一張">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="下一張">›</button>
+    <img id="lbImg" src="" alt="">
+    <div class="lb-caption"><h4 id="lbTitle"></h4><p id="lbDesc"></p></div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- 小工具 ---------- */
+var $=function(s,c){return (c||document).querySelector(s);};
+var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}}
+var LS_FULL_MSG='瀏覽器空間不足，可先刪除部分舊照片或用無照片留言';
+function lsSet(k,v){
+  try{localStorage.setItem(k,JSON.stringify(v));return true;}
+  catch(e){
+    /* 容量額滿：回退重試一次，仍失敗則 toast 告知，不讓頁面崩潰 */
+    try{localStorage.setItem(k,JSON.stringify(v));return true;}
+    catch(e2){toast(LS_FULL_MSG);return false;}
+  }
+}
+var toastEl=$('#toast'),toastTimer=null;
+function toast(msg){
+  toastEl.textContent=msg;toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){toastEl.classList.remove('show');},2800);
+}
+
+/* ---------- 捲動淡入 ---------- */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12});
+$$('.reveal').forEach(function(el){io.observe(el);});
+
+/* ---------- 導覽漢堡 ---------- */
+var burger=$('#burger'),navLinks=$('#navLinks');
+burger.addEventListener('click',function(){
+  var open=navLinks.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open?'true':'false');
+  burger.textContent=open?'✕':'☰';
+});
+$$('#navLinks a').forEach(function(a){a.addEventListener('click',function(){
+  navLinks.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.textContent='☰';
+});});
+
+/* ---------- Hero 數字遞增 ---------- */
+function baseStats(){
+  var notes=lsGet('tut_notes',[]);
+  return {alumni:1268, notes:842+notes.length+serverNotes.length};
+}
+function animateNum(el,to){
+  var from=parseInt(el.textContent.replace(/\D/g,''),10)||0;
+  var dur=1600,t0=null;
+  function step(ts){
+    if(!t0)t0=ts;
+    var p=Math.min((ts-t0)/dur,1);
+    var ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(to-from)*ease).toLocaleString('en-US');
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function refreshStats(animate){
+  var s=baseStats();
+  var els=$$('#heroStats .num');
+  var vals=[s.alumni,s.notes];
+  els.forEach(function(el,i){
+    if(animate){animateNum(el,vals[i]);}
+    else{el.textContent=vals[i].toLocaleString('en-US');}
+  });
+}
+var statsIO=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){refreshStats(true);statsIO.unobserve(e.target);}
+  });
+},{threshold:.4});
+statsIO.observe($('#heroStats'));
+
+/* ---------- 圖片淡入（載入完成才顯現，避免閃爍） ---------- */
+function bindImgFade(root){
+  $$('img[data-fade]',root||document).forEach(function(img){
+    if(img.dataset.bound)return;
+    img.dataset.bound='1';
+    if(img.complete&&img.naturalWidth>0){img.classList.add('loaded');}
+    else{img.addEventListener('load',function(){img.classList.add('loaded');});}
+  });
+}
+
+/* ---------- Lightbox（十景與回憶照片共用） ---------- */
+var lbItems=[],lbIdx=0;
+function openLightbox(items,idx){
+  lbItems=items;lbIdx=idx||0;
+  renderLb();
+  $('#lightbox').classList.add('show');
+  document.body.style.overflow='hidden';
+  $('#lbClose').focus();
+}
+function renderLb(){
+  var it=lbItems[lbIdx];if(!it)return;
+  $('#lbImg').src=it.src;
+  $('#lbImg').alt=it.title||'';
+  $('#lbTitle').textContent=it.title||'';
+  $('#lbDesc').textContent=it.desc||'';
+  $('#lbPrev').style.display=lbItems.length>1?'':'none';
+  $('#lbNext').style.display=lbItems.length>1?'':'none';
+}
+function closeLightbox(){
+  $('#lightbox').classList.remove('show');
+  document.body.style.overflow='';
+  $('#lbImg').src='';
+}
+function lbStep(d){
+  if(lbItems.length<2)return;
+  lbIdx=(lbIdx+d+lbItems.length)%lbItems.length;
+  renderLb();
+}
+$('#lbClose').addEventListener('click',closeLightbox);
+$('#lbPrev').addEventListener('click',function(){lbStep(-1);});
+$('#lbNext').addEventListener('click',function(){lbStep(1);});
+$('#lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
+document.addEventListener('keydown',function(e){
+  if(!$('#lightbox').classList.contains('show'))return;
+  if(e.key==='Escape')closeLightbox();
+  else if(e.key==='ArrowLeft')lbStep(-1);
+  else if(e.key==='ArrowRight')lbStep(1);
+});
+
+/* ---------- Section 2 時光走廊手風琴 ---------- */
+$$('#tl .tl-node').forEach(function(node){
+  var card=$('.tl-card',node);
+  function toggle(){
+    var willOpen=!node.classList.contains('open');
+    $$('#tl .tl-node').forEach(function(n){
+      n.classList.remove('open');
+      $('.tl-card',n).setAttribute('aria-expanded','false');
+    });
+    if(willOpen){node.classList.add('open');card.setAttribute('aria-expanded','true');}
+  }
+  card.addEventListener('click',toggle);
+  var tlImg=$('.tl-media img',node);
+  if(tlImg){tlImg.addEventListener('click',function(e){
+    e.stopPropagation();
+    var nodes=$$('#tl .tl-node');
+    openLightbox(nodes.map(function(n){
+      return {src:$('.tl-media img',n).getAttribute('src'),title:$('.yr',n).textContent+'　'+$('h3',n).textContent,desc:$('.tl-story',n).textContent};
+    }),nodes.indexOf(node));
+  });}
+  card.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
+  });
+});
+
+bindImgFade(document);
+
+/* ---------- Section 4 回憶相簿牆 ---------- */
+var SEED_NOTES=[
+  {id:'seed1',name:'旗袍課幽靈車手',year:'1982 屆',color:'yellow',txt:'家政科二年級，旗袍課縫到半夜，但成品穿上那天全都值得。',baseEcho:38},
+  {id:'seed2',name:'306 寢室全體',year:'2008 屆',color:'mint',txt:'紅樓宿舍半夜真的有椅子聲，我們整間寢室沒人敢去廁所。',baseEcho:47},
+  {id:'seed3',name:'阿凱',year:'2015 屆',color:'pink',txt:'南應之心前第一次告白，現在小孩都兩歲了。',baseEcho:26},
+  {id:'seed4',name:'設計系爆肝王',year:'2012 屆',color:'yellow',txt:'設計大樓四樓的燈，是陪我熬過畢業展的那盞。評圖前一晚大家互相遞咖啡，那味道現在聞到還會想哭。',baseEcho:52},
+  {id:'seed5',name:'鳳凰花下的學姊',year:'1996 屆',color:'pink',txt:'畢業那天鳳凰花開得剛好，我們沿著花道拍照，學妹們在旁邊唱離別歌，哭得比我們還慘。',baseEcho:41},
+  {id:'seed6',name:'餐廳常客小陳',year:'2019 屆',color:'mint',txt:'學生餐廳的排骨飯加一顆滷蛋，是我一個月生活費的支柱。畢業後吃過很多家，都不是那個味道。',baseEcho:33}
+];
+var MEMWALL_API='https://event.bymyway.com/api/memwall/tut-memory/notes';
+var serverNotes=[];
+var userNotes=lsGet('tut_notes',[]);
+/* 舊版純文字留言相容：無 id 者補發 id 並遷移回存 */
+(function(){
+  var needMigrate=false;
+  userNotes.forEach(function(n,i){
+    if(!n||typeof n!=='object')return;
+    if(!n.id){n.id='u'+(n.ts||Date.now()).toString(36)+'x'+i;needMigrate=true;}
+  });
+  if(needMigrate)lsSet('tut_notes',userNotes);
+})();
+var echoMap=lsGet('tut_echoes',{});
+var sortNew=true;
+/* 自己送出、還沒審核通過的留言只顯示給自己；已通過的以伺服器版本為準，不重複 */
+function myPending(){
+  var ok={};serverNotes.forEach(function(n){ok[n.id]=1;});
+  return userNotes.filter(function(n){return !(n.serverId&&ok[n.serverId]);});
+}
+function allNotes(){return myPending().concat(serverNotes,SEED_NOTES);}
+function loadServerNotes(){
+  fetch(MEMWALL_API).then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.ok)return;
+    serverNotes=d.notes.map(function(n){
+      return {id:n.id,name:n.name,year:n.year,color:n.color,txt:n.txt,
+        photo:n.photo?('https://event.bymyway.com'+n.photo):null,
+        ts:Date.parse((n.created_at||'').replace(' ','T'))||0,baseEcho:0};
+    });
+    renderNotes();refreshStats(false);
+  }).catch(function(){});
+}
+function echoCount(n){return (n.baseEcho||0)+(echoMap[n.id]?1:0);}
+function escapeHTML(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function noteHTML(n,isNew){
+  var pend=n.pending?'<span class="ncard-pending">⏳ 審核中・目前只有你看得到</span>':'';
+  var sig='<p class="ncard-sig">— '+escapeHTML(n.name||'匿名校友')+' · '+escapeHTML(n.year||'')+'</p>';
+  var foot='<div class="ncard-foot"><button type="button" class="btn-echo'+(echoMap[n.id]?' on':'')+
+    '" data-echo="'+n.id+'" aria-pressed="'+(echoMap[n.id]?'true':'false')+'">♡ <span>'+echoCount(n)+'</span> 共鳴</button></div>';
+  if(n.photo){
+    return '<article class="ncard'+(isNew?' new':'')+'" data-id="'+n.id+'">'+
+      '<div class="ncard-photo" role="button" tabindex="0" aria-label="放大檢視這張回憶照片">'+
+      '<img src="'+n.photo+'" alt="'+escapeHTML(n.name||'匿名校友')+'上傳的回憶照片"></div>'+
+      pend+'<p class="ncard-txt">'+escapeHTML(n.txt)+'</p>'+sig+foot+'</article>';
+  }
+  return '<article class="ncard plain note-'+(n.color||'yellow')+(isNew?' new':'')+'" data-id="'+n.id+'">'+
+    pend+'<p class="ncard-txt">'+escapeHTML(n.txt)+'</p>'+sig+foot+'</article>';
+}
+function renderNotes(highlightId){
+  var grid=$('#notesGrid');
+  var list;
+  if(sortNew){list=myPending().slice().reverse().concat(serverNotes,SEED_NOTES);}
+  else{list=allNotes().sort(function(a,b){return echoCount(b)-echoCount(a)||((b.ts||0)-(a.ts||0));});}
+  grid.innerHTML=list.map(function(n){return noteHTML(n,n.id===highlightId);}).join('');
+  $$('.btn-echo',grid).forEach(function(b){
+    b.addEventListener('click',function(){toggleEcho(b.getAttribute('data-echo'));});
+  });
+  $$('.ncard-photo',grid).forEach(function(p){
+    function open(){openNoteLb(p.parentNode.getAttribute('data-id'));}
+    p.addEventListener('click',open);
+    p.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}
+    });
+  });
+}
+function toggleEcho(id){
+  if(echoMap[id])delete echoMap[id];else echoMap[id]=1;
+  lsSet('tut_echoes',echoMap);
+  renderNotes();
+}
+function openNoteLb(id){
+  var photoNotes=allNotes().filter(function(n){return n.photo;});
+  if(!photoNotes.length)return;
+  var idx=0;
+  photoNotes.forEach(function(n,i){if(n.id===id)idx=i;});
+  openLightbox(photoNotes.map(function(n){
+    return {src:n.photo,title:'— '+(n.name||'匿名校友')+' · '+(n.year||''),desc:n.txt};
+  }),idx);
+}
+function setSortUI(){
+  $('#sortNew').classList.toggle('on',sortNew);
+  $('#sortHot').classList.toggle('on',!sortNew);
+  $('#sortNew').setAttribute('aria-pressed',sortNew?'true':'false');
+  $('#sortHot').setAttribute('aria-pressed',!sortNew?'true':'false');
+}
+$('#sortNew').addEventListener('click',function(){sortNew=true;setSortUI();renderNotes();});
+$('#sortHot').addEventListener('click',function(){sortNew=false;setSortUI();renderNotes();});
+setSortUI();
+renderNotes();
+loadServerNotes();
+
+/* ---------- 照片上傳（canvas 壓縮） ---------- */
+var pendingPhoto=null;
+var fPhoto=$('#fPhoto'),fileDrop=$('#fileDrop'),filePreview=$('#filePreview');
+var MAX_PHOTO_BYTES=1.2*1024*1024;
+fileDrop.addEventListener('click',function(){fPhoto.click();});
+fileDrop.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();fPhoto.click();}
+});
+fPhoto.addEventListener('change',function(){
+  var f=fPhoto.files&&fPhoto.files[0];
+  if(!f)return;
+  compressImage(f,function(dataUrl,bytes){
+    if(!dataUrl){toast('這張照片讀取失敗，請換一張試試');fPhoto.value='';return;}
+    if(bytes>MAX_PHOTO_BYTES){toast('這張照片壓縮後還是太大，請換一張試試');fPhoto.value='';return;}
+    pendingPhoto=dataUrl;
+    $('#fpImg').src=dataUrl;
+    $('#fpMeta').textContent='已壓縮至約 '+(bytes/1024).toFixed(0)+' KB，將隨回憶一起貼上牆';
+    filePreview.classList.add('show');
+  });
+});
+$('#fpRemove').addEventListener('click',function(){
+  pendingPhoto=null;fPhoto.value='';filePreview.classList.remove('show');
+});
+function compressImage(file,cb){
+  var reader=new FileReader();
+  reader.onerror=function(){cb(null);};
+  reader.onload=function(){
+    var img=new Image();
+    img.onerror=function(){cb(null);};
+    img.onload=function(){
+      try{
+        var ratio=Math.min(1,1000/Math.max(img.width,img.height));
+        var w=Math.max(1,Math.round(img.width*ratio)),h=Math.max(1,Math.round(img.height*ratio));
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        var url=c.toDataURL('image/jpeg',0.75);
+        cb(url,Math.round((url.length-(url.indexOf(',')+1))*3/4));
+      }catch(e){cb(null);}
+    };
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+var fText=$('#fText'),charCount=$('#charCount');
+fText.addEventListener('input',function(){charCount.textContent=fText.value.length;});
+$('#noteForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var txt=fText.value.trim();
+  if(!txt){toast('先寫點什麼再貼進相簿喔 ✍️');fText.focus();return;}
+  var color=($('input[name=noteColor]:checked')||{}).value||'yellow';
+  var note={id:'u'+Date.now().toString(36),name:$('#fName').value.trim(),year:$('#fYear').value,
+    color:color,txt:txt,ts:Date.now(),baseEcho:0};
+  if(pendingPhoto)note.photo=pendingPhoto;
+  note.pending=true;
+  userNotes.push(note);
+  fetch(MEMWALL_API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:note.name,year:note.year,color:note.color,txt:note.txt,photo:note.photo||''})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(d&&d.ok){note.serverId=d.id;lsSet('tut_notes',userNotes);}
+    else{toast(d&&d.error==='too many'?'送出太多次了，請稍後再試':'暫時送不出去，回憶先貼在你自己的牆上');}
+  }).catch(function(){toast('暫時送不出去，回憶先貼在你自己的牆上');});
+  /* lsSet 失敗（容量額滿）時已 toast 告知；仍保留在記憶體，頁面不崩潰 */
+  lsSet('tut_notes',userNotes);
+  sortNew=true;setSortUI();
+  renderNotes(note.id);
+  this.reset();charCount.textContent='0';$('#cYellow').checked=true;
+  pendingPhoto=null;filePreview.classList.remove('show');
+  toast('已送出！審核通過後，所有校友都看得到 ✨');
+  refreshStats(false);
+  var wall=$('#notesGrid');
+  wall.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+/* ---------- Section 5 講座主題票選（2026-10-10：先收集願望，不排日期、不報名） ---------- */
+var TALKS=[
+  {id:'t1',no:'#01',title:'記憶開箱：南應十景票選 LIVE',desc:'十景票選結果現場揭曉，一起倒數誰是南應人心中的 No.1。',tags:['十景現場揭票','校友連線說故事']},
+  {id:'t2',no:'#02',title:'從家專到南應：跨越一甲子的女子學校傳奇',desc:'走過一甲子的校園故事，由資深校友親自說給你聽。',tags:['資深校友講古','旗袍課老照片募集']},
+  {id:'t3',no:'#03',title:'設計×藝術學院之夜：爆肝人的同學會',desc:'設計人與藝術人的深夜同學會，作品與鬼故事齊飛。',tags:['作品即興接龍','鬼故事大賽']},
+  {id:'t4',no:'#04',title:'南應人的商務資源課：校友網絡怎麼用',desc:'把校友網絡變成你的商務籌碼，資源一次看個夠。',tags:['商務團隊資源大公開','一對一職涯媒合']}
+];
+var POLL_API='/api/works/poll/tut-memory';
+var pollCounts={};
+var myVotes=lsGet('tut_talk_votes',{});
+var voterId=lsGet('tut_voter','');
+if(!voterId){
+  voterId='v'+Math.random().toString(36).slice(2,12)+Date.now().toString(36);
+  lsSet('tut_voter',voterId);
+}
+function renderTalks(){
+  var wrap=$('#talkCards');wrap.innerHTML='';
+  TALKS.forEach(function(t){
+    var mine=!!myVotes[t.id];
+    var n=pollCounts[t.id];
+    var cnt=(typeof n==='number')?(n>0?'<b>'+n+'</b> 人想聽':'成為第一個想聽的人'):'&nbsp;';
+    var el=document.createElement('article');
+    el.className='talk';
+    el.innerHTML='<div class="stamp"><span>'+t.no.replace('#','')+'</span></div>'+
+      '<div class="no">'+t.no+'</div><h3>《'+t.title+'》</h3><p class="desc">'+t.desc+'</p>'+
+      '<div class="tags">'+t.tags.map(function(g){return '<span class="tag">'+g+'</span>';}).join('')+'</div>'+
+      '<div class="want-count" id="wc-'+t.id+'">'+cnt+'</div>'+
+      '<button class="btn '+(mine?'btn-outline':'btn-primary')+'" id="rb-'+t.id+'"'+(mine?' disabled':'')+'>'+
+      (mine?'我想聽這個 ✓':'我想聽這個')+'</button>';
+    wrap.appendChild(el);
+    $('#rb-'+t.id,el).addEventListener('click',function(){voteTalk(t.id);});
+  });
+}
+function loadPoll(){
+  fetch(POLL_API).then(function(r){return r.json();}).then(function(d){
+    if(d&&d.ok){pollCounts=d.counts||{};renderTalks();}
+  }).catch(function(){});
+}
+function voteTalk(id){
+  if(myVotes[id])return;
+  fetch(POLL_API+'/vote',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({option:id,voter:voterId})})
+    .then(function(r){return r.json();}).then(function(d){
+      if(d&&d.ok){
+        myVotes[id]=1;lsSet('tut_talk_votes',myVotes);
+        pollCounts=d.counts||pollCounts;renderTalks();
+        toast('收到！謝謝您投下想聽的一票 🎉');
+      }else{toast((d&&d.error)||'投票沒成功，請稍後再試');}
+    }).catch(function(){toast('網路不太穩，請稍後再試');});
+}
+renderTalks();loadPoll();
+
+$('#wishForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var text=$('#wishText').value.trim(),out=$('#wishOut'),btn=$('#wishBtn');
+  if(text.length<2){out.textContent='請先寫下您想聽的主題喔';$('#wishText').focus();return;}
+  btn.disabled=true;out.textContent='送出中⋯';
+  fetch(POLL_API+'/suggest',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({suggestion:text,name:$('#wishName').value.trim(),website:$('#wishWebsite').value})})
+    .then(function(r){return r.json();}).then(function(d){
+      btn.disabled=false;
+      if(d&&d.ok){
+        $('#wishText').value='';
+        out.textContent='收到了！謝謝您的願望，校友會會參考大家的想法來安排講座 💌';
+      }else{out.textContent=(d&&d.error)||'送出沒成功，請稍後再試';}
+    }).catch(function(){btn.disabled=false;out.textContent='網路不太穩，請稍後再試';});
+});
+
+/* ---------- Section 6 入會 ---------- */
+var joined=false;
+var joinBtn=$('#joinBtn'),joinForm=$('#joinForm');
+function reflectJoined(){
+  if(joined){
+    joinBtn.disabled=true;joinBtn.textContent='校友會成員 ✓';
+    joinForm.classList.remove('show');
+  }
+}
+reflectJoined();
+joinBtn.addEventListener('click',function(){
+  /* 2026-10-02：原本只存在瀏覽器、沒人收得到；改開召集令真正的報名表（有後端，會通知校友會） */
+  window.open('https://event.bymyway.com/tut/#join','_blank','noopener');
+});
+joinForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=$('#jName').value.trim(),email=$('#jEmail').value.trim();
+  if(!name){toast('請填寫姓名');$('#jName').focus();return;}
+  if(!email||email.indexOf('@')<0){toast('請填寫有效的 Email');$('#jEmail').focus();return;}
+  joined=true;lsSet('tut_joined',true);
+  reflectJoined();
+  toast('感謝加入，校友會秘書處將與你聯繫！');
+});
+
+/* ---------- 初始 stats（未動畫前先放基礎值） ---------- */
+refreshStats(false);
+})();
+</script>
+
+
+</body></html>
