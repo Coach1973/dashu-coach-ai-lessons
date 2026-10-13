@@ -2491,6 +2491,87 @@ def api_rongtree_episodes():
     return resp
 
 
+# ---- 榮樹下來賓資料表＋AI 來賓卡（教練 2026-10-14）：說明見 rongtree_guest.py ----
+import rongtree_guest as _rg
+
+_RG_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多送出 10 次
+
+
+def _rg_json(obj, status=200):
+    return Response(json.dumps(obj, ensure_ascii=False), status=status, content_type="application/json",
+                    headers={"Cache-Control": "no-store"})
+
+
+def _rg_card_ok(token):
+    return hmac.compare_digest(request.args.get("k", ""), _rg.card_sig(app.secret_key, token))
+
+
+@app.route("/rongtree/guest/<token>", methods=["GET", "POST"])
+def rongtree_guest_form(token):
+    ev = _rg.find_event(token)
+    if not ev:
+        abort(404)
+    if request.method == "GET":
+        return Response(_rg.render_form(token, ev, _rg.get_form(token)), content_type="text/html; charset=utf-8",
+                        headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _RG_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 10:
+        return _rg_json({"ok": False, "error": "送出次數太多，請稍後再試"}, 429)
+    _RG_HITS[ip] = hits + [now]
+    ok, err, first = _rg.save(token, ev, request.get_json(force=True, silent=True) or {}, ip)
+    if not ok:
+        return _rg_json({"ok": False, "error": err}, 400)
+    _rg.start_card(token, app.secret_key,
+                   lambda t: _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID), first)
+    return _rg_json({"ok": True})
+
+
+@app.route("/rongtree/guest/<token>/card")
+def rongtree_guest_card(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not _rg_card_ok(token):
+        abort(404)
+    return Response(_rg.render_card(token, r, app.secret_key), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
+@app.route("/rongtree/guest/<token>/card/regen", methods=["POST"])
+def rongtree_guest_card_regen(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not _rg_card_ok(token):
+        abort(404)
+    if r["card_status"] != "pending":
+        conn = _rg._conn()
+        conn.execute("UPDATE rongtree_guest_forms SET card_status='pending' WHERE token=?", (token,))
+        conn.commit()
+        conn.close()
+        threading.Thread(target=_rg.build_card, args=(token,), daemon=True).start()
+    return redirect(f"/rongtree/guest/{token}/card?k={request.args.get('k', '')}")
+
+
+@app.route("/rongtree/guest/<token>/photo.jpg")
+def rongtree_guest_photo(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not r["photo_file"] or not _rg_card_ok(token):
+        return Response("", status=404, headers={"Cache-Control": "no-store"})
+    resp = send_from_directory(_rg.UPLOAD_DIR, r["photo_file"], mimetype="image/jpeg")
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.route("/rongtree/cards")
+@app.route("/rongtree/a/<code>")
+def rongtree_guest_cards(code=""):
+    ok = (hmac.compare_digest(code, _rg.list_code(app.secret_key)) if code
+          else hmac.compare_digest(request.args.get("k", ""), _rg.list_sig(app.secret_key)))
+    if not ok:
+        abort(404)
+    return Response(_rg.render_list(app.secret_key), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
 @app.route("/api/works/poll/<site>", methods=["GET"])
 def api_works_poll_counts(site):
     if site not in WORKS_POLL_OPTIONS:

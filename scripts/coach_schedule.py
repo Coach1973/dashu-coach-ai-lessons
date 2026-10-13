@@ -190,6 +190,14 @@ def is_rongshuxia(ev):
     return ev.get("booking_type") == "榮樹下訪談" or t.startswith("榮樹下訪談") or t.startswith("訪談預約（待確認）")
 
 
+def guest_form_url(ev):
+    """榮樹下來賓資料表網址（2026-10-14）：每場訪談一組隨機代碼，拿到網址的來賓才填得到；表單在 event-signup/rongtree_guest.py。"""
+    if not ev.get("form_token"):
+        import secrets
+        ev["form_token"] = secrets.token_urlsafe(9)
+    return f"https://event.bymyway.com/rongtree/guest/{ev['form_token']}"
+
+
 def guest_text(ev):
     if not ev.get("guest"):
         return ""
@@ -710,6 +718,8 @@ def main():
     sg.add_argument("--guest", required=True)
     sg.add_argument("--field", default="")
     sg.add_argument("--by", default="")
+    gf = sub.add_parser("guest-form")
+    gf.add_argument("--id", required=True)
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
     sub.add_parser("sync-reminders")
@@ -832,6 +842,7 @@ def main():
         if not ev.get("tentative"):
             ev["title"] = f"榮樹下訪談：{guest}"
         rem = ensure_reminder(ev, force=True) or "（這個時段還在待確認，教練確認後才會排提醒）"
+        form = guest_form_url(ev)
         save(data)
         d = dt.date.fromisoformat(ev["date"])
         when = f"{day_label(d)} {ev['start']}-{ev['end']}"
@@ -841,6 +852,15 @@ def main():
         print(f"✅ 已登記：{when} 榮樹下訪談，對象 {guest_text(ev)}{tent}")
         print("✅ 已通知巴哈助理群組" if ok else f"⚠️ 通知巴哈助理群組失敗：{err}")
         print(rem)
+        print("📝 來賓資料表（請轉給來賓填寫，交回後 AI 會整理成來賓卡給主持人）：")
+        print(form)
+    elif args.cmd == "guest-form":
+        hit = [e for e in data["events"] if e["id"] == args.id and is_rongshuxia(e)]
+        if not hit:
+            raise SystemExit(f"找不到這場榮樹下訪談 id={args.id}")
+        url = guest_form_url(hit[0])
+        save(data)
+        print(url)
     elif args.cmd == "remind":
         hit = [e for e in data["events"] if e["id"] == args.id]
         if not hit:
