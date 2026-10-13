@@ -1,5 +1,6 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
+- [🔴 教練討厭輪詢：Google日曆改 events.watch 即時通知(新增<10秒)，但刪除不會通知→留每3小時保險＋每天續約通道；接手輪詢先問能否事件觸發(2026-10-13)](feedback_prefer_event_trigger_google_push_misses_deletes_2026-10-13.md)
 - [🔴 修網頁版面重疊：保持原位置、讓區塊加高字往下掉，不可橫移去遮照片人物；榮樹下招牌壓字教練10/13糾正(0020132)](feedback_layout_fix_keep_position_dont_cover_photo_subject_2026-10-13.md)
 - [📅 教練Google日曆非公開iCal網址已存憑證層(機器人不登入就能讀，340筆實測通)；陳佩貞／a39521102 已由教練自己移除、陳佩貞不是佩佩老師；Google與行程總表是兩本帳(2026-10-13)](reference_google_calendar_private_ical_for_bots_2026-10-13.md)
 - [🔴 離會的人不留在培訓總覽／來賓總覽：以三戰情表在籍為準，補信用證時同輪處理；BNI-Training/departed.py＋同人不同寫法要放ALIASES防誤刪(2026-10-13)](feedback_departed_members_removed_from_training_guests_overview_2026-10-13.md)
