@@ -234,7 +234,7 @@ def schedule_reminder(ev):
     argv = ["/usr/bin/python3", "-I", os.path.abspath(__file__), "remind", "--id", ev["id"]]
     cmd = [_openclaw(), "cron", "add", "--name", f"榮樹下訪談提醒 {ev['date']} {ev['start']}",
            "--at", at.isoformat(timespec="seconds"), "--tz", "Asia/Taipei",
-           "--command-argv", json.dumps(argv), "--delete-after-run", "--json"]
+           "--command-argv", json.dumps(argv), "--no-deliver", "--delete-after-run", "--json"]
     if os.environ.get("COACH_SCHEDULE_DRYRUN"):
         return f"（測試：會在 {at.strftime('%m/%d %H:%M')} 提醒）"
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
