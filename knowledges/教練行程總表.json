@@ -904,14 +904,14 @@
   {
    "id": "gcal-2026-10-16-18",
    "date": "2026-10-16",
-   "title": "BNI INW 整日行程",
+   "title": "總部訂物料",
    "source": "Google日曆",
    "allday": true
   },
   {
    "id": "gcal-2026-10-16-19",
    "date": "2026-10-16",
-   "title": "總部訂物料",
+   "title": "BNI INW 整日行程",
    "source": "Google日曆",
    "allday": true
   },
@@ -2402,18 +2402,18 @@
   {
    "id": "gcal-2026-12-18-206",
    "date": "2026-12-18",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-12-18-207",
-   "date": "2026-12-18",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-207",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-12-18-208",
@@ -3168,7 +3168,7 @@
   {
    "id": "gcal-2027-01-28-302",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3176,7 +3176,7 @@
   {
    "id": "gcal-2027-01-28-303",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3982,7 +3982,7 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-13 21:51",
+ "updated_at": "2026-10-13 22:45",
  "tainan_synced_at": "2026-10-13 03:37",
  "evening_window": {
   "start": "19:00",
@@ -4026,6 +4026,6 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-13 21:51",
- "google_synced_epoch": 1791899472
+ "google_synced_at": "2026-10-13 22:45",
+ "google_synced_epoch": 1791902750
 }
