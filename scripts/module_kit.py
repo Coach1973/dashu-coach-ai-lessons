@@ -198,6 +198,16 @@ def audit() -> list:
     return rows
 
 
+# 字最小 20px（教練 2026-10-14：「我們做的任何網頁，字體大小最少都要 20px」）
+_FONT_DECL = re.compile(r"font(?:-size)?\s*:[^;}\"]*")
+_SMALL_PX = re.compile(r"(?<![\d.])(1[0-9]|[0-9])(?:\.\d+)?px")
+
+
+def small_fonts(html_text: str) -> list:
+    """CSS 裡 font／font-size 寫了小於 20px 的地方（含 clamp 的最小值）。"""
+    return sorted({m.group(0).strip()[:50] for m in _FONT_DECL.finditer(html_text) if _SMALL_PX.search(m.group(0))})
+
+
 def check(slug: str) -> list:
     out = []
     d = REPOS / slug
@@ -207,6 +217,10 @@ def check(slug: str) -> list:
                if "unwired" in form_status(p.read_text(encoding="utf-8", errors="ignore"))
                and not page_wired(p.read_text(encoding="utf-8", errors="ignore"))]
     out.append("❌ 表單沒接收件：" + "、".join(unwired) + f"（跑 module_kit.py wire {slug}）" if unwired else "✅ 送出資料：已接（或本站沒有表單）")
+    small = {p.name: small_fonts(p.read_text(encoding="utf-8", errors="ignore")) for p in d.glob("*.html")}
+    small = {k: v for k, v in small.items() if v}
+    out.append("❌ 字小於 20px：" + "；".join(f"{k}（{len(v)} 處，例：{v[0]}）" for k, v in small.items())
+               if small else "✅ 字體：全部 20px 以上")
     try:
         remote = subprocess.run(["git", "-C", str(d), "remote", "get-url", "origin"], capture_output=True, text=True).stdout.strip()
     except Exception:  # noqa: BLE001

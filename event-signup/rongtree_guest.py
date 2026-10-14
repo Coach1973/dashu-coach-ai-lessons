@@ -386,7 +386,7 @@ E = html.escape
 BASE_CSS = """
 :root{--ink:#0e1712;--ink-2:#14211a;--paper:#f2ead8;--paper-2:#e8dcc3;--line:#cdbd9c;--on-ink:#efe6d2;--mute:#a7b2a3;
 --on-paper:#1d2a22;--on-paper-mute:#5b6656;--amber:#d9a441;--amber-hi:#f0c46a;--amber-deep:#9a6a1c}
-*{box-sizing:border-box}body{margin:0;font:400 18px/1.8 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.02em}
+*{box-sizing:border-box}body{margin:0;font:400 20px/1.8 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.02em}
 h1,h2,h3{font-family:"Noto Serif TC","Songti TC",serif;margin:0}
 .wrap{max-width:760px;margin:0 auto;padding:32px 16px 64px}
 """
@@ -419,16 +419,16 @@ h1{{font-size:clamp(28px,6vw,40px);line-height:1.3;margin:8px 0 12px}}
 .lead{{color:var(--mute)}}.when{{display:inline-block;margin:6px 0 20px;padding:6px 14px;border:1px solid var(--amber);border-radius:999px;color:var(--amber-hi)}}
 form{{background:rgba(239,230,210,.04);border:1px solid rgba(239,230,210,.14);border-radius:10px;padding:clamp(18px,4vw,32px)}}
 .field{{display:flex;flex-direction:column;margin-bottom:18px}}
-label{{margin-bottom:6px;color:#d8d6c6}}.req{{color:var(--amber)}}.opt{{color:var(--mute);font-size:15px}}
+label{{margin-bottom:6px;color:#d8d6c6}}.req{{color:var(--amber)}}.opt{{color:var(--mute);font-size:20px}}
 input,textarea{{font:inherit;color:var(--on-ink);background:rgba(239,230,210,.05);border:1px solid rgba(239,230,210,.25);border-radius:6px;padding:10px 12px;min-height:48px;width:100%}}
 textarea{{min-height:110px;resize:vertical}}input:focus,textarea:focus{{outline:none;border-color:var(--amber)}}
-.photo small{{color:var(--mute)}}
-button{{font:500 19px/1 inherit;min-height:56px;padding:0 32px;border:0;border-radius:999px;background:var(--amber);color:#1a1206;cursor:pointer}}
+.photo small,small{{color:var(--mute);font-size:20px}}
+button{{font-family:inherit;font-size:20px;font-weight:500;line-height:1;min-height:56px;padding:0 32px;border:0;border-radius:999px;background:var(--amber);color:#1a1206;cursor:pointer}}
 button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}}.again{{color:var(--amber-hi)}}
-.consent{{color:var(--mute);font-size:16px;margin:4px 0 16px}}.consent b{{color:var(--on-ink)}}
+.consent{{color:var(--mute);font-size:20px;margin:4px 0 16px}}.consent b{{color:var(--on-ink)}}
 .done{{display:none;text-align:center;padding:40px 0}}.done h2{{font-size:30px;margin-bottom:12px}}
 .linkbtn{{font:inherit;min-height:0;padding:0 4px;background:none;color:var(--amber-hi);text-decoration:underline;border-radius:0}}
-.more{{margin-top:28px;color:var(--mute)}}.more button{{min-height:48px;font-size:17px;background:none;border:1px solid var(--amber);color:var(--amber-hi)}}
+.more{{margin-top:28px;color:var(--mute)}}.more button{{min-height:48px;font-size:20px;background:none;border:1px solid var(--amber);color:var(--amber-hi)}}
 </style></head><body><div class="wrap">
 <p class="eyebrow">榮樹下 Podcast</p>
 <h1>謝謝您，願意坐到榮樹下。</h1>
@@ -534,7 +534,7 @@ dt{{font-weight:700;margin-top:12px}}dd{{margin:2px 0 0;white-space:pre-wrap}}
 <form method="post" action="/rongtree/guest/{token}/card/public?k={k}"><input type="hidden" name="public" value="{0 if r['public'] else 1}"><button>{'從公開名單隱藏' if r['public'] else '恢復公開'}</button></form>
 <a href="/rongtree/guest/{slot_token(token)}" target="_blank" rel="noopener">來賓填表頁</a>
 <button onclick="print()">列印</button></div>
-<p class="sub" style="margin-top:24px;font-size:15px">AI 依來賓自填資料整理，訪談前請自行確認內容。最後更新：{E(r['updated_at'])}</p>
+<p class="sub" style="margin-top:24px;font-size:20px">AI 依來賓自填資料整理，訪談前請自行確認內容。最後更新：{E(r['updated_at'])}</p>
 </div></body></html>"""
 
 
