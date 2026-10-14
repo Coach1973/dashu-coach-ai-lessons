@@ -46,7 +46,8 @@ grep -rn "<關鍵字>" "$W/scripts/files"
 
 ### 4. 用大樹自己的風格重做
 - **重寫，不整份照抄**：別人的文字、圖片、商標、品牌一律不搬；公開套件可以用。
-- 單檔 HTML 優先；需要報名／聯絡表單就走線上報名 SOP（表單打 /api/works/contact）。
+- 開工先跑 `python3 workspace/scripts/module_kit.py menu` 看大樹標準模組（`knowledges/模組庫_大樹標準功能.md`）；表單一律用共用元件 `<form data-works-form="slug">`（works-form.js → /api/works/contact → 活動報名群），交付前跑 `module_kit.py check`。
+- 單檔 HTML 優先。
 - 本機實際打開測過再往下。
 
 ### 5. 上架＋交付
