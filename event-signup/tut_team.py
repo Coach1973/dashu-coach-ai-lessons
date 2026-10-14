@@ -60,6 +60,25 @@ ADVISOR_SEATS = [
     ("林志和", "智匯保經一處副總", ""),
 ]
 
+# 有網頁連結的顧問：本人補資料前，先放從網頁整理的介紹（2026-10-14 教練：至少先看得到對方的網頁簡介）。
+# 只寫網頁上看得到的內容；網頁沒提到本人的（謝志賓），只介紹協會、不替本人寫頭銜。
+SEAT_SOURCE_NOTE = "\n\n（以上整理自公開網頁，待本人補充）"
+SEAT_INTROS = {
+    "鄭儷絲": "中華網紅協會（CICA）創會理事長暨永續長。協會於 2020 年 11 月 1 日立案，是全國性非營利人民團體，"
+             "主張「網紅是一個產業」，攜手臺北網紅節與 TY Star 臺北網紅獎，也推動培養身障網紅與銀髮網紅、扶助弱勢直播主。"
+             "本人擁有十餘年主持、採訪、活動企劃與製作經驗，曾任東森 ET FM 節目製作人暨主持人、"
+             "正聲廣播與中國廣播公司節目主持人，也是直播培訓講師與公益主持人。",
+    "陳彥玲": "陳彥玲博士，紐約北方醫學中心國際合作處處長。全球健康發展協會與紐約北方醫學教育基金會合作推廣四維醫學，"
+             "2026 年 6 月 26 日在國立中正大學舉辦「智匯健康｜腦力長青」失智防治與逆齡醫學跨界論壇"
+             "（嘉義縣衛生局指導，國立中正大學中小企業育成中心、全球健康發展協會、紐約北方醫學中心共同推動），"
+             "陳彥玲博士為論壇致詞貴賓。",
+    "謝志賓": "協會介紹：中華新媒體影音發展協會於 2026 年 6 月 29 日立案，推動新媒體人才培育、產業孵化與跨界共創，"
+             "串聯影音製作、AI 短影音、直播與商業資源，協助中小企業建立新媒體能力；"
+             "2026 年 10 月 31 日在台中舉辦協會啟動大會。",
+    "林丁禾": "藝術孵化實驗室創辦人、「人人都是藝術家」品牌主理人，也是國立臺灣藝術大學校友總會理事、正觀藝術顧問。"
+             "工作據點在高雄市苓雅區，歡迎洽談藝術合作與顧問事宜。",
+}
+
 E = html.escape
 
 
@@ -88,6 +107,11 @@ def seed_advisor_seats():
             conn.execute("INSERT INTO tut_team_members (team, role, name, company_title, link_web, edit_token, filled, sort)"
                          " VALUES ('advisor', '顧問', ?, ?, ?, ?, 0, ?)", (name, title, url, secrets.token_urlsafe(16), i))
         conn.commit()
+    # 還沒補資料、簡介還空著的顧問座位，補上網頁整理的介紹（本人填過的不動）
+    for name, intro in SEAT_INTROS.items():
+        conn.execute("UPDATE tut_team_members SET bio=? WHERE team='advisor' AND name=? AND filled=0 AND bio=''",
+                     (intro + SEAT_SOURCE_NOTE, name))
+    conn.commit()
     conn.close()
 
 
@@ -143,6 +167,7 @@ def clean_form(form, need_photo):
         v = (form.get(k) or "").strip()
         v = v[:LIMITS.get(k, 20)] if k == "bio" else re.sub(r"\s+", " ", v)[:LIMITS.get(k, 20)]
         d[k] = _norm_link(k, v) if k.startswith("link_") else v
+    d["bio"] = d["bio"].replace(SEAT_SOURCE_NOTE.strip(), "").strip()   # 本人存檔＝已補充，拿掉「待本人補充」
     if d["team"] not in TEAMS:
         return d, "請選擇您是「理監事團隊」還是「顧問團隊」"
     for k, label in (("name", "姓名"), ("company_title", "公司／職稱"), ("bio", "個人簡介")):
@@ -262,7 +287,7 @@ display:flex;align-items:center;justify-content:center;font:700 32px/1 "Noto Ser
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
 .links a{font-size:14px;padding:4px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none}
 .card.seat{border-style:dashed;background:transparent}.card.seat .ph{background:#fff}
-.card.seat form{margin-top:auto;padding-top:12px}
+.card.seat form{padding-top:12px}.card.seat .links{margin-top:auto}
 .seat-btn{font:500 15px/1 inherit;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--purple);background:none;color:var(--purple);cursor:pointer;width:100%}
 .empty{border:1px dashed var(--line);border-radius:14px;padding:22px;color:var(--muted)}
 .cta{margin:56px 0;padding:36px 24px;border-radius:18px;background:var(--purple-soft);text-align:center}
@@ -312,20 +337,28 @@ def _photo(r, cls="ph"):
     return f'<span class="{cls}" aria-hidden="true">{E((r["name"] or "?")[:1])}</span>'
 
 
+def _bio_html(bio):
+    """長簡介先露前 150 字，其餘收進「看完整介紹」。"""
+    if len(bio) <= 160:
+        return f'<p class="bio">{E(bio)}</p>'
+    return (f'<details class="bio-wrap"><summary><span class="short bio">{E(bio[:150])}…</span>'
+            f'<span class="more">看完整介紹</span></summary><p class="bio">{E(bio)}</p></details>')
+
+
 def _card(r):
     links = "".join(f'<a href="{E(r[k])}" target="_blank" rel="noopener nofollow">{lab}</a>' for k, lab in LINKS if r[k])
     role = f'<span class="role">{E(r["role"])}</span>' if r["role"] else ""
     dept = f'<p class="ct">🎓 {E(r["dept_year"])}</p>' if r["dept_year"] else ""
-    if not r["filled"]:
-        return (f'<div class="card seat"><div class="head">{_photo(r)}<div>{role}<h3>{E(r["name"])}</h3>'
-                f'<p class="ct">{E(r["company_title"])}</p></div></div>'
-                f'<p class="ct">簡介準備中</p>'
-                f'<form method="post" action="/tut/team/claim/{r["id"]}"><button class="seat-btn">我是{E(r["name"])}，補上我的簡介</button></form></div>')
     bio = r["bio"] or ""
-    # 長簡介先露前 150 字，其餘收進「看完整介紹」
-    bio_html = (f'<p class="bio">{E(bio)}</p>' if len(bio) <= 160 else
-                f'<details class="bio-wrap"><summary><span class="short bio">{E(bio[:150])}…</span>'
-                f'<span class="more">看完整介紹</span></summary><p class="bio">{E(bio)}</p></details>')
+    if not r["filled"]:
+        intro = _bio_html(bio) if bio else '<p class="ct">簡介準備中</p>'
+        seat_links = "".join(f'<a href="{E(r[k])}" target="_blank" rel="noopener nofollow">看{lab if k != "link_web" else "網頁介紹"} ›</a>'
+                             for k, lab in LINKS if r[k])
+        return (f'<div class="card seat"><div class="head">{_photo(r)}<div>{role}<h3>{E(r["name"])}</h3>'
+                f'<p class="ct">{E(r["company_title"])}</p></div></div>{intro}'
+                f'{f"<div class=links>{seat_links}</div>" if seat_links else ""}'
+                f'<form method="post" action="/tut/team/claim/{r["id"]}"><button class="seat-btn">我是{E(r["name"])}，補上我的簡介</button></form></div>')
+    bio_html = _bio_html(bio)
     return (f'<article class="card"><div class="head">{_photo(r)}<div>{role}<h3>{E(r["name"])}</h3>'
             f'<p class="ct">{E(r["company_title"])}</p>{dept}</div></div>{bio_html}'
             f'{f"<div class=links>{links}</div>" if links else ""}</article>')

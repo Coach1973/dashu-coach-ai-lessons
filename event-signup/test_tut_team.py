@@ -144,5 +144,23 @@ check("機器人（填了隱藏欄位）不會建立資料", r.status_code == 30
 h = client.get("/tut/team").get_data(as_text=True)
 check("公開頁不含修改連結、後台網址", "/tut/team/edit/" not in h and "/tut/team/a/" not in h)
 
+# ---- 有網頁連結的顧問：先放網頁整理的介紹（2026-10-14 教練）----
+h = client.get("/tut/team").get_data(as_text=True)
+for nm in ("陳彥玲", "謝志賓", "林丁禾"):
+    seg = h[h.index(nm):h.index("補上我的簡介", h.index(nm))]
+    check(f"{nm} 座位已有網頁整理的介紹、標註待本人補充、附網頁連結", "整理自公開網頁" in seg and "看網頁介紹" in seg)
+check("陳彥玲介紹寫對網頁上的頭銜", "紐約北方醫學中心國際合作處處長" in h)
+check("謝志賓只介紹協會，不替本人編頭銜", "協會介紹：中華新媒體影音發展協會" in h)
+seg = h[h.index("林家旭"):h.index("補上我的簡介", h.index("林家旭"))]
+check("沒有網頁的顧問維持「簡介準備中」", "簡介準備中" in seg and "整理自公開網頁" not in seg)
+seat = next(s for s in tt.open_seats() if s["name"] == "林丁禾")
+h = client.get(f"/tut/team/edit/{seat['edit_token']}").get_data(as_text=True)
+check("認領後修改頁帶入網頁整理的介紹，本人可以直接改", "藝術孵化實驗室創辦人" in h)
+client.post(f"/tut/team/edit/{seat['edit_token']}", data={"team": "advisor", "role": "顧問", "name": "林丁禾",
+            "company_title": "藝術商務顧問", "bio": tt.get_by_id(seat["id"])["bio"], "photo": (jpg(), "l.jpg")},
+            content_type="multipart/form-data")
+b = tt.get_by_id(seat["id"])["bio"]
+check("本人存檔後拿掉「待本人補充」字樣、內容保留", "待本人補充" not in b and "藝術孵化實驗室創辦人" in b)
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)
