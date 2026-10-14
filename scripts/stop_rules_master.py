@@ -941,6 +941,7 @@ for evt in EVENTS[-300:]:
 # （只有頁面/網站/工具/系統4個詞），這次真實案例寫的是「新增...後台管理頁」
 # （頁面的簡寫「頁」），已補上頁/後台/平台/管理頁/入口這幾種常見簡寫。
 NEW_NAMED_ITEMS = []
+NEW_NAMED_FILES = {}   # 2026-10-14：名稱 -> 同一個 commit 指令裡出現的 xxx.html 檔名（改名後仍可用網址比對）
 for evt in EVENTS[-300:]:
     if not isinstance(evt, dict) or evt.get("type") != "assistant":
         continue
@@ -992,6 +993,7 @@ for evt in EVENTS[-300:]:
             if len(name) > 16 or re.search(r"[，。、]", name):
                 continue
             NEW_NAMED_ITEMS.append(name)
+            NEW_NAMED_FILES[name] = [f for f in set(re.findall(r"([\w-]+\.html)\b", command)) if f != "index.html"]
 
 if NEW_NAMED_ITEMS:
     try:
@@ -1007,7 +1009,8 @@ if NEW_NAMED_ITEMS:
         # 任何角落——放在「保留」等教練不會看的分類一樣視同沒收錄。
         def _in_html(n):
             core = re.sub(r"(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口)$", "", n).strip()
-            return n in VISIBLE_HTML_2 or (core and core in VISIBLE_HTML_2)
+            return (n in VISIBLE_HTML_2 or (core and core in VISIBLE_HTML_2)
+                    or any(f in VISIBLE_HTML_2 for f in NEW_NAMED_FILES.get(n, [])))
         missing_named = [n for n in NEW_NAMED_ITEMS if not _in_html(n)]
         if missing_named:
             in_wrong_section = [n for n in missing_named if n in COACH888_HTML_2 or (re.sub(r"(?:頁面|頁|網站|網頁|工具|系統|後台|平台|管理頁|入口)$", "", n).strip() in COACH888_HTML_2)]
