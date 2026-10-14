@@ -1192,6 +1192,155 @@ def api_tut_join():
     )
 
 
+# ---------- 南應大校友會台南分會：理監事團隊與顧問團隊（2026-10-14 教練交辦）：說明見 tut_team.py ----------
+# 比照 BNI 分會頁自助簡介：按「我要建立檔案」→ 送出立刻上架 → 拿專屬修改連結；顧問空座位本人點名字補資料。
+import tut_team as _tt
+
+_TT_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多建立 10 份
+
+
+def _tt_html(body, status=200):
+    return Response(body, status=status, content_type="text/html; charset=utf-8", headers={"Cache-Control": "no-store"})
+
+
+def _tt_rate_ok(ip):
+    now = time.time()
+    hits = [t for t in _TT_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 10:
+        return False
+    _TT_HITS[ip] = hits + [now]
+    return True
+
+
+def _tt_notify(token):
+    """有人新上架（含認領顧問座位第一次補完）→ 活動報名即時通知群（教練＋佩佩老師），附後台網址方便處理亂填。"""
+    r = _tt.get_by_token(token)
+    if not r:
+        return
+    role = f"／{r['role']}" if r["role"] else ""
+    text = (f"🎓【南應大校友會・理監事與顧問】{r['name']} 建立了檔案（{_tt.TEAMS.get(r['team'], '')}{role}）\n"
+            f"{r['company_title']}\n公開頁：\nhttps://event.bymyway.com/tut/team\n"
+            f"管理後台（有人亂填可隱藏或刪除）：\n{_tt.admin_url(app.secret_key)}")
+    threading.Thread(target=_notify_xiaolongxia, args=(text,),
+                     kwargs={"chat_id": TELEGRAM_REGISTRATION_GROUP_CHAT_ID}, daemon=True).start()
+
+
+def _tt_photo(form_file, err):
+    """有選照片就存；回傳 (檔名或 None, 錯誤訊息)。"""
+    if err or not (form_file and form_file.filename):
+        return None, err
+    name = _tt.save_photo(form_file)
+    return name, ("" if name else "這張照片打不開，麻煩改存成 jpg 或 png 再上傳一次")
+
+
+@app.route("/tut/team")
+@app.route("/tut/team/")
+def tut_team_index():
+    return _tt_html(_tt.render_index())
+
+
+@app.route("/tut/team/join", methods=["GET", "POST"])
+def tut_team_join():
+    if request.method == "GET":
+        return _tt_html(_tt.render_join())
+    if (request.form.get("website") or "").strip():   # honeypot：機器人才會填
+        return redirect("/tut/team")
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _tt_rate_ok(ip):
+        return _tt_html(_tt.render_join(request.form, "這個小時送出次數太多了，請稍後再試一次"), 429)
+    photo = request.files.get("photo")
+    d, err = _tt.clean_form(request.form, need_photo=not (photo and photo.filename))
+    fname, err = _tt_photo(photo, err)
+    if err:
+        return _tt_html(_tt.render_join(d, err), 400)
+    token = _tt.insert(d, fname, ip)
+    _tt_notify(token)
+    return redirect(f"/tut/team/edit/{token}?new=1")
+
+
+@app.route("/tut/team/claim/<int:mid>", methods=["POST"])
+def tut_team_claim(mid):
+    """顧問空座位：本人點自己的名字就進到修改頁（誠信原則，比照 BNI 認座位）；已補完的不能再認領。"""
+    r = _tt.get_by_id(mid)
+    if not r or r["filled"] or r["hidden"]:
+        return redirect("/tut/team/join")
+    return redirect(f"/tut/team/edit/{r['edit_token']}")
+
+
+@app.route("/tut/team/edit/<token>", methods=["GET", "POST"])
+def tut_team_edit(token):
+    r = _tt.get_by_token(token)
+    if not r:
+        abort(404)
+    if request.method == "GET":
+        return _tt_html(_tt.render_edit(r, first=request.args.get("new") == "1", saved=request.args.get("saved") == "1"))
+    photo = request.files.get("photo")
+    d, err = _tt.clean_form(request.form, need_photo=not r["photo_file"] and not (photo and photo.filename))
+    fname, err = _tt_photo(photo, err)
+    if err:
+        return _tt_html(_tt.render_edit(r, d, err), 400)
+    _tt.update(r["id"], d, fname)
+    if fname and r["photo_file"] and _tt.PHOTO_RE.match(r["photo_file"]):
+        (_tt.UPLOAD_DIR / r["photo_file"]).unlink(missing_ok=True)   # 換照片就把舊的刪掉
+    if not r["filled"]:   # 認領的顧問座位第一次補完＝上架
+        _tt_notify(token)
+        return redirect(f"/tut/team/edit/{token}?new=1")
+    return redirect(f"/tut/team/edit/{token}?saved=1")
+
+
+@app.route("/tut/team/edit/<token>/delete", methods=["POST"])
+def tut_team_delete(token):
+    r = _tt.get_by_token(token)
+    if not r:
+        abort(404)
+    _tt.delete(r["id"])
+    return redirect("/tut/team")
+
+
+@app.route("/tut/team/photo/<name>")
+def tut_team_photo(name):
+    if not _tt.PHOTO_RE.match(name) or not (_tt.UPLOAD_DIR / name).exists():
+        abort(404)
+    resp = send_from_directory(_tt.UPLOAD_DIR, name, mimetype="image/jpeg")
+    resp.headers["Cache-Control"] = "public, max-age=86400"   # 換照片會換檔名，可以放心快取
+    return resp
+
+
+def _tt_admin(code):
+    if not hmac.compare_digest(code, _tt.admin_code(app.secret_key)):
+        abort(404)
+
+
+@app.route("/tut/team/a/<code>")
+def tut_team_admin(code):
+    _tt_admin(code)
+    return _tt_html(_tt.render_admin(app.secret_key, request.args.get("msg", "")[:60]))
+
+
+@app.route("/tut/team/a/<code>/hide/<int:mid>", methods=["POST"])
+def tut_team_admin_hide(code, mid):
+    _tt_admin(code)
+    _tt.set_hidden(mid, request.form.get("hidden") == "1")
+    return redirect(f"/tut/team/a/{code}")
+
+
+@app.route("/tut/team/a/<code>/delete/<int:mid>", methods=["POST"])
+def tut_team_admin_delete(code, mid):
+    _tt_admin(code)
+    _tt.delete(mid)
+    return redirect(f"/tut/team/a/{code}?msg=已刪除")
+
+
+@app.route("/tut/team/a/<code>/seat", methods=["POST"])
+def tut_team_admin_seat(code):
+    _tt_admin(code)
+    name = (request.form.get("name") or "").strip()
+    team = request.form.get("team") or "board"
+    if name and team in _tt.TEAMS:
+        _tt.add_seat(team, (request.form.get("role") or "").strip(), name, (request.form.get("company_title") or "").strip())
+    return redirect(f"/tut/team/a/{code}?msg=已新增座位：{name}" if name else f"/tut/team/a/{code}")
+
+
 # ---------- 校友回憶牆：留言＋照片送審，教練通過才公開（2026-10-02 教練交辦） ----------
 # 原本 tut-memory 頁的照片只存在訪客自己瀏覽器，別人看不到。改成：送出→存伺服器(pending)
 # →Telegram 傳照片給教練，附一個審核連結→教練按「通過」才出現在所有人的牆上。

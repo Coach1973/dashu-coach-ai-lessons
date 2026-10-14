@@ -8,3 +8,5 @@ webapp.error.log
 slides/*
 !slides/.gitkeep
 memwall_uploads/
+rongtree_uploads/
+tut_team_uploads/
