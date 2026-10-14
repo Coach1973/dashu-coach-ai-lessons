@@ -795,12 +795,25 @@ def ensure_curated_github(slug: str) -> str:
         return "⚠️ GitHub 還沒建好，今晚會自動補建"
 
 
+def wire_forms(site_dir: Path, slug: str) -> str:
+    """2026-10-14 教練：「上架的作品裡有『送出資料』，要自動串接，使用者送出我就一定收到」。
+    有表單卻沒接收件的頁，自動接上 /static/works-form.js（進活動報名即時通知群）；接線失敗不擋上架、寫進通知。"""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import module_kit
+        return module_kit.auto_wire_dir(site_dir, slug)
+    except Exception as e:  # noqa: BLE001
+        log(f"表單自動接線失敗: {e!r}")
+        return f"\n⚠️ 表單自動接線失敗，請軍師跑 python3 scripts/module_kit.py wire {slug}：{e}"
+
+
 def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set, opt_note: str = "") -> None:
     """大樹作品：原封不動上架event.bymyway.com，建私有GitHub repo（2026-09-30教練定：event網址背後都要有GitHub，
     靜態內容在聯想／宏碁／小龍蝦改GitHub就好）、不插商圈卡、不發FB，
     登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
     shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
+    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug)
     event_url = f"https://event.bymyway.com/curated/{slug}/"
     registry["sites"].append({
         "slug": slug,
@@ -837,6 +850,7 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
         f"{c888_note}\n"
         f"{gh_note}\n"
         f"{opt_note}"
+        f"{form_note.strip() + chr(10) if form_note else ''}"
         "📌 教練個人創作，不進大台南商圈店家名冊"
     )
     log(f"✅ 大樹作品完成：{pkg_path.name} → {slug}")
@@ -977,6 +991,7 @@ def process_one(pkg_path: Path) -> None:
         repo_dir = GITHUB_REPOS_DIR / slug
         shutil.copytree(tmp_extract, repo_dir)
         ensure_og_tags_absolute(repo_dir, slug)
+        form_note = wire_forms(repo_dir, slug)
 
         token = get_github_token()
         create_github_repo(token, slug)
@@ -1027,6 +1042,7 @@ def process_one(pkg_path: Path) -> None:
             + card_note
             + fb_note
             + works_note
+            + form_note
             + "\n📌 待軍師下次確認：潤飾店家介紹文案。"
         )
         log(f"✅ 完成：{pkg_path.name} → {slug}")
