@@ -47,7 +47,7 @@ ADVISOR_SEATS = [
     ("鄭儷絲", "中華網紅協會理事長", "https://event.bymyway.com/cica/"),
     ("劉雅萍", "台南市台灣世界旗袍文化推展聯合會理事長", ""),
     ("陳彥玲", "全球健康發展協會", "https://northern-tw.netlify.app/"),
-    ("施正義", "彰化縣網路購物服務人員職業工會理事長", ""),
+    ("施正益", "彰化縣網路購物服務人員職業工會理事長", ""),
     ("謝志賓", "新媒體影音發展協會", "https://event.bymyway.com/curated/nmda/"),
     ("陳美芬", "職能發展協會理事長", ""),
     ("林丁禾", "藝術商務顧問", "https://event.bymyway.com/curated/art-lab/"),
@@ -75,22 +75,36 @@ SEAT_INTROS = {
     "謝志賓": "協會介紹：中華新媒體影音發展協會於 2026 年 6 月 29 日立案，推動新媒體人才培育、產業孵化與跨界共創，"
              "串聯影音製作、AI 短影音、直播與商業資源，協助中小企業建立新媒體能力；"
              "2026 年 10 月 31 日在台中舉辦協會啟動大會。",
-    "林丁禾": "藝術孵化實驗室創辦人、「人人都是藝術家」品牌主理人，也是國立臺灣藝術大學校友總會理事、正觀藝術顧問。"
-             "工作據點在高雄市苓雅區，歡迎洽談藝術合作與顧問事宜。",
+    # 林丁禾、江睿翔：用本人在 AI 百人導師（mentor100.bymyway.com）自己填的簡介（2026-10-14 教練：照片也從百人導師移植）
+    "林丁禾": "林丁禾藝術孵化實驗室 創辦人（藝術孵化＆課程）。1978 年出生於高雄，政治大學商學院科技與創新管理研究所、"
+             "台灣藝術大學美術學院雕塑學系畢業。2018 年起為正觀藝術畫廊藝術顧問，同時是高雄市女青年會對外招生藝術課程老師，"
+             "以及六城市 EMBA 心靈領袖讀書會企業講師與聯席主持人。2020 年創立藝術孵化實驗室，持續以「藝術入世」的角度，"
+             "積極成為「商業藝術」與「社會雕塑」的實踐者，經常在跨界的不同領域舉行藝術講座與創作實踐，"
+             "推動以人為本的自我實現，同時創造社會價值。",
+    "江睿翔": "睿翔AI應用工作室，AI 應用教學講師。專長 AI 應用教學，並協助企業 ESG 永續經營、輔導政府部門補助案。",
     # 以下兩位整理自「為你轉身」導師席（event.bymyway.com/curated/turnforyou/，2026-10-14 教練：有資料就先移植）
     "李中閔": "宸霖智權科技集團業務經理、中華媒體交流協會總幹事。專長社區型政府補助申請，對協會的成立與運作經驗豐富；"
              "也擔任社團法人高雄市職能發展協會常務理事、國際獅子會 300E3 區雄大獅子會資訊長、高雄市見真際同濟會創會秘書長、"
              "高雄市幸運草歌藝共好協進會總幹事，並任台灣小姐選拔大會南區執行長、2026 世界美顏小姐籌委會執行總監、"
              "總成國際整合行銷公司副總。",
-    # 「為你轉身」寫「施正益」、記憶牆寫「施正義」，職稱相同；座位名字先沿用記憶牆，等本人或教練確認
-    "施正義": "彰化縣網路購物服務人員職業工會理事長、時間旅人文創創辦人。從事網路行銷與顧問二十六年，擔任 TTQS 網路行銷課程講師；"
+    # 正確名字是「施正益」（教練 2026-10-14 確認；記憶牆原本寫錯一個字，已一起更正）
+    "施正益": "彰化縣網路購物服務人員職業工會理事長、時間旅人文創創辦人。從事網路行銷與顧問二十六年，擔任 TTQS 網路行銷課程講師；"
              "是 Google 地圖第 10 級在地嚮導（Google 地圖社群貢獻的最高等級），發展「地圖關鍵字行銷」與在地嚮導團隊，"
              "協助店家做地圖優化、360 度環景照片與影片拍攝。",
 }
+NAME_FIXES = {"施" + "正義": "施正益"}   # 2026-10-14 教練確認的正確寫法（舊座位自動改名）
 TURNFORYOU = "https://event.bymyway.com/curated/turnforyou/"
-SEAT_LINKS = {"李中閔": TURNFORYOU, "施正義": TURNFORYOU}
+SEAT_LINKS = {
+    "李中閔": {"link_web": TURNFORYOU}, "施正益": {"link_web": TURNFORYOU},
+    "林丁禾": {"link_fb": "https://www.facebook.com/dinghe.lin", "link_ig": "https://www.instagram.com/star119832003/"},
+    "江睿翔": {"link_fb": "https://www.facebook.com/mickjay1201"},
+}
 _TFY_IMG = Path.home() / "github_repos" / "turnforyou" / "img" / "mentors"
-SEAT_PHOTOS = {"李中閔": _TFY_IMG / "li-zhongmin.jpg", "施正義": _TFY_IMG / "shi-zhengyi.jpg"}
+_M100_IMG = Path.home() / "github_repos" / "mentor100" / "static" / "uploads"
+SEAT_PHOTOS = {"李中閔": _TFY_IMG / "li-zhongmin.jpg", "施正益": _TFY_IMG / "shi-zhengyi.jpg",
+               "林丁禾": _M100_IMG / "unnamed-939916e2.jpg",
+               "江睿翔": _M100_IMG / "85806E99-0013-4845-9FFB-770A52874B71-ca08edce.jpg",
+               "林士民": _M100_IMG / "專業灰背景企業肖像-a012e03a.jpg"}
 
 E = html.escape
 
@@ -120,13 +134,16 @@ def seed_advisor_seats():
             conn.execute("INSERT INTO tut_team_members (team, role, name, company_title, link_web, edit_token, filled, sort)"
                          " VALUES ('advisor', '顧問', ?, ?, ?, ?, 0, ?)", (name, title, url, secrets.token_urlsafe(16), i))
         conn.commit()
+    for wrong, right in NAME_FIXES.items():
+        conn.execute("UPDATE tut_team_members SET name=? WHERE team='advisor' AND name=?", (right, wrong))
     # 還沒補資料、簡介還空著的顧問座位，補上網頁整理的介紹（本人填過的不動）
     for name, intro in SEAT_INTROS.items():
-        conn.execute("UPDATE tut_team_members SET bio=? WHERE team='advisor' AND name=? AND filled=0 AND bio=''",
-                     (intro + SEAT_SOURCE_NOTE, name))
-    for name, url in SEAT_LINKS.items():
-        conn.execute("UPDATE tut_team_members SET link_web=? WHERE team='advisor' AND name=? AND filled=0 AND link_web=''",
-                     (url, name))
+        conn.execute("UPDATE tut_team_members SET bio=? WHERE team='advisor' AND name=? AND filled=0"
+                     " AND (bio='' OR bio LIKE ?)", (intro + SEAT_SOURCE_NOTE, name, "%" + SEAT_SOURCE_NOTE.strip()))
+    for name, links in SEAT_LINKS.items():
+        for col, url in links.items():
+            conn.execute(f"UPDATE tut_team_members SET {col}=? WHERE team='advisor' AND name=? AND filled=0 AND {col}=''",
+                         (url, name))
     for name, src in SEAT_PHOTOS.items():
         row = conn.execute("SELECT id FROM tut_team_members WHERE team='advisor' AND name=? AND filled=0 AND photo_file IS NULL",
                            (name,)).fetchone()
@@ -303,7 +320,7 @@ section.team{padding:48px 0 8px}.team h2{font-size:clamp(24px,4vw,32px);color:va
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
 .card .head{display:flex;gap:16px;align-items:center;margin-bottom:12px}
 .ph{width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--purple-soft);background:var(--purple-soft);
-display:flex;align-items:center;justify-content:center;font:700 32px/1 "Noto Serif TC",serif;color:var(--purple)}
+display:flex;align-items:center;justify-content:center;font:700 32px/1 "Noto Serif TC",serif;color:var(--purple);object-position:50% 18%}
 .role{display:inline-block;font-size:14px;padding:1px 12px;border-radius:999px;background:var(--purple-soft);color:var(--purple-deep);margin-bottom:4px}
 .card h3{font-size:22px}.ct{color:var(--muted);font-size:15px;margin:2px 0 0}
 .bio{white-space:pre-line;margin:0;font-size:16px}

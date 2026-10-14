@@ -155,23 +155,36 @@ seg = h[h.index("林家旭"):h.index("補上我的簡介", h.index("林家旭"))
 check("沒有網頁的顧問維持「簡介準備中」", "簡介準備中" in seg and "整理自公開網頁" not in seg)
 seat = next(s for s in tt.open_seats() if s["name"] == "林丁禾")
 h = client.get(f"/tut/team/edit/{seat['edit_token']}").get_data(as_text=True)
-check("認領後修改頁帶入網頁整理的介紹，本人可以直接改", "藝術孵化實驗室創辦人" in h)
+check("認領後修改頁帶入網頁整理的介紹，本人可以直接改", "藝術孵化實驗室" in h and "社會雕塑" in h)
 client.post(f"/tut/team/edit/{seat['edit_token']}", data={"team": "advisor", "role": "顧問", "name": "林丁禾",
             "company_title": "藝術商務顧問", "bio": tt.get_by_id(seat["id"])["bio"], "photo": (jpg(), "l.jpg")},
             content_type="multipart/form-data")
 b = tt.get_by_id(seat["id"])["bio"]
-check("本人存檔後拿掉「待本人補充」字樣、內容保留", "待本人補充" not in b and "藝術孵化實驗室創辦人" in b)
+check("本人存檔後拿掉「待本人補充」字樣、內容保留", "待本人補充" not in b and "社會雕塑" in b)
 
-# ---- 「為你轉身」的李中閔、施正義：介紹＋照片＋網頁連結 ----
+# ---- 「為你轉身」的李中閔、施正益：介紹＋照片＋網頁連結 ----
 h = client.get("/tut/team").get_data(as_text=True)
-for nm, key in (("李中閔", "中華媒體交流協會總幹事"), ("施正義", "Google 地圖第 10 級在地嚮導")):
+for nm, key in (("李中閔", "中華媒體交流協會總幹事"), ("施正益", "Google 地圖第 10 級在地嚮導")):
     seg = h[h.index(nm):h.index("補上我的簡介", h.index(nm))]
     i = h.rfind('<div class="card seat">', 0, h.index(nm))
     check(f"{nm} 座位有為你轉身的介紹、照片、網頁連結", key in seg and "curated/turnforyou/" in seg
           and "/tut/team/photo/" in h[i:h.index(nm)])
+check("記憶牆舊寫法「施正義」已改成正確的「施正益」", "施正義" not in h and "施正益" in h)
 n_before = len(list(tt.UPLOAD_DIR.glob("*.jpg")))
 tt.seed_advisor_seats()
 check("重複執行不會重複複製照片", len(list(tt.UPLOAD_DIR.glob("*.jpg"))) == n_before)
+
+# ---- 百人導師的林丁禾、江睿翔、林士民：照片（＋簡介、社群）----
+h = client.get("/tut/team").get_data(as_text=True)
+def seat_seg(nm):
+    i = h.index(nm)
+    return h[h.rfind('<div class="card seat">', 0, i):h.index("補上我的簡介", i)]
+seg = seat_seg("江睿翔")
+check("江睿翔：百人導師照片、簡介、Facebook", "/tut/team/photo/" in seg and "ESG 永續經營" in seg and "facebook.com/mickjay1201" in seg)
+seg = seat_seg("林士民")
+check("林士民：只有照片，簡介仍準備中", "/tut/team/photo/" in seg and "簡介準備中" in seg)
+check("林丁禾在測試裡已被認領，本人上傳的照片不會被百人導師照片蓋掉",
+      tt.get_by_id(next(r["id"] for r in tt.list_members() if r["name"] == "林丁禾"))["filled"] == 1)
 
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)
