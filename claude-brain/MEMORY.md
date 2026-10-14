@@ -1,5 +1,7 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
+- [🎓 南應大校友會理監事與顧問團隊頁 /tut/team 怎麼運作、照片存哪（不在git）、施正益；教練說「移植」＝複製原處保留；真鑽5位助理大使複製進真貴（只在資料庫、有備份）(2026-10-14)](project_tut_team_page_and_zhengui_copy_2026-10-14.md)
+- [🔧 BNI夥伴「專屬修改連結」≠後台編輯網址；後台已加一鍵複製，但 bni-chapters 與 team-bymyway 各有一份後台模板要同步改(2026-10-14)](reference_bni_member_personal_edit_link_two_repos_2026-10-14.md)
 - [🎙️ 榮樹下來賓資料表＋AI來賓卡＋樹蔭席承諾牆＋最下方「訪談嘉賓前置作業」公開區：怎麼運作、公開範圍、維護指令；給吳董的信只存草稿教練自己傳(2026-10-14)](project_rongshuxia_guest_form_card_prep_section_2026-10-14.md)
 - [🔴 事件觸發不要輪詢：教練糾正 5 次（後端排程與前端 setInterval 都算），要「自動」先問能不能在事情發生當下觸發(2026-07-28，10/13 更新)](feedback_event_driven_not_polling_pattern.md)
 - [🔴 教練討厭輪詢：Google日曆採「用到才現看」(ensure_fresh 60秒)，現況無任何定時工作；通知通道實測不通知刪除、已拆除不要重做；接手別人設計先退一步問最簡單做法(2026-10-13)](feedback_prefer_event_trigger_google_push_misses_deletes_2026-10-13.md)
