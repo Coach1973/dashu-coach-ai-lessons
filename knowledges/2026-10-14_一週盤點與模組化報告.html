@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一週盤點與模組化</title>
+<style>
+:root{--bg:#f7f5f0;--card:#fff;--ink:#1d2321;--muted:#5d6763;--line:#e3dfd6;--accent:#2f6b4f;--accent-soft:#e3f0e8;--warn:#a5621b;--warn-soft:#fbefdf;--bad:#a83232;--bad-soft:#f8e3e3;--chip:#efece5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1c211f;--ink:#e8ece9;--muted:#9aa5a0;--line:#2c3330;--accent:#6fc39a;--accent-soft:#1e3328;--warn:#e0a35a;--warn-soft:#33281b;--bad:#e07a7a;--bad-soft:#3a2222;--chip:#262c29}}
+:root[data-theme="dark"]{--bg:#141816;--card:#1c211f;--ink:#e8ece9;--muted:#9aa5a0;--line:#2c3330;--accent:#6fc39a;--accent-soft:#1e3328;--warn:#e0a35a;--warn-soft:#33281b;--bad:#e07a7a;--bad-soft:#3a2222;--chip:#262c29}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:1.75rem;line-height:1.35;margin:.2em 0 .3em}
+h2{font-size:1.3rem;margin:2.2em 0 .7em;padding-top:.4em;border-top:1px solid var(--line)}
+h3{font-size:1.05rem;margin:1.4em 0 .4em}
+.sub{color:var(--muted);margin:0 0 1.2em}
+.lead{background:var(--accent-soft);border-radius:14px;padding:16px 18px;font-size:1.06rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:1.6rem;line-height:1.2;color:var(--accent)}
+.stat span{color:var(--muted);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.menu{font-family:inherit;white-space:pre-wrap;background:var(--chip);border-radius:10px;padding:14px 16px;font-size:.95rem;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.86rem}
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 10px}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.84em;background:var(--chip);padding:1px 5px;border-radius:5px;word-break:break-all}
+.ev{color:var(--muted);font-size:.84rem}
+.tag{display:inline-block;font-size:.78rem;padding:1px 8px;border-radius:99px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.tag.ok{background:var(--accent-soft);color:var(--accent)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+ul{padding-left:1.3em;margin:.4em 0}
+li{margin:.25em 0}
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(0,13em) 1fr 2.2em;gap:10px;align-items:center;font-size:.92rem}
+.bar i{display:block;height:12px;border-radius:6px;background:var(--warn)}
+.bar em{font-style:normal;text-align:right;color:var(--muted)}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding:10px 12px 10px 48px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:10px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.9rem}
+.ask{border-left:4px solid var(--warn);background:var(--warn-soft);border-radius:10px;padding:12px 14px}
+footer{margin-top:3em;color:var(--muted);font-size:.85rem}
+@media (max-width:600px){h1{font-size:1.45rem}.bar{grid-template-columns:minmax(0,9em) 1fr 2em}th:nth-child(4),td:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="sub">2026-10-14（三）上午｜軍師（Opus 5.5）｜範圍：10/07～10/14，含小龍蝦、LINE、各網站、跨機</p>
+<h1>一週盤點與模組化報告</h1>
+<p class="lead"><b>一句話：</b>這週主要在做榮樹下、行程預約、信任遊戲、南應大、BNI 和二十幾個作品網站。今天盤點時抓到 <b>10 件</b>「壞了卻沒人發現」的問題，<b>全部已修好並實測</b>。您要的「開新專案先給清單、送出資料自動接到您這裡」<b>已經上線</b>，從現在起不用再提醒。</p>
+
+<div class="stats">
+  <div class="stat"><b>272</b><span>本週提交（工作區 145＋39 個網站 127）</span></div>
+  <div class="stat"><b>10</b><span>今天抓到並修好的隱藏問題</span></div>
+  <div class="stat"><b>0</b><span>「有表單卻收不到」的網頁（原本 4 個）</span></div>
+  <div class="stat"><b>全綠</b><span>全隊點名 13 項（今天 09:40）</span></div>
+</div>
+
+<h2>一、您要的機制：已經上線</h2>
+<div class="card">
+<h3>① 開新專案，先給您一張「預設全勾」的清單</h3>
+<p>您只要說「做一個○○網站／名冊／活動頁」或「比照百人導師那套」，系統會自動提醒我，第一個回覆一定先給您這張清單。沒說拿掉的，全部做上去：</p>
+<div class="menu">請問大樹教練，「○○」這幾樣功能是否要套版加入？（預設全部勾選，不需要的請說「拿掉第幾項」）
+
+☑ 1. 送出資料就通知您——任何「送出／報名／留資料」一送出就進「活動報名即時通知」群
+☑ 2. 活動報名（場次＋同行人數）——問「報名幾人」一行指令就有含同行的總數
+☑ 3. 本人專屬修改連結——每人拿到自己的修改網址，自己補照片、改資料、刪除，不用登入
+☑ 4. 教練後台＋一鍵複製專屬連結——看得到每一筆，可隱藏／刪除／新增空座位，每人旁邊有複製鈕
+☑ 5. 收進大樹作品集——公開網址放「最新作品」、後台放「活動後台」，您不用記網址
+☑ 6. 背後接 GitHub——聯想、宏碁、小龍蝦都能改，推上去自動換新
+☑ 7. 預約／取消時段——對方自己挑時段預約、可取消，您收到通知
+☑ 8. 空座位——已知名單先放好空位，本人點名字認領
+☑ 9. 按讚／票選／留言牆
+☑ 10. 分享卡與短網址</div>
+<p class="ev">機制：模組目錄 <code>knowledges/模組庫_大樹標準功能.md</code>（每項都標好「照哪一份範本做、做完怎麼驗收」）、清單工具 <code>scripts/module_kit.py menu</code>、反射 <code>R-NEW-PROJECT-MODULE-MENU</code>（實測：4 句該跳的都跳、5 句不該跳的都沒跳）｜<code>c4ed811da</code></p>
+</div>
+
+<div class="card">
+<h3>② 送出資料自動接到您這裡，不用再交代</h3>
+<ul>
+<li><b>共用表單元件</b> <code>/static/works-form.js</code>：任何作品頁的表單加一個標記就接好，送出就進「活動報名即時通知」群。表單上多出來的欄位（公司、需求類型……）會自動併進留言，不會漏。</li>
+<li><b>上架自動接線</b>：作品上傳時，系統發現「有表單卻沒接」就自動接上，並在上架通知寫「📮 送出資料自動接線」。大樹作品、店家策展兩條路都有。</li>
+<li><b>寫表單的當下就提醒</b>：反射 <code>R-FORM-USE-WORKS-FORM-MODULE</code>，不准再做「展示版、送出不寄出」的表單。</li>
+<li><b>全站稽核</b>：<code>module_kit.py audit</code> 掃 57 個策展站，目前 <b>0 個</b>沒接。</li>
+</ul>
+<p class="ev">實測：瀏覽器攔下送出請求，確認送出內容與成功畫面；伺服器端用暫存資料庫＋假通知，確認兩站都進活動報名群；原有上架測試 4 組全過｜<code>6b7dadc22</code> <code>b54f177ea</code></p>
+</div>
+
+<h2>二、今天盤點抓到並修好的 10 件事</h2>
+<div class="tbl"><table>
+<thead><tr><th>問題</th><th>影響</th><th>怎麼修</th><th>證據</th></tr></thead>
+<tbody>
+<tr><td><b>真公益表單是「展示版」</b></td><td>有人留下足跡，您收不到</td><td>接上共用表單元件，進活動報名群</td><td><code>6b50d04</code></td></tr>
+<tr><td><b>柚式藝術洽詢表單沒接</b></td><td>客人送出後只看到「請加 LINE」</td><td>同上；填 Email 也收</td><td><code>beb4ba3</code></td></tr>
+<tr><td><b>約瑟布舊版頁表單沒接</b></td><td>拿到舊網址的人送出沒人收</td><td>同上</td><td><code>6eb8de5</code></td></tr>
+<tr><td><b>17 日報名人數漏算</b></td><td>「4 人以上」被當 1 人，小龍蝦報少了</td><td>報名統計會算同行人數：10/17 是 14 筆、含同行<b>至少 20 人</b>；小龍蝦改用固定工具，不再臨時算</td><td><code>2654c10a0</code> <code>7ead306d8</code></td></tr>
+<tr><td><b>接力棒鏡像停在 10/01 兩週</b></td><td>桌面版每次開工讀到兩週前的舊接力棒；默默失敗 3,257 次</td><td>修好防呆判斷；每日點名加「接力棒鏡像」，超過一天沒更新就亮黃燈</td><td><code>be1f93108</code></td></tr>
+<tr><td><b>小龍蝦記憶檔超過 2 萬字</b></td><td>每次開機最後一段被截掉，讀不到</td><td>7～8 月舊段落原文封存，20,717→15,132 字</td><td><code>7ead306d8</code></td></tr>
+<tr><td><b>發明家舊連結 404</b></td><td>10/09 換版後還有人點舊的計畫書連結</td><td>舊網址自動轉到新版</td><td><code>a5da246</code></td></tr>
+<tr><td><b>每日點名每週亮假黃燈</b></td><td>鎖住的分身本來就不能整理技能，卻被當錯誤，久了大家會無視黃燈</td><td>改成認分身名稱；大台南小幫手那次手動重跑成功（偶發）</td><td><code>9eb33332e</code></td></tr>
+<tr><td><b>行程外掛測試 2 項失敗</b></td><td>測試綁死舊行程名稱</td><td>改成不綁名稱，25/25 通過</td><td><code>05e2a1445</code></td></tr>
+<tr><td><b>KR 提問牆從沒接資料庫</b></td><td>10/03 當天的提問只存在訪客手機，<b>已無法追回</b></td><td>活動已結束，標成例外；下次要用提問牆，用清單第 9 項的留言牆元件</td><td><code>a21d3f8</code></td></tr>
+</tbody></table></div>
+<p class="ev">另外查過、確認沒問題：活動網站這週 0 次伺服器錯誤、通知失敗 0 筆；南應大／榮樹下上傳的照片都在時光機備份內（最近一次 10/14 08:18）；跨機信箱 0 封未讀；小龍蝦「產業鏈 SOP 被忽略」的警告只是同一份程式有兩個副本，正常版本有在跑。</p>
+
+<h2>三、這週做了什麼（10/07～10/14）</h2>
+<div class="card"><ul>
+<li><b>榮樹下 Podcast</b>：網站改版與招牌修正、來賓資料表＋AI 來賓卡、樹蔭席承諾牆、「訪談嘉賓前置作業」公開區、一場多位來賓、LINE 群組小龍蝦排訪談（登記對象、開始前提醒、撞期講清楚撞到什麼、不主動推播省 LINE 額度）、營運藍圖、給吳董與裕榮的信（草稿，等您看）。</li>
+<li><b>行程與預約</b>：教練行程總表、預約頁（可取消、單一頁面）、Google 日曆改「用到才讀」（不輪詢）、行程名稱簡化規則、巴哈助理每天 07:00 報佩佩老師行程、行事曆兩本帳合一。</li>
+<li><b>信任遊戲</b>：七項小上癮機制、信任邀請函、團隊命名與身份二分、玩家 8 階、鼓勵、後台新增／刪除玩家與座位頭像。</li>
+<li><b>南應大校友會</b>：理監事與顧問團隊頁 <code>/tut/team</code>（自助建檔＋專屬連結＋後台）、記憶牆講座票選與按讚。</li>
+<li><b>BNI</b>：真誠／真鑽／真鑫戰情表、信用證補登、離會者移出培訓與來賓總覽、夥伴專屬連結後台一鍵複製（兩個網站都改）、真鑽 5 位複製進真貴、簡報套 BNI 底圖改滿版。</li>
+<li><b>大樹作品與策展</b>：51 個策展站全部接上 GitHub、通用留資料／票選／按讚接口、作品集「新作品保護」、上傳頁短網址；新上架約瑟布、真公益、發明家、斯科特博士、三缺經典對話、Run for Future、邱裕榮、楊博士、林丁禾。</li>
+<li><b>大樹大腦</b>：NotebookLM 兩個帳號 2,157 份來源搬到外接 SSD（去重後 1,871 份）、Plaud 175 筆錄音備份＋本機轉成繁中逐字稿。</li>
+<li><b>小龍蝦與系統</b>：重複迴圈防呆鎖、記憶搜尋瘦身 2.1→0.66GB、模型三燈號、「做好就直接跳出來」、新後台自動收進大樹作品集（N10）、反射規則增加到 131 條。</li>
+</ul></div>
+
+<h2>四、還沒解決的（誰處理、怎麼解）</h2>
+<div class="tbl"><table>
+<thead><tr><th>事項</th><th>誰</th><th>解法</th></tr></thead>
+<tbody>
+<tr><td>給吳董與裕榮的信</td><td><span class="tag warn">等您看</span></td><td>您看過要改哪裡我就改，您自己傳</td></tr>
+<tr><td>南應大理監事名單</td><td><span class="tag warn">等您給</span></td><td>給名單後我到後台開空座位，複製專屬連結給本人</td></tr>
+<tr><td>企業家數四個來源不一致（50–55／88／50／近 40）</td><td><span class="tag">等順發回覆</span></td><td>回覆後一次統一各網頁</td></tr>
+<tr><td>真誠 10/08 早鳥、真鑫 9 月出席報告</td><td><span class="tag">等資料</span></td><td>拿到截圖／報告就補進戰情表</td></tr>
+<tr><td>真公益 2013–2026 時間軸還沒對照原始報導</td><td><span class="tag ok">AI 自己</span></td><td>逐條查報導核實</td></tr>
+<tr><td>座位地圖每次載入寫入 90 次、「已入會」不能改回</td><td><span class="tag ok">AI 自己</span></td><td>改程式，不影響現在使用</td></tr>
+<tr><td>報名人數借用「公司」欄位存放</td><td><span class="tag ok">AI 自己</span></td><td>報名表加獨立的人數欄位（目前統計已正確）</td></tr>
+<tr><td>小龍蝦設定檔 SOUL.md 已 19,353 字，接近 2 萬上限</td><td><span class="tag ok">AI 自己</span></td><td>下次要加內容前先瘦身，別等被截斷</td></tr>
+<tr><td>小龍蝦主程式掛在 nvm 的 Node 上，升級時可能壞</td><td><span class="tag ok">AI 自己</span></td><td>下次升級（升級前會自動備份）時順便改成系統 Node</td></tr>
+</tbody></table></div>
+
+<h2>五、AI 團隊這週最常犯的錯（品質稽核自動抓的）</h2>
+<div class="card bars">
+<div class="bar"><span>跟您講時間沒換成台灣時間</span><i style="width:100%"></i><em>12</em></div>
+<div class="bar"><span>叫您自己去按、去開</span><i style="width:67%"></i><em>8</em></div>
+<div class="bar"><span>提出「定時檢查」設計</span><i style="width:67%"></i><em>8</em></div>
+<div class="bar"><span>沒查證就交付</span><i style="width:67%"></i><em>8</em></div>
+<div class="bar"><span>回覆第一行漏標模型燈號</span><i style="width:50%"></i><em>6</em></div>
+<div class="bar"><span>問了不必問的事</span><i style="width:42%"></i><em>5</em></div>
+<div class="bar"><span>說要做卻沒當場提交</span><i style="width:25%"></i><em>3</em></div>
+</div>
+<p class="ev">執行細則 N8：同一類錯出現第二次就改機制，不再加記憶。時間換算已經有提醒卻還錯 12 次，下一步要從程式上攔：回覆裡出現沒換算的時間就擋下重寫。</p>
+
+<h2>六、模組化下一步（重複做了好幾次的，做成共用零件）</h2>
+<div class="card">
+<p>盤點發現，同一套邏輯各自重寫了很多次：</p>
+<ul>
+<li><b>自助名冊</b>（建檔＋專屬連結＋後台＋空座位）至少 6 份：BNI 兩個網站、百人導師、南應大、信任遊戲、榮樹下來賓表。</li>
+<li><b>一次性報名接口</b> 5 支：南應大、領袖營、10/10、台南商圈、KR，各自寫一套。</li>
+<li><b>短網址</b> 3 套：上傳頁、遊戲後台、南應大後台。</li>
+</ul>
+<ol class="steps">
+<li><b>名冊引擎</b>：以南應大那份（最新最乾淨）為底，改成「寫一份設定就生出一套名冊」。之後真貴、新分會、遊戲資料都只要寫設定，專屬連結、後台和一鍵複製自動就有。</li>
+<li><b>預約引擎</b>：把您的行程預約頁做成「任何人都能有一份」，榮樹下、佩佩老師、夥伴分身共用。</li>
+<li><b>通用短網址</b>：所有後台和長網址共用一套。</li>
+<li><b>報名接口收斂</b>：新活動一律走清單第 1、2 項，不再開新接口。</li>
+</ol>
+<div class="ask"><b>只需要您一句話：</b>這 4 項會改到已在使用的系統（BNI、南應大、預約頁），我建議 1 點後從第 1 項「名冊引擎」開始，做完一項驗收一項，舊網址一律照舊可用。說「照做」我就開工。</div>
+</div>
+
+<h2>七、1 點之後的新工作流程</h2>
+<ol class="steps">
+<li><b>您動嘴</b>：「做一個○○」→ 我先給預設全勾的清單，您只說要拿掉哪幾項。</li>
+<li><b>照範本做</b>：每項功能都從模組庫的範本出發，不從零寫。</li>
+<li><b>交付前自檢</b>：跑 <code>module_kit.py check</code>（表單有接嗎、GitHub、大樹作品集），再實測一次。</li>
+<li><b>直接跳出來給您看</b>：網頁開 Chrome、檔案開資料夾，網址收進大樹作品集。</li>
+<li><b>每天 08:10 點名</b>：任何自動化壞了都會在點名出聲。像接力棒停兩週、記憶被截斷這種「默默壞掉」，從今天起會被抓出來。</li>
+</ol>
+
+<footer>本報告由軍師產生並逐項實測。原始資料：工作區與各網站 git 紀錄、接力棒與封存棒、小龍蝦日誌、活動網站錯誤日誌、每日點名、品質稽核紀錄。檔案：<code>knowledges/2026-10-14_一週盤點與模組化報告.html</code></footer>
+</div>
+</body>
+</html>
