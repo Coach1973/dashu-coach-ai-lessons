@@ -506,6 +506,7 @@ def render_admin(secret, msg=""):
         f"<tr><td>{TEAMS.get(r['team'], r['team'])}<br>{E(r['role'])}</td><td><b>{E(r['name'])}</b><br>{E(r['company_title'])}</td>"
         f"<td>{'✅ 已上架' if r['filled'] else '🪑 空座位'}{'<br>🙈 已隱藏' if r['hidden'] else ''}</td>"
         f"<td><a href='/tut/team/edit/{E(r['edit_token'])}' target='_blank' rel='noopener'>修改</a> "
+        f"<button type='button' data-url='https://event.bymyway.com/tut/team/edit/{E(r['edit_token'])}' onclick='copyLink(this)'>複製專屬連結</button> "
         f"<form method='post' action='/tut/team/a/{code}/hide/{r['id']}'><input type='hidden' name='hidden' value='{0 if r['hidden'] else 1}'>"
         f"<button>{'恢復顯示' if r['hidden'] else '隱藏'}</button></form> "
         f"<form method='post' action='/tut/team/a/{code}/delete/{r['id']}' onsubmit=\"return confirm('確定刪除？')\"><button>刪除</button></form></td></tr>"
@@ -515,6 +516,7 @@ def render_admin(secret, msg=""):
 <h1 style="color:var(--purple-deep)">理監事與顧問團隊・管理後台</h1>
 <p style="color:var(--muted)">「修改」可直接幫本人改資料；「隱藏」先不公開、資料保留；有人亂填可以刪除。<a href="/tut/team" target="_blank">看公開頁</a></p>
 {f'<p class="ok">{E(msg)}</p>' if msg else ''}
+<p class="hint">「複製專屬連結」＝傳給本人讓他自己補資料或修改的連結（不用登入）；上方網址列的後台網址只有你知道，不要傳給別人。</p>
 <table><thead><tr><th>團隊／職務</th><th>姓名／公司</th><th>狀態</th><th></th></tr></thead><tbody>{tr}</tbody></table>
 <form class="paper" method="post" action="/tut/team/a/{code}/seat"><h2 style="font-size:22px;margin-bottom:12px">新增空座位</h2>
 <p class="hint" style="margin-top:0">理監事名單確定後，可先把名字放上去，本人點自己的名字補資料。</p>
@@ -522,5 +524,13 @@ def render_admin(secret, msg=""):
 <div class="two"><div class="field"><label for="s_name">姓名</label><input type="text" id="s_name" name="name" required maxlength="30"></div>
 <div class="field"><label for="s_role">職務</label><input type="text" id="s_role" name="role" maxlength="20" placeholder="例：常務理事"></div></div>
 <div class="field"><label for="s_title">公司／職稱</label><input type="text" id="s_title" name="company_title" maxlength="60"></div>
-<button class="btn purple">新增座位</button></form></div>"""
+<button class="btn purple">新增座位</button></form></div>
+<script>
+function copyLink(btn) {{
+  var url = btn.getAttribute('data-url');
+  var done = function () {{ var t = btn.textContent; btn.textContent = '已複製！'; setTimeout(function () {{ btn.textContent = t; }}, 1800); }};
+  if (navigator.clipboard) {{ navigator.clipboard.writeText(url).then(done, function () {{ prompt('請複製這條連結：', url); }}); }}
+  else {{ prompt('請複製這條連結：', url); }}
+}}
+</script>"""
     return _page("管理後台｜" + TITLE, body, robots=False)

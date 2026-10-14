@@ -186,5 +186,13 @@ check("林士民：只有照片，簡介仍準備中", "/tut/team/photo/" in seg
 check("林丁禾在測試裡已被認領，本人上傳的照片不會被百人導師照片蓋掉",
       tt.get_by_id(next(r["id"] for r in tt.list_members() if r["name"] == "林丁禾"))["filled"] == 1)
 
+# ---- 後台一鍵複製專屬連結（2026-10-14 教練）----
+h = client.get(f"/tut/team/a/{code}").get_data(as_text=True)
+rows_n = len(tt.list_members(include_hidden=True))
+check("後台每位都有「複製專屬連結」，連結是 https 完整網址", h.count("複製專屬連結</button>") == rows_n
+      and len(re.findall(r"data-url='https://event.bymyway.com/tut/team/edit/[\w-]+'", h)) == rows_n)
+check("後台說明哪條可傳給本人、哪條不能", "不要傳給別人" in h)
+check("複製的連結真的打得開本人修改頁（不用登入）", client.get(re.search(r"data-url='https://event.bymyway.com(/tut/team/edit/[\w-]+)'", h).group(1)).status_code == 200)
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)
