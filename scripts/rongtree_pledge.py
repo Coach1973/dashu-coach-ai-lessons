@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""榮樹下「樹蔭席」承諾牆（2026-10-14 教練構想）：每集 3～5 位樹蔭席嘉賓聽完故事，承諾自己能出的一份力，
+"""榮樹下「嘉賓席」承諾牆（2026-10-14 教練構想）：每集 3～5 位嘉賓席嘉賓聽完故事，承諾自己能出的一份力，
 掛成一片葉子；做到了變金色，並記入真公益足跡。
 
 資料＝~/github_repos/rongtree/pledges.json（網頁 /curated/rongtree/#seats 直接讀），改完自動 commit＋push。
@@ -35,7 +35,7 @@ def save(d, msg, push=True):
     if not push:
         return
     subprocess.run(["git", "-C", str(REPO), "add", "pledges.json"], check=True)
-    subprocess.run(["git", "-C", str(REPO), "commit", "-q", "-m", f"[Mac] 樹蔭席承諾牆：{msg}"], check=True)
+    subprocess.run(["git", "-C", str(REPO), "commit", "-q", "-m", f"[Mac] 嘉賓席承諾牆：{msg}"], check=True)
     r = subprocess.run(["git", "-C", str(REPO), "push", "-q"], capture_output=True, text=True)
     print("✅ 已上傳 GitHub" if r.returncode == 0 else f"⚠️ 網頁已更新，但上傳 GitHub 失敗：{r.stderr.strip()[:200]}")
 
@@ -48,7 +48,7 @@ def find(d, pid):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="榮樹下樹蔭席承諾牆")
+    ap = argparse.ArgumentParser(description="榮樹下嘉賓席承諾牆")
     ap.add_argument("--no-push", action="store_true")
     sub = ap.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("add")
