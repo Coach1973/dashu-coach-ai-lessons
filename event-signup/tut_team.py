@@ -77,7 +77,20 @@ SEAT_INTROS = {
              "2026 年 10 月 31 日在台中舉辦協會啟動大會。",
     "林丁禾": "藝術孵化實驗室創辦人、「人人都是藝術家」品牌主理人，也是國立臺灣藝術大學校友總會理事、正觀藝術顧問。"
              "工作據點在高雄市苓雅區，歡迎洽談藝術合作與顧問事宜。",
+    # 以下兩位整理自「為你轉身」導師席（event.bymyway.com/curated/turnforyou/，2026-10-14 教練：有資料就先移植）
+    "李中閔": "宸霖智權科技集團業務經理、中華媒體交流協會總幹事。專長社區型政府補助申請，對協會的成立與運作經驗豐富；"
+             "也擔任社團法人高雄市職能發展協會常務理事、國際獅子會 300E3 區雄大獅子會資訊長、高雄市見真際同濟會創會秘書長、"
+             "高雄市幸運草歌藝共好協進會總幹事，並任台灣小姐選拔大會南區執行長、2026 世界美顏小姐籌委會執行總監、"
+             "總成國際整合行銷公司副總。",
+    # 「為你轉身」寫「施正益」、記憶牆寫「施正義」，職稱相同；座位名字先沿用記憶牆，等本人或教練確認
+    "施正義": "彰化縣網路購物服務人員職業工會理事長、時間旅人文創創辦人。從事網路行銷與顧問二十六年，擔任 TTQS 網路行銷課程講師；"
+             "是 Google 地圖第 10 級在地嚮導（Google 地圖社群貢獻的最高等級），發展「地圖關鍵字行銷」與在地嚮導團隊，"
+             "協助店家做地圖優化、360 度環景照片與影片拍攝。",
 }
+TURNFORYOU = "https://event.bymyway.com/curated/turnforyou/"
+SEAT_LINKS = {"李中閔": TURNFORYOU, "施正義": TURNFORYOU}
+_TFY_IMG = Path.home() / "github_repos" / "turnforyou" / "img" / "mentors"
+SEAT_PHOTOS = {"李中閔": _TFY_IMG / "li-zhongmin.jpg", "施正義": _TFY_IMG / "shi-zhengyi.jpg"}
 
 E = html.escape
 
@@ -111,6 +124,16 @@ def seed_advisor_seats():
     for name, intro in SEAT_INTROS.items():
         conn.execute("UPDATE tut_team_members SET bio=? WHERE team='advisor' AND name=? AND filled=0 AND bio=''",
                      (intro + SEAT_SOURCE_NOTE, name))
+    for name, url in SEAT_LINKS.items():
+        conn.execute("UPDATE tut_team_members SET link_web=? WHERE team='advisor' AND name=? AND filled=0 AND link_web=''",
+                     (url, name))
+    for name, src in SEAT_PHOTOS.items():
+        row = conn.execute("SELECT id FROM tut_team_members WHERE team='advisor' AND name=? AND filled=0 AND photo_file IS NULL",
+                           (name,)).fetchone()
+        if row and src.is_file():
+            fname = _save_image_bytes(src.read_bytes())
+            if fname:
+                conn.execute("UPDATE tut_team_members SET photo_file=? WHERE id=?", (fname, row["id"]))
     conn.commit()
     conn.close()
 
@@ -180,7 +203,10 @@ def clean_form(form, need_photo):
 
 def save_photo(file_storage):
     """驗證是真的圖片、轉正、縮圖存 jpg；回傳檔名，失敗回 None。"""
-    data = file_storage.read(MAX_UPLOAD + 1)
+    return _save_image_bytes(file_storage.read(MAX_UPLOAD + 1))
+
+
+def _save_image_bytes(data):
     if not data or len(data) > MAX_UPLOAD:
         return None
     try:

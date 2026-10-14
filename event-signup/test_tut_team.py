@@ -162,5 +162,16 @@ client.post(f"/tut/team/edit/{seat['edit_token']}", data={"team": "advisor", "ro
 b = tt.get_by_id(seat["id"])["bio"]
 check("本人存檔後拿掉「待本人補充」字樣、內容保留", "待本人補充" not in b and "藝術孵化實驗室創辦人" in b)
 
+# ---- 「為你轉身」的李中閔、施正義：介紹＋照片＋網頁連結 ----
+h = client.get("/tut/team").get_data(as_text=True)
+for nm, key in (("李中閔", "中華媒體交流協會總幹事"), ("施正義", "Google 地圖第 10 級在地嚮導")):
+    seg = h[h.index(nm):h.index("補上我的簡介", h.index(nm))]
+    i = h.rfind('<div class="card seat">', 0, h.index(nm))
+    check(f"{nm} 座位有為你轉身的介紹、照片、網頁連結", key in seg and "curated/turnforyou/" in seg
+          and "/tut/team/photo/" in h[i:h.index(nm)])
+n_before = len(list(tt.UPLOAD_DIR.glob("*.jpg")))
+tt.seed_advisor_seats()
+check("重複執行不會重複複製照片", len(list(tt.UPLOAD_DIR.glob("*.jpg"))) == n_before)
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)
