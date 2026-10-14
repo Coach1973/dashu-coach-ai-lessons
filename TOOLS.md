@@ -43,6 +43,9 @@
 
 > ⚠️ 所有腳本路徑已統一移至 `~/.claude-code/workspace/scripts/`（2026-06-04 更新）
 
+### 📋 報名人數／報名名單（2026-10-14，10/13 臨時 awk 把「4人以上」算成 1 人）
+教練問「X 日報名人數」「列出報名同行的人」→ 一律跑 `python3 ~/.openclaw/workspace/scripts/registration_report.py <日期或場次，例如 1017>`，整段輸出直接回給教練（含「含同行至少 N 人」與完整名單）。不准自己用 awk／sqlite 臨時算。總覽：不帶參數。
+
 ## What Goes Here
 
 Things like:
