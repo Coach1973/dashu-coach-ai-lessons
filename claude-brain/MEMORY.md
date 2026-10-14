@@ -1,5 +1,7 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
+- [🔴 數字類修改先分「目標」還是「目前進度」：教練說100改66其實是100席位、已66位，整站改錯被糾正(2026-10-14)](feedback_number_change_target_vs_progress_2026-10-14.md)
+- [🔧 Mac 裝 REA 逆向工程工具：npm 全域在 ~/.hermes/node，要補 ~/.local/bin/rea 捷徑；技能 bigtree-web-feature-clone 已裝(2026-10-14)](reference_rea_install_mac_hermes_npm_path_2026-10-14.md)
 - [🔴 網頁字最小 20px（教練10/14定）：module_kit check 擋 px 寫法；font 簡寫加 inherit 會整條失效；既有網站不批次改、改到那站才一起調(教練同意)(2026-10-14)](feedback_web_font_min_20px_2026-10-14.md)
 - [🔧 「默默壞掉」怎麼查：接力棒鏡像停兩週(防呆擋正常棒)、小龍蝦開機檔超2萬字被截、點名例外靠錯誤字樣失效；新自動化要接進每日點名才會出聲(2026-10-14)](reference_silent_failures_found_in_weekly_audit_2026-10-14.md)
 - [🧩 開新專案先給教練「預設全勾」功能清單（module_kit.py menu）＋送出資料自動接到活動報名群（works-form.js、上架自動接線）已上線；模組化下一步 4 項等教練一句話(2026-10-14)](project_module_kit_new_project_menu_2026-10-14.md)
