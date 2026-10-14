@@ -16,6 +16,7 @@
     python3 scripts/audit_coach888_coverage.py          # 只列出結果
     python3 scripts/audit_coach888_coverage.py --strict  # 有漏收錄就exit 1(給Stop hook用)
 """
+import json
 import re
 import sys
 from pathlib import Path
@@ -64,6 +65,19 @@ def extract_visible_section_html(full_html: str) -> str:
     return "\n".join(chunks)
 
 
+def server_visible_urls() -> str:
+    """coach888 實際顯示的內容在伺服器狀態（event.bymyway.com/api/coach888/state），
+    coach888_register_admin.py 也是寫那裡；只讀 git 靜態 HTML 會把用正式工具登記的新網址誤報成漏收錄
+    （2026-10-14 /tut/team 已登記仍被擋）。連不上伺服器就只看靜態 HTML，不讓稽核本身卡住收工。"""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from coach888_register_admin import _get
+        layout = json.loads(_get()["coach888_layout"])
+    except Exception:  # noqa: BLE001
+        return ""
+    return "\n".join(u for s in VISIBLE_SECTIONS for u in layout.get(s, []))
+
+
 def main():
     if not APP_PY.is_file() or not COACH888_HTML.is_file():
         # 雲端工作頁只sparse-checkout main分支的scripts/knowledges/cloud_sync等目錄，
@@ -76,7 +90,7 @@ def main():
         return
     app_text = APP_PY.read_text(encoding="utf-8")
     coach888_text = COACH888_HTML.read_text(encoding="utf-8")
-    visible = extract_visible_section_html(coach888_text)
+    visible = extract_visible_section_html(coach888_text) + "\n" + server_visible_urls()
 
     routes = extract_page_routes(app_text)
 
