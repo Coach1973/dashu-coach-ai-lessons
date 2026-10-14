@@ -109,6 +109,41 @@ def count_for(c, ev, legacy_all, same_date_events):
     return live, len(mine), len(unassigned)
 
 
+def party_size(company_title):
+    """報名表「出席人數」下拉選單（1人/2人/3人/4人以上）存在 attendees.company_title。
+    回傳 (人數, 是否只是下限)。「4人以上」只能當 4 人下限算，不能當 1 人（10/13 漏算事件）。
+    沒填或不是人數格式（舊版表單這欄放公司職稱）→ 當 1 人，並標為未知。"""
+    import re
+    m = re.fullmatch(r"\s*(\d+)\s*人(以上)?\s*", company_title or "")
+    if not m:
+        return 1, False, True
+    return int(m.group(1)), bool(m.group(2)), False
+
+
+def headcount(rows):
+    """rows 需含 company_title。回傳 (總人數下限, 有幾筆是『N人以上』)。"""
+    total = at_least = 0
+    for r in rows:
+        n, is_min, _unknown = party_size(r["company_title"])
+        total += n
+        at_least += 1 if is_min else 0
+    return total, at_least
+
+
+def live_headcount(c, ev):
+    rows = c.execute(
+        """SELECT a.company_title FROM signups s JOIN attendees a ON a.id = s.attendee_id
+            WHERE s.event_id = ?""", (ev["id"],)).fetchall()
+    return headcount(rows)
+
+
+def head_note(total, at_least, n):
+    """含同行人數的說明字串；跟筆數一樣就不囉嗦。"""
+    if total == n and not at_least:
+        return ""
+    return f"（含同行{'至少 ' if at_least else '共 '}{total} 人" + (f"，其中 {at_least} 筆填『N人以上』只按下限算" if at_least else "") + "）"
+
+
 def roster(c, ev, legacy_all, same_date_events):
     live = c.execute(
         """SELECT a.name, a.phone, a.company_title, a.email,
@@ -153,6 +188,8 @@ def summary(c, include_past: bool):
         total += n
         pending = max(pending, 0)
         extra = f"（線上 {live}＋歷史 {legacy}）" if legacy else ""
+        hc, hc_min = live_headcount(c, ev)
+        extra += head_note(hc, hc_min, live)
         if unassigned:
             extra += f" ⚠️另有 {unassigned} 筆同日報名分不出場次"
         when = f"{ev['event_date'] or '日期未定'} {ev['start_time'] or ''}".strip()
@@ -206,6 +243,9 @@ def main() -> int:
         print(f"\n═══ {ev['event_date']} {ev['start_time'] or ''}｜{ev['name']} ═══")
         print(f"場地：{ev.get('venue') or ev.get('location') or '未填'}｜場次代碼：{ev['slug']}")
         print(f"報名人數：{n} 人" + (f"（線上 {len(live)}＋歷史補登 {len(legacy)}）" if legacy else ""))
+        hc, hc_min = headcount(live)
+        if head_note(hc, hc_min, len(live)):
+            print(head_note(hc, hc_min, len(live))[1:-1])
         if unassigned:
             print(f"⚠️ 另有 {len(unassigned)} 筆同一天的歷史報名看不出是哪一場（沒寫時間），沒有算進上面的數字：")
             for r in unassigned:
