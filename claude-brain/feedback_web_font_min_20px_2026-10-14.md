@@ -15,4 +15,4 @@ metadata:
 **How to apply:**
 - 新做／修改的網頁：所有字（含小註、按鈕、表單說明、<small>）計算後 ≥20px。交付前跑 `python3 scripts/module_kit.py check <slug>`，會列出 CSS 裡 font／font-size 小於 20px 的寫法（只抓 px，rem/em/瀏覽器預設小字抓不到，要用瀏覽器量 getComputedStyle）。
 - 坑：`font:500 19px/1 inherit` 這種簡寫加 inherit 整條失效，按鈕會掉回瀏覽器預設 13px（榮樹下來賓資料表踩過）。
-- 10/14 盤點：event.bymyway.com 策展 57 站有 43 站有小字，每頁小字元素 40～530 個，多數是 rem/em 不是 px；EDM／og 分享圖頁（1080/1200 寬）是出圖用，不適用。全面改會大改夥伴網站版面，範圍等教練裁示（見 [[project-rongtree-guest-form-card-prep-section]]）。
+- 10/14 盤點：event.bymyway.com 策展 57 站有 43 站有小字，每頁小字元素 40～530 個，多數是 rem/em 不是 px；EDM／og 分享圖頁（1080/1200 寬）是出圖用，不適用。**教練 10/14 11:27 裁示「同意」：新做的、或教練叫我改到的網頁一律 20px；既有網站不批次改，改到那一站時順手一起調（同站全部頁面、手機寬度檢查不跑版）。** 不要再拿「要不要 43 站全部改」去問。
