@@ -2708,6 +2708,24 @@ def rongtree_guest_card_regen(token):
     return redirect(f"/rongtree/guest/{token}/card?k={request.args.get('k', '')}")
 
 
+@app.route("/rongtree/guest/<token>/card/delete", methods=["POST"])
+def rongtree_guest_card_delete(token):
+    r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
+    if not r or not _rg_card_ok(token):
+        abort(404)
+    _rg.delete_form(token)
+    return redirect(f"/rongtree/a/{_rg.list_code(app.secret_key)}")
+
+
+@app.route("/rongtree/guest/<token>/card/restore", methods=["POST"])
+def rongtree_guest_card_restore(token):
+    r = _rg.get_form(token, include_deleted=True) if _rg.TOKEN_RE.match(token) else None
+    if not r or not _rg_card_ok(token):
+        abort(404)
+    _rg.restore_form(token)
+    return redirect(f"/rongtree/a/{_rg.list_code(app.secret_key)}")
+
+
 @app.route("/rongtree/guest/<token>/photo.jpg")
 def rongtree_guest_photo(token):
     r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None

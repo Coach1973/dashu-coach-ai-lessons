@@ -115,20 +115,47 @@ def _conn():
     if "public" not in [c[1] for c in conn.execute("PRAGMA table_info(rongtree_guest_forms)")]:
         # 2026-10-14 教練：交了資料的來賓公開列在榮樹下網頁；有人亂填可在來賓卡頁按「從公開名單隱藏」
         conn.execute("ALTER TABLE rongtree_guest_forms ADD COLUMN public INTEGER NOT NULL DEFAULT 1")
+    if "deleted_at" not in [c[1] for c in conn.execute("PRAGMA table_info(rongtree_guest_forms)")]:
+        # 2026-10-14 教練：來賓交了兩次（第一次不完整）要能刪掉舊的。軟刪除：資料留在資料庫，名單與來賓卡看不到，可還原
+        conn.execute("ALTER TABLE rongtree_guest_forms ADD COLUMN deleted_at TEXT")
     return conn
 
 
-def get_form(token):
+def get_form(token, include_deleted=False):
     conn = _conn()
     r = conn.execute("SELECT * FROM rongtree_guest_forms WHERE token=?", (token,)).fetchone()
     conn.close()
+    if r and r["deleted_at"] and not include_deleted:
+        return None
     return r
+
+
+def delete_form(token):
+    conn = _conn()
+    conn.execute("UPDATE rongtree_guest_forms SET deleted_at=datetime('now','localtime') WHERE token=?", (token,))
+    conn.commit()
+    conn.close()
+
+
+def restore_form(token):
+    conn = _conn()
+    conn.execute("UPDATE rongtree_guest_forms SET deleted_at=NULL WHERE token=?", (token,))
+    conn.commit()
+    conn.close()
+
+
+def deleted_forms():
+    conn = _conn()
+    rows = conn.execute("SELECT token, date, start, guest, deleted_at FROM rongtree_guest_forms "
+                        "WHERE deleted_at IS NOT NULL ORDER BY deleted_at DESC").fetchall()
+    conn.close()
+    return rows
 
 
 def all_forms():
     conn = _conn()
     rows = conn.execute("SELECT token, date, start, guest, card_status, updated_at FROM rongtree_guest_forms "
-                        "ORDER BY date DESC, start DESC").fetchall()
+                        "WHERE deleted_at IS NULL ORDER BY date DESC, start DESC").fetchall()
     conn.close()
     return rows
 
@@ -185,7 +212,7 @@ def one_liner(r):
 def public_prep():
     _ensure_forms()
     conn = _conn()
-    rows = conn.execute("SELECT * FROM rongtree_guest_forms ORDER BY date DESC, start DESC").fetchall()
+    rows = conn.execute("SELECT * FROM rongtree_guest_forms WHERE deleted_at IS NULL ORDER BY date DESC, start DESC").fetchall()
     conn.close()
     upcoming = []
     for e in _upcoming():
@@ -218,7 +245,7 @@ def _pick_key(conn, base, name, mine):
     """這份資料要存在哪一格：本人瀏覽器記得的那筆 → 同名的那筆（換裝置修改）→ 第一個空格（新增一位來賓）。"""
     keys = [base] + [f"{base}{i}" for i in range(2, MAX_GUESTS + 1)]
     have = {r["token"]: r["guest"] for r in conn.execute(
-        f"SELECT token, guest FROM rongtree_guest_forms WHERE token IN ({','.join('?' * len(keys))})", keys)}
+        f"SELECT token, guest FROM rongtree_guest_forms WHERE deleted_at IS NULL AND token IN ({','.join('?' * len(keys))})", keys)}
     if mine in have:
         return mine
     for k in keys:
@@ -229,7 +256,7 @@ def _pick_key(conn, base, name, mine):
 
 def count_in_slot(base):
     conn = _conn()
-    n = sum(1 for r in conn.execute("SELECT token FROM rongtree_guest_forms").fetchall() if _slot_has(r["token"], base))
+    n = sum(1 for r in conn.execute("SELECT token FROM rongtree_guest_forms WHERE deleted_at IS NULL").fetchall() if _slot_has(r["token"], base))
     conn.close()
     return n
 
@@ -260,7 +287,10 @@ def save(token, ev, payload, ip, mine=None):
     if not key:
         conn.close()
         return False, f"這一場最多收 {MAX_GUESTS} 位來賓的資料，已經滿了", False, None
-    old = conn.execute("SELECT photo_file FROM rongtree_guest_forms WHERE token=?", (key,)).fetchone()
+    old = conn.execute("SELECT photo_file, deleted_at FROM rongtree_guest_forms WHERE token=?", (key,)).fetchone()
+    revived = bool(old and old["deleted_at"])
+    if revived:
+        old = None      # 這格是已刪除的舊資料：當成全新的一位，不沿用舊照片
     photo_file = old["photo_file"] if old else None
     if photo_raw:
         UPLOAD_DIR.mkdir(exist_ok=True)
@@ -270,9 +300,12 @@ def save(token, ev, payload, ip, mine=None):
         "INSERT INTO rongtree_guest_forms (token, event_id, date, start, guest, data, photo_file, card_status, ip) "
         "VALUES (?,?,?,?,?,?,?, 'pending', ?) ON CONFLICT(token) DO UPDATE SET "
         "data=excluded.data, photo_file=excluded.photo_file, guest=excluded.guest, date=excluded.date, "
-        "start=excluded.start, card_status='pending', ip=excluded.ip, updated_at=datetime('now','localtime')",
+        "start=excluded.start, card_status='pending', ip=excluded.ip, deleted_at=NULL, "
+        "updated_at=datetime('now','localtime')",
         (key, ev.get("id"), ev.get("date"), ev.get("start"), clean["name"],
          json.dumps(clean, ensure_ascii=False), photo_file, ip))
+    if revived:
+        conn.execute("UPDATE rongtree_guest_forms SET public=1 WHERE token=?", (key,))
     conn.commit()
     conn.close()
     return True, "", old is None, key
@@ -535,6 +568,7 @@ dt{{font-weight:700;margin-top:12px}}dd{{margin:2px 0 0;white-space:pre-wrap}}
 <div class="tools">
 <form method="post" action="/rongtree/guest/{token}/card/regen?k={k}"><button>重新產生來賓卡</button></form>
 <form method="post" action="/rongtree/guest/{token}/card/public?k={k}"><input type="hidden" name="public" value="{0 if r['public'] else 1}"><button>{'從公開名單隱藏' if r['public'] else '恢復公開'}</button></form>
+<form method="post" action="/rongtree/guest/{token}/card/delete?k={k}" onsubmit="return confirm('確定刪除這一筆？刪除後名單與來賓卡都看不到，之後可以在來賓卡列表最下方還原。')"><button>刪除這一筆</button></form>
 <a href="/rongtree/guest/{slot_token(token)}" target="_blank" rel="noopener">來賓填表頁</a>
 <button onclick="print()">列印</button></div>
 <p class="sub" style="margin-top:24px;font-size:20px">AI 依來賓自填資料整理，訪談前請自行確認內容。最後更新：{E(r['updated_at'])}</p>
@@ -546,14 +580,28 @@ def render_list(secret):
     rows = "".join(
         f"<tr><td>{E(r['date'] or '')} {E(r['start'] or '')}</td><td>{E(r['guest'] or '')}</td>"
         f"<td>{status_txt.get(r['card_status'], r['card_status'])}</td>"
-        f"<td><a href='/rongtree/guest/{r['token']}/card?k={card_sig(secret, r['token'])}'>打開</a></td></tr>"
-        for r in all_forms()) or "<tr><td colspan='4'>還沒有來賓交回資料。裕榮在 LINE 群組登記訪談對象後，群組回覆會附上來賓資料表網址。</td></tr>"
+        f"<td><a href='/rongtree/guest/{r['token']}/card?k={card_sig(secret, r['token'])}'>打開</a></td>"
+        f"<td><form method='post' action='/rongtree/guest/{r['token']}/card/delete?k={card_sig(secret, r['token'])}' "
+        f"onsubmit=\"return confirm('確定刪除「{E(r['guest'] or '')}」{E(r['date'] or '')} {E(r['start'] or '')} 這一筆？\\n刪除後名單與來賓卡都看不到，之後可以在頁面最下方還原。')\">"
+        f"<button class='del'>刪除</button></form></td></tr>"
+        for r in all_forms()) or "<tr><td colspan='5'>還沒有來賓交回資料。裕榮在 LINE 群組登記訪談對象後，群組回覆會附上來賓資料表網址。</td></tr>"
+    gone = deleted_forms()
+    gone_html = ""
+    if gone:
+        items = "".join(
+            f"<tr><td>{E(r['date'] or '')} {E(r['start'] or '')}</td><td>{E(r['guest'] or '')}</td><td>刪除於 {E(r['deleted_at'] or '')}</td>"
+            f"<td><form method='post' action='/rongtree/guest/{r['token']}/card/restore?k={card_sig(secret, r['token'])}'>"
+            f"<button class='del'>還原</button></form></td></tr>" for r in gone)
+        gone_html = (f"<h2>已刪除（可還原）</h2><table><tbody>{items}</tbody></table>")
     return f"""<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>榮樹下來賓卡</title><style>{BASE_CSS}
-body{{background:var(--paper);color:var(--on-paper)}}h1{{font-size:30px;margin-bottom:6px}}.sub{{color:var(--on-paper-mute)}}
+body{{background:var(--paper);color:var(--on-paper)}}h1{{font-size:30px;margin-bottom:6px}}h2{{font-size:24px;margin:44px 0 0;color:var(--on-paper-mute)}}.sub{{color:var(--on-paper-mute)}}
 table{{width:100%;border-collapse:collapse;margin-top:20px}}td,th{{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}}
-a{{color:var(--amber-deep)}}</style></head><body><div class="wrap">
+a{{color:var(--amber-deep)}}
+.del{{font:inherit;padding:6px 18px;border-radius:999px;border:1px solid var(--amber-deep);background:none;color:var(--amber-deep);cursor:pointer}}
+form{{margin:0}}</style></head><body><div class="wrap">
 <h1>榮樹下來賓卡</h1><p class="sub">來賓交回資料表後，AI 自動整理的來賓卡都在這裡。</p>
-<table><thead><tr><th>訪談時間</th><th>來賓</th><th>狀態</th><th></th></tr></thead><tbody>{rows}</tbody></table>
+<table><thead><tr><th>訪談時間</th><th>來賓</th><th>狀態</th><th></th><th></th></tr></thead><tbody>{rows}</tbody></table>
+{gone_html}
 </div></body></html>"""
