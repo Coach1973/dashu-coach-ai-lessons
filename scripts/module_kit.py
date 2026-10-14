@@ -206,7 +206,12 @@ _SMALL_PX = re.compile(r"(?<![\d.])(1[0-9]|[0-9])(?:\.\d+)?px")
 
 def small_fonts(html_text: str) -> list:
     """CSS 裡 font／font-size 寫了小於 20px 的地方（含 clamp 的最小值）。"""
-    return sorted({m.group(0).strip()[:50] for m in _FONT_DECL.finditer(html_text) if _SMALL_PX.search(m.group(0))})
+    # 教練親口指示某處縮小（例：榮樹下頁尾 10/14）→ 該行樣式後面加 /*coach-small-font-ok*/ 就放行，記號即留痕
+    def _excused(m):
+        end = html_text.find("\n", m.end())
+        return "coach-small-font-ok" in html_text[m.start(): end if end != -1 else len(html_text)]
+    return sorted({m.group(0).strip()[:50] for m in _FONT_DECL.finditer(html_text)
+                   if _SMALL_PX.search(m.group(0)) and not _excused(m)})
 
 
 def check(slug: str) -> list:
