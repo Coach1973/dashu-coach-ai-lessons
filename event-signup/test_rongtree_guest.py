@@ -28,6 +28,8 @@ rg.SCHEDULE = sched
 rg.UPLOAD_DIR = Path(TMP) / "uploads"
 SENT, PROMPTS = [], []
 rg.send_baha = lambda text: SENT.append(text) or True
+COACH = []   # 教練私人電報（2026-10-14 加）：測試絕不准真的發出去
+appmod._notify_xiaolongxia = lambda text, chat_id=None: COACH.append((chat_id, text)) or True
 rg._call_minimax = lambda prompt: PROMPTS.append(prompt) or "## 一句話介紹\n測試介紹\n## 三個核心問題\n1. 問題一\n2. **問題二**"
 client = appmod.app.test_client()
 fails = []
@@ -69,6 +71,7 @@ row = wait_card()
 check("資料存進資料庫、來賓卡做好", row and row["card_status"] == "done" and "問題一" in row["card"])
 check("交給 AI 的資料不含聯絡電話（個資不外送）", PROMPTS and "0912-345-678" not in PROMPTS[0] and "我的公益故事" in PROMPTS[0])
 check("巴哈群組收到通知，網址自己一行且帶簽章", len(SENT) == 1 and "\n" + rg.card_url(SECRET, TOKEN) in SENT[0])
+check("教練私人電報也收到同一張來賓卡網址", any(cid is None and rg.card_url(SECRET, TOKEN) in t for cid, t in COACH))
 
 k = rg.card_sig(SECRET, TOKEN)
 r = client.get(f"/rongtree/guest/{TOKEN}/card?k={k}")

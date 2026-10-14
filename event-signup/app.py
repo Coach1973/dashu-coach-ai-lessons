@@ -2677,7 +2677,8 @@ def rongtree_guest_form(token):
     if not ok:
         return _rg_json({"ok": False, "error": err}, 400)
     _rg.start_card(key, app.secret_key,
-                   lambda t: _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID), first)
+                   lambda t: _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID), first,
+                   coach_notify=_notify_xiaolongxia)   # 預設＝教練私人電報（10/14 教練要求）
     resp = _rg_json({"ok": True})
     # 這個瀏覽器記得自己填的是哪一筆：再打開網址是修改自己的；按「新增另一位來賓」才清掉
     resp.set_cookie(cookie_name, key, max_age=30 * 86400, path="/rongtree/guest/", samesite="Lax")

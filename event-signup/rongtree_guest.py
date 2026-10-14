@@ -364,8 +364,9 @@ def send_baha(text: str) -> bool:
         return False
 
 
-def build_card_and_notify(token, secret, fallback_notify, first=True):
-    """背景執行：做來賓卡 → 通知巴哈助理群組（送不出去退回活動報名群）。"""
+def build_card_and_notify(token, secret, fallback_notify, first=True, coach_notify=None):
+    """背景執行：做來賓卡 → 通知巴哈助理群組（送不出去退回活動報名群）＋教練私人電報。
+    2026-10-14 教練：「是否可以自動發到電報？不然我平常找不到路徑」——巴哈群組之外，再發一份到教練個人對話。"""
     ok, err = build_card(token)
     r = get_form(token)
     who = r["guest"] if r else "來賓"
@@ -375,10 +376,12 @@ def build_card_and_notify(token, secret, fallback_notify, first=True):
             else f"{head}\n⚠️ AI 來賓卡這次沒做出來（{err}），資料已存好，打開下面網址可以按「重新產生」：\n{card_url(secret, token)}")
     if not send_baha(body):
         fallback_notify(body)
+    if coach_notify:
+        coach_notify(body)
 
 
-def start_card(token, secret, fallback_notify, first=True):
-    threading.Thread(target=build_card_and_notify, args=(token, secret, fallback_notify, first), daemon=True).start()
+def start_card(token, secret, fallback_notify, first=True, coach_notify=None):
+    threading.Thread(target=build_card_and_notify, args=(token, secret, fallback_notify, first, coach_notify), daemon=True).start()
 
 
 # ---------- 頁面 ----------
