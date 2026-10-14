@@ -4,115 +4,61 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-01 06:00:52**
+> **最後同步：2026-10-14 09:40:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 05:58 台灣時間，Mac桌面版 Sonnet 5.5，新的一棒 v257；教練出門改用手機版接手）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-14 09:20 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5／Opus 5.5 交替，教練說「總結」收工；對話 08:07～09:20）
 
-**本場主軸：教練逐件稽核「禮拜三13:00後交辦的事」，揪出怡靜分身一連串「測過卻一用就壞」——根因是『舊對話沿用舊規則』＋『分身自己亂寫出圖描述』；另查 RustDesk 連不上。**
-
-### 1. 怡靜AI群分身（chat -5480670608，agent yijing）現況
-- **根因**：分身的對話（session）會把舊規則帶著走，改了 AGENTS.md 它不會重讀。之前我「封存」沒有真的重開。**正確重建法**：`openclaw sessions delete --agent yijing --yes "agent:yijing:telegram:group:-5480670608"`（下一則群訊息就用新規則）。記憶：`reference_agent_session_keeps_old_rules_archive_after_edit_2026-10-01.md`。
-- **真實群組路徑測試法（不必教練發話）**：`openclaw gateway call agent --params '{"agentId":"yijing","sessionKey":"agent:yijing:telegram:group:-5480670608","message":"[Telegram 怡靜AI群 id:-5480670608] 大樹教練 (6124913915): ...","idempotencyKey":"唯一值","deliver":false}'`。用 `--session-id` 測走的是另一套權限，測不到真實情況，別用。
-- **第一分會名單**：已加12位新名字；`team_tool.py` 新增「刪除／移除」口令；team01.bymyway.com 每位會員旁加「移除」按鈕（移除＝清姓名＋清每週紀錄；DB備份 `team01_guests.db.bak-20261001-before-remove`）。測試殘留「張三」已移除。第二～五分會後台本來就有成員刪除。
-- **產業鏈出圖（教練：別再用我的點數測品質）**：`generate_industry_chain.py` 新增 `--nodes`（20個）`--center` `--held` `--audience` `--background`。圖片描述由腳本用核准範本組成；節點不是剛好20個、或任一個不在BNI詞庫，**在呼叫LK888（扣點）之前就擋下**（結束碼2）；`--background` 馬上回覆、做完自己送進群組、失敗會通知群組。分身被安全鎖擋 `2>&1`，SOP已明寫禁加。已寫死進 `knowledges/SOP_產業鏈.md`「一鍵正式流程」與小龍蝦技能檔。**測付費功能只測到「組出描述／被擋下」，別真的出圖。**
-- 教練02:18要的艾多美圖已補送進群（msg 11868）；本場花了教練約1點測試（02:31那張）。
-- LINE送圖通道實測：用已付費圖送到教練LINE成功（msg 634115160696946757）。**LINE小龍蝦自己聽到「做一張產業鏈」會不會下新指令，未實測**（需真出圖，等教練在LINE講一次）。
-
-### 2. RustDesk連不上（教練三台都顯示「尚未就緒」）
-- Mac本機網路正常、RustDesk三個程序在跑；日誌顯示教練遠端操作到02:35才結束，02:36系統無任何變更。
-- 官方中轉埠 rs-ny.rustdesk.com:21117 從日本/香港/美國/德國四個節點都「被拒絕」；UDP報到封包對官方報到伺服器無回應（無對照組，只算可疑）。**研判是RustDesk官方公用伺服器故障，非Mac問題，但未確鑿。**
-- 每天05:00 `ai.openclaw.rustdesk-guard` 在RustDesk超過800MB時強制重啟（今天2087MB被重啟）；RustDesk長連線會吃2GB記憶體，是它本身的問題，非主因。
-- 我建議裝Tailscale取代對RustDesk公用伺服器的依賴。Mac端我可裝；聯想端要教練本人登入一次。**教練尚未回覆要不要做。**
-
-### 3. 赫米斯（電報版一問三不知）
-`~/.hermes/CURRENT_TASK.md` 是4月舊任務（還含明文金鑰）→ 已換成指標檔，舊檔備份 `.bak.20261001_stale_april`；`SOUL.md` 加「每次對話開始先讀接力棒／today_other_agents_digest／對應SOP」（備份 `.bak.20261001_before_context_pointer`）。**尚未實測它真的會讀。**
-
-### 4. 稽核清單（教練點名：不准讓他當測試員，做完自己在真實路徑測過才報）
-| 項目 | 狀態 |
-|---|---|
-| 怡靜群回話白話／名單／刪除／工作回報 | ✅已測 |
-| 怡靜總管理帳號＋名片系統 | 帳號存在、名片已批准；密碼未重新登入驗證 |
-| jacky-brand 繁體／台灣重心／封面比例 | ✅已查（FB封面照沒找到單人照，未完成） |
-| 第三位顧問（tava-ai資本代表）資料 | ❓沒找到完成紀錄，未確認 |
-| 怡靜遇問題「自動寫信到Mac」 | ❌未做：分身寫不了信（安全鎖），且Mac是開新對話才讀信，需先跟教練確認要到什麼程度 |
-| 怡靜學姐稱呼／協會報名通知 | ❌未開始 |
-| 策展網站全面GitHub化收尾 | ❌未做（上一棒待辦） |
-
-### 🔑 本場commit
-workspace：`1d2337f25`（產業鏈一鍵流程SOP＋腳本）`8593a7135`（team_tool刪除口令）；yijing：`262d77a` `7d4942c` `f7b3333` `f5ef421` `8cf58ae`；team01-guests：`8a71c34`。本次總結commit另計。
-
-### 📋 下一場（手機版）先做
-1. 回答教練：要不要裝Tailscale。
-2. LINE小龍蝦實測（教練在LINE講「產業鏈」，看會不會用新指令）。
-3. 怡靜：「怡靜學姐」稱呼設計、協會報名通知、抓怡靜Telegram編號補進 yijing/IDENTITY.md。
-4. 策展網站全面GitHub化收尾、第三位顧問資料確認、分身寫信到Mac的機制（先問程度）。
-5. 🔴 **做法鐵律**：做完先自己在真實路徑測，過了才回報；付費功能不真測；手機版不能截圖。
-
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-01 01:30，Mac桌面版 Opus 5.5／Sonnet 5 交替，新的一棒 v256）
-
-**本場主軸：怡靜AI群從「完全沒反應」到「專屬分身＋查詢工具＋安全鎖」上線；第一分會表加出缺席；jacky-brand修版＋GitHub化；策展網站全面GitHub化備妥但未完成。**
-
-### 1. 怡靜AI群（chat -5480670608）
-- 根因：群裡原本是 VPS 機器人 @coach_bymyway_bot，VPS 沒准許任何群組，每則訊息記成 not-allowed 略過。教練要 Mac 版，已把學長 @openclaw_macbook4_bot（顯示名「頂級特助」）拉進群，是管理員。
-- 建獨立分身 `yijing`（比照學弟/學妹）：`~/.openclaw/agents/yijing`，GitHub 備份 `Coach1973/yijing-ai-backup`（最新 `88ad26c`）。openclaw.json 綁定「bot_main＋該群→yijing」，requireMention=false（外層 `0e1e12c62`、`87874f12e`）。分身已在群裡發自我介紹（messageId 11847）。
-- 規矩：怡靜是 AI 新手→不講術語、不反問技術問題、不秀指令、只講結果；「本人帳號已開通」跟「AI 有沒有工具」分開講（教練糾正過兩次）。
-- 工具 `scripts/team_tool.py`（`23612152f`）：五分會總覽/單一分會/查人/查週/改第一分會出席/新增名單，讀唯讀、寫走網站自己的API。
-- 安全鎖 `extensions/safety-locks` 加 yijing 白名單：只准 team_tool / 產業鏈兩支、只能寫自己資料夾；20 種測試（含雙引號 $() 偷渡）全擋對，main 不受影響。群組 toolsBySender 改成全開、改由白名單管。
-- **還沒實測**：怡靜/教練在群裡真的問一句，看回話是否白話正確；怡靜 Telegram 編號還沒抓到。
-
-### 2. 第一分會 team01.bymyway.com 加「出席」欄（實體/線上/缺席）＋缺席次數（team01-guests `367b247`），正式網址實測、已用 Chrome 開給教練。第二～五分會沒有每週統計表。
-
-### 3. jacky-brand：修「為什麼回到台灣」卡片白底白字（`.band .card{color:var(--ink)}`），git 化 `Coach1973/jacky-brand`（`25174ab`）。
-
-### 4. 策展網站全面 GitHub 化（教練要：上架時順手建 GitHub，聯想/宏碁貼 event 網址就能改，推上去自動更新）
-- 工具 `scripts/curated_git.py` 已備妥（`26b7935af`）；35 站中 24 站有 GitHub。其餘 11 站補建、接進 curation_process.py 三條上架路、GitHub 通知 Mac 的 webhook 入口、聯想/宏碁 feed_junshi_handoff.ps1 網址觸發，當時被自動模式擋下。**教練已切 bypass，下一場直接做完**，ema/huitou origin 網址夾帶的 GitHub 金鑰一起清。
-
-### 5. 教訓（教練：漏洞百出、每次都是用了才發現）
-- 被自動模式擋第二次就要講「切 bypass 一個按鈕」，不准逐件叫教練回「上」（記憶已寫）。
-- 做給夥伴用的東西，要站在夥伴位置實測一次（講法、術語、權限說明）才交付；本場怡靜分身兩次講錯話都是教練先發現（試金石案例94）。
+**主軸：榮樹下多位來賓、南應大校友會理監事與顧問團隊頁（新建）、BNI 夥伴專屬編輯連結後台一鍵複製、真鑽 5 位助理大使複製進真貴。**
+- **榮樹下一場多位來賓**（裕榮 10/14 21:00–22:00 有兩位；填表網址 `/rongtree/guest/AQGsXEnm8GKe`，教練轉給裕榮，AI 不代傳）：原本一場一格、重送會覆蓋，改成每位各存一筆（代碼＋2…6）；同瀏覽器重送＝改自己（cookie `rg_<代碼>`）、同名換裝置＝改同一位、送出後「新增另一位來賓」鈕；上限 6 位；#prep 顯示已交幾位。commit workspace `a95fe485d`、rongtree `67b76de`。
+- **南應大校友會「理監事團隊與顧問團隊」頁** https://event.bymyway.com/tut/team ：`event-signup/tut_team.py`＋`test_tut_team.py`（47 項全過）。比照 BNI 自助簡介：「我要建立檔案」→送出立刻上架→專屬連結；顧問 17 位（記憶牆 BIZ_TEAM）先放空座位、本人點名字補；南應大官網紫 `#854D92`（樣式表＋校徽實測）；後台 `/tut/team/a/<簽章>` 已收進大樹作品集，可隱藏／刪除／新增座位／複製專屬連結。已預放介紹與照片：鄭儷絲、陳彥玲、謝志賓（只協會）、林丁禾、江睿翔、李中閔、施正益、林士民照片（來源：各自網頁／為你轉身／百人導師，標「待本人補充」）。**施正益**（教練確認；記憶牆舊寫「施正義」已改）。理監事名單教練還沒給。commit `403dcee2f` `e3926bb7b` `7b6fb951c` `ee95870a8` `1b3f76ea4`；記憶牆 `8dd7e43`。⚠️ 本人上傳照片在 `event-signup/tut_team_uploads/`（不進 git）。
+- **coach888 稽核誤報根因**：`audit_coach888_coverage.py` 只讀 git 靜態 index.html，用正式登記工具收錄的網址一律被報漏收，改成同時讀伺服器實際狀態（`5a10a8e08`）。
+- **BNI 夥伴專屬修改連結**：教練新增真貴彭益家後找不到要傳的連結。後台編輯網址要登入、不能傳；本人連結是 `/<slug>/join/edit/<token>`。補上夥伴編輯頁連結框＋分會列表「複製他的專屬連結」：bni-chapters `fa36f74`（13 分會共用）、team-bymyway `02af90d`（第一、二分會，另一份獨立模板）。已加反射 `R-BNI-ADMIN-TEMPLATE-TWO-REPOS`。
+- **真鑽 5 位→真貴籌備會**（楊仁豪、康文彬、楊智帆、黃智宏、李孟哲）：**複製不是搬走**——楊仁豪是真鑽主席、康文彬導師協調人，搬走真鑽頁主席會消失；含簡介、大頭照、一頁式簡報圖、新專屬連結，不含真鑽職務／金牌。只改資料庫，備份 `bni-chapters/chapters.db.bak-before-zhengui-ambassadors-20261014`。教練若要從真鑽拿掉要另外做。
+- 記憶：`project_tut_team_page_and_zhengui_copy_2026-10-14.md`、`reference_bni_member_personal_edit_link_two_repos_2026-10-14.md`。
+- **卡在哪**：沒有卡關。「4 人以上」漏算（10/17 零基礎學AI課，陳世真填「4 人以上」被小龍蝦當 1 人，實際至少 20 人）：後台 export.csv 沒有「報名人數」欄，來源還沒找到，**沒修**。
+- **教練本場原話線索**：①「移植」＝有資料先複製過來、原處保留。②「這個網站有，其他的網站都得有」→ 改一處要找所有副本。③截圖鎖仍有效（沒同意不截圖，改用讀頁面結構量版面）。④AI 百人導師後台可複製專屬連結，教練以此為標準要求 BNI／南應大一致。
 
 ### 📋 下一場開工先做
-1. **開工回報第一行：逐步說明開工六步驟有沒有照做**（教練點名要求，不准只說「讀完了」）。
-2. **設計「怡靜學姐」**：教練會建立；以後「怡靜學姐／怡靜董顧／怡靜區董」都叫得到——「怡靜」是關鍵詞、後面是不同場合的稱呼。
-3. **怡靜的協會報名**：用現成報名系統（event.bymyway.com），有人報名→怡靜AI群＋活動報名即時通知群都收到。
-4. 策展網站全面 GitHub 化收尾（上面第 4 點）。
-5. 在群裡實測 team_tool 回話；抓怡靜 Telegram 編號補進 yijing/IDENTITY.md。
+1. **教練看過給吳董與裕榮的信草稿**（`knowledges/榮樹下_三人分工回覆_給吳董與裕榮_2026-10-14.html`）→ 要改哪裡就改，教練自己傳，AI 不代寄。
+2. 教練給南應大理監事名單時：到後台新增座位（`/tut/team/a/…` 在大樹作品集），再複製專屬連結傳給本人。
+3. 🔧 AI 自己：找「報名人數 1人／2人／4人以上」那欄的來源，把「4 人以上」算法寫進固定腳本（小龍蝦 10/13 23:21 臨時 awk 漏算）；schedule-context test.mjs 2 項舊失敗；`tut_team_uploads/` 納入備份。
+4. 第一位榮樹下來賓真的用起來時：看 `https://event.bymyway.com/rongtree/a/b99f99e2f2b0` 與榮樹下 #prep 顯示（含 21:00 兩位同場）。
+5. 俱樂部網頁搬進 event.bymyway.com 後：榮樹下樹蔭席區「真公益」連結改指向；上架照 SOP 收進大樹作品集、建 GitHub。企業家數四個來源不一致，等順發回覆。
 
-### 🔑 本場commit
-workspace `d9e66f81a` `26b7935af` `1d30f7869` `23612152f`；外層 `0e1e12c62` `87874f12e`；yijing `d8a117e` `14f8c1d` `88ad26c`；team01-guests `367b247`；jacky-brand `25174ab`；本次總結另計。
+🙋 要教練決定：（目前沒有）
+🤫 等教練自己提起：預約頁「只開固定時段」（03:11 裁示先按下）；南應大 /tut/team 要不要在記憶牆／召集令頁加入口（已提過一次，教練沒回）；真貴 5 位要不要從真鑽拿掉。
+
+---
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-14 07:20 台灣時間，Mac 桌面版 Code 分頁，Haiku→Sonnet→Opus 5.5→Sonnet 5.5，教練說「總結」收工；對話 02:50～03:45）
+
+**主軸：讀完吳董 ChatGPT 分工建議 → 榮樹下營運藍圖；教練要做 1、2、4，第 3 項（預約頁固定時段）先按下。**
+- 藍圖 `knowledges/榮樹下_營運藍圖與公益轉身席_2026-10-14.md`：大樹只做主訪＋舞台＋系統；剪輯發稿交裕榮；每週四場（教練定）；「樹蔭席」＝教練好聲音式資源席構想（提一個好問題＋掛一片葉子承諾）；戰略漏斗＝真公益企業家俱樂部（教練新做，暫放 tava-ai.com/chat/dn3wyx5ini/）→榮樹下→Run for Future→足跡勳章（4/18 授勳、5 月海餅乾 20 週年）。
+- ① 來賓資料表＋AI 來賓卡：`event-signup/rongtree_guest.py`；裕榮在群組登記對象→回覆附 `/rongtree/guest/<代碼>`→來賓填→MiniMax 做卡→巴哈群組通知。後台 https://event.bymyway.com/rongtree/a/b99f99e2f2b0 已收進大樹作品集。MiniMax 金鑰在 `state/minimax_api_key`（不進 git）。
+- ② 榮樹下網頁 `#seats` 樹蔭席區（承諾牆＋報名表）；承諾牆用 `scripts/rongtree_pledge.py`。
+- ⑤ 榮樹下網頁最下方 `#prep`「訪談嘉賓前置作業」（教練 03:44 構想）：列出接下來的訪談＋每場「填寫來賓資料表」，交了資料的來賓公開列出（只公開姓名、職稱、照片、一句話介紹；電話、不談話題、訪綱只在簽章來賓卡）；表單寫明會公開哪些；來賓卡頁有「從公開名單隱藏」鈕防亂填。資料 `/api/rongtree/prep`，網址由 `coach_schedule.py ensure-forms` 自動配。
+- ④ 給吳董與裕榮的回覆：`knowledges/榮樹下_三人分工回覆_給吳董與裕榮_2026-10-14.txt`／.html，**草稿，教練看過自己寄**。
+- commit：workspace `c2cb68a7c` `419a7519b`、rongtree `2247da5`、外層 `6d07ded57`。
+- 🔧 AI 自己的：schedule-context 外掛 test.mjs 原本就有 2 項失敗（10/17 實際行程名稱變成「整日行程」，測試還寫舊名稱），跟本場無關，找時間改測試資料；企業家數四個來源不一致（50–55／88／50／近40），等順發回覆後統一各網頁。
+- **卡在哪**：沒有卡關。教練 03:44 後去休息，07:20 才說「總結」。表單「樹蔭席報名」「來賓資料表」只用測試資料驗證，沒有真送出（避免通知打進正式群）；樹蔭席區塊、前置作業區已在 Chrome 開給教練。
+- **教練本場原話線索**：①「這封要回給吳董的信要先讓我看過，不是你自己就寄出去」→ 信只存草稿＋跳網頁，絕不代寄。②「跳個網頁出來讓我看，不然我怎麼知道信寫在哪裡」→ 做好一律 deliver_open 跳出（既有記憶，沒犯第二次）。③一週四場，要麼四天各一場、要麼一天兩場連軸；預約頁固定時段先按下不動。④來賓資料表＋來賓卡要放榮樹下最下方「訪談嘉賓前置作業」，誰交了資料公開一目了然。⑤公益企業家俱樂部（tava-ai.com/chat/dn3wyx5ini/）是教練自己規劃的行銷工具，之後收進 event.bymyway.com。
+
+### 📋 下一場開工先做
+1. **教練看過給吳董與裕榮的信草稿**（`knowledges/榮樹下_三人分工回覆_給吳董與裕榮_2026-10-14.html`）→ 要改哪裡就改，教練自己傳，AI 不代寄。
+2. 俱樂部網頁搬進 event.bymyway.com 後：把榮樹下樹蔭席區的「真公益」連結改指向；上架時照 SOP 收進大樹作品集、建 GitHub。
+3. 第一位來賓真的用起來時：看 `https://event.bymyway.com/rongtree/a/b99f99e2f2b0` 與榮樹下 #prep 的顯示是否正常（目前零筆資料）。
+4. 企業家數四個來源不一致（50–55／88／50／近40），等順發回覆再統一各網頁。
+5. 🔧 AI 自己：schedule-context 的 test.mjs 原本 2 項失敗要更新測試資料；MEMORY.md 索引已瘦到約 1.7 萬字，再加條目前先看大小。
+
+🙋 要教練決定：（目前沒有）
+🤫 等教練自己提起：預約頁「只開固定時段」（教練 03:11 裁示先按下，不追問）。
 
 ---
 
----
-> 📦 v255完整內容已封存：`handoff_archive/handoff_v255_archived_2026-10-01.md`（v255產業鏈SOP出包總檢討+怡靜群組與帳號前置+LINE小龍蝦出LK888圖）
-
-> 📦 v254完整內容已封存：`handoff_archive/handoff_v254_archived_2026-09-30.md`（v254接力棒被整份覆蓋修復+coach888稽核雲端修法套用）
-
-> 📦 v253完整內容已封存：`handoff_archive/handoff_v253_archived_2026-09-30.md`（v253雲端coach888稽核假警報診斷，v254已套用修法）
-
-> 📦 v251~v252完整內容已封存：`handoff_archive/handoff_v251_to_v252_archived_2026-09-30.md`（v251聯想Netlify兩站改期+git同步卡住修復／v252 VPS遷移信審議+開工沒讀到信根因+LK888第二帳戶備援+全站網址統一event）
-
-> 📦 v248~v250完整內容已封存：`handoff_archive/handoff_v248_to_v250_archived_2026-09-27.md`（v248公開交接棒上線／v249開工hook與赫米斯上架bug／v250 VPS遷移與鑫瀚昌）
-
-> 📦 v247完整內容已封存：`handoff_archive/handoff_v247_archived_2026-09-26.md`（v247：赫米斯登入自動跳出根因修復+副螢幕防呆+模型分工v2上線+雲端方案分岔陷阱查證）
-
-> 📦 v246完整內容已封存：`handoff_archive/handoff_v246_archived_2026-09-25.md`（v246：執行細則16條E併9條N規則上線+VPS/LINE/大台南小幫手每位朋友單獨記憶查證+龍蝦小助教記憶檔被巡檢指令灌爆bug修復）
-
----
-
-> 📦 v245完整內容已封存：`handoff_archive/handoff_v245_archived_2026-09-25.md`（v245：VPS/LINE健檢推播404修復+五項修法落地+小龍蝦2.0評估+版本變動通知）
-
-> 📦 v244完整內容已封存：`handoff_archive/handoff_v244_archived_2026-09-25.md`（v244：大樹創作SOP口語別名缺失修復+coach888插入bug修復+coach888分類重組+MEMORY.md清理）
-
-
-> 📦 v242~v243完整內容已封存：`handoff_archive/handoff_v242_to_v243_archived_2026-09-24.md`（v242產業鏈SOP誤報700+分類資料庫查證+名片系統去識別化技術文件雙版本交付／v243 MEMORY.md索引159筆清零+namecard-db前會員/來賓資訊改造+cloudflared版本過舊發現解決，E16瘦身2026-09-24執行）
-> 📦 v238~v241完整內容已封存：`handoff_archive/handoff_v238_to_v241_archived_2026-09-24.md`（含全面體檢/agents人設檔救回/llama-cpp修復/聚寶盆發票/ezPay作廢SOP等v238~v241全紀錄）
+> 📦 10/13 23:33 棒～10/14 02:49 棒、10/12 聯想棒已封存：`handoff_archive/handoff_v258_to_v261_archived_2026-10-14.md`
 
 ---
 
@@ -128,210 +74,6 @@ workspace `d9e66f81a` `26b7935af` `1d30f7869` `23612152f`；外層 `0e1e12c62` `
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 （目前沒有）
-
-
-### 🤫 等教練自己提起（AI不主動問、開工不唸；教練提到時才去封存檔查詳情）
-> 詳情全文：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
-- 大台南商圈示範版位林百貨/神農街換成建築/街景照（要從網路下載照片，09-26已問過一次，教練沒回）
-- VPS升級LTS 2026.7.35（教練09-24：10/1左右月報會自動提醒，時間到再說）
-- 367位前會員推薦人補查（BNI Connect帳密沒存在路徑大全，要教練本人登入一次；09-24已問過一次）
-- 柯朝陽發票（教練09-24：延後約一年，不用管）
-- 試金石商業化計畫書（教練09-24：還沒想到怎麼商品化，暫時不用管）
-- 小二(test2)/OpenClaw 2.0評估（暫停，等官方修復）
-- 小二Telegram輪詢異常（教練09-21：等小二成熟再處理）
-- 聯想C碟WinSxS再瘦身4~5GB（要不要做，教練沒回）
-- bni-chapters真誠分會網頁架構問題（教練還沒說明是哪個問題）
-- 「教練都在想什麼」補更多素材（等教練提供）
-- 其他LINE帳號比照搬遷（等教練指定帳號，SOP已備妥）
-- 小龍蝦後台看不到中文名（教練裁示：看到陌生ID問了再回）
-- coach888拖拉排序好不好用（等教練回饋）
-- 「全世界最優秀的團隊計畫」報名連結（等教練給網址）
-- 企業健身房正式建站（等教練交辦）
-- 企業健身房4項文案修改（等教練交辦下一步）
-- BNI小幫手實戰體驗（等教練親測）
-- Coze舊機器人何時停用（等教練裁示）
-- ACER 36.3GB備份刪除（需教練在ACER親自開對話）
-- 赫米斯Telegram線登出登入時斷約2分鐘（綁使用者登入，要改成開機常駐系統服務才能根治；09-25已告知一次，教練沒要求處理）
-
-### 🔧 AI自己的工作清單（AI自行處理，做完不用跟教練報告細節）
-
-> 📦 **更早162筆已完成列**：`handoff_archive/handoff_status_table_completed_archive_2026-09-18.md`；**09-24搬出的21筆結案列**：`handoff_archive/handoff_status_table_parked_and_closed_2026-09-24.md`
-
-| 優先 | 任務 | 狀態 | 說明 |
-|---|---|---|---|
-| 🔴 | **策展網站全面GitHub化收尾（09-30教練交辦，10-01教練已切bypass＝授權）** | ⏳下一場直接做 | 工具`scripts/curated_git.py`已備妥：跑`ensure-all`補11站→接回`curation_process.py`三條上架路（github_note，大樹作品/全新店家/暫代頁覆蓋）→event-signup加`/hooks/github-curated`(HMAC)＋每repo掛webhook→聯想宏碁`feed_junshi_handoff.ps1`加「貼event /curated/網址→指路GitHub」＋Mac `projects/INDEX.md`策展卡→模擬聯想push驗證線上換新；順手清ema/huitou origin夾帶的GitHub金鑰。 |
-| 🟡 | **團隊協作全面體檢（2026-09-24 Opus 5.5）：五項修法教練13:37說「執行」，已落地** | ⚠️持續追蹤-首次真實使用待觀察 | 完整報告`knowledges/2026-09-24_團隊協作全面體檢報告.md`。①每日08:10全隊點名`scripts/daily_team_rollcall.py`+launchd`ai.openclaw.daily-rollcall`(13:41實跑送達)；VPS/LINE健檢改為只在異常時通知②VPS看守Mac：VPS`/root/watch_mac.sh`每30分，Mac連續兩次連不上才通知(測試訊息message_id 3860送達)③上傳頁`kind`必填，`creation`全自動進coach888最新作品——**09-25首次真實作品實測，發現index.html判斷bug已修復**（個人創作常沒有index.html慣例檔名，改成剩一個html檔就自動採用，見v249），真實上架成功④產業鏈同主題同對話10分鐘防重複⑤VPS健檢拿掉1小時無活動誤報；赫米斯記憶檔金鑰是教練指示保留的寫法，不搬。commit`b076a80fc`+`777c9c7c4`。**VPS升級另見下一列**。VPS健檢缺天原因仍未查明，改由每日點名檢查「今天有沒有跑」。 |
-| 🟡 | **雲端工作頁規則同步（2026-09-25 Opus 5.5，教練原則：同一套規則本機雲端一體適用，只有動到Mac本機的事例外）** | ✅已上線，兩條路實測通過 | 機制與SOP見記憶`reference_move_to_cloud_this_repo_2026-09-25.md`：`cloud_sync/`(全域規則+11技能副本，每則回覆結束自動更新)+`workspace/.claude/settings.json`(main)+外層`.claude/settings.json`+`cloud_bootstrap.sh`(master)。commit`1e0bea3ab`+`2db3d1330`(workspace)、`a0975a949`(外層)。**待修小bug**：`model_tier_advisor.sh`剛用/model切換後的第一則仍顯示舊模型(09-25切Opus後仍報sonnet-5)，雲端第一則顯示「未知模型」。外層master分岔已查證安全並合併推送`f517ec524`，v247「791d775d2未push」一句已過時。 |
-| 🟡 | **公開交接棒「隨身軍師・一鍵接手」上線（2026-09-25，教練說「推」，後續修好AI相容性問題）** | ✅已上線，每次「總結」自動更新 | **主要網址（貼給任何AI）：`https://coach1973.github.io/ai-go/status.html`**；純文字備用：`status.md`。目的：教練Claude每週額度不夠，思考型問題分流到其他網頁版Opus，貼一個網址對方就知道規則＋目前工作狀態。🔴**真因查證（curl實測，不是猜的）**：一開始只做.md版，教練回報「其他AI說讀不到、被屏蔽」——查證GitHub Pages對.md副檔名回傳`content-type: text/markdown`，index.html回傳`text/html`；人爬蟲UA(GPTBot等)全部200無阻擋，不是robots/WAF——是多數AI內建讀網頁工具只認text/html。已建`scripts/render_public_status_html.py`(python-markdown轉換+bare URL自動連結)，`status.md`仍是唯一手改來源，`scripts/publish_public_status.sh`每次發布自動轉出`status.html`不會分岔。更新流程：`summary_upload_trigger.sh`第5步改寫`~/github_repos/ai-go/status.md`→跑`publish_public_status.sh`(機密掃描→轉HTML→再掃描→commit兩檔→push→確認網站換新版，等5分鐘)。只寫教練自己的事，不寫帳密/主機位址/路徑/他人個資。已收進coach888「工具類」第一項並改指向.html（伺服器狀態+靜態HTML都改，舊狀態備份`state/coach888_state_backup_20260925_110956.json`）。同場順便修正教練品牌數據「1.5萬位老闆」→「6,000+場演講、10萬人受眾」（教練親口訂正，5個檔案）。🔴**教練追問揪出遺漏**：status.html內文引用的另外兩份`coach-persona.md`/`system-prompt.md`本身也是同一個content-type問題，沒有一起修——已比照建`coach-persona.html`/`system-prompt.html`，三份都納入`publish_public_status.sh`自動轉出，`index.html`的「查看全文」連結也改指向.html（JS一鍵複製到剪貼簿的fetch()維持指向.md不變，複製出來才是純文字不是HTML標籤）。順便修好`publish_public_status.sh`驗證上線的迴圈：GitHub Pages CDN偶爾超過5分鐘才生效，push本身成功卻被誤判成失敗跳exit 1（已實際發生2次），改成push成功就算數，CDN慢只如實回報不當失敗。commit：workspace`445210e92`+`8f953cd14`+`5ea38190d`、ai-go`39b84c7`+`22bbe94`+`5114dc3`+`3f4273e`、coach888`79a7d81`+`03021cb`。 |
-| 🟢 | 外層`~/.openclaw`本機git歷史紀錄跟GitHub版本編號對不齊（純本機書面整理，教練2026-09-24裁示：不是外洩、不是公開風險，AI自行找時間處理，不用再提） | ✅無風險-低優先-AI自主處理 | **教練2026-09-24明確裁示**：這不是安全問題（金鑰外洩早在9/19處理完畢，repo本身是私有的、沒有外部協作者，也已決定金鑰不rotate），純粹是這台Mac的git紀錄本子跟GitHub對不上編號的書面瑣事，沒有任何被公開查到的風險，也沒有立即性危害。**教練要求：AI不准再主動提這件事，覺得需要處理就自己找時間安靜做完，不要拿來討論、不要問、不要當成待辦逐場複誦**。哪天AI自己收拾好了，直接做、不用報告；沒收拾好也不影響教練現在用的任何功能，不追蹤、不升級語氣。技術細節（若AI自己要動手）：新版GitHub歷史已把`agent/auth-profiles.json`等金鑰檔從全部commit移除，本機若直接`git reset --hard origin/master`會把本機正在用的同名檔案從磁碟刪掉，須先備份+確認`.gitignore`涵蓋再處理，過去做法可參考`c07544815`的worktree cherry-pick模式。 |
-| 🔧 | **AI技術備忘（不准拿去跟教練講）：這個repo的git歷史已被改寫，其他機器的本機clone要先同步才能push** | ⚠️任何機器的AI下次動這個repo前自己看 | 2026-09-19 06:45教練親自裁示後，軍師用`git-filter-repo`把`路徑大全_憑證層.md`+`agent/auth-profiles.json`+`agent/models.json(.bak)`4個含明文金鑰的檔案從全部16000+ commit歷史徹底清除+強制推送到GitHub(已用全新clone獨立驗證確認乾淨)。**任何其他機器(聯想Windows/ACER/VPS)如果有這個repo的本機clone，現在都跟GitHub遠端分岔了**——下次要push前必須先`git fetch origin && git reset --hard origin/main`(或直接砍掉重新clone)，絕對不能在沒同步的狀態下直接push，否則會把舊歷史(含外洩金鑰)重新推回去，等於這次白做。教練同時裁示：外洩的金鑰(MiniMax/Gemini)**不rotate**，「已經曝光不代表會被濫用，換的話動一髮牽全身」。完整過程見[[feedback_credential_layer_file_was_git_tracked_2026-09-19]]。 |
-| 🔴🔴🔴🔴 | **全機必讀：Netlify圖片部署事故檢討報告** | ⚠️永久提醒 | 2026-07-25聯想機一件本該一次做對的事做了3次部署才成功（多扣30點credit），教練親自要求全機軍師都要吸收教訓，完整報告見`knowledges/2026-07-25_ai-talk圖片部署事故檢討報告_明明有SOP卻沒執行.md`。三條鐵律：①Netlify `_headers`不用`/*`萬用規則(除非站台永遠沒圖片) ②Windows打包zip給Netlify禁用PowerShell`Compress-Archive`(反斜線路徑會404)，改用.NET ZipArchive ③部署後驗證文字跟圖片要分開各自curl確認，圖片要專查Content-Type不能只看狀態碼 |
-| ⚠️ | Netlify部署額度 | ⚠️持續追蹤 | credit制，「剩幾次」=credit餘額÷15(每次部署耗15點)。`state/netlify_deploy_quota.json`最新記錄剩50次(2026-08-05，jiesheng-leadership git-auto-deploy推送後)。這只是本地推算，建議教練有空時親自到Netlify後台billing頁面核對一次真實數字最保險 |
-| 🔴🔴🔴 | **Netlify站分兩型，動手前必查是哪型(2026-08-05二度誤推)** | ⚠️永久提醒 | `feedback_netlify_deploy_zip_api.md`早就記載`jiesheng-leadership`是GitHub自動部署型(2026-06-09第一次血淚)，本場(2026-08-05)Sonnet 5仍然只想著「教練說先推GitHub」沒有觸發查證動作，導致同一個錯犯第二次。已補進記憶+更新MEMORY.md索引標題直接寫「動手前必查是哪型」。**新鐵律**：聽到「推GitHub」這類指令，只要牽涉Netlify網站，一律先查是不是自動部署型，不能拆開處理成「先推一半」 |
-| 🔴🔴 | 聯想C槽94GB備份（`易数一键还原Windows系统备份`）**原訂計畫改變** | ⚠️持續追蹤-暫緩刪除 | 2026-07-25發現這份7/11舊備份剛在7/24真的被拿去做過一次系統還原（LINE junction事故+WMI/CIM異常，救回一台機器），證明它有實際救援價值，**不能照原計畫刪除**。建議教練確認今天新裝的OpenCode/CC Switch搬家+Advanced SystemCare移除都正常後，做一次新的一鍵備份取代這份舊的，新備份穩定觀察期滿才能考慮刪舊的，詳見[[project_lenovo_c_drive_slimdown_2026-07-11]]更新 |
-| 🟡 | **shops.bymyway.com已拆除VPS依賴（2026-09-26）；09-27教練拍板全站統一event.bymyway.com/curated/，shops只剩舊連結轉址。VPS上舊檔案+GitHub孤兒repo收尾** | ⏳待處理-低優先 | 3家店(huitou/ema/hsinhan)已遷移到Mac本機+DNS切換完成，VPS(43.245.60.200)上`/var/www/shops/`原始檔案故意沒刪，當一段時間的rollback安全網，穩定觀察期(建議至少2週無異常)過了可以安全刪除。另外測試時意外建立的GitHub孤兒repo`coach1973/hsinhan-2`因手上token沒有`delete_repo`權限刪不掉，已無任何連結指向它、無害，之後若拿到有delete權限的token可順手清掉。詳見`knowledges/LETTER_VPS策展中心遷移過程說明_給Opus_2026-09-26.md`。**09-26 Opus審議**：遷移時shops路由沒比照/curated/的白名單，整個github_repos(含來賓名單.db)可被外人下載，已修(白名單+敏感副檔名防線，實測)，詳見信第八節。 |
-| 🟡 | MEMORY.md超過OpenClaw 2萬字bootstrap上限(20,717字)且有1處UTF-8亂碼，跟HEARTBEAT.md同一類問題(2026-09-25查到，只查不動，優先度低於HEARTBEAT.md因為不影響小龍蝦即時反應) | ⏳待處理 | 用跟HEARTBEAT.md同樣手法瘦身：找出佔比最大的段落搬去handoff_archive或distill、備份原檔、確認新檔UTF-8正常。不用問教練，AI自己找時間做完即可 |
-| 🟡 | 軍師自我要求：查證前先查「路徑大全」+盤點類任務要窮舉底層資料結構 | ⚠️永久提醒 | 教練v90當場糾正兩次查證不完整（VPS沒先查路徑大全就回報查不到、LINE帳號盤點漏算沒有名稱標籤的「龍蝦小助教」），教練明確期許「你是所有資訊的大總管，要自己想辦法完善」。已寫入試金石案例55，核心自我檢查：①任何「查不到/做不到」結論前先確認查過該環境萬用索引檔 ②盤點類任務直接數清楚底層資料結構(JSON物件key數)逐一核對，不能只挑印象中顯眼的幾筆 |
-
----
-
-> 📦 v114完整內容已封存：`handoff_archive/handoff_v114_archived_2026-08-18.md`（Mac桌面版，Chrome搶線根因+ezPay 238筆+coach888連結）
-
----
-
-> 📦 v115完整內容已封存：`handoff_archive/handoff_v115_archived_2026-08-18.md`（聯想Windows，BNI-Training雙軌系統從零建置+753筆官方報表整合）
-
----
-
-> 📦 v116完整內容已封存：`handoff_archive/handoff_v116_archived_2026-08-18.md`（聯想Windows，BNI培訓紀錄精準度修正+MSP投票新網站+SOP違規教訓）
-
----
-
-> 📦 v117完整內容已封存：`handoff_archive/handoff_v117_archived_2026-08-18.md`（聯想Windows，4-8月簽到表開票總清冊交叉比對修正MSP名單）
-
----
-
-> 📦 v118完整內容已封存：`handoff_archive/handoff_v118_archived_2026-08-18.md`（Mac桌面版，五項任務逐一執行+ezPay 108統編備註查詢完成+find -maxdepth查證失誤自我更正）
-
----
-
-> 📦 v119完整內容已封存：`handoff_archive/handoff_v119_archived_2026-08-19.md`（Mac桌面版，BNI Connect活動出席勾選任務首次上線，8場活動101人次標記完成）
-
----
-
-> 📦 v120完整內容已封存：`handoff_archive/handoff_v120_archived_2026-08-19.md`（Mac桌面版，讀跨機信箱接手ezPay培訓費發票，16張全部開立完成，MerchantID假成功陷阱首次發現）
-
----
-
-> 📦 v121完整內容已封存：`handoff_archive/handoff_v121_archived_2026-08-23.md`（Mac桌面版，教練推翻「34人收齊才開票」規則，24張ezPay培訓費發票先開立）
-
----
-
-> 📦 v122完整內容已封存：`handoff_archive/handoff_v122_archived_2026-08-24.md`（Mac桌面版，教練糾正「查無Email」誤判＋BNI 94人資料庫永久指引）
-
----
-
-> 📦 v123完整內容已封存：`handoff_archive/handoff_v123_archived_2026-08-24.md`（Mac桌面版，大樹小講事件密集場：救回雙寫程式碼+場次管理後台+修好2次部署bug）
-
----
-
-> 📦 v124完整內容已封存：`handoff_archive/handoff_v124_archived_2026-08-24.md`（Mac桌面版，AI助理資料包+8/28攤位頁+報名通知失聯真根因，搬運工失誤試金石案例62）
-
----
-
----
-
-> 📦 **v112及更早的完整接力棒內容已封存**：`handoff_archive/handoff_v116_archived_2026-08-18.md`（v116）+ `handoff_archive/handoff_v115_archived_2026-08-18.md`（v115）+ `handoff_archive/handoff_v114_archived_2026-08-18.md`（v114）+ `handoff_archive/handoff_v113_archived_2026-08-17.md`（v113）+ `handoff_archive/handoff_v112_archived_2026-08-17.md`（v112）+ `handoff_archive/handoff_v111_archived_2026-08-16.md`（v111）+ `handoff_archive/handoff_v110_archived_2026-08-16.md`（v110）+ `handoff_archive/handoff_v109_archived_2026-08-16.md`（v109）+ `handoff_archive/handoff_v108_archived_2026-08-15.md`（v108）+ `handoff_archive/handoff_v106_to_v107_archived_2026-08-14.md`（v106+v107）+ `handoff_archive/handoff_v105-lenovo_archived_2026-08-14.md`（聯想Windows 2026-08-10）+ `handoff_archive/handoff_v104_to_v105_archived_2026-08-12.md`（v104+v105 Mac桌面版） + `handoff_archive/handoff_v104-lenovo_archived_2026-08-10.md`（v104聯想Windows） + `handoff_archive/handoff_v101_to_v103_archived_2026-08-09.md`（v101~v103）+ `handoff_archive/handoff_v100_archived_2026-08-08.md`（v100）+ `handoff_archive/handoff_v99_archived_2026-08-08.md`（v99）+ `handoff_archive/handoff_v97_to_v98_archived_2026-08-07.md`（v97~v98）+ `handoff_archive/handoff_v93_to_v96_archived_2026-08-05.md`（v93~v96）+ `handoff_archive/handoff_v92_archived_2026-08-05.md`（v92）+ `handoff_archive/handoff_v91_archived_2026-08-05.md`（v91）+ `handoff_archive/handoff_v90_archived_2026-08-04.md`（v90）+ `handoff_archive/handoff_v89_archived_2026-08-03.md`（v89）+ `handoff_archive/handoff_v88_archived_2026-08-03.md`（v88）+ `handoff_archive/handoff_v87_archived_2026-08-02.md`（v87）+ `handoff_archive/handoff_v85_to_v86_archived_2026-08-02.md`（v85+v86）+ `handoff_archive/handoff_v84_archived_2026-07-31.md`（v84單獨一份）+ `handoff_archive/handoff_v83_archived_2026-07-30.md`（v83單獨一份）+ `handoff_archive/handoff_v82_archived_2026-07-28.md`（v82單獨一份）+ `handoff_archive/handoff_v72_to_v81_archived_2026-07-26.md`（v72~v81）
-> 瘦身原因：教練2026-07-26指出接力棒檔案太大，每次「開工」自動注入會吃掉新對話框大量額度，
-> 只保留最新2棒在主檔，舊棒需要查歷史時才去讀封存檔，不再每次自動注入。
-
----
-
-
-> 📦 v125+v126完整內容已封存：`handoff_archive/handoff_v125_to_v126_archived_2026-08-25.md`（Mac桌面版，凌晨全系統稽核+教練覆核追加任務）
-
----
-
-
-> 📦 v127+v128+v129完整內容已封存：`handoff_archive/handoff_v127_v128_v129_archived_2026-08-25.md`（Mac桌面版，ezPay發票+台中場上線+賈維斯全系統體檢兩場+頻率覆核）
-
----
-
-> 📦 v130完整內容已封存：`handoff_archive/handoff_v130_archived_2026-08-25.md`（Mac桌面版，賈維斯體檢延續：頻率覆核+解決通知從沒送達的根因，留下Q1待辦）
-
----
-
-> 📦 v131完整內容已封存：`handoff_archive/handoff_v131_archived_2026-08-26.md`（Mac桌面版，AI微論壇台中場RWD真根因修復+Netlify額度重新校正）
-
----
-
-
-> 📦 v132+v133完整內容已封存：（Mac桌面版，Q1總結功能+context-overflow-guard改版+名片系統CRM擴建）
-
----
-
-> 📦 v134完整內容已封存：`handoff_archive/handoff_v134_archived_2026-08-26.md`（聯想Windows，Windows當機根因+ezPay記憶更正+跨機Stop hook查證+總結hook缺jq修復）
-
----
-
-> 📦 v135完整內容已封存：`handoff_archive/handoff_v135_archived_2026-08-27.md`（Mac桌面版，BNI Connect 430人匯入+MiniMax額度事故案例65+路徑大全憑證稽核）
-
----
-
-
-> 📦 v136完整內容已封存：`handoff_archive/handoff_v136_archived_2026-08-26.md`（Mac桌面版，BNI Connect前會員電話/Email補齊+來賓資料庫3712筆完整收集）
-
-> 📦 v137~v139完整內容已封存：`handoff_archive/handoff_v137_to_v139_archived_2026-08-27.md`（v137 Mac桌面版媒合手動觸發定案／v138聯想Windows跨機同步四層根因／v139 Mac桌面版RustDesk修復+MiniMax紅線+bigtree密集迭代）
-
-> 📦 v140完整內容已封存：`handoff_archive/handoff_v140_archived_2026-08-27.md`（聯想Windows，FB粉專發文API從零建置，卡在商家驗證+教練當場檢討試錯效率）
-
----
-
-> 📦 v141完整內容已封存：`handoff_archive/handoff_v141_archived_2026-08-27.md`（Mac終端機，bigtree 8/28 EDM上線+報名頁LINE誘因文案定案+/slides多簡報支援+ezPay發票查證）
-
----
-
-> 📦 v142完整內容已封存：`handoff_archive/handoff_v142_archived_2026-08-27.md`（Mac終端機，修復Stop hook守則#07輪詢偵測瞎眼35天的根因，commit`01a28f2fb`）
-
----
-
-> 📦 v143完整內容已封存：`handoff_archive/handoff_v143_archived_2026-08-28.md`（Mac終端機，BNI信用証清查4分會171人完成，真鑽231人查了10人中途總結）
-
----
-
-> 📦 v144+v145完整內容已封存：`handoff_archive/handoff_v144_to_v145_archived_2026-08-28.md`（Mac終端機v144離會會員信用証清查全數完結／聯想Windows v145 AI微論壇+ai-art獨立站建置）
-
----
-
-> 📦 v146完整內容已封存：`handoff_archive/handoff_v146_archived_2026-08-30.md`（Mac終端機，BNI信用証清查後續建網頁+複查+權限隔離+誤觸事故）
-
----
-
-> 📦 v147完整內容已封存：`handoff_archive/handoff_v147_archived_2026-08-30.md`（Mac終端機，/bni-credit三項待改+34筆信用証補開+搜尋空格bug修復）
-
----
-
-> 📦 v148完整內容已封存：`handoff_archive/handoff_v148_archived_2026-08-30.md`（Mac終端機，乾淨世界頻道QR上線+peipei-event斷線5天修復+電腦變慢診斷）
-
----
-
-> 📦 v149+v151完整內容已封存：`handoff_archive/handoff_v149_v151_archived_2026-08-30.md`（Mac終端機，真誠分會邀約來賓系統從零建置+bni-chapters重複實作/fork根因鑑識，v149與v151是同一起fork事件的兩條分支，內容已在v150結案）
-
----
-
-> 📦 v150完整內容已封存：`handoff_archive/handoff_v150_archived_2026-08-31.md`（Mac終端機，真誠分會邀約來賓重複建置根因查明+移除+5位會員專屬編輯網址交付）
-
----
-
-> 📦 v152完整內容已封存：`handoff_archive/handoff_v152_archived_2026-08-31.md`（Mac終端機，逐步脫離Netlify：4個新路由+3處連動+作品總覽更新）
-
----
-
-> 📦 v218完整內容已封存：`handoff_archive/handoff_v218_archived_2026-09-19.md`（Mac桌面版，全部釋放+MiniMax團隊品質稽核機制+開工hook身份誤判修復+幕僚長晨報重建+Netlify中文檔名部署bug發現）
-
----
-
-> 📦 v219完整內容已封存：`handoff_archive/handoff_v219_archived_2026-09-19.md`（Mac桌面版，手機/軍師討論邊界+Netlify中文檔名修復部署+後台帳密清單結案+workspace git大掃除含金鑰外洩發現+coach888熱門排行新功能）
-
-> 📦 v220完整內容已封存：`handoff_archive/handoff_v220_archived_2026-09-19.md`（Mac桌面版，接力棒狀態表失真教訓+機械防呆`handoff_sync_guard.sh`上線+CLAUDE.md 236KB→78KB瘦身+M系列MiniMax 1M機制查證+手機Remote Control重啟卡死未解留待下一棒）
-
-> 📦 v221+v222完整內容已封存：`handoff_archive/handoff_v221_v222_archived_2026-09-19.md`（v221 Mac桌面版，手機Remote Control真正根因查明修復+舊SOP早有答案的教訓／v222 Mac桌面版，中正大學互動牆從零建置上線+赫米斯Telegram斷線16小時根因修復，E16瘦身本場執行）
-
-> 📦 v223~v227完整內容已封存：`handoff_archive/handoff_v223_to_v227_archived_2026-09-20.md`（v223 B路徑1M通驗證／v224跨對話框交接SOP／v225 MiniMax懸案初步調查+coach888同步修復(平行session)／v226產業鏈SOP雙執行root cause／v227 MiniMax懸案徹底解謎+手機1M實測成功，E16瘦身2026-09-20執行）
-
----
-
-
-> 📦 v228~v230完整內容已封存：`handoff_archive/handoff_v228_to_v230_archived_2026-09-21.md`（v228憑證層git追蹤問題發現／v229 git-filter-repo歷史清除執行完畢／v230 CCU留言關閉+coach888收錄查證，E16瘦身2026-09-21執行）
-
----
-
-> 📦 v231~v237完整內容已封存：`handoff_archive/handoff_v231_to_v237_archived_2026-09-24.md`（v231 TokenTable接OpenCode+Episode11漫畫+agent捏造完工案例／v232 CCU媒體格式連環修復／v233海餅乾網站+BNI PPT SOP建立／v234聯想bni-dna/bigtree維護+記憶體洩漏追蹤／v235手機流量查證鏈+EM模式定義／v237膠囊咖啡機產業鏈+語音轉簡體字記錄，E16瘦身2026-09-24執行）
-
-
----
-
-> 📦 sincere戰情儀表板SOP補充段已結案封存：`handoff_archive/handoff_sincere_supplement_archived_2026-10-01.md`
 
 
 ---
