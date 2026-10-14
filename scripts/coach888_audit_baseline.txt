@@ -20,3 +20,8 @@
 # 2026-10-14 榮樹下來賓卡後台的「舊長連結」（/rongtree/cards?k=簽章）。coach888 已收錄短網址版
 # https://event.bymyway.com/rongtree/a/<12字>（活動後台），兩者是同一頁；長連結只為相容保留，不重複收錄。
 /rongtree/cards
+
+# 2026-10-14 南應大校友會「理監事與顧問團隊」：公開頁 /tut/team 已收進 coach888「bymyway自架版」。
+# /tut/team/ 是同一頁（結尾多一個斜線）；/tut/team/join 是公開頁「我要建立檔案」按鈕進去的子頁，不單獨收錄。
+/tut/team/
+/tut/team/join
