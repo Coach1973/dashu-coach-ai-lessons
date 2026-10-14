@@ -1,5 +1,6 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
+- [🔴 網頁字最小 20px（教練10/14定）：module_kit check 擋 px 寫法；font 簡寫加 inherit 會整條失效；既有43站小字多為rem/em、全面改待教練定範圍(2026-10-14)](feedback_web_font_min_20px_2026-10-14.md)
 - [🔧 「默默壞掉」怎麼查：接力棒鏡像停兩週(防呆擋正常棒)、小龍蝦開機檔超2萬字被截、點名例外靠錯誤字樣失效；新自動化要接進每日點名才會出聲(2026-10-14)](reference_silent_failures_found_in_weekly_audit_2026-10-14.md)
 - [🧩 開新專案先給教練「預設全勾」功能清單（module_kit.py menu）＋送出資料自動接到活動報名群（works-form.js、上架自動接線）已上線；模組化下一步 4 項等教練一句話(2026-10-14)](project_module_kit_new_project_menu_2026-10-14.md)
 - [🎓 南應大校友會理監事與顧問團隊頁 /tut/team 怎麼運作、照片存哪（不在git）、施正益；教練說「移植」＝複製原處保留；真鑽5位助理大使複製進真貴（只在資料庫、有備份）(2026-10-14)](project_tut_team_page_and_zhengui_copy_2026-10-14.md)
