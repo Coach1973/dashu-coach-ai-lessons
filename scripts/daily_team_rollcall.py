@@ -158,6 +158,21 @@ def check_public_urls():
             bad(label, f"對外網址打不開（{f'回應{code}' if code else '沒有回應'}）")
 
 
+def check_handoff_mirror():
+    """接力棒鏡像（workspace/CLAUDE.md）超過一天沒更新＝同步被擋或壞掉。
+    2026-10-14 發現：格式防呆把正常接力棒也擋掉，每 5 分鐘默默失敗、停在 10/01 兩週沒人發現。"""
+    md = Path.home() / ".openclaw/workspace/CLAUDE.md"
+    m = re.search(r"最後同步：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})", md.read_text(encoding="utf-8")[:2000]) if md.exists() else None
+    if not m:
+        bad("接力棒鏡像", "CLAUDE.md 找不到「最後同步」時間", "🟡")
+        return
+    age = datetime.now() - datetime.strptime(m.group(1), "%Y-%m-%d %H:%M")
+    if age > timedelta(hours=26):
+        bad("接力棒鏡像", f"CLAUDE.md 已 {age.days} 天沒同步（看 /tmp/sync_handoff.log）", "🟡")
+    else:
+        ok("接力棒鏡像")
+
+
 def check_cron_jobs():
     db = sqlite3.connect(f"file:{CRON_DB}?mode=ro", uri=True)
     failing = []
@@ -292,6 +307,7 @@ def main():
     try:
         check_public_urls()
         check_cron_jobs()
+        check_handoff_mirror()
     except Exception as e:
         bad("網址/排程檢查", f"檢查程式本身出錯：{e}")
 
