@@ -1,0 +1,19 @@
+{"reflexes": [
+ {"id": "R-NEW-PROJECT-MODULE-MENU",
+  "moment": "prompt",
+  "match": "(做|建|開|架|弄|搞|生)(一個|個|一份|一套|新的?)[^。！？\\n]{0,14}(網站|網頁|頁面|名冊|名單|系統|後台|活動頁|報名頁|專案|遊戲|資料庫|預約)|新(專案|網站|名冊|活動頁)|(套用|比照|複製|移植)[^。！？\\n]{0,12}(百人導師|BNI|南應大|真貴|tut|那套|模式|同一套)|建檔",
+  "say": "這是新專案：第一個回覆先跑 python3 scripts/module_kit.py menu \"專案名\"，把清單原樣給教練（預設全勾，教練說拿掉的才不做），其餘照 knowledges/模組庫_大樹標準功能.md 的範本做（送出資料就通知／專屬修改連結／後台一鍵複製／大樹作品集／GitHub／預約／空座位／按讚票選／分享卡）。不要等教練一項一項提醒（教練 10/14：『之後任何新建類似底層邏輯的網站，是不是我都不用再提醒』）。交付前跑 module_kit.py check <slug>。只是改既有網站的一小處，略過。",
+  "level": "remind",
+  "situation": "教練要開新網站／新名冊／新活動頁／新系統，或說「比照百人導師／BNI／南應大那套」時",
+  "source": "knowledges/模組庫_大樹標準功能.md（2026-10-14 教練交辦）",
+  "audience": ["coach"]},
+ {"id": "R-FORM-USE-WORKS-FORM-MODULE",
+  "moment": "pre_tool",
+  "tool": "Write|Edit",
+  "match": "<form\\b(?![^>]*(data-works-form|action=))[^>]*>",
+  "say": "你在寫一個表單：靜態作品頁一律加 data-works-form=\"<slug>\" ＋ <script src=\"/static/works-form.js\" defer></script>（送出就進活動報名即時通知群），欄位 name 用 name／phone／email／item／message，其他欄位有 name 就會自動併進留言。不准做「展示版、送出不寄出」的表單；有場次的活動頁改用 /api/register（模組庫第 2 項）。Flask 自己處理的表單（有 action）不適用。",
+  "level": "remind",
+  "situation": "AI 在網頁裡寫新表單時",
+  "source": "knowledges/模組庫_大樹標準功能.md 第 1 項（2026-10-14）",
+  "audience": ["coach"]}
+]}
