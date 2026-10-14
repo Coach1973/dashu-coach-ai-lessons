@@ -869,6 +869,28 @@ def _extract_visible_section_html(full_html):
     return "\n".join(chunks)
 
 
+# 🔴 2026-10-14 假陽性修正：coach888 畫面實際讀的是伺服器同步狀態（/api/coach888/state），
+# 不是 git 裡的靜態 index.html（2026-09-24 查證）；coach888_register_admin.py 也只寫伺服器。
+# 只查靜態檔會讓「已收進大樹常用」的項目一直被擋。改成兩邊都查，任一邊命中就算收錄。
+def _coach888_server_visible_text():
+    try:
+        import urllib.request
+        req = urllib.request.Request("https://event.bymyway.com/api/coach888/state",
+                                     headers={"User-Agent": "Mozilla/5.0", "Origin": "https://coach1973.github.io"})
+        with urllib.request.urlopen(req, timeout=4) as r:
+            state = json.loads(r.read().decode("utf-8"))
+        layout = json.loads(state.get("coach888_layout") or "{}")
+        items = json.loads(state.get("coach888_items") or "{}")
+        out = []
+        for sec in _COACH888_VISIBLE_SECTIONS:
+            for u in layout.get(sec, []):
+                out.append(u)
+                out.append(str((items.get(u) or {}).get("name", "")))
+        return "\n".join(out)
+    except Exception:
+        return ""
+
+
 # ════════════════════════════════════════════════
 # L. 新網站上線但沒收錄進coach888作品一覽（擋）—— 2026-09-04教練親定
 #    起因：tainan-shangquan網站上線後漏放coach888，教練回報「怎麼我看不到」
@@ -978,7 +1000,7 @@ if NEW_NAMED_ITEMS:
     except Exception:
         COACH888_HTML_2 = None
     if COACH888_HTML_2 is not None:
-        VISIBLE_HTML_2 = _extract_visible_section_html(COACH888_HTML_2)
+        VISIBLE_HTML_2 = _extract_visible_section_html(COACH888_HTML_2) + "\n" + _coach888_server_visible_text()
         # commit訊息裡的措辭是「XX頁面」，但coach888連結文字通常不帶這個後綴字，
         # 兩種寫法都查一次，任一種命中就算已收錄，避免措辭差異造成假陽性。
         # 2026-09-06再修正：只在「大樹常用」「後臺系統」範圍內找，不是整份檔案
@@ -1011,7 +1033,7 @@ if NEW_PUBLIC_REPOS:
     except Exception:
         COACH888_HTML = None
     if COACH888_HTML is not None:
-        VISIBLE_HTML = _extract_visible_section_html(COACH888_HTML)
+        VISIBLE_HTML = _extract_visible_section_html(COACH888_HTML) + "\n" + _coach888_server_visible_text()
         missing_repos = [r for r in NEW_PUBLIC_REPOS if r not in VISIBLE_HTML]
         if missing_repos:
             in_wrong_section = [r for r in missing_repos if r in COACH888_HTML]
