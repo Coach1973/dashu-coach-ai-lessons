@@ -1,4 +1,6 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
+- [🔴 頂部選單加項目前先量寬度：20px 字下多一項整排折兩行(公益路跑被教練截圖)；手機導覽統一用共用 nav-burger.js(四站已接)(2026-10-14)](feedback_nav_add_item_measure_width_with_20px_font_2026-10-14.md)
+- [🙋 招募志工團隊頁 volunteer.html：目標年底前100席、四站入口、人數改 JOINED、送出進活動報名群、教練構想與急需6項(2026-10-14)](project_volunteer_recruit_page_2026-10-14.md)
 # Memory Index
 - [🔴 數字類修改先分「目標」還是「目前進度」：教練說100改66其實是100席位、已66位，整站改錯被糾正(2026-10-14)](feedback_number_change_target_vs_progress_2026-10-14.md)
 - [🔧 Mac 裝 REA 逆向工程工具：npm 全域在 ~/.hermes/node，要補 ~/.local/bin/rea 捷徑；技能 bigtree-web-feature-clone 已裝(2026-10-14)](reference_rea_install_mac_hermes_npm_path_2026-10-14.md)
