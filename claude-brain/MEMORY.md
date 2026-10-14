@@ -1,5 +1,6 @@
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 # Memory Index
+- [🧩 開新專案先給教練「預設全勾」功能清單（module_kit.py menu）＋送出資料自動接到活動報名群（works-form.js、上架自動接線）已上線；模組化下一步 4 項等教練一句話(2026-10-14)](project_module_kit_new_project_menu_2026-10-14.md)
 - [🎓 南應大校友會理監事與顧問團隊頁 /tut/team 怎麼運作、照片存哪（不在git）、施正益；教練說「移植」＝複製原處保留；真鑽5位助理大使複製進真貴（只在資料庫、有備份）(2026-10-14)](project_tut_team_page_and_zhengui_copy_2026-10-14.md)
 - [🔧 BNI夥伴「專屬修改連結」≠後台編輯網址；後台已加一鍵複製，但 bni-chapters 與 team-bymyway 各有一份後台模板要同步改(2026-10-14)](reference_bni_member_personal_edit_link_two_repos_2026-10-14.md)
 - [🎙️ 榮樹下來賓資料表＋AI來賓卡＋樹蔭席承諾牆＋最下方「訪談嘉賓前置作業」公開區：怎麼運作、公開範圍、維護指令；給吳董的信只存草稿教練自己傳(2026-10-14)](project_rongshuxia_guest_form_card_prep_section_2026-10-14.md)
