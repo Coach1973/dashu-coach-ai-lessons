@@ -2511,8 +2511,12 @@ def rongtree_guest_form(token):
     ev = _rg.find_event(token)
     if not ev:
         abort(404)
+    token = ev["form_token"]          # 一律用「場次代碼」；同一場可有好幾位來賓，各存一筆
+    cookie_name = f"rg_{token}"
+    mine = request.cookies.get(cookie_name, "")
     if request.method == "GET":
-        return Response(_rg.render_form(token, ev, _rg.get_form(token)), content_type="text/html; charset=utf-8",
+        mine_row = _rg.get_form(mine) if _rg.TOKEN_RE.match(mine) and _rg._slot_has(mine, token) else None
+        return Response(_rg.render_form(token, ev, mine_row, _rg.count_in_slot(token)), content_type="text/html; charset=utf-8",
                         headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
     ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
     now = time.time()
@@ -2520,12 +2524,15 @@ def rongtree_guest_form(token):
     if len(hits) >= 10:
         return _rg_json({"ok": False, "error": "送出次數太多，請稍後再試"}, 429)
     _RG_HITS[ip] = hits + [now]
-    ok, err, first = _rg.save(token, ev, request.get_json(force=True, silent=True) or {}, ip)
+    ok, err, first, key = _rg.save(token, ev, request.get_json(force=True, silent=True) or {}, ip, mine)
     if not ok:
         return _rg_json({"ok": False, "error": err}, 400)
-    _rg.start_card(token, app.secret_key,
+    _rg.start_card(key, app.secret_key,
                    lambda t: _notify_xiaolongxia(t, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID), first)
-    return _rg_json({"ok": True})
+    resp = _rg_json({"ok": True})
+    # 這個瀏覽器記得自己填的是哪一筆：再打開網址是修改自己的；按「新增另一位來賓」才清掉
+    resp.set_cookie(cookie_name, key, max_age=30 * 86400, path="/rongtree/guest/", samesite="Lax")
+    return resp
 
 
 @app.route("/rongtree/guest/<token>/card")

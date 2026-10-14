@@ -82,7 +82,25 @@ def find_event(token: str):
         data = json.loads(SCHEDULE.read_text(encoding="utf-8"))
     except Exception:  # noqa: BLE001
         return None
-    return next((e for e in data.get("events", []) if e.get("form_token") == token), None)
+    evs = data.get("events", [])
+    hit = next((e for e in evs if e.get("form_token") == token), None)
+    if hit or not (len(token) > 8 and token[-1] in "23456789"):
+        return hit
+    # 同一場有多位來賓時，第 2、3… 位的資料用「場次代碼＋數字」存（見 save）
+    return next((e for e in evs if e.get("form_token") == token[:-1]), None)
+
+
+MAX_GUESTS = 6   # 同一場訪談最多收幾位來賓的資料表
+
+
+def slot_token(token):
+    """來賓資料的代碼 → 該場訪談的代碼（填表網址用）。"""
+    ev = find_event(token)
+    return ev["form_token"] if ev else token
+
+
+def _slot_has(row_token, tok):
+    return row_token == tok or (len(row_token) == len(tok) + 1 and row_token.startswith(tok) and row_token[-1] in "23456789")
 
 
 def _conn():
@@ -169,15 +187,15 @@ def public_prep():
     conn = _conn()
     rows = conn.execute("SELECT * FROM rongtree_guest_forms ORDER BY date DESC, start DESC").fetchall()
     conn.close()
-    by_token = {r["token"]: r for r in rows}
     upcoming = []
     for e in _upcoming():
         tok = e.get("form_token")
-        r = by_token.get(tok) if tok else None
+        mine = sorted((r for r in rows if tok and _slot_has(r["token"], tok)), key=lambda r: len(r["token"]))
+        names = [json.loads(r["data"])["name"] for r in mine if r["public"]]
         upcoming.append({"date": e["date"], "start": e["start"], "end": e.get("end", ""),
                          "tentative": bool(e.get("tentative")),
-                         "guest": (json.loads(r["data"])["name"] if r and r["public"] else e.get("guest") or ""),
-                         "form": f"/rongtree/guest/{tok}" if tok else "", "submitted": bool(r)})
+                         "guest": "、".join(names) or e.get("guest") or "",
+                         "form": f"/rongtree/guest/{tok}" if tok else "", "submitted": bool(mine), "count": len(mine)})
     guests = []
     for r in rows:
         if not r["public"]:
@@ -196,42 +214,68 @@ def set_public(token, public: bool):
     conn.close()
 
 
-def save(token, ev, payload, ip):
-    """回傳 (ok, 錯誤訊息, 是否第一次交回)。照片可不傳；重送時沒附照片就保留舊照片。"""
+def _pick_key(conn, base, name, mine):
+    """這份資料要存在哪一格：本人瀏覽器記得的那筆 → 同名的那筆（換裝置修改）→ 第一個空格（新增一位來賓）。"""
+    keys = [base] + [f"{base}{i}" for i in range(2, MAX_GUESTS + 1)]
+    have = {r["token"]: r["guest"] for r in conn.execute(
+        f"SELECT token, guest FROM rongtree_guest_forms WHERE token IN ({','.join('?' * len(keys))})", keys)}
+    if mine in have:
+        return mine
+    for k in keys:
+        if have.get(k) == name:
+            return k
+    return next((k for k in keys if k not in have), None)
+
+
+def count_in_slot(base):
+    conn = _conn()
+    n = sum(1 for r in conn.execute("SELECT token FROM rongtree_guest_forms").fetchall() if _slot_has(r["token"], base))
+    conn.close()
+    return n
+
+
+def save(token, ev, payload, ip, mine=None):
+    """token＝該場訪談代碼。一場可有多位來賓，各存一筆；不會互相覆蓋。
+    回傳 (ok, 錯誤訊息, 是否第一次交回, 這筆資料的代碼)。照片可不傳；重送時沒附照片就保留舊照片。"""
     clean = {}
     for key, label, kind, req, _ in FIELDS:
         v = (payload.get(key) or "").strip()
         v = v[:1500] if kind == "area" else re.sub(r"\s+", " ", v)[:80]
         if req and not v:
-            return False, f"請填寫「{label}」", False
+            return False, f"請填寫「{label}」", False, None
         clean[key] = v
     if len(re.sub(r"\D", "", clean["contact"])) < 8 and not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", clean["contact"]):
-        return False, "請填寫正確的電話或 Email", False
-    photo_file = None
+        return False, "請填寫正確的電話或 Email", False, None
+    photo_raw = None
     photo = payload.get("photo") or ""
     if photo:
         m = re.match(r"^data:image/(jpeg|jpg|png|webp);base64,(.+)$", photo, re.S)
         if not m:
-            return False, "照片格式不支援，請換一張 JPG 或 PNG", False
-        raw = base64.b64decode(m.group(2), validate=False)
-        if len(raw) > MAX_PHOTO or (raw[:3] != b"\xff\xd8\xff" and raw[:8] != b"\x89PNG\r\n\x1a\n" and raw[8:12] != b"WEBP"):
-            return False, "照片太大或格式不支援，請換一張", False
-        UPLOAD_DIR.mkdir(exist_ok=True)
-        photo_file = f"{token}.jpg"
-        (UPLOAD_DIR / photo_file).write_bytes(raw)
+            return False, "照片格式不支援，請換一張 JPG 或 PNG", False, None
+        photo_raw = base64.b64decode(m.group(2), validate=False)
+        if len(photo_raw) > MAX_PHOTO or (photo_raw[:3] != b"\xff\xd8\xff" and photo_raw[:8] != b"\x89PNG\r\n\x1a\n" and photo_raw[8:12] != b"WEBP"):
+            return False, "照片太大或格式不支援，請換一張", False, None
     conn = _conn()
-    old = conn.execute("SELECT photo_file FROM rongtree_guest_forms WHERE token=?", (token,)).fetchone()
-    photo_file = photo_file or (old["photo_file"] if old else None)
+    key = _pick_key(conn, token, clean["name"], mine)
+    if not key:
+        conn.close()
+        return False, f"這一場最多收 {MAX_GUESTS} 位來賓的資料，已經滿了", False, None
+    old = conn.execute("SELECT photo_file FROM rongtree_guest_forms WHERE token=?", (key,)).fetchone()
+    photo_file = old["photo_file"] if old else None
+    if photo_raw:
+        UPLOAD_DIR.mkdir(exist_ok=True)
+        photo_file = f"{key}.jpg"
+        (UPLOAD_DIR / photo_file).write_bytes(photo_raw)
     conn.execute(
         "INSERT INTO rongtree_guest_forms (token, event_id, date, start, guest, data, photo_file, card_status, ip) "
         "VALUES (?,?,?,?,?,?,?, 'pending', ?) ON CONFLICT(token) DO UPDATE SET "
         "data=excluded.data, photo_file=excluded.photo_file, guest=excluded.guest, date=excluded.date, "
         "start=excluded.start, card_status='pending', ip=excluded.ip, updated_at=datetime('now','localtime')",
-        (token, ev.get("id"), ev.get("date"), ev.get("start"), clean["name"],
+        (key, ev.get("id"), ev.get("date"), ev.get("start"), clean["name"],
          json.dumps(clean, ensure_ascii=False), photo_file, ip))
     conn.commit()
     conn.close()
-    return True, "", old is None
+    return True, "", old is None, key
 
 
 # ---------- AI 來賓卡 ----------
@@ -348,9 +392,10 @@ h1,h2,h3{font-family:"Noto Serif TC","Songti TC",serif;margin:0}
 """
 
 
-def render_form(token, ev, existing):
+def render_form(token, ev, existing, others=0):
+    """others＝這一場已經有幾位來賓交過資料。已有人交過、這個瀏覽器又不是修改自己那筆時，不預填名字。"""
     d = json.loads(existing["data"]) if existing else {}
-    if not d.get("name") and ev.get("guest"):
+    if not d.get("name") and ev.get("guest") and not others:
         d["name"] = ev["guest"]
     when = f"{ev.get('date', '')} {ev.get('start', '')}–{ev.get('end', '')}"
     rows = []
@@ -362,7 +407,8 @@ def render_form(token, ev, existing):
                f'<input id="{key}" name="{key}" value="{val}" placeholder="{E(ph)}" {"required" if req else ""}>')
         rows.append(f'<div class="field"><label for="{key}">{E(label)} {star}</label>{ctl}</div>')
     photo_note = "已收到您的照片，若不換可以不用再傳。" if existing and existing["photo_file"] else "節目封面與宣傳會用到，建議清楚的半身照。"
-    again = '<p class="again">您先前已填過，修改後再送出一次即可。</p>' if existing else ""
+    again = ('<p class="again">您先前已填過，修改後再送出一次即可。<br>'
+             '要幫<b>另一位來賓</b>填寫？<button type="button" class="linkbtn" onclick="newGuest()">新增另一位來賓</button></p>') if existing else ""
     return f"""<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>榮樹下來賓資料表</title>
@@ -381,6 +427,8 @@ button{{font:500 19px/1 inherit;min-height:56px;padding:0 32px;border:0;border-r
 button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}}.again{{color:var(--amber-hi)}}
 .consent{{color:var(--mute);font-size:16px;margin:4px 0 16px}}.consent b{{color:var(--on-ink)}}
 .done{{display:none;text-align:center;padding:40px 0}}.done h2{{font-size:30px;margin-bottom:12px}}
+.linkbtn{{font:inherit;min-height:0;padding:0 4px;background:none;color:var(--amber-hi);text-decoration:underline;border-radius:0}}
+.more{{margin-top:28px;color:var(--mute)}}.more button{{min-height:48px;font-size:17px;background:none;border:1px solid var(--amber);color:var(--amber-hi)}}
 </style></head><body><div class="wrap">
 <p class="eyebrow">榮樹下 Podcast</p>
 <h1>謝謝您，願意坐到榕樹下。</h1>
@@ -394,11 +442,13 @@ button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}
 <p class="consent">送出即同意在榮樹下網站公開您的<b>姓名、公司職稱、照片與一句話介紹</b>；聯絡方式與其他內容只給主持人看。</p>
 <button type="submit">送出資料</button><p class="msg" id="msg" role="alert"></p>
 </form>
-<div class="done" id="done" role="status"><h2>已收到，謝謝您！</h2><p class="lead">主持人會在訪談前讀過您的資料。想修改，再打開這個網址重新送出即可。</p></div>
+<div class="done" id="done" role="status"><h2>已收到，謝謝您！</h2><p class="lead">主持人會在訪談前讀過您的資料。想修改，再打開這個網址重新送出即可。</p>
+<div class="more"><p>同一場還有另一位來賓要填？</p><button type="button" onclick="newGuest()">新增另一位來賓</button></div></div>
 </div>
 <script>
 (()=>{{
 const f=document.getElementById('f'),msg=document.getElementById('msg');
+window.newGuest=()=>{{document.cookie='rg_{token}=; Max-Age=0; path=/rongtree/guest/';location.reload()}};
 function shrink(file){{return new Promise((ok,no)=>{{const img=new Image();img.onload=()=>{{const s=Math.min(1,1400/Math.max(img.width,img.height));
 const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
 ok(c.toDataURL('image/jpeg',.85));URL.revokeObjectURL(img.src)}};img.onerror=()=>no();img.src=URL.createObjectURL(file)}})}}
@@ -482,7 +532,7 @@ dt{{font-weight:700;margin-top:12px}}dd{{margin:2px 0 0;white-space:pre-wrap}}
 <div class="tools">
 <form method="post" action="/rongtree/guest/{token}/card/regen?k={k}"><button>重新產生來賓卡</button></form>
 <form method="post" action="/rongtree/guest/{token}/card/public?k={k}"><input type="hidden" name="public" value="{0 if r['public'] else 1}"><button>{'從公開名單隱藏' if r['public'] else '恢復公開'}</button></form>
-<a href="/rongtree/guest/{token}" target="_blank" rel="noopener">來賓填表頁</a>
+<a href="/rongtree/guest/{slot_token(token)}" target="_blank" rel="noopener">來賓填表頁</a>
 <button onclick="print()">列印</button></div>
 <p class="sub" style="margin-top:24px;font-size:15px">AI 依來賓自填資料整理，訪談前請自行確認內容。最後更新：{E(r['updated_at'])}</p>
 </div></body></html>"""

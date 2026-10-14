@@ -123,5 +123,44 @@ client.post(f"/rongtree/guest/{TOKEN}/card/public?k={k}", data={"public": "1"})
 check("恢復公開", client.get("/api/rongtree/prep").get_json()["guests"][0]["name"] == "測試來賓")
 check("填表頁寫明哪些資料會公開", "姓名、公司職稱、照片與一句話介紹" in client.get(f"/rongtree/guest/{TOKEN}").get_data(as_text=True))
 
+# ---- 同一場兩位以上來賓（2026-10-14 裕榮：9–10 點有兩位來賓）----
+rg._call_minimax = lambda prompt: "## 一句話介紹\n第二位介紹"
+SENT.clear()
+guest2 = {**OK, "name": "第二位來賓", "title": "乙公司 總經理", "contact": "second@example.com", "story": "第二位的故事"}
+c2 = appmod.app.test_client()                      # 另一支手機：沒有第一位的 cookie
+before = rg.get_form(TOKEN)
+h2 = c2.get(f"/rongtree/guest/{TOKEN}").get_data(as_text=True)
+check("另一支手機打開同網址是空白表單，看不到第一位的資料", "我的公益故事" not in h2 and "改過的故事" not in h2 and 'value="測試來賓"' not in h2)
+check("已有人交過時不預填名字，避免第二位看到前一位的名字", '<input id="name" name="name" value=""' in h2)
+r = c2.post(f"/rongtree/guest/{TOKEN}", json=guest2)
+check("第二位送出成功", r.status_code == 200 and r.get_json()["ok"])
+k2 = TOKEN + "2"
+for _ in range(50):
+    row2 = rg.get_form(k2)
+    if row2 and row2["card_status"] == "done":
+        break
+    time.sleep(0.1)
+check("第二位另存一筆、來賓卡也做好", row2 and row2["guest"] == "第二位來賓" and row2["card_status"] == "done")
+check("第一位的資料沒被蓋掉", rg.get_form(TOKEN)["guest"] == "測試來賓" and rg.get_form(TOKEN)["data"] == before["data"])
+check("第二位也通知巴哈群組、網址帶自己的簽章", any(rg.card_url(SECRET, k2) in t and "第二位來賓" in t for t in SENT))
+check("第二位的來賓卡打得開、填表頁連回場次代碼", f"/rongtree/guest/{TOKEN}\"" in c2.get(f"/rongtree/guest/{k2}/card?k={rg.card_sig(SECRET, k2)}").get_data(as_text=True))
+r = c2.post(f"/rongtree/guest/{TOKEN}", json={**guest2, "story": "第二位改過"})
+check("第二位同一支手機再送＝修改自己那筆，不會變第三位", json.loads(rg.get_form(k2)["data"])["story"] == "第二位改過" and rg.get_form(TOKEN + "3") is None)
+c3 = appmod.app.test_client()
+c3.post(f"/rongtree/guest/{TOKEN}", json={**guest2, "story": "換裝置修改"})
+check("換一台裝置、同名再送＝修改同一位，不重複", json.loads(rg.get_form(k2)["data"])["story"] == "換裝置修改" and rg.get_form(TOKEN + "3") is None)
+c2.set_cookie("rg_" + TOKEN, "", max_age=0, path="/rongtree/guest/")   # 等於按「新增另一位來賓」
+c2.post(f"/rongtree/guest/{TOKEN}", json={**OK, "name": "第三位來賓", "contact": "third@example.com"})
+check("按「新增另一位來賓」後再送出＝第三位", rg.get_form(TOKEN + "3") and rg.get_form(TOKEN + "3")["guest"] == "第三位來賓")
+j = client.get("/api/rongtree/prep").get_json()
+check("前置作業同一場列出所有來賓名字、顯示交了幾位", j["upcoming"][0]["count"] == 3 and all(n in j["upcoming"][0]["guest"] for n in ("測試來賓", "第二位來賓", "第三位來賓")))
+check("公開名單每位都有、各有自己的照片網址規則", {g["name"] for g in j["guests"]} >= {"測試來賓", "第二位來賓", "第三位來賓"})
+check("後台列表三位都列出", all(n in client.get(rg.list_url(SECRET).replace("https://event.bymyway.com", "")).get_data(as_text=True) for n in ("第二位來賓", "第三位來賓")))
+appmod._RG_HITS.clear()      # 測試用同一個 IP，先清掉每小時 10 次的限流
+for i in range(4, 8):
+    appmod.app.test_client().post(f"/rongtree/guest/{TOKEN}", json={**OK, "name": f"來賓{i}", "contact": f"g{i}@example.com"})
+r = appmod.app.test_client().post(f"/rongtree/guest/{TOKEN}", json={**OK, "name": "超額來賓", "contact": "over@example.com"})
+check("一場最多收 6 位，超過會明確告知", r.status_code == 400 and "已經滿了" in r.get_json()["error"])
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)
