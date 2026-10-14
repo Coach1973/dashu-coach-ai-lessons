@@ -163,8 +163,9 @@ def check_cron_jobs():
     failing = []
     for name, js in db.execute("select name, state_json from cron_jobs where enabled=1"):
         st = json.loads(js or "{}")
-        # 鎖死不能跑指令的分身(yang/yijing)，系統自帶的每週技能整理一定被擋，屬預期，不報
-        if name.startswith("skill-collection-review-") and "Exec blocked" in str(st.get("lastError", "")):
+        # 鎖死不能跑指令的分身(yang/yijing，extensions/safety-locks 的 SANDBOXED_AGENTS)，系統自帶的每週技能整理
+        # 一定被擋，屬預期，不報。看分身名稱、不看錯誤字樣：安全鎖改版後訊息從 Exec blocked 變成 Ls failed，舊判斷失效（10/14）
+        if name in ("skill-collection-review-yijing", "skill-collection-review-yang"):
             continue
         if st.get("consecutiveErrors", 0) > 0 or st.get("lastDeliveryStatus") == "failed":
             failing.append(name)
