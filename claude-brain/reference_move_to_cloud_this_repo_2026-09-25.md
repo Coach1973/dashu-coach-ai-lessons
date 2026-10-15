@@ -41,3 +41,9 @@ move_to_cloud 若遇 uncommitted changes：逐一檢查再 commit，不要 `git 
 - 10/06 02:12 改用 Bash 工具 `( script -q log claude --cloud "..." < /dev/null & )`：session 建立了（`Created cloud session`），但**沒掛倉庫**（頁面只有 Environment: Default；雲端說沒有 origin、`GitHub access to this repository is not enabled for this session`），做完 4 個 commit 推不出去。觀察到的差異只有開法；確切原因沒查證，但以後一律走終端機分頁。
 - 開完要驗：雲端頁（claude.ai/code/session_...）頂端要看得到倉庫名與分支；沒有就是開壞了，別讓它開工。
 - 補救：教練在網頁版自己把倉庫接上既有對話即可（10/06 02:43 教練做了），雲端不用重做。誤請雲端「貼出 diff」會白耗教練額度，發現開壞時第一動作是停手回報。
+
+## 6. 2026-10-15 補：開雲端對話改用「Chrome 開 claude.ai/code 新增工作階段」，不要用終端機 `claude --cloud`
+- 教練用手機／遠端時看不到 Mac 終端機分頁，`claude --cloud` 停在「信任這個資料夾」他根本不知道（10/15 他說「它並沒有跳出來」），而且按信任是改安全設定、只能他按，白等 10 分鐘。
+- 做法：教練先在 claude.ai/code 把倉庫加進雲端（他 10/15 手動加了 rongtree，倉庫清單有搜尋框，打 repo 名篩選）。之後我用 claude-in-chrome：開 claude.ai/code → 倉庫下拉選 Coach1973/<repo>（選項要用 find 找 ref 再點；JS 取清單是虛擬捲動只列前 87 個，要在搜尋框輸入）→ 模型下拉選 Opus 5.5（預設是 Sonnet 5.5 超高）→ 提示詞是 ProseMirror，用 `focus(); execCommand('insertText', false, 文字)` 填入 → 按「傳送」。實測成功：榮樹下改版雲端對話 `session_01UN5wbKUBNK5RsdQUJKiQXo`（https://claude.ai/code/session_01UN5wbKUBNK5RsdQUJKiQXo）。
+- 任務書放 `workspace/state/cloud_briefs/`，雲端只准推自己的分支（榮樹下 main 推上去會自動換新正式站）；收回方式：`git -C ~/github_repos/<repo> fetch && git branch -r | grep claude`，雲端信放分支 `docs/to_junshi/`。
+- 螢幕截圖被截圖鎖擋，操作網頁用 find／read_page／javascript_tool 讀結構即可。
