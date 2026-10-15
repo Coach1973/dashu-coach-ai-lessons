@@ -1,3 +1,6 @@
+- [🔧 聯想「倒數日」小程式重開機沒自動啟動：開機捷徑直指 WindowsApps 內 exe 會被拒絕存取，改用 explorer shell:AppsFolder\AppID；桌面捷徑位置(2026-10-15)](reference_lenovo_countdown_app_startup_fix_2026-10-15.md)
+- [🔧 聯想記憶體從50%飆到77%＝核心非分頁集區 NtFC(ntfs.sys) 漏15GB，工作管理員看不到；怎麼查、重開機才釋放；同場移除 ChatGPT(OpenAI.Codex)(2026-10-15)](reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15.md)
+- [☁️ 雲端工作頁怎麼吃到教練全套規則(cloud_sync+專案.claude/settings.json)、claude --cloud 卡信任確認要改用 Chrome 開 claude.ai/code、第6節開法與坑、驗收雲端分支輕量法(2026-09-25，10/15～10/16 更新)](reference_move_to_cloud_this_repo_2026-09-25.md)
 - [🙏 真公益俱樂部頁新增「首批足跡夥伴」7位(牧師＝何瑞峰 ruifeng)＋五位個人頁頁尾補志工/真公益連結：做法、漢堡門檻改 1260、怎麼加第8位、擱著的事(2026-10-16)](project_peers_footprint_section_social_club_2026-10-16.md)
 - [🔧 「開工」臨時 worktree 對話：Edit 改 ~/.openclaw/** 正式檔案會被 hook 擋，request_directory 沒用；教練授權後才改用終端機補丁，改前備份、path-limited commit(2026-10-15)](reference_worktree_session_edit_hook_blocks_openclaw_2026-10-15.md)
 - [🔧 LINE 任何群問「最近 N 場／N 天／一週／半個月可以訪談的時間」都答得出來：萬用接線 peer=group:*→rongshuxia、open-slots --count/--days、觸發詞、真實群組路徑測法；教練不用通知(2026-10-15)](reference_line_any_group_answers_coach_free_slots_2026-10-15.md)
