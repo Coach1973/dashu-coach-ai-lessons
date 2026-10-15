@@ -1756,6 +1756,20 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-NO-8765-TEST-PORT",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "(?s)(http\\.server|serve|live-server|flask run|-m http)[^\\n]{0,40}\\b8765\\b|\\b8765\\b[^\\n]{0,20}(http\\.server|serve)",
+      "say": "8765 是正式站 /api/mytools/state 放行的測試來源：用這個埠測試常用查詢頁，頁面的存檔會真的寫進教練的正式資料（案例121，10/15 14:44 被蓋掉一次）。測試改用別的埠（例如 8791），或先把頁面的 fetch／API 換成假的再開。",
+      "level": "remind",
+      "situation": "本機起網頁伺服器測試會寫入正式站的頁面時",
+      "source": "試金石案例121",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
