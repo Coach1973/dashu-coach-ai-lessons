@@ -1,3 +1,4 @@
+- [🔧 驗收雲端分支：event.bymyway.com 直接讀 ~/github_repos/<slug> 工作目錄，在那裡 checkout＝立刻上線；改用另開 worktree＋唯讀代理伺服器，雲端交接信不進網站目錄(榮樹下改版 0cf9d29, 2026-10-15)](reference_review_cloud_branch_never_checkout_in_live_repo_2026-10-15.md)
 - [🔎 「完整作品一覽」頁 coach1973.github.io/all-works：GitHub+策展名冊+作品集三來源去重(212筆)、搜人名(曾博士/Scott)；事件觸發更新三處(上架完/下架/gh repo create hook)；找不到網頁先搜這頁(2026-10-15)](reference_all_works_page_architecture_2026-10-15.md)
 - [🔧 上架「完成」通知沒來＝處理程序卡死：怎麼查(ps/sample/processing)怎麼救；10/15 根因是圖片瘦身 regex 遇 10MB 內嵌圖變平方級，已修(2026-10-15)](reference_curation_pipeline_stuck_diagnosis_2026-10-15.md)
 - [🔧 對話容量提醒 hook：context 跨 30/35/40/50% 各提醒一次(教練30%出頭開新對話)；桌面版看不到 context 時用 get_usage 讀，不需升級模型(2026-10-14)](reference_context_percent_reminder_hook_2026-10-14.md)
