@@ -3299,6 +3299,84 @@ def api_coach888_state():
     )
 
 
+MYTOOLS_ORIGINS = {"https://coach1973.github.io", "http://localhost:8765", "http://127.0.0.1:8765"}
+MYTOOLS_KEY = "mytools_data"
+
+
+def _mytools_clean(data):
+    """「大樹的常用查詢網站」排版存檔的格式檢查：只收 sections(分類)/items(項目)/removed(已刪除網址)，
+    其他欄位丟掉、字串截長度，網址只收 http(s)。不合格式回 None。"""
+    if not isinstance(data, dict) or not isinstance(data.get("sections"), list):
+        return None
+    if not 1 <= len(data["sections"]) <= 40:
+        return None
+
+    def txt(v, n):
+        return v.strip()[:n] if isinstance(v, str) else ""
+
+    sections = []
+    for sec in data["sections"]:
+        if not isinstance(sec, dict) or not isinstance(sec.get("items"), list) or len(sec["items"]) > 300:
+            return None
+        items = []
+        for it in sec["items"]:
+            if not isinstance(it, dict):
+                return None
+            url = txt(it.get("url"), 1000)
+            if not re.match(r"^https?://", url):
+                return None
+            items.append({"name": txt(it.get("name"), 120) or url, "url": url,
+                          "desc": txt(it.get("desc"), 300), "tag": txt(it.get("tag"), 20)})
+        sections.append({"id": txt(sec.get("id"), 40) or "s" + secrets.token_hex(4),
+                         "icon": txt(sec.get("icon"), 8), "title": txt(sec.get("title"), 60) or "未命名",
+                         "collapsed": bool(sec.get("collapsed")), "items": items})
+    removed = [u for u in data.get("removed", []) if isinstance(u, str)][:500] if isinstance(data.get("removed", []), list) else []
+    return {"sections": sections, "removed": removed}
+
+
+@app.route("/api/mytools/state", methods=["GET", "POST", "OPTIONS"])
+def api_mytools_state():
+    """大樹的常用查詢網站(coach1973.github.io/my-tools)的排版狀態(2026-10-15教練交辦：像作品一覽一樣自己排分組、搬項目)。
+    GET：回傳 {data, updated_at}（沒存過 data 是 null，頁面用內建預設）。
+    POST：body {data:{sections,removed}}，只收來自 coach1973.github.io 的瀏覽器(Origin 檢查)，格式不合回 400。
+    每次存檔都留一份歷史(最近 60 份)，被亂改可以還原：mytools_history 表。"""
+    origin = request.headers.get("Origin", "")
+    headers = {"Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type",
+               "Content-Type": "application/json"}
+    if origin in MYTOOLS_ORIGINS:
+        headers["Access-Control-Allow-Origin"] = origin
+    if request.method == "OPTIONS":
+        return Response(status=204, headers=headers)
+    conn = db.get_conn()
+    conn.execute("CREATE TABLE IF NOT EXISTS mytools_history (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT, saved_at TEXT)")
+    if request.method == "GET":
+        row = conn.execute("SELECT value, updated_at FROM coach888_state WHERE key = ?", (MYTOOLS_KEY,)).fetchone()
+        conn.close()
+        body = {"data": json.loads(row["value"]) if row and row["value"] else None,
+                "updated_at": row["updated_at"] if row else None}
+        return Response(json.dumps(body, ensure_ascii=False), status=200, headers={**headers, "Access-Control-Allow-Origin": "*"} if "Access-Control-Allow-Origin" not in headers else headers)
+    if origin not in MYTOOLS_ORIGINS:
+        conn.close()
+        return Response(json.dumps({"ok": False, "error": "origin not allowed"}), status=403, headers=headers)
+    payload = request.get_json(force=True, silent=True) or {}
+    clean = _mytools_clean(payload.get("data"))
+    if clean is None:
+        conn.close()
+        return Response(json.dumps({"ok": False, "error": "bad data"}), status=400, headers=headers)
+    value = json.dumps(clean, ensure_ascii=False)
+    if len(value) > 400_000:
+        conn.close()
+        return Response(json.dumps({"ok": False, "error": "too large"}), status=413, headers=headers)
+    conn.execute(
+        "INSERT INTO coach888_state (key, value, updated_at) VALUES (?, ?, datetime('now', 'localtime')) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at", (MYTOOLS_KEY, value))
+    conn.execute("INSERT INTO mytools_history (value, saved_at) VALUES (?, datetime('now', 'localtime'))", (value,))
+    conn.execute("DELETE FROM mytools_history WHERE id NOT IN (SELECT id FROM mytools_history ORDER BY id DESC LIMIT 60)")
+    conn.commit()
+    conn.close()
+    return Response(json.dumps({"ok": True}), status=200, headers=headers)
+
+
 @app.route("/api/coach888/click", methods=["POST", "OPTIONS"])
 def api_coach888_click():
     """coach888「熱門排行」點擊計數(2026-09-18交辦)：教練點某個項目的連結就+1，
