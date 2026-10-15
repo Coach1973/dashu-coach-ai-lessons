@@ -665,7 +665,8 @@
       "uploaded_at": "2026-10-13 03:43",
       "status": "live",
       "source_package": "20261013-034314__doc_c5df80cac43e_rongshuxia-site.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/rongtree"
     },
     {
       "slug": "scott-dr",
@@ -677,7 +678,8 @@
       "uploaded_at": "2026-10-13 11:43",
       "status": "live",
       "source_package": "20261013-114246__doc_933569f72d26_scott-dr-site-v2.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/scott-dr"
     },
     {
       "slug": "social-good",
@@ -691,6 +693,56 @@
       "source_package": "20261013-213200__zhen-gongyi-v2-slim.zip",
       "no_shop_card": true,
       "repo": "Coach1973/social-good"
+    },
+    {
+      "slug": "social-club",
+      "title": "真公益・企業家俱樂部｜參與，就是公益",
+      "description": "真公益企業家俱樂部：公益不一定要很花錢，參與就是公益。以順發電腦 17 年「消費做公益」為示範，邀請企業家一起把好事做大。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/social-club/",
+      "github_pages_url": "https://coach1973.github.io/social-club/",
+      "uploaded_at": "2026-10-14 03:33",
+      "status": "live",
+      "source_package": "20261014-033335__doc_132eb5b1ad97_zhen-gongyi-club.zip",
+      "in_works": true,
+      "repo": "Coach1973/social-club"
+    },
+    {
+      "slug": "angel-sister",
+      "title": "陳淑玲｜CBMC 高雄一分會會長・職場宣教者",
+      "description": "CBMC 國際基督徒工商人員協會高雄一分會會長陳淑玲。護理師出身，人生三次因病轉型，用耶穌基督的愛與能力轉化工商職場。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/angel-sister/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-15 09:33",
+      "status": "live",
+      "source_package": "20261015-091653__chen-shuling-brand-web-v2.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/angel-sister"
+    },
+    {
+      "slug": "patrick-chu",
+      "title": "朱元中 Patrick｜幫企業認真導入 ESG 的人",
+      "description": "天下顧問（B 型企業）執行長朱元中 Patrick：從思科、台積電、TutorABC 到 ESG 培訓、輔導與第三方查證。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/patrick-chu/",
+      "github_pages_url": "https://coach1973.github.io/patrick-chu/",
+      "uploaded_at": "2026-10-15 09:34",
+      "status": "live",
+      "source_package": "20261015-092954__朱元中_個人品牌網頁_含公益足跡.zip",
+      "in_works": true
+    },
+    {
+      "slug": "lidie",
+      "title": "張麗蝶｜T1科技 ‧ 元照科技照明 董事長 — 讓每一盞燈照亮健康，也照亮社會",
+      "description": "張麗蝶，T1科技股份有限公司／元照科技照明有限公司董事長。從銀行高階主管轉身投入全光譜健康照明，長年陪伴社福團體、推動時間銀行與企業 ESG。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/lidie/",
+      "github_pages_url": "https://coach1973.github.io/lidie/",
+      "uploaded_at": "2026-10-15 20:34",
+      "status": "live",
+      "source_package": "20261015-203355__zhang-lidie-website-v2.zip",
+      "repo": "Coach1973/lidie"
     }
   ],
   "redirects": {
