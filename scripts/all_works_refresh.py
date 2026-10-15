@@ -17,6 +17,8 @@
   python3 scripts/all_works_refresh.py --no-push  寫檔但不推
   python3 scripts/all_works_refresh.py --reason "上架 xxx"   寫進 commit 訊息
 """
+from __future__ import annotations
+
 import argparse
 import concurrent.futures as cf
 import fcntl

@@ -81,6 +81,17 @@ def log(msg: str) -> None:
     print(line, end="")
 
 
+def trigger_all_works_refresh(reason: str) -> None:
+    """「完整作品一覽」(Coach1973/all-works) 資料更新：上架處理完的那一刻背景跑一次（事件觸發，不輪詢）。
+    不等結果、不擋上架；失敗只寫 state/all_works_refresh.log。"""
+    try:
+        out = open(WORKSPACE / "state" / "all_works_refresh.log", "a", encoding="utf-8")
+        subprocess.Popen([sys.executable, str(WORKSPACE / "scripts" / "all_works_refresh.py"), "--reason", reason],
+                         stdout=out, stderr=subprocess.STDOUT, start_new_session=True, env=_ENV)
+    except Exception as e:  # noqa: BLE001
+        log(f"完整作品一覽更新觸發失敗(不影響上架): {e!r}")
+
+
 def notify(text: str) -> None:
     """2026-09-06補：回傳的message_id一併記進log——教練事後要求「網址改短
     之後把發錯的舊通知清掉」時，這台Mac完全查不到訊息ID(Bot API不能瀏覽
@@ -1087,6 +1098,7 @@ def main() -> None:
             if sidecar_src.is_file():
                 shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
         process_one(staged)
+    trigger_all_works_refresh(f"策展上架處理完成（{len(pending)} 包）")
 
 
 if __name__ == "__main__":
