@@ -1770,6 +1770,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-FIND-WORK-IN-ALL-WORKS",
+      "moment": "prompt",
+      "match": "(?s)((找不到|不見了|不見|在哪裡|在哪|有沒有做過|做過沒)[^\\n]{0,24}(網頁|網站|頁面|作品|報告|站)|(網頁|網站|頁面|作品|報告)[^\\n]{0,24}(找不到|不見了|在哪裡|在哪))",
+      "say": "教練說找不到某個網頁／作品／某個人的站：先開「完整作品一覽」搜（https://coach1973.github.io/all-works/?q=關鍵字，也可以直接把頁面跳出來給教練自己搜）——GitHub 全部倉庫、策展名冊、大樹作品一覽三個來源都在裡面，連「只有 GitHub 沒上架」的也有。搜到就把網址獨立一行回給教練並跑 scripts/deliver_open.sh 跳出來；搜不到才往下查（接力棒、coach888、策展名冊），不要先說「沒有」。細節見記憶 reference_all_works_page_architecture_2026-10-15。",
+      "level": "remind",
+      "situation": "教練找不到某個網頁、作品或某個人的網站時",
+      "source": "教練 2026-10-15：10/14 一週盤點報告找不到、曾博士的網頁找不到（其實 scott-dr 有網頁、策展中心也有登記）；完整作品一覽頁的起因",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
