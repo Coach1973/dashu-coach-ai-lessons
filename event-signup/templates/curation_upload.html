@@ -72,7 +72,7 @@
   <div class="card">
     <h1>作品<span>上傳</span></h1>
     <p class="sub">丟一個做好的網站zip檔案，系統會自動上架到 event.bymyway.com</p>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" action="/curation/upload" enctype="multipart/form-data">
       {% if key %}<input type="hidden" name="key" value="{{ key }}">{% endif %}
       <label class="slug-label">這是哪一種？（必選）</label>
       <div class="kinds">

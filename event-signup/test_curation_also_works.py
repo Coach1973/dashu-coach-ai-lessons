@@ -56,5 +56,16 @@ r = client.get(f"/u/{code}")
 check("短網址 /u/<10字> 打開就是上傳頁，帶著金鑰", r.status_code == 200 and KEY in r.get_data(as_text=True) and len(code) == 10)
 check("短代碼不對 → 404", client.get("/u/aaaaaaaaaa").status_code == 404)
 
+# 2026-10-15 教練：用短網址上傳「失效」＝表單沒寫送到哪，瀏覽器把檔案 POST 回 /u/<代碼>（只准看）→ 405。
+import re
+html = client.get(f"/u/{code}").get_data(as_text=True)
+action = re.search(r'<form[^>]*method="POST"[^>]*action="([^"]+)"', html)
+check("短網址頁的上傳表單明寫送到 /curation/upload（不是送回自己）", bool(action) and action.group(1) == "/curation/upload")
+hidden_key = re.search(r'name="key" value="([^"]+)"', html).group(1)
+r = client.post(action.group(1), data={"key": hidden_key, "kind": "creation", "custom_slug": "tmp-test-short",
+                                       "package": (io.BytesIO(b"PK"), "x.zip")}, content_type="multipart/form-data")
+check("照短網址頁的表單送出（不帶 ?key=，只靠內建金鑰）→ 收件成功，不是 405／被導去登入", r.status_code == 200)
+check("直接 POST 到短網址仍是 405（短網址只負責顯示）", client.post(f"/u/{code}", data={}).status_code == 405)
+
 print("\n全部通過" if not fails else f"\n失敗 {len(fails)} 項：{fails}")
 raise SystemExit(1 if fails else 0)
