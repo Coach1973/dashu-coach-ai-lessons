@@ -1555,10 +1555,10 @@
       "moment": "pre_tool",
       "tool": "Bash",
       "match": "claude\\s+--cloud",
-      "say": "開雲端對話不要用 Bash（背景 script／stdin 接 /dev/null）：10/06 這樣開出來的對話沒掛倉庫、做完推不上 GitHub。改用 mcp__terminal__run_in_terminal 在真終端機分頁跑 `cd ~/github_repos/<倉庫> && claude --cloud \"...\"`；開完到 claude.ai/code/session_... 頁頂確認看得到倉庫名與分支，沒有就是開壞了、先別讓它開工。只是傳話給既有雲端頁（`claude -p ... --cloud <session_id>`）不受此限。",
+      "say": "開雲端對話：①不要用 Bash 背景 script（10/06 沒掛倉庫、推不上 GitHub）；②也不要用終端機分頁 `claude --cloud`——資料夾沒信任過會停在確認題，教練用手機／遠端看不到、按信任又是安全設定只能他按（10/15 白等 10 分鐘）。改用 Chrome（claude-in-chrome）開 claude.ai/code 新增工作階段：倉庫下拉（搜尋框打 repo 名）→ 模型選 Opus 5.5 → 提示詞用 ProseMirror 的 execCommand('insertText') 填入任務書（放 state/cloud_briefs/）→ 按傳送；細節在記憶 reference_move_to_cloud_this_repo_2026-09-25 第 6 節。倉庫要先由教練在 claude.ai/code 加進雲端；雲端只准推自己的分支。只是傳話給既有雲端頁（`claude -p ... --cloud <session_id>`）不受此限。",
       "level": "remind",
       "situation": "要開新的雲端對話（claude --cloud）時",
-      "source": "教練 2026-10-06 02:38「那你要幫我開一個新的雲端對話框嗎？」（看到新對話沒接上倉庫）；reference_move_to_cloud_this_repo_2026-09-25 第 5 節",
+      "source": "教練 2026-10-06 02:38「那你要幫我開一個新的雲端對話框嗎？」（看到新對話沒接上倉庫）；reference_move_to_cloud_this_repo_2026-09-25 第 5 節；2026-10-15 改：終端機分頁路線在教練遠端時卡信任確認，改走 Chrome 開 claude.ai/code（榮樹下改版實測成功）",
       "audience": [
         "coach"
       ]
