@@ -1731,6 +1731,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-TAVA-UPDATED-PAGE-SYNC",
+      "moment": "prompt",
+      "match": "tava-ai\\.com/chat/[A-Za-z0-9]+/[^\\s]+\\.html",
+      "say": "教練貼了 TAVA 頁面網址（多半是更新版）：照 knowledges/SOP_TAVA更新版備份_my-tools與作品集收錄.md 一次做完——抓原頁→找對應備份倉庫（README 原頁網址／標題比對）→1:1 覆蓋 index.html、改 README、push、cmp 驗證→my-tools build.py 改說明並 push→coach888_register_admin.py 更新名稱（維持原分類）→網址獨立一行＋開 Chrome。不要問「要不要更新」「放哪裡」（教練 10/15：『我只要丟更新版的網址，你就知道你要去更新什麼東西』）。TAVA 每版網址都是新的，沒有固定網址可輪詢，所以靠教練丟網址觸發。只是教練問『這頁在講什麼』『幫我看這頁』而沒有更新備份意圖，略過。",
+      "level": "remind",
+      "situation": "教練貼 tava-ai.com 的頁面網址（TAVA 更新版）時",
+      "source": "knowledges/SOP_TAVA更新版備份_my-tools與作品集收錄.md（2026-10-15 教練交辦）",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
