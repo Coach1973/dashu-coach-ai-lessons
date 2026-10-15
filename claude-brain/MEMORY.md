@@ -1,3 +1,4 @@
+- [🔧 上架「完成」通知沒來＝處理程序卡死：怎麼查(ps/sample/processing)怎麼救；10/15 根因是圖片瘦身 regex 遇 10MB 內嵌圖變平方級，已修(2026-10-15)](reference_curation_pipeline_stuck_diagnosis_2026-10-15.md)
 - [🔧 對話容量提醒 hook：context 跨 30/35/40/50% 各提醒一次(教練30%出頭開新對話)；桌面版看不到 context 時用 get_usage 讀，不需升級模型(2026-10-14)](reference_context_percent_reminder_hook_2026-10-14.md)
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 - [🔴 頂部選單加項目前先量寬度：20px 字下多一項整排折兩行(公益路跑被教練截圖)；手機導覽統一用共用 nav-burger.js(四站已接)(2026-10-14)](feedback_nav_add_item_measure_width_with_20px_font_2026-10-14.md)
