@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 7dfd3491-32da-49ec-be24-a2c0d54e850c
-  modified: 2026-09-25T02:39:31.968Z
+  modified: 2026-10-15T17:38:13.935Z
 ---
 
 # 雲端工作頁與這個 repo
@@ -47,3 +47,5 @@ move_to_cloud 若遇 uncommitted changes：逐一檢查再 commit，不要 `git 
 - 做法：教練先在 claude.ai/code 把倉庫加進雲端（他 10/15 手動加了 rongtree，倉庫清單有搜尋框，打 repo 名篩選）。之後我用 claude-in-chrome：開 claude.ai/code → 倉庫下拉選 Coach1973/<repo>（選項要用 find 找 ref 再點；JS 取清單是虛擬捲動只列前 87 個，要在搜尋框輸入）→ 模型下拉選 Opus 5.5（預設是 Sonnet 5.5 超高）→ 提示詞是 ProseMirror，用 `focus(); execCommand('insertText', false, 文字)` 填入 → 按「傳送」。實測成功：榮樹下改版雲端對話 `session_01UN5wbKUBNK5RsdQUJKiQXo`（https://claude.ai/code/session_01UN5wbKUBNK5RsdQUJKiQXo）。
 - 任務書放 `workspace/state/cloud_briefs/`，雲端只准推自己的分支（榮樹下 main 推上去會自動換新正式站）；收回方式：`git -C ~/github_repos/<repo> fetch && git branch -r | grep claude`，雲端信放分支 `docs/to_junshi/`。
 - 螢幕截圖被截圖鎖擋，操作網頁用 find／read_page／javascript_tool 讀結構即可。
+- **10/16 01:3x 第二次開（軍火庫總入口設計稿，`session_018mtZLomzGSG6BQk4axWPMg`，rongtree 倉庫、要求分支 `claude/arsenal-entry-design`）踩到的坑**：①Bash 沙箱讀不到剪貼簿（`pbcopy`後`pbpaste`是空的），不能靠貼上；②長提示詞用 `javascript_tool`：`String.raw` 範本字串＋把內文反引號先換成 `‹BT›` 再 `.split('‹BT›').join(String.fromCharCode(96))`，接著 `.ProseMirror.focus(); execCommand('insertText')`，3,680 字一次進；③`find`出來的「傳送」ref 點了沒送出，要用 JS 取按鈕 `.click()`（等 6 秒網址才變成 `/code/session_...`）；④倉庫清單的搜尋框用我的操作搜不到任何倉庫（連 bni-chapters 也搜不到），預設就選著 rongtree，所以**新任務借用 rongtree 倉庫＋新分支＋新資料夾**最穩，不另建倉庫；⑤GitHub 查 Claude app 的倉庫存取權要手機確認（sudo mode），是只有教練能做的步驟，不碰。交辦單存 `workspace/state/cloud_briefs/arsenal_entry_design_2026-10-16.md`（`d0abd57a7`）。
+- **收回與驗收**：`git -C ~/github_repos/rongtree fetch && git branch -r | grep claude`；雲端信 `docs/to_junshi/2026-10-16_arsenal_entry_design.md`。**不要在 `~/github_repos/rongtree` checkout 該分支**（會直接上線，見 [[reference_review_cloud_branch_never_checkout_in_live_repo_2026-10-15]]），用 `git worktree add`＋本機預覽；設計稿**不合併進 rongtree main**，驗收後搬到軍火庫自己的倉庫。
