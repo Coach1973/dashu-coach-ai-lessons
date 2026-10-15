@@ -1025,6 +1025,11 @@ def process_one(pkg_path: Path) -> None:
         })
         save_registry(registry)
 
+        # 2026-10-15 根因修復：這條店家上架路自己建 repo＋Pages，從來沒掛「GitHub 推送→網站自動換新」通知，
+        # 張麗蝶（lidie）在 GitHub 改學歷，正式站 10 分鐘都沒更新，要等夜裡 ensure-all 才補。上架當下就掛。
+        gh_note = ensure_curated_github(slug)
+        gh_warn = f"\n{gh_note}" if gh_note.startswith("⚠️") else ""
+
         card_note = ""
         card_image_path = find_post_image(repo_dir, html_text)
         try:
@@ -1054,6 +1059,7 @@ def process_one(pkg_path: Path) -> None:
             + fb_note
             + works_note
             + form_note
+            + gh_warn
             + "\n📌 待軍師下次確認：潤飾店家介紹文案。"
         )
         log(f"✅ 完成：{pkg_path.name} → {slug}")
