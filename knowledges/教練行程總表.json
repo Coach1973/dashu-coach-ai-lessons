@@ -815,14 +815,14 @@
   {
    "id": "gcal-2026-10-16-5",
    "date": "2026-10-16",
-   "title": "總部訂物料",
+   "title": "BNI INW 整日行程",
    "source": "Google日曆",
    "allday": true
   },
   {
    "id": "gcal-2026-10-16-6",
    "date": "2026-10-16",
-   "title": "BNI INW 整日行程",
+   "title": "總部訂物料",
    "source": "Google日曆",
    "allday": true
   },
@@ -1658,18 +1658,18 @@
   {
    "id": "gcal-2026-11-20-111",
    "date": "2026-11-20",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-11-20-112",
-   "date": "2026-11-20",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-112",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-20-113",
@@ -3934,7 +3934,7 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-15 12:02",
+ "updated_at": "2026-10-15 15:28",
  "tainan_synced_at": "2026-10-15 09:27",
  "evening_window": {
   "start": "19:00",
@@ -3978,6 +3978,6 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-15 12:02",
- "google_synced_epoch": 1792036932
+ "google_synced_at": "2026-10-15 15:28",
+ "google_synced_epoch": 1792049331
 }
