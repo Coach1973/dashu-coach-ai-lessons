@@ -105,8 +105,8 @@ def main():
             msgs.append(
                 f"🧠 記憶體漏洞又在漲（教練 10/15 交辦）：{TAG} 已 {mb:,.0f} MB（剛跨過 {max(hit) // 1024}GB），"
                 f"從 {fmt(st['base_ts'])} 起算平均每小時 +{rate:,.0f} MB；核心記憶體前三名：{top_s}。"
-                f"👉 請先用一句白話告訴教練，再追查是誰造成的：嫌疑 NordVPN ThreatProtection（mshield.sys，"
-                f"唯一第三方硬碟過濾驅動），可請教練暫停它觀察是否停漲；要更準可用管理員權限跑 wpr 抓 Pool 追蹤。"
+                f"👉 請先用一句白話告訴教練，再追查是誰造成的：10/15 查過硬碟過濾驅動全是微軟的（NordVPN mshield 是停止狀態，"
+                f"已排除，不要再列嫌疑），所以要抓「哪個程式觸發的」，需用 Windows 內建 wpr 開 Pool 追蹤（要教練按一次管理員同意）。"
                 f"背景見記憶 reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15。"
             )
             st["warned"] = sorted(set(st.get("warned", [])) | set(hit))
