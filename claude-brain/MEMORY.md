@@ -1,3 +1,4 @@
+- [🙏 真公益俱樂部頁新增「首批足跡夥伴」7位(牧師＝何瑞峰 ruifeng)＋五位個人頁頁尾補志工/真公益連結：做法、漢堡門檻改 1260、怎麼加第8位、擱著的事(2026-10-16)](project_peers_footprint_section_social_club_2026-10-16.md)
 - [🔧 「開工」臨時 worktree 對話：Edit 改 ~/.openclaw/** 正式檔案會被 hook 擋，request_directory 沒用；教練授權後才改用終端機補丁，改前備份、path-limited commit(2026-10-15)](reference_worktree_session_edit_hook_blocks_openclaw_2026-10-15.md)
 - [🔧 LINE 任何群問「最近 N 場／N 天／一週／半個月可以訪談的時間」都答得出來：萬用接線 peer=group:*→rongshuxia、open-slots --count/--days、觸發詞、真實群組路徑測法；教練不用通知(2026-10-15)](reference_line_any_group_answers_coach_free_slots_2026-10-15.md)
 - [🔧 驗收雲端分支：event.bymyway.com 直接讀 ~/github_repos/<slug> 工作目錄，在那裡 checkout＝立刻上線；改用另開 worktree＋唯讀代理伺服器，雲端交接信不進網站目錄(榮樹下改版 0cf9d29, 2026-10-15)](reference_review_cloud_branch_never_checkout_in_live_repo_2026-10-15.md)
