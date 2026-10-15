@@ -19,6 +19,7 @@
   coach_schedule.py set-guest --id <id> --guest 王小明 [--field 綠能] [--by 邱裕榮]   # 登記對象＋通知巴哈＋排開始前 1 小時提醒
   coach_schedule.py remind --id <id>                   # 提醒排程到點時呼叫，同時送 LINE 榮樹下群組＋巴哈群組
   coach_schedule.py sync-reminders                     # 幫所有「已確定」的未來榮樹下訪談補排前 1 小時提醒（漏的才補）
+  coach_schedule.py open-slots [--count 5 | --days 7]  # 最近 N 個可訪談時段／最近 N 天逐天可約時段（跟預約頁同一套算法；LINE 群有人問「最近五場／一週／半個月」用）
   coach_schedule.py daily-report [--date YYYY-MM-DD] [--send]   # 每日行程報告（今天行程＋可約空檔＋預約頁），--send 貼到巴哈群組
 
 2026-10-13 教練：榮樹下的時間由邱裕榮先定、對象之後才定。邱裕榮在 LINE 群組講「哪一場訪問誰」
@@ -298,6 +299,80 @@ def booking_url():
         return f"https://event.bymyway.com/schedule/{t}/" if t else ""
     except OSError:
         return ""
+
+
+def open_slots(data, count=5):
+    """2026-10-15 教練：任何 LINE 群有人問「最近五場可以訪談的時間」都要答得出來。
+    跟預約頁（coach_schedule_view.py）同一套算法：晚上時段（evening_window）每小時一個起點、一場 1 小時；
+    今天只算「現在起 1 小時之後」的起點；整天有行程的日子跳過。晚上排不滿 count 個才往白天補。"""
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    es, ee = hm(eve["start"]), hm(eve["end"])
+    ws = hm(win["start"])
+    now = dt.datetime.now(TZ)
+    earliest = now.hour * 60 + now.minute + 60
+
+    def starts(d, a, b):
+        out = []
+        for s_, e_ in free_slots(d, data, a, b):
+            t = s_
+            while t + 60 <= e_:
+                if d > today() or t >= earliest:
+                    out.append(t)
+                t += 60
+        return out
+
+    def allday(d):
+        return any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(d, data))
+
+    picked = []
+    for i in range(60):
+        d = today() + dt.timedelta(days=i)
+        if allday(d):
+            continue
+        picked += [(d, t) for t in starts(d, es, ee)]
+        if len(picked) >= count:
+            break
+    picked = picked[:count]
+    if len(picked) < count:  # 晚上不夠才補白天（很少發生）
+        for i in range(60):
+            d = today() + dt.timedelta(days=i)
+            if allday(d):
+                continue
+            for t in starts(d, ws, es):
+                if (d, t) not in picked:
+                    picked.append((d, t))
+        picked = sorted(picked)[:count]
+    return [f"{day_label(d)} {fmt(t)}–{fmt(t + 60)}" for d, t in picked]
+
+
+def open_days(data, days):
+    """2026-10-15 教練：問「最近 3 天／一個禮拜／半個月」→ 逐天列出可訪談時段（晚上為主，白天另列）。
+    同一套算法（free_slots＋整天有行程跳過）；今天只算現在起 1 小時之後。整天有行程或排滿的日子不列。"""
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    es, ee = hm(eve["start"]), hm(eve["end"])
+    ws = hm(win["start"])
+    now = dt.datetime.now(TZ)
+    earliest = ((now.hour * 60 + now.minute + 60) + 59) // 60 * 60
+
+    def windows(d, a, b):
+        if d == today():
+            a = max(a, earliest)
+        if b - a < 60:
+            return ""
+        return "、".join(f"{fmt(x)}–{fmt(y)}" for x, y in free_slots(d, data, a, b))
+
+    out = []
+    for i in range(days):
+        d = today() + dt.timedelta(days=i)
+        if any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(d, data)):
+            continue
+        night, day = windows(d, es, ee), windows(d, ws, es)
+        if not (night or day):
+            continue
+        out.append(f"{day_label(d)} " + (f"晚上 {night}" if night else "晚上排滿") + (f"｜白天 {day}" if day else ""))
+    return out
 
 
 def daily_report(data, d):
@@ -730,10 +805,13 @@ def main():
     dr = sub.add_parser("daily-report")
     dr.add_argument("--date")
     dr.add_argument("--send", action="store_true")
+    os_ = sub.add_parser("open-slots")
+    os_.add_argument("--count", type=int, default=5)
+    os_.add_argument("--days", type=int, default=0)  # 給了 --days 就改成逐天列出
     args = p.parse_args()
 
     if args.cmd in ("add", "remove", "confirm", "set-guest", "check", "list", "soon", "rongshuxia", "daily-report",
-                    "ensure-fresh") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+                    "open-slots", "ensure-fresh") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
         ensure_fresh()
     data = load()
     if args.cmd == "add":
@@ -940,6 +1018,9 @@ def main():
                 fcntl.flock(lockf, fcntl.LOCK_EX)
                 a_, u_, r_, errs = push_google(load())
             print(f"📤 寫回 Google：新增 {a_}、更新 {u_}、刪除 {r_}" + ("".join("\n⚠️ " + x for x in errs)))
+    elif args.cmd == "open-slots":
+        rows = open_days(data, args.days) if args.days else open_slots(data, args.count)
+        print("\n".join(rows) if rows else "這段期間沒有可約時段")
     elif args.cmd == "ensure-fresh":
         pass  # 上面已經 ensure_fresh 過了
     elif args.cmd == "push-google":
