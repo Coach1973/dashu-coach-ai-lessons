@@ -67,7 +67,7 @@ def _busy(d, data):
         if e.get("covered_by_google"):  # 2026-10-13：同一件 Google 日曆已有，不重複列（同 coach_schedule.blocks_on）
             continue
         if e["date"] <= iso <= e.get("end_date", e["date"]):
-            out.append((0, 1440, e) if e.get("allday") else (_hm(e["start"]), _hm(e["end"]), e))
+            out.append((0, 1440, e) if e.get("allday") else (_hm(e["start"]), _hm(e["end"]), _yield_if_online(e, d)))
     for r in data.get("recurring", []):
         if d.weekday() != r["weekday"]:
             continue
@@ -77,13 +77,23 @@ def _busy(d, data):
             continue
         if iso in r.get("skip", []) or iso in r.get("gskip", []):
             continue
-        out.append((_hm(r["start"]), _hm(r["end"]), r))
+        out.append((_hm(r["start"]), _hm(r["end"]), _yield_if_online(r, d)))
     return sorted(out, key=lambda x: x[0])
+
+
+def _yield_if_online(item, d):
+    """2026-10-15 教練：週四的線上聚會／線上學習保留，但訪談優先，預約頁不擋。
+    Google 同步會整批重建一次性行程，所以用名稱判斷，不靠資料旗標。"""
+    if d.weekday() == 3 and str(item.get("title", "")).startswith("線上"):
+        return {**item, "yield": True}
+    return item
 
 
 def _free(busy, ws, we):
     cur, slots = ws, []
-    for s, e, _ in busy:
+    for s, e, x in busy:
+        if x.get("yield"):  # 2026-10-15 教練：線上聚會／學習保留，但訪談優先，不擋預約
+            continue
         if e <= cur or s >= we:
             continue
         if s - cur >= 60:

@@ -3932,6 +3932,28 @@
    "source": "教練10/12",
    "soft": true,
    "gskip": []
+  },
+  {
+   "id": "thu-warm",
+   "weekday": 3,
+   "start": "19:00",
+   "end": "19:30",
+   "title": "暖身（分享會後）",
+   "source": "我",
+   "since": "2026-10-22",
+   "until": "2026-12-31",
+   "gskip": []
+  },
+  {
+   "id": "thu-rest",
+   "weekday": 3,
+   "start": "20:30",
+   "end": "21:00",
+   "title": "休息（訪談間隔）",
+   "source": "我",
+   "since": "2026-10-22",
+   "until": "2026-12-31",
+   "gskip": []
   }
  ],
  "updated_at": "2026-10-15 20:53",
