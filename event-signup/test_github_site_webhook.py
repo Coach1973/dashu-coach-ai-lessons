@@ -68,6 +68,27 @@ r = send(push("tut-alumni"))
 check("舊站 tut-alumni（不在策展名單）→ 404 不碰", r.status_code == 404 and not CALLS)
 r = send({"action": "opened"}, event="issues")
 check("其他事件 → 忽略", r.status_code == 200 and not CALLS)
+# ── 雲端對話推 claude/* 分支 → 電報通知教練（2026-10-15）──
+appmod.GITHUB_WEBHOOK_SECRET = SECRET
+NOTES = []
+appmod._notify_xiaolongxia = lambda text, *a, **k: NOTES.append(text) or True
+appmod._CLOUD_PUSH_LAST.clear()
+cloud = push("rongtree", ref="refs/heads/claude/rongtree-redesign")
+cloud["commits"] = [{"message": "榮樹下改版：主題清單\n\n細節"}]
+CALLS.clear()
+r = send(cloud)
+check("雲端分支推送 → 通知教練一次（含倉庫與分支與最新說明），且不同步正式站",
+      r.status_code == 200 and len(NOTES) == 1 and "rongtree" in NOTES[0] and "claude/rongtree-redesign" in NOTES[0]
+      and "榮樹下改版：主題清單" in NOTES[0] and not CALLS)
+r = send(cloud)
+check("同一分支 10 分鐘內再推 → 不重複通知", len(NOTES) == 1)
+r = send(push("rongtree", ref="refs/heads/feature/x"))
+check("一般分支（非 claude/*）→ 不通知", len(NOTES) == 1)
+gone = push("rongtree", ref="refs/heads/claude/other"); gone["deleted"] = True
+r = send(gone)
+check("刪除分支 → 不通知", len(NOTES) == 1)
+appmod._notify_xiaolongxia = lambda *a, **k: True
+
 appmod.GITHUB_WEBHOOK_SECRET = ""
 r = send(push("111-wei"))
 check("伺服器沒設暗號 → 一律 403", r.status_code == 403 and not CALLS)

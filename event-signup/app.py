@@ -2151,6 +2151,20 @@ def _publish_shangquan_index(message: str) -> None:
     subprocess.run(["git", "push", "-q"], cwd=TAINAN_SHANGQUAN_REPO, check=True, timeout=30, env=_OPENCLAW_ENV)
 
 
+def _fire_all_works_refresh(reason: str) -> None:
+    """「完整作品一覽」(Coach1973/all-works) 資料更新：下架／重新上架／刪除按下去的那一刻背景跑一次（事件觸發，不輪詢）。
+    不等結果、不擋後台操作；測試用的假名冊不觸發。"""
+    if CURATED_REGISTRY_PATH != Path(__file__).resolve().parent / "curated_sites_registry.json":
+        return
+    try:
+        script = Path(__file__).resolve().parent.parent / "scripts" / "all_works_refresh.py"
+        log_file = open(script.parent.parent / "state" / "all_works_refresh.log", "a", encoding="utf-8")
+        subprocess.Popen([sys.executable, str(script), "--reason", reason],
+                         stdout=log_file, stderr=subprocess.STDOUT, start_new_session=True, env=_OPENCLAW_ENV)
+    except Exception:  # noqa: BLE001  更新一覽失敗不能影響後台本身
+        pass
+
+
 def _save_curated_registry(registry: dict) -> None:
     CURATED_REGISTRY_PATH.write_text(json.dumps(registry, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -2247,6 +2261,8 @@ def curation_admin_unlist(slug):
     if not _CURATED_SLUG_RE.match(slug):
         abort(404)
     ok, message = unlist_curated_site(slug)
+    if ok:
+        _fire_all_works_refresh(f"策展下架 {slug}")
     return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
@@ -2257,6 +2273,8 @@ def curation_admin_relist(slug):
     if not _CURATED_SLUG_RE.match(slug):
         abort(404)
     ok, message = relist_curated_site(slug)
+    if ok:
+        _fire_all_works_refresh(f"策展重新上架 {slug}")
     return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
@@ -2267,6 +2285,8 @@ def curation_admin_delete(slug):
     if not _CURATED_SLUG_RE.match(slug):
         abort(404)
     ok, message = delete_curated_site(slug)
+    if ok:
+        _fire_all_works_refresh(f"策展刪除 {slug}")
     return render_template("curation_admin.html", **_curation_admin_context(), result_message=message, result_ok=ok)
 
 
@@ -4087,6 +4107,28 @@ def _github_sync_worker(kind: str, key: str, pushed_sha: str) -> None:
         _notify_xiaolongxia(f"⚠️ GitHub 有新版本，但網站沒能自動換新：{key}\n原因：{exc}")
 
 
+_CLOUD_PUSH_LAST = {}
+
+
+def _notify_cloud_branch_push(repo_name: str, branch: str, payload: dict) -> None:
+    """雲端 Claude 對話把成果推到 claude/* 分支時，電報通知教練（2026-10-15 教練：「我要等到什麼時候才知道他們交回來？」）。
+    每個分支 10 分鐘內只通知一次，避免雲端連推好幾次洗版；通知失敗不影響 webhook 回應。"""
+    now = time.time()
+    key = repo_name + "/" + branch
+    if now - _CLOUD_PUSH_LAST.get(key, 0) < 600:
+        return
+    _CLOUD_PUSH_LAST[key] = now
+    commits = payload.get("commits") or []
+    last = (commits[-1].get("message", "") if commits else "").splitlines()[0][:80]
+    msg = (f"☁️ 雲端對話有交件：{repo_name} 的分支 {branch}\n"
+           f"最新一筆：{last or '（無說明）'}\n"
+           f"雲端可能還在繼續做；我（軍師）下次被叫到會去驗收，驗過才上線。")
+    try:
+        _notify_xiaolongxia(msg)
+    except Exception:
+        pass
+
+
 @app.route("/hooks/github-site", methods=["POST"])
 def github_site_webhook():
     body = request.get_data()
@@ -4103,6 +4145,9 @@ def github_site_webhook():
     default_ref = f"refs/heads/{repo.get('default_branch') or 'main'}"
     if not _GH_REPO_NAME_RE.fullmatch(repo_name):
         abort(400)
+    ref = str(payload.get("ref", ""))
+    if ref.startswith("refs/heads/claude/") and payload.get("deleted") is not True:
+        _notify_cloud_branch_push(repo_name, ref[len("refs/heads/"):], payload)   # 雲端對話交件：電報通知教練（事件觸發，不輪詢）
     if payload.get("ref") != default_ref:
         return {"ok": True, "ignored": "not default branch"}
     kind, key = _resolve_github_repo(repo_name)
