@@ -55,7 +55,7 @@ with tempfile.TemporaryDirectory() as d:
     check("2. 同一場同一條線不重複提醒", rc == 0 and out == "", out)
     tp.write_text(tp.read_text(encoding="utf-8").replace('"cache_read_input_tokens": 318900', '"cache_read_input_tokens": 518900'), encoding="utf-8")
     rc, out, _ = run({"session_id": sid, "transcript_path": str(tp)}, m1)
-    check("3. 一次跳過 35/40/50 只提醒最高的 50", "跨過 50%" in out and "已過一半" in out, out)
+    check("3. 一次跳過 35/40/45/50 只提醒最高的 50", "跨過 50%" in out and "已過一半" in out, out)
 
     m2 = tempfile.mkdtemp(dir=d)
     rc, out, _ = run({"session_id": sid}, m2, config_dir=d)
@@ -72,6 +72,19 @@ with tempfile.TemporaryDirectory() as d:
     for i, bad in enumerate(["", "not json", "{}", json.dumps({"session_id": "nope"})], 1):
         rc, out, err = run(bad, m3)
         check(f"7.{i} 壞輸入／找不到檔不出錯也不輸出", rc == 0 and out == "", out + err)
+
+
+    # 定期報告：每 5 句報一次（跨線那句也算報過，重新數）
+    m4 = tempfile.mkdtemp(dir=d)
+    sid3 = "test-session-3"
+    tp3 = fake_transcript(d, sid3, 120000)
+    outs = [run({"session_id": sid3, "transcript_path": str(tp3)}, m4)[1] for _ in range(10)]
+    check("8. 12% 第 1~4 句不出聲、第 5 句定期報告", all(o == "" for o in outs[:4]) and "定期報告" in outs[4] and "約 12%" in outs[4], outs[:5])
+    check("9. 第 10 句再報一次", outs[9].count("定期報告") == 1 and all(o == "" for o in outs[5:9]), outs[5:10])
+    m5 = tempfile.mkdtemp(dir=d)
+    tp4 = fake_transcript(d, "test-session-4", 460000)
+    rc, out, _ = run({"session_id": "test-session-4", "transcript_path": str(tp4)}, m5)
+    check("10. 46% 跨 45 線（45 已加回）", "跨過 45%" in out, out)
 
 print("全部通過" if ok else "有失敗")
 sys.exit(0 if ok else 1)

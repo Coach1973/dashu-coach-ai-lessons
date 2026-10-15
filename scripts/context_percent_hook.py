@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Hook：UserPromptSubmit —— 對話容量（context window）跨過 30/35/40/50% 各提醒教練一次。
+"""Hook：UserPromptSubmit —— 對話容量（context window）跨過 30/35/40/45/50% 各提醒教練一次，
+另外每 5 句話定期報一次目前用量（教練 2026-10-15：「每經過幾次對話就主動報告」，並把 45% 加回來）。
 
 跟 context_percent_hook.sh 同一套邏輯，但改成純 Python，Windows／Mac 都能跑
 （.sh 版寫死 Mac 路徑、/usr/bin/jq、/tmp，在聯想上不會動）。
@@ -11,6 +12,7 @@ input + cache_creation + cache_read ＝ 目前對話容量。
 
 環境變數（測試用）：CONTEXT_WINDOW（預設 1000000）、CONTEXT_MARKER_DIR（預設系統暫存夾）。
 防洗版：同一場只在「第一次跨過」某條線時提醒；一次跳過好幾條只提醒最高那條。
+定期報告：CONTEXT_REPORT_EVERY（預設 5）句話報一次，計數存在 context_count_<session_id>；跨線那一句也算一次報告。
 """
 import glob
 import json
@@ -19,8 +21,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-LEVELS = (30, 35, 40, 50)
+LEVELS = (30, 35, 40, 45, 50)
 WINDOW = int(os.environ.get("CONTEXT_WINDOW") or 1000000)
+EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 5)
 MARKER_DIR = Path(os.environ.get("CONTEXT_MARKER_DIR") or tempfile.gettempdir())
 TAIL_BYTES = 4 * 1024 * 1024
 
@@ -92,7 +95,20 @@ def main():
     except Exception:
         last = 0
     hit = max([lv for lv in LEVELS if pct >= lv and lv > last], default=0)
+    counter = MARKER_DIR / ("context_count_" + sid)
+    try:
+        n = int(counter.read_text().strip() or 0) + 1
+    except Exception:
+        n = 1
+    try:
+        counter.write_text(str(0 if hit else n))   # 跨線那一句已經報過，重新數
+    except Exception:
+        pass
     if not hit:
+        if EVERY > 0 and n % EVERY == 0:
+            sys.stdout.reconfigure(encoding="utf-8")
+            print(f"🧠 對話容量定期報告（系統自動，每 {EVERY} 句一次）：本場對話目前用了約 {pct}%（約 {total // 10000} 萬 token）。"
+                  f"\n👉 請在這一則回覆的第一行（亮燈那行後面）用一句白話告訴教練：目前用了約 {pct}%。")
         return
     try:
         marker.write_text(str(hit))
