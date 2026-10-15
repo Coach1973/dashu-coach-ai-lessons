@@ -1,0 +1,123 @@
+<title>雲端與本機分工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@800&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* 版面概念：先回答容量提醒，再用兩欄（雲端／本機）把每件工作分好，最後列開工順序 */
+:root{
+  --bg:#F5F7FA; --paper:#FFFFFF; --fg:#18202B; --muted:#56606E; --line:#D9DFE7;
+  --sky:#1F5FA8; --sky-soft:#E3EDF8; --home:#1E6A46; --home-soft:#E4F0E8; --gold:#9A6B00; --gold-soft:#FBF3DF;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141B; --paper:#171E28; --fg:#E5EAF1; --muted:#A2ACB9; --line:#2B3442;
+  --sky:#7FB3EE; --sky-soft:#1A2A3E; --home:#6DC497; --home-soft:#1D3227; --gold:#E2B54E; --gold-soft:#2E2817; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --paper:#171E28; --fg:#E5EAF1; --muted:#A2ACB9; --line:#2B3442;
+  --sky:#7FB3EE; --sky-soft:#1A2A3E; --home:#6DC497; --home-soft:#1D3227; --gold:#E2B54E; --gold-soft:#2E2817; color-scheme:dark}
+html{font-size:20px}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:20px;line-height:1.8;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:900px;margin-inline:auto}
+header{padding-block:40px 20px;border-bottom:2px solid var(--fg)}
+.eyebrow{color:var(--sky);font-weight:700;letter-spacing:.1em}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(32px,6vw,46px);line-height:1.3;margin:8px 0 10px;text-wrap:balance}
+.meta{color:var(--muted)}
+h2{font-family:var(--serif);font-weight:800;font-size:clamp(26px,4vw,32px);line-height:1.4;margin:44px 0 10px;text-wrap:balance}
+p{margin:0 0 12px}
+ul{padding-left:1.2em;margin:0 0 12px} li{margin-bottom:6px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:18px 22px}
+.ans{border-left:6px solid var(--gold);background:var(--gold-soft)}
+.num{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+.rule{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:12px}
+.rule .box{min-width:0}
+.rule .sky{border-top:6px solid var(--sky)} .rule .home{border-top:6px solid var(--home)}
+.rule h3{margin:0 0 6px;font-size:22px}
+.sky h3{color:var(--sky)} .home h3{color:var(--home)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper);margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:680px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line)}
+th{background:var(--sky-soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:999px;padding:0 12px;font-weight:700;white-space:nowrap}
+.p-sky{background:var(--sky-soft);color:var(--sky)} .p-home{background:var(--home-soft);color:var(--home)}
+.src{color:var(--muted);white-space:nowrap}
+ol.steps{padding-left:1.4em;margin:0} ol.steps li{margin-bottom:12px}
+.note{color:var(--muted)}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted)}
+a{color:var(--sky)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">2026-10-15（四）· 軍師評估</div>
+  <h1>雲端與本機分工</h1>
+  <div class="meta">依據：百人軍火庫企劃書（10/15）＋10/14 一週盤點報告</div>
+</header>
+
+<section>
+<h2>先回答：對話容量提醒</h2>
+<div class="box ans">
+<p><b>您的理解大致正確，我補了兩個地方。</b>以後您不用管，系統會提醒。</p>
+<ul>
+  <li><b>跨線提醒：</b>到 30%、35%、40%、45%、50% 各提醒一次。原本沒有 45%，現在加上了。</li>
+  <li><b>定期報告（新加的）：</b>您每說 5 句話，我就在回覆第一行報一次目前用了多少。</li>
+  <li><b>這一場現在：</b>用了約 <span class="num">31%</span>。這一場其實已經跨過 30% 了，但提醒沒跳，因為它是在我一段長工作的中間跨過去的，系統要等您下一句話才會檢查。您下一句話它就會跳出來。</li>
+</ul>
+<p class="note">另外查了您的額度：5 小時額度用了 27%，本週額度用了 19%，都還很寬。</p>
+</div>
+</section>
+
+<section>
+<h2>判斷標準：什麼能丟雲端</h2>
+<p>雲端只拿得到 GitHub 上的程式和網頁，拿不到 Mac 本機的資料庫、密碼、正在跑的伺服器。所以分法很簡單：</p>
+<div class="rule">
+  <div class="box sky"><h3>☁️ 適合雲端</h3>
+  <ul><li>只改網頁畫面和文字</li><li>要上網查資料、寫長文案</li><li>做設計稿（可以先用示範資料）</li><li>一個倉庫就做得完</li></ul></div>
+  <div class="box home"><h3>🖥️ 只能本機</h3>
+  <ul><li>動到資料庫（百人導師、分會、名片庫）</li><li>動到伺服器程式要重啟</li><li>要寄 LINE／電報、要登入帳號</li><li>把雲端做好的東西接上真資料、驗收、上線</li></ul></div>
+</div>
+<div class="box" style="margin-top:14px">
+<p><b>一個安全規定：</b>榮樹下、真公益、為你轉身這幾個網站，GitHub 一推上去，正式網站就會自動換新。所以雲端一律在「自己的分支」上做，不准推到正式版。做完寫信回來，我在本機驗過再上線。</p>
+</div>
+</section>
+
+<section>
+<h2>逐項分工</h2>
+<div class="tbl"><table>
+<thead><tr><th>工作</th><th>給誰做</th><th>來自</th><th>為什麼</th></tr></thead>
+<tbody>
+<tr><td><b>榮樹下改版</b>：四個主題改成「文字標題＋連結」；Podcast 和百集計畫合併成 1～100 的格子，7 格亮、93 格空著等人</td><td><span class="pill p-sky">☁️ 雲端</span></td><td class="src">企劃書</td><td>只改網頁、一個倉庫、要設計感。現在就能開工，不用等任何決定。</td></tr>
+<tr><td><b>真公益足跡查證</b>：上網查吳錦昌、陳淑玲、朱元中、邱裕榮、曾志雄博士的公益事蹟，每一筆附出處，寫成卡片草稿</td><td><span class="pill p-sky">☁️ 雲端</span></td><td class="src">企劃書</td><td>大量上網查證和寫作，最適合雲端。只出草稿，不上線，等本人確認。</td></tr>
+<tr><td><b>軍火庫總入口＋入選卡設計稿</b>：一頁看完所有席次、許願池、即時人數；每人一張可分享的入選卡</td><td><span class="pill p-sky">☁️ 雲端</span></td><td class="src">企劃書</td><td>設計工作，先用標明「示範」的資料做。等您決定標題和目標數字再開工。</td></tr>
+<tr><td><b>提名信與入選卡文案</b>：寄給百人導師和 BNI 夥伴的「您被提名」邀請，含同意上架說明</td><td><span class="pill p-sky">☁️ 雲端</span></td><td class="src">企劃書</td><td>純寫作。寄送要在本機做。</td></tr>
+<tr><td><b>真 AI、真愛、真誠的對外獨立頁設計稿</b></td><td><span class="pill p-sky">☁️ 雲端</span></td><td class="src">企劃書</td><td>設計稿可以雲端做；接上分會真資料要本機。排在名冊引擎之後。</td></tr>
+<tr><td><b>完整作品一覽</b>：合併 GitHub 160 個倉庫、策展中心 59 站、作品一覽 141 項</td><td><span class="pill p-home">🖥️ 本機</span></td><td class="src">企劃書</td><td>作品一覽的資料在伺服器上，策展名單在本機，雲端拿不全。</td></tr>
+<tr><td><b>名冊引擎</b></td><td><span class="pill p-home">🖥️ 本機</span></td><td class="src">兩份都有</td><td>要動百人導師、分會、南應大的資料庫和伺服器。</td></tr>
+<tr><td><b>預約引擎、通用短網址、報名接口收斂</b></td><td><span class="pill p-home">🖥️ 本機</span></td><td class="src">一週盤點</td><td>全部在 Mac 的活動伺服器裡，要重啟、要真資料測試。</td></tr>
+<tr><td><b>一週盤點第四、五節的待辦</b>（時間換算改程式擋、報名人數欄位等）</td><td><span class="pill p-home">🖥️ 本機</span></td><td class="src">一週盤點</td><td>都是本機的提醒程式和伺服器。</td></tr>
+<tr><td><b>拿掉真 AI 導師席頁的「示範內容」字樣</b></td><td><span class="pill p-home">🖥️ 本機</span></td><td class="src">企劃書</td><td>一行字，本機一分鐘就好，不值得開雲端。</td></tr>
+</tbody></table></div>
+<p style="margin-top:12px"><b>結論：</b>一週盤點的工作幾乎都要本機做，雲端主要接軍火庫裡「畫面、文案、查資料」這幾塊，一共 5 件。</p>
+</section>
+
+<section>
+<h2>建議的開工順序</h2>
+<ol class="steps">
+  <li><b>現在就能開：</b>雲端做「榮樹下改版」和「真公益足跡查證」。同一時間，本機做「完整作品一覽」。三件互不干擾。</li>
+  <li><b>您決定企劃書的 4 件事之後：</b>雲端做「軍火庫總入口＋入選卡」和「提名信文案」；本機開始做名冊引擎。</li>
+  <li><b>名冊引擎做好之後：</b>雲端做真 AI、真愛、真誠的對外頁設計稿，本機把真資料接上去。</li>
+  <li><b>每一件雲端做完：</b>雲端寫信回來，我在本機看過、接上真資料、確認沒問題才上線，再跟您報告網址。</li>
+</ol>
+</section>
+
+<section>
+<h2>關於花費</h2>
+<div class="box">
+<p>我不知道每件雲端工作實際會花掉多少美金，現在講數字會是猜的。建議先開第 1 件（榮樹下改版），做完我查實際花費，再決定後面幾件要不要也丟雲端。用雲端要花錢，這一步要您點頭。</p>
+</div>
+</section>
+
+<footer>評估依據：本機各倉庫的 GitHub 設定（推送即自動上線的 4 個網站已逐一查過）、雲端工作記憶檔（2026-09-25、10-06）、本場額度讀數。</footer>
+</div>
