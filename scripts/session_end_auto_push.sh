@@ -110,7 +110,24 @@ if git commit -m "$COMMIT_MSG" >/dev/null 2>&1; then
   STASH_NOTE=""
   if [[ "$STASHED" -eq 1 ]]; then
     if ! git stash pop --quiet 2>/dev/null; then
-      STASH_NOTE="（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）"
+      # 2026-10-15 根因修復：pop 失敗時（-u 的未追蹤檔被排程重建、或記錄檔剛好被寫入）整包不放回，
+      # 工作目錄停在 HEAD 版本——策展名冊 registry 就這樣被退回 56 站，lidie 等 4 站 404。
+      # 先把「stash 時是什麼、現在還是什麼」的檔案逐一放回；真的有衝突的才留在 stash。
+      LEFT=0
+      while IFS= read -r f; do
+        [[ -z "$f" ]] && continue
+        if git diff --quiet "stash@{0}^1" -- "$f" 2>/dev/null; then
+          git checkout "stash@{0}" -- "$f" 2>/dev/null && git reset -q -- "$f" 2>/dev/null || LEFT=1
+        else
+          LEFT=1
+        fi
+      done < <(git diff --name-only "stash@{0}^1" "stash@{0}" 2>/dev/null)
+      if [[ "$LEFT" -eq 0 ]]; then
+        git stash drop --quiet 2>/dev/null
+        STASH_NOTE="（stash pop 失敗，已逐檔放回）"
+      else
+        STASH_NOTE="（⚠️ stash pop 有衝突，改動保留在 git stash list 未遺失）"
+      fi
     fi
   fi
 
