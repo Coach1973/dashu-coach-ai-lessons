@@ -63,20 +63,38 @@ def _encode_webp(src: Path, dest: Path) -> bool:
     return dest.exists()
 
 
+_REF_DELIMS = frozenset(" \t\r\n\f\v\"'()<>,=")      # token 往左延伸的邊界
+_REF_AFTER = frozenset(" \t\r\n\f\v\"'()<>,?#;")     # 檔名後面允許接的字元
+
+
 def _rewrite_refs(text: str, old_name: str, new_name: str) -> tuple[str, int]:
-    """把『不是外部網址』的 token 裡的 old_name 換成 new_name。"""
+    """把『不是外部網址』的 token 裡的 old_name 換成 new_name。
+    2026-10-15 重寫：原本用 `[^\\s"'()<>,=]*` + 檔名的 regex，遇到 10MB 內嵌圖片資料（一整段沒有空白的 base64）
+    會對每個起點都掃到底再倒退，變成平方級，陳淑玲品牌網頁包 15 分鐘還沒跑完（10/13 真公益包同病，當時靠瘦身繞過）。
+    改成先用字串找檔名出現的位置，再只往左延伸一次，語意不變、時間線性。"""
+    if old_name not in text:
+        return text, 0
+    out: list[str] = []
+    last = 0
     count = 0
-    pattern = re.compile(r"[^\s\"'()<>,=]*" + re.escape(old_name) + r"(?=[\s\"'()<>,?#;]|$)")
-
-    def repl(m: re.Match) -> str:
-        nonlocal count
-        tok = m.group(0)
-        if tok.startswith(("http://", "https://", "//")):
-            return tok
-        count += 1
-        return tok[: -len(old_name)] + new_name
-
-    return pattern.sub(repl, text), count
+    n = len(text)
+    L = len(old_name)
+    pos = text.find(old_name)
+    while pos != -1:
+        end = pos + L
+        if pos >= last and (end >= n or text[end] in _REF_AFTER):
+            b = pos
+            while b > last and text[b - 1] not in _REF_DELIMS:
+                b -= 1
+            token = text[b:end]
+            if not token.startswith(("http://", "https://", "//")):
+                out.append(text[last:b])
+                out.append(token[:-L] + new_name)
+                last = end
+                count += 1
+        pos = text.find(old_name, pos + 1)
+    out.append(text[last:])
+    return "".join(out), count
 
 
 def optimize_images(root: Path, dry_run: bool, report: dict) -> None:
