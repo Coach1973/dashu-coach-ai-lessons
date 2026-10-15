@@ -1,0 +1,272 @@
+<title>百人軍火庫企劃書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* 版面概念：一份給老闆讀的作戰企劃，單欄閱讀、數字用金色標出、每節一個結論先講 */
+:root{
+  --bg:#F6F8F5; --paper:#FFFFFF; --fg:#17201A; --muted:#55625A; --line:#D8E0D9;
+  --accent:#1E6A46; --accent-soft:#E4F0E8; --gold:#9A6B00; --gold-soft:#FBF3DF; --warn:#9B3B2B; --warn-soft:#F8E8E4;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101612; --paper:#18201B; --fg:#E6EDE7; --muted:#A3B0A7; --line:#2C3830;
+  --accent:#6DC497; --accent-soft:#1D3227; --gold:#E2B54E; --gold-soft:#2E2817; --warn:#EE9A88; --warn-soft:#3A2420; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101612; --paper:#18201B; --fg:#E6EDE7; --muted:#A3B0A7; --line:#2C3830;
+  --accent:#6DC497; --accent-soft:#1D3227; --gold:#E2B54E; --gold-soft:#2E2817; --warn:#EE9A88; --warn-soft:#3A2420; color-scheme:dark}
+html{font-size:20px}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:20px;line-height:1.8;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:860px;margin-inline:auto}
+header.cover{padding-block:48px 28px;border-bottom:2px solid var(--fg)}
+.eyebrow{font-size:20px;letter-spacing:.12em;color:var(--accent);font-weight:700}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(36px,6vw,52px);line-height:1.25;margin:10px 0 14px;text-wrap:balance}
+.meta{color:var(--muted);font-size:20px}
+.thesis{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--accent);padding:18px 22px;font-size:22px;font-weight:500}
+h2{font-family:var(--serif);font-weight:800;font-size:clamp(28px,4vw,34px);line-height:1.35;margin:56px 0 6px;text-wrap:balance}
+h2 .no{color:var(--accent);margin-inline-end:.4em}
+h3{font-size:22px;margin:28px 0 6px;line-height:1.5}
+.lead{color:var(--muted);margin:0 0 18px}
+p{margin:0 0 14px}
+b,strong{font-weight:700}
+.num{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:20px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n{white-space:nowrap}
+.finding{display:grid;gap:14px;margin-top:20px}
+.note{background:var(--gold-soft);border:1px solid var(--line);border-radius:6px;padding:14px 18px}
+.note.warn{background:var(--warn-soft)}
+.note .tag{font-weight:700;color:var(--gold);display:block}
+.note.warn .tag{color:var(--warn)}
+/* 一份名冊，多張臉 */
+.hub{display:grid;gap:14px;margin-top:18px}
+.core{background:var(--accent);color:var(--paper);border-radius:6px;padding:18px 20px;text-align:center}
+.core b{font-family:var(--serif);font-size:26px;display:block}
+.faces{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.face{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 16px;min-width:0}
+.face b{display:block;color:var(--accent)}
+.face span{color:var(--muted)}
+/* 階梯 */
+ol.ladder{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px;counter-reset:s}
+ol.ladder li{counter-increment:s;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+ol.ladder li::before{content:"第" counter(s) "階";font-weight:700;color:var(--paper);background:var(--accent);border-radius:4px;padding:2px 10px;white-space:nowrap}
+ol.ladder li:first-child::before{content:"起點";background:var(--muted)}
+/* 觀點 */
+.ideas{display:grid;gap:18px;margin-top:10px}
+.idea{border-top:1px solid var(--line);padding-top:16px}
+.idea h3{margin-top:0}
+.idea .why{color:var(--muted)}
+/* 時間軸 */
+.days{display:grid;gap:0;margin-top:14px;border-left:3px solid var(--accent);padding-left:18px}
+.day{padding:6px 0 18px;position:relative}
+.day::before{content:"";position:absolute;left:-27px;top:16px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--accent)}
+.day .d{font-weight:700;color:var(--accent)}
+.day .d small{font-size:20px;color:var(--muted);font-weight:500;margin-inline-start:8px}
+.decide{display:grid;gap:14px;margin-top:14px}
+.dc{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.dc .q{font-weight:700;font-size:22px}
+.dc .rec{color:var(--accent);font-weight:700}
+ul{padding-left:1.2em;margin:0 0 14px}
+li{margin-bottom:6px}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+<header class="cover">
+  <div class="eyebrow">商業企劃書 · 給大樹教練</div>
+  <h1>百人軍火庫企劃書</h1>
+  <div class="meta">2026-10-15（四）撰寫 · 軍師（Opus 5.5）· 數字都從軍師電腦裡的實際資料數出來</div>
+  <div class="thesis">一句話：把散在 6 個網站裡的人才，集中成一個「一眼就看得出我們有多強」的入口；7 天之內，讓每一位被展示的人，都變成替我們招人的人。</div>
+</header>
+
+<section>
+<h2><span class="no">一</span>這件事為什麼偉大</h2>
+<p>過去這四群人彼此看不見：<b>BNI 商務夥伴、AI 導師、公益企業家、志工</b>。您是少數同時握有這四份名單、而且每一份都有網頁可以證明的人。</p>
+<p>每個人都缺兩樣東西：<b>被看見</b>，和<b>找得到對的人</b>。這個入口同時解決兩邊：人才被看見（供給），需要資源的人找得到（需求）。兩邊都在同一個地方，才是平台；只有一邊，只是名單。</p>
+</section>
+
+<section>
+<h2><span class="no">二</span>家底：我們手上真的有什麼</h2>
+<p class="lead">今天 13:10 從各系統資料庫實際數出來的，不是估計。</p>
+<div class="tbl"><table>
+<thead><tr><th>資產</th><th>數量</th><th>在哪裡</th></tr></thead>
+<tbody>
+<tr><td>AI 百人導師（已上架）</td><td class="n"><span class="num">77</span> 位</td><td>mentor100：21 位實際當過講師、56 位自己申請</td></tr>
+<tr><td>真 AI 商業導師席</td><td class="n"><span class="num">8</span> 席</td><td>為你轉身：連啓佑、邱裕榮、施正益、顧瀚鈞、鄒昆廷、李中閔、王夏儷、凌榆舜</td></tr>
+<tr><td>信任遊戲玩家</td><td class="n"><span class="num">117</span> 位</td><td>trust 信任遊戲</td></tr>
+<tr><td>BNI 分會網站登錄夥伴</td><td class="n"><span class="num">94</span> 筆</td><td>chapters（13 個分會頁）</td></tr>
+<tr><td>名片庫</td><td class="n"><span class="num">464</span> 張</td><td>名片媒合中心</td></tr>
+<tr><td>榮樹下訪談</td><td class="n"><span class="num">7</span> 集</td><td>榮樹下（每位嘉賓幾乎都有個人網頁）</td></tr>
+<tr><td>公益路跑席次</td><td class="n"><span class="num">66</span> / 100</td><td>Run for Future 2027</td></tr>
+<tr><td>志工團隊</td><td class="n"><span class="num">0</span> / 100</td><td>10/14 剛上線</td></tr>
+<tr><td>真公益俱樂部</td><td class="n">首批 100 席</td><td>示範單位順發電腦：累積捐款 3 億 3,016 萬元</td></tr>
+<tr><td>策展中心網站</td><td class="n"><span class="num">59</span> 站</td><td>其中 28 站是您的個人創作，31 站是店家與活動</td></tr>
+<tr><td>大樹作品一覽</td><td class="n"><span class="num">141</span> 項</td><td>coach888</td></tr>
+<tr><td>GitHub 作品倉庫</td><td class="n"><span class="num">160</span> 個</td><td>Coach1973 帳號</td></tr>
+</tbody></table></div>
+
+<div class="finding">
+  <div class="note"><span class="tag">發現 1：門檻太高，您的直覺是對的</span>信任遊戲有 117 位玩家，但所有玩家的個人頁加起來只被點開過 <span class="num">15</span> 次。資料都在，就是沒人去看。外面的人要的是「一眼看完」，不是「進來玩」。</div>
+  <div class="note"><span class="tag">發現 2：不是沒做，是找不到</span>您說在策展中心找不到曾博士。其實曾志雄博士 Dr. Scott 有完整網頁，策展中心也有登記。問題出在沒有一張能搜尋的總表，所以「完整作品一覽」要排第一個做。</div>
+  <div class="note warn"><span class="tag">發現 3：真 AI 導師席頁有一行會扣分的字</span>「為你轉身」頁上還寫著「目前顯示的姓名與戰績為示範內容」，可是 8 位都已經是真人了。對外秀肌肉時，這行字會讓人懷疑。等 8 位本人確認過資料，就該拿掉。</div>
+</div>
+</section>
+
+<section>
+<h2><span class="no">三</span>核心設計：一份名冊，多張臉</h2>
+<p>每個人的資料只存一份，一人一張卡，可以掛很多標籤。不同的網頁只是不同的「篩選」，不用重做資料。您說「一邊給 BNI 內部看、一邊給外面看」，就是這個意思。</p>
+<div class="hub">
+  <div class="core"><b>大樹名冊</b>一人一張卡 · 本人自己修改 · 本人同意才公開</div>
+  <div class="faces">
+    <div class="face"><b>總入口「軍火庫」</b><span>所有同意公開的人，給外面的人一眼看完</span></div>
+    <div class="face"><b>真 AI</b><span>確定一起運作的團隊，8 導師席在最上面</span></div>
+    <div class="face"><b>真公益</b><span>外部友好單位，有公益足跡、有出處</span></div>
+    <div class="face"><b>BNI 內部版</b><span>分會網站，維持 BNI 紅黑官方色</span></div>
+    <div class="face"><b>榮樹下嘉賓</b><span>每一集訪談的來賓自動進名冊</span></div>
+    <div class="face"><b>志工</b><span>志工頁報名的人，同意後也上牆</span></div>
+  </div>
+</div>
+<p style="margin-top:16px">同一個人可以有好幾張臉。例如邱裕榮：真 AI 導師席＋榮樹下主持人＋（可能的）公益足跡。改一次，每一頁一起更新。</p>
+<p>這正好就是您 10/14 還沒拍板的「模組化下一步：名冊引擎」。這個計畫就是名冊引擎最好的第一個用途。</p>
+</section>
+
+<section>
+<h2><span class="no">四</span>關係階梯：每個人都有清楚的下一步</h2>
+<p class="lead">每一頁只放一個最大的按鈕，對準下一階。</p>
+<ol class="ladder">
+  <li><div><b>路人</b>：看到軍火庫，心想「哇，這裡人好多、好強」。下一步按鈕：「我也想被看見」。</div></li>
+  <li><div><b>被看見</b>：免費留下自己的卡片，5 分鐘填完，拿到一張可以分享的入選卡。</div></li>
+  <li><div><b>連結</b>：成為志工、公益夥伴、榮樹下嘉賓，或在許願池說出自己要找什麼。</div></li>
+  <li><div><b>合作</b>：一起辦活動、上 Podcast、跑公益路跑、被引薦生意。</div></li>
+  <li><div><b>加入</b>：成為真 AI 團隊成員，或加入分會。</div></li>
+</ol>
+</section>
+
+<section>
+<h2><span class="no">五</span>您可能沒想到的 10 件事</h2>
+<div class="ideas">
+
+<div class="idea"><h3>1. 名單上的每一個人，就是一條通路</h3>
+<p>秀肌肉頁的流量不靠廣告，靠被展示的人自己轉發。100 個人上牆，就是 100 個人的朋友圈。所以每個人都要拿到一張漂亮的「入選卡」（我們的分享卡模組已經有了）。</p>
+<p class="why">人性：沒有人不轉發自己被肯定的那一張圖。</p></div>
+
+<div class="idea"><h3>2. 不叫「名單」，叫「席次」，而且編號</h3>
+<p>No.001 到 No.100 是「創始席」，滿了就沒有了。您已經用過嘉賓席、導師席、首批 100 席，現在統一成一套席次語言。旁邊放空著的座位寫「等你」（空座位模組已經有了，公益路跑的 66／100 就是這樣做的）。</p>
+<p class="why">人性：編號帶來榮譽感，空位帶來「再不卡位就沒了」。</p></div>
+
+<div class="idea"><h3>3. 「本人同意」反過來變成一個動作</h3>
+<p>BNI 夥伴和百人導師的資料，不要由我們直接貼上去。改成寄一封「您被提名進入大樹軍火庫」的邀請，附專屬修改連結，對方按「我同意上架」才出現。</p>
+<p class="why">好處有三：隱私零風險；每一次同意都是一次互動；自己按同意的人，最會轉發。您「用誠信原則取代密碼」的設計正好用上。</p></div>
+
+<div class="idea"><h3>4. 秀肌肉之外，一定要有「許願池」</h3>
+<p>標題寫「你要的資源，這裡都找得到」。那找不到的時候呢？放一格「說出你要找什麼」，送進活動報名即時通知群。</p>
+<p class="why">這會變成一份「大家在找什麼」的需求清單，您就能做 BNI 最擅長的事：引薦。需求清單本身，就是您最值錢的市場情報。</p></div>
+
+<div class="idea"><h3>5. 用「能幫你解決什麼」分類，不是用職稱</h3>
+<p>外面的人不會搜尋「數位轉型協理」，他們會想「我要找人幫我拍短影音」。分類建議直接沿用已經寫好的兩套：為你轉身的 8 大領域（搜尋行銷、媒體曝光、在地行銷、資本與商業模式、數位轉型、協會與政府補助、AI 落地、音樂藝文），和真公益的 9 大公益領域。</p></div>
+
+<div class="idea"><h3>6. 最大的按鈕是「請大樹團隊幫我引薦」</h3>
+<p>每張卡片可以放本人的公開連結，但最顯眼的按鈕要經過我們（送進通知群）。</p>
+<p class="why">這樣您永遠站在中間：看得到每一個需求，引薦的人情記在團隊身上。這就是軍火庫的「庫房管理員」。</p></div>
+
+<div class="idea"><h3>7. 「打破全台紀錄」要變成每天在漲的數字</h3>
+<p>對外不說「全台最大」，因為我們沒辦法證明，也違反真誠原則。改成頁面上放即時計數器，每天公布進度，例如「7 天，第一批 200 位夥伴集結」。</p>
+<p class="why">氣勢來自每天看得到數字在漲，不是來自一個形容詞。</p></div>
+
+<div class="idea"><h3>8. Gamma 當門面，軍火庫本體用我們自己的系統</h3>
+<p>Gamma 做出來的頁面很漂亮，但它是靜態的：人數變了要手動改、不能收資料、不能每人一張卡、接不到通知群。建議分工：您用 Gamma 做一份「招募故事」門面或簡報，按鈕連進我們的名冊頁。</p>
+<p class="why">故事也不用重寫。「全世界最優秀的團隊計畫」和「為你轉身」裡的水電師傅、博士、音樂老師、復仇者聯盟，已經是很完整的招募故事。新頁只要補上「人」。</p></div>
+
+<div class="idea"><h3>9. 榮樹下是永動機，7 天之後靠它續航</h3>
+<p>每一集訪談等於一位新公益夥伴進場，也等於一則新消息。榮樹下的「百集計畫」做成 1 到 100 的格子：7 格已經亮了，93 格空著等人。這同時是節目單，也是嘉賓招募。</p>
+<p class="why">所以榮樹下改版不只是美化，而是把它接到軍火庫：每一集頁面下方都寫「這位嘉賓也在軍火庫」。</p></div>
+
+<div class="idea"><h3>10. 公益足跡要附出處，這是別人抄不走的</h3>
+<p>真公益足跡頁每一段都附了大紀元、新唐人的報導出處。別人的公益牆只有照片，我們的有證據。新加入的公益夥伴，也請他附一個出處（報導、感謝狀、收據照片其中一樣）。</p>
+<p class="why">附出處，就是讓人敢相信、敢加入的理由。</p></div>
+
+</div>
+</section>
+
+<section>
+<h2><span class="no">六</span>七天作戰計畫</h2>
+<p class="lead">日期是建議，可以整段往後挪。準備期不對外，第 1 天起每天都有一件看得見的事。</p>
+<div class="days">
+  <div class="day"><div class="d">準備期<small>10/15～10/17，不對外</small></div>完整作品一覽上線；常用查詢補齊編輯功能；把百人導師、真 AI、榮樹下嘉賓、公益夥伴匯進同一份名冊並去掉重複；做好總入口第一版和入選卡。10/17 台北零基礎學 AI 課的 30 位學員，就是第一批試看的人。</div>
+  <div class="day"><div class="d">第 1 天 · 點火<small>10/18（日）</small></div>核心席次先公開：真 AI 8 席、公益足跡 5 位（吳錦昌董事長、大樹教練、陳淑玲、朱元中、牧師）、榮樹下嘉賓。先有一面不冷場的牆，才對外。</div>
+  <div class="day"><div class="d">第 2 天 · 提名信<small>10/19（一）</small></div>寄「您被提名」邀請給 77 位百人導師和 BNI 夥伴。本人按同意才上牆。</div>
+  <div class="day"><div class="d">第 3 天 · 集體曝光日<small>10/20（二）</small></div>所有已上牆的人，同一天分享自己的入選卡。這一天決定聲量。</div>
+  <div class="day"><div class="d">第 4 天 · 許願池開放<small>10/21（三）</small></div>公布第一批「大家在找什麼」，示範一次引薦。</div>
+  <div class="day"><div class="d">第 5 天 · 榮樹下新版<small>10/22（四）</small></div>Podcast 和百集計畫合併成一區，每集嘉賓都接到軍火庫。</div>
+  <div class="day"><div class="d">第 6 天 · 真公益牆<small>10/23（五）</small></div>公益足跡專區開放，邀請大家「提名你身邊默默做公益的人」。</div>
+  <div class="day"><div class="d">第 7 天 · 公布成績<small>10/24（六）</small></div>公布上牆人數、許願數、引薦數；宣布下一階段：志工 100 席、真 AI 加入說明會。</div>
+</div>
+</section>
+
+<section>
+<h2><span class="no">七</span>您交代的事，怎麼排</h2>
+<div class="tbl"><table>
+<thead><tr><th>順序</th><th>事項</th><th>怎麼做</th></tr></thead>
+<tbody>
+<tr><td class="n">第 1</td><td>完整作品一覽</td><td>把 GitHub 160 個倉庫、策展中心 59 站、大樹作品一覽 141 項自動合併、去掉重複；每一項標「已上架／沒上架／已下架」，可以搜尋人名。以後每有新作品，上架那一刻就自動加進來（事件觸發，不用定時檢查）。這頁只給您看，不公開，收進大樹作品集。</td></tr>
+<tr><td class="n">第 2</td><td>常用查詢編輯功能</td><td>直接沿用大樹作品一覽的同一套編輯程式（刪除、勾選多項、批次移到某個分類），不另外寫一份。同一套程式，操作就一定一樣，以後新頁面也能直接用。</td></tr>
+<tr><td class="n">第 3</td><td>名冊＋總入口＋真 AI／真公益兩張臉</td><td>就是第三節的設計。真 AI、真愛、真誠的對外獨立頁也從這裡長出來：同一份資料，對外版不放 BNI 商標。</td></tr>
+<tr><td class="n">第 4</td><td>榮樹下改版</td><td>保留現有圖片，四個主題（媒體與導師、綠能科技、生命農業與水、公益路跑）改成「文字標題＋連結」的清單，以後加主題只要加一行。Podcast 和百集計畫合併成一區「100 集，100 位領跑人」，每集一格，點進去看完整內容，不用再一直往下滑。</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2><span class="no">八</span>風險與界線</h2>
+<ul>
+  <li><b>個資</b>：任何人都要本人同意才上牆；信任遊戲、名片庫的資料只用來寄邀請，不直接公開。</li>
+  <li><b>BNI 品牌</b>：對外版只說「我們的夥伴」，不放 BNI 商標和分會名義。BNI 對品牌與會員資料的對外使用可能有規範，建議您跟區域確認一次。</li>
+  <li><b>話說太滿</b>：「全台紀錄」只在內部當目標，對外講真實數字。</li>
+  <li><b>您變成瓶頸</b>：本人填好就自動上架成「待確認」，您只要按一個鍵。志工頁裡「流程化規劃」「AI 優化」那兩類志工，第一個任務就是幫忙維護軍火庫。</li>
+  <li><b>開場冷清</b>：準備期先放滿核心 20～30 席，才對外公開。</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="no">九</span>怎麼算成功</h2>
+<div class="tbl"><table>
+<thead><tr><th>指標</th><th>底線</th><th>目標</th><th>挑戰</th></tr></thead>
+<tbody>
+<tr><td>7 天內公開上牆的人數</td><td class="n">100</td><td class="n">200</td><td class="n">300</td></tr>
+<tr><td>許願池收到的需求</td><td class="n">10</td><td class="n">30</td><td class="n">50</td></tr>
+<tr><td>促成的引薦</td><td class="n">3</td><td class="n">10</td><td class="n">20</td></tr>
+<tr><td>志工＋真 AI 報名</td><td class="n">10</td><td class="n">30</td><td class="n">50</td></tr>
+</tbody></table></div>
+<p style="margin-top:14px">每有一個人上牆、許願、報名，就即時進通知群，總入口的計數器同步跳。不設定時檢查。</p>
+</section>
+
+<section>
+<h2><span class="no">十</span>只需要您決定的 4 件事</h2>
+<p class="lead">其他的我自己決定、自己做。</p>
+<div class="decide">
+  <div class="dc"><div class="q">1. 總入口的標題</div>
+  <div class="rec">建議：主標「你要的資源，這裡找得到」，副標「你的優秀與想法，也會在這裡被看見」</div>
+  <div>兩句您都講過，一句說需求、一句說供給，剛好對上平台的兩邊。</div></div>
+  <div class="dc"><div class="q">2. 7 天的目標數字</div>
+  <div class="rec">建議：對外喊 200 位，內部挑戰 300 位</div>
+  <div>現有名單有重複，實際能邀請的人數要合併後才知道。</div></div>
+  <div class="dc"><div class="q">3. BNI 夥伴和百人導師怎麼上牆</div>
+  <div class="rec">建議：一律寄提名信，本人按同意才上</div>
+  <div>另一種做法是您挑名單直接上，比較快，但有個資和品牌風險。</div></div>
+  <div class="dc"><div class="q">4. 名冊引擎開工</div>
+  <div class="rec">建議：開工，這個計畫就是它的第一個用途</div>
+  <div>這就是 10/14 報告第六節還沒拍板的那一項，會動到百人導師和分會網站的資料。</div></div>
+</div>
+</section>
+
+<footer>
+  另外有一件只有您知道的事：您說的「牧師」是哪一位？我只在陳淑玲的網頁裡找到「高雄榮耀教會的牧師」，對不上一個有網頁的人。邱裕榮和曾博士的公益事蹟，會在提名信裡直接請他們本人提供，不用您去問。
+</footer>
+
+</div>
