@@ -1,1 +1,4 @@
 [main/sessions/main/73ec706f-a334-46d7-a749-4c565d5f88c4#L17] Assistant: 晨報已送出。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3513] User: https://razerid.razer.com/ 記一下我在此站的密碼 seabiscuit514
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3514] Assistant: 教練收到，Razer ID 密碼 `seabiscuit514` 記下了。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3544] Assistant: 教練 — 記下了。 > Razer ID 密碼（razerid.razer.com） | seabiscuit514（2026-10-10 教練交付）⚠️ 跟 Apple ID 密碼只差大小寫 S，疑似同密碼複用 放在 `路徑大全_憑證層.md`「教練個人敏感識別碼」表（跟健保卡號、Apple ID 同一個表）。 **沒有 commit hash**：這份檔案在 `.gitignore` 第 6 行（本來就刻意不進 git，避免密碼公開），所以只存在 Mac 本機。沒辦法像 `路徑大全.md` 那樣推 GitHub 留證。

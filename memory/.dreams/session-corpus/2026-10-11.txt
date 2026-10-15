@@ -2,3 +2,4 @@
 [main/sessions/main/1c5ce56f-1b87-4063-8b41-15cef02c8c57#L122] User: 10月17日目前報名幾人
 [main/sessions/main/1c5ce56f-1b87-4063-8b41-15cef02c8c57#L123] Assistant: 我重新撈一次最新數字。
 [main/sessions/main/1c5ce56f-1b87-4063-8b41-15cef02c8c57#L126] Assistant: 教練，10/17「零基礎學AI課」最新數字： - **報名筆數：13 筆**（比 10/4 的 11 筆多 2 筆） - **實際會來人數：16 人**（含同行） 📈 這 7 天新增的 2 位： - **林育聖（0916086032）** — 10/6 07:54 報名（1人） - **蔣婷婷（0933158517）** — 10/8 10:33 報名（2人同行） 需要把 13 位完整名單列出來，或做其他處理嗎？
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3545] Assistant: ☕ 幕僚長晨報：昨日bni_tainan+jiaolian_thoughts運作正常，無需教練關注
