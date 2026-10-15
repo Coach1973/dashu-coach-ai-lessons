@@ -1,3 +1,25 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-15 21:05 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5；教練說「總結」收工；本段 20:31～21:05，對話容量約 36%）
+
+**主軸：驗收雲端榮樹下改版並上線；教練新拉的 LINE 群接上「查行程」；張麗蝶網站 GitHub 改了卻沒更新的根因修復。三件都已實測。**
+- **榮樹下改版上線**（`~/github_repos/rongtree` `0cf9d29`）：真實 API 8 筆→亮 7 集（吳錦昌兩版本併一格，新增 EP5 張麗蝶、EP6 何瑞峰牧師、EP7 天使姐姐與朱元中顧問）；7 項選單錨點全通、舊 `#hundred` 保留、400px 無橫向捲動、格子最小 55x64、主題區 10 個連結與舊版逐一相同、字級只剩頁尾 16px（教練特准）。雲端交接信不進網站目錄，存 `knowledges/雲端來信存檔/`。**接力棒原寫的「在 ~/github_repos/<slug> checkout 雲端分支」會讓未驗收版本直接上線**（event.bymyway.com/curated 讀該資料夾工作目錄），驗收改用 `git worktree add`＋唯讀代理伺服器；已掛反射 `R-NO-CHECKOUT-IN-LIVE-GITHUB-REPOS`（`ef0d2255f` `69c8457f0`）、記憶 reference_review_cloud_branch_never_checkout_in_live_repo。
+- **新 LINE 群「榮樹下-訪談預約系統」**（C6d82fc6…cdc，小龍蝦台灣時間 20:24 自己進群，歡迎詞沒送出、原因未查）：原本落到通用 `main`（沒行程資料、沒擋外人）。現在 `openclaw.json` 加 `rongshuxia <- line default peer=group:*`，**以後任何新 LINE 群自動接專屬分身，不必通知我**。教練糾正「只給 5 個時段一天就查完」→ `coach_schedule.py open-slots --count N | --days N`（與預約頁前 8 個時段逐一一致）；外掛 `parseRange` 聽懂最近 N 場／N 天／一週／半個月；觸發詞補 可以約／可約／哪些時間／哪些時段／最近＋數字＋天場週月；測試 41/41；以真實群組路徑（gateway call agent，不發 LINE）實測三種問法都答對，測完刪了測試 session。commit：workspace `f3a7b843e`，外層 `e8cba79ed` `577325273`。記憶 reference_line_any_group_answers_coach_free_slots。**真群組尚未走過一次**（等有人在新群問，查日誌 grep C6d82fc6）。
+- **張麗蝶 lidie 在 GitHub 改學歷、正式站 10 分鐘沒換新**：正式站讀 Mac 本機 clone，靠 GitHub webhook（`/hooks/github-site`→`curated_git.py sync`）；lidie 與 patrick-chu 漏掛（其餘 58 站有掛）。補掛、`git pull --ff-only` 補上這次、已在 Chrome 確認顯示。根因：店家上架路（`curation_process.py` 自己建 repo＋Pages）漏了 `ensure_curated_github`，已補（`ab84ac812`）；證據：rongtree 20:39 推送→webhook 202→1 秒內同步。
+- **操作坑**：本場是臨時 worktree，Edit 工具改 `~/.openclaw/**` 被 hook 擋（request_directory／change_directory 都沒用），教練明確授權後改用終端機補丁；備份在 `state/backup_20261015_open_slots/`。內建瀏覽器截圖被截圖鎖擋，改用 DOM 數值檢查。
+- **被 Stop hook 糾正兩處**：回報時間要標「台灣時間」（日誌是 UTC）；吳錦昌沒個人頁那題不該拿來問教練，已收進🤫區。
+- **教練原話線索**：「這些時間本來就是公開給人家預約的」→ 公開資訊誰問都該答，不需另外下指令；「如果查最近 5 個行程，那一天就查完了」→ 查詢要依對方問法決定場數或天數；「已經等了 10 分鐘也沒看到更新」→ 網站類修改要自動換新，不是等夜裡補。
+
+### 📋 下一場開工先做
+1. 查新 LINE 群有沒有人問過（`grep C6d82fc6 /tmp/openclaw/openclaw-今天.log`），確認真路徑答得出；沒問過就等，不主動追。
+2. **查雲端實際花費**（還沒做）：claude.ai 用量看 session_01UN5wbKUBNK5RsdQUJKiQXo，告訴教練後再決定企劃書雲端另 4 件。
+3. 教練回應軍火庫企劃書 4 件待決＋「牧師是誰」（可能是 EP6 何瑞峰牧師，教練沒確認）→ 照做；名冊引擎開工。
+4. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
+5. 🔧 AI 自己：新對話確認 `auto_register_artifact`／`all_works_repo_hook`／容量提醒 Python 版會自動跳；gateway 每次啟動有一則無關的 `providers.nvidia.models[17].input` 設定驗證錯誤（10/15 01:52 起）；新群歡迎詞沒送出原因；策展 GitHub 化收尾剩聯想／宏碁貼網址觸發與 projects/INDEX 策展卡（先看現況再做）；聯想 `/api/mytools/state` 放行 8765 建議拿掉。
+
+🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）＋「牧師是哪位」｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；榮樹下第 1 集吳錦昌無個人頁（維持不連）。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-15 16:30 台灣時間，Mac 桌面版 Code 分頁，Opus 5.5／Sonnet 5.5 來回切；教練說「總結」收工；本段對話 12:32～16:28，對話容量用到約 38%）
 
 **主軸：百人軍火庫企劃書＋雲端分工開工；教練追問「找不到報告／常用查詢缺批量搬移」查出根因並補機制。雲端已交件，待本機驗收。**
@@ -11,8 +33,8 @@
 - **新增 webhook 通知**：任何倉庫的雲端 `claude/*` 分支被推，教練電報收到通知（`f15764643`，10 分鐘內同分支一次；event-webapp 已重啟）。
 - **教練原話線索**：「做出來的東西我只看了一眼，之後就不知道它在哪裡」→ 所有報告要有入口；「操作介面必須保持一致，比照作品一覽」→ 比照要逐項對照；「一律用 HTML 網站，而且要跳出來」；「我要等到什麼時候才知道他們交回來」→ 交件要主動通知。教練 30% 出頭換新對話框。
 
-### 📋 下一場開工先做
-1. **驗收雲端榮樹下改版**：`cd ~/github_repos/rongtree && git fetch && git checkout claude/rongtree-redesign`，讀信 `docs/to_junshi/2026-10-15_rongtree_redesign.md`（信裡第四段有未解決的事，如吳錦昌沒個人頁），本機用 400px 與桌機寬度開、檢查最小字 20px、頂部／漢堡選單錨點、`/api/rongtree/episodes` 8 筆亮起、點空格跳嘉賓席。沒問題才合併到 main（推 main 會自動換正式站），再收進作品集並把網址用 Chrome 跳給教練。
+### 📋 下一場開工先做（v258 已完成第 1 項：榮樹下改版已驗收合併 `0cf9d29`，不要再 checkout）
+1. ~~**驗收雲端榮樹下改版**~~（已完成）：`cd ~/github_repos/rongtree && git fetch && git checkout claude/rongtree-redesign`，讀信 `docs/to_junshi/2026-10-15_rongtree_redesign.md`（信裡第四段有未解決的事，如吳錦昌沒個人頁），本機用 400px 與桌機寬度開、檢查最小字 20px、頂部／漢堡選單錨點、`/api/rongtree/episodes` 8 筆亮起、點空格跳嘉賓席。沒問題才合併到 main（推 main 會自動換正式站），再收進作品集並把網址用 Chrome 跳給教練。
 2. **查雲端實際花費**（教練要看：先做第 1 件、查花費再決定後面幾件）：到 claude.ai 用量看 session_01UN5wbKUBNK5RsdQUJKiQXo；告訴教練後再決定企劃書雲端另 4 件（軍火庫總入口設計稿、真公益足跡查證草稿、提名信文案、真AI／真愛／真誠對外頁設計稿）。
 3. 教練回應軍火庫企劃書 4 件待決＋「牧師是誰」→ 照做；名冊引擎開工。
 4. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
@@ -23,39 +45,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-15 12:40 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5；教練說「總結」收工；本段對話 10/14 18:51～10/15 12:36，對話容量用到約 36%）
-
-**主軸：榮樹下訪談時間表網頁＋來賓卡刪除鈕＋朱元中／陳淑玲訪談備課；查出「上架卡死」根因；短網址上傳 405 修好；TAVA 更新版網址→自動備份流程固定下來；對話容量提醒 hook。**
-- **榮樹下訪談建議時間表**：`github_repos/rongtree/interview-flow.html`（網址 /curated/rongtree/interview-flow.html，commit `0f20993` `bb458da` `4cbc983`）：60 分鐘錄製流程＋邀約到追蹤時程；教練改字「樹蔭席→嘉賓席」「吳董-嘉勉及建議事項」，藍圖 md 與承諾牆腳本同步（`c0f2dfd86` `643a22a8d`）。已收大樹作品集「大樹常用」＋/vault（`e565105b5`）。內部頁不放公開連結、noindex。真公益俱樂部頂部選單加「榮樹下」（social-club `e0c5f9d`）。
-- **來賓卡**：查證朱元中（Patrick，天下顧問）**從未送出資料**（伺服器日誌五次 POST 全對得上 DB、系統無任何刪除功能）；新增**刪除／還原**（軟刪除，列表與來賓卡頁各有鈕，`d6b75a3ab`，測試 12 項），教練要刪的陳淑玲第一筆（AQGsXEnm8GKe，CBMC）我已刪；留下的 mmLIhyXPfHBM2 被人 23:33 按過「從公開名單隱藏」，已告知教練。朱元中／陳淑玲聯訪備課（3 重點＋關聯點「全人健康」＋做球給吳董 3 題）都在對話裡，沒存檔。
-- **Podcast 抓取**：榮樹下「用到才現看」（開頁才讀 SoundOn RSS，5 分鐘快取），新兩集已抓到；SoundOn **沒有 webhook／WebSub**，做不到即時推；可把快取 5→1 分鐘（教練還沒說要）。
-- **上架卡死根因**（最重要）：`scripts/optimize_site_assets.py` 的檔名替換 regex 遇 10MB 內嵌圖片資料變平方級，陳淑玲包（angel-sister）空轉 15 分鐘沒發完成通知，10/13 真公益包同病（當時用瘦身繞過）。已改直線寫法＋`test_optimize_rewrite_refs.py` 15 項（`2b3ae30b5`），卡住的包重跑成功：angel-sister、patrick-chu 上線並進作品集。
-- **短網址上傳 405**：`/u/<代碼>` 的表單沒寫 action，POST 回自己被擋；補 `action="/curation/upload"`＋3 項測試（`f52b6667d`）。10/10 以來短網址上傳一直壞，只是長網址那條沒壞。
-- **TAVA 更新版流程**：教練貼 `tava-ai.com/chat/…html`＝要我更新備份（TAVA 每版網址都新，無固定網址可輪詢）。已做 `tava-brand-web-playbook` v2（`443a8d8`）、my-tools 說明（`d70703e`）、coach888 工具類改名 v2；SOP `knowledges/SOP_TAVA更新版備份_my-tools與作品集收錄.md`＋反射 `R-TAVA-UPDATED-PAGE-SYNC`（`e6dfe1b71`，實測會跳）。
-- **對話容量**：桌面版畫面看不到 context，改用 `mcp__ccd_session_mgmt__get_usage` 讀（本場 1M 視窗）；新增 `scripts/context_percent_hook.sh`（30/35/40/50% 各提醒一次，`7627c3888`），已掛 settings.json（備份 `.bak-20261014-before-context-hook`）——**本場沒自動跳，新對話才生效**。
-- **10/17 零基礎學 AI 課＋海鮮鍋**（ema1017）名額 50→30（`1fe49ad`）；報名系統沒有名額欄位，不會自動額滿。
-- **聯想信**（`/api/mytools/state`）已部署重啟、實測 GET/POST 後還原，已回信（inbox/lenovo）。
-- **教練原話線索**：「我不喜歡輪詢機制」（第 6 次，事件觸發優先）；「我一般 30% 出頭就開新對話框」；「我只要丟更新版網址，你就知道要更新什麼」＝要固定流程不要每次交代；「我要網頁版，不是本機顯示版」＝交付一律線上網址。
-
-### 📋 下一場開工先做
-1. 新對話確認 `context_percent_hook.sh` 有自動在 30% 跳提醒（沒跳就查 settings.json 載入）。
-2. 朱元中重送資料表後，看 `webapp.error.log` 有沒有 POST；陳淑玲 mmLIhyXPfHBM2 被隱藏，教練說沒印象才恢復公開。
-3. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
-4. 教練回應模組化下一步 4 項（建議名冊引擎）；教練給南應大理監事名單 → 後台新增座位＋專屬連結。
-5. 🔧 AI 自己：「報名名額」做成活動欄位並在額滿時自動關報名（ema1017 目前只有網頁文字）；Podcast 快取要不要 1 分鐘等教練一句話；時間沒換算改程式擋；43 站小字改到那站才調。
-
-🙋 要教練決定：模組化下一步 4 項｜動到夥伴在用的系統要教練拍板｜問過：2026-10-14 報告內
-🤫 等教練自己提起：預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；TAVA 備份頁放「工具類」還是「大樹常用」（已告知，教練沒回）；Podcast 快取改 1 分鐘。
-
----
-> 📦 10/14 18:50 棒（志工頁／漢堡選單／來賓卡電報）已封存：`handoff_archive/handoff_2026-10-14_1850_志工頁_漢堡選單_來賓卡電報_archived.md`
-
----
-
-> 📦 10/14 13:41 棒（嘉賓席改名／邀請函／字 20px）已封存：`handoff_archive/handoff_2026-10-14_1341_嘉賓席改名_邀請函_字20px_archived.md`
-
-> 📦 10/14 09:50 棒（一週盤點與模組化報告）已封存：`handoff_archive/handoff_2026-10-14_0950_一週盤點與模組化_archived.md`
-
+> 📦 10/15 12:40 棒（榮樹下一週盤點／模組化／常用查詢）已封存：`handoff_archive/handoff_2026-10-15_1240_榮樹下一週盤點_archived.md`
 
 > 📦 10/14 09:20 棒（榮樹下多位來賓／南應大團隊頁）已封存：`handoff_archive/handoff_2026-10-14_0920_榮樹下多位來賓_南應大團隊頁_archived.md`
 
