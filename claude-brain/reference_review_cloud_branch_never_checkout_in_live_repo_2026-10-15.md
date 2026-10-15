@@ -19,3 +19,5 @@ event-signup 的 `/curated/<slug>/` 路由直接讀 `~/github_repos/<slug>` 的*
 10/15 榮樹下改版就是這樣合併（commit `0cf9d29`）。瀏覽器窗格在背景時 `innerWidth` 會是 0、平滑捲動不會動：量錨點落點要先 `scroll-behavior:auto` 再設 `location.hash`。
 
 相關：[[reference-curation-sop-2026-09-06]]、[[reference-cloud-work-map-and-where-lessons-live-2026-10-06]]
+
+**同一個架構的另一面（10/15 張麗蝶 lidie）：** 教練說「GitHub（coach1973.github.io/<slug>）改了、event.bymyway.com/curated/<slug>/ 沒更新」＝正式站讀的是 Mac 本機 clone，GitHub 推上去要靠 webhook（`/hooks/github-site` → `curated_git.py sync`）才會拉回來。先查 `gh api repos/Coach1973/<slug>/hooks` 有沒有掛；沒有 → `python3 scripts/curated_git.py hook <slug>`，再到 `~/github_repos/<slug>` `git pull --ff-only` 補上這次。根因是店家上架路（`curation_process.py` 自己建 repo＋Pages）漏了 `ensure_curated_github`，10/15 已補（`curation_process.py` 同輪掛通知）；夜裡 `ensure-all` 只是兜底。
