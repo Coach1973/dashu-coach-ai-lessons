@@ -1743,6 +1743,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-REPORT-ANSWER-AS-HTML",
+      "moment": "prompt",
+      "match": "(?s)(報告|企劃|規劃書|提案|策略分析|提醒我一下|是什麼東西|幫我整理|整理一下|解釋一下|說明一下|講解)",
+      "say": "教練要的是「報告／說明／規劃」這類要讀的東西：一律做成 HTML 頁，用 Artifact 上線取得 https 網址（獨立一行），再跑 scripts/deliver_open.sh <網址> 直接跳出 Chrome，回覆只放 3~5 行重點＋網址。不要把整份內容寫在對話框裡讓教練讀（他看不到、也沒有網址可轉傳）。字最小 20px。教練問『某某報告第幾節是什麼』也一樣：查到原文後做成頁面跳出來，不是貼在對話裡。",
+      "level": "remind",
+      "situation": "教練要一份可讀的報告、說明、規劃或提醒時",
+      "source": "教練 2026-10-15 14:28：「上面的報告請跳 HTML 檔案給我……請記住我的習慣，一律用 HTML 網站給我，而且是要跳出來，不要讓我在那個對話框裡面去讀」；同類 10/04、10/08（feedback_opened_on_mac_is_not_delivery_phone_coach_2026-10-04）。N8：同類錯改源頭——原反射 R-DELIVER-POP-OPEN 只比對 pptx/pdf 等檔案成品，漏了『對話裡直接寫報告』這條路",
+      "kind": "防錯型",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
