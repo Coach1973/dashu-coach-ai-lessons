@@ -6,7 +6,7 @@
 - **教練找不到 10/14 報告的根因與修法**：Artifact 發佈後沒人登記進 coach888，全靠記得。新增 PostToolUse hook `scripts/auto_register_artifact.py`（掛 `~/.claude/settings.json`，備份 `.bak-20261015-before-artifact-register-hook`）：發佈成功當下自動收進「大樹常用」，已在的不動；補登 3 份報告（`a58ed9c65`，試金石案例 121）。反射 R-REPORT-ANSWER-AS-HTML（教練要報告一律做成網頁跳出，不貼對話）`6aa6dc8d6`。
 - **常用查詢補批量搬移**（my-tools `f229067`，https://coach1973.github.io/my-tools/）：勾選多個→選分類→搬移／批量刪除／每類全選。🔴**我測試用 8765 埠，伺服器放行該來源，把教練正式存檔蓋掉 18 秒，已用歷史 id 15 還原核對相同**；反射 R-NO-8765-TEST-PORT `eef64681a`。聯想的 `/api/mytools/state` 已部署（重啟 event-webapp，回信聯想，`1044b3ca6`）。
 - **對話容量提醒**：加 45% 線＋每 5 句定期報一次，Mac 改用 Python 版（`0f6f706c0`，測試 13 項過）。
-- **完整作品一覽**（本機另開對話做完，https://coach1973.github.io/all-works/，已驗）：去重 212 筆、144 筆已在作品一覽、搜「曾博士／Scott」找得到 scott-dr；事件觸發更新，無排程；已收進大樹常用。
+- **完整作品一覽**（本機另開對話 Sonnet 5.5 做完，https://coach1973.github.io/all-works/，倉庫 Coach1973/all-works `1c42839` `5e267ca` `12a47b0`，已驗）：GitHub 161 倉庫＋策展名冊 59 站＋作品一覽 147 項，去重 212 筆（已收進作品一覽 144／只在策展中心 25／只有 GitHub 沒上架 31／已下架 12）；搜「曾博士／Scott」找得到 scott-dr（`?q=` 可帶搜尋）；已收進大樹常用＋/vault（`f338cbe04`）。**事件觸發更新，無排程**：①`curation_process.py` main() 末尾 ②`app.py` 策展後台下架／重新上架／刪除（webapp 已重啟）③PostToolUse hook `scripts/all_works_repo_hook.py` 偵測 `gh repo create` 等（掛 settings.json，備份 `.bak-20261015-before-all-works-hook`）；作品一覽與 GitHub 公開清單由頁面開啟時即時讀；產生器 `scripts/all_works_refresh.py`，測試 `scripts/test_all_works_refresh.py` 27 項過；反射 R-FIND-WORK-IN-ALL-WORKS（`2b4158a92`）；記憶 reference_all_works_page_architecture_2026-10-15。⚠️ data.json 在公開倉庫、含 51 個私有倉庫「名稱」（無描述），教練在意再改；新增不照命名慣例的站要補 `ALIASES`，否則被算成「只有 GitHub 沒上架」；別台電腦建的私有倉庫要等下一次觸發才進。
 - **雲端分工**：教練同意雲端 5 件中先開第 1 件。**雲端用 Chrome 開 claude.ai/code 新增工作階段**才成功（終端機 `claude --cloud` 在教練遠端時卡信任確認，已寫進記憶第 6 節＋改反射 `6c1d0ad1c`）。雲端對話 https://claude.ai/code/session_01UN5wbKUBNK5RsdQUJKiQXo（Opus 5.5，榮樹下倉庫）。**已交件**：分支 `claude/rongtree-redesign` 一個 commit `aba59a0`（16:23，index.html 改版＋4 張縮圖＋信 `docs/to_junshi/2026-10-15_rongtree_redesign.md`，沒動 main）。**還沒驗收、還沒上線、還沒查雲端實際花費**。
 - **新增 webhook 通知**：任何倉庫的雲端 `claude/*` 分支被推，教練電報收到通知（`f15764643`，10 分鐘內同分支一次；event-webapp 已重啟）。
 - **教練原話線索**：「做出來的東西我只看了一眼，之後就不知道它在哪裡」→ 所有報告要有入口；「操作介面必須保持一致，比照作品一覽」→ 比照要逐項對照；「一律用 HTML 網站，而且要跳出來」；「我要等到什麼時候才知道他們交回來」→ 交件要主動通知。教練 30% 出頭換新對話框。
@@ -16,7 +16,7 @@
 2. **查雲端實際花費**（教練要看：先做第 1 件、查花費再決定後面幾件）：到 claude.ai 用量看 session_01UN5wbKUBNK5RsdQUJKiQXo；告訴教練後再決定企劃書雲端另 4 件（軍火庫總入口設計稿、真公益足跡查證草稿、提名信文案、真AI／真愛／真誠對外頁設計稿）。
 3. 教練回應軍火庫企劃書 4 件待決＋「牧師是誰」→ 照做；名冊引擎開工。
 4. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
-5. 🔧 AI 自己：雲端用的 hook／提醒新對話才確定載入（`auto_register_artifact`、容量提醒 Python 版）→ 新對話確認會自動跳；真 AI 導師席頁「示範內容」字樣等 8 位本人確認後拿掉；聯想 `/api/mytools/state` 放行 `localhost:8765` 來源建議告知聯想考慮拿掉（會讓本機測試寫進正式資料）；時間沒換算改程式擋；43 站小字改到那站才調。
+5. 🔧 AI 自己：雲端用的 hook／提醒新對話才確定載入（`auto_register_artifact`、`all_works_repo_hook`、容量提醒 Python 版）→ 新對話確認會自動跳；真 AI 導師席頁「示範內容」字樣等 8 位本人確認後拿掉；聯想 `/api/mytools/state` 放行 `localhost:8765` 來源建議告知聯想考慮拿掉（會讓本機測試寫進正式資料）；時間沒換算改程式擋；43 站小字改到那站才調。
 
 🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）＋「牧師是哪位」｜問過：2026-10-15 企劃書內
 🤫 等教練自己提起：預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類。
