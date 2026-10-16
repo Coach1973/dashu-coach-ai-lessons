@@ -52,7 +52,7 @@ with tempfile.TemporaryDirectory() as d:
     rc, out, err = run({"session_id": sid, "transcript_path": str(tp)}, m1)
     check("1. 32% 跨 30 線會提醒", rc == 0 and "跨過 30%" in out and "約 32%" in out, out + err)
     rc, out, _ = run({"session_id": sid, "transcript_path": str(tp)}, m1)
-    check("2. 同一場同一條線不重複提醒", rc == 0 and out == "", out)
+    check("2. 同一場同一條線不重複「跨線提醒」（過 30% 改為每句定期報告，教練 2026-10-17）", rc == 0 and "跨過 30%" not in out and "定期報告" in out, out)
     tp.write_text(tp.read_text(encoding="utf-8").replace('"cache_read_input_tokens": 318900', '"cache_read_input_tokens": 518900'), encoding="utf-8")
     rc, out, _ = run({"session_id": sid, "transcript_path": str(tp)}, m1)
     check("3. 一次跳過 35/40/45/50 只提醒最高的 50", "跨過 50%" in out and "已過一半" in out, out)
@@ -85,6 +85,17 @@ with tempfile.TemporaryDirectory() as d:
     tp4 = fake_transcript(d, "test-session-4", 460000)
     rc, out, _ = run({"session_id": "test-session-4", "transcript_path": str(tp4)}, m5)
     check("10. 46% 跨 45 線（45 已加回）", "跨過 45%" in out, out)
+
+    # 過 30% 之後每一句都報（教練 2026-10-17）：先跨線（第 1 句），之後 3 句每句都有定期報告
+    m6 = tempfile.mkdtemp(dir=d)
+    tp5 = fake_transcript(d, "test-session-5", 330000)
+    outs = [run({"session_id": "test-session-5", "transcript_path": str(tp5)}, m6)[1] for _ in range(4)]
+    check("11. 33% 第 1 句跨線提醒、第 2~4 句每句都有定期報告（含額度提示）",
+          "跨過 30%" in outs[0] and all("定期報告" in o and "約 33%" in o and "get_usage" in o for o in outs[1:]), outs)
+    m7 = tempfile.mkdtemp(dir=d)
+    tp6 = fake_transcript(d, "test-session-6", 290000)
+    outs = [run({"session_id": "test-session-6", "transcript_path": str(tp6)}, m7)[1] for _ in range(5)]
+    check("12. 29% 還是每 5 句才報（沒過線不加密）", all(o == "" for o in outs[:4]) and "定期報告" in outs[4] and "get_usage" not in outs[4], outs)
 
 print("全部通過" if ok else "有失敗")
 sys.exit(0 if ok else 1)

@@ -290,6 +290,8 @@ PY
   echo "- ${PULL_STATUS}"
   echo "- 小龍蝦信箱：${DISPATCH_STATUS}"
   echo "- workspace: \`${WORKSPACE}\`"
+  SCORE_LINE=$(python3 "$WORKSPACE/scripts/rules_reminder_count.py" 2>/dev/null)
+  [[ -n "$SCORE_LINE" ]] && echo "- ${SCORE_LINE}"
   echo ""
   echo "## 🪪 身份硬性告知"
   echo ""

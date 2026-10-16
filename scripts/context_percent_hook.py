@@ -13,6 +13,7 @@ input + cache_creation + cache_read ＝ 目前對話容量。
 環境變數（測試用）：CONTEXT_WINDOW（預設 1000000）、CONTEXT_MARKER_DIR（預設系統暫存夾）。
 防洗版：同一場只在「第一次跨過」某條線時提醒；一次跳過好幾條只提醒最高那條。
 定期報告：CONTEXT_REPORT_EVERY（預設 5）句話報一次，計數存在 context_count_<session_id>；跨線那一句也算一次報告。
+過 30% 之後改成每一句都報（CONTEXT_REPORT_EVERY_OVER30，預設 1；教練 2026-10-17 02:40：查容量不貴就頻繁報）。
 """
 import glob
 import json
@@ -24,6 +25,7 @@ from pathlib import Path
 LEVELS = (30, 35, 40, 45, 50)
 WINDOW = int(os.environ.get("CONTEXT_WINDOW") or 1000000)
 EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 5)
+EVERY_OVER30 = int(os.environ.get("CONTEXT_REPORT_EVERY_OVER30") or 1)
 MARKER_DIR = Path(os.environ.get("CONTEXT_MARKER_DIR") or tempfile.gettempdir())
 TAIL_BYTES = 4 * 1024 * 1024
 
@@ -105,10 +107,15 @@ def main():
     except Exception:
         pass
     if not hit:
-        if EVERY > 0 and n % EVERY == 0:
+        every = EVERY_OVER30 if pct >= 30 else EVERY
+        if every > 0 and n % every == 0:
             sys.stdout.reconfigure(encoding="utf-8")
-            print(f"🧠 對話容量定期報告（系統自動，每 {EVERY} 句一次）：本場對話目前用了約 {pct}%（約 {total // 10000} 萬 token）。"
-                  f"\n👉 請在這一則回覆的第一行（亮燈那行後面）用一句白話告訴教練：目前用了約 {pct}%。")
+            msg = (f"🧠 對話容量定期報告（系統自動，每 {every} 句一次）：本場對話目前用了約 {pct}%（約 {total // 10000} 萬 token）。"
+                   f"\n👉 請在這一則回覆的第一行（亮燈那行後面）用一句白話告訴教練：目前用了約 {pct}%。")
+            if pct >= 30:
+                msg += ("\n   ⚠️ 已過 30%：只做教練這一句明說的事、不順手加工作；手上這件做完就主動問「要現在總結嗎？」。"
+                        "問總結那一句，用 get_usage 查一次 5 小時額度 %，連同容量 % 一起講（只在問總結那一句查，平常不查）。")
+            print(msg)
         return
     try:
         marker.write_text(str(hit))
