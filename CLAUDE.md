@@ -4,9 +4,29 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-17 00:50:12**
+> **最後同步：2026-10-17 01:35:35**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 01:40 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說要登出再登入，順手收工；本段 00:53～01:40，對話容量約 29%）
+
+**主軸：教練要弄懂 Discord 對工作的用處、跟 LINE 差在哪、App／網頁與記憶體；查證後把「榮樹下」伺服器頻道開通（教練 01:19 實測有回）。我講錯一次（「這台沒裝 Discord App」，其實是指令報錯被我當成查不到），已更正並加防呆。收工前健康檢查 🟢 全部正常。**
+- **Discord vs LINE 查證**（教練原話：朋友說高手都用 Discord、比 LINE 好太多）：結論＝不搬家、分工——LINE 對外（夥伴／學員／預約），Discord 當教練＋小龍蝦＋助理的內部工作台。查到：頻道分主題不洗版（TVBS 2026/8/26）；LINE 照片約 30 天、文件 7 天過期（報導，LINE 官方沒明確公布）；Discord 免費單檔 20MB（Dexerto 2026/8/13）→訪談錄音原檔不走 Discord；LINE 官方帳號免費推播 200 則／月（第三方整理）、LINE Notify 2025/3/31 已終止；小龍蝦官方文件有 Discord 語音逐字稿＋自動會議記錄（要設語音轉文字、先告知與會者、摘要不自動貼回；本機 2026.9.4 有、設定檔未開）。「談完自動上 Podcast／YouTube」目前沒現成路：YouTube API 未審核專案上傳會被鎖私人、SoundOn 沒查到公開上傳功能、路徑大全沒 YouTube 授權；網頁上架技能已有（換入口而已，Discord 內未實測）。教練說 Discord 語音不如 Typeless → 語音頻道不用，實測「之後我再說」。
+- **榮樹下頻道開通**（`46900b190`，~/.openclaw master）：原因＝`channels.discord.groupPolicy` 是 `disabled` 且無 `guilds`（只開私訊）；改 `allowlist`＋`guilds["1560663537527820298"]={requireMention:false, users:[教練ID]}`，dry-run→套用→重啟 gateway（CLI 與服務同為 2026.9.4）。伺服器只有教練＋機器人，新頻道自動生效；**只限 MiniMax 版**，切 Claude 版時伺服器頻道未設定。已給教練白話三步驟（頻道打字即回、私訊也行、新頻道不用再加）。
+- **錯誤更正**（試金石126、反射 R-ERROR-IS-NOT-NOT-FOUND，`2b5caefb2`）：`ls -d /Applications/Discord* ~/Applications/Discord*` 第二路徑沒東西，zsh 報 `no matches found` 整行中止，我當成「沒裝」並標【查到】；教練：「我有裝，而且正開著呢」。實際 `/Applications/Discord.app` 存在。同類「否定結論沒驗證查法」第二次（記憶 reference_windows_file_scan_silent_zero_traps 只寫記憶）→ 這次進機制，回測 291／45,234。
+- **Discord App 與記憶體**：「App 比網頁省記憶體」查不到根據（App 是 Electron／Chromium、無並排實測）；App 開 45 秒實際佔用約 500MB（RSS 加總 920MB 偏高）；網頁版沒量。Mac mini 16GB，系統可用比例約 55%、交換檔 135MB，壓力正常；教練活動監視器的數字（用量 12.92GB、快取 3.08、核心 2.35、壓縮 3.89）與我量的吻合，要看的是「記憶體壓力」圖與交換檔，不是用量。已驗證 computer-use 能控制 Discord App（full，讀到畫面與 113 個元素；沒點擊／打字），建議機器人 API 即可。
+- **登出前查證**：38 個自動服務設定檔都在、都已載入；tmux `remote-control`（手機連回 Mac 上 Claude）登出會消失、沒有登入自動重開（`scripts/restart_remote_control.sh`）。
+- **教練原話線索**：「你怎麼可以在沒有查證的時候就說沒裝這件事呢？」→案例125／126 一線：否定結論前先驗證查法（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我要的是在不同的頻道當中它都可以發揮作用，不是嗎？」「有沒有很簡單、很簡單的使用說明書」→ 要的是「任何頻道叫得動小龍蝦」＋白話說明。「我不想刪了之後到時候又重裝，先這樣子吧」「我希望這台電腦可以輕鬆完成任務，不要因為記憶體不夠而顯得笨重」→ 取捨偏保留；在意的是「用得順」，數字只是手段。
+
+### 📋 下一場開工先做（以本棒為準）
+1. **登入後馬上做**：`bash ~/.openclaw/workspace/scripts/restart_remote_control.sh` 重開手機遙控並驗證；看 `~/Library/Logs/openclaw/launchagents_guard.log` 有沒有登入時那筆；跑 `python3 scripts/system_health_check.py`（這次登出就是 19:45 棒要的「真實登入」測試）。
+2. 🔧 承接（19:45 棒清單已併入此處）：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway 啟動的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；52 筆舊 stash 留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；`memory/` 有 2 個記憶檔放錯位置（應在 claude-brain/）；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件（可能本來手動，未處理）。
+3. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
+
+🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：Discord 語音頻道自動會議記錄實測（教練「先不用實測，之後我再說」）；Claude 版的伺服器頻道、朋友加入伺服器時改 `users`／`requireMention`；Discord Claude「說新對話就自動重開」、開機自動啟動；後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
 
 ---
 
@@ -21,33 +41,15 @@
 ### 📋 下一場開工先做（以本棒為準）
 1. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；誤擋就改反射索引 R-VERIFY-BEFORE-ANSWER 的 match（E2 讀同一條）。
 2. 🔧 修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）：先查有沒有換過金鑰；查不到就放 🤫（只有教練能給新金鑰）。
-3. 承接下方 19:45 棒：軍火庫設計稿教練回應後照做、志工頁 `JOINED`、下次登入看 `launchagents_guard.log`、gateway `providers.nvidia.models[17].input` 驗證錯誤等。
+3. 承接新一棒 📋 第 2 項（19:45 棒的清單已併入、該棒已封存）。
 
 🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：「在群裡幫我接回去」是不是也要開「榮樹下」伺服器頻道（10/17 凌晨問過、未回；要開就在 `channels.discord.guilds` 加 `1560663537527820298`、groupPolicy 改 allowlist，先 dry-run）；Discord Claude「說新對話就自動重開」、開機自動啟動；後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；及下方 19:45 棒的 🤫 清單。
+🤫 等教練自己提起：（「榮樹下」伺服器頻道已於 01:19 開通並經教練實測，本項移出）；其餘見新一棒 🤫 清單。
 
 ---
 
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 19:45 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；教練說「要總結嗎」收工；本段 13:09～19:45，對話容量約 49%）
-
-**主軸：15:00 workspace 被本機另一個 AI 對話框拉錯分支換掉，教練在外面 3.5 小時下不了任何指令、/curated/ 全部 404（重大疏失，試金石123）→ 全部救回並從源頭封住；全面盤查救回 7 月以來 52 筆自動暫存默默弄丟的東西；Claude 新增 7 個技能、小龍蝦新增 2 個技能；背景工作失敗改成當下通知。收工前健康檢查 🟢 全部正常。**
-- **兇手與原因**：對話框 960f614e（做香檳下午茶網頁）在 workspace 憑印象寫 `origin master`（workspace 是 main），整個資料夾被換成 ~/.openclaw 的檔；python 檢查程式不見→回 2→教練每句話（含手機）被擋 16 次。9/10 同坑已發生過，當時只寫記憶。還原後 4,172 檔全回（`2538fe817`）。
-- **源頭機制**：①8 支 python hook「檔案不在就放行」②`scripts/git_wrong_branch_guard.py`（PreToolUse）：寫錯分支名或指到毫無共同歷史的線就擋並給正確名稱，所有資料夾適用，1,525 筆真實指令回測誤擋 0（`6ef61e757` `aab134d12`）③兩個資料夾都裝 pre-rebase。
-- **盤查救回**（`c1eb5ede6`）：5 個整份檔（Plaud主題整理.md 等）、13 條記憶索引、3 份 SOP 段落；遺失行封存 `handoff_archive/stash_rescue_2026-10-16/README.md`；三支自動同步改用 `scripts/safe_stash_restore.py` 逐檔放回。守門員擴大到 38 個自動服務含小龍蝦 gateway（`00886b78d`）；接力棒鏡像格式檢查改查全文（`69d1d3ad6`）；背景排程失敗當下通知 `scripts/cron_fail_notify.sh`（30 分鐘同工作 3 次→電報＋信到 inbox/mac，`de8266088`，daemon 19:22 已重啟）。
-- **技能**（`9d6041215` `7502acedf`）：Claude＝健康檢查 system-health-check（`scripts/system_health_check.py`）、總結、改網頁、上架、加上報名、BNI 開票、原話報告書；小龍蝦 main＝site-down-check、bigtree-publish-site（備份 `ops/xiaolongxia_workshop_skills/`）。都實測新對話看得到／答對。報告 https://claude.ai/artifact/GF4ueUwADRQtzeaeQko2JK
-- **教練原話線索**：「寫一個指令，寫到我連主人親自下命令都不行，那要你何用？」「憑什麼你們可以憑印象？」「我又不懂電腦」→ 會造成損失的動作一律「系統先查、不符就擋」，不靠 AI 自覺；做得到的事不叫教練點、不叫教練動手。
-
-### 📋 下一場開工先做
-1. 教練回應軍火庫設計稿（https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 ）後照做（企劃書 4 件＋雲端另 3 件；點數剩 US$36、週用量預警）；不主動追問。
-2. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
-3. 🔧 下次真實登入後看 `~/Library/Logs/openclaw/launchagents_guard.log` 有沒有登入時那筆；跑一次 `system_health_check.py`。
-4. 🔧 承接：gateway 啟動的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；52 筆舊 stash 留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；`memory/` 有 2 個記憶檔放錯位置（應在 claude-brain/）；angel-sister 頁 10.6MB（圖片內嵌），手機慢可考慮壓。
-
-🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
-
----
+> 📦 10/16 19:45 棒（workspace 被拉錯分支事件、守門員與技能、盤查救回）已封存：`handoff_archive/handoff_2026-10-16_1945_軍師棒_archived.md`（待辦清單已併入新一棒）
 
 > 📦 10/16 23:55 棒（Discord 建置過程、被糾正的兩個低級錯、金鑰防護、教練原話線索）已封存：`handoff_archive/handoff_2026-10-16_2355_Discord建置_archived.md`
 
