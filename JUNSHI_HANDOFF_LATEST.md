@@ -1,23 +1,24 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 23:55 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「總結」收工；本段 20:14～23:55，對話容量約 37%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 00:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「開」，一路做到 Discord 切成真的 Claude；本段 23:51～00:20，對話容量約 25%）
 
-**主軸：教練要把 Claude 串進 Discord。機器人建好了、在教練的伺服器裡，但「接上 Claude」沒成功（Anthropic 對教練帳號的功能旗標關著）；下一步改接小龍蝦，尚未動手。同一晚被教練當場糾正兩個低級錯，都已從源頭修掉。**
-- **Discord 已做好**（全在教練的 Chrome 操作；教練本人輸了密碼、點了授權）：應用程式「Claude特助」ID `1560673837568233532`、伺服器「榮樹下」ID `1560663537527820298`（擁有者＝教練 `1560659588297130046`）、Message Content Intent 已開、機器人已在伺服器內（API 驗證）。金鑰在 `~/.claude/channels/discord/.env`（600）與 `路徑大全_憑證層.md` 的 Discord 段（git 忽略，驗證有效）。Bun 1.4.3 已裝；外掛 `discord@claude-plugins-official` v0.0.4 已裝；`access.json` 已寫成只有教練可私訊。
-- **卡點**：`claude --channels plugin:discord@claude-plugins-official` 顯示「Channels are not currently available」。查 Claude Code 2.1.278 程式碼：閘門是 `P("tengu_harbor", false)`＝Anthropic 伺服器端、依帳號逐步開放的旗標；拿掉桌面版環境變數重試結果相同，教練電腦上改不了。教練朋友能接＝他的帳號被開了旗標（推論，沒看到朋友設定）。
-- **小龍蝦路（教練 23:35「如果是的話，那你就做吧」，尚未動手）**：OpenClaw 2026.9.4 原生支援 Discord（`openclaw channels add --channel discord`）。查到：所有 agent 的腦都是 `minimax/MiniMax-M3`；aiprimetech 的 Claude 線金鑰實測 401 INVALID_API_KEY，憑證層寫「使用中」已過時。已向教練說明「回話的會是 MiniMax，不是 Claude」，教練沒有反對。
-- **被糾正的兩個低級錯（試金石124）**：①下載資料夾是指向外接 SSD 的捷徑，反射提示寫 `ls ~/Downloads` 看不到圖→改反射 `55465d9d8`；②用了教練看不到的內建瀏覽器窗格→新反射 R-BUILTIN-BROWSER-EXTERNAL-BLOCK（擋下，通行證 `state/BUILTIN_BROWSER_APPROVED` 10 分鐘）、路由器支援 `unless_fresh_file`、settings.json PreToolUse 觸發範圍加 `mcp__Claude_Browser__.*`，`30c573f7f`，真實呼叫被擋已驗證。
-- **金鑰防護**：教練貼的金鑰曾被 `log_junshi_activity_to_echo.sh` 寫進 `state/inbound_echo`（會被自動同步推上 GitHub）→已遮掉並讓程式寫入前自動遮蔽 Discord／Telegram／sk-／GitHub 金鑰 `c8076a774`；新反射 R-COACH-PASTED-CREDENTIAL `b829cdd59`；記憶 feedback_coach_pastes_credentials_on_purpose／project_discord_bot_claude_tezhu_pending_openclaw `3444a1d99`。
-- **教練原話線索**：「我是一定要把金鑰貼給你…你自己去做好防護，就不要再來煩我了」→貼密碼是刻意的，收進憑證層、做防護、一句話回報；「為什麼你思考了這麼久？…我什麼都不知道，也看不到」→長時間做事要主動簡短報進度；「我一直都在使用chrome且登入好了，你怎麼不用呢」→網頁操作預設用教練的 Chrome（先 list_connected_browsers 確認 Mac 本機）；「超過 30% 就要開始準備，差不多 40% 就要開新對話框」→主動看容量。
+**主軸：Discord 機器人「龍蝦特助」現在接的是真的 Claude（教練 00:10 實測「Discord 有回了，確實是 Claude」）。前一場「Anthropic 旗標對教練帳號關著」的結論是錯的，已更正（試金石125）。**
+- **過程**：先照上一棒接小龍蝦（OpenClaw 加 Discord，金鑰不進 git、用 SecretRef 指到 `~/.claude/channels/discord/openclaw-secrets.json`，`plugins.allow` 要補 `discord` 否則一直 stopped；`d9d8e2c92`）→教練 23:59 測有回（MiniMax）→教練追問「為什麼朋友可以我不可以」→查本機：`cachedGrowthBookFeatures.tengu_harbor=true`、核准清單含 discord、帳號個人 Pro、乾淨環境實測 `Channels: Listening` →教練 00:08 授權切換。
+- **現況**：小龍蝦的 Discord 暫停（`channels.discord.enabled:false`，`c1427db72`），備援；真的 Claude 在 tmux 視窗 `discord-claude` 常駐，工作資料夾 `~/claude-discord`（`CLAUDE.md`、預先核准 5 個 Discord 工具），Claude Code 首次啟動自動升到 2.1.301，模型 Sonnet 5。權限提示會傳到教練 Discord 私訊按按鈕。啟動／檢查／退回指令全在記憶 `project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16`。
+- **改名**：教練 00:02 指定機器人叫「龍蝦特助」，用機器人金鑰改好；開發者後台的應用程式名稱仍叫「Claude特助」。
+- **容量（教練 00:12 問「日後叫它做事會有 context 問題吧？算法跟這邊像嗎？」）**：同一套算法（同一份 settings.json，視窗 100 萬）；Discord 視窗是一個持續的對話，剛開機就 8%（75.1k，固定開銷約 55k）；全域 hook 在 Discord 訊息也會觸發（交易紀錄確認），容量提醒理應也會到。沒有「新對話」按鈕，目前重啟 tmux 視窗。
+- **其他**：Hook 稽核紅字查到是 `scripts/context_percent_hook.sh`（舊版，現行是 `.py`），已拿掉檔頭「# Hook：」宣告。每個桌面版對話都會多一個閒置的 Discord 外掛程序（外掛是 user scope），無害。
+- **教練原話線索**：「我的朋友說他可以，我就納悶，為什麼他可以我不可以？你還是沒有解決我這個問題，對嗎？」→教練不接受「帳號被擋」的推論，要證據；別人能做、他不能，一定要追到底。「它也會有對話上下文視窗…我就比較想了解它那邊計算的方式」→教練在意長期用 Discord Claude 的容量管理，習慣 30% 準備、40% 開新對話。
 
 ### 📋 下一場開工先做（以本棒為準）
-1. **Discord 改接小龍蝦**（完整步驟在記憶 project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16）：備份 `~/.openclaw/openclaw.json` → `openclaw channels add --channel discord`（金鑰用腳本從 `.env` 讀、不貼出來）→ 只允許教練 ID 私訊、伺服器頻道先不開 → `openclaw config validate` → 重啟閘道 → 確認 Telegram／LINE 沒壞 → 請教練私訊機器人實測。回報要講清楚：回話的是 MiniMax-M3，不是 Claude。同一把金鑰不要同時給 Claude Code 外掛與 OpenClaw。
-2. 🔧 修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）：先查有沒有換過金鑰；查不到就放 🤫（只有教練能給新金鑰）。
-3. 🔧 查新工作資料夾啟動時 SessionStart 紅字「Hook稽核：宣告是hook但沒註冊進settings.json的腳本」是哪一支（`scripts/audit_claude_hooks_registered.sh`）。
-4. 承接上一棒（下方 19:45 棒）：軍火庫設計稿教練回應後照做、志工頁 `JOINED`、下次登入看 `launchagents_guard.log`、gateway `providers.nvidia.models[17].input` 驗證錯誤等。
+1. 看 tmux 視窗還活著：`tmux ls`、`tmux capture-pane -t discord-claude -p`；Discord Claude 的容量接近 30% 時提醒教練。教練若要「在 Discord 說新對話就自動重開」→ 做成重啟腳本（目前只有手動指令，見記憶）。
+2. 🔧 Mac 重開機或登出後 Discord Claude 不會自動回來；教練需要時再做開機自動啟動（先把 10/16 的 launchd 事件收尾）。
+3. 🔧 修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）：先查有沒有換過金鑰；查不到就放 🤫（只有教練能給新金鑰）。
+4. 承接下方 19:45 棒的項目：軍火庫設計稿教練回應後照做、志工頁 `JOINED`、下次登入看 `launchagents_guard.log`、gateway `providers.nvidia.models[17].input` 驗證錯誤等。
 
 🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：朋友的 Discord 用哪種方法接 Claude；Claude 線（aiprimetech）新金鑰；等 Anthropic 開 tengu_harbor 後改用官方 `--channels`（一行指令即通）；及下方 19:45 棒的 🤫 清單。
+🤫 等教練自己提起：Discord Claude「說新對話就自動重開」、開機自動啟動；開發者後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；及下方 19:45 棒的 🤫 清單。
 
 ---
+
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 19:45 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；教練說「要總結嗎」收工；本段 13:09～19:45，對話容量約 49%）
 
@@ -38,6 +39,8 @@
 🤫 等教練自己提起：香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
 
 ---
+
+> 📦 10/16 23:55 棒（Discord 建置過程、被糾正的兩個低級錯、金鑰防護、教練原話線索）已封存：`handoff_archive/handoff_2026-10-16_2355_Discord建置_archived.md`
 
 > 📦 10/16 15:10 追加棒（網站斷線通知、香檳下午茶頁上架）已封存：`handoff_archive/handoff_2026-10-16_1510_香檳下午茶追加_archived.md`
 

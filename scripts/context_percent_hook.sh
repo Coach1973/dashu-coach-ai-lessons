@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hook：UserPromptSubmit
+# （已停用的舊版：現在由 context_percent_hook.py 執行並註冊在 settings.json，本檔不再宣告成 hook）
 # 用途：對話容量（context window）用量跨過 30%、35%、40%、50% 時，各提醒教練一次。
 # 起因（2026-10-14 23:53 台灣時間，教練）：桌面版畫面上看不到 context 了，
 #       「我一般都是 30% 出頭就開始會開新的對話框了」→ 請 AI 在 30/35/40/50% 各提醒一次。

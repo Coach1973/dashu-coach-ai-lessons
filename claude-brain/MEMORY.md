@@ -1,3 +1,4 @@
+- [🔧 Discord 機器人「龍蝦特助」已切成真的 Claude（tmux 視窗 discord-claude 常駐、教練10/17 00:10 實測）；「官方 --channels 被旗標關著」舊結論作廢；小龍蝦 Discord 暫停當備援；怎麼重啟／退回／容量怎麼算(2026-10-17)](project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16.md)
 - [🧰 技能清單：Claude 7 個（健康檢查／總結／改網頁／上架／加上報名／開過票沒／原話報告書）＋小龍蝦 2 個新技能的位置、怎麼加、怎麼驗證(2026-10-16)](project_skills_catalog_2026-10-16.md)
 - [🔴🔴 重大疏失：AI 寫的檢查程式自己不見就把教練每句話擋掉 3.5 小時(10/16 15:00～18:26)；hook 一律「壞了就放行」；workspace 被拉錯分支 origin master 換掉的認法與救法(2026-10-16)](feedback_hooks_must_fail_open_never_block_coach_2026-10-16.md)
 - [🔧 event.bymyway.com 整站 530/1033＝webapp＋event-tunnel 兩個 launchd plist 消失，重建法與驗證；10/16 lidie 連結無效即此因(2026-10-16)](reference_event_site_down_530_1033_launchd_plists_vanished_2026-10-16.md)
