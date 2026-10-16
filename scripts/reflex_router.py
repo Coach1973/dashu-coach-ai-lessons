@@ -201,6 +201,12 @@ def main():
                 continue
             if not re.search(r["match"], text):
                 continue
+            if r.get("unless_fresh_file"):  # 教練明說要放行時 touch 通行證檔，10 分鐘有效
+                try:
+                    if time.time() - os.path.getmtime(os.path.join(WS, r["unless_fresh_file"])) < 600:
+                        continue
+                except OSError:
+                    pass
         except re.error:
             continue  # 一條寫壞只跳過那一條，不能讓同時刻的其他反射一起失效
         if r.get("check") == "weekday":

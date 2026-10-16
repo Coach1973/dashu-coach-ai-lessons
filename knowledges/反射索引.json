@@ -1811,6 +1811,21 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-BUILTIN-BROWSER-EXTERNAL-BLOCK",
+      "moment": "pre_tool",
+      "tool": "mcp__Claude_Browser__.*",
+      "kind": "防錯型",
+      "match": "(?m)^https?://(?!localhost\\b|127\\.0\\.0\\.1|\\[::1\\]|[^/\\s]*\\.(?:localhost|test)\\b)",
+      "say": "別用內建瀏覽器窗格開外部網站：它常是隱藏的，教練看不到、也登不進去。教練平常登入的是他自己的 Chrome → 一律用 mcp__claude-in-chrome__*（先 list_connected_browsers 確認是 Mac 本機那個）；內建窗格只留給 localhost 預覽。教練明說要用內建窗格時，先 touch ~/.openclaw/workspace/state/BUILTIN_BROWSER_APPROVED（10 分鐘有效）再重試。",
+      "level": "block",
+      "unless_fresh_file": "state/BUILTIN_BROWSER_APPROVED",
+      "situation": "AI 要用內建瀏覽器窗格開外部網站時",
+      "source": "教練 2026-10-16 23:15 糾正：「你又開那個我看不到的網頁，我一直都在使用chrome且登入好了，你怎麼不用呢？」",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
