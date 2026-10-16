@@ -29,12 +29,12 @@ while true; do
 
     # 2. split_memory: 10,40 (每小時 :10, :40，原 cron 設定)
     if [ "$CURRENT_MIN" = "10" ] || [ "$CURRENT_MIN" = "40" ]; then
-        bash "$WS/scripts/split_memory.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ split_memory 失敗" >> "$LOG"
+        bash "$WS/scripts/split_memory.sh" >> "$LOG" 2>&1 || { echo "[$TS] ⚠️ split_memory 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "split_memory" >/dev/null 2>&1; }  # 10/16：失敗當下通知
     fi
 
     # 3. distill_watchdog + VPS polling healthcheck: */15 (:00, :15, :30, :45)
     if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
-        bash "$WS/scripts/distill_watchdog.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ distill_watchdog 失敗" >> "$LOG"
+        bash "$WS/scripts/distill_watchdog.sh" >> "$LOG" 2>&1 || { echo "[$TS] ⚠️ distill_watchdog 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "distill_watchdog" >/dev/null 2>&1; }  # 10/16：失敗當下通知
         # vps_polling_healthcheck: 已移除（2026-08-12 全面體檢，教練核准）
         #   重複原因：LaunchAgent ai.openclaw.vps-polling-healthcheck.plist 已經
         #   用 StartInterval=900（每 15 分鐘）跑同一支腳本，等於同一件事每 15 分鐘
@@ -49,7 +49,7 @@ while true; do
 
     # 5. heartbeat_audit: 每天 23:50（用 LAST_HEARTBEAT_DAY 防止重複）
     if [ "$CURRENT_HOUR:$CURRENT_MIN" = "23:50" ] && [ "$LAST_HEARTBEAT_DAY" != "$CURRENT_DAY" ]; then
-        bash "$WS/scripts/heartbeat_audit.sh" >> "$LOG" 2>&1 || echo "[$TS] ⚠️ heartbeat_audit 失敗" >> "$LOG"
+        bash "$WS/scripts/heartbeat_audit.sh" >> "$LOG" 2>&1 || { echo "[$TS] ⚠️ heartbeat_audit 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "heartbeat_audit" >/dev/null 2>&1; }  # 10/16：失敗當下通知
         LAST_HEARTBEAT_DAY="$CURRENT_DAY"
     fi
 
@@ -62,21 +62,21 @@ while true; do
     #    且 session 結束時 session_end_auto_push.sh 會立刻補推一次，不會真的漏。
     #    2026-06-20 從系統 crontab 接管：原 cron 與 sync_handoff 撞 lock 96% 失敗
     if [ $((10#$CURRENT_MIN % 15)) -eq 0 ]; then
-        bash "$WS/scripts/backup_terminal_sessions.sh" >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ backup_terminal_sessions 失敗" >> "$LOG"
+        bash "$WS/scripts/backup_terminal_sessions.sh" >> /tmp/backup_terminal.log 2>&1 || { echo "[$TS] ⚠️ backup_terminal_sessions 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "backup_terminal_sessions" >/dev/null 2>&1; }  # 10/16：失敗當下通知
     fi
     if [ "$CURRENT_MIN" = "00" ]; then
-        bash "$WS/scripts/safe_git.sh" "$WS" "auto: 終端機對話備份 $(date '+%H:%M')" terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 || echo "[$TS] ⚠️ safe_git(backup) 失敗" >> "$LOG"
+        bash "$WS/scripts/safe_git.sh" "$WS" "auto: 終端機對話備份 $(date '+%H:%M')" terminal-notes/raw_sessions >> /tmp/backup_terminal.log 2>&1 || { echo "[$TS] ⚠️ safe_git(backup) 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "safe_git(backup)" >/dev/null 2>&1; }  # 10/16：失敗當下通知
     fi
 
     # 7. sync_handoff + commit: */5 (:00, :05, :10, ...)
     #    2026-06-20 從系統 crontab 接管：原 cron 與 backup_terminal 撞 lock
     if [ $((10#$CURRENT_MIN % 5)) -eq 0 ]; then
-        bash "$WS/scripts/sync_handoff_to_claudemd.sh" >> /tmp/sync_handoff.log 2>&1 || echo "[$TS] ⚠️ sync_handoff 失敗" >> "$LOG"
+        bash "$WS/scripts/sync_handoff_to_claudemd.sh" >> /tmp/sync_handoff.log 2>&1 || { echo "[$TS] ⚠️ sync_handoff 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "sync_handoff" >/dev/null 2>&1; }  # 10/16：失敗當下通知
     fi
 
     # 8. recall（查話系統）: */30 (:00, :30)
     if [ "$CURRENT_MIN" = "00" ] || [ "$CURRENT_MIN" = "30" ]; then
-        /opt/homebrew/bin/python3 "$WS/scripts/recall.py" --harvest --build >> /tmp/recall.log 2>&1 || echo "[$TS] ⚠️ recall 失敗" >> "$LOG"
+        /opt/homebrew/bin/python3 "$WS/scripts/recall.py" --harvest --build >> /tmp/recall.log 2>&1 || { echo "[$TS] ⚠️ recall 失敗" >> "$LOG"; bash "$WS/scripts/cron_fail_notify.sh" "recall" >/dev/null 2>&1; }  # 10/16：失敗當下通知
     fi
 
     sleep 60
