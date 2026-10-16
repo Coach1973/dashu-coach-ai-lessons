@@ -6,6 +6,7 @@
 - **錯誤更正**（試金石126、反射 R-ERROR-IS-NOT-NOT-FOUND，`2b5caefb2`）：`ls -d /Applications/Discord* ~/Applications/Discord*` 第二路徑沒東西，zsh 報 `no matches found` 整行中止，我當成「沒裝」並標【查到】；教練：「我有裝，而且正開著呢」。實際 `/Applications/Discord.app` 存在。同類「否定結論沒驗證查法」第二次（記憶 reference_windows_file_scan_silent_zero_traps 只寫記憶）→ 這次進機制，回測 291／45,234。
 - **Discord App 與記憶體**：「App 比網頁省記憶體」查不到根據（App 是 Electron／Chromium、無並排實測）；App 開 45 秒實際佔用約 500MB（RSS 加總 920MB 偏高）；網頁版沒量。Mac mini 16GB，系統可用比例約 55%、交換檔 135MB，壓力正常；教練活動監視器的數字（用量 12.92GB、快取 3.08、核心 2.35、壓縮 3.89）與我量的吻合，要看的是「記憶體壓力」圖與交換檔，不是用量。已驗證 computer-use 能控制 Discord App（full，讀到畫面與 113 個元素；沒點擊／打字），建議機器人 API 即可。
 - **登出前查證**：38 個自動服務設定檔都在、都已載入；tmux `remote-control`（手機連回 Mac 上 Claude）登出會消失、沒有登入自動重開（`scripts/restart_remote_control.sh`）。
+- **陌生詞先問（教練 01:37 親口要求，試金石127）**：教練問「Copilot 覆蓋率」（語音錯誤），我沒先問就去查；教練要我寫進檢查清單。已做：反射 R-UNFAMILIAR-TERM（reflex_router `unfamiliar_terms`，教練話裡出現歷史上沒用過的英文詞→提醒「先問是不是語音輸入錯誤、不先查」，同詞只提醒一次，回測短句 6% 會跳）＋執行合約加一行＋skill 改成先問再查。限制：中文陌生詞程式抓不到。
 - **教練原話線索**：「你怎麼可以在沒有查證的時候就說沒裝這件事呢？」→案例125／126 一線：否定結論前先驗證查法（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我要的是在不同的頻道當中它都可以發揮作用，不是嗎？」「有沒有很簡單、很簡單的使用說明書」→ 要的是「任何頻道叫得動小龍蝦」＋白話說明。「我不想刪了之後到時候又重裝，先這樣子吧」「我希望這台電腦可以輕鬆完成任務，不要因為記憶體不夠而顯得笨重」→ 取捨偏保留；在意的是「用得順」，數字只是手段。
 
 ### 📋 下一場開工先做（以本棒為準）
@@ -14,7 +15,7 @@
 3. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
 
 🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：Discord 語音頻道自動會議記錄實測（教練「先不用實測，之後我再說」）；Claude 版的伺服器頻道、朋友加入伺服器時改 `users`／`requireMention`；Discord Claude「說新對話就自動重開」、開機自動啟動；後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
+🤫 等教練自己提起：執行細則 N3 第一段「陌生檔名／術語：先搜尋驗證」與第二段「陌生詞主動問」順序打架（教練欽定原文，我沒改，我照第一段先查了；要不要改成先問再查）；Discord 語音頻道自動會議記錄實測（教練「先不用實測，之後我再說」）；Claude 版的伺服器頻道、朋友加入伺服器時改 `users`／`requireMention`；Discord Claude「說新對話就自動重開」、開機自動啟動；後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
 
 ---
 

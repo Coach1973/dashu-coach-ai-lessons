@@ -172,6 +172,64 @@ def backup_needed(text):
             "請把指令改成先備份再升級：tmutil startbackup --block && <原本的升級指令>（等備份跑完才會升級）。")
 
 
+CORPUS_FILE = os.path.join(WS, "state/coach_corpus.jsonl")
+VOCAB_SEEN = os.environ.get("COACH_VOCAB_SEEN") or os.path.join(WS, "state/coach_vocab_seen.json")
+LAT_WORD = re.compile(r"(?<![A-Za-z0-9_\-./~])[A-Za-z]{4,15}(?![A-Za-z0-9_\-/])")
+
+
+def _prompt_words(text):
+    """教練本人打的話裡的英文詞（小寫）。貼上的內容、系統提示、程式碼、網址、路徑都不算。"""
+    t = re.sub(r"<pasted_content.*?</pasted_content[^>]*>", "", text, flags=re.S)
+    t = re.sub(r"<system-reminder>.*?</system-reminder>", "", t, flags=re.S)
+    t = re.sub(r"```.*?```|`[^`\n]*`|https?://\S+|\S*[/\\]\S*", "", t, flags=re.S)
+    if len(t) > 300:
+        return set()  # 長篇多半是貼上的輸出，不抽查
+    han = len(re.findall(r"[\u4e00-\u9fff]", t))
+    lat = len(re.findall(r"[A-Za-z]", t))
+    if han < lat:
+        return set()  # 英文為主（貼終端機輸出、英文稿）不是語音輸入的中文句
+    return {w.lower() for w in LAT_WORD.findall(t)}
+
+
+def check_unfamiliar(text):
+    """教練話裡出現他歷史上沒用過的英文詞（Typeless 常把中文聽成英文）：回傳說明，叫我先問、不要先查。
+    詞庫＝教練原話庫（state/coach_corpus.jsonl，短句、非貼上）＋這支程式自己看過的詞（同一個詞只提醒一次）。
+    任何一步壞掉都回空字串放行（寧可漏報，不能擋教練說話）。"""
+    try:
+        words = _prompt_words(text)
+        if not words:
+            return ""
+        known = set()
+        with open(CORPUS_FILE, encoding="utf-8") as f:
+            for line in f:
+                try:
+                    o = json.loads(line)
+                except ValueError:
+                    continue
+                if not o.get("pasted") and len(o.get("text", "")) <= 300:
+                    known |= {w.lower() for w in LAT_WORD.findall(o.get("text", ""))}
+        try:
+            with open(VOCAB_SEEN, encoding="utf-8") as f:
+                seen = set(json.load(f))
+        except (OSError, ValueError):
+            seen = set()
+        new = sorted(w for w in words if w not in known and w not in seen)
+        try:
+            tmp = VOCAB_SEEN + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(sorted(seen | words), f, ensure_ascii=False)
+            os.replace(tmp, VOCAB_SEEN)
+        except OSError:
+            pass
+        if not new:
+            return ""
+        return ("這句話裡有教練歷史上沒用過的詞：" + "、".join(new[:3]) +
+                "。先別查、先別動手：對照上下文，接不上或不像教練平常的用語，第一句就問"
+                "「請問您說的是『…』嗎？是不是語音輸入錯誤？」，教練確認真有這個東西才去查。")
+    except Exception:
+        return ""
+
+
 def log_hit(moment, rid, level):
     try:
         with open(HITS, "a", encoding="utf-8") as f:
@@ -219,6 +277,11 @@ def main():
                 continue  # 這一輪已經用 deliver_open.sh 跳出來了，放行
         elif r.get("check") == "backup_recent":
             detail = backup_needed(text)
+            if not detail:
+                continue
+            r = {**r, "say": r["say"] + detail}
+        elif r.get("check") == "unfamiliar_terms":
+            detail = check_unfamiliar(text)
             if not detail:
                 continue
             r = {**r, "say": r["say"] + detail}

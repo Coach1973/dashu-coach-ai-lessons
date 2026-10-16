@@ -1878,6 +1878,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-UNFAMILIAR-TERM",
+      "moment": "prompt",
+      "match": ".",
+      "check": "unfamiliar_terms",
+      "say": "陌生詞先問、不先查（守則#18、教練 2026-10-17 01:37 親口要求）：",
+      "level": "remind",
+      "situation": "教練的話裡出現他歷史上沒用過的英文詞時（Typeless 語音輸入常把中文聽成英文）",
+      "source": "試金石案例127／守則#18／細則N3",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1901,7 +1914,8 @@
     "案例120": "→ R-POLLING-CODE 改寫（用到才現看列第一）＋R-ACCOUNT-CHANGE-VERIFY-FIRST(-TOOL)＋R-REPLY-INTERNAL-JARGON＋stop_rules_master D 段文字＋handoff_sync_guard 漏洞修正",
     "案例122": "→ R-LAUNCHAGENTS-PLIST-MISSING＋scripts/launchagents_guard.sh（WatchPaths 守門員）＋ops/launchagents_backup 換成 TM 原檔",
     "案例125": "→ R-VERIFY-BEFORE-ANSWER（判斷題每次提醒先查再答）＋stop_rules_master E2（判斷題零查證就回答：擋下要求補查更正並記錄）",
-    "案例126": "已轉成反射 R-ERROR-IS-NOT-NOT-FOUND（終端機回 no matches found 時提醒：指令中止≠查不到，換查法重查）"
+    "案例126": "已轉成反射 R-ERROR-IS-NOT-NOT-FOUND（終端機回 no matches found 時提醒：指令中止≠查不到，換查法重查）",
+    "案例127": "已轉成反射 R-UNFAMILIAR-TERM（reflex_router.py 的 unfamiliar_terms 檢查）＋執行合約加一行＋skill existence-verification-voice-correction 改成先問再查"
   },
   "memory_ledger": {
     "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",

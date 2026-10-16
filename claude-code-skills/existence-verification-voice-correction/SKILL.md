@@ -1,31 +1,41 @@
 ---
 name: existence-verification-voice-correction
-description: Use whenever 教練 mentions an unfamiliar filename, term, or phrase — especially via voice input — or when context doesn't logically connect. Verify existence before acting; ask for confirmation on transcription anomalies rather than guessing.
+description: Use whenever 教練 says an unfamiliar word, filename, English term, or something that doesn't connect with the context — especially via voice input (Typeless). FIRST ask "是不是語音輸入錯誤？您說的是『XXXX』嗎？" and wait; only after 教練 confirms it is real, verify it exists. Never search first.
 ---
 
-# 存在性驗證 + 語音糾偏必問不猜（執行細則 N3）
+# 陌生詞：先問「是不是語音輸入錯誤」，確認後才查（執行細則 N3）
 
 對應守則 #03、#15、#18。
 
-## 存在性驗證
+> 2026-10-17 01:36 教練親口糾正（試金石案例127）：「出現你很陌生的名詞…你應該第一時間去問我是不是語音輸入法錯誤啊。我從來就沒有跟你講過覆蓋率的問題，你怎麼就不問我就開始查了呢？」
+> 那次我拿到「現在我們的 Copilot 覆蓋率是多少？」，沒有先問就去搜尋、跑腳本，結果是語音錯誤，白做。
 
-聽到陌生檔名/術語/專案名：
-1. 先搜尋驗證（grep、find、WebSearch）
-2. 找不到就明說「找不到」，不假裝存在、不照字面瞎猜著執行
+## 第一步：先問，不查、不動手
 
-## 語音糾偏四情況（守則#18）
-
-以下四種情況之一出現，主動問「您說的是『XXXX』嗎？」，確認後才執行：
+以下四種情況之一出現，**第一句**就問：「請問您說的是『XXXX』嗎？是不是語音輸入錯誤？」，等教練回答：
 1. **上下文接不上**——這句話跟前後文邏輯兜不起來
 2. **詞不達意**——聽起來像在講別的事
-3. **詞彙陌生**——過去對話從未出現過的字眼
-4. **邏輯反常**——教練平常不會這樣講/這樣要求
+3. **詞彙陌生**——過去對話從未出現過的字眼（特別是中文句子裡夾著一個英文詞；教練用 Typeless 語音輸入，常把中文聽成英文）
+4. **邏輯反常**——教練平常不會這樣講/這樣要求；或突然問一個他從來沒談過的主題（例如某某覆蓋率）
+
+問的時候：
+- 同一則回覆裡不要同時開始查、不要先給一個「我查到…」的答案。
+- 可以附一個最可能的猜測，方便教練只回「對」或「不是」。
+- 教練說「語音錯誤，不要管」就收手，不追問、不繼續查。
+
+自動提醒：反射 R-UNFAMILIAR-TERM 會在教練的話裡出現他歷史上沒用過的英文詞時提醒（同一個詞只提醒一次）。中文陌生詞程式抓不到（比對誤報太多），靠這份清單自己判斷。
+
+## 第二步：教練確認「真有這個東西」之後，才做存在性驗證
+
+1. 搜尋驗證（grep、find、WebSearch）
+2. 找不到就明說「找不到」，不假裝存在、不照字面瞎猜著執行
 
 ## 常見語音變體對照（持續累積）
 
 中文語音辨識常見諧音錯誤，聽到近似詞先對映再確認：
 - 「特助心法」「頂級特助」等核心詞的語音變體
 - 數字/日期矛盾（同段訊息出現兩個不一致數字，例如「四」↔「十」）必須用 AskUserQuestion 問清楚，不能自己選一個
+- 2026-10-17：「Copilot 覆蓋率」「Windows Content Content Windows」＝教練說是語音錯誤，不要管（真正想說什麼不明）
 
 ## 鐵律
 
