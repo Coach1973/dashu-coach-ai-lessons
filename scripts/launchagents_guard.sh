@@ -32,7 +32,7 @@ sleep "${GUARD_WAIT_SEC:-10}"
 [ -d "$BACKUP" ] || { echo "[$(ts)] ❌ 找不到備份資料夾 $BACKUP" >> "$LOG"; exit 1; }
 
 FIXED=()
-for src in "$BACKUP"/com.coach.*.plist; do
+for src in "$BACKUP"/com.coach.*.plist "$BACKUP"/ai.openclaw.*.plist; do  # 10/16 盤查：小龍蝦本體(gateway)等 ai.openclaw.* 也要保護
   [ -e "$src" ] || continue
   f=$(basename "$src"); label=${f%.plist}; dst="$LA/$f"
   if [ ! -e "$dst" ]; then
@@ -49,7 +49,7 @@ if [ ${#FIXED[@]} -gt 0 ]; then
   echo "[$(ts)] $msg" >> "$LOG"
   "$NOTIFY" "$msg" 600 launchagents_guard >/dev/null 2>&1 || echo "[$(ts)] ❌ 通知送出失敗" >> "$LOG"
 else
-  echo "[$(ts)] ✅ 全部 $(ls "$BACKUP"/com.coach.*.plist | wc -l | tr -d ' ') 個設定檔都在、都已載入" >> "$LOG"
+  echo "[$(ts)] ✅ 全部 $(ls "$BACKUP"/com.coach.*.plist "$BACKUP"/ai.openclaw.*.plist | wc -l | tr -d ' ') 個設定檔都在、都已載入" >> "$LOG"
 fi
 # 登入／設定檔變動後，實測各網站公開網址真的連得到（530／1033／連不上＝掛了）。事件觸發，不輪詢。
 SITES=(chapters trust event shops mentor100 namecard peipei-event sincere team team01 real-wealth zhenxin real-diamonds)

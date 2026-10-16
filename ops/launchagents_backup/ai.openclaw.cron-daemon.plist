@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.openclaw.cron-daemon</string>
+    <key>Comment</key>
+    <string>OpenClaw cron daemon — 永久背景跑 5 個原 cron job（cron scheduler 卡死替代方案 2026-06-05）</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/bymyway/.openclaw/workspace/scripts/openclaw_cron_daemon.sh</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw_cron_daemon.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw_cron_daemon.error.log</string>
+</dict>
+</plist>
