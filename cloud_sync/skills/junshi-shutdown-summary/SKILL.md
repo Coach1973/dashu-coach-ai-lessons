@@ -9,7 +9,7 @@ description: 教練說「總結」「總結上傳」「總結一下」「收工�
 
 ## 步驟
 
-1. **先跑一次快速健康檢查**：`python3 ~/.openclaw/workspace/scripts/system_health_check.py --quick`。有 ⚠️ 先驗證、能修就修，寫進這一棒。
+1. **先跑一次快速健康檢查**：`python3 ~/.openclaw/workspace/scripts/system_health_check.py --quick`。有 ⚠️ 先驗證、能修就修，寫進這一棒；同時跑 `python3 ~/.openclaw/workspace/scripts/rules_health_audit.py`（規則自動體檢，機械層：過時／重複／份量／反射命中；只出摘要與 `distill/rules_health_report.md`）。有「過時」「真正重複」：機械的（死路徑、重複副本）自己改，規則文字只出建議，寫進這一棒🔧區；守則 21 條原文一字不動。
 2. **濃縮本場 300～500 字**：做了什麼（附 commit hash）、卡在哪、下一步。只寫結果，不寫過程報告（守則 #14）。時間一律台灣時間。
 3. **更新接力棒** `~/.openclaw/workspace/JUNSHI_HANDOFF_LATEST.md`：
    - 新的一棒放最上面，**標題一定要有「給跨對話框軍師讀的總結摘要」這幾個字**（鏡像程式靠它認出這是正常的一棒，沒有的話新對話框讀不到；10/16 有人在最上面加「本場追加」，鏡像就停了 4 小時）。
