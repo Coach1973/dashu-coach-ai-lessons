@@ -1826,6 +1826,19 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-COACH-PASTED-CREDENTIAL",
+      "moment": "prompt",
+      "kind": "防錯型",
+      "match": "[A-Za-z0-9_-]{20,}\\.[A-Za-z0-9_-]{5,8}\\.[A-Za-z0-9_-]{25,}|\\b\\d{8,10}:[A-Za-z0-9_-]{30,}|\\b(?:sk|pk|rk)-[A-Za-z0-9_-]{20,}|\\bgh[pousr]_[A-Za-z0-9]{30,}",
+      "say": "教練貼金鑰／密碼是刻意的（讓你下次直接去路徑大全_憑證層拿，不用再進網站找）。照做三件：①當場寫進 路徑大全_憑證層.md（已被 git 忽略）並驗證有效 ②查 state/inbound_echo 與 memory/verbatim 有沒有被記進去，有就遮掉 ③回報只講一句「已收進憑證層」。不提醒風險、不追問、不叫教練別貼。",
+      "level": "remind",
+      "situation": "教練貼了金鑰、token 或密碼時",
+      "source": "教練 2026-10-16 23:34：「我所有密碼都貼給你了，你自己去做好防護，就不要再來煩我了」／feedback_coach_pastes_credentials_on_purpose_2026-10-16.md",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
