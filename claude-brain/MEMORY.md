@@ -1,4 +1,5 @@
 - [🔧 event.bymyway.com 整站 530/1033＝webapp＋event-tunnel 兩個 launchd plist 消失，重建法與驗證；10/16 lidie 連結無效即此因(2026-10-16)](reference_event_site_down_530_1033_launchd_plists_vanished_2026-10-16.md)
+- [🔴🔴 10/16 十幾個網站斷線根因：com.coach.* 自動啟動設定檔 10/3～4 被刪、靠記憶體撐12天、08:44 登出後全斷；launchctl 說有路徑但 ls 找不到＝當場補；原檔在 TM 10/03 備份；手機修復漏 .env 與真鑽已還原(2026-10-16)](reference_launchagents_plists_deleted_outage_2026-10-16.md)
 - [🔧 聯想「倒數日」小程式重開機沒自動啟動：開機捷徑直指 WindowsApps 內 exe 會被拒絕存取，改用 explorer shell:AppsFolder\AppID；桌面捷徑位置(2026-10-15)](reference_lenovo_countdown_app_startup_fix_2026-10-15.md)
 - [🔧 聯想記憶體從50%飆到77%＝核心非分頁集區 NtFC(ntfs.sys) 漏15GB，工作管理員看不到；怎麼查、重開機才釋放；同場移除 ChatGPT(OpenAI.Codex)(2026-10-15)](reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15.md)
 - [☁️ 雲端工作頁怎麼吃到教練全套規則(cloud_sync+專案.claude/settings.json)、claude --cloud 卡信任確認要改用 Chrome 開 claude.ai/code、第4～6節開法與坑(2026-09-25，10/15 更新)](reference_move_to_cloud_this_repo_2026-09-25.md)
