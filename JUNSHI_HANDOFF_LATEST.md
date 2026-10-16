@@ -1,3 +1,24 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 02:42 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Opus 5.5→Sonnet 5.5；教練說「回答完我這個問題之後就可以總結了」；本段 02:04～02:42，對話容量約 27～30%（get_usage 27%、hook 估 30%），Pro 5 小時額度 97%（04:20 重置））
+
+**主軸：教練交辦「把特助守則 21 條納入賈維斯」→ 研究完成、教練選定方案、已動手一半；5 小時額度用到 97% 而中斷，審查員等新對話做。**
+- **研究報告**（`ad1b887ca`）：`knowledges/守則納入賈維斯_研究與方案_2026-10-17.md`。查到 5 個原因：①守則提醒看教練說的字、不看 AI 行為；②143 條反射只有 11 條標守則編號；③違規最多的 #03／#15／#18 是判斷類、關鍵字抓不到；④守則淹在 732 行／6 萬字背景裡；⑤`periodic_xinfa_reload_hook.sh` 寫死對話資料夾，「開工」worktree 對話從沒重貼過守則（已修，實測舊版 0 字、新版貼出 21 條）。
+- **Haiku 審查員實測**：拿上一場真實對話，4 個真錯抓到 3 個（沒裝 Discord、Copilot 沒先問、「登出會全清掉」），漏 1 個（手機遙控預測）；每次 12～20 秒、牌價每次 US$0.0014～0.0045；會漏、會邊界誤抓 → 先「只記錄 3 天」。教練 02:25 選「照推薦做（B 審查員＋修重貼漏洞＋看提醒次數）」，授權終端機改正式檔案（改前備份：`state/backup_2026-10-17_rules_reviewer/`）。
+- **教練 02:26 新要求：規則自動體檢**（過時／重複／沒必要，精簡加精準，越用越好用，將來可商業化）。查到教練問過至少 6 次（8/9、9/19 三次、10/1、10/14），之前的檢查都只查「有沒有載入」、從沒量「有沒有照做」。初步設計在交辦檔。
+- **案例128**（`b0702cea7`）：問教練要不要總結卻沒附對話容量 % → 反射 R-ASK-SUMMARY-WITH-CONTEXT-PCT 擋下；`reflex_router.py` 回話檢查原本讀不到收尾框，已補（實測 3 種情況正確）。
+- **容量與額度怎麼讀（教練 02:40 問，已答）**：容量 % 由 `context_percent_hook.py` 在本機讀對話檔算，不花模型 token，只有出聲時（跨 30/35/40/45/50% 與每 5 句）各約 100 token 進對話；`get_usage` 是工具呼叫＝多一趟來回（整段對話再讀一次快取）＋結果數百 token，佔額度多少 % 沒量到。**5 小時額度 % 只有 get_usage 看得到**（hook 看不到；有沒有本機來源沒查）。兩個容量來源差 3%（hook 30%／get_usage 27%，切 Sonnet 後），原因沒查。
+- **教練原話線索**：「我雖然在意額度，但面對精準、高效率的工作，我寧可多花一點額度，因為我已經 53 歲了，沒有那麼多體力每天熬夜在那邊等待、抓錯」「改三次以上的額度比做對一次還要更多」→ 判斷標準＝一次做對優於單次省額度；「那之前都幹嘛去了？」→ 主動體檢，不等教練問；「我們是越來越有默契」。
+
+### 📋 下一場開工先做（以本棒為準）
+1. **🎯 先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md` 照做**：①`scripts/rules_reviewer_hook.py`（Stop，async，只記錄 3 天，壞了放行）②`rules_reminder_count.py` 教練提醒次數＋接進開工注入 ③規則自動體檢先提設計。Sonnet 5.5 就能做；5 小時額度 04:20 後重置。
+2. **🔧 容量回報（教練 02:40 答案：查容量不貴就頻繁報）**：`context_percent_hook.py` 過 30% 後改成每句都報（現在每 5 句；`CONTEXT_REPORT_EVERY`），問總結時附額度 %（get_usage 只在問總結那一句查一次）；順便查 hook 30% 與 get_usage 27% 為何差 3%。
+3. 🔧 `session_length_hook.sh` 也寫死對話資料夾（與守則無關，沒動）。
+4. 承接舊清單：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件（未處理）；看「先查再答」E2 有沒有誤擋（`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`）；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
+
+🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：（沿用上一棒 🤫 清單，見本檔下一棒；N3 兩段順序打架、Discord 後續、香檳下午茶 4 點等）。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 02:05 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說要登出再登入，順手收工；本段 00:53～02:05，對話容量約 50%）
 
 **主軸：教練要弄懂 Discord 對工作的用處、跟 LINE 差在哪、App／網頁與記憶體；查證後把「榮樹下」伺服器頻道開通（教練 01:19 實測有回）。我講錯一次（「這台沒裝 Discord App」，其實是指令報錯被我當成查不到），已更正並加防呆。收工前健康檢查 🟢 全部正常。**
@@ -23,24 +44,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 00:50 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；教練說「總結」收工；本段 10/16 23:51～10/17 00:50，對話容量約 42%）
-
-**主軸：Discord 機器人「龍蝦特助」兩種腦都通，平常用 MiniMax 省用量；教練要的「先查再答」標準已接進系統（每次提醒＋回話擋下）。收工前健康檢查 🟢 全部正常。**
-- **Discord**：先接小龍蝦（金鑰不進 git，SecretRef 指到 `~/.claude/channels/discord/openclaw-secrets.json`；`plugins.allow` 要補 discord 否則一直 stopped；`d9d8e2c92`）→ 教練追問「為什麼朋友可以我不可以」→ 查本機 `cachedGrowthBookFeatures.tengu_harbor=true`、帳號個人 Pro、乾淨環境實測 Listening → 切真的 Claude（tmux `discord-claude`、資料夾 `~/claude-discord`），00:10 教練實測「確實是 Claude」→ 00:30 教練要省流量，切回 MiniMax（`c482276a2`）。換腦一行：`bash scripts/discord_brain_switch.sh minimax|claude|status`（Telegram／LINE 會斷約 20 秒）。機器人已改名「龍蝦特助」（開發者後台的應用程式名仍叫「Claude特助」）。細節在記憶 project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16。
-- **先查再答**（`80b8a1a80`）：反射 R-VERIFY-BEFORE-ANSWER（教練問原因／能不能／是不是／對嗎，每次都提醒；路由新增 `repeat`；歷史回測 4,092 句中 1,073 句觸發）；`stop_rules_master.py` E2（判斷題這輪 0 次查證就下結論→擋下要求補查，記錄在 `distill/rule03_verify_violations.log`）；24 項迴歸全過。極限：有用工具卻仍把推論講成結論，程式抓不到，靠「查到的／推論／沒查的」三分法。試金石125。
-- **其他**：「BB＝MiniMax」反射＋語音對照（Claude 與小龍蝦都吃）；Hook 稽核紅字＝舊 `scripts/context_percent_hook.sh`，已拿掉宣告；Discord Claude 視窗容量算法與桌面版相同（開機即 8%，沒有新對話鈕，要重啟 tmux）。
-- **教練原話線索**：「為什麼你都不能說「我先去了解一下真實情況」，不要著急回答我吧？」「這種反反覆覆，你不覺得很煩嗎？」「不是今天晚上而已，之前也多次發生過這種情況」→ 判斷題先查第一手證據，話分「查到的／推論／沒查的」，不夠就說「我先去了解」（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我現在還不確定我 Discord 要怎麼用，所以也不想浪費我的流量」→ 平常 MiniMax，要用才切 Claude。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；誤擋就改反射索引 R-VERIFY-BEFORE-ANSWER 的 match（E2 讀同一條）。
-2. 🔧 修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）：先查有沒有換過金鑰；查不到就放 🤫（只有教練能給新金鑰）。
-3. 承接新一棒 📋 第 2 項（19:45 棒的清單已併入、該棒已封存）。
-
-🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：（「榮樹下」伺服器頻道已於 01:19 開通並經教練實測，本項移出）；其餘見新一棒 🤫 清單。
-
----
-
+> 📦 10/17 00:50 棒（Discord 兩種腦、先查再答、教練原話線索）已封存：`handoff_archive/handoff_2026-10-17_0050_Discord先查再答_archived.md`
 
 > 📦 10/16 19:45 棒（workspace 被拉錯分支事件、守門員與技能、盤查救回）已封存：`handoff_archive/handoff_2026-10-16_1945_軍師棒_archived.md`（待辦清單已併入新一棒）
 
