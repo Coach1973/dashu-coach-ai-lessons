@@ -4,11 +4,20 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-16 02:25:28**
+> **最後同步：2026-10-16 13:00:16**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 13:05 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；中途進度棒，教練尚未說「總結」；對話容量約 44%）
+
+**主軸：10/16 早上十幾個網站斷線，查出根因、補完手機修復漏掉的部分、裝上守門員。全部實測。**
+- **根因**：`~/Library/LaunchAgents` 的 com.coach.* 設定檔在 10/3 01:42～10/4 14:07 之間被刪（刪的人沒查到），服務靠記憶體撐了 12 天；10/16 08:44:55 Mac 登出（聯想 RustDesk 遠端操作中，08:44:28 有遠端點擊），08:45 重新登入後網站和通道都沒起來。event 斷約 3 小時，其他 11 站約 3.5 小時，真鑽約 4 小時。記憶 reference_launchagents_plists_deleted_outage_2026-10-16（`5a99e45b2`），試金石案例 122。
+- **手機修復（另一場對話 33476b01，`723d246f4`）漏掉的，12:50 用 Time Machine 10/03 原檔補好**：5 站少 `source .env`（bni-chapters／mentor100／namecard／peipei-event／team）、真鑽兩個（誤判為「9/18 停用」，原文是「解真鑽 DB 停擺」）、名片監看 amber-watch。12 個網域實測 200 或導向登入頁。還原前的版本備份在 `state/backup_20261016_launchagents_before_restore/`。
+- **守門員上線**：`scripts/launchagents_guard.sh`＋`ai.openclaw.launchagents-guard`（WatchPaths 監看 LaunchAgents，登入時也跑），以 `ops/launchagents_backup/`（已換成完整 25 個正本＋守門員自己）為準，少檔補回、沒載入就載入、電報通知（10 分鐘節流）。實測：刪檔 10 秒內補回且與備份一致、卸載後自動重新載入。反射 R-LAUNCHAGENTS-PLIST-MISSING 已實測會跳。**要正式停掉某服務＝同時從 ops/launchagents_backup 刪掉，否則會被補回。**
+- 教練授權本場用終端機寫正式目錄（worktree 擋 Edit/Write）。
+- 跟本次斷線無關：coach1973.github.io 的 joseph-cloth／social-good（私有倉庫不能開 Pages）、Business.gym（沒有這個倉庫）404；zhencheng.bymyway.com 8/30 已改名 sincere。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 02:10 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「總結」收工；本段 01:24～02:10，對話容量約 41%）
 
