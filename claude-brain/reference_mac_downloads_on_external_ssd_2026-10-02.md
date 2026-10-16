@@ -16,3 +16,5 @@ metadata:
 待做：Chrome 資料搬 SSD（要關 Chrome）、26.7.1 系統更新（教練定時段）。相關：[[project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02]]
 
 **13:37 追加：Chrome 資料也搬了**：`~/Library/Application Support/Google/Chrome` → 捷徑指向 `/Volumes/953-SSD/Mac應用資料/Chrome`（8671 檔、內容差異 0，重開 Chrome 後新寫入的檔案出現在 SSD 那份）。舊夾 `Chrome.bak.20261002`（5.2GB）保留到 **10/09** 後刪。SSD 沒接上 Chrome 會打不開。
+
+**10/16 追加（教練當場糾正「圖明明在下載資料夾你怎麼找不到」）**：`~/Downloads` 是捷徑，`ls -lt ~/Downloads` 和 `find ~/Downloads`（沒加 -L）只會看到捷徑本身、當成空的。找檔一律用 `ls -lt ~/Downloads/`（結尾斜線）或 `find -L ~/Downloads/`，或直接 `/Volumes/953-SSD/下載/`。源頭已修：`knowledges/反射索引.json` 的「下載資料夾」反射原本寫「ls ~/Downloads」，現在寫明捷徑與斜線（情境目錄由腳本重產）。
