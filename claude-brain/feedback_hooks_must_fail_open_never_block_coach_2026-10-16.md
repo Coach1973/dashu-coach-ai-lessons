@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: cf0feb25-cf92-471e-881b-4e0724e55f1e
-  modified: 2026-10-16T10:36:12.329Z
+  modified: 2026-10-16T10:42:29.025Z
 ---
 
 **事實**：10/16 15:00:32（台灣時間）workspace 執行了 `git pull --rebase --autostash origin master`。master 是 ~/.openclaw 另一條歷史（兩個倉庫推到同一個 GitHub 的不同分支：workspace＝main，~/.openclaw＝master），workspace 被換成另一套檔、卡在 rebase 中途。settings.json 的 python 檢查程式檔案不見 → python 回 2 → Claude Code 把教練的話擋下（手機、每個對話框都一樣）。教練在外面 3.5 小時下不了任何指令，列為重大疏失（試金石123）。
@@ -17,4 +17,4 @@ metadata:
 - 認法：`git -C ~/.openclaw/workspace status` 出現「重定基底動作正在進行中」、分支空白、HEAD 是 ~/.openclaw 的提交 → 就是這種情況。
 - 救法：先備份 15:00 之後寫入的檔 → `git rebase --quit`（暫存會存進 stash list）→ `git checkout -f main` → `git stash apply <那筆 sha>`。`rebase --abort` 會因為「未追蹤檔擋路」失敗（state 不變，不會壞）。數缺檔要用 `git -c core.quotepath=off ls-files -z`，不然中文檔名會誤算成不見。
 - 現在 workspace 有 `.git/hooks/pre-rebase`（副本 ops/git_hooks/pre-rebase）擋沒有共同歷史的 rebase；換電腦或重 clone 要記得裝回去。
-- 誰下的 pull 還不知道；pre-rebase 擋著，誰再下都不會壞。相關：[[reference_launchagents_plists_deleted_outage_2026-10-16]]
+- 兇手＝本機另一個 AI 對話框（session 960f614e，桌面版，做香檳下午茶網頁），在 workspace 憑印象寫 `origin master`。現在 `scripts/git_wrong_branch_guard.py`（PreToolUse Bash）會在下指令前擋下寫錯的分支名並給正確名稱；1,515 筆真實指令回測誤擋 0。**在這兩個資料夾下 git 前先 `git branch --show-current`，不憑印象。** ~/.openclaw 也裝了 pre-rebase。相關：[[reference_launchagents_plists_deleted_outage_2026-10-16]]
