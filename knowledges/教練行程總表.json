@@ -2272,18 +2272,18 @@
   {
    "id": "gcal-2026-12-18-188",
    "date": "2026-12-18",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-12-18-189",
-   "date": "2026-12-18",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-189",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-12-18-190",
@@ -3919,8 +3919,8 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-16 02:32",
- "tainan_synced_at": "2026-10-15 09:27",
+ "updated_at": "2026-10-16 11:21",
+ "tainan_synced_at": "2026-10-16 11:19",
  "evening_window": {
   "start": "19:00",
   "end": "22:00"
@@ -3963,6 +3963,6 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-16 02:32",
- "google_synced_epoch": 1792089158
+ "google_synced_at": "2026-10-16 11:21",
+ "google_synced_epoch": 1792120887
 }
