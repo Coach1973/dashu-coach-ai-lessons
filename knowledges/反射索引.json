@@ -1866,6 +1866,18 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-ERROR-IS-NOT-NOT-FOUND",
+      "moment": "post_tool",
+      "match": "(?im)(zsh: no matches found|\\(eval\\):\\d+: no matches found|^no matches found:)",
+      "say": "指令因為『檔名樣式沒配對到』直接報錯中止——整行指令根本沒跑完，這不是「找不到」。不准拿它當「沒有／沒裝／不存在」的證據，也不准標【查到】：換一個不會中止的查法（mdfind、find、ps、ls 資料夾再 grep）重查，確認查得到已知存在的東西，才能下「沒有」的結論。",
+      "level": "remind",
+      "situation": "終端機回「no matches found」、準備說某個東西沒有／沒裝時",
+      "source": "試金石案例126",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1888,7 +1900,8 @@
     "案例105": "R-BNI-GUEST-COUNT-SOURCE（算帶來賓／培訓前提醒用 PALMS 與 /training 同一份）；源頭探測器方案檔第一節已改",
     "案例120": "→ R-POLLING-CODE 改寫（用到才現看列第一）＋R-ACCOUNT-CHANGE-VERIFY-FIRST(-TOOL)＋R-REPLY-INTERNAL-JARGON＋stop_rules_master D 段文字＋handoff_sync_guard 漏洞修正",
     "案例122": "→ R-LAUNCHAGENTS-PLIST-MISSING＋scripts/launchagents_guard.sh（WatchPaths 守門員）＋ops/launchagents_backup 換成 TM 原檔",
-    "案例125": "→ R-VERIFY-BEFORE-ANSWER（判斷題每次提醒先查再答）＋stop_rules_master E2（判斷題零查證就回答：擋下要求補查更正並記錄）"
+    "案例125": "→ R-VERIFY-BEFORE-ANSWER（判斷題每次提醒先查再答）＋stop_rules_master E2（判斷題零查證就回答：擋下要求補查更正並記錄）",
+    "案例126": "已轉成反射 R-ERROR-IS-NOT-NOT-FOUND（終端機回 no matches found 時提醒：指令中止≠查不到，換查法重查）"
   },
   "memory_ledger": {
     "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
