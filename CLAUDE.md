@@ -4,13 +4,13 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-17 02:00:46**
+> **最後同步：2026-10-17 02:03:57**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 01:55 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說要登出再登入，順手收工；本段 00:53～01:55，對話容量約 39%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 02:05 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說要登出再登入，順手收工；本段 00:53～02:05，對話容量約 50%）
 
 **主軸：教練要弄懂 Discord 對工作的用處、跟 LINE 差在哪、App／網頁與記憶體；查證後把「榮樹下」伺服器頻道開通（教練 01:19 實測有回）。我講錯一次（「這台沒裝 Discord App」，其實是指令報錯被我當成查不到），已更正並加防呆。收工前健康檢查 🟢 全部正常。**
 - **Discord vs LINE 查證**（教練原話：朋友說高手都用 Discord、比 LINE 好太多）：結論＝不搬家、分工——LINE 對外（夥伴／學員／預約），Discord 當教練＋小龍蝦＋助理的內部工作台。查到：頻道分主題不洗版（TVBS 2026/8/26）；LINE 照片約 30 天、文件 7 天過期（報導，LINE 官方沒明確公布）；Discord 免費單檔 20MB（Dexerto 2026/8/13）→訪談錄音原檔不走 Discord；LINE 官方帳號免費推播 200 則／月（第三方整理）、LINE Notify 2025/3/31 已終止；小龍蝦官方文件有 Discord 語音逐字稿＋自動會議記錄（要設語音轉文字、先告知與會者、摘要不自動貼回；本機 2026.9.4 有、設定檔未開）。「談完自動上 Podcast／YouTube」目前沒現成路：YouTube API 未審核專案上傳會被鎖私人、SoundOn 沒查到公開上傳功能、路徑大全沒 YouTube 授權；網頁上架技能已有（換入口而已，Discord 內未實測）。教練說 Discord 語音不如 Typeless → 語音頻道不用，實測「之後我再說」。
@@ -21,6 +21,7 @@
 - **手機遙控重開失敗（01:51，我的疏忽）**：教練同意後我跑 `restart_remote_control.sh`，舊 `claude rc` 與 7 個手機舊對話已清掉（教練活動監視器記憶體用量 12.92→10.83GB），但新的 `claude rc` 報「You must be logged in」：鑰匙圈 `Claude Code-credentials` 的 accessToken／refreshToken 長度 0、expiresAt＝0（01:38:20 被清空；refreshTokenExpiresAt 10/16 23:04 已過），`claude auth status`（四個版本都是）loggedIn:false，Chrome 的 claude.ai 也是登出狀態（登入頁網址帶 from=logout）。舊 rc 能活 13 天是靠記憶體裡的令牌。**我重開前沒先驗證「新的能登入」**→ 教訓：重開長壽的已登入程序前，先跑 `claude auth status` 確認新實例登得上。**01:57 已修好**：教練登入 Claude 帳號、把授權驗證碼貼進終端機（驗證碼我不代輸入）→ `claude auth status` loggedIn:true（claude.ai／pro，憑證到 10/17 09:56 為 access token 期限、refresh token 在）→ 我 `tmux kill-server` 後用「拔掉 CLAUDE_*／ANTHROPIC_* 環境變數」重跑 `restart_remote_control.sh`（避免桌面版的環境變數混進手機對話）→ 看到 `Connected · mac-openclaw-workflows · master`、Capacity 0/32、舊對話程序 0 個；Chrome 的 claude.ai/code 也列出 `mac-openclaw-workflows · wudashudeMac-mini` 環境。手機端「真的看到」只有教練手機能確認（我驗不到）。**注意：下次 `claude rc` 重開若再報「必須登入」，先 `claude auth status`；refresh token 會過期，約兩週要重登一次。**
 - **Plaud 已關**（教練 01:46：「Plaud 我確實不常用，我要用的時候再打開就可以了」）：用 `claude mcp remove plaud -s user` 從 `~/.claude.json` 移除，並結束 14 個 Plaud 小程式（約 380MB）；要用再裝回（無金鑰）：`claude mcp add plaud -s user -- ~/.hermes/node/bin/npx -y @plaud-ai/mcp@latest`。REA 教練沒回，仍在。
 - **陌生詞先問（教練 01:37 親口要求，試金石127）**：教練問「Copilot 覆蓋率」（語音錯誤），我沒先問就去查；教練要我寫進檢查清單。已做：反射 R-UNFAMILIAR-TERM（reflex_router `unfamiliar_terms`，教練話裡出現歷史上沒用過的英文詞→提醒「先問是不是語音輸入錯誤、不先查」，同詞只提醒一次，回測短句 6% 會跳）＋執行合約加一行＋skill 改成先問再查。限制：中文陌生詞程式抓不到。
+- **手機遙控收尾＋容量與收工口令（02:01～02:03 教練糾正）**：手機遙控已修好驗證（`c26e9369a`，細節見上一條）。教練抓到我過了 30% 還繼續加做事（31%→48%、約 17 萬 token 白燒），已在容量提醒加一句「過 30% 只做教練明說的事、不順手加工作、做完主動問要不要總結」（`abc426348`）。教練再問「你總結了嗎？」→ 定下**口令默契：只有我說「總結已完成（commit hash）」才代表總結好了；沒總結完不准說「可以開新的對話框」**（已寫進 junshi-shutdown-summary 技能第 6 步，兩份）。TGONDeviceInferenceProviderService＝Apple 系統程式（`com.apple.tgondeviceinferenceproviderservice`，5MB，不用管）。
 - **教練原話線索**：「你怎麼可以在沒有查證的時候就說沒裝這件事呢？」→案例125／126 一線：否定結論前先驗證查法（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我要的是在不同的頻道當中它都可以發揮作用，不是嗎？」「有沒有很簡單、很簡單的使用說明書」→ 要的是「任何頻道叫得動小龍蝦」＋白話說明。「我不想刪了之後到時候又重裝，先這樣子吧」「我希望這台電腦可以輕鬆完成任務，不要因為記憶體不夠而顯得笨重」→ 取捨偏保留；在意的是「用得順」，數字只是手段。
 
 ### 📋 下一場開工先做（以本棒為準）
