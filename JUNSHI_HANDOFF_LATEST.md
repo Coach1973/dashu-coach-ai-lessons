@@ -13,7 +13,7 @@
 - **教練原話線索**：「你怎麼可以在沒有查證的時候就說沒裝這件事呢？」→案例125／126 一線：否定結論前先驗證查法（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我要的是在不同的頻道當中它都可以發揮作用，不是嗎？」「有沒有很簡單、很簡單的使用說明書」→ 要的是「任何頻道叫得動小龍蝦」＋白話說明。「我不想刪了之後到時候又重裝，先這樣子吧」「我希望這台電腦可以輕鬆完成任務，不要因為記憶體不夠而顯得笨重」→ 取捨偏保留；在意的是「用得順」，數字只是手段。
 
 ### 📋 下一場開工先做（以本棒為準）
-1. **🎯 教練交辦：下一場開 Opus，研究怎麼把特助守則 21 條納入賈維斯智慧體系，變成每次工作的參考標準，不用教練天天提醒**（教練原話：「這點真的值得在下一輪對話時開 Opus，好好研究一下怎麼做比較好。」）。先研究、提方案給教練選，不先大改；守則原文一字不改。完整原話、違規基線、已查到的原因：`knowledges/TASK_特助守則納入賈維斯_給Opus_2026-10-17.md`（開工先 Read）。
+1. **🎯 教練交辦（10/17 02:25 選定方案）：做「守則審查員」（AI 回話前小模型拿 21 條審一次，先只記錄 3 天）＋「教練親口提醒守則次數」統計；接著設計「規則自動體檢」（過時／重複／沒必要，教練 02:26 新要求）**。研究已完成、重貼漏洞已修（10/17 Opus）。開工先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md`（步驟、驗收、教練原話、授權）。Sonnet 5.5 就能做；中斷原因是 5 小時額度 91%（04:20 重置）。
 2. **手機遙控已修好（見上）**：只需在下次開工 `tmux ls` 看 `remote-control` 還在、`claude auth status` 仍 loggedIn:true；另看 `~/Library/Logs/openclaw/launchagents_guard.log` 有沒有登入時那筆、跑 `python3 scripts/system_health_check.py`。
 3. 🔧 承接（19:45 棒清單已併入此處）：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway 啟動的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；52 筆舊 stash 留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；`memory/` 有 2 個記憶檔放錯位置（應在 claude-brain/）；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件（可能本來手動，未處理）。
 4. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。

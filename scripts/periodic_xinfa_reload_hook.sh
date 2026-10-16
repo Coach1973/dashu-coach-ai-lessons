@@ -26,7 +26,10 @@ SESSION_ID=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.session_id // ""' 2>/dev/nu
 [[ -z "$SESSION_ID" ]] && exit 0
 [[ -f "$XINFA" ]] || exit 0
 
-JSONL="${PROJECT_DIR}/${SESSION_ID}.jsonl"
+# 2026-10-17：優先用 hook 輸入的 transcript_path——「開工」開在 worktree，對話記錄不在 PROJECT_DIR，
+# 寫死路徑時找不到檔就靜靜退出，開工對話從沒重貼過守則（守則納入賈維斯_研究與方案_2026-10-17.md 原因5）
+JSONL=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.transcript_path // ""' 2>/dev/null)
+[[ -f "$JSONL" ]] || JSONL="${PROJECT_DIR}/${SESSION_ID}.jsonl"
 [[ -f "$JSONL" ]] || exit 0
 
 TURNS=$(python3 -c "
