@@ -4,9 +4,27 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-16 19:06:55**
+> **最後同步：2026-10-16 19:14:21**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 19:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；本段 13:09～19:20，對話容量約 40%）
+
+**主軸：15:00 workspace 被另一個 AI 對話框拉錯分支換掉，教練在外面 3.5 小時下不了任何指令（重大疏失，試金石123）；已全部救回、從源頭封住；全面盤查救回 52 筆自動暫存裡默默弄丟的東西；新增 7 個技能。全部實測。**
+- **兇手與原因**：本機對話框 960f614e（做香檳下午茶網頁）在 workspace 憑印象寫 `origin master`（workspace 是 main），整個資料夾被換成 ~/.openclaw 的檔；python 檢查程式不見→回 2→教練每句話被擋。9/10 同坑已發生過一次只寫了記憶。還原：備份 1,753 檔→`rebase --quit`→`checkout -f main`→套回暫存，4,172 檔全回（`2538fe817`）。
+- **三道源頭機制**：①8 支 python hook 改「檔案不在就放行」（settings.json 備份 `.bak-20261016-before-failopen`）②`scripts/git_wrong_branch_guard.py`（PreToolUse）：寫錯分支名或指到毫無共同歷史的線就擋，所有資料夾適用，1,525 筆真實指令回測誤擋 0（`6ef61e757` `aab134d12`）③兩個資料夾都裝 pre-rebase（拉不相干的線一律拒絕）。
+- **盤查救回**（`c1eb5ede6`）：三支自動同步（session_end_auto_push／junshi_dispatch_worker／feed_junshi_handoff）放不回去就留 stash，52 筆沒人取回→救回 5 個整份檔（Plaud主題整理.md 等）、13 條記憶索引、3 份 SOP 段落；全部遺失行封存在 `handoff_archive/stash_rescue_2026-10-16/README.md`；改用 `scripts/safe_stash_restore.py` 逐檔放回（文字兩邊都留、其他另存 `handoff_archive/stash_rescue_auto/`），兩台機器同時改同一檔實測兩邊都留住。
+- **其他修好**：守門員擴大保護 38 個自動服務（含小龍蝦本體 gateway，`00886b78d`，實測移走自動補回，19:05 那則電報是測試）；接力棒鏡像停 4 小時（格式檢查只看前 500 字）改查全文（`69d1d3ad6`）。
+- **新技能 7 個**（`9d6041215`，依 3,003 則教練交辦盤點）：健康檢查 system-health-check（`scripts/system_health_check.py`）、總結 junshi-shutdown-summary、改網頁 bigtree-web-edit、上架 bigtree-publish-site、報名頁 bigtree-event-signup、BNI 開票 bni-training-invoice、原話報告書 coach-verbatim-report；新對話實測看得到。
+- **教練原話線索**：「寫一個指令，寫到我連主人親自下命令都不行，那要你何用？」「憑什麼你們可以憑印象？」→ 會造成損失的動作一律「系統先查、不符就擋」，不靠 AI 自覺。
+
+### 📋 下一場開工先做
+1. 教練回應軍火庫設計稿（https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 ）後照做；不主動追問。
+2. 🔧 背景排程失敗不會通知任何人（今天 15:00～19:05 失敗 91 次沒人知道）→ 設計事件式通知（同一工作連續失敗才發），接進每日點名；改 `openclaw_cron_daemon.sh` 要先停 daemon 再改（bash 邊跑邊讀檔）。
+3. 🔧 小龍蝦那邊的重複工作還沒從它的對話紀錄盤點（只看了 11 個既有技能）。
+4. 🔧 52 筆舊 stash 還留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 已救回本機但含個資不進 git；`memory/` 資料夾有 2 個記憶檔放錯位置（應在 claude-brain/）。
 
 ---
 
