@@ -730,7 +730,8 @@
       "uploaded_at": "2026-10-15 09:34",
       "status": "live",
       "source_package": "20261015-092954__朱元中_個人品牌網頁_含公益足跡.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/patrick-chu"
     },
     {
       "slug": "lidie",
@@ -743,6 +744,44 @@
       "status": "live",
       "source_package": "20261015-203355__zhang-lidie-website-v2.zip",
       "repo": "Coach1973/lidie"
+    },
+    {
+      "slug": "ruifeng",
+      "title": "何瑞峰牧師｜祝福的最高級——從華岡團契到泰緬邊境",
+      "description": "德生堂教會何瑞峰牧師，從華岡團契到泰緬邊境，用廿餘年走出一條以福音為本的公益之路。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/ruifeng/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-16 00:41",
+      "status": "live",
+      "source_package": "20261016-004104__he-ruifeng-brand-web-v2.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/ruifeng"
+    },
+    {
+      "slug": "andy-chen",
+      "title": "陳顯立執行長｜好廣告數據創辦人・《信任效應》作者",
+      "description": "陳顯立（Andy Chen），好廣告數據創辦人暨執行長、《信任效應》作者、東吳大學企管系專技副教授。25 年數位與零售轉型經驗，連續 20 年每月認養家扶學童。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/andy-chen/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-16 01:15",
+      "status": "live",
+      "source_package": "20261016-011505__andy-chen-brand.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/andy-chen"
+    },
+    {
+      "slug": "champagne-salon",
+      "title": "香檳下午茶國際禮儀沙龍｜台灣形象設計發展協會",
+      "description": "你不需要變成另一個人，只需要讓更好的自己，自然地被看見。2026/11/9 台南香格里拉遠東國際大飯店，限額 20 席。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/champagne-salon/",
+      "github_pages_url": "https://coach1973.github.io/champagne-salon/",
+      "uploaded_at": "2026-10-16 14:58",
+      "status": "live",
+      "source_package": "20261016-145836__champagne-salon.zip",
+      "in_works": true
     }
   ],
   "redirects": {
