@@ -43,3 +43,25 @@ git -C ~/.openclaw/workspace status | head -5
 ## 順帶發現的另一個檢查程式缺陷（雲端 Stop hook 誤報，不影響手機問題）
 `stop_rules_master.sh` 的「記憶索引漏收提醒」是用**檔案修改時間**判斷「24 小時內寫的記憶檔」。雲端每次新 clone，所有檔案的修改時間都是 clone 當下，所以一開場就把約 400 個舊記憶檔全部當成「剛寫的」，列出一長串誤報（2026-10-16 15:37 台灣時間雲端 clone 時實測：工作區乾淨、`feedback_taiwan_time_always.md` 的 git 最後修改是 10/15 20:30，卻被列入）。
 建議改成用 `git log --since` / `git diff --name-only` 判斷哪些記憶檔真的是這 24 小時被提交或修改的。這是現有程式的問題，雲端軍師沒有動它，留給 Mac 端處理。
+
+## 追加（2026-10-16 17:05 台灣時間）：教練回報 https://event.bymyway.com/curated/angel-sister/ 無法顯示，且 Mac 本機一樣被 Hook 擋
+雲端查到的（雲端連不到 event.bymyway.com：雲端網路規則回 403，WebFetch 連 example.com 都解析不到，所以**沒有親眼看到這個網址的回應**）：
+- 網頁本身沒壞：`Coach1973/angel-sister` 最新 commit `e3d6d6a`（10/16 01:50 台灣時間）只改頁尾一行，index.html 10.6 MB（90 張內嵌圖，自 10/15 上架就這麼大），HTML 標籤成對、結尾完整。
+- 這站由 `event-signup/app.py` 的 `/curated/<slug>/` 供應：**每次請求都從硬碟讀** `event-signup/curated_sites_registry.json`，檔案不存在就當名冊為空，所有 `/curated/*` 一律 404；再從 `/Users/bymyway/github_repos/<slug>/index.html` 送出。
+- `origin/master` 沒有 `event-signup/`、`scripts/` 大部分、`CLAUDE.md`（共 3827 個檔案只在 `main`）。如果 Mac 的 workspace 工作區被切到只含 master 內容的狀態，Hook 腳本和這份名冊會**同時**消失，剛好解釋「Hook 缺檔」和「策展頁 404」兩件事。**這只是推論，尚未在 Mac 驗證。** 10/15 21:08 也發生過同類事故（commit `614c4c6`，名冊被 stash 走沒放回，angel-sister 當時 404）。
+- 網站程式監聽 5060（`EVENT_PORT` 預設），launchd 用 `workspace/event-signup/venv/bin/python app.py` 並 `source .env`；`venv/`、`.env` 不在 git，若被清掉無法從 GitHub 還原。
+
+Mac 端一次檢查＋補缺檔（只補硬碟上不存在的檔案，不覆蓋、不刪除；補完本機仍非 200 才重啟 `com.coach.event-webapp`）：
+```
+cd ~/.openclaw/workspace
+echo "分支: $(git branch --show-current)"; echo "最近動作:"; git --no-pager reflog -6
+echo "補之前本機回應: $(curl -s -m 10 -o /dev/null -w '%{http_code}' http://127.0.0.1:5060/curated/angel-sister/)"
+git fetch -q origin main
+git ls-tree -r -z --name-only origin/main | while IFS= read -r -d '' f; do [ -e "$f" ] || printf '%s\0' "$f"; done > /tmp/missing_files.nul
+echo "工作區缺檔數: $(tr -cd '\0' < /tmp/missing_files.nul | wc -c | tr -d ' ')"
+[ -s /tmp/missing_files.nul ] && git --literal-pathspecs restore --source=origin/main --worktree --pathspec-from-file=/tmp/missing_files.nul --pathspec-file-nul && echo "已補回缺的檔案"
+c=$(curl -s -m 10 -o /dev/null -w '%{http_code}' http://127.0.0.1:5060/curated/angel-sister/)
+if [ "$c" != "200" ]; then launchctl kickstart -k gui/$(id -u)/com.coach.event-webapp; sleep 6; c=$(curl -s -m 10 -o /dev/null -w '%{http_code}' http://127.0.0.1:5060/curated/angel-sister/); fi
+echo "補完後本機回應: $c"; echo "網頁檔: $(ls ~/github_repos/angel-sister/index.html 2>&1)"
+```
+本機回應 200 但公開網址仍打不開 → 查 `com.coach.event-tunnel`（cloudflared）。
