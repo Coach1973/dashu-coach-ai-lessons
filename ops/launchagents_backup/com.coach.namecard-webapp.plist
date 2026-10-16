@@ -2,13 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>com.coach.namecard-webapp</string>
-  <key>ProgramArguments</key><array><string>/Users/bymyway/.openclaw/workspace/namecard-db/venv/bin/python3</string><string>/Users/bymyway/.openclaw/workspace/namecard-db/app.py</string></array>
-  <key>WorkingDirectory</key><string>/Users/bymyway/.openclaw/workspace/namecard-db</string>
-  <key>EnvironmentVariables</key><dict></dict>
-  <key>RunAtLoad</key><true/>
-  <key>KeepAlive</key><true/>
-  <key>StandardOutPath</key><string>/Users/bymyway/.openclaw/workspace/namecard-db/webapp.log</string>
-  <key>StandardErrorPath</key><string>/Users/bymyway/.openclaw/workspace/namecard-db/webapp.error.log</string>
+    <key>Label</key>
+    <string>com.coach.namecard-webapp</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>set -a; source /Users/bymyway/.openclaw/workspace/namecard-db/.env; set +a; exec /Users/bymyway/.openclaw/workspace/namecard-db/venv/bin/python3 /Users/bymyway/.openclaw/workspace/namecard-db/app.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>NAMECARD_PORT</key>
+        <string>5050</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/webapp.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/webapp.error.log</string>
 </dict>
 </plist>

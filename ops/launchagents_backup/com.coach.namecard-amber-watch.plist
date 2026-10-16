@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.coach.namecard-amber-watch</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>sleep 8 &amp;&amp; cd /Users/bymyway/.openclaw/workspace/namecard-db &amp;&amp; source .env &amp;&amp; ./venv/bin/python3 watch_and_extract.py --once</string>
+    </array>
+
+    <key>WatchPaths</key>
+    <array>
+        <string>/Volumes/home/名片媒合中心</string>
+    </array>
+
+    <key>ThrottleInterval</key>
+    <integer>15</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/amber-watch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/bymyway/.openclaw/workspace/namecard-db/amber-watch.error.log</string>
+</dict>
+</plist>

@@ -2,13 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>com.coach.peipei-event-webapp</string>
-  <key>ProgramArguments</key><array><string>/Users/bymyway/github_repos/peipei-event/venv/bin/python3</string><string>/Users/bymyway/github_repos/peipei-event/app.py</string></array>
-  <key>WorkingDirectory</key><string>/Users/bymyway/github_repos/peipei-event</string>
-  <key>EnvironmentVariables</key><dict><key>EVENT_PORT</key><string>5061</string></dict>
-  <key>RunAtLoad</key><true/>
-  <key>KeepAlive</key><true/>
-  <key>StandardOutPath</key><string>/Users/bymyway/github_repos/peipei-event/webapp.log</string>
-  <key>StandardErrorPath</key><string>/Users/bymyway/github_repos/peipei-event/webapp.error.log</string>
+    <key>Label</key>
+    <string>com.coach.peipei-event-webapp</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>set -a; source /Users/bymyway/github_repos/peipei-event/.env; set +a; exec /Users/bymyway/github_repos/peipei-event/venv/bin/python3 /Users/bymyway/github_repos/peipei-event/app.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bymyway/github_repos/peipei-event</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bymyway/github_repos/peipei-event/webapp.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/bymyway/github_repos/peipei-event/webapp.error.log</string>
 </dict>
 </plist>
