@@ -999,6 +999,10 @@ for evt in EVENTS[-300:]:
             # 記載的真實案例，含「」但不含逗號/句號，必須留著才抓得到）。
             if len(name) > 16 or re.search(r"[，。、]", name):
                 continue
+            # 🔴 2026-10-16 同場第二次假陽性（改設計）：「新增 2 個技能（網站打不開…」被抓成「2 個技能（網站」。
+            # 後綴詞（網站／頁面…）落在還沒關上的括號裡＝那是括號內的說明，不是被新增東西的名字。
+            if name.count("（") > name.count("）") or name.count("(") > name.count(")"):
+                continue
             NEW_NAMED_ITEMS.append(name)
             NEW_NAMED_FILES[name] = [f for f in set(re.findall(r"([\w-]+\.html)\b", command)) if f != "index.html"]
 
