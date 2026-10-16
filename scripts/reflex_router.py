@@ -83,6 +83,10 @@ def last_assistant_text(evt):
             for c in d.get("message", {}).get("content", []):
                 if isinstance(c, dict) and c.get("type") == "text":
                     texts.append(c["text"])
+                # 2026-10-17：桌面版收尾框（wrap_up 的 recap／ask）也是講給教練聽的話，一起比對
+                elif isinstance(c, dict) and c.get("type") == "tool_use" and str(c.get("name", "")).endswith("wrap_up"):
+                    ti = c.get("input") or {}
+                    texts.append("\n".join(str(ti.get(k) or "") for k in ("recap", "ask")))
     return "\n".join(reversed(texts))
 
 
