@@ -1,3 +1,26 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 18:29 台灣時間，雲端 Claude Code（Linux 容器，教練從 Mac 桌面版／手機開），Sonnet 5.5→Opus 5.5；教練說「總結交接」收工；本段 15:37～18:29）
+
+**主軸：教練手機與 Mac 本機的 Claude 全部叫不動 → 查出原因、給一行修法，教練照做後 Mac 已恢復收訊息。angel-sister 策展頁打不開 → 查證網頁本身沒壞，推論同一批缺檔造成，未驗證。**
+- **叫不動的原因**：Mac `~/.openclaw/workspace/scripts/` 的 Hook 腳本（`context_percent_hook.py`、`reflex_router.py`）在 14:44～15:12（台灣時間）之間從硬碟消失。**Python 找不到腳本時結束代碼是 2（雲端實測），Claude Code 把 UserPromptSubmit hook 的 exit 2 當成「擋下這句話」**，所以每句話都被擋、AI 根本收不到。證據：雲端用 `list_events` 讀三場手機橋接對話，15:12～15:32 五則訊息（含「開工」「為何現在都叫不動？」「在嗎？」）全被同一錯誤擋下，耗時 54～78 毫秒、沒呼叫模型。
+- **修法**：教練在 Mac 終端機貼一行，從 `origin/main` 只補回 `scripts/` 裡不存在的檔案（不覆蓋、不刪除）→ 18:2x 教練回報「他那邊已經開始接收我的訊息了」。**只補了 scripts/，其他缺檔（如 event-signup/）還沒補。**
+- **angel-sister**：雲端連不到 event.bymyway.com（雲端網路規則回 403；WebFetch 連 example.com 都解析不到），**沒親眼驗**。GitHub `Coach1973/angel-sister` 原始檔完好（最新 `e3d6d6a` 只改頁尾一行、標籤成對；10.6 MB／90 張內嵌圖，自 10/15 上架就這樣）。推論：同批缺檔讓 `event-signup/curated_sites_registry.json` 消失 → 程式每次請求都從硬碟讀名冊，讀不到就當空名冊 → 所有 `/curated/*` 都 404。
+- **缺檔原因未知**：線索是 `origin/master`（外層 `~/.openclaw` 用的分支）沒有 `event-signup/`、大部分 `scripts/`、`CLAUDE.md`，`main` 有 3827 個檔案 master 沒有（見記憶 reference_openclaw_repo_dual_branch_trap_2026-09-10）。真相要看 Mac 的 `git reflog`。
+- **教練原話線索**：「它阻止我，那我接下來要幹嘛呢？什麼也沒講，就貼一個這個東西阻止我」→ 任何擋下教練的訊息都必須附白話的下一步，不能只丟程式錯誤；「我被這問題卡很久了」→ 系統癱瘓時教練沒有任何求救管道，要有主動通知。
+- **雲端留痕**（全在分支 `claude/kaigong-8jo10h`，**未進 main**）：信 `cross-agent/inbox/mac/20261016-1540_cloud-to-mac_phone-prompts-blocked-by-missing-hook-scripts.md`（`b1071df` `6a51e5d` `d143ca0`）、本棒、記憶 reference_python_hook_missing_file_exit2_blocks_all_prompts_2026-10-16。
+
+### 📋 下一場開工先做（Mac 軍師）
+1. `git -C ~/.openclaw/workspace fetch origin claude/kaigong-8jo10h` → 讀上面那封信 → 把分支併進 main（接力棒若衝突，以兩邊內容合併，不丟任何一棒）。
+2. 補其餘缺檔：信裡「追加」段那一段（整個工作區只補不存在的檔案；本機 5060 不是 200 才 kickstart `com.coach.event-webapp`）→ 用真的瀏覽器開 https://event.bymyway.com/curated/angel-sister/ 確認顯示正常。
+3. `git -C ~/.openclaw/workspace reflog` 對照 14:44～15:12 找出是誰清掉檔案 → 寫進試金石（同類第二次：9/18 hooks 目錄也從工作區消失過，見 feedback_hook_files_disappeared_from_working_tree_2026-09-18），改源頭不加記憶。
+4. 🔧 根因補強（同類第二次，必須改機制）：`~/.claude/settings.json` 每個 hook 改成「腳本不在就放行＋告訴 AI」，例如 `f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; if [ -f "$f" ]; then /usr/bin/env python3 "$f" prompt; else echo "⚠️ 檢查程式 $f 不見了，已先放行；請先用白話告訴教練並補回"; exit 0; fi`；守門員旁加「hook 腳本不見就電報通知教練」。改完用「暫時改名一支腳本→送一句話→應該放行並看到提醒」實測。
+5. 🔧 Stop hook「記憶索引漏收提醒」用檔案修改時間判斷，雲端每次新 clone 都會把約 400 個舊記憶檔當成剛寫的 → 改用 git 時間。
+6. 上一棒（13:06）📋 1～4 照舊。
+
+🙋 要教練決定：同上一棒，無新增。
+🤫 等教練自己提起：同上一棒，無新增。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 13:06 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；教練說「總結」收工；本段 02:31～13:06，對話容量約 47%）
 
 **主軸：①開工交辦兩件做完（預約頁週四時段生效、雲端軍火庫設計稿驗收並交付）②10/16 早上十幾個網站斷線：查出根因、補完手機修復漏掉的、裝上守門員。全部實測。**
@@ -19,27 +42,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 02:10 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「總結」收工；本段 01:24～02:10，對話容量約 41%）
-
-**主軸：開工交辦兩件查完；軍火庫總入口設計稿開到雲端；真公益俱樂部頁新增「首批足跡夥伴」7 位並補齊五位個人頁頁尾；座位圖改照實況 7 席。全部實測、已推送。**
-- **開工交辦兩件做完**：①新 LINE 群「榮樹下-訪談預約系統」真實路徑走通（台灣時間 10/15 20:53 教練問週四時段，分身 20:56 依總表回答；20:50 沒 @ 的那則被擋＝requireMention 設計，不是壞掉）。②雲端點數剩 **US$44／共 100**（11/5 15:59 到期；claude.ai/settings/usage），頁面不拆單一對話花費；方案本週用量 28%。三個自動機制（`auto_register_artifact`、`all_works_repo_hook`、容量提醒 Python 版）已確認掛在 `~/.claude/settings.json`，**但本場沒遇到事件，還沒驗到會跳**。
-- **雲端「軍火庫總入口＋入選卡」設計稿**（教練：「先開這 1 件，其他 3 件等看過成果再決定」）：對話 https://claude.ai/code/session_018mtZLomzGSG6BQk4axWPMg ，Opus 5.5，借用 rongtree 倉庫，只准推分支 `claude/arsenal-entry-design`（新增 `arsenal-design/index.html`＋信 `docs/to_junshi/2026-10-16_arsenal_entry_design.md`），全用「示範」資料、`DEMO=true` 不送出、字 ≥20px，信裡要貼 `ROSTER/COUNTERS/WISHES` 資料形狀（給名冊引擎接）。標題與目標數字用我建議的暫定值（「你要的資源，這裡找得到」、對外 200）。交辦單 `workspace/state/cloud_briefs/arsenal_entry_design_2026-10-16.md`（worktree 分支 `claude/kaigong-424fd5` `d0abd57a7`，未進 master）。**還在跑、未驗收；開跑前點數 US$44，做完要查差額。** 開法與坑已寫進記憶 reference_move_to_cloud 第 6 節。
-- **真公益俱樂部頁**（教練 01:39：牧師＝何瑞峰 `ruifeng`；名單陳顯立、何瑞峰、張麗蝶、朱元中、陳淑玲、大樹教練、吳錦昌）：social-club `3e228da` 新增 `#peers`「首批足跡夥伴」6 張卡（數字／足跡時間軸共 62 則／出處連結由程式逐字從各人頁抽出；吳錦昌連到原有 `#sunfar`）；導覽加「足跡夥伴」，**漢堡選單門檻 1180→1260**（CSS＋nav-burger `data-bp` 兩處，否則 1181–1234px 時「加入俱樂部」被擠出畫面）。五位個人頁頁尾補「招募志工團隊／真公益／真公益・企業家俱樂部」：ruifeng `2f6241fcd`、lidie `4ae55378c`、angel-sister `e3d6d6a21`、andy-chen `805fa3876`、patrick-chu `33d5a7a2e`（TAVA AI 製作五頁本來就有；教練說的「Tapa」＝TAVA；五頁字級本來就 ≥20px）。產生器 `workspace/scripts/peers_footprints/`（`1a68f81cd`，同在 worktree 分支）。座位圖「已有 50 席」→「已有 7 席」`e0d9aaeb8`（教練：原本前面席位保留給順發董事長邀請的 40 位上市櫃老闆，改照時間線「一步一腳印」）。記憶 project_peers_footprint_section_social_club_2026-10-16。
-- **踩到的坑**：worktree 對話 Edit/Write 不能寫 `~/.openclaw`（只能走教練授權的終端機補丁）；內建瀏覽器要先 `resize_window` 才有版面（預設 innerWidth=0）；Python urllib 打正式站被 403，改 curl；`rm -rf` 被刪檔鎖擋（改用新資料夾名）；截圖被鎖，用 DOM 量尺寸。
-- **教練原話線索**：「我們不是要找 100 家公益來參與嗎？目前就已經收集到這麼多了」→ 已做好的人當戰績先秀出來，不等湊滿；「按照目前這 7 位，一步一腳印」→ 對外數字一律照實況，不預留空號；「銷險整合計畫」疑為「策展整合計畫」（語音），後台 `event.bymyway.com/curation/admin`。
-
-### 📋 下一場開工先做
-1. **雲端軍火庫設計稿**：`git -C ~/github_repos/rongtree fetch && git branch -r | grep claude`，等 `claude/arsenal-entry-design` 出現（教練電報會收到通知）→ 讀信 → 用 `git worktree add` 驗收，**不要在 `~/github_repos/rongtree` checkout（會直接上線）**，也不併進 rongtree main，驗完搬到軍火庫自己的倉庫；到 claude.ai/settings/usage 查點數差額（開跑前 US$44）。
-2. **Mac**（承接聯想棒第 1 項）：讀 `cross-agent/inbox/mac/` 聯想來信 `20261016-0155`，重啟 `com.coach.event-webapp`（預約頁週四新時段程式已 pull 未載入），驗證 10/22、10/29 晚上起點＝19:30 與 21:00；處理完信 mv 到 `outbox/2026-10/`。
-3. 教練回應軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）→ 照做；教練已改用「目前 7 位、一步一腳印」的節奏，對外目標數字可能要比原建議 200／300 保守，等教練說。
-4. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
-5. 🔧 AI 自己：新對話確認 `auto_register_artifact`／`all_works_repo_hook`／容量提醒會自動跳；gateway 每次啟動有一則無關的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出的原因；策展 GitHub 化收尾（聯想／宏碁貼網址觸發、projects/INDEX 策展卡）；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 上有兩個 commit（交辦單、產生器腳本）看要不要搬進 master。
-
-🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內（「牧師是哪位」已解：何瑞峰）
-🤫 等教練自己提起：social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類。
-
----
-
+> 📦 10/16 02:10 Mac 軍師棒已封存：`handoff_archive/handoff_2026-10-16_0210_Mac軍師_archived.md`
 > 📦 10/16 01:55 聯想 v259 棒已封存：`handoff_archive/handoff_2026-10-16_0155_聯想v259_archived.md`
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）

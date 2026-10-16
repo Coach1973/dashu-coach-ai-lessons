@@ -76,3 +76,4 @@
 
 - [📦 舊記憶主題分組彙整（15 組：稱呼／OpenClaw坑／查證守則／BNI歷史／部署／刪除安全等），2026-10-14 搬進舊記憶索引](MEMORY_ARCHIVE_INDEX.md)
 - [🔧 品牌名「榮樹下」正確寫法（教練10/12確認，不是榕／龍）](reference_brand_name_rong_shu_xia_2026-10-12.md)
+- [🔧 Hook 腳本不見＝Python exit 2＝每句話被擋，手機／Mac 全叫不動；雲端可讀手機對話查錯（2026-10-16）](reference_python_hook_missing_file_exit2_blocks_all_prompts_2026-10-16.md)
