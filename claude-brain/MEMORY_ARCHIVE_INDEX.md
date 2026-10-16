@@ -208,3 +208,5 @@
 - [🔴 建網站自己build測直接deploy跳SOP](feedback_skipped_web_push_sop_2026-08-18.md)｜[ezPay開立SOP](reference_ezpay_invoice_issuing_procedure.md)
 - [🔴 對照版存在直接diff/抄](feedback_compare_before_diagnose.md)｜[部署詞彙字典](feedback_coach_deploy_vocabulary.md)｜[禁止假輪詢承諾](feedback_no_background_polling_lies.md)｜[教練親口=完整授權](feedback_coach_words_equal_authorization.md)
 - [🔴🔴 海餅乾19年鐵律](feedback_anti_fool_system_haibinggang_rule.md)｜[資料搬移du-sh比對](feedback_data_move_du_sh_verify.md)｜[全自動總結任務](project_auto_distill_mission.md)｜[Opus指令用.openclaw](feedback_claude_code_path_is_openclaw.md)
+- [教練貼憑證是刻意的](feedback_coach_pastes_credentials_on_purpose_2026-10-16.md) — 收進憑證層、做防護，不提醒不追問
+- [Discord 機器人 Claude特助](project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16.md) — 已建好；官方 Channels 被旗標關著，下一步改接小龍蝦
