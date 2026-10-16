@@ -39,3 +39,7 @@ git -C ~/.openclaw/workspace status | head -5
 1. 先查清楚上面四行，確認沒有未提交的修改，再從 `origin/main` 還原缺的檔案（只補缺檔，不覆蓋既有）。
 2. 還原後馬上實測：手機送「在嗎？」要能得到回覆。
 3. 根因補強（守則 #07，不要在同處跌倒兩次）：`~/.claude/settings.json` 的 UserPromptSubmit hook 現在是「檔案不存在就整句話被擋掉」。建議改成檔案不存在時放行（例如先 `[ -f 檔案 ] &&` 才執行，否則 exit 0），並且在守門員（`launchagents_guard`）旁邊加一條「Hook 腳本不見就電報通知教練」。一支檢查程式壞掉不該讓整個 Claude 叫不動。
+
+## 順帶發現的另一個檢查程式缺陷（雲端 Stop hook 誤報，不影響手機問題）
+`stop_rules_master.sh` 的「記憶索引漏收提醒」是用**檔案修改時間**判斷「24 小時內寫的記憶檔」。雲端每次新 clone，所有檔案的修改時間都是 clone 當下，所以一開場就把約 400 個舊記憶檔全部當成「剛寫的」，列出一長串誤報（2026-10-16 15:37 台灣時間雲端 clone 時實測：工作區乾淨、`feedback_taiwan_time_always.md` 的 git 最後修改是 10/15 20:30，卻被列入）。
+建議改成用 `git log --since` / `git diff --name-only` 判斷哪些記憶檔真的是這 24 小時被提交或修改的。這是現有程式的問題，雲端軍師沒有動它，留給 Mac 端處理。
