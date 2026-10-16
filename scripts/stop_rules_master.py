@@ -820,10 +820,17 @@ try:
     with open(_idx_path, encoding="utf-8") as f:
         _idx_text = f.read()
     _linked = set(re.findall(r"\]\(([^)]+\.md)\)", _idx_text))
+    # 2026-10-16：舊記憶從 10/14 起正式收在 MEMORY_ARCHIVE_INDEX.md（MEMORY.md 有連過去），
+    # 只看 MEMORY.md 會把「今天補改的舊記憶」誤報成漏收。兩份索引都算。
+    try:
+        with open(os.path.join(BRAIN_DIR, "MEMORY_ARCHIVE_INDEX.md"), encoding="utf-8") as f:
+            _linked |= set(re.findall(r"\]\(([^)]+\.md)\)", f.read()))
+    except Exception:
+        pass
     _cutoff = time.time() - 86400
     _missing = []
     for _fn in os.listdir(BRAIN_DIR):
-        if not _fn.endswith(".md") or _fn == "MEMORY.md" or _fn.startswith("daily_"):
+        if not _fn.endswith(".md") or _fn in ("MEMORY.md", "MEMORY_ARCHIVE_INDEX.md") or _fn.startswith("daily_"):
             continue
         if _fn in _linked:
             continue
