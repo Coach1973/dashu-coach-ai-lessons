@@ -7,8 +7,10 @@ workspace 跟 ~/.openclaw 推到同一個 GitHub 倉庫的兩條線：
 2026-10-16 15:00 有 AI 在 workspace 打成 `git pull --rebase origin master`，
 整個 workspace 被換成另一套檔、教練的指令被擋 3.5 小時（試金石123）。
 
-規則：在這兩個資料夾裡，pull/push/rebase/merge/reset/checkout/switch 指到「另一個資料夾的分支名稱」就擋下，
-並告訴 AI 正確的分支名稱。其他資料夾、其他 git 指令一律放行。
+規則一：在這兩個資料夾裡，pull/push/rebase/merge/reset/checkout/switch 指到「另一個資料夾的分支名稱」就擋下。
+規則二（所有資料夾）：指令裡寫的分支名稱跟目前分支不同，而且那條線跟目前分支「完全沒有共同歷史」（不相干的另一條線），也擋下。
+9/10 在 ~/.openclaw 憑印象寫 main、10/16 在 workspace 憑印象寫 master，同一個坑踩兩次，所以不靠 AI 記得，由這支程式在執行前查真相。
+擋下時告訴 AI 正確的分支名稱。其他 git 指令一律放行。
 本程式自己出任何錯都放行（回 0），絕不因為壞掉而擋人。
 """
 import json
@@ -52,6 +54,35 @@ def names_branch(args, wrong):
     return False
 
 
+def git(where, *args):
+    r = subprocess.run(["git", "-C", where, *args], capture_output=True, text=True, timeout=5)
+    return r.returncode, r.stdout.strip()
+
+
+def unrelated_branch(where, args):
+    """args 裡寫到的分支，如果不是目前分支、而且跟目前分支沒有共同歷史，就回傳 (分支名, 目前分支)。"""
+    rc, cur = git(where, "branch", "--show-current")
+    if rc != 0 or not cur:
+        return None
+    for a in args:
+        if a == "--":
+            break
+        if a.startswith("-"):
+            continue
+        for part in a.lstrip("+").split(":"):
+            name = part.replace("refs/heads/", "").replace("refs/remotes/", "")
+            if name.startswith("origin/"):
+                name = name[len("origin/"):]
+            if not name or name in (cur, "HEAD", "origin"):
+                continue
+            for ref in ("refs/remotes/origin/" + name, "refs/heads/" + name):
+                if git(where, "rev-parse", "--verify", "-q", ref)[0] != 0:
+                    continue
+                if git(where, "merge-base", "HEAD", ref)[0] != 0:
+                    return name, cur
+    return None
+
+
 def check(command, cwd):
     # 依 ; && || | 換行 切段，追蹤 cd 之後的所在資料夾
     here = cwd
@@ -80,6 +111,11 @@ def check(command, cwd):
             continue
         top = toplevel(where)
         if top not in REPOS:
+            hit = unrelated_branch(where, toks[i + 1:]) if top else None
+            if hit:
+                return (f"⛔ 已擋下：{top} 目前的分支是「{hit[1]}」，指令裡寫的「{hit[0]}」是一條跟它完全沒有共同歷史的線。"
+                        f"照這樣跑會把整個資料夾換成另一套檔案（試金石123）。先跑 git branch --show-current 確認，"
+                        f"把「{hit[0]}」改成「{hit[1]}」再跑。")
             continue
         right, wrong = REPOS[top]
         if names_branch(toks[i + 1:], wrong):
