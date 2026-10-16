@@ -1,0 +1,9 @@
+#!/bin/sh
+# 擋「拉錯分支」：要重定基底到一條跟目前分支毫無共同歷史的線（例如在 workspace 執行 git pull origin master），一律拒絕。
+# 2026-10-16 15:00 真實事故：workspace 被換成 ~/.openclaw 的檔案，3,493 個檔不見、教練指令被擋 3.5 小時。
+up="$1"; [ -z "$up" ] && exit 0
+if ! git merge-base HEAD "$up" >/dev/null 2>&1; then
+  echo "⛔ 已拒絕：$up 跟目前分支沒有共同歷史（拉錯分支），工作區保持原樣。" >&2
+  exit 1
+fi
+exit 0
