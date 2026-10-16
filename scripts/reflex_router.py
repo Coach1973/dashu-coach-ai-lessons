@@ -224,8 +224,9 @@ def main():
             r = {**r, "say": r["say"] + detail}
         if r.get("level") == "block":
             blocks.append(r)
-        elif r.get("check") or not seen_before(session, r["id"]):  # 核對類每次錯都要講，不只講一次
+        elif r.get("check") or r.get("repeat") or not seen_before(session, r["id"]):  # 核對類每次錯都要講；repeat＝每次命中都講（例如「先查再答」）
             reminds.append(r)
+    reminds.sort(key=lambda x: not x.get("repeat"))  # 每次都要講的排前面，不被 3 條上限擠掉
     hits = (blocks + reminds)[:MAX_PER_FIRE]
     if not hits:
         return

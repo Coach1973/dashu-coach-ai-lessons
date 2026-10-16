@@ -657,6 +657,53 @@ if LAST_TEXT:
             "本次為提醒，不阻擋回覆送出；違規記錄已寫入：%s\n" % path + BAR + "\n")
 
 # ════════════════════════════════════════════════
+# E2. 判斷題沒查就回答（擋下要求補查更正）—— 2026-10-17 教練：「先回答、答錯、再推翻自己，反反覆覆」
+#     E 只抓「應該／大概」這類猜測字；最傷人的是講得很肯定的錯（案例125「您的帳號還沒開」），
+#     所以改看行為：教練問原因／能不能／是不是，這一輪卻一個查證工具都沒用就給了答案。
+#     問句規則與反射 R-VERIFY-BEFORE-ANSWER 共用（knowledges/反射索引.json），只改那一處。
+# ════════════════════════════════════════════════
+E2_BOOKKEEPING = re.compile(r"^(mcp__ccd_turn__|mcp__ccd_session__mark_chapter$|ToolSearch$|TodoWrite$)")
+E2_DEFER_OR_EVIDENCE = re.compile(
+    r"我先去了解|先去了解|我先查|先查清楚|我去查|查完再|還沒查|需要查證|我不確定|不知道|"
+    r"查到的|實測|已驗證|已確認|剛才查|前面查|紀錄顯示|日誌顯示")
+
+
+def _e2_question_re():
+    try:
+        idx = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "knowledges", "反射索引.json")
+        with open(idx, encoding="utf-8") as f:
+            for r in json.load(f)["reflexes"]:
+                if r.get("id") == "R-VERIFY-BEFORE-ANSWER":
+                    return re.compile(r["match"])
+    except Exception:
+        pass
+    return None
+
+
+_E2_Q = _e2_question_re()
+if (_E2_Q and _last_idx is not None and LAST_TEXT and _E2_Q.search(_last_prompt)
+        and not _last_prompt.startswith("Stop hook feedback")):
+    _e2_tools = 0
+    for ev in EVENTS[_last_idx + 1:]:
+        if isinstance(ev, dict) and ev.get("type") == "assistant":
+            for c in _content_list(ev):
+                if isinstance(c, dict) and c.get("type") == "tool_use" and not E2_BOOKKEEPING.search(c.get("name", "")):
+                    _e2_tools += 1
+    if _e2_tools == 0 and not E2_DEFER_OR_EVIDENCE.search(LAST_TEXT):
+        body = "  • 教練問：「%s」→ 這一輪 0 次查證就回答了\n" % _last_prompt.strip().replace("\n", " ")[:60]
+        path = log_violation("rule03_verify_violations.log", "[E2 判斷題零查證]\n" + body)
+        MESSAGES.append(
+            "\n🔎 判斷題沒查就回答（系統偵測，2026-10-17 教練要求的「先查再答」標準）\n" + BAR + "\n" + body +
+            "\n教練問的是原因／能不能／是不是，這一輪卻沒用任何工具看第一手證據就給了答案。\n"
+            "📜 三大信念一：「真誠：說真話，辦真事，一切歸於真實。」\n\n"
+            "✅ 現在就做：\n"
+            "  1. 用工具查證剛才的答案（設定檔實際值、日誌、指令輸出、原始紀錄）\n"
+            "  2. 回一則短更正，把話分成：查到的（附證據）／我的推論／還沒查的\n"
+            "  3. 如果答案全是前面已查證過的，說是哪一步查到的即可\n\n"
+            "違規記錄已寫入：%s\n" % path + BAR + "\n")
+        BLOCK = True
+
+# ════════════════════════════════════════════════
 # F. 守則#08 多此一舉徵詢（提醒，不擋）—— 原 rule08_ask_when_clear_check.sh
 # ════════════════════════════════════════════════
 F_PATTERNS = [

@@ -1839,6 +1839,33 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-VERIFY-BEFORE-ANSWER",
+      "moment": "prompt",
+      "repeat": true,
+      "kind": "防錯型",
+      "match": "為什麼|為何|怎麼會|怎麼可能|什麼原因|原因|是不是|是否|對不對|對嗎|對吧|是嗎|有沒有|有嗎|可不可以|可以嗎|能不能|能嗎|行不行|會不會|會嗎|確定嗎|真的嗎|到底|(我|我們|他|她|它|這|那|這個|那個)(可以|能|會|有).{0,15}[嗎呢][？?]|怎麼(沒|不|還沒)|沒有?(回|反應|回應|回覆|動靜)|(壞|掛|斷)掉?了|不見了",
+      "say": "教練在問原因／能不能／是不是（判斷題）：①先查再答——第一個動作是用工具看第一手證據（設定檔實際值、日誌、指令輸出、原始紀錄），查到之前不寫結論句；②回覆分三種話並標清楚：查到的（附證據）／我的推論（標明還沒證實）／還沒查的；③來不及查就只說「我先去了解一下真實情況」，不要先答；④要推翻自己前面講的話，先說清楚前面哪句是查到的、哪句只是推論。",
+      "level": "remind",
+      "situation": "教練問原因、能不能、是不是、對嗎（判斷題）時，每次都提醒",
+      "source": "試金石案例125／三大信念一「真誠：說真話，辦真事，一切歸於真實。」／守則#03 #15",
+      "audience": [
+        "coach"
+      ]
+    },
+    {
+      "id": "R-VOICE-BB-MINIMAX",
+      "moment": "prompt",
+      "kind": "需求型",
+      "match": "(?<![A-Za-z])[Bb][Bb](?![A-Za-z])",
+      "say": "教練說的「BB」＝MiniMax（語音輸入把 MiniMax 聽成 BB，教練 2026-10-17 定）：直接照 MiniMax 理解，不用再問；回話裡寫 MiniMax。",
+      "level": "remind",
+      "situation": "教練的話裡出現 BB 時（語音誤聽）",
+      "source": "教練 2026-10-17 00:24「下次聽到 BB，請直接幫我翻譯成 MiniMax」／feedback_coach_chinese_file_mapping.md",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
@@ -1860,7 +1887,8 @@
     "案例98": "併入 R-OC-HOOK-INJECT-DEAD（改 hook 寫 inject 時提醒）；機制已改：外掛 reflex-prompt 取代死注入；「有命中≠有送達，請模型逐字貼出收到的段落」屬驗證習慣（守則#03）",
     "案例105": "R-BNI-GUEST-COUNT-SOURCE（算帶來賓／培訓前提醒用 PALMS 與 /training 同一份）；源頭探測器方案檔第一節已改",
     "案例120": "→ R-POLLING-CODE 改寫（用到才現看列第一）＋R-ACCOUNT-CHANGE-VERIFY-FIRST(-TOOL)＋R-REPLY-INTERNAL-JARGON＋stop_rules_master D 段文字＋handoff_sync_guard 漏洞修正",
-    "案例122": "→ R-LAUNCHAGENTS-PLIST-MISSING＋scripts/launchagents_guard.sh（WatchPaths 守門員）＋ops/launchagents_backup 換成 TM 原檔"
+    "案例122": "→ R-LAUNCHAGENTS-PLIST-MISSING＋scripts/launchagents_guard.sh（WatchPaths 守門員）＋ops/launchagents_backup 換成 TM 原檔",
+    "案例125": "→ R-VERIFY-BEFORE-ANSWER（判斷題每次提醒先查再答）＋stop_rules_master E2（判斷題零查證就回答：擋下要求補查更正並記錄）"
   },
   "memory_ledger": {
     "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",

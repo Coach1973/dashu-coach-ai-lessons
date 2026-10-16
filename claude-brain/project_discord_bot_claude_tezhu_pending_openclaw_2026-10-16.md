@@ -1,12 +1,14 @@
 ---
 name: project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16
-description: Discord 機器人「龍蝦特助」已切成真的 Claude（Mac 上 tmux 視窗 discord-claude 常駐，2026-10-17 00:10 教練實測確認）；前一場「被旗標關著」是沒讀實際值的推論、現已可用；小龍蝦 Discord 暫停當備援；怎麼重啟、怎麼退回、容量怎麼算
+description: Discord 機器人「龍蝦特助」兩種腦都通——平常用小龍蝦 MiniMax（10/17 00:30 依教練要求切回、省 Claude 用量），要 Claude 時一行指令切換 scripts/discord_brain_switch.sh（00:10 教練實測過 Claude 版）；前一場「被旗標關著」是沒讀實際值的推論、現已可用；小龍蝦 Discord 暫停當備援；怎麼重啟、怎麼退回、容量怎麼算
 metadata:
   type: project
 ---
 2026-10-16 夜～10-17 凌晨，教練要「把 Claude 串進 Discord」，全程在教練的 Chrome 做（Chrome 才是教練看得到的瀏覽器，不是內建窗格）。
 
-**現況（10/17 00:10 教練實測：Discord 有回，確實是 Claude）**
+**現況（10/17 00:30）：平常用 MiniMax。** 教練：「我現在還不確定我 Discord 要怎麼用，所以也不想浪費我的流量…我只需要知道兩邊都通用」→ 已用 `bash ~/.openclaw/workspace/scripts/discord_brain_switch.sh minimax` 切回（Claude 視窗已關、小龍蝦 Discord 在線、Telegram／LINE 正常）。要 Claude：`… claude`；看現況：`… status`。切換會重啟閘道，Telegram／LINE 斷約 20 秒。教練說「在群裡幫我接回去」：是否也要開「榮樹下」伺服器頻道，00:3x 已問、待回。
+
+**Claude 版設定（10/17 00:10 教練實測：Discord 有回，確實是 Claude）**
 - Discord 應用程式 ID `1560673837568233532`（開發者後台的應用程式名稱仍叫「Claude特助」）；機器人顯示名 **10/17 00:02 已改「龍蝦特助」**（用機器人自己的金鑰 `PATCH /users/@me`，教練問「我可以改他的名字嗎」後指定）；伺服器「榮樹下」ID `1560663537527820298`；教練 Discord ID `1560659588297130046`（帳號 dashujiaolian_43576）；Message Content Intent 已開。
 - **常駐方式**：tmux 視窗 `discord-claude`，工作資料夾 `~/claude-discord`（內有 `CLAUDE.md` 與 `.claude/settings.json`，後者預先核准 5 個 Discord 工具 reply／react／edit_message／fetch_messages／download_attachment）。啟動指令：`tmux new-session -d -s discord-claude -c ~/claude-discord "env -i HOME=$HOME USER=$USER LOGNAME=$USER PATH=$PATH TERM=xterm-256color LANG=en_US.UTF-8 claude --channels plugin:discord@claude-plugins-official"`；第一次會問「信任資料夾」，用 `tmux send-keys -t discord-claude Down Enter` 選信任。**env -i 一定要留 USER／LOGNAME，否則鑰匙圈讀不到登入，會顯示 Not logged in。**
 - 檢查：`tmux capture-pane -t discord-claude -p`；在視窗打 `/status` 要看到 `Channels: Listening for messages from plugin:discord@claude-plugins-official`；`/context` 看容量。首次啟動時 Claude Code 自動從 2.1.278 升到 2.1.301。模型 Sonnet 5（Pro 帳號，用教練的 Pro 用量）。
