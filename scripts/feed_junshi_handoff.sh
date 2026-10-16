@@ -75,6 +75,7 @@ if [[ -d "$WORKSPACE/.git" ]]; then
     if [[ -n "$DIRTY" ]]; then
       if git stash push -u -m "auto-pull-stash-$(date +%Y%m%d%H%M%S)" --quiet 2>/dev/null; then
         STASHED=1
+        STASH_SHA=$(git rev-parse -q --verify "stash@{0}" 2>/dev/null)
       fi
     fi
     if git pull --quiet --rebase 2>/dev/null; then
@@ -90,9 +91,9 @@ if [[ -d "$WORKSPACE/.git" ]]; then
         # 衝突標記(<<<<<<< / ======= / >>>>>>>)會被寫進檔案卻毫無警示，只留一句
         # 「已拉雲端最新」誤導後續動作，衝突有可能被下一次commit直接汙染共用檔案。
         # 改成明確列出受影響檔案，stash留著不清掉，逼自己/教練手動處理。
-        CONFLICT_FILES=$(git diff --name-only --diff-filter=U 2>/dev/null | tr '\n' ' ')
-        PULL_STATUS="🔴 stash pop 衝突未解決！受影響檔案：${CONFLICT_FILES}——本地改動仍在stash裡，請手動 git stash pop 並解決衝突，不要直接commit"
-        POP_CONFLICT=1
+        # 2026-10-16：改成自動逐檔放回（safe_stash_restore.py），不再留在 stash 清單等人手動處理（52 筆沒人取回的教訓）
+        R=$(python3 "$HOME/.openclaw/workspace/scripts/safe_stash_restore.py" "$PWD" "$STASH_SHA" 2>/dev/null | tail -1)
+        PULL_STATUS="${PULL_STATUS}（stash 放不回去，已自動逐檔放回：${R}）"
       fi
     fi
     # 2026-09-05補強（聯想同日實測撞到的邊界情況）：pop 回報成功(exit 0)但工作區

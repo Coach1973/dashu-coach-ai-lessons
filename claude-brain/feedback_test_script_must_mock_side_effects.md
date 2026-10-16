@@ -20,3 +20,8 @@ metadata:
 4. 若真的需要重跑一支「已知會產生真實副作用」的測試，重跑前先提醒使用者，不要假設「上次講過一次以後就不用再講」。
 
 Related: [[feedback_ezpay_confirm_before_submit_2026-08-18]]（同樣是「送出前確認」精神的延伸——這裡是「送出（測試）前先確認有沒有攔截」）
+
+---
+## 🛟 2026-10-16 從自動暫存救回的段落（原本在 2026-09-11 02:30 寫進來，被自動同步放回失敗弄丟；照原樣補回，未改寫）
+
+**2026-09-10二度發生（不同腳本，同根因）：** 驗證invoice-inbound誤報修復(commit `5dd58e7bf`)時重跑`scripts/test_invoice_inbound_hook.js`，發現該腳本的`INVOICE_HOOK_TEST=1`只攔截了`sendTelegram()`（避免真的發通知），卻沒攔截`fs.appendFileSync()`落地寫檔——導致5筆測試假資料混進正式的`state/invoice_inbox/2026-09.jsonl`，污染真實對帳資料。當場發現後用`git checkout`清乾淨，並根治：`INVOICE_HOOK_TEST=1`時改把落地目錄整個換成`invoice_inbox_test`（handler.js跟測試腳本同步改），測試腳本結尾自動`rmSync`清掉該目錄，commit`906d39ed4`(外層repo)+`45258482b`(workspace)。**新教訓**：本條守則第1點寫的是「呼叫https.request/fetch要攔截」，但沒提醒「寫真實檔案（fs.appendFileSync/writeFileSync）同樣算副作用」——凡是測試會操作正式資料檔案路徑的，都要考慮改寫獨立測試路徑，不能只想到網路呼叫這一種副作用。

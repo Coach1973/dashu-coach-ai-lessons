@@ -105,3 +105,20 @@ function setVal(id, val){
 5. 作廢後若要重開，走正常開立流程，**自訂編號接續原本序號往後排一號**（例如舊的是092312作廢，新的用092313），不要沿用舊自訂編號。
 
 參見 [[project_ezpay_invoice_task_delegated_to_lenovo_2026-08-16]]。
+
+---
+## 🛟 2026-10-16 從自動暫存救回的段落（原本在 2026-08-25 21:20 寫進來，被自動同步放回失敗弄丟；照原樣補回，未改寫）
+
+```js
+**🔴 2026-08-25新發現：`computer`工具的`triple_click`+`type`（或`key`）對`ItemCount1`/`ItemPrice1`這兩個數量/單價欄位完全不生效**——click後`document.activeElement`確實顯示該欄位ID(焦點正確)，但輸入的字元不會進入`.value`，`TotleAmount`維持空白。診斷發現這兩欄位帶`usePlus txtCount`這類class，其金額計算監聽器要看到完整的原生鍵盤事件序列（`keydown`+`keypress`+`keyup`，且`keyCode`/`which`/`charCode`要有值）才會觸發，`computer`工具送出的CDP合成按鍵不滿足這個要求。**改用JS手動組出完整事件序列即可穩定觸發計算**：
+function typeDigits(el, str) {
+    const code = ch.charCodeAt(0);
+    const opts = {key: ch, code: 'Digit'+ch, keyCode: code, which: code, charCode: code, bubbles: true, cancelable: true};
+    el.dispatchEvent(new KeyboardEvent('keydown', opts));
+    el.dispatchEvent(new KeyboardEvent('keypress', opts));
+    el.value = el.value + ch;
+    el.dispatchEvent(new KeyboardEvent('keyup', opts));
+typeDigits(document.getElementById('ItemCount1'), '1');
+typeDigits(document.getElementById('ItemPrice1'), '39800');
+送出後讀`TotleAmount`確認金額，這次實測`39800`一次到位（税額1895+銷售額37905=39800）。**建議優先順序**：先試這個JS方法（快、不受畫面座標/scroll影響），`triple_click`+`type`當作備援手段，不要預設後者一定有效。
+```

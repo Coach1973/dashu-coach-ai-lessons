@@ -175,6 +175,8 @@ def main() -> int:
                      f"dispatch-worker-auto-{datetime.now(TPE).strftime('%Y%m%d%H%M%S')}", "--quiet"],
                     cwd=WORKSPACE, capture_output=True, text=True, timeout=15)
                 stashed = st.returncode == 0
+                stash_sha = subprocess.run(["git", "rev-parse", "-q", "--verify", "stash@{0}"], cwd=WORKSPACE,
+                                           capture_output=True, text=True, timeout=15).stdout.strip() if stashed else ""
             r = subprocess.run(["git", "pull", "--quiet", "--rebase"],
                                 cwd=WORKSPACE, capture_output=True, text=True, timeout=30)
             if r.returncode != 0:
@@ -183,7 +185,10 @@ def main() -> int:
                 pop = subprocess.run(["git", "stash", "pop", "--quiet"],
                                       cwd=WORKSPACE, capture_output=True, text=True, timeout=15)
                 if pop.returncode != 0:
-                    log(f"STASH_POP_FAIL {pop.stderr.strip()[:200]}（stash 仍保留在清單裡，不會遺失）")
+                    # 2026-10-16：放不回去改成自動逐檔放回，不再留在清單沒人取回（52 筆的教訓）
+                    fix = subprocess.run(["python3", os.path.join(os.path.dirname(os.path.abspath(__file__)), "safe_stash_restore.py"),
+                                          WORKSPACE, stash_sha], capture_output=True, text=True, timeout=120)
+                    log(f"STASH_POP_FAIL {pop.stderr.strip()[:120]} → 已逐檔放回：{fix.stdout.strip()[-200:]}")
         except Exception as e:
             log(f"GIT_PULL_ERROR {e!r}")
 

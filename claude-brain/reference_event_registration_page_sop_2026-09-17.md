@@ -83,3 +83,9 @@ curl -sI https://coach1973.github.io/<slug>/ | head -1     # GitHub Pages 應 20
 教練說「上架SOP」時，先判斷內容類型（報名表單 vs 店家介紹）：報名頁照上面五步走；店家介紹走 [[reference_curation_sop_2026-09-06]]。不確定就問教練，不要瞎猜。
 
 Related: [[reference_curation_sop_2026-09-06]]、[[project_bymyway_dynamic_hosting_escape_netlify_2026-08-30]]、[[feedback_web_push_sop]]
+
+---
+## 🛟 2026-10-16 從自動暫存救回的段落（原本在 2026-09-17 19:55 寫進來，被自動同步放回失敗弄丟；照原樣補回，未改寫）
+
+**🔴 2026-09-17教練補充：如果這場活動屬於「大樹小講」(bigtree)系列，這步要多做一件事**——把第二步建好的報名頁網址一併填進這筆 `events` 記錄的 `event_url` 欄位。**⚠️2026-09-17實測修正：`event_url`不在`admin/sessions/save`表單白名單裡，用curl帶這個欄位會被靜默忽略（回應顯示成功，實際沒寫入，親身踩過一次）**，必須用直接寫DB的方式：
+sqlite3 event-signup/event.db "UPDATE events SET event_url='<報名頁網址>' WHERE slug='<場次代碼>';"

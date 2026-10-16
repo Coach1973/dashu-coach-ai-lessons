@@ -193,3 +193,18 @@
 - [🔴🔴🔴 「小龍蝦」vs「Hermes」身份混淆三次，衝突時原始 digest 優先於轉述(2026-09-19~30)](feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md)
 - [🔴🔴 手機開工＝MiniMax模型＝特助身份(教練判斷優先於system reminder)；機制是SDK按model名稱字串路由、非BASE_URL開關(2026-09-19~22)](feedback_phone_kai_gong_means_minimax_model_2026-09-22.md)
 - [遠端連線替教練做完不講術語](feedback_remote_connect_do_it_for_coach_no_jargon_2026-10-01.md) — RustDesk 用 --connect IP 捷徑、管理員指令放剪貼簿、不提密碼
+
+## 🛟 2026-10-16 從自動暫存救回的索引（檔案一直都在，只是索引行被自動同步弄丟）
+- [🔴 面向非技術使用者的表單要給具體範例+YouTube是最佳預設建議+雙向管理內容優先自助後台(2026-09-20)](feedback_design_for_nontechnical_users_ccu_media_upload_2026-09-20.md)
+- [🔧 tmutil刪網路型TimeMachine備份的CLI限制…](reference_tmutil_network_destination_delete_limitation_2026-09-11.md)
+- [🔴🔴 invoice-inbound誤報二度發作：心跳偽裝telegram channel繞過排除…](reference_invoice_inbound_heartbeat_disguise_2026-09-10.md)
+- [🔴 .openclaw外層repo遠端main/master雙分支陷阱…](reference_openclaw_repo_dual_branch_trap_2026-09-10.md)
+- [🔧 bymyway被Cloudflare擋UA](reference_bymyway_cloudflare_blocks_default_useragent_2026-08-30.md)｜[大樹小講脫離Netlify](project_bymyway_dynamic_hosting_escape_netlify_2026-08-30.md)｜[桌面版App平行build要查log](feedback_check_git_log_for_parallel_builds_2026-08-30.md)｜[Jinja2 dict鍵名衝突](reference_jinja2_dict_values_key_collision_2026-08-30.md)｜[子網域530缺launchd](reference_bymyway_subdomain_530_missing_launchd_2026-08-29.md)
+- [🔧 BNI Connect信用証三態](reference_bni_connect_credit_button_states_and_dialog_override_2026-08-28.md)｜[workspace多機race](reference_workspace_git_concurrent_machine_race_2026-08-28.md)｜[🔴🔴第三方系統不點產生/送出](feedback_never_click_action_buttons_on_thirdparty_systems_2026-08-28.md)
+- [🔧 bigtree_publish hash範圍](reference_bigtree_publish_hash_scope_2026-08-27.md)｜[FB API卡住先查官方文件](feedback_diagnose_root_cause_before_trial_and_error_2026-08-27.md)｜[素材未到不湊圖頂替](feedback_dont_substitute_placeholder_await_real_material_2026-08-27.md)
+- [🎯 名片媒合改手動觸發](project_namecard_manual_trigger_matching_design_2026-08-27.md)｜[BNI Connect地區查詢導航](reference_bni_connect_guest_report_navigation_2026-08-27.md)｜[INSERT OR IGNORE靜默失敗](feedback_insert_or_ignore_silent_failure_2026-08-27.md)
+- [🔧 verbatim蒸餾只抓CLI](reference_verbatim_pipeline_cli_only_not_desktop_chat.md)｜[AI自稱機制先驗證](feedback_ai_claimed_mechanism_verify_before_trust.md)｜[測試腳本要mock副作用](feedback_test_script_must_mock_side_effects.md)
+- [🔧 VPS git備份靜默失敗35天](reference_vps_git_dubious_ownership_silent_failure.md)｜[自動化要問結果誰看到](feedback_automation_must_reach_a_human.md)
+- [🔴 建網站自己build測直接deploy跳SOP](feedback_skipped_web_push_sop_2026-08-18.md)｜[ezPay開立SOP](reference_ezpay_invoice_issuing_procedure.md)
+- [🔴 對照版存在直接diff/抄](feedback_compare_before_diagnose.md)｜[部署詞彙字典](feedback_coach_deploy_vocabulary.md)｜[禁止假輪詢承諾](feedback_no_background_polling_lies.md)｜[教練親口=完整授權](feedback_coach_words_equal_authorization.md)
+- [🔴🔴 海餅乾19年鐵律](feedback_anti_fool_system_haibinggang_rule.md)｜[資料搬移du-sh比對](feedback_data_move_du_sh_verify.md)｜[全自動總結任務](project_auto_distill_mission.md)｜[Opus指令用.openclaw](feedback_claude_code_path_is_openclaw.md)
