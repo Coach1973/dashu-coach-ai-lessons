@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-16 19:14:21**
+> **最後同步：2026-10-16 19:23:47**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -22,9 +22,8 @@
 
 ### 📋 下一場開工先做
 1. 教練回應軍火庫設計稿（https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 ）後照做；不主動追問。
-2. 🔧 背景排程失敗不會通知任何人（今天 15:00～19:05 失敗 91 次沒人知道）→ 設計事件式通知（同一工作連續失敗才發），接進每日點名；改 `openclaw_cron_daemon.sh` 要先停 daemon 再改（bash 邊跑邊讀檔）。
-3. 🔧 小龍蝦那邊的重複工作還沒從它的對話紀錄盤點（只看了 11 個既有技能）。
-4. 🔧 52 筆舊 stash 還留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 已救回本機但含個資不進 git；`memory/` 資料夾有 2 個記憶檔放錯位置（應在 claude-brain/）。
+2. ✅ 已做（19:25）：背景排程失敗當下通知（`scripts/cron_fail_notify.sh`，30 分鐘內同工作失敗 3 次→電報＋寫信 inbox/mac，`de8266088`）；小龍蝦盤點 385 則→新增 main 分身技能 site-down-check、bigtree-publish-site（測試對話答對，備份 `ops/xiaolongxia_workshop_skills/`，`7502acedf`）。報告 https://claude.ai/artifact/GF4ueUwADRQtzeaeQko2JK
+3. 🔧 52 筆舊 stash 還留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 已救回本機但含個資不進 git；`memory/` 資料夾有 2 個記憶檔放錯位置（應在 claude-brain/）。
 
 ---
 
