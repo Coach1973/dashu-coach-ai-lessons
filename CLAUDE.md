@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-17 00:15:53**
+> **最後同步：2026-10-17 00:25:57**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -12,13 +12,13 @@
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 00:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「開」，一路做到 Discord 切成真的 Claude；本段 23:51～00:20，對話容量約 25%）
 
-**主軸：Discord 機器人「龍蝦特助」現在接的是真的 Claude（教練 00:10 實測「Discord 有回了，確實是 Claude」）。前一場「Anthropic 旗標對教練帳號關著」的結論是錯的，已更正（試金石125）。**
+**主軸：Discord 機器人「龍蝦特助」現在接的是真的 Claude（教練 00:10 實測「Discord 有回了，確實是 Claude」）。前一場「Anthropic 旗標對教練帳號關著」只是從程式預設值＋兩次失敗推論，沒讀本機實際旗標值；現在實測可用（試金石125）。我翻案時又把話說過頭（說「前一場說錯了」），已更正。教練 00:18 嚴正指出「先答、答錯、再推翻自己」是長期毛病，要一套回答前先查證的標準。**
 - **過程**：先照上一棒接小龍蝦（OpenClaw 加 Discord，金鑰不進 git、用 SecretRef 指到 `~/.claude/channels/discord/openclaw-secrets.json`，`plugins.allow` 要補 `discord` 否則一直 stopped；`d9d8e2c92`）→教練 23:59 測有回（MiniMax）→教練追問「為什麼朋友可以我不可以」→查本機：`cachedGrowthBookFeatures.tengu_harbor=true`、核准清單含 discord、帳號個人 Pro、乾淨環境實測 `Channels: Listening` →教練 00:08 授權切換。
 - **現況**：小龍蝦的 Discord 暫停（`channels.discord.enabled:false`，`c1427db72`），備援；真的 Claude 在 tmux 視窗 `discord-claude` 常駐，工作資料夾 `~/claude-discord`（`CLAUDE.md`、預先核准 5 個 Discord 工具），Claude Code 首次啟動自動升到 2.1.301，模型 Sonnet 5。權限提示會傳到教練 Discord 私訊按按鈕。啟動／檢查／退回指令全在記憶 `project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16`。
 - **改名**：教練 00:02 指定機器人叫「龍蝦特助」，用機器人金鑰改好；開發者後台的應用程式名稱仍叫「Claude特助」。
 - **容量（教練 00:12 問「日後叫它做事會有 context 問題吧？算法跟這邊像嗎？」）**：同一套算法（同一份 settings.json，視窗 100 萬）；Discord 視窗是一個持續的對話，剛開機就 8%（75.1k，固定開銷約 55k）；全域 hook 在 Discord 訊息也會觸發（交易紀錄確認），容量提醒理應也會到。沒有「新對話」按鈕，目前重啟 tmux 視窗。
 - **其他**：Hook 稽核紅字查到是 `scripts/context_percent_hook.sh`（舊版，現行是 `.py`），已拿掉檔頭「# Hook：」宣告。每個桌面版對話都會多一個閒置的 Discord 外掛程序（外掛是 user scope），無害。
-- **教練原話線索**：「我的朋友說他可以，我就納悶，為什麼他可以我不可以？你還是沒有解決我這個問題，對嗎？」→教練不接受「帳號被擋」的推論，要證據；別人能做、他不能，一定要追到底。「它也會有對話上下文視窗…我就比較想了解它那邊計算的方式」→教練在意長期用 Discord Claude 的容量管理，習慣 30% 準備、40% 開新對話。
+- **教練原話線索**：「我的朋友說他可以，我就納悶，為什麼他可以我不可以？你還是沒有解決我這個問題，對嗎？」→教練不接受「帳號被擋」的推論，要證據；別人能做、他不能，一定要追到底。「它也會有對話上下文視窗…我就比較想了解它那邊計算的方式」→教練在意長期用 Discord Claude 的容量管理，習慣 30% 準備、40% 開新對話。「為什麼你都不能說「我先去了解一下真實情況」，不要著急回答我吧？」「這種反反覆覆，你不覺得很煩嗎？」「我先說，不是今天晚上而已，之前也多次發生過這種情況。」→ 三大信念一「真誠：說真話，辦真事，一切歸於真實。」原因／判斷題先查第一手證據再答，話分「查到的／推論／沒查的」，不夠就說「我先去了解」。
 
 ### 📋 下一場開工先做（以本棒為準）
 1. 看 tmux 視窗還活著：`tmux ls`、`tmux capture-pane -t discord-claude -p`；Discord Claude 的容量接近 30% 時提醒教練。教練若要「在 Discord 說新對話就自動重開」→ 做成重啟腳本（目前只有手動指令，見記憶）。
