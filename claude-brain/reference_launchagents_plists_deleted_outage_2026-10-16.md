@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 5f6b7aeb-e52c-466c-8c58-907bd13abbd1
-  modified: 2026-10-16T04:55:24.380Z
+  modified: 2026-10-16T05:07:05.938Z
 ---
 
 **時間線（台灣時間）**
@@ -22,4 +22,5 @@ metadata:
 - 這些網站的程式設定多半是 `/bin/bash -c "set -a; source <repo>/.env; set +a; exec venv/bin/python3 app.py"`；重建時少了 `.env`，網站照樣會回 200，看不出壞了。比對要看設定名稱，不能只看網址通不通。
 - 還原：`launchctl bootout gui/$U/<label>`，再 `cp` 原檔，最後 `launchctl bootstrap gui/$U <plist>`。
 
-**還沒做**：「設定檔守門員」（launchd WatchPaths 監看 LaunchAgents，少檔就從 `ops/launchagents_backup/` 補回、載入並通知；登入時也跑一次）。另外 `ops/launchagents_backup/` 還是手機版那份不完整的設定，要換成 `~/Library/LaunchAgents` 現在的 25 個。worktree 對話寫不進正式目錄，見 [[reference_worktree_session_edit_hook_blocks_openclaw_2026-10-15]]。
+**已上線的防線（10/16 12:58，`f90ba2012`）**：守門員 `scripts/launchagents_guard.sh`＋`ai.openclaw.launchagents-guard`（launchd WatchPaths 監看 LaunchAgents，登入時也跑），以 `ops/launchagents_backup/`（Time Machine 原檔 25 個＋守門員自己）為準，少檔補回、沒載入就載入、電報通知（10 分鐘節流），紀錄在 `~/Library/Logs/openclaw/launchagents_guard.log`。實測刪檔 10 秒內補回、卸載後自動重載。**要正式停掉某服務＝同時從 ops/launchagents_backup 刪掉並 commit，否則會被補回。** 反射 R-LAUNCHAGENTS-PLIST-MISSING（試金石 122）。worktree 對話寫正式目錄要教練授權，見 [[reference_worktree_session_edit_hook_blocks_openclaw_2026-10-15]]。
+**還沒有**：網站本身掛了（例如通道掛掉）主動通知教練的外部偵測；這次教練是 3 小時後自己從手機發現的。
