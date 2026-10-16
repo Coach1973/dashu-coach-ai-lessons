@@ -4,20 +4,32 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-16 13:00:16**
+> **最後同步：2026-10-16 13:10:26**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 13:05 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；中途進度棒，教練尚未說「總結」；對話容量約 44%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 13:06 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5→Opus 5.5；教練說「總結」收工；本段 02:31～13:06，對話容量約 47%）
 
-**主軸：10/16 早上十幾個網站斷線，查出根因、補完手機修復漏掉的部分、裝上守門員。全部實測。**
-- **根因**：`~/Library/LaunchAgents` 的 com.coach.* 設定檔在 10/3 01:42～10/4 14:07 之間被刪（刪的人沒查到），服務靠記憶體撐了 12 天；10/16 08:44:55 Mac 登出（聯想 RustDesk 遠端操作中，08:44:28 有遠端點擊），08:45 重新登入後網站和通道都沒起來。event 斷約 3 小時，其他 11 站約 3.5 小時，真鑽約 4 小時。記憶 reference_launchagents_plists_deleted_outage_2026-10-16（`5a99e45b2`），試金石案例 122。
-- **手機修復（另一場對話 33476b01，`723d246f4`）漏掉的，12:50 用 Time Machine 10/03 原檔補好**：5 站少 `source .env`（bni-chapters／mentor100／namecard／peipei-event／team）、真鑽兩個（誤判為「9/18 停用」，原文是「解真鑽 DB 停擺」）、名片監看 amber-watch。12 個網域實測 200 或導向登入頁。還原前的版本備份在 `state/backup_20261016_launchagents_before_restore/`。
-- **守門員上線**：`scripts/launchagents_guard.sh`＋`ai.openclaw.launchagents-guard`（WatchPaths 監看 LaunchAgents，登入時也跑），以 `ops/launchagents_backup/`（已換成完整 25 個正本＋守門員自己）為準，少檔補回、沒載入就載入、電報通知（10 分鐘節流）。實測：刪檔 10 秒內補回且與備份一致、卸載後自動重新載入。反射 R-LAUNCHAGENTS-PLIST-MISSING 已實測會跳。**要正式停掉某服務＝同時從 ops/launchagents_backup 刪掉，否則會被補回。**
-- 教練授權本場用終端機寫正式目錄（worktree 擋 Edit/Write）。
-- 跟本次斷線無關：coach1973.github.io 的 joseph-cloth／social-good（私有倉庫不能開 Pages）、Business.gym（沒有這個倉庫）404；zhencheng.bymyway.com 8/30 已改名 sincere。
+**主軸：①開工交辦兩件做完（預約頁週四時段生效、雲端軍火庫設計稿驗收並交付）②10/16 早上十幾個網站斷線：查出根因、補完手機修復漏掉的、裝上守門員。全部實測。**
+- **預約頁週四**：02:32 重啟 com.coach.event-webapp，10/22、10/29 晚上＝19:30＋21:00（本機與公開網址一致），聯想信歸檔＋回信（`66a865b91`）。
+- **軍火庫設計稿**（rongtree 分支 `claude/arsenal-entry-design` `0c08858`，未併 main）：單檔 git show 到暫存區＋本機伺服器驗收（桌機 1440／手機 400：無橫向捲動、字 ≥20px、100 格亮 37、DEMO 0 請求、不同意公開者不外洩）。私人頁交付 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 （auto_register_artifact hook 實測自動收進大樹常用）。雲端點數 US$44→US$36（這件約 US$8）；方案週用量 32%，系統預警週一早上用盡。雲端信第六節 11 點待決（真公益 9 大領域、site 名稱、許願池聯絡欄、名冊 API 形狀…）。
+- **網站斷線根因**：`~/Library/LaunchAgents` 的 com.coach.* 設定檔在 10/3 01:42～10/4 14:07 被刪（刪的人沒找到），服務靠記憶體撐 12 天；10/16 08:44:55 Mac 登出（聯想 RustDesk 遠端操作中，08:44:28 有遠端點擊），08:45 再登入後全沒起來。event 斷約 3 小時、其他 11 站約 3.5 小時、真鑽約 4 小時。教練手機開的對話（33476b01，`723d246f4`）接回 12 站，但 5 站漏 `source .env`、真鑽被誤判「9/18 停用」（原文「解真鑽 DB 停擺」）、名片監看說找不回。12:50 用 Time Machine 10/03 01:10 原檔還原這 8 個，12 個網域實測 OK，資料沒外洩。
+- **守門員**：`scripts/launchagents_guard.sh`＋`ai.openclaw.launchagents-guard`（WatchPaths＋登入時跑），以 `ops/launchagents_backup/`（完整 25＋1）為準；實測刪檔 10 秒補回、卸載自動重載、電報通知 10 分鐘節流。**要停服務＝同時從備份刪掉，否則會被補回。** `f90ba2012` `e75b4e3c1`；試金石 122、反射 R-LAUNCHAGENTS-PLIST-MISSING（實測會跳）、記憶 reference_launchagents_plists_deleted_outage_2026-10-16（`5a99e45b2`）。教練 12:57 授權本場用終端機寫正式目錄。
+- **我的疏失**：02:32 重啟 event-webapp 時 ls 已找不到設定檔，沒當警訊（寫進案例 122）。
+- **教練原話線索**：「我後來才知道」→ 網站掛了要有人主動通知他，不能等他自己發現；「簡單說，什麼原因」→ 先一句白話結論，再講細節。
+
+### 📋 下一場開工先做
+1. 教練看過軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 後的回應 → 企劃書 4 件＋雲端另 3 件要不要開（點數剩 US$36、週用量預警）→ 照做；不主動追問。
+2. 🔧 AI 自己：①網站「掛了主動通知教練」的外部偵測還沒有（這次教練 3 小時後才從手機發現）→ 設計事件式做法（例如通道或網站程式結束時 launchd 觸發通知），做完實測。②下次真實登入後看 `~/Library/Logs/openclaw/launchagents_guard.log` 有沒有登入時那筆紀錄。③想縮小刪檔兇手時間窗：掛 TM 10/04 08:17 備份比對（目前只自動掛上 10/03 那份）。
+3. 志工頁有人加入後教練報人數 → 改 `volunteer.html` 的 `JOINED`。
+4. 🔧 承接：gateway 啟動的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit（交辦單、產生器腳本）要不要搬進 master。
+
+🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
+
+---
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 02:10 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說「總結」收工；本段 01:24～02:10，對話容量約 41%）
 
@@ -40,40 +52,7 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-16 01:55 台灣時間，**Windows 聯想**桌面版 Code 分頁，Opus 5.5／Sonnet 5.5／Haiku 5.5 來回切；教練說「總結」收工；本段 10/15 13:54～10/16 01:51，對話容量約 35%）
-
-**主軸：聯想記憶體 50%→77% 查出核心漏洞並重開釋放；容量提醒 hook 聯想版；預約頁週四改時段；四個教練網頁小修。**
-- **聯想記憶體**：元兇是核心非分頁集區 `NtFC`（ntfs.sys）卡 15GB、1.2 億筆未釋放，工作管理員看不到；重新啟動後歸 0、使用率 77%→40%。**快速啟動開著，「關機」不會清，要「重新啟動」**。誰觸發的**未破案**（WPR 錄製被重開中斷）；NordVPN 已排除（mshield 驅動是停止狀態，教練糾正我「沒開怎麼是嫌疑犯」）。`scripts/ntfc_leak_watch.py` 掛聯想 UserPromptSubmit（教練說話才量 0.1 秒，重啟記新起點、跨 1/2/4/8GB 各提醒一次；已實測重開後自動跳「已放掉」），狀態檔 `E:/Claude-Data/.claude/state/ntfc_watch.json`；跳「又在漲」時用管理員同意跑 `wpr -start %TEMP%\ntfc_trace_20261015\ntfc.wprp!NtFC`。記憶 reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15。
-- **聯想 UAC 原本設成「不詢問」**（ConsentPromptBehaviorAdmin=0），RunAs 不會跳視窗，我叫教練按「是」三次他根本沒看到；教練 14:27 自己調成 5。ChatGPT 桌面版（套件名 **OpenAI.Codex**）我已 `Remove-AppxPackage` 移除，Gemini 教練自己移除；兩者都不是我們的 AI 裝的（9/27 前後裝、10/11 商店自動更新）。
-- **容量提醒 hook Python 版**（`scripts/context_percent_hook.py`＋`test_context_percent_hook.py`，聯想 settings.json 已掛，備份 `.bak-20261015-before-context-hook`）；Mac 後來改成 45%＋每5句定期報，本場 30/33/35% 實際有跳。
-- **倒數日小程式**（Store 版，套件 `WuhanNetPowerTechnologyCo.220271D9343D`）重開沒啟動：開機捷徑直指 WindowsApps 內 exe 被拒絕存取，已改走 `explorer shell:AppsFolder\<AppID>`，桌面（`D:\Users\Desktop`）放「倒數日.lnk」，視窗從副螢幕搬回主螢幕。**開機自動啟動要等教練下次重新啟動才能驗證**。記憶 reference_lenovo_countdown_app_startup_fix_2026-10-15。
-- **預約頁週四**（`5e8a76d61`）：19:30–20:30、21:00–22:00 可約；暖身 19:00–19:30／休息 20:30–21:00 兩筆緩衝寫進總表；週四「線上」開頭行程（線上學習／聚）不擋預約（訪談優先，`_yield_if_online`，用名稱判斷因為 Google 同步會整批重建一次性行程）。**10/16 01:55 實測：資料已生效（線上有 19:30、暖身、休息），但 10/22 缺 21:00＝event-webapp 程式還沒重啟**，已寫信給 Mac 軍師（`cross-agent/inbox/mac/`）。記憶 reference_booking_page_thursday_slots_2026-10-15。
-- **四個網頁小修**：lidie 學歷補「國立臺中科技大學 企業管理（大專）1996–2000」`2edcbd1`（教練追問「改 GitHub 為什麼網頁沒換」→新記憶 feedback_github_edit_is_the_web_edit…）；tava-brand-web-playbook 足跡時間軸改上下時間線＋Podcast／部落格寫進規格與檢查 `004fcd1` `2466ca4`（我們這份與 TAVA 原頁文字已不同，README 有註）；榮樹下王大明董事長邀請函短網址 `curated/rongtree/wang-dm.html`（轉址頁，`f0c4e7f`；「通用短網址」仍是教練未拍板的模組化第 3 項，這只是單一轉址頁）；andy-chen 首屏「從受助到助人」卡片從照片上移到照片下（卡片橫向正好蓋住下巴位置，`f33679a`；用 DOM 量測驗證，教練規定不截圖）。
-- **踩到的坑**：刪檔鎖會擋 `rm -rf` 暫存夾（改用新資料夾名，不刪）；管理員跑的 PowerShell 腳本要**全英文**（無 BOM 中文會壞）；Windows 沒 `fcntl`，預約頁程式不能直接 import 測試；本機記憶資料夾＝倉庫 `claude-brain`，我的索引壓縮第一次被 Mac 同步蓋回，重做後一起提交；Pages 狀態 errored 時 `gh api -X POST repos/<repo>/pages/builds` 手動重跑。
-- **教練原話線索**：「我並沒有開啟它，它也沒有在運行中，為什麼是嫌疑犯」→ 列嫌疑前先查有沒有在執行；「你要確定是跳在 Windows 視窗還是你看得到我看不到的東西」→ 叫教練按東西前先確認真的有跳；「那我剛才就叫你改網頁就好了」→ 教練不分 GitHub 與網頁。
-
-### 📋 下一場開工先做
-1. **Mac**：讀 `cross-agent/inbox/mac/` 聯想來信，重啟 `com.coach.event-webapp`（預約頁程式 `coach_schedule_view.py` 已 pull 但未載入），驗證 10/22、10/29 晚上起點＝19:30 與 21:00。
-2. 教練下次**重新啟動**電腦後，問他「倒數日」有沒有自動跳出；沒有再查啟動捷徑。
-3. 聯想 `ntfc_leak_watch` 若跳「又在漲」：先一句白話告訴教練，再請他在跳出視窗按「是」錄 WPR 追兇手（UAC 已改，會真的跳）。
-4. 其餘待辦照上一棒（軍火庫企劃書 4 件待決、新 LINE 群查日誌、雲端花費、志工頁人數）。
-
-🙋 要教練決定：無新增（承上一棒軍火庫企劃書 4 件）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：TAVA 原頁是否也要改成上下時間線（我們這份已改）；通用短網址模組化；記憶體漏洞追兇。
-
----
-
-> 📦 10/15 16:30 棒（軍火庫企劃書／雲端分工）與 21:05 棒（榮樹下改版驗收上線／新 LINE 群查行程／張麗蝶站更新機制）已封存：`handoff_archive/handoff_2026-10-15_1630_2105_軍火庫企劃書_榮樹下改版_archived.md`
-
-> 📦 10/15 12:40 棒（榮樹下一週盤點／模組化／常用查詢）已封存：`handoff_archive/handoff_2026-10-15_1240_榮樹下一週盤點_archived.md`
-
-> 📦 10/14 09:20 棒（榮樹下多位來賓／南應大團隊頁）已封存：`handoff_archive/handoff_2026-10-14_0920_榮樹下多位來賓_南應大團隊頁_archived.md`
-
-> 📦 10/14 07:20 棒（榮樹下藍圖）已封存：`handoff_archive/handoff_2026-10-14_0720_榮樹下藍圖_archived.md`
-
-> 📦 10/13 23:33 棒～10/14 02:49 棒、10/12 聯想棒已封存：`handoff_archive/handoff_v258_to_v261_archived_2026-10-14.md`
-
----
+> 📦 10/16 01:55 聯想 v259 棒已封存：`handoff_archive/handoff_2026-10-16_0155_聯想v259_archived.md`
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
