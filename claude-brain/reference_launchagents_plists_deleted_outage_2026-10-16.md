@@ -5,12 +5,13 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 5f6b7aeb-e52c-466c-8c58-907bd13abbd1
-  modified: 2026-10-16T05:07:05.938Z
+  modified: 2026-10-16T05:15:56.719Z
 ---
 
 **時間線（台灣時間）**
 - 10/03 01:10 Time Machine 備份：`~/Library/LaunchAgents` 裡 25 個 `com.coach.*.plist` 都在。01:37 自動更新 macOS 26.7.1、01:40 重開機，01:42 登入後全部正常啟動。
-- 10/03 01:42 ～ 10/04 14:07 之間：除了 curation-watch 以外的 com.coach.* 設定檔全被刪（10/04 14:07 有對話發現 curation-watch 不見，只重建那一個）。刪的人沒找到：Claude／小龍蝦／赫米斯的紀錄裡都沒有對應指令。
+- 10/03 01:42 ～ 10/04 14:07 之間：com.coach.* 設定檔全被刪（10/04 14:07 有對話發現 curation-watch 不見，只重建那一個）。
+- **刪的是清理軟體 CleanerCat（/Applications/CleanerCat.app，com.lightyear.CleanerCat）**，10/16 13:2x 查證：①它的使用日期有 10/04，設定裡 `lastCleanDate=2026-10-04`、當天 `dailyCleanCount=4`，資料夾 10/04 13:42 有寫入；②它的「已解除安裝 App 殘留檔（Uninstall Leftovers）」功能靠 `bundle_mappings.json` 判斷開機設定屬於哪個 App——表裡認得 openclaw、hermes（所以 ai.openclaw.*、ai.hermes.* 沒事），**不認得 com.coach、cloudflared**，就把它們當殘留檔清掉；③Claude／小龍蝦 8 個分身／赫米斯的紀錄都沒有刪除指令，也沒有 AI 操作 CleanerCat。它沒有自動排程、不常駐，是有人在畫面上手動按清理（誰按的無法從紀錄確定）。**用 CleanerCat 時不要勾「Uninstall Leftovers／殘留檔」，或先排除 ~/Library/LaunchAgents**；就算清掉，守門員也會補回。
 - 10/05、10/09、10/12、10/13、10/14、10/15、10/16 02:32，至少 7 個對話都看到「No such file」或 ls 找不到，**沒有人當警訊處理**（包括我 10/16 02:32 重啟 event-webapp 時）。服務還在跑，是因為 launchd 記憶體裡還留著設定。
 - 10/16 08:44:55 Mac 登出（install.log：loginwindow logoutNoReturn，不是系統更新）。當時聯想（Tailscale 100.95.122.29 = tree）從 05:00 起就一直用 RustDesk 連著，08:44:28 有遠端滑鼠點擊，最可能是遠端誤點登出。08:45 重新登入，小龍蝦 gateway 自動起來，但網站的設定檔已不在，**所有網站和通道都沒有再起來**。
 - 11:52～12:20 教練用手機開的對話（session 33476b01）重建了 12 個設定檔（commit 723d246f4）。但 bni-chapters／mentor100／namecard／peipei-event／team 這 5 個漏了 `source .env`（後台登入、LINE 通知、名片辨識失效，資料沒外洩，因為頁面仍導向登入）。真鑽被誤判為「教練 9/18 說停用」而沒拉；接力棒原文其實是「**解**真鑽 DB 4 週停擺」。名片自動辨識 amber-watch 也被說成「找不回來」。
