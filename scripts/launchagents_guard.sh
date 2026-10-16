@@ -51,4 +51,23 @@ if [ ${#FIXED[@]} -gt 0 ]; then
 else
   echo "[$(ts)] ✅ 全部 $(ls "$BACKUP"/com.coach.*.plist | wc -l | tr -d ' ') 個設定檔都在、都已載入" >> "$LOG"
 fi
+# 登入／設定檔變動後，實測各網站公開網址真的連得到（530／1033／連不上＝掛了）。事件觸發，不輪詢。
+SITES=(chapters trust event shops mentor100 namecard peipei-event sincere team team01 real-wealth zhenxin real-diamonds)
+DOWN=()
+for round in 1 2 3 4 5 6; do
+  DOWN=()
+  for h in "${SITES[@]}"; do
+    code=$(curl -s -o /dev/null -m 10 -w '%{http_code}' "https://$h.bymyway.com/" 2>/dev/null)
+    case "$code" in 2*|3*|4*) ;; *) DOWN+=("$h.bymyway.com（${code}）") ;; esac
+  done
+  [ ${#DOWN[@]} -eq 0 ] && break
+  [ "$round" -lt 6 ] && sleep 15
+done
+if [ ${#DOWN[@]} -gt 0 ]; then
+  msg="🚨 網站連不上（$(ts) 台灣時間，等了約 75 秒仍不通）"$'\n'"$(printf '・%s\n' "${DOWN[@]}")"
+  echo "[$(ts)] $msg" >> "$LOG"
+  "$NOTIFY" "$msg" 600 sites_down >/dev/null 2>&1 || echo "[$(ts)] ❌ 通知送出失敗" >> "$LOG"
+else
+  echo "[$(ts)] ✅ ${#SITES[@]} 個網站公開網址實測都連得到" >> "$LOG"
+fi
 exit 0
