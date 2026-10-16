@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.coach.zhenxin-webapp</string>
+  <key>ProgramArguments</key><array><string>/Users/bymyway/github_repos/zhenxin-guests/venv/bin/python3</string><string>/Users/bymyway/github_repos/zhenxin-guests/app.py</string></array>
+  <key>WorkingDirectory</key><string>/Users/bymyway/github_repos/zhenxin-guests</string>
+  <key>EnvironmentVariables</key><dict></dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/Users/bymyway/github_repos/zhenxin-guests/webapp.log</string>
+  <key>StandardErrorPath</key><string>/Users/bymyway/github_repos/zhenxin-guests/webapp.error.log</string>
+</dict>
+</plist>

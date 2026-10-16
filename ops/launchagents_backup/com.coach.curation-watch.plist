@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.coach.curation-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>sleep 5 &amp;&amp; /Users/bymyway/.openclaw/workspace/event-signup/venv/bin/python /Users/bymyway/.openclaw/workspace/scripts/curation_process.py</string>
+  </array>
+  <key>WatchPaths</key>
+  <array>
+    <string>/Users/bymyway/.openclaw/workspace/event-signup/curation_uploads/incoming</string>
+  </array>
+  <key>ThrottleInterval</key><integer>10</integer>
+  <key>StandardOutPath</key><string>/Users/bymyway/.openclaw/workspace/event-signup/curation_uploads/watch.log</string>
+  <key>StandardErrorPath</key><string>/Users/bymyway/.openclaw/workspace/event-signup/curation_uploads/watch.error.log</string>
+</dict>
+</plist>

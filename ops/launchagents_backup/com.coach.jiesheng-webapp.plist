@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.coach.jiesheng-webapp</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>set -a; source /Users/bymyway/.openclaw/workspace/jiesheng-report/.env; set +a; exec /Users/bymyway/.openclaw/workspace/jiesheng-report/venv/bin/python /Users/bymyway/.openclaw/workspace/jiesheng-report/app.py</string>
+  </array>
+  <key>WorkingDirectory</key><string>/Users/bymyway/.openclaw/workspace/jiesheng-report</string>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/Users/bymyway/.openclaw/workspace/jiesheng-report/webapp.log</string>
+  <key>StandardErrorPath</key><string>/Users/bymyway/.openclaw/workspace/jiesheng-report/webapp.error.log</string>
+</dict>
+</plist>
