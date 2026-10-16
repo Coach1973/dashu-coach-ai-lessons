@@ -1,3 +1,4 @@
+- [🧰 技能清單：Claude 7 個（健康檢查／總結／改網頁／上架／加上報名／開過票沒／原話報告書）＋小龍蝦 2 個新技能的位置、怎麼加、怎麼驗證(2026-10-16)](project_skills_catalog_2026-10-16.md)
 - [🔴🔴 重大疏失：AI 寫的檢查程式自己不見就把教練每句話擋掉 3.5 小時(10/16 15:00～18:26)；hook 一律「壞了就放行」；workspace 被拉錯分支 origin master 換掉的認法與救法(2026-10-16)](feedback_hooks_must_fail_open_never_block_coach_2026-10-16.md)
 - [🔧 event.bymyway.com 整站 530/1033＝webapp＋event-tunnel 兩個 launchd plist 消失，重建法與驗證；10/16 lidie 連結無效即此因(2026-10-16)](reference_event_site_down_530_1033_launchd_plists_vanished_2026-10-16.md)
 - [🔴🔴 10/16 十幾個網站斷線根因：com.coach.* 自動啟動設定檔 10/3～4 被刪、靠記憶體撐12天、08:44 登出後全斷；launchctl 說有路徑但 ls 找不到＝當場補；原檔在 TM 10/03 備份；手機修復漏 .env 與真鑽已還原(2026-10-16)](reference_launchagents_plists_deleted_outage_2026-10-16.md)
