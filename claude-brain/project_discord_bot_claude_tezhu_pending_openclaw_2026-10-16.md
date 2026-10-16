@@ -2,11 +2,15 @@
 name: project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16
 description: Discord 機器人「龍蝦特助」兩種腦都通——平常用小龍蝦 MiniMax（10/17 00:30 依教練要求切回、省 Claude 用量），要 Claude 時一行指令切換 scripts/discord_brain_switch.sh（00:10 教練實測過 Claude 版）；前一場「被旗標關著」是沒讀實際值的推論、現已可用；小龍蝦 Discord 暫停當備援；怎麼重啟、怎麼退回、容量怎麼算
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 872e0b25-03fd-4e1c-9a52-554ec8a4ada8
+  modified: 2026-10-16T17:20:01.575Z
 ---
+
 2026-10-16 夜～10-17 凌晨，教練要「把 Claude 串進 Discord」，全程在教練的 Chrome 做（Chrome 才是教練看得到的瀏覽器，不是內建窗格）。
 
-**現況（10/17 00:30）：平常用 MiniMax。** 教練：「我現在還不確定我 Discord 要怎麼用，所以也不想浪費我的流量…我只需要知道兩邊都通用」→ 已用 `bash ~/.openclaw/workspace/scripts/discord_brain_switch.sh minimax` 切回（Claude 視窗已關、小龍蝦 Discord 在線、Telegram／LINE 正常）。要 Claude：`… claude`；看現況：`… status`。切換會重啟閘道，Telegram／LINE 斷約 20 秒。教練說「在群裡幫我接回去」：是否也要開「榮樹下」伺服器頻道，00:3x 已問、待回。
+**現況（10/17 00:30）：平常用 MiniMax。** 教練：「我現在還不確定我 Discord 要怎麼用，所以也不想浪費我的流量…我只需要知道兩邊都通用」→ 已用 `bash ~/.openclaw/workspace/scripts/discord_brain_switch.sh minimax` 切回（Claude 視窗已關、小龍蝦 Discord 在線、Telegram／LINE 正常）。要 Claude：`… claude`；看現況：`… status`。切換會重啟閘道，Telegram／LINE 斷約 20 秒。教練說「在群裡幫我接回去」：**10/17 01:19 已開通並經教練實測有回**——教練在榮樹下頻道打字沒人回，查到 `channels.discord.groupPolicy` 是 `disabled` 且沒有 `guilds`（伺服器頻道整個關著、只開私訊）；已改 `groupPolicy: allowlist` ＋ `guilds["1560663537527820298"] = {requireMention:false, users:[教練ID]}`（沒設 `channels` 子表＝該伺服器所有頻道含新建的都通），dry-run→套用→`openclaw gateway restart`，commit `46900b190`。目前只回教練本人、不用 @；朋友加入伺服器要回應時改 `users`／`requireMention`。**這只限 MiniMax 版**：切到 Claude 版時小龍蝦 Discord 暫停，Claude 版的伺服器頻道（要設 `access.json` 群組）還沒開，教練要用再開。
 
 **Claude 版設定（10/17 00:10 教練實測：Discord 有回，確實是 Claude）**
 - Discord 應用程式 ID `1560673837568233532`（開發者後台的應用程式名稱仍叫「Claude特助」）；機器人顯示名 **10/17 00:02 已改「龍蝦特助」**（用機器人自己的金鑰 `PATCH /users/@me`，教練問「我可以改他的名字嗎」後指定）；伺服器「榮樹下」ID `1560663537527820298`；教練 Discord ID `1560659588297130046`（帳號 dashujiaolian_43576）；Message Content Intent 已開。
