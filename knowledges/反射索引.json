@@ -2019,6 +2019,18 @@
       "agents": [
         "rongshuxia"
       ]
+    },
+    {
+      "id": "R-REPLY-NAME-GROUP-IN-FULL",
+      "moment": "reply",
+      "match": "(?<![哪是」』）)\\*])(?:這|那)(?:一)?個(?:[^，。\\n「」]{0,12})?(?:群組|群|機器人)(?!的功能)",
+      "say": "回覆裡用『那個群組／那個機器人』這類代稱：教練管理很多群組與機器人，會被迫猜。改寫成全名（例如「活動報名即時通知群」「佩佩老師的巴哈助理群」、主機器人／巴哈助理）；群組名查 openclaw-agent.sqlite 的 session_windows.display_name。",
+      "level": "remind",
+      "situation": "AI 回報裡提到群組、機器人，卻只用代稱時",
+      "source": "feedback_always_name_the_group_bot_site_in_full_2026-10-18（教練：『讓我猜嗎？訓練我的記憶力？』）／守則#10 #12",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
