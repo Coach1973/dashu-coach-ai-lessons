@@ -18,3 +18,4 @@ metadata:
 - 卡關時不要叫教練去下載檔案；先回頭問「這條路是不是繞遠了」。
 - 與 [[reference-move-to-cloud-this-repo-2026-09-25]] 無關；與 N2「方向模糊只問一句：您想要什麼結果？」同一精神。
 - 站台更新方式：event.bymyway.com 的 `/curated/<slug>/` 直接讀 `~/github_repos/<slug>`，改檔 commit＋push 即上線，網址不變；用上傳表單重傳同 slug 會被改名成 `-2`。
+- 已落成機制（教練 10/18 說「守則16很好用，要融入對話工作」）：條件反射 `R-RULE16-LONG-INSTRUCTION-ASK-RESULT`（knowledges/反射索引.json，prompt 時刻）；教練貼多步驟長指令（「要做的事」「執行步驟」或 1.2.3.編號清單）就自動跳出守則#16 提醒。回測 4,499 句只跳 12 次。
