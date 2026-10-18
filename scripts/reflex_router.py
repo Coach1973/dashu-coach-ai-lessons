@@ -29,8 +29,10 @@ SELF = re.compile(r"反射索引|reflex_(router|backtest)|render_situation_direc
 
 def load_reflexes(moment):
     with open(INDEX, encoding="utf-8") as f:
-        # 有寫 agents 的只給小龍蝦指定分身用（例如 BNI 官方條文），軍師這邊不比
-        return [r for r in json.load(f)["reflexes"] if r.get("moment") == moment and not r.get("agents")]
+        # 有寫 agents 的只給小龍蝦指定分身用（例如 BNI 官方條文），軍師這邊不比；
+        # audience 不含 coach 的（只對夥伴／會員講的，例如回覆風格）也不比：軍師這邊說話的一律是教練
+        return [r for r in json.load(f)["reflexes"] if r.get("moment") == moment and not r.get("agents")
+                and "coach" in (r.get("audience") or ["coach"])]
 
 
 def text_for(moment, evt):
