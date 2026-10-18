@@ -234,6 +234,33 @@ def check_unfamiliar(text):
         return ""
 
 
+def _pending_path(session):
+    return os.path.join(SEEN_DIR, f"{session}_pending_reply")
+
+
+def save_pending_reply(session, body):
+    """回話時的 remind 級反射：回話已經送出、沒辦法插話（Stop 只能擋），
+    原本只記 log、AI 永遠看不到（2026-10-18 查到 5 條、15 次命中全都沒出聲）。
+    改成留到教練下一句話時一起送上。"""
+    try:
+        os.makedirs(SEEN_DIR, exist_ok=True)
+        with open(_pending_path(session), "a", encoding="utf-8") as f:
+            f.write(body + "\n")
+    except Exception:
+        pass
+
+
+def take_pending_reply(session):
+    try:
+        p = _pending_path(session)
+        with open(p, encoding="utf-8") as f:
+            s = f.read().strip()
+        os.remove(p)
+        return s
+    except Exception:
+        return ""
+
+
 def log_hit(moment, rid, level):
     try:
         with open(HITS, "a", encoding="utf-8") as f:
@@ -295,18 +322,23 @@ def main():
             reminds.append(r)
     reminds.sort(key=lambda x: not x.get("repeat"))  # 每次都要講的排前面，不被 3 條上限擠掉
     hits = (blocks + reminds)[:MAX_PER_FIRE]
-    if not hits:
+    pending = take_pending_reply(session) if moment == "prompt" else ""
+    if not hits and not pending:
         return
     for r in hits:
         log_hit(moment, r["id"], r.get("level", "remind"))
 
     body = "\n".join(f"• {r['say']}（出處：{r['source']}）" for r in hits)
     head = "⚡ 條件反射（試金石經驗，系統依當下情境自動調出）："
-    msg = f"{head}\n{body}"
+    msg = f"{head}\n{body}" if hits else ""
+    if pending:
+        msg = (msg + "\n" if msg else "") + "⚡ 上一輪回覆踩到（這一輪起照做）：\n" + pending
 
     if moment == "reply":
         if blocks:
             print(json.dumps({"decision": "block", "reason": msg + "\n請改好再回覆教練。"}))  # 純 ASCII：Windows cp950 印不出 ⚡ 會被安靜吞掉
+        elif hits:
+            save_pending_reply(session, body)
         return
     event_name = {"prompt": "UserPromptSubmit", "pre_tool": "PreToolUse", "post_tool": "PostToolUse"}[moment]
     out = {"hookSpecificOutput": {"hookEventName": event_name, "additionalContext": msg}}
