@@ -1,3 +1,5 @@
+- [🔴 回報提到群組／機器人／網站一律寫全名，不叫教練猜（10/18 被罵；佩君老師問報名人數貼進兩個不同群組，我說成同群組重複回答）](feedback_always_name_the_group_bot_site_in_full_2026-10-18.md)
+- [🔧 小龍蝦 10 月起對話存各分身 sqlite（不是 jsonl）：怎麼讀夥伴對話、查群組名、外掛 message_sending 能擋送出；教練／佩君老師／邱裕榮 ID(2026-10-18)](reference_openclaw_transcripts_in_agent_sqlite_2026-10-18.md)
 - [🔴 教練貼來的長指令常是 Chat 寫的、不懂他的 code 環境；看到繞遠步驟先找教練問真正要的結果（Suno 加歌案：內嵌播放器一步到位，我照字面繞 15 分鐘）(2026-10-18)](feedback_chat_written_prompts_may_be_detour_ask_coach_first_2026-10-18.md)
 - [🔴 教練很在意額度，但寧可多花額度換「一次做對」：改三次以上比一次做對更貴、53 歲沒體力熬夜抓錯；額度 90% 以上先收尾、問總結一併講容量%與額度%(2026-10-17)](feedback_quota_vs_first_time_right_coach_values_2026-10-17.md)
 - [🔧 Discord 機器人「龍蝦特助」兩種腦都通：平常 MiniMax、要 Claude 跑 discord_brain_switch.sh（Claude 版教練10/17 00:10 實測）；前一場「被旗標關著」是沒讀實際值的推論；榮樹下伺服器頻道10/17 01:19已開通(只回教練、不用@、僅MiniMax版)；小龍蝦 Discord 暫停當備援；怎麼重啟／退回／容量怎麼算(2026-10-17)](project_discord_bot_claude_tezhu_pending_openclaw_2026-10-16.md)
