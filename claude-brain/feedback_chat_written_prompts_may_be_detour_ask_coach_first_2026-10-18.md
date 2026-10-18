@@ -19,3 +19,4 @@ metadata:
 - 與 [[reference-move-to-cloud-this-repo-2026-09-25]] 無關；與 N2「方向模糊只問一句：您想要什麼結果？」同一精神。
 - 站台更新方式：event.bymyway.com 的 `/curated/<slug>/` 直接讀 `~/github_repos/<slug>`，改檔 commit＋push 即上線，網址不變；用上傳表單重傳同 slug 會被改名成 `-2`。
 - 已落成機制（教練 10/18 說「守則16很好用，要融入對話工作」）：條件反射 `R-RULE16-LONG-INSTRUCTION-ASK-RESULT`（knowledges/反射索引.json，prompt 時刻）；教練貼多步驟長指令（「要做的事」「執行步驟」或 1.2.3.編號清單）就自動跳出守則#16 提醒。回測 4,499 句只跳 12 次。
+- 教練 10/18 接著說「整個特助心法都要有這樣的智能反應」→ 21 條逐條對照表 `knowledges/特助心法21條_智能反應對照表.md`（commit 12c3a90a4）；新加反射要回來更新這張表。
