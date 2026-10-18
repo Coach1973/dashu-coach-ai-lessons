@@ -4,9 +4,30 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-17 02:45:11**
+> **最後同步：2026-10-18 12:20:00**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-18 12:20 台灣時間，Mac 桌面版 Code 分頁（臨時 worktree），Sonnet 5.5→Opus 5.5→Sonnet 5.5；教練說「總結」；本段 11:24～12:20，對話容量約 36%）
+
+**主軸：教練先要把 Suno 歌《嘿！明麗》加進 10/17 活動網頁；之後說「守則16很好用」，一路延伸成「整個特助心法都要有智能反應」「小龍蝦（電報、LINE）也要服務好夥伴與朋友」。全部做完、都已 commit＋push。**
+- **Suno 加歌**（site repo `taipeiema1017`，commit `9c4c575`）：03／今晚的歌多了第二首，用 Suno 官方內嵌播放器（`https://suno.com/embed/<歌曲編號>`）＋Suno 連結＋歌詞（標籤簡化、副歌兩句用 hook 樣式）；標題改成《觀念一改變》＋《嘿！明麗》；原本那首沒動；網址不變，用 curl 驗證線上已是新版。桌面備份 `~/Desktop/heymingli-prep/`（裡面的封面圖沒用到）。
+- **走了冤枉路（教練不高興，已記）**：Chat 寫的指令要求「下載 mp3 放進 assets、不要用外站網址、重新打包上傳」，我照字面做，卡在 Suno 音檔加密（我拿到的是打不開的檔案，不破解）、叫教練去下載，白繞約 15 分鐘。教練真正要的只有「給 Suno 網址、誰點都能聽」。**重新用上傳表單傳同一個短網址會被改名成 `taipeiema1017-2`（`curation_process.py` 的 `unique_slug`），要網址不變只能直接改 `~/github_repos/<slug>` 再 commit＋push。**
+- **守則 #16 融入對話**（commit `60e76e1df`）→ **21 條都有智能反應**（commit `12c3a90a4`）：新增 6 條條件反射（#16 多步驟長指令、#04 壞了先修、#07 同樣錯改源頭、#09 判斷題給一個建議、#12 叫教練下載上傳就擋、#02 大範圍找檔先查地圖），都用過去 4,499 句教練原話／2,888 則回覆／45,234 次動作回測不吵；#12 收窄兩次才上線。對照表 `knowledges/特助心法21條_智能反應對照表.md`。**修了一個舊漏洞**：回話時機的 remind 級反射（含 #10 白話）過去命中 15 次 AI 一次都沒看到（Stop 只能擋、不能提醒），`reflex_router.py` 改成留到教練下一句話補送。
+- **小龍蝦（電報／LINE／Discord）變聰明**（workspace `4212f3b01`、~/.openclaw `3d7f268c4`；gateway 已重啟，CLI 與服務同為 2026.9.4，7 個頻道連線正常）：讀兩週真實對話 121 則（資料在各分身的 `openclaw-agent.sqlite`，不是 jsonl）。①`url-typo-guard` 外掛加「推理外流守門」：給人看的訊息出現 NO_REPLY／HEARTBEAT_OK 就整則不送（收件人是教練放行；起因 10/16 榮樹下群組外流內心推理，**發送紀錄已被清掉、只能從程式寫法推定有發出**）；②`event-signup/query_signups.py`＋`schedule-context` 外掛：問報名人數先即時查好，只給教練與佩君老師（10/17 場 24 筆；10/19 BNI 台中培訓不在大樹系統，會說查不到）；③反射 R-PARTNER-REPLY-STYLE（夥伴／會員每 30 分鐘提醒回覆四習慣）、R-RONGSHUXIA-GUEST-ACK（榮樹下通報來賓先確認收到）、#04/#07/#09/#16 加 say_other；④`reflex-prompt` 外掛跳過需核對程式的反射（修好每 30 分鐘對教練空白提醒）。備份：各外掛 `index.js.bak-*-20261018`。
+- **我講錯、被抓到的兩次**：①回報說「那個有多個機器人的群組」沒寫群組名，教練氣說「讓我猜嗎？」；查到佩君老師 10/15 晚上 10:27（台灣時間）把同一句「10/19 報名幾人」貼進兩個群：**活動報名即時通知群**（主機器人答「沒資料」）與**佩佩老師的巴哈助理群**（巴哈助理答另一套），不是同群重複回答——我先前說反了，已更正。②亮燈與台灣時間標示漏寫，Stop hook 補救。
+- **教練原話線索**：「寫指令的是 chat，他不懂我 code 的工作狀況，下來你看到了很繞遠的指令，就找我問清楚」→ 守則 #16（多問想要什麼結果）要落在日常；「不單只是服務我，也要服務好那些我的夥伴及朋友」→ 小龍蝦對夥伴／會員的品質是目標；「下次明確說哪個群組？讓我猜嗎？訓練我的記憶力？還是叫我去做事？」→ **提到群組／機器人／網站一律寫全名**（教練的語氣是被迫猜測的不耐煩）。
+
+### 📋 下一場開工先做（以本棒為準）
+1. **🎯 承接 10/17 02:42 棒的交辦（未做）**：先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md` 照做——①`scripts/rules_reviewer_hook.py`（AI 回話前小模型審 21 條，先只記錄 3 天）②`rules_reminder_count.py` 教練提醒次數接進開工注入 ③規則自動體檢（`rules_health_audit.py` 機械層已存在，今天跑出：專案 CLAUDE＋特助心法重複約 877 字；執行細則＋特助心法重複約 16 字，都只是建議、守則 21 條原文一字不動）。
+2. **🔧 看今天新反射有沒有在動、有沒有吵**：`awk -F'\t' '{print $3}' state/reflex_hits.log | sort | uniq -c | sort -rn | head -20`；小龍蝦端看 `state/reply_leak_guard.log`（擋了什麼）與 `state/schedule_context.log` 的 `signups` 行；R-RULE12 若在教練這邊誤擋就再收窄。
+3. 🔧 「回覆講群組／機器人一律寫全名」已做成反射 R-REPLY-NAME-GROUP-IN-FULL（reply 時機，remind 級，下一句話補送；回測 37／2,888 則，約 1.3%）；觀察是否太吵、網站代稱（「那個網站」）還沒納入。
+4. 🔧 承接 10/17 清單：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway `providers.nvidia.models[17].input` 設定驗證錯誤；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件；看「先查再答」E2 有沒有誤擋（`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`）；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
+
+🙋 要教練決定：①**佩君老師問報名人數，要固定在哪個群問？**（建議固定問「活動報名即時通知群」，那裡的主機器人已接上即時人數查詢；問過：2026-10-18 12:15，教練尚未回）｜②軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：沿用 10/17 02:05 棒清單（已封存於 `handoff_archive/handoff_2026-10-17_0205_Discord榮樹下與手機遙控_archived.md`）；另：Suno 內嵌播放器與第一首可能同時播放（內嵌控制不到，教練沒反應就不提）。
 
 ---
 
@@ -31,30 +52,9 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-17 02:05 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree），Sonnet 5.5；教練說要登出再登入，順手收工；本段 00:53～02:05，對話容量約 50%）
-
-**主軸：教練要弄懂 Discord 對工作的用處、跟 LINE 差在哪、App／網頁與記憶體；查證後把「榮樹下」伺服器頻道開通（教練 01:19 實測有回）。我講錯一次（「這台沒裝 Discord App」，其實是指令報錯被我當成查不到），已更正並加防呆。收工前健康檢查 🟢 全部正常。**
-- **Discord vs LINE 查證**（教練原話：朋友說高手都用 Discord、比 LINE 好太多）：結論＝不搬家、分工——LINE 對外（夥伴／學員／預約），Discord 當教練＋小龍蝦＋助理的內部工作台。查到：頻道分主題不洗版（TVBS 2026/8/26）；LINE 照片約 30 天、文件 7 天過期（報導，LINE 官方沒明確公布）；Discord 免費單檔 20MB（Dexerto 2026/8/13）→訪談錄音原檔不走 Discord；LINE 官方帳號免費推播 200 則／月（第三方整理）、LINE Notify 2025/3/31 已終止；小龍蝦官方文件有 Discord 語音逐字稿＋自動會議記錄（要設語音轉文字、先告知與會者、摘要不自動貼回；本機 2026.9.4 有、設定檔未開）。「談完自動上 Podcast／YouTube」目前沒現成路：YouTube API 未審核專案上傳會被鎖私人、SoundOn 沒查到公開上傳功能、路徑大全沒 YouTube 授權；網頁上架技能已有（換入口而已，Discord 內未實測）。教練說 Discord 語音不如 Typeless → 語音頻道不用，實測「之後我再說」。
-- **榮樹下頻道開通**（`46900b190`，~/.openclaw master）：原因＝`channels.discord.groupPolicy` 是 `disabled` 且無 `guilds`（只開私訊）；改 `allowlist`＋`guilds["1560663537527820298"]={requireMention:false, users:[教練ID]}`，dry-run→套用→重啟 gateway（CLI 與服務同為 2026.9.4）。伺服器只有教練＋機器人，新頻道自動生效；**只限 MiniMax 版**，切 Claude 版時伺服器頻道未設定。已給教練白話三步驟（頻道打字即回、私訊也行、新頻道不用再加）。
-- **錯誤更正**（試金石126、反射 R-ERROR-IS-NOT-NOT-FOUND，`2b5caefb2`）：`ls -d /Applications/Discord* ~/Applications/Discord*` 第二路徑沒東西，zsh 報 `no matches found` 整行中止，我當成「沒裝」並標【查到】；教練：「我有裝，而且正開著呢」。實際 `/Applications/Discord.app` 存在。同類「否定結論沒驗證查法」第二次（記憶 reference_windows_file_scan_silent_zero_traps 只寫記憶）→ 這次進機制，回測 291／45,234。
-- **Discord App 與記憶體**：「App 比網頁省記憶體」查不到根據（App 是 Electron／Chromium、無並排實測）；App 開 45 秒實際佔用約 500MB（RSS 加總 920MB 偏高）；網頁版沒量。Mac mini 16GB，系統可用比例約 55%、交換檔 135MB，壓力正常；教練活動監視器的數字（用量 12.92GB、快取 3.08、核心 2.35、壓縮 3.89）與我量的吻合，要看的是「記憶體壓力」圖與交換檔，不是用量。已驗證 computer-use 能控制 Discord App（full，讀到畫面與 113 個元素；沒點擊／打字），建議機器人 API 即可。
-- **登出前查證（01:46 被教練抓到自相矛盾，已更正）**：38 個自動服務設定檔都在、都已載入沒錯；但我說「登出後 tmux `remote-control` 會消失、登入後要重開」是沒查證的推論、**錯的**——查到 `last` 顯示教練 10/16 08:44 登出、08:45 登入，而 tmux `remote-control`（10/3 10:30 起）與 `claude rc` 一路活到現在（7 個手機舊對話約 1.1GB，最舊 13 天），登出不會清掉它們，原因沒查到。要清只能明確重開 `bash scripts/restart_remote_control.sh`（會結束手機上那些對話，只有教練知道哪些要留，已問一次、等回）。
-- **手機遙控重開失敗（01:51，我的疏忽）**：教練同意後我跑 `restart_remote_control.sh`，舊 `claude rc` 與 7 個手機舊對話已清掉（教練活動監視器記憶體用量 12.92→10.83GB），但新的 `claude rc` 報「You must be logged in」：鑰匙圈 `Claude Code-credentials` 的 accessToken／refreshToken 長度 0、expiresAt＝0（01:38:20 被清空；refreshTokenExpiresAt 10/16 23:04 已過），`claude auth status`（四個版本都是）loggedIn:false，Chrome 的 claude.ai 也是登出狀態（登入頁網址帶 from=logout）。舊 rc 能活 13 天是靠記憶體裡的令牌。**我重開前沒先驗證「新的能登入」**→ 教訓：重開長壽的已登入程序前，先跑 `claude auth status` 確認新實例登得上。**01:57 已修好**：教練登入 Claude 帳號、把授權驗證碼貼進終端機（驗證碼我不代輸入）→ `claude auth status` loggedIn:true（claude.ai／pro，憑證到 10/17 09:56 為 access token 期限、refresh token 在）→ 我 `tmux kill-server` 後用「拔掉 CLAUDE_*／ANTHROPIC_* 環境變數」重跑 `restart_remote_control.sh`（避免桌面版的環境變數混進手機對話）→ 看到 `Connected · mac-openclaw-workflows · master`、Capacity 0/32、舊對話程序 0 個；Chrome 的 claude.ai/code 也列出 `mac-openclaw-workflows · wudashudeMac-mini` 環境。手機端「真的看到」只有教練手機能確認（我驗不到）。**注意：下次 `claude rc` 重開若再報「必須登入」，先 `claude auth status`；refresh token 會過期，約兩週要重登一次。**
-- **Plaud 已關**（教練 01:46：「Plaud 我確實不常用，我要用的時候再打開就可以了」）：用 `claude mcp remove plaud -s user` 從 `~/.claude.json` 移除，並結束 14 個 Plaud 小程式（約 380MB）；要用再裝回（無金鑰）：`claude mcp add plaud -s user -- ~/.hermes/node/bin/npx -y @plaud-ai/mcp@latest`。REA 教練沒回，仍在。
-- **陌生詞先問（教練 01:37 親口要求，試金石127）**：教練問「Copilot 覆蓋率」（語音錯誤），我沒先問就去查；教練要我寫進檢查清單。已做：反射 R-UNFAMILIAR-TERM（reflex_router `unfamiliar_terms`，教練話裡出現歷史上沒用過的英文詞→提醒「先問是不是語音輸入錯誤、不先查」，同詞只提醒一次，回測短句 6% 會跳）＋執行合約加一行＋skill 改成先問再查。限制：中文陌生詞程式抓不到。
-- **手機遙控收尾＋容量與收工口令（02:01～02:03 教練糾正）**：手機遙控已修好驗證（`c26e9369a`，細節見上一條）。教練抓到我過了 30% 還繼續加做事（31%→48%、約 17 萬 token 白燒），已在容量提醒加一句「過 30% 只做教練明說的事、不順手加工作、做完主動問要不要總結」（`abc426348`）。教練再問「你總結了嗎？」→ 定下**口令默契：只有我說「總結已完成（commit hash）」才代表總結好了；沒總結完不准說「可以開新的對話框」**（已寫進 junshi-shutdown-summary 技能第 6 步，兩份）。TGONDeviceInferenceProviderService＝Apple 系統程式（`com.apple.tgondeviceinferenceproviderservice`，5MB，不用管）。
-- **教練原話線索**：「你怎麼可以在沒有查證的時候就說沒裝這件事呢？」→案例125／126 一線：否定結論前先驗證查法（三大信念一「真誠：說真話，辦真事，一切歸於真實。」）。「我要的是在不同的頻道當中它都可以發揮作用，不是嗎？」「有沒有很簡單、很簡單的使用說明書」→ 要的是「任何頻道叫得動小龍蝦」＋白話說明。「我不想刪了之後到時候又重裝，先這樣子吧」「我希望這台電腦可以輕鬆完成任務，不要因為記憶體不夠而顯得笨重」→ 取捨偏保留；在意的是「用得順」，數字只是手段。
-
-### 📋 下一場開工先做（以本棒為準）
-1. **🎯 教練交辦（10/17 02:25 選定方案）：做「守則審查員」（AI 回話前小模型拿 21 條審一次，先只記錄 3 天）＋「教練親口提醒守則次數」統計；接著設計「規則自動體檢」（過時／重複／沒必要，教練 02:26 新要求）**。研究已完成、重貼漏洞已修（10/17 Opus）。開工先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md`（步驟、驗收、教練原話、授權）。Sonnet 5.5 就能做；中斷原因是 5 小時額度 91%（04:20 重置）。
-2. **手機遙控已修好（見上）**：只需在下次開工 `tmux ls` 看 `remote-control` 還在、`claude auth status` 仍 loggedIn:true；另看 `~/Library/Logs/openclaw/launchagents_guard.log` 有沒有登入時那筆、跑 `python3 scripts/system_health_check.py`。
-3. 🔧 承接（19:45 棒清單已併入此處）：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway 啟動的 `providers.nvidia.models[17].input` 設定驗證錯誤；新 LINE 群歡迎詞沒送出原因；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；52 筆舊 stash 留在清單（內容已封存）；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；`memory/` 有 2 個記憶檔放錯位置（應在 claude-brain/）；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件（可能本來手動，未處理）。
-4. 🔧 看「先查再答」E2 有沒有誤擋：`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
-
-🙋 要教練決定：軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：執行細則 N3 第一段「陌生檔名／術語：先搜尋驗證」與第二段「陌生詞主動問」順序打架（教練欽定原文，我沒改，我照第一段先查了；要不要改成先問再查）；Discord 語音頻道自動會議記錄實測（教練「先不用實測，之後我再說」）；Claude 版的伺服器頻道、朋友加入伺服器時改 `users`／`requireMention`；Discord Claude「說新對話就自動重開」、開機自動啟動；後台應用程式名稱改成龍蝦特助；Claude 線（aiprimetech）新金鑰；香檳下午茶頁 4 點確認（戰績只用原頁、理事長林家旭查無資料、照片人物依檔名推斷、類別被分成「食」）；social-club 頁尾寫「TAVA AI 設計」不是「製作」；吳錦昌沒有個人頁；預約頁「只開固定時段」；南應大 /tut/team 要不要加入口；真貴 5 位要不要從真鑽拿掉；Podcast 快取改 1 分鐘；TAVA 備份頁放哪一類；GitHub 404 三個（joseph-cloth／social-good 私有倉庫不能開 Pages、Business.gym 沒有倉庫，event 上的版本正常）。
-
 ---
+
+> 📦 10/17 02:05 棒（Discord 榮樹下開通、手機遙控修復、陌生詞先問）已封存：`handoff_archive/handoff_2026-10-17_0205_Discord榮樹下與手機遙控_archived.md`
 
 > 📦 10/17 00:50 棒（Discord 兩種腦、先查再答、教練原話線索）已封存：`handoff_archive/handoff_2026-10-17_0050_Discord先查再答_archived.md`
 
