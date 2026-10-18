@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-18 12:30:03**
+> **最後同步：2026-10-18 13:55:43**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -83,6 +83,7 @@
 
 ### 🔧 聯想 RustDesk 連不上（2026-10-18 12:30 台灣時間）
 查證：聯想（Tailscale 100.95.122.29）開機且網路通（Mac ping 5ms、3389 開），但 21118 被拒＝RustDesk 沒在跑；Mac 的 RustDesk 直撥同樣失敗，不是手機問題。已寫 `scripts/lenovo_rustdesk_autostart.ps1`（登入自動開＋被關自動重開），**尚未在聯想實跑**——等能連進聯想（有人在機器旁或 RDP）時執行並用 `nc -zv 100.95.122.29 21118` 驗證。
+補（13:55 台灣時間）：教練手機錯誤＝`Failed to connect to 100.95.122.29:21118`，與 Mac 測的完全相同→聯想端 21118 沒人接聽（RustDesk 沒跑，或直連設定關掉）；手機走 Tailscale IP 直連（連 Mac 同路正常）。腳本已補「確認直連開著＋檢查 21118 listen」，仍未在聯想實跑。
 
 
 ---
