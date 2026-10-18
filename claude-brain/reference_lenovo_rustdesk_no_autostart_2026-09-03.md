@@ -13,3 +13,5 @@ metadata:
 - 聯想這台機器上，教練說「釋放記憶體」時，**預設只處理LINE跟Typeless語音輸入（兩者都可安全關閉重開，不影響連線）**，RustDesk除非它本身記憶體異常飆高（教練可以看Activity Monitor/工作管理員自己判斷），否則不要主動去重啟它。
 - 若情境明確需要重啟RustDesk（例如它真的記憶體異常，或教練確認自己不是靠RustDesk連線），才動手，且要先跟教練說明「這台沒有自動重啟機制，關掉後需要你自己去機器旁重開」讓他知情。
 - 若之後要幫這台機器補上自動重啟機制（比照Mac的launchd KeepAlive），Windows端可用「工作排程器」設一個「程式結束時觸發」的條件式任務，或改用`nssm`把RustDesk包成Windows Service。目前未建置。
+
+**2026-10-19 更新：** 已加 HKCU Run 登入自動啟動（仍沒有系統服務）；另查到 stop-service=Y 讓別人根本連不進來，見 [[reference-lenovo-rustdesk-stop-service-blocked-incoming-2026-10-19]]。
