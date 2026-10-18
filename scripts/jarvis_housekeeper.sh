@@ -55,24 +55,37 @@ say "session 歸檔：$SESS_N 個 / ${SESS_MB}MB"
 [ "${SESS_N:-0}" -gt 100 ] && add "📦 歸檔了 $SESS_N 個舊對話原始檔（${SESS_MB}MB），系統跑得更輕"
 
 # ── 2. 記憶檔寫了卻沒進索引（守則#01：記不住就用不出來）──
-ORPHAN=$(python3 - <<'PY'
-import os, re, time
+# 2026-10-18 教練「解決問題，不要讓小龍蝦來提醒我有問題沒解決」：
+#   ①主索引＋舊記憶索引都算已登記（舊版只看 MEMORY.md，把放在舊索引的 460 個檔全誤報）
+#   ②不再看修改時間（10/16 倉庫還原讓所有檔 mtime 重置）
+#   ③發現真漏收就自己補進舊記憶索引（只追加、不動檔案），不通知教練，結果寫進 log
+HEALED=$(python3 - <<'PY'
+import os, re
 d='/Users/bymyway/.openclaw/workspace/claude-brain'
+rd=lambda f: open(os.path.join(d,f),encoding='utf-8').read()
 try:
-    txt=open(os.path.join(d,'MEMORY.md'),encoding='utf-8').read()
-except Exception: print(''); raise SystemExit
-linked=set(re.findall(r'\]\(([^)]+\.md)\)', txt))
-cut=time.time()-30*86400
-out=[f for f in os.listdir(d)
-     if f.endswith('.md') and f!='MEMORY.md' and not f.startswith('daily_')
-     and f not in linked and os.path.getmtime(os.path.join(d,f))>=cut]
-print('、'.join(sorted(out)))
+    idx=rd('MEMORY.md')+rd('MEMORY_ARCHIVE_INDEX.md')
+except Exception:
+    print('0'); raise SystemExit
+miss=sorted(f for f in os.listdir(d)
+     if f.endswith('.md') and f not in('MEMORY.md','MEMORY_ARCHIVE_INDEX.md')
+     and not f.startswith('daily_') and f not in idx)
+lines=[]
+for f in miss:
+    t=rd(f)
+    m=re.search(r'^description:\s*(.+)$',t,re.M)
+    desc=m.group(1).strip().strip(chr(34)) if m else ''
+    if not desc:
+        m=re.search(r'^#\s*(.+)$',t,re.M); desc=m.group(1).strip() if m else f[:-3]
+    lines.append('- [' + desc[:110] + '](' + f + ')')
+if lines:
+    import time
+    with open(os.path.join(d,'MEMORY_ARCHIVE_INDEX.md'),'a',encoding='utf-8') as fh:
+        fh.write('\n\n## %s 自動補登（賈維斯管家，%d 條）\n\n' % (time.strftime('%Y-%m-%d'),len(lines))+'\n'.join(lines)+'\n')
+print(len(lines))
 PY
 )
-if [ -n "$ORPHAN" ]; then
-    say "記憶索引漏收：$ORPHAN"
-    add "🧠 有記憶寫了但沒登記進目錄（下次開新對話會讀不到）：$ORPHAN"
-fi
+say "記憶索引自動補登：${HEALED:-0} 條"
 
 # ── 3. 防呆機關做好了卻沒裝上（教練 2026-07-12 重話的那個系統性問題）──
 AUDIT=$(bash "$WS/scripts/audit_claude_hooks_registered.sh" 2>/dev/null | grep -c '  • ' || true)
