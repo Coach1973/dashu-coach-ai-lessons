@@ -69,6 +69,5 @@
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
 
-### 🔧 聯想 RustDesk 連不上（2026-10-18 12:30 台灣時間）
-查證：聯想（Tailscale 100.95.122.29）開機且網路通（Mac ping 5ms、3389 開），但 21118 被拒＝RustDesk 沒在跑；Mac 的 RustDesk 直撥同樣失敗，不是手機問題。已寫 `scripts/lenovo_rustdesk_autostart.ps1`（登入自動開＋被關自動重開），**尚未在聯想實跑**——等能連進聯想（有人在機器旁或 RDP）時執行並用 `nc -zv 100.95.122.29 21118` 驗證。
-補（13:55 台灣時間）：教練手機錯誤＝`Failed to connect to 100.95.122.29:21118`，與 Mac 測的完全相同→聯想端 21118 沒人接聽（RustDesk 沒跑，或直連設定關掉）；手機走 Tailscale IP 直連（連 Mac 同路正常）。腳本已補「確認直連開著＋檢查 21118 listen」，仍未在聯想實跑。
+### ✅ 聯想 RustDesk 已修好（2026-10-19 01:27，聯想軍師）＋自癒守衛
+根因：`RustDesk2.toml` 的 `stop-service='Y'`（21118 不開、不登記櫃台；`log/tray/` 有 9 次 `Uninstalling service...`，09/05 03:09 與 10/14 22:56 對得上設定檔修改時間；誰按的「停止服務」仍不明）。已拿掉並重開，Tailscale IP 實測連入通。新增 `scripts/lenovo_rustdesk_guard.ps1`（登入自動執行、事件觸發不輪詢；實測砍程式／寫回 Y 都 15 秒內自癒）。**10/18 的 `lenovo_rustdesk_autostart.ps1` 已作廢**（`--tray` 不開 21118）。待做：①從 Mac 驗 `nc -zv 100.95.122.29 21118` ②宏碁上線後同法檢查 ③自癒失敗時推播給教練（目前只留聯想 `AppData/Roaming/RustDesk/guard/` 的 guard.log、last_repair.txt）。
