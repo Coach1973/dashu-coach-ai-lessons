@@ -30,6 +30,7 @@ EVERY_OVER30 = int(os.environ.get("CONTEXT_REPORT_EVERY_OVER30") or 1)
 MARKER_DIR = Path(os.environ.get("CONTEXT_MARKER_DIR") or tempfile.gettempdir())
 TAIL_BYTES = 4 * 1024 * 1024
 # 教練 2026-10-19 定的默契：一問「對話百分比剩多少」（或類似問法）就直接列，不論有沒有過 30%
+LASTMARK = "（教練 2026-10-19 定的默契：他都看最後一句）"
 ASK = re.compile(r"對話.{0,6}百分比|百分比.{0,4}(多少|剩)|對話.{0,4}剩多少|容量.{0,4}(多少|剩)")
 
 
@@ -98,7 +99,7 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8")
         print(f"🧠 教練問對話容量（默契關鍵字「對話百分比剩多少」，教練 2026-10-19 定）：本場對話已用約 {pct}%（約 {total // 10000} 萬 token），"
               f"剩約 {100 - pct}%（視窗 {WINDOW // 10000} 萬；約 97% 時系統會自動壓縮）。\n"
-              f"👉 這一則回覆第一行直接把「已用 {pct}%、剩 {100 - pct}%」列給教練，不用再查、不用叫工具。")
+              f"👉 把「已用 {pct}%、剩 {100 - pct}%」列給教練，寫在這一則回覆的最後一句{LASTMARK}，不用再查、不用叫工具。")
         return
     marker = MARKER_DIR / ("context_remind_" + sid)
     try:
@@ -119,8 +120,12 @@ def main():
         every = EVERY_OVER30 if pct >= 30 else EVERY
         if every > 0 and n % every == 0:
             sys.stdout.reconfigure(encoding="utf-8")
+            if pct >= 30:
+                where = f"寫在這一則回覆的「最後一句」（所有內容講完之後，固定一句：這場對話已用約 {pct}%）{LASTMARK}"
+            else:
+                where = "放在這一則回覆的第一行（亮燈那行後面）"
             msg = (f"🧠 對話容量定期報告（系統自動，每 {every} 句一次）：本場對話目前用了約 {pct}%（約 {total // 10000} 萬 token）。"
-                   f"\n👉 請在這一則回覆的第一行（亮燈那行後面）用一句白話告訴教練：目前用了約 {pct}%。")
+                   f"\n👉 請用一句白話告訴教練：目前用了約 {pct}%，{where}。")
             if pct >= 30:
                 msg += ("\n   ⚠️ 已過 30%：只做教練這一句明說的事、不順手加工作；手上這件做完就主動問「要現在總結嗎？」。"
                         "問總結那一句，用 get_usage 查一次 5 小時額度 %，連同容量 % 一起講（只在問總結那一句查，平常不查）。")
@@ -133,7 +138,7 @@ def main():
 
     out = [
         f"🧠 對話容量提醒（系統自動，教練 2026-10-14 要求）：本場對話已用約 {pct}%（約 {total // 10000} 萬 token，視窗 {WINDOW // 10000} 萬），剛跨過 {hit}% 這條線。",
-        f"👉 請在這一則回覆的「最前面」用一句白話告訴教練：目前用了約 {pct}%。",
+        f"👉 請用一句白話告訴教練：這場對話已用約 {pct}%，寫在這一則回覆的「最後一句」（所有內容講完之後）{LASTMARK}。",
     ]
     if hit >= 50:
         out.append("   已過一半，建議這一段做完就說「總結」，我會更新接力棒並上傳，您再開新對話框。")

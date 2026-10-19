@@ -13,4 +13,6 @@ metadata:
 
 **10/17 補（教練 02:40 問「查容量花不花 token」）**：容量 % 由 `context_percent_hook.py` 在本機讀對話檔的 usage 算，不花模型 token；只有出聲時（跨 30/35/40/45/50% 與預設每 5 句，`CONTEXT_REPORT_EVERY`）才各約 100 token 進對話。`get_usage` 是工具呼叫＝多一趟來回（整段對話再讀一次快取）＋結果數百 token；**5 小時額度 % 只有 get_usage 看得到**。兩個容量來源曾差 3%（hook 30%、get_usage 27%，切 Sonnet 後），原因沒查。教練答案：查容量不貴就過 30% 頻繁報（35/40/45/50）。
 
-**2026-10-19 教練定的默契關鍵字**：教練問「對話百分比剩多少」（或「目前對話的百分比是多少」、「容量剩多少」）→ `scripts/context_percent_hook.py` 偵測 UserPromptSubmit 的 `prompt`，**不論有沒有過 30%** 都送出「已用 X%、剩 Y%」，AI 第一行直接列給教練，不用叫 get_usage。過 30% 後本來就每句都報（10/17 起）；5 小時／每週額度仍只在問總結那一句才用 get_usage 查。測試 `scripts/test_context_percent_hook.py` 第 13 項。
+**2026-10-19 教練定的兩個默契**：
+1. **過 30% 之後，每則回覆在所有內容講完之後的「最後一句」固定寫「這場對話已用約 X%」**（教練原話：「我們看到最後一定都是看最後一句的總結」）。`scripts/context_percent_hook.py` 的提醒文字已改成叫 AI 放最後一句（30% 以下的定期報告仍放第一行）；亮燈仍在第一行；收工回報第一句固定「總結已完成…」、最後一句才是容量。
+2. **關鍵字**：教練問「對話百分比剩多少」（或「目前對話的百分比是多少」、「容量剩多少」）→ hook 偵測 UserPromptSubmit 的 `prompt`，**不論有沒有過 30%** 都送出「已用 X%、剩 Y%」，AI 直接列給教練、不用叫 get_usage。5 小時／每週額度仍只在問總結那一句才用 get_usage 查。測試 `scripts/test_context_percent_hook.py`（第 11b／12b／13 系列）。

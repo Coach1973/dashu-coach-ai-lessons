@@ -1,3 +1,4 @@
+- [🔗 教練說的「大樹常用網址（34→36項）」＝my-tools 常用查詢網站，不是 coach888 作品集；兩者網址與差別(2026-10-19)](reference_dashu_common_urls_my_tools_vs_coach888_2026-10-19.md)
 - [📅 訪談每兩場留30分鐘緩衝（19:00/20:30/22:00）、週四19:30起；預約頁與LINE兩套算法要一起改；順手修預約頁 JS 語法錯誤（\n）(2026-10-19)](feedback_interview_30min_buffer_between_sessions_2026-10-19.md)
 - [🔴 聯想 RustDesk 反覆被「停止服務」(stop-service=Y)→別人連不進來，8/1修過沒撐住、無預警；10/19 已裝事件觸發自癒守衛 lenovo_rustdesk_guard.ps1；--tray不開21118；失敗時推播給教練還沒做(2026-10-19)](reference_lenovo_rustdesk_stop_service_blocked_incoming_2026-10-19.md)
 - [🔴 回報提到群組／機器人／網站一律寫全名，不叫教練猜（10/18 被罵；佩君老師問報名人數貼進兩個不同群組，我說成同群組重複回答）](feedback_always_name_the_group_bot_site_in_full_2026-10-18.md)
@@ -18,7 +19,7 @@
 - [🔧 驗收雲端分支：event.bymyway.com 直接讀 ~/github_repos/<slug> 工作目錄，在那裡 checkout＝立刻上線；改用另開 worktree＋唯讀代理伺服器（單一 HTML 檔更輕：git show 抽到暫存區＋本機 http.server，10/16 軍火庫設計稿實證），雲端交接信不進網站目錄(榮樹下改版 0cf9d29, 2026-10-15)](reference_review_cloud_branch_never_checkout_in_live_repo_2026-10-15.md)
 - [🔎 「完整作品一覽」頁 coach1973.github.io/all-works：GitHub+策展名冊+作品集三來源去重(212筆)、搜人名(曾博士/Scott)；事件觸發更新三處(上架完/下架/gh repo create hook)；找不到網頁先搜這頁(2026-10-15)](reference_all_works_page_architecture_2026-10-15.md)
 - [🔧 上架「完成」通知沒來＝處理程序卡死：怎麼查(ps/sample/processing)怎麼救；10/15 根因是圖片瘦身 regex 遇 10MB 內嵌圖變平方級，已修(2026-10-15)](reference_curation_pipeline_stuck_diagnosis_2026-10-15.md)
-- [🔧 對話容量提醒 hook：context 跨 30/35/40/50% 各提醒一次(教練30%出頭開新對話)；桌面版看不到 context 時用 get_usage 讀，不需升級模型(2026-10-14)](reference_context_percent_reminder_hook_2026-10-14.md)
+- [🔧 對話容量提醒 hook：context 跨 30/35/40/50% 各提醒一次(教練30%出頭開新對話)；桌面版看不到 context 時用 get_usage 讀，不需升級模型；10/19默契：過30%每則回覆「最後一句」寫已用%、問「對話百分比剩多少」自動給數字(2026-10-14，10/19更新)](reference_context_percent_reminder_hook_2026-10-14.md)
 - [🔴🔴 做擋下機制時訊息不准寫「去問教練」，缺欄位給預設自己補；赫米斯因我的規則反覆問被罵（試金石119）；另 LINE 官方帳號每月200則、只有主動推播扣額度、聊天回覆不扣(2026-10-13)](feedback_blocking_messages_must_not_say_ask_coach_2026-10-13.md)
 - [🔴 頂部選單加項目前先量寬度：20px 字下多一項整排折兩行(公益路跑被教練截圖)；手機導覽統一用共用 nav-burger.js(四站已接)(2026-10-14)](feedback_nav_add_item_measure_width_with_20px_font_2026-10-14.md)
 - [🙋 招募志工團隊頁 volunteer.html：目標年底前100席、四站入口、人數改 JOINED、送出進活動報名群、教練構想與急需6項(2026-10-14)](project_volunteer_recruit_page_2026-10-14.md)

@@ -22,3 +22,5 @@ metadata:
 - 沒有吳錦昌個人頁（只有 #sunfar 區塊），所以他沒有「頁尾補連結」這一步。
 - **未動、留給教練**：social-club 頁尾仍寫「TAVA AI 設計」（教練要的是個別頁寫「製作」）；座位圖說明「首批 100 席・已有 50 席加入」與新區塊「已有 7 位」並存，50 的來源不明，沒改。
 - 本機預覽用法：先改 `~/github_repos` 的副本（正式資料夾＝立刻上線），`python3 serve.py` 起本機伺服器，內建瀏覽器要先 `resize_window` 才有版面（預設 innerWidth=0），`/static/nav-burger.js` 要先 curl 存到 `static_dl/`（Python urllib 打正式站會被 403）。截圖被鎖擋，用 DOM 量字級／溢出。
+
+**2026-10-19 補（教練要檢查「所有透過榮樹下訪談出現的網頁是否都有榮樹下友善連結」）**：榮樹下 Podcast 已播 8 集來賓與網頁對照：吳錦昌（無個人頁；相關頁 `runforfuture`、`social-good`、`social-club`）、楊境界→`hnv-cc`、周總→`joseph-cloth`、黃國彰→`inventor`、張麗蝶→`lidie`、何瑞峰→`ruifeng`、天使姐姐→`angel-sister`、朱元中→`patrick-chu`（依網頁標題對上）。標準頁尾＝「友善連結｜榮樹下　招募志工團隊　真公益　真公益・企業家俱樂部」（寫法見 `patrick-chu`／`lidie`）；10/19 補上 `hnv-cc` `3ee8a43`、`inventor` `ccb45f9`、`joseph-cloth` `ba2a912`，十頁掃描 9 頁通過（`social-club` 頁有 10 個榮樹下連結但沒有「友善連結」標籤，非來賓頁沒動）。**檢查法**：`curl` 線上版，在「友善連結」字樣後 600 字內找 `curated/rongtree/`；周總頁真正的頁尾是 `<footer class="footer">`，不是第一個 `<footer>`（那是頁內引言）。倉庫都是私有、沒有 GitHub Pages，線上只有 `event.bymyway.com/curated/<slug>/`。榮樹下新來賓有網頁時，頁尾要補同一組。
