@@ -97,5 +97,15 @@ with tempfile.TemporaryDirectory() as d:
     outs = [run({"session_id": "test-session-6", "transcript_path": str(tp6)}, m7)[1] for _ in range(5)]
     check("12. 29% 還是每 5 句才報（沒過線不加密）", all(o == "" for o in outs[:4]) and "定期報告" in outs[4] and "get_usage" not in outs[4], outs)
 
+    # 教練 2026-10-19 默契：問「對話百分比剩多少」就直接給數字（12% 沒過線也要給）；平常話不出聲
+    m8 = tempfile.mkdtemp(dir=d)
+    tp7 = fake_transcript(d, "test-session-7", 120000)
+    rc, out, _ = run({"session_id": "test-session-7", "transcript_path": str(tp7), "prompt": "對話百分比剩多少"}, m8)
+    check("13. 12% 時問「對話百分比剩多少」→ 直接給：已用約 12%、剩約 88%", "約 12%" in out and "剩約 88%" in out, out)
+    rc, out, _ = run({"session_id": "test-session-7", "transcript_path": str(tp7), "prompt": "目前對話1M的百分比是多少？"}, m8)
+    check("13b. 另一種問法「目前對話1M的百分比是多少」也認得", "剩約 88%" in out, out)
+    rc, out, _ = run({"session_id": "test-session-7", "transcript_path": str(tp7), "prompt": "幫我查一下預約頁"}, m8)
+    check("13c. 平常的話（12%、非第 5 句）不出聲", out == "", out)
+
 print("全部通過" if ok else "有失敗")
 sys.exit(0 if ok else 1)

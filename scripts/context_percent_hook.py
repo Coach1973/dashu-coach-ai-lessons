@@ -18,6 +18,7 @@ input + cache_creation + cache_read ＝ 目前對話容量。
 import glob
 import json
 import os
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -28,6 +29,8 @@ EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 5)
 EVERY_OVER30 = int(os.environ.get("CONTEXT_REPORT_EVERY_OVER30") or 1)
 MARKER_DIR = Path(os.environ.get("CONTEXT_MARKER_DIR") or tempfile.gettempdir())
 TAIL_BYTES = 4 * 1024 * 1024
+# 教練 2026-10-19 定的默契：一問「對話百分比剩多少」（或類似問法）就直接列，不論有沒有過 30%
+ASK = re.compile(r"對話.{0,6}百分比|百分比.{0,4}(多少|剩)|對話.{0,4}剩多少|容量.{0,4}(多少|剩)")
 
 
 def find_transcript(data):
@@ -91,6 +94,12 @@ def main():
     if total <= 0:
         return
     pct = total * 100 // WINDOW
+    if ASK.search(str(data.get("prompt") or "")):  # 關鍵字：教練問容量，立刻給數字（不動提醒用的計數，不影響定期報告節奏）
+        sys.stdout.reconfigure(encoding="utf-8")
+        print(f"🧠 教練問對話容量（默契關鍵字「對話百分比剩多少」，教練 2026-10-19 定）：本場對話已用約 {pct}%（約 {total // 10000} 萬 token），"
+              f"剩約 {100 - pct}%（視窗 {WINDOW // 10000} 萬；約 97% 時系統會自動壓縮）。\n"
+              f"👉 這一則回覆第一行直接把「已用 {pct}%、剩 {100 - pct}%」列給教練，不用再查、不用叫工具。")
+        return
     marker = MARKER_DIR / ("context_remind_" + sid)
     try:
         last = int(marker.read_text().strip() or 0)
