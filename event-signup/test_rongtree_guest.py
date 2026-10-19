@@ -189,5 +189,9 @@ cE = appmod.app.test_client()
 cE.post(f"/rongtree/guest/{TOKEN}", json={**guest2, "story": "刪除後重新送出"})
 check("刪除後同一位再送＝全新一筆（不沿用舊內容）、回到名單", rg.get_form(kd) and json.loads(rg.get_form(kd)["data"])["story"] == "刪除後重新送出")
 
+BACK = '<a href="/curated/rongtree/">← 回榮樹下</a>'
+check("來賓卡列表頁左上有『回榮樹下』連結（教練 2026-10-19）", BACK in client.get(lst).get_data(as_text=True))
+check("單張來賓卡頁左上有『回榮樹下』連結", BACK in client.get(f"/rongtree/guest/{TOKEN}/card?k={rg.card_sig(SECRET, TOKEN)}").get_data(as_text=True))
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)

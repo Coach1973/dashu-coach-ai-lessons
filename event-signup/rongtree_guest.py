@@ -425,7 +425,11 @@ BASE_CSS = """
 *{box-sizing:border-box}body{margin:0;font:400 20px/1.8 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.02em}
 h1,h2,h3{font-family:"Noto Serif TC","Songti TC",serif;margin:0}
 .wrap{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+.back{margin:0 0 18px}.back a{color:var(--amber-deep);text-decoration:none;font-weight:700}
+@media print{.back{display:none}}
 """
+# 管理頁（來賓卡列表、單張來賓卡）左上角固定放「回榮樹下」（教練 2026-10-19）
+BACK_LINK = '<p class="back"><a href="/curated/rongtree/">← 回榮樹下</a></p>'
 
 
 def render_form(token, ev, existing, others=0):
@@ -561,6 +565,7 @@ dt{{font-weight:700;margin-top:12px}}dd{{margin:2px 0 0;white-space:pre-wrap}}
 .tools button,.tools a{{font:inherit;padding:10px 20px;border-radius:999px;border:1px solid var(--amber-deep);background:none;color:var(--amber-deep);text-decoration:none;cursor:pointer}}
 @media print{{.tools,details summary{{display:none}}details{{display:block}}}}
 </style></head><body><div class="wrap">
+{BACK_LINK}
 <div class="top">{photo}<div><p class="eyebrow">榮樹下來賓卡</p><h1>{E(d.get('name', ''))}</h1>
 <p class="sub">{E(d.get('title', ''))}｜訪談 {E(r['date'] or '')} {E(r['start'] or '')}｜{'榮樹下網頁公開中' if r['public'] else '已從公開名單隱藏'}</p></div></div>
 {card_html}
@@ -601,6 +606,7 @@ table{{width:100%;border-collapse:collapse;margin-top:20px}}td,th{{text-align:le
 a{{color:var(--amber-deep)}}
 .del{{font:inherit;padding:6px 18px;border-radius:999px;border:1px solid var(--amber-deep);background:none;color:var(--amber-deep);cursor:pointer}}
 form{{margin:0}}</style></head><body><div class="wrap">
+{BACK_LINK}
 <h1>榮樹下來賓卡</h1><p class="sub">來賓交回資料表後，AI 自動整理的來賓卡都在這裡。</p>
 <table><thead><tr><th>訪談時間</th><th>來賓</th><th>狀態</th><th></th><th></th></tr></thead><tbody>{rows}</tbody></table>
 {gone_html}
