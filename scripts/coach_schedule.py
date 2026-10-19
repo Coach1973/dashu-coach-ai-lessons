@@ -43,6 +43,8 @@ DATA = os.environ.get("COACH_SCHEDULE_DATA") or os.path.expanduser("~/.openclaw/
 TAINAN_URL = "https://tainan-calender.netlify.app/"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
+SESSION = 60  # 一場訪談 1 小時
+BUFFER = 30   # 兩場訪談之間的緩衝（教練 2026-10-19）；跟預約頁 coach_schedule_view.py 同一套，兩邊要一起改
 
 
 def today():
@@ -117,8 +119,23 @@ def describe(b, private=False):
     return f"{when} {what}{flag}"
 
 
+def is_interview(ev):
+    """訪談類行程前後各留 BUFFER 分鐘（跟預約頁 coach_schedule_view._is_interview 同一套）。每週固定行程不算——
+    週四那列「休息（訪談間隔）」本身就是緩衝，不能再加一圈。"""
+    if "weekday" in ev:
+        return False
+    return ev.get("kind") == "interview" or bool(ev.get("guest")) or "訪談" in str(ev.get("title", ""))
+
+
 def free_slots(d, data, win_start, win_end, minutes=60):
-    busy = [(s, e) for s, e, _ in blocks_on(d, data)]
+    busy = []
+    for s, e, ev in blocks_on(d, data):
+        if d.weekday() == 3 and str(ev.get("title", "")).startswith("線上"):
+            continue  # 教練 2026-10-15：週四的線上聚會／學習保留，但訪談優先，不擋預約（跟預約頁一致）
+        if is_interview(ev):
+            s, e = s - BUFFER, e + BUFFER  # 教練 2026-10-19：已有訪談的前後各留半小時
+        busy.append((s, e))
+    busy.sort()
     slots, cur = [], win_start
     for s, e in busy:
         if e <= cur or s >= win_end:
@@ -129,6 +146,29 @@ def free_slots(d, data, win_start, win_end, minutes=60):
     if win_end - cur >= minutes:
         slots.append((cur, win_end))
     return slots
+
+
+def session_starts(d, data, a, b):
+    """一場 SESSION 分鐘＋場間緩衝 BUFFER：每個空檔每 90 分鐘一個起點（19:00、20:30、22:00…）"""
+    out = []
+    for s_, e_ in free_slots(d, data, a, b, SESSION):
+        t = s_
+        while t + SESSION <= e_:
+            out.append(t)
+            t += SESSION + BUFFER
+    return out
+
+
+def day_and_eve_starts(d, data):
+    """(白天起點, 晚上起點)；白天最後一場要在晚上開始前留出緩衝。跟預約頁 coach_schedule_view._day_slots 同一套"""
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    ws, es, ee = hm(win["start"]), hm(eve["start"]), hm(eve["end"])
+    return session_starts(d, data, ws, es - BUFFER), session_starts(d, data, es, ee)
+
+
+def sessions_text(starts):
+    return "、".join(f"{fmt(t)}–{fmt(t + SESSION)}" for t in starts)
 
 
 def check(data, d, start=None, minutes=60, private=False):
@@ -149,11 +189,15 @@ def check(data, d, start=None, minutes=60, private=False):
         lines.append("  當天行程：" + "；".join(describe(b, private) for b in blocks))
     else:
         lines.append("  當天行程：沒有")
-    slots = free_slots(d, data, ws, we, minutes)
-    lines.append(
-        f"  {win['start']}-{win['end']} 可訪談空檔："
-        + ("、".join(f"{fmt(a)}-{fmt(b)}" for a, b in slots) if slots else "沒有")
-    )
+    if minutes == SESSION:
+        day_t, eve_t = day_and_eve_starts(d, data)
+        lines.append(f"  可訪談時段（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：" + (sessions_text(day_t + eve_t) or "沒有"))
+    else:
+        slots = free_slots(d, data, ws, we, minutes)
+        lines.append(
+            f"  {win['start']}-{win['end']} 可訪談空檔（訪談前後各留 {BUFFER} 分鐘）："
+            + ("、".join(f"{fmt(a)}-{fmt(b)}" for a, b in slots) if slots else "沒有")
+        )
     return "\n".join(lines)
 
 
@@ -303,24 +347,13 @@ def booking_url():
 
 def open_slots(data, count=5):
     """2026-10-15 教練：任何 LINE 群有人問「最近五場可以訪談的時間」都要答得出來。
-    跟預約頁（coach_schedule_view.py）同一套算法：晚上時段（evening_window）每小時一個起點、一場 1 小時；
+    跟預約頁（coach_schedule_view.py）同一套算法：晚上時段（evening_window）一場 1 小時、兩場之間留 30 分鐘（每 90 分鐘一個起點）；
     今天只算「現在起 1 小時之後」的起點；整天有行程的日子跳過。晚上排不滿 count 個才往白天補。"""
-    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
-    es, ee = hm(eve["start"]), hm(eve["end"])
-    ws = hm(win["start"])
     now = dt.datetime.now(TZ)
     earliest = now.hour * 60 + now.minute + 60
 
-    def starts(d, a, b):
-        out = []
-        for s_, e_ in free_slots(d, data, a, b):
-            t = s_
-            while t + 60 <= e_:
-                if d > today() or t >= earliest:
-                    out.append(t)
-                t += 60
-        return out
+    def starts(d, part):  # part：0＝白天、1＝晚上
+        return [t for t in day_and_eve_starts(d, data)[part] if d > today() or t >= earliest]
 
     def allday(d):
         return any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(d, data))
@@ -330,7 +363,7 @@ def open_slots(data, count=5):
         d = today() + dt.timedelta(days=i)
         if allday(d):
             continue
-        picked += [(d, t) for t in starts(d, es, ee)]
+        picked += [(d, t) for t in starts(d, 1)]
         if len(picked) >= count:
             break
     picked = picked[:count]
@@ -339,7 +372,7 @@ def open_slots(data, count=5):
             d = today() + dt.timedelta(days=i)
             if allday(d):
                 continue
-            for t in starts(d, ws, es):
+            for t in starts(d, 0):
                 if (d, t) not in picked:
                     picked.append((d, t))
         picked = sorted(picked)[:count]
@@ -348,27 +381,19 @@ def open_slots(data, count=5):
 
 def open_days(data, days):
     """2026-10-15 教練：問「最近 3 天／一個禮拜／半個月」→ 逐天列出可訪談時段（晚上為主，白天另列）。
-    同一套算法（free_slots＋整天有行程跳過）；今天只算現在起 1 小時之後。整天有行程或排滿的日子不列。"""
-    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
-    es, ee = hm(eve["start"]), hm(eve["end"])
-    ws = hm(win["start"])
+    同一套算法（訪談前後留緩衝、每 90 分鐘一個起點、整天有行程跳過）；今天只算現在起 1 小時之後。整天有行程或排滿的日子不列。"""
     now = dt.datetime.now(TZ)
     earliest = ((now.hour * 60 + now.minute + 60) + 59) // 60 * 60
 
-    def windows(d, a, b):
-        if d == today():
-            a = max(a, earliest)
-        if b - a < 60:
-            return ""
-        return "、".join(f"{fmt(x)}–{fmt(y)}" for x, y in free_slots(d, data, a, b))
+    def sessions(d, part):  # part：0＝白天、1＝晚上；列「一場一場」的時段，不列整段空檔（整段空檔會讓人挑到沒留緩衝的起點）
+        return sessions_text([t for t in day_and_eve_starts(d, data)[part] if d > today() or t >= earliest])
 
     out = []
     for i in range(days):
         d = today() + dt.timedelta(days=i)
         if any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(d, data)):
             continue
-        night, day = windows(d, es, ee), windows(d, ws, es)
+        night, day = sessions(d, 1), sessions(d, 0)
         if not (night or day):
             continue
         out.append(f"{day_label(d)} " + (f"晚上 {night}" if night else "晚上排滿") + (f"｜白天 {day}" if day else ""))
@@ -377,8 +402,6 @@ def open_days(data, days):
 
 def daily_report(data, d):
     """2026-10-13 教練：佩佩老師用手寫筆記本記行程，巴哈助理群組每天一則報告，一看就知道今天行程與可約空檔。"""
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
-    ws, we = hm(win["start"]), hm(win["end"])
     lines = [f"☀️ {day_label(d)} 教練今日行程"]
     bs = blocks_on(d, data)
     for s_, e_, ev in bs:
@@ -388,21 +411,20 @@ def daily_report(data, d):
     if not bs:
         lines.append("・今天沒有排行程")
     allday = any((s_, e_) == (0, 1440) for s_, e_, _ in bs)
-    if d == today():
-        now = dt.datetime.now(TZ)
-        ws = max(ws, ((now.hour * 60 + now.minute + 59) // 60) * 60)
-    free = [] if allday else free_slots(d, data, ws, we)
+    now = dt.datetime.now(TZ)
+    earliest = ((now.hour * 60 + now.minute + 59) // 60) * 60 if d == today() else 0
+    free = [] if allday else [t for part in day_and_eve_starts(d, data) for t in part if t >= earliest]
     lines.append("")
-    lines.append("🟢 今天還可以約：" + ("、".join(f"{fmt(a)}–{fmt(b)}" for a, b in free) if free else "今天已經排滿了"))
+    lines.append(f"🟢 今天還可以約（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：" + (sessions_text(free) if free else "今天已經排滿了"))
     nxt = []
     for i in range(1, 8):
         dd = d + dt.timedelta(days=i)
         if any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(dd, data)):
             nxt.append(f"{day_label(dd)} 整天有行程")
             continue
-        fs = free_slots(dd, data, hm(win["start"]), hm(win["end"]))
-        nxt.append(f"{day_label(dd)} " + ("、".join(f"{fmt(a)}–{fmt(b)}" for a, b in fs) if fs else "已排滿"))
-    lines.append("📆 接下來 7 天可約（10:00–22:00 內）：\n" + "\n".join(f"・{x}" for x in nxt))
+        fs = [t for part in day_and_eve_starts(dd, data) for t in part]
+        nxt.append(f"{day_label(dd)} " + (sessions_text(fs) if fs else "已排滿"))
+    lines.append(f"📆 接下來 7 天可約（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：\n" + "\n".join(f"・{x}" for x in nxt))
     url = booking_url()
     if url:
         lines.append("")

@@ -1,3 +1,4 @@
+- [📅 訪談每兩場留30分鐘緩衝（19:00/20:30/22:00）、週四19:30起；預約頁與LINE兩套算法要一起改；順手修預約頁 JS 語法錯誤（\n）(2026-10-19)](feedback_interview_30min_buffer_between_sessions_2026-10-19.md)
 - [🔴 聯想 RustDesk 反覆被「停止服務」(stop-service=Y)→別人連不進來，8/1修過沒撐住、無預警；10/19 已裝事件觸發自癒守衛 lenovo_rustdesk_guard.ps1；--tray不開21118；失敗時推播給教練還沒做(2026-10-19)](reference_lenovo_rustdesk_stop_service_blocked_incoming_2026-10-19.md)
 - [🔴 回報提到群組／機器人／網站一律寫全名，不叫教練猜（10/18 被罵；佩君老師問報名人數貼進兩個不同群組，我說成同群組重複回答）](feedback_always_name_the_group_bot_site_in_full_2026-10-18.md)
 - [🔧 小龍蝦 10 月起對話存各分身 sqlite（不是 jsonl）：怎麼讀夥伴對話、查群組名、外掛 message_sending 能擋送出；教練／佩君老師／邱裕榮 ID(2026-10-18)](reference_openclaw_transcripts_in_agent_sqlite_2026-10-18.md)

@@ -22,6 +22,8 @@ TOKEN_FILE = WS / "state" / "coach_schedule_token.txt"
 WEEK = "一二三四五六日"
 TZ = dt.timezone(dt.timedelta(hours=8))
 DAYS = 28
+SESSION = 60  # 一場 1 小時
+BUFFER = 30   # 兩場訪談之間的緩衝（教練 2026-10-19：要喝水、上廁所、跟下一位來賓打招呼暖場，不能 8 點結束 8 點又開下一場）
 CANCELLABLE = ("預約頁", "巴哈", "coach", "教練")  # 跟 coach_schedule.py 的同名常數一致：只有總表自己的行程可取消
 
 
@@ -89,11 +91,21 @@ def _yield_if_online(item, d):
     return item
 
 
+def _is_interview(ev):
+    """訪談類行程（預約頁預約、總表訪談、標題有「訪談」）：前後各留 BUFFER 分鐘緩衝；一般會議（BNI 例會、團隊會議…）不加。
+    每週固定行程（有 weekday）一律不算：週四那列「休息（訪談間隔）」本身就是緩衝，標題雖有「訪談」不能再加一圈。"""
+    if "weekday" in ev:
+        return False
+    return ev.get("kind") == "interview" or bool(ev.get("guest")) or "訪談" in str(ev.get("title", ""))
+
+
 def _free(busy, ws, we):
     cur, slots = ws, []
     for s, e, x in busy:
         if x.get("yield"):  # 2026-10-15 教練：線上聚會／學習保留，但訪談優先，不擋預約
             continue
+        if _is_interview(x):  # 2026-10-19 教練：已有訪談的前後各留半小時，不能一場接一場
+            s, e = s - BUFFER, e + BUFFER
         if e <= cur or s >= we:
             continue
         if s - cur >= 60:
@@ -105,14 +117,23 @@ def _free(busy, ws, we):
 
 
 def _starts(slots):
-    """每個可約區間，每小時一個起點，一場 1 小時"""
+    """每個可約區間：一場 1 小時＋場間緩衝 30 分，所以每 90 分鐘一個起點（19:00、20:30、22:00…）"""
     out = []
     for a, b in slots:
         t = a
-        while t + 60 <= b:
+        while t + SESSION <= b:
             out.append(t)
-            t += 60
+            t += SESSION + BUFFER
     return out
+
+
+def _day_slots(busy, data):
+    """(白天起點, 晚上起點)。render 與 book 共用同一套算法，畫面看到的時段＝伺服器認得的時段。
+    白天最後一場要在晚上開始前留出緩衝（19:00 晚上開始 → 白天最晚 18:30 結束）。"""
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
+    ws, es, ee = _hm(win["start"]), _hm(eve["start"]), _hm(eve["end"])
+    return _starts(_free(busy, ws, es - BUFFER)), _starts(_free(busy, es, ee))
 
 
 def _refresh_google():
@@ -145,9 +166,8 @@ def book(date_s, start_s, booking_type):
     fcntl.flock(lockf, fcntl.LOCK_EX)
     try:
         data = json.loads(DATA.read_text(encoding="utf-8"))
-        win = data.get("interview_window", {"start": "19:00", "end": "22:00"})
         busy = _busy(d, data)
-        if st not in _starts(_free(busy, _hm(win["start"]), _hm(win["end"]))):
+        if st not in sum(_day_slots(busy, data), []):
             return False, "這個時段剛剛被預約走了，請選別的時間"
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
               "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
@@ -181,10 +201,7 @@ def render(token: str = "") -> str:
     """2026-10-13 教練：重新設計得好看一點；點空檔直接出四個類型按鈕，不填姓名電話。"""
     _refresh_google()
     data = json.loads(DATA.read_text(encoding="utf-8"))
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    ws, we = _hm(win["start"]), _hm(win["end"])
-    es, ee = _hm(eve["start"]), _hm(eve["end"])
     today = dt.datetime.now(TZ).date()
     cards, n_open = [], 0
 
@@ -208,8 +225,7 @@ def render(token: str = "") -> str:
             cards.append(f'<h2 class="wk"><span>{name}</span>{monday.month}/{monday.day} – {sunday.month}/{sunday.day}</h2>')
         busy = _busy(d, data)
         allday = any((s_, e_) == (0, 1440) for s_, e_, _ in busy)
-        eve_starts = [] if allday else _starts(_free(busy, es, ee))
-        day_starts = [] if allday else _starts(_free(busy, ws, es))
+        day_starts, eve_starts = ([], []) if allday else _day_slots(busy, data)
         n_open += bool(eve_starts)
         if eve_starts:
             chip = '<span class="chip ok">晚上可約</span>'
@@ -321,7 +337,7 @@ dialog::backdrop{{background:rgba(30,20,10,.45);backdrop-filter:blur(2px)}}
 <header>
 <p class="eyebrow">大樹教練 ‧ 可約時間</p>
 <h1>挑一個時段，<br>按一下就預約。</h1>
-<p class="lede">未來 {DAYS} 天，晚上 {escape(eve['start'])}–{escape(eve['end'])} 優先，一場 1 小時。點綠色時間，選類型即送出，教練確認後就排定。</p>
+<p class="lede">未來 {DAYS} 天，晚上 {escape(eve['start'])}–{escape(eve['end'])} 優先，一場 1 小時，兩場之間留 30 分鐘緩衝。點綠色時間，選類型即送出，教練確認後就排定。</p>
 <div class="legend"><span><i style="background:var(--green)"></i>晚上可約（{n_open} 天）</span><span><i style="background:var(--amber)"></i>白天時段</span><span><i style="background:var(--line)"></i>已排滿</span></div>
 <button type="button" class="toggle" id="dt" aria-pressed="false">也看白天時段</button>
 </header>
@@ -344,7 +360,7 @@ document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
  document.getElementById('pick').textContent=b.dataset.l;
  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}}}});
 document.querySelectorAll('.cx').forEach(function(b){{b.onclick=function(){{
- if(!confirm('確定要取消這筆行程嗎？\n\n'+b.dataset.l+'\n\n取消後教練 Google 日曆裡我們寫過的那一筆也會一起刪掉。'))return;
+ if(!confirm('確定要取消這筆行程嗎？\\n\\n'+b.dataset.l+'\\n\\n取消後教練 Google 日曆裡我們寫過的那一筆也會一起刪掉。'))return;
  b.disabled=true;b.textContent='取消中…';
  fetch('/schedule/{token}/cancel',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{id:b.dataset.id,date:b.dataset.d}})}})
  .then(function(r){{return r.json()}}).then(function(j){{if(j.ok)location.reload();else{{alert(j.error||'取消失敗，請稍後再試');b.disabled=false;b.textContent='取消'}}}})
