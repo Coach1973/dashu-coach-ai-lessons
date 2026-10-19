@@ -2190,18 +2190,18 @@
   {
    "id": "gcal-2026-12-18-178",
    "date": "2026-12-18",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-12-18-179",
-   "date": "2026-12-18",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-18-179",
+   "date": "2026-12-18",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-12-18-180",
@@ -2956,7 +2956,7 @@
   {
    "id": "gcal-2027-01-28-274",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2964,7 +2964,7 @@
   {
    "id": "gcal-2027-01-28-275",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3902,7 +3902,7 @@
    "gskip": []
   }
  ],
- "updated_at": "2026-10-19 11:19",
+ "updated_at": "2026-10-19 12:32",
  "tainan_synced_at": "2026-10-18 16:36",
  "evening_window": {
   "start": "19:00",
@@ -3946,6 +3946,6 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-19 11:19",
- "google_synced_epoch": 1792379969
+ "google_synced_at": "2026-10-19 12:32",
+ "google_synced_epoch": 1792384368
 }
