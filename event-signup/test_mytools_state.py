@@ -53,5 +53,12 @@ conn = db.get_conn(); n = conn.execute("SELECT COUNT(*) FROM mytools_history").f
 check("歷史只留最近 60 份", n == 60)
 check("OPTIONS 預檢 204", c.options("/api/mytools/state", headers=OK).status_code == 204)
 check("coach888 狀態端點看不到 mytools_data", "mytools_data" not in c.get("/api/coach888/state").get_json())
+tc = json.loads(json.dumps(good)); tc["trashCollapsed"] = True
+c.post("/api/mytools/state", json={"data": tc}, headers=OK)
+check("最近刪除收合狀態存得住", c.get("/api/mytools/state").get_json()["data"]["trashCollapsed"] is True)
+c.post("/api/coach888/click", json={"url": "https://a.com/"})
+c.post("/api/coach888/click", json={"url": "mytools::https://b.com/"})
+check("作品一覽熱門排行看不到 mytools:: 點擊", c.get("/api/coach888/click-counts").get_json() == {"https://a.com/": 1})
+check("常用查詢熱門排行只拿 mytools:: 點擊", c.get("/api/coach888/click-counts?prefix=mytools::").get_json() == {"mytools::https://b.com/": 1})
 print("全過" if not fails else f"失敗 {len(fails)} 項")
 raise SystemExit(1 if fails else 0)

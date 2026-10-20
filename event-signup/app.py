@@ -3408,7 +3408,7 @@ MYTOOLS_KEY = "mytools_data"
 
 def _mytools_clean(data):
     """「大樹的常用查詢網站」排版存檔的格式檢查：只收 sections(分類)/items(項目)/removed(已刪除網址)/
-    trash(最近刪除，可復原；2026-10-20 補，比照大樹作品一覽)，其他欄位丟掉、字串截長度，網址只收 http(s)。不合格式回 None。"""
+    trash(最近刪除，可復原；2026-10-20 補，比照大樹作品一覽)/trashCollapsed(最近刪除收合，2026-10-21 補)，其他欄位丟掉、字串截長度，網址只收 http(s)。不合格式回 None。"""
     if not isinstance(data, dict) or not isinstance(data.get("sections"), list):
         return None
     if not 1 <= len(data["sections"]) <= 40:
@@ -3440,7 +3440,7 @@ def _mytools_clean(data):
         if re.match(r"^https?://", url) and len(trash) < 500:
             trash.append({"name": txt(it.get("name"), 120) or url, "url": url, "desc": txt(it.get("desc"), 300),
                           "tag": txt(it.get("tag"), 20), "from": txt(it.get("from"), 40) or None})
-    return {"sections": sections, "removed": removed, "trash": trash}
+    return {"sections": sections, "removed": removed, "trash": trash, "trashCollapsed": bool(data.get("trashCollapsed"))}
 
 
 @app.route("/api/mytools/state", methods=["GET", "POST", "OPTIONS"])
@@ -3556,7 +3556,11 @@ def api_coach888_click_counts():
     conn = db.get_conn()
     rows = conn.execute("SELECT url, click_count FROM coach888_clicks").fetchall()
     conn.close()
-    counts = {r["url"]: r["click_count"] for r in rows}
+    # 2026-10-21：常用查詢網站(my-tools)照抄熱門排行，網址前加「mytools::」記在同一張表；
+    # 帶 ?prefix=mytools:: 只回那一份，不帶就排除，兩邊的前 10 名不會互相擠掉
+    prefix = request.args.get("prefix", "")
+    counts = {r["url"]: r["click_count"] for r in rows
+              if (r["url"].startswith(prefix) if prefix else not r["url"].startswith("mytools::"))}
     return Response(
         json.dumps(counts), status=200, headers={**resp_headers, "Content-Type": "application/json"},
     )
