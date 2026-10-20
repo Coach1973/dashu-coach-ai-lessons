@@ -66,9 +66,10 @@ TELEGRAM_REGISTRATION_GROUP_CHAT_ID = "-5349981085"  # 教練2026-08-24建立「
 
 NOTIFY_FAIL_LOG = os.path.join(os.path.dirname(__file__), "notify_failures.log")
 
-# 2026-10-19教練：「活動報名即時通知」群裡提到某關鍵字的報名通知，同步轉發到指定 LINE 群（小龍蝦已在群裡）。
-# 報名通知一發出就轉（事件觸發，不輪詢、不靠小龍蝦盯）。要多轉一個群＝這裡多加一行。
-LINE_GROUP_FORWARD_RULES = [
+# 2026-10-19教練：「活動報名即時通知」群裡提到某關鍵字的報名通知，同步轉發到指定的群（原文照轉）。
+# 報名通知一發出就轉（事件觸發，不輪詢、不靠小龍蝦盯）。要多轉一個群＝這裡多加一行：
+#   Telegram 群寫 "telegram_chat_id"（不扣額度，建議用這個）；LINE 群寫 "group_id"（推播扣月額度，群組按人數算）。
+GROUP_FORWARD_RULES = [
     {"keyword": "香檳下午茶", "group_id": "C37ef97aa4155577abfb2f6a53500d8b3", "name": "小旭老師報名通知"},
 ]
 # LINE 官方帳號每月推播只有 200 則（教練 2026-08-24 裁示 LINE 會扣配額）；本月剩餘低於這個數就不轉、只留紀錄，
@@ -97,19 +98,25 @@ def _line_forward_one(token: str, group_id: str, text: str) -> None:
     call("message/push", {"to": group_id, "messages": [{"type": "text", "text": text[:4900]}]})
 
 
-def _forward_to_line_groups(text: str) -> None:
-    """報名通知含關鍵字 → 同步推進對應 LINE 群。失敗只留痕跡，不影響 Telegram 通知與報名本身。"""
-    rules = [r for r in LINE_GROUP_FORWARD_RULES if r["keyword"] in text]
-    if not rules:
+def _forward_by_keyword(text: str) -> None:
+    """報名通知含關鍵字 → 同步轉發到對應的群（Telegram 群或 LINE 群）。
+    失敗只留痕跡，不影響「活動報名即時通知」那則原本的通知與報名本身。"""
+    rules = [r for r in GROUP_FORWARD_RULES if r["keyword"] in text]
+    for r in rules:
+        if r.get("telegram_chat_id"):
+            # 目標不是報名群，所以不會再觸發轉發；送不出去它自己會寫進 notify_failures.log
+            _notify_xiaolongxia(text, chat_id=r["telegram_chat_id"])
+    line_rules = [r for r in rules if r.get("group_id")]
+    if not line_rules:
         return
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             token = json.load(f)["channels"]["line"]["channelAccessToken"]
     except Exception as e:
-        for r in rules:
+        for r in line_rules:
             _log_notify_failure(f"line:{r['group_id']}", f"讀不到 LINE 金鑰: {e!r}", text)
         return
-    for r in rules:
+    for r in line_rules:
         try:
             _line_forward_one(token, r["group_id"], text)
         except Exception as e:
@@ -126,7 +133,7 @@ def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> bo
     """
     if chat_id == TELEGRAM_REGISTRATION_GROUP_CHAT_ID:
         # 含關鍵字就同步轉進 LINE 群；放背景執行緒，不拖慢報名頁回應，也不受 Telegram 成敗影響
-        threading.Thread(target=_forward_to_line_groups, args=(text,), daemon=True).start()
+        threading.Thread(target=_forward_by_keyword, args=(text,), daemon=True).start()
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             config = json.load(f)

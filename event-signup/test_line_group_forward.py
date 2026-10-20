@@ -30,12 +30,12 @@ with open(CFG, "w", encoding="utf-8") as f:
 appmod.OPENCLAW_CONFIG_PATH = CFG
 appmod.NOTIFY_FAIL_LOG = os.path.join(TMP, "notify_failures.log")
 
-GROUP = appmod.LINE_GROUP_FORWARD_RULES[0]["group_id"]
+GROUP = appmod.GROUP_FORWARD_RULES[0]["group_id"]
 SAMPLE = ("【大樹小講・官網報名】\n場次：香檳下午茶國際禮儀沙龍｜台灣形象設計發展協會（台南・11/09）\n"
           "姓名：測試勿理\n公司：測試公司\n電話：0900000001\nEmail：t@example.com\n（新報名，由bymyway.com官方發送）")
 
 CALLS = []
-STATE = {"used": 27, "limit": 200, "push_error": False}
+STATE = {"used": 27, "limit": 200, "push_error": False, "tg_error": False}
 
 
 class FakeResp:
@@ -65,6 +65,8 @@ def fake_urlopen(req, timeout=None):
             raise urllib.error.HTTPError(url, 429, "quota", {}, None)
         return FakeResp({})
     if "api.telegram.org" in url:
+        if STATE["tg_error"]:
+            raise urllib.error.URLError("測試用：Telegram 連不上")
         return FakeResp({"ok": True})
     raise AssertionError("測試不該打到這個網址：" + url)
 
@@ -72,9 +74,9 @@ def fake_urlopen(req, timeout=None):
 appmod.urllib.request.urlopen = fake_urlopen
 
 
-def reset(used=27, push_error=False):
+def reset(used=27, push_error=False, tg_error=False):
     CALLS.clear()
-    STATE.update(used=used, push_error=push_error)
+    STATE.update(used=used, push_error=push_error, tg_error=tg_error)
     open(appmod.NOTIFY_FAIL_LOG, "w").close()
 
 
@@ -88,7 +90,7 @@ def pushes():
 
 # 1. 含關鍵字：推進對的群、內容一字不差、用的是 LINE 金鑰
 reset()
-appmod._forward_to_line_groups(SAMPLE)
+appmod._forward_by_keyword(SAMPLE)
 p = pushes()
 check("含「香檳下午茶」→ 推一則", len(p) == 1, str(CALLS))
 if p:
@@ -99,24 +101,24 @@ check("成功時沒有失敗紀錄", fail_log() == "", fail_log())
 
 # 2. 沒有關鍵字：一個 HTTP 都不打
 reset()
-appmod._forward_to_line_groups("【大樹小講・官網報名】\n場次：AI微論壇\n姓名：某人")
+appmod._forward_by_keyword("【大樹小講・官網報名】\n場次：AI微論壇\n姓名：某人")
 check("沒提到香檳下午茶 → 完全不打 LINE", CALLS == [], str(CALLS))
 
 # 3. 額度快用完（剩 20 < 保留線 30）：不推、留紀錄
 reset(used=180)
-appmod._forward_to_line_groups(SAMPLE)
+appmod._forward_by_keyword(SAMPLE)
 check("額度剩 20 則 → 不推", pushes() == [], str(pushes()))
 check("額度不足有寫進失敗紀錄", "額度剩 20" in fail_log(), fail_log())
 
 # 4. 額度剛好在保留線上（剩 30）：照推
 reset(used=170)
-appmod._forward_to_line_groups(SAMPLE)
+appmod._forward_by_keyword(SAMPLE)
 check("額度剩 30 則 → 照推", len(pushes()) == 1)
 
 # 5. LINE 回 429：不丟例外、留紀錄
 reset(push_error=True)
 try:
-    appmod._forward_to_line_groups(SAMPLE)
+    appmod._forward_by_keyword(SAMPLE)
     raised = False
 except Exception:
     raised = True
@@ -128,7 +130,7 @@ reset()
 good = appmod.OPENCLAW_CONFIG_PATH
 appmod.OPENCLAW_CONFIG_PATH = os.path.join(TMP, "不存在.json")
 try:
-    appmod._forward_to_line_groups(SAMPLE)
+    appmod._forward_by_keyword(SAMPLE)
     raised = False
 except Exception:
     raised = True
@@ -139,8 +141,8 @@ check("讀不到金鑰檔有寫紀錄", "金鑰" in fail_log(), fail_log())
 # 7. 真的從出口 _notify_xiaolongxia 走：報名群會轉、教練個人對話不轉
 SEEN = []
 done = threading.Event()
-real_forward = appmod._forward_to_line_groups
-appmod._forward_to_line_groups = lambda t: (SEEN.append(t), done.set())
+real_forward = appmod._forward_by_keyword
+appmod._forward_by_keyword = lambda t: (SEEN.append(t), done.set())
 
 reset()
 done.clear()
@@ -152,7 +154,47 @@ SEEN.clear()
 done.clear()
 appmod._notify_xiaolongxia(SAMPLE, chat_id=appmod.TELEGRAM_NOTIFY_CHAT_ID)
 check("發給教練個人對話時不轉發", not done.wait(0.5) and SEEN == [], str(SEEN))
-appmod._forward_to_line_groups = real_forward
+appmod._forward_by_keyword = real_forward
+
+# 8. Telegram 專屬群規則（教練 10/20：另開「小旭老師活動報名通知」Telegram 群，不扣 LINE 額度）
+TG_TARGET = "-1009999999999"
+saved_rules = appmod.GROUP_FORWARD_RULES
+rule_tg = {"keyword": "香檳下午茶", "telegram_chat_id": TG_TARGET, "name": "小旭老師活動報名通知"}
+rule_line = saved_rules[0]
+
+
+def tg_calls():
+    return [c for c in CALLS if "api.telegram.org" in c["url"]]
+
+
+appmod.GROUP_FORWARD_RULES = [rule_tg]
+reset()
+appmod._forward_by_keyword(SAMPLE)
+check("Telegram 規則：轉進指定 Telegram 群一則", len(tg_calls()) == 1 and tg_calls()[0]["body"]["chat_id"] == TG_TARGET, str(CALLS))
+check("Telegram 轉發內容與原通知一字不差", bool(tg_calls()) and tg_calls()[0]["body"]["text"] == SAMPLE)
+check("Telegram 規則不碰 LINE（不查額度、不推播）", all("api.line.me" not in c["url"] for c in CALLS), str(CALLS))
+
+reset()
+appmod._forward_by_keyword("【大樹小講・官網報名】\n場次：AI微論壇\n姓名：某人")
+check("沒提到關鍵字 → Telegram 規則也完全不發", CALLS == [], str(CALLS))
+
+reset(tg_error=True)
+try:
+    appmod._forward_by_keyword(SAMPLE)
+    raised = False
+except Exception:
+    raised = True
+check("Telegram 轉發失敗不丟例外", not raised)
+check("Telegram 轉發失敗有寫紀錄（含目標群編號）", TG_TARGET in fail_log(), fail_log())
+
+# 兩種規則並存、LINE 額度又不夠：Telegram 照轉，LINE 不推、留紀錄
+appmod.GROUP_FORWARD_RULES = [rule_tg, rule_line]
+reset(used=190)
+appmod._forward_by_keyword(SAMPLE)
+check("並存：LINE 額度不夠時 Telegram 照轉", len(tg_calls()) == 1)
+check("並存：LINE 額度不夠時 LINE 不推", pushes() == [], str(pushes()))
+check("並存：LINE 額度不足有留紀錄", "額度剩 10" in fail_log(), fail_log())
+appmod.GROUP_FORWARD_RULES = saved_rules
 
 print()
 print("全部通過" if not fails else f"❌ {len(fails)} 項沒過：{fails}")
