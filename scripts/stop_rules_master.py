@@ -1145,6 +1145,64 @@ try:
 except Exception:
     pass  # 稽核腳本本身故障不該擋住教練收工，靜默跳過
 
+# ════════════════════════════════════════════════
+# N. 照抄鎖（擋）—— 2026-10-21 my-tools 改 11 版後建立
+#    教練說過「一模一樣／照抄／比照 X」→ 這場對話之後改到 ~/github_repos 的網頁，
+#    收工前必須跑過 scripts/parity_check.py 而且「缺 0 項」。
+#    不看 AI 怎麼說，只看有沒有真的跑、跑出來缺幾項。
+#    教練明說可以不一樣的項目寫進目標倉庫 .parity-allow。
+#    任何例外一律放行（hook 壞了不能擋教練，見 feedback_hooks_must_fail_open）。
+# ════════════════════════════════════════════════
+try:
+    _IDENT = re.compile(r"一模一樣|照抄|(比照|照著|依照|參考|跟)[^。！？\n]{0,14}(作品一覽|作品總覽|那個網站|那一頁|那頁|那套)")
+    _REPO = os.path.join(HOME, "github_repos") + os.sep
+    _ident_idx, _last_edit_idx, _last_pass_idx = None, None, None
+    _edited, _pending = [], {}
+    for _i, _e in enumerate(EVENTS):
+        if not isinstance(_e, dict):
+            continue
+        _t, _c = _e.get("type"), (_e.get("message") or {}).get("content")
+        if _t == "user" and _is_real_user_prompt(_e):
+            _txt = _c if isinstance(_c, str) else " ".join(
+                x.get("text", "") for x in _c if isinstance(x, dict) and x.get("type") == "text")
+            if not _txt.lstrip().startswith(("Stop hook feedback", "<system-reminder")) and _IDENT.search(_txt):
+                if _ident_idx is None:
+                    _ident_idx = _i
+        if _t == "assistant" and isinstance(_c, list):
+            for _x in _c:
+                if not (isinstance(_x, dict) and _x.get("type") == "tool_use"):
+                    continue
+                _inp = _x.get("input") or {}
+                _fp = str(_inp.get("file_path") or "")
+                _cmd = str(_inp.get("command") or "")
+                if _x.get("name") in ("Edit", "Write") and _fp.startswith(_REPO) and _fp.endswith((".html", ".js")):
+                    _last_edit_idx = _i; _edited.append(_fp)
+                if _x.get("name") == "Bash" and "parity_check.py" in _cmd:
+                    _pending[_x.get("id")] = _i
+                if _x.get("name") == "Bash" and re.search(r"github_repos/[^ ]+.*(\.html|\.js)|git -C [^ ]*github_repos", _cmd) and re.search(r">|sed -i|python3 -|git commit", _cmd):
+                    _last_edit_idx = _i; _edited.append(_cmd[:60])
+        if _t == "user" and isinstance(_c, list):
+            for _x in _c:
+                if isinstance(_x, dict) and _x.get("type") == "tool_result" and _x.get("tool_use_id") in _pending:
+                    _out = _x.get("content")
+                    _out = _out if isinstance(_out, str) else json.dumps(_out, ensure_ascii=False)
+                    if "缺 0 項" in _out:
+                        _last_pass_idx = _i
+    if _ident_idx is not None and _last_edit_idx is not None and _last_edit_idx > _ident_idx \
+            and (_last_pass_idx is None or _last_pass_idx < _last_edit_idx):
+        MESSAGES.append(
+            "\n🔴🔒 照抄鎖（deterministic check，2026-10-21 my-tools 改 11 版後建立）\n" + BAR + "\n"
+            "教練在這場說過「一模一樣／照抄／比照」，你也改了網頁：\n  " + "\n  ".join(_edited[-3:]) + "\n"
+            "但改完之後沒有跑過照抄對照器，或跑出來還有缺。\n\n"
+            "✅ 立刻執行：\n"
+            "  1. python3 ~/.openclaw/workspace/scripts/parity_check.py <標準答案.html> <你改的頁>\n"
+            "  2. 缺的項目照抄補上（以標準答案的程式為底，不要另寫一套）\n"
+            "  3. 跑到「缺 0 項」才算交付；教練明說可以不一樣的，寫進目標倉庫 .parity-allow\n" + BAR + "\n")
+        log_violation("rule_parity_copy_violations.log", "edited=%s\n" % _edited[-3:])
+        BLOCK = True
+except Exception:
+    pass
+
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
 # ────────────────────────────────────────────────
