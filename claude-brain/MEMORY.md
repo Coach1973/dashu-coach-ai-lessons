@@ -1,3 +1,4 @@
+- [🔴🔴 教練裁示（10/20）：MiniMax 過載(529)是對方的事，不設備援、不接第二家付費 API（上次自動切換忘了切回，一天燒 66 美金）；現況 8 分身全 MiniMax-M3 無備援＝符合；10/20 上午 10:13～11:03 過載事實(2026-10-20)](feedback_no_model_fallback_minimax_overload_is_their_problem_2026-10-20.md)
 - [🔴🔴 教練常設禁令（10/20）：所有 LINE 小龍蝦沒有他允許，永遠不得用會扣額度的推播；閘門已補進 LINE 外掛唯一推播出口＋Python 推播腳本，許可旗標 state/LINE_PUSH_APPROVED（教練明說才建、10分鐘）、擋下帳 line_push_blocked.log、每日點名驗閘門、補丁腳本 scripts/line_push_gate_patch.py(2026-10-20)](feedback_line_push_needs_coach_approval_standing_order_2026-10-20.md)
 - [🔴 LINE 官方帳號額度：推播按收件人數扣（3人群一則扣3）、reply不扣；10/20已用199/200；報名通知含「香檳下午茶」轉LINE群「小旭老師報名通知」規則放app.py、剩<30不轉(3a8e58cc4)(2026-10-20)](reference_line_quota_push_counts_per_member_registration_forward_2026-10-20.md)
 - [🔗 教練說的「大樹常用網址（34→36項）」＝my-tools 常用查詢網站，不是 coach888 作品集；兩者網址與差別(2026-10-19)](reference_dashu_common_urls_my_tools_vs_coach888_2026-10-19.md)
