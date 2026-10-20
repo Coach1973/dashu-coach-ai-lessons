@@ -3407,8 +3407,8 @@ MYTOOLS_KEY = "mytools_data"
 
 
 def _mytools_clean(data):
-    """「大樹的常用查詢網站」排版存檔的格式檢查：只收 sections(分類)/items(項目)/removed(已刪除網址)，
-    其他欄位丟掉、字串截長度，網址只收 http(s)。不合格式回 None。"""
+    """「大樹的常用查詢網站」排版存檔的格式檢查：只收 sections(分類)/items(項目)/removed(已刪除網址)/
+    trash(最近刪除，可復原；2026-10-20 補，比照大樹作品一覽)，其他欄位丟掉、字串截長度，網址只收 http(s)。不合格式回 None。"""
     if not isinstance(data, dict) or not isinstance(data.get("sections"), list):
         return None
     if not 1 <= len(data["sections"]) <= 40:
@@ -3434,7 +3434,13 @@ def _mytools_clean(data):
                          "icon": txt(sec.get("icon"), 8), "title": txt(sec.get("title"), 60) or "未命名",
                          "collapsed": bool(sec.get("collapsed")), "items": items})
     removed = [u for u in data.get("removed", []) if isinstance(u, str)][:500] if isinstance(data.get("removed", []), list) else []
-    return {"sections": sections, "removed": removed}
+    trash = []
+    for it in data.get("trash", []) if isinstance(data.get("trash", []), list) else []:
+        url = txt(it.get("url"), 1000) if isinstance(it, dict) else ""
+        if re.match(r"^https?://", url) and len(trash) < 500:
+            trash.append({"name": txt(it.get("name"), 120) or url, "url": url, "desc": txt(it.get("desc"), 300),
+                          "tag": txt(it.get("tag"), 20), "from": txt(it.get("from"), 40) or None})
+    return {"sections": sections, "removed": removed, "trash": trash}
 
 
 @app.route("/api/mytools/state", methods=["GET", "POST", "OPTIONS"])
