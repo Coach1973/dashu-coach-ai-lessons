@@ -1179,7 +1179,7 @@ try:
                     _last_edit_idx = _i; _edited.append(_fp)
                 if _x.get("name") == "Bash" and "parity_check.py" in _cmd:
                     _pending[_x.get("id")] = _i
-                if _x.get("name") == "Bash" and re.search(r"github_repos/[^ ]+.*(\.html|\.js)|git -C [^ ]*github_repos", _cmd) and re.search(r">|sed -i|python3 -|git commit", _cmd):
+                if _x.get("name") == "Bash" and re.search(r"(>{1,2}|\btee|sed -i\S*|\bcp|\bmv)\s+[^|;&]*github_repos/\S+\.(html|js)\b|github_repos/\S*\s*&&[^|;]*\bbuild\.py", _cmd):
                     _last_edit_idx = _i; _edited.append(_cmd[:60])
         if _t == "user" and isinstance(_c, list):
             for _x in _c:
