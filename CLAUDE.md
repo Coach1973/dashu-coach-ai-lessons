@@ -4,9 +4,29 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-19 11:40:32**
+> **最後同步：2026-10-20 22:12:18**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
+
+---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-20 22:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree 的側邊對話，由主對話交辦），Sonnet 5.5；教練說「總結」；本段 18:31～22:20，對話容量約 46%）
+
+**主軸：查出 LINE「龍蝦小助教」(@268dptjc) 本月額度 199／200 是誰用掉的 → 修 → 教練下「常設禁令」→ 做成系統閘門。額度 11/1 重置，現在剩 1 則，推播會被 LINE 拒絕，即時回覆不受影響。**
+- **查因（白話報告頁 https://claude.ai/artifact/DJ3WTEYjcCwLq41dtt1uQ9，詳細版在 side-session-notes「LINE額度199查因報告_2026-10-20.md」）**：回答（reply）免費；是約 8 則「推播」進 24 人的「榮樹下談公益 Run for Future」大群，一則扣 24，共 185 則（93%）。帳：10/12 17、10/15 4、10/19＝3＋5×24（AI 辦「取消 10/21 19:00 訪談」時連發 5 次 `message send` 進度播報，撞到 Tool exec not found）、10/20＝24＋24（AI 服務過載的英文出錯通知進群）＋4。兩天各自反推群人數都是 24。外掛程式碼證明：即時回覆走回信券（免費），外送路徑（message 工具、排隊接續回覆、出錯通知、重送）一律 `pushMessageLine`。另兩個 LINE 帳號與活動報名系統的「大樹教育顧問」本月都是 0。
+- **方案 2＋3（教練 18:43 批准）**：outer repo `~/.openclaw` commit `a39fd133f`——rongshuxia 禁用 `message`／`conversations_send`／`conversations_turn`；url-typo-guard 外掛加 LINE 限定的「AI service is temporarily overloaded」攔截（教練收件放行）；外掛測試 22/22。
+- **常設禁令（教練 19:05）：「所有的 LINE 小龍蝦，沒有經過我的允許，永遠不得使用會扣額度的方式來工作。」** 做成閘門：補進 LINE 外掛唯一推播出口 `sendLineProviderMessages`（回覆永遠放行、其餘擋），補丁腳本 `scripts/line_push_gate_patch.py`（冪等，`--check`／`--revert`）；`send_line_push.py`（outer `ae2032337`）與 event-signup 轉 LINE 群（workspace `42efb64f6`）同規則；許可旗標 `workspace/state/LINE_PUSH_APPROVED`（教練在對話明說同意才 touch、10 分鐘、用完作廢）；擋下帳 `workspace/state/line_push_blocked.log`；每日點名新增 `check_line_push_gate`（被外掛更新洗掉會自動補回並報 🔴，補回後要重啟 gateway）。實測：真實 C 群編號經運作中 gateway→403 常設禁令、不重試、額度仍 199；有旗標放行到 LINE 吃 429；旗標作廢再擋。gateway 為此重啟 2 次（18:46、19:10）。
+- **代價（已告知教練）**：AI 太慢、回信券過期時，答案會被丟掉而不是改用推播；群友會看到沒回應，查 `line_push_blocked.log`。
+- **教練原話線索**：①「這次小龍蝦這種問題，我都覺得是事後才發現額度被扣光光，很久以前用 Kimi 也發生過」→ 他最痛的是「事後才知道」，要的是看得見、擋在前面的閘門，不是事後解釋。②「這樣指令夠明確了嗎？」→ 他在確認我真的懂常設禁令的範圍（所有 LINE 小龍蝦＝三個 LINE 帳號；「允許」＝他在對話明說）。③連續追問「為什麼發 1 則卻扣 24 次」，22:10 結論：「LINE 這種計費方式非常不合理…這不就是在騙錢嗎？」並明說「不怪你」。我的「群發簡訊」比喻被他挑出不合理（群組只有一則訊息、不是每人單獨收到）→ 以後不再用那個比喻，直接講「LINE 的規則是按成員人數算，這是 LINE 的規則、我們改不了，所以用閘門避開」；這是 LINE 的計價規則，不是我們程式算錯（官方：developers.line.biz/en/docs/messaging-api/sending-messages 與 /pricing；兩日 LINE 官方統計也都反推出 24）。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 看 `workspace/state/line_push_blocked.log`（有真實被擋紀錄＝有人想推播）與每日點名「LINE推播閘門」一行；11/1 額度重置後閘門仍擋，要推播需教練明說。
+2. 小旭老師報名通知：現在 LINE 轉發被閘門擋（原文留 `event-signup/notify_failures.log`）；教練 10/20 決定另開 Telegram 專屬群「小旭老師活動報名通知」，群編號填進規則表後，把 LINE 那條規則拿掉。
+3. 🔧 AI 自己的清單（沒教練決定的事，N7 只記不動）：另兩種英文出錯通知（rate-limited／Something went wrong）沒進攔截清單；bni_tainan／jiaolian_thoughts 的 AI 沒禁發訊息工具（其推播現在被閘門兜底）；rongshuxia 的 `sessions_send` 沒禁；gateway 的 delivery-recovery 重送不經 message_sending 攔截（推播由閘門兜底）；舊世代 2026.6.33 LINE 外掛目錄沒補；10/1 的 2 則與 10/13 的 1 則單人推播沒追；額度哨兵（過 50/80/95% Telegram 通知）已不急。
+4. 承接 10/19 棒第 1～6 項（審查員觀察期 10/20 已滿，未對照；連排訪談等）。
+
+🙋 要教練決定：沿用 10/19 棒（無新增）。
+🤫 等教練自己提起：榮樹下大群機器人已被教練移出；若要放回，先講明「推播已被禁，只能回覆」。教練對 LINE 計費的看法（認為不合理）若再提，可協助他整理成給 LINE 客服的問題。
 
 ---
 
@@ -33,24 +53,8 @@
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-18 12:20 台灣時間，Mac 桌面版 Code 分頁（臨時 worktree），Sonnet 5.5→Opus 5.5→Sonnet 5.5；教練說「總結」；本段 11:24～12:20，對話容量約 36%）
+> 📦 10/18 12:20 棒（Suno 加歌、守則 21 條融入對話、小龍蝦變聰明、提到群組一律寫全名）已封存：`handoff_archive/handoff_2026-10-18_1220_Suno加歌與守則融入對話_archived.md`（其待辦已併入 10/19 棒第 6 項）
 
-**主軸：教練先要把 Suno 歌《嘿！明麗》加進 10/17 活動網頁；之後說「守則16很好用」，一路延伸成「整個特助心法都要有智能反應」「小龍蝦（電報、LINE）也要服務好夥伴與朋友」。全部做完、都已 commit＋push。**
-- **Suno 加歌**（site repo `taipeiema1017`，commit `9c4c575`）：03／今晚的歌多了第二首，用 Suno 官方內嵌播放器（`https://suno.com/embed/<歌曲編號>`）＋Suno 連結＋歌詞（標籤簡化、副歌兩句用 hook 樣式）；標題改成《觀念一改變》＋《嘿！明麗》；原本那首沒動；網址不變，用 curl 驗證線上已是新版。桌面備份 `~/Desktop/heymingli-prep/`（裡面的封面圖沒用到）。
-- **走了冤枉路（教練不高興，已記）**：Chat 寫的指令要求「下載 mp3 放進 assets、不要用外站網址、重新打包上傳」，我照字面做，卡在 Suno 音檔加密（我拿到的是打不開的檔案，不破解）、叫教練去下載，白繞約 15 分鐘。教練真正要的只有「給 Suno 網址、誰點都能聽」。**重新用上傳表單傳同一個短網址會被改名成 `taipeiema1017-2`（`curation_process.py` 的 `unique_slug`），要網址不變只能直接改 `~/github_repos/<slug>` 再 commit＋push。**
-- **守則 #16 融入對話**（commit `60e76e1df`）→ **21 條都有智能反應**（commit `12c3a90a4`）：新增 6 條條件反射（#16 多步驟長指令、#04 壞了先修、#07 同樣錯改源頭、#09 判斷題給一個建議、#12 叫教練下載上傳就擋、#02 大範圍找檔先查地圖），都用過去 4,499 句教練原話／2,888 則回覆／45,234 次動作回測不吵；#12 收窄兩次才上線。對照表 `knowledges/特助心法21條_智能反應對照表.md`。**修了一個舊漏洞**：回話時機的 remind 級反射（含 #10 白話）過去命中 15 次 AI 一次都沒看到（Stop 只能擋、不能提醒），`reflex_router.py` 改成留到教練下一句話補送。
-- **小龍蝦（電報／LINE／Discord）變聰明**（workspace `4212f3b01`、~/.openclaw `3d7f268c4`；gateway 已重啟，CLI 與服務同為 2026.9.4，7 個頻道連線正常）：讀兩週真實對話 121 則（資料在各分身的 `openclaw-agent.sqlite`，不是 jsonl）。①`url-typo-guard` 外掛加「推理外流守門」：給人看的訊息出現 NO_REPLY／HEARTBEAT_OK 就整則不送（收件人是教練放行；起因 10/16 榮樹下群組外流內心推理，**發送紀錄已被清掉、只能從程式寫法推定有發出**）；②`event-signup/query_signups.py`＋`schedule-context` 外掛：問報名人數先即時查好，只給教練與佩君老師（10/17 場 24 筆；10/19 BNI 台中培訓不在大樹系統，會說查不到）；③反射 R-PARTNER-REPLY-STYLE（夥伴／會員每 30 分鐘提醒回覆四習慣）、R-RONGSHUXIA-GUEST-ACK（榮樹下通報來賓先確認收到）、#04/#07/#09/#16 加 say_other；④`reflex-prompt` 外掛跳過需核對程式的反射（修好每 30 分鐘對教練空白提醒）。備份：各外掛 `index.js.bak-*-20261018`。
-- **我講錯、被抓到的兩次**：①回報說「那個有多個機器人的群組」沒寫群組名，教練氣說「讓我猜嗎？」；查到佩君老師 10/15 晚上 10:27（台灣時間）把同一句「10/19 報名幾人」貼進兩個群：**活動報名即時通知群**（主機器人答「沒資料」）與**佩佩老師的巴哈助理群**（巴哈助理答另一套），不是同群重複回答——我先前說反了，已更正。②亮燈與台灣時間標示漏寫，Stop hook 補救。
-- **教練原話線索**：「寫指令的是 chat，他不懂我 code 的工作狀況，下來你看到了很繞遠的指令，就找我問清楚」→ 守則 #16（多問想要什麼結果）要落在日常；「不單只是服務我，也要服務好那些我的夥伴及朋友」→ 小龍蝦對夥伴／會員的品質是目標；「下次明確說哪個群組？讓我猜嗎？訓練我的記憶力？還是叫我去做事？」→ **提到群組／機器人／網站一律寫全名**（教練的語氣是被迫猜測的不耐煩）。
-
-### 📋 下一場開工先做（以本棒為準）
-1. **🎯 承接 10/17 02:42 棒的交辦（未做）**：先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md` 照做——①`scripts/rules_reviewer_hook.py`（AI 回話前小模型審 21 條，先只記錄 3 天）②`rules_reminder_count.py` 教練提醒次數接進開工注入 ③規則自動體檢（`rules_health_audit.py` 機械層已存在，今天跑出：專案 CLAUDE＋特助心法重複約 877 字；執行細則＋特助心法重複約 16 字，都只是建議、守則 21 條原文一字不動）。
-2. **🔧 看今天新反射有沒有在動、有沒有吵**：`awk -F'\t' '{print $3}' state/reflex_hits.log | sort | uniq -c | sort -rn | head -20`；小龍蝦端看 `state/reply_leak_guard.log`（擋了什麼）與 `state/schedule_context.log` 的 `signups` 行；R-RULE12 若在教練這邊誤擋就再收窄。
-3. 🔧 「回覆講群組／機器人一律寫全名」已做成反射 R-REPLY-NAME-GROUP-IN-FULL（reply 時機，remind 級，下一句話補送；回測 37／2,888 則，約 1.3%）；觀察是否太吵、網站代稱（「那個網站」）還沒納入。
-4. 🔧 承接 10/17 清單：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway `providers.nvidia.models[17].input` 設定驗證錯誤；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件；看「先查再答」E2 有沒有誤擋（`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`）；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
-
-🙋 要教練決定：①**佩君老師問報名人數，要固定在哪個群問？**（建議固定問「活動報名即時通知群」，那裡的主機器人已接上即時人數查詢；問過：2026-10-18 12:15，教練尚未回）｜②軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
-🤫 等教練自己提起：沿用 10/17 02:05 棒清單（已封存於 `handoff_archive/handoff_2026-10-17_0205_Discord榮樹下與手機遙控_archived.md`）；另：Suno 內嵌播放器與第一首可能同時播放（內嵌控制不到，教練沒反應就不提）。
 
 ---
 
