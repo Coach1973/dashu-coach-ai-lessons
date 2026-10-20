@@ -1,14 +1,15 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-21 00:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree kaigong-1eca08），Sonnet 5.5→Opus 5.5；教練說「總結」；本段 10/20 23:54～10/21 00:20，對話容量約 38%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-21 00:50 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree kaigong-1eca08），Sonnet 5.5→Opus 5.5；教練說「總結」（第二次，補照抄重做結果）；本段 10/20 23:54～10/21 00:50，對話容量約 39%）
 
 **主軸：教練問「常用網站 my-tools 我叫你們改了幾次？每次說什麼？」→ 查證：叫改 8 次、做出 11 版，「照作品一覽」講了 3 輪（10/15 12:21 聯想、13:06／14:41 Mac、10/20 雲端）。根因：沒有一個 AI 照抄 coach888 作品一覽，10/15 12:26 聯想另寫一套（編輯排版鍵、⋯彈窗、▲▼），之後每次只補教練剛抱怨的一項；再加上話散在三台電腦、本機任務交給雲端（雲端假伺服器測不出真伺服器會丟掉最近刪除）。**
 - 報告頁（教練「看了很滿意」）：https://claude.ai/artifact/4gwNABx9YeygjiFiNXTSgV；證據檔 `knowledges/mytools_change_history_evidence_2026-10-20.md`（`af8f70a87`、`4275362c5`，含聯想轉來的原話）；寫給聯想的找原話信 `cross-agent/inbox/lenovo/20261021-0001_*`（聯想已另外回覆教練，信可視為已完成）。
 - **防範機制（不靠記得）**：`scripts/parity_check.py`（把標準答案頁的按鈕／確認視窗／提示字／拖曳／點文字改逐項列出，比對目標頁缺幾項；coach888 vs my-tools 實測缺 20 項）＋ Stop「N. 照抄鎖」（教練說過一模一樣／照抄／比照後改了 `~/github_repos` 的網頁，沒跑到「缺 0 項」不准收工；四情境實測＋本場真實對話不誤擋；`3f9f07657`，被自動同步一起收進）＋反射 `R-IDENTICAL-MEANS-COPY`（`a3b739540`）＋記憶 `feedback_identical_means_copy_the_reference_code_2026-10-21`＋my-tools README 21 項對照表（`dc1d8bc`、`79a430c`，現況 ✅14 ⚠️4 ❌3）。例外只能寫進目標倉庫 `.parity-allow`，且要教練明說。
+- **照抄重做已推上線（00:50 更新）**：側邊工作階段推了 my-tools `c21a47e`（整頁照抄作品一覽、只換資料）；Mac 自己跑 parity_check 對 index.html＝「一樣 34 項，缺 0 項」；GitHub Pages 建置 built c21a47e，線上頁已有「熱門排行／複製目前排序」字樣（curl 6 處）。**還沒做：在 Chrome 逐項操作線上版、確認教練原有分類與最近刪除沒丟、跑 deliver_open.sh 交付給教練。**
 - **照抄重做已開跑**：側邊工作階段「照抄作品一覽重做常用網站 my-tools」（local_1e567594-1fe0-41f9-bcd7-670abebd3d17，cwd ~/github_repos/my-tools），完成標準＝parity_check 缺 0 項＋21 項全 ✅＋Chrome 逐項操作＋資料（sections／removed／trash）不丟。
 - **教練原話線索**：①「一模一樣還需要定義嗎？一模一樣當然就是照抄照做啊！」→ 我說「一模一樣沒被定義過」被罵，**以後絕不把教練的明確字眼說成「沒定義」**；②「只有一種可能可以不用照抄：你確定可以做出比作品一覽更完善、更簡約、更好用的」；③「我要的是解決方案…怎麼防範下次再出現這麼愚蠢的行為」→ 他要的是擋得住的機制，不是檢討文；④「明明是本機電腦該跑的任務，雲端在那邊診斷，雞同鴨講」。
 - 開工交辦 1：`state/line_push_blocked.log` 為空（沒人想推播）、閘門 `--check` ✅；10/20 22:21 一筆香檳下午茶報名轉 LINE 被額度保護擋下，教練 23:02 自己手動轉了。
 
 ### 📋 下一場開工先做（以本棒為準）
-1. 驗收側邊工作階段的照抄重做：自己跑 `python3 scripts/parity_check.py ~/github_repos/coach888/index.html ~/github_repos/my-tools/index.html` 要缺 0 項、線上 https://coach1973.github.io/my-tools/ 實測、教練的分類與最近刪除沒丟；沒過就叫它補完，不要把半成品交給教練。
+1. 驗收照抄重做（已推 `c21a47e`、本機對照缺 0 項、線上已更新）：在 Chrome 逐項操作 https://coach1973.github.io/my-tools/ 、確認教練原有分類與最近刪除沒丟、跑 deliver_open.sh 交付；再跑一次 `python3 scripts/parity_check.py ~/github_repos/coach888/index.html ~/github_repos/my-tools/index.html` 要缺 0 項、線上 https://coach1973.github.io/my-tools/ 實測、教練的分類與最近刪除沒丟；沒過就叫它補完，不要把半成品交給教練。
 2. 小旭老師報名通知改 Telegram 專屬群（承接 10/20 棒第 2 項，等教練建群）。
 3. 承接 10/20 棒第 3～4 項與 10/19 棒（已封存：`handoff_archive/handoff_2026-10-19_1136_審查員與訪談緩衝_archived.md`）的待辦。
 4. 🔧 雲端 10/20 信提到 10/16 香檳下午茶那場 Mac 對話紀錄裡有策展上傳金鑰明文，是否換金鑰尚未評估。
