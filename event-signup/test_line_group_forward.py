@@ -29,6 +29,11 @@ with open(CFG, "w", encoding="utf-8") as f:
                             "telegram": {"accounts": {"bot_main": {"botToken": "FAKE-TG-TOKEN"}}}}}, f)
 appmod.OPENCLAW_CONFIG_PATH = CFG
 appmod.NOTIFY_FAIL_LOG = os.path.join(TMP, "notify_failures.log")
+# 常設禁令閘門（教練 2026-10-20）：測試用暫存資料夾當 state，預設先放一面「已許可」旗標，
+# 讓底下原本要驗「會推播」的案例照舊；最後一段再作廢旗標，驗證預設就是擋。
+appmod.LINE_PUSH_STATE_DIR = TMP + os.sep
+APPROVAL_FLAG = os.path.join(TMP, "LINE_PUSH_APPROVED")
+open(APPROVAL_FLAG, "w").close()
 
 GROUP = appmod.GROUP_FORWARD_RULES[0]["group_id"]
 SAMPLE = ("【大樹小講・官網報名】\n場次：香檳下午茶國際禮儀沙龍｜台灣形象設計發展協會（台南・11/09）\n"
@@ -194,6 +199,21 @@ appmod._forward_by_keyword(SAMPLE)
 check("並存：LINE 額度不夠時 Telegram 照轉", len(tg_calls()) == 1)
 check("並存：LINE 額度不夠時 LINE 不推", pushes() == [], str(pushes()))
 check("並存：LINE 額度不足有留紀錄", "額度剩 10" in fail_log(), fail_log())
+appmod.GROUP_FORWARD_RULES = saved_rules
+
+# 9. 常設禁令閘門：沒有教練許可旗標 → LINE 推播一則都不能發（不打 push 網址），但會留下紀錄
+appmod.GROUP_FORWARD_RULES = [rule_line]
+os.utime(APPROVAL_FLAG, (946684800, 946684800))  # 旗標作廢（mtime 設回 2000 年）
+reset(used=27)
+appmod._forward_by_keyword(SAMPLE)
+check("閘門：沒有許可 → 不發任何 LINE 推播", pushes() == [], str(pushes()))
+check("閘門：沒有許可 → 擋下有寫進 line_push_blocked.log",
+      os.path.exists(os.path.join(TMP, "line_push_blocked.log")) and "event-signup-forward" in open(os.path.join(TMP, "line_push_blocked.log"), encoding="utf-8").read())
+check("閘門：沒有許可 → 原文留進 notify_failures.log 可事後補轉", "常設禁令" in fail_log() and "測試勿理" in fail_log(), fail_log())
+os.utime(APPROVAL_FLAG, None)  # 旗標更新成現在 → 放行
+reset(used=27)
+appmod._forward_by_keyword(SAMPLE)
+check("閘門：有許可旗標 → 照推一則", len(pushes()) == 1, str(CALLS))
 appmod.GROUP_FORWARD_RULES = saved_rules
 
 print()

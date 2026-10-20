@@ -77,6 +77,29 @@ GROUP_FORWARD_RULES = [
 LINE_FORWARD_MIN_QUOTA = 30
 
 
+# ==== LINE_PUSH_GATE_V1（教練 2026-10-20 常設禁令：所有 LINE 小龍蝦沒有教練許可，不得使用會扣額度的推播）====
+# 這裡轉 LINE 群用的是「龍蝦小助教」的金鑰，推播會扣它的月額度，所以也要過閘門。
+# 許可旗標 ~/.openclaw/workspace/state/LINE_PUSH_APPROVED（touch 後 10 分鐘有效，教練口頭同意才建）。
+LINE_PUSH_STATE_DIR = os.path.expanduser("~/.openclaw/workspace/state/")  # 測試時換到暫存資料夾
+
+
+def _line_push_gate(source: str, to: str, text: str) -> None:
+    base = LINE_PUSH_STATE_DIR
+    try:
+        if 0 <= time.time() - os.path.getmtime(base + "LINE_PUSH_APPROVED") < 600:
+            return
+    except OSError:
+        pass
+    try:
+        ts = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S")
+        with open(base + "line_push_blocked.log", "a", encoding="utf-8") as f:
+            f.write(f"{ts}\t{source}\tpush\t{to}\t{' '.join(str(text).split())[:40]}\n")
+    except Exception:
+        pass
+    raise RuntimeError("LINE 推播（會扣額度）已被教練常設禁令擋下，需教練同意才可送")
+# ==== /LINE_PUSH_GATE_V1 ====
+
+
 def _line_forward_one(token: str, group_id: str, text: str) -> None:
     """推一則文字進 LINE 群；額度不夠或 LINE 回錯都丟例外，由呼叫端寫進 notify_failures.log。"""
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
@@ -95,6 +118,7 @@ def _line_forward_one(token: str, group_id: str, text: str) -> None:
         left = quota.get("value", 0) - used
         if left < LINE_FORWARD_MIN_QUOTA:
             raise RuntimeError(f"LINE 本月額度剩 {left} 則，低於保留線 {LINE_FORWARD_MIN_QUOTA}，沒轉")
+    _line_push_gate("event-signup-forward", group_id, text)
     call("message/push", {"to": group_id, "messages": [{"type": "text", "text": text[:4900]}]})
 
 

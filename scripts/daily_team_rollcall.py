@@ -173,6 +173,19 @@ def check_handoff_mirror():
         ok("接力棒鏡像")
 
 
+def check_line_push_gate():
+    """LINE 推播閘門（教練 2026-10-20 常設禁令：沒有教練許可，LINE 小龍蝦不得使用會扣額度的推播）。
+    閘門是補在 LINE 外掛檔案裡的；外掛更新換世代目錄會把它洗掉，沒人知道＝禁令默默失效。
+    這裡每天檢查，被洗掉就自動補回（補回後要重啟主程式才生效，所以仍然報 🔴 讓人處理）。"""
+    gate = Path.home() / ".openclaw/workspace/scripts/line_push_gate_patch.py"
+    r = subprocess.run([sys.executable, str(gate), "--check"], capture_output=True, text=True, timeout=30)
+    if r.returncode == 0:
+        ok("LINE推播閘門")
+        return
+    subprocess.run([sys.executable, str(gate)], capture_output=True, text=True, timeout=30)
+    bad("LINE推播閘門", "閘門被外掛更新洗掉，已自動補回；需要重啟主程式（launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway）才生效")
+
+
 def check_cron_jobs():
     db = sqlite3.connect(f"file:{CRON_DB}?mode=ro", uri=True)
     failing = []
@@ -308,6 +321,7 @@ def main():
         check_public_urls()
         check_cron_jobs()
         check_handoff_mirror()
+        check_line_push_gate()
     except Exception as e:
         bad("網址/排程檢查", f"檢查程式本身出錯：{e}")
 
