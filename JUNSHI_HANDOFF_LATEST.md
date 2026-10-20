@@ -18,6 +18,25 @@
 
 ---
 
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-21 00:25 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree great-diffie-2c83b1 的側邊對話，由主對話交辦），Sonnet 5.5；教練說「總結」；本段 10/20 23:46～10/21 00:25，對話容量約 40%）
+
+**主軸：根治「從聯想或手機開的雲端對話（claude.ai/code）很笨、做完停在問同不同意」。完成並實測。workspace main `bc2a20246`（含 `caa5a7436`、`7143b0bef`）。全文：`knowledges/雲端對話規則與接手流程.md`；交接筆記：side-session-notes「雲端對話根治_交接_2026-10-21.md」。**
+- **規則包**：`scripts/cloud/sync_rules_to_repos.py` 把規則同步進 bni-chapters／my-tools／rongtree／taipeiema1017（清單 `scripts/cloud/cloud_repos.json`；私有放 21 守則＋細則全文、公開 my-tools／rongtree 只放雲端行為精簡版）。來源有變才推（session_end_auto_push.sh 背景觸發，沒變不碰網路）；新倉庫 `... add <名>`；`... status` 看線上版本。倉庫內容：`.claude/coach-rules/`（RULES.md、core.md、三支 hook、VERSION）、`.claude/settings.json`、CLAUDE.md 最上方指標段。hook 只在 CLAUDE_CODE_REMOTE=true 動、出錯放行；Stop hook 每回合最多攔一次（沒亮燈／結尾問同不同意）。
+- **實測**：bni-chapters 新開雲端對話（session_01CkfXbCCz5u8DUfQARJyoLf，Sonnet 5.5）第一則回覆第一行即亮燈，說得出開場規則、守則 01~10，推不上 main 答「推 claude/* 分支＋docs/to_junshi 寫信，不停下來問」。規則包 commit：bni-chapters master `8f65ad9`（備份 bundle 在 side-session-notes/backup，推前 `fa36f74`）、my-tools `52f2875`、rongtree `1785ecd`、taipeiema1017 `55f0ee5`（之後腳本改版又同步，線上版本 41c475b0）。
+- **交件接手**：發現 bni-chapters、my-tools 原本沒掛 GitHub 推送通知（事故兩個倉庫）→ 已補掛。雲端推 claude/* → webhook（app.py `_record_cloud_branch_pending`）寫 `state/cloud_branch_pending/*.json` ＋ Telegram → 開工注入「☁️ 雲端對話交件，等你接手」→ `scripts/cloud_branch_pickup.sh list|prep|merge --verified|done`（prep 另開 `state/cloud_verify/` 資料夾，絕不 checkout 進上線資料夾）。每日點名加「雲端規則包」「雲端交件待接手(>24h)」。已重啟 event-webapp。測試：webhook 19 項全過、開工注入自測通過、假倉庫跑完整接手流程。
+- **採納雲端來信**（bni-chapters 分支 claude/epic-allen-gyl3sg，20261020-2354）：雲端對話第一行要說「我是雲端 Claude，看不到聯想、Mac、宏碁…」，已併入全部規則包。
+- **教練原話線索**：「叫他去做事他就去做就好了，還問我同不同意……討論的目的是為了執行」＋「為什麼不能直接告訴我我現在是雲端伺服器、讀不到本機資料」→ 他要的是雲端對話自己知道身份、做完就交、有人接手，不是他來當傳話或點頭的人。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 讀雲端來信 `bash scripts/cloud_letters.sh cat`（claude/epic-allen-gyl3sg 那封已被規則包涵蓋）；該分支合併時其 CLAUDE.md 段與規則包指標段會衝突，直接丟掉雲端那段。
+2. 若開工注入出現「☁️ 雲端對話交件」→ 照 `cloud_branch_pickup.sh prep/merge --verified` 接手（驗證＋正式程式再測＋合併上線＋白話回報），不問教練同不同意。
+3. 🔧 AI 自己的清單：①清單外新雲端倉庫要 `sync_rules_to_repos.py add` ②真雲端推分支的完整通知鏈還沒實跑一次 ③公開倉庫（my-tools、rongtree）沒放 21 守則全文，教練若要放需他點頭（`cloud_repos.json` variant 設 full）④`.claude/settings.local.json` 非我建，沒動。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：公開倉庫是否放守則全文。
+
+---
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-20 22:20 台灣時間，Mac 桌面版 Code 分頁（「開工」臨時 worktree 的側邊對話，由主對話交辦），Sonnet 5.5；教練說「總結」；本段 18:31～22:20，對話容量約 46%）
 
 **主軸：查出 LINE「龍蝦小助教」(@268dptjc) 本月額度 199／200 是誰用掉的 → 修 → 教練下「常設禁令」→ 做成系統閘門。額度 11/1 重置，現在剩 1 則，推播會被 LINE 拒絕，即時回覆不受影響。**
