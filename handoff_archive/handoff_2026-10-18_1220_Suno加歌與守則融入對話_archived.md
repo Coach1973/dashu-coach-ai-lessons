@@ -1,0 +1,18 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-18 12:20 台灣時間，Mac 桌面版 Code 分頁（臨時 worktree），Sonnet 5.5→Opus 5.5→Sonnet 5.5；教練說「總結」；本段 11:24～12:20，對話容量約 36%）
+
+**主軸：教練先要把 Suno 歌《嘿！明麗》加進 10/17 活動網頁；之後說「守則16很好用」，一路延伸成「整個特助心法都要有智能反應」「小龍蝦（電報、LINE）也要服務好夥伴與朋友」。全部做完、都已 commit＋push。**
+- **Suno 加歌**（site repo `taipeiema1017`，commit `9c4c575`）：03／今晚的歌多了第二首，用 Suno 官方內嵌播放器（`https://suno.com/embed/<歌曲編號>`）＋Suno 連結＋歌詞（標籤簡化、副歌兩句用 hook 樣式）；標題改成《觀念一改變》＋《嘿！明麗》；原本那首沒動；網址不變，用 curl 驗證線上已是新版。桌面備份 `~/Desktop/heymingli-prep/`（裡面的封面圖沒用到）。
+- **走了冤枉路（教練不高興，已記）**：Chat 寫的指令要求「下載 mp3 放進 assets、不要用外站網址、重新打包上傳」，我照字面做，卡在 Suno 音檔加密（我拿到的是打不開的檔案，不破解）、叫教練去下載，白繞約 15 分鐘。教練真正要的只有「給 Suno 網址、誰點都能聽」。**重新用上傳表單傳同一個短網址會被改名成 `taipeiema1017-2`（`curation_process.py` 的 `unique_slug`），要網址不變只能直接改 `~/github_repos/<slug>` 再 commit＋push。**
+- **守則 #16 融入對話**（commit `60e76e1df`）→ **21 條都有智能反應**（commit `12c3a90a4`）：新增 6 條條件反射（#16 多步驟長指令、#04 壞了先修、#07 同樣錯改源頭、#09 判斷題給一個建議、#12 叫教練下載上傳就擋、#02 大範圍找檔先查地圖），都用過去 4,499 句教練原話／2,888 則回覆／45,234 次動作回測不吵；#12 收窄兩次才上線。對照表 `knowledges/特助心法21條_智能反應對照表.md`。**修了一個舊漏洞**：回話時機的 remind 級反射（含 #10 白話）過去命中 15 次 AI 一次都沒看到（Stop 只能擋、不能提醒），`reflex_router.py` 改成留到教練下一句話補送。
+- **小龍蝦（電報／LINE／Discord）變聰明**（workspace `4212f3b01`、~/.openclaw `3d7f268c4`；gateway 已重啟，CLI 與服務同為 2026.9.4，7 個頻道連線正常）：讀兩週真實對話 121 則（資料在各分身的 `openclaw-agent.sqlite`，不是 jsonl）。①`url-typo-guard` 外掛加「推理外流守門」：給人看的訊息出現 NO_REPLY／HEARTBEAT_OK 就整則不送（收件人是教練放行；起因 10/16 榮樹下群組外流內心推理，**發送紀錄已被清掉、只能從程式寫法推定有發出**）；②`event-signup/query_signups.py`＋`schedule-context` 外掛：問報名人數先即時查好，只給教練與佩君老師（10/17 場 24 筆；10/19 BNI 台中培訓不在大樹系統，會說查不到）；③反射 R-PARTNER-REPLY-STYLE（夥伴／會員每 30 分鐘提醒回覆四習慣）、R-RONGSHUXIA-GUEST-ACK（榮樹下通報來賓先確認收到）、#04/#07/#09/#16 加 say_other；④`reflex-prompt` 外掛跳過需核對程式的反射（修好每 30 分鐘對教練空白提醒）。備份：各外掛 `index.js.bak-*-20261018`。
+- **我講錯、被抓到的兩次**：①回報說「那個有多個機器人的群組」沒寫群組名，教練氣說「讓我猜嗎？」；查到佩君老師 10/15 晚上 10:27（台灣時間）把同一句「10/19 報名幾人」貼進兩個群：**活動報名即時通知群**（主機器人答「沒資料」）與**佩佩老師的巴哈助理群**（巴哈助理答另一套），不是同群重複回答——我先前說反了，已更正。②亮燈與台灣時間標示漏寫，Stop hook 補救。
+- **教練原話線索**：「寫指令的是 chat，他不懂我 code 的工作狀況，下來你看到了很繞遠的指令，就找我問清楚」→ 守則 #16（多問想要什麼結果）要落在日常；「不單只是服務我，也要服務好那些我的夥伴及朋友」→ 小龍蝦對夥伴／會員的品質是目標；「下次明確說哪個群組？讓我猜嗎？訓練我的記憶力？還是叫我去做事？」→ **提到群組／機器人／網站一律寫全名**（教練的語氣是被迫猜測的不耐煩）。
+
+### 📋 下一場開工先做（以本棒為準）
+1. **🎯 承接 10/17 02:42 棒的交辦（未做）**：先 Read `knowledges/TASK_守則審查員與規則體檢_接續_2026-10-17.md` 照做——①`scripts/rules_reviewer_hook.py`（AI 回話前小模型審 21 條，先只記錄 3 天）②`rules_reminder_count.py` 教練提醒次數接進開工注入 ③規則自動體檢（`rules_health_audit.py` 機械層已存在，今天跑出：專案 CLAUDE＋特助心法重複約 877 字；執行細則＋特助心法重複約 16 字，都只是建議、守則 21 條原文一字不動）。
+2. **🔧 看今天新反射有沒有在動、有沒有吵**：`awk -F'\t' '{print $3}' state/reflex_hits.log | sort | uniq -c | sort -rn | head -20`；小龍蝦端看 `state/reply_leak_guard.log`（擋了什麼）與 `state/schedule_context.log` 的 `signups` 行；R-RULE12 若在教練這邊誤擋就再收窄。
+3. 🔧 「回覆講群組／機器人一律寫全名」已做成反射 R-REPLY-NAME-GROUP-IN-FULL（reply 時機，remind 級，下一句話補送；回測 37／2,888 則，約 1.3%）；觀察是否太吵、網站代稱（「那個網站」）還沒納入。
+4. 🔧 承接 10/17 清單：軍火庫設計稿 https://claude.ai/artifact/VvLFrV8He1qA3fnScPTSm3 教練回應後照做；志工頁有人加入後改 `volunteer.html` 的 `JOINED`；gateway `providers.nvidia.models[17].input` 設定驗證錯誤；策展 GitHub 化收尾；聯想 `/api/mytools/state` 放行 8765 建議拿掉；worktree 分支 `claude/kaigong-424fd5` 兩個 commit 要不要搬進 master；`namecard-db/namecards.db.backup-…20260712` 含個資只留本機；angel-sister 頁 10.6MB 可考慮壓；`ai.hermes.desktop.plist` 沒有登入啟動條件；看「先查再答」E2 有沒有誤擋（`grep -A2 "E2 判斷題零查證" distill/rule03_verify_violations.log`）；修憑證層「Claude（主力 UNLIMITED）」過時（aiprimetech 金鑰 401）。
+
+🙋 要教練決定：①**佩君老師問報名人數，要固定在哪個群問？**（建議固定問「活動報名即時通知群」，那裡的主機器人已接上即時人數查詢；問過：2026-10-18 12:15，教練尚未回）｜②軍火庫企劃書 4 件（標題、目標數字、提名信方式、名冊引擎開工）｜問過：2026-10-15 企劃書內
+🤫 等教練自己提起：沿用 10/17 02:05 棒清單（已封存於 `handoff_archive/handoff_2026-10-17_0205_Discord榮樹下與手機遙控_archived.md`）；另：Suno 內嵌播放器與第一首可能同時播放（內嵌控制不到，教練沒反應就不提）。
