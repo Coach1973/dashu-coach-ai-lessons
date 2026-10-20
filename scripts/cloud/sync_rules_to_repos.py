@@ -264,7 +264,8 @@ def ensure_clone(owner, name, branch):
     run(["git", "fetch", "-q", "--depth", "1", "origin", branch], cwd=d)
     if run(["git", "status", "--porcelain"], cwd=d).stdout.strip():
         raise RuntimeError(f"{name} 的暫存複製有沒處理完的修改（{d}），請先看一下再重跑")
-    run(["git", "merge", "-q", "--ff-only", f"origin/{branch}"], cwd=d)
+    # 淺層複製反覆 fetch 後歷史接不上，ff-only 會失敗；前面已確認工作區乾淨，直接把分支指到遠端最新即可
+    run(["git", "checkout", "-q", "-B", branch, f"origin/{branch}"], cwd=d)
     return d
 
 
