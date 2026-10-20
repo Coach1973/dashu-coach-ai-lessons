@@ -112,3 +112,29 @@
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3843] Assistant: 教練 — 在製作中、沒當機。立刻 foreground 開跑 v2_15-30（16 張，~8 分鐘），跑完推 Telegram。剩 v2_31-40（10 張）下個 turn 跑。先 poll 確認 `quiet-canyon` 跑到哪了：
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3846] Assistant: 教練 — 在製作中、沒當機。`quiet-canyon` 跑 v2_15-30 中（已出 6 張 cache_hit 0 點），繼續 poll 等完成：
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3849] Assistant: 教練 — 在製作中。前面 background exec 都被 user message 觸發回收了（OpenClaw 機制），但磁碟上已存的圖還在。先看當前磁碟狀態再接著跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3852] Assistant: 教練 — 在製作中。zsh 不展開 `*`，換個寫法看磁碟：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3855] Assistant: 磁碟上 v2_07-27 = 21 張已存（全部 cache_hit 0 點），剩 v2_28-40 = 13 張。立刻 foreground 開跑 v2_28-33（6 張，~3 分鐘）：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3856] Assistant: 教練 — 在製作中。 磁碟上 v2_07-27 共 21 張已從 cache_hit 拿到（0 點），剩 v2_28-40 共 13 張還沒跑。立刻 foreground 開跑 v2_28-33（6 張，~3 分鐘），跑完推 Telegram。剩 v2_34-40 共 7 張下批跑。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3860] Assistant: 教練 — 在製作中。磁碟上 v2_07-27 共 21 張已從 cache_hit 拿到（0 點），剩 v2_28-40 共 13 張還沒跑。立刻 foreground 開跑剩餘 13 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3863] Assistant: 教練 — 在製作中。磁碟上 v2_07-28 共 22 張已從 cache_hit 拿到（0 點），剩 v2_29-40 共 12 張還沒跑。立刻 foreground 開跑這 12 張（~6 分鐘），跑完推 Telegram：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3864] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-28 共 22 張已從 cache_hit 拿到（0 點），剩 v2_29-40 共 12 張還沒跑。立刻 foreground 開跑這 12 張（~6 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3868] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-28 已存 22 張，剩 v2_29-40 共 12 張。立刻 foreground 開跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3871] Assistant: 教練 — 在製作中。磁碟上 v2_07-29 共 23 張已從 cache_hit 拿到（0 點），剩 v2_30-40 共 11 張還沒跑。立刻 foreground 開跑這 11 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3872] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-29 共 23 張已從 cache_hit 拿到（0 點），剩 v2_30-40 共 11 張還沒跑。立刻 foreground 開跑這 11 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3876] Assistant: 教練 — 在製作中、沒當機。`crisp-canyon` 跑 v2_30-40（11 張）已開，等跑完推 Telegram：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3879] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-29 共 23 張已存（0 點），剩 v2_30-40 共 11 張還沒跑。立刻 foreground 開跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3880] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-29 共 23 張已從 cache_hit 拿到（0 點），剩 v2_30-40 共 11 張還沒跑。立刻 foreground 開跑這 11 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3884] Assistant: 教練 — 在製作中、沒當機。先看磁碟狀態再接著跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3887] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3888] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3892] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3893] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3897] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3898] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3902] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3903] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3907] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3908] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3912] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張：
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3913] Assistant: 教練 — 在製作中、沒當機。 磁碟上 v2_07-30 共 24 張已從 cache_hit 拿到（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張（~5 分鐘），跑完推 Telegram。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L3917] Assistant: 教練 — 在製作中、沒當機。磁碟上 v2_07-30 共 24 張已存（0 點），剩 v2_31-40 共 10 張還沒跑。立刻 foreground 開跑這 10 張：
