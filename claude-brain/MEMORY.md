@@ -1,3 +1,4 @@
+- [🔴🔴 教練常設禁令（10/20）：所有 LINE 小龍蝦沒有他允許，永遠不得用會扣額度的推播；閘門已補進 LINE 外掛唯一推播出口＋Python 推播腳本，許可旗標 state/LINE_PUSH_APPROVED（教練明說才建、10分鐘）、擋下帳 line_push_blocked.log、每日點名驗閘門、補丁腳本 scripts/line_push_gate_patch.py(2026-10-20)](feedback_line_push_needs_coach_approval_standing_order_2026-10-20.md)
 - [🔴 LINE 官方帳號額度：推播按收件人數扣（3人群一則扣3）、reply不扣；10/20已用199/200；報名通知含「香檳下午茶」轉LINE群「小旭老師報名通知」規則放app.py、剩<30不轉(3a8e58cc4)(2026-10-20)](reference_line_quota_push_counts_per_member_registration_forward_2026-10-20.md)
 - [🔗 教練說的「大樹常用網址（34→36項）」＝my-tools 常用查詢網站，不是 coach888 作品集；兩者網址與差別(2026-10-19)](reference_dashu_common_urls_my_tools_vs_coach888_2026-10-19.md)
 - [📅 訪談每兩場留30分鐘緩衝（19:00/20:30/22:00）、週四19:30起；預約頁與LINE兩套算法要一起改；順手修預約頁 JS 語法錯誤（\n）(2026-10-19)](feedback_interview_30min_buffer_between_sessions_2026-10-19.md)
