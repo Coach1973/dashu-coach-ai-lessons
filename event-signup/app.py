@@ -66,6 +66,55 @@ TELEGRAM_REGISTRATION_GROUP_CHAT_ID = "-5349981085"  # 教練2026-08-24建立「
 
 NOTIFY_FAIL_LOG = os.path.join(os.path.dirname(__file__), "notify_failures.log")
 
+# 2026-10-19教練：「活動報名即時通知」群裡提到某關鍵字的報名通知，同步轉發到指定 LINE 群（小龍蝦已在群裡）。
+# 報名通知一發出就轉（事件觸發，不輪詢、不靠小龍蝦盯）。要多轉一個群＝這裡多加一行。
+LINE_GROUP_FORWARD_RULES = [
+    {"keyword": "香檳下午茶", "group_id": "C37ef97aa4155577abfb2f6a53500d8b3", "name": "小旭老師報名通知"},
+]
+# LINE 官方帳號每月推播只有 200 則（教練 2026-08-24 裁示 LINE 會扣配額）；本月剩餘低於這個數就不轉、只留紀錄，
+# 避免把額度用光、害別的通知送不出去（試金石案例62）。
+LINE_FORWARD_MIN_QUOTA = 30
+
+
+def _line_forward_one(token: str, group_id: str, text: str) -> None:
+    """推一則文字進 LINE 群；額度不夠或 LINE 回錯都丟例外，由呼叫端寫進 notify_failures.log。"""
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+    def call(path: str, body: dict | None = None) -> dict:
+        req = urllib.request.Request(
+            f"https://api.line.me/v2/bot/{path}", method="POST" if body is not None else "GET", headers=headers,
+            data=json.dumps(body).encode("utf-8") if body is not None else None,
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return json.loads(resp.read().decode("utf-8") or "{}")
+
+    quota = call("message/quota")
+    if quota.get("type") == "limited":
+        used = call("message/quota/consumption").get("totalUsage", 0)
+        left = quota.get("value", 0) - used
+        if left < LINE_FORWARD_MIN_QUOTA:
+            raise RuntimeError(f"LINE 本月額度剩 {left} 則，低於保留線 {LINE_FORWARD_MIN_QUOTA}，沒轉")
+    call("message/push", {"to": group_id, "messages": [{"type": "text", "text": text[:4900]}]})
+
+
+def _forward_to_line_groups(text: str) -> None:
+    """報名通知含關鍵字 → 同步推進對應 LINE 群。失敗只留痕跡，不影響 Telegram 通知與報名本身。"""
+    rules = [r for r in LINE_GROUP_FORWARD_RULES if r["keyword"] in text]
+    if not rules:
+        return
+    try:
+        with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
+            token = json.load(f)["channels"]["line"]["channelAccessToken"]
+    except Exception as e:
+        for r in rules:
+            _log_notify_failure(f"line:{r['group_id']}", f"讀不到 LINE 金鑰: {e!r}", text)
+        return
+    for r in rules:
+        try:
+            _line_forward_one(token, r["group_id"], text)
+        except Exception as e:
+            _log_notify_failure(f"line:{r['group_id']}({r['name']})", repr(e), text)
+
 
 def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> bool:
     """發Telegram訊息，預設給教練個人對話；報名通知改傳group chat_id同時通知佩佩老師。
@@ -75,6 +124,9 @@ def _notify_xiaolongxia(text: str, chat_id: str = TELEGRAM_NOTIFY_CHAT_ID) -> bo
     用 `except: pass` 把 HTTP 429（月配額用完）整個吞掉，沒有任何 log、沒有任何人知道，
     教練還以為報名系統壞了（試金石案例62）。從此：靜默失敗一律不准，至少寫一行。
     """
+    if chat_id == TELEGRAM_REGISTRATION_GROUP_CHAT_ID:
+        # 含關鍵字就同步轉進 LINE 群；放背景執行緒，不拖慢報名頁回應，也不受 Telegram 成敗影響
+        threading.Thread(target=_forward_to_line_groups, args=(text,), daemon=True).start()
     try:
         with open(OPENCLAW_CONFIG_PATH, encoding="utf-8") as f:
             config = json.load(f)
