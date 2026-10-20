@@ -4197,11 +4197,39 @@ def _github_sync_worker(kind: str, key: str, pushed_sha: str) -> None:
 
 
 _CLOUD_PUSH_LAST = {}
+CLOUD_PENDING_DIR = WORKSPACE_ROOT / "state" / "cloud_branch_pending"   # 雲端交件待接手清單（開工注入、cloud_branch_pickup.sh 讀）
+CLOUD_REPOS_CONF = WORKSPACE_ROOT / "scripts" / "cloud" / "cloud_repos.json"
+
+
+def _record_cloud_branch_pending(repo_name: str, branch: str, payload: dict) -> bool:
+    """雲端分支每推一次就更新一筆「待接手」紀錄（事件觸發）。回傳這個倉庫有沒有規則包（沒有的話通知會提醒補上）。"""
+    commits = payload.get("commits") or []
+    last = (commits[-1].get("message", "") if commits else "").splitlines()[0][:120]
+    try:
+        known = repo_name in json.loads(CLOUD_REPOS_CONF.read_text(encoding="utf-8")).get("repos", [])
+    except Exception:
+        known = True
+    try:
+        CLOUD_PENDING_DIR.mkdir(parents=True, exist_ok=True)
+        f = CLOUD_PENDING_DIR / (repo_name + "__" + branch.replace("/", "__") + ".json")
+        old = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+        if old.get("status") == "done" and old.get("head") == str(payload.get("after", "")):
+            return known
+        f.write_text(json.dumps({
+            "repo": repo_name, "branch": branch, "head": str(payload.get("after", "")), "last_message": last,
+            "first_seen": old.get("first_seen") or datetime.now().isoformat(timespec="seconds"),
+            "pushed_at": datetime.now().isoformat(timespec="seconds"), "status": "pending", "has_rules_pack": known,
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        app.logger.exception("cloud pending record failed")
+    return known
 
 
 def _notify_cloud_branch_push(repo_name: str, branch: str, payload: dict) -> None:
-    """雲端 Claude 對話把成果推到 claude/* 分支時，電報通知教練（2026-10-15 教練：「我要等到什麼時候才知道他們交回來？」）。
+    """雲端 Claude 對話把成果推到 claude/* 分支時：①寫一筆「待接手」紀錄（下次開工第一件事，驗證後直接合併上線，不問教練同不同意）
+    ②電報通知教練（2026-10-15 教練：「我要等到什麼時候才知道他們交回來？」）。
     每個分支 10 分鐘內只通知一次，避免雲端連推好幾次洗版；通知失敗不影響 webhook 回應。"""
+    known = _record_cloud_branch_pending(repo_name, branch, payload)
     now = time.time()
     key = repo_name + "/" + branch
     if now - _CLOUD_PUSH_LAST.get(key, 0) < 600:
@@ -4211,7 +4239,9 @@ def _notify_cloud_branch_push(repo_name: str, branch: str, payload: dict) -> Non
     last = (commits[-1].get("message", "") if commits else "").splitlines()[0][:80]
     msg = (f"☁️ 雲端對話有交件：{repo_name} 的分支 {branch}\n"
            f"最新一筆：{last or '（無說明）'}\n"
-           f"雲端可能還在繼續做；我（軍師）下次被叫到會去驗收，驗過才上線。")
+           f"已排進軍師的待接手清單：軍師下次被叫到，第一件事就是驗證、用正式程式再測、合併上線，不會停在等您同意。")
+    if not known:
+        msg += f"\n⚠️ {repo_name} 還沒有雲端規則包（亮燈／交件流程），軍師會補上。"
     try:
         _notify_xiaolongxia(msg)
     except Exception:

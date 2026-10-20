@@ -186,6 +186,33 @@ def check_line_push_gate():
     bad("LINE推播閘門", "閘門被外掛更新洗掉，已自動補回；需要重啟主程式（launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway）才生效")
 
 
+def check_cloud_rules_pack():
+    """雲端對話規則包（教練 2026-10-20：雲端對話很笨、做完停在問同不同意）。
+    ①每個雲端倉庫線上要有跟 Mac 來源同版的規則包，過期/不見就當場重新同步；
+    ②雲端交件（claude/* 分支）超過 24 小時沒人接手 → 報 🟡（接手流程見 knowledges/雲端對話規則與接手流程.md）。"""
+    script = Path.home() / ".openclaw/workspace/scripts/cloud/sync_rules_to_repos.py"
+    r = subprocess.run([sys.executable, str(script), "status"], capture_output=True, text=True, timeout=120)
+    bad_lines = [l for l in r.stdout.splitlines() if l.startswith(("❌", "⚠️"))]
+    if bad_lines:
+        subprocess.run([sys.executable, str(script), "--force"], capture_output=True, text=True, timeout=300)
+        bad("雲端規則包", "已自動重新同步：" + "；".join(bad_lines), "🟡")
+    else:
+        ok("雲端規則包")
+    old = []
+    pend = WS / "state" / "cloud_branch_pending"
+    for f in pend.glob("*.json") if pend.exists() else []:
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+            if d.get("status") == "pending" and (datetime.now() - datetime.fromisoformat(d["first_seen"])).total_seconds() > 86400:
+                old.append(f'{d["repo"]}/{d["branch"]}')
+        except Exception:
+            continue
+    if old:
+        bad("雲端交件待接手", "超過 24 小時沒人接手：" + "、".join(old), "🟡")
+    else:
+        ok("雲端交件待接手")
+
+
 def check_cron_jobs():
     db = sqlite3.connect(f"file:{CRON_DB}?mode=ro", uri=True)
     failing = []
@@ -322,6 +349,7 @@ def main():
         check_cron_jobs()
         check_handoff_mirror()
         check_line_push_gate()
+        check_cloud_rules_pack()
     except Exception as e:
         bad("網址/排程檢查", f"檢查程式本身出錯：{e}")
 

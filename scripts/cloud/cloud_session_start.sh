@@ -25,6 +25,7 @@ cat <<'EOF'
 - 下方規則若顯示被截斷，立刻用 Read 讀完 ~/.openclaw/workspace/cloud_sync/GLOBAL_CLAUDE.md。
 
 EOF
+[ -f "$P/cloud_sync/CLOUD_RULES_COMMON.md" ] && { cat "$P/cloud_sync/CLOUD_RULES_COMMON.md"; printf '\n\n'; }
 cat "$P/cloud_sync/GLOBAL_CLAUDE.md"
 printf '\n\n=== 模型分工規則（knowledges/模型分工規則_Opus與Sonnet.md）===\n'
 cat "$P/knowledges/模型分工規則_Opus與Sonnet.md"

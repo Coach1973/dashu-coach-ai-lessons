@@ -29,6 +29,10 @@ cd "$WS" 2>/dev/null || exit 0
 # ~/.claude/ 的全域規則與技能不在 git 裡，雲端工作頁讀不到；每次回覆結束複製一份進 cloud_sync/
 bash "$WS/scripts/cloud/mirror_to_cloud_sync.sh" 2>/dev/null
 
+# 雲端倉庫（bni-chapters／my-tools／rongtree／taipeiema1017…）也要吃到同一套規則：來源有變才同步（事件觸發，沒變 0.1 秒離開、不碰網路）；
+# 背景執行不拖慢回覆，過程記在 state/cloud_rules_sync.log；壞了不影響這支（2026-10-21）
+( python3 "$WS/scripts/cloud/sync_rules_to_repos.py" >/dev/null 2>&1 & )
+
 # 只追蹤同步相關檔（避免 push noise，例如 node_modules、log）
 SYNC_PATHS=(
   "JUNSHI_HANDOFF_LATEST.md"

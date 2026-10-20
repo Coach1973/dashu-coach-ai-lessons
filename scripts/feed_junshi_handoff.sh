@@ -261,6 +261,17 @@ PY
     printf '%s\n' "$NEXT_TASK"
     echo ""
   fi
+  # 2026-10-21 雲端交件待接手：雲端對話推 claude/* 分支後 webhook 寫一筆紀錄，這裡列為第一件事。
+  # 教練 10/20：雲端做完停在「要你同意」、他去忙 8 小時回來還停著 → 接手＝驗證、正式程式再測、合併上線，不問教練同不同意。
+  CLOUD_PENDING=$(CLOUD_WS="$WORKSPACE" bash "$WORKSPACE/scripts/cloud_branch_pickup.sh" list 2>/dev/null)
+  if [ -n "$CLOUD_PENDING" ]; then
+    echo "## ☁️ 雲端對話交件，等你接手（第一件事：不問教練同不同意，驗證後直接合併上線）"
+    echo ""
+    printf '%s\n' "$CLOUD_PENDING" | while read -r L; do echo "- $L"; done
+    echo ""
+    echo "做法：\`bash scripts/cloud_branch_pickup.sh prep <倉庫> <分支>\`（另開資料夾、印差異與雲端的信）→ 用正式程式再測（雲端多半用假資料測）→ \`merge <倉庫> <分支> --verified\` → 回報教練白話結果。流程文件：knowledges/雲端對話規則與接手流程.md"
+    echo ""
+  fi
   # 2026-09-26教練抓到：Sonnet寫給Opus的信(knowledges/LETTER_*)只在第4步清單裡佔一行，
   # 而本注入常超過10KB，Claude Code只給模型看前2KB預覽、其餘存成檔案，第2~6步實際上看不到，
   # 軍師開工沒讀信、教練要自己點名才看到。信件一律放最前面(預覽範圍內)並要求當場讀完。

@@ -73,6 +73,9 @@ appmod.GITHUB_WEBHOOK_SECRET = SECRET
 NOTES = []
 appmod._notify_xiaolongxia = lambda text, *a, **k: NOTES.append(text) or True
 appmod._CLOUD_PUSH_LAST.clear()
+import tempfile
+from pathlib import Path
+appmod.CLOUD_PENDING_DIR = Path(tempfile.mkdtemp()) / "cloud_branch_pending"
 cloud = push("rongtree", ref="refs/heads/claude/rongtree-redesign")
 cloud["commits"] = [{"message": "榮樹下改版：主題清單\n\n細節"}]
 CALLS.clear()
@@ -87,6 +90,20 @@ check("一般分支（非 claude/*）→ 不通知", len(NOTES) == 1)
 gone = push("rongtree", ref="refs/heads/claude/other"); gone["deleted"] = True
 r = send(gone)
 check("刪除分支 → 不通知", len(NOTES) == 1)
+# 待接手紀錄（雲端交件 → Mac 軍師下次開工第一件事：驗證、合併、上線，不問教練同不同意）
+pf = appmod.CLOUD_PENDING_DIR / "rongtree__claude__rongtree-redesign.json"
+rec = json.loads(pf.read_text(encoding="utf-8")) if pf.exists() else {}
+check("雲端分支推送 → 寫一筆待接手紀錄（pending、有最新說明與 head）",
+      rec.get("status") == "pending" and rec.get("head") == "abcdef1234567" and "榮樹下改版" in rec.get("last_message", "") and rec.get("has_rules_pack") is True)
+check("非 claude/* 與刪除分支 → 不寫待接手紀錄", len(list(appmod.CLOUD_PENDING_DIR.glob("*.json"))) == 1)
+unk = push("brand-new-repo", ref="refs/heads/claude/x"); unk["commits"] = [{"message": "新東西"}]
+send(unk)
+check("沒有規則包的新倉庫 → 紀錄標 has_rules_pack=False，通知提醒補上",
+      json.loads((appmod.CLOUD_PENDING_DIR / "brand-new-repo__claude__x.json").read_text(encoding="utf-8"))["has_rules_pack"] is False
+      and "還沒有雲端規則包" in NOTES[-1])
+rec["status"] = "done"; pf.write_text(json.dumps(rec), encoding="utf-8")
+send(cloud)
+check("已接手完成(done)的同一個 head 再推 → 不被改回 pending", json.loads(pf.read_text(encoding="utf-8"))["status"] == "done")
 appmod._notify_xiaolongxia = lambda *a, **k: True
 
 appmod.GITHUB_WEBHOOK_SECRET = ""
