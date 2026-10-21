@@ -23,6 +23,7 @@ description: 教練說「賈維斯智慧體的自我檢測系統」「賈維斯�
 python3 ~/.openclaw/workspace/scripts/rules_health_audit.py
 ```
 讀 `distill/rules_health_report.md`：過時路徑、重複段落、總字數趨勢、反射命中。
+量字數一律用 `python3 -c "print(len(open(f,encoding='utf-8').read()))"`；`wc -m` 在這台 Mac 算的是位元組，中文會多算約 3 倍（2026-10-21 第一次執行就算錯）。
 
 ### 第 2 步：五問逐項查（每問都要有工具查到的證據）
 
@@ -64,7 +65,5 @@ python3 ~/.openclaw/workspace/scripts/rules_health_audit.py
 ## 什麼時候跑
 教練說口令時跑完整套。收工時 `rules_health_audit.py` 已自動跑機械層，報告第 3 節會寫出規則總字數比第一次紀錄多或少多少；看到變多，收工回報順帶一句即可。不設定時排程。
 
-## 第一次執行時已知要查的（2026-10-21 建立技能時發現）
-- 小龍蝦開機檔 `workspace/SOUL.md` 40,893 字、上限設定 40,000 字（`openclaw.json` bootstrapMaxChars）；日誌暫無截斷紀錄，要確認實際有沒有被截。
-- 專案 CLAUDE.md 與特助心法重複約 877 字（守則全文抄了一份）。
-- 每場常駐約 5.4 萬字（全域 31,225＋專案 22,587）。
+## 上一次檢測留下的（下一次先看）
+2026-10-21 第一次：佩佩分身 MEMORY.md 被截已修（降到 18,976 字）；小龍蝦主分身 SOUL.md 19,353 字已達上限 97%；主分身 TOOLS.md、HEARTBEAT.md 不在開機清單，裡面的規則是否送得到模型待查；其餘建議見當天報告。
