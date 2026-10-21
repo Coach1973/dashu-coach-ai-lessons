@@ -1203,6 +1203,73 @@ try:
 except Exception:
     pass
 
+# ════════════════════════════════════════════════
+# O. 含糊指稱鎖（擋）—— 2026-10-21 教練：「你給了一句非常模糊的話，害我去搜尋是不是這兩條」
+#    回覆講到「一條／某個／那個…網址、連結、群組、機器人、網站」，卻沒寫出是哪一個，教練只能自己猜。
+#    同類第二次（第一次 10/18 群組沒寫全名，記憶 feedback_always_name_the_group_bot_site_in_full），
+#    照執行細則 N8 改機制、不加記憶。只看最後給教練的回覆；引用（> 開頭、「」內）與程式碼區塊不算。
+#    一條／某個＝同一段要寫出來；這條／那個＝整則回覆或教練剛貼的話裡有寫出來就算。
+#    網址／連結要有 http、網域或 `/路徑`；群組／機器人／網站要有「全名」或網址。做／建／開一個新網站不算。
+# ════════════════════════════════════════════════
+try:
+    # 回測 333 則真實回覆後收緊（10/21）：中間只准隔 4 個字，或「…的…」修飾（一條帶 key= 的策展上傳網址）；
+    # 半形逗號、頓號也斷句；同一個／哪一個／每一個／各有一個／沒有一個／十一個（數字）／貼了一個（自己做的測試）
+    # 不是在指某一條，不算；「某個」中文多半是泛指（以後要停掉某個網站），不列入
+    _SEP = r"[^。！？，,、；;：:\n]"
+    _VAGUE = re.compile(r"(一條|一個|另一條|另一個|有條|那條|那個|這條|這個)"
+                        r"(?:%s{0,4}?|%s{0,12}?的%s{0,6}?)(短網址|網址|連結|群組|機器人|網站)" % (_SEP, _SEP, _SEP))
+    # 這條／那個：上下文接得上就不算含糊——看這一則、教練剛說的話、再往前兩輪的對話
+    _recent, _seen_prompts = [], 0
+    for _e in reversed(EVENTS):
+        if not isinstance(_e, dict):
+            continue
+        if _e.get("type") == "user" and _is_real_user_prompt(_e):
+            _recent.append(_prompt_text(_e))
+            _seen_prompts += 1
+            if _seen_prompts >= 3:
+                break
+        elif _e.get("type") == "assistant":
+            _recent += [c.get("text", "") for c in _content_list(_e) if isinstance(c, dict) and c.get("type") == "text"]
+    _URL_ID = re.compile(r"https?://|\b[A-Za-z0-9-]+\.(?:com|io|tw|app|net|org|me)\b|`/[^`\s]+`")
+    _NAME_ID = re.compile(r"「[^」]{2,}」|『[^』]{2,}』|https?://|\b[A-Za-z0-9-]+\.(?:com|io|tw|app|net|org|me)\b")
+    _vague_hits, _para, _paras, _in_code = [], [], [], False
+    for _ln in LAST_LINES + [""]:
+        if _ln.strip().startswith("```"):
+            _in_code = not _in_code
+            continue
+        if _in_code or _ln.lstrip().startswith(">"):
+            continue
+        if _ln.strip():
+            _para.append(_ln)
+        elif _para:
+            _paras.append("\n".join(_para))
+            _para = []
+    _whole = "\n".join(_recent)
+    for _blk in _paras:
+        _plain = strip_quotes(_blk)
+        for _m in _VAGUE.finditer(_plain):
+            _before = _plain[max(0, _m.start() - 2):_m.start()]
+            if re.search(r"[做建開架蓋新加設寫弄同哪每任各十百千萬零〇二三四五六七八九兩幾0-9]$", _before) \
+                    or _before in ("沒有", "各有") or re.fullmatch(r"[做建開架蓋新加設寫弄貼造]了", _before):
+                continue
+            _need = _URL_ID if _m.group(2) in ("短網址", "網址", "連結") else _NAME_ID
+            _scope = _whole if _m.group(1) in ("那條", "那個", "這條", "這個") else _blk
+            if not _need.search(_scope):
+                _vague_hits.append(_m.group(0))
+    if _vague_hits:
+        MESSAGES.append(
+            "\n🔴🔒 含糊指稱鎖（2026-10-21 教練：「你給了一句非常模糊的話，害我去搜尋是不是這兩條」）\n" + BAR + "\n"
+            "回覆裡講到下面這些，卻沒寫出到底是哪一個，教練只能自己猜：\n" +
+            "".join("  • %s\n" % h for h in _vague_hits[:5]) +
+            "\n✅ 立刻改寫回覆：\n"
+            "  • 網址／連結：寫出完整網址；含金鑰就寫網址開頭＋項目全名＋在哪一頁哪個分類\n"
+            "  • 群組／機器人／網站：寫「全名」\n"
+            "  • 教練要的是看一次就懂，不是自己去對是哪一條\n" + BAR + "\n")
+        log_violation("rule_vague_reference_violations.log", "".join("  • %s\n" % h for h in _vague_hits[:5]))
+        BLOCK = True
+except Exception:
+    pass
+
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
 # ────────────────────────────────────────────────

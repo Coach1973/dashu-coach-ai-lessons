@@ -282,6 +282,24 @@ with open(sys.argv[1],'w') as f:
 PY
 run_case "改HTML有跳Chrome"  "$HTMLOKF"
 
+echo "════ 🔴 2026-10-21 規則O 含糊指稱鎖：講「一條網址／一個群組」卻沒寫出是哪一個 ════"
+run_case_direct "O-10/21原句一條帶key網址" "$(mk vague_orig '- 大樹作品一覽（`coach888`）是公開網頁，頁面裡有一條帶 `key=` 的策展上傳網址，任何人都看得到。')" 1
+run_case_direct "O-一個群組沒寫名字"       "$(mk vague_group '另外有一個群組也收到了同樣的通知。')" 1
+run_case_direct "O-對照組-有寫完整網址"     "$(mk vague_url_ok '作品一覽裡有一條網址 https://event.bymyway.com/curation/upload ，沒登入會被帶去登入頁。')" 0
+run_case_direct "O-對照組-群組有寫全名"     "$(mk vague_group_ok '另外有一個群組「活動報名即時通知」也收到了同樣的通知。')" 0
+run_case_direct "O-對照組-十一個網站(數字)" "$(mk vague_number '十一個網站目前都回 200。')" 0
+run_case_direct "O-對照組-做一個新網站"     "$(mk vague_create '我可以幫您做一個網站放活動資訊。')" 0
+VAGUECTX="$FIXDIR/vague_context.jsonl"
+python3 - "$VAGUECTX" <<'PY'
+import json,sys
+with open(sys.argv[1],'w') as f:
+    for role, text in (('user','請幫我看一下'), ('assistant','上架好了 https://event.bymyway.com/curated/demo/'),
+                       ('user','對不起剛剛沒看到'), ('assistant','不用抱歉，這個網站昨天就上架了。')):
+        msg = {'role':'user','content':text} if role == 'user' else {'content':[{'type':'text','text':text}]}
+        f.write(json.dumps({'type':role,'message':msg}, ensure_ascii=False)+'\n')
+PY
+run_case_direct "O-對照組-這個網站上一輪講過" "$VAGUECTX" 0
+
 echo "════════════════════════════════════════"
 printf '通過 %s 項，不一致 %s 項\n' "$PASS" "$FAIL"
 rm -rf "$TESTHOME" "$FIXDIR"
