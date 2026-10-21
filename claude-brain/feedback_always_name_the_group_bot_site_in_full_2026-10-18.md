@@ -13,3 +13,5 @@ metadata:
 - 提到群組寫全名；提到機器人寫「主機器人」「巴哈助理」這類教練叫得出的名字；提到網站寫網址或網站名。
 - 查群組名：各分身資料庫 `~/.openclaw/agents/<agent>/agent/openclaw-agent.sqlite` 的 `session_windows.display_name`（例如 `telegram:g-活動報名即時通知`）。
 - 同類錯第二次出現就做成 reply 時機的反射（N8），不再加記憶。與 [[feedback-chat-written-prompts-may-be-detour-ask-coach-first]] 同日。
+
+**10/21 同類第二次 → 已改機制**：我寫「作品一覽裡有一條帶 key= 的策展上傳網址」沒寫是哪一條，教練只好猜兩條來問（「你給了一句非常模糊的話，害我去搜尋是不是這兩條」）。已做成收工前檢查規則 O「含糊指稱鎖」（`scripts/stop_rules_master.py`，workspace `faea30ffa`，試金石案例129）：回覆寫「一條／一個／這個…網址、連結、群組、機器人、網站」卻沒寫出網址或「全名」就擋下。

@@ -16,3 +16,5 @@ metadata:
 **2026-10-19 教練定的兩個默契**：
 1. **過 30% 之後，每則回覆在所有內容講完之後的「最後一句」固定寫「這場對話已用約 X%」**（教練原話：「我們看到最後一定都是看最後一句的總結」）。`scripts/context_percent_hook.py` 的提醒文字已改成叫 AI 放最後一句（30% 以下的定期報告仍放第一行）；亮燈仍在第一行；收工回報第一句固定「總結已完成…」、最後一句才是容量。
 2. **關鍵字**：教練問「對話百分比剩多少」（或「目前對話的百分比是多少」、「容量剩多少」）→ hook 偵測 UserPromptSubmit 的 `prompt`，**不論有沒有過 30%** 都送出「已用 X%、剩 Y%」，AI 直接列給教練、不用叫 get_usage。5 小時／每週額度仍只在問總結那一句才用 get_usage 查。測試 `scripts/test_context_percent_hook.py`（第 11b／12b／13 系列）。
+
+**10/21 問總結的固定格式（教練肯定並要求 Claude 介面所有 AI 照做）**：用收尾框（wrap_up）問「對話容量 xx%、本週額度 xx%，要現在總結嗎？」，按鈕第一顆「總結」（message「總結」）。教練原話：「如果你能主動問我，我連『總結』兩個字都不用打，直接按總結就好了…決定權在我。」已寫進 `scripts/context_percent_hook.py` 的 SUMMARY_ASK 與反射 R-ASK-SUMMARY-WITH-CONTEXT-PCT。
