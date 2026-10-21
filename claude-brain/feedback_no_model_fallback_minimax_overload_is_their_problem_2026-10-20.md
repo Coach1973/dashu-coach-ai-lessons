@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: c07a66b5-34ac-4890-a710-97b4e1d5cefb
-  modified: 2026-10-20T14:25:28.488Z
+  modified: 2026-10-21T01:34:39.511Z
 ---
 
 **裁示（教練 2026-10-20 22:24 台灣時間）**：小龍蝦全部分身只用 MiniMax-M3。MiniMax 過載（HTTP 529）時，**我們不做任何事**，也不接另一個付費 API 當備援。
@@ -17,6 +17,6 @@ metadata:
 - 現況已符合他的意思：openclaw.json 沒有任何模型備援欄位，日誌每次寫 `fallbackConfigured: false`、`decision: surface_error`（錯誤直接丟給使用者）；8 個分身（main/kong/peipei/bni_tainan/jiaolian_thoughts/yijing/yang/rongshuxia）全是 `minimax/MiniMax-M3`；`models.mode: replace`。
 - 之後若有人想加備援、或系統更新帶入預設備援，要當成「會燒錢」先攔下，需教練明說。
 
-**10/20 事件事實（不必重查）：** 10:13～11:03 共 11 次對話失敗（另 07:02 一次），MiniMax 回 `HTTP 529 The server cluster is currently under high load`；每次對話系統自動重試 7～9 次、約 70 秒後放棄；Telegram 與 LINE 都受影響。佩君老師（巴哈助理群）10:57～11:02 連發 5 句全失敗，13:52 起恢復；LINE 榮樹下群 10:43～10:50 失敗 4 次，吻合邱裕榮 10:49「直接把小龍蝦移除」。11:03:43 後無再發生。
+**10/20 事件事實（不必重查）：** 10:13～11:03 共 10 次對話失敗，另 07:02 一次，合計 11 次；MiniMax 回 `HTTP 529 The server cluster is currently under high load`；每一輪留下 7～9 行錯誤紀錄、約 70 秒後放棄（看起來是系統自動重試，未完整證實）；Telegram 與 LINE 都受影響。佩君老師（巴哈助理群）10:57～11:02 連發 5 句全失敗，13:52 起恢復；LINE 榮樹下群 10:43～10:50 失敗 4 次，吻合邱裕榮 10:49「直接把小龍蝦移除」。11:03:43 後無再發生。
 
 **沒做、教練沒要求（N7 只記不動）：** 失敗時給使用者看的訊息（目前多數輪次靜默無回）；連續出錯後「對話重新綁定失敗」第二層症狀（寫不進錯誤訊息）。
