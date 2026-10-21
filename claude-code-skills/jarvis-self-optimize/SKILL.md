@@ -62,7 +62,7 @@ python3 ~/.openclaw/workspace/scripts/rules_health_audit.py
 做一頁 HTML 報告（Artifact）：五問各自的結論、改了什麼（附存檔編號）、刪了多少字、等教練拍板的建議（每項一句話＋好處）。跑 `scripts/deliver_open.sh <網址>` 跳出來；Artifact 會自動收進大樹作品集。回覆只放 3～5 行重點＋網址。最後 commit＋push 給存檔編號。
 
 ## 什麼時候跑
-教練說口令時跑完整套。收工時 `rules_health_audit.py` 已自動跑機械層；若常駐總字數比上次體檢多 10% 以上，收工回報最後一行提一句「規則變胖了，可以找時間跑賈維斯自我檢測」。不設定時排程。
+教練說口令時跑完整套。收工時 `rules_health_audit.py` 已自動跑機械層，報告第 3 節會寫出規則總字數比第一次紀錄多或少多少；看到變多，收工回報順帶一句即可。不設定時排程。
 
 ## 第一次執行時已知要查的（2026-10-21 建立技能時發現）
 - 小龍蝦開機檔 `workspace/SOUL.md` 40,893 字、上限設定 40,000 字（`openclaw.json` bootstrapMaxChars）；日誌暫無截斷紀錄，要確認實際有沒有被截。
