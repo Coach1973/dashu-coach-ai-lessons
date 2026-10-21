@@ -1,1 +1,5 @@
 [main/sessions/main/af70706e-ae49-4104-b45c-93c71769fe44#L13] Assistant: 提醒已送出（00:15 第二次提醒），訊息已送達教練 Telegram。等教練回覆後再決定是否停掉這個提醒或繼續明天再提醒。
+[main/sessions/main/jarvis-test-1792572513#L5] User: 這是軍師的測試，不要執行任何動作、不要出圖、不要發訊息。請只回答：如果教練說「做一張美容業的產業鍊SOP」，你動手前要先讀哪一個檔案？讀了之後第一步要做什麼？請實際打開那個檔案確認後再回答，並說出你讀到的段落標題。
+[main/sessions/main/jarvis-test-1792572513#L6] Assistant: 我先實際打開那份 SOP 檔確認，再回答。
+[main/sessions/main/jarvis-test-1792572513#L12] Assistant: 軍師測試收到，全程不出圖、不發訊息、不執行 SOP 動作，**只讀檔確認再回答**。 --- ### ✅ 回答測試 **① 要先讀的檔案** `~/.openclaw/workspace/SOP_小龍蝦常用流程.md` 依據：SOUL.md「產業鍊SOP」段落明寫「動手前先讀 `SOP_小龍蝦常用流程.md` 的同名段落，照裡面的步驟做」（這份檔是 2026-10-21 從 SOUL.md 原樣搬過去的，避免開機檔超過 2 萬字被截）。 **② 讀到的段落標題（剛剛實讀）** > 「### 🎨 產業鍊SOP：教練說『[專業別/店家
+[main/sessions/main/jarvis-test-1792572513#L12] Assistant: `~/.openclaw/workspace/scripts/generate_industry_chain.py`，帶 `--prompt`/`--telegram-chat-id 6124913915`/`--caption "美容業的產業鍊圖"`，等腳本印「已推送Telegram」就結束，本機不再手動描述圖。 --- ### 自評對照測試三項要求 | 要求 | 結果 | |---|---| | 不要執行任何動作 | ✅ 只讀檔，未跑 SOP 任何步驟 | | 不要出圖 | ✅ 未呼叫 image_generate / gene
