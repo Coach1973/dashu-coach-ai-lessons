@@ -340,7 +340,15 @@ PY
   LAST_SYNC=0
   [[ -f "$SYNC_MARKER" ]] && LAST_SYNC=$(cat "$SYNC_MARKER" 2>/dev/null || echo 0)
   # 2026-09-27：workspace/CLAUDE.md只有對話框開在workspace底下才會被載入，開在~/.openclaw就看不到，一律完整貼上
-  if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" && "$HOOK_CWD" == "$WORKSPACE"* ]]; then
+  # 2026-10-21 賈維斯自我檢測（教練核准 E）：「開工」分身（.claude/worktrees/…）的 CLAUDE.md 也帶著接力棒鏡像，
+  # 它的「最後同步」那行跟 workspace/CLAUDE.md 一樣，就代表鏡像已載入，不再重複貼；比對不到一律照舊貼上
+  MIRROR_IN_CWD=0
+  if [[ -n "$HOOK_CWD" && -f "$HOOK_CWD/CLAUDE.md" ]]; then
+    _ws_sync=$(grep -m1 "最後同步：" "$WORKSPACE/CLAUDE.md" 2>/dev/null)
+    _cwd_sync=$(grep -m1 "最後同步：" "$HOOK_CWD/CLAUDE.md" 2>/dev/null)
+    [[ -n "$_ws_sync" && "$_ws_sync" == "$_cwd_sync" ]] && MIRROR_IN_CWD=1
+  fi
+  if [[ "$LAST_SYNC" -ge "$HANDOFF_MTIME" && ( "$HOOK_CWD" == "$WORKSPACE"* || "$MIRROR_IN_CWD" == 1 ) ]]; then
     echo "（接力棒全文已透過 workspace/CLAUDE.md 自動鏡像注入，內容與 JUNSHI_HANDOFF_LATEST.md 一致，不重複貼上。若這是這場對話第一則訊息卻沒看到 CLAUDE.md 內容，代表鏡像沒生效，請直接讀 \`JUNSHI_HANDOFF_LATEST.md\` 原檔。）"
   else
     # 2026-10-02 瘦身（教練「心＋最新一棒摘要」）：不再整份 30KB 全貼，只貼最新一棒＋「🙋要教練決定」區；

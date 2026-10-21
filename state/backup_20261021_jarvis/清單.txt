@@ -1,2 +1,4 @@
 SOUL AGENTS 專案CLAUDE 全域CLAUDE hermes_SOUL openclaw.json｜2026-10-21 16:35 賈維斯自我檢測改前備份
 peipei_MEMORY.md｜佩佩分身記憶檔改前
+執行細則.md｜N3 改前
+feed_junshi_handoff.sh｜E 改前
