@@ -30,6 +30,11 @@ for y in range(127,149):
     for x in range(64,160):
         t=(x-64)/96; im.putpixel((x,y), tuple(int(v) for v in (1-t)*l+t*r))
 text(111, 137, "中華新媒體", 17, (255,255,255))
+for y in range(152,172):
+    yy=min(y,158); l = a[yy,48:52].mean(0); r = a[yy,170:174].mean(0)
+    for x in range(56,166):
+        t=(x-56)/110; im.putpixel((x,y), tuple(int(v) for v in (1-t)*l+t*r))
+text(111, 162, "影音發展協會", 17, (255,255,255))
 im.save(dst)
 im.crop((1260,180,1480,680)).resize((660,1500)).save("/tmp/z3_trophy.png")
-im.crop((10,20,210,220)).resize((800,800)).save("/tmp/z3_logo.png")
+im.crop((10,20,210,220)).resize((800,800), Image.LANCZOS).save("/tmp/z3_logo.png")
