@@ -1,3 +1,4 @@
+- [🎨 海報換人換字：巴哈出圖失敗根因（內建 Google 金鑰無效）→改 lk888 edits 帶模板＋照片兩張圖；規則只改照片＋頭銜、獎杯不動（僅教練本人橫版寫乾淨世界）；AI 小字常錯改用 PIL 貼字；SOP 在 agents/peipei(2026-10-22)](reference_poster_swap_lk888_two_images_bahai_sop_2026-10-22.md)
 - [🔴🔴 教練10/21定：規則越少越好；說「賈維斯智慧體的自我檢測系統／優化系統」直接跑技能 jarvis-self-optimize；新增規則一進一出；小龍蝦開機檔每檔2萬／總6萬、砍中間、TOOLS/HEARTBEAT不在開機清單(3b073e447)(2026-10-21)](feedback_rules_fewer_is_wiser_jarvis_self_check_2026-10-21.md)
 - [🔴🔴 教練說「跟X一模一樣／比照X」＝照抄X的程式只換資料，不准另寫一套再一項項補、不准說「一模一樣沒被定義」；my-tools 因此改 11 版、21 項對照表在 README(2026-10-21)](feedback_identical_means_copy_the_reference_code_2026-10-21.md)
 - [🔴🔴 教練裁示（10/20）：MiniMax 過載(529)是對方的事，不設備援、不接第二家付費 API（上次自動切換忘了切回，一天燒 66 美金）；現況 8 分身全 MiniMax-M3 無備援＝符合；10/20 上午 10:13～11:03 過載事實(2026-10-20)](feedback_no_model_fallback_minimax_overload_is_their_problem_2026-10-20.md)
