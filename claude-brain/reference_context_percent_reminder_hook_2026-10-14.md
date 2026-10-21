@@ -2,7 +2,10 @@
 name: reference-context-percent-reminder-hook-2026-10-14
 description: 對話容量提醒 hook：context 跨 30/35/40/50% 各提醒教練一次（教練 30% 出頭就開新對話）；怎麼算、怎麼改門檻、桌面版看不到 context 時怎麼查
 metadata:
+  node_type: memory
   type: reference
+  originSessionId: 330ab967-c78b-4986-8507-ec4cff314930
+  modified: 2026-10-21T01:18:45.387Z
 ---
 
 2026-10-14 教練發現桌面版畫面看不到 context 用量（只剩 5 小時／每週額度），請 AI 在 30、35、40、50% 各提醒一次；他習慣 30% 出頭就開新對話框。不需升級模型。
@@ -16,5 +19,7 @@ metadata:
 **2026-10-19 教練定的兩個默契**：
 1. **過 30% 之後，每則回覆在所有內容講完之後的「最後一句」固定寫「這場對話已用約 X%」**（教練原話：「我們看到最後一定都是看最後一句的總結」）。`scripts/context_percent_hook.py` 的提醒文字已改成叫 AI 放最後一句（30% 以下的定期報告仍放第一行）；亮燈仍在第一行；收工回報第一句固定「總結已完成…」、最後一句才是容量。
 2. **關鍵字**：教練問「對話百分比剩多少」（或「目前對話的百分比是多少」、「容量剩多少」）→ hook 偵測 UserPromptSubmit 的 `prompt`，**不論有沒有過 30%** 都送出「已用 X%、剩 Y%」，AI 直接列給教練、不用叫 get_usage。5 小時／每週額度仍只在問總結那一句才用 get_usage 查。測試 `scripts/test_context_percent_hook.py`（第 11b／12b／13 系列）。
+
+**10/21 09:17 教練找到桌面版畫面看容量的位置**：側邊欄的「背景資訊」會列出這場 100 萬空間用了多少，並分項（Messages、Memory Files、Auto-compact buffer、MCP tools、System tools、System prompt、Skills、MCP server instructions）。教練當時看到共 141K。他說開著側邊欄就能隨時看，AI 不用頻繁報；**但規則不變：過 30% 照報＋問要不要總結**。我用他給的數字加總：扣掉 Auto-compact buffer（3.3%）剛好約 14.0%≈141K，所以側邊欄的「用量」應是不含 buffer（這是算出來的，沒在畫面上確認過）。報容量時若跟教練畫面差幾個百分點，先想到「畫面可能不算 buffer」，不要硬說他看錯。
 
 **10/21 問總結的固定格式（教練肯定並要求 Claude 介面所有 AI 照做）**：用收尾框（wrap_up）問「對話容量 xx%、本週額度 xx%，要現在總結嗎？」，按鈕第一顆「總結」（message「總結」）。教練原話：「如果你能主動問我，我連『總結』兩個字都不用打，直接按總結就好了…決定權在我。」已寫進 `scripts/context_percent_hook.py` 的 SUMMARY_ASK 與反射 R-ASK-SUMMARY-WITH-CONTEXT-PCT。
