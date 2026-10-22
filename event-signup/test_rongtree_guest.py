@@ -108,11 +108,15 @@ import datetime as _dt
 fut = (_dt.date.today() + _dt.timedelta(days=3)).isoformat()
 sched.write_text(json.dumps({"events": [
     {"id": "abcd1234", "date": fut, "start": "19:00", "end": "20:00", "title": "榮樹下訪談：測試來賓", "guest": "測試來賓", "form_token": TOKEN},
-    {"id": "eeee5555", "date": fut, "start": "20:00", "end": "21:00", "title": "榮樹下訪談", "form_token": "OtherToken456"},
+    {"id": "eeee5555", "date": fut, "start": "20:00", "end": "21:00", "title": "榮樹下訪談", "form_token": "OtherToken456", "booked_by": "邱裕榮"},
+    {"id": "gggg7777", "date": fut, "start": "22:00", "end": "23:00", "title": "榮樹下訪談", "form_token": "NobodyToken789"},
     {"id": "ffff6666", "date": fut, "start": "08:00", "end": "09:00", "title": "BNI 例會"}]}, ensure_ascii=False), encoding="utf-8")
 r = client.get("/api/rongtree/prep"); j = r.get_json(); raw = r.get_data(as_text=True)
 check("前置作業只列榮樹下訪談、附資料表網址、標出誰已交", r.status_code == 200 and len(j["upcoming"]) == 2
       and j["upcoming"][0]["submitted"] and not j["upcoming"][1]["submitted"] and j["upcoming"][1]["form"] == "/rongtree/guest/OtherToken456")
+check("沒有人預約、不知道來賓是誰的場次不列（不寫「來賓邀請中」，教練 2026-10-22）", all(u["form"] != "/rongtree/guest/NobodyToken789" for u in j["upcoming"]))
+check("有邀約人的場次帶出邀約人", j["upcoming"][1]["booked_by"] == "邱裕榮")
+check("前置作業附上空檔區間清單", isinstance(j.get("open"), list))
 check("已交來賓公開姓名、職稱、一句話介紹、照片", j["guests"] and j["guests"][0]["name"] == "測試來賓"
       and j["guests"][0]["title"] == "測試公司 董事長" and j["guests"][0]["line"] == "重做成功" and j["guests"][0]["photo"])
 check("公開資料不含電話、不談的話題、AI 訪綱", all(x not in raw for x in ("0912-345-678", "家人", "核心問題")))

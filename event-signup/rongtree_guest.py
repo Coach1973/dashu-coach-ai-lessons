@@ -197,7 +197,34 @@ def _upcoming(days=60):
             continue
         if now - dt.timedelta(hours=2) <= start <= now + dt.timedelta(days=days):
             out.append(e)
+    # 2026-10-22：同一場在總表（有來賓名字、資料表網址）和 Google 日曆副本各一筆時，只留總表那筆，不重複列
+    mine = {(e["date"], e["start"]) for e in out if e.get("source") != "Google日曆"}
+    out = [e for e in out if e.get("source") != "Google日曆" or (e["date"], e["start"]) not in mine]
     return sorted(out, key=lambda e: (e["date"], e["start"]))
+
+
+def _open_evenings(days=7):
+    """接下來幾天晚上還有空的整段時間（教練 2026-10-22：不寫「來賓邀請中」，直接顯示例如「19:00–23:00 有空檔」）。
+    跟預約頁同一套算法（coach_schedule_view._day_windows：已有訪談前後各留 30 分鐘）。"""
+    import datetime as dt
+    import coach_schedule_view as v
+    try:
+        data = json.loads(SCHEDULE.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return []
+    now = dt.datetime.now(dt.timezone(dt.timedelta(hours=8)))
+    out = []
+    for i in range(days):
+        d = now.date() + dt.timedelta(days=i)
+        busy = v._busy(d, data)
+        if any((s, e) == (0, 1440) for s, e, _ in busy):
+            continue
+        for a, b in v._day_windows(busy, data)[1]:
+            if i == 0:  # 今天：已經過去的部分不算
+                a = max(a, -(-(now.hour * 60 + now.minute) // 30) * 30)
+            if b - a >= v.SESSION:
+                out.append({"date": d.isoformat(), "start": v._fmt(a), "end": v._fmt(b)})
+    return out
 
 
 def one_liner(r):
@@ -219,9 +246,12 @@ def public_prep():
         tok = e.get("form_token")
         mine = sorted((r for r in rows if tok and _slot_has(r["token"], tok)), key=lambda r: len(r["token"]))
         names = [json.loads(r["data"])["name"] for r in mine if r["public"]]
+        guest = "、".join(names) or e.get("guest") or ""
+        if not guest and not e.get("booked_by"):
+            continue  # 2026-10-22 教練：沒有人預約、連來賓是誰都不知道的，不列、不寫「來賓邀請中」
         upcoming.append({"date": e["date"], "start": e["start"], "end": e.get("end", ""),
                          "tentative": bool(e.get("tentative")),
-                         "guest": "、".join(names) or e.get("guest") or "",
+                         "guest": guest, "booked_by": e.get("booked_by", ""),
                          "form": f"/rongtree/guest/{tok}" if tok else "", "submitted": bool(mine), "count": len(mine)})
     guests = []
     for r in rows:
@@ -231,7 +261,7 @@ def public_prep():
         guests.append({"name": d.get("name", ""), "title": d.get("title", ""), "line": one_liner(r),
                        "date": r["date"], "start": r["start"],
                        "photo": f"/rongtree/face/{r['token']}.jpg" if r["photo_file"] else ""})
-    return {"ok": True, "upcoming": upcoming, "guests": guests}
+    return {"ok": True, "upcoming": upcoming, "open": _open_evenings(), "guests": guests}
 
 
 def set_public(token, public: bool):

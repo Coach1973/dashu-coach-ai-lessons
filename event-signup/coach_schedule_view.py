@@ -136,6 +136,24 @@ def _day_slots(busy, data):
     return _starts(_free(busy, ws, es - BUFFER)), _starts(_free(busy, es, ee))
 
 
+def _day_windows(busy, data):
+    """(白天空檔, 晚上空檔)：整段可約區間，例如晚上 [(19:00, 23:00)]。
+    2026-10-22 教練：不再切成固定的整點格子，來賓自己挑區間內任何一個小時（例如 19:30–20:30）；
+    已有訪談的前後各留 30 分鐘，已經算在 _free 裡。"""
+    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
+    eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
+    ws, es, ee = _hm(win["start"]), _hm(eve["start"]), _hm(eve["end"])
+    return _free(busy, ws, es - BUFFER), _free(busy, es, ee)
+
+
+def _fits(st, windows):
+    """這一個小時（st 起算 60 分鐘）是否完整落在某段空檔裡"""
+    return any(a <= st and st + SESSION <= b for a, b in windows)
+
+
+STEP = 30  # 預約頁下拉選單的開始時間間隔（19:00、19:30、20:00…）
+
+
 def _refresh_google():
     """打開預約頁、預約的當下才去看 Google 日曆（一分鐘內看過就不再看）；讀不到就用現有資料。"""
     import subprocess
@@ -167,8 +185,8 @@ def book(date_s, start_s, booking_type):
     try:
         data = json.loads(DATA.read_text(encoding="utf-8"))
         busy = _busy(d, data)
-        if st not in sum(_day_slots(busy, data), []):
-            return False, "這個時段剛剛被預約走了，請選別的時間"
+        if st % 5 or not _fits(st, sum(_day_windows(busy, data), [])):
+            return False, "這個時段剛剛被預約走了，或離前後訪談不到 30 分鐘，請選別的時間"
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
               "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
               "booking_type": booking_type, "booked_by": who, "note": f"預約人：{who}（預約頁點選）"}
@@ -205,12 +223,13 @@ def render(token: str = "") -> str:
     today = dt.datetime.now(TZ).date()
     cards, n_open = [], 0
 
-    def slot_btns(d, starts, cls):
+    def slot_btns(d, windows, cls):
+        """一段空檔一顆按鈕（例：19:00–23:00 有空檔），點下去再選要哪一個小時"""
         lab = f"{d.month}/{d.day}（{WEEK[d.weekday()]}）"
         return "".join(
-            f'<button type="button" class="slot {cls}" data-d="{d.isoformat()}" data-t="{_fmt(t)}" '
-            f'data-l="{escape(lab)} {_fmt(t)}–{_fmt(t + 60)}">{_fmt(t)}</button>'
-            for t in starts
+            f'<button type="button" class="slot {cls}" data-d="{d.isoformat()}" data-a="{a}" data-b="{b}" '
+            f'data-l="{escape(lab)}">{_fmt(a)}–{_fmt(b)}<small>有空檔</small></button>'
+            for a, b in windows
         )
 
     week_of = None
@@ -225,7 +244,7 @@ def render(token: str = "") -> str:
             cards.append(f'<h2 class="wk"><span>{name}</span>{monday.month}/{monday.day} – {sunday.month}/{sunday.day}</h2>')
         busy = _busy(d, data)
         allday = any((s_, e_) == (0, 1440) for s_, e_, _ in busy)
-        day_starts, eve_starts = ([], []) if allday else _day_slots(busy, data)
+        day_starts, eve_starts = ([], []) if allday else _day_windows(busy, data)
         n_open += bool(eve_starts)
         if eve_starts:
             chip = '<span class="chip ok">晚上可約</span>'
@@ -302,6 +321,9 @@ h2.wk::after{{content:"";flex:1;height:1px;background:var(--line)}}
 .slot{{font-family:inherit;font-weight:700;font-size:.98rem;line-height:1;font-variant-numeric:tabular-nums;padding:11px 16px;min-width:76px;border-radius:12px;border:1.5px solid var(--green);
 background:var(--paper);color:var(--green);cursor:pointer;transition:transform .12s,background .12s}}
 .slot:hover{{background:var(--green-soft)}}.slot:active{{transform:scale(.96)}}
+.slot small{{display:block;font-size:.72rem;font-weight:600;margin-top:4px;opacity:.85}}
+.pickt{{display:flex;flex-direction:column;gap:6px;font-size:.88rem;color:var(--mut);margin:10px 0 6px}}
+.pickt select{{font:inherit;font-size:1.15rem;font-weight:700;padding:10px 12px;border-radius:12px;border:1.5px solid var(--green);background:var(--bg);color:var(--ink)}}
 .slot.dayt{{display:none;border-color:var(--amber);color:var(--amber)}}.slot.dayt:hover{{background:var(--amber-soft)}}
 body.showday .slot.dayt{{display:inline-block}}
 .day.dayonly .slots{{display:none}}body.showday .day.dayonly .slots{{display:flex}}
@@ -336,8 +358,8 @@ dialog::backdrop{{background:rgba(30,20,10,.45);backdrop-filter:blur(2px)}}
 </style></head><body><main>
 <header>
 <p class="eyebrow">大樹教練 ‧ 可約時間</p>
-<h1>挑一個時段，<br>按一下就預約。</h1>
-<p class="lede">未來 {DAYS} 天，晚上 {escape(eve['start'])}–{escape(eve['end'])} 優先，一場 1 小時，兩場之間留 30 分鐘緩衝。點綠色時間，選類型即送出，教練確認後就排定。</p>
+<h1>挑一段空檔，<br>選您要的那一個小時。</h1>
+<p class="lede">未來 {DAYS} 天，晚上 {escape(eve['start'])}–{escape(eve['end'])} 優先。綠色是整段有空的時間，點下去選想要的一個小時（例如 19:30–20:30），再選類型就送出；前後訪談會自動留 30 分鐘緩衝，教練確認後就排定。</p>
 <div class="legend"><span><i style="background:var(--green)"></i>晚上可約（{n_open} 天）</span><span><i style="background:var(--amber)"></i>白天時段</span><span><i style="background:var(--line)"></i>已排滿</span></div>
 <button type="button" class="toggle" id="dt" aria-pressed="false">也看白天時段</button>
 </header>
@@ -345,7 +367,9 @@ dialog::backdrop{{background:rgba(30,20,10,.45);backdrop-filter:blur(2px)}}
 <p class="foot">本頁隨教練行程即時更新 ‧ 行程更新：{updated}</p>
 </main>
 <dialog id="dlg" aria-labelledby="pick"><div class="sheet" id="sheet">
-<p class="when">預約時段</p><h3 id="pick"></h3><p class="hint">選一個類型，按下就送出。</p>
+<p class="when">預約時段</p><h3 id="pick"></h3>
+<label class="pickt">要哪一個小時<select id="st"></select></label>
+<p class="hint">選好時間，再選一個類型，按下就送出。</p>
 <div class="types">{types_html}</div><p id="err" role="alert"></p>
 <button type="button" class="close" id="x">取消</button></div></dialog>
 <script>
@@ -355,9 +379,12 @@ function bind(){{
  document.getElementById('x').onclick=function(){{dlg.close()}};
  sheet.querySelectorAll('.type').forEach(function(b){{b.onclick=function(){{book(b.dataset.type)}}}});
 }}
+function hm(m){{return ('0'+Math.floor(m/60)).slice(-2)+':'+('0'+m%60).slice(-2)}}
 document.querySelectorAll('.slot').forEach(function(b){{b.onclick=function(){{
- cur={{d:b.dataset.d,t:b.dataset.t,l:b.dataset.l}};sheet.innerHTML=orig;bind();
- document.getElementById('pick').textContent=b.dataset.l;
+ var a=+b.dataset.a,z=+b.dataset.b,ts=[];for(var t=a;t+60<=z;t+={STEP})ts.push(t);if(ts[ts.length-1]!==z-60)ts.push(z-60);
+ cur={{d:b.dataset.d,l:b.dataset.l}};sheet.innerHTML=orig;bind();
+ document.getElementById('pick').textContent=b.dataset.l+' '+hm(a)+'–'+hm(z)+' 有空檔';
+ document.getElementById('st').innerHTML=ts.map(function(t){{return '<option value="'+hm(t)+'">'+hm(t)+'–'+hm(t+60)+'</option>'}}).join('');
  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}}}});
 document.querySelectorAll('.cx').forEach(function(b){{b.onclick=function(){{
  if(!confirm('確定要取消這筆行程嗎？\\n\\n'+b.dataset.l+'\\n\\n取消後教練 Google 日曆裡我們寫過的那一筆也會一起刪掉。'))return;
@@ -368,8 +395,10 @@ document.querySelectorAll('.cx').forEach(function(b){{b.onclick=function(){{
 dlg.addEventListener('click',function(e){{if(e.target===dlg)dlg.close()}});
 dlg.addEventListener('close',function(){{if(sheet.dataset.ok)location.reload()}});
 function book(type){{
- var err=document.getElementById('err');sheet.querySelectorAll('.type').forEach(function(x){{x.disabled=true}});err.textContent='送出中…';
- fetch('/schedule/{token}/book',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{date:cur.d,start:cur.t,type:type}})}})
+ var err=document.getElementById('err'),st=document.getElementById('st').value;cur.t=st;
+ var m=+st.slice(0,2)*60+ +st.slice(3);cur.l=cur.l.split(' ')[0]+' '+st+'–'+hm(m+60);
+ sheet.querySelectorAll('.type').forEach(function(x){{x.disabled=true}});err.textContent='送出中…';
+ fetch('/schedule/{token}/book',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{date:cur.d,start:st,type:type}})}})
  .then(function(r){{return r.json()}}).then(function(j){{
   if(j.ok){{sheet.dataset.ok='1';sheet.innerHTML='<div class="done"><div class="ic">✅</div><p class="when">已送出</p><h3></h3><p class="hint"></p></div><button type="button" class="close" id="x">完成</button>';
    sheet.querySelector('h3').textContent=type;sheet.querySelector('.hint').textContent=cur.l+'　等教練確認後就排定。';

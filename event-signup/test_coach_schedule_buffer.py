@@ -127,5 +127,18 @@ if shutil.which("node") and scripts:
 else:
     check("10. （這台沒有 node，略過 JS 語法檢查）", True)
 
+# 11. 2026-10-22 教練：不再切固定格子，顯示整段空檔，來賓自己挑其中任何一個小時
+def wins(data, d):
+    day, eve = v._day_windows(v._busy(d, data), data)
+    return [f"{v._fmt(a)}-{v._fmt(b)}" for a, b in eve]
+
+
+check("11. 全空晚上＝一整段 19:00-23:00", wins(data_with(), SAT) == ["19:00-23:00"], wins(data_with(), SAT))
+dd = data_with([iv("21:30", "22:30")])
+check("11b. 已有 21:30–22:30 → 晚上空檔 19:00-21:00（前面留 30 分）", wins(dd, SAT) == ["19:00-21:00"], wins(dd, SAT))
+eve = v._day_windows(v._busy(SAT, dd), dd)[1]
+check("11c. 19:30、20:00 可約；20:30 開始會碰到緩衝 → 不可",
+      v._fits(v._hm("19:30"), eve) and v._fits(v._hm("20:00"), eve) and not v._fits(v._hm("20:30"), eve))
+
 print("\n全部通過" if not fails else f"\n有 {len(fails)} 項失敗：{fails}")
 raise SystemExit(1 if fails else 0)
