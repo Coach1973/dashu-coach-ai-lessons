@@ -781,7 +781,47 @@
       "uploaded_at": "2026-10-16 14:58",
       "status": "live",
       "source_package": "20261016-145836__champagne-salon.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/champagne-salon"
+    },
+    {
+      "slug": "taipeiema1017",
+      "title": "10/17 台北・一支手機的魔法夜｜中華網紅協會 × 大樹教育",
+      "description": "10/17 台北零基礎學 AI 課全紀錄：現場一人一句寫成的歌、歌詞、提示詞、影片、簡報與海鮮鍋之夜。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/taipeiema1017/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-17 19:41",
+      "status": "live",
+      "source_package": "20261017-194101__1017-taipei-event-web.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/taipeiema1017"
+    },
+    {
+      "slug": "lovingfamily",
+      "title": "戀家大叔 李忠儒｜戀家小舖創辦人・20 年電商實戰家",
+      "description": "戀家大叔李忠儒（Allen）：2006 年創辦台灣自製寢具品牌戀家小舖，渠道商學院共同創辦人，20 年電商實戰經驗。生平學經歷、專長、故事、公益足跡、媒體報導與照片。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/lovingfamily/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-22 01:34",
+      "status": "live",
+      "source_package": "20261022-013428__li-zhongru-brand-web.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/lovingfamily"
+    },
+    {
+      "slug": "meihua",
+      "title": "李美花 美花姐｜用乾淨的食物，陪家庭變健康美麗",
+      "description": "李美花（美花姐）：27 年合作金庫銀行資歷，50 歲轉換跑道投入有機保健產業，現任美麗樂生技翡翠星級董事。台南安平。",
+      "category": "食",
+      "event_url": "https://event.bymyway.com/curated/meihua/",
+      "github_pages_url": "https://coach1973.github.io/meihua/",
+      "uploaded_at": "2026-10-22 12:13",
+      "status": "live",
+      "source_package": "20261022-121322__meihua-brand.zip",
+      "in_works": true,
+      "address": "台南市安平區永華路二段139號"
     }
   ],
   "redirects": {
