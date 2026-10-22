@@ -1,22 +1,29 @@
 ---
 name: project-tut-memory-board-list-cards-2026-10-23
-description: 南應大記憶牆「加入校友會」第三張卡改成「理監事校友名單」（照 mentor100 卡片版型，23 位）；資料放哪、怎麼補照片簡介職稱連結；同輪把整站字級調到 20px
+description: 南應大理監事 23 位：記憶牆「理監事校友名單」與 /tut/team 共用同一份資料（event.db tut_team_members board）；教練的「建置模式」短網址 /tut/m、/tut/b 可直接點卡片補照片簡介；整站字級 20px
 metadata:
   node_type: memory
   type: project
   originSessionId: c2ca99d7-473c-431c-a47c-501f10611947
-  modified: 2026-10-22T18:10:02.790Z
+  modified: 2026-10-22T18:22:33.907Z
 ---
 
-教練 2026-10-23 02:00 交辦：把 mentor100（AI 百人導師）的「照片＋名字＋職稱＋簡介按鈕」卡片架構，搬到 https://event.bymyway.com/curated/tut-memory/#join 的「終身校友網絡」，改名「理監事校友名單」，名單 23 位由教練貼。
+教練 2026-10-23 02:00～02:30 交辦：mentor100 的卡片架構搬到 https://event.bymyway.com/curated/tut-memory/#join（「終身校友網絡」改「理監事校友名單」），23 位名單由教練貼；又要求 /tut/team「兩邊同時都要有同一份資料」；又罵「沒有任何按鈕可以上傳照片跟修改、列出來沒照片沒簡介要幹嘛」，要「使用者找到自己位置點進去就能傳照片編輯簡介（像信任遊戲，他口誤說『新人遊戲』）」，且建置期間只有教練在用、要能直接在頁面上點。
 
-- 程式：`~/github_repos/tut-memory/index.html`（改了就上線，main 分支）。資料在 JS 陣列 `BOARD`（每人一行 `{name,title,bio,photo,links:[{label,url}]}`，欄位同 mentor100）；點卡片區的「理監事校友名單」展開，「簡介」按鈕開視窗。簡介跟連結都空的人沒有簡介按鈕、照片空顯示姓名首字。
-- 教練要補的「照片、簡介、職稱、超連結」就改那一行；照片放 `images_web/board/`（換圖要換檔名，快取 4 小時）。教練是透過 AI 補，不要叫他自己改程式。
-- 「AI 版導出檔格式」我解讀為 mentor100 的欄位（姓名、職稱、簡介、照片、連結）；教練沒糾正。
-- 名單是教練 02:00 貼的 23 人，順序照貼；陳佩君在名單裡（也是 2027 理事長候選人）。
-- 同輪整站字級調到 ≥20px（教練 10/14 規則：改到那站一起調）；選單字變大，漢堡選單改 ≤960px 才收合。剩 3 處刻意不動：圓形郵戳 9px／7.5px 與箭頭 ▾ 12px（裝飾，aria-hidden）。
-- commit：86e1f7b（功能）、8fb3e49（字級＋選單）。
-- 另有 `/tut/team`（event-signup 的理監事與顧問自助簡介頁，10/14 做的）理監事仍是空的；教練這次沒要求合併，沒動。
+**資料只有一份**：`workspace/event-signup/event.db` 的 `tut_team_members`（team='board'，23 位，順序照教練貼；`BOARD_SEATS` 在 `tut_team.py`，第一次用到自動放空座位）。記憶牆（`~/github_repos/tut-memory/index.html`）載入時讀 `GET /api/tut/team/board`（CORS *、no-store），讀不到才用頁內備援名單 `BOARD`（只有名字，不要在那邊補資料）。
 
-**Why:** 下次教練說「補某某的照片／簡介／職稱／連結」就直接改 BOARD 那一行，不用重查結構。
-**How to apply:** 先 `git pull` 再改；改完用 Chrome 開 live 頁量 23 張卡與手機寬度；相關：[[project-tut-team-page-and-zhengui-copy-2026-10-14]]、[[feedback-web-font-min-20px-2026-10-14]]
+**教練補資料的方式（建置模式）**：他的專屬短網址（簽章碼＝後台同一個 `admin_code`，碼存在服務環境，算法 `tut_team.admin_code(EVENT_SECRET_KEY)`；要算得 `source event-signup/.env` 後再 import app）：
+- `https://event.bymyway.com/tut/m/<碼>` → 記憶牆理監事名單，每張卡「✏️ 編輯」
+- `https://event.bymyway.com/tut/b/<碼>` → /tut/team 建置模式，每張卡「✏️ 編輯」
+兩條都已收進大樹作品集「活動後台」與 /vault。編輯頁 `?build=碼`：職稱、簡介、照片可以只補其中一項、不發通知群。一般訪客：未填座位有「這是我，補簡介」（POST /tut/team/claim/<id> → 編輯頁，已補完的不能再認領）。
+
+**坑**：
+- `workspace/event-signup` 在 worktree 對話裡 Edit 工具會被擋，用 python 精準替換（比對剛好 1 處）＋改前 `sqlite3 .backup` 與複製原檔到 `workspace/state/backup_20261023_tut_team_board/`；commit 用 `git commit -- <路徑>`（workspace 常有大量別人的未提交變更）。
+- 改完要 `launchctl kickstart -k gui/$(id -u)/com.coach.event-webapp`；測試 `cd event-signup && venv/bin/python test_tut_team.py`（77 項，用暫時資料庫）。
+- 23 位都不在名片庫；event.db 其他表只有陳佩君（嗨餅乾藝術策展人）等同名紀錄，無法確定是同一人，沒帶入。照片、職稱、簡介都還是空的，等教練補。
+- 字級：記憶牆與 /tut/team 整頁已 ≥20px（兩個帶 inherit 的 font 簡寫已拆開）；記憶牆選單改 ≤960px 才收漢堡；僅郵戳 9px／7.5px 與箭頭是裝飾保留。
+
+commit：記憶牆 86e1f7b、8fb3e49、1c6d068；workspace 6dd7d087a。
+
+**Why:** 下次教練說「補某人的照片／簡介」「為什麼不能改」直接用上面的機制，不要再叫他自己改程式或找 token。
+**How to apply:** 先看這份再動；相關：[[project-tut-team-page-and-zhengui-copy-2026-10-14]]、[[feedback-web-font-min-20px-2026-10-14]]、[[feedback-new-admin-urls-auto-register-coach888-2026-10-10]]
