@@ -1,0 +1,3935 @@
+{
+ "說明": "教練行程總表（唯一真相源）。巴哈助理、LINE 小龍蝦（榮樹下群組）共用；用 scripts/coach_schedule.py 增刪，不要手改。大台南行事曆只收 ZOOM 線上場次（教練 10/12 親定）。",
+ "interview_window": {
+  "start": "10:00",
+  "end": "22:00"
+ },
+ "events": [
+  {
+   "id": "64ea71fd",
+   "date": "2026-10-13",
+   "title": "全球健康發展協會年度會員大會",
+   "source": "巴哈",
+   "start": "20:00",
+   "end": "21:30",
+   "where": "線上",
+   "note": "結束時間未公告，先抓 21:30"
+  },
+  {
+   "id": "5dece17d",
+   "date": "2026-10-17",
+   "title": "台北演講",
+   "source": "巴哈",
+   "allday": true,
+   "where": "台北",
+   "note": "教練10/12親口"
+  },
+  {
+   "id": "3df3f677",
+   "date": "2026-10-18",
+   "title": "台北整天行程",
+   "source": "巴哈",
+   "allday": true,
+   "where": "台北",
+   "note": "教練10/12親口"
+  },
+  {
+   "id": "2be4d519",
+   "date": "2026-10-19",
+   "title": "BNI 培訓",
+   "source": "巴哈",
+   "start": "18:30",
+   "end": "21:30",
+   "where": "台中"
+  },
+  {
+   "id": "94bcf875",
+   "date": "2026-10-13",
+   "title": "藍天屏（線上教練一起）",
+   "source": "巴哈",
+   "start": "11:00",
+   "end": "12:00",
+   "where": "線上"
+  },
+  {
+   "id": "83b3a914",
+   "date": "2026-10-13",
+   "title": "黃建元（線上教練一起）",
+   "source": "巴哈",
+   "start": "16:30",
+   "end": "17:30",
+   "where": "線上"
+  },
+  {
+   "id": "db96fc49",
+   "date": "2026-10-12",
+   "title": "線上訪問",
+   "source": "巴哈",
+   "start": "15:00",
+   "end": "16:00",
+   "where": "Zoom"
+  },
+  {
+   "id": "204f5ee4",
+   "date": "2026-10-12",
+   "title": "分享會",
+   "source": "巴哈",
+   "start": "17:30",
+   "end": "19:00",
+   "where": "Zoom 線上"
+  },
+  {
+   "id": "6eeeb121",
+   "date": "2026-10-12",
+   "title": "諮詢會議",
+   "source": "巴哈",
+   "start": "21:00",
+   "end": "22:00",
+   "where": "網路會議"
+  },
+  {
+   "id": "b9887196",
+   "date": "2026-10-12",
+   "title": "戰報會議",
+   "source": "巴哈",
+   "start": "22:00",
+   "end": "23:00",
+   "where": "網路會議"
+  },
+  {
+   "id": "fbd741c2",
+   "date": "2026-10-13",
+   "title": "團隊會議",
+   "source": "巴哈",
+   "start": "21:30",
+   "end": "22:30",
+   "where": "Zoom 線上"
+  },
+  {
+   "id": "3926c478",
+   "date": "2026-10-13",
+   "title": "佩佩老師",
+   "source": "巴哈",
+   "start": "14:00",
+   "end": "15:00",
+   "where": "線上（教練自己）"
+  },
+  {
+   "id": "6b2e9c1e",
+   "date": "2026-10-13",
+   "title": "咖啡會議",
+   "source": "巴哈",
+   "start": "14:00",
+   "end": "15:00",
+   "where": "安平家樂福2樓"
+  },
+  {
+   "id": "a704ee53",
+   "date": "2026-10-13",
+   "title": "佩佩老師",
+   "source": "巴哈",
+   "start": "15:00",
+   "end": "16:00",
+   "where": "線上（教練自己）"
+  },
+  {
+   "id": "d72967b4",
+   "date": "2026-10-15",
+   "title": "BNI 例會",
+   "source": "巴哈",
+   "start": "06:30",
+   "end": "10:00",
+   "where": "Zoom 線上"
+  },
+  {
+   "id": "224760ba",
+   "date": "2026-10-16",
+   "title": "BNI INW 整日行程",
+   "source": "巴哈",
+   "allday": true,
+   "where": "整日"
+  },
+  {
+   "id": "8f456b7a",
+   "date": "2026-10-16",
+   "title": "總部訂物料",
+   "source": "巴哈",
+   "allday": true
+  },
+  {
+   "id": "f1080788",
+   "date": "2026-10-28",
+   "title": "LINE@要發訊息",
+   "source": "巴哈",
+   "start": "12:00",
+   "end": "13:00",
+   "covered_by_google": true
+  },
+  {
+   "id": "874f02ec",
+   "date": "2026-11-28",
+   "title": "LINE@要發訊息",
+   "source": "巴哈",
+   "start": "12:00",
+   "end": "13:00",
+   "covered_by_google": true
+  },
+  {
+   "id": "64596281",
+   "date": "2026-12-28",
+   "title": "LINE@要發訊息",
+   "source": "巴哈",
+   "start": "12:00",
+   "end": "13:00",
+   "covered_by_google": true
+  },
+  {
+   "id": "78672b7d",
+   "date": "2026-12-16",
+   "title": "總部訂物料",
+   "source": "巴哈",
+   "allday": true,
+   "covered_by_google": true
+  },
+  {
+   "id": "60257892",
+   "date": "2026-11-25",
+   "title": "台北開課",
+   "source": "巴哈",
+   "end_date": "2026-11-26",
+   "allday": true,
+   "where": "台北",
+   "note": "教練10/12親口：11/25-26兩天",
+   "covered_by_google": true
+  },
+  {
+   "id": "62817671",
+   "date": "2026-10-13",
+   "title": "咖啡會議",
+   "source": "巴哈",
+   "start": "12:10",
+   "end": "13:00",
+   "where": "安平家樂福2樓"
+  },
+  {
+   "id": "2ac5c915",
+   "date": "2026-10-13",
+   "title": "榮樹下訪談：張麗蝶總經理",
+   "source": "巴哈",
+   "start": "19:00",
+   "end": "20:00",
+   "note": "Podcast 訪談",
+   "kind": "interview",
+   "guest": "張麗蝶總經理",
+   "guest_field": "照明產業",
+   "guest_by": "邱裕榮",
+   "reminder_job": "499547df-90a0-4a5f-9616-6a262b5eea17"
+  },
+  {
+   "id": "cfe88924",
+   "date": "2026-10-14",
+   "title": "榮樹下訪談",
+   "source": "巴哈",
+   "start": "19:00",
+   "end": "20:00",
+   "note": "Podcast 訪談",
+   "kind": "interview",
+   "reminder_job": "9e2bcf59-a7e2-41c0-b4bd-3659130c64a5",
+   "form_token": "mmLIhyXPfHBM"
+  },
+  {
+   "id": "0fdf8b42",
+   "date": "2026-10-14",
+   "title": "榮樹下訪談",
+   "source": "巴哈",
+   "start": "21:00",
+   "end": "22:00",
+   "note": "Podcast 訪談",
+   "kind": "interview",
+   "reminder_job": "f9b4906e-53b1-4e71-a826-4e148cf4e0f1",
+   "form_token": "AQGsXEnm8GKe"
+  },
+  {
+   "id": "70a85050",
+   "date": "2026-10-15",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "訪談預約（待確認）：邱裕榮",
+   "source": "預約頁",
+   "kind": "interview",
+   "tentative": true,
+   "note": "聯絡：0988202178｜主題：生命農業系列報導",
+   "form_token": "VqYnHVbEUd9u"
+  },
+  {
+   "id": "7155a70f",
+   "date": "2026-10-20",
+   "start": "19:00",
+   "end": "20:00",
+   "title": "訪談預約（待確認）：邱裕榮",
+   "source": "預約頁",
+   "kind": "interview",
+   "tentative": true,
+   "note": "聯絡：0988202178｜主題：格蘭西服陳和平總監與順發電腦吳錦昌董事長的公益對談。榮樹下談公益",
+   "form_token": "jsjMtHHEVAp5"
+  },
+  {
+   "id": "09ef1d3a",
+   "date": "2026-10-16",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "RPL",
+   "source": "巴哈"
+  },
+  {
+   "id": "bc32edbc",
+   "date": "2026-11-20",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "RPL",
+   "source": "巴哈",
+   "covered_by_google": true
+  },
+  {
+   "id": "0cf63cc0",
+   "date": "2026-12-18",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "RPL",
+   "source": "巴哈",
+   "covered_by_google": true
+  },
+  {
+   "id": "1c22e2c7",
+   "date": "2026-10-20",
+   "title": "榮樹下訪談",
+   "source": "coach",
+   "start": "18:00",
+   "end": "19:00",
+   "kind": "interview",
+   "reminder_job": "cc50e786-7e7e-49c0-b05c-3b6d5c7d5f0a",
+   "form_token": "1gJ61pbcCYAZ"
+  },
+  {
+   "id": "b1b2451a",
+   "date": "2026-10-20",
+   "title": "榮樹下訪談",
+   "source": "coach",
+   "start": "20:00",
+   "end": "21:00",
+   "kind": "interview",
+   "reminder_job": "6a0e586a-5577-4a3d-b1e1-6102b1b2cf03",
+   "form_token": "cygLF3ZZsqKt"
+  },
+  {
+   "id": "11a4ef97",
+   "date": "2026-10-21",
+   "title": "榮樹下訪談：陳和平",
+   "source": "coach",
+   "start": "19:00",
+   "end": "20:00",
+   "kind": "interview",
+   "form_token": "rdqI9be31qlk",
+   "guest": "陳和平",
+   "guest_by": "教練",
+   "reminder_job": "32d3b879-85ac-46cd-8184-9816714d44a4"
+  },
+  {
+   "id": "4f7dbed3",
+   "date": "2026-10-21",
+   "title": "榮樹下訪談：孔弟兄",
+   "source": "coach",
+   "start": "21:00",
+   "end": "22:00",
+   "kind": "interview",
+   "form_token": "4kEYvmRlNGsg",
+   "guest": "孔弟兄",
+   "guest_by": "教練",
+   "reminder_job": "2219d51b-e740-4ff0-9fc1-69d394e370d8"
+  },
+  {
+   "id": "5515f0f6",
+   "date": "2026-10-15",
+   "start": "19:00",
+   "end": "20:00",
+   "title": "榮樹下訪談（待確認）",
+   "source": "預約頁",
+   "kind": "interview",
+   "tentative": true,
+   "booking_type": "榮樹下訪談",
+   "booked_by": "邱裕榮",
+   "note": "預約人：邱裕榮（預約頁點選）",
+   "form_token": "CKXuWLyoJvVQ",
+   "guest": "陳顯立",
+   "guest_by": "教練"
+  },
+  {
+   "id": "9c078b50",
+   "date": "2026-10-22",
+   "title": "分享會（助理，林鴻昌主持）",
+   "source": "教練",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "7b70e13d",
+   "date": "2026-10-14",
+   "title": "江依倫訪談（教練去）",
+   "source": "巴哈",
+   "start": "17:10",
+   "end": "18:00",
+   "kind": "interview"
+  },
+  {
+   "id": "c3dcfd60",
+   "date": "2026-10-22",
+   "title": "線上採訪：NLP／NAC 發展與運用、教練工具分類與成效、諮商挑選與防操控、禮物諮詢法（對象待補）",
+   "source": "教練 10/21 10:05 口頭下單",
+   "start": "09:30",
+   "end": "10:30",
+   "where": "線上（Zoom）",
+   "kind": "interview"
+  },
+  {
+   "id": "829c2fc2",
+   "date": "2026-10-09",
+   "title": "榮樹下訪談：吳錦昌",
+   "source": "補填",
+   "allday": true,
+   "note": "EP.01 補填來賓資料（節目 2026-10-09 播出；資料表 10/14 才上線，當時沒填）",
+   "kind": "interview",
+   "form_token": "WSaCfKfUHbdj"
+  },
+  {
+   "id": "21ca3b0d",
+   "date": "2026-10-10",
+   "title": "榮樹下訪談：楊境界",
+   "source": "補填",
+   "allday": true,
+   "note": "EP.02 補填來賓資料（節目 2026-10-10 播出；資料表 10/14 才上線，當時沒填）",
+   "kind": "interview",
+   "form_token": "mtgpje1wqOff"
+  },
+  {
+   "id": "fa239be5",
+   "date": "2026-10-12",
+   "title": "榮樹下訪談：周睿麒",
+   "source": "補填",
+   "allday": true,
+   "note": "EP.03 約瑟布 周總 補填來賓資料（節目 2026-10-12 播出；資料表 10/14 才上線，當時沒填）",
+   "kind": "interview",
+   "form_token": "5KkE3gFzZ5Rr"
+  },
+  {
+   "id": "b8f0796b",
+   "date": "2026-10-13",
+   "title": "榮樹下訪談：黃國彰",
+   "source": "補填",
+   "allday": true,
+   "note": "EP.04 補填來賓資料（節目 2026-10-13 播出；資料表 10/14 才上線，當時沒填）",
+   "kind": "interview",
+   "form_token": "lIoBq_1Hq10r"
+  },
+  {
+   "id": "728ef015",
+   "date": "2026-10-14",
+   "title": "榮樹下訪談：朱元中",
+   "source": "補填",
+   "allday": true,
+   "note": "EP.07 天使姐姐與朱元中顧問 補填來賓資料（節目 2026-10-14 播出；資料表 10/14 才上線，當時沒填）",
+   "kind": "interview",
+   "form_token": "Pc9Q1FbxI59V"
+  },
+  {
+   "id": "bc78ddfa",
+   "date": "2026-10-22",
+   "start": "21:30",
+   "end": "22:30",
+   "title": "榮樹下訪談：林家旭",
+   "source": "預約頁",
+   "kind": "interview",
+   "booking_type": "榮樹下訪談",
+   "booked_by": "佩佩老師",
+   "note": "嘉賓：林家旭；邀請人：佩佩老師（教練 10/22 交代）",
+   "guest": "林家旭",
+   "form_token": "N6TEUpRLItGQ",
+   "reminder_job": "437ff7ec-976e-48a3-8861-78608401b4a7"
+  },
+  {
+   "id": "0fb0c055",
+   "date": "2026-10-24",
+   "title": "榮樹下訪談：鄭麗絲",
+   "source": "coach",
+   "start": "21:30",
+   "end": "22:30",
+   "note": "嘉賓：鄭麗絲；邀請人：佩佩老師（教練 10/22 交代）",
+   "kind": "interview",
+   "reminder_job": "9964c23a-5d87-4c34-9251-db50be1d79da",
+   "booked_by": "佩佩老師",
+   "covered_by_google": true,
+   "form_token": "bzF6gf9SwRLv",
+   "guest": "鄭麗絲"
+  },
+  {
+   "id": "gcal-2026-10-23-0",
+   "date": "2026-10-23",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-10-23-1",
+   "date": "2026-10-23",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-10-23-2",
+   "date": "2026-10-23",
+   "title": "執董與新會員有約（霜降）",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-10-23-3",
+   "date": "2026-10-23",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-10-23-4",
+   "date": "2026-10-23",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-10-24-5",
+   "date": "2026-10-24",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-10-24-6",
+   "date": "2026-10-24",
+   "title": "榮樹下訪談：鄭麗絲",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30",
+   "form_token": "crbU71EhR63G"
+  },
+  {
+   "id": "gcal-2026-10-25-7",
+   "date": "2026-10-25",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-10-26-8",
+   "date": "2026-10-26",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-10-26-9",
+   "date": "2026-10-26",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-10-26-10",
+   "date": "2026-10-26",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-10-26-11",
+   "date": "2026-10-26",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-10-26-12",
+   "date": "2026-10-26",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-10-27-13",
+   "date": "2026-10-27",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-10-27-14",
+   "date": "2026-10-27",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-10-28-15",
+   "date": "2026-10-28",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-10-28-16",
+   "date": "2026-10-28",
+   "title": "LINE@要發訊息",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-10-28-17",
+   "date": "2026-10-28",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-10-29-18",
+   "date": "2026-10-29",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-10-29-19",
+   "date": "2026-10-29",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-10-29-20",
+   "date": "2026-10-29",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-10-29-21",
+   "date": "2026-10-29",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-10-29-22",
+   "date": "2026-10-29",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-10-30-23",
+   "date": "2026-10-30",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-10-30-24",
+   "date": "2026-10-30",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-10-30-25",
+   "date": "2026-10-30",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-10-31-26",
+   "date": "2026-10-31",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-01-27",
+   "date": "2026-11-01",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-02-28",
+   "date": "2026-11-02",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-02-29",
+   "date": "2026-11-02",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-02-30",
+   "date": "2026-11-02",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-02-31",
+   "date": "2026-11-02",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-02-32",
+   "date": "2026-11-02",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-03-33",
+   "date": "2026-11-03",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-03-34",
+   "date": "2026-11-03",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-04-35",
+   "date": "2026-11-04",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-04-36",
+   "date": "2026-11-04",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-05-37",
+   "date": "2026-11-05",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-05-38",
+   "date": "2026-11-05",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-11-05-39",
+   "date": "2026-11-05",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-05-40",
+   "date": "2026-11-05",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-05-41",
+   "date": "2026-11-05",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-06-42",
+   "date": "2026-11-06",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-06-43",
+   "date": "2026-11-06",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-06-44",
+   "date": "2026-11-06",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-07-45",
+   "date": "2026-11-07",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-08-46",
+   "date": "2026-11-08",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-09-47",
+   "date": "2026-11-09",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-09-48",
+   "date": "2026-11-09",
+   "title": "MSP",
+   "source": "Google日曆",
+   "start": "09:00",
+   "end": "12:00"
+  },
+  {
+   "id": "gcal-2026-11-09-49",
+   "date": "2026-11-09",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-09-50",
+   "date": "2026-11-09",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-09-51",
+   "date": "2026-11-09",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-09-52",
+   "date": "2026-11-09",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-10-53",
+   "date": "2026-11-10",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-10-54",
+   "date": "2026-11-10",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-11-55",
+   "date": "2026-11-11",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-11-56",
+   "date": "2026-11-11",
+   "title": "DnA月例會",
+   "source": "Google日曆",
+   "start": "14:00",
+   "end": "17:00"
+  },
+  {
+   "id": "gcal-2026-11-11-57",
+   "date": "2026-11-11",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-12-58",
+   "date": "2026-11-12",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-12-59",
+   "date": "2026-11-12",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-11-12-60",
+   "date": "2026-11-12",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-12-61",
+   "date": "2026-11-12",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-12-62",
+   "date": "2026-11-12",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-13-63",
+   "date": "2026-11-13",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-13-64",
+   "date": "2026-11-13",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-13-65",
+   "date": "2026-11-13",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-14-66",
+   "date": "2026-11-14",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-15-67",
+   "date": "2026-11-15",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-16-68",
+   "date": "2026-11-16",
+   "title": "總部訂物料",
+   "source": "Google日曆",
+   "allday": true
+  },
+  {
+   "id": "gcal-2026-11-16-69",
+   "date": "2026-11-16",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-16-70",
+   "date": "2026-11-16",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-16-71",
+   "date": "2026-11-16",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-16-72",
+   "date": "2026-11-16",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-16-73",
+   "date": "2026-11-16",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-17-74",
+   "date": "2026-11-17",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-17-75",
+   "date": "2026-11-17",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-18-76",
+   "date": "2026-11-18",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-18-77",
+   "date": "2026-11-18",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-19-78",
+   "date": "2026-11-19",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-19-79",
+   "date": "2026-11-19",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-11-19-80",
+   "date": "2026-11-19",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-19-81",
+   "date": "2026-11-19",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-19-82",
+   "date": "2026-11-19",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-20-83",
+   "date": "2026-11-20",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-20-84",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-20-85",
+   "date": "2026-11-20",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-86",
+   "date": "2026-11-20",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-21-87",
+   "date": "2026-11-21",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-22-88",
+   "date": "2026-11-22",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-23-89",
+   "date": "2026-11-23",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-23-90",
+   "date": "2026-11-23",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-23-91",
+   "date": "2026-11-23",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-23-92",
+   "date": "2026-11-23",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-23-93",
+   "date": "2026-11-23",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-24-94",
+   "date": "2026-11-24",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-24-95",
+   "date": "2026-11-24",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-25-96",
+   "date": "2026-11-25",
+   "title": "台北開課",
+   "source": "Google日曆",
+   "allday": true,
+   "end_date": "2026-11-26"
+  },
+  {
+   "id": "gcal-2026-11-25-97",
+   "date": "2026-11-25",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-25-98",
+   "date": "2026-11-25",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-26-99",
+   "date": "2026-11-26",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-26-100",
+   "date": "2026-11-26",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-11-26-101",
+   "date": "2026-11-26",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-26-102",
+   "date": "2026-11-26",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-11-26-103",
+   "date": "2026-11-26",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-27-104",
+   "date": "2026-11-27",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-11-27-105",
+   "date": "2026-11-27",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-27-106",
+   "date": "2026-11-27",
+   "title": "執董與新會員有約",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-27-107",
+   "date": "2026-11-27",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-11-28-108",
+   "date": "2026-11-28",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-28-109",
+   "date": "2026-11-28",
+   "title": "LINE@要發訊息",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-11-29-110",
+   "date": "2026-11-29",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-30-111",
+   "date": "2026-11-30",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-30-112",
+   "date": "2026-11-30",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-11-30-113",
+   "date": "2026-11-30",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-30-114",
+   "date": "2026-11-30",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-30-115",
+   "date": "2026-11-30",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-01-116",
+   "date": "2026-12-01",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-01-117",
+   "date": "2026-12-01",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-02-118",
+   "date": "2026-12-02",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-02-119",
+   "date": "2026-12-02",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-03-120",
+   "date": "2026-12-03",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-03-121",
+   "date": "2026-12-03",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-03-122",
+   "date": "2026-12-03",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-03-123",
+   "date": "2026-12-03",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-03-124",
+   "date": "2026-12-03",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-04-125",
+   "date": "2026-12-04",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-04-126",
+   "date": "2026-12-04",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-04-127",
+   "date": "2026-12-04",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-05-128",
+   "date": "2026-12-05",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-06-129",
+   "date": "2026-12-06",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-07-130",
+   "date": "2026-12-07",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-07-131",
+   "date": "2026-12-07",
+   "title": "領導團隊期中訓",
+   "source": "Google日曆",
+   "start": "09:00",
+   "end": "12:00"
+  },
+  {
+   "id": "gcal-2026-12-07-132",
+   "date": "2026-12-07",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-07-133",
+   "date": "2026-12-07",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-07-134",
+   "date": "2026-12-07",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-07-135",
+   "date": "2026-12-07",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-08-136",
+   "date": "2026-12-08",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-08-137",
+   "date": "2026-12-08",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-09-138",
+   "date": "2026-12-09",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-09-139",
+   "date": "2026-12-09",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-10-140",
+   "date": "2026-12-10",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-10-141",
+   "date": "2026-12-10",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-10-142",
+   "date": "2026-12-10",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-10-143",
+   "date": "2026-12-10",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-10-144",
+   "date": "2026-12-10",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-11-145",
+   "date": "2026-12-11",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-11-146",
+   "date": "2026-12-11",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-11-147",
+   "date": "2026-12-11",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-12-148",
+   "date": "2026-12-12",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-13-149",
+   "date": "2026-12-13",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-14-150",
+   "date": "2026-12-14",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-14-151",
+   "date": "2026-12-14",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-14-152",
+   "date": "2026-12-14",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-14-153",
+   "date": "2026-12-14",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-14-154",
+   "date": "2026-12-14",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-15-155",
+   "date": "2026-12-15",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-15-156",
+   "date": "2026-12-15",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-16-157",
+   "date": "2026-12-16",
+   "title": "總部訂物料",
+   "source": "Google日曆",
+   "allday": true
+  },
+  {
+   "id": "gcal-2026-12-16-158",
+   "date": "2026-12-16",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-16-159",
+   "date": "2026-12-16",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-17-160",
+   "date": "2026-12-17",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-17-161",
+   "date": "2026-12-17",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-17-162",
+   "date": "2026-12-17",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-17-163",
+   "date": "2026-12-17",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-17-164",
+   "date": "2026-12-17",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-18-165",
+   "date": "2026-12-18",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-18-166",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-18-167",
+   "date": "2026-12-18",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-168",
+   "date": "2026-12-18",
+   "title": "執董與新會員有約（聖誕提前一週）",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-169",
+   "date": "2026-12-18",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-19-170",
+   "date": "2026-12-19",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-20-171",
+   "date": "2026-12-20",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-21-172",
+   "date": "2026-12-21",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-21-173",
+   "date": "2026-12-21",
+   "title": "MSP",
+   "source": "Google日曆",
+   "start": "09:00",
+   "end": "12:00"
+  },
+  {
+   "id": "gcal-2026-12-21-174",
+   "date": "2026-12-21",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-21-175",
+   "date": "2026-12-21",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-21-176",
+   "date": "2026-12-21",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-21-177",
+   "date": "2026-12-21",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-22-178",
+   "date": "2026-12-22",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-22-179",
+   "date": "2026-12-22",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-23-180",
+   "date": "2026-12-23",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-23-181",
+   "date": "2026-12-23",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-24-182",
+   "date": "2026-12-24",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-24-183",
+   "date": "2026-12-24",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-24-184",
+   "date": "2026-12-24",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-24-185",
+   "date": "2026-12-24",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-24-186",
+   "date": "2026-12-24",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-25-187",
+   "date": "2026-12-25",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-25-188",
+   "date": "2026-12-25",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-25-189",
+   "date": "2026-12-25",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2026-12-26-190",
+   "date": "2026-12-26",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-27-191",
+   "date": "2026-12-27",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-28-192",
+   "date": "2026-12-28",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-12-28-193",
+   "date": "2026-12-28",
+   "title": "LINE@要發訊息",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-28-194",
+   "date": "2026-12-28",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-28-195",
+   "date": "2026-12-28",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-28-196",
+   "date": "2026-12-28",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-28-197",
+   "date": "2026-12-28",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-12-29-198",
+   "date": "2026-12-29",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-29-199",
+   "date": "2026-12-29",
+   "title": "團隊會議",
+   "source": "Google日曆",
+   "start": "21:30",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-30-200",
+   "date": "2026-12-30",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-30-201",
+   "date": "2026-12-30",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-31-202",
+   "date": "2026-12-31",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:30",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2026-12-31-203",
+   "date": "2026-12-31",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2026-12-31-204",
+   "date": "2026-12-31",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2026-12-31-205",
+   "date": "2026-12-31",
+   "title": "線上聚",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:30"
+  },
+  {
+   "id": "gcal-2026-12-31-206",
+   "date": "2026-12-31",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-01-207",
+   "date": "2027-01-01",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-01-208",
+   "date": "2027-01-01",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-02-209",
+   "date": "2027-01-02",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-03-210",
+   "date": "2027-01-03",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-04-211",
+   "date": "2027-01-04",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-04-212",
+   "date": "2027-01-04",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-04-213",
+   "date": "2027-01-04",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-04-214",
+   "date": "2027-01-04",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-04-215",
+   "date": "2027-01-04",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-05-216",
+   "date": "2027-01-05",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-01-06-217",
+   "date": "2027-01-06",
+   "title": "整日行程（台北）",
+   "source": "Google日曆",
+   "allday": true
+  },
+  {
+   "id": "gcal-2027-01-06-218",
+   "date": "2027-01-06",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-07-219",
+   "date": "2027-01-07",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-01-07-220",
+   "date": "2027-01-07",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-07-221",
+   "date": "2027-01-07",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-08-222",
+   "date": "2027-01-08",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-08-223",
+   "date": "2027-01-08",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-09-224",
+   "date": "2027-01-09",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-10-225",
+   "date": "2027-01-10",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-11-226",
+   "date": "2027-01-11",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-11-227",
+   "date": "2027-01-11",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-11-228",
+   "date": "2027-01-11",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-11-229",
+   "date": "2027-01-11",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-11-230",
+   "date": "2027-01-11",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-12-231",
+   "date": "2027-01-12",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-01-13-232",
+   "date": "2027-01-13",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-14-233",
+   "date": "2027-01-14",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-01-14-234",
+   "date": "2027-01-14",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-14-235",
+   "date": "2027-01-14",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-15-236",
+   "date": "2027-01-15",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-15-237",
+   "date": "2027-01-15",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-16-238",
+   "date": "2027-01-16",
+   "title": "總部訂物料",
+   "source": "Google日曆",
+   "allday": true
+  },
+  {
+   "id": "gcal-2027-01-16-239",
+   "date": "2027-01-16",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-17-240",
+   "date": "2027-01-17",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-18-241",
+   "date": "2027-01-18",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-18-242",
+   "date": "2027-01-18",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-18-243",
+   "date": "2027-01-18",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-18-244",
+   "date": "2027-01-18",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-18-245",
+   "date": "2027-01-18",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-19-246",
+   "date": "2027-01-19",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-01-20-247",
+   "date": "2027-01-20",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-21-248",
+   "date": "2027-01-21",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-01-21-249",
+   "date": "2027-01-21",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-21-250",
+   "date": "2027-01-21",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-22-251",
+   "date": "2027-01-22",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-22-252",
+   "date": "2027-01-22",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-23-253",
+   "date": "2027-01-23",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-24-254",
+   "date": "2027-01-24",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-25-255",
+   "date": "2027-01-25",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-25-256",
+   "date": "2027-01-25",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-25-257",
+   "date": "2027-01-25",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-01-25-258",
+   "date": "2027-01-25",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-25-259",
+   "date": "2027-01-25",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-01-26-260",
+   "date": "2027-01-26",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-01-27-261",
+   "date": "2027-01-27",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-28-262",
+   "date": "2027-01-28",
+   "title": "LINE@要發訊息",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-01-28-263",
+   "date": "2027-01-28",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-01-28-264",
+   "date": "2027-01-28",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-01-28-265",
+   "date": "2027-01-28",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-29-266",
+   "date": "2027-01-29",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-01-29-267",
+   "date": "2027-01-29",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-01-30-268",
+   "date": "2027-01-30",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-01-31-269",
+   "date": "2027-01-31",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-01-270",
+   "date": "2027-02-01",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-02-01-271",
+   "date": "2027-02-01",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-01-272",
+   "date": "2027-02-01",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-01-273",
+   "date": "2027-02-01",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-01-274",
+   "date": "2027-02-01",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-02-275",
+   "date": "2027-02-02",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-02-03-276",
+   "date": "2027-02-03",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-04-277",
+   "date": "2027-02-04",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-02-04-278",
+   "date": "2027-02-04",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-04-279",
+   "date": "2027-02-04",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-05-280",
+   "date": "2027-02-05",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-05-281",
+   "date": "2027-02-05",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-06-282",
+   "date": "2027-02-06",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-02-07-283",
+   "date": "2027-02-07",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-08-284",
+   "date": "2027-02-08",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-02-08-285",
+   "date": "2027-02-08",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-08-286",
+   "date": "2027-02-08",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-08-287",
+   "date": "2027-02-08",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-08-288",
+   "date": "2027-02-08",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-09-289",
+   "date": "2027-02-09",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-02-10-290",
+   "date": "2027-02-10",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-11-291",
+   "date": "2027-02-11",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-02-11-292",
+   "date": "2027-02-11",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-11-293",
+   "date": "2027-02-11",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-12-294",
+   "date": "2027-02-12",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-12-295",
+   "date": "2027-02-12",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-13-296",
+   "date": "2027-02-13",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-02-14-297",
+   "date": "2027-02-14",
+   "title": "真鑽領導團隊會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-15-298",
+   "date": "2027-02-15",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "gcal-2027-02-15-299",
+   "date": "2027-02-15",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-15-300",
+   "date": "2027-02-15",
+   "title": "董事諮詢會議",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "id": "gcal-2027-02-15-301",
+   "date": "2027-02-15",
+   "title": "戰報會議",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-15-302",
+   "date": "2027-02-15",
+   "title": "啟動分會DnA週報",
+   "source": "Google日曆",
+   "start": "22:00",
+   "end": "23:00"
+  },
+  {
+   "id": "gcal-2027-02-16-303",
+   "date": "2027-02-16",
+   "title": "總部訂物料",
+   "source": "Google日曆",
+   "allday": true
+  },
+  {
+   "id": "gcal-2027-02-16-304",
+   "date": "2027-02-16",
+   "title": "BNI 例會",
+   "source": "Google日曆",
+   "start": "06:00",
+   "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-02-17-305",
+   "date": "2027-02-17",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-18-306",
+   "date": "2027-02-18",
+   "title": "執董共識會",
+   "source": "Google日曆",
+   "start": "12:00",
+   "end": "13:00"
+  },
+  {
+   "id": "gcal-2027-02-18-307",
+   "date": "2027-02-18",
+   "title": "分享會",
+   "source": "Google日曆",
+   "start": "17:30",
+   "end": "19:00"
+  },
+  {
+   "id": "gcal-2027-02-18-308",
+   "date": "2027-02-18",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-19-309",
+   "date": "2027-02-19",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "id": "gcal-2027-02-19-310",
+   "date": "2027-02-19",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "21:10",
+   "end": "22:10"
+  },
+  {
+   "id": "gcal-2027-02-20-311",
+   "date": "2027-02-20",
+   "title": "線上學習",
+   "source": "Google日曆",
+   "start": "07:35",
+   "end": "08:35"
+  },
+  {
+   "id": "tainan-2026-02-11-0",
+   "date": "2026-02-11",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-1",
+   "date": "2026-02-13",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-2",
+   "date": "2026-02-13",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-3",
+   "date": "2026-02-13",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "委員會培訓(真誠分會專用)",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-03-20-4",
+   "date": "2026-03-20",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-03-27-5",
+   "date": "2026-03-27",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-08-6",
+   "date": "2026-04-08",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-17-7",
+   "date": "2026-04-17",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-24-8",
+   "date": "2026-04-24",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-13-9",
+   "date": "2026-05-13",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-15-10",
+   "date": "2026-05-15",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-22-11",
+   "date": "2026-05-22",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-06-19-12",
+   "date": "2026-06-19",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-06-26-13",
+   "date": "2026-06-26",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-08-14",
+   "date": "2026-07-08",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-17-15",
+   "date": "2026-07-17",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-17-16",
+   "date": "2026-07-17",
+   "start": "15:00",
+   "end": "16:00",
+   "title": "與國董有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-24-17",
+   "date": "2026-07-24",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-12-18",
+   "date": "2026-08-12",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-21-19",
+   "date": "2026-08-21",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-28-20",
+   "date": "2026-08-28",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-18-21",
+   "date": "2026-09-18",
+   "start": "08:00",
+   "end": "09:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-18-22",
+   "date": "2026-09-18",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-21-23",
+   "date": "2026-09-21",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "新領導團隊培訓",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-12-24",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-14-25",
+   "date": "2026-10-14",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-16-26",
+   "date": "2026-10-16",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-23-27",
+   "date": "2026-10-23",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-09-28",
+   "date": "2026-11-09",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-11-29",
+   "date": "2026-11-11",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-20-30",
+   "date": "2026-11-20",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-27-31",
+   "date": "2026-11-27",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-07-32",
+   "date": "2026-12-07",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "領導團隊期中訓",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-18-33",
+   "date": "2026-12-18",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-18-34",
+   "date": "2026-12-18",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-21-35",
+   "date": "2026-12-21",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  }
+ ],
+ "recurring": [
+  {
+   "id": "470f3374",
+   "weekday": 6,
+   "start": "20:00",
+   "end": "21:00",
+   "title": "RPL 團隊工作會議（8月舊紀錄）",
+   "source": "巴哈",
+   "tentative": true,
+   "gskip": []
+  },
+  {
+   "id": "25aa97e3",
+   "weekday": 0,
+   "start": "07:35",
+   "end": "08:35",
+   "title": "線上學習",
+   "source": "巴哈",
+   "since": "2026-10-12",
+   "until": "2026-12-28",
+   "gskip": [
+    "2026-10-26",
+    "2026-11-02",
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11",
+    "2027-01-18",
+    "2027-01-25",
+    "2027-02-01",
+    "2027-02-08",
+    "2027-02-15"
+   ]
+  },
+  {
+   "id": "474d4680",
+   "weekday": 0,
+   "start": "17:30",
+   "end": "19:00",
+   "title": "分享會",
+   "source": "巴哈",
+   "since": "2026-10-12",
+   "until": "2026-12-28",
+   "gskip": [
+    "2026-10-26",
+    "2026-11-02",
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11",
+    "2027-01-18",
+    "2027-01-25",
+    "2027-02-01",
+    "2027-02-08",
+    "2027-02-15"
+   ]
+  },
+  {
+   "id": "35e9dd4b",
+   "weekday": 0,
+   "start": "21:00",
+   "end": "22:00",
+   "title": "諮詢會議",
+   "source": "巴哈",
+   "since": "2026-10-12",
+   "until": "2026-12-28",
+   "gskip": [
+    "2026-10-26",
+    "2026-11-02",
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11",
+    "2027-01-18",
+    "2027-01-25",
+    "2027-02-01",
+    "2027-02-08",
+    "2027-02-15"
+   ]
+  },
+  {
+   "id": "047fec7f",
+   "weekday": 0,
+   "start": "22:00",
+   "end": "23:00",
+   "title": "啟動分會DnA週報",
+   "source": "巴哈",
+   "since": "2026-10-12",
+   "until": "2026-12-28",
+   "gskip": [
+    "2026-10-26",
+    "2026-11-02",
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11",
+    "2027-01-18",
+    "2027-01-25",
+    "2027-02-01",
+    "2027-02-08",
+    "2027-02-15"
+   ]
+  },
+  {
+   "id": "affcbaa8",
+   "weekday": 1,
+   "start": "06:30",
+   "end": "10:00",
+   "title": "BNI 例會",
+   "source": "巴哈",
+   "since": "2026-10-13",
+   "until": "2026-12-29",
+   "gskip": [
+    "2026-10-27",
+    "2026-11-03",
+    "2026-11-10",
+    "2026-11-17",
+    "2026-11-24",
+    "2026-12-01",
+    "2026-12-08",
+    "2026-12-15",
+    "2026-12-22",
+    "2026-12-29",
+    "2027-01-05",
+    "2027-01-12",
+    "2027-01-19",
+    "2027-01-26",
+    "2027-02-02",
+    "2027-02-09",
+    "2027-02-16"
+   ]
+  },
+  {
+   "id": "277d544b",
+   "weekday": 2,
+   "start": "06:30",
+   "end": "10:00",
+   "title": "BNI 例會",
+   "source": "巴哈",
+   "since": "2026-10-14",
+   "until": "2026-12-30",
+   "gskip": [
+    "2026-10-28",
+    "2026-11-04",
+    "2026-11-11",
+    "2026-11-18",
+    "2026-11-25",
+    "2026-12-02",
+    "2026-12-09",
+    "2026-12-16",
+    "2026-12-23",
+    "2026-12-30"
+   ]
+  },
+  {
+   "id": "44c22175",
+   "weekday": 2,
+   "start": "20:00",
+   "end": "21:00",
+   "title": "團隊週會",
+   "source": "巴哈",
+   "since": "2026-10-14",
+   "until": "2026-12-30",
+   "gskip": [
+    "2026-10-28",
+    "2026-11-04",
+    "2026-11-11",
+    "2026-11-18",
+    "2026-11-25",
+    "2026-12-02",
+    "2026-12-09",
+    "2026-12-16",
+    "2026-12-23",
+    "2026-12-30",
+    "2027-01-06",
+    "2027-01-13",
+    "2027-01-20",
+    "2027-01-27",
+    "2027-02-03",
+    "2027-02-10",
+    "2027-02-17"
+   ]
+  },
+  {
+   "id": "ce5250b2",
+   "weekday": 3,
+   "start": "12:00",
+   "end": "13:00",
+   "title": "執董共識會",
+   "source": "巴哈",
+   "since": "2026-10-15",
+   "until": "2026-12-31",
+   "gskip": [
+    "2026-10-29",
+    "2026-11-05",
+    "2026-11-12",
+    "2026-11-19",
+    "2026-11-26",
+    "2026-12-03",
+    "2026-12-10",
+    "2026-12-17",
+    "2026-12-24",
+    "2026-12-31",
+    "2027-01-07",
+    "2027-01-14",
+    "2027-01-21",
+    "2027-01-28",
+    "2027-02-04",
+    "2027-02-11",
+    "2027-02-18"
+   ]
+  },
+  {
+   "id": "aa33faff",
+   "weekday": 3,
+   "start": "17:30",
+   "end": "19:00",
+   "title": "分享會",
+   "source": "巴哈",
+   "since": "2026-10-15",
+   "until": "2026-12-31",
+   "gskip": [
+    "2026-10-29",
+    "2026-11-05",
+    "2026-11-12",
+    "2026-11-19",
+    "2026-11-26",
+    "2026-12-03",
+    "2026-12-10",
+    "2026-12-17",
+    "2026-12-24",
+    "2026-12-31",
+    "2027-01-07",
+    "2027-01-14",
+    "2027-01-21",
+    "2027-01-28",
+    "2027-02-04",
+    "2027-02-11",
+    "2027-02-18"
+   ]
+  },
+  {
+   "id": "f661451d",
+   "weekday": 3,
+   "start": "21:10",
+   "end": "22:10",
+   "title": "線上學習",
+   "source": "巴哈",
+   "since": "2026-10-15",
+   "until": "2026-12-31",
+   "gskip": [
+    "2026-10-29",
+    "2026-11-05",
+    "2026-11-12",
+    "2026-11-19",
+    "2026-11-26",
+    "2026-12-03",
+    "2026-12-10",
+    "2026-12-17",
+    "2026-12-24",
+    "2026-12-31",
+    "2027-01-07",
+    "2027-01-14",
+    "2027-01-21",
+    "2027-01-28",
+    "2027-02-04",
+    "2027-02-11",
+    "2027-02-18"
+   ]
+  },
+  {
+   "id": "2c14e690",
+   "weekday": 4,
+   "start": "06:30",
+   "end": "10:00",
+   "title": "BNI 例會",
+   "source": "巴哈",
+   "since": "2026-10-16",
+   "until": "2026-12-25",
+   "gskip": [
+    "2026-10-23",
+    "2026-10-30",
+    "2026-11-06",
+    "2026-11-13",
+    "2026-11-20",
+    "2026-11-27",
+    "2026-12-04",
+    "2026-12-11",
+    "2026-12-18",
+    "2026-12-25"
+   ]
+  },
+  {
+   "id": "a3d9c182",
+   "weekday": 4,
+   "start": "20:00",
+   "end": "21:00",
+   "title": "RPL",
+   "source": "巴哈",
+   "since": "2026-10-16",
+   "until": "2026-12-25",
+   "skip": [
+    "2026-10-16",
+    "2026-11-20",
+    "2026-12-18"
+   ],
+   "gskip": [
+    "2026-10-23",
+    "2026-10-30",
+    "2026-11-06",
+    "2026-11-13",
+    "2026-11-20",
+    "2026-11-27",
+    "2026-12-04",
+    "2026-12-11",
+    "2026-12-18",
+    "2026-12-25",
+    "2027-01-01",
+    "2027-01-08",
+    "2027-01-15",
+    "2027-01-22",
+    "2027-01-29",
+    "2027-02-05",
+    "2027-02-12",
+    "2027-02-19"
+   ]
+  },
+  {
+   "id": "00ffa8fc",
+   "weekday": 4,
+   "start": "21:10",
+   "end": "22:10",
+   "title": "線上學習",
+   "source": "巴哈",
+   "since": "2026-10-16",
+   "until": "2026-12-25",
+   "gskip": [
+    "2026-10-23",
+    "2026-10-30",
+    "2026-11-06",
+    "2026-11-13",
+    "2026-11-20",
+    "2026-11-27",
+    "2026-12-04",
+    "2026-12-11",
+    "2026-12-18",
+    "2026-12-25",
+    "2027-01-01",
+    "2027-01-08",
+    "2027-01-15",
+    "2027-01-22",
+    "2027-01-29",
+    "2027-02-05",
+    "2027-02-12",
+    "2027-02-19"
+   ]
+  },
+  {
+   "id": "62d438a1",
+   "weekday": 5,
+   "start": "07:35",
+   "end": "08:35",
+   "title": "線上學習",
+   "source": "巴哈",
+   "since": "2026-10-17",
+   "until": "2026-12-26",
+   "gskip": [
+    "2026-10-24",
+    "2026-10-31",
+    "2026-11-07",
+    "2026-11-14",
+    "2026-11-21",
+    "2026-11-28",
+    "2026-12-05",
+    "2026-12-12",
+    "2026-12-19",
+    "2026-12-26",
+    "2027-01-02",
+    "2027-01-09",
+    "2027-01-16",
+    "2027-01-23",
+    "2027-01-30",
+    "2027-02-06",
+    "2027-02-13",
+    "2027-02-20"
+   ]
+  },
+  {
+   "id": "22bf8fd0",
+   "weekday": 6,
+   "start": "21:00",
+   "end": "22:00",
+   "title": "真鑽領導團隊會議",
+   "source": "巴哈",
+   "since": "2026-10-18",
+   "until": "2026-12-27",
+   "gskip": [
+    "2026-10-25",
+    "2026-11-01",
+    "2026-11-08",
+    "2026-11-15",
+    "2026-11-22",
+    "2026-11-29",
+    "2026-12-06",
+    "2026-12-13",
+    "2026-12-20",
+    "2026-12-27",
+    "2027-01-03",
+    "2027-01-10",
+    "2027-01-17",
+    "2027-01-24",
+    "2027-01-31",
+    "2027-02-07",
+    "2027-02-14"
+   ]
+  },
+  {
+   "id": "6bbed989",
+   "weekday": 0,
+   "start": "22:00",
+   "end": "23:00",
+   "title": "戰報會議",
+   "source": "巴哈",
+   "since": "2026-10-19",
+   "until": "2026-12-28",
+   "gskip": [
+    "2026-10-26",
+    "2026-11-02",
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11",
+    "2027-01-18",
+    "2027-01-25",
+    "2027-02-01",
+    "2027-02-08",
+    "2027-02-15"
+   ]
+  },
+  {
+   "id": "75d39626",
+   "weekday": 1,
+   "start": "21:30",
+   "end": "22:30",
+   "title": "團隊會議",
+   "source": "巴哈",
+   "since": "2026-10-20",
+   "until": "2026-12-29",
+   "gskip": [
+    "2026-10-27",
+    "2026-11-03",
+    "2026-11-10",
+    "2026-11-17",
+    "2026-11-24",
+    "2026-12-01",
+    "2026-12-08",
+    "2026-12-15",
+    "2026-12-22",
+    "2026-12-29"
+   ]
+  },
+  {
+   "id": "4fc38db8",
+   "weekday": 3,
+   "start": "06:30",
+   "end": "10:00",
+   "title": "BNI 例會",
+   "source": "巴哈",
+   "since": "2026-10-22",
+   "until": "2026-12-31",
+   "gskip": [
+    "2026-10-29",
+    "2026-11-05",
+    "2026-11-12",
+    "2026-11-19",
+    "2026-11-26",
+    "2026-12-03",
+    "2026-12-10",
+    "2026-12-17",
+    "2026-12-24",
+    "2026-12-31"
+   ]
+  },
+  {
+   "id": "c6b3273f",
+   "weekday": 3,
+   "start": "21:00",
+   "end": "22:30",
+   "title": "線上聚",
+   "source": "巴哈",
+   "since": "2026-10-15",
+   "until": "2026-12-31",
+   "gskip": [
+    "2026-10-29",
+    "2026-11-05",
+    "2026-11-12",
+    "2026-11-19",
+    "2026-11-26",
+    "2026-12-03",
+    "2026-12-10",
+    "2026-12-17",
+    "2026-12-24",
+    "2026-12-31"
+   ]
+  },
+  {
+   "id": "trash0",
+   "weekday": 0,
+   "start": "17:00",
+   "end": "18:00",
+   "title": "家務時間",
+   "source": "教練10/12",
+   "soft": true,
+   "gskip": []
+  },
+  {
+   "id": "trash1",
+   "weekday": 1,
+   "start": "17:00",
+   "end": "18:00",
+   "title": "家務時間",
+   "source": "教練10/12",
+   "soft": true,
+   "gskip": []
+  },
+  {
+   "id": "trash3",
+   "weekday": 3,
+   "start": "17:00",
+   "end": "18:00",
+   "title": "家務時間",
+   "source": "教練10/12",
+   "soft": true,
+   "gskip": []
+  },
+  {
+   "id": "trash5",
+   "weekday": 5,
+   "start": "17:00",
+   "end": "18:00",
+   "title": "家務時間",
+   "source": "教練10/12",
+   "soft": true,
+   "gskip": []
+  },
+  {
+   "id": "thu-warm",
+   "weekday": 3,
+   "start": "19:00",
+   "end": "19:30",
+   "title": "暖身（分享會後）",
+   "source": "我",
+   "since": "2026-10-22",
+   "until": "2026-12-31",
+   "gskip": []
+  },
+  {
+   "id": "thu-rest",
+   "weekday": 3,
+   "start": "20:30",
+   "end": "21:00",
+   "title": "休息（訪談間隔）",
+   "source": "我",
+   "since": "2026-10-22",
+   "until": "2026-10-21",
+   "gskip": [],
+   "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
+  }
+ ],
+ "updated_at": "2026-10-23 01:48",
+ "tainan_synced_at": "2026-10-23 01:47",
+ "evening_window": {
+  "start": "19:00",
+  "end": "23:00"
+ },
+ "tainan_overrides": [
+  {
+   "date": "2026-10-16",
+   "title": "LTRT",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "start": "20:00",
+   "end": "21:00"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "RPL",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "date": "2026-11-20",
+   "title": "RPL",
+   "start": "21:00",
+   "end": "22:00"
+  },
+  {
+   "date": "2026-12-18",
+   "title": "RPL",
+   "start": "21:00",
+   "end": "22:00"
+  }
+ ],
+ "google_synced_at": "2026-10-23 01:47",
+ "google_synced_epoch": 1792691227
+}
