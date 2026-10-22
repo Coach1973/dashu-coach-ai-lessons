@@ -12,7 +12,7 @@
 1. 巴哈海報實測：教練去群組測；看 peipei 原始紀錄確認它真的跑了 `generate_poster_swap.py`、獎杯沒被動（群組內出圖尚未驗證）。
 2. meihua 是否進「大樹作品一覽」：名冊標 in_works，但作品一覽頁沒搜到，尚未確認。
 3. 小旭老師 Telegram 群（沿用 19:20 棒第 2 項）。
-   ✅ **推播許可旗標漏洞已修（10/22 12:40，workspace `c28f26cd6`、outer `c34679888`）**：旗標檔改寫「內容＝時間戳」，閘門只看內容不看修改時間；許可用 `scripts/line_push_approve.sh`、作廢 `--revoke`（`touch` 不再有效）。三個閘門（LINE 外掛 JS／`send_line_push.py`／event-signup）都改了，gateway 與 event-webapp 已重啟；實測：運作中 gateway 對假目標推播＝403 擋下，「舊內容＋新修改時間」的殘檔（就是 10/20 漏洞）也擋。外掛更新洗掉閘門時，每日點名會把舊 V1 自動升級成 V2。
+   ✅ **推播許可旗標漏洞已修（10/22 台灣時間 12:34，workspace `c28f26cd6`、outer `c34679888`）**：旗標檔改寫「內容＝時間戳」，閘門只看內容不看修改時間；許可用 `scripts/line_push_approve.sh`、作廢 `--revoke`（`touch` 不再有效）。三個閘門（LINE 外掛 JS／`send_line_push.py`／event-signup）都改了，gateway 與 event-webapp 已重啟；實測：運作中 gateway 對假目標推播＝403 擋下，「舊內容＋新修改時間」的殘檔（就是 10/20 漏洞）也擋。外掛更新洗掉閘門時，每日點名會把舊 V1 自動升級成 V2。
 
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：公開倉庫是否放守則全文（沿用）。

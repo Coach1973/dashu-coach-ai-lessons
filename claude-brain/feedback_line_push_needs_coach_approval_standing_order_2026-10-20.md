@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 5c639ade-2875-478d-b19c-cdbb974e4aae
-  modified: 2026-10-22T04:40:00.000Z
+  modified: 2026-10-22T04:34:30.000Z
 ---
 
 **教練原話（2026-10-20 19:05）**：「所有的LINE小龍蝦，沒有經過我的允許，永遠不得使用會扣額度的方式來工作。」起因：額度被扣光都是「事後才發現」，很久以前用 Kimi 時也發生過同樣的事（同類錯第二次＝要改機制，不是再寫記憶，[[reference-line-quota-push-counts-per-member-registration-forward]]）。
