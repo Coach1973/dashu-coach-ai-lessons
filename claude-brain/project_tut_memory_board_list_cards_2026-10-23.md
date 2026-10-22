@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c2ca99d7-473c-431c-a47c-501f10611947
-  modified: 2026-10-22T18:22:33.907Z
+  modified: 2026-10-22T18:26:05.741Z
 ---
 
 教練 2026-10-23 02:00～02:30 交辦：mentor100 的卡片架構搬到 https://event.bymyway.com/curated/tut-memory/#join（「終身校友網絡」改「理監事校友名單」），23 位名單由教練貼；又要求 /tut/team「兩邊同時都要有同一份資料」；又罵「沒有任何按鈕可以上傳照片跟修改、列出來沒照片沒簡介要幹嘛」，要「使用者找到自己位置點進去就能傳照片編輯簡介（像信任遊戲，他口誤說『新人遊戲』）」，且建置期間只有教練在用、要能直接在頁面上點。
@@ -16,6 +16,8 @@ metadata:
 - `https://event.bymyway.com/tut/m/<碼>` → 記憶牆理監事名單，每張卡「✏️ 編輯」
 - `https://event.bymyway.com/tut/b/<碼>` → /tut/team 建置模式，每張卡「✏️ 編輯」
 兩條都已收進大樹作品集「活動後台」與 /vault。編輯頁 `?build=碼`：職稱、簡介、照片可以只補其中一項、不發通知群。一般訪客：未填座位有「這是我，補簡介」（POST /tut/team/claim/<id> → 編輯頁，已補完的不能再認領）。
+
+**🔴 同步鐵律（教練 10/23 02:25 親口：「不管透過記憶牆編輯，還是透過 /tut/team 專頁，只要其中一頁變更，兩邊都要同步」）**：理監事資料只准存在資料庫 `tut_team_members` 一份；記憶牆沒有自己的資料，編輯按鈕也都跳到 /tut/team 的編輯頁，所以任何一邊改都寫同一張表。往後不准在記憶牆頁面裡另存第二份資料、不准加快取（網址、介面都要維持 no-store）；若之後改成記憶牆能直接存檔，也一定要寫回資料庫。頁內 `BOARD` 備援名單只有名字，連不上時才用。
 
 **坑**：
 - `workspace/event-signup` 在 worktree 對話裡 Edit 工具會被擋，用 python 精準替換（比對剛好 1 處）＋改前 `sqlite3 .backup` 與複製原檔到 `workspace/state/backup_20261023_tut_team_board/`；commit 用 `git commit -- <路徑>`（workspace 常有大量別人的未提交變更）。

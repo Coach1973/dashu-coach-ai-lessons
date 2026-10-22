@@ -1,3 +1,4 @@
+- [🔴🔴 「最後一下我不能按」（改系統設定等）：先把開頁、導到位置全做完，只留那一下給教練，不准丟「系統設定→…」路徑叫他自己找；實話講規定、不說「不能」；搬運工類第4次犯(2026-10-23)](feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md)
 - [🎓 南應大記憶牆「加入校友會」第三張卡＝理監事校友名單（照 mentor100 卡片版型，23 位）：資料在 tut-memory/index.html 的 BOARD 陣列、怎麼補照片簡介職稱連結；同輪整站字級調 20px、漢堡選單改 960px(86e1f7b, 8fb3e49)(2026-10-23)](project_tut_memory_board_list_cards_2026-10-23.md)
 - [🔴 榮樹下預約改「整段空檔＋來賓自選一小時」、不准寫「來賓邀請中」、每場分嘉賓／邀請人、LINE算法不用管；我沒查資料就說要清來賓資料被糾正(f45ef789f)(2026-10-22)](feedback_rongtree_free_window_no_placeholder_2026-10-22.md)
 - [🎨 海報換人換字：巴哈出圖失敗根因（內建 Google 金鑰無效）→改 lk888 edits 帶模板＋照片兩張圖；規則只改照片＋頭銜、獎杯不動（僅教練本人橫版寫乾淨世界）；AI 小字常錯改用 PIL 貼字；SOP 在 agents/peipei(2026-10-22)](reference_poster_swap_lk888_two_images_bahai_sop_2026-10-22.md)
