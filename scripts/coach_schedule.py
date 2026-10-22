@@ -159,11 +159,17 @@ def session_starts(d, data, a, b):
     return out
 
 
+def win_start(data, d, default="10:00"):
+    """白天可約窗口的起點。2026-10-23 教練：週六 9:30 起（總表 interview_window_start_by_weekday，鍵＝星期幾、0＝週一），
+    其他天照 interview_window。跟預約頁 coach_schedule_view._win_start 同一套"""
+    start = data.get("interview_window", {"start": default})["start"]
+    return hm(data.get("interview_window_start_by_weekday", {}).get(str(d.weekday()), start))
+
+
 def day_and_eve_starts(d, data):
     """(白天起點, 晚上起點)；白天最後一場要在晚上開始前留出緩衝。跟預約頁 coach_schedule_view._day_slots 同一套"""
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
-    ws, es, ee = hm(win["start"]), hm(eve["start"]), hm(eve["end"])
+    ws, es, ee = win_start(data, d), hm(eve["start"]), hm(eve["end"])
     return session_starts(d, data, ws, es - BUFFER), session_starts(d, data, es, ee)
 
 
@@ -173,7 +179,7 @@ def sessions_text(starts):
 
 def check(data, d, start=None, minutes=60, private=False):
     win = data.get("interview_window", {"start": "19:00", "end": "22:00"})
-    ws, we = hm(win["start"]), hm(win["end"])
+    ws, we = win_start(data, d, "19:00"), hm(win["end"])
     blocks = blocks_on(d, data)
     lines = [f"{day_label(d)}"]
     if start is not None:
@@ -195,7 +201,7 @@ def check(data, d, start=None, minutes=60, private=False):
     else:
         slots = free_slots(d, data, ws, we, minutes)
         lines.append(
-            f"  {win['start']}-{win['end']} 可訪談空檔（訪談前後各留 {BUFFER} 分鐘）："
+            f"  {fmt(ws)}-{win['end']} 可訪談空檔（訪談前後各留 {BUFFER} 分鐘）："
             + ("、".join(f"{fmt(a)}-{fmt(b)}" for a, b in slots) if slots else "沒有")
         )
     return "\n".join(lines)

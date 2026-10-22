@@ -127,22 +127,29 @@ def _starts(slots):
     return out
 
 
-def _day_slots(busy, data):
+def _win_start(data, d=None):
+    """白天可約窗口的起點。2026-10-23 教練：週六 9:30 起（總表 interview_window_start_by_weekday，鍵＝星期幾、0＝週一），
+    其他天照 interview_window。跟 scripts/coach_schedule.py 的 win_start 同一套。"""
+    start = data.get("interview_window", {"start": "10:00"})["start"]
+    if d is not None:
+        start = data.get("interview_window_start_by_weekday", {}).get(str(d.weekday()), start)
+    return _hm(start)
+
+
+def _day_slots(busy, data, d=None):
     """(白天起點, 晚上起點)。render 與 book 共用同一套算法，畫面看到的時段＝伺服器認得的時段。
     白天最後一場要在晚上開始前留出緩衝（19:00 晚上開始 → 白天最晚 18:30 結束）。"""
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    ws, es, ee = _hm(win["start"]), _hm(eve["start"]), _hm(eve["end"])
+    ws, es, ee = _win_start(data, d), _hm(eve["start"]), _hm(eve["end"])
     return _starts(_free(busy, ws, es - BUFFER)), _starts(_free(busy, es, ee))
 
 
-def _day_windows(busy, data):
+def _day_windows(busy, data, d=None):
     """(白天空檔, 晚上空檔)：整段可約區間，例如晚上 [(19:00, 23:00)]。
     2026-10-22 教練：不再切成固定的整點格子，來賓自己挑區間內任何一個小時（例如 19:30–20:30）；
     已有訪談的前後各留 30 分鐘，已經算在 _free 裡。"""
-    win = data.get("interview_window", {"start": "10:00", "end": "22:00"})
     eve = data.get("evening_window", {"start": "19:00", "end": "22:00"})
-    ws, es, ee = _hm(win["start"]), _hm(eve["start"]), _hm(eve["end"])
+    ws, es, ee = _win_start(data, d), _hm(eve["start"]), _hm(eve["end"])
     return _free(busy, ws, es - BUFFER), _free(busy, es, ee)
 
 
@@ -185,7 +192,7 @@ def book(date_s, start_s, booking_type):
     try:
         data = json.loads(DATA.read_text(encoding="utf-8"))
         busy = _busy(d, data)
-        if st % 5 or not _fits(st, sum(_day_windows(busy, data), [])):
+        if st % 5 or not _fits(st, sum(_day_windows(busy, data, d), [])):
             return False, "這個時段剛剛被預約走了，或離前後訪談不到 30 分鐘，請選別的時間"
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
               "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
@@ -244,7 +251,7 @@ def render(token: str = "") -> str:
             cards.append(f'<h2 class="wk"><span>{name}</span>{monday.month}/{monday.day} – {sunday.month}/{sunday.day}</h2>')
         busy = _busy(d, data)
         allday = any((s_, e_) == (0, 1440) for s_, e_, _ in busy)
-        day_starts, eve_starts = ([], []) if allday else _day_windows(busy, data)
+        day_starts, eve_starts = ([], []) if allday else _day_windows(busy, data, d)
         n_open += bool(eve_starts)
         if eve_starts:
             chip = '<span class="chip ok">晚上可約</span>'

@@ -96,7 +96,7 @@ d0, d1 = dt.date(2026, 10, 19), dt.date(2026, 12, 31)
 diff, n_days, n_slots, back2back = [], 0, 0, []
 d = d0
 while d <= d1:
-    page = v._day_slots(v._busy(d, real), real)
+    page = v._day_slots(v._busy(d, real), real, d)
     line = cs.day_and_eve_starts(d, real)
     if tuple(map(list, page)) != tuple(map(list, line)):
         diff.append((d.isoformat(), page, line))
@@ -139,6 +139,14 @@ check("11b. 已有 21:30–22:30 → 晚上空檔 19:00-21:00（前面留 30 分
 eve = v._day_windows(v._busy(SAT, dd), dd)[1]
 check("11c. 19:30、20:00 可約；20:30 開始會碰到緩衝 → 不可",
       v._fits(v._hm("19:30"), eve) and v._fits(v._hm("20:00"), eve) and not v._fits(v._hm("20:30"), eve))
+
+# 12. 2026-10-23 教練：週六白天可約起點 9:30（其他天仍 10:00）；預約頁與 LINE 兩邊都要認
+SAT_DATA = {**BASE, "interview_window_start_by_weekday": {"5": "09:30"}}
+check("12. 週六白天從 9:30 起（預約頁）", v._day_windows(v._busy(SAT, SAT_DATA), SAT_DATA, SAT)[0][0][0] == v._hm("09:30"))
+check("12b. 週六白天 9:30 起（LINE 同一套）", cs.day_and_eve_starts(SAT, SAT_DATA)[0][0] == cs.hm("09:30"))
+MON = dt.date(2026, 10, 26)
+check("12c. 週一白天仍 10:00 起", v._day_windows(v._busy(MON, SAT_DATA), SAT_DATA, MON)[0][0][0] == v._hm("10:00"))
+check("12d. 沒帶日期時照 interview_window（舊呼叫相容）", v._day_windows([], SAT_DATA)[0][0][0] == v._hm("10:00"))
 
 print("\n全部通過" if not fails else f"\n有 {len(fails)} 項失敗：{fails}")
 raise SystemExit(1 if fails else 0)

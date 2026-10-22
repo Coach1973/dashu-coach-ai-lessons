@@ -3887,7 +3887,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-23 01:56",
+ "updated_at": "2026-10-23 01:59",
  "tainan_synced_at": "2026-10-23 01:47",
  "evening_window": {
   "start": "19:00",
@@ -3931,6 +3931,9 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-23 01:56",
- "google_synced_epoch": 1792691762
+ "google_synced_at": "2026-10-23 01:59",
+ "google_synced_epoch": 1792691967,
+ "interview_window_start_by_weekday": {
+  "5": "09:30"
+ }
 }
