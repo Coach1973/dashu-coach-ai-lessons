@@ -60,6 +60,12 @@ ADVISOR_SEATS = [
     ("林志和", "智匯保經一處副總", ""),
 ]
 
+# 理監事校友名單（2026-10-23 教練 02:00 貼的 23 位，順序照貼）。第一次用到時放成空座位，
+# 照片、職稱、簡介、連結之後補在資料庫；記憶牆（tut-memory）的「理監事校友名單」讀 /api/tut/team/board，兩邊同一份。
+BOARD_SEATS = ["王佩茹", "楊孟薰", "陳佩君", "謝念均", "許山本美道子", "王佑文", "劉上維", "邱鈺涵",
+               "林泓丞", "曾智美", "陳沛岺", "潘皓瑋", "何冠忻", "林惠雯", "彭韻錚", "邱錦秀",
+               "顏妙青", "金巧玲", "陳孟珩", "楊志芳", "吳泰良", "郭怡淳", "孫熙閑"]
+
 # 有網頁連結的顧問：本人補資料前，先放從網頁整理的介紹（2026-10-14 教練：至少先看得到對方的網頁簡介）。
 # 只寫網頁上看得到的內容；網頁沒提到本人的（謝志賓），只介紹協會、不替本人寫頭銜。
 SEAT_SOURCE_NOTE = "\n\n（以上整理自公開網頁，待本人補充）"
@@ -127,8 +133,13 @@ def _conn():
 
 
 def seed_advisor_seats():
-    """第一次用到時放好顧問空座位；已經有任何顧問資料就不再動（不會重複、不會蓋掉本人填的）。"""
+    """第一次用到時放好顧問與理監事空座位；各團隊已經有任何資料就不再動（不會重複、不會蓋掉本人填的）。"""
     conn = _conn()
+    if not conn.execute("SELECT 1 FROM tut_team_members WHERE team='board' LIMIT 1").fetchone():
+        for i, name in enumerate(BOARD_SEATS):
+            conn.execute("INSERT INTO tut_team_members (team, role, name, edit_token, filled, sort)"
+                         " VALUES ('board', '', ?, ?, 0, ?)", (name, secrets.token_urlsafe(16), i))
+        conn.commit()
     if not conn.execute("SELECT 1 FROM tut_team_members WHERE team='advisor' LIMIT 1").fetchone():
         for i, (name, title, url) in enumerate(ADVISOR_SEATS):
             conn.execute("INSERT INTO tut_team_members (team, role, name, company_title, link_web, edit_token, filled, sort)"
@@ -169,6 +180,24 @@ def list_members(include_hidden=False):
     return sorted(rows, key=_rank)
 
 
+def board_public(build=""):
+    """記憶牆「理監事校友名單」用的資料：跟 /tut/team 同一份。一般訪客只有公開欄位（不含修改連結、IP）；
+    build＝教練的建置模式簽章短碼，對了才多給每人的編輯網址。"""
+    out = []
+    for r in list_members():
+        if r["team"] != "board":
+            continue
+        title = " ｜ ".join(x for x in (r["role"], r["company_title"]) if x)
+        bio = "\n\n".join(x for x in ((f"🎓 {r['dept_year']}" if r["dept_year"] else ""), r["bio"]) if x)
+        item = {"id": r["id"], "filled": bool(r["filled"]), "name": r["name"], "title": title, "bio": bio,
+                "photo": f"https://event.bymyway.com/tut/team/photo/{r['photo_file']}" if r["photo_file"] else "",
+                "links": [{"label": lab, "url": r[k]} for k, lab in LINKS if r[k]]}
+        if build:
+            item["edit"] = f"https://event.bymyway.com/tut/team/edit/{r['edit_token']}?build={build}"
+        out.append(item)
+    return out
+
+
 def get_by_token(token):
     if not token or len(token) > 64:
         return None
@@ -200,8 +229,8 @@ def _norm_link(key, v):
     return v if re.match(r"^https?://[^\s<>\"']+$", v) else ""
 
 
-def clean_form(form, need_photo):
-    """回傳 (資料 dict, 錯誤訊息)。"""
+def clean_form(form, need_photo, partial=False):
+    """回傳 (資料 dict, 錯誤訊息)。partial＝教練的建置模式，只要有團隊跟姓名就收，其他之後補。"""
     d = {}
     for k in FIELDS:
         v = (form.get(k) or "").strip()
@@ -210,6 +239,8 @@ def clean_form(form, need_photo):
     d["bio"] = d["bio"].replace(SEAT_SOURCE_NOTE.strip(), "").strip()   # 本人存檔＝已補充，拿掉「待本人補充」
     if d["team"] not in TEAMS:
         return d, "請選擇您是「理監事團隊」還是「顧問團隊」"
+    if partial:
+        return d, ("" if d["name"] else "請填寫「姓名」")
     for k, label in (("name", "姓名"), ("company_title", "公司／職稱"), ("bio", "個人簡介")):
         if not d[k]:
             return d, f"請填寫「{label}」"
@@ -301,48 +332,48 @@ CSS = """
 :root{--purple:#854D92;--purple-deep:#3D2B47;--purple-mid:#5B3A6B;--purple-soft:#EDE4F3;--bg:#F6F2F8;--card:#FFFFFF;
 --line:#D4B8E0;--text:#2E2433;--muted:#6B6170;--gold:#B8862B;--danger:#A33A3A}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:400 20px/1.75 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 a{color:var(--purple)}h1,h2,h3{line-height:1.35;margin:0}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
-.top{background:var(--purple-deep);color:#fff;font-size:15px}.top .wrap{display:flex;gap:16px;align-items:center;min-height:48px;flex-wrap:wrap}
+.top{background:var(--purple-deep);color:#fff;font-size:20px}.top .wrap{display:flex;gap:16px;align-items:center;min-height:48px;flex-wrap:wrap}
 .top a{color:#E9DDF0;text-decoration:none}.top b{color:#fff;margin-right:auto;letter-spacing:.06em}
 .hero{background:linear-gradient(160deg,var(--purple-deep),var(--purple) 70%);color:#fff;padding:56px 0 64px}
-.eyebrow{letter-spacing:.24em;font-size:14px;color:#E9DDF0;margin:0 0 10px}
+.eyebrow{letter-spacing:.24em;font-size:20px;color:#E9DDF0;margin:0 0 10px}
 .hero h1{font-size:clamp(30px,6vw,48px);font-weight:700}.hero p.lead{max-width:640px;color:#EFE7F4;margin:16px 0 28px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;border:0;
-background:#fff;color:var(--purple-deep);font:700 18px/1 inherit;text-decoration:none;cursor:pointer}
+background:#fff;color:var(--purple-deep);font-family:inherit;font-weight:700;font-size:20px;line-height:1;text-decoration:none;cursor:pointer}
 .btn.purple{background:var(--purple);color:#fff}.btn.ghost{background:none;border:1.5px solid var(--purple);color:var(--purple)}
-.btn.danger{background:none;border:1.5px solid var(--danger);color:var(--danger);font-size:16px;min-height:44px}
-.hero .count{margin-left:16px;color:#E9DDF0;font-size:15px}
+.btn.danger{background:none;border:1.5px solid var(--danger);color:var(--danger);font-size:20px;min-height:44px}
+.hero .count{margin-left:16px;color:#E9DDF0;font-size:20px}
 section.team{padding:48px 0 8px}.team h2{font-size:clamp(24px,4vw,32px);color:var(--purple-deep);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.team h2 small{font-size:15px;color:var(--muted);font-weight:400}.team .intro{color:var(--muted);margin:6px 0 22px}
+.team h2 small{font-size:20px;color:var(--muted);font-weight:400}.team .intro{color:var(--muted);margin:6px 0 22px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
 .card .head{display:flex;gap:16px;align-items:center;margin-bottom:12px}
 .ph{width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--purple-soft);background:var(--purple-soft);
 display:flex;align-items:center;justify-content:center;font:700 32px/1 "Noto Serif TC",serif;color:var(--purple);object-position:50% 18%}
-.role{display:inline-block;font-size:14px;padding:1px 12px;border-radius:999px;background:var(--purple-soft);color:var(--purple-deep);margin-bottom:4px}
-.card h3{font-size:22px}.ct{color:var(--muted);font-size:15px;margin:2px 0 0}
-.bio{white-space:pre-line;margin:0;font-size:16px}
+.role{display:inline-block;font-size:20px;padding:1px 12px;border-radius:999px;background:var(--purple-soft);color:var(--purple-deep);margin-bottom:4px}
+.card h3{font-size:22px}.ct{color:var(--muted);font-size:20px;margin:2px 0 0}
+.bio{white-space:pre-line;margin:0;font-size:20px}
 .bio-wrap summary{cursor:pointer;list-style:none}.bio-wrap summary::-webkit-details-marker{display:none}
-.bio-wrap .short{display:block;color:var(--text)}.bio-wrap .more{display:block;color:var(--purple);font-size:15px;margin-top:4px}
-.bio-wrap[open] .short{display:none}.bio-wrap[open] .more{font-size:0}.bio-wrap[open] .more::after{content:"收合";font-size:15px}
+.bio-wrap .short{display:block;color:var(--text)}.bio-wrap .more{display:block;color:var(--purple);font-size:20px;margin-top:4px}
+.bio-wrap[open] .short{display:none}.bio-wrap[open] .more{font-size:0}.bio-wrap[open] .more::after{content:"收合";font-size:20px}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
-.links a{font-size:14px;padding:4px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none}
+.links a{font-size:20px;padding:4px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none}
 .card.seat{border-style:dashed;background:transparent}.card.seat .ph{background:#fff}
 .card.seat form{padding-top:12px}.card.seat .links{margin-top:auto}
-.seat-btn{font:500 15px/1 inherit;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--purple);background:none;color:var(--purple);cursor:pointer;width:100%}
+.seat-btn{font-family:inherit;font-weight:500;font-size:20px;line-height:1;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--purple);background:none;color:var(--purple);cursor:pointer;width:100%}
 .empty{border:1px dashed var(--line);border-radius:14px;padding:22px;color:var(--muted)}
 .cta{margin:56px 0;padding:36px 24px;border-radius:18px;background:var(--purple-soft);text-align:center}
 .cta h2{color:var(--purple-deep);font-size:clamp(22px,4vw,30px);margin-bottom:8px}.cta p{color:var(--muted);margin:0 0 20px}
-footer{background:var(--purple-deep);color:#D9CCE0;font-size:14px;padding:28px 0}footer a{color:#fff}
+footer{background:var(--purple-deep);color:#D9CCE0;font-size:20px;padding:28px 0}footer a{color:#fff}
 /* 表單 */
 .paper{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:28px 0 56px}
 .field{display:flex;flex-direction:column;margin-bottom:18px}label{font-weight:500;margin-bottom:6px}
-.req{color:var(--purple)}.opt{color:var(--muted);font-weight:400;font-size:14px;margin-left:6px}
+.req{color:var(--purple)}.opt{color:var(--muted);font-weight:400;font-size:20px;margin-left:6px}
 input[type=text],input[type=url],textarea{font:inherit;color:var(--text);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;min-height:50px;width:100%;background:#fff}
 textarea{min-height:150px;resize:vertical}input:focus,textarea:focus{outline:none;border-color:var(--purple)}
-.hint{color:var(--muted);font-size:14px;margin-top:4px}
+.hint{color:var(--muted);font-size:20px;margin-top:4px}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .choice{position:relative}.choice input{position:absolute;opacity:0}
 .choice span{display:flex;align-items:center;justify-content:center;min-height:56px;border:1.5px solid var(--line);border-radius:12px;font-weight:500;cursor:pointer;text-align:center;padding:6px}
@@ -353,12 +384,13 @@ textarea{min-height:150px;resize:vertical}input:focus,textarea:focus{outline:non
 .ok{background:#EEF6EE;color:#2F6B34;border-radius:10px;padding:12px 16px;margin-bottom:18px}
 .claim{background:var(--purple-soft);border-radius:14px;padding:18px 20px;margin:24px 0}
 .claim p{margin:0 0 10px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chips form{margin:0}
-.chips button{font:inherit;font-size:15px;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--purple);background:#fff;color:var(--purple-deep);cursor:pointer}
+.chips button{font:inherit;font-size:20px;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--purple);background:#fff;color:var(--purple-deep);cursor:pointer}
 .cur{display:flex;gap:12px;align-items:center;margin-bottom:8px}.cur img{width:64px;height:64px;border-radius:50%;object-fit:cover}
-.copy{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}.copy input{flex:1;min-width:220px;font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
-table{width:100%;border-collapse:collapse;font-size:15px}td,th{text-align:left;padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-td form{display:inline}td button{font:inherit;font-size:14px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.copy{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}.copy input{flex:1;min-width:220px;font:inherit;font-size:20px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+table{width:100%;border-collapse:collapse;font-size:20px}td,th{text-align:left;padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+td form{display:inline}td button{font:inherit;font-size:20px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
 @media(max-width:640px){.two{grid-template-columns:1fr}.hero{padding:40px 0 48px}.hero .count{display:block;margin:12px 0 0}}
+.editbtn{background:var(--purple);color:#fff !important;font-weight:700}
 """
 
 TITLE = "南應大校友會台南分會"
@@ -388,7 +420,9 @@ def _bio_html(bio):
             f'<span class="more">看完整介紹</span></summary><p class="bio">{E(bio)}</p></details>')
 
 
-def _card(r):
+def _card(r, build=""):
+    edit = (f'<div class="links"><a class="editbtn" href="/tut/team/edit/{E(r["edit_token"])}?build={E(build)}">'
+            f'✏️ 編輯（上傳照片／簡介）</a></div>' if build else "")
     links = "".join(f'<a href="{E(r[k])}" target="_blank" rel="noopener nofollow">{lab}</a>' for k, lab in LINKS if r[k])
     role = f'<span class="role">{E(r["role"])}</span>' if r["role"] else ""
     dept = f'<p class="ct">🎓 {E(r["dept_year"])}</p>' if r["dept_year"] else ""
@@ -400,14 +434,14 @@ def _card(r):
         return (f'<div class="card seat"><div class="head">{_photo(r)}<div>{role}<h3>{E(r["name"])}</h3>'
                 f'<p class="ct">{E(r["company_title"])}</p></div></div>{intro}'
                 f'{f"<div class=links>{seat_links}</div>" if seat_links else ""}'
-                f'<form method="post" action="/tut/team/claim/{r["id"]}"><button class="seat-btn">我是{E(r["name"])}，補上我的簡介</button></form></div>')
+                f'{edit or f"""<form method="post" action="/tut/team/claim/{r["id"]}"><button class="seat-btn">我是{E(r["name"])}，補上我的簡介</button></form>"""}</div>')
     bio_html = _bio_html(bio)
     return (f'<article class="card"><div class="head">{_photo(r)}<div>{role}<h3>{E(r["name"])}</h3>'
             f'<p class="ct">{E(r["company_title"])}</p>{dept}</div></div>{bio_html}'
-            f'{f"<div class=links>{links}</div>" if links else ""}</article>')
+            f'{f"<div class=links>{links}</div>" if links else ""}{edit}</article>')
 
 
-def render_index():
+def render_index(build=""):
     rows = list_members()
     board = [r for r in rows if r["team"] == "board"]
     adv = [r for r in rows if r["team"] == "advisor"]
@@ -415,38 +449,47 @@ def render_index():
 
     def sec(key, items, intro, empty):
         n = sum(1 for r in items if r["filled"])
-        grid = f'<div class="grid">{"".join(_card(r) for r in items)}</div>' if items else f'<p class="empty">{empty}</p>'
+        grid = f'<div class="grid">{"".join(_card(r, build) for r in items)}</div>' if items else f'<p class="empty">{empty}</p>'
         return (f'<section class="team" id="{key}"><div class="wrap"><h2>{TEAMS[key]}<small>已上架 {n} 位</small></h2>'
                 f'<p class="intro">{intro}</p>{grid}</div></section>')
 
+    build_note = ('<p class="lead" style="background:#fff3cd;color:#3D2B47;padding:10px 14px;border-radius:8px">'
+                  '🛠 建置模式（只有您看得到）：每張卡片都有「✏️ 編輯」，可以上傳照片、補職稱和簡介，也可以只補其中一項。</p>'
+                  if build else "")
     body = f"""<header class="hero"><div class="wrap">
 <p class="eyebrow">TAINAN UNIVERSITY OF TECHNOLOGY ALUMNI</p>
 <h1>{TITLE}<br>理監事團隊與顧問團隊</h1>
 <p class="lead">把校友的經驗與資源串在一起。點開每一位，認識為南應人服務的理監事與顧問；您也在團隊裡嗎？按下面的按鈕，自己建立檔案，送出就上架。</p>
-<a class="btn" href="/tut/team/join">我要建立檔案</a><span class="count">目前 {filled} 位已上架</span>
+{build_note}<a class="btn" href="/tut/team/join">我要建立檔案</a><span class="count">目前 {filled} 位已上架</span>
 </div></header>
-{sec("board", board, "校友會的理事、監事與幹部。", "理監事名單確定後，請理監事本人按「我要建立檔案」，選「理監事團隊」填寫，送出就會出現在這裡。")}
+{sec("board", board, "校友會的理事、監事與幹部。名單上已有您的名字？點您那一張的按鈕，補上照片與簡介就上架。", "理監事名單確定後，請理監事本人按「我要建立檔案」，選「理監事團隊」填寫，送出就會出現在這裡。")}
 {sec("advisor", adv, "為校友提供產業、商務與專業資源的顧問夥伴。名單上已有您的名字？點您那一張的按鈕，補上照片與簡介就上架。", "顧問名單整理中。")}
 <div class="wrap"><div class="cta"><h2>您也是理監事或顧問？</h2><p>填姓名、公司、簡介，附一張照片，3 分鐘完成，送出立刻上架。</p>
 <a class="btn purple" href="/tut/team/join">我要建立檔案</a></div></div>"""
     return _page(f"{TITLE}｜理監事團隊與顧問團隊", body)
 
 
-def _form_html(action, d, error, existing=None, seats=()):
+def _form_html(action, d, error, existing=None, seats=(), build=""):
     d = d or {}
+    rq = "" if build else "required"   # 建置模式：職稱、簡介、照片都不必填
     v = lambda k: E(d.get(k, "") or "")  # noqa: E731
     team = d.get("team", "")
     choices = "".join(
         f'<label class="choice"><input type="radio" name="team" value="{k}" {"checked" if team == k else ""} required><span>{lab}</span></label>'
         for k, lab in TEAMS.items())
-    photo_req = not (existing and existing["photo_file"])
+    photo_req = not (existing and existing["photo_file"]) and not build
     cur = (f'<div class="cur">{_photo(existing)}<span class="hint">目前的照片；不換就不用再上傳</span></div>'
            if existing and existing["photo_file"] else "")
     claim = ""
     if seats:
-        chips = "".join(f'<form method="post" action="/tut/team/claim/{s["id"]}"><button>{E(s["name"])}</button></form>' for s in seats)
-        claim = (f'<div class="claim"><p><b>顧問名單上已經有您的名字？</b>直接點您的名字，補上照片與簡介即可，不用重新填。</p>'
-                 f'<div class="chips">{chips}</div></div>')
+        groups = ""
+        for key, lab in TEAMS.items():
+            part = "".join(f'<form method="post" action="/tut/team/claim/{s["id"]}"><button>{E(s["name"])}</button></form>'
+                           for s in seats if s["team"] == key)
+            if part:
+                groups += f'<p class="hint" style="margin:10px 0 4px">{lab}</p><div class="chips">{part}</div>'
+        claim = (f'<div class="claim"><p><b>名單上已經有您的名字？</b>直接點您的名字，補上照片與簡介即可，不用重新填。</p>'
+                 f'{groups}</div>')
     links = "".join(
         f'<div class="field"><label for="{k}">{lab}<span class="opt">選填</span></label>'
         f'<input type="text" id="{k}" name="{k}" value="{v(k)}" placeholder="{"LINE ID 或加好友網址" if k == "link_line" else "https://"}"></div>'
@@ -458,9 +501,9 @@ def _form_html(action, d, error, existing=None, seats=()):
 <div class="field"><label for="name">姓名<span class="req"> *</span></label><input type="text" id="name" name="name" value="{v('name')}" required maxlength="30" autocomplete="name"></div>
 <div class="field"><label for="role">校友會職務<span class="opt">選填</span></label><input type="text" id="role" name="role" value="{v('role')}" maxlength="20" placeholder="例：理事長、常務理事、監事、顧問"></div>
 </div>
-<div class="field"><label for="company_title">公司／職稱<span class="req"> *</span></label><input type="text" id="company_title" name="company_title" value="{v('company_title')}" required maxlength="60" placeholder="例：大樹教育 創辦人"></div>
+<div class="field"><label for="company_title">公司／職稱<span class="req"> *</span></label><input type="text" id="company_title" name="company_title" value="{v('company_title')}" {rq} maxlength="60" placeholder="例：大樹教育 創辦人"></div>
 <div class="field"><label for="dept_year">南應大科系與畢業年<span class="opt">選填</span></label><input type="text" id="dept_year" name="dept_year" value="{v('dept_year')}" maxlength="40" placeholder="例：企管系 1998 年畢業"></div>
-<div class="field"><label for="bio">個人簡介<span class="req"> *</span></label><textarea id="bio" name="bio" required maxlength="800" placeholder="您的專長、經歷，以及能為校友提供的資源（800 字內）">{v('bio')}</textarea></div>
+<div class="field"><label for="bio">個人簡介<span class="req"> *</span></label><textarea id="bio" name="bio" {rq} maxlength="800" placeholder="您的專長、經歷，以及能為校友提供的資源（800 字內）">{v('bio')}</textarea></div>
 <div class="field"><label for="photo">個人照片{'<span class="req"> *</span>' if photo_req else '<span class="opt">選填</span>'}</label>{cur}
 <input type="file" id="photo" name="photo" accept="image/*" {"required" if photo_req else ""}><p class="hint">清楚的半身照最好，手機照片直接傳即可</p></div>
 <div class="two">{links}</div>
@@ -477,23 +520,25 @@ def render_join(d=None, error=""):
     return _page("我要建立檔案｜" + TITLE, body, robots=False)
 
 
-def render_edit(r, d=None, error="", saved=False, first=False):
+def render_edit(r, d=None, error="", saved=False, first=False, build=""):
     d = d or dict(r)
     url = f"https://event.bymyway.com/tut/team/edit/{r['edit_token']}"
+    back = f"/tut/team?build={E(build)}#{r['team']}" if build else f"/tut/team#{r['team']}"
+    bnote = ('<p class="ok" role="status">🛠 建置模式：照片、職稱、簡介可以只補其中一項，按「儲存修改」就更新。</p>' if build else "")
     note = ""
     if first:
         note = ('<p class="ok" role="status"><b>已上架！</b>這是您的專屬修改連結，請存起來（加入書籤或傳給自己 LINE），之後修改資料都用它：</p>'
                 f'<div class="copy"><input id="me" value="{E(url)}" readonly><button class="btn purple" type="button" '
                 f'onclick="navigator.clipboard.writeText(document.getElementById(\'me\').value).then(()=>this.textContent=\'已複製\')">複製連結</button>'
-                f'<a class="btn ghost" href="/tut/team#{r["team"]}">看我的檔案</a></div>')
+                f'<a class="btn ghost" href="{back}">看我的檔案</a></div>')
     elif saved:
-        note = f'<p class="ok" role="status">已儲存，頁面已更新。<a href="/tut/team#{r["team"]}">回團隊頁看看</a></p>'
+        note = f'<p class="ok" role="status">已儲存，頁面已更新。<a href="{back}">回團隊頁看看</a></p>'
     elif not r["filled"]:
         note = '<p class="ok" role="status">您的名字已經在名單上了，補上照片與簡介，按「儲存修改」就會上架。</p>'
     body = f"""<div class="wrap" style="max-width:760px;padding-top:36px">
 <p class="eyebrow" style="color:var(--purple)">專屬修改頁</p><h1 style="color:var(--purple-deep)">{E(r['name'])} 的檔案</h1>
-{note}
-{_form_html(f"/tut/team/edit/{r['edit_token']}", d, error, existing=r)}
+{bnote}{note}
+{_form_html(f"/tut/team/edit/{r['edit_token']}" + (f"?build={E(build)}" if build else ""), d, error, existing=r, build=build)}
 <form method="post" action="/tut/team/edit/{r['edit_token']}/delete" onsubmit="return confirm('確定要刪除您的檔案嗎？刪除後就不會出現在團隊頁。')" style="margin:-32px 0 56px">
 <button class="btn danger">刪除我的檔案</button></form></div>"""
     return _page("修改我的檔案｜" + TITLE, body, robots=False)

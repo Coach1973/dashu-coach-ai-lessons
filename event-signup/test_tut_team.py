@@ -54,14 +54,16 @@ FORM = {"team": "board", "role": "理事長", "name": "王小明", "company_titl
 r = client.get("/tut/team")
 h = r.get_data(as_text=True)
 check("公開頁打得開、標題正確、用南應大紫色", r.status_code == 200 and "理監事團隊與顧問團隊" in h and "#854D92" in h)
-check("顧問名單 17 位空座位已放好，各有「補上我的簡介」按鈕", h.count("補上我的簡介") == 17 and "林士民" in h and "林志和" in h)
+check("顧問 17 位＋理監事 23 位空座位已放好，各有「補上我的簡介」按鈕", h.count("補上我的簡介") == 40 and "林士民" in h and "林志和" in h)
 check("顧問座位依記憶牆順序：林士民第一、林志和最後", h.index("林士民") < h.index("鄭儷絲") < h.index("林志和"))
-check("理監事目前沒名單，提示本人自己建立", "理監事名單確定後" in h)
+check("理監事 23 位照教練貼的順序放好，在顧問區前面",
+      h.index("王佩茹") < h.index("陳佩君") < h.index("孫熙閑") < h.index('id="advisor"') and "許山本美道子" in h)
 check("有「我要建立檔案」按鈕", 'href="/tut/team/join"' in h)
 check("/tut/ 召集令沒被新網址吃掉", client.get("/tut/").status_code in (200, 404) and client.get("/tut/team/").status_code == 200)
 
 h = client.get("/tut/team/join").get_data(as_text=True)
-check("建立檔案頁：先列顧問名單名字可直接點", "顧問名單上已經有您的名字" in h and h.count("/tut/team/claim/") == 17)
+check("建立檔案頁：先列兩個團隊的名單名字可直接點", "名單上已經有您的名字" in h and h.count("/tut/team/claim/") == 40
+      and "理監事團隊" in h and "王佩茹" in h)
 
 r = client.post("/tut/team/join", data={**FORM, "bio": ""}, content_type="multipart/form-data")
 check("簡介沒填會擋下並說是哪一欄、資料保留", r.status_code == 400 and "個人簡介" in r.get_data(as_text=True) and "王小明" in r.get_data(as_text=True))
@@ -114,7 +116,7 @@ check("補完照片與簡介 → 上架（顯示專屬連結）", "new=1" in r.h
 wait_sent(2)
 check("顧問補完也通知一次", len(SENT) == 2 and "鄭儷絲" in SENT[1][1])
 h = client.get("/tut/team").get_data(as_text=True)
-check("公開頁顧問空座位少一個", h.count("補上我的簡介") == 16 and "網紅產業顧問" in h)
+check("公開頁顧問空座位少一個", h.count("補上我的簡介") == 39 and "網紅產業顧問" in h)
 r = client.post(f"/tut/team/claim/{seat['id']}")
 check("已補完的座位不能再被別人認領", "/tut/team/join" in r.headers.get("Location", ""))
 
@@ -137,6 +139,7 @@ client.post(f"/tut/team/edit/{token}/delete")
 check("本人刪除自己的檔案 → 公開頁消失、照片檔刪掉", "王小明" not in client.get("/tut/team").get_data(as_text=True)
       and tt.get_by_token(token) is None)
 check("重開網站不會重複放顧問座位", (tt.seed_advisor_seats() or True) and len([r for r in tt.list_members() if r["team"] == "advisor"]) == 17)
+check("重開網站不會重複放理監事座位", len([r for r in tt.list_members() if r["name"] in tt.BOARD_SEATS]) == 23)
 
 r = client.post("/tut/team/join", data={**FORM, "website": "spam"}, content_type="multipart/form-data")
 check("機器人（填了隱藏欄位）不會建立資料", r.status_code == 302 and "王小明" not in client.get("/tut/team").get_data(as_text=True))
@@ -193,6 +196,70 @@ check("後台每位都有「複製專屬連結」，連結是 https 完整網址
       and len(re.findall(r"data-url='https://event.bymyway.com/tut/team/edit/[\w-]+'", h)) == rows_n)
 check("後台說明哪條可傳給本人、哪條不能", "不要傳給別人" in h)
 check("複製的連結真的打得開本人修改頁（不用登入）", client.get(re.search(r"data-url='https://event.bymyway.com(/tut/team/edit/[\w-]+)'", h).group(1)).status_code == 200)
+
+# ---- 記憶牆「理監事校友名單」共用同一份資料（2026-10-23 教練）----
+r = client.get("/api/tut/team/board")
+raw = r.get_data(as_text=True)
+data = r.get_json(force=True)
+check("API：回 JSON、可跨站讀、不快取", r.status_code == 200 and r.headers.get("Access-Control-Allow-Origin") == "*"
+      and "no-store" in r.headers.get("Cache-Control", "") and "json" in r.headers.get("Content-Type", ""))
+check("API：23 位照貼的順序，顧問不混進來", [x["name"] for x in data if x["name"] in tt.BOARD_SEATS] == tt.BOARD_SEATS
+      and not any(x["name"] in ("林士民", "林志和") for x in data))
+check("API：不外洩修改連結與 IP", "edit_token" not in raw and "/tut/team/edit/" not in raw and '"ip"' not in raw)
+seat = next(s for s in tt.open_seats() if s["name"] == "陳佩君")
+client.post(f"/tut/team/edit/{seat['edit_token']}", data={"team": "board", "role": "常務理事", "name": "陳佩君",
+            "company_title": "大樹教育 創辦人", "dept_year": "企管系 1998 年畢業", "bio": "簡介一\n\n簡介二",
+            "link_web": "example.org", "photo": (jpg(), "p.jpg")}, content_type="multipart/form-data")
+one = next(x for x in client.get("/api/tut/team/board").get_json(force=True) if x["name"] == "陳佩君")
+check("API：補完資料後兩邊同步（職務｜公司、系級、簡介、照片、連結）",
+      one["title"] == "常務理事 ｜ 大樹教育 創辦人" and one["bio"].startswith("🎓 企管系 1998 年畢業") and "簡介二" in one["bio"]
+      and one["photo"].startswith("https://event.bymyway.com/tut/team/photo/") and one["links"] == [{"label": "網站", "url": "https://example.org"}])
+check("API：照片網址真的打得開", client.get(one["photo"].replace("https://event.bymyway.com", "")).status_code == 200)
+mid = tt.get_by_id(seat["id"])["id"]
+client.post(f"/tut/team/a/{code}/hide/{mid}", data={"hidden": "1"})
+check("API：後台隱藏的人兩邊都不顯示", "陳佩君" not in [x["name"] for x in client.get("/api/tut/team/board").get_json(force=True)]
+      and "陳佩君" not in client.get("/tut/team").get_data(as_text=True))
+
+# ---- 建置模式（教練 2026-10-23：直接在頁面上點就能補照片、簡介，不用先認領）----
+bq = tt.admin_code(appmod.app.secret_key)
+h = client.get("/tut/team").get_data(as_text=True)
+check("一般訪客看不到編輯按鈕、也沒有建置碼", "✏️ 編輯" not in h and "build=" not in h)
+h = client.get(f"/tut/team?build={bq}").get_data(as_text=True)
+check("建置模式：每張卡都有編輯按鈕，有提示", h.count("✏️ 編輯（上傳照片／簡介）") == len(tt.list_members()) and "建置模式" in h)
+check("建置碼錯（含中文）＝跟一般訪客一樣、不報錯",
+      client.get("/tut/team?build=wrongwrong").status_code == 200 and "✏️ 編輯" not in client.get("/tut/team?build=wrongwrong").get_data(as_text=True)
+      and client.get("/tut/team?build=%E4%B8%AD").status_code == 200)
+seat = next(s for s in tt.open_seats() if s["name"] == "王佩茹")
+n_sent = len(SENT)
+r = client.post(f"/tut/team/edit/{seat['edit_token']}?build={bq}", data={"team": "board", "name": "王佩茹", "photo": (jpg(), "a.jpg")},
+                content_type="multipart/form-data")
+check("建置模式：只補照片就能存，轉回編輯頁並帶著建置碼", r.status_code == 302 and "saved=1" in r.headers["Location"] and f"build={bq}" in r.headers["Location"])
+row = tt.get_by_id(seat["id"])
+check("照片存好、算已上架、不發通知（不吵通知群）", row["photo_file"] and row["filled"] == 1 and len(SENT) == n_sent)
+r = client.post(f"/tut/team/edit/{seat['edit_token']}?build={bq}", data={"team": "board", "name": "王佩茹",
+                "company_title": "測試公司 董事長", "bio": "第一次補簡介"}, content_type="multipart/form-data")
+row2 = tt.get_by_id(seat["id"])
+check("建置模式：再補職稱簡介，照片保留", row2["company_title"] == "測試公司 董事長" and row2["bio"] == "第一次補簡介" and row2["photo_file"] == row["photo_file"])
+h = client.get(f"/tut/team/edit/{seat['edit_token']}?build={bq}").get_data(as_text=True)
+check("建置模式編輯頁：職稱簡介照片都不必填，回團隊頁帶建置碼",
+      "required" not in re.search(r'<input[^>]*id="company_title"[^>]*>', h).group(0) and "required" not in re.search(r'<textarea[^>]*id="bio"[^>]*>', h).group(0)
+      and "建置模式" in h and f"/tut/team/edit/{seat['edit_token']}?build={bq}" in h)
+seat2 = next(s for s in tt.open_seats() if s["name"] == "楊孟薰")
+r = client.post(f"/tut/team/edit/{seat2['edit_token']}", data={"team": "board", "name": "楊孟薰"}, content_type="multipart/form-data")
+check("沒有建置碼的一般修改，簡介照片照樣必填", r.status_code == 400 and "個人簡介" in r.get_data(as_text=True))
+r = client.post(f"/tut/team/edit/{seat2['edit_token']}?build=wrongwrong", data={"team": "board", "name": "楊孟薰"}, content_type="multipart/form-data")
+check("建置碼錯的人不能借用寬鬆規則", r.status_code == 400)
+api = client.get("/api/tut/team/board").get_json(force=True)
+check("API 一般訪客：有 id 與 filled，沒有編輯網址", all("id" in x and "filled" in x and "edit" not in x for x in api))
+api = client.get(f"/api/tut/team/board?build={bq}").get_json(force=True)
+check("API 建置模式：每人多一個編輯網址", all(x["edit"].startswith("https://event.bymyway.com/tut/team/edit/") and f"build={bq}" in x["edit"] for x in api))
+check("API 建置碼錯＝沒有編輯網址", all("edit" not in x for x in client.get("/api/tut/team/board?build=nope").get_json(force=True)))
+
+r = client.get(f"/tut/b/{bq}")
+check("短網址 /tut/b/<碼> → 團隊頁建置模式", r.status_code == 302 and r.headers["Location"] == f"/tut/team?build={bq}")
+r = client.get(f"/tut/m/{bq}")
+check("短網址 /tut/m/<碼> → 記憶牆理監事名單建置模式", r.status_code == 302 and r.headers["Location"] == f"/curated/tut-memory/?build={bq}#join")
+check("短網址碼錯一律 404", client.get("/tut/b/wrongcode123").status_code == 404 and client.get("/tut/m/wrongcode123").status_code == 404)
 
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)

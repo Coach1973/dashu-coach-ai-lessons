@@ -1319,10 +1319,37 @@ def _tt_photo(form_file, err):
     return name, ("" if name else "這張照片打不開，麻煩改存成 jpg 或 png 再上傳一次")
 
 
+def _tt_build_ok():
+    """教練的「建置模式」專屬連結（?build=簽章短碼，同後台簽章）：對才回短碼，沒帶或錯回空字串。"""
+    code = request.args.get("build", "")
+    return code if code and hmac.compare_digest(code.encode(), _tt.admin_code(app.secret_key).encode()) else ""
+
+
 @app.route("/tut/team")
 @app.route("/tut/team/")
 def tut_team_index():
-    return _tt_html(_tt.render_index())
+    return _tt_html(_tt.render_index(_tt_build_ok()))
+
+
+@app.route("/api/tut/team/board")
+def tut_team_board_api():
+    """記憶牆（/curated/tut-memory/）的「理監事校友名單」讀這裡，跟 /tut/team 是同一份資料（2026-10-23 教練）。"""
+    return Response(json.dumps(_tt.board_public(_tt_build_ok()), ensure_ascii=False), content_type="application/json; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "Access-Control-Allow-Origin": "*"})
+
+
+@app.route("/tut/b/<code>")
+def tut_team_build_short(code):
+    """教練的建置模式短網址（簽章短碼，同後台）→ 團隊頁建置模式。"""
+    _tt_admin(code)
+    return redirect(f"/tut/team?build={code}")
+
+
+@app.route("/tut/m/<code>")
+def tut_memory_build_short(code):
+    """同上，但回到記憶牆「加入校友會」的理監事校友名單（建置模式）。"""
+    _tt_admin(code)
+    return redirect(f"/curated/tut-memory/?build={code}#join")
 
 
 @app.route("/tut/team/join", methods=["GET", "POST"])
@@ -1358,20 +1385,21 @@ def tut_team_edit(token):
     r = _tt.get_by_token(token)
     if not r:
         abort(404)
+    build = _tt_build_ok()   # 教練的建置模式：可只補一部分、不發通知
     if request.method == "GET":
-        return _tt_html(_tt.render_edit(r, first=request.args.get("new") == "1", saved=request.args.get("saved") == "1"))
+        return _tt_html(_tt.render_edit(r, first=request.args.get("new") == "1", saved=request.args.get("saved") == "1", build=build))
     photo = request.files.get("photo")
-    d, err = _tt.clean_form(request.form, need_photo=not r["photo_file"] and not (photo and photo.filename))
+    d, err = _tt.clean_form(request.form, need_photo=not r["photo_file"] and not (photo and photo.filename), partial=bool(build))
     fname, err = _tt_photo(photo, err)
     if err:
-        return _tt_html(_tt.render_edit(r, d, err), 400)
+        return _tt_html(_tt.render_edit(r, d, err, build=build), 400)
     _tt.update(r["id"], d, fname)
     if fname and r["photo_file"] and _tt.PHOTO_RE.match(r["photo_file"]):
         (_tt.UPLOAD_DIR / r["photo_file"]).unlink(missing_ok=True)   # 換照片就把舊的刪掉
-    if not r["filled"]:   # 認領的顧問座位第一次補完＝上架
+    if not r["filled"] and not build:   # 認領的顧問座位第一次補完＝上架
         _tt_notify(token)
         return redirect(f"/tut/team/edit/{token}?new=1")
-    return redirect(f"/tut/team/edit/{token}?saved=1")
+    return redirect(f"/tut/team/edit/{token}?saved=1" + (f"&build={build}" if build else ""))
 
 
 @app.route("/tut/team/edit/<token>/delete", methods=["POST"])
