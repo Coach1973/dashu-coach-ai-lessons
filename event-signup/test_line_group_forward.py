@@ -9,6 +9,7 @@ import json
 import os
 import tempfile
 import threading
+import time
 import urllib.error
 
 import app as appmod
@@ -31,9 +32,17 @@ appmod.OPENCLAW_CONFIG_PATH = CFG
 appmod.NOTIFY_FAIL_LOG = os.path.join(TMP, "notify_failures.log")
 # 常設禁令閘門（教練 2026-10-20）：測試用暫存資料夾當 state，預設先放一面「已許可」旗標，
 # 讓底下原本要驗「會推播」的案例照舊；最後一段再作廢旗標，驗證預設就是擋。
+# 旗標內容＝許可當下的 Unix 秒數（V2，2026-10-22；只看內容、不看修改時間）。
 appmod.LINE_PUSH_STATE_DIR = TMP + os.sep
 APPROVAL_FLAG = os.path.join(TMP, "LINE_PUSH_APPROVED")
-open(APPROVAL_FLAG, "w").close()
+
+
+def write_flag(content):
+    with open(APPROVAL_FLAG, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+write_flag(str(int(time.time())))
 
 GROUP = appmod.GROUP_FORWARD_RULES[0]["group_id"]
 SAMPLE = ("【大樹小講・官網報名】\n場次：香檳下午茶國際禮儀沙龍｜台灣形象設計發展協會（台南・11/09）\n"
@@ -203,17 +212,44 @@ appmod.GROUP_FORWARD_RULES = saved_rules
 
 # 9. 常設禁令閘門：沒有教練許可旗標 → LINE 推播一則都不能發（不打 push 網址），但會留下紀錄
 appmod.GROUP_FORWARD_RULES = [rule_line]
-os.utime(APPROVAL_FLAG, (946684800, 946684800))  # 旗標作廢（mtime 設回 2000 年）
+write_flag(str(int(time.time()) - 3600))  # 旗標作廢：內容是一小時前的時間戳
 reset(used=27)
 appmod._forward_by_keyword(SAMPLE)
 check("閘門：沒有許可 → 不發任何 LINE 推播", pushes() == [], str(pushes()))
 check("閘門：沒有許可 → 擋下有寫進 line_push_blocked.log",
       os.path.exists(os.path.join(TMP, "line_push_blocked.log")) and "event-signup-forward" in open(os.path.join(TMP, "line_push_blocked.log"), encoding="utf-8").read())
 check("閘門：沒有許可 → 原文留進 notify_failures.log 可事後補轉", "常設禁令" in fail_log() and "測試勿理" in fail_log(), fail_log())
-os.utime(APPROVAL_FLAG, None)  # 旗標更新成現在 → 放行
+write_flag(str(int(time.time())))  # 旗標寫入現在的時間戳 → 放行
 reset(used=27)
 appmod._forward_by_keyword(SAMPLE)
 check("閘門：有許可旗標 → 照推一則", len(pushes()) == 1, str(CALLS))
+
+
+def pushes_with_flag(content):
+    """content=None＝沒有旗標檔；回傳這樣設定時實際發出的 LINE 推播則數"""
+    if content is None:
+        if os.path.exists(APPROVAL_FLAG):
+            os.remove(APPROVAL_FLAG)
+    else:
+        write_flag(content)  # 寫檔的當下修改時間就是「剛剛」
+    reset(used=27)
+    appmod._forward_by_keyword(SAMPLE)
+    return len(pushes())
+
+
+# V2（2026-10-22）：只看檔案「內容」的時間戳。10/20 22:13 殘檔被自動暫存還原、修改時間變成剛剛，舊版就誤放行。
+now = int(time.time())
+for label, content in [
+    ("沒有旗標檔", None),
+    ("空檔（舊式 touch）", ""),
+    ("舊時間戳（修改時間是剛剛、內容是 11 分鐘前＝還原殘檔）", str(now - 660)),
+    ("未來時間戳", str(now + 3600)),
+    ("非數字", "approved"),
+    ("數字後面夾雜文字", f"{now}abc"),
+]:
+    check(f"閘門 V2：{label} → 擋", pushes_with_flag(content) == 0, str(CALLS))
+check("閘門 V2：剛寫入的時間戳 → 放行", pushes_with_flag(str(now)) == 1, str(CALLS))
+check("閘門 V2：9 分鐘前的時間戳 → 仍有效", pushes_with_flag(str(now - 540)) == 1, str(CALLS))
 appmod.GROUP_FORWARD_RULES = saved_rules
 
 print()

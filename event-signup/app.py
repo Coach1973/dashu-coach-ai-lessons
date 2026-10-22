@@ -77,18 +77,21 @@ GROUP_FORWARD_RULES = [
 LINE_FORWARD_MIN_QUOTA = 30
 
 
-# ==== LINE_PUSH_GATE_V1（教練 2026-10-20 常設禁令：所有 LINE 小龍蝦沒有教練許可，不得使用會扣額度的推播）====
+# ==== LINE_PUSH_GATE_V2（教練 2026-10-20 常設禁令：所有 LINE 小龍蝦沒有教練許可，不得使用會扣額度的推播）====
 # 這裡轉 LINE 群用的是「龍蝦小助教」的金鑰，推播會扣它的月額度，所以也要過閘門。
-# 許可旗標 ~/.openclaw/workspace/state/LINE_PUSH_APPROVED（touch 後 10 分鐘有效，教練口頭同意才建）。
+# 許可旗標 ~/.openclaw/workspace/state/LINE_PUSH_APPROVED：內容＝許可當下的 Unix 秒數，10 分鐘有效；
+# 教練口頭同意才建（scripts/line_push_approve.sh），用完 --revoke 刪檔。只看內容、不看修改時間（V2，2026-10-22）。
 LINE_PUSH_STATE_DIR = os.path.expanduser("~/.openclaw/workspace/state/")  # 測試時換到暫存資料夾
 
 
 def _line_push_gate(source: str, to: str, text: str) -> None:
     base = LINE_PUSH_STATE_DIR
     try:
-        if 0 <= time.time() - os.path.getmtime(base + "LINE_PUSH_APPROVED") < 600:
+        with open(base + "LINE_PUSH_APPROVED", encoding="utf-8") as f:
+            raw = f.read().strip()
+        if raw.isascii() and raw.isdigit() and 0 <= time.time() - int(raw) < 600:
             return
-    except OSError:
+    except (OSError, ValueError):
         pass
     try:
         ts = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S")
@@ -97,7 +100,7 @@ def _line_push_gate(source: str, to: str, text: str) -> None:
     except Exception:
         pass
     raise RuntimeError("LINE 推播（會扣額度）已被教練常設禁令擋下，需教練同意才可送")
-# ==== /LINE_PUSH_GATE_V1 ====
+# ==== /LINE_PUSH_GATE_V2 ====
 
 
 def _line_forward_one(token: str, group_id: str, text: str) -> None:
