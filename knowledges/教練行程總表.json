@@ -783,8 +783,8 @@
    "source": "預約頁",
    "kind": "interview",
    "booking_type": "榮樹下訪談",
-   "booked_by": "邱裕榮",
-   "note": "預約人：邱裕榮（預約頁點選）；10/22 教練改 21:30、對象林家旭",
+   "booked_by": "佩佩老師",
+   "note": "嘉賓：林家旭；邀請人：佩佩老師（教練 10/22 交代）",
    "covered_by_google": true,
    "guest": "林家旭",
    "form_token": "N6TEUpRLItGQ",
@@ -793,16 +793,17 @@
   {
    "id": "0fb0c055",
    "date": "2026-10-24",
-   "title": "榮樹下訪談",
+   "title": "榮樹下訪談：鄭麗絲",
    "source": "coach",
    "start": "21:30",
    "end": "22:30",
-   "note": "邀約人：鄭麗絲（教練 10/22 交代）",
+   "note": "嘉賓：鄭麗絲；邀請人：佩佩老師（教練 10/22 交代）",
    "kind": "interview",
    "reminder_job": "9964c23a-5d87-4c34-9251-db50be1d79da",
-   "booked_by": "鄭麗絲",
+   "booked_by": "佩佩老師",
    "covered_by_google": true,
-   "form_token": "bzF6gf9SwRLv"
+   "form_token": "bzF6gf9SwRLv",
+   "guest": "鄭麗絲"
   },
   {
    "id": "gcal-2026-10-22-0",
@@ -850,7 +851,8 @@
    "title": "榮樹下訪談：林家旭",
    "source": "Google日曆",
    "start": "21:30",
-   "end": "22:30"
+   "end": "22:30",
+   "form_token": "UPELeh-WklFr"
   },
   {
    "id": "gcal-2026-10-23-6",
@@ -898,7 +900,8 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "21:30",
-   "end": "22:30"
+   "end": "22:30",
+   "form_token": "LjeGaskafqMC"
   },
   {
    "id": "gcal-2026-10-25-12",
@@ -3931,7 +3934,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-22 14:01",
+ "updated_at": "2026-10-22 14:44",
  "tainan_synced_at": "2026-10-22 00:12",
  "evening_window": {
   "start": "19:00",
