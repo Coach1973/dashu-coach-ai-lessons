@@ -1,3 +1,4 @@
+- [🔴 榮樹下預約改「整段空檔＋來賓自選一小時」、不准寫「來賓邀請中」、每場分嘉賓／邀請人、LINE算法不用管；我沒查資料就說要清來賓資料被糾正(f45ef789f)(2026-10-22)](feedback_rongtree_free_window_no_placeholder_2026-10-22.md)
 - [🎨 海報換人換字：巴哈出圖失敗根因（內建 Google 金鑰無效）→改 lk888 edits 帶模板＋照片兩張圖；規則只改照片＋頭銜、獎杯不動（僅教練本人橫版寫乾淨世界）；AI 小字常錯改用 PIL 貼字；SOP 在 agents/peipei(2026-10-22)](reference_poster_swap_lk888_two_images_bahai_sop_2026-10-22.md)
 - [🔴🔴 教練10/21定：規則越少越好；說「賈維斯智慧體的自我檢測系統／優化系統」直接跑技能 jarvis-self-optimize；新增規則一進一出；小龍蝦開機檔每檔2萬／總6萬、砍中間、TOOLS/HEARTBEAT不在開機清單(3b073e447)(2026-10-21)](feedback_rules_fewer_is_wiser_jarvis_self_check_2026-10-21.md)
 - [🔴🔴 教練說「跟X一模一樣／比照X」＝照抄X的程式只換資料，不准另寫一套再一項項補、不准說「一模一樣沒被定義」；my-tools 因此改 11 版、21 項對照表在 README(2026-10-21)](feedback_identical_means_copy_the_reference_code_2026-10-21.md)
