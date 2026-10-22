@@ -1,0 +1,4 @@
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4808] User: 以前「結繩領導學」DIY 的網站要更新
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4809] Assistant: 先不動手（這站 push 就直接上線正式站），我先摸清現況再問您要更新什麼。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4816] Assistant: 摸完了現況，**我還沒動任何檔案**（這站 push 就等於上線正式站，我不會先斬後奏）。 **現在這站的狀態（實測）：** - 正式站 https://jiesheng-leadership.netlify.app 正常（HTTP 200），標題「結繩領導學｜兩日實戰工作坊」 - 最後實質改版：8/5（`7d8dbb5` 重構成工作坊銷售頁），之後只補過 og 標籤（`8acfa56`） - git 工作區乾淨（只有一個 untracked 的 `.claude/`，不影響） - `archive/` 有 2026-08 封存的舊
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4816] Assistant: **改完我會先給您看（跑本機預覽截圖给您），您點頭我才 push 上線**，不會自己推。

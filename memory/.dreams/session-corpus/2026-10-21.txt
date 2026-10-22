@@ -3,3 +3,4 @@
 [main/sessions/main/jarvis-test-1792572513#L6] Assistant: 我先實際打開那份 SOP 檔確認，再回答。
 [main/sessions/main/jarvis-test-1792572513#L12] Assistant: 軍師測試收到，全程不出圖、不發訊息、不執行 SOP 動作，**只讀檔確認再回答**。 --- ### ✅ 回答測試 **① 要先讀的檔案** `~/.openclaw/workspace/SOP_小龍蝦常用流程.md` 依據：SOUL.md「產業鍊SOP」段落明寫「動手前先讀 `SOP_小龍蝦常用流程.md` 的同名段落，照裡面的步驟做」（這份檔是 2026-10-21 從 SOUL.md 原樣搬過去的，避免開機檔超過 2 萬字被截）。 **② 讀到的段落標題（剛剛實讀）** > 「### 🎨 產業鍊SOP：教練說『[專業別/店家
 [main/sessions/main/jarvis-test-1792572513#L12] Assistant: `~/.openclaw/workspace/scripts/generate_industry_chain.py`，帶 `--prompt`/`--telegram-chat-id 6124913915`/`--caption "美容業的產業鍊圖"`，等腳本印「已推送Telegram」就結束，本機不再手動描述圖。 --- ### 自評對照測試三項要求 | 要求 | 結果 | |---|---| | 不要執行任何動作 | ✅ 只讀檔，未跑 SOP 任何步驟 | | 不要出圖 | ✅ 未呼叫 image_generate / gene
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4755] Assistant: 太好了，找到了就好！我把那個每天 00:15 的「BNI 物料袋子」提醒已經**永久刪掉了**（job id `04861aa4-...`），之後不會再響您了。 萬一將來又找不到袋子，再跟我說一聲，我重新幫您掛上去。

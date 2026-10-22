@@ -1,3 +1,5 @@
+- [🧩 榮樹下網頁「我要預約」＋選時間送出自動占位（待確認）：前端 rongtree 17af887/da3ba4c、伺服器 /api/rongtree/hold e1d984776、上限6筆／IP每小時4次、姓名只在私人備註；週六可約起點改 9:30（interview_window_start_by_weekday）；正式站尚未實占過一次(2026-10-23)](project_rongtree_booking_hold_and_saturday_930_2026-10-23.md)
+- [🔧 Dock 同一 App 圖示變多個＝「最近使用」區 recent-apps 記了好幾筆（Chrome 4→1 靠關掉『在Dock中顯示建議的和最近使用過的App』）；怎麼查、哪些開法已測不會增加(2026-10-23)](reference_dock_extra_app_icons_are_recent_apps_2026-10-23.md)
 - [🔴🔴 「最後一下我不能按」（改系統設定等）：先把開頁、導到位置全做完，只留那一下給教練，不准丟「系統設定→…」路徑叫他自己找；實話講規定、不說「不能」；搬運工類第4次犯(2026-10-23)](feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md)
 - [🎓 南應大記憶牆「加入校友會」第三張卡＝理監事校友名單（照 mentor100 卡片版型，23 位）：資料在 tut-memory/index.html 的 BOARD 陣列、怎麼補照片簡介職稱連結；同輪整站字級調 20px、漢堡選單改 960px(86e1f7b, 8fb3e49)(2026-10-23)](project_tut_memory_board_list_cards_2026-10-23.md)
 - [🔴 榮樹下預約改「整段空檔＋來賓自選一小時」、不准寫「來賓邀請中」、每場分嘉賓／邀請人、LINE算法不用管；我沒查資料就說要清來賓資料被糾正(f45ef789f)(2026-10-22)](feedback_rongtree_free_window_no_placeholder_2026-10-22.md)
