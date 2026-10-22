@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 5c639ade-2875-478d-b19c-cdbb974e4aae
-  modified: 2026-10-21T01:34:38.436Z
+  modified: 2026-10-22T04:40:00.000Z
 ---
 
 **教練原話（2026-10-20 19:05）**：「所有的LINE小龍蝦，沒有經過我的允許，永遠不得使用會扣額度的方式來工作。」起因：額度被扣光都是「事後才發現」，很久以前用 Kimi 時也發生過同樣的事（同類錯第二次＝要改機制，不是再寫記憶，[[reference-line-quota-push-counts-per-member-registration-forward]]）。
@@ -15,7 +15,7 @@ metadata:
 **How to apply（機制已上線，不靠記得）**：
 - 閘門＝補在 LINE 外掛唯一推播出口 `sendLineProviderMessages`（`~/.openclaw/npm/projects/openclaw-line-*/node_modules/@openclaw/line/dist/send-*.js`），回覆永遠放行、非回覆（push）一律擋；套用／檢查／還原：`python3 ~/.openclaw/workspace/scripts/line_push_gate_patch.py [--check|--revert]`（冪等）。外掛更新換世代會洗掉補丁→每日點名 `check_line_push_gate` 會發現並自動補回、報 🔴（補回後要重啟 gateway 才生效）。
 - 同一套規則也套在 Python 推播者：`agents/bni_tainan/scripts/send_line_push.py`（三個 LINE 帳號都能推，line-delivery-fallback hook 會呼叫它）與 `workspace/event-signup/app.py` 的 LINE 群轉發（用龍蝦小助教金鑰）。
-- **許可方式**：教練在對話裡明說同意某次推播後，AI 才 `touch ~/.openclaw/workspace/state/LINE_PUSH_APPROVED`，10 分鐘內有效（同 DELETE_APPROVED 慣例）；用完要**刪檔**作廢（`rm`），不能只把 mtime 改成舊日期。10/21 查到的漏洞：10/20 19:10 測試用 `touch` 建檔後只改 mtime、沒刪，留下殘檔；22:13 這個殘檔被重建（建立時間＝修改時間＝22:13:40），閘門又開了 10 分鐘。最可能是自動暫存還原造成（推論，未完全證實）。已刪殘檔；修法待辦：檔內寫時間戳，不靠檔案時間。沒有教練明說，AI 自己不准建這個旗標。
+- **許可方式**：教練在對話裡明說同意某次推播後，AI 才執行 `~/.openclaw/workspace/scripts/line_push_approve.sh`（旗標檔 `state/LINE_PUSH_APPROVED` 的**內容**＝許可當下的 Unix 秒數，10 分鐘內有效）；用完執行 `line_push_approve.sh --revoke`（刪檔）作廢。閘門只看檔案內容，**不看修改時間**；`touch` 出來的空檔、舊時間戳、未來時間戳、非數字一律擋。沒有教練明說，AI 自己不准建這個旗標。（V2，2026-10-22 workspace `c28f26cd6`／outer `c34679888`；起因：10/20 19:10 測試殘檔在 22:13 被自動暫存還原、修改時間變剛剛，舊閘門看 mtime 就誤放行 10 分鐘。三個閘門都已改：LINE 外掛 JS、`send_line_push.py`、event-signup `app.py`；補丁腳本會把舊 V1 自動升級成 V2；gateway 與 event-webapp 已重啟。）
 - 被擋會寫 `workspace/state/line_push_blocked.log`（時間／來源／收件／前 40 字），這是「有誰想推」的稽核帳；事件轉發被擋時原文另留在 `event-signup/notify_failures.log`。
 - 實測（10/20，commit outer `ae2032337`＋`a39fd133f`、workspace `42efb64f6`）：真實 C 群編號經運作中的 gateway → `OutboundDeliveryError: 403 …常設禁令`、不重試、不進重送佇列、額度仍 199；有旗標時放行到 LINE 吃 429；旗標作廢再擋。
 - **沒涵蓋**：①「大樹教育顧問」(@qaw8118h，event-signup 自己的 OA，本月 0／200)不屬於小龍蝦，沒加閘門 ②Telegram／Discord 不扣額度，不受影響 ③AI 手動 curl LINE 推播 API 繞過閘門（靠這條記憶與自律，禁止）④舊世代 2026.6.33 外掛目錄沒有 send-*.js，沒補。
