@@ -171,14 +171,15 @@ def _refresh_google():
         pass
 
 
-def book(date_s, start_s, booking_type):
+def book(date_s, start_s, booking_type, who=None, note=None):
     """預約一個 1 小時時段：寫成「待確認」的行程（先占位，教練確認或取消）。
+    who／note：榮樹下網頁「我要預約」（官網預約）用——預約人不是預設的那位，來賓個資只放 note（私人，不公開）。
     回傳 (ok, 訊息或事件)。伺服器端重新檢查，不信任網頁送來的時段與類型。"""
     _refresh_google()
     booking_type = (booking_type or "").strip()
     if booking_type not in BOOKING_TYPES:
         return False, "請選擇預約類型"
-    who = BOOKING_TYPES[booking_type]
+    who = who or BOOKING_TYPES[booking_type]
     try:
         d = dt.date.fromisoformat(date_s)
         st = _hm(start_s)
@@ -196,7 +197,7 @@ def book(date_s, start_s, booking_type):
             return False, "這個時段剛剛被預約走了，或離前後訪談不到 30 分鐘，請選別的時間"
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
               "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
-              "booking_type": booking_type, "booked_by": who, "note": f"預約人：{who}（預約頁點選）"}
+              "booking_type": booking_type, "booked_by": who, "note": note or f"預約人：{who}（預約頁點選）"}
         data["events"].append(ev)
         data["updated_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
         fd, tmp = tempfile.mkstemp(dir=str(DATA.parent), suffix=".tmp")

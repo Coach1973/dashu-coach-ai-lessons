@@ -2647,6 +2647,103 @@ def coach_schedule_book(token):
     return reply(True, label=label, type=res["booking_type"])
 
 
+# ---------- 榮樹下網頁「我要預約」自動占位（教練 2026-10-23：要） ----------
+_RONGTREE_HOLD_HITS = {}          # ip -> [時間戳]；每個 IP 每小時最多 4 次
+_RONGTREE_HOLD_MAX_OPEN = 6       # 官網預約同時最多 6 筆「待確認」；超過就不再自動占位（防有人亂點占光空檔），前端改走一般留資料
+
+
+def _rongtree_hold_notify(text):
+    """通知進「佩佩老師的巴哈助理」群（跟預約頁同一條路）；送不出去退回活動報名群。"""
+    import subprocess
+    try:
+        r = subprocess.run(["/Users/bymyway/.nvm/versions/node/v24.21.0/bin/node",  # 網站服務的 PATH 沒有 node，直接指定
+                            "/Users/bymyway/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw/openclaw.mjs", "message", "send", "--channel", "telegram",
+                            "--account", "bot_peipei", "--target", "-5115910257", "-m", text],
+                           capture_output=True, text=True, timeout=90)
+        ok = r.returncode == 0
+    except Exception:  # noqa: BLE001
+        ok = False
+    if not ok:
+        _notify_xiaolongxia(text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+
+
+def _rongtree_hold_record_lead(name, contact, org, msg, label, ip):
+    """留資料紀錄（跟 /api/works/contact 同一張表）；寫入失敗不影響占位。"""
+    title = next((s.get("title") for s in _load_curated_registry().get("sites", []) if s["slug"] == "rongtree"), "榮樹下") or "榮樹下"
+    is_mail = "@" in contact
+    try:
+        conn = db.get_conn()
+        conn.execute("INSERT INTO works_contact_leads (site, site_title, name, phone, item, email, message, ip) "
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                     ("rongtree", title, name, "" if is_mail else contact, "節目專訪", contact if is_mail else "",
+                      f"企業／單位：{org}\n想預約的時間：{label}" + (f"\n想說的話：{msg}" if msg else ""), ip))
+        conn.commit()
+        conn.close()
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _rongtree_hold_push_google():
+    """占位一成功就寫進教練 Google 日曆；失敗沒關係，每 15 分鐘的同步會補。"""
+    import subprocess
+    try:
+        subprocess.run(["/usr/bin/python3", "-I", str(_csv.WS / "scripts" / "coach_schedule.py"), "push-google"],
+                       capture_output=True, text=True, timeout=120)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+@app.route("/api/rongtree/hold", methods=["POST"])
+def api_rongtree_hold():
+    """榮樹下網頁「我要預約」：節目專訪選好那一小時、送出 → 先把那一小時占成「待確認」，空檔清單就不再出現它。
+    教練確認：「確認預約 <id>」；不要：「取消預約 <id>」（取消後空檔自動恢復）。姓名、單位、聯絡方式只放私人備註與巴哈群通知，不上公開網頁。
+    搶不到（剛被約走／離前後訪談太近）回 409 code=taken；官網待確認已達上限回 409 code=full，前端改走一般留資料。"""
+    def reply(ok, error=None, status=200, **extra):
+        body = {"ok": ok, **extra}
+        if error:
+            body["error"] = error
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json",
+                        headers={"Cache-Control": "no-store"})
+
+    p = request.get_json(force=True, silent=True) or {}
+    if (p.get("website") or "").strip():          # 防機器人隱藏欄位：假裝成功、不占位、不通知
+        return reply(True, held=False)
+    clean = lambda k, n: re.sub(r"\s+", " ", (p.get(k) or "").strip())[:n]
+    name, org, contact, msg = clean("name", 30), clean("org", 40), clean("contact", 80), (p.get("msg") or "").strip()[:300]
+    if not name or not org:
+        return reply(False, "請填寫姓名與單位", 400)
+    if len(re.sub(r"\D", "", contact)) < 8 and not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", contact):
+        return reply(False, "請填寫正確的電話或 Email", 400)
+    import time
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _RONGTREE_HOLD_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 4:
+        return reply(False, "送出次數太多，請稍後再試", 429)
+    hits.append(now)
+    _RONGTREE_HOLD_HITS[ip] = hits
+    try:
+        evs = json.loads(_csv.DATA.read_text(encoding="utf-8")).get("events", [])
+    except Exception:  # noqa: BLE001
+        evs = []
+    today_s = datetime.now(_csv.TZ).date().isoformat()
+    if sum(1 for e in evs if e.get("booked_by") == "官網預約" and e.get("tentative") and e.get("date", "") >= today_s) >= _RONGTREE_HOLD_MAX_OPEN:
+        return reply(False, "目前待確認的預約已滿", 409, code="full")
+    ok, res = _csv.book(p.get("date"), p.get("start"), "榮樹下訪談", who="官網預約",
+                        note=f"官網預約：{name}（{org}）｜聯絡：{contact}" + (f"｜留言：{msg}" if msg else "") + "（私人資料，網頁不公開）")
+    if not ok:
+        return reply(False, res, 409, code="taken")
+    d = datetime.strptime(res["date"], "%Y-%m-%d")
+    label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
+    text = (f"📅【榮樹下訪談・官網預約・待教練確認】\n時間：{label}\n預約人：{name}（{org}）\n聯絡：{contact}\n"
+            + (f"留言：{msg}\n" if msg else "")
+            + f"（已先占位，其他人不能再約這個時段）\n確認：跟巴哈助理說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」（取消後空檔自動恢復）")
+    _rongtree_hold_record_lead(name, contact, org, msg, label, ip)
+    threading.Thread(target=_rongtree_hold_notify, args=(text,), daemon=True).start()
+    threading.Thread(target=_rongtree_hold_push_google, daemon=True).start()
+    return reply(True, held=True, label=label)
+
+
 @app.route("/schedule/<token>/cancel", methods=["POST"])
 def coach_schedule_cancel(token):
     """預約頁的「取消」鈕（教練 2026-10-13）：拿到網址的人可取消總表自己的行程（預約頁／巴哈／榮樹下訪談／每週固定的單一天）；

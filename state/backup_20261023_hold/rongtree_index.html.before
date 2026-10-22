@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>榮樹下｜邱裕榮與吳大樹談古論今聊家常</title>
+<meta name="description" content="榮樹下 Podcast——邱裕榮與吳大樹在榮樹下專訪企業家與發明家。做對的事，自然把事做對；商業即公益，利他即商業。">
+<meta property="og:title" content="榮樹下｜做對的事，自然把事做對">
+<meta property="og:description" content="邱裕榮與吳大樹談古論今聊家常。專訪企業家與發明家，連結綠能、生命農業與 Run for Future 公益路跑。">
+<meta property="og:image" content="https://event.bymyway.com/curated/rongtree/img/hero-banyan.jpg">
+<meta name="theme-color" content="#0e1712">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e1712; --ink-2:#14211a; --ink-3:#1c2d23;
+  --paper:#f2ead8; --paper-2:#e8dcc3; --paper-line:#cdbd9c;
+  --on-ink:#efe6d2; --on-ink-mute:#a7b2a3; --on-paper:#1d2a22; --on-paper-mute:#5b6656;
+  --amber:#d9a441; --amber-hi:#f0c46a; --amber-deep:#9a6a1c;
+  --line-ink:rgba(239,230,210,.14);
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --wrap:1200px; --r:6px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--on-ink);font:400 20px/1.85 var(--sans);letter-spacing:.02em;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber-hi);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--amber);color:var(--ink);padding:8px 14px;z-index:99;border-radius:4px}
+.skip:focus{left:8px}
+.eyebrow{font:500 20px/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.paper .eyebrow{color:var(--amber-deep)}
+h1,h2,h3{font-family:var(--serif);font-weight:900;margin:0;letter-spacing:.02em}
+h2{font-size:clamp(32px,4.6vw,56px);line-height:1.25}
+h3{font-size:clamp(21px,2vw,25px);line-height:1.4;font-weight:600}
+p{margin:0}
+.lead{font-size:clamp(20px,1.6vw,22px);color:var(--on-ink-mute);max-width:36em}
+.paper{background:var(--paper);color:var(--on-paper);
+  background-image:radial-gradient(rgba(120,90,40,.06) 1px,transparent 1.2px);background-size:5px 5px}
+.paper .lead{color:var(--on-paper-mute)}
+section{position:relative}
+.sec{padding:clamp(80px,11vw,150px) 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.6em;min-height:56px;padding:0 28px;border-radius:999px;font:500 20px/1 var(--sans);letter-spacing:.08em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
+.btn-amber{background:var(--amber);color:#1a1206;box-shadow:0 0 0 0 rgba(240,196,106,.0),0 10px 30px -12px rgba(217,164,65,.7)}
+.btn-amber:hover{background:var(--amber-hi);transform:translateY(-1px)}
+.btn-ghost{border-color:rgba(239,230,210,.35);color:var(--on-ink)}
+.btn-glass{background:rgba(14,23,18,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber-hi)}
+.btn .arr{transition:transform .2s var(--ease)}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s var(--ease),border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(14,23,18,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-color:var(--line-ink)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.seal{width:42px;height:42px;border:1.5px solid var(--amber);border-radius:4px;display:grid;place-items:center;font:900 20px/1 var(--serif);color:var(--amber)}
+.brand b{font:900 24px/1 var(--serif);letter-spacing:.16em}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-size:20px;color:var(--on-ink-mute);letter-spacing:.06em;transition:color .2s}
+.nav:not(.solid) ul a,.nav:not(.solid) .brand{text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.nav ul a:hover{color:var(--amber-hi)}
+.nav .btn{min-height:46px;padding:0 20px;font-size:20px}
+@media (max-width:1180px){.nav ul{display:none}}
+
+/* HERO — the photo is the hero; text only sits where the picture is quiet */
+.hero{position:relative;height:auto;min-height:max(100svh,640px);max-height:1080px;padding-top:calc(clamp(96px,13vh,140px) + clamp(64px,7.4vw,112px)*4.1 + 24px);overflow:hidden;isolation:isolate;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0;z-index:-2}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:58% 62%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(95% 75% at 0% 100%,rgba(14,23,18,.94) 0%,rgba(14,23,18,.72) 32%,rgba(14,23,18,0) 62%),
+    linear-gradient(180deg,rgba(14,23,18,.6) 0%,rgba(14,23,18,0) 15%),
+    linear-gradient(0deg,rgba(14,23,18,.55) 0%,rgba(14,23,18,0) 12%)}
+/* temple-plaque title */
+.plaque{position:absolute;top:clamp(96px,13vh,140px);left:max(clamp(20px,4vw,48px),calc((100vw - var(--wrap))/2 + 48px));margin:0;
+  writing-mode:vertical-rl;font:900 clamp(64px,7.4vw,112px)/1 var(--serif);letter-spacing:.14em;color:#f6ecd4;
+  padding:.34em .26em .26em;background:linear-gradient(180deg,rgba(14,23,18,.82),rgba(20,33,26,.7));
+  border:1.5px solid rgba(217,164,65,.85);outline:1px solid rgba(217,164,65,.35);outline-offset:6px;border-radius:4px;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.plaque small{display:block;margin-top:.5em;font:500 20px/1 var(--sans);letter-spacing:.32em;color:var(--amber-hi);writing-mode:vertical-rl}
+.hero-copy{width:100%;padding-bottom:clamp(44px,7vh,84px)}
+.hero-copy .inner{max-width:min(40vw,560px)}
+.hero h1{font-size:clamp(44px,4.6vw,72px);line-height:1.2;margin:16px 0 30px;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.hero h1 em{font-style:normal;color:var(--amber-hi)}
+.hero .eyebrow{text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px}
+.scrollcue{position:absolute;right:clamp(20px,4vw,48px);bottom:clamp(28px,5vh,56px);font:500 20px/1 var(--sans);letter-spacing:.2em;color:#f6ecd4;text-decoration:none;writing-mode:vertical-rl;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.scrollcue::after{content:"";display:block;width:1px;height:56px;margin:14px auto 0;background:linear-gradient(#f6ecd4,transparent);animation:drip 2.4s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* intro band under the photo */
+.intro{background:var(--ink);border-bottom:1px solid var(--line-ink)}
+.intro .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,96px);padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(48px,6vw,80px);align-items:start}
+.intro .say{font:600 clamp(22px,1.9vw,27px)/1.75 var(--serif);color:var(--on-ink)}
+.onair{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-ink)}
+.onair li{border-bottom:1px solid var(--line-ink)}
+.onair a{display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:baseline;padding:14px 4px;text-decoration:none;font-size:20px;transition:background .2s}
+.onair a:hover{background:rgba(217,164,65,.07)}
+.onair b{font:600 20px/1 var(--sans);color:var(--amber);letter-spacing:.06em}
+.onair i{font-style:normal;color:var(--amber)}
+.onair .new{font:700 20px/1 var(--sans);color:var(--ink);background:var(--amber-hi);border-radius:4px;padding:5px 8px;margin-left:10px;letter-spacing:.08em;vertical-align:2px}
+.intro .label{font:500 20px/1.4 var(--sans);letter-spacing:.2em;color:var(--on-ink-mute);margin-bottom:14px}
+
+@media (max-width:820px){
+  .hero{display:block;height:auto;min-height:0;max-height:none;padding-top:0;background:var(--ink)}
+  .hero-img{position:relative;height:min(64svh,560px)}
+  .hero-img img{object-position:66% 60%}
+  .hero::before{bottom:auto;height:min(64svh,560px);background:
+    linear-gradient(180deg,rgba(14,23,18,.55) 0%,rgba(14,23,18,0) 22%),
+    linear-gradient(0deg,var(--ink) 0%,rgba(14,23,18,0) 26%)}
+  .plaque{top:84px;left:20px;font-size:52px;padding:.32em .22em .22em}
+  .plaque small{display:none}
+  .hero-copy{padding:8px 0 48px}
+  .hero-copy .inner{max-width:none}
+  .hero h1{font-size:clamp(38px,10vw,52px);text-shadow:none;margin-top:12px}
+  .scrollcue{display:none}
+  .hero .eyebrow{letter-spacing:.06em}
+  .intro .wrap{grid-template-columns:1fr}
+  .onair a{grid-template-columns:82px 1fr}
+  .onair a > :last-child{display:none}
+}
+@media (prefers-reduced-motion:reduce){.scrollcue::after{animation:none}}
+
+/* NAMING */
+.naming .wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(40px,7vw,110px);align-items:start}
+.naming h2{margin:18px 0 26px}
+.chars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--paper-line)}
+.char{padding:28px 18px 30px 0;border-bottom:1px solid var(--paper-line)}
+.char + .char{padding-left:18px;border-left:1px solid var(--paper-line)}
+.char .big{font:900 clamp(72px,8vw,120px)/1 var(--serif);color:var(--on-paper)}
+.char:nth-child(2) .big{color:var(--amber-deep)}
+.char h3{font-size:20px;margin:18px 0 8px}
+.char p{font-size:20px;color:var(--on-paper-mute);line-height:1.75}
+.namer{margin-top:34px;display:flex;gap:18px;align-items:center;padding:20px 24px;background:var(--paper-2);border-radius:var(--r)}
+.namer .seal{border-color:var(--amber-deep);color:var(--amber-deep);flex:none;width:48px;height:48px;font-size:24px}
+.namer p{font-size:20px;color:var(--on-paper-mute)}
+.namer strong{color:var(--on-paper);font-family:var(--serif);font-size:20px}
+@media (max-width:900px){.naming .wrap{grid-template-columns:1fr}}
+@media (max-width:640px){.chars{grid-template-columns:1fr}.char+.char{padding-left:0;border-left:0}}
+
+/* PEOPLE */
+.people{border-top:1px solid var(--paper-line)}
+.people-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:56px}
+.people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--on-paper)}
+.person{padding:34px 30px 38px;border-right:1px solid var(--paper-line);display:flex;flex-direction:column}
+.person:first-child{padding-left:0}.person:last-child{border-right:0;padding-right:0}
+.person .role{font:500 20px/1 var(--sans);letter-spacing:.16em;color:var(--amber-deep)}
+.person .mono{font:900 64px/1 var(--serif);color:var(--paper);-webkit-text-stroke:1.2px var(--on-paper);margin:26px 0 18px}
+.person .face{display:block;width:112px;height:112px;object-fit:cover;border-radius:50%;border:2px solid var(--amber-deep);margin:26px 0 18px;background:var(--paper-line)}
+.person h3{font-size:28px;font-weight:900}
+.person .title{font-size:20px;color:var(--on-paper-mute);margin:6px 0 18px;line-height:1.6}
+.person p.bio{font-size:20px;line-height:1.85;flex:1}
+.person ul{list-style:none;padding:0;margin:18px 0 0;font-size:20px;color:var(--on-paper-mute)}
+.person li{padding:7px 0;border-top:1px dashed var(--paper-line)}
+.person a.more{margin-top:22px;font-size:20px;font-weight:500;color:var(--amber-deep);text-decoration:none;letter-spacing:.08em}
+.person a.more:hover{text-decoration:underline;text-underline-offset:4px}
+@media (max-width:900px){.people-grid{grid-template-columns:1fr}.person{padding:32px 0!important;border-right:0;border-bottom:1px solid var(--paper-line)}}
+
+/* PHILOSOPHY */
+.philo{overflow:hidden}
+.philo .wrap-plain{display:block!important}
+.philo .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,96px);align-items:center}
+.motto{font:900 clamp(44px,6.4vw,92px)/1.2 var(--serif);margin:22px 0 30px}
+.motto span{display:block}
+.motto span:last-child{color:var(--amber-hi)}
+.quote{border-left:2px solid var(--amber);padding:6px 0 6px 24px;margin-top:40px}
+.quote p{font:600 clamp(20px,2vw,24px)/1.6 var(--serif)}
+.quote cite{display:block;margin-top:14px;font:400 20px/1.5 var(--sans);font-style:normal;color:var(--on-ink-mute);letter-spacing:.1em}
+.philo figure{margin:0;position:relative}
+.philo figure img{border-radius:var(--r);aspect-ratio:4/5;object-fit:cover;width:100%}
+.philo figcaption{font-size:20px;color:var(--on-ink-mute);margin-top:12px}
+.tenets{margin-top:clamp(64px,8vw,110px);display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-ink)}
+.tenet{padding:30px 28px 0 0}
+.tenet + .tenet{padding-left:28px;border-left:1px solid var(--line-ink)}
+.tenet .n{font:400 20px/1 var(--sans);color:var(--amber);letter-spacing:.2em}
+.tenet h3{margin:14px 0 10px}
+.tenet p{color:var(--on-ink-mute);font-size:20px}
+@media (max-width:900px){.philo .wrap,.tenets{grid-template-columns:1fr}.tenet+.tenet{padding-left:0;border-left:0;border-top:1px solid var(--line-ink);margin-top:28px}.philo figure img{aspect-ratio:4/3}}
+
+/* EPISODES ＋ 100 集（2026-10-15 合併：1～100 格，已播出亮起來、點了看該集；空格子＝嘉賓招募） */
+.eps{background:var(--ink-2)}
+.eps h2 .num{color:var(--amber-hi)}
+.eps-head{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:end}
+.eps-head img{border-radius:var(--r);width:100%;aspect-ratio:1;object-fit:cover;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.eps-head h2{margin-top:14px}
+.eps-head .btn{margin-top:22px;line-height:1.35;padding-top:8px;padding-bottom:8px}
+.legend{display:flex;gap:10px 28px;margin:clamp(40px,5vw,64px) 0 18px;font-size:20px;color:var(--on-ink-mute);flex-wrap:wrap;scroll-margin-top:96px}
+.legend i{display:inline-block;width:20px;height:20px;border-radius:8px 0 8px 0;margin-right:8px;vertical-align:-2px;border:1px solid rgba(239,230,210,.35)}
+.legend i.on{background:var(--amber);border-color:var(--amber)}
+.legend b{color:var(--amber-hi);font-weight:700}
+.grid100{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}
+.grid100 li{display:flex;min-width:0}
+.cell{flex:1;min-width:0;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px;margin:0;border:1px solid var(--line-ink);border-radius:22px 0 22px 0;background:rgba(239,230,210,.025);color:rgba(239,230,210,.5);font:500 20px/1.15 var(--sans);letter-spacing:0;font-variant-numeric:tabular-nums;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.cell .w{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(217,164,65,.75)}
+.cell:not(.on):hover{border-color:var(--amber);color:var(--on-ink)}
+.cell.on{background:var(--amber);border-color:var(--amber);color:#1a1206;font-weight:700}
+.cell.on .w{color:#1a1206}
+.cell.on:hover{background:var(--amber-hi)}
+.eps .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px;margin-top:clamp(40px,5vw,64px)}
+@media (max-width:960px){
+  .eps-head{grid-template-columns:120px minmax(0,1fr)}
+  .eps-head > :last-child{grid-column:1/-1}
+  .cell.on .w{display:none}.cell.on::after{content:"▶";font-size:20px}
+  .eps .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .eps-head{grid-template-columns:72px minmax(0,1fr);gap:18px 16px;align-items:center}
+  .grid100{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  .cell{min-height:64px;padding:6px 0;border-radius:16px 0 16px 0}
+  .eps .steps{grid-template-columns:1fr}
+}
+/* 點已播出格子跳出的那一集 */
+html:has(.ep-dlg[open]){overflow:hidden}
+.ep-dlg{width:min(680px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain;padding:0;border:1px solid rgba(217,164,65,.6);border-radius:12px;background:var(--ink-2);color:var(--on-ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
+.ep-dlg::backdrop{background:rgba(6,10,8,.72)}
+.dlg-in{position:relative;padding:clamp(24px,4vw,40px)}
+.dlg-x{position:absolute;top:10px;right:10px;width:52px;height:52px;border:0;border-radius:50%;background:transparent;color:var(--on-ink);font:400 34px/1 var(--sans);cursor:pointer}
+.dlg-x:hover{background:rgba(239,230,210,.08);color:var(--amber-hi)}
+.ep-dlg h3{font-size:clamp(26px,3vw,32px);font-weight:900;margin:10px 56px 4px 0}
+.ep-dlg .ver{border-top:1px solid var(--line-ink);margin-top:24px;padding-top:22px}
+.ep-dlg .tag{display:inline-block;font-size:20px;letter-spacing:.08em;padding:4px 14px;border:1px solid var(--line-ink);border-radius:999px;color:var(--on-ink-mute)}
+.ep-dlg h4{font:600 22px/1.5 var(--serif);margin:12px 0 4px}
+.ep-dlg .meta{font-size:20px;color:var(--amber);font-variant-numeric:tabular-nums}
+.ep-dlg .ver p:not(.meta){font-size:20px;color:var(--on-ink-mute);margin:10px 0 18px;white-space:pre-line}
+.ep-dlg .more{border-top:1px solid var(--line-ink);margin-top:26px;padding-top:20px}
+.ep-dlg .more a{display:flex;justify-content:space-between;gap:10px;padding:10px 0;font-size:20px;color:var(--amber-hi);text-decoration:none}
+.ep-dlg .more a:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* ECOSYSTEM 主題清單（2026-10-15 改版：一個主題一行，以後加主題就多一行） */
+.eco-head h2{font-size:clamp(30px,3.8vw,48px)}
+.eco-head{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end;margin-bottom:24px}
+.canopy{height:14px;border-top:2px solid var(--on-paper);border-bottom:1px solid var(--paper-line);margin-top:48px}
+.topics{list-style:none;margin:0;padding:0}
+.topic{display:grid;grid-template-columns:200px minmax(0,1fr) minmax(260px,340px);grid-template-areas:"img head links" "img body links";grid-template-rows:auto 1fr;gap:6px clamp(24px,3vw,44px);padding:30px 0;border-bottom:1px solid var(--paper-line)}
+.topic img{grid-area:img;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.topic-head{grid-area:head}.topic-body{grid-area:body}
+.topic .k{font:500 20px/1.3 var(--sans);letter-spacing:.12em;color:var(--amber-deep)}
+.topic h3{margin:8px 0 0;font-size:clamp(24px,2.2vw,28px)}
+.topic-body p{font-size:20px;line-height:1.8;color:var(--on-paper-mute)}
+.topic .links{grid-area:links;margin-top:0;border-bottom:1px solid #e6dbc2;align-self:start}
+.nums{margin-top:8px}
+.nums summary{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:20px;color:var(--amber-deep);cursor:pointer;list-style:none}
+.nums summary::-webkit-details-marker{display:none}
+.nums summary::before{content:"＋"}.nums[open] summary::before{content:"－"}
+.nums summary:hover{text-decoration:underline;text-underline-offset:4px}
+.facts{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.facts li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;font-size:20px;color:var(--on-paper-mute);border-top:1px solid #e6dbc2;padding-top:8px}
+.facts b{font:900 26px/1 var(--serif);color:var(--on-paper);font-variant-numeric:tabular-nums}
+.links{margin-top:18px;display:flex;flex-direction:column;gap:2px}
+.links a{display:flex;justify-content:space-between;gap:10px;font-size:20px;font-weight:500;text-decoration:none;color:var(--on-paper);padding:9px 0;border-top:1px solid #e6dbc2}
+.links a span{color:var(--amber-deep);transition:transform .2s var(--ease)}
+.links a:hover{color:var(--amber-deep)}.links a:hover span{transform:translate(2px,-2px)}
+.eco-note{margin-top:40px;font-size:20px;color:var(--on-paper-mute);max-width:52em}
+@media (max-width:1040px){
+  .eco-head{grid-template-columns:1fr}
+  .topic{grid-template-columns:160px minmax(0,1fr);grid-template-areas:"img head" "img body" "img links";grid-template-rows:auto auto 1fr}
+  .topic .links{margin-top:10px}
+}
+@media (max-width:640px){
+  .topic{grid-template-columns:88px minmax(0,1fr);grid-template-areas:"img head" "body body" "links links";grid-template-rows:auto;gap:14px 16px;padding:26px 0}
+  .topic img{aspect-ratio:1;align-self:center}
+  .topic .k{letter-spacing:.06em}
+  .topic .links{margin-top:0}
+}
+
+/* 步驟清單（百集節目、前置作業共用） */
+.steps{list-style:none;padding:0;margin:34px 0 0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:10px;padding:14px 0;border-top:1px solid var(--line-ink);font-size:20px;color:#cfd3c4}
+.steps li::before{content:"0" counter(s);font:600 20px/1.9 var(--sans);color:var(--amber);letter-spacing:.1em}
+
+/* SEATS 嘉賓席（2026-10-14） */
+.seats{background:var(--ink-2)}
+.seats-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:end}
+.seats-head h2 em{font-style:normal;color:var(--amber-hi)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
+.two article{border:1px solid var(--line-ink);border-radius:var(--r);padding:28px 26px}
+.two .n{font:600 20px/1 var(--sans);color:var(--amber);letter-spacing:.2em}
+.two h3{margin:12px 0 8px}
+.two p{margin:0;color:var(--on-ink-mute)}
+.pledge-wall{margin-top:56px}
+.pledge-wall h3{margin-bottom:6px}
+.pledge-wall .sub{color:var(--on-ink-mute);margin:0 0 20px}
+.pledges{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pledges li{border:1px solid var(--line-ink);border-radius:28px 0 28px 0;padding:22px 24px;background:rgba(239,230,210,.03)}
+.pledges li.done{border-color:var(--amber);background:rgba(217,164,65,.1)}
+.pledges .who{font:600 21px/1.4 var(--serif)}
+.pledges .org{display:block;font-size:20px;color:var(--on-ink-mute)}
+.pledges .what{margin:10px 0 8px}
+.pledges .meta{font-size:20px;color:var(--amber)}
+.pledges li.empty{border-style:dashed;color:var(--on-ink-mute)}
+.seat-join{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(40px,6vw,90px);margin-top:72px;padding-top:56px;border-top:1px solid var(--line-ink);scroll-margin-top:72px}
+.seat-join h3{font-size:clamp(26px,3vw,36px);font-weight:900;margin:12px 0 16px}
+.seat-join .fine{font-size:20px;color:var(--on-ink-mute);margin-top:18px}
+.seat-join .fine a{color:var(--amber-hi)}
+@media (max-width:900px){.seats-head,.seat-join{grid-template-columns:1fr}}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+
+/* JOIN */
+.join{background:var(--ink-3);overflow:hidden}
+.join .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(40px,6vw,90px)}
+.join h2{margin:18px 0 22px;font-size:clamp(32px,3.6vw,48px)}
+.direct{margin-top:36px;display:grid;gap:10px}
+.direct a{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border:1px solid var(--line-ink);border-radius:var(--r);text-decoration:none;font-size:20px;transition:border-color .2s,background .2s}
+.direct a:hover{border-color:var(--amber);background:rgba(217,164,65,.06)}
+.direct a span{color:var(--amber)}
+form{background:rgba(14,23,18,.6);border:1px solid var(--line-ink);border-radius:10px;padding:clamp(24px,3.5vw,44px)}
+fieldset{border:0;padding:0;margin:0 0 26px}
+legend,.lbl{font:500 20px/1.4 var(--sans);letter-spacing:.1em;color:var(--on-ink);margin-bottom:12px;display:block;padding:0}
+.req{color:var(--amber)}
+.intent{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.intent label{position:relative;display:block;cursor:pointer}
+.intent input{position:absolute;opacity:0;inset:0}
+.intent span{display:block;padding:16px 18px;border:1px solid var(--line-ink);border-radius:var(--r);font-size:20px;line-height:1.45;transition:border-color .2s,background .2s}
+.intent span small{display:block;font-size:20px;color:var(--on-ink-mute);margin-top:4px}
+.intent input:checked + span{border-color:var(--amber);background:rgba(217,164,65,.12)}
+.intent input:focus-visible + span{outline:2px solid var(--amber-hi);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-bottom:18px}
+.field{display:flex;flex-direction:column}
+.field.full{grid-column:1/-1}
+.field label{font-size:20px;letter-spacing:.06em;margin-bottom:8px;color:#d8d6c6}
+.field input,.field textarea{font:400 20px/1.5 var(--sans);min-height:56px;color:var(--on-ink);background:rgba(239,230,210,.04);border:1px solid rgba(239,230,210,.22);border-radius:var(--r);padding:12px 14px;min-height:48px;transition:border-color .2s,background .2s}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--amber);background:rgba(239,230,210,.07)}
+.field select{font:400 20px/1.5 var(--sans);min-height:56px;color:var(--on-ink);background:rgba(239,230,210,.04);border:1px solid rgba(239,230,210,.22);border-radius:var(--r);padding:12px 14px;transition:border-color .2s,background .2s}
+.field select:focus{outline:none;border-color:var(--amber);background:rgba(239,230,210,.07)}
+.field select:disabled{opacity:.6}
+.field select option{background:var(--ink-2);color:var(--on-ink)}
+.when-wrap{margin:0 0 26px}
+.when-wrap[hidden]{display:none}
+.when-wrap .row{margin-bottom:0}
+.when-wrap .pick-note{font-size:20px;color:var(--on-ink-mute);margin:0 0 14px}
+#f{scroll-margin-top:96px}
+.field input:user-invalid{border-color:#e48a6e}
+.err{font-size:20px;color:#f0a58c;margin-top:6px;min-height:0}
+.field .err:empty{display:none}
+.errsum{display:none;border:1px solid #e48a6e;background:rgba(228,138,110,.08);border-radius:var(--r);padding:12px 16px;margin-bottom:20px;font-size:20px;color:#f3c3b3}
+.errsum.show{display:block}
+.submit-row{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:8px}
+.submit-row p{font-size:20px;color:var(--on-ink-mute);flex:1;min-width:220px}
+.done{display:none;text-align:left}
+.done.show{display:block}
+.done h3{font-size:28px;margin:12px 0 14px}
+.done pre{white-space:pre-wrap;font:400 20px/1.7 var(--sans);background:rgba(239,230,210,.05);border:1px dashed var(--line-ink);border-radius:var(--r);padding:16px;color:#d8d6c6;margin:18px 0}
+.done .ctas{display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:900px){.join .wrap{grid-template-columns:1fr}}
+@media (max-width:560px){.intent,.row{grid-template-columns:1fr}}
+
+/* PREP 訪談嘉賓前置作業（2026-10-14） */
+.prep .prep-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:end}
+.prep .steps li{color:var(--on-paper);border-top-color:var(--paper-line)}
+.prep .steps li::before{color:var(--amber-deep)}
+.prep h3.sub-h{margin:56px 0 16px;font-size:clamp(22px,2.4vw,28px)}
+.slots{list-style:none;padding:0;margin:0;border-top:1px solid var(--paper-line)}
+.slots li{display:grid;grid-template-columns:220px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--paper-line)}
+.slots .when{font-weight:700;font-variant-numeric:tabular-nums}
+.slots .when small{display:block;font-weight:400;color:var(--on-paper-mute);font-size:20px}
+.slots .who{color:var(--on-paper)}.slots .who.none{color:var(--on-paper-mute)}
+.slots .who .fld{display:block}.slots .who .fld.inv{color:var(--on-paper-mute)}
+.slots a{text-decoration:none;white-space:nowrap}
+.slots a.go{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:var(--amber);color:#1a1206;font-weight:500}
+.slots a.go:hover{background:var(--amber-hi)}
+.slots a.ok{color:var(--amber-deep);font-weight:700}
+.guests{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.guests li{background:var(--paper-2);border-radius:var(--r);padding:22px;display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:start}
+.guests .ph{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--amber-deep);background:var(--paper-line);display:grid;place-items:center;font:900 28px/1 var(--serif);color:var(--amber-deep)}
+.guests b{display:block;font:600 21px/1.4 var(--serif)}
+.guests .t{display:block;font-size:20px;color:var(--on-paper-mute)}
+.guests p{margin:8px 0 6px;font-size:20px;line-height:1.7}
+.guests .d{font-size:20px;color:var(--amber-deep)}
+.prep .empty{color:var(--on-paper-mute);border:1px dashed var(--paper-line);border-radius:var(--r);padding:18px 20px;margin:0}
+@media (max-width:900px){.prep .prep-head{grid-template-columns:1fr}}
+@media (max-width:640px){.slots li{grid-template-columns:1fr;gap:6px}}
+
+/* FOOTER */
+footer{background:var(--ink);padding:clamp(80px,10vw,130px) 0 40px;text-align:center;position:relative;overflow:hidden}
+.blessing{font:900 clamp(30px,4.4vw,58px)/1.45 var(--serif);max-width:15em;margin:0 auto}
+.blessing em{font-style:normal;color:var(--amber-hi)}
+footer .credits{margin-top:40px;display:flex;justify-content:center;gap:10px 34px;flex-wrap:wrap;font-size:20px;color:var(--on-ink-mute);letter-spacing:.1em}
+footer .credits b{color:var(--on-ink);font-weight:500;margin-left:6px}
+/* 2026-10-14 教練指示：頁尾版權＋連結一排太長會折行，字縮到 16px（唯一刻意低於 20px 的地方） */
+footer .base{margin-top:70px;padding-top:24px;border-top:1px solid var(--line-ink);display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px 28px;font-size:16px;color:var(--on-ink-mute);text-align:center} /*coach-small-font-ok*/
+footer .base a{text-decoration:none;white-space:nowrap}footer .base a:hover{color:var(--amber-hi)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  *{transition-duration:.01ms!important}
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gives{margin:10px 0 12px;padding-left:1.2em}.gives li{margin:4px 0}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="榮樹下 回到頂端"><span class="seal" aria-hidden="true">榮</span><b>榮樹下</b></a>
+    <nav aria-label="主選單">
+      <ul>
+        <li><a href="#name">命名</a></li>
+        <li><a href="#people">主持人</a></li>
+        <li><a href="#philo">理念</a></li>
+        <li><a href="#episodes">百集節目</a></li>
+        <li><a href="#eco">版圖</a></li>
+        <li><a href="#seats">嘉賓席</a></li>
+        <li><a href="#prep">前置作業</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-amber" href="#join">預約合作</a>
+  </div>
+</header>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero" id="top" aria-labelledby="hero-h">
+  <div class="hero-img"><img src="img/hero-banyan.jpg" alt="黃昏的陽光穿過一棵老榕樹，氣根垂落，紅燈籠掛在枝間；樹下的石埕擺著木桌矮凳，一家老小、鄰居與小攤販圍坐喝茶聊天" width="1536" height="1024" fetchpriority="high"></div>
+  <p class="plaque" aria-hidden="true">榮樹下<small>UNDER THE BANYAN</small></p>
+  <div class="hero-copy">
+    <div class="wrap">
+      <div class="inner">
+        <p class="eyebrow">Podcast ‧ 企業家共好生態系</p>
+        <h1 id="hero-h"><span class="sr">榮樹下：</span>做對的事，<br>自然<em>把事做對</em>。</h1>
+        <div class="ctas">
+          <a class="btn btn-amber" href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923" target="_blank" rel="noopener">收聽節目 <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost btn-glass" href="#join">預約專訪與合作</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="scrollcue" href="#intro">往下看</a>
+</section>
+
+<!-- INTRO BAND -->
+<section class="intro" id="intro" aria-label="節目簡介與最新集數">
+  <div class="wrap">
+    <p class="say rv">邱裕榮與吳大樹，在榮樹下談古論今聊家常。我們專訪企業家與發明家，把一個人的初心說清楚——再把聽見的人，請到同一張桌子旁。</p>
+    <div class="rv">
+      <p class="label">已播出 ‧ 4 集</p>
+      <ol class="onair">
+        <li><a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/102b66d2-afc7-4dd6-bc24-8462acfb3f4c" target="_blank" rel="noopener"><b>EP.04</b><span>發明家 黃國彰<span class="new">NEW</span></span><i aria-hidden="true">▶</i></a></li>
+        <li><a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/16f7315c-a855-4a03-9b61-de7fa3d4e18a" target="_blank" rel="noopener"><b>EP.03</b><span>約瑟布 周總</span><i aria-hidden="true">▶</i></a></li>
+        <li><a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/5247b010-60c2-4e8c-9459-173fa6b6d1b9" target="_blank" rel="noopener"><b>EP.02</b><span>楊境界博士</span><i aria-hidden="true">▶</i></a></li>
+        <li><a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/58db728e-0556-41a8-821a-874b6a2bedca" target="_blank" rel="noopener"><b>EP.01</b><span>順發電腦 吳錦昌董事長</span><i aria-hidden="true">▶</i></a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- NAMING -->
+<section class="paper sec naming" id="name" aria-labelledby="name-h">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">一個名字的由來</p>
+      <h2 id="name-h">兩個人的名字，<br>合成一棵樹。</h2>
+      <p class="lead">念出來，跟村口那棵大榕樹同音。台灣每個村子口都有這麼一棵樹：老人泡茶、孩子乘涼，大大小小的事，都在樹蔭底下被說開。我們想做的節目，就是那樣的地方。</p>
+      <div class="namer">
+        <span class="seal" aria-hidden="true">昌</span>
+        <p><strong>吳錦昌</strong>　順發電腦董事長<br>本節目命名人。這個名字，是他給的祝福。</p>
+      </div>
+    </div>
+    <div class="chars rv">
+      <div class="char"><div class="big" aria-hidden="true">榮</div><h3>取自 邱裕榮</h3><p>欣欣向榮。二十多年財經記者與主持人，聽過上千小時董事長的故事。</p></div>
+      <div class="char"><div class="big" aria-hidden="true">樹</div><h3>取自 吳大樹</h3><p>十年樹木。大樹教練，長年陪伴創業者與團隊，一圈一圈長出信任。</p></div>
+      <div class="char"><div class="big" aria-hidden="true">下</div><h3>樹蔭底下</h3><p>不站在台上，而是坐下來。不分輩分與產業，一起談古論今聊家常。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section class="paper sec people" id="people" aria-labelledby="people-h" style="padding-top:clamp(64px,8vw,110px)">
+  <div class="wrap">
+    <div class="people-head rv">
+      <div><p class="eyebrow">樹下的人</p><h2 id="people-h">兩位主持，一位命名人</h2></div>
+      <p class="lead" style="max-width:26em">一位把麥克風對準企業家二十年，一位把人與人接成團隊；而這棵樹的名字，來自一位做了十七年公益的董事長。</p>
+    </div>
+    <div class="people-grid">
+      <article class="person rv">
+        <span class="role">創辦人 ‧ 主持</span>
+        <img class="face" src="img/people-qiu-yurong.jpg" alt="邱裕榮" width="112" height="112" loading="lazy">
+        <h3>邱裕榮</h3>
+        <p class="title">才榮數位 總經理｜AI 傳道學院 創辦人｜AI 媒體聯盟 總編輯</p>
+        <p class="bio">從《工商時報》大陸新聞中心、《管理雜誌》，到東森聯播網《BossClub 老闆俱樂部》主持台。他坐在無數董事長對面，慢慢看見：真正影響企業與社會的，不只是策略與資本，而是價值觀、呼召與生命的抉擇。</p>
+        <ul><li>20+ 年財經與管理媒體資歷</li><li>白皮書《當 AI 遇上農業》作者</li></ul>
+        <a class="more" href="https://event.bymyway.com/curated/qiu-yurong/" target="_blank" rel="noopener">認識邱裕榮 ↗</a>
+      </article>
+      <article class="person rv">
+        <span class="role">創辦人 ‧ 主持</span>
+        <img class="face" src="img/people-wu-dashu.jpg" alt="吳大樹" width="112" height="112" loading="lazy">
+        <h3>吳大樹</h3>
+        <p class="title">大樹教練｜海餅乾俱樂部 創辦人｜大樹教育顧問</p>
+        <p class="bio">相信「專注本業，才有高溢價；不懂的，交給隊友裡的專家」。他每週把客戶、人才與伯樂請進同一個房間，也發起 AI 百人導師計劃，帶更多人用正向的方式走進 AI 的世界。</p>
+        <ul><li>6 年 3,600 位潛在客戶走進同一個房間</li><li>AI 百人導師計劃 發起人</li></ul>
+        <a class="more" href="https://www.bymyway.com/" target="_blank" rel="noopener">認識大樹教練 ↗</a>
+      </article>
+      <article class="person rv">
+        <span class="role">本節目命名人</span>
+        <img class="face" src="img/people-wu-jinchang.jpg" alt="吳錦昌" width="112" height="112" loading="lazy">
+        <h3>吳錦昌</h3>
+        <p class="title">順發電腦 創辦人 ‧ 董事長</p>
+        <p class="bio">長年倡導「用消費改變世界」。一份單純的初心，走成一條十七年的公益之路；Run for Future 公益路跑自 2019 年起，2027 年邁入第五屆。榮樹下第一集，就從他的故事開始。</p>
+        <ul><li>Run for Future 發起人</li><li>榮樹下 EP.01 受訪者</li></ul>
+        <a class="more" href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/58db728e-0556-41a8-821a-874b6a2bedca" target="_blank" rel="noopener">收聽他的專訪 ↗</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="sec philo" id="philo" aria-labelledby="philo-h">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow" id="philo-h">我們相信</p>
+      <p class="motto"><span>商業即公益，</span><span>利他即商業。</span></p>
+      <p class="lead">一家企業究竟相信什麼，是唯一無法外包的事。榮樹下不做單向的贊助與乞求，而是讓每一次合作都有對價、有回報，也有被看見的意義。</p>
+      <blockquote class="quote">
+        <p>「一家公司可以做公益，100 家公司可以改變世界。」</p>
+        <cite>—— 順發電腦董事長　吳錦昌</cite>
+      </blockquote>
+    </div>
+    <figure class="rv">
+      <img src="img/mic.jpg" alt="榕樹氣根下的木桌上，擺著兩支復古麥克風與兩杯烏龍茶" width="1800" height="1350" loading="lazy">
+      <figcaption>兩支麥克風，一壺茶。節目從這裡開始。</figcaption>
+    </figure>
+  </div>
+  <div class="wrap wrap-plain">
+    <div class="tenets">
+      <div class="tenet rv"><span class="n">01 ／ 共好</span><h3>不是贊助，是一起做</h3><p>擺脫單向贊助，設計雙贏的商業對價。好事不再停在原地，而是被串起來、被放大。</p></div>
+      <div class="tenet rv"><span class="n">02 ／ 誠信</span><h3>讓信任看得見</h3><p>從一次次見面、引薦，到可查核的資料與帳本——信任不靠口號，而是一圈一圈長出來。</p></div>
+      <div class="tenet rv"><span class="n">03 ／ 傳承</span><h3>本業，就是解方</h3><p>把企業的本業，接上社會與土地真正的痛點。做對的事，商業的成長自然跟上。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EPISODES ＋ 100 集（2026-10-15 合併原「節目單」與「100 集，100 位領跑人」）
+     格子由下方 script 依每集資料畫出；舊網址 #hundred 仍會跳到格子這裡 -->
+<section class="sec eps" id="episodes" aria-labelledby="eps-h">
+  <div class="wrap">
+    <div class="eps-head rv">
+      <img src="img/cover.jpg" alt="榮樹下 Podcast 封面：木質招牌寫著「榮樹下——邱裕榮與吳大樹談古論今聊家常」，前景是一支錄音麥克風" width="600" height="600" loading="lazy">
+      <div>
+        <p class="eyebrow">榮樹下 Podcast × Run for Future</p>
+        <h2 id="eps-h"><span class="num">100</span> 集，<br><span class="num">100</span> 位領跑人。</h2>
+      </div>
+      <div>
+        <p class="lead">每一集，請一位企業家或發明家坐下來，說他為什麼做這件事。我們將逐一專訪 Run for Future 的 100 家共同發起單位，由企業最高領導者親口說出：你的企業，為什麼而跑。每一片葉子，都是一個被記錄的名字。</p>
+        <a class="btn btn-ghost" href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923" target="_blank" rel="noopener">在 SoundOn Podcast 收聽全部 <span class="arr" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <p class="legend" id="hundred"><span><i class="on" aria-hidden="true"></i>已播出 <b id="ep-count">4</b> 集：點一下看內容、收聽</span><span><i aria-hidden="true"></i>等你：點一下報名嘉賓席</span></p>
+    <ol class="grid100" id="ep-grid" aria-label="100 集進度，已播出 4 集"></ol>
+    <ol class="steps">
+      <li>加入成為共同發起人，確認領跑代表</li>
+      <li>坐到榮樹下，分享品牌故事與公益理念</li>
+      <li>節目上架，透過 Podcast 與社群持續擴散</li>
+      <li>帶動更多人報名——2027.04.18 港都見</li>
+    </ol>
+  </div>
+  <dialog class="ep-dlg" id="ep-dlg" aria-labelledby="ep-dlg-h">
+    <div class="dlg-in">
+      <button class="dlg-x" type="button" aria-label="關閉">×</button>
+      <div id="ep-dlg-body"></div>
+    </div>
+  </dialog>
+</section>
+
+<!-- ECOSYSTEM 主題清單（2026-10-15 改版：一個主題一行）
+     以後加主題：複製一整段 <li class="topic rv">…</li> 貼在最後，改圖、ROOT 編號、標題、說明、連結即可；
+     「看關鍵數字」那段沒有數字就整段刪掉。小圖放 img/，建議 480×360。 -->
+<section class="paper sec" id="eco" aria-labelledby="eco-h">
+  <div class="wrap">
+    <div class="eco-head rv">
+      <div><p class="eyebrow">一棵樹，四條氣根</p><h2 id="eco-h">從樹上垂下的根，<br>都扎進了真實的土地。</h2></div>
+      <p class="lead">榕樹的氣根落地，就成了新的樹幹。每一場專訪背後，都長出一條可以參與的計畫——媒體、綠能、生命農業與公益路跑，彼此相連。</p>
+    </div>
+    <div class="canopy" aria-hidden="true"></div>
+    <ol class="topics">
+      <li class="topic rv">
+        <img src="img/thumb-mic.jpg" alt="" width="480" height="360" loading="lazy" style="object-position:70% 60%">
+        <div class="topic-head"><span class="k">ROOT 01 ‧ 媒體與導師</span><h3>榮樹下 IP ‧ 商業導師席</h3></div>
+        <div class="topic-body">
+          <p>深度專訪把企業家精神轉成數位信任資產；再由導師群與團隊夥伴，接住每一位想再往前一步的人。</p>
+          <details class="nums"><summary>看關鍵數字</summary><ul class="facts"><li><b>3,600</b>6 年走進同一個房間的潛在客戶</li><li><b>116</b>位玩家已在信任遊戲入座</li></ul></details>
+        </div>
+        <nav class="links" aria-label="媒體與導師相關頁面">
+          <a href="https://mentor100.bymyway.com/" target="_blank" rel="noopener">AI 百人導師計劃<span aria-hidden="true">↗</span></a>
+          <a href="https://event.bymyway.com/curated/three-lacks" target="_blank" rel="noopener">團隊計畫：客戶、人才、伯樂<span aria-hidden="true">↗</span></a>
+          <a href="https://trust.bymyway.com/game/" target="_blank" rel="noopener">信任遊戲<span aria-hidden="true">↗</span></a>
+        </nav>
+      </li>
+      <li class="topic rv">
+        <img src="img/thumb-wind.jpg" alt="" width="480" height="360" loading="lazy">
+        <div class="topic-head"><span class="k">ROOT 02 ‧ 綠能科技</span><h3>讓電長在需要的地方</h3></div>
+        <div class="topic-body">
+          <p>台南歸仁的發明人黃國彰，把風、河水、海浪、洋流，甚至工廠排出的廢風，一項一項畫成專利——小型、分散、在地。</p>
+          <details class="nums"><summary>看關鍵數字</summary><ul class="facts"><li><b>167</b>項專利登記資料（TIPO GPSS）</li><li><b>7</b>個國家／地區布局</li><li><b>43</b>個技術家族</li></ul></details>
+        </div>
+        <nav class="links" aria-label="綠能相關頁面">
+          <a href="https://event.bymyway.com/curated/inventor/" target="_blank" rel="noopener">發明家黃國彰專題<span aria-hidden="true">↗</span></a>
+          <a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/102b66d2-afc7-4dd6-bc24-8462acfb3f4c" target="_blank" rel="noopener">收聽 EP.04 專訪<span aria-hidden="true">↗</span></a>
+        </nav>
+      </li>
+      <li class="topic rv">
+        <img src="img/thumb-wall.jpg" alt="" width="480" height="360" loading="lazy">
+        <div class="topic-head"><span class="k">ROOT 03 ‧ 生命農業與水</span><h3>讓土地重新值錢</h3></div>
+        <div class="topic-body">
+          <p>一塊會呼吸的布、一罐發酵母液、一滴從空氣取來的水。把被叫做夕陽的農業，變成能驗證、能傳承的生命科技資產。</p>
+          <details class="nums"><summary>看關鍵數字</summary><ul class="facts"><li><b>300+</b>項 SGS 農藥殘留檢測全數零檢出</li><li><b>+10%</b>綠建築容積獎勵的應用路徑</li><li><b>3 合 1</b>綠牆 × 屏幕 × 富氫水機，只租不賣</li></ul></details>
+        </div>
+        <nav class="links" aria-label="生命農業相關頁面">
+          <a href="https://event.bymyway.com/curated/joseph-cloth/" target="_blank" rel="noopener">約瑟布 ‧ 永續綠牆<span aria-hidden="true">↗</span></a>
+          <a href="https://event.bymyway.com/curated/big-plan/" target="_blank" rel="noopener">生命農業億級計劃<span aria-hidden="true">↗</span></a>
+          <a href="https://event.bymyway.com/curated/hnv-cc/" target="_blank" rel="noopener">楊博士 ‧ 空氣取水<span aria-hidden="true">↗</span></a>
+          <a href="https://event.bymyway.com/curated/qiu-yurong/" target="_blank" rel="noopener">白皮書：當 AI 遇上農業<span aria-hidden="true">↗</span></a>
+        </nav>
+      </li>
+      <li class="topic rv">
+        <img src="img/thumb-run.jpg" alt="" width="480" height="360" loading="lazy">
+        <div class="topic-head"><span class="k">ROOT 04 ‧ 公益路跑</span><h3>Run for Future 2027</h3></div>
+        <div class="topic-body">
+          <p>第五屆順發 × 港都公益路跑。聯合公益、運動幸福——不是各自做好事，而是一起把好事做大。</p>
+          <details class="nums"><summary>看關鍵數字</summary><ul class="facts"><li><b>04.18</b>2027 高雄港灣（駁二 × 高流）</li><li><b>12,000</b>位跑者，25–30 個國家地區</li><li><b>100</b>家共同發起企業</li></ul></details>
+        </div>
+        <nav class="links" aria-label="公益路跑相關頁面">
+          <a href="https://event.bymyway.com/curated/runforfuture/" target="_blank" rel="noopener">成為 100 家之一<span aria-hidden="true">↗</span></a>
+        </nav>
+      </li>
+    </ol>
+    <p class="eco-note">各項數據引自上列專題頁所載之公開資料或計畫書內容；計畫中的目標與規劃，不等同已完成之實績。</p>
+  </div>
+</section>
+
+<!-- SEATS 嘉賓席：每集 3～5 位列席嘉賓，提一個好問題、掛一片葉子（2026-10-14 教練構想） -->
+<section class="sec seats" id="seats" aria-labelledby="seats-h">
+  <div class="wrap">
+    <div class="seats-head rv">
+      <div><p class="eyebrow">嘉賓席 ‧ 為公益轉身</p>
+        <h2 id="seats-h">聽完一個故事，<br>為公益<em>掛上一片葉子</em>。</h2></div>
+      <p class="lead">榮樹下每一集，會留 3 到 5 個座位，給願意為公益出一份力的朋友。你不用上台、帶著愉快的心情，打開電腦或是手機，聽完一個故事，提一個想問的問題，或是回饋給受訪者的一段話，就能讓節目增添光彩。</p>
+    </div>
+    <div class="two rv">
+      <article><span class="n">01</span><h3>提問一個好問題</h3>
+        <p>這個問題可以是感悟、可以是共鳴、可以是啟發，或者是一種生活或生命哲學的同頻共振。我們只是想讓故事走得更深，讓更多人聽見。</p></article>
+      <article><span class="n">02</span><h3>掛上一片葉子</h3>
+        <p>聽完之後，說出自己願意出的一份力，小小的就好，例如：</p>
+        <ul class="gives"><li>我願意在 FB／IG 貼文分享</li><li>我願意在最近的一場活動幫忙宣傳</li><li>我願意帶動更多人一起參與這項公益活動</li></ul>
+        <p>每一份承諾，都會掛在承諾牆上公開致謝。</p></article>
+    </div>
+    <div class="pledge-wall rv">
+      <h3>承諾牆</h3>
+      <p class="sub">每一片葉子，都是一位嘉賓席貴賓的承諾；金色的葉子，代表已經做到。</p>
+      <ul class="pledges" id="pledges" aria-live="polite">
+        <li class="empty">第一片葉子，等你來掛。</li>
+      </ul>
+    </div>
+    <div class="seat-join" id="seat-join">
+      <div class="rv">
+        <p class="eyebrow">下一場的座位</p>
+        <h3>我也想坐上嘉賓席。</h3>
+        <p class="lead">不必是大企業，只要有一份願意分享的資源或影響力，就有你的位子。我們會依每一集的主題，邀請你入席。</p>
+        <p class="fine">承諾以嘉賓自己的資源為限，不代表節目或活動主辦單位承諾任何權益。做到的承諾，會記入「<a href="https://event.bymyway.com/curated/social-good/" target="_blank" rel="noopener">真公益</a>」的公益足跡。</p>
+      </div>
+      <div class="rv">
+        <form id="sf" novalidate>
+          <div class="errsum" id="s-errsum" role="alert" tabindex="-1"></div>
+          <div class="row">
+            <div class="field"><label for="s-name">姓名 <span class="req">*</span></label><input id="s-name" name="name" required autocomplete="name"></div>
+            <div class="field"><label for="s-org">單位與身分</label><input id="s-org" name="org" autocomplete="organization" placeholder="例：某某協會 理事長"></div>
+            <div class="field full"><label for="s-contact">電話或 Email <span class="req">*</span></label><input id="s-contact" name="contact" required autocomplete="email"></div>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+            <div class="field full"><label for="s-give">我願意出的一份力 <span class="req">*</span></label><textarea id="s-give" name="give" required placeholder="例：在 FB／IG 貼文分享／在最近的一場活動幫忙宣傳／帶動更多人一起參與"></textarea></div>
+            <div class="field full"><label for="s-reach">我的影響範圍</label><input id="s-reach" name="reach" placeholder="例：社群 3 萬人追蹤、全台 200 個據點"></div>
+          </div>
+          <div class="submit-row">
+            <button class="btn btn-amber" type="submit">我要入席 <span class="arr" aria-hidden="true">→</span></button>
+            <p>送出後我們會直接收到，再跟你約適合的一集。</p>
+          </div>
+          <p class="fine"><a href="invite.html">想邀請朋友坐上嘉賓席？傳一份嘉賓席邀請函給他 →</a></p>
+        </form>
+        <div class="done" id="s-done" role="status" aria-live="polite" tabindex="-1">
+          <p class="eyebrow">已送出</p>
+          <h3>謝謝你，願意為公益轉身。</h3>
+          <p class="lead">我們已經收到，會依節目主題邀請你入席。想先聊聊，也可以直接加榮樹下官方 LINE@。</p>
+          <div class="ctas"><a class="btn btn-amber" href="https://lin.ee/OkaMlzx" target="_blank" rel="noopener">開啟榮樹下官方 LINE@ <span class="arr" aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="sec join" id="join" aria-labelledby="join-h">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">坐下來聊聊</p>
+      <h2 id="join-h">樹下還有位子，<br>留給你。</h2>
+      <p class="lead">節目專訪、共同發起路跑、技術與場域對接，或加入導師與團隊——留下你的想法，我們會親自與你聯繫。</p>
+      <div class="direct">
+        <a href="https://lin.ee/OkaMlzx" target="_blank" rel="noopener">榮樹下 官方 LINE@<span aria-hidden="true">↗</span></a>
+        <a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923" target="_blank" rel="noopener">SoundOn Podcast 節目頁<span aria-hidden="true">↗</span></a>
+        <a href="volunteer.html">我想加入志工團隊<span aria-hidden="true">→</span></a>
+        <a href="https://event.bymyway.com/curated/runforfuture/" target="_blank" rel="noopener">Run for Future 2027 公益路跑<span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="rv">
+      <form id="f" novalidate aria-describedby="formnote">
+        <div class="errsum" id="errsum" role="alert" tabindex="-1"></div>
+        <fieldset>
+          <legend>想一起做的事 <span class="req">*</span></legend>
+          <div class="intent">
+            <label><input type="radio" name="intent" value="節目專訪" required><span>節目專訪<small>坐到榮樹下說你的故事</small></span></label>
+            <label><input type="radio" name="intent" value="Run for Future 共同發起"><span>Run for Future 共同發起<small>成為 100 家之一</small></span></label>
+            <label><input type="radio" name="intent" value="綠能／綠建築／生命農業對接"><span>綠能 ‧ 綠建築 ‧ 生命農業<small>技術、場域與投資對接</small></span></label>
+            <label><input type="radio" name="intent" value="商業導師與團隊計畫"><span>商業導師與團隊<small>導師諮詢、加入團隊計畫</small></span></label>
+          </div>
+          <p class="err" id="intent-err"></p>
+        </fieldset>
+        <div class="when-wrap" id="when-wrap" hidden>
+          <p class="lbl">想預約的時間</p>
+          <p class="pick-note" id="when-note">正在讀取可預約的時間…</p>
+          <div class="row">
+            <div class="field"><label for="when-d">哪一天</label><select id="when-d" name="when_d"></select></div>
+            <div class="field"><label for="when-t">哪一個小時</label><select id="when-t" name="when_t"></select></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="org">企業／單位名稱 <span class="req">*</span></label><input id="org" name="org" required autocomplete="organization" aria-describedby="org-err"><p class="err" id="org-err"></p></div>
+          <div class="field"><label for="who">聯絡人與職稱 <span class="req">*</span></label><input id="who" name="who" required autocomplete="name" placeholder="例：王小明 總經理" aria-describedby="who-err"><p class="err" id="who-err"></p></div>
+          <div class="field full"><label for="contact">電話或 Email <span class="req">*</span></label><input id="contact" name="contact" required autocomplete="email" aria-describedby="contact-err"><p class="err" id="contact-err"></p></div>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+          <div class="field full"><label for="msg">想說的話</label><textarea id="msg" name="msg" placeholder="你的企業在做什麼？想透過榮樹下完成什麼？"></textarea></div>
+        </div>
+        <div class="submit-row">
+          <button class="btn btn-amber" type="submit">送出申請 <span class="arr" aria-hidden="true">→</span></button>
+          <p id="formnote">送出後我們會直接收到，盡快與你聯絡。</p>
+        </div>
+      </form>
+      <div class="done" id="done" role="status" aria-live="polite" tabindex="-1">
+        <p class="eyebrow" id="done-eyebrow">已送出</p>
+        <h3>謝謝你，願意坐下來。</h3>
+        <p class="lead" id="copied">我們已經收到你的申請，會盡快與你聯絡。想先聊聊，也可以直接加榮樹下官方 LINE@。</p>
+        <pre id="summary" hidden></pre>
+        <div class="ctas">
+          <a class="btn btn-amber" href="https://lin.ee/OkaMlzx" target="_blank" rel="noopener">開啟榮樹下官方 LINE@ <span class="arr" aria-hidden="true">↗</span></a>
+          <button class="btn btn-ghost" type="button" id="again">修改內容</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREP 訪談嘉賓前置作業：接下來的訪談＋來賓資料表；交了資料的來賓公開列出（2026-10-14 教練） -->
+<section class="paper sec prep" id="prep" aria-labelledby="prep-h">
+  <div class="wrap">
+    <div class="prep-head rv">
+      <div><p class="eyebrow">訪談嘉賓前置作業</p>
+        <h2 id="prep-h">坐到榮樹下之前，<br>先讓我們認識你。</h2></div>
+      <div>
+        <p class="lead">受邀的來賓，請在訪談前找到自己的場次，花 10 分鐘填寫來賓資料表。主持人會先讀過，現場就能直接聊到你最動人的故事。</p>
+        <ol class="steps">
+          <li>在下方找到你的訪談場次</li>
+          <li>點「填寫來賓資料表」，留下你的故事與照片</li>
+          <li>送出後，你會出現在「已交資料的來賓」</li>
+        </ol>
+      </div>
+    </div>
+    <h3 class="sub-h rv">接下來的訪談</h3>
+    <ul class="slots" id="prep-slots" aria-live="polite"><li><span class="who none">讀取中…</span></li></ul>
+    <h3 class="sub-h rv">還有空檔的時間</h3>
+    <p class="lead open-hint">下面是整段有空的時間。點右邊的「我要預約」，會帶您到上方的預約表單，選想要的那一個小時（一場一小時，前後場會留 30 分鐘緩衝），留下姓名與聯絡方式就能送出。</p>
+    <ul class="slots open" id="prep-open" aria-live="polite"><li><span class="who none">讀取中…</span></li></ul>
+    <h3 class="sub-h rv">已交資料的來賓</h3>
+    <ul class="guests" id="prep-guests" aria-live="polite"></ul>
+    <p class="empty" id="prep-guests-empty" hidden>還沒有來賓交回資料，第一位會出現在這裡。</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="eyebrow" style="margin-bottom:22px">祝福</p>
+    <p class="blessing">願這棵樹，為台灣遮蔭，<br>也為<em>世界</em>結出果實。</p>
+    <p class="credits"><span>創辦 ‧ 主持<b>邱裕榮</b><b>吳大樹</b></span><span>命名<b>吳錦昌</b></span></p>
+    <div class="base"><span>© 2026 榮樹下 ‧ 談古論今聊家常</span><span><a href="https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923" target="_blank" rel="noopener">SoundOn Podcast</a>　‧　<a href="https://lin.ee/OkaMlzx" target="_blank" rel="noopener">榮樹下 LINE@</a>　‧　<a href="https://event.bymyway.com/curated/runforfuture/" target="_blank" rel="noopener">Run for Future 2027</a>　‧　<a href="volunteer.html">招募志工團隊</a>　‧　<a href="https://event.bymyway.com/curated/social-club/#join" target="_blank" rel="noopener">真公益・企業家俱樂部</a>　‧　<a href="#top">回到頂端 ↑</a></span></div>
+  </div>
+</footer>
+
+<script>
+(()=>{
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('solid',scrollY>40);
+  onScroll();addEventListener('scroll',onScroll,{passive:true});
+
+  // reveal
+  const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'}):null;
+  document.querySelectorAll('.rv').forEach(el=>io?io.observe(el):el.classList.add('in'));
+
+  // form
+  const f=document.getElementById('f'),sum=document.getElementById('errsum'),done=document.getElementById('done');
+  const msgs={org:'請填寫企業或單位名稱',who:'請填寫聯絡人與職稱',contact:'請留下電話或 Email'};
+  const okContact=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)||/^[+\d][\d\s\-()]{7,}$/.test(v);
+  function check(name){
+    const el=f.elements[name],err=document.getElementById(name+'-err');let m='';
+    const v=el.value.trim();
+    if(!v)m=msgs[name];else if(name==='contact'&&!okContact(v))m='請輸入有效的電話號碼或 Email';
+    err.textContent=m;el.setAttribute('aria-invalid',m?'true':'false');return m;
+  }
+  ['org','who','contact'].forEach(n=>{const el=f.elements[n];
+    el.addEventListener('blur',()=>{if(el.value)check(n)});
+    el.addEventListener('input',()=>{if(el.getAttribute('aria-invalid')==='true')check(n)});});
+  // 預約時間：選「節目專訪」才出現；空檔清單（/api/rongtree/prep）載入後填進來，清單裡的「我要預約」會帶日期與起點過來
+  const wrap=document.getElementById('when-wrap'),wd=document.getElementById('when-d'),wt=document.getElementById('when-t'),wnote=document.getElementById('when-note');
+  let wins;
+  const mm=s=>{const [h,m]=s.split(':').map(Number);return h*60+m};
+  const hm=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+  const dlabel=d=>{const x=new Date(d+'T00:00:00+08:00');return `${x.getMonth()+1}/${x.getDate()}（${'日一二三四五六'[x.getDay()]}）`};
+  function fillTimes(d,first){
+    const starts=[];
+    (wins||[]).filter(w=>w.date===d).forEach(w=>{for(let t=mm(w.start);t+60<=mm(w.end);t+=30)if(!starts.includes(t))starts.push(t)});
+    starts.sort((a,b)=>a-b);
+    wt.innerHTML=d&&starts.length?starts.map(t=>`<option value="${hm(t)}">${hm(t)}–${hm(t+60)}</option>`).join(''):'<option value="">請先選哪一天</option>';
+    wt.disabled=!(d&&starts.length);
+    if(first&&starts.includes(mm(first)))wt.value=first;
+  }
+  function fillDays(){
+    const days=[...new Set((wins||[]).map(w=>w.date))];
+    wd.innerHTML='<option value="">先不選，請你們再與我約時間</option>'+days.map(d=>`<option value="${d}">${dlabel(d)}</option>`).join('');
+    wd.disabled=!days.length;fillTimes('');
+    wnote.textContent=wins===undefined?'正在讀取可預約的時間…':days.length?'選您想要的那一個小時，一場一小時；前後場會留 30 分鐘緩衝。不選也可以，我們再與您約。':(wins===null?'暫時讀不到可預約的時間，留下聯絡方式，我們會再與您約時間。':'這幾天晚上都排滿了，留下聯絡方式，我們會再與您約時間。');
+  }
+  const syncWhen=()=>{const c=f.querySelector('input[name=intent]:checked');wrap.hidden=!(c&&c.value==='節目專訪')};
+  wd.addEventListener('change',()=>fillTimes(wd.value));
+  document.addEventListener('rt-open',e=>{wins=e.detail;fillDays()});
+  document.addEventListener('rt-pick',e=>{
+    f.querySelector('input[name=intent][value="節目專訪"]').checked=true;
+    document.getElementById('intent-err').textContent='';syncWhen();
+    wd.value=e.detail.d;fillTimes(e.detail.d,e.detail.a);
+    f.scrollIntoView({block:'start'});setTimeout(()=>wt.focus({preventScroll:true}),500);
+  });
+  fillDays();
+  f.addEventListener('change',e=>{if(e.target.name==='intent'){document.getElementById('intent-err').textContent='';syncWhen()}});
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const errs=[];
+    const intent=f.querySelector('input[name=intent]:checked');
+    if(!intent){document.getElementById('intent-err').textContent='請選擇一項想一起做的事';errs.push(['intent','請選擇想一起做的事'])}
+    ['org','who','contact'].forEach(n=>{const m=check(n);if(m)errs.push([n,m])});
+    if(errs.length){
+      sum.innerHTML='<strong>還有 '+errs.length+' 個欄位需要補上：</strong><ul style="margin:6px 0 0;padding-left:20px">'+errs.map(([n,m])=>`<li><a href="#${n==='intent'?'f':n}" style="color:inherit">${m}</a></li>`).join('')+'</ul>';
+      sum.classList.add('show');sum.focus();return;
+    }
+    sum.classList.remove('show');
+    const whenText=(!wrap.hidden&&wd.value&&wt.value)?`${dlabel(wd.value)} ${wt.value}–${hm(mm(wt.value)+60)}`:'';
+    const text=`【榮樹下 申請】\n合作意向：${intent.value}\n企業／單位：${f.org.value.trim()}\n聯絡人：${f.who.value.trim()}\n聯絡方式：${f.contact.value.trim()}`+(whenText?`\n想預約的時間：${whenText}`:'')+(f.msg.value.trim()?`\n想說的話：${f.msg.value.trim()}`:'');
+    // 2026-10-13：資料直接送進「活動報名即時通知」群（大樹作品通用接口），送不出去才退回「複製貼到 LINE@」
+    const btn=f.querySelector('button[type=submit]');btn.disabled=true;
+    const c=f.contact.value.trim(),isMail=c.includes('@');
+    let sent=false;
+    try{
+      const r=await fetch('/api/works/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        site:'rongtree',name:f.who.value.trim(),phone:isMail?'':c,email:isMail?c:'',item:intent.value,
+        message:`企業／單位：${f.org.value.trim()}`+(whenText?`\n想預約的時間：${whenText}`:'')+(f.msg.value.trim()?`\n想說的話：${f.msg.value.trim()}`:''),website:f.website.value})});
+      sent=r.ok&&(await r.json()).ok===true;
+    }catch(_){}
+    btn.disabled=false;
+    const pre=document.getElementById('summary');
+    if(sent){
+      document.getElementById('done-eyebrow').textContent='已送出';
+      document.getElementById('copied').textContent='我們已經收到你的申請，會盡快與你聯絡。想先聊聊，也可以直接加榮樹下官方 LINE@。';
+      pre.textContent='';pre.hidden=true;
+    }else{
+      pre.hidden=false;pre.textContent=text;
+      let ok=false;try{await navigator.clipboard.writeText(text);ok=true}catch(_){}
+      document.getElementById('done-eyebrow').textContent='已整理好';
+      document.getElementById('copied').textContent=ok?'線上送出暫時沒成功，以下訊息已複製，開啟榮樹下官方 LINE@ 貼上送出即可。':'線上送出暫時沒成功，請長按或選取下方訊息複製，再開啟榮樹下官方 LINE@ 貼上送出。';
+    }
+    f.style.display='none';done.classList.add('show');done.focus();
+  });
+  document.getElementById('again').addEventListener('click',()=>{done.classList.remove('show');f.style.display='';f.querySelector('button').focus()});
+})();
+</script>
+<script>
+/* 訪談嘉賓前置作業：讀 /api/rongtree/prep（行程表裡接下來的榮樹下訪談＋已交資料的來賓，只含公開欄位） */
+(()=>{
+  const slots=document.getElementById('prep-slots'),open=document.getElementById('prep-open'),guests=document.getElementById('prep-guests'),empty=document.getElementById('prep-guests-empty');
+  const esc=t=>String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const day=(d,s,e)=>{const x=new Date(d+'T00:00:00+08:00');return `${x.getMonth()+1}/${x.getDate()}（${'日一二三四五六'[x.getDay()]}）<small>${s}${e?'–'+e:''}</small>`;};
+  open.addEventListener('click',e=>{const a=e.target.closest('a.book');if(!a)return;e.preventDefault();
+    document.dispatchEvent(new CustomEvent('rt-pick',{detail:{d:a.dataset.d,a:a.dataset.a}}))});
+  fetch('/api/rongtree/prep',{cache:'no-store'}).then(r=>r.json()).then(d=>{
+    const up=d.upcoming||[];
+    slots.innerHTML=up.length?up.map(u=>`<li><span class="when">${day(u.date,u.start,u.end)}</span>`+
+      `<span class="who"><span class="fld">嘉賓：${u.guest?esc(u.guest):'待確認'}${u.tentative?'（時間待確認）':''}</span>`+
+      `${u.booked_by?`<span class="fld inv">邀請人：${esc(u.booked_by)}</span>`:''}</span>`+
+      (u.form?(u.submitted?`<a class="ok" href="${esc(u.form)}" target="_blank" rel="noopener">✓ 已交資料${u.count>1?`（${u.count} 位）`:''}　修改或新增</a>`
+                         :`<a class="go" href="${esc(u.form)}" target="_blank" rel="noopener">填寫來賓資料表 →</a>`):'<span></span>')+`</li>`).join('')
+      :'<li><span class="who none">接下來兩個月還沒有排定的訪談。</span></li>';
+    const op=d.open||[];
+    open.innerHTML=op.length?op.map(o=>`<li><span class="when">${day(o.date,'','')}</span><span class="who">晚上 ${esc(o.start)}–${esc(o.end)} 有空檔</span>`+
+      `<a class="go book" href="#join" data-d="${esc(o.date)}" data-a="${esc(o.start)}">我要預約 <span aria-hidden="true">→</span></a></li>`).join('')
+      :'<li><span class="who none">這幾天晚上都排滿了。</span></li>';
+    document.dispatchEvent(new CustomEvent('rt-open',{detail:op}));
+    const g=d.guests||[];
+    guests.innerHTML=g.map(x=>`<li>${x.photo?`<img class="ph" src="${esc(x.photo)}" alt="${esc(x.name)}" loading="lazy">`:`<span class="ph" aria-hidden="true">${esc((x.name||'?').slice(0,1))}</span>`}`+
+      `<div><b>${esc(x.name)}</b><span class="t">${esc(x.title)}</span>${x.line?`<p>${esc(x.line)}</p>`:''}`+
+      (x.date?`<span class="d">訪談 ${day(x.date,x.start,'').replace(/<\/?small>/g,' ')}</span>`:'')+`</div></li>`).join('');
+    empty.hidden=g.length>0;
+  }).catch(()=>{slots.innerHTML='<li><span class="who none">暫時讀不到訪談清單，請稍後再試。</span></li>';open.innerHTML='';document.dispatchEvent(new CustomEvent('rt-open',{detail:null}))});
+})();
+</script>
+<script>
+/* 嘉賓席：承諾牆讀 pledges.json（scripts/rongtree_pledge.py 維護）；報名表打大樹作品通用接口 /api/works/contact */
+(()=>{
+  const ul=document.getElementById('pledges');
+  const esc=t=>String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  fetch('pledges.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
+    const list=(d&&d.pledges)||[];
+    if(!list.length)return;
+    ul.innerHTML=list.map(p=>`<li class="${p.status==='done'?'done':''}"><span class="who">${esc(p.name)}</span><span class="org">${esc(p.org)}</span>`+
+      `<p class="what">${esc(p.what)}</p><span class="meta">${p.status==='done'?'✓ 已做到':'承諾中'}${p.episode?'　‧　'+esc(p.episode):''}</span></li>`).join('');
+  }).catch(()=>{});
+
+  const f=document.getElementById('sf'),sum=document.getElementById('s-errsum'),done=document.getElementById('s-done');
+  const okContact=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)||/^[+\d][\d\s\-()]{7,}$/.test(v);
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const name=f.name.value.trim(),c=f.contact.value.trim(),give=f.give.value.trim(),errs=[];
+    if(!name)errs.push('請填寫姓名');
+    if(!c)errs.push('請留下電話或 Email');else if(!okContact(c))errs.push('請輸入有效的電話號碼或 Email');
+    if(!give)errs.push('請寫下你願意出的一份力');
+    if(errs.length){sum.innerHTML='<strong>還有 '+errs.length+' 個地方需要補上：</strong><ul style="margin:6px 0 0;padding-left:20px">'+errs.map(m=>`<li>${m}</li>`).join('')+'</ul>';sum.classList.add('show');sum.focus();return}
+    sum.classList.remove('show');
+    const btn=f.querySelector('button');btn.disabled=true;
+    const isMail=c.includes('@');let sent=false;
+    try{
+      const r=await fetch('/api/works/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        site:'rongtree',name,phone:isMail?'':c,email:isMail?c:'',item:'嘉賓席報名',
+        message:(f.org.value.trim()?`單位與身分：${f.org.value.trim()}\n`:'')+`願意出的一份力：${give}`+(f.reach.value.trim()?`\n影響範圍：${f.reach.value.trim()}`:''),
+        website:f.website.value})});
+      sent=r.ok&&(await r.json()).ok===true;
+    }catch(_){}
+    btn.disabled=false;
+    if(!sent){sum.innerHTML='線上送出暫時沒成功，請稍後再試，或直接加榮樹下官方 LINE@ 告訴我們。';sum.classList.add('show');sum.focus();return}
+    f.style.display='none';done.classList.add('show');done.focus();
+  });
+})();
+</script>
+<script>
+/* 百集節目（2026-10-15 改版：原「節目單」＋「100 集」合併成 1～100 格）
+   BASE 是人工整理的底：簡介照原節目單；pages 是來賓在本頁已有的專題網頁（彈窗裡「認識來賓」）。
+   開頁讀 /api/rongtree/episodes（伺服器讀 SoundOn RSS），BASE 裡還沒有的集數自動補上：
+   重點節錄版給下一個集數，實況轉播版併進同一位來賓那一集，也補進上方「已播出」清單。讀不到就只用 BASE，不影響頁面。 */
+(()=>{
+  const grid=document.getElementById('ep-grid'),dlg=document.getElementById('ep-dlg'),body=document.getElementById('ep-dlg-body');
+  if(!grid||!dlg)return;
+  const SO='https://player.soundon.fm/p/01bac58b-741f-4cbc-8fa6-58dd45f24923/episodes/';
+  const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const pad=n=>String(n).padStart(2,'0');
+  // no 第幾集、who 格子上的短名、guest 彈窗標題、pages [連結字, 網址]、v 各版本（live=實況轉播版）
+  const BASE=[
+    {no:1,who:'吳錦昌',guest:'順發電腦 吳錦昌董事長',pages:[],v:[
+      {id:'58db728e-0556-41a8-821a-874b6a2bedca',live:false,title:'專訪順發電腦董事長 吳錦昌',dur:'12:15',date:'2026.10.09',
+       desc:'一份單純的初心，一場長達 17 年的公益之路，一場超過 12,000 人的路跑，一場超過 100 家參與的公益活動。'},
+      {id:'d939b0f7-f80d-4923-93f5-30d28db87d94',live:true,title:'吳錦昌董事長 ‧ 完整對談',dur:'1:14:42',date:'2026.10.09',
+       desc:'不剪輯的一小時十四分鐘。想聽完整的來龍去脈，從這一版開始。'}]},
+    {no:2,who:'楊境界',guest:'楊境界博士',pages:[['楊博士 ‧ 空氣取水','https://event.bymyway.com/curated/hnv-cc/']],v:[
+      {id:'5247b010-60c2-4e8c-9459-173fa6b6d1b9',live:false,title:'專訪 楊境界博士',dur:'17:48',date:'2026.10.09',
+       desc:'專注氫同位素與細胞能量代謝研究。與漢諾威研發團隊把石墨烯篩分技術，轉化為可量產的常溫降氘製程，並在高雄旗山建立示範基地。'}]},
+    {no:3,who:'周總',guest:'約瑟布 周總',pages:[['約瑟布 ‧ 永續綠牆','https://event.bymyway.com/curated/joseph-cloth/']],v:[
+      {id:'16f7315c-a855-4a03-9b61-de7fa3d4e18a',live:false,title:'專訪約瑟布發明人 周總',dur:'21:14',date:'2026.10.11',
+       desc:'讓一面牆，長出一座永續的生意。從一塊會呼吸的布，到城市裡持續生長的風景。'}]},
+    {no:4,who:'黃國彰',guest:'發明家 黃國彰',pages:[['發明家黃國彰專題','https://event.bymyway.com/curated/inventor/']],v:[
+      {id:'102b66d2-afc7-4dd6-bc24-8462acfb3f4c',live:false,title:'專訪瘋子發明人 黃國彰',dur:'19:16',date:'2026.10.12',
+       desc:'別人說風太小、浪太亂、水庫太髒。他說：那些都是還沒接上的電。十多年來，他把風、河水、海浪、洋流，甚至工廠排出去的廢風，一項一項畫成專利。'}]}
+  ];
+  const eps=BASE.map(e=>({...e,v:e.v.map(x=>({...x,url:SO+x.id}))}));
+
+  function render(){
+    const byNo=new Map(eps.map(e=>[e.no,e]));
+    let h='',c=0;
+    for(let n=1;n<=100;n++){
+      const e=byNo.get(n);
+      if(e)c++;
+      h+=e?`<li><button class="cell on" type="button" data-no="${n}" aria-haspopup="dialog" aria-label="第 ${n} 集：${esc(e.guest)}，已播出，點開看內容"><span class="n">${n}</span><span class="w">${esc(e.who)}</span></button></li>`
+          :`<li><a class="cell" href="#seat-join" aria-label="第 ${n} 集，等你：到嘉賓席報名"><span class="n">${n}</span><span class="w">等你</span></a></li>`;
+    }
+    grid.innerHTML=h;
+    grid.setAttribute('aria-label',`100 集進度，已播出 ${c} 集`);
+    const ct=document.getElementById('ep-count');if(ct)ct.textContent=c;
+  }
+
+  function open(no){
+    const e=eps.find(x=>x.no===no);if(!e)return;
+    const vers=[...e.v].sort((a,b)=>a.live-b.live);
+    if(typeof dlg.showModal!=='function'){window.open(vers[0].url,'_blank','noopener');return}
+    const latest=Math.max(...eps.map(x=>x.no));
+    body.innerHTML=`<p class="eyebrow">第 ${pad(no)} 集 ‧ 已播出${no===latest?' ‧ 最新一集':''}</p><h3 id="ep-dlg-h">${esc(e.guest)}</h3>`+
+      vers.map(x=>`<article class="ver"><span class="tag">${x.live?'實況轉播版':'重點節錄版'}</span><h4>${esc(x.title)}</h4>`+
+        `<p class="meta">${esc(x.date)}${x.dur?`　‧　長度 ${esc(x.dur)}`:''}</p>${x.desc?`<p>${esc(x.desc)}</p>`:''}`+
+        `<a class="btn btn-amber" href="${esc(x.url)}" target="_blank" rel="noopener">到 SoundOn 收聽 <span class="arr" aria-hidden="true">↗</span></a></article>`).join('')+
+      (e.pages.length?`<div class="more"><p class="eyebrow">認識來賓</p>${e.pages.map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}<span aria-hidden="true">↗</span></a>`).join('')}</div>`:'');
+    dlg.showModal();dlg.scrollTop=0;
+  }
+  grid.addEventListener('click',ev=>{const b=ev.target.closest('button.cell');if(b)open(+b.dataset.no)});
+  dlg.querySelector('.dlg-x').addEventListener('click',()=>dlg.close());
+  dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close()});
+  render();
+
+  if(!window.fetch)return;
+  const share3=(a,b)=>{a=a.replace(/[\s專訪‧\-]/g,'');b=b.replace(/[\s專訪‧\-]/g,'');for(let i=0;i+3<=a.length;i++)if(b.includes(a.substr(i,3)))return true;return false;};
+  fetch('/api/rongtree/episodes').then(r=>r.json()).then(d=>{
+    const have=new Set(eps.flatMap(e=>e.v.map(x=>x.id)));
+    const fresh=(d.episodes||[]).filter(e=>e&&e.id&&e.title&&!have.has(e.id)&&/^https:\/\//.test(e.url||''))
+      .sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')));
+    if(!fresh.length)return;
+    const ver=e=>({id:e.id,url:e.url,live:e.version==='live',title:e.title,desc:e.desc||'',dur:e.dur||'',date:e.date||''});
+    const add=e=>{const full=e.title.replace(/^專訪/,'').replace(/-/g,' ').trim();
+      const ep={no:Math.max(0,...eps.map(x=>x.no))+1,who:full.split(/\s+/).pop(),guest:full,pages:[],v:[ver(e)]};eps.push(ep);return ep;};
+    const added=fresh.filter(e=>e.version!=='live').map(add);
+    fresh.filter(e=>e.version==='live').forEach(e=>{
+      const rev=[...eps].reverse();
+      const m=rev.find(x=>x.who&&e.title.includes(x.who))||rev.find(x=>x.v.some(y=>!y.live&&share3(y.title,e.title)));
+      if(m)m.v.push(ver(e));else add(e);
+    });
+    render();
+    const onair=document.querySelector('.onair');
+    if(onair&&added.length){
+      onair.querySelectorAll('.new').forEach(n=>n.remove());
+      added.forEach((ep,i)=>{const o=document.createElement('li');
+        o.innerHTML=`<a href="${esc(ep.v[0].url)}" target="_blank" rel="noopener"><b>EP.${pad(ep.no)}</b><span>${esc(ep.guest)}${i===added.length-1?'<span class="new">NEW</span>':''}</span><i aria-hidden="true">▶</i></a>`;
+        onair.insertBefore(o,onair.firstChild);});
+    }
+    const lab=document.querySelector('.intro .label');if(lab)lab.textContent=`已播出 ‧ ${eps.length} 集`;
+  }).catch(()=>{});
+})();
+</script>
+<!-- 窄螢幕漢堡選單：連結自動複製頂部選單（2026-10-14，共用模組 /static/nav-burger.js） -->
+<script src="/static/nav-burger.js?v=1" defer data-links=".nav ul a" data-host=".nav .wrap" data-before=".nav .wrap > .btn" data-bp="1180" data-btn-bg="rgba(14,23,18,.62)" data-btn-fg="#ffffff" data-btn-ring="rgba(240,196,106,.75)" data-panel-bg="#14211a" data-panel-fg="#efe6d2" data-accent="#f0c46a" data-line="rgba(239,230,210,.14)" data-cta=".nav .wrap > .btn" data-cta-fg="#14211a"></script>
+</body>
+</html>
