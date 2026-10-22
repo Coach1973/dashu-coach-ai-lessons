@@ -2055,6 +2055,18 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-LAST-CLICK-NAVIGATE-FOR-COACH",
+   "moment": "reply",
+   "match": "系統設定\\s*(→|->|＞|>|›)|(不能|無法)代(你|您)(改|按|點|設定)|請(您|你|教練)自己(去|到|再)?.{0,12}(設定|關掉|打開|點|按)",
+   "say": "你要叫教練『自己去找、自己去按』了。守則#12：只要 AI 做得到的事（開設定頁、導到位置、讀出開關在哪），都要先做完，只留「最後那一下」。做法：open \"x-apple.systempreferences:<頁面>\" 開到該頁（桌面與 Dock＝com.apple.Desktop-Settings.extension）→ 用 System Events 讀出開關名稱、目前值、位置 → 回「已幫您開好在畫面上，開關在視窗 xx，這一下只有您能按」。不附『系統設定 → … → …』路徑。實話講：是『做得到、但規定要本人按（授權也不能解）』，不是『我不能』。詳見記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30。",
+   "level": "remind",
+   "situation": "AI 要請教練自己去設定、點開關、按最後一下時",
+   "source": "試金石案例130／記憶 feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30（教練 2026-10-23 02:2x 糾正）",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
@@ -2079,7 +2091,8 @@
   "案例122": "→ R-LAUNCHAGENTS-PLIST-MISSING＋scripts/launchagents_guard.sh（WatchPaths 守門員）＋ops/launchagents_backup 換成 TM 原檔",
   "案例125": "→ R-VERIFY-BEFORE-ANSWER（判斷題每次提醒先查再答）＋stop_rules_master E2（判斷題零查證就回答：擋下要求補查更正並記錄）",
   "案例126": "已轉成反射 R-ERROR-IS-NOT-NOT-FOUND（終端機回 no matches found 時提醒：指令中止≠查不到，換查法重查）",
-  "案例127": "已轉成反射 R-UNFAMILIAR-TERM（reflex_router.py 的 unfamiliar_terms 檢查）＋執行合約加一行＋skill existence-verification-voice-correction 改成先問再查"
+  "案例127": "已轉成反射 R-UNFAMILIAR-TERM（reflex_router.py 的 unfamiliar_terms 檢查）＋執行合約加一行＋skill existence-verification-voice-correction 改成先問再查",
+  "案例130": "已轉成反射 R-LAST-CLICK-NAVIGATE-FOR-COACH（reply 時刻：回覆含『系統設定 →』『不能代你改』『請您自己去…點』時提醒先開頁導位置、只留最後一下）"
  },
  "memory_ledger": {
   "feedback_telegram_url_must_stand_alone_2026-10-02": "併入 R-URL-REPLY／R-URL-NOTIFY-CODE",
@@ -2196,6 +2209,7 @@
   "reference_partner_agent_reminder_via_openclaw_cron_2026-10-02": "參考資料（夥伴分身代排提醒 SOP）；併入 R-OPENCLAW-CONFIG／R-LAUNCHD-VERIFY（建排程要實跑一次）",
   "feedback_open_settings_to_exact_spot_only_password_left_2026-10-02": "已有程式：scripts/stop_rules_master.py A2b（選單路徑兩段箭頭又沒寫已幫您打開→擋）",
   "project_mac_backup_policy_good_state_and_pre_upgrade_2026-10-02": "已有程式：daily_team_rollcall.py backup_when_healthy＋併入 R-BACKUP-BEFORE-UPGRADE",
-  "reference_session_verbatim_report_from_jsonl_2026-10-04": "併入 R-SESSION-VERBATIM-REPORT"
+  "reference_session_verbatim_report_from_jsonl_2026-10-04": "併入 R-SESSION-VERBATIM-REPORT",
+  "feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30": "併入 R-LAST-CLICK-NAVIGATE-FOR-COACH"
  }
 }
