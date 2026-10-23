@@ -24,6 +24,8 @@
       python3 recall.py 壽星
       python3 recall.py 壽星 生日          # 多關鍵詞 = OR（任一命中）
       python3 recall.py --limit 20 早鳥
+  教練有沒有說過 A 跟 B（回答「您沒講過」之前必跑，2026-10-24）：
+      python3 recall.py --said 佩佩 LK888
   模糊搜尋：同義詞表 state/recall_synonyms.json，查任一詞自動連同組詞一起查
 """
 import json, glob, os, sys, re, datetime
@@ -255,8 +257,88 @@ def search(words, limit=10):
         print("\n……還有 %d 筆，要看更多：recall.py --limit %d %s" % (len(hits) - limit, limit + 10, " ".join(words)))
 
 
+def _group_of(word):
+    """一個詞所屬的同義詞組（含自己）"""
+    g = set([word])
+    try:
+        for grp in json.load(open(SYNONYMS, encoding="utf-8")):
+            if word in grp:
+                g.update(grp)
+    except Exception:
+        pass
+    return sorted(g, key=len, reverse=True)
+
+
+# 教練的話常常已經「做進系統」：設定檔、hook、分身說明檔裡有寫，就代表教練交代過
+LANDED_GLOBS = [
+    HOME + "/.openclaw/workspace/hooks/*/HOOK.md",
+    HOME + "/.openclaw/agents/*/*.md",
+    HOME + "/.openclaw/openclaw.json",
+    HOME + "/.openclaw/workspace/knowledges/*.md",
+    HOME + "/.claude/projects/-Users-bymyway--openclaw/memory/*.md",
+]
+
+
+def said(topics, limit=15):
+    """2026-10-24 教練：「你一句我沒講過，我就得叫小龍蝦去翻紀錄」——
+    回答「教練有沒有說過 A 跟 B」前一定跑這個：每個主題各自展開同義詞，
+    同一句話裡每個主題都命中才算；再查這件事有沒有被做進設定檔／hook／分身說明檔。
+    查無結果時只准說「我用哪些詞查了哪些地方沒找到」，不准說「你沒講過」。"""
+    if not os.path.exists(INDEX):
+        build()
+    groups = [_group_of(t) for t in topics]
+    hits = []
+    for line in open(INDEX, encoding="utf-8"):
+        try:
+            e = json.loads(line)
+        except Exception:
+            continue
+        txt = e.get("text", "").lower()
+        if all(any(k.lower() in txt for k in g) for g in groups):
+            hits.append(e)
+    hits.sort(key=lambda x: x["t"])
+    print("🔎 原話（每個主題都要命中；同義詞已展開）")
+    for i, g in enumerate(groups):
+        print("   主題%d：%s" % (i + 1, " / ".join(g)))
+    print("   共 %d 筆（台灣時間，舊到新）：\n" % len(hits))
+    for e in hits[:limit]:
+        print("[%s]（%s·%s）%s" % (e["t"], e["src"], e["who"], e["text"][:200].replace("\n", " ")))
+    if len(hits) > limit:
+        print("……還有 %d 筆（--limit 調大）" % (len(hits) - limit))
+
+    landed = []
+    for pat in LANDED_GLOBS:
+        for f in glob.glob(pat):
+            try:
+                lines = open(f, encoding="utf-8", errors="ignore").read().split("\n")
+            except Exception:
+                continue
+            for i in range(len(lines)):
+                if not any(any(k.lower() in lines[i].lower() for k in g) for g in groups):
+                    continue
+                win = "\n".join(lines[max(0, i - 3):i + 4]).lower()
+                if all(any(k.lower() in win for k in g) for g in groups):
+                    landed.append((f.replace(HOME, "~"), i + 1, lines[i].strip()[:160]))
+                    break
+    print("\n🧱 已做進系統的證據（設定檔／hook／分身說明檔／記憶，前後 3 行內每個主題都出現）：%d 處" % len(landed))
+    for f, n, t in landed[:limit]:
+        print("  %s:%d  %s" % (f, n, t))
+
+    print("\n" + ("✅ 有找到，回覆要引用上面的原話或檔案行號。" if hits or landed else
+                  "⚪ 查無。回覆只准寫：「我用上面這些詞查了原話索引和系統設定，沒找到」，"
+                  "並問教練大概哪一天、在哪個群說的；不准寫「您沒講過」「從來沒有」。"))
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
+    if args[:1] == ["--said"]:
+        lim = 15
+        if "--limit" in args:
+            i = args.index("--limit")
+            lim = int(args[i + 1])
+            del args[i:i + 2]
+        said(args[1:], lim)
+        sys.exit(0)
     if not args or args == ["--help"]:
         print(__doc__)
         sys.exit(0)

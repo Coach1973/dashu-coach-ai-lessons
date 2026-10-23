@@ -1270,6 +1270,53 @@ try:
 except Exception:
     pass
 
+# ════════════════════════════════════════════════
+# P. 「教練沒講過」鎖（擋）—— 2026-10-24 教練：「就因為你的一句我沒講過，我就得再叫小龍蝦去翻找對話紀錄」
+#    軍師只用「LK888＋佩佩」窄關鍵字 grep 一次，沒找到就回「紀錄裡找不到這句」；其實 9/17 原話寫「產業鍊SOP」，
+#    hook 也早就寫明孔大哥／佩佩老師能用。同類第二次以上（試金石案例 125 先查再答），照 N8 改機制：
+#    最後回覆裡說「找不到／沒講過／從來沒有」教練說的話，這一輪卻沒跑 recall.py --said（同義詞＋已做進系統的證據）→ 擋下。
+#    任何例外一律放行（hook 壞了不能擋教練）。
+# ════════════════════════════════════════════════
+try:
+    _ABSENT = re.compile(
+        r"(找不到|查不到|搜不到|沒找到|沒有找到|查無)[^。！？\n]{0,24}(你|您|教練)[^。！？\n]{0,10}(說|講|交代|提|吩咐|要求|指示)過"
+        r"|(你|您|教練)[^。！？\n]{0,6}(從來|從未|根本)?(沒有|沒|不曾|未曾|從未)[^。！？\n]{0,6}(說|講|交代|提|吩咐|開)過"
+        r"|(紀錄|記錄|對話|原話)[^。！？\n]{0,14}(找不到|查不到|搜不到|沒找到|沒有找到|查無)[^。！？\n]{0,6}(這句|這段|這件|這個指示|這個交代|這些話)")
+    _absent_hits = []
+    for _ln in LAST_LINES:
+        if _ln.lstrip().startswith(">"):
+            continue
+        _m = _ABSENT.search(strip_quotes(_ln))
+        if _m and not re.search(r"不准|禁止|不要說|不能說|鎖|案例|句型|我錯|錯在|承認|violations", _ln):
+            _absent_hits.append(_m.group(0))
+    if _absent_hits:
+        _turn_start = 0
+        for _i, _e in enumerate(EVENTS):
+            if isinstance(_e, dict) and _e.get("type") == "user" and _is_real_user_prompt(_e) \
+                    and not _prompt_text(_e).lstrip().startswith(("Stop hook feedback", "<system-reminder")):
+                _turn_start = _i
+        _ran = False
+        for _e in EVENTS[_turn_start:]:
+            if isinstance(_e, dict) and _e.get("type") == "assistant":
+                for _x in _content_list(_e):
+                    if isinstance(_x, dict) and _x.get("type") == "tool_use" and _x.get("name") == "Bash" \
+                            and "recall.py" in str((_x.get("input") or {}).get("command", "")) \
+                            and "--said" in str((_x.get("input") or {}).get("command", "")):
+                        _ran = True
+        if not _ran:
+            MESSAGES.append(
+                "\n🔴🔒 「教練沒講過」鎖（2026-10-24 教練：「就因為你的一句我沒講過，我就得再叫小龍蝦去翻找對話紀錄」）\n" + BAR + "\n"
+                "回覆裡說教練沒講過／找不到教練的話：\n" + "".join("  • %s\n" % h for h in _absent_hits[:3]) +
+                "這一輪卻沒跑過全面查證。\n\n"
+                "✅ 立刻執行：\n"
+                "  1. python3 ~/.openclaw/workspace/scripts/recall.py --said <人> <主題>（例：--said 佩佩 LK888；同義詞自動展開，也查設定檔／hook／分身說明檔）\n"
+                "  2. 有找到 → 改寫回覆，引用原話時間或檔案行號，直接承認教練說過\n"
+                "  3. 真的查無 → 只准寫「我用 X、Y 這些詞查了原話和系統設定，沒找到」，問教練大概哪天、哪個群說的；不准寫「您沒講過」\n" + BAR + "\n")
+            log_violation("rule_coach_never_said_violations.log", "".join("  • %s\n" % h for h in _absent_hits[:3]))
+            BLOCK = True
+except Exception:
+    pass
+
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
 # ────────────────────────────────────────────────
