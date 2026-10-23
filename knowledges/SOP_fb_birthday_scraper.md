@@ -84,7 +84,8 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 檔案 | 用途 |
 |------|------|
 | `scripts/fb_birthday_scraper.js` | 主腳本（Puppeteer 無頭瀏覽器） |
-| `scripts/fb_session_data/` | 教練 FB 登入 cookie 存放處（首次需手動登入一次） |
+| `scripts/fb_session_data/` | 教練 FB 登入 cookie 存放處（首次需手動登入一次）。⚠️ 2026-10-03 起這份已搬到 953-SSD 外接碟，**launchd 背景執行會失敗**，腳本已改用 `/Users/bymyway/.openclaw/fb_session_data_local`（本機碟） |
+| `/Users/bymyway/.openclaw/fb_session_data_local/` | **現行實際使用的 Chrome profile（本機碟）**。外部磁碟版保留備用，不要刪 |
 | `.lessons_upload/memory/feedback_fb_birthday_automation_cost.md` | 商業決策文件（2026-04-12 教練拍板） |
 | `.memsearch/memory/2026-06-01.md` | 排程確認紀錄（FB 生日每日爬蟲：✅ 明天 06:00 準時執行） |
 
@@ -99,6 +100,22 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 完全沒跑 | 檢查 OpenClaw cron 狀態（`cron list` 確認 `12fad20b` 還在） |
 | 跑很久沒回應 | Puppeteer 等 `networkidle2` + 多等 4 秒，網路慢就會慢（屬正常現象） |
 | 重複抓到同名壽星 | 已是已知行為，Step 4 會自動去重（不必改腳本） |
+| 🔴 報「The browser is already running for ...fb_session_data」 | **Chrome profile 放在外部磁碟（USB SSD）時，launchd 背景執行沒有權限寫那個磁碟**，Chrome 建不了 SingletonLock 就會噴這句假錯誤。**解法：profile 必須放本機碟**。本機版在 `/Users/bymyway/.openclaw/fb_session_data_local`，腳本會優先用它、找不到才退回舊路徑。（2026-10-24 實例：`fb_session_data` 在 10/03 被搬到 953-SSD，結果連續 19 天每天 exit 1，教練完全沒收到壽星名單卻沒人發現） |
+
+### 🔴 2026-10-24 事故紀錄（19 天靜默失敗）
+
+| 日期 | 現象 |
+|------|------|
+| 2026-10-03 | `fb_session_data` 被搬到 `/Volumes/953-SSD/Mac本機搬移_20261003/fb_session_data`（symlink） |
+| 10/04 起 | `ai.openclaw.fb-birthday`（launchd）每日 exit 1，錯誤訊息是誤導性的「browser is already running」 |
+| 10/04～10/24 | **連續 19 天**背景排程失敗，但 `ca5195d8c4ca`（Hermes cron）同時也在跑，所以教練**實際上還是有收到名單**，只是多了一條壞掉的排程在暗處失敗 |
+| 2026-10-24 | 找出根因（Chrome stderr: `Failed to create ... SingletonLock: Operation not permitted`），profile 改本機碟，launchd kickstart 驗證 exit 0 |
+
+**教訓**：
+1. **看到「already running」先看 Chrome 真正報什麼錯**，不要照字面以為有殘留行程。開 `dumpio: true` 才看得到 `process_singleton_posix.cc` 的真因。
+2. **外部磁碟搬移後，所有需要寫入的 Chrome/DB profile 都會在 launchd 下失效**。搬檔前先想清楚「這個路徑會不會被背景排程寫」。
+3. **有兩條排程做同一件事時，一條壞掉不會有人發現**——因為另一條還在送。健康檢查要盯「每一條」，不是只看「教練有沒有收到」。
+
 
 ---
 
