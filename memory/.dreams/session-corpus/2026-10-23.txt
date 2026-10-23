@@ -2,3 +2,13 @@
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4809] Assistant: 先不動手（這站 push 就直接上線正式站），我先摸清現況再問您要更新什麼。
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4816] Assistant: 摸完了現況，**我還沒動任何檔案**（這站 push 就等於上線正式站，我不會先斬後奏）。 **現在這站的狀態（實測）：** - 正式站 https://jiesheng-leadership.netlify.app 正常（HTTP 200），標題「結繩領導學｜兩日實戰工作坊」 - 最後實質改版：8/5（`7d8dbb5` 重構成工作坊銷售頁），之後只補過 og 標籤（`8acfa56`） - git 工作區乾淨（只有一個 untracked 的 `.claude/`，不影響） - `archive/` 有 2026-08 封存的舊
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4816] Assistant: **改完我會先給您看（跑本機預覽截圖给您），您點頭我才 push 上線**，不會自己推。
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L6] Assistant: I'll start by auditing the Skill Workshop directory completely.
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L47] Assistant: Audit complete. Now executing the consolidation plan, starting with the authoritative publishing home.
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L83] Assistant: Found a table-break bug from my edit — fixing it now.
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L100] Assistant: ## Skill Workshop 審查完成報告 ### 稽核結果（先看再改） 盤點 8 個 live skill + 2 個封存備份，逐一讀完所有 SKILL.md 與支援檔，並驗證 10 個被引用的腳本**全部存在**（`lk888_guard.py`、`generate_comic_panel.py`、`comic_monitor.py`、`generate_industry_chain.py`、`curation_check_result.py`、`system_health_check.py` 等）。 ### 判斷與實際變
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L100] Assistant: 個指向它的引用：`character-illustration-batch/SKILL.md`、`pitfalls.md`、`image-archive-github/SKILL.md`（4 處） **2. 修正已退場的舊走法（contradiction）** 舊 `publishing.md` 說「漫畫照走策展 SOP → 會自動插商圈卡片、教練自己刪」，與現行 `kind=creation` 不進商圈的規則衝突（2026-09-23／09-24 教練已兩度親自糾正）。已改為：教練作品（含漫畫）一律 `kind=creation`
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L100] Assistant: `pitfalls.md`（與其caveat 放一起）：anime key-visual 的 V1→V4 驗證鏈、位置權重坑的 ❌/✅ 成敗範例、以及「成熟不蒼老」的**正面寫法**（原檔只留 NO 清單）。 **6. 去重** - `character-illustration-batch/SKILL.md` 的「參考」段整段重抄「腳本」表 → 刪除只留差異資訊 - `tava-ai-batch/mixed-mode-script.md` 底部「禁止」四條與 SKILL.md 陷阱表重複 → 改為指標 **未動**：`indust
+[main/sessions/main/17ace61a-ea75-462b-ba1f-5ed4eef218cc#L100] Assistant: 無證據可判定為冗餘的規則一律保留，並在下文標註不確定性：例如 `bigtree-publish-site` 裡「圖片不用先壓、伺服器會自動壓」與 Cloudflare 100MB body 上限並存——兩者管的是不同東西（進站 vs 上傳），已並列寫明而非刪其一。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L4817] Assistant: ☕ 幕僚長晨報：昨日 bni_tainan + jiaolian_thoughts 運作正常，無需教練關注
+[main/sessions/main/ddb1f6de-4c28-4cdb-b703-27e1493f5bfd#L6] Assistant: I'll check the two agent directories for their latest logs.
+[main/sessions/main/ddb1f6de-4c28-4cdb-b703-27e1493f5bfd#L24] Assistant: ☕ 幕僚長晨報：昨日 bni_tainan + jiaolian_thoughts 運作正常，無需教練關注
