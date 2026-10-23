@@ -64,5 +64,17 @@
     "url": "https://event.bymyway.com/tut/b/4c7ac37b77c5",
     "user": "（不需要帳密，網址本身就是通行證）",
     "password": "—"
+  },
+  {
+    "name": "NMDA 協會・理監事團隊頁（建置模式：每張卡可編輯）",
+    "url": "https://event.bymyway.com/nmda/b/80d5cc8e630e",
+    "user": "（不需要帳密，網址本身就是通行證）",
+    "password": "—"
+  },
+  {
+    "name": "NMDA 協會・理監事團隊管理後台（隱藏／刪除／新增空座位）",
+    "url": "https://event.bymyway.com/nmda/team/a/80d5cc8e630e",
+    "user": "（不需要帳密，網址本身就是通行證）",
+    "password": "—"
   }
 ]

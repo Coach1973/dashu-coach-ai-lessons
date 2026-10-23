@@ -1455,6 +1455,169 @@ def tut_team_admin_seat(code):
     return redirect(f"/tut/team/a/{code}?msg=已新增座位：{name}" if name else f"/tut/team/a/{code}")
 
 
+# ---------- 中華新媒體影音發展協會（NMDA）理監事團隊（2026-10-23 教練交辦）：說明見 nmda_team.py ----------
+# 照南應大 /tut/team 同一套：名單先放空座位，本人點自己的名字補照片簡介；公開頁是 nmda 網站自己的 team.html，讀 /api/nmda/team/board。
+import nmda_team as _nt
+
+_NT_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多建立 10 份
+
+
+def _nt_html(body, status=200):
+    return Response(body, status=status, content_type="text/html; charset=utf-8", headers={"Cache-Control": "no-store"})
+
+
+def _nt_rate_ok(ip):
+    now = time.time()
+    hits = [t for t in _NT_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 10:
+        return False
+    _NT_HITS[ip] = hits + [now]
+    return True
+
+
+def _nt_notify(token):
+    """有人新上架（含認領空座位第一次補完）→ 活動報名即時通知群，附後台網址方便處理亂填。"""
+    r = _nt.get_by_token(token)
+    if not r:
+        return
+    role = f"（{r['role']}）" if r["role"] else ""
+    text = (f"🎬【中華新媒體影音發展協會・理監事團隊】{r['name']}{role} 建立了檔案\n"
+            f"{r['company_title']}\n公開頁：\n{_nt.PAGE_URL}\n"
+            f"管理後台（有人亂填可隱藏或刪除）：\n{_nt.admin_url(app.secret_key)}")
+    threading.Thread(target=_notify_xiaolongxia, args=(text,),
+                     kwargs={"chat_id": TELEGRAM_REGISTRATION_GROUP_CHAT_ID}, daemon=True).start()
+
+
+def _nt_photo(form_file, err):
+    """有選照片就存；回傳 (檔名或 None, 錯誤訊息)。"""
+    if err or not (form_file and form_file.filename):
+        return None, err
+    name = _nt.save_photo(form_file)
+    return name, ("" if name else "這張照片打不開，麻煩改存成 jpg 或 png 再上傳一次")
+
+
+def _nt_build_ok():
+    """教練的「建置模式」專屬連結（?build=簽章短碼，同後台簽章）：對才回短碼，沒帶或錯回空字串。"""
+    code = request.args.get("build", "")
+    return code if code and hmac.compare_digest(code.encode(), _nt.admin_code(app.secret_key).encode()) else ""
+
+
+def _nt_admin(code):
+    if not hmac.compare_digest(code, _nt.admin_code(app.secret_key)):
+        abort(404)
+
+
+@app.route("/api/nmda/team/board")
+def nmda_team_board_api():
+    """NMDA 網站 team.html 讀這裡（跟本檔所有編輯頁是同一份資料）。"""
+    return Response(json.dumps(_nt.board_public(_nt_build_ok()), ensure_ascii=False), content_type="application/json; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "Access-Control-Allow-Origin": "*"})
+
+
+@app.route("/nmda/b/<code>")
+def nmda_team_build_short(code):
+    """教練的建置模式短網址（簽章短碼，同後台）→ NMDA 理監事團隊頁建置模式。"""
+    _nt_admin(code)
+    return redirect(f"/curated/nmda/team.html?build={code}")
+
+
+@app.route("/nmda/team/join", methods=["GET", "POST"])
+def nmda_team_join():
+    if request.method == "GET":
+        return _nt_html(_nt.render_join())
+    if (request.form.get("website") or "").strip():   # honeypot：機器人才會填
+        return redirect("/curated/nmda/team.html")
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _nt_rate_ok(ip):
+        return _nt_html(_nt.render_join(request.form, "這個小時送出次數太多了，請稍後再試一次"), 429)
+    photo = request.files.get("photo")
+    d, err = _nt.clean_form(request.form, need_photo=not (photo and photo.filename))
+    fname, err = _nt_photo(photo, err)
+    if err:
+        return _nt_html(_nt.render_join(d, err), 400)
+    token = _nt.insert(d, fname, ip)
+    _nt_notify(token)
+    return redirect(f"/nmda/team/edit/{token}?new=1")
+
+
+@app.route("/nmda/team/claim/<int:mid>", methods=["POST"])
+def nmda_team_claim(mid):
+    """空座位：本人點自己的名字就進到修改頁（誠信原則，比照 BNI 認座位）；已補完的不能再認領。"""
+    r = _nt.get_by_id(mid)
+    if not r or r["filled"] or r["hidden"]:
+        return redirect("/nmda/team/join")
+    return redirect(f"/nmda/team/edit/{r['edit_token']}")
+
+
+@app.route("/nmda/team/edit/<token>", methods=["GET", "POST"])
+def nmda_team_edit(token):
+    r = _nt.get_by_token(token)
+    if not r:
+        abort(404)
+    build = _nt_build_ok()   # 教練的建置模式：可只補一部分、不發通知
+    if request.method == "GET":
+        return _nt_html(_nt.render_edit(r, first=request.args.get("new") == "1", saved=request.args.get("saved") == "1", build=build))
+    photo = request.files.get("photo")
+    d, err = _nt.clean_form(request.form, need_photo=not r["photo_file"] and not (photo and photo.filename), partial=bool(build))
+    fname, err = _nt_photo(photo, err)
+    if err:
+        return _nt_html(_nt.render_edit(r, d, err, build=build), 400)
+    _nt.update(r["id"], d, fname)
+    if fname and r["photo_file"] and _nt.PHOTO_RE.match(r["photo_file"]):
+        (_nt.UPLOAD_DIR / r["photo_file"]).unlink(missing_ok=True)   # 換照片就把舊的刪掉
+    if not r["filled"] and not build:   # 認領的空座位第一次補完＝上架
+        _nt_notify(token)
+        return redirect(f"/nmda/team/edit/{token}?new=1")
+    return redirect(f"/nmda/team/edit/{token}?saved=1" + (f"&build={build}" if build else ""))
+
+
+@app.route("/nmda/team/edit/<token>/delete", methods=["POST"])
+def nmda_team_delete(token):
+    r = _nt.get_by_token(token)
+    if not r:
+        abort(404)
+    _nt.delete(r["id"])
+    return redirect("/curated/nmda/team.html")
+
+
+@app.route("/nmda/team/photo/<name>")
+def nmda_team_photo(name):
+    if not _nt.PHOTO_RE.match(name) or not (_nt.UPLOAD_DIR / name).exists():
+        abort(404)
+    resp = send_from_directory(_nt.UPLOAD_DIR, name, mimetype="image/jpeg")
+    resp.headers["Cache-Control"] = "public, max-age=86400"   # 換照片會換檔名，可以放心快取
+    return resp
+
+
+@app.route("/nmda/team/a/<code>")
+def nmda_team_admin(code):
+    _nt_admin(code)
+    return _nt_html(_nt.render_admin(app.secret_key, request.args.get("msg", "")[:60]))
+
+
+@app.route("/nmda/team/a/<code>/hide/<int:mid>", methods=["POST"])
+def nmda_team_admin_hide(code, mid):
+    _nt_admin(code)
+    _nt.set_hidden(mid, request.form.get("hidden") == "1")
+    return redirect(f"/nmda/team/a/{code}")
+
+
+@app.route("/nmda/team/a/<code>/delete/<int:mid>", methods=["POST"])
+def nmda_team_admin_delete(code, mid):
+    _nt_admin(code)
+    _nt.delete(mid)
+    return redirect(f"/nmda/team/a/{code}?msg=已刪除")
+
+
+@app.route("/nmda/team/a/<code>/seat", methods=["POST"])
+def nmda_team_admin_seat(code):
+    _nt_admin(code)
+    name = (request.form.get("name") or "").strip()
+    if name:
+        _nt.add_seat((request.form.get("role") or "").strip(), name, (request.form.get("company_title") or "").strip())
+    return redirect(f"/nmda/team/a/{code}?msg=已新增座位：{name}" if name else f"/nmda/team/a/{code}")
+
+
 # ---------- 校友回憶牆：留言＋照片送審，教練通過才公開（2026-10-02 教練交辦） ----------
 # 原本 tut-memory 頁的照片只存在訪客自己瀏覽器，別人看不到。改成：送出→存伺服器(pending)
 # →Telegram 傳照片給教練，附一個審核連結→教練按「通過」才出現在所有人的牆上。
