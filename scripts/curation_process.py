@@ -798,7 +798,7 @@ def ensure_curated_github(slug: str) -> str:
         r = subprocess.run([sys.executable, str(WORKSPACE / "scripts" / "curated_git.py"), "ensure", slug],
                            capture_output=True, text=True, timeout=300)
         if r.returncode == 0:
-            return f"🐙 GitHub：https://github.com/Coach1973/{slug}（私有）"
+            return f"🐙 GitHub（私有倉庫）：\nhttps://github.com/Coach1973/{slug}"
         log(f"GitHub建立失敗 {slug}: {r.stdout[-300:]} {r.stderr[-300:]}")
         return "⚠️ GitHub 還沒建好，今晚會自動補建"
     except Exception as e:  # noqa: BLE001
