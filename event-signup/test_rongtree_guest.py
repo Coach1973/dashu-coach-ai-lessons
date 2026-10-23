@@ -197,5 +197,23 @@ BACK = '<a href="/curated/rongtree/">← 回榮樹下</a>'
 check("來賓卡列表頁左上有『回榮樹下』連結（教練 2026-10-19）", BACK in client.get(lst).get_data(as_text=True))
 check("單張來賓卡頁左上有『回榮樹下』連結", BACK in client.get(f"/rongtree/guest/{TOKEN}/card?k={rg.card_sig(SECRET, TOKEN)}").get_data(as_text=True))
 
+# 補填場次（教練 2026-10-22：節目早已播出、當時沒填的來賓）＝只有日期、沒有開始時間的場次
+AD = "AlldayTok99"
+_s = json.loads(sched.read_text(encoding="utf-8"))
+_s["events"].append({"id": "aaaa0001", "date": "2026-10-09", "allday": True, "title": "榮樹下訪談：補填來賓", "kind": "interview", "form_token": AD})
+sched.write_text(json.dumps(_s, ensure_ascii=False), encoding="utf-8")
+appmod._RG_HITS.clear()
+page = client.get(f"/rongtree/guest/{AD}").get_data(as_text=True)
+check("補填場次填表頁只寫日期、尾巴沒有多餘的橫線", "訪談時間：2026-10-09<" in page and "2026-10-09 –" not in page)
+cA = appmod.app.test_client()
+r = cA.post(f"/rongtree/guest/{AD}", json={**OK, "name": "補填來賓", "contact": "backfill@example.com"})
+check("補填場次可以送出", r.status_code == 200 and r.get_json()["ok"])
+rowA = rg.get_form(AD)
+check("補填場次存進資料庫的開始時間是空字串、不是 NULL", rowA is not None and rowA["start"] == "")
+gA = [g for g in client.get("/api/rongtree/prep").get_json()["guests"] if g["name"] == "補填來賓"]
+check("公開名單裡補填來賓的開始時間是空字串（網頁不會顯示 null）", len(gA) == 1 and gA[0]["start"] == "" and gA[0]["date"] == "2026-10-09")
+time.sleep(0.5)
+check("通知文字沒有 None", all("None" not in s for s in SENT) and all("None" not in t for _, t in COACH))
+
 print(f"\n{'全部通過' if not fails else f'{len(fails)} 項失敗'}")
 raise SystemExit(1 if fails else 0)

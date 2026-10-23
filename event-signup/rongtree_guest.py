@@ -332,7 +332,7 @@ def save(token, ev, payload, ip, mine=None):
         "data=excluded.data, photo_file=excluded.photo_file, guest=excluded.guest, date=excluded.date, "
         "start=excluded.start, card_status='pending', ip=excluded.ip, deleted_at=NULL, "
         "updated_at=datetime('now','localtime')",
-        (key, ev.get("id"), ev.get("date"), ev.get("start"), clean["name"],
+        (key, ev.get("id"), ev.get("date"), ev.get("start") or "", clean["name"],
          json.dumps(clean, ensure_ascii=False), photo_file, ip))
     if revived:
         conn.execute("UPDATE rongtree_guest_forms SET public=1 WHERE token=?", (key,))
@@ -467,7 +467,7 @@ def render_form(token, ev, existing, others=0):
     d = json.loads(existing["data"]) if existing else {}
     if not d.get("name") and ev.get("guest") and not others:
         d["name"] = ev["guest"]
-    when = f"{ev.get('date', '')} {ev.get('start', '')}–{ev.get('end', '')}"
+    when = f"{ev.get('date', '')} {ev.get('start', '')}–{ev.get('end', '')}" if ev.get("start") else str(ev.get("date", ""))
     rows = []
     for key, label, kind, req, ph in FIELDS:
         star = '<span class="req">*</span>' if req else '<span class="opt">選填</span>'
