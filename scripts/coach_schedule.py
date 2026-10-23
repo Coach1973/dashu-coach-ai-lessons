@@ -422,15 +422,16 @@ def daily_report(data, d):
     free = [] if allday else [t for part in day_and_eve_starts(d, data) for t in part if t >= earliest]
     lines.append("")
     lines.append(f"🟢 今天還可以約（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：" + (sessions_text(free) if free else "今天已經排滿了"))
+    # 2026-10-23 教練親令：最多只列今天、明天、後天三天，不要佔版面
     nxt = []
-    for i in range(1, 8):
+    for i in range(1, 3):
         dd = d + dt.timedelta(days=i)
         if any((s_, e_) == (0, 1440) for s_, e_, _ in blocks_on(dd, data)):
             nxt.append(f"{day_label(dd)} 整天有行程")
             continue
         fs = [t for part in day_and_eve_starts(dd, data) for t in part]
         nxt.append(f"{day_label(dd)} " + (sessions_text(fs) if fs else "已排滿"))
-    lines.append(f"📆 接下來 7 天可約（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：\n" + "\n".join(f"・{x}" for x in nxt))
+    lines.append(f"📆 明天、後天可約（一場 1 小時，兩場之間留 {BUFFER} 分鐘緩衝）：\n" + "\n".join(f"・{x}" for x in nxt))
     url = booking_url()
     if url:
         lines.append("")
