@@ -22,3 +22,5 @@ metadata:
 **怎麼辦**：同類問題（Dock 同一 App 圖示重複）先看 `recent-apps`；解法是關掉上面那個開關。這是系統設定，我不能代按，但要把設定頁開好、導到位置、讀出開關位置，只留最後一下給教練（`open "x-apple.systempreferences:com.apple.Desktop-Settings.extension"` 開「桌面與 Dock」，視窗名稱「桌面與Dock」）；不准丟「系統設定 → …」路徑叫他自己找，見 [[feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30]]。
 
 附：教練設有截圖鎖（`state/SCREENSHOT_APPROVED`，沒同意不能截圖）與內建瀏覽器鎖（外部網站要用 claude-in-chrome），查畫面狀態改用 AppleScript／AX 讀取，不要自己解鎖。
+
+**2026-10-23 15:27 復發補記**：教練又截圖（~/Downloads/ 最新 jpg）Dock 有 3 個 Chrome＝1 個正常＋recent-apps 內 2 筆一模一樣的記錄；此時 `defaults read com.apple.dock show-recents` 不存在＝「最近使用」又是預設開啟（上午關過的沒留住，原因未查證）。實驗：`open -a "Google Chrome"`（含帶網址）重複叫，recent-apps 數量不變（2→2），所以不是 AI 開網頁造成；寫入來源仍未知。處理：開「系統設定→桌面與 Dock」讓教練按最後一個開關（不能代改系統設定）。數記錄用 `grep -c 'bundle-identifier.*com.google.Chrome'`（鍵名帶引號，寫成 `bundle-identifier = ` 會永遠得 0）。
