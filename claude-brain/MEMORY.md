@@ -1,3 +1,4 @@
+- [🎬 NMDA（中華新媒體影音發展協會）網站「理監事團隊」頁 team.html：照 tut_team 複製成 nmda_team.py，先放陳佩君、吳大樹空座位、本人點名字補資料；建置模式短網址 /nmda/b/<碼>＋後台已收進大樹作品集；nmda 5b965f8、workspace 7b3c08f26(2026-10-23)](project_nmda_board_team_page_2026-10-23.md)
 - [🧩 榮樹下網頁「我要預約」＋選時間送出自動占位（待確認）：前端 rongtree 17af887/da3ba4c、伺服器 /api/rongtree/hold e1d984776、上限6筆／IP每小時4次、姓名只在私人備註；週六可約起點改 9:30（interview_window_start_by_weekday）；正式站尚未實占過一次(2026-10-23)](project_rongtree_booking_hold_and_saturday_930_2026-10-23.md)
 - [🔧 Dock 同一 App 圖示變多個＝「最近使用」區 recent-apps 記了好幾筆（Chrome 4→1 靠關掉『在Dock中顯示建議的和最近使用過的App』）；怎麼查、哪些開法已測不會增加(2026-10-23)](reference_dock_extra_app_icons_are_recent_apps_2026-10-23.md)
 - [🔴🔴 「最後一下我不能按」（改系統設定等）：先把開頁、導到位置全做完，只留那一下給教練，不准丟「系統設定→…」路徑叫他自己找；實話講規定、不說「不能」；搬運工類第4次犯(2026-10-23)](feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md)
