@@ -1105,6 +1105,11 @@ def main() -> None:
                 shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
         process_one(staged)
     trigger_all_works_refresh(f"策展上架處理完成（{len(pending)} 包）")
+    try:  # 顧問／專家個人頁自動連進人才軍火庫（2026-10-24 教練定）；沒對到人就什麼都不做
+        subprocess.Popen([sys.executable, str(WORKSPACE / "scripts" / "skyteam_link_expert.py")],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True, env=_ENV)
+    except Exception as e:  # noqa: BLE001
+        log(f"人才軍火庫連結觸發失敗(不影響上架): {e!r}")
 
 
 if __name__ == "__main__":
