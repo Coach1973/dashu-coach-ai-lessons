@@ -2888,7 +2888,7 @@
   {
    "id": "gcal-2027-01-28-258",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2896,7 +2896,7 @@
   {
    "id": "gcal-2027-01-28-259",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3891,7 +3891,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-24 14:29",
+ "updated_at": "2026-10-24 14:47",
  "tainan_synced_at": "2026-10-24 02:02",
  "evening_window": {
   "start": "19:00",
@@ -3935,8 +3935,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-24 14:29",
- "google_synced_epoch": 1792823397,
+ "google_synced_at": "2026-10-24 14:47",
+ "google_synced_epoch": 1792824429,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
