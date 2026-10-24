@@ -1455,6 +1455,62 @@ def tut_team_admin_seat(code):
     return redirect(f"/tut/team/a/{code}?msg=已新增座位：{name}" if name else f"/tut/team/a/{code}")
 
 
+# ---------- 互動教材學習報告（2026-10-25 教練交辦：bni-gusest 來賓接待工作坊）：說明見 game_report.py ----------
+import game_report as _gr
+
+_GR_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多送 20 份
+
+
+@app.route("/api/game/report", methods=["POST"])
+def game_report_submit():
+    def reply(body, status=200):
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json")
+
+    payload = request.get_json(force=True, silent=True) or {}
+    if (payload.get("website") or "").strip():          # 防機器人的隱藏欄位：假裝成功
+        return reply({"ok": True, "url": ""})
+    site = (payload.get("site") or "").strip()
+    if not _CURATED_SLUG_RE.match(site) or site not in _curated_slugs():
+        return reply({"ok": False, "error": "找不到這個互動教材"}, 404)
+    d, err = _gr.clean(payload)
+    if err:
+        return reply({"ok": False, "error": err}, 400)
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _GR_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 20:
+        return reply({"ok": False, "error": "送出次數太多，請稍後再試"}, 429)
+    _GR_HITS[ip] = hits + [now]
+    title = next((s.get("title") for s in _load_curated_registry().get("sites", []) if s["slug"] == site), site) or site
+    token = _gr.save(site, title, d, ip)
+    if not d["name"].startswith(_gr.TEST_PREFIX):
+        who = d["name"] + (f"（{d['chapter']}）" if d["chapter"] else "")
+        text = (f"📝【{d['game'] or title}】{who} 完成學習報告\n{_gr.summary_line(d)}\n"
+                f"看報告：\n{_gr.report_url(token)}\n全部報告（講師後台）：\n{_gr.admin_url(app.secret_key, site)}")
+        threading.Thread(target=_notify_xiaolongxia, args=(text,),
+                         kwargs={"chat_id": TELEGRAM_REGISTRATION_GROUP_CHAT_ID}, daemon=True).start()
+    return reply({"ok": True, "url": _gr.report_url(token)})
+
+
+@app.route("/game-report/<token>")
+def game_report_view(token):
+    r = _gr.get(token)
+    if not r:
+        abort(404)
+    return Response(_gr.render_report(r), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
+@app.route("/gr/<code>")
+@app.route("/game-report/a/<code>")
+def game_report_admin(code):
+    if not hmac.compare_digest(code, _gr.admin_code(app.secret_key)):
+        abort(404)
+    site = request.args.get("site", "").strip()
+    return Response(_gr.render_admin(_gr.list_reports(site), site), content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
 # ---------- 中華新媒體影音發展協會（NMDA）理監事團隊（2026-10-23 教練交辦）：說明見 nmda_team.py ----------
 # 照南應大 /tut/team 同一套：名單先放空座位，本人點自己的名字補照片簡介；公開頁是 nmda 網站自己的 team.html，讀 /api/nmda/team/board。
 import nmda_team as _nt
