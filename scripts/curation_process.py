@@ -1170,8 +1170,12 @@ def main() -> None:
             notify("🌱 足跡夥伴自動新增 " + "、".join(res["added"]) + f"（真公益現有 {res.get('total', 0) + 1} 位）\nhttps://event.bymyway.com/curated/social-club/#peers")
         for m_ in res.get("manual", []):
             log(f"足跡夥伴需人工：{m_}")
-        if res.get("manual"):
-            notify("⚠️ 這些頁面有公益足跡，但自動抽不出來，要人工處理：" + "、".join(f"{x['slug']}（{x['reason']}）" for x in res["manual"][:6]))
+        seen_p = WORKSPACE / "state" / "peers_manual_seen.json"  # 同一頁只提醒一次，不每次上架都唸
+        seen = set(json.loads(seen_p.read_text(encoding="utf-8"))) if seen_p.exists() else set()
+        fresh = [x for x in res.get("manual", []) if x["slug"] not in seen]
+        if fresh:
+            notify("⚠️ 這些頁面有公益足跡，但自動抽不出來，要人工處理：" + "、".join(f"{x['slug']}（{x['reason']}）" for x in fresh[:6]))
+            seen_p.write_text(json.dumps(sorted(seen | {x["slug"] for x in fresh}), ensure_ascii=False), encoding="utf-8")
     except Exception as e:  # noqa: BLE001
         log(f"足跡夥伴同步失敗(不影響上架): {e!r}")
     try:  # 顧問／專家個人頁自動連進人才軍火庫（2026-10-24 教練定）；沒對到人就什麼都不做
