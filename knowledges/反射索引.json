@@ -2067,6 +2067,21 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-BOT-COMMAND-SELFCHECK",
+   "moment": "pre_tool",
+   "tool": "Edit|Write|Bash",
+   "kind": "防錯型",
+   "match": "\\.openclaw/agents/[a-z_]+/(SOUL\\.md|AGENTS\\.md|SOP_[^/\\s]*\\.md|HEARTBEAT\\.md)",
+   "say": "你要改分身（巴哈等）的指令。最高等級：同一輪三件事做完才准交付——①舊路用程式擋死（lk888_guard／safety-locks），不能只寫在說明檔；②讓分身用真資料跑一次，數它走幾步、每步帶多少 token（一件事 10 步內、每步 3 萬 token 內，超過就是繞路）；③分身的長對話先備份再清。三件做完 touch ~/.openclaw/workspace/state/BOT_COMMAND_CHECKED（10 分鐘有效）再改。",
+   "level": "block",
+   "unless_fresh_file": "state/BOT_COMMAND_CHECKED",
+   "situation": "AI 要寫／改分身（巴哈、小龍蝦各分身）的 SOUL／SOP／AGENTS 指令時",
+   "source": "試金石案例133（2026-10-25 00:15 巴哈繞過一行指令，5 小時燒 MiniMax 1.18 億 token，額度打滿；教練：「為什麼你在寫指令的時候就不能自我檢查呢？」）",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
