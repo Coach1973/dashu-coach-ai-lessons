@@ -25,29 +25,33 @@ from PIL import Image  # noqa: E402
 
 DATA = Path.home() / ".openclaw" / "workspace" / "claude-brain" / "data"
 TEMPLATES = {
-    "橫版": (DATA / "poster_wangzhixuan_horizontal_title_nmda_20261024.png", "1536x1024"),
-    "直版": (DATA / "poster_wangzhixuan_portrait_title_nmda_20261024.png", "1024x1536"),
+    "橫版": (DATA / "poster_wangzhixuan_horizontal_title_nmda_20261024.png", "1536x1024",
+             "人物左邊緣大約在畫面寬度 38% 的位置，文字放在畫面左側 5%～35% 之間"),
+    "直版": (DATA / "poster_wangzhixuan_portrait_title_nmda_20261024.png", "1024x1536",
+             "人物放右半邊、左邊緣大約在畫面寬度 45% 的位置，文字放在畫面左側 5%～42% 之間"),
 }
 
 PROMPT = """第一張圖是一張已完成的{kind}宣傳海報（版面模板）。第二張圖是一位真人照片（臉部來源）。
 
 其餘元素一律完全不變（依第一張圖）：版面與構圖、背景、頂部大標題「中華新媒體影音發展協會」與其下英文行、左上角圓形標誌、右側金色獎杯（不改造型、不加字）、中央「星耀亞洲 SHINING ACROSS ASIA」、器材、社群圖示、底部五個圖示與文字。
 
-只改兩處：
+只改以下幾處：
 
-一、人物：換成第二張照片裡的那位人物——臉部五官、髮型、膚色、性別必須就是本人（照片裡有戴眼鏡才戴）；保留原海報人物的位置與半身比例，姿勢可改為自然的雙手交叉或自然垂放；服裝改成得體的正式商務穿著；表情親切自信、直視前方。照片四周若有白邊、相框、扇子等裝飾，一律不要帶進海報。
+一、人物：換成第二張照片裡的那位人物。最重要：一看就要認得出是本人——臉型、五官比例、眼型、鼻子、嘴型與笑容、髮型、膚色、年齡感都照第二張照片，不要美化、不要瘦臉、不要變年輕、不要變成網紅臉或模特兒臉（照片裡有戴眼鏡才戴）。服裝改成得體的正式商務穿著；半身、自然雙手交叉；表情照照片的笑容。照片四周若有白邊、相框、扇子等裝飾，一律不要帶進海報。
 
-二、人物左側文字（繁體中文，字形端正、清晰可讀、不得有錯字亂碼；位置與字體風格照第一張圖）：
+二、版面：人物整體放在畫面中間偏右（{person_pos}），人物左邊留出一整塊乾淨空白給文字。所有文字（姓名、職稱、頭銜）都只能放在這塊空白裡，一個字都不可以壓到人物的頭髮、臉、衣服或手臂；寧可把字縮小也不要碰到人。
+
+三、人物左側文字（繁體中文，字形端正、清晰可讀、不得有錯字亂碼；字體風格照第一張圖）：
 - 大字姓名（原「王志玄」）改成：「{name}」
 - 其下職稱（原「副理事長」）改成：「{role}」
-- 其下原本兩行小字（「南投縣飛雁創業協會」「第六屆理事長」）全部拿掉，改成以下 {n} 行小字（每行一個，照順序，白色、字級略小、不要壓到人物身體）：
+- 其下原本兩行小字（「南投縣飛雁創業協會」「第六屆理事長」）全部拿掉，改成以下 {n} 行小字（每行一個，照順序，字級小一點、靠左對齊，整塊文字的右邊界不得超過人物的左邊緣）：
 {lines}
 """
 
 
 def make(kind, photo, name, role, titles, stamp):
-    template, size = TEMPLATES[kind]
-    prompt = PROMPT.format(kind=kind, name=name, role=role, n=len(titles),
+    template, size, person_pos = TEMPLATES[kind]
+    prompt = PROMPT.format(kind=kind, person_pos=person_pos, name=name, role=role, n=len(titles),
                            lines="\n".join(f"「{t}」" for t in titles))
     img = generate_with_references(prompt, [template, photo], size)
     tag = "horizontal" if kind == "橫版" else "portrait"
