@@ -20,3 +20,5 @@ metadata:
 5. 額度打滿時先量各分身 5 小時 token 找元兇（見 [[feedback-lk888-hourly-cap-raised-and-minimax-quota-burner-2026-10-25]]）。
 
 相關：[[feedback-hand-verified-command-to-bots-not-sop-prose-2026-10-24]]、[[reference-peipei-group-context-overflow-blocks-main-lane]]
+
+**同晚再被抓（00:22）**：我交的許瀞文、王枘榆海報名字是 AI 畫錯的字（瀞→灝、枘→棶），我只看縮圖沒放大看名字。教練：「你自己都不用先看一下嗎？……做錯就得重做。」→ `poster_new_person.py` 加 `fix_name`：姓名一律抹掉 AI 畫的字、用宋體重排（commit 見 workspace 10/25）。交付海報前，名字與頭銜必須放大裁切逐字對過原文，不能只看整張縮圖。另：佩佩老師說「怎麼沒有橫的」＝那幾位群組裡只收到直版，要補的是橫版。
