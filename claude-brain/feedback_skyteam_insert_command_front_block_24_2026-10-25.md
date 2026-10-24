@@ -20,3 +20,5 @@ metadata:
 - 名單沒有的新專家不會自動建卡片（skyteam_link_expert.py 只補連結），要手動加。
 
 相關：[[project-skyteam-identity-labels-chapters-six-columns-2026-10-24]]、[[project-skyteam-auto-link-expert-and-footer-audit-2026-10-24]]
+
+**10/25 03:02 更新：** 陳和平（格蘭，grand 頁）加進第 25 位；教練裁示先維持 FRONT=24，之後他說「擴到 32 位」才改（4 排×8 排滿，改完用瀏覽器看第一屏）。新專家插第 25 位（第一屏之外）也算「加入天團」，要上第一屏必須擴大 FRONT。
