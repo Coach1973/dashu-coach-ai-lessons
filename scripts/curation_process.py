@@ -818,6 +818,24 @@ def wire_forms(site_dir: Path, slug: str) -> str:
         return f"\n⚠️ 表單自動接線失敗，請軍師跑 python3 scripts/module_kit.py wire {slug}：{e}"
 
 
+def fix_shengping(site_dir: Path) -> str:
+    """2026-10-24 教練：網頁不要出現「生平」二字（像在說人已不在）。上架時自動改：
+    生平學經歷→學經歷、生平事蹟→生活事蹟、選單單獨的「生平」→生活事蹟。「學生平安保險」不受影響。"""
+    try:
+        import re as _re
+        done = []
+        for f in Path(site_dir).glob("*.html"):
+            t = f.read_text(encoding="utf-8", errors="ignore")
+            n = _re.sub(r">生平</a>", ">生活事蹟</a>", t.replace("生平學經歷", "學經歷").replace("生平事蹟", "生活事蹟"))
+            if n != t:
+                f.write_text(n, encoding="utf-8")
+                done.append(f.name)
+        return ("\n✏️ 已自動把「生平」改成「學經歷／生活事蹟」：" + "、".join(done)) if done else ""
+    except Exception as e:  # noqa: BLE001
+        log(f"生平字樣改寫失敗: {e!r}")
+        return ""
+
+
 def footer_check(site_dir: Path) -> str:
     """2026-10-24 教練：新網頁由他的 AI 製作時會自動帶頁尾三句，不用系統補；缺了才提醒他。
     只檢查、不改檔；全齊回空字串。"""
@@ -838,7 +856,8 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
     登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
     shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
-    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug) + footer_check(GITHUB_REPOS_DIR / slug)
+    sp_note = fix_shengping(GITHUB_REPOS_DIR / slug)
+    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug) + footer_check(GITHUB_REPOS_DIR / slug) + sp_note
     event_url = f"https://event.bymyway.com/curated/{slug}/"
     registry["sites"].append({
         "slug": slug,
@@ -1016,7 +1035,8 @@ def process_one(pkg_path: Path) -> None:
         repo_dir = GITHUB_REPOS_DIR / slug
         shutil.copytree(tmp_extract, repo_dir)
         ensure_og_tags_absolute(repo_dir, slug)
-        form_note = wire_forms(repo_dir, slug) + footer_check(repo_dir)
+        sp_note = fix_shengping(repo_dir)
+        form_note = wire_forms(repo_dir, slug) + footer_check(repo_dir) + sp_note
 
         token = get_github_token()
         create_github_repo(token, slug)
