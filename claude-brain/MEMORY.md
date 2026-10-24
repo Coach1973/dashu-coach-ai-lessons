@@ -1,3 +1,4 @@
+- [🧑‍🏫 顧問師天團＝人才軍火庫；專家頁上架自動填名錄連結(skyteam_link_expert.py，未實測)；頁尾三句75站僅15站齊全、NMDA已補、其餘60站待教練決定(2026-10-24)](project_skyteam_auto_link_expert_and_footer_audit_2026-10-24.md)
 - [🔴 預覽頁新功能必須落在第一屏（量 top<innerHeight 或自動捲到）；教練滑不到就「看都沒看到」，我還連問OK不OK；deliver_open 開頁要讀回確認(2026-10-24)](feedback_show_new_feature_on_first_screen_2026-10-24.md)
 - [🔧 巴哈群組對話塞爆135%→壓縮卡5分鐘佔住 lane=main→小龍蝦也沒反應；診斷看日誌 overflow／stalled、重啟gateway、compact/archive指令；compact後仍135%未驗證(2026-10-24)](reference_peipei_group_context_overflow_blocks_main_lane_2026-10-24.md)
 - [🧑‍🤝‍🧑 人才軍火庫一排6人；大樹夥伴圈→商務團隊(在籍84)／人脈資源團隊(離會4)；詳細頁顯示所屬分會；戰情表判斷；21位未標分會；需求按鈕沒進正式頁(2026-10-24)](project_skyteam_identity_labels_chapters_six_columns_2026-10-24.md)
