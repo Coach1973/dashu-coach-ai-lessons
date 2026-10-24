@@ -818,13 +818,27 @@ def wire_forms(site_dir: Path, slug: str) -> str:
         return f"\n⚠️ 表單自動接線失敗，請軍師跑 python3 scripts/module_kit.py wire {slug}：{e}"
 
 
+def footer_check(site_dir: Path) -> str:
+    """2026-10-24 教練：新網頁由他的 AI 製作時會自動帶頁尾三句，不用系統補；缺了才提醒他。
+    只檢查、不改檔；全齊回空字串。"""
+    try:
+        txt = ""
+        for f in Path(site_dir).glob("*.html"):
+            txt += f.read_text(encoding="utf-8", errors="ignore")
+        miss = [name for key, name in (("TAVA", "TAVA AI 製作"), ("出品人", "出品人 大樹教練"), ("友善連結", "友善連結 榮樹下")) if key not in txt]
+        return ("\n⚠️ 頁尾缺：" + "、".join(miss) + "（教練說缺了要提醒他）") if miss else ""
+    except Exception as e:  # noqa: BLE001
+        log(f"頁尾檢查失敗: {e!r}")
+        return ""
+
+
 def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set, opt_note: str = "") -> None:
     """大樹作品：原封不動上架event.bymyway.com，建私有GitHub repo（2026-09-30教練定：event網址背後都要有GitHub，
     靜態內容在聯想／宏碁／小龍蝦改GitHub就好）、不插商圈卡、不發FB，
     登記進coach888「最新作品」第一筆，通知「活動報名即時通知」群組。"""
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
     shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
-    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug)
+    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug) + footer_check(GITHUB_REPOS_DIR / slug)
     event_url = f"https://event.bymyway.com/curated/{slug}/"
     registry["sites"].append({
         "slug": slug,
@@ -1002,7 +1016,7 @@ def process_one(pkg_path: Path) -> None:
         repo_dir = GITHUB_REPOS_DIR / slug
         shutil.copytree(tmp_extract, repo_dir)
         ensure_og_tags_absolute(repo_dir, slug)
-        form_note = wire_forms(repo_dir, slug)
+        form_note = wire_forms(repo_dir, slug) + footer_check(repo_dir)
 
         token = get_github_token()
         create_github_repo(token, slug)
