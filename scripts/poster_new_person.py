@@ -10,7 +10,8 @@
     --titles "時尚爵士新媒體製作公司執行長/南山人壽業務襄理 MDRT 百萬圓桌會員/亞伯安磁力健康按摩鞋 營銷總監"
 
 版型＝王志玄已完成的中華新媒體版（頂部協會名、人物左側大字姓名＋職稱＋小字頭銜）。
-兩張同時跑（各約 1～2 分鐘），存 PNG＋JPEG（JPEG 傳群組用），最後印出兩個 .jpg 路徑。
+兩張同時跑（約 1～2 分鐘），頭銜由程式用電腦字體排大字（跟底部「影音製作」一樣大、太長自動分行），
+存 PNG＋JPEG（JPEG 傳群組用），最後印出兩個 .jpg 路徑。
 """
 import argparse
 import re
@@ -21,7 +22,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from generate_poster_swap import generate_with_references  # noqa: E402
-from PIL import Image  # noqa: E402
+import numpy as np  # noqa: E402
+from PIL import Image, ImageDraw, ImageFilter, ImageFont  # noqa: E402
 
 DATA = Path.home() / ".openclaw" / "workspace" / "claude-brain" / "data"
 TEMPLATES = {
@@ -39,24 +41,82 @@ PROMPT = """第一張圖是一張已完成的{kind}宣傳海報（版面模板�
 
 一、人物：換成第二張照片裡的那位人物。最重要：一看就要認得出是本人——臉型、五官比例、眼型、鼻子、嘴型與笑容、髮型、膚色、年齡感都照第二張照片，不要美化、不要瘦臉、不要變年輕、不要變成網紅臉或模特兒臉（照片裡有戴眼鏡才戴）。姿勢、頭的角度、表情與笑容也照第二張照片（例如照片是單手托腮、頭微側，就照做）；服裝改成得體的正式商務穿著；半身。照片四周若有白邊、相框、扇子等裝飾，一律不要帶進海報。
 
-二、版面：人物整體放在畫面中間偏右（{person_pos}），人物左邊留出一整塊乾淨空白給文字。所有文字（姓名、職稱、頭銜）都只能放在這塊空白裡，一個字都不可以壓到人物的頭髮、臉、衣服或手臂；寧可把字縮小也不要碰到人。
+二、版面：人物整體放在畫面中間偏右（{person_pos}），人物左邊留出一整塊乾淨空白給文字。所有文字（姓名、職稱、頭銜）都只能放在這塊空白裡，一個字都不可以壓到人物的頭髮、臉、衣服或手臂。
 
-三、人物左側文字（繁體中文，字形端正、清晰可讀、不得有錯字亂碼；字體風格照第一張圖）：
+三、人物左側只寫兩行字（繁體中文，字形端正、清晰可讀、不得有錯字亂碼；字體風格照第一張圖）：
 - 大字姓名（原「王志玄」）改成：「{name}」
 - 其下職稱（原「副理事長」）改成：「{role}」
-- 其下原本兩行小字（「南投縣飛雁創業協會」「第六屆理事長」）全部拿掉，改成以下 {n} 行小字（每行一個，照順序，字級小一點、靠左對齊，整塊文字的右邊界不得超過人物的左邊緣）：
-{lines}
+- 其下原本兩行小字（「南投縣飛雁創業協會」「第六屆理事長」）全部拿掉，那一塊留白、乾淨無字（頭銜之後另外排）。
 """
+
+
+# 頭銜用電腦字體排大字（教練 10/24：字跟底部「影音製作」一樣大，不寫小字；AI 寫小字常錯）
+FONT = "/System/Library/Fonts/Supplemental/Songti.ttc"  # index 2 = 宋體-繁 粗體
+COLUMN = {"橫版": (0.04, 0.29, 0.25, 0.55), "直版": (0.04, 0.42, 0.25, 0.50)}  # 左欄 x 起訖、找職稱的 y 範圍（比例）
+POSITION_WORDS = ["總經理", "董事長", "理事長", "執行長", "總監", "襄理", "經理", "會長", "創辦人", "負責人", "院長", "主任", "顧問", "講師"]
+
+
+def wrap(text, font, maxw, d):
+    if d.textlength(text, font=font) <= maxw:
+        return [text]
+    if " " in text:
+        head, tail = text.split(" ", 1)
+        return wrap(head, font, maxw, d) + wrap(tail, font, maxw, d)
+    for w in POSITION_WORDS:
+        i = text.rfind(w)
+        if i > 0:
+            return wrap(text[:i], font, maxw, d) + wrap(text[i:], font, maxw, d)
+    cut = len(text)
+    while cut > 1 and d.textlength(text[:cut], font=font) > maxw:
+        cut -= 1
+    return [text[:cut]] + wrap(text[cut:], font, maxw, d)
+
+
+def draw_titles(png, kind, titles):
+    im = Image.open(png).convert("RGB")
+    W, H = im.size
+    x0r, x1r, y0r, y1r = COLUMN[kind]
+    g = np.array(im.convert("L"))
+    gx0, gx1 = int(W * x0r), int(W * (x1r - 0.04))
+    box = g[int(H * y0r):int(H * y1r), gx0:gx1] < 60   # 姓名、職稱是黑色大字
+    hit = np.where(box.sum(1) > 25)[0]
+    # 只取最上面那一塊（姓名＋職稱，中間空隙 ≤ 40px），下方城市背景的暗處不算
+    end = hit[0] if len(hit) else 0
+    for r in hit:
+        if r - end > 40:
+            break
+        end = r
+    block = box[hit[0]:end + 1] if len(hit) else box[:0]
+    cols = np.where(block.sum(0) > 2)[0]
+    left = gx0 + (cols.min() if len(cols) else 40)
+    top = int(H * y0r) + (end if len(hit) else int(H * 0.2)) + 22
+    fs = 26
+    font = ImageFont.truetype(FONT, fs, index=2)
+    d = ImageDraw.Draw(im)
+    maxw = int(W * x1r) - left
+    lines = [ln for t in titles for ln in wrap(t, font, maxw, d)]
+    glow = Image.new("L", im.size, 0)
+    gd = ImageDraw.Draw(glow)
+    for i, ln in enumerate(lines):
+        gd.text((left, top + i * 36), ln, font=font, fill=255, stroke_width=4, stroke_fill=255)
+    glow = glow.filter(ImageFilter.GaussianBlur(3)).point(lambda v: min(255, int(v * 1.4)))
+    im = Image.composite(Image.new("RGB", im.size, (255, 250, 242)), im, glow)
+    d = ImageDraw.Draw(im)
+    for i, ln in enumerate(lines):
+        d.text((left, top + i * 36), ln, font=font, fill=(12, 12, 12))
+    im.save(png)
 
 
 def make(kind, photo, name, role, titles, stamp):
     template, size, person_pos = TEMPLATES[kind]
-    prompt = PROMPT.format(kind=kind, person_pos=person_pos, name=name, role=role, n=len(titles),
-                           lines="\n".join(f"「{t}」" for t in titles))
+    prompt = PROMPT.format(kind=kind, person_pos=person_pos, name=name, role=role)
     img = generate_with_references(prompt, [template, photo], size)
     tag = "horizontal" if kind == "橫版" else "portrait"
     png = DATA / f"poster_{stamp}_{tag}.png"
     png.write_bytes(img)
+    png.with_name(png.stem + "_raw.png").write_bytes(img)  # 沒排頭銜的原圖，重排字用
+    if titles:
+        draw_titles(png, kind, titles)
     jpg = png.with_suffix(".jpg")
     Image.open(png).convert("RGB").save(jpg, "JPEG", quality=90)
     return jpg
