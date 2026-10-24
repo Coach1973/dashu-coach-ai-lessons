@@ -27,6 +27,11 @@ def main():
     img = g.generate_with_references(prompt, [Path(a.image)], a.size)
     Path(a.out).write_bytes(img)
     print("OK", a.out, len(img))
+    # 傳給人看／傳 Telegram 用 JPEG（同像素約 0.6 MB，PNG 要 2.2 MB；教練 10/24 要求 1 MB 內）
+    from PIL import Image
+    jpg = str(Path(a.out).with_suffix(".jpg"))
+    Image.open(a.out).convert("RGB").save(jpg, "JPEG", quality=90, subsampling=0, optimize=True)
+    print("JPG", jpg, Path(jpg).stat().st_size)
 
 
 if __name__ == "__main__":
