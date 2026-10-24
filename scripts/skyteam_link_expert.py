@@ -14,6 +14,7 @@ REPO = Path.home() / "github_repos/skyteam"
 IDX = REPO / "index.html"
 PAT = re.compile(r'(<script id="experts-data" type="application/json">)(.*?)(</script>)', re.S)
 SKIP_SLUGS = {"skyteam"}
+PLACEHOLDER_HOSTS = ("facebook.com", "search.books.com.tw")  # 臨時放的連結（臉書／搜尋頁），有策展個人頁就換掉
 
 
 def main(dry: bool) -> int:
@@ -30,7 +31,8 @@ def main(dry: bool) -> int:
             continue
         # 已是本人頁、或是外部自家網站就不動；空白／#錨點／指向別人的策展頁才換
         if url and "#" not in url and (url.rstrip("/") == hits[0]["event_url"].rstrip("/")
-                                       or "event.bymyway.com/curated/" not in url):
+                                       or ("event.bymyway.com/curated/" not in url
+                                       and not any(x in url for x in PLACEHOLDER_HOSTS))):
             continue
         new = hits[0]["event_url"]
         if new != url:
