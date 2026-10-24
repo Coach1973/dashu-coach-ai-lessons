@@ -1,3 +1,4 @@
+- [🔴 驗證有效的做法要包成「一行指令」給巴哈等分身，不能只寫 SOP 說明讓它摸索；海報換人 poster_new_person.py(2026-10-24)](feedback_hand_verified_command_to_bots_not_sop_prose_2026-10-24.md)
 - [🧑‍🏫 顧問師天團＝人才軍火庫；專家頁上架自動填名錄連結(skyteam_link_expert.py，未實測)；頁尾三句75站僅15站齊全、NMDA已補、其餘60站待教練決定(2026-10-24)](project_skyteam_auto_link_expert_and_footer_audit_2026-10-24.md)
 - [🔴 勾選頁一定要有送出鈕／回傳通道、交付前自己勾一次按一次；10/24 頁尾清單沒送出鈕，教練勾 35 項只能口述編號(2026-10-24)](feedback_checkbox_page_must_have_submit_or_be_real_page_2026-10-24.md)
 - [🔴 預覽頁新功能必須落在第一屏（量 top<innerHeight 或自動捲到）；教練滑不到就「看都沒看到」，我還連問OK不OK；deliver_open 開頁要讀回確認(2026-10-24)](feedback_show_new_feature_on_first_screen_2026-10-24.md)
