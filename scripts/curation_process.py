@@ -843,7 +843,7 @@ def footer_check(site_dir: Path) -> str:
         txt = ""
         for f in Path(site_dir).glob("*.html"):
             txt += f.read_text(encoding="utf-8", errors="ignore")
-        miss = [name for key, name in (("TAVA", "TAVA AI 製作"), ("出品人", "出品人 大樹教練"), ("友善連結", "友善連結 榮樹下")) if key not in txt]
+        miss = [name for key, name in (("TAVA", "TAVA AI 製作"), ("出品人", "出品人 大樹教練"), ("友善連結", "友善連結 榮樹下"), ("curated/skyteam", "顧問師天團・人才軍火庫")) if key not in txt]
         return ("\n⚠️ 頁尾缺：" + "、".join(miss) + "（教練說缺了要提醒他）") if miss else ""
     except Exception as e:  # noqa: BLE001
         log(f"頁尾檢查失敗: {e!r}")
@@ -1162,6 +1162,18 @@ def main() -> None:
                 shutil.move(str(sidecar_src), str(PROCESSING_DIR / sidecar_src.name))
         process_one(staged)
     trigger_all_works_refresh(f"策展上架處理完成（{len(pending)} 包）")
+    try:  # 公益足跡自動進「真公益」足跡夥伴區（2026-10-25 教練定：只要網頁有公益足跡的量，就要移到真公益網站）
+        r = subprocess.run([sys.executable, str(WORKSPACE / "scripts" / "peers_footprints" / "sync_peers.py")],
+                           capture_output=True, text=True, timeout=600, env=_ENV)
+        res = json.loads((r.stdout.strip().splitlines() or ["{}"])[-1])
+        if res.get("added"):
+            notify("🌱 足跡夥伴自動新增 " + "、".join(res["added"]) + f"（真公益現有 {res.get('total', 0) + 1} 位）\nhttps://event.bymyway.com/curated/social-club/#peers")
+        for m_ in res.get("manual", []):
+            log(f"足跡夥伴需人工：{m_}")
+        if res.get("manual"):
+            notify("⚠️ 這些頁面有公益足跡，但自動抽不出來，要人工處理：" + "、".join(f"{x['slug']}（{x['reason']}）" for x in res["manual"][:6]))
+    except Exception as e:  # noqa: BLE001
+        log(f"足跡夥伴同步失敗(不影響上架): {e!r}")
     try:  # 顧問／專家個人頁自動連進人才軍火庫（2026-10-24 教練定）；沒對到人就什麼都不做
         subprocess.Popen([sys.executable, str(WORKSPACE / "scripts" / "skyteam_link_expert.py")],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True, env=_ENV)
