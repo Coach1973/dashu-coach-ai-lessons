@@ -1,3 +1,4 @@
+- [🧑‍🏫 教練口令「插入顧問天團」＝把專家插進軍火庫前面固定區（現24位、不夠提高到32）其他往後擠；10/25 前25位已排好(6c1ef60)、他念名字常諧音錯要先對名單(2026-10-25)](feedback_skyteam_insert_command_front_block_24_2026-10-25.md)
 - [🔴🔴🔴 最高等級：給分身寫指令＝程式擋死舊路＋真跑量步數token＋清長對話，只寫說明＝巴哈繞路5小時燒光MiniMax全機額度（案例133）(2026-10-25)](feedback_bot_instructions_must_block_old_path_and_measure_tokens_2026-10-25.md)
 - [💸 LK888 每小時上限 40→200（教練10/25「不需要設限」）；MiniMax 2056 額度打滿元兇＝巴哈 peipei 5小時 118M token，怎麼量(2026-10-25)](feedback_lk888_hourly_cap_raised_and_minimax_quota_burner_2026-10-25.md)
 - [🔴 驗證有效的做法要包成「一行指令」給巴哈等分身，不能只寫 SOP 說明讓它摸索；海報換人 poster_new_person.py(2026-10-24)](feedback_hand_verified_command_to_bots_not_sop_prose_2026-10-24.md)
