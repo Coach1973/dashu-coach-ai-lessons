@@ -1,3 +1,4 @@
+- [🔧 網頁表頭滑掉＝body overflow-x:hidden 讓 sticky 失效；全站 84 頁同網域 iframe 往下捲量表頭法、手機固定表頭要量高度(2026-10-25)](reference_sticky_header_broken_by_body_overflow_x_hidden_audit_method_2026-10-25.md)
 - [🎮 互動教材玩完產生學習報告系統（game_report.py：/api/game/report、/game-report/<代碼>、/gr/<碼>後台）；bni-gusest 是第一個、已放孫林博士頁「共同創作」區；別的互動教材照同格式POST；還沒真人送過(2026-10-25)](project_game_report_interactive_materials_2026-10-25.md)
 - [🧑‍🏫 教練口令「插入顧問天團」＝把專家插進軍火庫前面固定區（現24位、不夠提高到32）其他往後擠；10/25 前25位已排好(6c1ef60)、他念名字常諧音錯要先對名單(2026-10-25)](feedback_skyteam_insert_command_front_block_24_2026-10-25.md)
 - [🔴🔴🔴 最高等級：給分身寫指令＝程式擋死舊路＋真跑量步數token＋清長對話，只寫說明＝巴哈繞路5小時燒光MiniMax全機額度（案例133）(2026-10-25)](feedback_bot_instructions_must_block_old_path_and_measure_tokens_2026-10-25.md)
