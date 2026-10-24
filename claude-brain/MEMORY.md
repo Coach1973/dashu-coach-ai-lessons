@@ -1,3 +1,4 @@
+- [🌱 有公益足跡(≥3則)的網頁自動進真公益「足跡夥伴」(sync_peers.py，上架後自動跑，現23位)；顧問師天團頁尾第4連結已補40頁；軍火庫前32位、陳和平第1、周睿麒(教練念周瑞琪)；抽不出來的4頁(2026-10-25)](project_footprint_partners_auto_sync_and_skyteam_footer_2026-10-25.md)
 - [🔧 網頁表頭滑掉＝body overflow-x:hidden 讓 sticky 失效；全站 84 頁同網域 iframe 往下捲量表頭法、手機固定表頭要量高度(2026-10-25)](reference_sticky_header_broken_by_body_overflow_x_hidden_audit_method_2026-10-25.md)
 - [🎮 互動教材玩完產生學習報告系統（game_report.py：/api/game/report、/game-report/<代碼>、/gr/<碼>後台）；bni-gusest 是第一個、已放孫林博士頁「共同創作」區；別的互動教材照同格式POST；還沒真人送過(2026-10-25)](project_game_report_interactive_materials_2026-10-25.md)
 - [🧑‍🏫 教練口令「插入顧問天團」＝把專家插進軍火庫前面固定區（現24位、不夠提高到32）其他往後擠；10/25 前25位已排好(6c1ef60)、他念名字常諧音錯要先對名單(2026-10-25)](feedback_skyteam_insert_command_front_block_24_2026-10-25.md)
