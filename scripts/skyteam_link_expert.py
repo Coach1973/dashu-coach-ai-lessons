@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """人才軍火庫（顧問師天團）自動連結：新上架的顧問／專家個人網頁，自動寫進該專家在名錄裡的「url」欄位。
 規則（教練 2026-10-24 定）：凡做出顧問或專家的網頁，就自動放進他在天團名錄的連結。
-- 只改「沒有連結」或「連結是別頁的 #錨點」的專家；已有獨立個人頁的不動。
+- 只改「沒有連結」「#錨點」或「指向別人策展頁」的專家；已是本人頁或外部網站的不動。
 - 網站標題的第一段必須含專家姓名（避免多人合輯頁誤配）。
 - 事件觸發：curation_process 上架處理完跑一次；沒有任何要改的就什麼都不做。
 用法：skyteam_link_expert.py [--dry-run]
@@ -25,10 +25,12 @@ def main(dry: bool) -> int:
     changed = []
     for e in experts:
         url = e.get("url") or ""
-        if url and "#" not in url:
-            continue
         hits = [s for s in sites if e["name"] in re.split(r"[｜|・—\-]", s["title"])[0]]
         if len(hits) != 1:
+            continue
+        # 已是本人頁、或是外部自家網站就不動；空白／#錨點／指向別人的策展頁才換
+        if url and "#" not in url and (url.rstrip("/") == hits[0]["event_url"].rstrip("/")
+                                       or "event.bymyway.com/curated/" not in url):
             continue
         new = hits[0]["event_url"]
         if new != url:
