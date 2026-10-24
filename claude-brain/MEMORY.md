@@ -1,3 +1,4 @@
+- [💸 LK888 每小時上限 40→200（教練10/25「不需要設限」）；MiniMax 2056 額度打滿元兇＝巴哈 peipei 5小時 118M token，怎麼量(2026-10-25)](feedback_lk888_hourly_cap_raised_and_minimax_quota_burner_2026-10-25.md)
 - [🔴 驗證有效的做法要包成「一行指令」給巴哈等分身，不能只寫 SOP 說明讓它摸索；海報換人 poster_new_person.py(2026-10-24)](feedback_hand_verified_command_to_bots_not_sop_prose_2026-10-24.md)
 - [🧑‍🏫 顧問師天團＝人才軍火庫；專家頁上架自動填名錄連結(skyteam_link_expert.py，未實測)；頁尾三句：教練勾35站已補(齊全50/75)、其餘不補、上架通知缺了才提醒(2026-10-24)](project_skyteam_auto_link_expert_and_footer_audit_2026-10-24.md)
 - [🔴 勾選頁一定要有送出鈕／回傳通道、交付前自己勾一次按一次；10/24 頁尾清單沒送出鈕，教練勾 35 項只能口述編號(2026-10-24)](feedback_checkbox_page_must_have_submit_or_be_real_page_2026-10-24.md)
