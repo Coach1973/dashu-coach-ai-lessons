@@ -139,6 +139,31 @@ def _notify_coach(text):
         print(f"⚠️ LK888閘門通知教練失敗：{e}", file=sys.stderr)
 
 
+PEIPEI_DIR = Path.home() / ".openclaw" / "agents" / "peipei"
+BAHAI_ALLOWED = {"poster_new_person.py"}
+
+
+def _bahai_offpath():
+    """2026-10-25 教練：巴哈（peipei）做海報只能走 poster_new_person.py 那一行。
+    從巴哈資料夾發出、或程式本身放在巴哈資料夾的出圖（舊的自己寫程式那條路），一律擋下。
+    10/24 晚巴哈繞路，一個人跑 100 多步、5 小時燒掉 MiniMax 1.18 億 token。"""
+    if _caller() in BAHAI_ALLOWED:
+        return ""
+    cands = []
+    for get in (lambda: Path(sys.argv[0]).resolve(), lambda: Path.cwd().resolve()):
+        try:
+            cands.append(str(get()))
+        except Exception:  # noqa: BLE001
+            pass
+    if os.environ.get("OPENCLAW_AGENT_DIR"):
+        cands.append(os.environ["OPENCLAW_AGENT_DIR"])
+    if any(c.startswith(str(PEIPEI_DIR)) for c in cands):
+        return ("巴哈做海報只能跑這一行，不准自己寫程式、裁照片、寫提示詞："
+                "python3 ~/.openclaw/workspace/scripts/poster_new_person.py --photo <照片> --name <名字> --role <職稱> "
+                "--titles \"<頭銜1>/<頭銜2>\"（只重做一張加 --only 橫版 或 --only 直版）")
+    return ""
+
+
 def _block(fp, url_path, redo, reason):
     _record("blocked", fp, url_path, redo, reason)
     msg = f"🛑 LK888收費閘門擋下（沒有扣點）：{reason}"
@@ -207,6 +232,9 @@ def urlopen(req, timeout=None, **kwargs):
     redo = os.environ.get("LK888_REDO") == "1"
     fp = _fingerprint(req)
     url_path = req.full_url.split(GUARDED_HOST, 1)[1]
+    off = _bahai_offpath()
+    if off:
+        _block(fp, url_path, redo, off)
     LOCK_DIR.mkdir(parents=True, exist_ok=True)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
