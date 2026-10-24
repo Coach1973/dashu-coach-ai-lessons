@@ -1,3 +1,6 @@
+- [🔴 預覽頁新功能必須落在第一屏（量 top<innerHeight 或自動捲到）；教練滑不到就「看都沒看到」，我還連問OK不OK；deliver_open 開頁要讀回確認(2026-10-24)](feedback_show_new_feature_on_first_screen_2026-10-24.md)
+- [🔧 巴哈群組對話塞爆135%→壓縮卡5分鐘佔住 lane=main→小龍蝦也沒反應；診斷看日誌 overflow／stalled、重啟gateway、compact/archive指令；compact後仍135%未驗證(2026-10-24)](reference_peipei_group_context_overflow_blocks_main_lane_2026-10-24.md)
+- [🧑‍🤝‍🧑 人才軍火庫一排6人；大樹夥伴圈→商務團隊(在籍84)／人脈資源團隊(離會4)；詳細頁顯示所屬分會；戰情表判斷；21位未標分會；需求按鈕沒進正式頁(2026-10-24)](project_skyteam_identity_labels_chapters_six_columns_2026-10-24.md)
 - [🔴 教練 9/17 授權孔大哥、佩佩老師可用 LK888 出圖；海報要執行程式，10/24 02:10 才補開兩人權限（openclaw.json toolsBySender，備份在 state）；未實測出圖；問「教練說過嗎」先跑 recall.py --said(2026-10-24)](project_lk888_poster_permission_peipei_kong_2026-10-24.md)
 - [🎬 NMDA（中華新媒體影音發展協會）網站「理監事團隊」頁 team.html：照 tut_team 複製成 nmda_team.py，先放陳佩君、吳大樹空座位、本人點名字補資料；建置模式短網址 /nmda/b/<碼>＋後台已收進大樹作品集；nmda 5b965f8、workspace 7b3c08f26(2026-10-23)](project_nmda_board_team_page_2026-10-23.md)
 - [🧩 榮樹下網頁「我要預約」＋選時間送出自動占位（待確認）：前端 rongtree 17af887/da3ba4c、伺服器 /api/rongtree/hold e1d984776、上限6筆／IP每小時4次、姓名只在私人備註；週六可約起點改 9:30（interview_window_start_by_weekday）；正式站尚未實占過一次(2026-10-23)](project_rongtree_booking_hold_and_saturday_930_2026-10-23.md)
