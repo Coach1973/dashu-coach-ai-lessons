@@ -850,6 +850,29 @@ def footer_check(site_dir: Path) -> str:
         return ""
 
 
+def image_check(site_dir: Path) -> str:
+    """2026-10-25 教練：佩佩老師頁 4 張照片首次上架沒帶到、404 一個多月沒人發現。
+    網頁 html 引用的本地圖檔，資料夾裡不存在就提醒；只檢查、不改檔；全齊回空字串。"""
+    try:
+        import re as _re
+        site_dir = Path(site_dir)
+        miss = set()
+        for f in site_dir.glob("*.html"):
+            t = f.read_text(encoding="utf-8", errors="ignore")
+            for r in _re.findall(r'''(?:src|poster)=["']([^"']+)["']|url\(["']?([^)"']+)''', t):
+                ref = (r[0] or r[1]).split("?")[0].split("#")[0]
+                if not ref or ref.startswith(("data:", "http", "//", "#", "mailto")) or "{" in ref or "$" in ref:
+                    continue
+                if not _re.search(r"\.(jpe?g|png|gif|webp|svg|avif)$", ref, _re.I):
+                    continue
+                if not (site_dir / ref.lstrip("/")).exists():
+                    miss.add(ref)
+        return ("\n⚠️ 網頁用到但沒帶上來的圖：" + "、".join(sorted(miss)[:8]) + (f" 等{len(miss)}張" if len(miss) > 8 else "")) if miss else ""
+    except Exception as e:  # noqa: BLE001
+        log(f"圖檔檢查失敗: {e!r}")
+        return ""
+
+
 def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, registry: dict, existing_slugs: set, opt_note: str = "") -> None:
     """大樹作品：原封不動上架event.bymyway.com，建私有GitHub repo（2026-09-30教練定：event網址背後都要有GitHub，
     靜態內容在聯想／宏碁／小龍蝦改GitHub就好）、不插商圈卡、不發FB，
@@ -857,7 +880,7 @@ def publish_creation(pkg_path: Path, site_dir: Path, title: str, desc: str, regi
     slug = unique_slug(read_custom_slug(pkg_path) or slugify_title(title), existing_slugs)
     shutil.copytree(site_dir, GITHUB_REPOS_DIR / slug)
     sp_note = fix_shengping(GITHUB_REPOS_DIR / slug)
-    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug) + footer_check(GITHUB_REPOS_DIR / slug) + sp_note
+    form_note = wire_forms(GITHUB_REPOS_DIR / slug, slug) + footer_check(GITHUB_REPOS_DIR / slug) + image_check(GITHUB_REPOS_DIR / slug) + sp_note
     event_url = f"https://event.bymyway.com/curated/{slug}/"
     registry["sites"].append({
         "slug": slug,
@@ -1036,7 +1059,7 @@ def process_one(pkg_path: Path) -> None:
         shutil.copytree(tmp_extract, repo_dir)
         ensure_og_tags_absolute(repo_dir, slug)
         sp_note = fix_shengping(repo_dir)
-        form_note = wire_forms(repo_dir, slug) + footer_check(repo_dir) + sp_note
+        form_note = wire_forms(repo_dir, slug) + footer_check(repo_dir) + image_check(repo_dir) + sp_note
 
         token = get_github_token()
         create_github_repo(token, slug)
