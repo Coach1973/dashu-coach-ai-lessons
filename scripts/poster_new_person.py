@@ -72,6 +72,56 @@ def wrap(text, font, maxw, d):
     return [text[:cut]] + wrap(text[cut:], font, maxw, d)
 
 
+def fix_name(png, kind, name):
+    """2026-10-25 教練：AI 畫姓名遇少見字會畫錯（瀞→灝、枘→棶）。姓名也改用電腦字體重排：
+    先把 AI 畫的姓名抹成乾淨底色，再用宋體粗體寫上正確的字，位置、大小照原來那一塊。"""
+    im = Image.open(png).convert("RGB")
+    W, H = im.size
+    x0r, x1r, y0r, y1r = COLUMN[kind]
+    gx0, gx1 = int(W * x0r), int(W * (x1r - 0.04))
+    gy0, gy1 = int(H * y0r), int(H * y1r)
+    a = np.array(im).astype(float)
+    dark = np.array(im.convert("L"))[gy0:gy1, gx0:gx1] < 60
+    rows = np.where(dark.sum(1) > 25)[0]
+    if not len(rows):
+        return
+    r0 = r1 = rows[0]
+    for r in rows:                      # 第一組連續的深色列＝姓名（姓名與職稱之間有空隙）
+        if r - r1 > 8:
+            break
+        r1 = r
+    cols = np.where(dark[r0:r1 + 1].sum(0) > 1)[0]
+    c0, c1 = gx0 + cols.min(), gx0 + cols.max()
+    y0, y1 = gy0 + r0, gy0 + r1
+    pad = 14
+    ys, ye, xs, xe = max(0, y0 - pad), min(H, y1 + pad), max(0, c0 - pad), min(W, c1 + pad)
+    mask = np.zeros((H, W), bool)
+    sub = np.array(im.convert("L"))[ys:ye, xs:xe] < 150
+    mask[ys:ye, xs:xe] = np.array(Image.fromarray((sub * 255).astype("uint8")).filter(ImageFilter.MaxFilter(9))) > 0
+    def blur(x, r=12):                  # 方框模糊（numpy 累加），浮點圖 PIL 不支援
+        for ax in (0, 1):
+            c = np.cumsum(np.pad(x, [(r + 1, r) if i == ax else (0, 0) for i in range(x.ndim)], mode="edge"), axis=ax)
+            x = (np.take(c, range(2 * r + 1, c.shape[ax]), axis=ax) - np.take(c, range(0, c.shape[ax] - 2 * r - 1), axis=ax)) / (2 * r + 1)
+        return x
+    for _ in range(6):                  # 用周圍的底色往裡填（柔和的漸層底色）
+        w = (~mask).astype(float)
+        den = blur(w)[..., None]
+        fill = blur(a * w[..., None]) / np.maximum(den, 1e-3)
+        a = np.where(mask[..., None] & (den > 1e-3), fill, a)
+        mask = mask & (den[..., 0] <= 1e-3)
+    im = Image.fromarray(a.clip(0, 255).astype("uint8"))
+    size = int((y1 - y0 + 1) / 0.9)
+    font = ImageFont.truetype(FONT, size, index=2)
+    maxw = int(W * x1r) - int(c0)
+    while font.getlength(name) > max(maxw, c1 - c0 + 40) and size > 20:
+        size -= 2
+        font = ImageFont.truetype(FONT, size, index=2)
+    d = ImageDraw.Draw(im)
+    bbox = d.textbbox((0, 0), name, font=font)
+    d.text((c0 - bbox[0], y0 - bbox[1]), name, font=font, fill=(12, 12, 12))
+    im.save(png)
+
+
 def draw_titles(png, kind, titles):
     im = Image.open(png).convert("RGB")
     W, H = im.size
@@ -115,6 +165,7 @@ def make(kind, photo, name, role, titles, stamp):
     png = DATA / f"poster_{stamp}_{tag}.png"
     png.write_bytes(img)
     png.with_name(png.stem + "_raw.png").write_bytes(img)  # 沒排頭銜的原圖，重排字用
+    fix_name(png, kind, name)   # 姓名由電腦字體重排，避免少見字被 AI 畫錯
     if titles:
         draw_titles(png, kind, titles)
     jpg = png.with_suffix(".jpg")
