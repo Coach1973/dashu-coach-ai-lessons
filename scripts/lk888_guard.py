@@ -14,7 +14,7 @@
 規則：
   1. 一模一樣的出圖要求 24 小時內只付一次錢，再叫直接回傳上次的圖（不扣點）。
   2. 教練明說重畫才可設 LK888_REDO=1；同一張 5 分鐘內不准連續重畫。
-  3. 同一張 24 小時內最多付費 3 次；一小時內全部腳本合計最多 40 次，超過全面煞車並通知教練。
+  3. 同一張 24 小時內最多付費 3 次；一小時內全部腳本合計最多 200 次，超過全面煞車並通知教練。
   4. 超過上限要繼續，必須教練同意後 touch state/LK888_APPROVED（10 分鐘有效）。
   5. 兩個程式同時要畫同一張，第二個排隊等第一個畫完，直接拿結果。
 
@@ -52,7 +52,7 @@ GUARDED_HOST = "api.lk888.ai"
 CACHE_TTL = 24 * 3600
 REDO_MIN_GAP = 5 * 60
 MAX_PAID_PER_IMAGE_24H = 3
-MAX_PAID_PER_HOUR = 40
+MAX_PAID_PER_HOUR = 200  # 2026-10-25 教練：「不需要設限」，由 40 放寬；仍保留防暴衝煞車
 APPROVAL_TTL = 10 * 60
 LOCK_WAIT_SECONDS = 300
 TPE = timezone(timedelta(hours=8))
