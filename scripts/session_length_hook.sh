@@ -57,6 +57,8 @@ echo "$CUR_BAND" > "$MARKER"
 
 echo "🔔 對話長度提醒（系統自動）：本場已約 ${TURNS} 輪對話。"
 echo "   建議告一段落時：說「總結並上傳」→ 我會蒸餾紀錄+commit，然後你可開新視窗（/clear）。"
+echo "   ⚠️ 回覆時兩個數字一起講：「已 ${TURNS} 輪」＋「對話容量約 xx%」（用 get_usage 查 context.percentUsed，或看容量報告）。"
+echo "      輪數只是參考，容量才決定要不要換；兩個都給教練，由教練自己評估（教練 10/25 19:55）。"
 echo "   （提醒只是參考，任務沒做完不必急著換。）"
 
 exit 0
