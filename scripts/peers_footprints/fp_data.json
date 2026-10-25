@@ -1992,5 +1992,114 @@
   ],
   "photo_alt": "重慶國中魚菜共生社團課",
   "caption": "重慶國中魚菜共生社團課"
+ },
+ {
+  "slug": "wu-jinchang",
+  "name": "吳錦昌董事長",
+  "role": "順發電腦創辦人・用消費改變世界",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/wu-jinchang/",
+  "anchor": "#giving",
+  "lede": "2010 年，順發宣布轉型為「公益型企業」。不靠一次性的大筆捐款，而是把公益寫進每一筆交易裡——讓顧客不多花一毛錢，就能一起幫助弱勢學童。",
+  "stats": [
+   [
+    "3億3,016萬",
+    "累積捐款金額（元）"
+   ],
+   [
+    "4,624萬",
+    "消費行善人次"
+   ],
+   [
+    "1,210所+",
+    "受益全台中小學"
+   ],
+   [
+    "350,700人+",
+    "受益學童"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "2010",
+    "title": "轉型公益型企業",
+    "desc": "宣布每年捐出淨利 20% 幫助弱勢兒童，門市制服印上「全民新主義・消費做公益」。",
+    "src": "出處：ETtoday 2015/8/5 ↗",
+    "href": "https://www.ettoday.net/news/20150805/545446.htm"
+   },
+   {
+    "yr": "2012",
+    "title": "選擇透明的平台",
+    "desc": "以教育部學校教育儲蓄戶為主要捐款管道，讓善款盡可能直接用在孩子身上。",
+    "src": "出處：ETtoday 2015/8/5 ↗",
+    "href": "https://www.ettoday.net/news/20150805/545446.htm"
+   },
+   {
+    "yr": "2013",
+    "title": "遠見 CSR 首獎",
+    "desc": "獲《遠見》第九屆企業社會責任「公益推廣組」首獎；三年捐款已逾 1 億元，幫助近 18 萬人次。",
+    "src": "出處：遠見雜誌 2013/4/30 ↗",
+    "href": "https://www.gvm.com.tw/article/17907"
+   },
+   {
+    "yr": "2014",
+    "title": "20 for Future 公益企業聯盟",
+    "desc": "成立公益企業聯盟，號召更多企業一起響應「消費做公益」。",
+    "src": "出處：ETtoday 2015/8/5 ↗",
+    "href": "https://www.ettoday.net/news/20150805/545446.htm"
+   },
+   {
+    "yr": "2019",
+    "title": "首屆 Run for Future",
+    "desc": "與高雄港都上市櫃企業家協會合辦公益路跑，結餘 98.6 萬元贊助高雄偏鄉 11 所學校。",
+    "src": "出處：中時新聞網 2020/1/21 ↗",
+    "href": "https://www.chinatimes.com/realtimenews/20200121001516-260405"
+   },
+   {
+    "yr": "2021–23",
+    "title": "疫情中學習不中斷",
+    "desc": "與高雄市教育局合作，三年捐贈 1,200 組線上學習帳號，47 校次師生受惠，獲頒感謝狀。",
+    "src": "出處：風傳媒 2023/2/8 ↗",
+    "href": "https://www.storm.mg/article/4723024"
+   },
+   {
+    "yr": "2023",
+    "title": "與慈濟「企業共善」",
+    "desc": "簽約推動再生電腦專案，整修後無償送給弱勢學童，同時減少電子廢棄物。",
+    "src": "出處：慈善新聞網 2023/9/26 ↗",
+    "href": "https://www.tcnews.com.tw/news/item/20085.html"
+   },
+   {
+    "yr": "2025",
+    "title": "路跑規模創新高",
+    "desc": "第四屆 Run for Future 吸引 20 國 5,464 名跑者，結餘 173 萬 8,328 元全數捐助高雄 17 個兒少照顧單位。",
+    "src": "出處：工商時報 2025/7/23 ↗",
+    "href": "https://www.ctee.com.tw/news/20250723700201-439901"
+   },
+   {
+    "yr": "2026",
+    "title": "累積捐款 3 億 3,016 萬元",
+    "desc": "17 年累積成果；第五屆 Run for Future 啟動，邀請 100 家企業共同發起。",
+    "src": "出處：順發電腦提供，統計至 2026/9 ↗",
+    "href": "https://event.bymyway.com/curated/social-club/#sunfar"
+   },
+   {
+    "yr": "2027",
+    "title": "走向國際",
+    "desc": "4 月 18 日在高雄港灣文化廊帶起跑，目標 12,000 名跑者、25–30 個國家地區。",
+    "src": "出處：福爾摩沙時報 2026/10/5 ↗",
+    "href": "https://formosa.ikh.tw/index.php?pn=vw&id=i327ec32zv5l"
+   }
+  ],
+  "photo": [
+   "assets/people/wu-jinchang.jpg",
+   [
+    720,
+    477,
+    80860
+   ]
+  ],
+  "photo_alt": "Run for Future 企業家領跑隊伍",
+  "caption": "第三屆 Run for Future 企業家領跑隊伍（工商時報）"
  }
 ]
