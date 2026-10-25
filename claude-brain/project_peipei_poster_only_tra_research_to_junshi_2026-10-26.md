@@ -12,3 +12,5 @@ metadata:
 **Why:** 10/25 台鐵研究讓巴哈派小幫手燒到 898 步／1.29 億 token，連帶限流冷卻→罷工（見 [[feedback-bot-instructions-must-block-old-path-and-measure-tokens-2026-10-25]]、[[feedback-lk888-hourly-cap-raised-and-minimax-quota-burner-2026-10-25]]）。
 
 **How to apply:** 開工先讀 tra_research_inbox.md；做完用巴哈 bot token（channels.telegram.accounts.bot_peipei）推回群組 -5115910257；要重新開放研究工具要教練明說。講「額度」必附時間點與現況（案例134 ef69f9fc4）。圖文報告：event.bymyway.com/curated/tra-taitung/。
+
+**01:14 追加**：轉交檔已接事件觸發 `scripts/tra_inbox_worker.sh`＋`com.coach.tra-inbox-watch`（98e5070a9）；觸發正常，但背景 `claude -p` 輸出空白（根因未明，見接力棒），目前失敗只私訊教練兜底。launchd 跑 claude 必須有 USER 環境變數，否則「沒登入」。
