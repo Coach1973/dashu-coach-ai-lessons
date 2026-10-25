@@ -100,6 +100,12 @@ def check_xiaolongxia():
         ok("小龍蝦主程式")
     else:
         bad("小龍蝦主程式", f"狀態={state}，健康檢查回應={code}")
+    # 卡死看門員（2026-10-25）：同一則訊息逾時第 2 次就自動重開那段對話並通知教練；它停了就沒人解卡
+    wd = launchd_running("com.coach.openclaw-stall-watchdog")
+    if wd == "running":
+        ok("小龍蝦卡死看門員")
+    else:
+        bad("小龍蝦卡死看門員", f"狀態={wd}，重啟：launchctl kickstart -k gui/$(id -u)/com.coach.openclaw-stall-watchdog")
 
 
 def check_telegram_bots():
