@@ -222,9 +222,15 @@ Skills define how tools work. Keep environment-specific local notes in this sect
 |------|---------|
 | node | `/opt/homebrew/bin/node` |
 | python3 | `/opt/homebrew/bin/python3` |
-| claude-code CLI | `/opt/homebrew/bin/claude-code` |
+| claude-code CLI（軍師） | `/Users/bymyway/.local/bin/claude` |
 
 **原則**：任何 cron wrapper 腳本一律使用絕對路徑，不依賴 PATH。
+
+> 🔴 2026-10-26 實測修正：舊記載的 `/opt/homebrew/bin/claude-code` **已不存在**（`command not found`）。軍師 CLI 真正的執行檔是 `~/.local/bin/claude`（symlink 到 `~/.local/share/claude/versions/<ver>`），用 `which claude` 確認。
+>
+> ⚠️ 軍師 CLI 額度會撞上限，回應文字為 `You've hit your session limit · resets HH:MM (Asia/Taipei)`。撞到時派工給軍師會直接失敗，此時由小龍蝦接手做完（見 LK888 派工 `ebc3da7e9`）。
+
+> 🔴 anthropic provider 未授權 → `view_image` 的 `anthropic/claude-opus-5` 路徑固定回 `401 Invalid API key`。`openclaw models auth login --provider anthropic` 需要互動式 TTY，自動化環境要改用 `openclaw models auth paste-token --provider anthropic`。未補授權前，圖片驗收只能靠 `minimax/MiniMax-VL-01`，且它會間歇性回空（失敗時改用單張小圖重試）。
 
 ## 模型驗證
 
