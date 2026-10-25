@@ -14,8 +14,11 @@
 規則：
   1. 一模一樣的出圖要求 24 小時內只付一次錢，再叫直接回傳上次的圖（不扣點）。
   2. 教練明說重畫才可設 LK888_REDO=1；同一張 5 分鐘內不准連續重畫。
-  3. 同一張 24 小時內最多付費 3 次；一小時內全部腳本合計最多 200 次，超過全面煞車並通知教練。
+  3. 同一張 24 小時內最多付費 3 次。
   4. 超過上限要繼續，必須教練同意後 touch state/LK888_APPROVED（10 分鐘有效）。
+
+  （2026-10-26 教練「不需要設限，請繼續」→ 已移除每小時付費總量上限與暫停通知機制；
+    同一張 24 小時上限、5 分鐘重畫間隔、24 小時 cache、核准 token 仍在。）
   5. 兩個程式同時要畫同一張，第二個排隊等第一個畫完，直接拿結果。
 
   6. 多組金鑰備援（2026-09-26教練開第二個帳戶）：路徑大全_憑證層.md 的 lk888 段落可放多行
@@ -44,15 +47,11 @@ LEDGER = STATE / "lk888_ledger.jsonl"
 CACHE_DIR = STATE / "lk888_cache"
 LOCK_DIR = STATE / "lk888_locks"
 APPROVAL_TOKEN = STATE / "LK888_APPROVED"
-BREAKER_ALERT_MARK = STATE / "lk888_breaker_alerted"
-OPENCLAW_CONFIG = Path.home() / ".openclaw" / "openclaw.json"
-COACH_CHAT_ID = "6124913915"
 
 GUARDED_HOST = "api.lk888.ai"
 CACHE_TTL = 24 * 3600
 REDO_MIN_GAP = 5 * 60
 MAX_PAID_PER_IMAGE_24H = 3
-MAX_PAID_PER_HOUR = 200  # 2026-10-25 教練：「不需要設限」，由 40 放寬；仍保留防暴衝煞車
 APPROVAL_TTL = 10 * 60
 LOCK_WAIT_SECONDS = 300
 TPE = timezone(timedelta(hours=8))
@@ -123,20 +122,6 @@ def _fingerprint(req):
     h.update(req.full_url.encode())
     h.update(body)
     return h.hexdigest()[:24]
-
-
-def _notify_coach(text):
-    try:
-        cfg = json.loads(OPENCLAW_CONFIG.read_text(encoding="utf-8"))
-        token = cfg["channels"]["telegram"]["accounts"]["bot_main"]["botToken"]
-        payload = json.dumps({"chat_id": COACH_CHAT_ID, "text": text}).encode()
-        r = urllib.request.Request(
-            f"https://api.telegram.org/bot{token}/sendMessage",
-            data=payload, method="POST", headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(r, timeout=10):
-            pass
-    except Exception as e:
-        print(f"⚠️ LK888閘門通知教練失敗：{e}", file=sys.stderr)
 
 
 PEIPEI_DIR = Path.home() / ".openclaw" / "agents" / "peipei"
@@ -266,18 +251,6 @@ def urlopen(req, timeout=None, **kwargs):
             _block(fp, url_path, redo, f"同一張圖{ago}秒前才付費畫過，5分鐘內不准再重畫（疑似鬼打牆重跑）。請先把已畫好的圖交給教練")
         if len(mine) >= MAX_PAID_PER_IMAGE_24H and not _approved():
             _block(fp, url_path, redo, f"同一張圖24小時內已付費{len(mine)}次，達上限。請停下來問教練；教練同意後才可 touch ~/.openclaw/workspace/state/LK888_APPROVED（10分鐘有效）")
-        hour = [d for d in recent if d["event"] == "attempt" and d["epoch"] >= _now() - 3600]
-        if len(hour) >= MAX_PAID_PER_HOUR and not _approved():
-            try:
-                alerted = _now() - float(BREAKER_ALERT_MARK.read_text()) < 3600
-            except (FileNotFoundError, ValueError):
-                alerted = False
-            if not alerted:
-                BREAKER_ALERT_MARK.write_text(str(_now()))
-                _notify_coach(f"🛑 LK888收費閘門全面煞車：過去一小時已付費出圖 {len(hour)} 次（上限{MAX_PAID_PER_HOUR}）。"
-                              f"已暫停所有出圖，避免額度被燒光。要繼續請跟軍師或小龍蝦說一聲。")
-            _block(fp, url_path, redo, f"過去一小時全部腳本合計已付費{len(hour)}次，觸發全面煞車並已通知教練。請停下來等教練指示")
-
         _record("attempt", fp, url_path, redo)
         try:
             raw = _send_with_key_failover(req, fp, url_path, redo, timeout, kwargs)
