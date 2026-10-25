@@ -1529,6 +1529,12 @@ def skyteam_visit():
     return _sts_json(_sts.stats())
 
 
+@app.route("/api/skyteam/ranking", methods=["GET"])
+def skyteam_ranking():
+    """只讀各人點擊數（不記到訪）：邀請函頁用它跟首頁排名同步。"""
+    return _sts_json({"clicks": _sts.stats().get("clicks", {})})
+
+
 @app.route("/api/skyteam/click", methods=["POST"])
 def skyteam_click():
     ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
