@@ -1,3 +1,4 @@
+- [🔴🔴 小龍蝦分身每8分鐘重試同一則、整天不回話：根因＝中途不整理(midTurnPrecheck預設關)＋整理逾時300秒＋重試要滿24小時才放棄；已開midTurnPrecheck、群組每天4點重開、卡死看門員自動解卡並通知(2026-10-25)](reference_openclaw_compaction_timeout_infinite_retry_root_fix_2026-10-25.md)
 - [🔴 教練給條件式規則（凡…就…）＝範圍是符合條件的全部頁面，自己從名單掃完一次做完，不要只做點名的幾頁再問要不要補（頁尾第4連結被糾正，2026-10-25）](feedback_scope_sweep_all_matching_pages_not_just_named_2026-10-25.md)
 - [🌱 有公益足跡(≥3則)的網頁自動進真公益「足跡夥伴」(sync_peers.py，上架後自動跑，現23位)；顧問師天團頁尾第4連結已補40頁；軍火庫前32位、陳和平第1、周睿麒(教練念周瑞琪)；抽不出來的4頁(2026-10-25)](project_footprint_partners_auto_sync_and_skyteam_footer_2026-10-25.md)
 - [🔧 網頁表頭滑掉＝body overflow-x:hidden 讓 sticky 失效；全站 84 頁同網域 iframe 往下捲量表頭法、手機固定表頭要量高度(2026-10-25)](reference_sticky_header_broken_by_body_overflow_x_hidden_audit_method_2026-10-25.md)
