@@ -157,9 +157,15 @@ def draw_titles(png, kind, titles):
     im.save(png)
 
 
-def make(kind, photo, name, role, titles, stamp):
+OUTFIT = ("補充（很重要）：人物身上的衣服顏色、款式與姿勢都要跟第二張照片一模一樣，"
+          "不要換成別的衣服（例如白色外套就維持白色外套、白色蕾絲上衣就維持白色蕾絲上衣，不可改成黑西裝）。")
+
+
+def make(kind, photo, name, role, titles, stamp, extra=""):
     template, size, person_pos = TEMPLATES[kind]
-    prompt = PROMPT.format(kind=kind, person_pos=person_pos, name=name, role=role)
+    prompt = PROMPT.format(kind=kind, person_pos=person_pos, name=name, role=role) + "\n" + OUTFIT
+    if extra:
+        prompt += "\n" + extra
     img = generate_with_references(prompt, [template, photo], size)
     tag = "horizontal" if kind == "橫版" else "portrait"
     png = DATA / f"poster_{stamp}_{tag}.png"
@@ -180,6 +186,7 @@ def main():
     ap.add_argument("--role", default="", help="姓名下面那一行，例如 秘書長、副理事長")
     ap.add_argument("--titles", default="", help="頭銜，用 / 或 、 或換行分隔")
     ap.add_argument("--only", choices=["橫版", "直版"], help="只出一張（重做時用）")
+    ap.add_argument("--extra", default="", help="額外要求（例如 外套要白色），會接在提示詞最後")
     a = ap.parse_args()
 
     photo = Path(a.photo).expanduser()
@@ -192,7 +199,7 @@ def main():
 
     def run(k):
         try:
-            results[k] = make(k, photo, a.name, a.role, titles, stamp)
+            results[k] = make(k, photo, a.name, a.role, titles, stamp, a.extra)
         except Exception as e:  # noqa: BLE001
             errors[k] = e
 
