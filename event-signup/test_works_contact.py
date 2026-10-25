@@ -34,8 +34,11 @@ def post(**over):
 
 r = post()
 check("正常送出回 ok", r.status_code == 200 and r.get_json()["ok"] is True)
-check("通知只發到「活動報名即時通知」群", len(SENT) == 1 and SENT[0]["chat_id"] == GROUP)
-check("通知含作品名、姓名、電話、項目", all(k in SENT[0]["text"] for k in ("楊博士", "測試勿理", "0912-345-678", "洽詢代工")))
+check("通知發 2 則：群組 + 教練個人對話", len(SENT) == 2 and SENT[0]["chat_id"] == GROUP and SENT[1]["chat_id"] == appmod.TELEGRAM_NOTIFY_CHAT_ID)
+check("兩則通知都含作品名、姓名、電話、項目",
+      all(all(k in s["text"] for k in ("楊博士", "測試勿理", "0912-345-678", "洽詢代工")) for s in SENT))
+check("教練個人對話那則開頭含「（同步給教練）」標記", "（同步給教練）" in SENT[1]["text"])
+check("群組那則不含「同步給教練」標記", "同步給教練" not in SENT[0]["text"])
 conn = db.get_conn(); row = conn.execute("SELECT * FROM works_contact_leads").fetchone()
 check("資料有存進資料庫", row and row["site"] == "hnv-cc" and row["name"] == "測試勿理" and row["item"] == "洽詢代工")
 
@@ -46,7 +49,7 @@ check("沒電話但有 Email 也收（榮樹下表單）", post(phone="", email=
 check("電話跟 Email 都沒有被擋", post(phone="", email="not-an-email").status_code == 400)
 check("不存在的作品頁被擋", post(site="no-such-site").status_code == 404)
 check("亂填 site 格式被擋", post(site="../etc").status_code == 404)
-check("以上被擋的都沒有通知（Email 那筆正常通知 1 則）", len(SENT) == n + 1)
+check("以上被擋的都沒有通知（Email 那筆正常通知 2 則：群組+教練）", len(SENT) == n + 2)
 n = len(SENT)
 r = post(website="http://spam")
 check("機器人隱藏欄位：假裝成功但不通知不存檔", r.get_json()["ok"] is True and len(SENT) == n

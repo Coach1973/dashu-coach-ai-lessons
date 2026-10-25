@@ -2816,14 +2816,17 @@ def api_works_contact():
         conn.commit()
         conn.close()
     except Exception as e:  # noqa: BLE001  資料庫寫入失敗也一定要通知，人工補登
-        _notify_xiaolongxia(f"⚠️【{title}・留資料寫入失敗】\n姓名：{name}\n電話：{phone}\n項目：{item or '未選'}\n錯誤：{e}\n請人工補登。",
-                            chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+        fail_text = f"⚠️【{title}・留資料寫入失敗】\n姓名：{name}\n電話：{phone}\n項目：{item or '未選'}\n錯誤：{e}\n請人工補登。"
+        _notify_xiaolongxia(fail_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+        _notify_xiaolongxia(f"📩（同步給教練）{fail_text}", chat_id=TELEGRAM_NOTIFY_CHAT_ID)
         return reply(False, "系統忙碌，請稍後再試", 500)
-    _notify_xiaolongxia(
+    lead_text = (
         f"📩【{title}】有人留資料\n姓名：{name}\n電話：{phone or '（沒留，請看 Email）'}\n想了解：{item or '未選'}\n"
         + (f"Email：{email}\n" if email else "") + (f"留言：{message}\n" if message else "")
-        + f"（來源：event.bymyway.com/curated/{site}/）",
-        chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+        + f"（來源：event.bymyway.com/curated/{site}/）")
+    _notify_xiaolongxia(lead_text, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    _notify_xiaolongxia(lead_text.replace("有人留資料", "有人留資料（同步給教練）", 1),
+                        chat_id=TELEGRAM_NOTIFY_CHAT_ID)
     return reply(True)
 
 
