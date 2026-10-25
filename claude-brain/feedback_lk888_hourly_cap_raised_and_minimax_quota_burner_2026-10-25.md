@@ -14,3 +14,7 @@ metadata:
 
 **Why:** 教練工作中被系統擋住會不高興；額度打滿的元兇要用數字講，不要猜。
 **How to apply:** 再看到 2056 → 先跑同樣的 5 小時 token 統計找元兇；巴哈一批海報做完再把群組對話清掉（先備份 sqlite），避免下一批又每次帶 10 萬 token。相關：[[reference-peipei-group-context-overflow-blocks-main-lane]]、[[feedback-no-model-fallback-minimax-overload-is-their-problem-2026-10-20]]
+
+**10/26 00:25 教練糾正（我又說「額度用完」）**：教練貼 MiniMax 後台：5 小時額度只用 13%、週額度 79%。實情是額度在 10/25 22:00～23:03（台灣時間）用完過，之後恢復，但小龍蝦把帳號標成「限流冷卻」（連錯 14 次→冷卻倍增、套件寫死最長 24 小時），標記冷卻到 00:43；聊天打得過去，**整理對話卻拒用冷卻中的帳號**→對話塞爆→罷工。燒額度的元兇不是海報，是佩佩老師的「台鐵標案研究」：巴哈派小幫手，一個跑 898 步、1.29 億 token（每步約 14 萬），還陷入回報失敗重送迴圈。
+**根治**：①看門員看到「probing cooldowned auth profile」或「auth candidates are temporarily unavailable」就清掉各分身的限流冷卻（`clear_rate_limit_cooldowns`，workspace 19aa8a39f，用真實副本實測過）②`agents.defaults.subagents`＝一層、同時 2 個、每個 10 分鐘（929586963，閘道已熱載入）。
+**How to apply:** 教練問「為什麼不能跑」，先查各分身 sqlite `auth_profile_state` 的 cooldownUntil 與日誌最後一次 usage limit 時間，**講「額度」前必須附時間點與目前狀態**，不准用過去式的錯誤當現況。
