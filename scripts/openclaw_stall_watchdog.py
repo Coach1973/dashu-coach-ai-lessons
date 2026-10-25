@@ -9,6 +9,9 @@
 - 第 1 次逾時：中斷該聊天室正在跑的背景工作（子任務回報、分身互傳訊息等），讓真人訊息先處理（10/25 晚巴哈案）。
 - 第 2 次逾時：把那個聊天室的對話刪掉重開（原紀錄系統會自動封存成 .zst，不會遺失）。
 兩種處理都直接發 Telegram 通知教練，並附上它原本在忙什麼。
+- 對話塞爆、整理也救不回來（日誌「Auto-compaction failed … Preserving existing session mapping for <對話>」）：
+  直接把那段對話封存重開，通知教練可以再說一次（10/25 19:24 頂級特助案；送出的英文錯誤通知由
+  外掛 url-typo-guard 換成中文「【軍師轉達】…看門員會自動幫它換新對話」，這裡負責讓那句話成真）。
 """
 import json
 import re
@@ -28,6 +31,9 @@ COACH_CHAT_ID = "6124913915"
 STALL_RE = re.compile(r"stalled for event (\d+) on lane ([^\s]+) after \d+ms; applying retry policy \(handler-timeout\)")
 STALLS_BEFORE_RESET = 2
 TOOL_RE = re.compile(r"偵測工具呼叫: (\w+) agent: (\w+)")
+OVERFLOW_RE = re.compile(r"Auto-compaction failed \(.*?Preserving existing session mapping for (agent:([a-z_]+):[^\s\"]+?)\.?\"")
+OVERFLOW_COOLDOWN = 300  # 同一段對話 5 分鐘內只處理一次（一次塞爆常連寫好幾行）
+overflow_done = {}
 INBOUND_RE = re.compile(r"Inbound message telegram:[a-z]+:(-?\d+) -> @(\w+)")
 last_bot_for_chat = {}  # 聊天室 → 最近收到訊息的機器人帳號名稱
 _bot_accounts = {}
@@ -195,6 +201,29 @@ def handle(event_id, lane, st):
         notify(f"⚠️ 小龍蝦卡住：{lane} 自動解卡時出錯（{e}），請叫軍師處理。")
 
 
+def handle_overflow(key, agent, dry_run=False):
+    now = time.time()
+    if now - overflow_done.get(key, 0) < OVERFLOW_COOLDOWN:
+        return
+    overflow_done[key] = now
+    log(f"偵測到對話塞爆、整理救不回來：{key}")
+    if dry_run:
+        print(f"[試跑] 會執行：openclaw sessions delete {key} --agent {agent} --yes")
+        return
+    try:
+        code, out = run_openclaw("sessions", "delete", key, "--agent", agent, "--yes")
+        ok = code == 0 and "Deleted session" in out
+        log(f"{'已重開' if ok else '重開失敗'}：{key}\n{out[-400:]}")
+        where = "跟您的私訊" if key == f"agent:{agent}:main" else key.split(":", 2)[-1]
+        notify(
+            f"【軍師轉達】分身「{agent}」在{where}的對話太長、整理不動了，"
+            + ("看門員已自動換成新對話（舊紀錄有封存），現在可以把剛剛那句話再說一次。" if ok else "看門員自動換新對話失敗，請叫軍師處理。")
+        )
+    except Exception as e:
+        log(f"重開塞爆對話失敗：{e}")
+        notify(f"【軍師轉達】分身「{agent}」對話塞爆，自動換新對話時出錯（{e}），請叫軍師處理。")
+
+
 def follow():
     st = load_state()
     cur, f = None, None
@@ -215,6 +244,10 @@ def follow():
         if i:
             last_bot_for_chat[i.group(1)] = i.group(2)
             continue
+        o = OVERFLOW_RE.search(line)
+        if o:
+            handle_overflow(o.group(1), o.group(2))
+            continue
         t = TOOL_RE.search(line)
         if t:
             recent_tools.append((time.time(), t.group(2), t.group(1)))
@@ -226,7 +259,13 @@ def follow():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2 and sys.argv[1] == "--test-line":
+    if len(sys.argv) > 2 and sys.argv[1] == "--test-overflow":
+        ACTION_LOG = Path("/dev/null")
+        o = OVERFLOW_RE.search(sys.argv[2])
+        print(o.groups() if o else None)
+        if o:
+            handle_overflow(o.group(1), o.group(2), dry_run=True)
+    elif len(sys.argv) > 2 and sys.argv[1] == "--test-line":
         m = STALL_RE.search(sys.argv[2])
         print(m.groups() if m else None)
     else:
