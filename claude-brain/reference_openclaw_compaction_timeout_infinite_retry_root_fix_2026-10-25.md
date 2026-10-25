@@ -22,3 +22,5 @@ metadata:
 **How to apply**：分身不回話先看日誌有沒有 handler-timeout；看門員應已自動處理，看 `state/openclaw_stall_watchdog.log`。看門員本身沒真實觸發過（只做過假日誌行自測），第一次真觸發時確認有沒有通知到教練。
 
 相關：[[reference-peipei-group-context-overflow-blocks-main-lane]]、[[feedback-bot-instructions-must-block-old-path-and-measure-tokens-2026-10-25]]
+
+**10/25 晚第二輪（18:00～18:10）**：巴哈對話不大（6.8 萬）也卡——是被背景工作佔住：內建「自動技能整理」(skills.workshop.autonomous 預設 auto) 會自己開工作、用 sessions_send 叫頂級特助，頂級特助再回傳巴哈，群組真人訊息排在後面。已設 `skills.workshop.autonomous.mode=off`（外層 repo ed06e68e0）。看門員 v2（workspace 4c6d25126）：第 1 次逾時 → `openclaw gateway call sessions.abort --params '{"key":…,"agentId":…}'` 中斷背景工作並通知教練它在忙什麼；第 2 次才刪對話。分身判斷改用「收到訊息的機器人 @名稱 → getMe 對帳號 → bindings」，**不可用最近更新排序**（測試時同群組選到 agent:main，差點動錯頂級特助）。手動中斷實測：18:04 中斷後排隊 7 分多的訊息立刻被接手。v2 的自動中斷還沒真實觸發過。
