@@ -227,6 +227,45 @@ def handle_overflow(key, agent, dry_run=False, reason="對話太長、整理不�
         notify(f"【軍師轉達】分身「{agent}」對話塞爆，自動換新對話時出錯（{e}），請叫軍師處理。")
 
 
+# 2026-10-26 教練：「明明就有額度，為什麼不能跑？」——MiniMax 5 小時額度一用完，小龍蝦會把帳號標成
+# 「冷卻中」，連錯幾次冷卻時間就倍增（最長 24 小時，寫死在套件裡）。額度早就恢復了，標記還在：
+# 聊天會試著打過去，但「整理對話」直接拒絕→對話塞爆→罷工。看到這兩種日誌就把「限流冷卻」清掉；
+# 真的還沒額度，下一次呼叫會重新標記（從 30 秒起算），不會亂打。
+COOLDOWN_HINTS = ("probing cooldowned auth profile", "auth candidates are temporarily unavailable")
+cooldown_cleared_at = [0.0]
+
+
+def clear_rate_limit_cooldowns(dry_run=False):
+    import sqlite3
+    if time.time() - cooldown_cleared_at[0] < 60:
+        return
+    cooldown_cleared_at[0] = time.time()
+    for db in sorted((Path.home() / ".openclaw" / "agents").glob("*/agent/openclaw-agent.sqlite")):
+        agent = db.parent.parent.name
+        try:
+            c = sqlite3.connect(db, timeout=5)
+            row = c.execute("SELECT state_json FROM auth_profile_state WHERE state_key='primary'").fetchone()
+            if not row:
+                continue
+            st = json.loads(row[0])
+            hit = []
+            for pid, u in (st.get("usageStats") or {}).items():
+                if u.get("cooldownReason") == "rate_limit" and (u.get("cooldownUntil") or 0) > time.time() * 1000:
+                    hit.append(f"{pid} 原本冷卻到 {datetime.fromtimestamp(u['cooldownUntil'] / 1000):%H:%M}")
+                    for k in ("cooldownUntil", "cooldownReason", "cooldownModel"):
+                        u.pop(k, None)
+                    u["errorCount"] = 0
+            if hit and not dry_run:
+                c.execute("UPDATE auth_profile_state SET state_json=?, updated_at=? WHERE state_key='primary'",
+                          (json.dumps(st), int(time.time() * 1000)))
+                c.commit()
+            if hit:
+                log(f"{'[試跑] ' if dry_run else ''}解除限流冷卻：{agent}：{'；'.join(hit)}")
+            c.close()
+        except Exception as e:
+            log(f"解除限流冷卻失敗：{agent}：{e}")
+
+
 def handle_claim(key, agent, dry_run=False):
     now = time.time()
     fails = [t for t in claim_fails.get(key, []) if now - t < 600] + [now]
@@ -256,6 +295,8 @@ def follow():
         if i:
             last_bot_for_chat[i.group(1)] = i.group(2)
             continue
+        if any(h in line for h in COOLDOWN_HINTS):
+            clear_rate_limit_cooldowns()
         o = OVERFLOW_RE.search(line)
         if o:
             handle_overflow(o.group(1), o.group(2))
@@ -288,6 +329,8 @@ if __name__ == "__main__":
         if c:
             handle_claim(c.group(1), c.group(2), dry_run=True)
             handle_claim(c.group(1), c.group(2), dry_run=True)
+    elif len(sys.argv) > 1 and sys.argv[1] == "--test-cooldown":
+        clear_rate_limit_cooldowns(dry_run=True)
     elif len(sys.argv) > 2 and sys.argv[1] == "--test-line":
         m = STALL_RE.search(sys.argv[2])
         print(m.groups() if m else None)
