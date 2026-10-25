@@ -70,13 +70,18 @@ def main():
         env = dict(os.environ)
         env["PATH"] = f"{Path.home()}/.local/bin:/opt/homebrew/bin:" + env.get("PATH", "")
         r = subprocess.run(cmd, cwd=str(CWD), env=env, capture_output=True, text=True, timeout=TIMEOUT)
-        d = json.loads(r.stdout)
+        try:
+            d = json.loads(r.stdout)
+        except Exception:
+            rec["err"] = ((r.stderr or "") + (r.stdout or ""))[:200]
+            raise
         text = (d.get("result") or "").strip()
         u = d.get("usage") or {}
         rec.update(sec=round(time.time() - t0, 1), cost_usd=d.get("total_cost_usd"), turns=d.get("num_turns"),
                    inp=u.get("input_tokens"), cache_new=u.get("cache_creation_input_tokens"),
                    cache_read=u.get("cache_read_input_tokens"), out=u.get("output_tokens"))
         if d.get("is_error") or not text:
+            rec["err"] = (text or json.dumps(d, ensure_ascii=False))[:200]
             rec["why"] = "empty_or_error"
             return FALLBACK
         rec["ok"] = True
