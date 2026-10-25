@@ -1,4 +1,4 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-26 00:56 台灣時間，Mac 桌面版 Code 分頁（「開工1437」臨時 worktree kaigyo-1437-7ba0b0），Sonnet 5.5 ⇄ Opus 5.5；教練說「總結」；本段 10/25 14:38～10/26 00:56，對話容量約 40%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-26 01:14 台灣時間（含 00:56 後追加），Mac 桌面版 Code 分頁（「開工1437」臨時 worktree kaigyo-1437-7ba0b0），Sonnet 5.5 ⇄ Opus 5.5；教練說「總結」；本段 10/25 14:38～10/26 01:14，對話容量約 46%）
 
 **主軸：人才軍火庫邀請函連動排名、小龍蝦（巴哈）罷工根治、接手巴哈卡住的海報與台鐵研究案、巴哈改成只出海報。**
 - **軍火庫**：邀請函首批 24 位連動首頁點擊排名（roster.json＋/api/skyteam/ranking），首頁換人要跑 skyteam_build_invite_roster.py。
@@ -8,8 +8,11 @@
 - **新分工（教練 10/26 00:52）**：台鐵研究案由軍師統籌；巴哈只出中華新媒體橫＋直版海報。已用程式擋：巴哈 3 種身分都禁用上網、瀏覽器、小幫手（`da22958c9`），台鐵類訊息由巴哈追加到 state/tra_research_inbox.md（實測成功）。
 - **教練原話線索**：「為什麼要讓我二選一」＝兩個資訊都給、讓他自己評估；「卡住的你就做、做完推回去」＝佩佩老師處理不了的由軍師接手、成品推回群組；「沒有查明之前怎麼可以胡說八道」＝講額度必附時間點與現況。
 
+- **00:56 後追加：台鐵轉交自動觸發（未完成）**：教練要「轉交檔一寫入就自己處理、做完用巴哈推回群組」。已裝 `scripts/tra_inbox_worker.sh`＋`com.coach.tra-inbox-watch`（WatchPaths 監看 state/tra_research_inbox.md，幾秒內觸發，實測 OK；plist 已備份進 ops/launchagents_backup；一天上限 8 次）。**卡關**：腳本在背景叫 `claude -p` 每次約 30～50 秒、exit 0、輸出 0 bytes（json 也空）；同參數拆開單獨在 launchd 測都正常（短提示、長提示、三個 --add-dir、perl alarm 各自 OK），合起來就空白，根因未找到。補過 `USER/LOGNAME`（乾淨環境沒 USER 時 claude 顯示沒登入）。目前失敗會用主機器人私訊教練「請叫軍師接手」，不會推群組。除錯用 `TRA_DEBUG=1`（set -x 到 /tmp/tra_worker_debug.log）、`TRA_TEST=1`（答案改發教練私訊）。另：舊派工橋 `junshi_task_worker.sh` 的 WatchPaths 設定檔已不在 LaunchAgents（寫 JUNSHI_TASK_QUEUE 沒人接），10/25 的成功紀錄不知是誰觸發。
+- **教練問（00:55）**：特殊任務結束後巴哈要恢復跟頂級特助一樣——恢復＝拿掉 openclaw.json peipei toolsBySender 三處 deny 裡我加的 `group:web`、`browser`、`sessions_spawn`、`subagents`，與 AGENTS.md 最上方「2026-10-26 教練指令」那段（原檔備份 state/backup_peipei_AGENTS_20261026.md）。兩邊原本設定就不同，只保證恢復原狀。
+
 ### 📋 下一場開工先做（以本棒為準）
-1. **讀 state/tra_research_inbox.md**：佩佩老師有沒有新的台鐵問題（巴哈轉來的），有就接手做、成品用巴哈 bot token 推回群組 -5115910257。這條轉交機制沒有自動通知，只能開工時讀（可改成事件觸發推播給教練）。
+1. **用 Opus 查 tra_inbox_worker 的 claude -p 空白根因**：重現法＝寫一行到 state/tra_research_inbox.md（先 `launchctl setenv TRA_TEST 1`，測完一定 `launchctl unsetenv TRA_TEST`），看 ~/Library/Logs/openclaw/tra_inbox_worker.log；可試改成直接把 PROMPT 寫檔、用 stdin 餵 claude，或加 `--debug` 看。修好前，佩佩老師的台鐵問題靠「私訊通知教練→叫軍師接手」。
 2. 台鐵研究案：還缺標案正式 16 據點名單與標案形式，明天提案結果出來後補。
 3. 林家羽海報照片是否正確，問佩佩老師。
 4. 看門員「解除冷卻」與巴哈「禁用上網」都還沒碰到真實事件驗證，第一次罷工時看 state/openclaw_stall_watchdog.log。
