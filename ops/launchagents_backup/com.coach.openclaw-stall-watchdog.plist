@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.coach.openclaw-stall-watchdog</string>
+  <key>ProgramArguments</key><array><string>/opt/homebrew/bin/python3</string><string>/Users/bymyway/.openclaw/workspace/scripts/openclaw_stall_watchdog.py</string></array>
+  <key>EnvironmentVariables</key><dict><key>PATH</key><string>/Users/bymyway/.nvm/versions/node/v24.21.0/bin:/opt/homebrew/bin:/usr/bin:/bin</string></dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/Users/bymyway/.openclaw/workspace/state/openclaw_stall_watchdog.out.log</string>
+  <key>StandardErrorPath</key><string>/Users/bymyway/.openclaw/workspace/state/openclaw_stall_watchdog.out.log</string>
+</dict>
+</plist>
