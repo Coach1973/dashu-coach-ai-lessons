@@ -74,7 +74,7 @@ def _anc(n):
         p = p.parent
 
 
-YEAR = re.compile(r'^\s*((19|20)\d{2}|長期|至今|持續|近年|每年|現在|目前|多年)')
+YEAR = re.compile(r'^\s*((19|20)\d{2}|長期|至今|持續|近年|每年|現在|現任|目前|多年)')
 
 
 def _year_node(n):
@@ -186,8 +186,9 @@ def _photo(sec, slug, nodes, save=True):
         if id(img) in inside:
             continue
         src = img.attrs.get('src', '')
-        if not src and img.attrs.get('data-k'):
-            km = re.search(r'["\']?%s["\']?\s*:\s*["\'](data:image/[a-z+]+;base64,[^"\']+)' % re.escape(img.attrs['data-k']), PAGE_TEXT.get(slug, ''))
+        key = img.attrs.get('data-k') or img.attrs.get('data-img')
+        if key and (not src or len(src) < 200):  # 空的或 1x1 佔位圖，真圖在頁面 JS 的圖庫裡
+            km = re.search(r'["\']?%s["\']?\s*:\s*["\'](data:image/[a-z+]+;base64,[^"\']+)' % re.escape(key), PAGE_TEXT.get(slug, ''))
             src = km.group(1) if km else ''
         im = None
         try:

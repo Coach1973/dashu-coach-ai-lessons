@@ -71,7 +71,7 @@ def upload_order():
 
 
 def run(slugs):
-    import fp_generic
+    import fp_generic, fp_manual
     db = load_db()
     have = {d['slug'] for d in db}
     added, manual = [], []
@@ -81,7 +81,12 @@ def run(slugs):
         if not os.path.exists(f'{GH}/{s}/index.html'):
             continue
         try:
-            d = fp_generic.extract_generic(s, save=True)
+            if s in fp_manual.MANUAL:
+                d = fp_manual.MANUAL[s]()
+            else:
+                d = fp_generic.extract_generic(s, save=True)
+                if d is not None:
+                    d.update(fp_manual.FIX.get(s, {}))
         except Exception as e:  # noqa: BLE001
             manual.append(dict(slug=s, reason=f'抽取出錯 {e!r}'[:80]))
             continue
