@@ -830,15 +830,15 @@
    "date": "2026-11-05",
    "start": "19:30",
    "end": "20:30",
-   "title": "榮樹下訪談（待確認）",
+   "title": "榮樹下訪談",
    "source": "預約頁",
    "kind": "interview",
-   "tentative": true,
    "booking_type": "榮樹下訪談",
    "booked_by": "邱裕榮",
    "note": "預約人：邱裕榮（預約頁點選）",
    "form_token": "Cv-O651tkW0C",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "reminder_job": "33438b20-3e81-447e-abc6-24c423eec051"
   },
   {
    "id": "gcal-2026-10-25-0",
@@ -1115,7 +1115,7 @@
   {
    "id": "gcal-2026-11-05-34",
    "date": "2026-11-05",
-   "title": "榮樹下訪談（待確認）",
+   "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:30",
    "end": "20:30"
@@ -1482,18 +1482,18 @@
   {
    "id": "gcal-2026-11-20-80",
    "date": "2026-11-20",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-11-20-81",
-   "date": "2026-11-20",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-81",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-20-82",
@@ -2137,18 +2137,18 @@
   {
    "id": "gcal-2026-12-18-162",
    "date": "2026-12-18",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-12-18-163",
-   "date": "2026-12-18",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-163",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-12-18-164",
@@ -3950,7 +3950,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-25 15:24",
+ "updated_at": "2026-10-25 15:55",
  "tainan_synced_at": "2026-10-25 02:16",
  "evening_window": {
   "start": "19:00",
@@ -3994,8 +3994,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-25 15:24",
- "google_synced_epoch": 1792913051,
+ "google_synced_at": "2026-10-25 15:55",
+ "google_synced_epoch": 1792914914,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
