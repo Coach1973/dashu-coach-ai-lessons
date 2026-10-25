@@ -862,7 +862,8 @@
    "title": "榮樹下訪談：林玟妗",
    "source": "Google日曆",
    "start": "15:00",
-   "end": "16:00"
+   "end": "16:00",
+   "form_token": "qBvf6Er70gdm"
   },
   {
    "id": "gcal-2026-10-26-3",
@@ -1118,7 +1119,8 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "ogypkHHe6-jG"
   },
   {
    "id": "gcal-2026-11-05-35",
@@ -3950,7 +3952,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-25 17:54",
+ "updated_at": "2026-10-25 17:57",
  "tainan_synced_at": "2026-10-25 02:16",
  "evening_window": {
   "start": "19:00",
