@@ -1,3 +1,4 @@
+- [🤖 巴哈只出中華新媒體橫直版海報、台鐵研究案軍師統籌：巴哈上網/瀏覽器/小幫手已程式禁用、台鐵訊息進 state/tra_research_inbox.md；10/26 罷工真因＝限流冷卻標記不是額度(2026-10-26)](project_peipei_poster_only_tra_research_to_junshi_2026-10-26.md)
 - [🧑‍🏫 人才軍火庫邀請函首批24位＝連動首頁點擊排名（roster.json＋/api/skyteam/ranking）；首頁換人／改FRONT後要跑 skyteam_build_invite_roster.py，上架連結步驟已掛，手動換人要自己跑(2026-10-25)](reference_skyteam_invite_faces_follow_home_ranking_2026-10-25.md)
 - [🔧 派工橋 junshi_task_worker.sh 呼叫 claude -p 要加 --add-dir 才讀得到 github_repos（林家旭補件卡關案）(2026-10-25)](reference_junshi_bridge_add_dir_fix_2026-10-25.md)
 - [🔴🔴 小龍蝦分身每8分鐘重試同一則、整天不回話：根因＝中途不整理(midTurnPrecheck預設關)＋整理逾時300秒＋重試要滿24小時才放棄；已開midTurnPrecheck、群組每天4點重開、卡死看門員自動解卡並通知；英文系統通知改中文【軍師轉達】、塞爆自動換新對話(2026-10-25)](reference_openclaw_compaction_timeout_infinite_retry_root_fix_2026-10-25.md)
