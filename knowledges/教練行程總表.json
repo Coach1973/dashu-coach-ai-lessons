@@ -847,7 +847,8 @@
    "title": "榮樹下訪談：林玟妗",
    "source": "Google日曆",
    "start": "15:00",
-   "end": "16:00"
+   "end": "16:00",
+   "form_token": "hMrsw-hnBlUG"
   },
   {
    "id": "gcal-2026-10-26-3",
@@ -3335,7 +3336,8 @@
    "tentative": true,
    "booking_type": "榮樹下訪談",
    "booked_by": "邱裕榮",
-   "note": "預約人：邱裕榮（預約頁點選）"
+   "note": "預約人：邱裕榮（預約頁點選）",
+   "form_token": "Cv-O651tkW0C"
   }
  ],
  "recurring": [
@@ -3940,7 +3942,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-25 08:47",
+ "updated_at": "2026-10-25 09:02",
  "tainan_synced_at": "2026-10-25 02:16",
  "evening_window": {
   "start": "19:00",
