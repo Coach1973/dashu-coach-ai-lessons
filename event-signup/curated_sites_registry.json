@@ -852,7 +852,7 @@
     },
     {
       "slug": "skyteam",
-      "title": "人才軍火庫｜顧問師天團・全彩第二版",
+      "title": "人才軍火庫顧問師天團",
       "description": "人才軍火庫・顧問師天團。匯聚 AI、品牌、教育、藝術、財金與永續領域的跨界專家，從深厚經歷找到值得同行的專業夥伴。",
       "category": "教練個人創作",
       "event_url": "https://event.bymyway.com/curated/skyteam/",
@@ -951,7 +951,8 @@
       "uploaded_at": "2026-10-24 20:30",
       "status": "live",
       "source_package": "20261024-202949__林家旭個人品牌網頁-v2.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/charles-lin"
     },
     {
       "slug": "kong-ling-feng",
@@ -963,7 +964,8 @@
       "uploaded_at": "2026-10-24 20:46",
       "status": "live",
       "source_package": "20261024-204554__kong-ling-feng-v2.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/kong-ling-feng"
     },
     {
       "slug": "roger-luo",
@@ -975,7 +977,8 @@
       "uploaded_at": "2026-10-24 21:12",
       "status": "live",
       "source_package": "20261024-211159__roger-luojue-web-v2.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/roger-luo"
     },
     {
       "slug": "kunting",
@@ -987,7 +990,266 @@
       "uploaded_at": "2026-10-24 23:21",
       "status": "live",
       "source_package": "20261024-232101__kunting-brand-web.zip",
-      "in_works": true
+      "in_works": true,
+      "repo": "Coach1973/kunting"
+    },
+    {
+      "slug": "linbaohua",
+      "title": "林寶華（寶華姐）｜寶麗寶銀樓創辦人・府城志工中隊長",
+      "description": "從澎湖貧民戶的老五，到台南寶麗寶銀樓創辦人、二分局志工中隊長二十年、台南市好人好事代表——寶華姐的故事。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/linbaohua/",
+      "github_pages_url": "https://coach1973.github.io/linbaohua/",
+      "uploaded_at": "2026-10-24 23:33",
+      "status": "live",
+      "source_package": "20261024-233301__linbaohua-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/linbaohua"
+    },
+    {
+      "slug": "drsoonlin",
+      "title": "Dr. Soonlin｜教學進化學院創辦人・個人品牌網頁",
+      "description": "Dr. Soonlin，教學進化學院創辦人、UNESCO 課程講師、ELEVATE 講師進化系統設計者。10 年、250+ 場講座與培訓、15,000+ 名參與學員。",
+      "category": "衣",
+      "event_url": "https://event.bymyway.com/curated/drsoonlin/",
+      "github_pages_url": "https://coach1973.github.io/drsoonlin/",
+      "uploaded_at": "2026-10-24 23:34",
+      "status": "live",
+      "source_package": "20261024-233406__DrSoonlin-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/drsoonlin"
+    },
+    {
+      "slug": "lianchiyu",
+      "title": "連啓佑老師｜台灣搜尋產業先驅・SEO × GEO 搜尋行銷顧問",
+      "description": "連啓佑，將能數位行銷創辦人暨執行長，27 年搜尋產業經驗，2002 年推出台灣最早的 SEO 服務。著有《AI 搜尋策略優化與實務》《人生演算法》《網站績效分析與管理》。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/lianchiyu/",
+      "github_pages_url": "https://coach1973.github.io/lianchiyu/",
+      "uploaded_at": "2026-10-24 23:35",
+      "status": "live",
+      "source_package": "20261024-233446__lianchiyu-brand-v2.zip",
+      "in_works": true,
+      "repo": "Coach1973/lianchiyu"
+    },
+    {
+      "slug": "chen-yijing",
+      "title": "陳怡靜（宜璟）｜薩加瑪奇克創藝學院創辦人・讓每個人都能創作音樂",
+      "description": "陳怡靜（陳宜璟，Roxie），台中薩加瑪奇克創藝學院創辦人，數位音樂教育者、電子琴演奏者、CEO 商業聚會主辦人。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/chen-yijing/",
+      "github_pages_url": "https://coach1973.github.io/chen-yijing/",
+      "uploaded_at": "2026-10-24 23:45",
+      "status": "live",
+      "source_package": "20261024-234525__chen-yijing-brand-site-v2.zip",
+      "in_works": true,
+      "repo": "Coach1973/chen-yijing"
+    },
+    {
+      "slug": "wang-xiali",
+      "title": "王夏儷｜音樂與藝術創意・EZ Player 執行長・音樂總監",
+      "description": "王夏儷，EZ Player 執行長・音樂總監，高雄市港都音樂表演藝術發展協會理事長。結合音樂教育、數位創作與演奏指導，拓展音樂與科技的跨域可能。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/wang-xiali/",
+      "github_pages_url": "https://coach1973.github.io/wang-xiali/",
+      "uploaded_at": "2026-10-24 23:59",
+      "status": "live",
+      "source_package": "20261024-235845__wang-xiali-brand-web-v2.zip",
+      "in_works": true,
+      "repo": "Coach1973/wang-xiali"
+    },
+    {
+      "slug": "yu-shang-en",
+      "title": "余尚恩博士｜AI 財商 × 騎走讀高雄",
+      "description": "余尚恩博士，成功大學財務金融博士、經濟部雙中級 AI 應用規劃師、國立屏東科技大學助理教授。用 AI 讀懂財報，騎著單車讀懂高雄。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/yu-shang-en/",
+      "github_pages_url": "https://coach1973.github.io/yu-shang-en/",
+      "uploaded_at": "2026-10-25 00:00",
+      "status": "live",
+      "source_package": "20261025-000022__yu-shang-en-brand.zip",
+      "in_works": true,
+      "repo": "Coach1973/yu-shang-en"
+    },
+    {
+      "slug": "suchin",
+      "title": "蘇秦老師｜英語教學 × AI 工具應用",
+      "description": "蘇秦老師：高師大英語系畢業，AI 融入英語教學講師與作者，100 多場校園演講，著有《英語教學神助手》《英語自學神助手》《Gemini Notebook 任務神助手》。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/suchin/",
+      "github_pages_url": "https://coach1973.github.io/suchin/",
+      "uploaded_at": "2026-10-25 00:30",
+      "status": "live",
+      "source_package": "20261025-002947__suchin-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/suchin"
+    },
+    {
+      "slug": "bni-gusest",
+      "title": "你的假設對了嗎？｜BNI 來賓接待培訓工作坊 · 互動教材",
+      "description": "45 分鐘來賓接待工作坊互動教材：假設前提決定行為，行為決定結果。三個單元、三個練習、課後自我檢核。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/bni-gusest/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-25 01:14",
+      "status": "live",
+      "source_package": "20261025-011359__bni-guest-workshop.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/bni-gusest"
+    },
+    {
+      "slug": "coachwu",
+      "title": "大樹教練 吳大樹｜有效溝通，就是無價之寶",
+      "description": "投入培訓業 27 年、超過 6,000 場演講。大樹教育顧問創辦人、海餅乾俱樂部創辦人、AI 百人導師團隊發起人、BNI 大台南南區執行董事。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/coachwu/",
+      "github_pages_url": "https://coach1973.github.io/coachwu/",
+      "uploaded_at": "2026-10-25 01:18",
+      "status": "live",
+      "source_package": "20261025-011837__bigtree-brand.zip",
+      "in_works": true,
+      "repo": "Coach1973/coachwu"
+    },
+    {
+      "slug": "grand",
+      "title": "陳和平 設計總監｜格蘭訂製西服・世界洋服大賽大師組金牌",
+      "description": "陳和平，格蘭訂製西服第二代主理人暨設計總監。出身瑞芳礦工家庭，師承上海紅幫裁縫，2025 年奪世界洋服聯盟大會大師組男裝裁剪金牌，曾為多位總統訂製西服。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/grand/",
+      "github_pages_url": "https://coach1973.github.io/grand/",
+      "uploaded_at": "2026-10-25 02:49",
+      "status": "live",
+      "source_package": "20261025-024924__chen-he-ping-website.zip",
+      "in_works": true,
+      "repo": "Coach1973/grand"
+    },
+    {
+      "slug": "zhou-ruiqi",
+      "title": "周睿麒｜把一塊布，種成一面綠牆",
+      "description": "周睿麒：永樂市場資深布商、永樂商圈發展協會創會理事長、布思綠創辦人。以機能布取代土壤，推動無耗材種植與城市綠化。",
+      "category": "育",
+      "event_url": "https://event.bymyway.com/curated/zhou-ruiqi/",
+      "github_pages_url": "https://coach1973.github.io/zhou-ruiqi/",
+      "uploaded_at": "2026-10-25 03:39",
+      "status": "live",
+      "source_package": "20261025-033933__zhou-ruiqi-brand-web-v2.zip",
+      "in_works": true,
+      "repo": "Coach1973/zhou-ruiqi"
+    },
+    {
+      "slug": "kueilan",
+      "title": "奎嵐 KueiLan｜用 AI 幫你提早下班",
+      "description": "奎嵐 KueiLan，台大政治系畢業的自媒體內容創作者、AI 教學講師與社群操盤手，現居美國加州，教上班族用 AI 提早下班。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/kueilan/",
+      "github_pages_url": "https://coach1973.github.io/kueilan/",
+      "uploaded_at": "2026-10-25 03:57",
+      "status": "live",
+      "source_package": "20261025-035706__kueilan-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/kueilan"
+    },
+    {
+      "slug": "wu-jinchang",
+      "title": "吳錦昌董事長｜順發電腦創辦人・用消費改變世界",
+      "description": "順發電腦創辦人暨董事長吳錦昌。2010 年起承諾捐出淨利 20%，17 年累積捐款 3 億 3,016 萬元；Run for Future 公益路跑發起人。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/wu-jinchang/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-25 04:35",
+      "status": "live",
+      "source_package": "20261025-043517__wu-jinchang-brand-web.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/wu-jinchang"
+    },
+    {
+      "slug": "sendstudio",
+      "title": "鄭憲聰｜憲樂錄音室 SendStudio 創辦人・AI 影音行銷講師",
+      "description": "鄭憲聰是「憲樂錄音室 SendStudio」創辦人，也是 AI 影音行銷講師，專門協助企業與個人品牌，用錄音、影音、短影音與 AI 工具，打造從內容製作到流量變現的完整系統。",
+      "category": "衣",
+      "event_url": "https://event.bymyway.com/curated/sendstudio/",
+      "github_pages_url": "https://coach1973.github.io/sendstudio/",
+      "uploaded_at": "2026-10-25 16:02",
+      "status": "live",
+      "source_package": "20261025-160231__cheng-hsien-tsung-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/sendstudio"
+    },
+    {
+      "slug": "wufan",
+      "title": "吳梵｜華語・台語雙棲詞曲創作人、唱片製作人",
+      "description": "吳梵，台灣華語與台語雙棲詞曲創作人、豪記唱片製作人。〈不甘心不放手〉〈感謝無情人〉〈練舞功〉〈斷情歌〉的作者。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/wufan/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-25 17:24",
+      "status": "live",
+      "source_package": "20261025-172401__wufan-brand-v2.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/wufan"
+    },
+    {
+      "slug": "helen",
+      "title": "鄒祥星 CP Helen｜新竹竹夢扶輪社創社社長・亞勃華騰國際商業董事長",
+      "description": "鄒祥星（CP Helen），新竹竹夢扶輪社創社社長、亞勃華騰國際商業股份有限公司董事長、國際扶輪 3501 地區 2025–26 年度地區社員發展主委。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/helen/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-25 17:36",
+      "status": "live",
+      "source_package": "20261025-173640__helen-brand-web.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/helen"
+    },
+    {
+      "slug": "lingyushun",
+      "title": "凌榆舜｜教育科技與 AiGeo 跨界整合專家",
+      "description": "凌榆舜，iSmart 南區業務經理、跨領域數位轉型顧問。淡江大學教育科技學系畢業，用教育科技的思維「教育 AI」，讓 ChatGPT、Gemini 與 Google 主動推薦你的品牌。",
+      "category": "教練個人創作",
+      "event_url": "https://event.bymyway.com/curated/lingyushun/",
+      "github_pages_url": "",
+      "uploaded_at": "2026-10-25 18:16",
+      "status": "live",
+      "source_package": "20261025-181647__lingyushun-brand.zip",
+      "no_shop_card": true,
+      "repo": "Coach1973/lingyushun"
+    },
+    {
+      "slug": "richrd-tsai",
+      "title": "蔡曜隆 Richard Tsai｜總工程師．企業教練．《結繩領導學》作者",
+      "description": "大地工程碩士、近 40 年土木大地工程實戰、50 年結繩匠人、BNI 台灣國家培訓董事暨國家發展董事，《結繩領導學》作者蔡曜隆的個人品牌網頁。",
+      "category": "衣",
+      "event_url": "https://event.bymyway.com/curated/richrd-tsai/",
+      "github_pages_url": "https://coach1973.github.io/richrd-tsai/",
+      "uploaded_at": "2026-10-25 19:23",
+      "status": "live",
+      "source_package": "20261025-192300__tsai-yaolong-brand-package.zip",
+      "in_works": true,
+      "repo": "Coach1973/richrd-tsai"
+    },
+    {
+      "slug": "ohth-at-aj",
+      "title": "莊哲昀 AJ｜把學 AI 變得像喝水一樣簡單",
+      "description": "莊哲昀（AJ），那個數位有限公司執行長、Google Gemini 官方認證講師、《欸那個AJ》YouTube 頻道主持人。十五年數位教學，陪伴上百家企業與公部門把生成式 AI 帶進日常工作。",
+      "category": "樂",
+      "event_url": "https://event.bymyway.com/curated/ohth-at-aj/",
+      "github_pages_url": "https://coach1973.github.io/ohth-at-aj/",
+      "uploaded_at": "2026-10-25 19:49",
+      "status": "live",
+      "source_package": "20261025-194856__AJ-brand-web.zip",
+      "in_works": true,
+      "repo": "Coach1973/ohth-at-aj"
+    },
+    {
+      "slug": "tra-taitung",
+      "title": "台東16站，一起賺得到錢｜台鐵標案提案研究",
+      "description": "台鐵台東16據點提案研究圖文版：錢從哪裡來、BNI夥伴怎麼進駐、吸睛機制、台鐵規定、財務試算。",
+      "category": "商",
+      "event_url": "https://event.bymyway.com/curated/tra-taitung/",
+      "uploaded_at": "2026-10-26 00:48",
+      "status": "live",
+      "in_works": false,
+      "repo": "Coach1973/tra-taitung"
     }
   ],
   "redirects": {
@@ -997,6 +1259,7 @@
     "xing-fu-dao-shi-esther-yang-zai-zhen": "yang-zai-zhen",
     "qiu-nan-yin-xiao-nan-diao-ke": "xiaonan",
     "zhen-gongyi-v2": "social-good",
-    "Social-good": "social-good"
+    "Social-good": "social-good",
+    "bigtree-2": "coachwu"
   }
 }
