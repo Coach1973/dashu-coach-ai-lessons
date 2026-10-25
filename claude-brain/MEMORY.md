@@ -1,3 +1,5 @@
+- [🔧 巴哈看圖一直卡住＝MiniMax 看圖 API 2 天 18 次全失敗(2056／空白)；改 tools.media CLI 交給 Claude(describe_image_via_claude.py，失敗一律回提示、每小時上限40、一張約0.023美元)；整條路還沒用真圖驗證(2026-10-26)](reference_openclaw_image_understanding_via_claude_cli_2026-10-26.md)
+- [🔧 巴哈私訊開通：allowlist＋dmScope 獨立對話、佩佩老師要先按 Start(Telegram 403)；小龍蝦實際在跑 nvm 那份(英文錯誤訊息已改中文，補丁腳本)；寫入失敗兩次自動換新對話；教練留在群組是為了第一時間指揮(2026-10-26)](reference_peipei_dm_allowlist_dmscope_and_openclaw_nvm_copy_2026-10-26.md)
 - [🔧 背景程式在 workspace 寫沒進 git 的檔＝會被 hook／派工的 stash -u 收走放回成空檔；台鐵轉交 claude -p 0 bytes 真因；輸出寫 workspace 外＋背景 claude 關 hook＋gitignore(2026-10-26)](reference_workspace_stash_u_clobbers_background_outputs_2026-10-26.md)
 - [🧑‍🏫 做好頁面但軍火庫還沒掛的名單＝等教練通知才掛（蔡曜隆、莊哲昀、潛錩、之後的布萊恩紅茶；品牌頁背後也是一位老闆，他要先跟本人確認）；鄭憲聰已改連新頁(2026-10-26)](project_skyteam_pending_coach_notice_list_2026-10-26.md)
 - [🤖 巴哈只出中華新媒體橫直版海報、台鐵研究案軍師統籌：巴哈上網/瀏覽器/小幫手已程式禁用、台鐵訊息進 state/tra_research_inbox.md；10/26 罷工真因＝限流冷卻標記不是額度(2026-10-26)](project_peipei_poster_only_tra_research_to_junshi_2026-10-26.md)
