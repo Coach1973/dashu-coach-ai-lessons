@@ -140,7 +140,15 @@ case "$TASK_TYPE" in
     notify_telegram "⏳ *軍師開始執行任務*\n📋 ${PROMPT:0:100}..."
 
     TASK_STDERR=$(mktemp)
-    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" --permission-mode acceptEdits --output-format text 2>"$TASK_STDERR" | tail -c 3000) || true
+    # 2026-10-25 修：派工橋的 claude -p 只認「當前工作目錄」，
+    # 導致軍師讀不到 /Users/bymyway/github_repos 底下的 repo
+    # （錯誤：「For security, Claude Code may only list files in the allowed working directories」）。
+    # 用 --add-dir 開通 github_repos + claude-code workspace，這是「被允許的存取範圍」不是提權。
+    TASK_OUTPUT=$("$CLAUDE_CLI" -p "$PROMPT" \
+        --add-dir /Users/bymyway/github_repos \
+        --add-dir /Users/bymyway/.claude-code/workspace \
+        --add-dir /Users/bymyway/.openclaw/workspace \
+        --permission-mode acceptEdits --output-format text 2>"$TASK_STDERR" | tail -c 3000) || true
     if [ -s "$TASK_STDERR" ]; then
       log "claude stderr: $(head -c 500 "$TASK_STDERR")"
     fi
