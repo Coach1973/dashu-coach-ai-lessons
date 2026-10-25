@@ -44,7 +44,9 @@ def main(dry: bool) -> int:
         return 0
     IDX.write_text(h[:m.start(2)] + json.dumps(experts, ensure_ascii=False) + h[m.end(2):], encoding="utf-8")
     names = "、".join(c[0] for c in changed)
-    subprocess.run(["git", "-C", str(REPO), "add", "index.html"], check=True)
+    # 邀請函頁的首批 24 位讀 roster.json，首頁連結改了就一起重產（2026-10-25）
+    subprocess.run([sys.executable, str(Path(__file__).with_name("skyteam_build_invite_roster.py"))], check=True)
+    subprocess.run(["git", "-C", str(REPO), "add", "index.html", "roster.json", "img/invite/roster"], check=True)
     subprocess.run(["git", "-C", str(REPO), "commit", "-q", "-m", f"[Mac] 人才軍火庫自動連結專家個人頁：{names}"], check=True)
     subprocess.run(["git", "-C", str(REPO), "push", "-q", "origin", "main"], check=True)
     return 0
