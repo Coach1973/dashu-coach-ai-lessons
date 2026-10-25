@@ -32,6 +32,9 @@ STALL_RE = re.compile(r"stalled for event (\d+) on lane ([^\s]+) after \d+ms; ap
 STALLS_BEFORE_RESET = 2
 TOOL_RE = re.compile(r"偵測工具呼叫: (\w+) agent: (\w+)")
 OVERFLOW_RE = re.compile(r"Auto-compaction failed \(.*?Preserving existing session mapping for (agent:([a-z_]+):[^\s\"]+?)\.?\"")
+CLAIM_RE = re.compile(r"terminal session persistence failed session=(agent:([a-z_]+):telegram:(?:group|direct):[^\s]+) run=\S+ error=SessionTranscriptWriterClaimReboundError")
+CLAIM_FAILS_BEFORE_RESET = 2  # 同一段對話 10 分鐘內寫入失敗 2 次（等於教練連傳兩則都沒回）就換新對話
+claim_fails = {}
 OVERFLOW_COOLDOWN = 300  # 同一段對話 5 分鐘內只處理一次（一次塞爆常連寫好幾行）
 overflow_done = {}
 INBOUND_RE = re.compile(r"Inbound message telegram:[a-z]+:(-?\d+) -> @(\w+)")
@@ -201,12 +204,12 @@ def handle(event_id, lane, st):
         notify(f"⚠️ 小龍蝦卡住：{lane} 自動解卡時出錯（{e}），請叫軍師處理。")
 
 
-def handle_overflow(key, agent, dry_run=False):
+def handle_overflow(key, agent, dry_run=False, reason="對話太長、整理不動了"):
     now = time.time()
     if now - overflow_done.get(key, 0) < OVERFLOW_COOLDOWN:
         return
     overflow_done[key] = now
-    log(f"偵測到對話塞爆、整理救不回來：{key}")
+    log(f"偵測到對話壞掉（{reason}）：{key}")
     if dry_run:
         print(f"[試跑] 會執行：openclaw sessions delete {key} --agent {agent} --yes")
         return
@@ -216,12 +219,21 @@ def handle_overflow(key, agent, dry_run=False):
         log(f"{'已重開' if ok else '重開失敗'}：{key}\n{out[-400:]}")
         where = "跟您的私訊" if key == f"agent:{agent}:main" else key.split(":", 2)[-1]
         notify(
-            f"【軍師轉達】分身「{agent}」在{where}的對話太長、整理不動了，"
+            f"【軍師轉達】分身「{agent}」在{where}的對話{reason}，"
             + ("看門員已自動換成新對話（舊紀錄有封存），現在可以把剛剛那句話再說一次。" if ok else "看門員自動換新對話失敗，請叫軍師處理。")
         )
     except Exception as e:
         log(f"重開塞爆對話失敗：{e}")
         notify(f"【軍師轉達】分身「{agent}」對話塞爆，自動換新對話時出錯（{e}），請叫軍師處理。")
+
+
+def handle_claim(key, agent, dry_run=False):
+    now = time.time()
+    fails = [t for t in claim_fails.get(key, []) if now - t < 600] + [now]
+    claim_fails[key] = fails
+    if len(fails) >= CLAIM_FAILS_BEFORE_RESET:
+        claim_fails[key] = []
+        handle_overflow(key, agent, dry_run, reason="寫入紀錄一直失敗、傳訊息都沒回")
 
 
 def follow():
@@ -248,6 +260,10 @@ def follow():
         if o:
             handle_overflow(o.group(1), o.group(2))
             continue
+        c = CLAIM_RE.search(line)
+        if c:
+            handle_claim(c.group(1), c.group(2))
+            continue
         t = TOOL_RE.search(line)
         if t:
             recent_tools.append((time.time(), t.group(2), t.group(1)))
@@ -265,6 +281,13 @@ if __name__ == "__main__":
         print(o.groups() if o else None)
         if o:
             handle_overflow(o.group(1), o.group(2), dry_run=True)
+    elif len(sys.argv) > 2 and sys.argv[1] == "--test-claim":
+        ACTION_LOG = Path("/dev/null")
+        c = CLAIM_RE.search(sys.argv[2])
+        print(c.groups() if c else None)
+        if c:
+            handle_claim(c.group(1), c.group(2), dry_run=True)
+            handle_claim(c.group(1), c.group(2), dry_run=True)
     elif len(sys.argv) > 2 and sys.argv[1] == "--test-line":
         m = STALL_RE.search(sys.argv[2])
         print(m.groups() if m else None)
