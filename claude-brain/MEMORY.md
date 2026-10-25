@@ -1,3 +1,4 @@
+- [🧑‍🏫 做好頁面但軍火庫還沒掛的名單＝等教練通知才掛（蔡曜隆、莊哲昀、潛錩、之後的布萊恩紅茶；品牌頁背後也是一位老闆，他要先跟本人確認）；鄭憲聰已改連新頁(2026-10-26)](project_skyteam_pending_coach_notice_list_2026-10-26.md)
 - [🤖 巴哈只出中華新媒體橫直版海報、台鐵研究案軍師統籌：巴哈上網/瀏覽器/小幫手已程式禁用、台鐵訊息進 state/tra_research_inbox.md；10/26 罷工真因＝限流冷卻標記不是額度(2026-10-26)](project_peipei_poster_only_tra_research_to_junshi_2026-10-26.md)
 - [🧑‍🏫 人才軍火庫邀請函首批24位＝連動首頁點擊排名（roster.json＋/api/skyteam/ranking）；首頁換人／改FRONT後要跑 skyteam_build_invite_roster.py，上架連結步驟已掛，手動換人要自己跑(2026-10-25)](reference_skyteam_invite_faces_follow_home_ranking_2026-10-25.md)
 - [🔧 派工橋 junshi_task_worker.sh 呼叫 claude -p 要加 --add-dir 才讀得到 github_repos（林家旭補件卡關案）(2026-10-25)](reference_junshi_bridge_add_dir_fix_2026-10-25.md)
