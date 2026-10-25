@@ -2605,5 +2605,93 @@
   ],
   "photo_alt": "新書發表會新竹場",
   "caption": "新書發表會新竹場"
+ },
+ {
+  "slug": "ohth-at-aj",
+  "name": "莊哲昀 AJ",
+  "role": "把學 AI 變得像喝水一樣簡單",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/ohth-at-aj/",
+  "anchor": "#giving",
+  "lede": "AJ 的教學起點，是 2009 年莫拉克風災後的數位重建。從開著胖卡下鄉教長輩用電腦，到陪公益組織、病友團體與偏鄉老師用 AI——他把「縮短數位落差」做了十五年。",
+  "stats": [
+   [
+    "2011",
+    "開著胖卡深入屏東偏鄉，教長輩用電腦"
+   ],
+   [
+    "16 個",
+    "病友團體、50 位代表參加數位賦能工作坊"
+   ],
+   [
+    "3 套",
+    "與 Google、泛科學院合作的免費 YouTube 課程"
+   ],
+   [
+    "9 個",
+    "官網列出的非營利合作單位，如伊甸、喜憨兒"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "2011 起",
+    "title": "胖卡：數位落差偏鄉服務計畫",
+    "desc": "跟著台灣數位文化協會開行動數位車，在廟埕、活動中心教長輩與新住民用電腦，之後擔任計畫經理。",
+    "src": "出處：AJ 親筆文章、NPOst 專訪",
+    "href": "https://www.ahadigit.work/blog/aj-leaves-pansci"
+   },
+   {
+    "yr": "2014",
+    "title": "從 NGO 到 NG0：替公益組織解決資訊問題",
+    "desc": "在 g0v summit 與「創新吧！公益」論壇分享，如何用一張圖表讓非營利組織效率提升 30%。",
+    "src": "出處：g0v 影片、NPOst 影片",
+    "href": "https://www.youtube.com/watch?v=ry2snqMxloo"
+   },
+   {
+    "yr": "2016",
+    "title": "「學得會的工具，才是好工具」",
+    "desc": "為公益組織夥伴開設數位工具課，強調工具要好學、能用、留得下來。",
+    "src": "出處：NPOst 活動報導",
+    "href": "https://npost.tw/archives/27626"
+   },
+   {
+    "yr": "2017",
+    "title": "一群阿宅開小貨卡，展開偏鄉資訊神救援",
+    "desc": "今周刊報導台灣數位文化協會九年來跑遍全台、長期陪伴偏鄉非營利組織的歷程。",
+    "src": "出處：今周刊",
+    "href": "https://www.businesstoday.com.tw/article/category/183034/post/201711010013/"
+   },
+   {
+    "yr": "2025",
+    "title": "陪病友團體數位賦能",
+    "desc": "數位賦能與媒體溝通培力工作坊，16 個病友團體、50 位代表一同交流如何運用數位工具與 AI。",
+    "src": "出處：AJ 的 LinkedIn（本人自述）",
+    "href": "https://www.linkedin.com/in/cheyunchuang/"
+   },
+   {
+    "yr": "2025–26",
+    "title": "Google × 泛科學院：三套免費 AI 課",
+    "desc": "給高中大學生、國中小學生、家長與老師的入門課程，全部免費公開在 YouTube。",
+    "src": "出處：AJ 親筆文章",
+    "href": "https://www.ahadigit.work/blog/pansci-google-youtube-courses"
+   },
+   {
+    "yr": "2026",
+    "title": "從會議室走進偏鄉教室",
+    "desc": "在台灣水泥支持下，到南部與東部多所偏鄉學校為老師做 AI 師培；他也記下一位年輕老師的話：「請一位講師上來不容易，謝謝你願意來。」",
+    "src": "出處：AJ 親筆文章",
+    "href": "https://www.ahadigit.work/blog/taiwan-cement-ai-collaboration-2026"
+   }
+  ],
+  "photo": [
+   "assets/people/ohth-at-aj.jpg",
+   [
+    720,
+    406,
+    46287
+   ]
+  ],
+  "photo_alt": "胖卡行動數位車旁擺著電腦螢幕與看板",
+  "caption": "胖卡行動數位車旁擺著電腦螢幕與看板"
  }
 ]
