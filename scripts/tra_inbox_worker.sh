@@ -73,8 +73,17 @@ OUT=$WORK.reply.txt
 ERR=$WORK.err
 perl -e 'alarm 1500; exec @ARGV' "$CLAUDE_CLI" -p "$PROMPT" \
   --add-dir /Users/bymyway/github_repos --add-dir /Users/bymyway/.openclaw/workspace --add-dir /Users/bymyway/.openclaw/agents/peipei/media/work \
-  --allowedTools "WebSearch,WebFetch,Read,Glob,Grep" --output-format text > "$OUT" 2> "$ERR"
+  --allowedTools "WebSearch,WebFetch,Read,Glob,Grep" --output-format json < /dev/null > "$OUT.json" 2> "$ERR"
 code=$?
+python3 -c "
+import json,sys
+try:
+    d=json.load(open(sys.argv[1]))
+    open(sys.argv[2],'w',encoding='utf-8').write((d.get('result') or '').strip())
+    print('turns=%s stop=%s err=%s' % (d.get('num_turns'),d.get('terminal_reason'),d.get('is_error')))
+except Exception as e:
+    open(sys.argv[2],'w').write(''); print('解析失敗',e)
+" "$OUT.json" "$OUT" >> "$LOG" 2>&1
 log "claude 結束 code=$code 輸出 $(wc -c < "$OUT") bytes"
 
 if [ "$code" -ne 0 ] || [ ! -s "$OUT" ]; then
