@@ -5,6 +5,7 @@
 # 流程：搬走轉交檔內容 → claude -p 研究（只給讀檔＋上網，不給改檔、不給下指令）→ 用巴哈 bot 發到群組
 # 測試：TRA_TEST=1 時答案改用主機器人發給教練私訊（不吵到佩佩老師群組）
 set -uo pipefail
+[ "${TRA_DEBUG:-0}" = "1" ] && exec 2>>/tmp/tra_worker_debug.log && set -x
 export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 PYTHONIOENCODING=utf-8
 export USER=bymyway LOGNAME=bymyway HOME=/Users/bymyway   # claude 用 USER 找鑰匙圈裡的登入，沒有就變成「沒登入」、什麼都不輸出
 
