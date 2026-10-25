@@ -111,3 +111,7 @@ state/minimax_api_key
 
 # 派工附件暫存（含個資，不入版控；正式副本在 cross-agent/attachments/）
 state/dispatch_mac/
+
+# 台鐵轉交（巴哈寫入、tra_inbox_worker 處理）：不進 git，免得 stash -u 收走檔案、重複觸發
+state/tra_research_inbox.md
+state/tra_research_done/

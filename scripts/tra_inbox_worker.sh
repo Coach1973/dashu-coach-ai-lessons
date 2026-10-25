@@ -71,9 +71,14 @@ $(cat "$WORK")
 3. 如果這件事需要出圖、做簡報或大改版，不要自己做，回覆最後一行寫「（這件較大，軍師會另外做完再送，請稍等）」。
 4. 只輸出要發給她的文字本身，不要輸出你的思考過程。"
 
-OUT=$WORK.reply.txt
-ERR=$WORK.err
+# 2026-10-26 根因：claude 跑的時候，它自己的 hook（開工注入、收工自動同步）跟派工程式會對 workspace
+# 做 git stash -u → pull → pop，把正在寫的輸出檔收走再放回成空檔（試過 6 次都 0 bytes）。
+# 所以輸出先寫在 workspace 外面、背景 claude 關掉 hook，做完才搬進 DONE_DIR。
+TMP=$(mktemp -d /tmp/tra_worker.XXXXXX)
+OUT=$TMP/reply.txt
+ERR=$TMP/err
 perl -e 'alarm 1500; exec @ARGV' "$CLAUDE_CLI" -p "$PROMPT" \
+  --settings '{"disableAllHooks":true}' \
   --add-dir /Users/bymyway/github_repos --add-dir /Users/bymyway/.openclaw/workspace --add-dir /Users/bymyway/.openclaw/agents/peipei/media/work \
   --allowedTools "WebSearch,WebFetch,Read,Glob,Grep" --output-format json < /dev/null > "$OUT.json" 2> "$ERR"
 code=$?
@@ -87,6 +92,8 @@ except Exception as e:
     open(sys.argv[2],'w').write(''); print('解析失敗',e)
 " "$OUT.json" "$OUT" >> "$LOG" 2>&1
 log "claude 結束 code=$code 輸出 $(wc -c < "$OUT") bytes"
+cp "$OUT" "$WORK.reply.txt"; cp "$OUT.json" "$WORK.reply.json"; cp "$ERR" "$WORK.err"; rm -rf "$TMP"
+OUT=$WORK.reply.txt
 
 if [ "$code" -ne 0 ] || [ ! -s "$OUT" ]; then
   printf '【軍師轉達】佩佩老師在巴哈群組問的台鐵問題，軍師自動處理失敗（code=%s），原文已存 state/tra_research_done/%s.md，請叫軍師接手。' "$code" "$STAMP" > "$WORK.fail.txt"
