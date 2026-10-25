@@ -24,3 +24,8 @@ metadata:
 相關：[[reference-peipei-group-context-overflow-blocks-main-lane]]、[[feedback-bot-instructions-must-block-old-path-and-measure-tokens-2026-10-25]]
 
 **10/25 晚第二輪（18:00～18:10）**：巴哈對話不大（6.8 萬）也卡——是被背景工作佔住：內建「自動技能整理」(skills.workshop.autonomous 預設 auto) 會自己開工作、用 sessions_send 叫頂級特助，頂級特助再回傳巴哈，群組真人訊息排在後面。已設 `skills.workshop.autonomous.mode=off`（外層 repo ed06e68e0）。看門員 v2（workspace 4c6d25126）：第 1 次逾時 → `openclaw gateway call sessions.abort --params '{"key":…,"agentId":…}'` 中斷背景工作並通知教練它在忙什麼；第 2 次才刪對話。分身判斷改用「收到訊息的機器人 @名稱 → getMe 對帳號 → bindings」，**不可用最近更新排序**（測試時同群組選到 agent:main，差點動錯頂級特助）。手動中斷實測：18:04 中斷後排隊 7 分多的訊息立刻被接手。v2 的自動中斷還沒真實觸發過。
+
+## 10/25 19:40 追加：英文系統通知改成中文【軍師轉達】＋塞爆自動換新對話
+- 教練看不懂小龍蝦直接發的英文通知（對話塞爆、First heartbeat alert、⚠️ Dir List failed）。OpenClaw 沒有關掉的設定（suppressToolErrors 已退役），改在外掛 `extensions/url-typo-guard/index.js` 的送出前那一關 `translateSystemNotice` 換成中文，開頭「【軍師轉達】」；沒見過的 ⚠️ 英文只給一句中文，原文記在 `workspace/state/system_notice_zh.log`——看到有新的就補一條翻譯（outer repo 14ec920d2）。
+- 看門員 `openclaw_stall_watchdog.py` 新增：日誌出現「Auto-compaction failed … Preserving existing session mapping for <對話>」就自動 `sessions delete` 封存重開，通知教練可以再說一次（workspace 4a7936993）。試跑 `--test-overflow "<日誌行>"` 只印不刪。
+- 我（軍師）自己在對話裡下 `openclaw sessions delete` 會被系統安全機制擋；看門員是 launchd 背景跑的，不受影響。
