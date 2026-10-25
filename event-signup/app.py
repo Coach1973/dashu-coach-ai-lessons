@@ -1511,6 +1511,33 @@ def game_report_admin(code):
                     headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
 
 
+# ---------- 顧問師天團人氣排序＋到訪次數（2026-10-25 教練交辦，比照 mentor100）：說明見 skyteam_stats.py ----------
+import skyteam_stats as _sts
+
+
+def _sts_json(obj, status=200):
+    return Response(json.dumps(obj, ensure_ascii=False), status=status,
+                    headers={"Content-Type": "application/json", "Cache-Control": "no-store"})
+
+
+@app.route("/api/skyteam/visit", methods=["POST"])
+def skyteam_visit():
+    """頁面載入時呼叫一次：記一筆到訪（含重複造訪），回傳目前的到訪數與各人點擊數。"""
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _sts.is_bot(request.headers.get("User-Agent", "")) and _sts.allowed(ip):
+        _sts.log_visit(ip)
+    return _sts_json(_sts.stats())
+
+
+@app.route("/api/skyteam/click", methods=["POST"])
+def skyteam_click():
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if _sts.is_bot(request.headers.get("User-Agent", "")) or not _sts.allowed(ip):
+        return ("", 204)
+    payload = request.get_json(force=True, silent=True) or {}
+    return ("", 204) if _sts.log_click(payload.get("name")) else ("", 400)
+
+
 # ---------- 中華新媒體影音發展協會（NMDA）理監事團隊（2026-10-23 教練交辦）：說明見 nmda_team.py ----------
 # 照南應大 /tut/team 同一套：名單先放空座位，本人點自己的名字補照片簡介；公開頁是 nmda 網站自己的 team.html，讀 /api/nmda/team/board。
 import nmda_team as _nt
