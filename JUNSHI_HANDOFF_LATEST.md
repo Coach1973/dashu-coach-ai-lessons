@@ -19,7 +19,7 @@
 
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：巴哈要不要重新開放研究工具（目前只出海報）。
-🤫 等教練通知才掛軍火庫（教練10/26 01:16定，他要先跟本人確認，不追問）：蔡曜隆（richrd-tsai）、莊哲昀 AJ（ohth-at-aj）、哈囉！潛錩規劃行銷（hello-brand，背後有老闆人名）；之後教練還會上傳「布萊恩紅茶」（同類，品牌背後是一個人）。教練說「可以掛了」才用 skyteam_link_expert.py 或手動插入；鄭憲聰已改連新頁 sendstudio（skyteam 8386342、be38728）。
+🤫 等教練通知才掛軍火庫（教練10/26 01:16定，他要先跟本人確認，不追問）：蔡曜隆（richrd-tsai）、莊哲昀 AJ（ohth-at-aj）、哈囉！潛錩規劃行銷（hello-brand，老闆＝紀宇牧）；之後教練還會上傳「布萊恩紅茶」（同類，品牌背後是一個人）。教練說「可以掛了」才用 skyteam_link_expert.py 或手動插入；鄭憲聰已改連新頁 sendstudio（skyteam 8386342、be38728）。
 🔧 AI 自己的清單：①session_length 提醒在 Stop hook 文字仍只提輪數；②workspace 有 1 個別場刪掉的 inbox 檔、all-works 1 個沒推上去（不是本場）；③看門員 plist 已備份進 ops/launchagents_backup（待 commit）。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-25 09:05 台灣時間，Mac 桌面版 Code 分頁（「開工0228」臨時 worktree kaigyo-0228-fe37da），Sonnet 5.5；教練說「總結」；本段 02:28～09:05，對話容量約 46%）
