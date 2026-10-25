@@ -86,7 +86,10 @@ python3 -c "
 import json,sys
 try:
     d=json.load(open(sys.argv[1]))
-    open(sys.argv[2],'w',encoding='utf-8').write((d.get('result') or '').strip())
+    r=(d.get('result') or '').strip()
+    i=r.find('軍師回覆：')   # 模型偶爾在前面多吐一句思考、或把「佩佩」寫錯字，開頭一律重寫
+    if i>=0: r='佩佩老師，軍師回覆：'+r[i+len('軍師回覆：'):]
+    open(sys.argv[2],'w',encoding='utf-8').write(r)
     print('turns=%s stop=%s err=%s' % (d.get('num_turns'),d.get('terminal_reason'),d.get('is_error')))
 except Exception as e:
     open(sys.argv[2],'w').write(''); print('解析失敗',e)
