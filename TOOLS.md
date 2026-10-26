@@ -16,6 +16,18 @@
 
 ---
 
+## ⚠️ 長命令的 exec 階段會被回收 → 結果一律寫檔再用 read 取（2026-10-26 實測）
+
+2026-10-26 連續 10+ 次遇到：`exec` 階段在 10～20 秒後被回收（session 直接消失，只剩 `(no new output)`），命令其實被中斷，stdout 拿不到；同一時間 `process poll` 也會掉線。
+
+**鐵律**：
+1. 任何預計超過 ~15 秒的命令，**一律把輸出寫進 `/tmp/xxx.txt`**（`{ ... } > "$OUT" 2>&1`），再用 `read` 工具讀檔；**不要依賴 exec 階段的 stdout**。
+2. `process poll` 拿不到輸出時不要一直 poll——改用寫檔＋`read`。
+3. 推完 commit/push 一定要用 `git ls-remote` 驗（見上方鐵律）；這個命令快且可靠，適合單獨跑。
+4. inline python heredoc 不要留半套 helper（例如呼叫沒定義的 `_try_alive`）——寧可拆成兩段，或直接用 `ps`／`lsof` 這類現成指令取代。
+
+---
+
 ## ⚠️ 關鍵路徑（cron 環境 PATH 不含 /opt/homebrew/bin）
 
 | 工具 | 絕對路徑 |
