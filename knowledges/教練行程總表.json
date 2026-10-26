@@ -867,7 +867,8 @@
    "source": "Google日曆",
    "start": "15:00",
    "end": "16:00",
-   "reminder_job": "f3243844-f66d-402f-9e9c-0a88da18aa9d"
+   "reminder_job": "f3243844-f66d-402f-9e9c-0a88da18aa9d",
+   "form_token": "dtSXnmjZJKcQ"
   },
   {
    "id": "gcal-2026-10-26-2",
@@ -1124,7 +1125,8 @@
    "source": "Google日曆",
    "start": "19:30",
    "end": "20:30",
-   "reminder_job": "faf5b6cd-0c35-4f3f-b59a-31bd3230d53b"
+   "reminder_job": "faf5b6cd-0c35-4f3f-b59a-31bd3230d53b",
+   "form_token": "pvyFsMAfEdJk"
   },
   {
    "id": "gcal-2026-11-05-34",
@@ -1181,7 +1183,8 @@
    "source": "Google日曆",
    "start": "08:30",
    "end": "09:30",
-   "reminder_job": "e8a8db2e-9013-4ec1-8569-4bbb90b95170"
+   "reminder_job": "e8a8db2e-9013-4ec1-8569-4bbb90b95170",
+   "form_token": "S_-AqqAdNPuE"
   },
   {
    "id": "gcal-2026-11-08-41",
@@ -3973,7 +3976,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-26 07:00",
+ "updated_at": "2026-10-26 11:22",
  "tainan_synced_at": "2026-10-26 02:19",
  "evening_window": {
   "start": "19:00",
