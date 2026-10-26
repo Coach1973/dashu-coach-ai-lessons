@@ -52,7 +52,7 @@
 - `SessionStart`／`UserPromptSubmit` hook **時序上跑在提示落地之後**
   （實測：01:17:20 提示 → 01:18:21 SessionStart → 01:18:27 UserPromptSubmit）
 - `git worktree add` 搜尋範圍：`~/.openclaw/workspace/scripts/`、`~/.openclaw/scripts/`、`~/.claude/hooks/`
-- `/tmp/cc-socks/*.sock`：**唯一可能的外部注入路徑**，無任何腳本寫入 → 排除
+- `/tmp/cc-socks/*.sock`：OpenClaw 訊息工具的**外部注入通道**（收件人寫法 `uds:/tmp/cc-socks/<pid>.sock`），有審批閘門。**腳本層零命中**（唯一 `socket.connect` 是 Playwright 內部 CDP socket）；命中全在資料／記錄檔，狀態只有「擋住待核准」「逾期未核准」「未投遞」三種，**無一筆成功投遞**；uds 收件只有 9 月的 2 個 pid，與三場「開工」分身無關；10/26 當天 uds 紀錄為 0 → 與本案無關
 - `~/Library/LaunchAgents/`、crontab、`osascript`／`cliclick`：無驅動 Claude Desktop 者
 - Claude Desktop 自身日誌（`main.log`、`coworkd.log`、`cowork_vm_*.log`、`app-cu-helper.log`）：無自動觸發痕跡
 
