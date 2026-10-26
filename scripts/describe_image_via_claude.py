@@ -20,7 +20,7 @@ LOG = Path.home() / ".openclaw/workspace/state/image_describe_log.jsonl"
 CWD = Path("/tmp/img_describe_cwd")
 HOURLY_CAP = 40
 TIMEOUT = 100
-MODEL = "claude-sonnet-5-5"
+MODEL = "claude-haiku-5-5"
 
 
 def log(rec):
