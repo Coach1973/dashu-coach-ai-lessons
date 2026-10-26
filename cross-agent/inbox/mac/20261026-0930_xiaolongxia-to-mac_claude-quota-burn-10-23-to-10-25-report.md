@@ -115,9 +115,12 @@
 - **外部注入路徑查核（10/26 10:20 勘誤，原文「無任何腳本寫入、全無命中」過於絕對，已更正）**：OpenClaw 自己的訊息工具**確實**支援把訊息送進 Claude session（收件人寫法 `uds:/tmp/cc-socks/<pid>.sock`），且有審批閘門。逐項查核結果：
   - **腳本層真的零命中**：`workspace/scripts/`、`~/.openclaw/scripts/`、`hooks/` 內唯一的 `socket.connect` 命中是 Playwright 內部的 CDP socket，與 Claude 無關。
   - 命中的是 **10 個資料／記錄檔**（`memory/verbatim/*.jsonl`、`state/inbound_echo/*.jsonl`、`state/recall_index.jsonl`、`terminal-notes/distilled/*.txt`），內容是**審批閘門的擋下紀錄**，不是可執行程式。
-  - 全部狀態字眼只有三種：`held for the recipient user's approval`（2 筆）、`not approved before expiry`（1 筆）、`Not delivered to that session's Claude`（3 筆）——**沒有任何一筆成功投遞**。
+  - 全部狀態字眼只有三種：`held for the recipient user's approval`（2 筆）、`not approved before expiry`（1 筆）、`Not delivered to that session's Claude`（3 筆）——**沒有任何一筆成功投遞**。（補充：跨整個 `state/` 搜 `delivered to that session` 共 14 筆，**每一筆都出現在否定句「**Not** delivered to that session's Claude」裡**，成功投遞數為 0。）
+  - 機制名稱：這是 OpenClaw 的「**跨場次投遞通知**」（`[Cross-session delivery notice]`）＋**收件人審批閘門**。系統內的核准標記有 `CROSS_MACHINE_APPROVED`、`LK888_APPROVED` 兩種，**未核准一律不投遞**。
+  - 命中檔的來源：那些資料檔是由我方自己的紀錄型腳本寫入的（`recall.py`、`distill_terminal_llm.py`、`distill_watchdog.sh`、`extract_terminal_sessions.py`、`today_other_agents_digest.py`），內容是**把舊的審批通知原文存成日誌／索引**，不是可執行程式。
   - 全部 uds 收件只有 **2 個 pid：15998、18522**（9 月的 session），**與三位「開工」分身（59137／64977／85527）無關**；這三個 pid 在整份收發紀錄裡出現次數為 **0**。
-  - 10/26 當天的收發紀錄裡，`uds:` 出現次數為 **0**。
+  - 10/26 當天的收發紀錄裡，`uds:` 出現次數為 **0**（當天收發全數是 telegram 27 筆、line 5 筆）。
+  - `/tmp/cc-socks/` 現存 5 個 socket，全部是 Claude Code 自己場次的通訊端（3 個「開工」分身 ＋ 2 個 `openclaw-*` CLI 場次），**沒有任何外來注入者的 socket**。
   → **結論不變**：這三場「開工」提示不是機器投遞，是教練在 GUI 打字。
 - **沒有任何 launchd／osascript／cliclick 在驅動 Claude Desktop**；Claude Desktop 自己的日誌（`main.log`、`coworkd.log`、`cowork_vm_*.log`、`app-cu-helper.log`）找不到任何自動觸發痕跡。
 
