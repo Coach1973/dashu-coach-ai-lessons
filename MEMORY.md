@@ -1,4 +1,6 @@
 - [🔴 Claude 額度燒光主因＝Claude Desktop 內建 worktree 分身，不是排程也不是 hook(2026-10-26)](claude-brain/reference_claude_desktop_worktree_quota_2026-10-26.md) — 教練在 Claude Desktop 打「開工＋時分」→ Desktop 自己 git worktree add → hook 注入接力棒 → 場次跨夜 → 94.9% 加權額度燒掉；查「誰發起的」必看首則 user 事件的 `userType=external`/`isMeta=null`/`hookEventName=null` 簽章
+- [🔴 curation_check_result 回 found:false 不等於上架失敗，可能是「根本沒做」(2026-10-27)](claude-brain/feedback_curation_found_false_means_not_done_2026-10-27.md) — hsiuli 拖 23 天沒動就是這樣誤判；先分「上架失敗」vs「從來沒上過」（看 log 關鍵字＋incoming/processing/failed 三目錄），是後者就直接做；收件匣未結案信件＝待辦不是垃圾 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- [🔴 解析 HTML 清單頁前先剝掉 <script>，髒資料先查「髒在哪一層」(2026-10-27)](claude-brain/feedback_strip_script_before_html_parse_2026-10-27.md) — bni_tainan 行事曆 `${time}` 髒值根因是頁尾 JS 模板被當成活動內容；含 ~/.openclaw 推 master、workspace 推 main 的分支對照 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
 - [🔧 派工橋 claude -p 要加 --add-dir 才讀得到 github_repos(2026-10-25)](claude-brain/reference_junshi_bridge_add_dir_fix_2026-10-25.md) — 軍師卡關「For security, Claude Code may only list files in the allowed working directories」的根因就是沙盒只開 workspace；`scripts/junshi_task_worker.sh` 已加 `--add-dir /Users/bymyway/github_repos`（+ .claude-code/workspace + .openclaw/workspace），實測可列出 charles-lin 檔名 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
 - [🎙️ 教練語音諧音 BB / MM = MiniMax-M3(2026-10-17 拍板)](memory/reference_model_alias_bb_mm_minimax_2026-10-17.md) — 教練說 BB / MM / MiniMax / Minimax 一律當 MiniMax-M3 接，不要反問是哪個模型、不要提切換
 - [🔴🔴🔴 「小龍蝦」≠「Hermes」，是這台Mac上兩套獨立Telegram系統(2026-09-22)](claude-brain/feedback_xiaolongxia_vs_hermes_different_systems_2026-09-22.md) — 故障診斷前先確認教練指的是哪個對話框顯示名稱，別憑印象套用上次查過的系統；process沒在跑比process卡住更隱蔽，先查launchctl state
@@ -146,31 +148,7 @@
   - **已歸檔**到 `memory/archive/2026-09-06.md`（完整 33040 bytes），原檔截短到 22068 bytes + 加註「[已蒸餾歸檔]」。
 
 
-## Promoted From Short-Term Memory (2026-09-08)
+## Promoted From Short-Term Memory (2026-10-26)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:304:307 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:304-307]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:308:311 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:308-311]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:312:315 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:312-315]
-<!-- openclaw-memory-promotion:memory:memory/2026-08-31.md:316:319 -->
-- 📨 對話記錄 22:30（共約 50 條，從第 0 行起）: 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] [score=0.866 recalls=0 avg=0.620 source=memory/2026-08-31.md:316-319]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:267:268 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：🦞 對話記錄已滿，已自動重啟，請繼續下指令 [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:267-268]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:270:270 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 對話紀錄已完整存入 `memory/2026-09-01.md`，零遺漏。剛才環境健檢結果： [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:270-270]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:272:275 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 通道健康（probe ok=true）; 教練上次訊息 11:06，現在 12:07，靜默約 1 小時; cron 健康，三關全 fail_no; repo untracked/modified 累積 23 + 22 行，建議下次開工順手掃一眼 [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:272-275]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:278:281 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:278-281]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:282:285 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:282-285]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:286:289 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:286-289]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:290:293 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:290-293]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:294:297 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:294-297]
-<!-- openclaw-memory-promotion:memory:memory/2026-09-01.md:298:301 -->
-- 📨 對話記錄 22:30（共約 41 條，從第 0 行起）: 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：HEARTBEAT_OK 👤 教練：[OpenClaw heartbeat poll] 🦞 小龍蝦：[assistant turn failed before producing content] [score=0.854 recalls=0 avg=0.620 source=memory/2026-09-01.md:298-301]
+<!-- openclaw-memory-promotion:memory:memory/2026-10-12.md:1:28 -->
+- ## 02:12~02:38 約瑟布 v2 推圖（災難+修復紀錄） ### 任務 教練 01:51 下令：v2_01-40 共 40 張，但前 6 張重複，所以實際要跑 v2_07-40 共 34 張。 ### 過程失誤（鐵律二違規） 1. 教練已給清楚 if-else 條件「如果前 6 張重複了，就出剩下 34 張」，我多嘴問「要我馬上開跑嗎？還是要先看哪幾張停一下？」→ 違鐵律二「直接行動不問確認」 2. 用 background exec 一直被教練的訊息打斷 → 應一開始就 foreground 3. Gateway 中間重啟兩次，所有 background exec 全清空 4. 第三次醒來後用「撈磁碟 + 推 Telegram」路線完成 ### 最終結果 - 34 張全部 cache hit 存到磁碟（本次重跑 0 點） - 9 推 4+4+4+4+4+4+4+4+2 全送到 Telegram（messageId 12314-12346） ### 教訓 🔴 批量圖任務鐵律（記住）： - 「全部出圖」= 立即跑，不問確認 - 一開始就 foreground，不要 background - Gateway 重啟後第一件事是「撈磁碟 + 補推」，不要盲重跑 - lk888 cache 機制 24h 內免費重複回傳，重跑成本 0 ### 磁碟狀態 -... [score=0.604 signals=2 recalls=2 avg=0.509 source=memory/2026-10-12.md:1-28] <!-- trigger: gateway, v2-01-40, v2-07-40 --> <!-- importance: 6 -->
