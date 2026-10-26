@@ -23,3 +23,5 @@ metadata:
 **10/21 09:17 教練找到桌面版畫面看容量的位置**：側邊欄的「背景資訊」會列出這場 100 萬空間用了多少，並分項（Messages、Memory Files、Auto-compact buffer、MCP tools、System tools、System prompt、Skills、MCP server instructions）。教練當時看到共 141K。他說開著側邊欄就能隨時看，AI 不用頻繁報；**但規則不變：過 30% 照報＋問要不要總結**。我用他給的數字加總：扣掉 Auto-compact buffer（3.3%）剛好約 14.0%≈141K，所以側邊欄的「用量」應是不含 buffer（這是算出來的，沒在畫面上確認過）。報容量時若跟教練畫面差幾個百分點，先想到「畫面可能不算 buffer」，不要硬說他看錯。
 
 **10/21 問總結的固定格式（教練肯定並要求 Claude 介面所有 AI 照做）**：用收尾框（wrap_up）問「對話容量 xx%、本週額度 xx%，要現在總結嗎？」，按鈕第一顆「總結」（message「總結」）。教練原話：「如果你能主動問我，我連『總結』兩個字都不用打，直接按總結就好了…決定權在我。」已寫進 `scripts/context_percent_hook.py` 的 SUMMARY_ASK 與反射 R-ASK-SUMMARY-WITH-CONTEXT-PCT。
+
+**2026-10-26 教練改門檻（依三天用量分析：衝到 40% 以上的 6 場占總量約 51%，全在 30% 收最多省約 36%；40% 線只省約 8%）**：LEVELS 加 25；25% 起每句提醒「快到 30%，這件做完建議總結」；30% 起每句報＋只做明說的事；35% 起每句「一定要收尾、現在就問總結」。目標：35% 以前一定總結。測試 test_context_percent_hook.py 12／12b／12c 已改。要驗證的是這樣做之後週額度是否真的多出來（教練說「測試看看」），之後比對用量。
