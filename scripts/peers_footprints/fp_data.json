@@ -2855,5 +2855,68 @@
   ],
   "photo_alt": "盲人環台公益電影會說明場",
   "caption": "盲人環台公益電影會說明場"
+ },
+ {
+  "slug": "jiang-yilun",
+  "name": "江宜倫老師",
+  "role": "鋼琴・歌唱老師・《音樂。人生。診聊室》主持人",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/jiang-yilun/",
+  "anchor": "#give",
+  "lede": "對宜倫老師來說，分享音樂本身就是一種給予：免費的體驗課、免費的短片、免費收聽的 Podcast，讓「想學卻不敢開始」的人，先跨出第一步。",
+  "stats": [
+   [
+    "12 支",
+    "免費公開的音樂知識短片"
+   ],
+   [
+    "2 場",
+    "2026.10 免費體驗課"
+   ],
+   [
+    "免費",
+    "Podcast 診聊室，註冊即可收聽"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "2026.02",
+    "title": "開始免費分享音樂教學",
+    "desc": "過年在家一起練琴：C 大調順階和弦教學。出處：YouTube 短片",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2026 春",
+    "title": "攝影展前三重奏",
+    "desc": "把現場音樂帶進攝影展，邀大家「好好看一場表演」。出處：YouTube 短片",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2026.10",
+    "title": "免費體驗課",
+    "desc": "流行樂團合奏（10/13）、流行歌唱成人班（10/29）。出處：Instagram 海報",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2026 秋",
+    "title": "診聊室免費開診",
+    "desc": "免費下載、免費註冊、免費收聽。出處：本人 Facebook 貼文",
+    "src": "",
+    "href": null
+   }
+  ],
+  "photo": [
+   "assets/people/jiang-yilun.jpg",
+   [
+    700,
+    1069,
+    66003
+   ]
+  ],
+  "photo_alt": "宜倫老師邊彈邊唱分享音樂知識",
+  "caption": "宜倫老師邊彈邊唱分享音樂知識"
  }
 ]
