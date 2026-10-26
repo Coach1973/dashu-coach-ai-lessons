@@ -23,7 +23,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-LEVELS = (30, 35, 40, 45, 50)
+LEVELS = (25, 30, 35, 40, 45, 50)
 WINDOW = int(os.environ.get("CONTEXT_WINDOW") or 1000000)
 EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 5)
 EVERY_OVER30 = int(os.environ.get("CONTEXT_REPORT_EVERY_OVER30") or 1)
@@ -120,17 +120,21 @@ def main():
     except Exception:
         pass
     if not hit:
-        every = EVERY_OVER30 if pct >= 30 else EVERY
+        every = EVERY_OVER30 if pct >= 25 else EVERY
         if every > 0 and n % every == 0:
             sys.stdout.reconfigure(encoding="utf-8")
-            if pct >= 30:
+            if pct >= 25:
                 where = f"寫在這一則回覆的「最後一句」（所有內容講完之後，固定一句：這場對話已用約 {pct}%）{LASTMARK}"
             else:
                 where = "放在這一則回覆的第一行（亮燈那行後面）"
             msg = (f"🧠 對話容量定期報告（系統自動，每 {every} 句一次）：本場對話目前用了約 {pct}%（約 {total // 10000} 萬 token）。"
                    f"\n👉 請用一句白話告訴教練：目前用了約 {pct}%，{where}。")
-            if pct >= 30:
+            if pct >= 35:
+                msg += ("\n   🔴 已過 35%（教練 2026-10-26 定：35% 以前一定要收尾總結）：不再開任何新工作，現在就主動問總結——" + SUMMARY_ASK + "。")
+            elif pct >= 30:
                 msg += ("\n   ⚠️ 已過 30%：只做教練這一句明說的事、不順手加工作；手上這件做完就主動問要不要總結——" + SUMMARY_ASK + "（只在問總結那一句查 get_usage，平常不查）。")
+            if 25 <= pct < 30:
+                msg += "\n   🟡 快到 30% 了（教練 2026-10-26 定：25% 起每句提醒）：手上這件做完就準備收尾，告訴教練「快到 30%，這件做完建議總結」。"
             print(msg)
         return
     try:
@@ -142,13 +146,16 @@ def main():
         f"🧠 對話容量提醒（系統自動，教練 2026-10-14 要求）：本場對話已用約 {pct}%（約 {total // 10000} 萬 token，視窗 {WINDOW // 10000} 萬），剛跨過 {hit}% 這條線。",
         f"👉 請用一句白話告訴教練：這場對話已用約 {pct}%，寫在這一則回覆的「最後一句」（所有內容講完之後）{LASTMARK}。",
     ]
+    if hit >= 35:
+        out.append("   🔴 已過 35%：教練 2026-10-26 定「35% 以前一定要收尾總結」，這一句回完就問總結，不再開新工作。")
     if hit >= 50:
         out.append("   已過一半，建議這一段做完就說「總結」，我會更新接力棒並上傳，您再開新對話框。")
     elif hit >= 40:
         out.append("   容量越來越滿，建議找個段落收尾，說「總結」後開新對話框。")
-    else:
+    elif hit >= 30:
         out.append("   教練習慣在 30% 出頭開新對話框；告一段落時說「總結」，我會更新接力棒並上傳，您就可以開新的。任務沒做完不必急著換。")
-    out.append("   ⚠️ 過 30% 之後（教練 2026-10-17 02:01 糾正：31%→48% 白白多燒 token）：只做教練這一句明說要做的事，不順手加做別的（修規則、整理檔案、查延伸問題）；手上這件做完就收尾，主動問要不要總結——" + SUMMARY_ASK + "，不再開新工作。")
+    if hit >= 30:
+        out.append("   ⚠️ 過 30% 之後（教練 2026-10-17 02:01 糾正：31%→48% 白白多燒 token）：只做教練這一句明說要做的事，不順手加做別的（修規則、整理檔案、查延伸問題）；手上這件做完就收尾，主動問要不要總結——" + SUMMARY_ASK + "，不再開新工作。")
     sys.stdout.reconfigure(encoding="utf-8")
     print("\n".join(out))
 

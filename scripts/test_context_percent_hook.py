@@ -95,9 +95,17 @@ with tempfile.TemporaryDirectory() as d:
           "跨過 30%" in outs[0] and all("定期報告" in o and "約 33%" in o and "get_usage" in o for o in outs[1:]), outs)
     m7 = tempfile.mkdtemp(dir=d)
     tp6 = fake_transcript(d, "test-session-6", 290000)
-    outs = [run({"session_id": "test-session-6", "transcript_path": str(tp6)}, m7)[1] for _ in range(5)]
-    check("12. 29% 還是每 5 句才報（沒過線不加密）", all(o == "" for o in outs[:4]) and "定期報告" in outs[4] and "get_usage" not in outs[4], outs)
-    check("12b. 30% 以下的定期報告維持放第一行（默契只針對過 30%）", "第一行" in outs[4] and "最後一句" not in outs[4], outs[4])
+    outs = [run({"session_id": "test-session-6", "transcript_path": str(tp6)}, m7)[1] for _ in range(3)]
+    check("12. 29%（25% 起）第 1 句跨 25% 線、之後每句都報並提醒快到 30%（教練 2026-10-26）",
+          "跨過 25%" in outs[0] and all("快到 30%" in o for o in outs[1:]) and all("get_usage" not in o for o in outs), outs)
+    m8 = tempfile.mkdtemp(dir=d)
+    tp7 = fake_transcript(d, "test-session-7", 360000)
+    outs = [run({"session_id": "test-session-7", "transcript_path": str(tp7)}, m8)[1] for _ in range(2)]
+    check("12b. 36% 每句都有「35% 以前一定要收尾總結」", all("35%" in o and "收尾" in o for o in outs), outs)
+    m9 = tempfile.mkdtemp(dir=d)
+    tp8 = fake_transcript(d, "test-session-8", 240000)
+    outs = [run({"session_id": "test-session-8", "transcript_path": str(tp8)}, m9)[1] for _ in range(4)]
+    check("12c. 24% 維持原樣：前 4 句不出聲", all(o == "" for o in outs), outs)
 
     # 教練 2026-10-19 默契：問「對話百分比剩多少」就直接給數字（12% 沒過線也要給）；平常話不出聲
     m8 = tempfile.mkdtemp(dir=d)
