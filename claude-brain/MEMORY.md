@@ -1,3 +1,5 @@
+- [🔧 策展上架驗證 curation_check_result.py 回 found:false ≠ 上架失敗（黃秀麗 hsiuli 案）；碰到先查真實狀態再下結論(2026-10-27)](feedback_curation_found_false_means_not_done_2026-10-27.md)
+- [🔧 解析網頁前先剝掉 <script>、髒資料先查髒在哪一層（bni_tainan 台南行事曆 sync_calendar.py 多一段髒資料案）(2026-10-27)](feedback_strip_script_before_html_parse_2026-10-27.md)
 - [🔴 Claude 額度燒光主因＝教練在 Claude Desktop 打「開工＋時分」所開的 worktree 分身（94.9%，cache 佔 87.6%），沒有排程或 hook 自發；防範＝關活分身／限輪數／背景改走便宜通道／縮短上下文；講額度要看這份(2026-10-26)](reference_claude_desktop_worktree_quota_2026-10-26.md)
 - [🔧 巴哈看圖一直卡住＝MiniMax 看圖 API 2 天 18 次全失敗(2056／空白)；改 tools.media CLI 交給 Claude(describe_image_via_claude.py，失敗一律回提示、每小時上限40、一張約0.023美元)；整條路還沒用真圖驗證(2026-10-26)](reference_openclaw_image_understanding_via_claude_cli_2026-10-26.md)
 - [🔧 巴哈私訊開通：allowlist＋dmScope 獨立對話、佩佩老師要先按 Start(Telegram 403)；小龍蝦實際在跑 nvm 那份(英文錯誤訊息已改中文，補丁腳本)；寫入失敗兩次自動換新對話；教練留在群組是為了第一時間指揮(2026-10-26)](reference_peipei_dm_allowlist_dmscope_and_openclaw_nvm_copy_2026-10-26.md)
