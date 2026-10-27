@@ -1471,18 +1471,18 @@
   {
    "id": "gcal-2026-11-20-75",
    "date": "2026-11-20",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-11-20-76",
-   "date": "2026-11-20",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-20-76",
+   "date": "2026-11-20",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-11-20-77",
@@ -2892,7 +2892,7 @@
   {
    "id": "gcal-2027-01-28-253",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2900,7 +2900,7 @@
   {
    "id": "gcal-2027-01-28-254",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3351,6 +3351,16 @@
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "4f379fbf",
+   "date": "2026-10-27",
+   "title": "線上咖啡會議：施正益",
+   "source": "巴哈",
+   "start": "17:30",
+   "end": "18:00",
+   "where": "線上",
+   "note": "線上咖啡會議"
   }
  ],
  "recurring": [
@@ -3951,7 +3961,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-27 14:46",
+ "updated_at": "2026-10-27 16:35",
  "tainan_synced_at": "2026-10-27 12:38",
  "evening_window": {
   "start": "19:00",
@@ -3995,8 +4005,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-27 14:46",
- "google_synced_epoch": 1793083578,
+ "google_synced_at": "2026-10-27 16:34",
+ "google_synced_epoch": 1793090079,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
