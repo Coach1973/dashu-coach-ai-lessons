@@ -1118,7 +1118,8 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "-ACAVzeLgWSb"
   },
   {
    "id": "gcal-2026-11-05-30",
@@ -1174,7 +1175,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "1uRp7-CmLN-7"
   },
   {
    "id": "gcal-2026-11-08-37",
@@ -2145,18 +2147,18 @@
   {
    "id": "gcal-2026-12-18-158",
    "date": "2026-12-18",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-12-18-159",
-   "date": "2026-12-18",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-159",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-12-18-160",
@@ -3970,7 +3972,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-27 19:40",
+ "updated_at": "2026-10-27 22:32",
  "tainan_synced_at": "2026-10-27 12:38",
  "evening_window": {
   "start": "19:00",
@@ -4014,8 +4016,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-27 19:40",
- "google_synced_epoch": 1793101249,
+ "google_synced_at": "2026-10-27 22:31",
+ "google_synced_epoch": 1793111518,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
