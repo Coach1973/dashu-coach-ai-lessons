@@ -2082,6 +2082,20 @@
    "audience": [
     "coach"
    ]
+  },
+  {
+   "id": "R-VERIFY-ONE-SHOT-ELEMENT-ONLY",
+   "moment": "pre_tool",
+   "tool": "Bash",
+   "kind": "防錯型",
+   "match": "(--screenshot|screencapture|\\.screenshot\\(|page\\.screenshot)",
+   "say": "你要截圖驗證。先問：我改的是哪一小塊、原始碼第幾行？只截那一塊、一張就收（只留被改動區塊，其他用 CSS 隱藏或直接滾到該元素），不要整頁往下掃、不要重複截。驗證完這一張就交付；第二張之前先說「這張要多看什麼」。",
+   "level": "remind",
+   "situation": "AI 改完網頁小地方要截圖驗證時",
+   "source": "教練 2026-10-27 17:00 糾正：champagne-salon 加匯款帳號，原文只有一處、我一次就改對，卻為了找位置截了 5 次圖、看了 7 張（整頁掃描），白燒額度；「這樣是不是不夠遵守我的指令」",
+   "audience": [
+    "coach"
+   ]
   }
  ],
  "case_ledger": {
