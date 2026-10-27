@@ -1,0 +1,9 @@
+{
+ "session_id": "77a9c208-6050-4c9e-b83b-da37d989650a",
+ "transcript_path": "/Users/bymyway/.claude/projects/-/77a9c208-6050-4c9e-b83b-da37d989650a.jsonl",
+ "cwd": "/",
+ "prompt_id": "3ef8749c-d084-45fa-b69a-683b16ecf369",
+ "permission_mode": "default",
+ "hook_event_name": "UserPromptSubmit",
+ "prompt": "str"
+}
