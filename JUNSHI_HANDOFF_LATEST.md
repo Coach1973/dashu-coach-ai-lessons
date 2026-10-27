@@ -1,3 +1,8 @@
+### 📌 10/27 16:10 追加：巴哈已改回 MiniMax-M3（教練：外接 Haiku 實驗結束）
+- 教練反映 Haiku 版連 LK888 出圖指令都找不到，實驗結束。`openclaw.json` 的 `agents.entries.peipei.model` → `minimax/MiniMax-M3`，閘道熱重載已套用（日誌 16:08 `config hot reload applied`）；改前備份 `state/backup_openclaw_before_peipei_back_to_minimax_20261027.json`。openclaw.json 含金鑰不進 git，這次只存在本機。
+- synterolink 通道設定與 `peipei_claude_daily_cap.py`（plist `com.coach.peipei-claude-cap`）沒刪：模型已是 MiniMax 且無「到頂旗標」，腳本不會把它切回去。看圖腳本仍直連 synterolink Haiku（`bae1308fd`），與巴哈聊天模型無關。
+- 容量提醒新規則（25/30/35%）測試中，見 `8e2ae09f7`。
+
 ### 📌 08:50 追加（教練：Claude 額度用完，週三 10/28 13:00 才恢復；之後小事直接叫小龍蝦做）
 - 看圖腳本模型 Sonnet→**Haiku 5.5**（`describe_image_via_claude.py`），實測真圖 10 秒、$0.0014（原 Sonnet 約 $0.023）。**風險：看圖走 `claude -p`＝吃教練 Claude 額度，額度沒了這條會失敗（回固定提示，不會卡）；週三 13:00 前實際是否可用沒驗證。**
 - 巴哈今天一張去白底任務：34 次呼叫、約 56 萬輸入／1.1 萬輸出、約 $0.33；內建 view_image 一直失敗、未走新腳本（原因未查）。
