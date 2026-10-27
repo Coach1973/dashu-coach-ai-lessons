@@ -1,3 +1,4 @@
+- [🔴 改網頁小地方後驗證只截「被改動那一小塊」一張，不整頁掃（匯款帳號案 5截7看白燒額度）；已掛反射 R-VERIFY-ONE-SHOT-ELEMENT-ONLY(2026-10-27)](feedback_verify_only_changed_element_one_screenshot_2026-10-27.md)
 - [🔧 策展上架驗證 curation_check_result.py 回 found:false ≠ 上架失敗（黃秀麗 hsiuli 案）；碰到先查真實狀態再下結論(2026-10-27)](feedback_curation_found_false_means_not_done_2026-10-27.md)
 - [🔧 解析網頁前先剝掉 <script>、髒資料先查髒在哪一層（bni_tainan 台南行事曆 sync_calendar.py 多一段髒資料案）(2026-10-27)](feedback_strip_script_before_html_parse_2026-10-27.md)
 - [🔴 Claude 額度燒光主因＝教練在 Claude Desktop 打「開工＋時分」所開的 worktree 分身（94.9%，cache 佔 87.6%），沒有排程或 hook 自發；防範＝關活分身／限輪數／背景改走便宜通道／縮短上下文；講額度要看這份(2026-10-26)](reference_claude_desktop_worktree_quota_2026-10-26.md)
