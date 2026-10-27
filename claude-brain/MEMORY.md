@@ -1,3 +1,4 @@
+- [🧩 江宜倫頁「預約老師」每週二晚上8:00（works-form 通用接口進活動報名通知，群組有沒有收到測試通知沒確認）＋榮樹下「已交資料」手動補來賓＝寫 event.db rongtree_guest_forms（token用行程總表 form_token、照片轉jpg）(2026-10-27)](project_jiang_yilun_booking_tuesday_8pm_and_rongtree_backfill_2026-10-27.md)
 - [🔴 改網頁小地方後驗證只截「被改動那一小塊」一張，不整頁掃（匯款帳號案 5截7看白燒額度）；已掛反射 R-VERIFY-ONE-SHOT-ELEMENT-ONLY(2026-10-27)](feedback_verify_only_changed_element_one_screenshot_2026-10-27.md)
 - [🔧 策展上架驗證 curation_check_result.py 回 found:false ≠ 上架失敗（黃秀麗 hsiuli 案）；碰到先查真實狀態再下結論(2026-10-27)](feedback_curation_found_false_means_not_done_2026-10-27.md)
 - [🔧 解析網頁前先剝掉 <script>、髒資料先查髒在哪一層（bni_tainan 台南行事曆 sync_calendar.py 多一段髒資料案）(2026-10-27)](feedback_strip_script_before_html_parse_2026-10-27.md)
