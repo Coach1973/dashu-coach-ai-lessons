@@ -2830,6 +2830,24 @@ def api_works_contact():
     return reply(True)
 
 
+# ---------- 留資料後台（教練 2026-10-27：「寫好的資料在哪裡，我看不到，給我網址」）
+# works_contact_leads 原本只有寫入、沒有任何一處讀取或後台頁 → 教練在網站上完全看不到自己收的資料。
+# 短網址即通行證（沿用 rongtree_guest.py 的慣例），簽章用 app.secret_key，無簽章一律 404。
+import works_leads as _wl
+
+
+@app.route("/leads")
+@app.route("/leads/a/<code>")
+def works_leads_list(code=""):
+    ok = (hmac.compare_digest(code, _wl.list_code(app.secret_key)) if code
+          else hmac.compare_digest(request.args.get("k", ""), _wl.list_sig(app.secret_key)))
+    if not ok:
+        abort(404)
+    return Response(_wl.render_list(app.secret_key, (request.args.get("site") or "").strip() or None),
+                    content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
 # ---------- 教練行程預約頁（2026-10-12）：只有拿到含隨機代碼的網址才進得來 ----------
 # 資料＝workspace/knowledges/教練行程總表.json（scripts/coach_schedule.py）。預約會先寫成「待確認」占位，
 # 並通知「活動報名即時通知」群；教練確認：coach_schedule.py confirm --id，不要：remove --id。
