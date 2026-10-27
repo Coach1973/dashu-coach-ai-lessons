@@ -34,9 +34,43 @@
 |------|---------|
 | node | `/opt/homebrew/bin/node` |
 | python3 | `/opt/homebrew/bin/python3` |
-| claude-code CLI | `/opt/homebrew/bin/claude-code` |
+| claude-code CLI（軍師） | `/Users/bymyway/.local/bin/claude` |
+| openclaw CLI（**排程用這支**） | `/Users/bymyway/.openclaw/tmp/agent-cli/openclaw` |
 
 **原則**：任何 cron wrapper 腳本一律使用絕對路徑，不依賴 PATH。
+
+> 🔴 2026-10-27 實測修正：`/opt/homebrew/bin/claude-code` 與 `/opt/homebrew/bin/claude` **都不存在**（command not found）。軍師 CLI 真正的執行檔是 `/Users/bymyway/.local/bin/claude`（symlink 到 `~/.local/share/claude/versions/<ver>`）。
+
+## ⚠️ openclaw CLI 有三支，版本不一致 → 舊版會讀不了新設定（2026-10-27 實測）
+
+`which -a openclaw` 會列出三支，版本差很多：
+
+| 路徑 | 版本 | 能不能用 |
+|------|------|---------|
+| `/opt/homebrew/bin/openclaw` | 2026.6.34 | ❌ **不能用**：解析不了現在的 `openclaw.json`，`cron list` 直接噴 `Invalid config at .../openclaw.json`（`meta`、`browser.profiles.imported.color`、`agents.defaults.heartbeat`… 全部 Invalid input） |
+| `/Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw` | 2026.9.4 | ⚠️ 版本對但要靠 `openclaw: Retrying with .../node` 重試才跑得起來，輸出會混雜 Node 警告 |
+| `/Users/bymyway/.openclaw/tmp/agent-cli/openclaw` | 2026.9.4 | ✅ **首選**：乾淨、秒回、輸出可直接解析 |
+
+**鐵律**：要下排程指令（`cron add/list/rm`）一律用 `/Users/bymyway/.openclaw/tmp/agent-cli/openclaw`。
+看到 `Invalid config` 先別懷疑設定壞掉——**先確認自己跑的是哪一支 CLI**。
+
+**建立一次性提醒的可用寫法（2026-10-27 實測成功）**：
+
+```bash
+CLI=/Users/bymyway/.openclaw/tmp/agent-cli/openclaw
+$CLI cron add \
+  --at "2026-10-27T19:00:00" \
+  --tz "Asia/Taipei" \
+  --name "提醒發LRP戰報-2026-10-27-19:00" \
+  --message "⏰ 教練，19:00 到了——該發 LRP 戰報了。" \
+  --announce --channel telegram --to 6124913915 \
+  --agent main --session isolated --json
+```
+
+- `--at` 給「無時區的 ISO」時，靠 `--tz` 決定時區；存檔會轉成 UTC（`2026-10-27T19:00 Asia/Taipei` → `at: 2026-10-27T11:00:00.000Z`），**驗收時要用 Asia/Taipei 換算回來看**，不要直接看 UTC 字串。
+- 投遞教練本人用 `--to 6124913915`（DM），群組是 `-5115910257`，兩者不可混用。
+- `--announce` 讓 agent 的最終回覆直接推到該 chat。
+- 建完一定要用 `cron list --json` 驗 `nextRunAtMs` 換算後是不是正確的當下時間。
 
 ## 模型驗證
 
