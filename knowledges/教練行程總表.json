@@ -497,7 +497,7 @@
    "date": "2026-11-05",
    "start": "19:30",
    "end": "20:30",
-   "title": "榮樹下訪談",
+   "title": "榮樹下訪談：吳寶玉、吳錦昌",
    "source": "預約頁",
    "kind": "interview",
    "booking_type": "榮樹下訪談",
@@ -505,7 +505,10 @@
    "note": "預約人：邱裕榮（預約頁點選）",
    "form_token": "Cv-O651tkW0C",
    "covered_by_google": true,
-   "reminder_job": "33438b20-3e81-447e-abc6-24c423eec051"
+   "guest": "吳寶玉、吳錦昌",
+   "guest_field": "地產、電腦",
+   "guest_by": "教練",
+   "reminder_job": "0fe82c40-eaf2-418a-97f4-eb26e081ced3"
   },
   {
    "id": "d5a312f6",
@@ -1112,7 +1115,8 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "mODgJ-4fT6oX"
   },
   {
    "id": "gcal-2026-11-05-27",
@@ -1168,7 +1172,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "FasRxyu8VpA4"
   },
   {
    "id": "gcal-2026-11-08-34",
@@ -3997,7 +4002,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-28 21:42",
+ "updated_at": "2026-10-28 23:04",
  "tainan_synced_at": "2026-10-28 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4041,8 +4046,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-28 21:42",
- "google_synced_epoch": 1793194953,
+ "google_synced_at": "2026-10-28 22:37",
+ "google_synced_epoch": 1793198258,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
