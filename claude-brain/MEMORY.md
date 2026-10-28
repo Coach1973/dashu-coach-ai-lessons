@@ -129,3 +129,4 @@
 - [📦 舊記憶主題分組彙整（15 組：稱呼／OpenClaw坑／查證守則／BNI歷史／部署／刪除安全等），2026-10-14 搬進舊記憶索引](MEMORY_ARCHIVE_INDEX.md)
 - [🔧 品牌名「榮樹下」正確寫法（教練10/12確認，不是榕／龍）](reference_brand_name_rong_shu_xia_2026-10-12.md)
 - [🧑‍🏫 人物頁標題不掛任期職稱（名字就好）、內文現職照寫（賴昭賢頁 10/27 教練糾正）](feedback_title_no_role_body_role_ok_2026-10-27.md)
+- [🔴 教練傳一串檔案到 Telegram：他按下載幾秒，我接管螢幕 8 分鐘／約10萬token只存16張；直接找 ~/Downloads/ 不開螢幕；理監事換照片案(2026-10-28)](feedback_telegram_bulk_files_coach_taps_ai_takes_from_downloads_2026-10-28.md)
