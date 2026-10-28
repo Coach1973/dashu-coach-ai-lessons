@@ -3080,5 +3080,107 @@
   ],
   "photo_alt": "中山大學暨永豐銀行產學合作參訪凱景",
   "caption": "中山大學暨永豐銀行產學合作參訪凱景"
+ },
+ {
+  "slug": "xu-zhe-cheng",
+  "name": "許哲誠",
+  "role": "視障鋼琴家・用琴聲翻譯生命故事",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/xu-zhe-cheng/",
+  "anchor": "#give",
+  "lede": "從 13 歲第一次在慈濟「生命之歌」上台，到為花蓮災民寫曲，哲誠把每一次演出都當成陪伴。下面每一筆足跡都附上出處。",
+  "stats": [
+   [
+    "13 歲",
+    "首度以音樂參與慈濟「生命之歌」"
+   ],
+   [
+    "240 位",
+    "2023 台南扶輪「看見生命的愛音樂會」與會者"
+   ],
+   [
+    "5 天",
+    "2025 基隆「聽見愛與夢想」生命教育巡迴"
+   ],
+   [
+    "第 28 屆",
+    "身心障礙楷模金鷹獎（2024）"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "13 歲",
+    "title": "慈濟「生命之歌」",
+    "desc": "首度以音樂和慈濟結緣，赴奧前接受證嚴上人祝福。無障礙科技發展協會",
+    "src": "無障礙科技發展協會",
+    "href": "https://www.twacc.org/news_content.php?c_id=10&id=239"
+   },
+   {
+    "yr": "2009",
+    "title": "伊甸「給生命一個支點」音樂會",
+    "desc": "與四指鋼琴家李喜芽同台。伊甸基金會影片",
+    "src": "伊甸基金會影片",
+    "href": "https://www.youtube.com/watch?v=1MloJh0iVzA"
+   },
+   {
+    "yr": "2016",
+    "title": "回到校園鼓勵學弟妹",
+    "desc": "以充滿生命力的音符分享自己的路。吉隆新聞",
+    "src": "吉隆新聞",
+    "href": "https://www.youtube.com/watch?v=HK0HSiQafO4"
+   },
+   {
+    "yr": "2018",
+    "title": "台大醫院 × 九昱文教基金會",
+    "desc": "參與公益慈善演出，「希望我的音樂可以給大家帶來溫暖跟感動」。PeoPo 公民新聞",
+    "src": "PeoPo 公民新聞",
+    "href": "https://www.peopo.org/news/361435"
+   },
+   {
+    "yr": "2022",
+    "title": "小太陽長青生活學苑",
+    "desc": "為長輩舉辦音樂見證同樂會。影片紀錄",
+    "src": "影片紀錄",
+    "href": "https://www.youtube.com/watch?v=qNDzjpiJ2dM"
+   },
+   {
+    "yr": "2023",
+    "title": "「美化心靈–看見生命的愛音樂會」",
+    "desc": "台南八個扶輪社合辦，結合鋼琴、自編曲與影片說生命故事。人間通訊社",
+    "src": "人間通訊社",
+    "href": "https://www.lnanews.com/news/155683"
+   },
+   {
+    "yr": "2025.6",
+    "title": "基隆「聽見愛與夢想」生命教育",
+    "desc": "基隆市教育處邀請，於信義國小演出分享，開放全市國中小報名。暢NEWS／民生電子報",
+    "src": "暢NEWS／民生電子報",
+    "href": "https://songnews.com.tw/197295/"
+   },
+   {
+    "yr": "2025.9",
+    "title": "為花蓮災民譜曲",
+    "desc": "花蓮堰塞湖災情後發表自創鋼琴曲撫慰人心。民視新聞",
+    "src": "民視新聞",
+    "href": "https://www.youtube.com/watch?v=DukA7jdM9QA"
+   },
+   {
+    "yr": "2025.12",
+    "title": "基隆音樂愛心大使",
+    "desc": "到各地學校分享走出逆境的故事，並現場彈奏鼓勵學生。世界日報",
+    "src": "世界日報",
+    "href": "https://www.worldjournal.com/wj/story/122163/9194136"
+   }
+  ],
+  "photo": [
+   "assets/people/xu-zhe-cheng.jpg",
+   [
+    720,
+    346,
+    67027
+   ]
+  ],
+  "photo_alt": "台南扶輪社音樂會與會者合影",
+  "caption": "台南扶輪社音樂會與會者合影"
  }
 ]
