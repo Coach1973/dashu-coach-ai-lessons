@@ -20,3 +20,5 @@ commit：nmda `5b965f8`；workspace `7b3c08f26`。
 
 **Why:** 下次教練說「協會要加理監事／顧問團隊頁」「像理監事名單那樣能自己補資料」，直接複製這套（nmda_team.py → 換名稱）。
 **How to apply:** 先看這份再動；相關：[[project-tut-memory-board-list-cards-2026-10-23]]、[[feedback-identical-means-copy-the-reference-code-2026-10-21]]、[[feedback-new-admin-urls-auto-register-coach888-2026-10-10]]
+
+**2026-10-28 22:07 換新海報**：教練給 26 張新海報（Telegram 存到 ~/Downloads），對人名換 21 位，只改 photo_file（1200×800 JPEG，舊圖搬 state/backup_20261028_nmda_photo_swap/old_photos）；王珠娟沒給所以沒動。海報有但名單沒有：羅爵、連清成、林嘉華、戴明堂（教練沒說新增，未加）。王柄榆(海報)＝王枘榆(名單)，李小龍海報本名陳柏州。換照片只動 photo_file、不用重啟服務。
