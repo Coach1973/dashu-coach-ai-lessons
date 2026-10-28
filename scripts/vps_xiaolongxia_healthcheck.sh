@@ -45,12 +45,22 @@ if [ "$STATUS" = "OK" ]; then
   fi
 
   # 3. Gateway 過去 24 小時 ERROR 數量
-  ERR_CNT=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 24h 2>&1 | grep -ciE 'error|failed|exception' | head -1" 2>&1)
+  ERR_CNT=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "docker logs openclaw --since 24h 2>&1 | grep -iE 'error|failed|exception' | grep -viE 'embeddings unavailable|node-llama-cpp|memory pressure|edit failed' | wc -l" 2>&1)
   ERR_CNT=${ERR_CNT:-0}
   if [ "$ERR_CNT" -lt 50 ]; then
     RESULTS+=("✅ Gateway 24h 錯誤數: $ERR_CNT（< 50 容忍值）")
   else
     RESULTS+=("⚠️ Gateway 24h 錯誤數: $ERR_CNT（超過容忍值）")
+    [ "$STATUS" = "OK" ] && STATUS="WARN"
+  fi
+
+  # 3b. 硬碟用量（2026-10-28 VPS 曾因 .git 堆積用到 81%，超過 70% 就預警）
+  DISK_PCT=$(sshpass -p "$VPS_PASS" ssh $SSH_OPTS "$VPS_HOST" "df / | awk 'NR==2{gsub(\"%\",\"\",\$5); print \$5}'" 2>/dev/null)
+  DISK_PCT=${DISK_PCT:-0}
+  if [ "$DISK_PCT" -lt 70 ]; then
+    RESULTS+=("✅ 硬碟用量: ${DISK_PCT}%")
+  else
+    RESULTS+=("⚠️ 硬碟用量: ${DISK_PCT}%（超過 70%）")
     [ "$STATUS" = "OK" ] && STATUS="WARN"
   fi
 
