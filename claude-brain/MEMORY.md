@@ -1,3 +1,4 @@
+- [🔧 榮樹下集數＝SoundOn 標題「第N集」真集數（API回傳no，陳智博第8集）；每集彈窗「認識來賓」自動對策展名冊、對不上補 _RONG_ALIAS；改app.py要重啟event-webapp(2026-10-28)](reference_rongtree_episode_numbers_from_podcast_title_and_guest_pages_2026-10-28.md)
 - [🔧 VPS 硬碟 81G 真因＝.git 堆 650 個 pack(47G)，root 擁有的檔讓 gc 一直失敗；已 repack+清快取降到 26G、重啟釋放記憶體；VPS git pull 9/24 起分歧未處理(2026-10-28)](reference_vps_disk_81g_git_pack_pileup_2026-10-28.md)
 - [🧩 江宜倫頁「預約老師」每週二晚上8:00（works-form 通用接口進活動報名通知，群組有沒有收到測試通知沒確認）＋榮樹下「已交資料」手動補來賓＝寫 event.db rongtree_guest_forms（token用行程總表 form_token、照片轉jpg）(2026-10-27)](project_jiang_yilun_booking_tuesday_8pm_and_rongtree_backfill_2026-10-27.md)
 - [🔴 改網頁小地方後驗證只截「被改動那一小塊」一張，不整頁掃（匯款帳號案 5截7看白燒額度）；已掛反射 R-VERIFY-ONE-SHOT-ELEMENT-ONLY(2026-10-27)](feedback_verify_only_changed_element_one_screenshot_2026-10-27.md)
@@ -7,7 +8,7 @@
 - [🔧 巴哈看圖一直卡住＝MiniMax 看圖 API 2 天 18 次全失敗(2056／空白)；改 tools.media CLI 交給 Claude(describe_image_via_claude.py，失敗一律回提示、每小時上限40、一張約0.023美元)；整條路還沒用真圖驗證(2026-10-26)](reference_openclaw_image_understanding_via_claude_cli_2026-10-26.md)
 - [🔧 巴哈私訊開通：allowlist＋dmScope 獨立對話、佩佩老師要先按 Start(Telegram 403)；小龍蝦實際在跑 nvm 那份(英文錯誤訊息已改中文，補丁腳本)；寫入失敗兩次自動換新對話；教練留在群組是為了第一時間指揮(2026-10-26)](reference_peipei_dm_allowlist_dmscope_and_openclaw_nvm_copy_2026-10-26.md)
 - [🔧 背景程式在 workspace 寫沒進 git 的檔＝會被 hook／派工的 stash -u 收走放回成空檔；台鐵轉交 claude -p 0 bytes 真因；輸出寫 workspace 外＋背景 claude 關 hook＋gitignore(2026-10-26)](reference_workspace_stash_u_clobbers_background_outputs_2026-10-26.md)
-- [🧑‍🏫 做好頁面但軍火庫還沒掛的名單＝等教練通知才掛（蔡曜隆、莊哲昀、潛錩、之後的布萊恩紅茶；品牌頁背後也是一位老闆，他要先跟本人確認）；鄭憲聰已改連新頁(2026-10-26)](project_skyteam_pending_coach_notice_list_2026-10-26.md)
+- [🧑‍🏫 做好頁面但軍火庫還沒掛的名單＝等教練通知才掛；10/28 蔡曜隆、林玟妗、布萊恩、許哲誠已掛（前段32→40位），莊哲昀、潛錩仍等通知；江宜倫放最後(2026-10-28)](project_skyteam_pending_coach_notice_list_2026-10-26.md)
 - [🤖 巴哈只出中華新媒體橫直版海報、台鐵研究案軍師統籌：巴哈上網/瀏覽器/小幫手已程式禁用、台鐵訊息進 state/tra_research_inbox.md；10/26 罷工真因＝限流冷卻標記不是額度(2026-10-26)](project_peipei_poster_only_tra_research_to_junshi_2026-10-26.md)
 - [🧑‍🏫 人才軍火庫邀請函首批24位＝連動首頁點擊排名（roster.json＋/api/skyteam/ranking）；首頁換人／改FRONT後要跑 skyteam_build_invite_roster.py，上架連結步驟已掛，手動換人要自己跑(2026-10-25)](reference_skyteam_invite_faces_follow_home_ranking_2026-10-25.md)
 - [🔧 派工橋 junshi_task_worker.sh 呼叫 claude -p 要加 --add-dir 才讀得到 github_repos（林家旭補件卡關案）(2026-10-25)](reference_junshi_bridge_add_dir_fix_2026-10-25.md)
