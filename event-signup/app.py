@@ -3126,6 +3126,38 @@ def _rong_parse_feed(xml_text: str) -> list:
     return out[::-1]  # 舊→新
 
 
+# 每集彈窗的「認識來賓」專屬網頁（教練 2026-10-28）：照節目標題裡的名字，自動對到策展名冊裡已上架的個人頁；
+# 網頁標題不是以本人名字開頭的（暱稱、專題頁），寫在 _RONG_ALIAS。新集數只要來賓有上架網頁就會自己出現。
+_RONG_ALIAS = {"周總": ["zhou-ruiqi"], "天使姐姐": ["angel-sister"], "陳智博": ["big-plan"],
+               "黃國彰": ["inventor"], "楊境界": ["hnv-cc"]}
+_RONG_PAGE_SKIP = {"skyteam", "all-works", "rongtree", "coach888", "coachwu"}
+
+
+def _rong_guest_pages(title: str, sites: list) -> list:
+    hits = []
+    for kw, slugs in _RONG_ALIAS.items():
+        if kw in title:
+            hits += slugs
+    for s in sites:
+        if s["slug"] in _RONG_PAGE_SKIP:
+            continue
+        nm = re.split(r"[｜|]", s["title"])[0].strip().split(" ")[0]
+        nm = re.sub(r"(博士|董事長|總經理|老師|牧師)$", "", nm)
+        if re.fullmatch(r"[\u4e00-\u9fff]{2,4}", nm) and nm in title:
+            hits.append(s["slug"])
+    by = {s["slug"]: s for s in sites}
+    out, seen = [], set()
+    for slug in hits:
+        s = by.get(slug)
+        if not s or slug in seen:
+            continue
+        seen.add(slug)
+        parts = re.split(r"[｜|]", s["title"], 1)
+        label = parts[0].strip() + (" ‧ " + parts[1].strip()[:24] if len(parts) > 1 else "")
+        out.append([label, s["event_url"]])
+    return out[:4]
+
+
 @app.route("/api/rongtree/episodes", methods=["GET"])
 def api_rongtree_episodes():
     """同源給 /curated/rongtree/ 的 JS 用；5 分鐘快取，SoundOn 暫時連不上就給上一份（網頁還是有靜態名單當底）"""
@@ -3140,7 +3172,12 @@ def api_rongtree_episodes():
         except Exception as exc:
             print(f"[rongtree-episodes] 讀 SoundOn 失敗，沿用上一份：{exc}", flush=True)
             _rong_cache["at"] = now - 240  # 1 分鐘後再試，不要每個訪客都重打
-    resp = Response(json.dumps({"ok": True, "episodes": _rong_cache["items"]}, ensure_ascii=False), mimetype="application/json")
+    try:
+        _sites = [x for x in json.loads(CURATED_REGISTRY_PATH.read_text(encoding="utf-8"))["sites"] if x.get("status") == "live"]
+    except Exception:
+        _sites = []
+    _eps = [dict(e, pages=_rong_guest_pages(e["title"], _sites)) for e in _rong_cache["items"]]
+    resp = Response(json.dumps({"ok": True, "episodes": _eps}, ensure_ascii=False), mimetype="application/json")
     resp.headers["Access-Control-Allow-Origin"] = "*"
     resp.headers["Cache-Control"] = "public, max-age=120"
     return resp
