@@ -3107,6 +3107,8 @@ def _rong_parse_feed(xml_text: str) -> list:
             continue
         ver = "live" if "實況" in title else "highlight"
         guest = re.sub(r"^【[^】]*】\s*", "", title)
+        mno = re.match(r"^第\s*(\d+)\s*集\s*[:：]\s*", guest)
+        no = int(mno.group(1)) if mno else 0   # Podcast 標題上的真集數（2026-10-28 教練：頁面不要自己照發布順序編號）
         guest = re.sub(r"^第\s*\d+\s*集\s*[:：]\s*", "", guest)
         guest = re.sub(r"\s*[\(（][^\)）]*版[\)）]\s*$", "", guest).strip()
         desc = re.sub(r"\s+", " ", (it.findtext("description") or "")).strip()
@@ -3120,7 +3122,7 @@ def _rong_parse_feed(xml_text: str) -> list:
             day = parsedate_to_datetime(it.findtext("pubDate")).astimezone(timezone(timedelta(hours=8))).strftime("%Y.%m.%d")
         except Exception:
             day = ""
-        out.append({"id": guid, "url": link, "title": guest, "version": ver, "desc": desc[:140], "dur": dur, "date": day})
+        out.append({"id": guid, "url": link, "title": guest, "version": ver, "desc": desc[:140], "dur": dur, "date": day, "no": no})
     return out[::-1]  # 舊→新
 
 
