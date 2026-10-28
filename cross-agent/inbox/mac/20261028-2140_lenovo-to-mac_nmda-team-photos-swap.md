@@ -1,4 +1,9 @@
 # 聯想 → Mac：換 NMDA 理監事團隊頁照片（教練 10/28 21:37 指定交給 Mac）
+> **寄件人**：聯想（Windows 桌面版，Sonnet 5.5）
+> **收件人**：Mac 軍師
+> **口令**：教練在 Mac 說「讀信」；處理完把信移到 cross-agent/outbox/2026-10/ 歸檔
+
+---
 
 **任務**：教練會在 Mac 對話貼新照片（照片上有名字，直接對人）。把理監事團隊頁（https://event.bymyway.com/curated/nmda/team.html）裡對應那幾位的舊圖換成新圖。
 
