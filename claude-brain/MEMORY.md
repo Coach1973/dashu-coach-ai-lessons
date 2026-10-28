@@ -81,7 +81,7 @@
 - [📅 教練Google日曆非公開iCal網址已存憑證層(機器人不登入就能讀，340筆實測通)；陳佩貞／a39521102 已由教練自己移除、陳佩貞不是佩佩老師；Google與行程總表是兩本帳(2026-10-13)](reference_google_calendar_private_ical_for_bots_2026-10-13.md)
 - [🔴 離會的人不留在培訓總覽／來賓總覽：以三戰情表在籍為準，補信用證時同輪處理；BNI-Training/departed.py＋同人不同寫法要放ALIASES防誤刪(2026-10-13)](feedback_departed_members_removed_from_training_guests_overview_2026-10-13.md)
 - [📅 教練行程總表名稱簡化規則（分享會／BNI 例會／MSP／LTRT只留代碼等），sync-tainan 內建(2026-10-13)](reference_coach_schedule_title_rules_2026-10-13.md)
-- [🔧 小龍蝦記憶搜尋 llama-server 2.1GB→0.66GB：外掛把 ubatch-size 寫死2048，改用包裝腳本 llama-server-lite.sh 壓成1024；外掛更新後要重查；釋放不碰小龍蝦(2026-10-12)](reference_llama_server_memory_ubatch_wrapper_2026-10-12.md)
+- [🔧 小龍蝦記憶搜尋 llama-server 吃 2.1GB＝外掛原始碼寫死 ubatch 2048（10/12 包裝腳本被蓋掉）；10/29 改原始碼 1024＋守衛 llama_memory_guard.sh 事件觸發自動修回、超 1.2GB 連 router 一起釋放、外掛被更新自動補(2026-10-29)](reference_llama_server_memory_ubatch_wrapper_2026-10-12.md)
 - [📅 榮樹下群組排訪談：「龍馥夏」＝榮樹下；分身rongshuxia＋教練行程總表json(coach_schedule.py)＋schedule-context外掛，巴哈助理共用同一份；大台南只算ZOOM線上場(2026-10-12)](project_rongshuxia_group_interview_scheduler_2026-10-12.md)
 - [🔧 小龍蝦10/12凌晨重複迴圈根因＋safety-locks v1.3重複防呆鎖＋怎麼查(日誌/SQLite/帳本)；不是當機、沒扣點(2026-10-12)](reference_openclaw_agent_repeat_loop_and_guard_2026-10-12.md)
 - [🔴 教練說網頁「跟作品一覽不一樣」→先查作品一覽(coach888狀態)放的網址是否404，不只比對網頁(2026-10-12)](feedback_check_what_url_the_overview_holds_first_2026-10-12.md)
