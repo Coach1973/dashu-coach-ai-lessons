@@ -16,3 +16,5 @@ metadata:
 **How to apply:** 新上架的頁面若不在軍火庫，只記進這份名單與接力棒 🤫 區，不問、不追；教練說「可以掛了」才插入（教練口令見 [[feedback-skyteam-insert-command-front-block-24-2026-10-25]]），插入後要跑 `skyteam_build_invite_roster.py`。鄭憲聰例外，已直接連到新頁 sendstudio（skyteam 8386342、be38728）。
 
 相關：[[project-footprint-partners-auto-sync-and-skyteam-footer-2026-10-25]]
+
+**更新 10/28 12:56（教練通知）**：蔡曜隆、林玟妗、布萊恩紅茶已掛進軍火庫（第33～36位，連同許哲誠）；前段 32→40 位（skyteam `c6d4472`）。江宜倫（真誠分會）放名單最後、不在前 40。**莊哲昀、潛錩仍等教練通知**（教練沒點名）。教練念的名字是諧音：蔡耀龍＝蔡曜隆、林文妗＝林玟妗、許澤成＝許哲誠。
