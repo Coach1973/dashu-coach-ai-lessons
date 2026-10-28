@@ -1492,18 +1492,18 @@
   {
    "id": "gcal-2026-11-20-74",
    "date": "2026-11-20",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-11-20-75",
-   "date": "2026-11-20",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-75",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-20-76",
@@ -2913,7 +2913,7 @@
   {
    "id": "gcal-2027-01-28-252",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2921,7 +2921,7 @@
   {
    "id": "gcal-2027-01-28-253",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3997,7 +3997,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-28 21:23",
+ "updated_at": "2026-10-28 21:42",
  "tainan_synced_at": "2026-10-28 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4041,8 +4041,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-28 21:23",
- "google_synced_epoch": 1793193820,
+ "google_synced_at": "2026-10-28 21:42",
+ "google_synced_epoch": 1793194953,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
