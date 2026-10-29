@@ -378,7 +378,7 @@ A2_PATTERNS = [
     r"(請|麻煩)您(看一下|確認一下|到|去|進入|打開|點(?!頭)|按|關|找|試)",
     r"(?<!是)您自己(去|來|改|關|開|點|按|操作|設定|處理|動手)(?!的)",   # 「那是您自己關的」是陳述事實，不是叫人做
 ]
-A2_ALLOW = re.compile(r"只有您|只有教練|您本人|密碼|簡訊|驗證碼|連結|網址|不用|不需要|不必|免")
+A2_ALLOW = re.compile(r"只有您|只有教練|您本人|密碼|簡訊|驗證碼|連結|網址|不用|不需要|不必|免|Haiku|Sonnet|Opus|模型")  # 2026-10-30：亮燈規則本身要求寫「建議切換到 Sonnet」，被這條當成叫教練動手（8 次中常見）
 
 if LAST_TEXT:
     hits2 = []
@@ -523,7 +523,8 @@ if LAST_TEXT:
 # ════════════════════════════════════════════════
 if TOUCHED_UTC and LAST_TEXT:
     has_clock = bool(re.search(r"[0-9]{1,2}:[0-9]{2}|[0-9]{1,2}[點时]", LAST_TEXT))
-    has_tw = bool(re.search(r"台灣時間|台湾时间|\+8|GMT\+8|UTC\+8", LAST_TEXT))
+    # 2026-10-30：「凌晨 3:29」「下午 4:24」是換算後的口語寫法，也算有講台灣時間（本週 16 次裡多半是這種誤判）
+    has_tw = bool(re.search(r"台灣時間|台湾时间|\+8|GMT\+8|UTC\+8|凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|半夜", LAST_TEXT))
     if has_clock and not has_tw:
         path = log_violation("rule_taiwan_time_violations.log", "")
         MESSAGES.append(
@@ -681,7 +682,9 @@ def _e2_question_re():
 
 
 _E2_Q = _e2_question_re()
-if (_E2_Q and _last_idx is not None and LAST_TEXT and _E2_Q.search(_last_prompt)
+# 2026-10-30：系統自動附上的 <system-reminder>（其他對話框完成通知等）不是教練問的，先拿掉再判斷
+_e2_prompt = re.sub(r"(<|&lt;)system-reminder>.*?((<|&lt;)/system-reminder>|$)", "", _last_prompt, flags=re.S).strip()
+if (_E2_Q and _last_idx is not None and LAST_TEXT and _e2_prompt and _E2_Q.search(_e2_prompt)
         and not _last_prompt.startswith("Stop hook feedback")):
     _e2_tools = 0
     for ev in EVENTS[_last_idx + 1:]:
@@ -690,7 +693,7 @@ if (_E2_Q and _last_idx is not None and LAST_TEXT and _E2_Q.search(_last_prompt)
                 if isinstance(c, dict) and c.get("type") == "tool_use" and not E2_BOOKKEEPING.search(c.get("name", "")):
                     _e2_tools += 1
     if _e2_tools == 0 and not E2_DEFER_OR_EVIDENCE.search(LAST_TEXT):
-        body = "  • 教練問：「%s」→ 這一輪 0 次查證就回答了\n" % _last_prompt.strip().replace("\n", " ")[:60]
+        body = "  • 教練問：「%s」→ 這一輪 0 次查證就回答了\n" % _e2_prompt.replace("\n", " ")[:60]
         path = log_violation("rule03_verify_violations.log", "[E2 判斷題零查證]\n" + body)
         MESSAGES.append(
             "\n🔎 判斷題沒查就回答（系統偵測，2026-10-17 教練要求的「先查再答」標準）\n" + BAR + "\n" + body +
