@@ -11,6 +11,7 @@ import fcntl
 import hmac
 import json
 import os
+import secrets
 import tempfile
 import uuid
 from html import escape
@@ -198,6 +199,8 @@ def book(date_s, start_s, booking_type, who=None, note=None):
         ev = {"id": uuid.uuid4().hex[:8], "date": d.isoformat(), "start": _fmt(st), "end": _fmt(st + 60),
               "title": f"{booking_type}（待確認）", "source": "預約頁", "kind": "interview", "tentative": True,
               "booking_type": booking_type, "booked_by": who, "note": note or f"預約人：{who}（預約頁點選）"}
+        if booking_type == "榮樹下訪談":   # 2026-10-29：來賓資料表網址在預約當下就配好（格式同 coach_schedule.guest_form_url），不用等 5 分鐘的補配
+            ev["form_token"] = secrets.token_urlsafe(9)
         data["events"].append(ev)
         data["updated_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
         fd, tmp = tempfile.mkstemp(dir=str(DATA.parent), suffix=".tmp")

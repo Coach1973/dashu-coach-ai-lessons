@@ -75,7 +75,7 @@ A._RONGTREE_HOLD_HITS.clear()
 st, j = post(base)
 time.sleep(0.4)
 check("1. 送出一個空檔 → 200、held=true", st == 200 and j.get("ok") and j.get("held"), (st, j))
-ev = next((e for e in load()["events"] if e.get("booked_by") == "官網預約"), None)
+ev = next((e for e in load()["events"] if e.get("booked_by") == "官網預約" and "測試先生" in e.get("note", "")), None)   # 只認本測試送出的那筆（總表複本裡若已有真實預約，不會誤抓）
 check("1b. 總表多一筆「待確認」榮樹下訪談（booked_by=官網預約、tentative）", bool(ev) and ev.get("tentative") and ev.get("booking_type") == "榮樹下訪談", ev)
 check("1c. 姓名單位聯絡方式只在私人備註；沒有 guest 欄位（公開清單不會出現姓名）",
       bool(ev) and "測試先生" in ev.get("note", "") and "guest" not in ev and "測試先生" not in ev.get("booked_by", ""), ev)
@@ -83,6 +83,8 @@ kinds = [k[0] for k in events]
 check("1d. 有通知、留資料紀錄、寫 Google 各一次", kinds.count("notify") == 1 and kinds.count("lead") == 1 and kinds.count("google") == 1, kinds)
 note_text = next((e[1] for e in events if e[0] == "notify"), "")
 check("1e. 通知含時間、姓名、確認預約／取消預約指令", "測試先生" in note_text and "確認預約" in note_text and "取消預約" in note_text and hm in note_text, note_text)
+check("1f. 預約當下就配好來賓資料表網址（form_token），公開清單馬上有填寫按鈕",
+      bool(ev) and bool(ev.get("form_token")) and len(ev["form_token"]) >= 8, ev)
 
 # 2. 占位後空檔消失（含前後 30 分緩衝）
 data = load()
