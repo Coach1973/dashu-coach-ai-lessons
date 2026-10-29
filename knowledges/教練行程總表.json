@@ -1090,7 +1090,8 @@
    "title": "榮樹下訪談：吳寶玉、吳錦昌（地產、電腦）",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "4t-45yGcdx-l"
   },
   {
    "id": "gcal-2026-11-05-24",
@@ -1146,7 +1147,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "bO_fLdR1CWQ6"
   },
   {
    "id": "gcal-2026-11-08-31",
@@ -1470,18 +1472,18 @@
   {
    "id": "gcal-2026-11-20-71",
    "date": "2026-11-20",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-11-20-72",
-   "date": "2026-11-20",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-20-72",
+   "date": "2026-11-20",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-11-20-73",
@@ -2125,18 +2127,18 @@
   {
    "id": "gcal-2026-12-18-153",
    "date": "2026-12-18",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-12-18-154",
-   "date": "2026-12-18",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-18-154",
+   "date": "2026-12-18",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-12-18-155",
@@ -2891,7 +2893,7 @@
   {
    "id": "gcal-2027-01-28-249",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2899,7 +2901,7 @@
   {
    "id": "gcal-2027-01-28-250",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3991,7 +3993,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-29 16:24",
+ "updated_at": "2026-10-29 16:42",
  "tainan_synced_at": "2026-10-29 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4035,8 +4037,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-29 16:24",
- "google_synced_epoch": 1793262250,
+ "google_synced_at": "2026-10-29 16:42",
+ "google_synced_epoch": 1793263330,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
