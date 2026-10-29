@@ -1090,8 +1090,7 @@
    "title": "榮樹下訪談：吳寶玉、吳錦昌（地產、電腦）",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30",
-   "form_token": "A0Qmp2EcASdb"
+   "end": "20:30"
   },
   {
    "id": "gcal-2026-11-05-24",
@@ -1147,8 +1146,7 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30",
-   "form_token": "Na6fCKnf2NQx"
+   "end": "09:30"
   },
   {
    "id": "gcal-2026-11-08-31",
@@ -1472,18 +1470,18 @@
   {
    "id": "gcal-2026-11-20-71",
    "date": "2026-11-20",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-11-20-72",
-   "date": "2026-11-20",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-20-72",
+   "date": "2026-11-20",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-11-20-73",
@@ -2127,18 +2125,18 @@
   {
    "id": "gcal-2026-12-18-153",
    "date": "2026-12-18",
-   "title": "RPL",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-12-18-154",
-   "date": "2026-12-18",
    "title": "LTRT",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-12-18-154",
+   "date": "2026-12-18",
+   "title": "RPL",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "22:00"
   },
   {
    "id": "gcal-2026-12-18-155",
@@ -3993,7 +3991,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-29 14:20",
+ "updated_at": "2026-10-29 15:30",
  "tainan_synced_at": "2026-10-28 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4037,8 +4035,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-29 14:19",
- "google_synced_epoch": 1793254747,
+ "google_synced_at": "2026-10-29 15:30",
+ "google_synced_epoch": 1793259010,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
