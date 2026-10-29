@@ -2830,6 +2830,71 @@ def api_works_contact():
     return reply(True)
 
 
+
+# ---------- 點子樹（2026-10-30 教練：「我丟了一個點子，樹上還是四個，圖文不符」）----------
+# idea-center 原本只畫範例點子＋這台瀏覽器自己存的，伺服器收到的點子不會回到樹上；上架時又被自動接成
+# 留資料表單（要姓名電話），匿名的人送不出去、果實也不會長。改成：點子存 curated_ideas，所有人看到同一棵樹，
+# 同時照舊寫進 works_contact_leads（各頁後台看得到）並通知「活動報名即時通知」群。
+_IDEA_TREE_SITES = {"idea-center"}
+_IDEA_CATS = {"run", "community", "share", "npo", "other"}
+
+
+def _idea_row(r) -> dict:
+    return {"id": r["id"], "text": r["text"], "cat": r["cat"], "ripe": r["ripe"], "path": r["path"],
+            "who": r["who"], "t": r["created_at"]}
+
+
+@app.route("/api/curated/<site>/ideas", methods=["GET", "POST"])
+def api_curated_ideas(site):
+    def reply(body, status=200):
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json",
+                        headers={"Cache-Control": "no-store"})
+
+    if site not in _IDEA_TREE_SITES or site not in _curated_slugs():
+        return reply({"ok": False, "error": "找不到這個作品頁"}, 404)
+    if request.method == "GET":
+        conn = db.get_conn()
+        rows = conn.execute("SELECT * FROM curated_ideas WHERE site=? AND hidden=0 ORDER BY id LIMIT 500",
+                            (site,)).fetchall()
+        conn.close()
+        return reply({"ok": True, "ideas": [_idea_row(r) for r in rows]})
+
+    payload = request.get_json(force=True, silent=True) or {}
+    if (payload.get("website") or "").strip():          # 防機器人的隱藏欄位
+        return reply({"ok": True, "idea": None})
+    clean = lambda k, n: re.sub(r"\s+", " ", str(payload.get(k) or "").strip())[:n]
+    text = clean("text", 500)
+    if not text:
+        return reply({"ok": False, "error": "先寫下一句話就好，不用完美。"}, 400)
+    cat = clean("cat", 20)
+    cat = cat if cat in _IDEA_CATS else "other"
+    ripe = clean("ripe", 10) if clean("ripe", 10) in {"種子", "發芽", "長葉", "結果"} else "種子"
+    path = clean("path", 2) if clean("path", 2) in {"A", "B", "C", "?"} else "?"
+    name, org, email = clean("name", 30), clean("org", 40), clean("email", 80)
+    anon = bool(payload.get("anon"))
+    who = "匿名的好心人" if anon else ("・".join(filter(None, [name, org])) or "一位好心人")
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _works_contact_rate_ok(ip):
+        return reply({"ok": False, "error": "送出次數太多，請稍後再試"}, 429)
+    title = next((s.get("title") for s in _load_curated_registry().get("sites", []) if s["slug"] == site), site) or site
+    conn = db.get_conn()
+    cur = conn.execute("INSERT INTO curated_ideas (site, text, cat, ripe, path, who, email, ip) VALUES (?,?,?,?,?,?,?,?)",
+                       (site, text, cat, ripe, path, who, email, ip))
+    row = conn.execute("SELECT * FROM curated_ideas WHERE id=?", (cur.lastrowid,)).fetchone()
+    msg = f"點子：{text}\n分類：{cat}｜熟度：{ripe}｜落地方式：{path}" + (f"\n單位：{org}" if org and not anon else "")
+    try:
+        conn.execute("INSERT INTO works_contact_leads (site, site_title, name, phone, item, email, message, ip) "
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (site, title, who, "", "點子", email, msg, ip))
+    except Exception:  # noqa: BLE001  後台副本寫不進去不影響點子長在樹上
+        pass
+    conn.commit()
+    conn.close()
+    note = (f"🌱【{title}】有人種了一個點子\n署名：{who}\n" + (f"Email：{email}\n" if email else "")
+            + msg + f"\n（來源：event.bymyway.com/curated/{site}/）")
+    _notify_xiaolongxia(note, chat_id=TELEGRAM_REGISTRATION_GROUP_CHAT_ID)
+    _notify_xiaolongxia(note.replace("有人種了一個點子", "有人種了一個點子（同步給教練）", 1), chat_id=TELEGRAM_NOTIFY_CHAT_ID)
+    return reply({"ok": True, "idea": _idea_row(row)})
+
 # ---------- 留資料後台（教練 2026-10-27：「寫好的資料在哪裡，我看不到，給我網址」）
 # works_contact_leads 原本只有寫入、沒有任何一處讀取或後台頁 → 教練在網站上完全看不到自己收的資料。
 # 短網址即通行證（沿用 rongtree_guest.py 的慣例），簽章用 app.secret_key，無簽章一律 404。
@@ -2844,6 +2909,20 @@ def works_leads_list(code=""):
     if not ok:
         abort(404)
     return Response(_wl.render_list(app.secret_key, (request.args.get("site") or "").strip() or None),
+                    content_type="text/html; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+
+# ---------- 每個策展頁各有各的後台（2026-10-30 教練裁示） ----------
+# 原本所有頁面留言混在同一個簽章池 → 教練要各頁獨立，讓每頁負責人只看得到自己頁面的客戶。
+# 簽章綁 site：別頁的簽章打不開這頁；這頁也不會出現總覽簽章碼，拿到的人跳不出去。
+@app.route("/leads/s/<site>/<code>")
+def works_leads_site(site, code):
+    if not _CURATED_SLUG_RE.match(site):
+        abort(404)
+    if not hmac.compare_digest(code, _wl.site_code(app.secret_key, site)):
+        abort(404)
+    return Response(_wl.render_site_only(app.secret_key, site),
                     content_type="text/html; charset=utf-8",
                     headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
 

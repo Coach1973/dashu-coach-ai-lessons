@@ -229,3 +229,17 @@ CREATE INDEX IF NOT EXISTS idx_event_wall_items_event_kind ON event_wall_items(e
 
 -- 課後影音清單用app_settings存(key格式 event_wall_media_<event>，value是JSON陣列)，
 -- 跟講者金鑰(key格式 event_wall_key_<event>)共用同一張既有key/value表，不必新增資料表。
+
+-- 點子樹（2026-10-30 教練：「丟一個點子，樹上就該長出一顆果實」）：idea-center 等「大家一起種」的頁面，
+-- 每個訪客丟的點子都公開長在樹上；hidden=1 代表不顯示（垃圾訊息手動藏起來）。
+CREATE TABLE IF NOT EXISTS curated_ideas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    site TEXT NOT NULL,
+    text TEXT NOT NULL,
+    cat TEXT, ripe TEXT, path TEXT,
+    who TEXT NOT NULL,        -- 樹上顯示的署名（匿名就是「匿名的好心人」）
+    email TEXT,
+    ip TEXT,
+    hidden INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
