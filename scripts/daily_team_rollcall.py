@@ -179,6 +179,39 @@ def check_handoff_mirror():
         ok("接力棒鏡像")
 
 
+def check_verbatim_vault():
+    """逐字保險箱（教練每句話的永久存檔）。2026-10-30 體檢：對話存放位置 9/16 換了，收割程式一直印「新收 0 句」
+    當成功，群組停收 6 週沒人發現。這裡每天驗：全部來源超過 6 小時沒新增、或有新的對話檔沒人收，就報。"""
+    r = subprocess.run([sys.executable, str(WS / "scripts" / "recall.py"), "--check"],
+                       capture_output=True, text=True, timeout=120)
+    if r.returncode == 0:
+        ok("逐字保險箱")
+    else:
+        bad("逐字保險箱", (r.stdout.strip() or r.stderr.strip() or "檢查失敗")[:200] + "（叫軍師查 scripts/recall.py）")
+
+
+def check_agent_boot_files():
+    """分身開機檔每檔只讀 2 萬字，超過中間被截掉（2026-10-30 巴哈 MEMORY.md 9 天從 2 萬長到 2.9 萬）。
+    分身自己寫有 safety-locks 長期記憶上限鎖擋；系統自動搬進來的（Promoted From Short-Term Memory）擋不到，這裡每天量。"""
+    cfg = json.loads(OPENCLAW_JSON.read_text())
+    over = []
+    entries = cfg["agents"]["entries"]   # 找不到就讓它報錯，不能掃 0 個分身還報正常
+    for aid, a in entries.items():
+        ws = Path(str(a.get("workspace") or "").replace("~", str(HOME), 1))
+        for name in ("AGENTS.md", "SOUL.md", "MEMORY.md", "USER.md", "IDENTITY.md"):
+            f = ws / name
+            if f.is_file():
+                n = len(f.read_text(encoding="utf-8", errors="ignore"))
+                if n > 20000:
+                    over.append(f"{aid}/{name} {n:,}字")
+    if not entries:
+        bad("分身開機檔", "openclaw.json 讀不到分身清單", "🟡")
+    elif over:
+        bad("分身開機檔", "超過 2 萬字會被截掉：" + "、".join(over) + "（叫軍師把過期段落搬封存）", "🟡")
+    else:
+        ok("分身開機檔")
+
+
 def check_line_push_gate():
     """LINE 推播閘門（教練 2026-10-20 常設禁令：沒有教練許可，LINE 小龍蝦不得使用會扣額度的推播）。
     閘門是補在 LINE 外掛檔案裡的；外掛更新換世代目錄會把它洗掉，沒人知道＝禁令默默失效。
@@ -354,6 +387,8 @@ def main():
         check_public_urls()
         check_cron_jobs()
         check_handoff_mirror()
+        check_verbatim_vault()
+        check_agent_boot_files()
         check_line_push_gate()
         check_cloud_rules_pack()
     except Exception as e:

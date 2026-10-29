@@ -18,6 +18,10 @@
 用法：
   收割原文（每 30 分鐘 cron 自動跑）：
       python3 recall.py --harvest
+  說話當下收割＋核對（2026-10-30 教練拍板事件觸發；桌面版 hook、小龍蝦 coach-context 外掛呼叫）：
+      python3 recall.py --harvest-now 終端機      # 等 20 秒讓訊息寫進檔，收割，15 分鐘內沒收到這個來源就出聲
+  保險箱體檢（每日點名呼叫）：
+      python3 recall.py --check
   建索引（每日 cron 自動跑，也可手動）：
       python3 recall.py --build
   查話（預設前 10 筆，新的在前，全部台灣時間）：
@@ -167,9 +171,10 @@ def scan_terminal():
                 text = " ".join(texts)
             else:
                 text = str(c or "")
-            text = re.sub(r"</?pasted_content[^>]*>", "", text).strip()   # 教練貼上的語音稿也是他的話
+            text = re.sub(r"</?pasted_content[^>]*>", "", text)   # 教練貼上的語音稿也是他的話
+            text = re.sub(r"<system-reminder>.*?</system-reminder>", "", text, flags=re.S).strip()   # worktree 第一句前面黏著系統提示，不剝掉整句會被當系統訊息丟掉（10/30「開工」全漏）
             if (not text or is_noise(text) or text.startswith("<")
-                    or text.startswith("Caveat:") or text.startswith("[Request interrupted")):
+                    or text.startswith(("Caveat:", "[Request interrupted", "Stop hook feedback", "Base directory for this skill"))):
                 continue
             yield {
                 "t": taiwan_time(d.get("timestamp")),
@@ -204,6 +209,82 @@ def harvest():
             f.write(json.dumps(e, ensure_ascii=False) + "\n")
         added += 1
     print("✅ 逐字保險箱：新收 %d 句（永久保存於 %s/）" % (added, VERBATIM_DIR))
+    probs = vault_problems()
+    if probs and datetime.datetime.now(TZ).hour >= 12:   # 半夜到早上沒人說話是正常的，中午後才報
+        print("⚠️ " + "；".join(probs))
+        notify("🔴 逐字保險箱：" + "；".join(probs) + "。收割程式可能沒讀到新的對話位置，叫軍師查 scripts/recall.py。", "verbatim_stale")
+
+
+NOTIFY = HOME + "/.openclaw/workspace/scripts/notify_coach.sh"
+STALE_HOURS = 6
+
+
+def vault_newest():
+    """保險箱裡每個來源最新一句的時間（檔案是補收後追加，順序不保證，要全掃取最大）"""
+    newest = {}
+    for vf in glob.glob(VERBATIM_DIR + "/*.jsonl"):
+        for line in open(vf, encoding="utf-8", errors="ignore"):
+            try:
+                e = json.loads(line)
+            except Exception:
+                continue
+            t, src = e.get("t", ""), e.get("src", "")
+            if re.match(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}$", t) and t > newest.get(src, ""):
+                newest[src] = t
+    return newest
+
+
+def vault_problems():
+    """回傳保險箱的問題清單（空＝正常）。10/30 教訓：來源搬家後收割一直印「新收 0 句」當成功，停了 6 週沒人發現。"""
+    newest = vault_newest()
+    now = datetime.datetime.now(TZ)
+    out = []
+    if not newest:
+        return ["保險箱是空的"]
+    latest = max(newest.values())
+    age = now - datetime.datetime.strptime(latest, "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
+    if age > datetime.timedelta(hours=STALE_HOURS):
+        out.append("全部來源已 %d 小時沒新增（最後一句 %s）" % (age.total_seconds() // 3600, latest))
+    miss = uncovered_stores()
+    if miss:
+        out.append("有 %d 個新的對話檔沒人收（例：%s）" % (len(miss), miss[0]))
+    return out
+
+
+def uncovered_stores():
+    """24 小時內有寫入的對話類檔案，卻不在收割範圍＝對話又搬家了（9/16 改存 sqlite 就是這樣漏了 6 週）"""
+    import fnmatch, time
+    covered = (SESS_GLOB, AGENT_DB_GLOB)
+    out = []
+    for path in glob.glob(HOME + "/.openclaw/agents/*/**/*", recursive=True):
+        if not path.endswith((".jsonl", ".sqlite", ".db")) or not os.path.isfile(path):
+            continue
+        if time.time() - os.path.getmtime(path) > 86400:
+            continue
+        if not any(fnmatch.fnmatch(path, g) for g in covered):
+            out.append(path.replace(HOME, "~"))
+    return out
+
+
+def notify(msg, key):
+    import subprocess
+    subprocess.run([NOTIFY, msg, "21600", key], check=False)   # 同一件事 6 小時只報一次
+
+
+def harvest_now(expect):
+    """說話當下收割：同一時間只跑一個，等訊息寫進檔後收割，再核對剛說的話有沒有進來。"""
+    import fcntl, time
+    lock = open(HOME + "/.openclaw/workspace/state/recall_harvest.lock", "w")
+    fcntl.flock(lock, fcntl.LOCK_EX)   # 另一個收割在跑就排隊等，跑完再收、再核對
+    time.sleep(20)
+    harvest()
+    if expect == "-":   # 不是教練本人說的，只收割不核對
+        return
+    t = vault_newest().get(expect, "")
+    cutoff = (datetime.datetime.now(TZ) - datetime.timedelta(minutes=15)).strftime("%Y-%m-%d %H:%M")
+    if t < cutoff:
+        notify("🔴 逐字保險箱：%s剛有人說話，但保險箱沒收到（%s最後一句 %s）。對話存放位置可能又變了，叫軍師查 scripts/recall.py。"
+               % (expect, expect, t or "從沒收過"), "verbatim_expect_" + expect)
 
 
 def build():
@@ -383,6 +464,14 @@ if __name__ == "__main__":
     if not args or args == ["--help"]:
         print(__doc__)
         sys.exit(0)
+    if "--harvest-now" in args:
+        i = args.index("--harvest-now")
+        harvest_now(args[i + 1] if i + 1 < len(args) else "終端機")
+        sys.exit(0)
+    if "--check" in args:
+        probs = vault_problems()
+        print("\n".join(probs) if probs else "✅ 逐字保險箱正常")
+        sys.exit(1 if probs else 0)
     did = False
     if "--harvest" in args:
         harvest()
