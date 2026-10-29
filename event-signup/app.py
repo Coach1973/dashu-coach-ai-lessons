@@ -3317,6 +3317,37 @@ def rongtree_guest_cards(code=""):
                     headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
 
 
+import rongtree_tracker as _rtk  # noqa: E402
+_RONGTREE_TRACKER_HITS = {}   # ip -> [時間戳]
+
+
+@app.route("/api/rongtree/tracker/<code>", methods=["GET", "POST"])
+def api_rongtree_tracker(code):
+    """榮樹下 SOP 網頁「進度追蹤表」（2026-10-29 教練：不用另開 Google 試算表，網頁直接勾選、存資料庫）。
+    代碼同來賓卡後台 /rongtree/a/<代碼>；GET 讀全部，POST {id, field, value} 改一格。"""
+    if not hmac.compare_digest(code, _rg.list_code(app.secret_key)):
+        abort(404)
+
+    def reply(body, status=200):
+        return Response(json.dumps(body, ensure_ascii=False), status=status, content_type="application/json",
+                        headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"})
+
+    if request.method == "GET":
+        return reply({"ok": True, "rows": _rtk.rows(),
+                      "fields": {k: ("check" if v is True else v) for k, v in _rtk.FIELDS.items()}})
+    import time
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _RONGTREE_TRACKER_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 300:
+        return reply({"ok": False, "error": "操作太頻繁，請稍後再試"}, 429)
+    hits.append(now)
+    _RONGTREE_TRACKER_HITS[ip] = hits
+    p = request.get_json(force=True, silent=True) or {}
+    ok, err = _rtk.set_field(str(p.get("id") or ""), str(p.get("field") or ""), p.get("value"))
+    return reply({"ok": True} if ok else {"ok": False, "error": err}, 200 if ok else 400)
+
+
 @app.route("/api/works/poll/<site>", methods=["GET"])
 def api_works_poll_counts(site):
     if site not in WORKS_POLL_OPTIONS:
