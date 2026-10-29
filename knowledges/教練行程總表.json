@@ -1064,8 +1064,7 @@
    "title": "榮樹下訪談：鍾俊榮",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30",
-   "form_token": "dyytAkDw_JU0"
+   "end": "20:30"
   },
   {
    "id": "gcal-2026-11-05-19",
@@ -1121,8 +1120,7 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30",
-   "form_token": "Q8ZaERNJ2OmC"
+   "end": "09:30"
   },
   {
    "id": "gcal-2026-11-08-26",
@@ -2867,7 +2865,7 @@
   {
    "id": "gcal-2027-01-28-244",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2875,7 +2873,7 @@
   {
    "id": "gcal-2027-01-28-245",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -3971,7 +3969,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-30 03:10",
+ "updated_at": "2026-10-30 03:20",
  "tainan_synced_at": "2026-10-29 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4015,8 +4013,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-30 03:08",
- "google_synced_epoch": 1793300899,
+ "google_synced_at": "2026-10-30 03:20",
+ "google_synced_epoch": 1793301619,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
