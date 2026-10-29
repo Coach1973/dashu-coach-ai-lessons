@@ -912,7 +912,8 @@
    "booking_type": "榮樹下訪談",
    "booked_by": "官網預約",
    "note": "官網預約：牧師（楊曉熹牧師）｜聯絡：0987105665｜留言：感謝邀請（私人資料，網頁不公開）",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "form_token": "sF0au-7g0X66"
   },
   {
    "id": "gcal-2026-10-29-0",
@@ -1492,18 +1493,18 @@
   {
    "id": "gcal-2026-11-20-72",
    "date": "2026-11-20",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-11-20-73",
-   "date": "2026-11-20",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-73",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-20-74",
@@ -2147,18 +2148,18 @@
   {
    "id": "gcal-2026-12-18-154",
    "date": "2026-12-18",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-12-18-155",
-   "date": "2026-12-18",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-12-18-155",
+   "date": "2026-12-18",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-12-18-156",
@@ -2913,7 +2914,7 @@
   {
    "id": "gcal-2027-01-28-250",
    "date": "2027-01-28",
-   "title": "LINE@要發訊息",
+   "title": "執董共識會",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -2921,7 +2922,7 @@
   {
    "id": "gcal-2027-01-28-251",
    "date": "2027-01-28",
-   "title": "執董共識會",
+   "title": "LINE@要發訊息",
    "source": "Google日曆",
    "start": "12:00",
    "end": "13:00"
@@ -4013,7 +4014,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-29 17:45",
+ "updated_at": "2026-10-29 17:48",
  "tainan_synced_at": "2026-10-29 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4057,8 +4058,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-29 17:45",
- "google_synced_epoch": 1793267126,
+ "google_synced_at": "2026-10-29 17:48",
+ "google_synced_epoch": 1793267290,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
