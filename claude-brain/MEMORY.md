@@ -1,3 +1,4 @@
+- [🧭 靈魂拷問(10/30)：做成程式的不再犯、等教練開口的會回來；四步循環缺「自我觸發」，賈維斯成績單提案未拍板(2026-10-30)](project_jarvis_soul_loop_four_steps_2026-10-30.md)
 - [🔴 逐字保險箱默默停收：群組9/16起停6週、桌面版10/27起停3天，程式一直印「新收0句」當成功，沒人下令停；已改讀sqlite＋worktree夾補回1552句，警報與事件觸發待做(2026-10-30)](reference_verbatim_vault_silent_zero_harvest_2026-10-30.md)
 - [🔴 教練話裡有「體檢／規則打架／越用越笨」或附賈維斯頁面網址＝當口令，同輪跑 jarvis-self-optimize 交報告；10/30 我只讀網址沒跑被抓(2026-10-30)](feedback_pasted_trigger_phrase_with_link_must_run_skill_2026-10-30.md)
 - [🔴 上架作品一律不貼 FB（教練10/30拍板）：策展程式FB步驟已拿掉、小龍蝦加FB鎖；10/30 FB 無限重開＝通知寫「請軍師人工補發」被小龍蝦當待辦；停小龍蝦用 sessions.abort(2026-10-30)](feedback_no_fb_post_after_curation_and_fb_lock_2026-10-30.md)
