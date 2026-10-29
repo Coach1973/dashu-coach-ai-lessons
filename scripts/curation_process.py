@@ -8,11 +8,11 @@
 
 完整流程：解壓縮 → 判斷ASCII slug(拼音轉換) → 建GitHub repo+push+開Pages →
 登記進curated_sites_registry.json(讓event.bymyway.com/curated/<slug>/立刻可讀取，
-不需要重啟Flask服務) → 插入tainan-shangquan店家名冊卡片 → 自動發一則大台南策展中心
-FB貼文宣布 → Telegram通知教練（2026-09-06教練追加：全自動，不用等軍師人工發文）。
+不需要重啟Flask服務) → 插入tainan-shangquan店家名冊卡片 → Telegram通知教練。
+（2026-10-30教練拍板：上架後不貼 FB，原本的自動 FB 貼文已拿掉。）
 
 刻意不做的事（留給軍師下次確認時人工潤飾，見reference_curation_sop_2026-09-06.md）：
-- 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值，FB文案也是自動套模板）
+- 店家分類/描述的最終潤飾（這裡用關鍵字猜測，只是暫時的合理預設值）
 """
 from __future__ import annotations
 
@@ -41,8 +41,6 @@ REGISTRY_PATH = EVENT_SIGNUP / "curated_sites_registry.json"
 GITHUB_REPOS_DIR = Path("/Users/bymyway/github_repos")
 TAINAN_SHANGQUAN_REPO = GITHUB_REPOS_DIR / "tainan-shangquan"
 LOG_PATH = WORKSPACE / "distill" / "curation_process.log"
-FB_PAGE_TOKENS_PATH = WORKSPACE / "fb_automation" / "page_tokens_2026-09-01.json"
-FB_PAGE_NAME = "大台南策展中心"
 
 COACH888_REPO = GITHUB_REPOS_DIR / "coach888"
 COACH888_STATE_API = "https://event.bymyway.com/api/coach888/state"
@@ -54,13 +52,8 @@ COACH888_HEADERS = {"User-Agent": "Mozilla/5.0 (curation-bot)", "Origin": "https
 OPENCLAW_CONFIG_PATH = os.path.expanduser("~/.openclaw/openclaw.json")
 TELEGRAM_NOTIFY_CHAT_ID = "-5349981085"  # 「活動報名即時通知」群組(教練+佩佩老師共見)，2026-09-06教練交辦：策展上傳完成也要跟活動報名一樣即時通知這裡，不只發教練個人對話
 
-# 2026-09-12暫停：這個App(1050871501278089)還沒通過FB App Review，實測用完全登出的
-# 瀏覽器驗證，用這組token發的貼文一般訪客完全看不到(只有App角色成員/管理員看得到)。
-# 2026-09-06~09-10已累積21則這樣的隱形貼文。App Review通過前繼續呼叫這支只會不斷
-# 產生更多看不見的貼文(白工)，先暫停自動發文，改由Telegram通知教練「有新店家上架」，
-# 教練/軍師視需要手動用Meta Business Suite補發。詳見
-# claude-brain/reference_fb_graph_api_app_review_required_for_public_visibility_2026-09-11.md
-FB_AUTO_POST_PAUSED = True
+# 2026-10-30教練拍板：上架作品一律不貼 FB（策展中心粉專、人工補發都不要）。舊的自動貼文程式已拿掉，
+# 通知也不再出現「請軍師人工補發」——那句話會讓小龍蝦自己開 Chrome 去補貼，10/30 凌晨因此無限重開 FB。
 _ENV = {**os.environ, "PATH": f"/opt/homebrew/bin:/Users/bymyway/.local/bin:{os.environ.get('PATH', '')}"}
 
 CATEGORY_KEYWORDS = {
@@ -586,54 +579,6 @@ def find_post_image(repo_dir: Path, html_text: str) -> Path | None:
     return None
 
 
-def post_to_facebook(title: str, desc: str, event_url: str, image_path: Path | None) -> bool:
-    """自動發一則大台南策展中心FB貼文宣布新店家上架（2026-09-06教練交辦：全自動不用等軍師人工發文）。
-    文案套固定模板（emoji開頭+店名+簡介+連結+hashtag），非致命——失敗只記log，不擋整體上架流程。"""
-    if FB_AUTO_POST_PAUSED:
-        log(f"⏸️ FB自動貼文已暫停(App Review未通過，訪客看不到)，跳過「{title}」，請人工評估是否手動補發")
-        return False
-    try:
-        tokens = json.loads(FB_PAGE_TOKENS_PATH.read_text(encoding="utf-8"))
-        page = next((p for p in tokens.get("pages", []) if p.get("name") == FB_PAGE_NAME), None)
-        if not page:
-            log(f"⚠️ FB貼文跳過：找不到粉專「{FB_PAGE_NAME}」的token")
-            return False
-        page_id, access_token = page["id"], page["access_token"]
-
-        caption = (
-            f"🎯【大台南商圈上新網站】{title}正式上線！\n\n"
-            + (f"{desc}\n\n" if desc else "")
-            + f"看看這個新加入的好店家 👉 {event_url}\n\n"
-            + "更多加入大台南商圈整合計劃的好店家，都在 👉 https://event.bymyway.com/tainan-shangquan/\n\n"
-            + f"#大台南策展中心 #{re.sub(r'[^0-9A-Za-z一-鿿]', '', title)}"
-        )
-
-        if image_path:
-            cmd = [
-                "curl", "-s", f"https://graph.facebook.com/v20.0/{page_id}/photos",
-                "-F", f"source=@{image_path}",
-                "-F", f"caption={caption}",
-                "-F", f"access_token={access_token}",
-            ]
-        else:
-            cmd = [
-                "curl", "-s", f"https://graph.facebook.com/v20.0/{page_id}/feed",
-                "-F", f"message={caption}",
-                "-F", f"link={event_url}",
-                "-F", f"access_token={access_token}",
-            ]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-        resp = json.loads(result.stdout or "{}")
-        if "error" in resp:
-            log(f"⚠️ FB貼文失敗：{resp['error']}")
-            return False
-        log(f"✅ FB貼文成功：{resp}")
-        return True
-    except Exception as e:  # noqa: BLE001
-        log(f"⚠️ FB貼文例外：{e!r}")
-        return False
-
-
 def insert_tainan_shangquan_card(title: str, desc: str, category: str, event_url: str, address: str = "",
                                   image_path: Path | None = None, slug: str = "") -> None:
     index_path = TAINAN_SHANGQUAN_REPO / "index.html"
@@ -1032,19 +977,12 @@ def process_one(pkg_path: Path) -> None:
             except Exception as e:  # noqa: BLE001
                 log(f"⚠️ 換卡片代表照失敗（網站本身已更新，不影響）：{e!r}")
 
-            fb_note = ""
-            image_path = find_post_image(tmp_extract, html_text)
-            if post_to_facebook(title, desc, event_url, image_path):
-                fb_note = "\n✅ 已自動發布大台南策展中心FB貼文宣布"
-            else:
-                fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已更新）"
-
             works_note = works_note_for_shop(pkg_path, registry, existing_shop_slug, event_url, title)
             notify(
                 "🎯【策展SOP・既有店家頁面已更新為完整版】\n"
                 f"店名：{title}\n"
                 f"網址：{event_url}{rename_note}"
-                + fb_note + works_note
+                + works_note
             )
             log(f"✅ 完成(覆蓋既有暫代頁)：{pkg_path.name} → {existing_shop_slug}")
             shutil.rmtree(tmp_extract, ignore_errors=True)
@@ -1096,13 +1034,6 @@ def process_one(pkg_path: Path) -> None:
             card_note = f"\n⚠️ 加入大台南策展中心店家名冊失敗（網站本身已上線，不影響）：{e}"
             log(f"插卡失敗: {e!r}")
 
-        fb_note = ""
-        image_path = card_image_path
-        if post_to_facebook(title, desc, event_url, image_path):
-            fb_note = "\n✅ 已自動發布大台南策展中心FB貼文宣布"
-        else:
-            fb_note = "\n⚠️ FB自動貼文失敗，請軍師人工補發（不影響網站本身已上線）"
-
         works_note = works_note_for_shop(pkg_path, registry, slug, event_url, title)
         map_note = f"\n📍 已自動偵測地址並加地圖：{address}" if address else "\n⚠️ 網站內容抓不到地址，店家名冊卡片暫無地圖（可請生成網站的AI工具把地址寫清楚後重新上傳）"
         notify(
@@ -1113,7 +1044,6 @@ def process_one(pkg_path: Path) -> None:
             f"GitHub Pages：{github_pages_url}"
             + map_note
             + card_note
-            + fb_note
             + works_note
             + form_note
             + gh_warn
