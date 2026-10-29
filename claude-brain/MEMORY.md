@@ -1,3 +1,4 @@
+- [🔴 教練話裡有「體檢／規則打架／越用越笨」或附賈維斯頁面網址＝當口令，同輪跑 jarvis-self-optimize 交報告；10/30 我只讀網址沒跑被抓(2026-10-30)](feedback_pasted_trigger_phrase_with_link_must_run_skill_2026-10-30.md)
 - [🔴 上架作品一律不貼 FB（教練10/30拍板）：策展程式FB步驟已拿掉、小龍蝦加FB鎖；10/30 FB 無限重開＝通知寫「請軍師人工補發」被小龍蝦當待辦；停小龍蝦用 sessions.abort(2026-10-30)](feedback_no_fb_post_after_curation_and_fb_lock_2026-10-30.md)
 - [🔧 FB 生日頁一直跳出來＝小龍蝦重開臉書專用 Chrome(9222)時還原舊分頁（5秒載入45次）；兩個 profile 的 Sessions 已移備份、重開驗證剩1個空白分頁；FB 登入已過期待教練登入(2026-10-30)](reference_fb_chrome_profile_session_restore_birthday_popups_2026-10-30.md)
 - [🔧 小龍蝦 DM「讀了沒回」＝一輪工作跑20分鐘沒中間回覆＋對話整理兩次各4分鐘（不是當機）；已開 DM 收到反應 ackReactionScope=direct＋狀態反應，尚未用真 DM 驗證(2026-10-30)](reference_openclaw_silent_long_run_ack_reaction_2026-10-30.md)
