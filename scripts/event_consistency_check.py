@@ -120,8 +120,11 @@ def main() -> int:
 
     sessions = db_sessions()
     future = {s: v for s, v in sessions.items() if v["is_future"] and v.get("status") != "cancelled"}
-    # 其他獨立站（例如 ai-art）的場次本來就不會列在大樹官網，不拿來比
-    future_bigtree = {s: v for s, v in future.items() if (v.get("site") or "bigtree") == "bigtree"}
+    # 其他獨立站（例如 ai-art、curated、turnforyou）與外部主辦場次（site=None）
+    # 本來就不會列在大樹官網，不拿來比。
+    # ⚠️ site=None 代表「未標記站點」，不能預設當成 bigtree，
+    #    否則外部主辦的活動會被誤判成「忘了上架官網」而產生假告警。
+    future_bigtree = {s: v for s, v in future.items() if v.get("site") == "bigtree"}
     live = live_site_slugs()
     sats = satellite_status()
 
