@@ -1,8 +1,8 @@
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 01:50 台灣時間，Mac 桌面版 Code 分頁（kaigong-e99272 worktree），Haiku 5.5 → Opus 5.5；本段 10/30 01:30～01:50；與下方 01:30 那棒是不同對話框）
 
 **主軸：FB 無限重開已停、上架後不貼 FB（教練拍板）、小龍蝦換新對話、Stop hook 三個誤判修正。**
-- **誰在開 FB**：小龍蝦主分身（Telegram，MiniMax-M3）。上架通知一直寫「⚠️ FB自動貼文失敗，請軍師人工補發」，它把 hsiuli FB 列進待決清單；教練 00:59 說「不要吵」，它當成「自己做」，01:00～01:37 連開 Chrome。共 140 次 MiniMax 呼叫，不是 Claude 額度。chat.abort 沒抓到、重啟 gateway 會續跑，最後用 `sessions.abort` key=agent:main:main 停下，01:37 起沒再動、FB Chrome 已全關。
-- **教練拍板：上架作品一律不貼 FB**。策展程式 FB 步驟與那句通知拿掉（workspace `d94e9b259`）；safety-locks v1.5 FB 鎖（openclaw `9487b5385`，實測：FB 擋、生日工具放行、一般指令放行，gateway 已重載 v1.5）；反射 R-FB-POST／R-CURATION-SOP 改寫（`50ffe427b`）；小龍蝦 .learnings 已寫教練裁示。試金石案例135、記憶 feedback_no_fb_post_after_curation_and_fb_lock。
+- **誰在開 FB**：小龍蝦主分身（Telegram，MiniMax-M3）。上架通知一直寫「⚠️ FB自動貼文失敗，請軍師人工補發」，它把 hsiuli FB 列進待決清單；教練 00:59 說「不要吵」，它當成「自己做」，01:00～01:37 連開 Chrome。共 140 次 MiniMax 呼叫，不是 Claude 額度。chat.abort 沒抓到、重啟 gateway 會續跑，`sessions.abort` key=agent:main:main 也只停住一下，它 01:38～01:42 又接著跑，**真正停下是 01:42:48 sessions.reset（換新對話）**。01:38 它截圖顯示已用「大台南策展中心」身分發出 hsiuli 貼文（未驗證線上是否真的存在），要不要刪等教練決定。
+- **教練拍板：上架作品一律不貼 FB**。策展程式 FB 步驟與那句通知拿掉（workspace `d94e9b259`）；safety-locks v1.5 FB 鎖（openclaw `9487b5385`；補漏 `9857d1568`：它曾先把網址寫進 /tmp/*.js 再執行繞過，現在也看 write/edit 和被執行腳本的內容；只擋真的開瀏覽器／自動化／打 FB API，網頁裡的 FB 連結不擋；7 案例實測全對）；反射 R-FB-POST／R-CURATION-SOP 改寫（`50ffe427b`）；小龍蝦 .learnings 已寫教練裁示。試金石案例135、記憶 feedback_no_fb_post_after_curation_and_fb_lock。
 - **小龍蝦慢**：每次呼叫讀約 14 萬 token 舊對話。main 已 sessions.reset（寫入 reset 標記），**下一則訊息才驗證得到是否真的從新對話開始**。
 - **體檢（亮燈等重複糾正）**：本週桌面版 Claude 回覆教練 248 次，第一則文字沒亮燈 46 次（約 19%），Haiku／Sonnet／Opus 都差不多＝不是模型問題，多半是先寫了進度說明才亮燈。Stop hook 本週觸發 85 次，其中 37 次 AI 回的是「我沒有…可以忽略」＝誤判。已修三個誤判（`e4d9015dc`，7 個假對話測試全對）：建議切換模型不算叫教練動手、凌晨／下午算台灣時間、系統通知不算教練問句。亮燈檢查本身沒改。
 
@@ -11,7 +11,7 @@
 2. 亮燈第一行問題：如果教練還覺得常漏，下一步是改注入文字（「進度說明也要先亮燈」）或接受亮燈出現在本輪任一則；要改先講給教練聽。
 3. 沿用 01:30 棒第 3、4 項（鍾長老來賓卡；進度追蹤表手機寬度、李勳婷／婦女再就業／TAVA）。
 
-🙋 要教練決定：無新增。
+🙋 要教練決定：hsiuli 那則 01:38 被小龍蝦發出的 FB 貼文要不要刪（問過：2026-10-30 01:5x）。
 🤫 等教練自己提起：FB 專用 Chrome 要不要登入（生日名單工具）。
 🔧 AI 自己的清單：①Stop hook 測試在 distill 違規紀錄寫了 7 筆 session=test-* 的假紀錄，可清；②`ai.openclaw.fb-birthday` launchd 沒載入（沿用）。
 
