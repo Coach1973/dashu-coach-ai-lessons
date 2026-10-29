@@ -5,7 +5,7 @@
 - 教練原話線索：他要的是「內在循環」不是外部補丁；Haiku 照 Opus 設計的機制跑也能有 Opus 表現＝判斷力放進機制。
 
 ### 📋 下一場開工先做
-1. 建議「賈維斯成績單」（未做，教練還沒拍板）：週一 08:10 點名自動算四數字（教練親口糾正、新案例、同類重犯、規則總字數），任一變差就自動跑 jarvis-self-optimize 交報告。教練開新對話提起就做。
+1. ✅ 賈維斯成績單已做好（10/30 03:00，教練拍板）：`scripts/jarvis_scorecard.py` 接進每日點名，每週一 08:10 算四數字（糾正／新案例／同類重犯／規則字數，上週對上上週），任一變差自動背景跑 `jarvis_scorecard_trigger.sh`（Opus，同週一次，報告存 reports/jarvis/、傳教練 Telegram）。**第一次正式跑：11/2（一）08:10**，那天看 logs/jarvis_scorecard_trigger.log 與 reports/jarvis/ 有沒有東西。
 2. 看 `state/coach_context.log` 有沒有 verbatim／progress 紀錄（驗證 B 小龍蝦端、D 推播）。
 3. 沿用：小龍蝦新對話／不開 FB／收到反應；鍾長老來賓卡；進度追蹤表手機寬度、李勳婷／婦女再就業／TAVA。
 

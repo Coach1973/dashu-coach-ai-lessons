@@ -63,7 +63,7 @@ python3 ~/.openclaw/workspace/scripts/rules_health_audit.py
 做一頁 HTML 報告（Artifact）：五問各自的結論、改了什麼（附存檔編號）、刪了多少字、等教練拍板的建議（每項一句話＋好處）。跑 `scripts/deliver_open.sh <網址>` 跳出來；Artifact 會自動收進大樹作品集。回覆只放 3～5 行重點＋網址。最後 commit＋push 給存檔編號。
 
 ## 什麼時候跑
-教練說口令時跑完整套。收工時 `rules_health_audit.py` 已自動跑機械層，報告第 3 節會寫出規則總字數比第一次紀錄多或少多少；看到變多，收工回報順帶一句即可。不設定時排程。
+教練說口令時跑完整套。另外每週一 08:10 點名會算賈維斯成績單（`scripts/jarvis_scorecard.py`：教練糾正、新案例、同類重犯、規則總字數），任一項變差就自動在背景跑一次（`scripts/jarvis_scorecard_trigger.sh`，同一週最多一次，只做「AI 直接改」類，報告傳教練 Telegram）。收工時 `rules_health_audit.py` 已自動跑機械層；看到字數變多，收工回報順帶一句即可。
 
 ## 上一次檢測留下的（下一次先看）
 2026-10-21 第一次：佩佩分身 MEMORY.md 被截已修（降到 18,976 字）；小龍蝦主分身 SOUL.md 19,353 字已達上限 97%；主分身 TOOLS.md、HEARTBEAT.md 不在開機清單，裡面的規則是否送得到模型待查；其餘建議見當天報告。

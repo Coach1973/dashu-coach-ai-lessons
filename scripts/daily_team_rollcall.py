@@ -416,6 +416,13 @@ def main():
 
     backup_line = backup_when_healthy(dry)
 
+    # 賈維斯成績單（2026-10-30 教練拍板）：每週一算四個數字，變差就自動跑體檢（測試模式不啟動）
+    scorecard = []
+    if datetime.now().weekday() == 0 or "--scorecard" in sys.argv:
+        r = subprocess.run([sys.executable, str(WS / "scripts" / "jarvis_scorecard.py")] + ([] if dry else ["--trigger"]),
+                           capture_output=True, text=True, timeout=120)
+        scorecard = ["", *(r.stdout.strip() or "📈 賈維斯成績單：沒有輸出，叫軍師查 scripts/jarvis_scorecard.py").splitlines()]
+
     weekday = "一二三四五六日"[datetime.now().weekday()]
     head = "✅ 全員正常" if not problems else f"⚠️ {len(problems)}項需要注意"
     lines = [f"🩺 每日全隊點名 {datetime.now():%m/%d}（{weekday}）{datetime.now():%H:%M} 台灣時間", head, ""]
@@ -424,7 +431,7 @@ def main():
     if problems:
         lines.append("")
     lines.append("✅ " + "、".join(oks))
-    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, backup_line, partner_line, "",
+    lines += ["", "📊 昨日使用（排除教練本人與測試帳號）", *usage, "", version_line, backup_line, partner_line, *scorecard, "",
               "（每天08:10送出；08:30前沒收到這則＝系統出事，直接叫軍師）"]
     msg = "\n".join(lines)
 
