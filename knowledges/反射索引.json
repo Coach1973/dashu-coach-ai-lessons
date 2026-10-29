@@ -2096,6 +2096,15 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-JARVIS-PASTED-TRIGGER",
+      "moment": "prompt",
+      "match": "(體檢|檢查一下|檢查.{0,6}小龍蝦|規則.{0,6}(打架|矛盾|重複)|越用越笨|越來越笨|反覆.{0,8}提醒|賈維斯.{0,10}(檢測|體檢|質檢|優化)|jarvis\\.html|jarvis-self|self-optimize)",
+      "say": "教練話裡有「體檢／規則打架／越用越笨」，或附賈維斯頁面網址＝當作口令：同一輪跑 jarvis-self-optimize 技能，交一頁 HTML 報告並跳出來。急事先處理，但回報要說「體檢排在下一件」並真的排進去。10/30 我只讀網址沒跑，教練抓到（feedback_pasted_trigger_phrase_with_link_must_run_skill_2026-10-30）。",
+      "level": "remind",
+      "situation": "教練貼一段話要求體檢、規則打架檢查，或附賈維斯自我檢測頁網址時",
+      "source": "教練 2026-10-30 01:55：「我要求跑賈維斯的質檢系統，這件事情有做嗎？我沒有得到報告」"
     }
   ],
   "case_ledger": {
