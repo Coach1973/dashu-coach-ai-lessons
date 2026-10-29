@@ -1,3 +1,4 @@
+- [🔧 FB 生日頁一直跳出來＝小龍蝦重開臉書專用 Chrome(9222)時還原舊分頁（5秒載入45次）；兩個 profile 的 Sessions 已移備份、重開驗證剩1個空白分頁；FB 登入已過期待教練登入(2026-10-30)](reference_fb_chrome_profile_session_restore_birthday_popups_2026-10-30.md)
 - [🔧 小龍蝦 DM「讀了沒回」＝一輪工作跑20分鐘沒中間回覆＋對話整理兩次各4分鐘（不是當機）；已開 DM 收到反應 ackReactionScope=direct＋狀態反應，尚未用真 DM 驗證(2026-10-30)](reference_openclaw_silent_long_run_ack_reaction_2026-10-30.md)
 - [🔧 榮樹下集數＝SoundOn 標題「第N集」真集數（API回傳no，陳智博第8集）；每集彈窗「認識來賓」自動對策展名冊、對不上補 _RONG_ALIAS；改app.py要重啟event-webapp(2026-10-28)](reference_rongtree_episode_numbers_from_podcast_title_and_guest_pages_2026-10-28.md)
 - [🔧 VPS 硬碟 81G 真因＝.git 堆 650 個 pack(47G)，root 擁有的檔讓 gc 一直失敗；已 repack+清快取降到 26G、重啟釋放記憶體；VPS git pull 9/24 起分歧未處理(2026-10-28)](reference_vps_disk_81g_git_pack_pileup_2026-10-28.md)
