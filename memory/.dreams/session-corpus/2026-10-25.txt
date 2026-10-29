@@ -116,3 +116,27 @@
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5224] Assistant: 我確認一下這份 RESUME3 跟 repo 裡既有版本的差異，並看那張內嵌照片。
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5228] Assistant: 我確認一下工作區 repo隱私狀態（PDF 內有手機號，不能誤推公開）。
 [main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5232] Assistant: 繼續。我先確認信箱格式、線上頁電話缺口，再寫正式派工單。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5235] Assistant: 收到，繼續。我先把 RESUME3 全文與線上頁逐項比對，確認還差哪些，再寫派工單。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5239] Assistant: 兩項指定內容軍師已自行補完，唯一缺口是**電話／Line**。我先看派工單機制的完整格式。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5242] Assistant: 派工機制只認固定選單，我確認一下軍師目前的執行管道與可直接通知的 session。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5246] Assistant: 軍師已自行補完兩項，唯一缺口是電話／Line。我確認派工執行路徑與頁面 Contact 區塊。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5249] Assistant: 派工機制確認完畢。我檢查任務橋的 WatchPaths 是否活著，避免派了沒人接。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5252] Assistant: 任務橋的 WatchPaths 沒載入，我確認 `task` 類型能否直接觸發。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5255] Assistant: 軍師在 16:10 已自行補完您點名的兩項。我確認過 RESUME3 全文與線上頁逐項比對，現在把完整資料正式轉交軍師，並交代唯一缺口（電話／Line）。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5259] Assistant: 派工單已寫好。我檢查 dispatch worker 對「無 DISPATCH 標記的信」的處理，以及 workspace repo 是否有 merge 衝突（那會讓軍師 git pull 拿不到信）。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5262] Assistant: 派工單已寫好，repo 無衝突。我把附件納入版控、提交留證，並啟動任務橋讓軍師立刻執行。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5268] Assistant: 派工單已寫好、附件已納入版控。現在提交留證並觸發任務橋，讓軍師立刻執行（不等下次開工）。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5271] Assistant: 軍師在 16:10 已自行補完您點名的兩項。我把完整履歷正式轉交、附件納入版控，並立即觸發軍師執行補上唯一缺口。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5274] Assistant: 派工單已提交上雲（commit `8e256afc5`）。現在觸發任務橋，讓軍師立刻執行，不用等下次開工。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5277] Assistant: 派工單已上雲。我確認軍師的工作目錄，然後觸發任務橋執行。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5280] Assistant: 派工單已上雲（commit `8e256afc5`）。現在觸發任務橋，讓軍師立刻執行，不用等下次開工。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5283] Assistant: 佇列已寫入，但 WatchPaths plist 沒載入（不會自動觸發），我直接跑任務橋。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5286] Assistant: 任務橋已啟動（背景執行中）。我跟進軍師的執行結果。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5295] Assistant: 任務橋仍在跑軍師的 `claude -p`。我看一下 worker log 與 repo 變化。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5298] Assistant: 任務橋背景執行已結束，我確認軍師的執行結果。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5301] Assistant: 任務橋仍在執行軍師的 `claude -p`。我檢查 repo 變化與結果檔。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5304] Assistant: 任務橋仍在跑軍師的 `claude -p`。我繼續跟。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5311] Assistant: 任務橋仍在跑軍師的 `claude -p`。我繼續跟。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5314] Assistant: 任務橋執行完畢。我確認軍師的執行結果。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5317] Assistant: 軍師回報卡關：`claude -p` 被鎖在 workspace 目錄內，讀不到 `github_repos/charles-lin`。我讀他的回報信並改用正確工作目錄重跑。
+[main/sessions/main/7ed6287e-7a6c-44c8-87ce-a497a2127393#L5320] Assistant: 軍師誠實回報卡關：`claude -p` 被鎖在 workspace 沙盒內，讀不到 `github_repos`。我有完整權限，我直接把這唯一一行補上，不讓它卡在那裡等。
