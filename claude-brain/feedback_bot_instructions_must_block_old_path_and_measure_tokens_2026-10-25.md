@@ -15,7 +15,7 @@ metadata:
 **How to apply（一次到位，缺一不交付）：**
 1. **擋死舊路**：在花錢／出力的那一關用程式擋（例：`lk888_guard.py` 的 `_bahai_offpath`），錯的做法跑不動，並在擋下訊息裡直接給正確那一行。
 2. **真跑一次量用量**：讓分身用真資料做一次，查它的 sqlite（`transcript_events` usage、created_at 毫秒）數步數與每步 token；一件事 10 步內、每步 3 萬 token 內，超過＝它在繞路，回頭改。
-3. **清長對話**：先 `sqlite3 … ".backup state/backup_…sqlite"`，再 `openclaw sessions delete --agent <id> --yes "<session key>"`。
+3. **清長對話**：先 `sqlite3 … ".backup ~/.openclaw-backups/<分身>_<日期>/…sqlite"`（10/30 改：放 workspace/state 會被自動同步推上 GitHub，資料庫 288MB 又含個資），再 `openclaw sessions delete --agent <id> --yes "<session key>"`。
 4. 反射 `R-BOT-COMMAND-SELFCHECK`（block）會在我改 `agents/*/SOUL|AGENTS|SOP_*` 時擋下，三件做完 touch `state/BOT_COMMAND_CHECKED` 才放行。
 5. 額度打滿時先量各分身 5 小時 token 找元兇（見 [[feedback-lk888-hourly-cap-raised-and-minimax-quota-burner-2026-10-25]]）。
 
