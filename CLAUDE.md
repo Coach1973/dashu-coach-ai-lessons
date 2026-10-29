@@ -4,30 +4,28 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-29 02:55:09**
+> **最後同步：2026-10-29 09:30:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-29 02:51 台灣時間，Mac 桌面版 Code 分頁（kaigong-c79b55 worktree），Haiku 5.5 ⇄ Sonnet 5.5 ⇄ Opus 5.5；教練說「總結」；本段 10/28 22:17～10/29 02:51，對話容量約 25%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-29 09:27 台灣時間，Mac 桌面版 Code 分頁（kaigong-c79b55 worktree），Haiku 5.5；教練說「總結」；本段 10/29 02:51～09:27，對話容量約 25%）
 
-**主軸：小龍蝦記憶搜尋引擎吃 2.1G 的根因修好，加上像 RustDesk 一樣的自動釋放守衛。**
-- **根因**：外掛原始碼寫死 `ubatch 2048`，每次載入模型就把設定蓋回去，10/12 的包裝腳本因此失效。
-- **做了**：外掛改成 1024（留 .bak）、設定檔改 1024、守衛 `scripts/llama_memory_guard.sh` ＋ launchd `ai.openclaw.llama-memory-guard`（事件觸發＋每天 05:10）。實測：改回 2048 後 6 秒自動修回；強制釋放後搜尋自動恢復（768 維）。commit `85287938b`。
-- **注意**：釋放要連上層 router 一起結束，只殺嵌入程序會讓搜尋整個壞掉。小龍蝦重啟改用 `launchctl kickstart`，不用 `/opt/homebrew` 那份舊版 openclaw。
-- **同場另做**：「張瓊芳」全部改成「張瓊方」（多個 repo 已推上）；mbba 頁拿掉英文副標、頁尾加三個連結。
+**主軸：綉美個人 LINE 改成正確連結並放 QR code；Chrome 查證鎖觸發後已補開頁面。**
+- **綉美頁（xiumei）**：個人 LINE 連結從錯的 `aYDPnfRMc3` 改成 `b6hkGJBpdU`，QR 圖（教練提供）放在按鈕下方 `assets/line-qr.jpg`。QR 解碼出來是加好友代碼，不是 LINE 文字 ID（`@xxxx` 那種），文字 ID 要教練到 LINE 個人檔案找。commit `39bffa9`，已推 main，線上 200、新連結在、舊連結不見。
+- **Chrome 查證鎖**：Stop hook 擋下，因為改了 HTML 沒用 Google Chrome 開。已開本機檔與線上網址；交付網址給教練：https://event.bymyway.com/curated/xiumei/#contact
+- **沒做**：手機寬度排版沒親眼看過；電腦點 LINE 連結後的網頁沒實際點過。
 
 ### 📋 下一場開工先做
-1. 記憶搜尋守衛：觀察 2 天實際負載，看 `workspace/logs/llama_memory_guard.log` 有沒有誤觸發。
-2. 張瓊方快取：教練說頁面快取還顯示草字頭的「芳」。線上 HTML 已全改，快取來源還沒找到。
-3. tainan-shangquan 的 GitHub Pages 回 404，還沒確認線上版。
-4. 沿用舊：江宜倫預約測試通知；軍火庫第 40 位版面；許哲誠 3 歲圖眼神。
+1. 綉美頁手機寬度看一次（QR 圖、按鈕是否跑版）。
+2. 沿用：記憶搜尋守衛觀察 2 天（`workspace/logs/llama_memory_guard.log`）；張瓊方快取舊字來源未查；tainan-shangquan Pages 404 未確認。
 
-🙋 要教練決定：新增 4 位理監事座位（羅爵、連清成、林嘉華、戴明堂）——前一棒問過，教練未答。
-🤫 等教練自己提起：王珠娟新海報。
-🔧 AI 自己的清單：①張瓊方快取舊字的來源未查；②作品一覽 registry 裡張瓊方那一筆是別人的未提交變更，等它進 commit 時會一起帶上；③守衛下次開工量實際常駐用量。
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：新增 4 位理監事座位（羅爵、連清成、林嘉華、戴明堂）；王珠娟新海報。
+🔧 AI 自己的清單：①QR 解碼用 scratchpad 的 opencv 虛擬環境（系統 Python 不能裝）；②Chrome 查證鎖：改 HTML 後當場 `open -a "Google Chrome"`，不要等 Stop hook 擋。
 
+---
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
