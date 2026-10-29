@@ -1,3 +1,4 @@
+- [🔧 出圖清單JSON預設我自己用 run_img_list.py 一行跑（生成不佔我token、看圖才佔；教練10/30糾正別繞小龍蝦），大批量才用 nvm 的 openclaw agent 交辦；coachwu 時間軸4個AI示意圖(51c588a)、媒體牆7張補縮圖(a1711e5)(2026-10-30)](reference_delegate_to_xiaolongxia_openclaw_agent_and_run_img_list_2026-10-30.md)
 - [🧭 靈魂拷問(10/30)：做成程式的不再犯、等教練開口的會回來；第四步「自我觸發」＝賈維斯成績單已上線（週一08:10點名算四數字、變差自動體檢，11/2首跑）(2026-10-30)](project_jarvis_soul_loop_four_steps_2026-10-30.md)
 - [🔴 逐字保險箱默默停收：群組9/16起停6週、桌面版10/27起停3天，程式一直印「新收0句」當成功，沒人下令停；已改讀sqlite＋worktree夾補回1552句，警報與事件觸發待做(2026-10-30)](reference_verbatim_vault_silent_zero_harvest_2026-10-30.md)
 - [🔴 教練話裡有「體檢／規則打架／越用越笨」或附賈維斯頁面網址＝當口令，同輪跑 jarvis-self-optimize 交報告；10/30 我只讀網址沒跑被抓(2026-10-30)](feedback_pasted_trigger_phrase_with_link_must_run_skill_2026-10-30.md)
