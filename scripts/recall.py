@@ -33,6 +33,12 @@ import json, glob, os, sys, re, datetime
 HOME = os.path.expanduser("~")
 SESS_GLOB = HOME + "/.openclaw/agents/*/sessions/*.jsonl"
 TERMINAL_GLOB = HOME + "/.openclaw/workspace/terminal-notes/raw_sessions/*.jsonl"
+# 2026-10-30 賈維斯體檢：桌面版「開工」對話存在 worktree 專案夾，raw_sessions 只備份主資料夾 → 10/27 起教練的話沒收進來。
+# 直接讀 Claude Code 專案夾（主資料夾＋所有 worktree），只看 3 天內有動的檔，夠 30 分鐘收割一次用。
+LIVE_TERMINAL_GLOB = HOME + "/.claude/projects/-Users-bymyway--openclaw*/*.jsonl"
+# 小龍蝦 10 月起（OpenClaw 2026.9.4）對話改存各分身 sqlite，sessions/*.jsonl 只剩舊檔 → 從 10 月起群組原話全沒收。
+AGENT_DB_GLOB = HOME + "/.openclaw/agents/*/agent/openclaw-agent.sqlite"
+RECENT_SECONDS = 3 * 86400
 MEMORY_GLOB = HOME + "/.openclaw/workspace/memory/*.md"
 VERBATIM_DIR = HOME + "/.openclaw/workspace/memory/verbatim"
 INDEX = HOME + "/.openclaw/workspace/state/recall_index.jsonl"
@@ -100,9 +106,44 @@ def scan_sessions():
         f.close()
 
 
+def scan_agent_dbs():
+    """掃小龍蝦各分身 sqlite 的真人訊息（只看最近 3 天，收割每 30 分鐘跑一次）"""
+    import sqlite3, time
+    since = int((time.time() - RECENT_SECONDS) * 1000)
+    for path in glob.glob(AGENT_DB_GLOB):
+        agent = path.split("/agents/")[1].split("/")[0]
+        try:
+            conn = sqlite3.connect("file:%s?mode=ro" % path, uri=True, timeout=5)
+            rows = conn.execute("SELECT event_json FROM transcript_events WHERE created_at >= ? "
+                                "AND event_json LIKE '%\"role\":\"user\"%'", (since,)).fetchall()
+            conn.close()
+        except Exception:
+            continue
+        for (raw,) in rows:
+            try:
+                d = json.loads(raw)
+            except Exception:
+                continue
+            m = d.get("message") or {}
+            meta = m.get("__openclaw") or {}
+            if m.get("role") != "user" or m.get("toolName") or (m.get("provenance") or {}).get("kind") == "internal_system":
+                continue
+            text = extract_text(m.get("content")).strip()
+            if not text or is_noise(text) or text.startswith(("[System]", "[OpenClaw", "An async command")):
+                continue
+            yield {
+                "t": taiwan_time(d.get("timestamp")),
+                "src": AGENT_NAMES.get(agent, agent),
+                "who": meta.get("senderName") or "真人訊息",
+                "text": re.sub(r"\s+", " ", text)[:1000],
+            }
+
+
 def scan_terminal():
-    """掃終端機對話備份（Claude Code 格式），抽教練打的字"""
-    for path in glob.glob(TERMINAL_GLOB):
+    """掃終端機對話（Claude Code 格式），抽教練打的字：舊備份＋專案夾裡 3 天內有動的檔"""
+    import time
+    live = [p for p in glob.glob(LIVE_TERMINAL_GLOB) if time.time() - os.path.getmtime(p) < RECENT_SECONDS]
+    for path in glob.glob(TERMINAL_GLOB) + live:
         try:
             f = open(path, encoding="utf-8", errors="ignore")
         except OSError:
@@ -126,7 +167,7 @@ def scan_terminal():
                 text = " ".join(texts)
             else:
                 text = str(c or "")
-            text = text.strip()
+            text = re.sub(r"</?pasted_content[^>]*>", "", text).strip()   # 教練貼上的語音稿也是他的話
             if (not text or is_noise(text) or text.startswith("<")
                     or text.startswith("Caveat:") or text.startswith("[Request interrupted")):
                 continue
@@ -153,7 +194,7 @@ def harvest():
                 pass
     added = 0
     import itertools
-    for e in itertools.chain(scan_sessions(), scan_terminal()):
+    for e in itertools.chain(scan_sessions(), scan_agent_dbs(), scan_terminal()):
         key = e["t"] + e["text"][:80]
         if key in seen:
             continue
@@ -178,7 +219,7 @@ def build():
                 pass
     # 來源一之二：對話原文檔（小龍蝦＋終端機）還活著、但尚未收割的訊息
     import itertools
-    for e in itertools.chain(scan_sessions(), scan_terminal()):
+    for e in itertools.chain(scan_sessions(), scan_agent_dbs(), scan_terminal()):
         e = dict(e, ref="sessions", text=e["text"][:300])
         entries.append(e)
     # 來源二：每日摘要裡的教練原話
