@@ -3432,5 +3432,55 @@
   ],
   "photo_alt": "陳千禾在新書發表會上分享",
   "caption": "陳千禾在新書發表會上分享"
+ },
+ {
+  "slug": "lin-hunang-yi",
+  "name": "林晃誼老師",
+  "role": "甜彩虹音樂藝術中心 — 讓音樂走進生活",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/lin-hunang-yi/",
+  "anchor": "#good",
+  "lede": "把音樂帶到最需要陪伴的地方：日照中心、樂齡據點、每一個需要被理解的孩子。",
+  "stats": [],
+  "items": [
+   {
+    "yr": "2021",
+    "title": "日照中心新年表演",
+    "desc": "〈賀新年〉日照中心表演曲。",
+    "src": "看影片 →",
+    "href": "https://www.youtube.com/watch?v=L369ycv-43g"
+   },
+   {
+    "yr": "2023",
+    "title": "和長輩一起做情人節手作",
+    "desc": "簡易手作，陪長輩動動手、說說話。",
+    "src": "看影片 →",
+    "href": "https://www.youtube.com/watch?v=hLZqy2n7LG0"
+   },
+   {
+    "yr": "2023",
+    "title": "長輩律動活動",
+    "desc": "帶長輩跟著音樂活動身體。",
+    "src": "看影片 →",
+    "href": "https://www.youtube.com/watch?v=doPIyHAc-WY"
+   },
+   {
+    "yr": "2025",
+    "title": "樂齡據點《寶島曼波》",
+    "desc": "動作教學與分段教學，長輩在家也能跟著跳。",
+    "src": "看影片 →",
+    "href": "https://www.youtube.com/watch?v=I1zq2bA0PKk"
+   }
+  ],
+  "photo": [
+   "assets/people/lin-hunang-yi.jpg",
+   [
+    480,
+    360,
+    26184
+   ]
+  ],
+  "photo_alt": "林老師陪長輩一起律動",
+  "caption": "林老師陪長輩一起律動"
  }
 ]
