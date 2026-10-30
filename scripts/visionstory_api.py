@@ -16,7 +16,7 @@
   python3 scripts/visionstory_api.py create-avatar (--url https://…jpg | --file 照片.jpg)    # 用一張正面照建頭像
   python3 scripts/visionstory_api.py clone-voice --file 錄音.m4a [--preview-text "…"]       # 用錄音複製聲音（約 15 秒）
 """
-import argparse, base64, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request, uuid
+import argparse, base64, json, os, re, subprocess, sys, time, urllib.error, urllib.parse, urllib.request, uuid
 
 BASE = "https://openapi.visionstory.ai"
 CRED = os.path.expanduser("~/.openclaw/workspace/路徑大全_憑證層.md")
@@ -33,7 +33,15 @@ def get_key():
             return m.group(1)
     except OSError:
         pass
-    sys.exit("找不到 VisionStory 金鑰（環境變數或路徑大全_憑證層.md）")
+    # Windows：讀 workspace 內 DPAPI 加密檔（同一台、同一帳號才解得開）
+    enc = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "visionstory_key.enc")
+    if os.path.exists(enc):
+        ps = ("$e = Get-Content -LiteralPath '%s'; $s = ConvertTo-SecureString -String $e; "
+              "[System.Net.NetworkCredential]::new('', $s).Password") % enc
+        r = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True)
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    sys.exit("找不到 VisionStory 金鑰（環境變數、visionstory_key.enc 或路徑大全_憑證層.md）")
 
 
 def redact(s, key):
