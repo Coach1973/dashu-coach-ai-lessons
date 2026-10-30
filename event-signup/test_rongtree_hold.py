@@ -79,6 +79,9 @@ ev = next((e for e in load()["events"] if e.get("booked_by") == "官網預約" a
 check("1b. 總表多一筆「待確認」榮樹下訪談（booked_by=官網預約、tentative）", bool(ev) and ev.get("tentative") and ev.get("booking_type") == "榮樹下訪談", ev)
 check("1c. 預約人姓名寫進 guest（前置作業看得到是誰預約）；單位聯絡方式只在私人備註（2026-10-30 教練）",
       bool(ev) and ev.get("guest") == "測試先生" and "測試公司" in ev.get("note", "") and "0912345678" in ev.get("note", ""), ev)
+rf = A._rg.render_form(ev["form_token"], ev, None, 0) if ev else ""
+check("1h. 預約時填的姓名、單位、聯絡方式、想說的話，打開來賓資料表時已自動帶入（教練：不要叫人重填）",
+      all(x in rf for x in ("測試先生", "測試公司", "0912345678", "測試留言")), rf[:200])
 check("1g. 回應附來賓資料表網址，成功畫面可直接帶去填", bool(ev) and j.get("form") == f"/rongtree/guest/{ev['form_token']}", j)
 kinds = [k[0] for k in events]
 check("1d. 有通知、留資料紀錄、寫 Google 各一次", kinds.count("notify") == 1 and kinds.count("lead") == 1 and kinds.count("google") == 1, kinds)

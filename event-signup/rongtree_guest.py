@@ -471,6 +471,12 @@ BACK_LINK = '<p class="back"><a href="/curated/rongtree/">← 回榮樹下</a></
 def render_form(token, ev, existing, others=0):
     """others＝這一場已經有幾位來賓交過資料。已有人交過、這個瀏覽器又不是修改自己那筆時，不預填名字。"""
     d = json.loads(existing["data"]) if existing else {}
+    bd = ev.get("booking_data") or {}
+    from_booking = bool(bd) and not existing and not others
+    if from_booking:   # 2026-10-30 教練：預約時已填的資料直接帶進來，不要叫人重填
+        d.update({k: v for k, v in {"name": bd.get("name"), "title": bd.get("org"), "contact": bd.get("contact"), "intro": bd.get("msg")}.items() if v})
+    booking_hint = ("<p class=\"again\">你預約時留的姓名、單位、聯絡方式和想說的話，已經先帶進下面了，"
+                    "補上其他欄位就好，不用重寫。</p>") if from_booking else ""
     if not d.get("name") and ev.get("guest") and not others:
         d["name"] = ev["guest"]
     when = f"{ev.get('date', '')} {ev.get('start', '')}–{ev.get('end', '')}" if ev.get("start") else str(ev.get("date", ""))
@@ -510,7 +516,7 @@ button:disabled{{opacity:.6}}.msg{{margin-top:14px;min-height:1em;color:#f0a58c}
 <h1>謝謝您，願意坐到榮樹下。</h1>
 <p class="lead">為了讓訪談聚焦在您最動人的故事，麻煩花 10 分鐘留下以下資料。主持人會在訪談前先讀過，現場就能直接聊到重點。</p>
 <span class="when">訪談時間：{E(when)}</span>
-{again}
+{again}{booking_hint}
 <form id="f" novalidate>
 {''.join(rows)}
 <div class="field photo"><label for="photo">個人照片 <span class="opt">選填</span></label>
@@ -633,10 +639,12 @@ def render_list(secret):
         tok = e.get("form_token")
         mine = [r for r in forms if tok and _slot_has(r["token"], tok)]
         who = "、".join(r["guest"] or "" for r in mine) or _event_guest(e) or "（還不知道是誰）"
-        state = "✅ 已填寫資料表" if mine else "⏳ 已預約，還沒填資料表"
+        bd = e.get("booking_data") or {}
+        state = "✅ 已填寫資料表" if mine else ("📝 預約資料已收到，資料表還差故事與轉折" if bd else "⏳ 已預約，還沒填資料表")
+        extra = f"<br><small>{E(bd.get('org', ''))}｜{E(bd.get('contact', ''))}</small>" if bd and not mine else ""
         link = f"<a href='/rongtree/guest/{tok}' target='_blank' rel='noopener'>資料表網址</a>" if tok else ""
         up.append(f"<tr><td>{E(e['date'])} {E(e['start'])}{'（時間待確認）' if e.get('tentative') else ''}</td>"
-                  f"<td>{E(who)}</td><td>{state}</td><td>{link}</td></tr>")
+                  f"<td>{E(who)}{extra}</td><td>{state}</td><td>{link}</td></tr>")
     up_html = (f"<h2>接下來的訪談</h2><table><thead><tr><th>訪談時間</th><th>來賓</th><th>資料表</th><th></th></tr></thead>"
                f"<tbody>{''.join(up)}</tbody></table>") if up else ""
     gone = deleted_forms()

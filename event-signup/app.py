@@ -3264,6 +3264,7 @@ def api_rongtree_hold():
     if sum(1 for e in evs if e.get("booked_by") == "官網預約" and e.get("tentative") and e.get("date", "") >= today_s) >= _RONGTREE_HOLD_MAX_OPEN:
         return reply(False, "目前待確認的預約已滿", 409, code="full")
     ok, res = _csv.book(p.get("date"), p.get("start"), "榮樹下訪談", who="官網預約", guest=name,
+                        guest_data={"name": name, "org": org, "contact": contact, "msg": msg},
                         note=f"官網預約：{name}（{org}）｜聯絡：{contact}" + (f"｜留言：{msg}" if msg else "") + "（單位與聯絡方式為私人資料，網頁不公開）")
     if not ok:
         return reply(False, res, 409, code="taken")

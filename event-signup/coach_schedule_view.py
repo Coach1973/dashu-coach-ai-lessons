@@ -172,7 +172,7 @@ def _refresh_google():
         pass
 
 
-def book(date_s, start_s, booking_type, who=None, note=None, guest=None):
+def book(date_s, start_s, booking_type, who=None, note=None, guest=None, guest_data=None):
     """預約一個 1 小時時段：寫成「待確認」的行程（先占位，教練確認或取消）。
     who／note：榮樹下網頁「我要預約」（官網預約）用——預約人不是預設的那位，單位與聯絡方式只放 note（私人，不公開）。
     guest：預約人姓名（2026-10-30 教練：前置作業要看得到是誰預約，不再只寫「待確認」）。
@@ -203,6 +203,8 @@ def book(date_s, start_s, booking_type, who=None, note=None, guest=None):
         if guest:
             ev["guest"] = guest[:40]
             ev["guest_by"] = who
+        if guest_data:   # 預約時填的姓名／單位／聯絡／想說的話，來賓打開資料表時自動帶入（2026-10-30 教練：不要叫人重填）
+            ev["booking_data"] = guest_data
         if booking_type == "榮樹下訪談":   # 2026-10-29：來賓資料表網址在預約當下就配好（格式同 coach_schedule.guest_form_url），不用等 5 分鐘的補配
             ev["form_token"] = secrets.token_urlsafe(9)
         data["events"].append(ev)

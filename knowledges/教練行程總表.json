@@ -582,7 +582,13 @@
    "covered_by_google": true,
    "form_token": "sF0au-7g0X66",
    "guest": "楊曉熹牧師",
-   "guest_by": "官網預約"
+   "guest_by": "官網預約",
+   "booking_data": {
+    "name": "牧師",
+    "org": "楊曉熹牧師",
+    "contact": "0987105665",
+    "msg": "感謝邀請"
+   }
   },
   {
    "id": "885b7e8e",
@@ -952,7 +958,13 @@
    "covered_by_google": true,
    "reminder_job": "83619e4d-a467-4172-95a6-5becb458bd7b",
    "guest": "張瓊方",
-   "guest_by": "官網預約"
+   "guest_by": "官網預約",
+   "booking_data": {
+    "name": "張瓊方創會理事長",
+    "org": "中華身心平衡推廣協會",
+    "contact": "0980826241",
+    "msg": "以社會企業的視角，透過社區健康講座，改善老化、弱勢經濟等社會問題。創造「個人健康、家庭圓夢、社會共好」的三贏人生。"
+   }
   },
   {
    "id": "gcal-2026-10-30-0",
