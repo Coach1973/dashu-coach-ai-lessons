@@ -1,3 +1,4 @@
+- [🖼️ 個人品牌網頁出圖流程改版：TAVA 出位置寫 img data-slot=IMG-編號＋清單，教練上傳後說「○○ 已上架，換圖」→我跑 swap_slot_images.py 換圖壓 webp 內嵌上線；林晃誼頁首例(網頁2ecdceb、腳本22562ebef、playbook 0e5e814)；5MB 網頁不整檔讀(2026-10-30)](reference_swap_slot_images_after_publish_flow_2026-10-30.md)
 - [🔴 分身「沒反應」＝一輪一直換題目查不回話（10/30 巴哈70分鐘149指令，「8號」＝巴哈）；safety-locks v1.7 悶頭鎖30次／收尾鎖30分鐘或200次(c4c155546)；止血 sessions.abort＋reset；別限死40次會誤殺小龍蝦(2026-10-30)](reference_turn_budget_lock_bots_silent_loop_2026-10-30.md)
 - [🔧 媒體牆／連結卡補縮圖：看雜誌、Dcard 對 curl 回 Cloudflare 403 不繞過→改用教練 Chrome 開頁抓 og:image；Podcast 封面走 itunes lookup；coachwu 7 張已補(a1711e5)(2026-10-30)](reference_media_wall_thumbnails_use_coach_chrome_when_curl_blocked_2026-10-30.md)
 - [🔧 出圖清單JSON預設我自己用 run_img_list.py 一行跑（生成不佔我token、看圖才佔；教練10/30糾正別繞小龍蝦），大批量才用 nvm 的 openclaw agent 交辦；coachwu 時間軸4個AI示意圖(51c588a)、媒體牆7張補縮圖(a1711e5)(2026-10-30)](reference_delegate_to_xiaolongxia_openclaw_agent_and_run_img_list_2026-10-30.md)
