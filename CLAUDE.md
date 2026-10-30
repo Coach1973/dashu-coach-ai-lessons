@@ -4,11 +4,32 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-30 10:45:26**
+> **最後同步：2026-10-30 12:10:08**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 12:07 台灣時間，Mac 桌面版 Code 分頁（kaigong-0d2ad2 worktree），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 11:43～12:07；對話容量約 25%；教練說「總結」；與上方 10:45 那棒是不同對話框）
+
+**主軸：巴哈（教練語音說「8號」）一輪卡 70 分鐘的根治；研究「小龍蝦為什麼老卡住」；教練裁示「升級」，升級卡在 Time Machine 備份。**
+- **點點點設定（已 commit `f9e637f6a`、已推雲端）**：`typingMode: instant`，日誌確認熱載入（hot reload applied）。**真的有沒有點點點還沒用真訊息測。** 我第一次 commit 整檔 add，夾帶別人未提交的 47 行（含 synterolink 金鑰明文），發現後在未 push 前拆掉重做（案例 139）。
+- **巴哈卡住真相**：不是當機，是 10:22～11:48 一輪連續 149 次 exec，話都卡在整輪結束才送出；群組對話約 19 萬 token 超預算。已 `sessions.abort`＋`sessions.reset` 止血。**止血時佩佩老師交辦的「今晚 Grace 20:00～20:50」沒寫進行程**（巴哈重開不記得）。
+- **根治（機制）**：safety-locks v1.7 悶頭鎖（連續 30 次工具沒對外講話→擋一次）＋收尾鎖（同一輪 30 分鐘或 200 次→只放行送訊息）`c4c155546`，11:51 重啟後日誌確認載入，**還沒被真實情況觸發過**；官方 `tools.loopDetection` 原本預設關，已開 `5a41b6296`（熱載入）。
+- **研究結論（教練問全世界有沒有、升級有沒有修、赫米斯會不會比較好）**：近一個月教練為卡住開口約 24 次（向軍師 11＋直接催 13，6 天）；官方 GitHub 9/30 後 stuck 回報 255 筆；本機 OpenClaw 2026.9.4、最新 2026.10.9，10.2～10.8 修了多個卡住相關；赫米斯內建 max_turns 90／30 分逾時／每 10 分回報／50% 提早壓縮，機制較好但同樣用 MiniMax-M3，LINE／Telegram 多分身都建在小龍蝦上，不搬家、把機制搬進小龍蝦。詳見記憶 `reference_turn_budget_lock_bots_silent_loop_2026-10-30.md`。
+- **升級進度（教練說「升級」）**：Node 24.22.2 已裝（`~/.nvm/versions/node/v24.22.2`，SQLite 檢查過；舊 24.21.0 保留可退回）。`scripts/openclaw_zh_errmsg_patch.py` 從 git（`644896ffe`）救回並改成自動找正式服務在跑的那份（**這個檔還沒 commit**）。教練 10/2 規矩「升級前要 Time Machine 備份」：12:03 啟動 `tmutil startbackup --block`，12:07 進度約 14%、還在跑。**正式升級、補丁重打、驗證都還沒做。**
+- 教練原話線索：「從根源徹底解決，我為這件事不堪其擾很久了」＝要機制擋、不要每次手動修；他問「全世界沒人卡嗎」＝想知道是不是我們自己的問題（答案：官方也有，但我們版本落後且防卡設定沒開）。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 🔴 **今晚 20:00 前**：確認佩佩老師的「今晚 Grace 咖啡會議 20:00～20:50」有沒有寫進行程（巴哈重開後不記得；佩佩 10:04 的交辦、教練 10:07 裁示「RPL 晚上 9 點、線上學習不影響」）。沒寫就直接補，並在群組回報。
+2. 🔴 **升級小龍蝦 2026.9.4 → 2026.10.9**（教練已說「升級」）：先看備份 `tmutil status` 跑完沒（12:03 開始）；備份完才 `openclaw update --dry-run` 預演，再正式升級；升級前先確認所有分身都閒置（用 `agents/*/agent/openclaw-agent.sqlite` 最後事件時間）。升完要做：①重跑 `python3 workspace/scripts/line_push_gate_patch.py`（LINE 推播閘門）②重跑 `python3 scripts/openclaw_zh_errmsg_patch.py`（英文錯誤訊息改中文）③確認 safety-locks v1.7、loopDetection、typingMode 都還在日誌載入 ④LINE／Telegram 各頻道、巴哈、小龍蝦各發一則真訊息確認會回。重啟前核對版本一致（案例 73）。
+3. `openclaw.json` 還有 45 行未提交（synterolink 模型設定，含 API 金鑰明文）：金鑰要先移出 git 才能提交，先不動。
+4. 看日誌有沒有出現 `悶頭鎖觸發` / `收尾鎖觸發`，有就檢查誤殺；`一輪工作計數開始` 那行會印 ctx 欄位，確認有沒有 runId。
+5. 沿用上一棒：賈維斯成績單 11/2（一）08:10 首跑；影片報告存 git＋查商用授權；超過 25% 每次收尾給「要不要總結」按鈕。
+
+🙋 要教練決定：無新增（升級已裁示）。
+🤫 等教練自己提起：NMDA 頁「大樹教練」字樣；FB 專用 Chrome 要不要登入；小龍蝦卡住通知要不要改成只報一次（沿用）。
+🔧 AI 自己的清單：①`scripts/openclaw_zh_errmsg_patch.py` 救回後要 commit；②案例 138、139 已寫；③升級後 `~/.nvm` 預設 Node 要改 24.22.2、確認服務記錄的 node 路徑；④提早壓縮（赫米斯 50% 做法）可評估放進小龍蝦。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 10:45 台灣時間，Mac 桌面版 Code 分頁（kaigong-a6b23d worktree），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 04:05～10:45；對話容量約 27%；教練說「總結」）
 
@@ -29,26 +50,6 @@
 🙋 要教練決定：小龍蝦卡住通知要不要改成只報一次（我已提，尚未裁示）。
 🤫 等教練自己提起：NMDA 頁「大樹教練」字樣要不要拿掉；FB 專用 Chrome 要不要登入。
 🔧 AI 自己的清單：①`ai.openclaw.fb-birthday` 沒載入（有意不載）；②自動暫存 stash 1 筆未放回（不可逆，未動）；③規則體檢：執行細則＋特助心法重複約 16 字，不動；④bni_tainan/AGENTS.md 超過 2 萬字；⑤對話容量分析（10/30 14 場）：40% 以上每回合約 66K，比 20～30% 的 36K 貴約 1.8 倍，但最兇那場主要因回合多（169）加上換了三個模型。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 03:50 台灣時間，Mac 桌面版 Code 分頁（kaigong-a8daef worktree），Haiku 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 02:53～03:50，對話容量約 41%（教練畫面顯示 34%）；教練說「總結」）
-
-**主軸：賈維斯成績單上線；NMDA 入會禮改 12 項；coachwu 頁換 4 張真 AI 圖＋三項改版。**
-- **賈維斯成績單（教練「趕緊做」）**：`scripts/jarvis_scorecard.py`＋`jarvis_scorecard_trigger.sh` 接進每日點名，每週一 08:10 算四數字（教練糾正／試金石新案例／同類重犯／規則總字數，上週對上上週；逐字保險箱 0 句也算變差），任一變差自動背景跑 jarvis-self-optimize（Opus、關 hook、指令白名單、同週一次、報告存 reports/jarvis/ 並傳教練）。commit `606939b4f`。真資料算出：糾正 1→3、同類重犯 3→5、規則字 +631；觸發整條路只用測試題跑過（10 秒），**完整體檢沒正式跑過，首次是 11/2（一）08:10**。
-- **NMDA（event.bymyway.com/curated/nmda/）**：入會禮改成教練貼的 12 項、贈品字級 20px（nmda `22ac62d`），再拿掉人名只留品項（`6c622b6`）；頁面其他處的「大樹教練」未動。
-- **釋放**＝只重啟 RustDesk：1130M→205M。
-- **coachwu 頁**：①出圖清單 4 張（workspace `ae5cf3f10`；真正 AI 示意圖只有時間軸 4 個 SVG，其餘 139 張是真照片）→交辦小龍蝦（nvm 的 openclaw agent，101 秒）用 `scripts/run_img_list.py`（`79877f498`）出圖→我逐張看過→換進時間軸（coachwu `51c588a`，圖說「AI 繪製示意插畫」，原始 PNG 在 ~/Pictures/coachwu_AI插畫_20261030/）。②`a1711e5`：友善連結加「Hello 大樹教練 LINE 社群」（coach.pse.is/9955→LINE 社群邀請）；榮樹下拿掉已播出節目／四條氣根／來賓專屬頁與參與方式；媒體牆 7 張純文字卡補縮圖（看雜誌 3、新竹職訓海報、Dcard 海報、兩個 Podcast 封面；看雜誌與 Dcard 被 Cloudflare 擋，改用教練 Chrome 正常開啟，沒繞過驗證）。線上 event.bymyway.com 已讀回確認；GitHub Pages 備援站最後狀態 building。
-- **總結後追加（04:00）**：教練要求「預計流程跑完會超過 40% 就先預警、建議下一輪開工再跑」→ `scripts/context_percent_hook.py` 25%～35% 每句帶「📐 開工前預估」（附 10/30 實測數字），試金石案例137，commit `2c5506369`。只是提醒、不是擋下；同類再犯就升級成 Stop 檢查。
-- **教練原話線索**：①「趕緊做呀，我這麼重視的事我能不做嗎」＝上一棒寫「提起就做」的事，他說開工就是直接做，不准再問（已記憶）；②「交給小龍蝦是不是繞遠路」＝出圖預設我自己跑（生成不佔我 token，看圖才佔），大批量才交小龍蝦（已更正記憶）；③他在意真人名字／肖像授權（入會禮人名拿掉）；④媒體牆「有縮圖比純文字有說服力」。
-
-### 📋 下一場開工先做
-1. **11/2（一）08:10 之後**看成績單第一次正式跑：點名訊息有「📈 賈維斯成績單」；`logs/jarvis_scorecard_trigger.log`、`reports/jarvis/` 有沒有東西、報告有沒有傳到教練 Telegram。
-2. 看 `state/coach_context.log` 有沒有 verbatim／progress 紀錄（驗證小龍蝦端逐字存檔、卡住推播，沿用）。
-3. coachwu GitHub Pages 備援站（coach1973.github.io/coachwu）是否已部署完成（`gh api repos/Coach1973/coachwu/pages/builds/latest`）。
-4. 沿用：小龍蝦新對話／不開 FB；鍾長老來賓卡；進度追蹤表手機寬度、李勳婷／婦女再就業／TAVA。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：NMDA 頁其他地方的「大樹教練」字樣要不要也拿掉；FB 專用 Chrome 要不要登入。
-🔧 AI 自己的清單：①`ai.openclaw.fb-birthday` 沒載入（**有意不載**：FB 一律不開，教練登入 FB 後再說）；②自動暫存 stash@{0}（10/26 dispatch-worker 留的機器狀態檔，無保存價值；刪除屬不可逆，未動）；③distill 違規紀錄 7 筆 test-* 假紀錄可清；④規則體檢：執行細則＋特助心法重複約 16 字，不動；⑤bni_tainan/AGENTS.md 22,045 字超過 2 萬（動它要走分身三步驟）；⑥NMDA 與 coachwu 頁還有舊的 18px 字級（module_kit 擋：NMDA index 6 處、team.html 1 處），既有網站不批次改，改到那頁才一起調。
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
