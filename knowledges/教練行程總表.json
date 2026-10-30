@@ -935,18 +935,18 @@
   {
    "id": "gcal-2026-10-30-1",
    "date": "2026-10-30",
-   "title": "Grace咖啡會議",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "20:50"
-  },
-  {
-   "id": "gcal-2026-10-30-2",
-   "date": "2026-10-30",
    "title": "RPL",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-10-30-2",
+   "date": "2026-10-30",
+   "title": "Grace咖啡會議",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "20:50"
   },
   {
    "id": "gcal-2026-10-30-3",
@@ -1462,18 +1462,18 @@
   {
    "id": "gcal-2026-11-20-67",
    "date": "2026-11-20",
-   "title": "LTRT",
-   "source": "Google日曆",
-   "start": "20:00",
-   "end": "21:00"
-  },
-  {
-   "id": "gcal-2026-11-20-68",
-   "date": "2026-11-20",
    "title": "RPL",
    "source": "Google日曆",
    "start": "21:00",
    "end": "22:00"
+  },
+  {
+   "id": "gcal-2026-11-20-68",
+   "date": "2026-11-20",
+   "title": "LTRT",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-20-69",
@@ -3987,7 +3987,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-30 11:58",
+ "updated_at": "2026-10-30 12:04",
  "tainan_synced_at": "2026-10-29 15:45",
  "evening_window": {
   "start": "19:00",
@@ -4031,8 +4031,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-30 11:58",
- "google_synced_epoch": 1793332698,
+ "google_synced_at": "2026-10-30 12:04",
+ "google_synced_epoch": 1793333058,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
