@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 69f187ed-0852-4168-84e4-c4322d41ad4f
-  modified: 2026-10-30T03:58:45.628Z
+  modified: 2026-10-30T05:02:39.973Z
 ---
 
 **症狀**：教練說某分身（例：「8 號」＝巴哈，語音諧音）一直沒反應。不是當機——它在同一輪裡不停查程式，嘴上一直寫「現在收尾寫入」，但一輪沒結束，中間的話不會送到群組。
@@ -26,5 +26,7 @@ metadata:
 - 官方 GitHub 9/30 後標題或內文含 stuck 的 issue 255 筆＝全球都有。本機 2026.9.4，最新 2026.10.9；10.2～10.8 修了多個卡住相關（訊息無限重試、工具逾時看得到、壓縮後迴圈）。升級要先把 Node 升到 24.22.1+，且 line_push_gate_patch.py 等改在 nvm 版程式的補丁要重打——待教練拍板。
 - 官方內建 `tools.loopDetection` 預設關、官方建議小模型開 → 10/30 已開（5a41b6296，熱載入生效）。
 - 赫米斯本身內建：max_turns 90、gateway_timeout 30 分、每 10 分回報進度、對話用到 50% 就壓縮；同樣用 MiniMax-M3。結論：赫米斯的「機制」比較好，但教練的工作（LINE／Telegram 多分身、群組綁定、行程外掛、各種鎖）全建在小龍蝦上，搬家成本大；做法是把赫米斯的機制搬進小龍蝦（v1.7＋loopDetection 已做，提早壓縮待做）。
+
+**10/30 升級已完成（9.4→10.9，13:00 驗證）**：Node 24.22.2；套件實體仍在 `~/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw`（`v24.22.2/lib/node_modules/openclaw` 是指向它的符號連結，舊起點 CLI 9.4 已搬到 `state/backup_bootstrap_cli_openclaw_2026.9.4_20261030`）。三個坑：①升級程式不會改服務 plist 的 node 路徑，升級前要先改（否則主服務每10秒起不來，停機16分）②LINE 外掛換世代後送訊息程式在 `dist/.setup/send-*.mjs`，`line_push_gate_patch.py` 已認新格式，驗證要比對 `plugins list --json` 的 rootDir（否則會對舊世代假通過，空窗3.5分）③用 `launchctl bootout` 重載看門狗後 `bootstrap` 第一次可能失敗，要立刻再 bootstrap 並確認 state = running。
 
 相關：[[reference-openclaw-compaction-timeout-infinite-retry-root-fix-2026-10-25]]、[[reference-openclaw-silent-long-run-ack-reaction-2026-10-30]]、[[reference-openclaw-agent-repeat-loop-and-guard-2026-10-12]]
