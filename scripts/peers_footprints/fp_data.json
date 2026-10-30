@@ -3570,5 +3570,48 @@
   ],
   "photo_alt": "身穿傳統服飾的原住民孩子在東元獎典禮演唱",
   "caption": "身穿傳統服飾的原住民孩子在東元獎典禮演唱"
+ },
+ {
+  "slug": "grace-podcasts",
+  "name": "Grace 好享說",
+  "role": "不露臉的創作者・嘉義閱讀人",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/grace-podcasts/",
+  "anchor": "#give",
+  "lede": "Grace 許下的承諾：辦完 100 場公益活動。讀書會的參加者，常會一起捐款給在地的社福團體。",
+  "stats": [],
+  "items": [
+   {
+    "yr": "2024.03.03",
+    "title": "捐款給新世界自立生活協會",
+    "desc": "第一場讀書會，參加者每人捐 50 元；場地也由協會提供，開場先介紹協會的工作。",
+    "src": "出處：Eatgether 活動頁",
+    "href": "https://eatgether.com/zh-tw/meetup/fdcde7bb-dad9-463f-937d-b486f84c6dd6"
+   },
+   {
+    "yr": "2025.03.23",
+    "title": "捐款給聲暉協會",
+    "desc": "《底層邏輯》讀書會，參加者每人捐 50 元給聲暉協會；不看書也歡迎來參與。",
+    "src": "出處：Eatgether 活動頁",
+    "href": "https://eatgether.com/meetups/e0c87aaa-0ebd-4d34-ada8-631c31f5cf4a"
+   },
+   {
+    "yr": "2025.08",
+    "title": "每月免費讀書會",
+    "desc": "讀書會改為每月免費參加，線上與實體同步，讓更多人能一起閱讀。",
+    "src": "出處：PTT 招募文",
+    "href": "https://www.ptt.cc/bbs/StudyGroup/M.1755401261.A.7B3.html"
+   }
+  ],
+  "photo": [
+   "assets/people/grace-podcasts.jpg",
+   [
+    720,
+    540,
+    14547
+   ]
+  ],
+  "photo_alt": "捐款箱上的愛心，旁邊疊著幾本書",
+  "caption": "捐款箱上的愛心，旁邊疊著幾本書"
  }
 ]
