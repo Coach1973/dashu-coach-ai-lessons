@@ -3181,7 +3181,7 @@ def coach_schedule_book(token):
 
 # ---------- 榮樹下網頁「我要預約」自動占位（教練 2026-10-23：要） ----------
 _RONGTREE_HOLD_HITS = {}          # ip -> [時間戳]；每個 IP 每小時最多 4 次
-_RONGTREE_HOLD_MAX_OPEN = 6       # 官網預約同時最多 6 筆「待確認」；超過就不再自動占位（防有人亂點占光空檔），前端改走一般留資料
+_RONGTREE_HOLD_MAX_OPEN = 6       # 官網預約「還沒填來賓資料表」的同時最多 6 筆（2026-10-30 起不再有待確認，改看資料表）；超過就不再自動排入（防有人亂點占光空檔），前端改走一般留資料
 
 
 def _rongtree_hold_notify(text):
@@ -3215,11 +3215,12 @@ def _rongtree_hold_record_lead(name, contact, org, msg, label, ip):
         pass
 
 
-def _rongtree_hold_push_google():
-    """占位一成功就寫進教練 Google 日曆；失敗沒關係，每 15 分鐘的同步會補。"""
+def _rongtree_hold_confirm(bid):
+    """官網預約一成功就自動確認：改行程、排開始前 1 小時提醒、寫進教練 Google 日曆（跟對巴哈說「確認預約」同一支 confirm）。
+    失敗沒關係：來賓卡後台有「確認這個時段」鈕，Google 也有每 15 分鐘的同步會補。"""
     import subprocess
     try:
-        subprocess.run(["/usr/bin/python3", "-I", str(_csv.WS / "scripts" / "coach_schedule.py"), "push-google"],
+        subprocess.run(["/usr/bin/python3", "-I", str(_csv.WS / "scripts" / "coach_schedule.py"), "confirm", "--id", bid],
                        capture_output=True, text=True, timeout=120)
     except Exception:  # noqa: BLE001
         pass
@@ -3227,8 +3228,8 @@ def _rongtree_hold_push_google():
 
 @app.route("/api/rongtree/hold", methods=["POST"])
 def api_rongtree_hold():
-    """榮樹下網頁「我要預約」：節目專訪選好那一小時、送出 → 先把那一小時占成「待確認」，空檔清單就不再出現它。
-    教練確認：「確認預約 <id>」；不要：「取消預約 <id>」（取消後空檔自動恢復）。
+    """榮樹下網頁「我要預約」：節目專訪選好那一小時、送出 → 那一小時直接排進行程（背景自動確認；2026-10-30 教練：對方自選的時間不用再確認），空檔清單就不再出現它。
+    要取消：「取消預約 <id>」（取消後空檔自動恢復）。
     姓名寫進 guest，前置作業與來賓卡後台看得到是誰預約（2026-10-30 教練）；單位、聯絡方式只放私人備註與巴哈群通知。
     回應附來賓資料表網址，成功畫面直接帶預約人去填。
     搶不到（剛被約走／離前後訪談太近）回 409 code=taken；官網待確認已達上限回 409 code=full，前端改走一般留資料。"""
@@ -3261,7 +3262,9 @@ def api_rongtree_hold():
     except Exception:  # noqa: BLE001
         evs = []
     today_s = datetime.now(_csv.TZ).date().isoformat()
-    if sum(1 for e in evs if e.get("booked_by") == "官網預約" and e.get("tentative") and e.get("date", "") >= today_s) >= _RONGTREE_HOLD_MAX_OPEN:
+    forms = _rg.all_forms()
+    filled = lambda e: bool(e.get("form_token")) and any(_rg._slot_has(r["token"], e["form_token"]) for r in forms)
+    if sum(1 for e in evs if e.get("booked_by") == "官網預約" and e.get("date", "") >= today_s and not filled(e)) >= _RONGTREE_HOLD_MAX_OPEN:
         return reply(False, "目前待確認的預約已滿", 409, code="full")
     ok, res = _csv.book(p.get("date"), p.get("start"), "榮樹下訪談", who="官網預約", guest=name,
                         guest_data={"name": name, "org": org, "contact": contact, "msg": msg},
@@ -3271,13 +3274,13 @@ def api_rongtree_hold():
     d = datetime.strptime(res["date"], "%Y-%m-%d")
     label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
     form = f"/rongtree/guest/{res['form_token']}" if res.get("form_token") else ""
-    text = (f"📅【榮樹下訪談・官網預約・待教練確認】\n時間：{label}\n預約人：{name}（{org}）\n聯絡：{contact}\n"
+    text = (f"📅【榮樹下訪談・官網預約】\n時間：{label}\n預約人：{name}（{org}）\n聯絡：{contact}\n"
             + (f"留言：{msg}\n" if msg else "")
             + (f"來賓資料表（預約人送出後已在畫面上看到這個按鈕）：https://event.bymyway.com{form}\n" if form else "")
-            + f"（已先占位，其他人不能再約這個時段）\n確認：跟巴哈助理說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」（取消後空檔自動恢復）")
+            + f"（時段已直接排入教練行程，其他人不能再約；對方還沒填來賓資料表的話，榮樹下前置作業會標示）\n要取消：跟巴哈助理說「取消預約 {res['id']}」（取消後空檔自動恢復）")
     _rongtree_hold_record_lead(name, contact, org, msg, label, ip)
     threading.Thread(target=_rongtree_hold_notify, args=(text,), daemon=True).start()
-    threading.Thread(target=_rongtree_hold_push_google, daemon=True).start()
+    threading.Thread(target=_rongtree_hold_confirm, args=(res["id"],), daemon=True).start()
     return reply(True, held=True, label=label, form=form)
 
 

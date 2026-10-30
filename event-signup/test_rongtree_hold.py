@@ -28,7 +28,7 @@ cs.DATA = str(data_copy)
 events = []
 A._rongtree_hold_notify = lambda t: events.append(("notify", t))
 A._rongtree_hold_record_lead = lambda *a, **k: events.append(("lead", a))
-A._rongtree_hold_push_google = lambda: events.append(("google",))
+A._rongtree_hold_confirm = lambda bid: events.append(("google", bid))
 A.app.config["TESTING"] = True
 client = A.app.test_client()
 
@@ -91,7 +91,8 @@ check("1g. 回應附來賓資料表網址，成功畫面可直接帶去填", boo
 kinds = [k[0] for k in events]
 check("1d. 有通知、留資料紀錄、寫 Google 各一次", kinds.count("notify") == 1 and kinds.count("lead") == 1 and kinds.count("google") == 1, kinds)
 note_text = next((e[1] for e in events if e[0] == "notify"), "")
-check("1e. 通知含時間、姓名、確認預約／取消預約指令", "測試先生" in note_text and "確認預約" in note_text and "取消預約" in note_text and hm in note_text, note_text)
+check("1e. 通知含時間、姓名、取消預約指令，且不再說待教練確認", "測試先生" in note_text and "取消預約" in note_text and hm in note_text and "待教練確認" not in note_text and "確認預約" not in note_text, note_text)
+check("1k. 預約一成功就自動確認這一筆（背景呼叫 confirm，不等教練）", ("google", ev["id"]) in events, events)
 check("1f. 預約當下就配好來賓資料表網址（form_token），公開清單馬上有填寫按鈕",
       bool(ev) and bool(ev.get("form_token")) and len(ev["form_token"]) >= 8, ev)
 
@@ -123,7 +124,7 @@ data = load()
 win = v._day_windows(v._busy(d, data), data)[1]
 check("5. 取消這筆預約後，那一小時恢復成空檔", label_err[1] is None and v._fits(a, win), (label_err, win))
 
-# 6. 同時待確認上限（6 筆）→ 409 code=full，不占位
+# 6. 同時「還沒填來賓資料表」的官網預約上限（6 筆）→ 409 code=full，不占位
 data = load()
 for i in range(6):
     dd = dt.datetime.now(v.TZ).date() + dt.timedelta(days=2 + i)
