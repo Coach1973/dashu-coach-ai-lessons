@@ -116,6 +116,21 @@ def main():
         print("找不到任何 LINE 外掛的 send-*.js（外掛路徑變了？）")
         return 1
     bad = 0
+    # 案例141：外掛換世代、檔案搬位置時，舊世代還顯示「有閘門」會造成假通過。
+    # 最新一代（資料夾修改時間最新、且真有 @openclaw/line）若沒有任何可套用的送訊息檔，一律當失敗，響亮出聲。
+    gens = [d for d in glob.glob(os.path.join(PROJECTS, "openclaw-line-*")) if os.path.isdir(os.path.join(d, "node_modules", "@openclaw", "line"))]
+    if gens:
+        def _ver(d):
+            try:
+                import json
+                v = json.load(open(os.path.join(d, "node_modules", "@openclaw", "line", "package.json"), encoding="utf-8")).get("version", "0")
+                return tuple(int(x) for x in re.findall(r"\d+", v)[:4])
+            except Exception:
+                return (0,)
+        newest = max(gens, key=lambda d: (_ver(d), os.path.getmtime(d)))  # 版本號最高＝最新一代（資料夾修改時間不可靠）
+        if not any(f.startswith(newest + os.sep) for f in files):
+            print("❌ 最新一代 LINE 外掛找不到送訊息檔（外掛又改寫法了，閘門沒裝到，要人看）: " + newest.replace(os.path.expanduser("~"), "~"))
+            bad += 1
     for f in files:
         short = f.replace(os.path.expanduser("~"), "~")
         if mode == "--check":
