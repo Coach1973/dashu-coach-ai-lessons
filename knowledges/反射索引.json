@@ -2118,6 +2118,15 @@
       "audience": [
         "coach"
       ]
+    },
+    {
+      "id": "R-SWAP-SLOT-IMAGES-AFTER-PUBLISH",
+      "moment": "prompt",
+      "match": "(已上架.{0,20}換圖|換圖.{0,10}已上架|IMG-00\\d.{0,12}換進|圖.{0,6}換進.{0,6}(已上架|策展))",
+      "say": "教練說某網頁已上架、要把小龍蝦出好的圖換進去＝跑 `python3 scripts/swap_slot_images.py <短網址> --dry-run` 看 4 個位置對不對，再不帶 --dry-run 正式換（自動壓 webp 內嵌、備份原圖到 ~/Pictures、commit、push，線上即時）。網頁常 5MB 以上有大量 base64，絕對不要整檔 Read，只用腳本或搜尋。沒標 data-slot 的位置用 --map IMG-003=alt:關鍵字。換完 curl 線上版確認＋把 4 張拼一張看過（人像照對照原圖）。說明在腳本檔頭。",
+      "level": "remind",
+      "situation": "教練說網頁已上架、請把出好的圖換進去時",
+      "source": "教練 2026-10-30 13:12：「我直接打包上傳策展中心，你去小龍蝦讀圖幫我傳上去」"
     }
   ],
   "case_ledger": {
