@@ -97,7 +97,7 @@ def main():
         body = {"model_id": a.model, "avatar_id": a.avatar_id, "client_request_id": uuid.uuid4().hex,
                 "text_script": {"text": a.text, "voice_id": a.voice_id, "speech_rate": a.speech_rate},
                 "aspect_ratio": a.aspect, "resolution": a.resolution}
-        vid = call("POST", "/api/v1/video", body)["data"]["video_id"]
+        vid = call("POST", "/api/v1/video", body=body)["data"]["video_id"]
         print("video_id:", vid)
         deadline = time.time() + 600
         while time.time() < deadline:
@@ -115,7 +115,7 @@ def main():
         body = {"text": a.text, "voice_id": a.voice_id, "speech_rate": a.speech_rate}
         if a.locale:
             body["locale"] = a.locale
-        show(call("POST", "/api/v1/tts", body))
+        show(call("POST", "/api/v1/tts", body=body))
 
 
 if __name__ == "__main__":
