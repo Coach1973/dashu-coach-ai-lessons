@@ -52,6 +52,9 @@ function __lineQuotaPushGate(operation, request) {
 '''
 
 ANCHOR = "async function sendLineProviderMessages(operation, token, request, retryKey) {\n"
+# 2026.10.9 起外掛搬到 dist/.setup/send-*.mjs，函式多了 authorize 等參數，真正發出請求的是 postLineProviderMessages（原本與重試都經過它）
+ANCHOR_NEW = "async function postLineProviderMessages(operation, token, request, retryKey, authorize, assertDirectAdapterHandoff) {\n"
+ANCHORS = (ANCHOR, ANCHOR_NEW)
 CALL = '\tif (operation !== "reply") __lineQuotaPushGate(operation, request); // LINE_PUSH_GATE_V2\n'
 
 # V1（看檔案修改時間）的舊區塊與呼叫行：升級時先拿掉，再套 V2
@@ -60,11 +63,19 @@ OLD_CALL = '\tif (operation !== "reply") __lineQuotaPushGate(operation, request)
 
 
 def targets():
-    return sorted(glob.glob(os.path.join(PROJECTS, "openclaw-line-*", "node_modules", "@openclaw", "line", "dist", "send-*.js")))
+    base = os.path.join(PROJECTS, "openclaw-line-*", "node_modules", "@openclaw", "line", "dist")
+    return sorted(glob.glob(os.path.join(base, "send-*.js")) + glob.glob(os.path.join(base, ".setup", "send-*.mjs")))
+
+
+def find_anchor(text):
+    for a in ANCHORS:
+        if a in text:
+            return a
+    return None
 
 
 def has_function(text):
-    return ANCHOR in text or MARK in text or OLD_MARK in text
+    return find_anchor(text) is not None or MARK in text or OLD_MARK in text
 
 
 def apply(path):
@@ -77,12 +88,13 @@ def apply(path):
         if OLD_MARK in text:
             return "舊版 V1 區塊拆不乾淨（外掛或補丁被人改過，要人看）"
         upgraded = True
-    if ANCHOR not in text:
-        return "找不到 sendLineProviderMessages（外掛版本改了寫法，要人看）"
+    anchor = find_anchor(text)
+    if anchor is None:
+        return "找不到 sendLineProviderMessages／postLineProviderMessages（外掛版本改了寫法，要人看）"
     bak = path + ".bak-before-line-push-gate-20261020"
     if not os.path.exists(bak):
         shutil.copy2(path, bak)
-    new = text.replace(ANCHOR, HELPER + ANCHOR + CALL, 1)
+    new = text.replace(anchor, HELPER + anchor + CALL, 1)
     tmp = path + ".tmp-gate"
     open(tmp, "w", encoding="utf-8").write(new)
     os.replace(tmp, path)
