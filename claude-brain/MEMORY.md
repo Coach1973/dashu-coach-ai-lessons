@@ -1,3 +1,4 @@
+- [🎬 NMDA 首頁換開場動畫包：站內全域 section/nav/h1 規則蓋到動畫要覆寫、第一屏扣固定標頭、導覽擠多行、影片跳播要 Range；倒數 10/31 21:30 後自動移除(c6a0da8,abcf2fb)(2026-10-30)](reference_nmda_home_opening_animation_integration_2026-10-30.md)
 - [🎬 NMDA「會員資料」頁＋工作人員帳密登入後台(/nmda/members/login)；LK888 壓縮長邊1000/q72寫進腳本與一鍵注入；worktree 對話改 workspace 教練說直接做就用終端機補丁、別問他工程詞(2026-10-30)](project_nmda_members_page_and_staff_login_2026-10-30.md)
 - [🖼️ 吳尚謙頁換圖：舊頁 svg data-img-id 先轉 img data-slot 再跑 swap；主視覺臉被拱形框切→補邊縮小右移(00970f1)；換圖 token 約1.1～3.5萬；教練要「上傳後自動壓圖」機制，查到內嵌98張僅省10～23%(2026-10-30)](reference_wu_shang_qian_swap_old_svg_slots_hero_reframe_token_cost_2026-10-30.md)
 - [🔴 小龍蝦 10/30 升到 2026.10.9：主服務 plist 寫死舊 Node 24.21.0 → 升級卡 20 分鐘、全分身沒反應；改 24.22.2 修好；升級超過 5 分鐘先看 launchctl＋gateway.log 不乾等；新版日誌字樣改「telegram text delivery ok」(案例140)(2026-10-30)](reference_openclaw_upgrade_2026_10_9_plist_node_path_2026-10-30.md)
