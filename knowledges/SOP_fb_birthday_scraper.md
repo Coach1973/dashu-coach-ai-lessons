@@ -49,15 +49,19 @@
 node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 ```
 
-腳本內部邏輯：
-1. 用 Puppeteer 無頭模式啟動瀏覽器
-2. `userDataDir` 載入 `scripts/fb_session_data/`（教練先前登入留下的 cookie）
-3. 前往 `https://www.facebook.com/friends/birthdays/`
-4. 等 `networkidle2` + 多等 4 秒
-5. 抓頁面上所有 `<h2>` 標籤
-6. 找到「**今日壽星**」這個 h2
-7. 抓它下面到「剛過生日 / 即將過生日」出現之前的全部名字
-8. 結束時關閉瀏覽器
+腳本內部邏輯（**2026-10-31 改版**）：
+1. 從教練自己的 Chrome（`~/Library/Application Support/Google/Chrome`）複製 cookie 檔到工作 profile
+   → 教練平常在 Chrome 登 FB，cookie 自動跟著走，不用手動同步
+2. 用 `open -na "Google Chrome" --args --user-data-dir=... --remote-debugging-port=9225 --headless=new` 啟動 Chrome
+   → **關鍵**：走 LaunchServices 讓 macOS 歸屬 responsible app，鑰匙圈才會放行 cookie
+   → `--headless=new` → 教練螢幕不會跳出任何視窗
+3. `puppeteer.connect({browserURL:'http://localhost:9225'})` 接上已開好的 Chrome
+4. 前往 `https://www.facebook.com/friends/birthdays/`
+5. 等 `networkidle2` + 多等 6 秒
+6. 抓頁面上所有 `<h2>` 標籤
+7. 找到「**今日壽星**」這個 h2（注意：「新朋友」h2 會出現在它之前，不能看到就 break）
+8. 抓它下面到「剛過生日 / 即將過生日」出現之前的全部名字
+9. 關閉 CDP port 上的 Chrome 實例（只關自己開的那個，不動教練的 Chrome）
 
 ### Step 3｜三種結果分支
 
@@ -101,6 +105,35 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 跑很久沒回應 | Puppeteer 等 `networkidle2` + 多等 4 秒，網路慢就會慢（屬正常現象） |
 | 重複抓到同名壽星 | 已是已知行為，Step 4 會自動去重（不必改腳本） |
 | 🔴 報「The browser is already running for ...fb_session_data」 | **Chrome profile 放在外部磁碟（USB SSD）時，launchd 背景執行沒有權限寫那個磁碟**，Chrome 建不了 SingletonLock 就會噴這句假錯誤。**解法：profile 必須放本機碟**。本機版在 `/Users/bymyway/.openclaw/fb_session_data_local`，腳本會優先用它、找不到才退回舊路徑。（2026-10-24 實例：`fb_session_data` 在 10/03 被搬到 953-SSD，結果連續 19 天每天 exit 1，教練完全沒收到壽星名單卻沒人發現） |
+| 🔴 2026-10-31 新坑：cookie 在但還是被導去登入頁 | **Puppeteer 直接 `puppeteer.launch()` 啟動的 Chrome，macOS 判定它「沒有 responsible app」，鑰匙圈 ACL 會拒絕 → cookie 解不出來 → 直接被丟掉（不是 session 過期）**。Chrome 自己的 stderr 會寫 `Failed to decrypt token for service ...`。**解法：改用 `open -na "Google Chrome" --args --user-data-dir=... --remote-debugging-port=9225 --headless=new`（LaunchServices 啟動）**，macOS 才會正確歸屬 responsible app、鑰匙圈才放行；再 `puppeteer.connect({browserURL})` 接上去。`--headless=new` 保證教練螢幕不會跳出視窗。**已驗證有效（2026-10-31 修好）** |
+
+### 🔴 2026-10-31 事故紀錄（cookie 好好的一直在，卻抓不到）
+
+| 日期 | 現象 |
+|------|------|
+| 2026-10-30 05:54 | Chrome 自動更新 156.0.8078.49 → **156.0.8078.79** |
+| 10/30 起 | 腳本每天被導去登入頁。**教練自己 Chrome 的 cookie 一直有效**（`c_user`/`xs` 到 2027 年才過期），但工作 profile 的 cookie 被 Chrome 啟動時清掉 |
+| 10/30 | 前一班 AI 診斷為「新版拿不到鑰匙圈授權，要教練手動重新登入 FB」——**診斷方向對，但開錯藥**（重新登入也沒用，因為不是 session 過期） |
+| 2026-10-31 | 本人查出真正根因：**Puppeteer 直接啟動的 Chrome 沒有 responsible app → 鑰匙圈拒絕 → cookie 解不出來被丟棄**。改用 `open -na`（LaunchServices）+ `--headless=new` + CDP → **一次就通** |
+
+**教訓**：
+1. **「被導去登入頁」有兩種原因，症狀一樣、根因完全不同**：(a) session 真的過期 → 要人重登；(b) cookie 解不出來 → **人重登也沒用**，要改啟動方式。**先用 stderr 判斷**：`Failed to decrypt token` = (b)，沒有這行 = (a)。
+2. **診斷要抓原始錯誤，不要只看症狀**。Chrome 的 `dumpio: true` stderr 才有真因。
+3. **macOS 上「從程式啟動 App」≠「使用者啟動 App」**。任何需要鑰匙圈授權的 App（Chrome、密碼管理器、密鑰庫）都受影響，headless/背景執行特別容易踩。
+4. **「壞掉時不要急著叫人來修」**——10/30 叫教練重新登入 FB 是白叫，因為重新登入解決不了 (b)。先自己找出 0 按鈕解法。
+
+### ✅ 2026-10-31 修好後的日常流程（0 按鈕，不需要教練做任何事）
+
+```
+腳本自動做三件事：
+1. 從教練自己的 Chrome（~/Library/Application Support/Google/Chrome）複製 cookie 檔到工作 profile
+   → 教練平常在 Chrome 登入 FB，cookie 自動跟著走，不用手動同步
+2. 用 open -na（LaunchServices）＋ --headless=new 啟動 Chrome（教練螢幕不會跳視窗）
+   → 讓 macOS 歸屬 responsible app，鑰匙圈才放行
+3. 掛 CDP port 用 puppeteer.connect 抓「今日壽星」h2 底下的名字
+```
+
+**唯一會壞的情況**：教練自己把 FB 登出，或 FB 真的把 session 廢掉 → 那時才需要教練重新登入一次。
 
 ### 🔴 2026-10-24 事故紀錄（19 天靜默失敗）
 
