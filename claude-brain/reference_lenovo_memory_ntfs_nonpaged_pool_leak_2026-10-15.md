@@ -22,3 +22,5 @@ metadata:
 - 分頁檔仍固定 4GB、committed 33.4GB → 跟 [[reference_lenovo_freeze_virtual_memory_exhausted_2026-10-08]] 同一種當機風險。
 
 同場：ChatGPT 桌面版在 Windows 套件名是 **OpenAI.Codex**（開始選單叫 ChatGPT，所以「找不到解除安裝」），9/27 前後裝、10/11 被商店自動更新；我們的 git 紀錄查無 AI 安裝過。用 `Remove-AppxPackage OpenAI.Codex_…` 移除（不需管理員），已驗證開始選單消失。`%LOCALAPPDATA%\OpenAI`（設定檔）沒刪，刪檔鎖規則。
+
+**10/24～10/31 追加：** 10/16 15:19 開機後 10/24 08:48 NtFC 又 15,052MB（1.23 億筆，與 10/15 的 15,005MB 幾乎同大小；10/19 01:22 水位近 0）；量 45 秒完全不漲＝凍結的殘骸。同時間佔 CPU/卡死的是 CyberLink PowerDirector 23 輸出 3 小時影片，與記憶體無關。教練 10/24 09:25 重新啟動後 NtFC 歸 0；**10/31 00:43 量只有 8MB（已運行 6.6 天，沒再復發）**。候選嫌疑（網路回報，未在本機證實）：Claude 桌面版是 MSIX 套件（`Claude_3.6556.2.0`）、bindflt 驅動執行中、AppData 下有 Signal／Zoom／OpenCode 三個指向 E 槽的 junction；參考 anthropics/claude-code#96870、#94198。再漲過 1GB 才用 wpr 追。

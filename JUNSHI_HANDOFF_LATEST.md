@@ -1,3 +1,20 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 00:50 台灣時間，聯想 Windows 桌面版 Code 分頁，Sonnet 5.5；教練說「總結」；本段 10/24 08:48～10/28 21:50，對話容量約 25%；與上方 Mac 各棒是不同對話框）
+
+**主軸：記憶體／CPU 卡頓查證、電報更新評估、NMDA 理監事頁換照片的分工與交接信放錯位置被糾正。**
+- **記憶體**：10/24 08:48 NtFC（ntfs.sys）又 15,052MB，量 45 秒不漲＝凍結殘骸；教練 09:25 重啟後歸 0，**10/31 00:43 只有 8MB（6.6 天沒復發）**。嫌疑（網路回報、未本機證實）：Claude 桌面版是 MSIX、bindflt 在跑、AppData 有三個 junction。卡 3～5 分鐘那次＝PowerDirector 23 輸出 3 小時影片滿載 CPU（正常，沒動它）。已併入記憶 `reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15`。
+- **電報**：Store 版 7.3.1，官方最新 7.3.3（新功能只有 Money／TON 禮物，其餘修 bug）；教練看完差異決定不更新，沒動。
+- **NMDA 理監事頁換照片**：照片存 Mac 資料庫、不在 GitHub；聯想網頁上傳會把 17 個空座位標成已填，教練 10/28 21:37 決定交 Mac；**Mac 22:10 已換 21 位新海報（`0bdf9dabf`，只動 photo_file）**。巴哈沒有自動放進團隊頁的步驟，歷來都是軍師手動放。記憶 `reference_nmda_team_photos_live_in_mac_db_not_github_2026-10-28`。
+- **我被糾正**：交接信放 `outbox`（歸檔區）Mac 讀不到，教練罵低級錯誤；已改放 `inbox/mac/`（`402b624f8` 後續更正）。記憶 `feedback_letters_to_junshi_go_to_inbox_not_outbox_2026-10-28`。
+- **教練原話線索**：「我給你的照片，最終目的就是把舊圖換成新圖，評估做快又好又省 token 再決定給誰」＝要我先比較再選人，不要直接動手。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 聯想 workspace 落後雲端數百個版本、`claude-brain/MEMORY.md` 有未 commit 的合併結果（兩邊條目都保留、已 git add）；先 `git stash`／對照再拉，別直接 pull。
+2. NtFC 再漲過 1GB 才用 wpr 追；平常不用動。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：是否升級電報到 7.3.3。
+🔧 AI 自己的清單：①聯想 inbox 有 6 封舊信（10/12～10/27）未歸檔；②聯想寫信前先對照 cross-agent/README 收信路徑。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 00:10 台灣時間，Mac 桌面版 Code 分頁（kaigong-1ea9b2 worktree），Haiku 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 21:12～10/31 00:10；對話容量約 26%；教練說「總結」；與下方 21:12 那棒是不同對話框）
 
 **主軸：Grace 頁換圖上線、VisionStory 影片 API 串好並用教練本人的照片與錄音做出影片、小龍蝦主程式 node 記憶體。**

@@ -1,3 +1,5 @@
+- [🔴 寫信給別台軍師一律放 cross-agent/inbox/<收信人>/、不是 outbox（歸檔用）；寫完從雲端讀回驗證；聯想誤放被教練罵(2026-10-28)](feedback_letters_to_junshi_go_to_inbox_not_outbox_2026-10-28.md)
+- [🔧 NMDA 理監事團隊頁照片存 Mac 資料庫不在 GitHub；換照片交 Mac 只改 photo_file，聯想網頁上傳會把空座位標已填；10/28 Mac 已換21位(2026-10-28)](reference_nmda_team_photos_live_in_mac_db_not_github_2026-10-28.md)
 - [🔧 教練問「node 佔 2.15G」＝小龍蝦 gateway；重啟後開機即回 1.7～1.9G(V8 堆積)，重啟只省約0.4G；Mac mini 16G 可用63%、沒壓力；沒做降基線(2026-10-30)](reference_openclaw_gateway_node_memory_baseline_2026-10-30.md)
 - [🔧 VisionStory(talking-avatar影片/TTS) API 已串：金鑰在憑證層、scripts/visionstory_api.py(094d44529)；唯讀已實測，生成會扣點(剩220)沒跑(2026-10-30)](reference_visionstory_api_client_2026-10-30.md)
 - [🧩 榮樹下官網預約10/30改順：預約即自動確認(不再待確認)、顯示姓名、預約資料帶進來賓資料表；預約表單≠來賓資料表(5d6d478d2, 49b178b)(2026-10-30)](project_rongtree_booking_shows_name_two_forms_2026-10-30.md)
