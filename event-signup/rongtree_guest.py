@@ -643,6 +643,10 @@ def render_list(secret):
         state = "✅ 已填寫資料表" if mine else ("📝 預約資料已收到，資料表還差故事與轉折" if bd else "⏳ 已預約，還沒填資料表")
         extra = f"<br><small>{E(bd.get('org', ''))}｜{E(bd.get('contact', ''))}</small>" if bd and not mine else ""
         link = f"<a href='/rongtree/guest/{tok}' target='_blank' rel='noopener'>資料表網址</a>" if tok else ""
+        if e.get("tentative") and e.get("source") != "Google日曆" and re.fullmatch(r"[0-9a-f]{8}", e.get("id", "")):
+            # 2026-10-30 教練：時間明明談好了卻一直「待確認」——確認不用再對巴哈講代碼，這裡按一下就好
+            link += (f"<form method='post' action='/rongtree/a/{list_code(secret)}/confirm/{e['id']}' style='display:inline;margin-left:10px'>"
+                     f"<button class='del'>確認這個時段</button></form>")
         up.append(f"<tr><td>{E(e['date'])} {E(e['start'])}{'（時間待確認）' if e.get('tentative') else ''}</td>"
                   f"<td>{E(who)}{extra}</td><td>{state}</td><td>{link}</td></tr>")
     up_html = (f"<h2>接下來的訪談</h2><table><thead><tr><th>訪談時間</th><th>來賓</th><th>資料表</th><th></th></tr></thead>"

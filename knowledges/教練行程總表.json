@@ -572,10 +572,9 @@
    "date": "2026-11-04",
    "start": "19:00",
    "end": "20:00",
-   "title": "榮樹下訪談（待確認）",
+   "title": "榮樹下訪談：楊曉熹牧師",
    "source": "預約頁",
    "kind": "interview",
-   "tentative": true,
    "booking_type": "榮樹下訪談",
    "booked_by": "官網預約",
    "note": "官網預約：牧師（楊曉熹牧師）｜聯絡：0987105665｜留言：感謝邀請（私人資料，網頁不公開）",
@@ -588,7 +587,8 @@
     "org": "楊曉熹牧師",
     "contact": "0987105665",
     "msg": "感謝邀請"
-   }
+   },
+   "reminder_job": "8ee61350-cd7a-4f94-a13c-ec5dc24d663f"
   },
   {
    "id": "885b7e8e",
@@ -1084,8 +1084,7 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:00",
-   "end": "20:00",
-   "form_token": "0S3Sm5JBjTpK"
+   "end": "20:00"
   },
   {
    "id": "gcal-2026-11-03-15",
@@ -1141,8 +1140,7 @@
    "title": "榮樹下訪談：鍾俊榮",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30",
-   "form_token": "6ZmnZFD4QUaQ"
+   "end": "20:30"
   },
   {
    "id": "gcal-2026-11-05-22",
@@ -1198,8 +1196,7 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30",
-   "form_token": "u1zEp7WQLEIP"
+   "end": "09:30"
   },
   {
    "id": "gcal-2026-11-08-29",
@@ -4048,7 +4045,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-30 20:57",
+ "updated_at": "2026-10-30 21:07",
  "tainan_synced_at": "2026-10-30 16:41",
  "evening_window": {
   "start": "19:00",
@@ -4092,8 +4089,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-10-30 20:55",
- "google_synced_epoch": 1793364921,
+ "google_synced_at": "2026-10-30 21:07",
+ "google_synced_epoch": 1793365673,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }

@@ -3570,6 +3570,17 @@ def rongtree_guest_face(token):
     return resp
 
 
+@app.route("/rongtree/a/<code>/confirm/<bid>", methods=["POST"])
+def rongtree_confirm_booking(code, bid):
+    """來賓卡後台「確認這個時段」鈕（2026-10-30 教練）：等於對巴哈說「確認預約 <id>」，走同一支 coach_schedule.py confirm（改行程、排提醒、寫 Google 日曆）。"""
+    if not hmac.compare_digest(code, _rg.list_code(app.secret_key)) or not re.fullmatch(r"[0-9a-f]{8}", bid):
+        abort(404)
+    import subprocess
+    subprocess.run(["/usr/bin/python3", "-I", str(_csv.WS / "scripts" / "coach_schedule.py"), "confirm", "--id", bid],
+                   capture_output=True, text=True, timeout=120)
+    return redirect(f"/rongtree/a/{code}")
+
+
 @app.route("/rongtree/cards")
 @app.route("/rongtree/a/<code>")
 def rongtree_guest_cards(code=""):

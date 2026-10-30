@@ -82,6 +82,11 @@ check("1c. 預約人姓名寫進 guest（前置作業看得到是誰預約）；
 rf = A._rg.render_form(ev["form_token"], ev, None, 0) if ev else ""
 check("1h. 預約時填的姓名、單位、聯絡方式、想說的話，打開來賓資料表時已自動帶入（教練：不要叫人重填）",
       all(x in rf for x in ("測試先生", "測試公司", "0912345678", "測試留言")), rf[:200])
+A._rg.SCHEDULE = data_copy      # 來賓卡後台改讀測試複本
+lst = A._rg.render_list(A.app.secret_key)
+check("1i. 來賓卡後台：待確認的預約有「確認這個時段」鈕，指向它自己的代碼",
+      bool(ev) and "確認這個時段" in lst and f"/confirm/{ev['id']}" in lst, lst[:100])
+check("1j. 確認鈕代碼不對 → 404、不動行程", client.post(f"/rongtree/a/wrongcode/confirm/{ev['id']}").status_code == 404 and load()["events"][-1].get("tentative") is not None, "")
 check("1g. 回應附來賓資料表網址，成功畫面可直接帶去填", bool(ev) and j.get("form") == f"/rongtree/guest/{ev['form_token']}", j)
 kinds = [k[0] for k in events]
 check("1d. 有通知、留資料紀錄、寫 Google 各一次", kinds.count("notify") == 1 and kinds.count("lead") == 1 and kinds.count("google") == 1, kinds)
