@@ -236,6 +236,12 @@ def one_liner(r):
     return (d.get("intro") or "")[:60]
 
 
+def _event_guest(e):
+    """行程上的來賓名字；沒寫 guest 欄位時，從標題「榮樹下訪談：某某」讀（巴哈登記的常只寫在標題）"""
+    t = e.get("title", "")
+    return e.get("guest") or (t.split("：", 1)[1].strip() if t.startswith("榮樹下訪談：") else "")
+
+
 def public_prep():
     _ensure_forms()
     conn = _conn()
@@ -246,7 +252,7 @@ def public_prep():
         tok = e.get("form_token")
         mine = sorted((r for r in rows if tok and _slot_has(r["token"], tok)), key=lambda r: len(r["token"]))
         names = [json.loads(r["data"])["name"] for r in mine if r["public"]]
-        guest = "、".join(names) or e.get("guest") or ""
+        guest = "、".join(names) or _event_guest(e)
         if not guest and not e.get("booked_by"):
             continue  # 2026-10-22 教練：沒有人預約、連來賓是誰都不知道的，不列、不寫「來賓邀請中」
         upcoming.append({"date": e["date"], "start": e["start"], "end": e.get("end", ""),
@@ -620,6 +626,19 @@ def render_list(secret):
         f"onsubmit=\"return confirm('確定刪除「{E(r['guest'] or '')}」{E(r['date'] or '')} {E(r['start'] or '')} 這一筆？\\n刪除後名單與來賓卡都看不到，之後可以在頁面最下方還原。')\">"
         f"<button class='del'>刪除</button></form></td></tr>"
         for r in all_forms()) or "<tr><td colspan='5'>還沒有來賓交回資料。裕榮在 LINE 群組登記訪談對象後，群組回覆會附上來賓資料表網址。</td></tr>"
+    # 2026-10-30 教練：預約了還沒填資料表的人也要看得到，不然以為系統漏了
+    forms = all_forms()
+    up = []
+    for e in _upcoming():
+        tok = e.get("form_token")
+        mine = [r for r in forms if tok and _slot_has(r["token"], tok)]
+        who = "、".join(r["guest"] or "" for r in mine) or _event_guest(e) or "（還不知道是誰）"
+        state = "✅ 已填寫資料表" if mine else "⏳ 已預約，還沒填資料表"
+        link = f"<a href='/rongtree/guest/{tok}' target='_blank' rel='noopener'>資料表網址</a>" if tok else ""
+        up.append(f"<tr><td>{E(e['date'])} {E(e['start'])}{'（時間待確認）' if e.get('tentative') else ''}</td>"
+                  f"<td>{E(who)}</td><td>{state}</td><td>{link}</td></tr>")
+    up_html = (f"<h2>接下來的訪談</h2><table><thead><tr><th>訪談時間</th><th>來賓</th><th>資料表</th><th></th></tr></thead>"
+               f"<tbody>{''.join(up)}</tbody></table>") if up else ""
     gone = deleted_forms()
     gone_html = ""
     if gone:
@@ -638,6 +657,8 @@ a{{color:var(--amber-deep)}}
 form{{margin:0}}</style></head><body><div class="wrap">
 {BACK_LINK}
 <h1>榮樹下來賓卡</h1><p class="sub">來賓交回資料表後，AI 自動整理的來賓卡都在這裡。</p>
+{up_html}
+<h2>已交資料的來賓卡</h2>
 <table><thead><tr><th>訪談時間</th><th>來賓</th><th>狀態</th><th></th><th></th></tr></thead><tbody>{rows}</tbody></table>
 {gone_html}
 </div></body></html>"""

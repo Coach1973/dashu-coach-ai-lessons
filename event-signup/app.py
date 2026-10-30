@@ -3228,7 +3228,9 @@ def _rongtree_hold_push_google():
 @app.route("/api/rongtree/hold", methods=["POST"])
 def api_rongtree_hold():
     """榮樹下網頁「我要預約」：節目專訪選好那一小時、送出 → 先把那一小時占成「待確認」，空檔清單就不再出現它。
-    教練確認：「確認預約 <id>」；不要：「取消預約 <id>」（取消後空檔自動恢復）。姓名、單位、聯絡方式只放私人備註與巴哈群通知，不上公開網頁。
+    教練確認：「確認預約 <id>」；不要：「取消預約 <id>」（取消後空檔自動恢復）。
+    姓名寫進 guest，前置作業與來賓卡後台看得到是誰預約（2026-10-30 教練）；單位、聯絡方式只放私人備註與巴哈群通知。
+    回應附來賓資料表網址，成功畫面直接帶預約人去填。
     搶不到（剛被約走／離前後訪談太近）回 409 code=taken；官網待確認已達上限回 409 code=full，前端改走一般留資料。"""
     def reply(ok, error=None, status=200, **extra):
         body = {"ok": ok, **extra}
@@ -3261,19 +3263,21 @@ def api_rongtree_hold():
     today_s = datetime.now(_csv.TZ).date().isoformat()
     if sum(1 for e in evs if e.get("booked_by") == "官網預約" and e.get("tentative") and e.get("date", "") >= today_s) >= _RONGTREE_HOLD_MAX_OPEN:
         return reply(False, "目前待確認的預約已滿", 409, code="full")
-    ok, res = _csv.book(p.get("date"), p.get("start"), "榮樹下訪談", who="官網預約",
-                        note=f"官網預約：{name}（{org}）｜聯絡：{contact}" + (f"｜留言：{msg}" if msg else "") + "（私人資料，網頁不公開）")
+    ok, res = _csv.book(p.get("date"), p.get("start"), "榮樹下訪談", who="官網預約", guest=name,
+                        note=f"官網預約：{name}（{org}）｜聯絡：{contact}" + (f"｜留言：{msg}" if msg else "") + "（單位與聯絡方式為私人資料，網頁不公開）")
     if not ok:
         return reply(False, res, 409, code="taken")
     d = datetime.strptime(res["date"], "%Y-%m-%d")
     label = f"{d.month}/{d.day}（{'一二三四五六日'[d.weekday()]}）{res['start']}–{res['end']}"
+    form = f"/rongtree/guest/{res['form_token']}" if res.get("form_token") else ""
     text = (f"📅【榮樹下訪談・官網預約・待教練確認】\n時間：{label}\n預約人：{name}（{org}）\n聯絡：{contact}\n"
             + (f"留言：{msg}\n" if msg else "")
+            + (f"來賓資料表（預約人送出後已在畫面上看到這個按鈕）：https://event.bymyway.com{form}\n" if form else "")
             + f"（已先占位，其他人不能再約這個時段）\n確認：跟巴哈助理說「確認預約 {res['id']}」；取消：「取消預約 {res['id']}」（取消後空檔自動恢復）")
     _rongtree_hold_record_lead(name, contact, org, msg, label, ip)
     threading.Thread(target=_rongtree_hold_notify, args=(text,), daemon=True).start()
     threading.Thread(target=_rongtree_hold_push_google, daemon=True).start()
-    return reply(True, held=True, label=label)
+    return reply(True, held=True, label=label, form=form)
 
 
 @app.route("/schedule/<token>/cancel", methods=["POST"])
