@@ -59,7 +59,7 @@ check("API 打得開、no-store、允許跨站讀、一開始是空名單", r.st
 # 2. 建立檔案頁
 h = client.get("/nmda/members/join").get_data(as_text=True)
 check("建立頁有姓名、公司職稱、簡介、照片", all(x in h for x in ('name="name"', 'name="company_title"', 'name="bio"', 'name="photo"')))
-check("建立頁有 10 種連結欄位（含 Threads、YouTube、LinkedIn、Podcast、部落格）", all(f'name="{k}"' in h for k in nm.LINK_KEYS) and len(nm.LINK_KEYS) == 10)
+check("建立頁有 12 種連結欄位（含抖音、其他連結、Threads、YouTube、LinkedIn、Podcast、部落格）", all(f'name="{k}"' in h for k in nm.LINK_KEYS) and len(nm.LINK_KEYS) == 12)
 check("連結欄位選填、姓名公司簡介照片必填", h.count(">選填<") >= 10 and h.count("required") >= 4)
 
 # 3. 缺欄位擋下

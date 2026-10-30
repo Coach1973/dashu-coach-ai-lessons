@@ -39,12 +39,14 @@ LINKS = [
     ("link_fb", "Facebook 粉絲專頁", "Facebook", "https://facebook.com/..."),
     ("link_ig", "Instagram", "Instagram", "https://instagram.com/..."),
     ("link_threads", "Threads", "Threads", "https://threads.net/..."),
+    ("link_douyin", "抖音", "抖音", "https://www.douyin.com/..."),
     ("link_youtube", "YouTube", "YouTube", "https://youtube.com/..."),
     ("link_linkedin", "LinkedIn 領英", "LinkedIn", "https://linkedin.com/in/..."),
     ("link_podcast", "Podcast", "Podcast", "https://..."),
     ("link_blog", "部落格文章", "部落格", "https://..."),
     ("link_gjw", "乾淨世界 GJW", "GJW", "https://www.ganjing.world/..."),
     ("link_line", "LINE", "LINE", "LINE ID 或加好友網址"),
+    ("link_other", "其他連結", "其他連結", "https://..."),
 ]
 LINK_KEYS = [k for k, _, _, _ in LINKS]
 FIELDS = ["name", "company_title", "bio"] + LINK_KEYS
@@ -69,6 +71,11 @@ def _conn():
         " created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),"
         " updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime')))"
     )
+    # 既有資料表補新欄位（CREATE IF NOT EXISTS 不會幫舊表加欄）
+    have = {r[1] for r in conn.execute("PRAGMA table_info(nmda_members)").fetchall()}
+    for k in LINK_KEYS:
+        if k not in have:
+            conn.execute(f"ALTER TABLE nmda_members ADD COLUMN {k} TEXT NOT NULL DEFAULT ''")
     return conn
 
 
