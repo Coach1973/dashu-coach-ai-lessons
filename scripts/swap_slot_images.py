@@ -12,7 +12,7 @@
   2. <div class="ill"><svg>…</svg><span class="tag">…待換圖 IMG-001</span></div>   ← 舊版示意插畫位，整塊換成圖，圖說改「AI 繪製示意插畫」
   3. --map 指定的 alt 關鍵字
 來源圖：~/.openclaw/media/outbound/IMG-00N*.png（取最新一張）。網頁在 ~/github_repos/<短網址>/index.html（改那裡＝線上版）。
-圖片處理：長邊縮到 1600、轉 webp（品質 82）、以 base64 內嵌（跟 TAVA 網頁「圖片放進網頁裡」的規則一致）；原始 PNG 另存 ~/Pictures/<短網址>_AI原圖_<日期>/。
+圖片處理：長邊縮到 1000、轉 webp（品質 72，單張約 50～120KB，手機與電腦看都清楚）、以 base64 內嵌（跟 TAVA 網頁「圖片放進網頁裡」的規則一致）；原始 PNG 另存 ~/Pictures/<短網址>_AI原圖_<日期>/。（2026-10-30 教練定：LK888 的圖一律壓小再放進網頁，原 1600／q82 約 230～270KB。）
 任何一個位置找不到或對到不只 1 個＝該張不換、最後列出，不會亂換。
 輸出只印摘要，絕對不印網頁內容（網頁常有數 MB 的 base64）。
 """
@@ -22,11 +22,15 @@ from PIL import Image
 OUT = os.path.expanduser("~/.openclaw/media/outbound")
 
 
+LONG_SIDE = 1000
+WEBP_QUALITY = 72
+
+
 def webp_data_uri(png):
     im = Image.open(png).convert("RGB")
-    im.thumbnail((1600, 1600))
+    im.thumbnail((LONG_SIDE, LONG_SIDE), Image.LANCZOS)
     buf = io.BytesIO()
-    im.save(buf, "WEBP", quality=82, method=6)
+    im.save(buf, "WEBP", quality=WEBP_QUALITY, method=6)
     return "data:image/webp;base64," + base64.b64encode(buf.getvalue()).decode(), len(buf.getvalue()), im.size
 
 

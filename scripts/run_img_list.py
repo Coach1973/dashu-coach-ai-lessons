@@ -7,7 +7,7 @@
 
 用法：
   python3 run_img_list.py <清單.json> <輸出資料夾> [--dry-run]
-完成後在輸出資料夾留下 IMG-00X.png 與 run_summary.json，並用 notify_coach.sh 回報教練一行結果。
+完成後在輸出資料夾留下 IMG-00X.png、網頁小圖 IMG-00X.web.webp（長邊 1000／q72，約 50～120KB）與 run_summary.json，並用 notify_coach.sh 回報教練一行結果。
 """
 import base64, json, subprocess, sys, time, urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -22,6 +22,14 @@ MAX_ITEMS = 12
 NOTIFY = Path(__file__).resolve().parent / "notify_coach.sh"
 
 
+def save_web_copy(png):
+    """出圖當下另存網頁小圖（2026-10-30 教練：LK888 的 2～3MB 原圖網頁用不到）；網頁一律放這張，原 PNG 留作備份。"""
+    from PIL import Image
+    im = Image.open(png).convert("RGB")
+    im.thumbnail((1000, 1000), Image.LANCZOS)
+    im.save(png.with_suffix(".web.webp"), "WEBP", quality=72, method=6)
+
+
 def gen(item, out_dir, key):
     f = out_dir / item["file"]
     if f.exists() and f.stat().st_size > 10000:
@@ -33,6 +41,7 @@ def gen(item, out_dir, key):
     with lk888_guard.urlopen(req, timeout=240) as resp:
         data = json.loads(resp.read().decode())
     f.write_bytes(base64.b64decode(data["data"][0]["b64_json"]))
+    save_web_copy(f)
     return item["id"], "完成 %d 秒" % (time.time() - t0), f.stat().st_size
 
 
