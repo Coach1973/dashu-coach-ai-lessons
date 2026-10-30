@@ -94,5 +94,23 @@
     "url": "https://event.bymyway.com/leads/a/d53f4480c83b",
     "user": "（不需要帳密，網址本身就是通行證）",
     "password": "—"
+  },
+  {
+    "name": "榮樹下來賓進度追蹤表（網頁直接勾選）",
+    "url": "https://event.bymyway.com/curated/rongtree-sop/#tracker",
+    "user": "（不需要帳密，網址本身就是通行證）",
+    "password": "—"
+  },
+  {
+    "name": "NMDA 會員資料後台（隱藏／刪除／修改）",
+    "url": "https://event.bymyway.com/nmda/members/a/734cfeee8df9",
+    "user": "（不需要帳密，網址本身就是通行證）",
+    "password": "—"
+  },
+  {
+    "name": "NMDA 會員資料後台登入（工作人員用）",
+    "url": "https://event.bymyway.com/nmda/members/login",
+    "user": "admin",
+    "password": "88888"
   }
 ]

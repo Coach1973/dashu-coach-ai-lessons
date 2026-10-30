@@ -52,6 +52,10 @@ LIMITS = {"name": 30, "company_title": 60, "bio": 800, **{k: 300 for k in LINK_K
 
 E = html.escape
 
+# 協會工作人員的後台登入（教練 2026-10-30 指定帳號 admin；密碼只存雜湊，不存明文）。登入網址：{SITE}/nmda/members/login
+ADMIN_USER = "admin"
+ADMIN_PASS_HASH = "scrypt:32768:8:1$oOUr3boP7yRhWND6$3d1f535ed59133c45949e92557f670b9e229b131246341fbb6670d1d467efa25d9b557050a185affb840d7d09599f094b199bb1dab1bc603ce04ce2d28df0662"
+
 
 # ---------- 資料 ----------
 def _conn():
@@ -264,20 +268,33 @@ def render_edit(r, d=None, error="", saved=False, first=False):
     return _page("修改我的檔案｜" + TITLE, body)
 
 
-def render_admin(secret, msg=""):
-    code = admin_code(secret)
+def render_login(error=""):
+    body = f"""<div class="wrap" style="padding-top:36px">
+<p class="kicker">工作人員專用</p><h1>會員資料後台登入</h1>
+<form class="paper" method="post" action="/nmda/members/login">
+{f'<p class="err" role="alert">{E(error)}</p>' if error else ''}
+<div class="field"><label for="u">帳號</label><input type="text" id="u" name="username" required autocomplete="username" autocapitalize="none"></div>
+<div class="field"><label for="p">密碼</label><input type="password" id="p" name="password" required autocomplete="current-password"></div>
+<button class="btn" type="submit">登入</button></form></div>"""
+    return _page("後台登入｜" + TITLE, body)
+
+
+def render_admin(secret, msg="", staff=False):
+    # staff＝工作人員用帳密登入的後台；否則是教練的簽章短址後台。兩邊功能相同，只有表單送出的路徑不同。
+    base = "/nmda/members/admin" if staff else f"/nmda/members/a/{admin_code(secret)}"
     rows = list_members(include_hidden=True)
     tr = "".join(
         f"<tr><td><b>{E(r['name'])}</b><br>{E(r['company_title'])}</td>"
         f"<td>{'🙈 已隱藏' if r['hidden'] else '✅ 已上架'}<br><span class='hint'>{E(r['created_at'])}</span></td>"
         f"<td><a href='/nmda/members/edit/{E(r['edit_token'])}' target='_blank' rel='noopener'>修改</a> "
         f"<button type='button' data-url='{SITE}/nmda/members/edit/{E(r['edit_token'])}' onclick='copyLink(this)'>複製專屬連結</button> "
-        f"<form method='post' action='/nmda/members/a/{code}/hide/{r['id']}'><input type='hidden' name='hidden' value='{0 if r['hidden'] else 1}'>"
+        f"<form method='post' action='{base}/hide/{r['id']}'><input type='hidden' name='hidden' value='{0 if r['hidden'] else 1}'>"
         f"<button>{'恢復顯示' if r['hidden'] else '隱藏'}</button></form> "
-        f"<form method='post' action='/nmda/members/a/{code}/delete/{r['id']}' onsubmit=\"return confirm('確定刪除？')\"><button>刪除</button></form></td></tr>"
+        f"<form method='post' action='{base}/delete/{r['id']}' onsubmit=\"return confirm('確定刪除？')\"><button>刪除</button></form></td></tr>"
         for r in rows)
     body = f"""<div class="wrap" style="padding-top:32px;padding-bottom:56px;max-width:1000px">
 <h1>會員資料・管理後台</h1>
+{'<form method="post" action="/nmda/members/logout" style="text-align:right;margin:-8px 0 8px"><button class="btn ghost" style="min-height:44px">登出</button></form>' if staff else ''}
 <p style="color:var(--muted)">「修改」可直接幫會員改資料；「隱藏」先不公開、資料保留；有人亂填可以刪除。<a href="/curated/nmda/members.html" target="_blank">看公開頁</a></p>
 {f'<p class="ok">{E(msg)}</p>' if msg else ''}
 <p class="hint">「複製專屬連結」＝傳給本人讓他自己修改的連結（不用登入）；這個後台網址只有你知道，不要傳給別人。</p>

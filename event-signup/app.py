@@ -1810,6 +1810,63 @@ def nmda_members_photo(name):
     return resp
 
 
+_NM_LOGIN_FAILS = {}   # ip -> [失敗時間戳]；10 分鐘內失敗 5 次就先鎖住，擋猜密碼
+
+
+def _nm_staff():
+    return bool(session.get("nmda_members_admin"))
+
+
+@app.route("/nmda/members/login", methods=["GET", "POST"])
+def nmda_members_login():
+    """協會工作人員的後台登入（帳號 admin；密碼只存雜湊）。登入成功只開 NMDA 會員資料後台，不影響大樹的其他後台。"""
+    if request.method == "GET":
+        return _nt_html(_nm.render_login())
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    fails = [t for t in _NM_LOGIN_FAILS.get(ip, []) if now - t < 600]
+    if len(fails) >= 5:
+        return _nt_html(_nm.render_login("嘗試次數太多，請 10 分鐘後再試"), 429)
+    user = (request.form.get("username") or "").strip()
+    ok = hmac.compare_digest(user.encode(), _nm.ADMIN_USER.encode()) & check_password_hash(_nm.ADMIN_PASS_HASH, request.form.get("password") or "")
+    if not ok:
+        _NM_LOGIN_FAILS[ip] = fails + [now]
+        return _nt_html(_nm.render_login("帳號或密碼不對"), 401)
+    _NM_LOGIN_FAILS.pop(ip, None)
+    session["nmda_members_admin"] = True
+    session.permanent = True
+    return redirect("/nmda/members/admin")
+
+
+@app.route("/nmda/members/logout", methods=["POST"])
+def nmda_members_logout():
+    session.pop("nmda_members_admin", None)
+    return redirect("/nmda/members/login")
+
+
+@app.route("/nmda/members/admin")
+def nmda_members_staff_admin():
+    if not _nm_staff():
+        return redirect("/nmda/members/login")
+    return _nt_html(_nm.render_admin(app.secret_key, request.args.get("msg", "")[:60], staff=True))
+
+
+@app.route("/nmda/members/admin/hide/<int:mid>", methods=["POST"])
+def nmda_members_staff_hide(mid):
+    if not _nm_staff():
+        return redirect("/nmda/members/login")
+    _nm.set_hidden(mid, request.form.get("hidden") == "1")
+    return redirect("/nmda/members/admin")
+
+
+@app.route("/nmda/members/admin/delete/<int:mid>", methods=["POST"])
+def nmda_members_staff_delete(mid):
+    if not _nm_staff():
+        return redirect("/nmda/members/login")
+    _nm.delete(mid)
+    return redirect("/nmda/members/admin?msg=已刪除")
+
+
 @app.route("/nmda/members/a/<code>")
 def nmda_members_admin(code):
     _nm_admin(code)
