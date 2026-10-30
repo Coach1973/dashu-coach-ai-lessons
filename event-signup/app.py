@@ -1707,6 +1707,129 @@ def nmda_team_admin_seat(code):
     return redirect(f"/nmda/team/a/{code}?msg=已新增座位：{name}" if name else f"/nmda/team/a/{code}")
 
 
+# ---------- 中華新媒體影音發展協會（NMDA）會員資料（2026-10-30 教練交辦）：說明見 nmda_members.py ----------
+# 照上面的理監事團隊同一套：會員自己建立檔案、送出即上架；公開頁是 nmda 網站自己的 members.html，讀 /api/nmda/members/board。
+import nmda_members as _nm
+
+_NM_HITS = {}   # ip -> [時間戳]；每個 IP 每小時最多建立 10 份
+
+
+def _nm_rate_ok(ip):
+    now = time.time()
+    hits = [t for t in _NM_HITS.get(ip, []) if now - t < 3600]
+    if len(hits) >= 10:
+        return False
+    _NM_HITS[ip] = hits + [now]
+    return True
+
+
+def _nm_notify(token):
+    """有人新建立檔案 → 活動報名即時通知群，附後台網址方便處理亂填。"""
+    r = _nm.get_by_token(token)
+    if not r:
+        return
+    text = (f"🎬【中華新媒體影音發展協會・會員資料】{r['name']} 建立了檔案\n"
+            f"{r['company_title']}\n公開頁：\n{_nm.PAGE_URL}\n"
+            f"管理後台（有人亂填可隱藏或刪除）：\n{_nm.admin_url(app.secret_key)}")
+    threading.Thread(target=_notify_xiaolongxia, args=(text,),
+                     kwargs={"chat_id": TELEGRAM_REGISTRATION_GROUP_CHAT_ID}, daemon=True).start()
+
+
+def _nm_photo(form_file, err):
+    """有選照片就存；回傳 (檔名或 None, 錯誤訊息)。"""
+    if err or not (form_file and form_file.filename):
+        return None, err
+    name = _nm.save_photo(form_file)
+    return name, ("" if name else "這張照片打不開，麻煩改存成 jpg 或 png 再上傳一次")
+
+
+def _nm_admin(code):
+    if not hmac.compare_digest(code, _nm.admin_code(app.secret_key)):
+        abort(404)
+
+
+@app.route("/api/nmda/members/board")
+def nmda_members_board_api():
+    """NMDA 網站 members.html 讀這裡（跟本段所有編輯頁是同一份資料）。"""
+    return Response(json.dumps(_nm.board_public(), ensure_ascii=False), content_type="application/json; charset=utf-8",
+                    headers={"Cache-Control": "no-store", "Access-Control-Allow-Origin": "*"})
+
+
+@app.route("/nmda/members/join", methods=["GET", "POST"])
+def nmda_members_join():
+    if request.method == "GET":
+        return _nt_html(_nm.render_join())
+    if (request.form.get("website") or "").strip():   # honeypot：機器人才會填
+        return redirect("/curated/nmda/members.html")
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    if not _nm_rate_ok(ip):
+        return _nt_html(_nm.render_join(request.form, "這個小時送出次數太多了，請稍後再試一次"), 429)
+    photo = request.files.get("photo")
+    d, err = _nm.clean_form(request.form, need_photo=not (photo and photo.filename))
+    fname, err = _nm_photo(photo, err)
+    if err:
+        return _nt_html(_nm.render_join(d, err), 400)
+    token = _nm.insert(d, fname, ip)
+    _nm_notify(token)
+    return redirect(f"/nmda/members/edit/{token}?new=1")
+
+
+@app.route("/nmda/members/edit/<token>", methods=["GET", "POST"])
+def nmda_members_edit(token):
+    r = _nm.get_by_token(token)
+    if not r:
+        abort(404)
+    if request.method == "GET":
+        return _nt_html(_nm.render_edit(r, first=request.args.get("new") == "1", saved=request.args.get("saved") == "1"))
+    photo = request.files.get("photo")
+    d, err = _nm.clean_form(request.form, need_photo=not r["photo_file"] and not (photo and photo.filename))
+    fname, err = _nm_photo(photo, err)
+    if err:
+        return _nt_html(_nm.render_edit(r, d, err), 400)
+    _nm.update(r["id"], d, fname)
+    if fname and r["photo_file"] and _nm.PHOTO_RE.match(r["photo_file"]):
+        (_nm.UPLOAD_DIR / r["photo_file"]).unlink(missing_ok=True)   # 換照片就把舊的刪掉
+    return redirect(f"/nmda/members/edit/{token}?saved=1")
+
+
+@app.route("/nmda/members/edit/<token>/delete", methods=["POST"])
+def nmda_members_delete(token):
+    r = _nm.get_by_token(token)
+    if not r:
+        abort(404)
+    _nm.delete(r["id"])
+    return redirect("/curated/nmda/members.html")
+
+
+@app.route("/nmda/members/photo/<name>")
+def nmda_members_photo(name):
+    if not _nm.PHOTO_RE.match(name) or not (_nm.UPLOAD_DIR / name).exists():
+        abort(404)
+    resp = send_from_directory(_nm.UPLOAD_DIR, name, mimetype="image/jpeg")
+    resp.headers["Cache-Control"] = "public, max-age=86400"   # 換照片會換檔名，可以放心快取
+    return resp
+
+
+@app.route("/nmda/members/a/<code>")
+def nmda_members_admin(code):
+    _nm_admin(code)
+    return _nt_html(_nm.render_admin(app.secret_key, request.args.get("msg", "")[:60]))
+
+
+@app.route("/nmda/members/a/<code>/hide/<int:mid>", methods=["POST"])
+def nmda_members_admin_hide(code, mid):
+    _nm_admin(code)
+    _nm.set_hidden(mid, request.form.get("hidden") == "1")
+    return redirect(f"/nmda/members/a/{code}")
+
+
+@app.route("/nmda/members/a/<code>/delete/<int:mid>", methods=["POST"])
+def nmda_members_admin_delete(code, mid):
+    _nm_admin(code)
+    _nm.delete(mid)
+    return redirect(f"/nmda/members/a/{code}?msg=已刪除")
+
+
 # ---------- 校友回憶牆：留言＋照片送審，教練通過才公開（2026-10-02 教練交辦） ----------
 # 原本 tut-memory 頁的照片只存在訪客自己瀏覽器，別人看不到。改成：送出→存伺服器(pending)
 # →Telegram 傳照片給教練，附一個審核連結→教練按「通過」才出現在所有人的牆上。
