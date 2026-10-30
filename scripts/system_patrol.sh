@@ -38,8 +38,8 @@ UID_NUM=$(id -u)
 GW_STATE=$(/bin/launchctl print "gui/${UID_NUM}/ai.openclaw.gateway" 2>&1 | awk -F'= ' '/state = /{print $2; exit}')
 if [ "$GW_STATE" != "running" ]; then
     say "⚠️ 小龍蝦本尊(ai.openclaw.gateway)狀態異常：state=${GW_STATE:-找不到service}，嘗試自動修復"
-    /Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw doctor --fix >/dev/null 2>&1
-    /Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw gateway start >/dev/null 2>&1
+    /Users/bymyway/.nvm/versions/node/v24.22.2/bin/openclaw doctor --fix >/dev/null 2>&1
+    /Users/bymyway/.nvm/versions/node/v24.22.2/bin/openclaw gateway start >/dev/null 2>&1
     sleep 5
     GW_STATE2=$(/bin/launchctl print "gui/${UID_NUM}/ai.openclaw.gateway" 2>&1 | awk -F'= ' '/state = /{print $2; exit}')
     if [ "$GW_STATE2" = "running" ]; then
@@ -112,7 +112,7 @@ fi
 #    完全正常（因為那一層跟channel lifecycle是兩回事），教練實際傳訊息卻收到
 #    "Sorry, I encountered an error"，既有健檢當時回報"OK"是假警報。
 #    這裡補上真正會抓到這類問題的檢查層級：直接查每個LINE帳號的lifecycle欄位。
-OPENCLAW_BIN="/Users/bymyway/.nvm/versions/node/v24.21.0/bin/openclaw"
+OPENCLAW_BIN="/Users/bymyway/.nvm/versions/node/v24.22.2/bin/openclaw"
 LINE_HEALTH=$("$OPENCLAW_BIN" gateway call health 2>/dev/null)
 if [ -n "$LINE_HEALTH" ]; then
     STUCK_ACCOUNTS=$(printf '%s' "$LINE_HEALTH" | python3 -c "

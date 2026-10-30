@@ -269,8 +269,8 @@ def rongshuxia_upcoming(data, days=60):
 
 def _oc():
     """直接用 node 跑 openclaw：網站服務、排程的 PATH 不一定有 node"""
-    node = os.path.expanduser("~/.nvm/versions/node/v24.21.0/bin/node")
-    mjs = os.path.expanduser("~/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw/openclaw.mjs")
+    node = os.path.expanduser("~/.nvm/versions/node/v24.22.2/bin/node")
+    mjs = os.path.expanduser("~/.nvm/versions/node/v24.22.2/lib/node_modules/openclaw/openclaw.mjs")
     if os.path.exists(node) and os.path.exists(mjs):
         return [node, mjs]
     import shutil
