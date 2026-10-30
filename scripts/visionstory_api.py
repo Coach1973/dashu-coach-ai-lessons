@@ -13,8 +13,10 @@
         [--model vs_character_v4] [--aspect 9:16] [--resolution 720p] [--output out.mp4]   # 會扣點數
   python3 scripts/visionstory_api.py video-status VIDEO_ID
   python3 scripts/visionstory_api.py tts --voice-id ID --text "…" [--output out.mp3]        # 會扣點數
+  python3 scripts/visionstory_api.py create-avatar (--url https://…jpg | --file 照片.jpg)    # 用一張正面照建頭像
+  python3 scripts/visionstory_api.py clone-voice --file 錄音.m4a [--preview-text "…"]       # 用錄音複製聲音（約 15 秒）
 """
-import argparse, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request, uuid
+import argparse, base64, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request, uuid
 
 BASE = "https://openapi.visionstory.ai"
 CRED = os.path.expanduser("~/.openclaw/workspace/路徑大全_憑證層.md")
@@ -38,7 +40,17 @@ def redact(s, key):
     return s.replace(key, "sk-vs-***") if key else s
 
 
-def call(method, path, params=None, body=None):
+MIME = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp", "heic": "image/heic",
+        "mp3": "audio/mp3", "m4a": "audio/m4a", "wav": "audio/wav", "mp4": "audio/mp4", "avi": "video/avi"}
+
+
+def inline(path):
+    ext = path.rsplit(".", 1)[-1].lower()
+    with open(path, "rb") as f:
+        return {"mime_type": MIME.get(ext, "application/octet-stream"), "data": base64.b64encode(f.read()).decode()}
+
+
+def call(method, path, params=None, body=None, timeout=60):
     key = get_key()
     url = BASE + path
     if params:
@@ -49,7 +61,7 @@ def call(method, path, params=None, body=None):
     if data:
         req.add_header("Content-Type", "application/json")
     try:
-        with urllib.request.urlopen(req, timeout=60) as r:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.loads(r.read().decode())
     except urllib.error.HTTPError as e:
         sys.exit("HTTP %s：%s" % (e.code, redact(e.read().decode("utf-8", "ignore"), key)[:500]))
@@ -81,6 +93,8 @@ def main():
     p = sub.add_parser("tts")
     p.add_argument("--voice-id", required=True); p.add_argument("--text", required=True)
     p.add_argument("--locale"); p.add_argument("--speech-rate", default="normal"); p.add_argument("--output", default="speech.mp3")
+    p = sub.add_parser("create-avatar"); p.add_argument("--url"); p.add_argument("--file")
+    p = sub.add_parser("clone-voice"); p.add_argument("--file", required=True); p.add_argument("--preview-text")
     a = ap.parse_args()
 
     if a.cmd == "credits":
@@ -116,6 +130,16 @@ def main():
         if a.locale:
             body["locale"] = a.locale
         show(call("POST", "/api/v1/tts", body=body))
+    elif a.cmd == "create-avatar":
+        if bool(a.url) == bool(a.file):
+            sys.exit("--url 和 --file 要擇一")
+        body = {"img_url": a.url} if a.url else {"inline_data": inline(a.file)}
+        show(call("POST", "/api/v1/avatar", body=body))
+    elif a.cmd == "clone-voice":
+        body = {"inline_data": inline(a.file)}
+        if a.preview_text:
+            body["preview_text"] = a.preview_text
+        show(call("POST", "/api/v1/voice", body=body, timeout=180))
 
 
 if __name__ == "__main__":
