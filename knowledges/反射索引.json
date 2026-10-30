@@ -2105,6 +2105,19 @@
       "level": "remind",
       "situation": "教練貼一段話要求體檢、規則打架檢查，或附賈維斯自我檢測頁網址時",
       "source": "教練 2026-10-30 01:55：「我要求跑賈維斯的質檢系統，這件事情有做嗎？我沒有得到報告」"
+    },
+    {
+      "id": "R-OPENCLAW-UPDATE-NODE-PATH",
+      "moment": "pre_tool",
+      "tool": "Bash",
+      "match": "openclaw\\s+update(?!\\s+--dry-run)",
+      "say": "升級小龍蝦前：比對新版 Node 要求和 ~/Library/LaunchAgents/ai.openclaw.gateway.plist 裡寫死的 node 路徑，不夠新就先改（PlistBuddy＋bootout/bootstrap）。升級超過 5 分鐘沒結束，先看 launchctl print 的 runs／last exit code 和 ~/Library/Logs/openclaw/gateway.log 尾巴，不准乾等。",
+      "level": "remind",
+      "situation": "要執行 openclaw update 升級小龍蝦時",
+      "source": "試金石案例140",
+      "audience": [
+        "coach"
+      ]
     }
   ],
   "case_ledger": {
