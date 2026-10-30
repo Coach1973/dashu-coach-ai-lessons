@@ -4,11 +4,32 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-30 13:35:51**
+> **最後同步：2026-10-30 14:10:05**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 14:08 台灣時間，Mac 桌面版 Code 分頁（kaigong-9ecc7a worktree），Haiku 5.5 → Sonnet 5.5；本段 13:31～14:07；對話容量約 24%；教練說「總結」；與下方 13:28 那棒是不同對話框）
+
+**主軸：吳尚謙頁換入小龍蝦出的 AI 圖＋主視覺重新構圖（教練看過說「不錯」）；查 LINE 400；算換圖流程的 token。**
+- **吳尚謙頁（`wu-shang-qian`，repo `~/github_repos/wu-shang-qian`）**：IMG-001（四歲抱小提琴）、IMG-002（五線譜小路回到琴邊）換入並上線（`c7cf7ff`，讀回確認 data-slot 已是 webp、舊 SVG／待換圖字卡 0）。這頁做在 data-slot 規則之前，位置是 `<svg data-img-id>`，我先把兩個 svg 轉成 `<img data-slot>` 再跑 `swap_slot_images.py`（腳本沒改）。**IMG-003（宣傳照去 logo 的實景修飾）沒換**，真人照片，等教練裁示。
+- **主視覺**：教練 14:03 指出臉被切到。根因是拱形框（半徑夾成 210px）圓角切到左臉。處理：原圖左、上補邊（邊緣延伸＋淡出到背景色）、人物縮約 14% 往右下，重製 1047×1501 webp 換入（`00970f1`），線上讀回尺寸與 `object-position:50% 50%` 正確；教練親眼看過說不錯。
+- **LINE 400（12:57，rongshuxia 群組 `c2f85a1e`）**：日誌沒記 LINE 回傳內容，**原因未明**；後續重試被推播閘門 403 擋下，沒送出、沒扣額度。12:56 另一群組（`c55cd2cd`）回 429，也沒查。已加記錄補丁 `scripts/line_refusal_log_patch.py`（LINE 被拒時把 HTTP 狀態與回傳內容寫進 `state/line_refusal.log`，只記錄不改行為），已套到外掛 `send-retry-*.mjs`（備份 `.bak-before-line-refusal-log-20261030`、語法檢查過）。**要重啟閘道才生效，教練說「等下次再說」**；外掛更新會洗掉補丁，重跑腳本即可。
+- **token（教練想知道）**：從 session 紀錄量出：讀完圖→換圖→push 約 1.1 萬；找頁面到 push 約 3.1 萬；含線上驗證約 3.5 萬新 token；另每輪重讀對話約 190 萬（cache，價低但是額度主因）。頁面若一開始就有 data-slot，約 1 萬。
+- **教練 14:08 新需求「圖片上傳策展中心後自動壓到清晰但最輕的大小」（還沒做，只查證）**：查到 ①`scripts/optimize_site_assets.py`（10/2 教練裁示）已在 `curation_process.py` kind=creation 上傳時自動跑，但只處理「獨立圖檔」（png／jpg 大於 100KB、長邊 2000、webp q82），**不處理網頁裡內嵌的 base64 圖**（TAVA 網頁都是內嵌）②吳尚謙頁實測：內嵌 98 張，解開 3.69MB（平均 49KB、最大 357KB），base64 後 4.92MB＝網頁 5.0MB；重壓（長邊 1200／q75 只省 10%，長邊 900／q70 省 23%）。推論（未證實）：重量主因不是單張大，是 98 張塞同一個檔＋base64 多 33%，更有效是「把內嵌圖拆成獨立檔＋延遲載入」，但會動到 TAVA「圖片放進網頁裡」規則與上架流程，要先定方向。
+- **教練原話線索**：「我就是想知道這件事而已」＝要數字不要過程；看圖後直接說「臉被切到」＝人像交付前要自己看過臉在框內的位置，不只看版位比例。
+
+### 📋 下一場開工先做（以本棒為準；13:28 棒第 2 項 LINE 400 已查到「原因未明、已加記錄」）
+1. 🔴 **今晚 20:00 前**（沿用 13:33 棒，教練說晚點再說但時限不變）：確認佩佩老師「今晚 Grace 咖啡會議 20:00～20:50」有沒有寫進行程，沒寫就直接補並在群組回報。
+2. **圖片自動壓縮機制**（教練 14:08 提的）：把 `optimize_site_assets.py` 擴充到內嵌 base64 圖，並決定要不要「拆成獨立檔＋延遲載入」（先給教練看估算：重壓只省 10～23%、拆檔可省 base64 的 33% 並讓首屏變輕）；`swap_slot_images.py` 新圖上限順手從 1600／q82 降到約 1200／q75。動手前先用吳尚謙頁（5.0MB）實測前後載入時間。
+3. 下次重啟閘道時，順便載入 LINE 記錄補丁；之後 LINE 再被拒就看 `state/line_refusal.log` 查 400／429 原因。
+4. 沿用 13:28 棒第 1、3、4、5 項（觀察悶頭鎖、看門員歸屬漏洞、英文錯誤訊息中文化＋plist node 路徑、賈維斯成績單 11/2 首跑）。
+5. 沿用 13:33 棒（已封存 `handoff_archive/JUNSHI_HANDOFF_20261030_1333_升級與巴哈根治.md`）：升級後 23 個警告先看報告再動、`openclaw.json` 45 行含明文金鑰先不動、541MB 備份穩定後走 N6 才刪。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：吳尚謙頁 IMG-003（宣傳照去 logo）要不要換；其餘沿用。
+🔧 AI 自己的清單：①`swap_slot_images.py` 加「`svg data-img-id` 位」自動轉換（這次手動轉）②之後升級小龍蝦後把 `line_refusal_log_patch.py --check` 與 `line_push_gate_patch.py --check` 一起跑 ③健康檢查 ⚠️：`ai.openclaw.fb-birthday` 沒在跑（沿用，重載前先確認 FB 登入）、自動暫存 1 筆沒放回（沿用，疑似 dispatch-worker-auto-20261026，非本場）④`claude/kaigong-9ecc7a` 分支只有補丁腳本一個 commit（`a6d074ca8`），已另複製一份進 main。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 13:28 台灣時間，Mac 桌面版 Code 分頁（kaigong-de1842 worktree），Haiku 5.5 → Opus 5.5 → Sonnet 5.5；本段 12:11～13:28；對話容量約 30%；教練說「總結」；與下方 12:07 那棒是不同對話框）
 
@@ -29,31 +50,6 @@
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：林晃誼頁主視覺人像是 AI 修圖（對照原圖人物一致、教練是否看過不確定）、網頁 7.2MB 要不要瘦身；行事曆「RPL」20:00–21:00 與 Grace咖啡會議撞時間（佩君說 RPL 是 21:00，已問過一次沒回應）。
 🔧 AI 自己的清單：①plist node 路徑穩定化 ②看門員歸屬漏洞 ③LINE 400 原因 ④`ai.openclaw.fb-birthday` plist 在但沒載入（可能 10/30 處理 FB 生日頁彈出時卸載，沒查證，重載前先確認 FB 登入，別讓生日頁又彈出來）⑤健康檢查提示「自動暫存沒放回去」，疑似 `stash@{0}` dispatch-worker-auto-20261026（非本場）⑥swap 腳本只換圖，「實景修飾」類自動出圖沒做 ⑦`ai-go` 倉庫 `index.html` 有別人未提交修改，沒碰。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 13:33 台灣時間收工，Mac 桌面版 Code 分頁（kaigong-0d2ad2 worktree），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 11:43～13:33（12:07 說「總結」後仍把已核准的升級做完，13:33 再次說「總結」收工）；對話容量約 38%、本週額度 36%；與下方 10:45 那棒是不同對話框）
-
-**主軸：巴哈（教練語音說「8號」）一輪卡 70 分鐘的根治；研究「小龍蝦為什麼老卡住」；教練裁示「升級」→ 小龍蝦已從 2026.9.4 升到 2026.10.9（13:00 驗證完成）。**
-- **點點點設定（已 commit `f9e637f6a`、已推雲端）**：`typingMode: instant`，日誌確認熱載入（hot reload applied）。**真的有沒有點點點還沒用真訊息測。** 我第一次 commit 整檔 add，夾帶別人未提交的 47 行（含 synterolink 金鑰明文），發現後在未 push 前拆掉重做（案例 139）。
-- **巴哈卡住真相**：不是當機，是 10:22～11:48 一輪連續 149 次 exec，話都卡在整輪結束才送出；群組對話約 19 萬 token 超預算。已 `sessions.abort`＋`sessions.reset` 止血。**止血時佩佩老師交辦的「今晚 Grace 20:00～20:50」沒寫進行程**（巴哈重開不記得）。
-- **根治（機制）**：safety-locks v1.7 悶頭鎖（連續 30 次工具沒對外講話→擋一次）＋收尾鎖（同一輪 30 分鐘或 200 次→只放行送訊息）`c4c155546`，11:51 重啟後日誌確認載入，**還沒被真實情況觸發過**；官方 `tools.loopDetection` 原本預設關，已開 `5a41b6296`（熱載入）。
-- **研究結論（教練問全世界有沒有、升級有沒有修、赫米斯會不會比較好）**：近一個月教練為卡住開口約 24 次（向軍師 11＋直接催 13，6 天）；官方 GitHub 9/30 後 stuck 回報 255 筆；本機 OpenClaw 2026.9.4、最新 2026.10.9，10.2～10.8 修了多個卡住相關；赫米斯內建 max_turns 90／30 分逾時／每 10 分回報／50% 提早壓縮，機制較好但同樣用 MiniMax-M3，LINE／Telegram 多分身都建在小龍蝦上，不搬家、把機制搬進小龍蝦。詳見記憶 `reference_turn_budget_lock_bots_silent_loop_2026-10-30.md`。
-- **升級已完成（12:36 開始、12:55 驗證通過，閘道停機 969 秒≈16 分）**：官方驗證 `service running (2026.10.9); version verified; channels ready; HTTP ready; core ready`。流程：①12:03～12:33 Time Machine 備份（16.7 GB，教練 10/2 規矩）②第一次 `update` 因 Node 24.21.0 < 24.22.1 在驗證階段安全失敗（什麼都沒動）③裝 Node 24.22.2、在它底下裝一份 2026.9.4 當起點 CLI 再升級 ④套件仍在 `~/.nvm/versions/node/v24.21.0/lib/node_modules/openclaw`（內容已是 10.9）。**更正（我一度寫錯）：升級程式沒能改服務設定**（報告 `Failed to reconcile gateway service … Environment.PATH operator setting`）。12:39 停機後主服務因 `ai.openclaw.gateway.plist` 寫死 `v24.21.0/bin/node`，每 10 秒重啟失敗 61 次、卡約 16 分鐘；**我當時只在等背景升級結束、沒去看 launchctl／gateway.log，是另一個對話框 12:55 用 PlistBuddy 把 node 改 24.22.2＋bootout/bootstrap 救起來（案例 140，plist 備份 `state/ai.openclaw.gateway.plist.bak-20261030-1255`）**。這就是停機 969 秒的原因。
-- **升級後我做的善後（都已驗證）**：①`v24.22.2/lib/node_modules/openclaw` 原本是舊 9.4 起點 CLI（版本不一致危險）→搬到 `state/backup_bootstrap_cli_openclaw_2026.9.4_20261030`（541MB，可刪）並做符號連結指向 10.9，兩個位置的 `openclaw --version` 都是 2026.10.9 ②nvm 預設改 24.22.2 ③`openclaw_stall_watchdog.py`／`coach_schedule.py`／`system_patrol.sh`／看門狗 plist 的 v24.21.0 改 v24.22.2（自動同步已 commit：`f88c1d8c3`、`2b5b3108c`）；看門狗 plist 備份在 `state/com.coach.openclaw-stall-watchdog.plist.bak-before-node24222` ④中文錯誤訊息：另一個對話框 12:55 已對新版重打補丁；我查新版 dist 無英文殘留、2 檔為中文，補丁腳本再跑不會有改動。
-- **🔴 LINE 推播閘門空窗與修復**：新版 LINE 外掛把送訊息程式搬到 `dist/.setup/send-*.mjs`、函式改 `postLineProviderMessages`，舊 `line_push_gate_patch.py` 只認舊檔名＝升級後閘門消失（12:55～12:58:32 約 3.5 分鐘）。空窗內有 2 次 LINE 發送嘗試（12:56 回 429、12:57 回 400），**都被 LINE 拒絕、沒有任何一則送出**。已把補丁腳本改成新舊格式都認得、重啟後生效，實測 push／multicast 擋下 403，12:59:15 一則真實推播被擋。教練的 LINE 常設禁令現在是有程式擋著的。
-- **驗證結果**：頻道 Discord 1、LINE 3、Telegram 3（小龍蝦／巴哈／孔大哥）都 running/connected；10 個我們的外掛都 loaded；安全鎖 v1.7 重啟後註冊，一輪計數器有 runId（按每輪計數）；用 yang 分身做本機測試 11 秒回話，exec 被沙盒鎖擋下＝鎖在新版仍運作。
-- **我的失誤**：重新載入看門狗時 `launchctl bootout` 後 `bootstrap` 第一次報錯，看門狗空窗約 1 分鐘，再 bootstrap 一次救回（現 running、PATH 為新 Node）。
-- 教練原話線索：「從根源徹底解決，我為這件事不堪其擾很久了」＝要機制擋、不要每次手動修；他問「全世界沒人卡嗎」＝想知道是不是我們自己的問題（答案：官方也有，但我們版本落後且防卡設定沒開）。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 🔴 **今晚 20:00 前**（教練 13:32 說「晚點再說」＝先不處理，但時限不變，開工第一件主動提）：確認佩佩老師的「今晚 Grace 咖啡會議 20:00～20:50」有沒有寫進行程（巴哈重開後不記得；佩佩 10:04 的交辦、教練 10:07 裁示「RPL 晚上 9 點、線上學習不影響」）。沒寫就直接補，並在群組回報。
-2. **升級後要追的（不急）**：①用一則真訊息確認小龍蝦、巴哈有出現點點點（typingMode 在新版是否仍生效）②升級報告 `~/.openclaw/update-reports/d5cc7c19-37ca-4390-be52-c57713bb6ff1.md` 有 23 個警告：外掛「資料升級未完成」（外掛都正常載入，可能是升級中暫時狀態，跑 `openclaw update repair` 前先看報告）、「agent database path repair 被略過」（`openclaw doctor --fix`，先看會改什麼）、model retirement 已完成 ③觀察 1～2 天沒問題後，才用 `openclaw update cleanup --dry-run` 預覽舊遷移備份清理（不可逆，教練同意才真刪）④`openclaw.json` 含明文金鑰（官方警告建議改 SecretRefs），先不動。
-3. `openclaw.json` 還有 45 行未提交（synterolink 模型設定，含 API 金鑰明文）：金鑰要先移出 git 才能提交，先不動。
-4. 看日誌有沒有出現 `悶頭鎖觸發` / `收尾鎖觸發`，有就檢查誤殺；`一輪工作計數開始` 那行會印 ctx 欄位，確認有沒有 runId。
-5. 沿用上一棒：賈維斯成績單 11/2（一）08:10 首跑；影片報告存 git＋查商用授權；超過 25% 每次收尾給「要不要總結」按鈕。
-
-🙋 要教練決定：無新增（升級已裁示）。
-🤫 等教練自己提起：NMDA 頁「大樹教練」字樣；FB 專用 Chrome 要不要登入；小龍蝦卡住通知要不要改成只報一次（沿用）。
-🔧 AI 自己的清單：①案例 138、139、141 已寫（140 是另一個對話框寫的）；②提早壓縮（赫米斯 50% 做法）可評估放進小龍蝦；③`state/backup_bootstrap_cli_openclaw_2026.9.4_20261030`（541MB）穩定後可刪（刪前走 N6 五道閘門）；④之後升級小龍蝦：升級前先改 plist 的 node 路徑（反射 R-OPENCLAW-UPDATE-NODE-PATH），升級後必跑 `line_push_gate_patch.py --check` 且要確認「目前載入的那一代外掛」有閘門，不只看舊檔。
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
