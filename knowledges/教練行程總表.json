@@ -1084,7 +1084,8 @@
    "title": "榮樹下訪談",
    "source": "Google日曆",
    "start": "19:00",
-   "end": "20:00"
+   "end": "20:00",
+   "form_token": "A3gDZr0zJ4st"
   },
   {
    "id": "gcal-2026-11-03-15",
@@ -1140,7 +1141,8 @@
    "title": "榮樹下訪談：鍾俊榮",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "Wn_OEMrusKeE"
   },
   {
    "id": "gcal-2026-11-05-22",
@@ -1196,7 +1198,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "xaVejc6874nP"
   },
   {
    "id": "gcal-2026-11-08-29",
@@ -4045,7 +4048,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-10-30 21:07",
+ "updated_at": "2026-10-30 21:10",
  "tainan_synced_at": "2026-10-30 16:41",
  "evening_window": {
   "start": "19:00",
