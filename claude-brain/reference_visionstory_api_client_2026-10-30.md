@@ -15,3 +15,8 @@ metadata:
 - **在 worktree 對話寫 workspace**：Write 工具被 hook 擋，改用 Bash heredoc 建新檔＋path-limited commit。
 
 **How to apply:** 要做 VisionStory 影片先 `avatars --public`／`voices --locale zh-TW` 找真 ID，不猜；真生成前先講會扣多少點數（剩 220）。
+
+## 教練本人的素材（2026-10-30 23:40 台灣時間，教練親口交付）
+- **教練本人的聲音錄音檔**：`/Volumes/953-SSD/下載/歸仁齒輪有限公司.m4a`（104 秒、單聲道 AAC、0.9MB；教練說「這個是我的錄音檔」，要我記錄）。以此複製出 VisionStory 聲音 `voice_id=893883331753573490`（沒扣點；系統標成 zh-CN 男聲）。帳號裡 9/28 就有的 2 個複製聲音（3666746792484267812、7047654227939670478）不確定是誰的聲音。
+- **教練指定的照片**：`https://coach1973.github.io/bigtree/speakers-2026/coach-profile.jpg`（600×900，深灰格紋西裝、藍領帶、雙手抱胸、黑背景）→ VisionStory 頭像 `avatar_id=2236789676702807693`（教練說上一張「不是很滿意」，這張是他點名的）。
+- 指令檔新增 `create-avatar`、`clone-voice` 子指令。
