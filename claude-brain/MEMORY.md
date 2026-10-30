@@ -1,3 +1,4 @@
+- [🔧 VisionStory(talking-avatar影片/TTS) API 已串：金鑰在憑證層、scripts/visionstory_api.py(094d44529)；唯讀已實測，生成會扣點(剩220)沒跑(2026-10-30)](reference_visionstory_api_client_2026-10-30.md)
 - [🧩 榮樹下官網預約10/30改順：預約即自動確認(不再待確認)、顯示姓名、預約資料帶進來賓資料表；預約表單≠來賓資料表(5d6d478d2, 49b178b)(2026-10-30)](project_rongtree_booking_shows_name_two_forms_2026-10-30.md)
 - [🎬 NMDA 首頁換開場動畫包：站內全域 section/nav/h1 規則蓋到動畫要覆寫、第一屏扣固定標頭、導覽擠多行、影片跳播要 Range；倒數 10/31 21:30 後自動移除(c6a0da8,abcf2fb)(2026-10-30)](reference_nmda_home_opening_animation_integration_2026-10-30.md)
 - [🎬 NMDA「會員資料」頁＋工作人員帳密登入後台(/nmda/members/login)；LK888 壓縮長邊1000/q72寫進腳本與一鍵注入；worktree 對話改 workspace 教練說直接做就用終端機補丁、別問他工程詞(2026-10-30)](project_nmda_members_page_and_staff_login_2026-10-30.md)
