@@ -1,3 +1,4 @@
+- [🔧 掃碼抽獎簽到後跳去哪＝event.db app_settings.lottery_join_url；10/31 設成零基礎學AI群邀請連結，刪該列即回官方LINE；抽獎名單看簽到不看進群(f74db3b97)(2026-10-31)](reference_event_lottery_join_url_setting_2026-10-31.md)
 - [🔴 寫信給別台軍師一律放 cross-agent/inbox/<收信人>/、不是 outbox（歸檔用）；寫完從雲端讀回驗證；聯想誤放被教練罵(2026-10-28)](feedback_letters_to_junshi_go_to_inbox_not_outbox_2026-10-28.md)
 - [🔧 NMDA 理監事團隊頁照片存 Mac 資料庫不在 GitHub；換照片交 Mac 只改 photo_file，聯想網頁上傳會把空座位標已填；10/28 Mac 已換21位(2026-10-28)](reference_nmda_team_photos_live_in_mac_db_not_github_2026-10-28.md)
 - [🔧 教練問「node 佔 2.15G」＝小龍蝦 gateway；重啟後開機即回 1.7～1.9G(V8 堆積)，重啟只省約0.4G；Mac mini 16G 可用63%、沒壓力；沒做降基線(2026-10-30)](reference_openclaw_gateway_node_memory_baseline_2026-10-30.md)
