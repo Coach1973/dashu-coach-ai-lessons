@@ -3,12 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// 🔴 2026-10-31 修法（Puppeteer 直接 launch 會被 macOS 判定為「無 responsible app」，
-//    導致鑰匙圈 ACL 拒絕、cookie 解不出來 → 被導去登入頁）：
-//    1) cookie 來源改成教練自己的 Chrome（真實 profile 的 cookie 一定是新的）
-//    2) Chrome 改用 `open -na`（LaunchServices）啟動 → macOS 會正確歸屬
-//       responsible app，鑰匙圈才會放行；再掛 CDP port 用 puppeteer.connect
-//    3) --headless=new → 教練螢幕不會跳出任何視窗
 const REAL_CHROME = '/Users/bymyway/Library/Application Support/Google/Chrome';
 const WORK_PROFILE = '/Users/bymyway/.openclaw/fb_session_data_local';
 const CDP_PORT = 9225;
@@ -25,13 +19,23 @@ function sh(cmd) {
   catch (e) { return (e.stdout || '').toString() + (e.stderr || '').toString(); }
 }
 
-// 1) 同步 cookie：從教練真實 Chrome 複製到工作 profile（保留加密格式，不用解密）
+// 🔴 2026-11-01 新增：重置工作 profile
+// 原因：Chrome 自動更新（156.0.8078.49 → .79）後，沿用舊工作 profile 會被 Chrome
+// 判定 profile 版本不符 → 啟動時直接把 cookie 清掉（Cookies 變成 32KB 空殼、沒有 cookies 表），
+// 結果就是被導去登入頁。每次同步前先清掉舊 cookie 檔，確保放進去的是「完整快照」。
+function resetCookieState() {
+  sh(`pkill -f "remote-debugging-port=${CDP_PORT}" 2>/dev/null`);
+  sh(`sleep 1`);
+  sh(`rm -f "${WORK_PROFILE}/Default/Cookies"* "${WORK_PROFILE}/Default/Network Persistent State"* 2>/dev/null`);
+  sh(`rm -f "${WORK_PROFILE}"/Singleton* "${WORK_PROFILE}/Default"/Singleton* 2>/dev/null`);
+  return true;
+}
+
 function syncCookies() {
   const srcDefault = path.join(REAL_CHROME, 'Default');
   const dstDefault = path.join(WORK_PROFILE, 'Default');
   fs.mkdirSync(dstDefault, { recursive: true });
 
-  // Local State（os_crypt 用同一把鑰匙）
   try { fs.copyFileSync(path.join(REAL_CHROME, 'Local State'), path.join(WORK_PROFILE, 'Local State')); } catch (e) {}
 
   let copied = 0;
@@ -43,27 +47,26 @@ function syncCookies() {
   for (const d of DIR_FILES) {
     const s = path.join(srcDefault, d);
     if (!fs.existsSync(s)) continue;
-    try {
-      sh(`ditto "${s}" "${path.join(dstDefault, d)}" 2>/dev/null`);
-    } catch (e) {}
+    try { sh(`ditto "${s}" "${path.join(dstDefault, d)}" 2>/dev/null`); } catch (e) {}
   }
   return copied;
 }
 
-// 2) 檢查工作 profile 是否還有 FB 登入 cookie
-function hasSessionCookie() {
-  const db = path.join(WORK_PROFILE, 'Default', 'Cookies');
-  if (!fs.existsSync(db)) return false;
+function countCookies(profileDir) {
+  const db = path.join(profileDir, 'Cookies');
+  if (!fs.existsSync(db)) return -1;
   try {
-    const out = sh(`sqlite3 "${db}" "select count(*) from cookies where host_key like '%facebook.com' and name in ('c_user','xs');"`).trim();
-    return parseInt(out, 10) > 0;
-  } catch (e) { return false; }
+    const out = sh(`sqlite3 "${db}" "select count(*) from cookies where host_key like '%facebook.com' and name in ('c_user','xs');" 2>/dev/null`).trim();
+    return parseInt(out, 10) || 0;
+  } catch (e) { return -1; }
 }
 
-// 3) 經 LaunchServices 啟動 Chrome（關鍵：讓 macOS 歸屬 responsible app）
+function hasSessionCookie() {
+  return countCookies(path.join(WORK_PROFILE, 'Default')) > 0;
+}
+
 function launchChrome() {
   sh(`pkill -f "remote-debugging-port=${CDP_PORT}" 2>/dev/null`);
-  sh(`pkill -9 -f SecurityAgent 2>/dev/null`);
   sh(`rm -f "${WORK_PROFILE}"/Singleton* "${WORK_PROFILE}/Default"/Singleton* 2>/dev/null`);
 
   sh(`open -na "Google Chrome" --args --user-data-dir="${WORK_PROFILE}" --remote-debugging-port=${CDP_PORT} --headless=new --disable-gpu --no-first-run --no-default-browser-check --disable-session-crashed-bubble about:blank`);
@@ -81,11 +84,12 @@ function shutdown() {
 }
 
 (async () => {
+  resetCookieState();
   const copied = syncCookies();
-  const hasCookie = hasSessionCookie();
-  console.log('同步 cookie 檔案數：' + copied + '，FB 登入 cookie：' + (hasCookie ? '有' : '無'));
+  const before = countCookies(path.join(WORK_PROFILE, 'Default'));
+  console.log('同步 cookie 檔案數：' + copied + '，FB 登入 cookie（啟動前）：' + (before > 0 ? '有 ' + before + ' 筆' : '無'));
 
-  if (!hasCookie) {
+  if (before <= 0) {
     console.log('⚠️ 教練 Chrome 裡也沒有 FB 登入 cookie 了，需要教練在瀏覽器重新登入 Facebook。');
     process.exit(2);
   }
@@ -94,6 +98,10 @@ function shutdown() {
     console.log('⚠️ Chrome 啟動失敗（CDP port 未就緒）。');
     process.exit(3);
   }
+
+  // 🔴 啟動後檢查 cookie 是否被 Chrome 清掉（自動更新/profile 版本不符時會發生）
+  const after = countCookies(path.join(WORK_PROFILE, 'Default'));
+  console.log('Chrome 啟動後 cookie：' + (after > 0 ? '存活 ' + after + ' 筆' : '❌ 被清空（啟動前 ' + before + ' 筆）'));
 
   let browser = null;
   try {
@@ -109,7 +117,6 @@ function shutdown() {
     if (/\/login|index\.php\?next=/.test(finalUrl)) {
       console.log('⚠️ FB session 已過期，被導去登入頁，無法抓壽星。');
       console.log('   終網址：' + finalUrl);
-      console.log('   請教練登入後再跑一次。');
       await browser.disconnect();
       shutdown();
       process.exit(2);
@@ -121,8 +128,6 @@ function shutdown() {
       let isTodaySection = false;
       for (const text of h2s) {
         if (text === '今日壽星') { isTodaySection = true; continue; }
-        // 🔴 區段結束標記只有在「已經進入今日壽星」之後才算數：
-        //    「新朋友」這個 h2 會出現在「今日壽星」之前，先 break 會抓到 0 人。
         if (isTodaySection && (text === '剛過生日的壽星' || text === '即將過生日的壽星' || text === '近期過生日的壽星' || text === '朋友')) break;
         if (isTodaySection && text.length > 0) todayList.push(text);
       }
