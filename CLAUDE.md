@@ -4,11 +4,33 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-31 18:50:00**
+> **最後同步：2026-11-01 06:35:42**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 06:30～06:40 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca，MiniMax-M3；與下方各棒是不同對話框）
+
+**主軸：FB 壽星抓取連續兩天壞掉，今天自己找出真因修好（教練 0 按鈕）；順手把 10/31 宣稱存在但實際不存在的 skill 真正做出來。**
+- **今日壽星已抓到（13 位）**：林治域、羅大勇、張簡湘玲、陳宥錚、張敬媛、王倩芳、高強、王玠詳、洪嘉隆、張秀蓮、Judy Teoh S L、葉芳棟、周延。
+- **第一次執行失敗**：腳本被導去 FB 登入頁（exit 2）。**第一時間以為又是 session 過期，但這次先查了教練真實 Chrome 的 cookie**：`c_user`/`xs` 到 2027-10-24 才過期、1370 筆完整、FB 相關 10 筆、`Local State` 顯示 profile=大樹/bymyway7@gmail.com → **確定不是 session 過期，不要叫教練重新登入**。
+- **真正根因**：Chrome 自動更新（156.0.8078.49 → .79）後，舊工作 profile `fb_session_data_local` 的 `Cookies` 被清成 **32KB 空殼**（sqlite 報 `no such table: cookies`），但腳本的 `hasSessionCookie()` 卻回「有」——因為它只查 cookie「名稱」不看筆數。**教練自己 Chrome 的 cookie 一直是好的**。
+- **對照實驗（定位關鍵）**：建乾淨 profile `fb_test_profile`，只複製真實 `Cookies`+`Cookies-journal`+`Local State`+Preferences → 啟動 Chrome 後 cookie **存活 1370 筆/FB 10 筆** → 證實是「舊工作 profile 狀態問題」不是「cookie 資料問題」。實驗檔已清。
+- **修法**（commit `d69b3b600`）：每次同步前先 `pkill` + 刪掉工作 profile 的 `Cookies*`/`Network Persistent State*`/`Singleton*`，讓同步放完整快照；**並在 Chrome 啟動後回報 cookie 存活筆數（啟動前 vs 啟動後）**，下次壞掉一眼看得出誰清的。
+- **驗證**：連跑兩次結果一致；**最壞狀態（cookie DB 整個刪光）重跑仍抓到 13 位** → 真的會自癒。
+- **補做 10/31 欠的帳**：10/31 那棒寫「一般化教訓已寫進 skill `macos-headless-chrome-keychain`」，但**該 skill 從未存在**（只有 CLAUDE.md 與接力棒裡的文字提到）。本次真正建立（Claude Code 端 `claude-code-skills/`＋Hermes 端 `~/.hermes/skills/devops/`，symlink 已建，commit `64a225bb4`），並用 `skill_view` 確認兩邊都能載入。
+- **SOP 已更新**（commit `05ebbc74f`）：`knowledges/SOP_fb_birthday_scraper.md` 補 2026-11-01 事故紀錄＋故障排除新列＋4 條教訓。
+- **三個 commit 都已 push**：`d69b3b600`（修腳本）、`05ebbc74f`（SOP）、`64a225bb4`（skill），remote main = `64a225bb4`。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 明天 06:30 那棒確認名單有出來（腳本 exit 0 且列出人名）；若又空 → **先看腳本自己印的「Chrome 啟動後 cookie：存活 N 筆」那行**，N=0 就是 profile 被清（腳本自己會重置，連跑即可）；N>0 但仍跳登入頁 → 看 `/tmp/fb_birthday.log` 有沒有 `Failed to decrypt token`（那是另一個根因）。
+2. `ai.openclaw.fb-birthday`（launchd）仍是 disabled（10/30 教練指示停用），**維持停用**，健康檢查不要報它。
+3. Chrome 若又自動更新，再確認一次工作 profile 會不會被清（腳本已能自癒，但值得回報一句）。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：無新增。
+🔧 AI 自己的清單：①`fb_test_profile` 實驗目錄已刪；②`/tmp/fb_birthday.log` 沒有輪替機制，長期會變大，下次有機會加；③10/31 棒提到的 Chrome 舊版框架 156.0.8078.49 還在 `/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/`，等下次自動更新後可清，現在別動（教練的 Chrome 正在用）。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 16:51～18:43 台灣時間，Mac 終端機／桌面版 Code 分頁，Sonnet 5.5；手機開工同一場的後半；對話容量約 26%；教練說「總結」；承接下方 13:10 那棒，同一個對話框）
 
