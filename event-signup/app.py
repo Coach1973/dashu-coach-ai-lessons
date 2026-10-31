@@ -1551,6 +1551,11 @@ def skyteam_click():
     return ("", 204) if _sts.log_click(payload.get("name")) else ("", 400)
 
 
+# ---------- 「零基礎學 AI」現場互動頁後端（2026-10-31）：說明見 nmda_ai.py ----------
+import nmda_ai as _nai
+app.register_blueprint(_nai.bp)
+
+
 # ---------- 中華新媒體影音發展協會（NMDA）理監事團隊（2026-10-23 教練交辦）：說明見 nmda_team.py ----------
 # 照南應大 /tut/team 同一套：名單先放空座位，本人點自己的名字補照片簡介；公開頁是 nmda 網站自己的 team.html，讀 /api/nmda/team/board。
 import nmda_team as _nt
