@@ -1,3 +1,4 @@
+- [🔧 VisionStory 說話影片生成 SOP：每 4 秒 1 點無條件進位、片長 10～11 秒最划算（教練 10/31 拍板）；先看這份再生成(2026-10-31)](SOP_visionstory_影片生成_2026-10-31.md)
 - [🔧 掃碼抽獎簽到後跳去哪＝event.db app_settings.lottery_join_url；10/31 設成零基礎學AI群邀請連結，刪該列即回官方LINE；抽獎名單看簽到不看進群(f74db3b97)(2026-10-31)](reference_event_lottery_join_url_setting_2026-10-31.md)
 - [🔴 寫信給別台軍師一律放 cross-agent/inbox/<收信人>/、不是 outbox（歸檔用）；寫完從雲端讀回驗證；聯想誤放被教練罵(2026-10-28)](feedback_letters_to_junshi_go_to_inbox_not_outbox_2026-10-28.md)
 - [🔧 NMDA 理監事團隊頁照片存 Mac 資料庫不在 GitHub；換照片交 Mac 只改 photo_file，聯想網頁上傳會把空座位標已填；10/28 Mac 已換21位(2026-10-28)](reference_nmda_team_photos_live_in_mac_db_not_github_2026-10-28.md)
