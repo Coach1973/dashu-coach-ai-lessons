@@ -106,6 +106,7 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 重複抓到同名壽星 | 已是已知行為，Step 4 會自動去重（不必改腳本） |
 | 🔴 報「The browser is already running for ...fb_session_data」 | **Chrome profile 放在外部磁碟（USB SSD）時，launchd 背景執行沒有權限寫那個磁碟**，Chrome 建不了 SingletonLock 就會噴這句假錯誤。**解法：profile 必須放本機碟**。本機版在 `/Users/bymyway/.openclaw/fb_session_data_local`，腳本會優先用它、找不到才退回舊路徑。（2026-10-24 實例：`fb_session_data` 在 10/03 被搬到 953-SSD，結果連續 19 天每天 exit 1，教練完全沒收到壽星名單卻沒人發現） |
 | 🔴 2026-10-31 新坑：cookie 在但還是被導去登入頁 | **Puppeteer 直接 `puppeteer.launch()` 啟動的 Chrome，macOS 判定它「沒有 responsible app」，鑰匙圈 ACL 會拒絕 → cookie 解不出來 → 直接被丟掉（不是 session 過期）**。Chrome 自己的 stderr 會寫 `Failed to decrypt token for service ...`。**解法：改用 `open -na "Google Chrome" --args --user-data-dir=... --remote-debugging-port=9225 --headless=new`（LaunchServices 啟動）**，macOS 才會正確歸屬 responsible app、鑰匙圈才放行；再 `puppeteer.connect({browserURL})` 接上去。`--headless=new` 保證教練螢幕不會跳出視窗。**已驗證有效（2026-10-31 修好）** |
+| 🔴 2026-11-01 新坑：Chrome 更新後工作 profile 的 cookie 變空殼 | **症狀一樣（被導去登入頁），但根因是「舊工作 profile 被 Chrome 判定版本不符 → 啟動時把 cookie 清掉」**。徵狀：工作 profile 的 `Cookies` 變成 32KB、sqlite 報 `no such table: cookies`（空殼），而教練真實 Chrome 的 `Cookies` 完整（1370 筆、FB 10 筆、`c_user`/`xs` 到 2027 年才過期）。**解法：每次同步前先 `pkill` + 刪掉工作 profile 的 `Cookies*`、`Network Persistent State*`、`Singleton*`，讓同步放進去的是完整快照；並在 Chrome 啟動後回報 cookie 存活筆數（啟動前 vs 啟動後）**。已驗證有效（2026-11-01 修好，commit `d69b3b600`） |
 
 ### 🔴 2026-10-31 事故紀錄（cookie 好好的一直在，卻抓不到）
 
@@ -121,6 +122,22 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 2. **診斷要抓原始錯誤，不要只看症狀**。Chrome 的 `dumpio: true` stderr 才有真因。
 3. **macOS 上「從程式啟動 App」≠「使用者啟動 App」**。任何需要鑰匙圈授權的 App（Chrome、密碼管理器、密鑰庫）都受影響，headless/背景執行特別容易踩。
 4. **「壞掉時不要急著叫人來修」**——10/30 叫教練重新登入 FB 是白叫，因為重新登入解決不了 (b)。先自己找出 0 按鈕解法。
+
+### 🔴 2026-11-01 事故紀錄（Chrome 更新後，cookie 變空殼）
+
+| 日期 | 現象 |
+|------|------|
+| 2026-11-01 06:30 | cron 首次執行被導去 FB 登入頁，腳本 exit 2。**第一時間以為又是 session 過期** |
+| 11/01 診斷 | **教練真實 Chrome 的 cookie 完全正常**：1370 筆、FB 相關 10 筆、`c_user`/`xs` 到 2027-10-24 才過期（`Local State` 顯示 profile = 大樹 / bymyway7@gmail.com）。**所以不是 session 過期** |
+| 11/01 診斷 | 反過來查工作 profile `fb_session_data_local` → `Cookies` 只有 32KB，sqlite 直接報 `no such table: cookies`（空殼）；但 `hasSessionCookie()` 卻回「有」——因為它查的是「有沒有 `c_user`/`xs` 這兩個名稱」，空殼裡剛好有殘留 |
+| 11/01 對照實驗 | 建乾淨 profile `fb_test_profile`，只複製真實 `Cookies` + `Cookies-journal` + `Local State` + Preferences → 啟動 Chrome 後 cookie **存活 1370 筆 / FB 10 筆** → 證實「cookie 本身沒問題，是舊工作 profile 被 Chrome 更新後判定版本不符、啟動時清空」 |
+| 2026-11-01 | 修法落地（commit `d69b3b600`）：每次同步前先 `pkill` + 刪掉工作 profile 的 `Cookies*`/`Network Persistent State*`/`Singleton*`，同步放完整快照；啟動後回報 cookie 存活筆數。**連跑兩次都抓到 13 位，結果一致** |
+
+**教訓（補）**：
+5. **「有 cookie」不等於「cookie 是好的」**。`hasSessionCookie()` 只查名稱不看筆數，空殼 DB 也會回「有」。**要看總筆數**（`select count(*) from cookies`），空殼會是 32KB / 0 筆。
+6. **Chrome 大版本更新後，工作 profile 一定要「重置 cookie 狀態」再同步**，否則複製進去的檔案會被 Chrome 啟動時丟掉。
+7. **判斷「session 過期 vs 環境壞掉」永遠先查教練真實瀏覽器的 cookie 到期日**——這是最快、最不會誤導教練的分法。
+8. **對照實驗是最快的定位法**：建一個乾淨 profile 複製同樣的檔案，跑一次就知道是「資料問題」還是「環境問題」。
 
 ### ✅ 2026-10-31 修好後的日常流程（0 按鈕，不需要教練做任何事）
 
