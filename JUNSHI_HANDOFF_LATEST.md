@@ -1,3 +1,23 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 06:30～07:05 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca 那一棒，MiniMax-M3；與下方各棒是不同對話框）
+
+**主軸：FB 壽星抓取連續兩天失敗，根因是「cookie 好好的但解不出來」，不是 session 過期；已修好，教練 0 按鈕。**
+- **今日壽星已抓到（13 位）**：陳芯怡、劉秀珍、廖綉玲、王國柱、王芳連、葉竹興、Laowu Freya Chen、胡真萍、黃鈺成、李將、連文昭、梁美珠、程名瑋。
+- **真正根因**：`puppeteer.launch()` 直接啟動的 Chrome，macOS 判定它「沒有 responsible app」→ 鑰匙圈 ACL 拒絕 → cookie 解不出來 → **Chrome 啟動時直接把 cookie 清掉**。證據是 Chrome 自己的 stderr：`Failed to decrypt token for service ...`。**不是 session 過期**——教練自己 Chrome 的 `c_user`/`xs` 到 2027 年才過期。
+- **10/30 那棒開錯藥**：叫教練「重新登入 FB」，但重新登入解決不了這題（cookie 一樣解不出來）。這次沒叫教練動手，直接找 0 按鈕解法。
+- **修法**（commit `f6474c865`，`scripts/fb_birthday_scraper.js` 全改）：①cookie 來源改用教練自己的 Chrome（`~/Library/Application Support/Google/Chrome`），自動同步到工作 profile；②改用 `open -na`（LaunchServices）＋ `--headless=new` 啟動，讓 macOS 正確歸屬 responsible app；③掛 CDP port 9225 用 `puppeteer.connect` 抓。教練螢幕不會跳視窗，實測不影響他正在用的 Chrome。
+- **順手修掉一個 h2 解析 bug**：「新朋友」這個 h2 會出現在「今日壽星」之前，舊邏輯看到就 break → 抓到 0 人。
+- **驗證**：把工作 profile 的 cookie DB 整個刪光（最壞狀態）重跑，仍正確抓到 13 位 → 真的會自癒。連跑三次結果一致。
+- **SOP 已更新**：`knowledges/SOP_fb_birthday_scraper.md` 加了 2026-10-31 事故紀錄 + 故障排除 + 新流程。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 明天 06:30 那棒確認名單有出來（腳本 exit 0 且列出人名）；若又空 → 直接看 `/tmp/fb_birthday.log` 有沒有 `Failed to decrypt token`。
+2. `ai.openclaw.fb-birthday`（launchd）仍是 disabled（10/30 教練指示停用），**維持停用**，健康檢查不要報它。
+3. 一般化教訓已寫進 skill `macos-headless-chrome-keychain`（macOS 上任何 headless Chrome 需要 cookie 的自動化作業都會踩）。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：無新增。
+🔧 AI 自己的清單：①`/Users/bymyway/.openclaw/fb_session_data_local` 現在只是 cookie 同步的工作區，SSD 那份 `fb_session_data` 備用已過期（2026-10-30 無 FB cookie），不用再當備援；②Chrome 舊版框架 156.0.8078.49 還留在 `/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/`，等下次自動更新後可清，現在別動（教練的 Chrome 正在用）。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 00:50 台灣時間，聯想 Windows 桌面版 Code 分頁，Sonnet 5.5；教練說「總結」；本段 10/24 08:48～10/28 21:50，對話容量約 25%；與上方 Mac 各棒是不同對話框）
 
 **主軸：記憶體／CPU 卡頓查證、電報更新評估、NMDA 理監事頁換照片的分工與交接信放錯位置被糾正。**
