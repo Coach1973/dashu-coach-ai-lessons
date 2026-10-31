@@ -4,11 +4,28 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-10-31 07:00:24**
+> **最後同步：2026-10-31 13:10:19**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 11:35～13:10 台灣時間，Mac 終端機／桌面版 Code 分頁，Haiku 5.5 → Sonnet 5.5；手機開工；對話容量約 15%；教練說「總結」；與下方各棒是不同對話框）
+
+**主軸：新增真聚籌備會、掃碼抽獎改成加入「零基礎學 AI」LINE 群、產兩張現場用 QR。**
+- **真聚籌備會**：分會列表新增第 14 個，slug `real-center`（教練說 RealCenter，照既有慣例小寫連字號）、英文名 Real Center Chapter、狀態籌備中。`bni-chapters` commit `72d6851`；正式站 https://chapters.bymyway.com/real-center 回 200 且顯示「真聚籌備會」；資料庫備份 `chapters.db.bak-before-real-center-20261031`。**信任遊戲座位地圖沒同步加（10/10 教練要兩邊對齊 13 個，現在差一個）。**
+- **抽獎改進群**：教練給 LINE 群邀請 QR（解出為 `line.me/ti/g2/…`，零基礎學 AI 群）。`event-signup/app.py` 的 `_lottery_greet_url` 改成：`app_settings.lottery_join_url` 有值就導去群連結，沒值維持官方 LINE 問候語；已設定該值、重啟 `com.coach.event-webapp`、`event.db` 備份 `event.db.bak-before-lottery-join-url-20261031`；commit `f74db3b97`。回退＝刪掉該設定列。
+- **兩張 QR**（桌面＋`event-signup/qr/`，commit `76ed32e2c`，皆解碼驗證）：抽獎簽到 `/checkin`、AI 互動頁 `https://event.bymyway.com/curated/ai-impact/`（原網址會 308 轉 http，加斜線直接 200）。
+- **教練原話線索**：「掃完就能加入，對吧？」＝他以為一掃就進群；實際是掃 QR→輸入手機→跳群邀請頁按加入。
+- **沒驗證／風險**：沒真的送出簽到測試（怕污染正式名單）；抽獎名單只看簽到、不看有沒有進群，官方 LINE 是否在群裡沒確認；官方 LINE「綁定」不再發生，之後推播這批人推不到；現在「目前活動」掛的是 bigtree-1031 中華新媒體啟動大會（manual 模式），現場若是別場要先在後台切；ai-impact QR 第一次嘗試被安全檢查擋下，重跑成功；真聚的畫面沒用真 Chrome 看過；`bni-chapters` 沒裝 pytest 所以沒跑測試。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 問教練現場抽獎當天用得順不順；若要自動知道誰進了群，才查官方 LINE 帳號在不在零基礎學 AI 群。
+2. 教練說要補座位地圖的真聚，再做（`seat_lists.py` CHAPTER_SLUGS＋`data/seat_lists/real-center.json`＋`tests/test_seats_nine_chapters.py` 數字 13→14）。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：座位地圖要不要加真聚。
+🔧 AI 自己的清單：①`ai-impact` 頁沒用真瀏覽器看過互動是否正常；②`bni-chapters` 本機 5063 對 `/<slug>` 回 404（連既有 real-happy 也是），公開站正常，疑似本機 port 對應別的服務，沒查。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 06:30～07:05 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca 那一棒，MiniMax-M3；與下方各棒是不同對話框）
 
