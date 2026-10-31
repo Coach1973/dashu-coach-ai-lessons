@@ -49,7 +49,14 @@ LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("EVENT_LINE_CHANNEL_ACCESS_TOKEN", ""
 
 def _lottery_greet_url(name: str, event_name: str) -> str:
     """組出「加好友同時帶問候語」的LINE連結：對方點開LINE就看到預填好的訊息，
-    按下傳送才算完成binding+登記抽獎（webhook比對這句話裡的姓名寫入line_user_id）。"""
+    按下傳送才算完成binding+登記抽獎（webhook比對這句話裡的姓名寫入line_user_id）。
+    2026-10-31教練：後台設定表 app_settings 有 lottery_join_url（例如「零基礎學AI」LINE群邀請連結）時，
+    一律改導去那個連結（加入群組即可參加抽獎）；沒設定就維持原本官方LINE問候語。"""
+    conn = db.get_conn()
+    row = conn.execute("SELECT value FROM app_settings WHERE key = 'lottery_join_url'").fetchone()
+    conn.close()
+    if row and (row["value"] or "").startswith("https://line.me/"):
+        return row["value"]
     greet_text = (
         f"我是{name}，剛報名了{event_name}。"
         f"我要現場立即參加抽獎（送出才算登記成功）"
