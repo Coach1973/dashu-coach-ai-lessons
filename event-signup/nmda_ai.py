@@ -41,8 +41,12 @@ KINDS = {"AI 指令", "工具／網站", "工作流程", "其他"}
 
 def _conn():
     c = sqlite3.connect(DB_PATH, timeout=10)
-    c.row_factory = sqlite3.Row
-    c.execute("PRAGMA journal_mode=WAL")
+    try:
+        c.row_factory = sqlite3.Row
+        c.execute("PRAGMA journal_mode=WAL")
+    except Exception:
+        c.close()  # 設定失敗也要關，否則每次失敗漏一條連線（10/31 開檔數爆掉的原因）
+        raise
     return c
 
 
@@ -100,6 +104,13 @@ def _headers(resp):
 @bp.get("/state")
 def state():
     c = _conn()
+    try:
+        return _state_json(c)
+    finally:
+        c.close()
+
+
+def _state_json(c):
     polls: dict = {}
     for r in c.execute("SELECT poll, opt, n FROM polls WHERE n > 0"):
         polls.setdefault(r["poll"], {})[r["opt"]] = r["n"]
@@ -111,16 +122,17 @@ def state():
         "skills": [dict(r) for r in c.execute("SELECT * FROM skills ORDER BY ts")],
         "words": [dict(r) for r in c.execute("SELECT w, n FROM words ORDER BY n DESC LIMIT 80")],
     }
-    c.close()
     return jsonify(out)
 
 
 def _write(sql, params):
     with _LOCK:
         c = _conn()
-        c.execute(sql, params)
-        c.commit()
-        c.close()
+        try:
+            c.execute(sql, params)
+            c.commit()
+        finally:
+            c.close()
 
 
 @bp.post("/polls/<poll>/vote")
@@ -212,12 +224,14 @@ def reset():
         return jsonify(error="forbidden"), 403
     with _LOCK:
         c = _conn()
-        for t in ("polls", "options", "questions", "echoes", "words"):
-            c.execute(f"DELETE FROM {t}")
-        c.execute("UPDATE skills SET likes = 0")
-        c.execute("DELETE FROM skills WHERE id NOT LIKE 'seed%'")
-        c.commit()
-        c.close()
+        try:
+            for t in ("polls", "options", "questions", "echoes", "words"):
+                c.execute(f"DELETE FROM {t}")
+            c.execute("UPDATE skills SET likes = 0")
+            c.execute("DELETE FROM skills WHERE id NOT LIKE 'seed%'")
+            c.commit()
+        finally:
+            c.close()
     return jsonify(ok=True)
 
 
