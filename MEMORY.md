@@ -167,3 +167,4 @@
 - 🔧 **Telegram 群組遷移後 ID 會變**：佩佩老師群組 `-5115910257` 已遷移，真實 chat_id 為 `-1003877502911`。舊 ID 送會回 `chat not found`。
 - 🔧 **`bot_main` 不在佩佩老師群組**，要投遞該群需用 `bot_peipei` 帳號；否則必定 `chat not found`（此錯誤是帳號/群組問題，不是路徑問題，不要誤判成媒體路徑錯誤）。
 - 🔧 **另一個同樣被允許的媒體目錄：`~/.openclaw/media/tool-image-generation/`**（2026-11-01 由 3 號機實測、1 號機驗證）。與 `~/.openclaw/media/` 根層並列，同樣可被 `message` 工具讀取。分辨技巧：**「Local media file not found」代表目錄被允許但檔案不在；「path is not under an allowed directory」代表目錄被拒** —— 兩者語意相反，可用來快速判斷。
+- 🔧 **`scripts/coach_schedule.py add` 沒有去重機制**（2026-11-01 實測）：直接 add 會在同一天同一時段產生第二筆重複行程，並讓可訪談時段計算錯亂（腳本只用 `data["events"]` append）。加入行程前必須先 `check --date` 並直接看 `knowledges/教練行程總表.json` 的 `events` 陣列，比對「時段＋參與者＋note」是否已被既有事件涵蓋。
