@@ -1,0 +1,1673 @@
+{
+  "jobs": [
+    {
+      "id": "2d36aa92-2992-4049-9390-19705bb1668c",
+      "declarationKey": "memory-core:memory-dreaming-promotion",
+      "name": "Memory Dreaming Promotion",
+      "description": "[managed-by=memory-core.short-term-promotion] Promote weighted short-term recalls into MEMORY.md (limit=30, minScore=0.600, minRecallCount=2, minUniqueQueries=1, recencyHalfLifeDays=14, maxAgeDays=60).",
+      "enabled": true,
+      "createdAtMs": 1789503041588,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "__openclaw_memory_core_short_term_promotion_dream__",
+        "lightContext": true,
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793559600000,
+        "lastRunAtMs": 1793473200042,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 32479,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793473232521,
+      "configRevision": "sha256:lzh1is1edkbmin74QMRfRKcgnoV1BsW0ufyGHJMKeZo",
+      "nextRunAtMs": 1793559600000,
+      "lastRunAtMs": 1793473200042,
+      "lastRunStatus": "ok",
+      "lastDelivered": false,
+      "lastDeliveryStatus": "not-requested",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "main",
+      "status": "ok"
+    },
+    {
+      "id": "0d64be3c-061d-4ca8-add0-d22862677e59",
+      "displayName": "☕ 幕僚長晨報(bni_tainan+jiaolian_thoughts彙整)",
+      "agentId": "main",
+      "name": "幕僚長晨報",
+      "description": "每日07:00統整bni_tainan(BNI大台南小幫手)+jiaolian_thoughts(教練都在想什麼)兩個對外服務agent昨日動態，三關判斷過濾(真的有問題/非偶發/真的影響業務)才播報，沒事就說沒事不硬編內容。原job b73845c9於2026-09-16 doctor--fix意外消失，2026-09-18重建，原始prompt文字未留存，本次依既有記錄的設計意圖重寫。",
+      "enabled": true,
+      "createdAtMs": 1789722249328,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "現在是每日晨報時間。請讀取 workspace/agents/bni_tainan/ 與 workspace/agents/jiaolian_thoughts/ 兩個目錄下「最新日期」的日誌檔（memory/*.md 或 DREAMS.md），每個目錄最多讀 2 個檔案、每檔最多讀最後 80 行，不要整份讀 AGENTS.md 或 DREAMS.md。\n\n⚠️ 教練 2026-11-01 明令：這份晨報不要傳給教練，也不要在最後回覆寫任何晨報內容（最後回覆只寫 NO_REPLY）。\n判斷有沒有「真的出問題、非偶發、會影響會員」的事：沒有就什麼都不做。有的話，用 exec 執行一行：python3 /Users/bymyway/.openclaw/workspace/scripts/junshi_inbox.py add 晨報 \"一句話寫清楚是什麼問題、在哪個分身、發生幾次\"，軍師開工時會看到並自己處理。",
+        "thinking": "low",
+        "toolsAllow": [
+          "*"
+        ],
+        "lightContext": true
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "telegram",
+        "to": "6124913915",
+        "bestEffort": true
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "failureAlert": {
+        "after": 1,
+        "channel": "telegram",
+        "to": "6124913915",
+        "cooldownMs": 21600000,
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1793574000000,
+        "lastRunAtMs": 1793487600046,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 1515195,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastDelivered": true
+      },
+      "updatedAtMs": 1793514454541,
+      "configRevision": "sha256:-rQB7c1OUUHeHCcuRD9IgRcdSRnXArXj--oMVEe5TdU",
+      "nextRunAtMs": 1793574000000,
+      "lastRunAtMs": 1793487600046,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "main",
+      "status": "ok"
+    },
+    {
+      "id": "ed6ef8a3-d29e-44a0-a6b9-12b43cee7134",
+      "name": "每日行程報告-巴哈助理群組",
+      "description": "教練 2026-10-13：佩佩老師每天一看就知道今天行程與可約空檔",
+      "enabled": true,
+      "createdAtMs": 1791853839569,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * *",
+        "tz": "Asia/Taipei"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "daily-report",
+          "--send"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1793574000000,
+        "lastRunAtMs": 1793487600063,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 9733,
+        "lastDiagnostics": {
+          "summary": "✅ 已貼到巴哈助理群組",
+          "entries": [
+            {
+              "ts": 1793487609796,
+              "source": "exec",
+              "severity": "info",
+              "message": "command ok: \"/usr/bin/python3\" \"-I\" \"/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py\" \"daily-report\" \"--send\"",
+              "exitCode": 0
+            }
+          ]
+        },
+        "lastDiagnosticSummary": "✅ 已貼到巴哈助理群組",
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793487609796,
+      "configRevision": "sha256:J5Vu-RiinOpBEjOy4vKWWZWqsrF5Y7xkuP1gpbT_X_M",
+      "nextRunAtMs": 1793574000000,
+      "lastRunAtMs": 1793487600063,
+      "lastRunStatus": "ok",
+      "lastDeliveryStatus": "not-requested",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "main",
+      "status": "ok"
+    },
+    {
+      "id": "78d71e4d-d3ab-4348-a4cf-a1c3a80df934",
+      "name": "榮樹下訪談提醒 2026-11-02 10:00",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1793509275047,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-02T01:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "remind",
+          "--id",
+          "cfee40e2"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1793581200000
+      },
+      "updatedAtMs": 1793509275047,
+      "configRevision": "sha256:A4pTtuq2-sY0Y43ENHxNV_84biTxcSA-I8rkpZXA_RA",
+      "nextRunAtMs": 1793581200000,
+      "effectiveAgentId": "main",
+      "status": "idle"
+    },
+    {
+      "id": "25686b00-9f47-4c77-8764-568a81a0752a",
+      "agentId": "peipei",
+      "name": "weekly-週一-BNI全台交流-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790702043,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 17 * * 1"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 17:30 BNI全台交流（每週一）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793611500000,
+        "lastRunAtMs": 1793006700018,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 23032,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793006723050,
+      "configRevision": "sha256:ubk_Y4vYzIcDstYCG6Bs_u32i7BkE2fneArtCnY5Mnw",
+      "nextRunAtMs": 1793611500000,
+      "lastRunAtMs": 1793006700018,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "3488b1ec-9812-446d-a3a4-61d994fe7924",
+      "agentId": "peipei",
+      "name": "weekly-週一-曜董諮詢會議-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790702389,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 19 * * 1"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 20:00 曜董諮詢會議（網路會議，每週一）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793620500000,
+        "lastRunAtMs": 1793015700027,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 22731,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793015722758,
+      "configRevision": "sha256:yFMsGuh40jyvBUZJh0SWzITT2m5m536bkpz4BfBHR6w",
+      "nextRunAtMs": 1793620500000,
+      "lastRunAtMs": 1793015700027,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "fd1f0953-a3a3-4875-a5e0-196d140f09e9",
+      "agentId": "peipei",
+      "name": "weekly-週一-董事諮詢會議-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790702728,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 20 * * 1"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:00 董事諮詢會議（每週一）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793624100000,
+        "lastRunAtMs": 1793019300025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 27620,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793019327645,
+      "configRevision": "sha256:B0F2YQxkRyMMsl7LPUpm2sdN-SFLzrqDSYgZs53QHsE",
+      "nextRunAtMs": 1793624100000,
+      "lastRunAtMs": 1793019300025,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "1562091d-e746-46ea-a172-2e42226a3a01",
+      "agentId": "peipei",
+      "name": "weekly-週一-啟動分會DnA週報-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790703219,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 21 * * 1"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 22:00 啟動分會DnA週報（每週一）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793627700000,
+        "lastRunAtMs": 1793022900031,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 22276,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793022922307,
+      "configRevision": "sha256:XB8T31nKejB8ayR_NXN0IvGEFroqcVvukPPTjJTcc4s",
+      "nextRunAtMs": 1793627700000,
+      "lastRunAtMs": 1793022900031,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "6503cdc1-a986-467e-84fa-b0dd0afa09a1",
+      "agentId": "peipei",
+      "name": "weekly-週一-戰報會議-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790703607,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 21 * * 1"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 22:00 戰報會議（網路會議，每週一，10/19 起）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793627700000,
+        "lastRunAtMs": 1793022900042,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 21712,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793022921754,
+      "configRevision": "sha256:crY_c-CYVC1qc_3jVFW0oej5_5YKWXnDrZ2a5j1gTlw",
+      "nextRunAtMs": 1793627700000,
+      "lastRunAtMs": 1793022900042,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "c908aa46-6a18-4e83-ac85-e40d3ee83f9f",
+      "agentId": "peipei",
+      "name": "weekly-週二-真鑽會議-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790703965,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 5 * * 2"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 06:00 真鑽會議（每週二）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793656500000,
+        "lastRunAtMs": 1793051700038,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 22016,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793051722054,
+      "configRevision": "sha256:Oy2Wl0Huv9DvAkmnLBJT4j4QDsV_YAXf49E9xOduSJ4",
+      "nextRunAtMs": 1793656500000,
+      "lastRunAtMs": 1793051700038,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "83619e4d-a467-4172-95a6-5becb458bd7b",
+      "name": "榮樹下訪談提醒 2026-11-03 19:00",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1793361262803,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-03T10:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "remind",
+          "--id",
+          "eddc6b57"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1793700000000
+      },
+      "updatedAtMs": 1793361262803,
+      "configRevision": "sha256:ExFER34nDdcs-WEpsuvKEUMqwwJkuBoXJu2YdH6ANjs",
+      "nextRunAtMs": 1793700000000,
+      "effectiveAgentId": "main",
+      "status": "idle"
+    },
+    {
+      "id": "d9491f2b-4da5-49bb-9382-7ca63cb90529",
+      "agentId": "peipei",
+      "name": "weekly-週二-真誠分會固定上線-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790704317,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 21 * * 2"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:30 真誠分會固定上線（Zoom 線上，每週二，10/20 起）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793712300000,
+        "lastRunAtMs": 1793107500025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 17569,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793107517594,
+      "configRevision": "sha256:VxSlkehaALnZax9NWllTj2JySwXhXK3xW7LDDJLx20I",
+      "nextRunAtMs": 1793712300000,
+      "lastRunAtMs": 1793107500025,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "04691202-6dda-4b29-8221-6eebb7b1acaa",
+      "agentId": "peipei",
+      "name": "weekly-週三-BNI例會-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790704699,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 6 * * 3"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 06:30 BNI 例會（每週三）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793744700000,
+        "lastRunAtMs": 1793139900030,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 124753,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793140024783,
+      "configRevision": "sha256:4G5cJ9eAjw-ep6wq0l1M6VDwQW5saerXA4-P6Uhnc9E",
+      "nextRunAtMs": 1793744700000,
+      "lastRunAtMs": 1793139900030,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "8ee61350-cd7a-4f94-a13c-ec5dc24d663f",
+      "name": "榮樹下訪談提醒 2026-11-04 19:00",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1793365674836,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-04T10:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "remind",
+          "--id",
+          "a294a77c"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1793786400000
+      },
+      "updatedAtMs": 1793365674836,
+      "configRevision": "sha256:8d4AjHODsyi8IHMuYx987LhsmT7en6od4exsoRUTOLY",
+      "nextRunAtMs": 1793786400000,
+      "effectiveAgentId": "main",
+      "status": "idle"
+    },
+    {
+      "id": "0e00d828-b973-4bce-be52-b42cb0211275",
+      "agentId": "peipei",
+      "name": "weekly-週三-方碩方共識會-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790705051,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 19 * * 3"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 20:00 方碩方共識會（每週三）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793793300000,
+        "lastRunAtMs": 1793188500032,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 36050,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793188536082,
+      "configRevision": "sha256:1s9oGVEyW3-sEc1ikLZGY6ca1eMggsxvY4ovIbo4QwM",
+      "nextRunAtMs": 1793793300000,
+      "lastRunAtMs": 1793188500032,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "2abc404e-1298-41c2-8d13-cef731cb8d8a",
+      "agentId": "peipei",
+      "name": "weekly-週四-真誠分會週例會-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790705400,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 6 * * 4"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 06:30 真誠分會週例會（Zoom 線上，每週四，10/22 起）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793831100000,
+        "lastRunAtMs": 1793226300103,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 30843,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793226330946,
+      "configRevision": "sha256:fC7jQw5CevZntbbwTfZZ_2FC3AxLFdI9v1ddENI8iR4",
+      "nextRunAtMs": 1793831100000,
+      "lastRunAtMs": 1793226300103,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "aaeb406b-3be2-42e2-9d79-5ce0973852c8",
+      "agentId": "peipei",
+      "name": "weekly-週四-執董共識會-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790705756,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 11 * * 4"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 12:00 執董共識會（每週四）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793850900000,
+        "lastRunAtMs": 1793246100039,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 26262,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793246126301,
+      "configRevision": "sha256:FUm7JXFVqyK_Du5cSXqt6_o6SUJqWNaDLriS2qf0VHM",
+      "nextRunAtMs": 1793850900000,
+      "lastRunAtMs": 1793246100039,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "b132e845-463a-45cd-9c0b-f4e8a4fc8d5a",
+      "agentId": "peipei",
+      "name": "weekly-週四-BNI全台交流-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790706106,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 17 * * 4"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 17:30 BNI全台交流（每週四）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793870700000,
+        "lastRunAtMs": 1793265900025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 14401,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793265914426,
+      "configRevision": "sha256:TTliTgkFzDOO9PYYg2mtr2OVgbFLMbF9NmaWrI80kuU",
+      "nextRunAtMs": 1793870700000,
+      "lastRunAtMs": 1793265900025,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "7a14995c-ab70-4f31-b5d3-a0c0997f0e2a",
+      "name": "榮樹下訪談提醒 2026-11-05 19:30",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1793275954746,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-05T10:30:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "remind",
+          "--id",
+          "05191591"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1793874600000
+      },
+      "updatedAtMs": 1793275954746,
+      "configRevision": "sha256:Z0I3xgDpR95XHaPS5ZWv3hDwLHpq3Zf2sxPbbOyzAp0",
+      "nextRunAtMs": 1793874600000,
+      "effectiveAgentId": "main",
+      "status": "idle"
+    },
+    {
+      "id": "1ee51d47-b67b-4ba8-8c78-8dc394ada4df",
+      "agentId": "peipei",
+      "name": "weekly-週四-線上聚-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790706457,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 20 * * 4"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:00 線上聚（Zoom 線上，每週四）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793883300000,
+        "lastRunAtMs": 1793278500030,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 55227,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793278555257,
+      "configRevision": "sha256:tFN_I1FAFbziH9zpXVOIcmAYgRMjQ0OfnCv3exOexBU",
+      "nextRunAtMs": 1793883300000,
+      "lastRunAtMs": 1793278500030,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "eeb63fb1-b1ed-44f4-8053-171649ce80a8",
+      "agentId": "peipei",
+      "name": "weekly-週五-BNI例會-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790706808,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 6 * * 5"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 06:30 BNI 例會（每週五）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793917500000,
+        "lastRunAtMs": 1793312700035,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 160297,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793312860332,
+      "configRevision": "sha256:n45GYAhidRcOEr7YcLxv8egC_NFMcW-G-y6K33qezAQ",
+      "nextRunAtMs": 1793917500000,
+      "lastRunAtMs": 1793312700035,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "bb8b6dc2-d587-4868-8402-59e896702d73",
+      "agentId": "peipei",
+      "name": "weekly-週五-RPL-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790707159,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 19 * * 5"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 20:00 RPL（每週五）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793966100000,
+        "lastRunAtMs": 1793361300013,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 105007,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793361405020,
+      "configRevision": "sha256:RIm8x0A4LaCxv4ybfmdeib35sVxTuzfAlgJykpWpKXg",
+      "nextRunAtMs": 1793966100000,
+      "lastRunAtMs": 1793361300013,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "d23edfa1-5acb-4caa-9dbf-05405f84b0ab",
+      "agentId": "peipei",
+      "name": "LRC週報會議-週五-提前5分鐘",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1790407479444,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 20 * * 5"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:00 LRC 週報會議。建議準備：1) 本週重點工作進度 2) 下週待辦 3) 需要支援的事項。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1793969700000,
+        "lastRunAtMs": 1793364900041,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 125246,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793365025287,
+      "configRevision": "sha256:NrJYim7xhTulDIUepQ4dkUUldKH9VrgtwRjm4GRIuP8",
+      "nextRunAtMs": 1793969700000,
+      "lastRunAtMs": 1793364900041,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "ed4c40fd-797c-4574-a327-946f6748f708",
+      "name": "榮樹下訪談提醒 2026-11-08 08:30",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1792933812852,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-07T23:30:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "command",
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "/Users/bymyway/.openclaw/workspace/scripts/coach_schedule.py",
+          "remind",
+          "--id",
+          "d5a312f6"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1794094200000
+      },
+      "updatedAtMs": 1792933812852,
+      "configRevision": "sha256:TKFj-P1y_AtlH942GWNAT7EDFgR184QPOfiXLvmC7vE",
+      "nextRunAtMs": 1794094200000,
+      "effectiveAgentId": "main",
+      "status": "idle"
+    },
+    {
+      "id": "1ce06d61-d366-472f-b506-864fc8470384",
+      "agentId": "peipei",
+      "name": "weekly-週日-真鑽領導團隊會議-5分鐘提醒",
+      "enabled": true,
+      "createdAtMs": 1791790707509,
+      "schedule": {
+        "kind": "cron",
+        "expr": "55 20 * * 0"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:00 真鑽領導團隊會議（每週日 21:00-22:00）。\n\n發提醒時請先對照行程總表 recurring 的 weekday（0=一、6=日）與 Google 日曆，並遵守以下事實：\n• 諮詢會議＝行程總表 id=35e9dd4b，weekday=0（星期一）21:00-22:00，Google 上改名為「董事諮詢會議」，只在星期一，不要說成週日。\n• 啟動分會DnA週報（id=047fec7f）與戰報會議（id=6bbed989）都是星期一 22:00-23:00，兩場同時段，不是今晚。\n• 曜董諮詢會議＝Google 星期一 20:00-21:00。\n• 星期日晚上只有真鑽領導團隊會議 21:00-22:00；RPL 團隊工作會議（8月舊紀錄 id=470f3374）為 tentative 待確認，沒有提醒。\n• 不要自行推論星期，星期以 weekday 欄位為準。\n\n提醒內容請寫：會議時間、地點／連結有無、以及與今晚其他行程是否衝突；不要把其他星期的行程寫進今晚。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1794142500000,
+        "lastRunAtMs": 1793537700042,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 60711,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1793540655157,
+      "configRevision": "sha256:fnxvlRBzO7QQTJSN4Es4h2cLTZnV3VqTwYRIRUQyX3E",
+      "nextRunAtMs": 1794142500000,
+      "lastRunAtMs": 1793537700042,
+      "lastRunStatus": "ok",
+      "lastDelivered": true,
+      "lastDeliveryStatus": "delivered",
+      "lastFailureNotificationDeliveryStatus": "not-requested",
+      "effectiveAgentId": "peipei",
+      "status": "ok"
+    },
+    {
+      "id": "5024f1cf-8c08-476a-b235-8474690e3b25",
+      "agentId": "peipei",
+      "name": "提醒-江宜倫採訪-1110",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1793117178354,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-10T11:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "提醒教練：20:00 接受江宜倫的採訪（上級），行程已寫入總表 id=fcf1a419。1 小時後開始，請先準備。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "6124913915"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1794308400000
+      },
+      "updatedAtMs": 1793117178354,
+      "configRevision": "sha256:VB8-Vg0LypwDArGV1UzV6nVWg8JJ3l-tgGk2_99FoRo",
+      "nextRunAtMs": 1794308400000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "29cdaf11-99b3-43eb-9968-aa2b67b4eb97",
+      "agentId": "peipei",
+      "name": "11-18-結繩領導學-台北場-一週前",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1790141717236,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-18T01:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📖 一週後 11/25-26（三、四）結繩領導學工作坊【台北場】就要開跑了！地點：劍潭海外青年活動中心 B1（台北市士林區中山北路四段16號），時間 9:30-16:30（9:00 報到）。建議本週準備：1) 高鐵票 2) 報名/結帳確認 3) 行李（兩天一夜可能要訂住宿？）4) 課程教材或簡報。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1794963600000
+      },
+      "updatedAtMs": 1790141717236,
+      "configRevision": "sha256:9c10PAIW4FeV4HA9YufKAlrUBlvD-_-E2VOEFfAakVo",
+      "nextRunAtMs": 1794963600000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "f8a8ffa2-99a2-40c7-9849-4e4bbc4bf9d0",
+      "agentId": "peipei",
+      "name": "11-24-結繩領導學-台北場-前一晚",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1790141717577,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-24T13:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📖 明天 11/25（三）早上結繩領導學工作坊【台北場】開跑！9:00 開始報到（9:30 上課），地點：劍潭海外青年活動中心 B1（台北市士林區中山北路四段16號）。記得：1) 早點睡 2) 設好明天出門鬧鐘 3) 高鐵票 + 身分證 4) 帶簡報/教材（如果有的話）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1795525200000
+      },
+      "updatedAtMs": 1790141717577,
+      "configRevision": "sha256:OalQOSnc9LMjSOXmPEX6I4vtGXK7fxeKYm6ioqjE3Lk",
+      "nextRunAtMs": 1795525200000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "9af41d4e-8234-4342-a4f9-399d5c7a3737",
+      "agentId": "peipei",
+      "name": "11-25-結繩領導學-台北場-當天出門",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1790141717917,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-24T23:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "🚄 今天 11/25（三）結繩領導學工作坊【台北場】！9:00 報到 / 9:30 上課 / 16:30 結束。地點：劍潭海外青年活動中心 B1（台北市士林區中山北路四段16號）。高鐵台南→台北約 2 小時，建議搭早班車。平安順利！💪",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1795561200000
+      },
+      "updatedAtMs": 1790141717917,
+      "configRevision": "sha256:8Jp5dxiVTztddWgZ5NVijhELaEO0nzrtdFGoSntynPo",
+      "nextRunAtMs": 1795561200000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "50e475d3-bd68-405d-9a7d-479c237ef53f",
+      "agentId": "peipei",
+      "name": "11-26-結繩領導學-台北場-第二天",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1790141718254,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-11-25T23:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📖 今天 11/26（四）結繩領導學工作坊【台北場】第二天！9:00 報到 / 9:30 上課 / 16:30 結束。地點同上（劍潭海外青年活動中心 B1）。今天結束後回程記得訂高鐵票！",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1795647600000
+      },
+      "updatedAtMs": 1790141718254,
+      "configRevision": "sha256:PHeSZinYOcfT7NDgKO--K3K7587hPmbABCaTQYlSMXA",
+      "nextRunAtMs": 1795647600000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "9671f667-d12e-484f-b776-c3b5f9d259ae",
+      "agentId": "peipei",
+      "name": "12-18-20:00-LTRT-5分鐘提醒",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1791790701021,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-12-18T11:55:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 20:00 LTRT（Zoom）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1797594900000
+      },
+      "updatedAtMs": 1791790701021,
+      "configRevision": "sha256:ZpsiSnsJpk4BWPtFMNTVvpiOCum5icW4nUpqtlREDSM",
+      "nextRunAtMs": 1797594900000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "aaa5516c-3a39-4249-992a-ca1e767ce1e3",
+      "agentId": "peipei",
+      "name": "12-18-21:00-執董與新會員有約(聖誕)-5分鐘提醒",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1791790701361,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-12-18T12:55:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 21:00 執董與新會員有約（聖誕提前一週，Zoom）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1797598500000
+      },
+      "updatedAtMs": 1791790701361,
+      "configRevision": "sha256:ZsxfvQF9a4kOCxBqi9ItYA3M0qc6bKDSnsHG8VSKgas",
+      "nextRunAtMs": 1797598500000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    },
+    {
+      "id": "4c8e5a55-a442-4c9e-ab85-7f879ccc5223",
+      "agentId": "peipei",
+      "name": "12-21-09:00-進階MSP-5分鐘提醒",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1791790701702,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-12-21T00:55:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "⏰ 再 5 分鐘 09:00 進階MSP（Zoom）。",
+        "toolsAllow": [
+          "*"
+        ]
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "-5115910257"
+      },
+      "scheduledToolPolicy": {
+        "version": 1,
+        "mode": "trusted"
+      },
+      "state": {
+        "nextRunAtMs": 1797814500000
+      },
+      "updatedAtMs": 1791790701702,
+      "configRevision": "sha256:eM91aASLh7xCfvqvOPdzJg176t_ibCu1SPU3IW0YWRs",
+      "nextRunAtMs": 1797814500000,
+      "effectiveAgentId": "peipei",
+      "status": "idle"
+    }
+  ],
+  "snapshotRevision": "sha256:wMk1YrSwZ-1SWxn3xj6bKjj7NwKgr2qN6j1qhIVpgwU",
+  "total": 33,
+  "offset": 0,
+  "limit": 200,
+  "hasMore": false,
+  "nextOffset": null,
+  "deliveryPreviews": {
+    "2d36aa92-2992-4049-9390-19705bb1668c": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "0d64be3c-061d-4ca8-add0-d22862677e59": {
+      "label": "none -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "ed6ef8a3-d29e-44a0-a6b9-12b43cee7134": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "78d71e4d-d3ab-4348-a4cf-a1c3a80df934": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "25686b00-9f47-4c77-8764-568a81a0752a": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "3488b1ec-9812-446d-a3a4-61d994fe7924": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "fd1f0953-a3a3-4875-a5e0-196d140f09e9": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "1562091d-e746-46ea-a172-2e42226a3a01": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "6503cdc1-a986-467e-84fa-b0dd0afa09a1": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "c908aa46-6a18-4e83-ac85-e40d3ee83f9f": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "83619e4d-a467-4172-95a6-5becb458bd7b": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "d9491f2b-4da5-49bb-9382-7ca63cb90529": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "04691202-6dda-4b29-8221-6eebb7b1acaa": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "8ee61350-cd7a-4f94-a13c-ec5dc24d663f": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "0e00d828-b973-4bce-be52-b42cb0211275": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "2abc404e-1298-41c2-8d13-cef731cb8d8a": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "aaeb406b-3be2-42e2-9d79-5ce0973852c8": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "b132e845-463a-45cd-9c0b-f4e8a4fc8d5a": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "7a14995c-ab70-4f31-b5d3-a0c0997f0e2a": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "1ee51d47-b67b-4ba8-8c78-8dc394ada4df": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "eeb63fb1-b1ed-44f4-8053-171649ce80a8": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "bb8b6dc2-d587-4868-8402-59e896702d73": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "d23edfa1-5acb-4caa-9dbf-05405f84b0ab": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "ed4c40fd-797c-4574-a327-946f6748f708": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "1ce06d61-d366-472f-b506-864fc8470384": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "5024f1cf-8c08-476a-b235-8474690e3b25": {
+      "label": "announce -> telegram:6124913915",
+      "detail": "explicit"
+    },
+    "29cdaf11-99b3-43eb-9968-aa2b67b4eb97": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "f8a8ffa2-99a2-40c7-9849-4e4bbc4bf9d0": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "9af41d4e-8234-4342-a4f9-399d5c7a3737": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "50e475d3-bd68-405d-9a7d-479c237ef53f": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "9671f667-d12e-484f-b776-c3b5f9d259ae": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "aaa5516c-3a39-4249-992a-ca1e767ce1e3": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    },
+    "4c8e5a55-a442-4c9e-ab85-7f879ccc5223": {
+      "label": "announce -> telegram:-5115910257",
+      "detail": "explicit"
+    }
+  }
+}

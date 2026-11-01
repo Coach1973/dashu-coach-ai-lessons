@@ -58,6 +58,10 @@ def load():
 
 def save(d):
     d["updated_at"] = dt.datetime.now(TZ).strftime("%Y-%m-%d %H:%M")
+    # 2026-11-01 巴哈直接讀原始檔，把 weekday=0（週一）當成週日，提醒佩佩老師把週一的會寫成今晚：每筆都寫上中文星期，讀檔的人不用自己換算
+    for r in d.get("recurring", []):
+        if isinstance(r.get("weekday"), int):
+            r["星期"] = "每週" + WEEK[r["weekday"]]
     fd, tmp = tempfile.mkstemp(dir=os.path.dirname(DATA), suffix=".tmp")
     with os.fdopen(fd, "w", encoding="utf-8") as f:
         json.dump(d, f, ensure_ascii=False, indent=1)
