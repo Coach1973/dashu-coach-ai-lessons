@@ -1,3 +1,4 @@
+- [🔧 改網頁深色區塊顏色連犯三次→page_contrast_scan.js 一次掃全頁；找活動頁連結先查 events.url＋app.py 路由(大樹小講/bigtree、微論壇/ai-talk)；公開頁不留講者控制台(2026-11-01)](reference_page_edit_contrast_scan_and_url_lookup_2026-11-01.md)
 - [🔴 教練說「提醒我做X」＝只提醒他本人、不替他對外發；小龍蝦誤發24則LINE廣告(案例142)，閘門已改分身開不了推播許可、排程停用(f20df6ae4)(2026-11-01)](feedback_reminder_means_remind_coach_not_act_for_him_line_push_2026-11-01.md)
 - [🔧 互動頁統計歸零三層原因：現場單機模式沒送出／收工 stash -u 把 workspace 內 nmda_ai.db 換空檔／加減票對不上；DB 已搬 ~/.openclaw/data、改 /marks/sync 冪等同步(9027f4197,df02da8)(2026-11-01)](reference_ai_impact_stats_db_wiped_by_auto_stash_marks_sync_2026-11-01.md)
 - [🔧 互動頁「送出沒反應」＝API_BASE=null 單機模式＋上架自動塞的 works-form.js 攔 submit；修法 nmda_ai.py、交付前用兩個獨立瀏覽器實測(d3213f0dd,09e687b)(2026-10-31)](reference_ai_impact_connected_mode_and_works_form_hijack_2026-10-31.md)
