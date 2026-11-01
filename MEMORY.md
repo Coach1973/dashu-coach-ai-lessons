@@ -168,3 +168,5 @@
 - 🔧 **`bot_main` 不在佩佩老師群組**，要投遞該群需用 `bot_peipei` 帳號；否則必定 `chat not found`（此錯誤是帳號/群組問題，不是路徑問題，不要誤判成媒體路徑錯誤）。
 - 🔧 **另一個同樣被允許的媒體目錄：`~/.openclaw/media/tool-image-generation/`**（2026-11-01 由 3 號機實測、1 號機驗證）。與 `~/.openclaw/media/` 根層並列，同樣可被 `message` 工具讀取。分辨技巧：**「Local media file not found」代表目錄被允許但檔案不在；「path is not under an allowed directory」代表目錄被拒** —— 兩者語意相反，可用來快速判斷。
 - 🔧 **`scripts/coach_schedule.py add` 沒有去重機制**（2026-11-01 實測）：直接 add 會在同一天同一時段產生第二筆重複行程，並讓可訪談時段計算錯亂（腳本只用 `data["events"]` append）。加入行程前必須先 `check --date` 並直接看 `knowledges/教練行程總表.json` 的 `events` 陣列，比對「時段＋參與者＋note」是否已被既有事件涵蓋。
+- 🔧 **兩種媒體錯誤的語意差異（2026-11-01 實測，重要）**：「Local media file not found」＝ 路徑通過允許目錄檢查、但**檔案在該路徑不存在**（常見原因是實測時間點早於複製落地）；「path is not under an allowed directory」＝ **目錄本身不被允許**。兩者指向完全不同的修法，不要混為一談。
+- 🔧 **`message` 工具的 `dryRun: true` 只驗「允許目錄＋路徑」，不會真的讀檔**：所以 dryRun 通過 ≠ 檔案存在。檔案存在性要另外用 `os.path.exists`／MD5 驗，不能只靠 dryRun 推論。
