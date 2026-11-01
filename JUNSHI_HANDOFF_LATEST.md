@@ -1,3 +1,23 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 14:29 台灣時間，Mac 終端機／桌面版 Code 分頁，Haiku 5.5 → Sonnet 5.5；本段 10/31 13:05～11/01 14:29，手機開工；對話容量約 25%；教練說「總結」；與下方各棒是不同對話框）
+
+**主軸：教練「看不懂小龍蝦的技術通知」→ 系統自己的通知改進軍師待處理匣、不再傳教練；另修好活動站整站 500、真聚頁面、NMDA 啟動大會頁。**
+- **最重要的新規矩（教練 11/01 原話）**：小龍蝦沒事不要講一大堆他看不懂的東西；我開工或對話時自己去巡視、自己解決，不要吵他。**回報第一句先講他要不要做事；沒事就說「教練，你什麼都不用做，這些我都來處理。」**（他說我「說得不清不楚」才罵。）
+- **待處理匣機制（commit `658f7a3b9`）**：`scripts/junshi_inbox.py`（add／list／done／stale）；`scripts/notify_coach.sh` 依呼叫者（名單 `SYSTEM_CALLERS`）把系統類通知存進 `state/junshi_inbox.jsonl` 不傳教練，要硬送加 `NOTIFY_FORCE_COACH=1`；開工 hook `feed_junshi_handoff.sh` 第 5.8 步列出；放超過 48 小時才用一句白話提醒教練（3 天內最多一次）。幕僚長晨報 cron（id `0d64be3c`）已改 delivery=none，有事才寫進匣。模擬系統通知測過進匣、沒傳 Telegram；業務類（報名、提醒、帳款）沒改也沒測。舊備份：`/tmp/notify_coach.sh.bak-inbox`、`/tmp/feed_junshi_handoff.sh.bak-inbox`。
+- **活動站整站 500（根因＋修）**：我 10/31 寫的 `nmda_ai.py` 資料庫連線沒關，開檔數爆掉（306 個，nmda_ai.db 漏 158 條）→ `bigtree` 頁面與 coach888 狀態都 500。連線一律 finally 關閉，重啟後 55 個，連打 360 次不增（commit `c7fef2a54`）。壞了多久沒查明。
+- **真聚籌備會**：創始會員登記之前只存資料庫、網頁不顯示；籌備中分會頁現在顯示「創始會員（已登記 N 位）」只列姓名＋公司（`bni-chapters` `cd4b581`，連帶真財富頁會顯示吳大樹 9/1 那筆）。教練說的「展示頁」我還沒確定是哪一頁（候選：信任遊戲座位地圖，還沒加真聚），他沒回。
+- **NMDA 啟動大會 10/31 活動頁**：event.db `bigtree-1031` 改為「中華新媒體影音發展協會 啟動大會」13:00 開始、備註 13:00–18:00 啟動儀式、18:00 後晚會（新增時段「全場」13:00–21:00，`bigtree` repo `56ccd5e`）；地點／地址仍空白；`bigtree-tw.netlify.app` 沒部署（要教練說「推」）。
+- **逐字保險箱**：11/01 警報是誤報（空鎖檔 `*.sqlite.generation-writer` 被當成沒人收的對話檔），已修（`recall.py` `9409acdfd`）；佩佩群 10/30 20:32 後無真人發言，「剛有人說話」那則警報來源沒找到。
+- **coach888**：NMDA 會員資料後台網址改放「後臺系統」（稽核只掃 changyong／houtai／bymyway，登記工具預設 baoliu 不在內，工具本身沒改）。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 先看開工注入的「🔧 小龍蝦／系統自己的通知」，待處理匣有 2 件：①小龍蝦 `main/AGENTS.md`（23,526 字）、`bni_tainan/AGENTS.md`（22,045 字）超過 2 萬字會被截，過期段落搬封存；②Mac 備份 3 天沒跑，確認 11/02 08:10 有恢復，沒恢復查備份腳本。處理完跑 `python3 scripts/junshi_inbox.py done`。
+2. 回報教練一律先說他要不要做事；不要唸技術名詞。
+3. 承接 10/31 16:51 那棒（已封存 `handoff_archive/接力棒封存_2026-11-01.md`）：VisionStory 影片等教練選（臨時目錄 `event-signup/static/_tmp_505f26aefbf3/` 未刪）；互動頁 `/api/nmda-ai/state` 正式使用後確認有資料。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：「展示頁」是哪一頁（座位地圖加真聚？）；10/31 活動地點；`bigtree-tw.netlify.app` 要不要部署；來賓資料表三個人生轉折要不要改選填。
+🔧 AI 自己的清單：①coach888 登記工具預設分類 baoliu 與稽核範圍不一致，之後改工具；②`ai.openclaw.fb-birthday` 維持停用；③`notify_coach.sh` 的 `SYSTEM_CALLERS` 名單若誤吞業務通知要調整；④`bni-chapters` 座位地圖未加真聚。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 06:30～06:40 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca，MiniMax-M3；與下方各棒是不同對話框）
 
 **主軸：FB 壽星抓取連續兩天壞掉，今天自己找出真因修好（教練 0 按鈕）；順手把 10/31 宣稱存在但實際不存在的 skill 真正做出來。**
@@ -19,112 +39,6 @@
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：無新增。
 🔧 AI 自己的清單：①`fb_test_profile` 實驗目錄已刪；②`/tmp/fb_birthday.log` 沒有輪替機制，長期會變大，下次有機會加；③10/31 棒提到的 Chrome 舊版框架 156.0.8078.49 還在 `/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/`，等下次自動更新後可清，現在別動（教練的 Chrome 正在用）。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 16:51～18:43 台灣時間，Mac 終端機／桌面版 Code 分頁，Sonnet 5.5；手機開工同一場的後半；對話容量約 26%；教練說「總結」；承接下方 13:10 那棒，同一個對話框）
-
-**主軸：啟動大會互動頁「送出沒反應」根因與修復、把成果頁裝回互動頁、VisionStory 雙人影片。**
-- **送出沒反應（兩個根因）**：①`ai-impact` 頁 `API_BASE=null`＝單機示範模式，資料只存來賓手機瀏覽器，講師螢幕看不到；②上架時自動塞入的 `works-form.js` 攔截 5 張表單的 submit（`stopImmediatePropagation`）並要求姓名＋電話／Email，來賓只看到紅字、頁面自己的送出程式沒跑（`works_contact_leads` 該站 0 筆佐證）。修法：新後端 `event-signup/nmda_ai.py`（`/api/nmda-ai/*`，存 `nmda_ai.db`，每 IP 每分鐘 60 次寫入上限，commit `d3213f0dd`）；頁面切 `API_BASE='/api/nmda-ai'`、拿掉 `data-works-form` 與腳本（`ai-impact` commit `09e687b`）。真 Chrome 兩個獨立訪客實測：講師畫面 6 秒內看到提問、回饋、票數；測試資料已清空。
-- **成果裝回互動頁**（`ai-impact` `85aa4ee`）：Suno 區換成兩首《新媒體時代來了》可播放＋歌詞連結；新增 `#results`「今天現場的成果」區（4 張現場圖、短影音、語音導讀、12 頁簡報＋PDF、完整成果頁連結）；素材直接引用 `/curated/newmedia/…`（不複製；成果頁改檔名或下架這邊會壞）。手機寬度 Chrome 實測無破圖、無 JS 錯、簡報翻頁正常；沒有真手機聽歌／播影片。頂部選單沒加項目（20px 字下加一項會折行）。
-- **VisionStory 影片（教練我被糾正一次）**：教練「兩個台灣年輕人的聲音」＝他和照片裡另一位**同框一起說話**，我先誤做成單人（左邊年輕人）兩種聲音。查證：API 只有單人說話，沒有雙人同框。補做「一人一句」並排版（左 Yu「好久不見！」、右 Devon「祝中華新媒體發展協會啟動大會成功」，ffmpeg 並排輪流定格，3.7 秒），點數 160→154。聲音全程**沒聽過**；右邊那位是不是教練、聲音要不要換教練複製聲音，沒確認。
-- **教練原話線索**：「沒看到影片，給我路徑」＝他在手機，Mac 桌面看不到；`SendUserFile` 在這種對話送不出檔案，要放臨時網址。
-- **沒驗證／風險**：臨時網址 `https://event.bymyway.com/static/_tmp_505f26aefbf3/`（A.mp4、B.mp4、duo.mp4）未刪，等教練選定才刪（已加進 `.git/info/exclude`）；左邊年輕人是第三人，外用要他同意；MEMORY 索引補收 VisionStory SOP（`429f7ff3c`，SOP 本身另一場寫的，檔名被「不合規」檢查提醒、沒改）。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 問教練選哪一支影片／要不要改（第一句太短 0.6 秒、右邊聲音、要不要補「影音」）；選定後刪臨時目錄 `event-signup/static/_tmp_505f26aefbf3/`。
-2. 互動頁正式使用後，確認 `/api/nmda-ai/state` 有資料、需要清空時再清（`nmda_ai.db`，頁面「清空本機資料」只清本機）。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：成果頁換內容時互動頁引用會連動；頁面沒有「標記提問已回答」鈕。
-🔧 AI 自己的清單：①臨時影片目錄待刪；②`SOP_visionstory_影片生成_2026-10-31.md` 等檔名「不合規」警告（改名會斷引用，需先查）；③真聚座位地圖未加（見上一棒）。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 11:35～13:10 台灣時間，Mac 終端機／桌面版 Code 分頁，Haiku 5.5 → Sonnet 5.5；手機開工；對話容量約 15%；教練說「總結」；與下方各棒是不同對話框）
-
-**主軸：新增真聚籌備會、掃碼抽獎改成加入「零基礎學 AI」LINE 群、產兩張現場用 QR。**
-- **真聚籌備會**：分會列表新增第 14 個，slug `real-center`（教練說 RealCenter，照既有慣例小寫連字號）、英文名 Real Center Chapter、狀態籌備中。`bni-chapters` commit `72d6851`；正式站 https://chapters.bymyway.com/real-center 回 200 且顯示「真聚籌備會」；資料庫備份 `chapters.db.bak-before-real-center-20261031`。**信任遊戲座位地圖沒同步加（10/10 教練要兩邊對齊 13 個，現在差一個）。**
-- **抽獎改進群**：教練給 LINE 群邀請 QR（解出為 `line.me/ti/g2/…`，零基礎學 AI 群）。`event-signup/app.py` 的 `_lottery_greet_url` 改成：`app_settings.lottery_join_url` 有值就導去群連結，沒值維持官方 LINE 問候語；已設定該值、重啟 `com.coach.event-webapp`、`event.db` 備份 `event.db.bak-before-lottery-join-url-20261031`；commit `f74db3b97`。回退＝刪掉該設定列。
-- **兩張 QR**（桌面＋`event-signup/qr/`，commit `76ed32e2c`，皆解碼驗證）：抽獎簽到 `/checkin`、AI 互動頁 `https://event.bymyway.com/curated/ai-impact/`（原網址會 308 轉 http，加斜線直接 200）。
-- **教練原話線索**：「掃完就能加入，對吧？」＝他以為一掃就進群；實際是掃 QR→輸入手機→跳群邀請頁按加入。
-- **沒驗證／風險**：沒真的送出簽到測試（怕污染正式名單）；抽獎名單只看簽到、不看有沒有進群，官方 LINE 是否在群裡沒確認；官方 LINE「綁定」不再發生，之後推播這批人推不到；現在「目前活動」掛的是 bigtree-1031 中華新媒體啟動大會（manual 模式），現場若是別場要先在後台切；ai-impact QR 第一次嘗試被安全檢查擋下，重跑成功；真聚的畫面沒用真 Chrome 看過；`bni-chapters` 沒裝 pytest 所以沒跑測試。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 問教練現場抽獎當天用得順不順；若要自動知道誰進了群，才查官方 LINE 帳號在不在零基礎學 AI 群。
-2. 教練說要補座位地圖的真聚，再做（`seat_lists.py` CHAPTER_SLUGS＋`data/seat_lists/real-center.json`＋`tests/test_seats_nine_chapters.py` 數字 13→14）。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：座位地圖要不要加真聚。
-🔧 AI 自己的清單：①`ai-impact` 頁沒用真瀏覽器看過互動是否正常；②`bni-chapters` 本機 5063 對 `/<slug>` 回 404（連既有 real-happy 也是），公開站正常，疑似本機 port 對應別的服務，沒查。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 06:30～07:05 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca 那一棒，MiniMax-M3；與下方各棒是不同對話框）
-
-**主軸：FB 壽星抓取連續兩天失敗，根因是「cookie 好好的但解不出來」，不是 session 過期；已修好，教練 0 按鈕。**
-- **今日壽星已抓到（13 位）**：陳芯怡、劉秀珍、廖綉玲、王國柱、王芳連、葉竹興、Laowu Freya Chen、胡真萍、黃鈺成、李將、連文昭、梁美珠、程名瑋。
-- **真正根因**：`puppeteer.launch()` 直接啟動的 Chrome，macOS 判定它「沒有 responsible app」→ 鑰匙圈 ACL 拒絕 → cookie 解不出來 → **Chrome 啟動時直接把 cookie 清掉**。證據是 Chrome 自己的 stderr：`Failed to decrypt token for service ...`。**不是 session 過期**——教練自己 Chrome 的 `c_user`/`xs` 到 2027 年才過期。
-- **10/30 那棒開錯藥**：叫教練「重新登入 FB」，但重新登入解決不了這題（cookie 一樣解不出來）。這次沒叫教練動手，直接找 0 按鈕解法。
-- **修法**（commit `f6474c865`，`scripts/fb_birthday_scraper.js` 全改）：①cookie 來源改用教練自己的 Chrome（`~/Library/Application Support/Google/Chrome`），自動同步到工作 profile；②改用 `open -na`（LaunchServices）＋ `--headless=new` 啟動，讓 macOS 正確歸屬 responsible app；③掛 CDP port 9225 用 `puppeteer.connect` 抓。教練螢幕不會跳視窗，實測不影響他正在用的 Chrome。
-- **順手修掉一個 h2 解析 bug**：「新朋友」這個 h2 會出現在「今日壽星」之前，舊邏輯看到就 break → 抓到 0 人。
-- **驗證**：把工作 profile 的 cookie DB 整個刪光（最壞狀態）重跑，仍正確抓到 13 位 → 真的會自癒。連跑三次結果一致。
-- **SOP 已更新**：`knowledges/SOP_fb_birthday_scraper.md` 加了 2026-10-31 事故紀錄 + 故障排除 + 新流程。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 明天 06:30 那棒確認名單有出來（腳本 exit 0 且列出人名）；若又空 → 直接看 `/tmp/fb_birthday.log` 有沒有 `Failed to decrypt token`。
-2. `ai.openclaw.fb-birthday`（launchd）仍是 disabled（10/30 教練指示停用），**維持停用**，健康檢查不要報它。
-3. 一般化教訓已寫進 skill `macos-headless-chrome-keychain`（macOS 上任何 headless Chrome 需要 cookie 的自動化作業都會踩）。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：無新增。
-🔧 AI 自己的清單：①`/Users/bymyway/.openclaw/fb_session_data_local` 現在只是 cookie 同步的工作區，SSD 那份 `fb_session_data` 備用已過期（2026-10-30 無 FB cookie），不用再當備援；②Chrome 舊版框架 156.0.8078.49 還留在 `/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/`，等下次自動更新後可清，現在別動（教練的 Chrome 正在用）。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 00:50 台灣時間，聯想 Windows 桌面版 Code 分頁，Sonnet 5.5；教練說「總結」；本段 10/24 08:48～10/28 21:50，對話容量約 25%；與上方 Mac 各棒是不同對話框）
-
-**主軸：記憶體／CPU 卡頓查證、電報更新評估、NMDA 理監事頁換照片的分工與交接信放錯位置被糾正。**
-- **記憶體**：10/24 08:48 NtFC（ntfs.sys）又 15,052MB，量 45 秒不漲＝凍結殘骸；教練 09:25 重啟後歸 0，**10/31 00:43 只有 8MB（6.6 天沒復發）**。嫌疑（網路回報、未本機證實）：Claude 桌面版是 MSIX、bindflt 在跑、AppData 有三個 junction。卡 3～5 分鐘那次＝PowerDirector 23 輸出 3 小時影片滿載 CPU（正常，沒動它）。已併入記憶 `reference_lenovo_memory_ntfs_nonpaged_pool_leak_2026-10-15`。
-- **電報**：Store 版 7.3.1，官方最新 7.3.3（新功能只有 Money／TON 禮物，其餘修 bug）；教練看完差異決定不更新，沒動。
-- **NMDA 理監事頁換照片**：照片存 Mac 資料庫、不在 GitHub；聯想網頁上傳會把 17 個空座位標成已填，教練 10/28 21:37 決定交 Mac；**Mac 22:10 已換 21 位新海報（`0bdf9dabf`，只動 photo_file）**。巴哈沒有自動放進團隊頁的步驟，歷來都是軍師手動放。記憶 `reference_nmda_team_photos_live_in_mac_db_not_github_2026-10-28`。
-- **我被糾正**：交接信放 `outbox`（歸檔區）Mac 讀不到，教練罵低級錯誤；已改放 `inbox/mac/`（`402b624f8` 後續更正）。記憶 `feedback_letters_to_junshi_go_to_inbox_not_outbox_2026-10-28`。
-- **教練原話線索**：「我給你的照片，最終目的就是把舊圖換成新圖，評估做快又好又省 token 再決定給誰」＝要我先比較再選人，不要直接動手。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 聯想 workspace 落後雲端數百個版本、`claude-brain/MEMORY.md` 有未 commit 的合併結果（兩邊條目都保留、已 git add）；先 `git stash`／對照再拉，別直接 pull。
-2. NtFC 再漲過 1GB 才用 wpr 追；平常不用動。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：是否升級電報到 7.3.3。
-🔧 AI 自己的清單：①聯想 inbox 有 6 封舊信（10/12～10/27）未歸檔；②聯想寫信前先對照 cross-agent/README 收信路徑。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-31 00:10 台灣時間，Mac 桌面版 Code 分頁（kaigong-1ea9b2 worktree），Haiku 5.5 → Opus 5.5 → Sonnet 5.5；本段 10/30 21:12～10/31 00:10；對話容量約 26%；教練說「總結」；與下方 21:12 那棒是不同對話框）
-
-**主軸：Grace 頁換圖上線、VisionStory 影片 API 串好並用教練本人的照片與錄音做出影片、小龍蝦主程式 node 記憶體。**
-- **Grace 頁**（`github_repos/grace-podcasts`）：小龍蝦補做的 6 張圖（IMG-001～006）換入，commit `fc756a1`，線上版與倉庫逐張一致；沒用真瀏覽器看排版。
-- **VisionStory**：金鑰在憑證層；指令檔 `scripts/visionstory_api.py`（commit `094d44529`、`855112500`、`20335fbd8`），子指令 credits／models／avatars／voices／create-video／tts／create-avatar／clone-voice，真生成都跑過。教練素材：錄音 `/Volumes/953-SSD/下載/歸仁齒輪有限公司.m4a`→聲音 `893883331753573490`；指定照片 coach-profile.jpg→頭像 `2236789676702807693`。做了 4 支影片放桌面：`visionstory_me_8s`（教練說喜歡，用帳號 9/28 就有的頭像＋複製聲音，聲音是不是教練的**沒確認**）、`coach_8s`（抱胸）、`gestureA`（有手勢）、`gestureB`（仍抱胸，我看縮圖挑錯）。點數 220→206。我都只看畫面、沒聽聲音。
-- **動作**：說話影片只能調語氣 emotion（5 種），姿勢由照片決定；「AI 影片」beta 可寫動作文字指令，要付費方案、每支較貴，沒實測。
-- **給別的 AI 的指令**：教練要 `me_8s` 的畫面＋台詞指令（不扣點數的那種）已給中英文版，並把 mp3 聲音樣本與臉參考照放桌面；教練「不是 API 指令、是分鏡指令」，我一開始給成 API 做法，被糾正。
-- **小龍蝦 node 2.15G**：就是主程式 gateway，23:20 重啟後開機仍約 1.8G，沒壓低、沒查原因；「釋放」（RustDesk 重啟）已跑。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 請教練播放 `me_8s`、`coach_8s`、`gestureA` 聽聲音像不像他（我沒聽過）。
-2. 教練說要用哪個 AI 工具重做，我再幫忙備到按生成前（登入要他自己）。
-3. Grace 頁請教練在真實 Chrome 與手機看排版。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：要不要試 AI 影片（可寫動作）；要不要查小龍蝦開機 1.8G 的原因。
-🔧 AI 自己的清單：①帳號裡 9/28 就有的 8 個頭像、2 個聲音沒動、不確定是誰的；②`visionstory_api.py` 的 tts 沒實跑過；③VisionStory 點數剩 206。
-
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-10-30 21:12 台灣時間，Mac 桌面版 Code 分頁（kai-ae7ac5 worktree），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 18:01～21:12；對話容量約 29%；教練說「總結」；與下方 18:01 那棒是不同對話框）
-
-**主軸：大樹常用技能表上線（GitHub 公開版）＋榮樹下官網預約流程整個改順。**
-- **大樹常用技能表**：7 張卡片（含「做整個網頁開頭動畫的技能」），公開網址 https://coach1973.github.io/bigtree-skills/（repo `Coach1973/bigtree-skills`，本機推送 `24f4a84`）；已登記大樹作品集「大樹常用」第一項。教練不想登入 Claude，所以 Claude 網頁版那個私人網址不給他。
-- **榮樹下預約（教練 21:00 起連續糾正）**：①預約人姓名直接顯示在前置作業（以前只寫「待確認」，姓名只在私人備註）；②預約時填的姓名／單位／電話／想說的話自動帶進來賓資料表（張瓊方、楊曉熹牧師既有資料已補）；③來賓卡後台加「接下來的訪談」表（已預約／已填資料表狀態）＋「確認這個時段」鈕；④**教練邏輯：對方自選的 7-8 點就是訪談時間，不該再等教練確認**——官網預約改成送出即自動確認（背景跑 `coach_schedule.py confirm`：排提醒＋寫 Google），上限改看「沒填資料表的最多 6 筆」，通知與成功畫面不再說待確認。存檔：workspace `d860a3224`、`87beaacc5`、`be4a4afd6`、`5d6d478d2`；rongtree 網頁 `6cbe817`、`49b178b`。11/4 楊曉熹牧師已手動確認（含 18:00 提醒）。
-- **教練原話線索**：「預約 7 點到 8 點，我還要跟他確認時間？要確認的是他有沒有填來賓表」＝流程只該有兩件事：預約即成立、資料表有沒有填；「他都填完了為什麼還要重填」＝預約資料要自動帶過去。我兩次把「預約表單」和「來賓資料表」當成同一張，被抓到。
-- **沒做到／風險**：整條「網頁送出→自動確認」沒真的送出一筆預約實測（會排進行程、吵巴哈群），只測過程式與 confirm 單獨跑；張瓊方還沒填「人生轉折、公益故事」兩個必填欄（預約表單本來沒問）。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 下一位真的在榮樹下預約時，確認：行程自動變「榮樹下訪談：某某」、有 1 小時前提醒、Google 日曆有、前置作業顯示姓名。
-2. 張瓊方資料表網址 https://event.bymyway.com/rongtree/guest/3GAILTIBuii2 ，教練決定要不要傳給她。
-
-🙋 要教練決定：來賓資料表的「三個人生轉折」「公益故事」要不要改選填（問過：2026-10-30 21:05）。
-🤫 等教練自己提起：無新增。
-🔧 AI 自己的清單：①`ai.openclaw.fb-birthday` 是被 launchctl 明確停用（disabled，對應 10/30 不貼 FB），健康檢查會一直報 ⚠️，改成不報；②近期 `dispatch-worker-auto-20261030211232` 自動暫存 28 檔沒放回（多為 terminal-notes 狀態檔，下場確認放回）；③「確認這個時段」鈕畫面尚未見過（沒有待確認的預約）；④worktree 對話框 Edit 改 workspace 檔被擋，本場全程用終端機補丁＋備份（state/rongtree_*_backup_*）。
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
