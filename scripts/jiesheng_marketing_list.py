@@ -31,6 +31,7 @@ SENT_LOG = WS / "state/jiesheng_sent_log.jsonl"
 DAILY_BATCH = 15          # 每日機器人推播上限（LINE 月配額 200，留 30 則安全線）
 QUOTA_RESERVE = 30       # LINE 月配額保留線（沿用 event-signup 的 LINE_FORWARD_MIN_QUOTA）
 PHONE_ROTATE_SIZE = 40   # 每日給教練手機手動發送的人數（10 分鐘約可發 40 則）
+BOT_CANDIDATES = 45     # 機器人每日候選數（實際送出以「成功 15 則」為目標）
 PHONE_START = "2026-11-01"
 WORKSHOP = "台北"
 
@@ -61,6 +62,17 @@ def norm_phone(p):
     return d if len(d) >= 9 else ""
 
 
+# LINE 推播 API 的 to 必須是真正的 user ID：U 開頭 + 32 碼十六進位。
+# 實測（2026-11-01）：event.db 的 line_user_id 欄位混有使用者自填的 LINE 帳號 ID
+# （例：Jerry、kksasa0430、regine.hsu），直接送會回 HTTP 400
+# "The property, 'to', in the request body is invalid"。
+LINE_UID = re.compile(r"^U[0-9a-f]{32}$")
+
+
+def valid_line_id(v):
+    return bool(v and LINE_UID.match(v.strip()))
+
+
 def load_state():
     if STATE.exists():
         try:
@@ -77,6 +89,11 @@ def collect():
     def put(name, phone, line_id, source, email="", title="", company="", note=""):
         name = (name or "").strip()
         phone = norm_phone(phone)
+        line_id = (line_id or "").strip()
+        if line_id and not valid_line_id(line_id):
+            # 不是有效 LINE user ID（多半是使用者自填的帳號），改由教練手機手動發
+            note = (note + "／原填的LINE帳號無效:" + line_id).strip("／")
+            line_id = ""
         if not name and not phone:
             return
         key = phone or ("fp:" + name)
@@ -231,14 +248,16 @@ def build():
 
     todo = [r for r in final if not r.get("sent_on")]
     bot_all = [r for r in todo if r["channel"] == "bot"]
-    phone_all = [r for r in todo if r["channel"] == "phone"]
+    # 手機輪轉池用「全部」phone 候選（不剔除已發），否則每天有人被標記已發後
+    # 清單縮減會讓索引位移、跳過沒發到的人。以 day_index 固定推進視窗。
+    phone_pool_all = [r for r in final if r["channel"] == "phone"]
 
     # ── 教練手動發送名單：每日輪轉，保證「全部的人都要發完」且不重複轟炸 ──
-    # 以起始日為基準算第幾天，每天往後推進 PHONE_ROTATE_SIZE 位。
     start = date(*map(int, PHONE_START.split("-")))
     day_idx = max(0, (date.today() - start).days)
-    rot = (day_idx * PHONE_ROTATE_SIZE) % len(phone_all) if phone_all else 0
-    phone_batch = (phone_all[rot:] + phone_all[:rot])[:PHONE_ROTATE_SIZE] if phone_all else []
+    rot = (day_idx * PHONE_ROTATE_SIZE) % len(phone_pool_all) if phone_pool_all else 0
+    rotated = phone_pool_all[rot:] + phone_pool_all[:rot] if phone_pool_all else []
+    phone_batch = [r for r in rotated if not r.get("sent_on")][:PHONE_ROTATE_SIZE]
 
     data = {
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -246,10 +265,11 @@ def build():
         "signup_url": "https://rplconstw.pse.is/Taipei1125",
         "daily_batch_size": DAILY_BATCH,
         "quota_reserve": QUOTA_RESERVE,
-        "today_bot_batch": bot_all[:DAILY_BATCH],
+        "today_bot_batch": bot_all[:BOT_CANDIDATES],
         "today_phone_batch": phone_batch,
         "phone_rotation": {"day_index": day_idx, "offset": rot,
-                           "rotate_size": PHONE_ROTATE_SIZE, "pool": len(phone_all)},
+                           "rotate_size": PHONE_ROTATE_SIZE, "pool": len(phone_pool_all),
+                           "already_sent": len([r for r in phone_pool_all if r.get("sent_on")])},
         "candidates": final,
         "excluded": ex,
         "sent": sent,

@@ -31,6 +31,9 @@ cd "$WS" || exit 1
   echo "--- 步驟5：產生教練手機手動發送名單 ---"
   "$PY" scripts/jiesheng_marketing_list.py --phone-sheet 2>&1 | tail -6
 
+  echo "--- 步驟6：回報教練（Telegram）---"
+  "$PY" scripts/jiesheng_daily_report.py 2>&1 | tail -4
+
   echo "===== 結束 $(date '+%H:%M:%S') ====="
 } >> "$LOG" 2>&1
 

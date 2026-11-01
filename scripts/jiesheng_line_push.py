@@ -39,6 +39,8 @@ MESSAGE = """📚 結繩領導學・兩日實戰工作坊（台北場 11/25-26�
 名額有限，確認報名後即保留席次。"""
 
 RESERVE = 30
+TARGET_OK = 15        # 每日成功推播目標
+MAX_ATTEMPTS = 40     # 單日最大嘗試次數（失敗不斷續位，避免無限打）
 
 
 def token():
@@ -78,12 +80,14 @@ def quota(tok):
 
 
 def push(tok, uid, text):
+    if not re.match(r"^U[0-9a-f]{32}$", uid or ""):
+        return False, "無效的 LINE user ID（非 U 開頭 32 碼）"
     body = json.dumps({"to": uid, "messages": [{"type": "text", "text": text}]}).encode()
     req = urllib.request.Request("https://api.line.me/v2/bot/message/push", data=body,
                                  method="POST", headers={"Content-Type": "application/json",
                                                         "Authorization": f"Bearer {tok}"})
     with urllib.request.urlopen(req, timeout=12) as resp:
-        return resp.status == 200
+        return resp.status == 200, ""
 
 
 def main():
@@ -109,7 +113,7 @@ def main():
     print(f"=== 結繩領導學 LINE 推播（許可剩 {left//60} 分 {left%60} 秒）===")
     if remain is not None:
         print(f"    本月配額剩餘：{remain} 則（保留線 {RESERVE}）")
-    print(f"    本次目標：{len(batch)} 位／今日上限 {d.get('daily_batch_size')}")
+    print(f"    目標：成功 {TARGET_OK} 則／今日批次 {len(batch)} 位")
 
     if dry:
         for r in batch:
@@ -117,21 +121,27 @@ def main():
         return
 
     ok, fail = [], []
-    for i, r in enumerate(batch, 1):
+    tried = 0
+    idx = 0
+    # 目標是「成功 N 則」，失敗者記錄後自動續下一位，避免白耗每日名額
+    while len(ok) < TARGET_OK and idx < len(batch):
+        if len(ok) + len(fail) >= MAX_ATTEMPTS:
+            break
+        r = batch[idx]
+        idx += 1
+        tried += 1
         left = approved()
         if left <= 0:
-            print(f"  ⚠️ 許可視窗已到期（剩 {left}s），停止於第 {i}/{len(batch)} 位")
+            print(f"  ⚠️ 許可視窗已到期（剩 {left}s），停止於第 {tried}/{len(batch)} 位")
             break
         try:
-            good = push(tok, r["line_id"], msg)
+            good, err = push(tok, r["line_id"], msg)
         except urllib.error.HTTPError as e:
             good = False
             err = f"HTTP {e.code}"
         except Exception as e:
             good = False
             err = type(e).__name__
-        else:
-            err = ""
         rec = {"ts": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "date": date.today().isoformat(),
                "name": r["name"], "phone": r["phone"], "line_id": r["line_id"],
                "ok": bool(good), "err": err, "channel": "bot"}
@@ -139,10 +149,10 @@ def main():
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
         if good:
             ok.append(r)
-            print(f"  [{i}/{len(batch)}] ✓ {r['name']} {r['phone']}")
+            print(f"  [{tried}] ✓ {r['name']} {r['phone']}（成功 {len(ok)}/{TARGET_OK}）")
         else:
             fail.append((r, err))
-            print(f"  [{i}/{len(batch)}] ✗ {r['name']} {r['phone']}  {err}")
+            print(f"  [{tried}] ✗ {r['name']} {r['phone']}  {err}（續下一位）")
         time.sleep(0.4)
 
     # 標記成功者為已發
