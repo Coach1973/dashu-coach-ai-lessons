@@ -130,7 +130,8 @@ def scan_agent_dbs():
                 continue
             m = d.get("message") or {}
             meta = m.get("__openclaw") or {}
-            if m.get("role") != "user" or m.get("toolName") or (m.get("provenance") or {}).get("kind") == "internal_system":
+            # inter_session＝分身互相傳話（11/01 起已關），不是真人說話，以前被記成「真人訊息」
+            if m.get("role") != "user" or m.get("toolName") or (m.get("provenance") or {}).get("kind") in ("internal_system", "inter_session"):
                 continue
             text = extract_text(m.get("content")).strip()
             if not text or is_noise(text) or text.startswith(("[System]", "[OpenClaw", "An async command")):
@@ -282,8 +283,26 @@ def harvest_now(expect):
     harvest()
     if expect == "-":   # 不是教練本人說的，只收割不核對
         return
-    t = vault_newest().get(expect, "")
     cutoff = (datetime.datetime.now(TZ) - datetime.timedelta(minutes=15)).strftime("%Y-%m-%d %H:%M")
+    if expect != "終端機":
+        # 2026-11-02：11/01 四次警報全是誤報——①分工群一句話三個分身都收到，保險箱只存一份（記在先掃到的分身名下），
+        # 照分身名找就找不到；②分身「接續工作」也會觸發，但教練根本沒說新的話。
+        # 改成直接核對：分身資料庫裡 15 分鐘內有署名的真人訊息，是不是每一句都進了保險箱。
+        seen = set()
+        for vf in glob.glob(VERBATIM_DIR + "/*.jsonl"):
+            for line in open(vf, encoding="utf-8", errors="ignore"):
+                try:
+                    e = json.loads(line)
+                    seen.add(e["t"] + e["text"][:80])
+                except Exception:
+                    pass
+        missing = [e for e in scan_agent_dbs() if e["t"] >= cutoff and e["who"] != "真人訊息"
+                   and e["t"] + e["text"][:80] not in seen]
+        if missing:
+            notify("🔴 逐字保險箱：%s有 %d 句話沒收進保險箱（例：%s %s）。叫軍師查 scripts/recall.py。"
+                   % (expect, len(missing), missing[0]["t"], missing[0]["text"][:30]), "verbatim_expect_" + expect)
+        return
+    t = vault_newest().get(expect, "")
     if t < cutoff:
         notify("🔴 逐字保險箱：%s剛有人說話，但保險箱沒收到（%s最後一句 %s）。對話存放位置可能又變了，叫軍師查 scripts/recall.py。"
                % (expect, expect, t or "從沒收過"), "verbatim_expect_" + expect)
