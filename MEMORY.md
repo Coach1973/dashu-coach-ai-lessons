@@ -166,3 +166,4 @@
 - 🔧 **`openclaw.json` 沒有任何媒體允許目錄欄位**（allowedDirs / mediaRoot / mediaStore 全查無），這是 OpenClaw 內建預設，不需設定；要傳本機圖給其他 agent 時，直接放 `~/.openclaw/media/` 根層。
 - 🔧 **Telegram 群組遷移後 ID 會變**：佩佩老師群組 `-5115910257` 已遷移，真實 chat_id 為 `-1003877502911`。舊 ID 送會回 `chat not found`。
 - 🔧 **`bot_main` 不在佩佩老師群組**，要投遞該群需用 `bot_peipei` 帳號；否則必定 `chat not found`（此錯誤是帳號/群組問題，不是路徑問題，不要誤判成媒體路徑錯誤）。
+- 🔧 **另一個同樣被允許的媒體目錄：`~/.openclaw/media/tool-image-generation/`**（2026-11-01 由 3 號機實測、1 號機驗證）。與 `~/.openclaw/media/` 根層並列，同樣可被 `message` 工具讀取。分辨技巧：**「Local media file not found」代表目錄被允許但檔案不在；「path is not under an allowed directory」代表目錄被拒** —— 兩者語意相反，可用來快速判斷。
