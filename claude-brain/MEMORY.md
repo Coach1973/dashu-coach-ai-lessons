@@ -156,3 +156,4 @@
 - [🧑‍🏫 人物頁標題不掛任期職稱（名字就好）、內文現職照寫（賴昭賢頁 10/27 教練糾正）](feedback_title_no_role_body_role_ok_2026-10-27.md)
 - [🔴 教練傳一串檔案到 Telegram：他按下載幾秒，我接管螢幕 8 分鐘／約10萬token只存16張；直接找 ~/Downloads/ 不開螢幕；理監事換照片案(2026-10-28)](feedback_telegram_bulk_files_coach_taps_ai_takes_from_downloads_2026-10-28.md)
 - [🔧 教練給 LINE QR 圖＝用 scratchpad 的 opencv 解碼成 line.me/ti/p/<代碼>（不是文字ID）；鄭綉美個人 LINE 正確代碼 b6hkGJBpdU（10/29 糾正舊的 aYDPnfRMc3）](reference_line_qr_decode_and_personal_link_xiumei_2026-10-29.md)
+- [🔴 教練看不懂小龍蝦技術通知：系統自己的通知改進 junshi_inbox 由我開工時自己處理，回報先說「你什麼都不用做」；幕僚長晨報已停直送(658f7a3b9)(2026-11-01)](feedback_system_notices_go_to_inbox_not_coach_2026-11-01.md)
