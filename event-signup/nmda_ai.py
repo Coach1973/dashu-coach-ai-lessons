@@ -31,7 +31,10 @@ from flask import Blueprint, jsonify, request
 
 bp = Blueprint("nmda_ai", __name__, url_prefix="/api/nmda-ai")
 
-DB_PATH = Path(os.environ.get("NMDA_AI_DB", Path(__file__).resolve().parent / "nmda_ai.db"))
+# 11/01：資料庫放在 workspace 外面。放在 workspace 內且沒進 git 時，每次收工自動備份（git stash -u）會把它收走、
+# 程式在空檔期建一個空新檔，原資料就放不回來（統計全清空、介面 500）。
+DB_PATH = Path(os.environ.get("NMDA_AI_DB", Path.home() / ".openclaw" / "data" / "nmda_ai.db"))
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 SEED_PATH = Path(__file__).resolve().parent / "nmda_ai_seed_skills.json"
 _LOCK = threading.Lock()
 _HITS: dict = {}
@@ -39,11 +42,24 @@ ID_RE = re.compile(r"^[A-Za-z0-9_\-]{1,40}$")
 KINDS = {"AI 指令", "工具／網站", "工作流程", "其他"}
 
 
+_SCHEMA = """
+        CREATE TABLE IF NOT EXISTS polls (poll TEXT, opt TEXT, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (poll, opt));
+        CREATE TABLE IF NOT EXISTS options (key TEXT PRIMARY KEY, label TEXT, poll TEXT);
+        CREATE TABLE IF NOT EXISTS questions (id TEXT PRIMARY KEY, topic TEXT, body TEXT, name TEXT,
+            votes INTEGER NOT NULL DEFAULT 0, answered INTEGER NOT NULL DEFAULT 0, ts INTEGER);
+        CREATE TABLE IF NOT EXISTS echoes (id TEXT PRIMARY KEY, body TEXT, ts INTEGER);
+        CREATE TABLE IF NOT EXISTS skills (id TEXT PRIMARY KEY, name TEXT, kind TEXT, use TEXT, how TEXT,
+            by TEXT, likes INTEGER NOT NULL DEFAULT 0, ts INTEGER);
+        CREATE TABLE IF NOT EXISTS words (w TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0);
+        """
+
+
 def _conn():
     c = sqlite3.connect(DB_PATH, timeout=10)
     try:
         c.row_factory = sqlite3.Row
         c.execute("PRAGMA journal_mode=WAL")
+        c.executescript(_SCHEMA)  # 檔案被換成空檔時自動補表，不再 500
     except Exception:
         c.close()  # 設定失敗也要關，否則每次失敗漏一條連線（10/31 開檔數爆掉的原因）
         raise
@@ -53,16 +69,7 @@ def _conn():
 def init_db():
     with _LOCK:
         c = _conn()
-        c.executescript("""
-        CREATE TABLE IF NOT EXISTS polls (poll TEXT, opt TEXT, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (poll, opt));
-        CREATE TABLE IF NOT EXISTS options (key TEXT PRIMARY KEY, label TEXT, poll TEXT);
-        CREATE TABLE IF NOT EXISTS questions (id TEXT PRIMARY KEY, topic TEXT, body TEXT, name TEXT,
-            votes INTEGER NOT NULL DEFAULT 0, answered INTEGER NOT NULL DEFAULT 0, ts INTEGER);
-        CREATE TABLE IF NOT EXISTS echoes (id TEXT PRIMARY KEY, body TEXT, ts INTEGER);
-        CREATE TABLE IF NOT EXISTS skills (id TEXT PRIMARY KEY, name TEXT, kind TEXT, use TEXT, how TEXT,
-            by TEXT, likes INTEGER NOT NULL DEFAULT 0, ts INTEGER);
-        CREATE TABLE IF NOT EXISTS words (w TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0);
-        """)
+        c.executescript(_SCHEMA)
         if not c.execute("SELECT 1 FROM skills LIMIT 1").fetchone() and SEED_PATH.exists():
             now = int(time.time() * 1000)
             for i, s in enumerate(json.loads(SEED_PATH.read_text(encoding="utf-8"))):
@@ -86,7 +93,7 @@ def _limited():
     hits = [t for t in _HITS.get(ip, []) if now - t < 60]
     hits.append(now)
     _HITS[ip] = hits
-    return len(hits) > 60
+    return len(hits) > 600  # 11/01 教練：同 IP 重複也照算；現場同一個 WiFi 70 人各勾 8 個不能被擋，這只防惡意洪水
 
 
 @bp.before_request
