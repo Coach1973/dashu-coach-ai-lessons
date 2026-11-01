@@ -160,3 +160,9 @@
 - 🔧 **LINE 月配額 200 則是硬上限，批次要按「成功 N 則」設計**：寫「取 N 位送 N 位」遇失敗就白耗名額；改成目標成功 N 則 + 失敗自動續下一位 + 最多嘗試 M 次。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
 - 📌 **教練手機人脈的真實來源**：`namecard-db/namecards.db`（cards 466 張名片／451 手機、guests 3,222 來賓），加上 `event-signup/event.db` attendees（369／105 有 LINE ID）與 `jiesheng-report/jiesheng_report.db` registrants（29，含台北場 20 已報名）。本機 AddressBook 與 iCloud 通訊錄皆無資料，Mac 端拿不到 iPhone 同步的聯絡人。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
 - 📌 **排程**：`每日12:15-結繩領導學LINE行銷`，cron `15 12 * * *` Asia/Taipei，command payload 跑 `scripts/jiesheng_daily_push.sh`（重建→開 10 分鐘推播許可→推播→撤銷→產手機名單→Telegram 回報）。commit `f642cbbba` 已 push 驗證。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+
+## OpenClaw 訊息工具的本機媒體允許目錄（2026-11-01 實測）
+- 🔧 **只有 `~/.openclaw/media/` 根層能被 `message` 工具讀取**。實測被拒（LocalMediaAccessError: path is not under an allowed directory）的位置：`~/.openclaw/agents/main/media/`、`~/.openclaw/agents/peipei/media/`、`~/.openclaw/media/store/`、`~/.openclaw/workspace/`、`~/.openclaw/media/peipei_out/`。
+- 🔧 **`openclaw.json` 沒有任何媒體允許目錄欄位**（allowedDirs / mediaRoot / mediaStore 全查無），這是 OpenClaw 內建預設，不需設定；要傳本機圖給其他 agent 時，直接放 `~/.openclaw/media/` 根層。
+- 🔧 **Telegram 群組遷移後 ID 會變**：佩佩老師群組 `-5115910257` 已遷移，真實 chat_id 為 `-1003877502911`。舊 ID 送會回 `chat not found`。
+- 🔧 **`bot_main` 不在佩佩老師群組**，要投遞該群需用 `bot_peipei` 帳號；否則必定 `chat not found`（此錯誤是帳號/群組問題，不是路徑問題，不要誤判成媒體路徑錯誤）。
