@@ -965,7 +965,8 @@
    "note": "周龍鴻 博士 Roger, PhD 與榮樹下線上正式認識；參與：邱裕榮、吳錦昌、吳大樹、陳佩君；正式訪談時間待討論",
    "kind": "interview",
    "reminder_job": "78d71e4d-d3ab-4348-a4cf-a1c3a80df934",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "form_token": "opNVIPNq5Yx0"
   },
   {
    "id": "gcal-2026-11-01-0",
@@ -989,7 +990,8 @@
    "title": "榮樹下訪談前正式認識：周龍鴻 博士 Roger, PhD",
    "source": "Google日曆",
    "start": "10:00",
-   "end": "11:00"
+   "end": "11:00",
+   "form_token": "Bi5CL7cJNqID"
   },
   {
    "id": "gcal-2026-11-02-3",
@@ -1045,7 +1047,8 @@
    "title": "榮樹下訪談：張瓊方",
    "source": "Google日曆",
    "start": "19:00",
-   "end": "20:00"
+   "end": "20:00",
+   "form_token": "n0PXeOfAgeJt"
   },
   {
    "id": "gcal-2026-11-03-10",
@@ -1101,7 +1104,8 @@
    "title": "榮樹下訪談：鍾俊榮",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "TdQMOWgdjU1N"
   },
   {
    "id": "gcal-2026-11-05-17",
@@ -1157,7 +1161,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "i1dMa5sZjVOK"
   },
   {
    "id": "gcal-2026-11-08-24",
@@ -4064,7 +4069,7 @@
    "note": "2026-10-22 教練改成整段空檔、來賓自選一小時，緩衝依實際訪談自動算，不再需要固定休息"
   }
  ],
- "updated_at": "2026-11-01 13:02",
+ "updated_at": "2026-11-01 15:34",
  "tainan_synced_at": "2026-11-01 10:56",
  "evening_window": {
   "start": "19:00",
