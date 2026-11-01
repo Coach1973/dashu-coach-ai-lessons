@@ -46,7 +46,7 @@ def normalize(target):
 
 def main():
     ap = argparse.ArgumentParser(description="Telegram 投遞目標防呆閘門")
-    ap.add_argument("target", help="chat id，例如 -5115910257 或 telegram:-5115910257")
+    ap.add_argument("target", nargs="?", default=None, help="chat id，例如 -5115910257 或 telegram:-5115910257")
     ap.add_argument("--expect", default=None, help="預期的群組名稱關鍵字，例如『佩佩老師』")
     ap.add_argument("--media", default=None, help="要送的媒體路徑（僅供紀錄用）")
     ap.add_argument("--registry", default=REGISTRY)
@@ -63,6 +63,10 @@ def main():
             if info.get("note"):
                 print(f"{'':>18}└ {info['note']}")
         return 0
+
+    if not args.target:
+        print("❌ 請提供要投遞的 chat_id（或用 --list 列出全部對照）。")
+        return 2
 
     tid = normalize(args.target)
     info = chats.get(tid)

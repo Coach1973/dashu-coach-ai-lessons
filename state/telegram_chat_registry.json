@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "purpose": "Telegram 投遞目標唯一真實對照表（2026-11-01 建立，誤投事故後）",
+    "rule": "送任何訊息／圖片到 Telegram 前，先用 telegram_target_guard.py 查這個表；不要憑印象、不要憑舊訊息裡的『已遷移』說法。",
+    "maintainedBy": "小龍蝦學長（1 號機）",
+    "updatedAt": "2026-11-01"
+  },
+  "chats": {
+    "-5115910257": {
+      "name": "佩佩老師的巴哈助理",
+      "kind": "group",
+      "recommendedAccount": "bot_peipei",
+      "note": "佩佩老師的海報、提醒、行程回報都送這裡。3 號機（巴哈助理）的本業群。"
+    },
+    "-1003877502911": {
+      "name": "頂級特助分工群",
+      "kind": "group",
+      "recommendedAccount": "bot_main",
+      "note": "學長／學弟／學妹三隻 bot 的協作群。教練在這裡問話、回報、派工用。這裡不是佩佩老師的群。"
+    },
+    "-5349981085": {
+      "name": "活動報名即時通知",
+      "kind": "group",
+      "recommendedAccount": "bot_main",
+      "note": "教練的報名通知群。"
+    },
+    "-5405039910": {
+      "name": "尚儒的AI群",
+      "kind": "group",
+      "recommendedAccount": "bot_main",
+      "note": "外部社群群。"
+    },
+    "6124913915": {
+      "name": "大樹教練（私聊）",
+      "kind": "direct",
+      "recommendedAccount": "bot_main",
+      "note": "教練本人 DM，執行完通報用這個。"
+    },
+    "8786886419": {
+      "name": "佩君 老師（佩佩老師本人，私聊）",
+      "kind": "direct",
+      "recommendedAccount": "bot_peipei",
+      "note": "佩佩老師本人 DM，不是群組。"
+    }
+  }
+}
