@@ -152,3 +152,11 @@
 
 <!-- openclaw-memory-promotion:memory:memory/2026-10-12.md:1:28 -->
 - ## 02:12~02:38 約瑟布 v2 推圖（災難+修復紀錄） ### 任務 教練 01:51 下令：v2_01-40 共 40 張，但前 6 張重複，所以實際要跑 v2_07-40 共 34 張。 ### 過程失誤（鐵律二違規） 1. 教練已給清楚 if-else 條件「如果前 6 張重複了，就出剩下 34 張」，我多嘴問「要我馬上開跑嗎？還是要先看哪幾張停一下？」→ 違鐵律二「直接行動不問確認」 2. 用 background exec 一直被教練的訊息打斷 → 應一開始就 foreground 3. Gateway 中間重啟兩次，所有 background exec 全清空 4. 第三次醒來後用「撈磁碟 + 推 Telegram」路線完成 ### 最終結果 - 34 張全部 cache hit 存到磁碟（本次重跑 0 點） - 9 推 4+4+4+4+4+4+4+4+2 全送到 Telegram（messageId 12314-12346） ### 教訓 🔴 批量圖任務鐵律（記住）： - 「全部出圖」= 立即跑，不問確認 - 一開始就 foreground，不要 background - Gateway 重啟後第一件事是「撈磁碟 + 補推」，不要盲重跑 - lk888 cache 機制 24h 內免費重複回傳，重跑成本 0 ### 磁碟狀態 -... [score=0.604 signals=2 recalls=2 avg=0.509 source=memory/2026-10-12.md:1-28] <!-- trigger: gateway, v2-01-40, v2-07-40 --> <!-- importance: 6 -->
+
+## 結繩領導學每日 LINE 行銷（2026-11-01 建置）
+<!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- 🔧 **LINE 推播的 `to` 必須是 `^U[0-9a-f]{32}$`**：event.db 的 `line_user_id` 欄位混有使用者自填的 LINE 帳號 ID（Jerry、kksasa0430…），直接送會回 HTTP 400 `The property, 'to', in the request body is invalid`。名單建置時就要 regex 驗證並把不合格者回流到人工通道。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- 🔧 **每日輪轉名單不可用「未發過」清單當索引基準**：有人被標記已發後清單縮減會造成索引位移、跳過沒發到的人。輪轉池要用全部候選 + `day_index * size` 取視窗，再濾掉已發。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- 🔧 **LINE 月配額 200 則是硬上限，批次要按「成功 N 則」設計**：寫「取 N 位送 N 位」遇失敗就白耗名額；改成目標成功 N 則 + 失敗自動續下一位 + 最多嘗試 M 次。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- 📌 **教練手機人脈的真實來源**：`namecard-db/namecards.db`（cards 466 張名片／451 手機、guests 3,222 來賓），加上 `event-signup/event.db` attendees（369／105 有 LINE ID）與 `jiesheng-report/jiesheng_report.db` registrants（29，含台北場 20 已報名）。本機 AddressBook 與 iCloud 通訊錄皆無資料，Mac 端拿不到 iPhone 同步的聯絡人。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
+- 📌 **排程**：`每日12:15-結繩領導學LINE行銷`，cron `15 12 * * *` Asia/Taipei，command payload 跑 `scripts/jiesheng_daily_push.sh`（重建→開 10 分鐘推播許可→推播→撤銷→產手機名單→Telegram 回報）。commit `f642cbbba` 已 push 驗證。 <!-- project: github.com/Coach1973/mac-openclaw-workflows -->
