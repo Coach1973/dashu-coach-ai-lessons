@@ -500,3 +500,9 @@
 **教練裁示**：上架任何作品都不要到大台南策展中心 FB 貼文，人工補發也不要。這一項直接從待辦刪掉，不用再提。
 **機制**：策展上架程式已拿掉 FB 步驟與「請軍師人工補發」那句；safety-locks 加了 FB 鎖，碰 facebook.com 會被擋（生日名單工具例外）。
 **通則**：教練說「不要吵」＝不要再列清單，不是「清單上的事全部自己做」。沒交辦給我的事，不要自己開始做。
+
+## 2026-11-01｜子代理 session 沒有 exec／process／read／write
+sessions_spawn 出來的 subagent 工具集不含本機 shell 與檔案工具（tool_call("exec") 回 Unknown tool id；file-transfer 需 paired node，本機 gateway 無節點）。下次純 git／本機檔案任務不要派給 subagent，改 sessions_send 給有 exec 的 agent:main:main 代跑，並要求回傳原始指令輸出當證據。
+
+## 2026-11-01｜telegram_target_guard 私聊 chat_id 被誤判
+閘門 normalize() 把「正數字 chat_id」一律加負號，導致所有私聊 target 一律回 2（不在對照表），等於私聊永遠送不出去。修法：先照原字串查表，查不到才試負號變體。已在 commit 8715dd17b 修正並回歸測試。
