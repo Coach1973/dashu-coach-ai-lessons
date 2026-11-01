@@ -1,3 +1,4 @@
+- [🔧 互動頁統計歸零三層原因：現場單機模式沒送出／收工 stash -u 把 workspace 內 nmda_ai.db 換空檔／加減票對不上；DB 已搬 ~/.openclaw/data、改 /marks/sync 冪等同步(9027f4197,df02da8)(2026-11-01)](reference_ai_impact_stats_db_wiped_by_auto_stash_marks_sync_2026-11-01.md)
 - [🔧 互動頁「送出沒反應」＝API_BASE=null 單機模式＋上架自動塞的 works-form.js 攔 submit；修法 nmda_ai.py、交付前用兩個獨立瀏覽器實測(d3213f0dd,09e687b)(2026-10-31)](reference_ai_impact_connected_mode_and_works_form_hijack_2026-10-31.md)
 - [🔧 VisionStory API 只能單人說話，雙人同框用 ffmpeg 並排輪流；教練在手機時影片放臨時網址（SendUserFile 送不出）(2026-10-31)](reference_visionstory_single_person_only_deliver_phone_url_2026-10-31.md)
 - [🔧 VisionStory 說話影片生成 SOP：每 4 秒 1 點無條件進位、片長 10～11 秒最划算（教練 10/31 拍板）；先看這份再生成(2026-10-31)](SOP_visionstory_影片生成_2026-10-31.md)
