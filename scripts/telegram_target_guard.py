@@ -34,14 +34,28 @@ def load_registry(path=REGISTRY):
 
 
 def normalize(target):
-    """把 telegram:-5115910257 / chat_id:-5115910257 / -5115910257 都收斂成 -5115910257"""
+    """把 telegram:-5115910257 / chat_id:-5115910257 / -5115910257 / g-5115910257 收斂成純數字字串。
+
+    ⚠️ 2026-11-01 修正：舊版會把「正數字 chat_id」一律加上負號，
+    導致 Telegram 私聊（教練 DM = 6124913915）永遠查不到而被誤判為「不在對照表裡」。
+    現在不再預設加號，改由 resolve() 先照原字串查表、查不到才試「負號變體」。
+    """
     t = str(target).strip()
     if ":" in t:
         t = t.split(":")[-1]
     t = t.replace("chat_id", "").replace("g-", "").strip()
-    if t and not t.startswith("-") and t.isdigit():
-        t = "-" + t
     return t
+
+
+def resolve(tid, chats):
+    """先照原字串查對照表；查不到才試「負號變體」（群組 chat_id 漏寫負號的情況）。"""
+    if tid in chats:
+        return tid
+    if tid and not tid.startswith("-") and tid.isdigit():
+        alt = "-" + tid
+        if alt in chats:
+            return alt
+    return None
 
 
 def main():
@@ -68,11 +82,12 @@ def main():
         print("❌ 請提供要投遞的 chat_id（或用 --list 列出全部對照）。")
         return 2
 
-    tid = normalize(args.target)
-    info = chats.get(tid)
+    raw = normalize(args.target)
+    tid = resolve(raw, chats)
+    info = chats.get(tid) if tid else None
 
     if info is None:
-        print(f"❌ 拒絕送出：目標 {tid} 不在對照表裡。")
+        print(f"❌ 拒絕送出：目標 {raw} 不在對照表裡。")
         print("   請先確認這是什麼群，並把對照補進 telegram_chat_registry.json 再送。")
         print("   絕對不要憑印象或舊訊息裡的『已遷移』說法投遞。")
         return 2
