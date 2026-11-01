@@ -990,7 +990,8 @@
    "title": "榮樹下訪談前正式認識：周龍鴻 博士 Roger, PhD",
    "source": "Google日曆",
    "start": "10:00",
-   "end": "11:00"
+   "end": "11:00",
+   "form_token": "NC357aAFncK7"
   },
   {
    "id": "gcal-2026-11-02-3",
@@ -1046,7 +1047,8 @@
    "title": "榮樹下訪談：張瓊方",
    "source": "Google日曆",
    "start": "19:00",
-   "end": "20:00"
+   "end": "20:00",
+   "form_token": "KGzs9S3b8y2F"
   },
   {
    "id": "gcal-2026-11-03-10",
@@ -1102,7 +1104,8 @@
    "title": "榮樹下訪談：鍾俊榮",
    "source": "Google日曆",
    "start": "19:30",
-   "end": "20:30"
+   "end": "20:30",
+   "form_token": "ZLXgrZI2sIVu"
   },
   {
    "id": "gcal-2026-11-05-17",
@@ -1158,7 +1161,8 @@
    "title": "榮樹下訪談：趙敏玄",
    "source": "Google日曆",
    "start": "08:30",
-   "end": "09:30"
+   "end": "09:30",
+   "form_token": "gX_vjF5w3siS"
   },
   {
    "id": "gcal-2026-11-08-24",
@@ -4091,7 +4095,7 @@
    "星期": "每週四"
   }
  ],
- "updated_at": "2026-11-01 22:24",
+ "updated_at": "2026-11-01 23:52",
  "tainan_synced_at": "2026-11-01 10:56",
  "evening_window": {
   "start": "19:00",
