@@ -261,6 +261,8 @@ def uncovered_stores():
             continue
         if time.time() - os.path.getmtime(path) > 86400:
             continue
+        if ".sqlite." in os.path.basename(path):
+            continue  # openclaw-agent.sqlite.generation-writer／reindex-lock 這類 4KB 空鎖檔，不是對話（2026-11-01 誤報 3 次）
         if not any(fnmatch.fnmatch(path, g) for g in covered):
             out.append(path.replace(HOME, "~"))
     return out
