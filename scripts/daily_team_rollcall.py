@@ -191,23 +191,26 @@ def check_verbatim_vault():
 
 
 def check_agent_boot_files():
-    """分身開機檔每檔只讀 2 萬字，超過中間被截掉（2026-10-30 巴哈 MEMORY.md 9 天從 2 萬長到 2.9 萬）。
+    """分身開機檔每檔有字數上限（預設 2 萬，openclaw.json 各分身可設 bootstrapMaxChars），超過中間被截掉
+    （2026-10-30 巴哈 MEMORY.md 9 天從 2 萬長到 2.9 萬）。2026-11-02：原本一律用 2 萬判斷，大台南小幫手上限是 4 萬卻被誤報。
     分身自己寫有 safety-locks 長期記憶上限鎖擋；系統自動搬進來的（Promoted From Short-Term Memory）擋不到，這裡每天量。"""
     cfg = json.loads(OPENCLAW_JSON.read_text())
     over = []
     entries = cfg["agents"]["entries"]   # 找不到就讓它報錯，不能掃 0 個分身還報正常
+    default_limit = int(cfg["agents"].get("defaults", {}).get("bootstrapMaxChars") or 20000)
     for aid, a in entries.items():
+        limit = int(a.get("bootstrapMaxChars") or default_limit)
         ws = Path(str(a.get("workspace") or "").replace("~", str(HOME), 1))
         for name in ("AGENTS.md", "SOUL.md", "MEMORY.md", "USER.md", "IDENTITY.md"):
             f = ws / name
             if f.is_file():
                 n = len(f.read_text(encoding="utf-8", errors="ignore"))
-                if n > 20000:
-                    over.append(f"{aid}/{name} {n:,}字")
+                if n > limit:
+                    over.append(f"{aid}/{name} {n:,}字（上限{limit:,}）")
     if not entries:
         bad("分身開機檔", "openclaw.json 讀不到分身清單", "🟡")
     elif over:
-        bad("分身開機檔", "超過 2 萬字會被截掉：" + "、".join(over) + "（叫軍師把過期段落搬封存）", "🟡")
+        bad("分身開機檔", "超過上限會被截掉：" + "、".join(over) + "（叫軍師把過期段落搬封存）", "🟡")
     else:
         ok("分身開機檔")
 
