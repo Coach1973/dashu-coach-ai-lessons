@@ -6,10 +6,10 @@
 - **playbook**：TAVA 個人品牌網頁製作指令補「ZIP 根目錄必須有全小寫 index.html、驗證最後交付的 ZIP」（`133dbae`，倉庫 tava-brand-web-playbook；起因陳佩君包首頁叫 peipei-brand.html 上架失敗）。
 - **開機檔誤報**：交辦說大台南小幫手 AGENTS.md 要瘦身，查證後是誤報——它的上限 4 萬字（openclaw.json bootstrapMaxChars），實際 2.2 萬字，Haiku 報的 47,827 是位元組。點名改用各分身自己的上限（`1b9395d21`）；刪掉系統誤搬的 964 字英文 TOOLS 範本（`1cb583d2c`）；本機問它 1-2-1 答得正常。**教練內容一個字沒動**，備份在 `state/backup_bni_tainan_agents_20261102/`。
 - **保險箱誤報**：11/01 四次警報全是誤報（分工群一句話三個分身都收、保險箱只存一份；分身「接續工作」也觸發檢查）。`recall.py` 改成逐句核對，並排除分身互傳訊息（`4979745d0`）；3 天署名真人訊息 53 句漏 0。
-- **Mac 備份**：10/30 12:32 後因點名有紅燈沒備；00:5x 手動 `tmutil startbackup`，開跑時 Copying，**我收工時還沒跑完**。
+- **Mac 備份**：10/30 12:32 後因點名有紅燈沒備；00:5x 手動 `tmutil startbackup`，開跑時 Copying；01:25 回頭看已停止（Running=0），但 `tmutil latestbackup/listbackups` 都說找不到備份、點名讀到的最後一份仍是 10/30 12:32，**無法確認這次有備成功**（可能只是網路磁碟已卸載讀不到）。
 
 ### 📋 下一場開工先做（以本棒為準）
-1. 確認 Time Machine 新的一份寫進去（`tmutil latestbackup`）、明早 08:10 點名自動備份有恢復。
+1. 確認 Time Machine 有沒有真的備成功（掛上 Amber 的 TimeMachine 磁碟看有沒有 11/02 的快照；沒有就查 backupd 日誌為何停）、明早 08:10 點名自動備份有恢復。
 2. 教練試填 superpower 表單一筆，確認「活動報名即時通知」群有收到。
 3. `bni-reminder-schedule` handler 沒看到 LINE 推播閘門，要查是否真的繞過。
 4. 之前交辦第 1～3 項已處理（AGENTS.md 結論＝不用砍；LINE 推播腳本有閘門；互動頁統計有真資料）；逐字保險箱漏收警報已修，通知清單可跑 `python3 scripts/junshi_inbox.py done`。
