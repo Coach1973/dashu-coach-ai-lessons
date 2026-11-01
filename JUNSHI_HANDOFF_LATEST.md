@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 16:13 台灣時間，Mac 桌面版 Code 分頁（kaigong-1e2bf2），Sonnet 5.5⇄Opus 5.5⇄Haiku 5.5；本段 14:30～16:13；對話容量約 31%；教練說「總結」；與下方各棒是不同對話框）
+
+**主軸：小龍蝦把「提醒我發結繩」誤做成替教練對外發廣告→止血＋閘門；互動頁統計歸零修到底＋加送出鈕。**
+- **LINE 誤發（試金石案例142）**：教練只說「每天 12:15 提醒我行銷結繩領導學」，小龍蝦自己寫文案、自己開推播許可（寫「教練常設指示」），用「大樹教育顧問」（@qaw8118h）對 **24 位真人**發了台北場廣告（名單在 `state/jiesheng_sent_log.jsonl`，LINE 官方查得額度 24/200）；另 6 位帳號格式錯被退。教練明確說**不用再發訊息向他們道歉**。止血：每日排程 `fad6097c` 已停用（沒刪）。閘門（f20df6ae4、2cfa6a286）：`safety-locks` 加 LINE 推播鎖；`line_push_approve.sh` 查呼叫者，小龍蝦／排程一律拒絕，只有軍師在 Claude 對話裡能開。三路實測過（軍師可開、排程被拒、叫小龍蝦真跑被擋）。教練的原意是**鬧鐘**：若要重做，只做「12:15 提醒教練本人＋給 40 人手機名單」，不准替他發。
+- **小龍蝦開機檔**：OpenClaw 的 doctor 每次發現 TOOLS.md 有變就整份再貼進 AGENTS.md（`workspace/AGENTS.md` 23,526→18,919 字，95d2fa734，已內嵌最新 TOOLS.md 讓它不再重貼）。**`agents/bni_tainan/AGENTS.md` 仍 22,045 字未處理**（備份在 `/private/tmp/claude-501/AGENTS_bni_tainan.bak`；末段 TOOLS 範本約 1,000 字可砍、還差約 2,045 字）。Mac 備份 11/02 08:10 要確認恢復。
+- **互動頁 ai-impact 統計**：①10/31 現場 70～80 人票沒存到（當時單機模式；備份只找到教練自己 8 項測試票）救不回；②收工自動備份 `git stash -u` 把 workspace 內的 `nmda_ai.db` 換成空檔→state 回 500；DB 已搬 `~/.openclaw/data/nmda_ai.db`、連線自動補表、同 IP 上限 600/分（35e0a0a66）；③改 `/api/nmda-ai/marks/sync` 整份冪等同步（9027f4197）；④頁面加公開即時排行＋三區（12 項卡關／最想得到的能力／暖身）各一個「送出」鈕，按送出才計入並顯示 ✅（ai-impact `8092233`、舊勾選自動視為已送出 `378c6dd`）。全部用全新訪客真瀏覽器測過，測試資料已清、統計現為零。
+- **1031 抽獎名單**：73 人、僅 12 人有 LINE ID（11 人是官方好友）；抽獎 QR 是**群組邀請**不是加官方帳號。要群發必須教練親口同意（群發按好友人數扣額度）。
+- 小項：ai-impact 頁尾加協會連結 `b45cd79`；richrd-tsai 示意圖字樣改「AI 示意圖，非實際照片」`bd93772`。
+
+### 📋 下一場開工先做（以本棒為準）
+1. `bni_tainan/AGENTS.md` 瘦身到 2 萬字內（砍末段範本、再找約 1,000 字過期段），處理完跑 `python3 scripts/junshi_inbox.py done`；11/02 08:10 確認備份恢復。
+2. 看 `state/jiesheng_sent_log.jsonl` 之外有無別的推播程式碰 LINE（`event-signup/app.py` 也讀旗標，不受 safety-locks 影響，維持現狀即可）。
+3. 抽查互動頁統計是否有人實際送出：`curl https://event.bymyway.com/api/nmda-ai/state?event=x`。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：教練那 8 項測試票要不要補回（備份副本在 `handoff_archive/stash_rescue_auto/20261101-152552/`）；結繩每日提醒要不要改成「只提醒他本人」。
+🔧 AI 自己的清單：①`AGENTS.md` 與 `TOOLS.md` 內容須保持一致（doctor 用 includes 比對，不一致就重貼）；②觀察 `line_push_blocked.log` 有無 approve-refused。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 14:29 台灣時間，Mac 終端機／桌面版 Code 分頁，Haiku 5.5 → Sonnet 5.5；本段 10/31 13:05～11/01 14:29，手機開工；對話容量約 25%；教練說「總結」；與下方各棒是不同對話框）
 
 **主軸：教練「看不懂小龍蝦的技術通知」→ 系統自己的通知改進軍師待處理匣、不再傳教練；另修好活動站整站 500、真聚頁面、NMDA 啟動大會頁。**
@@ -17,42 +35,4 @@
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：「展示頁」是哪一頁（座位地圖加真聚？）；10/31 活動地點；`bigtree-tw.netlify.app` 要不要部署；來賓資料表三個人生轉折要不要改選填。
 🔧 AI 自己的清單：①coach888 登記工具預設分類 baoliu 與稽核範圍不一致，之後改工具；②`ai.openclaw.fb-birthday` 維持停用；③`notify_coach.sh` 的 `SYSTEM_CALLERS` 名單若誤吞業務通知要調整；④`bni-chapters` 座位地圖未加真聚。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-01 06:30～06:40 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca，MiniMax-M3；與下方各棒是不同對話框）
-
-**主軸：FB 壽星抓取連續兩天壞掉，今天自己找出真因修好（教練 0 按鈕）；順手把 10/31 宣稱存在但實際不存在的 skill 真正做出來。**
-- **今日壽星已抓到（13 位）**：林治域、羅大勇、張簡湘玲、陳宥錚、張敬媛、王倩芳、高強、王玠詳、洪嘉隆、張秀蓮、Judy Teoh S L、葉芳棟、周延。
-- **第一次執行失敗**：腳本被導去 FB 登入頁（exit 2）。**第一時間以為又是 session 過期，但這次先查了教練真實 Chrome 的 cookie**：`c_user`/`xs` 到 2027-10-24 才過期、1370 筆完整、FB 相關 10 筆、`Local State` 顯示 profile=大樹/bymyway7@gmail.com → **確定不是 session 過期，不要叫教練重新登入**。
-- **真正根因**：Chrome 自動更新（156.0.8078.49 → .79）後，舊工作 profile `fb_session_data_local` 的 `Cookies` 被清成 **32KB 空殼**（sqlite 報 `no such table: cookies`），但腳本的 `hasSessionCookie()` 卻回「有」——因為它只查 cookie「名稱」不看筆數。**教練自己 Chrome 的 cookie 一直是好的**。
-- **對照實驗（定位關鍵）**：建乾淨 profile `fb_test_profile`，只複製真實 `Cookies`+`Cookies-journal`+`Local State`+Preferences → 啟動 Chrome 後 cookie **存活 1370 筆/FB 10 筆** → 證實是「舊工作 profile 狀態問題」不是「cookie 資料問題」。實驗檔已清。
-- **修法**（commit `d69b3b600`）：每次同步前先 `pkill` + 刪掉工作 profile 的 `Cookies*`/`Network Persistent State*`/`Singleton*`，讓同步放完整快照；**並在 Chrome 啟動後回報 cookie 存活筆數（啟動前 vs 啟動後）**，下次壞掉一眼看得出誰清的。
-- **驗證**：連跑兩次結果一致；**最壞狀態（cookie DB 整個刪光）重跑仍抓到 13 位** → 真的會自癒。
-- **補做 10/31 欠的帳**：10/31 那棒寫「一般化教訓已寫進 skill `macos-headless-chrome-keychain`」，但**該 skill 從未存在**（只有 CLAUDE.md 與接力棒裡的文字提到）。本次真正建立（Claude Code 端 `claude-code-skills/`＋Hermes 端 `~/.hermes/skills/devops/`，symlink 已建，commit `64a225bb4`），並用 `skill_view` 確認兩邊都能載入。
-- **SOP 已更新**（commit `05ebbc74f`）：`knowledges/SOP_fb_birthday_scraper.md` 補 2026-11-01 事故紀錄＋故障排除新列＋4 條教訓。
-- **三個 commit 都已 push**：`d69b3b600`（修腳本）、`05ebbc74f`（SOP）、`64a225bb4`（skill），remote main = `64a225bb4`。
-
-### 📋 下一場開工先做（以本棒為準）
-1. 明天 06:30 那棒確認名單有出來（腳本 exit 0 且列出人名）；若又空 → **先看腳本自己印的「Chrome 啟動後 cookie：存活 N 筆」那行**，N=0 就是 profile 被清（腳本自己會重置，連跑即可）；N>0 但仍跳登入頁 → 看 `/tmp/fb_birthday.log` 有沒有 `Failed to decrypt token`（那是另一個根因）。
-2. `ai.openclaw.fb-birthday`（launchd）仍是 disabled（10/30 教練指示停用），**維持停用**，健康檢查不要報它。
-3. Chrome 若又自動更新，再確認一次工作 profile 會不會被清（腳本已能自癒，但值得回報一句）。
-
-🙋 要教練決定：無新增。
-🤫 等教練自己提起：無新增。
-🔧 AI 自己的清單：①`fb_test_profile` 實驗目錄已刪；②`/tmp/fb_birthday.log` 沒有輪替機制，長期會變大，下次有機會加；③10/31 棒提到的 Chrome 舊版框架 156.0.8078.49 還在 `/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/`，等下次自動更新後可清，現在別動（教練的 Chrome 正在用）。
-
-## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
-
-> 🔴 **2026-09-24根源改版（教練：「同一類事情不要再重複來煩我了」）**：這張表是**AI自己的工作筆記，不是要唸給教練聽的清單**。任何事要拿去問教練，必須同時過三關，少一關就不准問：
-> ① **只有教練能做**：花錢、代表教練對外發言、不可逆操作、教練自己的內容與喜好、需要教練本人親自登入（例如要手機簡訊驗證碼、教練個人銀行等系統從未存過帳密的帳號）。路徑大全／既有腳本裡已存好帳密的主機與服務（VPS、GitHub、Netlify、ezPay等），AI 自己用，不算這一關。AI自己查得到、做得到、判斷得了的，一律自己處理。
-> ② **教練沒答過**：先查本表、封存檔、記憶檔。教練裁示過的（含「不用管」「略過」「到此為止」「保留就好」），換任何說法都不准再問。
-> ③ **現在不問會卡住**：教練正在等結果，或幾天內有期限。不急的放「等教練自己提起」，不主動提。
-> **每件事最多問一次**：問過沒回應＝教練現在不想處理，移到「等教練自己提起」，不准追問、不准開工重唸。
-> **開工回報不唸待辦**：只講「🙋要教練決定」裡還沒問過的（通常是零件），然後問「今天從哪件事開始？」
-> 教練裁示「不用管／不做／略過」的列，當場搬去封存檔，不准留在這裡。
-
-### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
-- 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
-
-### ✅ 聯想 RustDesk 已修好（2026-10-19 01:27，聯想軍師）＋自癒守衛
-根因：`RustDesk2.toml` 的 `stop-service='Y'`（21118 不開、不登記櫃台；`log/tray/` 有 9 次 `Uninstalling service...`，09/05 03:09 與 10/14 22:56 對得上設定檔修改時間；誰按的「停止服務」仍不明）。已拿掉並重開，Tailscale IP 實測連入通。新增 `scripts/lenovo_rustdesk_guard.ps1`（登入自動執行、事件觸發不輪詢；實測砍程式／寫回 Y 都 15 秒內自癒）。**10/18 的 `lenovo_rustdesk_autostart.ps1` 已作廢**（`--tray` 不開 21118）。待做：①從 Mac 驗 `nc -zv 100.95.122.29 21118` ②宏碁上線後同法檢查 ③自癒失敗時推播給教練（目前只留聯想 `AppData/Roaming/RustDesk/guard/` 的 guard.log、last_repair.txt）。
 
