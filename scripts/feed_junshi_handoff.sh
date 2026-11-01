@@ -416,6 +416,16 @@ PY
     printf '%s\n' "$QA_DIGEST"
   fi
 
+  # ───────── 第 5.8 步：小龍蝦／系統自己的通知（2026-11-01 教練：看不懂的別報給我，你自己處理）─────────
+  # 壞了就放行：這段出任何錯都不能擋開工。
+  INBOX_OUT=$(python3 "$HOME/.openclaw/workspace/scripts/junshi_inbox.py" list 2>/dev/null | head -40 || true)
+  if [ -n "$INBOX_OUT" ]; then
+    echo ""
+    echo "---"
+    echo ""
+    printf '%s\n' "$INBOX_OUT"
+  fi
+
   # ───────── 第 6 步：上線回應要求 ─────────
   echo ""
   echo "---"

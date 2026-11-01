@@ -32,6 +32,34 @@ if [[ -z "$MSG" ]]; then
     exit 1
 fi
 
+# 2026-11-01 教練：「小龍蝦沒事不要講一大堆我看不懂的東西……你自己內部不就處理了嗎？」
+# 系統自我監控／維運類通知（下面這些腳本發的）不直接傳給教練，改存進軍師待處理匣，
+# 開工時由軍師（feed_junshi_handoff.sh 第 5.8 步）看到、自己查自己修。
+# 要硬送給教練（花錢／對外／需要他決定）：呼叫時加環境變數 NOTIFY_FORCE_COACH=1。
+# 業務類（報名、提醒、帳款、活動）不在名單內，照舊直送。
+SYSTEM_CALLERS="daily_team_rollcall|recall\\.py|openclaw_upgrade_watch|minimax_batch_guard|llama_memory_guard|rustdesk_memory_guard|launchagents_guard|three_line_bots_healthcheck|system_patrol|vps_xiaolongxia_healthcheck|vps_polling_healthcheck|peipei_stuck_force_restart|cron_fail_notify|checkpoint_audit|jarvis_housekeeper|git_secret_guard"
+if [[ -z "${NOTIFY_FORCE_COACH:-}" ]]; then
+    CALLER_CHAIN=""
+    _P=$$
+    for _i in 1 2 3 4; do
+        _P=$(ps -o ppid= -p "$_P" 2>/dev/null | tr -d ' ')
+        [[ -z "$_P" || "$_P" -le 1 ]] && break
+        CALLER_CHAIN="$CALLER_CHAIN $(ps -o command= -p "$_P" 2>/dev/null)"
+    done
+    SYS_HIT=$(echo "$CALLER_CHAIN" | grep -Eo "$SYSTEM_CALLERS" | head -1)
+    if [[ -n "$SYS_HIT" ]]; then
+        if python3 "$(dirname "$0")/junshi_inbox.py" add "$SYS_HIT" "$MSG" 2>>"$LOG"; then
+            echo "[$(ts)] 📥 系統類通知改存軍師待處理匣（來源=${SYS_HIT}）：$(echo "$MSG" | head -1)" >> "$LOG"
+            STALE_N=$(python3 "$(dirname "$0")/junshi_inbox.py" stale 48 2>/dev/null)
+            if [[ -n "$STALE_N" ]]; then
+                NOTIFY_FORCE_COACH=1 "$0" "教練，系統有 ${STALE_N} 件小事放了兩天，等你下次開工我就處理，你什麼都不用做。" 259200 inbox_stale >/dev/null 2>&1 || true
+            fi
+            exit 0
+        fi
+        echo "[$(ts)] ⚠️ 待處理匣寫入失敗，退回直送教練" >> "$LOG"
+    fi
+fi
+
 # 節流：同一個鍵在指定秒數內只送一次，避免反覆打擾
 # ⚠️ lock 只在「真的送出成功」之後才建立——送失敗還鎖住的話，
 #    整個節流視窗內都不會再重試，等於一次失敗換來長時間靜音。
