@@ -18,6 +18,8 @@ cd "$WS" || exit 1
   "$PY" scripts/jiesheng_marketing_list.py --build 2>&1 | tail -12
 
   echo "--- 步驟2：開啟 10 分鐘 LINE 推播許可 ---"
+  echo "    授權依據：教練 2026-11-01 常設指示「每天中午12點15分都要提醒我行銷結繩領導學，用LINE發10分鐘，全部的人都要發完」"
+  echo "    授權時間：$(date '+%Y-%m-%d %H:%M:%S')　執行者：cron 每日行銷排程"
   bash scripts/line_push_approve.sh 2>&1
 
   echo "--- 步驟3：推播今日批次 ---"

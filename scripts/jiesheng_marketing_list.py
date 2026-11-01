@@ -235,7 +235,7 @@ def build():
 
     # ── 教練手動發送名單：每日輪轉，保證「全部的人都要發完」且不重複轟炸 ──
     # 以起始日為基準算第幾天，每天往後推進 PHONE_ROTATE_SIZE 位。
-    start = date(2026, 11, 1)
+    start = date(*map(int, PHONE_START.split("-")))
     day_idx = max(0, (date.today() - start).days)
     rot = (day_idx * PHONE_ROTATE_SIZE) % len(phone_all) if phone_all else 0
     phone_batch = (phone_all[rot:] + phone_all[:rot])[:PHONE_ROTATE_SIZE] if phone_all else []
