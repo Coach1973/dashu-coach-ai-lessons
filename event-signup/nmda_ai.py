@@ -51,6 +51,7 @@ _SCHEMA = """
         CREATE TABLE IF NOT EXISTS skills (id TEXT PRIMARY KEY, name TEXT, kind TEXT, use TEXT, how TEXT,
             by TEXT, likes INTEGER NOT NULL DEFAULT 0, ts INTEGER);
         CREATE TABLE IF NOT EXISTS words (w TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0);
+        CREATE TABLE IF NOT EXISTS marks (visitor TEXT, poll TEXT, opt TEXT, ts INTEGER, PRIMARY KEY (visitor, poll, opt));
         """
 
 
@@ -148,8 +149,42 @@ def poll_vote(poll):
     opt = _s(d.get("option"), 60)
     if not ID_RE.match(poll) or not opt:
         return jsonify(error="bad"), 400
+    if poll in MARK_POLLS:  # 11/01 起這三個投票以 /marks/sync 為準（舊頁面的加減票不再寫入，避免帳對不上）
+        return jsonify(ok=True)
     _write("INSERT INTO polls (poll, opt, n) VALUES (?,?,MAX(0,?)) "
            "ON CONFLICT(poll, opt) DO UPDATE SET n = MAX(0, n + ?)", (poll, opt, _delta(d), _delta(d)))
+    return jsonify(ok=True)
+
+
+MARK_POLLS = {"pain", "ability", "level"}
+
+
+@bp.post("/marks/sync")
+def marks_sync():
+    """訪客目前勾選的完整清單（冪等）：伺服器依此重算 pain/ability/level 的票數。
+    同一個 IP、同一個人重複來都照算；每個瀏覽器（visitor）每個選項最多算一票。"""
+    d = request.get_json(silent=True) or {}
+    vid = _s(d.get("visitor"), 40)
+    if not ID_RE.match(vid):
+        return jsonify(error="bad"), 400
+    items = []
+    for it in (d.get("marks") or [])[:60]:
+        if isinstance(it, (list, tuple)) and len(it) == 2 and it[0] in MARK_POLLS and ID_RE.match(_s(it[0], 40)):
+            opt = _s(it[1], 60)
+            if opt:
+                items.append((it[0], opt))
+    now = int(time.time() * 1000)
+    with _LOCK:
+        c = _conn()
+        try:
+            c.execute("DELETE FROM marks WHERE visitor=? AND poll IN ('pain','ability','level')", (vid,))
+            c.executemany("INSERT OR IGNORE INTO marks (visitor, poll, opt, ts) VALUES (?,?,?,?)",
+                          [(vid, a, b, now) for a, b in items])
+            c.execute("DELETE FROM polls WHERE poll IN ('pain','ability','level')")
+            c.execute("INSERT INTO polls (poll, opt, n) SELECT poll, opt, COUNT(*) FROM marks GROUP BY poll, opt")
+            c.commit()
+        finally:
+            c.close()
     return jsonify(ok=True)
 
 
