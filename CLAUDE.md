@@ -4,11 +4,31 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-11-02 00:55:07**
+> **最後同步：2026-11-02 01:00:10**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-02 00:59 台灣時間，Mac 桌面版 Code 分頁（kaigong-dd944a），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 11/01 23:32～11/02 00:59；對話容量約 26%；教練說「總結」；與下方各棒是不同對話框）
+
+**主軸：超能力頁（superpower）四輪改版＋「大樹網頁常規清單」寫進技能＋開機檔誤報與保險箱誤報修好＋Mac 備份補跑。**
+- **superpower 頁**（https://event.bymyway.com/curated/superpower/，倉庫 `~/github_repos/superpower`）：Podcast 標題拿掉「來賓回訪-」；「我要參加」改 works-form 表單（姓名必填、手機/Email 擇一，進活動報名群），加費用 300 元、請著正式服裝（`3b1cf1f`）；Podcast 由 4 集增為 14 集、改精簡清單、新標題「這些 Podcast 都是你可能從來沒有聽說過的觀念」（`c5f57e8`，集數標題對 SoundOn RSS 查來）；表頭 sticky 固定＋頁尾加 TAVA AI／榮樹下／人才軍火庫（`70dd47e`，教練說「榕樹下」我當榮樹下，教練沒反對）。表單沒真送過，等教練試填看群組收不收得到。
+- **常規清單（教練新定）**：教練丟大樹出品網頁時要主動問「還沒有報名連結要做嗎？」「底下要放友善連結嗎？」，不等提醒。已寫進 `claude-code-skills/bigtree-web-edit/SKILL.md` 步驟 0（`3e0eb8a87`，含表頭固定）。直接「做新網頁」走上架／策展流程那邊還沒加。
+- **playbook**：TAVA 個人品牌網頁製作指令補「ZIP 根目錄必須有全小寫 index.html、驗證最後交付的 ZIP」（`133dbae`，倉庫 tava-brand-web-playbook；起因陳佩君包首頁叫 peipei-brand.html 上架失敗）。
+- **開機檔誤報**：交辦說大台南小幫手 AGENTS.md 要瘦身，查證後是誤報——它的上限 4 萬字（openclaw.json bootstrapMaxChars），實際 2.2 萬字，Haiku 報的 47,827 是位元組。點名改用各分身自己的上限（`1b9395d21`）；刪掉系統誤搬的 964 字英文 TOOLS 範本（`1cb583d2c`）；本機問它 1-2-1 答得正常。**教練內容一個字沒動**，備份在 `state/backup_bni_tainan_agents_20261102/`。
+- **保險箱誤報**：11/01 四次警報全是誤報（分工群一句話三個分身都收、保險箱只存一份；分身「接續工作」也觸發檢查）。`recall.py` 改成逐句核對，並排除分身互傳訊息（`4979745d0`）；3 天署名真人訊息 53 句漏 0。
+- **Mac 備份**：10/30 12:32 後因點名有紅燈沒備；00:5x 手動 `tmutil startbackup`，開跑時 Copying，**我收工時還沒跑完**。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 確認 Time Machine 新的一份寫進去（`tmutil latestbackup`）、明早 08:10 點名自動備份有恢復。
+2. 教練試填 superpower 表單一筆，確認「活動報名即時通知」群有收到。
+3. `bni-reminder-schedule` handler 沒看到 LINE 推播閘門，要查是否真的繞過。
+4. 之前交辦第 1～3 項已處理（AGENTS.md 結論＝不用砍；LINE 推播腳本有閘門；互動頁統計有真資料）；逐字保險箱漏收警報已修，通知清單可跑 `python3 scripts/junshi_inbox.py done`。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：Podcast 新 10 集要不要改排序（最新在前）；「做新網頁」流程要不要也加常規清單。
+🔧 AI 自己的清單：①superpower 第 3 集等標題與 SoundOn 保持一致；②playbook 與 skill 變動後要請教練的 AI 同步 TAVA（教練說他自己會叫）。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-02 00:55 台灣時間，Mac 桌面版 Code 分頁（kaigong-20a598），Haiku 5.5 → Sonnet 5.5；本段 10/31 00:16～00:58；對話容量約 20%；教練說「總結」；與下方各棒是不同對話框）
 
