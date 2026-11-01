@@ -220,3 +220,10 @@ v207/v208 遺留待辦（孔大哥id`8689825759`/佩佩老師id`8786886419`的�
 - top10_dynamic.md 已 34 天未更新
 - 候選池：特助場景庫_自動增量.md 累積 50 個自動場景
 - 動作：教練動嘴「策展試金石」→ 軍師讀候選池挑出值得收錄的，升級成 top10_dynamic.md 條目
+
+## 🔴🔴 2026-11-01 21:32 Telegram 誤投事故：陳佩君 V5 海報送到分工群（已結案）
+- 根因：3 號機技能檔 `poster-person-swap/SKILL.md` 把兩個 chat_id 寫反（`-5115910257` 佩佩老師群 / `-1003877502911` 分工群），3 號機照錯誤說法投遞 → 圖落到分工群
+- 補正：已補送佩佩老師群 `-5115910257`（messageId 2684 橫版 / 2685 直版）；重複查核無先前成功投遞紀錄，未造成重複洗版
+- 防呆三層已落地：① `workspace/state/telegram_chat_registry.json` 對照表 ② `workspace/scripts/telegram_target_guard.py` 閘門（0=准送／2=不在表／3=群名不符）③ 3 號機 SKILL.md（備份 .bak-20261101-chatid）與 SOP_海報換人換字.md 必跑閘門；路徑大全.md 已加 chat_id 對照章節
+- 🔴 送任何 Telegram 訊息／圖片前，必跑：`python3 ~/.openclaw/workspace/scripts/telegram_target_guard.py <chat_id> --expect <群名>`，回傳碼非 0 一律不准送
+- commit：workspace `deeced4f5`、`cf5846c19`；peipei `b30eea5`（皆已 push 並用 ls-remote 驗證）
