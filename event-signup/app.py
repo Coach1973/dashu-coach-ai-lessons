@@ -3575,6 +3575,58 @@ def api_rongtree_prep():
     return resp
 
 
+# ---------- 主持人專區（2026-11-02 教練：在榮樹下頁面直接點「我是主持人」，輸入手機＋密碼就看得到來賓填的資料，不用另外記網址）----------
+_RG_HOST_PHONES = {"0901056777": "吳大樹"}   # 主持人手機白名單；要加人（邱裕榮等）就加在這裡
+_RG_HOST_PASSWORD = "88888"                    # 教練指定，跟大樹各後台同一組
+_RG_HOST_HITS = {}                             # ip -> [時間戳]；每個 IP 10 分鐘最多試 8 次
+
+
+def _rg_is_host():
+    return bool(session.get("rongtree_host"))
+
+
+@app.route("/api/rongtree/host/login", methods=["POST"])
+def api_rongtree_host_login():
+    ip = request.headers.get("CF-Connecting-IP") or request.remote_addr or "unknown"
+    now = time.time()
+    hits = [t for t in _RG_HOST_HITS.get(ip, []) if now - t < 600]
+    if len(hits) >= 8:
+        return _rg_json({"ok": False, "error": "試太多次了，請 10 分鐘後再試"}, 429)
+    _RG_HOST_HITS[ip] = hits + [now]
+    p = request.get_json(force=True, silent=True) or {}
+    phone = re.sub(r"\D", "", str(p.get("phone") or ""))
+    pw = str(p.get("password") or "")
+    ok_phone = any(hmac.compare_digest(phone, h) for h in _RG_HOST_PHONES)
+    ok_pw = hmac.compare_digest(pw.encode(), _RG_HOST_PASSWORD.encode())
+    if not (ok_phone and ok_pw):
+        return _rg_json({"ok": False, "error": "手機號碼或密碼不對"}, 401)
+    session["rongtree_host"] = True
+    session.permanent = True
+    return _rg_json({"ok": True, "name": _RG_HOST_PHONES.get(phone, "")})
+
+
+@app.route("/api/rongtree/host/logout", methods=["POST"])
+def api_rongtree_host_logout():
+    session.pop("rongtree_host", None)
+    return _rg_json({"ok": True})
+
+
+@app.route("/api/rongtree/host/cards")
+def api_rongtree_host_cards():
+    """主持人登入後：每一場訪談對應的來賓卡網址（帶簽章），加上全部來賓卡總覽網址"""
+    if not _rg_is_host():
+        return _rg_json({"ok": False, "error": "請先登入主持人專區"}, 401)
+    by_slot = {}
+    for e in _rg._upcoming():
+        tok = e.get("form_token")
+        if not tok:
+            continue
+        by_slot[tok] = [{"guest": r["guest"] or "", "status": r["card_status"],
+                         "url": f"/rongtree/guest/{r['token']}/card?k={_rg.card_sig(app.secret_key, r['token'])}"}
+                        for r in _rg.all_forms() if _rg._slot_has(r["token"], tok)]
+    return _rg_json({"ok": True, "list_url": f"/rongtree/a/{_rg.list_code(app.secret_key)}", "by_slot": by_slot})
+
+
 @app.route("/rongtree/face/<token>.jpg")
 def rongtree_guest_face(token):
     r = _rg.get_form(token) if _rg.TOKEN_RE.match(token) else None
