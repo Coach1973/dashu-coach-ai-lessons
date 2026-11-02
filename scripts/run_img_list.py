@@ -56,6 +56,31 @@ def save_web_copy(png):
     im.save(png.with_suffix(".web.webp"), "WEBP", quality=72, method=6)
 
 
+PKG_MAX_FILE = 1_000_000   # 教練 2026-10-24「1MB 以內就夠」
+PKG_MAX_TOTAL = 3_000_000  # 一包 12 張小圖約 1MB；超過 3MB 一定是夾到原圖
+
+
+def build_zip(pngs, zip_path):
+    """包裹只放網頁用小圖 IMG-00X.webp（教練 10/24「1MB 以內就夠」、10/30「可以壓縮，清晰可見，不要模糊」）；原圖 PNG 留本機備份。"""
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+        for p in pngs:
+            web = p.with_suffix(".web.webp")
+            if not web.exists():
+                save_web_copy(p)
+            z.write(web, p.stem + ".webp")
+
+
+def package_problems(zip_path):
+    """交付前自我審查：拿教練定的規格檢查成品，不合就回傳原因（空清單＝合格）。"""
+    infos = zipfile.ZipFile(zip_path).infolist()
+    out = ["%s 不是網頁小圖（只准 .webp）" % i.filename for i in infos if not i.filename.endswith(".webp")]
+    out += ["%s 有 %.1fMB，超過 1MB" % (i.filename, i.file_size / 1e6) for i in infos if i.file_size > PKG_MAX_FILE]
+    total = Path(zip_path).stat().st_size
+    if total > PKG_MAX_TOTAL:
+        out.append("整包 %.1fMB，超過 %dMB" % (total / 1e6, PKG_MAX_TOTAL // 1_000_000))
+    return out
+
+
 def gen(item, out_dir, key):
     f = out_dir / item["file"]
     if f.exists() and f.stat().st_size > 10000:
@@ -166,22 +191,15 @@ def main():
     for k, v in qa.items():
         print("  🔎", k, v)
     sheet = zip_path = None
+    problems = []
     if done:
         sheet = out_dir / "contact-sheet.jpg"
         contact_sheet(done, sheet)
         zip_path = out_dir / "images.zip"
-        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-            for p in done:
-                web = p.with_suffix(".web.webp")
-                if not web.exists():
-                    save_web_copy(p)
-                    web = p.with_suffix(".web.webp")
-                # 只放網頁用壓縮圖（教練 2026-10-24「1MB 以內就夠」＋10/30「可以壓縮、清晰可見、不要模糊」）。
-                # 原圖 PNG 留在本機當備份，不進 zip——網頁用不到，進去只會把包裹撐到 10MB 以上。
-                z.write(web, p.stem + ".webp")
-        big = [(n, i.file_size) for n, i in zipfile.ZipFile(zip_path).infolist() if i.file_size > 1_000_000]
-        if big:
-            print("  ⚠️ 超過 1MB 的檔案：", big)
+        build_zip(done, zip_path)
+        problems = package_problems(zip_path)
+        for pr in problems:
+            print("  🚫", pr)
     minutes = (time.time() - t_start) / 60
     (out_dir / "run_summary.json").write_text(json.dumps(
         {"ok": sorted(ok_ids), "failed": errors, "skipped": skipped, "ocr": qa,
@@ -191,7 +209,9 @@ def main():
     for i, why in errors + skipped:
         caption += "\n%s：%s" % (i, why[:80])
     sent = False
-    if send and sheet:
+    if problems:  # 交付前自我審查沒過：不傳不合規的包裹，改發文字講清楚哪裡不合
+        caption += "\n🚫 包裹沒通過交付檢查，沒有傳：" + "；".join(problems)
+    elif send and sheet:
         sent = tg_send("sendPhoto", "photo", sheet, caption) and tg_send("sendDocument", "document", zip_path, "網頁用圖（已壓縮，每張 1MB 以內）")
     if send and not sent:
         subprocess.run([str(NOTIFY), caption + "\n輸出：%s" % out_dir], check=False)
