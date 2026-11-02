@@ -89,6 +89,8 @@ def _yield_if_online(item, d):
     Google 同步會整批重建一次性行程，所以用名稱判斷，不靠資料旗標。"""
     if d.weekday() == 3 and str(item.get("title", "")).startswith("線上"):
         return {**item, "yield": True}
+    if d.weekday() == 2 and str(item.get("title", "")).startswith("團隊週會"):
+        return {**item, "yield": True}  # 2026-11-02 教練：週三晚上團隊週會他掛線旁聽就好，有訪談就排訪談、不擋預約
     return item
 
 

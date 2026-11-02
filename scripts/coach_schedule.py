@@ -136,6 +136,8 @@ def free_slots(d, data, win_start, win_end, minutes=60):
     for s, e, ev in blocks_on(d, data):
         if d.weekday() == 3 and str(ev.get("title", "")).startswith("線上"):
             continue  # 教練 2026-10-15：週四的線上聚會／學習保留，但訪談優先，不擋預約（跟預約頁一致）
+        if d.weekday() == 2 and str(ev.get("title", "")).startswith("團隊週會"):
+            continue  # 教練 2026-11-02：週三團隊週會掛線旁聽，訪談優先，不擋預約（跟預約頁一致）
         if is_interview(ev):
             s, e = s - BUFFER, e + BUFFER  # 教練 2026-10-19：已有訪談的前後各留半小時
         busy.append((s, e))
