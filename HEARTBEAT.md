@@ -227,3 +227,8 @@ v207/v208 遺留待辦（孔大哥id`8689825759`/佩佩老師id`8786886419`的�
 - 防呆三層已落地：① `workspace/state/telegram_chat_registry.json` 對照表 ② `workspace/scripts/telegram_target_guard.py` 閘門（0=准送／2=不在表／3=群名不符）③ 3 號機 SKILL.md（備份 .bak-20261101-chatid）與 SOP_海報換人換字.md 必跑閘門；路徑大全.md 已加 chat_id 對照章節
 - 🔴 送任何 Telegram 訊息／圖片前，必跑：`python3 ~/.openclaw/workspace/scripts/telegram_target_guard.py <chat_id> --expect <群名>`，回傳碼非 0 一律不准送
 - commit：workspace `deeced4f5`、`cf5846c19`；peipei `b30eea5`（皆已 push 並用 ls-remote 驗證）
+
+## 🔴 2026-11-02 網頁用圖交付規格（教練 10/24「1MB 以內就夠」、10/30「可以壓縮、不要問」、11/02 二次驗證）
+- 出圖清單類交付：zip 內**只放 `IMG-xxx.webp`**（長邊 1000／q72，每張 ≤1MB），原圖 PNG 留本機不進 zip
+- 交付前必自我審查包裹：非 webp／單檔 >1MB／整包 >3MB → 不傳，改發文字說明哪裡不合（`scripts/run_img_list.py` 的 `package_problems()` 已內建）
+- 教練講過的規格先用 `recall.py` 查原始紀錄再照做，不要反問教練「有說過嗎」
