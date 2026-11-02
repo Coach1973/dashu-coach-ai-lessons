@@ -1,3 +1,4 @@
+- [🔧 LINE 標籤＝聊天進階方案月租NT$100會自動續扣，看預定付款/取消路徑；手動一對一上限＝1小時超過200個不同聊天室，暫停時長官方沒寫(2026-11-02)](reference_line_oa_chat_plan_monthly_and_send_limit_2026-11-02.md)
 - [🔴 出圖清單網址小龍蝦只准 run_img_list.py 一行指令、出完當場傳圖；safety-locks 出圖清單鎖；11/02 蔡佩茹3張拖40分根因(97e5705ca,e8a29e7f1)(2026-11-02)](reference_img_list_one_command_deliver_first_lock_2026-11-02.md)
 - [🔴 11/01 巴哈圖送錯分工群＋週一寫成今晚＋440次空轉根因：過期背景通知叫醒沒清空的私人主對話、提醒排程是AI跑一輪；safety-locks v1.8＋提醒改直送(a5609df2c,635b2dded)(2026-11-01)](reference_openclaw_stale_main_session_wakeup_wrong_group_2026-11-01.md)
 - [🔧 改網頁深色區塊顏色連犯三次→page_contrast_scan.js 一次掃全頁；找活動頁連結先查 events.url＋app.py 路由(大樹小講/bigtree、微論壇/ai-talk)；公開頁不留講者控制台(2026-11-01)](reference_page_edit_contrast_scan_and_url_lookup_2026-11-01.md)
