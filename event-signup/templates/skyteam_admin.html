@@ -80,8 +80,8 @@
         <option value="">主題分類：照每個人原本的</option>
         {% for t in topics %}<option value="{{ t }}">主題分類：{{ t }}</option>{% endfor %}
       </select>
-      <button class="go" type="submit">上架勾選的人</button>
-      <button class="ghost" type="submit" formaction="/skyteam/admin/dismiss" onclick="return confirm('勾選的不是人才（例如活動頁），移出這份清單？之後不會再自動加入。')">勾選的不是人才，移出清單</button>
+      <button class="go" type="submit">上架／重新上架勾選的人</button>
+      <button class="ghost" type="submit" formaction="/skyteam/admin/dismiss" onclick="return confirm('⚠️ 刪除勾選的人？\n\n只是從這份未上架清單拿掉，他的網頁不會刪。\n只有「不是人才」（例如活動頁）或「重複」才需要刪除；只是暫時不想上架就留著。\n\n確定要刪除嗎？')">刪除（不是人才，移出清單）</button>
     </div>
     {% else %}
     <p class="empty">目前沒有未上架的人。</p>
@@ -101,7 +101,7 @@
       {% endfor %}
     </div>
     <div class="bar">
-      <button class="ghost" type="submit" onclick="return confirm('把勾選的人從人才軍火庫下架、移回未上架？')">下架勾選的人（移回未上架）</button>
+      <button class="ghost" type="submit" onclick="return confirm('下架勾選的人？\n只是從人才軍火庫收起來，他的網頁和資料都保留，會移回上面的未上架，隨時可以重新上架。')">下架勾選的人（移回未上架）</button>
     </div>
   </form>
 </div>
