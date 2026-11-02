@@ -1,3 +1,4 @@
+- [🔴 FB/IG 多數公開、沒實測不准說「要登入才看得到」；指令夾已改 ed50378，facebookexternalhit 身分可證明公開頁拿得到 og:image (2026-11-02)](feedback_fb_ig_public_test_before_saying_login_required_2026-11-02.md)
 - [🔧 LINE 標籤＝聊天進階方案月租NT$100會自動續扣，看預定付款/取消路徑；手動一對一上限＝1小時超過200個不同聊天室，暫停時長官方沒寫(2026-11-02)](reference_line_oa_chat_plan_monthly_and_send_limit_2026-11-02.md)
 - [🔴 出圖清單網址小龍蝦只准 run_img_list.py 一行指令、出完當場傳圖；safety-locks 出圖清單鎖；11/02 蔡佩茹3張拖40分根因(97e5705ca,e8a29e7f1)(2026-11-02)](reference_img_list_one_command_deliver_first_lock_2026-11-02.md)
 - [🔴 11/01 巴哈圖送錯分工群＋週一寫成今晚＋440次空轉根因：過期背景通知叫醒沒清空的私人主對話、提醒排程是AI跑一輪；safety-locks v1.8＋提醒改直送(a5609df2c,635b2dded)(2026-11-01)](reference_openclaw_stale_main_session_wakeup_wrong_group_2026-11-01.md)
