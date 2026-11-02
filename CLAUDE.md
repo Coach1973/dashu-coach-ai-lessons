@@ -4,11 +4,28 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-11-03 00:00:41**
+> **最後同步：2026-11-03 06:35:46**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
+
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-03 06:30～06:40 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca，MiniMax-M3；與下方各棒是不同對話框）
+
+**主軸：每日 FB 壽星名單抓取（半自動、0 Token）。今天一次就抓成功，無需任何修補。**
+- **今日壽星 6 位**：陳毓雯、楊月兒、陳德原、黃金菊、陳乂云、Nikki Koe。
+- **狀況正常**：cookie 同步 9 檔、啟動前 FB 登入 cookie 2 筆、啟動後存活 2 筆（10/31 與 11/01 修的兩個坑都沒再犯）；腳本 exit 0，跑兩次結果完全一致；無殘留 Chrome CDP 行程（9225 port 檢查為 0）；`~/.openclaw/fb_session_data_local` 為本機碟路徑，沒有踩 10/24 那個外部磁碟 SingletonLock 坑。
+- **抓取邊界已獨立驗證**（不只信腳本）：另跑一次驗證版把頁面所有 `h2` 順序印出來對照 —— `今日壽星` 區段正好 6 人，下一段是 `剛過生日的壽星`；該段 18 人 = 11/01 的 13 人 + 11/02 的 5 人（林治域…周延、沈育德…莊彩微），再下一段才是 `即將過生日的壽星`。**交叉比對完全吻合 → 今日 6 人確實是最新的、沒有把剛過生日的人混進來**。驗證用臨時腳本已刪除。
+- **排程健康**：`ca5195d8c4ca`（Hermes cron，30 6 * * *）近 8 天（10/26～11/02）全部 `completed` + `delivered`，今天這次 `running`；OpenClaw 舊的 `12fad20b` 已於 2026-06-07 遷出成 `.migrated` 舊檔，不是活體；launchd 的 `ai.openclaw.fb-birthday` 依 10/30 教練指示**維持停用**，不要去動它。
+- **沒有動到任何程式**：今天只是抓名單，腳本一行沒改。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 明天 06:30 那棒照樣跑，確認名單有出來。若空 → 先看腳本自己印的「Chrome 啟動後 cookie：存活 N 筆」那行：N=0 就是工作 profile 被 Chrome 清（腳本會自癒，連跑即可）；N>0 但仍跳登入頁 → 看 Chrome stderr 有沒有 `Failed to decrypt token`（那是另一個根因，見 skill `macos-headless-chrome-keychain`）。
+2. `/tmp/fb_birthday.log` 沒有輪替機制，長期會變大，有機會加。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：無新增。
+🔧 AI 自己的清單：①`/tmp/fb_birthday.log` 無輪替；②OpenClaw 的 `openclaw.json` 目前是**無效設定**（`openclaw cron list` 直接報 `Invalid config`：`meta`、`browser.profiles.imported.color`、`agents.defaults.heartbeat`、`tools.media.image`、`memory`、`skills.workshop.autonomous` 全部 Invalid input）→ 這是**獨立於 FB 壽星**的問題，OpenClaw 側的 cron 只能靠 Hermes 這條活體在跑；③今天 FB 生日名單已送達。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-03 00:00 台灣時間，Mac 桌面版 Code 分頁（kaigong-62abe3 worktree），Haiku 5.5 → Sonnet 5.5 → Opus 5.5 → Sonnet 5.5；本段 11/02 22:59～11/03 00:00；對話容量約 29%；教練說「總結」；與下方各棒是不同對話框）
 
