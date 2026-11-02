@@ -12,7 +12,8 @@
 
 用法：
   python3 run_img_list.py <網址或清單.json> <輸出資料夾> [--dry-run] [--no-send]
-完成後輸出資料夾有 IMG-00X.png、網頁小圖 IMG-00X.web.webp（長邊 1000／q72）、contact-sheet.jpg、images.zip、run_summary.json；
+完成後輸出資料夾有 IMG-00X.png（原圖，留本機備份）、網頁小圖 IMG-00X.web.webp（長邊 1000／q72）、contact-sheet.jpg、images.zip、run_summary.json；
+images.zip 內**只有**網頁用壓縮圖（檔名 IMG-00X.webp，每張 1MB 以內）——原圖 PNG 不進 zip（教練 2026-10-24「1MB 以內就夠」、10-30「可以壓縮，清晰可見，不要模糊」）；
 並用 bot_main 直接傳一覽圖＋zip 到教練 Telegram 私聊（--no-send 只產檔不傳）。
 """
 import base64, html, json, re, shutil, subprocess, sys, time, urllib.request, zipfile
@@ -171,8 +172,16 @@ def main():
         zip_path = out_dir / "images.zip"
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
             for p in done:
-                z.write(p, p.name)
-                z.write(p.with_suffix(".web.webp"), p.with_suffix(".web.webp").name)
+                web = p.with_suffix(".web.webp")
+                if not web.exists():
+                    save_web_copy(p)
+                    web = p.with_suffix(".web.webp")
+                # 只放網頁用壓縮圖（教練 2026-10-24「1MB 以內就夠」＋10/30「可以壓縮、清晰可見、不要模糊」）。
+                # 原圖 PNG 留在本機當備份，不進 zip——網頁用不到，進去只會把包裹撐到 10MB 以上。
+                z.write(web, p.stem + ".webp")
+        big = [(n, i.file_size) for n, i in zipfile.ZipFile(zip_path).infolist() if i.file_size > 1_000_000]
+        if big:
+            print("  ⚠️ 超過 1MB 的檔案：", big)
     minutes = (time.time() - t_start) / 60
     (out_dir / "run_summary.json").write_text(json.dumps(
         {"ok": sorted(ok_ids), "failed": errors, "skipped": skipped, "ocr": qa,
@@ -183,7 +192,7 @@ def main():
         caption += "\n%s：%s" % (i, why[:80])
     sent = False
     if send and sheet:
-        sent = tg_send("sendPhoto", "photo", sheet, caption) and tg_send("sendDocument", "document", zip_path, "全部原圖＋網頁小圖")
+        sent = tg_send("sendPhoto", "photo", sheet, caption) and tg_send("sendDocument", "document", zip_path, "網頁用圖（已壓縮，每張 1MB 以內）")
     if send and not sent:
         subprocess.run([str(NOTIFY), caption + "\n輸出：%s" % out_dir], check=False)
     print("📨 已傳教練 Telegram" if sent else "📨 沒有傳圖（%s）" % ("--no-send" if not send else "傳送失敗或沒有圖，已改發文字通知"))
