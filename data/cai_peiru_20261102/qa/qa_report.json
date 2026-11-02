@@ -1,0 +1,69 @@
+{
+  "task": "蔡佩茹個人網站 3 張概念圖",
+  "source_page": "https://www.tava-ai.com/ivs5j0rts2/image-list.html",
+  "generated_at": "2026-11-02T13:00:00+08:00",
+  "model": "gpt-image-2",
+  "api": "https://api.lk888.ai/v1/images/generations",
+  "points_charged": 3,
+  "qa_method": [
+    "Tesseract OCR (chi_tra+eng)",
+    "gem-3.8-flash 描述式提問（文字/手部/符合度/品質自評）",
+    "MiniMax-VL-01 直接目視整圖與手部放大裁切"
+  ],
+  "qa_bug_note": "第一輪 QA 腳本以字串比對判定，先判斷「合格 in ans」、後判斷「不合格 in ans」；因「不合格」包含「合格」，IMG-001 與 IMG-003 被誤記為合格。第一輪的「三張皆合格」結論不成立，已作廢。",
+  "results": {
+    "IMG-001": {
+      "title": "初心（為什麼走進這一行）",
+      "ratio_requested": "4:3",
+      "pixel_size": "1536x1024",
+      "has_text": false,
+      "text_evidence": "OCR 無可辨識文字；gem-3.8-flash 答「無文字」",
+      "fits_brief": true,
+      "fit_evidence": "gem-3.8-flash 答「符合」：女性坐窗邊整理舊照片、木桌白百合、柔和金色光線、奶油與琥珀橘色調",
+      "hand_quality": "有問題",
+      "hand_evidence": "gem-3.8-flash 品質自評：「女子放在桌上的右手手指數量異常」；MiniMax-VL-01 看放大裁切：手掌過寬扁、手指極端細長、缺乏骨骼關節感",
+      "verdict": "不合格",
+      "action": "需重畫（付費，等教練明確指示後才執行）"
+    },
+    "IMG-002": {
+      "title": "生活事蹟・家族背景",
+      "ratio_requested": "16:9",
+      "pixel_size": "1536x1024",
+      "has_text": false,
+      "text_evidence": "OCR 無可辨識文字；gem-3.8-flash 答「無文字」",
+      "fits_brief": true,
+      "fit_evidence": "gem-3.8-flash 答「符合」：1980-90 年代台灣小型家族五金機械加工廠、老式車床、鋼製零件堆疊、午後光束與灰塵、暖琥珀與鐵鏽色調",
+      "hand_quality": "不適用（無人物特寫）",
+      "verdict": "合格",
+      "action": "直接採用"
+    },
+    "IMG-003": {
+      "title": "生活事蹟・十年業務",
+      "ratio_requested": "16:9",
+      "pixel_size": "1536x1024",
+      "has_text": false,
+      "text_evidence": "OCR 無可辨識文字；gem-3.8-flash 答「無文字」",
+      "fits_brief": true,
+      "fit_evidence": "gem-3.8-flash 答「符合」：百貨櫃檯、年輕台灣女店員穿整齊制服、2000 年代初百貨氛圍、奶油與黃橘搭海軍藍",
+      "hand_quality": "有疑慮",
+      "hand_evidence": "gem-3.8-flash 專項手部題答「手部：正常」（手指數量正確），但同一張圖品質自評答「櫃檯人員左手的指節與手掌結構明顯異常」；MiniMax-VL-01 看放大裁切亦判為多指與指節扭曲。兩者說法相反，以放大目視判讀為準。",
+      "verdict": "待教練裁決（建議重畫）",
+      "action": "建議重畫（付費，等教練明確指示後才執行）"
+    }
+  },
+  "deliverables": {
+    "png": [
+      "data/cai_peiru_20261102/out/IMG-001.png",
+      "data/cai_peiru_20261102/out/IMG-002.png",
+      "data/cai_peiru_20261102/out/IMG-003.png"
+    ],
+    "webp": [
+      "data/cai_peiru_20261102/final/IMG-001.webp",
+      "data/cai_peiru_20261102/final/IMG-002.webp",
+      "data/cai_peiru_20261102/final/IMG-003.webp"
+    ],
+    "contact_sheet": "data/cai_peiru_20261102/contact-sheet.png",
+    "zip": "data/cai_peiru_20261102/cai-pei-ru-images.zip",
+    "zip_check": "testzip() 回傳 None，7 個項目，10,626,147 bytes"
+  }
+}
