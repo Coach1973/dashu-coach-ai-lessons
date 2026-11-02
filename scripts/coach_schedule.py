@@ -759,7 +759,9 @@ def sync_google(data, days=120):
         pushed = set()
     cov = 0
     for e in data["events"]:
-        if (e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest")) or (e["id"] in pushed and e.get("source") != "Google日曆"):
+        # 2026-11-02：已帶 covered_by_google 旗標的也要每次重驗；Google 那筆不見了旗標就拿掉，否則預約頁的預約變隱形、空檔還顯示有空
+        if (e.get("source") in ("巴哈", "教練", "大台南行事曆") and not e.get("guest")) or (e["id"] in pushed and e.get("source") != "Google日曆") \
+                or (e.get("covered_by_google") and e.get("source") != "Google日曆"):
             hit = (e["date"] in gallday) if e.get("allday") else (
                 e["start"] in gstart.get(e["date"], ()) if e["id"] in pushed else in_google(e["date"], e["start"], e["end"], e["title"]))
             e["covered_by_google"] = bool(hit)
