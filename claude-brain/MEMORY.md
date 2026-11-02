@@ -99,6 +99,7 @@
 - [🔴 頂部選單加項目前先量寬度：20px 字下多一項整排折兩行(公益路跑被教練截圖)；手機導覽統一用共用 nav-burger.js(四站已接)(2026-10-14)](feedback_nav_add_item_measure_width_with_20px_font_2026-10-14.md)
 - [🙋 招募志工團隊頁 volunteer.html：目標年底前100席、四站入口、人數改 JOINED、送出進活動報名群、教練構想與急需6項(2026-10-14)](project_volunteer_recruit_page_2026-10-14.md)
 # Memory Index
+- [🧑‍🏫 未上架的人才軍火庫後台 /skyteam/admin：做好的人一律先進未上架、教練勾選上架／下架；他區 BNI 會員不放軍火庫(f7950a1ad)(2026-11-02)](project_skyteam_unlisted_pool_admin_2026-11-02.md)
 - [📅 預約頁週四19:30／21:00可約：暖身休息緩衝＋線上聚會學習訪談優先(程式依名稱判斷，Google同步會蓋掉資料旗標)；Mac要重啟event-webapp才生效(2026-10-15)](reference_booking_page_thursday_slots_2026-10-15.md)
 - [🔴 教練不分「GitHub」與「網頁」：改完要curl驗證線上版、第一次回報就講部署1～2分鐘＋快取10分鐘＋Ctrl+F5；Pages errored 可手動重跑(2026-10-15)](feedback_github_edit_is_the_web_edit_say_wait_and_cache_2026-10-15.md)
 - [🔴 數字類修改先分「目標」還是「目前進度」：教練說100改66其實是100席位、已66位，整站改錯被糾正(2026-10-14)](feedback_number_change_target_vs_progress_2026-10-14.md)
