@@ -1,0 +1,18 @@
+{
+ "ok": [
+  "IMG-001",
+  "IMG-002",
+  "IMG-003",
+  "IMG-004"
+ ],
+ "failed": [],
+ "skipped": [],
+ "ocr": {
+  "IMG-001": "無多餘文字",
+  "IMG-002": "無多餘文字",
+  "IMG-003": "無多餘文字",
+  "IMG-004": "無多餘文字"
+ },
+ "minutes": 0.6,
+ "out": "/Users/bymyway/.openclaw/workspace/data/roger_chou_brand_20261102"
+}
