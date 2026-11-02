@@ -3687,5 +3687,86 @@
   ],
   "photo_alt": "大甲招待會館的客廳空間",
   "caption": "大甲招待會館的客廳空間"
+ },
+ {
+  "slug": "roger-chou",
+  "name": "周龍鴻博士 Dr. Roger Chou",
+  "role": "台灣首位 CST・Scrum Alliance 全球董事",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/roger-chou/",
+  "anchor": "#good",
+  "lede": "Roger 老師的公益，很少是一次性的捐款；他習慣把公益做成「專案」——有範圍、有分工、有交付。從八八水災的 300 位 PMP 志工，到無償培育數百位 CEO，再到把董事薪資整份捐回，十七年來留下一條清楚的足跡。",
+  "stats": [
+   [
+    "300",
+    "位 PMP 志工 25 天完成八八水災重建計畫書"
+   ],
+   [
+    "235",
+    "位 CEO 無償培育成為 CSM"
+   ],
+   [
+    "40 萬",
+    "元品牌大使贊助 全數轉為 RSG 觀眾票券"
+   ],
+   [
+    "100%",
+    "Scrum Alliance 董事薪資 全數捐回組織"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "2009",
+    "title": "三週內號召 300 位 PMP 志工",
+    "desc": "八八水災後 25 天內整合全台與海外 300 位志工，完成 170 多頁《八八水災災後重建及預防專案 WBS 計畫書》，無償提供各重建單位下載，並親赴旗山勘查。",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2010",
+    "title": "公益計畫獲 PMI 國際肯定",
+    "desc": "這份志工計畫書讓 ITPM 獲頒 PMI「公益社團卓越貢獻獎」——該獎項此前已連續三年從缺。",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2016–2021",
+    "title": "志工制定國家標準、翻譯 PMBOK",
+    "desc": "出處：維基百科、PMI 台灣分會、民眾網",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2023–2026",
+    "title": "無償培育 CEO 的三個志業",
+    "desc": "從 100 位 CEO 成為 CSM 開始，三年累計 235 位 CEO 取得 CSM、150 位取得 CSPO；2026 年再啟動第三個無償志業：一年培育 100 位 CEO 成為引導型領袖（CAF）。",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2026",
+    "title": "品牌大使贊助，全數變成觀眾票券",
+    "desc": "RSG Taipei 2026 的 20 位品牌大使共贊助新台幣 40 萬元，Roger 老師表示一塊錢都沒進自己口袋，全數轉為觀眾票券。",
+    "src": "",
+    "href": null
+   },
+   {
+    "yr": "2026",
+    "title": "董事全薪，捐回組織",
+    "desc": "當選 Scrum Alliance 全球董事第十天，寫信將任期內的董事薪資（約每年三萬美元）全數捐回組織。",
+    "src": "",
+    "href": null
+   }
+  ],
+  "photo": [
+   "assets/people/roger-chou.jpg",
+   [
+    720,
+    480,
+    84581
+   ]
+  ],
+  "photo_alt": "RSG Taipei 2026 志工團",
+  "caption": "RSG Taipei 2026 志工團"
  }
 ]
