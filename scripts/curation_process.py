@@ -1113,6 +1113,11 @@ def main() -> None:
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True, env=_ENV)
     except Exception as e:  # noqa: BLE001
         log(f"人才軍火庫連結觸發失敗(不影響上架): {e!r}")
+    try:  # 新做好的個人頁一律先進「未上架的人才軍火庫」，教練在 /skyteam/admin 勾選才上架（2026-11-02 教練定）
+        subprocess.Popen([sys.executable, str(WORKSPACE / "event-signup" / "skyteam_pool.py"), "auto"],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True, env=_ENV)
+    except Exception as e:  # noqa: BLE001
+        log(f"未上架人才軍火庫觸發失敗(不影響上架): {e!r}")
 
 
 if __name__ == "__main__":

@@ -2867,6 +2867,38 @@ def curation_upload_short(code):
                            sites=_load_curated_registry().get("sites", [])[::-1])
 
 
+# ---- 未上架的人才軍火庫（教練 2026-11-02）：做好的人一律先進「未上架」，教練勾選才上架、也能勾選下架；比照上面的策展上架／下架後台 ----
+import skyteam_pool as _stp
+
+
+def _skyteam_admin_page(message=None, ok=None):
+    _, experts, front = _stp.read_roster()
+    return render_template("skyteam_admin.html", pool=_stp.load_pool()["pool"][::-1], experts=experts, front=front,
+                           topics=_stp.TOPICS, result_message=message, result_ok=ok)
+
+
+@app.route("/skyteam/admin")
+def skyteam_admin():
+    if not _logged_in():
+        return redirect(url_for("admin_login", next=request.path))
+    return _skyteam_admin_page()
+
+
+@app.route("/skyteam/admin/<action>", methods=["POST"])
+def skyteam_admin_action(action):
+    if not _logged_in():
+        return redirect(url_for("admin_login", next="/skyteam/admin"))
+    if action == "publish":
+        ok, message = _stp.publish(request.form.getlist("slug"), request.form.get("to", ""), request.form.get("topic") or None)
+    elif action == "unpublish":
+        ok, message = _stp.unpublish(request.form.getlist("name"))
+    elif action == "dismiss":
+        ok, message = _stp.dismiss(request.form.getlist("slug"))
+    else:
+        abort(404)
+    return _skyteam_admin_page(message, ok)
+
+
 @app.route("/curation/upload", methods=["GET", "POST"])
 def curation_upload():
     """教練交辦(2026-09-06)：策展SOP的檔案入口。教練把AI工具做好的店家網站zip丟這裡，
