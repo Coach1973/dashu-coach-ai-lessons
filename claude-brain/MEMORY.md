@@ -1,3 +1,4 @@
+- [🔧 新後台網址登記大樹作品集用 --section houtai（後臺系統），預設 baoliu 會被稽核鎖判新缺漏(2026-11-03)](feedback_register_admin_url_use_houtai_section_2026-11-03.md)
 - [🔧 簡介視窗連結不顯示＝網址被貼進「修改標籤」欄；bni-chapters 已防呆(3f9e2e2)、team-bymyway 尚無；彥仲＝陳晏綜(未確認)(2026-11-02)](reference_url_typed_into_label_field_links_missing_2026-11-02.md)
 - [🔴 FB/IG 多數公開、沒實測不准說「要登入才看得到」；指令夾已改 ed50378，facebookexternalhit 身分可證明公開頁拿得到 og:image (2026-11-02)](feedback_fb_ig_public_test_before_saying_login_required_2026-11-02.md)
 - [🔧 LINE 標籤＝聊天進階方案月租NT$100會自動續扣，看預定付款/取消路徑；手動一對一上限＝1小時超過200個不同聊天室，暫停時長官方沒寫(2026-11-02)](reference_line_oa_chat_plan_monthly_and_send_limit_2026-11-02.md)
