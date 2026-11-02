@@ -31,6 +31,8 @@ TRIGGER_SH = os.path.join(SCRIPTS, "jarvis_scorecard_trigger.sh")
 CASE_HEAD = re.compile(r"^## 案例\s*(\d+)", re.M)
 DATE = re.compile(r"(20\d\d)[-/.](\d{1,2})[-/.](\d{1,2})")
 REPEAT = re.compile(r"同類|同一類|復發|同處跌倒|再犯|又犯|第\s*[二三四五六七八九十2-9]\s*次")
+# 「同類再犯就升級…」是寫給未來的條件句，不是這次重犯（2026-11-02 案例137 被誤算）；比對前先拿掉
+NOT_REPEAT = re.compile(r"(?:若|如果|如)?(?:同類|同一類)?再犯(?:就|時|的話|要)")
 
 
 def _load(name):
@@ -80,7 +82,7 @@ def cases():
         except (AttributeError, ValueError):
             undated.append(int(h.group(1)))
             continue
-        out.append((int(h.group(1)), dt, bool(REPEAT.search(body))))
+        out.append((int(h.group(1)), dt, bool(REPEAT.search(NOT_REPEAT.sub("", body)))))
     newest = max([n for n, _, _ in out] + undated + [0])
     return out, [n for n in undated if n > newest - 20]  # 最新 20 案裡沒寫日期的會被漏算，要標出來
 

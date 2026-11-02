@@ -1,0 +1,1 @@
+jarvis_scorecard.py（改 REPEAT 誤判前）
