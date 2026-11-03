@@ -25,3 +25,5 @@ metadata:
 **還沒驗證／沒修**：真實對話裡 hook 回傳 params 是否被 gateway 採用（要等巴哈下次實際出錯或測試）；超出 SOP 的海報改版面仍沒有一行指令；長對話(150K+)每步慢；壓縮空白期。
 
 相關：[[reference_turn_budget_lock_bots_silent_loop_2026-10-30]] [[reference_img_list_one_command_deliver_first_lock_2026-11-02]] [[feedback_bot_instructions_must_block_old_path_and_measure_tokens_2026-10-25]]
+
+**後續（11/03 14:35 收工時）**：教練要「丟檔案就調 LK888 出圖、成品傳回群組不貼給他看」。已寫 `workspace/scripts/lk888_edit_image.py`（Claude 拆工單→LK888 只重畫要改的塊→貼回；`--send-to` 傳群組；成品字逐行比對把關）。真圖測 5 輪未過關：LK888 畫小字會錯（2:30／缺字／亂碼）。下一步＝日期時間地點用電腦字體貼、LK888 只畫人物。**學到**：不要拿 LLM 的「看起來 OK」當核對，用「抄字＋程式比對」才抓得到錯（舊核對連 2:30 都放行）。
