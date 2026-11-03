@@ -529,3 +529,7 @@ sessions_spawn 出來的 subagent 工具集不含本機 shell 與檔案工具（
 4. **用像素比對回推原始照片**：PIL 把解碼圖與專案 `原始照片/` 每張都縮成 32x32 灰階算 MSE，diff≈0.3 的就是原檔（`原始照片/2026-08-29_公益課程_1814865749670507.jpg`）。
 **通則**：視覺模型不可用時（`view_image` 兩條路都掛：MiniMax-VL no content、claude-opus-5-5 401；`read` 圖片被當前模型丟棄），**像素比對可以取代「看圖」**做同一件事——確認兩張圖是不是同一張。別因為看不到圖就放棄或亂用不對的參考照。
 **附帶**：`run_img_list.py` 的 kind 判斷只讀 `type`，但有些清單用 `kind` → 全批被靜默跳過。已修成 `it.get("type") or it.get("kind")`，並加 `--dump-items` 診斷模式（只印欄位、不扣點）。下次拿到新格式清單，先跑 `--dump-items` 看實際欄位名。
+
+### 2026-11-03｜策展頁換圖要逐版位比 sha1，不能假設別人已換完
+教練交辦「把做出來的圖裝到 curated 頁」，軍師先換了 IMG-001/002/004，但 IMG-003 版位其實還放著原始照片。驗收方式＝解出每個 `data-slot` 的 base64 算 sha1，跟我方產出檔 sha1 逐一比對，全中才算換完。
+另：`jiang-ruixiang` 這類策展站 push 到 `main` 後線上頁會自動同步（約 10～15 秒），不必另外觸發 site-update，也不必寫信問軍師。<!-- project: github.com/Coach1973/mac-openclaw-workflows -->
