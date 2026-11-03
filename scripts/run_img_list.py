@@ -150,6 +150,16 @@ def main():
         sys.exit(__doc__)
     t_start = time.time()
     items = load_items(args[0])
+    if "--dump-items" in sys.argv:
+        # 診斷用：只印欄位結構，不出圖、不扣點
+        for it in items:
+            print("==== %s ====" % it.get("id"))
+            for k, v in it.items():
+                if k == "prompt":
+                    print("   prompt: %s" % (v or "")[:400].replace("\n", " "))
+                else:
+                    print("   %s: %r" % (k, v))
+        sys.exit(0)
     for it in items:
         it.setdefault("file", it["id"] + ".png")
     out_dir = Path(args[1]); out_dir.mkdir(parents=True, exist_ok=True)
@@ -157,8 +167,9 @@ def main():
         sys.exit("清單 %d 張，超過一次上限 %d 張，請教練確認後分批" % (len(items), MAX_ITEMS))
     todo, skipped = [], []
     for it in items:
-        if it.get("type") not in ("概念", "圖解背景"):
-            skipped.append((it["id"], "類型是「%s」，需要參考照片，這支不處理" % it.get("type")))
+        kind = it.get("type") or it.get("kind")  # 2026-11-03 江瑞祥清單用 kind 欄位
+        if kind not in ("概念", "圖解背景"):
+            skipped.append((it["id"], "類型是「%s」，需要參考照片，這支不處理" % kind))
         elif it.get("ratio") not in SIZE:
             skipped.append((it["id"], "比例 %s 不支援" % it.get("ratio")))
         else:
