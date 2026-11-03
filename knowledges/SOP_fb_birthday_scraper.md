@@ -88,6 +88,7 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 檔案 | 用途 |
 |------|------|
 | `scripts/fb_birthday_scraper.js` | 主腳本（Puppeteer 無頭瀏覽器） |
+| `scripts/fb_birthday_verify.js` | **獨立驗證腳本（2026-11-04 新增）**：自己同步 cookie、自己啟 Chrome、自己關；用「今日壽星 h2 → 往上找區塊容器 → 容器內 h2 + 容器文字 + profile 連結」三路徑交叉比對主腳本結果。抓不到會印出頁面所有 h2 與容器文字 1200 字，FB 改版時直接看得到長什麼樣 |
 | `scripts/fb_session_data/` | 教練 FB 登入 cookie 存放處（首次需手動登入一次）。⚠️ 2026-10-03 起這份已搬到 953-SSD 外接碟，**launchd 背景執行會失敗**，腳本已改用 `/Users/bymyway/.openclaw/fb_session_data_local`（本機碟） |
 | `/Users/bymyway/.openclaw/fb_session_data_local/` | **現行實際使用的 Chrome profile（本機碟）**。外部磁碟版保留備用，不要刪 |
 | `.lessons_upload/memory/feedback_fb_birthday_automation_cost.md` | 商業決策文件（2026-04-12 教練拍板） |
@@ -104,6 +105,8 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 | 完全沒跑 | 檢查 OpenClaw cron 狀態（`cron list` 確認 `12fad20b` 還在） |
 | 跑很久沒回應 | Puppeteer 等 `networkidle2` + 多等 4 秒，網路慢就會慢（屬正常現象） |
 | 重複抓到同名壽星 | 已是已知行為，Step 4 會自動去重（不必改腳本） |
+| 🔴 想知道名單抓對沒 | 跑 `node scripts/fb_birthday_verify.js` 交叉比對。**2026-11-04 起有這支獨立驗證腳本**，主腳本壞掉或 FB 改版時用它確認，不要只信主腳本一次輸出 |
+| 🔴 2026-11-04 新坑：想抓「profile 連結文字」會抓到 0 筆 | **FB 目前 DOM 結構：壽星名字本身就是 `<h2>`（parent=A）**，不是 profile 連結的 innerText。驗證腳本第一版就是這樣寫的，結果抓到 0 筆誤判「抓不到」。**正確做法：抓 h2**（主腳本原本就是對的），或抓「今日壽星 h2 往上找的區塊容器的 innerText」 |
 | 🔴 報「The browser is already running for ...fb_session_data」 | **Chrome profile 放在外部磁碟（USB SSD）時，launchd 背景執行沒有權限寫那個磁碟**，Chrome 建不了 SingletonLock 就會噴這句假錯誤。**解法：profile 必須放本機碟**。本機版在 `/Users/bymyway/.openclaw/fb_session_data_local`，腳本會優先用它、找不到才退回舊路徑。（2026-10-24 實例：`fb_session_data` 在 10/03 被搬到 953-SSD，結果連續 19 天每天 exit 1，教練完全沒收到壽星名單卻沒人發現） |
 | 🔴 2026-10-31 新坑：cookie 在但還是被導去登入頁 | **Puppeteer 直接 `puppeteer.launch()` 啟動的 Chrome，macOS 判定它「沒有 responsible app」，鑰匙圈 ACL 會拒絕 → cookie 解不出來 → 直接被丟掉（不是 session 過期）**。Chrome 自己的 stderr 會寫 `Failed to decrypt token for service ...`。**解法：改用 `open -na "Google Chrome" --args --user-data-dir=... --remote-debugging-port=9225 --headless=new`（LaunchServices 啟動）**，macOS 才會正確歸屬 responsible app、鑰匙圈才放行；再 `puppeteer.connect({browserURL})` 接上去。`--headless=new` 保證教練螢幕不會跳出視窗。**已驗證有效（2026-10-31 修好）** |
 | 🔴 2026-11-01 新坑：Chrome 更新後工作 profile 的 cookie 變空殼 | **症狀一樣（被導去登入頁），但根因是「舊工作 profile 被 Chrome 判定版本不符 → 啟動時把 cookie 清掉」**。徵狀：工作 profile 的 `Cookies` 變成 32KB、sqlite 報 `no such table: cookies`（空殼），而教練真實 Chrome 的 `Cookies` 完整（1370 筆、FB 10 筆、`c_user`/`xs` 到 2027 年才過期）。**解法：每次同步前先 `pkill` + 刪掉工作 profile 的 `Cookies*`、`Network Persistent State*`、`Singleton*`，讓同步放進去的是完整快照；並在 Chrome 啟動後回報 cookie 存活筆數（啟動前 vs 啟動後）**。已驗證有效（2026-11-01 修好，commit `d69b3b600`） |
@@ -188,6 +191,7 @@ node /Users/bymyway/.openclaw/workspace/scripts/fb_birthday_scraper.js
 - [ ] 有壽星的日子有推到 Telegram
 - [ ] 沒壽星的日子安靜完成
 - [ ] 報錯有推到 Telegram（不要悶著不報）
+- [ ] **跑過 `scripts/fb_birthday_verify.js` 交叉比對，名單一致**（2026-11-04 加；單一腳本輸出不算數，兩個獨立路徑一致才算數）
 
 ---
 
