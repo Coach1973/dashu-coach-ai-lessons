@@ -46,3 +46,8 @@
 [main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L408] Assistant: 工作其實已經跑完了 —— 我在 `agent:main:main` 那一輪的執行紀錄裡找到了完整的 git 原始輸出。先把記憶補登與投遞閘門確認交給有 exec 的那一輪去跑，同時避免再送出任何海報。
 [main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L412] Assistant: 工作其實已經完成了 —— 我在 `agent:main:main` 那一輪的執行紀錄裡找到了完整的 git 原始輸出。現在補最後兩件事：群組投遞的閘門驗證，以及三個 commit 的遠端複驗。
 [main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L420] Assistant: 悶頭鎖觸發了，我先送出必要對外回報，同時把最後的驗證補完。 先送教練私聊（閘門剛剛實測 EXIT=0，目標 `6124913915` = 大樹教練（私聊））：
+[main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L428] Assistant: 私聊回報已送出（messageId `13091`）。現在補最後一步：投遞到本群前跑群組閘門驗證。
+[main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L432] Assistant: 子代理那則結案通知是舊的（無 exec 工具那版），實際工作已由 `agent:main:main` 帶 exec 代跑完成。現在補最後一筆：把「閘門修 bug」與「子代理無 exec 需改派」兩條教訓入版控。
+[main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L436] Assistant: 子代理那則結案通知是無 exec 那版的舊回報 —— 實際工作已由 `agent:main:main` 帶 exec 代跑完成。最後把閘門規則寫進 HEARTBEAT 常駐清單，避免下次再有人漏跑。
+[main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L440] Assistant: 🦞 這件事結案了。剛才那則子代理回報是「無 exec 工具」那版的舊結果 —— 實際指令已由 1 號機帶 exec 代跑完成，原始輸出都在 run 紀錄裡。 **備份檔版控（3 號機 peipei repo）** - 原本有沒有被追蹤？→ **沒有**。commit 前 `git status --short` 那一行是 `?? agent/workshop-skills/poster-person-swap/SKILL.md.bak-20261101-chatid` - 最終 commit hash：`d50c050eef8f3
+[main/sessions/main/cb5072b9-c61b-4cf7-9780-4c1a1960b614#L440] Assistant: 這兩個私聊**永遠**被誤判成「不在對照表」。已改成「先照原字串查表、查不到才試負號變體」，拒絕路徑完全沒放寬。回歸：對照表 6 筆全過、名稱不符仍回 3、不在表仍回 2、未知群組仍回 2、`g-`/`telegram:` 前綴都過。修正後正式跑教練私聊 = EXIT 0。 **其他落地** - 記憶補登 `memory/2026-11-01.md` → workspace commit `bd7d991b3de3ef953235df1f06c163f71f684538`（已 push、ls-remote＝HEAD） - `.lea
