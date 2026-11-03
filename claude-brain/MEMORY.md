@@ -1,3 +1,4 @@
+- [🔧 字壓漸層／光暈背景看不清＝page_contrast_scan 會漏；字藏起來截圖取像素算對比＋::before 深色暗幕(rebreathe 51e9161)(2026-11-04)](reference_gradient_bg_contrast_hide_text_pixel_sampling_2026-11-04.md)
 - [🔧 TAVA 網頁載圖程式 lazy+onload 才 append＝離畫面的圖永遠不載(rebreathe 634db31)；prompts.html 轉 JSON 餵 run_img_list.py 的做法(2026-11-03)](reference_tava_page_lazy_image_bug_and_prompts_page_to_run_img_list_2026-11-03.md)
 - [🔧 巴哈海報改版面拖30分鐘：每步38秒＋進度被 final:"false" 擋掉；safety-locks v1.9 時間版進度鎖＋參數自動修正(ec59cc22a)，真對話尚未驗證(2026-11-03)](reference_bahai_poster_30min_slow_progress_lock_v19_2026-11-03.md)
 - [🔴 手機連不上 Claude＝Mac 重開機後 claude rc 沒回來；已加開機自啟 com.coach.claude-remote-control；重啟撞 already served 等3分鐘(2026-11-03)](reference_phone_claude_rc_dies_on_reboot_autostart_2026-11-03.md)
