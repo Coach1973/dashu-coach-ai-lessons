@@ -1,3 +1,4 @@
+- [🔧 巴哈海報改版面拖30分鐘：每步38秒＋進度被 final:"false" 擋掉；safety-locks v1.9 時間版進度鎖＋參數自動修正(ec59cc22a)，真對話尚未驗證(2026-11-03)](reference_bahai_poster_30min_slow_progress_lock_v19_2026-11-03.md)
 - [🔴 手機連不上 Claude＝Mac 重開機後 claude rc 沒回來；已加開機自啟 com.coach.claude-remote-control；重啟撞 already served 等3分鐘(2026-11-03)](reference_phone_claude_rc_dies_on_reboot_autostart_2026-11-03.md)
 - [🔧 新後台網址登記大樹作品集用 --section houtai（後臺系統），預設 baoliu 會被稽核鎖判新缺漏(2026-11-03)](feedback_register_admin_url_use_houtai_section_2026-11-03.md)
 - [🔧 簡介視窗連結不顯示＝網址被貼進「修改標籤」欄；bni-chapters 已防呆(3f9e2e2)、team-bymyway 尚無；彥仲＝陳晏綜(未確認)(2026-11-02)](reference_url_typed_into_label_field_links_missing_2026-11-02.md)
