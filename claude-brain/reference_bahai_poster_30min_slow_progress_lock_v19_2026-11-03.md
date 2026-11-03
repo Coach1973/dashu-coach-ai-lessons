@@ -27,3 +27,5 @@ metadata:
 相關：[[reference_turn_budget_lock_bots_silent_loop_2026-10-30]] [[reference_img_list_one_command_deliver_first_lock_2026-11-02]] [[feedback_bot_instructions_must_block_old_path_and_measure_tokens_2026-10-25]]
 
 **後續（11/03 14:35 收工時）**：教練要「丟檔案就調 LK888 出圖、成品傳回群組不貼給他看」。已寫 `workspace/scripts/lk888_edit_image.py`（Claude 拆工單→LK888 只重畫要改的塊→貼回；`--send-to` 傳群組；成品字逐行比對把關）。真圖測 5 輪未過關：LK888 畫小字會錯（2:30／缺字／亂碼）。下一步＝日期時間地點用電腦字體貼、LK888 只畫人物。**學到**：不要拿 LLM 的「看起來 OK」當核對，用「抄字＋程式比對」才抓得到錯（舊核對連 2:30 都放行）。
+
+**結果（11/03 15:11）**：教練 15:05 問「巴哈的圖做好了沒、有沒有推回去」——查到巴哈 13:56 回的是「還沒出成品」、之後無動作，上輪 LK888 腳本 5 輪也沒過關，所以沒推。我改成**不讓 AI 畫字**做完：場次區塊用電腦字體（STHeiti Medium，stroke 加粗）蓋掉舊字重貼；左下人物用 macOS Vision 去背（`swiftc` 編一支 `VNGenerateForegroundInstanceMaskRequest`，Mac 26.7 實測可用，PIL 沒有 numpy/rembg）貼進原位，前臂在手肘處收掉避免蓋到緞帶字、舊人物殘影用左右背景色逐列補平。成品已用 `send_telegram_photo('-5115910257', …, account='bot_peipei')` 傳到「佩佩老師的巴哈助理」群，message_id 2758、檔案 `workspace/data/lk888_edit/poster_tainan_20261208_1511.jpg`。**學到**：教練說「做好要推回去」＝成品直接傳群組，不是貼給他看；改字／換人海報＝電腦字體＋去背貼回，比 LK888 重畫穩；工具腳本沒存進 repo（在暫存區），要一行指令化還沒做。
