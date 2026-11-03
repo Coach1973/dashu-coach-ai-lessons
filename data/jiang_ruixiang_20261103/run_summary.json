@@ -1,0 +1,19 @@
+{
+ "ok": [
+  "IMG-001",
+  "IMG-002",
+  "IMG-003",
+  "IMG-004"
+ ],
+ "failed": [],
+ "skipped": [],
+ "ocr": {
+  "IMG-001": "無多餘文字",
+  "IMG-002": "無多餘文字",
+  "IMG-003": "無多餘文字",
+  "IMG-004": "無多餘文字"
+ },
+ "minutes": 0.5,
+ "out": "/Users/bymyway/.openclaw/workspace/data/jiang_ruixiang_20261103",
+ "ref_IMG-003": "jiang-ruixiang/原始照片/2026-08-29_公益課程_1814865749670507.jpg（像素比對確認＝清單所指 75.jpg 皮紋公益檢測實景）"
+}
