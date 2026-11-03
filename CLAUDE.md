@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
-> **最後同步：2026-11-03 15:25:36**
+> **最後同步：2026-11-03 15:45:49**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -64,6 +64,10 @@
 
 ### ✅ 聯想 RustDesk 已修好（2026-10-19 01:27，聯想軍師）＋自癒守衛
 根因：`RustDesk2.toml` 的 `stop-service='Y'`（21118 不開、不登記櫃台；`log/tray/` 有 9 次 `Uninstalling service...`，09/05 03:09 與 10/14 22:56 對得上設定檔修改時間；誰按的「停止服務」仍不明）。已拿掉並重開，Tailscale IP 實測連入通。新增 `scripts/lenovo_rustdesk_guard.ps1`（登入自動執行、事件觸發不輪詢；實測砍程式／寫回 Y 都 15 秒內自癒）。**10/18 的 `lenovo_rustdesk_autostart.ps1` 已作廢**（`--tray` 不開 21118）。待做：①從 Mac 驗 `nc -zv 100.95.122.29 21118` ②宏碁上線後同法檢查 ③自癒失敗時推播給教練（目前只留聯想 `AppData/Roaming/RustDesk/guard/` 的 guard.log、last_repair.txt）。
+
+## 🔴 11/03 15:50 補棒（Sonnet 5.5，kai-0e7b66）：巴哈 safety-locks v1.10「改圖鎖」寫好
+- ~/.openclaw/extensions/safety-locks/index.js：peipei 用 exec/write/edit/process 碰 lk888_edit_image／images/edits／gpt-image…edit／ImageFont+906/1280，且指令沒有 poster_event_edit／poster_new_person／run_img_list → 擋下並印出那一行指令。備份 index.js.bak-20261103-before-poster-edit-lock；鏡像 workspace/plugin-dev/safety-locks-live/index.js。
+- 模擬呼叫驗證 5 種（舊腳本擋、images/edits 擋、新腳本放行、ls 放行、main 不受影響）。**gateway 尚未重啟，鎖還沒上線**；真對話未驗證。
 
 
 ---
