@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>展示手法測試</title>
+<style>
+body{margin:0;font:20px/1.6 system-ui,"PingFang TC",sans-serif;background:#111;color:#f3efe8}
+/* 1 縮框開場 */
+.hero{position:relative;height:100vh;overflow:hidden}
+.hero-media{position:absolute;inset:0;background:linear-gradient(135deg,#c2410c,#1e1b4b);transform-origin:50% 50%;will-change:transform,border-radius}
+.hero h1{position:relative;margin:0;padding-top:40vh;text-align:center;font-size:56px}
+/* 2 滾輪數字 */
+.stats{display:flex;gap:48px;justify-content:center;padding:120px 20px;font-size:72px;font-weight:700}
+.stat-digit{display:inline-block;width:.6em;height:1em;overflow:hidden;line-height:1}
+.stat-reel{display:block;transform:translateY(calc(var(--end)*-1em))}
+.stat-reel>span{display:block;height:1em}
+[data-motion=ready] .stat-reel{transform:translateY(0)}
+[data-motion=running] .stat-reel{transition:transform 1s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--stat)*70ms + var(--pos)*45ms)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* 3 跑馬燈 */
+.marquee{overflow:hidden;padding:40px 0}
+.track{display:flex;width:max-content;animation:slide 18s linear infinite paused}
+.marquee.is-active .track{animation-play-state:running}
+.marquee:hover .track{animation-play-state:paused}
+.group{display:flex;gap:48px;padding-right:48px}
+.group b{white-space:nowrap;font-size:28px;opacity:.8}
+@keyframes slide{to{transform:translateX(-50%)}}
+/* 4 文字升起 */
+[data-reveal]{opacity:0;clip-path:inset(0 0 100%);transform:translateY(28px)}
+[data-reveal].in{opacity:1;clip-path:inset(0);transform:none;transition:all .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0ms)}
+.copy{max-width:720px;margin:0 auto;padding:160px 20px 400px}
+@media (prefers-reduced-motion:reduce){.track{animation:none}[data-reveal]{opacity:1;clip-path:none;transform:none}}
+</style></head><body>
+<section class="hero"><div class="hero-media"></div><h1>展示手法</h1></section>
+
+<section class="stats" id="stats" data-motion="static"></section>
+
+<div class="marquee" id="mq"><div class="track">
+ <div class="group"><b>品牌甲</b><b>品牌乙</b><b>品牌丙</b><b>品牌丁</b><b>品牌戊</b><b>品牌己</b></div>
+ <div class="group" aria-hidden="true"><b>品牌甲</b><b>品牌乙</b><b>品牌丙</b><b>品牌丁</b><b>品牌戊</b><b>品牌己</b></div>
+</div></div>
+
+<section class="copy"><p data-reveal>第一段文字從下方升起。</p><p data-reveal>第二段延遲一點。</p><p data-reveal>第三段再延遲。</p></section>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 1 縮框：捲動時把滿版影片縮成圓角卡片 */
+const media=document.querySelector('.hero-media'),hero=document.querySelector('.hero');
+if(!reduce){
+  const inset=innerWidth<=850?14:10, radius=innerWidth<=850?22:18, span=innerHeight*1.55;
+  const ease=t=>-(Math.cos(Math.PI*t)-1)/2; // sine.inOut
+  let cur=0,tgt=0,raf=0;
+  const apply=()=>{cur+=(tgt-cur)*.18; const e=ease(cur);
+    const sx=1-e*(1-Math.max((hero.clientWidth-inset*2)/hero.clientWidth,.94));
+    const sy=1-e*(1-Math.max((hero.clientHeight-inset*2)/hero.clientHeight,.94));
+    media.style.transform=`scale(${sx},${sy})`; media.style.borderRadius=radius*e+'px';
+    raf=Math.abs(tgt-cur)>.001?requestAnimationFrame(apply):0;};
+  addEventListener('scroll',()=>{tgt=Math.min(Math.max(scrollY/span,0),1); if(!raf)raf=requestAnimationFrame(apply);},{passive:true});
+}
+
+/* 2 滾輪數字：三段 0–9 疊起來，停在第三段的目標數字 */
+const stats=document.getElementById('stats');
+[60,30,8,5].forEach((v,si)=>{
+  const dl=document.createElement('div');
+  dl.innerHTML=`<span class="sr-only">${v}+</span><span aria-hidden="true"></span>+`;
+  const box=dl.children[1];
+  String(v).split('').map(Number).forEach((d,pi)=>{
+    const col=document.createElement('span');col.className='stat-digit';
+    col.innerHTML=`<span class="stat-reel" style="--end:${20+d};--stat:${si};--pos:${pi}">`+
+      Array.from({length:30},(_,i)=>`<span>${i%10}</span>`).join('')+`</span>`;
+    box.appendChild(col);
+  });
+  stats.appendChild(dl);
+});
+if(reduce){stats.dataset.motion='static'}
+else{
+  stats.dataset.motion='ready';
+  new IntersectionObserver((es,io)=>{ if(es.some(e=>e.isIntersecting)){io.disconnect();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>stats.dataset.motion='running'));}},{threshold:.25}).observe(stats);
+}
+
+/* 3 跑馬燈：進畫面才跑 */
+new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('is-active',e.isIntersecting))).observe(document.getElementById('mq'));
+
+/* 4 文字升起 */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:0,rootMargin:'0px 0px -12% 0px'}); /* 被 clip-path 裁光的元素面積比例是 0，threshold 不能 > 0 */
+document.querySelectorAll('[data-reveal]').forEach((el,i)=>{el.style.setProperty('--d',i*120+'ms');io.observe(el)});
+</script></body></html>
