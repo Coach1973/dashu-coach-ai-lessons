@@ -49,3 +49,26 @@
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L485] Assistant: 批次 4 張全過，腳本回報已傳教練。我確認投遞紀錄，並補上 commit 與記憶。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L488] Assistant: 批次已完成並投遞。補上紀錄與 commit。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L494] Assistant: 批次產出已完成並投遞。最後把紀錄 commit 掉。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L506] Assistant: 🦞 教練，周正品牌那批 4 張出好了，圖跟 zip 已經直接傳到您私聊。 **成果** - 清單 4 張全數生成成功，跳過 0、失敗 0，耗時 0.6 分鐘 - 4 張都是 4:3（1536x1024） - 文字檢查：4 張都沒有任何多餘文字、數字或浮水印 - 已傳給您：一覽圖 + `images.zip`（11.3 MB，8 個項目，解壓驗證無誤；內含 4 張 PNG 原圖 + 4 張網頁用小圖） - 檔案在 `data/roger_chou_brand_20261102/` 這次我學乖了，走正規流程一行指令跑完就交（教練您 1
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L507] User: 我之前是不是有說過不需要出那麼高解析度的圖？我是要用在網頁上，又不是要印刷，隨便 4 個檔案就要 10.08 MB。我沒有說過要壓縮嗎？
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L509] Assistant: 教練說「之前講過」——我先自己查原始紀錄，不會叫您回想。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L513] Assistant: 教練講過，而且講得很清楚。我先查原始紀錄確認，再直接改掉，不問您。 **查到的原始紀錄（`recall.py` 查證，非我推論）：** - **2026-10-24 10:05**：您說「檔案大概都是 2.1、2.2、2.3 MB 左右…如果要在電腦或手機上看，檔案似乎不用這麼大，我覺得 **1 MB 以內應該就夠了**…有必要出這麼高解析度的圖片嗎？」 - **2026-10-30 14:15**：您說「LK888 的這張圖是很大的圖檔…**我們沒有必要用這麼大，可以壓縮**」 - **2026-10-30 14:33**：您說「
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L517] Assistant: 教練說得對，我確實漏了規則。先看程式根因再修。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L521] Assistant: 根因找到了，而且教練講得對。程式其實**已經有**做網頁壓縮小圖（`.web.webp`），但打包時把 2～3MB 的原圖 PNG **一起塞進 zip** 送出——小圖白做了，zip 反而撐到 11.3 MB。這是我的錯，不是沒聽過。 我直接修，不問您。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L524] Assistant: 根因確認：程式**已經有**做網頁壓縮小圖（`.web.webp`，1000px/q72，每張 47～117KB，完全符合您的要求），但打包時把 2～3MB 的原圖 PNG **也一起塞進 zip** 送出——小圖白做了，zip 反而撐到 11.3 MB。教練 10/24、10/30 講的規則我漏接了。現在修。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L527] Assistant: 教練講過，而且講得很清楚。我先自己查原始紀錄，不會叫您回想。 **查到的原始紀錄（`recall.py` 查證，非我推論）：** - **2026-10-24 10:05**：您說「檔案大概都是 2.1、2.2、2.3 MB 左右…如果要在電腦或手機上看，**檔案似乎不用這麼大，我覺得 1 MB 以內應該就夠了**…有必要出這麼高解析度的圖片嗎？」 - **2026-10-30 14:15**：您說「LK888 的這張圖是很大的圖檔…**我們沒有必要用這麼大，可以壓縮**」 - **2026-10-30 14:33**：您說「壓縮成
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L530] User: Continue the current task from the existing transcript, preserving completed work. If an action was interrupted, inspect its state before deciding whether to retry it. Do not restart the task or repeat completed actions.
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L536] Assistant: 程式已修好（語法檢查通過）。現在把兩批的 zip 重新打包成「只含網頁壓縮圖」，不重跑出圖、不花點數。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L539] Assistant: 程式已修好。現在重新打包兩批的 zip（只含網頁用壓縮圖，不重跑出圖、不扣點）。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L543] Assistant: zip 打包有重複檔名的 bug（`*.webp` 也命中 `*.web.webp`），我修掉重跑。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L546] Assistant: 兩批 zip 都已重新打包完成。現在把壓縮版交付給教練，同時補記憶。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L551] Assistant: 附件參數格式寫錯了（要陣列），修正重送。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L555] Assistant: 附件參數連續兩次被拒，我先查工具 schema 同時把記憶補上。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L559] Assistant: 附件陣列被拒兩次，我改用 `media` + `asDocument` 送。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L565] Assistant: 📦 教練，周正品牌這批重新打包：zip 內只有網頁用壓縮圖（webp，長邊 1000px），4 張共 0.28 MB（原來 11.3 MB）。原圖 PNG 留我本機備份，不進 zip。請用這份。 images.zip
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L571] Assistant: 📦 教練，蔡佩茹那 3 張的 zip 也重新打包好了：只含網頁用壓縮圖（webp），3 張共 1.02 MB（原來 10.6 MB）。請用這份。 cai-pei-ru-images.zip
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L604] Assistant: 教練的兩份新 zip 都已送達（回執 13137／13138）。剩下把規則寫進技能檔，讓下一批不會再犯。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L616] Assistant: 技能檔規則已寫入。最後補 HEARTBEAT 與試金石案例，然後收尾。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L622] Assistant: 案例庫已有案例146 記錄這次教訓。我補 HEARTBEAT 規則（AGENTS 規定犯錯要寫 HEARTBEAT → 蒸餾進案例庫），然後收尾。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L631] Assistant: 🦞 教練，**您講過，而且講得很清楚**。我先用紀錄查證再回覆，沒叫您回想。 **查到的原始紀錄（recall.py 查證，非我推論）** - **2026-10-24 10:05**：「檔案大概都是 2.1、2.2、2.3 MB 左右…如果要在電腦或手機上看，檔案似乎不用這麼大，我覺得 **1 MB 以內應該就夠了**…有必要出這麼高解析度的圖片嗎？」 - **2026-10-30 14:15**：「LK888 的這張圖是很大的圖檔…**我們沒有必要用這麼大，可以壓縮**」 - **2026-10-30 14:33**：「壓縮成
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L631] Assistant: 您請用新收的這兩份，舊的 11.3 MB 那包可以刪掉。 **規則已寫進四個地方，不會再犯** - 技能檔 `tava-ai-batch`：zip 只放 webp 小圖這句直接寫在出圖步驟裡 - `HEARTBEAT.md`：新增「網頁用圖交付規格」規則 - `memory/2026-11-02.md`（191 行）＋ `.learnings/LEARNINGS.md`：記錄您三次原話與根因 - 試金石案例庫已有**案例146**記錄這次教訓 **commit**：`d09a278ae`（記憶＋教訓）、`a0adc434a`（HEA
