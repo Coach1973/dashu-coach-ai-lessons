@@ -66,13 +66,16 @@ if not missing and not blockers: ok("教練說話時跑的檢查程式：檔案�
 # 3. 自動服務：重開機／登出後會不會自己起來
 _, ll = sh(["launchctl", "list"])
 loaded = {l.split("\t")[2] for l in ll.splitlines()[1:] if l.count("\t") == 2}
+# 被 launchctl 明確停用（disabled）的是教練有意停的（例：ai.openclaw.fb-birthday，10/30 不貼 FB），不報「沒在跑」
+_, dis = sh(["launchctl", "print-disabled", f"gui/{os.getuid()}"])
+disabled = set(re.findall(r'"([^"]+)"\s*=>\s*disabled', dis))
 ours = sorted(glob.glob(f"{LA}/com.coach.*.plist") + glob.glob(f"{LA}/ai.openclaw.*.plist"))
 sv = []
 for p in ours:
     try: dd = plistlib.load(open(p, "rb"))
     except Exception: sv.append(f"{os.path.basename(p)} 設定檔壞了"); continue
     lab = dd.get("Label"); args = dd.get("ProgramArguments") or [dd.get("Program", "")]
-    if lab not in loaded: sv.append(f"{lab} 沒在跑")
+    if lab not in loaded and lab not in disabled: sv.append(f"{lab} 沒在跑")
     for q in re.findall(r"(/Users/bymyway/[^\s;\"']+)", " ".join(map(str, args))):
         if not os.path.exists(q.rstrip(")")): sv.append(f"{lab} 指到不存在的 {q}")
 bk = {os.path.basename(x) for x in glob.glob(f"{WS}/ops/launchagents_backup/*.plist")}

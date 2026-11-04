@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- 手機連 Claude（claude rc）開機登入自動啟動。2026-11-03：11/02 01:41 重開機後 rc 沒回來，教練出門手機連不上。
+     只在登入時跑一次（RunAtLoad），不輪詢、不 KeepAlive（腳本跑完就結束，rc 留在 tmux 裡）。 -->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.coach.claude-remote-control</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/bymyway/.openclaw/workspace/scripts/restart_remote_control.sh</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/Users/bymyway/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>HOME</key>
+		<string>/Users/bymyway</string>
+		<key>LANG</key>
+		<string>zh_TW.UTF-8</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>StandardOutPath</key>
+	<string>/Users/bymyway/.openclaw/logs/claude_remote_control_boot.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/bymyway/.openclaw/logs/claude_remote_control_boot.log</string>
+</dict>
+</plist>
