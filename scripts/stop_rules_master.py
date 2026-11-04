@@ -707,6 +707,38 @@ if (_E2_Q and _last_idx is not None and LAST_TEXT and _e2_prompt and _E2_Q.searc
         BLOCK = True
 
 # ════════════════════════════════════════════════
+# F2. 守則#08／細則N2「不用問的一直問」（擋，2026-11-04）
+#    F 只提醒擋不住（教練 10/28～11/04 又重複提醒約 8 次）。
+#    高信心句型（要不要我／要我…嗎／還是先…？）出現在結尾幾行就擋一次；
+#    N2 第①關的事（花錢、對外、不可逆、要教練登入）與「方向不明」自動放行，
+#    或在同一則訊息寫一行【只有您能決定：…】自述是哪一關（會留紀錄）。
+#    出錯一律放行（2026-10-16 教訓）。偵測邏輯在 scripts/ask_gate.py，測試：scripts/test_ask_gate.py
+# ════════════════════════════════════════════════
+F2_HIT = False
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from ask_gate import should_block as _ask_should_block
+    if LAST_TEXT:
+        _f2_block, _f2_hits = _ask_should_block(LAST_TEXT)
+        if _f2_block:
+            F2_HIT = True
+            _f2_body = "\n".join("  • %s：「%s」" % (n, t) for n, t in _f2_hits) + "\n"
+            _f2_path = log_violation("rule08_ask_violations.log", "[F2 擋下]\n" + _f2_body)
+            MESSAGES.append(
+                "\n🔴 不用問的一直問（系統擋下一次，執行細則 N2）\n" + BAR + "\n" + _f2_body +
+                "\n你在結尾向教練討許可。N2：方向清楚 → 直接執行，不問「要做嗎」。\n"
+                "請三選一，改好再回覆：\n"
+                "  A. 這件事在教練這次交辦的範圍內 → 刪掉問句，直接做，做完回報憑證。\n"
+                "  B. 是範圍外的「順手」項目 → 不做也不問，寫進接力棒「🔧AI自己的工作清單」（N7）。\n"
+                "  C. 真的只有教練能決定（花錢／代表他對外發言／不可逆／需他本人登入／他自己的內容與喜好）\n"
+                "     → 保留問句，並在同一則訊息加一行：【只有您能決定：<是哪一種>】\n"
+                "三關：①只有教練能做 ②教練沒答過（先查接力棒與記憶）③現在不問會卡住。\n"
+                "違規記錄已寫入：%s\n" % _f2_path + BAR + "\n")
+            BLOCK = True
+except Exception:
+    pass
+
+# ════════════════════════════════════════════════
 # F. 守則#08 多此一舉徵詢（提醒，不擋）—— 原 rule08_ask_when_clear_check.sh
 # ════════════════════════════════════════════════
 F_PATTERNS = [
@@ -719,7 +751,7 @@ F_PATTERNS = [
 F_WHITELIST = re.compile(
     r"不可逆|刪除|危險|案例[0-9三十二四五六七八九十]|教訓|檢討|反省|方向不明|方向模糊|不確定您想要|多種.*(方式|方案|解讀)")
 
-if LAST_TEXT:
+if LAST_TEXT and not F2_HIT:
     hits = []
     for line in LAST_LINES:
         if F_WHITELIST.search(line):
