@@ -2127,6 +2127,20 @@
       "level": "remind",
       "situation": "教練說網頁已上架、請把出好的圖換進去時",
       "source": "教練 2026-10-30 13:12：「我直接打包上傳策展中心，你去小龍蝦讀圖幫我傳上去」"
+    },
+    {
+      "id": "R-VENUE-SIGNUP-LIST",
+      "moment": "prompt",
+      "match": "(養生廚房|KR|維悅|音樂廳|再耕園|場地).{0,30}(名單|參加|報名|人數|來過)|(名單|參加|報名|人數|來過).{0,30}(養生廚房|KR|維悅|音樂廳|再耕園|場地)",
+      "say": "依場地查報名名單＝一行指令 `python3 ~/.openclaw/workspace/scripts/venue_signups.py \"<場地關鍵字>\" --since YYYY-MM-DD`（不到1秒，會列每場人數、場地沒登記的場次、並把 CSV 寫進 ~/.openclaw/media/outbound/）。不要 grep 整個 workspace、不要翻記憶檔猜場地；指令列出「場地未登記」的場次就照實說未登記。傳檔直接用它印出的 CSV 路徑。",
+      "say_other": "依場地查報名名單＝一行指令 `python3 ~/.openclaw/workspace/scripts/venue_signups.py \"<場地關鍵字>\" --since YYYY-MM-DD`（不到1秒，會列每場人數、場地沒登記的場次、並把 CSV 寫進 ~/.openclaw/media/outbound/）。不要 grep 整個 workspace、不要翻記憶檔猜場地；指令列出「場地未登記」的場次就照實說未登記。傳檔直接用它印出的 CSV 路徑。",
+      "level": "remind",
+      "audience": [
+        "coach",
+        "partner"
+      ],
+      "situation": "有人要某個場地（KR養生廚房、維悅…）辦過的活動報名／參加名單時",
+      "source": "memory reference_bot_long_rounds_root_causes_2026-11-05（11/04 佩佩找 KR 名單 11 分鐘）"
     }
   ],
   "case_ledger": {
