@@ -1,3 +1,4 @@
+- [🔧 分身一輪 10～17 分真因(11/04 四輪)：沒一行指令亂找、傳檔要放 ~/.openclaw/media/outbound/ 否則試5次、答完被過期 Exec completed 叫醒空轉](reference_bot_long_rounds_root_causes_2026-11-05.md)
 - [🔧 字壓漸層／光暈背景看不清＝page_contrast_scan 會漏；字藏起來截圖取像素算對比＋::befor…](reference_gradient_bg_contrast_hide_text_pixel_sampling_2026-11-04.md)
 - [🔧 TAVA 網頁載圖程式 lazy+onload 才 append＝離畫面的圖永遠不載(rebreathe 63…](reference_tava_page_lazy_image_bug_and_prompts_page_to_run_img_list_2026-11-03.md)
 - [🔧 巴哈海報改版面拖30分鐘：每步38秒＋進度被 final:"false" 擋掉；safety-locks v1…](reference_bahai_poster_30min_slow_progress_lock_v19_2026-11-03.md)
