@@ -219,6 +219,11 @@ def check_line_push_gate():
     """LINE 推播閘門（教練 2026-10-20 常設禁令：沒有教練許可，LINE 小龍蝦不得使用會扣額度的推播）。
     閘門是補在 LINE 外掛檔案裡的；外掛更新換世代目錄會把它洗掉，沒人知道＝禁令默默失效。
     這裡每天檢查，被洗掉就自動補回（補回後要重啟主程式才生效，所以仍然報 🔴 讓人處理）。"""
+    # 2026-11-04：多張照片合成一則回覆的補丁也在 LINE 外掛裡，一樣會被外掛更新洗掉，一起檢查、洗掉就補回
+    merge = Path.home() / ".openclaw/workspace/scripts/line_loose_image_merge_patch.py"
+    if merge.exists() and subprocess.run([sys.executable, str(merge), "check"], capture_output=True, text=True, timeout=30).returncode != 0:
+        subprocess.run([sys.executable, str(merge), "apply"], capture_output=True, text=True, timeout=30)
+        bad("LINE多張照片合一", "補丁被外掛更新洗掉，已自動補回；需要重啟主程式才生效")
     gate = Path.home() / ".openclaw/workspace/scripts/line_push_gate_patch.py"
     r = subprocess.run([sys.executable, str(gate), "--check"], capture_output=True, text=True, timeout=30)
     if r.returncode == 0:

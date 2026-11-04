@@ -59,10 +59,33 @@ if "給跨對話框軍師讀的總結摘要" not in handoff_content:
           f"疑似被整份覆蓋，不寫入CLAUDE.md（案例91）。請人工檢查 {handoff_path} 是不是被誰直接蓋掉了。")
     sys.exit(1)
 
+# 2026-11-04 教練同意（賈維斯體檢建議1）：開工 hook 已會送接力棒，這裡只留「最新一棒」＋🙋區，
+# 不再貼整份（原本 9 千多字、跟開工注入重複讀兩遍；三關全文已在全域 CLAUDE.md 的 N2）。
+def _latest_only(txt):
+    key = "## 🔴 給跨對話框軍師讀的總結摘要"
+    i = txt.find(key)
+    if i == -1:
+        return txt
+    j = txt.find("\n## ", i + len(key))
+    latest = txt[i:] if j == -1 else txt[i:j]
+    ask = ""
+    k = txt.find("### 🙋 要教練決定")
+    if k != -1:
+        m = txt.find("\n### ", k + 5)
+        n = txt.find("\n## ", k + 5)
+        ends = [x for x in (m, n) if x != -1]
+        ask = txt[k:min(ends)] if ends else txt[k:]
+    out = latest.rstrip() + "\n"
+    if ask and ask not in latest:
+        out += "\n" + ask.rstrip() + "\n"
+    out += "\n> 前一棒、🤫／🔧 待辦、封存索引：需要才讀 `JUNSHI_HANDOFF_LATEST.md`。問教練之前的三關：見執行細則 N2。\n"
+    return out
+handoff_content = _latest_only(handoff_content)
+
 new_section = f"""{start_mark}
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
-> 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，鏡像 `JUNSHI_HANDOFF_LATEST.md` 全文。
+> 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
 > **最後同步：{stamp}**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
