@@ -1031,7 +1031,8 @@
    "source": "Google日曆",
    "start": "19:00",
    "end": "20:00",
-   "reminder_job": "88b54b48-265d-4e12-a554-56a1870fbb4e"
+   "reminder_job": "88b54b48-265d-4e12-a554-56a1870fbb4e",
+   "form_token": "bgwcSKnTj_15"
   },
   {
    "id": "gcal-2026-11-04-3",
@@ -1048,7 +1049,8 @@
    "source": "Google日曆",
    "start": "20:30",
    "end": "21:30",
-   "reminder_job": "f23c6913-0706-40ff-9f79-fa4ce3598388"
+   "reminder_job": "f23c6913-0706-40ff-9f79-fa4ce3598388",
+   "form_token": "mg96yFECLRXs"
   },
   {
    "id": "gcal-2026-11-05-5",
@@ -1081,7 +1083,8 @@
    "source": "Google日曆",
    "start": "19:30",
    "end": "20:30",
-   "reminder_job": "0bf04c37-5983-4201-b406-2b82520d1a18"
+   "reminder_job": "0bf04c37-5983-4201-b406-2b82520d1a18",
+   "form_token": "_ATdqaaCjjUK"
   },
   {
    "id": "gcal-2026-11-05-9",
@@ -1138,7 +1141,8 @@
    "source": "Google日曆",
    "start": "08:30",
    "end": "09:30",
-   "reminder_job": "57d5ffe3-70fc-435b-bd2a-5730eb2ccd73"
+   "reminder_job": "57d5ffe3-70fc-435b-bd2a-5730eb2ccd73",
+   "form_token": "Je9YjP5yLGO6"
   },
   {
    "id": "gcal-2026-11-08-16",
@@ -4274,7 +4278,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-04 07:00",
+ "updated_at": "2026-11-04 08:14",
  "tainan_synced_at": "2026-11-03 11:27",
  "evening_window": {
   "start": "19:00",
