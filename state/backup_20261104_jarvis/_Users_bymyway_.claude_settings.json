@@ -1,0 +1,335 @@
+{
+  "env": {
+    "ANTHROPIC_MODEL": "claude-sonnet-5[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "claude-sonnet-5",
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "1000000",
+    "API_TIMEOUT_MS": "3000000"
+  },
+  "permissions": {
+    "allow": [
+      "Read(/Users/bymyway/**)",
+      "Write(/Users/bymyway/**)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace && git *)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(git rev-parse:*)",
+      "Edit(/Users/bymyway/**)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup && ./venv/bin/python *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup && venv/bin/python *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace && ./venv/bin/python *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup && ls *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup && cat *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup && grep *)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace/event-signup)",
+      "Bash(cd /Users/bymyway/.openclaw/workspace)",
+      "Bash(./venv/bin/python:*)",
+      "Bash(venv/bin/python:*)",
+      "Bash(/Users/bymyway/.openclaw/workspace/event-signup/venv/bin/python:*)",
+      "Bash(sshpass -p * ssh -o StrictHostKeyChecking=no root@43.245.60.200 *)",
+      "Bash(scp -o StrictHostKeyChecking=no *)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/git_wrong_branch_guard.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/netlify_deploy_guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/delete_guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/lk888_bypass_guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__computer-use__screenshot|mcp__computer-use__zoom|mcp__computer-use__computer_batch|mcp__computer-use__teach_step|mcp__computer-use__teach_batch|mcp__claude-in-chrome__computer|mcp__claude-in-chrome__browser_batch|mcp__Claude_Preview__preview_screenshot|mcp__Claude_Browser__computer",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/screenshot_lock.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/cross_machine_dispatch_guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/web_preview_verify_guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/unsafe_port_check.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/handoff_sync_guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|mcp__terminal__run_in_terminal",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" pre_tool"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__claude-in-chrome__.*|mcp__Claude_Browser__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" pre_tool"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/auto_chrome_after_html_edit.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|mcp__computer-use__open_application",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/main_display_guard_hook.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/lesson_conversion_hook.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" post_tool"
+          }
+        ]
+      },
+      {
+        "matcher": "Artifact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/auto_register_artifact.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/all_works_repo_hook.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/stop_rules_master.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/session_end_auto_push.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/session_end_distill_push.sh"
+          },
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/rules_reviewer_hook.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" || exit 0",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" reply"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/inject_time_context.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/feed_junshi_handoff.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/pre_task_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/auto_goal_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/session_length_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/context_percent_hook.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\""
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/quote_xinfa_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/e07_settings_inject.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/scan_cross_agent_inbox.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/scan_cross_machine_commits.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/summary_upload_trigger.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/log_junshi_activity_to_echo.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/periodic_xinfa_reload_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/project_card_router.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/identity_model_verify.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/verbatim_on_prompt.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/model_tier_advisor.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/Users/bymyway/.openclaw/workspace/scripts/reflex_router.py; [ -f \"$f\" ] || exit 0; exec /usr/bin/env python3 \"$f\" prompt"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/bymyway/.openclaw/workspace/scripts/audit_claude_hooks_registered.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
+  "theme": "dark",
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "discord@claude-plugins-official": true
+  }
+}

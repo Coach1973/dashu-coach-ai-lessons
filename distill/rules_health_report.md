@@ -2,7 +2,7 @@
 
 **結論：⚠️ 體檢發現 1 項：執行細則＋特助心法 重複約 16 字**
 
-> 2026-11-01 22:27 自動產生。零額度、只讀、不改任何規則。「候選」＝程式判斷，需要人（或 AI）確認才處置。
+> 2026-11-04 12:31 自動產生。零額度、只讀、不改任何規則。「候選」＝程式判斷，需要人（或 AI）確認才處置。
 
 ## 1. 過時：規則檔提到的檔案還在不在
 - 掃到 55 個路徑／檔名，**找不到 0 個**。
@@ -22,9 +22,9 @@
 - 每場對話常駐載入的是 全域CLAUDE＋專案CLAUDE；反射索引由 hook 程式讀、命中才送進對話，不佔常駐份量。
 
 ## 4. 沒必要：反射命中統計
-- 反射 161 條；命中紀錄只累積 **31 天**。
-- 紀錄不到 90 天，**不列退休建議**（未命中 54 條僅供參考，危險指令類本來就該很少命中）。
-- 最吵前 5：R-VERIFY-BEFORE-ANSWER 254 次、R-PARTNER-REPLY-STYLE 196 次、R-RULE16-LONG-INSTRUCTION-ASK-RESULT 60 次、R-ERROR-IS-NOT-NOT-FOUND 57 次、R-CHROME-WHICH-MACHINE 35 次
+- 反射 161 條；命中紀錄只累積 **34 天**。
+- 紀錄不到 90 天，**不列退休建議**（未命中 50 條僅供參考，危險指令類本來就該很少命中）。
+- 最吵前 5：R-VERIFY-BEFORE-ANSWER 283 次、R-PARTNER-REPLY-STYLE 211 次、R-ERROR-IS-NOT-NOT-FOUND 69 次、R-RULE16-LONG-INSTRUCTION-ASK-RESULT 66 次、R-CHROME-WHICH-MACHINE 42 次
 
 ## 處置分級
 - 機械的（死路徑、重複副本改成「見某檔」）：AI 自己改並 commit。
