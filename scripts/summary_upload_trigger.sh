@@ -12,7 +12,7 @@ PROMPT=$(printf '%s' "$INPUT" | /usr/bin/jq -r '.prompt // ""')
 
 # 觸發詞判定：整句主要是「總結」類指令才觸發，避免長句子裡順口提到「總結」誤觸發
 # （例如「幫我寫一份年度總結報告」不該觸發收工流程）
-if ! printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*總結[[:space:]。！!，,]*$|^總結[，,]|總結上傳|總結一下"; then
+if ! printf '%s' "$PROMPT" | grep -qE "^[[:space:]]*(總結|總)[[:space:]。！!，,]*$|^總結[，,]|總結上傳|總結一下"; then
   exit 0
 fi
 
