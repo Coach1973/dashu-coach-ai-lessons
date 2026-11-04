@@ -29,10 +29,15 @@ description: 教練要改既有網頁時使用——「改網頁」「這頁改�
    - 數字類先分清楚是「目標」還是「目前進度」（100 席位≠已 100 位）。
    - 換圖一定換檔名（伺服器圖片快取 4 小時）。
 4. **用真瀏覽器量，不截圖**（教練禁截圖）：內建瀏覽器先 `resize_window` 設 1280 與 390 寬再量；檢查 `scrollWidth<=clientWidth`（手機沒有左右捲動）、圖片 `naturalWidth>0`、最小字級。
-5. **推上線**：`git add <改的檔> && git commit -m "[Mac] …" && git push origin <分支>`。
-6. **確認線上版真的變了**：`curl -s "<網址>?v=$RANDOM" | grep <新文字>`。GitHub Pages 部署要 1～2 分鐘；沒變先重試，再查 `gh api repos/Coach1973/<repo>/pages/builds/latest`（errored 就 `gh api -X POST repos/Coach1973/<repo>/pages/builds` 重跑）。
-7. **交付**：`bash ~/.openclaw/workspace/scripts/deliver_open.sh <網址>`（直接跳出 Chrome）。回報第一次就講：「已推上、線上已確認；如果您那邊還是舊的，等 1～2 分鐘再按 Ctrl+F5（瀏覽器快取 10 分鐘）」。網址獨立一行，後面不黏字。
-8. 如果這次做出新的後台／編輯／刪除網址 → 同一輪收進大樹作品集：`python3 ~/.openclaw/workspace/scripts/coach888_register_admin.py`（用 `--list` 讀回確認）。
+5. **推上線前先跑交付前自檢**（2026-11-04 教練：不要每次都讓我抓到錯誤；Stop 鎖會查對話紀錄，改過 html 卻沒跑就不准收尾）：
+   - 頁面已上線 → `node ~/.openclaw/workspace/scripts/page_preflight.js <https 網址>`；還沒上線 → 在倉庫資料夾 `python3 -m http.server 8791`（**不要用 8765**，會寫正式資料），再對 `http://127.0.0.1:8791/<檔名>` 跑。
+   - 電腦 1280／手機 390 各掃一次，一頁約 1 分鐘。檢查字看不清、表頭捲下去不見、手機左右捲動、字小於 20px、圖壞掉或單張超過 1MB、常規連結。
+   - 有 🔴 → 先修到 0 處再往下；🟡 偏淡（對比 2.2～3）只提醒，不擋，要不要改是設計選擇。
+   - 剛推上線的頁面可能要等 1～2 分鐘才讀到新版，掃之前先 `curl` 確認線上版已更新。
+6. **推上線**：`git add <改的檔> && git commit -m "[Mac] …" && git push origin <分支>`。
+7. **確認線上版真的變了**：`curl -s "<網址>?v=$RANDOM" | grep <新文字>`。GitHub Pages 部署要 1～2 分鐘；沒變先重試，再查 `gh api repos/Coach1973/<repo>/pages/builds/latest`（errored 就 `gh api -X POST repos/Coach1973/<repo>/pages/builds` 重跑）。
+8. **交付**：`bash ~/.openclaw/workspace/scripts/deliver_open.sh <網址>`（直接跳出 Chrome）。回報第一次就講：「已推上、線上已確認；如果您那邊還是舊的，等 1～2 分鐘再按 Ctrl+F5（瀏覽器快取 10 分鐘）」。網址獨立一行，後面不黏字。
+9. 如果這次做出新的後台／編輯／刪除網址 → 同一輪收進大樹作品集：`python3 ~/.openclaw/workspace/scripts/coach888_register_admin.py`（用 `--list` 讀回確認）。
 
 ## 相關記憶
 feedback_github_edit_is_the_web_edit_say_wait_and_cache_2026-10-15、feedback_web_font_min_20px_2026-10-14、feedback_layout_fix_keep_position_dont_cover_photo_subject_2026-10-13、feedback_nav_add_item_measure_width_with_20px_font_2026-10-14、feedback_number_change_target_vs_progress_2026-10-14
