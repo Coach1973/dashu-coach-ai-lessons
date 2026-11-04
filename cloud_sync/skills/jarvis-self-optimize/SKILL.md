@@ -66,4 +66,4 @@ python3 ~/.openclaw/workspace/scripts/rules_health_audit.py
 教練說口令時跑完整套。另外每週一 08:10 點名會算賈維斯成績單（`scripts/jarvis_scorecard.py`：教練糾正、新案例、同類重犯、規則總字數），任一項變差就自動在背景跑一次（`scripts/jarvis_scorecard_trigger.sh`，同一週最多一次，只做「AI 直接改」類，報告傳教練 Telegram）。收工時 `rules_health_audit.py` 已自動跑機械層；看到字數變多，收工回報順帶一句即可。
 
 ## 上一次檢測留下的（下一次先看）
-2026-10-21 第一次：佩佩分身 MEMORY.md 被截已修（降到 18,976 字）；小龍蝦主分身 SOUL.md 19,353 字已達上限 97%；主分身 TOOLS.md、HEARTBEAT.md 不在開機清單，裡面的規則是否送得到模型待查；其餘建議見當天報告。
+2026-11-04（報告 https://claude.ai/artifact/5cADom9tyeizLpQJLWJLfN）：記憶目錄 MEMORY.md 超過上限（約 2.4 萬字／200 行）末 37 筆讀不到→已縮到 21,526 字，之後每行一句、不寫細節；小龍蝦開機檔看 `openclaw doctor --non-interactive` 的「Bootstrap file size」最準（主分身 AGENTS.md 95%）；doctor 算的主分身總量 33,690 只對得上 AGENTS＋SOUL＋IDENTITY，USER.md／TOOLS.md 有沒有送到模型待查；LINE 推播鎖擋下多圖回覆是擋對的（逐張慢回→免費回覆時效過→改走推播）。等教練點頭：專案 CLAUDE.md 不貼整份接力棒、多圖合一則回、R-VERIFY-BEFORE-ANSWER 縮觸發。
