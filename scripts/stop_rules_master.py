@@ -467,11 +467,15 @@ if _last_idx is not None and len(_last_prompt) >= 15:
         if isinstance(ev, dict) and ev.get("type") == "assistant":
             _texts += [c.get("text", "") for c in _content_list(ev)
                        if isinstance(c, dict) and c.get("type") == "text"]
-    if _texts and not any(("🔵" in t or "🟢" in t or "🟣" in t) for t in _texts):
+    # 2026-11-04 教練抓到：舊版只看「這一輪任何一段文字有燈」，開頭亮過一次，後面每則回覆都不用亮。
+    # 改成：最後一則回覆（教練實際讀到的那則）的第一行必須有燈。
+    _last_reply = _texts[-1] if _texts else ""
+    _first_line = next((l for l in _last_reply.split("\n") if l.strip()), "")
+    if _texts and not any(m in _first_line for m in ("🔵", "🟢", "🟣")):
         path = log_violation("model_tier_label_missing.log", "  • 教練：%s\n\n" % _last_prompt[:60])
         MESSAGES.append(
-            "\n🚨 模型分工亮燈缺漏（教練 2026-09-25 親定，2026-10-09 改三燈號）\n" + BAR + "\n"
-            "這一輪回覆沒有亮燈。請補一則回覆，第一行寫：\n"
+            "\n🚨 模型分工亮燈缺漏（教練 2026-09-25 親定，2026-10-09 改三燈號，2026-11-04 改成逐則檢查）\n" + BAR + "\n"
+            "最後這一則回覆的第一行沒有亮燈（每一則回覆都要自己亮，不能靠前面亮過）。請補一則回覆，第一行寫：\n"
             "  「🔵 這件 Haiku 就能做」「🟢 這件 Sonnet 就能做」或「🟣 這件是 Opus 等級（理由：…）」\n"
             "規則：knowledges/模型分工規則_Opus與Sonnet.md\n"
             "違規記錄已寫入：%s\n" % path + BAR + "\n")
@@ -734,6 +738,40 @@ try:
                 "     → 保留問句，並在同一則訊息加一行：【只有您能決定：<是哪一種>】\n"
                 "三關：①只有教練能做 ②教練沒答過（先查接力棒與記憶）③現在不問會卡住。\n"
                 "違規記錄已寫入：%s\n" % _f2_path + BAR + "\n")
+            BLOCK = True
+except Exception:
+    pass
+
+# ════════════════════════════════════════════════
+# F3. 回報固定「結論一句＋您要做什麼」（擋一次，2026-11-04 交辦 ⑥）
+#    只檢查「這一輪有做事」（有非記帳工具呼叫）的回覆；純閒聊不擋。
+#    回覆裡沒有「您要做什麼：」那一行就擋一次（寫「您要做什麼：沒有，不用做」即可放行）。
+#    出錯一律放行。
+# ════════════════════════════════════════════════
+F3_MARK = re.compile(r"(?m)^\s*(?:[>\-*#]+\s*)?\**您要做什麼\**\s*[:：]")
+try:
+    if LAST_TEXT and not F2_HIT:
+        _f3_turn_start = 0
+        for _i, _e in enumerate(EVENTS):
+            if isinstance(_e, dict) and _e.get("type") == "user" and _is_real_user_prompt(_e) \
+                    and not _prompt_text(_e).lstrip().startswith(("Stop hook feedback", "<system-reminder")):
+                _f3_turn_start = _i
+        _f3_tools = 0
+        for _e in EVENTS[_f3_turn_start:]:
+            if isinstance(_e, dict) and _e.get("type") == "assistant":
+                for _x in _content_list(_e):
+                    if isinstance(_x, dict) and _x.get("type") == "tool_use" \
+                            and not E2_BOOKKEEPING.search(_x.get("name", "")):
+                        _f3_tools += 1
+        if _f3_tools > 0 and not F3_MARK.search(LAST_TEXT):
+            _f3_body = "  • 這一輪做了 %d 次工具操作，回覆末尾沒有「您要做什麼：」那一行\n" % _f3_tools
+            _f3_path = log_violation("rule_report_format_violations.log", "[F3 擋下]\n" + _f3_body)
+            MESSAGES.append(
+                "\n🔴 回報格式缺「您要做什麼」（系統擋下一次，2026-11-04 交辦 ⑥）\n" + BAR + "\n" + _f3_body +
+                "\n做事的回報固定兩行收尾，改好再回覆：\n"
+                "  結論：<一句話講做完了什麼或查到什麼>\n"
+                "  您要做什麼：<需要教練做的一件事>，沒有就寫「沒有，不用做」\n"
+                "違規記錄已寫入：%s\n" % _f3_path + BAR + "\n")
             BLOCK = True
 except Exception:
     pass
