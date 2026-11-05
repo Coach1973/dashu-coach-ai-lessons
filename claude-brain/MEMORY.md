@@ -174,3 +174,4 @@
 - [🔧 教練給 LINE QR 圖＝用 scratchpad 的 opencv 解碼成 line.me/ti/p/<代…](reference_line_qr_decode_and_personal_link_xiumei_2026-10-29.md)
 - [🔴 教練看不懂小龍蝦技術通知：系統自己的通知改進 junshi_inbox 由我開工時自己處理，回報先說「你什麼都…](feedback_system_notices_go_to_inbox_not_coach_2026-11-01.md)
 - [🏷️ LINE 官方帳號清 Unknown 聊天：加標籤（新增標籤＋鉛筆、Enter 才生效、讀回驗證）、標籤付費…](reference_line_oa_bulk_tag_unknown_2026-11-02.md)
+- [🔧 Hook 腳本檔不見→Python 結束代碼 2→UserPromptSubmit 被當成擋下，手機／Mac 所有 Claude 對話叫不動(2026-10-16)](reference_python_hook_missing_file_exit2_blocks_all_prompts_2026-10-16.md) — hook 檔不見、對話全被擋時用；雲端可 list_events 讀手機橋接對話查錯
