@@ -1,7 +1,23 @@
 #!/bin/bash
 # 雲端對話寫給軍師的信：掃指定專案所有遠端分支的 docs/to_junshi/*.md，沒讀過的才列出
 # 用法：cloud_letters.sh list（只列，開工 hook 用）｜cat（印全文）｜mark（現有的全部標成已讀）
-REPOS="${CLOUD_LETTERS_REPOS:-$HOME/github_repos/bni-chapters}"
+# 2026-11-05：原本只掃 bni-chapters，my-tools／rongtree／taipeiema1017／工作區的雲端來信開工都看不到（雲端盤點報告第 1 項）。
+# 改成讀 scripts/cloud/cloud_repos.json 的倉庫清單 + 工作區本身；要覆蓋仍可設 CLOUD_LETTERS_REPOS。
+_default_repos() {
+  python3 - <<'PY' 2>/dev/null
+import json, os
+home = os.path.expanduser("~")
+try:
+    names = json.load(open(os.path.join(home, ".openclaw/workspace/scripts/cloud/cloud_repos.json")))["repos"]
+except Exception:
+    names = ["bni-chapters"]
+out = [os.path.join(home, "github_repos", n) for n in names]
+out.append(os.path.join(home, ".openclaw/workspace"))
+print(" ".join(out))
+PY
+}
+REPOS="${CLOUD_LETTERS_REPOS:-$(_default_repos)}"
+[ -n "$REPOS" ] || REPOS="$HOME/github_repos/bni-chapters"
 STATE="${CLOUD_LETTERS_STATE:-$HOME/.openclaw/workspace/state/cloud_letters_read.txt}"
 DIR="docs/to_junshi"
 touch "$STATE"
