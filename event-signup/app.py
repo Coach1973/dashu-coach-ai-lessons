@@ -4176,7 +4176,18 @@ def _coach888_keep_new_works(conn, payload):
         except (KeyError, ValueError):
             continue
         missing.append(site)
-    if not missing:
+    # 2026-11-05 案例149：AI 登記進各分類的項目（例：雲端做的 Artifact 進「大樹常用」）同樣會被舊頁面蓋掉，
+    # 登記時另存一份在 coach888_pinned_recent.json，72 小時內被蓋掉就補回原分類；教練刪除會落在「最近刪除」，不受影響。
+    pinned = []
+    try:
+        for r in json.loads((Path(__file__).resolve().parent / "coach888_pinned_recent.json").read_text(encoding="utf-8")):
+            if r["url"] in present or datetime.strptime(r["at"], "%Y-%m-%d %H:%M") < cutoff:
+                continue
+            if r.get("section") in layout:
+                pinned.append(r)
+    except (OSError, ValueError, KeyError):
+        pass
+    if not missing and not pinned:
         return
     row = conn.execute("SELECT value FROM coach888_state WHERE key = 'coach888_items'").fetchone()
     server_items = json.loads(row["value"]) if row and row["value"] else {}
@@ -4188,6 +4199,11 @@ def _coach888_keep_new_works(conn, payload):
         if new_items is not None and url not in new_items:
             new_items[url] = server_items.get(url) or {"name": site["title"], "badge": "公開"}
         app.logger.warning("coach888 保護：補回被舊頁面蓋掉的新作品 %s", url)
+    for r in pinned:
+        layout[r["section"]].append(r["url"])
+        if new_items is not None and r["url"] not in new_items:
+            new_items[r["url"]] = {"name": r["name"], "badge": r.get("badge", "")}
+        app.logger.warning("coach888 保護：補回被舊頁面蓋掉的登記項目 %s", r["url"])
     payload["coach888_layout"] = json.dumps(layout, ensure_ascii=False)
     if new_items is not None:
         payload["coach888_items"] = json.dumps(new_items, ensure_ascii=False)

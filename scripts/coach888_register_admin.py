@@ -47,6 +47,21 @@ def register_vault(url: str, name: str, user: str = "（不需要帳密，網址
     return f"；已同步到 /vault（共 {len(rows)} 筆額外項目）"
 
 
+PINNED = Path(__file__).resolve().parent.parent / "event-signup" / "coach888_pinned_recent.json"
+
+
+def _pin_recent(url: str, name: str, section: str, badge: str) -> None:
+    """另存一份「最近登記」，伺服器端被舊頁面蓋掉時 72 小時內會補回（案例149）。"""
+    try:
+        rows = json.loads(PINNED.read_text(encoding="utf-8")) if PINNED.exists() else []
+    except ValueError:
+        rows = []
+    cutoff = (datetime.now().timestamp() - 7 * 86400)
+    rows = [r for r in rows if r.get("url") != url and datetime.strptime(r["at"], "%Y-%m-%d %H:%M").timestamp() > cutoff]
+    rows.append({"url": url, "section": section, "name": name, "badge": badge, "at": datetime.now().strftime("%Y-%m-%d %H:%M")})
+    PINNED.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+
 def register(url: str, name: str, section: str = "baoliu", badge: str = "後臺") -> str:
     if not url.startswith("https://"):
         raise SystemExit("網址要用 https:// 開頭")
@@ -69,6 +84,7 @@ def register(url: str, name: str, section: str = "baoliu", badge: str = "後臺"
     l2, i2 = json.loads(chk["coach888_layout"]), json.loads(chk["coach888_items"])
     if url not in l2.get(section, []) or i2.get(url, {}).get("name") != name:
         raise SystemExit("寫入後核對不符，請人工檢查 coach888 狀態（備份在 state/）")
+    _pin_recent(url, name, section, badge)
     after = {k: len(v) for k, v in l2.items()}
     moved = {k: (before[k], after[k]) for k in before if before[k] != after.get(k)}
     return f"{'已更新' if already else '已登記'}：{name}（{section}，共 {len(l2[section])} 項；數量變動 {moved or '無'}）"
