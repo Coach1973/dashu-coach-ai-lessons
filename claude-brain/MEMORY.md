@@ -1,3 +1,4 @@
+- [🔴 人才軍火庫補照片＝直接用個人網頁第一張（程式已自動 set-image 不給檔案），不准翻原始照片瞎找；教練11/05嫌浪費額度](feedback_skyteam_photo_use_page_first_image_2026-11-05.md)
 - [🔧 分身一輪 10～17 分真因(11/04 四輪)：沒一行指令亂找、傳檔要放 ~/.openclaw/media/outbound/ 否則試5次、答完被過期 Exec completed 叫醒空轉](reference_bot_long_rounds_root_causes_2026-11-05.md)
 - [🔧 字壓漸層／光暈背景看不清＝page_contrast_scan 會漏；字藏起來截圖取像素算對比＋::befor…](reference_gradient_bg_contrast_hide_text_pixel_sampling_2026-11-04.md)
 - [🔧 TAVA 網頁載圖程式 lazy+onload 才 append＝離畫面的圖永遠不載(rebreathe 63…](reference_tava_page_lazy_image_bug_and_prompts_page_to_run_img_list_2026-11-03.md)
