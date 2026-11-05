@@ -31,10 +31,37 @@ COACH_CHAT_ID = "6124913915"
 TESSERACT = shutil.which("tesseract") or "/opt/homebrew/bin/tesseract"
 
 
+def normalize_items(data):
+    """把清單每筆的正規化：prompt 欄位可能是 prompt / en（英文指令），比例可能是 ratio / aspect / size。"""
+    out = []
+    for x in data:
+        if not isinstance(x, dict):
+            continue
+        it = dict(x)
+        if not it.get("prompt"):
+            for k in ("en", "english", "英文指令", "prompt_en"):
+                if it.get(k):
+                    it["prompt"] = it[k]
+                    break
+        if not it.get("ratio"):
+            for k in ("aspect", "aspectRatio", "size", "比例"):
+                if it.get(k):
+                    it["ratio"] = it[k]
+                    break
+        if not it.get("id"):
+            it["id"] = it.get("file") or "IMG-%03d" % (len(out) + 1)
+        if not it.get("type") and not it.get("kind"):
+            it["type"] = "概念"
+        if it.get("prompt"):
+            out.append(it)
+    return out
+
+
 def load_items(src):
-    """網址：抓頁面，取出 <pre> 裡那段 JSON 陣列；檔案：直接讀。"""
+    """網址：抓頁面，取出 <pre> 裡那段 JSON 陣列；檔案：直接讀。
+    2026-11-05 康牧師清單：JSON 欄位是 en／zh（沒有 prompt），所以要放寬抓法。"""
     if not src.startswith("http"):
-        return json.loads(Path(src).read_text(encoding="utf-8"))
+        return normalize_items(json.loads(Path(src).read_text(encoding="utf-8")))
     req = urllib.request.Request(src, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
         page = resp.read().decode("utf-8", "replace")
@@ -43,9 +70,32 @@ def load_items(src):
             data = json.loads(html.unescape(re.sub(r"<[^>]+>", "", block)))
         except ValueError:
             continue
-        if isinstance(data, list) and data and all(isinstance(x, dict) and "prompt" in x for x in data):
-            return data
+        if isinstance(data, list) and data and all(isinstance(x, dict) for x in data):
+            items = normalize_items(data)
+            if items:
+                return items
     sys.exit("網頁裡找不到出圖清單 JSON：%s" % src)
+
+
+def probe_page(src):
+    """診斷模式：只印出圖清單頁的結構（有哪些標籤、JSON 藏在哪），不出圖、不扣點。
+    2026-11-05 康牧師清單：<pre> 裡沒有 JSON，需要知道頁面長什麼樣才修 parser。"""
+    req = urllib.request.Request(src, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        page = resp.read().decode("utf-8", "replace")
+        status = resp.status
+    print("HTTP", status, "len", len(page))
+    print("有 <pre>:", "<pre" in page, "｜<script> 數:", len(re.findall(r"<script", page)))
+    for m in re.finditer(r"<script([^>]*)>", page):
+        print("  script:", (m.group(1) or "").strip()[:140])
+    print("關鍵字次數：prompt=%d  IMG-=%d  ratio=%d  [ =%d" % (
+        page.count("prompt"), len(re.findall(r"IMG-\d+", page)), page.count("ratio"), page.count("[")))
+    for kw in ("prompt", "IMG-", "ratio"):
+        i = page.find(kw)
+        if i >= 0:
+            print("  關鍵字 %s 首現位置 %d，前後 200 字：%s" % (kw, i, page[max(0, i - 200):i + 200].replace("\n", " ")))
+    tail = page[-600:].replace("\n", " ")
+    print("頁尾 600 字：", tail)
 
 
 def save_web_copy(png):
@@ -149,6 +199,9 @@ def main():
     if len(args) != 2:
         sys.exit(__doc__)
     t_start = time.time()
+    if "--probe" in sys.argv:
+        probe_page(args[0])
+        return
     items = load_items(args[0])
     if "--dump-items" in sys.argv:
         # 診斷用：只印欄位結構，不出圖、不扣點
