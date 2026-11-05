@@ -4155,5 +4155,72 @@
   ],
   "photo_alt": "愛人如己聖誕音樂饗宴",
   "caption": "愛人如己聖誕音樂饗宴"
+ },
+ {
+  "slug": "kang-pastor",
+  "name": "巴康忠義牧師",
+  "role": "高雄天泉611靈糧堂主任牧師",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/kang-pastor/",
+  "anchor": "#good",
+  "lede": "「我在監裡，你們來看我。」（馬太福音 25:36）他把這句話當成給每個基督徒的呼召，長年走進監所，服事受刑人、更生人與戒毒者。",
+  "stats": [
+   [
+    "多年",
+    "更生團契服事"
+   ],
+   [
+    "3",
+    "點被害家屬公開聲明"
+   ],
+   [
+    "100+",
+    "人出席追思，一同站立"
+   ],
+   [
+    "1",
+    "個不變的決定：繼續服事"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "長年",
+    "title": "基督教更生團契服事",
+    "desc": "輔導更生人與吸毒者，帶領許多受刑人重返正途。",
+    "src": "出處：聯合新聞網",
+    "href": "https://udn.com/news/story/7315/9423467"
+   },
+   {
+    "yr": "2026.03",
+    "title": "「這份痛，我們一起分擔」",
+    "desc": "台北靈糧堂、香港 611 全球分堂連線禱告；他學到「不必獨自承擔」。",
+    "src": "出處：基督教今日報",
+    "href": "https://cdn-news.org/News.aspx?EntityID=News&PK=00000000a485dec36491f5550ab654429d0acec0f70c2bf2"
+   },
+   {
+    "yr": "2026.04",
+    "title": "以被害家屬身分發表三點聲明",
+    "desc": "悔改是唯一的路、建立社會防護網、保持初衷以良善回應暴力。",
+    "src": "出處：基督教今日報",
+    "href": "https://cdn-news.org/News.aspx?EntityID=News&PK=00000000a485d5d247bc750f37afff4ebd30e159b642be60"
+   },
+   {
+    "yr": "2026.10",
+    "title": "親自擔任告訴人",
+    "desc": "「我不希望我的女兒白死……希望透過她留下來的血，可以對這個社會做點事、說一些話。」",
+    "src": "出處：基督教今日報專訪",
+    "href": "https://cdn-news.org/News.aspx?EntityID=News&PK=00000000a49c5ae0da25e1b46d170f469404bf688172d1b7"
+   }
+  ],
+  "photo": [
+   "assets/people/kang-pastor.jpg",
+   [
+    720,
+    405,
+    29662
+   ]
+  ],
+  "photo_alt": "康忠義牧師在講台上分享信息",
+  "caption": "康忠義牧師在講台上分享信息"
  }
 ]
