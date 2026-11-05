@@ -261,11 +261,26 @@ def guest_text(ev):
     return ev["guest"] + (f"（{ev['guest_field']}）" if ev.get("guest_field") else "")
 
 
+def is_google_twin(ev, events):
+    """同一場榮樹下訪談會在總表裡有兩筆：一筆是預約頁／巴哈登錄的正本（帶來賓、預約人），
+    另一筆是 sync_google 從教練 Google 日曆讀進來的鏡像（id 每次同步還會重新編號）。
+    2026-11-05：提醒迴圈沒有濾掉鏡像，於是每同步一次就多排一個提醒 cron（11/5、11/8 各多到 5 個），
+    18:30 會在巴哈群組貼兩次同一場訪談。鏡像一律不排提醒、不單獨提醒。"""
+    if ev.get("source") != "Google日曆":
+        return False
+    return any(o.get("id") != ev.get("id") and o.get("source") != "Google日曆"
+               and o.get("date") == ev.get("date") and o.get("start") == ev.get("start")
+               and is_rongshuxia(o) for o in events)
+
+
 def rongshuxia_upcoming(data, days=60):
     now = dt.datetime.now(TZ)
+    events = data.get("events", [])
     out = []
-    for e in data.get("events", []):
+    for e in events:
         if not is_rongshuxia(e) or e.get("allday"):
+            continue
+        if is_google_twin(e, events):
             continue
         start = dt.datetime.fromisoformat(f"{e['date']}T{e['start']}:00+08:00")
         if now <= start <= now + dt.timedelta(days=days):
@@ -993,6 +1008,9 @@ def main():
             print("行程已刪除，不提醒")
             return
         ev = hit[0]
+        if is_google_twin(ev, data.get("events", [])):
+            print("這是 Google 日曆同步出來的重複紀錄，不提醒")
+            return
         if ev.get("tentative"):
             print("這場又變回待確認，不提醒")
             return
