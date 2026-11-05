@@ -256,9 +256,15 @@ def guest_form_url(ev):
 
 
 def guest_text(ev):
-    if not ev.get("guest"):
+    """訪談對象。巴哈登記的場次常常只有把名字寫在標題（「榮樹下訪談：趙敏玄」）、沒填 guest 欄位，
+    提醒訊息也要看得到名字，所以 guest 欄位空著時用標題後面那段（跟 event-signup/rongtree_guest.py 的 _event_guest 同一套）。"""
+    g = ev.get("guest")
+    if not g:
+        t = (ev.get("title") or "").strip()
+        g = t.split("：", 1)[1].strip() if t.startswith("榮樹下訪談：") else ""
+    if not g:
         return ""
-    return ev["guest"] + (f"（{ev['guest_field']}）" if ev.get("guest_field") else "")
+    return g + (f"（{ev['guest_field']}）" if ev.get("guest_field") else "")
 
 
 def is_google_twin(ev, events):
@@ -737,7 +743,9 @@ def sync_google(data, days=120):
     for e in data.get("events", []):
         if e.get("source") == "Google日曆":
             old_gcal.setdefault((e.get("date"), e.get("start"), e.get("end"), e.get("title")), e)
-    for g in sorted(got, key=lambda g: (g["date"], g["start"] or "")):
+    # 排序加標題：Google 讀回來的順序不一定每次一樣，同一時間的兩場會互換位置、id 就跟著跳。
+    # 固定排序讓 id 穩定，提醒 cron 不會因為對調而變成孤兒。
+    for g in sorted(got, key=lambda g: (g["date"], g["start"] or "", g["title"], g["end"] or "")):
         title = google_title(g["title"], dt.date.fromisoformat(g["date"]), g["start"])
         if title is None:
             continue
