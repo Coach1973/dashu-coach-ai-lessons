@@ -213,6 +213,8 @@ Skills define how tools work. Keep environment-specific local notes in this sect
 1. push 收到 5xx 一定要重試一次。
 2. 重試後用 `git ls-remote origin <branch>` 確認 commit hash 真的出現在遠端，才算「推過了」。
 3. commit ≠ push：「本地 commit 已就位」不等於「教練能看到」。
+4. **重試還是 5xx 就改用 HTTP/1.1**（2026-11-05 00:00 康牧師出圖那次連推兩次都回 `Internal Server Error`，加 `-c http.version=HTTP/1.1` 一次就成功）：
+   `git -c http.version=HTTP/1.1 push origin main`
 
 ---
 
