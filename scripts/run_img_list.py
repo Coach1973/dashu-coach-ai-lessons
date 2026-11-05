@@ -16,7 +16,7 @@
 images.zip 內**只有**網頁用壓縮圖（檔名 IMG-00X.webp，每張 1MB 以內）——原圖 PNG 不進 zip（教練 2026-10-24「1MB 以內就夠」、10-30「可以壓縮，清晰可見，不要模糊」）；
 並用 bot_main 直接傳一覽圖＋zip 到教練 Telegram 私聊（--no-send 只產檔不傳）。
 """
-import base64, html, json, re, shutil, subprocess, sys, time, urllib.request, zipfile
+import base64, html, json, re, shutil, subprocess, sys, time, urllib.request, uuid, zipfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -26,6 +26,7 @@ from generate_industry_chain import get_api_key, LK888_API_URL  # noqa: E402
 
 SIZE = {"16:9": "1536x1024", "4:3": "1536x1024", "3:2": "1536x1024", "4:5": "1024x1536", "3:4": "1024x1536", "1:1": "1024x1024"}
 MAX_ITEMS = 12
+EDIT_ENDPOINT = "https://api.lk888.ai/v1/images/edits"
 NOTIFY = Path(__file__).resolve().parent / "notify_coach.sh"
 COACH_CHAT_ID = "6124913915"
 TESSERACT = shutil.which("tesseract") or "/opt/homebrew/bin/tesseract"
@@ -148,6 +149,96 @@ def gen(item, out_dir, key):
     return item["id"], "完成 %d 秒" % (time.time() - t0), f.stat().st_size
 
 
+def ref_filename(item):
+    """從 ref 欄位抓出參考照片檔名（例：'p001.jpg（周良敦書房揮毫照，原始照片資料夾）' → 'p001.jpg'）。"""
+    m = re.search(r"([A-Za-z0-9_\-]+\.(?:jpg|jpeg|png|webp))", (item.get("ref") or ""), re.I)
+    return m.group(1) if m else None
+
+
+def find_ref(item, out_dir):
+    """找參考照片：先看輸出資料夾的 refs/，再看已上架 zip 裡的「原始照片/」。找不到回 None。"""
+    name = ref_filename(item)
+    if not name:
+        return None
+    local = out_dir / "refs" / name
+    if local.exists():
+        return local
+    flat = out_dir / name
+    if flat.exists():
+        return flat
+    processed = Path("/Users/bymyway/.openclaw/workspace/event-signup/curation_uploads/processed")
+    zips = sorted(processed.glob("*.zip"), key=lambda p: p.stat().st_mtime, reverse=True)[:6]
+    for zp in zips:
+        try:
+            with zipfile.ZipFile(zp) as z:
+                hits = [n for n in z.namelist() if n.rsplit("/", 1)[-1] == name]
+                if not hits:
+                    continue
+                local.parent.mkdir(parents=True, exist_ok=True)
+                with z.open(hits[0]) as f, open(local, "wb") as o:
+                    shutil.copyfileobj(f, o)
+                print("  參考照片取自 %s → %s" % (zp.name, local))
+                return local
+        except (zipfile.BadZipFile, OSError):
+            continue
+    return None
+
+
+def build_edit_prompt(item, ref_name):
+    """實景修飾：以真實照片為底，把清單描述的場景畫進去；保留真人與真實場域。"""
+    base = (item.get("prompt") or "").strip()
+    return (
+        "Reference photo %s — build the scene below from this real photograph. "
+        "Keep the real person (identity, face, age, hairstyle, clothing) and the real room of the reference photo, "
+        "and render the described moment photorealistically, as if it really happened in that room, "
+        "same camera feel, natural warm lighting, no illustration look.\n\n"
+        "Scene: %s\n\n"
+        "Do not add: any watermark, logo, signature, caption, banner or readable text overlay; "
+        "no deformed hands, no extra fingers, no duplicated objects." % (ref_name, base)
+    )
+
+
+def gen_edit(item, out_dir, key, ref_path):
+    """實景修飾：走 LK888 /v1/images/edits（multipart，帶參考照片）。"""
+    f = out_dir / item["file"]
+    if f.exists() and f.stat().st_size > 10000:
+        if not f.with_suffix(".web.webp").exists():
+            save_web_copy(f)
+        return item["id"], "已存在，跳過（不重複扣點）", f.stat().st_size
+    boundary = uuid.uuid4().hex
+    parts = []
+
+    def field(name, value):
+        parts.append(("--%s" % boundary).encode())
+        parts.append(('Content-Disposition: form-data; name="%s"' % name).encode())
+        parts.append(b"")
+        parts.append(value.encode("utf-8") if isinstance(value, str) else value)
+
+    with open(ref_path, "rb") as fp:
+        img = fp.read()
+    parts.append(("--%s" % boundary).encode())
+    parts.append(('Content-Disposition: form-data; name="image"; filename="%s"' % ref_path.name).encode())
+    parts.append(b"Content-Type: image/jpeg")
+    parts.append(b"")
+    parts.append(img)
+    field("prompt", build_edit_prompt(item, ref_path.name))
+    field("model", "gpt-image-2")
+    field("size", SIZE[item["ratio"]])
+    field("n", "1")
+    parts.append(("--%s--" % boundary).encode())
+    parts.append(b"")
+    body = b"\r\n".join(parts)
+    req = urllib.request.Request(EDIT_ENDPOINT, data=body, method="POST",
+                                 headers={"Authorization": f"Bearer {key}",
+                                          "Content-Type": f"multipart/form-data; boundary={boundary}"})
+    t0 = time.time()
+    with lk888_guard.urlopen(req, timeout=240) as resp:
+        data = json.loads(resp.read().decode())
+    f.write_bytes(base64.b64decode(data["data"][0]["b64_json"]))
+    save_web_copy(f)
+    return item["id"], "完成 %d 秒（實景修飾）" % (time.time() - t0), f.stat().st_size
+
+
 def ocr_check(png):
     """唯一一次檢查：灰階＋二值化後 OCR，抓多餘文字／浮水印。讀到字就回那幾個字，空的＝乾淨。"""
     from PIL import Image
@@ -221,12 +312,19 @@ def main():
     todo, skipped = [], []
     for it in items:
         kind = it.get("type") or it.get("kind")  # 2026-11-03 江瑞祥清單用 kind 欄位
-        if kind not in ("概念", "圖解背景"):
-            skipped.append((it["id"], "類型是「%s」，需要參考照片，這支不處理" % kind))
-        elif it.get("ratio") not in SIZE:
+        if it.get("ratio") not in SIZE:
             skipped.append((it["id"], "比例 %s 不支援" % it.get("ratio")))
-        else:
+        elif kind in ("概念", "圖解背景"):
             todo.append(it)
+        elif kind in ("實景修飾", "實景修圖", "修飾"):
+            ref = find_ref(it, out_dir)  # 2026-11-06 周良敦 IMG-004：參考照片在已上架 zip 的「原始照片/」
+            if not ref:
+                skipped.append((it["id"], "實景修飾但找不到參考照片（%s）" % (it.get("ref") or "未指定")))
+            else:
+                it["_ref"] = ref
+                todo.append(it)
+        else:
+            skipped.append((it["id"], "類型是「%s」，這支不處理" % kind))
     print("清單 %d 張：要出 %d 張，跳過 %d 張；輸出到 %s" % (len(items), len(todo), len(skipped), out_dir))
     for i, why in skipped:
         print("  跳過", i, why)
@@ -237,8 +335,13 @@ def main():
         return
     key = get_api_key()
     results, errors = [], []
+    def run_one(it):
+        if it.get("_ref"):
+            return gen_edit(it, out_dir, key, it["_ref"])
+        return gen(it, out_dir, key)
+
     with ThreadPoolExecutor(max_workers=4) as ex:
-        futs = {ex.submit(gen, it, out_dir, key): it for it in todo}
+        futs = {ex.submit(run_one, it): it for it in todo}
         for fu, it in futs.items():
             try:
                 results.append(fu.result())
