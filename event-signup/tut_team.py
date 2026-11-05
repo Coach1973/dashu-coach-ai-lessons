@@ -392,7 +392,7 @@ td form{display:inline}td button{font:inherit;font-size:20px;padding:4px 10px;bo
 .editbtn{background:var(--purple);color:#fff !important;font-weight:700}
 """
 
-TITLE = "南應大校友會台南分會"
+TITLE = "台南市台南應用科技大學校友會"
 
 
 def _page(title, body, robots=True):
@@ -457,7 +457,7 @@ def render_index(build=""):
                   if build else "")
     body = f"""<header class="hero"><div class="wrap">
 <p class="eyebrow">TAINAN UNIVERSITY OF TECHNOLOGY ALUMNI</p>
-<h1>{TITLE}<br>理監事團隊與顧問團隊</h1>
+<h1>{TITLE}<br>理監事候選人團隊與顧問團隊</h1>
 <p class="lead">把校友的經驗與資源串在一起。點開每一位，認識為南應人服務的理監事與顧問；您也在團隊裡嗎？按下面的按鈕，自己建立檔案，送出就上架。</p>
 {build_note}<a class="btn" href="/tut/team/join">我要建立檔案</a><span class="count">目前 {filled} 位已上架</span>
 </div></header>
@@ -465,7 +465,7 @@ def render_index(build=""):
 {sec("advisor", adv, "為校友提供產業、商務與專業資源的顧問夥伴。名單上已有您的名字？點您那一張的按鈕，補上照片與簡介就上架。", "顧問名單整理中。")}
 <div class="wrap"><div class="cta"><h2>您也是理監事或顧問？</h2><p>填姓名、公司、簡介，附一張照片，3 分鐘完成，送出立刻上架。</p>
 <a class="btn purple" href="/tut/team/join">我要建立檔案</a></div></div>"""
-    return _page(f"{TITLE}｜理監事團隊與顧問團隊", body)
+    return _page(f"{TITLE}｜理監事候選人團隊與顧問團隊", body)
 
 
 def _form_html(action, d, error, existing=None, seats=(), build=""):
@@ -514,7 +514,7 @@ def _form_html(action, d, error, existing=None, seats=(), build=""):
 def render_join(d=None, error=""):
     body = f"""<div class="wrap" style="max-width:760px;padding-top:36px">
 <p class="eyebrow" style="color:var(--purple)">我要建立檔案</p><h1 style="color:var(--purple-deep)">建立您的校友會團隊檔案</h1>
-<p style="color:var(--muted)">送出後立刻出現在「理監事團隊與顧問團隊」頁面，並給您一條專屬修改連結，之後隨時可以自己修改。</p>
+<p style="color:var(--muted)">送出後立刻出現在「理監事候選人團隊與顧問團隊」頁面，並給您一條專屬修改連結，之後隨時可以自己修改。</p>
 {_form_html("/tut/team/join", d, error, seats=open_seats())}</div>"""
     return _page("我要建立檔案｜" + TITLE, body, robots=False)
 

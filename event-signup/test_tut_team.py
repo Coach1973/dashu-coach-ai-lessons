@@ -53,7 +53,7 @@ FORM = {"team": "board", "role": "理事長", "name": "王小明", "company_titl
 
 r = client.get("/tut/team")
 h = r.get_data(as_text=True)
-check("公開頁打得開、標題正確、用南應大紫色", r.status_code == 200 and "理監事團隊與顧問團隊" in h and "#854D92" in h)
+check("公開頁打得開、標題正確、用南應大紫色", r.status_code == 200 and "理監事候選人團隊與顧問團隊" in h and "#854D92" in h)
 check("顧問 17 位＋理監事 23 位空座位已放好，各有「補上我的簡介」按鈕", h.count("補上我的簡介") == 40 and "林士民" in h and "林志和" in h)
 check("顧問座位依記憶牆順序：林士民第一、林志和最後", h.index("林士民") < h.index("鄭儷絲") < h.index("林志和"))
 check("理監事 23 位照教練貼的順序放好，在顧問區前面",
