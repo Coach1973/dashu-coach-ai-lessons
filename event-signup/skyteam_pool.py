@@ -14,7 +14,7 @@
 用法：
   skyteam_pool.py list
   skyteam_pool.py add <slug> [--name N --role R --background B --summary S --tags a,b,c --category C --image 照片檔]
-  skyteam_pool.py set-image <slug> <照片檔>
+  skyteam_pool.py set-image <slug> [照片檔]   不給照片檔＝自動用個人網頁首頁第一張（教練 11/05 定）
   skyteam_pool.py publish <slug>... --to front|商務團隊|人脈資源團隊 [--topic 主題分類]
   skyteam_pool.py unpublish <姓名>...
   skyteam_pool.py dismiss <slug>...       不是人才（例如活動頁）→ 移出清單，之後不再自動加入
@@ -144,6 +144,25 @@ def image_data_uri(path: str) -> str:
     return "data:image/webp;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
+def page_first_image(slug: str) -> str | None:
+    """個人網頁（完成版）首頁第一張內嵌照片＝教練認定的本人照。回傳 data URI（4:5、520×650 webp），沒有就回 None。
+    2026-11-05 教練指正：做好的網頁第一張就是照片，不准再翻原始照片資料夾瞎找。"""
+    page = REPOS / slug / "index.html"
+    if not page.exists():
+        return None
+    h = page.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r'<img[^>]*src="data:image/[a-z+]+;base64,([A-Za-z0-9+/=]{200,})"', h)
+    if not m:
+        return None
+    from PIL import Image
+    tmp = DATA / f"_first_{slug}.img"
+    tmp.write_bytes(base64.b64decode(m.group(1)))
+    try:
+        return image_data_uri(str(tmp))
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
 # ---------- 從網頁抓基本資料 ----------
 def _registry_sites() -> list:
     return [s for s in json.loads(REG.read_text(encoding="utf-8"))["sites"] if s["slug"] not in SKIP_SLUGS]
@@ -179,6 +198,8 @@ def add(slug: str, fields: dict | None = None, image: str | None = None, force: 
         card.update({k: v for k, v in (fields or {}).items() if v})
         if image:
             card["image"] = image_data_uri(image)
+        elif not card.get("image"):
+            card["image"] = page_first_image(slug) or ""
         card["slug"] = slug
         card["added_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
         p["pool"] = [c for c in p["pool"] if c["slug"] != slug] + [card]
@@ -187,13 +208,16 @@ def add(slug: str, fields: dict | None = None, image: str | None = None, force: 
         return f"已加進未上架的人才軍火庫：{card['name']}（{slug}）"
 
 
-def set_image(slug: str, image: str) -> str:
+def set_image(slug: str, image: str | None = None) -> str:
     with _Lock():
         p = load_pool()
         c = next((c for c in p["pool"] if c["slug"] == slug), None)
         if not c:
             return f"未上架名單裡沒有 {slug}"
-        c["image"] = image_data_uri(image)
+        uri = image_data_uri(image) if image else page_first_image(slug)
+        if not uri:
+            return f"{slug} 的網頁上找不到照片，請給照片檔"
+        c["image"] = uri
         save_pool(p)
         return f"已換 {c['name']} 的照片"
 
@@ -345,7 +369,7 @@ def main(argv: list) -> int:
     a.add_argument("--force", action="store_true")
     si = sub.add_parser("set-image")
     si.add_argument("slug")
-    si.add_argument("image")
+    si.add_argument("image", nargs="?", default=None)  # 不給＝用個人網頁第一張照片
     pb = sub.add_parser("publish")
     pb.add_argument("slugs", nargs="+")
     pb.add_argument("--to", required=True)
