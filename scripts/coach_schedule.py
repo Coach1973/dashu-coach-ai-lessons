@@ -333,10 +333,14 @@ def send_line_group(msg):
     return r.returncode == 0, (r.stderr or r.stdout)[-300:]
 
 
-def ensure_reminder(ev, force=False):
+def ensure_reminder(ev, force=False, events=None):
     """已確定的未來榮樹下訪談 → 排前 1 小時提醒；待確認、已排過（沒要求重排）、已過期都不動。回傳說明文字或 None"""
     if ev.get("allday") or ev.get("tentative") or not is_rongshuxia(ev):
         return None
+    if events is None:
+        events = []
+    if is_google_twin(ev, events):
+        return None  # Google 日曆同步出來的鏡像：正本已經會提醒，這裡再排一次就是重複通知
     if ev.get("reminder_job") and not force:
         return None
     return schedule_reminder(ev)
@@ -727,6 +731,12 @@ def sync_google(data, days=120):
     if len(got) < 5:
         raise SystemExit("Google 日曆只讀到 %d 筆，可能網址失效，保留舊資料不覆蓋" % len(got))
     seen, new, merged_starts = set(), [], {}
+    # 2026-11-05：Google 事件的 id 以前每次同步都重新編號（gcal-<日期>-<序號>），提醒 cron 掛在舊 id 上就變成孤兒，
+    # 每同步一次就多排一個重複提醒。這裡改用「舊事件的同一組時間＋名稱」沿用舊 id，id 固定、reminder_job 也跟著留著。
+    old_gcal = {}
+    for e in data.get("events", []):
+        if e.get("source") == "Google日曆":
+            old_gcal.setdefault((e.get("date"), e.get("start"), e.get("end"), e.get("title")), e)
     for g in sorted(got, key=lambda g: (g["date"], g["start"] or "")):
         title = google_title(g["title"], dt.date.fromisoformat(g["date"]), g["start"])
         if title is None:
@@ -738,7 +748,11 @@ def sync_google(data, days=120):
         if key in seen:
             continue  # Google 裡 Cal.com 同步造成的重複只在這裡合併，不動教練日曆
         seen.add(key)
-        ev = {"id": "gcal-%s-%d" % (g["date"], len(new)), "date": g["date"], "title": title, "source": "Google日曆"}
+        old = old_gcal.get((g["date"], g.get("start"), g.get("end"), title))
+        ev = {"id": (old or {}).get("id") or "gcal-%s-%d" % (g["date"], len(new)),
+              "date": g["date"], "title": title, "source": "Google日曆"}
+        if old and old.get("reminder_job"):
+            ev["reminder_job"] = old["reminder_job"]  # 沿用舊提醒（id 固定了就不會重複排）
         if g["allday"]:
             ev["allday"] = True
             if g.get("end_date") and g["end_date"] != g["date"]:
@@ -887,7 +901,7 @@ def main():
         if args.tentative:
             ev["tentative"] = True
         data["events"].append(ev)
-        rem = ensure_reminder(ev)
+        rem = ensure_reminder(ev, events=data.get("events", []))
         save(data)
         print(f"✅ 已寫入行程總表 id={ev['id']}")
         if rem:
@@ -936,7 +950,7 @@ def main():
         # 預約頁新格式（有 booking_type）確認後就是乾淨的類型名稱，例：榮樹下訪談
         hit[0]["title"] = (f"榮樹下訪談：{hit[0]['guest']}" if hit[0].get("guest") else
                            hit[0].get("booking_type") or hit[0]["title"].replace("（待確認）", "（已確認）"))
-        rem = ensure_reminder(hit[0])
+        rem = ensure_reminder(hit[0], events=data.get("events", []))
         save(data)
         print(f"✅ 已確認 id={args.id}：{hit[0]['date']} {hit[0].get('start','')} {hit[0]['title']}")
         print(hit[0].get("note", ""))
@@ -973,7 +987,7 @@ def main():
             ev["guest_by"] = args.by[:20]
         if not ev.get("tentative"):
             ev["title"] = f"榮樹下訪談：{guest}"
-        rem = ensure_reminder(ev, force=True) or "（這個時段還在待確認，教練確認後才會排提醒）"
+        rem = ensure_reminder(ev, force=True, events=data.get("events", [])) or "（這個時段還在待確認，教練確認後才會排提醒）"
         form = guest_form_url(ev)
         save(data)
         d = dt.date.fromisoformat(ev["date"])
@@ -1039,7 +1053,7 @@ def main():
     elif args.cmd == "sync-reminders":
         n = 0
         for e in rongshuxia_upcoming(data, 60):
-            r = ensure_reminder(e)
+            r = ensure_reminder(e, events=data.get("events", []))
             if r:
                 n += 1
                 print(f"{e['date']} {e['start']}：{r}")
@@ -1050,7 +1064,7 @@ def main():
         msg = daily_report(data, d)
         if args.send:
             for e in rongshuxia_upcoming(data, 14):   # 順手補排漏掉的提醒
-                ensure_reminder(e)
+                ensure_reminder(e, events=data.get("events", []))
             save(data)
             ok, err = send_baha(msg)
             print("✅ 已貼到巴哈助理群組" if ok else f"⚠️ 貼到巴哈助理群組失敗：{err}")
