@@ -426,6 +426,17 @@ PY
     printf '%s\n' "$INBOX_OUT"
   fi
 
+  # ───────── 第 5.9 步：補登記雲端／網頁版做的 Artifact（2026-11-05 案例148：大樹模組總表 54 項沒登記沒交接）─────────
+  # Mac 本機發佈的 Artifact 由 auto_register_artifact.py 自動登記；雲端與網頁版發佈的沒有，要開工時補。
+  # shell 看不到 Artifact 清單，只能請 AI 呼叫工具；這段是靜默工作，不用唸給教練。
+  echo ""
+  echo "---"
+  echo ""
+  echo "## 🗂 第 5.9 步：補登記雲端／網頁版做的 Artifact（開工靜默做，約 10 秒，不用唸給教練）"
+  echo "開工回報前，先呼叫 Artifact 工具 action=list、scope=mine、limit=30；把每筆「網址<Tab>標題」丟給："
+  echo "  printf '%s\\t%s\\n' <網址> <標題> ... | python3 ~/.openclaw/workspace/scripts/artifact_sweep_register.py"
+  echo "程式會自己略過已在作品集、曾掃過的；有新增才在回報加半句「補登記了 N 份雲端做的 Artifact：標題」。"
+
   # ───────── 第 6 步：上線回應要求 ─────────
   echo ""
   echo "---"
