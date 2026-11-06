@@ -5,13 +5,14 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: be77858d-05df-4933-bbd0-c7d9901f8645
-  modified: 2026-11-06T04:10:53.522Z
+  modified: 2026-11-06T04:13:06.272Z
 ---
 
 2026-11-06 教練存照片說「空間不足」，本機 Data 卷 191G/228G、只剩 17G。
 
 **最大元兇**：`/private/var/folders/_s/6lw5k_0s6qb2180wk8470fmc0000gn/X/com.google.Chrome.code_sign_clone/`，Chrome 每次啟動複製自己一份（每份 1.4G），正常結束才會刪；當機或被自動化程式強制關掉就留下來。11/06 累積 24 份、34G（早上 Chrome 崩潰十幾次＋FB/生日腳本常開關 Chrome）。
 - 怎麼判斷能清：`pgrep -x "Google Chrome"`，看執行中的 Chrome 是從 /Applications 跑的；保留最新一份，其餘可清。
+- ⚠️ du 說 34G 是假象：複本是 APFS 共用複本(clone)，彼此共用區塊。11/06 搬走 23 份複本＋兩份 .bak（du 合計 49G），清空垃圾桶後 df 實際只多 17G（17G→34G）。估「能清出多少」要用清空前後的 df，不要拿 du 加總跟教練報數字。
 - 做法：搬進 `~/.Trash/空間清理_YYYYMMDD/`（可救回），清空垃圾桶這一下留給教練按（不能代按永久刪除）。
 
 **其他大戶**：
