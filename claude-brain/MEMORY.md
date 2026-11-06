@@ -1,3 +1,4 @@
+- [🔴 教練說「EDM」＝網頁上的 WebP 圖：素材找不到先看接力棒最新一棒的 github_repos/<slug>，不要全機亂翻再回頭問位置；「施正毅」是諧音（頁面是施正益）(11/07)](feedback_edm_means_web_page_images_look_in_latest_project_repo_2026-11-07.md)
 - [🔧 高價銷售課程已建於 bymyway.com（課程27448私人、13章77堂）：Tutor編輯器壞了改用 admin-ajax tutor_save_topic/lesson；影片走 htcvideo.bymyway.com 通道，Mac關機就播不出來(2026-11-06)](reference_bymyway_tutor_course_build_via_ajax_htc_video_tunnel_2026-11-06.md)
 - [🔧 Amber 掛載帳號是 bymyway7 不是 amber-Coach；11/06 .git 25G 備份 SSD+Amber 進行中、305G 用量報告、時光機 244G 空殼待壓縮](project_amber_smb_login_git_backup_in_progress_2026-11-06.md)
 - [🔴 教練指定的照片找不到時，先問不要自己挑近似照片換上（鍾俊榮頁 2026.2.22 照片，11/06 教練糾正人物位置）](feedback_substitute_photo_ask_before_swap_2026-11-06.md)
