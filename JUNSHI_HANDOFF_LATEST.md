@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 12:25 台灣時間，Mac 桌面版 Code 分頁（kai-ae0e57 worktree），Haiku 5.5→Opus 5.5→Sonnet 5.5；本段 11/06 11:45～12:25；教練說「總結」；對話容量約 22%）
+
+**主軸：教練存照片說「空間不足」→ 查出是本機 256G 被 Chrome 暫存複本與舊備份佔滿，已清出空間；同時發現外接 SSD 今天清晨斷線，教練決定「關機再開機」處理，下一場先確認它回來沒。**
+- **本機空間**：可用 17G → 34G（`df` 實測，教練已清空垃圾桶）。元兇：Chrome 每次啟動留下的暫存複本 `/private/var/folders/_s/…/X/com.google.Chrome.code_sign_clone/` 24 份（du 34G，但是 APFS 共用複本，實際只釋出一部分）；已搬 23 份、保留最新 1 份，另搬舊備份 `Claude/vm_bundles.bak.20261003`(10G)、`Google/Chrome.bak.20261002`(5.2G)。「開工」worktree 87 份 31G 沒動（官方清理只清 30 天以上、逐一封存要按 87 次）。報告頁：https://claude.ai/artifact/FoSTLaBbZYWEH6BC5KXBBB（已收進大樹作品集）。
+- **外接 SSD（953-SSD，教練說是插在 Mac mini M4 上的 SSD 隨身碟，不是硬碟盒）**：11/06 05:37:48 內部 RTL9210 晶片沒回應、系統重設失敗而卸載；01:19 也斷過一次但自己接回。教練不想拆螺絲拔隨身碟，改「關機→等 10 秒→開機」，不行再拔 Mac mini 電源線 10 秒。逐字保險箱 01:21 停收，疑似同因，未查。
+- **教練糾正**：①我誤說「硬碟盒」「集線器」；②我說清空後可用約 66G，實際 34G（把 du 帳面相加，沒用清理前後 df 核對）。兩者已寫進記憶：`reference_mac_disk_full_chrome_code_sign_clone_2026-11-06.md`、`reference_mac_downloads_on_external_ssd_2026-10-02.md`（追加段）。
+- **教練原話線索**：「不要丟一大堆問題讓我決定，你自己決定」＝能判斷的（舊備份能不能刪）自己評估自己做；「是哪裡滿了？256G 為什麼會滿？」＝要具體說出哪顆碟、被什麼佔走。
+
+### 📋 下一場開工先做
+1. **先確認外接 SSD 回來沒**：`ls /Volumes/953-SSD`。沒回來 → 請教練關機並拔電源線 10 秒。回來後驗：「下載」資料夾可存檔、`Claude/vm_bundles` 捷徑可讀。**注意：`Google/Chrome` 現在是本機真實目錄，SSD 回來也不要搬回去。**
+2. 把「本機硬碟」檢查加進 `scripts/daily_team_rollcall.py`（可用空間 < 30G 或 Chrome 暫存複本 > 5 份就亮紅燈；程式已設計好，這場被 worktree 擋，沒套用）。非 worktree 的對話可直接改；worktree 對話要先問教練授權用終端機補丁。
+3. 查逐字保險箱 01:21 停收（`scripts/recall.py`），看是否跟 SSD 01:19 斷線有關。
+4. liu-weihua IMG-001（開場主視覺）：等教練把劉維華本人照片放進 `~/github_repos/liu-weihua/原始照片/`；wei-gen 對外讀回（沿用）。
+
+🙋 要教練決定：無新增（SSD 回來與否是教練手上的動作，已交辦）。
+🤫 等教練自己提起：無新增。
+🔧 AI 自己的清單：①上列第 2、3 項；②「開工」worktree 87 份 31G，等超過 30 天用 `clean_up_worktrees` 一次清；③`rules_health_audit.py` 體檢：執行細則與特助心法重複約 16 字，只出建議，守則原文未動；④鍾俊榮頁 G 陣列第 33 格已清空、保留索引。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 11:37 台灣時間，Mac 桌面版 Code 分頁（kai-43f1e2 worktree），Haiku 5.5；本段 11/06 01:05～11:37；教練說「總結」；對話容量約 22%）
 
 **主軸：兩個策展網頁改版完成並上線。劉維華頁改為現任「諾科獎國際文教交流協會 產業交流發展中心主任」，名片用 AI 重製後放進聯絡區；鍾俊榮頁拿掉所有理事長字樣，學經歷第四張換成教練指定的 2026.2.22 照片。**
@@ -13,23 +31,6 @@
 🙋 要教練決定：無新增（劉維華照片見上方第 1 項，已問過）。
 🤫 等教練自己提起：無新增。
 🔧 AI 自己的清單：①`rules_health_audit.py` 體檢：執行細則與特助心法重複約 16 字，只出建議，守則原文未動（`distill/rules_health_report.md`）；②鍾俊榮頁 G 陣列第 33 格已清空、保留索引（避免後面錯位）。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 07:05 台灣時間，Hermes cron【Mac H 試營運】FB 生日排程）
-
-**主軸：FB 生日排程本來全壞（Chrome 一開就崩），已找出根因修好，今日壽星名單抓到了。**
-- **症狀**：`node scripts/fb_birthday_scraper.js` exit 2「教練 Chrome 裡也沒有 FB 登入 cookie」。追下去發現 Chrome 任何啟動方式（無頭/有頭/open -na/launchctl asuser）都立刻崩，stderr 印 `[FATAL:base/path_service.cc:264] Failed to get the path for 1001`，今天已產生 15 份 crash 檔。
-- **根因**：教練的 Chrome 資料夾 `~/Library/Application Support/Google/Chrome` 是指向**未掛載外接 SSD** 的懸空 symlink（→ `/Volumes/953-SSD/Mac應用資料/Chrome`）。SSD 沒接上 → Chrome 連預設資料夾都建不出來 → 開機即崩。（1001 不是 uid，教練是 501，是 Chromium 內部目錄編號，別誤判成權限問題。）
-- **對照實驗**：暫時把懸空連結換成真實目錄 → Chrome 立刻能開（CDP 2 秒就緒）→ 證實是資料夾問題不是 FB session 問題。
-- **修復**：SSD 連結改名保留為 `Chrome.ssd-link`；從本機備份 `Chrome.bak.20261002` rsync 回本機真實目錄（跳過 OptGuideOnDeviceModel 等約 4GB 可重新下載的 AI 模型目錄，1.0G）；`Last Version` 寫成當前版本 156.0.8078.80 避免 cookie 被清。
-- **結果**：FB cookie 1236 筆（`c_user`/`xs` 到 2027-10-02）、教練平常的 Chrome 也恢復正常開啟（修復後 0 新崩潰）、生日腳本抓出 **8 位壽星**、獨立驗證腳本 `fb_birthday_verify.js` 交叉比對**完全一致**。
-- **SOP 已更新**（commit `e84c7fe42`）：`knowledges/SOP_fb_birthday_scraper.md` 故障排除表新增此坑＋`Chrome.ssd-link` 說明。
-- ⚠️ 副作用提醒：教練的 Chrome 資料夾現在在本機碟（1.0G），若日後要搬回 SSD 必須先確認 SSD 有接上，且搬回後 Chrome 崩潰問題會再出現。
-
-### 📋 下一場開工先做
-1. liu-weihua IMG-001（開場主視覺）：教練丟來他本人照片就做、換上、驗證。
-2. wei-gen 對外讀回（沿用上棒第1項）。
-3. 沿用上棒其餘清單。
-
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
