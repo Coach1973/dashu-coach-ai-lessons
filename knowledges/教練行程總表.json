@@ -684,338 +684,6 @@
    "covered_by_google": true
   },
   {
-   "id": "tainan-2026-02-11-0",
-   "date": "2026-02-11",
-   "start": "14:00",
-   "end": "16:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-02-13-1",
-   "date": "2026-02-13",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-02-13-2",
-   "date": "2026-02-13",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-02-13-3",
-   "date": "2026-02-13",
-   "start": "14:00",
-   "end": "17:00",
-   "title": "委員會培訓(真誠分會專用)",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-03-20-4",
-   "date": "2026-03-20",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-03-27-5",
-   "date": "2026-03-27",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-04-08-6",
-   "date": "2026-04-08",
-   "start": "14:00",
-   "end": "16:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-04-17-7",
-   "date": "2026-04-17",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-04-24-8",
-   "date": "2026-04-24",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-05-13-9",
-   "date": "2026-05-13",
-   "start": "14:00",
-   "end": "16:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-05-15-10",
-   "date": "2026-05-15",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-05-22-11",
-   "date": "2026-05-22",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-06-19-12",
-   "date": "2026-06-19",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-06-26-13",
-   "date": "2026-06-26",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-07-08-14",
-   "date": "2026-07-08",
-   "start": "14:00",
-   "end": "17:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-07-17-15",
-   "date": "2026-07-17",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-07-17-16",
-   "date": "2026-07-17",
-   "start": "15:00",
-   "end": "16:00",
-   "title": "與國董有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-07-24-17",
-   "date": "2026-07-24",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-08-12-18",
-   "date": "2026-08-12",
-   "start": "14:00",
-   "end": "17:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-08-21-19",
-   "date": "2026-08-21",
-   "start": "20:00",
-   "end": "21:30",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-08-28-20",
-   "date": "2026-08-28",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-09-18-21",
-   "date": "2026-09-18",
-   "start": "08:00",
-   "end": "09:00",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-09-18-22",
-   "date": "2026-09-18",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-09-21-23",
-   "date": "2026-09-21",
-   "start": "09:00",
-   "end": "12:00",
-   "title": "新領導團隊培訓",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-10-12-24",
-   "date": "2026-10-12",
-   "start": "09:00",
-   "end": "12:00",
-   "title": "MSP",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-10-14-25",
-   "date": "2026-10-14",
-   "start": "14:00",
-   "end": "17:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-10-16-26",
-   "date": "2026-10-16",
-   "start": "20:00",
-   "end": "21:00",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-10-23-27",
-   "date": "2026-10-23",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆"
-  },
-  {
-   "id": "tainan-2026-11-09-28",
-   "date": "2026-11-09",
-   "start": "09:00",
-   "end": "12:00",
-   "title": "MSP",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-11-11-29",
-   "date": "2026-11-11",
-   "start": "14:00",
-   "end": "17:00",
-   "title": "DnA月例會",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-11-20-30",
-   "date": "2026-11-20",
-   "start": "20:00",
-   "end": "21:00",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-11-27-31",
-   "date": "2026-11-27",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-12-07-32",
-   "date": "2026-12-07",
-   "start": "09:00",
-   "end": "12:00",
-   "title": "領導團隊期中訓",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-12-18-33",
-   "date": "2026-12-18",
-   "start": "20:00",
-   "end": "21:00",
-   "title": "LTRT",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-12-18-34",
-   "date": "2026-12-18",
-   "start": "21:00",
-   "end": "22:00",
-   "title": "執董與新會員有約",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
-   "id": "tainan-2026-12-21-35",
-   "date": "2026-12-21",
-   "start": "09:00",
-   "end": "12:00",
-   "title": "MSP",
-   "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
-  },
-  {
    "id": "37dc8c4c",
    "date": "2026-12-04",
    "title": "執董聚餐",
@@ -3587,6 +3255,330 @@
    "source": "Google日曆",
    "start": "07:35",
    "end": "08:35"
+  },
+  {
+   "id": "tainan-2026-02-11-0",
+   "date": "2026-02-11",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-1",
+   "date": "2026-02-13",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-2",
+   "date": "2026-02-13",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-02-13-3",
+   "date": "2026-02-13",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "委員會培訓(真誠分會專用)",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-03-20-4",
+   "date": "2026-03-20",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-03-27-5",
+   "date": "2026-03-27",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-08-6",
+   "date": "2026-04-08",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-17-7",
+   "date": "2026-04-17",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-04-24-8",
+   "date": "2026-04-24",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-13-9",
+   "date": "2026-05-13",
+   "start": "14:00",
+   "end": "16:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-15-10",
+   "date": "2026-05-15",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-05-22-11",
+   "date": "2026-05-22",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-06-19-12",
+   "date": "2026-06-19",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-06-26-13",
+   "date": "2026-06-26",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-08-14",
+   "date": "2026-07-08",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-17-15",
+   "date": "2026-07-17",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-17-16",
+   "date": "2026-07-17",
+   "start": "15:00",
+   "end": "16:00",
+   "title": "與國董有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-07-24-17",
+   "date": "2026-07-24",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-12-18",
+   "date": "2026-08-12",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-21-19",
+   "date": "2026-08-21",
+   "start": "20:00",
+   "end": "21:30",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-08-28-20",
+   "date": "2026-08-28",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-18-21",
+   "date": "2026-09-18",
+   "start": "08:00",
+   "end": "09:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-18-22",
+   "date": "2026-09-18",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-09-21-23",
+   "date": "2026-09-21",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "新領導團隊培訓",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-12-24",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-14-25",
+   "date": "2026-10-14",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-16-26",
+   "date": "2026-10-16",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-10-23-27",
+   "date": "2026-10-23",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-09-28",
+   "date": "2026-11-09",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-11-29",
+   "date": "2026-11-11",
+   "start": "14:00",
+   "end": "17:00",
+   "title": "DnA月例會",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-20-30",
+   "date": "2026-11-20",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-11-27-31",
+   "date": "2026-11-27",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-07-32",
+   "date": "2026-12-07",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "領導團隊期中訓",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-18-33",
+   "date": "2026-12-18",
+   "start": "20:00",
+   "end": "21:00",
+   "title": "LTRT",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-18-34",
+   "date": "2026-12-18",
+   "start": "21:00",
+   "end": "22:00",
+   "title": "執董與新會員有約",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
+  },
+  {
+   "id": "tainan-2026-12-21-35",
+   "date": "2026-12-21",
+   "start": "09:00",
+   "end": "12:00",
+   "title": "MSP",
+   "where": "ZOOM線上",
+   "source": "大台南行事曆"
   }
  ],
  "recurring": [
@@ -4234,8 +4226,8 @@
    ]
   }
  ],
- "updated_at": "2026-11-06 07:00",
- "tainan_synced_at": "2026-11-05 11:45",
+ "updated_at": "2026-11-06 11:56",
+ "tainan_synced_at": "2026-11-06 11:56",
  "evening_window": {
   "start": "19:00",
   "end": "23:00"
