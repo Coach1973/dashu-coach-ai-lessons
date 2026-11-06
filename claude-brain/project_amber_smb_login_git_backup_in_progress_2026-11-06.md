@@ -16,4 +16,5 @@ metadata:
 - Amber 305G：TimeMachine sparsebundle 244G（時光機自己算只用 135G、只有 10/29、10/30 兩個備份點、上限 150G；推論多的約 109G 是空殼要 hdiutil compact，未證實未動；結果代碼 56 未查）、Videos 20G（2024 課程影片，教練說重要不動）、其餘小；約 40G 來源未查明。
 - 教練裁示：SSD 掉線半年才一次，別再拿來問；時光機只留最近幾次穩定備份。
 
-**Why:** 教練要清出本機空間（目標約 49G）。**How to apply:** 開工先看 Amber 份 rsync 是否完成並核對，再問教練能否刪本機 .git（改捷徑指 SSD）；Chrome 5.9G 搬 SSD 要先關 Chrome。
+**Why:** 教練要清出本機空間（目標約 49G）。**更新 14:30：** .git 已搬到 SSD（本機是捷徑，另有 Amber 保險備份），本機刪完可用 71G；名片辨識系統早已全在 Mac 本機、Amber 名片媒合中心已刪。接力棒已寫（commit a63128b32）。剩：時光機壓縮實測、舊監看 plist 清理。
+**How to apply（舊，僅供參考）:** 開工先看 Amber 份 rsync 是否完成並核對，再問教練能否刪本機 .git（改捷徑指 SSD）；Chrome 5.9G 搬 SSD 要先關 Chrome。
