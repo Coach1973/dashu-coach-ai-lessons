@@ -27,3 +27,9 @@
 
 🤫 等教練自己提起：①bymyway.com 後台登入一次（11/06 已問、未回；下一輪做到「建課程」那步才需要，到時直接講一句，不先問）；②高價銷售課程的價格、版本、網址放哪、舊工具課（Kajabi／GetResponse 等）標附錄或重錄（報告書第七節，教練說陪跑制不急）。
 🔧 AI 自己的清單：①上列「下一場開工先做」1～3；②`.git` 25G：本機刪除前先對 SSD 備份跑 `git fsck`＋核對檔案數，再複製一份到 Amber（`~/amber-mnt`），並先對教練講「SSD 掉線時小龍蝦 commit 會失敗」的風險讓他決定；③SSD `Chrome.old-20261002` 5.3G 舊複本，確認新版穩定幾天後處理；④`daily_team_rollcall.py` 加本機硬碟 <30G 紅燈、逐字保險箱「6 小時沒新增」改白天才判，SSD 一掉線當下用白話通知（事件觸發）；⑤**11/06 14:2x `system_health_check.py --quick` 在 `verbatim_on_prompt.sh` 逾時 60 秒**，沒修，下一輪查；⑥「開工」worktree 88 份 32G 等超過 30 天用 `clean_up_worktrees` 清；量不到的 47G 沒查；`rules_health_audit.py` 仍提示執行細則與特助心法重複約 16 字，只出建議。
+
+## 🔴 2026-11-06 16:20 補記（Mac 桌面版，Opus 5.5）高價銷售課程收費已修好
+- 根因：課程編輯器其實沒存到「已付款」（重載仍是免費）。改在 wp-admin 課程編輯器選「已付款」＋商品 27543、**特價欄清空**（原本 0，存了會讓商品變免費）、按更新 → 前台顯示 NT$180,000＋加入購物車（add-to-cart=27543）。
+- 封面：用銷售頁主視覺 hero-teaching.webp 合成 1280x720 封面（媒體 27545 htc-course-cover.jpg），已設為課程與商品精選圖片；/courses 線上課程列表已出現、圖片載入正常。
+- 驗證：訪客 curl 加入購物車 → 購物車 1 件、TWD 180000；WooCommerce 結帳不開放訪客、結帳時可註冊（買家會有帳號，付款完成 Tutor 自動報名）。
+- 未做：event.bymyway.com/curated/hing-sales/ 講師區線上驗證；實際付款流程沒測（會真扣款）。
