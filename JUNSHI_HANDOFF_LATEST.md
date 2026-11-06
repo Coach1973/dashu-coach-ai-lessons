@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 15:20 台灣時間，Mac 桌面版 Code 分頁（此對話為 Sonnet 5.5；開頭由 Haiku 5.5 起手），本段 14:37～15:20；教練說「總」；對話容量約 26%）
+
+**主軸：教練貼「高價銷售課程上架報告書」要求「照上一輪說的、掛在 bymyway 執行」→ 影片通道＋Tutor 課程整套建好；時光機壓縮只做檢查沒動。**
+- **高價銷售 12 週陪跑課程已建進 bymyway.com**：課程 ID **27448**，狀態「**私人**」（教練 15:13 裁示維持私人，只有管理員看得到），13 章節、77 堂（64 支影片＋13 個「本週講義與作業」頁，附件 40 份、作業文字都在）。真 Chrome 實測 `設立基礎` 課堂頁影片可播（1080p、22 分）、拖曳進度條正常、附件與作業文字在。我試做的 3 個測試課堂（L1/L2/L3）已丟垃圾桶。commit `e0d5965cb`（影片伺服器）、`30a9e8dd3`（課程規格）。
+- **影片通道**：Mac 只讀伺服器 `knowledges/高價銷售課程/htc_video_server.py`（127.0.0.1:5075，只送 ~/amber-Videos 的 mp4、Referer 限 bymyway.com、支援 Range）＋ cloudflared 通道 `htc-video` → `htcvideo.bymyway.com`，launchd：`com.coach.htc-video-server`、`com.coach.htc-video-tunnel`（已載入，公開網址實測 206）。**限制：Mac 關機／斷網／Amber 沒掛上，課程影片就播不出來。**
+- **Tutor 3.9.15 的坑（已寫記憶）**：新版課程編輯器程式沒載入（wp-admin 與前台 dashboard 都空白）、`tutor/v1` REST 對登入 cookie 一律 403；改用教練在 Chrome 的登入狀態打 admin-ajax：`tutor_save_topic`（`title`＋`course_id`）、`tutor_save_lesson`（`topic_id`、`course_id`、`title`、`description`、`video[source]=external_url`、`video[source_external_url]`、`tutor_attachments[]`）、`tutor_update_course`（要 `post_author`＝2）。草稿課程的課堂前台是 404，預覽要改「私人」。記憶檔：`reference_bymyway_tutor_course_build_via_ajax_htc_video_tunnel_2026-11-06.md`。
+- **時光機壓縮（教練說「排時間壓縮」，我先做檢查就被新指示插隊，沒排）**：Amber 已掛載、時光機沒在備份；`tmutil` 自動備份是關的（AutoBackup=0）；Mac 設定永不睡眠；sparsebundle 244G 目前被系統掛著（`hdiutil info` 可見 /dev/disk5），Results.plist 結果代碼 **56**，已用 135GB、剩 15GB（上限 150G）。壓縮要先卸載再 `hdiutil compact`，網路硬碟上會跑很久；**未卸載、未壓縮、未建任何排程**。
+- **舊名片監看排程**：`com.coach.namecard-amber-watch` 已 `launchctl bootout` 停用（`launchctl list` 確認不在了），但想把 plist 搬去備份資料夾被權限擋（Permission denied），**檔案還在 `~/Library/LaunchAgents/`**，重開機也不會載入。
+- **TAVA**：教練問「TAVA 做好了把打包檔案給你就可以？」→ 答「對」：給我 HTML＋CSS＋圖片資料夾，我放進 WordPress 銷售首頁（先私人）、把按鈕接到申請表／預約頁、檢查手機版與 20px。價格、自學版／陪跑版是否分開賣還沒決定。
+
+### 📋 下一場開工先做
+1. **時光機壓縮排程**（教練已說「排時間壓縮」）：先挑時段（任何時段都不會與自動備份互撞），腳本要含防呆（確認沒在備份、備份檔沒被占用、卸載成功才 compact、全程 log、失敗不留半殘狀態），用乾跑驗證檢查項目後排 launchd 一次性任務並讀回確認；再查結果代碼 56 與那 40G 來源。壓縮動作本身不可逆性高，執行前對教練講一句時段與預估時間。
+2. 高價銷售課程後續（教練說了才做）：TAVA 首頁進來後放進 WordPress；每週自動解鎖（Tutor Pro Content Drip）；作業改 Tutor 作業題型；結業證書；價格與購買頁；公開前把影片防護從 Referer 檢查升級成有時效簽名網址。
+3. 殘留：`com.coach.namecard-amber-watch.plist` 檔案還在（已停用）；`scripts/daily_team_rollcall.py` 加「本機硬碟 <30G 或 Chrome 暫存複本 >5 份」紅燈、逐字保險箱「6 小時沒新增」改白天才判；「開工」worktree 約 88 份 32G 等超過 30 天用 `clean_up_worktrees` 清。
+
+🙋 要教練決定：無新增（課程維持私人已裁示）。 🤫 等教練自己提起：高價銷售課程的價格、版本、舊工具課標附錄或重錄。 🔧 AI 自己的清單：上列 1～3。
+
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 14:30 台灣時間，Mac 桌面版 Code 分頁（kai-2d6c69 worktree），Haiku 5.5→Sonnet 5.5；本段 13:01～14:30；教練說「總結」；對話容量約 22%）
 
 **主軸：照上一場交辦清出本機空間，本機可用 31G → 71G（df 前後實測），並把 Amber 接回、查清它的 305G 是什麼。**
@@ -13,20 +31,6 @@
 4. 「開工」worktree 約 88 份 32G 等超過 30 天用 `clean_up_worktrees` 一次清。
 
 🙋 要教練決定：無新增。 🤫 等教練自己提起：無新增。 🔧 AI 自己的清單：上列 1～4。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 14:30 台灣時間，Mac 桌面版 Code 分頁（kaigong-41ab99 worktree），Haiku 5.5→Opus 5.5→Sonnet 5.5；本段 11/06 13:34～14:30；教練說「總結」；對話容量約 27%）
-
-**主軸：①照上一棒清本機空間（Chrome 搬 SSD 完成）②教練交辦「高價銷售課程」重新上架：出報告書、開始搬檔，卡在大影片，教練已決定「用 Amber 直接播」，下一輪動工。**
-- **清空間（已驗證）**：vm_bundles 已不存在（誰刪的沒查）；本機 Chrome 5.1G 複製到 SSD（7898 檔逐一比對一致）後，本機改成捷徑指向 `/Volumes/953-SSD/Mac應用資料/Chrome`，Chrome 重開正常；垃圾桶那份經教練同意刪除；本機可用 41G→47G。SSD 舊複本改名 `Chrome.old-20261002`（5.3G，未刪）。`.git` 25G：SSD 已有 `openclaw-git-backup-20261106`（25G，**未核對、本機未刪**）。**更正上一棒：Amber 其實已掛著，在 `~/amber-mnt`（home）與 `~/amber-Videos`（Videos），不是 /Volumes/home。**
-- **高價銷售課程（查到）**：Amber Videos＝12 週、64 支影片、27 小時、21.1GB、40 份附件；原 Kajabi 每 7 天開一週（目錄截圖在 `課程目錄/1~7.png`）。報告書 https://claude.ai/artifact/RSboGooVdCgX1jPTjLcru4（已進大樹作品集）。教練裁示：影片放 bymyway.com、不另付費（Bunny 作廢）；目前只自己看自己測，陪跑制不急；TAVA 首頁指令在報告書第四節，可同時進行。
-- **bymyway.com 現況（查到）**：WordPress＋Tutor LMS Pro 3.9.15＋WooCommerce＋藍新；源站 Vultr `64.176.38.233`（`--resolve` 直連可繞 Cloudflare 100MB）；我們沒有 SSH／主機帳號。Tutor REST 不吃應用程式密碼（403）、xmlrpc 被擋（403）→ **建課程要教練在 Chrome 登入 wp-admin**（Chrome 目前沒登入）。
-- **上傳實測**：110MB 成功（媒體 27402，可拖進度條）；40 份附件成功（27403～27442）；**≥200MB 全部回 500「嚴重錯誤」**（200／300／500／745MB 都一樣，分段、faststart 都一樣），推測是主機 PHP 記憶體／上傳上限（未證實）；失敗檔沒殘留。程式與清單已存 `knowledges/高價銷售課程/`（密碼改從憑證層讀）。
-- **教練原話線索**：「我就不會額外再去付費」＝不想新增月費；「目前只是想要自己看、自己測試」＝先求能跑，不求完美；「可以到下一輪執行，這局先總結」＝影片通道那段一行都還沒建。
-
-### 📋 下一場開工先做（教練已選「用 Amber 直接播」；預估 6～8% 容量）
-1. **影片通道**：在 Mac 寫只讀影片伺服器讀 `~/amber-Videos`（支援 HTTP Range、只開 .mp4、網址帶隨機密碼；port 先 `lsof` 確認沒被占）→ 新 cloudflared 通道＋子網域（例 `course.bymyway.com`，用憑證層 Cloudflare token 加 CNAME；**不動**既有通道，pid 802 那條是 LINE 小龍蝦專線）→ launchd 開機自啟（N5：建立當下實跑）→ 外部網址 curl 驗 200／video/mp4／Range 206，再用 Chrome 真播一支。要先對教練講清楚：Mac 或 Amber 沒開就看不到；密碼網址轉傳就能看。
-2. **建課程**：做到這步才需要教練在 Chrome 登入 bymyway.com 後台；用他的登入建 Tutor 課程（開課＋12 章共 13 章節、64 堂課、附件 40 份用 `htc_media.json` 的網址、12 份作業、每週 drip 7 天），先設不公開，教練自己測。
-3. 影片通道的網址清單用 `htc_media.json` 同格式產生，路徑對應 `~/amber-Videos` 內的相對路徑。
 
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
@@ -44,16 +48,3 @@
 
 🤫 等教練自己提起：①bymyway.com 後台登入一次（11/06 已問、未回；下一輪做到「建課程」那步才需要，到時直接講一句，不先問）；②高價銷售課程的價格、版本、網址放哪、舊工具課（Kajabi／GetResponse 等）標附錄或重錄（報告書第七節，教練說陪跑制不急）。
 🔧 AI 自己的清單：①上列「下一場開工先做」1～3；②`.git` 25G：本機刪除前先對 SSD 備份跑 `git fsck`＋核對檔案數，再複製一份到 Amber（`~/amber-mnt`），並先對教練講「SSD 掉線時小龍蝦 commit 會失敗」的風險讓他決定；③SSD `Chrome.old-20261002` 5.3G 舊複本，確認新版穩定幾天後處理；④`daily_team_rollcall.py` 加本機硬碟 <30G 紅燈、逐字保險箱「6 小時沒新增」改白天才判，SSD 一掉線當下用白話通知（事件觸發）；⑤**11/06 14:2x `system_health_check.py --quick` 在 `verbatim_on_prompt.sh` 逾時 60 秒**，沒修，下一輪查；⑥「開工」worktree 88 份 32G 等超過 30 天用 `clean_up_worktrees` 清；量不到的 47G 沒查；`rules_health_audit.py` 仍提示執行細則與特助心法重複約 16 字，只出建議。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 12:58 台灣時間，Mac 桌面版 Code 分頁（kai-b37c50 worktree），Haiku 5.5→Sonnet 5.5→Opus 5.5；本段 11/06 12:26～12:58；教練說「總結」；對話容量約 27%）
-
-**主軸：教練檢討兩件事——SSD 為何斷線、本機 256G 誰佔走；查完定下「清出本機空間」的做法，刪除與搬移留到這一場開工執行（教練已同意規劃，要我跳按鈕讓他按）。**
-- **SSD 斷線（查到）**：11/06 01:19 與 05:37 SSD 內的晶片 RTL9210 兩度沒回應，Mac 重設失敗而卸載；系統卸載紀錄只有 05:37:51 一筆（裝置消失後的自動收尾），沒有任何人／程式下退出指令；SSD 在 05:37 後不會自己回來，直到 12:24 教練重開機（共 6 時 47 分）。Chrome 不是兇手（11/04～05 碰 USB 十幾次都沒事）。**推論未證實**：SSD 經一個 4 孔 USB 3.0 集線器（系統裝置清單），供電／過熱。08:10 每日點名其實抓到了，但通知只進 AI 收件匣沒到教練。
-- **教練糾正（必讀）**：SSD 裝在要鎖螺絲的外接盒，**不准再建議拔插**；它 8～10 個月沒出過事、11/06 是第一次，**不准因此主張把東西全搬回本機**。本機＝黃金地段，只放小龍蝦／Claude／系統非用不可的，其餘搬 SSD＋Amber 私有雲備份。
-- **本機盤點（11/06 實測，已用 210G／可用 34G）**：「開工」worktree 32G（88 份）、`~/.openclaw/.git` 25G、小龍蝦工作區＋分身等 23G、Claude-3p 12G（vm_bundles 11G）、應用程式 18G、Chrome 5.9G、系統 21G、量不到約 47G。報告頁：https://claude.ai/artifact/1yTctYoXvtGZEtewB9q3gZ
-- **Claude-3p 虛擬機來歷（查到）**：10/27 13:27 桌面版以「外接模式」首次啟動（週額度 94%，教練用手機遙控測 synterolink 的 Haiku 5.5），16:05 最後關閉，16:07 教練宣布實驗結束，之後沒再開。報告：https://claude.ai/artifact/94VTn8vjwx8Gsh5x3HdKK4
-- **已修／已記**：HTML 編輯不再每次跳 Chrome（`8de770dbe`）；試金石案例 151（`5e48d5a4e`）；反射 `R-DELETE-REPORT-WHY-IT-EXISTS`（`783e16fa6`）；記憶 `feedback_local_disk_gold_ssd_for_rest_2026-11-06.md`。
-- **教練原話線索**：「事出必有因…我並不想無腦地說刪就刪」＝刪之前要交代它是什麼、為什麼出現、為什麼能刪；「不要再給我一些愚蠢的建議」＝拿罕見事件推翻他長期驗證的配置，等於不信他的判斷。
-
-### 📋 下一場開工先做（本項已於 11/06 14:30 那棒處理：Chrome 已搬 SSD、vm_bundles 已不在、.git 還沒刪，見上一棒）
-
