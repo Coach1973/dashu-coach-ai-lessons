@@ -4,35 +4,33 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-06 13:00:54**
+> **最後同步：2026-11-06 14:30:33**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 12:58 台灣時間，Mac 桌面版 Code 分頁（kai-b37c50 worktree），Haiku 5.5→Sonnet 5.5→Opus 5.5；本段 11/06 12:26～12:58；教練說「總結」；對話容量約 27%）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 14:30 台灣時間，Mac 桌面版 Code 分頁（kai-2d6c69 worktree），Haiku 5.5→Sonnet 5.5；本段 13:01～14:30；教練說「總結」；對話容量約 22%）
 
-**主軸：教練檢討兩件事——SSD 為何斷線、本機 256G 誰佔走；查完定下「清出本機空間」的做法，刪除與搬移留到這一場開工執行（教練已同意規劃，要我跳按鈕讓他按）。**
-- **SSD 斷線（查到）**：11/06 01:19 與 05:37 SSD 內的晶片 RTL9210 兩度沒回應，Mac 重設失敗而卸載；系統卸載紀錄只有 05:37:51 一筆（裝置消失後的自動收尾），沒有任何人／程式下退出指令；SSD 在 05:37 後不會自己回來，直到 12:24 教練重開機（共 6 時 47 分）。Chrome 不是兇手（11/04～05 碰 USB 十幾次都沒事）。**推論未證實**：SSD 經一個 4 孔 USB 3.0 集線器（系統裝置清單），供電／過熱。08:10 每日點名其實抓到了，但通知只進 AI 收件匣沒到教練。
-- **教練糾正（必讀）**：SSD 裝在要鎖螺絲的外接盒，**不准再建議拔插**；它 8～10 個月沒出過事、11/06 是第一次，**不准因此主張把東西全搬回本機**。本機＝黃金地段，只放小龍蝦／Claude／系統非用不可的，其餘搬 SSD＋Amber 私有雲備份。
-- **本機盤點（11/06 實測，已用 210G／可用 34G）**：「開工」worktree 32G（88 份）、`~/.openclaw/.git` 25G、小龍蝦工作區＋分身等 23G、Claude-3p 12G（vm_bundles 11G）、應用程式 18G、Chrome 5.9G、系統 21G、量不到約 47G。報告頁：https://claude.ai/artifact/1yTctYoXvtGZEtewB9q3gZ
-- **Claude-3p 虛擬機來歷（查到）**：10/27 13:27 桌面版以「外接模式」首次啟動（週額度 94%，教練用手機遙控測 synterolink 的 Haiku 5.5），16:05 最後關閉，16:07 教練宣布實驗結束，之後沒再開。報告：https://claude.ai/artifact/94VTn8vjwx8Gsh5x3HdKK4
-- **已修／已記**：HTML 編輯不再每次跳 Chrome（`8de770dbe`）；試金石案例 151（`5e48d5a4e`）；反射 `R-DELETE-REPORT-WHY-IT-EXISTS`（`783e16fa6`）；記憶 `feedback_local_disk_gold_ssd_for_rest_2026-11-06.md`。
-- **教練原話線索**：「事出必有因…我並不想無腦地說刪就刪」＝刪之前要交代它是什麼、為什麼出現、為什麼能刪；「不要再給我一些愚蠢的建議」＝拿罕見事件推翻他長期驗證的配置，等於不信他的判斷。
+**主軸：照上一場交辦清出本機空間，本機可用 31G → 71G（df 前後實測），並把 Amber 接回、查清它的 305G 是什麼。**
+- **已完成**：①刪 `Claude-3p/vm_bundles` 11G（教練口頭授權＋通行證）；②`~/.openclaw/.git` 25G 搬到 SSD（`/Volumes/953-SSD/Mac應用資料/openclaw-git/.git`），本機 `.git` 改成指向它的捷徑；另一份保險備份在 Amber `大樹大腦備份/openclaw-git-backup-20261106/.git`。兩份核對：檔案數都 2222、大小 25G、HEAD 相同、fsck 無錯；換前換後檔案清單逐一比對無差異；③Amber「名片媒合中心」23M 已刪（19 個檔案逐一 md5 與本機 `team_uploads`/`public_uploads` 一致才刪）；④Chrome 5.9G 在 13:37 已被另一個視窗搬到 SSD，我沒重做（正在跑的 Chrome 有 215 個檔案開在 SSD）。
+- **Amber 連不上的真因（查到）**：SMB 登入帳號是 `bymyway7`（AmberCloud email 前半，Amber 後台「檔案服務」頁寫明），不是主機名 `amber-Coach`；鑰匙圈存的就是 bymyway7。現掛載點 `~/amber-mnt`（不是 `/Volumes/home`）。macOS 沒有 `timeout` 指令，用 `perl -e 'alarm N; exec @ARGV'`。
+- **Amber 305G 報告**：TimeMachine sparsebundle 244G（時光機自己算只用 135G、僅 10/29、10/30 兩個備份點、上限 150G；推論多的約 109G 是空殼、要 hdiutil compact，**未證實未動**；結果代碼 56 未查）、Videos 20G（2024 課程影片，教練說重要不動）、其餘合計不到 1.2G；約 40G 來源未查明。
+- **教練糾正／裁示**：①SSD 半年才斷一次，**不准再拿它當問題問**（我第一段就讀到卻還問）；②時光機只留最近幾次穩定備份，不要佔那麼多；③名片辨識系統早已打掉重練、全在 Mac 本機，我先前說「名片辨識停著」是看舊錯誤紀錄（最後寫入 10/30）誤判。
 
-### 📋 下一場開工先做（教練已同意，**動手前跳按鈕讓他按**；Chrome 要關那段先講一聲）
-1. 刪 `~/Library/Application Support/Claude-3p/vm_bundles`（11G；報告已交代來歷）。
-2. Chrome 本機 5.9G 複製到 `/Volumes/953-SSD/Mac應用資料/Chrome`（蓋掉 10/02 舊的 5.3G），本機改捷徑；`Chrome.ssd-link` 是 11/06 07:01 留的舊連結可比對。複製時 Chrome 先關 1～2 分鐘。同批：`~/Downloads.bak.20261002` 1.1G、各種可重生快取約 6G。
-3. 修改歷史 `~/.openclaw/.git` 25G：先把 Amber 接回（`/Volumes/home`，SMB `amber-Coach`＝192.168.0.35，帳密在鑰匙圈；11/06 重開機後沒自動掛回，**名片自動辨識目前因此停著**），複製一份到 Amber、一份到 SSD，核對檔案數／大小／`git fsck`，才刪本機 25G。**要先對教練講清楚的風險**：本機 .git 刪掉後小龍蝦 commit 要靠 SSD 捷徑，SSD 若再掉線 commit 會失敗——教練說過 SSD 不拔插，但「SSD 掉線時小龍蝦能不能 commit」要講明、讓他決定。
-4. 清完用前後 `df` 回報實際空出量（不用 du 加總）。
-5. 之前沒做完：①`daily_team_rollcall.py` 加「本機硬碟 <30G 或 Chrome 暫存複本 >5 份」紅燈，並把逐字保險箱「6 小時沒新增」改成白天才判（夜間誤報）；②SSD 一掉線**當下**用白話通知教練（事件觸發，不輪詢）。worktree 對話改正式檔案要先請教練授權終端機補丁。
+### 📋 下一場開工先做
+1. 時光機 sparsebundle 壓縮可行性實測（Amber 空間，預期釋出約 100G）：先確認時光機沒在跑、Amber 掛載、備份檔未被占用；實測安全再請教練決定；查結果代碼 56 與那 40G 來源。
+2. 清舊監看設定：`~/Library/LaunchAgents/com.coach.namecard-amber-watch.plist`（指向已刪的 Amber 資料夾，早已無作用；改前先 launchctl 確認未載入）。
+3. 上一場第 5 項仍未做：`scripts/daily_team_rollcall.py` 加「本機硬碟 <30G 或 Chrome 暫存複本 >5 份」紅燈、逐字保險箱「6 小時沒新增」改白天才判；SSD 一掉線當下用白話通知教練（事件觸發，不輪詢）。
+4. 「開工」worktree 約 88 份 32G 等超過 30 天用 `clean_up_worktrees` 一次清。
+
+🙋 要教練決定：無新增。 🤫 等教練自己提起：無新增。 🔧 AI 自己的清單：上列 1～4。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
 
-
-🤫 等教練自己提起：無新增。
-🔧 AI 自己的清單：①上列第 5 項；②「開工」worktree 88 份 32G 等超過 30 天用 `clean_up_worktrees` 一次清；③量不到的 47G（需要管理員權限，Spotlight／系統快照？）沒查；④`rules_health_audit.py` 仍提示執行細則與特助心法重複約 16 字，只出建議。
+🤫 等教練自己提起：①bymyway.com 後台登入一次（11/06 已問、未回；下一輪做到「建課程」那步才需要，到時直接講一句，不先問）；②高價銷售課程的價格、版本、網址放哪、舊工具課（Kajabi／GetResponse 等）標附錄或重錄（報告書第七節，教練說陪跑制不急）。
+🔧 AI 自己的清單：①上列「下一場開工先做」1～3；②`.git` 25G：本機刪除前先對 SSD 備份跑 `git fsck`＋核對檔案數，再複製一份到 Amber（`~/amber-mnt`），並先對教練講「SSD 掉線時小龍蝦 commit 會失敗」的風險讓他決定；③SSD `Chrome.old-20261002` 5.3G 舊複本，確認新版穩定幾天後處理；④`daily_team_rollcall.py` 加本機硬碟 <30G 紅燈、逐字保險箱「6 小時沒新增」改白天才判，SSD 一掉線當下用白話通知（事件觸發）；⑤**11/06 14:2x `system_health_check.py --quick` 在 `verbatim_on_prompt.sh` 逾時 60 秒**，沒修，下一輪查；⑥「開工」worktree 88 份 32G 等超過 30 天用 `clean_up_worktrees` 清；量不到的 47G 沒查；`rules_health_audit.py` 仍提示執行細則與特助心法重複約 16 字，只出建議。
 
 > 前一棒、🤫／🔧 待辦、封存索引：需要才讀 `JUNSHI_HANDOFF_LATEST.md`。問教練之前的三關：見執行細則 N2。
 
