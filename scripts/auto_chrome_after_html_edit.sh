@@ -38,6 +38,10 @@ file_path = ti.get("file_path", "")
 if not file_path.lower().endswith(".html"):
     sys.exit(0)
 
+# 2026-11-06 教練：一份報告邊寫邊跳 5～6 次，要一個個關掉。改成寫的過程一律不跳，
+# 寫完交付時由 deliver_open.sh（或收尾的 Chrome 查證鎖）只跳一次。
+sys.exit(0)
+
 if not os.path.isabs(file_path):
     sys.exit(0)
 
