@@ -1,0 +1,10 @@
+{
+ "session_id": "19560b24-fe5c-400f-8d97-05a71e2c8f34",
+ "transcript_path": "/Users/bymyway/.claude/projects/-Users-bymyway--openclaw--claude-worktrees-kaigong-1ea9b2/19560b24-fe5c-400f-8d97-05a71e2c8f34.jsonl",
+ "cwd": "/Users/bymyway/.openclaw/.claude/worktrees/kaigong-1ea9b2",
+ "scratchpad_dir": "/private/tmp/claude-501/-Users-bymyway--openclaw--claude-worktrees-kaigong-1ea9b2/19560b24-fe5c-400f-8d97-05a71e2c8f34/scratchpad",
+ "prompt_id": "6edfeea1-ef9b-4175-8f4a-21677dc334bf",
+ "permission_mode": "bypassPermissions",
+ "hook_event_name": "UserPromptSubmit",
+ "prompt": "str"
+}

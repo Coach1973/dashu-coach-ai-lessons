@@ -1,0 +1,12 @@
+{
+  "ts": "2026-11-04T09:00:06Z",
+  "status": "ok",
+  "alert": false,
+  "reason": "",
+  "spool_count": 0,
+  "spool_processing": 0,
+  "last_inbound": "",
+  "last_inbound_age_minutes": 0,
+  "last_restart_age_minutes": 16666,
+  "container_uptime": "2026-10-28T08:24:26.748539974Z"
+}
