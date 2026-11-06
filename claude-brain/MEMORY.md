@@ -180,3 +180,4 @@
 - [🔧 Hook 腳本檔不見→Python 結束代碼 2→UserPromptSubmit 被當成擋下，手機／Mac 所有 Claude 對話叫不動(2026-10-16)](reference_python_hook_missing_file_exit2_blocks_all_prompts_2026-10-16.md) — hook 檔不見、對話全被擋時用；雲端可 list_events 讀手機橋接對話查錯
 - [🔧 TAVA 出圖清單版網頁(images.js＋images/)回填＝webp 依 IMG 編號放 images/；載圖程式 detached Image＋lazy 永遠不載要拿掉，第二次踩(2026-11-05)](reference_tava_image_list_page_images_dir_webp_swap_2026-11-05.md) — 換圖前先看是 data-slot 還是 images/ 版
 - [🔧 Mac 本機空間不足先查 Chrome code_sign_clone(11/06 24份34G)＋開工 worktree 31G＋舊 .bak；搬垃圾桶、清空留教練按](reference_mac_disk_full_chrome_code_sign_clone_2026-11-06.md)
+- [🔴 本機只放小龍蝦/Claude/系統必要的，其他搬 SSD＋Amber 備份；SSD 鎖螺絲不准建議拔；問還用不用前先查最後使用時間；HTML 不准邊寫邊跳(11/06)](feedback_local_disk_gold_ssd_for_rest_2026-11-06.md)
