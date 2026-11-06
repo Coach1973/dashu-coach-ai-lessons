@@ -188,3 +188,4 @@
 - [🔧 Tutor 課程前台一直顯示免費＝編輯器「已付款」沒存成；選商品後特價欄要清空（0 會讓商品免費）；封面用 REST 設 featured_media(2026-11-06)](reference_tutor_paid_course_save_sale_price_zero_trap_2026-11-06.md)
 - [🔧 Amber(NAS) 刪檔先進 @SmbRecyclebin、要再刪一次才釋放；時光機 sparsebundle 多佔108G只能刪整份重做；清理後 352G→51G(11/06)](reference_amber_nas_delete_goes_to_smbrecyclebin_2026-11-06.md)
 - [🔴 報容量先講「可用多少」；空間/檔案突變先查其他對話框報告與接力棒，不說「查不出來」(11/06 Amber 51G 被誤讀)](feedback_disk_report_say_free_space_and_check_parallel_sessions_2026-11-06.md)
+- [🔧 TAVA prompts.html 第二種格式 const items=[…] 已寫進 run_img_list.py(網址直接跑)；reemployment 網頁 slug／event.db id35／佩佩老師洽詢列／img height:auto 坑(2026-11-07)](reference_tava_prompts_js_items_format_and_reemployment_page_2026-11-07.md)
