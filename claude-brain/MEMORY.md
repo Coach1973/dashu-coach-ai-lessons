@@ -1,3 +1,4 @@
+- [🔴 教練指定的照片找不到時，先問不要自己挑近似照片換上（鍾俊榮頁 2026.2.22 照片，11/06 教練糾正人物位置）](feedback_substitute_photo_ask_before_swap_2026-11-06.md)
 - [🔴 出圖清單「實景修飾」被 run_img_list 跳過＝我自己去倉庫「原始照片」找本人照帶參考出圖，不准丟回問教練（11/06 wei-gen 被罵）；出完自己看臉像不像、人種性別符合頁面](feedback_real_scene_slots_find_reference_yourself_not_ask_coach_2026-11-06.md)
 - [🔧 榮樹下來賓資料表從個人頁面補：備份→save()/UPDATE→一定連照片一起補→build_card；11/05 楊曉熹、鍾俊榮兩位(教練問「照片為什麼沒放」)](reference_rongtree_guest_form_fill_from_personal_page_with_photo_2026-11-05.md)
 - [🔴 人才軍火庫補照片＝直接用個人網頁第一張（程式已自動 set-image 不給檔案），不准翻原始照片瞎找；教練11/05嫌浪費額度](feedback_skyteam_photo_use_page_first_image_2026-11-05.md)
