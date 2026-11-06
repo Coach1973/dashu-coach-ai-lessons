@@ -33,3 +33,9 @@
 - 封面：用銷售頁主視覺 hero-teaching.webp 合成 1280x720 封面（媒體 27545 htc-course-cover.jpg），已設為課程與商品精選圖片；/courses 線上課程列表已出現、圖片載入正常。
 - 驗證：訪客 curl 加入購物車 → 購物車 1 件、TWD 180000；WooCommerce 結帳不開放訪客、結帳時可註冊（買家會有帳號，付款完成 Tutor 自動報名）。
 - 未做：event.bymyway.com/curated/hing-sales/ 講師區線上驗證；實際付款流程沒測（會真扣款）。
+
+## 🎯 2026-11-06 16:40 教練新交辦（下一個對話框第一件做）：Amber 清理
+- 架構已寫：`knowledges/Amber整理/Amber清理架構_2026-11-06.md`，照第 1～5 步跑。
+- 目標：Amber 只留線上課程＋每類最新一份備份，能壓縮就壓縮；重大備份 SSD 放第二份。
+- 現況：Amber 352Gi/467Gi（剩 115Gi）；SSD 剩 818Gi。
+- 紅線：`~/amber-Videos` 的課程影片（高價銷售 WEEK1～12 正在供 bymyway.com 播放）不准動；刪除先搬 `_待刪除_20261106/`，給教練一張清單一句話批准（N6）。
