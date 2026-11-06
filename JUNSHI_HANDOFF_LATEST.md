@@ -7,10 +7,10 @@
 - **教練原話線索**：「不要丟一大堆問題讓我決定，你自己決定」＝能判斷的（舊備份能不能刪）自己評估自己做；「是哪裡滿了？256G 為什麼會滿？」＝要具體說出哪顆碟、被什麼佔走。
 
 ### 📋 下一場開工先做
-1. ✅ **外接 SSD 已回來**（12:35 教練重開機後驗證：`/Volumes/953-SSD` 在、下載資料夾讀得到、`Claude/vm_bundles` 捷徑可讀、本機可用 32G）。**注意：`Google/Chrome` 現在是本機真實目錄，不要搬回 SSD。** 若 SSD 日後再斷，處理順序見記憶 `reference_mac_downloads_on_external_ssd_2026-10-02.md` 11/06 追加段。
+1. ✅ **外接 SSD 已回來**（12:36 驗證：`/Volumes/953-SSD` 在、下載資料夾讀得到、`Claude/vm_bundles` 捷徑可讀、本機可用 32G）。**注意：`Google/Chrome` 現在是本機真實目錄，不要搬回 SSD。** 若 SSD 日後再斷，處理順序見記憶 `reference_mac_downloads_on_external_ssd_2026-10-02.md` 11/06 追加段。
 2. 把「本機硬碟」檢查加進 `scripts/daily_team_rollcall.py`（可用空間 < 30G 或 Chrome 暫存複本 > 5 份就亮紅燈；程式已設計好，這場被 worktree 擋，沒套用）。非 worktree 的對話可直接改；worktree 對話要先問教練授權用終端機補丁。
 3. 查逐字保險箱 01:21 停收（`scripts/recall.py`），看是否跟 SSD 01:19 斷線有關。
-4. ✅ liu-weihua IMG-001（開場主視覺）已完成（12:50 教練把照片放進下載資料夾 `export (12).jpg`；裁成 4:5 後換入，網頁 `b43abe3`，線上 https://event.bymyway.com/curated/liu-weihua/ 驗證 IMG-001 為 webp、無待換圖占位；原照收進倉庫 `原始照片/`，`63e3cca`）。**下一步：wei-gen 對外讀回（沿用）。**
+4. ✅ liu-weihua IMG-001（開場主視覺）已完成（教練 12:34 把照片放進下載資料夾 `export (12).jpg`；裁成 4:5 後換入，網頁 `b43abe3`，線上 https://event.bymyway.com/curated/liu-weihua/ 驗證 IMG-001 為 webp、無待換圖占位；原照收進倉庫 `原始照片/`，`63e3cca`）。**下一步：wei-gen 對外讀回（沿用）。**
 
 🙋 要教練決定：無新增。
 🤫 等教練自己提起：無新增。
