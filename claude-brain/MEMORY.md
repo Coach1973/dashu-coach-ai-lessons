@@ -185,3 +185,4 @@
 - [🔴 本機只放小龍蝦/Claude/系統必要的，其他搬 SSD＋Amber 備份；SSD 鎖螺絲不准建議拔；問還用不用前先查最後使用時間；HTML 不准邊寫邊跳(11/06)](feedback_local_disk_gold_ssd_for_rest_2026-11-06.md)
 - [🔧 bymyway.com(WordPress+Tutor)大於約200MB影片上傳會500、Tutor API/xmlrpc 403要教練登入後台；Amber實際掛在~/amber-mnt與~/amber-Videos；高價銷售課程素材在knowledges/高價銷售課程/(2026-11-06)](reference_bymyway_wp_upload_limit_and_tutor_auth_2026-11-06.md)
 - [先量化效益再建議教練動手（11/06 時光機壓縮只回收 161.5 MB，還誤讀成 KB）](feedback_check_benefit_before_recommending_2026-11-06.md) — 建議耗時或要教練動手的操作前先量化
+- [🔧 Tutor 課程前台一直顯示免費＝編輯器「已付款」沒存成；選商品後特價欄要清空（0 會讓商品免費）；封面用 REST 設 featured_media(2026-11-06)](reference_tutor_paid_course_save_sale_price_zero_trap_2026-11-06.md)
