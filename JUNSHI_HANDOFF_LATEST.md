@@ -1,4 +1,15 @@
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-06 17:26 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Opus→Sonnet 5.5；本場 16:41～17:26；教練說「總」）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-07 02:30 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 11/06 17:08～11/07 02:30；教練說「總」）
+
+**主軸：Amber 收尾（只刪大型備份）＋婦女再就業課程網頁 reemployment 出圖接圖改版。**
+- **Amber 收尾**：教練裁示「只刪大型備份檔，其餘（MyDocuments 549MB、媒體資源中心 405MB）復原留著」，已搬回原位、待刪區移除，Amber 已用 51G／467G、可用 416G，沒有待刪項目；時光機新備份待自動重建（約135G）。commit `1e6a84270`。過程中我誤報「剩51G」＋誤說時光機「查不出為何不見」（其實是另一對話框17:05經教練批准刪的），已寫記憶。
+- **TAVA 出圖**：`tava-ai.com/n2af7xksk3/prompts.html` 5 張 LK888 圖（原圖 `~/Pictures/TAVA_n2af7xksk3_出圖_20261107/`，清單 `reports/img_lists/tava_n2af7xksk3_…json`，commit `e94854675`）。`run_img_list.py` 已補上讀 JS `const items=[…]` 格式（網址直接可跑，dry-run 通過；commit 見本棒）。
+- **reemployment 網頁**（`github_repos/reemployment`，commit `ddeac32`，已上線 event.bymyway.com/curated/reemployment/）：接回 5 張圖（首頁／為什麼是你／DAY1／DAY2／專輯封面）、頂部洽詢列（佩佩老師 0988-004-118、LINE `lin.ee/vyFqWVB`）、頁尾 TAVA AI 製作連結；字級全頁 0 個 <20px（電腦＋手機實測）；報名場次代碼 `women-ip-ai-1230`（資料庫查無）改 `reemployment` 並在 event.db 建場次 id=35，測試模式驗證通知文字正確（**沒真送一筆到活動報名群**），測試資料已清。event.db 備份 `workspace/state/event.db.bak-20261107-reemployment`。**沒截圖（截圖鎖未獲教練同意），版面用量座標＋裁切預覽驗證。**
+
+### 📋 下一場開工先做
+1. 教練看過 reemployment 網頁後的回饋：IMG-005 專輯封面（寫實側臉）要不要重出、佩佩老師 LINE 是 `lin.ee/vyFqWVB` 對不對（它是連結不是 @ID）。
+2. 前一棒待辦照舊（見下一節）。
+
+## 📦 前一棒（2026-11-06 17:26 摘要）（2026-11-06 17:26 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Opus→Sonnet 5.5；本場 16:41～17:26；教練說「總」）
 
 **主軸：Amber 清理完成（352G→51G）＋銷售頁改版上線＋課程購買評估。**
 - **Amber 清理**：用量 352G→51G／467G，剩 416G。刪了回收筒半份 .git 複本 22.6G、舊時光機 sparsebundle 244G（教練「兩項都刪」批准）。**重點：NAS 刪檔會先進 `@SmbRecyclebin`，要再刪一次空間才會回來。** 時光機：APFS 實際 135G 但 sparsebundle 250G（舊空間還不回來，compact 無效），唯一解＝刪整份重做；目的地設定仍在，下次自動備份會重建（約135G）。`.git` 備份 25G fsck 通過，SSD `openclaw-git` 為第二份。課程影片 SSD 雙份：`/Volumes/953-SSD/Amber重要備份/課程影片/` 111 檔＝Amber 111 檔，抽查 3 檔 shasum 相同；Amber 原檔沒動。報告 `knowledges/Amber整理/Amber盤點結果_2026-11-06.md`，commit `408ac0a77`。

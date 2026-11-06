@@ -75,6 +75,22 @@ def load_items(src):
             items = normalize_items(data)
             if items:
                 return items
+    # 2026-11-07 TAVA 女性個人IP課程 prompts.html：清單在 <script> 的 JS 陣列 const items=[{id,file,ratio,p:'…'}]（11/03 是 const P=[[…]]）。
+    # 用 node 把陣列轉成 JSON（只對頁面裡抓出的那段陣列求值），欄位 p 當 prompt，沒寫 type 一律當「概念」。
+    for m in re.finditer(r"const\s+items\s*=\s*(\[[\s\S]*?\n\s*\]);", page):
+        try:
+            r = subprocess.run(["node", "-e", "process.stdout.write(JSON.stringify(eval(process.argv[1])))", m.group(1)],
+                               capture_output=True, text=True, timeout=20)
+            data = json.loads(r.stdout) if r.returncode == 0 else None
+        except Exception:
+            data = None
+        if isinstance(data, list) and data and all(isinstance(x, dict) for x in data):
+            for x in data:
+                if not x.get("prompt") and x.get("p"):
+                    x["prompt"] = x["p"]
+            items = normalize_items(data)
+            if items:
+                return items
     sys.exit("網頁裡找不到出圖清單 JSON：%s" % src)
 
 
