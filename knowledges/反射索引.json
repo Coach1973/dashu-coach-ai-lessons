@@ -2154,6 +2154,19 @@
    ],
    "situation": "run_img_list.py 跳過「實景修飾」圖位時",
    "source": "memory feedback_real_scene_slots_find_reference_yourself_not_ask_coach_2026-11-06（11/06 wei-gen 被罵：你把問題丟給我要幹嘛）"
+  },
+  {
+   "id": "R-DELETE-REPORT-WHY-IT-EXISTS",
+   "moment": "post_tool",
+   "tool": "Bash",
+   "match": "du -sh|du -xsh|du -xhd1",
+   "say": "準備請教練同意刪除／搬移某樣東西前，報告一定要有三件事：①它是什麼 ②當初為什麼會出現（查建立時間、設定檔、對話紀錄、接力棒、逐字保險箱，不能只看大小和最後修改時間）③為什麼現在可以刪／搬。標明哪句是查到的、哪句是推論；查不到就說查不到。禁止寫「教練已經不用了」「教練還用不用」把查得出來的事丟回給教練。",
+   "level": "remind",
+   "audience": [
+    "coach"
+   ],
+   "situation": "量完大小、準備請教練點頭刪除或搬移時",
+   "source": "試金石案例151（11/06 虛擬機 11GB 沒頭沒腦丟給教練：我不想無腦說刪就刪）"
   }
  ],
  "case_ledger": {
