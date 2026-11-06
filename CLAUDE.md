@@ -4,22 +4,25 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-07 02:30:52**
+> **最後同步：2026-11-07 02:55:06**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-07 02:30 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 11/06 17:08～11/07 02:30；教練說「總」）
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-07 02:51 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Opus 5.5→Sonnet 5.5；本場 02:29～02:51；教練說「總」）
 
-**主軸：Amber 收尾（只刪大型備份）＋婦女再就業課程網頁 reemployment 出圖接圖改版。**
-- **Amber 收尾**：教練裁示「只刪大型備份檔，其餘（MyDocuments 549MB、媒體資源中心 405MB）復原留著」，已搬回原位、待刪區移除，Amber 已用 51G／467G、可用 416G，沒有待刪項目；時光機新備份待自動重建（約135G）。commit `1e6a84270`。過程中我誤報「剩51G」＋誤說時光機「查不出為何不見」（其實是另一對話框17:05經教練批准刪的），已寫記憶。
-- **TAVA 出圖**：`tava-ai.com/n2af7xksk3/prompts.html` 5 張 LK888 圖（原圖 `~/Pictures/TAVA_n2af7xksk3_出圖_20261107/`，清單 `reports/img_lists/tava_n2af7xksk3_…json`，commit `e94854675`）。`run_img_list.py` 已補上讀 JS `const items=[…]` 格式（網址直接可跑，dry-run 通過；commit 見本棒）。
-- **reemployment 網頁**（`github_repos/reemployment`，commit `ddeac32`，已上線 event.bymyway.com/curated/reemployment/）：接回 5 張圖（首頁／為什麼是你／DAY1／DAY2／專輯封面）、頂部洽詢列（佩佩老師 0988-004-118、LINE `lin.ee/vyFqWVB`）、頁尾 TAVA AI 製作連結；字級全頁 0 個 <20px（電腦＋手機實測）；報名場次代碼 `women-ip-ai-1230`（資料庫查無）改 `reemployment` 並在 event.db 建場次 id=35，測試模式驗證通知文字正確（**沒真送一筆到活動報名群**），測試資料已清。event.db 備份 `workspace/state/event.db.bak-20261107-reemployment`。**沒截圖（截圖鎖未獲教練同意），版面用量座標＋裁切預覽驗證。**
+**主軸：婦女再就業網頁 reemployment「EDM 下載」修正（四項全上線，commit `a6610c6`）。**
+- **起因與我的錯**：教練貼四點修改，我把「網頁上的 WebP 圖」誤當成另外兩張 EDM 檔，翻了一輪檔案還回頭問教練位置，教練動氣並升到 Opus。教訓：網頁上的「EDM 下載」＝網頁裡那兩張 WebP 圖，看到「某網頁的素材」先去該網頁的 GitHub 資料夾（`~/github_repos/<slug>/`）找，不要在小龍蝦工作區亂翻。
+- **做了什麼**（`github_repos/reemployment`）：①兩張宣傳圖原始檔 `EDM原始檔/v2.html`（直式1080×1920）、`h2.html`（橫式1920×1080）字級全數 ≥30px、講師頭像 116→200px，直式刪掉 chips 一排騰空間，用 headless Chrome 渲染輸出 `edm-v2-vertical.jpg`／`edm-v2-horizontal.jpg`（舊 WebP 已 git rm，網頁 img／下載連結／og:image 全改 jpg）；②網頁講師兩張照片 `.sp-top` 固定 240×340 等大；③「網路行銷經驗（本人自述）」刪「本人自述」；④頂部佩佩老師洽詢列整塊刪除（頁尾本來就有佩佩、珊珊、LINE），孤兒 `.topbar` CSS 一併清掉。
+- **驗證**：兩張 JPG 渲染後逐張看過；線上 `content-type: image/jpeg`；講師圖用數值量（螢幕截圖被截圖鎖擋，沒硬解鎖）。
+- 教練寫「施正毅」，網頁／圖上是「施正益」（語音諧音），維持「益」未改，回覆已提。
 
 ### 📋 下一場開工先做
-1. 教練看過 reemployment 網頁後的回饋：IMG-005 專輯封面（寫實側臉）要不要重出、佩佩老師 LINE 是 `lin.ee/vyFqWVB` 對不對（它是連結不是 @ID）。
-2. 前一棒待辦照舊（見下一節）。
+1. 等教練看過新版 EDM 與網頁回饋（行內字級、頭像大小夠不夠）。
+2. 上一棒（02:30 那段）待辦照舊：IMG-005 專輯封面要不要重出、佩佩老師 LINE `lin.ee/vyFqWVB` 是否正確。
+
+🙋 要教練決定：無新增。 🤫 等教練自己提起：無新增。 🔧 AI 自己的清單：無新增（本場未留未完成項）。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
