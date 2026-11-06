@@ -182,3 +182,4 @@
 - [🔧 TAVA 出圖清單版網頁(images.js＋images/)回填＝webp 依 IMG 編號放 images/；載圖程式 detached Image＋lazy 永遠不載要拿掉，第二次踩(2026-11-05)](reference_tava_image_list_page_images_dir_webp_swap_2026-11-05.md) — 換圖前先看是 data-slot 還是 images/ 版
 - [🔧 Mac 本機空間不足先查 Chrome code_sign_clone(11/06 24份34G)＋開工 worktree 31G＋舊 .bak；搬垃圾桶、清空留教練按](reference_mac_disk_full_chrome_code_sign_clone_2026-11-06.md)
 - [🔴 本機只放小龍蝦/Claude/系統必要的，其他搬 SSD＋Amber 備份；SSD 鎖螺絲不准建議拔；問還用不用前先查最後使用時間；HTML 不准邊寫邊跳(11/06)](feedback_local_disk_gold_ssd_for_rest_2026-11-06.md)
+- [🔧 bymyway.com(WordPress+Tutor)大於約200MB影片上傳會500、Tutor API/xmlrpc 403要教練登入後台；Amber實際掛在~/amber-mnt與~/amber-Videos；高價銷售課程素材在knowledges/高價銷售課程/(2026-11-06)](reference_bymyway_wp_upload_limit_and_tutor_auth_2026-11-06.md)
