@@ -18,3 +18,8 @@ metadata:
 **13:37 追加：Chrome 資料也搬了**：`~/Library/Application Support/Google/Chrome` → 捷徑指向 `/Volumes/953-SSD/Mac應用資料/Chrome`（8671 檔、內容差異 0，重開 Chrome 後新寫入的檔案出現在 SSD 那份）。舊夾 `Chrome.bak.20261002`（5.2GB）保留到 **10/09** 後刪。SSD 沒接上 Chrome 會打不開。
 
 **10/16 追加（教練當場糾正「圖明明在下載資料夾你怎麼找不到」）**：`~/Downloads` 是捷徑，`ls -lt ~/Downloads` 和 `find ~/Downloads`（沒加 -L）只會看到捷徑本身、當成空的。找檔一律用 `ls -lt ~/Downloads/`（結尾斜線）或 `find -L ~/Downloads/`，或直接 `/Volumes/953-SSD/下載/`。源頭已修：`knowledges/反射索引.json` 的「下載資料夾」反射原本寫「ls ~/Downloads」，現在寫明捷徑與斜線（情境目錄由腳本重產）。
+
+**11/06 追加（SSD 清晨斷線，教練存照片說空間不足）**：這顆 953-SSD 是「USB 隨身碟型 SSD」（教練 11/06 糾正，不是硬碟盒），直接插在 Mac mini M4 的 USB 孔（不是集線器；紀錄裡的 AppleUSB30HubPort 是 Mac 本體孔的內部名稱）。11/06 05:37:48 SSD 內的 Realtek RTL9210 晶片沒回應，系統重設 2 秒逾時→當成拔除、卸載；01:19 也斷過一次但自己接回。系統紀錄(`/usr/bin/log show --predicate 'eventMessage CONTAINS "953-SSD"'`)只留約 2 天。徵兆：`ls /Volumes` 沒有 953-SSD、`ioreg -p IOUSB` 仍列「USB Storage」但沒有 IOMedia。
+- 教練不想拆螺絲／拔隨身碟 → 處理順序：①「關機」(不是重新開機，USB 孔才會斷電)等 10 秒再開 ②不行再關機並拔 Mac mini 電源線 10 秒 ③最後才拔 SSD。
+- 推論(未證實)：大量寫入時隨身碟型 SSD 過熱／供電不穩卡死；再斷就考慮散熱或換孔。
+- 11/06 同日把 ~/.Trash 內 Chrome code_sign_clone 與舊 .bak 清掉，原因見 [[mac-disk-full-chrome-code-sign-clone]]。`~/Library/Application Support/Google/Chrome` 現在是本機真實目錄(`Chrome.ssd-link` 才是指向 SSD 的舊捷徑)，SSD 回來也**不要**把 Chrome 搬回去。
