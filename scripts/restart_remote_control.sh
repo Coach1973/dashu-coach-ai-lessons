@@ -45,28 +45,42 @@ if [ -f "$POINTER" ]; then
   rm -f "$POINTER"
 fi
 
-tmux kill-session -t "$SESSION" 2>/dev/null || true
-sleep 2
-
-tmux new-session -d -s "$SESSION" -c ~/.openclaw -x 200 -y 50
-tmux send-keys -t "$SESSION" 'env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL -u ANTHROPIC_DEFAULT_HAIKU_MODEL -u ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME -u ANTHROPIC_DEFAULT_OPUS_MODEL -u ANTHROPIC_DEFAULT_OPUS_MODEL_NAME -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc' C-m
-
-echo "⏳ 啟動 claude rc（精準env -u排除MiniMax殘留 + 已清除殭屍指標檔）..."
-
+# v5（2026-11-07）：開機時撞「already served」不再直接放棄。
+#   11/06 12:24 重開機，開機自動啟動有跑，但雲端還記著重開機前的舊連線→報 already served→
+#   v4 直接 exit 1，tmux 留著空殼，手機整整一天只看得到雲端、看不到這台 Mac。
+#   雲端舊記號約 3 分鐘會過期，所以改成：撞到就等 60 秒重來，最多 6 次（約 6 分鐘）。
 SUCCESS=0
-for i in $(seq 1 15); do
-  sleep 1
-  PANE=$(tmux capture-pane -t "$SESSION" -p 2>/dev/null || true)
-  if echo "$PANE" | grep -q "Choose \[1/2\]"; then
-    tmux send-keys -t "$SESSION" "1" C-m
-  fi
-  if echo "$PANE" | grep -q "already served"; then
-    echo "❌ 偵測到「already served」衝突，可能還有殘留process，請手動排查"
-    tmux capture-pane -t "$SESSION" -p
-    exit 1
-  fi
-  if echo "$PANE" | grep -q "Connected"; then
-    SUCCESS=1
+for attempt in $(seq 1 6); do
+  tmux kill-session -t "$SESSION" 2>/dev/null || true
+  sleep 2
+
+  tmux new-session -d -s "$SESSION" -c ~/.openclaw -x 200 -y 50
+  tmux send-keys -t "$SESSION" 'env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL -u ANTHROPIC_DEFAULT_HAIKU_MODEL -u ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME -u ANTHROPIC_DEFAULT_OPUS_MODEL -u ANTHROPIC_DEFAULT_OPUS_MODEL_NAME -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc' C-m
+
+  echo "⏳ $(date '+%F %T') 第 ${attempt} 次啟動 claude rc（精準env -u排除MiniMax殘留 + 已清除殭屍指標檔）..."
+
+  SERVED=0
+  for i in $(seq 1 15); do
+    sleep 1
+    PANE=$(tmux capture-pane -t "$SESSION" -p 2>/dev/null || true)
+    if echo "$PANE" | grep -q "Choose \[1/2\]"; then
+      tmux send-keys -t "$SESSION" "1" C-m
+    fi
+    if echo "$PANE" | grep -q "already served"; then
+      SERVED=1
+      break
+    fi
+    if echo "$PANE" | grep -q "Connected"; then
+      SUCCESS=1
+      break
+    fi
+  done
+
+  [ "$SUCCESS" = "1" ] && break
+  if [ "$SERVED" = "1" ]; then
+    echo "⚠️ 雲端還記著舊連線（already served），60 秒後重試..."
+    sleep 60
+  else
     break
   fi
 done
