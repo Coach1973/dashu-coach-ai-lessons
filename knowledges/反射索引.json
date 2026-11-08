@@ -2192,6 +2192,20 @@
    ],
    "situation": "教練叫我改某張 EDM／海報／講師照片，但沒講檔案在哪",
    "source": "試金石案例152（2026-11-07 reemployment EDM 誤判）"
+  },
+  {
+   "id": "R-BG-BATCH-READ-LOG-BEFORE-REPORTING",
+   "moment": "post_tool",
+   "tool": "Bash",
+   "match": "(Command running in background|run_in_background|nohup [^\\n]{0,80}(ffmpeg|python3))",
+   "say": "背景批次的「執行中／已完成」通知只代表那條指令結束，不代表任務成功：回報前先讀 log 數 ok／FAIL 與實際產檔數；批次先試跑 1 支確認有產檔；ffmpeg 的 -f 要放在輸出檔名前面。",
+   "level": "remind",
+   "audience": [
+    "coach",
+    "self"
+   ],
+   "situation": "我把一個長時間背景批次丟出去，準備回報進度",
+   "source": "memory/feedback_background_batch_verify_result_before_reporting_2026-11-08.md（11/08 高價銷售 64 支 MP3 全失敗卻回報轉換中）"
   }
  ],
  "case_ledger": {
