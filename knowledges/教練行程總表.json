@@ -4115,7 +4115,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-08 13:18",
+ "updated_at": "2026-11-08 13:43",
  "tainan_synced_at": "2026-11-08 12:54",
  "evening_window": {
   "start": "19:00",
@@ -4159,8 +4159,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-08 13:18",
- "google_synced_epoch": 1794115115,
+ "google_synced_at": "2026-11-08 13:43",
+ "google_synced_epoch": 1794116636,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
