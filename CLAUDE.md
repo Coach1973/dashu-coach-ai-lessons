@@ -4,7 +4,7 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-09 02:45:29**
+> **最後同步：2026-11-09 03:05:41**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
@@ -20,7 +20,7 @@
 **教訓：** 教練前提（重頁是圖片）不對時先查實再回報，沒盲目壓縮；Stop hook 輪詢偵測對報告表格標題誤報兩次。
 
 ### 📋 下一場開工先做
-1. 教練連上 Chrome 擴充後，在 Cloudflare 為 event.bymyway.com 設 Cache Rule：路徑 /curated/* 且排除 /api，邊緣快取（HTML 短 TTL 如 5 分鐘），設完用 `cf-cache-status` 驗 HIT；或請教練給有 Cache Rules 權限的 token。
+1. ✅ Cloudflare Cache Rule（11/09 02:57 查完，沒有部署）：免費方案「固定快取時間」最短 2 小時，要更短得付費升級（點該欄位會跳升級方案視窗，沒買任何東西）；HTML 回 cache-control: no-cache 所以 DYNAMIC 不快取（檔案小）。大檔其實已被快取：mp4／pdf／圖 回 max-age=14400，第二次起 REVALIDATED。只有 m4a 等少數副檔名 DYNAMIC。結論：Cache Rule 幾乎沒額外效益，不用做；教練若要省音檔流量再另議。教練已登入 Cloudflare（bymyway7@gmail.com，帳號只有 bymyway.com 一個網域）。
 2. ai-image1202：教練看過再改；場地名稱未知（events 只填地址）；有實景照可換 IMG-006。
 3. （舊）a-to-b 自檢紅燈（A／B 圓點、按鈕對比）、巴哈戰報時間修改、日誌看安靜鎖／找工具鎖有沒有碰到。
 🙋 要教練決定：無新增。 🤫 等教練自己提起：重頁影片（muyija 85MB 等）要不要重壓縮（會改畫質）；沿用上棒。 🔧 AI 自己的清單：①Cache Rule（見上）；②TAVA 報名頁「假送出」可在上架流程加檢查；③沿用上棒。
