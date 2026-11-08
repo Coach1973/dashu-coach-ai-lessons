@@ -15,9 +15,15 @@
 🙋 要教練決定：無新增。 🤫 等教練自己提起：沿用上棒。 🔧 AI 自己的清單：沿用上棒；另加①觀察 A4 擋住口令句的實際誤判次數。
 - 記憶：同類（問了明顯答案）已有 `feedback_dont_ask_obvious_yes_and_never_hand_commands_2026-09-30.md`，依 N8 不再加新記憶，改源頭（A4 機關）。
 
-## 🆕 11/09 凌晨 課程推廣報名網頁技能書（Mac 桌面版 Opus/Sonnet 5.5）
-- 已做完並上線：https://coach1973.github.io/course-signup-playbook/ （repo Coach1973/course-signup-playbook，commit 6e191b5）。整合出圖指令表(ai-go/biz-web-prompt.md)＋反向技能書14招＋17個報名網頁（含縮圖與超連結），開工指令三版（完整／精簡／圖片回填），最小字20px、頁尾四連結、ZIP＋prompts.html＋images.json 一次交付、表單用 data-works-form。
-- 下一步：教練看過有要改再改；尚未實際拿這份指令跑過一場新網頁（沒實測過端到端）。
+## 🔴 11/09 凌晨 最新一棒：課程推廣報名網頁技能書（Mac 桌面版，Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 22:41～02:05；教練說「總」）
+**做了什麼：**
+1. a-to-b 關卡地圖改成固定在最上方的 A→B 進度列（1～9 圓點隨捲動亮起、點了跳關、☰ 展開關卡名稱），commit 020f258（repo a-to-b）。
+2. 新做「課程推廣報名網頁｜開工指令與製作經驗」技能書：https://coach1973.github.io/course-signup-playbook/ （repo Coach1973/course-signup-playbook，最新 cec59bd）。整合出圖指令表（ai-go/biz-web-prompt.md）＋反向技能書 14 招＋17 個報名網頁；開工指令三版（完整／精簡／圖片回填），一次交付網頁＋prompts.html/images.json＋ZIP，最小字 20px，頁尾四連結，表單用 data-works-form；技法庫 A～Q 十七招各連到示範網站。
+3. 教練看完很滿意，只要求拿掉 17 張縮圖、改成「標題＋超連結」，已改並上線；自檢（page_preflight）全過。
+4. 已收進大樹作品集「大樹常用」第一項（coach888 commit 6e07c42，線上確認）。
+**教訓（沒寫新記憶）：** 縮圖用整頁截圖裁成固定比例，教練看了覺得左不左右不右，之後連結清單一律文字＋超連結，不放自動截圖縮圖。
+**下一步：** ①尚未拿這份指令端到端跑過一場新網頁，教練下次做新課程就是實測；②開場畫面「共 8 關」字樣未改（a-to-b 實際 9 關，教練沒回覆要不要改）；③技能書示範日期若要更新自己改。
+🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 沿用上棒。
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-08 20:05 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 16:55～20:05；教練說「總」）
 
