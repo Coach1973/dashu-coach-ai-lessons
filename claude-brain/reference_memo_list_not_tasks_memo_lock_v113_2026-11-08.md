@@ -15,3 +15,5 @@ metadata:
 **How to apply:** 以後教練說「又鬼打牆」先看日誌有沒有 📓 字樣；新的備忘說法沒被抓到就加進 MEMO_RE，不要加條文。
 
 相關：[[reference_bots_quiet_no_exec_wake_v112_2026-11-08]]
+
+**同日同類清查（教練：「不要每次都是我發現問題」）**：提醒排程鎖擴到全分身、聊天一輪 15 分鐘收尾、對話累計 120 次、4 則 AI 提醒改固定文字；新增 `workspace/scripts/bot_loop_patrol.py`＋排程「分身鬼打牆預警巡檢」每天台灣時間 07:50 寫軍師信箱（commit 5c4283f1c／b78c26872）。以後教練說「又鬼打牆」先看信箱裡 bot_loop_patrol 的預警，再看日誌。

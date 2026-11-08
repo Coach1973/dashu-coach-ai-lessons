@@ -677,12 +677,19 @@
   {
    "id": "c0c86fae",
    "date": "2026-11-10",
-   "title": "會計師胡宗奇線上會談",
+   "title": "榮樹下訪談：胡宗奇（會計師）",
    "source": "巴哈",
    "start": "10:30",
    "end": "11:30",
    "where": "線上",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "guest": "胡宗奇",
+   "guest_field": "會計師",
+   "note": "德盺會計師事務所｜手機 0963-220798｜線上｜佩佩老師訊息稱「胡宗奇律師」，職稱待確認",
+   "kind": "interview",
+   "booking_type": "榮樹下訪談",
+   "reminder_job": "ebf18d4d-9de2-4238-b9cf-062a7c5d1f04",
+   "reminder_job_d1": "b4253d69-9664-4a08-9e00-d8d9433fecca"
   },
   {
    "id": "37dc8c4c",
@@ -697,29 +704,46 @@
   {
    "id": "f74f7f8e",
    "date": "2026-11-08",
-   "title": "楊健一訪談",
+   "title": "榮樹下訪談：楊健一（真誠）",
    "source": "巴哈",
    "start": "14:00",
    "end": "15:00",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "guest": "楊健一",
+   "guest_field": "真誠",
+   "note": "真誠分會｜網化（資訊科技&網絡）｜手機 0912282627｜現金分期（佩佩老師 11/8 註記）",
+   "kind": "interview",
+   "booking_type": "榮樹下訪談"
   },
   {
    "id": "d0225e31",
    "date": "2026-11-08",
-   "title": "江睿翔訪談",
+   "title": "榮樹下訪談：江睿翔（真誠）",
    "source": "巴哈",
    "start": "21:30",
    "end": "22:30",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "guest": "江睿翔",
+   "guest_field": "真誠",
+   "note": "真誠分會｜線上培訓｜手機 0901150409（沿用 11/3 那筆的資料）",
+   "kind": "interview",
+   "booking_type": "榮樹下訪談",
+   "reminder_job": "0d40fb47-df74-4234-a293-cb3eceb44c62"
   },
   {
    "id": "3cd1a751",
    "date": "2026-11-08",
-   "title": "葉家甄訪談",
+   "title": "榮樹下訪談：葉家甄（真誠）",
    "source": "巴哈",
    "start": "22:40",
    "end": "23:40",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "guest": "葉家甄",
+   "guest_field": "真誠",
+   "note": "真誠分會｜聯絡方式待補",
+   "kind": "interview",
+   "booking_type": "榮樹下訪談",
+   "reminder_job": "12c87db5-b4b5-4783-8e6c-ce0686ea2d3d"
   },
   {
    "id": "tainan-2026-02-11-0",
@@ -1054,6 +1078,53 @@
    "covered_by_google": true
   },
   {
+   "id": "b2518597",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：王鈺（真AI）",
+   "source": "巴哈",
+   "start": "11:45",
+   "end": "12:45",
+   "note": "真AI（籌備會）｜姓名、电话、公司待補",
+   "kind": "interview",
+   "reminder_job": "d9625b74-c86d-4a13-b0e4-701e250dfc1e",
+   "reminder_job_d1": "38933e60-6711-459a-8766-99cd757fd0c3",
+   "guest": "王鈺",
+   "guest_field": "真AI",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true
+  },
+  {
+   "id": "ab0f0115",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：如新蘇董",
+   "source": "巴哈",
+   "start": "13:00",
+   "end": "14:00",
+   "note": "美商如新（股）公司 董事長｜姓名、手機待補",
+   "kind": "interview",
+   "reminder_job": "2be9292c-fd93-4884-a1b0-e62fccc5b2d6",
+   "reminder_job_d1": "f023efcf-0b1d-4f76-98cf-372b704425a9",
+   "guest": "如新蘇董",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true
+  },
+  {
+   "id": "2855f155",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：朱志成（真AI）",
+   "source": "巴哈",
+   "start": "15:00",
+   "end": "16:00",
+   "note": "真AI｜講師｜輔導做連鎖加盟（沿用 6 月咖啡會議記錄）",
+   "kind": "interview",
+   "reminder_job": "57b327a1-b3cd-4770-b73f-34ff47f03048",
+   "reminder_job_d1": "7b715010-3809-47d7-8646-31e1b5e5b7a7",
+   "guest": "朱志成",
+   "guest_field": "真AI",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true
+  },
+  {
    "id": "gcal-2026-11-08-10",
    "date": "2026-11-08",
    "title": "榮樹下訪談：趙敏玄",
@@ -1064,7 +1135,7 @@
   {
    "id": "gcal-2026-11-08-1",
    "date": "2026-11-08",
-   "title": "楊健一訪談",
+   "title": "榮樹下訪談：楊健一（真誠）",
    "source": "Google日曆",
    "start": "14:00",
    "end": "15:00"
@@ -1080,7 +1151,7 @@
   {
    "id": "gcal-2026-11-08-3",
    "date": "2026-11-08",
-   "title": "江睿翔訪談",
+   "title": "榮樹下訪談：江睿翔（真誠）",
    "source": "Google日曆",
    "start": "21:30",
    "end": "22:30"
@@ -1088,7 +1159,7 @@
   {
    "id": "gcal-2026-11-08-4",
    "date": "2026-11-08",
-   "title": "葉家甄訪談",
+   "title": "榮樹下訪談：葉家甄（真誠）",
    "source": "Google日曆",
    "start": "22:40",
    "end": "23:40"
@@ -1142,12 +1213,36 @@
    "end": "10:00"
   },
   {
-   "id": "gcal-2026-11-10-19",
+   "id": "gcal-2026-11-10-11",
    "date": "2026-11-10",
-   "title": "會計師胡宗奇線上會談",
+   "title": "榮樹下訪談：胡宗奇（會計師）",
    "source": "Google日曆",
    "start": "10:30",
    "end": "11:30"
+  },
+  {
+   "id": "gcal-2026-11-10-12",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：王鈺（真AI）",
+   "source": "Google日曆",
+   "start": "11:45",
+   "end": "12:45"
+  },
+  {
+   "id": "gcal-2026-11-10-13",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：如新蘇董",
+   "source": "Google日曆",
+   "start": "13:00",
+   "end": "14:00"
+  },
+  {
+   "id": "gcal-2026-11-10-14",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：朱志成（真AI）",
+   "source": "Google日曆",
+   "start": "15:00",
+   "end": "16:00"
   },
   {
    "id": "gcal-2026-11-10-20",
@@ -4115,7 +4210,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-08 15:49",
+ "updated_at": "2026-11-08 16:28",
  "tainan_synced_at": "2026-11-08 12:54",
  "evening_window": {
   "start": "19:00",
@@ -4159,8 +4254,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-08 15:49",
- "google_synced_epoch": 1794124178,
+ "google_synced_at": "2026-11-08 16:28",
+ "google_synced_epoch": 1794126491,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
