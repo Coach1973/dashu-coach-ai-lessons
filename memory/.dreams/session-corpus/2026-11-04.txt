@@ -19,3 +19,27 @@
 [main/sessions/main/cae49bea-16af-4174-905f-bc074510877e#L159] Assistant: I have enough to judge. Let me record the finding.
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L944] User: https://www.tava-ai.com/scivms7lxs/image-prompts.html
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L946] Assistant: 教練丟了 TAVA AI 的 prompt 頁。我先讀這條專屬 SOP 再動作。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L950] Assistant: 收到 TAVA 出圖清單（薛德民網頁，4 張）。我先回報教練，再用腳本跑。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L951] Assistant: 收到，開始出 4 張圖（薛德民網頁），約 3～5 分鐘。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L956] Assistant: 我先看完整頁面內容，確認是新版「出圖清單 JSON」還是舊版 prompt 列表。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L959] Assistant: 出圖清單已解析完（薛德民網頁，4 張）。我先確認腳本行為、參考照來源與下載包位置。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L963] Assistant: 出圖清單解析完成（薛德民網頁，4 張）。我先找參考照來源（p020/p026/g3.jpg），同時讀混合模式腳本範本。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L967] Assistant: 出圖清單解析完成（薛德民網頁，4 張）。參考照我找到線索了，確認一下來源專案與缺的三張檔。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L970] Assistant: 我找到 p020/p026 的線索，但 8ccafe 不像薛德民的專案、g3.jpg 還沒找到。我再精準定位一次。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L973] Assistant: 參考照還沒定位到（8ccafe 是蕭蓓霖的專案，不是薛德民）。我改用精準線索再找一次。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L976] Assistant: 參考照還沒定位到。我從教練今天傳的訊息紀錄與本機下載包找起。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L980] Assistant: 清單解析完成（薛德民網頁 4 張）。參考照還沒定位到，我用兩條路並行找——本機索引 + TAVA 專案頁的下載包。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L984] Assistant: TAVA 專案的 index.html 有 7.4MB，裡面應該就嵌著參考照。我先驗證清單解析，同時抓網頁找參考照。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L987] Assistant: TAVA 專案頁抓到了（7.4MB，4 個版位都是 base64 內嵌）。我現在把參考照從網頁裡解出來，同時找原始照片包。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L990] Assistant: TAVA 專案頁找到了（4 個版位都是 base64 內嵌）。我現在解出參考照。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L993] Assistant: 參考照從 TAVA 網頁解出來了，但只有網頁版小圖。我再找一次原始照片包與同類專案的存放位置。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L997] Assistant: 清單已解析（薛德民網頁 4 張）。IMG-002/003/004 是純文字概念圖；IMG-001 是實景修飾，需要參考照。我先用像素比對找出真正的原始照片。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1001] Assistant: 參考照線索到了：TAVA 專案頁 4 個版位都是 base64 內嵌的真實活動照片。我先找原始照片包與高解析原圖，同時開跑 3 張純文字概念圖。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1004] Assistant: 清單解析完成（薛德民網頁 4 張）。其中 3 張是純文字概念圖、IMG-001 是實景修飾需參考照。我現在同時開跑 3 張概念圖，並比對找出 IMG-001 的原始照片。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1008] Assistant: 3 張概念圖已出好（IMG-002/003/004，OCR 乾淨）。剩 IMG-001 是實景修飾，需要參考照。我用像素比對找出原始照片。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1011] Assistant: 3 張概念圖已出好（OCR 乾淨）。剩 IMG-001 是實景修飾要參考照——TAVA 頁面裡還內嵌了 107 張圖，我從裡面找出 IMG-001 的高解析原圖。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1017] Assistant: 3 張概念圖已出好（OCR 乾淨）。剩 IMG-001 要參考照——我正在比對原圖。同時查一下軍師那邊有沒有薛德民的網站專案。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1021] Assistant: 3 張概念圖已出好（OCR 全乾淨）。剩 IMG-001 是實景修飾要參考照——我已從 TAVA 專案頁解出原始照片，現在走 edits 修飾。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1024] Assistant: 3 張概念圖已出好（OCR 乾淨）。現在跑 IMG-001 實景修飾（帶參考照走 edits）。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1027] Assistant: IMG-001 修飾完成（28 秒，1536x1024）。現在把 4 張打包並做文字檢查。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1031] Assistant: 🦞 教練，進度回報：4 張圖都已经出好了（IMG-002/003/004 概念圖、IMG-001 實景修飾），OCR 檢查全部乾淨。現在只剩最後一步——打包成一覽圖＋zip 傳給您，大約 2 分鐘。
