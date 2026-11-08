@@ -58,3 +58,25 @@
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L865] Assistant: 記憶與教訓已寫入。現在提交並推送（只收記憶、教訓、run_summary，不收大圖檔）。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L868] Assistant: 記憶與教訓已提交。現在推送並用 `git ls-remote` 驗證遠端一致。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L871] Assistant: 🦞 教練，**4 張全部完成，圖與壓縮包都已傳到您私聊**（一覽圖 messageId `13171`、zip `13172`，回執皆 settled）。 **成果** - 4 張全數生成成功（gpt-image-2，失敗 0、跳過 0），全部 1536x1024 - `IMG-001` 南投水里出發（概念）／`IMG-002` 翔安心農場（概念）／`IMG-003` 皮紋分析（實景修飾）／`IMG-004` 紫微斗數・催眠諮詢（概念） - zip 只放網頁用 webp（115／142／93／57 KB，整包 0.42 MB），檔
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L871] Assistant: `--dump-items` 診斷模式，以後拿到新格式清單可先看欄位、不扣點。 - 視覺辨識模型這次兩條路都掛（MiniMax-VL 無回應、Claude 401），改用**像素比對**確認「是不是同一張照片」——這招以後遇到找參考照可直接用。 記憶與教訓已補登，commit `0d922c766` 已 push，`git ls-remote` 驗證遠端與本機一致。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L874] Assistant: 收到這則背景 exec 的回報，輸出是 `chen-yijing` 專案的原始照片清單。我先確認這是不是還有未完的任務，避免誤判。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L877] Assistant: 這則是稍早背景 exec 的完成通知。我需要確認 `chen-yijing` 是不是有未完的工作。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L880] Assistant: 這是稍早背景 exec 的殘留通知。我查一下 `chen-yijing` 到底有沒有未完的工作，避免漏掉教練的交辦。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L883] Assistant: 關鍵發現：教練在 16:48 又交辦了一件事——把做出來的圖裝到 `https://event.bymyway.com/curated/jiang-ruixiang/`。我先確認這則訊息原文與策展頁的運作方式。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L887] Assistant: 教練交辦了第二件事：把做出來的 4 張圖裝到策展頁。專案網站裡正好已有這 4 個對應版位的示意插畫。我先讀策展 SOP 與發布流程。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L890] Assistant: 教練交辦了第二件事：把做出的 4 張圖裝到策展頁 `event.bymyway.com/curated/jiang-ruixiang/`。我先摸清網站結構與發布機制。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L893] Assistant: 教練 16:48 又交辦了：把做出來的圖裝到策展頁。而且 repo 已經有人換入 IMG-001／002／004——我得先查清楚現況，避免重複做。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L896] User: Continue the current task from the existing transcript, preserving completed work. If an action was interrupted, inspect its state before deciding whether to retry it. Do not restart the task or repeat completed actions.
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L898] Assistant: 交辦事項已確認：教練 16:48 交代把做好的 4 張圖裝到策展頁。repo 裡 `d787b2a` 已換入 IMG-001／002／004（軍師做的），IMG-003 還沒換。我先核對每個版位到底放的是哪一張。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L901] Assistant: 換圖機制搞清楚了：用 `data-slot` 標記的版位。軍師換了 IMG-001/002/004，IMG-003 還是 SVG 佔位圖。我逐一比對指紋。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L904] Assistant: IMG-003 版位現在放的是**原始照片**（指紋 `f20ef8a27e98` = 我先前反查的那張公益課程原圖），軍師只換了 3 張概念圖。我來補上 IMG-003 修飾版，並查清策展頁的發布機制。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L908] Assistant: 線上策展頁已同步到 IMG-001/002/004，IMG-003 版位仍是原始照片。我來補上 IMG-003 並確認發布機制。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L912] Assistant: IMG-003 已換好。查策展同步機制時被 LINE 推播鎖擋下，我改用 GitHub Pages 發布路徑查證。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L915] Assistant: IMG-003 已替換完成（舊：原始照片 → 新：修飾版 94,672 bytes）。發布機制確認是「push 觸發同步」，軍師那筆也是這樣上去的。現在提交推送。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L918] Assistant: 已推送。現在確認線上策展頁有沒有自動同步到新圖。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L921] Assistant: 線上策展頁 4 個版位全部換成新圖了。現在把這件事寫進記憶並提交。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L927] Assistant: 🦞 教練，**策展頁 4 張圖全部裝好了**，線上已驗證：<https://event.bymyway.com/curated/jiang-ruixiang/> **我接手時的狀況**：軍師已經換了 IMG-001（水里）、IMG-002（農場）、IMG-004（紫微斗數）三張，但 **IMG-003 皮紋分析那格其實還是原始照片沒換**——我解出網頁裡的圖跟原圖指紋一樣，等於漏了一张。 **我補的部分** - 把 IMG-003 換成實景修飾版（94,672 bytes），commit `1c61e52` 推上去 - 線上 4 
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L930] Assistant: 這則是先前 OCR 檢查的背景執行完成通知，不是新指令。我確認一下它對應哪一張圖、有沒有需要處理的文字。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L933] Assistant: OCR 輸出是一個「偵測到區域但辨識不到字」的空白列。我確認它對應哪張圖、原始碼怎麼判讀。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L939] Assistant: 這則 OCR 輸出是先前比對用的第二套辨識引擎殘留通知（欄位格式是 PaddleOCR 的 TSV，`text` 欄是空的）。我確認一下它的來源，並檢查目前成品狀態沒有變動。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L942] Assistant: 🦞 教練，這則是**先前那輪 OCR 檢查的殘留通知**，不是新任務，我已核對完，**不用再處理任何東西**。 **它是什麼**：PaddleOCR 的表格輸出（欄位是 level / page_num / block_num…conf / text），`text` 欄是**空的**。意思是「偵測到一個區塊，但辨識不出任何字」——這正是**乾淨、沒有多餘文字**的結果，不是發現了雜字。那個 `95.000000` 是座標框的信心度，不是文字內容。 **為什麼會在這個時間點跳出來**：這是背景執行的收尾訊息延遲回報，不是新指令。我沒

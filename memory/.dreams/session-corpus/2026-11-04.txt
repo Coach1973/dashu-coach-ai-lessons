@@ -17,3 +17,5 @@
 [main/sessions/main/cae49bea-16af-4174-905f-bc074510877e#L147] Assistant: I have a clear, verifiable finding. Let me confirm it isn't already in the inbox and record it.
 [main/sessions/main/cae49bea-16af-4174-905f-bc074510877e#L150] Assistant: Let me check one more member-facing angle — whether bni_tainan is actually receiving member messages.
 [main/sessions/main/cae49bea-16af-4174-905f-bc074510877e#L159] Assistant: I have enough to judge. Let me record the finding.
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L944] User: https://www.tava-ai.com/scivms7lxs/image-prompts.html
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L946] Assistant: 教練丟了 TAVA AI 的 prompt 頁。我先讀這條專屬 SOP 再動作。
