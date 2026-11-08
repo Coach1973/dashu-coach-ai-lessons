@@ -150,6 +150,7 @@ def package_problems(zip_path):
 
 def gen(item, out_dir, key):
     f = out_dir / item["file"]
+    f.parent.mkdir(parents=True, exist_ok=True)  # 2026-11-09 清單檔名可能帶子資料夾（images/img-001.webp），先建好
     if f.exists() and f.stat().st_size > 10000:
         if not f.with_suffix(".web.webp").exists():
             save_web_copy(f)
@@ -217,6 +218,7 @@ def build_edit_prompt(item, ref_name):
 def gen_edit(item, out_dir, key, ref_path):
     """實景修飾：走 LK888 /v1/images/edits（multipart，帶參考照片）。"""
     f = out_dir / item["file"]
+    f.parent.mkdir(parents=True, exist_ok=True)  # 2026-11-09 清單檔名可能帶子資料夾（images/img-001.webp），先建好
     if f.exists() and f.stat().st_size > 10000:
         if not f.with_suffix(".web.webp").exists():
             save_web_copy(f)
