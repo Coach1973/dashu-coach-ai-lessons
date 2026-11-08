@@ -86,7 +86,8 @@ def admin():
         w: round(stats[w]["paid"] / WORKSHOP_TARGETS[w] * 100) if WORKSHOP_TARGETS[w] else 0
         for w in ACTIVE_WORKSHOPS
     }
-    breakeven_reached = {w: stats[w]["total"] >= WORKSHOP_BREAKEVEN[w] for w in ACTIVE_WORKSHOPS}
+    # 損益平衡以「已繳費」人數判斷（2026-11-09 教練要求，與目標達成率一致）
+    breakeven_reached = {w: stats[w]["paid"] >= WORKSHOP_BREAKEVEN[w] for w in ACTIVE_WORKSHOPS}
 
     return render_template(
         "admin.html",

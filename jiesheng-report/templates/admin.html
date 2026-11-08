@@ -95,7 +95,7 @@
         <div class="sub-row">
           <div class="countdown">倒數<b>{{ countdown_days[w] }}天</b></div>
           <div class="percent">繳費目標{{ workshop_targets[w] }}人<b>{{ percent[w] }}%</b></div>
-          <div class="breakeven">損益平衡{{ workshop_breakeven[w] }}人<b class="{{ 'reached' if breakeven_reached[w] else 'not-reached' }}">{{ '已達成' if breakeven_reached[w] else '未達成' }}</b></div>
+          <div class="breakeven">繳費損益平衡{{ workshop_breakeven[w] }}人<b class="{{ 'reached' if breakeven_reached[w] else 'not-reached' }}">{{ '已達成' if breakeven_reached[w] else '未達成' }}</b></div>
         </div>
         <div class="progress-bar"><div class="fill" style="width:{{ [percent[w], 100] | min }}%"></div></div>
       </a>
