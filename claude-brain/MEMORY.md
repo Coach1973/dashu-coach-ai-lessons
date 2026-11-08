@@ -1,3 +1,4 @@
+- [🔧 TAVA 報名頁表單常是假送出（只跳成功畫面）：上架後要建 events 列＋改 POST /api/register＋後端測試；run_img_list 檔名帶 images/ 已修(11/09 ai-image1202)](reference_tava_signup_form_is_mock_wire_to_api_register_2026-11-09.md)
 - [🔧 教練說「1-2B」＝a-to-b（從A到B過橋任務）網頁；單檔 index.html，第2關16張翻牌、第4關11個搭橋方法；教練說看不到圖先確認他刷新的是哪個網址（11/08 是刷到 TAVA 頁）](reference_a_to_b_1_2b_page_structure_and_flow_2026-11-08.md)
 - [🔴 背景批次「完成」通知≠成功：回報前讀 log 與產檔數；ffmpeg -f 放輸出檔名前（11/08 64 支 MP3 全失敗卻先說轉換中）](feedback_background_batch_verify_result_before_reporting_2026-11-08.md)
 - [🔴 教練丟「今日備忘錄」＝他自己的待辦不是交辦；小龍蝦去查25分鐘→v1.13 備忘鎖＋卡住通知20分鐘冷卻(11/08)](reference_memo_list_not_tasks_memo_lock_v113_2026-11-08.md)
