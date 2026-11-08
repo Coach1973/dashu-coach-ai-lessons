@@ -4420,8 +4420,9 @@ def api_coach888_click_counts():
     # 2026-10-21：常用查詢網站(my-tools)照抄熱門排行，網址前加「mytools::」記在同一張表；
     # 帶 ?prefix=mytools:: 只回那一份，不帶就排除，兩邊的前 10 名不會互相擠掉
     prefix = request.args.get("prefix", "")
+    # 2026-11-09：大樹作品分類表(works-map)也照抄，網址前加「worksmap::」，不帶 prefix 時一併排除，不擠掉大樹作品集的前 10 名
     counts = {r["url"]: r["click_count"] for r in rows
-              if (r["url"].startswith(prefix) if prefix else not r["url"].startswith("mytools::"))}
+              if (r["url"].startswith(prefix) if prefix else not r["url"].startswith(("mytools::", "worksmap::")))}
     return Response(
         json.dumps(counts), status=200, headers={**resp_headers, "Content-Type": "application/json"},
     )
