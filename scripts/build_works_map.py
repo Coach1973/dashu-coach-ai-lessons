@@ -39,7 +39,7 @@ page = f"""<!doctype html>
 <title>大樹作品分類表</title>
 <style>
 :root{{--bg:#F5F1E8;--ink:#1F2A24;--mut:#5A6359;--card:#fff;--line:#DDD5C3;--g:#2F5D46;--gold:#B98B2E}}
-*{{box-sizing:border-box}}html{{scroll-behavior:smooth;scroll-padding-top:150px}}
+*{{box-sizing:border-box}}html{{scroll-behavior:smooth;scroll-padding-top:190px}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:20px/1.7 "Noto Sans TC","PingFang TC",system-ui,sans-serif}}
 header{{position:sticky;top:0;z-index:10;background:#1F3A2D;color:#F7F1DF;padding:12px 16px;box-shadow:0 2px 10px rgba(0,0,0,.25)}}
 .hin{{max-width:1100px;margin:auto}}
@@ -59,6 +59,7 @@ h2 small{{font:400 20px sans-serif;color:var(--mut)}}
 .d{{margin:4px 0 14px;color:var(--mut)}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}}
 .card{{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:inherit;text-decoration:none}}
+.card{{scroll-margin-top:190px}}
 .card:hover{{border-color:var(--g);box-shadow:0 6px 18px -8px rgba(47,93,70,.5)}}
 .card .n{{display:block;font-weight:700;line-height:1.45;overflow-wrap:anywhere}}
 .card .m{{display:block;color:var(--mut);font-size:20px;overflow-wrap:anywhere}}
