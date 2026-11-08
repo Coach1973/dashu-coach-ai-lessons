@@ -509,15 +509,16 @@
   },
   {
    "id": "d5a312f6",
-   "date": "2026-11-08",
+   "date": "2026-11-14",
    "title": "榮樹下訪談：趙敏玄",
    "source": "巴哈",
-   "start": "08:30",
-   "end": "09:30",
+   "start": "20:00",
+   "end": "21:00",
    "note": "嘉賓：趙敏玄；教練 10/25 交代",
-   "reminder_job": "ed4c40fd-797c-4574-a327-946f6748f708",
    "form_token": "B9LqlIPXMvB9",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "reminder_job": "67e244f1-a22b-433b-ad12-024d4419fe5c",
+   "reminder_job_d1": "17b228c7-e097-475f-8e26-918162cf3992"
   },
   {
    "id": "17d8181d",
@@ -1125,14 +1126,6 @@
    "covered_by_google": true
   },
   {
-   "id": "gcal-2026-11-08-10",
-   "date": "2026-11-08",
-   "title": "榮樹下訪談：趙敏玄",
-   "source": "Google日曆",
-   "start": "08:30",
-   "end": "09:30"
-  },
-  {
    "id": "gcal-2026-11-08-1",
    "date": "2026-11-08",
    "title": "榮樹下訪談：楊健一（真誠）",
@@ -1371,6 +1364,14 @@
    "source": "Google日曆",
    "start": "07:35",
    "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-14-30",
+   "date": "2026-11-14",
+   "title": "榮樹下訪談：趙敏玄",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   },
   {
    "id": "gcal-2026-11-15-35",
@@ -4210,7 +4211,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-08 16:28",
+ "updated_at": "2026-11-08 16:45",
  "tainan_synced_at": "2026-11-08 12:54",
  "evening_window": {
   "start": "19:00",
@@ -4254,8 +4255,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-08 16:28",
- "google_synced_epoch": 1794126491,
+ "google_synced_at": "2026-11-08 16:45",
+ "google_synced_epoch": 1794127513,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
