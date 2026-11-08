@@ -951,6 +951,9 @@ def main():
     up.add_argument("--booking-type")
     up.add_argument("--where")
     up.add_argument("--no-reminder", action="store_true", help="只改資料，不重排提醒")
+    up.add_argument("--date", help="改日期 YYYY-MM-DD")
+    up.add_argument("--start", help="改開始時間 HH:MM（要跟 --end 一起給）")
+    up.add_argument("--end", help="改結束時間 HH:MM（要跟 --start 一起給）")
     sub.add_parser("sync-tainan")
     sub.add_parser("sync-google")
     sub.add_parser("push-google")
@@ -1044,6 +1047,15 @@ def main():
             ev["booking_type"] = args.booking_type
         if args.where is not None:
             ev["where"] = args.where
+        if args.date is not None:
+            dt.date.fromisoformat(args.date)
+            ev["date"] = args.date
+        if args.start is not None or args.end is not None:
+            if not (args.start and args.end):
+                raise SystemExit("改時間要同時給 --start 與 --end")
+            hm(args.start), hm(args.end)
+            ev["start"], ev["end"] = args.start, args.end
+            ev.pop("allday", None)
         rem = ""
         if not args.no_reminder:
             rem = ensure_reminder(ev, force=True, events=data.get("events", [])) or ""
