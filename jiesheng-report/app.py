@@ -1,5 +1,5 @@
 """
-結繩領導學工作坊（台南／台中／台北）即時戰報。跑法：python app.py（預設 port 5061）
+結繩領導學工作坊（台南／台中／台北）即時戰報。跑法：python app.py（預設 port 5063；5061 是 peipei-event）
 純工作人員內部工具，不對外公開報名——資料全靠工作人員手動輸入。
 2026-08-27 教練要求改免登錄：「除了我們，不會有其他人看」，_logged_in() 已改成
 永遠回傳 True。登入頁/帳密機制程式碼保留不刪，若日後要重新上鎖，改回
@@ -188,4 +188,4 @@ def delete(reg_id):
 
 if __name__ == "__main__":
     db.init_db()
-    app.run(host="0.0.0.0", port=int(os.environ.get("JIESHENG_PORT", 5061)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("JIESHENG_PORT", 5063)))

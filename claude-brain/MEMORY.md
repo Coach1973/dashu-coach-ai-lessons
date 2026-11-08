@@ -1,3 +1,4 @@
+- [🔧 結繩戰報真正埠是 5063（5061 是 peipei-event，app.py 預設已改）；網頁加「最常點排行」＝照 worksmap:: 前綴抄 coach888 計次接口，要改 click-counts 排除清單(11/09)](reference_jiesheng_port_5063_and_click_rank_prefix_pattern_2026-11-09.md)
 - [🔧 大樹作品分類表 works-map：256 作品分 9 類、規則在 works_map_classify.py（快照要重跑）；preflight「對比1.98」常是 sticky 表頭太高(>110px)誤報(11/09)](reference_works_map_page_and_sticky_header_preflight_2026-11-09.md)
 - [🔴 叫教練登入／看畫面前要確保他看得到（open -a "Google Chrome"，外掛分頁他看不到）；EDM／封面照片人臉不可被日期牌或漸層蓋住、EDM 一定放圖、輸出 JPG/PDF(11/09)](feedback_show_coach_visible_chrome_and_check_faces_edm_2026-11-09.md)
 - [🔧 TAVA 報名頁表單常是假送出（只跳成功畫面）：上架後要建 events 列＋改 POST /api/register＋後端測試；run_img_list 檔名帶 images/ 已修(11/09 ai-image1202)](reference_tava_signup_form_is_mock_wire_to_api_register_2026-11-09.md)

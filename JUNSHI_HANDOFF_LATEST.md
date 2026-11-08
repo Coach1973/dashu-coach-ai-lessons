@@ -1,3 +1,12 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:49 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:29～03:49；對話容量約 15%；教練說「做完自動總結」）：結繩戰報兩項修改＋作品分類表收合與排行＋技法庫 R
+**做了什麼：**
+1. **結繩戰報**（rpl-workshop.bymyway.com/admin，程式在 `workspace/jiesheng-report`）：名單改成最新報名排前面；目標達成率與損益平衡都改以「已繳費」人數計算（台北已繳 19／目標 50＝38%，損益平衡 11 人已達成）；卡片字樣改「繳費目標／繳費損益平衡」。commit `63cf91dd7`、`6c605a9ec`，服務 com.coach.jiesheng-webapp 已重啟，公開網址查過內容。
+2. **大樹作品分類表**（event.bymyway.com/curated/works-map/）：每個分類加 ▼ 收合鈕＋全部收合／展開＋「🔥 我最常點的」前 10 名（沿用 coach888 的 /api/coach888/click 與 click-counts，網址前加 `worksmap::`，伺服器 click-counts 不帶 prefix 時排除，所以不擠掉大樹作品集排行）。網頁 repo works-map `f2e460c`，產頁程式與後端 `8fc506fc9`（`scripts/build_works_map.py`、`event-signup/app.py`，已重啟活動報名站）。目前 257 個作品；測試點擊已清空；手機 375 無橫捲。
+3. **課程推廣報名技能書**技法庫新增 R「分類收合＋最常點排行」（只用在課程、場次很多的總覽目錄頁，不放「作品回顧」＝17 個報名網頁清單）：repo course-signup-playbook `c2f7bd3`，線上確認，page_preflight 全過。
+**教訓：** 戰報真正埠是 5063（app.py 預設 5061 與 peipei-event 撞，README 也寫 5061）；公開網址帶中文要 URL 編碼否則回 400；截圖鎖擋住截圖，改用腳本量數字，畫面教練需自己看。
+**下一步：** ①教練看分類表（收合／排行）與技能書 R，有意見再改；②新作品進來分類表要重跑 `build_works_map.py`；③ai-image1202 教練看過再改、a-to-b 自檢紅燈、巴哈戰報時間（沿用上棒）。
+🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①找出條件反射「一律用 claude-in-chrome」的來源檔補上「教練要看的畫面用 open -a Google Chrome」；②健康檢查 ⚠️：com.coach.htc-video-server／htc-video-tunnel 兩個 plist 沒被守門員保護、`stash@{0}` auto-push-stash-20261108172102 沒放回（非本場造成，下一輪查 `safe_stash_restore.py`）；③分類表自動重產（要做先講成本）；④沿用上棒。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:37 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:11～03:37；對話容量約 25%；教練說「總」）：南應大榮譽欄補三位＋人才軍火庫換連結＋大樹作品分類表
 **做了什麼：**
 1. 南應大校友會招募頁（tut-membership）榮譽欄補滿四位：蔡筱薇（111-wei）、薛郁慧老師（1107-taiwna-tea/master.html，教練口述「玉慧」，頁面寫薛郁慧）、陳佩君（peipei1983，教練確認 11/01 這版才對）、原有林家旭；TAVA 出圖清單 3 張（IMG-001~003）用 run_img_list.py 出好換入；刻名字小功能滿格時自動長新格。commit 85c5c74，線上已確認。
@@ -6,41 +15,6 @@
 **教訓：** page_preflight「對比1.98」常是 sticky 表頭太高誤報（壓到約110px內即過），已寫記憶；截圖鎖擋掉截圖，改用瀏覽器量數字驗證。
 **下一步：** ①教練看分類表，哪個作品放錯類就改名單重跑；②可考慮讓分類表跟 all_works_refresh 事件連動自動重產（目前手動，要做先講成本）；③沿用上棒其餘項目（ai-image1202 看過再改、a-to-b 自檢紅燈等）。
 🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①分類表自動重產（見上）；②沿用上棒。
-
-## 🔴 11/09 凌晨 最新一棒（Mac 桌面版，Haiku→Sonnet 5.5；本場 02:45～03:10；教練說「總」）：ai-image1202 EDM 重做＋講師區＋技能書補坑
-**做了什麼：**
-1. ai-image1202 EDM 用 img-003（鏡子雙人像）重做成明亮象牙白版面，人臉不被蓋；直式、橫式各 JPG／webp，另有一份 PDF，電子郵件版換同圖（commit 749ecad，JPG 1a452de）。
-2. 網頁封面日期牌移出人臉（電腦移到身體區、手機排照片下方）；新增「認識今天的主講人」講師區，照 reemployment 的大樹教練卡複製（bb216fe）。
-3. 課程推廣報名網頁技能書：開工指令三版加 EDM 規則（41b8913、80abffe）；製作經驗加 5 個坑＋交付前檢查 4 項（70de9fa）。
-4. Cloudflare Cache Rule 查完：免費方案固定快取最短 2 小時、大檔本來就已被快取，不部署（596a0f788）。
-**教訓：** 交付前看「臉有沒有被蓋」；叫教練登入前先確認他看得到（外掛開的分頁他看不到，改用 `open -a "Google Chrome"`）。試金石案例156已寫。
-**下一步：** ①找出條件反射「一律用 claude-in-chrome」的來源檔，補上「教練要看的畫面用 open -a Google Chrome」（本場 workspace grep 沒找到）；②教練看過 EDM 與講師區後的修改；③沿用上棒其餘項目。
-🙋 要教練決定：無新增（音檔 m4a 要不要快取，教練沒提就不問）。 🤫 沿用上棒。 🔧 ①見上。
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 02:45 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 02:06～02:45；教練說「總結」）：event 網頁容量評估＋ai-image1202 活動網頁
-**做了什麼：**
-1. 回答「event.bymyway.com 網頁放哪」：全在這台 Mac（Flask 5060＋cloudflared 隧道；網頁檔在 `~/github_repos/`，148 個，內容 2.1GB、含 .git 與上傳包約 7.4GB）。報告 https://claude.ai/artifact/Hs8BdrByNCVgG1ev21rVMY（已更正兩處：重頁重在影片／下載檔、不是圖片；教練實測 Wi-Fi 上傳 218Mbps≈27MB/s，最壞情況 100 人同時約 22 秒），已收進大樹作品集。
-2. **ai-image1202（協會 12/02 講座）一氣呵成**：TAVA 10 張圖用 LK888 出好換入、地址「704臺南市北區元美里文賢三街31號」＋Google 地圖放進地點欄／地點與交通／FAQ／行事曆、events 建列 id=36、表單原本是假送出→改 POST /api/register（後端用假通知測過、測試資料已清、手機 375 無橫捲、字≥20px）。網頁 commit `dc4e07e`，線上 200、圖 image/webp。IMG-006 是 AI 示意場地圖，已加「AI 繪製示意」標示。
-3. `scripts/run_img_list.py` 修清單檔名帶 `images/` 子資料夾會存檔失敗（`493cdc0ab`）；新記憶 `reference_tava_signup_form_is_mock_wire_to_api_register_2026-11-09.md`。
-4. 其他：RustDesk「釋放」1313M→204M；tmux 彈窗＝remote-control 手機遠端連線，教練說允許。
-**卡住：** Cloudflare 快取規則沒設成——存的 token 只有 DNS 編輯（讀 cache rules 回 403）、Claude in Chrome 沒連上、內建瀏覽器開外部網站被反射擋。
-**教訓：** 教練前提（重頁是圖片）不對時先查實再回報，沒盲目壓縮；Stop hook 輪詢偵測對報告表格標題誤報兩次。
-
-### 📋 下一場開工先做
-1. ✅ Cloudflare Cache Rule（11/09 02:57 查完，沒有部署）：免費方案「固定快取時間」最短 2 小時，要更短得付費升級（點該欄位會跳升級方案視窗，沒買任何東西）；HTML 回 cache-control: no-cache 所以 DYNAMIC 不快取（檔案小）。大檔其實已被快取：mp4／pdf／圖 回 max-age=14400，第二次起 REVALIDATED。只有 m4a 等少數副檔名 DYNAMIC。結論：Cache Rule 幾乎沒額外效益，不用做；教練若要省音檔流量再另議。教練已登入 Cloudflare（bymyway7@gmail.com，帳號只有 bymyway.com 一個網域）。
-2. ai-image1202：教練看過再改；場地名稱未知（events 只填地址）；有實景照可換 IMG-006。
-3. （舊）a-to-b 自檢紅燈（A／B 圓點、按鈕對比）、巴哈戰報時間修改、日誌看安靜鎖／找工具鎖有沒有碰到。
-🙋 要教練決定：無新增。 🤫 等教練自己提起：重頁影片（muyija 85MB 等）要不要重壓縮（會改畫質）；沿用上棒。 🔧 AI 自己的清單：①Cache Rule（見上）；②TAVA 報名頁「假送出」可在上架流程加檢查；③沿用上棒。
-
-## 🔴 11/09 凌晨 最新一棒：課程推廣報名網頁技能書（Mac 桌面版，Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 22:41～02:05；教練說「總」）
-**做了什麼：**
-1. a-to-b 關卡地圖改成固定在最上方的 A→B 進度列（1～9 圓點隨捲動亮起、點了跳關、☰ 展開關卡名稱），commit 020f258（repo a-to-b）。
-2. 新做「課程推廣報名網頁｜開工指令與製作經驗」技能書：https://coach1973.github.io/course-signup-playbook/ （repo Coach1973/course-signup-playbook，最新 cec59bd）。整合出圖指令表（ai-go/biz-web-prompt.md）＋反向技能書 14 招＋17 個報名網頁；開工指令三版（完整／精簡／圖片回填），一次交付網頁＋prompts.html/images.json＋ZIP，最小字 20px，頁尾四連結，表單用 data-works-form；技法庫 A～Q 十七招各連到示範網站。
-3. 教練看完很滿意，只要求拿掉 17 張縮圖、改成「標題＋超連結」，已改並上線；自檢（page_preflight）全過。
-4. 已收進大樹作品集「大樹常用」第一項（coach888 commit 6e07c42，線上確認）。
-**教訓（沒寫新記憶）：** 縮圖用整頁截圖裁成固定比例，教練看了覺得左不左右不右，之後連結清單一律文字＋超連結，不放自動截圖縮圖。
-**下一步：** ①尚未拿這份指令端到端跑過一場新網頁，教練下次做新課程就是實測；②開場畫面「共 8 關」字樣未改（a-to-b 實際 9 關，教練沒回覆要不要改）；③技能書示範日期若要更新自己改。
-🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 沿用上棒。
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
