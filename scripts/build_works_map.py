@@ -39,14 +39,15 @@ page = f"""<!doctype html>
 <title>大樹作品分類表</title>
 <style>
 :root{{--bg:#F5F1E8;--ink:#1F2A24;--mut:#5A6359;--card:#fff;--line:#DDD5C3;--g:#2F5D46;--gold:#B98B2E}}
-*{{box-sizing:border-box}}html{{scroll-behavior:smooth;scroll-padding-top:190px}}
+*{{box-sizing:border-box}}html{{scroll-behavior:smooth;scroll-padding-top:100px}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:20px/1.7 "Noto Sans TC","PingFang TC",system-ui,sans-serif}}
-header{{position:sticky;top:0;z-index:10;background:#1F3A2D;color:#F7F1DF;padding:12px 16px;box-shadow:0 2px 10px rgba(0,0,0,.25)}}
-.hin{{max-width:1100px;margin:auto}}
+header{{position:sticky;top:0;z-index:10;background:#1F3A2D;color:#F7F1DF;padding:8px 16px;box-shadow:0 2px 10px rgba(0,0,0,.25)}}
+.hin{{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px}}
+@media(max-width:700px){{.hin{{flex-direction:column;align-items:stretch;gap:4px}}}}
 h1{{margin:0;font:900 28px/1.3 "Noto Serif TC",serif}}
-h1 small{{font:400 20px/1.4 sans-serif;color:#CFE0D4;margin-left:10px}}
-#q{{width:100%;margin-top:8px;font:20px sans-serif;padding:10px 16px;border-radius:12px;border:0}}
-nav{{display:flex;gap:8px;overflow-x:auto;padding:8px 0 2px;-webkit-overflow-scrolling:touch}}
+h1{{white-space:nowrap}}h1 small{{font:400 20px/1.4 sans-serif;color:#CFE0D4;margin-left:10px}}
+#q{{width:100%;font:20px sans-serif;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:#fff;margin-bottom:22px}}
+nav{{flex:1;min-width:0;display:flex;gap:8px;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch}}
 nav a{{flex:none;color:#F7F1DF;text-decoration:none;border:1px solid #567A67;border-radius:999px;padding:4px 14px;white-space:nowrap}}
 nav a b{{color:#E8C673}}nav a i{{font-style:normal;color:#E8C673;margin-left:4px}}
 main{{max-width:1100px;margin:auto;padding:24px 16px 60px}}
@@ -59,7 +60,7 @@ h2 small{{font:400 20px sans-serif;color:var(--mut)}}
 .d{{margin:4px 0 14px;color:var(--mut)}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}}
 .card{{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:inherit;text-decoration:none}}
-.card{{scroll-margin-top:190px}}
+.card{{scroll-margin-top:110px}}
 .card:hover{{border-color:var(--g);box-shadow:0 6px 18px -8px rgba(47,93,70,.5)}}
 .card .n{{display:block;font-weight:700;line-height:1.45;overflow-wrap:anywhere}}
 .card .m{{display:block;color:var(--mut);font-size:20px;overflow-wrap:anywhere}}
@@ -70,9 +71,9 @@ footer{{max-width:1100px;margin:0 auto;padding:0 16px 40px;color:var(--mut)}}
 footer a{{color:var(--g);margin-right:14px}}
 </style></head><body>
 <header><div class="hin"><h1>大樹作品分類表<small>共 {len(items)} 個</small></h1>
-<input id="q" type="search" placeholder="搜尋名字、網址代號（例：佩佩、tea、peipei）" aria-label="搜尋">
 <nav>{"".join(nav)}</nav></div></header>
 <main>
+<input id="q" type="search" placeholder="搜尋名字、網址代號（例：佩佩、tea、peipei）" aria-label="搜尋">
 <div class="lead"><p>每個作品只放在一個分類，點卡片就開啟網頁。黃色小標籤＝<b>只在 GitHub</b>（還沒放進作品庫）、<b>已下架</b>、<b>私有</b>。</p>
 <p>資料更新時間：{E(generated)}（來源：完整作品一覽）。</p></div>
 {"".join(secs)}
