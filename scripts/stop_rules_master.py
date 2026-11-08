@@ -482,6 +482,29 @@ if _last_idx is not None and len(_last_prompt) >= 15:
         BLOCK = True
 
 # ════════════════════════════════════════════════
+# A4. 收工口令（總／總結）這一輪沒有 commit hash＝沒收工（擋）—— 2026-11-08 教練糾正
+#   教練只打「總」，我反問「是要說總結嗎」。hook 其實有認出來，是我沒照做；
+#   源頭改成：口令句的最後一則回覆沒有 commit hash 就擋，逼它當場收工，不准反問。
+# ════════════════════════════════════════════════
+_SHUTDOWN_RE = re.compile(r"^[\s]*(總結|總)[\s。！!，,]*$|^總結[，,]|總結上傳|總結一下")
+if _last_idx is not None and _SHUTDOWN_RE.search(_last_prompt):
+    _sd_texts = []
+    for ev in EVENTS[_last_idx + 1:]:
+        if isinstance(ev, dict) and ev.get("type") == "assistant":
+            _sd_texts += [c.get("text", "") for c in _content_list(ev)
+                          if isinstance(c, dict) and c.get("type") == "text"]
+    _sd_all = "\n".join(_sd_texts)
+    if _sd_texts and not re.search(r"\b[0-9a-f]{7,40}\b", _sd_all):
+        path = log_violation("shutdown_cue_not_executed.log", "  • 教練：%s\n\n" % _last_prompt[:30])
+        MESSAGES.append(
+            "\n🚨 收工口令沒執行（執行細則 N9：聽到就直接做，不問「要不要」）\n" + BAR + "\n"
+            "教練說「%s」＝收工暗號，但這一輪回覆沒有 commit hash。請立刻：\n"
+            "  濃縮本場 300~500 字 → 更新接力棒 → 依 N8 判斷記憶 → commit + push 給 hash。\n"
+            "單字「總」「開」也是口令，不准反問「您是要說總結嗎」。\n"
+            "違規記錄已寫入：%s\n" % (_last_prompt[:10], path) + BAR + "\n")
+        BLOCK = True
+
+# ════════════════════════════════════════════════
 # B. 守則#05 完成聲明缺 commit hash（擋）—— 原 rule05_hash_check.sh
 # ════════════════════════════════════════════════
 B_PATTERNS = [
