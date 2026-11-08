@@ -315,9 +315,10 @@ def send_baha(msg):
 
 def cancel_reminder(ev):
     import subprocess
-    job = ev.pop("reminder_job", None)
-    if job and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
-        subprocess.run([*_oc(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
+    for key in ("reminder_job", "reminder_job_d1"):
+        job = ev.pop(key, None)
+        if job and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+            subprocess.run([*_oc(), "cron", "rm", job], capture_output=True, text=True, timeout=60)
 
 
 LINE_GROUP = "C2f85a1e6010c4be676b93c5386da3d66"  # LINE「榮樹下談公益」群組
@@ -348,8 +349,11 @@ def ensure_reminder(ev, force=False, events=None):
     if is_google_twin(ev, events):
         return None  # Google 日曆同步出來的鏡像：正本已經會提醒，這裡再排一次就是重複通知
     if ev.get("reminder_job") and not force:
+        ensure_d1_reminder(ev, force=force, events=events)
         return None
-    return schedule_reminder(ev)
+    r = schedule_reminder(ev)
+    ensure_d1_reminder(ev, force=force, events=events)
+    return r
 
 
 def schedule_reminder(ev):
@@ -372,6 +376,56 @@ def schedule_reminder(ev):
         return f"⚠️ 提醒沒排成功：{(r.stderr or r.stdout)[-200:]}"
     ev["reminder_job"] = m.group(1)
     return f"已排好 {at.strftime('%m/%d %H:%M')} 提醒（開始前 1 小時）"
+
+
+def schedule_d1_reminder(ev):
+    """前一天晚上 20:00 的提醒（2026-11-08 佩佩老師：今早 08:30 的 podcast 漏了，要前一天就提醒）。
+    一次性的，時間到了自動刪。"""
+    import subprocess
+    start = dt.datetime.fromisoformat(f"{ev['date']}T{ev['start']}:00+08:00")
+    at = start - dt.timedelta(days=1)
+    at = at.replace(hour=20, minute=0, second=0, microsecond=0)
+    if at <= dt.datetime.now(TZ) + dt.timedelta(minutes=2):
+        return "（前一天 20:00 已經過了，不排提醒）"
+    argv = ["/usr/bin/python3", "-I", os.path.abspath(__file__), "remind", "--id", ev["id"], "--day-before"]
+    cmd = [*_oc(), "cron", "add", "--name", f"榮樹下訪談前一天提醒 {ev['date']} {ev['start']}",
+           "--at", at.isoformat(timespec="seconds"), "--tz", "Asia/Taipei",
+           "--command-argv", json.dumps(argv), "--no-deliver", "--delete-after-run", "--json"]
+    if os.environ.get("COACH_SCHEDULE_DRYRUN"):
+        return f"（測試：會在 {at.strftime('%m/%d %H:%M')} 提醒）"
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    m = re.search(r'"id"\s*:\s*"([^"]+)"', r.stdout or "")
+    if r.returncode != 0 or not m:
+        return f"⚠️ 前一天提醒沒排成功：{(r.stderr or r.stdout)[-200:]}"
+    ev["reminder_job_d1"] = m.group(1)
+    return f"已排好 {at.strftime('%m/%d %H:%M')} 前一天提醒"
+
+
+def d1_needed(ev, events):
+    """要不要排「前一天晚上 20:00」提醒：訪談／採訪類行程，而且不是 Google 同步出來的鏡像。"""
+    if ev.get("allday") or ev.get("tentative"):
+        return False
+    t = str(ev.get("title", ""))
+    if not (ev.get("guest") or ev.get("kind") == "interview" or "訪談" in t or "採訪" in t):
+        return False
+    if ev.get("source") == "Google日曆" and any(
+            o.get("id") != ev.get("id") and o.get("source") != "Google日曆"
+            and o.get("date") == ev.get("date") and o.get("start") == ev.get("start")
+            and o.get("title") == ev.get("title") for o in events):
+        return False  # 鏡像列：不重複排
+    return True
+
+
+def ensure_d1_reminder(ev, force=False, events=None):
+    """已確定的未來訪談（含榮樹下 podcast）→ 補排前一天 20:00 提醒；已排過的不動。
+    2026-11-08 佩佩老師：今早 08:30 的 podcast 漏了，要前一天晚上就提醒。"""
+    if ev.get("allday") or ev.get("tentative"):
+        return None
+    if not d1_needed(ev, events or []):
+        return None
+    if ev.get("reminder_job_d1") and not force:
+        return None
+    return schedule_d1_reminder(ev)
 
 
 def booking_url():
@@ -468,6 +522,40 @@ def daily_report(data, d):
         lines.append("")
         lines.append("👉 要約教練：開預約頁，點時間，再選「咖啡會議／電話回訪／入會訪談」就送出（不用填資料）：")
         lines.append(url)
+    return "\n".join(lines)
+
+
+def tomorrow_report(data, d):
+    """前一天晚上的「明日行程」預告：時間、訪談對象、地點都列出，榮樹下訪談（podcast）特別標記，
+    最後附明天還能約的時段與預約頁。給佩佩老師跟教練提早知道明天要做什麼。"""
+    lines = [f"📆 明天（{day_label(d)}）教練行程"]
+    bs = blocks_on(d, data)
+    if not bs:
+        lines.append("・沒有排行程")
+    allday = False
+    for s_, e_, ev in bs:
+        when = "整天" if (s_, e_) == (0, 1440) else f"{fmt(s_)}–{fmt(e_)}"
+        if (s_, e_) == (0, 1440):
+            allday = True
+        title = str(ev.get("title", "")).replace("（待確認）", "").replace("（已確認）", "")
+        if ev.get("booking_type") or (ev.get("guest") and "訪談" not in title):
+            title = f"榮樹下訪談：{guest_text(ev)}" if guest_text(ev) else (ev.get("booking_type") or title)
+        mark = "🎙️ " if ("訪談" in title or ev.get("booking_type")) else ""
+        where = f"（{ev['where']}）" if ev.get("where") else ""
+        flag = "（待確認）" if ev.get("tentative") else ""
+        lines.append(f"・{when} {mark}{title}{where}{flag}")
+    if not allday:
+        try:
+            day_t, eve_t = day_and_eve_starts(d, data)
+            slots = sessions_text(day_t + eve_t)
+        except Exception:  # noqa: BLE001
+            slots = ""
+        if slots:
+            lines.append("")
+            lines.append(f"🟢 明天還可以約：{slots}")
+    url = booking_url()
+    if url:
+        lines.append(f"👉 要約教練：{url}")
     return "\n".join(lines)
 
 
@@ -873,18 +961,22 @@ def main():
     ef.add_argument("--days", type=int, default=60)
     rm_ = sub.add_parser("remind")
     rm_.add_argument("--id", required=True)
+    rm_.add_argument("--day-before", action="store_true", help="前一天晚上的提醒（講明天的訪談）")
     sub.add_parser("sync-reminders")
     so = sub.add_parser("soon")
     so.add_argument("--minutes", type=int, default=120)
     dr = sub.add_parser("daily-report")
     dr.add_argument("--date")
     dr.add_argument("--send", action="store_true")
+    tm = sub.add_parser("tomorrow-report")
+    tm.add_argument("--date")
+    tm.add_argument("--send", action="store_true")
     os_ = sub.add_parser("open-slots")
     os_.add_argument("--count", type=int, default=5)
     os_.add_argument("--days", type=int, default=0)  # 給了 --days 就改成逐天列出
     args = p.parse_args()
 
-    if args.cmd in ("add", "remove", "confirm", "set-guest", "check", "list", "soon", "rongshuxia", "daily-report",
+    if args.cmd in ("add", "remove", "confirm", "set-guest", "check", "list", "soon", "rongshuxia", "daily-report", "tomorrow-report",
                     "open-slots", "ensure-fresh") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
         ensure_fresh()
     data = load()
@@ -1036,12 +1128,23 @@ def main():
         if ev.get("tentative"):
             print("這場又變回待確認，不提醒")
             return
-        mins = (dt.datetime.fromisoformat(f"{ev['date']}T{ev['start']}:00+08:00") - dt.datetime.now(TZ)).total_seconds() / 60
-        if not (-5 <= mins <= 90) and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
-            print(f"行程時間已改（現在離開始還有 {int(mins)} 分鐘），這個提醒作廢")
-            return
+        if args.day_before:
+            tomorrow = dt.datetime.now(TZ).date() + dt.timedelta(days=1)
+            if ev["date"] != tomorrow.isoformat():
+                print("不是明天的訪談，這個前一天提醒作廢")
+                return
+        else:
+            mins = (dt.datetime.fromisoformat(f"{ev['date']}T{ev['start']}:00+08:00") - dt.datetime.now(TZ)).total_seconds() / 60
+            if not (-5 <= mins <= 90) and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+                print(f"行程時間已改（現在離開始還有 {int(mins)} 分鐘），這個提醒作廢")
+                return
         g = guest_text(ev)
-        text = f"⏰ 一個小時之後（{ev['start']}）即將有 Podcast 訪談" + (f"（訪談對象：{g}）" if g else "") + "，請提早做好準備，上線做準備。"
+        if args.day_before:
+            who = f"（訪談對象：{g}）" if g else ""
+            text = (f"📌 明天（{ev['date']}）{ev['start']}-{ev['end']} 有 Podcast 訪談{who}，"
+                    "請先確認上線時間與設備，別漏掉。")
+        else:
+            text = f"⏰ 一個小時之後（{ev['start']}）即將有 Podcast 訪談" + (f"（訪談對象：{g}）" if g else "") + "，請提早做好準備，上線做準備。"
         ok1, err1 = send_line_group(text)
         ok2, err2 = send_baha(text)
         l1 = "不推播（省額度）" if ok1 is None else ("✅" if ok1 else "⚠️ 失敗 " + err1)
@@ -1065,6 +1168,13 @@ def main():
             if r:
                 n += 1
                 print(f"{e['date']} {e['start']}：{r}")
+        # 2026-11-08：所有未來的訪談（含 podcast）都補排「前一天晚上 20:00」提醒
+        for e in data.get("events", []):
+            if e.get("date") and e["date"] > today().isoformat() and d1_needed(e, data.get("events", [])):
+                r = ensure_d1_reminder(e, events=data.get("events", []))
+                if r:
+                    n += 1
+                    print(f"{e['date']} {e.get('start','')}：{r}")
         save(data)
         print(f"✅ 補排了 {n} 個提醒")
     elif args.cmd == "daily-report":
@@ -1074,6 +1184,18 @@ def main():
             for e in rongshuxia_upcoming(data, 14):   # 順手補排漏掉的提醒
                 ensure_reminder(e, events=data.get("events", []))
             save(data)
+            ok, err = send_baha(msg)
+            print("✅ 已貼到巴哈助理群組" if ok else f"⚠️ 貼到巴哈助理群組失敗：{err}")
+        else:
+            print(msg)
+    elif args.cmd == "tomorrow-report":
+        d = dt.date.fromisoformat(args.date) if args.date else today() + dt.timedelta(days=1)
+        if not blocks_on(d, data):
+            # 明天沒有行程就不發訊息（2026-11-08 佩佩老師要「前一天提醒」，沒事別吵）
+            print(f"（{d.isoformat()} 沒有行程，不發提醒）")
+            return
+        msg = tomorrow_report(data, d)
+        if args.send:
             ok, err = send_baha(msg)
             print("✅ 已貼到巴哈助理群組" if ok else f"⚠️ 貼到巴哈助理群組失敗：{err}")
         else:
