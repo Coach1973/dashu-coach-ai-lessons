@@ -4,20 +4,20 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-09 03:40:58**
+> **最後同步：2026-11-09 03:50:01**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:37 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:11～03:37；對話容量約 25%；教練說「總」）：南應大榮譽欄補三位＋人才軍火庫換連結＋大樹作品分類表
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:49 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:29～03:49；對話容量約 15%；教練說「做完自動總結」）：結繩戰報兩項修改＋作品分類表收合與排行＋技法庫 R
 **做了什麼：**
-1. 南應大校友會招募頁（tut-membership）榮譽欄補滿四位：蔡筱薇（111-wei）、薛郁慧老師（1107-taiwna-tea/master.html，教練口述「玉慧」，頁面寫薛郁慧）、陳佩君（peipei1983，教練確認 11/01 這版才對）、原有林家旭；TAVA 出圖清單 3 張（IMG-001~003）用 run_img_list.py 出好換入；刻名字小功能滿格時自動長新格。commit 85c5c74，線上已確認。
-2. 人才軍火庫（skyteam）陳佩君連結 peipei → peipei1983（index.html＋roster.json），commit 3419857，線上已確認；preview-need*.html 草稿沒動。
-3. **大樹作品分類表** https://event.bymyway.com/curated/works-map/ ：256 個作品分 9 類（課程報名35／天團66／工具技能31／沒上架36／個人品牌頁14／店家13／協會公益8／故事漫畫教材23／內部備份30），已收進大樹作品集「大樹常用」。規則 `scripts/works_map_classify.py`、產頁 `scripts/build_works_map.py`（已由自動同步 commit 4bc914f2e）。是快照，新作品要重跑重傳。
-**教訓：** page_preflight「對比1.98」常是 sticky 表頭太高誤報（壓到約110px內即過），已寫記憶；截圖鎖擋掉截圖，改用瀏覽器量數字驗證。
-**下一步：** ①教練看分類表，哪個作品放錯類就改名單重跑；②可考慮讓分類表跟 all_works_refresh 事件連動自動重產（目前手動，要做先講成本）；③沿用上棒其餘項目（ai-image1202 看過再改、a-to-b 自檢紅燈等）。
-🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①分類表自動重產（見上）；②沿用上棒。
+1. **結繩戰報**（rpl-workshop.bymyway.com/admin，程式在 `workspace/jiesheng-report`）：名單改成最新報名排前面；目標達成率與損益平衡都改以「已繳費」人數計算（台北已繳 19／目標 50＝38%，損益平衡 11 人已達成）；卡片字樣改「繳費目標／繳費損益平衡」。commit `63cf91dd7`、`6c605a9ec`，服務 com.coach.jiesheng-webapp 已重啟，公開網址查過內容。
+2. **大樹作品分類表**（event.bymyway.com/curated/works-map/）：每個分類加 ▼ 收合鈕＋全部收合／展開＋「🔥 我最常點的」前 10 名（沿用 coach888 的 /api/coach888/click 與 click-counts，網址前加 `worksmap::`，伺服器 click-counts 不帶 prefix 時排除，所以不擠掉大樹作品集排行）。網頁 repo works-map `f2e460c`，產頁程式與後端 `8fc506fc9`（`scripts/build_works_map.py`、`event-signup/app.py`，已重啟活動報名站）。目前 257 個作品；測試點擊已清空；手機 375 無橫捲。
+3. **課程推廣報名技能書**技法庫新增 R「分類收合＋最常點排行」（只用在課程、場次很多的總覽目錄頁，不放「作品回顧」＝17 個報名網頁清單）：repo course-signup-playbook `c2f7bd3`，線上確認，page_preflight 全過。
+**教訓：** 戰報真正埠是 5063（app.py 預設 5061 與 peipei-event 撞，README 也寫 5061）；公開網址帶中文要 URL 編碼否則回 400；截圖鎖擋住截圖，改用腳本量數字，畫面教練需自己看。
+**下一步：** ①教練看分類表（收合／排行）與技能書 R，有意見再改；②新作品進來分類表要重跑 `build_works_map.py`；③ai-image1202 教練看過再改、a-to-b 自檢紅燈、巴哈戰報時間（沿用上棒）。
+🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①找出條件反射「一律用 claude-in-chrome」的來源檔補上「教練要看的畫面用 open -a Google Chrome」；②健康檢查 ⚠️：com.coach.htc-video-server／htc-video-tunnel 兩個 plist 沒被守門員保護、`stash@{0}` auto-push-stash-20261108172102 沒放回（非本場造成，下一輪查 `safe_stash_restore.py`）；③分類表自動重產（要做先講成本）；④沿用上棒。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
