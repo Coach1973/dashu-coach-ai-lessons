@@ -733,7 +733,7 @@
   },
   {
    "id": "3cd1a751",
-   "date": "2026-11-08",
+   "date": "2026-11-09",
    "title": "榮樹下訪談：葉家甄（真誠）",
    "source": "巴哈",
    "start": "22:40",
@@ -744,7 +744,8 @@
    "note": "真誠分會｜聯絡方式待補",
    "kind": "interview",
    "booking_type": "榮樹下訪談",
-   "reminder_job": "12c87db5-b4b5-4783-8e6c-ce0686ea2d3d"
+   "reminder_job": "1da8c72c-1ff1-41c8-b544-71c3df70d912",
+   "reminder_job_d1": "ff27fb97-27c6-482f-ad81-5baf433f2670"
   },
   {
    "id": "tainan-2026-02-11-0",
@@ -1150,14 +1151,6 @@
    "end": "22:30"
   },
   {
-   "id": "gcal-2026-11-08-4",
-   "date": "2026-11-08",
-   "title": "榮樹下訪談：葉家甄（真誠）",
-   "source": "Google日曆",
-   "start": "22:40",
-   "end": "23:40"
-  },
-  {
    "id": "gcal-2026-11-09-12",
    "date": "2026-11-09",
    "title": "線上學習",
@@ -1196,6 +1189,14 @@
    "source": "Google日曆",
    "start": "22:00",
    "end": "23:00"
+  },
+  {
+   "id": "gcal-2026-11-09-8",
+   "date": "2026-11-09",
+   "title": "榮樹下訪談：葉家甄（真誠）",
+   "source": "Google日曆",
+   "start": "22:40",
+   "end": "23:40"
   },
   {
    "id": "gcal-2026-11-10-18",
@@ -4211,7 +4212,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-08 16:45",
+ "updated_at": "2026-11-08 19:22",
  "tainan_synced_at": "2026-11-08 12:54",
  "evening_window": {
   "start": "19:00",
@@ -4255,8 +4256,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-08 16:45",
- "google_synced_epoch": 1794127513,
+ "google_synced_at": "2026-11-08 19:22",
+ "google_synced_epoch": 1794136946,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
