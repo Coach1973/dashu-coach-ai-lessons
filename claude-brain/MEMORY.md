@@ -1,3 +1,4 @@
+- [🔴 教練丟「今日備忘錄」＝他自己的待辦不是交辦；小龍蝦去查25分鐘→v1.13 備忘鎖＋卡住通知20分鐘冷卻(11/08)](reference_memo_list_not_tasks_memo_lock_v113_2026-11-08.md)
 - [🔴 教練講「N點」沒說早晚＝先查那件事原本幾點（DnA戰報週一22:00、RPL週五21:00）；個人線上學習vs團隊會議不算衝突、不再回報；11/08 我把DnA改成早上10:00還取消舊系列](feedback_schedule_clock_pm_and_online_learning_vs_team_meeting_2026-11-08.md)
 - [🔴 教練說「EDM」＝網頁上的 WebP 圖：素材找不到先看接力棒最新一棒的 github_repos/<slug>，不要全機亂翻再回頭問位置；「施正毅」是諧音（頁面是施正益）(11/07)](feedback_edm_means_web_page_images_look_in_latest_project_repo_2026-11-07.md)
 - [🔧 高價銷售課程已建於 bymyway.com（課程27448私人、13章77堂）：Tutor編輯器壞了改用 admin-ajax tutor_save_topic/lesson；影片走 htcvideo.bymyway.com 通道，Mac關機就播不出來(2026-11-06)](reference_bymyway_tutor_course_build_via_ajax_htc_video_tunnel_2026-11-06.md)
