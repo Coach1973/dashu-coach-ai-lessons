@@ -1,3 +1,18 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-08 13:35 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 11/07 12:20～11/08 13:35；教練說「總」）
+
+**三件事，都已 commit：**
+1. **手機連不上 Mac（11/07 12:2x）**：11/06 12:24 重開機後，開機自啟的 `restart_remote_control.sh` 撞到雲端舊記號「already served」就直接放棄，tmux 留空殼，手機整天只連雲端。手動重跑即通；腳本改 v5（撞到每 60 秒重試、最多 6 次），commit `2194e5cb0`。v5 重試沒在真重開機驗證過。
+2. **reemployment 教練照片換特寫（11/07 12:25）**：下載夾 `1775414250751(2).jpg` → 網頁 `img/coach.jpg`、EDM原始檔、兩張 EDM JPG 重渲染（要加 `--virtual-time-budget=15000` 等 Google 字型，否則字不出來），commit `3b9323c`，線上 content-type 驗過 image/jpeg。
+3. **巴哈（peipei）亂回報＋卡住重複（11/08）**：①11/06、11/07 19:00 RPL 戰報提醒排程的背景指令跑完，「Exec completed」通知叫醒私訊主對話，巴哈長篇解釋；②11/08 12:59 叫醒那輪沒有 exec 工具，找工具 18 分鐘，我 11/03 寫的 3 分鐘進度鎖每 3 分鐘逼它報進度→連發約 30 則；v1.11 叫醒鎖日誌 0 次觸發＝沒生效。**責任判斷：主因是我寫的規則，MiniMax 笨是次因。** 修法 commit `4ea325a73`：`tools.exec.notifyOnExit=false`＋safety-locks v1.12（一輪最多 3 則文字、找工具最多 5 次、進度鎖一輪只一次）。已重啟閘道、abort＋reset 巴哈私訊對話（歷史保留）。重啟會自動接續被中斷那輪，要先 abort。
+- 記憶：`reference_bots_quiet_no_exec_wake_v112_2026-11-08.md`。
+
+### 📋 下一場開工先做
+1. **巴哈沒做完的戰報時間修改**（教練 11/08 說 DnA＝週一 10:00、RPL 戰報＝週五 21:00）：行程總表＋Google 日曆新系列已寫好；**還沒做**：三個提醒改時間（DnA 週一 09:55、戰報會議週五 20:55、每日 19:00 戰報提醒→週五 21:00）、清舊 DnA 殘留系列 `i7s6juuaa9nic4jemi9s6og2lg`、sync-google＋逐日核對、時間衝突回報（11/9、11/16、11/13、11/20）。教練 13:15 說「先停止工作」，要不要由我接手做完，等教練回。
+2. 看日誌有沒有「🤐 安靜鎖觸發」「🔎 找工具鎖觸發」字樣，確認 v1.12 在真實對話有碰到。
+3. 等教練看 reemployment 網頁教練那一格（固定直立框、正方形照片兩側稍裁）臉大小是否合適；IMG-005 封面要不要重出、佩佩老師 LINE `lin.ee/vyFqWVB` 是否正確（舊待辦）。
+
+🙋 要教練決定：巴哈戰報提醒要不要我接手做完。 🤫 等教練自己提起：無新增。 🔧 AI 自己的清單：①巴哈每日 19:00 戰報提醒本身是 agentTurn（跑整輪 AI），應改成「直接送固定文字」的 command 型（v1.8 提醒排程鎖只擋部分建立路徑）；②v1.11 叫醒鎖偵測條件從未命中，notifyOnExit 關掉後可考慮刪。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-07 02:51 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Opus 5.5→Sonnet 5.5；本場 02:29～02:51；教練說「總」）
 
 **主軸：婦女再就業網頁 reemployment「EDM 下載」修正（四項全上線，commit `a6610c6`）。**
@@ -11,17 +26,6 @@
 2. 上一棒（02:30 那段）待辦照舊：IMG-005 專輯封面要不要重出、佩佩老師 LINE `lin.ee/vyFqWVB` 是否正確。
 
 🙋 要教練決定：無新增。 🤫 等教練自己提起：無新增。 🔧 AI 自己的清單：無新增（本場未留未完成項）。
-
-## 📦 前一棒（同日另一場）（2026-11-07 02:30 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5→Opus 5.5→Sonnet 5.5；本場 11/06 17:08～11/07 02:30；教練說「總」）
-
-**主軸：Amber 收尾（只刪大型備份）＋婦女再就業課程網頁 reemployment 出圖接圖改版。**
-- **Amber 收尾**：教練裁示「只刪大型備份檔，其餘（MyDocuments 549MB、媒體資源中心 405MB）復原留著」，已搬回原位、待刪區移除，Amber 已用 51G／467G、可用 416G，沒有待刪項目；時光機新備份待自動重建（約135G）。commit `1e6a84270`。過程中我誤報「剩51G」＋誤說時光機「查不出為何不見」（其實是另一對話框17:05經教練批准刪的），已寫記憶。
-- **TAVA 出圖**：`tava-ai.com/n2af7xksk3/prompts.html` 5 張 LK888 圖（原圖 `~/Pictures/TAVA_n2af7xksk3_出圖_20261107/`，清單 `reports/img_lists/tava_n2af7xksk3_…json`，commit `e94854675`）。`run_img_list.py` 已補上讀 JS `const items=[…]` 格式（網址直接可跑，dry-run 通過；commit 見本棒）。
-- **reemployment 網頁**（`github_repos/reemployment`，commit `ddeac32`，已上線 event.bymyway.com/curated/reemployment/）：接回 5 張圖（首頁／為什麼是你／DAY1／DAY2／專輯封面）、頂部洽詢列（佩佩老師 0988-004-118、LINE `lin.ee/vyFqWVB`）、頁尾 TAVA AI 製作連結；字級全頁 0 個 <20px（電腦＋手機實測）；報名場次代碼 `women-ip-ai-1230`（資料庫查無）改 `reemployment` 並在 event.db 建場次 id=35，測試模式驗證通知文字正確（**沒真送一筆到活動報名群**），測試資料已清。event.db 備份 `workspace/state/event.db.bak-20261107-reemployment`。**沒截圖（截圖鎖未獲教練同意），版面用量座標＋裁切預覽驗證。**
-
-### 📋 下一場開工先做
-1. 教練看過 reemployment 網頁後的回饋：IMG-005 專輯封面（寫實側臉）要不要重出、佩佩老師 LINE 是 `lin.ee/vyFqWVB` 對不對（它是連結不是 @ID）。
-2. 前一棒待辦照舊（見下一節）。
 
 ## 📋 現在真正待辦（狀態追蹤總表，2026-07-24建立；2026-09-24教練要求根源改版）
 
