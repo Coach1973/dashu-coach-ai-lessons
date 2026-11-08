@@ -941,6 +941,16 @@ def main():
     l.add_argument("--private", action="store_true")
     cf = sub.add_parser("confirm")
     cf.add_argument("--id", required=True)
+    up = sub.add_parser("update")
+    up.add_argument("--id", required=True, help="行程總表 id")
+    up.add_argument("--title")
+    up.add_argument("--guest", help="訪談對象")
+    up.add_argument("--guest-field", help="訪談對象後面的括號（分會／產業）；給空字串＝清掉")
+    up.add_argument("--note")
+    up.add_argument("--kind", choices=["busy", "interview"])
+    up.add_argument("--booking-type")
+    up.add_argument("--where")
+    up.add_argument("--no-reminder", action="store_true", help="只改資料，不重排提醒")
     sub.add_parser("sync-tainan")
     sub.add_parser("sync-google")
     sub.add_parser("push-google")
@@ -977,7 +987,7 @@ def main():
     args = p.parse_args()
 
     if args.cmd in ("add", "remove", "confirm", "set-guest", "check", "list", "soon", "rongshuxia", "daily-report", "tomorrow-report",
-                    "open-slots", "ensure-fresh") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
+                    "open-slots", "ensure-fresh", "update") and not os.environ.get("COACH_SCHEDULE_DRYRUN"):
         ensure_fresh()
     data = load()
     if args.cmd == "add":
@@ -1009,6 +1019,46 @@ def main():
         print(check(data, dt.date.fromisoformat(args.date)))
         if args.notify_baha:
             notify_baha(ev)
+    elif args.cmd == "update":
+        ev = next((e for e in data.get("events", []) if e.get("id") == args.id), None)
+        if ev is None:
+            raise SystemExit(f"找不到 id={args.id} 的行程")
+        if args.title is not None:
+            ev["title"] = clean_title(args.title)
+        if args.guest is not None:
+            ev["guest"] = re.sub(r"\s+", " ", args.guest).strip()[:40]
+        if args.guest_field is not None:
+            fld = re.sub(r"\s+", " ", args.guest_field).strip()[:30]
+            if fld:
+                ev["guest_field"] = fld
+            else:
+                ev.pop("guest_field", None)
+        if args.note is not None:
+            ev["note"] = args.note
+        if args.kind is not None:
+            if args.kind == "interview":
+                ev["kind"] = "interview"
+            else:
+                ev.pop("kind", None)
+        if args.booking_type is not None:
+            ev["booking_type"] = args.booking_type
+        if args.where is not None:
+            ev["where"] = args.where
+        rem = ""
+        if not args.no_reminder:
+            rem = ensure_reminder(ev, force=True, events=data.get("events", [])) or ""
+            if not is_rongshuxia(ev):
+                rem = ensure_d1_reminder(ev, force=True, events=data.get("events", [])) or rem
+        save(data)
+        d = dt.date.fromisoformat(ev["date"])
+        print(f"✅ 已更新 id={ev['id']}：{d} {ev.get('start', '')}-{ev.get('end', '')} {ev['title']}")
+        print(f"   訪談對象：{guest_text(ev) or '（未填）'}")
+        if ev.get("note"):
+            print(f"   備註：{ev['note']}")
+        print(f"   Google 顯示名稱：{google_summary(ev)}")
+        if rem:
+            print(f"⏰ {rem}")
+        print(check(data, d))
     elif args.cmd == "add-weekly":
         rv = {"id": uuid.uuid4().hex[:8], "weekday": args.weekday, "start": args.start, "end": args.end,
               "title": clean_title(args.title), "source": args.source}
@@ -1230,7 +1280,7 @@ def main():
 def main_then_push():
     """巴哈助理／LINE 小龍蝦用 add／remove／confirm／set-guest 改了總表，當下就寫回教練 Google 日曆（失敗不影響原本動作，15 分鐘的同步會補）。"""
     main()
-    if len(sys.argv) > 1 and sys.argv[1] in ("add", "remove", "confirm", "set-guest") and not os.environ.get("COACH_SCHEDULE_DRYRUN") \
+    if len(sys.argv) > 1 and sys.argv[1] in ("add", "remove", "confirm", "set-guest", "update") and not os.environ.get("COACH_SCHEDULE_DRYRUN") \
             and not os.environ.get("COACH_SCHEDULE_NO_PUSH") and DATA.endswith("教練行程總表.json"):
         try:
             import fcntl
