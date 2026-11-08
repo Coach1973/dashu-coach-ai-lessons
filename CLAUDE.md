@@ -4,26 +4,20 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-09 03:15:45**
+> **最後同步：2026-11-09 03:40:58**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 02:45 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 02:06～02:45；教練說「總結」）：event 網頁容量評估＋ai-image1202 活動網頁
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:37 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:11～03:37；對話容量約 25%；教練說「總」）：南應大榮譽欄補三位＋人才軍火庫換連結＋大樹作品分類表
 **做了什麼：**
-1. 回答「event.bymyway.com 網頁放哪」：全在這台 Mac（Flask 5060＋cloudflared 隧道；網頁檔在 `~/github_repos/`，148 個，內容 2.1GB、含 .git 與上傳包約 7.4GB）。報告 https://claude.ai/artifact/Hs8BdrByNCVgG1ev21rVMY（已更正兩處：重頁重在影片／下載檔、不是圖片；教練實測 Wi-Fi 上傳 218Mbps≈27MB/s，最壞情況 100 人同時約 22 秒），已收進大樹作品集。
-2. **ai-image1202（協會 12/02 講座）一氣呵成**：TAVA 10 張圖用 LK888 出好換入、地址「704臺南市北區元美里文賢三街31號」＋Google 地圖放進地點欄／地點與交通／FAQ／行事曆、events 建列 id=36、表單原本是假送出→改 POST /api/register（後端用假通知測過、測試資料已清、手機 375 無橫捲、字≥20px）。網頁 commit `dc4e07e`，線上 200、圖 image/webp。IMG-006 是 AI 示意場地圖，已加「AI 繪製示意」標示。
-3. `scripts/run_img_list.py` 修清單檔名帶 `images/` 子資料夾會存檔失敗（`493cdc0ab`）；新記憶 `reference_tava_signup_form_is_mock_wire_to_api_register_2026-11-09.md`。
-4. 其他：RustDesk「釋放」1313M→204M；tmux 彈窗＝remote-control 手機遠端連線，教練說允許。
-**卡住：** Cloudflare 快取規則沒設成——存的 token 只有 DNS 編輯（讀 cache rules 回 403）、Claude in Chrome 沒連上、內建瀏覽器開外部網站被反射擋。
-**教訓：** 教練前提（重頁是圖片）不對時先查實再回報，沒盲目壓縮；Stop hook 輪詢偵測對報告表格標題誤報兩次。
-
-### 📋 下一場開工先做
-1. ✅ Cloudflare Cache Rule（11/09 02:57 查完，沒有部署）：免費方案「固定快取時間」最短 2 小時，要更短得付費升級（點該欄位會跳升級方案視窗，沒買任何東西）；HTML 回 cache-control: no-cache 所以 DYNAMIC 不快取（檔案小）。大檔其實已被快取：mp4／pdf／圖 回 max-age=14400，第二次起 REVALIDATED。只有 m4a 等少數副檔名 DYNAMIC。結論：Cache Rule 幾乎沒額外效益，不用做；教練若要省音檔流量再另議。教練已登入 Cloudflare（bymyway7@gmail.com，帳號只有 bymyway.com 一個網域）。
-2. ai-image1202：教練看過再改；場地名稱未知（events 只填地址）；有實景照可換 IMG-006。
-3. （舊）a-to-b 自檢紅燈（A／B 圓點、按鈕對比）、巴哈戰報時間修改、日誌看安靜鎖／找工具鎖有沒有碰到。
-🙋 要教練決定：無新增。 🤫 等教練自己提起：重頁影片（muyija 85MB 等）要不要重壓縮（會改畫質）；沿用上棒。 🔧 AI 自己的清單：①Cache Rule（見上）；②TAVA 報名頁「假送出」可在上架流程加檢查；③沿用上棒。
+1. 南應大校友會招募頁（tut-membership）榮譽欄補滿四位：蔡筱薇（111-wei）、薛郁慧老師（1107-taiwna-tea/master.html，教練口述「玉慧」，頁面寫薛郁慧）、陳佩君（peipei1983，教練確認 11/01 這版才對）、原有林家旭；TAVA 出圖清單 3 張（IMG-001~003）用 run_img_list.py 出好換入；刻名字小功能滿格時自動長新格。commit 85c5c74，線上已確認。
+2. 人才軍火庫（skyteam）陳佩君連結 peipei → peipei1983（index.html＋roster.json），commit 3419857，線上已確認；preview-need*.html 草稿沒動。
+3. **大樹作品分類表** https://event.bymyway.com/curated/works-map/ ：256 個作品分 9 類（課程報名35／天團66／工具技能31／沒上架36／個人品牌頁14／店家13／協會公益8／故事漫畫教材23／內部備份30），已收進大樹作品集「大樹常用」。規則 `scripts/works_map_classify.py`、產頁 `scripts/build_works_map.py`（已由自動同步 commit 4bc914f2e）。是快照，新作品要重跑重傳。
+**教訓：** page_preflight「對比1.98」常是 sticky 表頭太高誤報（壓到約110px內即過），已寫記憶；截圖鎖擋掉截圖，改用瀏覽器量數字驗證。
+**下一步：** ①教練看分類表，哪個作品放錯類就改名單重跑；②可考慮讓分類表跟 all_works_refresh 事件連動自動重產（目前手動，要做先講成本）；③沿用上棒其餘項目（ai-image1202 看過再改、a-to-b 自檢紅燈等）。
+🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①分類表自動重產（見上）；②沿用上棒。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
