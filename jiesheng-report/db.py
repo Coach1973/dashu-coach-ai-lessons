@@ -31,7 +31,7 @@ def init_db() -> None:
 
 def list_registrants(conn: sqlite3.Connection, workshop: str):
     return conn.execute(
-        "SELECT * FROM registrants WHERE workshop = ? ORDER BY register_date ASC, created_at ASC",
+        "SELECT * FROM registrants WHERE workshop = ? ORDER BY register_date DESC, created_at DESC",
         (workshop,),
     ).fetchall()
 

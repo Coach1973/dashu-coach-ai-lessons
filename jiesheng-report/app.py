@@ -81,8 +81,9 @@ def admin():
     conn.close()
 
     countdown_days = {w: _countdown_days(WORKSHOP_DATES[w]) for w in ACTIVE_WORKSHOPS}
+    # 目標達成率以「已繳費」人數計算（2026-11-09 教練要求，不再以報名人數計）
     percent = {
-        w: round(stats[w]["total"] / WORKSHOP_TARGETS[w] * 100) if WORKSHOP_TARGETS[w] else 0
+        w: round(stats[w]["paid"] / WORKSHOP_TARGETS[w] * 100) if WORKSHOP_TARGETS[w] else 0
         for w in ACTIVE_WORKSHOPS
     }
     breakeven_reached = {w: stats[w]["total"] >= WORKSHOP_BREAKEVEN[w] for w in ACTIVE_WORKSHOPS}
