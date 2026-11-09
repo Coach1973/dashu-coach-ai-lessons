@@ -1,3 +1,4 @@
+- [🔴 教練給出圖清單網址／說「把照片接入網頁」＝直接用 LK888 出圖，不准問要不要花點數（11/09 教練嫌不專業）](feedback_img_list_lk888_no_ask_routine_authorized_2026-11-09.md)
 - [🔧 結繩戰報真正埠是 5063（5061 是 peipei-event，app.py 預設已改）；網頁加「最常點排行」＝照 worksmap:: 前綴抄 coach888 計次接口，要改 click-counts 排除清單(11/09)](reference_jiesheng_port_5063_and_click_rank_prefix_pattern_2026-11-09.md)
 - [🔧 大樹作品分類表 works-map：256 作品分 9 類、規則在 works_map_classify.py（快照要重跑）；preflight「對比1.98」常是 sticky 表頭太高(>110px)誤報(11/09)](reference_works_map_page_and_sticky_header_preflight_2026-11-09.md)
 - [🔴 叫教練登入／看畫面前要確保他看得到（open -a "Google Chrome"，外掛分頁他看不到）；EDM／封面照片人臉不可被日期牌或漸層蓋住、EDM 一定放圖、輸出 JPG/PDF(11/09)](feedback_show_coach_visible_chrome_and_check_faces_edm_2026-11-09.md)
