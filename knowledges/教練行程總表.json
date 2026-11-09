@@ -690,7 +690,8 @@
    "kind": "interview",
    "booking_type": "榮樹下訪談",
    "reminder_job": "ebf18d4d-9de2-4238-b9cf-062a7c5d1f04",
-   "reminder_job_d1": "b4253d69-9664-4a08-9e00-d8d9433fecca"
+   "reminder_job_d1": "b4253d69-9664-4a08-9e00-d8d9433fecca",
+   "form_token": "xkSxfLVZ0IV_"
   },
   {
    "id": "37dc8c4c",
@@ -743,7 +744,8 @@
    "kind": "interview",
    "booking_type": "榮樹下訪談",
    "reminder_job": "1da8c72c-1ff1-41c8-b544-71c3df70d912",
-   "reminder_job_d1": "ff27fb97-27c6-482f-ad81-5baf433f2670"
+   "reminder_job_d1": "ff27fb97-27c6-482f-ad81-5baf433f2670",
+   "form_token": "njXJvlG2lLQR"
   },
   {
    "id": "tainan-2026-02-11-0",
@@ -1091,7 +1093,8 @@
    "guest": "王鈺",
    "guest_field": "真AI",
    "booking_type": "榮樹下訪談",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "form_token": "jMTn4jR5GTQH"
   },
   {
    "id": "ab0f0115",
@@ -1106,7 +1109,8 @@
    "reminder_job_d1": "f023efcf-0b1d-4f76-98cf-372b704425a9",
    "guest": "如新蘇董",
    "booking_type": "榮樹下訪談",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "form_token": "WrvhcKizrNUO"
   },
   {
    "id": "2855f155",
@@ -1122,7 +1126,8 @@
    "guest": "朱志成",
    "guest_field": "真AI",
    "booking_type": "榮樹下訪談",
-   "covered_by_google": true
+   "covered_by_google": true,
+   "form_token": "u3LbFTpAxkes"
   },
   {
    "id": "gcal-2026-11-09-12",
@@ -4194,7 +4199,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-09 07:00",
+ "updated_at": "2026-11-09 10:59",
  "tainan_synced_at": "2026-11-08 12:54",
  "evening_window": {
   "start": "19:00",
