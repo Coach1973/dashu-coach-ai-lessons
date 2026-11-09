@@ -107,9 +107,16 @@ def plan_edits(paths, request, w, h):
     req = urllib.request.Request(prov["baseUrl"].rstrip("/") + "/v1/messages", data=json.dumps(body).encode(),
                                  headers={"content-type": "application/json", "anthropic-version": "2023-06-01",
                                           "authorization": "Bearer " + prov["apiKey"], "user-agent": "curl/8.7.1"})
-    d = json.loads(urllib.request.urlopen(req, timeout=120).read())
-    text = "".join(c.get("text", "") for c in d.get("content", []) if c.get("type") == "text")
-    m = re.search(r"\{.*\}", text, re.S)
+    # 回覆偶爾沒有 JSON（案例147：m 是 None → AttributeError，直接退回整張重畫），重問一次，再沒有就講清楚它回了什麼
+    for attempt in (1, 2):
+        d = json.loads(urllib.request.urlopen(req, timeout=120).read())
+        text = "".join(c.get("text", "") for c in d.get("content", []) if c.get("type") == "text")
+        m = re.search(r"\{.*\}", text, re.S)
+        if m:
+            break
+        print(f"  工單回覆沒有 JSON（第 {attempt} 次，stop_reason={d.get('stop_reason')}）", flush=True)
+    else:
+        raise ValueError(f"工單回覆沒有 JSON，stop_reason={d.get('stop_reason')}，回覆開頭：{text[:80]!r}")
     edits = json.loads(m.group(0))["edits"]
     out = []
     for e in edits:
