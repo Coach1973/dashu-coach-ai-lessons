@@ -4,20 +4,19 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-09 03:50:01**
+> **最後同步：2026-11-09 12:05:04**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 03:49 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 03:29～03:49；對話容量約 15%；教練說「做完自動總結」）：結繩戰報兩項修改＋作品分類表收合與排行＋技法庫 R
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-09 12:03 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku→Sonnet 5.5；本場 08:46～12:03；對話容量約 18%；教練說「總」）：人才軍火庫前48位調整＋說故事入會訪談網頁七張圖接入
 **做了什麼：**
-1. **結繩戰報**（rpl-workshop.bymyway.com/admin，程式在 `workspace/jiesheng-report`）：名單改成最新報名排前面；目標達成率與損益平衡都改以「已繳費」人數計算（台北已繳 19／目標 50＝38%，損益平衡 11 人已達成）；卡片字樣改「繳費目標／繳費損益平衡」。commit `63cf91dd7`、`6c605a9ec`，服務 com.coach.jiesheng-webapp 已重啟，公開網址查過內容。
-2. **大樹作品分類表**（event.bymyway.com/curated/works-map/）：每個分類加 ▼ 收合鈕＋全部收合／展開＋「🔥 我最常點的」前 10 名（沿用 coach888 的 /api/coach888/click 與 click-counts，網址前加 `worksmap::`，伺服器 click-counts 不帶 prefix 時排除，所以不擠掉大樹作品集排行）。網頁 repo works-map `f2e460c`，產頁程式與後端 `8fc506fc9`（`scripts/build_works_map.py`、`event-signup/app.py`，已重啟活動報名站）。目前 257 個作品；測試點擊已清空；手機 375 無橫捲。
-3. **課程推廣報名技能書**技法庫新增 R「分類收合＋最常點排行」（只用在課程、場次很多的總覽目錄頁，不放「作品回顧」＝17 個報名網頁清單）：repo course-signup-playbook `c2f7bd3`，線上確認，page_preflight 全過。
-**教訓：** 戰報真正埠是 5063（app.py 預設 5061 與 peipei-event 撞，README 也寫 5061）；公開網址帶中文要 URL 編碼否則回 400；截圖鎖擋住截圖，改用腳本量數字，畫面教練需自己看。
-**下一步：** ①教練看分類表（收合／排行）與技能書 R，有意見再改；②新作品進來分類表要重跑 `build_works_map.py`；③ai-image1202 教練看過再改、a-to-b 自檢紅燈、巴哈戰報時間（沿用上棒）。
-🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 ①找出條件反射「一律用 claude-in-chrome」的來源檔補上「教練要看的畫面用 open -a Google Chrome」；②健康檢查 ⚠️：com.coach.htc-video-server／htc-video-tunnel 兩個 plist 沒被守門員保護、`stash@{0}` auto-push-stash-20261108172102 沒放回（非本場造成，下一輪查 `safe_stash_restore.py`）；③分類表自動重產（要做先講成本）；④沿用上棒。
+1. **人才軍火庫**（event.bymyway.com/curated/skyteam/）：施正益、羅爵、江睿翔老師移出顧問師前48位，改放「人脈資源團隊」（現第156～158位）；大樹教練、凌榆舜、張騰文原位補進前48（原位替換，其他人順序不動）。邀請函 roster 已重產。repo skyteam `5ecec51`，線上讀回確認。教練當時提的「師資團隊」新分類沒做，選了他的第一個選項。
+2. **說故事入會訪談**（event.bymyway.com/curated/bni-story/，repo bni-story）：教練從 TAVA 上傳網頁後，圖位都是「示意圖」線稿；我用 `run_img_list.py` 以 LK888 出 7 張真圖（IMG-005 清單標「實景修飾」但參考照片欄是「無」，所以改當概念圖出），逐張看過、換進 `images/`，`d08628a`＋`e2434ab`，線上 7 張皆 200／image/webp、大小對上。IMG-006 逾時兩次、第三次才成功；IMG-007 OCR 報疑似有字，看圖確認是金色紋理誤報。
+**教訓（教練當場糾正兩件）：** ①出圖清單用 LK888 是例行授權，我先問「要不要花點數」被罵不專業，已寫記憶 `feedback_img_list_lk888_no_ask_routine_authorized_2026-11-09.md`；stop hook「花錢要問」是指超出例行的新花費。②出圖跑了 10 分鐘沒中途回報，教練連問兩次——長任務（超過 2 分鐘）要先講「現在做什麼、約多久」，每 3～5 分鐘補一次進度，不能等全部做完。
+**下一步：** 教練看 bni-story 七張圖，哪張要重出告訴編號；skyteam 若要獨立「師資團隊」分類再改。
+🙋 要教練決定：無新增。 🤫 沿用上棒。 🔧 沿用上棒（含「一律用 claude-in-chrome」反射補 open -a Google Chrome、htc plist 守門員、stash@{0} 放回）；另：長任務中途回報目前只靠記得，應做成機制（例如 run_img_list.py 每張完成就通知教練）——下一輪評估。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
