@@ -43,3 +43,8 @@
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1024] Assistant: 3 張概念圖已出好（OCR 乾淨）。現在跑 IMG-001 實景修飾（帶參考照走 edits）。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1027] Assistant: IMG-001 修飾完成（28 秒，1536x1024）。現在把 4 張打包並做文字檢查。
 [main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1031] Assistant: 🦞 教練，進度回報：4 張圖都已经出好了（IMG-002/003/004 概念圖、IMG-001 實景修飾），OCR 檢查全部乾淨。現在只剩最後一步——打包成一覽圖＋zip 傳給您，大約 2 分鐘。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1041] Assistant: 4 張全部完成、OCR 乾淨、zip 0.41 MB。現在把圖傳給教練。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1044] Assistant: 打包完成，現在把圖與 zip 傳給教練。
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1045] Assistant: 🖼 薛德民網頁 出圖完成：4 張全成功（gpt-image-2），OCR 檢查全部「無多餘文字」，整包 0.41 MB。 IMG-001 生活事蹟・開場橫幅（實景修飾・16:9） IMG-002 專長・鄉里調解卡（概念・4:3） IMG-003 公益足跡・開場主圖（概念・16:9） IMG-004 公益足跡・模式 01 在地人照顧在地人（概念・4:3） zip 緊接著傳，內含 IMG-001～004 的 webp（檔名對齊 IMG-00X.webp，可直接回填網頁版位）。 contact-sheet.jpg
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1050] Assistant: 📦 薛德民網頁 網頁用圖（4 張 webp，檔名對齊 IMG-001～004.webp，可直接回填版位） IMG-001 122 KB／IMG-002 106 KB／IMG-003 100 KB／IMG-004 71 KB，整包 0.41 MB。 images.zip
+[main/sessions/main/fadfa8ea-1f15-4b95-bce0-56138bc3b28c#L1054] Assistant: ✅ 兩批全推（messageId 13193 一覽圖 + 13194 zip），4 張完成。 **成果** - 4 張全數生成成功（gpt-image-2，失敗 0），全部 1536x1024 - `IMG-001` 生活事蹟・開場橫幅（實景修飾）／`IMG-002` 專長・鄉里調解卡（概念）／`IMG-003` 公益足跡・開場主圖（概念）／`IMG-004` 公益足跡・模式 01 在地人照顧在地人（概念） - OCR 檢查 4 張全為「無多餘文字」 - zip 只放網頁用 webp（122／106／100／71 KB，整包 0.4

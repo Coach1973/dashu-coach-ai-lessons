@@ -737,7 +737,6 @@
    "source": "巴哈",
    "start": "22:40",
    "end": "23:40",
-   "covered_by_google": true,
    "guest": "葉家甄",
    "guest_field": "真誠",
    "note": "真誠分會｜聯絡方式待補",
@@ -746,6 +745,76 @@
    "reminder_job": "1da8c72c-1ff1-41c8-b544-71c3df70d912",
    "reminder_job_d1": "ff27fb97-27c6-482f-ad81-5baf433f2670",
    "form_token": "njXJvlG2lLQR"
+  },
+  {
+   "id": "b2518597",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：王鈺（真AI）",
+   "source": "巴哈",
+   "start": "11:45",
+   "end": "12:45",
+   "note": "真AI（籌備會）｜姓名、电话、公司待補",
+   "kind": "interview",
+   "reminder_job": "d9625b74-c86d-4a13-b0e4-701e250dfc1e",
+   "reminder_job_d1": "38933e60-6711-459a-8766-99cd757fd0c3",
+   "guest": "王鈺",
+   "guest_field": "真AI",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true,
+   "form_token": "jMTn4jR5GTQH"
+  },
+  {
+   "id": "ab0f0115",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：如新蘇董",
+   "source": "巴哈",
+   "start": "13:00",
+   "end": "14:00",
+   "note": "美商如新（股）公司 董事長｜姓名、手機待補",
+   "kind": "interview",
+   "reminder_job": "2be9292c-fd93-4884-a1b0-e62fccc5b2d6",
+   "reminder_job_d1": "f023efcf-0b1d-4f76-98cf-372b704425a9",
+   "guest": "如新蘇董",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true,
+   "form_token": "WrvhcKizrNUO"
+  },
+  {
+   "id": "2855f155",
+   "date": "2026-11-10",
+   "title": "榮樹下訪談：朱志成（真AI）",
+   "source": "巴哈",
+   "start": "15:00",
+   "end": "16:00",
+   "note": "真AI｜講師｜輔導做連鎖加盟（沿用 6 月咖啡會議記錄）",
+   "kind": "interview",
+   "reminder_job": "57b327a1-b3cd-4770-b73f-34ff47f03048",
+   "reminder_job_d1": "7b715010-3809-47d7-8646-31e1b5e5b7a7",
+   "guest": "朱志成",
+   "guest_field": "真AI",
+   "booking_type": "榮樹下訪談",
+   "covered_by_google": true,
+   "form_token": "u3LbFTpAxkes"
+  },
+  {
+   "id": "02d78791",
+   "date": "2026-11-10",
+   "title": "黃姿璇",
+   "source": "巴哈",
+   "start": "21:00",
+   "end": "21:30",
+   "note": "30分鐘｜形式待確認（電話回訪／訪談）",
+   "covered_by_google": true
+  },
+  {
+   "id": "72e89466",
+   "date": "2026-11-11",
+   "title": "和東吳校友",
+   "source": "巴哈",
+   "start": "17:10",
+   "end": "18:10",
+   "note": "東吳校友｜單位、形式、地點待補",
+   "covered_by_google": true
   },
   {
    "id": "tainan-2026-02-11-0",
@@ -1006,8 +1075,7 @@
    "end": "12:00",
    "title": "MSP",
    "where": "ZOOM線上",
-   "source": "大台南行事曆",
-   "covered_by_google": true
+   "source": "大台南行事曆"
   },
   {
    "id": "tainan-2026-11-11-29",
@@ -1080,102 +1148,35 @@
    "covered_by_google": true
   },
   {
-   "id": "b2518597",
-   "date": "2026-11-10",
-   "title": "榮樹下訪談：王鈺（真AI）",
+   "id": "9119d014",
+   "date": "2026-11-13",
+   "title": "孫林",
    "source": "巴哈",
-   "start": "11:45",
-   "end": "12:45",
-   "note": "真AI（籌備會）｜姓名、电话、公司待補",
-   "kind": "interview",
-   "reminder_job": "d9625b74-c86d-4a13-b0e4-701e250dfc1e",
-   "reminder_job_d1": "38933e60-6711-459a-8766-99cd757fd0c3",
-   "guest": "王鈺",
-   "guest_field": "真AI",
-   "booking_type": "榮樹下訪談",
-   "covered_by_google": true,
-   "form_token": "jMTn4jR5GTQH"
+   "start": "10:00",
+   "end": "11:00",
+   "note": "暫定｜形式待確認（電話回訪／訪談）",
+   "tentative": true,
+   "covered_by_google": true
   },
   {
-   "id": "ab0f0115",
-   "date": "2026-11-10",
-   "title": "榮樹下訪談：如新蘇董",
+   "id": "4baf2a77",
+   "date": "2026-11-14",
+   "title": "余瑞銘聊",
    "source": "巴哈",
-   "start": "13:00",
-   "end": "14:00",
-   "note": "美商如新（股）公司 董事長｜姓名、手機待補",
-   "kind": "interview",
-   "reminder_job": "2be9292c-fd93-4884-a1b0-e62fccc5b2d6",
-   "reminder_job_d1": "f023efcf-0b1d-4f76-98cf-372b704425a9",
-   "guest": "如新蘇董",
-   "booking_type": "榮樹下訪談",
-   "covered_by_google": true,
-   "form_token": "WrvhcKizrNUO"
+   "start": "19:30",
+   "end": "20:00",
+   "note": "形式待確認（電話／面談）｜需 1 小時的話 21:30–22:30 那格也還空著",
+   "covered_by_google": true
   },
   {
-   "id": "2855f155",
+   "id": "8a65e689",
    "date": "2026-11-10",
-   "title": "榮樹下訪談：朱志成（真AI）",
+   "title": "與朱元中會議",
    "source": "巴哈",
-   "start": "15:00",
-   "end": "16:00",
-   "note": "真AI｜講師｜輔導做連鎖加盟（沿用 6 月咖啡會議記錄）",
-   "kind": "interview",
-   "reminder_job": "57b327a1-b3cd-4770-b73f-34ff47f03048",
-   "reminder_job_d1": "7b715010-3809-47d7-8646-31e1b5e5b7a7",
-   "guest": "朱志成",
-   "guest_field": "真AI",
-   "booking_type": "榮樹下訪談",
-   "covered_by_google": true,
-   "form_token": "u3LbFTpAxkes"
-  },
-  {
-   "id": "gcal-2026-11-09-12",
-   "date": "2026-11-09",
-   "title": "線上學習",
-   "source": "Google日曆",
-   "start": "07:35",
-   "end": "08:35"
-  },
-  {
-   "id": "gcal-2026-11-09-13",
-   "date": "2026-11-09",
-   "title": "MSP",
-   "source": "Google日曆",
-   "start": "09:00",
-   "end": "12:00"
-  },
-  {
-   "id": "gcal-2026-11-09-14",
-   "date": "2026-11-09",
-   "title": "分享會",
-   "source": "Google日曆",
-   "start": "17:30",
-   "end": "19:00"
-  },
-  {
-   "id": "gcal-2026-11-09-15",
-   "date": "2026-11-09",
-   "title": "董事諮詢會議",
-   "source": "Google日曆",
-   "start": "21:00",
-   "end": "22:00"
-  },
-  {
-   "id": "gcal-2026-11-09-9",
-   "date": "2026-11-09",
-   "title": "啟動分會DnA週報",
-   "source": "Google日曆",
-   "start": "22:00",
-   "end": "23:00"
-  },
-  {
-   "id": "gcal-2026-11-09-8",
-   "date": "2026-11-09",
-   "title": "榮樹下訪談：葉家甄（真誠）",
-   "source": "Google日曆",
-   "start": "22:40",
-   "end": "23:40"
+   "start": "16:00",
+   "end": "17:00",
+   "note": "地點待補",
+   "covered_by_google": true
   },
   {
    "id": "gcal-2026-11-10-18",
@@ -1218,12 +1219,28 @@
    "end": "16:00"
   },
   {
+   "id": "gcal-2026-11-10-5",
+   "date": "2026-11-10",
+   "title": "與朱元中會議",
+   "source": "Google日曆",
+   "start": "16:00",
+   "end": "17:00"
+  },
+  {
    "id": "gcal-2026-11-10-20",
    "date": "2026-11-10",
    "title": "接受江宜倫的採訪（上級）",
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
+  },
+  {
+   "id": "gcal-2026-11-10-12",
+   "date": "2026-11-10",
+   "title": "黃姿璇",
+   "source": "Google日曆",
+   "start": "21:00",
+   "end": "21:30"
   },
   {
    "id": "gcal-2026-11-10-21",
@@ -1256,6 +1273,14 @@
    "source": "Google日曆",
    "start": "14:00",
    "end": "17:00"
+  },
+  {
+   "id": "gcal-2026-11-11-17",
+   "date": "2026-11-11",
+   "title": "和東吳校友",
+   "source": "Google日曆",
+   "start": "17:10",
+   "end": "18:10"
   },
   {
    "id": "gcal-2026-11-11-25",
@@ -1314,6 +1339,14 @@
    "end": "10:00"
   },
   {
+   "id": "gcal-2026-11-13-25",
+   "date": "2026-11-13",
+   "title": "孫林（待確認）",
+   "source": "Google日曆",
+   "start": "10:00",
+   "end": "11:00"
+  },
+  {
    "id": "gcal-2026-11-13-32",
    "date": "2026-11-13",
    "title": "RPL",
@@ -1344,6 +1377,14 @@
    "source": "Google日曆",
    "start": "07:35",
    "end": "08:35"
+  },
+  {
+   "id": "gcal-2026-11-14-30",
+   "date": "2026-11-14",
+   "title": "余瑞銘聊",
+   "source": "Google日曆",
+   "start": "19:30",
+   "end": "20:00"
   },
   {
    "id": "gcal-2026-11-14-30",
@@ -3571,6 +3612,22 @@
    "source": "Google日曆",
    "start": "06:00",
    "end": "10:00"
+  },
+  {
+   "id": "gcal-2027-03-10-305",
+   "date": "2027-03-10",
+   "title": "咖啡會議：M",
+   "source": "Google日曆",
+   "start": "13:30",
+   "end": "14:30"
+  },
+  {
+   "id": "gcal-2027-03-10-306",
+   "date": "2027-03-10",
+   "title": "團隊週會",
+   "source": "Google日曆",
+   "start": "20:00",
+   "end": "21:00"
   }
  ],
  "recurring": [
@@ -3595,7 +3652,6 @@
    "since": "2026-10-12",
    "until": "2026-12-28",
    "gskip": [
-    "2026-11-09",
     "2026-11-16",
     "2026-11-23",
     "2026-11-30",
@@ -3626,7 +3682,6 @@
    "since": "2026-10-12",
    "until": "2026-12-28",
    "gskip": [
-    "2026-11-09",
     "2026-11-16",
     "2026-11-23",
     "2026-11-30",
@@ -3657,7 +3712,6 @@
    "since": "2026-10-12",
    "until": "2026-12-28",
    "gskip": [
-    "2026-11-09",
     "2026-11-16",
     "2026-11-23",
     "2026-11-30",
@@ -3756,7 +3810,8 @@
     "2027-02-10",
     "2027-02-17",
     "2027-02-24",
-    "2027-03-03"
+    "2027-03-03",
+    "2027-03-10"
    ],
    "星期": "每週三"
   },
@@ -4154,7 +4209,8 @@
     "2027-02-10",
     "2027-02-17",
     "2027-02-24",
-    "2027-03-03"
+    "2027-03-03",
+    "2027-03-10"
    ]
   },
   {
@@ -4188,7 +4244,6 @@
    "until": "2026-12-28",
    "星期": "每週一",
    "gskip": [
-    "2026-11-09",
     "2026-11-16",
     "2026-11-23",
     "2026-11-30",
@@ -4199,8 +4254,8 @@
    ]
   }
  ],
- "updated_at": "2026-11-09 10:59",
- "tainan_synced_at": "2026-11-08 12:54",
+ "updated_at": "2026-11-10 07:00",
+ "tainan_synced_at": "2026-11-09 14:50",
  "evening_window": {
   "start": "19:00",
   "end": "23:00"
@@ -4243,8 +4298,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-09 07:00",
- "google_synced_epoch": 1794178800,
+ "google_synced_at": "2026-11-10 07:00",
+ "google_synced_epoch": 1794265201,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }
