@@ -1066,19 +1066,6 @@
    ]
   },
   {
-   "id": "R-CLAUDE-RC-UNSET",
-   "moment": "pre_tool",
-   "tool": "Bash",
-   "match": "(?s)(unset|env\\s+-u)\\s+ANTHROPIC_(BASE_URL|API_KEY|AUTH_TOKEN).*claude\\s+(rc|remote-control)|claude\\s+(rc|remote-control).*(unset|env\\s+-u)\\s+ANTHROPIC_",
-   "say": "啟動 claude rc 不要 unset ANTHROPIC_* 變數（會觸發硬性檢查噴錯）；完全不動它們，路由問題去 ~/.claude/settings.json 的 env 區塊修。",
-   "level": "remind",
-   "situation": "要啟動 Remote Control（claude rc）時",
-   "source": "feedback_claude_rc_never_unset_base_url_2026-09-19.md",
-   "audience": [
-    "coach"
-   ]
-  },
-  {
    "id": "R-SENDBEACON-CORS",
    "moment": "pre_tool",
    "tool": "Edit|Write",

@@ -8,7 +8,7 @@
   junshi_inbox.py done                全部標為已處理（處理完才跑）
   junshi_inbox.py stale <小時>        有超過 N 小時沒處理的就印數量（沒有就不印）
 """
-import hashlib, json, sys, time
+import hashlib, json, re, sys, time
 from pathlib import Path
 
 WS = Path(__file__).resolve().parent.parent
@@ -39,6 +39,13 @@ def main():
         h = hashlib.sha1((src + msg).encode()).hexdigest()[:12]
         now = time.time()
         if any(e.get("h") == h and now - e.get("ts", 0) < 6 * 3600 for e in _load()):
+            return
+        # 2026-11-10 賈維斯體檢：匣子 6 天堆到 31 件，多半是「全員正常」「已自動重啟／補好」這種
+        # 不用任何人處理的報平安，害開工時沒人清、還推「小事放了兩天」給教練。
+        # 沒有紅黃燈的報平安直接記進已處理，不進匣子。
+        if not re.search(r"🔴|🟡|⚠️|失敗|沒有|沒備份|卡住|鬼打牆", msg) and re.search(r"全員正常|已自動重啟|已自動補好", msg):
+            with DONE.open("a", encoding="utf-8") as f:
+                f.write(json.dumps({"ts": now, "t": time.strftime("%m-%d %H:%M"), "src": src, "h": h, "msg": msg, "auto": "info_only"}, ensure_ascii=False) + "\n")
             return
         with BOX.open("a", encoding="utf-8") as f:
             f.write(json.dumps({"ts": now, "t": time.strftime("%m-%d %H:%M"), "src": src, "h": h, "msg": msg}, ensure_ascii=False) + "\n")

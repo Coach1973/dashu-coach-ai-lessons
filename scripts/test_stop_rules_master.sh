@@ -138,7 +138,7 @@ for i in range(n_tools):
                   'message':{'role':'user','content':[
                       {'type':'tool_result','tool_use_id':f'toolu_{i}','content':f'step{i} ok'}]}})
 lines.append({'type':'assistant','timestamp':'2026-08-27T00:00:99.000Z',
-              'message':{'content':[{'type':'text','text': final_text}]}})
+              'message':{'content':[{'type':'text','text': final_text + '\n您要做什麼：沒有，不用做'}]}})  # 2026-11-10：F3 回報格式鎖上線後補
 with open(path, 'w') as f:
     for l in lines:
         f.write(json.dumps(l, ensure_ascii=False) + '\n')
@@ -181,7 +181,7 @@ with open(path, 'w') as f:
     f.write(json.dumps({'type':'assistant','timestamp':'2026-09-06T00:00:01.000Z',
                         'message':{'content':[{'type':'tool_use','name':'Bash','input':{'command':cmd}}]}})+'\n')
     f.write(json.dumps({'type':'assistant','timestamp':'2026-09-06T00:00:05.000Z',
-                        'message':{'content':[{'type':'text','text':'已推送，commit abc1234 完成。'}]}})+'\n')
+                        'message':{'content':[{'type':'text','text':'已推送，commit abc1234 完成。\n您要做什麼：沒有，不用做'}]}})+'\n')
 PY
   echo "$f"
 }
@@ -200,6 +200,16 @@ run_case_direct "規則L2-已收錄的策展一鍵注入不應擋" \
 run_case_direct "規則L2-無關commit不應誤判" \
   "$(mk_gitcommit l2_unrelated 'git commit -q -m "修好一個bug"')" \
   0
+
+echo "════ 🔴 2026-11-10 賈維斯體檢：今天真實誤擋的兩句（時間鎖、輪詢偵測） ════"
+run_case_direct "時間鎖-昨晚口語寫法不應擋" "$(mk tz_zuowan '查到紀錄 2026-11-09T12:55:00Z，也就是昨晚 8:55 那次提醒沒發出去。
+您要做什麼：沒有，不用做')" 0
+run_case_direct "時間鎖-對照組沒換算應擋" "$(mk tz_raw '查到紀錄 2026-11-09T12:55:00Z，12:55 那次提醒沒發出去。
+您要做什麼：沒有，不用做')" 1
+run_case_direct "規則D-不是定時檢查不應擋" "$(mk poll_neg '啟動腳本外面包了一圈，連線一結束，20 秒後自動重新連。這不是定時檢查，是結束當下就重啟。
+您要做什麼：沒有，不用做')" 0
+run_case_direct "規則D-對照組定時檢查應擋" "$(mk poll_pos '我把它設計成定時檢查連線狀態，斷了就重開。
+您要做什麼：沒有，不用做')" 1
 
 echo "════ 🔴 2026-10-06 迴歸測試：規則D不掃「維護偵測器本身」的工具輸入（回測腳本／規則原始碼） ════"
 run_case_direct "規則D-維護偵測器的回測腳本不應擋" \
