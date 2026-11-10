@@ -165,7 +165,10 @@ for evt in reversed(EVENTS):
                 _tool_texts = [inp.get("content", "") or "", inp.get("new_string", "") or ""]
             elif name == "Bash":
                 _tool_texts = [inp.get("command", "") or ""]
-            if any(_DETECTOR_WORK.search(t) for t in _tool_texts):
+            # 2026-11-10：用 Edit 改偵測器本身時，new_string 可能只有白名單片段、沒有上面那些名字，也要整段不掃
+            if any(_DETECTOR_WORK.search(t) for t in _tool_texts) \
+                    or _DETECTOR_WORK.search(inp.get("file_path", "") or "") \
+                    or "test_stop_rules_master" in (inp.get("file_path", "") or ""):
                 continue
             _segments.extend(_tool_texts)
 TURN_TEXT = "\n".join(reversed(_segments))
