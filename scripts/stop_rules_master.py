@@ -786,13 +786,19 @@ try:
                     and not _prompt_text(_e).lstrip().startswith(("Stop hook feedback", "<system-reminder")):
                 _f3_turn_start = _i
         _f3_tools = 0
+        _f3_wrapped = False
         for _e in EVENTS[_f3_turn_start:]:
             if isinstance(_e, dict) and _e.get("type") == "assistant":
                 for _x in _content_list(_e):
                     if isinstance(_x, dict) and _x.get("type") == "tool_use" \
                             and not E2_BOOKKEEPING.search(_x.get("name", "")):
                         _f3_tools += 1
-        if _f3_tools > 0 and not F3_MARK.search(LAST_TEXT):
+                    # 2026-11-10 賈維斯體檢（教練核准）：這一輪已呼叫 wrap_up，桌面版下一步框就是
+                    # 「結論＋您要做什麼」（有 ask＝要教練做的事，沒有 ask＝沒有，不用做），不必在文字再擋一次
+                    if isinstance(_x, dict) and _x.get("type") == "tool_use" \
+                            and _x.get("name", "") == "mcp__ccd_turn__wrap_up":
+                        _f3_wrapped = True
+        if _f3_tools > 0 and not _f3_wrapped and not F3_MARK.search(LAST_TEXT):
             _f3_body = "  • 這一輪做了 %d 次工具操作，回覆末尾沒有「您要做什麼：」那一行\n" % _f3_tools
             _f3_path = log_violation("rule_report_format_violations.log", "[F3 擋下]\n" + _f3_body)
             MESSAGES.append(

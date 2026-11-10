@@ -201,6 +201,23 @@ run_case_direct "規則L2-無關commit不應誤判" \
   "$(mk_gitcommit l2_unrelated 'git commit -q -m "修好一個bug"')" \
   0
 
+mk_wrapup() {  # mk_wrapup <檔名> <有沒有呼叫 wrap_up：1/0>  ——一輪有做事、結尾文字沒有「您要做什麼」
+  local f="$FIXDIR/$1.jsonl"
+  python3 - "$f" "$2" <<'PY'
+import json, sys
+path, wrapped = sys.argv[1], sys.argv[2] == "1"
+ev = [{'type':'user','timestamp':'2026-11-10T00:00:00.000Z','message':{'role':'user','content':'幫我看一下'}},
+      {'type':'assistant','timestamp':'2026-11-10T00:00:01.000Z','message':{'content':[{'type':'tool_use','name':'Bash','input':{'command':'echo hi'}}]}},
+      {'type':'user','timestamp':'2026-11-10T00:00:02.000Z','message':{'role':'user','content':[{'type':'tool_result','tool_use_id':'t0','content':'hi'}]}}]
+if wrapped:
+    ev.append({'type':'assistant','timestamp':'2026-11-10T00:00:03.000Z','message':{'content':[{'type':'tool_use','name':'mcp__ccd_turn__wrap_up','input':{'recap':'做完了。'}}]}})
+ev.append({'type':'assistant','timestamp':'2026-11-10T00:00:04.000Z','message':{'content':[{'type':'text','text':'查完了，沒有問題。'}]}})
+open(path,'w').write("\n".join(json.dumps(e, ensure_ascii=False) for e in ev) + "\n")
+PY
+  echo "$f"
+}
+run_case_direct "回報格式-有做事沒wrap_up沒收尾應擋" "$(mk_wrapup f3_nowrap 0)" 1
+run_case_direct "回報格式-有呼叫wrap_up不應擋" "$(mk_wrapup f3_wrap 1)" 0
 echo "════ 🔴 2026-11-10 賈維斯體檢：今天真實誤擋的兩句（時間鎖、輪詢偵測） ════"
 run_case_direct "時間鎖-昨晚口語寫法不應擋" "$(mk tz_zuowan '查到紀錄 2026-11-09T12:55:00Z，也就是昨晚 8:55 那次提醒沒發出去。
 您要做什麼：沒有，不用做')" 0

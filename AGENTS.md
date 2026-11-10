@@ -165,36 +165,11 @@ In group chats where you receive every message, be **smart about when to contrib
 
 Participate, don't dominate.
 
-### 😊 React Like a Human!
-
-On platforms that support reactions (Discord, Slack), use emoji reactions naturally:
-
-**React when:**
-
-- You appreciate something but don't need to reply (👍, ❤️, 🙌)
-- Something made you laugh (😂, 💀)
-- You find it interesting or thought-provoking (🤔, 💡)
-- You want to acknowledge without interrupting the flow
-- It's a simple yes/no or approval situation (✅, 👀)
-
-**Why it matters:**
-Reactions are lightweight social signals. Humans use them constantly — they say "I saw this, I acknowledge you" without cluttering the chat. You should too.
-
-**Don't overdo it:** One reaction per message max. Pick the one that fits best.
-
 ## Tools
 
 ### Local notes
 
 Skills define how tools work. Keep environment-specific local notes in this section.
-
-**🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
-
-**📝 Platform Formatting:**
-
-- **Discord/WhatsApp:** No markdown tables! Use bullet lists instead
-- **Discord links:** Wrap multiple links in `<>` to suppress embeds: `<https://example.com>`
-- **WhatsApp:** No headers — use **bold** or CAPS for emphasis
 
 ### Local notes (migrated from TOOLS.md)
 
@@ -294,43 +269,6 @@ $CLI cron add \
 ### 📋 報名人數／報名名單（2026-10-14，10/13 臨時 awk 把「4人以上」算成 1 人）
 教練問「X 日報名人數」「列出報名同行的人」→ 一律跑 `python3 ~/.openclaw/workspace/scripts/registration_report.py <日期或場次，例如 1017>`，整段輸出直接回給教練（含「含同行至少 N 人」與完整名單）。不准自己用 awk／sqlite 臨時算。總覽：不帶參數。
 
-## What Goes Here
-
-Things like:
-
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
-
-## Examples
-
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
-
 ---
 
 ## 🚀 軍師任務橋——讓小龍蝦呼叫軍師執行任務（2026-06-13 教練親定）
@@ -417,65 +355,11 @@ When you receive a heartbeat poll (message matches the configured heartbeat prom
 
 You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it small to limit token burn.
 
-### Heartbeat vs Cron: When to Use Each
+### Heartbeat 簡述（英文全文已搬到 knowledges/小龍蝦AGENTS搬出的英文範本_2026-11-10.md，需要才讀）
 
-**Use heartbeat when:**
-
-- Multiple checks can batch together (inbox + calendar + notifications in one turn)
-- You need conversational context from recent messages
-- Timing can drift slightly (every ~30 min is fine, not exact)
-- You want to reduce API calls by combining periodic checks
-
-**Use cron when:**
-
-- Exact timing matters ("9:00 AM sharp every Monday")
-- Task needs isolation from main session history
-- You want a different model or thinking level for the task
-- One-shot reminders ("remind me in 20 minutes")
-- Output should deliver directly to a channel without main session involvement
-
-**Tip:** Batch similar periodic checks into `HEARTBEAT.md` instead of creating multiple cron jobs. Use cron for precise schedules and standalone tasks.
-
-**Things to check (rotate through these, 2-4 times per day):**
-
-- **Emails** - Any urgent unread messages?
-- **Calendar** - Upcoming events in next 24-48h?
-- **Mentions** - Twitter/social notifications?
-- **Weather** - Relevant if your human might go out?
-
-**Track your checks** in `memory/heartbeat-state.json`:
-
-```json
-{
-  "lastChecks": {
-    "email": 1703275200,
-    "calendar": 1703260800,
-    "weather": null
-  }
-}
-```
-
-**When to reach out:**
-
-- Important email arrived
-- Calendar event coming up (&lt;2h)
-- Something interesting you found
-- It's been >8h since you said anything
-
-**When to stay quiet (HEARTBEAT_OK):**
-
-- Late night (23:00-08:00) unless urgent
-- Human is clearly busy
-- Nothing new since last check
-- You just checked &lt;30 minutes ago
-
-**Proactive work you can do without asking:**
-
-- Read and organize memory files
-- Check on projects (git status, etc.)
-- Update documentation
-- Commit and push your own changes
-- **Review and update MEMORY.md** (see below)
+- 心跳沒事回 `HEARTBEAT_OK`；深夜 23:00-08:00 非緊急不打擾；30 分鐘內剛查過不重查。
+- 可以批次合併的檢查放 `HEARTBEAT.md`；要精準時間、要獨立對話的才用 cron。
+- 檢查紀錄寫 `memory/heartbeat-state.json`。
 
 ### 🔄 Memory Maintenance (During Heartbeats)
 

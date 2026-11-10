@@ -46,8 +46,33 @@ target_content = target.read_text(encoding="utf-8")
 source_content = source.read_text(encoding="utf-8")
 stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+# 2026-11-10 賈維斯體檢（教練核准）：常駐版只放規則本文，機制/案例/歷史對照留在 執行細則.md 全文
+DROP_PREFIX = ("撐住它的機制", "案例：", "違反代價")
+
+def condense(src: str) -> str:
+    """把執行細則.md 機械式瘦身成常駐版：規則本文一字不動，只拿掉『撐住它的機制』『案例』『違反代價』三種說明行
+    與文末『新舊對照』歷史表（那些是出處與歷史，不是規則）。要看機制與案例，Read 執行細則.md 全文。"""
+    cut = src.find("## 新舊對照")
+    if cut != -1:
+        src = src[:cut].rstrip() + "\n"
+    out = []
+    for line in src.split("\n"):
+        if line.startswith(DROP_PREFIX):
+            continue
+        out.append(line)
+    text = "\n".join(out)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    note = "> 常駐瘦身版：規則本文一字不動；各條的「撐住它的機制／案例」與新舊對照已省略，要看就 Read `~/.openclaw/workspace/執行細則.md` 全文。\n"
+    # 插在第一個 --- 之前的標題區之後
+    m = re.search(r"\n---\n", text)
+    if m:
+        text = text[:m.start()] + "\n" + note + text[m.start():]
+    return text.rstrip() + "\n"
+
+source_content = condense(source_content)
+
 new_block = f"""{start_mark}
-> 本區段由 `scripts/sync_zhixingxize_to_claude_global.sh` 自動鏡像 `workspace/執行細則.md` 全文（教練欽定唯一正式版）。
+> 本區段由 `scripts/sync_zhixingxize_to_claude_global.sh` 自動鏡像 `workspace/執行細則.md`（教練欽定唯一正式版；常駐瘦身版，規則本文一字不動）。
 > **最後同步：{stamp}**
 > 不再手動維護此區段內容——要改規則，改 `執行細則.md`，這裡會自動跟上。
 
