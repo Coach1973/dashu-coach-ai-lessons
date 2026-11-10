@@ -4595,5 +4595,89 @@
   ],
   "photo_alt": "高雄青年攤車品牌輔導計畫學員合影",
   "caption": "高雄青年攤車品牌輔導計畫學員合影"
+ },
+ {
+  "slug": "salina-hong",
+  "name": "洪繡巒老師 Salina Hong",
+  "role": "歐遊女王・國際管理與禮儀專家",
+  "illustration": false,
+  "url": "https://event.bymyway.com/curated/salina-hong/",
+  "anchor": "#good",
+  "lede": "免費講座、文創義賣、蔬食環保與民間外交——洪老師把自己最會的事，變成能分享出去的善意。",
+  "stats": [
+   [
+    "300 個",
+    "「福祥靈貓」文創背包，部分義賣收入贊助公益（2021）"
+   ],
+   [
+    "3 座",
+    "公共圖書館講座：新北市圖、高雄市圖岡山講堂、國資圖"
+   ],
+   [
+    "65 道",
+    "《淨蔬禪食》純素食譜，減少碳足跡的餐桌實踐"
+   ]
+  ],
+  "items": [
+   {
+    "yr": "2012",
+    "title": "純青社會福利基金會「美好人生」免費講座",
+    "desc": "1 月 7 日於台北主講，開放大眾免費報名。",
+    "src": "出處：PTT 講座公告",
+    "href": "https://www.ptt.cc/bbs/Refresh/M.1324533325.A.EC1.html"
+   },
+   {
+    "yr": "2013 前後",
+    "title": "新北市立圖書館「樂活健康」講座",
+    "desc": "主講「吃飽才會瘦」，分享以管理觀念健康減重 20 公斤的方法。",
+    "src": "出處：優活健康網",
+    "href": "https://www.uho.com.tw/article-28159.html"
+   },
+   {
+    "yr": "2018",
+    "title": "高雄市立圖書館岡山講堂",
+    "desc": "1 月 20 日主講「一開口就說對話」，全程影音公開。",
+    "src": "出處：高雄市立圖書館隨選影音",
+    "href": "https://www.youtube.com/watch?v=OhZgwb2WFnk"
+   },
+   {
+    "yr": "2019",
+    "title": "台灣與奧地利友誼和平之夜",
+    "desc": "與奧地利米其林主廚合作，以台奧料理交流做民間外交。",
+    "src": "出處：中時新聞網",
+    "href": "https://www.chinatimes.com/realtimenews/20191015003965-263005"
+   },
+   {
+    "yr": "2021",
+    "title": "「福祥靈貓」背包義賣支持 1919",
+    "desc": "300 個背包，義賣收入部分贊助「1919 單車勇士環台募款公益活動」。",
+    "src": "出處：PeoPo 公民新聞",
+    "href": "https://www.peopo.org/news/560297"
+   },
+   {
+    "yr": "2023",
+    "title": "《淨蔬禪食》蔬食環保",
+    "desc": "選用在地當令蔬果，減少碳足跡；中外讀者皆可閱讀的心靈食譜。",
+    "src": "出處：夢想誌專訪",
+    "href": "https://www.twdreamlife.com/%E3%80%8A%E6%B7%A8%E8%94%AC%E7%A6%AA%E9%A3%9F%E3%80%8B%E5%BF%83%E7%B6%93%E9%A3%9F%E8%AD%9C-%E4%B8%80%E5%A0%B4%E8%94%AC%E9%A3%9F%E9%9D%88%E5%91%B3%E4%B9%8B%E6%97%85/"
+   },
+   {
+    "yr": "2026",
+    "title": "國資圖「驚豔匈牙利」旅遊講座",
+    "desc": "11 月 29 日於國立公共資訊圖書館主講，免報名自由入座。",
+    "src": "出處：國立公共資訊圖書館",
+    "href": "https://www.nlpi.edu.tw/ActivityInfo/recap/Detail/1011"
+   }
+  ],
+  "photo": [
+   "assets/people/salina-hong.jpg",
+   [
+    720,
+    378,
+    48556
+   ]
+  ],
+  "photo_alt": "洪繡巒老師與友人展示福祥靈貓圖案背包",
+  "caption": "洪繡巒老師與友人展示福祥靈貓圖案背包"
  }
 ]
