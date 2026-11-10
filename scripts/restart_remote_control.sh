@@ -55,7 +55,9 @@ for attempt in $(seq 1 6); do
   sleep 2
 
   tmux new-session -d -s "$SESSION" -c ~/.openclaw -x 200 -y 50
-  tmux send-keys -t "$SESSION" 'env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL -u ANTHROPIC_DEFAULT_HAIKU_MODEL -u ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME -u ANTHROPIC_DEFAULT_OPUS_MODEL -u ANTHROPIC_DEFAULT_OPUS_MODEL_NAME -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc' C-m
+  # v6（2026-11-10）：教練手機常連不上要來叫我，因為 rc 在 tmux 裡自己結束就沒人拉起來（11/09 02:09 起的 tmux 只剩空殼）。
+  # 改成外面包 while 迴圈：rc 結束 20 秒後自動再起；不是定時檢查，是「結束的當下」就重啟。
+  tmux send-keys -t "$SESSION" 'while true; do env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL -u ANTHROPIC_DEFAULT_HAIKU_MODEL -u ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME -u ANTHROPIC_DEFAULT_OPUS_MODEL -u ANTHROPIC_DEFAULT_OPUS_MODEL_NAME -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc; echo "[rc 結束 $(date +%T)，20秒後自動重啟]"; sleep 20; done' C-m
 
   echo "⏳ $(date '+%F %T') 第 ${attempt} 次啟動 claude rc（精準env -u排除MiniMax殘留 + 已清除殭屍指標檔）..."
 

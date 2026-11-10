@@ -50,10 +50,9 @@ if [[ -z "${NOTIFY_FORCE_COACH:-}" ]]; then
     if [[ -n "$SYS_HIT" ]]; then
         if python3 "$(dirname "$0")/junshi_inbox.py" add "$SYS_HIT" "$MSG" 2>>"$LOG"; then
             echo "[$(ts)] 📥 系統類通知改存軍師待處理匣（來源=${SYS_HIT}）：$(echo "$MSG" | head -1)" >> "$LOG"
-            STALE_N=$(python3 "$(dirname "$0")/junshi_inbox.py" stale 48 2>/dev/null)
-            if [[ -n "$STALE_N" ]]; then
-                NOTIFY_FORCE_COACH=1 "$0" "教練，系統有 ${STALE_N} 件小事放了兩天，等你下次開工我就處理，你什麼都不用做。" 259200 inbox_stale >/dev/null 2>&1 || true
-            fi
+            # 2026-11-10 教練：「系統有 17 件小事放了兩天……我又沒叫他處理」看不懂也不是他的事。
+            # 原本這裡超過 48 小時會再傳一則「小事放了兩天」給教練；改成不傳，
+            # 待處理匣放著由軍師開工時看（feed_junshi_handoff.sh 第 5.8 步），處理完跑 junshi_inbox.py done。
             exit 0
         fi
         echo "[$(ts)] ⚠️ 待處理匣寫入失敗，退回直送教練" >> "$LOG"
