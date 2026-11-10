@@ -1179,6 +1179,16 @@
    "covered_by_google": true
   },
   {
+   "id": "a984c887",
+   "date": "2026-11-10",
+   "title": "與凌楡順見面",
+   "source": "佩佩老師",
+   "start": "14:15",
+   "end": "15:15",
+   "note": "形式：見面｜地點待補",
+   "tentative": true
+  },
+  {
    "id": "gcal-2026-11-10-18",
    "date": "2026-11-10",
    "title": "BNI 例會",
@@ -3628,16 +3638,6 @@
    "source": "Google日曆",
    "start": "20:00",
    "end": "21:00"
-  },
-  {
-   "id": "a984c887",
-   "date": "2026-11-10",
-   "title": "與凌楡順見面",
-   "source": "佩佩老師",
-   "start": "14:15",
-   "end": "15:15",
-   "note": "形式：見面｜地點待補",
-   "tentative": true
   }
  ],
  "recurring": [
@@ -4264,7 +4264,7 @@
    ]
   }
  ],
- "updated_at": "2026-11-10 13:12",
+ "updated_at": "2026-11-10 15:24",
  "tainan_synced_at": "2026-11-09 14:50",
  "evening_window": {
   "start": "19:00",
@@ -4308,8 +4308,8 @@
    "end": "22:00"
   }
  ],
- "google_synced_at": "2026-11-10 13:11",
- "google_synced_epoch": 1794287481,
+ "google_synced_at": "2026-11-10 15:24",
+ "google_synced_epoch": 1794295499,
  "interview_window_start_by_weekday": {
   "5": "09:30"
  }

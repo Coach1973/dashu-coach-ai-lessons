@@ -18,7 +18,7 @@
 - [🔧 字壓漸層／光暈背景看不清＝page_contrast_scan 會漏；字藏起來截圖取像素算對比＋::befor…](reference_gradient_bg_contrast_hide_text_pixel_sampling_2026-11-04.md)
 - [🔧 TAVA 網頁載圖程式 lazy+onload 才 append＝離畫面的圖永遠不載(rebreathe 63…](reference_tava_page_lazy_image_bug_and_prompts_page_to_run_img_list_2026-11-03.md)
 - [🔧 巴哈海報改版面拖30分鐘：每步38秒＋進度被 final:"false" 擋掉；safety-locks v1…](reference_bahai_poster_30min_slow_progress_lock_v19_2026-11-03.md)
-- [🔴 手機連不上 Claude＝Mac 重開機後 claude rc 沒回來；已加開機自啟 com.coach.cl…](reference_phone_claude_rc_dies_on_reboot_autostart_2026-11-03.md)
+- [🔴 手機連不上 Claude＝claude rc 結束沒人拉起；開機自啟＋11/10 起 while 迴圈 20 秒自動重啟，驗證看 tmux 有無「rc 結束」字樣](reference_phone_claude_rc_dies_on_reboot_autostart_2026-11-03.md)
 - [🔧 新後台網址登記大樹作品集用 --section houtai（後臺系統），預設 baoliu 會被稽核鎖判新缺…](feedback_register_admin_url_use_houtai_section_2026-11-03.md)
 - [🔧 簡介視窗連結不顯示＝網址被貼進「修改標籤」欄；bni-chapters 已防呆(3f9e2e2)、team-b…](reference_url_typed_into_label_field_links_missing_2026-11-02.md)
 - [🔴 FB/IG 多數公開、沒實測不准說「要登入才看得到」；指令夾已改 ed50378，facebookextern…](feedback_fb_ig_public_test_before_saying_login_required_2026-11-02.md)

@@ -1,6 +1,6 @@
 ---
 name: reference_phone_claude_rc_dies_on_reboot_autostart_2026-11-03
-description: 教練手機連不上 Claude＝Mac 重開機後 tmux 裡的 claude rc 沒回來；11/03 加開機自動啟動 com.coach.claude-remote-control；重啟中的 rc 會被雲端記號擋「already served」約3分鐘
+description: 教練手機連不上 Claude＝tmux 裡的 claude rc 沒回來（重開機或自己結束都會；11/10 起外包 while 迴圈自動重啟）；11/03 加開機自動啟動 com.coach.claude-remote-control；重啟中的 rc 會被雲端記號擋「already served」約3分鐘
 metadata:
   node_type: memory
   type: reference
@@ -22,5 +22,7 @@ metadata:
 **11/07 第二次發生（查到的）**：11/06 12:24 重開機，開機自啟有跑，但撞 already served，v4 腳本直接 exit 1，tmux 空殼留著、rc 沒起來，教練手機一整天只看到雲端。11/07 12:2x 手動重跑一次就 Connected。腳本已改 v5：撞 already served 每 60 秒重試、最多 6 次（commit 2194e5cb0）。v5 重試那段還沒在真的重開機時驗證過。手機只看到「雲端」、看不到 Mac＝先查 `tmux capture-pane -t remote-control -p` 有沒有 Connected。
 
 **沒驗證**：真的重開機一次看會不會自己連上；教練手機端實際連入。
+
+**11/10 第三次（沒重開機也掉）**：Mac 開機近 4 天沒重開，tmux `remote-control` 還在，但裡面 `claude rc` 已結束只剩空殼（pgrep 找不到），教練手機連不上、要我手動重跑腳本才接回。**掉線真因沒查到**（空殼無紀錄；當天 10:32～11:37 桌面版剛更新重開，無法證明相關）。解法：`restart_remote_control.sh` 升 v6，tmux 裡包 `while true; do …claude rc; sleep 20; done`，rc 結束 20 秒自動重啟（commit deed8ceea，11:44 重啟後生效）。驗證方式：`tmux capture-pane -t remote-control -p -J | grep "rc 結束"`，看到字樣＝迴圈真的救過一次。撞 already served 會讓重啟多等約 3 分鐘，這次實測 11:41→11:44。
 
 相關：[[reference_claude_desktop_worktree_quota_2026-10-26]] [[reference_launchagents_plists_deleted_outage_2026-10-16]]
