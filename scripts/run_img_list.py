@@ -401,6 +401,20 @@ def main():
     if send and not sent:
         subprocess.run([str(NOTIFY), caption + "\n輸出：%s" % out_dir], check=False)
     print("📨 已傳教練 Telegram" if sent else "📨 沒有傳圖（%s）" % ("--no-send" if not send else "傳送失敗或沒有圖，已改發文字通知"))
+    # 2026-11-10 朱志成頁：出圖完要換進「已上架」的網頁，網址不用教練給——從清單網址的人名 slug 查上架登記，直接印出網址與倉庫
+    try:
+        import re as _re
+        m = _re.search(r"tava-ai\.com/[^/]+/([^/]+)/", args[0])
+        if m:
+            reg = json.loads((Path(__file__).resolve().parent.parent / "event-signup" / "curated_sites_registry.json").read_text(encoding="utf-8"))
+            sites = reg if isinstance(reg, list) else reg.get("sites", reg.get("items", []))
+            hit = [x for x in sites if isinstance(x, dict) and x.get("slug") == m.group(1)]
+            if hit:
+                print("🔗 這個網頁已上架：%s｜倉庫 ~/github_repos/%s/｜圖位是 <img data-slot=IMG-編號>，直接換進該倉庫 index.html 並 push，不要只改本機、不要問教練網址" % (hit[0].get("event_url"), m.group(1)))
+            else:
+                print("🔗 上架登記查無 slug=%s；先查 curation_uploads/processed 再說，不要對教練說沒權限" % m.group(1))
+    except Exception as e:
+        print("🔗 查上架登記失敗：%s" % e)
     sys.exit(1 if errors else 0)
 
 
