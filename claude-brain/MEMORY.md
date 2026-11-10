@@ -1,3 +1,4 @@
+- [🔴 教練丟 TAVA 出圖清單網址要換圖＝網頁早已上架 event.bymyway.com/curated/<slug>/（倉庫 ~/github_repos/<slug>/），先查 curated_sites_registry.json，不准改本機副本還說沒權限(11/10 朱志成頁被罵雞同鴨講)](feedback_find_live_url_from_curated_registry_before_saying_no_access_2026-11-10.md)
 - [🔴 教練給出圖清單網址／說「把照片接入網頁」＝直接用 LK888 出圖，不准問要不要花點數（11/09 教練嫌不專業）](feedback_img_list_lk888_no_ask_routine_authorized_2026-11-09.md)
 - [🔧 結繩戰報真正埠是 5063（5061 是 peipei-event，app.py 預設已改）；網頁加「最常點排行」＝照 worksmap:: 前綴抄 coach888 計次接口，要改 click-counts 排除清單(11/09)](reference_jiesheng_port_5063_and_click_rank_prefix_pattern_2026-11-09.md)
 - [🔧 大樹作品分類表 works-map：256 作品分 9 類、規則在 works_map_classify.py（快照要重跑）；preflight「對比1.98」常是 sticky 表頭太高(>110px)誤報(11/09)](reference_works_map_page_and_sticky_header_preflight_2026-11-09.md)
