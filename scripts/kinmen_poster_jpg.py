@@ -20,7 +20,7 @@ def text_block(d, x, y, maxw, scale=1.0):
     rows.append(("eyebrow", "金門私廚 × AI 餐桌", f(int(34*scale)), AMBER))
     rows.append(("title", "秋瑩姐的金門私廚", f(int(78*scale)), CREAM))
     rows.append(("gap", None, None, None))
-    rows.append(("big", "12/5（六）11:30–14:30", f(int(56*scale)), CREAM))
+    rows.append(("big", "12/5（六）11:30–15:30", f(int(56*scale)), CREAM))
     rows.append(("kv", ("地點", "台南 KR 養生廚房"), f(int(40*scale)), CREAM))
     rows.append(("kv", ("費用", "每位 1,500 元，限 20 位"), f(int(40*scale)), CREAM))
     rows.append(("gap", None, None, None))
