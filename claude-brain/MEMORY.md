@@ -115,3 +115,4 @@
 - [🔴 開工注入可能是舊棒：回報前看 JUNSHI_HANDOFF_LATEST.md 第一行時間，比注入新就照檔案做（11/11 bni-story 第2棒被漏）](feedback_startup_check_handoff_file_newer_than_injection_2026-11-11.md)
 - [🧭 大樹入口 event.bymyway.com/curated/go/＝教練唯一總入口（六大系列＋最常用＋搜尋366件）；改分類改 build_go_portal.py 再到 ~/github_repos/go push；「14個特效」＝rs-demo(11/11)](project_go_portal_dashu_entry_2026-11-11.md)
 - [🔧 頁首標題 href="#top" 點了不回頂＝#top 掛在 sticky 頁首本身；JS scrollTo＋instant 保險(11/11 bni-story)](reference_sticky_header_top_anchor_no_scroll_2026-11-11.md)
+- [🔧 教練問「流量使用情況」＝Claude 額度：跑 scripts/claude_usage.py 一行查 5 小時／本週 % 與台灣重置時間(11/11)](reference_claude_usage_query_oauth_endpoint_2026-11-11.md)

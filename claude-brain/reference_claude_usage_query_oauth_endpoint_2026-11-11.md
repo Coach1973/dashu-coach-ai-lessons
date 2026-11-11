@@ -15,7 +15,7 @@ metadata:
 TOK=$(security find-generic-password -s "Claude Code-credentials" -w | python3 -c "import sys,json;print(json.load(sys.stdin)['claudeAiOauth']['accessToken'])")
 curl -s https://api.anthropic.com/api/oauth/usage -H "Authorization: Bearer $TOK" -H "anthropic-beta: oauth-2025-04-20"
 ```
-看 `five_hour.utilization`、`seven_day.utilization`（百分比）與 `resets_at`（UTC，要 +8 換台灣時間再講）。
+（已包成 `python3 ~/.openclaw/workspace/scripts/claude_usage.py`）看 `five_hour.utilization`、`seven_day.utilization`（百分比）與 `resets_at`（UTC，要 +8 換台灣時間再講）。
 
 **Why:** 2026-11-11 教練問流量，原本沒有現成腳本，翻了一輪才找到這個端點。
 **How to apply:** 回報用白話：「5 小時用了 X%，下午 N 點重置；這週用了 Y%，M 時重置」。相關 [[reference_claude_desktop_worktree_quota_2026-10-26]]。
