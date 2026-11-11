@@ -24,6 +24,15 @@ def norm(u):  # 跟 build_go_portal.norm 一致
     return (host + "/" + rest.partition("?")[0]).rstrip("/").lower()
 
 
+def is_own(nu):  # 比對「網域本身」：SQL like 會誤抓參數裡帶自家網址的轉址（google.com/url、l.facebook.com、chrome-extension://）
+    host, _, path = nu.partition("/")
+    for d in OWN:
+        dh, _, dp = d.partition("/")
+        if (host == dh or host.endswith("." + dh)) and path.startswith(dp):
+            return True
+    return False
+
+
 def find_histories():
     base = os.environ.get("LOCALAPPDATA", "")
     pats = [os.path.join(base, "Perplexity", "Comet", "User Data", "*", "History"),
@@ -48,7 +57,10 @@ def read(history, days, visits):
             f"join urls u on u.id=v.url where ({cond}) and "
             "v.visit_time/1000000-11644473600 > cast(strftime('%s','now',?) as integer)",
             [f"%{d}%" for d in OWN] + [f"-{days} days"]):
-        visits[norm(url)].add(d)
+        nu = norm(url)
+        if not is_own(nu):
+            continue
+        visits[nu].add(d)
         n += 1
     db.close()
     shutil.rmtree(tmp.parent, ignore_errors=True)
