@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>賈維斯自我檢測｜聯想電腦｜2026-11-11</title>
+<style>
+body{font-family:"Microsoft JhengHei","PingFang TC",sans-serif;font-size:20px;line-height:1.7;max-width:980px;margin:0 auto;padding:24px;color:#1f2933;background:#f7f8fa}
+h1{font-size:30px;margin:0 0 4px}h2{font-size:24px;margin:28px 0 10px;border-left:6px solid #2f6f4f;padding-left:10px}
+.sub{color:#52606d}.card{background:#fff;border-radius:12px;padding:16px 20px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #d9dee5;padding:8px 10px;text-align:left;vertical-align:top}th{background:#eef2f0}
+.ok{color:#1e7b44;font-weight:700}.bad{color:#b42318;font-weight:700}.warn{color:#9a5b00;font-weight:700}code{font-size:18px;background:#eef1f4;padding:1px 5px;border-radius:4px}
+</style></head><body>
+<h1>賈維斯智慧體自我檢測｜聯想電腦</h1>
+<div class="sub">2026-11-11 10:40～10:50｜範圍：這台的 Claude 桌面版（提醒程式 10 支、守門程式 9 支、反射 167 條、記憶索引、說明檔）｜存檔編號 <code>6d45d2e</code></div>
+
+<div class="card"><b>一句話：</b>找到 3 個「有掛著、其實沒作用」的壞機制，已直接修好並實測；另有 3 件會改變做法的，等教練點頭。規則總字數沒有增加，每句話少送約 400 字亂碼。</div>
+
+<h2>五問結論</h2>
+<table>
+<tr><th>問題</th><th>結論</th><th>證據</th></tr>
+<tr><td>① 運行良好嗎</td><td><span class="bad">3 個壞掉</span>（已修）；反射、刪除鎖（rm -rf）、繁中檢查正常</td><td>時間提醒每句送亂碼；接力棒「只送一次」標記資料夾 10/13 起是空的；刪除鎖對 <code>powershell -Command "Remove-Item…"</code> 放行。反射 40 天出聲 61 次</td></tr>
+<tr><td>② 有沒有打架</td><td><span class="warn">1 組</span></td><td>專案說明檔寫「21 守則在全域說明檔、每場都會載入」，但聯想<b>沒有</b>全域說明檔，前 20 句守則不在</td></tr>
+<tr><td>③ 有沒有重複</td><td><span class="warn">2 組</span></td><td>兩支時間提醒講同一件事（已合一）；接力棒同時出現在專案說明檔鏡像＋開工注入（約 8,887 字）</td></tr>
+<tr><td>④ 佔容量沒效率</td><td><span class="bad">記憶索引快爆</span></td><td>MEMORY.md 24,458 位元組，官方上限 25KB，已用約 95%，再加幾條後面就讀不到（Mac 共用同一份）</td></tr>
+<tr><td>⑤ 能更好嗎</td><td>見下方建議 A～C</td><td>官方：MEMORY.md 只載前 200 行或 25KB；說明檔可用 <code>@檔名</code> 引用，不必抄一份</td></tr>
+</table>
+
+<h2>已直接修好（機械性錯誤，皆已實測）</h2>
+<table>
+<tr><th>壞在哪</th><th>怎麼修</th><th>實測</th></tr>
+<tr><td>時間提醒兩支（台灣時間、時間覺察）：沒設輸出編碼→中文整段亂碼；另一支每句翻整個資料夾，開工抓錯說本場「130 小時前」開始</td><td>合成一支 <code>taiwan_time_hook.py</code>，一行輸出</td><td>593 字亂碼 → 182 字正常中文，0.14 秒；本場開始、教練上次說話時間正確</td></tr>
+<tr><td>接力棒「同一場只送一次」：程式把紀錄文字存進「測試模式」開關的變數，標記永遠不寫 → 話裡有「軍師」就重送 8,887 字＋重拉雲端（今天 10:37 就發生）</td><td>改變數名稱</td><td>同一場第 1 次「開工」送出、標記寫入；第 2 次說「軍師」→ 0 字</td></tr>
+<tr><td>刪除鎖：為了不誤擋 <code>grep "Remove-Item"</code> 先剝引號，結果把 <code>powershell -Command "Remove-Item -Recurse -Force …"</code> 整句剝掉 → 這台用 Remove-Item 永遠漏擋</td><td><code>-Command</code>／<code>-c</code> 後面引號裡的內容也檢查；暫存夾白名單斜線兩種都認</td><td>6 種情境：該擋 3 種全擋、grep／commit 訊息／暫存夾 3 種全放</td></tr>
+</table>
+
+<h2>字數（一進一出）</h2>
+<div class="card">規則條文：<b>持平</b>（沒新增任何條文）。每句話自動送的字：<b>約 −411 字</b>。每次話裡有「軍師」：<b>−8,887 字</b>（不再重送）。提醒程式：2 支 → 1 支。</div>
+
+<h2>等教練點頭（會改變做法）</h2>
+<table>
+<tr><th></th><th>建議</th><th>好處</th></tr>
+<tr><td>A</td><td>記憶索引瘦身：較舊的條目搬進封存索引（一字不刪，只搬位置），壓到上限 7 成</td><td>新記憶不會被截掉；Mac、聯想共用同一份，兩台一起受益</td></tr>
+<tr><td>B</td><td>聯想加全域說明檔，只放一行 <code>@特助心法.md</code>（引用，不抄一份）</td><td>每場第一句就有 21 守則；Mac 改心法聯想自動跟上；約 +4,178 字，由上面省下的字抵掉</td></tr>
+<tr><td>C</td><td>專案說明檔不再貼整份接力棒鏡像（Mac 11/04 已提，同一件）</td><td>聯想每場少約 2,500 字重複</td></tr>
+</table>
+
+<h2>這次沒做的</h2>
+<div class="card">小龍蝦、赫米斯、VPS 不在這台，沒查。上網只查了記憶上限一項（官方文件 code.claude.com/docs/en/memory）。舊的兩支時間程式檔還留著沒刪（已不被呼叫）。</div>
+</body></html>
