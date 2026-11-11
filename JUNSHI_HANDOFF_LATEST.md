@@ -1,3 +1,11 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 19:35 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku 5.5→19:25 切 Sonnet 5.5；本場 19:04～19:35；對話容量約 24%；教練說「總結」）：幸福學頁 emoji 全換 LK888 圖＋頁尾修正；金門私廚 EDM 海報＋下載鈕
+**做了什麼：**
+1. **女人的幸福學**（`~/github_repos/women-happiness`，線上 event.bymyway.com/curated/women-happiness/）：頁尾加「本網頁由 TAVA AI 製作，出品人：大樹教練，友善連結：榮樹下」、協辦加「大樹教育顧問」（頁尾＋講師區）、辦公室地址註明「上課是在線上進行」；講師名字連到 patrick-chu 頁、換成該頁形象照；課程亮點 3 張＋其餘 21 個 emoji 全換 LK888 客製柔光3D圖（256px webp，21 張合計約 85KB）。commit de9ec1a、4d6b374。風格卡 `.image-style.md`。
+2. **金門私廚（教練口語「KR 養生廚房」）**（`~/github_repos/kinmen-kitchen-1205`）：直式 1080x1350／橫式 1600x900 海報 JPG（各約 210KB）出好，含時間地點費用＋匯款資訊（將來銀行 823／帳號 88660901056777／專線 0988-585-279），加兩顆 JPG 下載鈕，og:image 改橫式海報。commit 7b0ddd4。海報產生程式存 `workspace/scripts/kinmen_poster_jpg.py`（Pillow，改文字重跑）。
+**卡在哪／教訓：** ①截圖鎖擋下（教練明令未經同意不截圖），版面改用 DOM 量（img decode 全成功、emoji 殘留 0）＋線上 Content-Type 驗證，沒有親眼看整頁版面。②STHeiti 字型沒有「・」（中點）字元，海報印成方框，改用「，」。③LK888 一次 24 張約 15 分鐘（每張 30～60 秒），用背景＋Monitor 等，不要前景等。④macOS 的 sed -i 要加 ''，改用 python 字串替換。
+**下一步：** 教練同意截圖後可補看幸福學整頁（手機／桌機）；金門頁第 3 句匯款說明「我們會以電話或 LINE 提供匯款帳號」與海報上直接印帳號不一致，教練要不要改頁面文字未問（不急，放🤫）。
+🙋 沿用。 🤫 加：金門頁匯款說明文字與海報帳號不一致，要不要改。 🔧 沿用。
+
 ## 🔴 補充（19:30 收工，Mac Sonnet 5.5）：金門私廚頁 21 張圖已裝回、佩佩海報已傳群組
 - 金門頁 event.bymyway.com/curated/kinmen-kitchen-1205/（倉庫 ~/github_repos/kinmen-kitchen-1205，commit a9db5f5）：21 張 LK888 圖覆蓋 images/ph-IMG-0NN.webp，本機瀏覽器量 21/21 載入、無變形，線上抽比 4 張與本機相同、Content-Type image/webp。
 - 佩佩海報 final.jpg 已用 bot_peipei 傳進 -5115910257（message_id 2941）。
