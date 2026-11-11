@@ -118,3 +118,5 @@
 - [🔧 教練問「流量使用情況」＝Claude 額度：跑 scripts/claude…](reference_claude_usage_query_oauth_endpoint_2026-11-11.md)
 - [🔧 聯想寫 hook 三坑：py 不認 /e/ 路徑、py -I 忽略 PYTHONIOENCODING 中文亂碼、PS5.1 沒設輸出編碼整段失效(11/11)](reference_windows_hook_python_path_and_encoding_pitfalls_2026-11-11.md)
 - [🔴 出圖清單標「實景修飾」但參考照片欄是空的＝沒有底圖，直接當概念圖用 LK888 出，不停下來跟教練要真實照片(11/11)](feedback_realscene_slots_without_reference_photo_generate_as_concept_2026-11-11.md)
+- [🔴 網頁 emoji 嫌廉價＝全改 LK888 客製圖（每意思一張、256px webp壓縮、圓章遮奶油底），背景批次＋Monitor 等(11/11)](feedback_web_emoji_replace_with_lk888_custom_icons_compressed_2026-11-11.md)
+- [🔧 活動頁 EDM 要 JPG 可下載：Pillow 疊字腳本 kinmen_poster_jpg.py；STHeiti 沒有「・」會變方框(11/11)](reference_event_poster_pillow_jpg_font_no_middle_dot_2026-11-11.md)
