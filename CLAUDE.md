@@ -4,19 +4,19 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-11 10:20:37**
+> **最後同步：2026-11-11 10:25:40**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 09:34 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 08:44～09:34；對話容量約 25%；教練說「總」）：bni-story 入會訪談網頁重構・第 2 棒完成＋第 3 棒出圖指令
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 10:25 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 09:35～10:25；對話容量約 38%；教練說「總結」）：bni-story 第 3 棒上線＋「大樹入口」新網頁上線
 **做了什麼：**
-1. **第 2 棒完成**（倉庫 `~/github_repos/bni-story/`，commit 6784ccd，**未 push**）：網頁改成卡牌引擎——`cards.json` 的 order 決定順序（15 張：14 張＋選配道德規範），A/B 可一直重選、不鎖定也不記住；每卡錄音槽 `audio/<id>.m4a` 有檔才出現；卡 2 A→B：一年目標 7 種可複選→填 B 點目標與 A 點現況→導航式路程條＋客戶來源百分比／身分／理想客戶；訪談書照正式表單排（基本資料、18 題、費用 3 項、簽名欄），沒填的列出可點回該卡；保留複製／PDF／送交秘書（form 仍掛 data-works-form="bni-story-interview"、interview_text 欄）。沒圖的卡自動單欄（HEAD 查圖）。實測：A/B 切換、路程計算、填滿 100%、送出成功、手機 375 無左右捲；page_preflight 電腦＋手機全過。教練看了說「做得很棒」。
-2. **第 3 棒出圖指令寫好**：教練要「圖文並茂，每張卡牌都一張圖」。沿用 4 張（specialist IMG-002、attendance-168 IMG-004、potluck IMG-005、reserved-seat IMG-006），新出 11 張：清單 `~/github_repos/bni-story/card_images.json`（2444f2f），執行步驟 `knowledges/bni-story入會訪談重構/05_第3棒出圖指令.md`（56810d767）。
-**卡在哪／教訓：** 開工時 hook 注入的是 08:01 舊棒（另一個對話框 08:45 才收工，晚了 1 分鐘），我沒發現就問「從哪件事開始」被教練說「再重新讀一下」。之後開工要看接力棒檔案本身最新一棒的時間，比注入的新就以檔案為準。
-**下一步（第 3 棒，教練開新對話框直接做）：** 照 05 指令：`run_img_list.py card_images.json` 一行出 11 張→親眼看 contact-sheet→換成 `images/<id>.webp`、a-to-b 拿掉 image 欄→preflight→Chrome 給教練看（本機 `python3 -m http.server 8731` 於倉庫）→教練說「推」才 push，上線查 Content-Type。
-🙋 沿用上棒。 🤫 沿用（教練口述可做成里程碑報告，等他提）。 🔧 沿用上棒；另加：開工注入與接力棒檔案最新一棒時間不同時要提醒（hook 改進）。
+1. **bni-story 第 3 棒**：11 張卡牌新圖（LK888）換入、a-to-b 改導航圖、IMG-003 停用，教練說「推」後 git push（6981087），線上 11 張圖 200＋image/webp、preflight 全過。順手把口令「推」補範圍：event.bymyway.com/curated 頁面沒有 Netlify，推＝git push 該倉庫（反射索引／口令字典／部署詞彙，4a965f6ee）。
+2. **大樹入口** https://event.bymyway.com/curated/go/ （教練選短網址 go；倉庫 ~/github_repos/go 私有，最新 2a4bb0b）：反推教練分類＝三把尺混用（哪個計劃／做什麼用／什麼時候），改成只用「六大系列」：團隊計劃（含網頁一鍵導入、生圖一鍵注入、14 招示範三神器）、漫畫（同脈絡虛線框）、榮樹下（來賓卡、時間預約表＝rongtree/#prep、進度追蹤表）、BNI、賈維斯（三個 OpenClaw 對話主控台＋報告）、大樹常用・里程碑（每天用＋21 筆時間軸）。最常用前 8＝Chrome 近 75 天開過天數×2＋點擊次數（即時抓 /api/coach888/click-counts 三種前綴，本頁點擊記 go::）；搜尋全部 366 件；新上架作品執行時從 /api/coach888/state 自動加進來。套 14 招中 10 招。資料產生器 scripts/build_go_portal.py＋go_portal_artifacts.json（0ecb1241c）：`python3 scripts/build_go_portal.py ~/github_repos/go` 再到倉庫 commit＋push。已自動進作品集「最新作品」第一筆。
+**卡在哪／教訓：** ①做事中途的進度說明寫成英文，被 Stop 鎖擋兩次（整段英文反射）；②內建瀏覽器不准開外部網址，線上驗證改用 playwright 無頭 Chrome（/tmp/go_live_check.js 寫法）；③GitHub Pages 網址大小寫有差（BNI-Training），從 Chrome 紀錄抄網址別轉小寫。
+**下一步：** 等教練手機實際用過的回饋（排序、分類調整）。報告清單快照要手動更新 go_portal_artifacts.json 才會進時間軸。
+🙋 沿用。 🤫 沿用。 🔧 加：①健康檢查 htc-video-server／tunnel 兩個服務沒被守門員保護；②git stash 有 11/08 等舊自動暫存沒放回（非本場）；③頂端那棒（10:15～10:40 bni-story 改稿）標題缺「給跨對話框軍師讀的總結摘要」字樣，鏡像讀不到，下一輪確認。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
