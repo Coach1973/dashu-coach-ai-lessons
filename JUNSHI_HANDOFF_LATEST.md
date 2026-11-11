@@ -1,3 +1,13 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 13:00 台灣時間，Mac 終端機（教練手機遠端），模型 Sonnet 5.5→12:39 切 Opus 5.5；本場 09:50～13:00；對話容量約 18%；教練說「總結」）：bni-story 第3棒驗收＋「台灣女人的幸福學」上架策展＋流量查詢
+**做了什麼：**
+1. **bni-story 第3棒**：11 張卡牌圖早已出好並換進網頁（6981087，前一場做的），我只確認＋preflight 全過、開 Chrome 給教練看；教練後續已在別場改稿上線（2e63d01）。
+2. **台灣女人的幸福學（TAVA 03olehi18o，朱元中老師／天下顧問婦女再就業課）上架策展**：圖由另一對話框出好放 `workspace/handoff_img03/`（dcfab3aa1）；我接 7 張圖進網頁、EDM 直橫兩張疊字（日期／線上／學費／朱先生電話／主辦）輸出 PNG 接下載鈕、修 body overflow 讓表頭 sticky；kind=shop 上架 **https://event.bymyway.com/curated/women-happiness/**（倉庫 `~/github_repos/women-happiness`），Telegram 通知 message_id=13379，網頁／8 張 webp／2 張 png 的 Content-Type 都查過。
+3. **表單確認**：上架自動掛 works-form.js → /api/works/contact → 活動報名即時通知群＋私訊教練。補「沒勾同意不送出」＋原本謝謝文字（9279fcc）；12:44 真送一筆「測試-軍師確認請忽略」(works_contact_leads #16) 成功。
+4. **流量查詢**：新增 `scripts/claude_usage.py`（5e040bf1e），一行查 5 小時／本週額度＋台灣重置時間。
+**卡在哪／教訓：** ①教練說「圖已出好」我先要重出、又找不到位置——跨對話框交接檔要先查 `handoff_*` 資料夾與最近 commit。②手機 preflight「左右捲動」仍報 498px，但實測 scrollX 恆 0（html overflow-x:clip，花瓣動畫）＝誤報，未再追。
+**下一步：** 教練檢閱 women-happiness 整體效果後口述改稿；IMG-006 講師區仍是空書桌，等教練給朱元中老師本人照片。
+🙋 沿用。 🤫 沿用。 🔧 沿用上棒＋page_preflight 對 html overflow-x:clip 會誤報左右捲動（看 scrollX 才準）。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 10:38 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 10:14～10:38；對話容量約 22%；教練說「總結」）：bni-story 改稿＋大樹入口常用排行
 **做了什麼：**
 1. **bni-story 教練改稿**（`~/github_repos/bni-story`，2e63d01 已上線）：標題改「這是一場信任的遊戲：以下是遊戲說明書」；點頁首標題回頂修好（原 href="#top" 指向 sticky 頁首本身所以不動，改 JS scrollTo＋0.7 秒 instant 保險）；「五項關鍵承諾」換教練版；一個專業類別一個位子；實體分會場地費／線上分會沒有；家人支持段改寫。
