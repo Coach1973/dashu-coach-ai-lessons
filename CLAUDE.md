@@ -1,40 +1,5 @@
 # 小龍蝦核心（每次啟動必讀）
 
-<!-- HANDOFF_AUTOINJECT_START -->
-## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
-
-> 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-11 13:05:23**
-> 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
-> 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
-
----
-
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 13:00 台灣時間，Mac 終端機（教練手機遠端），模型 Sonnet 5.5→12:39 切 Opus 5.5；本場 09:50～13:00；對話容量約 18%；教練說「總結」）：bni-story 第3棒驗收＋「台灣女人的幸福學」上架策展＋流量查詢
-**做了什麼：**
-1. **bni-story 第3棒**：11 張卡牌圖早已出好並換進網頁（6981087，前一場做的），我只確認＋preflight 全過、開 Chrome 給教練看；教練後續已在別場改稿上線（2e63d01）。
-2. **台灣女人的幸福學（TAVA 03olehi18o，朱元中老師／天下顧問婦女再就業課）上架策展**：圖由另一對話框出好放 `workspace/handoff_img03/`（dcfab3aa1）；我接 7 張圖進網頁、EDM 直橫兩張疊字（日期／線上／學費／朱先生電話／主辦）輸出 PNG 接下載鈕、修 body overflow 讓表頭 sticky；kind=shop 上架 **https://event.bymyway.com/curated/women-happiness/**（倉庫 `~/github_repos/women-happiness`），Telegram 通知 message_id=13379，網頁／8 張 webp／2 張 png 的 Content-Type 都查過。
-3. **表單確認**：上架自動掛 works-form.js → /api/works/contact → 活動報名即時通知群＋私訊教練。補「沒勾同意不送出」＋原本謝謝文字（9279fcc）；12:44 真送一筆「測試-軍師確認請忽略」(works_contact_leads #16) 成功。
-4. **流量查詢**：新增 `scripts/claude_usage.py`（5e040bf1e），一行查 5 小時／本週額度＋台灣重置時間。
-**卡在哪／教訓：** ①教練說「圖已出好」我先要重出、又找不到位置——跨對話框交接檔要先查 `handoff_*` 資料夾與最近 commit。②手機 preflight「左右捲動」仍報 498px，但實測 scrollX 恆 0（html overflow-x:clip，花瓣動畫）＝誤報，未再追。
-**下一步：** 教練檢閱 women-happiness 整體效果後口述改稿；IMG-006 講師區仍是空書桌，等教練給朱元中老師本人照片。
-🙋 沿用。 🤫 沿用。 🔧 沿用上棒＋page_preflight 對 html overflow-x:clip 會誤報左右捲動（看 scrollX 才準）。
-
-### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
-- 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
-
-🤫 等教練自己提起：①bymyway.com 後台登入一次（11/06 已問、未回；下一輪做到「建課程」那步才需要，到時直接講一句，不先問）；②高價銷售課程的價格、版本、網址放哪、舊工具課（Kajabi／GetResponse 等）標附錄或重錄（報告書第七節，教練說陪跑制不急）。
-🔧 AI 自己的清單：①上列「下一場開工先做」1～3；②`.git` 25G：本機刪除前先對 SSD 備份跑 `git fsck`＋核對檔案數，再複製一份到 Amber（`~/amber-mnt`），並先對教練講「SSD 掉線時小龍蝦 commit 會失敗」的風險讓他決定；③SSD `Chrome.old-20261002` 5.3G 舊複本，確認新版穩定幾天後處理；④`daily_team_rollcall.py` 加本機硬碟 <30G 紅燈、逐字保險箱「6 小時沒新增」改白天才判，SSD 一掉線當下用白話通知（事件觸發）；⑤**11/06 14:2x `system_health_check.py --quick` 在 `verbatim_on_prompt.sh` 逾時 60 秒**，沒修，下一輪查；⑥「開工」worktree 88 份 32G 等超過 30 天用 `clean_up_worktrees` 清；量不到的 47G 沒查；`rules_health_audit.py` 仍提示執行細則與特助心法重複約 16 字，只出建議。
-
-> 前一棒、🤫／🔧 待辦、封存索引：需要才讀 `JUNSHI_HANDOFF_LATEST.md`。問教練之前的三關：見執行細則 N2。
-
-
----
-
-> ⬆️ 接力棒鏡像結束。以下回到 CLAUDE.md 原本內容。
-<!-- HANDOFF_AUTOINJECT_END -->
-
-> ⬆️ 接力棒鏡像結束。以下回到 CLAUDE.md 原本內容。
 教練好，我是你專屬AI特助。專注傾聽，精準執行，隨時待命。
 
 **使命：** 成為最懂老闆的AI特助

@@ -5,6 +5,8 @@
 # 設計：HANDOFF mtime > 上次同步時間才動工，沒變化就不動 CLAUDE.md（避免 git noise）
 
 set -uo pipefail
+# 2026-11-11 聯想 C：專案 CLAUDE.md 不再鏡像接力棒（開工注入已送，省每場約 2,500 字重複）。要恢復：刪掉下面這行 exit。
+exit 0
 
 WS="/Users/bymyway/.openclaw/workspace"
 CLAUDE_MD="$WS/CLAUDE.md"
