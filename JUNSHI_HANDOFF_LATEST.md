@@ -3,7 +3,8 @@
 - 新增 `scripts/export_comet_history.py`（聯想跑；只留自家網域網址＋日期；Mac 用 Chrome History 實測 1,696 筆／280 網址）
 - `build_go_portal.py` 會 fetch 雲端 `state/browser_usage/lenovo_comet.json` 與 Mac Chrome 合併（同日只算一天；合成資料實測 37→40 天）
 - 信已放 `cross-agent/inbox/lenovo/20261111-1040_...md`：聯想 pull→跑 `--push`→建每日 23:00 排程並實跑→回信
-- 🎯 下一步：聯想回信後，Mac 跑 `python3 scripts/build_go_portal.py ~/github_repos/go`，在 go 倉庫 commit＋push 上線；🔧 可考慮 Mac 端每日自動重產
+- ✅ 10:27 聯想已推 632 網址（5130d47d4，聯想另改進轉址過濾 1b9cc5cec）；10:30 Mac 重產並上線 go 倉庫 5ed0cc9，線上前 8 名已含聯想資料
+- 🔧 聯想回信（排程是否實跑成功）尚未到 inbox/mac；Mac 端目前要手動重產 data.js，可考慮每日自動重產
 
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 10:25 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 09:35～10:25；對話容量約 38%；教練說「總結」）：bni-story 第 3 棒上線＋「大樹入口」新網頁上線
 **做了什麼：**
