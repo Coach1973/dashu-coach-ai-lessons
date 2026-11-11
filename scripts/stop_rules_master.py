@@ -1425,6 +1425,42 @@ try:
 except Exception:
     pass
 
+# ════════════════════════════════════════════════
+# Q. 「網址要完整可點」鎖（擋）—— 2026-11-11 教練：「後面那兩個星星是你把它寫到超連結當中，我點進去是亂碼，還得手動移掉」
+#    10/02 Telegram 通知網址緊貼括號（案例97）同一類第二次。照 N8 改機制：
+#    最後回覆裡的網址被 ** 包住，或後面緊貼中文字／全形標點 → 擋下，改成網址單獨一行、前後不加任何符號。
+#    任何例外一律放行。
+# ════════════════════════════════════════════════
+try:
+    _URLCH = r"[A-Za-z0-9\-._~:/?#@!$&'+,;=%]"
+    _BADURL = re.compile(
+        r"\*\*\s*https?://" + _URLCH + r"+"            # ** 開頭包網址
+        r"|https?://" + _URLCH + r"*\*+"               # 網址尾巴黏著 *
+        r"|https?://" + _URLCH + r"+[　-〿＀-￯一-鿿]")  # 後面緊貼中文或全形標點
+    _bad_hits = []
+    _in_fence = False
+    for _ln in LAST_LINES:
+        if _ln.lstrip().startswith("```"):
+            _in_fence = not _in_fence
+            continue
+        if _in_fence or _ln.lstrip().startswith(">"):
+            continue
+        _ln2 = re.sub(r"`[^`]*`", "", _ln)   # 反引號包住的是範例，不算
+        if re.search(r"案例|錯誤示範|違規|violations", _ln2):
+            continue
+        _m = _BADURL.search(_ln2)
+        if _m:
+            _bad_hits.append(_m.group(0)[:80])
+    if _bad_hits:
+        MESSAGES.append(
+            "\n🔴🔗 「網址要完整可點」鎖（2026-11-11 教練：網址後面的兩個星星被寫進連結，點進去是亂碼，還得手動刪）\n" + BAR + "\n"
+            "回覆裡的網址格式會讓連結點不開：\n" + "".join("  • %s\n" % h for h in _bad_hits[:3]) +
+            "✅ 改成：網址自己單獨一行，前後不加 ** 、括號、標點、中文字；要強調就強調網址上面那句話。\n" + BAR + "\n")
+        log_violation("rule_url_clickable_violations.log", "".join("  • %s\n" % h for h in _bad_hits[:3]))
+        BLOCK = True
+except Exception:
+    pass
+
 # ────────────────────────────────────────────────
 # 輸出：所有訊息一起送到 stderr，任一擋下級命中就 exit 2
 # ────────────────────────────────────────────────
