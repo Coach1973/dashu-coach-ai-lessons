@@ -4,20 +4,21 @@
 ## 🔴 最新接力棒（系統自動鏡像，桌面版啟動必讀）
 
 > 本區段由 `scripts/sync_handoff_to_claudemd.sh` 自動同步，只鏡像 `JUNSHI_HANDOFF_LATEST.md` 的最新一棒＋🙋區。
-> **最後同步：2026-11-11 13:00:08**
+> **最後同步：2026-11-11 13:05:23**
 > 任何模型（Opus / Sonnet / Haiku，桌面版 / 終端機）讀到 CLAUDE.md 都會看到，**不靠主動翻檔**。
 > 若本區段內容跟 `JUNSHI_HANDOFF_LATEST.md` 不同步，代表同步腳本掛掉，請通報教練。
 
 ---
 
-## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 10:38 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 10:14～10:38；對話容量約 22%；教練說「總結」）：bni-story 改稿＋大樹入口常用排行
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 13:00 台灣時間，Mac 終端機（教練手機遠端），模型 Sonnet 5.5→12:39 切 Opus 5.5；本場 09:50～13:00；對話容量約 18%；教練說「總結」）：bni-story 第3棒驗收＋「台灣女人的幸福學」上架策展＋流量查詢
 **做了什麼：**
-1. **bni-story 教練改稿**（`~/github_repos/bni-story`，2e63d01 已上線）：標題改「這是一場信任的遊戲：以下是遊戲說明書」；點頁首標題回頂修好（原 href="#top" 指向 sticky 頁首本身所以不動，改 JS scrollTo＋0.7 秒 instant 保險）；「五項關鍵承諾」換教練版；一個專業類別一個位子；實體分會場地費／線上分會沒有；家人支持段改寫。
-2. **大樹入口** https://event.bymyway.com/curated/go/ 「最常用」：新增 `scripts/export_comet_history.py`（聯想跑，只留自家網域），`build_go_portal.py` 合併 Mac Chrome＋聯想 Comet（45be74bee）；聯想 10:27 推 632 網址、每日 23:00 排程實跑成功（信已歸檔 20450ac63）。再依教練口述改成前 10 格 `PINNED` 指定順序＋自動補 2 格（go d42b72e、4a428f04a）。
-3. 對話容量改每句都報：聯想已改 context_percent_hook.py（bd4f1dca0），實測輸出 22%。wrap_up 按鈕不能送 /context，已跟教練說明。
-**卡在哪／教訓：** 開工注入宣稱「第3棒 fe73eec 已做好遊戲說明書」，查無此 commit、線上也沒有——注入內容與實際不符，要以 git log＋線上為準。
-**下一步：** 等教練確認常用第 3、5、7、10 名對應（人才軍火庫・顧問師天團／時間預約表／ai-impact／南應大記憶牆），錯就改 `PINNED`。🔧 Mac 端 go data.js 仍要手動重產；聯想建議 Mac Chrome 查詢也套 is_own()（只影響本機排行，不急）。
-🙋 沿用。 🤫 沿用。 🔧 沿用＋上列兩項。
+1. **bni-story 第3棒**：11 張卡牌圖早已出好並換進網頁（6981087，前一場做的），我只確認＋preflight 全過、開 Chrome 給教練看；教練後續已在別場改稿上線（2e63d01）。
+2. **台灣女人的幸福學（TAVA 03olehi18o，朱元中老師／天下顧問婦女再就業課）上架策展**：圖由另一對話框出好放 `workspace/handoff_img03/`（dcfab3aa1）；我接 7 張圖進網頁、EDM 直橫兩張疊字（日期／線上／學費／朱先生電話／主辦）輸出 PNG 接下載鈕、修 body overflow 讓表頭 sticky；kind=shop 上架 **https://event.bymyway.com/curated/women-happiness/**（倉庫 `~/github_repos/women-happiness`），Telegram 通知 message_id=13379，網頁／8 張 webp／2 張 png 的 Content-Type 都查過。
+3. **表單確認**：上架自動掛 works-form.js → /api/works/contact → 活動報名即時通知群＋私訊教練。補「沒勾同意不送出」＋原本謝謝文字（9279fcc）；12:44 真送一筆「測試-軍師確認請忽略」(works_contact_leads #16) 成功。
+4. **流量查詢**：新增 `scripts/claude_usage.py`（5e040bf1e），一行查 5 小時／本週額度＋台灣重置時間。
+**卡在哪／教訓：** ①教練說「圖已出好」我先要重出、又找不到位置——跨對話框交接檔要先查 `handoff_*` 資料夾與最近 commit。②手機 preflight「左右捲動」仍報 498px，但實測 scrollX 恆 0（html overflow-x:clip，花瓣動畫）＝誤報，未再追。
+**下一步：** 教練檢閱 women-happiness 整體效果後口述改稿；IMG-006 講師區仍是空書桌，等教練給朱元中老師本人照片。
+🙋 沿用。 🤫 沿用。 🔧 沿用上棒＋page_preflight 對 html overflow-x:clip 會誤報左右捲動（看 scrollX 才準）。
 
 ### 🙋 要教練決定（三關全過才能放；格式：標題｜只有教練能做的原因｜卡住什麼｜問過：日期或「未問」）
 - 模組化下一步 4 項（名冊引擎／預約引擎／通用短網址／報名接口收斂）｜只有教練能做：會改到 BNI、南應大、預約頁等夥伴正在用的系統，要教練拍板｜卡住名冊引擎開工｜問過：2026-10-14 報告第六節
