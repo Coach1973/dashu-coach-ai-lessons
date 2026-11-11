@@ -6,6 +6,7 @@ description: 教練人不在電腦前、用手機走「TAVA 做網頁 → Claude
 # 手機版：TAVA 網頁 → 出圖 → 上架 → 公開連結
 
 > 來源：2026-11-11 教練第一次全程用手機走完「女人的幸福學」（tava-ai.com/03olehi18o → event.bymyway.com/curated/women-happiness/）。
+> 教練端只要兩步：在 TAVA 最後貼 https://coach1973.github.io/tava-to-claude/ 的那一句 → 把 TAVA 回的 README-for-AI.txt 網址貼給 Claude。README 第一行會點名本技能。
 > 那次因為分兩個對話框做，第二個不知道圖已出好、差點重出，又找不到圖。**這支技能＝一個對話框從頭做到尾。**
 
 ## 教練那端（手機）在做什麼
@@ -34,6 +35,8 @@ ls ~/.openclaw/workspace/handoff_img*/ /private/tmp/*$C* 2>/dev/null; git -C ~/.
 有就直接用，不重出。
 
 ### 3. 出圖（LK888，不問點數——教練 11/09 已授權出圖清單一律直接出）
+**照新版說明書（https://coach1973.github.io/tava-to-claude/tava.txt）做的交接包**：`image-prompts.json` 已是 run_img_list 格式（id／type／ratio／file／prompt），直接 `run_img_list.py image-prompts.json out`；`type` 是「本人照片」的會被跳過，列進「還沒做的事」。
+舊版交接包才需要下面的轉換：
 `run_img_list.py` 讀不了 TAVA 的 `.txt`（`===== IMG-00X｜…｜尺寸 WxH｜存檔 … =====` 格式），也不認 JSON 的 `size` 欄位，所以先轉成它要的 JSON：
 ```bash
 python3 - <<'E'
