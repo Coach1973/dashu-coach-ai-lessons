@@ -1,3 +1,21 @@
+## 🔴 給跨對話框軍師讀的總結摘要（2026-11-12 06:30～06:45 台灣時間，Mac Hermes cron「FB 每日生日祝福」ca5195d8c4ca，MiniMax-M3；與下方各棒是不同對話框）
+
+**主軸：每日 FB 壽星名單抓取（半自動、0 Token）。今天一次就抓成功，無需任何修補。**
+- **今日壽星 19 位**：郭若潔、林宸緁(49)、Kelly Lee(39)、Kelly Tzeng、盧照仁(52)、黃宏偉(27)、Huang Otto、Caren Choo、Vic Diong Kar Wei(41)、邱朋潭(50)、李和(37)、翁國僧、呂美諭(59)、林逸盛、蔡函洺、蔡天送(69)、彭凡輝(44)、楊佩樺(47)、洪玄二。（括號為 FB 卡片上直接顯示的年齡，8 位卡片上沒寫歲數）
+- **狀況正常**：cookie 同步 9 檔、啟動前 FB 登入 cookie 2 筆、啟動後存活 2 筆（10/31 responsible-app 坑、11/01 空殼坑都沒再犯）；腳本 exit 0；無殘留 Chrome CDP 行程（9225 port 檢查為 0）；臨時驗證腳本已刪除。
+- **雙腳本交叉驗證一致**（不只信主腳本）：另跑 `scripts/fb_birthday_verify.js` 印出頁面所有 `h2` 順序 —— `今日壽星` 區段正好 19 人，下一段是 `剛過生日的壽星`（黃淑敏、張婉靖、Jack Hsu、陳其華、Calin Lai、潘瀅琪、曾香香、顏沐寬…）。19 筆完全對得上，**沒有把剛過生日的人混進來**。
+- **名單去重**：19 位無重複，已用程式比對確認。
+- **排程健康**：`ca5195d8c4ca`（Hermes cron，30 6 * * *）昨日 11/11 `ok`、今天 running，下次 11/13 06:30；launchd 的 `ai.openclaw.fb-birthday` 依 10/30 教練指示**維持停用**（plist 還在但不在 launchctl 啟用清單），沒有去動它。
+- **沒有動到任何程式**：今天只是抓名單，主腳本一行沒改。
+
+### 📋 下一場開工先做（以本棒為準）
+1. 明天 06:30 那棒照樣跑，確認名單有出來。若空 → 先看腳本自己印的「Chrome 啟動後 cookie：存活 N 筆」那行：N=0 就是工作 profile 被 Chrome 清（腳本會自癒，連跑即可）；N>0 但仍跳登入頁 → 看 Chrome stderr 有沒有 `Failed to decrypt token`（那是另一個根因，見 skill `macos-headless-chrome-keychain`）。
+2. `/tmp/fb_birthday.log` 目前不存在（11/03 那棒提到它沒輪替機制），若之後有人建了要記得加輪替。
+
+🙋 要教練決定：無新增。
+🤫 等教練自己提起：無新增。
+🔧 AI 自己的清單：①`/tmp/fb_birthday.log` 沒輪替機制（沿用 11/03 的待辦，目前檔案還沒建立）；②OpenClaw 的 `openclaw.json` 仍是**無效設定**（`openclaw cron list` 直接報 `Invalid config`），OpenClaw 側的 cron 目前只能靠 Hermes 這條活體在跑；③今天 FB 生日名單已送達教練。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 19:35 台灣時間，Mac 桌面版 Code 分頁，模型 Haiku 5.5→19:25 切 Sonnet 5.5；本場 19:04～19:35；對話容量約 24%；教練說「總結」）：幸福學頁 emoji 全換 LK888 圖＋頁尾修正；金門私廚 EDM 海報＋下載鈕
 **做了什麼：**
 1. **女人的幸福學**（`~/github_repos/women-happiness`，線上 event.bymyway.com/curated/women-happiness/）：頁尾加「本網頁由 TAVA AI 製作，出品人：大樹教練，友善連結：榮樹下」、協辦加「大樹教育顧問」（頁尾＋講師區）、辦公室地址註明「上課是在線上進行」；講師名字連到 patrick-chu 頁、換成該頁形象照；課程亮點 3 張＋其餘 21 個 emoji 全換 LK888 客製柔光3D圖（256px webp，21 張合計約 85KB）。commit de9ec1a、4d6b374。風格卡 `.image-style.md`。
