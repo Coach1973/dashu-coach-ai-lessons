@@ -332,11 +332,15 @@ def main():
         kind = it.get("type") or it.get("kind")  # 2026-11-03 江瑞祥清單用 kind 欄位
         if it.get("ratio") not in SIZE:
             skipped.append((it["id"], "比例 %s 不支援" % it.get("ratio")))
-        elif kind in ("概念", "圖解背景"):
+        elif str(kind or "").startswith(("概念", "圖解背景")):  # 「概念（之後可換成本人照片）」也算概念
             todo.append(it)
         elif kind in ("實景修飾", "實景修圖", "修飾"):
             ref = find_ref(it, out_dir)  # 2026-11-06 周良敦 IMG-004：參考照片在已上架 zip 的「原始照片/」
-            if not ref:
+            if not ref and not str(it.get("ref") or "").strip():
+                # 2026-11-11 金門 kinmen-1205：13 張「實景修飾」參考照片欄空白＝本來就沒有照片，不准停下來跟教練要，當概念圖直接出
+                it["type"] = "概念"
+                todo.append(it)
+            elif not ref:
                 skipped.append((it["id"], "實景修飾但找不到參考照片（%s）" % (it.get("ref") or "未指定")))
             else:
                 it["_ref"] = ref
