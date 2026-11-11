@@ -1,3 +1,10 @@
+## 🔴 補充（19:30 收工，Mac Sonnet 5.5）：金門私廚頁 21 張圖已裝回、佩佩海報已傳群組
+- 金門頁 event.bymyway.com/curated/kinmen-kitchen-1205/（倉庫 ~/github_repos/kinmen-kitchen-1205，commit a9db5f5）：21 張 LK888 圖覆蓋 images/ph-IMG-0NN.webp，本機瀏覽器量 21/21 載入、無變形，線上抽比 4 張與本機相同、Content-Type image/webp。
+- 佩佩海報 final.jpg 已用 bot_peipei 傳進 -5115910257（message_id 2941）。
+- run_img_list.py 已改：實景修飾＋ref 欄空白＝當概念圖直接出（a4386086c）。
+- 教練問「精靈生圖的網頁」＝不確定指哪個（是否 生圖一鍵注入／專案網頁生圖指令？），依 N3 已回問，等教練確認。
+- 🔧 待做：poster_swap_photo.py「換海報人像」一行指令（底稿＋只貼人像區，做法見 data/poster_swap_1111）；巴哈 AGENTS 加「不支援版型 1 句回覆」已由鎖處理。
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 19:15 台灣時間，Mac 桌面版 Code 分頁，Sonnet 5.5；教練追問巴哈 26 分鐘 167 次工具為何卡住）
 **查到的根因（證據：peipei 對話庫 3792bbad 的 15:51～16:18 逐步紀錄＋安全鎖日誌）：**
 1. 巴哈前 15 分鐘（56 次工具）都在量座標、找照片，沒開始出圖——這張「吸引人才的超能力」海報(853×1280)沒有一行指令（poster_event_edit 只支援 906×1280）。
