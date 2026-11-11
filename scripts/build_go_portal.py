@@ -157,6 +157,56 @@ PINNED = [
 # ───────────────────────── 3. 六大系列（教練 11/11 指定） ─────────────────────────
 # 每一項：(顯示名稱, 網址或「找:名稱片段」, 一句說明)。網址含金鑰的一律用「找:」從作品集取，不在這裡寫死。
 SERIES = [
+    {"id": "pick", "name": "大樹教練自選的常用網頁", "short": "自選常用", "color": "#7fd1e8", "img": "images/g-milestone.webp",
+     "tag": "教練親手挑的代表性網頁成果展", "groups": [
+        ("教練自選", "hand", [
+            ("", "https://event.bymyway.com/curated/rebreathe/", ""),
+            ("", "https://event.bymyway.com/curated/idea-center/", ""),
+            ("", "https://event.bymyway.com/curated/rs-demo/", ""),
+            ("", "https://event.bymyway.com/curated/newmedia/", ""),
+            ("", "https://event.bymyway.com/curated/creator-survey/", ""),
+            ("", "https://event.bymyway.com/curated/women-reepmployment/", ""),
+            ("", "https://event.bymyway.com/curated/taipeiema1017/", ""),
+            ("", "https://event.bymyway.com/curated/champagne-salon/", ""),
+            ("", "https://event.bymyway.com/curated/rpl-diy/", ""),
+            ("", "https://event.bymyway.com/tainan-shangquan/", ""),
+            ("", "https://event.bymyway.com/seabiscuit20/#home", ""),
+            ("", "https://mentor100.bymyway.com/", ""),
+            ("", "https://event.bymyway.com/bigtree/", ""),
+            ("", "https://event.bymyway.com/curated/rongtree/#top", ""),
+            ("", "https://event.bymyway.com/skyteam/admin", ""),
+        ]),
+    ]},
+    {"id": "bnipick", "name": "大樹自選 BNI 商務團隊系列", "short": "自選BNI", "color": "#ffa07a", "img": "images/g-bni.webp",
+     "tag": "BNI 與組建團隊的所有資料，教練親自挑選", "groups": [
+        ("教練自選", "hand", [
+            ("", "https://event.bymyway.com/curated/superpower", ""),
+            ("", "https://event.bymyway.com/curated/a-to-b/", ""),
+            ("", "https://event.bymyway.com/curated/time-secret/", ""),
+            ("", "https://event.bymyway.com/curated/bni-story/", ""),
+            ("", "https://event.bymyway.com/curated/bni-gusest", ""),
+            ("", "https://event.bymyway.com/curated/bni-trust/", ""),
+            ("", "https://event.bymyway.com/curated/bni-workshop/", ""),
+            ("", "https://coach1973.github.io/teamwork/", ""),
+            ("", "https://event.bymyway.com/curated/bestteam/", ""),
+            ("", "https://event.bymyway.com/curated/three-lacks", ""),
+            ("", "https://event.bymyway.com/tainan-calender/", ""),
+            ("", "https://chapters.bymyway.com/", ""),
+            ("", "https://coach1973.github.io/bni-dna/", ""),
+            ("", "https://trust.bymyway.com/game/", ""),
+            ("", "https://trust.bymyway.com/game/a/4c4emq2b3jao", ""),
+            ("", "https://event.bymyway.com/curated/answer2/", ""),
+            ("", "https://event.bymyway.com/curated/answer-tree/", ""),
+            ("", "https://event.bymyway.com/curated/answer/", ""),
+            ("", "https://event.bymyway.com/curated/zaolin/", ""),
+            ("", "https://coach1973.github.io/teamwork-notes/", ""),
+            ("", "https://event.bymyway.com/curated/ai-team-strategy/", ""),
+            ("", "https://coach1973.github.io/ai-go/ppt-inject.html", ""),
+            ("", "https://event.bymyway.com/curated/business-bni/", ""),
+            ("", "https://claude.ai/artifact/ThW2E2kT2W9xk5PJUtmoQa", ""),
+            ("", "https://event.bymyway.com/curated/turnforyou/", ""),
+        ]),
+    ]},
     {"id": "team", "name": "全世界最優秀的團隊計劃", "short": "團隊計劃", "color": "#e8c170", "img": "images/g-team.webp",
      "tag": "客戶、人才、伯樂——全部構想的核心", "groups": [
         ("網頁製作三神器", "tools", [
@@ -382,7 +432,7 @@ def build(out_dir, check=False):
                         placed.add(norm(u))
             else:
                 for name, ref, desc in spec:
-                    x = find(ref) if ref.startswith("找:") else (by.get(norm(ref)) or {"n": name, "u": ref, "d": ""})
+                    x = find(ref) if ref.startswith("找:") else (by.get(norm(ref)) or {"n": name or ref, "u": ref, "d": ""})
                     if x is None:
                         missing.append(f"{S['short']}／{title}／{name}（{ref}）")
                         continue
