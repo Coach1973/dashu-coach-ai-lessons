@@ -14,7 +14,7 @@
 分類＝下方 SERIES（明確名單，教練 11/11 指定的六大系列）＋ AUTO（關鍵字把其餘作品自動歸進系列的「其他相關」）。
 網頁執行時還會即時抓雲端排版與點擊次數：新上架的作品不用重跑這支也會出現在搜尋與「最新加入」。
 """
-import collections, json, re, shutil, sqlite3, sys, tempfile, time, urllib.request
+import collections, json, re, shutil, sqlite3, subprocess, sys, tempfile, time, urllib.request
 from pathlib import Path
 
 H = Path.home()
@@ -89,6 +89,28 @@ def collect():
 
 
 # ───────────────────────── 2. 使用頻率 ─────────────────────────
+LENOVO_USAGE = "state/browser_usage/lenovo_comet.json"  # 聯想跑 scripts/export_comet_history.py --push 產生（教練 11/11：最常用的是聯想的 Comet）
+
+
+def other_machine_usage():
+    """先抓雲端最新版（聯想推上去、Mac 還沒 pull 也讀得到），抓不到用本機那份。"""
+    ws = Path(__file__).resolve().parent.parent
+    raw = None
+    try:
+        subprocess.run(["git", "-C", str(ws), "fetch", "-q", "origin", "main"], timeout=30, check=True)
+        raw = subprocess.run(["git", "-C", str(ws), "show", f"origin/main:{LENOVO_USAGE}"],
+                             capture_output=True, text=True, timeout=10, check=True).stdout
+    except Exception:
+        f = ws / LENOVO_USAGE
+        raw = f.read_text(encoding="utf-8") if f.exists() else None
+    if not raw:
+        print("⚠️ 還沒有聯想 Comet 紀錄（聯想跑過 export_comet_history.py --push 才會有）")
+        return {}
+    d = json.loads(raw)
+    print(f"聯想 Comet 紀錄：{len(d.get('visits', {}))} 個網址（{d.get('generated')} 產生）")
+    return {norm(u): set(v) for u, v in d.get("visits", {}).items()}
+
+
 def usage():
     days = collections.defaultdict(set)
     try:
@@ -104,6 +126,9 @@ def usage():
         db.close()
     except Exception as e:  # Chrome 紀錄讀不到就只用點擊次數，不擋產生
         print("⚠️ Chrome 紀錄讀不到：", e)
+    lenovo = other_machine_usage()
+    for u, ds in lenovo.items():
+        days[u].update(ds)  # 同一天兩台都開過只算一天
     clicks = collections.Counter()
     try:
         for u, n in get_json("click-counts").items():
