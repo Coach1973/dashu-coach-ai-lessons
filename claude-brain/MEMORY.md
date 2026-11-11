@@ -1,3 +1,4 @@
+- [🔴 教練貼線上網址叫我改（換照片／改費用／修 bug）＝改完驗證直接 push，不准問「要不要推」(11/11)](feedback_live_page_change_request_means_push_no_ask_2026-11-11.md)
 - [🔴 疊在照片上的圓徽章／標籤不准蓋人臉：臉靠哪角徽章放另一角、桌機手機都看；已寫…](feedback_badge_must_not_cover_faces_check_overlay_on_photos_2026-11-10.md)
 - [🔴 教練丟 TAVA 出圖清單網址要換圖＝網頁早已上架 event.bymywa…](feedback_find_live_url_from_curated_registry_before_saying_no_access_2026-11-10.md)
 - [🔴 教練給出圖清單網址／說「把照片接入網頁」＝直接用 LK888 出圖，不准問要…](feedback_img_list_lk888_no_ask_routine_authorized_2026-11-09.md)
