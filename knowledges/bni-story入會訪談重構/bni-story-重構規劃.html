@@ -1,0 +1,155 @@
+<title>入會訪談卡牌重構規劃</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap">
+<style>
+/* 版面：單欄閱讀＋卡牌格，像一副攤開的規則牌；BNI 紅當重點色 */
+:root{
+  --bg:#f7f5f2; --paper:#ffffff; --ink:#1f1d1b; --muted:#5d5853; --line:#e2ddd6;
+  --accent:#b3122e; --accent-soft:#f6e3e6; --gold:#8a6a1f; --gold-soft:#f3ecd9;
+  --serif:"Noto Serif TC","Songti TC",serif; --sans:"Noto Sans TC","PingFang TC","Heiti TC",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171514; --paper:#211e1c; --ink:#f1ece6; --muted:#b5ada4; --line:#3a3532;
+  --accent:#f0687e; --accent-soft:#3a1d22; --gold:#e0be6c; --gold-soft:#332a17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171514; --paper:#211e1c; --ink:#f1ece6; --muted:#b5ada4; --line:#3a3532;
+  --accent:#f0687e; --accent-soft:#3a1d22; --gold:#e0be6c; --gold-soft:#332a17; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:20px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+h1,h2{font-family:var(--serif);text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(32px,6vw,48px);font-weight:900}
+h2{font-size:clamp(26px,4vw,32px);display:flex;gap:12px;align-items:baseline}
+h2 small{font-family:var(--sans);font-size:20px;color:var(--muted);font-weight:500}
+p{margin:0}
+.eyebrow{font-size:20px;letter-spacing:.08em;color:var(--accent);font-weight:700}
+header{display:flex;flex-direction:column;gap:16px}
+.slogan{font-family:var(--serif);font-size:clamp(24px,4vw,30px);font-weight:700;border-left:6px solid var(--accent);padding-left:18px}
+section{display:flex;flex-direction:column;gap:20px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:24px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:20px}
+ul,ol{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:8px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card .no{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:900}
+.card h3{margin:0;font-size:24px;font-family:var(--serif)}
+.card .meta{font-size:20px;color:var(--muted)}
+.q{display:flex;flex-wrap:wrap;gap:6px}
+.q span{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;font-size:20px;font-weight:700}
+.tag{font-size:20px;font-weight:700;color:var(--gold)}
+.card.opt{border-style:dashed}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:20px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:700}
+.note{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.road{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700}
+.road .bar{flex:1;min-width:140px;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--accent))}
+.legs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.leg{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.leg.now{border:2px solid var(--accent)}
+.leg b{font-family:var(--serif);font-size:24px}
+footer{color:var(--muted);font-size:20px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">商務啟航網頁重構・第 1 棒規劃（2026/11/11）</div>
+  <h1>說完故事，就完成入會訪談</h1>
+  <p class="slogan">入會訪談不是審查，而是深度了解即將加入團隊的會員夥伴狀態。</p>
+  <p>依據：教練今早的口述、入會訪談表（18 題＋費用 3 項）、2 小時訪談示範逐字稿、5 份 NotebookLM 整理。原本「5 關、自編 25 題、四層階梯」改成「一張卡＝一個 BNI 遊戲規則」，順序像樂高一樣由教練自己排。</p>
+</header>
+
+<section>
+  <h2>開場怎麼說 <small>卡 0</small></h2>
+  <div class="two">
+    <div class="box"><p><strong>上路前先拿駕照。</strong>拿到駕照不代表技術爐火純青，但紅燈停、黃燈注意、綠燈行、看到速限會控速、紅線不停車。大家都懂規則，交通才順；不懂規則，罰單一大堆。</p></div>
+    <div class="box"><p><strong>入會訪談做兩件事：</strong></p><ol><li>了解你過去用什麼方式完成生意。</li><li>告訴你這場遊戲怎麼玩：76 個國家、1 萬多個分會、30 幾萬名商務人士，正在玩一場名為「信任」的團隊遊戲。</li></ol></div>
+  </div>
+  <p>原本的「我問的是消費者的笨問題」是面對面才會講的話。網頁版改成：「想像一位完全不懂你這行的客戶問你：市面上那麼多，為什麼選你？」</p>
+</section>
+
+<section>
+  <h2>每張卡都長一樣 <small>樂高積木規格</small></h2>
+  <div class="box"><ul>
+    <li><strong>故事＋比喻</strong>：前因後果講完整，大白話。</li>
+    <li><strong>教練錄音</strong>：每張卡留一個錄音位置，教練錄好丟過來就自動出現；沒錄音時只顯示文字。</li>
+    <li><strong>A／B 情境選擇可以一直重選</strong>：選哪張就顯示哪張的說法，不鎖定，重開網頁也能再展示給朋友。</li>
+    <li><strong>教練金句</strong>：每張 1～3 句，教練之後可以再補訪談精華句。</li>
+    <li><strong>要填的題目</strong>：直接對應正式訪談表題號。</li>
+    <li><strong>一張插圖</strong>：LK888 出圖。</li>
+    <li><strong>順序由一個設定檔決定</strong>：教練說「把私房菜移到第三張」，改一行就好。</li>
+  </ul></div>
+</section>
+
+<section>
+  <h2>14 張卡牌 <small>★教練口述　☆逐字稿補上</small></h2>
+  <div class="cards">
+    <div class="card"><div class="no">卡 0</div><h3>上路前先拿駕照</h3><p class="meta">★駕照與交通規則（主）　★籃球賽規則（副）　☆撲克牌 21 點和大老二玩不起來</p><div class="q"><span>申請人</span><span>公司／職稱</span><span>推薦人</span><span>申請行業別</span></div></div>
+    <div class="card"><div class="no">卡 1</div><h3>專科醫師</h3><p class="meta">★胸痛倒地時衝向心臟專科　☆「品牌推廣」聚焦成「店家品牌推廣」　☆水果行 20 歲女孩摸一摸就知道甜度</p><div class="q"><span>題 1 年資證照</span><span>題 2 入行機緣</span><span>題 3 主力產品</span><span>題 4 獨特賣點</span></div></div>
+    <div class="card"><div class="no">卡 2</div><h3>從 A 點到 B 點</h3><p class="meta">★要去台北，你人在高雄（200 多公里）還是北京（2,000 多公里）？</p><div class="q"><span>題 8 一年目標</span><span>題 5 客戶來源</span><span>題 6 團隊</span></div></div>
+    <div class="card"><div class="no">卡 3</div><h3>誰在你的房間裡</h3><p class="meta">☆雜誌社編輯採訪：好奇心是一種尊重　☆加入就不會離開的房間，你希望誰進來</p><div class="q"><span>題 7 為何加入</span><span>題 9 希望的幫助</span></div></div>
+    <div class="card"><div class="no">卡 4</div><h3>168 個彈珠孔</h3><p class="meta">★我們同意意外會發生，但不同意意外總發生在你跟客戶約好的那個早上　★黃牌紅牌退場　☆6 年零缺席的布萊恩</p><div class="q"><span>題 15 出席政策</span></div></div>
+    <div class="card"><div class="no">卡 5</div><h3>清晨 5 點半的高爾夫</h3><p class="meta">★重要客戶約 5:30 打球，你去不去？是願不願意，不是早晚　★扶輪社、獅子會是聯誼公益，所以中午晚上　☆鬧鐘響的時候，我們已經交流一小時</p><div class="q"><span>題 15（補充）</span></div></div>
+    <div class="card"><div class="no">卡 6</div><h3>店長不在有副店長</h3><p class="meta">☆職務代理＝負責任　☆來賓當代理人，等於第三次參觀機會　☆最多 3 次：朋友是來見你本人</p><div class="q"><span>題 16 代理人</span></div></div>
+    <div class="card"><div class="no">卡 7</div><h3>自帶私房菜</h3><p class="meta">★20 人各帶一道＝20 道菜　★律師的客戶需要髮型設計師、防水工程　★100 個客戶 × 20 人＝2,000 人脈池</p><div class="q"><span>題 10 能提供的資源</span></div></div>
+    <div class="card"><div class="no">卡 8</div><h3>送禮看收禮的人</h3><p class="meta">☆請吃素的人吃最貴的牛排不算禮物　☆媒人不包生兒子：引薦是機會，不保證成交</p><div class="q"><span>題 14 五項承諾</span></div></div>
+    <div class="card"><div class="no">卡 9</div><h3>職業球隊五件事</h3><p class="meta">☆出席＝準時練球、培訓＝學戰術、一對一＝懂隊友跑位、來賓與引薦＝傳球助攻</p><div class="q"><span>題 14 五項承諾</span></div></div>
+    <div class="card"><div class="no">卡 10</div><h3>不當無照駕駛</h3><p class="meta">★駕照　☆智慧手機只拿來打電話很可惜　☆線上、免費、每 6 週至少一次 2 小時</p><div class="q"><span>題 17 培訓</span></div></div>
+    <div class="card"><div class="no">卡 11</div><h3>專心本業</h3><p class="meta">★東做西做的人不好推薦　★可以賣產品，不能拉下線　☆私房菜聚會有人不帶菜，卻叫大家去他家廚房煮飯</p><div class="q"><span>題 18 多層次行銷</span></div></div>
+    <div class="card"><div class="no">卡 12</div><h3>為你保留的座位</h3><p class="meta">★演唱會 VIP、電影票幾排幾號、高鐵商務艙幾車幾號：你沒來，也沒人能坐</p><div class="q"><span>費用 39,800</span><span>不退費</span><span>場地費分攤</span></div></div>
+    <div class="card"><div class="no">卡 13</div><h3>一個分會就是一家公司</h3><p class="meta">☆職務是學「領導一群老闆」的方法，不勉強　☆烏克麗麗老師的太太來看過就全力支持</p><div class="q"><span>題 11 角色</span><span>題 12 分會文化</span><span>題 13 家人支持</span></div></div>
+    <div class="card opt"><div class="tag">選配卡</div><h3>六條道德規範</h3><p class="meta">☆一分錢一分貨不砍價　☆說實話就不用記得說過什麼　☆生意不成人情在　☆自己跟進：別人幫你談 5 萬，你自己談 38 萬　☆積極態度　☆遵守本行業道德</p><div class="q"><span>申請書加分卡</span></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>18 題全部有卡承接</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>正式訪談表</th><th>放在哪張卡</th></tr></thead>
+    <tbody>
+      <tr><td>1 年資職位、他業並行、證照｜2 入行機緣｜3 主力產品與佔比｜4 獨特賣點</td><td>卡 1 專科醫師</td></tr>
+      <tr><td>5 客戶來源與背景、關係最密切的五種行業｜6 團隊｜8 一年目標</td><td>卡 2 從 A 點到 B 點</td></tr>
+      <tr><td>7 為何加入｜9 希望得到的幫助</td><td>卡 3 誰在你的房間裡</td></tr>
+      <tr><td>10 能提供的資源</td><td>卡 7 自帶私房菜</td></tr>
+      <tr><td>11 願意擔任的角色｜12 想成就的分會｜13 家人支持</td><td>卡 13 一個分會就是一家公司</td></tr>
+      <tr><td>14 五項關鍵承諾</td><td>卡 8＋卡 9</td></tr>
+      <tr><td>15 出席政策</td><td>卡 4＋卡 5</td></tr>
+      <tr><td>16 代理人</td><td>卡 6</td></tr>
+      <tr><td>17 培訓</td><td>卡 10</td></tr>
+      <tr><td>18 多層次行銷</td><td>卡 11</td></tr>
+      <tr><td>費用 39,800／不退費／場地費分攤</td><td>卡 12</td></tr>
+    </tbody>
+  </table></div>
+  <p>最後的訪談書照正式表單順序排，委員會一看就對得上。原本的報告、存 PDF、送交秘書功能保留。</p>
+</section>
+
+<section>
+  <h2>卡 2 的互動 <small>先問去哪，再問人在哪</small></h2>
+  <div class="box" style="display:flex;flex-direction:column;gap:16px">
+    <p><strong>第一步：</strong>你希望透過 BNI 一年創造什麼結果？（可複選）營業額 100 萬／300 萬／1,000 萬、多 20／50／100 位顧客、開 1／2／3 家店、團隊從幾人到幾人、找幾家合作廠商、客單價 20 萬的團隊每月接 1～2 案、知名度／市占率／獲利度。</p>
+    <p><strong>第二步：</strong>選了什麼就追問現況。選「多 300 萬」→「沒有 BNI 的前提下，你現在一年大概多少營業額？」選「多 20 位顧客」→「你現在大概有幾位？」</p>
+    <div class="road"><span>A 點：現在</span><span class="bar" role="img" aria-label="從現況到目標的距離條"></span><span>B 點：一年後</span></div>
+    <p><strong>第三步：</strong>現在的成果怎麼來的？客戶來源（網路／轉介紹／陌開各佔幾成）、客戶大多是什麼身分、團隊幾個人、理想客戶長什麼樣子。</p>
+  </div>
+</section>
+
+<section>
+  <div class="note">
+    <strong>有一個數字我先照官方寫，教練看一下</strong>
+    <p>正式表單和示範逐字稿都是「滾動 6 個月內可缺席 3 次，第 4 次失去席位」；今早口述是「被舉 3 次紅牌就退場」。我打算寫成「<strong>3 次是黃牌額度，第 4 次就是紅牌退場</strong>」，比喻留著、數字跟官方一致。教練沒意見就照這樣做。</p>
+  </div>
+</section>
+
+<section>
+  <h2>三棒接力</h2>
+  <div class="legs">
+    <div class="leg now"><b>第 1 棒（本場）</b><p>素材收齊、14 張卡牌藍圖、18 題對照表、這份規劃頁。</p></div>
+    <div class="leg"><b>第 2 棒</b><p>網頁改成卡牌引擎、A／B 可重選、錄音位置、正式 18 題欄位、卡 2 互動，寫好 14 張卡的文字。先在本機給教練看。</p></div>
+    <div class="leg"><b>第 3 棒</b><p>LK888 出約 14 張插圖（168 彈珠孔那張沿用）、換圖、電腦手機都驗過再上線。</p></div>
+  </div>
+  <p>錄音：教練有空時每張卡錄一段丟過來，放進去就會自動出現，不用等網頁做完。</p>
+</section>
+
+<footer>資料夾：workspace/knowledges/bni-story入會訪談重構/（01 教練口述、02 訪談表 18 題、03 示範逐字稿、04 卡牌架構藍圖、原始檔）</footer>
+</div>
