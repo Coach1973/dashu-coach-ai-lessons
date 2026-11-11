@@ -116,3 +116,4 @@
 - [🧭 大樹入口 event.bymyway.com/curated/go/＝教練唯…](project_go_portal_dashu_entry_2026-11-11.md)
 - [🔧 頁首標題 href="#top" 點了不回頂＝#top 掛在 sticky …](reference_sticky_header_top_anchor_no_scroll_2026-11-11.md)
 - [🔧 教練問「流量使用情況」＝Claude 額度：跑 scripts/claude…](reference_claude_usage_query_oauth_endpoint_2026-11-11.md)
+- [🔧 聯想寫 hook 三坑：py 不認 /e/ 路徑、py -I 忽略 PYTHONIOENCODING 中文亂碼、PS5.1 沒設輸出編碼整段失效(11/11)](reference_windows_hook_python_path_and_encoding_pitfalls_2026-11-11.md)
