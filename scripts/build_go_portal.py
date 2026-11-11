@@ -138,6 +138,22 @@ def usage():
     return {k: len(v) for k, v in days.items()}, clicks
 
 
+# ───────────────────────── 常用置頂（教練 11/11 10:31 親口排的順序，排在「最常用」最前面） ─────────────────────────
+# (卡片上顯示的短說明, 作品名稱)。要調順序就改這串；作品名稱要跟作品集裡的名字一樣。
+PINNED = [
+    ("做網頁最常用", "網頁一鍵導入"),
+    ("榮樹下", "榮樹下官網"),
+    ("人才俱樂部", "人才軍火庫・顧問師天團"),
+    ("賈維斯自我檢測", "賈維斯智慧體自我檢測系統"),
+    ("榮樹下預約", "時間預約表"),
+    ("專案網頁生圖指令", "生圖一鍵注入"),
+    ("互動式教學網頁", "零基礎學 AI，讓你被看見｜大樹教練 × 中華新媒體影音發展協會"),
+    ("近期推廣：婦女再就業", "女性個人 IP 打造 × AI 製作網頁和主題曲｜婦女再就業課程 12/30 高雄・01/03 台南"),
+    ("近期推廣：12 月 AI 課", "用AI優化個人形象和提高公司競爭力｜12/02（三）14:00–17:00｜台灣形象設計發展協會"),
+    ("佩佩老師・校友會", "南應大校友互動記憶牆 ｜ TUT Alumni Memory Wall"),
+]
+
+
 # ───────────────────────── 3. 六大系列（教練 11/11 指定） ─────────────────────────
 # 每一項：(顯示名稱, 網址或「找:名稱片段」, 一句說明)。網址含金鑰的一律用「找:」從作品集取，不在這裡寫死。
 SERIES = [
@@ -397,8 +413,23 @@ def build(out_dir, check=False):
         if x:
             j = next((i for i, it in enumerate(items) if norm(it["u"]) == norm(u)), None)
             new_ids.append(j if j is not None else add(x, "", "more"))
+    pin_ids = []
+    for label, q in PINNED:
+        j = next((i for i, it in enumerate(items) if it["n"] == q), None)  # 先找系列裡改過名的（榮樹下官網、時間預約表…）
+        if j is not None:
+            pin_ids.append([j, label])
+            continue
+        x = find("找:" + q)
+        if not x:
+            missing.append(f"常用置頂：{q}")
+            continue
+        j = next((i for i, it in enumerate(items) if it["u"] == x["u"]), None)  # 比完整網址：#prep 跟官網 norm 後一樣
+        if j is None:
+            j = add(x, "", "more")
+        pin_ids.append([j, label])
     data = {
         "built": time.strftime("%Y-%m-%d %H:%M"),
+        "pin": pin_ids,
         "series": series_out,
         "items": items,
         "newest": new_ids,
