@@ -1,3 +1,10 @@
+## 🔴 最新一棒（2026-11-11 10:22～10:45，Mac 桌面版 Opus 5.5）：大樹入口「最常用」加入聯想 Comet 紀錄（45be74bee）
+- 教練：最常用的是聯想的 Comet，只看 Mac Chrome 不準
+- 新增 `scripts/export_comet_history.py`（聯想跑；只留自家網域網址＋日期；Mac 用 Chrome History 實測 1,696 筆／280 網址）
+- `build_go_portal.py` 會 fetch 雲端 `state/browser_usage/lenovo_comet.json` 與 Mac Chrome 合併（同日只算一天；合成資料實測 37→40 天）
+- 信已放 `cross-agent/inbox/lenovo/20261111-1040_...md`：聯想 pull→跑 `--push`→建每日 23:00 排程並實跑→回信
+- 🎯 下一步：聯想回信後，Mac 跑 `python3 scripts/build_go_portal.py ~/github_repos/go`，在 go 倉庫 commit＋push 上線；🔧 可考慮 Mac 端每日自動重產
+
 ## 🔴 給跨對話框軍師讀的總結摘要（2026-11-11 10:25 台灣時間，Mac 桌面版 Code 分頁，模型 Opus 5.5；本場 09:35～10:25；對話容量約 38%；教練說「總結」）：bni-story 第 3 棒上線＋「大樹入口」新網頁上線
 **做了什麼：**
 1. **bni-story 第 3 棒**：11 張卡牌新圖（LK888）換入、a-to-b 改導航圖、IMG-003 停用，教練說「推」後 git push（6981087），線上 11 張圖 200＋image/webp、preflight 全過。順手把口令「推」補範圍：event.bymyway.com/curated 頁面沒有 Netlify，推＝git push 該倉庫（反射索引／口令字典／部署詞彙，4a965f6ee）。
