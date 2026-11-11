@@ -227,7 +227,7 @@
    "top30": 7,
    "kind": "需求型",
    "match": "(?i)網頁推|自動站|行動站|(^|[\\s，,。！!、；])推(上去|出去|到正式站|到\\s*netlify|吧|啊|了|囉|喔)*\\s*([\\s，,。！!、；]|$)",
-   "say": "部署口令：「推」＝推 Netlify 正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type，回報剩幾次）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。",
+   "say": "部署口令：「推」＝推該頁正式站（教練在 Chrome 看過才推；推完查文字＋圖片 Content-Type）：Netlify 站走 zip＋API、回報剩幾次；event.bymyway.com/curated/<slug>/ 的頁面走 git push（倉庫 ~/github_repos/<slug>/）；「網頁推」＝推 GitHub；「自動站／行動站」＝bymyway.com。草稿一律只到 GitHub。",
    "level": "remind",
    "situation": "教練說「推／網頁推／自動站」",
    "source": "feedback_coach_deploy_vocabulary.md／feedback_web_push_sop.md／試金石案例54",

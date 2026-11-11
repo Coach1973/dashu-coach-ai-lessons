@@ -15,6 +15,8 @@ metadata:
 | **「網頁推」**（這三個字）| **推送到 GitHub** | git add + commit + git push origin <branch> | GitHub 倉庫（教練的測試站）|
 | **「推」**（單字）| **推送到 Netlify** | zip + curl Netlify API（不靠 git push 觸發）| `*.netlify.app` 正式站 |
 
+> 補充（2026-11-11）：event.bymyway.com/curated/<slug>/ 的頁面（2026-10 起才有）沒有 Netlify，正式站就是 `~/github_repos/<slug>/`；教練說「推」＝git push 該倉庫（bigtree-web-edit 技能步驟 6）。上表「推＝Netlify」只適用 Netlify 站。
+
 ## 兩個彼此釐清的重點
 
 1. **「自動站」≠「網頁推」≠「推」**——三者部署到不同地方，混用會災難
