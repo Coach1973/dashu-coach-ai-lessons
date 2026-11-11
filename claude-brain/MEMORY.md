@@ -113,3 +113,4 @@
 - [🔧 TAVA prompts.html 第二種格式 const items=[…] 已寫進 run_img_list.py(網址直接跑)；reemployment 網頁 slug／event.db id35／佩佩老師洽詢列／img height:auto 坑(2026-11-07)](reference_tava_prompts_js_items_format_and_reemployment_page_2026-11-07.md)
 - [🔴 巴哈沒人叫自己跳出來長篇回報＝背景指令跑完通知叫醒；一直重複「不再回報」＝叫醒輪沒 exec＋進度鎖逼報；11/08 關 notifyOnExit＋v1.12 安靜鎖；重啟會自動接續被中斷那輪要先 abort](reference_bots_quiet_no_exec_wake_v112_2026-11-08.md)
 - [🔴 開工注入可能是舊棒：回報前看 JUNSHI_HANDOFF_LATEST.md 第一行時間，比注入新就照檔案做（11/11 bni-story 第2棒被漏）](feedback_startup_check_handoff_file_newer_than_injection_2026-11-11.md)
+- [🧭 大樹入口 event.bymyway.com/curated/go/＝教練唯一總入口（六大系列＋最常用＋搜尋366件）；改分類改 build_go_portal.py 再到 ~/github_repos/go push；「14個特效」＝rs-demo(11/11)](project_go_portal_dashu_entry_2026-11-11.md)
