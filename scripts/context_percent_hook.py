@@ -25,7 +25,7 @@ from pathlib import Path
 
 LEVELS = (25, 30, 35, 40, 45, 50)
 WINDOW = int(os.environ.get("CONTEXT_WINDOW") or 1000000)
-EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 5)
+EVERY = int(os.environ.get("CONTEXT_REPORT_EVERY") or 1)  # 教練 2026-11-11：每一句都報（原 5）
 EVERY_OVER30 = int(os.environ.get("CONTEXT_REPORT_EVERY_OVER30") or 1)
 MARKER_DIR = Path(os.environ.get("CONTEXT_MARKER_DIR") or tempfile.gettempdir())
 TAIL_BYTES = 4 * 1024 * 1024
