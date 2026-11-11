@@ -44,10 +44,15 @@ $danger = @(
     '\brm\s+(-[a-zA-Z]*r[a-zA-Z]*\b|--recursive)'
 )
 # 暫存/快取白名單：只動這些的刪除不擋
-$safe = '(?i)(\\AppData\\Local\\Temp\\|\\Windows\\Temp\\|[\\/]tmp[\\/]|node_modules)'
+$safe = '(?i)([\\/]AppData[\\/]Local[\\/]Temp[\\/]|[\\/]Windows[\\/]Temp[\\/]|[\\/]tmp[\\/]|node_modules)'
+
+# 2026-11-11 聯想體檢修：Git Bash 裡 Remove-Item 只能寫成 powershell -Command "..."，
+# 上面剝引號會把整句刪除指令剝掉→永遠漏擋。-Command／-c 後面引號裡的內容一律也要檢查。
+$targets = @($stripped)
+foreach ($m in [regex]::Matches($cmd, '(?i)(?:-Command|-c)\s+(["''])(.*?)\1')) { $targets += $m.Groups[2].Value }
 
 $hit = $false
-foreach ($p in $danger) { if ([regex]::IsMatch($stripped, $p)) { $hit = $true; break } }
+foreach ($t in $targets) { foreach ($p in $danger) { if ([regex]::IsMatch($t, $p)) { $hit = $true; break } }; if ($hit) { break } }
 if (-not $hit) { exit 0 }
 if ([regex]::IsMatch($cmd, $safe)) { exit 0 }
 

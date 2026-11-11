@@ -291,7 +291,8 @@ $automationLog = Join-Path $workspace "state\junshi_automation.log"
 if ((-not $selfTest) -and (Test-Path (Split-Path $automationLog))) {
     $ts = Get-Date -Format "yyyy-MM-dd HH:mm"
     $triggerPreview = if ($prompt.Length -gt 40) { $prompt.Substring(0, 40) } else { $prompt }
-    $selfTest = @"
+    # 2026-11-11 聯想體檢修：原本寫成 $selfTest = ...，蓋掉「測試模式」開關→第 305 行永遠不寫 marker→同場一直重送接力棒＋重拉雲端
+    $selfTestLog = @"
 
 ## 🩺 軍師 Hook 自檢 $ts（Windows v4 心法＋最新一棒注入）
 - ✅ Hook 觸發 + git pull + 注入完成
@@ -299,7 +300,7 @@ if ((-not $selfTest) -and (Test-Path (Split-Path $automationLog))) {
 - 雲端狀態：$pullStatus
 - Session: $sessionId
 "@
-    try { Add-Content -Path $automationLog -Value $selfTest -Encoding UTF8 } catch {}
+    try { Add-Content -Path $automationLog -Value $selfTestLog -Encoding UTF8 } catch {}
 }
 
 if ($sessionId -and -not $selfTest) { New-Item -ItemType File -Path $marker -Force | Out-Null }
